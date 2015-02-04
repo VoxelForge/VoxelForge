@@ -4,6 +4,8 @@ hud = {}
 hud.health = {}
 hud.air = {}
 
+hud.hudtables = {}
+
 -- HUD item ids
 local health_hud = {}
 local health_hud_text = {}
@@ -39,6 +41,76 @@ HUD_TICK = 0.1
 function hud.value_to_barlength(value, max)
 	return math.ceil((value/max) * HUD_BARLENGTH)
 end
+
+function hud.register_hudbar(identifier, text_color, label, use_icon, default_start_value, default_start_max, start_hide, format_string)
+	local hudtable = {}
+
+	-- TODO: fetch real pos and offset
+	local pos = {x=0.5, y=0.9}
+	local offset = {x=-175, y=-40}
+	if format_string == nil then
+		format_string = "%s: %d/%d"
+	end
+
+	hudtable.add_all = function(player, start_value, start_max)
+		if start_value == nil then start_value = default_start_value end
+		if start_max == nil then start_max = default_start_max end
+		local ids = {}
+		ids.bg = player:hud_add({
+			hud_elem_type = "image",
+			position = pos,
+			scale = { x = 1, y = 1 },
+			text = "hudbars_bar_background.png",
+			alignment = {x=1,y=1},
+			offset = { x = offset.x - 1, y = offset.y - 1 },
+		})
+		if use_icon then
+			ids.icon = player:hud_add({
+				hud_elem_type = "image",
+				position = pos,
+				scale = { x = 1, y = 1 },
+				text = "hudbars_icon_"..identifier..".png",
+				alignment = {x=-1,y=1},
+				offset = { x = offset.x - 3, y = offset.y },
+			})
+		end
+		ids.bar = player:hud_add({
+			hud_elem_type = "statbar",
+			position = pos,
+			text = "hudbars_bar_"..identifier..".png",
+			number = hud.value_to_barlength(start_value, start_max),
+			alignment = {x=-1,y=-1},
+			offset = offset,
+		})
+		ids.text = player:hud_add({
+			hud_elem_type = "text",
+			position = pos,
+			text = tostring(string.format(format_string, label, start_value, start_max)),
+			alignment = {x=1,y=1},
+			number = text_color,
+			direction = 0,
+			offset = { x = offset.x + 2,  y = offset.y },
+		})
+		return ids
+	end
+
+	hudtable.identifier = identifier
+	hudtable.format_string = format_string
+	hudtable.label = label
+	hudtable.hudids = {}
+	
+	hud.hudtables[identifier] = hudtable
+end
+
+function hud.change_hudbar(player, hudtable, new_value, new_max_value)
+	local name = player:get_player_name()
+	player:hud_change(hudtable.hudids[name].bar, "number", hud.value_to_barlength(new_value, new_max_value))
+	player:hud_change(hudtable.hudids[name].text, "text",
+		tostring(string.format(hudtable.format_string, hudtable.label, new_value, new_max_value))
+	)
+end
+
+
 
 --load custom settings
 local set = io.open(minetest.get_modpath("hudbars").."/hud.conf", "r")
