@@ -83,10 +83,16 @@ function hud.register_hudbar(identifier, text_color, label, textures, default_st
 		local ids = {}
 		local state = {}
 		local name = player:get_player_name()
+		local bgscale
+		if start_max == 0 then
+			bgscale = { x=0, y=0 }
+		else
+			bgscale = { x=1, y=1 }
+		end
 		ids.bg = player:hud_add({
 			hud_elem_type = "image",
 			position = pos,
-			scale = { x = 1, y = 1 },
+			scale = bgscale,
 			text = "hudbars_bar_background.png",
 			alignment = {x=1,y=1},
 			offset = { x = offset.x - 1, y = offset.y - 1 },
@@ -172,7 +178,7 @@ function hud.unhide_hudbar(player, hudtable)
 		local value = hudtable.hudstate[name].value
 		local max = hudtable.hudstate[name].max
 		player:hud_change(hudtable.hudids[name].icon, "scale", {x=1,y=1})
-		if hudtable.hudstate[name].max == 0 then
+		if hudtable.hudstate[name].max ~= 0 then
 			player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
 		end
 		player:hud_change(hudtable.hudids[name].bar, "number", hud.value_to_barlength(value, max))
