@@ -6,7 +6,9 @@ hud.air = {}
 
 -- HUD item ids
 local health_hud = {}
+local health_hud_text = {}
 local air_hud = {}
+local air_hud_text = {}
 
 -- default settings
 
@@ -67,6 +69,15 @@ local function custom_hud(player)
 		alignment = {x=-1,y=-1},
 		offset = HUD_HEALTH_OFFSET,
 	})
+	health_hud_text[name] = player:hud_add({
+		hud_elem_type = "text",
+		position = HUD_HEALTH_POS,
+		text = tostring(string.format("Health: %d/%d", player:get_hp(), 20)),
+		alignment = {x=1,y=1},
+		number = 0xFFFFFF,
+		direction = 0,
+		offset = { x = HUD_HEALTH_OFFSET.x + 2,  y = HUD_HEALTH_OFFSET.y },
+	})
 
  --air
 	player:hud_add({
@@ -85,6 +96,15 @@ local function custom_hud(player)
 		alignment = {x=-1,y=-1},
 		offset = HUD_AIR_OFFSET,
 	})
+	air_hud_text[name] = player:hud_add({
+		hud_elem_type = "text",
+		position = HUD_AIR_POS,
+		text = tostring(string.format("Breath: %d/%d", math.min(player:get_breath(), 10), 10)),
+		alignment = {x=1,y=1},
+		number = 0x000000,
+		direction = 0,
+		offset = { x = HUD_AIR_OFFSET.x + 2,  y = HUD_AIR_OFFSET.y },
+	})
 
  end
 end
@@ -99,6 +119,9 @@ local function update_hud(player)
 		air = player:get_breath()
 		hud.air[name] = air
 		player:hud_change(air_hud[name], "number", hud.value_to_barlength(math.min(air, 10), 10))
+		player:hud_change(air_hud_text[name], "text",
+			tostring(string.format("Breath: %d/%d", math.min(player:get_breath(), 10), 10))
+		)
 	end
  --health
 	local hp = tonumber(hud.health[name])
@@ -106,6 +129,9 @@ local function update_hud(player)
 		hp = player:get_hp()
 		hud.health[name] = hp
 		player:hud_change(health_hud[name], "number", hud.value_to_barlength(hp, 20))
+		player:hud_change(health_hud_text[name], "text",
+			tostring(string.format("Health: %d/%d", hp, 20))
+		)
 	end
 end
 
