@@ -56,6 +56,7 @@ function hud.register_hudbar(identifier, text_color, label, use_icon, default_st
 		if start_value == nil then start_value = default_start_value end
 		if start_max == nil then start_max = default_start_max end
 		local ids = {}
+		local state = {}
 		ids.bg = player:hud_add({
 			hud_elem_type = "image",
 			position = pos,
@@ -91,25 +92,57 @@ function hud.register_hudbar(identifier, text_color, label, use_icon, default_st
 			direction = 0,
 			offset = { x = offset.x + 2,  y = offset.y },
 		})
-		return ids
+		state.hidden = start_hide
+		state.value = start_value
+		state.max = start_max
+		return ids, state
 	end
 
 	hudtable.identifier = identifier
 	hudtable.format_string = format_string
 	hudtable.label = label
 	hudtable.hudids = {}
+	hudtable.hudstate = {}
 	
 	hud.hudtables[identifier] = hudtable
 end
 
 function hud.change_hudbar(player, hudtable, new_value, new_max_value)
 	local name = player:get_player_name()
-	player:hud_change(hudtable.hudids[name].bar, "number", hud.value_to_barlength(new_value, new_max_value))
-	player:hud_change(hudtable.hudids[name].text, "text",
-		tostring(string.format(hudtable.format_string, hudtable.label, new_value, new_max_value))
-	)
+	hudtable.hudstate[name].value = new_value
+	hudtable.hudstate[name].max = new_max_value
+	if hudtable.hudstate[name].hidden == false then
+		player:hud_change(hudtable.hudids[name].bar, "number", hud.value_to_barlength(new_value, new_max_value))
+		player:hud_change(hudtable.hudids[name].text, "text",
+			tostring(string.format(hudtable.format_string, hudtable.label, new_value, new_max_value))
+		)
+	end
 end
 
+function hud.hide_hudbar(player, hudtable)
+	local name = player:get_player_name()
+	if(hudtable.hudstate[name].hidden == false) then
+		player:hud_change(hudtable.hudids[name].icon, "scale", {x=0,y=0})
+		player:hud_change(hudtable.hudids[name].bg, "scale", {x=0,y=0})
+		player:hud_change(hudtable.hudids[name].bar, "number", 0)
+		player:hud_change(hudtable.hudids[name].text, "text", "")
+		hudtable.hudstate[name].hidden = true
+	end
+end
+
+function hud.unhide_hudbar(player, hudtable)
+	local name = player:get_player_name()
+	if(hudtable.hudstate[name].hidden) then
+		local name = player:get_player_name()
+		local value = hudtable.hudstate[name].value
+		local max = hudtable.hudstate[name].max
+		player:hud_change(hudtable.hudids[name].icon, "scale", {x=1,y=1})
+		player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
+		player:hud_change(hudtable.hudids[name].bar, "number", hud.value_to_barlength(value, max))
+		player:hud_change(hudtable.hudids[name].text, "text", tostring(string.format(hudtable.format_string, hudtable.label, value, max)))
+		hudtable.hudstate[name].hidden = false
+	end
+end
 
 
 --load custom settings
@@ -246,6 +279,7 @@ local function update_hud(player)
 			tostring(string.format("Health: %d/%d", hp, 20))
 		)
 	end
+
 end
 
 minetest.register_on_joinplayer(function(player)
