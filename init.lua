@@ -7,8 +7,10 @@ hud.air = {}
 -- HUD item ids
 local health_hud = {}
 local health_hud_text = {}
+local health_hud_icon = {}
 local air_hud = {}
 local air_hud_text = {}
+local air_hud_icon = {}
 
 -- default settings
 
@@ -53,6 +55,14 @@ local function custom_hud(player)
 
  if minetest.setting_getbool("enable_damage") then
  --health
+	health_hud_icon[name] = player:hud_add({
+		hud_elem_type = "image",
+		position = HUD_HEALTH_POS,
+		scale = { x = 1, y = 1 },
+		text = "hudbars_icon_health.png",
+		alignment = {x=-1,y=1},
+		offset = { x = HUD_HEALTH_OFFSET.x - 3, y = HUD_HEALTH_OFFSET.y },
+	})
 	player:hud_add({
 		hud_elem_type = "image",
 		position = HUD_HEALTH_POS,
@@ -80,6 +90,14 @@ local function custom_hud(player)
 	})
 
  --air
+	air_hud_icon[name] = player:hud_add({
+		hud_elem_type = "image",
+		position = HUD_AIR_POS,
+		scale = { x = 1, y = 1 },
+		text = "hudbars_icon_breath.png",
+		alignment = {x=-1,y=1},
+		offset = { x = HUD_AIR_OFFSET.x - 3, y = HUD_AIR_OFFSET.y },
+	})
 	player:hud_add({
 		hud_elem_type = "image",
 		position = HUD_AIR_POS,
