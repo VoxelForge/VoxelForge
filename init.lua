@@ -122,11 +122,6 @@ minetest.register_on_joinplayer(function(player)
 	end)
 end)
 
-minetest.register_on_respawnplayer(function(player)
-	-- reset player breath since the engine doesnt
-	player:set_breath(11)
-end)
-
 local main_timer = 0
 local timer = 0
 local timer2 = 0
