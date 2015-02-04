@@ -120,7 +120,9 @@ function hud.register_hudbar(identifier, text_color, label, use_icon, default_st
 		state.hidden = start_hide
 		state.value = start_value
 		state.max = start_max
-		return ids, state
+
+		hud.hudtables[identifier].hudids = ids
+		hud.hudtables[identifier].hudstate = state
 	end
 
 	hudtable.identifier = identifier
