@@ -82,6 +82,7 @@ function hud.register_hudbar(identifier, text_color, label, use_icon, default_st
 		if start_max == nil then start_max = default_start_max end
 		local ids = {}
 		local state = {}
+		local name = player:get_player_name()
 		ids.bg = player:hud_add({
 			hud_elem_type = "image",
 			position = pos,
@@ -121,8 +122,8 @@ function hud.register_hudbar(identifier, text_color, label, use_icon, default_st
 		state.value = start_value
 		state.max = start_max
 
-		hud.hudtables[identifier].hudids = ids
-		hud.hudtables[identifier].hudstate = state
+		hud.hudtables[identifier].hudids[name] = ids
+		hud.hudtables[identifier].hudstate[name] = state
 	end
 
 	hudtable.identifier = identifier
