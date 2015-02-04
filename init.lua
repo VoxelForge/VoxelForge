@@ -68,9 +68,9 @@ if minetest.get_modpath("3d_armor") ~= nil then
 end
 
 --load custom settings
-local set = io.open(minetest.get_modpath("hud").."/hud.conf", "r")
+local set = io.open(minetest.get_modpath("hudbars").."/hud.conf", "r")
 if set then 
-	dofile(minetest.get_modpath("hud").."/hud.conf")
+	dofile(minetest.get_modpath("hudbars").."/hud.conf")
 	set:close()
 else
 	if not HUD_ENABLE_HUNGER then
@@ -176,8 +176,8 @@ function hud.set_armor()
 end
 
 
-if HUD_ENABLE_HUNGER then dofile(minetest.get_modpath("hud").."/hunger.lua") end
-if HUD_SHOW_ARMOR then dofile(minetest.get_modpath("hud").."/armor.lua") end
+if HUD_ENABLE_HUNGER then dofile(minetest.get_modpath("hudbars").."/hunger.lua") end
+if HUD_SHOW_ARMOR then dofile(minetest.get_modpath("hudbars").."/armor.lua") end
 
 -- update hud elemtens if value has changed
 local function update_hud(player)
