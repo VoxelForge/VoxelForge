@@ -6,6 +6,9 @@ hud.air = {}
 
 hud.hudtables = {}
 
+-- number of registered HUD bars
+hud.hudbars_count = 0
+
 -- HUD item ids
 local health_hud = {}
 local health_hud_text = {}
@@ -36,6 +39,12 @@ if dump(minetest.hud_replace_builtin) ~= "nil" then
 	HUD_AIR_OFFSET = {x=15,y=-70}
 end
 
+HUD_CUSTOM_POS_LEFT = HUD_HEALTH_POS
+HUD_CUSTOM_POS_RIGHT = HUD_AIR_POS
+HUD_CUSTOM_VMARGIN = 24
+HUD_CUSTOM_START_OFFSET_LEFT = {x=HUD_HEALTH_OFFSET.x, y=HUD_HEALTH_OFFSET.y - HUD_CUSTOM_VMARGIN}
+HUD_CUSTOM_START_OFFSET_RIGHT = {x=HUD_AIR_OFFSET.x, y=HUD_AIR_OFFSET.y - HUD_CUSTOM_VMARGIN}
+
 HUD_TICK = 0.1
 
 function hud.value_to_barlength(value, max)
@@ -44,10 +53,20 @@ end
 
 function hud.register_hudbar(identifier, text_color, label, use_icon, default_start_value, default_start_max, start_hide, format_string)
 	local hudtable = {}
-
-	-- TODO: fetch real pos and offset
-	local pos = {x=0.5, y=0.9}
-	local offset = {x=-175, y=-40}
+	local pos, offset
+	if hud.hudbars_count % 2 == 0 then
+		pos = HUD_CUSTOM_POS_LEFT
+		offset = {
+			x = HUD_CUSTOM_START_OFFSET_LEFT.x,
+			y = HUD_CUSTOM_START_OFFSET_LEFT.y - HUD_CUSTOM_VMARGIN * math.floor(hud.hudbars_count/2)
+		}
+	else
+		pos = HUD_CUSTOM_POS_RIGHT
+		offset = {
+			x = HUD_CUSTOM_START_OFFSET_RIGHT.x,
+			y = HUD_CUSTOM_START_OFFSET_RIGHT.y - HUD_CUSTOM_VMARGIN * math.floor((hud.hudbars_count-1)/2)
+		}
+	end
 	if format_string == nil then
 		format_string = "%s: %d/%d"
 	end
@@ -103,6 +122,8 @@ function hud.register_hudbar(identifier, text_color, label, use_icon, default_st
 	hudtable.label = label
 	hudtable.hudids = {}
 	hudtable.hudstate = {}
+
+	hud.hudbars_count= hud.hudbars_count + 1
 	
 	hud.hudtables[identifier] = hudtable
 end
