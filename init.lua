@@ -51,6 +51,14 @@ local function custom_hud(player)
 
  if minetest.setting_getbool("enable_damage") then
  --health
+	player:hud_add({
+		hud_elem_type = "image",
+		position = HUD_HEALTH_POS,
+		scale = { x = 1, y = 1 },
+		text = "hudbars_bar_background.png",
+		alignment = {x=1,y=1},
+		offset = { x = HUD_HEALTH_OFFSET.x - 1, y = HUD_HEALTH_OFFSET.y - 1 },
+	})
 	health_hud[name] = player:hud_add({
 		hud_elem_type = "statbar",
 		position = HUD_HEALTH_POS,
@@ -61,6 +69,14 @@ local function custom_hud(player)
 	})
 
  --air
+	player:hud_add({
+		hud_elem_type = "image",
+		position = HUD_AIR_POS,
+		scale = { x = 1, y = 1 },
+		text = "hudbars_bar_background.png",
+		alignment = {x=1,y=1},
+		offset = { x = HUD_AIR_OFFSET.x - 1, y = HUD_AIR_OFFSET.y - 1 },
+	})
 	air_hud[name] = player:hud_add({
 		hud_elem_type = "statbar",
 		position = HUD_AIR_POS,
