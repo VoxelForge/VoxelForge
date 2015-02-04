@@ -8,9 +8,11 @@ hud.air = {}
 local health_hud = {}
 local health_hud_text = {}
 local health_hud_icon = {}
+local health_hud_bg = {}
 local air_hud = {}
 local air_hud_text = {}
 local air_hud_icon = {}
+local air_hud_bg = {}
 
 -- default settings
 
@@ -63,7 +65,7 @@ local function custom_hud(player)
 		alignment = {x=-1,y=1},
 		offset = { x = HUD_HEALTH_OFFSET.x - 3, y = HUD_HEALTH_OFFSET.y },
 	})
-	player:hud_add({
+	health_hud_bg[name] = player:hud_add({
 		hud_elem_type = "image",
 		position = HUD_HEALTH_POS,
 		scale = { x = 1, y = 1 },
@@ -90,18 +92,29 @@ local function custom_hud(player)
 	})
 
  --air
+	local airnumber, airtext, airscale
+	local air = player:get_breath()
+	if air == 11 then
+		airnumber = 0
+		airtext = ""
+		airscale = {x=0, y=0}
+	else
+		airnumber = hud.value_to_barlength(math.min(air, 10), 10)
+		airtext = tostring(string.format("Breath: %d/%d", math.min(air, 10), 10))
+		airscale = {x=1, y=1}
+	end
 	air_hud_icon[name] = player:hud_add({
 		hud_elem_type = "image",
 		position = HUD_AIR_POS,
-		scale = { x = 1, y = 1 },
+		scale = airscale,
 		text = "hudbars_icon_breath.png",
 		alignment = {x=-1,y=1},
 		offset = { x = HUD_AIR_OFFSET.x - 3, y = HUD_AIR_OFFSET.y },
 	})
-	player:hud_add({
+	air_hud_bg[name] = player:hud_add({
 		hud_elem_type = "image",
 		position = HUD_AIR_POS,
-		scale = { x = 1, y = 1 },
+		scale = airscale,
 		text = "hudbars_bar_background.png",
 		alignment = {x=1,y=1},
 		offset = { x = HUD_AIR_OFFSET.x - 1, y = HUD_AIR_OFFSET.y - 1 },
@@ -110,14 +123,14 @@ local function custom_hud(player)
 		hud_elem_type = "statbar",
 		position = HUD_AIR_POS,
 		text = "hudbars_bar_breath.png",
-		number = hud.value_to_barlength(math.min(player:get_breath(), 10), 10),
+		number = airnumber,
 		alignment = {x=-1,y=-1},
 		offset = HUD_AIR_OFFSET,
 	})
 	air_hud_text[name] = player:hud_add({
 		hud_elem_type = "text",
 		position = HUD_AIR_POS,
-		text = tostring(string.format("Breath: %d/%d", math.min(player:get_breath(), 10), 10)),
+		text = airtext,
 		alignment = {x=1,y=1},
 		number = 0x000000,
 		direction = 0,
@@ -136,10 +149,20 @@ local function update_hud(player)
 	if player:get_breath() ~= air then
 		air = player:get_breath()
 		hud.air[name] = air
-		player:hud_change(air_hud[name], "number", hud.value_to_barlength(math.min(air, 10), 10))
-		player:hud_change(air_hud_text[name], "text",
-			tostring(string.format("Breath: %d/%d", math.min(player:get_breath(), 10), 10))
-		)
+		local airnumber, airtext, airscale
+		if air == 11 then
+			airnumber = 0
+			airtext = ""
+			airscale = {x=0, y=0}
+		else
+			airnumber = hud.value_to_barlength(math.min(air, 10), 10)
+			airtext = tostring(string.format("Breath: %d/%d", math.min(player:get_breath(), 10), 10))
+			airscale = {x=1, y=1}
+		end
+		player:hud_change(air_hud[name], "number", airnumber)
+		player:hud_change(air_hud_text[name], "text", airtext)
+		player:hud_change(air_hud_icon[name], "scale", airscale)
+		player:hud_change(air_hud_bg[name], "scale", airscale)
 	end
  --health
 	local hp = tonumber(hud.health[name])
