@@ -27,9 +27,9 @@ HUD_AIR_OFFSET = {x=15,y=2}
 if dump(minetest.hud_replace_builtin) ~= "nil" then
 	HUD_SCALEABLE = true
 	HUD_HEALTH_POS = {x=0.5,y=1}
-	HUD_HEALTH_OFFSET = {x=-262, y=-87}
+	HUD_HEALTH_OFFSET = {x=-175, y=-70}
 	HUD_AIR_POS = {x=0.5,y=1}
-	HUD_AIR_OFFSET = {x=15,y=-87}
+	HUD_AIR_OFFSET = {x=15,y=-70}
 end
 
 HUD_TICK = 0.1
