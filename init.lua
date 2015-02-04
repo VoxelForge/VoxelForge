@@ -57,7 +57,7 @@ function hud.value_to_barlength(value, max)
 	return math.ceil((value/max) * HUD_BARLENGTH)
 end
 
-function hud.register_hudbar(identifier, text_color, label, use_icon, default_start_value, default_start_max, start_hide, format_string)
+function hud.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, start_hide, format_string)
 	local hudtable = {}
 	local pos, offset
 	if hud.hudbars_count % 2 == 0 then
@@ -91,12 +91,12 @@ function hud.register_hudbar(identifier, text_color, label, use_icon, default_st
 			alignment = {x=1,y=1},
 			offset = { x = offset.x - 1, y = offset.y - 1 },
 		})
-		if use_icon then
+		if textures.icon ~= nil then
 			ids.icon = player:hud_add({
 				hud_elem_type = "image",
 				position = pos,
 				scale = { x = 1, y = 1 },
-				text = "hudbars_icon_"..identifier..".png",
+				text = textures.icon,
 				alignment = {x=-1,y=1},
 				offset = { x = offset.x - 3, y = offset.y },
 			})
@@ -104,7 +104,7 @@ function hud.register_hudbar(identifier, text_color, label, use_icon, default_st
 		ids.bar = player:hud_add({
 			hud_elem_type = "statbar",
 			position = pos,
-			text = "hudbars_bar_"..identifier..".png",
+			text = textures.bar,
 			number = hud.value_to_barlength(start_value, start_max),
 			alignment = {x=-1,y=-1},
 			offset = offset,
