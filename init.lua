@@ -142,6 +142,11 @@ function hud.change_hudbar(player, hudtable, new_value, new_max_value)
 	hudtable.hudstate[name].value = new_value
 	hudtable.hudstate[name].max = new_max_value
 	if hudtable.hudstate[name].hidden == false then
+		if hudtable.hudstate[name].max == 0 then
+			player:hud_change(hudtable.hudids[name].bg, "scale", {x=0,y=0})
+		else
+			player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
+		end
 		player:hud_change(hudtable.hudids[name].bar, "number", hud.value_to_barlength(new_value, new_max_value))
 		player:hud_change(hudtable.hudids[name].text, "text",
 			tostring(string.format(hudtable.format_string, hudtable.label, new_value, new_max_value))
@@ -167,7 +172,9 @@ function hud.unhide_hudbar(player, hudtable)
 		local value = hudtable.hudstate[name].value
 		local max = hudtable.hudstate[name].max
 		player:hud_change(hudtable.hudids[name].icon, "scale", {x=1,y=1})
-		player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
+		if hudtable.hudstate[name].max == 0 then
+			player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
+		end
 		player:hud_change(hudtable.hudids[name].bar, "number", hud.value_to_barlength(value, max))
 		player:hud_change(hudtable.hudids[name].text, "text", tostring(string.format(hudtable.format_string, hudtable.label, value, max)))
 		hudtable.hudstate[name].hidden = false
