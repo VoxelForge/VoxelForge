@@ -54,7 +54,11 @@ end
 HUD_TICK = 0.1
 
 function hud.value_to_barlength(value, max)
-	return math.ceil((value/max) * HUD_BARLENGTH)
+	if max == 0 then
+		return 0
+	else
+		return math.ceil((value/max) * HUD_BARLENGTH)
+	end
 end
 
 function hud.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, start_hide, format_string)
