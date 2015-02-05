@@ -1,5 +1,5 @@
-Minetest mod "HUD bars"
-=========================
+Minetest mod: HUD bars
+======================
 Version: 0.1.0
 
 License of source code: WTFPL
@@ -10,15 +10,16 @@ Forked from the “Better HUD” [hud] mod by BlockMen.
 
 Using the mod:
 --------------
-This mod changes the HUD of Minetest. 
-It improves the apperance of the health and breath bar and adds a more fancy hotbar. Furthermore it adds a 
-custom crosshair, an armor bar (only for 3darmor mod) and a hunger bar. It includes also a mechanic for hunger.
+This mod changes the HUD of Minetest. It replaces the default health and breath symbols by horizontal colored bars with text showing
+the number.
 
-You can create a "hud.conf" file to customize the positions of the health and breath bars. Take a look at "hud.conf.example" to get more infos.
+Furthermore, it enables other mods to add their own custom bars to the HUD, this mod will place them accordingly.
+
+You can create a “hud.conf” file to customize the positions of the health and breath bars. Take a look at “hud.conf.example” to get more infos.
 
 
-!!IMPORTANT !!:
-Keep in mind if running a server with this mod, that the custom position should be displayed correct on every screen size!!
+IMPORTANT:
+Keep in mind if running a server with this mod, that the custom position should be displayed correct on every screen size!
 
 
 License of textures:
@@ -27,6 +28,7 @@ hudbars_icon_health.png - celeron55 (CC BY-SA 3.0), modified by BlockMen
 hudbars_icon_breath.png - kaeza (WTFPL), modified by BlockMen
 hudbars_bar_health.png - Wuzzy (WTFPL)
 hudbars_bar_breath.png - Wuzzy (WTFPL)
+hudbars_bar_background.png - Wuzzy(WTFPL)
 
 This program is free software. It comes without any warranty, to
 the extent permitted by applicable law. You can redistribute it
