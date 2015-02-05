@@ -284,7 +284,7 @@ local function custom_hud(player)
 		position = HUD_AIR_POS,
 		text = airtext,
 		alignment = {x=1,y=1},
-		number = 0x000000,
+		number = 0xFFFFFF,
 		direction = 0,
 		offset = { x = HUD_AIR_OFFSET.x + 2,  y = HUD_AIR_OFFSET.y },
 	})
