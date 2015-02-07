@@ -25,6 +25,11 @@ You can create a “hud.conf” file to customize the positions of the health an
 IMPORTANT:
 Keep in mind if running a server with this mod, that the custom position should be displayed correct on every screen size!
 
+API:
+----
+The API is used to add your own custom HUD bars.
+Documentation for the API of this mod can be found in API.md.
+
 
 License of textures:
 --------------------
