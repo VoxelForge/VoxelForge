@@ -19,7 +19,7 @@ the number.
 
 Furthermore, it enables other mods to add their own custom bars to the HUD, this mod will place them accordingly.
 
-You can create a “hud.conf” file to customize the positions of the health and breath bars. Take a look at “hud.conf.example” to get more infos.
+You can create a “hudbars.conf” file to customize the positions of the health and breath bars. Take a look at “hudbars.conf.example” to get more infos.
 
 
 IMPORTANT:

@@ -218,9 +218,9 @@ end
 
 
 --load custom settings
-local set = io.open(minetest.get_modpath("hudbars").."/hud.conf", "r")
+local set = io.open(minetest.get_modpath("hudbars").."/hudbars.conf", "r")
 if set then 
-	dofile(minetest.get_modpath("hudbars").."/hud.conf")
+	dofile(minetest.get_modpath("hudbars").."/hudbars.conf")
 	set:close()
 end
 
