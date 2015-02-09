@@ -156,10 +156,24 @@ function hud.init_hudbar(player, identifier, start_value, start_max)
 end
 
 function hud.change_hudbar(player, identifier, new_value, new_max_value)
+	if new_value == nil and new_max_value == nil then
+		return
+	end
+
 	local name = player:get_player_name()
 	local hudtable = hud.get_hudtable(identifier)
-	hudtable.hudstate[name].value = new_value
-	hudtable.hudstate[name].max = new_max_value
+
+	if new_value ~= nil then
+		hudtable.hudstate[name].value = new_value
+	else
+		new_value = hudtable.hudstate[name].value
+	end
+	if new_max_value ~= nil then
+		hudtable.hudstate[name].max = new_max_value
+	else
+		new_max_value = hudtable.hudstate[name].max
+	end
+
 	if hudtable.hudstate[name].hidden == false then
 		if hudtable.hudstate[name].max == 0 then
 			player:hud_change(hudtable.hudids[name].bg, "scale", {x=0,y=0})

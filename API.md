@@ -104,7 +104,9 @@ After a HUD bar has been added, you can change the current and maximum value on 
 You use the function `hud.change_hudbar` for this.
 
 ### `hud.change_hudbar(player, identifier, new_value, new_max_value)`
-Changes the values of. If
+Changes the values of an initialized HUD bar for a certain player. `new_value` and `new_max_value`
+can be `nil`; if one of them is `nil`, that means the value is unchanged. If both values
+are `nil`, this function is a no-op.
 
 #### Parameters
 * `player`: `ObjectRef` of the player to which the HUD bar belongs to
