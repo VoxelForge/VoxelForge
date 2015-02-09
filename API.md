@@ -31,12 +31,11 @@ These are soft rules, the HUD bars mod will not enforce all of these.
 But this mod has been programmed under the assumption that these rules are followed, for integrity.
 
 ## Adding a HUD bar
-To add a HUD bar, you need …
+To make a new HUD bar known to this mod, you need …
 
 * … an image of size 2×16 for the bar
 * … an icon of size 16×16 (optional)
-* … to register it wiith hud.
-* … to activate it for each player for which you want the HUD 
+* … to register it with `hud.register_hudbar`
 
 ### Bar image
 The image for the bar will be repeated horizontally to denote the “value” of the HUD bar.
@@ -58,7 +57,7 @@ There is currently no reliable way to force a certain order at which the custom 
 
 #### Parameters
 * `identifier`: A globally unique internal name for the HUD bar, will be used later to refer to it. Please only rely on alphanumeric characters for now.
-* `text_color`: A 3-byte number defining the color of the text. The bytes denote, in this order red, green and blue and range from `0x00` (complete lack of this component) to `0xFF` (full intensity of this component). Example: `0xFFFFFF` for white.
+* `text_color`: A 3-octet number defining the color of the text. The octets denote, in this order red, green and blue and range from `0x00` (complete lack of this component) to `0xFF` (full intensity of this component). Example: `0xFFFFFF` for white.
 * `label`: A string which is displayed on the HUD bar itself to describe the HUD bar. Try to keep this string short.
 * `textures`: A table with the following fields:
  * `bar`: The file name of the bar image (as string).
@@ -68,20 +67,19 @@ There is currently no reliable way to force a certain order at which the custom 
 * `start_hide`: The HUD bar will be initially start hidden when added to a player. Use `hud.unhide_hudbar` to unhide it.
 * `format_string`: This is optional; You can specify an alternative format string display the final text on the HUD bar. The default format string is “`%s: %d/%d`” (in this order: Label, current value, maximum value). See also the Lua documentation of `string.format`.
 
-
 #### Return value
 Always `nil`.
 
 
 ## Displaying a HUD bar
 After a HUD bar has been registered, they are not yet displayed yet for any player. HUD bars must be
-explicitly enabled on a per-player basis.
+explicitly initialized on a per-player basis.
 
 You probably want to do this in the `minetest.register_on_joinplayer`.
 
 ### `hud.init_hudbar(player, identifier, start_value, start_max)`
-This function initialzed and activates a previously registered HUD bar and assigns it to a
-certain client. This has only to be done once per player and after that, you can change
+This function initialzes and activates a previously registered HUD bar and assigns it to a
+certain client/player. This has only to be done once per player and after that, you can change
 the values using `hud.change_hudbar`.
 
 However, if `start_hide` was set to `true` for the HUD bar (in `hud.register_hudbar`), the HUD bar
