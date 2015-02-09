@@ -151,6 +151,10 @@ function hud.register_hudbar(identifier, text_color, label, textures, default_st
 	hud.hudtables[identifier] = hudtable
 end
 
+function hud.init_hudbar(player, identifier, start_value, start_max)
+	hud.hudtables[identifier].add_all(player, start_value, start_max)
+end
+
 function hud.change_hudbar(player, identifier, new_value, new_max_value)
 	local name = player:get_player_name()
 	local hudtable = hud.get_hudtable(identifier)
