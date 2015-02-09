@@ -61,6 +61,10 @@ function hud.value_to_barlength(value, max)
 	end
 end
 
+function hud.get_hudtable(identifier)
+	return hud.hudtables[identifier]
+end
+
 function hud.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, start_hide, format_string)
 	local hudtable = {}
 	local pos, offset
@@ -147,8 +151,9 @@ function hud.register_hudbar(identifier, text_color, label, textures, default_st
 	hud.hudtables[identifier] = hudtable
 end
 
-function hud.change_hudbar(player, hudtable, new_value, new_max_value)
+function hud.change_hudbar(player, identifier, new_value, new_max_value)
 	local name = player:get_player_name()
+	local hudtable = hud.get_hudtable(identifier)
 	hudtable.hudstate[name].value = new_value
 	hudtable.hudstate[name].max = new_max_value
 	if hudtable.hudstate[name].hidden == false then
@@ -164,8 +169,9 @@ function hud.change_hudbar(player, hudtable, new_value, new_max_value)
 	end
 end
 
-function hud.hide_hudbar(player, hudtable)
+function hud.hide_hudbar(player, identifier)
 	local name = player:get_player_name()
+	local hudtable = hud.get_hudtable(identifier)
 	if(hudtable.hudstate[name].hidden == false) then
 		player:hud_change(hudtable.hudids[name].icon, "scale", {x=0,y=0})
 		player:hud_change(hudtable.hudids[name].bg, "scale", {x=0,y=0})
@@ -175,8 +181,9 @@ function hud.hide_hudbar(player, hudtable)
 	end
 end
 
-function hud.unhide_hudbar(player, hudtable)
+function hud.unhide_hudbar(player, identifier)
 	local name = player:get_player_name()
+	local hudtable = hud.get_hudtable(identifier)
 	if(hudtable.hudstate[name].hidden) then
 		local name = player:get_player_name()
 		local value = hudtable.hudstate[name].value
