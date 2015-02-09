@@ -8,3 +8,12 @@ as of version 2.0.0 of the standard <http://semver.org/>.
 0.2.0
 -----
 - Add API documentation
+
+0.3.0
+-----
+- Rename main table from “hud” to “hb” (affects function names!)
+- Arguments 3-4 hb.change_hudbar can be nil for values which should not change
+- Add proper function hb.init_hudbar, replaces odd call to hud.hudtables[identifier].add_all
+- Update API documentation and fix mistakes
+- Use “hudbars.conf” instead of “hud.conf”
+
