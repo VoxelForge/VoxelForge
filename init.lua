@@ -1,13 +1,13 @@
-hud = {}
+hb = {}
 
 -- HUD statbar values
-hud.health = {}
-hud.air = {}
+hb.health = {}
+hb.air = {}
 
-hud.hudtables = {}
+hb.hudtables = {}
 
 -- number of registered HUD bars
-hud.hudbars_count = 0
+hb.hudbars_count = 0
 
 -- HUD item ids
 local health_hud = {}
@@ -53,7 +53,7 @@ end
 
 HUD_TICK = 0.1
 
-function hud.value_to_barlength(value, max)
+function hb.value_to_barlength(value, max)
 	if max == 0 then
 		return 0
 	else
@@ -61,24 +61,24 @@ function hud.value_to_barlength(value, max)
 	end
 end
 
-function hud.get_hudtable(identifier)
-	return hud.hudtables[identifier]
+function hb.get_hudtable(identifier)
+	return hb.hudtables[identifier]
 end
 
-function hud.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, start_hide, format_string)
+function hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, start_hide, format_string)
 	local hudtable = {}
 	local pos, offset
-	if hud.hudbars_count % 2 == 0 then
+	if hb.hudbars_count % 2 == 0 then
 		pos = HUD_CUSTOM_POS_LEFT
 		offset = {
 			x = HUD_CUSTOM_START_OFFSET_LEFT.x,
-			y = HUD_CUSTOM_START_OFFSET_LEFT.y - HUD_CUSTOM_VMARGIN * math.floor(hud.hudbars_count/2)
+			y = HUD_CUSTOM_START_OFFSET_LEFT.y - HUD_CUSTOM_VMARGIN * math.floor(hb.hudbars_count/2)
 		}
 	else
 		pos = HUD_CUSTOM_POS_RIGHT
 		offset = {
 			x = HUD_CUSTOM_START_OFFSET_RIGHT.x,
-			y = HUD_CUSTOM_START_OFFSET_RIGHT.y - HUD_CUSTOM_VMARGIN * math.floor((hud.hudbars_count-1)/2)
+			y = HUD_CUSTOM_START_OFFSET_RIGHT.y - HUD_CUSTOM_VMARGIN * math.floor((hb.hudbars_count-1)/2)
 		}
 	end
 	if format_string == nil then
@@ -119,7 +119,7 @@ function hud.register_hudbar(identifier, text_color, label, textures, default_st
 			hud_elem_type = "statbar",
 			position = pos,
 			text = textures.bar,
-			number = hud.value_to_barlength(start_value, start_max),
+			number = hb.value_to_barlength(start_value, start_max),
 			alignment = {x=-1,y=-1},
 			offset = offset,
 		})
@@ -136,8 +136,8 @@ function hud.register_hudbar(identifier, text_color, label, textures, default_st
 		state.value = start_value
 		state.max = start_max
 
-		hud.hudtables[identifier].hudids[name] = ids
-		hud.hudtables[identifier].hudstate[name] = state
+		hb.hudtables[identifier].hudids[name] = ids
+		hb.hudtables[identifier].hudstate[name] = state
 	end
 
 	hudtable.identifier = identifier
@@ -146,22 +146,22 @@ function hud.register_hudbar(identifier, text_color, label, textures, default_st
 	hudtable.hudids = {}
 	hudtable.hudstate = {}
 
-	hud.hudbars_count= hud.hudbars_count + 1
+	hb.hudbars_count= hb.hudbars_count + 1
 	
-	hud.hudtables[identifier] = hudtable
+	hb.hudtables[identifier] = hudtable
 end
 
-function hud.init_hudbar(player, identifier, start_value, start_max)
-	hud.hudtables[identifier].add_all(player, start_value, start_max)
+function hb.init_hudbar(player, identifier, start_value, start_max)
+	hb.hudtables[identifier].add_all(player, start_value, start_max)
 end
 
-function hud.change_hudbar(player, identifier, new_value, new_max_value)
+function hb.change_hudbar(player, identifier, new_value, new_max_value)
 	if new_value == nil and new_max_value == nil then
 		return
 	end
 
 	local name = player:get_player_name()
-	local hudtable = hud.get_hudtable(identifier)
+	local hudtable = hb.get_hudtable(identifier)
 
 	if new_value ~= nil then
 		hudtable.hudstate[name].value = new_value
@@ -180,16 +180,16 @@ function hud.change_hudbar(player, identifier, new_value, new_max_value)
 		else
 			player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
 		end
-		player:hud_change(hudtable.hudids[name].bar, "number", hud.value_to_barlength(new_value, new_max_value))
+		player:hud_change(hudtable.hudids[name].bar, "number", hb.value_to_barlength(new_value, new_max_value))
 		player:hud_change(hudtable.hudids[name].text, "text",
 			tostring(string.format(hudtable.format_string, hudtable.label, new_value, new_max_value))
 		)
 	end
 end
 
-function hud.hide_hudbar(player, identifier)
+function hb.hide_hudbar(player, identifier)
 	local name = player:get_player_name()
-	local hudtable = hud.get_hudtable(identifier)
+	local hudtable = hb.get_hudtable(identifier)
 	if(hudtable.hudstate[name].hidden == false) then
 		player:hud_change(hudtable.hudids[name].icon, "scale", {x=0,y=0})
 		player:hud_change(hudtable.hudids[name].bg, "scale", {x=0,y=0})
@@ -199,9 +199,9 @@ function hud.hide_hudbar(player, identifier)
 	end
 end
 
-function hud.unhide_hudbar(player, identifier)
+function hb.unhide_hudbar(player, identifier)
 	local name = player:get_player_name()
-	local hudtable = hud.get_hudtable(identifier)
+	local hudtable = hb.get_hudtable(identifier)
 	if(hudtable.hudstate[name].hidden) then
 		local name = player:get_player_name()
 		local value = hudtable.hudstate[name].value
@@ -210,7 +210,7 @@ function hud.unhide_hudbar(player, identifier)
 		if hudtable.hudstate[name].max ~= 0 then
 			player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
 		end
-		player:hud_change(hudtable.hudids[name].bar, "number", hud.value_to_barlength(value, max))
+		player:hud_change(hudtable.hudids[name].bar, "number", hb.value_to_barlength(value, max))
 		player:hud_change(hudtable.hudids[name].text, "text", tostring(string.format(hudtable.format_string, hudtable.label, value, max)))
 		hudtable.hudstate[name].hidden = false
 	end
@@ -254,7 +254,7 @@ local function custom_hud(player)
 		hud_elem_type = "statbar",
 		position = HUD_HEALTH_POS,
 		text = "hudbars_bar_health.png",
-		number = hud.value_to_barlength(player:get_hp(), 20),
+		number = hb.value_to_barlength(player:get_hp(), 20),
 		alignment = {x=-1,y=-1},
 		offset = HUD_HEALTH_OFFSET,
 	})
@@ -276,7 +276,7 @@ local function custom_hud(player)
 		airtext = ""
 		airscale = {x=0, y=0}
 	else
-		airnumber = hud.value_to_barlength(math.min(air, 10), 10)
+		airnumber = hb.value_to_barlength(math.min(air, 10), 10)
 		airtext = tostring(string.format("Breath: %d/%d", math.min(air, 10), 10))
 		airscale = {x=1, y=1}
 	end
@@ -322,17 +322,17 @@ end
 local function update_hud(player)
 	local name = player:get_player_name()
  --air
-	local air = tonumber(hud.air[name])
+	local air = tonumber(hb.air[name])
 	if player:get_breath() ~= air then
 		air = player:get_breath()
-		hud.air[name] = air
+		hb.air[name] = air
 		local airnumber, airtext, airscale
 		if air == 11 then
 			airnumber = 0
 			airtext = ""
 			airscale = {x=0, y=0}
 		else
-			airnumber = hud.value_to_barlength(math.min(air, 10), 10)
+			airnumber = hb.value_to_barlength(math.min(air, 10), 10)
 			airtext = tostring(string.format("Breath: %d/%d", math.min(player:get_breath(), 10), 10))
 			airscale = {x=1, y=1}
 		end
@@ -342,11 +342,11 @@ local function update_hud(player)
 		player:hud_change(air_hud_bg[name], "scale", airscale)
 	end
  --health
-	local hp = tonumber(hud.health[name])
+	local hp = tonumber(hb.health[name])
 	if player:get_hp() ~= hp then
 		hp = player:get_hp()
-		hud.health[name] = hp
-		player:hud_change(health_hud[name], "number", hud.value_to_barlength(hp, 20))
+		hb.health[name] = hp
+		player:hud_change(health_hud[name], "number", hb.value_to_barlength(hp, 20))
 		player:hud_change(health_hud_text[name], "text",
 			tostring(string.format("Health: %d/%d", hp, 20))
 		)
@@ -357,9 +357,9 @@ end
 minetest.register_on_joinplayer(function(player)
 	local name = player:get_player_name()
 	local inv = player:get_inventory()
-	hud.health[name] = player:get_hp()
+	hb.health[name] = player:get_hp()
 	local air = player:get_breath()
-	hud.air[name] = air
+	hb.air[name] = air
 	minetest.after(0.5, function()
 		hide_builtin(player)
 		custom_hud(player)

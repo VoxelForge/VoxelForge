@@ -12,10 +12,10 @@ This API allows you to add, change, hide and unhide custom HUD bars for this mod
 To give you a *very* brief overview over this API, here is the basic workflow on how to add your own custom HUD bar:
 
 * Create images for your HUD bar
-* Call `hud.register_hudbar` to make the definition of the HUD bar known to this mod
-* Call `hud.init_hudbar` for each player for which you want to use previously defined HUD bar
-* Use `hud.change_hudbar` whenever you need to change the values of a HUD bar of a certain player
-* If you need it: Use `hud.hide_hudbar` and `hud.unhide_hudbar` to hide or unhide HUD bars of a certain player
+* Call `hb.register_hudbar` to make the definition of the HUD bar known to this mod
+* Call `hb.init_hudbar` for each player for which you want to use previously defined HUD bar
+* Use `hb.change_hudbar` whenever you need to change the values of a HUD bar of a certain player
+* If you need it: Use `hb.hide_hudbar` and `hb.unhide_hudbar` to hide or unhide HUD bars of a certain player
 
 ## The basic rules
 In order to use this API, you should be aware of a few basic rules in order to understand it:
@@ -35,7 +35,7 @@ To make a new HUD bar known to this mod, you need …
 
 * … an image of size 2×16 for the bar
 * … an icon of size 16×16 (optional)
-* … to register it with `hud.register_hudbar`
+* … to register it with `hb.register_hudbar`
 
 ### Bar image
 The image for the bar will be repeated horizontally to denote the “value” of the HUD bar.
@@ -49,7 +49,7 @@ a vertical gradient.
 ### Icon
 A 16×16 image shown left of the HUD bar. This is optional.
 
-### `hud.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, start_hide, format_string)`
+### `hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, start_hide, format_string)`
 This function adds a new custom HUD
 Note this does not yet display the HUD bar.
 
@@ -64,7 +64,7 @@ There is currently no reliable way to force a certain order at which the custom 
  * `icon`: The file name of the icon, as string. This field can be `nil`, in which case no icon will be used.
 * `default_start_value`: If this HUD bar is added to a player, and no initial value is specified, this value will be used as initial current value
 * `default_max_value`: If this HUD bar is added to a player, and no initial maximum value is specified, this value will be used as initial maximum value
-* `start_hide`: The HUD bar will be initially start hidden when added to a player. Use `hud.unhide_hudbar` to unhide it.
+* `start_hide`: The HUD bar will be initially start hidden when added to a player. Use `hb.unhide_hudbar` to unhide it.
 * `format_string`: This is optional; You can specify an alternative format string display the final text on the HUD bar. The default format string is “`%s: %d/%d`” (in this order: Label, current value, maximum value). See also the Lua documentation of `string.format`.
 
 #### Return value
@@ -77,18 +77,18 @@ explicitly initialized on a per-player basis.
 
 You probably want to do this in the `minetest.register_on_joinplayer`.
 
-### `hud.init_hudbar(player, identifier, start_value, start_max)`
+### `hb.init_hudbar(player, identifier, start_value, start_max)`
 This function initialzes and activates a previously registered HUD bar and assigns it to a
 certain client/player. This has only to be done once per player and after that, you can change
-the values using `hud.change_hudbar`.
+the values using `hb.change_hudbar`.
 
-However, if `start_hide` was set to `true` for the HUD bar (in `hud.register_hudbar`), the HUD bar
+However, if `start_hide` was set to `true` for the HUD bar (in `hb.register_hudbar`), the HUD bar
 will initially be hidden, but the HUD elements are still sent to the client. Otherwise,
 the HUD bar will be initially be shown to the player.
 
 #### Parameters
 * `player`: `ObjectRef` of the player to which the new HUD bar should be displayed to.
-* `identifier`: The identifier of the HUD bar type, as specified in `hud.register_hudbar`.
+* `identifier`: The identifier of the HUD bar type, as specified in `hb.register_hudbar`.
 * `start_value`: The initial current value of the HUD bar. This is optional, `default_start_value` of the registration function will be used, if this is `nil`.
 * `start_max`: The initial maximum value of the HUD bar. This is optional, `default_start_max` of the registration function will be used, if this is `nil`
 
@@ -99,16 +99,16 @@ Always `nil`.
 
 ## Modifying a HUD bar
 After a HUD bar has been added, you can change the current and maximum value on a per-player basis.
-You use the function `hud.change_hudbar` for this.
+You use the function `hb.change_hudbar` for this.
 
-### `hud.change_hudbar(player, identifier, new_value, new_max_value)`
+### `hb.change_hudbar(player, identifier, new_value, new_max_value)`
 Changes the values of an initialized HUD bar for a certain player. `new_value` and `new_max_value`
 can be `nil`; if one of them is `nil`, that means the value is unchanged. If both values
 are `nil`, this function is a no-op.
 
 #### Parameters
 * `player`: `ObjectRef` of the player to which the HUD bar belongs to
-* `identifier`: The identifier of the HUD bar type to change, as specified in `hud.register_hudbar`.
+* `identifier`: The identifier of the HUD bar type to change, as specified in `hb.register_hudbar`.
 * `new_value`: The new current value of the HUD bar
 * `new_max_value`: The new maximum value of the HUD bar
 
@@ -118,29 +118,29 @@ Always `nil`.
 
 ## Hiding and unhiding a HUD bar
 You can also hide custom HUD bars, meaning they will not be displayed for a certain player. You can still
-use `hud.change_hudbar` on a hidden HUD bar, the new values will be correctly displayed after the HUD bar
+use `hb.change_hudbar` on a hidden HUD bar, the new values will be correctly displayed after the HUD bar
 has been unhidden.
 
 Note that the hidden state of a HUD bar will *not* be saved by this mod on server shutdown, so you may need
 to write your own routines for this.
 
-### `hud.hide_hudbar(player, identifier)`
+### `hb.hide_hudbar(player, identifier)`
 Hides the specified HUD bar from the screen of the specified player.
 
 #### Parameters
 * `player`: `ObjectRef` of the player to which the HUD bar belongs to
-* `identifier`: The identifier of the HUD bar type to hide, as specified in `hud.register_hudbar`.
+* `identifier`: The identifier of the HUD bar type to hide, as specified in `hb.register_hudbar`.
 
 #### Return value
 Always `nil`.
 
 
-### `hud.hide_hudbar(player, identifier)`
+### `hb.hide_hudbar(player, identifier)`
 Makes a previously hidden HUD bar visible again to a player.
 
 #### Parameters
 * `player`: `ObjectRef` of the player to which the HUD bar belongs to
-* `identifier`: The identifier of the HUD bar type to unhide, as specified in `hud.register_hudbar`.
+* `identifier`: The identifier of the HUD bar type to unhide, as specified in `hb.register_hudbar`.
 
 #### Return value
 Always `nil`.
