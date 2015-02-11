@@ -123,10 +123,11 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 			alignment = {x=-1,y=-1},
 			offset = offset,
 		})
+		local text = string.format(format_string, label, start_value, start_max)
 		ids.text = player:hud_add({
 			hud_elem_type = "text",
 			position = pos,
-			text = tostring(string.format(format_string, label, start_value, start_max)),
+			text = text,
 			alignment = {x=1,y=1},
 			number = text_color,
 			direction = 0,
@@ -135,6 +136,8 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 		state.hidden = start_hide
 		state.value = start_value
 		state.max = start_max
+		state.text = text
+		state.barlength = hb.value_to_barlength(start_value, start_max)
 
 		hb.hudtables[identifier].hudids[name] = ids
 		hb.hudtables[identifier].hudstate[name] = state
@@ -162,28 +165,47 @@ function hb.change_hudbar(player, identifier, new_value, new_max_value)
 
 	local name = player:get_player_name()
 	local hudtable = hb.get_hudtable(identifier)
+	local value_changed, max_changed = false, false
 
 	if new_value ~= nil then
-		hudtable.hudstate[name].value = new_value
+		if new_value ~= hudtable.hudstate[name].value then
+			hudtable.hudstate[name].value = new_value
+			value_changed = true
+		end
 	else
 		new_value = hudtable.hudstate[name].value
 	end
 	if new_max_value ~= nil then
-		hudtable.hudstate[name].max = new_max_value
+		if new_max_value ~= hudtable.hudstate[name].max then
+			hudtable.hudstate[name].max = new_max_value
+			max_changed = true
+		end
 	else
 		new_max_value = hudtable.hudstate[name].max
 	end
 
 	if hudtable.hudstate[name].hidden == false then
-		if hudtable.hudstate[name].max == 0 then
-			player:hud_change(hudtable.hudids[name].bg, "scale", {x=0,y=0})
-		else
-			player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
+		if max_changed then
+			if hudtable.hudstate[name].max == 0 then
+				player:hud_change(hudtable.hudids[name].bg, "scale", {x=0,y=0})
+			else
+				player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
+			end
 		end
-		player:hud_change(hudtable.hudids[name].bar, "number", hb.value_to_barlength(new_value, new_max_value))
-		player:hud_change(hudtable.hudids[name].text, "text",
-			tostring(string.format(hudtable.format_string, hudtable.label, new_value, new_max_value))
-		)
+
+		if value_changed or max_changed then
+			local new_barlength = hb.value_to_barlength(new_value, new_max_value)
+			if new_barlength ~= hudtable.hudstate[name].barlength then
+				player:hud_change(hudtable.hudids[name].bar, "number", hb.value_to_barlength(new_value, new_max_value))
+				hudtable.hudstate[name].barlength = new_barlength
+			end
+
+			local new_text = string.format(hudtable.format_string, hudtable.label, new_value, new_max_value)
+			if new_text ~= hudtable.hudstate[name].text then
+				player:hud_change(hudtable.hudids[name].text, "text", new_text)
+				hudtable.hudstate[name].text = new_text
+			end
+		end
 	end
 end
 
