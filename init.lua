@@ -65,7 +65,7 @@ function hb.get_hudtable(identifier)
 	return hb.hudtables[identifier]
 end
 
-function hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, start_hide, format_string)
+function hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, start_hidden, format_string)
 	local hudtable = {}
 	local pos, offset
 	if hb.hudbars_count % 2 == 0 then
@@ -133,7 +133,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 			direction = 0,
 			offset = { x = offset.x + 2,  y = offset.y },
 		})
-		state.hidden = start_hide
+		state.hidden = start_hidden
 		state.value = start_value
 		state.max = start_max
 		state.text = text

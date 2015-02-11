@@ -49,7 +49,7 @@ a vertical gradient.
 ### Icon
 A 16×16 image shown left of the HUD bar. This is optional.
 
-### `hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, start_hide, format_string)`
+### `hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, start_hidden, format_string)`
 This function registers a new custom HUD bar definition to the HUD bars mod, so it can be later used to be displayed, changed, hidden
 and unhidden on a per-player basis.
 Note this does not yet display the HUD bar.
@@ -67,7 +67,7 @@ manually in a reliable way.
  * `icon`: The file name of the icon, as string. This field can be `nil`, in which case no icon will be used.
 * `default_start_value`: If this HUD bar is added to a player, and no initial value is specified, this value will be used as initial current value
 * `default_max_value`: If this HUD bar is added to a player, and no initial maximum value is specified, this value will be used as initial maximum value
-* `start_hide`: The HUD bar will be initially start hidden when added to a player. Use `hb.unhide_hudbar` to unhide it.
+* `start_hidden`: The HUD bar will be initially start hidden when added to a player. Use `hb.unhide_hudbar` to unhide it.
 * `format_string`: This is optional; You can specify an alternative format string display the final text on the HUD bar. The default format string is “`%s: %d/%d`” (in this order: Label, current value, maximum value). See also the Lua documentation of `string.format`.
 
 #### Return value
@@ -85,7 +85,7 @@ This function initialzes and activates a previously registered HUD bar and assig
 certain client/player. This has only to be done once per player and after that, you can change
 the values using `hb.change_hudbar`.
 
-However, if `start_hide` was set to `true` for the HUD bar (in `hb.register_hudbar`), the HUD bar
+However, if `start_hidden` was set to `true` for the HUD bar (in `hb.register_hudbar`), the HUD bar
 will initially be hidden, but the HUD elements are still sent to the client. Otherwise,
 the HUD bar will be initially be shown to the player.
 
