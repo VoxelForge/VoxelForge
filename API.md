@@ -105,6 +105,9 @@ You use the function `hb.change_hudbar` for this.
 Changes the values of an initialized HUD bar for a certain player. `new_value` and `new_max_value`
 can be `nil`; if one of them is `nil`, that means the value is unchanged. If both values
 are `nil`, this function is a no-op.
+This function also tries minimize the amount of calls to `hud_change` of the Minetest Lua API, and
+therefore, network traffic. `hud_change` is only called if it is actually needed, i.e. when the
+actual length of the bar or the displayed string changed, so you do not have to worry about it.
 
 #### Parameters
 * `player`: `ObjectRef` of the player to which the HUD bar belongs to
@@ -119,7 +122,8 @@ Always `nil`.
 ## Hiding and unhiding a HUD bar
 You can also hide custom HUD bars, meaning they will not be displayed for a certain player. You can still
 use `hb.change_hudbar` on a hidden HUD bar, the new values will be correctly displayed after the HUD bar
-has been unhidden.
+has been unhidden. Both functions will only call `hud_change` if there has been an actual change to avoid
+unneccessary traffic.
 
 Note that the hidden state of a HUD bar will *not* be saved by this mod on server shutdown, so you may need
 to write your own routines for this.
