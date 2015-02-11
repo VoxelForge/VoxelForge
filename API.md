@@ -50,10 +50,13 @@ a vertical gradient.
 A 16×16 image shown left of the HUD bar. This is optional.
 
 ### `hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, start_hide, format_string)`
-This function adds a new custom HUD
+This function registers a new custom HUD bar definition to the HUD bars mod, so it can be later used to be displayed, changed, hidden
+and unhidden on a per-player basis.
 Note this does not yet display the HUD bar.
 
-There is currently no reliable way to force a certain order at which the custom HUD bars will be placed.
+The HUD bars will be displayed in a “first come, first serve” order. This mod does not allow fow a custom order or a way to set it
+manually in a reliable way.
+
 
 #### Parameters
 * `identifier`: A globally unique internal name for the HUD bar, will be used later to refer to it. Please only rely on alphanumeric characters for now.
