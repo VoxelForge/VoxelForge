@@ -31,7 +31,7 @@ function hb.get_hudtable(identifier)
 	return hb.hudtables[identifier]
 end
 
-function hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, start_hidden, format_string)
+function hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, default_start_hidden, format_string)
 	local hudtable = {}
 	local pos, offset
 	if hb.hudbars_count % 2 == 0 then
@@ -51,9 +51,10 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 		format_string = "%s: %d/%d"
 	end
 
-	hudtable.add_all = function(player, start_value, start_max)
+	hudtable.add_all = function(player, start_value, start_max, start_hidden)
 		if start_value == nil then start_value = default_start_value end
 		if start_max == nil then start_max = default_start_max end
+		if start_hidden == nil then start_hidden = default_start_hidden end
 		local ids = {}
 		local state = {}
 		local name = player:get_player_name()
@@ -142,8 +143,8 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 	hb.hudtables[identifier] = hudtable
 end
 
-function hb.init_hudbar(player, identifier, start_value, start_max)
-	hb.hudtables[identifier].add_all(player, start_value, start_max)
+function hb.init_hudbar(player, identifier, start_value, start_max, start_hidden)
+	hb.hudtables[identifier].add_all(player, start_value, start_max, start_hidden)
 end
 
 function hb.change_hudbar(player, identifier, new_value, new_max_value)
@@ -276,7 +277,10 @@ end
 local function custom_hud(player)
 	if minetest.setting_getbool("enable_damage") then
 		hb.init_hudbar(player, "health", player:get_hp())
-		hb.init_hudbar(player, "breath", math.min(player:get_breath(), 10))
+		local breath = player:get_breath()
+		local hide_breath
+		if breath == 11 then hide_breath = true else hide_breath = false end
+		hb.init_hudbar(player, "breath", math.min(breath, 10), nil, hide_breath)
 	end
 end
 

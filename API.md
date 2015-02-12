@@ -49,7 +49,7 @@ a vertical gradient.
 ### Icon
 A 16×16 image shown left of the HUD bar. This is optional.
 
-### `hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, start_hidden, format_string)`
+### `hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, default_start_hidden, format_string)`
 This function registers a new custom HUD bar definition to the HUD bars mod, so it can be later used to be displayed, changed, hidden
 and unhidden on a per-player basis.
 Note this does not yet display the HUD bar.
@@ -67,7 +67,7 @@ manually in a reliable way.
  * `icon`: The file name of the icon, as string. This field can be `nil`, in which case no icon will be used.
 * `default_start_value`: If this HUD bar is added to a player, and no initial value is specified, this value will be used as initial current value
 * `default_max_value`: If this HUD bar is added to a player, and no initial maximum value is specified, this value will be used as initial maximum value
-* `start_hidden`: The HUD bar will be initially start hidden when added to a player. Use `hb.unhide_hudbar` to unhide it.
+* `default_start_hidden`: The HUD bar will be initially start hidden by default when added to a player. Use `hb.unhide_hudbar` to unhide it.
 * `format_string`: This is optional; You can specify an alternative format string display the final text on the HUD bar. The default format string is “`%s: %d/%d`” (in this order: Label, current value, maximum value). See also the Lua documentation of `string.format`.
 
 #### Return value
@@ -80,7 +80,7 @@ explicitly initialized on a per-player basis.
 
 You probably want to do this in the `minetest.register_on_joinplayer`.
 
-### `hb.init_hudbar(player, identifier, start_value, start_max)`
+### `hb.init_hudbar(player, identifier, start_value, start_max, start_hidden)`
 This function initialzes and activates a previously registered HUD bar and assigns it to a
 certain client/player. This has only to be done once per player and after that, you can change
 the values using `hb.change_hudbar`.
@@ -94,6 +94,7 @@ the HUD bar will be initially be shown to the player.
 * `identifier`: The identifier of the HUD bar type, as specified in `hb.register_hudbar`.
 * `start_value`: The initial current value of the HUD bar. This is optional, `default_start_value` of the registration function will be used, if this is `nil`.
 * `start_max`: The initial maximum value of the HUD bar. This is optional, `default_start_max` of the registration function will be used, if this is `nil`
+* `start_hidden`: Whether the HUD bar is initially hidden. This is optional, `default_start_hidden` of the registration function will be used as default
 
 #### Return value
 Always `nil`.
