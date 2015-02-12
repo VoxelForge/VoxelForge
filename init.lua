@@ -293,13 +293,13 @@ end
 local function update_hud(player)
 	if minetest.setting_getbool("enable_damage") then
 		--air
-		local air = player:get_breath()
+		local breath = player:get_breath()
 		
-		if air == 11 then
+		if breath == 11 then
 			hb.hide_hudbar(player, "breath")
 		else
 			hb.unhide_hudbar(player, "breath")
-			hb.change_hudbar(player, "breath", air)
+			hb.change_hudbar(player, "breath", math.min(breath, 10))
 		end
 		
 		--health
