@@ -28,3 +28,9 @@ as of version 2.0.0 of the standard <http://semver.org/>.
 - Update documentation
 - Lots of refactoring
 - Health and breath bar now use API
+
+1.0.0
+-----
+- Add new parameter start_hidden to hb.init_hudbar, specified whether HUD bar is hidden on start
+- Copy-editing of API.md and README.txt
+- Internal: Fix add_all weirdness
