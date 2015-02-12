@@ -1,9 +1,5 @@
-API documentation for the HUD bars mod 0.4.0
+API documentation for the HUD bars mod 1.0.0
 ============================================
-
-**Warning**: This API is still experimental, everything may change at any time,
-and backwards compability will not be ensured until the 1.0.0 release of the
-HUD bars mod.
 
 ## Introduction
 This API allows you to add, change, hide and unhide custom HUD bars for this mod.
