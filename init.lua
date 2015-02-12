@@ -242,7 +242,7 @@ if set then
 end
 
 local function hide_builtin(player)
-	 player:hud_set_flags({crosshair = true, hotbar = true, healthbar = false, wielditem = true, breathbar = false})
+	 player:hud_set_flags({healthbar = false, breathbar = false})
 end
 
 
