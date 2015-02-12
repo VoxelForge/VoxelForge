@@ -5,23 +5,25 @@ hb.hudtables = {}
 -- number of registered HUD bars
 hb.hudbars_count = 0
 
+hb.settings = {}
+
 -- default settings
-HUD_BARLENGTH = 160
+hb.settings.max_bar_length = 160
 
 -- statbar positions
-HUD_START_OFFSET_LEFT = { x = -175, y = -70 }
-HUD_START_OFFSET_RIGHT = { x = 15, y = -70 }
-HUD_POS_LEFT = { x=0.5, y=1 }
-HUD_POS_RIGHT = { x = 0.5, y = 1 }
+hb.settings.pos_left = { x=0.5, y=1 }
+hb.settings.pos_right= { x = 0.5, y = 1 }
+hb.settings.start_offset_left = { x = -175, y = -70 }
+hb.settings.start_offset_right = { x = 15, y = -70 }
 
-HUD_VMARGIN = 24
-HUD_TICK = 0.1
+hb.settings.vmargin = 24
+hb.settings.tick = 0.1
 
 function hb.value_to_barlength(value, max)
 	if max == 0 then
 		return 0
 	else
-		return math.ceil((value/max) * HUD_BARLENGTH)
+		return math.ceil((value/max) * hb.settings.max_bar_length)
 	end
 end
 
@@ -33,16 +35,16 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 	local hudtable = {}
 	local pos, offset
 	if hb.hudbars_count % 2 == 0 then
-		pos = HUD_POS_LEFT
+		pos = hb.settings.pos_left
 		offset = {
-			x = HUD_START_OFFSET_LEFT.x,
-			y = HUD_START_OFFSET_LEFT.y - HUD_VMARGIN * math.floor(hb.hudbars_count/2)
+			x = hb.settings.start_offset_left.x,
+			y = hb.settings.start_offset_left.y - hb.settings.vmargin * math.floor(hb.hudbars_count/2)
 		}
 	else
-		pos = HUD_POS_RIGHT
+		pos = hb.settings.pos_right
 		offset = {
-			x = HUD_START_OFFSET_RIGHT.x,
-			y = HUD_START_OFFSET_RIGHT.y - HUD_VMARGIN * math.floor((hb.hudbars_count-1)/2)
+			x = hb.settings.start_offset_right.x,
+			y = hb.settings.start_offset_right.y - hb.settings.vmargin * math.floor((hb.hudbars_count-1)/2)
 		}
 	end
 	if format_string == nil then
@@ -308,8 +310,8 @@ minetest.after(2.5, function()
 	 main_timer = main_timer + dtime
 	 timer = timer + dtime
 	 timer2 = timer2 + dtime
-		if main_timer > HUD_TICK or timer > 4 then
-		 if main_timer > HUD_TICK then main_timer = 0 end
+		if main_timer > hb.settings.tick or timer > 4 then
+		 if main_timer > hb.settings.tick then main_timer = 0 end
 		 for _,player in ipairs(minetest.get_connected_players()) do
 			-- only proceed if damage is enabled
 			if minetest.setting_getbool("enable_damage") then
