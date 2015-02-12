@@ -229,9 +229,10 @@ function hb.get_hudbar_state(player, identifier)
 end
 
 --register built-in HUD bars
-hb.register_hudbar("health", 0xFFFFFF, "Health", { bar = "hudbars_bar_health.png", icon = "hudbars_icon_health.png" }, 20, 20, false)
-hb.register_hudbar("breath", 0xFFFFFF, "Breath", { bar = "hudbars_bar_breath.png", icon = "hudbars_icon_breath.png" }, 10, 10, true)
-
+if minetest.setting_getbool("enable_damage") then
+	hb.register_hudbar("health", 0xFFFFFF, "Health", { bar = "hudbars_bar_health.png", icon = "hudbars_icon_health.png" }, 20, 20, false)
+	hb.register_hudbar("breath", 0xFFFFFF, "Breath", { bar = "hudbars_bar_breath.png", icon = "hudbars_icon_breath.png" }, 10, 10, true)
+end
 
 --load custom settings
 local set = io.open(minetest.get_modpath("hudbars").."/hudbars.conf", "r")
@@ -255,18 +256,20 @@ end
 
 -- update built-in HUD bars
 local function update_hud(player)
-	--air
-	local air = player:get_breath()
-
-	if air == 11 then
-		hb.hide_hudbar(player, "breath")
-	else
-		hb.unhide_hudbar(player, "breath")
-		hb.change_hudbar(player, "breath", air)
+	if minetest.setting_getbool("enable_damage") then
+		--air
+		local air = player:get_breath()
+		
+		if air == 11 then
+			hb.hide_hudbar(player, "breath")
+		else
+			hb.unhide_hudbar(player, "breath")
+			hb.change_hudbar(player, "breath", air)
+		end
+		
+		--health
+		hb.change_hudbar(player, "health", player:get_hp())
 	end
-
-	--health
-	hb.change_hudbar(player, "health", player:get_hp())
 end
 
 minetest.register_on_joinplayer(function(player)
