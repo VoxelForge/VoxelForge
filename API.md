@@ -152,3 +152,23 @@ Makes a previously hidden HUD bar visible again to a player.
 #### Return value
 Always `nil`.
 
+
+## Reading HUD bar information
+It is also possible to read information about an active HUD bar.
+
+### `hb.get_hudbar_state(player, identifier)`
+Returns the current state of the active player's HUD bar.
+
+#### Parameters
+* `player`: `ObjectRef` of the player to which the HUD bar belongs to
+* `identifier`: The identifier of the HUD bar type to hide, as specified in `hb.register_hudbar`.
+
+#### Return value
+A table which holds information on the current state of the HUD bar. Note the table is a partial
+copy of the internal HUD bar state, it is *not* a reference; the information hold by the table is
+only true for the moment you called this function. The fields of this table are:
+* `value`: Current value of HUD bar
+* `max`: Current maximum value of HUD bar
+* `hidden`: Boolean denoting whether the HUD bar is hidden
+* `barlength`: The length of the HUD bar in pixels. This field is meaningless if the HUD bar is currently hidden.
+* `text`: The text shown on the HUD bar. This fiels is meaningless if the HUD bar is currently hidden.

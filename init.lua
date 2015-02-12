@@ -105,6 +105,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 			direction = 0,
 			offset = { x = offset.x + 2,  y = offset.y },
 		})
+		-- Do not forget to update hb.get_hudbar_state if you add new fields to the state table
 		state.hidden = start_hidden
 		state.value = start_value
 		state.max = start_max
@@ -212,6 +213,19 @@ function hb.unhide_hudbar(player, identifier)
 		player:hud_change(hudtable.hudids[name].text, "text", tostring(string.format(hudtable.format_string, hudtable.label, value, max)))
 		hudtable.hudstate[name].hidden = false
 	end
+end
+
+function hb.get_hudbar_state(player, identifier)
+	local ref = hb.get_hudtable(identifier).hudstate[player:get_player_name()]
+	-- Do not forget to update this chunk of code in case the state changes
+	local copy = {
+		hidden = ref.hidden,
+		value = ref.value,
+		max = ref.max,
+		text = ref.text,
+		barlength = ref.barlength,
+	}
+	return copy
 end
 
 --register built-in HUD bars
