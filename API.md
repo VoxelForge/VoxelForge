@@ -130,7 +130,8 @@ has been unhidden. Both functions will only call `hud_change` if there has been 
 unneccessary traffic.
 
 Note that the hidden state of a HUD bar will *not* be saved by this mod on server shutdown, so you may need
-to write your own routines for this.
+to write your own routines for this or by setting the correct value for `start_hidden` when calling
+`hb.init_hudbar`.
 
 ### `hb.hide_hudbar(player, identifier)`
 Hides the specified HUD bar from the screen of the specified player.
@@ -143,7 +144,7 @@ Hides the specified HUD bar from the screen of the specified player.
 Always `nil`.
 
 
-### `hb.hide_hudbar(player, identifier)`
+### `hb.unhide_hudbar(player, identifier)`
 Makes a previously hidden HUD bar visible again to a player.
 
 #### Parameters
@@ -165,11 +166,12 @@ Returns the current state of the active player's HUD bar.
 * `identifier`: The identifier of the HUD bar type to hide, as specified in `hb.register_hudbar`.
 
 #### Return value
-A table which holds information on the current state of the HUD bar. Note the table is a partial
+A table which holds information on the current state of the HUD bar. Note the table is a deep
 copy of the internal HUD bar state, it is *not* a reference; the information hold by the table is
 only true for the moment you called this function. The fields of this table are:
-* `value`: Current value of HUD bar
-* `max`: Current maximum value of HUD bar
-* `hidden`: Boolean denoting whether the HUD bar is hidden
+
+* `value`: Current value of HUD bar.
+* `max`: Current maximum value of HUD bar.
+* `hidden`: Boolean denoting whether the HUD bar is hidden.
 * `barlength`: The length of the HUD bar in pixels. This field is meaningless if the HUD bar is currently hidden.
 * `text`: The text shown on the HUD bar. This fiels is meaningless if the HUD bar is currently hidden.
