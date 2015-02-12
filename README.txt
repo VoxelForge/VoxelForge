@@ -25,7 +25,7 @@ set will use a default value instead.
 
 
 IMPORTANT:
-Keep in mind if running a server with this mod, that the custom position should be displayed correct on every screen size!
+Keep in mind if running a server with this mod, that the custom position should be displayed correctly on every screen size!
 
 API:
 ----
