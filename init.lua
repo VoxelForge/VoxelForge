@@ -55,11 +55,20 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 		local ids = {}
 		local state = {}
 		local name = player:get_player_name()
-		local bgscale
-		if start_max == 0 then
+		local bgscale, iconscale, text, barnumber
+		if start_max == 0 or start_hidden then
 			bgscale = { x=0, y=0 }
 		else
 			bgscale = { x=1, y=1 }
+		end
+		if start_hidden then
+			iconscale = { x=0, y=0 }
+			barnumber = 0
+			text = ""
+		else
+			iconscale = { x=1, y=1 }
+			barnumber = hb.value_to_barlength(start_value, start_max)
+			text = string.format(format_string, label, start_value, start_max)
 		end
 		ids.bg = player:hud_add({
 			hud_elem_type = "image",
@@ -73,7 +82,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 			ids.icon = player:hud_add({
 				hud_elem_type = "image",
 				position = pos,
-				scale = { x = 1, y = 1 },
+				scale = iconscale,
 				text = textures.icon,
 				alignment = {x=-1,y=1},
 				offset = { x = offset.x - 3, y = offset.y },
@@ -83,11 +92,10 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 			hud_elem_type = "statbar",
 			position = pos,
 			text = textures.bar,
-			number = hb.value_to_barlength(start_value, start_max),
+			number = barnumber,
 			alignment = {x=-1,y=-1},
 			offset = offset,
 		})
-		local text = string.format(format_string, label, start_value, start_max)
 		ids.text = player:hud_add({
 			hud_elem_type = "text",
 			position = pos,
