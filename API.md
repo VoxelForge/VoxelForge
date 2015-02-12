@@ -25,7 +25,7 @@ In order to use this API, you should be aware of a few basic rules in order to u
 * Both current value and maximum must not be smaller than 0
 * Both current value and maximum must be real numbers. So no NaN, infinity, etc.
 * The HUD bar will be hidden if the maximum equals 0. This is intentional.
-* The health and breath HUD bars are hardcoded and can not be changed with this API.
+* The health and breath HUD bars are hardcoded.
 
 These are soft rules, the HUD bars mod will not enforce all of these.
 But this mod has been programmed under the assumption that these rules are followed, for integrity.
@@ -59,7 +59,7 @@ manually in a reliable way.
 
 
 #### Parameters
-* `identifier`: A globally unique internal name for the HUD bar, will be used later to refer to it. Please only rely on alphanumeric characters for now.
+* `identifier`: A globally unique internal name for the HUD bar, will be used later to refer to it. Please only rely on alphanumeric characters for now. The identifiers “`health`” and “`breath`” are used internally for the built-in health and breath bar, respectively. Please do not use these names.
 * `text_color`: A 3-octet number defining the color of the text. The octets denote, in this order red, green and blue and range from `0x00` (complete lack of this component) to `0xFF` (full intensity of this component). Example: `0xFFFFFF` for white.
 * `label`: A string which is displayed on the HUD bar itself to describe the HUD bar. Try to keep this string short.
 * `textures`: A table with the following fields:
