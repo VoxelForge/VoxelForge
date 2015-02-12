@@ -1,56 +1,20 @@
 hb = {}
 
--- HUD statbar values
-hb.health = {}
-hb.air = {}
-
 hb.hudtables = {}
 
 -- number of registered HUD bars
 hb.hudbars_count = 0
 
--- HUD item ids
-local health_hud = {}
-local health_hud_text = {}
-local health_hud_icon = {}
-local health_hud_bg = {}
-local air_hud = {}
-local air_hud_text = {}
-local air_hud_icon = {}
-local air_hud_bg = {}
-
 -- default settings
-
-HUD_SCALEABLE = false
 HUD_BARLENGTH = 160
 
- -- statbar positions
-HUD_HEALTH_POS = {x=0.5,y=0.9}
-HUD_HEALTH_OFFSET = {x=-175, y=2}
-HUD_AIR_POS = {x=0.5,y=0.9}
-HUD_AIR_OFFSET = {x=15,y=2}
+-- statbar positions
+HUD_START_OFFSET_LEFT = { x = -175, y = -70 }
+HUD_START_OFFSET_RIGHT = { x = 15, y = -70 }
+HUD_POS_LEFT = { x=0.5, y=1 }
+HUD_POS_RIGHT = { x = 0.5, y = 1 }
 
--- dirty way to check for new statbars
-if dump(minetest.hud_replace_builtin) ~= "nil" then
-	HUD_SCALEABLE = true
-	HUD_HEALTH_POS = {x=0.5,y=1}
-	HUD_HEALTH_OFFSET = {x=-175, y=-70}
-	HUD_AIR_POS = {x=0.5,y=1}
-	HUD_AIR_OFFSET = {x=15,y=-70}
-end
-
-HUD_CUSTOM_POS_LEFT = HUD_HEALTH_POS
-HUD_CUSTOM_POS_RIGHT = HUD_AIR_POS
-
-HUD_CUSTOM_VMARGIN = 24
-if minetest.setting_getbool("enable_damage") then
-	HUD_CUSTOM_START_OFFSET_LEFT = {x=HUD_HEALTH_OFFSET.x, y=HUD_HEALTH_OFFSET.y - HUD_CUSTOM_VMARGIN}
-	HUD_CUSTOM_START_OFFSET_RIGHT = {x=HUD_AIR_OFFSET.x, y=HUD_AIR_OFFSET.y - HUD_CUSTOM_VMARGIN}
-else
-	HUD_CUSTOM_START_OFFSET_LEFT = {x=HUD_HEALTH_OFFSET.x, y=HUD_HEALTH_OFFSET.y }
-	HUD_CUSTOM_START_OFFSET_RIGHT = {x=HUD_AIR_OFFSET.x, y=HUD_AIR_OFFSET.y }
-end
-
+HUD_VMARGIN = 24
 HUD_TICK = 0.1
 
 function hb.value_to_barlength(value, max)
@@ -69,16 +33,16 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 	local hudtable = {}
 	local pos, offset
 	if hb.hudbars_count % 2 == 0 then
-		pos = HUD_CUSTOM_POS_LEFT
+		pos = HUD_POS_LEFT
 		offset = {
-			x = HUD_CUSTOM_START_OFFSET_LEFT.x,
-			y = HUD_CUSTOM_START_OFFSET_LEFT.y - HUD_CUSTOM_VMARGIN * math.floor(hb.hudbars_count/2)
+			x = HUD_START_OFFSET_LEFT.x,
+			y = HUD_START_OFFSET_LEFT.y - HUD_VMARGIN * math.floor(hb.hudbars_count/2)
 		}
 	else
-		pos = HUD_CUSTOM_POS_RIGHT
+		pos = HUD_POS_RIGHT
 		offset = {
-			x = HUD_CUSTOM_START_OFFSET_RIGHT.x,
-			y = HUD_CUSTOM_START_OFFSET_RIGHT.y - HUD_CUSTOM_VMARGIN * math.floor((hb.hudbars_count-1)/2)
+			x = HUD_START_OFFSET_RIGHT.x,
+			y = HUD_START_OFFSET_RIGHT.y - HUD_VMARGIN * math.floor((hb.hudbars_count-1)/2)
 		}
 	end
 	if format_string == nil then
@@ -238,6 +202,10 @@ function hb.unhide_hudbar(player, identifier)
 	end
 end
 
+--register built-in HUD bars
+hb.register_hudbar("health", 0xFFFFFF, "Health", { bar = "hudbars_bar_health.png", icon = "hudbars_icon_health.png" }, 20, 20, false)
+hb.register_hudbar("breath", 0xFFFFFF, "Breath", { bar = "hudbars_bar_breath.png", icon = "hudbars_icon_breath.png" }, 10, 10, true)
+
 
 --load custom settings
 local set = io.open(minetest.get_modpath("hudbars").."/hudbars.conf", "r")
@@ -252,136 +220,30 @@ end
 
 
 local function custom_hud(player)
- local name = player:get_player_name()
-
- if minetest.setting_getbool("enable_damage") then
- --health
-	health_hud_icon[name] = player:hud_add({
-		hud_elem_type = "image",
-		position = HUD_HEALTH_POS,
-		scale = { x = 1, y = 1 },
-		text = "hudbars_icon_health.png",
-		alignment = {x=-1,y=1},
-		offset = { x = HUD_HEALTH_OFFSET.x - 3, y = HUD_HEALTH_OFFSET.y },
-	})
-	health_hud_bg[name] = player:hud_add({
-		hud_elem_type = "image",
-		position = HUD_HEALTH_POS,
-		scale = { x = 1, y = 1 },
-		text = "hudbars_bar_background.png",
-		alignment = {x=1,y=1},
-		offset = { x = HUD_HEALTH_OFFSET.x - 1, y = HUD_HEALTH_OFFSET.y - 1 },
-	})
-	health_hud[name] = player:hud_add({
-		hud_elem_type = "statbar",
-		position = HUD_HEALTH_POS,
-		text = "hudbars_bar_health.png",
-		number = hb.value_to_barlength(player:get_hp(), 20),
-		alignment = {x=-1,y=-1},
-		offset = HUD_HEALTH_OFFSET,
-	})
-	health_hud_text[name] = player:hud_add({
-		hud_elem_type = "text",
-		position = HUD_HEALTH_POS,
-		text = tostring(string.format("Health: %d/%d", player:get_hp(), 20)),
-		alignment = {x=1,y=1},
-		number = 0xFFFFFF,
-		direction = 0,
-		offset = { x = HUD_HEALTH_OFFSET.x + 2,  y = HUD_HEALTH_OFFSET.y },
-	})
-
- --air
-	local airnumber, airtext, airscale
-	local air = player:get_breath()
-	if air == 11 then
-		airnumber = 0
-		airtext = ""
-		airscale = {x=0, y=0}
-	else
-		airnumber = hb.value_to_barlength(math.min(air, 10), 10)
-		airtext = tostring(string.format("Breath: %d/%d", math.min(air, 10), 10))
-		airscale = {x=1, y=1}
+	if minetest.setting_getbool("enable_damage") then
+		hb.init_hudbar(player, "health", player:get_hp())
+		hb.init_hudbar(player, "breath", player:get_breath())
 	end
-	air_hud_icon[name] = player:hud_add({
-		hud_elem_type = "image",
-		position = HUD_AIR_POS,
-		scale = airscale,
-		text = "hudbars_icon_breath.png",
-		alignment = {x=-1,y=1},
-		offset = { x = HUD_AIR_OFFSET.x - 3, y = HUD_AIR_OFFSET.y },
-	})
-	air_hud_bg[name] = player:hud_add({
-		hud_elem_type = "image",
-		position = HUD_AIR_POS,
-		scale = airscale,
-		text = "hudbars_bar_background.png",
-		alignment = {x=1,y=1},
-		offset = { x = HUD_AIR_OFFSET.x - 1, y = HUD_AIR_OFFSET.y - 1 },
-	})
-	air_hud[name] = player:hud_add({
-		hud_elem_type = "statbar",
-		position = HUD_AIR_POS,
-		text = "hudbars_bar_breath.png",
-		number = airnumber,
-		alignment = {x=-1,y=-1},
-		offset = HUD_AIR_OFFSET,
-	})
-	air_hud_text[name] = player:hud_add({
-		hud_elem_type = "text",
-		position = HUD_AIR_POS,
-		text = airtext,
-		alignment = {x=1,y=1},
-		number = 0xFFFFFF,
-		direction = 0,
-		offset = { x = HUD_AIR_OFFSET.x + 2,  y = HUD_AIR_OFFSET.y },
-	})
-
- end
 end
 
 
--- update hud elemtens if value has changed
+-- update built-in HUD bars
 local function update_hud(player)
-	local name = player:get_player_name()
- --air
-	local air = tonumber(hb.air[name])
-	if player:get_breath() ~= air then
-		air = player:get_breath()
-		hb.air[name] = air
-		local airnumber, airtext, airscale
-		if air == 11 then
-			airnumber = 0
-			airtext = ""
-			airscale = {x=0, y=0}
-		else
-			airnumber = hb.value_to_barlength(math.min(air, 10), 10)
-			airtext = tostring(string.format("Breath: %d/%d", math.min(player:get_breath(), 10), 10))
-			airscale = {x=1, y=1}
-		end
-		player:hud_change(air_hud[name], "number", airnumber)
-		player:hud_change(air_hud_text[name], "text", airtext)
-		player:hud_change(air_hud_icon[name], "scale", airscale)
-		player:hud_change(air_hud_bg[name], "scale", airscale)
-	end
- --health
-	local hp = tonumber(hb.health[name])
-	if player:get_hp() ~= hp then
-		hp = player:get_hp()
-		hb.health[name] = hp
-		player:hud_change(health_hud[name], "number", hb.value_to_barlength(hp, 20))
-		player:hud_change(health_hud_text[name], "text",
-			tostring(string.format("Health: %d/%d", hp, 20))
-		)
+	--air
+	local air = player:get_breath()
+
+	if air == 11 then
+		hb.hide_hudbar(player, "breath")
+	else
+		hb.unhide_hudbar(player, "breath")
+		hb.change_hudbar(player, "breath", air)
 	end
 
+	--health
+	hb.change_hudbar(player, "health", player:get_hp())
 end
 
 minetest.register_on_joinplayer(function(player)
-	local name = player:get_player_name()
-	local inv = player:get_inventory()
-	hb.health[name] = player:get_hp()
-	local air = player:get_breath()
-	hb.air[name] = air
 	minetest.after(0.5, function()
 		hide_builtin(player)
 		custom_hud(player)
@@ -399,15 +261,10 @@ minetest.after(2.5, function()
 		if main_timer > HUD_TICK or timer > 4 then
 		 if main_timer > HUD_TICK then main_timer = 0 end
 		 for _,player in ipairs(minetest.get_connected_players()) do
-			local name = player:get_player_name()
-
 			-- only proceed if damage is enabled
 			if minetest.setting_getbool("enable_damage") then
-			 local hp = player:get_hp()
-
 			 -- update all hud elements
 			 update_hud(player)
-			
 			end
 		 end
 		
