@@ -270,7 +270,7 @@ end
 local function custom_hud(player)
 	if minetest.setting_getbool("enable_damage") then
 		hb.init_hudbar(player, "health", player:get_hp())
-		hb.init_hudbar(player, "breath", player:get_breath())
+		hb.init_hudbar(player, "breath", math.min(player:get_breath(), 10))
 	end
 end
 
