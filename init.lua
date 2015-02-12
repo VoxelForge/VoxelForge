@@ -185,7 +185,9 @@ function hb.hide_hudbar(player, identifier)
 	local name = player:get_player_name()
 	local hudtable = hb.get_hudtable(identifier)
 	if(hudtable.hudstate[name].hidden == false) then
-		player:hud_change(hudtable.hudids[name].icon, "scale", {x=0,y=0})
+		if hudtable.hudids[name].icon ~= nil then
+			player:hud_change(hudtable.hudids[name].icon, "scale", {x=0,y=0})
+		end
 		player:hud_change(hudtable.hudids[name].bg, "scale", {x=0,y=0})
 		player:hud_change(hudtable.hudids[name].bar, "number", 0)
 		player:hud_change(hudtable.hudids[name].text, "text", "")
@@ -200,7 +202,9 @@ function hb.unhide_hudbar(player, identifier)
 		local name = player:get_player_name()
 		local value = hudtable.hudstate[name].value
 		local max = hudtable.hudstate[name].max
-		player:hud_change(hudtable.hudids[name].icon, "scale", {x=1,y=1})
+		if hudtable.hudids[name].icon ~= nil then
+			player:hud_change(hudtable.hudids[name].icon, "scale", {x=1,y=1})
+		end
 		if hudtable.hudstate[name].max ~= 0 then
 			player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
 		end
