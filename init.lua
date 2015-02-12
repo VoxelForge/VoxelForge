@@ -112,6 +112,17 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 		state.text = text
 		state.barlength = hb.value_to_barlength(start_value, start_max)
 
+
+		if start_max < start_value then
+			minetest.log("error", "[hudbars] Bad initial values of HUD bar identifier “"..tostring(identifier).."” for player "..name..": start_max ("..start_max..") is smaller than start_value ("..start_value..")!")
+		end
+		if start_max < 0 then
+			minetest.log("error", "[hudbars] Bad initial values of HUD bar identifier “"..tostring(identifier).."” for player "..name..": start_max ("..start_max..") is smaller than 0!")
+		end
+		if start_value < 0 then
+			minetest.log("error", "[hudbars] Bad initial values of HUD bar identifier “"..tostring(identifier).."” for player "..name..": start_value ("..start_value..") is smaller than 0!")
+		end
+
 		hb.hudtables[identifier].hudids[name] = ids
 		hb.hudtables[identifier].hudstate[name] = state
 	end
@@ -155,6 +166,16 @@ function hb.change_hudbar(player, identifier, new_value, new_max_value)
 		end
 	else
 		new_max_value = hudtable.hudstate[name].max
+	end
+
+	if new_max_value < new_value then
+		minetest.log("error", "[hudbars] Bad call to hb.change_hudbar, identifier: “"..tostring(identifier).."”, player name: “"..name.."”. new_max_value ("..new_max_value..") is smaller than new_value ("..new_value..")!")
+	end
+	if new_max_value < 0 then
+		minetest.log("error", "[hudbars] Bad call to hb.change_hudbar, identifier: “"..tostring(identifier).."”, player name: “"..name.."”. new_max_value ("..new_max_value..") is smaller than 0!")
+	end
+	if new_value < 0 then
+		minetest.log("error", "[hudbars] Bad call to hb.change_hudbar, identifier: “"..tostring(identifier).."”, player name: “"..name.."”. new_value ("..new_value..") is smaller than 0!")
 	end
 
 	if hudtable.hudstate[name].hidden == false then
