@@ -19,6 +19,9 @@ hb.settings.start_offset_right = { x = 15, y = -70 }
 hb.settings.vmargin = 24
 hb.settings.tick = 0.1
 
+-- Table which contains all players with active default HUD bars (only for internal use)
+hb.players = {}
+
 function hb.value_to_barlength(value, max)
 	if max == 0 then
 		return 0
@@ -311,7 +314,12 @@ minetest.register_on_joinplayer(function(player)
 	minetest.after(0.5, function()
 		hide_builtin(player)
 		custom_hud(player)
+		hb.players[player:get_player_name()] = player
 	end)
+end)
+
+minetest.register_on_leaveplayer(function(player)
+	hb.players[player:get_player_name()] = nil
 end)
 
 local main_timer = 0
@@ -324,7 +332,7 @@ minetest.after(2.5, function()
 	 timer2 = timer2 + dtime
 		if main_timer > hb.settings.tick or timer > 4 then
 		 if main_timer > hb.settings.tick then main_timer = 0 end
-		 for _,player in ipairs(minetest.get_connected_players()) do
+		 for playername, player in pairs(hb.players) do
 			-- only proceed if damage is enabled
 			if minetest.setting_getbool("enable_damage") then
 			 -- update all hud elements
