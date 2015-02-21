@@ -34,3 +34,7 @@ as of version 2.0.0 of the standard <http://semver.org/>.
 - Add new parameter start_hidden to hb.init_hudbar, specified whether HUD bar is hidden on start
 - Copy-editing of API.md and README.txt
 - Internal: Fix add_all weirdness
+
+1.0.1
+-----
+- Fix race condition causing crash at start of server
