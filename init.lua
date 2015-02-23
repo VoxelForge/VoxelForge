@@ -277,7 +277,10 @@ if set then
 end
 
 local function hide_builtin(player)
-	 player:hud_set_flags({healthbar = false, breathbar = false})
+	local flags = player:hud_get_flags()
+	flags.healthbar = false
+	flags.breathbar = false
+	player:hud_set_flags(flags)
 end
 
 
