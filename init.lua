@@ -314,11 +314,9 @@ local function update_hud(player)
 end
 
 minetest.register_on_joinplayer(function(player)
-	minetest.after(0.5, function()
-		hide_builtin(player)
-		custom_hud(player)
-		hb.players[player:get_player_name()] = player
-	end)
+	hide_builtin(player)
+	custom_hud(player)
+	hb.players[player:get_player_name()] = player
 end)
 
 minetest.register_on_leaveplayer(function(player)
@@ -327,23 +325,18 @@ end)
 
 local main_timer = 0
 local timer = 0
-local timer2 = 0
-minetest.after(2.5, function()
-	minetest.register_globalstep(function(dtime)
-	 main_timer = main_timer + dtime
-	 timer = timer + dtime
-	 timer2 = timer2 + dtime
-		if main_timer > hb.settings.tick or timer > 4 then
-		 if main_timer > hb.settings.tick then main_timer = 0 end
-		 for playername, player in pairs(hb.players) do
+minetest.register_globalstep(function(dtime)
+	main_timer = main_timer + dtime
+	timer = timer + dtime
+	if main_timer > hb.settings.tick or timer > 4 then
+		if main_timer > hb.settings.tick then main_timer = 0 end
+		for playername, player in pairs(hb.players) do
 			-- only proceed if damage is enabled
 			if minetest.setting_getbool("enable_damage") then
-			 -- update all hud elements
-			 update_hud(player)
+			-- update all hud elements
+				update_hud(player)
 			end
-		 end
-		
 		end
-		if timer > 4 then timer = 0 end
-	end)
+	end
+	if timer > 4 then timer = 0 end
 end)
