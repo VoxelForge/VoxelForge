@@ -38,3 +38,8 @@ as of version 2.0.0 of the standard <http://semver.org/>.
 1.0.1
 -----
 - Fix race condition causing crash at start of server
+
+1.0.2
+-----
+- Fix other HUD elements disappearing for rejoining players
+- Remove pointless delays for initializing the HUD for new or rejoining players
