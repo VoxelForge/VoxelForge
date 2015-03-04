@@ -43,3 +43,7 @@ as of version 2.0.0 of the standard <http://semver.org/>.
 -----
 - Fix other HUD elements disappearing for rejoining players
 - Remove pointless delays for initializing the HUD for new or rejoining players
+
+1.0.3
+-----
+- Adjust default HUD bars position for Minetest 0.4.12
