@@ -155,6 +155,10 @@ function doc.process_form(player,formname,fields)
 				minetest.show_formspec(playername, "doc:entry", formspec)
 			end
 		end
+		if fields["doc_button_goto_main"] then
+			local formspec = doc.formspec_core(1)..doc.formspec_main()
+			minetest.show_formspec(playername, "doc:main", formspec)
+		end
 		if fields["doc_catlist"] then
 			local event = minetest.explode_textlist_event(fields["doc_catlist"])
 			if event.type == "CHG" then
@@ -163,7 +167,13 @@ function doc.process_form(player,formname,fields)
 			end
 		end
 	elseif(formname == "doc:entry") then
-
+		if fields["doc_button_goto_main"] then
+			local formspec = doc.formspec_core(1)..doc.formspec_main()
+			minetest.show_formspec(playername, "doc:main", formspec)
+		elseif fields["doc_button_goto_category"] then
+			local formspec = doc.formspec_core(2)..doc.formspec_category(doc.data.players[playername].category, playername)
+			minetest.show_formspec(playername, "doc:category", formspec)
+		end
 	end
 end
 
