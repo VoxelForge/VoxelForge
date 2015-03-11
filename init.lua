@@ -22,17 +22,6 @@ function doc.new_category(id, def)
 	end
 end
 
-doc.new_category("one",
-{
-	name="One",
-	build_formspec = function(data)
-		return "label[0,1;Description: "..data.description.."]label[0,2;Time: "..data.time.."]"
-	end,
-}
-)
-doc.new_category("two", {name="Two"})
-doc.new_category("three", {name="Three"})
-
 function doc.new_entry(category_id, entry_id, def)
 	if doc.data.categories[category_id] ~= nil then
 		doc.data.categories[category_id].entries[entry_id] = def
@@ -41,31 +30,6 @@ function doc.new_entry(category_id, entry_id, def)
 		return false
 	end
 end
-
-doc.new_entry("one", "o1", {
-	name="O1",
-	data = {
-		description = "This is a test description",
-		time = 54,
-		population = "10000000",
-	},
-})
-doc.new_entry("one", "o2", {
-	name="O2",
-	data = {
-		description = "This is a test description 2.",
-		time = 100,
-		population = "50000",
-	},
-})
-doc.new_entry("one", "o3", {
-	name="O3",
-	data = {
-		description = "Third try description.",
-		time = 1,
-		population = "10000000",
-	},
-})
 
 function doc.show_doc(playername)
 	local formspec = doc.formspec_core()..doc.formspec_main()
