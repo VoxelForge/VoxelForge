@@ -9,18 +9,28 @@ doc.VERSION.STRING = "0.1.0"
 
 doc.data = {}
 doc.data.categories = {}
-doc.data.entries = {}
-
 
 function doc.new_category(id, def)
-	if doc.data.categories[id] ~= nil and id ~= nil then
-		doc.data.categories[id] = def
+	if doc.data.categories[id] == nil and id ~= nil then
+		doc.data.categories[id] = {}
+		doc.data.categories[id].entries = {}
+		doc.data.categories[id].def = def
+		return true
+	else
+		return false
 	end
 end
 
-function doc.new_entry(def)
-	if doc.data.entries[id] ~= nil and id ~= nil then
-		doc.data.entries[id] = def
+doc.new_category("one", {name="One"})
+doc.new_category("two", {name="Two"})
+doc.new_category("three", {name="Three"})
+
+function doc.new_entry(category_id, entry_id, def)
+	if doc.data.categories[category_id] ~= nil then
+		doc.data.categories[category_id].entries[entry_id] = def
+		return true
+	else
+		return false
 	end
 end
 
@@ -35,7 +45,14 @@ function doc.formspec_core(tab)
 end
 
 function doc.formspec_main()
-	return "label[0,1;Main]"
+	local y = 1
+	local formstring = "label[0,0;Available help topics:]"
+	for id,data in pairs(doc.data.categories) do
+		local button = "button[0,"..y..";3,1;button_category_"..id..";"..data.def.name.."]"
+		formstring = formstring .. button
+		y = y + 1
+	end
+	return formstring
 end
 
 function doc.formspec_category()
