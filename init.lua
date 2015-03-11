@@ -50,8 +50,22 @@ doc.new_entry("one", "o1", {
 		population = "10000000",
 	},
 })
-doc.new_entry("one", "o2", {name="O2"})
-doc.new_entry("one", "o3", {name="O3"})
+doc.new_entry("one", "o2", {
+	name="O2",
+	data = {
+		description = "This is a test description 2.",
+		time = 100,
+		population = "50000",
+	},
+})
+doc.new_entry("one", "o3", {
+	name="O3",
+	data = {
+		description = "Third try description.",
+		time = 1,
+		population = "10000000",
+	},
+})
 
 function doc.show_doc(playername)
 	local formspec = doc.formspec_core()..doc.formspec_main()
@@ -74,6 +88,33 @@ function doc.formspec_main()
 	return formstring
 end
 
+function doc.generate_entry_list(id, playername)
+	local formstring
+	if doc.data.players[playername].entry_textlist == nil then
+		local entry_textlist = "textlist[0,1;11,7;doc_catlist;"
+		local counter = 0
+		doc.data.players[playername].entry_ids = {}
+		for eid,entry in pairs(doc.data.categories[id].entries) do
+			table.insert(doc.data.players[playername].entry_ids, eid)
+			entry_textlist = entry_textlist .. entry.name .. ","
+			counter = counter + 1
+		end
+		if counter >= 1  then
+			entry_textlist = string.sub(entry_textlist, 1, #entry_textlist-1)
+		end
+		local catsel = doc.data.players[playername].catsel
+		if catsel then
+			entry_textlist = entry_textlist .. ";"..catsel
+		end
+		entry_textlist = entry_textlist .. "]"
+		doc.data.players[playername].entry_textlist = entry_textlist
+		formstring = entry_textlist
+	else
+		formstring = doc.data.players[playername].entry_textlist
+	end
+	return formstring
+end
+
 function doc.formspec_category(id, playername)
 	local formstring
 	if id == nil then
@@ -82,20 +123,7 @@ function doc.formspec_category(id, playername)
 	else
 		formstring = "label[0,0;Current help topic: "..doc.data.categories[id].def.name.."]"
 		formstring = formstring .. "label[0,0.5;Available entries:]"
-		formstring = formstring .. "textlist[0,1;11,7;doc_catlist;"
-		local counter = 0
-		for eid,entry in pairs(doc.data.categories[id].entries) do
-			formstring = formstring .. entry.name .. ","
-			counter = counter + 1
-		end
-		if counter >= 1  then
-			formstring = string.sub(formstring, 1, #formstring-1)
-		end
-		local catsel = doc.data.players[playername].catsel
-		if catsel then
-			formstring = formstring .. ";"..doc.data.players[playername].catsel
-		end
-		formstring = formstring .. "]"
+		formstring = formstring .. doc.generate_entry_list(id, playername)
 		formstring = formstring .. "button[0,8;3,1;doc_button_goto_entry;Show entry]"
 	end
 	return formstring
@@ -145,14 +173,23 @@ function doc.process_form(player,formname,fields)
 			if fields["doc_button_category_"..id] then
 				local formspec = doc.formspec_core(2)..doc.formspec_category(id, playername)
 				doc.data.players[playername].catsel = nil
+				doc.data.players[playername].category = id
 				minetest.show_formspec(playername, "doc:category", formspec)
 				break
 			end
 		end
 	elseif(formname == "doc:category") then
 		if fields["doc_button_goto_entry"] then
-			local formspec = doc.formspec_core(3)..doc.formspec_entry("one", "o1")
-			minetest.show_formspec(playername, "doc:entry", formspec)
+			local cid = doc.data.players[playername].category
+			if cid ~= nil then
+				local eid = nil
+				local eids, catsel = doc.data.players[playername].entry_ids, doc.data.players[playername].catsel
+				if eids ~= nil and catsel ~= nil then
+					eid = eids[catsel]
+				end
+				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid)
+				minetest.show_formspec(playername, "doc:entry", formspec)
+			end
 		end
 		if fields["doc_catlist"] then
 			local event = minetest.explode_textlist_event(fields["doc_catlist"])
