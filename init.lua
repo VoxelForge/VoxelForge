@@ -157,10 +157,10 @@ function doc.process_form(player,formname,fields)
 				contents = doc.formspec_main()
 				subformname = "main"
 			elseif(tab==2) then
-				contents = doc.formspec_category("one", playername)
+				contents = doc.formspec_category(doc.data.players[playername].category, playername)
 				subformname = "category"
 			elseif(tab==3) then
-				contents = doc.formspec_entry("one", "o1")
+				contents = doc.formspec_entry(doc.data.players[playername].category, doc.data.players[playername].entry)
 				subformname = "entry"
 			end
 			formspec = doc.formspec_core(tab)..contents
@@ -195,6 +195,7 @@ function doc.process_form(player,formname,fields)
 			local event = minetest.explode_textlist_event(fields["doc_catlist"])
 			if event.type == "CHG" then
 				doc.data.players[playername].catsel = event.index
+				doc.data.players[playername].entry = doc.data.players[playername].entry_ids[event.index]
 			end
 		end
 	elseif(formname == "doc:entry") then
