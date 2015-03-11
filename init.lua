@@ -131,6 +131,18 @@ function doc.process_form(player,formname,fields)
 			return
 		end
 	end
+	if(formname == "doc:main") then
+		for id,category in pairs(doc.data.categories) do
+			if fields["doc_button_category_"..id] then
+				local formspec = doc.formspec_core(2)..doc.formspec_category(id)
+				minetest.show_formspec(playername, "doc:category", formspec)
+				break
+			end
+		end
+	elseif(formname == "doc:category") then
+	elseif(formname == "doc:entry") then
+
+	end
 end
 
 minetest.register_on_player_receive_fields(doc.process_form)
