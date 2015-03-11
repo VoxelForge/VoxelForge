@@ -9,6 +9,7 @@ doc.VERSION.STRING = "0.1.0"
 
 doc.data = {}
 doc.data.categories = {}
+doc.data.players = {}
 
 function doc.new_category(id, def)
 	if doc.data.categories[id] == nil and id ~= nil then
@@ -73,7 +74,7 @@ function doc.formspec_main()
 	return formstring
 end
 
-function doc.formspec_category(id)
+function doc.formspec_category(id, playername)
 	local formstring
 	if id == nil then
 		formstring = "label[0,0;You haven't selected a help topic yet. Please select one in the category list first.]"
@@ -89,6 +90,10 @@ function doc.formspec_category(id)
 		end
 		if counter >= 1  then
 			formstring = string.sub(formstring, 1, #formstring-1)
+		end
+		local catsel = doc.data.players[playername].catsel
+		if catsel then
+			formstring = formstring .. ";"..doc.data.players[playername].catsel
 		end
 		formstring = formstring .. "]"
 		formstring = formstring .. "button[0,8;3,1;doc_button_goto_entry;Show entry]"
@@ -124,7 +129,7 @@ function doc.process_form(player,formname,fields)
 				contents = doc.formspec_main()
 				subformname = "main"
 			elseif(tab==2) then
-				contents = doc.formspec_category("one")
+				contents = doc.formspec_category("one", playername)
 				subformname = "category"
 			elseif(tab==3) then
 				contents = doc.formspec_entry("one", "o1")
@@ -138,7 +143,8 @@ function doc.process_form(player,formname,fields)
 	if(formname == "doc:main") then
 		for id,category in pairs(doc.data.categories) do
 			if fields["doc_button_category_"..id] then
-				local formspec = doc.formspec_core(2)..doc.formspec_category(id)
+				local formspec = doc.formspec_core(2)..doc.formspec_category(id, playername)
+				doc.data.players[playername].catsel = nil
 				minetest.show_formspec(playername, "doc:category", formspec)
 				break
 			end
@@ -147,6 +153,12 @@ function doc.process_form(player,formname,fields)
 		if fields["doc_button_goto_entry"] then
 			local formspec = doc.formspec_core(3)..doc.formspec_entry("one", "o1")
 			minetest.show_formspec(playername, "doc:entry", formspec)
+		end
+		if fields["doc_catlist"] then
+			local event = minetest.explode_textlist_event(fields["doc_catlist"])
+			if event.type == "CHG" then
+				doc.data.players[playername].catsel = event.index
+			end
 		end
 	elseif(formname == "doc:entry") then
 
@@ -164,3 +176,11 @@ minetest.register_chatcommand("doc", {
 	end,
 	}
 )
+
+minetest.register_on_joinplayer(function(player)
+	doc.data.players[player:get_player_name()] = {}
+end)
+
+minetest.register_on_leaveplayer(function(player)
+	doc.data.players[player:get_player_name()] = nil
+end)
