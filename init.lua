@@ -21,7 +21,14 @@ function doc.new_category(id, def)
 	end
 end
 
-doc.new_category("one", {name="One"})
+doc.new_category("one",
+{
+	name="One",
+	build_formspec = function(data)
+		return "label[0,1;Description: "..data.description.."]label[0,2;Time: "..data.time.."]"
+	end,
+}
+)
 doc.new_category("two", {name="Two"})
 doc.new_category("three", {name="Three"})
 
@@ -34,7 +41,14 @@ function doc.new_entry(category_id, entry_id, def)
 	end
 end
 
-doc.new_entry("one", "o1", {name="O1"})
+doc.new_entry("one", "o1", {
+	name="O1",
+	data = {
+		description = "This is a test description",
+		time = 54,
+		population = "10000000",
+	},
+})
 doc.new_entry("one", "o2", {name="O2"})
 doc.new_entry("one", "o3", {name="O3"})
 
@@ -78,8 +92,21 @@ function doc.formspec_category(id)
 	return formstring
 end
 
-function doc.formspec_entry()
-	return "label[0,1;Entry]"
+function doc.formspec_entry(category_id, entry_id)
+	local formstring
+	if category_id == nil then
+		formstring = "label[0,0;You haven't selected a help topic yet. Please select one in the category list first.]"
+		formstring = formstring .. "button[0,1;3,1;doc_button_goto_main;Go to category list]"
+	elseif entry_id == nil then
+		formstring = "label[0,0;You haven't selected an help entry yet. Please select one in the list of entries first.]"
+		formstring = formstring .. "button[0,1;3,1;doc_button_goto_category;Go to entry list]"
+	else
+		local category = doc.data.categories[category_id]
+		local entry = category.entries[entry_id]
+		formstring = "label[0,0;Help > "..category.def.name.." > "..entry.name.."]"
+		formstring = formstring .. category.def.build_formspec(entry.data)
+	end
+	return formstring
 end
 
 function doc.process_form(player,formname,fields)
@@ -96,7 +123,7 @@ function doc.process_form(player,formname,fields)
 				contents = doc.formspec_category("one")
 				subformname = "category"
 			elseif(tab==3) then
-				contents = doc.formspec_entry()
+				contents = doc.formspec_entry("one", "o1")
 				subformname = "entry"
 			end
 			formspec = doc.formspec_core(tab)..contents
