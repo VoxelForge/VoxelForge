@@ -52,13 +52,13 @@ function doc.formspec_main()
 	return formstring
 end
 
-function doc.generate_entry_list(id, playername)
+function doc.generate_entry_list(cid, playername)
 	local formstring
-	if doc.data.players[playername].entry_textlist == nil then
+	if doc.data.players[playername].entry_textlist == nil or doc.data.players[playername].category ~= cid then
 		local entry_textlist = "textlist[0,1;11,7;doc_catlist;"
 		local counter = 0
 		doc.data.players[playername].entry_ids = {}
-		for eid,entry in pairs(doc.data.categories[id].entries) do
+		for eid,entry in pairs(doc.data.categories[cid].entries) do
 			table.insert(doc.data.players[playername].entry_ids, eid)
 			entry_textlist = entry_textlist .. entry.name .. ","
 			counter = counter + 1
