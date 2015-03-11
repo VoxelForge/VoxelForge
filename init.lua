@@ -82,10 +82,14 @@ function doc.formspec_category(id)
 		formstring = "label[0,0;Current help topic: "..doc.data.categories[id].def.name.."]"
 		formstring = formstring .. "label[0,0.5;Available entries:]"
 		formstring = formstring .. "textlist[0,1;11,7;doc_catlist;"
+		local counter = 0
 		for eid,entry in pairs(doc.data.categories[id].entries) do
 			formstring = formstring .. entry.name .. ","
+			counter = counter + 1
 		end
-		formstring = string.sub(formstring, 1, #formstring-1)
+		if counter >= 1  then
+			formstring = string.sub(formstring, 1, #formstring-1)
+		end
 		formstring = formstring .. "]"
 		formstring = formstring .. "button[0,8;3,1;doc_button_goto_entry;Show entry]"
 	end
