@@ -34,6 +34,10 @@ function doc.new_entry(category_id, entry_id, def)
 	end
 end
 
+doc.new_entry("one", "o1", {name="O1"})
+doc.new_entry("one", "o2", {name="O2"})
+doc.new_entry("one", "o3", {name="O3"})
+
 function doc.show_doc(playername)
 	local formspec = doc.formspec_core()..doc.formspec_main()
 	minetest.show_formspec(playername, "doc:main", formspec)
@@ -48,15 +52,30 @@ function doc.formspec_main()
 	local y = 1
 	local formstring = "label[0,0;Available help topics:]"
 	for id,data in pairs(doc.data.categories) do
-		local button = "button[0,"..y..";3,1;button_category_"..id..";"..data.def.name.."]"
+		local button = "button[0,"..y..";3,1;doc_button_category_"..id..";"..data.def.name.."]"
 		formstring = formstring .. button
 		y = y + 1
 	end
 	return formstring
 end
 
-function doc.formspec_category()
-	return "label[0,1;Category]"
+function doc.formspec_category(id)
+	local formstring
+	if id == nil then
+		formstring = "label[0,0;You haven't selected a help topic yet. Please select one in the category list first.]"
+		formstring = formstring .. "button[0,1;3,1;doc_button_goto_main;Go to category list]"
+	else
+		formstring = "label[0,0;Current help topic: "..doc.data.categories[id].def.name.."]"
+		formstring = formstring .. "label[0,0.5;Available entries:]"
+		formstring = formstring .. "textlist[0,1;11,7;doc_catlist;"
+		for eid,entry in pairs(doc.data.categories[id].entries) do
+			formstring = formstring .. entry.name .. ","
+		end
+		formstring = string.sub(formstring, 1, #formstring-1)
+		formstring = formstring .. "]"
+		formstring = formstring .. "button[0,8;3,1;doc_button_goto_entry;Show entry]"
+	end
+	return formstring
 end
 
 function doc.formspec_entry()
@@ -74,7 +93,7 @@ function doc.process_form(player,formname,fields)
 				contents = doc.formspec_main()
 				subformname = "main"
 			elseif(tab==2) then
-				contents = doc.formspec_category()
+				contents = doc.formspec_category("one")
 				subformname = "category"
 			elseif(tab==3) then
 				contents = doc.formspec_entry()
