@@ -144,6 +144,10 @@ function doc.process_form(player,formname,fields)
 			end
 		end
 	elseif(formname == "doc:category") then
+		if fields["doc_button_goto_entry"] then
+			local formspec = doc.formspec_core(3)..doc.formspec_entry("one", "o1")
+			minetest.show_formspec(playername, "doc:entry", formspec)
+		end
 	elseif(formname == "doc:entry") then
 
 	end
