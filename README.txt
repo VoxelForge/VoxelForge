@@ -27,6 +27,15 @@ set will use a default value instead.
 IMPORTANT:
 Keep in mind if running a server with this mod, that the custom position should be displayed correctly on every screen size!
 
+Settings:
+---------
+This mod can be configured by editing minetest.conf. Currently, the following setting is recognized:
+
+- hudbars_autohide_breath: A boolean setting, it can be either “true” or “false”. If set to “true”,
+  the breath bar will be automatically hidden shortly after the breathbar has been filled up. If set
+  to “false”, the breath bar will always be displayed. The default value is “true”.
+
+
 API:
 ----
 The API is used to add your own custom HUD bars.

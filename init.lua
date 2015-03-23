@@ -19,6 +19,12 @@ hb.settings.start_offset_right = { x = 15, y = -86 }
 hb.settings.vmargin = 24
 hb.settings.tick = 0.1
 
+hb.settings.autohide_breath = true
+local autohide_breath = minetest.setting_getbool("hudbars_autohide_breath")
+if autohide_breath ~= nil then
+	hb.settings.autohide_breath = autohide_breath
+end
+
 -- Table which contains all players with active default HUD bars (only for internal use)
 hb.players = {}
 
@@ -289,7 +295,7 @@ local function custom_hud(player)
 		hb.init_hudbar(player, "health", player:get_hp())
 		local breath = player:get_breath()
 		local hide_breath
-		if breath == 11 then hide_breath = true else hide_breath = false end
+		if breath == 11 and hb.settings.autohide_breath == true then hide_breath = true else hide_breath = false end
 		hb.init_hudbar(player, "breath", math.min(breath, 10), nil, hide_breath)
 	end
 end
@@ -301,7 +307,7 @@ local function update_hud(player)
 		--air
 		local breath = player:get_breath()
 		
-		if breath == 11 then
+		if breath == 11 and hb.settings.autohide_breath == true then
 			hb.hide_hudbar(player, "breath")
 		else
 			hb.unhide_hudbar(player, "breath")
