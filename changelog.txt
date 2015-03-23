@@ -47,3 +47,7 @@ as of version 2.0.0 of the standard <http://semver.org/>.
 1.0.3
 -----
 - Adjust default HUD bars position for Minetest 0.4.12
+
+1.1.0
+-----
+- Add boolean minetest.conf setting support (hudbars_autohide_breathbar) to control whether the breath bar is automatically hidden when full (default: yes)
