@@ -45,7 +45,7 @@ function doc.formspec_main()
 	local y = 1
 	local formstring = "label[0,0;Available help topics:]"
 	for id,data in pairs(doc.data.categories) do
-		local button = "button[0,"..y..";3,1;doc_button_category_"..id..";"..data.def.name.."]"
+		local button = "button[0,"..y..";3,1;doc_button_category_"..id..";"..minetest.formspec_escape(data.def.name).."]"
 		formstring = formstring .. button
 		y = y + 1
 	end
@@ -61,7 +61,7 @@ function doc.generate_entry_list(cid, playername)
 		local entries = doc.get_sorted_entry_names(cid)
 		for i=1, #entries do
 			table.insert(doc.data.players[playername].entry_ids, entries[i].eid)
-			entry_textlist = entry_textlist .. entries[i].name .. ","
+			entry_textlist = entry_textlist .. minetest.formspec_escape(entries[i].name) .. ","
 			counter = counter + 1
 		end
 		if counter >= 1  then
