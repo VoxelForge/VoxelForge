@@ -58,9 +58,10 @@ function doc.generate_entry_list(cid, playername)
 		local entry_textlist = "textlist[0,1;11,7;doc_catlist;"
 		local counter = 0
 		doc.data.players[playername].entry_ids = {}
-		for eid,entry in pairs(doc.data.categories[cid].entries) do
-			table.insert(doc.data.players[playername].entry_ids, eid)
-			entry_textlist = entry_textlist .. entry.name .. ","
+		local entries = doc.get_sorted_entry_names(cid)
+		for i=1, #entries do
+			table.insert(doc.data.players[playername].entry_ids, entries[i].eid)
+			entry_textlist = entry_textlist .. entries[i].name .. ","
 			counter = counter + 1
 		end
 		if counter >= 1  then
@@ -77,6 +78,28 @@ function doc.generate_entry_list(cid, playername)
 		formstring = doc.data.players[playername].entry_textlist
 	end
 	return formstring
+end
+
+function doc.get_sorted_entry_names(cid)
+	local sort_table = {}
+	local entry_table = {}
+	for eid,entry in pairs(doc.data.categories[cid].entries) do
+		local new_entry = table.copy(entry)
+		new_entry.eid = eid
+		table.insert(entry_table, new_entry)
+		table.insert(sort_table, entry.name)
+	end
+	table.sort(sort_table)
+	local reverse_sort_table = table.copy(sort_table)
+	for i=1, #sort_table do
+		reverse_sort_table[sort_table[i]] = i
+	end
+	local comp = function(e1, e2)
+		if reverse_sort_table[e1.name] < reverse_sort_table[e2.name] then return true else return false end
+	end
+	table.sort(entry_table, comp)
+
+	return entry_table
 end
 
 function doc.formspec_category(id, playername)
