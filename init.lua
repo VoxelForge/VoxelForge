@@ -37,6 +37,7 @@ local alignment_pattern = minetest.setting_getbool("hudbars_alignment_pattern")
 if alignment_pattern ~= nil then
 	hb.settings.alignment_pattern = alignment_pattern
 	if alignment_pattern ~= "zigzag" and alignment_pattern ~= "stack_up" and alignment_pattern ~= "stack_down" then
+		hb.settings.alignment_pattern = "zigzag"
 		minetest.log("error", "[hudbars] Invalid value for hudbars_alignment_pattern! Using default (zigzag).")
 	end
 end
@@ -46,6 +47,7 @@ local bar_type = minetest.setting_getbool("hudbars_bar_type")
 if bar_type ~= nil then
 	hb.settings.bar_type = bar_type
 	if bar_type ~= "progress_bar" and bar_type ~= "statbar_classic" and bar_type ~= "statbar_modern" then
+		hb.settings.bar_type = "progress_bar"
 		minetest.log("error", "[hudbars] Invalid value for hudbars_alignment_pattern! Using default (progress_bar).")
 	end
 end
