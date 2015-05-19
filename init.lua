@@ -81,9 +81,15 @@ function hb.value_to_barlength(value, max)
 		return 0
 	else
 		if hb.settings.bar_type == "progress_bar" then
-			return math.ceil((value/max) * hb.settings.max_bar_length)
+			local x
+			if value < 0 then x=-0.5 else x = 0.5 end
+			local ret = math.modf((value/max) * hb.settings.max_bar_length + x)
+			return ret
 		else
-			return math.ceil((value/max) * 20)
+			local x
+			if value < 0 then x=-0.5 else x = 0.5 end
+			local ret = math.modf((value/max) * 20 + x)
+			return ret
 		end
 	end
 end
