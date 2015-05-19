@@ -58,7 +58,15 @@ This mod can be configured by editing minetest.conf. Currently, the following se
     breath=0, health=1
   This places the breath bar at the left side, and the health bar to the right side.
 
-
+- hudbars_bar_type: Specifies the style of bars. You can select between the default progress-bar-like bars and the good old statbars
+  like you know from vanilla Minetest. Note that the classic and modern statbars are still a little bit experimental.
+  These values are possible:
+    - progress_bar:    A horizontal progress-bar-like bar with a label, showing numerical value (current, maximum), and an icon.
+                       These bars usually convey the most information. This is the default and recommended value..
+    - statbar_classic: Classic statbar, like in vanilla Minetest. Made out of up to 20 half-symbols. Those bars represent the vague ratio between
+                       the current value and the maximum value. 1 half-symbol stands for approximately 5% of the maximum value.
+    - statbar_modern:  Like the classic statbar, but also supports background images, this kind of statbar may be considered to be more user-friendly
+                       than the classic statbar. This bar type closely resembles the [hud] mod.
 API:
 ----
 The API is used to add your own custom HUD bars.
@@ -68,6 +76,7 @@ Documentation for the API of this mod can be found in API.md.
 License of textures:
 --------------------
 hudbars_icon_health.png - celeron55 (CC BY-SA 3.0), modified by BlockMen
+hudbars_bgicon_health.png - celeron55 (CC BY-SA 3.0), modified by BlockMen
 hudbars_icon_breath.png - kaeza (WTFPL), modified by BlockMen
 hudbars_bar_health.png - Wuzzy (WTFPL)
 hudbars_bar_breath.png - Wuzzy (WTFPL)
