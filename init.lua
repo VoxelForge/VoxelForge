@@ -23,7 +23,7 @@ hb.settings.vmargin = 24
 hb.settings.tick = 0.1
 
 --[[
-- hudbars_display_mode: This setting changes the way the HUD bars are ordered on the display. You can choose
+- hudbars_alignment_pattern: This setting changes the way the HUD bars are ordered on the display. You can choose
   between a zig-zag pattern or a vertically stacked pattern.
   The following values are allowed:
     zigzag: Starting from the left bottom, the next is right from the first,
@@ -32,12 +32,12 @@ hb.settings.tick = 0.1
     stack_up: The HUD bars are stacked vertically, going upwards.
     stack_down: The HUD bars are stacked vertically. going downwards.
 ]]
-hb.settings.display_mode = "zigzag"
-local display_mode = minetest.setting_getbool("hudbars_display_mode")
-if display_mode ~= nil then
-	hb.settings.display_mode = display_mode
-	if display_mode ~= "zigzag" and display_mode ~= "stack_up" and display_mode ~= "stack_down" then
-		minetest.log("error", "[hudbars] Invalid value for hudbars_display_mode! Using default (zigzag).")
+hb.settings.alignment_pattern = "zigzag"
+local alignment_pattern = minetest.setting_getbool("hudbars_alignment_pattern")
+if alignment_pattern ~= nil then
+	hb.settings.alignment_pattern = alignment_pattern
+	if alignment_pattern ~= "zigzag" and alignment_pattern ~= "stack_up" and alignment_pattern ~= "stack_down" then
+		minetest.log("error", "[hudbars] Invalid value for hudbars_alignment_pattern! Using default (zigzag).")
 	end
 end
 
@@ -94,13 +94,13 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 	local pos, offset
 	local index = math.floor(hb.get_hudbar_position_index(identifier))
 	hb.registered_slots[index] = true
-	if hb.settings.display_mode == "stack_up" then
+	if hb.settings.alignment_pattern == "stack_up" then
 		pos = hb.settings.pos_left
 		offset = {
 			x = hb.settings.start_offset_left.x,
 			y = hb.settings.start_offset_left.y - hb.settings.vmargin * index
 		}
-	elseif hb.settings.display_mode == "stack_down" then
+	elseif hb.settings.alignment_pattern == "stack_down" then
 		pos = hb.settings.pos_left
 		offset = {
 			x = hb.settings.start_offset_left.x,
