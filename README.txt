@@ -35,6 +35,28 @@ This mod can be configured by editing minetest.conf. Currently, the following se
   the breath bar will be automatically hidden shortly after the breathbar has been filled up. If set
   to “false”, the breath bar will always be displayed. The default value is “true”.
 
+- hudbars_sorting: This setting allows you to specify the “slot” positions of the HUD bars manually.
+
+  The setting has to be specified as a comma-seperated list of key=value pairs, where a key refers to the
+  identifier of a HUD bar and the value refers to the slot number of where the HUD bar should be placed.
+  The slot number must be an integer greater of equal to 0. The slot positions start (slot 0) at the
+  bottom (nearest to hotbar in default configuration) left side, the following slot 1 is at the right
+  side, slot `2` is on the right side again, but placed over the first HUD bar (slot 0), and it goes on,
+  in a zig-zag pattern.
+  All HUD bars to which no sorting rule has been applied will fill in all slots which have not been occupied
+  by the HUD bars specified in this setting, the slots will be filled in from the lowest slot number.
+  Note that the order of those remaining HUD bars is *not* fixed, it basically just boils down on which mod
+  “came” first. Don't worry, the mod will still work perfectly fine, this setting is entirely optional.
+
+  Be careful not to use slot indices twice, or else different HUD bars will be drawn over each other!
+
+  If this setting is not set, by default the health and breath bar are displayed at slot positions 0 and 1,
+  respectively (health bar at left bottom-most positoin, breath bar right from it). All other HUD bars are
+  placed automatically.
+
+  Example value:
+    breath=0, health=1
+  This places the breath bar at the left side, and the health bar to the right side.
 
 API:
 ----

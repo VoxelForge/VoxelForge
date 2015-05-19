@@ -5,6 +5,12 @@ hb.hudtables = {}
 -- number of registered HUD bars
 hb.hudbars_count = 0
 
+-- index of the first HUD bar slot, used for automatic positioning
+hb.first_free_hudbar_slot = 0
+
+-- table which recoreds which HUD bar slots have been “registered” so far; used for automatic positioning
+hb.registered_slots = {}
+
 hb.settings = {}
 
 -- default settings
@@ -25,6 +31,31 @@ if autohide_breath ~= nil then
 	hb.settings.autohide_breath = autohide_breath
 end
 
+local sorting = minetest.setting_get("hudbars_sorting")
+if sorting ~= nil then
+	hb.settings.sorting = {}
+	hb.settings.sorting_reverse = {}
+	for k,v in string.gmatch(sorting, "(%w+)=(%w+)") do
+		hb.settings.sorting[k] = tonumber(v)
+		hb.settings.sorting_reverse[tonumber(v)] = k
+	end
+else
+	hb.settings.sorting = { ["health"] = 0, ["breath"] = 1 }
+	hb.settings.sorting_reverse = { [0] = "health", [1] = "breath" }
+end
+
+do
+	local max
+	for k,v in pairs(hb.settings.sorting_reverse) do
+		if max == nil then
+			max = k
+		elseif k > max then
+			max = k
+		end
+	end
+	hb.first_free_hudbar_slot = max + 1
+end
+
 -- Table which contains all players with active default HUD bars (only for internal use)
 hb.players = {}
 
@@ -40,20 +71,39 @@ function hb.get_hudtable(identifier)
 	return hb.hudtables[identifier]
 end
 
+function hb.get_hudbar_position_index(identifier)
+	if hb.settings.sorting[identifier] ~= nil then
+		return hb.settings.sorting[identifier]
+	else
+		local i = 0
+		while true do
+			if hb.registered_slots[i] ~= true and hb.settings.sorting_reverse[i] == nil then
+				return i
+			end
+			i = i + 1
+		end
+	end
+end
+
 function hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, default_start_hidden, format_string)
 	local hudtable = {}
 	local pos, offset
-	if hb.hudbars_count % 2 == 0 then
+	local index = math.floor(hb.get_hudbar_position_index(identifier))
+	hb.registered_slots[index] = true
+	if hb.settings.sorting_reverse[index] == nil then
+		hb.first_free_hudbar_slot = hb.first_free_hudbar_slot + 1
+	end
+	if index % 2 == 0 then
 		pos = hb.settings.pos_left
 		offset = {
 			x = hb.settings.start_offset_left.x,
-			y = hb.settings.start_offset_left.y - hb.settings.vmargin * math.floor(hb.hudbars_count/2)
+			y = hb.settings.start_offset_left.y - hb.settings.vmargin * (index/2)
 		}
 	else
 		pos = hb.settings.pos_right
 		offset = {
 			x = hb.settings.start_offset_right.x,
-			y = hb.settings.start_offset_right.y - hb.settings.vmargin * math.floor((hb.hudbars_count-1)/2)
+			y = hb.settings.start_offset_right.y - hb.settings.vmargin * ((index-1)/2)
 		}
 	end
 	if format_string == nil then
