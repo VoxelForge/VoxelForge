@@ -58,6 +58,7 @@ This mod can be configured by editing minetest.conf. Currently, the following se
     breath=0, health=1
   This places the breath bar at the left side, and the health bar to the right side.
 
+
 API:
 ----
 The API is used to add your own custom HUD bars.
