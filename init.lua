@@ -5,9 +5,6 @@ hb.hudtables = {}
 -- number of registered HUD bars
 hb.hudbars_count = 0
 
--- index of the first HUD bar slot, used for automatic positioning
-hb.first_free_hudbar_slot = 0
-
 -- table which recoreds which HUD bar slots have been “registered” so far; used for automatic positioning
 hb.registered_slots = {}
 
@@ -44,18 +41,6 @@ else
 	hb.settings.sorting_reverse = { [0] = "health", [1] = "breath" }
 end
 
-do
-	local max
-	for k,v in pairs(hb.settings.sorting_reverse) do
-		if max == nil then
-			max = k
-		elseif k > max then
-			max = k
-		end
-	end
-	hb.first_free_hudbar_slot = max + 1
-end
-
 -- Table which contains all players with active default HUD bars (only for internal use)
 hb.players = {}
 
@@ -90,9 +75,6 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 	local pos, offset
 	local index = math.floor(hb.get_hudbar_position_index(identifier))
 	hb.registered_slots[index] = true
-	if hb.settings.sorting_reverse[index] == nil then
-		hb.first_free_hudbar_slot = hb.first_free_hudbar_slot + 1
-	end
 	if index % 2 == 0 then
 		pos = hb.settings.pos_left
 		offset = {
