@@ -33,7 +33,7 @@ hb.settings.tick = 0.1
     stack_down: The HUD bars are stacked vertically. going downwards.
 ]]
 hb.settings.alignment_pattern = "zigzag"
-local alignment_pattern = minetest.setting_getbool("hudbars_alignment_pattern")
+local alignment_pattern = minetest.setting_get("hudbars_alignment_pattern")
 if alignment_pattern ~= nil then
 	hb.settings.alignment_pattern = alignment_pattern
 	if alignment_pattern ~= "zigzag" and alignment_pattern ~= "stack_up" and alignment_pattern ~= "stack_down" then
@@ -43,7 +43,7 @@ if alignment_pattern ~= nil then
 end
 
 hb.settings.bar_type = "progress_bar"
-local bar_type = minetest.setting_getbool("hudbars_bar_type")
+local bar_type = minetest.setting_get("hudbars_bar_type")
 if bar_type ~= nil then
 	hb.settings.bar_type = bar_type
 	if bar_type ~= "progress_bar" and bar_type ~= "statbar_classic" and bar_type ~= "statbar_modern" then
