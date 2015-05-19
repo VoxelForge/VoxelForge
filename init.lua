@@ -48,7 +48,7 @@ if bar_type ~= nil then
 	hb.settings.bar_type = bar_type
 	if bar_type ~= "progress_bar" and bar_type ~= "statbar_classic" and bar_type ~= "statbar_modern" then
 		hb.settings.bar_type = "progress_bar"
-		minetest.log("error", "[hudbars] Invalid value for hudbars_alignment_pattern! Using default (progress_bar).")
+		minetest.log("error", "[hudbars] Invalid value for hudbars_bar_type! Using default (progress_bar).")
 	end
 end
 
