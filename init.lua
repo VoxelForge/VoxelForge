@@ -5,7 +5,7 @@ hb.hudtables = {}
 -- number of registered HUD bars
 hb.hudbars_count = 0
 
--- table which recoreds which HUD bar slots have been “registered” so far; used for automatic positioning
+-- table which records which HUD bar slots have been “registered” so far; used for automatic positioning
 hb.registered_slots = {}
 
 hb.settings = {}
@@ -30,7 +30,7 @@ hb.settings.tick = 0.1
               the next is above the first, the next is right of the third, etc.
               This is the default.
     stack_up: The HUD bars are stacked vertically, going upwards.
-    stack_down: The HUD bars are stacked vertically. going downwards.
+    stack_down: The HUD bars are stacked vertically, going downwards.
 ]]
 hb.settings.alignment_pattern = "zigzag"
 local alignment_pattern = minetest.setting_get("hudbars_alignment_pattern")
