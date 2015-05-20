@@ -10,17 +10,57 @@ hb.registered_slots = {}
 
 hb.settings = {}
 
--- default settings
+function hb.load_setting(sname, stype, defaultval, valid_values)
+	local sval
+	if stype == "string" then
+		sval = minetest.setting_get(sname)
+	elseif stype == "bool" then
+		sval = minetest.setting_getbool(sname)
+	elseif stype == "number" then
+		sval = tonumber(minetest.setting_get(sname))
+	end
+	if sval ~= nil then
+		if valid_values ~= nil then
+			local valid = false
+			for i=1,#valid_values do
+				if sval == valid_values[i] then
+					valid = true
+				end
+			end
+			if not valid then
+				minetest.log("error", "[hudbars] Invalid value for "..sname.."! Using default value ("..tostring(defaultval)..").")
+				return defaultval
+			else
+				return sval
+			end
+		else
+			return sval
+		end
+	else
+		return defaultval
+	end
+end
+
+-- (hardcoded) default settings
 hb.settings.max_bar_length = 160
+hb.settings.statbar_length = 20
 
 -- statbar positions
-hb.settings.pos_left = { x=0.5, y=1 }
-hb.settings.pos_right= { x = 0.5, y = 1 }
-hb.settings.start_offset_left = { x = -175, y = -86 }
-hb.settings.start_offset_right = { x = 15, y = -86 }
+hb.settings.pos_left = {}
+hb.settings.pos_right = {}
+hb.settings.start_offset_left = {}
+hb.settings.start_offset_right= {}
+hb.settings.pos_left.x = hb.load_setting("hudbars_pos_left_x", "number", 0.5)
+hb.settings.pos_left.y = hb.load_setting("hudbars_pos_left_y", "number", 1)
+hb.settings.pos_right.x = hb.load_setting("hudbars_pos_right_x", "number", 0.5)
+hb.settings.pos_right.y = hb.load_setting("hudbars_pos_right_y", "number", 1)
+hb.settings.start_offset_left.x = hb.load_setting("hudbars_start_offset_left_x", "number", -175)
+hb.settings.start_offset_left.y = hb.load_setting("hudbars_start_offset_left_y", "number", -86)
+hb.settings.start_offset_right.x = hb.load_setting("hudbars_start_offset_right_x", "number", 15)
+hb.settings.start_offset_right.y = hb.load_setting("hudbars_start_offset_right_y", "number", -86)
 
-hb.settings.vmargin = 24
-hb.settings.tick = 0.1
+hb.settings.vmargin  = hb.load_setting("hudbars_tick", "number", 24)
+hb.settings.tick = hb.load_setting("hudbars_tick", "number", 0.1)
 
 --[[
 - hudbars_alignment_pattern: This setting changes the way the HUD bars are ordered on the display. You can choose
@@ -32,33 +72,11 @@ hb.settings.tick = 0.1
     stack_up: The HUD bars are stacked vertically, going upwards.
     stack_down: The HUD bars are stacked vertically, going downwards.
 ]]
-hb.settings.alignment_pattern = "zigzag"
-local alignment_pattern = minetest.setting_get("hudbars_alignment_pattern")
-if alignment_pattern ~= nil then
-	hb.settings.alignment_pattern = alignment_pattern
-	if alignment_pattern ~= "zigzag" and alignment_pattern ~= "stack_up" and alignment_pattern ~= "stack_down" then
-		hb.settings.alignment_pattern = "zigzag"
-		minetest.log("error", "[hudbars] Invalid value for hudbars_alignment_pattern! Using default (zigzag).")
-	end
-end
 
-hb.settings.bar_type = "progress_bar"
-local bar_type = minetest.setting_get("hudbars_bar_type")
-if bar_type ~= nil then
-	hb.settings.bar_type = bar_type
-	if bar_type ~= "progress_bar" and bar_type ~= "statbar_classic" and bar_type ~= "statbar_modern" then
-		hb.settings.bar_type = "progress_bar"
-		minetest.log("error", "[hudbars] Invalid value for hudbars_bar_type! Using default (progress_bar).")
-	end
-end
-
-
-
-hb.settings.autohide_breath = true
-local autohide_breath = minetest.setting_getbool("hudbars_autohide_breath")
-if autohide_breath ~= nil then
-	hb.settings.autohide_breath = autohide_breath
-end
+-- Misc. settings
+hb.settings.alignment_pattern = hb.load_setting("hudbars_alignment_pattern", "string", "zigzag", {"zigzag", "stack_up", "stack_down"})
+hb.settings.bar_type = hb.load_setting("hudbars_bar_type", "string", "progress_bar", {"progress_bar", "statbar_classic", "statbar_modern"})
+hb.settings.autohide_breath = hb.load_setting("hudbars_autohide_breath", "bool", true)
 
 local sorting = minetest.setting_get("hudbars_sorting")
 if sorting ~= nil then
@@ -88,7 +106,7 @@ function hb.value_to_barlength(value, max)
 		else
 			local x
 			if value < 0 then x=-0.5 else x = 0.5 end
-			local ret = math.modf((value/max) * 20 + x)
+			local ret = math.modf((value/max) * hb.settings.statbar_length + x)
 			return ret
 		end
 	end
@@ -196,7 +214,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 					position = pos,
 					scale = bgscale,
 					text = textures.bgicon,
-					number = 20,
+					number = hb.settings.statbar_length,
 					alignment = {x=-1,y=-1},
 					offset = { x = offset.x, y = offset.y },
 				})
@@ -389,13 +407,6 @@ end
 if minetest.setting_getbool("enable_damage") then
 	hb.register_hudbar("health", 0xFFFFFF, "Health", { bar = "hudbars_bar_health.png", icon = "hudbars_icon_health.png", bgicon = "hudbars_bgicon_health.png" }, 20, 20, false)
 	hb.register_hudbar("breath", 0xFFFFFF, "Breath", { bar = "hudbars_bar_breath.png", icon = "hudbars_icon_breath.png" }, 10, 10, true)
-end
-
---load custom settings
-local set = io.open(minetest.get_modpath("hudbars").."/hudbars.conf", "r")
-if set then 
-	dofile(minetest.get_modpath("hudbars").."/hudbars.conf")
-	set:close()
 end
 
 local function hide_builtin(player)

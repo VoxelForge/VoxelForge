@@ -67,6 +67,26 @@ This mod can be configured by editing minetest.conf. Currently, the following se
                        the current value and the maximum value. 1 half-symbol stands for approximately 5% of the maximum value.
     - statbar_modern:  Like the classic statbar, but also supports background images, this kind of statbar may be considered to be more user-friendly
                        than the classic statbar. This bar type closely resembles the [hud] mod.
+
+- hudbars_vmargin: The vertical distance between two HUD bars in pixels (default: 24)
+- hudbars_tick: The number of seconds between two updates of the HUD bars. Increase this number if you have a slow server (default: 0.1)
+
+Position settings:
+With these settings you can configure the positions of the HUD bars. All settings must be specified as a number.
+The pos settings are specified as a floating-point number between 0 to 1 each, the start_offset settings are
+specified as whole numbers, they specify a number of pixels.
+The left and right variants are used for the zig-zag mode. In the stack_up and stack_down modes, only the left variant is used for
+the base position
+
+- hudbars_pos_left_x, hudbars_pos_left_y: Screen position (x and y) of the left HUD bar in zigzag mode. 0 is left-most/top, 1 is right-most/bottom.
+	Defaults: 0.5 (x) and 1 (y)
+- hudbars_pos_right_x, hudbars_pos_right_y: Same as above, but for the right one.
+	Defaults: 0.5 and 1.
+- hudbars_start_offset_left_x, hudbars_start_offset_left_y: Offset in pixels from the basic screen position specified in hudbars_pos_left_x/hudbars_pos_left_y.
+	Defaults: -175 and -86
+- hudbars_start_offset_right_x, hudbars_start_offset_right_y: Same as above, but for the right one.
+	Defaults: 15 and -86
+
 API:
 ----
 The API is used to add your own custom HUD bars.
