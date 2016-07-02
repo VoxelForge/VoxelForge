@@ -92,6 +92,7 @@ hudbars_start_offset_right_y (Right HUD bar y offset) int -86
 hudbars_vmargin (Vertical distance between HUD bars) int 24 0
 
 [Performance]
-# The number of seconds which needs to pass before the server updates the HUD bars. Increase this
-# number if you have a slow server or a slow network connection.
-hudbars_tick (HUD bars update interval) float 0.1 0.0
+# The of seconds which need to pass before the server updates the default HUD bars
+# (health and breath). Increase this number if you have a slow server or a slow network
+# connection and experience performance problems.
+hudbars_tick (Default HUD bars update interval) float 0.1 0.0 4.0
