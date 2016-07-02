@@ -281,7 +281,7 @@ function hb.init_hudbar(player, identifier, start_value, start_max, start_hidden
 	hb.hudtables[identifier].add_all(player, hudtable, start_value, start_max, start_hidden)
 end
 
-function hb.change_hudbar(player, identifier, new_value, new_max_value)
+function hb.change_hudbar(player, identifier, new_value, new_max_value, new_icon, new_bgicon, new_bar, new_label, new_text_color)
 	if new_value == nil and new_max_value == nil then
 		return
 	end
@@ -305,6 +305,33 @@ function hb.change_hudbar(player, identifier, new_value, new_max_value)
 		end
 	else
 		new_max_value = hudtable.hudstate[name].max
+	end
+
+	if hb.settings.bar_type == "progress_bar" then
+		if new_icon ~= nil and hudtable.hudids[name].icon ~= nil then
+			player:hud_change(hudtable.hudids[name].icon, "text", new_icon)
+		end
+		if new_bgicon ~= nil and hudtable.hudids[name].bgicon ~= nil then
+			player:hud_change(hudtable.hudids[name].bgicon, "text", new_bgicon)
+		end
+		if new_bar ~= nil then
+			player:hud_change(hudtable.hudids[name].bar , "text", new_bar)
+		end
+		if new_label ~= nil then
+			hudtable.label = new_label
+			local new_text = string.format(hudtable.format_string, new_label, hudtable.hudstate[name].value, hudtable.hudstate[name].max)
+			player:hud_change(hudtable.hudids[name].text, "text", new_text)
+		end
+		if new_text_color ~= nil then
+			player:hud_change(hudtable.hudids[name].text, "number", new_text_color)
+		end
+	else
+		if new_icon ~= nil and hudtable.hudids[name].bar ~= nil then
+			player:hud_change(hudtable.hudids[name].bar, "text", new_icon)
+		end
+		if new_bgicon ~= nil and hudtable.hudids[name].bg ~= nil then
+			player:hud_change(hudtable.hudids[name].bg, "text", new_bgicon)
+		end
 	end
 
 	local main_error_text =
