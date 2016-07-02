@@ -65,17 +65,6 @@ hb.settings.tick = hb.load_setting("hudbars_tick", "number", 0.1)
 -- experimental setting: Changing this setting is not officially supported, do NOT rely on it!
 hb.settings.forceload_default_hudbars = hb.load_setting("hudbars_forceload_default_hudbars", "bool", true)
 
---[[
-- hudbars_alignment_pattern: This setting changes the way the HUD bars are ordered on the display. You can choose
-  between a zig-zag pattern or a vertically stacked pattern.
-  The following values are allowed:
-    zigzag: Starting from the left bottom, the next is right from the first,
-              the next is above the first, the next is right of the third, etc.
-              This is the default.
-    stack_up: The HUD bars are stacked vertically, going upwards.
-    stack_down: The HUD bars are stacked vertically, going downwards.
-]]
-
 -- Misc. settings
 hb.settings.alignment_pattern = hb.load_setting("hudbars_alignment_pattern", "string", "zigzag", {"zigzag", "stack_up", "stack_down"})
 hb.settings.bar_type = hb.load_setting("hudbars_bar_type", "string", "progress_bar", {"progress_bar", "statbar_classic", "statbar_modern"})
