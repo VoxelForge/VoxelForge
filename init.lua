@@ -59,7 +59,7 @@ hb.settings.start_offset_left.y = hb.load_setting("hudbars_start_offset_left_y",
 hb.settings.start_offset_right.x = hb.load_setting("hudbars_start_offset_right_x", "number", 15)
 hb.settings.start_offset_right.y = hb.load_setting("hudbars_start_offset_right_y", "number", -86)
 
-hb.settings.vmargin  = hb.load_setting("hudbars_tick", "number", 24)
+hb.settings.vmargin  = hb.load_setting("hudbars_vmargin", "number", 24)
 hb.settings.tick = hb.load_setting("hudbars_tick", "number", 0.1)
 
 -- experimental setting: Changing this setting is not officially supported, do NOT rely on it!
