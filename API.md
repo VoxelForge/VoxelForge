@@ -50,8 +50,9 @@ This function registers a new custom HUD bar definition to the HUD bars mod, so 
 and unhidden on a per-player basis.
 Note this does not yet display the HUD bar.
 
-The HUD bars will be displayed in a “first come, first serve” order. This mod does not allow fow a custom order or a way to set it
-manually in a reliable way.
+The HUD bars will be displayed in a “first come, first serve” order. This API does not allow fow a custom order or a way to set it
+manually in a reliable way. However, you can use the setting `hudbars_sorting` for this. See the advanced setting menu in Minetest
+for more information.
 
 
 #### Parameters
