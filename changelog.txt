@@ -72,3 +72,8 @@ as of version 2.0.0 of the standard <http://semver.org/>.
 - Use Markdown syntax in readme file
 - Fix some factual mistakes in readme file
 - Add metadata: mod.conf, description.txt, screenshot.png
+
+1.4.0
+-----
+- Allow to change HUD bar images and label after it has been registered
+- Minor API.md correction

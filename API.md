@@ -1,4 +1,4 @@
-API documentation for the HUD bars mod 1.3.0
+API documentation for the HUD bars mod 1.4.0
 ============================================
 
 ## Introduction
