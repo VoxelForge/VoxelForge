@@ -4,7 +4,7 @@ doc.VERSION = {}
 doc.VERSION.MAJOR = 0
 doc.VERSION.MINOR = 1
 doc.VERSION.PATCH = 0
-doc.VERSION.STRING = "0.1.0"
+doc.VERSION.STRING = doc.VERSION.MAJOR.."."..doc.VERSION.MINOR.."."..doc.VERSION.PATCH
 
 
 doc.data = {}
