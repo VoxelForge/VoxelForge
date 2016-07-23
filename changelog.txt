@@ -77,3 +77,7 @@ as of version 2.0.0 of the standard <http://semver.org/>.
 -----
 - Allow to change HUD bar images and label after it has been registered
 - Minor API.md correction
+
+1.4.1
+-----
+- Fix bug in hb.change_hudbar being a no-op if new_value and new_max value are nil
