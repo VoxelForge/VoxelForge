@@ -161,6 +161,7 @@ function doc.process_form(player,formname,fields)
 				local formspec = doc.formspec_core(2)..doc.formspec_category(id, playername)
 				doc.data.players[playername].catsel = nil
 				doc.data.players[playername].category = id
+				doc.data.players[playername].entry = nil
 				minetest.show_formspec(playername, "doc:category", formspec)
 				break
 			end
