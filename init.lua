@@ -187,6 +187,15 @@ function doc.process_form(player,formname,fields)
 			if event.type == "CHG" then
 				doc.data.players[playername].catsel = event.index
 				doc.data.players[playername].entry = doc.data.players[playername].entry_ids[event.index]
+			elseif event.type == "DCL" then
+				local cid = doc.data.players[playername].category
+				local eid = nil
+				local eids, catsel = doc.data.players[playername].entry_ids, event.index
+				if eids ~= nil and catsel ~= nil then
+					eid = eids[catsel]
+				end
+				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid)
+				minetest.show_formspec(playername, "doc:entry", formspec)
 			end
 		end
 	elseif(formname == "doc:entry") then
