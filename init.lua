@@ -11,6 +11,9 @@ doc.data = {}
 doc.data.categories = {}
 doc.data.players = {}
 
+--[[ Core API functions ]]
+
+-- Add a new category
 function doc.new_category(id, def)
 	if doc.data.categories[id] == nil and id ~= nil then
 		doc.data.categories[id] = {}
@@ -22,6 +25,7 @@ function doc.new_category(id, def)
 	end
 end
 
+-- Add a new entry
 function doc.new_entry(category_id, entry_id, def)
 	if doc.data.categories[category_id] ~= nil then
 		doc.data.categories[category_id].entries[entry_id] = def
@@ -31,10 +35,32 @@ function doc.new_entry(category_id, entry_id, def)
 	end
 end
 
+-- Opens the main documentation formspec for the player
 function doc.show_doc(playername)
 	local formspec = doc.formspec_core()..doc.formspec_main()
 	minetest.show_formspec(playername, "doc:main", formspec)
 end
+
+-- Opens the documentation formspec for the player at the specified category
+function doc.show_category(playername, category_id)
+	doc.data.players[playername].catsel = nil
+	doc.data.players[playername].category = category_id
+	doc.data.players[playername].entry = nil
+	local formspec = doc.formspec_core(2)..doc.formspec_category(category_id, playername)
+	minetest.show_formspec(playername, "doc:category", formspec)
+end
+
+-- Opens the documentation formspec for the player showing the specified entry in a category
+function doc.show_entry(playername, category_id, entry_id)
+	doc.data.players[playername].catsel = nil
+	doc.data.players[playername].category = category_id
+	doc.data.players[playername].entry = entry_id
+	local eids, catsel = doc.data.players[playername].entry_ids, doc.data.players[playername].catsel
+	local formspec = doc.formspec_core(3)..doc.formspec_entry(category_id, entry_id)
+	minetest.show_formspec(playername, "doc:entry", formspec)
+end
+
+--[[ Functions for internal use ]]
 
 function doc.formspec_core(tab)
 	if tab == nil then tab = 1 else tab = tostring(tab) end
