@@ -11,6 +11,9 @@ doc.data = {}
 doc.data.categories = {}
 doc.data.players = {}
 
+-- Space for additional APIs
+doc.sub = {}
+
 --[[ Core API functions ]]
 
 -- Add a new category
