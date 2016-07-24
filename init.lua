@@ -60,6 +60,17 @@ function doc.show_entry(playername, category_id, entry_id)
 	minetest.show_formspec(playername, "doc:entry", formspec)
 end
 
+-- Returns true if and only if:
+-- * The specified category exists
+-- * This category contains the specified entry
+function doc.entry_exists(category_id, entry_id)
+	if doc.data.categories[category_id] ~= nil then
+		return doc.data.categories[category_id].entries[entry_id] ~= nil
+	else
+		return false
+	end
+end
+
 --[[ Functions for internal use ]]
 
 function doc.formspec_core(tab)
