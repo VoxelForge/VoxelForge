@@ -90,6 +90,11 @@ function doc.add_entry_aliases(category_id, entry_id, aliases)
 	end
 end
 
+-- Same as above, but only adds one alias
+function doc.add_entry_alias(category_id, entry_id, alias)
+	doc.data.categories[category_id].entry_aliases[alias] = entry_id
+end
+
 --[[ Functions for internal use ]]
 
 function doc.formspec_core(tab)
