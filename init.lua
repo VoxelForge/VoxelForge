@@ -22,6 +22,7 @@ function doc.new_category(id, def)
 		doc.data.categories[id] = {}
 		doc.data.categories[id].entries = {}
 		doc.data.categories[id].def = def
+		doc.data.categories[id].entry_aliases = {}
 		return true
 	else
 		return false
@@ -68,9 +69,24 @@ end
 -- * This category contains the specified entry
 function doc.entry_exists(category_id, entry_id)
 	if doc.data.categories[category_id] ~= nil then
-		return doc.data.categories[category_id].entries[entry_id] ~= nil
+		if doc.data.categories[category_id].entries[entry_id] ~= nil then
+			-- Entry exists
+			return true
+		else
+			-- Entry of this ID does not exist, so we check if there's an alis for it
+			return doc.data.categories[category_id].entry_aliases[entry_id] ~= nil
+		end
 	else
 		return false
+	end
+end
+
+-- Adds aliases for an entry. Attempting to open an entry by an alias name
+-- results in opening the entry of the original name.
+-- Aliases are true within one category only.
+function doc.add_entry_aliases(category_id, entry_id, aliases)
+	for a=1,#aliases do
+		doc.data.categories[category_id].entry_aliases[aliases[a]] = entry_id
 	end
 end
 
@@ -165,8 +181,17 @@ function doc.formspec_entry(category_id, entry_id)
 		formstring = "label[0,0;You haven't selected an help entry yet. Please select one in the list of entries first.]"
 		formstring = formstring .. "button[0,1;3,1;doc_button_goto_category;Go to entry list]"
 	else
+
 		local category = doc.data.categories[category_id]
 		local entry = category.entries[entry_id]
+		-- Check if entry has an alias
+		if entry == nil then
+			local resolved_alias = doc.data.categories[category_id].entry_aliases[entry_id]
+			if resolved_alias ~= nil then
+				entry = category.entries[resolved_alias]
+			end
+		end
+
 		formstring = "label[0,0;Help > "..category.def.name.." > "..entry.name.."]"
 		formstring = formstring .. category.def.build_formspec(entry.data)
 	end
