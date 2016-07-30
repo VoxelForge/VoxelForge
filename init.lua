@@ -284,7 +284,7 @@ minetest.register_on_player_receive_fields(doc.process_form)
 
 minetest.register_chatcommand("doc", {
 	params = "",
-	description = "Show in-game documentation system.",
+	description = "Open documentation system.",
 	privs = {},
 	func = function(playername, param)
 		doc.show_doc(playername)
@@ -299,3 +299,16 @@ end)
 minetest.register_on_leaveplayer(function(player)
 	doc.data.players[player:get_player_name()] = nil
 end)
+
+---[[ Add buttons for inventory mods ]]
+-- Unified Inventory
+if minetest.get_modpath("unified_inventory") ~= nil then
+	unified_inventory.register_button("doc", {
+		type = "image",
+		image = "doc_button_icon_hires.png",
+		tooltip = "Documentation System",
+		action = function(player)
+			doc.show_doc(player:get_player_name())
+		end,
+	})
+end
