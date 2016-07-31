@@ -39,6 +39,23 @@ function doc.new_entry(category_id, entry_id, def)
 	end
 end
 
+-- Marks a particular entry as viewed by a certain player
+function doc.mark_entry_as_viewed(playername, category_id, entry_id)
+	if doc.data.players[playername].stored_data.viewed[category_id] == nil then
+		doc.data.players[playername].stored_data.viewed[category_id] = {}
+	end
+	doc.data.players[playername].stored_data.viewed[category_id][entry_id] = true
+end
+
+-- Returns true if the specified entry has been viewed by the player
+function doc.entry_viewed(playername, category_id, entry_id)
+	if doc.data.players[playername].stored_data.viewed[category_id] == nil then
+		return false
+	else
+		return doc.data.players[playername].stored_data.viewed[category_id][entry_id] == true
+	end
+end
+
 -- Opens the main documentation formspec for the player
 function doc.show_doc(playername)
 	local formspec = doc.formspec_core()..doc.formspec_main()
@@ -59,6 +76,7 @@ function doc.show_entry(playername, category_id, entry_id)
 	doc.data.players[playername].catsel = nil
 	doc.data.players[playername].category = category_id
 	doc.data.players[playername].entry = entry_id
+	doc.mark_entry_as_viewed(playername, category_id, entry_id)
 	local eids, catsel = doc.data.players[playername].entry_ids, doc.data.players[playername].catsel
 	local formspec = doc.formspec_core(3)..doc.formspec_entry(category_id, entry_id)
 	minetest.show_formspec(playername, "doc:entry", formspec)
@@ -121,8 +139,16 @@ function doc.generate_entry_list(cid, playername)
 		doc.data.players[playername].entry_ids = {}
 		local entries = doc.get_sorted_entry_names(cid)
 		for i=1, #entries do
-			table.insert(doc.data.players[playername].entry_ids, entries[i].eid)
-			entry_textlist = entry_textlist .. minetest.formspec_escape(entries[i].name) .. ","
+			local eid = entries[i].eid
+			table.insert(doc.data.players[playername].entry_ids, eid)
+			-- Colorize entries based on viewed status
+			-- Not viewed: Cyan
+			local viewedprefix = "#00FFFF"
+			if doc.entry_viewed(playername, cid, eid) then
+				-- Viewed: White
+				viewedprefix = "#FFFFFF"
+			end
+			entry_textlist = entry_textlist .. viewedprefix .. minetest.formspec_escape(entries[i].name) .. ","
 			counter = counter + 1
 		end
 		if counter >= 1  then
@@ -247,6 +273,7 @@ function doc.process_form(player,formname,fields)
 				end
 				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid)
 				minetest.show_formspec(playername, "doc:entry", formspec)
+				doc.mark_entry_as_viewed(playername, cid, eid)
 			end
 		end
 		if fields["doc_button_goto_main"] then
@@ -267,6 +294,7 @@ function doc.process_form(player,formname,fields)
 				end
 				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid)
 				minetest.show_formspec(playername, "doc:entry", formspec)
+				doc.mark_entry_as_viewed(playername, cid, eid)
 			end
 		end
 	elseif(formname == "doc:entry") then
@@ -293,7 +321,12 @@ minetest.register_chatcommand("doc", {
 )
 
 minetest.register_on_joinplayer(function(player)
-	doc.data.players[player:get_player_name()] = {}
+	local playername = player:get_player_name()
+	doc.data.players[playername] = {}
+	-- Table for persistant data
+	doc.data.players[playername].stored_data = {}
+	-- Contains viewed entries
+	doc.data.players[playername].stored_data.viewed = {}
 end)
 
 minetest.register_on_leaveplayer(function(player)
