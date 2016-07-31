@@ -241,14 +241,20 @@ function doc.process_form(player,formname,fields)
 		if fields.doc_header ~= nil then
 			local tab = tonumber(fields.doc_header)
 			local formspec, subformname, contents
+			local cid, eid
+			cid = doc.data.players[playername].category
+			eid = doc.data.players[playername].entry
 			if(tab==1) then
 				contents = doc.formspec_main()
 				subformname = "main"
 			elseif(tab==2) then
-				contents = doc.formspec_category(doc.data.players[playername].category, playername)
+				contents = doc.formspec_category(cid, playername)
 				subformname = "category"
 			elseif(tab==3) then
-				contents = doc.formspec_entry(doc.data.players[playername].category, doc.data.players[playername].entry)
+				contents = doc.formspec_entry(cid, eid)
+				if cid ~= nil and eid ~= nil then
+					doc.mark_entry_as_viewed(playername, cid, eid)
+				end
 				subformname = "entry"
 			end
 			formspec = doc.formspec_core(tab)..contents
