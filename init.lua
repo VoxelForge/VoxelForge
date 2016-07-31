@@ -45,6 +45,8 @@ function doc.mark_entry_as_viewed(playername, category_id, entry_id)
 		doc.data.players[playername].stored_data.viewed[category_id] = {}
 	end
 	doc.data.players[playername].stored_data.viewed[category_id][entry_id] = true
+	-- Needed because viewed entries get a different color
+	doc.data.players[playername].entry_textlist_needs_updating = true
 end
 
 -- Returns true if the specified entry has been viewed by the player
@@ -133,7 +135,9 @@ end
 
 function doc.generate_entry_list(cid, playername)
 	local formstring
-	if doc.data.players[playername].entry_textlist == nil or doc.data.players[playername].category ~= cid then
+	if doc.data.players[playername].entry_textlist == nil
+	or doc.data.players[playername].category ~= cid
+	or doc.data.players[playername].entry_textlist_needs_updating == true then
 		local entry_textlist = "textlist[0,1;11,7;doc_catlist;"
 		local counter = 0
 		doc.data.players[playername].entry_ids = {}
@@ -161,6 +165,7 @@ function doc.generate_entry_list(cid, playername)
 		entry_textlist = entry_textlist .. "]"
 		doc.data.players[playername].entry_textlist = entry_textlist
 		formstring = entry_textlist
+		doc.data.players[playername].entry_testlist_needs_updating = false
 	else
 		formstring = doc.data.players[playername].entry_textlist
 	end
