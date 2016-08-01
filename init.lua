@@ -9,6 +9,7 @@ doc.VERSION.STRING = doc.VERSION.MAJOR.."."..doc.VERSION.MINOR.."."..doc.VERSION
 
 doc.data = {}
 doc.data.categories = {}
+doc.data.category_order = {}
 doc.data.players = {}
 
 -- Space for additional APIs
@@ -23,6 +24,7 @@ function doc.new_category(id, def)
 		doc.data.categories[id].entries = {}
 		doc.data.categories[id].def = def
 		doc.data.categories[id].entry_aliases = {}
+		table.insert(doc.data.category_order, id)
 		return true
 	else
 		return false
@@ -125,7 +127,9 @@ end
 function doc.formspec_main()
 	local y = 1
 	local formstring = "label[0,0;Available help topics:]"
-	for id,data in pairs(doc.data.categories) do
+	for c=1,#doc.data.category_order do
+		local id = doc.data.category_order[c]
+		local data = doc.data.categories[id]
 		local button = "button[0,"..y..";3,1;doc_button_category_"..id..";"..minetest.formspec_escape(data.def.name).."]"
 		formstring = formstring .. button
 		y = y + 1
