@@ -6,8 +6,12 @@ The mod itself does not provide any help texts, just the framework.
 Current version: 0.2.0
 
 ## For users
-To open the help, say “/help” in chat. Everything else should be more or less
-self-explanationary.
+To open the help, there are multiple ways:
+
+- Say “/help” in chat. This always works.
+- If you use Unified Inventory, click on the book icon in the inventory menu
+
+The documentation system itself should be more or less self-explanationary.
 
 This mod is useless on its own, you will only need this mod as a dependency
 for mods which actually add some help entries.
