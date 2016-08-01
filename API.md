@@ -165,4 +165,5 @@ Returns how many entries have been viewed by a player.
   viewed entries
 
 #### Return value
-Amount of entries the player has viewed in the specified category.
+Amount of entries the player has viewed in the specified category. If the
+player does not exist, this function returns `nil`.
