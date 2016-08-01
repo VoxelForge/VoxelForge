@@ -22,6 +22,7 @@ function doc.new_category(id, def)
 	if doc.data.categories[id] == nil and id ~= nil then
 		doc.data.categories[id] = {}
 		doc.data.categories[id].entries = {}
+		doc.data.categories[id].entry_count = 0
 		doc.data.categories[id].def = def
 		doc.data.categories[id].entry_aliases = {}
 		table.insert(doc.data.category_order, id)
@@ -35,6 +36,7 @@ end
 function doc.new_entry(category_id, entry_id, def)
 	if doc.data.categories[category_id] ~= nil then
 		doc.data.categories[category_id].entries[entry_id] = def
+		doc.data.categories[category_id].entry_count = doc.data.categories[category_id].entry_count + 1
 		return true
 	else
 		return false
@@ -45,10 +47,14 @@ end
 function doc.mark_entry_as_viewed(playername, category_id, entry_id)
 	if doc.data.players[playername].stored_data.viewed[category_id] == nil then
 		doc.data.players[playername].stored_data.viewed[category_id] = {}
+		doc.data.players[playername].stored_data.viewed_count[category_id] = 0
 	end
-	doc.data.players[playername].stored_data.viewed[category_id][entry_id] = true
-	-- Needed because viewed entries get a different color
-	doc.data.players[playername].entry_textlist_needs_updating = true
+	if doc.data.players[playername].stored_data.viewed[category_id][entry_id] ~= true then
+		doc.data.players[playername].stored_data.viewed[category_id][entry_id] = true
+		doc.data.players[playername].stored_data.viewed_count[category_id] = doc.data.players[playername].stored_data.viewed_count[category_id] + 1
+		-- Needed because viewed entries get a different color
+		doc.data.players[playername].entry_textlist_needs_updating = true
+	end
 end
 
 -- Returns true if the specified entry has been viewed by the player
@@ -115,6 +121,26 @@ end
 -- Same as above, but only adds one alias
 function doc.add_entry_alias(category_id, entry_id, alias)
 	doc.data.categories[category_id].entry_aliases[alias] = entry_id
+end
+
+-- Returns number of categories
+function doc.get_category_count()
+	return #doc.data.category_order
+end
+
+-- Returns number of entries in category
+function doc.get_entry_count(category_id)
+	return doc.data.categories[category_id].entry_count
+end
+
+-- Returns how many entries have been viewed by the player
+function doc.get_viewed_count(playername, category_id)
+	local count = doc.data.players[playername].stored_data.viewed_count[category_id]
+	if count == nil then
+		return 0
+	else
+		return count
+	end
 end
 
 --[[ Functions for internal use ]]
@@ -342,6 +368,8 @@ minetest.register_on_joinplayer(function(player)
 	doc.data.players[playername].stored_data = {}
 	-- Contains viewed entries
 	doc.data.players[playername].stored_data.viewed = {}
+	-- Count viewed entries
+	doc.data.players[playername].stored_data.viewed_count = {}
 end)
 
 minetest.register_on_leaveplayer(function(player)
