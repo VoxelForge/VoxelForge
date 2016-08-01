@@ -144,3 +144,25 @@ function has the same effect as `doc.add_entry_alias`.
 #### Return value
 Always `nil`.
 
+### `doc.get_category_count()`
+Returns the number of registered categories.
+
+### `doc.get_entry_count(category_id)`
+Returns the number of entries in a category.
+
+#### Parameters
+* `category_id`: Category identifier of the category in which to count entries
+
+#### Return value
+Number of entries in the specified category.
+
+### `function doc.get_viewed_count(playername, category_id)`
+Returns how many entries have been viewed by a player.
+
+#### Parameters
+* `playername`: Name of the player to count the viewed entries for
+* `category_id`: Category identifier of the category in which to count the
+  viewed entries
+
+#### Return value
+Amount of entries the player has viewed in the specified category.
