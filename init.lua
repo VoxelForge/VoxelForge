@@ -135,6 +135,9 @@ end
 
 -- Returns how many entries have been viewed by the player
 function doc.get_viewed_count(playername, category_id)
+	if doc.data.players[playername] == nil then
+		return nil
+	end
 	local count = doc.data.players[playername].stored_data.viewed_count[category_id]
 	if count == nil then
 		return 0
