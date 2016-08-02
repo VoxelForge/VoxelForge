@@ -146,6 +146,14 @@ function doc.get_viewed_count(playername, category_id)
 	end
 end
 
+-- Template function templates, to be used for build_formspec in doc.new_category
+doc.entry_templates = {}
+
+-- Freeform text
+doc.entry_templates.text = function(data)
+	return "textarea[0.25,0.5;11,8;;"..minetest.formspec_escape(data)..";]"
+end
+
 --[[ Functions for internal use ]]
 
 function doc.formspec_core(tab)
