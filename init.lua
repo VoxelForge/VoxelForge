@@ -154,6 +154,11 @@ doc.entry_templates.text = function(data)
 	return "textarea[0.25,0.5;12,8;;"..minetest.formspec_escape(data)..";]"
 end
 
+-- Direct formspec
+doc.entry_templates.formspec = function(data)
+	return data
+end
+
 --[[ Functions for internal use ]]
 
 function doc.formspec_core(tab)

@@ -58,7 +58,12 @@ For `build_formspec` you can either define your own function or use one
 of the following predefined functions:
 
 * `doc.entry_templates.text`: Expects entry data to be a string.
-  It will be inserted directly into the entry.
+  It will be inserted directly into the entry. Useful for entries with
+  a freeform text.
+
+* `doc.entry_templates.formspec`: Entry data is expected to contain the
+  complete entry formspec as a string. Useful if your entries. Useful
+  if you expect your entries to differ wildly in layouts.
 
 #### Return value
 Always `nil`.
