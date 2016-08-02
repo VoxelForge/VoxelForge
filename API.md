@@ -53,17 +53,22 @@ data.
       only parameter (has the data type of the entry data) and must
       return a formspec which is inserted in the Entry tab.
 
-#### Predefined values `build_formspec`
-For `build_formspec` you can either define your own function or use one
-of the following predefined functions:
+#### Using `build_formspec`
+For `build_formspec` you can either define your own function which
+procedurally generates the entry formspec or you use one of the
+following predefined convenience functions:
 
 * `doc.entry_builders.text`: Expects entry data to be a string.
   It will be inserted directly into the entry. Useful for entries with
   a freeform text.
-
 * `doc.entry_builders.formspec`: Entry data is expected to contain the
   complete entry formspec as a string. Useful if your entries. Useful
   if you expect your entries to differ wildly in layouts.
+
+When building your formspec, you have to respect the size limitations.
+The documentation system uses a size of `12,9` and you should place
+all your formspec elements at positions not lower than `0.25,0.5` to
+avoid overlapping.
 
 #### Return value
 Always `nil`.
