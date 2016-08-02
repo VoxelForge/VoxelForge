@@ -151,7 +151,7 @@ doc.entry_templates = {}
 
 -- Freeform text
 doc.entry_templates.text = function(data)
-	return "textarea[0.25,0.5;11,8;;"..minetest.formspec_escape(data)..";]"
+	return "textarea[0.25,0.5;12,8;;"..minetest.formspec_escape(data)..";]"
 end
 
 --[[ Functions for internal use ]]
