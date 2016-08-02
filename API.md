@@ -58,8 +58,7 @@ For `build_formspec` you can either define your own function or use one
 of the following predefined functions:
 
 * `doc.entry_templates.text`: Expects entry data to be a string.
-  It will be inserted directly into the entry. Use “`\n`” to start a
-  new line.
+  It will be inserted directly into the entry.
 
 #### Return value
 Always `nil`.
