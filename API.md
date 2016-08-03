@@ -49,6 +49,8 @@ data.
 * `id`: Unique category identifier as a string
 * `def`: Definition table, it has the following fields:
     * `name`: Category name to be shown in the interface
+    * `description`: Short description (100 characters max. recommended)
+      of the category (optional), will be shown as tooltip
     * `build_formspec`: The template function. Takes entry data as its
       only parameter (has the data type of the entry data) and must
       return a formspec which is inserted in the Entry tab.

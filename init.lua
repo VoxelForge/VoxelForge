@@ -172,8 +172,14 @@ function doc.formspec_main()
 	for c=1,#doc.data.category_order do
 		local id = doc.data.category_order[c]
 		local data = doc.data.categories[id]
+		-- Category buton
 		local button = "button[0,"..y..";3,1;doc_button_category_"..id..";"..minetest.formspec_escape(data.def.name).."]"
-		formstring = formstring .. button
+		local tooltip = ""
+		-- Optional description
+		if data.def.description ~= nil then
+			tooltip = "tooltip[doc_button_category_"..id..";"..minetest.formspec_escape(data.def.description).."]"
+		end
+		formstring = formstring .. button .. tooltip
 		y = y + 1
 	end
 	return formstring
