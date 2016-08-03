@@ -163,12 +163,14 @@ end
 
 function doc.formspec_core(tab)
 	if tab == nil then tab = 1 else tab = tostring(tab) end
-	return "size[12,9]tabheader[0,0;doc_header;Main,Category,Entry;"..tab..";true;false]"
+	return "size[12,9]tabheader[0,0;doc_header;Category list,Entry list,Entry;"..tab..";true;false]"
 end
 
 function doc.formspec_main()
 	local y = 1
-	local formstring = "label[0,0;Available help topics:]"
+	local formstring = "label[0,0;This is the Documentation System, Version "..doc.VERSION.STRING..".\n"
+	formstring = formstring .. "Please select a category you wish to learn more about:]"
+
 	for c=1,#doc.data.category_order do
 		local id = doc.data.category_order[c]
 		local data = doc.data.categories[id]
@@ -249,11 +251,11 @@ end
 function doc.formspec_category(id, playername)
 	local formstring
 	if id == nil then
-		formstring = "label[0,0;You haven't selected a help topic yet. Please select one in the category list first.]"
+		formstring = "label[0,0;You haven't chosen a category yet. Please choose one in the category list first.]"
 		formstring = formstring .. "button[0,1;3,1;doc_button_goto_main;Go to category list]"
 	else
-		formstring = "label[0,0;Current help topic: "..doc.data.categories[id].def.name.."]"
-		formstring = formstring .. "label[0,0.5;Available entries:]"
+		formstring = "label[0,0;Help > "..doc.data.categories[id].def.name.."]"
+		formstring = formstring .. "label[0,0.5;This category has the following entries:]"
 		formstring = formstring .. doc.generate_entry_list(id, playername)
 		formstring = formstring .. "button[0,8;3,1;doc_button_goto_entry;Show entry]"
 	end
@@ -263,10 +265,10 @@ end
 function doc.formspec_entry(category_id, entry_id)
 	local formstring
 	if category_id == nil then
-		formstring = "label[0,0;You haven't selected a help topic yet. Please select one in the category list first.]"
+		formstring = "label[0,0;You haven't chosen a category yet. Please choose one in the category list first.]"
 		formstring = formstring .. "button[0,1;3,1;doc_button_goto_main;Go to category list]"
 	elseif entry_id == nil then
-		formstring = "label[0,0;You haven't selected an help entry yet. Please select one in the list of entries first.]"
+		formstring = "label[0,0;You haven't chosen an entry yet. Please choose one in the entry list first.]"
 		formstring = formstring .. "button[0,1;3,1;doc_button_goto_category;Go to entry list]"
 	else
 
