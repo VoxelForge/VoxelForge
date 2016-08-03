@@ -49,7 +49,7 @@ function doc.mark_entry_as_viewed(playername, category_id, entry_id)
 		doc.data.players[playername].stored_data.viewed[category_id] = {}
 		doc.data.players[playername].stored_data.viewed_count[category_id] = 0
 	end
-	if doc.data.players[playername].stored_data.viewed[category_id][entry_id] ~= true then
+	if doc.entry_exists(category_id, entry_id) and doc.data.players[playername].stored_data.viewed[category_id][entry_id] ~= true then
 		doc.data.players[playername].stored_data.viewed[category_id][entry_id] = true
 		doc.data.players[playername].stored_data.viewed_count[category_id] = doc.data.players[playername].stored_data.viewed_count[category_id] + 1
 		-- Needed because viewed entries get a different color
@@ -258,6 +258,8 @@ function doc.formspec_category(id, playername)
 		formstring = formstring .. "label[0,0.5;This category has the following entries:]"
 		formstring = formstring .. doc.generate_entry_list(id, playername)
 		formstring = formstring .. "button[0,8;3,1;doc_button_goto_entry;Show entry]"
+		formstring = formstring .. "label[8,8;Number of entries: "..doc.get_entry_count(id).."\n"
+		formstring = formstring .. "New entries: "..(doc.get_entry_count(id)-doc.get_viewed_count(playername, id)).."]"
 	end
 	return formstring
 end
