@@ -282,11 +282,15 @@ function doc.formspec_category(id, playername)
 		formstring = formstring .. "button[0,1;3,1;doc_button_goto_main;Go to category list]"
 	else
 		formstring = "label[0,0;Help > "..doc.data.categories[id].def.name.."]"
-		formstring = formstring .. "label[0,0.5;This category has the following entries:]"
-		formstring = formstring .. doc.generate_entry_list(id, playername)
-		formstring = formstring .. "button[0,8;3,1;doc_button_goto_entry;Show entry]"
-		formstring = formstring .. "label[8,8;Number of entries: "..doc.get_entry_count(id).."\n"
-		formstring = formstring .. "New entries: "..(doc.get_entry_count(id)-doc.get_viewed_count(playername, id)).."]"
+		if doc.get_entry_count(id) >= 1 then
+			formstring = formstring .. "label[0,0.5;This category has the following entries:]"
+			formstring = formstring .. doc.generate_entry_list(id, playername)
+			formstring = formstring .. "button[0,8;3,1;doc_button_goto_entry;Show entry]"
+			formstring = formstring .. "label[8,8;Number of entries: "..doc.get_entry_count(id).."\n"
+			formstring = formstring .. "New entries: "..(doc.get_entry_count(id)-doc.get_viewed_count(playername, id)).."]"
+		else
+			formstring = formstring .. "label[0,0.5;This category is empty.]"
+		end
 	end
 	return formstring
 end
