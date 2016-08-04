@@ -278,8 +278,8 @@ end
 function doc.formspec_category(id, playername)
 	local formstring
 	if id == nil then
-		formstring = "label[0,0;You haven't chosen a category yet. Please choose one in the category list first.]"
-		formstring = formstring .. "button[0,1;3,1;doc_button_goto_main;Go to category list]"
+		formstring = "label[0,0.5;You haven't chosen a category yet. Please choose one in the category list first.]"
+		formstring = formstring .. "button[0,1.5;3,1;doc_button_goto_main;Go to category list]"
 	else
 		formstring = "label[0,0;Help > "..doc.data.categories[id].def.name.."]"
 		if doc.get_entry_count(id) >= 1 then
@@ -290,6 +290,7 @@ function doc.formspec_category(id, playername)
 			formstring = formstring .. "New entries: "..(doc.get_entry_count(id)-doc.get_viewed_count(playername, id)).."]"
 		else
 			formstring = formstring .. "label[0,0.5;This category is empty.]"
+			formstring = formstring .. "button[0,1.5;3,1;doc_button_goto_main;Go to category list]"
 		end
 	end
 	return formstring
@@ -301,8 +302,14 @@ function doc.formspec_entry(category_id, entry_id)
 		formstring = "label[0,0;You haven't chosen a category yet. Please choose one in the category list first.]"
 		formstring = formstring .. "button[0,1;3,1;doc_button_goto_main;Go to category list]"
 	elseif entry_id == nil then
-		formstring = "label[0,0;You haven't chosen an entry yet. Please choose one in the entry list first.]"
-		formstring = formstring .. "button[0,1;3,1;doc_button_goto_category;Go to entry list]"
+		formstring = "label[0,0;Help > "..doc.data.categories[category_id].def.name.." > (No Entry)]"
+		if doc.get_entry_count(category_id) >= 1 then
+			formstring = formstring .. "label[0,0.5;You haven't chosen an entry yet. Please choose one in the entry list first.]"
+			formstring = formstring .. "button[0,1.5;3,1;doc_button_goto_category;Go to entry list]"
+		else
+			formstring = formstring .. "label[0,0.5;This category does not have any entries.]"
+			formstring = formstring .. "button[0,1.5;3,1;doc_button_goto_main;Go to category list]"
+		end
 	else
 
 		local category = doc.data.categories[category_id]
