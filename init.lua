@@ -68,12 +68,20 @@ end
 
 -- Opens the main documentation formspec for the player
 function doc.show_doc(playername)
+	if doc.get_category_count() <= 0 then
+		minetest.show_formspec(playername, "doc:error_no_categories", doc.formspec_error_no_categories())
+		return
+	end
 	local formspec = doc.formspec_core()..doc.formspec_main()
 	minetest.show_formspec(playername, "doc:main", formspec)
 end
 
 -- Opens the documentation formspec for the player at the specified category
 function doc.show_category(playername, category_id)
+	if doc.get_category_count() <= 0 then
+		minetest.show_formspec(playername, "doc:error_no_categories", doc.formspec_error_no_categories())
+		return
+	end
 	doc.data.players[playername].catsel = nil
 	doc.data.players[playername].category = category_id
 	doc.data.players[playername].entry = nil
@@ -83,6 +91,10 @@ end
 
 -- Opens the documentation formspec for the player showing the specified entry in a category
 function doc.show_entry(playername, category_id, entry_id)
+	if doc.get_category_count() <= 0 then
+		minetest.show_formspec(playername, "doc:error_no_categories", doc.formspec_error_no_categories())
+		return
+	end
 	doc.data.players[playername].catsel = nil
 	doc.data.players[playername].category = category_id
 	doc.data.players[playername].entry = entry_id
@@ -167,23 +179,38 @@ function doc.formspec_core(tab)
 end
 
 function doc.formspec_main()
-	local y = 1
 	local formstring = "label[0,0;This is the Documentation System, Version "..doc.VERSION.STRING..".\n"
-	formstring = formstring .. "Please select a category you wish to learn more about:]"
-
-	for c=1,#doc.data.category_order do
-		local id = doc.data.category_order[c]
-		local data = doc.data.categories[id]
-		-- Category buton
-		local button = "button[0,"..y..";3,1;doc_button_category_"..id..";"..minetest.formspec_escape(data.def.name).."]"
-		local tooltip = ""
-		-- Optional description
-		if data.def.description ~= nil then
+	if doc.get_category_count() >= 1 then
+		formstring = formstring .. "Please select a category you wish to learn more about:]"
+		local y = 1
+		for c=1,#doc.data.category_order do
+			local id = doc.data.category_order[c]
+			local data = doc.data.categories[id]
+			-- Category buton
+			local button = "button[0,"..y..";3,1;doc_button_category_"..id..";"..minetest.formspec_escape(data.def.name).."]"
+			local tooltip = ""
+			-- Optional description
+			if data.def.description ~= nil then
 			tooltip = "tooltip[doc_button_category_"..id..";"..minetest.formspec_escape(data.def.description).."]"
+			end
+			formstring = formstring .. button .. tooltip
+			y = y + 1
 		end
-		formstring = formstring .. button .. tooltip
-		y = y + 1
 	end
+	return formstring
+end
+
+function doc.formspec_error_no_categories()
+	local formstring = "size[8,6]textarea[0.25,0;8,6;;"
+	formstring = formstring .. minetest.formspec_escape(
+[=[This is the Documentation System, Version ]=]..doc.VERSION.STRING..[=[.
+
+ERROR: No help available.
+
+No categories have been registered, but the Documentation System is useless without them.
+The Documentation System does not come with help contents on its own, it needs additional mods to add help content.
+Please make sure such mods are enabled on this server, and try again.]=])
+	formstring = formstring .. ";]button_exit[3,5;2,1;okay;OK]"
 	return formstring
 end
 
