@@ -174,7 +174,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 		local ids = {}
 		local state = {}
 		local name = player:get_player_name()
-		local bgscale, iconscale, text, barnumber
+		local bgscale, iconscale, text, barnumber, bgiconnumber
 		if start_max == 0 or start_hidden then
 			bgscale = { x=0, y=0 }
 		else
@@ -183,10 +183,12 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 		if start_hidden then
 			iconscale = { x=0, y=0 }
 			barnumber = 0
+			bgiconnumber = 0
 			text = ""
 		else
 			iconscale = { x=1, y=1 }
 			barnumber = hb.value_to_barlength(start_value, start_max)
+			bgiconnumber = hb.settings.statbar_length
 			text = string.format(format_string, label, start_value, start_max)
 		end
 		if hb.settings.bar_type == "progress_bar" then
@@ -213,9 +215,8 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 				ids.bg = player:hud_add({
 					hud_elem_type = "statbar",
 					position = pos,
-					scale = bgscale,
 					text = textures.bgicon,
-					number = hb.settings.statbar_length,
+					number = bgiconnumber,
 					alignment = {x=-1,y=-1},
 					offset = { x = offset.x, y = offset.y },
 				})
@@ -391,6 +392,8 @@ function hb.hide_hudbar(player, identifier)
 			end
 			player:hud_change(hudtable.hudids[name].bg, "scale", {x=0,y=0})
 			player:hud_change(hudtable.hudids[name].text, "text", "")
+		elseif hb.settings.bar_type == "statbar_modern" then
+			player:hud_change(hudtable.hudids[name].bg, "number", 0)
 		end
 		player:hud_change(hudtable.hudids[name].bar, "number", 0)
 		hudtable.hudstate[name].hidden = true
@@ -412,6 +415,8 @@ function hb.unhide_hudbar(player, identifier)
 				player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
 			end
 			player:hud_change(hudtable.hudids[name].text, "text", tostring(string.format(hudtable.format_string, hudtable.label, value, max)))
+		elseif hb.settings.bar_type == "statbar_modern" then
+			player:hud_change(hudtable.hudids[name].bg, "number", hb.settings.statbar_length)
 		end
 		player:hud_change(hudtable.hudids[name].bar, "number", hb.value_to_barlength(value, max))
 		hudtable.hudstate[name].hidden = false
