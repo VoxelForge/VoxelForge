@@ -39,7 +39,8 @@ To Public License (WTFPL), version 2, as published by Sam Hocevar.
 
 * `hudbars_icon_health.png`—celeron55 (CC BY-SA 3.0), modified by BlockMen
 * `hudbars_bgicon_health.png`—celeron55 (CC BY-SA 3.0), modified by BlockMen
-* `hudbars_icon_breath.png`—kaeza (WTFPL), modified by BlockMen
+* `hudbars_icon_breath.png`—kaeza (WTFPL), modified by BlockMen, modified again by Wuzzy
+* `hudbars_bgicon_breath.png`—based on previous image, edited by Wuzzy (WTFPL)
 * `hudbars_bar_health.png`—Wuzzy (WTFPL)
 * `hudbars_bar_breath.png`—Wuzzy (WTFPL)
 * `hudbars_bar_background.png`—Wuzzy (WTFPL)
