@@ -2,7 +2,7 @@ doc = {}
 
 doc.VERSION = {}
 doc.VERSION.MAJOR = 0
-doc.VERSION.MINOR = 2
+doc.VERSION.MINOR = 3
 doc.VERSION.PATCH = 0
 doc.VERSION.STRING = doc.VERSION.MAJOR.."."..doc.VERSION.MINOR.."."..doc.VERSION.PATCH
 
