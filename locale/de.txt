@@ -1,0 +1,2 @@
+Health = Leben
+Breath = Atem
