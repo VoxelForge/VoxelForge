@@ -243,7 +243,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 				alignment = {x=1,y=1},
 				number = text_color,
 				direction = 0,
-				offset = { x = offset.x + 2,  y = offset.y },
+				offset = { x = offset.x + 2,  y = offset.y - 1},
 		})
 		end
 		-- Do not forget to update hb.get_hudbar_state if you add new fields to the state table
