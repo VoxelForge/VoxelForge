@@ -164,7 +164,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 		end
 	end
 	if format_string == nil then
-		format_string = "%s: %d/%d"
+		format_string = S("%s: %d/%d")
 	end
 
 	hudtable.add_all = function(player, hudtable, start_value, start_max, start_hidden)
