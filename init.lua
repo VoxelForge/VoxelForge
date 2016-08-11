@@ -99,7 +99,6 @@ function doc.show_entry(playername, category_id, entry_id)
 	doc.data.players[playername].category = category_id
 	doc.data.players[playername].entry = entry_id
 	doc.mark_entry_as_viewed(playername, category_id, entry_id)
-	local eids, catsel = doc.data.players[playername].entry_ids, doc.data.players[playername].catsel
 	local formspec = doc.formspec_core(3)..doc.formspec_entry(category_id, entry_id)
 	minetest.show_formspec(playername, "doc:entry", formspec)
 end
@@ -357,7 +356,7 @@ function doc.process_form(player,formname,fields)
 		end
 	end
 	if(formname == "doc:main") then
-		for id,category in pairs(doc.data.categories) do
+		for id,_ in pairs(doc.data.categories) do
 			if fields["doc_button_category_"..id] then
 				local formspec = doc.formspec_core(2)..doc.formspec_category(id, playername)
 				doc.data.players[playername].catsel = nil
