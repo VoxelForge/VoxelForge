@@ -404,7 +404,6 @@ function hb.unhide_hudbar(player, identifier)
 	local name = player:get_player_name()
 	local hudtable = hb.get_hudtable(identifier)
 	if(hudtable.hudstate[name].hidden) then
-		local name = player:get_player_name()
 		local value = hudtable.hudstate[name].value
 		local max = hudtable.hudstate[name].max
 		if hb.settings.bar_type == "progress_bar" then
@@ -510,7 +509,7 @@ minetest.register_globalstep(function(dtime)
 		if main_timer > hb.settings.tick then main_timer = 0 end
 		-- only proceed if damage is enabled
 		if minetest.setting_getbool("enable_damage") or hb.settings.forceload_default_hudbars then
-			for playername, player in pairs(hb.players) do
+			for _, player in pairs(hb.players) do
 				-- update all hud elements
 				update_hud(player)
 			end
