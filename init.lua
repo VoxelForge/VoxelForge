@@ -430,6 +430,7 @@ function doc.process_form(player,formname,fields)
 			local formspec = doc.formspec_core(2)..doc.formspec_category(doc.data.players[playername].category, playername)
 			minetest.show_formspec(playername, "doc:category", formspec)
 		elseif fields["doc_button_goto_next"] then
+			if doc.data.players[playername].catsel == nil then return end -- emergency exit
 			local eids = doc.data.players[playername].entry_ids
 			local cid = doc.data.players[playername].category
 			local new_catsel= doc.data.players[playername].catsel + 1
@@ -442,6 +443,7 @@ function doc.process_form(player,formname,fields)
 				doc.data.players[playername].entry = new_eid
 			end
 		elseif fields["doc_button_goto_prev"] then
+			if doc.data.players[playername].catsel == nil then return end -- emergency exit
 			local eids = doc.data.players[playername].entry_ids
 			local cid = doc.data.players[playername].category
 			local new_catsel= doc.data.players[playername].catsel - 1
