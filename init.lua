@@ -208,7 +208,7 @@ ERROR: No help available.
 
 No categories have been registered, but the Documentation System is useless without them.
 The Documentation System does not come with help contents on its own, it needs additional mods to add help content.
-Please make sure such mods are enabled on this server, and try again.]=])
+Please make sure such mods are enabled on for this world, and try again.]=])
 	formstring = formstring .. ";]button_exit[3,5;2,1;okay;OK]"
 	return formstring
 end
