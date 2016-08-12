@@ -295,6 +295,15 @@ function doc.formspec_category(id, playername)
 	return formstring
 end
 
+function doc.formspec_entry_navigation(category_id, entry_id)
+	local formstring = ""
+	formstring = formstring .. "button[10,8.5;1,1;doc_button_goto_prev;<]"
+	formstring = formstring .. "button[11,8.5;1,1;doc_button_goto_next;>]"
+	formstring = formstring .. "tooltip[doc_button_goto_prev;Show previous entry]"
+	formstring = formstring .. "tooltip[doc_button_goto_next;Show next entry]"
+	return formstring
+end
+
 function doc.formspec_entry(category_id, entry_id)
 	local formstring
 	if category_id == nil then
@@ -323,6 +332,7 @@ function doc.formspec_entry(category_id, entry_id)
 
 		formstring = "label[0,0;Help > "..category.def.name.." > "..entry.name.."]"
 		formstring = formstring .. category.def.build_formspec(entry.data)
+		formstring = formstring .. doc.formspec_entry_navigation(category_id, entry_id)
 	end
 	return formstring
 end
