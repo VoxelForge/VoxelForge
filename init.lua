@@ -95,6 +95,7 @@ function doc.show_entry(playername, category_id, entry_id)
 		minetest.show_formspec(playername, "doc:error_no_categories", doc.formspec_error_no_categories())
 		return
 	end
+	-- FIXME: catsel must be set!
 	doc.data.players[playername].catsel = nil
 	doc.data.players[playername].category = category_id
 	doc.data.players[playername].entry = entry_id
@@ -296,6 +297,9 @@ function doc.formspec_category(id, playername)
 end
 
 function doc.formspec_entry_navigation(category_id, entry_id)
+	if doc.get_entry_count(category_id) < 1 then
+		return ""
+	end
 	local formstring = ""
 	formstring = formstring .. "button[10,8.5;1,1;doc_button_goto_prev;<]"
 	formstring = formstring .. "button[11,8.5;1,1;doc_button_goto_next;>]"
@@ -418,6 +422,30 @@ function doc.process_form(player,formname,fields)
 		elseif fields["doc_button_goto_category"] then
 			local formspec = doc.formspec_core(2)..doc.formspec_category(doc.data.players[playername].category, playername)
 			minetest.show_formspec(playername, "doc:category", formspec)
+		elseif fields["doc_button_goto_next"] then
+			local eids = doc.data.players[playername].entry_ids
+			local cid = doc.data.players[playername].category
+			local new_catsel= doc.data.players[playername].catsel + 1
+			local new_eid = eids[new_catsel]
+			if #eids > 1 and new_catsel <= #eids then
+				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, new_eid)
+				minetest.show_formspec(playername, "doc:entry", formspec)
+				doc.mark_entry_as_viewed(playername, cid, new_eid)
+				doc.data.players[playername].catsel = new_catsel
+				doc.data.players[playername].entry = new_eid
+			end
+		elseif fields["doc_button_goto_prev"] then
+			local eids = doc.data.players[playername].entry_ids
+			local cid = doc.data.players[playername].category
+			local new_catsel= doc.data.players[playername].catsel - 1
+			local new_eid = eids[new_catsel]
+			if #eids > 1 and new_catsel >= 1 then
+				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, new_eid)
+				minetest.show_formspec(playername, "doc:entry", formspec)
+				doc.mark_entry_as_viewed(playername, cid, new_eid)
+				doc.data.players[playername].catsel = new_catsel
+				doc.data.players[playername].entry = new_eid
+			end
 		end
 	end
 end
