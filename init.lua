@@ -162,7 +162,7 @@ doc.entry_builders = {}
 
 -- Freeform text
 doc.entry_builders.text = function(data)
-	return "textarea[0.25,0.5;12,8;;"..minetest.formspec_escape(data)..";]"
+	return "textarea[0.25,0.5;12,10;;"..minetest.formspec_escape(data)..";]"
 end
 
 -- Direct formspec
