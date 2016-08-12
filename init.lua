@@ -256,7 +256,8 @@ end
 function doc.get_sorted_entry_names(cid)
 	local sort_table = {}
 	local entry_table = {}
-	for eid,entry in pairs(doc.data.categories[cid].entries) do
+	local cat = doc.data.categories[cid]
+	for eid,entry in pairs(cat.entries) do
 		local new_entry = table.copy(entry)
 		new_entry.eid = eid
 		table.insert(entry_table, new_entry)
@@ -267,10 +268,16 @@ function doc.get_sorted_entry_names(cid)
 	for i=1, #sort_table do
 		reverse_sort_table[sort_table[i]] = i
 	end
-	local comp = function(e1, e2)
-		if reverse_sort_table[e1.name] < reverse_sort_table[e2.name] then return true else return false end
+	-- Sorting algorithm
+	local comp
+	if cat.def.sorting ~= "nosort" then
+		if cat.def.sorting == "abc" or cat.def.sorting == nil then
+			comp = function(e1, e2)
+				if reverse_sort_table[e1.name] < reverse_sort_table[e2.name] then return true else return false end
+			end
+			table.sort(entry_table, comp)
+		end
 	end
-	table.sort(entry_table, comp)
 
 	return entry_table
 end

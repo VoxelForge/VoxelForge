@@ -53,6 +53,11 @@ data.
        will be shown as tooltip. Recommended style (in English):
        First letter capitalized, no puncation at end of sentence,
        max. 100 characters
+    * `sorting`: (optional) Sorting method of entries
+       * `"abc"`: Alphabetical (default)
+       * `"nosort": Entries appear in no particular order
+       * A table: Entries appear in exactly the same order as specified in the
+         table of entry IDs
     * `build_formspec`: The template function. Takes entry data as its
       only parameter (has the data type of the entry data) and must
       return a formspec which is inserted in the Entry tab.
