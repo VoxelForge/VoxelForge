@@ -54,10 +54,14 @@ data.
        First letter capitalized, no puncation at end of sentence,
        max. 100 characters
     * `sorting`: (optional) Sorting method of entries
-       * `"abc"`: Alphabetical (default)
-       * `"nosort": Entries appear in no particular order
-       * A table: Entries appear in exactly the same order as specified in the
-         table of entry IDs
+        * `"abc"`: Alphabetical (default)
+        * `"nosort"`: Entries appear in no particular order
+        * `"custom"`: Manually define the order of entries
+    * `sorting_data`: Additional data for special sorting methods.
+       If `sorting=="custom"`, this field must contain a table (list form) in which
+       the entry IDs are specified in the order they are supposed to appear in the
+       entry list. All entries which are missing in this table will appear in no
+       particular order below the final specified one.
     * `build_formspec`: The template function. Takes entry data as its
       only parameter (has the data type of the entry data) and must
       return a formspec which is inserted in the Entry tab.

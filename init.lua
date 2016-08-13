@@ -257,20 +257,36 @@ function doc.get_sorted_entry_names(cid)
 	local sort_table = {}
 	local entry_table = {}
 	local cat = doc.data.categories[cid]
+	local used_eids = {}
+	-- Predefined sorting
+	if cat.def.sorting == "custom" then
+		for i=1,#cat.def.sorting_data do
+			local new_entry = table.copy(cat.entries[cat.def.sorting_data[i]])
+			new_entry.eid = cat.def.sorting_data[i]
+			table.insert(entry_table, new_entry)
+			used_eids[cat.def.sorting_data[i]] = true
+		end
+	end
 	for eid,entry in pairs(cat.entries) do
 		local new_entry = table.copy(entry)
 		new_entry.eid = eid
-		table.insert(entry_table, new_entry)
+		if not used_eids[eid] then
+			table.insert(entry_table, new_entry)
+		end
 		table.insert(sort_table, entry.name)
 	end
-	table.sort(sort_table)
+	if cat.def.sorting == "custom" then
+		return entry_table
+	else
+		table.sort(sort_table)
+	end
 	local reverse_sort_table = table.copy(sort_table)
 	for i=1, #sort_table do
 		reverse_sort_table[sort_table[i]] = i
 	end
-	-- Sorting algorithm
 	local comp
 	if cat.def.sorting ~= "nosort" then
+		-- Alphabetic sorting
 		if cat.def.sorting == "abc" or cat.def.sorting == nil then
 			comp = function(e1, e2)
 				if reverse_sort_table[e1.name] < reverse_sort_table[e2.name] then return true else return false end
