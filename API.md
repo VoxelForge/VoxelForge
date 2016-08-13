@@ -57,15 +57,26 @@ data.
         * `"abc"`: Alphabetical (default)
         * `"nosort"`: Entries appear in no particular order
         * `"custom"`: Manually define the order of entries in `sorting_data`
+        * `"function"`: Sort by function defined in `sorting_data`
     * `sorting_data`: Additional data for special sorting methods.
-       If `sorting=="custom"`, this field must contain a table (list form) in which
-       the entry IDs are specified in the order they are supposed to appear in the
-       entry list. All entries which are missing in this table will appear in no
-       particular order below the final specified one.
-       This field is not required if `sorting` has any other value
+        * If `sorting=="custom"`, this field must contain a table (list form) in which
+          the entry IDs are specified in the order they are supposed to appear in the
+          entry list. All entries which are missing in this table will appear in no
+          particular order below the final specified one.
+        * If `sorting=="function"`, this field is a compare function to be used as
+          the `comp` parameter of `table.sort`. The parameters given are two entries.
+        * This field is not required if `sorting` has any other value
     * `build_formspec`: The template function. Takes entry data as its
       only parameter (has the data type of the entry data) and must
       return a formspec which is inserted in the Entry tab.
+
+Note: For function-based sorting, the entries provided in the compare function have the
+following format:
+
+    {
+        name = n, -- entry name
+        data = d, -- arbitrary entry data
+    }
 
 #### Using `build_formspec`
 For `build_formspec` you can either define your own function which

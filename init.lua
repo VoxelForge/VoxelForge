@@ -286,13 +286,16 @@ function doc.get_sorted_entry_names(cid)
 	end
 	local comp
 	if cat.def.sorting ~= "nosort" then
+		-- Sorting by user function
+		if cat.def.sorting == "function" then
+			comp = cat.def.sorting_data
 		-- Alphabetic sorting
-		if cat.def.sorting == "abc" or cat.def.sorting == nil then
+		elseif cat.def.sorting == "abc" or cat.def.sorting == nil then
 			comp = function(e1, e2)
 				if reverse_sort_table[e1.name] < reverse_sort_table[e2.name] then return true else return false end
 			end
-			table.sort(entry_table, comp)
 		end
+		table.sort(entry_table, comp)
 	end
 
 	return entry_table
