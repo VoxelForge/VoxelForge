@@ -1,4 +1,4 @@
-# API documentation for version 0.3.0
+# API documentation for version 0.4.0
 ## Core principles
 As a modder, you are free to write basically about everything and are also
 relatively free in the presentation of information. The Documentation
