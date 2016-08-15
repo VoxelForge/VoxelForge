@@ -224,17 +224,19 @@ function doc.generate_entry_list(cid, playername)
 		doc.data.players[playername].entry_ids = {}
 		local entries = doc.get_sorted_entry_names(cid)
 		for i=1, #entries do
-			local eid = entries[i].eid
-			table.insert(doc.data.players[playername].entry_ids, eid)
-			-- Colorize entries based on viewed status
-			-- Not viewed: Cyan
-			local viewedprefix = "#00FFFF"
-			if doc.entry_viewed(playername, cid, eid) then
-				-- Viewed: White
-				viewedprefix = "#FFFFFF"
+			if not entries[i].hidden then
+				local eid = entries[i].eid
+				table.insert(doc.data.players[playername].entry_ids, eid)
+				-- Colorize entries based on viewed status
+				-- Not viewed: Cyan
+				local viewedprefix = "#00FFFF"
+				if doc.entry_viewed(playername, cid, eid) then
+					-- Viewed: White
+					viewedprefix = "#FFFFFF"
+				end
+				entry_textlist = entry_textlist .. viewedprefix .. minetest.formspec_escape(entries[i].name) .. ","
+				counter = counter + 1
 			end
-			entry_textlist = entry_textlist .. viewedprefix .. minetest.formspec_escape(entries[i].name) .. ","
-			counter = counter + 1
 		end
 		if counter >= 1  then
 			entry_textlist = string.sub(entry_textlist, 1, #entry_textlist-1)

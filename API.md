@@ -110,6 +110,8 @@ the category definition.
 * `entry_id`: Unique identifier of the new entry, as a string
 * `def`: Definition table, it has the following fields:
     * `name`: Entry name to be shown in the interface
+    * `hidden`: (optional) If `true`, entry will not be displayed in entry list
+      initially (default: `false`)
     * `data`: Arbitrary data attached to the entry. Any data type is allowed;
       The data in this field will be used to create the actual formspec
       with `build_formspec` from the category definition
