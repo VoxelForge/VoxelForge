@@ -171,6 +171,56 @@ doc.entry_builders.formspec = function(data)
 	return data
 end
 
+--[[ Internal stuff ]]
+
+-- Loading and saving player data
+do
+	local filepath = minetest.get_worldpath().."/doc.mt"
+	local file = io.open(filepath, "r")
+	if file then
+		minetest.log("action", "[doc] doc.mt opened.")
+		local string = file:read()
+		io.close(file)
+		if(string ~= nil) then
+			local savetable = minetest.deserialize(string)
+			for name, players_stored_data in pairs(savetable.players_stored_data) do
+				doc.data.players[name] = {}
+				doc.data.players[name].stored_data = players_stored_data
+			end
+			minetest.debug("[doc] doc.mt successfully read.")
+		end
+	end
+end
+
+function doc.save_to_file()
+	local savetable = {}
+	savetable.players_stored_data = {}
+	for name, playerdata in pairs(doc.data.players) do
+		savetable.players_stored_data[name] = playerdata.stored_data
+	end
+
+	local savestring = minetest.serialize(savetable)
+
+	local filepath = minetest.get_worldpath().."/doc.mt"
+	local file = io.open(filepath, "w")
+	if file then
+		file:write(savestring)
+		io.close(file)
+		minetest.log("action", "[doc] Wrote player data into "..filepath..".")
+	else
+		minetest.log("error", "[doc] Failed to write player data into "..filepath..".")
+	end
+end
+
+minetest.register_on_leaveplayer(function(player)
+	doc.save_to_file()
+end)
+
+minetest.register_on_shutdown(function()
+	minetest.log("action", "[doc] Server shuts down. Rescuing player data into doc.mt.")
+	doc.save_to_file()
+end)
+
 --[[ Functions for internal use ]]
 
 function doc.formspec_core(tab)
@@ -494,13 +544,16 @@ minetest.register_chatcommand("doc", {
 
 minetest.register_on_joinplayer(function(player)
 	local playername = player:get_player_name()
-	doc.data.players[playername] = {}
-	-- Table for persistant data
-	doc.data.players[playername].stored_data = {}
-	-- Contains viewed entries
-	doc.data.players[playername].stored_data.viewed = {}
-	-- Count viewed entries
-	doc.data.players[playername].stored_data.viewed_count = {}
+	if doc.data.players[playername] == nil then
+		-- Initialize player data
+		doc.data.players[playername] = {}
+		-- Table for persistant data
+		doc.data.players[playername].stored_data = {}
+		-- Contains viewed entries
+		doc.data.players[playername].stored_data.viewed = {}
+		-- Count viewed entries
+		doc.data.players[playername].stored_data.viewed_count = {}
+	end
 end)
 
 minetest.register_on_leaveplayer(function(player)
