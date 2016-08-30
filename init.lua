@@ -66,6 +66,22 @@ function doc.entry_viewed(playername, category_id, entry_id)
 	end
 end
 
+-- Returns category definition
+function doc.get_category_definition(category_id)
+	if doc.data.categories[category_id] == nil then
+		return nil
+	end
+	return doc.data.categories[category_id].def
+end
+
+-- Returns entry definition
+function doc.get_entry_definition(category_id, entry_id)
+	if not doc.entry_exists(category_id, entry_id) then
+		return nil
+	end
+	return doc.data.categories[category_id].entries[entry_id]
+end
+
 -- Opens the main documentation formspec for the player
 function doc.show_doc(playername)
 	if doc.get_category_count() <= 0 then

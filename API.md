@@ -148,6 +148,28 @@ of a category (Entry tab).
 #### Return value
 Always `nil`.
 
+### `doc.get_category_definition(category_id)`
+Returns the definition of the specified category.
+
+#### Parameters
+* `category_id`: Category identifier of the category to the the definition
+  for
+
+#### Return value
+The category's definition table as spefied in the `def` argument of
+`doc.new_category`. The table fields are the same.
+
+### `doc.get_entry_definition(category_id, entry_id)`
+Returns the definition of the specified entry.
+
+#### Parameters
+* `category_id`: Category identifier of entry's category
+* `entry_id`: Entry identifier of the entry to get the definition for
+
+#### Return value
+The entry's definition table as spefied in the `def` argument of
+`doc.new_entry`. The table fields are the same.
+
 ### `doc.entry_exists(category_id, entry_id)`
 Checks if the specified entry exists and returns `true` or `false`.
 
