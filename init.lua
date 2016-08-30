@@ -43,7 +43,8 @@ function doc.new_entry(category_id, entry_id, def)
 	end
 end
 
--- Marks a particular entry as viewed by a certain player
+-- Marks a particular entry as viewed by a certain player, which also
+-- automatically reveals it
 function doc.mark_entry_as_viewed(playername, category_id, entry_id)
 	if doc.data.players[playername].stored_data.viewed[category_id] == nil then
 		doc.data.players[playername].stored_data.viewed[category_id] = {}
@@ -55,6 +56,21 @@ function doc.mark_entry_as_viewed(playername, category_id, entry_id)
 		-- Needed because viewed entries get a different color
 		doc.data.players[playername].entry_textlist_needs_updating = true
 	end
+	doc.mark_entry_as_revealed(playername, category_id, entry_id)
+end
+
+-- Marks a particular entry as revealed/unhidden by a certain player
+function doc.mark_entry_as_revealed(playername, category_id, entry_id)
+	if doc.data.players[playername].stored_data.revealed[category_id] == nil then
+		doc.data.players[playername].stored_data.revealed[category_id] = {}
+		doc.data.players[playername].stored_data.revealed_count[category_id] = 0
+	end
+	if doc.entry_exists(category_id, entry_id) and doc.data.players[playername].stored_data.revealed[category_id][entry_id] ~= true then
+		doc.data.players[playername].stored_data.revealed[category_id][entry_id] = true
+		doc.data.players[playername].stored_data.revealed_count[category_id] = doc.data.players[playername].stored_data.revealed_count[category_id] + 1
+		-- Needed because a new entry is added to the list of visible entries
+		doc.data.players[playername].entry_textlist_needs_updating = true
+	end
 end
 
 -- Returns true if the specified entry has been viewed by the player
@@ -63,6 +79,20 @@ function doc.entry_viewed(playername, category_id, entry_id)
 		return false
 	else
 		return doc.data.players[playername].stored_data.viewed[category_id][entry_id] == true
+	end
+end
+
+-- Returns true if the specified entry is hidden from the player
+function doc.entry_revealed(playername, category_id, entry_id)
+	local hidden = doc.data.categories[category_id].entries[entry_id].hidden
+	if doc.data.players[playername].stored_data.revealed[category_id] == nil then
+		return not hidden
+	else
+		if hidden then
+			return doc.data.players[playername].stored_data.revealed[category_id][entry_id] == true
+		else
+			return true
+		end
 	end
 end
 
@@ -167,6 +197,19 @@ function doc.get_viewed_count(playername, category_id)
 		return nil
 	end
 	local count = doc.data.players[playername].stored_data.viewed_count[category_id]
+	if count == nil then
+		return 0
+	else
+		return count
+	end
+end
+
+-- Returns how many entries have been revealed by the player
+function doc.get_revealed_count(playername, category_id)
+	if doc.data.players[playername] == nil then
+		return nil
+	end
+	local count = doc.data.players[playername].stored_data.revealed_count[category_id]
 	if count == nil then
 		return 0
 	else
@@ -290,8 +333,8 @@ function doc.generate_entry_list(cid, playername)
 		doc.data.players[playername].entry_ids = {}
 		local entries = doc.get_sorted_entry_names(cid)
 		for i=1, #entries do
-			if not entries[i].hidden then
-				local eid = entries[i].eid
+			local eid = entries[i].eid
+			if doc.entry_revealed(playername, cid, eid) then
 				table.insert(doc.data.players[playername].entry_ids, eid)
 				-- Colorize entries based on viewed status
 				-- Not viewed: Cyan
@@ -569,6 +612,10 @@ minetest.register_on_joinplayer(function(player)
 		doc.data.players[playername].stored_data.viewed = {}
 		-- Count viewed entries
 		doc.data.players[playername].stored_data.viewed_count = {}
+		-- Contains revealed/unhidden entries
+		doc.data.players[playername].stored_data.revealed = {}
+		-- Count revealed entries
+		doc.data.players[playername].stored_data.revealed_count = {}
 	end
 end)
 
