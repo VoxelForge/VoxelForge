@@ -136,18 +136,22 @@ function doc.show_category(playername, category_id)
 end
 
 -- Opens the documentation formspec for the player showing the specified entry in a category
-function doc.show_entry(playername, category_id, entry_id)
+function doc.show_entry(playername, category_id, entry_id, ignore_hidden)
 	if doc.get_category_count() <= 0 then
 		minetest.show_formspec(playername, "doc:error_no_categories", doc.formspec_error_no_categories())
 		return
 	end
-	-- FIXME: catsel must be set!
-	doc.data.players[playername].catsel = nil
-	doc.data.players[playername].category = category_id
-	doc.data.players[playername].entry = entry_id
-	doc.mark_entry_as_viewed(playername, category_id, entry_id)
-	local formspec = doc.formspec_core(3)..doc.formspec_entry(category_id, entry_id)
-	minetest.show_formspec(playername, "doc:entry", formspec)
+	if ignore_hidden or doc.entry_revealed(playername, category_id, entry_id) then
+		-- FIXME: catsel must be set!
+		doc.data.players[playername].catsel = nil
+		doc.data.players[playername].category = category_id
+		doc.data.players[playername].entry = entry_id
+		doc.mark_entry_as_viewed(playername, category_id, entry_id)
+		local formspec = doc.formspec_core(3)..doc.formspec_entry(category_id, entry_id)
+		minetest.show_formspec(playername, "doc:entry", formspec)
+	else
+		minetest.show_formspec(playername, "doc:error_hidden", doc.formspec_error_hidden(category_id, entry_id))
+	end
 end
 
 -- Returns true if and only if:
@@ -322,6 +326,21 @@ Please make sure such mods are enabled on for this world, and try again.]=])
 	formstring = formstring .. ";]button_exit[3,5;2,1;okay;OK]"
 	return formstring
 end
+
+function doc.formspec_error_hidden(category_id, entry_id)
+	local formstring = "size[8,6]textarea[0.25,0;8,6;;"
+	formstring = formstring .. minetest.formspec_escape(
+string.format([=[This is the Documentation System, Version %s.
+
+ERROR: Access denied.
+
+Sorry, access to the requested entry has been denied; this entry is secret. You may unlock access by more playing. Figure out on your own how to unlock this entry.]=],
+		doc.VERSION.STRING, doc.data.categories[category_id].def.name, doc.data.categories[category_id].entries[entry_id].name))
+	formstring = formstring .. ";]button_exit[3,5;2,1;okay;OK]"
+	return formstring
+end
+
+
 
 function doc.generate_entry_list(cid, playername)
 	local formstring

@@ -136,14 +136,18 @@ Opens the documentation formspec for the player at the specified category
 #### Return value
 Always `nil`.
 
-### `doc.show_entry(playername, category_id, entry_id)`
+### `doc.show_entry(playername, category_id, entry_id, ignore_hidden)`
 Opens the documentation formspec for the player showing the specified entry
-of a category (Entry tab).
+of a category (Entry tab). If the entry is hidden, an error message
+is displayed unless `ignore_hidden==true`.
 
 #### Parameters
 * `playername`: Name of the player to show the formspec to
 * `category_id`: Category identifier of the selected category
 * `entry_id`: Entry identifier of the entry to show
+* `ignore_hidden`: (optional) If `true`, shows entry even if it is still hidden
+  to the player; this will automatically reveal the entry to this player for the
+  rest of the game
 
 #### Return value
 Always `nil`.
