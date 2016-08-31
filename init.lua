@@ -46,6 +46,7 @@ end
 -- Marks a particular entry as viewed by a certain player, which also
 -- automatically reveals it
 function doc.mark_entry_as_viewed(playername, category_id, entry_id)
+	local entry, entry_id = doc.get_entry(category_id, entry_id)
 	if doc.data.players[playername].stored_data.viewed[category_id] == nil then
 		doc.data.players[playername].stored_data.viewed[category_id] = {}
 		doc.data.players[playername].stored_data.viewed_count[category_id] = 0
@@ -61,6 +62,7 @@ end
 
 -- Marks a particular entry as revealed/unhidden by a certain player
 function doc.mark_entry_as_revealed(playername, category_id, entry_id)
+	local entry, entry_id = doc.get_entry(category_id, entry_id)
 	if doc.data.players[playername].stored_data.revealed[category_id] == nil then
 		doc.data.players[playername].stored_data.revealed[category_id] = {}
 		doc.data.players[playername].stored_data.revealed_count[category_id] = 0
@@ -75,6 +77,7 @@ end
 
 -- Returns true if the specified entry has been viewed by the player
 function doc.entry_viewed(playername, category_id, entry_id)
+	local entry, entry_id = doc.get_entry(category_id, entry_id)
 	if doc.data.players[playername].stored_data.viewed[category_id] == nil then
 		return false
 	else
@@ -84,6 +87,7 @@ end
 
 -- Returns true if the specified entry is hidden from the player
 function doc.entry_revealed(playername, category_id, entry_id)
+	local entry, entry_id = doc.get_entry(category_id, entry_id)
 	local hidden = doc.data.categories[category_id].entries[entry_id].hidden
 	if doc.data.players[playername].stored_data.revealed[category_id] == nil then
 		return not hidden
@@ -109,7 +113,8 @@ function doc.get_entry_definition(category_id, entry_id)
 	if not doc.entry_exists(category_id, entry_id) then
 		return nil
 	end
-	return doc.data.categories[category_id].entries[entry_id]
+	local entry, _ = doc.get_entry(category_id, entry_id)
+	return entry
 end
 
 -- Opens the main documentation formspec for the player
@@ -141,6 +146,7 @@ function doc.show_entry(playername, category_id, entry_id, ignore_hidden)
 		minetest.show_formspec(playername, "doc:error_no_categories", doc.formspec_error_no_categories())
 		return
 	end
+	local entry, entry_id = doc.get_entry(category_id, entry_id)
 	if ignore_hidden or doc.entry_revealed(playername, category_id, entry_id) then
 		local playerdata = doc.data.players[playername]
 		playerdata.category = category_id
@@ -345,7 +351,19 @@ Sorry, access to the requested entry has been denied; this entry is secret. You 
 	return formstring
 end
 
-
+-- Returns the entry definition and true entry ID of an entry, taking aliases into account
+function doc.get_entry(category_id, entry_id)
+	local category = doc.data.categories[category_id]
+	local entry = category.entries[entry_id]
+	local resolved_entry_id = entry_id
+	if entry == nil then
+		resolved_entry_id = doc.data.categories[category_id].entry_aliases[entry_id]
+		if resolved_entry_id ~= nil then
+			entry = category.entries[resolved_entry_id]
+		end
+	end
+	return entry, resolved_entry_id
+end
 
 function doc.generate_entry_list(cid, playername)
 	local formstring
@@ -499,14 +517,7 @@ function doc.formspec_entry(category_id, entry_id)
 	else
 
 		local category = doc.data.categories[category_id]
-		local entry = category.entries[entry_id]
-		-- Check if entry has an alias
-		if entry == nil then
-			local resolved_alias = doc.data.categories[category_id].entry_aliases[entry_id]
-			if resolved_alias ~= nil then
-				entry = category.entries[resolved_alias]
-			end
-		end
+		local entry = doc.get_entry(category_id, entry_id)
 
 		formstring = "label[0,0;Help > "..category.def.name.." > "..entry.name.."]"
 		formstring = formstring .. category.def.build_formspec(entry.data)
