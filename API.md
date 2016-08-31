@@ -1,9 +1,10 @@
 # API documentation for version 0.4.0
-## Core principles
+## Core concepts
 As a modder, you are free to write basically about everything and are also
 relatively free in the presentation of information. The Documentation
 System has no restrictions on content whatsoever.
 
+### Categories and entries
 In the documentation system, everything is built on categories and entries.
 An entry is a single piece of documentation and is the basis of all actual
 documentation. Categories group multiple entries of the same topic together.
@@ -12,6 +13,18 @@ Categories also define a template which is used to determine how the final
 result in the Entry tab looks like. Entries themselves have a data field
 attached to them, this is a table containing arbitrary metadata which is
 used to construct the final formspec which is used on the Entry tab.
+
+## Advanced concepts
+### Viewed and hidden entries
+The mod keeps track of which entries have been viewed by any player.
+Any entry which has been accessed by a player is instantly marked as “viewed”.
+
+It also allows entries to be hidden. Hidden entries are not visible or
+normally accessible to players until they become revealed by function calls.
+
+Marking an entry as viewed or revealed is not reversible with this API.
+The viewed and hidden states are stored in the file `doc.mt` inside the
+world directory.
 
 ## Possible use cases
 I present to you some possible use cases to give you a rough idea what
@@ -39,6 +52,31 @@ this block as possible.
 
 ## Functions
 This is a list of all publicly available functions.
+
+### Overview
+The most important functions are `doc.new_category` and `doc.new_entry`. All other functions
+are mostly used for utility and examination purposes.
+
+These functions are available:
+
+* `doc.new_category`: Adds a new category
+* `doc.new_entry`: Adds a new entry
+* `doc.show_entry`: Shows a particular entry to a player
+* `doc.show_category`: Shows the entry list of a category to a player
+* `doc.show_doc`: Opens the main Documentation System form for a player
+* `doc.get_category_definition`: Returns the definition table of a category
+* `doc.get_entry_definition`: Returns the definition table of an entry
+* `doc.entry_exists`: Checks whether an entry exists
+* `doc.entry_viewed`: Checks whether an entry has been viewed/read by a player
+* `doc.entry_revealed`: Checks whether an entry is visible and normally accessible to a player
+* `doc.mark_entry_as_viewed`: Manually marks an entry as viewed/read by a player
+* `doc.mark_entry_as_revealed`: Make a hidden entry visible and accessible to a player
+* `doc.add_entry_alias`: Add an alternative name which can be used to access an entry
+* `doc.add_entry_aliases`: Add multiple alternative names which can be used to access an entry
+* `doc.get_category_count`: Returns the total number categories
+* `doc.get_entry_count`: Returns the total number of entries in a category
+* `doc.get_viewed_count`: Returns the number of entries a player has viewed in a category
+* `doc.get_revealed_count`: Returns the number of entries a player has access to in a category
 
 ### `doc.new_category(id, def)`
 Adds a new category. You have to define an unique identifier, a name
@@ -111,7 +149,7 @@ the category definition.
 * `def`: Definition table, it has the following fields:
     * `name`: Entry name to be shown in the interface
     * `hidden`: (optional) If `true`, entry will not be displayed in entry list
-      initially (default: `false`)
+      initially (default: `false`); it can be revealed later
     * `data`: Arbitrary data attached to the entry. Any data type is allowed;
       The data in this field will be used to create the actual formspec
       with `build_formspec` from the category definition
@@ -189,6 +227,59 @@ Returns `true` if and only if:
 
 Otherwise, returns `false`.
 
+### `doc.entry_viewed(playername, category_id, entry_id)`
+Tells whether the specified entry is marked as “viewed” (or read) by
+the player.
+
+#### Parameters
+* `playername`: Name of the player to check
+* `category_id`: Category identifier of the category to check
+* `entry_id`: Entry identifier of the entry to check
+
+#### Return value
+`true`, if entry is viewed, `false` otherwise.
+
+### `doc.entry_revealed(playername, category_id, entry_id)`
+Tells whether the specified entry is marked as “revealed” to the player
+and thus visible and generally accessible.
+
+#### Parameters
+* `playername`: Name of the player to check
+* `category_id`: Category identifier of the category to check
+* `entry_id`: Entry identifier of the entry to check
+
+#### Return value
+`true`, if entry is revealed, `false` otherwise.
+
+### `doc.mark_entry_as_viewed(playername, category_id, entry_id)`
+Marks a particular entry as “viewed” (or read) by a player. This will
+also automatically reveal the entry to the player permanently.
+
+#### Parameters
+* `playername`: Name of the player for whom to mark an entry as “viewed”
+* `category_id`: Category identifier of the category of the entry to mark
+* `entry_id`: Entry identifier of the entry to mark
+
+#### Returns
+Always `nil`.
+
+### `doc.mark_entry_as_revealed(playername, category_id, entry_id)`
+Marks a particular entry as “revealed” to a player. If the entry is
+declared as hidden, it will become visible in the list of entries for
+this player and will always be accessible with `doc.show_entry`. This
+change is permanently.
+
+For entries which are not normally hidden, this function has no direct
+effect.
+
+#### Parameters
+* `playername`: Name of the player for whom to reveal the entry
+* `category_id`: Category identifier of the category of the entry to reveal
+* `entry_id`: Entry identifier of the entry to reveal
+
+#### Returns
+Always `nil`.
+
 ### `doc.add_entry_alias(category_id, entry_id, alias)`
 Adds a single alias for an entry. When an entry has an alias, attempting to open
 an entry by an alias name results in opening the entry of the original name.
@@ -236,6 +327,19 @@ Returns how many entries have been viewed by a player.
 
 #### Return value
 Amount of entries the player has viewed in the specified category. If the
+player does not exist, this function returns `nil`.
+
+### `function doc.get_revealed_count(playername, category_id)`
+Returns how many entries the player has access to (non-hidden entries)
+in this category.
+
+#### Parameters
+* `playername`: Name of the player to count the revealed entries for
+* `category_id`: Category identifier of the category in which to count the
+  revealed entries
+
+#### Return value
+Amount of entries the player has access to in the specified category. If the
 player does not exist, this function returns `nil`.
 
 
