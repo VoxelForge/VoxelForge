@@ -97,12 +97,15 @@ data.
        will be shown as tooltip. Recommended style (in English):
        First letter capitalized, no puncation at end of sentence,
        max. 100 characters
+    * `build_formspec`: The template function. Takes entry data as its
+      only parameter (has the data type of the entry data) and must
+      return a formspec which is inserted in the Entry tab.
     * `sorting`: (optional) Sorting algorithm for display order of entries
         * `"abc"`: Alphabetical (default)
         * `"nosort"`: Entries appear in no particular order
         * `"custom"`: Manually define the order of entries in `sorting_data`
         * `"function"`: Sort by function defined in `sorting_data`
-    * `sorting_data`: Additional data for special sorting methods.
+    * `sorting_data`: (optional) Additional data for special sorting methods.
         * If `sorting=="custom"`, this field must contain a table (list form) in which
           the entry IDs are specified in the order they are supposed to appear in the
           entry list. All entries which are missing in this table will appear in no
@@ -110,9 +113,9 @@ data.
         * If `sorting=="function"`, this field is a compare function to be used as
           the `comp` parameter of `table.sort`. The parameters given are two entries.
         * This field is not required if `sorting` has any other value
-    * `build_formspec`: The template function. Takes entry data as its
-      only parameter (has the data type of the entry data) and must
-      return a formspec which is inserted in the Entry tab.
+    * `hide_entries_by_default` (optional, experimental): If `true`, all entries
+      added to this category will start as hidden, unless explicitly specified otherwise
+      (default: `false`)
 
 Note: For function-based sorting, the entries provided in the compare function have the
 following format:

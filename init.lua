@@ -37,11 +37,13 @@ end
 function doc.new_entry(category_id, entry_id, def)
 	local cat = doc.data.categories[category_id]
 	if cat ~= nil then
-		cat.entries[entry_id] = def
-		cat.entry_count = doc.data.categories[category_id].entry_count + 1
-		if def.hidden then
+		local hidden = def.hidden or (def.hidden == nil and cat.def.hide_entries_by_default)
+		if hidden then
 			cat.hidden_count = cat.hidden_count + 1
+			def.hidden = hidden
 		end
+		cat.entry_count = doc.data.categories[category_id].entry_count + 1
+		cat.entries[entry_id] = def
 		return true
 	else
 		return false
