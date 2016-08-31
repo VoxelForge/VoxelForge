@@ -142,11 +142,16 @@ function doc.show_entry(playername, category_id, entry_id, ignore_hidden)
 		return
 	end
 	if ignore_hidden or doc.entry_revealed(playername, category_id, entry_id) then
-		-- FIXME: catsel must be set!
-		doc.data.players[playername].catsel = nil
-		doc.data.players[playername].category = category_id
-		doc.data.players[playername].entry = entry_id
+		local playerdata = doc.data.players[playername]
+		playerdata.category = category_id
+		playerdata.entry = entry_id
+
 		doc.mark_entry_as_viewed(playername, category_id, entry_id)
+		playerdata.entry_textlist_needs_updating = true
+		doc.generate_entry_list(category_id, playername)
+
+		playerdata.catsel = playerdata.catsel_list[entry_id]
+
 		local formspec = doc.formspec_core(3)..doc.formspec_entry(category_id, entry_id)
 		minetest.show_formspec(playername, "doc:entry", formspec)
 	else
@@ -345,16 +350,20 @@ end
 function doc.generate_entry_list(cid, playername)
 	local formstring
 	if doc.data.players[playername].entry_textlist == nil
+	or doc.data.players[playername].catsel_list == nil
 	or doc.data.players[playername].category ~= cid
 	or doc.data.players[playername].entry_textlist_needs_updating == true then
 		local entry_textlist = "textlist[0,1;11,7;doc_catlist;"
 		local counter = 0
 		doc.data.players[playername].entry_ids = {}
 		local entries = doc.get_sorted_entry_names(cid)
+		doc.data.players[playername].catsel_list = {}
 		for i=1, #entries do
-			local eid = entries[i].eid
+			local eid = entries[i]
+			local edata = doc.data.categories[cid].entries[eid]
 			if doc.entry_revealed(playername, cid, eid) then
 				table.insert(doc.data.players[playername].entry_ids, eid)
+				doc.data.players[playername].catsel_list[eid] = counter + 1
 				-- Colorize entries based on viewed status
 				-- Not viewed: Cyan
 				local viewedprefix = "#00FFFF"
@@ -362,7 +371,7 @@ function doc.generate_entry_list(cid, playername)
 					-- Viewed: White
 					viewedprefix = "#FFFFFF"
 				end
-				entry_textlist = entry_textlist .. viewedprefix .. minetest.formspec_escape(entries[i].name) .. ","
+				entry_textlist = entry_textlist .. viewedprefix .. minetest.formspec_escape(edata.name) .. ","
 				counter = counter + 1
 			end
 		end
@@ -376,7 +385,7 @@ function doc.generate_entry_list(cid, playername)
 		entry_textlist = entry_textlist .. "]"
 		doc.data.players[playername].entry_textlist = entry_textlist
 		formstring = entry_textlist
-		doc.data.players[playername].entry_testlist_needs_updating = false
+		doc.data.players[playername].entry_textlist_needs_updating = false
 	else
 		formstring = doc.data.players[playername].entry_textlist
 	end
@@ -388,6 +397,15 @@ function doc.get_sorted_entry_names(cid)
 	local entry_table = {}
 	local cat = doc.data.categories[cid]
 	local used_eids = {}
+	-- Helper function to extract the entry ID out of the output table
+	local extract = function(entry_table)
+		local eids = {}
+		for k,v in pairs(entry_table) do
+			local eid = v.eid
+			table.insert(eids, eid)
+		end
+		return eids
+	end
 	-- Predefined sorting
 	if cat.def.sorting == "custom" then
 		for i=1,#cat.def.sorting_data do
@@ -406,7 +424,7 @@ function doc.get_sorted_entry_names(cid)
 		table.insert(sort_table, entry.name)
 	end
 	if cat.def.sorting == "custom" then
-		return entry_table
+		return extract(entry_table)
 	else
 		table.sort(sort_table)
 	end
@@ -428,7 +446,7 @@ function doc.get_sorted_entry_names(cid)
 		table.sort(entry_table, comp)
 	end
 
-	return entry_table
+	return extract(entry_table)
 end
 
 function doc.formspec_category(id, playername)
