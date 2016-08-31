@@ -682,19 +682,44 @@ minetest.register_chatcommand("doc", {
 
 minetest.register_on_joinplayer(function(player)
 	local playername = player:get_player_name()
-	if doc.data.players[playername] == nil then
+	local playerdata = doc.data.players[playername]
+	if playerdata == nil then
 		-- Initialize player data
 		doc.data.players[playername] = {}
+		playerdata = doc.data.players[playername]
 		-- Table for persistant data
-		doc.data.players[playername].stored_data = {}
+		playerdata.stored_data = {}
 		-- Contains viewed entries
-		doc.data.players[playername].stored_data.viewed = {}
+		playerdata.stored_data.viewed = {}
 		-- Count viewed entries
-		doc.data.players[playername].stored_data.viewed_count = {}
+		playerdata.stored_data.viewed_count = {}
 		-- Contains revealed/unhidden entries
-		doc.data.players[playername].stored_data.revealed = {}
+		playerdata.stored_data.revealed = {}
 		-- Count revealed entries
-		doc.data.players[playername].stored_data.revealed_count = {}
+		playerdata.stored_data.revealed_count = {}
+	else
+		-- Completely rebuild viewed and revealed counts from scratch
+		for cid, cat in pairs(doc.data.categories) do
+			if playerdata.stored_data.viewed[cid] == nil then
+				playerdata.stored_data.viewed[cid] = {}
+			end
+			if playerdata.stored_data.revealed[cid] == nil then
+				playerdata.stored_data.revealed[cid] = {}
+			end
+			local vc = 0
+			local rc = doc.get_entry_count(cid) - doc.data.categories[cid].hidden_count
+			for eid, entry in pairs(cat.entries) do
+				if playerdata.stored_data.viewed[cid][eid] then
+					vc = vc + 1
+					playerdata.stored_data.revealed[cid][eid] = true
+				end
+				if playerdata.stored_data.revealed[cid][eid] and entry.hidden then
+					rc = rc + 1
+				end
+			end
+			playerdata.stored_data.viewed_count[cid] = vc
+			playerdata.stored_data.revealed_count[cid] = rc
+		end
 	end
 end)
 
