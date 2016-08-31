@@ -26,6 +26,12 @@ Marking an entry as viewed or revealed is not reversible with this API.
 The viewed and hidden states are stored in the file `doc.mt` inside the
 world directory.
 
+### Entry aliases
+Entry aliases are alternative identifiers for entry identifiers. With the
+exception of the alias functions themselves, When a function demands an
+`entry_id` you can either supply the original `entry_id` or any alias of the
+`entry_id`.
+
 ## Possible use cases
 I present to you some possible use cases to give you a rough idea what
 this mod is capable and how certain use casescould be implemented.
@@ -281,13 +287,14 @@ effect.
 Always `nil`.
 
 ### `doc.add_entry_alias(category_id, entry_id, alias)`
-Adds a single alias for an entry. When an entry has an alias, attempting to open
-an entry by an alias name results in opening the entry of the original name.
-Aliases are true within one category only.
+Adds a single alias for an entry. When an entry has an alias, supplying the
+alias to a function which demands an `entry_id` will work as if the original
+`entry_id` has been supplied. Aliases are true within one category only.
 
 #### Parameters
 * `category_id`: Category identifier of the category of the entry in question
-* `entry_id`: Entry identifier of the entry to create an alias for
+* `entry_id`: The original (!) entry identifier of the entry to create an alias
+  for
 * `alias`: Alias (string) for `entry_id`
 
 #### Return value
@@ -299,7 +306,8 @@ function has the same effect as `doc.add_entry_alias`.
 
 #### Parameters
 * `category_id`: Category identifier of the category of the entry in question
-* `entry_id`: Entry identifier of the entry to create aliases for
+* `entry_id`: The original (!) entry identifier of the entry to create aliases
+  for
 * `aliases`: Table/list of aliases (strings) for `entry_id`
 
 #### Return value
