@@ -497,6 +497,7 @@ function doc.formspec_category(id, playername)
 			local viewed = doc.get_viewed_count(playername, id)
 			local hidden = total - revealed
 			local new = total - viewed - hidden
+			-- TODO/FIXME: Check if number of hidden/viewed entries is always correct
 			if viewed < total then
 				formstring = formstring .. "New entries: "..new
 				if hidden > 0 then
