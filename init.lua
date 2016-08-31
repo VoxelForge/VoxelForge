@@ -23,6 +23,7 @@ function doc.new_category(id, def)
 		doc.data.categories[id] = {}
 		doc.data.categories[id].entries = {}
 		doc.data.categories[id].entry_count = 0
+		doc.data.categories[id].hidden_count = 0
 		doc.data.categories[id].def = def
 		doc.data.categories[id].entry_aliases = {}
 		table.insert(doc.data.category_order, id)
@@ -34,9 +35,13 @@ end
 
 -- Add a new entry
 function doc.new_entry(category_id, entry_id, def)
-	if doc.data.categories[category_id] ~= nil then
-		doc.data.categories[category_id].entries[entry_id] = def
-		doc.data.categories[category_id].entry_count = doc.data.categories[category_id].entry_count + 1
+	local cat = doc.data.categories[category_id]
+	if cat ~= nil then
+		cat.entries[entry_id] = def
+		cat.entry_count = doc.data.categories[category_id].entry_count + 1
+		if def.hidden then
+			cat.hidden_count = cat.hidden_count + 1
+		end
 		return true
 	else
 		return false
@@ -65,9 +70,9 @@ function doc.mark_entry_as_revealed(playername, category_id, entry_id)
 	local entry, entry_id = doc.get_entry(category_id, entry_id)
 	if doc.data.players[playername].stored_data.revealed[category_id] == nil then
 		doc.data.players[playername].stored_data.revealed[category_id] = {}
-		doc.data.players[playername].stored_data.revealed_count[category_id] = 0
+		doc.data.players[playername].stored_data.revealed_count[category_id] = doc.get_entry_count(category_id) - doc.data.categories[category_id].hidden_count
 	end
-	if doc.entry_exists(category_id, entry_id) and doc.data.players[playername].stored_data.revealed[category_id][entry_id] ~= true then
+	if doc.entry_exists(category_id, entry_id) and entry.hidden and doc.data.players[playername].stored_data.revealed[category_id][entry_id] ~= true then
 		doc.data.players[playername].stored_data.revealed[category_id][entry_id] = true
 		doc.data.players[playername].stored_data.revealed_count[category_id] = doc.data.players[playername].stored_data.revealed_count[category_id] + 1
 		-- Needed because a new entry is added to the list of visible entries
@@ -208,12 +213,16 @@ end
 
 -- Returns how many entries have been viewed by the player
 function doc.get_viewed_count(playername, category_id)
-	if doc.data.players[playername] == nil then
+	local playerdata = doc.data.players[playername]
+	if playerdata == nil then
 		return nil
 	end
-	local count = doc.data.players[playername].stored_data.viewed_count[category_id]
+	local count = playerdata.stored_data.viewed_count[category_id]
 	if count == nil then
-		return 0
+		playerdata.stored_data.viewed[category_id] = {}
+		count = 0
+		playerdata.stored_data.viewed_count[category_id] = count
+		return count
 	else
 		return count
 	end
@@ -221,12 +230,16 @@ end
 
 -- Returns how many entries have been revealed by the player
 function doc.get_revealed_count(playername, category_id)
-	if doc.data.players[playername] == nil then
+	local playerdata = doc.data.players[playername]
+	if playerdata == nil then
 		return nil
 	end
-	local count = doc.data.players[playername].stored_data.revealed_count[category_id]
+	local count = playerdata.stored_data.revealed_count[category_id]
 	if count == nil then
-		return 0
+		playerdata.stored_data.revealed[category_id] = {}
+		count = doc.get_entry_count(category_id) - doc.data.categories[category_id].hidden_count
+		playerdata.stored_data.revealed_count[category_id] = count
+		return count
 	else
 		return count
 	end
@@ -479,7 +492,13 @@ function doc.formspec_category(id, playername)
 			formstring = formstring .. doc.generate_entry_list(id, playername)
 			formstring = formstring .. "button[0,8;3,1;doc_button_goto_entry;Show entry]"
 			formstring = formstring .. "label[8,8;Number of entries: "..doc.get_entry_count(id).."\n"
-			formstring = formstring .. "New entries: "..(doc.get_entry_count(id)-doc.get_viewed_count(playername, id)).."]"
+			local total = doc.get_entry_count(id)
+			local revealed = doc.get_revealed_count(playername, id)
+			local viewed = doc.get_viewed_count(playername, id)
+			local hidden = total - revealed
+			local new = total - viewed - hidden
+			formstring = formstring .. "New entries: "..new.."\n"
+			formstring = formstring .. "Hidden entries: "..hidden.."]"
 		else
 			formstring = formstring .. "label[0,0.5;This category is empty.]"
 			formstring = formstring .. "button[0,1.5;3,1;doc_button_goto_main;Go to category list]"
