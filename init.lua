@@ -497,8 +497,17 @@ function doc.formspec_category(id, playername)
 			local viewed = doc.get_viewed_count(playername, id)
 			local hidden = total - revealed
 			local new = total - viewed - hidden
-			formstring = formstring .. "New entries: "..new.."\n"
-			formstring = formstring .. "Hidden entries: "..hidden.."]"
+			if viewed < total then
+				formstring = formstring .. "New entries: "..new
+				if hidden > 0 then
+					formstring = formstring .. "\n"
+					formstring = formstring .. "Hidden entries: "..hidden.."]"
+				else
+					formstring = formstring .. "]"
+				end
+			else
+				formstring = formstring .. "All entries read.]"
+			end
 		else
 			formstring = formstring .. "label[0,0.5;This category is empty.]"
 			formstring = formstring .. "button[0,1.5;3,1;doc_button_goto_main;Go to category list]"
