@@ -89,6 +89,8 @@ Adds a new category. You have to define an unique identifier, a name
 and a template function to build the entry formspec from the entry
 data.
 
+**Important**: You must call this function before any player joins, but not later.
+
 #### Parameters
 * `id`: Unique category identifier as a string
 * `def`: Definition table, it has the following fields:
@@ -151,6 +153,8 @@ to which to insert the entry, the entry's identifier, a name and some
 data which defines the entry. Note you do not directly define here how the
 end result of an entry looks like, this is done by `build_formspec` from
 the category definition.
+
+**Important**: You must call this function before any player joins, but not later.
 
 #### Parameters
 * `category_id`: Identifier of the category to add the entry into
