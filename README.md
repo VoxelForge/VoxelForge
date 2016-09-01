@@ -21,3 +21,6 @@ This mod helps you in writing extensive documentation for your mod or subgame.
 You can write about basically anything in the presentation you prefer.
 
 To get started, read `API.md` in the directory of this mod.
+
+## License of everything
+WTFPL

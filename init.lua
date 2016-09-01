@@ -79,6 +79,15 @@ function doc.mark_entry_as_revealed(playername, category_id, entry_id)
 		doc.data.players[playername].stored_data.revealed_count[category_id] = doc.data.players[playername].stored_data.revealed_count[category_id] + 1
 		-- Needed because a new entry is added to the list of visible entries
 		doc.data.players[playername].entry_textlist_needs_updating = true
+		if minetest.get_modpath("central_message") ~= nil then
+			local cat = doc.data.categories[category_id]
+			cmsg.push_message_player(minetest.get_player_by_name(playername), string.format("New help entry unlocked: %s > %s", cat.def.name, entry.name))
+		end
+		local last_sound = doc.data.players[playername].last_reveal_sound
+		if last_sound == nil or os.difftime(os.time(), last_sound) >= 1 then
+			minetest.sound_play({ name = "doc_reveal", gain = 0.2 }, { to_player = playername })
+			doc.data.players[playername].last_reveal_sound = os.time()
+		end
 	end
 end
 
