@@ -276,9 +276,64 @@ end
 -- Template function templates, to be used for build_formspec in doc.new_category
 doc.entry_builders = {}
 
+-- Inserts line breaks into a single paragraph and collapses all whitespace (including newlines)
+-- into spaces
+function linebreaker_single(text)
+	local linelength = 80
+	local remain = linelength
+	local res = {}
+	local line = {}
+	local split = function(s)
+		local res = {}
+		for w in string.gmatch(s, "%S+") do
+			res[#res+1] = w
+		end
+		return res
+	end
+
+	for _, word in ipairs(split(text)) do
+		if string.len(word) + 1 > remain then
+			table.insert(res, table.concat(line, " "))
+			line = { word }
+			remain = linelength - string.len(word)
+		else
+			table.insert(line, word)
+			remain = remain - (string.len(word) + 1)
+		end
+	end
+
+	table.insert(res, table.concat(line, " "))
+	return table.concat(res, "\n")
+end
+
+-- Inserts automatic line breaks into an entire text and preserves existing newlines
+function linebreaker(text)
+	local out = ""
+	for s in string.gmatch(text, "([^\n]*)\n") do
+		s = linebreaker_single(s)
+		out = out .. s
+		out = out .. "\n"
+	end
+	-- Remove last newline
+	if string.len(out) >= 1 then
+		out = string.sub(out, 1, string.len(out) - 1)
+	end
+	return out
+end
+
+-- Inserts text suitable for a textlist (including automatic word-wrap)
+local text_for_textlist = function(text)
+	text = linebreaker(text)
+	text = minetest.formspec_escape(text)
+	text = string.gsub(text, "\n", ",")
+	return text
+end
+
 -- Freeform text
 doc.entry_builders.text = function(data)
-	return "textarea[0.25,0.5;12,10;;"..minetest.formspec_escape(data)..";]"
+	-- TODO: Wait for Minetest to provide a native widget for scrollable read-only text with automatic line breaks
+	-- Currently, all of this had to be hacked into this script manually by using/abusing the textlis widget
+	return "textlist[0,0.5;11.8,8;text;"..text_for_textlist(data)..";1;true]"
 end
 
 -- Direct formspec
