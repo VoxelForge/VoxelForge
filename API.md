@@ -83,6 +83,7 @@ These functions are available:
 * `doc.get_entry_count`: Returns the total number of entries in a category
 * `doc.get_viewed_count`: Returns the number of entries a player has viewed in a category
 * `doc.get_revealed_count`: Returns the number of entries a player has access to in a category
+* `doc.get_hidden_count`: Returns the number of entries which are hidden from a player in a category
 
 ### `doc.new_category(id, def)`
 Adds a new category. You have to define an unique identifier, a name
@@ -356,6 +357,18 @@ in this category.
 #### Return value
 Amount of entries the player has access to in the specified category. If the
 player does not exist, this function returns `nil`.
+
+### `function doc.get_hidden_count(playername, category_id)`
+Returns how many entries are hidden from the player in this category.
+
+#### Parameters
+* `playername`: Name of the player to count the hidden entries for
+* `category_id`: Category identifier of the category in which to count the
+  hidden entries
+
+#### Return value
+Amount of entries hidden from the player. If the player does not exist,
+this function returns `nil`.
 
 
 ## Extending this mod (naming conventions)

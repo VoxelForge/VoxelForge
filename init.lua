@@ -258,6 +258,21 @@ function doc.get_revealed_count(playername, category_id)
 	end
 end
 
+-- Returns how many entries are hidden from the player
+function doc.get_hidden_count(playername, category_id)
+	local playerdata = doc.data.players[playername]
+	if playerdata == nil then
+		return nil
+	end
+	local total = doc.get_entry_count(category_id)
+	local rcount = playerdata.stored_data.revealed_count[category_id]
+	if rcount == nil then
+		return total
+	else
+		return total - rcount
+	end
+end
+
 -- Template function templates, to be used for build_formspec in doc.new_category
 doc.entry_builders = {}
 
