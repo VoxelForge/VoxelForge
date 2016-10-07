@@ -331,9 +331,11 @@ end
 
 -- Freeform text
 doc.entry_builders.text = function(data)
-	-- TODO: Wait for Minetest to provide a native widget for scrollable read-only text with automatic line breaks
-	-- Currently, all of this had to be hacked into this script manually by using/abusing the textlis widget
-	return "textlist[0,0.5;11.8,8;text;"..text_for_textlist(data)..";1;true]"
+	-- TODO: Wait for Minetest to provide a native widget for scrollable read-only text with automatic line breaks.
+	-- Currently, all of this had to be hacked into this script manually by using/abusing the table widget
+	return "tablecolumns[text]"..
+	"tableoptions[background=#00000000;highlight=#00000000;border=false]"..
+	"table[0,0.5;11.8,8;text;"..text_for_textlist(data).."]"
 end
 
 -- Direct formspec
