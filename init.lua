@@ -83,8 +83,10 @@ function doc.mark_entry_as_revealed(playername, category_id, entry_id)
 			local cat = doc.data.categories[category_id]
 			cmsg.push_message_player(minetest.get_player_by_name(playername), string.format("New help entry unlocked: %s > %s", cat.def.name, entry.name))
 		end
+		-- To avoid sound spamming, don't play sound more than once per second
 		local last_sound = doc.data.players[playername].last_reveal_sound
 		if last_sound == nil or os.difftime(os.time(), last_sound) >= 1 then
+			-- Play notification sound
 			minetest.sound_play({ name = "doc_reveal", gain = 0.2 }, { to_player = playername })
 			doc.data.players[playername].last_reveal_sound = os.time()
 		end
@@ -498,27 +500,32 @@ function doc.formspec_category(id, playername)
 		formstring = formstring .. "button[0,1.5;3,1;doc_button_goto_main;Go to category list]"
 	else
 		formstring = "label[0,0;Help > "..doc.data.categories[id].def.name.."]"
-		if doc.get_entry_count(id) >= 1 then
-			formstring = formstring .. "label[0,0.5;This category has the following entries:]"
-			formstring = formstring .. doc.generate_entry_list(id, playername)
-			formstring = formstring .. "button[0,8;3,1;doc_button_goto_entry;Show entry]"
-			formstring = formstring .. "label[8,8;Number of entries: "..doc.get_entry_count(id).."\n"
-			local total = doc.get_entry_count(id)
+		local total = doc.get_entry_count(id)
+		if total >= 1 then
 			local revealed = doc.get_revealed_count(playername, id)
-			local viewed = doc.get_viewed_count(playername, id)
-			local hidden = total - revealed
-			local new = total - viewed - hidden
-			-- TODO/FIXME: Check if number of hidden/viewed entries is always correct
-			if viewed < total then
-				formstring = formstring .. "New entries: "..new
-				if hidden > 0 then
-					formstring = formstring .. "\n"
-					formstring = formstring .. "Hidden entries: "..hidden.."]"
-				else
-					formstring = formstring .. "]"
-				end
+			if revealed == 0 then
+				formstring = formstring .. "label[0,0.5;Currently all entries in this category are hidden from you.\nUnlock new entries by proceeding in the game.]"
+				formstring = formstring .. "button[0,1.5;3,1;doc_button_goto_main;Go to category list]"
 			else
-				formstring = formstring .. "All entries read.]"
+				formstring = formstring .. "label[0,0.5;This category has the following entries:]"
+				formstring = formstring .. doc.generate_entry_list(id, playername)
+				formstring = formstring .. "button[0,8;3,1;doc_button_goto_entry;Show entry]"
+				formstring = formstring .. "label[8,8;Number of entries: "..total.."\n"
+				local viewed = doc.get_viewed_count(playername, id)
+				local hidden = total - revealed
+				local new = total - viewed - hidden
+				-- TODO/FIXME: Check if number of hidden/viewed entries is always correct
+				if viewed < total then
+					formstring = formstring .. "New entries: "..new
+					if hidden > 0 then
+						formstring = formstring .. "\n"
+						formstring = formstring .. "Hidden entries: "..hidden.."]"
+					else
+						formstring = formstring .. "]"
+					end
+				else
+					formstring = formstring .. "All entries read.]"
+				end
 			end
 		else
 			formstring = formstring .. "label[0,0.5;This category is empty.]"
