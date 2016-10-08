@@ -278,7 +278,7 @@ doc.entry_builders = {}
 
 -- Inserts line breaks into a single paragraph and collapses all whitespace (including newlines)
 -- into spaces
-function linebreaker_single(text)
+local linebreaker_single = function(text)
 	local linelength = 80
 	local remain = linelength
 	local res = {}
@@ -307,7 +307,7 @@ function linebreaker_single(text)
 end
 
 -- Inserts automatic line breaks into an entire text and preserves existing newlines
-function linebreaker(text)
+local linebreaker = function(text)
 	local out = ""
 	for s in string.gmatch(text, "([^\n]*)\n") do
 		s = linebreaker_single(s)
