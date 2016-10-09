@@ -278,8 +278,10 @@ doc.entry_builders = {}
 
 -- Inserts line breaks into a single paragraph and collapses all whitespace (including newlines)
 -- into spaces
-local linebreaker_single = function(text)
-	local linelength = 80
+local linebreaker_single = function(text, linelength)
+	if linelength == nil then
+		linelength = 80
+	end
 	local remain = linelength
 	local res = {}
 	local line = {}
@@ -307,10 +309,10 @@ local linebreaker_single = function(text)
 end
 
 -- Inserts automatic line breaks into an entire text and preserves existing newlines
-local linebreaker = function(text)
+local linebreaker = function(text, linelength)
 	local out = ""
 	for s in string.gmatch(text, "([^\n]*)\n") do
-		s = linebreaker_single(s)
+		s = linebreaker_single(s, linelength)
 		out = out .. s
 		out = out .. "\n"
 	end
@@ -322,20 +324,31 @@ local linebreaker = function(text)
 end
 
 -- Inserts text suitable for a textlist (including automatic word-wrap)
-local text_for_textlist = function(text)
-	text = linebreaker(text)
+local text_for_textlist = function(text, linelength)
+	text = linebreaker(text, linelength)
 	text = minetest.formspec_escape(text)
 	text = string.gsub(text, "\n", ",")
 	return text
 end
 
--- Freeform text
+-- Scrollable freeform text
 doc.entry_builders.text = function(data)
+	return doc.widgets.text(data, 0, 0.5, 11.8, 8)
+end
+
+doc.widgets = {}
+
+-- Scrollable freeform text
+-- TODO: Write documentation
+doc.widgets.text = function(data, x, y, width, height)
+	local baselength = 80
+	local widget_basewidth = 12
+	local linelength = math.max(20, math.floor(baselength * (width / widget_basewidth)))
 	-- TODO: Wait for Minetest to provide a native widget for scrollable read-only text with automatic line breaks.
 	-- Currently, all of this had to be hacked into this script manually by using/abusing the table widget
 	return "tablecolumns[text]"..
 	"tableoptions[background=#00000000;highlight=#00000000;border=false]"..
-	"table[0,0.5;11.8,8;text;"..text_for_textlist(data).."]"
+	"table["..tostring(x)..","..tostring(y)..";"..tostring(width)..","..tostring(height)..";text;"..text_for_textlist(data, linelength).."]"
 end
 
 -- Direct formspec
