@@ -400,3 +400,8 @@ this function may be deprecated if it isn't needed anymore.
 
 #### Return value
 A string which contains a complete formspec definition building the widget.
+
+#### Note
+When you use this function to build a formspec string, do not use identifiers
+beginning with `doc_widget_text` to avoid naming collisions, as this function
+makes use of such identifiers internally.
