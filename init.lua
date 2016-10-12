@@ -339,7 +339,6 @@ end
 doc.widgets = {}
 
 -- Scrollable freeform text
--- TODO: Write documentation
 doc.widgets.text = function(data, x, y, width, height)
 	local baselength = 80
 	local widget_basewidth = 12

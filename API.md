@@ -85,6 +85,10 @@ These functions are available:
 * `doc.get_revealed_count`: Returns the number of entries a player has access to in a category
 * `doc.get_hidden_count`: Returns the number of entries which are hidden from a player in a category
 
+#### Special widgets
+This API provides an experimental convenience function for creating a special
+widget to be used in formspecs. This function may be deprecated in later versions.
+
 ### `doc.new_category(id, def)`
 Adds a new category. You have to define an unique identifier, a name
 and a template function to build the entry formspec from the entry
@@ -379,3 +383,20 @@ with “`doc_`”, like `doc_items`, `doc_minetest_game`, `doc_identifier`.
 
 One mod which uses this convention is `doc_items` which uses the `doc.sub.items`
 table.
+
+### `doc.widgets.text(data, x, y, width, height)`
+This is a convenience function for creating a special formspec widget. It creates
+a widget in which you can insert scrollable multi-line text.
+
+This function is provided because Minetest lacks native support for such a widget;
+this function may be deprecated if it isn't needed anymore.
+
+#### Parameters
+* `data`: Text to be written inside the widget
+* `x`: Formspec X coordinate
+* `y`: Formspec Y coordinate
+* `width`: Width of the widget in formspec units
+* `height`: Height of the widget in formspec units
+
+#### Return value
+A string which contains a complete formspec definition building the widget.
