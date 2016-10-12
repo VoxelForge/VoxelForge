@@ -34,17 +34,17 @@ exception of the alias functions themselves, When a function demands an
 
 ## Possible use cases
 I present to you some possible use cases to give you a rough idea what
-this mod is capable and how certain use casescould be implemented.
+this mod is capable of and how certain use cases should be implemented.
 
 ### Simple use case: Minetest basics
-I want to write in freeform short help texts about the basic concepts of
+I want to write in free form short help texts about the basic concepts of
 Minetest or my subgame. First I define a category called “Basics”, the data
-for each of its entry is just a freeform text. The template function simply
-creates a formspec where this freeform text is displayed.
+for each of its entry is just a free form text. The template function simply
+creates a formspec where this free form text is displayed.
 
 ### Complex use case: Blocks
 I could create a category called “Blocks”, and this category is supposed to
-contain entries for every single block in the game. For this case, a freeform 
+contain entries for every single block in the game. For this case, a free form
 approach would be very inefficient and error-prone, as a lot of data can be
 reused.
 
@@ -98,7 +98,7 @@ data.
     * `name`: Category name to be shown in the interface
     * `description`: (optional) Short description of the category,
        will be shown as tooltip. Recommended style (in English):
-       First letter capitalized, no puncation at end of sentence,
+       First letter capitalized, no punctuation at end of sentence,
        max. 100 characters
     * `build_formspec`: The template function. Takes entry data as its
       only parameter (has the data type of the entry data) and must
@@ -135,7 +135,7 @@ following predefined convenience functions:
 
 * `doc.entry_builders.text`: Expects entry data to be a string.
   It will be inserted directly into the entry. Useful for entries with
-  a freeform text.
+  a free form text.
 * `doc.entry_builders.formspec`: Entry data is expected to contain the
   complete entry formspec as a string. Useful if your entries. Useful
   if you expect your entries to differ wildly in layouts.
@@ -212,7 +212,7 @@ Returns the definition of the specified category.
   for
 
 #### Return value
-The category's definition table as spefied in the `def` argument of
+The category's definition table as specified in the `def` argument of
 `doc.new_category`. The table fields are the same.
 
 ### `doc.get_entry_definition(category_id, entry_id)`
@@ -223,7 +223,7 @@ Returns the definition of the specified entry.
 * `entry_id`: Entry identifier of the entry to get the definition for
 
 #### Return value
-The entry's definition table as spefied in the `def` argument of
+The entry's definition table as specified in the `def` argument of
 `doc.new_entry`. The table fields are the same.
 
 ### `doc.entry_exists(category_id, entry_id)`
@@ -231,7 +231,7 @@ Checks if the specified entry exists and returns `true` or `false`.
 
 #### Parameters
 * `category_id`: Category identifier of the category to check
-* `entry_id`: Entry identifier of the entry to check for its existance
+* `entry_id`: Entry identifier of the entry to check for its existence
 
 #### Return value
 Returns `true` if and only if:

@@ -11,7 +11,7 @@ To open the help, there are multiple ways:
 - Say “/help” in chat. This always works.
 - If you use Unified Inventory, click on the book icon in the inventory menu
 
-The documentation system itself should be more or less self-explanationary.
+The documentation system itself should be more or less self-explanatory.
 
 This mod is useless on its own, you will only need this mod as a dependency
 for mods which actually add some help entries.
