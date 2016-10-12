@@ -175,7 +175,7 @@ the category definition.
 #### Return value
 Always `nil`.
 
-### `function doc.show_doc(playername)`
+### `doc.show_doc(playername)`
 Opens the main documentation formspec for the player (Main tab).
 
 #### Parameters
@@ -337,7 +337,7 @@ Returns the number of entries in a category.
 #### Return value
 Number of entries in the specified category.
 
-### `function doc.get_viewed_count(playername, category_id)`
+### `doc.get_viewed_count(playername, category_id)`
 Returns how many entries have been viewed by a player.
 
 #### Parameters
@@ -349,7 +349,7 @@ Returns how many entries have been viewed by a player.
 Amount of entries the player has viewed in the specified category. If the
 player does not exist, this function returns `nil`.
 
-### `function doc.get_revealed_count(playername, category_id)`
+### `doc.get_revealed_count(playername, category_id)`
 Returns how many entries the player has access to (non-hidden entries)
 in this category.
 
@@ -362,7 +362,7 @@ in this category.
 Amount of entries the player has access to in the specified category. If the
 player does not exist, this function returns `nil`.
 
-### `function doc.get_hidden_count(playername, category_id)`
+### `doc.get_hidden_count(playername, category_id)`
 Returns how many entries are hidden from the player in this category.
 
 #### Parameters
@@ -373,16 +373,6 @@ Returns how many entries are hidden from the player in this category.
 #### Return value
 Amount of entries hidden from the player. If the player does not exist,
 this function returns `nil`.
-
-
-## Extending this mod (naming conventions)
-If you want to extend this mod with your own functionality, it is recommended
-that you put all API functions into `doc.sub.<name>`.
-As a naming convention, if your mod depends on `doc`, your mod name should also start
-with “`doc_`”, like `doc_items`, `doc_minetest_game`, `doc_identifier`.
-
-One mod which uses this convention is `doc_items` which uses the `doc.sub.items`
-table.
 
 ### `doc.widgets.text(data, x, y, width, height)`
 This is a convenience function for creating a special formspec widget. It creates
@@ -405,3 +395,15 @@ A string which contains a complete formspec definition building the widget.
 When you use this function to build a formspec string, do not use identifiers
 beginning with `doc_widget_text` to avoid naming collisions, as this function
 makes use of such identifiers internally.
+
+
+## Extending this mod (naming conventions)
+If you want to extend this mod with your own functionality, it is recommended
+that you put all API functions into `doc.sub.<name>`.
+As a naming convention, if your mod depends on `doc`, your mod name should also start
+with “`doc_`”, like `doc_items`, `doc_minetest_game`, `doc_identifier`.
+
+One mod which uses this convention is `doc_items` which uses the `doc.sub.items`
+table.
+
+
