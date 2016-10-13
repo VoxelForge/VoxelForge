@@ -77,6 +77,7 @@ These functions are available:
 * `doc.entry_revealed`: Checks whether an entry is visible and normally accessible to a player
 * `doc.mark_entry_as_viewed`: Manually marks an entry as viewed/read by a player
 * `doc.mark_entry_as_revealed`: Make a hidden entry visible and accessible to a player
+* `doc.mark_all_entries_as_revealed`: Make all hidden entries visible and accessible to a player
 * `doc.add_entry_alias`: Add an alternative name which can be used to access an entry
 * `doc.add_entry_aliases`: Add multiple alternative names which can be used to access an entry
 * `doc.get_category_count`: Returns the total number categories
@@ -285,7 +286,7 @@ Always `nil`.
 Marks a particular entry as “revealed” to a player. If the entry is
 declared as hidden, it will become visible in the list of entries for
 this player and will always be accessible with `doc.show_entry`. This
-change is permanently.
+change is permanent.
 
 For entries which are not normally hidden, this function has no direct
 effect.
@@ -294,6 +295,15 @@ effect.
 * `playername`: Name of the player for whom to reveal the entry
 * `category_id`: Category identifier of the category of the entry to reveal
 * `entry_id`: Entry identifier of the entry to reveal
+
+#### Returns
+Always `nil`.
+
+### `doc.mark_entry_as_revealed(playername)`
+Marks all entries as “revealed” to a player. This change is permanent.
+
+#### Parameters
+* `playername`: Name of the player for whom to reveal the entries
 
 #### Returns
 Always `nil`.

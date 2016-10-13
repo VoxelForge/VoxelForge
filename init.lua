@@ -93,6 +93,42 @@ function doc.mark_entry_as_revealed(playername, category_id, entry_id)
 	end
 end
 
+-- Reveal
+function doc.mark_all_entries_as_revealed(playername)
+	-- Has at least 1 new entry been revealed?
+	local reveal1 = false
+	for category_id, category in pairs(doc.data.categories) do
+		if doc.data.players[playername].stored_data.revealed[category_id] == nil then
+			doc.data.players[playername].stored_data.revealed[category_id] = {}
+			doc.data.players[playername].stored_data.revealed_count[category_id] = doc.get_entry_count(category_id) - doc.data.categories[category_id].hidden_count
+		end
+		for entry_id, _ in pairs(category.entries) do
+			if doc.data.players[playername].stored_data.revealed[category_id][entry_id] ~= true then
+				doc.data.players[playername].stored_data.revealed[category_id][entry_id] = true
+				doc.data.players[playername].stored_data.revealed_count[category_id] = doc.data.players[playername].stored_data.revealed_count[category_id] + 1
+				reveal1 = true
+			end
+		end
+	end
+
+	if reveal1 then
+		-- Needed because new entries are added to player's view on entry list
+		doc.data.players[playername].entry_textlist_needs_updating = true
+
+		-- Notify
+		local msg = "All help entries unlocked!"
+		if minetest.get_modpath("central_message") ~= nil then
+			cmsg.push_message_player(minetest.get_player_by_name(playername), msg)
+		else
+			minetest.chat_send_player(playername, msg)
+		end
+
+		-- Play notification sound (ignore sound limit intentionally)
+		minetest.sound_play({ name = "doc_reveal", gain = 0.2 }, { to_player = playername })
+		doc.data.players[playername].last_reveal_sound = os.time()
+	end
+end
+
 -- Returns true if the specified entry has been viewed by the player
 function doc.entry_viewed(playername, category_id, entry_id)
 	local entry, entry_id = doc.get_entry(category_id, entry_id)
@@ -842,3 +878,17 @@ if minetest.get_modpath("unified_inventory") ~= nil then
 		end,
 	})
 end
+
+minetest.register_privilege("doc_reveal", {
+	description = "Allows you to reveal all hidden help entries with /doc_unlock",
+	give_to_singleplayer = false
+})
+
+minetest.register_chatcommand("doc_reveal", {
+	params = "",
+	description = "Reveals all hidden help entries to you",
+	privs = { doc_unlock = true },
+	func = function(name, param)
+		doc.mark_all_entries_as_revealed(name)
+	end,
+})
