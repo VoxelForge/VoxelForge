@@ -880,14 +880,14 @@ if minetest.get_modpath("unified_inventory") ~= nil then
 end
 
 minetest.register_privilege("doc_reveal", {
-	description = "Allows you to reveal all hidden help entries with /doc_unlock",
+	description = "Allows you to reveal all hidden help entries with /doc_reveal",
 	give_to_singleplayer = false
 })
 
 minetest.register_chatcommand("doc_reveal", {
 	params = "",
 	description = "Reveals all hidden help entries to you",
-	privs = { doc_unlock = true },
+	privs = { doc_reveal = true },
 	func = function(name, param)
 		doc.mark_all_entries_as_revealed(name)
 	end,
