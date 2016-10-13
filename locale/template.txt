@@ -10,6 +10,7 @@ Entry =
 Entry list =
 Go to category list =
 Go to entry list =
+Help > (No Category) =
 Help > %s =
 Help > %s > %s =
 Help > %s > (No Entry) =
