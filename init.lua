@@ -635,8 +635,9 @@ end
 function doc.formspec_category(id, playername)
 	local formstring
 	if id == nil then
-		formstring = "label[0,0.5;"..F("You haven't chosen a category yet. Please choose one in the category list first.").."]"
-		formstring = formstring .. "button[0,1.5;3,1;doc_button_goto_main;"..F("Go to category list").."]"
+		formstring = "label[0,0;"..F("Help > (No Category)") .. "]"
+		formstring = formstring .. "label[0,0.5;"..F("You haven't chosen a category yet. Please choose one in the category list first.").."]"
+		formstring = formstring .. "button[0,1;3,1;doc_button_goto_main;"..F("Go to category list").."]"
 	else
 		formstring = "label[0,0;"..minetest.formspec_escape(string.format(S("Help > %s"), doc.data.categories[id].def.name)).."]"
 		local total = doc.get_entry_count(id)
@@ -689,7 +690,8 @@ end
 function doc.formspec_entry(category_id, entry_id)
 	local formstring
 	if category_id == nil then
-		formstring = "label[0,0;"..F("You haven't chosen a category yet. Please choose one in the category list first.").."]"
+		formstring = "label[0,0;"..F("Help > (No Category)") .. "]"
+		formstring = formstring .. "label[0,0.5;"..F("You haven't chosen a category yet. Please choose one in the category list first.").."]"
 		formstring = formstring .. "button[0,1;3,1;doc_button_goto_main;"..F("Go to category list").."]"
 	elseif entry_id == nil then
 		formstring = "label[0,0;"..minetest.formspec_escape(string.format(S("Help > %s > (No Entry)"), doc.data.categories[category_id].def.name)) .. "]"
