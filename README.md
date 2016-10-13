@@ -1,5 +1,5 @@
 # Documentation System
-This mod provides a simple and highly extensible formspec in which the user
+This mod provides a simple and highly extensible form in which the user
 can access help pages about various things and the modder can add those pages.
 The mod itself does not provide any help texts, just the framework.
 
@@ -9,7 +9,7 @@ Current version: 0.5.0
 ### Accessing the help
 To open the help, there are multiple ways:
 
-- Say “/help” in chat. This always works.
+- Use the `doc` chat command. This works always.
 - If you use Unified Inventory, click on the book icon in the inventory menu
 
 The documentation system itself should be more or less self-explanatory.
@@ -26,6 +26,7 @@ sense of progress.
 
 Players with the `doc_reveal` privilege can use the `doc_reveal` chat command
 to reveal all hidden entries instantly.
+
 
 ## For modders and subgame authors
 This mod helps you in writing extensive documentation for your mod or subgame.
