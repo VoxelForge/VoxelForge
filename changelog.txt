@@ -81,3 +81,7 @@ as of version 2.0.0 of the standard <http://semver.org/>.
 1.4.1
 -----
 - Fix bug in hb.change_hudbar being a no-op if new_value and new_max value are nil
+
+1.5.0
+-----
+- Portuguese translation by BrunoMine
