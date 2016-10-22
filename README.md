@@ -3,7 +3,7 @@ This mod provides a simple and highly extensible form in which the user
 can access help pages about various things and the modder can add those pages.
 The mod itself does not provide any help texts, just the framework.
 
-Current version: 0.5.0
+Current version: 0.6.0
 
 ## For users
 ### Accessing the help
