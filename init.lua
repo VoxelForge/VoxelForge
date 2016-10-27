@@ -492,13 +492,13 @@ end
 function doc.formspec_error_no_categories()
 	local formstring = "size[8,6]textarea[0.25,0;8,6;;"
 	formstring = formstring ..
-F([=[This is the Documentation System, Version %s.
+minetest.formspec_escape(string.format(S([=[This is the Documentation System, Version %s.
 
 ERROR: No help available.
 
 No categories have been registered, but the Documentation System is useless without them.
 The Documentation System does not come with help contents on its own, it needs additional mods to add help content.
-Please make sure such mods are enabled on for this world, and try again.]=])
+Please make sure such mods are enabled on for this world, and try again.]=]), doc.VERSION.STRING))
 	formstring = formstring .. ";]button_exit[3,5;2,1;okay;"..F("OK").."]"
 	return formstring
 end
