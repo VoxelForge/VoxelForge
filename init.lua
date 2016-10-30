@@ -55,6 +55,9 @@ function doc.new_entry(category_id, entry_id, def)
 			def.hidden = hidden
 		end
 		cat.entry_count = doc.data.categories[category_id].entry_count + 1
+		if def.name == nil or def.name == "" then
+			minetest.log("warning", "[doc] Nameless entry added. Entry ID: "..entry_id)
+		end
 		cat.entries[entry_id] = def
 		return true
 	else
