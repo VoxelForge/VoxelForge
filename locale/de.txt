@@ -31,3 +31,4 @@ This category is empty. = Diese Kategorie ist leer.
 This is the Documentation System, Version %s. = Dies ist das Dokumentationssystem, Version %s.
 You haven't chosen a category yet. Please choose one in the category list first. = Sie haben noch keine Kategorie gewählt. Bitte wählen Sie zuerst eine Kategorie in der Kategorienliste aus.
 You haven't chosen an entry yet. Please choose one in the entry list first. = Sie haben noch keinen Eintrag gewählt. Bitte wählen Sie zuerst einen Eintrag in der Eintragsliste aus.
+(Nameless entry) = (Namenloser Eintrag)

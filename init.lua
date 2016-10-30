@@ -550,11 +550,19 @@ function doc.generate_entry_list(cid, playername)
 				-- Colorize entries based on viewed status
 				-- Not viewed: Cyan
 				local viewedprefix = "#00FFFF"
-				if doc.entry_viewed(playername, cid, eid) then
+				local name = edata.name
+				if name == nil or name == "" then
+					name = S("(Nameless entry)")
+					if doc.entry_viewed(playername, cid, eid) then
+						viewedprefix = "#FF4444"
+					else
+						viewedprefix = "#FF0000"
+					end
+				elseif doc.entry_viewed(playername, cid, eid) then
 					-- Viewed: White
 					viewedprefix = "#FFFFFF"
 				end
-				entry_textlist = entry_textlist .. viewedprefix .. minetest.formspec_escape(edata.name) .. ","
+				entry_textlist = entry_textlist .. viewedprefix .. minetest.formspec_escape(name) .. ","
 				counter = counter + 1
 			end
 		end
@@ -706,7 +714,10 @@ function doc.formspec_entry(category_id, entry_id)
 
 		local category = doc.data.categories[category_id]
 		local entry = doc.get_entry(category_id, entry_id)
-
+		local name = entry.name
+		if name == nil or name == "" then
+			name = S("(Nameless entry)")
+		end
 		formstring = "label[0,0;"..minetest.formspec_escape(string.format(S("Help > %s > %s"), category.def.name, entry.name)).."]"
 		formstring = formstring .. category.def.build_formspec(entry.data)
 		formstring = formstring .. doc.formspec_entry_navigation(category_id, entry_id)
