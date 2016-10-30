@@ -714,11 +714,11 @@ function doc.formspec_entry(category_id, entry_id)
 
 		local category = doc.data.categories[category_id]
 		local entry = doc.get_entry(category_id, entry_id)
-		local name = entry.name
-		if name == nil or name == "" then
-			name = S("(Nameless entry)")
+		local ename = entry.name
+		if ename == nil or ename == "" then
+			ename = S("(Nameless entry)")
 		end
-		formstring = "label[0,0;"..minetest.formspec_escape(string.format(S("Help > %s > %s"), category.def.name, entry.name)).."]"
+		formstring = "label[0,0;"..minetest.formspec_escape(string.format(S("Help > %s > %s"), category.def.name, ename)).."]"
 		formstring = formstring .. category.def.build_formspec(entry.data)
 		formstring = formstring .. doc.formspec_entry_navigation(category_id, entry_id)
 	end
