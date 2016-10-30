@@ -552,7 +552,7 @@ function doc.generate_entry_list(cid, playername)
 				local viewedprefix = "#00FFFF"
 				local name = edata.name
 				if name == nil or name == "" then
-					name = S("(Nameless entry)")
+					name = string.format(S("Nameless entry (%s)"), eid)
 					if doc.entry_viewed(playername, cid, eid) then
 						viewedprefix = "#FF4444"
 					else
@@ -716,7 +716,7 @@ function doc.formspec_entry(category_id, entry_id)
 		local entry = doc.get_entry(category_id, entry_id)
 		local ename = entry.name
 		if ename == nil or ename == "" then
-			ename = S("(Nameless entry)")
+			ename = string.format(S("Nameless entry (%s)"), entry_id)
 		end
 		formstring = "label[0,0;"..minetest.formspec_escape(string.format(S("Help > %s > %s"), category.def.name, ename)).."]"
 		formstring = formstring .. category.def.build_formspec(entry.data)
