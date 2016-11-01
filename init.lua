@@ -362,10 +362,12 @@ end
 -- Inserts automatic line breaks into an entire text and preserves existing newlines
 local linebreaker = function(text, linelength)
 	local out = ""
-	for s in string.gmatch(text, "([^\n]*)\n") do
-		s = linebreaker_single(s, linelength)
-		out = out .. s
-		out = out .. "\n"
+	for s in string.gmatch(text, "([^\n]*)") do
+		local l = linebreaker_single(s, linelength)
+		out = out .. l
+		if(string.len(l) == 0) then
+			out = out .. "\n"
+		end
 	end
 	-- Remove last newline
 	if string.len(out) >= 1 then
