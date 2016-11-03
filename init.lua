@@ -18,6 +18,8 @@ doc.VERSION.MINOR = 6
 doc.VERSION.PATCH = 1
 doc.VERSION.STRING = doc.VERSION.MAJOR.."."..doc.VERSION.MINOR.."."..doc.VERSION.PATCH
 
+local doc_intro = string.format(S("This is the Documentation System, Version %s."), doc.VERSION.STRING)
+
 
 doc.data = {}
 doc.data.categories = {}
@@ -473,7 +475,7 @@ function doc.formspec_core(tab)
 end
 
 function doc.formspec_main()
-	local formstring = "label[0,0;"..minetest.formspec_escape(string.format(S("This is the Documentation System, Version %s."), doc.VERSION.STRING)) .. "\n"
+	local formstring = "label[0,0;"..minetest.formspec_escape(doc_intro) .. "\n"
 	if doc.get_category_count() >= 1 then
 		formstring = formstring .. F("Please select a category you wish to learn more about:").."]"
 		local y = 1
@@ -497,13 +499,11 @@ end
 function doc.formspec_error_no_categories()
 	local formstring = "size[8,6]textarea[0.25,0;8,6;;"
 	formstring = formstring ..
-minetest.formspec_escape(string.format(S([=[This is the Documentation System, Version %s.
-
-ERROR: No help available.
-
-No categories have been registered, but the Documentation System is useless without them.
-The Documentation System does not come with help contents on its own, it needs additional mods to add help content.
-Please make sure such mods are enabled on for this world, and try again.]=]), doc.VERSION.STRING))
+	minetest.formspec_escape(
+		doc_intro .. "\n\n" ..
+		S("Error: No help available.") .. "\n\n" ..
+S("No categories have been registered, but the Documentation System is useless without them.\nThe Documentation System does not come with help contents on its own, it needs additional mods to add help content. Please make sure such mods are enabled on for this world, and try again.")) .. "\n\n" ..
+S("Recommended mods: doc_basics, doc_items, doc_identifier.")
 	formstring = formstring .. ";]button_exit[3,5;2,1;okay;"..F("OK").."]"
 	return formstring
 end
@@ -511,12 +511,9 @@ end
 function doc.formspec_error_hidden(category_id, entry_id)
 	local formstring = "size[8,6]textarea[0.25,0;8,6;;"
 	formstring = formstring .. minetest.formspec_escape(
-string.format(S([=[This is the Documentation System, Version %s.
-
-ERROR: Access denied.
-
-Sorry, access to the requested entry has been denied; this entry is secret. You may unlock access by more playing. Figure out on your own how to unlock this entry.]=]),
-		doc.VERSION.STRING, doc.data.categories[category_id].def.name, doc.data.categories[category_id].entries[entry_id].name))
+	doc_intro .. "\n\n" ..
+	S("Error: Access denied.") .. "\n\n" ..
+	S("Access to the requested entry has been denied; this entry is secret. You may unlock access by more playing. Figure out on your own how to unlock this entry."))
 	formstring = formstring .. ";]button_exit[3,5;2,1;okay;"..F("OK").."]"
 	return formstring
 end
