@@ -45,6 +45,7 @@ function doc.new_category(id, def)
 		doc.data.categories[id].def = def
 		doc.data.categories[id].entry_aliases = {}
 		table.insert(doc.data.category_order, id)
+		doc.data.categories[id].order_position = #doc.data.category_order
 		return true
 	else
 		return false
@@ -512,7 +513,12 @@ function doc.formspec_main(playername)
 					formstring = formstring .. ","
 				end
 			end
-			formstring = formstring .. ";]"
+			formstring = formstring .. ";"
+			local sel = doc.data.categories[doc.data.players[playername].category]
+			if sel ~= nil then
+				formstring = formstring .. doc.data.categories[doc.data.players[playername].category].order_position
+			end
+			formstring = formstring .. "]"
 			formstring = formstring .. "button[0,8;3,1;doc_button_goto_category;"..F("Show category").."]"
 		end
 	end
@@ -808,10 +814,8 @@ function doc.process_form(player,formname,fields)
 		end
 		if fields["doc_button_goto_category"] then
 			local cid = doc.data.players[playername].category
-			if cid ~= nil then
-				local formspec = doc.formspec_core(2)..doc.formspec_category(cid, playername)
-				minetest.show_formspec(playername, "doc:category", formspec)
-			end
+			local formspec = doc.formspec_core(2)..doc.formspec_category(cid, playername)
+			minetest.show_formspec(playername, "doc:category", formspec)
 		end
 	elseif(formname == "doc:category") then
 		if fields["doc_button_goto_entry"] then
