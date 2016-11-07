@@ -413,7 +413,10 @@ The default values for the optional parameters result in a widget which fills
 nearly the entire entry page.
 
 #### Return value
-A string which contains a complete formspec definition building the widget.
+Two values are returned, in this order:
+
+* String: Contains a complete formspec definition building the widget.
+* String: Formspec element ID of the created widget
 
 #### Note
 When you use this function to build a formspec string, do not use identifiers

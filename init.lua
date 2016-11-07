@@ -416,7 +416,8 @@ end
 
 -- Scrollable freeform text
 doc.entry_builders.text = function(data)
-	return doc.widgets.text(data, doc.FORMSPEC.ENTRY_START_X, doc.FORMSPEC.ENTRY_START_Y, doc.FORMSPEC.ENTRY_WIDTH - 0.2, doc.FORMSPEC.ENTRY_HEIGHT)
+	local formstring = doc.widgets.text(data, doc.FORMSPEC.ENTRY_START_X, doc.FORMSPEC.ENTRY_START_Y, doc.FORMSPEC.ENTRY_WIDTH - 0.2, doc.FORMSPEC.ENTRY_HEIGHT)
+	return formstring
 end
 
 doc.widgets = {}
@@ -439,13 +440,15 @@ doc.widgets.text = function(data, x, y, width, height)
 	local baselength = 80
 	local widget_basewidth = doc.FORMSPEC.WIDTH
 	local linelength = math.max(20, math.floor(baselength * (width / widget_basewidth)))
+
+	local widget_id = "doc_widget_text"..text_id
+	text_id = text_id + 1
 	-- TODO: Wait for Minetest to provide a native widget for scrollable read-only text with automatic line breaks.
 	-- Currently, all of this had to be hacked into this script manually by using/abusing the table widget
 	local formstring = "tablecolumns[text]"..
 	"tableoptions[background=#00000000;highlight=#00000000;border=false]"..
-	"table["..tostring(x)..","..tostring(y)..";"..tostring(width)..","..tostring(height)..";doc_widget_text"..tostring(text_id)..";"..text_for_textlist(data, linelength).."]"
-	text_id = text_id + 1
-	return formstring
+	"table["..tostring(x)..","..tostring(y)..";"..tostring(width)..","..tostring(height)..";"..widget_id..";"..text_for_textlist(data, linelength).."]"
+	return formstring, widget_id
 end
 
 -- Direct formspec
