@@ -404,10 +404,13 @@ this function may be deprecated if it isn't needed anymore.
 
 #### Parameters
 * `data`: Text to be written inside the widget
-* `x`: Formspec X coordinate
-* `y`: Formspec Y coordinate
-* `width`: Width of the widget in formspec units
-* `height`: Height of the widget in formspec units
+* `x`: Formspec X coordinate (optional)
+* `y`: Formspec Y coordinate (optional)
+* `width`: Width of the widget in formspec units (optional)
+* `height`: Height of the widget in formspec units (optional)
+
+The default values for the optional parameters result in a widget which fills
+nearly the entire entry page.
 
 #### Return value
 A string which contains a complete formspec definition building the widget.

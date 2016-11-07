@@ -424,6 +424,18 @@ doc.widgets = {}
 local text_id = 1
 -- Scrollable freeform text
 doc.widgets.text = function(data, x, y, width, height)
+	if x == nil then
+		x = doc.FORMSPEC.ENTRY_START_X
+	end
+	if y == nil then
+		y = doc.FORMSPEC.ENTRY_START_Y
+	end
+	if width == nil then
+		width = doc.FORMSPEC.ENTRY_WIDTH
+	end
+	if height == nil then
+		height = doc.FORMSPEC.ENTRY_HEIGHT
+	end
 	local baselength = 80
 	local widget_basewidth = doc.FORMSPEC.WIDTH
 	local linelength = math.max(20, math.floor(baselength * (width / widget_basewidth)))
