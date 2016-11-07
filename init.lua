@@ -792,6 +792,7 @@ function doc.process_form(player,formname,fields)
 				doc.data.players[playername].catsel = nil
 				doc.data.players[playername].category = cid
 				doc.data.players[playername].entry = nil
+				doc.data.players[playername].entry_textlist_needs_updating = true
 				local formspec = doc.formspec_core(2)..doc.formspec_category(cid, playername)
 				minetest.show_formspec(playername, "doc:category", formspec)
 				break
@@ -810,6 +811,7 @@ function doc.process_form(player,formname,fields)
 					doc.data.players[playername].catsel = nil
 					doc.data.players[playername].category = cid
 					doc.data.players[playername].entry = nil
+					doc.data.players[playername].entry_textlist_needs_updating = true
 					local formspec = doc.formspec_core(2)..doc.formspec_category(cid, playername)
 					minetest.show_formspec(playername, "doc:category", formspec)
 				end
@@ -819,6 +821,7 @@ function doc.process_form(player,formname,fields)
 			local cid = doc.data.players[playername].category
 			doc.data.players[playername].catsel = nil
 			doc.data.players[playername].entry = nil
+			doc.data.players[playername].entry_textlist_needs_updating = true
 			local formspec = doc.formspec_core(2)..doc.formspec_category(cid, playername)
 			minetest.show_formspec(playername, "doc:category", formspec)
 		end
@@ -845,6 +848,7 @@ function doc.process_form(player,formname,fields)
 			if event.type == "CHG" then
 				doc.data.players[playername].catsel = event.index
 				doc.data.players[playername].entry = doc.data.players[playername].entry_ids[event.index]
+				doc.data.players[playername].entry_textlist_needs_updating = true
 			elseif event.type == "DCL" then
 				local cid = doc.data.players[playername].category
 				local eid = nil
@@ -853,6 +857,7 @@ function doc.process_form(player,formname,fields)
 					eid = eids[catsel]
 				end
 				doc.mark_entry_as_viewed(playername, cid, eid)
+				doc.data.players[playername].entry_textlist_needs_updating = true
 				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid)
 				minetest.show_formspec(playername, "doc:entry", formspec)
 			end
