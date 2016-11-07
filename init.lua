@@ -12,13 +12,36 @@ F = function(f) return minetest.formspec_escape(S(f)) end
 
 doc = {}
 
+-- Some informational variables
+-- DO NOT CHANGE THEM AFTERWARDS AT RUNTIME!
+
+-- Version number (follows the SemVer specification 2.0.0)
 doc.VERSION = {}
 doc.VERSION.MAJOR = 0
 doc.VERSION.MINOR = 6
 doc.VERSION.PATCH = 1
 doc.VERSION.STRING = doc.VERSION.MAJOR.."."..doc.VERSION.MINOR.."."..doc.VERSION.PATCH
 
-local doc_intro = string.format(S("This is the Documentation System, Version %s."), doc.VERSION.STRING)
+-- Formspec information
+doc.FORMSPEC = {}
+-- Width of formspec
+doc.FORMSPEC.WIDTH = 12
+doc.FORMSPEC.HEIGHT = 9
+
+--[[ Recommended bounding box coordinates for widgets to be placed in entry pages. Make sure
+all entry widgets are completely inside these coordinates to avoid overlapping. ]]
+doc.FORMSPEC.ENTRY_START_X = 0
+doc.FORMSPEC.ENTRY_START_Y = 0.5
+doc.FORMSPEC.ENTRY_END_X = doc.FORMSPEC.WIDTH
+doc.FORMSPEC.ENTRY_END_Y = doc.FORMSPEC.HEIGHT - 0.5
+doc.FORMSPEC.ENTRY_WIDTH = doc.FORMSPEC.ENTRY_END_X - doc.FORMSPEC.ENTRY_START_X
+doc.FORMSPEC.ENTRY_HEIGHT = doc.FORMSPEC.ENTRY_END_Y - doc.FORMSPEC.ENTRY_START_Y
+
+--TODO: Use container formspec element later
+
+
+-- Internal helper variables
+local DOC_INTRO = string.format(S("This is the Documentation System, Version %s."), doc.VERSION.STRING)
 
 local CATEGORYFIELDSIZE = {
 	WIDTH = 4,
@@ -393,7 +416,7 @@ end
 
 -- Scrollable freeform text
 doc.entry_builders.text = function(data)
-	return doc.widgets.text(data, 0, 0.5, 11.8, 8)
+	return doc.widgets.text(data, doc.FORMSPEC.ENTRY_START_X, doc.FORMSPEC.ENTRY_START_Y, doc.FORMSPEC.ENTRY_WIDTH - 0.2, doc.FORMSPEC.ENTRY_HEIGHT)
 end
 
 doc.widgets = {}
@@ -402,7 +425,7 @@ local text_id = 1
 -- Scrollable freeform text
 doc.widgets.text = function(data, x, y, width, height)
 	local baselength = 80
-	local widget_basewidth = 12
+	local widget_basewidth = doc.FORMSPEC.WIDTH
 	local linelength = math.max(20, math.floor(baselength * (width / widget_basewidth)))
 	-- TODO: Wait for Minetest to provide a native widget for scrollable read-only text with automatic line breaks.
 	-- Currently, all of this had to be hacked into this script manually by using/abusing the table widget
@@ -472,7 +495,7 @@ end)
 
 function doc.formspec_core(tab)
 	if tab == nil then tab = 1 else tab = tostring(tab) end
-	return "size[12,9]tabheader[0,0;doc_header;"..
+	return "size["..doc.FORMSPEC.WIDTH..","..doc.FORMSPEC.HEIGHT.."]tabheader[0,0;doc_header;"..
 	minetest.formspec_escape(S("Category list")) .. "," ..
 	minetest.formspec_escape(S("Entry list")) .. "," ..
 	minetest.formspec_escape(S("Entry")) .. ";"
@@ -480,7 +503,7 @@ function doc.formspec_core(tab)
 end
 
 function doc.formspec_main(playername)
-	local formstring = "label[0,0;"..minetest.formspec_escape(doc_intro) .. "\n"
+	local formstring = "label[0,0;"..minetest.formspec_escape(DOC_INTRO) .. "\n"
 	if doc.get_category_count() >= 1 then
 		formstring = formstring .. F("Please select a category you wish to learn more about:").."]"
 		if doc.get_category_count() <= (CATEGORYFIELDSIZE.WIDTH * CATEGORYFIELDSIZE.HEIGHT)  then
@@ -531,7 +554,7 @@ function doc.formspec_error_no_categories()
 	local formstring = "size[8,6]textarea[0.25,0;8,6;;"
 	formstring = formstring ..
 	minetest.formspec_escape(
-		doc_intro .. "\n\n" ..
+		DOC_INTRO .. "\n\n" ..
 		S("Error: No help available.") .. "\n\n" ..
 S("No categories have been registered, but the Documentation System is useless without them.\nThe main Documentation System mod (doc) does not come with help contents on its own, it needs additional mods to add help content. Please make sure such mods are enabled on for this world, and try again.")) .. "\n\n" ..
 S("Recommended mods: doc_basics, doc_items, doc_identifier.")
@@ -542,7 +565,7 @@ end
 function doc.formspec_error_hidden(category_id, entry_id)
 	local formstring = "size[8,6]textarea[0.25,0;8,6;;"
 	formstring = formstring .. minetest.formspec_escape(
-	doc_intro .. "\n\n" ..
+	DOC_INTRO .. "\n\n" ..
 	S("Error: Access denied.") .. "\n\n" ..
 	S("Access to the requested entry has been denied; this entry is secret. You may unlock access by more playing. Figure out on your own how to unlock this entry."))
 	formstring = formstring .. ";]button_exit[3,5;2,1;okay;"..F("OK").."]"

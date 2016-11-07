@@ -146,9 +146,20 @@ following predefined convenience functions:
   if you expect your entries to differ wildly in layouts.
 
 When building your formspec, you have to respect the size limitations.
-The documentation system uses a size of `12,9` and you should place
-all your formspec elements at positions not lower than `0.25,0.5` to
-avoid overlapping.
+The documentation system uses a size of 12×9 and you must make sure
+all entry widgets are inside a boundary box. The remaining space is
+reserved for widgets of the Documentation System and should not be used
+to avoid overlapping.
+Read from the following variables to calculate the final formspec coordinates:
+
+* `doc.FORMSPEC.WIDTH`: Width of Documentation System formspec
+* `doc.FORMSPEC.HEIGHT`: Height of Documentation System formspec
+* `doc.FORMSPEC.ENTRY_START_X`: Leftmost X point of bounding box
+* `doc.FORMSPEC.ENTRY_START_Y`: Topmost Y point of bounding box
+* `doc.FORMSPEC.ENTRY_END_X`: Rightmost X point of bounding box
+* `doc.FORMSPEC.ENTRY_END_Y`: Bottom Y point of bounding box
+* `doc.FORMSPEC.ENTRY_WIDTH`: Width of the entry widgets bounding box
+* `doc.FORMSPEC.ENTRY_HEIGHT`: Height of the entry widgets bounding box
 
 #### Return value
 Always `nil`.
