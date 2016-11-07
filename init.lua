@@ -483,9 +483,9 @@ function doc.formspec_main(playername)
 	local formstring = "label[0,0;"..minetest.formspec_escape(doc_intro) .. "\n"
 	if doc.get_category_count() >= 1 then
 		formstring = formstring .. F("Please select a category you wish to learn more about:").."]"
-		local y = 1
-		local x = 1
-		if #doc.data.category_order <= (CATEGORYFIELDSIZE.WIDTH * CATEGORYFIELDSIZE.HEIGHT)  then
+		if doc.get_category_count() <= (CATEGORYFIELDSIZE.WIDTH * CATEGORYFIELDSIZE.HEIGHT)  then
+			local y = 1
+			local x = 1
 			for c=1,#doc.data.category_order do
 				local id = doc.data.category_order[c]
 				local data = doc.data.categories[id]
@@ -513,14 +513,16 @@ function doc.formspec_main(playername)
 					formstring = formstring .. ","
 				end
 			end
-			formstring = formstring .. ";"
 			local sel = doc.data.categories[doc.data.players[playername].category]
 			if sel ~= nil then
+				formstring = formstring .. ";"
 				formstring = formstring .. doc.data.categories[doc.data.players[playername].category].order_position
 			end
 			formstring = formstring .. "]"
 			formstring = formstring .. "button[0,8;3,1;doc_button_goto_category;"..F("Show category").."]"
 		end
+	else
+		formstring = formstring .. "]"
 	end
 	return formstring
 end
@@ -787,10 +789,10 @@ function doc.process_form(player,formname,fields)
 	if(formname == "doc:main") then
 		for cid,_ in pairs(doc.data.categories) do
 			if fields["doc_button_category_"..cid] then
-				local formspec = doc.formspec_core(2)..doc.formspec_category(cid, playername)
 				doc.data.players[playername].catsel = nil
 				doc.data.players[playername].category = cid
 				doc.data.players[playername].entry = nil
+				local formspec = doc.formspec_core(2)..doc.formspec_category(cid, playername)
 				minetest.show_formspec(playername, "doc:category", formspec)
 				break
 			end
@@ -803,17 +805,20 @@ function doc.process_form(player,formname,fields)
 					doc.data.players[playername].catsel = nil
 					doc.data.players[playername].category = cid
 					doc.data.players[playername].entry = nil
+					doc.data.players[playername].entry_textlist_needs_updating = true
 				elseif event.type == "DCL" then
-					local formspec = doc.formspec_core(2)..doc.formspec_category(cid, playername)
 					doc.data.players[playername].catsel = nil
 					doc.data.players[playername].category = cid
 					doc.data.players[playername].entry = nil
+					local formspec = doc.formspec_core(2)..doc.formspec_category(cid, playername)
 					minetest.show_formspec(playername, "doc:category", formspec)
 				end
 			end
 		end
 		if fields["doc_button_goto_category"] then
 			local cid = doc.data.players[playername].category
+			doc.data.players[playername].catsel = nil
+			doc.data.players[playername].entry = nil
 			local formspec = doc.formspec_core(2)..doc.formspec_category(cid, playername)
 			minetest.show_formspec(playername, "doc:category", formspec)
 		end
@@ -847,9 +852,9 @@ function doc.process_form(player,formname,fields)
 				if eids ~= nil and catsel ~= nil then
 					eid = eids[catsel]
 				end
+				doc.mark_entry_as_viewed(playername, cid, eid)
 				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid)
 				minetest.show_formspec(playername, "doc:entry", formspec)
-				doc.mark_entry_as_viewed(playername, cid, eid)
 			end
 		end
 	elseif(formname == "doc:entry") then
@@ -866,11 +871,11 @@ function doc.process_form(player,formname,fields)
 			local new_catsel= doc.data.players[playername].catsel + 1
 			local new_eid = eids[new_catsel]
 			if #eids > 1 and new_catsel <= #eids then
-				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, new_eid)
-				minetest.show_formspec(playername, "doc:entry", formspec)
 				doc.mark_entry_as_viewed(playername, cid, new_eid)
 				doc.data.players[playername].catsel = new_catsel
 				doc.data.players[playername].entry = new_eid
+				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, new_eid)
+				minetest.show_formspec(playername, "doc:entry", formspec)
 			end
 		elseif fields["doc_button_goto_prev"] then
 			if doc.data.players[playername].catsel == nil then return end -- emergency exit
@@ -879,11 +884,11 @@ function doc.process_form(player,formname,fields)
 			local new_catsel= doc.data.players[playername].catsel - 1
 			local new_eid = eids[new_catsel]
 			if #eids > 1 and new_catsel >= 1 then
-				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, new_eid)
-				minetest.show_formspec(playername, "doc:entry", formspec)
 				doc.mark_entry_as_viewed(playername, cid, new_eid)
 				doc.data.players[playername].catsel = new_catsel
 				doc.data.players[playername].entry = new_eid
+				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, new_eid)
+				minetest.show_formspec(playername, "doc:entry", formspec)
 			end
 		end
 	end
