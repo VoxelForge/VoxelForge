@@ -29,6 +29,7 @@ Please select a category you wish to learn more about: =
 Recommended mods: doc_basics, doc_items, doc_identifier. =
 Reveals all hidden help entries to you =
 Show entry =
+Show category =
 Show next entry =
 Show previous entry =
 This category does not have any entries. =

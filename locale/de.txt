@@ -28,6 +28,7 @@ Please select a category you wish to learn more about: = Bitte wählen Sie eine 
 Recommended mods: doc_basics, doc_items, doc_identifier. = Empfohlene Mods: doc_basics, doc_items, doc_identifier.
 Reveals all hidden help entries to you = Schaltet für Sie alle verborgenen Hilfseinträge frei
 Show entry = Eintrag zeigen
+Show category = Kategorie zeigen
 Show next entry = Nächsten Eintrag zeigen
 Show previous entry = Vorherigen Eintrag zeigen
 This category does not have any entries. = Diese Kategorie hat keine Einträge.
