@@ -20,6 +20,10 @@ doc.VERSION.STRING = doc.VERSION.MAJOR.."."..doc.VERSION.MINOR.."."..doc.VERSION
 
 local doc_intro = string.format(S("This is the Documentation System, Version %s."), doc.VERSION.STRING)
 
+local CATEGORYFIELDSIZE = {
+	WIDTH = 4,
+	HEIGHT = 8,
+}
 
 doc.data = {}
 doc.data.categories = {}
@@ -479,18 +483,36 @@ function doc.formspec_main()
 	if doc.get_category_count() >= 1 then
 		formstring = formstring .. F("Please select a category you wish to learn more about:").."]"
 		local y = 1
-		for c=1,#doc.data.category_order do
-			local id = doc.data.category_order[c]
-			local data = doc.data.categories[id]
-			-- Category buton
-			local button = "button[0,"..y..";3,1;doc_button_category_"..id..";"..minetest.formspec_escape(data.def.name).."]"
-			local tooltip = ""
-			-- Optional description
-			if data.def.description ~= nil then
-			tooltip = "tooltip[doc_button_category_"..id..";"..minetest.formspec_escape(data.def.description).."]"
+		local x = 1
+		if #doc.data.category_order <= (CATEGORYFIELDSIZE.WIDTH * CATEGORYFIELDSIZE.HEIGHT)  then
+			for c=1,#doc.data.category_order do
+				local id = doc.data.category_order[c]
+				local data = doc.data.categories[id]
+				-- Category buton
+				local button = "button["..((x-1)*3)..","..y..";3,1;doc_button_category_"..id..";"..minetest.formspec_escape(data.def.name).."]"
+				local tooltip = ""
+				-- Optional description
+				if data.def.description ~= nil then
+				tooltip = "tooltip[doc_button_category_"..id..";"..minetest.formspec_escape(data.def.description).."]"
+				end
+				formstring = formstring .. button .. tooltip
+				y = y + 1
+				if y > CATEGORYFIELDSIZE.HEIGHT then
+					x = x + 1
+					y = 1
+				end
 			end
-			formstring = formstring .. button .. tooltip
-			y = y + 1
+		else
+			formstring = formstring .. "textlist[0,1;11,7;doc_mainlist;"
+			for c=1,#doc.data.category_order do
+				local id = doc.data.category_order[c]
+				local data = doc.data.categories[id]
+				formstring = formstring .. minetest.formspec_escape(data.def.name)
+				if c < #doc.data.category_order then
+					formstring = formstring .. ","
+				end
+			end
+			formstring = formstring .. ";]"
 		end
 	end
 	return formstring
