@@ -539,7 +539,7 @@ function doc.formspec_main(playername)
 				end
 			end
 		else
-			formstring = formstring .. "textlist[0,1;11,7;doc_mainlist;"
+			formstring = formstring .. "textlist[0,1;"..(doc.FORMSPEC.WIDTH-0.2)..","..(doc.FORMSPEC.HEIGHT-2)..";doc_mainlist;"
 			for c=1,#doc.data.category_order do
 				local id = doc.data.category_order[c]
 				local data = doc.data.categories[id]
@@ -554,7 +554,7 @@ function doc.formspec_main(playername)
 				formstring = formstring .. doc.data.categories[doc.data.players[playername].category].order_position
 			end
 			formstring = formstring .. "]"
-			formstring = formstring .. "button[0,8;3,1;doc_button_goto_category;"..F("Show category").."]"
+			formstring = formstring .. "button[0,"..(doc.FORMSPEC.HEIGHT-1)..";3,1;doc_button_goto_category;"..F("Show category").."]"
 		end
 	else
 		formstring = formstring .. "]"
@@ -604,7 +604,7 @@ function doc.generate_entry_list(cid, playername)
 	or doc.data.players[playername].catsel_list == nil
 	or doc.data.players[playername].category ~= cid
 	or doc.data.players[playername].entry_textlist_needs_updating == true then
-		local entry_textlist = "textlist[0,1;11,7;doc_catlist;"
+		local entry_textlist = "textlist[0,1;"..(doc.FORMSPEC.WIDTH-0.2)..","..(doc.FORMSPEC.HEIGHT-2)..";doc_catlist;"
 		local counter = 0
 		doc.data.players[playername].entry_ids = {}
 		local entries = doc.get_sorted_entry_names(cid)
@@ -725,7 +725,7 @@ function doc.formspec_category(id, playername)
 			else
 				formstring = formstring .. "label[0,0.5;"..F("This category has the following entries:").."]"
 				formstring = formstring .. doc.generate_entry_list(id, playername)
-				formstring = formstring .. "button[0,8;3,1;doc_button_goto_entry;"..F("Show entry").."]"
+				formstring = formstring .. "button[0,"..(doc.FORMSPEC.HEIGHT-1)..";3,1;doc_button_goto_entry;"..F("Show entry").."]"
 				formstring = formstring .. "label[8,8;"..minetest.formspec_escape(string.format(S("Number of entries: %d"), total)).."\n"
 				local viewed = doc.get_viewed_count(playername, id)
 				local hidden = total - revealed
