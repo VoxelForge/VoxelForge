@@ -198,7 +198,7 @@ function doc.show_doc(playername)
 		minetest.show_formspec(playername, "doc:error_no_categories", doc.formspec_error_no_categories())
 		return
 	end
-	local formspec = doc.formspec_core()..doc.formspec_main()
+	local formspec = doc.formspec_core()..doc.formspec_main(playername)
 	minetest.show_formspec(playername, "doc:main", formspec)
 end
 
@@ -478,7 +478,7 @@ function doc.formspec_core(tab)
 	..tab..";true;false]"
 end
 
-function doc.formspec_main()
+function doc.formspec_main(playername)
 	local formstring = "label[0,0;"..minetest.formspec_escape(doc_intro) .. "\n"
 	if doc.get_category_count() >= 1 then
 		formstring = formstring .. F("Please select a category you wish to learn more about:").."]"
@@ -513,6 +513,7 @@ function doc.formspec_main()
 				end
 			end
 			formstring = formstring .. ";]"
+			formstring = formstring .. "button[0,8;3,1;doc_button_goto_category;"..F("Show category").."]"
 		end
 	end
 	return formstring
@@ -760,7 +761,7 @@ function doc.process_form(player,formname,fields)
 			cid = doc.data.players[playername].category
 			eid = doc.data.players[playername].entry
 			if(tab==1) then
-				contents = doc.formspec_main()
+				contents = doc.formspec_main(playername)
 				subformname = "main"
 			elseif(tab==2) then
 				contents = doc.formspec_category(cid, playername)
@@ -778,14 +779,38 @@ function doc.process_form(player,formname,fields)
 		end
 	end
 	if(formname == "doc:main") then
-		for id,_ in pairs(doc.data.categories) do
-			if fields["doc_button_category_"..id] then
-				local formspec = doc.formspec_core(2)..doc.formspec_category(id, playername)
+		for cid,_ in pairs(doc.data.categories) do
+			if fields["doc_button_category_"..cid] then
+				local formspec = doc.formspec_core(2)..doc.formspec_category(cid, playername)
 				doc.data.players[playername].catsel = nil
-				doc.data.players[playername].category = id
+				doc.data.players[playername].category = cid
 				doc.data.players[playername].entry = nil
 				minetest.show_formspec(playername, "doc:category", formspec)
 				break
+			end
+		end
+		if fields["doc_mainlist"] then
+			local event = minetest.explode_textlist_event(fields["doc_mainlist"])
+			local cid = doc.data.category_order[event.index]
+			if cid ~= nil then
+				if event.type == "CHG" then
+					doc.data.players[playername].catsel = nil
+					doc.data.players[playername].category = cid
+					doc.data.players[playername].entry = nil
+				elseif event.type == "DCL" then
+					local formspec = doc.formspec_core(2)..doc.formspec_category(cid, playername)
+					doc.data.players[playername].catsel = nil
+					doc.data.players[playername].category = cid
+					doc.data.players[playername].entry = nil
+					minetest.show_formspec(playername, "doc:category", formspec)
+				end
+			end
+		end
+		if fields["doc_button_goto_category"] then
+			local cid = doc.data.players[playername].category
+			if cid ~= nil then
+				local formspec = doc.formspec_core(2)..doc.formspec_category(cid, playername)
+				minetest.show_formspec(playername, "doc:category", formspec)
 			end
 		end
 	elseif(formname == "doc:category") then
@@ -803,7 +828,7 @@ function doc.process_form(player,formname,fields)
 			end
 		end
 		if fields["doc_button_goto_main"] then
-			local formspec = doc.formspec_core(1)..doc.formspec_main()
+			local formspec = doc.formspec_core(1)..doc.formspec_main(playername)
 			minetest.show_formspec(playername, "doc:main", formspec)
 		end
 		if fields["doc_catlist"] then
@@ -825,7 +850,7 @@ function doc.process_form(player,formname,fields)
 		end
 	elseif(formname == "doc:entry") then
 		if fields["doc_button_goto_main"] then
-			local formspec = doc.formspec_core(1)..doc.formspec_main()
+			local formspec = doc.formspec_core(1)..doc.formspec_main(playername)
 			minetest.show_formspec(playername, "doc:main", formspec)
 		elseif fields["doc_button_goto_category"] then
 			local formspec = doc.formspec_core(2)..doc.formspec_category(doc.data.players[playername].category, playername)
