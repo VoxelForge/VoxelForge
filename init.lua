@@ -354,6 +354,26 @@ function doc.get_hidden_count(playername, category_id)
 	end
 end
 
+-- Returns the currently viewed entry and/or category of the player
+function doc.get_selection(playername)
+	local playerdata = doc.data.players[playername]
+	if playerdata ~= nil then
+		local cat = playerdata.category
+		if cat then
+			local entry = playerdata.entry
+			if entry then
+				return cat, entry
+			else
+				return cat
+			end
+		else
+			return nil
+		end
+	else
+		return nil
+	end
+end
+
 -- Template function templates, to be used for build_formspec in doc.new_category
 doc.entry_builders = {}
 

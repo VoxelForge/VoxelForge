@@ -85,6 +85,7 @@ These functions are available:
 * `doc.get_viewed_count`: Returns the number of entries a player has viewed in a category
 * `doc.get_revealed_count`: Returns the number of entries a player has access to in a category
 * `doc.get_hidden_count`: Returns the number of entries which are hidden from a player in a category
+* `doc.get_selection`: Returns the current viewed entry/category of a player
 
 #### Special widgets
 This API provides an experimental convenience function for creating a special
@@ -133,6 +134,9 @@ following format:
         data = d, -- arbitrary entry data
     }
 
+#### Return value
+Always `nil`.
+
 #### Using `build_formspec`
 For `build_formspec` you can either define your own function which
 procedurally generates the entry formspec or you use one of the
@@ -145,6 +149,7 @@ following predefined convenience functions:
   complete entry formspec as a string. Useful if your entries. Useful
   if you expect your entries to differ wildly in layouts.
 
+##### Formspec restrictions
 When building your formspec, you have to respect the size limitations.
 The documentation system uses a size of 12×9 and you must make sure
 all entry widgets are inside a boundary box. The remaining space is
@@ -161,8 +166,15 @@ Read from the following variables to calculate the final formspec coordinates:
 * `doc.FORMSPEC.ENTRY_WIDTH`: Width of the entry widgets bounding box
 * `doc.FORMSPEC.ENTRY_HEIGHT`: Height of the entry widgets bounding box
 
-#### Return value
-Always `nil`.
+Finally, to avoid naming collisions, you must make sure that all identifiers
+of your own formspec elements do *not* begin with “`doc_`”.
+
+##### Receiving formspec events
+You can even use the formspec elements you have added with `build_formspec` to
+receive formspec events, just like with any other formspec. For receiving, use
+the standard function `minetest.register_on_player_receive_fields` to register
+your event handling. The `formname` parameter will be `doc:entry`. Use
+`doc.get_selection` to get the category ID and entry ID of the entry in question.
 
 ### `doc.new_entry(category_id, entry_id, def)`
 Adds a new entry into an existing category. You have to define the category
@@ -422,6 +434,20 @@ Two values are returned, in this order:
 When you use this function to build a formspec string, do not use identifiers
 beginning with `doc_widget_text` to avoid naming collisions, as this function
 makes use of such identifiers internally.
+
+
+### `doc.get_selection(playername)`
+Returns the currently or last viewed entry and/or category of a player.
+
+#### Parameter
+* `playername`: Name of the player to query
+
+#### Return value
+It returns up to 2 values. The first one is the category ID, the second one
+is the entry ID of the entry/category which the player is currently viewing
+or is the last entry the player viewed in this session. If the player only
+viewed a category so far, the second value is `nil`. If the player has not
+viewed a category as well, both returned values are `nil`.
 
 
 ## Extending this mod (naming conventions)
