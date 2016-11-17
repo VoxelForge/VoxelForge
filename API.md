@@ -335,6 +335,7 @@ Always `nil`.
 Adds a single alias for an entry. When an entry has an alias, supplying the
 alias to a function which demands an `entry_id` will work as if the original
 `entry_id` has been supplied. Aliases are true within one category only.
+When using this function, you must make sure the category already exists.
 
 #### Parameters
 * `category_id`: Category identifier of the category of the entry in question
@@ -348,6 +349,7 @@ Always `nil`.
 ### `doc.add_entry_aliases(category_id, entry_id, aliases)`
 Adds an arbitrary amount of aliases for an entry at once. Apart from that, this
 function has the same effect as `doc.add_entry_alias`.
+When using this function, you must make sure the category already exists.
 
 #### Parameters
 * `category_id`: Category identifier of the category of the entry in question
