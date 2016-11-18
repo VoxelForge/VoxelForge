@@ -9,7 +9,7 @@ Current version: 0.7.0
 ### Accessing the help
 To open the help, there are multiple ways:
 
-- Use the `doc` chat command. This works always.
+- Use the `/doc` chat command. This works always.
 - If you use Unified Inventory, click on the book icon in the inventory menu
 
 The documentation system itself should be more or less self-explanatory.
@@ -24,15 +24,18 @@ revealed. Normally you just have to proceed in the game to unlock more
 entries. Hidden entries exist to avoid spoilers and give players a small
 sense of progress.
 
-Players with the `doc_reveal` privilege can use the `doc_reveal` chat command
+Players with the `doc_reveal` privilege can use the `/doc_reveal` chat command
 to reveal all hidden entries instantly.
-
 
 ## For modders and subgame authors
 This mod helps you in writing extensive documentation for your mod or subgame.
 You can write about basically anything in the presentation you prefer.
 
 To get started, read `API.md` in the directory of this mod.
+
+Note: If you want to add help texts for items and nodes, refer to the API
+documentation of `doc_items`, instead of manually adding entries. For
+custom entities, you may also want to add support for `doc_identifier`.
 
 ## License of everything
 MIT License
