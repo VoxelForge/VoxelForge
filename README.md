@@ -10,7 +10,8 @@ Current version: 0.7.0
 To open the help, there are multiple ways:
 
 - Use the `/doc` chat command. This works always.
-- If you use Unified Inventory, click on the book icon in the inventory menu
+- If you use Unified Inventory, click on the blue question mark icon in the
+  inventory menu
 
 The documentation system itself should be more or less self-explanatory.
 
