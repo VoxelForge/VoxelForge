@@ -36,7 +36,6 @@ doc.FORMSPEC.ENTRY_HEIGHT = doc.FORMSPEC.ENTRY_END_Y - doc.FORMSPEC.ENTRY_START_
 
 --TODO: Use container formspec element later
 
-
 -- Internal helper variables
 local DOC_INTRO = string.format(S("This is the Documentation System, Version %s."), doc.VERSION.STRING)
 
@@ -47,11 +46,15 @@ local CATEGORYFIELDSIZE = {
 
 doc.data = {}
 doc.data.categories = {}
-doc.data.category_order = {}
+-- Default order (includes categories of other mods from the Docuentation System modpack)
+doc.data.category_order = {"basics", "online", "nodes", "tools", "craftitems"}
 doc.data.players = {}
 
 -- Space for additional APIs
 doc.sub = {}
+
+-- Status variables
+local set_category_order_was_called = false
 
 --[[ Core API functions ]]
 
@@ -64,8 +67,20 @@ function doc.new_category(id, def)
 		doc.data.categories[id].hidden_count = 0
 		doc.data.categories[id].def = def
 		doc.data.categories[id].entry_aliases = {}
-		table.insert(doc.data.category_order, id)
-		doc.data.categories[id].order_position = #doc.data.category_order
+		-- Determine order position
+		local order_id = nil
+		for i=1,#doc.data.category_order do
+			if doc.data.category_order[i] == id then
+				order_id = i
+				break
+			end
+		end
+		if order_id == nil then
+			table.insert(doc.data.category_order, id)
+			doc.data.categories[id].order_position = #doc.data.category_order
+		else
+			doc.data.categories[id].order_position = order_id
+		end
 		return true
 	else
 		return false
@@ -276,6 +291,32 @@ function doc.entry_exists(category_id, entry_id)
 	else
 		return false
 	end
+end
+
+-- Sets the order of categories in the category list
+function doc.set_category_order(categories)
+	local reverse_categories = {}
+	for cid=1,#categories do
+		reverse_categories[categories[cid]] = cid
+	end
+	doc.data.category_order = categories
+	for cid, cat in pairs(doc.data.categories) do
+		if reverse_categories[cid] == nil then
+			table.insert(doc.data.category_order, cid)
+		end
+	end
+	reverse_categories = {}
+	for cid=1, #doc.data.category_order do
+		reverse_categories[categories[cid]] = cid
+	end
+
+	for cid, cat in pairs(doc.data.categories) do
+		cat.order_position = reverse_categories[cid]
+	end
+	if set_category_order_was_called then
+		minetest.log("warning", "[doc] doc.set_category_order was called again!")
+	end
+	set_category_order_was_called = true
 end
 
 -- Adds aliases for an entry. Attempting to open an entry by an alias name
@@ -541,21 +582,25 @@ function doc.formspec_main(playername)
 		if doc.get_category_count() <= (CATEGORYFIELDSIZE.WIDTH * CATEGORYFIELDSIZE.HEIGHT)  then
 			local y = 1
 			local x = 1
+			-- Show all categories in order
 			for c=1,#doc.data.category_order do
 				local id = doc.data.category_order[c]
 				local data = doc.data.categories[id]
-				-- Category buton
-				local button = "button["..((x-1)*3)..","..y..";3,1;doc_button_category_"..id..";"..minetest.formspec_escape(data.def.name).."]"
-				local tooltip = ""
-				-- Optional description
-				if data.def.description ~= nil then
-				tooltip = "tooltip[doc_button_category_"..id..";"..minetest.formspec_escape(data.def.description).."]"
-				end
-				formstring = formstring .. button .. tooltip
-				y = y + 1
-				if y > CATEGORYFIELDSIZE.HEIGHT then
-					x = x + 1
-					y = 1
+				-- Skip categories which do not exist
+				if data ~= nil then
+					-- Category buton
+					local button = "button["..((x-1)*3)..","..y..";3,1;doc_button_category_"..id..";"..minetest.formspec_escape(data.def.name).."]"
+					local tooltip = ""
+					-- Optional description
+					if data.def.description ~= nil then
+					tooltip = "tooltip[doc_button_category_"..id..";"..minetest.formspec_escape(data.def.description).."]"
+					end
+					formstring = formstring .. button .. tooltip
+					y = y + 1
+					if y > CATEGORYFIELDSIZE.HEIGHT then
+						x = x + 1
+						y = 1
+					end
 				end
 			end
 		else

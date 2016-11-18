@@ -67,6 +67,7 @@ These functions are available:
 
 * `doc.new_category`: Adds a new category
 * `doc.new_entry`: Adds a new entry
+* `doc.set_category_order`: Sets the order of categories in the category list
 * `doc.show_entry`: Shows a particular entry to a player
 * `doc.show_category`: Shows the entry list of a category to a player
 * `doc.show_doc`: Opens the main Documentation System form for a player
@@ -198,6 +199,26 @@ the category definition.
 
 #### Return value
 Always `nil`.
+
+### `doc.set_category_order(category_list)`
+Sets the order of categories in the category list.
+The Documentation System starts with this default order:
+
+    {"basics", "online", "nodes", "tools", "craftitems"}
+
+This function can be called at any time, but it recommended to only call
+this function once for the entire server session and to only call it
+from subgame mods, to avoid contradictions. If this function is called a
+second time by any mod, a warning is written into the log.
+
+#### Parameters
+* `category_list`: List of category IDs in the order they should appear
+  in the category list. All unspecified categories will be appended to
+  the end
+
+#### Return value
+Always `nil`.
+
 
 ### `doc.show_doc(playername)`
 Opens the main documentation formspec for the player (Main tab).
