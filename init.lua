@@ -285,7 +285,7 @@ function doc.entry_exists(category_id, entry_id)
 			-- Entry exists
 			return true
 		else
-			-- Entry of this ID does not exist, so we check if there's an alis for it
+			-- Entry of this ID does not exist, so we check if there's an alias for it
 			return doc.data.categories[category_id].entry_aliases[entry_id] ~= nil
 		end
 	else
