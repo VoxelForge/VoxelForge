@@ -528,8 +528,7 @@ minetest.register_globalstep(function(dtime)
 		if minetest.setting_getbool("enable_damage") or hb.settings.forceload_default_hudbars then
 			for _, player in pairs(hb.players) do
 				-- update all hud elements
-minetest.after(1,function(player) update_hud(player) end, player)
---				update_hud(player)
+				update_hud(player)
 			end
 		end
 	end
