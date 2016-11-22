@@ -90,6 +90,10 @@ else
 	hb.settings.sorting_reverse = { [0] = "health", [1] = "breath" }
 end
 
+local function player_exists(player)
+	return player ~= nil and player:is_player()
+end
+
 -- Table which contains all players with active default HUD bars (only for internal use)
 hb.players = {}
 
@@ -285,13 +289,18 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 end
 
 function hb.init_hudbar(player, identifier, start_value, start_max, start_hidden)
+	if not player_exists(player) then return false end
 	local hudtable = hb.get_hudtable(identifier)
 	hb.hudtables[identifier].add_all(player, hudtable, start_value, start_max, start_hidden)
+	return true
 end
 
 function hb.change_hudbar(player, identifier, new_value, new_max_value, new_icon, new_bgicon, new_bar, new_label, new_text_color)
 	if new_value == nil and new_max_value == nil and new_icon == nil and new_bgicon == nil and new_bar == nil and new_label == nil and new_text_color == nil then
-		return
+		return true
+	end
+	if not player_exists(player) then
+		return false
 	end
 
 	local name = player:get_player_name()
@@ -379,11 +388,14 @@ function hb.change_hudbar(player, identifier, new_value, new_max_value, new_icon
 			end
 		end
 	end
+	return true
 end
 
 function hb.hide_hudbar(player, identifier)
+	if not player_exists(player) then return false end
 	local name = player:get_player_name()
 	local hudtable = hb.get_hudtable(identifier)
+	if hudtable == nil then return false end
 	if(hudtable.hudstate[name].hidden == false) then
 		if hb.settings.bar_type == "progress_bar" then
 			if hudtable.hudids[name].icon ~= nil then
@@ -397,11 +409,14 @@ function hb.hide_hudbar(player, identifier)
 		player:hud_change(hudtable.hudids[name].bar, "number", 0)
 		hudtable.hudstate[name].hidden = true
 	end
+	return true
 end
 
 function hb.unhide_hudbar(player, identifier)
+	if not player_exists(player) then return false end
 	local name = player:get_player_name()
 	local hudtable = hb.get_hudtable(identifier)
+	if hudtable == nil then return false end
 	if(hudtable.hudstate[name].hidden) then
 		local value = hudtable.hudstate[name].value
 		local max = hudtable.hudstate[name].max
@@ -419,9 +434,11 @@ function hb.unhide_hudbar(player, identifier)
 		player:hud_change(hudtable.hudids[name].bar, "number", hb.value_to_barlength(value, max))
 		hudtable.hudstate[name].hidden = false
 	end
+	return true
 end
 
 function hb.get_hudbar_state(player, identifier)
+	if not player_exists(player) then return nil end
 	local ref = hb.get_hudtable(identifier).hudstate[player:get_player_name()]
 	-- Do not forget to update this chunk of code in case the state changes
 	local copy = {
@@ -467,6 +484,7 @@ end
 
 -- update built-in HUD bars
 local function update_hud(player)
+	if not player_exists() then return end
 	if minetest.setting_getbool("enable_damage") then
 		if hb.settings.forceload_default_hudbars then
 			hb.unhide_hudbar(player, "health")
@@ -510,7 +528,8 @@ minetest.register_globalstep(function(dtime)
 		if minetest.setting_getbool("enable_damage") or hb.settings.forceload_default_hudbars then
 			for _, player in pairs(hb.players) do
 				-- update all hud elements
-				update_hud(player)
+minetest.after(1,function(player) update_hud(player) end, player)
+--				update_hud(player)
 			end
 		end
 	end
