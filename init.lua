@@ -509,6 +509,43 @@ doc.widgets.text = function(data, x, y, width, height)
 	return formstring, widget_id
 end
 
+-- Image gallery
+doc.widgets.gallery = function(imagedata, x, y, aspect_ratio, width, rows, imageindex)
+	local formstring = ""
+	if rows == nil then rows = 3 end
+	if x == nil then x = doc.FORMSPEC.ENTRY_START_X end
+	if y == nil then y = doc.FORMSPEC.ENTRY_START_Y end
+	if width == nil then width = doc.FORMSPEC.ENTRY_WIDTH end
+	if imageindex == nil then imageindex = 1 end
+	if aspect_ratio == nil then aspect_ratio = (2/3) end
+	local pos = 0
+	local totalimagewidth, iw, ih
+	local bw = 0.5
+	local buttonoffset = 0
+	if #imagedata > rows then
+		totalimagewidth = width - bw*2
+		iw = totalimagewidth / rows
+		ih = iw * aspect_ratio
+		formstring = formstring .. "button["..x..","..y..";"..bw..","..ih..";doc_gallery_prev;"..F("<").."]"
+		local rightx = buttonoffset + (x + rows * iw)
+		formstring = formstring .. "button["..rightx..","..y..";"..bw..","..ih..";doc_gallery_next;"..F(">").."]"
+		buttonoffset = bw
+	else
+		totalimagewidth = width
+		iw = totalimagewidth / rows
+		ih = iw * aspect_ratio
+	end
+	for i=imageindex, math.min(#imagedata, (imageindex-1)+rows) do
+		xoffset = buttonoffset + (x + pos * iw)
+		formstring = formstring .. "image["..xoffset..","..y..";"..iw..","..ih..";"..imagedata[i].image.."]"
+		pos = pos + 1
+	end
+	local bw, bh
+
+	-- TODO: Use different identifiers
+	return formstring, "doc_gallery_prev", "doc_gallery_next"
+end
+
 -- Direct formspec
 doc.entry_builders.formspec = function(data)
 	return data
