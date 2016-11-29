@@ -154,6 +154,13 @@ following predefined convenience functions:
 * `doc.entry_builders.text`: Expects entry data to be a string.
   It will be inserted directly into the entry. Useful for entries with
   a free form text.
+* `doc.entry_builders.text_and_gallery`: For entries with text and
+  an optional standard gallery (3 rows, 3:2 aspect ratio). Expects
+  entry data to be a table with these fields:
+    * `text`: The entry text
+    * `images`: The images of the gallery, the format is the same as the
+       `imagedata` parameter of `doc.widgets.gallery`. Can be `nil`, in
+       which case no gallery is shown for the entry
 * `doc.entry_builders.formspec`: Entry data is expected to contain the
   complete entry formspec as a string. Useful if your entries. Useful
   if you expect your entries to differ wildly in layouts.
