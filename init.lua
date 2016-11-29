@@ -511,6 +511,7 @@ doc.widgets.text = function(data, x, y, width, height)
 end
 
 -- Image gallery
+-- Currently, only one gallery per entry is supported. TODO: Add support for multiple galleries in an entry (low priority)
 doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width, rows)
 	if playername == nil then return nil end -- emergency exit
 
@@ -564,8 +565,7 @@ doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width,
 	end
 	local bw, bh
 
-	-- TODO: Use different identifiers
-	return formstring, "doc_button_gallery_prev", "doc_button_gallery_next"
+	return formstring, ih
 end
 
 -- Direct formspec

@@ -95,9 +95,12 @@ These functions are available:
 
 If not mentioned otherwise, the return value of all functions is `nil`.
 
-#### Special widget
-This API provides a convenience function `doc.widgets.text` for creating a
-special widget to create multi-line text.
+#### Special widgets
+This API provides functions to add unique “widgets” for functionality
+you may find useful when creating entry templates. You find these
+functions in `doc.widgets`.
+Currently there is a widget for scrollable multi-line text and a
+widget providing an image gallery.
 
 ### `doc.new_category(id, def)`
 Adds a new category. You have to define an unique identifier, a name
@@ -457,6 +460,50 @@ beginning with `doc_widget_text` to avoid naming collisions, as this function
 makes use of such identifiers internally.
 
 
+### `doc.widgets.gallery(imagedata, playername, x, y, aspect_ratio, width, rows)`
+This function creates an image gallery which allows you to display an
+arbitrary amount of images aligned horizontally. It is possible to add more
+images than the space of an entry would normally held, this is done by adding
+“scroll” buttons to the left and right which allows the user to see more images
+of the gallery.
+
+This function is useful for adding multiple illustration to your entry without
+worrying about space too much. Adding illustrations can help you to create
+entry templates which aren't just lengthy walls of text. ;-)
+
+You can define the position, image aspect ratio, total gallery width and the
+ number of images displayed at once. You can *not* directly define the image
+size, nor the resulting height of the overall gallery, those values will
+be derived from the parameters.
+
+You can only really use this function efficiently inside a *custom*
+`build_formspec` function definition. This is because you need to pass a
+`playername`. You can currently also only add up to one gallery per entry;
+adding more galleries is not supported and will lead to bugs.
+
+### Parameters
+* `imagedata`: List of images to be displayed in the specified order. All images must
+   have the same aspect ratio. It's a table of tables with this format:
+    * `image`: Texture name of an image
+* `playername`: Name of the player who is viewing the entry in question
+* `x`: Formspec X coordinate of the top left corner (optional)
+* `y`: Formspec Y coordinate of the top left corner (optional)
+* `aspect_ratio`: Aspect ratio of all the images (width/height)
+* `width`: Total gallery width in formspec units (optional)
+* `rows`: Number of images which can be seen at once (optional)
+
+The default values for the optional parameters result in a gallery with
+3 rows which is placed at the top left corner and spans the width of the
+entry and assumes an aspect ratio of two thirds.
+
+If the number of images is greater than `rows`, “scroll” buttons will appear
+at the left and right side of the images.
+
+#### Return values
+Two values are returned, in this order:
+
+* String: Contains a complete formspec definition building the gallery
+* Number: The height the gallery occupies in the formspec
 
 ## Extending this mod (naming conventions)
 If you want to extend this mod with your own functionality, it is recommended
