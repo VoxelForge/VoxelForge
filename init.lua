@@ -524,6 +524,7 @@ doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width,
 
 	local imageindex = doc.data.players[playername].galidx
 	doc.data.players[playername].maxgalidx = #imagedata
+	doc.data.players[playername].galrows = rows
 
 	if aspect_ratio == nil then aspect_ratio = (2/3) end
 	local pos = 0
@@ -535,10 +536,21 @@ doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width,
 		iw = totalimagewidth / rows
 		ih = iw * aspect_ratio
 		formstring = formstring .. "button["..x..","..y..";"..bw..","..ih..";doc_button_gallery_prev;"..F("<").."]"
-		formstring = formstring .. "tooltip[doc_button_gallery_prev;"..F("Show previous image").."]"
+		local tt
+		if rows == 1 then
+			tt = F("Show previous image")
+		else
+			tt = F("Show previous gallery page")
+		end
+		formstring = formstring .. "tooltip[doc_button_gallery_prev;"..tt.."]"
 		local rightx = buttonoffset + (x + rows * iw)
 		formstring = formstring .. "button["..rightx..","..y..";"..bw..","..ih..";doc_button_gallery_next;"..F(">").."]"
-		formstring = formstring .. "tooltip[doc_button_gallery_next;"..F("Show next image").."]"
+		if rows == 1 then
+			tt = F("Show next image")
+		else
+			tt = F("Show next gallery page")
+		end
+		formstring = formstring .. "tooltip[doc_button_gallery_next;"..tt.."]"
 		buttonoffset = bw
 	else
 		totalimagewidth = width
@@ -1049,19 +1061,16 @@ function doc.process_form(player,formname,fields)
 			end
 		elseif fields["doc_button_gallery_prev"] then
 			local cid, eid = doc.get_selection(playername)
-			doc.data.players[playername].galidx = doc.data.players[playername].galidx - 1
-			if doc.data.players[playername].galidx <= 0 then
-				doc.data.players[playername].galidx = 1
+			if doc.data.players[playername].galidx - doc.data.players[playername].galrows > 0 then
+				doc.data.players[playername].galidx = doc.data.players[playername].galidx - doc.data.players[playername].galrows
 			end
 			local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid, playername)
 			minetest.show_formspec(playername, "doc:entry", formspec)
 		elseif fields["doc_button_gallery_next"] then
 			local cid, eid = doc.get_selection(playername)
-			doc.data.players[playername].galidx = doc.data.players[playername].galidx + 1
-			if doc.data.players[playername].galidx > doc.data.players[playername].maxgalidx then
-				doc.data.players[playername].galidx = doc.data.players[playername].maxgalidx
+			if doc.data.players[playername].galidx + doc.data.players[playername].galrows <= doc.data.players[playername].maxgalidx then
+				doc.data.players[playername].galidx = doc.data.players[playername].galidx + doc.data.players[playername].galrows
 			end
-
 			local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid, playername)
 			minetest.show_formspec(playername, "doc:entry", formspec)
 		end
@@ -1091,6 +1100,8 @@ minetest.register_on_joinplayer(function(player)
 		playerdata.galidx = 1
 		-- Maximum gallery index (index of last image in gallery)
 		playerdata.maxgalidx = 1
+		-- Number of rows in an gallery of the current entry
+		playerdata.galrows = 1
 		-- Table for persistant data
 		playerdata.stored_data = {}
 		-- Contains viewed entries
