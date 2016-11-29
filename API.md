@@ -118,7 +118,8 @@ data.
        First letter capitalized, no punctuation at the end,
        max. 100 characters
     * `build_formspec`: The template function (see below). Takes entry data
-      as its only parameter (has the data type of the entry data) and must
+      as its first parameter (has the data type of the entry data) and the
+      name of the player who views the entry as its second parameter. It must
       return a formspec which is inserted in the Entry tab.
     * `sorting`: (optional) Sorting algorithm for display order of entries
         * `"abc"`: Alphabetical (default)
