@@ -268,8 +268,9 @@ function doc.show_entry(playername, category_id, entry_id, ignore_hidden)
 		doc.generate_entry_list(category_id, playername)
 
 		playerdata.catsel = playerdata.catsel_list[entry_id]
+		playerdata.galidx = 1
 
-		local formspec = doc.formspec_core(3)..doc.formspec_entry(category_id, entry_id)
+		local formspec = doc.formspec_core(3)..doc.formspec_entry(category_id, entry_id, playername)
 		minetest.show_formspec(playername, "doc:entry", formspec)
 	else
 		minetest.show_formspec(playername, "doc:error_hidden", doc.formspec_error_hidden(category_id, entry_id))
@@ -510,13 +511,19 @@ doc.widgets.text = function(data, x, y, width, height)
 end
 
 -- Image gallery
-doc.widgets.gallery = function(imagedata, x, y, aspect_ratio, width, rows, imageindex)
+doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width, rows)
+	if playername == nil then return nil end -- emergency exit
+
 	local formstring = ""
-	if rows == nil then rows = 3 end
+
+	-- Defaults
 	if x == nil then x = doc.FORMSPEC.ENTRY_START_X end
 	if y == nil then y = doc.FORMSPEC.ENTRY_START_Y end
 	if width == nil then width = doc.FORMSPEC.ENTRY_WIDTH end
-	if imageindex == nil then imageindex = 1 end
+	if rows == nil then rows = 3 end
+
+	local imageindex = doc.data.players[playername].galidx
+
 	if aspect_ratio == nil then aspect_ratio = (2/3) end
 	local pos = 0
 	local totalimagewidth, iw, ih
@@ -526,9 +533,9 @@ doc.widgets.gallery = function(imagedata, x, y, aspect_ratio, width, rows, image
 		totalimagewidth = width - bw*2
 		iw = totalimagewidth / rows
 		ih = iw * aspect_ratio
-		formstring = formstring .. "button["..x..","..y..";"..bw..","..ih..";doc_gallery_prev;"..F("<").."]"
+		formstring = formstring .. "button["..x..","..y..";"..bw..","..ih..";doc_button_gallery_prev;"..F("<").."]"
 		local rightx = buttonoffset + (x + rows * iw)
-		formstring = formstring .. "button["..rightx..","..y..";"..bw..","..ih..";doc_gallery_next;"..F(">").."]"
+		formstring = formstring .. "button["..rightx..","..y..";"..bw..","..ih..";doc_button_gallery_next;"..F(">").."]"
 		buttonoffset = bw
 	else
 		totalimagewidth = width
@@ -543,7 +550,7 @@ doc.widgets.gallery = function(imagedata, x, y, aspect_ratio, width, rows, image
 	local bw, bh
 
 	-- TODO: Use different identifiers
-	return formstring, "doc_gallery_prev", "doc_gallery_next"
+	return formstring, "doc_button_gallery_prev", "doc_button_gallery_next"
 end
 
 -- Direct formspec
@@ -865,7 +872,7 @@ function doc.formspec_entry_navigation(category_id, entry_id)
 	return formstring
 end
 
-function doc.formspec_entry(category_id, entry_id)
+function doc.formspec_entry(category_id, entry_id, playername)
 	local formstring
 	if category_id == nil then
 		formstring = "label[0,0;"..F("Help > (No Category)") .. "]"
@@ -889,7 +896,7 @@ function doc.formspec_entry(category_id, entry_id)
 			ename = string.format(S("Nameless entry (%s)"), entry_id)
 		end
 		formstring = "label[0,0;"..minetest.formspec_escape(string.format(S("Help > %s > %s"), category.def.name, ename)).."]"
-		formstring = formstring .. category.def.build_formspec(entry.data)
+		formstring = formstring .. category.def.build_formspec(entry.data, playername)
 		formstring = formstring .. doc.formspec_entry_navigation(category_id, entry_id)
 	end
 	return formstring
@@ -912,7 +919,8 @@ function doc.process_form(player,formname,fields)
 				contents = doc.formspec_category(cid, playername)
 				subformname = "category"
 			elseif(tab==3) then
-				contents = doc.formspec_entry(cid, eid)
+				doc.data.players[playername].galidx = 1
+				contents = doc.formspec_entry(cid, eid, playername)
 				if cid ~= nil and eid ~= nil then
 					doc.mark_entry_as_viewed(playername, cid, eid)
 				end
@@ -971,7 +979,8 @@ function doc.process_form(player,formname,fields)
 				if eids ~= nil and catsel ~= nil then
 					eid = eids[catsel]
 				end
-				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid)
+				doc.data.players[playername].galidx = 1
+				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid, playername)
 				minetest.show_formspec(playername, "doc:entry", formspec)
 				doc.mark_entry_as_viewed(playername, cid, eid)
 			end
@@ -995,7 +1004,8 @@ function doc.process_form(player,formname,fields)
 				end
 				doc.mark_entry_as_viewed(playername, cid, eid)
 				doc.data.players[playername].entry_textlist_needs_updating = true
-				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid)
+				doc.data.players[playername].galidx = 1
+				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid, playername)
 				minetest.show_formspec(playername, "doc:entry", formspec)
 			end
 		end
@@ -1016,7 +1026,8 @@ function doc.process_form(player,formname,fields)
 				doc.mark_entry_as_viewed(playername, cid, new_eid)
 				doc.data.players[playername].catsel = new_catsel
 				doc.data.players[playername].entry = new_eid
-				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, new_eid)
+				doc.data.players[playername].galidx = 1
+				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, new_eid, playername)
 				minetest.show_formspec(playername, "doc:entry", formspec)
 			end
 		elseif fields["doc_button_goto_prev"] then
@@ -1029,9 +1040,23 @@ function doc.process_form(player,formname,fields)
 				doc.mark_entry_as_viewed(playername, cid, new_eid)
 				doc.data.players[playername].catsel = new_catsel
 				doc.data.players[playername].entry = new_eid
-				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, new_eid)
+				doc.data.players[playername].galidx = 1
+				local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, new_eid, playername)
 				minetest.show_formspec(playername, "doc:entry", formspec)
 			end
+		elseif fields["doc_button_gallery_prev"] then
+			local cid, eid = doc.get_selection(playername)
+			doc.data.players[playername].galidx = doc.data.players[playername].galidx - 1
+			if doc.data.players[playername].galidx <= 0 then
+				doc.data.players[playername].galidx = 1
+			end
+			local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid, playername)
+			minetest.show_formspec(playername, "doc:entry", formspec)
+		elseif fields["doc_button_gallery_next"] then
+			local cid, eid = doc.get_selection(playername)
+			doc.data.players[playername].galidx = doc.data.players[playername].galidx + 1
+			local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid, playername)
+			minetest.show_formspec(playername, "doc:entry", formspec)
 		end
 	end
 end
@@ -1055,6 +1080,8 @@ minetest.register_on_joinplayer(function(player)
 		-- Initialize player data
 		doc.data.players[playername] = {}
 		playerdata = doc.data.players[playername]
+		-- Gallery index, stores current index of first displayed image in a gallery
+		playerdata.galidx = 1
 		-- Table for persistant data
 		playerdata.stored_data = {}
 		-- Contains viewed entries
