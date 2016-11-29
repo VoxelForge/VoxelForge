@@ -523,6 +523,7 @@ doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width,
 	if rows == nil then rows = 3 end
 
 	local imageindex = doc.data.players[playername].galidx
+	doc.data.players[playername].maxgalidx = #imagedata
 
 	if aspect_ratio == nil then aspect_ratio = (2/3) end
 	local pos = 0
@@ -1057,6 +1058,10 @@ function doc.process_form(player,formname,fields)
 		elseif fields["doc_button_gallery_next"] then
 			local cid, eid = doc.get_selection(playername)
 			doc.data.players[playername].galidx = doc.data.players[playername].galidx + 1
+			if doc.data.players[playername].galidx > doc.data.players[playername].maxgalidx then
+				doc.data.players[playername].galidx = doc.data.players[playername].maxgalidx
+			end
+
 			local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid, playername)
 			minetest.show_formspec(playername, "doc:entry", formspec)
 		end
@@ -1084,6 +1089,8 @@ minetest.register_on_joinplayer(function(player)
 		playerdata = doc.data.players[playername]
 		-- Gallery index, stores current index of first displayed image in a gallery
 		playerdata.galidx = 1
+		-- Maximum gallery index (index of last image in gallery)
+		playerdata.maxgalidx = 1
 		-- Table for persistant data
 		playerdata.stored_data = {}
 		-- Contains viewed entries
