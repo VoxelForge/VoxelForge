@@ -487,12 +487,12 @@ doc.entry_builders.text_and_gallery = function(data, playername)
 	-- Only add the gallery if images are in the data, otherwise, the text widget gets all of the space
 	if data.images ~= nil then
 		local gallery
-		gallery, stolen_height = doc.widgets.gallery(data.images, playername, nil, nil, nil, nil, nil, nil, false)
+		gallery, stolen_height = doc.widgets.gallery(data.images, playername, nil, doc.FORMSPEC.ENTRY_END_Y + 0.2, nil, nil, nil, nil, false)
 		formstring = formstring .. gallery
 	end
 	formstring = formstring .. doc.widgets.text(data.text,
 		doc.FORMSPEC.ENTRY_START_X,
-		doc.FORMSPEC.ENTRY_START_Y + stolen_height,
+		doc.FORMSPEC.ENTRY_START_Y,
 		doc.FORMSPEC.ENTRY_WIDTH - 0.2,
 		doc.FORMSPEC.ENTRY_HEIGHT - stolen_height)
 
@@ -538,8 +538,20 @@ doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width,
 	local formstring = ""
 
 	-- Defaults
-	if x == nil then x = doc.FORMSPEC.ENTRY_START_X end
-	if y == nil then y = doc.FORMSPEC.ENTRY_START_Y end
+	if x == nil then
+		if align_left == false then
+			x = doc.FORMSPEC.ENTRY_END_X
+		else
+			x = doc.FORMSPEC.ENTRY_START_X
+		end
+	end
+	if y == nil then
+		if align_top == false then
+			y = doc.FORMSPEC.ENTRY_END_Y
+		else
+			y = doc.FORMSPEC.ENTRY_START_Y
+		end
+	end
 	if width == nil then width = doc.FORMSPEC.ENTRY_WIDTH end
 	if rows == nil then rows = 3 end
 
