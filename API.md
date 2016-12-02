@@ -468,7 +468,7 @@ beginning with `doc_widget_text` to avoid naming collisions, as this function
 makes use of such identifiers internally.
 
 
-### `doc.widgets.gallery(imagedata, playername, x, y, aspect_ratio, width, rows)`
+### `doc.widgets.gallery(imagedata, playername, x, y, aspect_ratio, width, rows, align_left, align_top)`
 This function creates an image gallery which allows you to display an
 arbitrary amount of images aligned horizontally. It is possible to add more
 images than the space of an entry would normally held, this is done by adding
@@ -499,6 +499,8 @@ adding more galleries is not supported and will lead to bugs.
 * `aspect_ratio`: Aspect ratio of all the images (width/height)
 * `width`: Total gallery width in formspec units (optional)
 * `rows`: Number of images which can be seen at once (optional)
+* `align_left`: If `false`, gallery is aligned to the left instead of the right (optional)
+* `align_right`: If `false`, gallery is aligned to the bottom instead of the top (optional)
 
 The default values for the optional parameters result in a gallery with
 3 rows which is placed at the top left corner and spans the width of the

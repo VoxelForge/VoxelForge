@@ -487,7 +487,7 @@ doc.entry_builders.text_and_gallery = function(data, playername)
 	-- Only add the gallery if images are in the data, otherwise, the text widget gets all of the space
 	if data.images ~= nil then
 		local gallery
-		gallery, stolen_height = doc.widgets.gallery(data.images, playername)
+		gallery, stolen_height = doc.widgets.gallery(data.images, playername, nil, nil, nil, nil, nil, nil, false)
 		formstring = formstring .. gallery
 	end
 	formstring = formstring .. doc.widgets.text(data.text,
@@ -532,7 +532,7 @@ end
 
 -- Image gallery
 -- Currently, only one gallery per entry is supported. TODO: Add support for multiple galleries in an entry (low priority)
-doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width, rows)
+doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width, rows, align_left, align_top)
 	if playername == nil then return nil end -- emergency exit
 
 	local formstring = ""
@@ -542,6 +542,10 @@ doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width,
 	if y == nil then y = doc.FORMSPEC.ENTRY_START_Y end
 	if width == nil then width = doc.FORMSPEC.ENTRY_WIDTH end
 	if rows == nil then rows = 3 end
+
+	if align_left == false then
+		x = x - width
+	end
 
 	local imageindex = doc.data.players[playername].galidx
 	doc.data.players[playername].maxgalidx = #imagedata
@@ -556,9 +560,13 @@ doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width,
 		totalimagewidth = width - bw*2
 		iw = totalimagewidth / rows
 		ih = iw * aspect_ratio
+		if align_top == false then
+			y = y - ih
+		end
+
+		local tt
 		if imageindex > 1 then
 			formstring = formstring .. "button["..x..","..y..";"..bw..","..ih..";doc_button_gallery_prev;"..F("<").."]"
-			local tt
 			if rows == 1 then
 				tt = F("Show previous image")
 			else
@@ -581,6 +589,9 @@ doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width,
 		totalimagewidth = width
 		iw = totalimagewidth / rows
 		ih = iw * aspect_ratio
+		if align_top == false then
+			y = y - ih
+		end
 	end
 	for i=imageindex, math.min(#imagedata, (imageindex-1)+rows) do
 		xoffset = buttonoffset + (x + pos * iw)
