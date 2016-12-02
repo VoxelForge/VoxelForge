@@ -493,6 +493,9 @@ local function custom_hud(player)
 	end
 end
 
+local function update_health(player)
+	hb.change_hudbar(player, "health", player:get_hp())
+end
 
 -- update built-in HUD bars
 local function update_hud(player)
@@ -510,14 +513,20 @@ local function update_hud(player)
 			hb.unhide_hudbar(player, "breath")
 			hb.change_hudbar(player, "breath", math.min(breath, 10))
 		end
-		
 		--health
-		hb.change_hudbar(player, "health", player:get_hp())
+		update_health(player)
 	elseif hb.settings.forceload_default_hudbars then
 		hb.hide_hudbar(player, "health")
 		hb.hide_hudbar(player, "breath")
 	end
 end
+
+minetest.register_on_player_hpchange(update_health)
+
+minetest.register_on_respawnplayer(function(player)
+	update_health(player)
+	hb.hide_hudbar(player, "breath")
+end)
 
 minetest.register_on_joinplayer(function(player)
 	hide_builtin(player)
