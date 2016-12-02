@@ -556,22 +556,26 @@ doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width,
 		totalimagewidth = width - bw*2
 		iw = totalimagewidth / rows
 		ih = iw * aspect_ratio
-		formstring = formstring .. "button["..x..","..y..";"..bw..","..ih..";doc_button_gallery_prev;"..F("<").."]"
-		local tt
-		if rows == 1 then
-			tt = F("Show previous image")
-		else
-			tt = F("Show previous gallery page")
+		if imageindex > 1 then
+			formstring = formstring .. "button["..x..","..y..";"..bw..","..ih..";doc_button_gallery_prev;"..F("<").."]"
+			local tt
+			if rows == 1 then
+				tt = F("Show previous image")
+			else
+				tt = F("Show previous gallery page")
+			end
+			formstring = formstring .. "tooltip[doc_button_gallery_prev;"..tt.."]"
 		end
-		formstring = formstring .. "tooltip[doc_button_gallery_prev;"..tt.."]"
-		local rightx = buttonoffset + (x + rows * iw)
-		formstring = formstring .. "button["..rightx..","..y..";"..bw..","..ih..";doc_button_gallery_next;"..F(">").."]"
-		if rows == 1 then
-			tt = F("Show next image")
-		else
-			tt = F("Show next gallery page")
+		if (imageindex + rows) <= #imagedata then
+			local rightx = buttonoffset + (x + rows * iw)
+			formstring = formstring .. "button["..rightx..","..y..";"..bw..","..ih..";doc_button_gallery_next;"..F(">").."]"
+			if rows == 1 then
+				tt = F("Show next image")
+			else
+				tt = F("Show next gallery page")
+			end
+			formstring = formstring .. "tooltip[doc_button_gallery_next;"..tt.."]"
 		end
-		formstring = formstring .. "tooltip[doc_button_gallery_next;"..tt.."]"
 		buttonoffset = bw
 	else
 		totalimagewidth = width
