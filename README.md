@@ -31,6 +31,7 @@ Author: Wuzzy (2015)
 Also: This mod was forked from the “Better HUD” [hud] mod by BlockMen.
 
 Translations:
+
 * German: Wuzzy
 * Portuguese: BrunoMine
 
