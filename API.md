@@ -1,4 +1,4 @@
-# API documentation for version 0.7.0
+# API documentation for the Documentation System core framework
 ## Core concepts
 As a modder, you are free to write basically about everything and are also
 relatively free in the presentation of information. The Documentation
