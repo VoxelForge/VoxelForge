@@ -606,7 +606,7 @@ doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width,
 		end
 	end
 	for i=imageindex, math.min(#imagedata, (imageindex-1)+rows) do
-		xoffset = buttonoffset + (x + pos * iw)
+		local xoffset = buttonoffset + (x + pos * iw)
 		local nx = xoffset - 0.2
 		local ny = y - 0.05
 		formstring = formstring .. "image["..xoffset..","..y..";"..iw..","..ih..";"..imagedata[i].image.."]"
