@@ -609,7 +609,11 @@ doc.widgets.gallery = function(imagedata, playername, x, y, aspect_ratio, width,
 		local xoffset = buttonoffset + (x + pos * iw)
 		local nx = xoffset - 0.2
 		local ny = y - 0.05
-		formstring = formstring .. "image["..xoffset..","..y..";"..iw..","..ih..";"..imagedata[i].image.."]"
+		if imagedata[i].imagetype == "item" then
+			formstring = formstring .. "item_image["..xoffset..","..y..";"..iw..","..ih..";"..imagedata[i].image.."]"
+		else
+			formstring = formstring .. "image["..xoffset..","..y..";"..iw..","..ih..";"..imagedata[i].image.."]"
+		end
 		formstring = formstring .. "label["..nx..","..ny..";"..i.."]"
 		pos = pos + 1
 	end

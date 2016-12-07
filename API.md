@@ -492,7 +492,10 @@ adding more galleries is not supported and will lead to bugs.
 ### Parameters
 * `imagedata`: List of images to be displayed in the specified order. All images must
    have the same aspect ratio. It's a table of tables with this format:
-    * `image`: Texture name of an image
+    * `imagetype`: Type of image to be used (optional):
+        * `"image"`: Texture file (default)
+        * `"item"`: Item image, specified as itemstring
+    * `image`: What to display. Depending on `imagetype`, a texture file or itemstring
 * `playername`: Name of the player who is viewing the entry in question
 * `x`: Formspec X coordinate of the top left corner (optional)
 * `y`: Formspec Y coordinate of the top left corner (optional)
