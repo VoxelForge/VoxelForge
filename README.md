@@ -10,8 +10,8 @@ Current version: 0.9.0
 To open the help, there are multiple ways:
 
 - Use the `/doc` chat command. This works always.
-- If you use Unified Inventory, click on the blue question mark icon in the
-  inventory menu
+- If you use Unified Inventory or Minetest Game, you will find an extra
+  button in the inventory
 
 The documentation system itself should be more or less self-explanatory.
 
