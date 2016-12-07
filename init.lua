@@ -47,7 +47,7 @@ local CATEGORYFIELDSIZE = {
 doc.data = {}
 doc.data.categories = {}
 -- Default order (includes categories of other mods from the Docuentation System modpack)
-doc.data.category_order = {"basics", "online", "nodes", "tools", "craftitems"}
+doc.data.category_order = {"basics", "nodes", "tools", "craftitems", "advanced"}
 doc.data.players = {}
 
 -- Space for additional APIs
