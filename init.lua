@@ -37,7 +37,7 @@ doc.FORMSPEC.ENTRY_HEIGHT = doc.FORMSPEC.ENTRY_END_Y - doc.FORMSPEC.ENTRY_START_
 --TODO: Use container formspec element later
 
 -- Internal helper variables
-local DOC_INTRO = string.format(S("This is the Documentation System, Version %s."), doc.VERSION.STRING)
+local DOC_INTRO = S("This is the help.")
 
 local CATEGORYFIELDSIZE = {
 	WIDTH = 4,
@@ -746,7 +746,7 @@ function doc.formspec_error_no_categories()
 	minetest.formspec_escape(
 		DOC_INTRO .. "\n\n" ..
 		S("Error: No help available.") .. "\n\n" ..
-S("No categories have been registered, but the Documentation System is useless without them.\nThe main Documentation System mod (doc) does not come with help contents on its own, it needs additional mods to add help content. Please make sure such mods are enabled on for this world, and try again.")) .. "\n\n" ..
+S("No categories have been registered, but they are required to provide help.\nThe Documentation System [doc] does not come with help contents on its own, it needs additional mods to add help content. Please make sure such mods are enabled on for this world, and try again.")) .. "\n\n" ..
 S("Recommended mods: doc_basics, doc_items, doc_identifier.")
 	formstring = formstring .. ";]button_exit[3,5;2,1;okay;"..F("OK").."]"
 	return formstring
@@ -1135,7 +1135,7 @@ minetest.register_on_player_receive_fields(doc.process_form)
 
 minetest.register_chatcommand("doc", {
 	params = "",
-	description = S("Open documentation system"),
+	description = S("Open help"),
 	privs = {},
 	func = function(playername, param)
 		doc.show_doc(playername)
@@ -1206,7 +1206,7 @@ if minetest.get_modpath("unified_inventory") ~= nil then
 	unified_inventory.register_button("doc", {
 		type = "image",
 		image = "doc_button_icon_hires.png",
-		tooltip = S("Documentation System"),
+		tooltip = S("Help"),
 		action = button_action,
 	})
 end
@@ -1216,7 +1216,7 @@ if minetest.get_modpath("sfinv_buttons") ~= nil then
 	sfinv_buttons.register_button("doc", {
 		image = "doc_button_icon_lores.png",
 		tooltip = S("Collection of help texts"),
-		title = S("Documentation System"),
+		title = S("Help"),
 		action = button_action,
 	})
 end

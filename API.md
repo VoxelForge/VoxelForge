@@ -1,11 +1,11 @@
-# API documentation for the Documentation System core framework
+# API documentation for the Documentation System
 ## Core concepts
 As a modder, you are free to write basically about everything and are also
-relatively free in the presentation of information. The Documentation
-System has no restrictions on content whatsoever.
+relatively free in the presentation of information. There are no
+restrictions on content whatsoever.
 
 ### Categories and entries
-In the documentation system, everything is built on categories and entries.
+In the Documentation System, everything is built on categories and entries.
 An entry is a single piece of documentation and is the basis of all actual
 documentation. Categories group multiple entries of the same topic together.
 
@@ -75,7 +75,7 @@ These functions are available:
 * `doc.set_category_order`: Sets the order of categories in the category list
 * `doc.show_entry`: Shows a particular entry to a player
 * `doc.show_category`: Shows the entry list of a category to a player
-* `doc.show_doc`: Opens the main Documentation System form for a player
+* `doc.show_doc`: Opens the main help form for a player
 * `doc.get_category_definition`: Returns the definition table of a category
 * `doc.get_entry_definition`: Returns the definition table of an entry
 * `doc.entry_exists`: Checks whether an entry exists
@@ -167,14 +167,14 @@ following predefined convenience functions:
 
 ##### Formspec restrictions
 When building your formspec, you have to respect the size limitations.
-The documentation system uses a size of 12×9 and you must make sure
+The help form uses a size of 12×9 and you must make sure
 all entry widgets are inside a boundary box. The remaining space is
-reserved for widgets of the Documentation System and should not be used
-to avoid overlapping.
+reserved for widgets of the help form and should not be used to avoid
+overlapping.
 Read from the following variables to calculate the final formspec coordinates:
 
-* `doc.FORMSPEC.WIDTH`: Width of Documentation System formspec
-* `doc.FORMSPEC.HEIGHT`: Height of Documentation System formspec
+* `doc.FORMSPEC.WIDTH`: Width of help formspec
+* `doc.FORMSPEC.HEIGHT`: Height of help formspec
 * `doc.FORMSPEC.ENTRY_START_X`: Leftmost X point of bounding box
 * `doc.FORMSPEC.ENTRY_START_Y`: Topmost Y point of bounding box
 * `doc.FORMSPEC.ENTRY_END_X`: Rightmost X point of bounding box
@@ -214,9 +214,9 @@ the category definition.
 
 ### `doc.set_category_order(category_list)`
 Sets the order of categories in the category list.
-The Documentation System starts with this default order:
+The help starts with this default order:
 
-    {"basics", "online", "nodes", "tools", "craftitems"}
+    {"basics", "nodes", "tools", "craftitems", "advanced"}
 
 This function can be called at any time, but it recommended to only call
 this function once for the entire server session and to only call it
@@ -230,13 +230,13 @@ second time by any mod, a warning is written into the log.
 
 
 ### `doc.show_doc(playername)`
-Opens the main documentation formspec for the player (“Category list” tab).
+Opens the main help formspec for the player (“Category list” tab).
 
 #### Parameters
 * `playername`: Name of the player to show the formspec to
 
 ### `doc.show_category(playername, category_id)`
-Opens the documentation formspec for the player at the specified category
+Opens the help formspec for the player at the specified category
 (“Entry list” tab).
 
 #### Parameters
@@ -244,7 +244,7 @@ Opens the documentation formspec for the player at the specified category
 * `category_id`: Category identifier of the selected category
 
 ### `doc.show_entry(playername, category_id, entry_id, ignore_hidden)`
-Opens the documentation formspec for the player showing the specified entry
+Opens the help formspec for the player showing the specified entry
 of a category (“Entry” tab). If the entry is hidden, an error message
 is displayed unless `ignore_hidden==true`.
 

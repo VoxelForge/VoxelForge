@@ -1,1 +1,1 @@
-A simple in-game documentation system (framework only, the actual help topics are added in other mods).
+A simple in-game documentation system which enables mods to add help entries based on templates.
