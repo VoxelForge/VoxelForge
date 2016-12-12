@@ -48,6 +48,7 @@ doc.data = {}
 doc.data.categories = {}
 -- Default order (includes categories of other mods from the Docuentation System modpack)
 doc.data.category_order = {"basics", "nodes", "tools", "craftitems", "advanced"}
+doc.data.category_count = 0
 doc.data.players = {}
 
 -- Space for additional APIs
@@ -81,6 +82,7 @@ function doc.new_category(id, def)
 		else
 			doc.data.categories[id].order_position = order_id
 		end
+		doc.data.category_count = doc.data.category_count + 1
 		return true
 	else
 		return false
@@ -336,7 +338,7 @@ end
 
 -- Returns number of categories
 function doc.get_category_count()
-	return #doc.data.category_order
+	return doc.data.category_count
 end
 
 -- Returns number of entries in category
