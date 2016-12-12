@@ -1232,7 +1232,7 @@ minetest.register_privilege("help_reveal", {
 minetest.register_chatcommand("help_reveal", {
 	params = "",
 	description = S("Reveal all hidden help entries to you"),
-	privs = { doc_reveal = true },
+	privs = { help_reveal = true },
 	func = function(name, param)
 		doc.mark_all_entries_as_revealed(name)
 	end,
