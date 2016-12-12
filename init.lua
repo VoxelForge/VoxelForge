@@ -746,10 +746,9 @@ function doc.formspec_error_no_categories()
 	local formstring = "size[8,6]textarea[0.25,0;8,6;;"
 	formstring = formstring ..
 	minetest.formspec_escape(
-		DOC_INTRO .. "\n\n" ..
 		S("Error: No help available.") .. "\n\n" ..
 S("No categories have been registered, but they are required to provide help.\nThe Documentation System [doc] does not come with help contents on its own, it needs additional mods to add help content. Please make sure such mods are enabled on for this world, and try again.")) .. "\n\n" ..
-S("Recommended mods: doc_basics, doc_items, doc_identifier.")
+S("Recommended mods: doc_basics, doc_items, doc_identifier, doc_encyclopedia.")
 	formstring = formstring .. ";]button_exit[3,5;2,1;okay;"..F("OK").."]"
 	return formstring
 end
