@@ -10,7 +10,7 @@ Current version: 0.10.0
 ### Accessing the help
 To open the help, there are multiple ways:
 
-- Use the `/doc` chat command. This works always.
+- Use the `/helpform` chat command. This works always.
 - If you use Unified Inventory or Minetest Game, you will find an extra
   button in the inventory
 
@@ -26,7 +26,7 @@ revealed. Normally you just have to proceed in the game to unlock more
 entries. Hidden entries exist to avoid spoilers and give players a small
 sense of progress.
 
-Players with the `doc_reveal` privilege can use the `/doc_reveal` chat command
+Players with the `help_reveal` privilege can use the `/help_reveal` chat command
 to reveal all hidden entries instantly.
 
 ## For modders and subgame authors

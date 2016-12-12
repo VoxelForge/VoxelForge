@@ -1134,9 +1134,9 @@ end
 
 minetest.register_on_player_receive_fields(doc.process_form)
 
-minetest.register_chatcommand("doc", {
+minetest.register_chatcommand("helpform", {
 	params = "",
-	description = S("Open help"),
+	description = S("Open a window providing help entries about Minetest and more"),
 	privs = {},
 	func = function(playername, param)
 		doc.show_doc(playername)
@@ -1224,14 +1224,14 @@ end
 
 
 
-minetest.register_privilege("doc_reveal", {
-	description = S("Allows you to reveal all hidden help entries with /doc_reveal"),
+minetest.register_privilege("help_reveal", {
+	description = S("Allows you to reveal all hidden help entries with /help_reveal"),
 	give_to_singleplayer = false
 })
 
-minetest.register_chatcommand("doc_reveal", {
+minetest.register_chatcommand("help_reveal", {
 	params = "",
-	description = S("Reveals all hidden help entries to you"),
+	description = S("Reveal all hidden help entries to you"),
 	privs = { doc_reveal = true },
 	func = function(name, param)
 		doc.mark_all_entries_as_revealed(name)
