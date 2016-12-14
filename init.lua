@@ -422,7 +422,7 @@ doc.entry_builders = {}
 -- into spaces
 local linebreaker_single = function(text, linelength)
 	if linelength == nil then
-		linelength = 80
+		linelength = 77
 	end
 	local remain = linelength
 	local res = {}
@@ -518,7 +518,7 @@ doc.widgets.text = function(data, x, y, width, height)
 	if height == nil then
 		height = doc.FORMSPEC.ENTRY_HEIGHT
 	end
-	local baselength = 80
+	local baselength = 77
 	local widget_basewidth = doc.FORMSPEC.WIDTH
 	local linelength = math.max(20, math.floor(baselength * (width / widget_basewidth)))
 
