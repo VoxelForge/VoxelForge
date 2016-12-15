@@ -527,7 +527,7 @@ doc.widgets.text = function(data, x, y, width, height)
 	-- TODO: Wait for Minetest to provide a native widget for scrollable read-only text with automatic line breaks.
 	-- Currently, all of this had to be hacked into this script manually by using/abusing the table widget
 	local formstring = "tablecolumns[text]"..
-	"tableoptions[background=#00000000;highlight=#00000000;border=false]"..
+	"tableoptions[background=#000000FF;highlight=#000000FF;border=false]"..
 	"table["..tostring(x)..","..tostring(y)..";"..tostring(width)..","..tostring(height)..";"..widget_id..";"..text_for_textlist(data, linelength).."]"
 	return formstring, widget_id
 end
