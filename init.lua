@@ -140,7 +140,7 @@ function doc.mark_entry_as_revealed(playername, category_id, entry_id)
 		doc.data.players[playername].entry_textlist_needs_updating = true
 		if minetest.get_modpath("central_message") ~= nil then
 			local cat = doc.data.categories[category_id]
-			cmsg.push_message_player(minetest.get_player_by_name(playername), S("New help entry unlocked: @1 > @1", cat.def.name, entry.name))
+			cmsg.push_message_player(minetest.get_player_by_name(playername), S("New help entry unlocked: @1 > @2", cat.def.name, entry.name))
 		end
 		-- To avoid sound spamming, don't play sound more than once per second
 		local last_sound = doc.data.players[playername].last_reveal_sound
