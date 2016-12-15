@@ -22,8 +22,8 @@ doc.VERSION.STRING = doc.VERSION.MAJOR.."."..doc.VERSION.MINOR.."."..doc.VERSION
 -- Formspec information
 doc.FORMSPEC = {}
 -- Width of formspec
-doc.FORMSPEC.WIDTH = 12
-doc.FORMSPEC.HEIGHT = 9
+doc.FORMSPEC.WIDTH = 15
+doc.FORMSPEC.HEIGHT = 10.5
 
 --[[ Recommended bounding box coordinates for widgets to be placed in entry pages. Make sure
 all entry widgets are completely inside these coordinates to avoid overlapping. ]]
@@ -683,7 +683,7 @@ end)
 
 function doc.formspec_core(tab)
 	if tab == nil then tab = 1 else tab = tostring(tab) end
-	return "size["..doc.FORMSPEC.WIDTH..","..doc.FORMSPEC.HEIGHT.."]tabheader[0,0;doc_header;"..
+	return "size["..doc.FORMSPEC.WIDTH..","..doc.FORMSPEC.HEIGHT.."]bgcolor[#000000CC;true]tabheader[0,0;doc_header;"..
 	minetest.formspec_escape(S("Category list")) .. "," ..
 	minetest.formspec_escape(S("Entry list")) .. "," ..
 	minetest.formspec_escape(S("Entry")) .. ";"

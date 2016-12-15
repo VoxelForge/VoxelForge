@@ -167,7 +167,7 @@ following predefined convenience functions:
 
 ##### Formspec restrictions
 When building your formspec, you have to respect the size limitations.
-The help form uses a size of 12×9 and you must make sure
+The help form uses a size of 15×10.5 and you must make sure
 all entry widgets are inside a boundary box. The remaining space is
 reserved for widgets of the help form and should not be used to avoid
 overlapping.
