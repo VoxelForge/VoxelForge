@@ -3,7 +3,7 @@ local S, F
 if minetest.get_modpath("intllib") then
 	S = intllib.Getter()
 else
-	S = function(s) return s end
+	S = function(s,a,...)a={a,...}return s:gsub("@(%d+)",function(n)return a[tonumber(n)]end)end
 end
 F = function(f) return minetest.formspec_escape(S(f)) end
 
@@ -140,7 +140,7 @@ function doc.mark_entry_as_revealed(playername, category_id, entry_id)
 		doc.data.players[playername].entry_textlist_needs_updating = true
 		if minetest.get_modpath("central_message") ~= nil then
 			local cat = doc.data.categories[category_id]
-			cmsg.push_message_player(minetest.get_player_by_name(playername), string.format(S("New help entry unlocked: %s > %s"), cat.def.name, entry.name))
+			cmsg.push_message_player(minetest.get_player_by_name(playername), S("New help entry unlocked: @1 > @1", cat.def.name, entry.name))
 		end
 		-- To avoid sound spamming, don't play sound more than once per second
 		local last_sound = doc.data.players[playername].last_reveal_sound
@@ -800,7 +800,7 @@ function doc.generate_entry_list(cid, playername)
 				local viewedprefix = "#00FFFF"
 				local name = edata.name
 				if name == nil or name == "" then
-					name = string.format(S("Nameless entry (%s)"), eid)
+					name = S("Nameless entry (@1)", eid)
 					if doc.entry_viewed(playername, cid, eid) then
 						viewedprefix = "#FF4444"
 					else
@@ -895,7 +895,7 @@ function doc.formspec_category(id, playername)
 		formstring = formstring .. "label[0,0.5;"..F("You haven't chosen a category yet. Please choose one in the category list first.").."]"
 		formstring = formstring .. "button[0,1;3,1;doc_button_goto_main;"..F("Go to category list").."]"
 	else
-		formstring = "label[0,0;"..minetest.formspec_escape(string.format(S("Help > %s"), doc.data.categories[id].def.name)).."]"
+		formstring = "label[0,0;"..minetest.formspec_escape(S("Help > @1", doc.data.categories[id].def.name)).."]"
 		local total = doc.get_entry_count(id)
 		if total >= 1 then
 			local revealed = doc.get_revealed_count(playername, id)
@@ -906,16 +906,16 @@ function doc.formspec_category(id, playername)
 				formstring = formstring .. "label[0,0.5;"..F("This category has the following entries:").."]"
 				formstring = formstring .. doc.generate_entry_list(id, playername)
 				formstring = formstring .. "button[0,"..(doc.FORMSPEC.HEIGHT-1)..";3,1;doc_button_goto_entry;"..F("Show entry").."]"
-				formstring = formstring .. "label["..(doc.FORMSPEC.WIDTH-4)..","..(doc.FORMSPEC.HEIGHT-1)..";"..minetest.formspec_escape(string.format(S("Number of entries: %d"), total)).."\n"
+				formstring = formstring .. "label["..(doc.FORMSPEC.WIDTH-4)..","..(doc.FORMSPEC.HEIGHT-1)..";"..minetest.formspec_escape(S("Number of entries: @1", total)).."\n"
 				local viewed = doc.get_viewed_count(playername, id)
 				local hidden = total - revealed
 				local new = total - viewed - hidden
 				-- TODO/FIXME: Check if number of hidden/viewed entries is always correct
 				if viewed < total then
-					formstring = formstring .. minetest.formspec_escape(string.format(S("New entries: %d"), new))
+					formstring = formstring .. minetest.formspec_escape(S("New entries: @1", new))
 					if hidden > 0 then
 						formstring = formstring .. "\n"
-						formstring = formstring .. minetest.formspec_escape(string.format(S("Hidden entries: %d"), hidden)).."]"
+						formstring = formstring .. minetest.formspec_escape(S("Hidden entries: @1", hidden)).."]"
 					else
 						formstring = formstring .. "]"
 					end
@@ -950,7 +950,7 @@ function doc.formspec_entry(category_id, entry_id, playername)
 		formstring = formstring .. "label[0,0.5;"..F("You haven't chosen a category yet. Please choose one in the category list first.").."]"
 		formstring = formstring .. "button[0,1;3,1;doc_button_goto_main;"..F("Go to category list").."]"
 	elseif entry_id == nil then
-		formstring = "label[0,0;"..minetest.formspec_escape(string.format(S("Help > %s > (No Entry)"), doc.data.categories[category_id].def.name)) .. "]"
+		formstring = "label[0,0;"..minetest.formspec_escape(S("Help > @1 > (No Entry)", doc.data.categories[category_id].def.name)) .. "]"
 		if doc.get_entry_count(category_id) >= 1 then
 			formstring = formstring .. "label[0,0.5;"..F("You haven't chosen an entry yet. Please choose one in the entry list first.").."]"
 			formstring = formstring .. "button[0,1.5;3,1;doc_button_goto_category;"..F("Go to entry list").."]"
@@ -964,9 +964,9 @@ function doc.formspec_entry(category_id, entry_id, playername)
 		local entry = doc.get_entry(category_id, entry_id)
 		local ename = entry.name
 		if ename == nil or ename == "" then
-			ename = string.format(S("Nameless entry (%s)"), entry_id)
+			ename = S("Nameless entry (@1)", entry_id)
 		end
-		formstring = "label[0,0;"..minetest.formspec_escape(string.format(S("Help > %s > %s"), category.def.name, ename)).."]"
+		formstring = "label[0,0;"..minetest.formspec_escape(S("Help > @1 > @2", category.def.name, ename)).."]"
 		formstring = formstring .. category.def.build_formspec(entry.data, playername)
 		formstring = formstring .. doc.formspec_entry_navigation(category_id, entry_id)
 	end
