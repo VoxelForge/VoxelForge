@@ -40,8 +40,8 @@ doc.FORMSPEC.ENTRY_HEIGHT = doc.FORMSPEC.ENTRY_END_Y - doc.FORMSPEC.ENTRY_START_
 local DOC_INTRO = S("This is the help.")
 
 local CATEGORYFIELDSIZE = {
-	WIDTH = 4,
-	HEIGHT = 8,
+	WIDTH = math.ceil(doc.FORMSPEC.WIDTH / 4),
+	HEIGHT = math.floor(doc.FORMSPEC.HEIGHT-1),
 }
 
 doc.data = {}
