@@ -905,7 +905,7 @@ function doc.formspec_category(id, playername)
 				formstring = formstring .. "label[0,0.5;"..F("This category has the following entries:").."]"
 				formstring = formstring .. doc.generate_entry_list(id, playername)
 				formstring = formstring .. "button[0,"..(doc.FORMSPEC.HEIGHT-1)..";3,1;doc_button_goto_entry;"..F("Show entry").."]"
-				formstring = formstring .. "label[8,8;"..minetest.formspec_escape(string.format(S("Number of entries: %d"), total)).."\n"
+				formstring = formstring .. "label["..(doc.FORMSPEC.WIDTH-4)..","..(doc.FORMSPEC.HEIGHT-1)..";"..minetest.formspec_escape(string.format(S("Number of entries: %d"), total)).."\n"
 				local viewed = doc.get_viewed_count(playername, id)
 				local hidden = total - revealed
 				local new = total - viewed - hidden
@@ -935,8 +935,8 @@ function doc.formspec_entry_navigation(category_id, entry_id)
 		return ""
 	end
 	local formstring = ""
-	formstring = formstring .. "button[10,8.5;1,1;doc_button_goto_prev;"..F("<").."]"
-	formstring = formstring .. "button[11,8.5;1,1;doc_button_goto_next;"..F(">").."]"
+	formstring = formstring .. "button["..(doc.FORMSPEC.WIDTH-2)..","..(doc.FORMSPEC.HEIGHT-0.5)..";1,1;doc_button_goto_prev;"..F("<").."]"
+	formstring = formstring .. "button["..(doc.FORMSPEC.WIDTH-1)..","..(doc.FORMSPEC.HEIGHT-0.5)..";1,1;doc_button_goto_next;"..F(">").."]"
 	formstring = formstring .. "tooltip[doc_button_goto_prev;"..F("Show previous entry").."]"
 	formstring = formstring .. "tooltip[doc_button_goto_next;"..F("Show next entry").."]"
 	return formstring
