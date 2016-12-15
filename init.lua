@@ -1194,10 +1194,6 @@ minetest.register_on_joinplayer(function(player)
 	end
 end)
 
-minetest.register_on_leaveplayer(function(player)
-	doc.data.players[player:get_player_name()] = nil
-end)
-
 ---[[ Add buttons for inventory mods ]]
 local button_action = function(player)
 	doc.show_doc(player:get_player_name())
