@@ -44,6 +44,9 @@ local CATEGORYFIELDSIZE = {
 	HEIGHT = math.floor(doc.FORMSPEC.HEIGHT-1),
 }
 
+-- Maximum characters per line in the text widget
+local TEXT_LINELENGTH = 80
+
 doc.data = {}
 doc.data.categories = {}
 -- Default order (includes categories of other mods from the Docuentation System modpack)
@@ -422,7 +425,7 @@ doc.entry_builders = {}
 -- into spaces
 local linebreaker_single = function(text, linelength)
 	if linelength == nil then
-		linelength = 77
+		linelength = TEXT_LINELENGTH
 	end
 	local remain = linelength
 	local res = {}
@@ -518,7 +521,7 @@ doc.widgets.text = function(data, x, y, width, height)
 	if height == nil then
 		height = doc.FORMSPEC.ENTRY_HEIGHT
 	end
-	local baselength = 77
+	local baselength = TEXT_LINELENGTH
 	local widget_basewidth = doc.FORMSPEC.WIDTH
 	local linelength = math.max(20, math.floor(baselength * (width / widget_basewidth)))
 
