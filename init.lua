@@ -759,7 +759,7 @@ function doc.formspec_error_hidden(category_id, entry_id)
 	formstring = formstring .. minetest.formspec_escape(
 	DOC_INTRO .. "\n\n" ..
 	S("Error: Access denied.") .. "\n\n" ..
-	S("Access to the requested entry has been denied; this entry is secret. You may unlock access by more playing. Figure out on your own how to unlock this entry."))
+	S("Access to the requested entry has been denied; this entry is secret. You may unlock access by progressing in the game. Figure out on your own how to unlock this entry."))
 	formstring = formstring .. ";]button_exit[3,5;2,1;okay;"..F("OK").."]"
 	return formstring
 end
@@ -900,7 +900,7 @@ function doc.formspec_category(id, playername)
 		if total >= 1 then
 			local revealed = doc.get_revealed_count(playername, id)
 			if revealed == 0 then
-				formstring = formstring .. "label[0,0.5;"..F("Currently all entries in this category are hidden from you.\nUnlock new entries by proceeding in the game.").."]"
+				formstring = formstring .. "label[0,0.5;"..F("Currently all entries in this category are hidden from you.\nUnlock new entries by progressing in the game.").."]"
 				formstring = formstring .. "button[0,1.5;3,1;doc_button_goto_main;"..F("Go to category list").."]"
 			else
 				formstring = formstring .. "label[0,0.5;"..F("This category has the following entries:").."]"
