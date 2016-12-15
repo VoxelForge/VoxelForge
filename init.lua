@@ -701,10 +701,11 @@ function doc.formspec_main(playername)
 			for c=1,#doc.data.category_order do
 				local id = doc.data.category_order[c]
 				local data = doc.data.categories[id]
+				local bw = doc.FORMSPEC.WIDTH / math.floor(((doc.data.category_count-1) / CATEGORYFIELDSIZE.HEIGHT)+1)
 				-- Skip categories which do not exist
 				if data ~= nil then
 					-- Category buton
-					local button = "button["..((x-1)*3)..","..y..";3,1;doc_button_category_"..id..";"..minetest.formspec_escape(data.def.name).."]"
+					local button = "button["..((x-1)*bw)..","..y..";"..bw..",1;doc_button_category_"..id..";"..minetest.formspec_escape(data.def.name).."]"
 					local tooltip = ""
 					-- Optional description
 					if data.def.description ~= nil then
