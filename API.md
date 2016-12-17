@@ -142,8 +142,9 @@ Note: For function-based sorting, the entries provided to the compare function
 will have the following format:
 
     {
-        name = n, -- entry name
-        data = d, -- arbitrary entry data
+        eid = e,	-- unique entry identifier
+        name = n,	-- entry name
+        data = d,	-- arbitrary entry data
     }
 
 #### Using `build_formspec`
