@@ -27,8 +27,8 @@ revealed. Normally you just have to proceed in the game to unlock more
 entries. Hidden entries exist to avoid spoilers and give players a small
 sense of progress.
 
-Players with the `help_reveal` privilege can use the `/help_reveal` chat command
-to reveal all hidden entries instantly.
+Players with the `help_reveal` privilege can use the `/help_reveal` chat
+command to reveal all hidden entries instantly.
 
 ### Maintenance
 The information of which player has viewed and revealed which entries is
@@ -37,14 +37,15 @@ the viewed/revealed state of all players by deleting this file. Players
 then need to start over revealing all entries.
 
 ## For modders and subgame authors
-This mod helps you in writing extensive help for your mod or subgame.
-You can write about basically anything in the presentation you prefer.
+This mod helps you in creating extensive and flexible help entries for your
+mods or subgame. You can write about basically anything in the presentation
+you prefer.
 
 To get started, read `API.md` in the directory of this mod.
 
 Note: If you want to add help texts for items and nodes, refer to the API
-documentation of `doc_items`, instead of manually adding entries. For
-custom entities, you may also want to add support for `doc_identifier`.
+documentation of `doc_items`, instead of manually adding entries.
+For custom entities, you may also want to add support for `doc_identifier`.
 
 ## License of everything
 MIT License
