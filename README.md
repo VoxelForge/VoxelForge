@@ -30,6 +30,12 @@ sense of progress.
 Players with the `help_reveal` privilege can use the `/help_reveal` chat command
 to reveal all hidden entries instantly.
 
+### Maintenance
+The information of which player has viewed and revealed which entries is
+stored in the world directory in the file `doc.mt`. You can safely reset
+the viewed/revealed state of all players by deleting this file. Players
+then need to start over revealing all entries.
+
 ## For modders and subgame authors
 This mod helps you in writing extensive help for your mod or subgame.
 You can write about basically anything in the presentation you prefer.
