@@ -6,13 +6,14 @@ It is the heart of the Help modpack, on which the other Help mods depend.
 
 Current version: 0.11.0
 
-## For users
+## For players 
 ### Accessing the help
 To open the help, there are multiple ways:
 
 - Use the `/helpform` chat command. This works always.
-- If you use Unified Inventory or Minetest Game, you will find an extra
-  button in the inventory
+- If you use one of these mods, there's a help button in the inventory menu:
+    - Unified Inventory [`unified_inventory`]
+    - Simple Fast Inventory Buttons [`sfinv_buttons`]
 
 The help itself should be more or less self-explanatory.
 
