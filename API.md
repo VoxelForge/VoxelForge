@@ -12,15 +12,17 @@ documentation. Categories group multiple entries of the same topic together.
 Categories also define a template function which is used to determine how the
 final result in the tab “Entry list” looks like. Entries themselves have
 a data field attached to them, this is a table containing arbitrary metadata
-which is used to construct the final formspec which is used on the Entry tab.
+which is used to construct the final formspec in the Entry tab. It may also
+be used for sorting entries in the entry list.
 
 ## Advanced concepts
 ### Viewed and hidden entries
 The mod keeps track of which entries have been viewed on a per-player basis.
-Any entry which has been accessed by a player is instantly marked as “viewed”.
+Any entry which has been accessed by a player is immediately marked as
+“viewed”.
 
-It also allows entries to be hidden. Hidden entries are not visible or
-otherwise accessible to players until they become revealed by function calls.
+Entries can also be hidden. Hidden entries are not visible or otherwise
+accessible to players until they become revealed by function calls.
 
 Marking an entry as viewed or revealed is not reversible with this API.
 The viewed and hidden states are stored in the file `doc.mt` inside the
@@ -29,13 +31,13 @@ the player states.
 
 ### Entry aliases
 Entry aliases are alternative identifiers for entry identifiers. With the
-exception of the alias functions themselves, for function demanding an
+exception of the alias functions themselves, for functions demanding an
 `entry_id` you can either supply the original `entry_id` or any alias of the
 `entry_id`.
 
 ## Possible use cases
-Here are some possible use cases to give you a rough idea what
-this mod is capable of and how certain use cases should be implemented.
+This section shows some possible use cases to give you a rough idea what
+this mod is capable of and how these use cases could be implemented.
 
 ### Simple use case: Minetest basics
 Let's say you want to write in free form short help texts about the basic
@@ -68,24 +70,25 @@ This is a list of all publicly available functions.
 The most important functions are `doc.new_category` and `doc.new_entry`. All other functions
 are mostly used for utility and examination purposes.
 
+If not mentioned otherwise, the return value of all functions is `nil`.
+
 These functions are available:
 
+#### Core
 * `doc.new_category`: Adds a new category
 * `doc.new_entry`: Adds a new entry
-* `doc.set_category_order`: Sets the order of categories in the category list
+
+#### Display
 * `doc.show_entry`: Shows a particular entry to a player
 * `doc.show_category`: Shows the entry list of a category to a player
 * `doc.show_doc`: Opens the main help form for a player
+
+#### Query
 * `doc.get_category_definition`: Returns the definition table of a category
 * `doc.get_entry_definition`: Returns the definition table of an entry
 * `doc.entry_exists`: Checks whether an entry exists
 * `doc.entry_viewed`: Checks whether an entry has been viewed/read by a player
 * `doc.entry_revealed`: Checks whether an entry is visible and normally accessible to a player
-* `doc.mark_entry_as_viewed`: Manually marks an entry as viewed/read by a player
-* `doc.mark_entry_as_revealed`: Make a hidden entry visible and accessible to a player
-* `doc.mark_all_entries_as_revealed`: Make all hidden entries visible and accessible to a player
-* `doc.add_entry_alias`: Add an alternative name which can be used to access an entry
-* `doc.add_entry_aliases`: Add multiple alternative names which can be used to access an entry
 * `doc.get_category_count`: Returns the total number of categories
 * `doc.get_entry_count`: Returns the total number of entries in a category
 * `doc.get_viewed_count`: Returns the number of entries a player has viewed in a category
@@ -93,7 +96,15 @@ These functions are available:
 * `doc.get_hidden_count`: Returns the number of entries which are hidden from a player in a category
 * `doc.get_selection`: Returns the currently viewed entry/category of a player
 
-If not mentioned otherwise, the return value of all functions is `nil`.
+#### Modify
+* `doc.set_category_order`: Sets the order of categories in the category list
+* `doc.mark_entry_as_viewed`: Manually marks an entry as viewed/read by a player
+* `doc.mark_entry_as_revealed`: Make a hidden entry visible and accessible to a player
+* `doc.mark_all_entries_as_revealed`: Make all hidden entries visible and accessible to a player
+
+#### Aliases
+* `doc.add_entry_alias`: Add an alternative name which can be used to access an entry
+* `doc.add_entry_aliases`: Add multiple alternative names which can be used to access an entry
 
 #### Special widgets
 This API provides functions to add unique “widgets” for functionality
@@ -101,6 +112,8 @@ you may find useful when creating entry templates. You find these
 functions in `doc.widgets`.
 Currently there is a widget for scrollable multi-line text and a
 widget providing an image gallery.
+
+
 
 ### `doc.new_category(id, def)`
 Adds a new category. You have to define an unique identifier, a name
@@ -168,7 +181,7 @@ following predefined convenience functions:
 
 ##### Formspec restrictions
 When building your formspec, you have to respect the size limitations.
-The help form uses a size of 15×10.5 and you must make sure
+The help form currently uses a size of 15×10.5 and you must make sure
 all entry widgets are inside a boundary box. The remaining space is
 reserved for widgets of the help form and should not be used to avoid
 overlapping.
@@ -460,8 +473,8 @@ nearly the entire entry page.
 #### Return value
 Two values are returned, in this order:
 
-* String: Contains a complete formspec definition building the widget.
-* String: Formspec element ID of the created widget
+* string: Contains a complete formspec definition building the widget
+* string: Formspec element ID of the created widget
 
 #### Note
 If you use this function to build a formspec string, do not use identifiers
@@ -481,7 +494,7 @@ worrying about space too much. Adding illustrations can help you to create
 entry templates which aren't just lengthy walls of text. ;-)
 
 You can define the position, image aspect ratio, total gallery width and the
- number of images displayed at once. You can *not* directly define the image
+number of images displayed at once. You can *not* directly define the image
 size, nor the resulting height of the overall gallery, those values will
 be derived from the parameters.
 
@@ -516,8 +529,8 @@ at the left and right side of the images.
 #### Return values
 Two values are returned, in this order:
 
-* String: Contains a complete formspec definition building the gallery
-* Number: The height the gallery occupies in the formspec
+* string: Contains a complete formspec definition building the gallery
+* number: The height the gallery occupies in the formspec
 
 ## Extending this mod (naming conventions)
 If you want to extend this mod with your own functionality, it is recommended
