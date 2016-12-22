@@ -690,7 +690,8 @@ function doc.formspec_core(tab)
 	minetest.formspec_escape(S("Category list")) .. "," ..
 	minetest.formspec_escape(S("Entry list")) .. "," ..
 	minetest.formspec_escape(S("Entry")) .. ";"
-	..tab..";true;false]"
+	..tab..";true;true]" ..
+	"bgcolor[#343434FF]"
 end
 
 function doc.formspec_main(playername)
