@@ -294,6 +294,7 @@ The entry's definition table as specified in the `def` argument of
 
 ### `doc.entry_exists(category_id, entry_id)`
 Checks whether the specified entry exists and returns `true` or `false`.
+Entry aliases are taken into account.
 
 #### Parameters
 * `category_id`: Category identifier of the category to check
