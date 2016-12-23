@@ -39,6 +39,10 @@ doc.FORMSPEC.ENTRY_HEIGHT = doc.FORMSPEC.ENTRY_END_Y - doc.FORMSPEC.ENTRY_START_
 -- Internal helper variables
 local DOC_INTRO = S("This is the help.")
 
+local COLOR_NOT_VIEWED = "#00FFFF"	-- cyan
+local COLOR_VIEWED = "#FFFFFF"		-- white
+local COLOR_HIDDEN = "#999999"		-- gray
+
 local CATEGORYFIELDSIZE = {
 	WIDTH = math.ceil(doc.FORMSPEC.WIDTH / 4),
 	HEIGHT = math.floor(doc.FORMSPEC.HEIGHT-1),
@@ -800,8 +804,7 @@ function doc.generate_entry_list(cid, playername)
 				table.insert(doc.data.players[playername].entry_ids, eid)
 				doc.data.players[playername].catsel_list[eid] = counter + 1
 				-- Colorize entries based on viewed status
-				-- Not viewed: Cyan
-				local viewedprefix = "#00FFFF"
+				local viewedprefix = COLOR_NOT_VIEWED
 				local name = edata.name
 				if name == nil or name == "" then
 					name = S("Nameless entry (@1)", eid)
@@ -811,8 +814,7 @@ function doc.generate_entry_list(cid, playername)
 						viewedprefix = "#FF0000"
 					end
 				elseif doc.entry_viewed(playername, cid, eid) then
-					-- Viewed: White
-					viewedprefix = "#FFFFFF"
+					viewedprefix = COLOR_VIEWED
 				end
 				entry_textlist = entry_textlist .. viewedprefix .. minetest.formspec_escape(name) .. ","
 				counter = counter + 1
@@ -916,10 +918,10 @@ function doc.formspec_category(id, playername)
 				local new = total - viewed - hidden
 				-- TODO/FIXME: Check if number of hidden/viewed entries is always correct
 				if viewed < total then
-					formstring = formstring .. minetest.formspec_escape(S("New entries: @1", new))
+					formstring = formstring .. core.colorize(COLOR_NOT_VIEWED, minetest.formspec_escape(S("New entries: @1", new)))
 					if hidden > 0 then
 						formstring = formstring .. "\n"
-						formstring = formstring .. minetest.formspec_escape(S("Hidden entries: @1", hidden)).."]"
+						formstring = formstring .. core.colorize(COLOR_HIDDEN, minetest.formspec_escape(S("Hidden entries: @1", hidden))).."]"
 					else
 						formstring = formstring .. "]"
 					end
