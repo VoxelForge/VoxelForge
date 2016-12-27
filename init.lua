@@ -186,21 +186,24 @@ function doc.mark_all_entries_as_revealed(playername)
 		end
 	end
 
+	local msg
 	if reveal1 then
 		-- Needed because new entries are added to player's view on entry list
 		doc.data.players[playername].entry_textlist_needs_updating = true
 
-		-- Notify
-		local msg = S("All help entries unlocked!")
-		if minetest.get_modpath("central_message") ~= nil then
-			cmsg.push_message_player(minetest.get_player_by_name(playername), msg)
-		else
-			minetest.chat_send_player(playername, msg)
-		end
+		msg = S("All help entries revealed!")
 
 		-- Play notification sound (ignore sound limit intentionally)
 		minetest.sound_play({ name = "doc_reveal", gain = 0.2 }, { to_player = playername })
 		doc.data.players[playername].last_reveal_sound = os.time()
+	else
+		msg = S("All help entries are already revealed.")
+	end
+	-- Notify
+	if minetest.get_modpath("central_message") ~= nil then
+		cmsg.push_message_player(minetest.get_player_by_name(playername), msg)
+	else
+		minetest.chat_send_player(playername, msg)
 	end
 end
 
