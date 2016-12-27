@@ -694,7 +694,7 @@ minetest.register_on_leaveplayer(function(player)
 end)
 
 minetest.register_on_shutdown(function()
-	minetest.log("action", "[doc] Server shuts down. Rescuing player data into doc.mt.")
+	minetest.log("action", "[doc] Server shuts down. Player data is about to be saved.")
 	doc.save_to_file()
 end)
 
