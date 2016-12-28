@@ -22,8 +22,8 @@ doc = {}
 
 -- Version number (follows the SemVer specification 2.0.0)
 doc.VERSION = {}
-doc.VERSION.MAJOR = 0
-doc.VERSION.MINOR = 11
+doc.VERSION.MAJOR = 1
+doc.VERSION.MINOR = 0
 doc.VERSION.PATCH = 0
 doc.VERSION.STRING = doc.VERSION.MAJOR.."."..doc.VERSION.MINOR.."."..doc.VERSION.PATCH
 
