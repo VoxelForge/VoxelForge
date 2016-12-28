@@ -74,6 +74,36 @@ doc.sub = {}
 -- Status variables
 local set_category_order_was_called = false
 
+-- Returns the entry definition and true entry ID of an entry, taking aliases into account
+local function get_entry(category_id, entry_id)
+	local category = doc.data.categories[category_id]
+	local entry
+	if category ~= nil then
+		entry = category.entries[entry_id]
+	end
+	if category == nil or entry == nil then
+		local c_alias = doc.data.aliases[category_id]
+		if c_alias then
+			local alias = c_alias[entry_id]
+			if alias then
+				category_id = alias.category_id
+				entry_id = alias.entry_id
+				category = doc.data.categories[category_id]
+				if category then
+					entry = category.entries[entry_id]
+				else
+					return nil
+				end
+			else
+				return nil
+			end
+		else
+			return nil
+		end
+	end
+	return entry, category_id, entry_id
+end
+
 --[[ Core API functions ]]
 
 -- Add a new category
@@ -128,7 +158,7 @@ end
 -- Marks a particular entry as viewed by a certain player, which also
 -- automatically reveals it
 function doc.mark_entry_as_viewed(playername, category_id, entry_id)
-	local entry, category_id, entry_id = doc.get_entry(category_id, entry_id)
+	local entry, category_id, entry_id = get_entry(category_id, entry_id)
 	if not entry then
 		return
 	end
@@ -147,7 +177,7 @@ end
 
 -- Marks a particular entry as revealed/unhidden by a certain player
 function doc.mark_entry_as_revealed(playername, category_id, entry_id)
-	local entry, category_id, entry_id = doc.get_entry(category_id, entry_id)
+	local entry, category_id, entry_id = get_entry(category_id, entry_id)
 	if not entry then
 		return
 	end
@@ -215,7 +245,7 @@ end
 
 -- Returns true if the specified entry has been viewed by the player
 function doc.entry_viewed(playername, category_id, entry_id)
-	local entry, category_id, entry_id = doc.get_entry(category_id, entry_id)
+	local entry, category_id, entry_id = get_entry(category_id, entry_id)
 	if doc.data.players[playername].stored_data.viewed[category_id] == nil then
 		return false
 	else
@@ -225,7 +255,7 @@ end
 
 -- Returns true if the specified entry is hidden from the player
 function doc.entry_revealed(playername, category_id, entry_id)
-	local entry, category_id, entry_id = doc.get_entry(category_id, entry_id)
+	local entry, category_id, entry_id = get_entry(category_id, entry_id)
 	local hidden = doc.data.categories[category_id].entries[entry_id].hidden
 	if doc.data.players[playername].stored_data.revealed[category_id] == nil then
 		return not hidden
@@ -251,7 +281,7 @@ function doc.get_entry_definition(category_id, entry_id)
 	if not doc.entry_exists(category_id, entry_id) then
 		return nil
 	end
-	local entry, _, _  = doc.get_entry(category_id, entry_id)
+	local entry, _, _  = get_entry(category_id, entry_id)
 	return entry
 end
 
@@ -284,7 +314,7 @@ function doc.show_entry(playername, category_id, entry_id, ignore_hidden)
 		minetest.show_formspec(playername, "doc:error_no_categories", doc.formspec_error_no_categories())
 		return
 	end
-	local entry, category_id, entry_id = doc.get_entry(category_id, entry_id)
+	local entry, category_id, entry_id = get_entry(category_id, entry_id)
 	if ignore_hidden or doc.entry_revealed(playername, category_id, entry_id) then
 		local playerdata = doc.data.players[playername]
 		playerdata.category = category_id
@@ -309,7 +339,7 @@ end
 -- * This category contains the specified entry
 -- Aliases are taken into account
 function doc.entry_exists(category_id, entry_id)
-	return doc.get_entry(category_id, entry_id) ~= nil
+	return get_entry(category_id, entry_id) ~= nil
 end
 
 -- Sets the order of categories in the category list
@@ -775,36 +805,6 @@ function doc.formspec_error_hidden(category_id, entry_id)
 	return formstring
 end
 
--- Returns the entry definition and true entry ID of an entry, taking aliases into account
-function doc.get_entry(category_id, entry_id)
-	local category = doc.data.categories[category_id]
-	local entry
-	if category ~= nil then
-		entry = category.entries[entry_id]
-	end
-	if category == nil or entry == nil then
-		local c_alias = doc.data.aliases[category_id]
-		if c_alias then
-			local alias = c_alias[entry_id]
-			if alias then
-				category_id = alias.category_id
-				entry_id = alias.entry_id
-				category = doc.data.categories[category_id]
-				if category then
-					entry = category.entries[entry_id]
-				else
-					return nil
-				end
-			else
-				return nil
-			end
-		else
-			return nil
-		end
-	end
-	return entry, category_id, entry_id
-end
-
 function doc.generate_entry_list(cid, playername)
 	local formstring
 	if doc.data.players[playername].entry_textlist == nil
@@ -986,7 +986,7 @@ function doc.formspec_entry(category_id, entry_id, playername)
 	else
 
 		local category = doc.data.categories[category_id]
-		local entry = doc.get_entry(category_id, entry_id)
+		local entry = get_entry(category_id, entry_id)
 		local ename = entry.name
 		if ename == nil or ename == "" then
 			ename = S("Nameless entry (@1)", entry_id)
