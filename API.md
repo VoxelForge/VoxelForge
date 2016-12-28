@@ -67,7 +67,7 @@ this block as possible.
 This is a list of all publicly available functions.
 
 ### Overview
-The most important functions are `doc.new_category` and `doc.new_entry`. All other functions
+The most important functions are `doc.add_category` and `doc.ad_entry`. All other functions
 are mostly used for utility and examination purposes.
 
 If not mentioned otherwise, the return value of all functions is `nil`.
@@ -75,8 +75,8 @@ If not mentioned otherwise, the return value of all functions is `nil`.
 These functions are available:
 
 #### Core
-* `doc.new_category`: Adds a new category
-* `doc.new_entry`: Adds a new entry
+* `doc.add_category`: Adds a new category
+* `doc.add_entry`: Adds a new entry
 
 #### Display
 * `doc.show_entry`: Shows a particular entry to a player
@@ -115,7 +115,7 @@ widget providing an image gallery.
 
 
 
-### `doc.new_category(id, def)`
+### `doc.add_category(id, def)`
 Adds a new category. You have to define an unique identifier, a name
 and a template function to build the entry formspec from the entry
 data.
@@ -206,7 +206,7 @@ the standard function `minetest.register_on_player_receive_fields` to register
 your event handling. The `formname` parameter will be `doc:entry`. Use
 `doc.get_selection` to get the category ID and entry ID of the entry in question.
 
-### `doc.new_entry(category_id, entry_id, def)`
+### `doc.add_entry(category_id, entry_id, def)`
 Adds a new entry into an existing category. You have to define the category
 to which to insert the entry, the entry's identifier, a name and some
 data which defines the entry. Note you do not directly define here how the
@@ -279,7 +279,7 @@ Returns the definition of the specified category.
 
 #### Return value
 The category's definition table as specified in the `def` argument of
-`doc.new_category`. The table fields are the same.
+`doc.add_category`. The table fields are the same.
 
 ### `doc.get_entry_definition(category_id, entry_id)`
 Returns the definition of the specified entry.
@@ -290,7 +290,7 @@ Returns the definition of the specified entry.
 
 #### Return value
 The entry's definition table as specified in the `def` argument of
-`doc.new_entry`. The table fields are the same.
+`doc.add_entry`. The table fields are the same.
 
 ### `doc.entry_exists(category_id, entry_id)`
 Checks whether the specified entry exists and returns `true` or `false`.

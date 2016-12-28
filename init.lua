@@ -76,7 +76,7 @@ local set_category_order_was_called = false
 --[[ Core API functions ]]
 
 -- Add a new category
-function doc.new_category(id, def)
+function doc.add_category(id, def)
 	if doc.data.categories[id] == nil and id ~= nil then
 		doc.data.categories[id] = {}
 		doc.data.categories[id].entries = {}
@@ -106,7 +106,7 @@ function doc.new_category(id, def)
 end
 
 -- Add a new entry
-function doc.new_entry(category_id, entry_id, def)
+function doc.add_entry(category_id, entry_id, def)
 	local cat = doc.data.categories[category_id]
 	if cat ~= nil then
 		local hidden = def.hidden or (def.hidden == nil and cat.def.hide_entries_by_default)
@@ -434,7 +434,7 @@ function doc.get_selection(playername)
 	end
 end
 
--- Template function templates, to be used for build_formspec in doc.new_category
+-- Template function templates, to be used for build_formspec in doc.add_category
 doc.entry_builders = {}
 
 -- Inserts line breaks into a single paragraph and collapses all whitespace (including newlines)
