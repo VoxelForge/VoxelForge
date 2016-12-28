@@ -14,6 +14,7 @@ To open the help, there are multiple ways:
 - If you use one of these mods, there's a help button in the inventory menu:
     - Unified Inventory [`unified_inventory`]
     - Simple Fast Inventory Buttons [`sfinv_buttons`]
+    - Inventory++ [`inventory_plus`]
 
 The help itself should be more or less self-explanatory.
 

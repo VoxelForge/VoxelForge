@@ -1147,6 +1147,11 @@ function doc.process_form(player,formname,fields)
 			local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid, playername)
 			minetest.show_formspec(playername, "doc:entry", formspec)
 		end
+	else
+		if fields["doc_inventory_plus"] and minetest.get_modpath("inventory_plus") then
+			doc.show_doc(playername)
+			return
+		end
 	end
 end
 
@@ -1209,6 +1214,11 @@ minetest.register_on_joinplayer(function(player)
 			playerdata.stored_data.revealed_count[cid] = rc
 		end
 	end
+
+	-- Add button for Inventory++
+	if minetest.get_modpath("inventory_plus") ~= nil then
+		inventory_plus.register_button(player, "doc_inventory_plus", S("Help"))
+	end
 end)
 
 ---[[ Add buttons for inventory mods ]]
@@ -1235,7 +1245,6 @@ if minetest.get_modpath("sfinv_buttons") ~= nil then
 		action = button_action,
 	})
 end
-
 
 
 minetest.register_privilege("help_reveal", {
