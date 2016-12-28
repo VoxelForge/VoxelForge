@@ -104,7 +104,6 @@ These functions are available:
 
 #### Aliases
 * `doc.add_entry_alias`: Add an alternative name which can be used to access an entry
-* `doc.add_entry_aliases`: Add multiple alternative names which can be used to access an entry
 
 #### Special widgets
 This API provides functions to add unique “widgets” for functionality
@@ -363,29 +362,27 @@ rest of the game.
 #### Parameters
 * `playername`: Name of the player for whom to reveal the entries
 
-### `doc.add_entry_alias(category_id, entry_id, alias)`
+### `doc.add_entry_alias(category_id_orig, entry_id_orig, category_id_alias, entry_id_orig)`
 Adds a single alias for an entry. If an entry has an alias, supplying the
-alias to a function which demands an `entry_id` will work as if the original
-`entry_id` has been supplied. The scope of an alias is the category in which
-it has been created.
+alias to a function which demand `category_id` and `entry_id` will work as expected.
 When using this function, you must make sure the category already exists.
 
-#### Parameters
-* `category_id`: Category identifier of the category of the entry in question
-* `entry_id`: The original (!) entry identifier of the entry to create an alias
-  for
-* `alias`: Alias (string) for `entry_id`
-
-### `doc.add_entry_aliases(category_id, entry_id, aliases)`
-Adds an arbitrary amount of aliases for an entry at once. Apart from that, this
-function has the same effect as `doc.add_entry_alias`.
-When using this function, you must make sure the category already exists.
+This function could be useful for legacy support after changing an entry ID or
+moving an entry to a different category.
 
 #### Parameters
-* `category_id`: Category identifier of the category of the entry in question
-* `entry_id`: The original (!) entry identifier of the entry to create aliases
+* `category_id_orig`: Category identifier of the category of the entry in question
+* `entry_id_orig`: The original (!) entry identifier of the entry to create an alias
   for
-* `aliases`: Table/list of aliases (strings) for `entry_id`
+* `category_id_alias`: The category ID of the alias
+* `entry_id_alias`: The entry ID of the alias
+
+#### Example
+
+    doc.add_entry_alias("nodes", "test", "craftitems", "test2")
+
+When calling a function with category ID “craftitems” and entry ID “test2”, it will
+act as if you supplied “nodes” as category ID and “test” as entry ID.
 
 ### `doc.get_category_count()`
 Returns the number of registered categories.

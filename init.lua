@@ -62,6 +62,7 @@ local TEXT_LINELENGTH = 80
 
 doc.data = {}
 doc.data.categories = {}
+doc.data.aliases = {}
 -- Default order (includes categories of other mods from the Docuentation System modpack)
 doc.data.category_order = {"basics", "nodes", "tools", "craftitems", "advanced"}
 doc.data.category_count = 0
@@ -83,7 +84,6 @@ function doc.add_category(id, def)
 		doc.data.categories[id].entry_count = 0
 		doc.data.categories[id].hidden_count = 0
 		doc.data.categories[id].def = def
-		doc.data.categories[id].entry_aliases = {}
 		-- Determine order position
 		local order_id = nil
 		for i=1,#doc.data.category_order do
@@ -128,7 +128,10 @@ end
 -- Marks a particular entry as viewed by a certain player, which also
 -- automatically reveals it
 function doc.mark_entry_as_viewed(playername, category_id, entry_id)
-	local entry, entry_id = doc.get_entry(category_id, entry_id)
+	local entry, category_id, entry_id = doc.get_entry(category_id, entry_id)
+	if not entry then
+		return
+	end
 	if doc.data.players[playername].stored_data.viewed[category_id] == nil then
 		doc.data.players[playername].stored_data.viewed[category_id] = {}
 		doc.data.players[playername].stored_data.viewed_count[category_id] = 0
@@ -144,7 +147,10 @@ end
 
 -- Marks a particular entry as revealed/unhidden by a certain player
 function doc.mark_entry_as_revealed(playername, category_id, entry_id)
-	local entry, entry_id = doc.get_entry(category_id, entry_id)
+	local entry, category_id, entry_id = doc.get_entry(category_id, entry_id)
+	if not entry then
+		return
+	end
 	if doc.data.players[playername].stored_data.revealed[category_id] == nil then
 		doc.data.players[playername].stored_data.revealed[category_id] = {}
 		doc.data.players[playername].stored_data.revealed_count[category_id] = doc.get_entry_count(category_id) - doc.data.categories[category_id].hidden_count
@@ -209,7 +215,7 @@ end
 
 -- Returns true if the specified entry has been viewed by the player
 function doc.entry_viewed(playername, category_id, entry_id)
-	local entry, entry_id = doc.get_entry(category_id, entry_id)
+	local entry, category_id, entry_id = doc.get_entry(category_id, entry_id)
 	if doc.data.players[playername].stored_data.viewed[category_id] == nil then
 		return false
 	else
@@ -219,7 +225,7 @@ end
 
 -- Returns true if the specified entry is hidden from the player
 function doc.entry_revealed(playername, category_id, entry_id)
-	local entry, entry_id = doc.get_entry(category_id, entry_id)
+	local entry, category_id, entry_id = doc.get_entry(category_id, entry_id)
 	local hidden = doc.data.categories[category_id].entries[entry_id].hidden
 	if doc.data.players[playername].stored_data.revealed[category_id] == nil then
 		return not hidden
@@ -245,7 +251,7 @@ function doc.get_entry_definition(category_id, entry_id)
 	if not doc.entry_exists(category_id, entry_id) then
 		return nil
 	end
-	local entry, _ = doc.get_entry(category_id, entry_id)
+	local entry, _, _  = doc.get_entry(category_id, entry_id)
 	return entry
 end
 
@@ -278,7 +284,7 @@ function doc.show_entry(playername, category_id, entry_id, ignore_hidden)
 		minetest.show_formspec(playername, "doc:error_no_categories", doc.formspec_error_no_categories())
 		return
 	end
-	local entry, entry_id = doc.get_entry(category_id, entry_id)
+	local entry, category_id, entry_id = doc.get_entry(category_id, entry_id)
 	if ignore_hidden or doc.entry_revealed(playername, category_id, entry_id) then
 		local playerdata = doc.data.players[playername]
 		playerdata.category = category_id
@@ -301,18 +307,9 @@ end
 -- Returns true if and only if:
 -- * The specified category exists
 -- * This category contains the specified entry
+-- Aliases are taken into account
 function doc.entry_exists(category_id, entry_id)
-	if doc.data.categories[category_id] ~= nil then
-		if doc.data.categories[category_id].entries[entry_id] ~= nil then
-			-- Entry exists
-			return true
-		else
-			-- Entry of this ID does not exist, so we check if there's an alias for it
-			return doc.data.categories[category_id].entry_aliases[entry_id] ~= nil
-		end
-	else
-		return false
-	end
+	return doc.get_entry(category_id, entry_id) ~= nil
 end
 
 -- Sets the order of categories in the category list
@@ -341,18 +338,13 @@ function doc.set_category_order(categories)
 	set_category_order_was_called = true
 end
 
--- Adds aliases for an entry. Attempting to open an entry by an alias name
+-- Adds an alias for an entry. Attempting to open an entry by an alias name
 -- results in opening the entry of the original name.
--- Aliases are true within one category only.
-function doc.add_entry_aliases(category_id, entry_id, aliases)
-	for a=1,#aliases do
-		doc.data.categories[category_id].entry_aliases[aliases[a]] = entry_id
+function doc.add_entry_alias(category_id_orig, entry_id_orig, category_id_alias, entry_id_alias)
+	if not doc.data.aliases[category_id_alias] then
+		doc.data.aliases[category_id_alias] = {}
 	end
-end
-
--- Same as above, but only adds one alias
-function doc.add_entry_alias(category_id, entry_id, alias)
-	doc.data.categories[category_id].entry_aliases[alias] = entry_id
+	doc.data.aliases[category_id_alias][entry_id_alias] = { category_id = category_id_orig, entry_id = entry_id_orig }
 end
 
 -- Returns number of categories
@@ -786,15 +778,31 @@ end
 -- Returns the entry definition and true entry ID of an entry, taking aliases into account
 function doc.get_entry(category_id, entry_id)
 	local category = doc.data.categories[category_id]
-	local entry = category.entries[entry_id]
-	local resolved_entry_id = entry_id
-	if entry == nil then
-		resolved_entry_id = doc.data.categories[category_id].entry_aliases[entry_id]
-		if resolved_entry_id ~= nil then
-			entry = category.entries[resolved_entry_id]
+	local entry
+	if category ~= nil then
+		entry = category.entries[entry_id]
+	end
+	if category == nil or entry == nil then
+		local c_alias = doc.data.aliases[category_id]
+		if c_alias then
+			local alias = c_alias[entry_id]
+			if alias then
+				category_id = alias.category_id
+				entry_id = alias.entry_id
+				category = doc.data.categories[category_id]
+				if category then
+					entry = category.entries[entry_id]
+				else
+					return nil
+				end
+			else
+				return nil
+			end
+		else
+			return nil
 		end
 	end
-	return entry, resolved_entry_id
+	return entry, category_id, entry_id
 end
 
 function doc.generate_entry_list(cid, playername)
