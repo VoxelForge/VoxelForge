@@ -24,7 +24,7 @@ doc = {}
 doc.VERSION = {}
 doc.VERSION.MAJOR = 1
 doc.VERSION.MINOR = 0
-doc.VERSION.PATCH = 0
+doc.VERSION.PATCH = 1
 doc.VERSION.STRING = doc.VERSION.MAJOR.."."..doc.VERSION.MINOR.."."..doc.VERSION.PATCH
 
 -- Formspec information
