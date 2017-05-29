@@ -11,7 +11,7 @@ this mod will place them accordingly.
 position should be displayed correctly on every screen size.
 
 ## Current version
-The current version is 1.7.1.
+The current version is 1.7.2.
 
 This software uses [semantic versioning](http://semver.org), as defined by version 2.0.0 of the SemVer
 standard.
