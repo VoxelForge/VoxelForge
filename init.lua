@@ -463,6 +463,14 @@ function hb.get_hudbar_state(player, identifier)
 	return copy
 end
 
+function hb.get_hudbar_identifiers()
+	local ids = {}
+	for id, _ in pairs(hb.hudtables) do
+		table.insert(ids, id)
+	end
+	return ids
+end
+
 --register built-in HUD bars
 if minetest.settings:get_bool("enable_damage") or hb.settings.forceload_default_hudbars then
 	hb.register_hudbar("health", 0xFFFFFF, S("Health"), { bar = "hudbars_bar_health.png", icon = "hudbars_icon_health.png", bgicon = "hudbars_bgicon_health.png" }, 20, 20, false)
