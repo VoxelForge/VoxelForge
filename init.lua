@@ -43,20 +43,20 @@ minetest.register_globalstep(function(dtime)
 		for cname, cbool in pairs(player_controls) do
 			--Press a key
 			if cbool==true and controls.players[player_name][cname][1]==false then
-				controls.players[player_name][cname] = {true, os.clock()}
 				for _, func in pairs(controls.registered_on_press) do
 					func(player, cname)
 				end
+				controls.players[player_name][cname] = {true, os.clock()}
 			elseif cbool==true and controls.players[player_name][cname][1]==true then
 				for _, func in pairs(controls.registered_on_hold) do
 					func(player, cname, os.clock()-controls.players[player_name][cname][2])
 				end
 			--Release a key
 			elseif cbool==false and controls.players[player_name][cname][1]==true then
-				controls.players[player_name][cname] = {false}
 				for _, func in pairs(controls.registered_on_release) do
-					func(player, cname)
+					func(player, cname, os.clock()-controls.players[player_name][cname][2])
 				end
+				controls.players[player_name][cname] = {false}
 			end
 		end
 	end
