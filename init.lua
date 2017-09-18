@@ -195,7 +195,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 		local bar_image, bar_size
 		if hb.settings.bar_type == "progress_bar" then
 			bar_image = textures.bar
-			bar_size = {x=2, y=16}
+			bar_size = nil
 		elseif hb.settings.bar_type == "statbar_classic" or hb.settings.bar_type == "statbar_modern" then
 			bar_image = textures.icon
 			bar_size = {x=24, y=24}
