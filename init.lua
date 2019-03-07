@@ -1,11 +1,5 @@
--- Boilerplate to support localized strings if intllib mod is installed.
-local S, F
-if minetest.get_modpath("intllib") then
-	S = intllib.Getter()
-else
-	S = function(s,a,...)a={a,...}return s:gsub("@(%d+)",function(n)return a[tonumber(n)]end)end
-end
-F = function(f) return minetest.formspec_escape(S(f)) end
+local S = minetest.get_translator("doc")
+local F = function(f) return minetest.formspec_escape(S(f)) end
 
 -- Compability for 0.4.14 or earlier
 local colorize
