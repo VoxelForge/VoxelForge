@@ -51,9 +51,6 @@ local CATEGORYFIELDSIZE = {
 	HEIGHT = math.floor(doc.FORMSPEC.HEIGHT-1),
 }
 
--- Maximum characters per line in the text widget
-local TEXT_LINELENGTH = 80
-
 doc.data = {}
 doc.data.categories = {}
 doc.data.aliases = {}
@@ -456,66 +453,9 @@ end
 -- Template function templates, to be used for build_formspec in doc.add_category
 doc.entry_builders = {}
 
--- Inserts line breaks into a single paragraph and collapses all whitespace (including newlines)
--- into spaces
-local linebreaker_single = function(text, linelength)
-	if linelength == nil then
-		linelength = TEXT_LINELENGTH
-	end
-	local remain = linelength
-	local res = {}
-	local line = {}
-	local split = function(s)
-		local res = {}
-		for w in string.gmatch(s, "%S+") do
-			res[#res+1] = w
-		end
-		return res
-	end
-
-	for _, word in ipairs(split(text)) do
-		if string.len(word) + 1 > remain then
-			table.insert(res, table.concat(line, " "))
-			line = { word }
-			remain = linelength - string.len(word)
-		else
-			table.insert(line, word)
-			remain = remain - (string.len(word) + 1)
-		end
-	end
-
-	table.insert(res, table.concat(line, " "))
-	return table.concat(res, "\n")
-end
-
--- Inserts automatic line breaks into an entire text and preserves existing newlines
-local linebreaker = function(text, linelength)
-	local out = ""
-	for s in string.gmatch(text, "([^\n]*)") do
-		local l = linebreaker_single(s, linelength)
-		out = out .. l
-		if(string.len(l) == 0) then
-			out = out .. "\n"
-		end
-	end
-	-- Remove last newline
-	if string.len(out) >= 1 then
-		out = string.sub(out, 1, string.len(out) - 1)
-	end
-	return out
-end
-
--- Inserts text suitable for a textlist (including automatic word-wrap)
-local text_for_textlist = function(text, linelength)
-	text = linebreaker(text, linelength)
-	text = minetest.formspec_escape(text)
-	text = string.gsub(text, "\n", ",")
-	return text
-end
-
 -- Scrollable freeform text
 doc.entry_builders.text = function(data)
-	local formstring = doc.widgets.text(data, doc.FORMSPEC.ENTRY_START_X, doc.FORMSPEC.ENTRY_START_Y, doc.FORMSPEC.ENTRY_WIDTH - 0.2, doc.FORMSPEC.ENTRY_HEIGHT)
+	local formstring = doc.widgets.text(data, doc.FORMSPEC.ENTRY_START_X, doc.FORMSPEC.ENTRY_START_Y, doc.FORMSPEC.ENTRY_WIDTH - 0.4, doc.FORMSPEC.ENTRY_HEIGHT)
 	return formstring
 end
 
@@ -533,7 +473,7 @@ doc.entry_builders.text_and_gallery = function(data, playername)
 	formstring = formstring .. doc.widgets.text(data.text,
 		doc.FORMSPEC.ENTRY_START_X,
 		doc.FORMSPEC.ENTRY_START_Y,
-		doc.FORMSPEC.ENTRY_WIDTH - 0.2,
+		doc.FORMSPEC.ENTRY_WIDTH - 0.4,
 		doc.FORMSPEC.ENTRY_HEIGHT - stolen_height)
 
 	return formstring
@@ -541,12 +481,13 @@ end
 
 doc.widgets = {}
 
-local text_id = 1
 -- Scrollable freeform text
 doc.widgets.text = function(data, x, y, width, height)
 	if x == nil then
 		x = doc.FORMSPEC.ENTRY_START_X
 	end
+	-- Offset to table[], which was used for this in a previous version
+	x = x + 0.35
 	if y == nil then
 		y = doc.FORMSPEC.ENTRY_START_Y
 	end
@@ -556,18 +497,9 @@ doc.widgets.text = function(data, x, y, width, height)
 	if height == nil then
 		height = doc.FORMSPEC.ENTRY_HEIGHT
 	end
-	local baselength = TEXT_LINELENGTH
-	local widget_basewidth = doc.FORMSPEC.WIDTH
-	local linelength = math.max(20, math.floor(baselength * (width / widget_basewidth)))
 
-	local widget_id = "doc_widget_text"..text_id
-	text_id = text_id + 1
-	-- TODO: Wait for Minetest to provide a native widget for scrollable read-only text with automatic line breaks.
-	-- Currently, all of this had to be hacked into this script manually by using/abusing the table widget
-	local formstring = "tablecolumns[text]"..
-	"tableoptions[background=#000000FF;highlight=#000000FF;border=false]"..
-	"table["..tostring(x)..","..tostring(y)..";"..tostring(width)..","..tostring(height)..";"..widget_id..";"..text_for_textlist(data, linelength).."]"
-	return formstring, widget_id
+	local formstring = "textarea["..tostring(x+0.35)..","..tostring(y)..";"..tostring(width)..","..tostring(height)..";;;"..minetest.formspec_escape(data).."]"
+	return formstring
 end
 
 -- Image gallery
