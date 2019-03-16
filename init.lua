@@ -3,8 +3,8 @@ local F = function(f) return minetest.formspec_escape(S(f)) end
 
 -- Compability for 0.4.14 or earlier
 local colorize
-if core.colorize then
-	colorize = core.colorize
+if minetest.colorize then
+	colorize = minetest.colorize
 else
 	colorize = function(color, text) return text end
 end
