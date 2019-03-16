@@ -732,7 +732,8 @@ function doc.formspec_error_no_categories()
 	formstring = formstring ..
 	minetest.formspec_escape(
 		colorize(COLOR_ERROR, S("Error: No help available.")) .. "\n\n" ..
-S("No categories have been registered, but they are required to provide help.\nThe Documentation System [doc] does not come with help contents on its own, it needs additional mods to add help content. Please make sure such mods are enabled on for this world, and try again.")) .. "\n\n" ..
+S("No categories have been registered, but they are required to provide help.").."\n"..
+S("The Documentation System [doc] does not come with help contents on its own, it needs additional mods to add help content. Please make sure such mods are enabled on for this world, and try again.")) .. "\n\n" ..
 S("Recommended mods: doc_basics, doc_items, doc_identifier, doc_encyclopedia.")
 	formstring = formstring .. ";]button_exit[3,5;2,1;okay;"..F("OK").."]"
 	return formstring
@@ -867,7 +868,7 @@ function doc.formspec_category(id, playername)
 		if total >= 1 then
 			local revealed = doc.get_revealed_count(playername, id)
 			if revealed == 0 then
-				formstring = formstring .. "label[0,0.5;"..F("Currently all entries in this category are hidden from you.\nUnlock new entries by progressing in the game.").."]"
+				formstring = formstring .. "label[0,0.5;"..minetest.formspec_escape(S("Currently all entries in this category are hidden from you.").."\n"..S("Unlock new entries by progressing in the game.")).."]"
 				formstring = formstring .. "button[0,1.5;3,1;doc_button_goto_main;"..F("Go to category list").."]"
 			else
 				formstring = formstring .. "label[0,0.5;"..F("This category has the following entries:").."]"
