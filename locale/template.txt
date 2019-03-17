@@ -45,3 +45,7 @@ You haven't chosen an entry yet. Please choose one in the entry list first.=
 Collection of help texts=
 Notify me when new help is available=
 Play notification sound when new help is available=
+Show previous image=
+Show previous gallery page=
+Show next image=
+Show next gallery page=
