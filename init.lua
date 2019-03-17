@@ -658,6 +658,7 @@ function doc.formspec_core(tab)
 	minetest.formspec_escape(S("Entry list")) .. "," ..
 	minetest.formspec_escape(S("Entry")) .. ";"
 	..tab..";false;false]"
+	-- Let the Game decide on the style, such as background, etc.
 end
 
 function doc.formspec_main(playername)
