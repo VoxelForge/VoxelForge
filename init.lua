@@ -487,7 +487,7 @@ doc.widgets.text = function(data, x, y, width, height)
 		x = doc.FORMSPEC.ENTRY_START_X
 	end
 	-- Offset to table[], which was used for this in a previous version
-	x = x + 0.35
+	local xfix = x + 0.35
 	if y == nil then
 		y = doc.FORMSPEC.ENTRY_START_Y
 	end
@@ -497,8 +497,12 @@ doc.widgets.text = function(data, x, y, width, height)
 	if height == nil then
 		height = doc.FORMSPEC.ENTRY_HEIGHT
 	end
+	-- Weird offset for textarea[]
+	local heightfix = height + 1
 
-	local formstring = "textarea["..tostring(x)..","..tostring(y)..";"..tostring(width)..","..tostring(height)..";;;"..minetest.formspec_escape(data).."]"
+	-- Also add background box
+	local formstring = "box["..tostring(x-0.175)..","..tostring(y)..";"..tostring(width)..","..tostring(height)..";#000000]" ..
+			"textarea["..tostring(xfix)..","..tostring(y)..";"..tostring(width)..","..tostring(heightfix)..";;;"..minetest.formspec_escape(data).."]"
 	return formstring
 end
 
