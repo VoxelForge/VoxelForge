@@ -498,7 +498,7 @@ doc.widgets.text = function(data, x, y, width, height)
 		height = doc.FORMSPEC.ENTRY_HEIGHT
 	end
 
-	local formstring = "textarea["..tostring(x+0.35)..","..tostring(y)..";"..tostring(width)..","..tostring(height)..";;;"..minetest.formspec_escape(data).."]"
+	local formstring = "textarea["..tostring(x)..","..tostring(y)..";"..tostring(width)..","..tostring(height)..";;;"..minetest.formspec_escape(data).."]"
 	return formstring
 end
 
