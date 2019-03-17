@@ -657,12 +657,12 @@ function doc.formspec_core(tab)
 	minetest.formspec_escape(S("Category list")) .. "," ..
 	minetest.formspec_escape(S("Entry list")) .. "," ..
 	minetest.formspec_escape(S("Entry")) .. ";"
-	..tab..";true;true]" ..
+	..tab..";false;false]" ..
 	"bgcolor[#343434FF]"
 end
 
 function doc.formspec_main(playername)
-	local formstring = "label[0,0;"..minetest.formspec_escape(DOC_INTRO) .. "\n"
+	local formstring = "textarea[0.35,0;"..doc.FORMSPEC.WIDTH..",1;;;"..minetest.formspec_escape(DOC_INTRO) .. "\n"
 	local notify_checkbox_x, notify_checkbox_y
 	if doc.get_category_count() >= 1 then
 		formstring = formstring .. F("Please select a category you wish to learn more about:").."]"
