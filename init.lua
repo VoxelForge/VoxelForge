@@ -1,4 +1,5 @@
 local S = minetest.get_translator("hudbars")
+local N = function(s) return s end
 
 hb = {}
 
@@ -123,7 +124,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 		end
 	end
 	if format_string == nil then
-		format_string = S("%s: %d/%d")
+		format_string = N("@1: @2/@3")
 	end
 
 	hudtable.add_all = function(player, hudtable, start_value, start_max, start_hidden)
@@ -148,7 +149,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 			iconscale = { x=1, y=1 }
 			barnumber = hb.value_to_barlength(start_value, start_max)
 			bgiconnumber = hb.settings.statbar_length
-			text = string.format(format_string, label, start_value, start_max)
+			text = S(format_string, label, start_value, start_max)
 		end
 		if hb.settings.bar_type == "progress_bar" then
 			ids.bg = player:hud_add({
@@ -298,7 +299,7 @@ function hb.change_hudbar(player, identifier, new_value, new_max_value, new_icon
 		end
 		if new_label ~= nil then
 			hudtable.label = new_label
-			local new_text = string.format(hudtable.format_string, new_label, hudtable.hudstate[name].value, hudtable.hudstate[name].max)
+			local new_text = S(hudtable.format_string, new_label, hudtable.hudstate[name].value, hudtable.hudstate[name].max)
 			player:hud_change(hudtable.hudids[name].text, "text", new_text)
 		end
 		if new_text_color ~= nil then
@@ -342,7 +343,7 @@ function hb.change_hudbar(player, identifier, new_value, new_max_value, new_icon
 			end
 
 			if hb.settings.bar_type == "progress_bar" then
-				local new_text = string.format(hudtable.format_string, hudtable.label, new_value, new_max_value)
+				local new_text = S(hudtable.format_string, hudtable.label, new_value, new_max_value)
 				if new_text ~= hudtable.hudstate[name].text then
 					player:hud_change(hudtable.hudids[name].text, "text", new_text)
 					hudtable.hudstate[name].text = new_text
@@ -389,7 +390,7 @@ function hb.unhide_hudbar(player, identifier)
 			if hudtable.hudstate[name].max ~= 0 then
 				player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
 			end
-			player:hud_change(hudtable.hudids[name].text, "text", tostring(string.format(hudtable.format_string, hudtable.label, value, max)))
+			player:hud_change(hudtable.hudids[name].text, "text", tostring(S(hudtable.format_string, hudtable.label, value, max)))
 		elseif hb.settings.bar_type == "statbar_modern" then
 			player:hud_change(hudtable.hudids[name].bg, "number", hb.settings.statbar_length)
 		end
