@@ -444,16 +444,20 @@ local function custom_hud(player)
 		else
 			hide = true
 		end
-		hb.init_hudbar(player, "health", player:get_hp(), nil, hide)
+		local hp = player:get_hp()
+		local hp_max = player:get_properties().hp_max
+		hb.init_hudbar(player, "health", math.min(hp, hp_max), hp_max, hide)
 		local breath = player:get_breath()
+		local breath_max = player:get_properties().breath_max
 		local hide_breath
-		if breath == 11 and hb.settings.autohide_breath == true then hide_breath = true else hide_breath = false end
-		hb.init_hudbar(player, "breath", math.min(breath, 10), nil, hide_breath or hide)
+		if breath >= breath_max and hb.settings.autohide_breath == true then hide_breath = true else hide_breath = false end
+		hb.init_hudbar(player, "breath", math.min(breath, breath_max-1), breath_max-1, hide_breath or hide)
 	end
 end
 
 local function update_health(player)
-	hb.change_hudbar(player, "health", player:get_hp())
+	local hp_max = player:get_properties().hp_max
+	hb.change_hudbar(player, "health", player:get_hp(), hp_max)
 end
 
 -- update built-in HUD bars
@@ -464,13 +468,14 @@ local function update_hud(player)
 			hb.unhide_hudbar(player, "health")
 		end
 		--air
+		local breath_max = player:get_properties().breath_max
 		local breath = player:get_breath()
 		
-		if breath == 11 and hb.settings.autohide_breath == true then
+		if breath >= breath_max and hb.settings.autohide_breath == true then
 			hb.hide_hudbar(player, "breath")
 		else
 			hb.unhide_hudbar(player, "breath")
-			hb.change_hudbar(player, "breath", math.min(breath, 10))
+			hb.change_hudbar(player, "breath", math.min(breath, breath_max-1), breath_max-1)
 		end
 		--health
 		update_health(player)
