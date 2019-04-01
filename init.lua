@@ -384,19 +384,17 @@ function hb.hide_hudbar(player, identifier)
 	local name = player:get_player_name()
 	local hudtable = hb.get_hudtable(identifier)
 	if hudtable == nil then return false end
-	if(hudtable.hudstate[name].hidden == false) then
-		if hb.settings.bar_type == "progress_bar" then
-			if hudtable.hudids[name].icon ~= nil then
-				player:hud_change(hudtable.hudids[name].icon, "scale", {x=0,y=0})
-			end
-			player:hud_change(hudtable.hudids[name].bg, "scale", {x=0,y=0})
-			player:hud_change(hudtable.hudids[name].text, "text", "")
-		elseif hb.settings.bar_type == "statbar_modern" then
-			player:hud_change(hudtable.hudids[name].bg, "number", 0)
+	if hb.settings.bar_type == "progress_bar" then
+		if hudtable.hudids[name].icon ~= nil then
+			player:hud_change(hudtable.hudids[name].icon, "scale", {x=0,y=0})
 		end
-		player:hud_change(hudtable.hudids[name].bar, "number", 0)
-		hudtable.hudstate[name].hidden = true
+		player:hud_change(hudtable.hudids[name].bg, "scale", {x=0,y=0})
+		player:hud_change(hudtable.hudids[name].text, "text", "")
+	elseif hb.settings.bar_type == "statbar_modern" then
+		player:hud_change(hudtable.hudids[name].bg, "number", 0)
 	end
+	player:hud_change(hudtable.hudids[name].bar, "number", 0)
+	hudtable.hudstate[name].hidden = true
 	return true
 end
 
@@ -405,23 +403,21 @@ function hb.unhide_hudbar(player, identifier)
 	local name = player:get_player_name()
 	local hudtable = hb.get_hudtable(identifier)
 	if hudtable == nil then return false end
-	if(hudtable.hudstate[name].hidden) then
-		local value = hudtable.hudstate[name].value
-		local max = hudtable.hudstate[name].max
-		if hb.settings.bar_type == "progress_bar" then
-			if hudtable.hudids[name].icon ~= nil then
-				player:hud_change(hudtable.hudids[name].icon, "scale", {x=1,y=1})
-			end
-			if hudtable.hudstate[name].max ~= 0 then
-				player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
-			end
-			player:hud_change(hudtable.hudids[name].text, "text", make_label(hudtable.format_string, hudtable.format_string_config, hudtable.format_string_textdomain, hudtable.label, value, max))
-		elseif hb.settings.bar_type == "statbar_modern" then
-			player:hud_change(hudtable.hudids[name].bg, "number", hb.settings.statbar_length)
+	local value = hudtable.hudstate[name].value
+	local max = hudtable.hudstate[name].max
+	if hb.settings.bar_type == "progress_bar" then
+		if hudtable.hudids[name].icon ~= nil then
+			player:hud_change(hudtable.hudids[name].icon, "scale", {x=1,y=1})
 		end
-		player:hud_change(hudtable.hudids[name].bar, "number", hb.value_to_barlength(value, max))
-		hudtable.hudstate[name].hidden = false
+		if hudtable.hudstate[name].max ~= 0 then
+			player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
+		end
+		player:hud_change(hudtable.hudids[name].text, "text", make_label(hudtable.format_string, hudtable.format_string_config, hudtable.format_string_textdomain, hudtable.label, value, max))
+	elseif hb.settings.bar_type == "statbar_modern" then
+		player:hud_change(hudtable.hudids[name].bg, "number", hb.settings.statbar_length)
 	end
+	player:hud_change(hudtable.hudids[name].bar, "number", hb.value_to_barlength(value, max))
+	hudtable.hudstate[name].hidden = false
 	return true
 end
 
