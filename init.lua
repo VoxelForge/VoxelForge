@@ -51,7 +51,7 @@ local function player_exists(player)
 	return player ~= nil and player:is_player()
 end
 
-local function make_label(format_string, format_string_config, label, start_value, max_value)
+local function make_label(format_string, format_string_config, format_string_textdomain, label, start_value, max_value)
 	local params = {}
 	for c=1, #format_string_config do
 		if format_string_config[c] == "label" then
@@ -62,7 +62,13 @@ local function make_label(format_string, format_string_config, label, start_valu
 			table.insert(params, max_value)
 		end
 	end
-	return S(format_string, unpack(params))
+	local ret
+	if format_string_textdomain then
+		ret = minetest.translate(format_string_textdomain, format_string, unpack(params))
+	else
+		ret = S(format_string, unpack(params))
+	end
+	return ret
 end
 
 -- Table which contains all players with active default HUD bars (only for internal use)
@@ -104,7 +110,7 @@ function hb.get_hudbar_position_index(identifier)
 	end
 end
 
-function hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, default_start_hidden, format_string, format_string_config)
+function hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, default_start_hidden, format_string, format_string_config, format_string_textdomain)
 	minetest.log("action", "hb.register_hudbar: "..tostring(identifier))
 	local hudtable = {}
 	local pos, offset
@@ -166,7 +172,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 			iconscale = { x=1, y=1 }
 			barnumber = hb.value_to_barlength(start_value, start_max)
 			bgiconnumber = hb.settings.statbar_length
-			text = make_label(format_string, format_string_config, label, start_value, start_max)
+			text = make_label(format_string, format_string_config, format_string_textdomain, label, start_value, start_max)
 		end
 		if hb.settings.bar_type == "progress_bar" then
 			ids.bg = player:hud_add({
@@ -257,6 +263,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 	hudtable.identifier = identifier
 	hudtable.format_string = format_string
 	hudtable.format_string_config = format_string_config
+	hudtable.format_string_textdomain = format_string_textdomain
 	hudtable.label = label
 	hudtable.hudids = {}
 	hudtable.hudstate = {}
@@ -317,7 +324,7 @@ function hb.change_hudbar(player, identifier, new_value, new_max_value, new_icon
 		end
 		if new_label ~= nil then
 			hudtable.label = new_label
-			local new_text = make_label(hudtable.format_string, hudtable.format_string_config, new_label, hudtable.hudstate[name].value, hudtable.hudstate[name].max)
+			local new_text = make_label(hudtable.format_string, hudtable.format_string_config, hudtable.format_string_textdomain, new_label, hudtable.hudstate[name].value, hudtable.hudstate[name].max)
 			player:hud_change(hudtable.hudids[name].text, "text", new_text)
 		end
 		if new_text_color ~= nil then
@@ -361,7 +368,7 @@ function hb.change_hudbar(player, identifier, new_value, new_max_value, new_icon
 			end
 
 			if hb.settings.bar_type == "progress_bar" then
-				local new_text = make_label(hudtable.format_string, hudtable.format_string_config, hudtable.label, new_value, new_max_value)
+				local new_text = make_label(hudtable.format_string, hudtable.format_string_config, hudtable.format_string_textdomain, hudtable.label, new_value, new_max_value)
 				if new_text ~= hudtable.hudstate[name].text then
 					player:hud_change(hudtable.hudids[name].text, "text", new_text)
 					hudtable.hudstate[name].text = new_text
@@ -408,7 +415,7 @@ function hb.unhide_hudbar(player, identifier)
 			if hudtable.hudstate[name].max ~= 0 then
 				player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
 			end
-			player:hud_change(hudtable.hudids[name].text, "text", make_label(hudtable.format_string, hudtable.format_string_config, hudtable.label, value, max))
+			player:hud_change(hudtable.hudids[name].text, "text", make_label(hudtable.format_string, hudtable.format_string_config, hudtable.format_string_textdomain, hudtable.label, value, max))
 		elseif hb.settings.bar_type == "statbar_modern" then
 			player:hud_change(hudtable.hudids[name].bg, "number", hb.settings.statbar_length)
 		end
