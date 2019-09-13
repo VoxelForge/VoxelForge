@@ -58,9 +58,17 @@ local function make_label(format_string, format_string_config, label, start_valu
 		if order[o] == "label" then
 			table.insert(params, label)
 		elseif order[o] == "value" then
-			table.insert(params, start_value)
+			if format_string_config.format_value then
+				table.insert(params, string.format(format_string_config.format_value, start_value))
+			else
+				table.insert(params, start_value)
+			end
 		elseif order[o] == "max_value" then
-			table.insert(params, max_value)
+			if format_string_config.format_max_value then
+				table.insert(params, string.format(format_string_config.format_max_value, max_value))
+			else
+				table.insert(params, max_value)
+			end
 		end
 	end
 	local ret
@@ -148,7 +156,16 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 		format_string = N("@1: @2/@3")
 	end
 	if format_string_config == nil then
-		format_string_config = { order = { "label", "value", "max_value" } }
+		format_string_config = {}
+	end
+	if format_string_config.order == nil then
+		format_string_config.order = { "label", "value", "max_value" }
+	end
+	if format_string_config.format_value == nil then
+		format_string_config.format_value = "%d"
+	end
+	if format_string_config.format_max_value == nil then
+		format_string_config.format_max_value = "%d"
 	end
 
 	hudtable.add_all = function(player, hudtable, start_value, start_max, start_hidden)
