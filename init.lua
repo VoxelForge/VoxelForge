@@ -39,7 +39,6 @@ end)
 minetest.register_globalstep(function(dtime)
 	for _, player in pairs(minetest.get_connected_players()) do
 		local player_name = player:get_player_name()
-		if not controls.players[player_name] then
 		local player_controls = player:get_player_control()
 		for cname, cbool in pairs(player_controls) do
 			if not controls.players[player_name] then
