@@ -39,8 +39,14 @@ end)
 minetest.register_globalstep(function(dtime)
 	for _, player in pairs(minetest.get_connected_players()) do
 		local player_name = player:get_player_name()
+		if not controls.players[player_name] then
 		local player_controls = player:get_player_control()
 		for cname, cbool in pairs(player_controls) do
+			if not controls.players[player_name] then
+				-- player timed out but is still provided by get_connected_players(), disregard
+				break
+			end
+
 			--Press a key
 			if cbool==true and controls.players[player_name][cname][1]==false then
 				for _, func in pairs(controls.registered_on_press) do
