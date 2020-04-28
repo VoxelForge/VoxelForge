@@ -19,14 +19,14 @@ end
 minetest.register_on_joinplayer(function(player)
 	local name = player:get_player_name()
 	controls.players[name] = {
-		jump={false}, 
-		right={false}, 
-		left={false}, 
-		LMB={false}, 
-		RMB={false}, 
-		sneak={false}, 
-		aux1={false}, 
-		down={false}, 
+		jump={false},
+		right={false},
+		left={false},
+		LMB={false},
+		RMB={false},
+		sneak={false},
+		aux1={false},
+		down={false},
 		up={false}
 	}
 end)
@@ -36,7 +36,7 @@ minetest.register_on_leaveplayer(function(player)
 	controls.players[name] = nil
 end)
 
-minetest.register_globalstep(function(dtime)
+minetest.register_globalstep(function()
 	for _, player in pairs(minetest.get_connected_players()) do
 		local player_name = player:get_player_name()
 		local player_controls = player:get_player_control()
