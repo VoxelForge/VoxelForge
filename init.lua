@@ -209,7 +209,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 					scale = iconscale,
 					text = textures.icon,
 					alignment = {x=-1,y=1},
-					offset = { x = offset.x - 3, y = offset.y },
+					offset = { x = offset.x - 4, y = offset.y + 2 },
 					z_index = 1,
 				})
 			end
