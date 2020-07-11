@@ -488,7 +488,7 @@ local function custom_hud(player)
 		local breath_max = player:get_properties().breath_max
 		local hide_breath
 		if breath >= breath_max and hb.settings.autohide_breath == true then hide_breath = true else hide_breath = false end
-		hb.init_hudbar(player, "breath", math.min(breath, breath_max-1), breath_max-1, hide_breath or hide)
+		hb.init_hudbar(player, "breath", math.min(breath, breath_max), breath_max, hide_breath or hide)
 	end
 end
 
@@ -512,7 +512,7 @@ local function update_hud(player)
 			hb.hide_hudbar(player, "breath")
 		else
 			hb.unhide_hudbar(player, "breath")
-			hb.change_hudbar(player, "breath", math.min(breath, breath_max-1), breath_max-1)
+			hb.change_hudbar(player, "breath", math.min(breath, breath_max), breath_max)
 		end
 		--health
 		update_health(player)
