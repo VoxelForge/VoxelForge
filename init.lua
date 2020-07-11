@@ -412,6 +412,7 @@ function hb.hide_hudbar(player, identifier)
 		player:hud_change(hudtable.hudids[name].text, "text", "")
 	end
 	player:hud_change(hudtable.hudids[name].bar, "number", 0)
+	player:hud_change(hudtable.hudids[name].bar, "item", 0)
 	hudtable.hudstate[name].hidden = true
 	return true
 end
@@ -431,8 +432,11 @@ function hb.unhide_hudbar(player, identifier)
 			player:hud_change(hudtable.hudids[name].bg, "scale", {x=1,y=1})
 		end
 		player:hud_change(hudtable.hudids[name].text, "text", make_label(hudtable.format_string, hudtable.format_string_config, hudtable.label, value, max))
+	elseif hb.settings.bar_type == "statbar_modern" then
+		player:hud_change(hudtable.hudids[name].bar, "scale", {x=1,y=1})
 	end
 	player:hud_change(hudtable.hudids[name].bar, "number", hb.value_to_barlength(value, max))
+	player:hud_change(hudtable.hudids[name].bar, "item", hb.value_to_barlength(max, max))
 	hudtable.hudstate[name].hidden = false
 	return true
 end
