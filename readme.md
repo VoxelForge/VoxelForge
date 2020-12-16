@@ -2,6 +2,7 @@
 controls library for minetest
 
 ![](https://github.com/mt-mods/controls/workflows/luacheck/badge.svg)
+[![ContentDB](https://content.minetest.net/packages/BuckarooBanzay/controls/shields/downloads/)](https://content.minetest.net/packages/BuckarooBanzay/controls/)
 
 # Overview
 
