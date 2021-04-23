@@ -121,6 +121,11 @@ minetest.register_globalstep(function(dtime)
 
 				-- Print description
 				if desc then
+					-- Optionally append the 'technical' itemname
+					local tech = minetest.settings:get_bool("show_wielded_item_itemname", false)
+					if tech and desc ~= "" then
+						desc = desc .. " ["..wname.."]"
+					end
 					player:hud_change(huds[player_name], 'text', desc)
 				end
 			end
