@@ -118,8 +118,9 @@ minetest.register_globalstep(function(dtime)
 					-- Final fallback: itemstring
 					desc = wname
 				end
+
+				-- Print description
 				if desc then
-					-- Print description
 					player:hud_change(huds[player_name], 'text', desc)
 				end
 			end
