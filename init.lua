@@ -107,6 +107,7 @@ minetest.register_globalstep(function(dtime)
 					-- Metadata (old versions only)
 					local meta = wstack:get_meta()
 					desc = meta:get_string("description")
+					desc = get_first_line(desc)
 				end
 				if not desc or desc == "" then
 					-- Item definition
