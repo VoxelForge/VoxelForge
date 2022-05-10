@@ -1,26 +1,6 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
 mcl_armor.register_set({
-	name = "leather",
-	description = "Leath",
-	descriptions = {
-		head = S("Leather Cap"),
-		torso = S("Leather Tunic"),
-		legs = S("Leather Pants"),
-		feet = S("Leather Boots"),
-	},
-	durability = 80,
-	enchantability = 15,
-	points = {
-		head = 1,
-		torso = 3,
-		legs = 2,
-		feet = 1,
-	},
-	craft_material = "mcl_mobitems:leather",
-})
-
-mcl_armor.register_set({
 	name = "gold",
 	descriptions = {
 		head = S("Golden Helmet"),
