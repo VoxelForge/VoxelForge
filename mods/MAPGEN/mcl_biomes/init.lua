@@ -1222,7 +1222,6 @@ local end_skycolor = "#000000"
 		_mcl_fogcolor = overworld_fogcolor
 	})
 
-
 	-- Savanna
 	minetest.register_biome({
 		name = "Savanna",
