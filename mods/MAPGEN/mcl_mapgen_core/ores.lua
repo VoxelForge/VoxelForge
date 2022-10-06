@@ -127,7 +127,6 @@ minetest.register_ore({
 	}
 })
 
-
 minetest.register_ore({
 	ore_type       = "blob",
 	ore            = "mcl_deepslate:deepslate",

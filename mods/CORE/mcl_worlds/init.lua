@@ -34,7 +34,7 @@ end
 --     nil, "void"
 function mcl_worlds.y_to_layer(y)
 	if y >= mcl_vars.mg_overworld_min then
-		return y - mcl_vars.mg_overworld_min, "overworld"
+		return y - mcl_vars.mg_overworld_min_old, "overworld"
 	elseif y >= mcl_vars.mg_nether_min and y <= mcl_vars.mg_nether_max+128 then
 		return y - mcl_vars.mg_nether_min, "nether"
 	elseif y >= mcl_vars.mg_end_min and y <= mcl_vars.mg_end_max then
@@ -56,7 +56,7 @@ end
 -- mc_dimension is one of "overworld", "nether", "end" (default: "overworld").
 function mcl_worlds.layer_to_y(layer, mc_dimension)
 	   if mc_dimension == "overworld" or mc_dimension == nil then
-			   return layer + mcl_vars.mg_overworld_min
+			   return layer + mcl_vars.mg_overworld_min_old
 	   elseif mc_dimension == "nether" then
 			   return layer + mcl_vars.mg_nether_min
 	   elseif mc_dimension == "end" then
