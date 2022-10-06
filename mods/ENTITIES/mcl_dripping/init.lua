@@ -69,8 +69,9 @@ function mcl_dripping.register_drop(def)
 			--start a bunch of particle cycles to be able to get away
 			--with longer abm cycles
 			table.shuffle(nn)
-			for i = 1, math.random(#nn) do
-				if minetest.get_item_group(minetest.get_node(vector.offset(nn[i], 0, 1, 0)).name, def.liquid) ~= 0 then
+			for i=1,math.random(#nn) do
+				if nn[i] and minetest.get_item_group(minetest.get_node(vector.offset(nn[i], 0, 1, 0)).name, liquid) ~= 0
+				and minetest.get_node(vector.offset(nn[i], 0, -1, 0)).name == "air" then
 					make_drop(nn[i], def.liquid, def.sound, def.interval, def.texture)
 				end
 			end
