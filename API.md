@@ -46,6 +46,19 @@ Removes the physics factor of the given ID and updates the player's physics.
 #### Parameters
 Same as in `playerphysics.add_physics_factor`, except there is no `value` argument.
 
+
+
+### `playerphysics.get_physics_factor(player, attribute, id)`
+Returns the current physics factor of the given ID, if it exists.
+If the ID exists, returns a number. If it does not exist, returns nil.
+
+Note a missing physics factor is mathematically equivalent to a factor of 1.
+
+#### Parameters
+Same as in `playerphysics.add_physics_factor`, except there is no `value` argument.
+
+
+
 ## Examples
 ### Speed changes
 Let's assume this mod is used by 3 different mods all trying to change the speed:
