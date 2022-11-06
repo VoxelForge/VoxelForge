@@ -1,6 +1,6 @@
-# Player Physics API.
+# Player Physics API
 
-Version: 1.0.1
+Version: 1.1.0
 
 This mod makes it possible for multiple mods to modify player physics (speed, jumping strength, gravity) without conflict.
 
