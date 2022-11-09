@@ -176,7 +176,7 @@ local piglin = {
 	specific_attack = { "player", "mobs_mc:hoglin" },
 }
 
-mcl_mobs:register_mob("mobs_mc:piglin", piglin)
+mcl_mobs.register_mob("mobs_mc:piglin", piglin)
 
 
 local sword_piglin = table.copy(piglin)
@@ -208,7 +208,7 @@ sword_piglin.animation = {
 	punch_start = 189,
 	punch_end = 198,
 }
-mcl_mobs:register_mob("mobs_mc:sword_piglin", sword_piglin)
+mcl_mobs.register_mob("mobs_mc:sword_piglin", sword_piglin)
 
 local zombified_piglin = table.copy(piglin)
 zombified_piglin.fire_resistant = 1
@@ -241,7 +241,7 @@ zombified_piglin.animation = {
 	punch_start = 189,
 	punch_end = 198,
 }
-mcl_mobs:register_mob("mobs_mc:zombified_piglin", zombified_piglin)
+mcl_mobs.register_mob("mobs_mc:zombified_piglin", zombified_piglin)
 
 
 local piglin_brute = table.copy(piglin)
@@ -282,7 +282,7 @@ piglin_brute.animation = {
 }
 piglin_brute.can_despawn = false
 piglin_brute.group_attack = { "mobs_mc:piglin", "mobs_mc:piglin_brute" }
-mcl_mobs:register_mob("mobs_mc:piglin_brute", piglin_brute)
+mcl_mobs.register_mob("mobs_mc:piglin_brute", piglin_brute)
 
 
 -- Regular spawning in the Nether
@@ -318,5 +318,5 @@ minetest.LIGHT_MAX+1,
 mcl_vars.mg_lava_nether_max,
 mcl_vars.mg_nether_max)
 -- spawn eggs
-mcl_mobs:register_egg("mobs_mc:piglin", S("Piglin"), "#7b4a17","#d5c381", 0)
-mcl_mobs:register_egg("mobs_mc:piglin_brute", S("Piglin Brute"), "#562b0c","#ddc89d", 0)
+mcl_mobs.register_egg("mobs_mc:piglin", S("Piglin"), "#7b4a17","#d5c381", 0)
+mcl_mobs.register_egg("mobs_mc:piglin_brute", S("Piglin Brute"), "#562b0c","#ddc89d", 0)
