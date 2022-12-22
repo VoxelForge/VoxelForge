@@ -197,6 +197,10 @@ local cave_biomes = {
 local cave_min = mcl_vars.mg_overworld_min
 local cave_max = water_level - 23
 
+local swampy_biomes = {"Swampland", "MangroveSwamp"}
+local swamp_light_max = 7
+local swamp_min = water_level
+local swamp_max = water_level + 27
 
 mcl_mobs.spawn_specific(
 "mobs_mc:slime_tiny",
@@ -212,6 +216,19 @@ cave_min,
 cave_max)
 
 mcl_mobs.spawn_specific(
+"mobs_mc:slime_tiny",
+"overworld",
+"ground",
+swampy_biomes,
+0,
+swamp_light_max,
+30,
+12000,
+4,
+swamp_min,
+swamp_max)
+
+mcl_mobs.spawn_specific(
 "mobs_mc:slime_small",
 "overworld",
 "ground",
@@ -225,6 +242,19 @@ cave_min,
 cave_max)
 
 mcl_mobs.spawn_specific(
+"mobs_mc:slime_small",
+"overworld",
+"ground",
+swampy_biomes,
+0,
+swamp_light_max,
+30,
+8500,
+4,
+swamp_min,
+swamp_max)
+
+mcl_mobs.spawn_specific(
 "mobs_mc:slime_big",
 "overworld",
 "ground",
@@ -236,6 +266,19 @@ minetest.LIGHT_MAX+1,
 4,
 cave_min,
 cave_max)
+
+mcl_mobs.spawn_specific(
+"mobs_mc:slime_big",
+"overworld",
+"ground",
+swampy_biomes,
+0,
+swamp_light_max,
+30,
+10000,
+4,
+swamp_min,
+swamp_max)
 
 -- Magma cube
 local magma_cube_big = {
