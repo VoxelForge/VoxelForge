@@ -139,8 +139,7 @@ local function composter_harvest(pos, node, player, itemstack, pointed_thing)
 	end
 	-- reset ready type composter to empty type
 	minetest.swap_node(pos, {name="mcl_composters:composter"})
-	-- spawn bone meal item (wtf dye?! is this how they make white cocoa)
-	minetest.add_item(pos, "mcl_dye:white")
+	minetest.add_item(pos, "mcl_bone_meal:bone_meal")
 	-- TODO play some sounds
 	return itemstack
 end

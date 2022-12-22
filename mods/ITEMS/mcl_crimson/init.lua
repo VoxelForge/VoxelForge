@@ -85,7 +85,7 @@ minetest.register_node("mcl_crimson:warped_fungus", {
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	node_placement_prediction = "",
 	on_rightclick = function(pos, node, pointed_thing, player, itemstack)
-		if pointed_thing:get_wielded_item():get_name() == "mcl_dye:white" then
+		if pointed_thing:get_wielded_item():get_name() == "mcl_bone_meal:bone_meal" then
 			local nodepos = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
 			if nodepos.name == "mcl_crimson:warped_nylium" or nodepos.name == "mcl_nether:netherrack" then
 				local random = math.random(1, 5)
@@ -141,7 +141,7 @@ minetest.register_node("mcl_crimson:twisting_vines", {
 			end
 		end
 
-		elseif clicker:get_wielded_item():get_name() == "mcl_dye:white" then
+		elseif clicker:get_wielded_item():get_name() == "mcl_bone_meal:bone_meal" then
 			if not minetest.is_creative_enabled(clicker:get_player_name()) then
 				itemstack:take_item()
 			end
@@ -215,7 +215,7 @@ minetest.register_node("mcl_crimson:weeping_vines", {
 				minetest.sound_play(idef.sounds.place, {pos=above, gain=1}, true)
 			end
 		end
-		elseif clicker:get_wielded_item():get_name() == "mcl_dye:white" then
+		elseif clicker:get_wielded_item():get_name() == "mcl_bone_meal:bone_meal" then
 			if not minetest.is_creative_enabled(clicker:get_player_name()) then
 				itemstack:take_item()
 			end
@@ -476,7 +476,7 @@ minetest.register_node("mcl_crimson:crimson_fungus", {
 	},
 	node_placement_prediction = "",
 	on_rightclick = function(pos, node, pointed_thing, player)
-		if pointed_thing:get_wielded_item():get_name() == "mcl_dye:white" then
+		if pointed_thing:get_wielded_item():get_name() == "mcl_bone_meal:bone_meal" then
 			local nodepos = minetest.get_node(vector.offset(pos, 0, -1, 0))
 			if nodepos.name == "mcl_crimson:crimson_nylium" or nodepos.name == "mcl_nether:netherrack" then
 				local random = math.random(1, 5)

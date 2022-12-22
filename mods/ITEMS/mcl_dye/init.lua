@@ -64,7 +64,7 @@ local dyelocal = {}
 
 -- This collection of colors is partly a historic thing, partly something else.
 dyelocal.dyes = {
-	{"white", "mcl_dye_white",	    S("Bone Meal"),     {dye=1, craftitem=1, basecolor_white=1,   excolor_white=1,     unicolor_white=1}},
+	{"white", "mcl_dye_white",	    S("White Dye"),     {dye=1, craftitem=1, basecolor_white=1,   excolor_white=1,     unicolor_white=1}},
 	{"grey", "dye_grey",      	    S("Light Grey Dye"),      {dye=1, craftitem=1, basecolor_grey=1,    excolor_grey=1,      unicolor_grey=1}},
 	{"dark_grey", "dye_dark_grey", 	    S("Grey Dye"), {dye=1, craftitem=1, basecolor_grey=1,    excolor_darkgrey=1,  unicolor_darkgrey=1}},
 	{"black", "mcl_dye_black",     	    S("Black Dye"),     {dye=1, craftitem=1, basecolor_black=1,   excolor_black=1,     unicolor_black=1}},
@@ -106,22 +106,19 @@ end
 -- Define items
 for _, row in ipairs(dyelocal.dyes) do
 	local name = row[1]
-	-- White dye is defined explicitly below
-	if name ~= "white" then
-		local img = row[2]
-		local description = row[3]
-		local groups = row[4]
-		local item_name = "mcl_dye:"..name
-		local item_image = img..".png"
-		minetest.register_craftitem(item_name, {
-			inventory_image = item_image,
-			description = description,
-			_doc_items_longdesc = S("This item is a dye which is used for dyeing and crafting."),
-			_doc_items_usagehelp = S("Rightclick on a sheep to dye its wool. Other things are dyed by crafting."),
-			groups = groups,
-			stack_max = 64,
-		})
-	end
+	local img = row[2]
+	local description = row[3]
+	local groups = row[4]
+	local item_name = "mcl_dye:"..name
+	local item_image = img..".png"
+	minetest.register_craftitem(item_name, {
+		inventory_image = item_image,
+		description = description,
+		_doc_items_longdesc = S("This item is a dye which is used for dyeing and crafting."),
+		_doc_items_usagehelp = S("Rightclick on a sheep to dye its wool. Other things are dyed by crafting."),
+		groups = groups,
+		stack_max = 64,
+	})
 end
 
 -- Dye mixing
@@ -190,6 +187,10 @@ minetest.register_craft({
 })
 
 -- Dye creation
+minetest.register_craft({
+	output = "mcl_dye:white",
+	recipe = {{"mcl_bone_meal:bone_meal"}},
+})
 minetest.register_craft({
 	output = "mcl_dye:black",
 	recipe = {{"mcl_mobitems:ink_sac"}},
@@ -289,11 +290,15 @@ minetest.register_craft({
 
 minetest.register_craft({
 	output = "mcl_dye:white 3",
-	recipe = {{"mcl_mobitems:bone"}},
+	recipe = {{"mcl_bone_meal:bone_meal"}},
 })
 
 -- legacy item grace conversion recipes
 
+minetest.register_craft({
+	output = "mcl_bone_meal:bone_meal",
+	recipe = {{"mcl_dye:white"}},
+})
 minetest.register_craft({
 	output = "mcl_mobitems:ink_sac",
 	recipe = {{"mcl_dye:black"}},
