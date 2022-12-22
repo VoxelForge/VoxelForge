@@ -397,11 +397,9 @@ local two_pi = 2 * math.pi
 local function get_next_mob_spawn_pos(pos)
 	local distance = math.random(25, 32)
 	local angle = math.random() * two_pi
-	return {
-		x = math_round(pos.x + distance * math.cos(angle)),
-		y = pos.y,
-		z = math_round(pos.z + distance * math.sin(angle))
-	}
+	local xoff = math.round(distance * math.cos(angle))
+	local yoff = math.round(distance * math.sin(angle))
+	return vector.offset(pos, xoff, 0, yoff)
 end
 
 local function decypher_limits(posy)
