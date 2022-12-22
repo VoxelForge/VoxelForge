@@ -100,6 +100,7 @@ register_deepslate_ore("redstone_lit", S("Lit Deepslate Redstone Ore"), {
 	_mcl_silk_touch_drop = { "mcl_deepslate:deepslate_with_redstone" },
 })
 
+
 if copper_mod then
 	register_deepslate_ore("copper", S("Deepslate Copper Ore"), nil, "mcl_copper:stone_with_copper")
 end
