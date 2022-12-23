@@ -86,3 +86,8 @@ minetest.register_craftitem("mcl_bone_meal:bone_meal", {
 	end,
 	_dispense_into_walkable = true
 })
+
+minetest.register_craft({
+	output = "mcl_bone_meal:bone_meal 3",
+	recipe = {{"mcl_mobitems:bone"}},
+})
