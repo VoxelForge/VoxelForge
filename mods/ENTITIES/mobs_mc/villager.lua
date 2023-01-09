@@ -221,7 +221,7 @@ local professions = {
 	librarian = {
 		name = S("Librarian"),
 		texture = "mobs_mc_villager_librarian.png",
-		jobsite = "mcl_books:bookshelf", --FIXME: lectern
+		jobsite = "mcl_lectern:lectern",
 		trades = {
 			{
 			{ { "mcl_core:paper", 24, 36 }, E1 },
