@@ -36,8 +36,7 @@ function mcl_skins.get_skin_list()
 			table.insert(list, {
 				texture = skin.texture,
 				slim_arms = skin.slim_arms,
-				id = skin.texture:gsub(".png$", "")
-					.. (skin.slim_arms and "_female" or "_male") .. game_mode,
+				id = skin.texture:gsub(".png$", "") .. (skin.slim_arms and "_female" or "_male") .. game_mode,
 				creative = game_mode == "_crea"
 			})
 		end
