@@ -59,12 +59,18 @@ local function potion_effect(itemstack, placer, pointed_thing,effect)
 end
 
 mcl_sus_stew.register_stew("fire_resistance","mcl_flowers:allium",potion_effect)
-mcl_sus_stew.register_stew("poison","mcl_flowers:tulip_white",potion_effect)
+--mcl_sus_stew.register_stew("blindness","mcl_flowers:azure_bluet",potion_effect) -- effect not implemented
 mcl_sus_stew.register_stew("hunger","mcl_flowers:blue_orchid",hunger_effect)
+mcl_sus_stew.register_stew("leaping","mcl_flowers:cornflower",potion_effect)
 mcl_sus_stew.register_stew("hunger","mcl_flowers:dandelion",hunger_effect)
-mcl_sus_stew.register_stew("leaping","mcl_flowers:peony",potion_effect)
+mcl_sus_stew.register_stew("poison","mcl_flowers:lily_of_the_valley",potion_effect)
 mcl_sus_stew.register_stew("regeneration","mcl_flowers:oxeye_daisy",potion_effect)
 mcl_sus_stew.register_stew("night_vision","mcl_flowers:poppy",potion_effect)
+--mcl_sus_stew.register_stew("weakness","mcl_flowers:tulip_orange",potion_effect) -- effect not implemented
+--mcl_sus_stew.register_stew("weakness","mcl_flowers:tulip_pink",potion_effect) -- effect not implemented
+--mcl_sus_stew.register_stew("weakness","mcl_flowers:tulip_red",potion_effect) -- effect not implemented
+--mcl_sus_stew.register_stew("weakness","mcl_flowers:tulip_white",potion_effect) -- effect not implemented
+mcl_sus_stew.register_stew("harming","mcl_flowers:wither_rose",potion_effect) -- in place of real wither effect
 
 minetest.register_craftitem("mcl_sus_stew:stew",{
 	description = "Suspicious Stew",
