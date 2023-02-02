@@ -9,18 +9,24 @@ function mcl_weather.set_sky_box_clear(player, sky, fog)
 	local pos = player:get_pos()
 	if minetest.get_item_group(minetest.get_node(vector.new(pos.x,pos.y+1.5,pos.z)).name, "water") ~= 0 then return end
 	local sc = {
-			day_sky = "#0000FF", -- Pure blue to make debugging this stuff easier. Not visible during normal gameplay.
-			day_horizon = "#FF0000", -- Pure red to make debugging this stuff easier. Not visible during normal gameplay.
-			dawn_sky = "#B4BAFA",
-			dawn_horizon = "#BAC1F0",
+			day_sky = "#7BA4FF",
+			day_horizon = "#C0D8FF",
+			dawn_sky = "#7BA4FF",
+			dawn_horizon = "#C0D8FF",
 			night_sky = "#000000",
 			night_horizon = "#4A6790",
+			indoors = "#C0D8FF",
+			fog_sun_tint = "#ff5f33",
+			fog_moon_tint = nil,
+			fog_tint_type = "custom"
 		}
 	if sky then
 		sc.day_sky = sky
+		sc.dawn_sky = sky
 	end
 	if fog then
 		sc.day_horizon = fog
+		sc.dawn_horizon = fog
 	end
 	player:set_sky({
 		type = "regular",
@@ -128,8 +134,12 @@ mcl_weather.skycolor = {
 						dawn_horizon = water_color,
 						night_sky = water_color,
 						night_horizon = water_color,
+						indoors = water_color,
+						fog_sun_tint = water_color,
+						fog_moon_tint = water_color,
+						fog_tint_type = "custom"
 					},
-					clouds = true,
+					clouds = false,
 				})
 			end
 			if dim == "overworld" then
@@ -247,6 +257,10 @@ mcl_weather.skycolor = {
 						dawn_horizon = biomefog,
 						night_sky = biomefog,
 						night_horizon = biomefog,
+						indoors = biomefog,
+						fog_sun_tint = biomefog,
+						fog_moon_tint = biomefog,
+						fog_tint_type = "custom"
 					},
 					clouds = false,
 				})
