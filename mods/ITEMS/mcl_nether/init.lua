@@ -405,7 +405,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-		type = "shapeless",
+	type = "shapeless",
 	output = "mcl_nether:netherite_ingot",
 	recipe = {
 		"mcl_nether:netherite_scrap", "mcl_nether:netherite_scrap", "mcl_nether:netherite_scrap",
