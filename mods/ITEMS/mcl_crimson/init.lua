@@ -113,8 +113,7 @@ minetest.register_node("mcl_crimson:twisting_vines", {
 	walkable = false,
 	climbable = true,
 	buildable_to = true,
-	groups = {dig_immediate=3, handy=1, axey=1, shearsy=1, swordy=1, vines=1, 
-	           dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, deco_block=1},
+	groups = {dig_immediate=3, shearsy=1, vines=1, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, deco_block=1},
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -148,7 +147,6 @@ minetest.register_node("mcl_crimson:twisting_vines", {
 		end
 		return itemstack
 	end,
---breaking twisting vines breaks the vines above logic
 	on_dig = function(pos, node, digger)
 		local above = {x=pos.x, y=pos.y+1, z=pos.z}
 		local abovenode = minetest.get_node(above)
@@ -156,8 +154,8 @@ minetest.register_node("mcl_crimson:twisting_vines", {
 		if abovenode.name == node.name and (not mcl_core.check_vines_supported(above, abovenode)) then
 			minetest.registered_nodes[node.name].on_dig(above, node, digger)
 		end
-	end,	
-	
+	end,
+
 	drop = {
 		max_items = 1,
 		items = {
@@ -190,8 +188,7 @@ minetest.register_node("mcl_crimson:weeping_vines", {
 	walkable = false,
 	climbable = true,
 	buildable_to = true,
-	groups = {dig_immediate=3, handy=1, axey=1, shearsy=1, swordy=1, vines=1, dig_by_water=1,
-				 destroy_by_lava_flow=1, dig_by_piston=1, deco_block=1},
+	groups = {dig_immediate=3, shearsy=1, vines=1, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, deco_block=1},
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -224,7 +221,7 @@ minetest.register_node("mcl_crimson:weeping_vines", {
 		end
 		return itemstack
 	end,
---breaking weeping vines breaks the vines below logic
+
 	on_dig = function(pos, node, digger)
 		local below = {x=pos.x, y=pos.y-1, z=pos.z}
 		local belownode = minetest.get_node(below)
@@ -233,8 +230,8 @@ minetest.register_node("mcl_crimson:weeping_vines", {
 			minetest.registered_nodes[node.name].on_dig(below, node, digger)
 		end
 	end,
-	
-	
+
+
 	drop = {
 		max_items = 1,
 		items = {
