@@ -602,6 +602,13 @@ local function set_textures(self)
 	self.object:set_properties({textures=badge_textures})
 end
 
+-- TODO Pass in self and if nitwit, go to bed later.
+local function is_night()
+	local tod = minetest.get_timeofday()
+	tod = ( tod * 24000 ) % 24000
+	return  tod > 17500 or tod < 6500
+end
+
 function get_activity(tod)
 	-- night hours = tod > 18541 or tod < 5458
 	if not tod then
@@ -611,8 +618,8 @@ function get_activity(tod)
 
 	local lunch_start = 11000
 	local lunch_end = 13500
-	local work_start = 7000
-	local work_end = 16500
+	local work_start = 7500
+	local work_end = 16000
 
 	local activity = nil
 	if weather_mod and mcl_weather.get_weather() == "thunder" then
@@ -620,7 +627,7 @@ function get_activity(tod)
 		activity = SLEEP
 	elseif (tod > work_start and tod < lunch_start) or  (tod > lunch_end and tod < work_end) then
 		activity = WORK
-	elseif mcl_beds.is_night() then
+	elseif is_night() then
 		activity = SLEEP
 	elseif tod > lunch_start and tod < lunch_end then
 		activity = GATHERING
@@ -814,7 +821,7 @@ local function go_home(entity, sleep)
 			else
 				--minetest.log("Need to walk to home")
 			end
-		end)
+		end, true)
 	end
 end
 
@@ -1138,13 +1145,12 @@ local function do_work (self)
 			local distance_to_jobsite = vector.distance(self.object:get_pos(),self._jobsite)
 			--mcl_log("Villager: ".. minetest.pos_to_string(self.object:get_pos()) ..  ", jobsite: " .. minetest.pos_to_string(self._jobsite) .. ", distance to jobsite: ".. distance_to_jobsite)
 
+
 			if distance_to_jobsite < 2 then
 				if self.state ~= PATHFINDING and  self.order ~= WORK then
 					mcl_log("Setting order to work.")
 					self.order = WORK
 					unlock_trades(self)
-				else
-					--mcl_log("Still pathfinding.")
 				end
 			else
 				mcl_log("Not at job block. Need to commute.")
@@ -1154,18 +1160,13 @@ local function do_work (self)
 				end
 				self:gopath(jobsite, function(self,jobsite)
 					if not self then
-						--mcl_log("missing self. not good")
 						return false
 					end
 					if not self._jobsite then
-						--mcl_log("Jobsite not valid")
 						return false
 					end
 					if vector.distance(self.object:get_pos(),self._jobsite) < 2 then
-						--mcl_log("Made it to work ok callback!")
 						return true
-					else
-						--mcl_log("Need to walk to work. Not sure we can get here.")
 					end
 				end)
 			end
@@ -1296,9 +1297,10 @@ local function do_activity (self)
 		return
 	end
 
-	if not validate_bed(self) and self.state ~= PATHFINDING then
+	local jobsite_valid = false
+
+	if not is_night() then
 		if self.order == SLEEP then self.order = nil end
-		mcl_log("Villager has no bed. Currently at location: "..minetest.pos_to_string(self.object:get_pos()))
 		take_bed (self)
 	end
 
