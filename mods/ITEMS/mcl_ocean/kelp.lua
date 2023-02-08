@@ -551,12 +551,14 @@ function kelp.kelp_on_place(itemstack, placer, pointed_thing)
 	end
 
 	-- Initialize age and timer when it's planted on a new surface.
+	local init_age = kelp.roll_init_age()
+
 	if new_surface then
-		kelp.init_age(pos_under, nil)
+		kelp.init_age(pos_under, init_age)
 		--kelp.init_timer(pos_under, pos_hash)
 	else
 		-- TODO needed?
-		store_age(pos_under, kelp.roll_init_age())
+		store_age(pos_under, init_age)
 		--kelp.store_age(kelp.roll_init_age(), pos_under, pos_hash)
 	end
 
@@ -823,8 +825,8 @@ minetest.register_abm({
 minetest.register_abm({
 	label = "Kelp growth",
 	nodenames = { "group:kelp" },
-	interval = 17, --17 target was 45
-	chance = 28, -- 3 target was 12
+	interval = 17, --17
+	chance = 28,
 	catch_up = false,
 	action = kelp.surface_on_timer,
 })
