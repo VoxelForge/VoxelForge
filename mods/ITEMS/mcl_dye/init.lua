@@ -502,6 +502,11 @@ minetest.register_craft({
 	recipe = {{"mcl_flowers:sunflower"}},
 })
 minetest.register_craft({
+	output = "mcl_dye:blue",
+	recipe = {{"mcl_flowers:cornflower"}},
+})
+
+minetest.register_craft({
 	output = "mcl_dye:lightblue",
 	recipe = {{"mcl_flowers:blue_orchid"}},
 })
