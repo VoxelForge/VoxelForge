@@ -65,6 +65,7 @@ minetest.register_node("mcl_lectern:lectern", {
 			if not success then
 				return
 			end
+			minetest.sound_play(mcl_sounds.node_sound_wood_defaults().place, {pos=above, gain=1}, true)
 			if not minetest.is_creative_enabled(placer:get_player_name()) then
 				itemstack:take_item()
 			end
