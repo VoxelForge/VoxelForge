@@ -388,6 +388,7 @@ mcl_mobs.register_mob("mobs_mc:enderman", {
 				end
 			end
 		end
+
 		-- PROVOKED BEHAVIOUR HERE.
 		local enderpos = self.object:get_pos()
 		if self.provoked == "broke_contact" then
@@ -440,6 +441,21 @@ mcl_mobs.register_mob("mobs_mc:enderman", {
 							end
 						end
 
+					end
+				end
+			end
+		end
+		-- ATTACK ENDERMITE
+		local enderpos = self.object:get_pos()
+		if math.random(1,140) == 1 then
+			local mobsnear = minetest.get_objects_inside_radius(enderpos, 64)
+			for n=1, #mobsnear do
+				local mob = mobsnear[n]
+				if mob then
+					local entity = mob:get_luaentity()
+					if entity and entity.name == "mobs_mc:endermite" then
+						self.state = 'attack'
+						self.attack = mob
 					end
 				end
 			end
