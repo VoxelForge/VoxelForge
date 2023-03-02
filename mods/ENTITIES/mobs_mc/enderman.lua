@@ -346,7 +346,7 @@ mcl_mobs.register_mob("mobs_mc:enderman", {
 					self:teleport(nil)
 				end
 			end
-		else return end
+		end
 		-- AGRESSIVELY WARP/CHASE PLAYER BEHAVIOUR HERE.
 		if self.state == "attack" then
 			if self.attack then
