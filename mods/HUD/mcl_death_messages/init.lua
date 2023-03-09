@@ -107,7 +107,7 @@ mcl_death_messages = {
 		},
 		thorns = {
 			killer = W("@1 was killed trying to hurt @2"),
-			item = W("@1 was killed by @3 trying to hurt @2"), -- yes, the order is intentional: @1 @3 @2
+			item = W("@1 tried to hurt @2 and died by @3"),
 		},
 		explosion = {
 			-- Killer and item death messages have been disabled due to a bug making them show raw
