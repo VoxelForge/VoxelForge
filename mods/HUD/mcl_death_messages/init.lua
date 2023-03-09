@@ -123,7 +123,7 @@ mcl_death_messages = {
 		},
 		fireworks = {
 			plain = W("@1 went off with a bang"),
-			item = W("@1 went off with a bang due to a firework fired from @3 by @2"), -- order is intentional
+			item = W("@1 went off with a bang due to a firework fired by @2 from @3"),
 		},
 		sweet_berry = {
 			plain = W("@1 was poked to death by a sweet berry bush"),
