@@ -179,6 +179,8 @@ local function register_entity(entity_id, mesh, textures, drop, on_rightclick, o
 
 	cart.on_activate_by_rail = on_activate_by_rail
 
+	local passenger_attach_position = vector.new(0, -1.75, 0)
+
 	function cart:on_step(dtime)
 		local ctrl, player = nil, nil
 		if self._driver then
@@ -224,7 +226,7 @@ local function register_entity(entity_id, mesh, textures, drop, on_rightclick, o
 						local entity = mob:get_luaentity()
 						if entity and entity.is_mob then
 							self._passenger = entity
-							mob:set_attach(self.object, "", {x=0, y=-1.75, z=0}, {x=0, y=0, z=0})
+							mob:set_attach(self.object, "", passenger_attach_position, vector.zero())
 							break
 						end
 					end
@@ -232,7 +234,7 @@ local function register_entity(entity_id, mesh, textures, drop, on_rightclick, o
 			end
 		-- Make room in the minecart after the mob dies
 		elseif self._passenger then
-			if math.random(1,20) > 1 then
+			if math.random(1,20) == 1 then
 				local dead = self._passenger:check_for_death()
 				if dead == true then
 					self._passenger = nil
