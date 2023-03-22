@@ -111,7 +111,7 @@ local professions = {
 			},
 			{
 			{ E1, { "mcl_farming:carrot_item_gold", 3, 10 } },
-			{ E1, { "mcl_potions:speckled_melon", 4, 1 } },
+			{ E1, { "mcl_potions:speckled_melon", 1, 4 } },
 			},
 		}
 	},
