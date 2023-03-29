@@ -52,6 +52,7 @@ For custom entities, you may also want to add support for `doc_identifier`.
 MIT License
 
 ## Translation credits
-French: Karamel
-German: Wuzzy
-Portuguese: BrunoMine
+
+* French: Karamel
+* German: Wuzzy
+* Portuguese: BrunoMine
