@@ -77,7 +77,6 @@ local function destruct_bed(pos, oldnode)
 	local pos2, node2, bottom = get_bed_next_node(pos, oldnode)
 
 	if bottom then
-		minetest.add_item(pos, node.name)
 		if node2 and string.sub(node2.name, -4) == "_top" then
 			minetest.remove_node(pos2)
 		end
@@ -125,11 +124,11 @@ function mcl_beds.register_bed(name, def)
 			type = "fixed",
 			fixed = {-0.5, -0.5, -0.5, 0.5, 0.06, 0.5},
 		}
-		
+
 	minetest.register_node(name .. "_bottom", {
 		description = def.description,
 		_tt_help = S("Allows you to sleep"),
-		
+
 		_doc_items_longdesc = def._doc_items_longdesc or beddesc,
 		_doc_items_usagehelp = def._doc_items_usagehelp or beduse,
 		_doc_items_create_entry = def._doc_items_create_entry,
@@ -150,9 +149,9 @@ function mcl_beds.register_bed(name, def)
 		sounds = def.sounds or default_sounds,
 		selection_box = common_box,
 		collision_box = common_box,
-		drop = "",
+		drop = def.recipe and name or "",
 		node_placement_prediction = "",
-		
+
 		on_place = function(itemstack, placer, pointed_thing)
 			local under = pointed_thing.under
 
@@ -218,7 +217,7 @@ function mcl_beds.register_bed(name, def)
 		on_rotate = rotate,
 	})
 
-	
+
 
 	minetest.register_node(name .. "_top", {
 		drawtype = "mesh",
@@ -233,10 +232,10 @@ function mcl_beds.register_bed(name, def)
 		_mcl_hardness = 0.2,
 		_mcl_blast_resistance = 1,
 		sounds = def.sounds or default_sounds,
-		drop = "",
+		drop = def.recipe and name or "",
 		selection_box = common_box,
 		collision_box = common_box,
-		
+
 		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			mcl_beds.on_rightclick(pos, clicker, true)
 			return itemstack
