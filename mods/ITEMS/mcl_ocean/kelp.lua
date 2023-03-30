@@ -181,35 +181,25 @@ local function store_age (pos, age)
 	end
 end
 
-local function retrieve_age (pos, include_nil)
+local function retrieve_age (pos)
 	local meta = minetest.get_meta(pos)
-
-	if include_nil then
-		local age_set = meta:contains("mcl_ocean:kelp_age")
-		if not age_set then
-			return nil
-		end
+	local age_set = meta:contains("mcl_ocean:kelp_age")
+	if not age_set then
+		return nil
 	end
-	return meta:get_int("mcl_ocean:kelp_age")
+
+	local age = meta:get_int("mcl_ocean:kelp_age")
+	return age
 end
 
 -- Initialise a kelp's age.
-function kelp.init_age(pos, age, from_lbm)
-	local new_age
-
-	local stored_age = retrieve_age(pos, from_lbm)
-
-	if age then
+function kelp.init_age(pos)
+	local age = retrieve_age(pos)
+	if not age then
+		age = kelp.roll_init_age()
 		store_age(pos, age)
-		new_age = age
-	elseif not stored_age then
-		new_age = kelp.roll_init_age()
-		store_age(pos, new_age)
-	else
-		new_age = stored_age
 	end
-
-	return new_age
+	return age
 end
 
 -- Apply next kelp height. The surface is swapped. so on_construct is skipped.
@@ -336,28 +326,23 @@ end
 
 local function grow_kelp (pos)
 	local node = minetest.get_node(pos)
+	local age = retrieve_age(pos)
+	if not age then
+		age = kelp.init_age(pos)
+	end
 
-	if kelp.roll_growth() then
-		local age = retrieve_age(pos)
-
-		if not age then
-			kelp.init_age(pos, nil)
-		end
-
-		if kelp.is_age_growable(age) then
-			kelp.next_grow(age+1, pos, node)
-		end
+	if kelp.is_age_growable(age) then
+		kelp.next_grow(age+1, pos, node)
 	end
 end
 
 function kelp.surface_on_construct(pos)
-	kelp.init_age(pos, nil)
+	kelp.init_age(pos)
 end
 
 
 function kelp.surface_on_destruct(pos)
 	local node = minetest.get_node(pos)
-
 	-- on_falling callback. Activated by pistons for falling nodes too.
 	-- I'm not sure this works. I think piston digs water and the unsubmerged nature drops kelp.
 	if kelp.is_falling(pos, node) then
@@ -459,20 +444,13 @@ function kelp.kelp_on_place(itemstack, placer, pointed_thing)
 		itemstack:take_item()
 	end
 
-	-- Initialize age and timer when it's planted on a new surface.
-	local init_age = kelp.roll_init_age()
-
-	if new_surface then
-		kelp.init_age(pos_under, init_age)
-	else
-		store_age(pos_under, init_age)
-	end
+	kelp.init_age(pos_under)
 
 	return itemstack
 end
 
 function kelp.lbm_register(pos)
-	kelp.init_age(pos, nil, true)
+	kelp.init_age(pos)
 end
 
 --------------------------------------------------------------------------------
@@ -699,7 +677,7 @@ minetest.register_abm({
 minetest.register_abm({
 	label = "Kelp growth",
 	nodenames = { "group:kelp" },
-	interval = 17, --17
+	interval = 17,
 	chance = 28,
 	catch_up = false,
 	action = grow_kelp,
