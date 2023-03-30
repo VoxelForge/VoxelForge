@@ -280,7 +280,7 @@ local function dir_to_pitch(dir)
 	return -math.atan2(-dir.y, xz)
 end
 
-local function who_are_you_looking_at (self)
+function mob_class:who_are_you_looking_at()
 	local pos = self.object:get_pos()
 
 	local stop_look_at_player_chance = math.random(833/self.curiosity)
@@ -325,7 +325,7 @@ end
 function mob_class:check_head_swivel(dtime)
 	if not self.head_swivel or type(self.head_swivel) ~= "string" then return end
 
-	who_are_you_looking_at (self)
+	self:who_are_you_looking_at()
 
 	local final_rotation = vector.new(0,0,0)
 	local oldp,oldr = self.object:get_bone_position(self.head_swivel)
