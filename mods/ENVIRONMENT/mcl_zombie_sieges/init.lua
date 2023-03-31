@@ -12,7 +12,7 @@ local function spawn_zombies(self)
 			local m = mcl_mobs.spawn(p,"mobs_mc:zombie")
 			if m then
 				local l = m:get_luaentity()
-				mcl_mobs:gopath(m:get_luaentity(), self.pos)
+				m:get_luaentity():gopath(self.pos)
 				table.insert(self.mobs, m)
 				self.health_max = self.health_max + l.health
 			else
