@@ -392,7 +392,6 @@ function mob_class:set_animation_speed()
 				self.object:set_animation_frame_speed(25)
 			end
 		end
-		--set_speed
 		if self.acc then
 			self.object:add_velocity(self.acc)
 		end

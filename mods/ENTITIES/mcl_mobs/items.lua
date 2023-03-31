@@ -1,6 +1,5 @@
 local math, vector, minetest, mcl_mobs = math, vector, minetest, mcl_mobs
 local mob_class = mcl_mobs.mob_class
---- Item and armor management
 
 local function player_near(pos)
 	for _,o in pairs(minetest.get_objects_inside_radius(pos,2)) do

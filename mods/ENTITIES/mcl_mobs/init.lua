@@ -46,16 +46,12 @@ local node_ok = function(pos, fallback)
 	return minetest.registered_nodes[fallback]
 end
 
---#### REGISTER FUNCS
-
--- Code to execute before custom on_rightclick handling
 local on_rightclick_prefix = function(self, clicker)
 	if not clicker:is_player() then return end
 	local item = clicker:get_wielded_item()
 	if extended_pet_control and self.tamed and self.owner == clicker:get_player_name() then
 		self:toggle_sit(clicker)
 	end
-	-- Name mob with nametag
 	if not self.ignores_nametag and item:get_name() == "mcl_mobs:nametag" then
 
 		local tag = item:get_meta():get_string("name")
@@ -107,7 +103,6 @@ local function within_limits(pos, radius)
 end
 
 mcl_mobs.spawning_mobs = {}
--- register mob entity
 function mcl_mobs.register_mob(name, def)
 
 	mcl_mobs.spawning_mobs[name] = true

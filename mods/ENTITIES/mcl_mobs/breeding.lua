@@ -26,17 +26,12 @@ function mcl_mobs:protect(self, clicker)
 	return false
 end
 
-
--- feeding, taming and breeding (thanks blert2112)
 function mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
 	if not self.follow then
 		return false
 	end
-	-- can eat/tame with item in hand
 	if self.nofollow or self:follow_holding(clicker) then
 		local consume_food = false
-
-		-- tame if not still a baby
 
 		if tame and not self.child then
 			if not self.owner or self.owner == "" then
@@ -45,8 +40,6 @@ function mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
 				consume_food = true
 			end
 		end
-
-		-- increase health
 
 		if self.health < self.hp_max and not consume_food then
 			consume_food = true
@@ -58,15 +51,10 @@ function mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
 			self.object:set_hp(self.health)
 		end
 
-		-- make children grow quicker
-
 		if not consume_food and self.child == true then
 			consume_food = true
-			-- deduct 10% of the time to adulthood
 			self.hornytimer = self.hornytimer + ((CHILD_GROW_TIME - self.hornytimer) * 0.1)
 		end
-
-		--  breed animals
 
 		if breed and not consume_food and self.hornytimer == 0 and not self.horny then
 			self.food = (self.food or 0) + 1
@@ -78,19 +66,15 @@ function mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
 		end
 
 		self:update_tag()
-		-- play a sound if the animal used the item and take the item if not in creative
 		if consume_food then
-			-- don't consume food if clicker is in creative
 			if not minetest.is_creative_enabled(clicker:get_player_name()) and not notake then
 				local item = clicker:get_wielded_item()
 				item:take_item()
 				clicker:set_wielded_item(item)
 			end
-			-- always play the eat sound if food is used, even in creative
 			self:mob_sound("eat", nil, true)
 
 		else
-			-- make sound when the mob doesn't want food
 			self:mob_sound("random", true)
 		end
 		return true
@@ -98,7 +82,6 @@ function mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
 	return false
 end
 
--- Spawn a child
 function mcl_mobs.spawn_child(pos, mob_type)
 	local child = minetest.add_entity(pos, mob_type)
 	if not child then
@@ -111,12 +94,10 @@ function mcl_mobs.spawn_child(pos, mob_type)
 	ent.child = true
 
 	local textures
-	-- using specific child texture (if found)
 	if ent.child_texture then
 		textures = ent.child_texture[1]
 	end
 
-	-- and resize to half height
 	child:set_properties({
 		textures = textures,
 		visual_size = {
@@ -148,13 +129,8 @@ function mcl_mobs.spawn_child(pos, mob_type)
 	return child
 end
 
--- find two animals of same type and breed if nearby and horny
 function mob_class:check_breeding()
-
-	--mcl_log("In breed function")
-	-- child takes a long time before growing into adult
 	if self.child == true then
-
 		-- When a child, hornytimer is used to count age until adulthood
 		self.hornytimer = self.hornytimer + 1
 
@@ -170,8 +146,6 @@ function mob_class:check_breeding()
 				collisionbox = self.base_colbox,
 				selectionbox = self.base_selbox,
 			})
-
-			-- custom function when child grows up
 			if self.on_grown then
 				self.on_grown(self)
 			else
@@ -185,14 +159,12 @@ function mob_class:check_breeding()
 
 			self.animation = nil
 			local anim = self._current_animation
-			self._current_animation = nil -- Mobs Redo does nothing otherwise
+			self._current_animation = nil
 			self:set_animation(anim)
 		end
 
 		return
 	else
-		-- horny animal can mate for HORNY_TIME seconds,
-		-- afterwards horny animal cannot mate again for HORNY_AGAIN_TIME seconds
 		if self.horny == true then
 			self.hornytimer = self.hornytimer + 1
 
@@ -202,8 +174,6 @@ function mob_class:check_breeding()
 			end
 		end
 	end
-
-	-- find another same animal who is also horny and mate if nearby
 	if self.horny == true
 	and self.hornytimer <= HORNY_TIME then
 
@@ -258,9 +228,6 @@ function mob_class:check_breeding()
 				self.hornytimer = HORNY_TIME + 1
 				ent.hornytimer = HORNY_TIME + 1
 
-				-- spawn baby
-
-
 				minetest.after(5, function(parent1, parent2, pos)
 					if not parent1.object:get_luaentity() then
 						return
@@ -271,9 +238,7 @@ function mob_class:check_breeding()
 
 					mcl_experience.throw_xp(pos, math.random(1, 7))
 
-					-- custom breed function
 					if parent1.on_breed then
-						-- when false, skip going any further
 						if parent1.on_breed(parent1, parent2) == false then
 							return
 						end
@@ -282,7 +247,6 @@ function mob_class:check_breeding()
 					local child = mcl_mobs.spawn_child(pos, parent1.name)
 
 					local ent_c = child:get_luaentity()
-
 
 					-- Use texture of one of the parents
 					local p = math.random(1, 2)
@@ -295,7 +259,6 @@ function mob_class:check_breeding()
 						textures = ent_c.base_texture
 					})
 
-					-- tamed and owned by parents' owner
 					ent_c.tamed = true
 					ent_c.owner = parent1.owner
 				end, self, ent, pos)

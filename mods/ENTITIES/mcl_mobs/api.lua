@@ -207,8 +207,8 @@ function mob_class:mob_activate(staticdata, def, dtime)
 	self.path.way = {} -- path to follow, table of positions
 	self.path.lastpos = {x = 0, y = 0, z = 0}
 	self.path.stuck = false
-	self.path.following = false -- currently following path?
-	self.path.stuck_timer = 0 -- if stuck for too long search for path
+	self.path.following = false
+	self.path.stuck_timer = 0
 
 	-- Armor groups
 	-- immortal=1 because we use custom health
@@ -283,7 +283,6 @@ function mob_class:mob_activate(staticdata, def, dtime)
 	end
 end
 
--- execute current state (stand, walk, run, attacks)
 -- returns true if mob has died
 function mob_class:do_states(dtime)
 	--if self.can_open_doors then check_doors(self) end
@@ -295,10 +294,8 @@ function mob_class:do_states(dtime)
 	elseif self.state == "walk" then
 		self:do_states_walk()
 	elseif self.state == "runaway" then
-		-- runaway when punched
 		self:do_states_runaway()
 	elseif self.state == "attack" then
-		-- attack routines (explode, dogfight, shoot, dogshoot)
 		if self:do_states_attack(dtime) then
 			return true
 		end
@@ -306,15 +303,12 @@ function mob_class:do_states(dtime)
 end
 
 local function update_timers (self, dtime)
-	-- knockback timer. set in on_punch
 	if self.pause_timer > 0 then
 		self.pause_timer = self.pause_timer - dtime
 		return true
 	end
-
 	-- attack timer
 	self.timer = self.timer + dtime
-
 	if self.state ~= "attack" and self.state ~= PATHFINDING then
 		if self.timer < 1 then
 			return true
@@ -322,13 +316,11 @@ local function update_timers (self, dtime)
 		self.timer = 0
 	end
 
-	-- never go over 100
 	if self.timer > 100 then
 		self.timer = 1
 	end
 end
 
--- main mob function
 function mob_class:on_step(dtime)
 	local pos = self.object:get_pos()
 	if not pos then return end
@@ -372,7 +364,6 @@ function mob_class:on_step(dtime)
 	self:check_breeding()
 	self:check_aggro(dtime)
 
-	-- run custom function (defined in mob lua file)
 	if self.do_custom then
 		if self.do_custom(self, dtime) == false then
 			return

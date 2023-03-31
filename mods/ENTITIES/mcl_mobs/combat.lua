@@ -4,7 +4,6 @@ local mob_class = mcl_mobs.mob_class
 local damage_enabled = minetest.settings:get_bool("enable_damage")
 local mobs_griefing = minetest.settings:get_bool("mobs_griefing") ~= false
 
--- pathfinding settings
 local stuck_timeout = 3 -- how long before mob gets stuck in place and starts searching
 local stuck_path_timeout = 10 -- how long will mob follow path before giving up
 
@@ -19,8 +18,6 @@ local function atan(x)
 	end
 end
 
-
--- check if daytime and also if mob is docile during daylight hours
 function mob_class:day_docile()
 	if self.docile_by_day == false then
 		return false
@@ -31,9 +28,7 @@ function mob_class:day_docile()
 	end
 end
 
--- attack player/mob
 function mob_class:do_attack(player)
-
 	if self.state == "attack" or self.state == "die" then
 		return
 	end
@@ -327,7 +322,6 @@ local specific_attack = function(list, what)
 	return false
 end
 
--- find someone to attack
 function mob_class:monster_attack()
 	if not damage_enabled
 	or self.passive ~= false
@@ -412,7 +406,6 @@ function mob_class:monster_attack()
 	if not min_player and #blacklist_attack > 0 then
 		min_player=blacklist_attack[math.random(#blacklist_attack)]
 	end
-	-- attack player
 	if min_player then
 		self:do_attack(min_player)
 	end
@@ -519,10 +512,7 @@ end
 -- deal damage and effects when mob punched
 function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 
-	-- custom punch function
 	if self.do_punch then
-
-		-- when false skip going any further
 		if self.do_punch(self, hitter, tflp, tool_capabilities, dir) == false then
 			return
 		end
