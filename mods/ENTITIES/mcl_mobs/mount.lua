@@ -241,14 +241,14 @@ function mcl_mobs.drive(entity, moving_anim, stand_anim, can_fly, dtime)
 	if entity.v == 0 and velo.x == 0 and velo.y == 0 and velo.z == 0 then
 
 		if stand_anim then
-			mcl_mobs:set_animation(entity, stand_anim)
+			entity:set_animation(stand_anim)
 		end
 
 		return
 	end
 
 	if moving_anim then
-		mcl_mobs:set_animation(entity, moving_anim)
+		entity:set_animation(moving_anim)
 	end
 
 	local s = get_sign(entity.v)
@@ -412,10 +412,10 @@ function mcl_mobs.fly(entity, dtime, speed, shoots, arrow, moving_anim, stand_an
 	-- change animation if stopped
 	if velo.x == 0 and velo.y == 0 and velo.z == 0 then
 
-		mcl_mobs:set_animation(entity, stand_anim)
+		entity:set_animation(stand_anim)
 	else
 		-- moving animation
-		mcl_mobs:set_animation(entity, moving_anim)
+		entity:set_animation(moving_anim)
 	end
 end
 
