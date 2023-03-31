@@ -27,7 +27,6 @@ dofile(path .. "/api.lua")
 dofile(path .. "/breeding.lua")
 dofile(path .. "/spawning.lua")
 dofile(path .. "/mount.lua")
-dofile(path .. "/crafts.lua")
 dofile(path .. "/compat.lua")
 
 local DEFAULT_FALL_SPEED = -9.81*1.5
