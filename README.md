@@ -85,7 +85,7 @@ The main goal of **Mineclonia** is to be a stable and performant clone of
 Minecraft released as free software.
 
 * Minecraft is aimed to be cloned as well as Minetest currently permits without
-  resorting to hacks which are too heavyweight and complicated to maintain
+  resorting to hacks which are too heavyweight or complicated to maintain
 * Cloning the gameplay has highest priority
 * Cloning the interface has low priority. It will only be roughly imitated
 * Mineclonia will use different graphics and sounds, but with a similar style
