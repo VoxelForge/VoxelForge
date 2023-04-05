@@ -1,8 +1,6 @@
 # Mineclonia
 An unofficial Minecraft-like game for Minetest. Forked from MineClone2.
 
-Version: 0.81
-
 ### Gameplay
 You start in a randomly-generated world made entirely of cubes. You can explore
 the world and dig and build almost every block in the world to create new
