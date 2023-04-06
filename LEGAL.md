@@ -30,7 +30,7 @@ No non-free licenses are used anywhere.
 
 The textures, unless otherwise noted, are based on the Pixel Perfection resource
 pack for Minecraft 1.11, authored by XSSheep. Most textures are verbatim copies,
-while some textures have been changed or redone from scratch.  The glazed
+while some textures have been changed or redone from scratch. The glazed
 terracotta textures have been created by
 [MysticTempest](https://github.com/MysticTempest).
 

@@ -11,7 +11,6 @@ Or you can play in “creative mode” in which you can build almost anything
 instantly.
 
 #### Gameplay summary
-
 * Sandbox-style gameplay, no goals
 * Survive: Fight against hostile monsters and hunger
 * Mine for ores and other treasures
@@ -188,7 +187,6 @@ Technical differences from Minecraft:
 … and finally, Mineclonia is free software (“free” as in “freedom”)!
 
 ## Other readme files
-
 * `LICENSE.txt`: The GPLv3 license text
 * `CONTRIBUTING.md`: Information for those who want to contribute
 * `API.md`: For Minetest modders who want to mod this game
