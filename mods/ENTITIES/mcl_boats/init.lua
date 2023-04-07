@@ -511,9 +511,11 @@ for b=1, #boat_ids do
 				chest_tex = "mcl_chests_normal.png"
 			end
 			local boat = minetest.add_entity(pos, boat_ent)
-			boat:get_luaentity()._itemstring = itemstring
-			boat:set_properties({ textures = { texture, chest_tex } })
-			boat:set_yaw(placer:get_look_horizontal())
+			if boat and boat:get_pos() then
+				boat:get_luaentity()._itemstring = itemstring
+				boat:set_properties({ textures = { texture, chest_tex } })
+				boat:set_yaw(placer:get_look_horizontal())
+			end
 			if not minetest.is_creative_enabled(placer:get_player_name()) then
 				itemstack:take_item()
 			end
