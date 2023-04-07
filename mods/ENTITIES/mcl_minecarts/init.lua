@@ -536,6 +536,7 @@ function mcl_minecarts.place_minecart(itemstack, pointed_thing, placer)
 
 	local entity_id = entity_mapping[itemstack:get_name()]
 	local cart = minetest.add_entity(railpos, entity_id)
+	if not cart or not cart:get_pos() then return end
 	local railtype = minetest.get_item_group(node.name, "connect_to_raillike")
 	local le = cart:get_luaentity()
 	if le then
