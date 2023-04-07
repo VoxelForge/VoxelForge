@@ -163,9 +163,11 @@ end
 local function create_entity(pos, node_name, textures, param2, double, sound_prefix, mesh_prefix, animation_type, dir, entity_pos)
 	dir, entity_pos = get_entity_info(pos, param2, double, dir, entity_pos)
 	local obj = minetest.add_entity(entity_pos, "mcl_chests:chest")
-	local luaentity = obj:get_luaentity()
-	luaentity:initialize(pos, node_name, textures, dir, double, sound_prefix, mesh_prefix, animation_type)
-	return luaentity
+	if obj and obj:get_pos() then
+		local luaentity = obj:get_luaentity()
+		luaentity:initialize(pos, node_name, textures, dir, double, sound_prefix, mesh_prefix, animation_type)
+		return luaentity
+	end
 end
 
 local function find_or_create_entity(pos, node_name, textures, param2, double, sound_prefix, mesh_prefix, animation_type, dir, entity_pos)
