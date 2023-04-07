@@ -96,8 +96,10 @@ local skeleton = {
 				if math.random(100) == 1 or self.jockey == true then -- 1% like from MCwiki
 					self.jockey = true
 					local jock = minetest.add_entity(self.object:get_pos(), "mobs_mc:spider")
-					jock:get_luaentity().docile_by_day = false
-					self.object:set_attach(jock, "", vector.new(0,0,0), vector.new(0,0,0))
+					if jock and jock:get_pos() then
+						jock:get_luaentity().docile_by_day = false
+						self.object:set_attach(jock, "", vector.new(0,0,0), vector.new(0,0,0))
+					end
 				end
 				self.jockey = false
 				return true

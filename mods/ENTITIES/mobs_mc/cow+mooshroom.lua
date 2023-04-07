@@ -118,7 +118,9 @@ mooshroom_def.on_rightclick = function(self, clicker)
 		local oldyaw = self.object:get_yaw()
 		self.object:remove()
 		local cow = minetest.add_entity(pos, "mobs_mc:cow")
-		cow:set_yaw(oldyaw)
+		if cow and cow:get_pos() then
+			cow:set_yaw(oldyaw)
+		end
 
 		if not minetest.is_creative_enabled(clicker:get_player_name()) then
 			item:add_wear(mobs_mc.shears_wear)

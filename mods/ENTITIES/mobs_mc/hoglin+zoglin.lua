@@ -77,8 +77,10 @@ local hoglin = {
 	do_custom = function(self)
 		if self.object:get_pos().y > -100 then
 			local zog = minetest.add_entity(self.object:get_pos(), "mobs_mc:zoglin")
-			zog:set_rotation(self.object:get_rotation())
-			self.object:remove()
+			if zog and zog:get_pos() then
+				zog:set_rotation(self.object:get_rotation())
+				self.object:remove()
+			end
 		end
 	end,
 	attack_animals = true,
