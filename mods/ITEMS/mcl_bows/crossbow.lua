@@ -42,6 +42,7 @@ local bow_index = {}
 
 function mcl_bows_s.shoot_arrow_crossbow(arrow_item, pos, dir, yaw, shooter, power, damage, is_critical, crossbow_stack, collectable)
 	local obj = minetest.add_entity({x=pos.x,y=pos.y,z=pos.z}, arrow_item.."_entity")
+	if not obj or not obj:get_pos() then return end
 	if power == nil then
 		power = BOW_MAX_SPEED --19
 	end
