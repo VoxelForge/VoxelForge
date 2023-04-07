@@ -25,25 +25,27 @@ local function on_place_fish(itemstack, placer, pointed_thing)
 		local fish = itemstack:get_name():gsub(fishbucket_prefix,"")
 		if fish_names[fish] then
 			local o = minetest.add_entity(pos, "mobs_mc:" .. fish)
-			local props = itemstack:get_meta():get_string("properties")
-			if props ~= "" then
-				o:set_properties(minetest.deserialize(props))
-			end
-			local water = "mcl_core:water_source"
-			if n.name == "mclx_core:river_water_source" then
-				water = n.name
-			elseif n.name == "mclx_core:river_water_flowing" then
-				water = nil
-			end
-			if mcl_worlds.pos_to_dimension(pos) == "nether" then
-				water = nil
-				minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
-			end
-			if water then
-				minetest.set_node(pos,{name = water})
-			end
-			if not placer or not minetest.is_creative_enabled(placer:get_player_name()) then
-				itemstack = ItemStack("mcl_buckets:bucket_empty")
+			if o and o:get_pos() then
+				local props = itemstack:get_meta():get_string("properties")
+				if props ~= "" then
+					o:set_properties(minetest.deserialize(props))
+				end
+				local water = "mcl_core:water_source"
+				if n.name == "mclx_core:river_water_source" then
+					water = n.name
+				elseif n.name == "mclx_core:river_water_flowing" then
+					water = nil
+				end
+				if mcl_worlds.pos_to_dimension(pos) == "nether" then
+					water = nil
+					minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
+				end
+				if water then
+					minetest.set_node(pos,{name = water})
+				end
+				if not placer or not minetest.is_creative_enabled(placer:get_player_name()) then
+					itemstack = ItemStack("mcl_buckets:bucket_empty")
+				end
 			end
 		end
 	end
