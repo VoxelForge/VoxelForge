@@ -93,6 +93,7 @@ function mcl_raids.promote_to_raidcaptain(c) -- object
 	local pos = c:get_pos()
 	local l = c:get_luaentity()
 	l._banner = minetest.add_entity(pos,"mcl_raids:ominous_banner")
+	if not l._banner or not l._banner:get_pos() then return end
 	l._banner:set_properties({textures = {mcl_banners.make_banner_texture("unicolor_white", oban_layers)}})
 	l._banner:set_attach(c,"",vector.new(-1,5.5,0),vector.new(0,0,0),true)
 	l._raidcaptain = true
@@ -242,8 +243,10 @@ local function start_firework_rocket(pos)
 	local l = minetest.get_natural_light(pos,0.5)
 	if n.name ~= "air" or l <= minetest.LIGHT_MAX then return end
 	local o = minetest.add_entity(p,"mcl_bows:rocket_entity")
-	o:get_luaentity()._harmless = true
-	o:set_acceleration(vector.new(math.random(0,2),math.random(30,50),math.random(0,2)))
+	if o and o:get_pos() then
+		o:get_luaentity()._harmless = true
+		o:set_acceleration(vector.new(math.random(0,2),math.random(30,50),math.random(0,2)))
+	end
 end
 
 local function make_firework(pos,stime)
