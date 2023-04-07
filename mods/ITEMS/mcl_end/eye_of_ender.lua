@@ -123,6 +123,7 @@ minetest.register_craftitem("mcl_end:ender_eye", {
 
 		-- Throw it!
 		local obj = minetest.add_entity(origin, "mcl_end:ender_eye")
+		if not obj or not obj:get_pos() then return end
 		local dir
 
 		if lowest_dist <= 25 then
