@@ -43,6 +43,7 @@ minetest.register_entity("mcl_experience:bottle",{
 local function throw_xp_bottle(pos, dir, velocity)
 	minetest.sound_play("mcl_throwing_throw", {pos = pos, gain = 0.4, max_hear_distance = 16}, true)
 	local obj = minetest.add_entity(pos, "mcl_experience:bottle")
+	if not obj or not obj:get_pos() then return end
 	obj:set_velocity(vector.multiply(dir, velocity))
 	local acceleration = vector.multiply(dir, -3)
 	acceleration.y = -9.81
