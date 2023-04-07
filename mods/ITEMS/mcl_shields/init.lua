@@ -236,9 +236,11 @@ end
 
 local function add_shield_entity(player, i)
 	local shield = minetest.add_entity(player:get_pos(), "mcl_shields:shield_entity")
-	shield:get_luaentity()._shield_number = i
-	mcl_shields.players[player].shields[i] = shield
-	set_shield(player, false, i)
+	if shield and shield:get_pos() then
+		shield:get_luaentity()._shield_number = i
+		mcl_shields.players[player].shields[i] = shield
+		set_shield(player, false, i)
+	end
 end
 
 local function remove_shield_entity(player, i)
