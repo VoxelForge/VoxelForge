@@ -16,6 +16,7 @@ local size_to_xp = {
 }
 
 local function xp_to_size(xp)
+	if not xp then return 1 end
 	local i, l = 1, #size_to_xp
 
 	while xp > size_to_xp[i][1] and i < l do
