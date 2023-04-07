@@ -320,34 +320,10 @@ local function trace_explode(pos, strength, raydirs, radius, info, direct, sourc
 				end
 				local damage = math.floor((impact * impact + impact) * 7 * strength + 1)
 
-				local sleep_formspec_doesnt_close_mt53 = false
-				if obj:is_player() then
-					local name = obj:get_player_name()
-					if mcl_beds then
-						local meta = obj:get_meta()
-						if meta:get_string("mcl_beds:sleeping") == "true" then
-							minetest.close_formspec(name, "") -- ABSOLUTELY NECESSARY FOR MT5.3 -- TODO: REMOVE THIS IN THE FUTURE
-							sleep_formspec_doesnt_close_mt53 = true
-						end
-					end
-				end
+				mcl_util.deal_damage(obj, damage, { type = "explosion", direct = direct, source = source })
 
-				if sleep_formspec_doesnt_close_mt53 then
-					minetest.after(0.3,
-						function() -- 0.2 is minimum delay for closing old formspec and open died formspec -- TODO: REMOVE THIS IN THE FUTURE
-							if not obj:is_player() then
-								return
-							end
-							mcl_util.deal_damage(obj, damage, { type = "explosion", direct = direct, source = source })
-
-							obj:add_velocity(vector.multiply(punch_dir, impact * 20))
-						end)
-				else
-					mcl_util.deal_damage(obj, damage, { type = "explosion", direct = direct, source = source })
-
-					if obj:is_player() or ent.tnt_knockback then
-						obj:add_velocity(vector.multiply(punch_dir, impact * 20))
-					end
+				if obj:is_player() or ent.tnt_knockback then
+					obj:add_velocity(vector.multiply(punch_dir, impact * 20))
 				end
 			end
 		end
