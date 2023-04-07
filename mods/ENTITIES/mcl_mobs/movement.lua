@@ -1,4 +1,3 @@
-local math, vector, minetest, mcl_mobs = math, vector, minetest, mcl_mobs
 local mob_class = mcl_mobs.mob_class
 local DEFAULT_FALL_SPEED = -9.81*1.5
 local FLOP_HEIGHT = 6

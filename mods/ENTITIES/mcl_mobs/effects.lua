@@ -1,4 +1,3 @@
-local math, vector, minetest, mcl_mobs = math, vector, minetest, mcl_mobs
 local mob_class = mcl_mobs.mob_class
 local active_particlespawners = {}
 local disable_blood = minetest.settings:get_bool("mobs_disable_blood")

@@ -1,31 +1,8 @@
 --lua locals
-local math, vector, minetest, mcl_mobs = math, vector, minetest, mcl_mobs
 local mob_class = mcl_mobs.mob_class
 
-local get_node                     = minetest.get_node
-local get_item_group               = minetest.get_item_group
-local get_node_light               = minetest.get_node_light
-local find_nodes_in_area_under_air = minetest.find_nodes_in_area_under_air
-local get_biome_name               = minetest.get_biome_name
-local get_objects_inside_radius    = minetest.get_objects_inside_radius
-local get_connected_players        = minetest.get_connected_players
-local minetest_get_perlin          = minetest.get_perlin
+local math_round     = function(x) return (x > 0) and math.floor(x + 0.5) or math.ceil(x - 0.5) end
 
-local math_random    = math.random
-local math_floor     = math.floor
-local math_ceil      = math.ceil
-local math_cos       = math.cos
-local math_sin       = math.sin
-local math_round     = function(x) return (x > 0) and math_floor(x + 0.5) or math_ceil(x - 0.5) end
-
-local vector_distance = vector.distance
-local vector_new      = vector.new
-local vector_floor    = vector.floor
-
-local table_copy     = table.copy
-local table_remove   = table.remove
-
-local pairs = pairs
 local dbg_spawn_attempts = 0
 local dbg_spawn_succ = 0
 local dbg_spawn_counts = {}
@@ -224,7 +201,7 @@ local function count_mobs(pos,r,mob_type)
 	for _,l in pairs(minetest.luaentities) do
 		if l and l.is_mob and (mob_type == nil or l.type == mob_type) then
 			local p = l.object:get_pos()
-			if p and vector_distance(p,pos) < r then
+			if p and vector.distance(p,pos) < r then
 				num = num + 1
 			end
 		end
@@ -418,17 +395,17 @@ end
 
 local two_pi = 2 * math.pi
 local function get_next_mob_spawn_pos(pos)
-	local distance = math_random(25, 32)
-	local angle = math_random() * two_pi
+	local distance = math.random(25, 32)
+	local angle = math.random() * two_pi
 	return {
-		x = math_round(pos.x + distance * math_cos(angle)),
+		x = math_round(pos.x + distance * math.cos(angle)),
 		y = pos.y,
-		z = math_round(pos.z + distance * math_sin(angle))
+		z = math_round(pos.z + distance * math.sin(angle))
 	}
 end
 
 local function decypher_limits(posy)
-	posy = math_floor(posy)
+	posy = math.floor(posy)
 	return posy - 32, posy + 32
 end
 
@@ -486,21 +463,21 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 	local dimension = mcl_worlds.pos_to_dimension(pos)
 	local mob_def = minetest.registered_entities[spawn_def.name]
 	local mob_type = mob_def.type
-	local gotten_node = get_node(pos).name
+	local gotten_node = minetest.get_node(pos).name
 	local gotten_biome = minetest.get_biome_data(pos)
 	if not gotten_node or not gotten_biome then return end
-	gotten_biome = get_biome_name(gotten_biome.biome) --makes it easier to work with
+	gotten_biome = minetest.get_biome_name(gotten_biome.biome) --makes it easier to work with
 
 	local is_ground = minetest.get_item_group(gotten_node,"solid") ~= 0
 	if not is_ground then
 		pos.y = pos.y - 1
-		gotten_node = get_node(pos).name
+		gotten_node = minetest.get_node(pos).name
 		is_ground = minetest.get_item_group(gotten_node,"solid") ~= 0
 	end
 	pos.y = pos.y + 1
-	local is_water = get_item_group(gotten_node, "water") ~= 0
-	local is_lava  = get_item_group(gotten_node, "lava") ~= 0
-	local is_leaf  = get_item_group(gotten_node, "leaves") ~= 0
+	local is_water = minetest.get_item_group(gotten_node, "water") ~= 0
+	local is_lava  = minetest.get_item_group(gotten_node, "lava") ~= 0
+	local is_leaf  = minetest.get_item_group(gotten_node, "leaves") ~= 0
 	local is_bedrock  = gotten_node == "mcl_core:bedrock"
 	local is_grass = minetest.get_item_group(gotten_node,"grass_block") ~= 0
 	local mob_count_wide = 0
@@ -527,7 +504,7 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 	and ( not spawn_protected or not minetest.is_protected(pos, "") )
 	and not is_bedrock then
 		--only need to poll for node light if everything else worked
-		local gotten_light = get_node_light(pos)
+		local gotten_light = minetest.get_node_light(pos)
 		if gotten_light >= spawn_def.min_light and gotten_light <= spawn_def.max_light then
 			return true
 		end
@@ -657,19 +634,19 @@ if mobs_spawn then
 	local function spawn_a_mob(pos, dimension, y_min, y_max)
 		--create a disconnected clone of the spawn dictionary
 		--prevents memory leak
-		local mob_library_worker_table = table_copy(spawn_dictionary)
+		local mob_library_worker_table = table.copy(spawn_dictionary)
 		local goal_pos = get_next_mob_spawn_pos(pos)
 		--grab mob that fits into the spawning location
 		--randomly grab a mob, don't exclude any possibilities
-		local spawning_position_list = find_nodes_in_area_under_air(
+		local spawning_position_list = minetest.find_nodes_in_area_under_air(
 			{x = goal_pos.x, y = y_min, z = goal_pos.z},
 			{x = goal_pos.x, y = y_max, z = goal_pos.z},
 			{"group:solid", "group:water", "group:lava"}
 		)
 		if #spawning_position_list <= 0 then return end
-		local spawning_position = spawning_position_list[math_random(1, #spawning_position_list)]
+		local spawning_position = spawning_position_list[math.random(1, #spawning_position_list)]
 
-		perlin_noise = perlin_noise or minetest_get_perlin(noise_params)
+		perlin_noise = perlin_noise or minetest.get_perlin(noise_params)
 		local noise = perlin_noise:get_3d(spawning_position)
 		local current_summary_chance = summary_chance
 		table.shuffle(mob_library_worker_table)
@@ -718,7 +695,7 @@ if mobs_spawn then
 				end
 			end
 			current_summary_chance = current_summary_chance - mob_chance
-			table_remove(mob_library_worker_table, mob_index)
+			table.remove(mob_library_worker_table, mob_index)
 		end
 	end
 
@@ -730,7 +707,7 @@ if mobs_spawn then
 		timer = timer + dtime
 		if timer < 10 then return end
 		timer = 0
-		local players = get_connected_players()
+		local players = minetest.get_connected_players()
 		local total_mobs = count_mobs_total_cap()
 		if total_mobs > mob_cap.total or total_mobs > #players * mob_cap.player then
 			minetest.log("action","[mcl_mobs] global mob cap reached. no cycle spawning.")

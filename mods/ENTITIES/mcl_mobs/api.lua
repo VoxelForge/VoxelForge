@@ -1,6 +1,5 @@
 local mob_class = mcl_mobs.mob_class
 local mob_class_meta = {__index = mcl_mobs.mob_class}
-local math, vector, minetest, mcl_mobs = math, vector, minetest, mcl_mobs
 -- API for Mobs Redo: MineClone 2 Edition (MRM)
 
 local PATHFINDING = "gowp"
