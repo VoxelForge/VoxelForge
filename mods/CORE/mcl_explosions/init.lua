@@ -13,22 +13,6 @@ under the LGPLv2.1 license.
 mcl_explosions = {}
 
 local mod_fire = minetest.get_modpath("mcl_fire")
---local CONTENT_FIRE = minetest.get_content_id("mcl_fire:fire")
-
-local math = math
-local vector = vector
-local table = table
-
-local hash_node_position = minetest.hash_node_position
-local get_objects_inside_radius = minetest.get_objects_inside_radius
-local get_position_from_hash = minetest.get_position_from_hash
-local get_node_drops = minetest.get_node_drops
-local get_name_from_content_id = minetest.get_name_from_content_id
-local get_voxel_manip = minetest.get_voxel_manip
-local bulk_set_node = minetest.bulk_set_node
-local check_for_falling = minetest.check_for_falling
-local add_item = minetest.add_item
-local pos_to_string = minetest.pos_to_string
 
 -- Saved sphere explosion shapes for various radiuses
 local sphere_shapes = {}
@@ -70,7 +54,7 @@ local function compute_sphere_rays(radius)
 	local sphere = {}
 
 	local function add_ray(pos)
-		sphere[hash_node_position(pos)] = pos
+		sphere[minetest.hash_node_position(pos)] = pos
 	end
 
 	for y = -radius, radius do
@@ -167,7 +151,7 @@ end
 -- inlined to avoid function calls and unnecessary table creation. This was
 -- measured to give a significant performance increase.
 local function trace_explode(pos, strength, raydirs, radius, info, direct, source)
-	local vm = get_voxel_manip()
+	local vm = minetest.get_voxel_manip()
 
 	local emin, emax = vm:read_from_map(vector.subtract(pos, radius),
 		vector.add(pos, radius))
@@ -215,7 +199,7 @@ local function trace_explode(pos, strength, raydirs, radius, info, direct, sourc
 					br = max_blast_resistance
 				end
 
-				local hash = hash_node_position(npos)
+				local hash = minetest.hash_node_position(npos)
 
 				rpos_x = rpos_x + STEP_LENGTH * rdir_x
 				rpos_y = rpos_y + STEP_LENGTH * rdir_y
@@ -238,7 +222,7 @@ local function trace_explode(pos, strength, raydirs, radius, info, direct, sourc
 
 	-- Entities in radius of explosion
 	local punch_radius = 2 * strength
-	local objs = get_objects_inside_radius(pos, punch_radius)
+	local objs = minetest.get_objects_inside_radius(pos, punch_radius)
 
 	-- Trace rays for entity damage
 	for _, obj in pairs(objs) do
@@ -338,50 +322,50 @@ local function trace_explode(pos, strength, raydirs, radius, info, direct, sourc
 		local remove = true
 
 		if do_drop or on_blast then
-			local npos = get_position_from_hash(hash)
+			local npos = minetest.get_position_from_hash(hash)
 			if on_blast then
 				on_blast(npos, 1.0, do_drop)
 				remove = false
 			else
-				local name = get_name_from_content_id(data[idx])
-				local drop = get_node_drops(name, "")
+				local name = minetest.get_name_from_content_id(data[idx])
+				local drop = minetest.get_node_drops(name, "")
 
 				for _, item in ipairs(drop) do
 					if type(item) ~= "string" then
 						item = item:get_name() .. item:get_count()
 					end
-					add_item(npos, item)
+					minetest.add_item(npos, item)
 				end
 			end
 		end
 		if remove then
 			if mod_fire and fire and math.random(1, 3) == 1 then
-				table.insert(fires, get_position_from_hash(hash))
+				table.insert(fires, minetest.get_position_from_hash(hash))
 			else
-				table.insert(airs, get_position_from_hash(hash))
+				table.insert(airs, minetest.get_position_from_hash(hash))
 			end
 		end
 	end
-	-- We use bulk_set_node instead of LVM because we want to have on_destruct and
+	-- We use minetest.bulk_set_node instead of LVM because we want to have on_destruct and
 	-- on_construct being called
 	if #airs > 0 then
-		bulk_set_node(airs, { name = "air" })
+		minetest.bulk_set_node(airs, { name = "air" })
 	end
 	if #fires > 0 then
-		bulk_set_node(fires, { name = "mcl_fire:fire" })
+		minetest.bulk_set_node(fires, { name = "mcl_fire:fire" })
 	end
 	-- Update falling nodes
 	for a = 1, #airs do
 		local p = airs[a]
-		check_for_falling(vector.offset(p, 0, 1, 0))
+		minetest.check_for_falling(vector.offset(p, 0, 1, 0))
 	end
 	for f = 1, #fires do
 		local p = fires[f]
-		check_for_falling(vector.offset(p, 0, 1, 0))
+		minetest.check_for_falling(vector.offset(p, 0, 1, 0))
 	end
 
 	-- Log explosion
-	minetest.log("action", "Explosion at " .. pos_to_string(pos) .. " with strength " .. strength .. " and radius " ..
+	minetest.log("action", "Explosion at " .. minetest.pos_to_string(pos) .. " with strength " .. strength .. " and radius " ..
 		radius)
 end
 
