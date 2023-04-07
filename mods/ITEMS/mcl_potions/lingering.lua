@@ -123,9 +123,11 @@ function mcl_potions.register_lingering(name, descr, color, def)
 			local pos = {x=s_pos.x+dropdir.x,y=s_pos.y+dropdir.y,z=s_pos.z+dropdir.z}
 			minetest.sound_play("mcl_throwing_throw", {pos = pos, gain = 0.4, max_hear_distance = 16}, true)
 			local obj = minetest.add_entity(pos, id.."_flying")
-			local velocity = 22
-			obj:set_velocity({x=dropdir.x*velocity,y=dropdir.y*velocity,z=dropdir.z*velocity})
-			obj:set_acceleration({x=dropdir.x*-3, y=-9.8, z=dropdir.z*-3})
+			if obj and obj:get_pos() then
+				local velocity = 22
+				obj:set_velocity({x=dropdir.x*velocity,y=dropdir.y*velocity,z=dropdir.z*velocity})
+				obj:set_acceleration({x=dropdir.x*-3, y=-9.8, z=dropdir.z*-3})
+			end
 		end
 	})
 
