@@ -3,8 +3,10 @@ local S = minetest.get_translator(minetest.get_current_modname())
 -- Spawn a stand entity
 local function spawn_stand_entity(pos, node)
 	local luaentity = minetest.add_entity(pos, "mcl_armor_stand:armor_entity"):get_luaentity()
-	luaentity:update_rotation(node or minetest.get_node(pos))
-	return luaentity
+	if luaentity then
+		luaentity:update_rotation(node or minetest.get_node(pos))
+		return luaentity
+	end
 end
 
 -- Find a stand entity or spawn one
