@@ -315,7 +315,9 @@ mcl_itemframes.update_item_entity = function(pos, node, param2)
 
 			if node.name == found_name_to_use then
 				map_id_entity = minetest.add_entity(pos, found_name_to_use .. "_map", map_id)
-				map_id_entity:set_yaw(yaw)
+				if map_id_entity and map_id_entity:get_pos() then
+					map_id_entity:set_yaw(yaw)
+				end
 			else
 				minetest.log("error", "[mcl_itemframes] Update_Generic_Item: Failed to set Map Item in " .. found_name_to_use .. "'s frame.")
 			end
