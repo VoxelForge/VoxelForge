@@ -331,10 +331,12 @@ local function flying_bobber_on_step(self, dtime)
 	if self._lastpos.x~=nil then
 		if (def and (def.walkable or def.liquidtype == "flowing" or def.liquidtype == "source")) or not def then
 			local ent = minetest.add_entity(self._lastpos, "mcl_fishing:bobber_entity"):get_luaentity()
-			ent.player = self._thrower
-			ent.child = true
-			self.object:remove()
-			return
+			if ent then
+				ent.player = self._thrower
+				ent.child = true
+				self.object:remove()
+				return
+			end
 		end
 	end
 	self._lastpos={x=pos.x, y=pos.y, z=pos.z} -- Set lastpos-->Node will be added at last pos outside the node
