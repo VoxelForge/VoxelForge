@@ -140,7 +140,7 @@ function mcl_maps.create_map(pos)
 end
 
 function mcl_maps.load_map(id, callback)
-	if id == "" or creating_maps[id] then
+	if not id or id == "" or creating_maps[id] then
 		return false
 	end
 
