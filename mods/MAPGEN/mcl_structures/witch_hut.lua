@@ -15,10 +15,12 @@ local function spawn_witch(p1,p2)
 			witch.can_despawn = false
 		end
 		local cat = minetest.add_entity(vector.offset(nn[math.random(#nn)],0,1,0),"mobs_mc:cat"):get_luaentity()
-		cat.object:set_properties({textures = {"mobs_mc_cat_black.png"}})
-		cat.owner = "!witch!" --so it's not claimable by player
-		cat._home = c
-		cat.can_despawn = false
+		if cat and cat:get_pos() then
+			cat.object:set_properties({textures = {"mobs_mc_cat_black.png"}})
+			cat.owner = "!witch!" --so it's not claimable by player
+			cat._home = c
+			cat.can_despawn = false
+		end
 		return
 	end
 end
