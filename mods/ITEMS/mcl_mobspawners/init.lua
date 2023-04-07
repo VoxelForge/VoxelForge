@@ -86,7 +86,9 @@ local function respawn_doll(pos)
 		doll = find_doll(pos)
 		if not doll then
 			doll = spawn_doll(pos)
-			set_doll_properties(doll, mob)
+			if doll and doll:get_pos() then
+				set_doll_properties(doll, mob)
+			end
 		end
 	end
 	return doll
