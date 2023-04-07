@@ -264,6 +264,7 @@ mcl_signs.wall_standard = {
 			x = place_pos.x + sign_info.delta.x,
 			y = place_pos.y + sign_info.delta.y,
 			z = place_pos.z + sign_info.delta.z }, "mcl_signs:text")
+		if not text_entity or not text_entity:get_pos() then return end
 		text_entity:set_yaw(sign_info.yaw)
 		text_entity:get_luaentity()._signnodename = nodeitem:get_name()
 		if DEBUG then
@@ -654,6 +655,7 @@ function mcl_signs.register_sign (modname, color, _name, ttsign)
 			x = place_pos.x + sign_info.delta.x,
 			y = place_pos.y + sign_info.delta.y,
 			z = place_pos.z + sign_info.delta.z }, "mcl_signs:text")
+		if not text_entity or not text_entity:get_pos() then return end
 		text_entity:set_yaw(sign_info.yaw)
 		text_entity:get_luaentity()._signnodename = nodeitem:get_name()
 
@@ -890,6 +892,7 @@ function mcl_signs.register_sign_custom (modname, _name, tiles, color, inventory
 			x = place_pos.x + sign_info.delta.x,
 			y = place_pos.y + sign_info.delta.y,
 			z = place_pos.z + sign_info.delta.z }, "mcl_signs:text")
+		if not text_entity or not text_entity:get_pos() then return end
 		text_entity:set_yaw(sign_info.yaw)
 		text_entity:get_luaentity()._signnodename = nodeitem:get_name()
 
@@ -1112,6 +1115,7 @@ function mcl_signs.reregister_sign (modname, color, _name, ttsign)
 			x = place_pos.x + sign_info.delta.x,
 			y = place_pos.y + sign_info.delta.y,
 			z = place_pos.z + sign_info.delta.z }, "mcl_signs:text")
+		if not text_entity or not text_entity:get_pos() then return end
 		text_entity:set_yaw(sign_info.yaw)
 		text_entity:get_luaentity()._signnodename = nodeitem:get_name()
 
@@ -1346,6 +1350,7 @@ function mcl_signs.reregister_sign_custom (modname, _name, tiles, color, invento
 			x = place_pos.x + sign_info.delta.x,
 			y = place_pos.y + sign_info.delta.y,
 			z = place_pos.z + sign_info.delta.z }, "mcl_signs:text")
+		if not text_entity or not text_entity:get_pos() then return end
 		text_entity:set_yaw(sign_info.yaw)
 		text_entity:get_luaentity()._signnodename = nodeitem:get_name()
 
@@ -1911,7 +1916,7 @@ function mcl_signs:update_sign(pos, fields, sender, force_remove, text_color)
 			x = pos.x + sign_info.delta.x,
 			y = pos.y + sign_info.delta.y,
 			z = pos.z + sign_info.delta.z }, "mcl_signs:text")
-
+		if not text_entity or not text_entity:get_pos() then return end
 		if DEBUG then
 			minetest.log("action", "[mcl_signs] Update_Sign: Placed position:" .. dump(pos) .. "\nSign_info: " .. dump(sign_info))
 		end
