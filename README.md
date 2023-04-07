@@ -86,8 +86,6 @@ Minecraft released as free software.
 * Cloning the gameplay has highest priority
 * Cloning the interface has low priority. It will only be roughly imitated
 * Mineclonia will use different graphics and sounds, but with a similar style
-* Limitations found in Minetest will be written down and documented in the
-  course of development
 
 ## Completion status
 This game is currently in **beta** stage.
