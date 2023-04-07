@@ -655,7 +655,7 @@ minetest.register_entity(":__builtin:item", {
 	end,
 
 	on_activate = function(self, staticdata, dtime_s)
-		if string.sub(staticdata, 1, string.len("return")) == "return" then
+		if string.sub(tostring(staticdata), 1, string.len("return")) == "return" then
 			local data = minetest.deserialize(staticdata)
 			if data and type(data) == "table" then
 				self.itemstring = data.itemstring
