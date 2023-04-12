@@ -1008,7 +1008,7 @@ minetest.register_node("mcl_chests:ender_chest_small", {
 	_doc_items_longdesc = S("Ender chests grant you access to a single personal interdimensional inventory with 27 slots. This inventory is the same no matter from which ender chest you access it from. If you put one item into one ender chest, you will find it in all other ender chests. Each player will only see their own items, but not the items of other players."),
 	_doc_items_usagehelp = S("Rightclick the ender chest to access your personal interdimensional inventory."),
 	drawtype = "nodebox",
-	node_box = {
+	selection_box = {
 		type = "fixed",
 		fixed = {-0.4375, -0.5, -0.4375, 0.4375, 0.375, 0.4375},
 	},
@@ -1223,7 +1223,7 @@ for color, desc in pairs(boxtypes) do
 		_doc_items_longdesc = longdesc,
 		_doc_items_usagehelp = usagehelp,
 		drawtype = "nodebox",
-		node_box = {
+		selection_box = {
 			type = "fixed",
 			fixed = {-0.48, -0.5, -0.48, 0.48, 0.489, 0.48},
 		},
