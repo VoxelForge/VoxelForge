@@ -193,11 +193,6 @@ function mcl_heads.register_head(head_def)
 		_mcl_armor_texture = head_def.texture
 	}))
 
-	--register aliases for old "multi-node" rotation
-	for _,n in pairs({'22_5', '45', '67_5'}) do
-		minetest.register_alias("mcl_heads:"..name.."_"..n,"mcl_heads:"..name)
-	end
-
 	-- register the wall head node
 	minetest.register_node(name .."_wall", table.update(table.copy(mcl_heads.deftemplate_wall), {
 		-- The head textures are based off the textures of an actual mob.
@@ -259,3 +254,72 @@ mcl_heads.register_head{
 	description = S("Wither Skeleton Skull"),
 	longdesc = S("A wither skeleton skull is a small decorative block which resembles the skull of a wither skeleton. It can also be worn as a helmet for fun, but does not offer any protection."),
 }
+
+local old_rots = {
+	["22_5"] = 22.5,
+	["45"] = 45,
+	["67_5"] = 67.5,
+}
+
+local old_bheads = {
+	"mcl_heads:steve",
+	"mcl_heads:zombie",
+	"mcl_heads:skeleton",
+	"mcl_heads:creeper",
+	"mcl_heads:wither_skeleton",
+}
+
+local old_rheads = {
+	"mcl_heads:creeper22_5",
+	"mcl_heads:creeper45",
+	"mcl_heads:creeper67_5",
+
+	"mcl_heads:wither_skeleton22_5",
+	"mcl_heads:wither_skeleton45",
+	"mcl_heads:wither_skeleton67_5",
+
+	"mcl_heads:skeleton45",
+	"mcl_heads:skeleton22_5",
+	"mcl_heads:skeleton67_5",
+
+	"mcl_heads:steve22_5",
+	"mcl_heads:steve45",
+	"mcl_heads:steve67_5",
+
+	"mcl_heads:zombie22_5",
+	"mcl_heads:zombie45",
+	"mcl_heads:zombie67_5",
+}
+
+minetest.register_lbm({
+	name = "mcl_heads:convert_old_angled_heads",
+	nodenames = old_rheads,
+	run_at_every_load = false,
+	action = function(pos, node, dtime_s)
+		local ceiling = node.param2 >= 20
+		local rt, nn
+		for k,v in pairs(old_rots) do
+			if node.name:find(k) then
+				rt = v
+				nn = node.name:gsub(k,"")
+			end
+		end
+		if rt and nn then
+			if ceiling then nn = nn.."_ceiling" end
+			minetest.swap_node(pos,{name=nn,param2=(rt / 1.5)})
+		end
+	end,
+})
+
+minetest.register_lbm({
+	name = "mcl_heads:convert_old_ceiling_heads",
+	nodenames = old_bheads,
+	run_at_every_load = false,
+	action = function(pos, node, dtime_s)
+		local ceiling = node.param2 >= 20
+		if ceiling then
+			node.name = node.name.."_ceiling"
+			minetest.swap_node(pos,node)
+		end
+	end,
+})
