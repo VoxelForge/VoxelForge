@@ -36,7 +36,6 @@ mcl_heads.deftemplate_floor = {
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
 	paramtype = "light",
 	paramtype2 = "degrotate",
-	stack_max = 64,
 	sunlight_propagates = true,
 	sounds = mcl_sounds.node_sound_defaults{
 		footstep = {name="default_hard_footstep", gain=0.3},
@@ -119,7 +118,6 @@ mcl_heads.deftemplate_wall = {
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
 	paramtype = "light",
 	paramtype2 = "wallmounted",
-	stack_max = 64,
 	sunlight_propagates = true,
 	sounds = mcl_sounds.node_sound_defaults{
 		footstep = {name="default_hard_footstep", gain=0.3},
