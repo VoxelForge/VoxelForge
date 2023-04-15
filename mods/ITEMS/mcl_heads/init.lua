@@ -10,19 +10,16 @@ if minetest.get_modpath("mcl_armor") then
 end
 
 mcl_heads = {}
-
--- rotations of head nodes within a quadrant (0° ≤ θ ≤ 90°)
-mcl_heads.FLOOR_DEGREES = { [0]='', '22_5', '45', '67_5', }
-
--- box of head nodes
 mcl_heads.FLOOR_BOX = { -0.25, -0.5, -0.25, 0.25, 0.0, 0.25, }
-
--- floor head node nodedef template ------------------------------------------------------------------------------------
 
 --- node definition template for floor mod heads
 mcl_heads.deftemplate_floor = {
-	drawtype = "nodebox",
-	node_box = {
+	drawtype = "mesh",
+	selection_box = {
+		type = "fixed",
+		fixed = mcl_heads.FLOOR_BOX,
+	},
+	collision_box = {
 		type = "fixed",
 		fixed = mcl_heads.FLOOR_BOX,
 	},
@@ -38,7 +35,7 @@ mcl_heads.deftemplate_floor = {
 	},
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
 	paramtype = "light",
-	paramtype2 = "facedir",
+	paramtype2 = "degrotate",
 	stack_max = 64,
 	sunlight_propagates = true,
 	sounds = mcl_sounds.node_sound_defaults{
@@ -51,38 +48,6 @@ mcl_heads.deftemplate_floor = {
 	_mcl_hardness = 1,
 
 	on_secondary_use = equip_armor,
-}
-
-mcl_heads.deftemplate_floor_angled = {
-	drawtype = "mesh",
-	selection_box = {
-		type = "fixed",
-		fixed = mcl_heads.FLOOR_BOX,
-	},
-	collision_box = {
-		type = "fixed",
-		fixed = mcl_heads.FLOOR_BOX,
-	},
-	groups = {
-		handy = 1,
-		head = 1,
-		deco_block = 1,
-		dig_by_piston = 1,
-		not_in_creative_inventory = 1,
-	},
-	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
-	paramtype = "light",
-	paramtype2 = "facedir",
-	stack_max = 64,
-	sunlight_propagates = true,
-	sounds = mcl_sounds.node_sound_defaults{
-		footstep = {name="default_hard_footstep", gain=0.3},
-	},
-	is_ground_content = false,
-
-	_doc_items_create_entry = false,
-	_mcl_blast_resistance = 1,
-	_mcl_hardness = 1,
 }
 
 function mcl_heads.deftemplate_floor.on_rotate(pos, node, user, mode, new_param2)
@@ -125,19 +90,7 @@ function mcl_heads.deftemplate_floor.on_place(itemstack, placer, pointed_thing)
 
 	-- place floor head node (floor and ceiling)
 	else
-		local fdir = minetest.dir_to_facedir(dir)
-
-		-- determine the head node rotation based on player's yaw (in cw direction from North/Z+)
-		local yaw = placer:get_look_horizontal()
-		yaw = wdir == 1 and math.pi*2 - yaw or yaw
-
-		local rotation_level = math.min(math.max(math.round((yaw / (math.pi*2)) * 16), 0), 15)
-		placestack:set_name(itemstring ..mcl_heads.FLOOR_DEGREES[rotation_level % 4])
-
-		-- determine the head node face direction based on rotation level
-		fdir = math.floor(rotation_level / 4) + (wdir == 1 and 0 or 20)
-
-		itemstack = minetest.item_place(placestack, placer, pointed_thing, fdir)
+		itemstack = minetest.item_place(placestack, placer, pointed_thing, placer:get_look_horizontal() * 180 / math.pi / 1.5 ) --param2 value is degrees / 1.5
 	end
 
 	-- restore item from angled and wall head nodes
@@ -208,31 +161,13 @@ function mcl_heads.register_head(head_def)
 		_doc_items_longdesc = head_def.longdesc,
 
 		-- The head textures are based off the textures of an actual mob.
-		tiles = {
-			-- Note: bottom texture is overlaid over top texture to get rid of possible transparency.
-			-- This is required for skeleton skull and wither skeleton skull.
-			-- Note: -x coords go right per-pixel, -y coords go down per-pixel
-			"[combine:16x16:-36,4="  ..head_def.texture, -- top
-			"([combine:16x16:-36,4=" ..head_def.texture..")^([combine:16x16:-44,4="..head_def.texture..")", -- bottom
-			"[combine:16x16:-28,0=" ..head_def.texture, -- left
-			"[combine:16x16:-44,0=" ..head_def.texture, -- right
-			"[combine:16x16:-52,0=" ..head_def.texture, -- back
-			"[combine:16x16:-36,0="  ..head_def.texture, -- front
-		},
+			mesh = "mcl_heads_floor.obj",
+			tiles = { head_def.texture },
 
 		_mcl_armor_mob_range_mob = head_def.range_mob,
 		_mcl_armor_mob_range_factor = head_def.range_factor,
 		_mcl_armor_texture = head_def.texture
 	}))
-
-	-- register the angled floor head nodes
-	for i, d in ipairs(mcl_heads.FLOOR_DEGREES) do
-		minetest.register_node(name ..d, table.update(table.copy(mcl_heads.deftemplate_floor_angled), {
-			mesh = "mcl_heads_floor" ..d ..".obj",
-			tiles = { head_def.texture },
-			drop = name,
-		}))
-	end
 
 	-- register the wall head node
 	minetest.register_node(name .."_wall", table.update(table.copy(mcl_heads.deftemplate_wall), {
@@ -252,7 +187,7 @@ function mcl_heads.register_head(head_def)
 	}))
 end
 
--- initial heads -------------------------------------------------------------------------------------------------------
+-- initial heads -------------------------------------------------------------------------------------------------------
 
 mcl_heads.register_head{
 	name = "zombie",
