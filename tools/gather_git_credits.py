@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 # This is based on the gather_git_credits.py script from the Minetest
-# repository, the only modification is that it will only take into account the
-# number of changes, not the number of commits.
+# repository. It has been modified to go back six months for active contributors
+# (instead of two minor releases) and only take into account the number of
+# changes, not the number of commits.
 
 import subprocess
 import re
@@ -10,17 +11,17 @@ from collections import defaultdict
 
 codefiles = r".lua$"
 
-# two minor versions back, for "Active Contributors"
-REVS_ACTIVE = "0.79.0..HEAD"
+# the past six months, for "Active Contributors"
+SINCE_ACTIVE = "six months ago ago"
 # all time, for "Previous Contributors"
-REVS_PREVIOUS = "HEAD"
+SINCE_PREVIOUS = "1970"
 
 CUTOFF_ACTIVE = 150
 CUTOFF_PREVIOUS = 1050
 
-def load(revs):
+def load(since):
 	points = defaultdict(int)
-	p = subprocess.Popen(["git", "log", "--mailmap", "--pretty=format:%h %aN <%aE>", revs],
+	p = subprocess.Popen(["git", "log", "--mailmap", "--pretty=format:%h %aN <%aE>", "--since", since],
 		stdout=subprocess.PIPE, universal_newlines=True)
 	for line in p.stdout:
 		hash, author = line.strip().split(" ", 1)
@@ -42,8 +43,8 @@ def load(revs):
 		points.pop(author, None)
 	return points
 
-points_active = load(REVS_ACTIVE)
-points_prev = load(REVS_PREVIOUS)
+points_active = load(SINCE_ACTIVE)
+points_prev = load(SINCE_PREVIOUS)
 
 with open("results.txt", "w") as f:
 	for author, points in sorted(points_active.items(), key=(lambda e: e[1]), reverse=True):
