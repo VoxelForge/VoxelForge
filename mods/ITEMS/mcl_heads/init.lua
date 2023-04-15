@@ -11,10 +11,12 @@ end
 
 mcl_heads = {}
 mcl_heads.FLOOR_BOX = { -0.25, -0.5, -0.25, 0.25, 0.0, 0.25, }
+mcl_heads.CEILING_BOX = { -0.25, 0, -0.25, 0.25, 0.5, 0.25, }
 
 --- node definition template for floor mod heads
 mcl_heads.deftemplate_floor = {
 	drawtype = "mesh",
+	mesh = "mcl_heads_floor.obj",
 	selection_box = {
 		type = "fixed",
 		fixed = mcl_heads.FLOOR_BOX,
@@ -47,6 +49,17 @@ mcl_heads.deftemplate_floor = {
 	_mcl_hardness = 1,
 
 	on_secondary_use = equip_armor,
+}
+
+mcl_heads.deftemplate_ceiling = table.copy(mcl_heads.deftemplate_floor)
+mcl_heads.deftemplate_ceiling.mesh = "mcl_heads_ceiling.obj"
+mcl_heads.deftemplate_ceiling.selection_box = {
+	type = "fixed",
+	fixed = mcl_heads.CEILING_BOX,
+}
+mcl_heads.deftemplate_ceiling.collision_box = {
+	type = "fixed",
+	fixed = mcl_heads.CEILING_BOX,
 }
 
 function mcl_heads.deftemplate_floor.on_rotate(pos, node, user, mode, new_param2)
@@ -86,8 +99,10 @@ function mcl_heads.deftemplate_floor.on_place(itemstack, placer, pointed_thing)
 	if wdir ~= 0 and wdir ~= 1 then
 		placestack:set_name(itemstring .."_wall")
 		itemstack = minetest.item_place(placestack, placer, pointed_thing, wdir)
-
 	-- place floor head node (floor and ceiling)
+	elseif wdir == 0 then
+		placestack:set_name(itemstring .."_ceiling")
+		itemstack = minetest.item_place(placestack, placer, pointed_thing, placer:get_look_horizontal() * 180 / math.pi / 1.5 ) --param2 value is degrees / 1.5
 	else
 		itemstack = minetest.item_place(placestack, placer, pointed_thing, placer:get_look_horizontal() * 180 / math.pi / 1.5 ) --param2 value is degrees / 1.5
 	end
@@ -97,7 +112,7 @@ function mcl_heads.deftemplate_floor.on_place(itemstack, placer, pointed_thing)
 	return itemstack
 end
 
--- wall head node nodedef template -------------------------------------------------------------------------------------
+-- wall head node nodedef template -------------------------------------------------------------------------------------
 
 --- node definition template for wall mod heads
 mcl_heads.deftemplate_wall = {
@@ -138,7 +153,7 @@ function mcl_heads.deftemplate_wall.on_rotate(pos, node, user, mode, new_param2)
 	end
 end
 
--- API functions -------------------------------------------------------------------------------------------------------
+-- API functions -------------------------------------------------------------------------------------------------------
 
 --- @class HeadDef
 --- @field name string identifier for node
@@ -159,7 +174,18 @@ function mcl_heads.register_head(head_def)
 		_doc_items_longdesc = head_def.longdesc,
 
 		-- The head textures are based off the textures of an actual mob.
-			mesh = "mcl_heads_floor.obj",
+			tiles = { head_def.texture },
+
+		_mcl_armor_mob_range_mob = head_def.range_mob,
+		_mcl_armor_mob_range_factor = head_def.range_factor,
+		_mcl_armor_texture = head_def.texture
+	}))
+
+	minetest.register_node(name.."_ceiling", table.update(table.copy(mcl_heads.deftemplate_ceiling), {
+		description = head_def.description,
+		_doc_items_longdesc = head_def.longdesc,
+
+		-- The head textures are based off the textures of an actual mob.
 			tiles = { head_def.texture },
 
 		_mcl_armor_mob_range_mob = head_def.range_mob,
