@@ -1,20 +1,18 @@
 #! /usr/bin/env lua
 -- Script to automatically generate mods/HUD/mcl_credits/people.lua from CREDITS.md
--- Run from MCL2 root folder
+-- Run from MCLA root folder
 
 local colors = {
-	["Creator of MineClone"] = "0x0A9400",
+	["Creators of Mineclonia"] = "0x0A9400",
 	["Creator of MineClone2"] = "0xFBF837",
-	["Maintainers"] = "0xFF51D5",
-	["Developers"] = "0xF84355",
-	["Contributors"] = "0x52FF00",
-	["MineClone5"] = "0xA60014",
-	["Original Mod Authors"] = "0x343434",
-	["3D Models"] = "0x0019FF",
-	["Textures"] = "0xFF9705",
-	["Translations"] = "0x00FF60",
-	["Funders"] = "0xF7FF00",
-	["Special thanks"] = "0x00E9FF",
+	["Creator of MineClone"] = "0xFF51D5",
+	["Active Contributors"] = "0xF84355",
+	["Previous Contributors"] = "0x52FF00",
+	["Original Mod Authors"] = "0xA60014",
+	["3D Models"] = "0x343434",
+	["Textures and menu images"] = "0x0019FF",
+	["Translations"] = "0xFF9705",
+	["Special thanks"] = "0x00FF60",
 }
 
 local from = io.open("CREDITS.md", "r")
