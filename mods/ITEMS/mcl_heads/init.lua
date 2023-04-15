@@ -169,6 +169,11 @@ function mcl_heads.register_head(head_def)
 		_mcl_armor_texture = head_def.texture
 	}))
 
+	--register aliases for old "multi-node" rotation
+	for _,n in pairs({'22_5', '45', '67_5'}) do
+		minetest.register_alias("mcl_heads:"..name.."_"..n,"mcl_heads:"..name)
+	end
+
 	-- register the wall head node
 	minetest.register_node(name .."_wall", table.update(table.copy(mcl_heads.deftemplate_wall), {
 		-- The head textures are based off the textures of an actual mob.
