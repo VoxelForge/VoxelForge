@@ -134,9 +134,11 @@ mcl_death_messages = {
 		},
 		explosion = {
 			_translator = S,
+			-- Killer and item death messages have been disabled due to a bug making them show raw
+			-- entity names (like "mobs_mc:creeper") and sometimes "userdata 0x455c2778".
 			plain = "@1 blew up",
-			killer = "@1 was blown up by @2",
-			item = "@1 was blown up by @2 using @3",
+			--killer = "@1 was blown up by @2",
+			--item = "@1 was blown up by @2 using @3",
 			-- "@1 was killed by [Intentional Game Design]" -- for exploding bed in nether or end
 		},
 		cramming = {
