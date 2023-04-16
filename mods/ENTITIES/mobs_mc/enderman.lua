@@ -271,6 +271,7 @@ mcl_mobs.register_mob("mobs_mc:enderman", {
 	textures = create_enderman_textures(),
 	visual_size = {x=3, y=3},
 	makes_footstep_sound = true,
+	can_despawn = true,
 	on_spawn = function(self)
 		local spider_eyes=false
 		for n = 1, #self.object:get_children() do

@@ -78,6 +78,7 @@ function mob_class:get_staticdata()
 	and self.can_despawn
 	and self.remove_ok
 	and ((not self.nametag) or (self.nametag == ""))
+	and not self.tamed
 	and self.lifetimer <= 20 then
 		if spawn_logging then
 			minetest.log("action", "[mcl_mobs] Mob "..tostring(self.name).." despawns at "..minetest.pos_to_string(vector.round(self.object:get_pos())) .. " - out of range")
