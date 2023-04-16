@@ -15,7 +15,6 @@
 * TheOnlyJoeEnderman
 * ancientmarinerdev
 * FossFanatic
-* Michieal
 * PrairieWind
 * epCode
 * anarquimico
