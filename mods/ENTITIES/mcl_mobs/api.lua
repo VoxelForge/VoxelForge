@@ -254,8 +254,9 @@ function mob_class:mob_activate(staticdata, def, dtime)
 			}
 		end
 	end
-
-	self.object:set_properties(self)
+	if self.textures then
+		self.object:set_properties({textures=self.textures})
+	end
 	self:set_yaw( (math.random(0, 360) - 180) / 180 * math.pi, 6)
 	self:update_tag()
 	self._current_animation = nil
