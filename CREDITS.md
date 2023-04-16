@@ -30,13 +30,10 @@
 * marcin-serwin
 * chmodsayshello
 * iliekprogrammar
-* bzoss
 * jordan4ibanez
-* epCode
 * SumianVoice
 * MysticTempest
 * HimbeerserverDE
-* kay27
 * FaceDeer
 * kabou
 * 3raven
