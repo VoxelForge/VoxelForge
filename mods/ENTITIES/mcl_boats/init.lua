@@ -150,6 +150,11 @@ local boat = {
 	_animation = 0, -- 0: not animated; 1: paddling forwards; -1: paddling backwards
 	_regen_timer = 0,
 	_damage_anim = 0,
+	on_detach_child = function(self, child)
+		if self._driver and minetest.is_player(child) and minetest.is_player(self._driver) and self._driver == child then
+			self._driver = nil
+		end
+	end,
 }
 
 minetest.register_on_respawnplayer(detach_object)
