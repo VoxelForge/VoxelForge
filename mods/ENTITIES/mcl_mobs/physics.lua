@@ -431,6 +431,12 @@ function mob_class:check_for_death(cause, cmi_cause)
 
 		-- play damage sound if health was reduced and make mob flash red.
 		if damaged then
+			self:add_texture_mod("^[colorize:#d42222:175")
+			minetest.after(1, function(self)
+				if self and self.object then
+					self:remove_texture_mod("^[colorize:#d42222:175")
+				end
+			end, self)
 			self:mob_sound("damage")
 		end
 
