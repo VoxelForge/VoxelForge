@@ -558,8 +558,9 @@ function mcl_util.deal_damage(target, damage, mcl_reason)
 	end
 
 	local hp = target:get_hp()
+	local armorgroups = target:get_armor_groups()
 
-	if hp > 0 then
+	if hp > 0 and not armorgroups.immortal then
 		target:set_hp(hp - damage, {_mcl_reason = mcl_reason})
 	end
 end
