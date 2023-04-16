@@ -607,7 +607,15 @@ function mob_class:do_env_damage()
 		return true
 	end
 
-	local sunlight = minetest.get_natural_light(pos, self.time_of_day)
+	--pcall the elusive get_light "out of bounds error" bug
+	local function pget_light(pos,tod)
+		local st,res = pcall(function() return minetest.get_natural_light(pos, tod) end)
+		if st then return res end
+		minetest.log("warning","[mcl_mobs] minetest.get_natural_light would have crashed at "..minetest.pos_to_string(pos).." mods/ENTITIES/mcl_mobs/physics.lua:612 ... https://codeberg.org/mineclonia/mineclonia/issues/17")
+		return 0
+	end
+
+	local sunlight =pget_light(pos, self.time_of_day)
 
 	-- bright light harms mob
 	if self.light_damage ~= 0 and (sunlight or 0) > 12 then
