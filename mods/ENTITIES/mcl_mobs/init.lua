@@ -133,6 +133,9 @@ function mcl_mobs.register_mob(name, def)
 		collisionbox[5] = 0.79
 	end
 	local final_def = {
+		initial_properties = {
+			damage_texture_modifier = "^[colorize:#d42222:175",
+		},
 		use_texture_alpha = def.use_texture_alpha,
 		head_swivel = def.head_swivel or nil, -- bool to activate this function
 		head_yaw_offset = def.head_yaw_offset or 0, -- for wonkey model bones
@@ -294,7 +297,6 @@ function mcl_mobs.register_mob(name, def)
 		on_breed = def.on_breed,
 		on_grown = def.on_grown,
 		on_pick_up = def.on_pick_up,
-		damage_texture_modifier = "^[colorize:#d42222:175",
 		on_activate = function(self, staticdata, dtime)
 			--this is a temporary hack so mobs stop
 			--glitching and acting really weird with the
