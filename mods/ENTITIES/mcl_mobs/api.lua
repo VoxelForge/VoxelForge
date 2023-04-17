@@ -105,8 +105,7 @@ function mob_class:get_staticdata()
 
 		if  t ~= "function"
 		and t ~= "nil"
-		and t ~= "userdata"
-		and _ ~= "_cmi_components" then
+		and t ~= "userdata" then
 			tmp[_] = self[_]
 		end
 	end
