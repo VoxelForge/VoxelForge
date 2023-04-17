@@ -100,10 +100,10 @@ function mcl_heads.deftemplate_floor.on_place(itemstack, placer, pointed_thing)
 		placestack:set_name(itemstring .."_wall")
 		itemstack = minetest.item_place(placestack, placer, pointed_thing, wdir)
 	-- place floor head node (floor and ceiling)
-	elseif wdir == 0 then
-		placestack:set_name(itemstring .."_ceiling")
-		itemstack = minetest.item_place(placestack, placer, pointed_thing, placer:get_look_horizontal() * 180 / math.pi / 1.5 ) --param2 value is degrees / 1.5
 	else
+		if wdir == 0 then
+			placestack:set_name(itemstring .."_ceiling")
+		end
 		itemstack = minetest.item_place(placestack, placer, pointed_thing, placer:get_look_horizontal() * 180 / math.pi / 1.5 ) --param2 value is degrees / 1.5
 	end
 
