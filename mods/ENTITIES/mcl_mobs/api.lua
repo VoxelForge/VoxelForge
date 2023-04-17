@@ -247,15 +247,13 @@ function mob_class:mob_activate(staticdata, def, dtime)
 	if not self.nametag then
 		self.nametag = def.nametag
 	end
-	if not self.custom_visual_size then
-		self.visual_size = nil
-		self.base_size = self.visual_size
-		if self.child then
-			self.visual_size = {
-				x = self.visual_size.x * 0.5,
-				y = self.visual_size.y * 0.5,
-			}
-		end
+	self.visual_size = nil
+	self.base_size = self.visual_size
+	if self.child then
+		self.visual_size = {
+			x = self.visual_size.x * 0.5,
+			y = self.visual_size.y * 0.5,
+		}
 	end
 
 	if self.textures then
