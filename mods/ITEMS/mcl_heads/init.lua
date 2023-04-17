@@ -174,7 +174,7 @@ function mcl_heads.register_head(head_def)
 		_doc_items_longdesc = head_def.longdesc,
 
 		-- The head textures are based off the textures of an actual mob.
-			tiles = { head_def.texture },
+		tiles = { head_def.texture },
 
 		_mcl_armor_mob_range_mob = head_def.range_mob,
 		_mcl_armor_mob_range_factor = head_def.range_factor,
@@ -186,7 +186,8 @@ function mcl_heads.register_head(head_def)
 		_doc_items_longdesc = head_def.longdesc,
 
 		-- The head textures are based off the textures of an actual mob.
-			tiles = { head_def.texture },
+		tiles = { head_def.texture },
+		drop = name,
 
 		_mcl_armor_mob_range_mob = head_def.range_mob,
 		_mcl_armor_mob_range_factor = head_def.range_factor,
