@@ -302,7 +302,7 @@ function mcl_mobs.register_mob(name, def)
 			--glitching and acting really weird with the
 			--default built in engine collision detection
 			self.is_mob = true
-			self.object:set_properties({
+			self:set_properties({
 				collide_with_objects = false,
 			})
 

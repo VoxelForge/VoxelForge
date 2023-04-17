@@ -40,6 +40,10 @@ local node_ok = function(pos, fallback)
 	return minetest.registered_nodes[fallback]
 end
 
+function mob_class:set_properties(prop)
+	mcl_util.set_properties(self.object, prop)
+end
+
 function mob_class:update_tag() --update nametag and/or the debug box
 	local tag
 	if mobs_debug then
@@ -63,7 +67,8 @@ function mob_class:update_tag() --update nametag and/or the debug box
 	else
 		tag = self.nametag
 	end
-	self.object:set_properties({
+
+	self:set_properties({
 		nametag = tag,
 	})
 end
@@ -255,8 +260,9 @@ function mob_class:mob_activate(staticdata, def, dtime)
 			}
 		end
 	end
+
 	if self.textures then
-		self.object:set_properties({textures=self.textures})
+		self:set_properties({textures=self.textures})
 	end
 	self:set_yaw( (math.random(0, 360) - 180) / 180 * math.pi, 6)
 	self:update_tag()

@@ -97,7 +97,7 @@ function mcl_mobs.spawn_child(pos, mob_type)
 		textures = ent.child_texture[1]
 	end
 
-	child:set_properties({
+	ent:set_properties({
 		textures = textures,
 		visual_size = {
 			x = ent.base_size.x * .5,
@@ -138,7 +138,7 @@ function mob_class:check_breeding()
 			self.child = false
 			self.hornytimer = 0
 
-			self.object:set_properties({
+			self:set_properties({
 				textures = self.base_texture,
 				mesh = self.base_mesh,
 				visual_size = self.base_size,
@@ -254,7 +254,7 @@ function mob_class:check_breeding()
 					else
 						ent_c.base_texture = parent2.base_texture
 					end
-					child:set_properties({
+					ent_c:set_properties({
 						textures = ent_c.base_texture
 					})
 
