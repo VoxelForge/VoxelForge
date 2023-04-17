@@ -131,8 +131,8 @@ cat.sounds = {
 }
 cat.on_rightclick = function(self, clicker)
 	if self:feed_tame(clicker, 1, true, false) then return end
-	if mcl_mobs:capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
-	if mcl_mobs:protect(self, clicker) then return end
+	if mcl_mobs.capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
+	if mcl_mobs.protect(self, clicker) then return end
 
 	if self.child then return end
 
@@ -173,7 +173,7 @@ local base_spawn_chance = 5000
 
 -- Spawn ocelot
 --they get the same as the llama because I'm trying to rework so much of this code right now -j4i
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:ocelot",
 "overworld",
 "ground",

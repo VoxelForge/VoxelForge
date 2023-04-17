@@ -171,7 +171,7 @@ table.insert(stray.drops, {
 mcl_mobs.register_mob("mobs_mc:stray", stray)
 
 -- Overworld spawn
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:skeleton",
 "overworld",
 "ground",
@@ -321,7 +321,7 @@ mcl_vars.mg_overworld_max)
 
 
 -- Nether spawn
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:skeleton",
 "nether",
 "ground",
@@ -338,7 +338,7 @@ mcl_vars.mg_nether_max)
 
 -- Stray spawn
 -- TODO: Spawn directly under the sky
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:stray",
 "overworld",
 "ground",

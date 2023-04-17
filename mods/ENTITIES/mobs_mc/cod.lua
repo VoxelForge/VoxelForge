@@ -118,7 +118,7 @@ mcl_mobs.register_mob("mobs_mc:cod", cod)
 
 local water = 0
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:cod",
 "overworld",
 "water",

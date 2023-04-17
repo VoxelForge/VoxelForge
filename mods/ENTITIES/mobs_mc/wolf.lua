@@ -52,7 +52,7 @@ local wolf = {
 	fear_height = 4,
 	follow = { "mcl_mobitems:bone" },
 	on_rightclick = function(self, clicker)
-		-- Try to tame wolf (intentionally does NOT use mcl_mobs:feed_tame)
+		-- Try to tame wolf (intentionally does NOT use mcl_mobs.feed_tame)
 		local tool = clicker:get_wielded_item()
 
 		local dog, ent
@@ -171,9 +171,9 @@ dog.on_rightclick = function(self, clicker)
 
 	if self:feed_tame(clicker, 1, true, false) then
 		return
-	elseif mcl_mobs:protect(self, clicker) then
+	elseif mcl_mobs.protect(self, clicker) then
 		return
-	elseif item:get_name() ~= "" and mcl_mobs:capture_mob(self, clicker, 0, 2, 80, false, nil) then
+	elseif item:get_name() ~= "" and mcl_mobs.capture_mob(self, clicker, 0, 2, 80, false, nil) then
 		return
 	elseif minetest.get_item_group(item:get_name(), "dye") == 1 then
 		-- Dye (if possible)
@@ -208,7 +208,7 @@ end
 
 mcl_mobs.register_mob("mobs_mc:dog", dog)
 -- Spawn
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:wolf",
 "overworld",
 "ground",

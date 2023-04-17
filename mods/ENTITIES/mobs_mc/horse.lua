@@ -356,7 +356,7 @@ local horse = {
 			return
 		end
 
-		if mcl_mobs:protect(self, clicker) then
+		if mcl_mobs.protect(self, clicker) then
 			return
 		end
 
@@ -434,14 +434,14 @@ local horse = {
 
 			-- Used to capture horse
 			elseif not self.driver and iname ~= "" then
-				mcl_mobs:capture_mob(self, clicker, 0, 5, 60, false, nil)
+				mcl_mobs.capture_mob(self, clicker, 0, 5, 60, false, nil)
 			end
 		end
 	end,
 
 	on_breed = function(parent1, parent2)
 		local pos = parent1.object:get_pos()
-		local child = mcl_mobs:spawn_child(pos, parent1.name)
+		local child = mcl_mobs.spawn_child(pos, parent1.name)
 		if child then
 			local ent_c = child:get_luaentity()
 			local p = math.random(1, 2)
@@ -594,7 +594,7 @@ mcl_entity_invs.register_inv("mobs_mc:mule","Mule",15,true)
 
 --===========================
 --Spawn Function
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:horse",
 "overworld",
 "ground",
@@ -617,7 +617,7 @@ minetest.LIGHT_MAX+1,
 mobs_mc.water_level+3,
 mcl_vars.mg_overworld_max)
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:donkey",
 "overworld",
 "ground",

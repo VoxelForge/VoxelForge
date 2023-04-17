@@ -253,7 +253,7 @@ end
 
 -- global functions
 
-function mcl_mobs:spawn_abm_check(pos, node, name)
+function mcl_mobs.spawn_abm_check(pos, node, name)
 	-- global function to add additional spawn checks
 	-- return true to stop spawning mob
 end
@@ -289,7 +289,7 @@ WARNING: BIOME INTEGRATION NEEDED -> How to get biome through lua??
 local spawn_dictionary = {}
 local summary_chance = 0
 
-function mcl_mobs:spawn_setup(def)
+function mcl_mobs.spawn_setup(def)
 	if not mobs_spawn then return end
 
 	if not def then
@@ -352,7 +352,7 @@ function mcl_mobs:spawn_setup(def)
 	summary_chance = summary_chance + chance
 end
 
-function mcl_mobs:spawn_specific(name, dimension, type_of_spawning, biomes, min_light, max_light, interval, chance, aoc, min_height, max_height, day_toggle, on_spawn)
+function mcl_mobs.spawn_specific(name, dimension, type_of_spawning, biomes, min_light, max_light, interval, chance, aoc, min_height, max_height, day_toggle, on_spawn)
 
 	-- Do mobs spawn at all?
 	if not mobs_spawn then

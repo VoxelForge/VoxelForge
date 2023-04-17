@@ -97,7 +97,7 @@ mcl_mobs.register_mob("mobs_mc:dolphin", dolphin)
 
 --spawning TO DO: in schools
 local water = 0
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:dolphin",
 "overworld",
 "water",

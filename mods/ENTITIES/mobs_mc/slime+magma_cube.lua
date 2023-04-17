@@ -158,7 +158,7 @@ mcl_mobs.register_mob("mobs_mc:slime_tiny", slime_tiny)
 local smin = mcl_vars.mg_overworld_min
 local smax = mobs_mc.water_level - 23
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:slime_tiny",
 "overworld",
 "ground",
@@ -202,7 +202,7 @@ minetest.LIGHT_MAX+1,
 smin,
 smax)
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:slime_small",
 "overworld",
 "ground",
@@ -246,7 +246,7 @@ minetest.LIGHT_MAX+1,
 smin,
 smax)
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:slime_big",
 "overworld",
 "ground",
@@ -399,7 +399,7 @@ mcl_mobs.register_mob("mobs_mc:magma_cube_tiny", magma_cube_tiny)
 local mmin = mcl_vars.mg_nether_min
 local mmax = mcl_vars.mg_nether_max
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:magma_cube_tiny",
 "nether",
 "ground",
@@ -416,7 +416,7 @@ mmin,
 mmax)
 
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:magma_cube_small",
 "nether",
 "ground",
@@ -432,7 +432,7 @@ minetest.LIGHT_MAX+1,
 mmin,
 mmax)
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:magma_cube_big",
 "nether",
 "ground",

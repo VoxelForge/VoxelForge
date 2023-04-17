@@ -631,7 +631,7 @@ mcl_mobs.register_mob("mobs_mc:enderman", {
 })
 
 -- End spawn
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:enderman",
 "end",
 "ground",
@@ -651,7 +651,7 @@ minetest.LIGHT_MAX+1,
 mcl_vars.mg_end_min,
 mcl_vars.mg_end_max)
 -- Overworld spawn
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:enderman",
 "overworld",
 "ground",
@@ -800,7 +800,7 @@ mcl_vars.mg_overworld_min,
 mcl_vars.mg_overworld_max)
 
 -- Nether spawn (rare)
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:enderman",
 "nether",
 "ground",
@@ -817,7 +817,7 @@ mcl_vars.mg_nether_min,
 mcl_vars.mg_nether_max)
 
 -- Warped Forest spawn (common)
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:enderman",
 "nether",
 "ground",

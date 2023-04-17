@@ -84,8 +84,8 @@ local rabbit = {
 	on_rightclick = function(self, clicker)
 		-- Feed, tame protect or capture
 		if self:feed_tame(clicker, 1, true, false) then return end
-		if mcl_mobs:protect(self, clicker) then return end
-		if mcl_mobs:capture_mob(self, clicker, 0, 50, 80, false, nil) then return end
+		if mcl_mobs.protect(self, clicker) then return end
+		if mcl_mobs.capture_mob(self, clicker, 0, 50, 80, false, nil) then return end
 	end,
 	do_custom = function(self)
 		-- Easter egg: Change texture if rabbit is named “Toast”
@@ -133,7 +133,7 @@ mcl_mobs.register_mob("mobs_mc:killer_bunny", killer_bunny)
 -- Mob spawning rules.
 -- Different skins depending on spawn location <- we'll get to this when the spawning algorithm is fleshed out
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:rabbit",
 "overworld",
 "ground",

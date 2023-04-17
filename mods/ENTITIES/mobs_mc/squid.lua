@@ -63,7 +63,7 @@ mcl_mobs.register_mob("mobs_mc:squid", {
 
 local water = mobs_mc.water_level
 --name, nodes, neighbours, minlight, maxlight, interval, chance, active_object_count, min_height, max_height
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:squid",
 "overworld",
 "water",

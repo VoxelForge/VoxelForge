@@ -144,7 +144,7 @@ cave_spider.sounds.base_pitch = 1.25
 mcl_mobs.register_mob("mobs_mc:cave_spider", cave_spider)
 
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:spider",
 "overworld",
 "ground",

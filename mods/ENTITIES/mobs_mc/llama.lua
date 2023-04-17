@@ -175,7 +175,7 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 			-- Feed with anything else
 			if self:feed_tame(clicker, 1, false, true) then return end
 		end
-		if mcl_mobs:protect(self, clicker) then return end
+		if mcl_mobs.protect(self, clicker) then return end
 
 		-- Make sure tamed llama is mature and being clicked by owner only
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
@@ -221,7 +221,7 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 		else
 			parent = parent2
 		end
-		child = mcl_mobs:spawn_child(pos, parent.name)
+		child = mcl_mobs.spawn_child(pos, parent.name)
 		if child then
 			local ent_c = child:get_luaentity()
 			ent_c.base_texture = table.copy(ent_c.base_texture)
@@ -274,7 +274,7 @@ mcl_mobs.register_arrow("mobs_mc:llamaspit", {
 })
 
 --spawn
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:llama",
 "overworld",
 "ground",

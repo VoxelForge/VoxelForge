@@ -262,7 +262,7 @@ mcl_mobs.register_mob("mobs_mc:creeper_charged", {
 	glow = 3,
 })
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:creeper",
 "overworld",
 "ground",

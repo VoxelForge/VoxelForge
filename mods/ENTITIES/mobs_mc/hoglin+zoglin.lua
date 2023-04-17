@@ -117,7 +117,7 @@ baby_hoglin.child = 1
 mcl_mobs.register_mob("mobs_mc:baby_hoglin", baby_hoglin)
 
 -- Regular spawning in the Nether
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:hoglin",
 "nether",
 "ground",

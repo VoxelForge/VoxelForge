@@ -66,7 +66,7 @@ else
 end
 
 -- Spawn on solid blocks at or below Sea level and the selected light level
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:bat",
 "overworld",
 "ground",

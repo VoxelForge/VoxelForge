@@ -110,7 +110,7 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 		if wielditem:get_name() ~= "mcl_mobitems:carrot_on_a_stick" then
 			if self:feed_tame(clicker, 1, true, false) then return end
 		end
-		if mcl_mobs:protect(self, clicker) then return end
+		if mcl_mobs.protect(self, clicker) then return end
 
 		if self.child then
 			return
@@ -180,13 +180,13 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 
 		-- Capture pig
 		elseif not self.driver and clicker:get_wielded_item():get_name() ~= "" then
-			mcl_mobs:capture_mob(self, clicker, 0, 5, 60, false, nil)
+			mcl_mobs.capture_mob(self, clicker, 0, 5, 60, false, nil)
 		end
 	end,
 
 	on_breed = function(parent1, parent2)
 		local pos = parent1.object:get_pos()
-		local child = mcl_mobs:spawn_child(pos, parent1.name)
+		local child = mcl_mobs.spawn_child(pos, parent1.name)
 		if child then
 			local ent_c = child:get_luaentity()
 			ent_c.tamed = true
@@ -196,7 +196,7 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 	end,
 })
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:pig",
 "overworld",
 "ground",

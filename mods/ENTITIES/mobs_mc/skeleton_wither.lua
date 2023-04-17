@@ -100,7 +100,7 @@ mcl_mobs.register_mob("mobs_mc:witherskeleton", {
 
 --spawn
 --[[]
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:witherskeleton",
 "nether",
 "ground",

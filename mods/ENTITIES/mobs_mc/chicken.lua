@@ -84,8 +84,8 @@ mcl_mobs.register_mob("mobs_mc:chicken", {
 
 	on_rightclick = function(self, clicker)
 		if self:feed_tame(clicker, 1, true, false) then return end
-		if mcl_mobs:protect(self, clicker) then return end
-		if mcl_mobs:capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
+		if mcl_mobs.protect(self, clicker) then return end
+		if mcl_mobs.capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
 	end,
 
 	do_custom = function(self, dtime)
@@ -115,7 +115,7 @@ mcl_mobs.register_mob("mobs_mc:chicken", {
 })
 
 --spawn
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:chicken",
 "overworld",
 "ground",

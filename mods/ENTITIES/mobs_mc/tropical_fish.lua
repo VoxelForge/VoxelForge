@@ -121,7 +121,7 @@ local tropical_fish = {
 mcl_mobs.register_mob("mobs_mc:tropical_fish", tropical_fish)
 
 local water = 0
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:tropical_fish",
 "overworld",
 "water",

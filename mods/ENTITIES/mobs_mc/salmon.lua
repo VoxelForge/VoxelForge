@@ -72,7 +72,7 @@ mcl_mobs.register_mob("mobs_mc:salmon", salmon)
 
 --spawning TODO: in schools
 local water = 0
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:salmon",
 "overworld",
 "water",

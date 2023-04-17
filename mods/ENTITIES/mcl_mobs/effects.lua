@@ -269,7 +269,7 @@ function mob_class:set_animation(anim, fixed_frame)
 end
 
 -- above function exported for mount.lua
-function mcl_mobs:set_animation(self, anim)
+function mcl_mobs.set_animation(self, anim)
 	self:set_animation(anim)
 end
 

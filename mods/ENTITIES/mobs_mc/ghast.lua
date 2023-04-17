@@ -85,7 +85,7 @@ mcl_mobs.register_mob("mobs_mc:ghast", {
 })
 
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:ghast",
 "nether",
 "ground",

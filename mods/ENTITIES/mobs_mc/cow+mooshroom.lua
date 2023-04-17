@@ -60,7 +60,7 @@ local cow_def = {
 	},
 	on_rightclick = function(self, clicker)
 		if self:feed_tame(clicker, 1, true, false) then return end
-		if mcl_mobs:protect(self, clicker) then return end
+		if mcl_mobs.protect(self, clicker) then return end
 
 		if self.child then
 			return
@@ -81,7 +81,7 @@ local cow_def = {
 			end
 			return
 		end
-		mcl_mobs:capture_mob(self, clicker, 0, 5, 60, false, nil)
+		mcl_mobs.capture_mob(self, clicker, 0, 5, 60, false, nil)
 	end,
 	follow = "mcl_farming:wheat_item",
 	view_range = 10,
@@ -98,7 +98,7 @@ mooshroom_def.spawn_in_group = 8
 mooshroom_def.textures = { {"mobs_mc_mooshroom.png", "mobs_mc_mushroom_red.png"}, {"mobs_mc_mooshroom_brown.png", "mobs_mc_mushroom_brown.png" } }
 mooshroom_def.on_rightclick = function(self, clicker)
 	if self:feed_tame(clicker, 1, true, false) then return end
-	if mcl_mobs:protect(self, clicker) then return end
+	if mcl_mobs.protect(self, clicker) then return end
 
 	if self.child then
 		return
@@ -153,7 +153,7 @@ mooshroom_def.on_rightclick = function(self, clicker)
 			minetest.add_item(pos, {name = "mcl_mushrooms:mushroom_stew"})
 		end
 	end
-	mcl_mobs:capture_mob(self, clicker, 0, 5, 60, false, nil)
+	mcl_mobs.capture_mob(self, clicker, 0, 5, 60, false, nil)
 end
 
 mooshroom_def.on_lightning_strike = function(self, pos, pos2, objects)
@@ -169,7 +169,7 @@ mcl_mobs.register_mob("mobs_mc:mooshroom", mooshroom_def)
 
 
 -- Spawning
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:cow",
 "overworld",
 "ground",
@@ -216,7 +216,7 @@ mcl_vars.mg_overworld_max)
 
 
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:mooshroom",
 "overworld",
 "ground",

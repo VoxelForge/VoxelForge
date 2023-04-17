@@ -159,7 +159,7 @@ mcl_mobs.register_mob("mobs_mc:baby_husk", baby_husk)
 
 -- Spawning
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:zombie",
 "overworld",
 "ground",
@@ -248,7 +248,7 @@ mcl_mobs:spawn_specific(
 mcl_vars.mg_overworld_min,
 mcl_vars.mg_overworld_max)
 -- Baby zombie is 20 times less likely than regular zombies
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:baby_zombie",
 "overworld",
 "ground",
@@ -338,7 +338,7 @@ mcl_vars.mg_overworld_min,
 mcl_vars.mg_overworld_max)
 
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:husk",
 "overworld",
 "ground",
@@ -352,7 +352,7 @@ mcl_mobs:spawn_specific(
 4,
 mcl_vars.mg_overworld_min,
 mcl_vars.mg_overworld_max)
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:baby_husk",
 "overworld",
 "ground",

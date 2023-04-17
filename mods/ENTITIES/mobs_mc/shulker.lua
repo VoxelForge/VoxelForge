@@ -79,7 +79,7 @@ mcl_mobs.register_mob("mobs_mc:shulker", {
 		local pos = self.object:get_pos()
 		if math.floor(self.object:get_yaw()) ~=0 then
 			self.object:set_yaw(0)
-			mcl_mobs:yaw(self, 0, 0, dtime)
+			mcl_mobs.yaw(self, 0, 0, dtime)
 		end
 		if self.state == "walk" or self.state == "stand" then
 			self.state = "stand"
@@ -180,7 +180,7 @@ mcl_mobs.register_arrow("mobs_mc:shulkerbullet", {
 mcl_mobs.register_egg("mobs_mc:shulker", S("Shulker"), "#946694", "#4d3852", 0)
 
 --[[
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:shulker",
 "end",
 "ground",

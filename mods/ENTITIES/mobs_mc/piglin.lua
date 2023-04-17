@@ -286,7 +286,7 @@ mcl_mobs.register_mob("mobs_mc:piglin_brute", piglin_brute)
 
 
 -- Regular spawning in the Nether
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:piglin",
 "nether",
 "ground",
@@ -302,7 +302,7 @@ minetest.LIGHT_MAX+1,
 mcl_vars.mg_lava_nether_max,
 mcl_vars.mg_nether_max)
 
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:sword_piglin",
 "nether",
 "ground",

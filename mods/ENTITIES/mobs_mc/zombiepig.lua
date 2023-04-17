@@ -116,7 +116,7 @@ baby_pigman.child = 1
 mcl_mobs.register_mob("mobs_mc:baby_pigman", baby_pigman)
 
 -- Regular spawning in the Nether
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:pigman",
 "nether",
 "ground",
@@ -132,7 +132,7 @@ minetest.LIGHT_MAX+1,
 mcl_vars.mg_nether_min,
 mcl_vars.mg_nether_max)
 -- Baby zombie is 20 times less likely than regular zombies
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:baby_pigman",
 "nether",
 "ground",

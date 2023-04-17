@@ -2153,7 +2153,7 @@ mcl_mobs.register_mob("mobs_mc:villager", {
 
 --[[
 Villager spawning in mcl_villages
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:villager",
 "overworld",
 "ground",

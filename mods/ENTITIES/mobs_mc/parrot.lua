@@ -222,7 +222,7 @@ mcl_mobs.register_mob("mobs_mc:parrot", {
 })
 
 -- Parrots spawn rarely in jungles. TODO: Also check for jungle *biome* <- I'll get to this eventually -j4i
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:parrot",
 "overworld",
 "ground",

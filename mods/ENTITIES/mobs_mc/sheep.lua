@@ -206,7 +206,7 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 		local item = clicker:get_wielded_item()
 
 		if self:feed_tame(clicker, 1, true, false) then return end
-		if mcl_mobs:protect(self, clicker) then return end
+		if mcl_mobs.protect(self, clicker) then return end
 
 		if item:get_name() == "mcl_tools:shears" and not self.gotten and not self.child then
 			self.gotten = true
@@ -262,12 +262,12 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 			end
 			return
 		end
-		if mcl_mobs:capture_mob(self, clicker, 0, 5, 70, false, nil) then return end
+		if mcl_mobs.capture_mob(self, clicker, 0, 5, 70, false, nil) then return end
 	end,
 	on_breed = function(parent1, parent2)
 		-- Breed sheep and choose a fur color for the child.
 		local pos = parent1.object:get_pos()
-		local child = mcl_mobs:spawn_child(pos, parent1.name)
+		local child = mcl_mobs.spawn_child(pos, parent1.name)
 		if child then
 			local ent_c = child:get_luaentity()
 			local color1 = parent1.color
@@ -314,7 +314,7 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 		end
 	end,
 })
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 "mobs_mc:sheep",
 "overworld",
 "ground",

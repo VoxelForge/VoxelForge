@@ -89,7 +89,7 @@ mcl_mobs.register_mob("mobs_mc:glow_squid", {
 -- spawning
 local water = mobs_mc.water_level - 1
 -- local water = mobs_mc.spawn_height.water + 1
-mcl_mobs:spawn_specific(
+mcl_mobs.spawn_specific(
 		"mobs_mc:glow_squid",
 		"overworld",
 		"water",

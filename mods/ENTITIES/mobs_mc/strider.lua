@@ -212,7 +212,7 @@ mcl_mobs.register_mob("mobs_mc:baby_strider", baby_strider)
 
 -- Regular spawning in the Nether
 
-mcl_mobs:spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:strider",
 	type_of_spawning = "lava",
 	dimension = "nether",
@@ -228,7 +228,7 @@ mcl_mobs:spawn_setup({
 	chance = 2000,
 })
 
-mcl_mobs:spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:baby_strider",
 	type_of_spawning = "lava",
 	dimension = "nether",
