@@ -3,9 +3,6 @@
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local math = math
-local table = table
-
 --- Plant parts ---
 
 local MAX_FLOWER_AGE = 5 -- Maximum age of chorus flower before it dies

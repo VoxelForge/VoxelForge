@@ -1,5 +1,3 @@
-local vector = vector
-
 function mcl_minecarts:get_sign(z)
 	if z == 0 then
 		return 0

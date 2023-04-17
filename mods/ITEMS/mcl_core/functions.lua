@@ -6,9 +6,6 @@ local modpath = minetest.get_modpath(minetest.get_current_modname())
 
 local mg_name = minetest.get_mapgen_setting("mg_name")
 
-local math = math
-local vector = vector
-
 local OAK_TREE_ID = 1
 local DARK_OAK_TREE_ID = 2
 local SPRUCE_TREE_ID = 3

@@ -5,22 +5,6 @@ mcl_playerplus = {
 
 local hud_water = {}
 
-local get_connected_players = minetest.get_connected_players
-local dir_to_yaw = minetest.dir_to_yaw
-local get_item_group = minetest.get_item_group
-local check_player_privs = minetest.check_player_privs
-local find_node_near = minetest.find_node_near
-local get_name_from_content_id = minetest.get_name_from_content_id
-local get_voxel_manip = minetest.get_voxel_manip
-local add_particle = minetest.add_particle
-local add_particlespawner = minetest.add_particlespawner
-
-local is_sprinting = mcl_sprint.is_sprinting
-local exhaust = mcl_hunger.exhaust
-local playerphysics = playerphysics
-
-local vector = vector
-local math = math
 -- Internal player state
 local mcl_playerplus_internal = {}
 
@@ -30,7 +14,7 @@ local look_pitch = 0
 
 local function calculate_water_depth(pos)
 	for i=1, 50 do
-		if get_item_group(minetest.get_node(vector.new(pos.x,pos.y+i,pos.z)).name, "water") == 0 then
+		if minetest.get_item_group(minetest.get_node(vector.new(pos.x,pos.y+i,pos.z)).name, "water") == 0 then
 			return i
 		end
 	end
@@ -143,9 +127,6 @@ end
 local node_stand, node_stand_below, node_head, node_feet, node_head_top
 local is_swimming
 
-local set_bone_pos = mcl_util.set_bone_position
-local set_properties = mcl_util.set_properties
-
 local function get_overall_velocity(vector)
 	local v = math.sqrt(vector.x^2 + vector.y^2 + vector.z^2)
 	return v
@@ -197,7 +178,7 @@ minetest.register_globalstep(function(dtime)
 
 	time = time + dtime
 
-	for _,player in pairs(get_connected_players()) do
+	for _,player in pairs(minetest.get_connected_players()) do
 
 		--[[
 
@@ -228,7 +209,7 @@ minetest.register_globalstep(function(dtime)
 		local pitch = - degrees(player:get_look_vertical())
 		local yaw = degrees(player:get_look_horizontal())
 
-		local player_vel_yaw = degrees(dir_to_yaw(player_velocity))
+		local player_vel_yaw = degrees(minetest.dir_to_yaw(player_velocity))
 		if player_vel_yaw == 0 then
 			player_vel_yaw = player_vel_yaws[name] or yaw
 		end
@@ -287,7 +268,7 @@ minetest.register_globalstep(function(dtime)
 				if vector.length(player_velocity) < 40 then
 					-- player:add_velocity(vector.multiply(player:get_look_dir(), 4))
 					speed_mult = elytra_vars.rocket_speed
-					add_particle({
+					minetest.add_particle({
 						pos = fly_pos,
 						velocity = {x = 0, y = 0, z = 0},
 						acceleration = {x = 0, y = 0, z = 0},
@@ -320,104 +301,104 @@ minetest.register_globalstep(function(dtime)
 		end
 
 		if wielded_def and wielded_def._mcl_toollike_wield then
-			set_bone_pos(player, "Wield_Item", vector.new(0, 4.7, 3.1), vector.new(-90, 225, 90))
+			mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 4.7, 3.1), vector.new(-90, 225, 90))
 		elseif string.find(wielded:get_name(), "mcl_bows:bow") then
-			set_bone_pos(player, "Wield_Item", vector.new(1, 4, 0), vector.new(90, 130, 115))
+			mcl_util.set_bone_position(player, "Wield_Item", vector.new(1, 4, 0), vector.new(90, 130, 115))
 		elseif string.find(wielded:get_name(), "mcl_bows:crossbow_loaded") then
-			set_bone_pos(player, "Wield_Item", vector.new(0, 5.2, 1.2), vector.new(0, 180, 73))
+			mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 5.2, 1.2), vector.new(0, 180, 73))
 		elseif string.find(wielded:get_name(), "mcl_bows:crossbow") then
-			set_bone_pos(player, "Wield_Item", vector.new(0, 5.2, 1.2), vector.new(0, 180, 45))
+			mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 5.2, 1.2), vector.new(0, 180, 45))
 		elseif wielded_def.inventory_image == "" then
-			set_bone_pos(player,"Wield_Item", vector.new(0, 6, 2), vector.new(180, -45, 0))
+			mcl_util.set_bone_position(player,"Wield_Item", vector.new(0, 6, 2), vector.new(180, -45, 0))
 		else
-			set_bone_pos(player, "Wield_Item", vector.new(0, 5.3, 2), vector.new(90, 0, 0))
+			mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 5.3, 2), vector.new(90, 0, 0))
 		end
 
 		-- controls right and left arms pitch when shooting a bow or blocking
 		if mcl_shields.is_blocking(player) == 2 then
-			set_bone_pos(player, "Arm_Right_Pitch_Control", nil, vector.new(20, -20, 0))
+			mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.new(20, -20, 0))
 		elseif mcl_shields.is_blocking(player) == 1 then
-			set_bone_pos(player, "Arm_Left_Pitch_Control", nil, vector.new(20, 20, 0))
+			mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.new(20, 20, 0))
 		elseif string.find(wielded:get_name(), "mcl_bows:bow") and control.RMB then
 			local right_arm_rot = vector.new(pitch + 90, -30, pitch * -1 * .35)
 			local left_arm_rot = vector.new(pitch + 90, 43, pitch * .35)
-			set_bone_pos(player, "Arm_Right_Pitch_Control", nil, right_arm_rot)
-			set_bone_pos(player, "Arm_Left_Pitch_Control", nil, left_arm_rot)
+			mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, right_arm_rot)
+			mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, left_arm_rot)
 		-- controls right and left arms pitch when holing a loaded crossbow
 		elseif string.find(wielded:get_name(), "mcl_bows:crossbow_loaded") then
 			local right_arm_rot = vector.new(pitch + 90, -30, pitch * -1 * .35)
 			local left_arm_rot = vector.new(pitch + 90, 43, pitch * .35)
-			set_bone_pos(player, "Arm_Right_Pitch_Control", nil, right_arm_rot)
-			set_bone_pos(player, "Arm_Left_Pitch_Control", nil, left_arm_rot)
+			mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, right_arm_rot)
+			mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, left_arm_rot)
 		-- controls right and left arms pitch when loading a crossbow
 		elseif string.find(wielded:get_name(), "mcl_bows:crossbow_") then
-			set_bone_pos(player, "Arm_Right_Pitch_Control", nil, vector.new(45, -20, 25))
-			set_bone_pos(player, "Arm_Left_Pitch_Control", nil, vector.new(55, 20, -45))
+			mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.new(45, -20, 25))
+			mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.new(55, 20, -45))
 		-- when punching
 		elseif control.LMB and not parent then
-			set_bone_pos(player,"Arm_Right_Pitch_Control", nil, vector.new(pitch, 0, 0))
-			set_bone_pos(player,"Arm_Left_Pitch_Control", nil, vector.zero())
+			mcl_util.set_bone_position(player,"Arm_Right_Pitch_Control", nil, vector.new(pitch, 0, 0))
+			mcl_util.set_bone_position(player,"Arm_Left_Pitch_Control", nil, vector.zero())
 		-- when holding an item.
 		elseif wielded:get_name() ~= "" then
-			set_bone_pos(player, "Arm_Right_Pitch_Control", nil, vector.new(20, 0, 0))
-			set_bone_pos(player, "Arm_Left_Pitch_Control", nil, vector.zero())
+			mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.new(20, 0, 0))
+			mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.zero())
 		-- resets arms pitch
 		else
-			set_bone_pos(player, "Arm_Left_Pitch_Control", nil, vector.zero())
-			set_bone_pos(player, "Arm_Right_Pitch_Control", nil, vector.zero())
+			mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.zero())
+			mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.zero())
 		end
 
 		if elytra.active then
 			-- set head pitch and yaw when flying
 			local head_rot = vector.new(pitch - degrees(dir_to_pitch(player_velocity)) + 50, player_vel_yaw - yaw, 0)
-			set_bone_pos(player,"Head_Control", nil, head_rot)
+			mcl_util.set_bone_position(player,"Head_Control", nil, head_rot)
 
 			-- sets eye height, and nametag color accordingly
-			set_properties(player, player_props_elytra)
+			mcl_util.set_properties(player, player_props_elytra)
 
 			-- control body bone when flying
 			local body_rot = vector.new((75 - degrees(dir_to_pitch(player_velocity))), -player_vel_yaw + yaw, 0)
-			set_bone_pos(player, "Body_Control", nil, body_rot)
+			mcl_util.set_bone_position(player, "Body_Control", nil, body_rot)
 		elseif parent then
-			set_properties(player, player_props_riding)
+			mcl_util.set_properties(player, player_props_riding)
 
 			local parent_yaw = degrees(parent:get_yaw())
 			local head_rot = vector.new(pitch, -limit_vel_yaw(yaw, parent_yaw) + parent_yaw, 0)
-			set_bone_pos(player, "Head_Control", nil, head_rot)
-			set_bone_pos(player,"Body_Control", nil, vector.zero())
+			mcl_util.set_bone_position(player, "Head_Control", nil, head_rot)
+			mcl_util.set_bone_position(player,"Body_Control", nil, vector.zero())
 		elseif control.sneak then
 			-- controls head pitch when sneaking
 			local head_rot = vector.new(pitch, player_vel_yaw - yaw, player_vel_yaw - yaw)
-			set_bone_pos(player, "Head_Control", nil, head_rot)
+			mcl_util.set_bone_position(player, "Head_Control", nil, head_rot)
 
 			-- sets eye height, and nametag color accordingly
-			set_properties(player, player_props_sneaking)
+			mcl_util.set_properties(player, player_props_sneaking)
 
 			-- sneaking body conrols
-			set_bone_pos(player, "Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
-		elseif get_item_group(mcl_playerinfo[name].node_head, "water") ~= 0 and is_sprinting(name) == true then
+			mcl_util.set_bone_position(player, "Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
+		elseif minetest.get_item_group(mcl_playerinfo[name].node_head, "water") ~= 0 and mcl_sprint.is_sprinting(name) == true then
 			-- set head pitch and yaw when swimming
 			is_swimming = true
 			local head_rot = vector.new(pitch - degrees(dir_to_pitch(player_velocity)) + 20, player_vel_yaw - yaw, 0)
-			set_bone_pos(player, "Head_Control", nil, head_rot)
+			mcl_util.set_bone_position(player, "Head_Control", nil, head_rot)
 
 			-- sets eye height, and nametag color accordingly
-			set_properties(player, player_props_swimming)
+			mcl_util.set_properties(player, player_props_swimming)
 
 			-- control body bone when swimming
 			local body_rot = vector.new((75 + degrees(dir_to_pitch(player_velocity))), player_vel_yaw - yaw, 180)
-			set_bone_pos(player,"Body_Control", nil, body_rot)
-		elseif get_item_group(mcl_playerinfo[name].node_head, "solid") == 0
-		and get_item_group(mcl_playerinfo[name].node_head_top, "solid") == 0 then
+			mcl_util.set_bone_position(player,"Body_Control", nil, body_rot)
+		elseif minetest.get_item_group(mcl_playerinfo[name].node_head, "solid") == 0
+		and minetest.get_item_group(mcl_playerinfo[name].node_head_top, "solid") == 0 then
 			-- sets eye height, and nametag color accordingly
 			is_swimming = false
-			set_properties(player, player_props_normal)
+			mcl_util.set_properties(player, player_props_normal)
 
-			set_bone_pos(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
-			set_bone_pos(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
+			mcl_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
+			mcl_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 		end
 
-		if get_item_group(mcl_playerinfo[name].node_head, "water") ~= 0 then
+		if minetest.get_item_group(mcl_playerinfo[name].node_head, "water") ~= 0 then
 			if not hud_water[player] or hud_water[player] and calculate_water_depth(player:get_pos()) ~= #hud_water[player] then
 				remove_water_hud(player)
 				hud_water[player] = {}
@@ -477,18 +458,18 @@ minetest.register_globalstep(function(dtime)
 			as of 0.4.15.
 			]]
 
-			if get_item_group(node_feet, "liquid") == 0 and
-					get_item_group(node_stand, "liquid") == 0 and
+			if minetest.get_item_group(node_feet, "liquid") == 0 and
+					minetest.get_item_group(node_stand, "liquid") == 0 and
 					not minetest.registered_nodes[node_feet].climbable and
 					not minetest.registered_nodes[node_stand].climbable and
 					(minetest.registered_nodes[node_stand].walkable or minetest.registered_nodes[node_stand_below].walkable)
-					and get_item_group(node_stand, "disable_jump") == 0
-					and get_item_group(node_stand_below, "disable_jump") == 0 then
+					and minetest.get_item_group(node_stand, "disable_jump") == 0
+					and minetest.get_item_group(node_stand_below, "disable_jump") == 0 then
 			-- Cause exhaustion for jumping
-			if is_sprinting(name) then
-				exhaust(name, mcl_hunger.EXHAUST_SPRINT_JUMP)
+			if mcl_sprint.is_sprinting(name) then
+				mcl_hunger.exhaust(name, mcl_hunger.EXHAUST_SPRINT_JUMP)
 			else
-				exhaust(name, mcl_hunger.EXHAUST_JUMP)
+				mcl_hunger.exhaust(name, mcl_hunger.EXHAUST_JUMP)
 			end
 
 			-- Reset cooldown timer
@@ -507,7 +488,7 @@ minetest.register_globalstep(function(dtime)
 	time = 0
 
 	-- check players
-	for _,player in pairs(get_connected_players()) do
+	for _,player in pairs(minetest.get_connected_players()) do
 		-- who am I?
 		local name = player:get_player_name()
 
@@ -540,7 +521,7 @@ minetest.register_globalstep(function(dtime)
 					playerphysics.add_physics_factor(player, "speed", "mcl_playerplus:surface", 0.4)
 				end
 			end
-		elseif get_item_group(node_feet, "liquid") ~= 0 and mcl_enchanting.get_enchantment(player:get_inventory():get_stack("armor", 5), "depth_strider") then
+		elseif minetest.get_item_group(node_feet, "liquid") ~= 0 and mcl_enchanting.get_enchantment(player:get_inventory():get_stack("armor", 5), "depth_strider") then
 			local boots = player:get_inventory():get_stack("armor", 5)
 			local depth_strider = mcl_enchanting.get_enchantment(boots, "depth_strider")
 
@@ -565,16 +546,16 @@ minetest.register_globalstep(function(dtime)
 		and (ndef.groups.opaque == 1)
 		and (node_head ~= "ignore")
 		-- Check privilege, too
-		and (not check_player_privs(name, {noclip = true})) then
+		and (not minetest.check_player_privs(name, {noclip = true})) then
 			if player:get_hp() > 0 then
 				mcl_util.deal_damage(player, 1, {type = "in_wall"})
 			end
 		end
 
 		-- Am I near a cactus?
-		local near = find_node_near(pos, 1, "mcl_core:cactus")
+		local near = minetest.find_node_near(pos, 1, "mcl_core:cactus")
 		if not near then
-			near = find_node_near({x=pos.x, y=pos.y-1, z=pos.z}, 1, "mcl_core:cactus")
+			near = minetest.find_node_near({x=pos.x, y=pos.y-1, z=pos.z}, 1, "mcl_core:cactus")
 		end
 		if near then
 			-- Am I touching the cactus? If so, it hurts
@@ -590,15 +571,15 @@ minetest.register_globalstep(function(dtime)
 		--[[ Swimming: Cause exhaustion.
 		NOTE: As of 0.4.15, it only counts as swimming when you are with the feet inside the liquid!
 		Head alone does not count. We respect that for now. ]]
-		if not player:get_attach() and (get_item_group(node_feet, "liquid") ~= 0 or
-				get_item_group(node_stand, "liquid") ~= 0) then
+		if not player:get_attach() and (minetest.get_item_group(node_feet, "liquid") ~= 0 or
+				minetest.get_item_group(node_stand, "liquid") ~= 0) then
 			local lastPos = mcl_playerplus_internal[name].lastPos
 			if lastPos then
 				local dist = vector.distance(lastPos, pos)
 				mcl_playerplus_internal[name].swimDistance = mcl_playerplus_internal[name].swimDistance + dist
 				if mcl_playerplus_internal[name].swimDistance >= 1 then
 					local superficial = math.floor(mcl_playerplus_internal[name].swimDistance)
-					exhaust(name, mcl_hunger.EXHAUST_SWIM * superficial)
+					mcl_hunger.exhaust(name, mcl_hunger.EXHAUST_SWIM * superficial)
 					mcl_playerplus_internal[name].swimDistance = mcl_playerplus_internal[name].swimDistance - superficial
 				end
 			end
@@ -606,8 +587,8 @@ minetest.register_globalstep(function(dtime)
 		end
 
 		-- Underwater: Spawn bubble particles
-		if get_item_group(node_head, "water") ~= 0 then
-			add_particlespawner({
+		if minetest.get_item_group(node_head, "water") ~= 0 then
+			minetest.add_particlespawner({
 				amount = 10,
 				time = 0.15,
 				minpos = { x = -0.25, y = 0.3, z = -0.25 },
@@ -630,7 +611,7 @@ minetest.register_globalstep(function(dtime)
 		if wi == "mcl_core:barrier" or wi == "mcl_core:realm_barrier" then
 			local pos = vector.round(player:get_pos())
 			local r = 8
-			local vm = get_voxel_manip()
+			local vm = minetest.get_voxel_manip()
 			local emin, emax = vm:read_from_map({x=pos.x-r, y=pos.y-r, z=pos.z-r}, {x=pos.x+r, y=pos.y+r, z=pos.z+r})
 			local area = VoxelArea:new{
 				MinEdge = emin,
@@ -641,7 +622,7 @@ minetest.register_globalstep(function(dtime)
 			for y=pos.y-r, pos.y+r do
 			for z=pos.z-r, pos.z+r do
 				local vi = area:indexp({x=x, y=y, z=z})
-				local nodename = get_name_from_content_id(data[vi])
+				local nodename = minetest.get_name_from_content_id(data[vi])
 				local tex
 				if nodename == "mcl_core:barrier" then
 					tex = "mcl_core_barrier.png"
@@ -649,7 +630,7 @@ minetest.register_globalstep(function(dtime)
 					tex = "mcl_core_barrier.png^[colorize:#FF00FF:127^[transformFX"
 				end
 				if tex then
-					add_particle({
+					minetest.add_particle({
 						pos = {x=x, y=y, z=z},
 						expirationtime = 1,
 						size = 8,

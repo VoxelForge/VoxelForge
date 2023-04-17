@@ -4,9 +4,6 @@ local modpath = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
 local W = mcl_curry(S)
 
-local math = math
-local table = table
-
 hb = {
     hudtables = {},
     -- number of registered HUD bars

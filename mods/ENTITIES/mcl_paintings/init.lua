@@ -5,8 +5,6 @@ dofile(minetest.get_modpath(modname).."/paintings.lua")
 
 local S = minetest.get_translator(modname)
 
-local math = math
-
 local wood = "[combine:16x16:-192,0=mcl_paintings_paintings.png"
 
 local function is_protected(pos, name)

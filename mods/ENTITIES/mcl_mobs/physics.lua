@@ -235,7 +235,7 @@ function mob_class:update_roll()
 	local was_Fleckenstein = false
 
 	local rot = self.object:get_rotation()
-	rot.z = is_Fleckenstein and pi or 0
+	rot.z = is_Fleckenstein and math.pi or 0
 	self.object:set_rotation(rot)
 
 	local cbox = table.copy(self.collisionbox)

@@ -1,6 +1,3 @@
-local pairs = pairs
-local tonumber = tonumber
-
 tsm_railcorridors = {}
 
 -- Load node names

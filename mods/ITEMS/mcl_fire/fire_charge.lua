@@ -1,8 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local get_node = minetest.get_node
-local add_entity = minetest.add_entity
-
 -- Fire Charge
 minetest.register_craftitem("mcl_fire:fire_charge", {
 	description = S("Fire Charge"),
@@ -27,7 +24,7 @@ minetest.register_craftitem("mcl_fire:fire_charge", {
 		end
 
 		-- Ignite/light fire
-		local node = get_node(pointed_thing.under)
+		local node = minetest.get_node(pointed_thing.under)
 		if pointed_thing.type == "node" then
 			local nodedef = minetest.registered_nodes[node.name]
 			if nodedef and nodedef._on_ignite then
@@ -47,7 +44,7 @@ minetest.register_craftitem("mcl_fire:fire_charge", {
 	_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
 		-- Throw fire charge
 		local shootpos = vector.add(pos, vector.multiply(dropdir, 0.51))
-		local fireball = add_entity(shootpos, "mobs_mc:blaze_fireball")
+		local fireball = minetest.add_entity(shootpos, "mobs_mc:blaze_fireball")
 		if fireball and fireball:get_pos() then
 			local ent = fireball:get_luaentity()
 			ent._shot_from_dispenser = true

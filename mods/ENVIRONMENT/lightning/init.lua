@@ -12,17 +12,6 @@ of the license, or (at your option) any later version.
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local get_connected_players = minetest.get_connected_players
-local line_of_sight = minetest.line_of_sight
-local get_node = minetest.get_node
-local set_node = minetest.set_node
-local sound_play = minetest.sound_play
-local add_particlespawner = minetest.add_particlespawner
-local after = minetest.after
-local add_entity = minetest.add_entity
-local get_objects_inside_radius = minetest.get_objects_inside_radius
-local get_item_group = minetest.get_item_group
-
 lightning = {
 	interval_low = 17,
 	interval_high = 503,
@@ -70,7 +59,7 @@ end
 -- select a random strike point, midpoint
 local function choose_pos(pos)
 	if not pos then
-		local playerlist = get_connected_players()
+		local playerlist = minetest.get_connected_players()
 		local playercount = table.getn(playerlist)
 
 		-- nobody on
@@ -92,14 +81,14 @@ local function choose_pos(pos)
 		pos.z = math.floor(pos.z - (lightning.range_h / 2) + rng:next(1, lightning.range_h))
 	end
 
-	local b, pos2 = line_of_sight(pos, { x = pos.x, y = pos.y - lightning.range_v, z = pos.z }, 1)
+	local b, pos2 = minetest.line_of_sight(pos, { x = pos.x, y = pos.y - lightning.range_v, z = pos.z }, 1)
 
 	-- nothing but air found
 	if b then
 		return nil, nil
 	end
 
-	local n = get_node({ x = pos2.x, y = pos2.y - 1/2, z = pos2.z })
+	local n = minetest.get_node({ x = pos2.x, y = pos2.y - 1/2, z = pos2.z })
 	if n.name == "air" or n.name == "ignore" then
 		return nil, nil
 	end
@@ -111,7 +100,7 @@ function lightning.strike_func(pos, pos2, objects)
 	local particle_pos = vector.offset(pos2, 0, (lightning.size / 2) + 0.5, 0)
 	local particle_size = lightning.size * 10
 	local time = 0.2
-	add_particlespawner({
+	minetest.add_particlespawner({
 		amount = 1,
 		time = time,
 		-- make it hit the top of a block exactly with the bottom
@@ -130,7 +119,7 @@ function lightning.strike_func(pos, pos2, objects)
 		glow = minetest.LIGHT_MAX,
 	})
 
-	sound_play({ name = "lightning_thunder", gain = 10 }, { pos = pos, max_hear_distance = 500 }, true)
+	minetest.sound_play({ name = "lightning_thunder", gain = 10 }, { pos = pos, max_hear_distance = 500 }, true)
 
 	-- damage nearby objects, transform mobs
 	for _, obj in pairs(objects) do
@@ -144,7 +133,7 @@ function lightning.strike_func(pos, pos2, objects)
 		end
 	end
 
-	local playerlist = get_connected_players()
+	local playerlist = minetest.get_connected_players()
 	for i = 1, #playerlist do
 		local player = playerlist[i]
 		local sky = {}
@@ -170,18 +159,18 @@ function lightning.strike_func(pos, pos2, objects)
 	if rng:next(1,100) <= 3 then
 		skeleton_lightning = true
 	end
-	if get_item_group(get_node({ x = pos2.x, y = pos2.y - 1, z = pos2.z }).name, "liquid") < 1 then
-		if get_node(pos2).name == "air" then
+	if minetest.get_item_group(minetest.get_node({ x = pos2.x, y = pos2.y - 1, z = pos2.z }).name, "liquid") < 1 then
+		if minetest.get_node(pos2).name == "air" then
 			-- Low chance for a lightning to spawn skeleton horse + skeletons
 			if skeleton_lightning then
-				add_entity(pos2, "mobs_mc:skeleton_horse")
+				minetest.add_entity(pos2, "mobs_mc:skeleton_horse")
 
 				local angle, posadd
 				angle = math.random(0, math.pi*2)
 				for i=1,3 do
 					posadd = { x=math.cos(angle),y=0,z=math.sin(angle) }
 					posadd = vector.normalize(posadd)
-					local mob = add_entity(vector.add(pos2, posadd), "mobs_mc:skeleton")
+					local mob = minetest.add_entity(vector.add(pos2, posadd), "mobs_mc:skeleton")
 					if mob then
 						mob:set_yaw(angle-math.pi/2)
 					end
@@ -190,7 +179,7 @@ function lightning.strike_func(pos, pos2, objects)
 
 			-- Cause a fire
 			else
-				set_node(pos2, { name = "mcl_fire:fire" })
+				minetest.set_node(pos2, { name = "mcl_fire:fire" })
 			end
 		end
 	end
@@ -200,7 +189,7 @@ end
 -- * returns: bool - success if a strike happened
 function lightning.strike(pos)
 	if lightning.auto then
-		after(rng:next(lightning.interval_low, lightning.interval_high), lightning.strike)
+		minetest.after(rng:next(lightning.interval_low, lightning.interval_high), lightning.strike)
 	end
 
 	local pos2
@@ -213,7 +202,7 @@ function lightning.strike(pos)
 	if lightning.on_strike_functions then
 		for _, func in pairs(lightning.on_strike_functions) do
 			-- allow on_strike callbacks to destroy entities by re-obtaining objects for each callback
-			local objects = get_objects_inside_radius(pos2, 3.5)
+			local objects = minetest.get_objects_inside_radius(pos2, 3.5)
 			local p,stop = func(pos, pos2, objects)
 			if p then
 				pos = p
@@ -223,14 +212,14 @@ function lightning.strike(pos)
 		end
 	end
 	if do_strike then
-		lightning.strike_func(pos,pos2,get_objects_inside_radius(pos2, 3.5))
+		lightning.strike_func(pos,pos2,minetest.get_objects_inside_radius(pos2, 3.5))
 	end
 end
 
 -- if other mods disable auto lightning during initialization, don't trigger the first lightning.
-after(5, function(dtime)
+minetest.after(5, function(dtime)
 	if lightning.auto then
-		after(rng:next(lightning.interval_low,
+		minetest.after(rng:next(lightning.interval_low,
 			lightning.interval_high), lightning.strike)
 	end
 end)

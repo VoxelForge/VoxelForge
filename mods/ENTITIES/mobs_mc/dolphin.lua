@@ -3,7 +3,6 @@
 --made for MC like Survival game
 --License for code WTFPL and otherwise stated in readmes
 
-local pi = math.pi
 local atann = math.atan
 local atan = function(x)
 	if not x or x ~= x then

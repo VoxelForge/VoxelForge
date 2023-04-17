@@ -32,11 +32,6 @@ mcl_title.layout.title = { position = { x = 0.5, y = 0.5 }, alignment = { x = 0,
 mcl_title.layout.subtitle = { position = { x = 0.5, y = 0.5 }, alignment = { x = 0, y = 1.7 }, size = 4 }
 mcl_title.layout.actionbar = { position = { x = 0.5, y = 1 }, alignment = { x = 0, y = 0 }, size = 1 }
 
-local get_color = mcl_util.get_color
-
---local string = string
-local pairs = pairs
-
 ---@param gametick integer
 ---@return number?
 local function gametick_to_secondes(gametick)
@@ -81,7 +76,7 @@ minetest.register_on_joinplayer(function(player)
 		--fadeIn = mcl_title.defaults.fadein,
 		--fadeOut = mcl_title.defaults.fadeout,
 	}
-	local _, hex_color = get_color("white")
+	local _, hex_color = mcl_util.get_color("white")
 	huds_idx.title[player] = player:hud_add({
 		hud_elem_type = "text",
 		position      = mcl_title.layout.title.position,
@@ -158,7 +153,7 @@ function mcl_title.set(player, type, data)
 	if not data.color then
 		data.color = "white"
 	end
-	local _, hex_color = get_color(data.color)
+	local _, hex_color = mcl_util.get_color(data.color)
 	if not hex_color then
 		return false
 	end

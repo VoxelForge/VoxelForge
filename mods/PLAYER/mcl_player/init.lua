@@ -1,5 +1,3 @@
-local sf = string.format
-
 -- Minetest 0.4 mod: player
 -- See README.txt for licensing and other information.
 mcl_player = {}
@@ -21,11 +19,8 @@ end
 
 mcl_player.registered_player_models = { }
 
--- Local for speed.
-local models = mcl_player.registered_player_models
-
 function mcl_player.player_register_model(name, def)
-	models[name] = def
+	mcl_player.registered_player_models[name] = def
 end
 
 -- Default player appearance
@@ -107,7 +102,7 @@ end
 -- Called when a player's appearance needs to be updated
 function mcl_player.player_set_model(player, model_name)
 	local name = player:get_player_name()
-	local model = models[model_name]
+	local model = mcl_player.registered_player_models[model_name]
 	if model then
 		if player_model[name] == model_name then
 			return
@@ -151,7 +146,7 @@ end
 function mcl_player.get_player_formspec_model(player, x, y, w, h, fsname)
 	local name = player:get_player_name()
 	local model = player_model[name]
-	local anim = models[model].animations[player_anim[name]]
+	local anim = mcl_player.registered_player_models[model].animations[player_anim[name]]
 	local textures = table.copy(player_textures[name])
 	if not player_visible[name] then
 		textures[1] = "blank.png"
@@ -159,7 +154,7 @@ function mcl_player.get_player_formspec_model(player, x, y, w, h, fsname)
 	for k,v in pairs(textures) do
 		textures[k] = minetest.formspec_escape(v)
 	end
-	return sf("model[%s,%s;%s,%s;%s;%s;%s;0,180;false;false;%s,%s]", x, y, w, h, fsname, model,
+	return string.format("model[%s,%s;%s,%s;%s;%s;%s;0,180;false;false;%s,%s]", x, y, w, h, fsname, model,
 		table.concat(textures, ","), anim.x, anim.y)
 end
 
@@ -168,7 +163,7 @@ function mcl_player.player_set_animation(player, anim_name, speed)
 	if player_anim[name] == anim_name then
 		return
 	end
-	local model = player_model[name] and models[player_model[name]]
+	local model = player_model[name] and mcl_player.registered_player_models[player_model[name]]
 	if not (model and model.animations[anim_name]) then
 		return
 	end
@@ -197,17 +192,13 @@ minetest.register_on_leaveplayer(function(player)
 	player_visible[name] = nil
 end)
 
--- Localize for better performance.
-local player_set_animation = mcl_player.player_set_animation
-local player_attached = mcl_player.player_attached
-
 -- Check each player and apply animations
 minetest.register_globalstep(function(dtime)
 	for _, player in pairs(minetest.get_connected_players()) do
 		local name = player:get_player_name()
 		local model_name = player_model[name]
-		local model = model_name and models[model_name]
-		if model and not player_attached[name] then
+		local model = model_name and mcl_player.registered_player_models[model_name]
+		if model and not mcl_player.player_attached[name] then
 			local controls = player:get_player_control()
 			local walking = false
 			local animation_speed_mod = model.animation_speed or 30
@@ -235,9 +226,9 @@ minetest.register_globalstep(function(dtime)
 
 			-- Apply animations based on what the player is doing
 			if player:get_hp() == 0 then
-				player_set_animation(player, "die")
+				mcl_player.player_set_animation(player, "die")
 			elseif mcl_playerplus.elytra[player] and mcl_playerplus.elytra[player].active then
-				player_set_animation(player, "stand")
+				mcl_player.player_set_animation(player, "stand")
 			elseif walking and velocity.x > 0.35
 			or walking and velocity.x < -0.35
 			or walking and velocity.z > 0.35
@@ -249,40 +240,40 @@ minetest.register_globalstep(function(dtime)
 					player_sneak[name] = controls.sneak
 				end
 				if get_mouse_button(player) == true and not controls.sneak and head_in_water and is_sprinting == true then
-					player_set_animation(player, "swim_walk_mine", animation_speed_mod)
+					mcl_player.player_set_animation(player, "swim_walk_mine", animation_speed_mod)
 				elseif not controls.sneak and head_in_water and is_sprinting == true then
-					player_set_animation(player, "swim_walk", animation_speed_mod)
+					mcl_player.player_set_animation(player, "swim_walk", animation_speed_mod)
 				elseif no_arm_moving and controls.RMB and controls.sneak or string.find(wielded_itemname, "mcl_bows:crossbow_") and controls.sneak then
-					player_set_animation(player, "bow_sneak", animation_speed_mod)
+					mcl_player.player_set_animation(player, "bow_sneak", animation_speed_mod)
 				elseif no_arm_moving and controls.RMB or string.find(wielded_itemname, "mcl_bows:crossbow_") then
-					player_set_animation(player, "bow_walk", animation_speed_mod)
+					mcl_player.player_set_animation(player, "bow_walk", animation_speed_mod)
 				elseif is_sprinting == true and get_mouse_button(player) == true and not controls.sneak and not head_in_water then
-					player_set_animation(player, "run_walk_mine", animation_speed_mod)
+					mcl_player.player_set_animation(player, "run_walk_mine", animation_speed_mod)
 				elseif get_mouse_button(player) == true and not controls.sneak then
-					player_set_animation(player, "walk_mine", animation_speed_mod)
+					mcl_player.player_set_animation(player, "walk_mine", animation_speed_mod)
 				elseif get_mouse_button(player) == true and controls.sneak and is_sprinting ~= true then
-					player_set_animation(player, "sneak_walk_mine", animation_speed_mod)
+					mcl_player.player_set_animation(player, "sneak_walk_mine", animation_speed_mod)
 				elseif is_sprinting == true and not controls.sneak and not head_in_water then
-					player_set_animation(player, "run_walk", animation_speed_mod)
+					mcl_player.player_set_animation(player, "run_walk", animation_speed_mod)
 				elseif controls.sneak and not get_mouse_button(player) == true then
-					player_set_animation(player, "sneak_walk", animation_speed_mod)
+					mcl_player.player_set_animation(player, "sneak_walk", animation_speed_mod)
 				else
-					player_set_animation(player, "walk", animation_speed_mod)
+					mcl_player.player_set_animation(player, "walk", animation_speed_mod)
 				end
 			elseif get_mouse_button(player) == true and not controls.sneak and head_in_water and is_sprinting == true then
-				player_set_animation(player, "swim_mine")
+				mcl_player.player_set_animation(player, "swim_mine")
 			elseif not get_mouse_button(player) == true and not controls.sneak and head_in_water and is_sprinting == true then
-				player_set_animation(player, "swim_stand")
+				mcl_player.player_set_animation(player, "swim_stand")
 			elseif get_mouse_button(player) == true and not controls.sneak then
-				player_set_animation(player, "mine")
+				mcl_player.player_set_animation(player, "mine")
 			elseif get_mouse_button(player) == true and controls.sneak then
-				player_set_animation(player, "sneak_mine")
+				mcl_player.player_set_animation(player, "sneak_mine")
 			elseif not controls.sneak and head_in_water and is_sprinting == true then
-				player_set_animation(player, "swim_stand", animation_speed_mod)
+				mcl_player.player_set_animation(player, "swim_stand", animation_speed_mod)
 			elseif not controls.sneak then
-				player_set_animation(player, "stand", animation_speed_mod)
+				mcl_player.player_set_animation(player, "stand", animation_speed_mod)
 			else
-				player_set_animation(player, "sneak_stand", animation_speed_mod)
+				mcl_player.player_set_animation(player, "sneak_stand", animation_speed_mod)
 			end
 		end
 	end

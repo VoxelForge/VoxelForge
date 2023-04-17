@@ -1,8 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local math = math
-local table = table
-
 mcl_mobspawners = {}
 
 local default_mob = "mobs_mc:pig"

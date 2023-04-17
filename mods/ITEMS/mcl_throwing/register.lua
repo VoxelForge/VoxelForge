@@ -1,8 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local math = math
-local vector = vector
-
 local mod_target = minetest.get_modpath("mcl_target")
 
 -- The snowball entity

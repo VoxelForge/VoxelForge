@@ -3,7 +3,6 @@
 --made for MC like Survival game
 --License for code WTFPL and otherwise stated in readmes
 
-local pi = math.pi
 local atann = math.atan
 local atan = function(x)
 	if not x or x ~= x then
@@ -97,7 +96,7 @@ local cod = {
 			}
 			if object and not object:is_player() and object:get_luaentity() and object:get_luaentity().name == "mobs_mc:cod" then
 				self.state = "runaway"
-				self.object:set_rotation({x=0,y=(atan(vec.z / vec.x) + 3 * pi / 2) - self.rotate,z=0})
+				self.object:set_rotation({x=0,y=(atan(vec.z / vec.x) + 3 * math.pi / 2) - self.rotate,z=0})
 			end
 		end
 	end,

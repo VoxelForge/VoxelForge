@@ -12,7 +12,6 @@ local function is_group(pos, group)
 	return minetest.get_item_group(nn, group) ~= 0
 end
 
-local is_water = flowlib.is_water
 local function is_river_water(p)
 	local n = minetest.get_node(p).name
 	if n == "mclx_core:river_water_source" or n == "mclx_core:river_water_flowing" then
@@ -235,10 +234,10 @@ function boat.on_step(self, dtime, moveresult)
 	local p = self.object:get_pos()
 	local on_water = true
 	local on_ice = false
-	local in_water = is_water({x=p.x, y=p.y-boat_y_offset+1, z=p.z})
+	local in_water = flowlib.is_water({x=p.x, y=p.y-boat_y_offset+1, z=p.z})
 	local in_river_water = is_river_water({x=p.x, y=p.y-boat_y_offset+1, z=p.z})
 	local waterp = {x=p.x, y=p.y-boat_y_offset - 0.1, z=p.z}
-	if not is_water(waterp) then
+	if not flowlib.is_water(waterp) then
 		on_water = false
 		if not in_water and is_ice(waterp) then
 			on_ice = true
@@ -373,7 +372,7 @@ function boat.on_step(self, dtime, moveresult)
 	p.y = p.y - boat_y_offset
 	local new_velo
 	local new_acce
-	if not is_water(p) and not on_ice then
+	if not flowlib.is_water(p) and not on_ice then
 		-- Not on water or inside water: Free fall
 		--local nodedef = minetest.registered_nodes[minetest.get_node(p).name]
 		new_acce = {x = 0, y = -9.8, z = 0}
@@ -393,7 +392,7 @@ function boat.on_step(self, dtime, moveresult)
 			end
 			new_velo = get_velocity(self._v, self.object:get_yaw(), y)
 			self.object:set_pos(self.object:get_pos())
-		elseif is_water(p) and not is_river_water(p) or is_obsidian_boat then
+		elseif flowlib.is_water(p) and not is_river_water(p) or is_obsidian_boat then
 			-- Inside water: Slowly sink
 			local y = self.object:get_velocity().y
 			y = y - 0.01
@@ -504,7 +503,7 @@ for b=1, #boat_ids do
 
 			if math.abs(dir.x) > 0.9 or math.abs(dir.z) > 0.9 then
 				pos = vector.add(pos, vector.multiply(dir, boat_side_offset))
-			elseif is_water(pos) then
+			elseif flowlib.is_water(pos) then
 				pos = vector.add(pos, vector.multiply(dir, boat_y_offset))
 			else
 				pos = vector.add(pos, vector.multiply(dir, boat_y_offset_ground))

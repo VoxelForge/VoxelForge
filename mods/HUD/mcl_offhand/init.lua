@@ -1,4 +1,3 @@
-local minetest, math = minetest, math
 mcl_offhand = {}
 
 local max_offhand_px = 128

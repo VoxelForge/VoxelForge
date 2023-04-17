@@ -15,9 +15,6 @@ mcl_dye = {}
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local math = math
-local string = string
-
 -- Other mods can use these for looping through available colors
 mcl_dye.basecolors = {"white", "grey", "black", "red", "yellow", "green", "cyan", "blue", "magenta"}
 mcl_dye.excolors = {"white", "lightgrey", "grey", "darkgrey", "black", "red", "orange", "yellow", "lime", "green", "aqua", "cyan", "sky_blue", "blue", "violet", "magenta", "red_violet"}

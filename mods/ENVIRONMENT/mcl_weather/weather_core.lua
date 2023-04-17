@@ -1,7 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local math = math
-
 -- weather states, 'none' is default, other states depends from active mods
 mcl_weather.state = "none"
 
@@ -123,11 +121,11 @@ function mcl_weather.is_underwater(player)
 	return false
 end
 
-local t, wci = 0, mcl_weather.check_interval
+local t = 0
 
 minetest.register_globalstep(function(dtime)
 	t = t + dtime
-	if t < wci then return end
+	if t < mcl_weather.check_interval then return end
 	t = 0
 
 	if mcl_weather.end_time == nil then

@@ -2,8 +2,6 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 local peaceful = minetest.settings:get_bool("only_peaceful_mobs", false)
 
-local vector = vector
-
 local explosion_strength = 6
 
 local directions = {

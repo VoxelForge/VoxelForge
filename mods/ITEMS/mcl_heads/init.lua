@@ -1,6 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local minetest = minetest
 local mod_doc = minetest.get_modpath("doc")
 local mod_screwdriver = minetest.get_modpath("screwdriver")
 

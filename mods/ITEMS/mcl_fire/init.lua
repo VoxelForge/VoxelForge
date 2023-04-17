@@ -8,22 +8,6 @@ local S = minetest.get_translator(modname)
 
 local has_mcl_portals = minetest.get_modpath("mcl_portals")
 
-local set_node = minetest.set_node
-local get_node = minetest.get_node
-local add_node = minetest.add_node
-local remove_node = minetest.remove_node
-local swap_node = minetest.swap_node
-local get_node_or_nil = minetest.get_node_or_nil
-
-local find_nodes_in_area = minetest.find_nodes_in_area
-local find_node_near = minetest.find_node_near
-local get_item_group = minetest.get_item_group
-
-local get_connected_players = minetest.get_connected_players
-
-local vector = vector
-local math = math
-
 local adjacents = {
 	{ x =-1, y = 0, z = 0 },
 	{ x = 1, y = 0, z = 0 },
@@ -91,7 +75,7 @@ else
 end
 
 local function spawn_fire(pos, age)
-	set_node(pos, {name="mcl_fire:fire", param2 = age})
+	minetest.set_node(pos, {name="mcl_fire:fire", param2 = age})
 	minetest.check_single_for_falling({x=pos.x, y=pos.y+1, z=pos.z})
 end
 
@@ -120,7 +104,7 @@ minetest.register_node("mcl_fire:fire", {
 	groups = {fire = 1, dig_immediate = 3, not_in_creative_inventory = 1, dig_by_piston=1, destroys_items=1, set_on_fire=8},
 	floodable = true,
 	on_flood = function(pos, oldnode, newnode)
-		if get_item_group(newnode.name, "water") ~= 0 then
+		if minetest.get_item_group(newnode.name, "water") ~= 0 then
 			minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
 		end
 	end,
@@ -129,11 +113,11 @@ minetest.register_node("mcl_fire:fire", {
 	-- Turn into eternal fire on special blocks, light Nether portal (if possible), start burning timer
 	on_construct = function(pos)
 		local bpos = {x=pos.x, y=pos.y-1, z=pos.z}
-		local under = get_node(bpos).name
+		local under = minetest.get_node(bpos).name
 
 		local dim = mcl_worlds.pos_to_dimension(bpos)
 		if under == "mcl_nether:magma" or under == "mcl_nether:netherrack" or (under == "mcl_core:bedrock" and dim == "end") then
-			swap_node(pos, {name = "mcl_fire:eternal_fire"})
+			minetest.swap_node(pos, {name = "mcl_fire:eternal_fire"})
 		end
 
 		if has_mcl_portals then
@@ -173,7 +157,7 @@ minetest.register_node("mcl_fire:eternal_fire", {
 	groups = {fire = 1, dig_immediate = 3, not_in_creative_inventory = 1, dig_by_piston = 1, destroys_items = 1, set_on_fire=8},
 	floodable = true,
 	on_flood = function(pos, oldnode, newnode)
-		if get_item_group(newnode.name, "water") ~= 0 then
+		if minetest.get_item_group(newnode.name, "water") ~= 0 then
 			minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
 		end
 	end,
@@ -214,7 +198,7 @@ if flame_sound then
 		local ppos = player:get_pos()
 		local areamin = vector.subtract(ppos, radius)
 		local areamax = vector.add(ppos, radius)
-		local fpos, num = find_nodes_in_area(
+		local fpos, num = minetest.find_nodes_in_area(
 			areamin,
 			areamax,
 			{"mcl_fire:fire", "mcl_fire:eternal_fire"}
@@ -285,7 +269,7 @@ if flame_sound then
 		end
 
 		timer = 0
-		local players = get_connected_players()
+		local players = minetest.get_connected_players()
 		for n = 1, #players do
 			mcl_fire.update_player_sound(players[n])
 		end
@@ -448,9 +432,9 @@ function mcl_fire.set_fire(pointed_thing, player, allow_on_fire)
 	else
 		pname = player:get_player_name()
 	end
-	local n = get_node(pointed_thing.above)
-	local nu = get_node(pointed_thing.under)
-	if allow_on_fire == false and get_item_group(nu.name, "fire") ~= 0 then
+	local n = minetest.get_node(pointed_thing.above)
+	local nu = minetest.get_node(pointed_thing.under)
+	if allow_on_fire == false and minetest.get_item_group(nu.name, "fire") ~= 0 then
 		return
 	end
 	if minetest.is_protected(pointed_thing.above, pname) then
@@ -458,7 +442,7 @@ function mcl_fire.set_fire(pointed_thing, player, allow_on_fire)
 		return
 	end
 	if n.name == "air" then
-		add_node(pointed_thing.above, {name="mcl_fire:fire"})
+		minetest.set_node(pointed_thing.above, {name="mcl_fire:fire"})
 	end
 end
 

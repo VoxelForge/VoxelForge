@@ -1,5 +1,3 @@
-local get_connected_players = minetest.get_connected_players
-
 -- turn off lightning mod 'auto mode'
 lightning.auto = false
 
@@ -27,7 +25,7 @@ minetest.register_globalstep(function(dtime)
 			{r=0, g=0, b=0},
 		})
 		mcl_weather.skycolor.active = true
-		for _, player in pairs(get_connected_players()) do
+		for _, player in pairs(minetest.get_connected_players()) do
 			player:set_clouds({color="#3D3D3FE8"})
 		end
 		mcl_weather.thunder.init_done = true

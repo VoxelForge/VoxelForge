@@ -1,5 +1,5 @@
 local S = minetest.get_translator("mcl_skins")
-local color_to_string = minetest.colorspec_to_colorstring
+local C = minetest.colorspec_to_colorstring
 
 mcl_skins = {
 	simple_skins = {},
@@ -99,7 +99,7 @@ function mcl_skins.compile_skin(skin)
 			
 			if skin[item .. "_color"] and mcl_skins.masks[texture] then
 				if #output > 0 then output = output .. "^" end
-				local color = color_to_string(skin[item .. "_color"])
+				local color = C(skin[item .. "_color"])
 				output = output ..
 					"(" .. mcl_skins.masks[texture] .. "^[colorize:" .. color .. ":alpha)"
 			end
@@ -282,7 +282,7 @@ function mcl_skins.show_formspec(player, active_tab, page_num)
 			local i = j - page_start + 1
 			local texture = textures[j]
 			local preview = mcl_skins.masks[skin.base] .. "^[colorize:gray^" .. skin.base
-			local color = color_to_string(skin[active_tab .. "_color"])
+			local color = C(skin[active_tab .. "_color"])
 			local mask = mcl_skins.masks[texture]
 			if color and mask then
 				preview = preview .. "^(" .. mask .. "^[colorize:" .. color .. ":alpha)"
@@ -337,7 +337,7 @@ function mcl_skins.show_formspec(player, active_tab, page_num)
 		local tab_color = active_tab .. "_color"
 		local selected_color = skin[tab_color]
 		for i, colorspec in pairs(colors) do
-			local color = color_to_string(colorspec)
+			local color = C(colorspec)
 			i = i - 1
 			local x = 3.6 + i % 6 * 0.9
 			local y = 8 + math.floor(i / 6) * 0.9

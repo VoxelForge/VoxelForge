@@ -1,5 +1,3 @@
-local table = table
-
 mesecon.queue.actions={} -- contains all ActionQueue actions
 
 function mesecon.queue:add_function(name, func)

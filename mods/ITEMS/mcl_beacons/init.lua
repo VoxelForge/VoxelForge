@@ -12,8 +12,6 @@ mcl_beacons = {
 	blocks ={"mcl_core:diamondblock","mcl_core:ironblock","mcl_core:goldblock","mcl_core:emeraldblock","mcl_nether:netheriteblock"},
 	fuel = {"mcl_core:diamond","mcl_core:emerald","mcl_core:iron_ingot","mcl_core:gold_ingot","mcl_nether:netherite_ingot"}
 }
-local beacon_blocklist = mcl_beacons.blocks
-local beacon_fuellist = mcl_beacons.fuel
 
 local pallete_order = {
 	glass_cyan		 		= 1,
@@ -162,7 +160,7 @@ local function beacon_blockcheck(pos)
 		for block_x = (pos.x-y_offset),(pos.x+y_offset) do
 			for block_z = (pos.z-y_offset),(pos.z+y_offset) do
 				local valid_block = false --boolean which stores if block is valid or not
-				for _, beacon_block in pairs(beacon_blocklist) do
+				for _, beacon_block in pairs(mcl_beacons.blocks) do
 					if beacon_block == minetest.get_node({x=block_x,y=block_y,z=block_z}).name and not valid_block then --is the block in the pyramid a valid beacon block
 						valid_block =true
 					end
@@ -264,7 +262,7 @@ minetest.register_node("mcl_beacons:beacon", {
 
 			local valid_item = false
 
-			for _, item in ipairs(beacon_fuellist) do
+			for _, item in ipairs(mcl_beacons.fuel) do
 				if input:get_name() == item then
 					valid_item = true
 				end
@@ -345,11 +343,11 @@ mesecon.register_mvps_stopper("mcl_beacons:beacon")
 mcl_wip.register_wip_item("mcl_beacons:beacon")
 
 function register_beaconblock (itemstring)--API function for other mods
-	table.insert(beacon_blocklist, itemstring)
+	table.insert(mcl_beacons.blocks, itemstring)
 end
 
 function register_beaconfuel(itemstring)
-	table.insert(beacon_fuellist, itemstring)
+	table.insert(mcl_beacons.fuel, itemstring)
 end
 
 local timer = 0

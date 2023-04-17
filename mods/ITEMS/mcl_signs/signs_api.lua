@@ -30,9 +30,6 @@ local LINE_HEIGHT = 14
 local CHAR_WIDTH = 5
 local TIMER_INTERVAL = 40.0
 -- -----------------------
--- CACHE LOCAL COPIES
-local table = table
-local string = string
 
 -- CACHE NODE_SOUNDS
 local node_sounds
@@ -69,16 +66,6 @@ else
 		chars_file:read("*l")
 		charmap[char] = img
 	end
-end
-
-local pi = 3.1415926 -- enough accuracy, to build an engine for a car.
-
-local math = math
-
--- locally cached copy of the official colors; this way, it updates as mcl_colors updates.
-local mcl_colors_official = mcl_colors
-if DEBUG then
-	minetest.log("verbose", "[mcl_signs]Official MCL_Colors:\n" .. dump(mcl_colors_official))
 end
 
 -- INITIALIZE THE GLOBAL API FOR SIGNS.
@@ -125,14 +112,14 @@ function mcl_signs.build_signs_info()
 
 	mcl_signs.signtext_info_wall = {
 		{ delta = { x = 0, y = 0, z = n }, yaw = 0 },
-		{ delta = { x = n, y = 0, z = 0 }, yaw = pi / -2 },
-		{ delta = { x = 0, y = 0, z = -n }, yaw = pi },
-		{ delta = { x = -n, y = 0, z = 0 }, yaw = pi / 2 },
+		{ delta = { x = n, y = 0, z = 0 }, yaw = math.pi / -2 },
+		{ delta = { x = 0, y = 0, z = -n }, yaw = math.pi },
+		{ delta = { x = -n, y = 0, z = 0 }, yaw = math.pi / 2 },
 	}
 
 	-- PLACE YAW VALUES INTO THE TABLE.
 	for rot = 0, 15 do
-		local yaw = pi * 2 - (((pi * 2) / 16) * rot)
+		local yaw = math.pi * 2 - (((math.pi * 2) / 16) * rot)
 		local delta = vector.multiply(minetest.yaw_to_dir(yaw), m)
 		-- Offset because sign is a bit above node boundaries
 		delta.y = delta.y + 2 / 28
@@ -210,10 +197,10 @@ mcl_signs.wall_standard = {
 			-- Standing sign
 
 			-- Determine the sign rotation based on player's yaw
-			local yaw = pi * 2 - placer:get_look_horizontal()
+			local yaw = math.pi * 2 - placer:get_look_horizontal()
 
 			-- Select one of 16 possible rotations (0-15)
-			local rotation_level = mcl_signs:round((yaw / (pi * 2)) * 16)
+			local rotation_level = mcl_signs:round((yaw / (math.pi * 2)) * 16)
 
 			if rotation_level > 15 then
 				rotation_level = 0
@@ -455,26 +442,26 @@ mcl_signs.standing_standard = {
 -- HELPER FUNCTIONS' VARIABLES
 local sign_glow = 6
 local Dyes_table = {
-	{ "mcl_dye:aqua", mcl_colors_official.AQUA },
-	{ "mcl_dye:black", mcl_colors_official.BLACK },
-	{ "mcl_dye:blue", mcl_colors_official.BLUE },
-	{ "mcl_dye:brown", mcl_colors_official.brown },
+	{ "mcl_dye:aqua", mcl_colors.AQUA },
+	{ "mcl_dye:black", mcl_colors.BLACK },
+	{ "mcl_dye:blue", mcl_colors.BLUE },
+	{ "mcl_dye:brown", mcl_colors.brown },
 	{ "mcl_dye:cyan", mcl_signs.mcl_wool_colors.unicolor_cyan },
-	{ "mcl_dye:green", mcl_colors_official.GREEN },
-	{ "mcl_dye:dark_green", mcl_colors_official.DARK_GREEN },
-	{ "mcl_dye:grey", mcl_colors_official.GRAY },
-	{ "mcl_dye:dark_grey", mcl_colors_official.DARK_GRAY },
+	{ "mcl_dye:green", mcl_colors.GREEN },
+	{ "mcl_dye:dark_green", mcl_colors.DARK_GREEN },
+	{ "mcl_dye:grey", mcl_colors.GRAY },
+	{ "mcl_dye:dark_grey", mcl_colors.DARK_GRAY },
 	{ "mcl_dye:lightblue", mcl_signs.mcl_wool_colors.unicolor_light_blue },
 	{ "mcl_dye:lime", mcl_signs.unicolor_green_or_lime },
-	{ "mcl_dye:magenta", mcl_colors_official.LIGHT_PURPLE },
+	{ "mcl_dye:magenta", mcl_colors.LIGHT_PURPLE },
 	{ "mcl_dye:orange", mcl_signs.mcl_wool_colors.unicolor_orange },
 	{ "mcl_dye:pink", mcl_signs.mcl_wool_colors.unicolor_light_red_pink },
-	{ "mcl_dye:purple", mcl_colors_official.LIGHT_PURPLE },
+	{ "mcl_dye:purple", mcl_colors.LIGHT_PURPLE },
 	{ "mcl_dye:red", mcl_signs.mcl_wool_colors.unicolor_red },
 	{ "mcl_dye:silver", mcl_signs.mcl_wool_colors.unicolor_grey },
-	{ "mcl_dye:violet", mcl_colors_official.DARK_PURPLE },
-	{ "mcl_dye:white", mcl_colors_official.WHITE },
-	{ "mcl_dye:yellow", mcl_colors_official.YELLOW },
+	{ "mcl_dye:violet", mcl_colors.DARK_PURPLE },
+	{ "mcl_dye:white", mcl_colors.WHITE },
+	{ "mcl_dye:yellow", mcl_colors.YELLOW },
 }
 
 local function update_sign_registry(type, name)
@@ -597,10 +584,10 @@ function mcl_signs.register_sign (modname, color, _name, description)
 			-- Standing sign
 
 			-- Determine the sign rotation based on player's yaw
-			yaw = pi * 2 - placer:get_look_horizontal()
+			yaw = math.pi * 2 - placer:get_look_horizontal()
 
 			-- Select one of 16 possible rotations (0-15)
-			local rotation_level = mcl_signs:round((yaw / (pi * 2)) * 16)
+			local rotation_level = mcl_signs:round((yaw / (math.pi * 2)) * 16)
 
 			if rotation_level > 15 then
 				rotation_level = 0
@@ -838,10 +825,10 @@ function mcl_signs.register_sign_custom (modname, _name, tiles, color, inventory
 			-- Standing sign
 
 			-- Determine the sign rotation based on player's yaw
-			local yaw = pi * 2 - placer:get_look_horizontal()
+			local yaw = math.pi * 2 - placer:get_look_horizontal()
 
 			-- Select one of 16 possible rotations (0-15)
-			local rotation_level = mcl_signs:round((yaw / (pi * 2)) * 16)
+			local rotation_level = mcl_signs:round((yaw / (math.pi * 2)) * 16)
 
 			if rotation_level > 15 then
 				rotation_level = 0
@@ -1057,10 +1044,10 @@ function mcl_signs.reregister_sign (modname, color, _name, description)
 			-- Standing sign
 
 			-- Determine the sign rotation based on player's yaw
-			local yaw = pi * 2 - placer:get_look_horizontal()
+			local yaw = math.pi * 2 - placer:get_look_horizontal()
 
 			-- Select one of 16 possible rotations (0-15)
-			local rotation_level = mcl_signs:round((yaw / (pi * 2)) * 16)
+			local rotation_level = mcl_signs:round((yaw / (math.pi * 2)) * 16)
 
 			if rotation_level > 15 then
 				rotation_level = 0
@@ -1296,10 +1283,10 @@ function mcl_signs.reregister_sign_custom (modname, _name, tiles, color, invento
 			-- Standing sign
 
 			-- Determine the sign rotation based on player's yaw
-			local yaw = pi * 2 - placer:get_look_horizontal()
+			local yaw = math.pi * 2 - placer:get_look_horizontal()
 
 			-- Select one of 16 possible rotations (0-15)
-			local rotation_level = mcl_signs:round((yaw / (pi * 2)) * 16)
+			local rotation_level = mcl_signs:round((yaw / (math.pi * 2)) * 16)
 
 			if rotation_level > 15 then
 				rotation_level = 0

@@ -38,16 +38,6 @@ minetest.register_craft({
 	burntime = 15,
 })
 
-local get_item_group = minetest.get_item_group
-local is_creative_enabled = minetest.is_creative_enabled
-local registered_nodes = minetest.registered_nodes
-local swap_node = minetest.swap_node
-local get_node_timer = minetest.get_node_timer
-local add_item = minetest.add_item
-local vector_offset = vector.offset
-local is_protected = minetest.is_protected
-local record_protection_violation = minetest.record_protection_violation
-
 --- Fill the composter when rightclicked.
 --
 -- `on_rightclick` handler for composter blocks of all fill levels except
@@ -64,26 +54,26 @@ local function composter_add_item(pos, node, player, itemstack, pointed_thing)
 		return itemstack
 	end
 	local name = player:get_player_name()
-	if is_protected(pos, name) then
-		record_protection_violation(pos, name)
+	if minetest.is_protected(pos, name) then
+		minetest.record_protection_violation(pos, name)
 		return itemstack
 	end
 	if not itemstack or itemstack:is_empty() then
 		return itemstack
 	end
 	local itemname = itemstack:get_name()
-	local chance = get_item_group(itemname, "compostability")
+	local chance = minetest.get_item_group(itemname, "compostability")
 	if chance > 0 then
-		if not is_creative_enabled(player:get_player_name()) then
+		if not minetest.is_creative_enabled(player:get_player_name()) then
 			itemstack:take_item()
 		end
 		-- calculate leveling up chance
 		local rand = math.random(0,100)
 		if chance >= rand then
 			-- get current compost level
-			local level = registered_nodes[node.name]["_mcl_compost_level"]
+			local level = minetest.registered_nodes[node.name]["_mcl_compost_level"]
 			-- spawn green particles above new layer
-			mcl_dye.add_bone_meal_particle(vector_offset(pos, 0, level/8, 0))
+			mcl_dye.add_bone_meal_particle(vector.offset(pos, 0, level/8, 0))
 			-- TODO: play some sounds
 			-- update composter block
 			if level < 7 then
@@ -91,11 +81,11 @@ local function composter_add_item(pos, node, player, itemstack, pointed_thing)
 			else
 				level = "ready"
 			end
-			swap_node(pos, {name = "mcl_composters:composter_" .. level})
+			minetest.swap_node(pos, {name = "mcl_composters:composter_" .. level})
 			-- a full composter becomes ready for harvest after one second
 			-- the block will get updated by the node timer callback set in node reg def
 			if level == 7 then
-				local timer = get_node_timer(pos)
+				local timer = minetest.get_node_timer(pos)
 				timer:start(1)
 			end
 		end
@@ -112,7 +102,7 @@ end
 -- returns false, thereby cancelling further activity of the timer.
 --
 local function composter_ready(pos)
-	swap_node(pos, {name = "mcl_composters:composter_ready"})
+	minetest.swap_node(pos, {name = "mcl_composters:composter_ready"})
 	-- maybe spawn particles again?
 	-- TODO: play some sounds
 	return false
@@ -132,14 +122,14 @@ local function composter_harvest(pos, node, player, itemstack, pointed_thing)
 		return itemstack
 	end
 	local name = player:get_player_name()
-	if is_protected(pos, name) then
-		record_protection_violation(pos, name)
+	if minetest.is_protected(pos, name) then
+		minetest.record_protection_violation(pos, name)
 		return itemstack
 	end
 	-- reset ready type composter to empty type
-	swap_node(pos, {name="mcl_composters:composter"})
+	minetest.swap_node(pos, {name="mcl_composters:composter"})
 	-- spawn bone meal item (wtf dye?! is this how they make white cocoa)
-	add_item(pos, "mcl_dye:white")
+	minetest.add_item(pos, "mcl_dye:white")
 	-- TODO play some sounds
 	return itemstack
 end

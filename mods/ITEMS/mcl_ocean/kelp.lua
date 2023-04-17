@@ -11,41 +11,6 @@ local S = minetest.get_translator(minetest.get_current_modname())
 local mod_doc = minetest.get_modpath("doc")
 
 --------------------------------------------------------------------------------
--- local-ify runtime functions
---------------------------------------------------------------------------------
--- objects
-local mt_registered_items = minetest.registered_items
-local mt_registered_nodes = minetest.registered_nodes
-
--- functions
-local mt_log = minetest.log
-local mt_add_item = minetest.add_item
-local mt_get_item_group = minetest.get_item_group
-local mt_get_node = minetest.get_node
-local mt_get_node_level = minetest.get_node_level
-local mt_get_node_max_level = minetest.get_node_max_level
-local mt_get_node_or_nil = minetest.get_node_or_nil
-local mt_get_node_timer = minetest.get_node_timer
-local mt_get_meta = minetest.get_meta
-local mt_hash_node_position = minetest.hash_node_position
-local mt_set_node = minetest.set_node
-local mt_swap_node = minetest.swap_node
-local mt_pos_to_string = minetest.pos_to_string
-local mt_is_protected = minetest.is_protected
-local mt_record_protection_violation = minetest.record_protection_violation
-
-local mt_is_creative_enabled = minetest.is_creative_enabled
-local mt_sound_play = minetest.sound_play
-
-local math = math
---local string = string
-local table = table
-
--- DEBUG: functions
--- local log = minetest.log
--- local chatlog = minetest.chat_send_all
-
---------------------------------------------------------------------------------
 -- Kelp API
 --------------------------------------------------------------------------------
 
@@ -103,9 +68,9 @@ end
 -- Is this water?
 -- Returns the liquidtype, if indeed water.
 function kelp.is_submerged(node)
-	if mt_get_item_group(node.name, "water") ~= 0 then
+	if minetest.get_item_group(node.name, "water") ~= 0 then
 		-- Expected only "source" and "flowing" from water liquids
-		return mt_registered_nodes[node.name].liquidtype
+		return minetest.registered_nodes[node.name].liquidtype
 	end
 	return false
 end
@@ -115,7 +80,7 @@ end
 -- (kelp can grow/be placed inside downward flowing water)
 function kelp.is_downward_flowing(pos, node, pos_above, node_above, __is_above__)
 	-- Function params: (pos[, node]) or (node, pos_above) or (node, node_above)
-	local node = node or mt_get_node(pos)
+	local node = node or minetest.get_node(pos)
 
 	local result = (math.floor(node.param2 / 8) % 2) == 1
 	if not (result or __is_above__) then
@@ -123,7 +88,7 @@ function kelp.is_downward_flowing(pos, node, pos_above, node_above, __is_above__
 		-- (this is needed due a weird quirk in the definition of "downwards flowing"
 		-- liquids in Minetest)
 		local pos_above = pos_above or {x=pos.x,y=pos.y+1,z=pos.z}
-		local node_above = node_above or mt_get_node(pos_above)
+		local node_above = node_above or minetest.get_node(pos_above)
 		result = kelp.is_submerged(node_above)
 			or kelp.is_downward_flowing(nil, node_above, nil, nil, true)
 	end
@@ -141,15 +106,15 @@ function kelp.is_falling(pos, node, is_falling, pos_bottom, node_bottom, def_bot
 	local nodename = node.name
 
 	if is_falling == false or
-		is_falling == nil and mt_get_item_group(nodename, "falling_node") == 0 then
+		is_falling == nil and minetest.get_item_group(nodename, "falling_node") == 0 then
 		return false
 	end
 
 	local pos_bottom = pos_bottom or {x = pos.x, y = pos.y - 1, z = pos.z}
 	-- get_node_or_nil: Only fall if node below is loaded
-	local node_bottom = node_bottom or mt_get_node_or_nil(pos_bottom)
+	local node_bottom = node_bottom or minetest.get_node_or_nil(pos_bottom)
 	local nodename_bottom = node_bottom.name
-	local def_bottom = def_bottom or node_bottom and mt_registered_nodes[nodename_bottom]
+	local def_bottom = def_bottom or node_bottom and minetest.registered_nodes[nodename_bottom]
 	if not def_bottom then
 		return false
 	end
@@ -157,15 +122,15 @@ function kelp.is_falling(pos, node, is_falling, pos_bottom, node_bottom, def_bot
 	local same = nodename == nodename_bottom
 	-- Let leveled nodes fall if it can merge with the bottom node
 	if same and def_bottom.paramtype2 == "leveled" and
-			mt_get_node_level(pos_bottom) <
-			mt_get_node_max_level(pos_bottom) then
+			minetest.get_node_level(pos_bottom) <
+			minetest.get_node_max_level(pos_bottom) then
 		return true
 	end
 
 	-- Otherwise only if the bottom node is considered "fall through"
 	if not same and
 			(not def_bottom.walkable or def_bottom.buildable_to) and
-			(mt_get_item_group(nodename, "float") == 0 or
+			(minetest.get_item_group(nodename, "float") == 0 or
 			def_bottom.liquidtype == "none") then
 		return true
 	end
@@ -199,23 +164,23 @@ end
 -- Obtain pos and node of the tip of kelp.
 function kelp.get_tip(pos, height)
 	-- Optional params: height
-	local height = height or kelp.get_height(mt_get_node(pos).param2)
+	local height = height or kelp.get_height(minetest.get_node(pos).param2)
 	local pos_tip = {x=pos.x, y=pos.y+height+1, z=pos.z}
-	return pos_tip, mt_get_node(pos_tip), height
+	return pos_tip, minetest.get_node(pos_tip), height
 end
 
 
 -- Obtain position of the first kelp unsubmerged.
 function kelp.find_unsubmerged(pos, node, height)
 	-- Optional params: node, height
-	local node = node or mt_get_node(pos)
+	local node = node or minetest.get_node(pos)
 	local height = height or ((node.param2 >= 0 and node.param2 < 16) and 1) or kelp.get_height(node.param2)
 
 	local walk_pos = {x=pos.x, z=pos.z}
 	local y = pos.y
 	for i=1,height do
 		walk_pos.y = y + i
-		local walk_node = mt_get_node(walk_pos)
+		local walk_node = minetest.get_node(walk_pos)
 		if not kelp.is_submerged(walk_node) then
 			return walk_pos, walk_node, height, i
 		end
@@ -237,14 +202,14 @@ function kelp.store_meta()
 	for _ in pairs(kelp.age_queue_pos) do
 		count = count + 1
 	end
-	-- chatlog(string.format("Storing age metadata: %d in queue", #kelp.age_queue))
-	-- chatlog(string.format("Storing age metadata: %d valid in queue", count))
+	-- minetest.chat_send_all(string.format("Storing age metadata: %d in queue", #kelp.age_queue))
+	-- minetest.chat_send_all(string.format("Storing age metadata: %d valid in queue", count))
 	for i=1,#kelp.age_queue do
 		local pos_hash = kelp.age_queue[i]
 		local pos = kelp.age_queue_pos[pos_hash]
 		-- queued hashes may no longer point to a valid pos, e.g. kelp is destroyed.
 		if pos then
-			mt_get_meta(pos):set_int("mcl_ocean:kelp_age", kelp.age_pool[pos_hash])
+			minetest.get_meta(pos):set_int("mcl_ocean:kelp_age", kelp.age_pool[pos_hash])
 		end
 	end
 	kelp.age_queue = {}
@@ -256,7 +221,7 @@ end
 function kelp.store_age(age, pos, pos_hash)
 	-- Watched params: pos
 	-- Optional params: pos_hash
-	local pos_hash = pos_hash or mt_hash_node_position(pos)
+	local pos_hash = pos_hash or minetest.hash_node_position(pos)
 
 	kelp.age_pool[pos_hash] = age
 	if not kelp.age_queue_pos[pos_hash] then
@@ -273,8 +238,8 @@ end
 function kelp.init_age(pos, age, pos_hash, meta)
 	-- Watched params: pos
 	-- Optional params: age, pos_hash, meta
-	local pos_hash = pos_hash or mt_hash_node_position(pos)
-	local meta = meta or mt_get_meta(pos)
+	local pos_hash = pos_hash or minetest.hash_node_position(pos)
+	local meta = meta or minetest.get_meta(pos)
 
 	local age = age
 	if age then
@@ -296,11 +261,11 @@ end
 -- Initialise kelp nodetimer.
 function kelp.init_timer(pos, pos_hash)
 	-- Optional params: pos_hash
-	local pos_hash = pos_hash or mt_hash_node_position(pos)
+	local pos_hash = pos_hash or minetest.hash_node_position(pos)
 
 	local timer = kelp.timers_pool[pos_hash]
 	if not timer then
-		timer = mt_get_node_timer(pos)
+		timer = minetest.get_node_timer(pos)
 		kelp.timers_pool[pos_hash] = timer
 	end
 	if not timer:is_started() then
@@ -315,9 +280,9 @@ end
 function kelp.next_height(pos, node, pos_tip, node_tip, submerged, downward_flowing)
 	-- Modified params: node
 	-- Optional params: node, set_node, pos_tip, node_tip, submerged, downward_flowing
-	local node = node or mt_get_node(pos)
+	local node = node or minetest.get_node(pos)
 	local pos_tip = pos_tip
-	local node_tip = node_tip or (pos_tip and mt_get_node(pos_tip))
+	local node_tip = node_tip or (pos_tip and minetest.get_node(pos_tip))
 	if not pos_tip then
 		pos_tip,node_tip = kelp.get_tip(pos)
 	end
@@ -327,13 +292,13 @@ function kelp.next_height(pos, node, pos_tip, node_tip, submerged, downward_flow
 
 	-- Liquid source: Grow normally.
 	node.param2 = kelp.next_param2(node.param2)
-	mt_swap_node(pos, node)
+	minetest.swap_node(pos, node)
 
 	-- Flowing liquid: Grow 1 step, but also turn the tip node into a liquid source.
 	if downward_flowing then
-		local alt_liq = mt_registered_nodes[node_tip.name].liquid_alternative_source
+		local alt_liq = minetest.registered_nodes[node_tip.name].liquid_alternative_source
 		if alt_liq then
-			mt_set_node(pos_tip, {name=alt_liq})
+			minetest.set_node(pos_tip, {name=alt_liq})
 		end
 	end
 
@@ -346,10 +311,10 @@ function kelp.next_grow(age, pos, node, pos_hash, pos_tip, node_tip, submerged, 
 	-- Watched params: pos
 	-- Modified params: node
 	-- Optional params: node, pos_hash, pos_tip, node_tip, submerged, downward_flowing
-	local node = node or mt_get_node(pos)
-	local pos_hash = pos_hash or mt_hash_node_position(pos)
+	local node = node or minetest.get_node(pos)
+	local pos_hash = pos_hash or minetest.hash_node_position(pos)
 	local pos_tip = pos_tip
-	local node_tip = node_tip or (pos_tip and mt_get_node(pos_tip))
+	local node_tip = node_tip or (pos_tip and minetest.get_node(pos_tip))
 	if not pos_tip then
 		pos_tip,node_tip = kelp.get_tip(pos)
 	end
@@ -369,12 +334,12 @@ end
 -- Drops the items for detached kelps.
 function kelp.detach_drop(pos, height)
 	-- Optional params: height
-	local height = height or kelp.get_height(mt_get_node(pos).param2)
+	local height = height or kelp.get_height(minetest.get_node(pos).param2)
 	local y = pos.y
 	local walk_pos = {x=pos.x, z=pos.z}
 	for i=1,height do
 		walk_pos.y = y+i
-		mt_add_item(walk_pos, "mcl_ocean:kelp")
+		minetest.add_item(walk_pos, "mcl_ocean:kelp")
 	end
 	return true
 end
@@ -387,7 +352,7 @@ end
 function kelp.detach_dig(dig_pos, pos, drop, node, height)
 	-- Optional params: drop, node, height
 
-	local node = node or mt_get_node(pos)
+	local node = node or minetest.get_node(pos)
 	local height = height or kelp.get_height(node.param2)
 	-- pos.y points to the surface, offset needed to point to the first kelp.
 	local new_height = dig_pos.y - (pos.y+1)
@@ -397,8 +362,8 @@ function kelp.detach_dig(dig_pos, pos, drop, node, height)
 		if drop then
 			kelp.detach_drop(dig_pos, height)
 		end
-		mt_set_node(pos, {
-			name=mt_registered_nodes[node.name].node_dig_prediction,
+		minetest.set_node(pos, {
+			name=minetest.registered_nodes[node.name].node_dig_prediction,
 			param=node.param,
 			param2=0 })
 
@@ -407,7 +372,7 @@ function kelp.detach_dig(dig_pos, pos, drop, node, height)
 		if drop then
 			kelp.detach_drop(dig_pos, height - new_height)
 		end
-		mt_swap_node(pos, {name=node.name, param=node.param, param2=16*new_height})
+		minetest.swap_node(pos, {name=node.name, param=node.param, param2=16*new_height})
 	end
 end
 
@@ -422,26 +387,26 @@ end
 
 
 function kelp.surface_after_dig_node(pos, node)
-	return mt_set_node(pos, {name=minetest.registered_nodes[node.name].node_dig_prediction})
+	return minetest.set_node(pos, {name=minetest.registered_nodes[node.name].node_dig_prediction})
 end
 
 
 function kelp.surface_on_timer(pos)
-	local node = mt_get_node(pos)
+	local node = minetest.get_node(pos)
 	local pos_hash
 
 	-- Update detahed kelps
 	local dig_pos,_, height = kelp.find_unsubmerged(pos, node)
 	if dig_pos then
-		pos_hash = mt_hash_node_position(pos)
-		mt_sound_play(mt_registered_nodes[node.name].sounds.dug, { gain = 0.5, pos = dig_pos }, true)
+		pos_hash = minetest.hash_node_position(pos)
+		minetest.sound_play(minetest.registered_nodes[node.name].sounds.dug, { gain = 0.5, pos = dig_pos }, true)
 		kelp.detach_dig(dig_pos, pos, true, node, height)
 		kelp.store_age(kelp.roll_init_age(), pos, pos_hash)
 	end
 
 	-- Grow kelp on chance
 	if kelp.roll_growth() then
-		pos_hash = pos_hash or mt_hash_node_position(pos)
+		pos_hash = pos_hash or minetest.hash_node_position(pos)
 		local age = kelp.age_pool[pos_hash]
 		if kelp.is_age_growable(age) then
 			kelp.next_grow(age+1, pos, node, pos_hash)
@@ -452,15 +417,15 @@ function kelp.surface_on_timer(pos)
 end
 
 function kelp.surface_on_construct(pos)
-	local pos_hash = mt_hash_node_position(pos)
+	local pos_hash = minetest.hash_node_position(pos)
 	kelp.init_age(pos, nil, pos_hash)
 	kelp.init_timer(pos, pos_hash)
 end
 
 
 function kelp.surface_on_destruct(pos)
-	local node = mt_get_node(pos)
-	local pos_hash = mt_hash_node_position(pos)
+	local node = minetest.get_node(pos)
+	local pos_hash = minetest.hash_node_position(pos)
 
 	-- on_falling callback. Activated by pistons for falling nodes too.
 	if kelp.is_falling(pos, node) then
@@ -475,7 +440,7 @@ end
 
 function kelp.surface_on_mvps_move(pos, node, oldpos, nodemeta)
 	-- Pistons moving falling nodes will have already activated on_falling callback.
-	kelp.detach_dig(pos, pos, mt_get_item_group(node.name, "falling_node") ~= 1, node)
+	kelp.detach_dig(pos, pos, minetest.get_item_group(node.name, "falling_node") ~= 1, node)
 end
 
 
@@ -497,9 +462,9 @@ function kelp.kelp_on_place(itemstack, placer, pointed_thing)
 	local player_name = placer:get_player_name()
 	local pos_under = pointed_thing.under
 	local pos_above = pointed_thing.above
-	local node_under = mt_get_node(pos_under)
+	local node_under = minetest.get_node(pos_under)
 	local nu_name = node_under.name
-	local def_under = mt_registered_nodes[nu_name]
+	local def_under = minetest.registered_nodes[nu_name]
 
 	-- Allow rightclick to override place.
 	if def_under and def_under.on_rightclick and not placer:get_player_control().sneak then
@@ -508,13 +473,13 @@ function kelp.kelp_on_place(itemstack, placer, pointed_thing)
 	end
 
 	-- Protection
-	if mt_is_protected(pos_under, player_name) or
-			mt_is_protected(pos_above, player_name) then
-		mt_log("action", player_name
+	if minetest.is_protected(pos_under, player_name) or
+			minetest.is_protected(pos_above, player_name) then
+		minetest.log("action", player_name
 			.. " tried to place " .. itemstack:get_name()
 			.. " at protected position "
-			.. mt_pos_to_string(pos_under))
-		mt_record_protection_violation(pos_under, player_name)
+			.. minetest.pos_to_string(pos_under))
+		minetest.record_protection_violation(pos_under, player_name)
 		return itemstack
 	end
 
@@ -526,10 +491,10 @@ function kelp.kelp_on_place(itemstack, placer, pointed_thing)
 	end
 
 	-- When placed on kelp.
-	if mt_get_item_group(nu_name, "kelp") == 1 then
+	if minetest.get_item_group(nu_name, "kelp") == 1 then
 		height = kelp.get_height(node_under.param2)
 		pos_tip,node_tip = kelp.get_tip(pos_under, height)
-		def_tip = mt_registered_nodes[node_tip.name]
+		def_tip = minetest.registered_nodes[node_tip.name]
 
 	-- When placed on surface.
 	else
@@ -548,8 +513,8 @@ function kelp.kelp_on_place(itemstack, placer, pointed_thing)
 		end
 
 		pos_tip = pos_above
-		node_tip = mt_get_node(pos_above)
-		def_tip = mt_registered_nodes[node_tip.name]
+		node_tip = minetest.get_node(pos_above)
+		def_tip = minetest.registered_nodes[node_tip.name]
 		height = 0
 	end
 
@@ -561,22 +526,22 @@ function kelp.kelp_on_place(itemstack, placer, pointed_thing)
 	end
 
 	-- Play sound, place surface/kelp and take away an item
-	local def_node = mt_registered_items[nu_name]
+	local def_node = minetest.registered_items[nu_name]
 	if def_node.sounds then
-		mt_sound_play(def_node.sounds.place, { gain = 0.5, pos = pos_under }, true)
+		minetest.sound_play(def_node.sounds.place, { gain = 0.5, pos = pos_under }, true)
 	end
 	-- TODO: get rid of rooted plantlike hack
 	if height < 16 then
 		kelp.next_height(pos_under, node_under, pos_tip, node_tip, def_tip, submerged, downward_flowing)
 	else
-		mt_add_item(pos_tip, "mcl_ocean:kelp")
+		minetest.add_item(pos_tip, "mcl_ocean:kelp")
 	end
-	if not mt_is_creative_enabled(player_name) then
+	if not minetest.is_creative_enabled(player_name) then
 		itemstack:take_item()
 	end
 
 	-- Initialize age and timer when it's planted on a new surface.
-	local pos_hash = mt_hash_node_position(pos_under)
+	local pos_hash = minetest.hash_node_position(pos_under)
 	if new_surface then
 		kelp.init_age(pos_under, nil, pos_hash)
 		kelp.init_timer(pos_under, pos_hash)
@@ -589,7 +554,7 @@ end
 
 
 function kelp.lbm_register_nodetimer(pos, node)
-	local pos_hash = mt_hash_node_position(pos)
+	local pos_hash = minetest.hash_node_position(pos)
 	kelp.init_age(pos, nil, pos_hash)
 	kelp.init_timer(pos, pos_hash)
 end
@@ -686,7 +651,7 @@ kelp.surface_docs = {
 function kelp.register_kelp_surface(surface, surface_deftemplate, surface_docs)
 	local name = surface.name
 	local nodename = surface.nodename
-	local def = mt_registered_nodes[nodename]
+	local def = minetest.registered_nodes[nodename]
 	local def_tiles = def.tiles
 
 	local surfacename = "mcl_ocean:kelp_"..name
@@ -716,7 +681,7 @@ function kelp.register_kelp_surface(surface, surface_deftemplate, surface_docs)
 	surface_deftemplate.tiles = surface_deftemplate.tiles or def_tiles
 	surface_deftemplate.inventory_image = surface_deftemplate.inventory_image or "("..def_tiles[1]..")^mcl_ocean_kelp_item.png"
 	surface_deftemplate.sounds = surface_deftemplate.sound or sounds
-	local falling_node = mt_get_item_group(nodename, "falling_node")
+	local falling_node = minetest.get_item_group(nodename, "falling_node")
 	surface_deftemplate.node_dig_prediction = surface_deftemplate.node_dig_prediction or nodename
 	surface_deftemplate.groups.falling_node = surface_deftemplate.groups.falling_node or falling_node
 	surface_deftemplate._mcl_falling_node_alternative = surface_deftemplate._mcl_falling_node_alternative or (falling_node and nodename or nil)

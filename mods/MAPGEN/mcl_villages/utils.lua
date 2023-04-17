@@ -1,5 +1,3 @@
-local get_node = mcl_vars.get_node
-
 -------------------------------------------------------------------------------
 -- function to copy tables
 -------------------------------------------------------------------------------
@@ -30,9 +28,9 @@ function settlements.find_surface(pos, wait)
 	-- check, in which direction to look for surface
 	local surface_node
 	if wait then
-		surface_node = get_node(p6, true, 10000000)
+		surface_node = mcl_vars.get_node(p6, true, 10000000)
 	else
-		surface_node = get_node(p6)
+		surface_node = mcl_vars.get_node(p6)
 	end
 	if surface_node.name=="air" or surface_node.name=="ignore" then
 		itter = -1
@@ -42,7 +40,7 @@ function settlements.find_surface(pos, wait)
 		-- Check Surface_node and Node above
 		--
 		if settlements.surface_mat[surface_node.name] then
-			local surface_node_plus_1 = get_node({ x=p6.x, y=p6.y+1, z=p6.z})
+			local surface_node_plus_1 = mcl_vars.get_node({ x=p6.x, y=p6.y+1, z=p6.z})
 			if surface_node_plus_1 and surface_node and
 				(string.find(surface_node_plus_1.name,"air") or
 				string.find(surface_node_plus_1.name,"snow") or
@@ -67,7 +65,7 @@ function settlements.find_surface(pos, wait)
 			return nil
 		end
 		cnt = cnt+1
-		surface_node = get_node(p6)
+		surface_node = mcl_vars.get_node(p6)
 	end
 	settlements.debug("find_surface5: cnt_max overflow")
 	return nil

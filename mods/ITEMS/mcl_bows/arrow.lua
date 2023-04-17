@@ -3,9 +3,6 @@ local S = minetest.get_translator(minetest.get_current_modname())
 local mod_target = minetest.get_modpath("mcl_target")
 local enable_pvp = minetest.settings:get_bool("enable_pvp")
 
-local math = math
-local vector = vector
-
 -- Time in seconds after which a stuck arrow is deleted
 local ARROW_TIMEOUT = 60
 -- Time after which stuck arrow is rechecked for being stuck

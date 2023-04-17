@@ -2,9 +2,6 @@
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local vector = vector
-local math = math
-
 --local WATER_ALPHA = 179
 local WATER_VISC = 1
 local LAVA_VISC = 7

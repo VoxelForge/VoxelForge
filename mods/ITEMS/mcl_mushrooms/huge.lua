@@ -1,7 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local vector = vector
-
 local template = {
 	groups = {
 		handy = 1, axey = 1, building_block = 1, material_wood = 1,

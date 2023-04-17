@@ -1,6 +1,3 @@
---these are lua locals, used for higher performance
-local minetest, math, vector, ipairs, pairs = minetest, math, vector, ipairs, pairs
-
 --this is used for the player pool in the sound buffer
 local pool = {}
 

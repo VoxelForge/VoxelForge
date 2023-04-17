@@ -1,8 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local math = math
-local vector = vector
-
 -- Time in seconds after which a stuck arrow is deleted
 local ARROW_TIMEOUT = 1
 -- Time after which stuck arrow is rechecked for being stuck

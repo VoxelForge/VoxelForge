@@ -2,8 +2,6 @@
 -- by kddekadenz
 -- License of code, textures & sounds: CC0
 
-local math = math
-
 mcl_dripping = {}
 
 

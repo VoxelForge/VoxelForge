@@ -1,5 +1,4 @@
 mcl_info = {}
-local format, pairs,ipairs,table,vector,minetest,mcl_info,tonumber,tostring = string.format,pairs,ipairs,table,vector,minetest,mcl_info,tonumber,tostring
 
 local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
@@ -163,7 +162,7 @@ mcl_info.register_debug_field("Biome",{
 		local biome_data = minetest.get_biome_data(pos)
 		local biome = biome_data and minetest.get_biome_name(biome_data.biome) or "No biome"
 		if biome_data then
-			return format("%s (%s), Humidity: %.1f, Temperature: %.1f",biome, biome_data.biome, biome_data.humidity, biome_data.heat)
+			return string.format("%s (%s), Humidity: %.1f, Temperature: %.1f",biome, biome_data.biome, biome_data.humidity, biome_data.heat)
 		end
 		return "No biome"
 	end
@@ -172,7 +171,7 @@ mcl_info.register_debug_field("Biome",{
 mcl_info.register_debug_field("Coords", {
 	level = 2,
 	func = function(pl, pos)
-		return format("x:%.1f y:%.1f z:%.1f", pos.x, pos.y, pos.z)
+		return string.format("x:%.1f y:%.1f z:%.1f", pos.x, pos.y, pos.z)
 	end
 })
 
@@ -182,23 +181,23 @@ mcl_info.register_debug_field("Location", {
 		local report_y = 0
 		-- overworld
 		if (pos.y >= mcl_vars.mg_overworld_min) and (pos.y <= mcl_vars.mg_overworld_max) then
-			return format("Overworld: x:%.1f y:%.1f z:%.1f", pos.x, pos.y, pos.z)
+			return string.format("Overworld: x:%.1f y:%.1f z:%.1f", pos.x, pos.y, pos.z)
 		end
 
 		-- nether
 		if (pos.y >= mcl_vars.mg_nether_min) and (pos.y <= mcl_vars.mg_nether_max) then
 			report_y = pos.y - mcl_vars.mg_nether_min
-			return format("Nether: x:%.1f y:%.1f z:%.1f", pos.x, report_y, pos.z)
+			return string.format("Nether: x:%.1f y:%.1f z:%.1f", pos.x, report_y, pos.z)
 		end
 
 		-- end
 		if (pos.y >= mcl_vars.mg_end_min) and (pos.y <= mcl_vars.mg_end_max) then
 			report_y = pos.y - mcl_vars.mg_end_min
-			return format("End: x:%.1f y:%.1f z:%.1f", pos.x, report_y, pos.z)
+			return string.format("End: x:%.1f y:%.1f z:%.1f", pos.x, report_y, pos.z)
 		end
 
 		-- outside of scoped bounds.
-		return format("Void: x:%.1f y:%.1f z:%.1f", pos.x, pos.y, pos.z)
+		return string.format("Void: x:%.1f y:%.1f z:%.1f", pos.x, pos.y, pos.z)
 
 	end
 })

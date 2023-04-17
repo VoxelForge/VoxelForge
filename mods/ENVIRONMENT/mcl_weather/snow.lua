@@ -1,5 +1,3 @@
-local get_connected_players = minetest.get_connected_players
-
 mcl_weather.snow = {}
 
 local PARTICLES_COUNT_SNOW = tonumber(minetest.settings:get("mcl_weather_snow_particles")) or 100
@@ -83,7 +81,7 @@ function mcl_weather.snow.set_sky_box()
 		{r=85, g=86, b=86},
 		{r=0, g=0, b=0}})
 	mcl_weather.skycolor.active = true
-	for _, player in pairs(get_connected_players()) do
+	for _, player in pairs(minetest.get_connected_players()) do
 		player:set_clouds({color="#ADADADE8"})
 	end
 	mcl_weather.skycolor.active = true
@@ -120,7 +118,7 @@ minetest.register_globalstep(function(dtime)
 		mcl_weather.snow.init_done = true
 	end
 
-	for _, player in pairs(get_connected_players()) do
+	for _, player in pairs(minetest.get_connected_players()) do
 		if mcl_weather.is_underwater(player) or not mcl_weather.has_snow(player:get_pos()) then
 			mcl_weather.remove_spawners_player(player)
 			mcl_weather.set_sky_box_clear(player)

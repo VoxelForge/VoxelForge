@@ -1,5 +1,4 @@
 local GRAVITY = tonumber(minetest.settings:get("movement_gravity"))
-local table = table
 
 --register stoppers for movestones/pistons
 

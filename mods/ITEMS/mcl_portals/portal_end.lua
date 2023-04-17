@@ -1,9 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local table = table
-local vector = vector
-local math = math
-
 local has_doc = minetest.get_modpath("doc")
 
 -- Parameters

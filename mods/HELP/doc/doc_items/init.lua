@@ -1,12 +1,6 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 local W = mcl_curry(S)
 
-local math = math
-local string = string
-
-local tostring = tostring
-local pairs = pairs
-
 doc.sub.items = {}
 
 -- Template texts

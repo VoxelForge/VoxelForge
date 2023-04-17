@@ -6,10 +6,6 @@ local huds = {}
 local dtimes = {}
 local dlimit = 3  -- HUD element will be hidden after this many seconds
 
-local math = math
-local string = string
-local tonumber = tonumber
-
 local hudbars_mod = minetest.get_modpath("hudbars")
 local xp_mod = minetest.get_modpath("mcl_experience")
 

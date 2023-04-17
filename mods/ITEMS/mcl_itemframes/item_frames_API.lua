@@ -19,8 +19,6 @@ if mcl_itemframes.DEBUG then
 end
 
 local S = minetest.get_translator(minetest.get_current_modname())
-local table = table
-local pairs = pairs
 
 if mcl_itemframes.DEBUG then
 	minetest.log("action", "[mcl_itemframes] API initialized.")
@@ -28,7 +26,6 @@ end
 
 local VISUAL_SIZE = 0.3
 local facedir = {}
-local pi = math.pi
 
 local glow_amount = 6 -- LIGHT_MAX is 15, but the items aren't supposed to be a light source.
 local frame_item_base = {}
@@ -59,14 +56,14 @@ local function update_roll(self, pos)
 	local rot = self:get_rotation()
 	local Radians = 0
 
-	-- Radians = Degrees * (pi / 180) degrees to radian formula
+	-- Radians = Degrees * (math.pi / 180) degrees to radian formula
 	-- Radian quick chart
 	-- One full revolution is equal to 2π rad (or) 360°.
 	-- 1° = 0.017453 radians and 1 rad = 57.2958°.
 	-- To convert an angle from degrees to radians, we multiply it by π/180°.
 	-- To convert an angle from radians to degrees, we multiply it by 180°/π.
 
-	Radians = new_roll_deg * (pi / 180)
+	Radians = new_roll_deg * (math.pi / 180)
 	rot.z = Radians
 
 	self:set_rotation(rot)
@@ -97,14 +94,14 @@ local function set_roll(self, faceDeg)
 	local rot = self:get_rotation()
 	local Radians = 0
 
-	-- Radians = Degrees * (pi / 180) degrees to radian formula
+	-- Radians = Degrees * (math.pi / 180) degrees to radian formula
 	-- Radian quick chart
 	-- One full revolution is equal to 2π rad (or) 360°.
 	-- 1° = 0.017453 radians and 1 rad = 57.2958°.
 	-- To convert an angle from degrees to radians, we multiply it by π/180°.
 	-- To convert an angle from radians to degrees, we multiply it by 180°/π.
 
-	Radians = new_roll_deg * (pi / 180)
+	Radians = new_roll_deg * (math.pi / 180)
 
 	rot.z = Radians
 
@@ -244,7 +241,7 @@ mcl_itemframes.update_item_entity = function(pos, node, param2)
 				minetest.log("[mcl_itemframes] Update_Generic_Item:\nFound Name in Registry: " .. found_name_to_use)
 			end
 		end
-		local yaw = pi * 2 - param2 * pi / 2
+		local yaw = math.pi * 2 - param2 * math.pi / 2
 		local map_id = item:get_meta():get_string("mcl_maps:id")
 		local map_id_entity = {}
 		local map_id_lua = {}

@@ -1,5 +1,4 @@
 local S = minetest.get_translator(minetest.get_current_modname())
-local minetest_get_meta = minetest.get_meta
 
 -- This helper function calls on_place_node callbacks.
 local function on_place_node(place_to, newnode,
@@ -172,14 +171,14 @@ function mcl_doors:register_door(name, def)
 			end
 
 			if def.only_placer_can_open then
-				local meta = minetest_get_meta(pt)
+				local meta = minetest.get_meta(pt)
 				meta:set_string("doors_owner", "")
-				meta = minetest_get_meta(pt2)
+				meta = minetest.get_meta(pt2)
 				meta:set_string("doors_owner", "")
 			end
 
-			local meta1 = minetest_get_meta(pt)
-			local meta2 = minetest_get_meta(pt2)
+			local meta1 = minetest.get_meta(pt)
+			local meta2 = minetest.get_meta(pt2)
 			-- save mirror state for the correct door
 			if mirrored then
 				meta1:set_int("is_mirrored", 1)
@@ -206,9 +205,9 @@ function mcl_doors:register_door(name, def)
 	local tb = def.tiles_bottom
 
 	local function on_open_close(pos, dir, check_name, replace, replace_dir)
-		local meta1 = minetest_get_meta(pos)
+		local meta1 = minetest.get_meta(pos)
 		pos.y = pos.y+dir
-		local meta2 = minetest_get_meta(pos)
+		local meta2 = minetest.get_meta(pos)
 
 		-- if name of other door is not the same as check_name -> return
 		if not minetest.get_node(pos).name == check_name  then
@@ -262,7 +261,7 @@ function mcl_doors:register_door(name, def)
 		if not def.only_placer_can_open then
 			return true
 		end
-		local meta = minetest_get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		local pn = player:get_player_name()
 		return meta:get_string("doors_owner") == pn
 	end
@@ -300,7 +299,7 @@ function mcl_doors:register_door(name, def)
 		sounds = def.sounds,
 
 		after_destruct = function(bottom, oldnode)
-			local meta_bottom = minetest_get_meta(bottom)
+			local meta_bottom = minetest.get_meta(bottom)
 			if meta_bottom:get_int("rotation") == 1 then
 				meta_bottom:set_int("rotation", 0)
 			else
@@ -320,13 +319,13 @@ function mcl_doors:register_door(name, def)
 
 		on_rotate = function(bottom, node, user, mode, param2)
 			if mode == screwdriver.ROTATE_FACE then
-				local meta_bottom = minetest_get_meta(bottom)
+				local meta_bottom = minetest.get_meta(bottom)
 				meta_bottom:set_int("rotation", 1)
 				node.param2 = screwdriver.rotate.facedir(bottom, node, mode)
 				minetest.swap_node(bottom, node)
 
 				local top = {x=bottom.x,y=bottom.y+1,z=bottom.z}
-				local meta_top = minetest_get_meta(top)
+				local meta_top = minetest.get_meta(top)
 				meta_top:set_int("rotation", 1)
 				node.name = name .."_t_1"
 				minetest.swap_node(top, node)
@@ -372,7 +371,7 @@ function mcl_doors:register_door(name, def)
 		sounds = def.sounds,
 
 		after_destruct = function(top, oldnode)
-			local meta_top = minetest_get_meta(top)
+			local meta_top = minetest.get_meta(top)
 			if meta_top:get_int("rotation") == 1 then
 				meta_top:set_int("rotation", 0)
 			else
@@ -392,13 +391,13 @@ function mcl_doors:register_door(name, def)
 
 		on_rotate = function(top, node, user, mode, param2)
 			if mode == screwdriver.ROTATE_FACE then
-				local meta_top = minetest_get_meta(top)
+				local meta_top = minetest.get_meta(top)
 				meta_top:set_int("rotation", 1)
 				node.param2 = screwdriver.rotate.facedir(top, node, mode)
 				minetest.swap_node(top, node)
 
 				local bottom = {x=top.x,y=top.y-1,z=top.z}
-				local meta_bottom = minetest_get_meta(bottom)
+				local meta_bottom = minetest.get_meta(bottom)
 				meta_bottom:set_int("rotation", 1)
 				node.name = name .."_b_1"
 				minetest.swap_node(bottom, node)
@@ -444,7 +443,7 @@ function mcl_doors:register_door(name, def)
 		sounds = def.sounds,
 
 		after_destruct = function(bottom, oldnode)
-			local meta_bottom = minetest_get_meta(bottom)
+			local meta_bottom = minetest.get_meta(bottom)
 			if meta_bottom:get_int("rotation") == 1 then
 				meta_bottom:set_int("rotation", 0)
 			else
@@ -464,13 +463,13 @@ function mcl_doors:register_door(name, def)
 
 		on_rotate = function(bottom, node, user, mode, param2)
 			if mode == screwdriver.ROTATE_FACE then
-				local meta_bottom = minetest_get_meta(bottom)
+				local meta_bottom = minetest.get_meta(bottom)
 				meta_bottom:set_int("rotation", 1)
 				node.param2 = screwdriver.rotate.facedir(bottom, node, mode)
 				minetest.swap_node(bottom, node)
 
 				local top = {x=bottom.x,y=bottom.y+1,z=bottom.z}
-				local meta_top = minetest_get_meta(top)
+				local meta_top = minetest.get_meta(top)
 				meta_top:set_int("rotation", 1)
 				node.name = name .."_t_2"
 				minetest.swap_node(top, node)
@@ -516,7 +515,7 @@ function mcl_doors:register_door(name, def)
 		sounds = def.sounds,
 
 		after_destruct = function(top, oldnode)
-			local meta_top = minetest_get_meta(top)
+			local meta_top = minetest.get_meta(top)
 			if meta_top:get_int("rotation") == 1 then
 				meta_top:set_int("rotation", 0)
 			else
@@ -536,13 +535,13 @@ function mcl_doors:register_door(name, def)
 
 		on_rotate = function(top, node, user, mode, param2)
 			if mode == screwdriver.ROTATE_FACE then
-				local meta_top = minetest_get_meta(top)
+				local meta_top = minetest.get_meta(top)
 				meta_top:set_int("rotation", 1)
 				node.param2 = screwdriver.rotate.facedir(top, node, mode)
 				minetest.swap_node(top, node)
 
 				local bottom = {x=top.x,y=top.y-1,z=top.z}
-				local meta_bottom = minetest_get_meta(bottom)
+				local meta_bottom = minetest.get_meta(bottom)
 				meta_bottom:set_int("rotation", 1)
 				node.name = name .."_b_2"
 				minetest.swap_node(bottom, node)

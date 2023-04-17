@@ -1,11 +1,4 @@
 -- register extra flavours of a base nodedef
-
-local get_connected_players = minetest.get_connected_players
-local get_node = minetest.get_node
-local vector = vector
-local ceil = math.ceil
-local pairs = pairs
-
 walkover = {}
 
 local on_walk = {}
@@ -29,11 +22,11 @@ local timer = 0
 minetest.register_globalstep(function(dtime)
 	timer = timer + dtime
 	if timer >= 0.6 then
-		for _, player in pairs(get_connected_players()) do
+		for _, player in pairs(minetest.get_connected_players()) do
 			local ppos = player:get_pos()
 			local npos = vector.add(ppos, vector.new(0, -0.1, 0))
 			if npos then
-				local node = get_node(npos)
+				local node = minetest.get_node(npos)
 				if node then
 					if on_walk[node.name] then
 						on_walk[node.name](npos, node, player)

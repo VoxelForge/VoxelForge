@@ -1,6 +1,3 @@
-local math = math
-local tostring = tostring
-
 mcl_farming.plant_lists = {}
 
 local plant_lists = {}

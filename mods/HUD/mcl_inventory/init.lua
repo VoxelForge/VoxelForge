@@ -193,10 +193,10 @@ dofile(minetest.get_modpath(minetest.get_current_modname()).."/creative.lua")
 
 mcl_player.register_on_visual_change(mcl_inventory.update_inventory_formspec)
 
-local mt_is_creative_enabled = minetest.is_creative_enabled
+local old_is_creative_enabled = minetest.is_creative_enabled
 
 function minetest.is_creative_enabled(name)
-	if mt_is_creative_enabled(name) then return true end
+	if old_is_creative_enabled(name) then return true end
 	if not name then return false end
 	local p = minetest.get_player_by_name(name)
 	if p then

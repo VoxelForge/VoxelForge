@@ -1,8 +1,6 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 local C = minetest.colorize
 
-local math = math
-
 mcl_jukebox = {}
 mcl_jukebox.registered_records = {}
 

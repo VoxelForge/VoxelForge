@@ -1,5 +1,3 @@
-local table = table
-
 -- Player state for public API
 mcl_playerinfo = {}
 
