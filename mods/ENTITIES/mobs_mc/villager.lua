@@ -263,7 +263,7 @@ local professions = {
 			},
 
 			{
-			{ { "mcl_core:emerald", 20, 20 }, { "mcl_mobs:nametag", 1, 1 } },
+			{ { "mcl_core:emerald", 20, 20 }, { "mcl_mobitems:nametag", 1, 1 } },
 			}
 		},
 	},

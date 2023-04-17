@@ -1,0 +1,6 @@
+# textdomain: mcl_mobitems
+Name Tag=命名牌
+A name tag is an item to name a mob.=命名牌是一個用於命名生物的物品
+Before you use the name tag, you need to set a name at an anvil. Then you can use the name tag to name a mob. This uses up the name tag.=在使用名字標籤之前，你需要在一個鐵砧上設置一個名字。然後你就可以用名字標籤來給生物命名。這會消耗命名牌。
+Give names to mobs=替生物命名
+Set name at anvil=在鐵砧上設置名字

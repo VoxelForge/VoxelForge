@@ -106,3 +106,9 @@ Golden horse armor can be worn by horses to increase their protection from harm.
 Diamond Horse Armor=
 Diamond horse armor can be worn by horses to greatly increase their protection from harm.=
 Place it on a horse to put on the horse armor. Donkeys and mules can't wear horse armor.=
+
+Name Tag=
+A name tag is an item to name a mob.=
+Before you use the name tag, you need to set a name at an anvil. Then you can use the name tag to name a mob. This uses up the name tag.=
+Give names to mobs=
+Set name at anvil=

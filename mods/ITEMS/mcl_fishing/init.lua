@@ -108,7 +108,7 @@ local fish = function(itemstack, player, pointed_thing)
 										{ itemstring = "mcl_fishing:fishing_rod", wear_min = 49144, wear_max = 65535, func = function(stack, pr)
 											mcl_enchanting.enchant_randomly(stack, 30, true, false, false, pr)
 										end }, -- 75%-100% damage
-										{ itemstring = "mcl_mobs:nametag", },
+										{ itemstring = "mcl_mobitems:nametag", },
 										{ itemstring = "mcl_mobitems:saddle", },
 										{ itemstring = "mcl_flowers:waterlily", },
 										{ itemstring = "mcl_mobitems:nautilus_shell", },

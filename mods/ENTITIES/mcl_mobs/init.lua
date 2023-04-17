@@ -52,7 +52,11 @@ local on_rightclick_prefix = function(self, clicker)
 	if extended_pet_control and self.tamed and self.owner == clicker:get_player_name() then
 		self:toggle_sit(clicker)
 	end
-	if not self.ignores_nametag and item:get_name() == "mcl_mobs:nametag" then
+
+	local item_name = item:get_name()
+	item_name = minetest.registered_aliases[item_name] or item_name
+
+	if not self.ignores_nametag and item_name == "mcl_mobitems:nametag" then
 
 		local tag = item:get_meta():get_string("name")
 		if tag ~= "" then
