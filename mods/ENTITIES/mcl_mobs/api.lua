@@ -81,7 +81,6 @@ function mob_class:get_staticdata()
 	-- remove mob when out of range unless tamed
 	if remove_far
 	and self.can_despawn
-	and self.remove_ok
 	and ((not self.nametag) or (self.nametag == ""))
 	and not self.tamed
 	and self.lifetimer <= 20 then
@@ -92,7 +91,6 @@ function mob_class:get_staticdata()
 		return "remove"-- nil
 	end
 
-	self.remove_ok = true
 	self.attack = nil
 	self.following = nil
 	self.state = "stand"
