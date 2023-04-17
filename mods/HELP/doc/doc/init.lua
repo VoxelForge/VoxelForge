@@ -2,7 +2,6 @@ local S = minetest.get_translator(minetest.get_current_modname())
 local F = function(f) return minetest.formspec_escape(S(f)) end
 
 local mod_central_messages = minetest.get_modpath("central_message")
-local mod_inventory_plus = minetest.get_modpath("inventory_plus")
 
 local math = math
 local colorize = minetest.colorize
@@ -663,12 +662,12 @@ function doc.formspec_core(tab)
 end
 
 function doc.formspec_main(playername)
-	local formstring = "textarea[0.35,0;"..doc.FORMSPEC.WIDTH..",1;;;"..minetest.formspec_escape(DOC_INTRO) .. "\n"
+	local formstring = "textarea[0.35,0;"..doc.FORMSPEC.WIDTH..",1.5;;;"..minetest.formspec_escape(DOC_INTRO) .. "\n"
 	local notify_checkbox_x, notify_checkbox_y
 	if doc.get_category_count() >= 1 then
 		formstring = formstring .. F("Please select a category you wish to learn more about:").."]"
 		if doc.get_category_count() <= (CATEGORYFIELDSIZE.WIDTH * CATEGORYFIELDSIZE.HEIGHT)  then
-			local y = 1
+			local y = 1.5
 			local x = 1
 			-- Show all categories in order
 			for c=1,#doc.data.category_order do
@@ -1104,11 +1103,6 @@ function doc.process_form(player,formname,fields)
 			local formspec = doc.formspec_core(3)..doc.formspec_entry(cid, eid, playername)
 			minetest.show_formspec(playername, "doc:entry", formspec)
 		end
-	else
-		if fields["doc_inventory_plus"] and mod_inventory_plus then
-			doc.show_doc(playername)
-			return
-		end
 	end
 end
 
@@ -1171,37 +1165,7 @@ minetest.register_on_joinplayer(function(player)
 			playerdata.stored_data.revealed_count[cid] = rc
 		end
 	end
-
-	-- Add button for Inventory++
-	if mod_inventory_plus then
-		inventory_plus.register_button(player, "doc_inventory_plus", S("Help"))
-	end
 end)
-
----[[ Add buttons for inventory mods ]]
-local function button_action(player)
-	doc.show_doc(player:get_player_name())
-end
-
--- Unified Inventory
-if minetest.get_modpath("unified_inventory") then
-	unified_inventory.register_button("doc", {
-		type = "image",
-		image = "doc_button_icon_hires.png",
-		tooltip = S("Help"),
-		action = button_action,
-	})
-end
-
--- sfinv_buttons
-if minetest.get_modpath("sfinv_buttons") then
-	sfinv_buttons.register_button("doc", {
-		image = "doc_button_icon_lores.png",
-		tooltip = S("Collection of help texts"),
-		title = S("Help"),
-		action = button_action,
-	})
-end
 
 
 minetest.register_privilege("help_reveal", {
