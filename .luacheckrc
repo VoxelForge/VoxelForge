@@ -23,6 +23,7 @@ read_globals = {
 			"indexof",
 			"insert_all",
 			"key_value_swap",
+			"shuffle",
 		}
 	},
 
@@ -37,7 +38,8 @@ read_globals = {
 		fields = {
 			"hypot",
 			"sign",
-			"factorial"
+			"factorial",
+			"round",
 		}
 	},
     ------
