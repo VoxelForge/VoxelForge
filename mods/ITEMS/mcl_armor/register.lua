@@ -2,11 +2,12 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 mcl_armor.register_set({
 	name = "leather",
-	description = "Leather",
+	description = "Leath",
 	descriptions = {
-		head = "Cap",
-		torso = "Tunic",
-		legs = "Pants",
+		head = S("Leather Cap"),
+		torso = S("Leather Tunic"),
+		legs = S("Leather Pants"),
+		boots = S("Leather Boots"),
 	},
 	durability = 80,
 	enchantability = 15,
@@ -21,7 +22,12 @@ mcl_armor.register_set({
 
 mcl_armor.register_set({
 	name = "gold",
-	description = "Golden",
+	descriptions = {
+		head = S("Golden Helmet"),
+		torso = S("Golden Chestplate"),
+		legs = S("Golden Leggings"),
+		boots = S("Golden Boots"),
+	},
 	durability = 112,
 	enchantability = 25,
 	points = {
@@ -38,7 +44,12 @@ mcl_armor.register_set({
 
 mcl_armor.register_set({
 	name = "chain",
-	description = "Chain",
+	descriptions = {
+		head = S("Chainmail Helmet"),
+		torso = S("Chainmail Chestplate"),
+		legs = S("Chainmail Leggings"),
+		boots = S("Chainmail Boots"),
+	},
 	durability = 240,
 	enchantability = 12,
 	points = {
@@ -55,7 +66,12 @@ mcl_armor.register_set({
 
 mcl_armor.register_set({
 	name = "iron",
-	description = "Iron",
+	descriptions = {
+		head = S("Iron Helmet"),
+		torso = S("Iron Chestplate"),
+		legs = S("Iron Leggings"),
+		boots = S("Iron Boots"),
+	},
 	durability = 240,
 	enchantability = 9,
 	points = {
@@ -72,7 +88,12 @@ mcl_armor.register_set({
 
 mcl_armor.register_set({
 	name = "diamond",
-	description = "Diamond",
+	descriptions = {
+		head = S("Diamond Helmet"),
+		torso = S("Diamond Chestplate"),
+		legs = S("Diamond Leggings"),
+		boots = S("Diamond Boots"),
+	},
 	durability = 528,
 	enchantability = 10,
 	points = {
@@ -91,8 +112,12 @@ mcl_armor.register_set({
 
 mcl_armor.register_set({
 	name = "netherite",
-	description = "Netherite",
-	durability = 555,
+	descriptions = {
+		head = S("Netherite Helmet"),
+		torso = S("Netherite Chestplate"),
+		legs = S("Netherite Leggings"),
+		boots = S("Netherite Boots"),
+	},	durability = 555,
 	enchantability = 10,
 	points = {
 		head = 3,

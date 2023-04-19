@@ -87,8 +87,6 @@ end
 
 function mcl_armor.register_set(def)
 	local modname = minetest.get_current_modname()
-	local S = minetest.get_translator(modname)
-	local descriptions = def.descriptions or {}
 	local groups = def.groups or {}
 	local on_equip_callbacks = def.on_equip_callbacks or {}
 	local on_unequip_callbacks = def.on_unequip_callbacks or {}
@@ -120,7 +118,7 @@ function mcl_armor.register_set(def)
 		end
 
 		minetest.register_tool(itemstring, {
-			description = S(def.description .. " " .. (descriptions[name] or element.description)),
+			description = def.descriptions[name],
 			_doc_items_longdesc = mcl_armor.longdesc,
 			_doc_items_usagehelp = mcl_armor.usage,
 			inventory_image = modname .. "_inv_" .. itemname .. ".png",

@@ -1,8 +1,5 @@
 # textdomain: mcl_enchanting
 
-
-### enchantments.lua ###
-
 Arrows passes through multiple objects.=
 Arrows set target on fire.=
 Bane of Arthropods=
@@ -72,14 +69,10 @@ Turns water beneath the player into frosted ice and prevents the damage from mag
 
 Unbreaking=
 
-### engine.lua ###
-
 @1 Enchantment Levels=
 @1 Lapis Lazuli=
 Inventory=
 Level requirement: @1=
-
-### init.lua ###
 
 '@1' is not a valid number=
 '@1' is not a valid number.=
@@ -122,15 +115,11 @@ To increase the enchantment strength, place bookshelves around the enchanting ta
 Usage: /enchant <player> <enchantment> [<level>]=
 Usage: /forceenchant <player> <enchantment> [<level>]=
 
-
-##### not used anymore #####
-
-# textdomain: mcl_enchanting
 Aqua Affinity=
 Increases underwater mining speed.=
 Blast Protection=
 Reduces explosion damage and knockback.=
-Curse of Binding=Malédiction du lien éternel
+Curse of Binding=
 Item cannot be removed from armor slots except due to death, breaking or in Creative Mode.=
 Feather Falling=
 Reduces fall damage.=

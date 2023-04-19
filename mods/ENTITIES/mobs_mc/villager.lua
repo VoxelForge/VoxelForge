@@ -18,7 +18,6 @@
 local weather_mod = minetest.get_modpath("mcl_weather")
 
 local S = minetest.get_translator("mobs_mc")
-local N = function(s) return s end
 local F = minetest.formspec_escape
 
 -- playername-indexed table containing the previously used tradenum
@@ -71,11 +70,11 @@ if minetest.get_mapgen_setting("mg_name") == "v6" then
 end
 
 local tiernames = {
-	"Novice",
-	"Apprentice",
-	"Journeyman",
-	"Expert",
-	"Master",
+	S("Novice"),
+	S("Apprentice"),
+	S("Journeyman"),
+	S("Expert"),
+	S("Master")
 }
 
 local badges = {
@@ -88,7 +87,7 @@ local badges = {
 
 local professions = {
 	unemployed = {
-		name = N("Unemployed"),
+		name = S("Unemployed"),
 		textures = {
 				"mobs_mc_villager.png",
 				"mobs_mc_villager.png",
@@ -96,7 +95,7 @@ local professions = {
 		trades = nil,
 	},
 	farmer = {
-		name = N("Farmer"),
+		name = S("Farmer"),
 		texture = "mobs_mc_villager_farmer.png",
 		jobsite = "mcl_composters:composter",
 		trades = {
@@ -130,7 +129,7 @@ local professions = {
 		}
 	},
 	fisherman = {
-		name = N("Fisherman"),
+		name = S("Fisherman"),
 		texture = "mobs_mc_villager_fisherman.png",
 		jobsite = "mcl_barrels:barrel_closed",
 		trades = {
@@ -164,7 +163,7 @@ local professions = {
 		},
 	},
 	fletcher = {
-		name = N("Fletcher"),
+		name = S("Fletcher"),
 		texture = "mobs_mc_villager_fletcher.png",
 		jobsite = "mcl_fletching_table:fletching_table",
 		trades = {
@@ -203,7 +202,7 @@ local professions = {
 		}
 	},
 	shepherd ={
-		name = N("Shepherd"),
+		name = S("Shepherd"),
 		texture =  "mobs_mc_villager_sheperd.png",
 		jobsite = "mcl_loom:loom",
 		trades = {
@@ -233,7 +232,7 @@ local professions = {
 		},
 	},
 	librarian = {
-		name = N("Librarian"),
+		name = S("Librarian"),
 		texture = "mobs_mc_villager_librarian.png",
 		jobsite = "mcl_books:bookshelf", --FIXME: lectern
 		trades = {
@@ -268,7 +267,7 @@ local professions = {
 		},
 	},
 	cartographer = {
-		name = N("Cartographer"),
+		name = S("Cartographer"),
 		texture = "mobs_mc_villager_cartographer.png",
 		jobsite = "mcl_cartography_table:cartography_table",
 		trades = {
@@ -311,7 +310,7 @@ local professions = {
 		},
 	},
 	armorer = {
-		name = N("Armorer"),
+		name = S("Armorer"),
 		texture = "mobs_mc_villager_armorer.png",
 		jobsite = "mcl_blast_furnace:blast_furnace",
 		trades = {
@@ -348,7 +347,7 @@ local professions = {
 		},
 	},
 	leatherworker = {
-		name = N("Leatherworker"),
+		name = S("Leatherworker"),
 		texture = "mobs_mc_villager_leatherworker.png",
 		jobsite = "mcl_cauldrons:cauldron",
 		trades = {
@@ -377,7 +376,7 @@ local professions = {
 		},
 	},
 	butcher = {
-		name = N("Butcher"),
+		name = S("Butcher"),
 		texture = "mobs_mc_villager_butcher.png",
 		jobsite = "mcl_smoker:smoker",
 		trades = {
@@ -407,7 +406,7 @@ local professions = {
 		},
 	},
 	weapon_smith = {
-		name = N("Weapon Smith"),
+		name = S("Weapon Smith"),
 		texture = "mobs_mc_villager_weaponsmith.png",
 		jobsite = "mcl_grindstone:grindstone",
 		trades = {
@@ -435,7 +434,7 @@ local professions = {
 		},
 	},
 	tool_smith = {
-		name = N("Tool Smith"),
+		name = S("Tool Smith"),
 		texture = "mobs_mc_villager_toolsmith.png",
 		jobsite = "mcl_smithing_table:table",
 		trades = {
@@ -469,7 +468,7 @@ local professions = {
 		},
 	},
 	cleric = {
-		name = N("Cleric"),
+		name = S("Cleric"),
 		texture = "mobs_mc_villager_priest.png",
 		jobsite = "mcl_brewing:stand_000",
 		trades = {
@@ -498,7 +497,7 @@ local professions = {
 		},
 	},
 	mason =	{
-	       name = N("Mason"),
+	       name = S("Mason"),
 	       texture = "mobs_mc_villager_mason.png",
                jobsite = "mcl_stonecutter:stonecutter",
 	       trades =  {
@@ -545,7 +544,7 @@ local professions = {
 		},
 	},
 	nitwit = {
-		name = N("Nitwit"),
+		name = S("Nitwit"),
 		texture = "mobs_mc_villager_nitwit.png",
 		-- No trades for nitwit
 		trades = nil,
@@ -1489,17 +1488,12 @@ local function show_trade_formspec(playername, trader, tradenum)
 		w2_formspec = "item_image[3,1;1,1;"..wanted2:to_string().."]"
 		.."tooltip[3,1;0.8,0.8;"..F(wanted2:get_description()).."]"
 	end
-	local tiername = tiernames[trader._max_trade_tier]
-	if tiername then
-		tiername = S(tiername)
-	else
-		tiername = S("Master")
-	end
+	local tiername = tiernames[trader._max_trade_tier] or S("Master")
 	local formspec =
 	"size[9,8.75]"
 	.."background[-0.19,-0.25;9.41,9.49;mobs_mc_trading_formspec_bg.png]"
 	..disabled_img
-.."label[3,0;"..F(minetest.colorize("#313131", S(profession).." - "..tiername)) .."]"
+.."label[3,0;"..F(minetest.colorize("#313131", profession.." - "..tiername)) .."]"
 	.."list[current_player;main;0,4.5;9,3;9]"
 	.."list[current_player;main;0,7.74;9,1;]"
 	..b_prev..b_next

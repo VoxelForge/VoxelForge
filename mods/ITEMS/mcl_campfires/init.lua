@@ -11,14 +11,14 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local campfires = {
-	{ name = "Campfire", lightlevel = 14, techname = "campfire", damage = 1, drops = "mcl_core:charcoal_lump 2" },
-	{ name = "Soul Campfire", lightlevel = 10, techname = "soul_campfire", damage = 2, drops = "mcl_blackstone:soul_soil" },
+	{ name = S("Campfire"), lightlevel = 14, techname = "campfire", damage = 1, drops = "mcl_core:charcoal_lump 2" },
+	{ name = S("Soul Campfire"), lightlevel = 10, techname = "soul_campfire", damage = 2, drops = "mcl_blackstone:soul_soil" },
 }
 
 for _, campfire in pairs(campfires) do
 -- Define Campfire
 	minetest.register_node("mcl_campfires:" .. campfire.techname, {
-		description = S(campfire.name),
+		description = campfire.name,
 		_tt_help = S("Cooks food and keeps bees happy."),
 		_doc_items_longdesc = S("Campfires have multiple uses, including keeping bees happy, cooking raw meat and fish, and as a trap."),
 		inventory_image = "mcl_campfires_" .. campfire.techname .. "_inv.png",
@@ -52,7 +52,7 @@ for _, campfire in pairs(campfires) do
 
 	--Define Lit Campfire
 	minetest.register_node("mcl_campfires:" .. campfire.techname .. "_lit", {
-		description = S(campfire.name),
+		description = campfire.name,
 		_tt_help = S("Cooks food and keeps bees happy."),
 		_doc_items_longdesc = S("Campfires have multiple uses, including keeping bees happy, cooking raw meat and fish, and as a trap."),
 		inventory_image = "mcl_campfires_" .. campfire.techname .. "_inv.png",

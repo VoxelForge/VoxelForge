@@ -20,7 +20,7 @@ local get_player_by_name = M.get_player_by_name
 local serialize, deserialize = M.serialize, M.deserialize
 
 local ESC = M.formspec_escape
-local S = M.get_translator("mcl_craftguide")
+local S = minetest.get_translator("mcl_craftguide")
 
 local maxn, sort, concat, insert, copy =
 	table.maxn, table.sort, table.concat, table.insert,

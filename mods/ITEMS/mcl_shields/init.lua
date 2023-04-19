@@ -429,10 +429,29 @@ minetest.register_craft({
 	}
 })
 
-for _, colortab in pairs(mcl_banners.colors) do
+local shield_colors = {
+	["unicolor_white"] =      S("White Shield"),
+	["unicolor_darkgrey"] =   S("Grey Shield"),
+	["unicolor_grey"] =       S("Light Grey Shield"),
+	["unicolor_black"] =      S("Black Shield"),
+	["unicolor_red"] =        S("Red Shield"),
+	["unicolor_yellow"] =     S("Yellow Shield"),
+	["unicolor_dark_green"] = S("Green Shield"),
+	["unicolor_cyan"] =       S("Cyan Shield"),
+	["unicolor_blue"] =       S("Blue Shield"),
+	["unicolor_red_violet"] = S("Magenta Shield"),
+	["unicolor_orange"] =     S("Orange Shield"),
+	["unicolor_violet"] =     S("Violet Shield"),
+	["unicolor_brown"] =      S("Brown Shield"),
+	["unicolor_pink"] =       S("Pink Shield"),
+	["unicolor_lime"] =       S("Lime Shield"),
+	["unicolor_light_blue"] = S("Light Blue Shield"),
+}
+
+for colorkey, colortab in pairs(mcl_banners.colors) do
 	local color = colortab[1]
 	minetest.register_tool("mcl_shields:shield_" .. color, {
-		description = S(colortab[6] .. " Shield"),
+		description = shield_colors[colorkey],
 		_doc_items_longdesc = S("A shield is a tool used for protecting the player against attacks."),
 		inventory_image = "mcl_shield.png^(mcl_shield_item_overlay.png^[colorize:" .. colortab[4] ..")",
 		stack_max = 1,

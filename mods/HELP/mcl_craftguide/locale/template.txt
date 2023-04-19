@@ -1,4 +1,4 @@
-# textdomain: craftguide
+# textdomain: mcl_craftguide
 Any shulker box=
 Any wool=
 Any wood planks=

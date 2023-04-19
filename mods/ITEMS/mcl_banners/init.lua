@@ -1,7 +1,6 @@
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
-local N = function(s) return s end
 
 local mod_mcl_core = minetest.get_modpath("mcl_core")
 local mod_doc = minetest.get_modpath("doc")
@@ -22,22 +21,22 @@ mcl_banners = {}
 mcl_banners.colors = {
 	-- Format:
 	-- [ID] = { banner description, wool, unified dyes color group, overlay color, dye, color name for emblazonings }
-	["unicolor_white"] =      {"white",      S("White Banner"),      "mcl_wool:white", "#FFFFFF", "mcl_dye:white", N("White") },
-	["unicolor_darkgrey"] =   {"grey",       S("Grey Banner"),       "mcl_wool:grey", "#303030", "mcl_dye:dark_grey", N("Grey") },
-	["unicolor_grey"] =       {"silver",     S("Light Grey Banner"), "mcl_wool:silver", "#5B5B5B", "mcl_dye:grey", N("Light Grey") },
-	["unicolor_black"] =      {"black",      S("Black Banner"),      "mcl_wool:black", "#000000", "mcl_dye:black", N("Black") },
-	["unicolor_red"] =        {"red",        S("Red Banner"),        "mcl_wool:red", "#BC0000", "mcl_dye:red", N("Red") },
-	["unicolor_yellow"] =     {"yellow",     S("Yellow Banner"),     "mcl_wool:yellow", "#E6CD00", "mcl_dye:yellow", N("Yellow") },
-	["unicolor_dark_green"] = {"green",      S("Green Banner"),      "mcl_wool:green", "#006000", "mcl_dye:dark_green", N("Green") },
-	["unicolor_cyan"] =       {"cyan",       S("Cyan Banner"),       "mcl_wool:cyan", "#00ACAC", "mcl_dye:cyan", N("Cyan") },
-	["unicolor_blue"] =       {"blue",       S("Blue Banner"),       "mcl_wool:blue", "#0000AC", "mcl_dye:blue", N("Blue") },
-	["unicolor_red_violet"] = {"magenta",    S("Magenta Banner"),    "mcl_wool:magenta", "#AC007C", "mcl_dye:magenta", N("Magenta")},
-	["unicolor_orange"] =     {"orange",     S("Orange Banner"),     "mcl_wool:orange", "#E67300", "mcl_dye:orange", N("Orange") },
-	["unicolor_violet"] =     {"purple",     S("Purple Banner"),     "mcl_wool:purple", "#6400AC", "mcl_dye:violet", N("Violet") },
-	["unicolor_brown"] =      {"brown",      S("Brown Banner"),      "mcl_wool:brown", "#603000", "mcl_dye:brown", N("Brown") },
-	["unicolor_pink"] =       {"pink",       S("Pink Banner"),       "mcl_wool:pink", "#DE557C", "mcl_dye:pink", N("Pink") },
-	["unicolor_lime"] =       {"lime",       S("Lime Banner"),       "mcl_wool:lime", "#30AC00", "mcl_dye:green", N("Lime") },
-	["unicolor_light_blue"] = {"light_blue", S("Light Blue Banner"), "mcl_wool:light_blue", "#4040CF", "mcl_dye:lightblue", N("Light Blue") },
+	["unicolor_white"] =      {"white",      S("White Banner"),      "mcl_wool:white", "#FFFFFF", "mcl_dye:white", S("White") },
+	["unicolor_darkgrey"] =   {"grey",       S("Grey Banner"),       "mcl_wool:grey", "#303030", "mcl_dye:dark_grey", S("Grey") },
+	["unicolor_grey"] =       {"silver",     S("Light Grey Banner"), "mcl_wool:silver", "#5B5B5B", "mcl_dye:grey", S("Light Grey") },
+	["unicolor_black"] =      {"black",      S("Black Banner"),      "mcl_wool:black", "#000000", "mcl_dye:black", S("Black") },
+	["unicolor_red"] =        {"red",        S("Red Banner"),        "mcl_wool:red", "#BC0000", "mcl_dye:red", S("Red") },
+	["unicolor_yellow"] =     {"yellow",     S("Yellow Banner"),     "mcl_wool:yellow", "#E6CD00", "mcl_dye:yellow", S("Yellow") },
+	["unicolor_dark_green"] = {"green",      S("Green Banner"),      "mcl_wool:green", "#006000", "mcl_dye:dark_green", S("Green") },
+	["unicolor_cyan"] =       {"cyan",       S("Cyan Banner"),       "mcl_wool:cyan", "#00ACAC", "mcl_dye:cyan", S("Cyan") },
+	["unicolor_blue"] =       {"blue",       S("Blue Banner"),       "mcl_wool:blue", "#0000AC", "mcl_dye:blue", S("Blue") },
+	["unicolor_red_violet"] = {"magenta",    S("Magenta Banner"),    "mcl_wool:magenta", "#AC007C", "mcl_dye:magenta", S("Magenta")},
+	["unicolor_orange"] =     {"orange",     S("Orange Banner"),     "mcl_wool:orange", "#E67300", "mcl_dye:orange", S("Orange") },
+	["unicolor_violet"] =     {"purple",     S("Purple Banner"),     "mcl_wool:purple", "#6400AC", "mcl_dye:violet", S("Violet") },
+	["unicolor_brown"] =      {"brown",      S("Brown Banner"),      "mcl_wool:brown", "#603000", "mcl_dye:brown", S("Brown") },
+	["unicolor_pink"] =       {"pink",       S("Pink Banner"),       "mcl_wool:pink", "#DE557C", "mcl_dye:pink", S("Pink") },
+	["unicolor_lime"] =       {"lime",       S("Lime Banner"),       "mcl_wool:lime", "#30AC00", "mcl_dye:green", S("Lime") },
+	["unicolor_light_blue"] = {"light_blue", S("Light Blue Banner"), "mcl_wool:light_blue", "#4040CF", "mcl_dye:lightblue", S("Light Blue") },
 }
 
 

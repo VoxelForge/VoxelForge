@@ -532,9 +532,9 @@ end
 ---
 --- _name: the sign's name suffix, such as "_dark" or "_red", etc., appended to "wall_sign" or "standing_sign"
 ---
---- ttsign: the tool tip of the sign that gets translated. Shown when the mouse hovers the inventory sign.
+--- description: the tool tip of the sign. Shown when the mouse hovers the inventory sign.
 --- For example: the basic, default oak (wood) sign is just "Sign"; and a spruce sign would be "Spruce Sign"
-function mcl_signs.register_sign (modname, color, _name, ttsign)
+function mcl_signs.register_sign (modname, color, _name, description)
 	local mod_name_pass = false
 	if modname ~= "" and modname ~= "false" then
 		if minetest.get_modpath(modname) then
@@ -551,7 +551,7 @@ function mcl_signs.register_sign (modname, color, _name, ttsign)
 	end
 
 	new_sign = table.copy(mcl_signs.wall_standard)
-	new_sign.description = S(ttsign)
+	new_sign.description = description
 
 	new_sign.wield_image = "(default_sign.png^[multiply:" .. color .. ")"
 	new_sign.tiles = { "(mcl_signs_sign.png^[multiply:" .. color .. ")" }
@@ -783,9 +783,9 @@ end
 ---
 --- inventory_image: the image used for in-inventory and in hand.
 ---
---- ttsign: the tool tip of the sign that gets translated. Shown when the mouse hovers the inventory sign.
+--- description: the tool tip of the sign. Shown when the mouse hovers the inventory sign.
 --- For example: the basic, default oak (wood) sign is just "Sign"; and a spruce sign would be "Spruce Sign"
-function mcl_signs.register_sign_custom (modname, _name, tiles, color, inventory_image, wield_image, ttsign)
+function mcl_signs.register_sign_custom (modname, _name, tiles, color, inventory_image, wield_image, description)
 	local mod_name_pass = false
 	if modname ~= "" and modname ~= "false" then
 		if minetest.get_modpath(modname) then
@@ -802,7 +802,7 @@ function mcl_signs.register_sign_custom (modname, _name, tiles, color, inventory
 	new_sign.wield_image = "(" .. wield_image .. "^[multiply:" .. color .. ")"
 	new_sign.tiles = { "(" .. tiles .. "^[multiply:" .. color .. ")" }
 	new_sign.inventory_image = "(" .. inventory_image .. "^[multiply:" .. color .. ")"
-	new_sign.description = S(ttsign)
+	new_sign.description = description
 	-- currently have to do this, because of how the base node placement works.
 	new_sign.on_place = function(itemstack, placer, pointed_thing)
 		local above = pointed_thing.above
@@ -997,9 +997,9 @@ end
 ---
 --- _name: the sign's name suffix, such as "_dark" or "_red", etc., appended to "wall_sign" or "standing_sign"
 ---
---- ttsign: the tool tip of the sign that gets translated. Shown when the mouse hovers the inventory sign.
+--- description: the tool tip of the sign. Shown when the mouse hovers the inventory sign.
 --- For example: the basic, default oak (wood) sign is just "Sign"; and a spruce sign would be "Spruce Sign"
-function mcl_signs.reregister_sign (modname, color, _name, ttsign)
+function mcl_signs.reregister_sign (modname, color, _name, description)
 	local mod_name_pass = false
 	if modname ~= "" and modname ~= "false" then
 		if minetest.get_modpath(modname) then
@@ -1016,7 +1016,7 @@ function mcl_signs.reregister_sign (modname, color, _name, ttsign)
 	end
 
 	new_sign = table.copy(mcl_signs.wall_standard)
-	new_sign.description = S(ttsign)
+	new_sign.description = description
 
 	new_sign.wield_image = "(default_sign.png^[multiply:" .. color .. ")"
 	new_sign.tiles = { "(mcl_signs_sign.png^[multiply:" .. color .. ")" }
@@ -1241,9 +1241,9 @@ end
 ---
 --- inventory_image: the image used for in-inventory and in hand.
 ---
---- ttsign: the tool tip of the sign that gets translated. Shown when the mouse hovers the inventory sign.
+--- description: the tool tip of the sign. Shown when the mouse hovers the inventory sign.
 --- For example: the basic, default oak (wood) sign is just "Sign"; and a spruce sign would be "Spruce Sign"
-function mcl_signs.reregister_sign_custom (modname, _name, tiles, color, inventory_image, wield_image, ttsign)
+function mcl_signs.reregister_sign_custom (modname, _name, tiles, color, inventory_image, wield_image, description)
 	local mod_name_pass = false
 	if modname ~= "" and modname ~= "false" then
 		if minetest.get_modpath(modname) then
@@ -1260,7 +1260,7 @@ function mcl_signs.reregister_sign_custom (modname, _name, tiles, color, invento
 	new_sign.wield_image = "(" .. wield_image .. "^[multiply:" .. color .. ")"
 	new_sign.tiles = { "(" .. tiles .. "^[multiply:" .. color .. ")" }
 	new_sign.inventory_image = "(" .. inventory_image .. "^[multiply:" .. color .. ")"
-	new_sign.description = S(ttsign)
+	new_sign.description = description
 	-- currently have to do this, because of how the base node placement works.
 	new_sign.on_place = function(itemstack, placer, pointed_thing)
 		local above = pointed_thing.above

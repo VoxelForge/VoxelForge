@@ -2,7 +2,7 @@ local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 
 local S = minetest.get_translator(modname)
-local N = function(s) return s end
+local W = mcl_curry(S)
 
 local math = math
 local table = table
@@ -82,13 +82,7 @@ local function make_label(format_string, format_string_config, label, start_valu
 			end
 		end
 	end
-	local ret
-	if format_string_config.textdomain then
-		ret = minetest.translate(format_string_config.textdomain, format_string, unpack(params))
-	else
-		ret = S(format_string, unpack(params))
-	end
-	return ret
+	return format_string(unpack(params))
 end
 
 function hb.value_to_barlength(value, max)
@@ -164,7 +158,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, direction, 
 	end
 
 	if format_string == nil then
-		format_string = N("@1: @2/@3")
+		format_string = W("@1: @2/@3")
 	end
 	if format_string_config == nil then
 		format_string_config = {}
