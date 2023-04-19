@@ -92,7 +92,7 @@ local skeleton = {
 	jock = "mobs_mc:spider",
 	on_spawn = function(self)
 		minetest.after(1,function()
-			if self and self.object then
+			if self and self.object and self.object:get_pos() then
 				if math.random(100) == 1 or self.jockey == true then -- 1% like from MCwiki
 					self.jockey = true
 					local jock = minetest.add_entity(self.object:get_pos(), "mobs_mc:spider")
