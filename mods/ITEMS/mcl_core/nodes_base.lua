@@ -89,7 +89,8 @@ minetest.register_node("mcl_core:stone_with_gold", {
 
 local redstone_timer = 68.28
 local function redstone_ore_activate(pos, node, puncher, pointed_thing)
-	minetest.swap_node(pos, {name="mcl_core:stone_with_redstone_lit"})
+	local nodedef = minetest.registered_nodes[minetest.get_node(pos).name]
+	minetest.swap_node(pos, {name=nodedef._mcl_ore_lit})
 	local t = minetest.get_node_timer(pos)
 	t:start(redstone_timer)
 	if puncher and pointed_thing then
@@ -126,7 +127,8 @@ minetest.register_node("mcl_core:stone_with_redstone", {
 		items = {"mesecons:redstone"},
 		min_count = 4,
 		max_count = 5,
-	}
+	},
+	_mcl_ore_lit = "mcl_core:stone_with_redstone_lit",
 })
 
 local function redstone_ore_reactivate(pos, node, puncher, pointed_thing)
@@ -164,7 +166,8 @@ minetest.register_node("mcl_core:stone_with_redstone_lit", {
 	on_walk_over = redstone_ore_reactivate, -- Uses walkover mod
 	-- Turn back to normal node after some time has passed
 	on_timer = function(pos, elapsed)
-		minetest.swap_node(pos, {name="mcl_core:stone_with_redstone"})
+		local nodedef = minetest.registered_nodes[minetest.get_node(pos).name]
+		minetest.swap_node(pos, {name=nodedef._mcl_ore_unlit})
 	end,
 	_mcl_blast_resistance = 3,
 	_mcl_hardness = 3,
@@ -174,7 +177,8 @@ minetest.register_node("mcl_core:stone_with_redstone_lit", {
 		items = {"mesecons:redstone"},
 		min_count = 4,
 		max_count = 5,
-	}
+	},
+	_mcl_ore_unlit = "mcl_core:stone_with_redstone",
 })
 
 minetest.register_node("mcl_core:stone_with_lapis", {
