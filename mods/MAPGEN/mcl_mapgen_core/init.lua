@@ -385,10 +385,6 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 	mcl_mapgen_core.register_generator("block_fixes", block_fixes, nil, 9999, true)
 end
 
-if mg_name == "v6" then
-	dofile(modpath.."/v6.lua")
-end
-
 -- This should be moved to mcl_structures eventually if the dependencies can be sorted out.
 mcl_mapgen_core.register_generator("structures",nil, function(minp, maxp, blockseed)
 	local gennotify = minetest.get_mapgen_object("gennotify")
