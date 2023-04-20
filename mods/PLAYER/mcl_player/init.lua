@@ -152,10 +152,12 @@ function mcl_player.get_player_formspec_model(player, x, y, w, h, fsname)
 	local name = player:get_player_name()
 	local model = player_model[name]
 	local anim = models[model].animations[player_anim[name]]
-	local textures = player_textures[name]
+	local textures = table.copy(player_textures[name])
 	if not player_visible[name] then
-		textures = table.copy(textures)
 		textures[1] = "blank.png"
+	end
+	for k,v in pairs(textures) do
+		textures[k] = minetest.formspec_escape(v)
 	end
 	return sf("model[%s,%s;%s,%s;%s;%s;%s;0,180;false;false;%s,%s]", x, y, w, h, fsname, model,
 		table.concat(textures, ","), anim.x, anim.y)
