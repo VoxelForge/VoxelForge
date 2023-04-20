@@ -99,11 +99,7 @@ function mcl_heads.deftemplate.on_place(itemstack, placer, pointed_thing)
 	return itemstack
 end
 
-mcl_heads.deftemplate_wall = {
-
-}
-
-function mcl_heads.deftemplate_wall.on_rotate(pos, node, user, mode, new_param2)
+local function wall_on_rotate(pos, node, user, mode, new_param2)
 	if mode == screwdriver.ROTATE_AXIS then
 		node.name = string.sub(node.name, 1, string.len(node.name)-5)
 		node.param2 = minetest.dir_to_facedir(minetest.wallmounted_to_dir(node.param2))
@@ -183,6 +179,7 @@ function mcl_heads.register_head(head_def)
 		},
 		_doc_items_create_entry = false,
 		-- Note: -x coords go right per-pixel, -y coords go down per-pixel
+		on_rotate = wall_on_rotate,
 		tiles = {
 			{ name = "[combine:16x16:-4,-4=" ..head_def.texture, align_style = "world" }, -- front
 			{ name = "[combine:16x16:-20,-4="..head_def.texture, align_style = "world" }, -- back
