@@ -179,7 +179,7 @@ function mcl_heads.register_head(head_def)
 
 		_mcl_armor_mob_range_mob = head_def.range_mob,
 		_mcl_armor_mob_range_factor = head_def.range_factor,
-		_mcl_armor_texture = head_def.texture
+		_mcl_armor_texture = "[combine:64x32:32,0=" ..head_def.texture,
 	}))
 
 	minetest.register_node(name.."_ceiling", table.update(table.copy(mcl_heads.deftemplate_ceiling), {
@@ -192,7 +192,7 @@ function mcl_heads.register_head(head_def)
 
 		_mcl_armor_mob_range_mob = head_def.range_mob,
 		_mcl_armor_mob_range_factor = head_def.range_factor,
-		_mcl_armor_texture = head_def.texture
+		_mcl_armor_texture = "[combine:64x32:32,0=" ..head_def.texture,
 	}))
 
 	-- register the wall head node
