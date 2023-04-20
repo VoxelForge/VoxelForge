@@ -53,6 +53,7 @@ mcl_heads.deftemplate_floor = {
 
 mcl_heads.deftemplate_ceiling = table.copy(mcl_heads.deftemplate_floor)
 mcl_heads.deftemplate_ceiling.mesh = "mcl_heads_ceiling.obj"
+mcl_heads.deftemplate_ceiling.groups.not_in_creative_inventory = 1
 mcl_heads.deftemplate_ceiling.selection_box = {
 	type = "fixed",
 	fixed = mcl_heads.CEILING_BOX,
@@ -186,7 +187,7 @@ function mcl_heads.register_head(head_def)
 		_doc_items_longdesc = head_def.longdesc,
 
 		-- The head textures are based off the textures of an actual mob.
-		tiles = { head_def.texture },
+		tiles = { head_def.texture.."^[transformR180" },
 		drop = name,
 
 		_mcl_armor_mob_range_mob = head_def.range_mob,
