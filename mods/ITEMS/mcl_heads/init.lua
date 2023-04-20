@@ -13,10 +13,11 @@ mcl_heads = {}
 mcl_heads.FLOOR_BOX = { -0.25, -0.5, -0.25, 0.25, 0.0, 0.25, }
 mcl_heads.CEILING_BOX = { -0.25, 0, -0.25, 0.25, 0.5, 0.25, }
 
---- node definition template for floor mod heads
-mcl_heads.deftemplate_floor = {
+mcl_heads.deftemplate = {
 	drawtype = "mesh",
 	mesh = "mcl_heads_floor.obj",
+	paramtype = "light",
+	paramtype2 = "degrotate",
 	selection_box = {
 		type = "fixed",
 		fixed = mcl_heads.FLOOR_BOX,
@@ -36,34 +37,19 @@ mcl_heads.deftemplate_floor = {
 		dig_by_piston = 1,
 	},
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
-	paramtype = "light",
-	paramtype2 = "degrotate",
+
 	sunlight_propagates = true,
 	sounds = mcl_sounds.node_sound_defaults{
 		footstep = {name="default_hard_footstep", gain=0.3},
 	},
 	is_ground_content = false,
-
 	_mcl_armor_element = "head",
 	_mcl_blast_resistance = 1,
 	_mcl_hardness = 1,
-
 	on_secondary_use = equip_armor,
 }
 
-mcl_heads.deftemplate_ceiling = table.copy(mcl_heads.deftemplate_floor)
-mcl_heads.deftemplate_ceiling.mesh = "mcl_heads_ceiling.obj"
-mcl_heads.deftemplate_ceiling.groups.not_in_creative_inventory = 1
-mcl_heads.deftemplate_ceiling.selection_box = {
-	type = "fixed",
-	fixed = mcl_heads.CEILING_BOX,
-}
-mcl_heads.deftemplate_ceiling.collision_box = {
-	type = "fixed",
-	fixed = mcl_heads.CEILING_BOX,
-}
-
-function mcl_heads.deftemplate_floor.on_rotate(pos, node, user, mode, new_param2)
+function mcl_heads.deftemplate.on_rotate(pos, node, user, mode, new_param2)
 	if mode == screwdriver.ROTATE_AXIS then
 		node.name = node.name .. "_wall"
 		node.param2 = minetest.dir_to_wallmounted(minetest.facedir_to_dir(node.param2))
@@ -72,7 +58,7 @@ function mcl_heads.deftemplate_floor.on_rotate(pos, node, user, mode, new_param2
 	end
 end
 
-function mcl_heads.deftemplate_floor.on_place(itemstack, placer, pointed_thing)
+function mcl_heads.deftemplate.on_place(itemstack, placer, pointed_thing)
 	if pointed_thing.type ~= "node" then
 		return itemstack
 	end
@@ -113,36 +99,8 @@ function mcl_heads.deftemplate_floor.on_place(itemstack, placer, pointed_thing)
 	return itemstack
 end
 
--- wall head node nodedef template -------------------------------------------------------------------------------------
-
---- node definition template for wall mod heads
 mcl_heads.deftemplate_wall = {
-	drawtype = "nodebox",
-	node_box = {
-		type = "wallmounted",
-		wall_bottom = { -0.25, -0.5, -0.25, 0.25, 0.0, 0.25, },
-		wall_top = { -0.25, 0.0, -0.25, 0.25, 0.5, 0.25, },
-		wall_side = { -0.5, -0.25, -0.25, 0.0, 0.25, 0.25, },
-	},
-	groups = {
-		handy = 1,
-		head = 1,
-		deco_block = 1,
-		dig_by_piston = 1,
-		not_in_creative_inventory = 1,
-	},
-	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
-	paramtype = "light",
-	paramtype2 = "wallmounted",
-	sunlight_propagates = true,
-	sounds = mcl_sounds.node_sound_defaults{
-		footstep = {name="default_hard_footstep", gain=0.3},
-	},
-	is_ground_content = false,
 
-	_doc_items_create_entry = false,
-	_mcl_blast_resistance = 1,
-	_mcl_hardness = 1,
 }
 
 function mcl_heads.deftemplate_wall.on_rotate(pos, node, user, mode, new_param2)
@@ -153,8 +111,6 @@ function mcl_heads.deftemplate_wall.on_rotate(pos, node, user, mode, new_param2)
 		return true
 	end
 end
-
--- API functions -------------------------------------------------------------------------------------------------------
 
 --- @class HeadDef
 --- @field name string identifier for node
@@ -170,11 +126,9 @@ function mcl_heads.register_head(head_def)
 	local name = "mcl_heads:" ..head_def.name
 
 	-- register the floor head node
-	minetest.register_node(name, table.update(table.copy(mcl_heads.deftemplate_floor), {
+	minetest.register_node(name, table.update(table.copy(mcl_heads.deftemplate), {
 		description = head_def.description,
 		_doc_items_longdesc = head_def.longdesc,
-
-		-- The head textures are based off the textures of an actual mob.
 		tiles = { head_def.texture },
 
 		_mcl_armor_mob_range_mob = head_def.range_mob,
@@ -182,11 +136,25 @@ function mcl_heads.register_head(head_def)
 		_mcl_armor_texture = "[combine:64x32:32,0=" ..head_def.texture,
 	}))
 
-	minetest.register_node(name.."_ceiling", table.update(table.copy(mcl_heads.deftemplate_ceiling), {
-		description = head_def.description,
-		_doc_items_longdesc = head_def.longdesc,
+	minetest.register_node(name.."_ceiling", table.update(table.copy(mcl_heads.deftemplate), {
+		mesh = "mcl_heads_ceiling.obj",
+		groups = {
+			handy = 1,
+			head = 1,
+			deco_block = 1,
+			dig_by_piston = 1,
+			not_in_creative_inventory = 1,
+		},
+		_doc_items_create_entry = false,
+		selection_box = {
+			type = "fixed",
+			fixed = mcl_heads.CEILING_BOX,
+		},
+		collision_box = {
+			type = "fixed",
+			fixed = mcl_heads.CEILING_BOX,
+		},
 
-		-- The head textures are based off the textures of an actual mob.
 		tiles = { head_def.texture.."^[transformR180" },
 		drop = name,
 
@@ -196,8 +164,24 @@ function mcl_heads.register_head(head_def)
 	}))
 
 	-- register the wall head node
-	minetest.register_node(name .."_wall", table.update(table.copy(mcl_heads.deftemplate_wall), {
-		-- The head textures are based off the textures of an actual mob.
+	minetest.register_node(name .."_wall", table.update(table.copy(mcl_heads.deftemplate), {
+		drawtype = "nodebox",
+		paramtype = "light",
+		paramtype2 = "wallmounted",
+		node_box = {
+			type = "wallmounted",
+			wall_bottom = { -0.25, -0.5, -0.25, 0.25, 0.0, 0.25, },
+			wall_top = { -0.25, 0.0, -0.25, 0.25, 0.5, 0.25, },
+			wall_side = { -0.5, -0.25, -0.25, 0.0, 0.25, 0.25, },
+		},
+		groups = {
+			handy = 1,
+			head = 1,
+			deco_block = 1,
+			dig_by_piston = 1,
+			not_in_creative_inventory = 1,
+		},
+		_doc_items_create_entry = false,
 		-- Note: -x coords go right per-pixel, -y coords go down per-pixel
 		tiles = {
 			{ name = "[combine:16x16:-4,-4=" ..head_def.texture, align_style = "world" }, -- front
@@ -212,8 +196,6 @@ function mcl_heads.register_head(head_def)
 		drop = name,
 	}))
 end
-
--- initial heads -------------------------------------------------------------------------------------------------------
 
 mcl_heads.register_head{
 	name = "zombie",
@@ -257,6 +239,7 @@ mcl_heads.register_head{
 	longdesc = S("A wither skeleton skull is a small decorative block which resembles the skull of a wither skeleton. It can also be worn as a helmet for fun, but does not offer any protection."),
 }
 
+-- convert old placed heads
 local old_rots = {
 	["22_5"] = 22.5,
 	["45"] = 45,
