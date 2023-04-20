@@ -62,7 +62,7 @@ function mcl_heads.deftemplate.on_rotate(pos, node, user, mode, new_param2)
 	end
 	local ctrl = user:get_player_control()
 	if ctrl and ctrl.sneak then
-		node.param2 = math.min(240,math.max(0,node.param2 + 1 % 240))
+		node.param2 = math.min(240, math.max(0, node.param2 + 1 % 240))
 	else
 		node.param2 = normalize_rotation((node.param2 + 15) % 240)
 	end
@@ -103,8 +103,8 @@ function mcl_heads.deftemplate.on_place(itemstack, placer, pointed_thing)
 		if wdir == 0 then
 			placestack:set_name(itemstring .."_ceiling")
 		end
-		local rot = normalize_rotation( placer:get_look_horizontal() * 180 / math.pi / 1.5 )
-		itemstack = minetest.item_place(placestack, placer, pointed_thing,  rot ) --param2 value is degrees / 1.5
+		local rot = normalize_rotation(placer:get_look_horizontal() * 180 / math.pi / 1.5)
+		itemstack = minetest.item_place(placestack, placer, pointed_thing,  rot) -- param2 value is degrees / 1.5
 	end
 
 	-- restore item from angled and wall head nodes
