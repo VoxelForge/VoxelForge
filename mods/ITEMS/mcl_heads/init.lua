@@ -200,14 +200,14 @@ function mcl_heads.register_head(head_def)
 		-- The head textures are based off the textures of an actual mob.
 		-- Note: -x coords go right per-pixel, -y coords go down per-pixel
 		tiles = {
-			{ name = "[combine:16x16:-36,-4=" ..head_def.texture, align_style = "world" }, -- front
-			{ name = "[combine:16x16:-52,-4="..head_def.texture, align_style = "world" }, -- back
-			{ name = "[combine:16x16:-40,-4=" ..head_def.texture, align_style = "world" }, -- right
-			{ name = "[combine:16x16:-32,-4="  ..head_def.texture, align_style = "world" }, -- left
-			{ name = "([combine:16x16:-36,0=" ..head_def.texture ..")^[transformR180", align_style = "node" }, -- top
-			-- Note: bottom texture is overlaid over top texture to get rid of possible transparency.
-			-- This is required for skeleton skull and wither skeleton skull.
-			{ name = "([combine:16x16:-36,0=" ..head_def.texture ..")^([combine:16x16:-44,8=" ..head_def.texture..")", align_style = "node" }, -- bottom
+			{ name = "[combine:16x16:-4,-4=" ..head_def.texture, align_style = "world" }, -- front
+			{ name = "[combine:16x16:-20,-4="..head_def.texture, align_style = "world" }, -- back
+
+			{ name = "[combine:16x16:-8,-4=" ..head_def.texture, align_style = "world" }, -- right
+			{ name = "[combine:16x16:0,-4="  ..head_def.texture, align_style = "world" }, -- left
+
+			{ name = "([combine:16x16:-4,0=" ..head_def.texture ..")^[transformR180", align_style = "node" }, -- top
+			{ name = "([combine:16x16:-12,0=" ..head_def.texture ..")^[transformR180", align_style = "node" }, -- bottom
 		},
 		drop = name,
 	}))
