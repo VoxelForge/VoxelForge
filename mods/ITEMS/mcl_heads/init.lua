@@ -50,7 +50,7 @@ mcl_heads.deftemplate = {
 }
 
 local function normalize_rotation(rot)
-	return math.min(255,math.max(0,rot - ( rot%16 )))
+	return math.min(240,math.max(0,rot - ( rot % 15 )))
 end
 
 function mcl_heads.deftemplate.on_rotate(pos, node, user, mode, new_param2)
@@ -60,7 +60,7 @@ function mcl_heads.deftemplate.on_rotate(pos, node, user, mode, new_param2)
 		minetest.set_node(pos, node)
 		return true
 	end
-	node.param2 = normalize_rotation(node.param2 + 16)
+	node.param2 = normalize_rotation((node.param2 + 16) % 240)
 	minetest.set_node(pos, node)
 	return true
 end
