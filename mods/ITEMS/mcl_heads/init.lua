@@ -60,7 +60,12 @@ function mcl_heads.deftemplate.on_rotate(pos, node, user, mode, new_param2)
 		minetest.set_node(pos, node)
 		return true
 	end
-	node.param2 = normalize_rotation((node.param2 + 16) % 240)
+	local ctrl = user:get_player_control()
+	if ctrl and ctrl.sneak then
+		node.param2 = math.min(240,math.max(0,node.param2 + 1 % 240))
+	else
+		node.param2 = normalize_rotation((node.param2 + 15) % 240)
+	end
 	minetest.set_node(pos, node)
 	return true
 end
