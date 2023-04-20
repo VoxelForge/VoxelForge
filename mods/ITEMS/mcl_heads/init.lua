@@ -50,7 +50,7 @@ mcl_heads.deftemplate = {
 }
 
 local function normalize_rotation(rot)
-	return math.min(240,math.max(0,rot - ( rot % 15 )))
+	return math.floor(0.5 + rot / 15) * 15
 end
 
 function mcl_heads.deftemplate.on_rotate(pos, node, user, mode, new_param2)
