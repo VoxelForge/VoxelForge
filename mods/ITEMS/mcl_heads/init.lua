@@ -49,6 +49,10 @@ mcl_heads.deftemplate = {
 	on_secondary_use = equip_armor,
 }
 
+local function normalize_rotation(rot)
+	return math.min(255,math.max(0,rot - ( rot%16 )))
+end
+
 function mcl_heads.deftemplate.on_rotate(pos, node, user, mode, new_param2)
 	if mode == screwdriver.ROTATE_AXIS then
 		node.name = node.name .. "_wall"
@@ -56,6 +60,9 @@ function mcl_heads.deftemplate.on_rotate(pos, node, user, mode, new_param2)
 		minetest.set_node(pos, node)
 		return true
 	end
+	node.param2 = normalize_rotation(node.param2 + 16)
+	minetest.set_node(pos, node)
+	return true
 end
 
 function mcl_heads.deftemplate.on_place(itemstack, placer, pointed_thing)
@@ -91,7 +98,8 @@ function mcl_heads.deftemplate.on_place(itemstack, placer, pointed_thing)
 		if wdir == 0 then
 			placestack:set_name(itemstring .."_ceiling")
 		end
-		itemstack = minetest.item_place(placestack, placer, pointed_thing, placer:get_look_horizontal() * 180 / math.pi / 1.5 ) --param2 value is degrees / 1.5
+		local rot = normalize_rotation( placer:get_look_horizontal() * 180 / math.pi / 1.5 )
+		itemstack = minetest.item_place(placestack, placer, pointed_thing,  rot ) --param2 value is degrees / 1.5
 	end
 
 	-- restore item from angled and wall head nodes
