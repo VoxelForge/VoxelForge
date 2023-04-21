@@ -9,7 +9,6 @@ local template = {
 	is_ground_content = true,
 	_mcl_blast_resistance = 0.2,
 	_mcl_hardness = 0.2,
-	_mcl_silk_touch_drop = true,
 }
 
 local red = table.copy(template)
@@ -43,28 +42,36 @@ local function to_binary(num)
 	return binary
 end
 
-local function register_mushroom(color, species_id, template, d_cap, d_stem, d_stem_all, longdesc_cap, longdesc_stem)
-
+do
 	-- Stem texture on all sides
 	local stem_full = table.copy(template)
-	stem_full.description = d_stem_all
-	stem_full._doc_items_longdesc = S("This decorative block is like a huge mushroom stem, but with the stem texture on all sides.")
+	stem_full.description = S("Mushroom Stem")
+	stem_full._doc_items_longdesc = S("This block is the stem part of a huge mushroom.")
 	stem_full.tiles = { "mcl_mushrooms_mushroom_block_skin_stem.png" }
-	stem_full.groups.huge_mushroom = species_id
+	stem_full.groups.huge_mushroom = 3
 	stem_full.groups.huge_mushroom_stem = 2
 	stem_full.groups.compostability = 65
-	minetest.register_node("mcl_mushrooms:"..color.."_mushroom_block_stem_full", stem_full)
+	stem_full.drop = ""
+	stem_full._mcl_silk_touch_drop = { "mcl_mushrooms:mushroom_block_stem_full" }
+	minetest.register_node("mcl_mushrooms:mushroom_block_stem_full", stem_full)
 
-	-- Stem
-	local stem = table.copy(template)
-	stem.description = d_stem
-	stem._doc_items_longdesc = longdesc_stem
+	local stem = table.copy(stem_full)
 	stem.tiles = { "mcl_mushrooms_mushroom_block_inside.png", "mcl_mushrooms_mushroom_block_inside.png", "mcl_mushrooms_mushroom_block_skin_stem.png" }
-	stem.groups.huge_mushroom = species_id
 	stem.groups.huge_mushroom_stem = 1
-	stem.groups.compostability = 65
-	minetest.register_node("mcl_mushrooms:"..color.."_mushroom_block_stem", stem)
+	stem.groups.not_in_creative_inventory = 1
+	minetest.register_node("mcl_mushrooms:mushroom_block_stem", stem)
 
+	if minetest.get_modpath("doc") then
+		doc.add_entry_alias("nodes", "mcl_mushrooms:mushroom_block_stem", "nodes", "mcl_mushrooms:mushroom_block_stem_full")
+	end
+end
+
+minetest.register_alias("mcl_mushrooms:brown_mushroom_block_stem_full", "mcl_mushrooms:mushroom_block_stem_full")
+minetest.register_alias("mcl_mushrooms:red_mushroom_block_stem_full", "mcl_mushrooms:mushroom_block_stem_full")
+minetest.register_alias("mcl_mushrooms:brown_mushroom_block_stem", "mcl_mushrooms:mushroom_block_stem")
+minetest.register_alias("mcl_mushrooms:red_mushroom_block_stem", "mcl_mushrooms:mushroom_block_stem")
+
+local function register_mushroom(color, species_id, template, d_cap, longdesc_cap)
 	-- Mushroom block (cap)
 	-- Each side can either be the cap or the pores texture.
 	-- Cubes have 6 sides, so there's a total of 2^6 = 64 combinations
@@ -151,6 +158,7 @@ local function register_mushroom(color, species_id, template, d_cap, d_stem, d_s
 			end
 		end
 
+		block._mcl_silk_touch_drop = { "mcl_mushrooms:"..color.."_mushroom_block_cap_111111" }
 		block.groups.huge_mushroom = species_id
 		block.groups.huge_mushroom_cap = s
 
@@ -162,15 +170,11 @@ local function register_mushroom(color, species_id, template, d_cap, d_stem, d_s
 
 end
 
+local longdesc_red = S("Red mushroom blocks are the cap parts of huge red mushrooms. It consists of a red skin and can have pores on each of its sides.")
+register_mushroom("red", 1, red, S("Red Mushroom Block"), longdesc_red)
 
-local longdesc_red = S("Huge red mushroom blocks are the cap parts of huge red mushrooms. It consists of a red skin and can have pores on each of its sides.")
-local longdesc_red_stem = S("The stem part of a huge red mushroom.")
-register_mushroom("red", 1, red, S("Huge Red Mushroom Block"), S("Huge Red Mushroom Stem"), S("Huge Red Mushroom All-Faces Stem"), longdesc_red, longdesc_red_stem)
-
-
-local longdesc_brown = S("Huge brown mushroom blocks are the cap parts of huge brown mushrooms. It consists of a brown skin and can have pores on each of its sides.")
-local longdesc_brown_stem = S("The stem part of a huge brown mushroom.")
-register_mushroom("brown", 2, brown, S("Huge Brown Mushroom Block"), S("Huge Brown Mushroom Stem"), S("Huge Brown Mushroom All-Faces Stem"), longdesc_brown, longdesc_brown_stem)
+local longdesc_brown = S("Brown mushroom blocks are the cap parts of huge brown mushrooms. It consists of a brown skin and can have pores on each of its sides.")
+register_mushroom("brown", 2, brown, S("Brown Mushroom Block"), longdesc_brown)
 
 minetest.register_craft({
 	type = "fuel",
