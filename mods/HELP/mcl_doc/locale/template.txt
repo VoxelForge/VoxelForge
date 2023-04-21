@@ -51,7 +51,6 @@ This block will not be destroyed by TNT explosions.=
 This block drops itself when mined by shears.=
 @1×@2=
 This blocks drops the following when mined by shears: @1=
-, =
 • Shears=
 • Sword=
 • Hand=
@@ -77,3 +76,6 @@ It can be worn on the head.=
 It can be worn on the torso.=
 It can be worn on the legs.=
 It can be worn on the feet.=
+This block can be turned into grass path with a shovel.=
+##### not used anymore #####
+, =

@@ -1,4 +1,4 @@
-# textdomain:mcl_achievements
+# textdomain: mcl_achievements
 Aquire Hardware=
 Bake Bread=
 Benchmarking=
@@ -85,7 +85,6 @@ The Next Generation=
 Hold the Dragon Egg.@nHint: Pick up the egg from the ground and have it in your inventory.=
 The End... Again...=
 Respawn the Ender Dragon.=
-Sky's The Limit=
 Find the elytra and prepare to fly above and beyond!=
 Free the End=
 Kill the ender dragon. Good Luck!=
@@ -97,3 +96,20 @@ Wax On=
 Apply honeycomb to a copper block to protect it from the elements.=
 Wax Off=
 Scrape wax off of a copper block.=
+Sky's the Limit=
+The End?=
+Or the beginning?@nHint: Enter an end portal.=
+Tactical Fishing=
+Catch a fish... without a fishing rod!=
+Stone Age=
+Mine a stone with new pickaxe.=
+Hot Stuff=
+Put lava in a bucket.=
+Ice Bucket Challenge=
+Obtain an obsidian block.=
+Hero of the Village=
+Successfully defend a village from a raid=
+Voluntary Exile=
+Kill a raid captain. Maybe consider staying away from the local villages for the time being...=
+##### not used anymore #####
+Sky's The Limit=

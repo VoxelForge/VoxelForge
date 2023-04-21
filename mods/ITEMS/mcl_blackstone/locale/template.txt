@@ -15,7 +15,6 @@ Chiseled Polished Blackstone Stair=
 Polished Blackstone Brick Stair=
 Quartz Bricks=
 Soul Torch=
-Soul Lantern=
 Soul Soil=
 Eternal Soul Fire=
 Gilded Blackstone=
@@ -26,3 +25,6 @@ Double Blackstone Slab=
 Polished Double Blackstone Slab=
 Double Chiseled Polished Blackstone Slab=
 Double Polished Blackstone Brick Slab=
+Torches are light sources which can be placed at the side or on the top of most blocks.=
+##### not used anymore #####
+Soul Lantern=

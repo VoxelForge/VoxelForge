@@ -2,7 +2,11 @@
 Inventory=
 Blast Furnace=
 Smelts ores faster than furnace=
+Blast Furnaces smelt several items, mainly ores and armor, using a furnace fuel, into something else.=
+				Use the furnace to open the furnace menu.@n				Place a furnace fuel in the lower slot and the source material in the upper slot.@n				The furnace will slowly use its fuel to smelt the item.@n				The result will be placed into the output slot at the right side.@n			=
+Use the recipe book to see what ores you can smelt, what you can use as fuel and how long it will burn.=
+Burning Blast Furnace=
+##### not used anymore #####
 Use the recipe book to see what you can smelt, what you can use as fuel and how long it will burn.=
 Use the furnace to open the furnace menu.\nPlace a furnace fuel in the lower slot and the source material in the upper slot.\nThe furnace will slowly use its fuel to smelt the item.\nThe result will be placed into the output slot at the right side.=
-Blast Furnaces smelt several items, mainly ores and armor, using a furnace fuel, into something else.=
 Active Blast Furnace=

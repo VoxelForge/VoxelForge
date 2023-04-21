@@ -1,5 +1,4 @@
 # textdomain: mobs_mc
-Agent=
 Axolotl=
 Bat=
 Blaze=
@@ -68,3 +67,21 @@ Salmon=
 Dolphin=
 Pillager=
 Tropical fish=
+Baby Zombie=
+Baby Husk=
+Cat=
+Novice=
+Apprentice=
+Journeyman=
+Expert=
+Master=
+Unemployed=
+Mason=
+Glow Squid=
+Piglin=
+Piglin Brute=
+Hoglin=
+Baby Zombie Pigman=
+Strider=
+##### not used anymore #####
+Agent=

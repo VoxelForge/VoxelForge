@@ -3,21 +3,17 @@
 Arrows passes through multiple objects.=
 Arrows set target on fire.=
 Bane of Arthropods=
-Channeling=
 
-Channels a bolt of lightning toward a target. Works only during thunderstorms and if target is unobstructed with opaque blocks.=
 
 Curse of Vanishing=
 Decreases crossbow charging time.=
 Decreases time until rod catches something.=
 Depth Strider=
 Efficiency=
-Extends underwater breathing time.=
 Fire Aspect=
 Flame=
 Fortune=
 Frost Walker=
-Impaling=
 Increases arrow damage.=
 Increases arrow knockback.=
 Increases certain block drops.=
@@ -31,14 +27,12 @@ Increases knockback.=
 Increases mining speed.=
 Increases mob loot.=
 Increases rate of good loot (enchanting books, etc.)=
-Increases sweeping attack damage.=
 Increases underwater movement speed.=
 Increases walking speed on soul sand.=
 Infinity=
 Item destroyed on death.=
 Knockback=
 Looting=
-Loyalty=
 Luck of the Sea=
 Lure=
 Mending=
@@ -49,8 +43,6 @@ Power=
 Punch=
 Quick Charge=
 Repair the item while gaining XP orbs.=
-Respiration=
-Riptide=
 Sets target on fire.=
 Sharpness=
 Shoot 3 arrows at the cost of one.=
@@ -58,12 +50,8 @@ Shooting consumes no regular arrows.=
 Silk Touch=
 Smite=
 Soul Speed=
-Sweeping Edge=
-Trident deals additional damage to ocean mobs.=
 
-Trident launches player with itself when thrown. Works only in water or rain.=
 
-Trident returns after being thrown. Higher levels reduce return time.=
 
 Turns water beneath the player into frosted ice and prevents the damage from magma blocks.=
 
@@ -115,6 +103,19 @@ To increase the enchantment strength, place bookshelves around the enchanting ta
 Usage: /enchant <player> <enchantment> [<level>]=
 Usage: /forceenchant <player> <enchantment> [<level>]=
 
+##### not used anymore #####
+Channeling=
+Channels a bolt of lightning toward a target. Works only during thunderstorms and if target is unobstructed with opaque blocks.=
+Extends underwater breathing time.=
+Impaling=
+Increases sweeping attack damage.=
+Loyalty=
+Respiration=
+Riptide=
+Sweeping Edge=
+Trident deals additional damage to ocean mobs.=
+Trident launches player with itself when thrown. Works only in water or rain.=
+Trident returns after being thrown. Higher levels reduce return time.=
 Aqua Affinity=
 Increases underwater mining speed.=
 Blast Protection=

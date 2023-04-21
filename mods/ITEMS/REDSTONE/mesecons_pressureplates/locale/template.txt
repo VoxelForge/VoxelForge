@@ -14,3 +14,6 @@ Pushable by players, mobs and objects=
 Pushable by players and mobs=
 Pushable by players=
 Pushable by mobs=
+Mangrove Pressure Plate=
+Crimson Pressure Plate=
+Warped Pressure Plate=

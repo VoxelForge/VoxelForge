@@ -28,7 +28,6 @@ You have to stop moving before going to bed!=
 You can't sleep now, monsters are nearby!=
 You can't sleep, the bed is obstructed!=
 It's too dangerous to sleep here!=
-New respawn position set! But you can only sleep at night or during a thunderstorm.=
 You can only sleep at night or during a thunderstorm.=
 New respawn position set!=
 Leave bed=
@@ -41,3 +40,5 @@ You will fall asleep when @1% of all players are in bed.=
 You're in bed.=
 Allows you to sleep=
 Respawn Anchor=
+##### not used anymore #####
+New respawn position set! But you can only sleep at night or during a thunderstorm.=

@@ -101,11 +101,6 @@ Water Breathing=
 Grants limitless breath underwater.=
 Fire Resistance=
 Grants immunity to damage from heat sources like fire.=
-Weakness=
-Weakness +=
-Strength=
-Strength II=
-Strength +=
 Try different combinations to create potions.=
 No effect=
 
@@ -113,3 +108,9 @@ A throwable potion that will shatter on impact, where it gives all nearby player
 
 This particular arrow is tipped and will give an effect when it hits a player or mob.=
 
+##### not used anymore #####
+Weakness=
+Weakness +=
+Strength=
+Strength II=
+Strength +=

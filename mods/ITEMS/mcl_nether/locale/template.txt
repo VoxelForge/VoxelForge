@@ -7,7 +7,6 @@ Netherrack=
 Netherrack is a stone-like block home to the Nether. Starting a fire on this block will create an eternal fire.=
 Magma Block=
 Magma blocks are hot solid blocks which hurt anyone standing on it, unless they have fire resistance. Starting a fire on this block will create an eternal fire.=
-@1 stood too long on a magma block.=
 Soul Sand=
 Soul sand is a block from the Nether. One can only slowly walk on soul sand. The slowing effect is amplified when the soul sand is on top of ice, packed ice or a slime block.=
 Nether Brick Block=
@@ -43,3 +42,8 @@ Netherite Ingot=
 Ancient Debris=
 Netherite Block=
 Netherite block is very hard and can be made of 9 netherite ingots.=
+Ancient debris can be found in the nether and is very very rare.=
+Netherite scrap is a crafting ingredient for netherite ingots.=
+Netherite ingots can be used with a smithing table to upgrade items to netherite.=
+##### not used anymore #####
+@1 stood too long on a magma block.=

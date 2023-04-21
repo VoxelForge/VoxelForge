@@ -30,3 +30,4 @@ Double Tallgrass=
 Large Fern=
 Lily Pad=
 A lily pad is a flat plant block which can be walked on. They can be placed on water sources, ice and frosted ice.=
+Wither Rose=

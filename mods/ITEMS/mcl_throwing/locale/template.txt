@@ -1,5 +1,4 @@
 # textdomain: mcl_throwing
-@1 used the ender pearl too often.=
 Use the punch key to throw.=
 Snowball=
 Snowballs can be thrown or launched from a dispenser for fun. Hitting something with a snowball does nothing.=
@@ -10,3 +9,5 @@ An ender pearl is an item which can be used for teleportation at the cost of hea
 Throwable=
 Chance to hatch chicks when broken=
 Teleports you on impact for cost of 5 HP=
+##### not used anymore #####
+@1 used the ender pearl too often.=

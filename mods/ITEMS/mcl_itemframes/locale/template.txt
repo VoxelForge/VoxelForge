@@ -3,6 +3,12 @@ Item Frame=
 Item frames are decorative blocks in which items can be placed.=
 Just place any item on the item frame. Use the item frame again to retrieve the item.=
 Can hold an item=
+Glow and Behold!=
+Craft a glow item frame.=
+Glowing Item Frame=
+Can hold an item and glows.=
+Glowing item frames are decorative blocks in which items can be placed and made to glow.=
+##### not used anymore #####
 Glow Item Frame=
 Glow item frames are decorative blocks in which items can be placed.=
 Can hold an item and glows=
