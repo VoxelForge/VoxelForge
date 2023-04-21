@@ -38,4 +38,4 @@ mcl_mobs.register_mob("mobs_mc:endermite", {
 	reach = 1,
 })
 
-mcl_mobs.register_egg("mobs_mc:endermite", S("Endermite"), "#161616", "#6d6d6d", 0)
+mcl_mobs.register_egg("mobs_mc:endermite", S("Endermite Spawn Egg"), "#161616", "#6d6d6d", 0)

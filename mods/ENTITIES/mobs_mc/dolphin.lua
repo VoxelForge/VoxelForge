@@ -29,6 +29,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 --###################
 
 local dolphin = {
+	description = S("Dolphin"),
 	type = "animal",
 	spawn_class = "water",
 	can_despawn = true,
@@ -249,4 +250,4 @@ water-16,
 water+1)
 
 --spawn egg
-mcl_mobs.register_egg("mobs_mc:dolphin", S("Dolphin"), "#223b4d", "#f9f9f9", 0)
+mcl_mobs.register_egg("mobs_mc:dolphin", S("Dolphin Spawn Egg"), "#223b4d", "#f9f9f9", 0)

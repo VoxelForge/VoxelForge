@@ -94,4 +94,4 @@ mcl_mobs.register_mob("mobs_mc:vex", {
 
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:vex", S("Vex"), "#7a90a4", "#e8edf1", 0)
+mcl_mobs.register_egg("mobs_mc:vex", S("Vex Spawn Egg"), "#7a90a4", "#e8edf1", 0)

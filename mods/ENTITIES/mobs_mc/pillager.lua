@@ -121,4 +121,4 @@ pillager = {
 }
 
 mcl_mobs.register_mob("mobs_mc:pillager", pillager)
-mcl_mobs.register_egg("mobs_mc:pillager", S("Pillager"), "#532f36", "#959b9b", 0)
+mcl_mobs.register_egg("mobs_mc:pillager", S("Pillager Spawn Egg"), "#532f36", "#959b9b", 0)

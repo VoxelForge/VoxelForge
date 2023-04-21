@@ -368,5 +368,5 @@ mcl_vars.mg_overworld_min,
 mcl_vars.mg_overworld_max)
 
 -- Spawn eggs
-mcl_mobs.register_egg("mobs_mc:husk", S("Husk"), "#777361", "#ded88f", 0)
-mcl_mobs.register_egg("mobs_mc:zombie", S("Zombie"), "#00afaf", "#799c66", 0)
+mcl_mobs.register_egg("mobs_mc:husk", S("Husk Spawn Egg"), "#777361", "#ded88f", 0)
+mcl_mobs.register_egg("mobs_mc:zombie", S("Zombie Spawn Egg"), "#00afaf", "#799c66", 0)

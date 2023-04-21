@@ -35,6 +35,7 @@ end
 --################### piglin
 --###################
 local piglin = {
+	description = S("Piglin"),
 	type = "monster",
 	passive = false,
 	spawn_class = "hostile",
@@ -211,6 +212,7 @@ sword_piglin.animation = {
 mcl_mobs.register_mob("mobs_mc:sword_piglin", sword_piglin)
 
 local zombified_piglin = table.copy(piglin)
+zombified_piglin.description = S("Zombified Piglin")
 zombified_piglin.fire_resistant = 1
 zombified_piglin.do_custom = function()
 	return
@@ -245,6 +247,7 @@ mcl_mobs.register_mob("mobs_mc:zombified_piglin", zombified_piglin)
 
 
 local piglin_brute = table.copy(piglin)
+piglin_brute.description = S("Piglin Brute")
 piglin_brute.xp_min = 20
 piglin_brute.xp_max = 20
 piglin_brute.hp_min = 50
@@ -318,5 +321,5 @@ minetest.LIGHT_MAX+1,
 mcl_vars.mg_lava_nether_max,
 mcl_vars.mg_nether_max)
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:piglin", S("Piglin"), "#7b4a17","#d5c381", 0)
-mcl_mobs.register_egg("mobs_mc:piglin_brute", S("Piglin Brute"), "#562b0c","#ddc89d", 0)
+mcl_mobs.register_egg("mobs_mc:piglin", S("Piglin Spawn Egg"), "#7b4a17","#d5c381", 0)
+mcl_mobs.register_egg("mobs_mc:piglin_brute", S("Piglin Brute Spawn Egg"), "#562b0c","#ddc89d", 0)

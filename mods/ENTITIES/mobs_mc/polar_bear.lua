@@ -92,4 +92,4 @@ mcl_vars.mg_overworld_min,
 mcl_vars.mg_overworld_max)
 
 -- spawn egg
-mcl_mobs.register_egg("mobs_mc:polar_bear", S("Polar Bear"), "#f2f2f2", "#959590", 0)
+mcl_mobs.register_egg("mobs_mc:polar_bear", S("Polar Bear Spawn Egg"), "#f2f2f2", "#959590", 0)

@@ -29,6 +29,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 --###################
 
 local cod = {
+	description = S("Cod"),
 	type = "animal",
 	spawn_class = "water",
 	can_despawn = true,
@@ -271,4 +272,4 @@ water-16,
 water+1)
 
 --spawn egg
-mcl_mobs.register_egg("mobs_mc:cod", S("Cod"), "#c1a76a", "#e5c48b", 0)
+mcl_mobs.register_egg("mobs_mc:cod", S("Cod Spawn Egg"), "#c1a76a", "#e5c48b", 0)

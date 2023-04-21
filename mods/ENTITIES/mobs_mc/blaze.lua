@@ -208,4 +208,4 @@ mcl_mobs.register_arrow("mobs_mc:blaze_fireball", {
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:blaze", S("Blaze"), "#f6b201", "#fff87e", 0)
+mcl_mobs.register_egg("mobs_mc:blaze", S("Blaze Spawn Egg"), "#f6b201", "#fff87e", 0)

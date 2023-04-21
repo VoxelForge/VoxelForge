@@ -65,4 +65,4 @@ mcl_mobs.register_mob("mobs_mc:illusioner", {
 	fear_height = 4,
 })
 
-mcl_mobs.register_egg("mobs_mc:illusioner", S("Illusioner"), "#3f5cbb", "#8a8686", 0)
+mcl_mobs.register_egg("mobs_mc:illusioner", S("Illusioner Spawn Egg"), "#3f5cbb", "#8a8686", 0)

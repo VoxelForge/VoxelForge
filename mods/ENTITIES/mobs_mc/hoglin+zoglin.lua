@@ -10,6 +10,7 @@ local S = minetest.get_translator("mobs_mc")
 --###################
 
 local hoglin = {
+	description = S("Hoglin"),
 	type = "monster",
 	passive = false,
 	spawn_class = "hostile",
@@ -134,4 +135,4 @@ mcl_vars.mg_nether_min,
 mcl_vars.mg_nether_max)
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:hoglin", S("Hoglin"), "#85682e", "#2b2140", 0)
+mcl_mobs.register_egg("mobs_mc:hoglin", S("Hoglin Spawn Egg"), "#85682e", "#2b2140", 0)

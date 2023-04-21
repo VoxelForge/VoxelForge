@@ -10,6 +10,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 --###################
 
 local salmon = {
+	description = S("Salmon"),
 	type = "animal",
 	spawn_class = "water",
 	can_despawn = true,
@@ -226,4 +227,4 @@ water-16,
 water+1)
 
 --spawn egg
-mcl_mobs.register_egg("mobs_mc:salmon", S("Salmon"), "#a00f10", "#0e8474", 0)
+mcl_mobs.register_egg("mobs_mc:salmon", S("Salmon Spawn Egg"), "#a00f10", "#0e8474", 0)

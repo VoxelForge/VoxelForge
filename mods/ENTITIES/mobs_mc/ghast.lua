@@ -141,4 +141,4 @@ mcl_mobs.register_arrow("mobs_mc:fireball", {
 
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:ghast", S("Ghast"), "#f9f9f9", "#bcbcbc", 0)
+mcl_mobs.register_egg("mobs_mc:ghast", S("Ghast Spawn Egg"), "#f9f9f9", "#bcbcbc", 0)

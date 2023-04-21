@@ -833,4 +833,4 @@ mcl_vars.mg_nether_min,
 mcl_vars.mg_nether_max)
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:enderman", S("Enderman"), "#252525", "#151515", 0)
+mcl_mobs.register_egg("mobs_mc:enderman", S("Enderman Spawn Egg"), "#252525", "#151515", 0)
