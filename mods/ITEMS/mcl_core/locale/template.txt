@@ -102,7 +102,7 @@ Grass Path=
 Grass paths are a decorative variant of grass blocks. Their top has a different color and they are a bit lower than grass blocks, making them useful to build footpaths. Grass paths can be created with a shovel. A grass path turns into dirt when it is below a solid block.=
 Gravel=
 Green Stained Glass=
-Grey Stained Glass=
+Gray Stained Glass=
 Ice=
 Ice is a solid block usually found in cold areas. It melts near block light sources at a light level of 12 or higher. When it melts or is broken while resting on top of another block, it will turn into a water source.=
 In the End dimension, starting a fire on this block will create an eternal fire.=
@@ -120,7 +120,7 @@ Lapis lazuli ore is the ore of lapis lazuli. It can be rarely found in clusters 
 Lava Source=
 Lava is hot and rather dangerous. Don't touch it, it will hurt you a lot and it is hard to get out.=
 Light Blue Stained Glass=
-Light Grey Stained Glass=
+Light Gray Stained Glass=
 Lime Stained Glass=
 Lit Redstone Ore=
 Magenta Stained Glass=

@@ -1,7 +1,7 @@
 # textdomain: mcl_dye
 Bone Meal=
-Light Grey Dye=
-Grey Dye=
+Light Gray Dye=
+Gray Dye=
 Ink Sac=
 Purple Dye=
 Lapis Lazuli=

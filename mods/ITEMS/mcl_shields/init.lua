@@ -430,8 +430,8 @@ minetest.register_craft({
 
 local shield_colors = {
 	["unicolor_white"] =      S("White Shield"),
-	["unicolor_darkgrey"] =   S("Grey Shield"),
-	["unicolor_grey"] =       S("Light Grey Shield"),
+	["unicolor_darkgrey"] =   S("Gray Shield"),
+	["unicolor_grey"] =       S("Light Gray Shield"),
 	["unicolor_black"] =      S("Black Shield"),
 	["unicolor_red"] =        S("Red Shield"),
 	["unicolor_yellow"] =     S("Yellow Shield"),

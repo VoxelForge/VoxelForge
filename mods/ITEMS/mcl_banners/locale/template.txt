@@ -1,10 +1,10 @@
 # textdomain: mcl_banners
 White Banner=
 White=
-Grey Banner=
-Grey=
-Light Grey Banner=
-Light Grey=
+Gray Banner=
+Gray=
+Light Gray Banner=
+Light Gray=
 Black Banner=
 Black=
 Red Banner=

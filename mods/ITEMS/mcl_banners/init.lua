@@ -22,8 +22,8 @@ mcl_banners.colors = {
 	-- Format:
 	-- [ID] = { banner description, wool, unified dyes color group, overlay color, dye, color name for emblazonings }
 	["unicolor_white"] =      {"white",      S("White Banner"),      "mcl_wool:white", "#FFFFFF", "mcl_dye:white", S("White") },
-	["unicolor_darkgrey"] =   {"grey",       S("Grey Banner"),       "mcl_wool:grey", "#303030", "mcl_dye:dark_grey", S("Grey") },
-	["unicolor_grey"] =       {"silver",     S("Light Grey Banner"), "mcl_wool:silver", "#5B5B5B", "mcl_dye:grey", S("Light Grey") },
+	["unicolor_darkgrey"] =   {"grey",       S("Gray Banner"),       "mcl_wool:grey", "#303030", "mcl_dye:dark_grey", S("Gray") },
+	["unicolor_grey"] =       {"silver",     S("Light Gray Banner"), "mcl_wool:silver", "#5B5B5B", "mcl_dye:grey", S("Light Gray") },
 	["unicolor_black"] =      {"black",      S("Black Banner"),      "mcl_wool:black", "#000000", "mcl_dye:black", S("Black") },
 	["unicolor_red"] =        {"red",        S("Red Banner"),        "mcl_wool:red", "#BC0000", "mcl_dye:red", S("Red") },
 	["unicolor_yellow"] =     {"yellow",     S("Yellow Banner"),     "mcl_wool:yellow", "#E6CD00", "mcl_dye:yellow", S("Yellow") },

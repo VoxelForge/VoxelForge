@@ -2,8 +2,8 @@
 Shield=
 A shield is a tool used for protecting the player against attacks.=
 White Shield=
-Grey Shield=
-Light Grey Shield=
+Gray Shield=
+Light Gray Shield=
 Black Shield=
 Red Shield=
 Yellow Shield=

@@ -65,8 +65,8 @@ local dyelocal = {}
 -- This collection of colors is partly a historic thing, partly something else.
 dyelocal.dyes = {
 	{"white", "mcl_dye_white",	    S("Bone Meal"),     {dye=1, craftitem=1, basecolor_white=1,   excolor_white=1,     unicolor_white=1}},
-	{"grey", "dye_grey",      	    S("Light Grey Dye"),      {dye=1, craftitem=1, basecolor_grey=1,    excolor_grey=1,      unicolor_grey=1}},
-	{"dark_grey", "dye_dark_grey", 	    S("Grey Dye"), {dye=1, craftitem=1, basecolor_grey=1,    excolor_darkgrey=1,  unicolor_darkgrey=1}},
+	{"grey", "dye_grey",      	    S("Light Gray Dye"),      {dye=1, craftitem=1, basecolor_grey=1,    excolor_grey=1,      unicolor_grey=1}},
+	{"dark_grey", "dye_dark_grey", 	    S("Gray Dye"), {dye=1, craftitem=1, basecolor_grey=1,    excolor_darkgrey=1,  unicolor_darkgrey=1}},
 	{"black", "mcl_dye_black",     	    S("Ink Sac"),     {dye=1, craftitem=1, basecolor_black=1,   excolor_black=1,     unicolor_black=1}},
 	{"violet", "dye_violet",    	    S("Purple Dye"),    {dye=1, craftitem=1, basecolor_magenta=1, excolor_violet=1,    unicolor_violet=1}},
 	{"blue", "mcl_dye_blue",      	    S("Lapis Lazuli"),      {dye=1, craftitem=1, basecolor_blue=1,    excolor_blue=1,      unicolor_blue=1}},

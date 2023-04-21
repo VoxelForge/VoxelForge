@@ -88,8 +88,8 @@ mcl_stairs.register_slab("stonebrickcracked", "mcl_core:stonebrickcracked",
 local block = {}
 block.dyes = {
 	{"white",      S("White Concrete Stairs"),      S("White Concrete Slab"), S("Double White Concrete Slab"), "white"},
-	{"grey",       S("Grey Concrete Stairs"),       S("Grey Concrete Slab"), S("Double Grey Concrete Slab"), "dark_grey"},
-	{"silver",     S("Light Grey Concrete Stairs"), S("Light Grey Concrete Slab"), S("Double Light Grey Concrete Slab"), "grey"},
+	{"grey",       S("Gray Concrete Stairs"),       S("Gray Concrete Slab"), S("Double Gray Concrete Slab"), "dark_grey"},
+	{"silver",     S("Light Gray Concrete Stairs"), S("Light Gray Concrete Slab"), S("Double Light Gray Concrete Slab"), "grey"},
 	{"black",      S("Black Concrete Stairs"),      S("Black Concrete Slab"), S("Double Black Concrete Slab"), "black"},
 	{"red",        S("Red Concrete Stairs"),        S("Red Concrete Slab"), S("Double Red Concrete Slab"), "red"},
 	{"yellow",     S("Yellow Concrete Stairs"),     S("Yellow Concrete Slab"), S("Double Yellow Concrete Slab"), "yellow"},
