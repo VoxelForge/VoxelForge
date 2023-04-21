@@ -136,7 +136,7 @@ end
 minetest.set_mapgen_setting("mg_flags", mg_flags_str, true)
 
 local function between(x, y, z) -- x is between y and z (inclusive)
-    return y <= x and x <= z
+	return y <= x and x <= z
 end
 
 local function in_cube(tpos,wpos1,wpos2)
@@ -363,13 +363,11 @@ local function end_basic(vm, data, data2, emin, emax, area, minp, maxp, blocksee
 	local lvm_used = false
 	local pr = PseudoRandom(blockseed)
 	local nodes
-	if mg_name ~= "v6" then
-		nodes = minetest.find_nodes_in_area(emin, emax, {"mcl_core:water_source"})
-		if #nodes > 0 then
-			lvm_used = true
-			for _,n in pairs(nodes) do
-				data[area:index(n.x, n.y, n.z)] = c_air
-			end
+	nodes = minetest.find_nodes_in_area(emin, emax, {"mcl_core:water_source"})
+	if #nodes > 0 then
+		lvm_used = true
+		for _,n in pairs(nodes) do
+			data[area:index(n.x, n.y, n.z)] = c_air
 		end
 	end
 	return true, false
@@ -381,7 +379,7 @@ mcl_mapgen_core.register_generator("end_fixes", end_basic, function(minp,maxp)
 	if maxp.y < mcl_vars.mg_end_min or minp.y > mcl_vars.mg_end_max then return end
 end, 9999, true)
 
-if mg_name ~= "v6" and mg_name ~= "singlenode" then
+if mg_name ~= "singlenode" then
 	mcl_mapgen_core.register_generator("block_fixes", block_fixes, nil, 9999, true)
 end
 

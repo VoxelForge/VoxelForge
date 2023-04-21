@@ -59,16 +59,6 @@ end
 
 local E1 = { "mcl_core:emerald", 1, 1 } -- one emerald
 
--- Special trades for v6 only
--- NOTE: These symbols MUST only be added at the end of a tier
-local TRADE_V6_RED_SANDSTONE, TRADE_V6_DARK_OAK_SAPLING, TRADE_V6_ACACIA_SAPLING, TRADE_V6_BIRCH_SAPLING
-if minetest.get_mapgen_setting("mg_name") == "v6" then
-	TRADE_V6_RED_SANDSTONE = { E1, { "mcl_core:redsandstone", 12, 16 } }
-	TRADE_V6_DARK_OAK_SAPLING = { { "mcl_core:emerald", 6, 9 }, { "mcl_core:darksapling", 1, 1 } }
-	TRADE_V6_ACACIA_SAPLING = { { "mcl_core:emerald", 14, 17 }, { "mcl_core:acaciasapling", 1, 1 } }
-	TRADE_V6_BIRCH_SAPLING = { { "mcl_core:emerald", 8, 11 }, { "mcl_core:birchsapling", 1, 1 } }
-end
-
 local tiernames = {
 	S("Novice"),
 	S("Apprentice"),
@@ -122,9 +112,6 @@ local professions = {
 			{
 			{ E1, { "mcl_farming:carrot_item_gold", 3, 10 } },
 			{ E1, { "mcl_potions:speckled_melon", 4, 1 } },
-			TRADE_V6_BIRCH_SAPLING,
-			TRADE_V6_DARK_OAK_SAPLING,
-			TRADE_V6_ACACIA_SAPLING,
 			},
 		}
 	},
@@ -488,7 +475,6 @@ local professions = {
 			--{ { "FIXME: scute", 4, 4 }, E1 },
 			{ { "mcl_potions:glass_bottle", 9, 9 }, E1 },
 			{ { "mcl_core:emerald", 5, 5 }, { "mcl_throwing:ender_pearl", 1, 1 } },
-			TRADE_V6_RED_SANDSTONE,
 			},
 			{
 			 { { "mcl_nether:nether_wart_item", 22, 22 }, E1 },
@@ -506,41 +492,41 @@ local professions = {
 		        { E1, { "mcl_core:brick", 10, 10 } },
 		        },
 			{
-		        { { "mcl_core:stone", 20, 20 }, E1 },
-		        { E1, { "mcl_core:stonebrickcarved", 4, 4 } },
-		        },
-		        {
-		        { { "mcl_core:granite", 16, 16 }, E1 },
-		        { { "mcl_core:andesite", 16, 16 }, E1 },
-		        { { "mcl_core:diorite", 16, 16 }, E1 },
-		        { E1, { "mcl_core:granite_smooth", 4, 4 } },
-		        { E1, { "mcl_core:andesite_smooth", 4, 4 } },
-		        { E1, { "mcl_core:diorite_smooth", 4, 4 } },
-		        },
-		        {
-		        { { "mcl_nether:quartz", 12, 12 }, E1 },
-		        { E1, { "mcl_colorblocks:hardened_clay", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_white", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_grey", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_silver", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_black", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_red", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_yellow", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_green", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_cyan", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_blue", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_magenta", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_orange", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_brown", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_pink", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_light_blue", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_lime", 1, 1} },
-                { E1, { "mcl_colorblocks:hardened_clay_purple", 1, 1 } },
-	  	        },
-	 	        {
-		        { E1, { "mcl_nether:quartz_pillar", 1, 1 } },
-                { E1, { "mcl_nether:quartz_block", 1, 1 } },
-		        },
+				{ { "mcl_core:stone", 20, 20 }, E1 },
+				{ E1, { "mcl_core:stonebrickcarved", 4, 4 } },
+				},
+				{
+				{ { "mcl_core:granite", 16, 16 }, E1 },
+				{ { "mcl_core:andesite", 16, 16 }, E1 },
+				{ { "mcl_core:diorite", 16, 16 }, E1 },
+				{ E1, { "mcl_core:granite_smooth", 4, 4 } },
+				{ E1, { "mcl_core:andesite_smooth", 4, 4 } },
+				{ E1, { "mcl_core:diorite_smooth", 4, 4 } },
+				},
+				{
+				{ { "mcl_nether:quartz", 12, 12 }, E1 },
+				{ E1, { "mcl_colorblocks:hardened_clay", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_white", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_grey", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_silver", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_black", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_red", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_yellow", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_green", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_cyan", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_blue", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_magenta", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_orange", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_brown", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_pink", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_light_blue", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_lime", 1, 1} },
+				{ E1, { "mcl_colorblocks:hardened_clay_purple", 1, 1 } },
+	  			},
+	 			{
+				{ E1, { "mcl_nether:quartz_pillar", 1, 1 } },
+				{ E1, { "mcl_nether:quartz_block", 1, 1 } },
+				},
 		},
 	},
 	nitwit = {
