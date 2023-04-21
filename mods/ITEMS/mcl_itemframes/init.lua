@@ -18,7 +18,7 @@ mcl_itemframes.create_custom_frame("false", "item_frame", false,
 		"Item Frame", "")
 mcl_itemframes.create_custom_frame("false", "glow_item_frame", true,
 		"mcl_itemframes_glow_item_frame.png", mcl_colors.WHITE, "Can hold an item and glows.",
-		"Glowing Item Frame", "")
+		"Glow Item Frame", "")
 
 -- Register the base frame's recipes.
 -- was going to make it a specialized function, but minetest refuses to play nice.

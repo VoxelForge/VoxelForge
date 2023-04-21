@@ -1,4 +1,6 @@
 # textdomain: mcl_smithing_table
-Smithing table=
 Inventory=
 Upgrade Gear=
+Smithing Table=
+##### not used anymore #####
+Smithing table=

@@ -6,12 +6,12 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local woods = {
-	{ "wood", "default_wood.png", S("Oak Wood Stairs"), S("Oak Wood Slab"), S("Double Oak Wood Slab") },
-	{ "junglewood", "default_junglewood.png", S("Jungle Wood Stairs"), S("Jungle Wood Slab"), S("Double Jungle Wood Slab") },
-	{ "acaciawood", "default_acacia_wood.png", S("Acacia Wood Stairs"), S("Acacia Wood Slab"), S("Double Acacia Wood Slab") },
-	{ "sprucewood", "mcl_core_planks_spruce.png", S("Spruce Wood Stairs"), S("Spruce Wood Slab"), S("Double Spruce Wood Slab") },
-	{ "birchwood", "mcl_core_planks_birch.png", S("Birch Wood Stairs"), S("Birch Wood Slab"), S("Double Birch Wood Slab") },
-	{ "darkwood", "mcl_core_planks_big_oak.png", S("Dark Oak Wood Stairs"), S("Dark Oak Wood Slab"), S("Double Dark Oak Wood Slab") },
+	{ "wood", "default_wood.png", S("Oak Stairs"), S("Oak Slab"), S("Double Oak Slab") },
+	{ "junglewood", "default_junglewood.png", S("Jungle Stairs"), S("Jungle Slab"), S("Double Jungle Slab") },
+	{ "acaciawood", "default_acacia_wood.png", S("Acacia Stairs"), S("Acacia Slab"), S("Double Acacia Slab") },
+	{ "sprucewood", "mcl_core_planks_spruce.png", S("Spruce Stairs"), S("Spruce Slab"), S("Double Spruce Slab") },
+	{ "birchwood", "mcl_core_planks_birch.png", S("Birch Stairs"), S("Birch Slab"), S("Double Birch Slab") },
+	{ "darkwood", "mcl_core_planks_big_oak.png", S("Dark Oak Stairs"), S("Dark Oak Slab"), S("Double Dark Oak Slab") },
 }
 
 for w=1, #woods do
@@ -35,9 +35,9 @@ mcl_stairs.register_stair_and_slab_simple("stone_rough", "mcl_core:stone", S("St
 mcl_stairs.register_slab("stone", "mcl_core:stone_smooth",
 		{pickaxey=1, material_stone=1},
 		{"mcl_stairs_stone_slab_top.png", "mcl_stairs_stone_slab_top.png", "mcl_stairs_stone_slab_side.png"},
-		S("Polished Stone Slab"),
+		S("Smooth Stone Slab"),
 		mcl_sounds.node_sound_stone_defaults(), 6, 2,
-		S("Double Polished Stone Slab"))
+		S("Double Smooth Stone Slab"))
 
 mcl_stairs.register_stair_and_slab_simple("andesite", "mcl_core:andesite", S("Andesite Stairs"), S("Andesite Slab"), S("Double Andesite Slab"))
 mcl_stairs.register_stair_and_slab_simple("granite", "mcl_core:granite", S("Granite Stairs"), S("Granite Slab"), S("Double Granite Slab"))
@@ -81,15 +81,15 @@ mcl_stairs.register_stair_and_slab_simple("redsandstonesmooth2", "mcl_core:redsa
 mcl_stairs.register_stair("stonebrick", "mcl_core:stonebrick",
 		{pickaxey=1, material_stone=1},
 		{"default_stone_brick.png"},
-		S("Stone Bricks Stairs"),
+		S("Stone Brick Stairs"),
 		mcl_sounds.node_sound_stone_defaults(), 6, 1.5,
 		nil, "mcl_core:stonebrick")	--fixme: extra parameter from previous release
 mcl_stairs.register_slab("stonebrick", "mcl_core:stonebrick",
 		{pickaxey=1, material_stone=1},
 		{"default_stone_brick.png"},
-		S("Stone Bricks Slab"),
+		S("Stone Brick Slab"),
 		mcl_sounds.node_sound_stone_defaults(), 6, 2,
-		S("Double Stone Bricks Slab"), "mcl_core:stonebrick")	--fixme: extra parameter from previous release
+		S("Double Stone Brick Slab"), "mcl_core:stonebrick")	--fixme: extra parameter from previous release
 
 mcl_stairs.register_stair("quartzblock", "group:quartz_block",
 		{pickaxey=1, material_stone=1},
@@ -138,7 +138,7 @@ mcl_stairs.register_slab("purpur_block", "group:purpur_block",
 
 mcl_stairs.register_stair_and_slab_simple("prismarine", "mcl_ocean:prismarine", S("Prismarine Stairs"), S("Prismarine Slab"), S("Double Prismarine Slab"))
 
-mcl_stairs.register_stair_and_slab_simple("mud_brick", "mcl_mud:mud_bricks", S("Mud Brick Stair"), S("Mud Brick Slab"), S("Double Mud Brick Slab"))
+mcl_stairs.register_stair_and_slab_simple("mud_brick", "mcl_mud:mud_bricks", S("Mud Brick Stairs"), S("Mud Brick Slab"), S("Double Mud Brick Slab"))
 
 mcl_stairs.register_stair_and_slab_simple("prismarine_brick", "mcl_ocean:prismarine_brick", S("Prismarine Brick Stairs"), S("Prismarine Brick Slab"), S("Double Prismarine Brick Slab"))
 mcl_stairs.register_stair_and_slab_simple("prismarine_dark", "mcl_ocean:prismarine_dark", S("Dark Prismarine Stairs"), S("Dark Prismarine Slab"), S("Double Dark Prismarine Slab"))

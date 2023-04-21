@@ -427,8 +427,8 @@ minetest.register_craft({
 
 -- Fish
 minetest.register_craftitem("mcl_fishing:fish_raw", {
-	description = S("Raw Fish"),
-	_doc_items_longdesc = S("Raw fish is obtained by fishing and is a food item which can be eaten safely. Cooking it improves its nutritional value."),
+	description = S("Raw Cod"),
+	_doc_items_longdesc = S("Raw cod is obtained by fishing and is a food item which can be eaten safely. Cooking it improves its nutritional value."),
 	inventory_image = "mcl_fishing_fish_raw.png",
 	on_place = minetest.item_eat(2),
 	on_secondary_use = minetest.item_eat(2),
@@ -438,8 +438,8 @@ minetest.register_craftitem("mcl_fishing:fish_raw", {
 })
 
 minetest.register_craftitem("mcl_fishing:fish_cooked", {
-	description = S("Cooked Fish"),
-	_doc_items_longdesc = S("Mmh, fish! This is a healthy food item."),
+	description = S("Cooked Cod"),
+	_doc_items_longdesc = S("This is a healthy food item which can be eaten."),
 	inventory_image = "mcl_fishing_fish_cooked.png",
 	on_place = minetest.item_eat(5),
 	on_secondary_use = minetest.item_eat(5),
@@ -485,10 +485,10 @@ minetest.register_craft({
 	cooktime = 10,
 })
 
--- Clownfish
+-- Tropical fish
 minetest.register_craftitem("mcl_fishing:clownfish_raw", {
-	description = S("Clownfish"),
-	_doc_items_longdesc = S("Clownfish may be obtained by fishing (and luck) and is a food item which can be eaten safely."),
+	description = S("Tropical Fish"),
+	_doc_items_longdesc = S("Tropical Fish may be obtained by fishing (and luck) and is a food item which can be eaten safely."),
 	inventory_image = "mcl_fishing_clownfish_raw.png",
 	on_place = minetest.item_eat(1),
 	on_secondary_use = minetest.item_eat(1),

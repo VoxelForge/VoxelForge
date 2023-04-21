@@ -1,6 +1,6 @@
 
 --                                          ____________________________
---_________________________________________/    Variables & Functions    \_________ 
+--_________________________________________/    Variables & Functions    \_________
 
 local eat = minetest.item_eat(6, "mcl_core:bowl") --6 hunger points, player receives mcl_core:bowl after eating
 
@@ -11,7 +11,7 @@ local flower_effect = {
 	[ "mcl_flowers:dandelion" ] = "hunger",
 	[ "mcl_flowers:peony" ] = "jump",
 	[ "mcl_flowers:oxeye_daisy" ] = "regeneration",
-	[ "mcl_flowers:poppy" ] = "night_vision"	
+	[ "mcl_flowers:poppy" ] = "night_vision"
 }
 
 local effects = {

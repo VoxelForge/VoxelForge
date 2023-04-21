@@ -46,7 +46,7 @@ local function get_drops(fortune_level)
 end
 
 minetest.register_node("mcl_mangrove:mangrove_tree", {
-	description = S("Mangrove Wood"),
+	description = S("Mangrove Log"),
 	_doc_items_longdesc = S("The trunk of a Mangrove tree."),
 	_doc_items_hidden = false,
 	tiles = {"mcl_mangrove_log_top.png", "mcl_mangrove_log_top.png", "mcl_mangrove_log.png"},
@@ -60,7 +60,7 @@ minetest.register_node("mcl_mangrove:mangrove_tree", {
 	_mcl_stripped_variant = "mcl_mangrove:mangrove_stripped_trunk",
 })
 minetest.register_node("mcl_mangrove:mangrove_tree_bark", {
-	description = S("Mangrove Bark"),
+	description = S("Mangrove Wood"),
 	_doc_items_longdesc = S("The bark of a Mangrove tree."),
 	_doc_items_hidden = false,
 	tiles = {"mcl_mangrove_log.png", "mcl_mangrove_log.png", "mcl_mangrove_log.png"},
@@ -74,7 +74,7 @@ minetest.register_node("mcl_mangrove:mangrove_tree_bark", {
 })
 
 minetest.register_node("mcl_mangrove:mangrove_wood", {
-	description = S("Mangrove Wood Planks"),
+	description = S("Mangrove Planks"),
 	_doc_items_longdesc = doc.sub.items.temp.build,
 	_doc_items_hidden = false,
 	tiles = {"mcl_mangrove_planks.png"},
@@ -106,7 +106,7 @@ minetest.register_node("mcl_mangrove:mangroveleaves", {
 })
 
 minetest.register_node("mcl_mangrove:mangrove_stripped_trunk", {
-	description = S("Stripped Mangrove Wood"),
+	description = S("Stripped Mangrove Log"),
 	_doc_items_longdesc = S("The stripped wood of a Mangrove tree"),
 	_doc_items_hidden = false,
 	tiles ={"mcl_stripped_mangrove_log_top.png","mcl_stripped_mangrove_log_side.png",},
@@ -119,7 +119,7 @@ minetest.register_node("mcl_mangrove:mangrove_stripped_trunk", {
 	_mcl_hardness = 2,
 })
 minetest.register_node("mcl_mangrove:mangrove_stripped_bark", {
-	description = S("Stripped Mangrove Bark"),
+	description = S("Stripped Mangrove Wood"),
 	_doc_items_longdesc = S("The stripped bark of a Mangrove tree"),
 	_doc_items_hidden = false,
 	tiles ={"mcl_stripped_mangrove_log_side.png","mcl_stripped_mangrove_log_side.png",},
@@ -383,8 +383,8 @@ mcl_doors:register_trapdoor("mcl_mangrove:mangrove_trapdoor", {
 
 mcl_fences.register_fence_and_fence_gate(
 	"mangrove_wood_fence",
-	S("Mangrove Wood Fence"),
-	S("Mangrove Wood Fence Gate"),
+	S("Mangrove Fence"),
+	S("Mangrove Fence Gate"),
 	"mcl_mangrove_fence.png",
 	{handy=1,axey=1, flammable=2,fence_wood=1, fire_encouragement=5, fire_flammability=20},
 	minetest.registered_nodes["mcl_core:wood"]._mcl_hardness,
@@ -396,16 +396,16 @@ mcl_fences.register_fence_and_fence_gate(
 mcl_stairs.register_stair("mangrove_wood", "mcl_mangrove:mangrove_wood",
 	{handy=1,axey=1, flammable=3,wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
 	{"mcl_mangrove_planks.png"},
-	S("Mangrove Wood Stairs"),
+	S("Mangrove Stairs"),
 	mcl_sounds.node_sound_wood_defaults(), 3, 2,
 	"woodlike")
 
 mcl_stairs.register_slab("mangrove_wood", "mcl_mangrove:mangrove_wood",
 	{handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
 	{"mcl_mangrove_planks.png"},
-	S("Mangrove Wood Slab"),
+	S("Mangrove Slab"),
 	mcl_sounds.node_sound_wood_defaults(), 3, 2,
-	S("Double Mangrove Wood Slab"))
+	S("Double Mangrove Slab"))
 
 minetest.register_craft({
 	output = "mcl_mangrove:mangrove_tree_bark 3",

@@ -224,12 +224,11 @@ mcl_heads.register_head{
 	range_factor = 0.5,
 }
 
--- Original Minecraft name: “Head”
 mcl_heads.register_head{
 	name = "steve",
 	texture = "mcl_heads_steve.png",
-	description = S("Human Head"),
-	longdesc = S("A human head is a small decorative block which resembles the head of a human (i.e. a player character). It can also be worn as a helmet for fun, but does not offer any protection."),
+	description = S("Player Head"),
+	longdesc = S("A player head is a small decorative block which resembles the head of a human (i.e. a player character). It can also be worn as a helmet for fun, but does not offer any protection."),
 }
 
 mcl_heads.register_head{

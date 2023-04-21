@@ -66,7 +66,7 @@ local function spread_nether_plants(pos,node)
 end
 
 minetest.register_node("mcl_crimson:warped_fungus", {
-	description = S("Warped Fungus Mushroom"),
+	description = S("Warped Fungus"),
 	drawtype = "plantlike",
 	tiles = { "farming_warped_fungus.png" },
 	inventory_image = "farming_warped_fungus.png",
@@ -277,7 +277,7 @@ minetest.register_node("mcl_crimson:shroomlight", {
 })
 
 minetest.register_node("mcl_crimson:warped_hyphae", {
-	description = S("Warped Hyphae"),
+	description = S("Warped Stem"),
 	_doc_items_longdesc = S("The stem of a warped hyphae"),
 	_doc_items_hidden = false,
 	tiles = {
@@ -319,7 +319,7 @@ minetest.register_node("mcl_crimson:warped_nylium", {
 --Stem bark, stripped stem and bark
 
 minetest.register_node("mcl_crimson:warped_hyphae_bark", {
-	description = S("Warped Hyphae Bark"),
+	description = S("Warped Hyphae"),
 	_doc_items_longdesc = S("This is a decorative block surrounded by the bark of an hyphae."),
 	tiles = {"warped_hyphae_side.png"},
 	paramtype2 = "facedir",
@@ -341,7 +341,7 @@ minetest.register_craft({
 })
 
 minetest.register_node("mcl_crimson:stripped_warped_hyphae", {
-	description = S("Stripped Warped Hyphae"),
+	description = S("Stripped Warped Stem"),
 	_doc_items_longdesc = S("The stripped hyphae of a warped fungus"),
 	_doc_items_hidden = false,
 	tiles = {"warped_stem_stripped_top.png", "warped_stem_stripped_top.png", "warped_stem_stripped_side.png"},
@@ -354,7 +354,7 @@ minetest.register_node("mcl_crimson:stripped_warped_hyphae", {
 })
 
 minetest.register_node("mcl_crimson:stripped_warped_hyphae_bark", {
-	description = S("Stripped Warped Hyphae Bark"),
+	description = S("Stripped Warped Hyphae"),
 	_doc_items_longdesc = S("The stripped hyphae bark of a warped fungus"),
 	tiles = {"warped_stem_stripped_side.png"},
 	paramtype2 = "facedir",
@@ -375,14 +375,14 @@ minetest.register_craft({
 })
 
 minetest.register_node("mcl_crimson:warped_hyphae_wood", {
-	description = S("Warped Hyphae Wood"),
+	description = S("Warped Planks"),
 	tiles = {"warped_hyphae_wood.png"},
 	groups = {handy = 5,axey = 1, flammable = 3, wood=1,building_block = 1, material_wood = 1, fire_encouragement = 5, fire_flammability = 20},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_hardness = 2,
 })
 
-mcl_stairs.register_stair_and_slab_simple("warped_hyphae_wood", "mcl_crimson:warped_hyphae_wood", S("Warped Stair"), S("Warped Slab"), S("Double Warped Slab"))
+mcl_stairs.register_stair_and_slab_simple("warped_hyphae_wood", "mcl_crimson:warped_hyphae_wood", S("Warped Stairs"), S("Warped Slab"), S("Double Warped Slab"))
 
 minetest.register_craft({
 	output = "mcl_crimson:warped_hyphae_wood 4",
@@ -400,7 +400,7 @@ minetest.register_craft({
 })
 
 minetest.register_node("mcl_crimson:crimson_fungus", {
-	description = S("Crimson Fungus Mushroom"),
+	description = S("Crimson Fungus"),
 	drawtype = "plantlike",
 	tiles = { "farming_crimson_fungus.png" },
 	inventory_image = "farming_crimson_fungus.png",
@@ -462,7 +462,7 @@ mcl_flowerpots.register_potted_flower("mcl_crimson:crimson_roots", {
 })
 
 minetest.register_node("mcl_crimson:crimson_hyphae", {
-	description = S("Crimson Hyphae"),
+	description = S("Crimson Stem"),
 	_doc_items_longdesc = S("The stem of a crimson hyphae"),
 	_doc_items_hidden = false,
 	tiles = {
@@ -485,7 +485,7 @@ minetest.register_node("mcl_crimson:crimson_hyphae", {
 --Stem bark, stripped stem and bark
 
 minetest.register_node("mcl_crimson:crimson_hyphae_bark", {
-	description = S("Crimson Hyphae Bark"),
+	description = S("Crimson Hyphae"),
 	_doc_items_longdesc = S("This is a decorative block surrounded by the bark of an hyphae."),
 	tiles = {"crimson_hyphae_side.png"},
 	paramtype2 = "facedir",
@@ -507,7 +507,7 @@ minetest.register_craft({
 })
 
 minetest.register_node("mcl_crimson:stripped_crimson_hyphae", {
-	description = S("Stripped Crimson Hyphae"),
+	description = S("Stripped Crimson Stem"),
 	_doc_items_longdesc = S("The stripped stem of a crimson hyphae"),
 	_doc_items_hidden = false,
 	tiles = {"crimson_stem_stripped_top.png", "crimson_stem_stripped_top.png", "crimson_stem_stripped_side.png"},
@@ -520,7 +520,7 @@ minetest.register_node("mcl_crimson:stripped_crimson_hyphae", {
 })
 
 minetest.register_node("mcl_crimson:stripped_crimson_hyphae_bark", {
-	description =	S("Stripped Crimson Hyphae Bark"),
+	description =	S("Stripped Crimson Hyphae"),
 	_doc_items_longdesc = S("The stripped wood of a crimson hyphae"),
 	tiles = {"crimson_stem_stripped_side.png"},
 	paramtype2 = "facedir",
@@ -541,7 +541,7 @@ minetest.register_craft({
 })
 
 minetest.register_node("mcl_crimson:crimson_hyphae_wood", {
-	description = S("Crimson Hyphae Wood"),
+	description = S("Crimson Planks"),
 	tiles = {"crimson_hyphae_wood.png"},
 	groups = {handy = 5, axey = 1, wood = 1, building_block = 1, material_wood = 1},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
@@ -582,7 +582,7 @@ minetest.register_craft({
 	},
 })
 
-mcl_stairs.register_stair_and_slab_simple("crimson_hyphae_wood", "mcl_crimson:crimson_hyphae_wood", S("Crimson Stair"), S("Crimson Slab"), S("Double Crimson Slab"))
+mcl_stairs.register_stair_and_slab_simple("crimson_hyphae_wood", "mcl_crimson:crimson_hyphae_wood", S("Crimson Stairs"), S("Crimson Slab"), S("Double Crimson Slab"))
 
 mcl_dye.register_on_bone_meal_apply(function(pt,user)
 	if not pt.type == "node" then return end

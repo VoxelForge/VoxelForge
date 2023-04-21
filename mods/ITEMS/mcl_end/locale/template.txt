@@ -12,7 +12,6 @@ A chorus flower is the living part of a chorus plant. It can grow into a tall ch
 Place it and wait for it to grow. It can only be placed on top of end stone, on top of a chorus plant stem, or at the side of exactly one chorus plant stem.=
 Dead Chorus Flower=
 This is a part of a chorus plant. It doesn't grow. Chorus flowers die of old age or when they are unable to grow. A dead chorus flower can be harvested to obtain a fresh chorus flower which is able to grow again.=
-Chorus Plant Stem=
 A chorus plant stem is the part of a chorus plant which holds the whole plant together. It needs end stone as its soil. Stems are grown from chorus flowers.=
 Chorus Fruit=
 A chorus fruit is an edible fruit from the chorus plant which is home to the End. Eating it teleports you to the top of a random solid block nearby, provided you won't end up inside a liquid, solid or harmful blocks. Teleportation might fail if there are very few or no places to teleport to.=
@@ -31,3 +30,6 @@ End Crystals are explosive devices. They can be placed on Obsidian or Bedrock. I
 Explosion radius: @1=
 Ignited by a punch or a hit with an arrow=
 Place the End Crystal on Obsidian or Bedrock, then punch it or hit it with an arrow to cause an huge and probably deadly explosion. To Spawn the Ender Dragon, place one at each side of the End Exit Portal.=
+Chorus Plant=
+##### not used anymore #####
+Chorus Plant Stem=

@@ -1671,7 +1671,7 @@ end
 
 -- A snow cover node is a node which turns a snowed dirtlike --
 -- node into its snowed form while it is placed above.
--- MCL2's snow cover nodes are Top Snow (mcl_core:snow) and Snow (mcl_core:snowblock).
+-- MCL2's snow cover nodes are Snow (mcl_core:snow) and Snow Block (mcl_core:snowblock).
 
 -- Always add the following functions to snow cover nodes:
 

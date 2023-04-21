@@ -34,7 +34,6 @@ Lingering Water Bottle=
 
 A throwable water bottle that will shatter on impact, where it creates a cloud of water vapor that lingers on the ground for a while. This cloud extinguishes fire and hurts mobs that are vulnerable to water.=
 
-Glistering Melon=
 
 This shiny melon is full of tiny gold nuggets and would be nice in an item frame. It isn't edible and not useful for anything else.=
 
@@ -108,9 +107,11 @@ A throwable potion that will shatter on impact, where it gives all nearby player
 
 This particular arrow is tipped and will give an effect when it hits a player or mob.=
 
+Glistering Melon Slice=
 ##### not used anymore #####
 Weakness=
 Weakness +=
 Strength=
 Strength II=
 Strength +=
+Glistering Melon=

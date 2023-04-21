@@ -66,8 +66,8 @@ minetest.register_node("mcl_nether:ancient_debris", {
 })
 
 minetest.register_node("mcl_nether:netheriteblock", {
-	description = S("Netherite Block"),
-	_doc_items_longdesc = S("Netherite block is very hard and can be made of 9 netherite ingots."),
+	description = S("Block of Netherite"),
+	_doc_items_longdesc = S("Block of netherite is very hard and can be made of 9 netherite ingots."),
 	stack_max = 64,
 	tiles = {"mcl_nether_netheriteblock.png"},
 	is_ground_content = true,
@@ -170,8 +170,7 @@ minetest.register_node("mcl_nether:soul_sand", {
 })
 
 minetest.register_node("mcl_nether:nether_brick", {
-	-- Original name: Nether Brick
-	description = S("Nether Brick Block"),
+	description = S("Nether Bricks"),
 	_doc_items_longdesc = doc.sub.items.temp.build,
 	stack_max = 64,
 	tiles = {"mcl_nether_nether_brick.png"},
@@ -183,8 +182,7 @@ minetest.register_node("mcl_nether:nether_brick", {
 })
 
 minetest.register_node("mcl_nether:red_nether_brick", {
-	-- Original name: Red Nether Brick
-	description = S("Red Nether Brick Block"),
+	description = S("Red Nether Bricks"),
 	_doc_items_longdesc = doc.sub.items.temp.build,
 	stack_max = 64,
 	tiles = {"mcl_nether_red_nether_brick.png"},
@@ -252,7 +250,7 @@ minetest.register_node("mcl_nether:quartz_pillar", {
 	_mcl_hardness = 0.8,
 })
 minetest.register_node("mcl_nether:quartz_smooth", {
-	description = S("Smooth Quartz"),
+	description = S("Smooth Quartz Block"),
 	_doc_items_longdesc = doc.sub.items.temp.build,
 	stack_max = 64,
 	is_ground_content = false,

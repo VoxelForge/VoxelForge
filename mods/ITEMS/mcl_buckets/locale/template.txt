@@ -1,5 +1,4 @@
 # textdomain: mcl_buckets
-Empty Bucket=
 A bucket can be used to collect and release liquids.=
 Punch a liquid source to collect it. You can then use the filled bucket to place the liquid somewhere else.=
 Lava Bucket=
@@ -19,8 +18,10 @@ Bucket of @1=
 This bucket is filled with water and @1.=
 Place it to empty the bucket and place a @1. Obtain by right clicking on a @2 with a bucket of water.=
 Places a water source and a @1.=
+Bucket=
 ##### not used anymore #####
 Axolotl=
 Cod=
 Salmon=
 Tropical Fish=
+Empty Bucket=

@@ -72,7 +72,7 @@ for i=0, 3 do
 end
 
 minetest.register_craftitem("mcl_farming:sweet_berry", {
-	description = S("Sweet Berry"),
+	description = S("Sweet Berries"),
 	inventory_image = "mcl_farming_sweet_berry.png",
 	_mcl_saturation = 0.4,
 	groups = { food = 2, eatable = 1, compostability=30 },

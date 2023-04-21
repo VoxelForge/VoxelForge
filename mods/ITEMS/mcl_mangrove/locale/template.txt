@@ -1,14 +1,11 @@
 # textdomain: mcl_mangrove
 Mangrove Wood=
 The trunk of a Mangrove tree.=
-Mangrove Bark=
 The bark of a Mangrove tree.=
-Mangrove Wood Planks=
 Mangrove Leaves=
 mangrove leaves are grown from mangrove trees.=
 Stripped Mangrove Wood=
 The stripped wood of a Mangrove tree=
-Stripped Mangrove Bark=
 The stripped bark of a Mangrove tree=
 Mangrove Roots=
 Mangrove roots are decorative blocks that form as part of mangrove trees.=
@@ -29,6 +26,18 @@ To open or close a wooden door, rightclick it or supply its lower half with a re
 Mangrove Trapdoor=
 Wooden trapdoors are horizontal barriers which can be opened and closed by hand or a redstone signal. They occupy the upper or lower part of a block, depending on how they have been placed. When open, they can be climbed like a ladder.=
 To open or close the trapdoor, rightclick it or send a redstone signal to it.=
+Mangrove Log=
+Mangrove Planks=
+Stripped Mangrove Log=
+Mangrove Fence=
+Mangrove Fence Gate=
+Mangrove Stairs=
+Mangrove Slab=
+Double Mangrove Slab=
+##### not used anymore #####
+Mangrove Bark=
+Mangrove Wood Planks=
+Stripped Mangrove Bark=
 Mangrove Wood Fence=
 Mangrove Wood Fence Gate=
 Mangrove Wood Stairs=
