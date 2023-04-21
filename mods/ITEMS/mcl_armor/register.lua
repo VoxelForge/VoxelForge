@@ -70,7 +70,7 @@ mcl_armor.register_set({
 		head = S("Iron Helmet"),
 		torso = S("Iron Chestplate"),
 		legs = S("Iron Leggings"),
-		boots = S("Iron Boots"),
+		feet = S("Iron Boots"),
 	},
 	durability = 240,
 	enchantability = 9,
