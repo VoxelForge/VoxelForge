@@ -236,7 +236,7 @@ minetest.register_node("mcl_nether:quartz_chiseled", {
 })
 
 minetest.register_node("mcl_nether:quartz_pillar", {
-	description = S("Pillar Quartz Block"),
+	description = S("Quartz Pillar"),
 	_doc_items_longdesc = doc.sub.items.temp.build,
 	stack_max = 64,
 	paramtype2 = "facedir",
