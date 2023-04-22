@@ -1164,6 +1164,12 @@ minetest.register_abm({
 			local p_drop = vector.offset(pos, math.random() - 0.5, math.random() - 0.5, math.random() - 0.5)
 			minetest.add_item(p_drop, itemname)
 		end
+		-- Check if there is a tree trunk (again) and turn back to normal leaf if so
+		if minetest.find_node_near(pos,6,{"group:tree"}) then
+			node.name = node.name:gsub("_orphan","")
+			minetest.swap_node(pos, node)
+			return
+		end
 		-- Remove the decayed node
 		minetest.remove_node(pos)
 		leafdecay_particles(pos, node)
