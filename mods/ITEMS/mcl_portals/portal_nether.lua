@@ -417,8 +417,11 @@ local function build_portal(pos, param2, bad_spot)
 	minetest.log("action", "[mcl_portal] Destination Nether portal generated at " .. minetest.pos_to_string(pos))
 end
 
-local function finalize_teleport(obj, dst_pos)
-	obj:set_pos(dst_pos)
+local function finalize_teleport(obj, pos)
+	obj:set_pos(pos)
+	minetest.sound_play("mcl_portals_teleport", { pos = pos, gain = 0.5, max_hear_distance = 16 }, true)
+
+	mcl_worlds.dimension_change(obj, mcl_worlds.y_to_layer(pos.y))
 	minetest.after(TELEPORT_COOLOFF, function(obj)
 		portal_cooloff[obj] = false
 	end, obj)
