@@ -4003,8 +4003,8 @@ local function register_decorations()
 		num_spawn_by = 1,
 	})
 
-	-- Doubletall grass
-	local function register_doubletall_grass(offset, scale, biomes)
+	-- Tall grass
+	local function register_tall_grass(offset, scale, biomes)
 
 		for b=1, #biomes do
 			local param2 = minetest.registered_biomes[biomes[b]]._mcl_palette_index
@@ -4035,9 +4035,9 @@ local function register_decorations()
 		end
 	end
 
-	register_doubletall_grass(-0.01, 0.03, {"Taiga", "Forest", "FlowerForest", "BirchForest", "BirchForestM", "RoofedForest"})
-	register_doubletall_grass(-0.002, 0.03, {"Plains", "SunflowerPlains"})
-	register_doubletall_grass(-0.0005, -0.03, {"Savanna", "SavannaM"})
+	register_tall_grass(-0.01, 0.03, {"Taiga", "Forest", "FlowerForest", "BirchForest", "BirchForestM", "RoofedForest"})
+	register_tall_grass(-0.002, 0.03, {"Plains", "SunflowerPlains"})
+	register_tall_grass(-0.0005, -0.03, {"Savanna", "SavannaM"})
 
 	-- Large ferns
 	local function register_double_fern(offset, scale, biomes)
@@ -4571,7 +4571,7 @@ local function register_decorations()
 		y_max = -20,
 	})
 
-	-- Place tall grass on snow in Ice Plains and Extreme Hills+
+	-- Place grass on snow in Ice Plains and Extreme Hills+
 	minetest.register_decoration({
 		deco_type = "schematic",
 		place_on = {"group:grass_block"},

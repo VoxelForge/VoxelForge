@@ -128,13 +128,13 @@ local fortune_wheat_seed_drop = {
 	overwrite = true,
 }
 
--- CHECKME: How does tall grass behave when pushed by a piston?
+-- CHECKME: How does grass behave when pushed by a piston?
 
---- Tall Grass ---
-local def_tallgrass = {
-	description = S("Tall Grass"),
+--- Grass ---
+local def_grass = {
+	description = S("Grass"),
 	drawtype = "plantlike",
-	_doc_items_longdesc = S("Tall grass is a small plant which often occurs on the surface of grasslands. It can be harvested for wheat seeds. By using bone meal, tall grass can be turned into double tallgrass which is two blocks high."),
+	_doc_items_longdesc = S("Grass is a small plant which often occurs on the surface of grasslands. It can be harvested for wheat seeds. By using bone meal, grass can be turned into tallgrass which is two blocks high."),
 	_doc_items_usagehelp = plant_usage_help,
 	_doc_items_hidden = false,
 	waving = 1,
@@ -167,11 +167,11 @@ local def_tallgrass = {
 	_mcl_blast_resistance = 0,
 	_mcl_hardness = 0,
 }
-minetest.register_node("mcl_flowers:tallgrass", def_tallgrass)
+minetest.register_node("mcl_flowers:tallgrass", def_grass)
 
 --- Fern ---
--- The fern is very similar to tall grass, so we can copy a lot from it.
-local def_fern = table.copy(def_tallgrass)
+-- The fern is very similar to grass, so we can copy a lot from it.
+local def_fern = table.copy(def_grass)
 def_fern.description = S("Fern")
 def_fern._doc_items_longdesc = S("Ferns are small plants which occur naturally in jungles and taigas. They can be harvested for wheat seeds. By using bone meal, a fern can be turned into a large fern which is two blocks high.")
 def_fern.tiles = { "mcl_flowers_fern.png" }
@@ -386,10 +386,10 @@ add_large_plant("lilac", S("Lilac"), S("A lilac is a large plant which occupies 
 -- TODO: Make the sunflower face East. Requires a mesh for the top node.
 add_large_plant("sunflower", S("Sunflower"), S("A sunflower is a large plant which occupies two blocks. It is mainly used in dye production."), "mcl_flowers_double_plant_sunflower_bottom.png", "mcl_flowers_double_plant_sunflower_top.png^mcl_flowers_double_plant_sunflower_front.png", "mcl_flowers_double_plant_sunflower_front.png", 6/16, 6/16)
 
-local longdesc_grass = S("Double tallgrass a variant of tall grass and occupies two blocks. It can be harvested for wheat seeds.")
+local longdesc_grass = S("Tallgrass a variant of grass and occupies two blocks. It can be harvested for wheat seeds.")
 local longdesc_fern = S("Large fern is a variant of fern and occupies two blocks. It can be harvested for wheat seeds.")
 
-add_large_plant("double_grass", S("Double Tallgrass"), longdesc_grass, "mcl_flowers_double_plant_grass_bottom.png", "mcl_flowers_double_plant_grass_top.png", "mcl_flowers_double_plant_grass_inv.png", 6/16, 4/16, wheat_seed_drop, {"mcl_flowers:tallgrass 2"}, false, true, fortune_wheat_seed_drop)
+add_large_plant("double_grass", S("Tallgrass"), longdesc_grass, "mcl_flowers_double_plant_grass_bottom.png", "mcl_flowers_double_plant_grass_top.png", "mcl_flowers_double_plant_grass_inv.png", 6/16, 4/16, wheat_seed_drop, {"mcl_flowers:tallgrass 2"}, false, true, fortune_wheat_seed_drop)
 add_large_plant("double_fern", S("Large Fern"), longdesc_fern, "mcl_flowers_double_plant_fern_bottom.png", "mcl_flowers_double_plant_fern_top.png", "mcl_flowers_double_plant_fern_inv.png", 5/16, 5/16, wheat_seed_drop, {"mcl_flowers:fern 2"}, false, true, fortune_wheat_seed_drop)
 
 minetest.register_abm({

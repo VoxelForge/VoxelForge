@@ -291,7 +291,7 @@ local function apply_bone_meal(pointed_thing,user)
 		mcl_cocoas.grow(pos)
 		return true
 	elseif minetest.get_item_group(n.name, "grass_block") == 1 then
-		-- Grass Block: Generate tall grass and random flowers all over the place
+		-- Grass Block: Generate grass and random flowers all over the place
 		for i = -7, 7 do
 			for j = -7, 7 do
 				for y = -1, 1 do
@@ -300,9 +300,9 @@ local function apply_bone_meal(pointed_thing,user)
 					local n2 = minetest.get_node(vector.offset(pos, 0, -1, 0))
 
 					if n.name ~= "" and n.name == "air" and (minetest.get_item_group(n2.name, "grass_block_no_snow") == 1) then
-						-- Randomly generate flowers, tall grass or nothing
+						-- Randomly generate flowers, grass or nothing
 						if math.random(1, 100) <= 90 / ((math.abs(i) + math.abs(j)) / 2)then
-							-- 90% tall grass, 10% flower
+							-- 90% grass, 10% flower
 							mcl_dye.add_bone_meal_particle(pos, {amount = 4})
 							if math.random(1,100) <= 90 then
 								local col = n2.param2
@@ -352,7 +352,7 @@ local function apply_bone_meal(pointed_thing,user)
 
 	elseif n.name == "mcl_flowers:tallgrass" then
 		mcl_dye.add_bone_meal_particle(pos)
-		-- Tall Grass: Grow into double tallgrass
+		-- Grass: Grow into Tallgrass
 		local toppos = { x=pos.x, y=pos.y+1, z=pos.z }
 		local topnode = minetest.get_node(toppos)
 		if minetest.registered_nodes[topnode.name].buildable_to then
@@ -383,7 +383,7 @@ minetest.register_craftitem("mcl_dye:white", {
 	description = S("Bone Meal"),
 	_tt_help = S("Speeds up plant growth"),
 	_doc_items_longdesc = S("Bone meal is a white dye and also useful as a fertilizer to speed up the growth of many plants."),
-	_doc_items_usagehelp = S("Rightclick a sheep to turn its wool white. Rightclick a plant to speed up its growth. Note that not all plants can be fertilized like this. When you rightclick a grass block, tall grass and flowers will grow all over the place."),
+	_doc_items_usagehelp = S("Rightclick a sheep to turn its wool white. Rightclick a plant to speed up its growth. Note that not all plants can be fertilized like this. When you rightclick a grass block, grass and flowers will grow all over the place."),
 	stack_max = 64,
 	groups = dyelocal.dyes[1][4],
 	on_place = function(itemstack, user, pointed_thing)
