@@ -331,7 +331,8 @@ function mob_class:on_step(dtime)
 
 	self:slow_mob()
 	if self:falling(pos) then return end
-	self:check_suspend()
+
+	if self:check_suspend() then return end
 
 	self:check_water_flow()
 
