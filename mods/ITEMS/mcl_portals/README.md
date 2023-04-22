@@ -5,7 +5,7 @@ Nether portal: Build an upright frame of obsidian, 4 blocks wide and 5 blocks hi
 End portal: Build an upright frame of red nether brick blocks, 4 blocks wide and 5 blocks high, and use an eye of ender inside it.
 
 ## Credits
-Created by maikerumine and Wuzzy.
+Created by maikerumine, Wuzzy and ryvnf.
 Code license: MIT License (see `LICENSE`).
 
 Texture license: See README.md in main MineClone 2 directory.
