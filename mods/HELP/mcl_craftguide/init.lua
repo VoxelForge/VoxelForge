@@ -480,9 +480,8 @@ local function get_recipe_fs(data, iY)
 	end
 
 	for i, item in pairs(recipe.items) do
-		local X = math.ceil((i - 1) % width + xoffset - width) -
-			(0.2)
-		local Y = math.ceil(i / width + (iY + 2) - min(2, rows))
+		local X = math.ceil((i - 1) % width + xoffset - width) - (0.2)
+		local Y = math.ceil(i / width + (iY + 2) - math.min(2, rows))
 
 		if width > 3 or rows > 3 then
 			btn_size = width > 3 and 3 / width or 3 / rows

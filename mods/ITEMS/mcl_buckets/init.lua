@@ -123,7 +123,7 @@ local function bucket_get_pointed_thing(user)
 	local look_dir = user:get_look_dir()
 	local _end = vector.add(start, vector.multiply(look_dir, 5))
 
-	local ray = raycast(start, _end, false, true)
+	local ray = minetest.raycast(start, _end, false, true)
 	for pointed_thing in ray do
 		local name = minetest.get_node(pointed_thing.under).name
 		local def = minetest.registered_nodes[name]
