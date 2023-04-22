@@ -566,8 +566,8 @@ local function emit_portal_particles(pos, node)
 	local direction = math.random(0, 1)
 	local time = math.random() * 1.9 + 0.5
 
-	local velocity = {x = math.random() - 0.5, y = math.random() - 0.5, z = math.random() * 0.7 + 0.3}
-	local acceleration = {x = math.random() - 0.5, y = math.random() - 0.5,	z = math.random() * 1.1 + 0.3}
+	local velocity = vector.new(math.random() - 0.5, math.random() - 0.5, math.random() * 0.7 + 0.3)
+	local acceleration = vector.new(math.random() - 0.5, math.random() - 0.5, math.random() * 1.1 + 0.3)
 	if param2 % 2 == 1 then
 		velocity.x, velocity.z = velocity.z, velocity.x
 		acceleration.x, acceleration.z = acceleration.z, acceleration.x
@@ -587,18 +587,13 @@ local function emit_portal_particles(pos, node)
 	distance = vector.subtract(pos, distance)
 	for _, obj in pairs(minetest.get_objects_inside_radius(pos, 15)) do
 		if obj:is_player() then
-			minetest.add_particlespawner({
+			minetest.add_particle({
 				amount = 1,
-				minpos = distance,
-				maxpos = distance,
-				minvel = velocity,
-				maxvel = velocity,
-				minacc = acceleration,
-				maxacc = acceleration,
-				minexptime = time,
-				maxexptime = time,
-				minsize = 0.3,
-				maxsize = 1.8,
+				pos = distance,
+				velocity = velocity,
+				acceleration = acceleration,
+				expiration_time = time,
+				size = 0.3 + math.random() * (1.8 - 0.3),
 				collisiondetection = false,
 				texture = "mcl_particles_nether_portal.png",
 				playername = obj:get_player_name(),
