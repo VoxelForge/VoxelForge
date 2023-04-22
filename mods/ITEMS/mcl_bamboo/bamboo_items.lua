@@ -216,6 +216,7 @@ if minetest.get_modpath("mcl_fences") then
 	mcl_bamboo.mcl_log(dump(gate_id))
 end
 
+--[[ FIXME: these can't be externally registered rn
 if minetest.get_modpath("mesecons_button") then
 	if mesecon ~= nil then
 		mesecon.register_button(
@@ -231,7 +232,7 @@ if minetest.get_modpath("mesecons_button") then
 				"mesecons_button_push")
 	end
 end
-
+--]]
 if minetest.get_modpath("mcl_stairs") then
 	if mcl_stairs ~= nil then
 		mcl_stairs.register_stair_and_slab_simple(
