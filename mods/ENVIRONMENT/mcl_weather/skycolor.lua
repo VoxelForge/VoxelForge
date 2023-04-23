@@ -209,7 +209,7 @@ mcl_weather.skycolor = {
 						mcl_weather.skycolor.override_day_night_ratio(player, 1)
 					elseif lf then
 						local w = minetest.get_timeofday()
-						local light = math.max(0.1,((1 - math.abs(0.5 - w)) * lf) - 0.15)
+						local light = math.max(0.2,((1 - math.abs(0.5 - w)) * lf) - 0.15)
 						mcl_weather.skycolor.override_day_night_ratio(player, light)
 					else
 						mcl_weather.skycolor.override_day_night_ratio(player, nil)
