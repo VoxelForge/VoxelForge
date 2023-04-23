@@ -6,27 +6,21 @@
 -- License for Media: CC-BY-SA 4
 -- Copyright (C) 2023, Michieal. See: License.txt.
 
--- LOCALS
-local modname = minetest.get_current_modname()
-local S = minetest.get_translator(modname)
-local node_sound = mcl_sounds.node_sound_wood_defaults()
-local pi = 3.1415926
+local S = minetest.get_translator(minetest.get_current_modname())
 
-local lectern_def = {
+minetest.register_node("mcl_lectern:lectern", {
 	description = S("Lectern"),
 	_tt_help = S("Lecterns not only look good, but are job site blocks for Librarians."),
 	_doc_items_longdesc = S("Lecterns not only look good, but are job site blocks for Librarians."),
 	_doc_items_usagehelp = S("Place the Lectern on a solid node for best results. May attract villagers, so it's best to place outside of where you call 'home'."),
-	sounds = node_sound,
+	sounds = mcl_sounds.node_sound_wood_defaults(),
 	paramtype = "light",
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
 	paramtype2 = "facedir",
 	drawtype = "mesh",
-	-- visual_scale = 1.0, -- Default is 1.0.
 	mesh = "mcl_lectern_lectern.obj",
 	tiles = {"mcl_lectern_lectern.png", },
 	groups = {handy = 1, axey = 1, flammable = 2, fire_encouragement = 5, fire_flammability = 5, solid = 1},
-	drops = "mcl_lectern:lectern",
 	sunlight_propagates = true,
 	walkable = true,
 	is_ground_content = false,
@@ -80,10 +74,10 @@ local lectern_def = {
 		if wdir == 1 then
 			-- (only make standing nodes...)
 			-- Determine the rotation based on player's yaw
-			local yaw = pi * 2 - placer:get_look_horizontal()
+			local yaw = math.pi * 2 - placer:get_look_horizontal()
 
 			-- Convert to 16 dir.
-			local rotation_level = math.round((yaw / (pi * 2)) * 16)
+			local rotation_level = math.round((yaw / (math.pi * 2)) * 16)
 
 			-- put the rotation level within bounds.
 			if rotation_level > 15 then
@@ -105,17 +99,14 @@ local lectern_def = {
 		end
 		return itemstack
 	end,
-}
+})
 
-minetest.register_node("mcl_lectern:lectern", lectern_def)
 mcl_wip.register_wip_item("mcl_lectern:lectern")
 
 -- April Fools setup
 local date = os.date("*t")
 if (date.month == 4 and date.day == 1) then
 	minetest.override_item("mcl_lectern:lectern", {waving = 2})
-else
-	minetest.override_item("mcl_lectern:lectern", {waving = 0})
 end
 
 minetest.register_craft({
@@ -126,6 +117,3 @@ minetest.register_craft({
 		{"", "group:slab", ""},
 	}
 })
-
--- Base Aliases.
-minetest.register_alias("lectern", "mcl_lectern:lectern")
