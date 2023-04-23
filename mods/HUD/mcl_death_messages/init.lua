@@ -126,11 +126,10 @@ mcl_death_messages = {
 			item = W("@1 went off with a bang due to a firework fired from @3 by @2"), -- order is intentional
 		},
 		sweet_berry = {
-			_translator = S,
-			plain = "@1 died a sweet death",
-			assist = "@1 was poked to death by a sweet berry bush whilst trying to escape @2",
+			plain = W("@1 was poked to death by a sweet berry bush"),
+			assist = W("@1 was poked to death by a sweet berry bush whilst trying to escape @2"),
 		},
-		-- Missing snowballs: The Minecraft wiki mentions them but the MC source code does not.
+		-- Missing snowballs: The Minecraft wiki mentions them but it doesn't seem like they have a dedicated death message in MC
 	},
 }
 

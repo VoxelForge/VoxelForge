@@ -281,6 +281,9 @@ Jungle Planks=
 Spruce Planks=
 Acacia Planks=
 Birch Planks=
+Light=
+Lights are invisible blocks. They are used to light up adventure maps and the like.=
+When you hold a light in hand, you reveal all placed lights in a short distance around you.=
 ##### not used anymore #####
 @1 could not survive in lava.=
 @1 died in lava.=
@@ -307,6 +310,3 @@ Spruce Bark=
 Spruce Wood Planks=
 Sugar Canes=
 Top Snow=
-Light=
-Lights are invisible blocks. They are used to light up adventure maps and the like.=
-When you hold a light in hand, you reveal all placed lights in a short distance around you.=
