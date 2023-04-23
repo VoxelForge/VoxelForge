@@ -47,16 +47,6 @@ minetest.register_node("mcl_lectern:lectern", {
 	},
 
 	on_place = function(itemstack, placer, pointed_thing)
-		local above = pointed_thing.above
-		local under = pointed_thing.under
-
-		local pos = under
-		local pname = placer:get_player_name()
-		if minetest.is_protected(pos, pname) then
-			minetest.record_protection_violation(pos, pname)
-			return
-		end
-
 		-- Use pointed node's on_rightclick function first, if present
 		local node = minetest.get_node(pointed_thing.under)
 		if placer and not placer:get_player_control().sneak then
@@ -64,34 +54,16 @@ minetest.register_node("mcl_lectern:lectern", {
 				return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
 			end
 		end
-		local dir = vector.subtract(under, above)
-		local wdir = minetest.dir_to_wallmounted(dir)
-		local fdir = minetest.dir_to_facedir(dir)
-		if wdir == 0 then
-			return itemstack
-			-- IE., no Hanging Lecterns for you!
+
+		if minetest.is_protected(pointed_thing.above, placer:get_player_name()) then
+			minetest.record_protection_violation(pointed_thing.above, pname)
+			return
 		end
-		if wdir == 1 then
-			-- (only make standing nodes...)
-			-- Determine the rotation based on player's yaw
-			local yaw = math.pi * 2 - placer:get_look_horizontal()
 
-			-- Convert to 16 dir.
-			local rotation_level = math.round((yaw / (math.pi * 2)) * 16)
-
-			-- put the rotation level within bounds.
-			if rotation_level > 15 then
-				rotation_level = 0
-			elseif rotation_level < 0 then
-				rotation_level = 15
-			end
-
-			fdir = math.floor(rotation_level / 4) -- collapse that to 4 dir.
-			local lectern_node = ItemStack(itemstack)
-			-- Place the node!
-			local _, success = minetest.item_place_node(lectern_node, placer, pointed_thing, fdir)
+		if minetest.dir_to_wallmounted(vector.subtract(pointed_thing.under,  pointed_thing.above)) == 1 then
+			local _, success = minetest.item_place_node(itemstack, placer, pointed_thing, minetest.dir_to_facedir(vector.direction(placer:get_pos(),pointed_thing.above)))
 			if not success then
-				return itemstack
+				return
 			end
 			if not minetest.is_creative_enabled(placer:get_player_name()) then
 				itemstack:take_item()
