@@ -101,6 +101,7 @@
 * Emojigit
 * snowyu
 * 3raven
+* Riu Sakura
 
 ## Special thanks
 * celeron55 for creating Minetest
