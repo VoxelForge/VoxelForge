@@ -208,6 +208,11 @@ mcl_weather.skycolor = {
 					if mcl_weather.skycolor.current_layer_name() == "lightning" then
 						mcl_weather.skycolor.override_day_night_ratio(player, 1)
 					elseif lf then
+						-- This used to be blatantly wrong and there appears to be another
+						-- fairly complex solution around so I will explain what it's doing (now):
+						-- The light is basically derived by the distance of the current time to
+						-- 0.5 which means midday/noon. i.e. the key here is 1 - math.abs(0.5 - w)
+						-- the rest is just modifications and a minimum light level of 0.2
 						local w = minetest.get_timeofday()
 						local light = math.max(0.2,((1 - math.abs(0.5 - w)) * lf) - 0.15)
 						mcl_weather.skycolor.override_day_night_ratio(player, light)
