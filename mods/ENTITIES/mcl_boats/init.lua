@@ -380,7 +380,6 @@ function boat.on_step(self, dtime, moveresult)
 			self.object:get_velocity().y)
 	else
 		p.y = p.y + 1
-		local is_obsidian_boat = self.object:get_luaentity()._itemstring == "mcl_boats:boat_obsidian"
 		if is_river_water(p) then
 			local y = self.object:get_velocity().y
 			if y >= 5 then
@@ -392,7 +391,7 @@ function boat.on_step(self, dtime, moveresult)
 			end
 			new_velo = get_velocity(self._v, self.object:get_yaw(), y)
 			self.object:set_pos(self.object:get_pos())
-		elseif flowlib.is_water(p) and not is_river_water(p) or is_obsidian_boat then
+		elseif flowlib.is_water(p) and not is_river_water(p) then
 			-- Inside water: Slowly sink
 			local y = self.object:get_velocity().y
 			y = y - 0.01
@@ -473,7 +472,7 @@ for b=1, #boat_ids do
 		inventory_image = "mcl_boats_" .. id .. "_boat.png"
 		texture = "mcl_boats_texture_" .. id .. "_boat.png"
 	end
-	
+
 	minetest.register_craftitem(itemstring, {
 		description = names[b],
 		_tt_help = tt_help,
