@@ -39,7 +39,6 @@ local flwr_def = { name = "bamboo_plant",
 
 -- Chose cube over "potted_flower" as "potted flower" looks bad.
 mcl_flowerpots.register_potted_cube(flwr_name, flwr_def)  --	mcl_flowerpots.register_potted_flower(flwr_name, flwr_def)
-minetest.register_alias("bamboo_flower_pot", "mcl_flowerpots:flower_pot_bamboo_plant")
 
 local top_door_tiles = {}
 local bot_door_tiles = {}
@@ -85,9 +84,6 @@ local trap_def = {
 }
 
 mcl_doors:register_trapdoor(name, trap_def)
-
-minetest.register_alias("bamboo_door", "mcl_bamboo:bamboo_door")
-minetest.register_alias("bamboo_trapdoor", "mcl_bamboo:bamboo_trapdoor")
 
 mcl_stairs.register_stair_and_slab_simple(
 		"bamboo_block",
@@ -145,8 +141,6 @@ minetest.register_craft({
 	recipe = "mcl_bamboo:pressure_plate_bamboo_wood_off",
 	burntime = 15
 })
-minetest.register_alias("bamboo_pressure_plate", "mcl_bamboo:pressure_plate_bamboo_wood")
-
 
 mcl_signs.register_sign_custom("mcl_bamboo", "_bamboo", "mcl_bamboo_bamboo_sign.png",
 		"#ffffff", "mcl_bamboo_bamboo_sign_wield.png", "mcl_bamboo_bamboo_sign_wield.png",

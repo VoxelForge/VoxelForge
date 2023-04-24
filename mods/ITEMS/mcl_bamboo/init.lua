@@ -67,24 +67,6 @@ minetest.register_abm({
 })
 
 
--- Base Aliases.
-local SCAFFOLDING_NAME = "mcl_bamboo:scaffolding"
-minetest.register_alias("bamboo_block", "mcl_bamboo:bamboo_block")
-minetest.register_alias("bamboo_strippedblock", "mcl_bamboo:bamboo_block_stripped")
-minetest.register_alias("bamboo", BAMBOO)
-minetest.register_alias("bamboo_plank", "mcl_bamboo:bamboo_plank")
-minetest.register_alias("bamboo_mosaic", "mcl_bamboo:bamboo_mosaic")
-
-minetest.register_alias("mcl_stairs:stair_bamboo", "mcl_stairs:stair_bamboo_block")
-minetest.register_alias("bamboo_stairs", "mcl_stairs:stair_bamboo_block")
-minetest.register_alias("bamboo:bamboo", BAMBOO)
-minetest.register_alias("scaffold", SCAFFOLDING_NAME)
-minetest.register_alias("mcl_scaffolding:scaffolding", SCAFFOLDING_NAME)
-minetest.register_alias("mcl_scaffolding:scaffolding_horizontal", SCAFFOLDING_NAME)
-
-minetest.register_alias("bamboo_fence", "mcl_fences:bamboo_fence")
-minetest.register_alias("bamboo_fence_gate", "mcl_fences:bamboo_fence_gate")
-
 --[[
 todo -- make scaffolds do side scaffold blocks, so that they jut out. (Shelved.)
 todo -- Also, make those blocks collapse (break) when a nearby connected scaffold breaks.
