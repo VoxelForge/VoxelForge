@@ -35,13 +35,9 @@ function mcl_core.update_leaves(pos, oldnode)
 				-- manually placed leaf nodes have param2
 				-- set and will never decay automatically
 				if lnode.param2 == 0 then
-					local orphan_name = lnode.name .. "_orphan"
-					local def = minetest.registered_nodes[orphan_name]
-					if def then
-						--minetest.log("Registered: ".. orphan_name)
-						minetest.swap_node(lpos, {name = orphan_name})
-					else
-						--minetest.log("Not registered: ".. orphan_name)
+					lnode.name = lnode.name .. "_orphan"
+					if minetest.registered_nodes[lnode.name] then
+						minetest.swap_node(lpos, lnode)
 					end
 				end
 			end
