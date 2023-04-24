@@ -7,7 +7,6 @@
 local DEBUG = false
 
 local rand = math.random
-math.randomseed((os.time() + 31) * 31415) -- try to make a valid seed
 local BAMBOO_MAX_HEIGHT = 16 -- base height check.
 
 local BAMBOO_SOIL_DIST = BAMBOO_MAX_HEIGHT * -1
@@ -132,11 +131,11 @@ function mcl_bamboo.grow_bamboo(pos, bonemeal_applied)
 	end
 
 	mcl_bamboo.mcl_log("Grow bamboo; soil found. ")
-	local grow_amount = rand(1, GROW_DOUBLE_CHANCE)
-	grow_amount = rand(1, GROW_DOUBLE_CHANCE)
-	grow_amount = rand(1, GROW_DOUBLE_CHANCE) -- because yeah, not truly random, or even a good prng.
-	grow_amount = rand(1, GROW_DOUBLE_CHANCE)
-	local init_height = rand(BAM_MAX_HEIGHT_STPCHK + 1, BAM_MAX_HEIGHT_TOP + 1)
+	local grow_amount = math.random(1, GROW_DOUBLE_CHANCE)
+	grow_amount = math.random(1, GROW_DOUBLE_CHANCE)
+	grow_amount = math.random(1, GROW_DOUBLE_CHANCE) -- because yeah, not truly random, or even a good prng.
+	grow_amount = math.random(1, GROW_DOUBLE_CHANCE)
+	local init_height = math.random(BAM_MAX_HEIGHT_STPCHK + 1, BAM_MAX_HEIGHT_TOP + 1)
 	mcl_bamboo.mcl_log("Grow bamboo; random height: " .. init_height)
 
 	node_name = ""
