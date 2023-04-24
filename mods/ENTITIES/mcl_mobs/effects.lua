@@ -296,14 +296,9 @@ function mob_class:who_are_you_looking_at()
 		end
 	elseif not self._locked_object then
 		if math.random(1, 30) then
-			--minetest.log("Change look check: ".. self.name)
-
 			-- For the wither this was 20/60=0.33, so probably need to rebalance and divide rates.
 			-- but frequency of check isn't good as it is costly. Making others too infrequent requires testing
-			local chance = 20/self.curiosity
-
-			if chance < 1 then chance = 1 end
-			local look_at_player_chance = math.random(chance)
+			local look_at_player_chance = math.random(math.max(1,20/self.curiosity))
 
 			-- was 5000 but called in loop based on entities. so div by 12 as estimate avg of entities found,
 			-- then div by 20 as less freq lookup
@@ -312,12 +307,10 @@ function mob_class:who_are_you_looking_at()
 
 			for _, obj in pairs(minetest.get_objects_inside_radius(pos, 8)) do
 				if obj:is_player() and vector.distance(pos,obj:get_pos()) < 4 then
-					--minetest.log("Change look to player: ".. self.name)
 					self._locked_object = obj
 					break
 				elseif obj:is_player() or (obj:get_luaentity() and obj:get_luaentity().name == self.name and self ~= obj:get_luaentity()) then
 					if look_at_player then
-						--minetest.log("Change look to mob: ".. self.name)
 						self._locked_object = obj
 						break
 					end
