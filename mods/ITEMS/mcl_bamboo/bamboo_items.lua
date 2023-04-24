@@ -27,194 +27,139 @@ local adj_nodes = {
 	vector.new(0, 0, -1),
 	vector.new(-1, 0, 0),
 }
-local node_sound = mcl_sounds.node_sound_wood_defaults()
 
--- specific bamboo nodes (Items)... Pt. 1
-if minetest.get_modpath("mcl_flowerpots") then
-	mcl_bamboo.mcl_log("FlowerPot Section Entrance. Modpath exists.")
-	if mcl_flowerpots ~= nil then
-		-- Flower-potted Bamboo...
-		local flwr_name = BAMBOO
-		local flwr_def = { name = "bamboo_plant",
-						   desc = S("Bamboo"),
-						   image = "mcl_bamboo_bamboo_fpm.png", -- use with "register_potted_cube"
-			-- "mcl_bamboo_flower_pot.png", -- use with "register_potted_flower"
-		}
+local wood_groups = { handy = 1, axey = 1, flammable = 2, fence_wood = 1, fire_encouragement = 5, fire_flammability = 20 }
+-- Flower-potted Bamboo...
+local flwr_name = BAMBOO
+local flwr_def = { name = "bamboo_plant",
+				   desc = S("Bamboo"),
+				   image = "mcl_bamboo_bamboo_fpm.png", -- use with "register_potted_cube"
+	-- "mcl_bamboo_flower_pot.png", -- use with "register_potted_flower"
+}
 
-		-- Chose cube over "potted_flower" as "potted flower" looks bad.
-		mcl_flowerpots.register_potted_cube(flwr_name, flwr_def)  --	mcl_flowerpots.register_potted_flower(flwr_name, flwr_def)
-		minetest.register_alias("bamboo_flower_pot", "mcl_flowerpots:flower_pot_bamboo_plant")
-	end
+-- Chose cube over "potted_flower" as "potted flower" looks bad.
+mcl_flowerpots.register_potted_cube(flwr_name, flwr_def)  --	mcl_flowerpots.register_potted_flower(flwr_name, flwr_def)
+minetest.register_alias("bamboo_flower_pot", "mcl_flowerpots:flower_pot_bamboo_plant")
+
+local top_door_tiles = {}
+local bot_door_tiles = {}
+
+if BROKEN_DOORS then
+	top_door_tiles = { "mcl_bamboo_door_top_alt.png", "mcl_bamboo_door_top.png" }
+	bot_door_tiles = { "mcl_bamboo_door_bottom_alt.png", "mcl_bamboo_door_bottom.png" }
+else
+	top_door_tiles = { "mcl_bamboo_door_top.png", "mcl_bamboo_door_top.png" }
+	bot_door_tiles = { "mcl_bamboo_door_bottom.png", "mcl_bamboo_door_bottom.png" }
 end
 
-if minetest.get_modpath("mcl_doors") then
-	if mcl_doors then
-		local top_door_tiles = {}
-		local bot_door_tiles = {}
+local name = "mcl_bamboo:bamboo_door"
+local def = {
+	description = S("Bamboo Door."),
+	inventory_image = "mcl_bamboo_door_wield.png",
+	wield_image = "mcl_bamboo_door_wield.png",
+	groups = { handy = 1, axey = 1, material_wood = 1, flammable = -1 },
+	_mcl_hardness = 3,
+	_mcl_blast_resistance = 3,
+	tiles_bottom = bot_door_tiles,
+	tiles_top = top_door_tiles,
+	sounds = mcl_sounds.node_sound_wood_defaults(),
+}
 
-		if BROKEN_DOORS then
-			top_door_tiles = { "mcl_bamboo_door_top_alt.png", "mcl_bamboo_door_top.png" }
-			bot_door_tiles = { "mcl_bamboo_door_bottom_alt.png", "mcl_bamboo_door_bottom.png" }
-		else
-			top_door_tiles = { "mcl_bamboo_door_top.png", "mcl_bamboo_door_top.png" }
-			bot_door_tiles = { "mcl_bamboo_door_bottom.png", "mcl_bamboo_door_bottom.png" }
-		end
+mcl_doors:register_door(name, def)
 
-		local name = "mcl_bamboo:bamboo_door"
-		local def = {
-			description = S("Bamboo Door."),
-			inventory_image = "mcl_bamboo_door_wield.png",
-			wield_image = "mcl_bamboo_door_wield.png",
-			groups = { handy = 1, axey = 1, material_wood = 1, flammable = -1 },
-			_mcl_hardness = 3,
-			_mcl_blast_resistance = 3,
-			tiles_bottom = bot_door_tiles,
-			tiles_top = top_door_tiles,
-			sounds = mcl_sounds.node_sound_wood_defaults(),
-		}
+name = "mcl_bamboo:bamboo_trapdoor"
+local trap_def = {
+	description = S("Bamboo Trapdoor."),
+	inventory_image = "mcl_bamboo_door_complete.png",
+	groups = {},
+	tile_front = "mcl_bamboo_trapdoor_side.png",
+	tile_side = "mcl_bamboo_trapdoor_side.png",
+	_doc_items_longdesc = S("Wooden trapdoors are horizontal barriers which can be opened and closed by hand or a redstone signal. They occupy the upper or lower part of a block, depending on how they have been placed. When open, they can be climbed like a ladder."),
+	_doc_items_usagehelp = S("To open or close the trapdoor, rightclick it or send a redstone signal to it."),
+	wield_image = "mcl_bamboo_trapdoor_side.png",
+	inventory_image = "mcl_bamboo_trapdoor_side.png",
+	groups = { handy = 1, axey = 1, mesecon_effector_on = 1, material_wood = 1, flammable = -1 },
+	_mcl_hardness = 3,
+	_mcl_blast_resistance = 3,
+	sounds = mcl_sounds.node_sound_wood_defaults(),
+}
 
-		mcl_doors:register_door(name, def)
+mcl_doors:register_trapdoor(name, trap_def)
 
-		name = "mcl_bamboo:bamboo_trapdoor"
-		local trap_def = {
-			description = S("Bamboo Trapdoor."),
-			inventory_image = "mcl_bamboo_door_complete.png",
-			groups = {},
-			tile_front = "mcl_bamboo_trapdoor_side.png",
-			tile_side = "mcl_bamboo_trapdoor_side.png",
-			_doc_items_longdesc = S("Wooden trapdoors are horizontal barriers which can be opened and closed by hand or a redstone signal. They occupy the upper or lower part of a block, depending on how they have been placed. When open, they can be climbed like a ladder."),
-			_doc_items_usagehelp = S("To open or close the trapdoor, rightclick it or send a redstone signal to it."),
-			wield_image = "mcl_bamboo_trapdoor_side.png",
-			inventory_image = "mcl_bamboo_trapdoor_side.png",
-			groups = { handy = 1, axey = 1, mesecon_effector_on = 1, material_wood = 1, flammable = -1 },
-			_mcl_hardness = 3,
-			_mcl_blast_resistance = 3,
-			sounds = mcl_sounds.node_sound_wood_defaults(),
-		}
+minetest.register_alias("bamboo_door", "mcl_bamboo:bamboo_door")
+minetest.register_alias("bamboo_trapdoor", "mcl_bamboo:bamboo_trapdoor")
 
-		mcl_doors:register_trapdoor(name, trap_def)
+mcl_stairs.register_stair_and_slab_simple(
+		"bamboo_block",
+		"mcl_bamboo:bamboo_block",
+		S("Bamboo Stair"),
+		S("Bamboo Slab"),
+		S("Double Bamboo Slab")
+)
+mcl_stairs.register_stair_and_slab_simple(
+		"bamboo_stripped",
+		"mcl_bamboo:bamboo_block_stripped",
+		S("Stripped Bamboo Stair"),
+		S("Stripped Bamboo Slab"),
+		S("Double Stripped Bamboo Slab")
+)
+mcl_stairs.register_stair_and_slab_simple(
+		"bamboo_plank",
+		BAMBOO_PLANK,
+		S("Bamboo Plank Stair"),
+		S("Bamboo Plank Slab"),
+		S("Double Bamboo Plank Slab")
+)
 
-		minetest.register_alias("bamboo_door", "mcl_bamboo:bamboo_door")
-		minetest.register_alias("bamboo_trapdoor", "mcl_bamboo:bamboo_trapdoor")
-	end
-end
+-- let's add plank slabs to the wood_slab group.
+local bamboo_plank_slab = "mcl_stairs:slab_bamboo_plank"
+local node_groups = {
+	wood_slab = 1,
+	building_block = 1,
+	slab = 1,
+	axey = 1,
+	handy = 1,
+	stair = 1,
+	flammable = 1,
+	fire_encouragement = 5,
+	fire_flammability = 20
+}
 
-if minetest.get_modpath("mcl_stairs") then
-	if mcl_stairs ~= nil then
-		mcl_stairs.register_stair_and_slab_simple(
-				"bamboo_block",
-				"mcl_bamboo:bamboo_block",
-				S("Bamboo Stair"),
-				S("Bamboo Slab"),
-				S("Double Bamboo Slab")
-		)
-		mcl_stairs.register_stair_and_slab_simple(
-				"bamboo_stripped",
-				"mcl_bamboo:bamboo_block_stripped",
-				S("Stripped Bamboo Stair"),
-				S("Stripped Bamboo Slab"),
-				S("Double Stripped Bamboo Slab")
-		)
-		mcl_stairs.register_stair_and_slab_simple(
-				"bamboo_plank",
-				BAMBOO_PLANK,
-				S("Bamboo Plank Stair"),
-				S("Bamboo Plank Slab"),
-				S("Double Bamboo Plank Slab")
-		)
+minetest.override_item(bamboo_plank_slab, { groups = node_groups })
 
-		-- let's add plank slabs to the wood_slab group.
-		local bamboo_plank_slab = "mcl_stairs:slab_bamboo_plank"
-		local node_groups = {
-			wood_slab = 1,
-			building_block = 1,
-			slab = 1,
-			axey = 1,
-			handy = 1,
-			stair = 1,
-			flammable = 1,
-			fire_encouragement = 5,
-			fire_flammability = 20
-		}
+mesecon.register_pressure_plate(
+		"mcl_bamboo:pressure_plate_bamboo_wood",
+		S("Bamboo Pressure Plate"),
+		{ "mcl_bamboo_bamboo_plank.png" },
+		{ "mcl_bamboo_bamboo_plank.png" },
+		"mcl_bamboo_bamboo_plank.png",
+		nil,
+		{ { BAMBOO_PLANK, BAMBOO_PLANK } },
+		mcl_sounds.node_sound_wood_defaults(),
+		{ axey = 1, material_wood = 1 },
+		nil,
+		S("A wooden pressure plate is a redstone component which supplies its surrounding blocks with redstone power while any movable object (including dropped items, players and mobs) rests on top of it."))
 
-		minetest.override_item(bamboo_plank_slab, { groups = node_groups })
-	end
-end
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_bamboo:pressure_plate_bamboo_wood_off",
+	burntime = 15
+})
+minetest.register_alias("bamboo_pressure_plate", "mcl_bamboo:pressure_plate_bamboo_wood")
 
-if minetest.get_modpath("mesecons_pressureplates") then
 
-	if mesecon ~= nil and mesecon.register_pressure_plate ~= nil then
-		-- make sure that pressure plates are installed.
+mcl_signs.register_sign_custom("mcl_bamboo", "_bamboo", "mcl_bamboo_bamboo_sign.png",
+		"#ffffff", "mcl_bamboo_bamboo_sign_wield.png", "mcl_bamboo_bamboo_sign_wield.png",
+		"Bamboo Sign")
+mcl_signs.register_sign_craft("mcl_bamboo", BAMBOO_PLANK, "_bamboo")
 
-		-- Bamboo Pressure Plate...
 
-		-- Register a Pressure Plate (api command doc.)
-		-- basename:    base name of the pressure plate
-		-- description:	description displayed in the player's inventory
-		-- textures_off:textures of the pressure plate when inactive
-		-- textures_on:	textures of the pressure plate when active
-		-- image_w:	wield image of the pressure plate
-		-- image_i:	inventory image of the pressure plate
-		-- recipe:	crafting recipe of the pressure plate
-		-- sounds:	sound table (like in minetest.register_node)
-		-- plusgroups:	group memberships (attached_node=1 and not_in_creative_inventory=1 are already used)
-		-- activated_by: optimal table with elements denoting by which entities this pressure plate is triggered
-		--		Possible table fields:
-		--		* player=true: Player
-		--		* mob=true: Mob
-		--		By default, is triggered by all entities
-		-- longdesc:	Customized long description for the in-game help (if omitted, a dummy text is used)
+mcl_fences.register_fence("bamboo_fence", S("Bamboo Fence"), "mcl_bamboo_fence_bamboo.png", wood_groups,
+			2, 15, { "group:fence_wood" }, mcl_sounds.node_sound_wood_defaults())
+mcl_fences.register_fence_gate("bamboo_fence", S("Bamboo Fence Gate"), "mcl_bamboo_fence_gate_bamboo.png",
+			wood_groups, 2, 15, mcl_sounds.node_sound_wood_defaults()) -- note: about missing params.. will use defaults.
 
-		mesecon.register_pressure_plate(
-				"mcl_bamboo:pressure_plate_bamboo_wood",
-				S("Bamboo Pressure Plate"),
-				{ "mcl_bamboo_bamboo_plank.png" },
-				{ "mcl_bamboo_bamboo_plank.png" },
-				"mcl_bamboo_bamboo_plank.png",
-				nil,
-				{ { BAMBOO_PLANK, BAMBOO_PLANK } },
-				mcl_sounds.node_sound_wood_defaults(),
-				{ axey = 1, material_wood = 1 },
-				nil,
-				S("A wooden pressure plate is a redstone component which supplies its surrounding blocks with redstone power while any movable object (including dropped items, players and mobs) rests on top of it."))
 
-		minetest.register_craft({
-			type = "fuel",
-			recipe = "mcl_bamboo:pressure_plate_bamboo_wood_off",
-			burntime = 15
-		})
-		minetest.register_alias("bamboo_pressure_plate", "mcl_bamboo:pressure_plate_bamboo_wood")
-
-	end
-end
-
-if minetest.get_modpath("mcl_signs") then
-	mcl_bamboo.mcl_log("Signs Section Entrance. Modpath exists.")
-	if mcl_signs ~= nil then
-		-- Bamboo Signs...
-		mcl_signs.register_sign_custom("mcl_bamboo", "_bamboo", "mcl_bamboo_bamboo_sign.png",
-				"#ffffff", "mcl_bamboo_bamboo_sign_wield.png", "mcl_bamboo_bamboo_sign_wield.png",
-				"Bamboo Sign")
-		mcl_signs.register_sign_craft("mcl_bamboo", BAMBOO_PLANK, "_bamboo")
-		minetest.register_alias("bamboo_sign", "mcl_signs:wall_sign_bamboo")
-	end
-end
-
-if minetest.get_modpath("mcl_fences") then
-	mcl_bamboo.mcl_log("Fences Section Entrance. Modpath exists.")
-
-	local id = "bamboo_fence"
-	local wood_groups = { handy = 1, axey = 1, flammable = 2, fence_wood = 1, fire_encouragement = 5, fire_flammability = 20 }
-	local wood_connect = { "group:fence_wood" }
-
-	local fence_id = mcl_fences.register_fence(id, S("Bamboo Fence"), "mcl_bamboo_fence_bamboo.png", wood_groups,
-			2, 15, wood_connect, node_sound)
-	local gate_id = mcl_fences.register_fence_gate(id, S("Bamboo Fence Gate"), "mcl_bamboo_fence_gate_bamboo.png",
-			wood_groups, 2, 15, node_sound) -- note: about missing params.. will use defaults.
-
-	mcl_bamboo.mcl_log(dump(fence_id))
-	mcl_bamboo.mcl_log(dump(gate_id))
-end
 
 --[[ FIXME: these can't be externally registered rn
 if minetest.get_modpath("mesecons_button") then
@@ -224,7 +169,7 @@ if minetest.get_modpath("mesecons_button") then
 				S("Bamboo Button"),
 				"mcl_bamboo_bamboo_plank.png",
 				BAMBOO_PLANK,
-				node_sound,
+				mcl_sounds.node_sound_wood_defaults(),
 				{ material_wood = 1, handy = 1, pickaxey = 1, flammable = 3, fire_flammability = 20, fire_encouragement = 5, },
 				1,
 				false,
@@ -233,17 +178,14 @@ if minetest.get_modpath("mesecons_button") then
 	end
 end
 --]]
-if minetest.get_modpath("mcl_stairs") then
-	if mcl_stairs ~= nil then
-		mcl_stairs.register_stair_and_slab_simple(
-				"bamboo_mosaic",
-				"mcl_bamboo:bamboo_mosaic",
-				S("Bamboo Mosaic Stair"),
-				S("Bamboo Mosaic Slab"),
-				S("Double Bamboo Mosaic Slab")
-		)
-	end
-end
+
+mcl_stairs.register_stair_and_slab_simple(
+		"bamboo_mosaic",
+		"mcl_bamboo:bamboo_mosaic",
+		S("Bamboo Mosaic Stair"),
+		S("Bamboo Mosaic Slab"),
+		S("Double Bamboo Mosaic Slab")
+)
 
 local disallow_on_rotate
 if minetest.get_modpath("screwdriver") then
@@ -377,7 +319,7 @@ minetest.register_node(SCAFFOLDING_NAME, {
 			}
 
 			minetest.remove_node(new_pos)
-			minetest.sound_play(node_sound.dug, sound_params, true)
+			minetest.sound_play(mcl_sounds.node_sound_wood_defaults().dug, sound_params, true)
 			local istack = ItemStack(SCAFFOLDING_NAME)
 			minetest.add_item(new_pos, istack)
 		end
@@ -537,7 +479,7 @@ minetest.register_node(SCAFFOLDING_NAME, {
 			}
 
 			minetest.remove_node(new_pos)
-			minetest.sound_play(node_sound.dug, sound_params, true)
+			minetest.sound_play(mcl_sounds.node_sound_wood_defaults().dug, sound_params, true)
 			local istack = ItemStack(SCAFFOLDING_NAME)
 			minetest.add_item(new_pos, istack)
 		end
