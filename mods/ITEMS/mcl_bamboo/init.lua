@@ -7,8 +7,6 @@
 
 -- LOCALS
 local modname = minetest.get_current_modname()
--- Used everywhere. Often this is just the name, but it makes sense to me as BAMBOO, because that's how I think of it...
--- "BAMBOO" goes here.
 local BAMBOO = "mcl_bamboo:bamboo"
 
 mcl_bamboo = {}
@@ -37,11 +35,7 @@ minetest.register_abm({
 
 --[[ TODO: Figure out how to make this work:
 local function dropper_call(node, pushdir, stack, stackid)
-	mcl_bamboo.mcl_log("mvps_dropper call for bamboo:")
 	-- mcl_bamboo.break_orphaned()
-
-	mcl_bamboo.mcl_log(dump(node))
-
 end
 
 if minetest.get_modpath("mesecons_mvps") then
@@ -49,7 +43,6 @@ if minetest.get_modpath("mesecons_mvps") then
 		mcl_bamboo.mcl_log("registering mvps_dropper for bamboo:")
 		for x = 1, #mcl_bamboo.bamboo_index do
 			mesecon.register_mvps_dropper(mcl_bamboo.bamboo_index[x],dropper_call)
-			mcl_bamboo.mcl_log("registering: " .. mcl_bamboo.bamboo_index[x])
 		end
 	end
 else

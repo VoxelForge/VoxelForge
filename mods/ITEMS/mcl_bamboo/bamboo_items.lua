@@ -11,14 +11,11 @@ local BROKEN_DOORS = true
 --	FUTURE USE VARIABLE. MUST REMAIN FALSE UNTIL IT HAS BEEN FULLY IMPLEMENTED. DO NOT ENABLE.
 local SIDE_SCAFFOLDING = false
 local SIDE_SCAFFOLD_NAME = "mcl_bamboo:scaffolding_horizontal"
--- ---------------------------------------------------------------------------
+
 local SCAFFOLDING_NAME = "mcl_bamboo:scaffolding"
--- Used everywhere. Often this is just the name, but it makes sense to me as BAMBOO, because that's how I think of it...
--- "BAMBOO" goes here.
 local BAMBOO = "mcl_bamboo:bamboo"
 local BAMBOO_PLANK = BAMBOO .. "_plank"
 
--- LOCALS
 local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 local adj_nodes = {
@@ -29,12 +26,11 @@ local adj_nodes = {
 }
 
 local wood_groups = { handy = 1, axey = 1, flammable = 2, fence_wood = 1, fire_encouragement = 5, fire_flammability = 20 }
--- Flower-potted Bamboo...
 local flwr_name = BAMBOO
 local flwr_def = { name = "bamboo_plant",
 				   desc = S("Bamboo"),
 				   image = "mcl_bamboo_bamboo_fpm.png", -- use with "register_potted_cube"
-	-- "mcl_bamboo_flower_pot.png", -- use with "register_potted_flower"
+					-- "mcl_bamboo_flower_pot.png", -- use with "register_potted_flower"
 }
 
 -- Chose cube over "potted_flower" as "potted flower" looks bad.
@@ -107,7 +103,6 @@ mcl_stairs.register_stair_and_slab_simple(
 		S("Double Bamboo Plank Slab")
 )
 
--- let's add plank slabs to the wood_slab group.
 local bamboo_plank_slab = "mcl_stairs:slab_bamboo_plank"
 local node_groups = {
 	wood_slab = 1,
@@ -224,35 +219,22 @@ minetest.register_node(SCAFFOLDING_NAME, {
 	on_rotate = disallow_on_rotate,
 
 	on_place = function(itemstack, placer, pointed)
-		mcl_bamboo.mcl_log("Checking for protected placement of scaffolding.")
 		local node = minetest.get_node(pointed.under)
 		local pos = pointed.under
 		local h = 0
 		local current_base_node = node -- Current Base Node.
 		local below_node = minetest.get_node(vector.offset(pos, 0, -1, 0)) -- current node below the current_base_node.
 
-		mcl_bamboo.mcl_log("Below Node: " .. below_node.name)
-
-		-- check protected placement.
 		if mcl_bamboo.is_protected(pos, placer) then
 			return
 		end
-		mcl_bamboo.mcl_log("placement of scaffolding is not protected.")
-		-- place on solid nodes
-		-- Need to add in a check here... to prevent placing scaffolds against doors, chests, etc.
-		-- Added in a quick check. need to test it.
 		if node.name ~= SCAFFOLDING_NAME then
-			-- Start temp fix: This is a temp fix... will NOT work in final scaffolding implementation.
-			-- Use pointed node's on_rightclick function first, if present
 			if placer and not placer:get_player_control().sneak then
 				if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-					mcl_bamboo.mcl_log("attempting placement of bamboo via targeted node's on_rightclick.")
 					return minetest.registered_nodes[node.name].on_rightclick(pointed.under, node, placer, itemstack) or itemstack
 				end
 			end
-			-- End: Temp fix
 
-			-- A quick check, that may or may not work, to attempt to prevent placing things on the side of other nodes.
 			local dir = vector.subtract(pointed.under, pointed.above)
 			local wdir = minetest.dir_to_wallmounted(dir)
 			if wdir == 1 then
@@ -274,42 +256,33 @@ minetest.register_node(SCAFFOLDING_NAME, {
 			more scaffolds on the top.. current_base_node (Current Base Node) is the targeted node for placement; we can only place
 			scaffolding on this one, to stack them up in the air.
 		--]]
-		repeat -- loop through, allowing placement.
-			pos = vector.offset(pos, 0, 1, 0) -- cleaned up vector.
-			local current_node = minetest.get_node(pos) -- current node.
+		repeat
+			pos = vector.offset(pos, 0, 1, 0)
+			local current_node = minetest.get_node(pos)
 			if current_node.name == "air" then
-				-- first step to making scaffolding work like scaffolding should.
-				-- Prevent running up, and putting down new scaffolding
 				if current_base_node.name == SCAFFOLDING_NAME and below_node == SCAFFOLDING_NAME and SIDE_SCAFFOLDING == false then
 					return itemstack
 				end
 
-				-- Make sure that the uppermost scaffolding doesn't violate protected areas.
 				if mcl_bamboo.is_protected(pos, placer) then
 					return itemstack
 				end
-
-				-- okay, we're good. place the node and take the item unless we are in creative mode.
 				minetest.set_node(pos, node)
 				if not minetest.is_creative_enabled(placer:get_player_name()) then
 					itemstack:take_item(1)
 				end
-				-- set the wielded item to the correct itemstack. (possibly unneeded code. but, works.)
-				placer:set_wielded_item(itemstack)
-				return itemstack -- finally, return the itemstack to finish on_place.
+				return itemstack
 			end
 			h = h + 1
 		until current_node.name ~= node.name or itemstack:get_count() == 0 or h >= 128 -- loop check.
 	end,
 	on_destruct = function(pos)
-		-- Node destructor; called before removing node.
 		local new_pos = vector.offset(pos, 0, 1, 0)
 		local node_above = minetest.get_node(new_pos)
 		if node_above and node_above.name == SCAFFOLDING_NAME then
 			local sound_params = {
 				pos = new_pos,
-				gain = 1.0, -- default
-				max_hear_distance = 10, -- default, uses a Euclidean metric
+				max_hear_distance = 10,
 			}
 
 			minetest.remove_node(new_pos)
@@ -362,15 +335,12 @@ minetest.register_node(SCAFFOLDING_NAME, {
 	on_rotate = disallow_on_rotate,
 
 	on_place = function(itemstack, placer, pointed)
-		mcl_bamboo.mcl_log("Checking for protected placement of scaffolding.")
 		local node = minetest.get_node(pointed.under)
 		local pos = pointed.under
 		local dir = vector.subtract(pointed.under, pointed.above)
 		local wdir = minetest.dir_to_wallmounted(dir)
 		local h = 0
-		mcl_bamboo.mcl_log("WDIR: " .. wdir)
 		local fdir = minetest.dir_to_facedir(dir, true)
-		mcl_bamboo.mcl_log("FDIR: " .. fdir)
 
 		local down_two = minetest.get_node(vector.offset(pointed.under, 0, -1, 0))
 
@@ -380,7 +350,6 @@ minetest.register_node(SCAFFOLDING_NAME, {
 			if mcl_bamboo.is_protected(pos, placer) then
 				return
 			end
-			mcl_bamboo.mcl_log("placement of scaffolding is not protected.")
 			-- place on solid nodes
 			if node.name ~= SCAFFOLDING_NAME then
 				minetest.set_node(pointed.above, {name = SCAFFOLDING_NAME, param2 = 0})

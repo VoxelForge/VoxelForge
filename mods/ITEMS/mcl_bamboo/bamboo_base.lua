@@ -6,8 +6,6 @@
 
 -- CONSTS
 local DOUBLE_DROP_CHANCE = 8
--- Used everywhere. Often this is just the name, but it makes sense to me as BAMBOO, because that's how I think of it...
--- "BAMBOO" goes here.
 local BAMBOO = "mcl_bamboo:bamboo"
 local BAMBOO_ENDCAP_NAME = "mcl_bamboo:bamboo_endcap"
 local BAMBOO_PLANK = BAMBOO .. "_plank"
@@ -23,7 +21,6 @@ if minetest.get_modpath("screwdriver") then
 	on_rotate = screwdriver.disallow
 end
 
--- basic bamboo nodes.
 local bamboo_def = {
 	description = "Bamboo",
 	tiles = {"mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo.png"},
@@ -34,25 +31,12 @@ local bamboo_def = {
 
 	drop = {
 		max_items = 1,
-		-- From the API:
-		-- max_items: Maximum number of item lists to drop.
-		-- The entries in 'items' are processed in order. For each:
-		-- Item filtering is applied, chance of drop is applied, if both are
-		-- successful the entire item list is dropped.
-		-- Entry processing continues until the number of dropped item lists
-		-- equals 'max_items'.
-		-- Therefore, entries should progress from low to high drop chance.
 		items = {
-			-- Examples:
 			{
-				-- 1 in DOUBLE_DROP_CHANCE chance of dropping.
-				-- Default rarity is '1'.
 				rarity = DOUBLE_DROP_CHANCE,
 				items = {BAMBOO .. " 2"},
 			},
 			{
-				-- 1 in 1 chance of dropping. (Note: this means that it will drop 100% of the time.)
-				-- Default rarity is '1'.
 				rarity = 1,
 				items = {BAMBOO},
 			},
@@ -91,38 +75,26 @@ local bamboo_def = {
 		end
 		local node = minetest.get_node(pointed_thing.under)
 		local pos = pointed_thing.under
-		local nodename = node.name -- intentional use of nodename.
+		local nodename = node.name
 
-		mcl_bamboo.mcl_log("Node placement data:")
-		mcl_bamboo.mcl_log(dump(pointed_thing))
-		mcl_bamboo.mcl_log("node name: " .. nodename)
-
-		mcl_bamboo.mcl_log("Checking for protected placement of bamboo.")
 		if mcl_bamboo.is_protected(pos, placer) then
 			return
 		end
-		mcl_bamboo.mcl_log("placement of bamboo is not protected.")
 
 		-- Use pointed node's on_rightclick function first, if present
 		if placer and not placer:get_player_control().sneak then
 			if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-				mcl_bamboo.mcl_log("Attempting targeted node's on_rightclick.")
 				return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
 			end
 		end
 
 		if mcl_bamboo.is_bamboo(nodename) == false and nodename ~= BAMBOO_ENDCAP_NAME then
-			-- not bamboo...
-			mcl_bamboo.mcl_log("not bamboo...")
 			if nodename ~= "mcl_flowerpots:flower_pot" then
 				if mcl_bamboo.is_dirt(nodename) == false then
-					mcl_bamboo.mcl_log("bamboo dirt node not found; node name: " .. nodename)
 					return
 				end
 			end
 		end
-
-		mcl_bamboo.mcl_log("placing bamboo directly.")
 
 		local dir = vector.subtract(pointed_thing.under, pointed_thing.above)
 		local wdir = minetest.dir_to_wallmounted(dir)
@@ -134,7 +106,6 @@ local bamboo_def = {
 		local place_item = ItemStack(itemstack) -- make a copy so that we don't indirectly mess with the original.
 
 		local bamboo_node = mcl_bamboo.is_bamboo(nodename) or 0
-		mcl_bamboo.mcl_log("node name: " .. nodename .. "\nbamboo_node: " .. bamboo_node)
 
 		local rand_height
 		local BAMBOO_MAX_HEIGHT = 16 -- maximum height of 16, per wiki.
@@ -164,7 +135,6 @@ local bamboo_def = {
 					break
 				end
 			end
-			-- requires knowing where the soil node is.
 			if first_shoot == nil then
 				return
 			end
@@ -174,32 +144,27 @@ local bamboo_def = {
 			end
 
 			dist = vector.distance(first_shoot, pos) + 1 -- +1 for the ground offset.
-			mcl_bamboo.mcl_log("Distance: " .. dist .. " Height: " .. height .. " Bamboo to place: " .. mcl_bamboo.bamboo_index[bamboo_node])
 			-- okay, so don't go beyond max height...
 			-- Height is determined when the first node grows or is placed.
 			-- here, it's not found, so let them do 4-5 nodes up. (should help it grow.)
 			if dist < 5 and height < 5 then
 				-- allow
 			else
-				-- else, it's complicated.
 				if dist > 5 and height < 5 then
 					return
 				end
 			end
 
 			if dist > height - 1 then
-				-- height found. here, we let them do it until they reach where the endcap will go.
 				return
 			end
 		else
 			local placed_type = pr:next(1, 4) -- randomly choose which one to place.
-			mcl_bamboo.mcl_log("Place_Bamboo_Shoot--Type: " .. placed_type)
 			place_item = ItemStack(mcl_bamboo.bamboo_index[placed_type])
 			rand_height = pr:next(BAMBOO_MAX_HEIGHT - 4, BAMBOO_MAX_HEIGHT)
 		end
 
 		local node_above_name = minetest.get_node(pointed_thing.above).name
-		mcl_bamboo.mcl_log("\n\n\nnode_above name: " .. node_above_name)
 		if node_above_name ~= "mcl_core:water_source" and node_above_name ~= "mcl_core:lava_source"
 				and node_above_name ~= "mcl_nether:nether_lava_source" then
 			local _, position = minetest.item_place(place_item, placer, pointed_thing, fdir)
@@ -208,7 +173,6 @@ local bamboo_def = {
 			end
 			if rand_height and rand_height > 1 then
 				if position then
-					mcl_bamboo.mcl_log("Setting Height Data...")
 					meta = minetest.get_meta(position)
 					if meta then
 						meta:set_int("height", rand_height)
@@ -222,15 +186,13 @@ local bamboo_def = {
 	end,
 
 	on_destruct = function(pos)
-		-- Node destructor; called before removing node.
 		local new_pos = vector.offset(pos, 0, 1, 0)
 		local node_above = minetest.get_node(new_pos)
 		local bamboo_node = mcl_bamboo.is_bamboo(node_above.name) or 0
 		local istack = ItemStack(BAMBOO)
 		local sound_params = {
 			pos = new_pos,
-			gain = 1.0, -- default
-			max_hear_distance = 10, -- default, uses a Euclidean metric
+			max_hear_distance = 10,
 		}
 
 		if node_above and ((bamboo_node and bamboo_node > 0) or node_above.name == BAMBOO_ENDCAP_NAME) then
@@ -249,16 +211,12 @@ local bamboo_top = table.copy(bamboo_def)
 bamboo_top.groups = {not_in_creative_inventory = 1, handy = 1, axey = 1, choppy = 1, flammable = 3}
 bamboo_top.tiles = {"mcl_bamboo_endcap.png"}
 bamboo_top.drawtype = "plantlike_rooted" --"plantlike"
---bamboo_top.paramtype2 = "meshoptions"
---bamboo_top.param2 = 2
--- bamboo_top.waving = 2
 bamboo_top.special_tiles = {{name = "mcl_bamboo_endcap.png"}}
 bamboo_top.nodebox = nil
 bamboo_top.selection_box = nil
 bamboo_top.collision_box = nil
 
 bamboo_top.on_place = function(itemstack, _, _)
-	-- Should never occur... but, if it does, then nix it.
 	itemstack:set_name(BAMBOO)
 	return itemstack
 end
@@ -316,18 +274,13 @@ minetest.register_node("mcl_bamboo:bamboo_plank", {
 	_mcl_hardness = 2,
 })
 
---	Bamboo Part 2 Base nodes.
--- 	Bamboo Mosaic
+
 local bamboo_mosaic = table.copy(minetest.registered_nodes[BAMBOO_PLANK])
 bamboo_mosaic.tiles = {"mcl_bamboo_bamboo_plank_mosaic.png"}
 bamboo_mosaic.groups = {handy = 1, axey = 1, flammable = 3, fire_encouragement = 5, fire_flammability = 20}
 bamboo_mosaic.description = S("Bamboo Mosaic Plank")
 bamboo_mosaic._doc_items_longdesc = S("Bamboo Mosaic Plank")
 minetest.register_node("mcl_bamboo:bamboo_mosaic", bamboo_mosaic)
-
---[[ Bamboo alternative node types. Note that the table.copy's are very important! if you use a common node def and
-make changes, even after registering them, the changes overwrite the previous node definitions, and in this case,
-you will end up with 4 nodes all being type 3. --]]
 
 local bamboo_one_def = table.copy(bamboo_def)
 bamboo_one_def.node_box = {
@@ -337,7 +290,6 @@ bamboo_one_def.node_box = {
 	}
 }
 bamboo_one_def.collision_box = {
-	-- see [Node boxes] for possibilities
 	type = "fixed",
 	fixed = {
 		{-0.05, -0.5, 0.285, -0.275, 0.5, 0.06},
@@ -350,7 +302,6 @@ bamboo_one_def.selection_box = {
 	}
 }
 bamboo_one_def.groups = {not_in_creative_inventory = 1, handy = 1, axey = 1, choppy = 1, flammable = 3}
-mcl_bamboo.mcl_log(dump(mcl_bamboo.bamboo_index))
 minetest.register_node(mcl_bamboo.bamboo_index[2], bamboo_one_def)
 local bamboo_two_def = table.copy(bamboo_def)
 
@@ -361,7 +312,6 @@ bamboo_two_def.node_box = {
 	}
 }
 bamboo_two_def.collision_box = {
-	-- see [Node boxes] for possibilities
 	type = "fixed",
 	fixed = {
 		{0.25, -0.5, 0.325, 0.025, 0.5, 0.100},
@@ -384,7 +334,6 @@ bamboo_three_def.node_box = {
 	}
 }
 bamboo_three_def.collision_box = {
-	-- see [Node boxes] for possibilities
 	type = "fixed",
 	fixed = {
 		{-0.125, -0.5, 0.125, -0.3125, 0.5, 0.3125},
