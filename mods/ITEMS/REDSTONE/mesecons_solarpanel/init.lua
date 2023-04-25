@@ -1,28 +1,8 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local function sunlight_visible(position)
-	local light_level
-	-- Minetest 5.4.0+ can measure the daylight level at a position
-	if nil ~= minetest.get_natural_light then
-		light_level = minetest.get_natural_light(position)
-		return light_level ~= nil and light_level >= 12
-	else -- Minetest 5.3.0 or less can only measure the light level
-		local time = minetest.get_timeofday() * 24000
-		-- only check light level during day
-		if time > 6000 and time < 18000 then
-			light_level = minetest.get_node_light(
-				position,
-				nil
-			)
-			if light_level >= 12 then
-				return path_to_sunlight_exists(
-					position,
-					12
-				)
-			end
-		end
-	end
-	return false
+	local light_level = minetest.get_natural_light(position)
+	return light_level ~= nil and light_level >= 12
 end
 
 local boxes = { -8/16, -8/16, -8/16,  8/16, -2/16, 8/16 }
