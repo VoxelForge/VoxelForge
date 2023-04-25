@@ -402,23 +402,23 @@ minetest.register_tool("mcl_tools:shovel_netherite", {
 
 -- Axes
 local function make_stripped_trunk(itemstack, placer, pointed_thing)
-    if pointed_thing.type ~= "node" then return end
+	if pointed_thing.type ~= "node" then return end
 
-    local node = minetest.get_node(pointed_thing.under)
+	local node = minetest.get_node(pointed_thing.under)
 
 	if not minetest.registered_nodes[node.name] then
 		return
 	end
 
-    if not placer:get_player_control().sneak and noddef.on_rightclick then
-        return minetest.item_place(itemstack, placer, pointed_thing)
-    end
-    if minetest.is_protected(pointed_thing.under, placer:get_player_name()) then
-        minetest.record_protection_violation(pointed_thing.under, placer:get_player_name())
-        return itemstack
-    end
+	if not placer:get_player_control().sneak and noddef.on_rightclick then
+		return minetest.item_place(itemstack, placer, pointed_thing)
+	end
+	if minetest.is_protected(pointed_thing.under, placer:get_player_name()) then
+		minetest.record_protection_violation(pointed_thing.under, placer:get_player_name())
+		return itemstack
+	end
 
-    if noddef._mcl_stripped_variant == nil then
+	if noddef._mcl_stripped_variant == nil then
 		return itemstack
 	else
 		minetest.swap_node(pointed_thing.under, {name=noddef._mcl_stripped_variant, param2=node.param2})
@@ -429,7 +429,7 @@ local function make_stripped_trunk(itemstack, placer, pointed_thing)
 			itemstack:add_wear(wear)
 		end
 	end
-    return itemstack
+	return itemstack
 end
 
 minetest.register_tool("mcl_tools:axe_wood", {
@@ -693,8 +693,8 @@ minetest.register_tool("mcl_tools:shears", {
 	stack_max = 1,
 	groups = { tool=1, shears=1, dig_speed_class=4, },
 	tool_capabilities = {
-	        full_punch_interval = 0.5,
-	        max_drop_level=1,
+			full_punch_interval = 0.5,
+			max_drop_level=1,
 	},
 	on_place = carve_pumpkin,
 	sound = { breaks = "default_tool_breaks" },
