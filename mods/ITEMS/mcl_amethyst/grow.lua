@@ -38,7 +38,7 @@ minetest.register_abm({
 	label = "Spawn Amethyst Bud",
 	nodenames = {"mcl_amethyst:budding_amethyst_block"},
 	neighbors = {"air", "group:water"},
-	interval = 20,
+	interval = 35,
 	chance = 2,
 	action = function(pos)
 		local check_pos = vector.add(all_directions[math.random(1, #all_directions)], pos)
