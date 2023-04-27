@@ -91,7 +91,7 @@ function mcl_copper.register_decaychain(name,def)
 						return itemstack
 					end
 				end
-				minetest.register_node(v.."_preserved",nd)
+				minetest.register_node(":"..v.."_preserved",nd)
 			end
 			if k > 1 and def.undecay_group then
 				local old_or = minetest.registered_items[v].on_rightclick

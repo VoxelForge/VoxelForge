@@ -149,7 +149,6 @@ mcl_stairs.register_stair("copper_cut", "mcl_copper:block_cut",
 	nil, 6, nil,
 	"woodlike")
 
-
 mcl_stairs.register_stair("copper_exposed_cut", "mcl_copper:block_exposed_cut",
 	{pickaxey = 2},
 	{"mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png"},
