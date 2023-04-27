@@ -96,11 +96,15 @@ local l_def = {
 	waving = 2,
 	place_param2 = 1, -- Prevent leafdecay for placed nodes
 	tiles = {"mcl_mangrove_leaves.png"},
+	paramtype2 = "color",
+	palette = "mcl_core_palette_leaves.png",
+	palette_index = 0,
+	color = "#2e8f29",
 	paramtype = "light",
 	groups = {
 		handy = 1, hoey = 1, shearsy = 1, swordy = 1, dig_by_piston = 1,
 		flammable = 2, fire_encouragement = 30, fire_flammability = 60,
-		leaves = 1, deco_block = 1, compostability = 30
+		leaves = 1, deco_block = 1, compostability = 30, biomecolor = 1,
 	},
 	drop = get_drops(0),
 	_mcl_shears_drop = true,
