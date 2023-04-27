@@ -12,7 +12,7 @@ minetest.register_craftitem("mcl_honey:honeycomb", {
 	_doc_items_longdesc = S("Used to craft beehives and protect copper blocks from further oxidation."),
 	_doc_items_usagehelp = S("Use on copper blocks to prevent further oxidation."),
 	inventory_image = "mcl_honey_honeycomb.png",
-	groups = { craftitem = 1 },
+	groups = { craftitem = 1, preserves_copper = 1 },
 })
 
 minetest.register_node("mcl_honey:honeycomb_block", {
