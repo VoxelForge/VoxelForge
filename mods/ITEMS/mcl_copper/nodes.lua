@@ -35,7 +35,6 @@ minetest.register_node("mcl_copper:block", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 3,
-	on_rightclick = function(pos, node, player, itemstack) waxing_copper_block(pos, node, player, itemstack, "mcl_copper:waxed_block") end,
 })
 
 minetest.register_node("mcl_copper:waxed_block", {
@@ -47,7 +46,6 @@ minetest.register_node("mcl_copper:waxed_block", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 3,
-	on_rightclick = function(pos, node, player, itemstack) scraping_copper_block(pos, node, player, itemstack, "mcl_copper:block") end,
 })
 
 minetest.register_node("mcl_copper:block_exposed", {
@@ -59,8 +57,6 @@ minetest.register_node("mcl_copper:block_exposed", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
-	_mcl_anti_oxidation_varient = "mcl_copper:block",
-	on_rightclick = function(pos, node, player, itemstack) waxing_copper_block(pos, node, player, itemstack, "mcl_copper:waxed_block_exposed") end,
 })
 
 minetest.register_node("mcl_copper:waxed_block_exposed", {
@@ -72,7 +68,6 @@ minetest.register_node("mcl_copper:waxed_block_exposed", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
-	on_rightclick = function(pos, node, player, itemstack) scraping_copper_block(pos, node, player, itemstack, "mcl_copper:block") end,
 })
 
 minetest.register_node("mcl_copper:block_weathered", {
@@ -84,8 +79,6 @@ minetest.register_node("mcl_copper:block_weathered", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
-	_mcl_anti_oxidation_varient = "mcl_copper:block_exposed",
-	on_rightclick = function(pos, node, player, itemstack) waxing_copper_block(pos, node, player, itemstack, "mcl_copper:waxed_block_weathered") end,
 })
 
 minetest.register_node("mcl_copper:waxed_block_weathered", {
@@ -97,7 +90,6 @@ minetest.register_node("mcl_copper:waxed_block_weathered", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
-	on_rightclick = function(pos, node, player, itemstack) scraping_copper_block(pos, node, player, itemstack, "mcl_copper:block_exposed") end,
 })
 
 minetest.register_node("mcl_copper:block_oxidized", {
@@ -109,8 +101,6 @@ minetest.register_node("mcl_copper:block_oxidized", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
-	_mcl_anti_oxidation_varient = "mcl_copper:block_weathered",
-	on_rightclick = function(pos, node, player, itemstack) waxing_copper_block(pos, node, player, itemstack, "mcl_copper:waxed_block_oxidized") end,
 })
 
 minetest.register_node("mcl_copper:waxed_block_oxidized", {
@@ -122,7 +112,6 @@ minetest.register_node("mcl_copper:waxed_block_oxidized", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
-	on_rightclick = function(pos, node, player, itemstack) scraping_copper_block(pos, node, player, itemstack, "mcl_copper:block_weathered") end,
 })
 
 minetest.register_node("mcl_copper:block_cut", {
@@ -134,7 +123,6 @@ minetest.register_node("mcl_copper:block_cut", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
-	on_rightclick = function(pos, node, player, itemstack) waxing_copper_block(pos, node, player, itemstack, "mcl_copper:waxed_block_cut") end,
 })
 
 minetest.register_node("mcl_copper:waxed_block_cut", {
@@ -146,7 +134,6 @@ minetest.register_node("mcl_copper:waxed_block_cut", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
-	on_rightclick = function(pos, node, player, itemstack) scraping_copper_block(pos, node, player, itemstack, "mcl_copper:block_cut") end,
 })
 
 minetest.register_node("mcl_copper:block_exposed_cut", {
@@ -158,8 +145,6 @@ minetest.register_node("mcl_copper:block_exposed_cut", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
-	_mcl_anti_oxidation_varient = "mcl_copper:block_cut",
-	on_rightclick = function(pos, node, player, itemstack) waxing_copper_block(pos, node, player, itemstack, "mcl_copper:waxed_block_exposed_cut") end,
 })
 
 minetest.register_node("mcl_copper:waxed_block_exposed_cut", {
@@ -171,7 +156,6 @@ minetest.register_node("mcl_copper:waxed_block_exposed_cut", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
-	on_rightclick = function(pos, node, player, itemstack) scraping_copper_block(pos, node, player, itemstack, "mcl_copper:block_cut") end,
 })
 
 minetest.register_node("mcl_copper:block_weathered_cut", {
@@ -183,8 +167,6 @@ minetest.register_node("mcl_copper:block_weathered_cut", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
-	_mcl_anti_oxidation_varient = "mcl_copper:block_exposed_cut",
-	on_rightclick = function(pos, node, player, itemstack) waxing_copper_block(pos, node, player, itemstack, "mcl_copper:waxed_block_weathered_cut") end,
 })
 
 minetest.register_node("mcl_copper:waxed_block_weathered_cut", {
@@ -196,7 +178,6 @@ minetest.register_node("mcl_copper:waxed_block_weathered_cut", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
-	on_rightclick = function(pos, node, player, itemstack) scraping_copper_block(pos, node, player, itemstack, "mcl_copper:block_exposed_cut") end,
 })
 
 minetest.register_node("mcl_copper:block_oxidized_cut", {
@@ -208,8 +189,6 @@ minetest.register_node("mcl_copper:block_oxidized_cut", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
-	_mcl_anti_oxidation_varient = "mcl_copper:block_weathered_cut",
-	on_rightclick = function(pos, node, player, itemstack) waxing_copper_block(pos, node, player, itemstack, "mcl_copper:waxed_block_oxidized_cut") end,
 })
 
 minetest.register_node("mcl_copper:waxed_block_oxidized_cut", {
@@ -221,7 +200,6 @@ minetest.register_node("mcl_copper:waxed_block_oxidized_cut", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
-	on_rightclick = function(pos, node, player, itemstack) scraping_copper_block(pos, node, player, itemstack, "mcl_copper:block_weathered_cut") end,
 })
 
 mcl_stairs.register_slab("copper_cut", "mcl_copper:block_cut",
