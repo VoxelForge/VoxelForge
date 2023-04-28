@@ -7,6 +7,26 @@ if mod_screwdriver then
 	on_rotate = screwdriver.rotate_simple
 end
 
+local function carve_pumpkin(itemstack, placer, pointed_thing)
+	local node = minetest.get_node(pointed_thing.under)
+	-- Only carve pumpkin if used on side
+	if pointed_thing.above.y ~= pointed_thing.under.y then
+		return
+	end
+	if not minetest.is_creative_enabled(placer:get_player_name()) then
+		-- Add wear (as if digging a shearsy node)
+		local toolname = itemstack:get_name()
+		local wear = mcl_autogroup.get_wear(toolname, "shearsy")
+		itemstack:add_wear(wear)
+	end
+	minetest.sound_play({name="default_grass_footstep", gain=1}, {pos = pointed_thing.above}, true)
+	local dir = vector.subtract(pointed_thing.under, pointed_thing.above)
+	local param2 = minetest.dir_to_facedir(dir)
+	minetest.set_node(pointed_thing.under, {name="mcl_farming:pumpkin_face", param2 = param2})
+	minetest.add_item(pointed_thing.above, "mcl_farming:pumpkin_seeds 4")
+	return itemstack
+end
+
 -- Seeds
 minetest.register_craftitem("mcl_farming:pumpkin_seeds", {
 	description = S("Pumpkin Seeds"),
@@ -105,6 +125,7 @@ local pumpkin_base_def = {
 	},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	on_rotate = on_rotate,
+	_on_shears_place = carve_pumpkin,
 	_mcl_blast_resistance = 1,
 	_mcl_hardness = 1,
 }
@@ -123,6 +144,7 @@ pumpkin_face_base_def._mcl_armor_mob_range_mob = "mobs_mc:enderman"
 
 pumpkin_face_base_def._mcl_armor_element = "head"
 pumpkin_face_base_def._mcl_armor_texture = "mcl_farming_pumpkin_face.png"
+pumpkin_face_base_def._on_shears_place = nil
 
 pumpkin_face_base_def.on_construct = function(pos)
 	-- Attempt to spawn iron golem or snow golem
