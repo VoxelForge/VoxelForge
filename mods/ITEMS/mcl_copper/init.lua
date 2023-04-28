@@ -78,4 +78,5 @@ for _,v in pairs({"top","double"}) do
 		},
 	})
 end
---TODO: stairs and slabs
+
+dofile(path .. "/alias.lua")
