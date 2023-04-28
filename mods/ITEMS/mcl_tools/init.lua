@@ -405,8 +405,8 @@ local function make_stripped_trunk(itemstack, placer, pointed_thing)
 	if pointed_thing.type ~= "node" then return end
 
 	local node = minetest.get_node(pointed_thing.under)
-
-	if not minetest.registered_nodes[node.name] then
+	local noddef = minetest.registered_nodes[node.name]
+	if not noddef then
 		return
 	end
 
