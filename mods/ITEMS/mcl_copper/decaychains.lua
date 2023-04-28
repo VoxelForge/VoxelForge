@@ -42,7 +42,7 @@ local function anti_oxidation_particles(pointed_thing)
 	})
 end
 
-local function unpreserve(pos, node, clicker, itemstack, pointed_thing)
+local function unpreserve(itemstack, clicker, pointed_thing)
 	local node = minetest.get_node(pointed_thing.under)
 	local unpreserved = node.name:gsub("_preserved","")
 	local def = mcl_copper.registered_decaychains[nodename_chains[unpreserved]]
@@ -56,7 +56,7 @@ local function unpreserve(pos, node, clicker, itemstack, pointed_thing)
 	return itemstack
 end
 
-local function undecay(pos, node, clicker, itemstack, pointed_thing)
+local function undecay(itemstack, clicker, pointed_thing)
 	local node = minetest.get_node(pointed_thing.under)
 	node.name = mcl_copper.get_undecayed(node.name)
 	minetest.swap_node(pointed_thing.under,node)
@@ -79,14 +79,14 @@ function mcl_copper.register_decaychain(name,def)
 				local nd = table.copy(od)
 				nd.description = (def.preserved_description or S("Preserved ") )..nd.description
 				if def.unpreserve_group then
-					nd.on_rightclick  = function(pos, node, clicker, itemstack, pointed_thing)
+					nd._on_axe_place  = function(itemstack, clicker, pointed_thing)
 						if minetest.get_item_group(itemstack:get_name(),def.unpreserve_group) == 0 then
-							if od.on_rightclick  then return od.on_rightclick(pos, node, clicker, itemstack, pointed_thing) end
-							if minetest.item_place_node(itemstack, clocker, pointed_thing) and not minetest.is_creative_enabled(clicker:get_player_name()) then
+							if od._on_axe_place  then return od._on_axe_place(itemstack, clicker, pointed_thing) end
+							if minetest.item_place_node(itemstack, clicker, pointed_thing, minetest.dir_to_facedir(vector.direction(pos,vector.offset(clicker:get_pos(),0,1,0)))) and not minetest.is_creative_enabled(clicker:get_player_name()) then
 								itemstack:take_item()
 							end
-						elseif minetest.get_item_group(itemstack:get_name(),def.unpreserve_group) > 0 then
-							return unpreserve(pos, node, clicker, itemstack, pointed_thing)
+						elseif pointed_thing and minetest.get_item_group(itemstack:get_name(),def.unpreserve_group) > 0 then
+							return unpreserve(itemstack, clicker, pointed_thing)
 						end
 						return itemstack
 					end
@@ -94,16 +94,16 @@ function mcl_copper.register_decaychain(name,def)
 				minetest.register_node(":"..v.."_preserved",nd)
 			end
 			if k > 1 and def.undecay_group then
-				local old_or = minetest.registered_items[v].on_rightclick
+				local old_os = minetest.registered_items[v]._on_axe_place
 				minetest.override_item(v,{
-					on_rightclick  = function(pos, node, clicker, itemstack, pointed_thing)
-						if minetest.get_item_group(itemstack:get_name(),def.unpreserve_group) == 0 then
-							if old_or  then return old_or(pos, node, clicker, itemstack, pointed_thing) end
-							if minetest.item_place_node(itemstack, clocker, pointed_thing) and not minetest.is_creative_enabled(clicker:get_player_name()) then
+					_on_axe_place  = function(itemstack, clicker, pointed_thing)
+						if minetest.get_item_group(itemstack:get_name(),def.undecay_group) == 0 then
+							if old_os  then return old_or(itemstack, clicker, pointed_thing) end
+							if minetest.item_place_node(itemstack, clicker, pointed_thing) and not minetest.is_creative_enabled(clicker:get_player_name()) then
 								itemstack:take_item()
 							end
 						elseif minetest.get_item_group(itemstack:get_name(),def.undecay_group) > 0 then
-							return undecay(pos, node, clicker, itemstack, pointed_thing)
+							return undecay(itemstack, clicker, pointed_thing)
 						end
 						return itemstack
 					end
