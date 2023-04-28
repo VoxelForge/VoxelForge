@@ -100,7 +100,7 @@ end
 
 mcl_tools.tool_place_funcs = {}
 
-for _,tool in pairs({"shovel","shears","axe","sword","pickaxe"}) do
+for _,tool in pairs({"shovel","shears","axe","sword","pick"}) do
 	mcl_tools.tool_place_funcs[tool] = function(itemstack,placer,pointed_thing)
 		return on_tool_place(itemstack,placer,pointed_thing,tool)
 	end
@@ -122,6 +122,7 @@ minetest.register_tool("mcl_tools:pick_wood", {
 		punch_attack_uses = 30,
 	},
 	sound = { breaks = "default_tool_breaks" },
+	on_place = mcl_tools.tool_place_funcs.pick,
 	_repair_material = "group:wood",
 	_mcl_toollike_wield = true,
 	_mcl_diggroups = {
@@ -142,6 +143,7 @@ minetest.register_tool("mcl_tools:pick_stone", {
 		punch_attack_uses = 66,
 	},
 	sound = { breaks = "default_tool_breaks" },
+	on_place = mcl_tools.tool_place_funcs.pick,
 	_repair_material = "group:cobble",
 	_mcl_toollike_wield = true,
 	_mcl_diggroups = {
@@ -162,6 +164,7 @@ minetest.register_tool("mcl_tools:pick_iron", {
 		punch_attack_uses = 126,
 	},
 	sound = { breaks = "default_tool_breaks" },
+	on_place = mcl_tools.tool_place_funcs.pick,
 	_repair_material = "mcl_core:iron_ingot",
 	_mcl_toollike_wield = true,
 	_mcl_diggroups = {
@@ -182,6 +185,7 @@ minetest.register_tool("mcl_tools:pick_gold", {
 		punch_attack_uses = 17,
 	},
 	sound = { breaks = "default_tool_breaks" },
+	on_place = mcl_tools.tool_place_funcs.pick,
 	_repair_material = "mcl_core:gold_ingot",
 	_mcl_toollike_wield = true,
 	_mcl_diggroups = {
@@ -202,6 +206,7 @@ minetest.register_tool("mcl_tools:pick_diamond", {
 		punch_attack_uses = 781,
 	},
 	sound = { breaks = "default_tool_breaks" },
+	on_place = mcl_tools.tool_place_funcs.pick,
 	_repair_material = "mcl_core:diamond",
 	_mcl_toollike_wield = true,
 	_mcl_diggroups = {
@@ -225,6 +230,7 @@ minetest.register_tool("mcl_tools:pick_netherite", {
 		punch_attack_uses = 1016,
 	},
 	sound = { breaks = "default_tool_breaks" },
+	on_place = mcl_tools.tool_place_funcs.pick,
 	_repair_material = "mcl_nether:netherite_ingot",
 	_mcl_toollike_wield = true,
 	_mcl_diggroups = {
@@ -506,6 +512,7 @@ minetest.register_tool("mcl_tools:sword_wood", {
 		punch_attack_uses = 60,
 	},
 	sound = { breaks = "default_tool_breaks" },
+	on_place = mcl_tools.tool_place_funcs.sword,
 	_repair_material = "group:wood",
 	_mcl_toollike_wield = true,
 	_mcl_diggroups = {
@@ -526,6 +533,7 @@ minetest.register_tool("mcl_tools:sword_stone", {
 		punch_attack_uses = 132,
 	},
 	sound = { breaks = "default_tool_breaks" },
+	on_place = mcl_tools.tool_place_funcs.sword,
 	_repair_material = "group:cobble",
 	_mcl_toollike_wield = true,
 	_mcl_diggroups = {
@@ -546,6 +554,7 @@ minetest.register_tool("mcl_tools:sword_iron", {
 		punch_attack_uses = 251,
 	},
 	sound = { breaks = "default_tool_breaks" },
+	on_place = mcl_tools.tool_place_funcs.sword,
 	_repair_material = "mcl_core:iron_ingot",
 	_mcl_toollike_wield = true,
 	_mcl_diggroups = {
@@ -566,6 +575,7 @@ minetest.register_tool("mcl_tools:sword_gold", {
 		punch_attack_uses = 33,
 	},
 	sound = { breaks = "default_tool_breaks" },
+	on_place = mcl_tools.tool_place_funcs.sword,
 	_repair_material = "mcl_core:gold_ingot",
 	_mcl_toollike_wield = true,
 	_mcl_diggroups = {
@@ -586,6 +596,7 @@ minetest.register_tool("mcl_tools:sword_diamond", {
 		punch_attack_uses = 1562,
 	},
 	sound = { breaks = "default_tool_breaks" },
+	on_place = mcl_tools.tool_place_funcs.sword,
 	_repair_material = "mcl_core:diamond",
 	_mcl_toollike_wield = true,
 	_mcl_diggroups = {
@@ -608,6 +619,7 @@ minetest.register_tool("mcl_tools:sword_netherite", {
 		punch_attack_uses = 2031,
 	},
 	sound = { breaks = "default_tool_breaks" },
+	on_place = mcl_tools.tool_place_funcs.sword,
 	_repair_material = "mcl_nether:netherite_ingot",
 	_mcl_toollike_wield = true,
 	_mcl_diggroups = {
