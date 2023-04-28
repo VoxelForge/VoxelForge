@@ -1456,3 +1456,24 @@ minetest.register_abm({
 		end)
 	end
 })
+
+function mcl_core.make_dirtpath(itemstack, placer, pointed_thing)
+	-- Only make grass path if tool used on side or top of target node
+	if pointed_thing.above.y < pointed_thing.under.y then
+		return itemstack
+	end
+
+	local above = table.copy(pointed_thing.under)
+	above.y = above.y + 1
+	if minetest.get_node(above).name == "air" then
+		if not minetest.is_creative_enabled(placer:get_player_name()) then
+			-- Add wear (as if digging a shovely node)
+			local toolname = itemstack:get_name()
+			local wear = mcl_autogroup.get_wear(toolname, "shovely")
+			itemstack:add_wear(wear)
+		end
+		minetest.sound_play({name="default_grass_footstep", gain=1}, {pos = above}, true)
+		minetest.swap_node(pointed_thing.under, {name="mcl_core:grass_path"})
+	end
+	return itemstack
+end
