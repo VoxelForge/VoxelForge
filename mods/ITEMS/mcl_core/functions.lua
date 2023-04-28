@@ -1477,3 +1477,21 @@ function mcl_core.make_dirtpath(itemstack, placer, pointed_thing)
 	end
 	return itemstack
 end
+
+function mcl_core.strip_tree(itemstack, placer, pointed_thing)
+	if pointed_thing.type ~= "node" then return end
+
+	local node = minetest.get_node(pointed_thing.under)
+	local noddef = minetest.registered_nodes[node.name]
+
+	if noddef._mcl_stripped_variant and minetest.registered_nodes[noddef._mcl_stripped_variant] then
+		minetest.swap_node(pointed_thing.under, {name=noddef._mcl_stripped_variant, param2=node.param2})
+		if not minetest.is_creative_enabled(placer:get_player_name()) then
+			-- Add wear (as if digging a axey node)
+			local toolname = itemstack:get_name()
+			local wear = mcl_autogroup.get_wear(toolname, "axey")
+			itemstack:add_wear(wear)
+		end
+	end
+	return itemstack
+end
