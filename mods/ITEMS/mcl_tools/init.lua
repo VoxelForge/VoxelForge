@@ -1,6 +1,7 @@
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
+mcl_tools = {}
 
 -- mods/default/tools.lua
 
@@ -73,6 +74,37 @@ local shears_longdesc = S("Shears are tools to shear sheep and to mine a few blo
 local shears_use = S("To shear sheep or carve faceless pumpkins, use the “place” key on them. Faces can only be carved at the side of faceless pumpkins. Mining works as usual, but the drops are different for a few blocks.")
 
 local wield_scale = mcl_vars.tool_wield_scale
+
+local function on_tool_place(itemstack, placer, pointed_thing, tool)
+	if pointed_thing.type ~= "node" then return end
+
+	local node = minetest.get_node(pointed_thing.under)
+	local noddef = minetest.registered_nodes[node.name]
+	if not noddef then
+		return
+	end
+
+	if not placer:get_player_control().sneak and noddef.on_rightclick then
+		return minetest.item_place(itemstack, placer, pointed_thing)
+	end
+	if minetest.is_protected(pointed_thing.under, placer:get_player_name()) then
+		minetest.record_protection_violation(pointed_thing.under, placer:get_player_name())
+		return itemstack
+	end
+
+	if type(noddef["_on_"..tool.."_place"]) == "function" then
+		return noddef["_on_"..tool.."_place"](itemstack, placer, pointed_thing)
+	end
+	return itemstack
+end
+
+mcl_tools.tool_place_funcs = {}
+
+for _,tool in pairs({"shovel","shears","axe","sword","pickaxe"}) do
+	mcl_tools.tool_place_funcs[tool] = function(itemstack,placer,pointed_thing)
+		return on_tool_place(itemstack,placer,pointed_thing,tool)
+	end
+end
 
 -- Picks
 minetest.register_tool("mcl_tools:pick_wood", {
