@@ -118,7 +118,7 @@ for s=1, #surfaces do
 		drawtype = "plantlike_rooted",
 		paramtype = "light",
 		paramtype2 = "meshoptions",
-		param2 = 3,
+		place_param2 = 3,
 		tiles = def.tiles,
 		special_tiles = {
 			{
