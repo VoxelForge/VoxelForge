@@ -2863,6 +2863,7 @@ local function register_seagrass_decoration(grasstype, offset, scale, biomes)
 	local seed, nodes, surfaces, param2, param2_max, y_max
 	if grasstype == "seagrass" then
 		seed = 16
+		param2 = 3
 		surfaces = { "mcl_core:dirt", "mcl_core:sand", "mcl_core:gravel", "mcl_core:redsand" }
 		nodes = { "mcl_ocean:seagrass_dirt", "mcl_ocean:seagrass_sand", "mcl_ocean:seagrass_gravel", "mcl_ocean:seagrass_redsand" }
 		y_max = 0

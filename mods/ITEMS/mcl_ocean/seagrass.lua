@@ -168,15 +168,3 @@ minetest.register_lbm({
 		end
 	end
 })
-
-minetest.register_on_generated(function(minp, maxp, blockseed)
-	local seagrass = minetest.find_nodes_in_area(minp, maxp, {"group:seagrass"})
-	for _, sgpos in pairs(seagrass) do
-		local sgnode = minetest.get_node(sgpos)
-		if sgnode.param2 ~= 3 then
-			sgnode.param2 = 3
-			minetest.set_node(sgpos, sgnode)
-		end
-	end
-end
-)
