@@ -376,15 +376,6 @@ minetest.register_globalstep(function(dtime)
 			mcl_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 		end
 
-		local underwater
-		if minetest.get_item_group(mcl_playerinfo[name].node_head, "water") ~= 0 and underwater ~= true then
-			mcl_weather.skycolor.update_sky_color()
-			local underwater = true
-		elseif minetest.get_item_group(mcl_playerinfo[name].node_head, "water") == 0 and underwater == true then
-			mcl_weather.skycolor.update_sky_color()
-			local underwater = false
-		end
-
 		elytra.last_yaw = player:get_look_horizontal()
 		-- Update jump status immediately since we need this info in real time.
 		-- WARNING: This section is HACKY as hell since it is all just based on heuristics.
