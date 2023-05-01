@@ -538,6 +538,7 @@ function mcl_signs.register_sign (modname, color, _name, description)
 	end
 
 	new_sign = table.copy(mcl_signs.wall_standard)
+
 	new_sign.description = description
 
 	new_sign.wield_image = "(default_sign.png^[multiply:" .. color .. ")"
@@ -796,7 +797,7 @@ function mcl_signs.register_sign_custom (modname, _name, tiles, color, inventory
 		new_sign.inventory_image = "(" .. inventory_image .. "^[multiply:" .. color .. ")"
 	end
 
-	new_sign.description = ttsign
+	new_sign.description = description
 
 	-- currently have to do this, because of how the base node placement works.
 	new_sign.on_place = function(itemstack, placer, pointed_thing)
@@ -1017,6 +1018,7 @@ function mcl_signs.reregister_sign (modname, color, _name, description)
 	end
 
 	new_sign = table.copy(mcl_signs.wall_standard)
+
 	new_sign.description = description
 
 	new_sign.wield_image = "(default_sign.png^[multiply:" .. color .. ")"
@@ -1267,7 +1269,7 @@ function mcl_signs.reregister_sign_custom (modname, _name, tiles, color, invento
 		new_sign.tiles = { "(" .. tiles .. "^[multiply:" .. color .. ")" }
 		new_sign.inventory_image = "(" .. inventory_image .. "^[multiply:" .. color .. ")"
 	end
-	new_sign.description = S(ttsign)
+	new_sign.description = description
 
 	-- currently have to do this, because of how the base node placement works.
 	new_sign.on_place = function(itemstack, placer, pointed_thing)
