@@ -819,8 +819,10 @@ minetest.register_entity(":__builtin:item", {
 		local fg = minetest.get_item_group(nn, "fire")
 		local dg = minetest.get_item_group(nn, "destroys_items")
 		if (def and (lg ~= 0 or fg ~= 0 or dg == 1)) then
+			local item_name = ItemStack(self.itemstring):get_name()
+
 			--Wait 2 seconds to allow mob drops to be cooked, & picked up instead of instantly destroyed.
-			if self.age > 2 and minetest.get_item_group(self.itemstring, "fire_immune") == 0 then
+			if self.age > 2 and minetest.get_item_group(item_name, "fire_immune") == 0 then
 				if dg ~= 2 then
 					minetest.sound_play("builtin_item_lava", {pos = self.object:get_pos(), gain = 0.5})
 				end
