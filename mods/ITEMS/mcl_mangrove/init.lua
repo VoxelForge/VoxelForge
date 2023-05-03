@@ -173,6 +173,17 @@ minetest.register_node("mcl_mangrove:mangrove_roots", {
 	_mcl_hardness = 0.7,
 	_mcl_silk_touch_drop = true,
 	_mcl_fortune_drop = { "mcl_mangrove:mangrove_roots 1", "mcl_mangrove:mangrove_roots 2", "mcl_mangrove:mangrove_roots 3", "mcl_mangrove:mangrove_roots 4" },
+	_on_bucket_place = function(itemstack,placer,pointed_thing)
+		local n = itemstack:get_name():gsub("mcl_buckets:bucket_","")
+		n = "mcl_mangrove:"..n.."_logged_roots"
+		if minetest.registered_nodes[n] then
+			itemstack:take_item()
+			local inv = placer:get_inventory()
+			inv:add_item("main","mcl_buckets:bucket_empty")
+			minetest.swap_node(pointed_thing.under,{name=n})
+		end
+		return itemstack
+	end
 })
 
 minetest.register_node("mcl_mangrove:propagule", {
@@ -345,6 +356,17 @@ local wlroots = {
 			minetest.set_node(pos, {name="mcl_core:water_source"})
 		end
 	end,
+	_on_bucket_place_empty = function(itemstack,placer,pointed_thing)
+		local n = minetest.get_node(pointed_thing.under).name:gsub("mcl_mangrove:","")
+		n = "mcl_buckets:bucket_"..n:gsub("_logged_roots","")
+		if minetest.registered_items[n] then
+			minetest.swap_node(pointed_thing.under,{name="mcl_mangrove:mangrove_roots"})
+			itemstack:take_item()
+			local inv = placer:get_inventory()
+			inv:add_item("main",ItemStack(n))
+		end
+		return itemstack
+	end
 }
 local rwlroots = table.copy(wlroots)
 -- FIXME luacheck complains that this is a repeated definition of water_tex.
