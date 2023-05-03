@@ -149,6 +149,11 @@ local function on_place_bucket(itemstack, user, pointed_thing)
 		return new_stack
 	end
 
+	local def = minetest.registered_nodes[minetest.get_node(pointed_thing.under).name]
+	if def and def._on_bucket_place then
+		return def._on_bucket_place(itemstack,user,pointed_thing)
+	end
+
 	local bucket_def = mcl_buckets.buckets[itemstack:get_name()]
 	for _, pos in pairs({ pointed_thing.under, pointed_thing.above }) do
 		local node = minetest.get_node(pos)
@@ -199,6 +204,10 @@ local function on_place_bucket_empty(itemstack, user, pointed_thing)
 	local new_bucket
 	local under = pointed_thing.under
 	local node_name = minetest.get_node(under).name
+	local def = minetest.registered_nodes[node_name]
+	if def and def._on_bucket_place_empty then
+		return def._on_bucket_place_empty(itemstack,user,pointed_thing)
+	end
 	if pointable_sources[node_name] then
 		if minetest.is_protected(under, user:get_player_name()) then
 			minetest.record_protection_violation(under, user:get_player_name())
