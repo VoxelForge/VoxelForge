@@ -17,13 +17,14 @@ minetest.register_craftitem("mcl_farming:wheat_seeds", {
 })
 
 local sel_heights = {
-	-5/16,
-	-2/16,
-	0,
-	3/16,
-	5/16,
-	6/16,
-	7/16,
+	-0.5+(5/16),
+	-0.5+(8/16),
+	-0.5+(10/16),
+	-0.5+(12/16),
+	-0.5+(13/16),
+	-0.5+(14/16),
+	-0.5+(15/16),
+	-0.5+(16/16),
 }
 
 for i=1,7 do
@@ -57,7 +58,7 @@ for i=1,7 do
 		selection_box = {
 			type = "fixed",
 			fixed = {
-				{-0.5, -0.5, -0.5, 0.5, sel_heights[i], 0.5}
+				{-7/16, -0.5 ,-7/16, 7/16, sel_heights[i] ,7/16}
 			},
 		},
 		groups = {dig_immediate=3, not_in_creative_inventory=1, plant=1,attached_node=1,

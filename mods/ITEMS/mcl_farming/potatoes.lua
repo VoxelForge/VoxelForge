@@ -6,13 +6,13 @@ for i=1, 7 do
 	local texture, selbox
 	if i < 3 then
 		texture = "mcl_farming_potatoes_stage_0.png"
-		selbox = { -0.5, -0.5, -0.5, 0.5, -5/16, 0.5 }
+		selbox = { -5/16, -0.5 ,-5/16, 5/16, -0.5+(3/16) ,5/16 }
 	elseif i < 5 then
 		texture = "mcl_farming_potatoes_stage_1.png"
-		selbox = { -0.5, -0.5, -0.5, 0.5, -2/16, 0.5 }
+		selbox = { -6/16, -0.5 ,-6/16, 6/16, -0.5+(4/16) ,6/16 }
 	else
 		texture = "mcl_farming_potatoes_stage_2.png"
-		selbox = { -0.5, -0.5, -0.5, 0.5, 2/16, 0.5 }
+		selbox = { -6/16, -0.5 ,-6/16, 6/16, -0.5+(6/16) ,6/16 }
 	end
 
 	local create, name, longdesc
@@ -77,7 +77,7 @@ minetest.register_node("mcl_farming:potato", {
 	selection_box = {
 		type = "fixed",
 		fixed = {
-			{ -0.5, -0.5, -0.5, 0.5, 1/16, 0.5 }
+			{ -6/16, -0.5 ,-6/16, 6/16, -0.5+(8/16) ,6/16 }
 		}
 	},
 	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1},

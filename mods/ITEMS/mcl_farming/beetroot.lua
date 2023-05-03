@@ -30,7 +30,7 @@ minetest.register_node("mcl_farming:beetroot_0", {
 	selection_box = {
 		type = "fixed",
 		fixed = {
-			{-0.5, -0.5, -0.5, 0.5, -5/16, 0.5}
+			{-5/16, -0.5 ,-5/16, 5/16, -0.5+(2/16) ,5/16}
 		},
 	},
 	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1},
@@ -54,7 +54,7 @@ minetest.register_node("mcl_farming:beetroot_1", {
 	selection_box = {
 		type = "fixed",
 		fixed = {
-			{-0.5, -0.5, -0.5, 0.5, -3/16, 0.5}
+			{-6/16, -0.5 ,-6/16, 6/16, -0.5+(5/16) ,6/16}
 		},
 	},
 	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1},
@@ -78,7 +78,7 @@ minetest.register_node("mcl_farming:beetroot_2", {
 	selection_box = {
 		type = "fixed",
 		fixed = {
-			{-0.5, -0.5, -0.5, 0.5, 2/16, 0.5}
+			{-7/16, -0.5 ,-7/16, 7/16, -0.5+(6/16) ,7/16}
 		},
 	},
 	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1},
@@ -129,7 +129,7 @@ minetest.register_node("mcl_farming:beetroot", {
 	selection_box = {
 		type = "fixed",
 		fixed = {
-			{-0.5, -0.5, -0.5, 0.5, 3 / 16, 0.5}
+			{-8/16, -0.5 ,-8/16, 8/16, -0.5+(8/16) ,8/16}
 		},
 	},
 	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1,beetroot=4},

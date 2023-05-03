@@ -3,13 +3,13 @@ local S = minetest.get_translator(minetest.get_current_modname())
 for i=1, 7 do
 	local texture, sel_height
 	if i < 3 then
-		sel_height = -5/16
+		sel_height = -0.5+(2/16)
 		texture = "farming_carrot_1.png"
 	elseif i < 5 then
-		sel_height = -3/16
+		sel_height = -0.5+(4/16)
 		texture = "farming_carrot_2.png"
 	else
-		sel_height = 2/16
+		sel_height = -0.5+(6/16)
 		texture = "farming_carrot_3.png"
 	end
 
@@ -39,7 +39,7 @@ for i=1, 7 do
 		selection_box = {
 			type = "fixed",
 			fixed = {
-				{-0.5, -0.5, -0.5, 0.5, sel_height, 0.5}
+				{-7/16, -0.5 ,-7/16, 7/16, sel_height ,7/16}
 			},
 		},
 		groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1},
@@ -72,7 +72,7 @@ minetest.register_node("mcl_farming:carrot", {
 	selection_box = {
 		type = "fixed",
 		fixed = {
-			{-0.5, -0.5, -0.5, 0.5, 4/16, 0.5}
+			{-7/16, -0.5 ,-7/16, 7/16, -0.5+(8/16) ,7/16}
 		},
 	},
 	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1},
