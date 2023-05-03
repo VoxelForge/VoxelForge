@@ -2,7 +2,19 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 -- Cauldron mod, adds cauldrons.
 
--- TODO: Extinguish fire of burning entities
+local function sound_place(itemname, pos)
+	local def = minetest.registered_nodes[itemname]
+	if def and def.sounds and def.sounds.place then
+		minetest.sound_play(def.sounds.place, {gain=1.0, pos = pos, pitch = 1 + math.random(-10, 10)*0.005}, true)
+	end
+end
+
+local function sound_take(itemname, pos)
+	local def = minetest.registered_nodes[itemname]
+	if def and def.sounds and def.sounds.dug then
+		minetest.sound_play(def.sounds.dug, {gain=1.0, pos = pos, pitch = 1 + math.random(-10, 10)*0.005}, true)
+	end
+end
 
 -- Convenience function because the cauldron nodeboxes are very similar
 local function create_cauldron_nodebox(water_level)
@@ -59,6 +71,30 @@ minetest.register_node("mcl_cauldrons:cauldron", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_hardness = 2,
 	_mcl_blast_resistance = 2,
+	_on_bucket_place = function(itemstack,placer,pointed_thing)
+		local n = itemstack:get_name():gsub("mcl_buckets:bucket_","")
+		local s
+		if n == "water" then
+			n = "mcl_cauldrons:cauldron_3"
+			s = "mcl_core:water_source"
+		elseif n == "river_water" then
+			n = "mcl_cauldrons:cauldron_3r"
+			s = "mclx_core:river_water_source"
+		elseif n == "lava" then
+			n = "mcl_cauldrons:cauldron_3_lava"
+			s = "mcl_core:lava_source"
+		end
+		if minetest.registered_nodes[n] then
+			itemstack:take_item()
+			local inv = placer:get_inventory()
+			inv:add_item("main","mcl_buckets:bucket_empty")
+			minetest.swap_node(pointed_thing.under,{name=n})
+			if s then
+				sound_place(s, pointed_thing.under)
+			end
+		end
+		return itemstack
+	end,
 })
 
 -- Template function for cauldrons with water
@@ -94,6 +130,29 @@ local function register_filled_cauldron(water_level, description, liquid)
 		drop = "mcl_cauldrons:cauldron",
 		_mcl_hardness = 2,
 		_mcl_blast_resistance = 2,
+		_on_bucket_place_empty  = function(itemstack,placer,pointed_thing)
+			local n,s
+			if id == "mcl_cauldrons:cauldron_3" then
+				n = "mcl_buckets:bucket_water"
+				s = "mcl_core:water_source"
+			elseif id == "mcl_cauldrons:cauldron_3r" then
+				n = "mcl_buckets:bucket_river_water"
+				s = "mclx_core:river_water_source"
+			elseif id == "mcl_cauldrons:cauldron_3_lava" then
+				n = "mcl_buckets:bucket_lava"
+				s = "mcl_core:lava_source"
+			end
+			if minetest.registered_items[n] then
+				itemstack:take_item()
+				local inv = placer:get_inventory()
+				inv:add_item("main",n)
+				minetest.swap_node(pointed_thing.under,{name="mcl_cauldrons:cauldron"})
+				if s then
+					sound_take(s, pointed_thing.under)
+				end
+			end
+			return itemstack
+		end,
 	})
 
 	-- Add entry aliases for the Help

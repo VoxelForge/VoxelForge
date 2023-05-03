@@ -159,7 +159,7 @@ local function on_place_bucket(itemstack, user, pointed_thing)
 		local node = minetest.get_node(pos)
 		local node_def = minetest.registered_nodes[node.name]
 
-		if node_def and node_def.buildable_to or minetest.get_item_group(node.name, "cauldron") == 1 then
+		if node_def and node_def.buildable_to then
 			local result, take_bucket = get_extra_check(bucket_def.extra_check, pos, user)
 			if result then
 				local node_place = get_node_place(bucket_def.source_place, pos)
@@ -237,28 +237,6 @@ local function on_place_bucket_empty(itemstack, user, pointed_thing)
 		end
 		return itemstack
 	else
-		-- FIXME: replace this ugly code by cauldrons API
-		if node_name == "mcl_cauldrons:cauldron_3" then
-			-- Take water out of full cauldron
-			minetest.set_node(under, {name="mcl_cauldrons:cauldron"})
-			if not minetest.is_creative_enabled(user:get_player_name()) then
-				new_bucket = ItemStack("mcl_buckets:bucket_water")
-			end
-			sound_take("mcl_core:water_source", under)
-		elseif node_name == "mcl_cauldrons:cauldron_3r" then
-			-- Take river water out of full cauldron
-			minetest.set_node(under, {name="mcl_cauldrons:cauldron"})
-			if not minetest.is_creative_enabled(user:get_player_name()) then
-				new_bucket = ItemStack("mcl_buckets:bucket_river_water")
-			end
-			sound_take("mclx_core:river_water_source", under)
-		elseif node_name == "mcl_cauldrons:cauldron_3_lava" then
-			minetest.set_node(under, {name="mcl_cauldrons:cauldron"})
-			if not minetest.is_creative_enabled(user:get_player_name()) then
-				new_bucket = ItemStack("mcl_buckets:bucket_lava")
-			end
-			sound_take("mcl_core:lava_source", under)
-		end
 		if new_bucket then
 			return give_bucket(new_bucket, itemstack, user)
 		end
