@@ -27,16 +27,6 @@ if mod_mcl_core then
 				awards.unlock(user:get_player_name(), "mcl:hotStuff")
 			end
 		end,
-		extra_check = function(pos, placer)
-			local nn = minetest.get_node(pos).name
-			if minetest.get_item_group(nn, "cauldron") ~= 0 then
-				if nn ~= "mcl_cauldrons:cauldron_3_lava" then
-					minetest.set_node(pos, {name="mcl_cauldrons:cauldron_3_lava"})
-				end
-				sound_place("mcl_core:lava_source", pos)
-				return false, true
-			end
-		end,
 		bucketname = "mcl_buckets:bucket_lava",
 		inventory_image = "bucket_lava.png",
 		name = S("Lava Bucket"),
@@ -56,22 +46,10 @@ if mod_mcl_core then
 		usagehelp = S("Place it to empty the bucket and create a water source."),
 		tt_help = S("Places a water source"),
 		extra_check = function(pos, placer)
-			local nn = minetest.get_node(pos).name
-			-- Pour water into cauldron
-			if minetest.get_item_group(nn, "cauldron") ~= 0 then
-				-- Put water into cauldron
-				if nn ~= "mcl_cauldrons:cauldron_3" then
-					minetest.set_node(pos, {name="mcl_cauldrons:cauldron_3"})
-				end
-				sound_place("mcl_core:water_source", pos)
+			local dim = mcl_worlds.pos_to_dimension(pos)
+			if dim == "nether" then
+				minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
 				return false, true
-			-- Evaporate water if used in Nether (except on cauldron)
-			else
-				local dim = mcl_worlds.pos_to_dimension(pos)
-				if dim == "nether" then
-					minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
-					return false, true
-				end
 			end
 		end,
 		groups = { water_bucket = 1 },
