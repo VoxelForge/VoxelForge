@@ -146,9 +146,10 @@ minetest.register_globalstep(function(dtime)
 end)
 
 function mcl_worlds.get_cloud_parameters()
-	if minetest.get_mapgen_setting("mg_name") == "valleys" then
+	local mg_name = minetest.get_mapgen_setting("mg_name")
+	if mg_name == "valleys" or mg_name == "carpathian" then
 		return {
-			height = 384, --valleys has a much higher average elevation thus often "normal" landscape ends up in the clouds
+			height = 384, --valleys and carpathian have a much higher average elevation thus often "normal" landscape ends up in the clouds
 			speed = {x=-2, z=0},
 			thickness=5,
 			color="#FFF0FEF",
