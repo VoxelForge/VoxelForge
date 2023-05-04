@@ -90,9 +90,7 @@ function mob_class:get_staticdata()
 	end
 	-- remove mob when out of range unless tamed
 	if remove_far
-	and self.can_despawn
-	and ((not self.nametag) or (self.nametag == ""))
-	and not self.tamed
+	and self:despawn_allowed()
 	and self.lifetimer <= 20 then
 		if spawn_logging then
 			minetest.log("action", "[mcl_mobs] Mob "..tostring(self.name).." despawns at "..minetest.pos_to_string(vector.round(self.object:get_pos())) .. " - out of range")

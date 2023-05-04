@@ -319,6 +319,17 @@ local function spawn_group(p,mob,spawn_on,group_max,group_min)
 	return o
 end
 
+function mob_class:despawn_allowed()
+	local nametag = self.nametag and self.nametag ~= ""
+	local not_busy = self.state ~= "attack" and self.following == nil
+	if self.can_despawn == true then
+		if not nametag and not_busy and not self.tamed == true and not self.persistent == true then
+			return true
+		end
+	end
+	return false
+end
+
 mcl_mobs.spawn_group = spawn_group
 
 local S = minetest.get_translator("mcl_mobs")
@@ -427,11 +438,7 @@ function mob_class:check_despawn(pos, dtime)
 	self.lifetimer = self.lifetimer - dtime
 
 	-- Despawning: when lifetimer expires, remove mob
-	if remove_far
-	and self.can_despawn == true
-	and ((not self.nametag) or (self.nametag == ""))
-	and self.state ~= "attack"
-	and self.following == nil then
+	if remove_far and self:despawn_allowed() then
 		if self.despawn_immediately or self.lifetimer <= 0 then
 			if logging then
 				minetest.log("action", "[mcl_mobs] Mob "..self.name.." despawns at "..minetest.pos_to_string(pos, 1) .. " lifetimer ran out")
@@ -539,6 +546,7 @@ minetest.register_chatcommand("spawncheck",{
 		end
 	end
 })
+
 
 minetest.register_chatcommand("mobstats",{
 	privs = { debug = true },
