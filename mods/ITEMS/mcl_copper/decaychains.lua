@@ -1,6 +1,7 @@
 mcl_copper.registered_decaychains = {}
 local decay_nodes = {}
 local nodename_chains = {}
+local S = minetest.get_translator("mcl_copper")
 
 function mcl_copper.get_decayed(nodename)
 	local dc = mcl_copper.registered_decaychains[nodename_chains[nodename]]
@@ -25,8 +26,8 @@ local function anti_oxidation_particles(pointed_thing)
 	minetest.add_particlespawner({
 		amount = 8,
 		time = 1,
-		minpos = pos - 1,
-		maxpos = pos + 1,
+		minpos = vector.subtract(pos, 1),
+		maxpos = vector.add(pos,1),
 		minvel = vector.zero(),
 		maxvel = vector.zero(),
 		minacc = vector.zero(),
@@ -37,7 +38,7 @@ local function anti_oxidation_particles(pointed_thing)
 		maxsize = 2.5,
 		collisiondetection = false,
 		vertical = false,
-		texture = "mcl_stone_copper_anti_oxidation_particle.png",
+		texture = "mcl_copper_anti_oxidation_particle.png",
 		glow = 5,
 	})
 end
@@ -45,7 +46,6 @@ end
 local function unpreserve(itemstack, clicker, pointed_thing)
 	local node = minetest.get_node(pointed_thing.under)
 	local unpreserved = node.name:gsub("_preserved","")
-	local def = mcl_copper.registered_decaychains[nodename_chains[unpreserved]]
 	if minetest.registered_nodes[unpreserved] then
 		node.name = unpreserved
 		minetest.swap_node(pointed_thing.under,node)
@@ -60,6 +60,7 @@ local function undecay(itemstack, clicker, pointed_thing)
 	local node = minetest.get_node(pointed_thing.under)
 	node.name = mcl_copper.get_undecayed(node.name)
 	minetest.swap_node(pointed_thing.under,node)
+	anti_oxidation_particles(pointed_thing)
 	if not minetest.is_creative_enabled(clicker:get_player_name()) then
 		itemstack:add_wear_by_uses(65536)
 	end
@@ -68,21 +69,21 @@ end
 
 function mcl_copper.register_decaychain(name,def)
 	mcl_copper.registered_decaychains[name] = def
-	assert(type(def.nodes) == "table","[mcl_stone] Failed to register decaychain "..tostring(name)..": field nodes is not a table.")
+	assert(type(def.nodes) == "table","[mcl_copper] Failed to register decaychain "..tostring(name)..": field nodes is not a table.")
 	for k,v in ipairs(def.nodes) do
 		nodename_chains[v] = name
 		if k <= #def.nodes then
 			table.insert(decay_nodes,v)
 			if k < #def.nodes and def.preserve_group then
 				local od = minetest.registered_nodes[v]
-				assert(type(od) == "table","[mcl_stone] Failed to register decaychain "..tostring(name)..": one of the nodes in the chain does not exist: "..tostring(v))
+				assert(type(od) == "table","[mcl_copper] Failed to register decaychain "..tostring(name)..": one of the nodes in the chain does not exist: "..tostring(v))
 				local nd = table.copy(od)
 				nd.description = (def.preserved_description or S("Preserved ") )..nd.description
 				if def.unpreserve_group then
 					nd._on_axe_place  = function(itemstack, clicker, pointed_thing)
 						if minetest.get_item_group(itemstack:get_name(),def.unpreserve_group) == 0 then
 							if od._on_axe_place  then return od._on_axe_place(itemstack, clicker, pointed_thing) end
-							if minetest.item_place_node(itemstack, clicker, pointed_thing, minetest.dir_to_facedir(vector.direction(pos,vector.offset(clicker:get_pos(),0,1,0)))) and not minetest.is_creative_enabled(clicker:get_player_name()) then
+							if minetest.item_place_node(itemstack, clicker, pointed_thing, minetest.dir_to_facedir(vector.direction(pointed_thing.under,vector.offset(clicker:get_pos(),0,1,0)))) and not minetest.is_creative_enabled(clicker:get_player_name()) then
 								itemstack:take_item()
 							end
 						elseif pointed_thing and minetest.get_item_group(itemstack:get_name(),def.unpreserve_group) > 0 then
@@ -98,7 +99,7 @@ function mcl_copper.register_decaychain(name,def)
 				minetest.override_item(v,{
 					_on_axe_place  = function(itemstack, clicker, pointed_thing)
 						if minetest.get_item_group(itemstack:get_name(),def.undecay_group) == 0 then
-							if old_os  then return old_or(itemstack, clicker, pointed_thing) end
+							if old_os  then return old_os(itemstack, clicker, pointed_thing) end
 							if minetest.item_place_node(itemstack, clicker, pointed_thing) and not minetest.is_creative_enabled(clicker:get_player_name()) then
 								itemstack:take_item()
 							end
@@ -125,7 +126,7 @@ minetest.register_on_mods_loaded(function()
 			minetest.swap_node(pos, {name = dc, param2 = node.param2})
 		end,
 	})
-	for k,v in pairs(mcl_copper.registered_decaychains) do
+	for _,v in pairs(mcl_copper.registered_decaychains) do
 		if v.preserve_group then
 			for it,def in pairs(minetest.registered_items) do
 				if minetest.get_item_group(it,v.preserve_group) > 0 then
