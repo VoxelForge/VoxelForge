@@ -1475,7 +1475,7 @@ local end_skycolor = "#000000"
 		humidity_point = 90,
 		heat_point = 79,
 		_mcl_biome_type = "medium",
-		_mcl_palette_index = 27,
+		_mcl_palette_index = 26,
 		_mcl_skycolor = "#77A8FF",
 		_mcl_fogcolor = overworld_fogcolor
 	})
@@ -1492,7 +1492,7 @@ local end_skycolor = "#000000"
 		humidity_point = 90,
 		heat_point = 79,
 		_mcl_biome_type = "medium",
-		_mcl_palette_index = 27,
+		_mcl_palette_index = 26,
 		_mcl_skycolor = ocean_skycolor,
 		_mcl_fogcolor = overworld_fogcolor
 	})
