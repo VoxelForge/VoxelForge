@@ -67,48 +67,78 @@ local function undecay(itemstack, clicker, pointed_thing)
 	return itemstack
 end
 
+local function register_unpreserve(nodename,od,def)
+	local nd = table.copy(od)
+	nd.description = (def.preserved_description or S("Preserved ") )..nd.description
+	nd._on_axe_place  = function(itemstack, clicker, pointed_thing)
+		if minetest.get_item_group(itemstack:get_name(),def.unpreserve_group) == 0 then
+			if od._on_axe_place  then return od._on_axe_place(itemstack, clicker, pointed_thing) end
+			if minetest.item_place_node(itemstack, clicker, pointed_thing, minetest.dir_to_facedir(vector.direction(pointed_thing.under,vector.offset(clicker:get_pos(),0,1,0)))) and not minetest.is_creative_enabled(clicker:get_player_name()) then
+				itemstack:take_item()
+			end
+		elseif pointed_thing and minetest.get_item_group(itemstack:get_name(),def.unpreserve_group) > 0 then
+			return unpreserve(itemstack, clicker, pointed_thing)
+		end
+		return itemstack
+	end
+	minetest.register_node(":"..nodename.."_preserved",nd)
+end
+
+local function register_undecay(nodename,def)
+	local old_os = minetest.registered_items[nodename]._on_axe_place
+	minetest.override_item(nodename,{
+		_on_axe_place  = function(itemstack, clicker, pointed_thing)
+			if minetest.get_item_group(itemstack:get_name(),def.undecay_group) == 0 then
+				if old_os  then return old_os(itemstack, clicker, pointed_thing) end
+				if minetest.item_place_node(itemstack, clicker, pointed_thing) and not minetest.is_creative_enabled(clicker:get_player_name()) then
+					itemstack:take_item()
+				end
+			elseif minetest.get_item_group(itemstack:get_name(),def.undecay_group) > 0 then
+				return undecay(itemstack, clicker, pointed_thing)
+			end
+			return itemstack
+		end
+	})
+end
+
+local function register_preserve(nodename,def,chaindef)
+	local old_op = def.on_place
+	minetest.override_item(nodename,{
+		on_place =  function(itemstack, placer, pointed_thing)
+			local node = minetest.get_node(pointed_thing.under)
+			if table.indexof(chaindef.nodes,node.name) == -1 then
+				if old_op then return old_op(itemstack, placer, pointed_thing) end
+			elseif table.indexof(chaindef.nodes,node.name) < #chaindef.nodes then
+				node.name = node.name.."_preserved"
+				if minetest.registered_nodes[node.name] then
+					minetest.swap_node(pointed_thing.under,node)
+					if not minetest.is_creative_enabled(placer:get_player_name()) then
+						itemstack:take_item()
+					end
+				end
+			end
+			return itemstack
+		end
+	})
+end
+
 function mcl_copper.register_decaychain(name,def)
 	mcl_copper.registered_decaychains[name] = def
 	assert(type(def.nodes) == "table","[mcl_copper] Failed to register decaychain "..tostring(name)..": field nodes is not a table.")
 	for k,v in ipairs(def.nodes) do
-		nodename_chains[v] = name
-		if k <= #def.nodes then
+		local od = minetest.registered_nodes[v]
+		if type(od) ~= "table" then
+			minetest.log("warning","[mcl_copper] The node '"..tostring(v).." in the decaychain "..tostring(name).." does not exist. skipping it.")
+		else
+			nodename_chains[v] = name
 			table.insert(decay_nodes,v)
-			if k < #def.nodes and def.preserve_group then
-				local od = minetest.registered_nodes[v]
-				assert(type(od) == "table","[mcl_copper] Failed to register decaychain "..tostring(name)..": one of the nodes in the chain does not exist: "..tostring(v))
-				local nd = table.copy(od)
-				nd.description = (def.preserved_description or S("Preserved ") )..nd.description
-				if def.unpreserve_group then
-					nd._on_axe_place  = function(itemstack, clicker, pointed_thing)
-						if minetest.get_item_group(itemstack:get_name(),def.unpreserve_group) == 0 then
-							if od._on_axe_place  then return od._on_axe_place(itemstack, clicker, pointed_thing) end
-							if minetest.item_place_node(itemstack, clicker, pointed_thing, minetest.dir_to_facedir(vector.direction(pointed_thing.under,vector.offset(clicker:get_pos(),0,1,0)))) and not minetest.is_creative_enabled(clicker:get_player_name()) then
-								itemstack:take_item()
-							end
-						elseif pointed_thing and minetest.get_item_group(itemstack:get_name(),def.unpreserve_group) > 0 then
-							return unpreserve(itemstack, clicker, pointed_thing)
-						end
-						return itemstack
-					end
-				end
-				minetest.register_node(":"..v.."_preserved",nd)
+
+			if k < #def.nodes and def.unpreserve_group then --exclude last entry in chain - can't decay further, hence no preservation
+				register_unpreserve(v,od,def)
 			end
-			if k > 1 and def.undecay_group then
-				local old_os = minetest.registered_items[v]._on_axe_place
-				minetest.override_item(v,{
-					_on_axe_place  = function(itemstack, clicker, pointed_thing)
-						if minetest.get_item_group(itemstack:get_name(),def.undecay_group) == 0 then
-							if old_os  then return old_os(itemstack, clicker, pointed_thing) end
-							if minetest.item_place_node(itemstack, clicker, pointed_thing) and not minetest.is_creative_enabled(clicker:get_player_name()) then
-								itemstack:take_item()
-							end
-						elseif minetest.get_item_group(itemstack:get_name(),def.undecay_group) > 0 then
-							return undecay(itemstack, clicker, pointed_thing)
-						end
-						return itemstack
-					end
-				})
+
+			if k > 1 and def.undecay_group then --exclude first entry in chain - can't be undecayed further
+				register_undecay(v,def)
 			end
 		end
 	end
@@ -130,22 +160,7 @@ minetest.register_on_mods_loaded(function()
 		if v.preserve_group then
 			for it,def in pairs(minetest.registered_items) do
 				if minetest.get_item_group(it,v.preserve_group) > 0 then
-					local old_op = def.on_place
-					minetest.override_item(it,{
-						on_place =  function(itemstack, placer, pointed_thing)
-							local node = minetest.get_node(pointed_thing.under)
-							if table.indexof(v.nodes,node.name) == -1 then
-								if old_op then return old_op(itemstack, placer, pointed_thing) end
-							elseif table.indexof(v.nodes,node.name) < #v.nodes then
-								node.name = node.name.."_preserved"
-								minetest.swap_node(pointed_thing.under,node)
-								if not minetest.is_creative_enabled(placer:get_player_name()) then
-									itemstack:take_item()
-								end
-							end
-							return itemstack
-						end
-					})
+					register_preserve(it,def,v)
 				end
 			end
 		end
