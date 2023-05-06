@@ -93,11 +93,12 @@ local function on_tool_place(itemstack, placer, pointed_thing, tool)
 	end
 
 	if type(noddef["_on_"..tool.."_place"]) == "function" then
-		itemstack,no_wear = noddef["_on_"..tool.."_place"](itemstack, placer, pointed_thing)
+		local itemstack,no_wear = noddef["_on_"..tool.."_place"](itemstack, placer, pointed_thing)
 		if minetest.is_creative_enabled(placer:get_player_name()) or no_wear then
 			return itemstack
 		end
 		itemstack:add_wear_by_uses(65536)
+		return itemstack
 	end
 	return itemstack
 end
