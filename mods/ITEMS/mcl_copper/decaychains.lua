@@ -70,13 +70,8 @@ end
 local function register_unpreserve(nodename,od,def)
 	local nd = table.copy(od)
 	nd.description = (def.preserved_description or S("Preserved ") )..nd.description
-	nd._on_axe_place  = function(itemstack, clicker, pointed_thing)
-		if minetest.get_item_group(itemstack:get_name(),def.unpreserve_group) == 0 then
-			if od._on_axe_place  then return od._on_axe_place(itemstack, clicker, pointed_thing) end
-			if minetest.item_place_node(itemstack, clicker, pointed_thing, minetest.dir_to_facedir(vector.direction(pointed_thing.under,vector.offset(clicker:get_pos(),0,1,0)))) and not minetest.is_creative_enabled(clicker:get_player_name()) then
-				itemstack:take_item()
-			end
-		elseif pointed_thing and minetest.get_item_group(itemstack:get_name(),def.unpreserve_group) > 0 then
+	nd["_on_"..def.unpreserve_tool.."_place"]  = function(itemstack, clicker, pointed_thing)
+		if pointed_thing then
 			return unpreserve(itemstack, clicker, pointed_thing)
 		end
 		return itemstack
@@ -85,15 +80,11 @@ local function register_unpreserve(nodename,od,def)
 end
 
 local function register_undecay(nodename,def)
-	local old_os = minetest.registered_items[nodename]._on_axe_place
+	local old_os = minetest.registered_items[nodename]["_on_"..def.undecay_tool.."_place"]
 	minetest.override_item(nodename,{
-		_on_axe_place  = function(itemstack, clicker, pointed_thing)
-			if minetest.get_item_group(itemstack:get_name(),def.undecay_group) == 0 then
-				if old_os  then return old_os(itemstack, clicker, pointed_thing) end
-				if minetest.item_place_node(itemstack, clicker, pointed_thing) and not minetest.is_creative_enabled(clicker:get_player_name()) then
-					itemstack:take_item()
-				end
-			elseif minetest.get_item_group(itemstack:get_name(),def.undecay_group) > 0 then
+		["_on_"..def.undecay_tool.."_place"] = function(itemstack, clicker, pointed_thing)
+			if old_os  then itemstack = old_os(itemstack, clicker, pointed_thing) end
+			if pointed_thing then
 				return undecay(itemstack, clicker, pointed_thing)
 			end
 			return itemstack
@@ -130,12 +121,10 @@ end
 --		--optional: description of the preserved variant will be prepended with this. Default: "Preserved"
 --	preserve_group = "preserves_copper",
 --		--optional: item group that when used on the node will preserve this state
---	unpreserve_group = "axe",
---		--optional: item group that when used on the node will unpreserve a preserved node.
---  decay_group = "oxidizes_copper",
---		--optional: item group that when used on the node will decay the node further.
---	undecay_group = "axe",
---		--optional: item group that when used on the node will undecay the node to the previous stage.
+--	unpreserve_tool = "axe",
+--		--optional: tool that when used on the node will unpreserve a preserved node. (axe|shovel|sword|shears|pick)
+--	undecay_tool = "axe",
+--		--optional: tool that when used on the node will undecay the node to the previous stage. (axe|shovel|sword|shears|pick)
 --	nodes = { --order is significant
 --		"mcl_copper:block",
 --		"mcl_copper:block_exposed",
@@ -155,11 +144,11 @@ function mcl_copper.register_decaychain(name,def)
 		nodename_chains[v] = name
 		table.insert(decay_nodes,v)
 
-		if k < #def.nodes and def.unpreserve_group then --exclude last entry in chain - can't decay further, hence no preservation
+		if k < #def.nodes and def.unpreserve_tool then --exclude last entry in chain - can't decay further, hence no preservation
 			register_unpreserve(v,od,def)
 		end
 
-		if k > 1 and def.undecay_group then --exclude first entry in chain - can't be undecayed further
+		if k > 1 and def.undecay_tool then --exclude first entry in chain - can't be undecayed further
 			register_undecay(v,def)
 		end
 	end

@@ -9,8 +9,8 @@ dofile(path .. "/crafting.lua")
 mcl_copper.register_decaychain("copper",{
 	preserved_description = "Waxed ",
 	preserve_group = "preserves_copper",
-	unpreserve_group = "axe",
-	undecay_group = "axe",
+	unpreserve_tool = "axe",
+	undecay_tool = "axe",
 	nodes = { --order is significant
 		"mcl_copper:block",
 		"mcl_copper:block_exposed",
@@ -22,8 +22,8 @@ mcl_copper.register_decaychain("copper",{
 mcl_copper.register_decaychain("cut_copper",{
 	preserved_description = "Waxed ",
 	preserve_group = "preserves_copper",
-	unpreserve_group = "axe",
-	undecay_group = "axe",
+	unpreserve_tool = "axe",
+	undecay_tool = "axe",
 	nodes = { --order is significant
 		"mcl_copper:block_cut",
 		"mcl_copper:block_exposed_cut",
@@ -38,8 +38,8 @@ for _,v in pairs({"stair","slab"}) do
 	mcl_copper.register_decaychain("cut_copper_"..v,{
 		preserved_description = "Waxed ",
 		preserve_group = "preserves_copper",
-		unpreserve_group = "axe",
-		undecay_group = "axe",
+		unpreserve_tool = "axe",
+		undecay_tool = "axe",
 		nodes = { --order is significant
 			"mcl_stairs:"..v.."_copper_cut",
 			"mcl_stairs:"..v.."_copper_exposed_cut",
@@ -53,8 +53,8 @@ for _,v in pairs({"inner","outer"}) do
 	mcl_copper.register_decaychain("cut_copper_stair_"..v,{
 		preserved_description = "Waxed ",
 		preserve_group = "preserves_copper",
-		unpreserve_group = "axe",
-		undecay_group = "axe",
+		unpreserve_tool = "axe",
+		undecay_tool = "axe",
 		nodes = { --order is significant
 			"mcl_stairs:stair_copper_cut_"..v,
 			"mcl_stairs:stair_copper_exposed_cut_"..v,
@@ -67,8 +67,8 @@ for _,v in pairs({"top","double"}) do
 	mcl_copper.register_decaychain("cut_copper_slab_"..v,{
 		preserved_description = "Waxed ",
 		preserve_group = "preserves_copper",
-		unpreserve_group = "axe",
-		undecay_group = "axe",
+		unpreserve_tool = "axe",
+		undecay_tool = "axe",
 		nodes = { --order is significant
 			"mcl_stairs:slab_copper_cut_"..v,
 			"mcl_stairs:slab_copper_exposed_cut_"..v,
