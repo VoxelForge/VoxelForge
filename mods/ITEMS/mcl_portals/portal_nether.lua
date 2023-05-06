@@ -395,7 +395,8 @@ local function in_portal(obj)
 	pos = vector.round(pos)
 	local node = minetest.get_node(pos)
 	if node.name == "mcl_portals:portal" then
-		return pos, node
+		local portal = vector.copy(minetest.deserialize(minetest.get_meta(pos):get_string(portal)))
+		return portal or pos, node
 	end
 end
 
