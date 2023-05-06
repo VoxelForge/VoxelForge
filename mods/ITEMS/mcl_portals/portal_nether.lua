@@ -2,7 +2,7 @@ local S = minetest.get_translator("mcl_portals")
 
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
-local portal_search_groups = { "group:building_block", "group:deco_block", "group:liquid" }
+local portal_search_groups = { "group:building_block", "group:dig_by_water", "group:liquid" }
 
 local TELEPORT_DELAY = 3
 local TELEPORT_COOLOFF = 4
@@ -106,7 +106,7 @@ local function check_and_light_shape(pos, param2)
 
 		if not checked[hash] then
 			local name = minetest.get_node(pos).name
-			if name == "air" or minetest.get_item_group(name, "fire") ~= 0 or minetest.get_item_group(name, "deco_block") ~= 0 then
+			if name == "air" or minetest.get_item_group(name, "dig_by_water") ~= 0 then
 				queue:enqueue(pos + orient(vector.new(0, -1, 0), param2))
 				queue:enqueue(pos + orient(vector.new(0, 1, 0), param2))
 				queue:enqueue(pos + orient(vector.new(-1, 0, 0), param2))
@@ -150,8 +150,9 @@ local function check_and_light_shape(pos, param2)
 end
 
 -- Attempts to light a nether portal at the specified position. The position
--- must be one of the nodes inside the frame which must be filled only with air
--- and fire. Returns true if portal was created, false otherwise.
+-- must be one of the nodes inside the frame which must be filled only with air,
+-- fire and decoration blocks. Returns true if portal was created, false
+-- otherwise.
 function mcl_portals.light_nether_portal(pos)
 	local dim = mcl_worlds.pos_to_dimension(pos)
 	if dim ~= "overworld" and dim ~= "nether" then
@@ -418,7 +419,7 @@ local function portal_emerge_area(blockpos, action, calls_remaining, param)
 
 	local function finalize(obj, src_pos, pos, param2, bad_pos)
 		-- Move portal down one node if on snow cover or grass.
-		if minetest.get_item_group(minetest.get_node(pos).name, "deco_block") > 0 then
+		if minetest.get_item_group(minetest.get_node(pos).name, "dig_by_water") ~= 0 then
 			pos.y = pos.y - 1
 		end
 
