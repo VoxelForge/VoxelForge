@@ -1475,7 +1475,7 @@ function mcl_core.make_dirtpath(itemstack, placer, pointed_thing)
 		minetest.sound_play({name="default_grass_footstep", gain=1}, {pos = above}, true)
 		minetest.swap_node(pointed_thing.under, {name="mcl_core:grass_path"})
 	end
-	return itemstack
+	return itemstack,true
 end
 
 function mcl_core.strip_tree(itemstack, placer, pointed_thing)
@@ -1493,5 +1493,5 @@ function mcl_core.strip_tree(itemstack, placer, pointed_thing)
 			itemstack:add_wear(wear)
 		end
 	end
-	return itemstack
+	return itemstack,true
 end

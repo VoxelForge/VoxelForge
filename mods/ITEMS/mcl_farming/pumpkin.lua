@@ -24,7 +24,7 @@ local function carve_pumpkin(itemstack, placer, pointed_thing)
 	local param2 = minetest.dir_to_facedir(dir)
 	minetest.set_node(pointed_thing.under, {name="mcl_farming:pumpkin_face", param2 = param2})
 	minetest.add_item(pointed_thing.above, "mcl_farming:pumpkin_seeds 4")
-	return itemstack
+	return itemstack, true
 end
 
 -- Seeds
