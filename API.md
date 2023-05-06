@@ -38,6 +38,18 @@ All nodes can have these fields:
 * `_mcl_after_falling(pos)`: Called after a falling node finished falling and
   turned into a node.
 
+### Tool Callbacks
+Nodes can have "tool callbacks" modifying the on_place function of certain tools.
+The first return value should be the itemstack and the second an option bool
+i ndicatingif no wear should be added to the tool e.g. because the mod does it
+itsself.
+
+* _on_axe_place(itemstack,placer,pointed_thing)
+* _on_shovel_place(itemstack,placer,pointed_thing)
+* _on_sword_place(itemstack,placer,pointed_thing)
+* _on_pickaxe_place(itemstack,placer,pointed_thing)
+* _on_shears_place(itemstack,placer,pointed_thing)
+
 Use the `mcl_sounds` mod for the sounds.
 
 ## APIs
