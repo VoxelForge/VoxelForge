@@ -236,7 +236,8 @@ function mcl_vars.get_node(pos)
 end
 
 -- Abm to update from old mapgen depth to new. potentially affects a lot of nodes inducing lag.
--- Also it will not generate ores or bedrock pattern.
+-- This is an ABM because these can be limited in Y space meaning they will completely stop
+-- once all bedrock and void in the relevant areas is gone.
 
 local adjacents = {
 	vector.new(1,0,0),
@@ -248,7 +249,7 @@ local adjacents = {
 }
 local function register_abms()
 	minetest.register_abm({
-		label = "Replace bedrock from old bedrock layer and air/void below to deepslate",
+		label = "Replace old world depth void",
 		name = ":mcl_mapgen_core:replace_old_void",
 		nodenames = { "mcl_core:void" },
 		chance = 1,
@@ -256,20 +257,20 @@ local function register_abms()
 		min_y = mcl_vars.mg_bedrock_overworld_max,
 		max_y = mcl_vars.mg_overworld_min_old,
 		action = function(p)
-		minetest.log("void")
 			if p.y > mcl_vars.mg_overworld_min_old - 5 then
 				minetest.bulk_set_node(minetest.find_nodes_in_area(vector.new(p.x-5,mcl_vars.mg_overworld_min_old-5,p.z-5),vector.new(p.x+5,mcl_vars.mg_overworld_min_old,p.z+5),{"mcl_core:void"}),{name="mcl_deepslate:deepslate"})
 			else
 				minetest.after(0,function(p)
 					if minetest.get_node(p).name == "mcl_core:void" then
-						minetest.delete_area(p,p)
+						minetest.delete_area(vector.new(p.x,mcl_vars.mg_overworld_min_old-10,p.z),vector.new(p.x,mcl_vars.mg_overworld_min + 5, p.z))
+						minetest.set_node(p,{name="mcl_deepslate:deepslate"})
 					end
 				end,p)
 			end
 		end
 	})
 	minetest.register_abm({
-		label = "Replace bedrock from old bedrock layer and air/void below to deepslate",
+		label = "Replace old world depth bedrock",
 		name = ":mcl_mapgen_core:replace_old_bedrock",
 		nodenames = { "mcl_core:bedrock" },
 		chance = 5,
@@ -277,7 +278,6 @@ local function register_abms()
 		min_y = mcl_vars.mg_overworld_min_old,
 		max_y = mcl_vars.mg_overworld_min_old + 4,
 		action = function(p)
-			minetest.log("bedr")
 			if minetest.find_node_near(p,24,{"mcl_core:void"}) then
 				return
 			end
