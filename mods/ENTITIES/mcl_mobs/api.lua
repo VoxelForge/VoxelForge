@@ -412,19 +412,41 @@ minetest.register_globalstep(function(dtime)
 end)
 
 minetest.register_chatcommand("clearmobs",{
-	privs={maphack=true},
-	params = "<all>|<nametagged>|<range>",
-	description=S("Removes all spawned mobs except nametagged and tamed ones. all removes all mobs, nametagged only nametagged ones and with the range paramter all mobs in a distance of the current player are removed."),
+	privs = { maphack = true },
+	params = "[<all> | <nametagged> | <tamed>] [<range>]",
+	description=S("Remove all, nametagged or tamed mobs within the specified distance or everywhere. When unspecified remove all mobs except tamed and nametagged ones."),
 	func=function(n,param)
+		local sparam = param:split(" ")
 		local p = minetest.get_player_by_name(n)
-		local num=tonumber(param)
-		for _,o in pairs(minetest.luaentities) do
+
+		local typ
+		local range
+		if sparam[1] then
+			typ = sparam[1]
+			if typ ~= "all" and typ ~= "nametagged" and typ ~= "tamed" then
+				typ = nil
+				range = tonumber(sparam[1])
+				if not range then
+					return false, S("Invalid syntax.")
+				end
+			end
+		end
+		if sparam[2] then
+			range = tonumber(sparam[2])
+			if not range then
+				return false, S("Invalid syntax.")
+			end
+		end
+
+		for _, o in pairs(minetest.luaentities) do
 			if o.is_mob then
-				if  param == "all" or
-				( param == "nametagged" and o.nametag ) or
-				( param == "" and ( not o.nametag or o.nametag == "" ) and not o.tamed ) or
-				( num and num > 0 and vector.distance(p:get_pos(),o.object:get_pos()) <= num ) then
-					o.object:remove()
+				if not range or vector.distance(p:get_pos(), o.object:get_pos()) <= range then
+					if typ == "all" or
+						(typ == "nametagged" and o.nametag) or
+						(typ == "tamed" and o.tamed and not o.nametag) or
+						(not typ and not o.nametag and not o.tamed) then
+						o.object:remove()
+					end
 				end
 			end
 		end
