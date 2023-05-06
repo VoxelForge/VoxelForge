@@ -122,6 +122,29 @@ local function register_preserve(nodename,def,chaindef)
 	})
 end
 
+-- mcl_copper.register_decaychain(name,def)
+-- name: short string that describes the decaychain; will be used as index of the registration table
+-- def: decaychain definition:
+--{
+--	preserved_description = "Waxed",
+--		--optional: description of the preserved variant will be prepended with this. Default: "Preserved"
+--	preserve_group = "preserves_copper",
+--		--optional: item group that when used on the node will preserve this state
+--	unpreserve_group = "axe",
+--		--optional: item group that when used on the node will unpreserve a preserved node.
+--  decay_group = "oxidizes_copper",
+--		--optional: item group that when used on the node will decay the node further.
+--	undecay_group = "axe",
+--		--optional: item group that when used on the node will undecay the node to the previous stage.
+--	nodes = { --order is significant
+--		"mcl_copper:block",
+--		"mcl_copper:block_exposed",
+--		"mcl_copper:block_weathered",
+--		"mcl_copper:block_oxidized",
+--	}
+--		--mandatory: table defining the decaychain with the undecayed state first and the most decayed state last. The order is significant here.
+--}
+
 function mcl_copper.register_decaychain(name,def)
 	mcl_copper.registered_decaychains[name] = def
 	assert(type(def.nodes) == "table","[mcl_copper] Failed to register decaychain "..tostring(name)..": field nodes is not a table.")
