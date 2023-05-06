@@ -70,7 +70,7 @@ end
 local function register_unpreserve(nodename,od,def)
 	local nd = table.copy(od)
 	nd.description = (def.preserved_description or S("Preserved ") )..nd.description
-	nd["_on_"..def.unpreserve_tool.."_place"]  = function(itemstack, clicker, pointed_thing)
+	nd[def.unpreserve_callback]  = function(itemstack, clicker, pointed_thing)
 		if pointed_thing then
 			return unpreserve(itemstack, clicker, pointed_thing)
 		end
@@ -80,9 +80,9 @@ local function register_unpreserve(nodename,od,def)
 end
 
 local function register_undecay(nodename,def)
-	local old_os = minetest.registered_items[nodename]["_on_"..def.undecay_tool.."_place"]
+	local old_os = minetest.registered_items[nodename][def.undecay_callback]
 	minetest.override_item(nodename,{
-		["_on_"..def.undecay_tool.."_place"] = function(itemstack, clicker, pointed_thing)
+		[def.undecay_callback] = function(itemstack, clicker, pointed_thing)
 			if old_os  then itemstack = old_os(itemstack, clicker, pointed_thing) end
 			if pointed_thing then
 				return undecay(itemstack, clicker, pointed_thing)
@@ -121,10 +121,10 @@ end
 --		--optional: description of the preserved variant will be prepended with this. Default: "Preserved"
 --	preserve_group = "preserves_copper",
 --		--optional: item group that when used on the node will preserve this state
---	unpreserve_tool = "axe",
---		--optional: tool that when used on the node will unpreserve a preserved node. (axe|shovel|sword|shears|pick)
---	undecay_tool = "axe",
---		--optional: tool that when used on the node will undecay the node to the previous stage. (axe|shovel|sword|shears|pick)
+--	unpreserve_callback = "_on_axe_place",
+--		--optional: callback to use for unpreservation (scraping)
+--	undecay_callback = "_on_axe_place",
+--		--optional: callback to use for undecay (deoxidation)
 --	nodes = { --order is significant
 --		"mcl_copper:block",
 --		"mcl_copper:block_exposed",
@@ -144,11 +144,11 @@ function mcl_copper.register_decaychain(name,def)
 		nodename_chains[v] = name
 		table.insert(decay_nodes,v)
 
-		if k < #def.nodes and def.unpreserve_tool then --exclude last entry in chain - can't decay further, hence no preservation
+		if k < #def.nodes and def.unpreserve_callback then --exclude last entry in chain - can't decay further, hence no preservation
 			register_unpreserve(v,od,def)
 		end
 
-		if k > 1 and def.undecay_tool then --exclude first entry in chain - can't be undecayed further
+		if k > 1 and def.undecay_callback then --exclude first entry in chain - can't be undecayed further
 			register_undecay(v,def)
 		end
 	end
