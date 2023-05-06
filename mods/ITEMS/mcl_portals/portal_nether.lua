@@ -106,7 +106,7 @@ local function check_and_light_shape(pos, param2)
 
 		if not checked[hash] then
 			local name = minetest.get_node(pos).name
-			if name == "air" or minetest.get_item_group(name, "fire") ~= 0 then
+			if name == "air" or minetest.get_item_group(name, "fire") ~= 0 or minetest.get_item_group(name, "deco_block") ~= 0 then
 				queue:enqueue(pos + orient(vector.new(0, -1, 0), param2))
 				queue:enqueue(pos + orient(vector.new(0, 1, 0), param2))
 				queue:enqueue(pos + orient(vector.new(-1, 0, 0), param2))
@@ -328,56 +328,28 @@ end
 -- bad_spot is true, then it will make a small platform and clear air space
 -- above it.
 local function build_portal(pos, param2, bad_spot)
-	register_portal(pos)
-
-	-- For some reason writing this using minetest.set_node does not work,
-	-- since that sometimes triggers on_destruct on the frame obsidian nodes
-	-- which removes portal nodes. The solution for now is to use a voxel
-	-- manipulator (which does not call on_destruct) to avoid this problem.
-        local vm = minetest.get_voxel_manip()
-	local emin, emax = vm:read_from_map(pos - vector.new(5, 5, 5), pos + vector.new(5, 5, 5))
-	local data = vm:get_data()
-	local param2_data = vm:get_param2_data()
-	local a = VoxelArea:new{
-		MinEdge = emin,
-		MaxEdge = emax
-	}
-
-	local c_air = minetest.get_content_id("air")
-	local c_portal = minetest.get_content_id("mcl_portals:portal")
-	local c_obsidian = minetest.get_content_id("mcl_core:obsidian")
-
-	local function index(pos)
-		return a:index(pos.x, pos.y, pos.z)
-	end
-
 	for i = -2, 1 do
-		data[index(pos + orient(vector.new(i, -1, 0), param2))] = c_obsidian
-		data[index(pos + orient(vector.new(i, 3, 0), param2))] = c_obsidian
+		minetest.set_node(pos + orient(vector.new(i, -1, 0), param2), { name = "mcl_core:obsidian" })
+		minetest.set_node(pos + orient(vector.new(i, -1, 0), param2), { name = "mcl_core:obsidian" })
+		minetest.set_node(pos + orient(vector.new(i, 3, 0), param2), { name = "mcl_core:obsidian" })
 	end
 
 	for i = 0, 2 do
-		data[index(pos + orient(vector.new(-2, i, 0), param2))] = c_obsidian
-		data[index(pos + orient(vector.new(-1, i, 0), param2))] = c_portal
-		param2_data[index(pos + orient(vector.new(-1, i, 0), param2))] = param2
-		data[index(pos + orient(vector.new(0, i, 0), param2))] = c_portal
-		param2_data[index(pos + orient(vector.new(0, i, 0), param2))] = param2
-		data[index(pos + orient(vector.new(1, i, 0), param2))] = c_obsidian
+		minetest.set_node(pos + orient(vector.new(-2, i, 0), param2), { name = "mcl_core:obsidian" })
+		minetest.set_node(pos + orient(vector.new(1, i, 0), param2), { name = "mcl_core:obsidian" })
 	end
 
 	if bad_spot then
 		for i = -1, 2 do
-			local content = i == -1 and c_obsidian or c_air
-			data[index(pos + orient(vector.new(-1, i, -1), param2))] = content
-			data[index(pos + orient(vector.new(0, i, -1), param2))] = content
-			data[index(pos + orient(vector.new(-1, i, 1), param2))] = content
-			data[index(pos + orient(vector.new(0, i, 1), param2))] = content
+			local content = i == -1 and "mcl_core:obsidian" or "air"
+			minetest.set_node(pos + orient(vector.new(-1, i, -1), param2), { name = content })
+			minetest.set_node(pos + orient(vector.new(0, i, -1), param2), { name = content })
+			minetest.set_node(pos + orient(vector.new(-1, i, 1), param2), { name = content })
+			minetest.set_node(pos + orient(vector.new(0, i, 1), param2), { name = content })
 		end
 	end
 
-	vm:set_data(data)
-	vm:set_param2_data(param2_data)
-	vm:write_to_map(true)
+	check_and_light_shape(pos, param2)
 end
 
 local function finalize_teleport(obj, pos)
