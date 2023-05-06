@@ -127,19 +127,17 @@ function mcl_copper.register_decaychain(name,def)
 	assert(type(def.nodes) == "table","[mcl_copper] Failed to register decaychain "..tostring(name)..": field nodes is not a table.")
 	for k,v in ipairs(def.nodes) do
 		local od = minetest.registered_nodes[v]
-		if type(od) ~= "table" then
-			minetest.log("warning","[mcl_copper] The node '"..tostring(v).." in the decaychain "..tostring(name).." does not exist. skipping it.")
-		else
-			nodename_chains[v] = name
-			table.insert(decay_nodes,v)
+		assert(od,"[mcl_copper] Error registereing decaychain: The node '"..tostring(v).." in the decaychain "..tostring(name).." does not exist.")
 
-			if k < #def.nodes and def.unpreserve_group then --exclude last entry in chain - can't decay further, hence no preservation
-				register_unpreserve(v,od,def)
-			end
+		nodename_chains[v] = name
+		table.insert(decay_nodes,v)
 
-			if k > 1 and def.undecay_group then --exclude first entry in chain - can't be undecayed further
-				register_undecay(v,def)
-			end
+		if k < #def.nodes and def.unpreserve_group then --exclude last entry in chain - can't decay further, hence no preservation
+			register_unpreserve(v,od,def)
+		end
+
+		if k > 1 and def.undecay_group then --exclude first entry in chain - can't be undecayed further
+			register_undecay(v,def)
 		end
 	end
 end
