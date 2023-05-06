@@ -49,9 +49,6 @@ local function unpreserve(itemstack, clicker, pointed_thing)
 	if minetest.registered_nodes[unpreserved] then
 		node.name = unpreserved
 		minetest.swap_node(pointed_thing.under,node)
-		if not minetest.is_creative_enabled(clicker:get_player_name()) then
-			itemstack:add_wear_by_uses(65536)
-		end
 	end
 	return itemstack
 end
@@ -61,9 +58,6 @@ local function undecay(itemstack, clicker, pointed_thing)
 	node.name = mcl_copper.get_undecayed(node.name)
 	minetest.swap_node(pointed_thing.under,node)
 	anti_oxidation_particles(pointed_thing)
-	if not minetest.is_creative_enabled(clicker:get_player_name()) then
-		itemstack:add_wear_by_uses(65536)
-	end
 	return itemstack
 end
 
