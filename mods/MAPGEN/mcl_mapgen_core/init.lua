@@ -268,27 +268,6 @@ local function set_layers(data, area, content_id, check, min, max, minp, maxp, l
 	return lvm_used
 end
 
-local function set_palette(minp,maxp,data2,area,biomemap,nodes)
-	-- Flat area at y=0 to read biome 3 times faster than 5.3.0.get_biome_data(pos).biome: 43us vs 125us per iteration:
-	if not biomemap then return end
-	local aream = VoxelArea:new({MinEdge={x=minp.x, y=0, z=minp.z}, MaxEdge={x=maxp.x, y=0, z=maxp.z}})
-	local nodes = minetest.find_nodes_in_area(minp, maxp, nodes)
-	for n=1, #nodes do
-		local n = nodes[n]
-		local p_pos = area:index(n.x, n.y, n.z)
-		local b_pos = aream:index(n.x, 0, n.z)
-		local bn = minetest.get_biome_name(biomemap[b_pos])
-		if bn then
-			local biome = minetest.registered_biomes[bn]
-			if biome and biome._mcl_biome_type then
-				data2[p_pos] = biome._mcl_palette_index
-				lvm_used = true
-			end
-		end
-	end
-	return lvm_used
-end
-
 -- Below the bedrock, generate air/void
 local function world_structure(vm, data, data2, emin, emax, area, minp, maxp, blockseed)
 	local biomemap --ymin, ymax
@@ -344,13 +323,39 @@ local function world_structure(vm, data, data2, emin, emax, area, minp, maxp, bl
 	return lvm_used, lvm_used, deco, ores
 end
 
+local cn = {}
+local cs = {}
+
+minetest.register_on_mods_loaded(function()
+	for n,d in pairs(minetest.registered_nodes) do
+		if minetest.get_item_group(n,"biomecolor") > 0 then
+			cn[n] = 1
+		end
+	end
+	for k, _ in pairs(cn) do
+		cs[minetest.get_content_id(k)] = 1
+	end
+end)
+
 local function block_fixes(vm, data, data2, emin, emax, area, minp, maxp, blockseed)
 	local biomemap = minetest.get_mapgen_object("biomemap")
 	local lvm_used = false
-	local pr = PseudoRandom(blockseed)
 	if minp.y <= mcl_vars.mg_overworld_max and maxp.y >= mcl_vars.mg_overworld_min then
-		-- Set param2 (=color) of sugar cane and grass
-		lvm_used = set_palette(minp,maxp,data2,area,biomemap,{"group:biomecolor"})
+		--lvm_used = set_palette(minp,maxp,data2,area,biomemap,{"group:biomecolor"}) --old method
+		for z = minp.z, maxp.z do
+		for y = minp.y, maxp.y do
+			local vi = area:index(minp.x, y, z)
+			for x = minp.x, maxp.x do
+				local vv = (x - minp.x) + ((z - minp.z) * mcl_vars.chunksize)
+				if cs[data[vi]] then
+					data2[vi] = mcl_util.get_pos_p2(vector.new(x,y,z))
+					lvm_used = true
+				end
+				vi = vi + 1
+			end
+		end
+		end
+		vm:set_param2_data(data2)
 	end
 	return lvm_used
 end

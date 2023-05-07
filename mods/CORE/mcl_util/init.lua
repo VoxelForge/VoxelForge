@@ -1012,3 +1012,7 @@ function mcl_util.check_position_protection(position, player)
 
 	return false
 end
+
+function mcl_util.get_pos_p2(pos)
+	return minetest.registered_biomes[minetest.get_biome_name(minetest.get_biome_data(pos).biome)]._mcl_palette_index or 0
+end
