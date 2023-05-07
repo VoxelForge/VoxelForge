@@ -75,8 +75,8 @@ local function update_mod_storage(dim)
 end
 
 local function register_portal(pos)
-	y, dim = mcl_worlds.y_to_layer(pos.y)
-	if not y then
+	dim = mcl_worlds.pos_to_dimension(pos)
+	if not dim then
 		return
 	end
 	portals[dim][minetest.hash_node_position(pos)] = pos
@@ -87,8 +87,8 @@ local function unregister_portal(pos)
 	if not pos then
 		return
 	end
-	y, dim = mcl_worlds.y_to_layer(pos.y)
-	if not y then
+	dim = mcl_worlds.pos_to_dimension(pos)
+	if not dim then
 		return
 	end
 	portals[dim][minetest.hash_node_position(pos)] = nil
@@ -431,8 +431,8 @@ end
 -- Get the target dimension and coordinate from portal located at position.
 -- Returns (dimension, position).
 local function get_teleport_target(pos)
-	local y, dim = mcl_worlds.y_to_layer(pos.y)
-	if not y then
+	local dim = mcl_worlds.pos_to_dimension(pos)
+	if not dim then
 		return
 	end
 
