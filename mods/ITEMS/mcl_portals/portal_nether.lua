@@ -22,10 +22,12 @@ local portals = {
 	nether = {},
 }
 for _, portal in pairs(minetest.deserialize(mod_storage:get_string("overworld_portals")) or {}) do
-	table.insert(portals["overworld"], vector.copy(portal))
+	portal = vector.copy(portal)
+	portals["overworld"][minetest.hash_node_position(portal)] = portal
 end
 for _, portal in pairs(minetest.deserialize(mod_storage:get_string("nether_portals")) or {}) do
-	table.insert(portals["nether"], vector.copy(portal))
+	portal = vector.copy(portal)
+	portals["nether"][minetest.hash_node_position(portal)] = portal
 end
 
 -- The distance portals can be apart and still link.
@@ -53,14 +55,32 @@ function mcl_portals.nether_portal_cooloff(object)
 	return portal_cooloff[object]
 end
 
+local function values(t)
+	local values = {}
+	for _, v in pairs(t) do
+		table.insert(values, v)
+	end
+	return values
+end
+
+local function update_mod_storage(dim)
+	if dim == "overworld" then
+		mod_storage:set_string("overworld_portals", minetest.serialize(values(portals.overworld)))
+	elseif dim == "nether" then
+		mod_storage:set_string("nether_portals", minetest.serialize(values(portals.nether)))
+	end
+end
+
 local function register_portal(pos)
 	y, dim = mcl_worlds.y_to_layer(pos.y)
-	table.insert(portals[dim], pos)
-	if dim == "overworld" then
-		mod_storage:set_string("overworld_portals", minetest.serialize(portals.overworld))
-	else
-		mod_storage:set_string("nether_portals", minetest.serialize(portals.nether))
-	end
+	portals[dim][minetest.hash_node_position(pos)] = pos
+	update_mod_storage(dim)
+end
+
+local function unregister_portal(pos)
+	y, dim = mcl_worlds.y_to_layer(pos.y)
+	portals[dim][minetest.hash_node_position(pos)] = nil
+	update_mod_storage(dim)
 end
 
 local function queue()
@@ -168,6 +188,14 @@ function mcl_portals.light_nether_portal(pos)
 	return
 end
 
+local function get_portal(pos)
+	local node = minetest.get_node(pos)
+	if node.name == "mcl_portals:portal" then
+		local portal = vector.copy(minetest.deserialize(minetest.get_meta(pos):get_string("portal")))
+		return portal or pos, node
+	end
+end
+
 -- Destroy a nether portal. Connected portal nodes are searched and removed
 -- using 'bulk_set_node'. This function is called from 'after_destruct' of
 -- portal and obsidian nodes.
@@ -179,6 +207,8 @@ local function destroy_portal(pos, node)
 	if destroying_portal then
 		return
 	end
+	local portal, node = get_portal(pos)
+	unregister_portal(portal)
 	destroying_portal = true
 
 	local param2 = node.param2
@@ -309,7 +339,7 @@ minetest.register_node("mcl_portals:portal", {
 	},
 	groups = { creative_breakable = 1, portal = 1, not_in_creative_inventory = 1 },
 	sounds = mcl_sounds.node_sound_glass_defaults(),
-	after_destruct = destroy_portal,
+	on_destruct = destroy_portal,
 	on_rotate = on_rotate,
 
 	_mcl_hardness = -1,
@@ -393,11 +423,8 @@ local function in_portal(obj)
 	end
 	pos.y = math.ceil(pos.y)
 	pos = vector.round(pos)
-	local node = minetest.get_node(pos)
-	if node.name == "mcl_portals:portal" then
-		local portal = vector.copy(minetest.deserialize(minetest.get_meta(pos):get_string(portal)))
-		return portal or pos, node
-	end
+
+	return get_portal(pos)
 end
 
 -- Scan emerged area and build a portal at a suitable spot. If no suitable spot
