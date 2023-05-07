@@ -26,10 +26,12 @@ local portals = {
 	overworld = {},
 	nether = {},
 }
+local portal_count = 0
 for dim, key in pairs(mod_storage_keys) do
 	for _, portal in pairs(minetest.deserialize(mod_storage:get_string(key)) or {}) do
 		portal = vector.copy(portal)
 		portals[dim][minetest.hash_node_position(portal)] = portal
+		portal_count = portal_count + 1
 	end
 end
 
@@ -78,8 +80,14 @@ local function register_portal(pos)
 	if not dim then
 		return
 	end
-	portals[dim][minetest.hash_node_position(pos)] = pos
-	update_mod_storage(dim)
+	local hash = minetest.hash_node_position(pos)
+	if not portals[dim][hash] then
+		portals[dim][hash] = pos
+		portal_count = portal_count + 1
+		minetest.log("action", "[mcl_portal] Registered portal at " .. tostring(pos))
+		minetest.log("action", "[mcl_portal] There are " .. portal_count .. " registered portals in total")
+		update_mod_storage(dim)
+	end
 end
 
 local function unregister_portal(pos)
@@ -90,8 +98,14 @@ local function unregister_portal(pos)
 	if not dim then
 		return
 	end
-	portals[dim][minetest.hash_node_position(pos)] = nil
-	update_mod_storage(dim)
+	local hash = minetest.hash_node_position(pos)
+	if portals[dim][hash] then
+		portals[dim][hash] = nil
+		portal_count = portal_count - 1
+		minetest.log("action", "[mcl_portal] Registered portal at " .. tostring(pos))
+		minetest.log("action", "[mcl_portal] There are " .. portal_count .. " registered portals in total")
+		update_mod_storage(dim)
+	end
 end
 
 -- Rotate vector 90 degrees if 'param2 % 2 == 1'.
@@ -152,9 +166,6 @@ local function init_and_register_portal(nodes, portal)
 		minetest.get_meta(pos):set_string("portal", minetest.serialize(portal))
 	end
 	register_portal(portal)
-end
-
-local function check_and_light_shape(pos, param2)
 end
 
 -- Attempts to light a nether portal at the specified position and param2 value.
@@ -321,6 +332,7 @@ local function build_portal(pos, param2, bad_spot)
 	end
 
 	light_nether_portal(pos, param2)
+	minetest.log("action", "[mcl_portal] Destination portal generated at " .. tostring(pos))
 end
 
 local function finalize_teleport(obj, pos, old_param2, new_param2)
@@ -335,6 +347,7 @@ local function finalize_teleport(obj, pos, old_param2, new_param2)
 	obj:set_pos(pos)
 	if obj:is_player() then
 		mcl_worlds.dimension_change(obj)
+		minetest.log("action", "[mcl_portal] " .. obj:get_player_name() .. " teleported to " .. tostring(pos))
 	end
 
 	minetest.after(TELEPORT_COOLOFF, function(obj)
@@ -597,6 +610,7 @@ minetest.override_item("mcl_core:obsidian", {
 		end
 
 		if portal_placed then
+			minetest.log("action", "[mcl_portal] Portal activated at " .. tostring(pos))
 			if minetest.get_modpath("doc") then
 				doc.mark_entry_as_revealed(user:get_player_name(), "nodes", "mcl_portals:portal")
 
