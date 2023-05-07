@@ -252,7 +252,7 @@ end
 
 -- Get portal at specified position. Returns (pos, node) for the portal.
 local function get_portal(pos)
-	local node = minetest.get_node(pos)
+	local node = mcl_vars.get_node(pos)
 	if node.name == "mcl_portals:portal" then
 		local meta = minetest.deserialize(minetest.get_meta(pos):get_string("portal"))
 		if meta then
