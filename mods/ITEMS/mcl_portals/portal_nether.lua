@@ -16,18 +16,21 @@ local MAP_SIZE = MAP_EDGE * 2
 
 local mod_storage = minetest.get_mod_storage()
 
+local mod_storage_keys = {
+	overworld = "overworld_portals",
+	nether = "nether_portals",
+}
+
 -- List of positions of portals in the nether and overworld.
 local portals = {
 	overworld = {},
 	nether = {},
 }
-for _, portal in pairs(minetest.deserialize(mod_storage:get_string("overworld_portals")) or {}) do
-	portal = vector.copy(portal)
-	portals["overworld"][minetest.hash_node_position(portal)] = portal
-end
-for _, portal in pairs(minetest.deserialize(mod_storage:get_string("nether_portals")) or {}) do
-	portal = vector.copy(portal)
-	portals["nether"][minetest.hash_node_position(portal)] = portal
+for dim, key in pairs(mod_storage_keys) do
+	for _, portal in pairs(minetest.deserialize(mod_storage:get_string(key)) or {}) do
+		portal = vector.copy(portal)
+		portals[dim][minetest.hash_node_position(portal)] = portal
+	end
 end
 
 -- The distance portals can be apart and still link. It is 20 instead of 16
@@ -67,11 +70,7 @@ local function get_portals(dim)
 end
 
 local function update_mod_storage(dim)
-	if dim == "overworld" then
-		mod_storage:set_string("overworld_portals", minetest.serialize(get_portals(dim)))
-	elseif dim == "nether" then
-		mod_storage:set_string("nether_portals", minetest.serialize(get_portals(dim)))
-	end
+	mod_storage:set_string(mod_storage_keys[dim], minetest.serialize(get_portals(dim)))
 end
 
 local function register_portal(pos)
