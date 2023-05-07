@@ -126,13 +126,39 @@ local function queue()
 	}
 end
 
+-- Check if node is replacable with a portal node.
+local function replacable_with_portal(name)
+	return name == "air" or minetest.get_item_group(name, "dig_by_water") ~= 0
+end
+
+-- Gets the position in a portal which players are teleported to.
+local function get_center_portal(nodes)
+	local center = vector.zero()
+	for _, pos in pairs(nodes) do
+		center = center + pos
+	end
+	center = center:divide(#nodes):round()
+
+	while replacable_with_portal(minetest.get_node(center:offset(0, -1, 0)).name) do
+		center = center:offset(0, -1, 0)
+	end
+
+	return center
+end
+
+-- Initialize metadata and register a portal containing nodes. Nodes is a list
+-- of the positions of all the portal nodes.
+local function init_and_register_portal(nodes, portal)
+	for _, pos in pairs(nodes) do
+		minetest.get_meta(pos):set_string("portal", minetest.serialize(portal))
+	end
+	register_portal(portal)
+end
+
 local function check_and_light_shape(pos, param2)
-	local portals = {}
+	local nodes = {}
 	local queue = queue()
 	local checked = {}
-	local function node_ok(name)
-		return name == "air" or minetest.get_item_group(name, "dig_by_water") ~= 0
-	end
 
 	queue:enqueue(pos)
 	while queue:size() > 0 do
@@ -141,16 +167,16 @@ local function check_and_light_shape(pos, param2)
 
 		if not checked[hash] then
 			local name = minetest.get_node(pos).name
-			if node_ok(name) then
+			if replacable_with_portal(name) then
 				queue:enqueue(pos + orient(vector.new(0, -1, 0), param2))
 				queue:enqueue(pos + orient(vector.new(0, 1, 0), param2))
 				queue:enqueue(pos + orient(vector.new(-1, 0, 0), param2))
 				queue:enqueue(pos + orient(vector.new(1, 0, 0), param2))
 
-				if #portals > MAX_PORTAL_NODES then
+				if #nodes > MAX_PORTAL_NODES then
 					return false
 				end
-				table.insert(portals, pos)
+				table.insert(nodes, pos)
 			elseif name ~= "mcl_core:obsidian" then
 				return false
 			end
@@ -159,26 +185,13 @@ local function check_and_light_shape(pos, param2)
 		end
 	end
 
-	local center = vector.zero()
-	for _, portal in pairs(portals) do
-		center = center + portal
-	end
-	center = center:divide(#portals):round()
-
-	while node_ok(minetest.get_node(center:offset(0, -1, 0)).name) do
-		center = center:offset(0, -1, 0)
-	end
-
-	if #portals >= MIN_PORTAL_NODES and node_ok(minetest.get_node(center:offset(0, 1, 0)).name) then
-		minetest.bulk_set_node(portals, {
+	local center = get_center_portal(nodes)
+	if #nodes >= MIN_PORTAL_NODES and replacable_with_portal(minetest.get_node(center:offset(0, 1, 0)).name) then
+		minetest.bulk_set_node(nodes, {
 			name = "mcl_portals:portal",
 			param2 = param2,
 		})
-		for _, portal in pairs(portals) do
-			minetest.get_meta(portal):set_string("portal", minetest.serialize(center))
-		end
-
-		register_portal(center)
+		init_and_register_portal(nodes, center)
 		return true
 	end
 	return false
@@ -202,30 +215,12 @@ function mcl_portals.light_nether_portal(pos)
 	return false
 end
 
--- Get portal at specified position. Returns (pos, node) for the portal.
-local function get_portal(pos)
+-- Get the positions of portal nodes adjacent to position.
+local function get_adjacent_portal_nodes(pos)
 	local node = minetest.get_node(pos)
-	local meta = minetest.deserialize(minetest.get_meta(pos):get_string("portal"))
-	if meta and node.name == "mcl_portals:portal" then
-		return vector.copy(meta), node
+	if node.name ~= "mcl_portals:portal" then
+		return {}
 	end
-end
-
--- Destroy a nether portal. Connected portal nodes are searched and removed
--- using 'bulk_set_node'. This function is called on destruction of portal and
--- obsidian nodes.
---
--- The flag 'destroying_portal' is used to avoid this function being called
--- recursively through callbacks in 'bulk_set_node'.
-local destroying_portal = false
-local function destroy_portal(pos, node)
-	if destroying_portal then
-		return
-	end
-	destroying_portal = true
-
-	pos, node = get_portal(pos)
-	unregister_portal(pos)
 
 	local param2 = node.param2
 	local checked_tab = { [minetest.hash_node_position(pos)] = true }
@@ -259,7 +254,43 @@ local function destroy_portal(pos, node)
 		i = i + 1
 	end
 
-	minetest.bulk_set_node(nodes, { name = "air" })
+	return nodes
+end
+
+-- Get portal at specified position. Returns (pos, node) for the portal.
+local function get_portal(pos)
+	local node = minetest.get_node(pos)
+	if node.name == "mcl_portals:portal" then
+		local meta = minetest.deserialize(minetest.get_meta(pos):get_string("portal"))
+		if meta then
+			return vector.copy(meta), node
+		else
+			local nodes = get_adjacent_portal_nodes(pos)
+			local center = get_center_portal(nodes)
+			init_and_register_portal(nodes, center)
+		end
+	end
+end
+
+-- Destroy a nether portal. Connected portal nodes are searched and removed
+-- using 'bulk_set_node'. This function is called on destruction of portal and
+-- obsidian nodes.
+--
+-- The flag 'destroying_portal' is used to avoid this function being called
+-- recursively through callbacks in 'bulk_set_node'.
+local destroying_portal = false
+local function destroy_portal(pos, node)
+	if destroying_portal then
+		return
+	end
+	destroying_portal = true
+
+	local portal = get_portal(pos)
+	if portal then
+		unregister_portal(get_portal(pos))
+	end
+
+	minetest.bulk_set_node(get_adjacent_portal_nodes(pos), { name = "air" })
 	destroying_portal = false
 end
 
