@@ -324,7 +324,8 @@ local function build_portal(pos, param2, bad_spot)
 end
 
 local function finalize_teleport(obj, pos, old_param2, new_param2)
-	-- Make player look out from the exit portal.
+	-- Adjust the player's look direction depending on the relative
+	-- direction of the portals.
 	if obj:is_player() then
 		local new_look = (old_param2 - new_param2 + 2) * math.pi / 2
 		obj:set_look_horizontal(obj:get_look_horizontal() + new_look)
