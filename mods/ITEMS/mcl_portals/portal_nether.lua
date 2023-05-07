@@ -140,7 +140,7 @@ local function check_and_light_shape(pos, param2)
 			param2 = param2,
 		})
 		for _, portal in pairs(portals) do
-			minetest.get_meta(pos):set_string("portal", minetest.serialize(center))
+			minetest.get_meta(portal):set_string("portal", minetest.serialize(center))
 		end
 
 		register_portal(center)
