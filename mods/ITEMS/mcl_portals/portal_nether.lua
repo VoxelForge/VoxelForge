@@ -130,6 +130,9 @@ local function check_and_light_shape(pos, param2)
 	local portals = {}
 	local queue = queue()
 	local checked = {}
+	local function node_ok(name)
+		return name == "air" or minetest.get_item_group(name, "dig_by_water") ~= 0
+	end
 
 	queue:enqueue(pos)
 	while queue:size() > 0 do
@@ -138,7 +141,7 @@ local function check_and_light_shape(pos, param2)
 
 		if not checked[hash] then
 			local name = minetest.get_node(pos).name
-			if name == "air" or minetest.get_item_group(name, "dig_by_water") ~= 0 then
+			if node_ok(name) then
 				queue:enqueue(pos + orient(vector.new(0, -1, 0), param2))
 				queue:enqueue(pos + orient(vector.new(0, 1, 0), param2))
 				queue:enqueue(pos + orient(vector.new(-1, 0, 0), param2))
@@ -162,11 +165,11 @@ local function check_and_light_shape(pos, param2)
 	end
 	center = center:divide(#portals):round()
 
-	while minetest.get_node(center:offset(0, -1, 0)).name ~= "mcl_core:obsidian" do
+	while node_ok(minetest.get_node(center:offset(0, -1, 0)).name) do
 		center = center:offset(0, -1, 0)
 	end
 
-	if #portals >= MIN_PORTAL_NODES then
+	if #portals >= MIN_PORTAL_NODES and node_ok(minetest.get_node(center:offset(0, 1, 0)).name) then
 		minetest.bulk_set_node(portals, {
 			name = "mcl_portals:portal",
 			param2 = param2,
