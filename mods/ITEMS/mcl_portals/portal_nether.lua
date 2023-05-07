@@ -55,9 +55,10 @@ function mcl_portals.nether_portal_cooloff(object)
 	return portal_cooloff[object]
 end
 
-local function values(t)
+-- Get list of portals in dimension as an array.
+local function get_portals(dim)
 	local values = {}
-	for _, v in pairs(t) do
+	for _, v in pairs(portals[dim]) do
 		table.insert(values, v)
 	end
 	return values
@@ -65,20 +66,26 @@ end
 
 local function update_mod_storage(dim)
 	if dim == "overworld" then
-		mod_storage:set_string("overworld_portals", minetest.serialize(values(portals.overworld)))
+		mod_storage:set_string("overworld_portals", minetest.serialize(get_portals(dim)))
 	elseif dim == "nether" then
-		mod_storage:set_string("nether_portals", minetest.serialize(values(portals.nether)))
+		mod_storage:set_string("nether_portals", minetest.serialize(get_portals(dim)))
 	end
 end
 
 local function register_portal(pos)
 	y, dim = mcl_worlds.y_to_layer(pos.y)
+	if not y then
+		return
+	end
 	portals[dim][minetest.hash_node_position(pos)] = pos
 	update_mod_storage(dim)
 end
 
 local function unregister_portal(pos)
 	y, dim = mcl_worlds.y_to_layer(pos.y)
+	if not y then
+		return
+	end
 	portals[dim][minetest.hash_node_position(pos)] = nil
 	update_mod_storage(dim)
 end
@@ -180,9 +187,9 @@ function mcl_portals.light_nether_portal(pos)
 	end
 
 	for orientation = 0, 1 do
-		local pos = check_and_light_shape(pos, orientation)
-		if pos then
-			return pos
+		local created = check_and_light_shape(pos, orientation)
+		if created then
+			return created
 		end
 	end
 	return
@@ -190,9 +197,9 @@ end
 
 local function get_portal(pos)
 	local node = minetest.get_node(pos)
+	local meta = minetest.deserialize(minetest.get_meta(pos):get_string("portal"))
 	if node.name == "mcl_portals:portal" then
-		local portal = vector.copy(minetest.deserialize(minetest.get_meta(pos):get_string("portal")))
-		return portal or pos, node
+		return meta and vector.copy(meta) or pos, node
 	end
 end
 
@@ -207,9 +214,10 @@ local function destroy_portal(pos, node)
 	if destroying_portal then
 		return
 	end
+	destroying_portal = true
+
 	local portal, node = get_portal(pos)
 	unregister_portal(portal)
-	destroying_portal = true
 
 	local param2 = node.param2
 	local checked_tab = { [minetest.hash_node_position(pos)] = true }
@@ -492,9 +500,9 @@ local function get_teleport_target(pos)
 		overworld = overworld_to_nether,
 	}
 	if dim == "overworld" then
-		return "nether", vector.new(overworld_to_nether(pos.x), 0, overworld_to_nether(pos.z))
+		return "nether", vector.new(overworld_to_nether(pos.x), 0, overworld_to_nether(pos.z)):round()
 	end
-	return "overworld", vector.new(nether_to_overworld(pos.x), 0, nether_to_overworld(pos.z))
+	return "overworld", vector.new(nether_to_overworld(pos.x), 0, nether_to_overworld(pos.z)):round()
 end
 
 local function portal_distance(a, b)
@@ -502,15 +510,29 @@ local function portal_distance(a, b)
 end
 
 local function get_linked_portal(dim, pos)
-	closest = nil
-	for _, portal in pairs(portals[dim]) do
-		if not closest or portal_distance(portal, pos) < portal_distance(closest, pos) then
-			closest = portal
-		end
+	local portals = get_portals(dim)
+
+	table.sort(portals, function(a, b)
+		return portal_distance(a, pos) < portal_distance(b, pos)
+	end)
+
+	for _, portal in pairs(portals) do
 	end
 
-	if closest and portal_distance(closest, pos) < link_distance[dim] then
-		return closest
+	for _, portal in pairs(portals) do
+		-- Stop when portals are too far away. Plus one because rounding
+		-- might make distance one less.
+		if portal_distance(portal, pos) > link_distance[dim] + 1 then
+			return
+		end
+
+		-- Check that it is still a portal (not destroyed).
+		local pos = get_portal(portal)
+		if pos then
+			return portal
+		else
+			unregister_portal(portal)
+		end
 	end
 end
 
