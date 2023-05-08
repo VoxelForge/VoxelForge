@@ -151,9 +151,6 @@ Bonus features (not found in Minecraft):
 * Built-in crafting guide which shows you crafting and smelting recipes
 * In-game help system containing extensive help about gameplay basics, blocks,
   items and more
-* Temporary crafting recipes. They only exist to make some otherwise
-  inaccessible items available when you're not in creative mode. These recipes
-  will be removed as development goes on an more features become available
 * Fully moddable (thanks to Minetest's powerful Lua API)
 * Ability to store books in bookshelves
 * Ability to create custom nether portal shapes
