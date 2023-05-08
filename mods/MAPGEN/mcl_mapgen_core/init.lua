@@ -367,27 +367,27 @@ end
 -- End block fixes:
 local function end_basic(vm, data, data2, emin, emax, area, minp, maxp, blockseed)
 	if maxp.y < mcl_vars.mg_end_min or minp.y > mcl_vars.mg_end_max then return end
-	local biomemap --ymin, ymax
 	local lvm_used = false
-	local pr = PseudoRandom(blockseed)
-	local nodes
-	nodes = minetest.find_nodes_in_area(emin, emax, {"mcl_core:water_source"})
-	if #nodes > 0 then
-		lvm_used = true
-		for _,n in pairs(nodes) do
-			data[area:index(n.x, n.y, n.z)] = c_air
+	for z = minp.z, maxp.z do
+	for y = minp.y, maxp.y do
+		local vi = area:index(minp.x, y, z)
+		for x = minp.x, maxp.x do
+			if data[vi] == c_water then
+				data[vi] = c_air
+				lvm_used = true
+			end
+			vi = vi + 1
 		end
 	end
-	return true, false
+	end
+	return lvm_used
 end
 
 
 mcl_mapgen_core.register_generator("world_structure", world_structure, nil, 1, true)
-mcl_mapgen_core.register_generator("end_fixes", end_basic, function(minp,maxp)
-	if maxp.y < mcl_vars.mg_end_min or minp.y > mcl_vars.mg_end_max then return end
-end, 9999, false)
 
 if mg_name ~= "singlenode" then
+	mcl_mapgen_core.register_generator("end_fixes", end_basic,nil, 9999, false)
 	mcl_mapgen_core.register_generator("set_param2_nodes", set_param2_nodes, nil, 9999, true)
 end
 
