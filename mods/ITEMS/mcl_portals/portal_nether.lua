@@ -76,7 +76,7 @@ local function update_mod_storage(dim)
 end
 
 local function register_portal(pos)
-	dim = mcl_worlds.pos_to_dimension(pos)
+	local dim = mcl_worlds.pos_to_dimension(pos)
 	if not dim then
 		return
 	end
@@ -159,13 +159,12 @@ local function get_center_portal(nodes)
 	return center
 end
 
--- Initialize metadata and register a portal containing nodes. Nodes is a list
--- of the positions of all the portal nodes.
-local function init_and_register_portal(nodes, portal)
+-- Initialize metadata for a portal containing nodes. Nodes is a list of
+-- positions for the portal nodes.
+local function init_portal_meta(nodes, portal)
 	for _, pos in pairs(nodes) do
 		minetest.get_meta(pos):set_string("portal", minetest.serialize(portal))
 	end
-	register_portal(portal)
 end
 
 -- Attempts to light a nether portal at the specified position and param2 value.
@@ -213,7 +212,8 @@ local function light_nether_portal(pos, param2)
 			name = "mcl_portals:portal",
 			param2 = param2,
 		})
-		init_and_register_portal(nodes, center)
+		init_portal_meta(nodes, center)
+                register_portal(center)
 		return true
 	end
 	return false
@@ -271,7 +271,7 @@ local function get_portal(pos)
 		else
 			local nodes = get_adjacent_portal_nodes(pos)
 			local center = get_center_portal(nodes)
-			init_and_register_portal(nodes, center)
+			init_portal_meta(nodes, center)
 			return center, minetest.get_node(pos)
 		end
 	end
@@ -466,6 +466,7 @@ end
 -- Get portal nearby position in dimension or nil.
 local function get_linked_portal(dim, pos)
 	local portals = get_portals(dim)
+
 	table.sort(portals, function(a, b)
 		return portal_distance(a, pos) < portal_distance(b, pos)
 	end)
@@ -489,6 +490,7 @@ local function teleport(obj)
 	if not portal or portal_cooloff[obj] then
 		return
 	end
+        register_portal(portal) -- Register portal if not already registered.
 	portal_cooloff[obj] = true
 
 	local dim, target = get_teleport_target(portal)
