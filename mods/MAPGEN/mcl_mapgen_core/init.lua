@@ -344,7 +344,6 @@ end)
 
 local function set_param2_nodes(vm, data, data2, emin, emax, area, minp, maxp, blockseed)
 	local t1 = os.clock()
-	local biomemap = minetest.get_mapgen_object("biomemap")
 	local lvm_used = false
 	if minp.y <= mcl_vars.mg_overworld_max and maxp.y >= mcl_vars.mg_overworld_min then
 		for z = minp.z, maxp.z do
