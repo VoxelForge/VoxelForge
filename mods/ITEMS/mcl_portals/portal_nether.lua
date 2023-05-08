@@ -94,7 +94,7 @@ local function unregister_portal(pos)
 	if not pos then
 		return
 	end
-	dim = mcl_worlds.pos_to_dimension(pos)
+	local dim = mcl_worlds.pos_to_dimension(pos)
 	if not dim then
 		return
 	end
@@ -445,18 +445,11 @@ end
 -- Returns (dimension, position).
 local function get_teleport_target(pos)
 	local dim = mcl_worlds.pos_to_dimension(pos)
-	if not dim then
-		return
-	end
-
-	local scale = {
-		nether = nether_to_overworld,
-		overworld = overworld_to_nether,
-	}
 	if dim == "overworld" then
 		return "nether", vector.new(overworld_to_nether(pos.x), 0, overworld_to_nether(pos.z)):round()
+	elseif dim == "nether" then
+		return "overworld", vector.new(nether_to_overworld(pos.x), 0, nether_to_overworld(pos.z)):round()
 	end
-	return "overworld", vector.new(nether_to_overworld(pos.x), 0, nether_to_overworld(pos.z)):round()
 end
 
 local function portal_distance(a, b)
