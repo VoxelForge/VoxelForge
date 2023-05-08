@@ -351,11 +351,8 @@ local function set_param2_nodes(vm, data, data2, emin, emax, area, minp, maxp, b
 			local vi = area:index(minp.x, y, z)
 			for x = minp.x, maxp.x do
 				if biomecolor_cids[data[vi]] then
-					local p2 = biome_id_p2[minetest.get_biome_data(vector.new(x,y,z)).biome]
-					if p2 ~= 0 then
-						data2[vi] = p2
-						lvm_used = true
-					end
+					data2[vi] = biome_id_p2[minetest.get_biome_data({x=x,y=y,z=z}).biome] --don't create a vector table here; makes this measurably slower!
+					lvm_used = true
 				end
 				vi = vi + 1
 			end
