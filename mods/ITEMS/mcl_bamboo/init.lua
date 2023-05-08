@@ -34,9 +34,6 @@ minetest.register_abm({
 })
 
 --[[ TODO: Figure out how to make this work:
-local function dropper_call(node, pushdir, stack, stackid)
-	-- mcl_bamboo.break_orphaned()
-end
 
 if minetest.get_modpath("mesecons_mvps") then
 	if mesecon then
@@ -48,17 +45,6 @@ if minetest.get_modpath("mesecons_mvps") then
 else
 end
 --]]
-
-minetest.register_abm({
-	label = "Break Orphaned Bamboo",
-	nodenames = mcl_bamboo.bamboo_index,
-	interval = 1.5,
-	chance = 1,
-	action = function(pos, _)
-		mcl_bamboo.break_orphaned(pos)
-	end,
-})
-
 
 --[[
 todo -- make scaffolds do side scaffold blocks, so that they jut out. (Shelved.)

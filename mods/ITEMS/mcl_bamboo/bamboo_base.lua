@@ -90,7 +90,7 @@ local bamboo_def = {
 
 		if mcl_bamboo.is_bamboo(nodename) == false and nodename ~= BAMBOO_ENDCAP_NAME then
 			if nodename ~= "mcl_flowerpots:flower_pot" then
-				if mcl_bamboo.is_dirt(nodename) == false then
+				if table.indexof(mcl_bamboo.dirt_nodes,nodename) == -1 then
 					return
 				end
 			end
@@ -127,7 +127,7 @@ local bamboo_def = {
 			for py = -1, BAMBOO_SOIL_DIST, -1 do
 				chk_pos = vector.offset(pos, 0, py, 0)
 				node_name = minetest.get_node(chk_pos).name
-				if mcl_bamboo.is_dirt(node_name) then
+				if table.indexof(mcl_bamboo.dirt_nodes,node_name) == -1 then
 					first_shoot = vector.offset(chk_pos, 0, 1, 0)
 					break
 				end

@@ -27,15 +27,6 @@ mcl_bamboo.bamboo_dirt_nodes = {
 	"mcl_mud:mud",
 }
 
-function mcl_bamboo.is_dirt(node_name)
-	local index = table.indexof(mcl_bamboo.bamboo_dirt_nodes, node_name)
-	if index == -1 then
-		return false
-	else
-		return true
-	end
-end
-
 mcl_bamboo.bamboo_index = {
 	"mcl_bamboo:bamboo",
 	"mcl_bamboo:bamboo_1",
@@ -64,32 +55,6 @@ function mcl_bamboo.is_protected(pos, placer)
 end
 
 local BAMBOO_ENDCAP_NAME = "mcl_bamboo:bamboo_endcap"
-
--- For when I learn more about the pistons...
-function mcl_bamboo.break_orphaned(pos)
-	mcl_bamboo.mcl_log("Break_Orphaned called.")
-	local node_below = minetest.get_node(vector.offset(pos, 0, -1, 0))
-	local node_name = node_below.name
-
-	-- short circuit checks.
-	if mcl_bamboo.is_dirt(node_name) or mcl_bamboo.is_bamboo(node_name) or mcl_bamboo.is_bamboo(minetest.get_node(pos).name) == false then
-		return
-	end
-
-	-- dig the node.
-	minetest.remove_node(pos)    -- if that fails, remove the node
-	local istack = ItemStack("mcl_bamboo:bamboo")
-	local sound_params = {
-		pos = pos,
-		gain = 1.0, -- default
-		max_hear_distance = 10, -- default, uses a Euclidean metric
-	}
-
-	minetest.remove_node(pos)
-	minetest.sound_play(mcl_sounds.node_sound_wood_defaults().dug, sound_params, true)
-	minetest.add_item(pos, istack)
-end
---]]
 
 function mcl_bamboo.grow_bamboo(pos, bonemeal_applied)
 	local node_above = minetest.get_node(vector.offset(pos, 0, 1, 0))
@@ -236,24 +201,6 @@ function mcl_bamboo.grow_bamboo(pos, bonemeal_applied)
 			break
 		end
 	end
-end
-
--- Add Groups function, courtesy of Warr1024.
-function mcl_bamboo.add_groups(name, ...)
-	local def = minetest.registered_items[name] or error(name .. " not found")
-	local groups = {}
-	for k, v in pairs(def.groups) do
-		groups[k] = v
-	end
-	local function add_all(x, ...)
-		if not x then
-			return
-		end
-		groups[x] = 1
-		return add_all(...)
-	end
-	addall(...)
-	return minetest.override_item(name, { groups = groups })
 end
 
 function mcl_bamboo.mcl_log(m, l)
