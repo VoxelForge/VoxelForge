@@ -156,13 +156,14 @@ Bonus features (not found in Minecraft):
   will be removed as development goes on an more features become available
 * Saplings in chests in mapgen v6
 * Fully moddable (thanks to Minetest's powerful Lua API)
+* Ability to store books in bookshelves
+* Ability to create custom nether portal shapes
 * New blocks and items:
     * Lookup tool, shows you the help for whatever it touches
     * More slabs and stairs
     * Nether Brick Fence Gate
     * Red Nether Brick Fence
     * Red Nether Brick Fence Gate
-* Ability to store books in bookshelves
 * Structure replacements - these small variants of Minecraft structures serve as
   replacements until we can get large structures working:
     * Woodland Cabin (Mansions)
