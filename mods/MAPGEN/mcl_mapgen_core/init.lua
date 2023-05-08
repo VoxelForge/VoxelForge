@@ -323,33 +323,40 @@ local function world_structure(vm, data, data2, emin, emax, area, minp, maxp, bl
 	return lvm_used, lvm_used, deco, ores
 end
 
-local cn = {}
-local cs = {}
+
+local biomecolor_cids = {}
+local biome_id_p2 = {}
 
 minetest.register_on_mods_loaded(function()
+	local cn = {}
 	for n,d in pairs(minetest.registered_nodes) do
 		if minetest.get_item_group(n,"biomecolor") > 0 then
 			cn[n] = 1
 		end
 	end
 	for k, _ in pairs(cn) do
-		cs[minetest.get_content_id(k)] = 1
+		biomecolor_cids[minetest.get_content_id(k)] = 1
+	end
+	for k,v in pairs(minetest.registered_biomes) do
+		biome_id_p2[minetest.get_biome_id(k)] = v._mcl_palette_index or 255
 	end
 end)
 
-local function block_fixes(vm, data, data2, emin, emax, area, minp, maxp, blockseed)
+local function set_param2_nodes(vm, data, data2, emin, emax, area, minp, maxp, blockseed)
+	local t1 = os.clock()
 	local biomemap = minetest.get_mapgen_object("biomemap")
 	local lvm_used = false
 	if minp.y <= mcl_vars.mg_overworld_max and maxp.y >= mcl_vars.mg_overworld_min then
-		--lvm_used = set_palette(minp,maxp,data2,area,biomemap,{"group:biomecolor"}) --old method
 		for z = minp.z, maxp.z do
 		for y = minp.y, maxp.y do
 			local vi = area:index(minp.x, y, z)
 			for x = minp.x, maxp.x do
-				local vv = (x - minp.x) + ((z - minp.z) * mcl_vars.chunksize)
-				if cs[data[vi]] then
-					data2[vi] = mcl_util.get_pos_p2(vector.new(x,y,z))
-					lvm_used = true
+				if biomecolor_cids[data[vi]] then
+					local p2 = biome_id_p2[minetest.get_biome_data(vector.new(x,y,z)).biome]
+					if p2 ~= 0 then
+						data2[vi] = p2
+						lvm_used = true
+					end
 				end
 				vi = vi + 1
 			end
@@ -357,6 +364,7 @@ local function block_fixes(vm, data, data2, emin, emax, area, minp, maxp, blocks
 		end
 		vm:set_param2_data(data2)
 	end
+	--minetest.log(os.clock()-t1)
 	return lvm_used
 end
 
@@ -385,7 +393,7 @@ mcl_mapgen_core.register_generator("end_fixes", end_basic, function(minp,maxp)
 end, 9999, true)
 
 if mg_name ~= "singlenode" then
-	mcl_mapgen_core.register_generator("block_fixes", block_fixes, nil, 9999, true)
+	mcl_mapgen_core.register_generator("set_param2_nodes", set_param2_nodes, nil, 9999, true)
 end
 
 -- This should be moved to mcl_structures eventually if the dependencies can be sorted out.
