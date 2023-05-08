@@ -154,7 +154,6 @@ Bonus features (not found in Minecraft):
 * Temporary crafting recipes. They only exist to make some otherwise
   inaccessible items available when you're not in creative mode. These recipes
   will be removed as development goes on an more features become available
-* Saplings in chests in mapgen v6
 * Fully moddable (thanks to Minetest's powerful Lua API)
 * Ability to store books in bookshelves
 * Ability to create custom nether portal shapes
