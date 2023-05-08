@@ -362,7 +362,6 @@ local function set_param2_nodes(vm, data, data2, emin, emax, area, minp, maxp, b
 			end
 		end
 		end
-		vm:set_param2_data(data2)
 	end
 	--minetest.log(os.clock()-t1)
 	return lvm_used
@@ -390,7 +389,7 @@ end
 mcl_mapgen_core.register_generator("world_structure", world_structure, nil, 1, true)
 mcl_mapgen_core.register_generator("end_fixes", end_basic, function(minp,maxp)
 	if maxp.y < mcl_vars.mg_end_min or minp.y > mcl_vars.mg_end_max then return end
-end, 9999, true)
+end, 9999, false)
 
 if mg_name ~= "singlenode" then
 	mcl_mapgen_core.register_generator("set_param2_nodes", set_param2_nodes, nil, 9999, true)
@@ -423,4 +422,4 @@ mcl_mapgen_core.register_generator("structures",nil, function(minp, maxp, blocks
 		end
 	end
 	return false, false, false
-end, 100, true)
+end, 100, false)
