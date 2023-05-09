@@ -14,8 +14,6 @@ local NETHER_SCALE = 8
 local MAP_EDGE = math.floor(mcl_vars.mapgen_limit / (16 * 5)) * 16 * 5 - 16 * 3
 local MAP_SIZE = MAP_EDGE * 2
 
-local mod_storage = minetest.get_mod_storage()
-
 local mod_storage_keys = {
 	overworld = "overworld_portals",
 	nether = "nether_portals",
@@ -28,7 +26,7 @@ local portals = {
 }
 local portal_count = 0
 for dim, key in pairs(mod_storage_keys) do
-	for _, portal in pairs(minetest.deserialize(mod_storage:get_string(key)) or {}) do
+	for _, portal in pairs(minetest.deserialize(mcl_portals.storage:get_string(key)) or {}) do
 		portal = vector.copy(portal)
 		portals[dim][minetest.hash_node_position(portal)] = portal
 		portal_count = portal_count + 1
@@ -72,7 +70,7 @@ local function get_portals(dim)
 end
 
 local function update_mod_storage(dim)
-	mod_storage:set_string(mod_storage_keys[dim], minetest.serialize(get_portals(dim)))
+	mcl_portals.storage:set_string(mod_storage_keys[dim], minetest.serialize(get_portals(dim)))
 end
 
 local function register_portal(pos)
