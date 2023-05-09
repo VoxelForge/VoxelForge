@@ -1016,3 +1016,36 @@ end
 function mcl_util.get_pos_p2(pos)
 	return minetest.registered_biomes[minetest.get_biome_name(minetest.get_biome_data(pos).biome)]._mcl_palette_index or 0
 end
+
+local function between(x, y, z) -- x is between y and z (inclusive)
+	return y <= x and x <= z
+end
+
+function mcl_util.in_cube(tpos,wpos1,wpos2)
+	local xmax=wpos2.x
+	local xmin=wpos1.x
+
+	local ymax=wpos2.y
+	local ymin=wpos1.y
+
+	local zmax=wpos2.z
+	local zmin=wpos1.z
+	if wpos1.x > wpos2.x then
+		xmax=wpos1.x
+		xmin=wpos2.x
+	end
+	if wpos1.y > wpos2.y then
+		ymax=wpos1.y
+		ymin=wpos2.y
+	end
+	if wpos1.z > wpos2.z then
+		zmax=wpos1.z
+		zmin=wpos2.z
+	end
+	if between(tpos.x,xmin,xmax) and between(tpos.y,ymin,ymax) and between(tpos.z,zmin,zmax) then
+		return true
+	end
+	return false
+end
+
+vector.in_cube = mcl_util.in_cube
