@@ -259,13 +259,43 @@ local function get_adjacent_portal_nodes(pos)
 	return nodes
 end
 
+-- For backwards compatibility, update and register source and destination
+-- portals which have the old 'target_portal' metadata.
+local function update_old_meta(portal)
+	local target_hash = tonumber(minetest.get_meta(portal):get_string("target_portal"))
+
+	if target_hash then
+		for _, pos in pairs(get_adjacent_portal_nodes(portal)) do
+			minetest.get_meta(pos):set_string("target_portal", "")
+		end
+
+		-- Initialize the destination portal so it will link with the
+		-- current portal.
+		local target_portal = minetest.get_position_from_hash(target_hash)
+		if mcl_vars.get_node(target_portal).name ~= "mcl_portals:portal" then
+			return
+		end
+
+		local nodes = get_adjacent_portal_nodes(target_portal)
+		for _, target_portal in pairs(nodes) do
+			minetest.get_meta(target_portal):set_string("portal_portal", "")
+		end
+
+		local center = get_center_portal(nodes)
+		init_portal_meta(nodes, center)
+		register_portal(center)
+	end
+end
+
 -- Get portal at specified position. Returns (pos, node) for the portal.
 local function get_portal(pos)
 	local node = mcl_vars.get_node(pos)
 	if node.name == "mcl_portals:portal" then
-		local meta = minetest.deserialize(minetest.get_meta(pos):get_string("portal"))
-		if meta then
-			return vector.copy(meta), node
+		update_old_meta(pos) -- For backwards compatibility.
+
+		local portal = minetest.deserialize(minetest.get_meta(pos):get_string("portal"))
+		if portal then
+			return vector.copy(portal), node
 		else
 			local nodes = get_adjacent_portal_nodes(pos)
 			local center = get_center_portal(nodes)
