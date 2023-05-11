@@ -79,12 +79,12 @@ local function on_tool_place(itemstack, placer, pointed_thing, tool)
 	if pointed_thing.type ~= "node" then return end
 
 	local node = minetest.get_node(pointed_thing.under)
-	local noddef = minetest.registered_nodes[node.name]
-	if not noddef then
+	local ndef = minetest.registered_nodes[node.name]
+	if not ndef then
 		return
 	end
 
-	if not placer:get_player_control().sneak and noddef.on_rightclick then
+	if not placer:get_player_control().sneak and ndef.on_rightclick then
 		return minetest.item_place(itemstack, placer, pointed_thing)
 	end
 	if minetest.is_protected(pointed_thing.under, placer:get_player_name()) then
@@ -92,12 +92,20 @@ local function on_tool_place(itemstack, placer, pointed_thing, tool)
 		return itemstack
 	end
 
-	if type(noddef["_on_"..tool.."_place"]) == "function" then
-		local itemstack,no_wear = noddef["_on_"..tool.."_place"](itemstack, placer, pointed_thing)
+	if type(ndef["_on_"..tool.."_place"]) == "function" then
+		local itemstack, no_wear = ndef["_on_"..tool.."_place"](itemstack, placer, pointed_thing)
 		if minetest.is_creative_enabled(placer:get_player_name()) or no_wear then
 			return itemstack
 		end
-		itemstack:add_wear_by_uses(65536)
+
+		-- Add wear using the usages of the tool defined in
+		-- _mcl_diggroups. This assumes the tool only has one diggroups
+		-- (which is the case in Mineclone).
+		local tdef = minetest.registered_tools[itemstack:get_name()]
+		for group, _ in pairs(tdef._mcl_diggroups) do
+			itemstack:add_wear(mcl_autogroup.get_wear(itemstack:get_name(), group))
+			return itemstack
+		end
 		return itemstack
 	end
 	return itemstack
