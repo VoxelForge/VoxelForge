@@ -536,7 +536,8 @@ local function teleport(obj)
 end
 
 local function initiate_teleport(obj)
-	minetest.after(TELEPORT_DELAY, function()
+	local creative = minetest.is_creative_enabled(obj:is_player() and obj:get_player_name() or nil)
+	minetest.after(creative and 0 or TELEPORT_DELAY, function()
 		teleport(obj)
 	end)
 end
