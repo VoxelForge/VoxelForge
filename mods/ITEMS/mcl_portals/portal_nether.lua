@@ -371,9 +371,9 @@ local function finalize_teleport(obj, pos, old_param2, new_param2)
 		obj:set_look_horizontal(obj:get_look_horizontal() + new_look)
 	end
 
-	minetest.sound_play("mcl_portals_teleport", { pos = pos, gain = 0.5, max_hear_distance = 16 }, true)
 	obj:set_pos(pos)
 	if obj:is_player() then
+		minetest.sound_play("mcl_portals_teleport", {pos = pos, gain = 0.5, max_hear_distance = 1}, true)
 		mcl_worlds.dimension_change(obj)
 		minetest.log("action", "[mcl_portal] " .. obj:get_player_name() .. " teleported to " .. tostring(pos))
 	end
