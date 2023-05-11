@@ -74,7 +74,7 @@ if mcl_skins_enabled then
 		if skin.creative then
 			node_def.range = creative_hand_range
 			node_def.groups.dig_speed_class = 7
-			node_def.tool_capabilities.groupcaps.creative_breakable = { times = { creative_dig_speed }, uses = 0 }
+			node_def.tool_capabilities.groupcaps.creative_breakable = { times = { 0 }, uses = 0 }
 		end
 		minetest.register_node("mcl_meshhand:" .. skin.id, node_def)
 	end
