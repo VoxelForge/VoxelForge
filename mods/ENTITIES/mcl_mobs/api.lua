@@ -119,6 +119,21 @@ function mob_class:get_staticdata()
 	return minetest.serialize(tmp)
 end
 
+function mob_class:valid_texture(def_textures)
+	if not self.base_texture then
+		return false
+	end
+
+	if self.texture_selected then
+		if #def_textures < self.texture_selected then
+			self.texture_selected = nil
+		else
+			return true
+		end
+	end
+	return false
+end
+
 function mob_class:mob_activate(staticdata, def, dtime)
 	if not self.object:get_pos() or staticdata == "remove" then
 		mcl_burning.extinguish(self.object)
@@ -140,17 +155,21 @@ function mob_class:mob_activate(staticdata, def, dtime)
 		end
 	end
 
-	if not self.base_texture then
+	--If textures in definition change, reload textures
+	if not self:valid_texture(def.textures) then
 
 		-- compatiblity with old simple mobs textures
 		if type(def.textures[1]) == "string" then
 			def.textures = {def.textures}
 		end
 
-		local c = 1
-		if #def.textures > c then c = #def.textures end
+		if not self.texture_selected then
+			local c = 1
+			if #def.textures > c then c = #def.textures end
+			self.texture_selected = math.random(c)
+		end
 
-		self.base_texture = def.textures[math.random(c)]
+		self.base_texture = def.textures[self.texture_selected]
 		self.base_mesh = def.mesh
 		self.base_size = self.visual_size
 		self.base_colbox = self.collisionbox
