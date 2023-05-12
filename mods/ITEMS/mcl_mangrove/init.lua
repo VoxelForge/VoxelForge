@@ -255,6 +255,8 @@ minetest.register_node("mcl_mangrove:mangrove_roots", {
 	_mcl_silk_touch_drop = true,
 	_mcl_fortune_drop = { "mcl_mangrove:mangrove_roots 1", "mcl_mangrove:mangrove_roots 2", "mcl_mangrove:mangrove_roots 3", "mcl_mangrove:mangrove_roots 4" },
 	_on_bucket_place = function(itemstack,placer,pointed_thing)
+		local dim = mcl_worlds.pos_to_dimension(pointed_thing.under)
+		if dim == "nether" then return itemstack end
 		local n = itemstack:get_name():gsub("mcl_buckets:bucket_","")
 		n = "mcl_mangrove:"..n.."_logged_roots"
 		if minetest.registered_nodes[n] then
@@ -395,10 +397,20 @@ local wlroots = {
 		handy = 1, hoey = 1, water=3, liquid=3, puts_out_fire=1, dig_by_piston = 1, deco_block = 1,  not_in_creative_inventory=1 },
 	_mcl_blast_resistance = 100,
 	_mcl_hardness = -1, -- Hardness intentionally set to infinite instead of 100 (Minecraft value) to avoid problems in creative mode
+	on_construct = function(pos)
+		local dim = mcl_worlds.pos_to_dimension(pos)
+		if dim == "nether" then
+			minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
+			minetest.set_node(pos, {name="mcl_mangrove:mangrove_roots"})
+		end
+	end,
 	after_dig_node = function(pos)
 		local node = minetest.get_node(pos)
-		if minetest.get_item_group(node.name, "water") == 0 then
+		local dim = mcl_worlds.pos_to_dimension(pos)
+		if minetest.get_item_group(node.name, "water") == 0 and dim ~= "nether" then
 			minetest.set_node(pos, {name="mcl_core:water_source"})
+		else
+			minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
 		end
 	end,
 	_on_bucket_place_empty = function(itemstack,placer,pointed_thing)
@@ -423,6 +435,15 @@ rwlroots.tiles = {
 	"("..water_tex..")^mcl_mangrove_roots_side.png",
 	"("..water_tex..")^mcl_mangrove_roots_side.png",
 }
+rwlroots.after_dig_node = function(pos)
+	local node = minetest.get_node(pos)
+	local dim = mcl_worlds.pos_to_dimension(pos)
+	if minetest.get_item_group(node.name, "water") == 0 and dim ~= "nether" then
+		minetest.set_node(pos, {name="mclx_core:river_water_source"})
+	else
+		minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
+	end
+end
 
 minetest.register_node("mcl_mangrove:water_logged_roots", wlroots)
 minetest.register_node("mcl_mangrove:river_water_logged_roots",rwlroots)
