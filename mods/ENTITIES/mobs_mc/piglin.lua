@@ -282,6 +282,12 @@ piglin_brute.animation = {
 }
 piglin_brute.can_despawn = false
 piglin_brute.group_attack = { "mobs_mc:piglin", "mobs_mc:piglin_brute" }
+piglin_brute.drops = {
+	{name = "mcl_tools:axe_gold",
+	chance = 8.5,
+	min = 1,
+	max = 1,},
+}
 mcl_mobs.register_mob("mobs_mc:piglin_brute", piglin_brute)
 
 
@@ -319,3 +325,4 @@ mcl_mobs.spawn_setup({
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:piglin", S("Piglin"), "#7b4a17","#d5c381", 0)
 mcl_mobs.register_egg("mobs_mc:piglin_brute", S("Piglin Brute"), "#562b0c","#ddc89d", 0)
+mcl_mobs.register_egg("mobs_mc:zombified_piglin", S("Zombie Piglin"), "#ea9393", "#4c7129", 0)
