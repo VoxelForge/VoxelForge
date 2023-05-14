@@ -340,8 +340,6 @@ function mob_class:check_head_swivel(dtime)
 		if _locked_object_eye_height then
 
 			local self_rot = self.object:get_rotation()
-			-- If a mob is attached, should we really be messing with what they are looking at?
-			-- Should this be excluded?
 			if self.object:get_attach() and self.object:get_attach():get_rotation() then
 				self_rot = self.object:get_attach():get_rotation()
 			end
