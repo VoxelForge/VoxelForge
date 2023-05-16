@@ -109,16 +109,15 @@ mcl_fences.register_fence("bamboo_fence", S("Bamboo Fence"), "mcl_bamboo_fence_b
 			2, 15, { "group:fence_wood" }, mcl_sounds.node_sound_wood_defaults())
 mcl_fences.register_fence_gate("bamboo_fence", S("Bamboo Fence Gate"), "mcl_bamboo_fence_gate_bamboo.png",
 			wood_groups, 2, 15, mcl_sounds.node_sound_wood_defaults()) -- note: about missing params.. will use defaults.
---[[
+
 mesecon.register_button(
 		"bamboo",
 		S("Bamboo Button"),
 		"mcl_bamboo_bamboo_plank.png",
-		BAMBOO_PLANK,
+		"mcl_bamboo:bamboo_plank",
 		mcl_sounds.node_sound_wood_defaults(),
 		{ material_wood = 1, handy = 1, pickaxey = 1, flammable = 3, fire_flammability = 20, fire_encouragement = 5, },
 		1,
 		false,
 		S("A bamboo button is a redstone component made out of stone which can be pushed to provide redstone power. When pushed, it powers adjacent redstone components for 1 second."),
 		"mesecons_button_push")
---]]
