@@ -170,7 +170,7 @@ mcl_mobs.register_arrow("mobs_mc:dragon_fireball", {
 	end
 })
 
-mcl_mobs.register_egg("mobs_mc:enderdragon", S("Ender Dragon Spawn Egg"), "#252525", "#b313c9", 0, true)
+mcl_mobs.register_egg("mobs_mc:enderdragon", S("Ender Dragon"), "#252525", "#b313c9", 0, true)
 
 
 mcl_wip.register_wip_item("mobs_mc:enderdragon")

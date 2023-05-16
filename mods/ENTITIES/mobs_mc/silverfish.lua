@@ -56,4 +56,4 @@ mcl_mobs.register_mob("mobs_mc:silverfish", {
 	reach = 1,
 })
 
-mcl_mobs.register_egg("mobs_mc:silverfish", S("Silverfish Spawn Egg"), "#6d6d6d", "#313131", 0)
+mcl_mobs.register_egg("mobs_mc:silverfish", S("Silverfish"), "#6d6d6d", "#313131", 0)

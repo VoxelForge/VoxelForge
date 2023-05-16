@@ -290,5 +290,5 @@ mcl_vars.mg_overworld_min,
 mcl_vars.mg_overworld_max)
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:spider", S("Spider Spawn Egg"), "#342d26", "#a80e0e", 0)
-mcl_mobs.register_egg("mobs_mc:cave_spider", S("Cave Spider Spawn Egg"), "#0c424e", "#a80e0e", 0)
+mcl_mobs.register_egg("mobs_mc:spider", S("Spider"), "#342d26", "#a80e0e", 0)
+mcl_mobs.register_egg("mobs_mc:cave_spider", S("Cave Spider"), "#0c424e", "#a80e0e", 0)

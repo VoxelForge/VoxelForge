@@ -233,5 +233,5 @@ mcl_vars.mg_overworld_min,
 mcl_vars.mg_overworld_max)
 
 -- spawn egg
-mcl_mobs.register_egg("mobs_mc:cow", S("Cow Spawn Egg"), "#443626", "#a1a1a1", 0)
-mcl_mobs.register_egg("mobs_mc:mooshroom", S("Mooshroom Spawn Egg"), "#a00f10", "#b7b7b7", 0)
+mcl_mobs.register_egg("mobs_mc:cow", S("Cow"), "#443626", "#a1a1a1", 0)
+mcl_mobs.register_egg("mobs_mc:mooshroom", S("Mooshroom"), "#a00f10", "#b7b7b7", 0)

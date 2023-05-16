@@ -11,7 +11,6 @@ local S = minetest.get_translator("mobs_mc")
 
 
 local strider = {
-	description = S("Strider"),
 	type = "animal",
 	passive = true,
 	spawn_class = "passive",
@@ -246,4 +245,4 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:strider", S("Strider Spawn Egg"), "#000000", "#FF0000", 0)
+mcl_mobs.register_egg("mobs_mc:strider", S("Strider"), "#000000", "#FF0000", 0)

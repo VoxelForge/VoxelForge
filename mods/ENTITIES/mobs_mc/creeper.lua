@@ -10,7 +10,6 @@ local S = minetest.get_translator("mobs_mc")
 
 
 mcl_mobs.register_mob("mobs_mc:creeper", {
-	description = S("Creeper"),
 	type = "monster",
 	spawn_class = "hostile",
 	spawn_in_group = 1,
@@ -412,4 +411,4 @@ mcl_vars.mg_overworld_min,
 mcl_vars.mg_overworld_max)
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:creeper", S("Creeper Spawn Egg"), "#0da70a", "#000000", 0)
+mcl_mobs.register_egg("mobs_mc:creeper", S("Creeper"), "#0da70a", "#000000", 0)

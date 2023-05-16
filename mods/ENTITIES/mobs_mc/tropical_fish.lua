@@ -58,7 +58,6 @@ local function set_textures(self)
 end
 
 local tropical_fish = {
-	description = S("Tropical Fish"),
 	type = "animal",
 	spawn_class = "water",
 	can_despawn = true,
@@ -190,4 +189,4 @@ water-16,
 water+1)
 
 --spawn egg
-mcl_mobs.register_egg("mobs_mc:tropical_fish", S("Tropical Fish Spawn Egg"), "#ef6915", "#fff9ef", 0)
+mcl_mobs.register_egg("mobs_mc:tropical_fish", S("Tropical Fish"), "#ef6915", "#fff9ef", 0)

@@ -152,4 +152,4 @@ mcl_vars.mg_nether_max)
 --mobs:spawn_specific("mobs_mc:pigman", {"mcl_portals:portal"}, {"air"}, 0, minetest.LIGHT_MAX+1, 30, 500, 4, mcl_vars.mg_overworld_min, mcl_vars.mg_overworld_max)
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:pigman", S("Zombie Pigman Spawn Egg"), "#ea9393", "#4c7129", 0)
+mcl_mobs.register_egg("mobs_mc:pigman", S("Zombie Pigman"), "#ea9393", "#4c7129", 0)

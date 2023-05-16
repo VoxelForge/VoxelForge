@@ -641,8 +641,8 @@ mobs_mc.water_level+3,
 mcl_vars.mg_overworld_max)
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:horse", S("Horse Spawn Egg"), "#c09e7d", "#eee500", 0)
-mcl_mobs.register_egg("mobs_mc:skeleton_horse", S("Skeleton Horse Spawn Egg"), "#68684f", "#e5e5d8", 0)
---mobs:register_egg("mobs_mc:zombie_horse", S("Zombie Horse Spawn Egg"), "#2a5a37", "#84d080", 0)
-mcl_mobs.register_egg("mobs_mc:donkey", S("Donkey Spawn Egg"), "#534539", "#867566", 0)
-mcl_mobs.register_egg("mobs_mc:mule", S("Mule Spawn Egg"), "#1b0200", "#51331d", 0)
+mcl_mobs.register_egg("mobs_mc:horse", S("Horse"), "#c09e7d", "#eee500", 0)
+mcl_mobs.register_egg("mobs_mc:skeleton_horse", S("Skeleton Horse"), "#68684f", "#e5e5d8", 0)
+--mobs:register_egg("mobs_mc:zombie_horse", S("Zombie Horse"), "#2a5a37", "#84d080", 0)
+mcl_mobs.register_egg("mobs_mc:donkey", S("Donkey"), "#534539", "#867566", 0)
+mcl_mobs.register_egg("mobs_mc:mule", S("Mule"), "#1b0200", "#51331d", 0)

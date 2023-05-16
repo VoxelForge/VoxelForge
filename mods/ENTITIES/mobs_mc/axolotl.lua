@@ -1,7 +1,6 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local axolotl = {
-	description = S("Axolotl"),
 	type = "animal",
 	spawn_class = "water",
 	can_despawn = true,
@@ -179,4 +178,4 @@ water-16,
 water+1)
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:axolotl", S("Axolotl Spawn Egg"), "#e890bf", "#b83D7e", 0)
+mcl_mobs.register_egg("mobs_mc:axolotl", S("Axolotl"), "#e890bf", "#b83D7e", 0)

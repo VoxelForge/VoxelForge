@@ -249,4 +249,4 @@ mobs:spawn({
 ]]--
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:ocelot", S("Ocelot Spawn Egg"), "#efde7d", "#564434", 0)
+mcl_mobs.register_egg("mobs_mc:ocelot", S("Ocelot"), "#efde7d", "#564434", 0)
