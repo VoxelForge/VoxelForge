@@ -102,10 +102,6 @@ Stone Brick Stairs=
 Stone Brick Slab=
 Double Stone Brick Slab=
 Mud Brick Stairs=
-Cut Sandstone Slab=
-Double Cut Sandstone Slab=
-Cut Red Sandstone Slab=
-Double Cut Red Sandstone Slab=
 ##### not used anymore #####
 Oak Wood Stairs=
 Oak Wood Slab=

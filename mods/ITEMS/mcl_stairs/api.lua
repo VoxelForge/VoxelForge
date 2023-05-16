@@ -356,12 +356,8 @@ end
 function mcl_stairs.register_stair_and_slab(subname, recipeitem,
 		groups, images, desc_stair, desc_slab, sounds, blast_resistance, hardness,
 		double_description, corner_stair_texture_override)
-	if desc_stair then
-		mcl_stairs.register_stair(subname, recipeitem, groups, images, desc_stair, sounds, blast_resistance, hardness, corner_stair_texture_override)
-	end
-	if desc_slab then
-		mcl_stairs.register_slab(subname, recipeitem, groups, images, desc_slab, sounds, blast_resistance, hardness, double_description)
-	end
+	mcl_stairs.register_stair(subname, recipeitem, groups, images, desc_stair, sounds, blast_resistance, hardness, corner_stair_texture_override)
+	mcl_stairs.register_slab(subname, recipeitem, groups, images, desc_slab, sounds, blast_resistance, hardness, double_description)
 end
 
 -- Very simple registration function
