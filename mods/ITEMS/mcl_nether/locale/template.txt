@@ -45,8 +45,6 @@ Nether Bricks=
 Red Nether Bricks=
 Smooth Quartz Block=
 Quartz Pillar=
-Chiseled Nether Bricks=
-Cracked Nether Bricks=
 ##### not used anymore #####
 @1 stood too long on a magma block.=
 Nether Brick Block=
