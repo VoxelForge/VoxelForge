@@ -5,118 +5,111 @@
 --- These are all of the fuel recipes and all of the crafting recipes, consolidated into one place.
 --- Copyright (C) 2022 - 2023, Michieal. See License.txt
 
-local BAMBOO = "mcl_bamboo:bamboo"
-local BAMBOO_PLANK = BAMBOO .. "_plank"
-
 minetest.register_craft({
 	output = "mcl_core:stick",
 	recipe = {
-		{BAMBOO},
-		{BAMBOO},
+		{"mcl_bamboo:bamboo"},
+		{"mcl_bamboo:bamboo"},
 	}
 })
 
 minetest.register_craft({
-	output = BAMBOO .. "_block",
+	output = "mcl_bamboo:bamboo_block",
 	recipe = {
-		{BAMBOO, BAMBOO, BAMBOO},
-		{BAMBOO, BAMBOO, BAMBOO},
-		{BAMBOO, BAMBOO, BAMBOO},
+		{"mcl_bamboo:bamboo", "mcl_bamboo:bamboo", "mcl_bamboo:bamboo"},
+		{"mcl_bamboo:bamboo", "mcl_bamboo:bamboo", "mcl_bamboo:bamboo"},
+		{"mcl_bamboo:bamboo", "mcl_bamboo:bamboo", "mcl_bamboo:bamboo"},
 	}
 })
 
 minetest.register_craft({
-	output = BAMBOO_PLANK .. " 2",
+	output = "mcl_bamboo:bamboo_plank 2",
 	recipe = {
-		{BAMBOO .. "_block"},
+		{"mcl_bamboo:bamboo_block"},
 	}
 })
 
 minetest.register_craft({
-	output = BAMBOO_PLANK .. " 2",
+	output = "mcl_bamboo:bamboo_plank 2",
 	recipe = {
-		{BAMBOO .. "_block_stripped"},
+		{"mcl_bamboo:bamboo_block_stripped"},
 	}
 })
 
 minetest.register_craft({
-	output = BAMBOO .. "_mosaic",
+	output = "mcl_bamboo:bamboo_mosaic",
 	recipe = {
 		{"mcl_stairs:slab_bamboo_plank"},
 		{"mcl_stairs:slab_bamboo_plank"},
 	}
 })
 
--- Bamboo specific items
+minetest.register_craft({
+	output = "mcl_bamboo:bamboo_door 3",
+	recipe = {
+		{"mcl_bamboo:bamboo_plank", "mcl_bamboo:bamboo_plank"},
+		{"mcl_bamboo:bamboo_plank", "mcl_bamboo:bamboo_plank"},
+		{"mcl_bamboo:bamboo_plank", "mcl_bamboo:bamboo_plank"}
+	}
+})
+minetest.register_craft({
+	output = "mcl_bamboo:bamboo_trapdoor 2",
+	recipe = {
+		{"mcl_bamboo:bamboo_plank", "mcl_bamboo:bamboo_plank", "mcl_bamboo:bamboo_plank"},
+		{"mcl_bamboo:bamboo_plank", "mcl_bamboo:bamboo_plank", "mcl_bamboo:bamboo_plank"},
+	}
+})
 
-if minetest.get_modpath("mcl_doors") and mcl_doors then
-	minetest.register_craft({
-		output = "mcl_bamboo:bamboo_door 3",
-		recipe = {
-			{BAMBOO_PLANK, BAMBOO_PLANK},
-			{BAMBOO_PLANK, BAMBOO_PLANK},
-			{BAMBOO_PLANK, BAMBOO_PLANK}
-		}
-	})
-	minetest.register_craft({
-		output = "mcl_bamboo:bamboo_trapdoor 2",
-		recipe = {
-			{BAMBOO_PLANK, BAMBOO_PLANK, BAMBOO_PLANK},
-			{BAMBOO_PLANK, BAMBOO_PLANK, BAMBOO_PLANK},
-		}
-	})
-end
-if minetest.get_modpath("mcl_fences") then
-	minetest.register_craft({
-		output = "mcl_bamboo:bamboo_fence 3",
-		recipe = {
-			{BAMBOO_PLANK, "mcl_core:stick", BAMBOO_PLANK},
-			{BAMBOO_PLANK, "mcl_core:stick", BAMBOO_PLANK},
-		}
-	})
-	minetest.register_craft({
-		output = "mcl_bamboo:bamboo_fence_gate",
-		recipe = {
-			{"mcl_core:stick", BAMBOO_PLANK, "mcl_core:stick"},
-			{"mcl_core:stick", BAMBOO_PLANK, "mcl_core:stick"},
-		}
-	})
-end
+
+minetest.register_craft({
+	output = "mcl_bamboo:bamboo_fence 3",
+	recipe = {
+		{"mcl_bamboo:bamboo_plank", "mcl_core:stick", "mcl_bamboo:bamboo_plank"},
+		{"mcl_bamboo:bamboo_plank", "mcl_core:stick", "mcl_bamboo:bamboo_plank"},
+	}
+})
+minetest.register_craft({
+	output = "mcl_bamboo:bamboo_fence_gate",
+	recipe = {
+		{"mcl_core:stick", "mcl_bamboo:bamboo_plank", "mcl_core:stick"},
+		{"mcl_core:stick", "mcl_bamboo:bamboo_plank", "mcl_core:stick"},
+	}
+})
 
 minetest.register_craft({
 	output = "mcl_bamboo:scaffolding 6",
-	recipe = {{BAMBOO, "mcl_mobitems:string", BAMBOO},
-			  {BAMBOO, "", BAMBOO},
-			  {BAMBOO, "", BAMBOO}}
+	recipe = {{"mcl_bamboo:bamboo", "mcl_mobitems:string", "mcl_bamboo:bamboo"},
+			  {"mcl_bamboo:bamboo", "", "mcl_bamboo:bamboo"},
+			  {"mcl_bamboo:bamboo", "", "mcl_bamboo:bamboo"}}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = BAMBOO,
-	burntime = 2.5, -- supposed to be 1/2 that of a stick, per minecraft wiki as of JE 1.19.3
+	recipe = "mcl_bamboo:bamboo",
+	burntime = 2.5,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = BAMBOO .. "_block",
+	recipe = "mcl_bamboo:bamboo_block",
 	burntime = 15,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = BAMBOO .. "_block_stripped",
+	recipe = "mcl_bamboo:bamboo_block_stripped",
 	burntime = 15,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = BAMBOO_PLANK,
+	recipe = "mcl_bamboo:bamboo_plank",
 	burntime = 7.5,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = BAMBOO .. "_mosaic",
+	recipe = "mcl_bamboo:bamboo_mosaic",
 	burntime = 7.5,
 })
 
@@ -137,50 +130,46 @@ if minetest.get_modpath("mcl_doors") then
 	end
 end
 
-if minetest.get_modpath("mcl_stairs") then
-	if mcl_stairs ~= nil then
-		minetest.register_craft({
-			type = "fuel",
-			recipe = "mcl_stairs:slab_bamboo_plank",
-			burntime = 7.5,
-		})
-		minetest.register_craft({
-			type = "fuel",
-			recipe = "mcl_stairs:slab_bamboo_block",
-			burntime = 7.5,
-		})
-		minetest.register_craft({
-			type = "fuel",
-			recipe = "mcl_stairs:slab_bamboo_stripped",
-			burntime = 7.5,
-		})
-		minetest.register_craft({
-			type = "fuel",
-			recipe = "mcl_stairs:stair_bamboo_plank",
-			burntime = 15,
-		})
-		minetest.register_craft({
-			type = "fuel",
-			recipe = "mcl_stairs:stair_bamboo_block",
-			burntime = 15,
-		})
-		minetest.register_craft({
-			type = "fuel",
-			recipe = "mcl_stairs:stair_bamboo_stripped",
-			burntime = 15,
-		})
-		minetest.register_craft({
-			type = "fuel",
-			recipe = "mcl_stairs:slab_bamboo_mosaic",
-			burntime = 7.5,
-		})
-		minetest.register_craft({
-			type = "fuel",
-			recipe = "mcl_stairs:stair_bamboo_mosaic",
-			burntime = 15,
-		})
-	end
-end
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_stairs:slab_bamboo_plank",
+	burntime = 7.5,
+})
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_stairs:slab_bamboo_block",
+	burntime = 7.5,
+})
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_stairs:slab_bamboo_stripped",
+	burntime = 7.5,
+})
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_stairs:stair_bamboo_plank",
+	burntime = 15,
+})
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_stairs:stair_bamboo_block",
+	burntime = 15,
+})
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_stairs:stair_bamboo_stripped",
+	burntime = 15,
+})
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_stairs:slab_bamboo_mosaic",
+	burntime = 7.5,
+})
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_stairs:stair_bamboo_mosaic",
+	burntime = 15,
+})
 
 minetest.register_craft({
 	type = "fuel",
