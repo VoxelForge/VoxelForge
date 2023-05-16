@@ -115,7 +115,7 @@ Grass Path=Тропинка
 Grass paths are a decorative variant of grass blocks. Their top has a different color and they are a bit lower than grass blocks, making them useful to build footpaths. Grass paths can be created with a shovel. A grass path turns into dirt when it is below a solid block.=Тропинки это декоративная разновидность травяных блоков. Их верхняя часть окрашена другим цветом, а они сами чуть ниже, чтобы это смотрелось как притоптанная трава. Такие блоки можно создать при помощи лопаты. При помещении под твёрдый блок данные блоки превращаются в грязь.
 Gravel=Гравий
 Green Stained Glass=Зелёное витражное стекло
-Gray Stained Glass=Серое витражное стекло
+Grey Stained Glass=Серое витражное стекло
 Ice=Лёд
 Ice is a solid block usually found in cold areas. It melts near block light sources at a light level of 12 or higher. When it melts or is broken while resting on top of another block, it will turn into a water source.=Лёд это твёрдый блок, обычно встречающийся в холодных областях. Он плавится, когда рядом имеется источник света уровня 12 и выше. Если он плавится или ломается, будучи расположенным на другом блоке, то превращается в источник воды.
 In the End dimension, starting a fire on this block will create an eternal fire.=В измерении Предела разжигание огня на этом блоке создаст вечный огонь.
@@ -136,7 +136,7 @@ Lapis lazuli ore is the ore of lapis lazuli. It can be rarely found in clusters 
 Lava Source=Источник лавы
 Lava is hot and rather dangerous. Don't touch it, it will hurt you a lot and it is hard to get out.=Лава горячая и довольно опасная. Не прикасайтесь к ней, это причинит сильную боль, и выбраться из неё сложно.
 Light Blue Stained Glass=Светло-голубое витражное стекло
-Light Gray Stained Glass=Светло-серое витражное стекло
+Light Grey Stained Glass=Светло-серое витражное стекло
 Lime Stained Glass=Зелёное лаймовое витражное стекло
 Lit Redstone Ore=Светящаяся руда красного камня
 Magenta Stained Glass=Фиолетовое витражное стекло

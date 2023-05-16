@@ -115,7 +115,7 @@ Grass Path=Chemin d'Herbe
 Grass paths are a decorative variant of grass blocks. Their top has a different color and they are a bit lower than grass blocks, making them useful to build footpaths. Grass paths can be created with a shovel. A grass path turns into dirt when it is below a solid block.=Les chemins d'herbe sont une variante décorative des blocs d'herbe. Leur sommet a une couleur différente et ils sont un peu plus bas que les blocs d'herbe, ce qui les rend utiles pour construire des sentiers. Les chemins d'herbe peuvent être créés avec une pelle. Un chemin d'herbe se transforme en terre quand il est en dessous d'un bloc solide.
 Gravel=Gravier
 Green Stained Glass=Verre Vert
-Gray Stained Glass=Verre Gris
+Grey Stained Glass=Verre Gris
 Ice=Glace
 Ice is a solid block usually found in cold areas. It melts near block light sources at a light level of 12 or higher. When it melts or is broken while resting on top of another block, it will turn into a water source.=La glace est un bloc solide que l'on trouve généralement dans les régions froides. Il fond près des sources de lumière de bloc à un niveau de lumière de 12 ou plus. Lorsqu'il fond ou se casse en se reposant sur un autre bloc, il se transforme en source d'eau.
 In the End dimension, starting a fire on this block will create an eternal fire.=Dans la dimension End, démarrer un feu sur ce bloc créera un feu éternel.
@@ -136,7 +136,7 @@ Lapis lazuli ore is the ore of lapis lazuli. It can be rarely found in clusters 
 Lava Source=Source de Lave
 Lava is hot and rather dangerous. Don't touch it, it will hurt you a lot and it is hard to get out.=La lave est chaude et plutôt dangereuse. Ne le touchez pas, cela vous fera beaucoup de mal et il est difficile d'en sortir.
 Light Blue Stained Glass=Verre Bleu Clair
-Light Gray Stained Glass=Verre Gris Clair
+Light Grey Stained Glass=Verre Gris Clair
 Lime Stained Glass=Verre Vert Clair
 Lit Redstone Ore=Minerai de Redstone
 Magenta Stained Glass=Verre Magenta

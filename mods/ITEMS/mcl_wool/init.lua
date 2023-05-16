@@ -14,8 +14,8 @@ local wool = {}
 wool.dyes = {
 	-- name,       texture,               wool desc.,           carpet desc.,           dye,          color_group
 	{"white",      "wool_white",          S("White Wool"),      S("White Carpet"),      nil,          "unicolor_white"},
-	{"grey",       "wool_dark_grey",      S("Gray Wool"),       S("Gray Carpet"),       "dark_grey",  "unicolor_darkgrey"},
-	{"silver",     "wool_grey",           S("Light Gray Wool"), S("Light Gray Carpet"), "grey",       "unicolor_grey"},
+	{"grey",       "wool_dark_grey",      S("Grey Wool"),       S("Grey Carpet"),       "dark_grey",  "unicolor_darkgrey"},
+	{"silver",     "wool_grey",           S("Light Grey Wool"), S("Light Grey Carpet"), "grey",       "unicolor_grey"},
 	{"black",      "wool_black",          S("Black Wool"),      S("Black Carpet"),      "black",      "unicolor_black"},
 	{"red",        "wool_red",            S("Red Wool"),        S("Red Carpet"),        "red",        "unicolor_red"},
 	{"yellow",     "wool_yellow",         S("Yellow Wool"),     S("Yellow Carpet"),     "yellow",     "unicolor_yellow"},

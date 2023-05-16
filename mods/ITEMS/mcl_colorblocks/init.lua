@@ -5,8 +5,8 @@ local block = {}
 
 block.dyes = {
 	{"white",      S("White Terracotta"),      S("White Glazed Terracotta"),	S("White Concrete Powder"),		S("White Concrete"),		"white"},
-	{"grey",       S("Gray Terracotta"),       S("Gray Glazed Terracotta"),		S("Gray Concrete Powder"),		S("Gray Concrete"),		"dark_grey"},
-	{"silver",     S("Light Gray Terracotta"), S("Light Gray Glazed Terracotta"),	S("Light Gray Concrete Powder"),	S("Light Gray Concrete"),	"grey"},
+	{"grey",       S("Grey Terracotta"),       S("Grey Glazed Terracotta"),		S("Grey Concrete Powder"),		S("Grey Concrete"),		"dark_grey"},
+	{"silver",     S("Light Grey Terracotta"), S("Light Grey Glazed Terracotta"),	S("Light Grey Concrete Powder"),	S("Light Grey Concrete"),	"grey"},
 	{"black",      S("Black Terracotta"),      S("Black Glazed Terracotta"),	S("Black Concrete Powder"),		S("Black Concrete"),		"black"},
 	{"red",        S("Red Terracotta"),        S("Red Glazed Terracotta"),		S("Red Concrete Powder"),		S("Red Concrete"),		"red"},
 	{"yellow",     S("Yellow Terracotta"),     S("Yellow Glazed Terracotta"),	S("Yellow Concrete Powder"),		S("Yellow Concrete"),		"yellow"},
