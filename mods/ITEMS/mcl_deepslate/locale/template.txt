@@ -43,7 +43,6 @@ Deepslate Brick Wall=
 Deepslate Tile Stairs=
 Deepslate Tile Slab=
 Double Deepslate Tile Slab=
-Deepslate Tile Wall=
 ##### not used anymore #####
 Chiseled deepslate is the chiseled version of deepslate.=
 Deepslate Bricks Slab=

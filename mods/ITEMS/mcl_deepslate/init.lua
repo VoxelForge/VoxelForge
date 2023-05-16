@@ -168,7 +168,7 @@ register_deepslate_variant("tiles",
 	S("Deepslate Tile Stairs"),
 	S("Deepslate Tile Slab"),
 	S("Double Deepslate Tile Slab"),
-	S("Deepslate Tile Wall"),
+	S("Deepslate Brick Wall"),
 	S("Cracked Deepslate Tiles"))
 
 register_deepslate_variant("chiseled",
