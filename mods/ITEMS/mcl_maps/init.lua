@@ -84,7 +84,7 @@ function mcl_maps.create_map(pos)
 								if def.palette then
 									local palette = palettes[texture]
 									color = palette and { palette = palette }
-								else
+								elseif texture_colors then
 									color = texture_colors[texture]
 								end
 							end
