@@ -33,7 +33,7 @@ local DEFAULT_FALL_SPEED = -9.81*1.5
 local MAX_MOB_NAME_LENGTH = 30
 
 local old_spawn_icons = minetest.settings:get_bool("mcl_old_spawn_icons",false)
-local extended_pet_control = minetest.settings:get_bool("mcl_extended_pet_control",true)
+local extended_pet_control = minetest.settings:get_bool("mcl_extended_pet_control",false)
 local difficulty = tonumber(minetest.settings:get("mob_difficulty")) or 1.0
 
 -- get node but use fallback for nil or unknown
