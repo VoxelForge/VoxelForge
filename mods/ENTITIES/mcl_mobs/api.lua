@@ -80,6 +80,7 @@ function mob_class:jock_to(mob, reletive_pos, rot)
 	jock:get_luaentity().docile_by_day = false
 	jock:get_luaentity().riden_by_jock = true
 	self.object:set_attach(jock, "", reletive_pos, rot)
+	return jock
 end
 
 function mob_class:get_staticdata()
