@@ -77,3 +77,4 @@ And @1 additional layers=
 Paintable decoration=
 Banner=
 Preview Banner=
+Ominous Banner=
