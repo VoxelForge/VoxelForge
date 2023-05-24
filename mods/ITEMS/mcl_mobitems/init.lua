@@ -146,7 +146,7 @@ local function drink_milk(itemstack, player, pointed_thing)
 end
 
 minetest.register_craftitem("mcl_mobitems:milk_bucket", {
-	description = S("Milk Bucket"),
+	description = S("Milk"),
 	_tt_help = minetest.colorize(mcl_colors.GREEN, S("Removes all status effects")),
 	_doc_items_longdesc = S("Milk is very refreshing and can be obtained by using a bucket on a cow. Drinking it will remove all status effects, but restores no hunger points."),
 	_doc_items_usagehelp = S("Use the placement key to drink the milk."),
@@ -230,7 +230,8 @@ minetest.register_craftitem("mcl_mobitems:nether_star", {
 	_doc_items_longdesc = S("A nether star is dropped when the Wither dies. Place it in an item frame to show the world how hardcore you are! Or just as decoration."),
 	wield_image = "mcl_mobitems_nether_star.png",
 	inventory_image = "mcl_mobitems_nether_star.png",
-	groups = { craftitem = 1 },
+	-- TODO: Reveal item when it's useful
+	groups = { craftitem = 1, not_in_creative_inventory = 1 },
 	stack_max = 64,
 })
 
@@ -327,7 +328,7 @@ minetest.register_tool("mcl_mobitems:carrot_on_a_stick", {
 })
 
 minetest.register_tool("mcl_mobitems:warped_fungus_on_a_stick", {
-	description = S("Warped Fungus on a Stick"),
+	description = S("Warped fungus on a Stick"),
 	_tt_help = S("Lets you ride a strider"),
 	_doc_items_longdesc = S("A warped fungus on a stick can be used on saddled striders to ride them."),
 	_doc_items_usagehelp = S("Place it on a saddled strider to mount it. You can now ride the strider like a horse. Striders will also walk towards you when you just wield the carrot on a stick."),

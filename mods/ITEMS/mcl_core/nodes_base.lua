@@ -284,7 +284,7 @@ minetest.register_node("mcl_core:stonebrickmossy", {
 })
 
 minetest.register_node("mcl_core:stone_smooth", {
-	description = S("Smooth Stone"),
+	description = S("Polished Stone"),
 	_doc_items_longdesc = doc.sub.items.temp.build,
 	tiles = {"mcl_stairs_stone_slab_top.png"},
 	stack_max = 64,
@@ -717,8 +717,9 @@ minetest.register_node("mcl_core:clay", {
 })
 
 minetest.register_node("mcl_core:brick_block", {
-	description = S("Bricks"),
-	_doc_items_longdesc = S("Bricks are a good building material for building solid houses and can take quite a punch."),
+	-- Original name: “Bricks”
+	description = S("Brick Block"),
+	_doc_items_longdesc = S("Brick blocks are a good building material for building solid houses and can take quite a punch."),
 	tiles = {"default_brick.png"},
 	is_ground_content = false,
 	stack_max = 64,
@@ -842,8 +843,8 @@ minetest.register_node("mcl_core:diamondblock", {
 })
 
 minetest.register_node("mcl_core:lapisblock", {
-	description = S("Block of Lapis Lazuli"),
-	_doc_items_longdesc = S("A block of lapis lazuli is mostly a decorative block but also useful as a compact storage of lapis lazuli."),
+	description = S("Lapis Lazuli Block"),
+	_doc_items_longdesc = S("A lapis lazuli block is mostly a decorative block but also useful as a compact storage of lapis lazuli."),
 	tiles = {"mcl_core_lapis_block.png"},
 	is_ground_content = false,
 	stack_max = 64,
@@ -1004,7 +1005,7 @@ for i=1,8 do
 	local id, desc, longdesc, usagehelp, tt_help, help, walkable, drawtype, node_box
 	if i == 1 then
 		id = "mcl_core:snow"
-		desc = S("Snow")
+		desc = S("Top Snow")
 		tt_help = S("Stackable")
 		longdesc = S("Top snow is a layer of snow. It melts near light sources other than the sun with a light level of 12 or higher.").."\n"..S("Top snow can be stacked and has one of 8 different height levels. At levels 2-8, top snow is collidable. Top snow drops 2-9 snowballs, depending on its height.")
 		usagehelp = S("This block can only be placed on full solid blocks and on another top snow (which increases its height).")
@@ -1115,7 +1116,7 @@ for i=1,8 do
 end
 
 minetest.register_node("mcl_core:snowblock", {
-	description = S("Snow Block"),
+	description = S("Snow"),
 	_doc_items_longdesc = S("This is a full block of snow. Snow of this thickness is usually found in areas of extreme cold."),
 	_doc_items_hidden = false,
 	tiles = {"default_snow.png"},

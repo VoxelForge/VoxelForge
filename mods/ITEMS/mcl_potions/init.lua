@@ -190,7 +190,7 @@ local function set_node_empty_bottle(itemstack, placer, pointed_thing, newitemst
 	-- play sound
 	minetest.sound_play("mcl_potions_bottle_pour", {pos=pointed_thing.under, gain=0.5, max_hear_range=16}, true)
 
-	--
+	-- 
 	if minetest.is_creative_enabled(placer:get_player_name()) then
 		return itemstack
 	else
@@ -315,7 +315,7 @@ mcl_potions.register_lingering("water", S("Lingering Water Bottle"), "#0022FF", 
 })
 
 minetest.register_craftitem("mcl_potions:speckled_melon", {
-	description = S("Glistering Melon Slice"),
+	description = S("Glistering Melon"),
 	_doc_items_longdesc = S("This shiny melon is full of tiny gold nuggets and would be nice in an item frame. It isn't edible and not useful for anything else."),
 	stack_max = 64,
 	groups = { brewitem = 1, },

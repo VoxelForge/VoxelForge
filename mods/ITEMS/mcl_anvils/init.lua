@@ -538,14 +538,14 @@ S("Armor counts as a tool. It is possible to repair and rename a tool in a singl
 S("The anvil has limited durability and 3 damage levels: undamaged, slightly damaged and very damaged. Each time you repair or rename something, there is a 12% chance the anvil gets damaged. Anvils also have a chance of being damaged when they fall by more than 1 block. If a very damaged anvil is damaged again, it is destroyed.")
 
 local anvildef1 = table.copy(anvildef)
-anvildef1.description = S("Chipped Anvil")
+anvildef1.description = S("Slightly Damaged Anvil")
 anvildef1._doc_items_create_entry = false
 anvildef1.groups.anvil = 2
 anvildef1._doc_items_create_entry = false
 anvildef1.tiles = {"mcl_anvils_anvil_top_damaged_1.png^[transformR90", "mcl_anvils_anvil_base.png", "mcl_anvils_anvil_side.png"}
 
 local anvildef2 = table.copy(anvildef)
-anvildef2.description = S("Damaged Anvil")
+anvildef2.description = S("Very Damaged Anvil")
 anvildef2._doc_items_create_entry = false
 anvildef2.groups.anvil = 3
 anvildef2._doc_items_create_entry = false

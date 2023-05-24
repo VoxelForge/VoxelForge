@@ -63,7 +63,7 @@ local hoe_longdesc = S("Hoes are essential tools for growing crops. They are use
 local hoe_usagehelp = S("Use the hoe on a cultivatable block (by rightclicking it) to turn it into farmland. Dirt, grass blocks and grass paths are cultivatable blocks. Using a hoe on coarse dirt turns it into dirt.")
 
 minetest.register_tool("mcl_farming:hoe_wood", {
-	description = S("Wooden Hoe"),
+	description = S("Wood Hoe"),
 	_tt_help = hoe_tt.."\n"..S("Uses: @1", uses.wood),
 	_doc_items_longdesc = hoe_longdesc,
 	_doc_items_usagehelp = hoe_usagehelp,

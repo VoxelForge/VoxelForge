@@ -143,7 +143,7 @@ function place_wet_sponge(itemstack, placer, pointed_thing)
 end
 
 minetest.register_node("mcl_sponges:sponge_wet", {
-	description = S("Wet Sponge"),
+	description = S("Waterlogged Sponge"),
 	_tt_help = S("Can be dried in furnace"),
 	_doc_items_longdesc = S("A waterlogged sponge can be dried in the furnace to turn it into (dry) sponge. When there's an empty bucket in the fuel slot of a furnace, the water will pour into the bucket."),
 	drawtype = "normal",

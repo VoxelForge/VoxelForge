@@ -12,14 +12,6 @@ Water vehicle=
 Sneak to dismount=
 Obsidian Boat=
 Mangrove Boat=
-Oak Boat with Chest=
-Spruce Boat with Chest=
-Birch Boat with Chest=
-Jungle Boat with Chest=
-Acacia Boat with Chest=
-Dark Oak Boat with Chest=
-Mangrove Boat with Chest=
-##### not used anymore #####
 Oak Chest Boat=
 Spruce Chest Boat=
 Birch Chest Boat=

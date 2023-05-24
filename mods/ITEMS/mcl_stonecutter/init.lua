@@ -8,7 +8,7 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
 minetest.register_node("mcl_stonecutter:stonecutter", {
-	description = S("Stonecutter"),
+	description = S("Stone Cutter"),
 	_tt_help = S("Used to cut stone like materials."),
 	_doc_items_longdesc = S("Stonecutters are used to create stairs and slabs from stone like materials. It is also the jobsite for the Stone Mason Villager."),
 	tiles = {
@@ -16,18 +16,18 @@ minetest.register_node("mcl_stonecutter:stonecutter", {
 		"mcl_stonecutter_bottom.png",
 		"mcl_stonecutter_side.png",
 		"mcl_stonecutter_side.png",
-		{name="mcl_stonecutter_saw.png",
+		{name="mcl_stonecutter_saw.png", 
 		animation={
-			type="vertical_frames",
-			aspect_w=16,
-			aspect_h=16,
+			type="vertical_frames", 
+			aspect_w=16, 
+			aspect_h=16, 
 			length=1
 		}},
-		{name="mcl_stonecutter_saw.png",
+		{name="mcl_stonecutter_saw.png", 
 		animation={
-			type="vertical_frames",
-			aspect_w=16,
-			aspect_h=16,
+			type="vertical_frames", 
+			aspect_w=16, 
+			aspect_h=16, 
 			length=1
 		}}
 	},

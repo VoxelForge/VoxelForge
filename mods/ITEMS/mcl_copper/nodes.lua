@@ -117,55 +117,55 @@ minetest.register_node("mcl_copper:block_oxidized_cut", {
 mcl_stairs.register_slab("copper_cut", "mcl_copper:block_cut",
 	{pickaxey = 2},
 	{"mcl_copper_block_cut.png", "mcl_copper_block_cut.png", "mcl_copper_block_cut.png"},
-	S("Cut Copper Slab"),
+	S("Slab of Cut Copper"),
 	nil, nil, nil,
-	S("Cut Copper Double Slab"))
+	S("Double Slab of Cut Copper"))
 
 mcl_stairs.register_slab("copper_exposed_cut", "mcl_copper:block_exposed_cut",
 	{pickaxey = 2},
 	{"mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png"},
-	S("Exposed Cut Copper Slab"),
+	S("Slab of Exposed Cut Copper"),
 	nil, nil, nil,
-	S("Exposed Cut Copper Double Slab"))
+	S("Double Slab of Exposed Cut Copper"))
 
 mcl_stairs.register_slab("copper_weathered_cut", "mcl_copper:block_weathered_cut",
 	{pickaxey = 2},
 	{"mcl_copper_weathered_cut.png", "mcl_copper_weathered_cut.png", "mcl_copper_weathered_cut.png"},
-	S("Weathered Cut Copper Slab"),
+	S("Slab of Weathered Cut Copper"),
 	nil, nil, nil,
-	S("Weathered Cut Copper Double Slab"))
+	S("Double Slab of Weathered Cut Copper"))
 
 mcl_stairs.register_slab("copper_oxidized_cut", "mcl_copper:block_oxidized_cut",
 	{pickaxey = 2},
 	{"mcl_copper_oxidized_cut.png", "mcl_copper_oxidized_cut.png", "mcl_copper_oxidized_cut.png"},
-	S("Oxidized Cut Copper Slab"),
+	S("Slab of Oxidized Cut Copper"),
 	nil, nil, nil,
-	S("Oxidized Cut Copper Double Slab"))
+	S("Double Slab of Oxidized Cut Copper"))
 
 mcl_stairs.register_stair("copper_cut", "mcl_copper:block_cut",
 	{pickaxey = 2},
 	{"mcl_copper_block_cut.png", "mcl_copper_block_cut.png", "mcl_copper_block_cut.png", "mcl_copper_block_cut.png", "mcl_copper_block_cut.png", "mcl_copper_block_cut.png"},
-	S("Cut Copper Stairs"),
+	S("Stairs of Cut Copper"),
 	nil, 6, nil,
 	"woodlike")
 
 mcl_stairs.register_stair("copper_exposed_cut", "mcl_copper:block_exposed_cut",
 	{pickaxey = 2},
 	{"mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png"},
-	S("Exposed Cut Copper Stairs"),
+	S("Stairs of Exposed Cut Copper"),
 	nil, 6, nil,
 	"woodlike")
 
 mcl_stairs.register_stair("copper_weathered_cut", "mcl_copper:block_weathered_cut",
 	{pickaxey = 2},
 	{"mcl_copper_weathered_cut.png", "mcl_copper_weathered_cut.png", "mcl_copper_weathered_cut.png", "mcl_copper_weathered_cut.png", "mcl_copper_weathered_cut.png", "mcl_copper_weathered_cut.png"},
-	S("Weathered Cut Copper Stairs"),
+	S("Stairs of Weathered Cut Copper"),
 	nil, 6, nil,
 	"woodlike")
 
 mcl_stairs.register_stair("copper_oxidized_cut", "mcl_copper:block_oxidized_cut",
 	{pickaxey = 2},
 	{"mcl_copper_oxidized_cut.png", "mcl_copper_oxidized_cut.png", "mcl_copper_oxidized_cut.png", "mcl_copper_oxidized_cut.png", "mcl_copper_oxidized_cut.png", "mcl_copper_oxidized_cut.png"},
-	S("Oxidized Cut Copper Stairs"),
+	S("Stairs of Oxidized Cut Copper"),
 	nil, 6, nil,
 	"woodlike")

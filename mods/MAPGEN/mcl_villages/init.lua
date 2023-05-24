@@ -23,7 +23,7 @@ minetest.register_node("mcl_villages:stonebrickcarved", {
 	_doc_items_longdesc = doc.sub.items.temp.build,
 	tiles = {"mcl_core_stonebrick_carved.png"},
 	drop = "mcl_core:stonebrickcarved",
-	groups = {pickaxey=1, stone=1, stonebrick=1, building_block=1, material_stone=1, not_in_creative_inventory=1},
+	groups = {pickaxey=1, stone=1, stonebrick=1, building_block=1, material_stone=1},
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	is_ground_content = false,
 	_mcl_blast_resistance = 6,

@@ -232,7 +232,7 @@ S("Redstone power can be received from various redstone components, such as a bl
 
 S("Read the help entries on the other redstone components to learn how redstone components interact.")
 			img = "redstone_redstone_dust.png"
-			desc_off = S("Redstone Dust")
+			desc_off = S("Redstone")
 			desc_on = S("Powered Redstone Spot (@1)", nodeid)
 		else
 			-- Connected redstone wire

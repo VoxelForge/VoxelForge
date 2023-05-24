@@ -7,7 +7,7 @@ end
 
 local boxes = { -8/16, -8/16, -8/16,  8/16, -2/16, 8/16 }
 
--- Daylight Detector
+-- Daylight Sensor
 minetest.register_node("mesecons_solarpanel:solar_panel_on", {
 	drawtype = "nodebox",
 	tiles = { "jeija_solar_panel.png","jeija_solar_panel.png","jeija_solar_panel_side.png",
@@ -62,9 +62,9 @@ minetest.register_node("mesecons_solarpanel:solar_panel_off", {
 		fixed = boxes
 	},
 	groups = {handy=1,axey=1, material_wood=1},
-	description=S("Daylight Detector"),
+	description=S("Daylight Sensor"),
 	_tt_help = S("Provides redstone power when in sunlight") .. "\n" ..S("Can be inverted"),
-	_doc_items_longdesc = S("Daylight detectors are redstone components which provide redstone power when they are in sunlight and no power otherwise. They can also be inverted.").."\n"..
+	_doc_items_longdesc = S("Daylight sensors are redstone components which provide redstone power when they are in sunlight and no power otherwise. They can also be inverted.").."\n"..
 		S("In inverted state, they provide redstone power when they are not in sunlight and no power otherwise."),
 	_doc_items_usagehelp = S("Use the daylight sensor to toggle its state."),
 	sounds = mcl_sounds.node_sound_glass_defaults(),

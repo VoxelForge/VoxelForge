@@ -3,12 +3,12 @@ local doc_mod = minetest.get_modpath("doc")
 
 
 local barks = {
-	{ "", S("Oak Wood Stairs"), S("Oak Wood Slab"), S("Double Oak Wood Slab") },
-	{ "jungle", S("Jungle Wood Stairs"), S("Jungle Wood Slab"), S("Double Jungle Wood Slab") },
-	{ "acacia", S("Acacia Wood Stairs"), S("Acacia Wood Slab"), S("Double Acacia Wood Slab") },
-	{ "spruce", S("Spruce Wood Stairs"), S("Spruce Wood Slab"), S("Double Spruce Wood Slab") },
-	{ "birch", S("Birch Wood Stairs"), S("Birch Wood Slab"), S("Double Birch Wood Slab") },
-	{ "dark", S("Dark Oak Wood Stairs"), S("Dark Oak Wood Slab"), S("Double Dark Oak Wood Slab") },
+	{ "", S("Oak Bark Stairs"), S("Oak Bark Slab"), S("Double Oak Bark Slab") },
+	{ "jungle", S("Jungle Bark Stairs"), S("Jungle Bark Slab"), S("Double Jungle Bark Slab") },
+	{ "acacia", S("Acacia Bark Stairs"), S("Acacia Bark Slab"), S("Double Acacia Bark Slab") },
+	{ "spruce", S("Spruce Bark Stairs"), S("Spruce Bark Slab"), S("Double Spruce Bark Slab") },
+	{ "birch", S("Birch Bark Stairs"), S("Birch Bark Slab"), S("Double Birch Bark Slab") },
+	{ "dark", S("Dark Oak Bark Stairs"), S("Dark Oak Bark Slab"), S("Double Dark Oak Bark Slab") },
 }
 
 for b=1, #barks do
@@ -48,26 +48,26 @@ mcl_stairs.register_stair("lapisblock", "mcl_core:lapisblock",
 mcl_stairs.register_slab("goldblock", "mcl_core:goldblock",
 		{pickaxey=4},
 		{"default_gold_block.png", "default_gold_block.png", "mcl_stairs_gold_block_slab.png"},
-		S("Gold Slab"),
+		S("Slab of Gold"),
 		nil, nil, nil,
 		S("Double Slab of Gold"))
 mcl_stairs.register_stair("goldblock", "mcl_core:goldblock",
 		{pickaxey=4},
 		{"mcl_stairs_gold_block_slab.png", "default_gold_block.png", "default_gold_block.png", "default_gold_block.png", "default_gold_block.png", "mcl_stairs_gold_block_slab.png"},
-		S("Gold Stairs"),
+		S("Stairs of Gold"),
 		nil, 6, nil,
 		"woodlike")
 
 mcl_stairs.register_slab("ironblock", "mcl_core:ironblock",
 		{pickaxey=2},
 		{"default_steel_block.png", "default_steel_block.png", "mcl_stairs_iron_block_slab.png"},
-		S("Iron Slab"),
+		S("Slab of Iron"),
 		nil, nil, nil,
-		S("Iron Double Slab"))
+		S("Double Slab of Iron"))
 mcl_stairs.register_stair("ironblock", "mcl_core:ironblock",
 		{pickaxey=2},
 		{"mcl_stairs_iron_block_slab.png", "default_steel_block.png", "default_steel_block.png", "default_steel_block.png", "default_steel_block.png", "mcl_stairs_iron_block_slab.png"},
-		S("Iron Stairs"),
+		S("Stairs of Iron"),
 		nil, 6, nil,
 		"woodlike")
 

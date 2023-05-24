@@ -63,7 +63,7 @@ local function reset_upgraded_item(pos)
 end
 
 minetest.register_node("mcl_smithing_table:table", {
-	description = S("Smithing Table"),
+	description = S("Smithing table"),
 	-- ToDo: Add _doc_items_longdesc and _doc_items_usagehelp
 
 	stack_max = 64,

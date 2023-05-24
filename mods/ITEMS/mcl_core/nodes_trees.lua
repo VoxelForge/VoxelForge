@@ -261,12 +261,12 @@ end
 
 ---------------------
 
-register_tree_trunk("tree", S("Oak Log"), S("Oak Wood"), S("The trunk of an oak tree."), "default_tree_top.png", "default_tree.png", "mcl_core:stripped_oak")
-register_tree_trunk("darktree", S("Dark Oak Log"), S("Dark Oak Wood"), S("The trunk of a dark oak tree."), "mcl_core_log_big_oak_top.png", "mcl_core_log_big_oak.png", "mcl_core:stripped_dark_oak")
-register_tree_trunk("acaciatree", S("Acacia Log"), S("Acacia Wood"), S("The trunk of an acacia."), "default_acacia_tree_top.png", "default_acacia_tree.png", "mcl_core:stripped_acacia")
-register_tree_trunk("sprucetree", S("Spruce Log"), S("Spruce Wood"), S("The trunk of a spruce tree."), "mcl_core_log_spruce_top.png", "mcl_core_log_spruce.png", "mcl_core:stripped_spruce")
-register_tree_trunk("birchtree", S("Birch Log"), S("Birch Wood"), S("The trunk of a birch tree."), "mcl_core_log_birch_top.png", "mcl_core_log_birch.png", "mcl_core:stripped_birch")
-register_tree_trunk("jungletree", S("Jungle Log"), S("Jungle Wood"), S("The trunk of a jungle tree."), "default_jungletree_top.png", "default_jungletree.png", "mcl_core:stripped_jungle")
+register_tree_trunk("tree", S("Oak Wood"), S("Oak Bark"), S("The trunk of an oak tree."), "default_tree_top.png", "default_tree.png", "mcl_core:stripped_oak")
+register_tree_trunk("darktree", S("Dark Oak Wood"), S("Dark Oak Bark"), S("The trunk of a dark oak tree."), "mcl_core_log_big_oak_top.png", "mcl_core_log_big_oak.png", "mcl_core:stripped_dark_oak")
+register_tree_trunk("acaciatree", S("Acacia Wood"), S("Acacia Bark"), S("The trunk of an acacia."), "default_acacia_tree_top.png", "default_acacia_tree.png", "mcl_core:stripped_acacia")
+register_tree_trunk("sprucetree", S("Spruce Wood"), S("Spruce Bark"), S("The trunk of a spruce tree."), "mcl_core_log_spruce_top.png", "mcl_core_log_spruce.png", "mcl_core:stripped_spruce")
+register_tree_trunk("birchtree", S("Birch Wood"), S("Birch Bark"), S("The trunk of a birch tree."), "mcl_core_log_birch_top.png", "mcl_core_log_birch.png", "mcl_core:stripped_birch")
+register_tree_trunk("jungletree", S("Jungle Wood"), S("Jungle Bark"), S("The trunk of a jungle tree."), "default_jungletree_top.png", "default_jungletree.png", "mcl_core:stripped_jungle")
 
 register_stripped_trunk("stripped_oak", S("Stripped Oak Log"), S("Stripped Oak Wood"), S("The stripped trunk of an oak tree."), S("The stripped wood of an oak tree."), "mcl_core_stripped_oak_top.png", "mcl_core_stripped_oak_side.png")
 register_stripped_trunk("stripped_acacia", S("Stripped Acacia Log"), S("Stripped Acacia Wood"), S("The stripped trunk of an acacia tree."), S("The stripped wood of an acacia tree."), "mcl_core_stripped_acacia_top.png", "mcl_core_stripped_acacia_side.png")
@@ -274,12 +274,12 @@ register_stripped_trunk("stripped_dark_oak", S("Stripped Dark Oak Log"), S("Stri
 register_stripped_trunk("stripped_birch", S("Stripped Birch Log"), S("Stripped Birch Wood"), S("The stripped trunk of a birch tree."), S("The stripped wood of a birch tree."),  "mcl_core_stripped_birch_top.png", "mcl_core_stripped_birch_side.png")
 register_stripped_trunk("stripped_spruce", S("Stripped Spruce Log"), S("Stripped Spruce Wood"), S("The stripped trunk of a spruce tree."), S("The stripped wood of a spruce tree."), "mcl_core_stripped_spruce_top.png", "mcl_core_stripped_spruce_side.png")
 register_stripped_trunk("stripped_jungle", S("Stripped Jungle Log"), S("Stripped Jungle Wood"), S("The stripped trunk of a jungle tree."), S("The stripped wood of a jungle tree."),"mcl_core_stripped_jungle_top.png", "mcl_core_stripped_jungle_side.png")
-register_wooden_planks("wood", S("Oak Planks"), {"default_wood.png"})
-register_wooden_planks("darkwood", S("Dark Oak Planks"), {"mcl_core_planks_big_oak.png"})
-register_wooden_planks("junglewood", S("Jungle Planks"), {"default_junglewood.png"})
-register_wooden_planks("sprucewood", S("Spruce Planks"), {"mcl_core_planks_spruce.png"})
-register_wooden_planks("acaciawood", S("Acacia Planks"), {"default_acacia_wood.png"})
-register_wooden_planks("birchwood", S("Birch Planks"), {"mcl_core_planks_birch.png"})
+register_wooden_planks("wood", S("Oak Wood Planks"), {"default_wood.png"})
+register_wooden_planks("darkwood", S("Dark Oak Wood Planks"), {"mcl_core_planks_big_oak.png"})
+register_wooden_planks("junglewood", S("Jungle Wood Planks"), {"default_junglewood.png"})
+register_wooden_planks("sprucewood", S("Spruce Wood Planks"), {"mcl_core_planks_spruce.png"})
+register_wooden_planks("acaciawood", S("Acacia Wood Planks"), {"default_acacia_wood.png"})
+register_wooden_planks("birchwood", S("Birch Wood Planks"), {"mcl_core_planks_birch.png"})
 
 
 register_sapling("sapling", S("Oak Sapling"),

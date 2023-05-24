@@ -291,7 +291,7 @@ function mcl_buckets.register_liquid(def)
 end
 
 minetest.register_craftitem("mcl_buckets:bucket_empty", {
-	description = S("Bucket"),
+	description = S("Empty Bucket"),
 	_doc_items_longdesc = S("A bucket can be used to collect and release liquids."),
 	_doc_items_usagehelp = S("Punch a liquid source to collect it. You can then use the filled bucket to place the liquid somewhere else."),
 	_tt_help = S("Collects liquids"),
