@@ -75,7 +75,7 @@ end
 
 local function register_portal(pos)
 	local dim = mcl_worlds.pos_to_dimension(pos)
-	if not dim then
+	if not portals[dim] then
 		return
 	end
 	local hash = minetest.hash_node_position(pos)
@@ -93,7 +93,7 @@ local function unregister_portal(pos)
 		return
 	end
 	local dim = mcl_worlds.pos_to_dimension(pos)
-	if not dim then
+	if not portals[dim] then
 		return
 	end
 	local hash = minetest.hash_node_position(pos)
@@ -508,13 +508,13 @@ end
 
 local function teleport(obj)
 	local portal, node = in_portal(obj)
-	if not portal or portal_cooloff[obj] then
+	local dim, target = get_teleport_target(portal)
+	if not portal or portal_cooloff[obj] or not portals[dim] then
 		return
 	end
         register_portal(portal) -- Register portal if not already registered.
 	portal_cooloff[obj] = true
 
-	local dim, target = get_teleport_target(portal)
 	local linked_portal = get_linked_portal(dim, target)
 	if linked_portal then
 		local linked_node = minetest.get_node(linked_portal)
