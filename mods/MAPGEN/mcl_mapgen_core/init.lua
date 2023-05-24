@@ -34,6 +34,7 @@ local superflat = mg_name == "flat" and minetest.get_mapgen_setting("mcl_superfl
 local c_bedrock = minetest.get_content_id("mcl_core:bedrock")
 local c_void = minetest.get_content_id("mcl_core:void")
 local c_lava = minetest.get_content_id("mcl_core:lava_source")
+local c_nether_lava = minetest.get_content_id("mcl_nether:nether_lava_source")
 local c_water = minetest.get_content_id("mcl_core:water_source")
 local c_realm_barrier = minetest.get_content_id("mcl_core:realm_barrier")
 local c_air = minetest.CONTENT_AIR
