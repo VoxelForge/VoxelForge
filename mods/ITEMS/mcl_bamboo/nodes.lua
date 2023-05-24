@@ -19,7 +19,7 @@ local bamboo_def = {
 	drawtype = "nodebox",
 	paramtype = "light",
 	groups = {handy = 1, axey = 1, choppy = 1, dig_by_piston = 1, plant = 1, non_mycelium_plant = 1, flammable = 3, bamboo = 1},
-	sounds = node_sound,
+	sounds = mcl_sounds.node_sound_wood_defaults(),
 
 	drop = {
 		max_items = 1,
@@ -123,7 +123,7 @@ local bamboo_block_def = {
 	description = "Bamboo Block",
 	tiles = {"mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo_block.png"},
 	groups = {handy = 1, building_block = 1, axey = 1, flammable = 2, material_wood = 1, bamboo_block = 1, fire_encouragement = 5, fire_flammability = 5},
-	sounds = node_sound,
+	sounds = mcl_sounds.node_sound_wood_defaults(),
 	paramtype2 = "facedir",
 	drops = "mcl_bamboo:bamboo_block",
 	_on_axe_place = mcl_core.strip_tree,
@@ -201,9 +201,7 @@ minetest.register_node("mcl_bamboo:scaffolding", {
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_blast_resistance = 0,
 	_mcl_hardness = 0,
-
-	on_rotate = disallow_on_rotate,
-
+	on_rotate = screwdriver.disallow,
 	on_place = function(itemstack, placer, pointed)
 		local node = minetest.get_node(pointed.under)
 		local pos = pointed.under
