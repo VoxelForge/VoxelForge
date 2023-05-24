@@ -4,7 +4,7 @@
 * ryvnf
 * cora
 
-## Creator of MineClone2
+## Creator of MineClone 2
 * Wuzzy
 
 ## Creator of MineClone
