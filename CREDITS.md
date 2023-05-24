@@ -11,30 +11,32 @@
 * davedevils
 
 ## Active Contributors
+* Lizzy Fleckenstein
 * Michieal
-* TheOnlyJoeEnderman
 * ancientmarinerdev
-* FossFanatic
+* ROllerozxa
 * PrairieWind
-* epCode
-* anarquimico
+* FossFanatic
 * AFCMS
+* kabou
+* MrRar
 * Johannes Fritz
+* chmodsayshello
 
 ## Previous Contributors
-* Elias Fleckenstein
 * NO11
-* kay27
+* davedevils
 * Brandon
+* kay27
 * marcin-serwin
-* chmodsayshello
+* epCode
 * iliekprogrammar
+* TheOnlyJoeEnderman
 * jordan4ibanez
 * SumianVoice
 * MysticTempest
 * HimbeerserverDE
 * FaceDeer
-* kabou
 * 3raven
 
 ## Original Mod Authors
