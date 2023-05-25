@@ -508,10 +508,15 @@ end
 
 local function teleport(obj)
 	local portal, node = in_portal(obj)
-	local dim, target = get_teleport_target(portal)
-	if not portal or portal_cooloff[obj] or not portals[dim] then
+	if not portal or portal_cooloff[obj] then
 		return
 	end
+
+	local dim, target = get_teleport_target(portal)
+	if not portals[dim] then
+		return
+	end
+
         register_portal(portal) -- Register portal if not already registered.
 	portal_cooloff[obj] = true
 
