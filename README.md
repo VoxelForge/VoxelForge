@@ -71,10 +71,10 @@ Use the `/giveme` chat command to obtain them. See the in-game help for
 an explanation.
 
 ## Installation
-This game requires [Minetest](http://minetest.net) to run (version 5.4.1 or
+This game requires [Minetest](http://minetest.net) to run (version 5.5.1 or
 later). So you need to install Minetest first. Only stable versions of Minetest
-are officially supported.
-There is no support for running Mineclonia in development versions of Minetest.
+are officially supported. There is no support for running Mineclonia in
+development versions of Minetest.
 
 To install Mineclonia (if you haven't already), move this directory into the
 “games” directory of your Minetest data directory. Consult the help of
