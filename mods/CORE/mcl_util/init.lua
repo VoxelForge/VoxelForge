@@ -22,6 +22,11 @@ function table.update_nil(t, ...)
 	return t
 end
 
+function table.merge(t, ...)
+	local t2 = table.copy(t)
+	return table.update(t2,...)
+end
+
 local LOGGING_ON = minetest.settings:get_bool("mcl_logging_default", false)
 local LOG_MODULE = "[MCL2]"
 function mcl_util.mcl_log(message, module, bypass_default_logger)
