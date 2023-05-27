@@ -1060,7 +1060,7 @@ minetest.register_allow_player_inventory_action(function(player, action, inv, in
 	) then
 		local def = player:get_wielded_item():get_definition()
 
-		if not minetest.find_node_near(player:get_pos(), def and def.range or ItemStack():get_definition().rangeor or tonumber(minetest.settings:get("mcl_hand_range")) or 4.5, "mcl_chests:ender_chest_small", true) then
+		if not minetest.find_node_near(player:get_pos(), def and def.range or ItemStack():get_definition().range or tonumber(minetest.settings:get("mcl_hand_range")) or 4.5, "mcl_chests:ender_chest_small", true) then
 			return 0
 		end
 	end
