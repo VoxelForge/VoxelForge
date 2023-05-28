@@ -130,18 +130,6 @@ function mcl_mapgen_core.unregister_generator(id)
 	--if rec.needs_level0 then level0 = level0 - 1 end
 end
 
-local function uint32_t(v)
-	if v >= 0 then
-		return v % 0x100000000
-	end
-	return 0x100000000 - (math.abs(v) % 0x100000000)
-end
-
-function mcl_mapgen_core.get_block_seed(pos, current_seed)
-	local current_seed = uint32_t(current_seed or uint32_t(tonumber(seed)))
-	local x = uint32_t((pos.x + 32768) * 13)
-	local y = uint32_t((pos.y + 32767) * 13873)
-	local z = uint32_t((pos.z + 76705) * 115249)
-	local seed = uint32_t(bit.bxor(current_seed, x, y, z))
-	return seed
+function mcl_mapgen_core.get_block_seed(pos)
+	return ((seed + minetest.hash_node_position(pos)) * 0x9e3779b1) % 0x100000000
 end
