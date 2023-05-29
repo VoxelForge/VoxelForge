@@ -110,6 +110,8 @@ local slime_big = {
 	on_die = spawn_children_on_die("mobs_mc:slime_small", 1.0, 1.5),
 	use_texture_alpha = true,
 	can_spawn = function(pos)
+		local biome = minetest.get_biome_name(minetest.get_biome_data(pos).biome)
+		if biome == "Swampland" or biome == "MangroveSwamp" then return true end
 		local pr = PseudoRandom(mcl_mapgen_core.get_block_seed(pos))
 		return pr:next(1,10) == 1
 	end,
