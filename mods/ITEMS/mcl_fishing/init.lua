@@ -449,7 +449,7 @@ minetest.register_craft({
 	cooktime = 10,
 })
 
-minetest.register_entity("mcl_fishing:fish_entity", {
+minetest.register_entity("mcl_fishing:fish_raw_entity", {
 	initial_properties = {
 		physical = false,
 		visual = "wielditem",
@@ -501,7 +501,7 @@ minetest.register_craft({
 	cooktime = 10,
 })
 
-minetest.register_entity("mcl_fishing:salmon_entity", {
+minetest.register_entity("mcl_fishing:salmon_raw_entity", {
 	initial_properties = {
 		physical = false,
 		visual = "wielditem",
