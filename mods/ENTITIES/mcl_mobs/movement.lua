@@ -456,6 +456,7 @@ end
 -- find and replace what mob is looking for (grass, wheat etc.)
 function mob_class:replace(pos)
 
+
 	if not self.replace_rate
 	or not self.replace_what
 	or self.child == true
@@ -495,6 +496,8 @@ function mob_class:replace(pos)
 		if on_replace_return ~= false then
 
 			if mobs_griefing then
+				self.state = "eat"
+				self:set_animation("eat")
 				minetest.set_node(pos, newnode)
 			end
 
