@@ -211,12 +211,9 @@ function mob_class:set_velocity(v)
 
 	local yaw = (self.object:get_yaw() or 0) + self.rotate
 	local vv = self.object:get_velocity()
-	if vv then
-		self.acc={
-		  x = ((math.sin(yaw) * -v) + c_x)*.27,
-		  y = 0,
-		  z = ((math.cos(yaw) * v) + c_y)*.27,
-		}
+
+	if vv and yaw then
+		self.acc = vector.new(((math.sin(yaw) * -v) + c_x) * .4, 0, ((math.cos(yaw) * v) + c_y) * .4)
 	end
 end
 
@@ -324,9 +321,9 @@ function mob_class:set_yaw(yaw, delay, dtime)
 	end
 
 	if math.deg(yaw) > 360 then
-		yaw=yaw%360
+		yaw=math.rad(math.deg(yaw)%360)
 	elseif math.deg(yaw) < 0 then
-		yaw=((360*5)-yaw)%360
+		yaw=math.rad(((360*5)-math.deg(yaw))%360)
 	end
 
 	--calculate the shortest way to turn to find our target
@@ -350,7 +347,7 @@ function mob_class:set_yaw(yaw, delay, dtime)
 		ddtime = dtime
 	end
 
-	if math.abs(target_shortest_path_nums) > 5 then
+	if math.abs(target_shortest_path_nums) > 10 then
 		self.object:set_yaw(self.object:get_yaw()+(target_shortest_path*(3.6*ddtime)))
 		if self.acc and mcl_mobs.check_vector(self.acc) then
 			self.acc=vector.rotate_around_axis(self.acc,vector.new(0,1,0), target_shortest_path*(3.6*ddtime))
@@ -715,7 +712,7 @@ function mob_class:do_env_damage()
 					pos = pos, node = self.standing_in}) then
 				return true
 			end
-		end	
+		end
 	-- lava damage
 	elseif self.lava_damage > 0
 	and (nodef.groups.lava) then
