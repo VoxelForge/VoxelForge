@@ -5,6 +5,11 @@
 --
 local S = minetest.get_translator("mobs_mc")
 
+local function in_slime_chunk(pos)
+	local pr = PseudoRandom(mcl_mapgen_core.get_block_seed(pos))
+	return pr:next(1,10) == 1
+end
+
 -- Returns a function that spawns children in a circle around pos.
 -- To be used as on_die callback.
 -- self: mob reference
@@ -109,12 +114,6 @@ local slime_big = {
 	spawn_small_alternative = "mobs_mc:slime_small",
 	on_die = spawn_children_on_die("mobs_mc:slime_small", 1.0, 1.5),
 	use_texture_alpha = true,
-	can_spawn = function(pos)
-		local biome = minetest.get_biome_name(minetest.get_biome_data(pos).biome)
-		if biome == "Swampland" or biome == "MangroveSwamp" then return true end
-		local pr = PseudoRandom(mcl_mapgen_core.get_block_seed(pos))
-		return pr:next(1,10) == 1
-	end,
 }
 mcl_mobs.register_mob("mobs_mc:slime_big", slime_big)
 
@@ -204,83 +203,36 @@ local swamp_light_max = 7
 local swamp_min = water_level
 local swamp_max = water_level + 27
 
-mcl_mobs.spawn_specific(
-"mobs_mc:slime_tiny",
-"overworld",
-"ground",
-cave_biomes,
-0,
-minetest.LIGHT_MAX+1,
-30,
-12000,
-4,
-cave_min,
-cave_max)
+for slime_name,slime_chance in pairs({
+	["mobs_mc:slime_tiny"] = 1200,
+	["mobs_mc:slime_small"] = 8500,
+	["mobs_mc:slime_big"] = 10000
+}) do
+	mcl_mobs.spawn_setup({
+		name = slime_name,
+		type_of_spawning = "ground",
+		dimension = "overworld",
+		biomes = cave_biomes,
+		min_light = 0,
+		max_light = minetest.LIGHT_MAX+1,
+		min_height = cave_min,
+		max_height = cave_max,
+		chance = slime_chance,
+		check_position = in_slime_chunk,
+	})
 
-mcl_mobs.spawn_specific(
-"mobs_mc:slime_tiny",
-"overworld",
-"ground",
-swampy_biomes,
-0,
-swamp_light_max,
-30,
-12000,
-4,
-swamp_min,
-swamp_max)
-
-mcl_mobs.spawn_specific(
-"mobs_mc:slime_small",
-"overworld",
-"ground",
-cave_biomes,
-0,
-minetest.LIGHT_MAX+1,
-30,
-8500,
-4,
-cave_min,
-cave_max)
-
-mcl_mobs.spawn_specific(
-"mobs_mc:slime_small",
-"overworld",
-"ground",
-swampy_biomes,
-0,
-swamp_light_max,
-30,
-8500,
-4,
-swamp_min,
-swamp_max)
-
-mcl_mobs.spawn_specific(
-"mobs_mc:slime_big",
-"overworld",
-"ground",
-cave_biomes,
-0,
-minetest.LIGHT_MAX+1,
-30,
-10000,
-4,
-cave_min,
-cave_max)
-
-mcl_mobs.spawn_specific(
-"mobs_mc:slime_big",
-"overworld",
-"ground",
-swampy_biomes,
-0,
-swamp_light_max,
-30,
-10000,
-4,
-swamp_min,
-swamp_max)
+	mcl_mobs.spawn_setup({
+		name = slime_name,
+		type_of_spawning = "ground",
+		dimension = "overworld",
+		biomes = swampy_biomes,
+		min_light = 0,
+		max_light = swamp_light_max,
+		min_height = swamp_min,
+		max_height = swamp_max,
+		chance = slime_chance,
+	})
+end
 
 -- Magma cube
 local magma_cube_big = {
