@@ -487,11 +487,8 @@ function mob_class:replace(pos)
 
 		local oldnode = {name = what, param2 = node.param2}
 		local newnode = {name = with, param2 = node.param2}
-		local on_replace_return
+		local on_replace_return = true
 
-		if self.on_replace then
-			on_replace_return = self.on_replace(self, pos, oldnode, newnode)
-		end
 
 		if on_replace_return ~= false then
 
@@ -503,6 +500,9 @@ function mob_class:replace(pos)
 					if self and self.object and not self.dead then
 						self.object:set_velocity(vector.new(0,0,0))
 						minetest.set_node(pos, newnode)
+						if self.on_replace then
+							on_replace_return = self.on_replace(self, pos, oldnode, newnode)
+						end
 					end
 				end)
 				minetest.after(2.5, function()
