@@ -353,44 +353,21 @@ function mcl_mobs.spawn_setup(def)
 end
 
 function mcl_mobs.spawn_specific(name, dimension, type_of_spawning, biomes, min_light, max_light, interval, chance, aoc, min_height, max_height, day_toggle, on_spawn)
-
-	-- Do mobs spawn at all?
-	if not mobs_spawn then
-		return
-	end
-
-	-- chance/spawn number override in minetest.conf for registered mob
-	local numbers = minetest.settings:get(name)
-
-	if numbers then
-		numbers = numbers:split(",")
-		chance = tonumber(numbers[1]) or chance
-		aoc = tonumber(numbers[2]) or aoc
-
-		if chance == 0 then
-			minetest.log("warning", string.format("[mcl_mobs] %s has spawning disabled", name))
-			return
-		end
-
-		minetest.log("action", string.format("[mcl_mobs] Chance setting for %s changed to %s (total: %s)", name, chance, aoc))
-	end
-
-	--load information into the spawn dictionary
-	local key = #spawn_dictionary + 1
-	spawn_dictionary[key]               = {}
-	spawn_dictionary[key]["name"]       = name
-	spawn_dictionary[key]["dimension"]  = dimension
-	spawn_dictionary[key]["type_of_spawning"] = type_of_spawning
-	spawn_dictionary[key]["biomes"]     = biomes
-	spawn_dictionary[key]["min_light"]  = min_light
-	spawn_dictionary[key]["max_light"]  = max_light
-	spawn_dictionary[key]["chance"]     = chance
-	spawn_dictionary[key]["aoc"]        = aoc
-	spawn_dictionary[key]["min_height"] = min_height
-	spawn_dictionary[key]["max_height"] = max_height
-	spawn_dictionary[key]["day_toggle"] = day_toggle
-
-	summary_chance = summary_chance + chance
+	mcl_mobs.spawn_setup({
+		name             = name,
+		dimension        = dimension,
+		type_of_spawning = type_of_spawning,
+		biomes           = biomes,
+		min_light        = min_light,
+		max_light        = max_light,
+		chance           = chance,
+		aoc              = aoc,
+		min_height       = min_height,
+		max_height       = max_height,
+		day_toggle       = day_toggle,
+		check_position   = check_position,
+		on_spawn         = on_spawn,
+	})
 end
 
 local two_pi = 2 * math.pi
