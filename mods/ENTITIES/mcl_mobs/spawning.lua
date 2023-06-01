@@ -251,40 +251,6 @@ local function count_mobs_total_cap(mob_type)
 	return num
 end
 
--- global functions
-
-function mcl_mobs.spawn_abm_check(pos, node, name)
-	-- global function to add additional spawn checks
-	-- return true to stop spawning mob
-end
-
-
---[[
-	Custom elements changed:
-
-name:
-the mobs name
-
-dimension:
-"overworld"
-"nether"
-"end"
-
-types of spawning:
-"water"
-"ground"
-"lava"
-
-biomes: tells the spawner to allow certain mobs to spawn in certain biomes
-{"this", "that", "grasslands", "whatever"}
-
-
-what is aoc??? objects in area
-
-WARNING: BIOME INTEGRATION NEEDED -> How to get biome through lua??
-]]--
-
-
 --this is where all of the spawning information is kept
 local spawn_dictionary = {}
 local summary_chance = 0
@@ -370,29 +336,13 @@ function mcl_mobs.spawn_specific(name, dimension, type_of_spawning, biomes, min_
 	})
 end
 
-local two_pi = 2 * math.pi
-local function get_next_mob_spawn_pos(pos)
-	local distance = math.random(25, 32)
-	local angle = math.random() * two_pi
-	local xoff = math.round(distance * math.cos(angle))
-	local yoff = math.round(distance * math.sin(angle))
-	return vector.offset(pos, xoff, 0, yoff)
-end
-
-local function decypher_limits(posy)
-	posy = math.floor(posy)
-	return posy - 32, posy + 32
-end
-
---a simple helper function for mob_spawn
 local function biome_check(biome_list, biome_goal)
-	for _, data in pairs(biome_list) do
-		if data == biome_goal then
-			return true
-		end
-	end
+	return table.indexof(biome_list,biome_goal) ~= -1
+end
 
-	return false
+local function is_forbidden_node(pos, node)
+	node = node or minetest.get_node(pos)
+	return minetest.get_item_group(node.name, "stair") > 0 or minetest.get_item_group(node.name, "slab") > 0 or minetest.get_item_group(node.name, "carpet") > 0
 end
 
 local function is_farm_animal(n)
@@ -527,82 +477,23 @@ mcl_mobs.spawn_group = spawn_group
 
 local S = minetest.get_translator("mcl_mobs")
 
-minetest.register_chatcommand("spawn_mob",{
-	privs = { debug = true },
-	description=S("spawn_mob is a chatcommand that allows you to type in the name of a mob without 'typing mobs_mc:' all the time like so; 'spawn_mob spider'. however, there is more you can do with this special command, currently you can edit any number, boolean, and string variable you choose with this format: spawn_mob 'any_mob:var<mobs_variable=variable_value>:'. any_mob being your mob of choice, mobs_variable being the variable, and variable value being the value of the chosen variable. and example of this format: \n spawn_mob skeleton:var<passive=true>:\n this would spawn a skeleton that wouldn't attack you. REMEMBER-THIS> when changing a number value always prefix it with 'NUM', example: \n spawn_mob skeleton:var<jump_height=NUM10>:\n this setting the skelly's jump height to 10. if you want to make multiple changes to a mob, you can, example: \n spawn_mob skeleton:var<passive=true>::var<jump_height=NUM10>::var<fly_in=air>::var<fly=true>:\n etc."),
-	func = function(n,param)
-		local pos = minetest.get_player_by_name(n):get_pos()
-
-		local modifiers = {}
-		for capture in string.gmatch(param, "%:(.-)%:") do
-			table.insert(modifiers, ":"..capture)
-		end
-
-		local mod1 = string.find(param, ":")
-
-
-
-		local mobname = param
-		if mod1 then
-			mobname = string.sub(param, 1, mod1-1)
-		end
-
-		local mob = mcl_mobs.spawn(pos,mobname)
-
-		if mob then
-			for c=1, #modifiers do
-				modifs = modifiers[c]
-
-				local mod1 = string.find(modifs, ":")
-				local mod_start = string.find(modifs, "<")
-				local mod_vals = string.find(modifs, "=")
-				local mod_end = string.find(modifs, ">")
-				local mob_entity = mob:get_luaentity()
-				if string.sub(modifs, mod1+1, mod1+3) == "var" then
-					if mod1 and mod_start and mod_vals and mod_end then
-						local variable = string.sub(modifs, mod_start+1, mod_vals-1)
-						local value = string.sub(modifs, mod_vals+1, mod_end-1)
-
-						number_tag = string.find(value, "NUM")
-						if number_tag then
-							value = tonumber(string.sub(value, 4, -1))
-						end
-
-						if value == "true" then
-							value = true
-						elseif value == "false" then
-							value = false
-						end
-
-						if not mob_entity[variable] then
-							minetest.log("warning", n.." mob variable "..variable.." previously unset")
-						end
-
-						mob_entity[variable] = value
-
-					else
-						minetest.log("warning", n.." couldn't modify "..mobname.." at "..minetest.pos_to_string(pos).. ", missing paramaters")
-					end
-				else
-					minetest.log("warning", n.." couldn't modify "..mobname.." at "..minetest.pos_to_string(pos).. ", missing modification type")
-				end
-			end
-
-			minetest.log("action", n.." spawned "..mobname.." at "..minetest.pos_to_string(pos))
-			return true, mobname.." spawned at "..minetest.pos_to_string(pos)
-		else
-			return false, "Couldn't spawn "..mobname
-		end
-	end
-})
-
 if mobs_spawn then
-
 	local perlin_noise
+	local two_pi = 2 * math.pi
+	local function get_next_mob_spawn_pos(pos)
+		local distance = math.random(25, 32)
+		local angle = math.random() * two_pi
+		local xoff = math.round(distance * math.cos(angle))
+		local yoff = math.round(distance * math.sin(angle))
+		return vector.offset(pos, xoff, 0, yoff)
+	end
+
+	local function decypher_limits(posy)
+		posy = math.floor(posy)
+		return posy - 32, posy + 32
+	end
 
 	-- Get pos to spawn, x and z are randomised, y is range
-
-
 	local function spawn_a_mob(pos, dimension, y_min, y_max)
 		--create a disconnected clone of the spawn dictionary
 		--prevents memory leak
@@ -722,6 +613,75 @@ function mob_class:check_despawn(pos, dtime)
 		end
 	end
 end
+
+minetest.register_chatcommand("spawn_mob",{
+	privs = { debug = true },
+	description=S("spawn_mob is a chatcommand that allows you to type in the name of a mob without 'typing mobs_mc:' all the time like so; 'spawn_mob spider'. however, there is more you can do with this special command, currently you can edit any number, boolean, and string variable you choose with this format: spawn_mob 'any_mob:var<mobs_variable=variable_value>:'. any_mob being your mob of choice, mobs_variable being the variable, and variable value being the value of the chosen variable. and example of this format: \n spawn_mob skeleton:var<passive=true>:\n this would spawn a skeleton that wouldn't attack you. REMEMBER-THIS> when changing a number value always prefix it with 'NUM', example: \n spawn_mob skeleton:var<jump_height=NUM10>:\n this setting the skelly's jump height to 10. if you want to make multiple changes to a mob, you can, example: \n spawn_mob skeleton:var<passive=true>::var<jump_height=NUM10>::var<fly_in=air>::var<fly=true>:\n etc."),
+	func = function(n,param)
+		local pos = minetest.get_player_by_name(n):get_pos()
+
+		local modifiers = {}
+		for capture in string.gmatch(param, "%:(.-)%:") do
+			table.insert(modifiers, ":"..capture)
+		end
+
+		local mod1 = string.find(param, ":")
+
+
+
+		local mobname = param
+		if mod1 then
+			mobname = string.sub(param, 1, mod1-1)
+		end
+
+		local mob = mcl_mobs.spawn(pos,mobname)
+
+		if mob then
+			for c=1, #modifiers do
+				modifs = modifiers[c]
+
+				local mod1 = string.find(modifs, ":")
+				local mod_start = string.find(modifs, "<")
+				local mod_vals = string.find(modifs, "=")
+				local mod_end = string.find(modifs, ">")
+				local mob_entity = mob:get_luaentity()
+				if string.sub(modifs, mod1+1, mod1+3) == "var" then
+					if mod1 and mod_start and mod_vals and mod_end then
+						local variable = string.sub(modifs, mod_start+1, mod_vals-1)
+						local value = string.sub(modifs, mod_vals+1, mod_end-1)
+
+						number_tag = string.find(value, "NUM")
+						if number_tag then
+							value = tonumber(string.sub(value, 4, -1))
+						end
+
+						if value == "true" then
+							value = true
+						elseif value == "false" then
+							value = false
+						end
+
+						if not mob_entity[variable] then
+							minetest.log("warning", n.." mob variable "..variable.." previously unset")
+						end
+
+						mob_entity[variable] = value
+
+					else
+						minetest.log("warning", n.." couldn't modify "..mobname.." at "..minetest.pos_to_string(pos).. ", missing paramaters")
+					end
+				else
+					minetest.log("warning", n.." couldn't modify "..mobname.." at "..minetest.pos_to_string(pos).. ", missing modification type")
+				end
+			end
+
+			minetest.log("action", n.." spawned "..mobname.." at "..minetest.pos_to_string(pos))
+			return true, mobname.." spawned at "..minetest.pos_to_string(pos)
+		else
+			return false, "Couldn't spawn "..mobname
+		end
+	end
+})
 
 minetest.register_chatcommand("mobstats",{
 	privs = { debug = true },
