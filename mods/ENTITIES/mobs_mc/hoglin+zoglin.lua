@@ -116,21 +116,20 @@ baby_hoglin.child = 1
 
 mcl_mobs.register_mob("mobs_mc:baby_hoglin", baby_hoglin)
 
--- Regular spawning in the Nether
-mcl_mobs.spawn_specific(
-"mobs_mc:hoglin",
-"nether",
-"ground",
-{
-"CrimsonForest"
-},
-0,
-minetest.LIGHT_MAX+1,
-30,
-6000,
-3,
-mcl_vars.mg_nether_min,
-mcl_vars.mg_nether_max)
+mcl_mobs.spawn_setup({
+	name = "mobs_mc:hoglin",
+	type_of_spawning = "lava",
+	dimension = "nether",
+	min_light = 0,
+	max_light = minetest.LIGHT_MAX+1,
+	min_height = mcl_vars.mg_lava_nether_max,
+	aoc = 3,
+	biomes = {
+		"Nether",
+		"CrimsonForest"
+	},
+	chance = 6000,
+})
 
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:hoglin", S("Hoglin"), "#85682e", "#2b2140", 0)

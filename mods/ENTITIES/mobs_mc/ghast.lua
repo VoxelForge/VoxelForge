@@ -85,22 +85,20 @@ mcl_mobs.register_mob("mobs_mc:ghast", {
 })
 
 
-mcl_mobs.spawn_specific(
-"mobs_mc:ghast",
-"nether",
-"ground",
-{
-"Nether",
-"SoulsandValley",
-"BasaltDelta",
-},
-0,
-7,
-30,
-72000,
-2,
-mcl_vars.mg_nether_min,
-mcl_vars.mg_nether_max)
+mcl_mobs.spawn_setup({
+	name = "mobs_mc:ghast",
+	type_of_spawning = "lava",
+	dimension = "nether",
+	min_light = 0,
+	max_light = 7,
+	aoc = 2,
+	biomes = {
+		"Nether",
+		"SoulsandValley",
+		"BasaltDelta",
+	},
+	chance = 72000,
+})
 
 -- fireball (projectile)
 mcl_mobs.register_arrow("mobs_mc:fireball", {

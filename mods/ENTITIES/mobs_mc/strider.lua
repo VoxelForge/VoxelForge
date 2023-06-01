@@ -192,10 +192,6 @@ local strider = {
 	end,
 }
 
-mcl_mobs.register_mob("mobs_mc:strider", strider)
-
--- Baby strider.
-
 local baby_strider = table.copy(strider)
 baby_strider.collisionbox = {-.3, -0.01, -.3, .3, 0.94, .3}
 baby_strider.xp_min = 13
@@ -208,23 +204,13 @@ baby_strider.walk_velocity = 1.2
 baby_strider.run_velocity = 2.4
 baby_strider.child = 1
 
+mcl_mobs.register_mob("mobs_mc:strider", strider)
 mcl_mobs.register_mob("mobs_mc:baby_strider", baby_strider)
-
--- Regular spawning in the Nether
 
 mcl_mobs.spawn_setup({
 	name = "mobs_mc:strider",
 	type_of_spawning = "lava",
 	dimension = "nether",
-	biomes = {
-		"Nether",
-		"BasaltDelta",
-		"WarpedForest",
-		"CrimsonForest",
-		"SoulsandValley"
-	},
-	min_height = mcl_vars.mg_nether_min,
-	max_height = mcl_vars.mg_nether_max,
 	chance = 2000,
 })
 
@@ -232,15 +218,6 @@ mcl_mobs.spawn_setup({
 	name = "mobs_mc:baby_strider",
 	type_of_spawning = "lava",
 	dimension = "nether",
-	biomes = {
-		"Nether",
-		"BasaltDelta",
-		"WarpedForest",
-		"CrimsonForest",
-		"SoulsandValley"
-	},
-	min_height = mcl_vars.mg_nether_min,
-	max_height = mcl_vars.mg_nether_max,
 	chance = 100,
 })
 

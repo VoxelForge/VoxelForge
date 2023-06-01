@@ -285,38 +285,37 @@ piglin_brute.group_attack = { "mobs_mc:piglin", "mobs_mc:piglin_brute" }
 mcl_mobs.register_mob("mobs_mc:piglin_brute", piglin_brute)
 
 
--- Regular spawning in the Nether
-mcl_mobs.spawn_specific(
-"mobs_mc:piglin",
-"nether",
-"ground",
-{
-"Nether",
-"CrimsonForest"
-},
-0,
-minetest.LIGHT_MAX+1,
-30,
-6000,
-3,
-mcl_vars.mg_lava_nether_max,
-mcl_vars.mg_nether_max)
 
-mcl_mobs.spawn_specific(
-"mobs_mc:sword_piglin",
-"nether",
-"ground",
-{
-"Nether",
-"CrimsonForest"
-},
-0,
-minetest.LIGHT_MAX+1,
-30,
-6000,
-3,
-mcl_vars.mg_lava_nether_max,
-mcl_vars.mg_nether_max)
+mcl_mobs.spawn_setup({
+	name = "mobs_mc:piglin",
+	type_of_spawning = "lava",
+	dimension = "nether",
+	min_light = 0,
+	max_light = minetest.LIGHT_MAX+1,
+	min_height = mcl_vars.mg_lava_nether_max,
+	aoc = 3,
+	biomes = {
+		"Nether",
+		"CrimsonForest"
+	},
+	chance = 6000,
+})
+
+mcl_mobs.spawn_setup({
+	name = "mobs_mc:sword_piglin",
+	type_of_spawning = "lava",
+	dimension = "nether",
+	min_light = 0,
+	max_light = minetest.LIGHT_MAX+1,
+	min_height = mcl_vars.mg_lava_nether_max,
+	aoc = 3,
+	biomes = {
+		"Nether",
+		"CrimsonForest"
+	},
+	chance = 6000,
+})
+
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:piglin", S("Piglin"), "#7b4a17","#d5c381", 0)
 mcl_mobs.register_egg("mobs_mc:piglin_brute", S("Piglin Brute"), "#562b0c","#ddc89d", 0)

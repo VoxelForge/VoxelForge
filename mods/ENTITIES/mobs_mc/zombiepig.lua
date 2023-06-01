@@ -115,41 +115,35 @@ baby_pigman.child = 1
 
 mcl_mobs.register_mob("mobs_mc:baby_pigman", baby_pigman)
 
--- Regular spawning in the Nether
-mcl_mobs.spawn_specific(
-"mobs_mc:pigman",
-"nether",
-"ground",
-{
-"Nether",
-"CrimsonForest",
-},
-0,
-minetest.LIGHT_MAX+1,
-30,
-6000,
-3,
-mcl_vars.mg_nether_min,
-mcl_vars.mg_nether_max)
--- Baby zombie is 20 times less likely than regular zombies
-mcl_mobs.spawn_specific(
-"mobs_mc:baby_pigman",
-"nether",
-"ground",
-{
-"Nether",
-"CrimsonForest",
-},
-0,
-minetest.LIGHT_MAX+1,
-30,
-100000,
-4,
-mcl_vars.mg_nether_min,
-mcl_vars.mg_nether_max)
+mcl_mobs.spawn_setup({
+	name = "mobs_mc:pigman",
+	type_of_spawning = "lava",
+	dimension = "nether",
+	min_light = 0,
+	max_light = minetest.LIGHT_MAX+1,
+	min_height = mcl_vars.mg_lava_nether_max,
+	aoc = 4,
+	biomes = {
+		"Nether",
+		"CrimsonForest"
+	},
+	chance = 6000,
+})
 
--- Spawning in Nether portals in the Overworld
---mobs:spawn_specific("mobs_mc:pigman", {"mcl_portals:portal"}, {"air"}, 0, minetest.LIGHT_MAX+1, 30, 500, 4, mcl_vars.mg_overworld_min, mcl_vars.mg_overworld_max)
+mcl_mobs.spawn_setup({
+	name = "mobs_mc:baby_pigman",
+	type_of_spawning = "lava",
+	dimension = "nether",
+	min_light = 0,
+	max_light = minetest.LIGHT_MAX+1,
+	min_height = mcl_vars.mg_lava_nether_max,
+	aoc = 4,
+	biomes = {
+		"Nether",
+		"CrimsonForest"
+	},
+	chance = 100000,
+})
 
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:pigman", S("Zombie Pigman"), "#ea9393", "#4c7129", 0)
