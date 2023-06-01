@@ -310,8 +310,8 @@ function mcl_mobs.spawn_setup(def)
 	local max_light        = def.max_light or (minetest.LIGHT_MAX + 1)
 	local chance           = def.chance or 1000
 	local aoc              = def.aoc or aoc_range
-	local min_height       = def.min_height or mcl_mapgen.overworld.min
-	local max_height       = def.max_height or mcl_mapgen.overworld.max
+	local min_height       = def.min_height or mcl_vars["mg_"..dimension.."_min"]
+	local max_height       = def.max_height or mcl_vars["mg_"..dimension.."_max"]
 	local day_toggle       = def.day_toggle
 	local on_spawn         = def.on_spawn
 	local check_position   = def.check_position
