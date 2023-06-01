@@ -24,6 +24,7 @@ local mob_cap = {
 local mobs_spawn = minetest.settings:get_bool("mobs_spawn", true) ~= false
 local spawn_protected = minetest.settings:get_bool("mobs_spawn_protected") ~= false
 local logging = minetest.settings:get_bool("mcl_logging_mobs_spawn",true)
+local mgname = minetest.get_mapgen_setting("mgname")
 
 local noise_params = {
 	offset = 0,
@@ -182,6 +183,7 @@ function mcl_mobs.spawn_specific(name, dimension, type_of_spawning, biomes, min_
 end
 
 local function biome_check(biome_list, biome_goal)
+	if mgname == "singlenode" then return true end
 	return table.indexof(biome_list,biome_goal) ~= -1
 end
 
