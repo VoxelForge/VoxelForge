@@ -323,35 +323,24 @@ mcl_mobs.spawn_group = spawn_group
 local S = minetest.get_translator("mcl_mobs")
 
 if mobs_spawn then
-	local perlin_noise
-	local two_pi = 2 * math.pi
-	local function get_next_mob_spawn_pos(pos)
-		local distance = math.random(25, 32)
-		local angle = math.random() * two_pi
-		local xoff = math.round(distance * math.cos(angle))
-		local yoff = math.round(distance * math.sin(angle))
-		return vector.offset(pos, xoff, 0, yoff)
-	end
-
-	local function decypher_limits(posy)
-		posy = math.floor(posy)
-		return posy - 32, posy + 32
-	end
-
-	-- Get pos to spawn, x and z are randomised, y is range
-	local function spawn_a_mob(pos, dimension, y_min, y_max)
+	local function spawn_a_mob(pos, dimension)
 		--create a disconnected clone of the spawn dictionary
 		--prevents memory leak
 		local mob_library_worker_table = table.copy(spawn_dictionary)
-		local goal_pos = get_next_mob_spawn_pos(pos)
-		--grab mob that fits into the spawning location
-		--randomly grab a mob, don't exclude any possibilities
-		local spawning_position_list = minetest.find_nodes_in_area_under_air(
-			{x = goal_pos.x, y = y_min, z = goal_pos.z},
-			{x = goal_pos.x, y = y_max, z = goal_pos.z},
-			{"group:solid", "group:water", "group:lava"}
+
+		local spawning_position_list = {}
+		local s = minetest.find_nodes_in_area_under_air(
+			vector.offset(pos,-32,-32,-32),
+			vector.offset(pos,32,32,32),
+			{"group:solid","group:water","group:lava"}
 		)
+		for _,v in pairs(s) do
+			local dst = vector.distance(pos,v)
+			if dst >= 25 and dst < 32 then table.insert(spawning_position_list,v) end
+		end
+
 		if #spawning_position_list <= 0 then return end
+
 		local spawning_position = spawning_position_list[math.random(1, #spawning_position_list)]
 
 		perlin_noise = perlin_noise or minetest.get_perlin(noise_params)
@@ -375,7 +364,6 @@ if mobs_spawn then
 				local spawn_in_group_min = minetest.registered_entities[spawn_def.name].spawn_in_group_min or 1
 				local mob_type = minetest.registered_entities[spawn_def.name].type
 				if spawn_check(spawning_position,spawn_def) then
-					minetest.log("YAY spawning .. "..spawn_def.name)
 					if spawn_def.type_of_spawning == "water" then
 						spawning_position = get_water_spawn(spawning_position)
 						if not spawning_position then
@@ -427,8 +415,7 @@ if mobs_spawn then
 			local dimension = mcl_worlds.pos_to_dimension(pos)
 			-- ignore void and unloaded area
 			if dimension ~= "void" and dimension ~= "default" then
-				local y_min, y_max = decypher_limits(pos.y)
-				spawn_a_mob(pos, dimension, y_min, y_max)
+				spawn_a_mob(pos, dimension)
 			end
 		end
 	end)
