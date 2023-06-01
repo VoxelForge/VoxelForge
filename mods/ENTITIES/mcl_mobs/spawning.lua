@@ -164,24 +164,6 @@ function mcl_mobs.spawn_setup(def)
 	summary_chance = summary_chance + chance
 end
 
-function mcl_mobs.spawn_specific(name, dimension, type_of_spawning, biomes, min_light, max_light, interval, chance, aoc, min_height, max_height, day_toggle, on_spawn)
-	mcl_mobs.spawn_setup({
-		name             = name,
-		dimension        = dimension,
-		type_of_spawning = type_of_spawning,
-		biomes           = biomes,
-		min_light        = min_light,
-		max_light        = max_light,
-		chance           = chance,
-		aoc              = aoc,
-		min_height       = min_height,
-		max_height       = max_height,
-		day_toggle       = day_toggle,
-		check_position   = check_position,
-		on_spawn         = on_spawn,
-	})
-end
-
 local function biome_check(biome_list, biome_goal)
 	if mgname == "singlenode" then return true end
 	return table.indexof(biome_list,biome_goal) ~= -1
