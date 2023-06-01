@@ -38,163 +38,6 @@ local noise_params = {
 	persistence = 0.5,
 }
 
--- THIS IS THE BIG LIST OF ALL BIOMES - used for programming/updating mobs
--- Also used for missing parameter
--- Please update the list when adding new biomes!
-
-local list_of_all_biomes = {
-
-	-- underground:
-
-	"FlowerForest_underground",
-	"JungleEdge_underground",
-	"ColdTaiga_underground",
-	"IcePlains_underground",
-	"IcePlainsSpikes_underground",
-	"MegaTaiga_underground",
-	"Taiga_underground",
-	"ExtremeHills+_underground",
-	"JungleM_underground",
-	"ExtremeHillsM_underground",
-	"JungleEdgeM_underground",
-	"MangroveSwamp_underground",
-
-	-- ocean:
-
-	"RoofedForest_ocean",
-	"JungleEdgeM_ocean",
-	"BirchForestM_ocean",
-	"BirchForest_ocean",
-	"IcePlains_deep_ocean",
-	"Jungle_deep_ocean",
-	"Savanna_ocean",
-	"MesaPlateauF_ocean",
-	"ExtremeHillsM_deep_ocean",
-	"Savanna_deep_ocean",
-	"SunflowerPlains_ocean",
-	"Swampland_deep_ocean",
-	"Swampland_ocean",
-	"MegaSpruceTaiga_deep_ocean",
-	"ExtremeHillsM_ocean",
-	"JungleEdgeM_deep_ocean",
-	"SunflowerPlains_deep_ocean",
-	"BirchForest_deep_ocean",
-	"IcePlainsSpikes_ocean",
-	"Mesa_ocean",
-	"StoneBeach_ocean",
-	"Plains_deep_ocean",
-	"JungleEdge_deep_ocean",
-	"SavannaM_deep_ocean",
-	"Desert_deep_ocean",
-	"Mesa_deep_ocean",
-	"ColdTaiga_deep_ocean",
-	"Plains_ocean",
-	"MesaPlateauFM_ocean",
-	"Forest_deep_ocean",
-	"JungleM_deep_ocean",
-	"FlowerForest_deep_ocean",
-	"MushroomIsland_ocean",
-	"MegaTaiga_ocean",
-	"StoneBeach_deep_ocean",
-	"IcePlainsSpikes_deep_ocean",
-	"ColdTaiga_ocean",
-	"SavannaM_ocean",
-	"MesaPlateauF_deep_ocean",
-	"MesaBryce_deep_ocean",
-	"ExtremeHills+_deep_ocean",
-	"ExtremeHills_ocean",
-	"MushroomIsland_deep_ocean",
-	"Forest_ocean",
-	"MegaTaiga_deep_ocean",
-	"JungleEdge_ocean",
-	"MesaBryce_ocean",
-	"MegaSpruceTaiga_ocean",
-	"ExtremeHills+_ocean",
-	"Jungle_ocean",
-	"RoofedForest_deep_ocean",
-	"IcePlains_ocean",
-	"FlowerForest_ocean",
-	"ExtremeHills_deep_ocean",
-	"MesaPlateauFM_deep_ocean",
-	"Desert_ocean",
-	"Taiga_ocean",
-	"BirchForestM_deep_ocean",
-	"Taiga_deep_ocean",
-	"JungleM_ocean",
-	"MangroveSwamp_ocean",
-	"MangroveSwamp_deep_ocean",
-
-	-- water or beach?
-
-	"MesaPlateauFM_sandlevel",
-	"MesaPlateauF_sandlevel",
-	"MesaBryce_sandlevel",
-	"Mesa_sandlevel",
-
-	-- beach:
-
-	"FlowerForest_beach",
-	"Forest_beach",
-	"StoneBeach",
-	"ColdTaiga_beach_water",
-	"Taiga_beach",
-	"Savanna_beach",
-	"Plains_beach",
-	"ExtremeHills_beach",
-	"ColdTaiga_beach",
-	"Swampland_shore",
-	"MushroomIslandShore",
-	"JungleM_shore",
-	"Jungle_shore",
-	"MangroveSwamp_shore",
-
-	-- dimension biome:
-
-	"Nether",
-	"BasaltDelta",
-	"CrimsonForest",
-	"WarpedForest",
-	"SoulsandValley",
-	"End",
-
-	-- Overworld regular:
-
-	"Mesa",
-	"FlowerForest",
-	"Swampland",
-	"Taiga",
-	"ExtremeHills",
-	"ExtremeHillsM",
-	"ExtremeHills+_snowtop",
-	"Jungle",
-	"Savanna",
-	"BirchForest",
-	"MegaSpruceTaiga",
-	"MegaTaiga",
-	"ExtremeHills+",
-	"Forest",
-	"Plains",
-	"Desert",
-	"ColdTaiga",
-	"MushroomIsland",
-	"IcePlainsSpikes",
-	"SunflowerPlains",
-	"IcePlains",
-	"RoofedForest",
-	"ExtremeHills+_snowtop",
-	"MesaPlateauFM_grasstop",
-	"JungleEdgeM",
-	"JungleM",
-	"BirchForestM",
-	"MesaPlateauF",
-	"MesaPlateauFM",
-	"MesaPlateauF_grasstop",
-	"MesaBryce",
-	"JungleEdge",
-	"SavannaM",
-	"MangroveSwamp",
-}
-
 -- count how many mobs are in an area
 local function count_mobs(pos,r,mob_type)
 	local num = 0
@@ -271,7 +114,8 @@ function mcl_mobs.spawn_setup(def)
 
 	local dimension        = def.dimension or "overworld"
 	local type_of_spawning = def.type_of_spawning or "ground"
-	local biomes           = def.biomes or list_of_all_biomes
+	local biomes           = def.biomes
+	local biomes_except    = def.biomes_except
 	local min_light        = def.min_light or 0
 	local max_light        = def.max_light or (minetest.LIGHT_MAX + 1)
 	local chance           = def.chance or 1000
@@ -305,6 +149,7 @@ function mcl_mobs.spawn_setup(def)
 		dimension        = dimension,
 		type_of_spawning = type_of_spawning,
 		biomes           = biomes,
+		biomes_except    = biomes_except,
 		min_light        = min_light,
 		max_light        = max_light,
 		chance           = chance,
@@ -412,14 +257,14 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 		mob_count = count_mobs(pos,32,mob_type)
 		mob_count_wide = count_mobs(pos,aoc_range,mob_type)
 	end
-
 	if pos and spawn_def
 	and ( mob_count_wide < (mob_cap[mob_type] or 15) )
 	and ( mob_count < 5 )
 	and pos.y >= spawn_def.min_height
 	and pos.y <= spawn_def.max_height
 	and spawn_def.dimension == dimension
-	and biome_check(spawn_def.biomes, gotten_biome)
+	and ( not spawn_def.biomes or (spawn_def.biomes and biome_check(spawn_def.biomes, gotten_biome)))
+	and ( not spawn_def.biomes_except or (spawn_def.biomes_except and not biome_check(spawn_def.biomes_except, gotten_biome)))
 	and (is_ground or spawn_def.type_of_spawning ~= "ground")
 	and (spawn_def.type_of_spawning ~= "ground" or not is_leaf)
 	and has_room(mob_def,pos)
