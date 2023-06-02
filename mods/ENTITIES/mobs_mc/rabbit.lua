@@ -133,84 +133,23 @@ mcl_mobs.register_mob("mobs_mc:killer_bunny", killer_bunny)
 -- Mob spawning rules.
 -- Different skins depending on spawn location <- we'll get to this when the spawning algorithm is fleshed out
 
-mcl_mobs.spawn_specific(
-"mobs_mc:rabbit",
-"overworld",
-"ground",
-{
-"Desert",
-"FlowerForest",
-"Taiga",
-"MegaSpruceTaiga",
-"MegaTaiga",
-"ColdTaiga",
-},
-9,
-minetest.LIGHT_MAX+1,
-30,
-15000,
-8,
-mcl_vars.mg_overworld_min,
-mcl_vars.mg_overworld_max)
-
---[[
-local spawn = {
-	name = "mobs_mc:rabbit",
-	neighbors = {"air"},
+mcl_mobs.spawn_setup({
+	name = "mobs_mc:wolf",
+	type_of_spawning = "ground",
+	dimension = "overworld",
+	aoc = 8,
+	min_light = 9,
+	biomes = {
+		"flat",
+		"Desert",
+		"FlowerForest",
+		"Taiga",
+		"MegaSpruceTaiga",
+		"MegaTaiga",
+		"ColdTaiga",
+	},
 	chance = 15000,
-	active_object_count = 10,
-	min_light = 0,
-	max_light = minetest.LIGHT_MAX+1,
-	min_height = mcl_vars.mg_overworld_min,
-	max_height = mcl_vars.mg_overworld_max,
-}
-
-local spawn_desert = table.copy(spawn)
-spawn_desert.nodes = { "mcl_core:sand", "mcl_core:sandstone" }
-spawn_desert.on_spawn = function(self, pos)
-	local texture = "mobs_mc_rabbit_gold.png"
-	self.base_texture = { "mobs_mc_rabbit_gold.png" }
-	self.object:set_properties({textures = self.base_texture})
-end
-mcl_mobs:spawn(spawn_desert)
-
-local spawn_snow = table.copy(spawn)
-spawn_snow.nodes = { "mcl_core:snow", "mcl_core:snowblock", "mcl_core:dirt_with_grass_snow" }
-spawn_snow.on_spawn = function(self, pos)
-	local texture
-	local r = math.random(1, 100)
-	-- 80% white fur
-	if r <= 80 then
-		texture = "mobs_mc_rabbit_white.png"
-	-- 20% black and white fur
-	else
-		texture = "mobs_mc_rabbit_white_splotched.png"
-	end
-	self.base_texture = { texture }
-	self.object:set_properties({textures = self.base_texture})
-end
-mcl_mobs:spawn(spawn_snow)
-
-local spawn_grass = table.copy(spawn)
-spawn_grass.nodes = { "mcl_core:dirt_with_grass" }
-spawn_grass.on_spawn = function(self, pos)
-	local texture
-	local r = math.random(1, 100)
-	-- 50% brown fur
-	if r <= 50 then
-		texture = "mobs_mc_rabbit_brown.png"
-	-- 40% salt fur
-	elseif r <= 90 then
-		texture = "mobs_mc_rabbit_salt.png"
-	-- 10% black fur
-	else
-		texture = "mobs_mc_rabbit_black.png"
-	end
-	self.base_texture = { texture }
-	self.object:set_properties({textures = self.base_texture})
-end
-mcl_mobs:spawn(spawn_grass)
-]]--
+})
 
 -- Spawn egg
 mcl_mobs.register_egg("mobs_mc:rabbit", S("Rabbit"), "#995f40", "#734831", 0)

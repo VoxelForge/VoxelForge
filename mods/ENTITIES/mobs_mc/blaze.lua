@@ -139,19 +139,6 @@ mcl_mobs.register_mob("mobs_mc:blaze", {
 	end,
 })
 
-mcl_mobs.spawn_specific(
-"mobs_mc:blaze",
-"nether",
-"ground",
-{"Nether"},
-0,
-minetest.LIGHT_MAX+1,
-30,
-5000,
-3,
-mcl_vars.mg_nether_min,
-mcl_vars.mg_nether_max)
-
 -- Blaze fireball
 mcl_mobs.register_arrow("mobs_mc:blaze_fireball", {
 	visual = "sprite",

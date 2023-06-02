@@ -252,8 +252,8 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 	if not spawn_def then return false,"no spawn_def" end
 	if not ( mob_count_wide < (mob_cap[mob_type] or 15) ) then return false,"mob cap wide full" end
 	if not ( mob_count < 5 ) then return false, "mob cap full" end
-	if not ( spawn_def.min_height and pos.y >= spawn_def.min_height ) then return false, "too high" end
-	if not ( spawn_def.max_height and pos.y <= spawn_def.max_height ) then return false, "too low" end
+	if not ( spawn_def.min_height and pos.y >= spawn_def.min_height ) then return false, "too low" end
+	if not ( spawn_def.max_height and pos.y <= spawn_def.max_height ) then return false, "too high" end
 	if not spawn_def.dimension == dimension then return false, "wrong dimension" end
 	if not ( not spawn_def.biomes_except or (spawn_def.biomes_except and not biome_check(spawn_def.biomes_except, gotten_biome))) then return false, "biomes_except failed" end
 	if not ( not spawn_def.biomes or (spawn_def.biomes and biome_check(spawn_def.biomes, gotten_biome))) then return false, "biome check failed" end

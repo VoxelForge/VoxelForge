@@ -87,7 +87,7 @@ mcl_mobs.register_mob("mobs_mc:ghast", {
 
 mcl_mobs.spawn_setup({
 	name = "mobs_mc:ghast",
-	type_of_spawning = "lava",
+	type_of_spawning = "ground",
 	dimension = "nether",
 	min_light = 0,
 	max_light = 7,
