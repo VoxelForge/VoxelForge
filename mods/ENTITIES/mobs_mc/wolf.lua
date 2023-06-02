@@ -207,29 +207,26 @@ dog.on_rightclick = function(self, clicker)
 end
 
 mcl_mobs.register_mob("mobs_mc:dog", dog)
--- Spawn
-mcl_mobs.spawn_specific(
-"mobs_mc:wolf",
-"overworld",
-"ground",
-{
-	"Taiga",
-	"MegaSpruceTaiga",
-	"MegaTaiga",
-	"Forest",
-	"ColdTaiga",
-	"FlowerForest_beach",
-	"Forest_beach",
-	"ColdTaiga_beach_water",
-	"Taiga_beach",
-	"ColdTaiga_beach",
-},
-0,
-minetest.LIGHT_MAX+1,
-30,
-9000,
-7,
-mobs_mc.water_level+3,
-mcl_vars.mg_overworld_max)
+mcl_mobs.spawn_setup({
+	name = "mobs_mc:wolf",
+	type_of_spawning = "ground",
+	dimension = "overworld",
+	aoc = 7,
+	min_height = mobs_mc.water_level + 3,
+	biomes = {
+		"flat",
+		"Taiga",
+		"MegaSpruceTaiga",
+		"MegaTaiga",
+		"Forest",
+		"ColdTaiga",
+		"FlowerForest_beach",
+		"Forest_beach",
+		"ColdTaiga_beach_water",
+		"Taiga_beach",
+		"ColdTaiga_beach",
+	},
+	chance = 15000,
+})
 
 mcl_mobs.register_egg("mobs_mc:wolf", S("Wolf"), "#d7d3d3", "#ceaf96", 0)

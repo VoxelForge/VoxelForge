@@ -171,82 +171,20 @@ mcl_mobs.register_mob("mobs_mc:cat", cat)
 
 local base_spawn_chance = 5000
 
--- Spawn ocelot
---they get the same as the llama because I'm trying to rework so much of this code right now -j4i
-mcl_mobs.spawn_specific(
-"mobs_mc:ocelot",
-"overworld",
-"ground",
-{
-"Jungle",
-"JungleEdgeM",
-"JungleM",
-"JungleEdge",
-},
-0,
-minetest.LIGHT_MAX+1,
-30,
-15000,
-5,
-mobs_mc.water_level+15,
-mcl_vars.mg_overworld_max)
---[[
-mobs:spawn({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:ocelot",
-	nodes = { "mcl_core:jungletree", "mcl_core:jungleleaves", "mcl_flowers:fern", "mcl_core:vine" },
-	neighbors = {"air"},
-	light_max = minetest.LIGHT_MAX+1,
-	light_min = 0,
-	chance = math.ceil(base_spawn_chance * 1.5), -- emulates 1/3 spawn failure rate
-	active_object_count = 12,
-	min_height = mobs_mc.water_level+1, -- Right above ocean level
-	max_height = mcl_vars.mg_overworld_max,
-	on_spawn = function(self, pos)
-		 Note: Minecraft has a 1/3 spawn failure rate.
-		In this mod it is emulated by reducing the spawn rate accordingly (see above).
-
-		-- 1/7 chance to spawn 2 ocelot kittens
-		if pr:next(1,7) == 1 then
-			-- Turn object into a child
-			local make_child = function(object)
-				local ent = object:get_luaentity()
-				object:set_properties({
-					visual_size = { x = ent.base_size.x/2, y = ent.base_size.y/2 },
-					collisionbox = {
-						ent.base_colbox[1]/2,
-						ent.base_colbox[2]/2,
-						ent.base_colbox[3]/2,
-						ent.base_colbox[4]/2,
-						ent.base_colbox[5]/2,
-						ent.base_colbox[6]/2,
-					}
-				})
-				ent.child = true
-			end
-
-			-- Possible spawn offsets, two of these will get selected
-			local k = 0.7
-			local offsets = {
-				{ x=k, y=0, z=0 },
-				{ x=-k, y=0, z=0 },
-				{ x=0, y=0, z=k },
-				{ x=0, y=0, z=-k },
-				{ x=k, y=0, z=k },
-				{ x=k, y=0, z=-k },
-				{ x=-k, y=0, z=k },
-				{ x=-k, y=0, z=-k },
-			}
-			for i=1, 2 do
-				local o = pr:next(1, #offsets)
-				local offset = offsets[o]
-				local child_pos = vector.add(pos, offsets[o])
-				table.remove(offsets, o)
-				make_child(minetest.add_entity(child_pos, "mobs_mc:ocelot"))
-			end
-		end
-	end,
+	type_of_spawning = "ground",
+	dimension = "overworld",
+	aoc = 5,
+	min_height = mobs_mc.water_level+15,
+	biomes = {
+		"Jungle",
+		"JungleEdgeM",
+		"JungleM",
+		"JungleEdge",
+	},
+	chance = 15000,
 })
-]]--
 
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:ocelot", S("Ocelot"), "#efde7d", "#564434", 0)
