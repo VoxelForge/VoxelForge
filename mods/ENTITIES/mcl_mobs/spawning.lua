@@ -113,16 +113,22 @@ function mcl_mobs.spawn_setup(def)
 		return
 	end
 
+	local mob_def = minetest.registered_entities[def.name]
+	if not mob_def then
+		minetest.log("warning","spawn definition with invalid entity: "..tostring(def.name))
+		return
+	end
+
 	local dimension        = def.dimension or "overworld"
 	local type_of_spawning = def.type_of_spawning or "ground"
 	local biomes           = def.biomes
 	local biomes_except    = def.biomes_except
-	local min_light        = def.min_light or (def.spawn_class == "hostile" and 0 or 7)
-	local max_light        = def.max_light or (def.spawn_class == "hostile" and 7 or minetest.LIGHT_MAX + 1)
+	local min_light        = def.min_light or (mob_def.spawn_class == "hostile" and 0) or 7
+	local max_light        = def.max_light or (mob_def.spawn_class == "hostile" and 7) or minetest.LIGHT_MAX + 1
 	local chance           = def.chance or 1000
 	local aoc              = def.aoc or aoc_range
-	local min_height       = def.min_height or mcl_vars["mg_"..dimension.."_min"]
-	local max_height       = def.max_height or mcl_vars["mg_"..dimension.."_max"]
+	local min_height       = def.min_height or mcl_vars["mg_"..dimension.."_min"] or -31000
+	local max_height       = def.max_height or mcl_vars["mg_"..dimension.."_max"] or 31000
 	local day_toggle       = def.day_toggle
 	local on_spawn         = def.on_spawn
 	local check_position   = def.check_position
@@ -234,36 +240,37 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 	local is_leaf  = minetest.get_item_group(gotten_node, "leaves") ~= 0
 	local is_bedrock  = gotten_node == "mcl_core:bedrock"
 	local is_grass = minetest.get_item_group(gotten_node,"grass_block") ~= 0
-	local mob_count_wide = 0
 
+	local mob_count_wide = 0
 	local mob_count = 0
 	if not ignore_caps then
 		mob_count = count_mobs(pos,32,mob_type)
 		mob_count_wide = count_mobs(pos,aoc_range,mob_type)
 	end
-	if pos and spawn_def
-	and ( mob_count_wide < (mob_cap[mob_type] or 15) )
-	and ( mob_count < 5 )
-	and pos.y >= spawn_def.min_height
-	and pos.y <= spawn_def.max_height
-	and spawn_def.dimension == dimension
-	and ( not spawn_def.biomes or (spawn_def.biomes and biome_check(spawn_def.biomes, gotten_biome)))
-	and ( not spawn_def.biomes_except or (spawn_def.biomes_except and not biome_check(spawn_def.biomes_except, gotten_biome)))
-	and (is_ground or spawn_def.type_of_spawning ~= "ground")
-	and (spawn_def.type_of_spawning ~= "ground" or not is_leaf)
-	and has_room(mob_def,pos)
-	and (spawn_def.check_position and spawn_def.check_position(pos) or true)
-	and (not is_farm_animal(spawn_def.name) or is_grass)
-	and (spawn_def.type_of_spawning ~= "water" or is_water)
-	and ( not spawn_protected or not minetest.is_protected(pos, "") )
-	and not is_bedrock then
-		--only need to poll for node light if everything else worked
-		local gotten_light = minetest.get_node_light(pos)
-		if gotten_light >= spawn_def.min_light and gotten_light <= spawn_def.max_light then
-			return true
-		end
-	end
-	return false
+
+	if not pos then return false,"no pos" end
+	if not spawn_def then return false,"no spawn_def" end
+	if not ( mob_count_wide < (mob_cap[mob_type] or 15) ) then return false,"mob cap wide full" end
+	if not ( mob_count < 5 ) then return false, "mob cap full" end
+	if not ( spawn_def.min_height and pos.y >= spawn_def.min_height ) then return false, "too high" end
+	if not ( spawn_def.max_height and pos.y <= spawn_def.max_height ) then return false, "too low" end
+	if not spawn_def.dimension == dimension then return false, "wrong dimension" end
+	if not ( not spawn_def.biomes_except or (spawn_def.biomes_except and not biome_check(spawn_def.biomes_except, gotten_biome))) then return false, "biomes_except failed" end
+	if not ( not spawn_def.biomes or (spawn_def.biomes and biome_check(spawn_def.biomes, gotten_biome))) then return false, "biome check failed" end
+	if not (is_ground or spawn_def.type_of_spawning ~= "ground") then return false, "not on ground" end
+	if not (spawn_def.type_of_spawning ~= "ground" or not is_leaf) then return false, "leaf" end
+	if not has_room(mob_def,pos) then return false, "no room" end
+	if not (spawn_def.check_position and spawn_def.check_position(pos) or true) then return false, "check_position failed" end
+	if not (not is_farm_animal(spawn_def.name) or is_grass) then return false, "farm animals only on grass" end
+	if not (spawn_def.type_of_spawning ~= "water" or is_water) then return false, "water mob only on water" end
+	if not ( not spawn_protected or not minetest.is_protected(pos, "") ) then return false, "spawn protected" end
+	if is_bedrock then return false, "no spawn on bedrock" end
+
+	local gotten_light = minetest.get_node_light(pos)
+
+	if gotten_light < spawn_def.min_light then return false,"too dark" end
+	if gotten_light > spawn_def.max_light then return false,"too bright" end
+	return true, ""
 end
 
 function mcl_mobs.spawn(pos,id)
@@ -496,6 +503,28 @@ minetest.register_chatcommand("spawn_mob",{
 			return true, mobname.." spawned at "..minetest.pos_to_string(pos)
 		else
 			return false, "Couldn't spawn "..mobname
+		end
+	end
+})
+minetest.register_chatcommand("spawncheck",{
+	privs = { debug = true },
+	func = function(n,param)
+		local pl = minetest.get_player_by_name(n)
+		local pos = vector.offset(pl:get_pos(),0,-1,0)
+		local sp
+		for _,v in pairs(spawn_dictionary) do
+			if v.name == param then sp = v end
+		end
+		if sp then
+			minetest.log(dump(sp))
+			local r,t = spawn_check(pos,sp)
+			if r then
+				return true, "spawn check for "..sp.name.." at "..minetest.pos_to_string(pos).." successful"
+			else
+				return r,tostring(t) or ""
+			end
+		else
+			return false,"no spawndef found for "..param
 		end
 	end
 })
