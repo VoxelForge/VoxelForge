@@ -592,13 +592,13 @@ mule.collisionbox = {
 mcl_mobs.register_mob("mobs_mc:mule", mule)
 mcl_entity_invs.register_inv("mobs_mc:mule","Mule",15,true)
 
---===========================
---Spawn Function
-mcl_mobs.spawn_specific(
-"mobs_mc:horse",
-"overworld",
-"ground",
-{
+mcl_mobs.spawn_setup({
+	name = "mobs_mc:horse",
+	type_of_spawning = "ground",
+	dimension = "overworld",
+	aoc = 9,
+	min_height = mobs_mc.water_level + 3,
+	biomes = {
 	"flat",
 	"Plains",
 	"Plains_beach",
@@ -608,20 +608,17 @@ mcl_mobs.spawn_specific(
 	"SavannaM",
 	"Savanna_beach",
 	"Plains_beach",
-},
-0,
-minetest.LIGHT_MAX+1,
-30,
-15000,
-4,
-mobs_mc.water_level+3,
-mcl_vars.mg_overworld_max)
+	},
+	chance = 15000,
+})
 
-mcl_mobs.spawn_specific(
-"mobs_mc:donkey",
-"overworld",
-"ground",
-{
+mcl_mobs.spawn_setup({
+	name = "mobs_mc:donkey",
+	type_of_spawning = "ground",
+	dimension = "overworld",
+	aoc = 9,
+	min_height = mobs_mc.water_level + 3,
+	biomes = {
 	"flat",
 	"Plains",
 	"Plains_beach",
@@ -631,14 +628,9 @@ mcl_mobs.spawn_specific(
 	"SavannaM",
 	"Savanna_beach",
 	"Plains_beach",
-},
-9,
-minetest.LIGHT_MAX+1,
-30,
-15000,
-4,
-mobs_mc.water_level+3,
-mcl_vars.mg_overworld_max)
+	},
+	chance = 15000,
+})
 
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:horse", S("Horse"), "#c09e7d", "#eee500", 0)

@@ -167,70 +167,60 @@ mooshroom_def.on_lightning_strike = function(self, pos, pos2, objects)
 end
 mcl_mobs.register_mob("mobs_mc:mooshroom", mooshroom_def)
 
+mcl_mobs.spawn_setup({
+	name = "mobs_mc:cow",
+	type_of_spawning = "ground",
+	dimension = "overworld",
+	aoc = 9,
+	min_height = mobs_mc.water_level,
+	biomes = {
+		"flat",
+		"MegaTaiga",
+		"MegaSpruceTaiga",
+		"ExtremeHills",
+		"ExtremeHills_beach",
+		"ExtremeHillsM",
+		"ExtremeHills+",
+		"StoneBeach",
+		"Plains",
+		"Plains_beach",
+		"SunflowerPlains",
+		"Taiga",
+		"Taiga_beach",
+		"Forest",
+		"Forest_beach",
+		"FlowerForest",
+		"FlowerForest_beach",
+		"BirchForest",
+		"BirchForestM",
+		"RoofedForest",
+		"Savanna",
+		"Savanna_beach",
+		"SavannaM",
+		"Jungle",
+		"Jungle_shore",
+		"JungleM",
+		"JungleM_shore",
+		"JungleEdge",
+		"JungleEdgeM",
+		"Swampland",
+		"Swampland_shore"
+	},
+	chance = 17000,
+})
 
--- Spawning
-mcl_mobs.spawn_specific(
-"mobs_mc:cow",
-"overworld",
-"ground",
-{
-	"flat",
-	"MegaTaiga",
-	"MegaSpruceTaiga",
-	"ExtremeHills",
-	"ExtremeHills_beach",
-	"ExtremeHillsM",
-	"ExtremeHills+",
-	"StoneBeach",
-	"Plains",
-	"Plains_beach",
-	"SunflowerPlains",
-	"Taiga",
-	"Taiga_beach",
-	"Forest",
-	"Forest_beach",
-	"FlowerForest",
-	"FlowerForest_beach",
-	"BirchForest",
-	"BirchForestM",
-	"RoofedForest",
-	"Savanna",
-	"Savanna_beach",
-	"SavannaM",
-	"Jungle",
-	"Jungle_shore",
-	"JungleM",
-	"JungleM_shore",
-	"JungleEdge",
-	"JungleEdgeM",
-	"Swampland",
-	"Swampland_shore"
-},
-9,
-minetest.LIGHT_MAX+1,
-30,
-17000,
-10,
-mobs_mc.water_level,
-mcl_vars.mg_overworld_max)
-
-
-
-mcl_mobs.spawn_specific(
-"mobs_mc:mooshroom",
-"overworld",
-"ground",
-{
-"MushroomIslandShore",
-"MushroomIsland"
-},
-9,
-minetest.LIGHT_MAX+1,
-30,
-17000,
-5,
-mcl_vars.mg_overworld_min,
-mcl_vars.mg_overworld_max)
+mcl_mobs.spawn_setup({
+	name = "mobs_mc:mooshroom",
+	type_of_spawning = "ground",
+	dimension = "overworld",
+	aoc = 9,
+	min_height = mobs_mc.water_level,
+	biomes = {
+		"MushroomIslandShore",
+		"MushroomIsland"
+	},
+	chance = 17000,
+})
 
 -- spawn egg
 mcl_mobs.register_egg("mobs_mc:cow", S("Cow"), "#443626", "#a1a1a1", 0)
