@@ -323,7 +323,7 @@ if mobs_spawn then
 		local s = minetest.find_nodes_in_area_under_air(
 			vector.offset(pos,-32,-32,-32),
 			vector.offset(pos,32,32,32),
-			{"group:solid","group:water","group:lava"}
+			{"group:opaque","group:water","group:lava"}
 		)
 		for _,v in pairs(s) do
 			local dst = vector.distance(pos,v)
