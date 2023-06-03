@@ -168,8 +168,6 @@ table.update(cat,{
 
 mcl_mobs.register_mob("mobs_mc:cat", cat)
 
-local base_spawn_chance = 5000
-
 mcl_mobs.spawn_setup({
 	name = "mobs_mc:ocelot",
 	type_of_spawning = "ground",
