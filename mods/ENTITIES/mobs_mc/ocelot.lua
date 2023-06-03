@@ -121,6 +121,7 @@ table.update(cat,{
 	tamed = false,
 	runaway = false,
 	follow_velocity = 2.4,
+	visual_size = { x = 0.8, y = 0.8 },
 	-- Automatically teleport cat to owner
 	do_custom = mobs_mc.make_owner_teleport_function(12),
 	sounds = {
