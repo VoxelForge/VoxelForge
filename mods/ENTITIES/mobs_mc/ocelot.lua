@@ -9,8 +9,6 @@ local S = minetest.get_translator("mobs_mc")
 --################### OCELOT AND CAT
 --###################
 
-local pr = PseudoRandom(os.time()*12)
-
 local default_walk_chance = 70
 
 local follow = {
@@ -92,7 +90,7 @@ local ocelot = {
 				clicker:set_wielded_item(item)
 			end
 			-- 1/3 chance of getting tamed
-			if pr:next(1, 3) == 1 then
+			if math.random(3) == 1 then
 				local yaw = self.object:get_yaw()
 				local cat = minetest.add_entity(self.object:get_pos(), "mobs_mc:cat")
 				cat:set_yaw(yaw)
