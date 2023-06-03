@@ -111,61 +111,61 @@ mcl_mobs.register_mob("mobs_mc:ocelot", ocelot)
 
 -- Cat
 local cat = table.copy(ocelot)
-cat.description = S("Cat")
-cat.textures = {{"mobs_mc_cat_black.png"}, {"mobs_mc_cat_red.png"}, {"mobs_mc_cat_siamese.png"}}
-cat.can_despawn = false
-cat.owner = ""
-cat.order = "roam" -- "sit" or "roam"
-cat.owner_loyal = true
-cat.tamed = true
-cat.runaway = false
-cat.follow_velocity = 2.4
--- Automatically teleport cat to owner
-cat.do_custom = mobs_mc.make_owner_teleport_function(12)
-cat.sounds = {
-	random = "mobs_mc_cat_idle",
-	damage = "mobs_mc_cat_hiss",
-	death = "mobs_mc_ocelot_hurt",
-	eat = "mobs_mc_animal_eat_generic",
-	distance = 16,
-}
-cat.on_rightclick = function(self, clicker)
-	if self:feed_tame(clicker, 1, true, false) then return end
-	if mcl_mobs.capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
-	if mcl_mobs.protect(self, clicker) then return end
+table.update(cat,{
+	description = S("Cat"),
+	textures = {{"mobs_mc_cat_black.png"}, {"mobs_mc_cat_red.png"}, {"mobs_mc_cat_siamese.png"}},
+	can_despawn = false,
+	owner = "",
+	order = "roam", -- "sit" or "roam"
+	owner_loyal = true,
+	tamed = false,
+	runaway = false,
+	follow_velocity = 2.4,
+	-- Automatically teleport cat to owner
+	do_custom = mobs_mc.make_owner_teleport_function(12),
+	sounds = {
+		random = "mobs_mc_cat_idle",
+		damage = "mobs_mc_cat_hiss",
+		death = "mobs_mc_ocelot_hurt",
+		eat = "mobs_mc_animal_eat_generic",
+		distance = 16,
+	},
+	on_rightclick = function(self, clicker)
+		if self:feed_tame(clicker, 1, true, false) then return end
+		if mcl_mobs.capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
+		if mcl_mobs.protect(self, clicker) then return end
 
-	if self.child then return end
+		if self.child then return end
 
-	-- Toggle sitting order
+		-- Toggle sitting order
 
-	if not self.owner or self.owner == "" then
-		-- Huh? This cat has no owner? Let's fix this! This should never happen.
-		self.owner = clicker:get_player_name()
+		if not self.owner or self.owner == "" then
+			-- Huh? This cat has no owner? Let's fix this! This should never happen.
+			self.owner = clicker:get_player_name()
+		end
+
+		if not self.order or self.order == "" or self.order == "sit" then
+			self.order = "roam"
+			self.walk_chance = default_walk_chance
+			self.jump = true
+		else
+			-- “Sit!”
+			-- TODO: Add sitting model
+			self.order = "sit"
+			self.walk_chance = 0
+			self.jump = false
+		end
+	end,
+	on_spawn  = function(self)
+		if self.owner == "!witch!" then
+			self._texture = {"mobs_mc_cat_black.png"}
+		end
+		if not self._texture then
+			self._texture = cat.textures[math.random(#cat.textures)]
+		end
+		self.object:set_properties({textures = self._texture})
 	end
-
-	if not self.order or self.order == "" or self.order == "sit" then
-		self.order = "roam"
-		self.walk_chance = default_walk_chance
-		self.jump = true
-	else
-		-- “Sit!”
-		-- TODO: Add sitting model
-		self.order = "sit"
-		self.walk_chance = 0
-		self.jump = false
-	end
-
-end
-
-cat.on_spawn  = function(self)
-	if self.owner == "!witch!" then
-		self._texture = {"mobs_mc_cat_black.png"}
-	end
-	if not self._texture then
-		self._texture = cat.textures[math.random(#cat.textures)]
-	end
-	self.object:set_properties({textures = self._texture})
-end
+})
 
 mcl_mobs.register_mob("mobs_mc:cat", cat)
 
