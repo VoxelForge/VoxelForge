@@ -214,6 +214,13 @@ local function spawn_villagers(minp,maxp)
 	end
 end
 
+local function spawn_cats(pos)
+	local sp=minetest.find_nodes_in_area_under_air(vector.offset(pos,-20,-20,-20),vector.offset(pos,20,20,20),{"group:opaque"})
+	for i=1,math.random(5) do
+		minetest.add_entity(vector.offset(sp[math.random(#sp)],0,1,0),"mobs_mc:cat")
+	end
+end
+
 local function init_nodes(p1, p2, size, rotation, pr)
 	construct_node(p1, p2, "mcl_itemframes:item_frame")
 	construct_node(p1, p2, "mcl_furnaces:furnace")
@@ -250,6 +257,7 @@ function settlements.place_schematics(settlement_info, pr)
 			end,
 			pr
 		)
+		spawn_cats(belltower["pos"])
 	end
 
 	for i, built_house in ipairs(settlement_info) do
