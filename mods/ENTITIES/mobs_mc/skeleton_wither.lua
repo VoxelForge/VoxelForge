@@ -98,23 +98,5 @@ mcl_mobs.register_mob("mobs_mc:witherskeleton", {
 	fire_resistant = true,
 })
 
---spawn
---[[]
-mcl_mobs.spawn_specific(
-"mobs_mc:witherskeleton",
-"nether",
-"ground",
-{
-"Nether",
-"SoulsandValley",
-},
-0,
-7,
-30,
-5000,
-5,
-mcl_vars.mg_nether_min,
-mcl_vars.mg_nether_max)
---]]
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:witherskeleton", S("Wither Skeleton"), "#141414", "#474d4d", 0)

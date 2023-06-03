@@ -101,9 +101,6 @@ mcl_mobs.register_arrow("mobs_mc:potion_arrow", {
 	end
 })
 
--- TODO: Spawn when witch works properly <- eventually -j4i
---mcl_mobs.spawn_specific("mobs_mc:witch", { "mcl_core:jungletree", "mcl_core:jungleleaves", "mcl_flowers:fern", "mcl_core:vine" }, {"air"}, 0, minetest.LIGHT_MAX-6, 12, 20000, 2, mobs_mc.water_level-6, mcl_vars.mg_overworld_max)
-
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:witch", S("Witch"), "#340000", "#51a03e", 0, true)
 
