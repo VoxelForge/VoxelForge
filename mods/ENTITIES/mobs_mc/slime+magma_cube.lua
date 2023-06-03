@@ -339,49 +339,21 @@ magma_cube_tiny.on_die = nil
 
 mcl_mobs.register_mob("mobs_mc:magma_cube_tiny", magma_cube_tiny)
 
-
-local magma_cube_biomes = {"Nether", "BasaltDelta"}
-local nether_min = mcl_vars.mg_nether_min
-local nether_max = mcl_vars.mg_nether_max
-
-mcl_mobs.spawn_specific(
-"mobs_mc:magma_cube_tiny",
-"nether",
-"ground",
-magma_cube_biomes,
-0,
-minetest.LIGHT_MAX+1,
-30,
-15000,
-4,
-nether_min,
-nether_max)
-
-mcl_mobs.spawn_specific(
-"mobs_mc:magma_cube_small",
-"nether",
-"ground",
-magma_cube_biomes,
-0,
-minetest.LIGHT_MAX+1,
-30,
-15500,
-4,
-nether_min,
-nether_max)
-
-mcl_mobs.spawn_specific(
-"mobs_mc:magma_cube_big",
-"nether",
-"ground",
-magma_cube_biomes,
-0,
-minetest.LIGHT_MAX+1,
-30,
-16000,
-4,
-nether_min,
-nether_max)
+for magma_name,magma_chance in pairs({
+	["mobs_mc:magma_cube_tiny"] = 15000,
+	["mobs_mc:magma_cube_small"] = 15500,
+	["mobs_mc:magma_cube_big"] = 16000
+}) do
+	mcl_mobs.spawn_setup({
+		name = magma_name,
+		type_of_spawning = "ground",
+		dimension = "nether",
+		min_light = 0,
+		max_light = minetest.LIGHT_MAX+1,
+		chance = magma_chance,
+		biomes = {"Nether", "BasaltDelta"},
+	})
+end
 
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:magma_cube_big", S("Magma Cube"), "#350000", "#fcfc00")
