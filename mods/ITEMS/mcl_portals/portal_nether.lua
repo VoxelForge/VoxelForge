@@ -37,8 +37,8 @@ end
 -- because the portal generation position and rounding might make the portals
 -- generate a bit further than 16 nodes away.
 local link_distance = {
-	overworld = 20 * NETHER_SCALE,
-	nether = 20,
+	overworld = 16 * NETHER_SCALE,
+	nether = 16,
 }
 
 -- The min and max y levels when searching for a place to generate a new nether
