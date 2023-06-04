@@ -338,27 +338,41 @@ end
 -- bad_spot is true, then it will make a small platform and clear air space
 -- above it.
 local function build_portal(pos, param2, bad_spot)
+	local portals = {}
+	local obsidian = {}
+	local air = {}
+
 	for i = -2, 1 do
-		minetest.set_node(pos + orient(vector.new(i, -1, 0), param2), { name = "mcl_core:obsidian" })
-		minetest.set_node(pos + orient(vector.new(i, 3, 0), param2), { name = "mcl_core:obsidian" })
+		table.insert(obsidian, pos + orient(vector.new(i, -1, 0), param2))
+		table.insert(obsidian, pos + orient(vector.new(i, 3, 0), param2))
 	end
 
 	for i = 0, 2 do
-		minetest.set_node(pos + orient(vector.new(-2, i, 0), param2), { name = "mcl_core:obsidian" })
-		minetest.set_node(pos + orient(vector.new(1, i, 0), param2), { name = "mcl_core:obsidian" })
+		table.insert(obsidian, pos + orient(vector.new(-2, i, 0), param2))
+		table.insert(portals, pos + orient(vector.new(-1, i, 0), param2))
+		table.insert(portals, pos + orient(vector.new(0, i, 0), param2))
+		table.insert(obsidian, pos + orient(vector.new(1, i, 0), param2))
 	end
 
 	if bad_spot then
-		for i = -1, 2 do
-			local content = i == -1 and "mcl_core:obsidian" or "air"
-			minetest.set_node(pos + orient(vector.new(-1, i, -1), param2), { name = content })
-			minetest.set_node(pos + orient(vector.new(0, i, -1), param2), { name = content })
-			minetest.set_node(pos + orient(vector.new(-1, i, 1), param2), { name = content })
-			minetest.set_node(pos + orient(vector.new(0, i, 1), param2), { name = content })
+		table.insert(obsidian, pos + orient(vector.new(-1, -1, -1), param2))
+		table.insert(obsidian, pos + orient(vector.new(0, -1, -1), param2))
+		table.insert(obsidian, pos + orient(vector.new(-1, -1, 1), param2))
+		table.insert(obsidian, pos + orient(vector.new(0, -1, 1), param2))
+		for i = 0, 2 do
+			table.insert(air, pos + orient(vector.new(-1, i, -1), param2))
+			table.insert(air, pos + orient(vector.new(0, i, -1), param2))
+			table.insert(air, pos + orient(vector.new(-1, i, 1), param2))
+			table.insert(air, pos + orient(vector.new(0, i, 1), param2))
 		end
 	end
 
-	light_nether_portal(pos, param2)
+	minetest.bulk_set_node(obsidian, { name = "mcl_core:obsidian" })
+	minetest.bulk_set_node(air, { name = "air" })
+	minetest.bulk_set_node(portals, { name = "mcl_portals:portal", param2 = param2 })
+	init_portal_meta(portals, pos)
+	register_portal(pos)
+
 	minetest.log("action", "[mcl_portal] Destination portal generated at " .. tostring(pos))
 end
 
@@ -425,6 +439,10 @@ local function in_portal(obj)
 	return get_portal(pos)
 end
 
+local function portal_distance(a, b)
+	return math.max(math.abs(a.x - b.x), math.abs(math.abs(a.z - b.z)))
+end
+
 -- Scan emerged area and build a portal at a suitable spot. If no suitable spot
 -- is found, then it will build the portal at a random location.
 local function portal_emerge_area(blockpos, action, calls_remaining, param)
@@ -432,6 +450,8 @@ local function portal_emerge_area(blockpos, action, calls_remaining, param)
 		return
 	end
 	local portal = param.portal
+	local dim = param.dim
+	local target = param.target
 	local minpos = param.minpos
 	local maxpos = param.maxpos
 	local param2 = param.param2
@@ -458,7 +478,7 @@ local function portal_emerge_area(blockpos, action, calls_remaining, param)
 	local liquid_pos
 	local nodes = minetest.find_nodes_in_area_under_air(minpos, maxpos, portal_search_groups)
 	for _, pos in pairs(nodes) do
-		if suitable_for_portal(pos, param2) and can_place_portal(pos, player_name) then
+		if suitable_for_portal(pos, param2) and can_place_portal(pos, player_name) and portal_distance(pos, target) <= link_distance[dim] then
 			if not (minetest.get_item_group(minetest.get_node(pos).name, "liquid") > 0) then
 				finalize(obj, pos, param2, false)
 				return
@@ -474,11 +494,7 @@ local function portal_emerge_area(blockpos, action, calls_remaining, param)
 
 	-- 5 attempts to find a random spot which is not protected.
 	for i = 1, 5 do
-		local pos = vector.new(
-			math.random(minpos.x, maxpos.x),
-			math.random(minpos.y, maxpos.y),
-			math.random(minpos.z, maxpos.z)
-		)
+		local pos = vector.new(target.x, math.random(minpos.y, maxpos.y), target.y)
 		if can_place_portal(pos, player_name) then
 			finalize(obj, pos, param2, true)
 			return
@@ -500,10 +516,6 @@ local function get_teleport_target(pos)
 	elseif dim == "nether" then
 		return "overworld", vector.new(nether_to_overworld(pos.x), 0, nether_to_overworld(pos.z)):round()
 	end
-end
-
-local function portal_distance(a, b)
-	return math.max(math.abs(a.x - b.x), math.abs(math.abs(a.z - b.z)))
 end
 
 -- Get portal nearby position in dimension or nil.
@@ -558,6 +570,8 @@ local function teleport(obj)
 			minpos = minpos,
 			maxpos = maxpos,
 			portal = portal,
+			dim = dim,
+			target = target,
 			done_flag = false,
 		})
 	end
