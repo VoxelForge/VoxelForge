@@ -486,7 +486,7 @@ local function portal_emerge_area(blockpos, action, calls_remaining, param)
 	end
 
 	minetest.sound_play("mcl_portals_teleport", {pos = obj:get_pos(), gain = 0.5, max_hear_distance = 1}, true)
-	minetest.log("action", "[mcl_portal] Could not generate destination portal for " .. obj:get_player_name() .. " at " .. tostring(portal))
+	minetest.log("action", "[mcl_portal] Could not generate destination portal for " .. player_name .. " at " .. tostring(portal))
 	minetest.remove_node(portal)
 	teleport_finished(obj)
 end
