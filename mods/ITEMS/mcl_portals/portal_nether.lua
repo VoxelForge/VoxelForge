@@ -362,6 +362,12 @@ local function build_portal(pos, param2, bad_spot)
 	minetest.log("action", "[mcl_portal] Destination portal generated at " .. tostring(pos))
 end
 
+local function teleport_finished(obj)
+	minetest.after(TELEPORT_COOLOFF, function(obj)
+		portal_cooloff[obj] = false
+	end, obj)
+end
+
 local function finalize_teleport(obj, pos, old_param2, new_param2)
 	-- Adjust the player's look direction depending on the relative
 	-- direction of the portals.
@@ -377,9 +383,7 @@ local function finalize_teleport(obj, pos, old_param2, new_param2)
 		minetest.log("action", "[mcl_portal] " .. obj:get_player_name() .. " teleported to " .. tostring(pos))
 	end
 
-	minetest.after(TELEPORT_COOLOFF, function(obj)
-		portal_cooloff[obj] = false
-	end, obj)
+	teleport_finished(obj)
 end
 
 local function build_portal_and_teleport(obj, pos, param2, bad_spot)
@@ -387,8 +391,14 @@ local function build_portal_and_teleport(obj, pos, param2, bad_spot)
 	finalize_teleport(obj, pos, param2, param2)
 end
 
+local function can_place_portal(pos, player_name)
+	local pos1 = pos:offset(-8, -8, -8)
+	local pos2 = pos:offset(8, 8, 8)
+	return not minetest.is_area_protected(pos1, pos2, player_name)
+end
+
 -- Check if portal with param2 can be placed at position.
-local function can_place_portal(pos, param2)
+local function suitable_for_portal(pos, param2)
 	local pos1 = pos + orient(vector.new(-2, 0, -1), param2)
 	local pos2 = pos + orient(vector.new(1, 0, 1), param2)
 	local ground_nodes = minetest.find_nodes_in_area(pos1, pos2, portal_search_groups)
@@ -399,7 +409,7 @@ local function can_place_portal(pos, param2)
 	local air_pos1 = pos + orient(vector.new(-2, 1, -1), param2)
 	local air_pos2 = pos + orient(vector.new(1, 4, 1), param2)
 	local air_nodes = minetest.find_nodes_in_area(air_pos1, air_pos2, { "air" })
-	return #air_nodes == 48 and not minetest.is_area_protected(air_pos1, air_pos2, "")
+	return #air_nodes == 48
 end
 
 -- Check if object is in portal, returns the (position, node) of the portal if
@@ -421,10 +431,12 @@ local function portal_emerge_area(blockpos, action, calls_remaining, param)
 	if param.done_flag or calls_remaining ~= 0 then
 		return
 	end
+	local portal = param.portal
 	local minpos = param.minpos
 	local maxpos = param.maxpos
 	local param2 = param.param2
 	local obj = param.obj
+	local player_name = obj:get_player_name()
 
 	-- Since there is a significant delay until the callback is run, we do
 	-- another check if the player is still standing in the portal.
@@ -446,7 +458,7 @@ local function portal_emerge_area(blockpos, action, calls_remaining, param)
 	local liquid_pos
 	local nodes = minetest.find_nodes_in_area_under_air(minpos, maxpos, portal_search_groups)
 	for _, pos in pairs(nodes) do
-		if can_place_portal(pos, param2) then
+		if suitable_for_portal(pos, param2) and can_place_portal(pos, player_name) then
 			if not (minetest.get_item_group(minetest.get_node(pos).name, "liquid") > 0) then
 				finalize(obj, pos, param2, false)
 				return
@@ -460,12 +472,23 @@ local function portal_emerge_area(blockpos, action, calls_remaining, param)
 		return
 	end
 
-	local pos = vector.new(
-		math.random(minpos.x, maxpos.x),
-		math.random(minpos.y, maxpos.y),
-		math.random(minpos.z, maxpos.z)
-	)
-	finalize(obj, pos, param2, true)
+	-- 5 attempts to find a random spot which is not protected.
+	for i = 1, 5 do
+		local pos = vector.new(
+			math.random(minpos.x, maxpos.x),
+			math.random(minpos.y, maxpos.y),
+			math.random(minpos.z, maxpos.z)
+		)
+		if can_place_portal(pos, player_name) then
+			finalize(obj, pos, param2, true)
+			return
+		end
+	end
+
+	minetest.sound_play("mcl_portals_teleport", {pos = obj:get_pos(), gain = 0.5, max_hear_distance = 1}, true)
+	minetest.log("action", "[mcl_portal] Could not generate destination portal for " .. obj:get_player_name() .. " at " .. tostring(portal))
+	minetest.remove_node(portal)
+	teleport_finished(obj)
 end
 
 -- Get the target dimension and coordinate from portal located at position.
@@ -534,6 +557,7 @@ local function teleport(obj)
 			param2 = param2,
 			minpos = minpos,
 			maxpos = maxpos,
+			portal = portal,
 			done_flag = false,
 		})
 	end
