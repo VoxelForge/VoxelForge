@@ -340,7 +340,6 @@ end
 local function build_portal(pos, param2, bad_spot)
 	for i = -2, 1 do
 		minetest.set_node(pos + orient(vector.new(i, -1, 0), param2), { name = "mcl_core:obsidian" })
-		minetest.set_node(pos + orient(vector.new(i, -1, 0), param2), { name = "mcl_core:obsidian" })
 		minetest.set_node(pos + orient(vector.new(i, 3, 0), param2), { name = "mcl_core:obsidian" })
 	end
 
