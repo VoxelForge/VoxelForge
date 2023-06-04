@@ -222,6 +222,7 @@ function mcl_mobs.register_mob(name, def)
 		replace_with = def.replace_with,
 		replace_offset = def.replace_offset or 0,
 		on_replace = def.on_replace,
+		replace_delay = def.replace_delay or 0,
 		timer = 0,
 		env_damage_timer = 0,
 		tamed = false,
