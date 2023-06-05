@@ -222,7 +222,7 @@ mcl_mobs.register_mob("mobs_mc:parrot", {
 })
 
 mcl_mobs.spawn_setup({
-	name = "mobs_mc:polar_bear",
+	name = "mobs_mc:parrot",
 	type_of_spawning = "ground",
 	dimension = "overworld",
 	aoc = 3,

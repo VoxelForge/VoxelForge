@@ -66,7 +66,7 @@ else
 end
 
 mcl_mobs.spawn_setup({
-	name = "mobs_mc:glow_squid",
+	name = "mobs_mc:bat",
 	type_of_spawning = "ground",
 	dimension = "overworld",
 	min_height = mcl_vars.mg_overworld_min,

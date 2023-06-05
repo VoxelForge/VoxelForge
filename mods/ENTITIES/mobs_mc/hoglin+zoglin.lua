@@ -118,7 +118,7 @@ mcl_mobs.register_mob("mobs_mc:baby_hoglin", baby_hoglin)
 
 mcl_mobs.spawn_setup({
 	name = "mobs_mc:hoglin",
-	type_of_spawning = "lava",
+	type_of_spawning = "ground",
 	dimension = "nether",
 	min_light = 0,
 	max_light = minetest.LIGHT_MAX+1,

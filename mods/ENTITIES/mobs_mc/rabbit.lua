@@ -134,7 +134,7 @@ mcl_mobs.register_mob("mobs_mc:killer_bunny", killer_bunny)
 -- Different skins depending on spawn location <- we'll get to this when the spawning algorithm is fleshed out
 
 mcl_mobs.spawn_setup({
-	name = "mobs_mc:wolf",
+	name = "mobs_mc:rabbit",
 	type_of_spawning = "ground",
 	dimension = "overworld",
 	aoc = 8,

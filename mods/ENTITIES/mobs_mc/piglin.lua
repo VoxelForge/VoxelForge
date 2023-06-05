@@ -288,7 +288,7 @@ mcl_mobs.register_mob("mobs_mc:piglin_brute", piglin_brute)
 
 mcl_mobs.spawn_setup({
 	name = "mobs_mc:piglin",
-	type_of_spawning = "lava",
+	type_of_spawning = "ground",
 	dimension = "nether",
 	min_light = 0,
 	max_light = minetest.LIGHT_MAX+1,
@@ -303,7 +303,7 @@ mcl_mobs.spawn_setup({
 
 mcl_mobs.spawn_setup({
 	name = "mobs_mc:sword_piglin",
-	type_of_spawning = "lava",
+	type_of_spawning = "ground",
 	dimension = "nether",
 	min_light = 0,
 	max_light = minetest.LIGHT_MAX+1,
