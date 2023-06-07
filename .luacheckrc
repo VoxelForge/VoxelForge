@@ -191,6 +191,7 @@ globals = {
 	"mcl_worlds",
 	"mcl_zombie_sieges",
 	"mcl_lush_caves",
+	"mcl_armor_trims",
 }
 
 read_globals = {
