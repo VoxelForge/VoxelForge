@@ -274,7 +274,7 @@ local function register_abms()
 		name = ":mcl_mapgen_core:replace_old_bedrock",
 		nodenames = { "mcl_core:bedrock" },
 		chance = 5,
-		interval = 5,
+		interval = 60,
 		min_y = mcl_vars.mg_overworld_min_old,
 		max_y = mcl_vars.mg_overworld_min_old + 4,
 		action = function(p)
