@@ -56,6 +56,11 @@ end
 for _,mg in pairs({"v7","valleys","carpathian","v5","fractal"}) do
 	if mg_name == mg then
 		minetest.set_mapgen_setting("mg"..mg.."_cavern_threshold", "0.20", true) --large nether caves
+		minetest.set_mapgen_setting("mg"..mg.."_small_cave_num_min", "0", true) -- more large overworld caves
+		minetest.set_mapgen_setting("mg"..mg.."_small_cave_num_max", "12", true)
+		minetest.set_mapgen_setting("mg"..mg.."_large_cave_flooded", "0.1", true)
+		minetest.set_mapgen_setting("mg"..mg.."_large_cave_num_min", "0", true)
+		minetest.set_mapgen_setting("mg"..mg.."_large_cave_num_max", "9", true)
 		mg_flags.caverns = true
 	end
 end
