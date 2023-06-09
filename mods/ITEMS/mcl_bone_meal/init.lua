@@ -25,22 +25,31 @@ function mcl_bone_meal.add_bone_meal_particle(pos, def)
 end
 
 local function bone_meal(itemstack,user,pointed_thing)
+	local pname = user:get_player_name()
 	local unode = minetest.get_node(pointed_thing.under)
 	local anode = minetest.get_node(pointed_thing.above)
 	local udef = minetest.registered_nodes[unode.name]
 	local adef = minetest.registered_nodes[anode.name]
 	if udef and udef._on_bone_meal then
+		if minetest.is_protected(pointed_thing.under, pname) then
+			minetest.record_protection_violation(pointed_thing.under, pname)
+			return itemstack
+		end
 		if udef._on_bone_meal(itemstack,user,pointed_thing, pointed_thing.under,unode) ~= false then
 			mcl_bone_meal.add_bone_meal_particle(pointed_thing.under)
 			mcl_bone_meal.add_bone_meal_particle(pointed_thing.above)
-			if not minetest.is_creative_enabled(user:get_player_name()) then
+			if not minetest.is_creative_enabled(pname) then
 				itemstack:take_item()
 			end
 		end
 	elseif adef and adef._on_bone_meal then
+		if minetest.is_protected(pointed_thing.above, pname) then
+			minetest.record_protection_violation(pointed_thing.above, pname)
+			return itemstack
+		end
 		if adef._on_bone_meal(itemstack,user,pointed_thing,pointed_thing.above,anode) ~= false then
 			mcl_bone_meal.add_bone_meal_particle(pointed_thing.above)
-			if not minetest.is_creative_enabled(user:get_player_name()) then
+			if not minetest.is_creative_enabled(pname) then
 				itemstack:take_item()
 			end
 		end
