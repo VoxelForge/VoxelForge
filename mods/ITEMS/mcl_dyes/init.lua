@@ -11,7 +11,7 @@
 --     recipe = {"<mod>:item_no_color", "group:basecolor_yellow"},
 -- })
 
-mcl_dye = {}
+mcl_dyes = {}
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
@@ -76,8 +76,8 @@ local dyes = {
 }
 
 -- Other mods can use these for looping through available colors
-mcl_dye.basecolors = {"white", "grey", "black", "magenta", "blue", "cyan", "green", "yellow", "orange", "red", "brown"}
-mcl_dye.excolors = {"white", "grey", "darkgrey", "black", "violet", "blue", "cyan", "green", "yellow", "orange", "red", "red_violet"}
+mcl_dyes.basecolors = {"white", "grey", "black", "magenta", "blue", "cyan", "green", "yellow", "orange", "red", "brown"}
+mcl_dyes.excolors = {"white", "grey", "darkgrey", "black", "violet", "blue", "cyan", "green", "yellow", "orange", "red", "red_violet"}
 
 local unicolor_to_dye_id = {}
 for d = 1, #dyes do
@@ -90,10 +90,10 @@ end
 
 -- Takes an unicolor group name (e.g. “unicolor_white”) and returns a
 -- corresponding dye name (if it exists), nil otherwise.
-function mcl_dye.unicolor_to_dye(unicolor_group)
+function mcl_dyes.unicolor_to_dye(unicolor_group)
 	local color = unicolor_to_dye_id[unicolor_group]
 	if color then
-		return "mcl_dye:" .. color
+		return "mcl_dyes:" .. color
 	else
 		return nil
 	end
@@ -103,201 +103,202 @@ end
 --
 for _, row in pairs(dyes) do
 	local name, desc, grps = unpack(row)
-	minetest.register_craftitem("mcl_dye:" .. name, {
+	minetest.register_craftitem("mcl_dyes:" .. name, {
 		inventory_image = "mcl_dye_" .. name .. ".png",
 		description = desc,
 		_doc_items_longdesc = S("This item is a dye which is used for dyeing and crafting."),
 		_doc_items_usagehelp = S("Rightclick on a sheep to dye its wool. Other things are dyed by crafting."),
 		groups = table.update({craftitem = 1, dye = 1}, grps)
 	})
+	minetest.register_alias("mcl_dye:"..name,"mcl_dyes:"..name)
 end
 
 -- Dye creation recipes.
 --
 minetest.register_craft({
-	output = "mcl_dye:white 3",
+	output = "mcl_dyes:white 3",
 	recipe = {{"mcl_bone_meal:bone_meal"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:black",
+	output = "mcl_dyes:black",
 	recipe = {{"mcl_mobitems:ink_sac"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:yellow",
+	output = "mcl_dyes:yellow",
 	recipe = {{"mcl_flowers:dandelion"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:yellow 2",
+	output = "mcl_dyes:yellow 2",
 	recipe = {{"mcl_flowers:sunflower"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:blue",
+	output = "mcl_dyes:blue",
 	recipe = {{"mcl_core:lapis"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:lightblue",
+	output = "mcl_dyes:lightblue",
 	recipe = {{"mcl_flowers:blue_orchid"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:grey",
+	output = "mcl_dyes:grey",
 	recipe = {{"mcl_flowers:azure_bluet"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:grey",
+	output = "mcl_dyes:grey",
 	recipe = {{"mcl_flowers:oxeye_daisy"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:grey",
+	output = "mcl_dyes:grey",
 	recipe = {{"mcl_flowers:tulip_white"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:magenta",
+	output = "mcl_dyes:magenta",
 	recipe = {{"mcl_flowers:allium"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:magenta 2",
+	output = "mcl_dyes:magenta 2",
 	recipe = {{"mcl_flowers:lilac"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:orange",
+	output = "mcl_dyes:orange",
 	recipe = {{"mcl_flowers:tulip_orange"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:brown",
+	output = "mcl_dyes:brown",
 	recipe = {{"mcl_cocoas:cocoa_beans"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:pink",
+	output = "mcl_dyes:pink",
 	recipe = {{"mcl_flowers:tulip_pink"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:pink 2",
+	output = "mcl_dyes:pink 2",
 	recipe = {{"mcl_flowers:peony"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:red",
+	output = "mcl_dyes:red",
 	recipe = {{"mcl_farming:beetroot_item"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:red",
+	output = "mcl_dyes:red",
 	recipe = {{"mcl_flowers:poppy"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:red",
+	output = "mcl_dyes:red",
 	recipe = {{"mcl_flowers:tulip_red"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dye:red 2",
+	output = "mcl_dyes:red 2",
 	recipe = {{"mcl_flowers:rose_bush"}},
 })
 
 minetest.register_craft({
 	type = "cooking",
-	output = "mcl_dye:dark_green",
+	output = "mcl_dyes:dark_green",
 	recipe = "mcl_core:cactus",
 	cooktime = 10,
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dye:dark_grey 2",
-	recipe = {"mcl_dye:black", "mcl_dye:white"},
+	output = "mcl_dyes:dark_grey 2",
+	recipe = {"mcl_dyes:black", "mcl_dyes:white"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dye:lightblue 2",
-	recipe = {"mcl_dye:blue", "mcl_dye:white"},
+	output = "mcl_dyes:lightblue 2",
+	recipe = {"mcl_dyes:blue", "mcl_dyes:white"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dye:grey 3",
-	recipe = {"mcl_dye:black", "mcl_dye:white", "mcl_dye:white"},
+	output = "mcl_dyes:grey 3",
+	recipe = {"mcl_dyes:black", "mcl_dyes:white", "mcl_dyes:white"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dye:grey 2",
-	recipe = {"mcl_dye:dark_grey", "mcl_dye:white"},
+	output = "mcl_dyes:grey 2",
+	recipe = {"mcl_dyes:dark_grey", "mcl_dyes:white"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dye:green 2",
-	recipe = {"mcl_dye:dark_green", "mcl_dye:white"},
+	output = "mcl_dyes:green 2",
+	recipe = {"mcl_dyes:dark_green", "mcl_dyes:white"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dye:magenta 4",
-	recipe = {"mcl_dye:blue", "mcl_dye:white", "mcl_dye:red", "mcl_dye:red"},
+	output = "mcl_dyes:magenta 4",
+	recipe = {"mcl_dyes:blue", "mcl_dyes:white", "mcl_dyes:red", "mcl_dyes:red"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dye:magenta 3",
-	recipe = {"mcl_dye:pink", "mcl_dye:red", "mcl_dye:blue"},
+	output = "mcl_dyes:magenta 3",
+	recipe = {"mcl_dyes:pink", "mcl_dyes:red", "mcl_dyes:blue"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dye:magenta 2",
-	recipe = {"mcl_dye:violet", "mcl_dye:pink"},
+	output = "mcl_dyes:magenta 2",
+	recipe = {"mcl_dyes:violet", "mcl_dyes:pink"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dye:pink 2",
-	recipe = {"mcl_dye:red", "mcl_dye:white"},
+	output = "mcl_dyes:pink 2",
+	recipe = {"mcl_dyes:red", "mcl_dyes:white"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dye:cyan 2",
-	recipe = {"mcl_dye:blue", "mcl_dye:dark_green"},
+	output = "mcl_dyes:cyan 2",
+	recipe = {"mcl_dyes:blue", "mcl_dyes:dark_green"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dye:violet 2",
-	recipe = {"mcl_dye:blue", "mcl_dye:red"},
+	output = "mcl_dyes:violet 2",
+	recipe = {"mcl_dyes:blue", "mcl_dyes:red"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dye:orange 2",
-	recipe = {"mcl_dye:yellow", "mcl_dye:red"},
+	output = "mcl_dyes:orange 2",
+	recipe = {"mcl_dyes:yellow", "mcl_dyes:red"},
 })
 
 minetest.register_craft({
 	type = "cooking",
-	output = "mcl_dye:dark_green",
+	output = "mcl_dyes:dark_green",
 	recipe = "mcl_core:cactus",
 	cooktime = 10,
 })
 
 minetest.register_craft({
 	type = "cooking",
-	output = "mcl_dye:green",
+	output = "mcl_dyes:green",
 	recipe = "group:sea_pickle",
 	cooktime = 10,
 })
@@ -310,20 +311,20 @@ minetest.register_craft({
 
 minetest.register_craft({
 	output = "mcl_bone_meal:bone_meal",
-	recipe = {{"mcl_dye:white"}},
+	recipe = {{"mcl_dyes:white"}},
 })
 
 minetest.register_craft({
 	output = "mcl_mobitems:ink_sac",
-	recipe = {{"mcl_dye:black"}},
+	recipe = {{"mcl_dyes:black"}},
 })
 
 minetest.register_craft({
 	output = "mcl_core:lapis",
-	recipe = {{"mcl_dye:blue"}},
+	recipe = {{"mcl_dyes:blue"}},
 })
 
 minetest.register_craft({
 	output = "mcl_cocoas:cocoa_beans",
-	recipe = {{"mcl_dye:brown"}},
+	recipe = {{"mcl_dyes:brown"}},
 })
