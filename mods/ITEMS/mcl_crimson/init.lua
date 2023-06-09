@@ -8,31 +8,6 @@ local modpath = minetest.get_modpath(modname)
 local wood_slab_groups = {handy = 1, axey = 1, flammable = 3, material_wood = 1, fire_encouragement = 5, fire_flammability = 20, wood_slab = 1}
 local wood_stair_groups = {handy = 1, axey = 1, flammable = 3, material_wood = 1, fire_encouragement = 5, fire_flammability = 20, wood_stairs = 1}
 
-local function generate_warped_tree(pos)
-	minetest.place_schematic(pos,modpath.."/schematics/warped_fungus_1.mts","random",nil,false,"place_center_x,place_center_z")
-end
-
-function generate_crimson_tree(pos)
-	minetest.place_schematic(pos,modpath.."/schematics/crimson_fungus_1.mts","random",nil,false,"place_center_x,place_center_z")
-end
-
-function grow_vines(pos, moreontop ,vine, dir)
-	if dir == nil then dir = 1 end
-	local n
-	repeat
-		pos = vector.offset(pos,0,dir,0)
-		n = minetest.get_node(pos)
-		if n.name == "air" then
-			for i=0,math.max(moreontop,1) do
-				if minetest.get_node(pos).name == "air" then
-					minetest.set_node(vector.offset(pos,0,i*dir,0),{name=vine})
-				end
-			end
-			break
-		end
-	until n.name ~= "air" and n.name ~= vine
-end
-
 local nether_plants = {
 	["mcl_crimson:crimson_nylium"] = {
 		"mcl_crimson:crimson_roots",
@@ -63,9 +38,45 @@ local function spread_nether_plants(pos,node)
 		local p = vector.offset(nn[i],0,1,0)
 		if minetest.get_node(p).name == "air" then
 			minetest.set_node(p,{name=nether_plants[n][math.random(#nether_plants[n])]})
-			mcl_dye.add_bone_meal_particle(vector.offset(nn[i],0,1,0))
 		end
 	end
+end
+
+local function on_bone_meal(itemstack,user,pt,pos,node)
+	if not pt.type == "node" then return end
+	if node.name == "mcl_nether:netherrack" then
+		local n = has_nylium_neighbor(pt.under)
+		if n then
+			minetest.set_node(pt.under,n)
+		end
+	elseif node.name == "mcl_crimson:warped_nylium" or node.name == "mcl_crimson:crimson_nylium" then
+		spread_nether_plants(pt.under,node)
+	end
+end
+
+local function generate_warped_tree(pos)
+	minetest.place_schematic(pos,modpath.."/schematics/warped_fungus_1.mts","random",nil,false,"place_center_x,place_center_z")
+end
+
+function generate_crimson_tree(pos)
+	minetest.place_schematic(pos,modpath.."/schematics/crimson_fungus_1.mts","random",nil,false,"place_center_x,place_center_z")
+end
+
+function grow_vines(pos, moreontop ,vine, dir)
+	if dir == nil then dir = 1 end
+	local n
+	repeat
+		pos = vector.offset(pos,0,dir,0)
+		n = minetest.get_node(pos)
+		if n.name == "air" then
+			for i=0,math.max(moreontop,1) do
+				if minetest.get_node(pos).name == "air" then
+					minetest.set_node(vector.offset(pos,0,i*dir,0),{name=vine})
+				end
+			end
+			break
+		end
+	until n.name ~= "air" and n.name ~= vine
 end
 
 minetest.register_node("mcl_crimson:warped_fungus", {
@@ -363,6 +374,7 @@ minetest.register_node("mcl_crimson:warped_nylium", {
 	_mcl_hardness = 0.4,
 	_mcl_blast_resistance = 0.4,
 	_mcl_silk_touch_drop = true,
+	_on_bone_meal = on_bone_meal,
 })
 
 --Stem bark, stripped stem and bark
@@ -629,6 +641,7 @@ minetest.register_node("mcl_crimson:crimson_nylium", {
 	_mcl_hardness = 0.4,
 	_mcl_blast_resistance = 0.4,
 	_mcl_silk_touch_drop = true,
+	_on_bone_meal = on_bone_meal,
 })
 
 minetest.register_craft({
@@ -648,19 +661,6 @@ minetest.register_craft({
 
 mcl_stairs.register_stair("crimson_hyphae_wood", "mcl_crimson:crimson_hyphae_wood", wood_stair_groups, false, S("Crimson Stair"))
 mcl_stairs.register_slab("crimson_hyphae_wood", "mcl_crimson:crimson_hyphae_wood", wood_slab_groups, false, S("Crimson Slab"))
-
-mcl_dye.register_on_bone_meal_apply(function(pt,user)
-	if not pt.type == "node" then return end
-	local node = minetest.get_node(pt.under)
-	if node.name == "mcl_nether:netherrack" then
-		local n = has_nylium_neighbor(pt.under)
-		if n then
-			minetest.set_node(pt.under,n)
-		end
-	elseif node.name == "mcl_crimson:warped_nylium" or node.name == "mcl_crimson:crimson_nylium" then
-		spread_nether_plants(pt.under,node)
-	end
-end)
 
 mcl_doors:register_door("mcl_crimson:crimson_door", {
 	description = S("Crimson Door"),
