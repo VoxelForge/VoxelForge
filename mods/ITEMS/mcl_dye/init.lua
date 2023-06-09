@@ -196,13 +196,7 @@ local function apply_bone_meal(pointed_thing,user)
 		end
 	end
 
-	if minetest.get_item_group(n.name, "sapling") >= 1 then
-		mcl_dye.add_bone_meal_particle(pos)
-		-- Saplings: 45% chance to advance growth stage
-		if math.random(1,100) <= 45 then
-			return mcl_core.grow_sapling(pos, n)
-		end
-	elseif minetest.get_item_group(n.name, "mushroom") == 1 then
+	if minetest.get_item_group(n.name, "mushroom") == 1 then
 		mcl_dye.add_bone_meal_particle(pos)
 		-- Try to grow huge mushroom
 
