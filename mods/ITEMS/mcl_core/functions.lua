@@ -1495,3 +1495,71 @@ function mcl_core.strip_tree(itemstack, placer, pointed_thing)
 	end
 	return itemstack,true
 end
+
+function mcl_core.bone_meal_grass(itemstack,placer,pointed_thing,pos,n)
+	local flowers_table_plains = {
+		"mcl_flowers:dandelion",
+		"mcl_flowers:dandelion",
+		"mcl_flowers:poppy",
+
+		"mcl_flowers:oxeye_daisy",
+		"mcl_flowers:tulip_orange",
+		"mcl_flowers:tulip_red",
+		"mcl_flowers:tulip_white",
+		"mcl_flowers:tulip_pink",
+		"mcl_flowers:azure_bluet",
+	}
+	local flowers_table_simple = {
+		"mcl_flowers:dandelion",
+		"mcl_flowers:poppy",
+	}
+	local flowers_table_swampland = {
+		"mcl_flowers:blue_orchid",
+	}
+	local flowers_table_flower_forest = {
+		"mcl_flowers:dandelion",
+		"mcl_flowers:poppy",
+		"mcl_flowers:oxeye_daisy",
+		"mcl_flowers:tulip_orange",
+		"mcl_flowers:tulip_red",
+		"mcl_flowers:tulip_white",
+		"mcl_flowers:tulip_pink",
+		"mcl_flowers:azure_bluet",
+		"mcl_flowers:allium",
+	}
+
+	for i = -7, 7 do
+		for j = -7, 7 do
+			for y = -1, 1 do
+				pos = vector.offset(pointed_thing.above, i, y, j)
+				n = minetest.get_node(pos)
+				local n2 = minetest.get_node(vector.offset(pos, 0, -1, 0))
+
+				if n.name ~= "" and n.name == "air" and (minetest.get_item_group(n2.name, "grass_block_no_snow") == 1) then
+					-- Randomly generate flowers, tall grass or nothing
+					if math.random(1, 100) <= 90 / ((math.abs(i) + math.abs(j)) / 2)then
+						-- 90% tall grass, 10% flower
+						if math.random(1,100) <= 90 then
+							local col = n2.param2
+							minetest.add_node(pos, {name="mcl_flowers:tallgrass", param2=col})
+						else
+							local flowers_table
+							local biome = minetest.get_biome_name(minetest.get_biome_data(pos).biome)
+							if biome == "Swampland" or biome == "Swampland_shore" or biome == "Swampland_ocean" or biome == "Swampland_deep_ocean" or biome == "Swampland_underground" then
+								flowers_table = flowers_table_swampland
+							elseif biome == "FlowerForest" or biome == "FlowerForest_beach" or biome == "FlowerForest_ocean" or biome == "FlowerForest_deep_ocean" or biome == "FlowerForest_underground" then
+								flowers_table = flowers_table_flower_forest
+							elseif biome == "Plains" or biome == "Plains_beach" or biome == "Plains_ocean" or biome == "Plains_deep_ocean" or biome == "Plains_underground" or biome == "SunflowerPlains" or biome == "SunflowerPlains_ocean" or biome == "SunflowerPlains_deep_ocean" or biome == "SunflowerPlains_underground" then
+								flowers_table = flowers_table_plains
+							else
+								flowers_table = flowers_table_simple
+							end
+							minetest.add_node(pos, {name=flowers_table[math.random(1, #flowers_table)]})
+						end
+					end
+				end
+			end
+		end
+	end
+	return true
+end

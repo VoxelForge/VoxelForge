@@ -404,6 +404,7 @@ minetest.register_node("mcl_core:dirt_with_grass", {
 	_mcl_blast_resistance = 0.6,
 	_mcl_hardness = 0.6,
 	_mcl_silk_touch_drop = true,
+	_on_bone_meal = mcl_core.bone_meal_grass,
 })
 mcl_core.register_snowed_node("mcl_core:dirt_with_grass_snow", "mcl_core:dirt_with_grass", nil, nil, true, S("Dirt with Snow"))
 
