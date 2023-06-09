@@ -22,12 +22,7 @@ local nether_plants = {
 	},
 }
 
-local function has_nylium_neighbor(pos)
-	local p = minetest.find_node_near(pos,1,{"mcl_crimson:warped_nylium","mcl_crimson:crimson_nylium"})
-	if p then
-		return minetest.get_node(p)
-	end
-end
+
 
 local function spread_nether_plants(pos,node)
 	local n = node.name
@@ -44,12 +39,7 @@ end
 
 local function on_bone_meal(itemstack,user,pt,pos,node)
 	if not pt.type == "node" then return end
-	if node.name == "mcl_nether:netherrack" then
-		local n = has_nylium_neighbor(pt.under)
-		if n then
-			minetest.set_node(pt.under,n)
-		end
-	elseif node.name == "mcl_crimson:warped_nylium" or node.name == "mcl_crimson:crimson_nylium" then
+	if node.name == "mcl_crimson:warped_nylium" or node.name == "mcl_crimson:crimson_nylium" then
 		spread_nether_plants(pt.under,node)
 	end
 end

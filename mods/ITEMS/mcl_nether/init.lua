@@ -119,6 +119,12 @@ minetest.register_node("mcl_nether:netherrack", {
 	-- Eternal fire on top
 	after_destruct = eternal_after_destruct,
 	_on_ignite = eternal_on_ignite,
+	_on_bone_meal = function(itemstack,placer,pt,pos,node)
+		local n = minetest.find_node_near(pos,1,{"mcl_crimson:warped_nylium","mcl_crimson:crimson_nylium"})
+		if n then
+			minetest.set_node(pos,minetest.get_node(n))
+		end
+	end,
 })
 
 minetest.register_node("mcl_nether:magma", {
