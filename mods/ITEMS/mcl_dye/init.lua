@@ -175,12 +175,7 @@ local function apply_bone_meal(pointed_thing,user)
 		end
 	end
 
-	if n.name == "mcl_cocoas:cocoa_1" or n.name == "mcl_cocoas:cocoa_2" then
-		mcl_dye.add_bone_meal_particle(pos)
-		-- Cocoa: Advance by 1 stage
-		mcl_cocoas.grow(pos)
-		return true
-	elseif minetest.get_item_group(n.name, "grass_block") == 1 then
+	if minetest.get_item_group(n.name, "grass_block") == 1 then
 		-- Grass Block: Generate tall grass and random flowers all over the place
 		for i = -7, 7 do
 			for j = -7, 7 do
