@@ -374,46 +374,6 @@ end
 
 mcl_dye.apply_bone_meal = apply_bone_meal
 
-minetest.register_craftitem("mcl_dye:white", {
-	inventory_image = "mcl_dye_white.png",
-	description = S("Bone Meal"),
-	_tt_help = S("Speeds up plant growth"),
-	_doc_items_longdesc = S("Bone meal is a white dye and also useful as a fertilizer to speed up the growth of many plants."),
-	_doc_items_usagehelp = S("Rightclick a sheep to turn its wool white. Rightclick a plant to speed up its growth. Note that not all plants can be fertilized like this. When you rightclick a grass block, tall grass and flowers will grow all over the place."),
-	stack_max = 64,
-	groups = dyelocal.dyes[1][4],
-	on_place = function(itemstack, user, pointed_thing)
-		-- Use pointed node's on_rightclick function first, if present
-		local node = minetest.get_node(pointed_thing.under)
-		if user and not user:get_player_control().sneak then
-			if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-				return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, user, itemstack) or itemstack
-			end
-		end
-
-		-- Use the bone meal on the ground
-		if (apply_bone_meal(pointed_thing, user) and (not minetest.is_creative_enabled(user:get_player_name()))) then
-			itemstack:take_item()
-		end
-		return itemstack
-	end,
-	_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
-		-- Apply bone meal, if possible
-		local pointed_thing
-		if dropnode.name == "air" then
-			pointed_thing = { above = droppos, under = { x=droppos.x, y=droppos.y-1, z=droppos.z } }
-		else
-			pointed_thing = { above = pos, under = droppos }
-		end
-		local success = apply_bone_meal(pointed_thing, nil)
-		if success then
-			stack:take_item()
-		end
-		return stack
-	end,
-	_dispense_into_walkable = true
-})
-
 minetest.register_craftitem("mcl_dye:brown", {
 	inventory_image = "mcl_dye_brown.png",
 	_tt_help = S("Grows at the side of jungle trees"),
