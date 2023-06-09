@@ -1,4 +1,28 @@
+mcl_bone_meal = {}
+
 local S = minetest.get_translator(minetest.get_current_modname())
+
+function mcl_bone_meal.add_bone_meal_particle(pos, def)
+	if not def then
+		def = {}
+	end
+	minetest.add_particlespawner({
+		amount = def.amount or 10,
+		time = def.time or 0.1,
+		minpos = def.minpos or vector.subtract(pos, 0.5),
+		maxpos = def.maxpos or vector.add(pos, 0.5),
+		minvel = def.minvel or vector.new(-0.01, 0.01, -0.01),
+		maxvel = def.maxvel or vector.new(0.01, 0.01, 0.01),
+		minacc = def.minacc or vector.new(0, 0, 0),
+		maxacc = def.maxacc or vector.new(0, 0, 0),
+		minexptime = def.minexptime or 1,
+		maxexptime = def.maxexptime or 4,
+		minsize = def.minsize or 0.7,
+		maxsize = def.maxsize or 2.4,
+		texture = "mcl_particles_bonemeal.png^[colorize:#00EE00:125", -- TODO: real MC color
+		glow = def.glow or 1,
+	})
+end
 
 local function bone_meal(itemstack,user,pointed_thing)
 	local unode = minetest.get_node(pointed_thing.under)
@@ -6,11 +30,15 @@ local function bone_meal(itemstack,user,pointed_thing)
 	local udef = minetest.registered_nodes[unode.name]
 	local adef = minetest.registered_nodes[anode.name]
 	if udef and udef._on_bone_meal then
-		if udef._on_bone_meal(itemstack,user,pointed_thing, pointed_thing.under,unode) then
+		if udef._on_bone_meal(itemstack,user,pointed_thing, pointed_thing.under,unode) ~= false then
+			mcl_bone_meal.add_bone_meal_particle(pointed_thing.under)
+
 			itemstack:take_item()
 		end
 	elseif adef and adef._on_bone_meal then
-		if adef._on_bone_meal(itemstack,user,pointed_thing,pointed_thing.above,anode) then
+		if adef._on_bone_meal(itemstack,user,pointed_thing,pointed_thing.above,anode) ~= false then
+			mcl_bone_meal.add_bone_meal_particle(pointed_thing.above)
+
 			itemstack:take_item()
 		end
 	end
