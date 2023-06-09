@@ -641,7 +641,7 @@ minetest.register_abm({
                         elseif downnode.name == "mcl_composters:composter_7" then
                             level = 7
                         end
-                        mcl_dye.add_bone_meal_particle(vector.offset(downpos, 0, level/8, 0))
+                        mcl_bone_meal.add_bone_meal_particle(vector.offset(downpos, 0, level/8, 0))
                         if level < 7 then
                             level = level + 1
                         else
