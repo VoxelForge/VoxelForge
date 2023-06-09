@@ -2,6 +2,18 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 local planton = {"mcl_core:dirt_with_grass", "mcl_core:dirt", "mcl_core:podzol", "mcl_core:coarse_dirt", "mcl_farming:soil", "mcl_farming:soil_wet", "mcl_moss:moss"}
 
+local function on_bone_meal(itemstack,placer,pointed_thing,pos,n)
+	if n.name == "mcl_farming:sweet_berry_bush_3" then
+		for j=1, berries_to_drop[math.random(2)] do
+			minetest.add_item(pos, "mcl_farming:sweet_berry")
+		end
+		minetest.swap_node(pos, {name = "mcl_farming:sweet_berry_bush_1"})
+		return true
+	else
+		return mcl_farming.on_bone_meal(itemstack,placer,pointed_thing,pos,n,"plant_sweet_berry_bush",1)
+	end
+end
+
 for i=0, 3 do
 	local texture = "mcl_farming_sweet_berry_bush_" .. i .. ".png"
 	local node_name = "mcl_farming:sweet_berry_bush_" .. i
@@ -45,28 +57,7 @@ for i=0, 3 do
 		sounds = mcl_sounds.node_sound_leaves_defaults(),
 		_mcl_blast_resistance = 0,
 		_mcl_hardness = 0,
-		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-			local pn = clicker:get_player_name()
-			if clicker:is_player() and minetest.is_protected(pos, pn) then
-				minetest.record_protection_violation(pos, pn)
-				return itemstack
-			end
-			if 3 ~= i and mcl_dye and clicker:get_wielded_item():get_name() == "mcl_dye:white" then
-				mcl_dye.apply_bone_meal({under=pos},clicker)
-				if not minetest.is_creative_enabled(pn) then
-					itemstack:take_item()
-				end
-				return
-			end
-
-			if drop_berries then
-				for j=1, berries_to_drop[math.random(2)] do
-					minetest.add_item(pos, "mcl_farming:sweet_berry")
-				end
-				minetest.swap_node(pos, {name = "mcl_farming:sweet_berry_bush_1"})
-			end
-			return itemstack
-		end,
+		_on_bone_meal = on_bone_meal,
 	})
 	minetest.register_alias("mcl_sweet_berry:sweet_berry_bush_" .. i, node_name)
 end

@@ -1,5 +1,9 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
+local function on_bone_meal(itemstack,placer,pointed_thing,pos,node)
+	return mcl_farming.on_bone_meal(itemstack,placer,pointed_thing,pos,node,"plant_carrot")
+end
+
 for i=1, 7 do
 	local texture, sel_height
 	if i < 3 then
@@ -45,6 +49,7 @@ for i=1, 7 do
 		groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1},
 		sounds = mcl_sounds.node_sound_leaves_defaults(),
 		_mcl_blast_resistance = 0,
+		_on_bone_meal = on_bone_meal,
 	})
 end
 
@@ -78,6 +83,7 @@ minetest.register_node("mcl_farming:carrot", {
 	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1},
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	_mcl_blast_resistance = 0,
+	_on_bone_meal = on_bone_meal,
 })
 
 minetest.register_craftitem("mcl_farming:carrot_item", {

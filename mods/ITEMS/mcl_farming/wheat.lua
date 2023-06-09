@@ -1,5 +1,9 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
+local function on_bone_meal(itemstack,placer,pointed_thing,pos,node)
+	return mcl_farming.on_bone_meal(itemstack,placer,pointed_thing,pos,node,"plant_wheat")
+end
+
 minetest.register_craftitem("mcl_farming:wheat_seeds", {
 	-- Original Minecraft name: “Seeds”
 	description = S("Wheat Seeds"),
@@ -65,6 +69,7 @@ for i=1,7 do
 			dig_by_water=1,destroy_by_lava_flow=1, dig_by_piston=1},
 		sounds = mcl_sounds.node_sound_leaves_defaults(),
 		_mcl_blast_resistance = 0,
+		_on_bone_meal = on_bone_meal,
 	})
 end
 

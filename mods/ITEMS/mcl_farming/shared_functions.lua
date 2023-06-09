@@ -481,6 +481,11 @@ function mcl_farming:get_seed_or_eat_callback(plantname, hp_change)
 	end
 end
 
+function mcl_farming.on_bone_meal(itemstack,placer,pointed_thing,pos,n,plant,stages)
+	local stages = stages or math.random(2, 5)
+	return mcl_farming:grow_plant(plant, pos, n, stages, true)
+end
+
 minetest.register_lbm({
 	label = "Add growth for unloaded farming plants",
 	name = "mcl_farming:growth",
