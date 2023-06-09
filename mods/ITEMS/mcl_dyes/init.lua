@@ -110,7 +110,6 @@ for _, row in pairs(dyes) do
 		_doc_items_usagehelp = S("Rightclick on a sheep to dye its wool. Other things are dyed by crafting."),
 		groups = table.update({craftitem = 1, dye = 1}, grps)
 	})
-	minetest.register_alias("mcl_dye:"..name,"mcl_dyes:"..name)
 end
 
 -- Dye creation recipes.
@@ -303,28 +302,4 @@ minetest.register_craft({
 	cooktime = 10,
 })
 
--- Legacy items grace conversion recipes.
---
--- These allow for retrieval of precious items that were converted into
--- dye items after refactoring of the dyes.  Should be removed again in
--- the near future.
-
-minetest.register_craft({
-	output = "mcl_bone_meal:bone_meal",
-	recipe = {{"mcl_dyes:white"}},
-})
-
-minetest.register_craft({
-	output = "mcl_mobitems:ink_sac",
-	recipe = {{"mcl_dyes:black"}},
-})
-
-minetest.register_craft({
-	output = "mcl_core:lapis",
-	recipe = {{"mcl_dyes:blue"}},
-})
-
-minetest.register_craft({
-	output = "mcl_cocoas:cocoa_beans",
-	recipe = {{"mcl_dyes:brown"}},
-})
+dofile(minetest.get_modpath(minetest.get_current_modname()).."/alias.lua")
