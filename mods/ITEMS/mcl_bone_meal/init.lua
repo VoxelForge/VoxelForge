@@ -32,14 +32,17 @@ local function bone_meal(itemstack,user,pointed_thing)
 	if udef and udef._on_bone_meal then
 		if udef._on_bone_meal(itemstack,user,pointed_thing, pointed_thing.under,unode) ~= false then
 			mcl_bone_meal.add_bone_meal_particle(pointed_thing.under)
-
-			itemstack:take_item()
+			mcl_bone_meal.add_bone_meal_particle(pointed_thing.above)
+			if not minetest.is_creative_enabled(user:get_player_name()) then
+				itemstack:take_item()
+			end
 		end
 	elseif adef and adef._on_bone_meal then
 		if adef._on_bone_meal(itemstack,user,pointed_thing,pointed_thing.above,anode) ~= false then
 			mcl_bone_meal.add_bone_meal_particle(pointed_thing.above)
-
-			itemstack:take_item()
+			if not minetest.is_creative_enabled(user:get_player_name()) then
+				itemstack:take_item()
+			end
 		end
 	end
 	return itemstack
