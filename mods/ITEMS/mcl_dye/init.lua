@@ -124,61 +124,6 @@ for _, row in ipairs(dyelocal.dyes) do
 	end
 end
 
-
-
-mcl_dye.bone_meal_callbacks = {}
-
-function mcl_dye.register_on_bone_meal_apply(func)
-	table.insert(mcl_dye.bone_meal_callbacks, func)
-end
-
-local function apply_bone_meal(pointed_thing,user)
-	-- Double flowers: Drop corresponding item
-	if n.name == "mcl_flowers:rose_bush" or n.name == "mcl_flowers:rose_bush_top" then
-		mcl_dye.add_bone_meal_particle(pos)
-		minetest.add_item(pos, "mcl_flowers:rose_bush")
-		return true
-	elseif n.name == "mcl_flowers:peony" or n.name == "mcl_flowers:peony_top" then
-		mcl_dye.add_bone_meal_particle(pos)
-		minetest.add_item(pos, "mcl_flowers:peony")
-		return true
-	elseif n.name == "mcl_flowers:lilac" or n.name == "mcl_flowers:lilac_top" then
-		mcl_dye.add_bone_meal_particle(pos)
-		minetest.add_item(pos, "mcl_flowers:lilac")
-		return true
-	elseif n.name == "mcl_flowers:sunflower" or n.name == "mcl_flowers:sunflower_top" then
-		mcl_dye.add_bone_meal_particle(pos)
-		minetest.add_item(pos, "mcl_flowers:sunflower")
-		return true
-
-	elseif n.name == "mcl_flowers:tallgrass" then
-		mcl_dye.add_bone_meal_particle(pos)
-		-- Tall Grass: Grow into double tallgrass
-		local toppos = { x=pos.x, y=pos.y+1, z=pos.z }
-		local topnode = minetest.get_node(toppos)
-		if minetest.registered_nodes[topnode.name].buildable_to then
-			minetest.set_node(pos, { name = "mcl_flowers:double_grass", param2 = n.param2 })
-			minetest.set_node(toppos, { name = "mcl_flowers:double_grass_top", param2 = n.param2 })
-			return true
-		end
-
-	elseif n.name == "mcl_flowers:fern" then
-		mcl_dye.add_bone_meal_particle(pos)
-		-- Fern: Grow into large fern
-		local toppos = { x=pos.x, y=pos.y+1, z=pos.z }
-		local topnode = minetest.get_node(toppos)
-		if minetest.registered_nodes[topnode.name].buildable_to then
-			minetest.set_node(pos, { name = "mcl_flowers:double_fern", param2 = n.param2 })
-			minetest.set_node(toppos, { name = "mcl_flowers:double_fern_top", param2 = n.param2 })
-			return true
-		end
-	end
-
-	return false
-end
-
-mcl_dye.apply_bone_meal = apply_bone_meal
-
 minetest.register_craftitem("mcl_dye:brown", {
 	inventory_image = "mcl_dye_brown.png",
 	_tt_help = S("Grows at the side of jungle trees"),

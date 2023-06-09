@@ -11,6 +11,41 @@ mcl_flowers.registered_simple_flowers = {}
 local smallflowerlongdesc = S("This is a small flower. Small flowers are mainly used for dye production and can also be potted.")
 local plant_usage_help = S("It can only be placed on a block on which it would also survive.")
 
+local function on_bone_meal(itemstack,placer,pointed_thing,pos,n)
+	if n.name == "mcl_flowers:rose_bush" or n.name == "mcl_flowers:rose_bush_top" then
+		minetest.add_item(pos, "mcl_flowers:rose_bush")
+		return true
+	elseif n.name == "mcl_flowers:peony" or n.name == "mcl_flowers:peony_top" then
+		minetest.add_item(pos, "mcl_flowers:peony")
+		return true
+	elseif n.name == "mcl_flowers:lilac" or n.name == "mcl_flowers:lilac_top" then
+		minetest.add_item(pos, "mcl_flowers:lilac")
+		return true
+	elseif n.name == "mcl_flowers:sunflower" or n.name == "mcl_flowers:sunflower_top" then
+		minetest.add_item(pos, "mcl_flowers:sunflower")
+		return true
+	elseif n.name == "mcl_flowers:tallgrass" then
+		-- Tall Grass: Grow into double tallgrass
+		local toppos = { x=pos.x, y=pos.y+1, z=pos.z }
+		local topnode = minetest.get_node(toppos)
+		if minetest.registered_nodes[topnode.name].buildable_to then
+			minetest.set_node(pos, { name = "mcl_flowers:double_grass", param2 = n.param2 })
+			minetest.set_node(toppos, { name = "mcl_flowers:double_grass_top", param2 = n.param2 })
+			return true
+		end
+	elseif n.name == "mcl_flowers:fern" then
+		-- Fern: Grow into large fern
+		local toppos = { x=pos.x, y=pos.y+1, z=pos.z }
+		local topnode = minetest.get_node(toppos)
+		if minetest.registered_nodes[topnode.name].buildable_to then
+			minetest.set_node(pos, { name = "mcl_flowers:double_fern", param2 = n.param2 })
+			minetest.set_node(toppos, { name = "mcl_flowers:double_fern_top", param2 = n.param2 })
+			return true
+		end
+	end
+	return false
+end
+
 local get_palette_color_from_pos = function(pos)
 	local biome_data = minetest.get_biome_data(pos)
 	local index = 0
@@ -166,6 +201,7 @@ local def_tallgrass = {
 	on_place = on_place_flower,
 	_mcl_blast_resistance = 0,
 	_mcl_hardness = 0,
+	_on_bone_meal = on_bone_meal,
 }
 minetest.register_node("mcl_flowers:tallgrass", def_tallgrass)
 
@@ -334,6 +370,7 @@ local function add_large_plant(name, desc, longdesc, bottom_img, top_img, inv_im
 		end,
 		groups = bottom_groups,
 		sounds = mcl_sounds.node_sound_leaves_defaults(),
+		_on_bone_meal = on_bone_meal,
 	})
 
 	local top_groups = table.copy(bottom_groups)
@@ -370,6 +407,7 @@ local function add_large_plant(name, desc, longdesc, bottom_img, top_img, inv_im
 		end,
 		groups = top_groups,
 		sounds = mcl_sounds.node_sound_leaves_defaults(),
+		_on_bone_meal = on_bone_meal,
 	})
 
 	if minetest.get_modpath("doc") and longdesc then
