@@ -118,7 +118,7 @@ minetest.register_craft({
 	output = "mcl_ocean:prismarine_dark",
 	recipe = {
 		{"mcl_ocean:prismarine_shard", "mcl_ocean:prismarine_shard", "mcl_ocean:prismarine_shard"},
-		{"mcl_ocean:prismarine_shard", "mcl_dye:black", "mcl_ocean:prismarine_shard"},
+		{"mcl_ocean:prismarine_shard", "mcl_dyes:black", "mcl_ocean:prismarine_shard"},
 		{"mcl_ocean:prismarine_shard", "mcl_ocean:prismarine_shard", "mcl_ocean:prismarine_shard"},
 	}
 })

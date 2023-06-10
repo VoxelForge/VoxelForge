@@ -4,22 +4,22 @@ local mod_doc = minetest.get_modpath("doc")
 
 local colors = {
 	-- { ID, decription, wool, dye }
-	{ "red", S("Red Bed"), "mcl_wool:red", "mcl_dye:red" },
-	{ "blue", S("Blue Bed"), "mcl_wool:blue", "mcl_dye:blue" },
-	{ "cyan", S("Cyan Bed"), "mcl_wool:cyan", "mcl_dye:cyan" },
-	{ "grey", S("Grey Bed"), "mcl_wool:grey", "mcl_dye:dark_grey" },
-	{ "silver", S("Light Grey Bed"), "mcl_wool:silver", "mcl_dye:grey" },
-	{ "black", S("Black Bed"), "mcl_wool:black", "mcl_dye:black" },
-	{ "yellow", S("Yellow Bed"), "mcl_wool:yellow", "mcl_dye:yellow" },
-	{ "green", S("Green Bed"), "mcl_wool:green", "mcl_dye:dark_green" },
-	{ "magenta", S("Magenta Bed"), "mcl_wool:magenta", "mcl_dye:magenta" },
-	{ "orange", S("Orange Bed"), "mcl_wool:orange", "mcl_dye:orange" },
-	{ "purple", S("Purple Bed"), "mcl_wool:purple", "mcl_dye:violet" },
-	{ "brown", S("Brown Bed"), "mcl_wool:brown", "mcl_dye:brown" },
-	{ "pink", S("Pink Bed"), "mcl_wool:pink", "mcl_dye:pink" },
-	{ "lime", S("Lime Bed"), "mcl_wool:lime", "mcl_dye:green" },
-	{ "light_blue", S("Light Blue Bed"), "mcl_wool:light_blue", "mcl_dye:lightblue" },
-	{ "white", S("White Bed"), "mcl_wool:white", "mcl_dye:white" },
+	{ "red", S("Red Bed"), "mcl_wool:red", "mcl_dyes:red" },
+	{ "blue", S("Blue Bed"), "mcl_wool:blue", "mcl_dyes:blue" },
+	{ "cyan", S("Cyan Bed"), "mcl_wool:cyan", "mcl_dyes:cyan" },
+	{ "grey", S("Grey Bed"), "mcl_wool:grey", "mcl_dyes:dark_grey" },
+	{ "silver", S("Light Grey Bed"), "mcl_wool:silver", "mcl_dyes:grey" },
+	{ "black", S("Black Bed"), "mcl_wool:black", "mcl_dyes:black" },
+	{ "yellow", S("Yellow Bed"), "mcl_wool:yellow", "mcl_dyes:yellow" },
+	{ "green", S("Green Bed"), "mcl_wool:green", "mcl_dyes:dark_green" },
+	{ "magenta", S("Magenta Bed"), "mcl_wool:magenta", "mcl_dyes:magenta" },
+	{ "orange", S("Orange Bed"), "mcl_wool:orange", "mcl_dyes:orange" },
+	{ "purple", S("Purple Bed"), "mcl_wool:purple", "mcl_dyes:violet" },
+	{ "brown", S("Brown Bed"), "mcl_wool:brown", "mcl_dyes:brown" },
+	{ "pink", S("Pink Bed"), "mcl_wool:pink", "mcl_dyes:pink" },
+	{ "lime", S("Lime Bed"), "mcl_wool:lime", "mcl_dyes:green" },
+	{ "light_blue", S("Light Blue Bed"), "mcl_wool:light_blue", "mcl_dyes:lightblue" },
+	{ "white", S("White Bed"), "mcl_wool:white", "mcl_dyes:white" },
 }
 local canonical_color = "red"
 

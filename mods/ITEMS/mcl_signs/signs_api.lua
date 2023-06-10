@@ -313,8 +313,8 @@ mcl_signs.wall_standard = {
 				return
 			end
 
-			-- "mcl_dye:black" is a special case: it makes the sign's lettering black AND removes glow.
-			if (iname == "mcl_dye:black") then
+			-- "mcl_dyes:black" is a special case: it makes the sign's lettering black AND removes glow.
+			if (iname == "mcl_dyes:black") then
 				clicker:set_wielded_item(item)
 				local success = mcl_signs:glow_sign(pos, true)
 				mcl_signs:color_sign(pos, mcl_colors.BLACK)
@@ -442,26 +442,26 @@ mcl_signs.standing_standard = {
 -- HELPER FUNCTIONS' VARIABLES
 local sign_glow = 6
 local Dyes_table = {
-	{ "mcl_dye:aqua", mcl_colors.AQUA },
-	{ "mcl_dye:black", mcl_colors.BLACK },
-	{ "mcl_dye:blue", mcl_colors.BLUE },
-	{ "mcl_dye:brown", mcl_colors.brown },
-	{ "mcl_dye:cyan", mcl_signs.mcl_wool_colors.unicolor_cyan },
-	{ "mcl_dye:green", mcl_colors.GREEN },
-	{ "mcl_dye:dark_green", mcl_colors.DARK_GREEN },
-	{ "mcl_dye:grey", mcl_colors.GRAY },
-	{ "mcl_dye:dark_grey", mcl_colors.DARK_GRAY },
-	{ "mcl_dye:lightblue", mcl_signs.mcl_wool_colors.unicolor_light_blue },
-	{ "mcl_dye:lime", mcl_signs.unicolor_green_or_lime },
-	{ "mcl_dye:magenta", mcl_colors.LIGHT_PURPLE },
-	{ "mcl_dye:orange", mcl_signs.mcl_wool_colors.unicolor_orange },
-	{ "mcl_dye:pink", mcl_signs.mcl_wool_colors.unicolor_light_red_pink },
-	{ "mcl_dye:purple", mcl_colors.LIGHT_PURPLE },
-	{ "mcl_dye:red", mcl_signs.mcl_wool_colors.unicolor_red },
-	{ "mcl_dye:silver", mcl_signs.mcl_wool_colors.unicolor_grey },
-	{ "mcl_dye:violet", mcl_colors.DARK_PURPLE },
-	{ "mcl_dye:white", mcl_colors.WHITE },
-	{ "mcl_dye:yellow", mcl_colors.YELLOW },
+	{ "mcl_dyes:aqua", mcl_colors.AQUA },
+	{ "mcl_dyes:black", mcl_colors.BLACK },
+	{ "mcl_dyes:blue", mcl_colors.BLUE },
+	{ "mcl_dyes:brown", mcl_colors.brown },
+	{ "mcl_dyes:cyan", mcl_signs.mcl_wool_colors.unicolor_cyan },
+	{ "mcl_dyes:green", mcl_colors.GREEN },
+	{ "mcl_dyes:dark_green", mcl_colors.DARK_GREEN },
+	{ "mcl_dyes:grey", mcl_colors.GRAY },
+	{ "mcl_dyes:dark_grey", mcl_colors.DARK_GRAY },
+	{ "mcl_dyes:lightblue", mcl_signs.mcl_wool_colors.unicolor_light_blue },
+	{ "mcl_dyes:lime", mcl_signs.unicolor_green_or_lime },
+	{ "mcl_dyes:magenta", mcl_colors.LIGHT_PURPLE },
+	{ "mcl_dyes:orange", mcl_signs.mcl_wool_colors.unicolor_orange },
+	{ "mcl_dyes:pink", mcl_signs.mcl_wool_colors.unicolor_light_red_pink },
+	{ "mcl_dyes:purple", mcl_colors.LIGHT_PURPLE },
+	{ "mcl_dyes:red", mcl_signs.mcl_wool_colors.unicolor_red },
+	{ "mcl_dyes:silver", mcl_signs.mcl_wool_colors.unicolor_grey },
+	{ "mcl_dyes:violet", mcl_colors.DARK_PURPLE },
+	{ "mcl_dyes:white", mcl_colors.WHITE },
+	{ "mcl_dyes:yellow", mcl_colors.YELLOW },
 }
 
 local function update_sign_registry(type, name)

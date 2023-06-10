@@ -1326,7 +1326,7 @@ for color, desc in pairs(boxtypes) do
 	minetest.register_craft({
 		type = "shapeless",
 		output = "mcl_chests:"..color.."_shulker_box",
-		recipe = { "group:shulker_box", "mcl_dye:"..color }
+		recipe = { "group:shulker_box", "mcl_dyes:"..color }
 	})
 end
 

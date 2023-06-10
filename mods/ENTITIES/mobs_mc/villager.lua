@@ -237,7 +237,7 @@ local professions = {
 			},
 
 			{
-			{ { "mcl_dye:black", 5, 5 }, E1 },
+			{ { "mcl_mobitems:ink_sac", 5, 5 }, E1 },
 			{ { "mcl_core:emerald", 5, 64, "mcl_books:book", 1, 1 }, { "mcl_enchanting:book_enchanted", 1 ,1 }},
 			{ E1, { "mcl_core:glass", 4, 4 } },
 			},

@@ -99,7 +99,7 @@ for _, row in ipairs(wool.dyes) do
 		minetest.register_craft({
 			type = "shapeless",
 			output = "mcl_wool:"..name,
-			recipe = {"mcl_dye:"..dye, "mcl_wool:white"},
+			recipe = {"mcl_dyes:"..dye, "mcl_wool:white"},
 		})
 	end
 	minetest.register_craft({
