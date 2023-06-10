@@ -27,50 +27,47 @@ local tt_help = S("Grows on podzol, mycelium and other blocks").."\n"..S("Spread
 local usagehelp = S("This mushroom can be placed on mycelium and podzol at any light level. It can also be placed on blocks which are both solid and opaque, as long as the light level at daytime is not higher than 12.")
 
 local function on_bone_meal(itemstack,placer,pointed_thing,pos,n)
-	local below = minetest.get_node({x=pos.x,y=pos.y-1,z=pos.z})
-	if below.name ~= "mcl_core:mycelium" and below.name ~= "mcl_core:dirt" and minetest.get_item_group(below.name, "grass_block") ~= 1 and below.name ~= "mcl_core:coarse_dirt" and below.name ~= "mcl_core:podzol" then
+	if math.random(1, 100) > 40 then return false end --40% chance
+
+	local bn = minetest.get_node(vector.offset(pos,0,-1,0)).name
+	if bn ~= "mcl_core:mycelium" and bn ~= "mcl_core:dirt" and minetest.get_item_group(bn, "grass_block") ~= 1 and bn ~= "mcl_core:coarse_dirt" and bn ~= "mcl_core:podzol" then
 		return false
 	end
 
 	-- Select schematic
 	local schematic, offset, height
+	height = 8
 	if n.name == "mcl_mushrooms:mushroom_brown" then
 		schematic = minetest.get_modpath("mcl_mushrooms").."/schematics/mcl_mushrooms_huge_brown.mts"
-		offset = { x = -3, y = -1, z = -3 }
-		height = 8
+		offset = vector.new(-3,-1,-3)
 	elseif n.name == "mcl_mushrooms:mushroom_red" then
 		schematic = minetest.get_modpath("mcl_mushrooms").."/schematics/mcl_mushrooms_huge_red.mts"
-		offset = { x = -2, y = -1, z = -2 }
-		height = 8
+		offset = vector.new(-2,-1,-2)
 	else
 		return false
 	end
-	-- 40% chance
-	if math.random(1, 100) <= 40 then
-		-- Check space requirements
-		for i=1,3 do
-			local cpos = vector.add(pos, {x=0, y=i, z=0})
-			if minetest.get_node(cpos).name ~= "air" then
-				return false
-			end
-		end
-		local yoff = 3
-		local minp, maxp = {x=pos.x-3, y=pos.y+yoff, z=pos.z-3}, {x=pos.x+3, y=pos.y+yoff+(height-3), z=pos.z+3}
-		local diff = vector.subtract(maxp, minp)
-		diff = vector.add(diff, {x=1,y=1,z=1})
-		local totalnodes = diff.x * diff.y * diff.z
-		local goodnodes = minetest.find_nodes_in_area(minp, maxp, {"air", "group:leaves"})
-		if #goodnodes < totalnodes then
+	-- Check space requirements
+	for i=1,3 do
+		local cpos = vector.add(pos, {x=0, y=i, z=0})
+		if minetest.get_node(cpos).name ~= "air" then
 			return false
 		end
-
-		-- Place the huge mushroom
-		minetest.remove_node(pos)
-		local place_pos = vector.add(pos, offset)
-		local ok = minetest.place_schematic(place_pos, schematic, 0, nil, false)
-		return ok ~= nil
 	end
-	return false
+	local yoff = 3
+	local minp, maxp = vector.offset(pos,-3,yoff,-3), vector.offset(pos,3,yoff+(height-3),3)
+	local diff = vector.subtract(maxp, minp)
+	diff = vector.add(diff, vector.new(1,1,1))
+	local totalnodes = diff.x * diff.y * diff.z
+	local goodnodes = minetest.find_nodes_in_area(minp, maxp, {"air", "group:leaves"})
+	if #goodnodes < totalnodes then
+		return false
+	end
+
+	-- Place the huge mushroom
+	minetest.remove_node(pos)
+	local place_pos = vector.add(pos, offset)
+	local ok = minetest.place_schematic(place_pos, schematic, 0, nil, false)
+	return ok ~= nil
 end
 
 minetest.register_node("mcl_mushrooms:mushroom_brown", {
