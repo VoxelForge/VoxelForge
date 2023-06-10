@@ -222,9 +222,6 @@ enable_real_maps (Enable Real Maps) bool true
 # Enable Bookshelf inventories
 mcl_bookshelf_inventories (Enable bookshelf inventories) bool true
 
-# Enable swiftness on enchanted golden apples
-mcl_enable_fapples (Enable swiftness on enchanted golden apples) bool true
-
 # All tameable mobs listen to the "sit" righclick like dogs
 mcl_extended_pet_control (Extended pet control) bool false
 
