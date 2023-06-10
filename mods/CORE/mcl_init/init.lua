@@ -137,7 +137,7 @@ else
 end
 
 -- mg_overworld_min_old is the overworld min value from before map generation
--- depth was increased. It is used for handling map layers in (mcl_worlds). Some
+-- depth was increased. It is used for handling map layers in mcl_worlds. Some
 -- mapgens do not set it, so for those we use the mg_overworld_min value.
 if not mcl_vars.mg_overworld_min_old then
 	mcl_vars.mg_overworld_min_old = mcl_vars.mg_overworld_min
