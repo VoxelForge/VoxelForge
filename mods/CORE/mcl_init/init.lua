@@ -100,6 +100,9 @@ if not superflat and not singlenode then
 
 	-- Overworld
 	mcl_vars.mg_overworld_min_old = -62
+	mcl_vars.mg_bedrock_overworld_min_old = mcl_vars.mg_overworld_min_old
+	mcl_vars.mg_bedrock_overworld_max_old = mcl_vars.mg_bedrock_overworld_min_old + 4
+
 	mcl_vars.mg_overworld_min = -128
 
 	mcl_vars.mg_overworld_max_official = mcl_vars.mg_overworld_min + minecraft_height_limit
@@ -236,39 +239,97 @@ end
 -- This is an ABM because these can be limited in Y space meaning they will completely stop
 -- once all bedrock and void in the relevant areas is gone.
 
+local function get_mapchunk_area(pos)
+	local pos1 = pos:divide(5 * 16):floor():multiply(5 * 16)
+	local pos2 = pos1:add(5 * 16 - 1)
+	return pos1, pos2
+end
+
+local void_regen_min_y = mcl_vars.mg_overworld_min
+local void_regen_max_y = math.floor(mcl_vars.mg_overworld_min_old / 16 - 1) * 16
+local bedrock_regen_min_y = void_regen_max_y + 1
+local bedrock_regen_max_y = mcl_vars.mg_bedrock_overworld_max_old
+
+local void_replaced = {}
+
 minetest.register_abm({
 	label = "Replace old world depth void",
 	name = ":mcl_mapgen_core:replace_old_void",
 	nodenames = { "mcl_core:void" },
 	chance = 1,
-	interval = 5,
-	min_y = mcl_vars.mg_bedrock_overworld_max,
-	max_y = mcl_vars.mg_overworld_min_old,
-	action = function(p)
-		if p.y > mcl_vars.mg_overworld_min_old - 5 then
-			minetest.bulk_set_node(minetest.find_nodes_in_area(vector.new(p.x-5,mcl_vars.mg_overworld_min_old-5,p.z-5),vector.new(p.x+5,mcl_vars.mg_overworld_min_old,p.z+5),{"mcl_core:void"}),{name="mcl_deepslate:deepslate"})
-		else
-			minetest.after(0,function(p)
-				if minetest.get_node(p).name == "mcl_core:void" then
-					minetest.delete_area(vector.new(p.x,mcl_vars.mg_overworld_min_old-10,p.z),vector.new(p.x,mcl_vars.mg_overworld_min + 5, p.z))
-				end
-			end,p)
+	interval = 10,
+	min_y = void_regen_min_y,
+	max_y = void_regen_max_y,
+	action = function(pos, node)
+		local pos1, pos2 = get_mapchunk_area(pos)
+		local h = minetest.hash_node_position(pos1)
+		if void_replaced[h] then
+			return
 		end
+		void_replaced[h] = true
+
+		pos2.y = math.min(pos2.y, void_regen_max_y)
+		minetest.after(0, function()
+			minetest.delete_area(pos1, pos2)
+		end)
 	end
 })
+
+local function get_mapblock_area(pos)
+	local pos1 = pos:divide(16):floor():multiply(16)
+	local pos2 = pos1:add(16 - 1)
+	return pos1, pos2
+end
+
+local bedrock_replaced = {}
 
 minetest.register_abm({
 	label = "Replace old world depth bedrock",
 	name = ":mcl_mapgen_core:replace_old_bedrock",
-	nodenames = { "mcl_core:bedrock" },
-	chance = 5,
-	interval = 60,
-	min_y = mcl_vars.mg_overworld_min_old,
-	max_y = mcl_vars.mg_overworld_min_old + 4,
-	action = function(p)
-		if minetest.find_node_near(p,24,{"mcl_core:void"}) then
+	nodenames = { "mcl_core:void", "mcl_core:bedrock" },
+	chance = 1,
+	interval = 10,
+	min_y = bedrock_regen_min_y,
+	max_y = bedrock_regen_max_y,
+	action = function(pos)
+		local pos1, pos2 = get_mapchunk_area(pos)
+		local h = minetest.hash_node_position(pos1)
+		if bedrock_replaced[h] then
 			return
 		end
-		minetest.bulk_set_node(minetest.find_nodes_in_area(vector.new(p.x-25,mcl_vars.mg_overworld_min_old-1,p.z-25),vector.new(p.x+25,mcl_vars.mg_overworld_min_old+5,p.z+25),{"mcl_core:bedrock",}),{name="mcl_deepslate:deepslate"})
+		bedrock_replaced[h] = true
+
+		pos1.y = math.max(pos1.y, bedrock_regen_min_y)
+		pos2.y = math.min(pos2.y, bedrock_regen_max_y)
+
+		minetest.after(0, function()
+			local vm = minetest.get_voxel_manip()
+			local emin, emax = vm:read_from_map(pos1, pos2)
+			local data = vm:get_data()
+			local a = VoxelArea:new{
+				MinEdge = emin,
+				MaxEdge = emax,
+			}
+
+			local c_void = minetest.get_content_id("mcl_core:void")
+			local c_bedrock = minetest.get_content_id("mcl_core:bedrock")
+			local c_deepslate = minetest.get_content_id("mcl_deepslate:deepslate")
+
+			local n = 0
+			for z = pos1.z, pos2.z do
+				for y = pos1.y, pos2.y do
+					for x = pos1.x, pos2.x do
+						local vi = a:index(x, y, z)
+						if data[vi] == c_void or data[vi] == c_bedrock then
+							n = n + 1
+							data[vi] = c_deepslate
+						end
+					end
+				end
+			end
+
+			vm:set_data(data)
+			vm:write_to_map(true)
+		end)
 	end
 })
