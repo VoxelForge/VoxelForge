@@ -87,8 +87,6 @@ function mcl_vars.get_chunk_number(pos) -- unsigned int
 end
 
 local convert_old_map_depth = false
-local old_overworld_min
-local old_bedrock_overworld_max
 
 if not superflat and not singlenode then
 	-- Normal mode
@@ -104,6 +102,7 @@ if not superflat and not singlenode then
 
 	-- Overworld
 	mcl_vars.mg_overworld_min = -128
+	mcl_vars.mg_overworld_min_old = -62
 
 	mcl_vars.mg_overworld_max_official = mcl_vars.mg_overworld_min + minecraft_height_limit
 	mcl_vars.mg_bedrock_overworld_min = mcl_vars.mg_overworld_min
@@ -113,8 +112,6 @@ if not superflat and not singlenode then
 	mcl_vars.mg_bedrock_is_rough = true
 
 	convert_old_map_depth = true
-	old_overworld_min = -62 -- old mcl_vars.mg_overworld_min
-	old_bedrock_overworld_max = old_overworld_min + 4
 elseif singlenode then
 	mcl_vars.mg_overworld_min = -130
 	mcl_vars.mg_overworld_max_official = mcl_vars.mg_overworld_min + minecraft_height_limit
@@ -137,6 +134,13 @@ else
 	mcl_vars.mg_lava = false
 	mcl_vars.mg_lava_overworld_max = mcl_vars.mg_overworld_min
 	mcl_vars.mg_bedrock_is_rough = false
+end
+
+-- mg_overworld_min_old is the overworld min value from before map generation
+-- depth was increased. It is used for handling map layers in (mcl_worlds). Some
+-- mapgens do not set it, so for those we use the mg_overworld_min value.
+if not mcl_vars.mg_overworld_min_old then
+	mcl_vars.mg_overworld_min_old = mcl_vars.mg_overworld_min
 end
 
 mcl_vars.mg_overworld_max = mcl_vars.mapgen_edge_max
@@ -237,10 +241,10 @@ function mcl_vars.get_node(pos)
 	return minetest.get_node(pos)
 end
 
--- Register ABMs to update from old mapgen depth to new. The ABMS are limited in
+-- Register ABMs to update from old mapgen depth to new. The ABMs are limited in
 -- the Y space meaning they will completely stop once all bedrock and void in
 -- the relevant areas is gone.
-if convert_old_map_depth then
+if mcl_vars.mg_overworld_min_old ~= mcl_vars.mg_overworld_min then
 	local function get_mapchunk_area(pos)
 		local pos1 = pos:divide(5 * 16):floor():multiply(5 * 16)
 		local pos2 = pos1:add(5 * 16 - 1)
@@ -248,9 +252,9 @@ if convert_old_map_depth then
 	end
 
 	local void_regen_min_y = mcl_vars.mg_overworld_min
-	local void_regen_max_y = math.floor(old_overworld_min / 16 - 1) * 16
+	local void_regen_max_y = math.floor(mcl_vars.mg_overworld_min_old / 16 - 1) * 16
 	local bedrock_regen_min_y = void_regen_max_y + 1
-	local bedrock_regen_max_y = old_bedrock_overworld_max
+	local bedrock_regen_max_y = mcl_vars.mg_overworld_min_old + 4
 
 	local void_replaced = {}
 	minetest.register_abm({
