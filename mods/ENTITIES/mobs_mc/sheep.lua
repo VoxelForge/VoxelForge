@@ -273,8 +273,8 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 			local color1 = parent1.color
 			local color2 = parent2.color
 
-			local dye1 = mcl_dye.unicolor_to_dye(color1)
-			local dye2 = mcl_dye.unicolor_to_dye(color2)
+			local dye1 = mcl_dyes.unicolor_to_dye(color1)
+			local dye2 = mcl_dyes.unicolor_to_dye(color2)
 			local output
 			-- Check if parent colors could be mixed as dyes
 			if dye1 and dye2 then
