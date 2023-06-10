@@ -30,8 +30,6 @@ local minecraft_height_limit = 320
 local superflat = mg_name == "flat" and minetest.get_mapgen_setting("mcl_superflat_classic") == "true"
 local singlenode = mg_name == "singlenode"
 
-local convert_old_bedrock = minetest.settings:get_bool("mcl_convert_old_bedrock", true)
-
 -- Calculate mapgen_edge_min/mapgen_edge_max
 mcl_vars.chunksize = math.max(1, tonumber(minetest.get_mapgen_setting("chunksize")) or 5)
 mcl_vars.MAP_BLOCKSIZE = math.max(1, minetest.MAP_BLOCKSIZE or 16)
@@ -101,9 +99,8 @@ if not superflat and not singlenode then
 	]]
 
 	-- Overworld
-	local mg_overworld_min_default = -128
 	mcl_vars.mg_overworld_min_old = -62
-	mcl_vars.mg_overworld_min = tonumber(minetest.settings:get("mcl_overworld_min")) or mg_overworld_min_default
+	mcl_vars.mg_overworld_min = -128
 
 	mcl_vars.mg_overworld_max_official = mcl_vars.mg_overworld_min + minecraft_height_limit
 	mcl_vars.mg_bedrock_overworld_min = mcl_vars.mg_overworld_min
@@ -247,44 +244,40 @@ local adjacents = {
 	vector.new(0,-1,0),
 	vector.new(0,0,-1),
 }
-local function register_abms()
-	minetest.register_abm({
-		label = "Replace old world depth void",
-		name = ":mcl_mapgen_core:replace_old_void",
-		nodenames = { "mcl_core:void" },
-		chance = 1,
-		interval = 5,
-		min_y = mcl_vars.mg_bedrock_overworld_max,
-		max_y = mcl_vars.mg_overworld_min_old,
-		action = function(p)
-			if p.y > mcl_vars.mg_overworld_min_old - 5 then
-				minetest.bulk_set_node(minetest.find_nodes_in_area(vector.new(p.x-5,mcl_vars.mg_overworld_min_old-5,p.z-5),vector.new(p.x+5,mcl_vars.mg_overworld_min_old,p.z+5),{"mcl_core:void"}),{name="mcl_deepslate:deepslate"})
-			else
-				minetest.after(0,function(p)
-					if minetest.get_node(p).name == "mcl_core:void" then
-						minetest.delete_area(vector.new(p.x,mcl_vars.mg_overworld_min_old-10,p.z),vector.new(p.x,mcl_vars.mg_overworld_min + 5, p.z))
-						minetest.set_node(p,{name="mcl_deepslate:deepslate"})
-					end
-				end,p)
-			end
+
+minetest.register_abm({
+	label = "Replace old world depth void",
+	name = ":mcl_mapgen_core:replace_old_void",
+	nodenames = { "mcl_core:void" },
+	chance = 1,
+	interval = 5,
+	min_y = mcl_vars.mg_bedrock_overworld_max,
+	max_y = mcl_vars.mg_overworld_min_old,
+	action = function(p)
+		if p.y > mcl_vars.mg_overworld_min_old - 5 then
+			minetest.bulk_set_node(minetest.find_nodes_in_area(vector.new(p.x-5,mcl_vars.mg_overworld_min_old-5,p.z-5),vector.new(p.x+5,mcl_vars.mg_overworld_min_old,p.z+5),{"mcl_core:void"}),{name="mcl_deepslate:deepslate"})
+		else
+			minetest.after(0,function(p)
+				if minetest.get_node(p).name == "mcl_core:void" then
+					minetest.delete_area(vector.new(p.x,mcl_vars.mg_overworld_min_old-10,p.z),vector.new(p.x,mcl_vars.mg_overworld_min + 5, p.z))
+					minetest.set_node(p,{name="mcl_deepslate:deepslate"})
+				end
+			end,p)
 		end
-	})
-	minetest.register_abm({
-		label = "Replace old world depth bedrock",
-		name = ":mcl_mapgen_core:replace_old_bedrock",
-		nodenames = { "mcl_core:bedrock" },
-		chance = 5,
-		interval = 60,
-		min_y = mcl_vars.mg_overworld_min_old,
-		max_y = mcl_vars.mg_overworld_min_old + 4,
-		action = function(p)
-			if minetest.find_node_near(p,24,{"mcl_core:void"}) then
-				return
-			end
-			minetest.bulk_set_node(minetest.find_nodes_in_area(vector.new(p.x-5,mcl_vars.mg_overworld_min_old-1,p.z-5),vector.new(p.x+5,mcl_vars.mg_overworld_min_old+5,p.z+5),{"mcl_core:bedrock",}),{name="mcl_deepslate:deepslate"})
+	end
+})
+minetest.register_abm({
+	label = "Replace old world depth bedrock",
+	name = ":mcl_mapgen_core:replace_old_bedrock",
+	nodenames = { "mcl_core:bedrock" },
+	chance = 5,
+	interval = 60,
+	min_y = mcl_vars.mg_overworld_min_old,
+	max_y = mcl_vars.mg_overworld_min_old + 4,
+	action = function(p)
+		if minetest.find_node_near(p,24,{"mcl_core:void"}) then
+			return
 		end
-	})
-end
-if convert_old_bedrock then
-	register_abms()
-end
+		minetest.bulk_set_node(minetest.find_nodes_in_area(vector.new(p.x-5,mcl_vars.mg_overworld_min_old-1,p.z-5),vector.new(p.x+5,mcl_vars.mg_overworld_min_old+5,p.z+5),{"mcl_core:bedrock",}),{name="mcl_deepslate:deepslate"})
+	end
+})
