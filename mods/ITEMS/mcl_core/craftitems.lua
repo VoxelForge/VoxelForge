@@ -2,8 +2,6 @@
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local enable_fapples = minetest.settings:get_bool("mcl_enable_fapples",true)
-
 --
 -- Crafting items
 --
