@@ -86,6 +86,10 @@ function mcl_vars.get_chunk_number(pos) -- unsigned int
 		 c.x + k_positive
 end
 
+local convert_old_map_depth = false
+local old_overworld_min
+local old_bedrock_overworld_max
+
 if not superflat and not singlenode then
 	-- Normal mode
 	--[[ Realm stacking (h is for height)
@@ -99,10 +103,6 @@ if not superflat and not singlenode then
 	]]
 
 	-- Overworld
-	mcl_vars.mg_overworld_min_old = -62
-	mcl_vars.mg_bedrock_overworld_min_old = mcl_vars.mg_overworld_min_old
-	mcl_vars.mg_bedrock_overworld_max_old = mcl_vars.mg_bedrock_overworld_min_old + 4
-
 	mcl_vars.mg_overworld_min = -128
 
 	mcl_vars.mg_overworld_max_official = mcl_vars.mg_overworld_min + minecraft_height_limit
@@ -112,8 +112,10 @@ if not superflat and not singlenode then
 	mcl_vars.mg_lava = true
 	mcl_vars.mg_bedrock_is_rough = true
 
+	convert_old_map_depth = true
+	old_overworld_min = -62 -- old mcl_vars.mg_overworld_min
+	old_bedrock_overworld_max = old_overworld_min + 4
 elseif singlenode then
-	mcl_vars.mg_overworld_min_old = -66
 	mcl_vars.mg_overworld_min = -130
 	mcl_vars.mg_overworld_max_official = mcl_vars.mg_overworld_min + minecraft_height_limit
 	mcl_vars.mg_bedrock_overworld_min = mcl_vars.mg_overworld_min
@@ -235,101 +237,94 @@ function mcl_vars.get_node(pos)
 	return minetest.get_node(pos)
 end
 
--- Abm to update from old mapgen depth to new. potentially affects a lot of nodes inducing lag.
--- This is an ABM because these can be limited in Y space meaning they will completely stop
--- once all bedrock and void in the relevant areas is gone.
-
-local function get_mapchunk_area(pos)
-	local pos1 = pos:divide(5 * 16):floor():multiply(5 * 16)
-	local pos2 = pos1:add(5 * 16 - 1)
-	return pos1, pos2
-end
-
-local void_regen_min_y = mcl_vars.mg_overworld_min
-local void_regen_max_y = math.floor(mcl_vars.mg_overworld_min_old / 16 - 1) * 16
-local bedrock_regen_min_y = void_regen_max_y + 1
-local bedrock_regen_max_y = mcl_vars.mg_bedrock_overworld_max_old
-
-local void_replaced = {}
-
-minetest.register_abm({
-	label = "Replace old world depth void",
-	name = ":mcl_mapgen_core:replace_old_void",
-	nodenames = { "mcl_core:void" },
-	chance = 1,
-	interval = 10,
-	min_y = void_regen_min_y,
-	max_y = void_regen_max_y,
-	action = function(pos, node)
-		local pos1, pos2 = get_mapchunk_area(pos)
-		local h = minetest.hash_node_position(pos1)
-		if void_replaced[h] then
-			return
-		end
-		void_replaced[h] = true
-
-		pos2.y = math.min(pos2.y, void_regen_max_y)
-		minetest.after(0, function()
-			minetest.delete_area(pos1, pos2)
-		end)
+-- Register ABMs to update from old mapgen depth to new. The ABMS are limited in
+-- the Y space meaning they will completely stop once all bedrock and void in
+-- the relevant areas is gone.
+if convert_old_map_depth then
+	local function get_mapchunk_area(pos)
+		local pos1 = pos:divide(5 * 16):floor():multiply(5 * 16)
+		local pos2 = pos1:add(5 * 16 - 1)
+		return pos1, pos2
 	end
-})
 
-local function get_mapblock_area(pos)
-	local pos1 = pos:divide(16):floor():multiply(16)
-	local pos2 = pos1:add(16 - 1)
-	return pos1, pos2
-end
+	local void_regen_min_y = mcl_vars.mg_overworld_min
+	local void_regen_max_y = math.floor(old_overworld_min / 16 - 1) * 16
+	local bedrock_regen_min_y = void_regen_max_y + 1
+	local bedrock_regen_max_y = old_bedrock_overworld_max
 
-local bedrock_replaced = {}
+	local void_replaced = {}
+	minetest.register_abm({
+		label = "Replace old world depth void",
+		name = ":mcl_mapgen_core:replace_old_void",
+		nodenames = { "mcl_core:void" },
+		chance = 1,
+		interval = 10,
+		min_y = void_regen_min_y,
+		max_y = void_regen_max_y,
+		action = function(pos, node)
+			local pos1, pos2 = get_mapchunk_area(pos)
+			local h = minetest.hash_node_position(pos1)
+			if void_replaced[h] then
+				return
+			end
+			void_replaced[h] = true
 
-minetest.register_abm({
-	label = "Replace old world depth bedrock",
-	name = ":mcl_mapgen_core:replace_old_bedrock",
-	nodenames = { "mcl_core:void", "mcl_core:bedrock" },
-	chance = 1,
-	interval = 10,
-	min_y = bedrock_regen_min_y,
-	max_y = bedrock_regen_max_y,
-	action = function(pos)
-		local pos1, pos2 = get_mapchunk_area(pos)
-		local h = minetest.hash_node_position(pos1)
-		if bedrock_replaced[h] then
-			return
+			pos2.y = math.min(pos2.y, void_regen_max_y)
+			minetest.after(0, function()
+				minetest.delete_area(pos1, pos2)
+			end)
 		end
-		bedrock_replaced[h] = true
+	})
 
-		pos1.y = math.max(pos1.y, bedrock_regen_min_y)
-		pos2.y = math.min(pos2.y, bedrock_regen_max_y)
+	local bedrock_replaced = {}
+	minetest.register_abm({
+		label = "Replace old world depth bedrock",
+		name = ":mcl_mapgen_core:replace_old_bedrock",
+		nodenames = { "mcl_core:void", "mcl_core:bedrock" },
+		chance = 1,
+		interval = 10,
+		min_y = bedrock_regen_min_y,
+		max_y = bedrock_regen_max_y,
+		action = function(pos)
+			local pos1, pos2 = get_mapchunk_area(pos)
+			local h = minetest.hash_node_position(pos1)
+			if bedrock_replaced[h] then
+				return
+			end
+			bedrock_replaced[h] = true
 
-		minetest.after(0, function()
-			local vm = minetest.get_voxel_manip()
-			local emin, emax = vm:read_from_map(pos1, pos2)
-			local data = vm:get_data()
-			local a = VoxelArea:new{
-				MinEdge = emin,
-				MaxEdge = emax,
-			}
+			pos1.y = math.max(pos1.y, bedrock_regen_min_y)
+			pos2.y = math.min(pos2.y, bedrock_regen_max_y)
 
-			local c_void = minetest.get_content_id("mcl_core:void")
-			local c_bedrock = minetest.get_content_id("mcl_core:bedrock")
-			local c_deepslate = minetest.get_content_id("mcl_deepslate:deepslate")
+			minetest.after(0, function()
+				local vm = minetest.get_voxel_manip()
+				local emin, emax = vm:read_from_map(pos1, pos2)
+				local data = vm:get_data()
+				local a = VoxelArea:new{
+					MinEdge = emin,
+					MaxEdge = emax,
+				}
 
-			local n = 0
-			for z = pos1.z, pos2.z do
-				for y = pos1.y, pos2.y do
-					for x = pos1.x, pos2.x do
-						local vi = a:index(x, y, z)
-						if data[vi] == c_void or data[vi] == c_bedrock then
-							n = n + 1
-							data[vi] = c_deepslate
+				local c_void = minetest.get_content_id("mcl_core:void")
+				local c_bedrock = minetest.get_content_id("mcl_core:bedrock")
+				local c_deepslate = minetest.get_content_id("mcl_deepslate:deepslate")
+
+				local n = 0
+				for z = pos1.z, pos2.z do
+					for y = pos1.y, pos2.y do
+						for x = pos1.x, pos2.x do
+							local vi = a:index(x, y, z)
+							if data[vi] == c_void or data[vi] == c_bedrock then
+								n = n + 1
+								data[vi] = c_deepslate
+							end
 						end
 					end
 				end
-			end
 
-			vm:set_data(data)
-			vm:write_to_map(true)
-		end)
-	end
-})
+				vm:set_data(data)
+				vm:write_to_map(true)
+			end)
+		end
+	})
+end
