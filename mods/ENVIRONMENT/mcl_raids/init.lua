@@ -339,30 +339,3 @@ minetest.register_chatcommand("dump_banner_layers",{
 		end
 	end
 })
-
-local function is_new_years()
-	local d = os.date("*t")
-	return d.month == 1 and d.day == 1 and d.hour < 1
-end
-
-mcl_events.register_event("new_years",{
-	stage = 0,
-	max_stage = 1,
-	readable_name = "New Years",
-	pos = vector.new(0,0,0),
-	exclusive_to_area = 256,
-	cond_start = function(event)
-		if not is_new_years() then return false end
-		local r = {}
-		for _,p in pairs(minetest.get_connected_players()) do
-			table.insert(r,{ player = p:get_player_name(), pos = p:get_pos()})
-		end
-		return r
-	end,
-	on_start = function(self)
-		minetest.chat_send_player(self.player,"<cora> Happy new year <3")
-	end,
-	cond_complete = function(event)
-		return not is_new_years()
-	end, --return success
-})
