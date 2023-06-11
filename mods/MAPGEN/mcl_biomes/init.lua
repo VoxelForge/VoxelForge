@@ -1750,6 +1750,58 @@ local function register_biomes()
 		param2 = 0,
 	})
 
+	minetest.register_biome({
+		name = "LushCaves",
+		node_top = "mcl_core:dirt_with_grass",
+		depth_top = 1,
+		node_filler = "mcl_core:dirt",
+		depth_filler = 3,
+		node_riverbed = "mcl_core:sand",
+		node_cave_liquid = "mcl_core:water_source",
+		depth_riverbed = 2,
+		y_min = 2,
+		y_max = 20,
+		vertical_blend = 1,
+		humidity_point = 83,
+		heat_point = 57,
+		_mcl_biome_type = "medium",
+		_mcl_palette_index = 0,
+	})
+
+	minetest.register_biome({
+		name = "LushCaves_ocean",
+		node_top = "mcl_core:sand",
+		depth_top = 1,
+		node_filler = "mcl_core:sand",
+		depth_filler = 3,
+		node_riverbed = "mcl_core:sand",
+		node_cave_liquid = "mcl_core:water_source",
+		depth_riverbed = 2,
+		y_min = -20,
+		y_max = 0,
+		vertical_blend = 1,
+		humidity_point = 83,
+		heat_point = 57,
+		_mcl_biome_type = "medium",
+		_mcl_palette_index = 0,
+	})
+	minetest.register_biome({
+		name = "LushCaves_underground",
+		node_top = "mcl_core:sand",
+		depth_top = 1,
+		node_filler = "mcl_core:sand",
+		depth_filler = 3,
+		node_riverbed = "mcl_core:sand",
+		node_cave_liquid = "mcl_core:water_source",
+		depth_riverbed = 2,
+		y_min = -57,
+		y_max = -21,
+		vertical_blend = 1,
+		humidity_point = 83,
+		heat_point = 57,
+		_mcl_biome_type = "medium",
+		_mcl_palette_index = 0,
+	})
 	-- Add deep ocean and underground biomes automatically.
 	for i=1, #overworld_biomes do
 		local biome = overworld_biomes[i]
@@ -3114,6 +3166,108 @@ local function register_decorations()
 	for k,_ in pairs(corals) do
 		register_coral_decos(k)
 	end
+
+
+	local lushcaves = { "LushCaves", "LushCaves_underground", "LushCaves_ocean", "LushCaves_deep_ocean"}
+
+	minetest.register_decoration({
+		decoration = "mcl_lush_caves:moss",
+		deco_type = "simple",
+		place_on = {"mcl_core:stone","mcl_deepslate:deepslate","mcl_deepslate:tuff","group:material_stone", "mcl_core:gravel", "mcl_core:bedrock"},
+		biomes = lushcaves,
+		fill_ratio = 10,
+		flags = "all_floors, all_ceilings",
+	})
+
+	minetest.register_decoration({
+		decoration = "mcl_flowers:tallgrass",
+		deco_type = "simple",
+		place_on = {"mcl_lush_caves:moss"},
+		biomes = lushcaves,
+		fill_ratio = 1,
+		flags = "all_floors",
+	})
+
+	minetest.register_decoration({
+		decoration = "mcl_lush_caves:cave_vines",
+		deco_type = "simple",
+		place_on = {"mcl_lush_caves:moss"},
+		height = 1,
+		height_max = 4,
+		fill_ratio = 0.2,
+		flags = "all_ceilings",
+		biomes = lushcaves,
+	})
+	minetest.register_decoration({
+		decoration = "mcl_lush_caves:cave_vines_lit",
+		deco_type = "simple",
+		place_on = {"mcl_lush_caves:moss"},
+		height = 1,
+		height_max = 4,
+		fill_ratio = 0.3,
+		flags = "all_ceilings",
+		biomes = lushcaves,
+	})
+
+	minetest.register_decoration({
+		decoration = "mcl_lush_caves:cave_vines_lit",
+		deco_type = "simple",
+		place_on = {"mcl_lush_caves:cave_vines_lit","mcl_lush_caves:cave_vines"},
+		height = 1,
+		height_max = 4,
+		fill_ratio = 0.1,
+		flags = "all_ceilings",
+		biomes = lushcaves,
+	})
+	minetest.register_decoration({
+		decoration = "mcl_lush_caves:cave_vines_lit",
+		deco_type = "simple",
+		place_on = {"mcl_lush_caves:cave_vines_lit","mcl_lush_caves:cave_vines"},
+		height = 1,
+		height_max = 4,
+		fill_ratio = 0.1,
+		flags = "all_ceilings",
+		biomes = lushcaves,
+	})
+
+	minetest.register_decoration({
+		decoration = "mcl_lush_caves:hanging_roots",
+		deco_type = "simple",
+		fill_ratio = 10,
+		flags = "all_ceilings",
+		biomes = lushcaves,
+	})
+	--[[
+	minetest.register_decoration({
+		decoration = "mcl_lush_caves:spore_blossom",
+		deco_type = "simple",
+		place_on = {"mcl_lush_caves:moss","group:material_stone"},
+		spawn_by = {"air"},
+		num_spawn_by = 4,
+		sidelen = 16,
+		fill_ratio = 0,
+		flags = "place_center_x, place_center_z, force_placement, all_ceilings",
+		biomes = { "LushCaves_underground", "LushCaves_ocean", "LushCaves_deep_ocean" },
+	})--]]
+
+	minetest.register_decoration({
+		decoration = "mcl_lush_caves:moss_carpet",
+		deco_type = "simple",
+		place_on = {"group:material_stone","mcl_core:gravel","mcl_lush_caves:moss"},
+		fill_ratio = 0.1,
+		flags = "all_floors",
+		biomes = lushcaves,
+	})
+
+	minetest.register_decoration({
+		deco_type = "simple",
+		place_on = "mcl_lush_caves:moss","mcl_core:clay",
+		fill_ratio = 0.5,
+		biomes = lushcaves,
+		decoration = "mcl_flowers:tallgrass",
+		flags = "all_floors",
+	})
+
 	minetest.register_decoration({
 		deco_type = "simple",
 		place_on = {"group:sand","mcl_core:gravel","mcl_mud:mud"},
