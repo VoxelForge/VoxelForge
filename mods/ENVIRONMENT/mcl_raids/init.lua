@@ -237,26 +237,6 @@ local function get_point_on_circle(pos,r,n)
 	return rt[1]
 end
 
-local function start_firework_rocket(pos)
-	local p = get_point_on_circle(pos,math.random(32,64),32)
-	local n = minetest.get_node(p)
-	local l = minetest.get_natural_light(pos,0.5)
-	if n.name ~= "air" or l <= minetest.LIGHT_MAX then return end
-	local o = minetest.add_entity(p,"mcl_bows:rocket_entity")
-	if o and o:get_pos() then
-		o:get_luaentity()._harmless = true
-		o:set_acceleration(vector.new(math.random(0,2),math.random(30,50),math.random(0,2)))
-	end
-end
-
-local function make_firework(pos,stime)
-	if os.time() - stime > 60 then return end
-	for i=1,math.random(25) do
-		minetest.after(math.random(i),start_firework_rocket,pos)
-	end
-	minetest.after(10,make_firework,pos,stime)
-end
-
 local function is_player_near(self)
 	for _,pl in pairs(minetest.get_connected_players()) do
 		if self.pos and vector.distance(pl:get_pos(),self.pos) < 64 then return true end
@@ -334,7 +314,6 @@ mcl_events.register_event("raid",{
 	on_complete = function(self)
 		awards.unlock(self.player,"mcl:hero_of_the_village")
 		mcl_potions.player_clear_effect(minetest.get_player_by_name(self.player),"bad_omen")
-		make_firework(self.pos,os.time())
 	end,
 })
 
@@ -382,15 +361,6 @@ mcl_events.register_event("new_years",{
 	end,
 	on_start = function(self)
 		minetest.chat_send_player(self.player,"<cora> Happy new year <3")
-	end,
-	on_step = function(self,dtime)
-		if not self.timer or self.timer < 0 then
-			self.timer = math.random(1,5)
-			for i=1,math.random(8) do
-				minetest.after(math.random(i),start_firework_rocket,minetest.get_player_by_name(self.player):get_pos())
-			end
-		end
-		self.timer = self.timer - dtime
 	end,
 	cond_complete = function(event)
 		return not is_new_years()
