@@ -23,6 +23,8 @@ local function register_rocket(n, duration, force)
 	})
 end
 
+minetest.register_alias("mcl_bows:rocket", "mcl_fireworks:rocket_2")
+
 register_rocket(1, 2.2, 10)
 register_rocket(2, 4.5, 20)
 register_rocket(3, 6, 30)

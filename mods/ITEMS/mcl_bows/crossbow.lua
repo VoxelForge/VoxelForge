@@ -97,7 +97,7 @@ local function player_shoot_arrow(wielditem, player, power, damage, is_critical)
 	local has_multishot_enchantment = mcl_enchanting.has_enchantment(player:get_wielded_item(), "multishot")
 	local arrow_itemstring = wielditem:get_meta():get("arrow")
 
-	if not arrow_itemstring then
+	if not arrow_itemstring or minetest.get_item_group(arrow_itemstring, "ammo_crossbow") == 0 then
 		return false
 	end
 
