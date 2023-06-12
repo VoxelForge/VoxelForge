@@ -147,7 +147,7 @@ local function register_wooden_planks(subname, description, tiles)
 	})
 end
 
-local function register_leaves(subname, description, longdesc, tiles, sapling, drop_apples, sapling_chances ,def)
+local function register_leaves(subname, description, longdesc, tiles, sapling, drop_apples, sapling_chances, def)
 	local apple_chances = {200, 180, 160, 120, 40}
 	local stick_chances = {50, 45, 30, 35, 10}
 
@@ -179,7 +179,7 @@ local function register_leaves(subname, description, longdesc, tiles, sapling, d
 	end
 
 	local l_def = {}
-	table.update(l_def,{
+	table.update(l_def, {
 		description = description,
 		_doc_items_longdesc = longdesc,
 		_doc_items_hidden = false,
@@ -203,7 +203,7 @@ local function register_leaves(subname, description, longdesc, tiles, sapling, d
 		_mcl_hardness = 0.2,
 		_mcl_silk_touch_drop = true,
 		_mcl_fortune_drop = { get_drops(1), get_drops(2), get_drops(3), get_drops(4) },
-	},def)
+	}, def)
 
 	minetest.register_node("mcl_core:" .. subname, l_def)
 
@@ -320,7 +320,7 @@ register_sapling("birchsapling", S("Birch Sapling"),
 register_leaves("leaves", S("Oak Leaves"), S("Oak leaves are grown from oak trees."), {"default_leaves.png"}, "mcl_core:sapling", true, {20, 16, 12, 10})
 register_leaves("darkleaves", S("Dark Oak Leaves"), S("Dark oak leaves are grown from dark oak trees."), {"mcl_core_leaves_big_oak.png"}, "mcl_core:darksapling", true, {20, 16, 12, 10})
 register_leaves("jungleleaves", S("Jungle Leaves"), S("Jungle leaves are grown from jungle trees."), {"default_jungleleaves.png"}, "mcl_core:junglesapling", false, {40, 26, 32, 24, 10})
-register_leaves("acacialeaves", S("Acacia Leaves"), S("Acacia leaves are grown from acacia trees."), {"default_acacia_leaves.png"}, "mcl_core:acaciasapling", false, {20, 16, 12, 10},{color="#FF0000"})
+register_leaves("acacialeaves", S("Acacia Leaves"), S("Acacia leaves are grown from acacia trees."), {"default_acacia_leaves.png"}, "mcl_core:acaciasapling", false, {20, 16, 12, 10}, {color="#FF0000"})
 register_leaves("spruceleaves", S("Spruce Leaves"), S("Spruce leaves are grown from spruce trees."), {"mcl_core_leaves_spruce.png"}, "mcl_core:sprucesapling", false, {20, 16, 12, 10})
 register_leaves("birchleaves", S("Birch Leaves"), S("Birch leaves are grown from birch trees."), {"mcl_core_leaves_birch.png"}, "mcl_core:birchsapling", false, {20, 16, 12, 10})
 
