@@ -651,7 +651,7 @@ local function make_formspec(name)
 		image_button[%f,0.12;0.8,0.8;craftguide_prev_icon.png;prev;]
 		image_button[%f,0.12;0.8,0.8;craftguide_next_icon.png;next;] ]],
 		data.iX - 3.1,
-		0)
+		(data.iX - 1.2) - (data.iX >= 11 and 0.08 or 0))
 
 	fs[#fs + 1] = string.format("field[0.3,0.32;2.5,1;filter;;%s]", F(data.filter))
 
