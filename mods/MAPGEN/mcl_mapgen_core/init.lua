@@ -255,11 +255,12 @@ end)
 
 local function set_param2_nodes(vm, data, data2, emin, emax, area, minp, maxp, blockseed)
 	local lvm_used = false
-	if minp.y <= mcl_vars.mg_overworld_max and maxp.y >= mcl_vars.mg_overworld_min then
-		for z = minp.z, maxp.z do
-		for y = minp.y, maxp.y do
-			local vi = area:index(minp.x, y, z)
-			for x = minp.x, maxp.x do
+
+	if emin.y <= mcl_vars.mg_overworld_max and emax.y >= mcl_vars.mg_overworld_min then
+		for z = emin.z, emax.z do
+		for y = emin.y, emax.y do
+			local vi = area:index(emin.x, y, z)
+			for x = emin.x, emax.x do
 				if biomecolor_cids[data[vi]] then
 					data2[vi] = biome_id_p2[minetest.get_biome_data({x=x,y=y,z=z}).biome] --don't create a vector table here; makes this measurably slower!
 					lvm_used = true
