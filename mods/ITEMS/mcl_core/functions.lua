@@ -390,6 +390,15 @@ function mcl_core.generate_tree(pos, tree_type, options)
 	elseif tree_type == BIRCH_TREE_ID then
 		mcl_core.generate_birch_tree(pos)
 	end
+	local nn = minetest.find_nodes_in_area(vector.offset(pos,-7,0,-7),vector.offset(pos,7,30,7),{"group:leaves"})
+	for _,v in pairs(nn) do
+		local n = minetest.get_node(v)
+		local p2 = mcl_util.get_pos_p2(v)
+		if n.param2 ~= p2 then
+			n.param2 = p2
+			minetest.swap_node(v,n)
+		end
+	end
 end
 
 -- Ballon Oak
