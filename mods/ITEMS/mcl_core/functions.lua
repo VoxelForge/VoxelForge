@@ -741,6 +741,20 @@ minetest.register_lbm({
 	end,
 })
 
+minetest.register_lbm({
+	label = "Set old leaves param2",
+	name = "mcl_core:leaves_param2_update",
+	nodenames = {"group:leaves"},
+	run_at_every_load = false,
+	action = function(pos, n)
+		local p2 = mcl_util.get_pos_p2(pos)
+		if n.param2 ~= p2 then
+			n.param2 = p2
+			minetest.swap_node(pos,n)
+		end
+	end,
+})
+
 --------------------------
 -- Try generate tree   ---
 --------------------------
