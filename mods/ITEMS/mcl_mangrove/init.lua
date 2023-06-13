@@ -109,6 +109,7 @@ local l_def = {
 	drop = get_drops(0),
 	_mcl_shears_drop = true,
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
+	after_place_node = mcl_core.update_leaf_p2,
 	_mcl_blast_resistance = 0.2,
 	_mcl_hardness = 0.2,
 	_mcl_silk_touch_drop = true,

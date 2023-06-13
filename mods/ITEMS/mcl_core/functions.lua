@@ -1586,3 +1586,13 @@ function mcl_core.bone_meal_grass(itemstack,placer,pointed_thing,pos,n)
 	end
 	return true
 end
+
+--called from leaves after_place_node
+function mcl_core.update_leaf_p2(pos, placer, itemstack, pointed_thing)
+	local n = minetest.get_node(pos)
+	local p2 = mcl_util.get_pos_p2(pos)
+	if n.param2 ~= p2 then
+		n.param2 = p2
+		minetest.swap_node(pos,n)
+	end
+end
