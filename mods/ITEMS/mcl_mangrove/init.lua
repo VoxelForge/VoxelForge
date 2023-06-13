@@ -588,5 +588,14 @@ minetest.register_abm({
 		if mcl_core.check_growth_width(pos,w,h) then
 			minetest.place_schematic(pos, path, "random", nil, true, "place_center_x, place_center_z")
 		end
+		local nn = minetest.find_nodes_in_area(vector.offset(pos,-7,0,-7),vector.offset(pos,7,30,7),{"group:leaves"})
+		for _,v in pairs(nn) do
+			local n = minetest.get_node(v)
+			local p2 = mcl_util.get_pos_p2(v)
+			if n.param2 ~= p2 then
+				n.param2 = p2
+				minetest.swap_node(v,n)
+			end
+		end
 end
 })
