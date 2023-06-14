@@ -97,6 +97,7 @@ local function redstone_ore_activate(pos, node, puncher, pointed_thing)
 		return minetest.node_punch(pos, node, puncher, pointed_thing)
 	end
 end
+
 minetest.register_node("mcl_core:stone_with_redstone", {
 	description = S("Redstone Ore"),
 	_doc_items_longdesc = S("Redstone ore is commonly found near the bottom of the world. It glows when it is punched or walked upon."),

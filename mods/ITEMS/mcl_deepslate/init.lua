@@ -63,9 +63,7 @@ local function register_deepslate_ore(item, desc, extra, basename)
 	def.description = desc
 	def.tiles = { "mcl_deepslate_" .. item .. "_ore.png" }
 
-	for k, v in pairs(extra or {}) do
-		def[k] = v
-	end
+	table.update(def,extra or {})
 
 	minetest.register_node(nodename, def)
 
