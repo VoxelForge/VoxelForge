@@ -90,10 +90,12 @@ register_deepslate_ore("emerald", S("Deepslate Emerald Ore"))
 register_deepslate_ore("diamond", S("Deepslate Diamond Ore"))
 register_deepslate_ore("lapis", S("Deepslate Lapis Lazuli Ore"))
 register_deepslate_ore("redstone", S("Deepslate Redstone Ore"), {
-	_mcl_ore_unlit = "mcl_deepslate:deepslate_with_redstone_lit",
+	_mcl_ore_lit = "mcl_deepslate:deepslate_with_redstone_lit",
+	_mcl_ore_unlit = "mcl_deepslate:deepslate_with_redstone",
 })
 register_deepslate_ore("redstone_lit", S("Lit Deepslate Redstone Ore"), {
 	tiles = { "mcl_deepslate_redstone_ore.png" },
+	_mcl_ore_lit = "mcl_deepslate:deepslate_with_redstone_lit",
 	_mcl_ore_unlit = "mcl_deepslate:deepslate_with_redstone",
 	_mcl_silk_touch_drop = { "mcl_deepslate:deepslate_with_redstone" },
 })
