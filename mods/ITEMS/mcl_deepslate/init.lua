@@ -1,7 +1,5 @@
 local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
-
-local copper_mod = minetest.get_modpath("mcl_copper")
 local cobble = "mcl_deepslate:deepslate_cobbled"
 local stick = "mcl_core:stick"
 
@@ -99,11 +97,7 @@ register_deepslate_ore("redstone_lit", S("Lit Deepslate Redstone Ore"), {
 	_mcl_ore_unlit = "mcl_deepslate:deepslate_with_redstone",
 	_mcl_silk_touch_drop = { "mcl_deepslate:deepslate_with_redstone" },
 })
-
-
-if copper_mod then
-	register_deepslate_ore("copper", S("Deepslate Copper Ore"), nil, "mcl_copper:stone_with_copper")
-end
+register_deepslate_ore("copper", S("Deepslate Copper Ore"), nil, "mcl_copper:stone_with_copper")
 
 local function register_deepslate_variant(item, desc, longdesc, stairs, slab, double_slab, wall, cracked)
 	local def = {
