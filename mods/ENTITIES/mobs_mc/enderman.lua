@@ -649,6 +649,7 @@ mcl_mobs.spawn_setup({
 	dimension = "overworld",
 	aoc = 9,
 	min_light = 0,
+	max_light = 7,
 	min_height = mcl_vars.mg_overworld_min,
 	max_height = mcl_vars.mg_overworld_max,
 	biomes_except = {
