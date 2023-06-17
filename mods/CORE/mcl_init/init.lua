@@ -252,7 +252,7 @@ if mcl_vars.mg_overworld_min_old ~= mcl_vars.mg_overworld_min then
 	end
 
 	local void_regen_min_y = mcl_vars.mg_overworld_min
-	local void_regen_max_y = math.floor(mcl_vars.mg_overworld_min_old / 16 - 1) * 16 - 1
+	local void_regen_max_y = math.floor(mcl_vars.mg_overworld_min_old / (5 * 16)) * (5 * 16) - 1
 	local bedrock_regen_min_y = void_regen_max_y + 1
 	local bedrock_regen_max_y = mcl_vars.mg_overworld_min_old + 4
 
