@@ -11,21 +11,20 @@
 * davedevils
 
 ## Active Contributors
-* Lizzy Fleckenstein
+* Fleckenstein
 * Michieal
 * ancientmarinerdev
 * ROllerozxa
-* PrairieWind
+* kabou
 * FossFanatic
 * AFCMS
+* PrairieWind
 * kabou
 * MrRar
-* Johannes Fritz
 * chmodsayshello
 
 ## Previous Contributors
 * NO11
-* davedevils
 * Brandon
 * kay27
 * marcin-serwin
@@ -88,7 +87,7 @@
 * MysticTempest
 * RandomLegoBrick
 * cora
-* Faerraven / Michieal
+* Michieal
 * ryvnf
 
 ## Translations
