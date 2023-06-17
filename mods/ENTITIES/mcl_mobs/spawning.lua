@@ -314,6 +314,7 @@ mcl_mobs.spawn_group = spawn_group
 local S = minetest.get_translator("mcl_mobs")
 
 if mobs_spawn then
+	local perlin_noise
 	local function spawn_a_mob(pos, dimension)
 		--create a disconnected clone of the spawn dictionary
 		--prevents memory leak
