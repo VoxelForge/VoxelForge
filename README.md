@@ -186,8 +186,8 @@ Technical differences from Minecraft:
 … and finally, Mineclonia is free software (“free” as in “freedom”)!
 
 ## Other readme files
-* `LICENSE.txt`: The GPLv3 license text
-* `CONTRIBUTING.md`: Information for those who want to contribute
-* `API.md`: For Minetest modders who want to mod this game
-* `LEGAL.md`: Legal information
-* `CREDITS.md`: List of everyone who contributed
+* [LICENSE.txt](./LICENSE.txt): The GPLv3 license text
+* [CONTRIBUTING.md](./CONTRIBUTING.md): Information for those who want to contribute
+* [API.md](./API.md): For Minetest modders who want to mod this game
+* [LEGAL.md](./LEGAL.md): Legal information
+* [CREDITS.md](./CREDITS.md): List of everyone who contributed
