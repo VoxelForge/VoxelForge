@@ -5,11 +5,11 @@ fully supported but not the other way around. If you want to try Mineclonia and
 have the option of going back, then we would advice you to make a backup of your
 world first.
 
-This revision of the document describes the compatibility between the upcoming
-Mineclonia release 0.83.0 and MineClone 2 0.83.1.
+This revision of the document describes the compatibility between Mineclonia
+0.83.0 and MineClone 2 0.83.1.
 
 ## World depth increase
-In Mineclonia 0.83.0 the world depth will be increased to -128 nodes (from -64
+In Mineclonia 0.83.0 the world depth was increased to -128 nodes (from -64
 nodes) to match Minecraft 1.18. Mineclonia will automatically update worlds from
 MineClone 2 and older Mineclonia versions by replacing the bedrock layer and
 void underneath with newly generated mapchunks. This means that migrated worlds
