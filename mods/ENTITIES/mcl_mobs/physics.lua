@@ -238,7 +238,7 @@ function mob_class:update_roll()
 	local cbox = table.copy(self.collisionbox)
 	local acbox = self.object:get_properties().collisionbox
 
-	if math.abs(cbox[2] - acbox[2]) > 0.1 then
+	if tonumber(cbox[2]) and tonumber(acbox[2]) and math.abs(cbox[2] - acbox[2]) > 0.1 then
 		was_Fleckenstein = true
 	end
 
