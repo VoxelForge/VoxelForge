@@ -896,7 +896,6 @@ local function summon_golem(self)
 	for _,n in pairs(nn) do
 		local up = minetest.find_nodes_in_area(vector.offset(n,0,1,0),vector.offset(n,0,3,0),{"air"})
 		if up and #up >= 3 then
-			minetest.sound_play("mcl_portals_open_end_portal", {pos=n, gain=0.5, max_hear_distance = 16}, true)
 			return minetest.add_entity(vector.offset(n,0,1,0),"mobs_mc:iron_golem")
 		end
 	end
