@@ -446,6 +446,7 @@ end
 function hb.get_hudbar_state(player, identifier)
 	if not player_exists(player) then return nil end
 	local ref = hb.get_hudtable(identifier).hudstate[player:get_player_name()]
+	if not ref then return nil end
 	-- Do not forget to update this chunk of code in case the state changes
 	local copy = {
 		hidden = ref.hidden,

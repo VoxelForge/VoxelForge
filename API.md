@@ -187,7 +187,7 @@ Makes a previously hidden HUD bar visible again to a player.
 It is also possible to read information about existing HUD bars.
 
 ### `hb.get_hudbar_state(player, identifier)`
-Returns the current state of the active player's HUD bar.
+Returns the current state of the active player's HUD bar. Will return `nil` if the hudbar is not initialized.
 
 #### Parameters
 * `player`: `ObjectRef` of the player to which the HUD bar belongs to
