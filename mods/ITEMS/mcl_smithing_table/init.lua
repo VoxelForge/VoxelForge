@@ -158,8 +158,7 @@ minetest.register_node("mcl_smithing_table:table", {
 			and		mcl_smithing_table.is_smithing_mineral(stack:get_name())
 
 			or 		listname == "template"
-			and 	string.find(stack:get_name(),"mcl_armor_trims")
-
+			and		string.find(stack:get_name(),"mcl_armor_trims")
 		then
 			return stack:get_count()
 		end
