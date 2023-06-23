@@ -499,7 +499,7 @@ end
 -- make explosion with protection and tnt mod check
 function mob_class:boom(pos, strength, fire)
 	if mobs_griefing and not minetest.is_protected(pos, "") then
-		mcl_explosions.explode(pos, strength, { drop_chance = 1.0, fire = fire }, self.object)
+		mcl_explosions.explode(pos, strength, { fire = fire }, self.object)
 	else
 		mcl_mobs.mob_class.safe_boom(self, pos, strength) --need to call it this way bc self is the "arrow" object here
 	end
@@ -899,7 +899,7 @@ function mob_class:do_states_attack (dtime)
 				local pos = self.object:get_pos()
 
 				if mobs_griefing and not minetest.is_protected(pos, "") then
-					mcl_explosions.explode(mcl_util.get_object_center(self.object), self.explosion_strength, { drop_chance = 1.0 }, self.object)
+					mcl_explosions.explode(mcl_util.get_object_center(self.object), self.explosion_strength, {}, self.object)
 				else
 					minetest.sound_play(self.sounds.explode, {
 						pos = pos,

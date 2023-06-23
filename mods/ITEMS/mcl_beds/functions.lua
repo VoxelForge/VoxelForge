@@ -358,7 +358,7 @@ function mcl_beds.on_rightclick(pos, player, is_top)
 			minetest.remove_node(pos)
 			minetest.remove_node(string.sub(node.name, -4) == "_top" and vector.subtract(pos, dir) or vector.add(pos, dir))
 			if explosions_mod then
-				mcl_explosions.explode(pos, 5, {drop_chance = 1.0, fire = true})
+				mcl_explosions.explode(pos, 5, {fire = true})
 			end
 			return
 		end
