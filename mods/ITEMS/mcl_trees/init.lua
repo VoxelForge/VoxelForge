@@ -16,13 +16,29 @@ mcl_trees.woods = {
 			{ file=modpath.."/schematics/mcl_core_oak_v6.mts",width=3,height=5 },
 			{ file=modpath.."/schematics/mcl_core_oak_classic_bee_nest.mts",width=3,height=5 },
 			{ file=modpath.."/schematics/mcl_core_oak_classic.mts",width=3,height=5 },
-		}
+		},
+		tree = { tiles = {"default_tree_top.png", "default_tree_top.png","default_tree.png"} },
+		leaves = { tiles = { "default_leaves.png" } },
+		planks = { tiles = {"default_wood.png"}},
+		sapling = {
+			tiles = {"default_sapling.png"},
+			inventory_image = "default_sapling.png",
+			wield_image = "default_sapling.png",
+		},
 	} ,
 	["dark_oak"]={
 		sign_color="#5F4021",
 		tree_schems = {
 			{ file=modpath.."/schematics/mcl_core_dark_oak.mts",width=4,height=7 },
-		}
+		},
+		tree = { tiles = {"mcl_core_log_big_oak_top.png", "mcl_core_log_big_oak_top.png","mcl_core_log_big_oak.png"} },
+		leaves = { tiles = { "mcl_core_leaves_big_oak.png" } },
+		planks = { tiles = {"mcl_core_planks_big_oak.png"}},
+		sapling = {
+			tiles = {"mcl_core_sapling_big_oak.png"},
+			inventory_image = "mcl_core_sapling_big_oak.png",
+			wield_image = "mcl_core_sapling_big_oak.png",
+		},
 	},
 	["jungle"]={
 		sign_color="#9f4112",
@@ -35,6 +51,14 @@ mcl_trees.woods = {
 			{ file=modpath.."/schematics/mcl_core_jungle_tree_huge_2.mts",width=8,height=8 },
 			{ file=modpath.."/schematics/mcl_core_jungle_tree_huge_3.mts",width=8,height=8 },
 			{ file=modpath.."/schematics/mcl_core_jungle_tree_huge_4.mts",width=8,height=8 },
+		},
+		tree = { tiles = {"default_jungletree_top.png", "default_jungletree_top.png","default_jungletree.png"} },
+		leaves = { tiles = { "default_jungleleaves.png" } },
+		planks = { tiles = {"default_junglewood.png"}},
+		sapling = {
+			tiles = {"default_junglesapling.png"},
+			inventory_image = "defaultjungle_sapling.png",
+			wield_image = "default_junglesapling.png",
 		},
 	},
 	["spruce"]={
@@ -68,7 +92,15 @@ mcl_trees.woods = {
 			{ file=modpath.."/schematics/mcl_core_acacia_6.mts",width=7,height=8 },
 			{ file=modpath.."/schematics/mcl_core_acacia_7.mts",width=7,height=8 },
 			{ file=modpath.."/schematics/mcl_core_acacia_weirdo.mts",width=7,height=8 },
-		}
+		},
+		tree = { tiles = {"default_acacia_tree_top.png", "default_acacia_tree_top.png","default_acacia_tree.png"} },
+		leaves = { tiles = { "default_acacia_leaves.png" } },
+		planks = { tiles = {"default_acacia_wood.png"}},
+		sapling = {
+			tiles = {"default_acacia_sapling.png"},
+			inventory_image = "default_acacia_sapling.png",
+			wield_image = "default_acacia_sapling.png",
+		},
 	},
 	["birch"]={
 		sign_color="#ffdba7",
@@ -87,7 +119,17 @@ mcl_trees.woods = {
 			{ file=modpath.."/schematics/mcl_mangrove_tree_3.mts",width=5,height=9 },
 			{ file=modpath.."/schematics/mcl_mangrove_tree_4.mts",width=5,height=9 },
 			{ file=modpath.."/schematics/mcl_mangrove_tree_5.mts",width=5,height=12 },
-		}
+		},
+		tree = { tiles = {"mcl_mangrove_log_top.png", "mcl_mangrove_log_top.png","mcl_mangrove_log.png" }},
+		bark = { tiles = {"mcl_mangrove_log.png"}},
+		leaves = { tiles = { "mcl_mangrove_leaves.png" }},
+		planks = { tiles = {"mcl_mangrove_planks.png"}},
+		stripped = {
+			tiles = {"mcl_stripped_mangrove_log_top.png", "mcl_stripped_mangrove_log_top.png","mcl_stripped_mangrove_log_side.png"}
+		},
+		stripped_bark = {
+			tiles = {"mcl_stripped_mangrove_log_side.png"}
+		},
 	},
 	["crimson"]={
 		sign_color="#c35f51",

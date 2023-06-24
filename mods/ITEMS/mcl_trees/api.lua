@@ -86,6 +86,8 @@ mcl_trees.tpl_leaves = {
 	drawtype = "allfaces_optional",
 	waving = 2,
 	paramtype = "light",
+	paramtype2 = "color",
+	palette = "mcl_core_palette_leaves.png",
 	groups = {
 		handy = 1, hoey = 1, shearsy = 1, swordy = 1, dig_by_piston = 1,
 		deco_block = 1, leaves = 1, biomecolor = 1,
@@ -210,7 +212,7 @@ function mcl_trees.register_wood(name,p)
 		minetest.register_node(":mcl_trees:".."tree_"..name,table.merge(mcl_trees.tpl_log,{
 			description = S(rname.." Wood"),
 			_doc_items_longdesc = S("The trunk of a "..name.." tree."),
-			tiles = { "mcl_trees_tree_"..name.."_top.png",  "mcl_trees_tree_"..name.."_top.png", "mcl_trees_tree_"..name..".png"},
+			tiles = { "mcl_core_log_"..name.."_top.png",  "mcl_core_log_"..name.."_top.png", "mcl_core_log_"..name..".png"},
 			_mcl_stripped_variant = "mcl_trees:stripped_"..name,
 		},p.tree or {}))
 	end
@@ -219,7 +221,7 @@ function mcl_trees.register_wood(name,p)
 		minetest.register_node(":mcl_trees:planks_"..name, table.merge(mcl_trees.tpl_planks,{
 			description =  S(rname.." Wood Planks"),
 			_doc_items_longdesc = doc.sub.items.temp.build,
-			tiles = {"mcl_trees_planks_"..name..".png"},
+			tiles = {"mcl_core_planks_"..name..".png"},
 		},p.planks or {}))
 		minetest.register_craft({
 			output = "mcl_trees:planks_"..name.." 4",
@@ -233,7 +235,7 @@ function mcl_trees.register_wood(name,p)
 		minetest.register_node(":mcl_trees:bark_"..name,table.merge(mcl_trees.tpl_log,{
 			description = S(rname.." Bark"),
 			_doc_items_longdesc = S("This is a decorative block surrounded by the bark of a tree trunk."),
-			tiles = {"mcl_trees_tree_"..name..".png"},
+			tiles = {"mcl_core_log_"..name..".png"},
 			is_ground_content = false,
 			_mcl_stripped_variant = "mcl_trees:bark_stripped_"..name,
 		},p.bark or {}))
@@ -259,7 +261,7 @@ function mcl_trees.register_wood(name,p)
 			description = S("Stripped "..rname.." Log"),
 			_doc_items_longdesc = S("The stripped trunk of an "..name.." tree."),
 			_doc_items_hidden = false,
-			tiles = { "mcl_trees_stripped_"..name.."_top.png",  "mcl_trees_stripped_"..name.."_top.png", "mcl_trees_stripped_"..name..".png"},
+			tiles = { "mcl_core_stripped_"..name.."_top.png",  "mcl_core_stripped_"..name.."_top.png", "mcl_core_stripped_"..name.."_side.png"},
 		},p.stripped or {}))
 	end
 
@@ -267,7 +269,7 @@ function mcl_trees.register_wood(name,p)
 		minetest.register_node(":mcl_trees:bark_stripped_"..name, table.merge(mcl_trees.tpl_log,{
 			description = S("Stripped "..rname.." Wood"),
 			_doc_items_longdesc = S("The stripped wood of an "..name.." tree."),
-			tiles = {"mcl_trees_stripped_"..name..".png"},
+			tiles = {"mcl_core_stripped_"..name.."_side.png"},
 			is_ground_content = false,
 		},p.stripped_bark or {}))
 	end
@@ -275,15 +277,15 @@ function mcl_trees.register_wood(name,p)
 	if p.sapling == nil or type(p.sapling) == "table" then
 		minetest.register_node(":mcl_trees:sapling_"..name, table.merge(mcl_trees.tpl_sapling,{
 			description = S(rname.." Sapling"),
-			tiles = {"mcl_trees_sapling_"..name..".png"},
-			inventory_image = "mcl_trees_sapling_"..name..".png",
-			wield_image = "mcl_trees_sapling_"..name..".png",
+			tiles = {"mcl_core_sapling_"..name..".png"},
+			inventory_image = "mcl_core_sapling_"..name..".png",
+			wield_image = "mcl_core_sapling_"..name..".png",
 		}))
 	end
 
 
 	if p.leaves == nil or type(p.leaves) == "table" then
-		register_leaves("leaves_"..name, S(rname.." Leaves"), S(rname.." leaves are grown from "..name.." trees."), {"mcl_trees_leaves_"..name..".png"}, "mcl_trees:sapling_"..name, true, {20, 16, 12, 10})
+		register_leaves("leaves_"..name, S(rname.." Leaves"), S(rname.." leaves are grown from "..name.." trees."), p.leaves and p.leaves.tiles or { "mcl_core_leaves_"..name..".png"}, "mcl_trees:sapling_"..name, true, {20, 16, 12, 10})
 	end
 
 	--[[if p.stairs == nil or type(p.stairs) == "table" then
