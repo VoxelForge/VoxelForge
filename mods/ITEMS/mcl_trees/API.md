@@ -1,4 +1,4 @@
-# API for `mcl_wood`
+# API for `mcl_trees`
 
 Register your own wood types. It will automatically register the associated nodes like stairs, fences etc.
 
@@ -7,12 +7,12 @@ Register your own wood types. It will automatically register the associated node
 Simple way of registering willow wood `willow`:
 
 ```
-mcl_wood.register_wood("willow")
+mcl_trees.register_wood("willow")
 ```
 
 For advanced usage you can override and/or turn on and off certain features for example:
 
-mcl_wood.register_wood("willow",{
+mcl_trees.register_wood("willow",{
 	sign_color = "#00FF00", --hex color for the sign
 	sapling = {tiles = { "different_sapling_texture_file.png" } },
 	boat = false, --no willow boat
@@ -25,16 +25,16 @@ the standard variant is used, if they are anything else the feature is turned of
 
 this expects the following textures unless the feature is turned off:
 
-mcl_wood_tree_willow.png
-mcl_wood_tree_willow_top.png
+mcl_trees_tree_willow.png
+mcl_trees_tree_willow_top.png
 
-mcl_wood_stripped_willow.png
-mcl_wood_stripped_willow_top.png
+mcl_trees_stripped_willow.png
+mcl_trees_stripped_willow_top.png
 
-mcl_wood_planks_willow.png
+mcl_trees_planks_willow.png
 
-mcl_wood_leaves_willow.png
-mcl_wood_sapling_willow.png
+mcl_trees_leaves_willow.png
+mcl_trees_sapling_willow.png
 
 mcl_doors_trapdoor_willow.png
 mcl_doors_trapdoor_willow_open.png
