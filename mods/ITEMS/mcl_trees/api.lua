@@ -70,6 +70,7 @@ mcl_trees.tpl_log = {
 	on_place = mcl_util.rotate_axis,
 	after_destruct = update_leaves,
 	on_rotate = screwdriver.rotate_3way,
+	_on_axe_place = mcl_trees.strip_tree,
 	_mcl_blast_resistance = 2,
 	_mcl_hardness = 2,
 }
