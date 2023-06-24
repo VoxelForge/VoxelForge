@@ -270,7 +270,7 @@ local function register_sapling(subname, description, longdesc, tt_help, texture
 end
 
 ---------------------
-
+--[[
 register_tree_trunk("tree", S("Oak Wood"), S("Oak Bark"), S("The trunk of an oak tree."), "default_tree_top.png", "default_tree.png", "mcl_core:stripped_oak")
 register_tree_trunk("darktree", S("Dark Oak Wood"), S("Dark Oak Bark"), S("The trunk of a dark oak tree."), "mcl_core_log_big_oak_top.png", "mcl_core_log_big_oak.png", "mcl_core:stripped_dark_oak")
 register_tree_trunk("acaciatree", S("Acacia Wood"), S("Acacia Bark"), S("The trunk of an acacia."), "default_acacia_tree_top.png", "default_acacia_tree.png", "mcl_core:stripped_acacia")
@@ -331,3 +331,4 @@ register_leaves("birchleaves", S("Birch Leaves"), S("Birch leaves are grown from
 
 minetest.register_alias("default:acacia_tree", "mcl_core:acaciatree")
 minetest.register_alias("default:acacia_leaves", "mcl_core:acacialeaves")
+--]]

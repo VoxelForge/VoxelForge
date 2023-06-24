@@ -914,7 +914,7 @@ end
 
 -- TODO: Use better tree models for everything
 -- TODO: Support 2×2 saplings
-
+--[[
 -- Oak tree
 minetest.register_abm({
 	label = "Oak tree growth",
@@ -1016,7 +1016,7 @@ minetest.register_lbm({
 	run_at_every_load = true,
 	action = grow_acacia
 })
-
+--]]
 local function leafdecay_particles(pos, node)
 	minetest.add_particlespawner({
 		amount = math.random(10, 20),
