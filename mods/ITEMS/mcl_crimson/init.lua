@@ -326,27 +326,6 @@ minetest.register_node("mcl_crimson:shroomlight", {
 	}),
 })
 
-minetest.register_node("mcl_crimson:warped_hyphae", {
-	description = S("Warped Hyphae"),
-	_doc_items_longdesc = S("The stem of a warped hyphae"),
-	_doc_items_hidden = false,
-	tiles = {
-		"warped_hyphae.png",
-		"warped_hyphae.png",
-		{
-			name = "warped_hyphae_side.png",
-			animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=2.0}
-		},
-	},
-	paramtype2 = "facedir",
-	on_place = mcl_util.rotate_axis,
-	groups = {handy = 1, axey = 1, tree = 1, building_block = 1, material_wood = 1},
-	sounds = mcl_sounds.node_sound_wood_defaults(),
-	_mcl_blast_resistance = 2,
-	_mcl_hardness = 2,
-	_mcl_stripped_variant = "mcl_crimson:stripped_warped_hyphae",
-})
-
 minetest.register_node("mcl_crimson:warped_nylium", {
 	description = S("Warped Nylium"),
 	tiles = {
@@ -367,86 +346,6 @@ minetest.register_node("mcl_crimson:warped_nylium", {
 	_on_bone_meal = on_bone_meal,
 })
 
---Stem bark, stripped stem and bark
-
-minetest.register_node("mcl_crimson:warped_hyphae_bark", {
-	description = S("Warped Hyphae Bark"),
-	_doc_items_longdesc = S("This is a decorative block surrounded by the bark of an hyphae."),
-	tiles = {
-	{
-		name = "warped_hyphae_side.png",
-		animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=2.0}
-	},
-	},
-	paramtype2 = "facedir",
-	on_place = mcl_util.rotate_axis,
-	groups = {handy = 1, axey = 1, bark = 1, building_block = 1, material_wood = 1},
-	sounds = mcl_sounds.node_sound_wood_defaults(),
-	is_ground_content = false,
-	_mcl_blast_resistance = 2,
-	_mcl_hardness = 2,
-	_mcl_stripped_variant = "mcl_crimson:stripped_warped_hyphae_bark",
-})
-
-minetest.register_craft({
-	output = "mcl_crimson:warped_hyphae_bark 3",
-	recipe = {
-		{ "mcl_crimson:warped_hyphae", "mcl_crimson:warped_hyphae" },
-		{ "mcl_crimson:warped_hyphae", "mcl_crimson:warped_hyphae" },
-	},
-})
-
-minetest.register_node("mcl_crimson:stripped_warped_hyphae", {
-	description = S("Stripped Warped Hyphae"),
-	_doc_items_longdesc = S("The stripped hyphae of a warped fungus"),
-	_doc_items_hidden = false,
-	tiles = {"warped_stem_stripped_top.png", "warped_stem_stripped_top.png", "warped_stem_stripped_side.png"},
-	paramtype2 = "facedir",
-	on_place = mcl_util.rotate_axis,
-	groups = {handy = 1, axey = 1, tree = 1, building_block = 1, material_wood = 1},
-	sounds = mcl_sounds.node_sound_wood_defaults(),
-	_mcl_blast_resistance = 2,
-	_mcl_hardness = 2,
-})
-
-minetest.register_node("mcl_crimson:stripped_warped_hyphae_bark", {
-	description = S("Stripped Warped Hyphae Bark"),
-	_doc_items_longdesc = S("The stripped hyphae bark of a warped fungus"),
-	tiles = {"warped_stem_stripped_side.png"},
-	paramtype2 = "facedir",
-	on_place = mcl_util.rotate_axis,
-	groups = {handy = 1, axey = 1, bark = 1, building_block = 1, material_wood = 1},
-	sounds = mcl_sounds.node_sound_wood_defaults(),
-	is_ground_content = false,
-	_mcl_blast_resistance = 2,
-	_mcl_hardness = 2,
-})
-
-minetest.register_craft({
-	output = "mcl_crimson:stripped_warped_hyphae_bark 3",
-	recipe = {
-		{ "mcl_crimson:stripped_warped_hyphae", "mcl_crimson:stripped_warped_hyphae" },
-		{ "mcl_crimson:stripped_warped_hyphae", "mcl_crimson:stripped_warped_hyphae" },
-	},
-})
-
-minetest.register_node("mcl_crimson:warped_hyphae_wood", {
-	description = S("Warped Hyphae Wood"),
-	tiles = {"warped_hyphae_wood.png"},
-	groups = {handy = 5,axey = 1, flammable = 3, wood=1,building_block = 1, material_wood = 1, fire_encouragement = 5, fire_flammability = 20},
-	sounds = mcl_sounds.node_sound_wood_defaults(),
-	_mcl_hardness = 2,
-})
-
-mcl_stairs.register_stair("warped_hyphae_wood", "mcl_crimson:warped_hyphae_wood", wood_stair_groups, false, S("Warped Stair"))
-mcl_stairs.register_slab("warped_hyphae_wood", "mcl_crimson:warped_hyphae_wood", wood_slab_groups, false, S("Warped Slab"))
-
-minetest.register_craft({
-	output = "mcl_crimson:warped_hyphae_wood 4",
-	recipe = {
-		{"mcl_crimson:warped_hyphae"},
-	},
-})
 
 minetest.register_craft({
 	output = "mcl_crimson:warped_nylium 2",
@@ -522,98 +421,6 @@ mcl_flowerpots.register_potted_flower("mcl_crimson:crimson_roots", {
 	image = "crimson_roots.png",
 })
 
-minetest.register_node("mcl_crimson:crimson_hyphae", {
-	description = S("Crimson Hyphae"),
-	_doc_items_longdesc = S("The stem of a crimson hyphae"),
-	_doc_items_hidden = false,
-	tiles = {
-		"crimson_hyphae.png",
-		"crimson_hyphae.png",
-		{
-			name = "crimson_hyphae_side.png",
-			animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=2.0}
-		},
-	},
-	paramtype2 = "facedir",
-	on_place = mcl_util.rotate_axis,
-	groups = {handy = 1, axey = 1, tree = 1, building_block = 1, material_wood = 1},
-	sounds = mcl_sounds.node_sound_wood_defaults(),
-	_mcl_blast_resistance = 2,
-	_mcl_hardness = 2,
-	_mcl_stripped_variant = "mcl_crimson:stripped_crimson_hyphae",
-})
-
---Stem bark, stripped stem and bark
-
-minetest.register_node("mcl_crimson:crimson_hyphae_bark", {
-	description = S("Crimson Hyphae Bark"),
-	_doc_items_longdesc = S("This is a decorative block surrounded by the bark of an hyphae."),
-	tiles = {
-	{
-		name = "crimson_hyphae_side.png",
-		animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=2.0}
-	},
-	},
-	paramtype2 = "facedir",
-	on_place = mcl_util.rotate_axis,
-	groups = {handy = 1, axey = 1, bark = 1, building_block = 1, material_wood = 1},
-	sounds = mcl_sounds.node_sound_wood_defaults(),
-	is_ground_content = false,
-	_mcl_blast_resistance = 2,
-	_mcl_hardness = 2,
-	_mcl_stripped_variant = "mcl_crimson:stripped_crimson_hyphae_bark",
-})
-
-minetest.register_craft({
-	output = "mcl_crimson:crimson_hyphae_bark 3",
-	recipe = {
-		{ "mcl_crimson:crimson_hyphae", "mcl_crimson:crimson_hyphae" },
-		{ "mcl_crimson:crimson_hyphae", "mcl_crimson:crimson_hyphae" },
-	},
-})
-
-minetest.register_node("mcl_crimson:stripped_crimson_hyphae", {
-	description = S("Stripped Crimson Hyphae"),
-	_doc_items_longdesc = S("The stripped stem of a crimson hyphae"),
-	_doc_items_hidden = false,
-	tiles = {"crimson_stem_stripped_top.png", "crimson_stem_stripped_top.png", "crimson_stem_stripped_side.png"},
-	paramtype2 = "facedir",
-	on_place = mcl_util.rotate_axis,
-	groups = {handy = 1, axey = 1, tree = 1, building_block = 1, material_wood = 1},
-	sounds = mcl_sounds.node_sound_wood_defaults(),
-	_mcl_blast_resistance = 2,
-	_mcl_hardness = 2,
-})
-
-minetest.register_node("mcl_crimson:stripped_crimson_hyphae_bark", {
-	description =	S("Stripped Crimson Hyphae Bark"),
-	_doc_items_longdesc = S("The stripped wood of a crimson hyphae"),
-	tiles = {"crimson_stem_stripped_side.png"},
-	paramtype2 = "facedir",
-	on_place = mcl_util.rotate_axis,
-	groups = {handy = 1, axey = 1, bark = 1, building_block = 1, material_wood = 1},
-	sounds = mcl_sounds.node_sound_wood_defaults(),
-	is_ground_content = false,
-	_mcl_blast_resistance = 2,
-	_mcl_hardness = 2,
-})
-
-minetest.register_craft({
-	output = "mcl_crimson:stripped_crimson_hyphae_bark 3",
-	recipe = {
-		{ "mcl_crimson:stripped_crimson_hyphae", "mcl_crimson:stripped_crimson_hyphae" },
-		{ "mcl_crimson:stripped_crimson_hyphae", "mcl_crimson:stripped_crimson_hyphae" },
-	},
-})
-
-minetest.register_node("mcl_crimson:crimson_hyphae_wood", {
-	description = S("Crimson Hyphae Wood"),
-	tiles = {"crimson_hyphae_wood.png"},
-	groups = {handy = 5, axey = 1, wood = 1, building_block = 1, material_wood = 1},
-	sounds = mcl_sounds.node_sound_wood_defaults(),
-	_mcl_hardness = 2,
-})
-
 minetest.register_node("mcl_crimson:crimson_nylium", {
 	description = S("Crimson Nylium"),
 	tiles = {
@@ -632,13 +439,6 @@ minetest.register_node("mcl_crimson:crimson_nylium", {
 	_mcl_blast_resistance = 0.4,
 	_mcl_silk_touch_drop = true,
 	_on_bone_meal = on_bone_meal,
-})
-
-minetest.register_craft({
-	output = "mcl_crimson:crimson_hyphae_wood 4",
-	recipe = {
-		{"mcl_crimson:crimson_hyphae"},
-	},
 })
 
 minetest.register_craft({

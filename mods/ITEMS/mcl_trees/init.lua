@@ -135,13 +135,31 @@ mcl_trees.woods = {
 		sign_color="#c35f51",
 		boat=false,
 		sapling=false,
-		leaves=false
+		leaves=false,
+		tree = { tiles = {"crimson_hyphae.png", "crimson_hyphae.png","crimson_hyphae_side.png" }},
+		bark = { tiles = {"crimson_hyphae_side.png"}},
+		planks = { tiles = {"crimson_hyphae_wood.png"}},
+		stripped = {
+			tiles = {"stripped_crimson_stem_top.png", "stripped_crimson_stem_top.png","stripped_crimson_stem_side.png"}
+		},
+		stripped_bark = {
+			tiles = {"stripped_crimson_stem_side.png"}
+		},
 	},
 	["warped"]={
 		sign_color="#9f7dcf",
 		boat=false,
 		sapling=false,
-		leaves=false
+		leaves=false,
+		tree = { tiles = {"warped_hyphae.png", "warped_hyphae.png","warped_hyphae_side.png" }},
+		bark = { tiles = {"warped_hyphae_side.png"}},
+		planks = { tiles = {"warped_hyphae_wood.png"}},
+		stripped = {
+			tiles = {"stripped_warped_stem_top.png", "stripped_warped_stem_top.png","stripped_warped_stem_side.png"}
+		},
+		stripped_bark = {
+			tiles = {"stripped_warped_stem_side.png"}
+		},
 	},
 }
 
