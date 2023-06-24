@@ -46,6 +46,16 @@ local function update_leaves(pos, oldnode)
 	end
 end
 
+--called from leaves after_place_node
+function mcl_trees.update_leaf_p2(pos, placer, itemstack, pointed_thing)
+	local n = minetest.get_node(pos)
+	local p2 = mcl_util.get_pos_p2(pos)
+	if n.param2 ~= p2 then
+		n.param2 = p2
+		minetest.swap_node(pos,n)
+	end
+end
+
 mcl_trees.tpl_log = {
 	groups = wood_groups,
 	_doc_items_hidden = false,
@@ -82,6 +92,7 @@ mcl_trees.tpl_leaves = {
 		flammable = 2, fire_encouragement = 30, fire_flammability = 60,
 		compostability = 30
 	},
+	after_place_node = mcl_trees.update_leaf_p2,
 	_mcl_shears_drop = true,
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	_mcl_blast_resistance = 0.2,
