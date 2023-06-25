@@ -182,6 +182,9 @@ Technical differences from Minecraft:
   replacements until we can get large structures working:
     * Woodland Cabin (Mansions)
     * Nether Outpost (Fortress)
+    * Ocean Temple (Monument)
+    * Nether Bulwark (Bastion)
+    * End Shipwreck & End Boat (End city)
 * A few items have slightly different names to make them easier to distinguish
 * Different music for jukebox
 * Different textures (Pixel Perfection)
