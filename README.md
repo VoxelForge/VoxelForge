@@ -3,7 +3,7 @@ An unofficial Minecraft-like game for Minetest. Fork of MineClone 2 with focus
 on stability and multiplayer performance. For information about migrating from
 MineClone 2 to Mineclonia, see [MIGRATING.md](./MIGRATING.md).
 
-Version: 0.83.0
+Version: 0.83.1
 
 ### Gameplay
 You start in a randomly-generated world made entirely of cubes. You can explore
