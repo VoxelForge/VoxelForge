@@ -176,7 +176,7 @@ Technical differences from Minecraft:
 * Height limit of ca. 31000 blocks (much higher than in Minecraft)
 * Horizontal world size is ca. 62000×62000 blocks (much smaller than in
   Minecraft, but it is still very large)
-* Still very incomplete and buggy
+* Still incomplete and buggy
 * Blocks, items, enemies and other features are missing
 * Structure replacements - these small variants of Minecraft structures serve as
   replacements until we can get large structures working:
