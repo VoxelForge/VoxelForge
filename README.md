@@ -5,6 +5,12 @@ MineClone 2 to Mineclonia, see [MIGRATING.md](./MIGRATING.md).
 
 Version: 0.83.1
 
+### Differences from MineClone 2
+* Overworld depth increased from 64 to 128 nodes to match Minecraft 1.18
+* Improved nether portals
+* No in-game music, twice as small compared to MineClone 2
+* No hamburgers
+
 ### Gameplay
 You start in a randomly-generated world made entirely of cubes. You can explore
 the world and dig and build almost every block in the world to create new
