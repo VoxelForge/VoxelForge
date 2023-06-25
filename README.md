@@ -162,8 +162,8 @@ Bonus features (not found in Minecraft):
 * In-game help system containing extensive help about gameplay basics, blocks,
   items and more
 * Fully moddable (thanks to Minetest's powerful Lua API)
-* Ability to store books in bookshelves
-* Ability to create custom nether portal shapes
+* Bookshelves can be used to store books
+* Nether portals can be created with custom shapes
 * New blocks and items:
     * Lookup tool, shows you the help for whatever it touches
     * More slabs and stairs
