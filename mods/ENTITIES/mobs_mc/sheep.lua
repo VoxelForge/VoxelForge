@@ -152,11 +152,11 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 			end
 		end)
 
-		minetest.after(2.5, function()
-			if self and self.object and self.state == 'eat' and self.health > 0 then
+		minetest.after(2.5, function(self)
+			if self and self.object and  self.object:get_pos() and self.state == 'eat' and self.health > 0 then
 				self.state = "walk"
 			end
-		end)
+		end,self)
 
 	end,
 
