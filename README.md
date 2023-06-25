@@ -170,10 +170,6 @@ Bonus features (not found in Minecraft):
     * Nether Brick Fence Gate
     * Red Nether Brick Fence
     * Red Nether Brick Fence Gate
-* Structure replacements - these small variants of Minecraft structures serve as
-  replacements until we can get large structures working:
-    * Woodland Cabin (Mansions)
-    * Nether Outpost (Fortress)
 
 Technical differences from Minecraft:
 
@@ -182,6 +178,10 @@ Technical differences from Minecraft:
   Minecraft, but it is still very large)
 * Still very incomplete and buggy
 * Blocks, items, enemies and other features are missing
+* Structure replacements - these small variants of Minecraft structures serve as
+  replacements until we can get large structures working:
+    * Woodland Cabin (Mansions)
+    * Nether Outpost (Fortress)
 * A few items have slightly different names to make them easier to distinguish
 * Different music for jukebox
 * Different textures (Pixel Perfection)
