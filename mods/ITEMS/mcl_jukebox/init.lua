@@ -14,8 +14,17 @@ local active_huds = {}
 -- Used to make sure that minetest.after only applies to the latest HUD change event
 local hud_sequence_numbers = {}
 
-function mcl_jukebox.register_record(title, author, identifier, image, sound)
-	mcl_jukebox.registered_records["mcl_jukebox:record_"..identifier] = {title, author, identifier, image, sound}
+-- get random disc itemstring that is obtainable as creeper loot
+function mcl_jukebox.get_random_creeper_loot()
+	local t = table.copy(mcl_jukebox.registered_records)
+	table.shuffle(t)
+	for k,v in pairs(t) do
+		if not v[6] then return k end
+	end
+end
+
+function mcl_jukebox.register_record(title, author, identifier, image, sound, nocreeper)
+	mcl_jukebox.registered_records["mcl_jukebox:record_"..identifier] = {title, author, identifier, image, sound, nocreeper}
 	local entryname = S("Music Disc")
 	local longdesc = S("A music disc holds a single music track which can be used in a jukebox to play music.")
 	local usagehelp = S("Place a music disc into an empty jukebox to play the music. Use the jukebox again to retrieve the music disc. The music can only be heard by you, not by other players.")
@@ -232,10 +241,10 @@ mcl_jukebox.register_record("The Evil Sister (Jordach's Mix)", "SoundHelix", "13
 mcl_jukebox.register_record("The Energetic Rat (Jordach's Mix)", "SoundHelix", "wait", "mcl_jukebox_record_wait.png", "mcl_jukebox_track_2")
 mcl_jukebox.register_record("Eastern Feeling", "Jordach", "blocks", "mcl_jukebox_record_blocks.png", "mcl_jukebox_track_3")
 mcl_jukebox.register_record("Minetest", "Jordach", "far", "mcl_jukebox_record_far.png", "mcl_jukebox_track_4")
-mcl_jukebox.register_record("Soaring over the sea", "mactonite", "chirp", "mcl_jukebox_record_chirp.png", "mcl_jukebox_track_5")
+mcl_jukebox.register_record("Soaring over the sea", "mactonite", "chirp", "mcl_jukebox_record_chirp.png", "mcl_jukebox_track_5",true)
 mcl_jukebox.register_record("Winter Feeling", "Tom Peter", "strad", "mcl_jukebox_record_strad.png", "mcl_jukebox_track_6")
 mcl_jukebox.register_record("Synthgroove (Jordach's Mix)", "HeroOfTheWinds", "mellohi", "mcl_jukebox_record_mellohi.png", "mcl_jukebox_track_7")
-mcl_jukebox.register_record("The Clueless Frog (Jordach's Mix)", "SoundHelix", "mall", "mcl_jukebox_record_mall.png", "mcl_jukebox_track_8")
+mcl_jukebox.register_record("The Clueless Frog (Jordach's Mix)", "SoundHelix", "mall", "mcl_jukebox_record_mall.png", "mcl_jukebox_track_8",true)
 
 --add backward compatibility
 minetest.register_alias("mcl_jukebox:record_1", "mcl_jukebox:record_13")

@@ -92,7 +92,10 @@ mcl_mobs.register_mob("mobs_mc:creeper", {
 			if luaentity and luaentity.name:find("arrow") then
 				local shooter_luaentity = luaentity._shooter and luaentity._shooter:get_luaentity()
 				if shooter_luaentity and (shooter_luaentity.name == "mobs_mc:skeleton" or shooter_luaentity.name == "mobs_mc:stray") then
-					minetest.add_item({x=pos.x, y=pos.y+1, z=pos.z}, "mcl_jukebox:record_" .. math.random(9))
+					local loot = mcl_jukebox.get_random_creeper_loot()
+					if loot then
+						minetest.add_item({x=pos.x, y=pos.y+1, z=pos.z}, loot)
+					end
 				end
 			end
 		end
