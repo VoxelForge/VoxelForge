@@ -228,9 +228,10 @@ function mcl_autogroup.can_harvest(nodename, toolname, player)
 	end
 
 	-- Check if it can be dug by hand
-	if not player or not player:is_player() then return false end
-	local name = player:get_inventory():get_stack("hand", 1):get_name()
-	local tdef = minetest.registered_items[name]
+	if player and player:is_player() then
+		local name = player:get_inventory():get_stack("hand", 1):get_name()
+		tdef = minetest.registered_items[name]
+	end
 	if tdef then
 		for g, gdef in pairs(tdef._mcl_diggroups) do
 			if ndef.groups[g] then

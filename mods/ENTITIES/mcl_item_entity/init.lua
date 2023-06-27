@@ -247,7 +247,7 @@ function minetest.handle_node_drops(pos, drops, digger)
 	local dug_node = minetest.get_node(pos)
 	local tooldef
 	local tool
-	if digger then
+	if digger and digger:is_player() then
 		tool = digger:get_wielded_item()
 		tooldef = minetest.registered_items[tool:get_name()]
 
