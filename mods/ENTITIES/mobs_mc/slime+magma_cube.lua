@@ -10,6 +10,19 @@ local function in_slime_chunk(pos)
 	return pr:next(1,10) == 1
 end
 
+
+-- If the light level is equal to or less than a random integer (from 0 to 7)
+-- If the fraction of the moon that is bright is greater than a random number (from 0 to 1)
+-- If these conditions are met and the altitude is acceptable, there is a 50% chance of spawning a slime.
+-- https://minecraft.fandom.com/wiki/Slime#Swamps
+
+local function swamp_spawn(pos)
+	if minetest.get_node_light(pos) > math.random(0,7) then return false end
+	if math.abs(4 - mcl_moon.get_moon_phase()) / 4 < math.random() then return false end --moon phase 4 is new moon in mcl_moon
+	if math.random(2) == 2 then return false end
+	return true
+end
+
 -- Returns a function that spawns children in a circle around pos.
 -- To be used as on_die callback.
 -- self: mob reference
@@ -231,6 +244,7 @@ for slime_name,slime_chance in pairs({
 		min_height = swamp_min,
 		max_height = swamp_max,
 		chance = slime_chance,
+		check_position = swamp_spawn,
 	})
 end
 
