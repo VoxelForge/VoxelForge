@@ -175,32 +175,33 @@ minetest.register_node("mcl_nether:soul_sand", {
 	-- Movement handling is done in mcl_playerplus mod
 })
 
-minetest.register_node("mcl_nether:nether_brick", {
-	-- Original name: Nether Brick
+local nether_brick = {
 	description = S("Nether Brick Block"),
 	_doc_items_longdesc = doc.sub.items.temp.build,
-	stack_max = 64,
 	tiles = {"mcl_nether_nether_brick.png"},
 	is_ground_content = false,
 	groups = {pickaxey=1, building_block=1, material_stone=1},
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 2,
-})
+}
 
-minetest.register_node("mcl_nether:red_nether_brick", {
-	-- Original name: Red Nether Brick
-	description = S("Red Nether Brick Block"),
-	_doc_items_longdesc = doc.sub.items.temp.build,
-	stack_max = 64,
-	tiles = {"mcl_nether_red_nether_brick.png"},
-	is_ground_content = false,
-	groups = {pickaxey=1, building_block=1, material_stone=1},
-	sounds = mcl_sounds.node_sound_stone_defaults(),
-	_mcl_blast_resistance = 6,
-	_mcl_hardness = 2,
-})
+minetest.register_node("mcl_nether:nether_brick", nether_brick)
 
+local red_nether_brick = table.copy(nether_brick)
+red_nether_brick.description = S("Red Nether Brick Block")
+red_nether_brick.tiles = {"mcl_nether_red_nether_brick.png"}
+minetest.register_node("mcl_nether:red_nether_brick", red_nether_brick)
+
+local chiseled_nether_brick = table.copy(nether_brick)
+chiseled_nether_brick.description = S("Chiseled Nether Brick Block")
+chiseled_nether_brick.tiles = {"mcl_nether_chiseled_nether_bricks.png"}
+minetest.register_node("mcl_nether:chiseled_nether_brick", chiseled_nether_brick)
+
+local cracked_nether_brick = table.copy(nether_brick)
+cracked_nether_brick.description = S("Cracked Nether Bricks")
+cracked_nether_brick.tiles = {"mcl_nether_cracked_nether_bricks.png"}
+minetest.register_node("mcl_nether:cracked_nether_brick", cracked_nether_brick)
 
 minetest.register_node("mcl_nether:nether_wart_block", {
 	description = S("Nether Wart Block"),
@@ -383,6 +384,21 @@ minetest.register_craft({
 		{"mcl_nether:netherbrick", "mcl_nether:nether_wart_item"},
 		{"mcl_nether:nether_wart_item", "mcl_nether:netherbrick"},
 	}
+})
+
+minetest.register_craft({
+	output = "mcl_nether:chiseled_nether_brick",
+	recipe = {
+		{"mcl_stairs:netherbrick_slab"},
+		{"mcl_stairs:netherbrick_slab"},
+	}
+})
+
+minetest.register_craft({
+	type = "cooking",
+	output = "mcl_core:cracked_nether_brick",
+	recipe = "mcl_core:netherbrick",
+	cooktime = 10,
 })
 
 minetest.register_craft({
