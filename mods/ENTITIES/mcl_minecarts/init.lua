@@ -78,7 +78,7 @@ local function hopper_take_item(self, dtime)
 		for k, v in pairs(objs) do
 			local ent = v:get_luaentity()
 
-			if ent._removed or not ent.itemstring or ent.itemstring == "" then
+			if not ent or ent._removed or not ent.itemstring or ent.itemstring == "" then
 				--minetest.log("Ignore this item")
 				break
 			end
@@ -90,7 +90,7 @@ local function hopper_take_item(self, dtime)
 			mcl_log("ent.name: " .. tostring(ent.name))
 			mcl_log("ent pos: " .. tostring(v:get_pos()))
 
-			local inv = mcl_entity_invs.load_inv(ent, 5)
+			local inv = mcl_entity_invs.load_inv(self, 5)
 
 			if not inv then
 				mcl_log("No inv")
@@ -99,7 +99,7 @@ local function hopper_take_item(self, dtime)
 
 			local current_itemstack = ItemStack(ent.itemstring)
 
-			mcl_log("inv. size: " .. ent._inv_size)
+			mcl_log("inv. size: " .. self._inv_size)
 			if inv:room_for_item("main", current_itemstack) then
 				mcl_log("Room")
 				inv:add_item("main", current_itemstack)
@@ -114,7 +114,7 @@ local function hopper_take_item(self, dtime)
 				local items_remaining = current_itemstack:get_count()
 
 				-- This will take part of a floating item stack if no slot can hold the full amount
-				for i = 1, ent._inv_size, 1 do
+				for i = 1, self._inv_size, 1 do
 					local stack = inv:get_stack("main", i)
 
 					mcl_log("i: " .. tostring(i))
@@ -157,7 +157,7 @@ local function hopper_take_item(self, dtime)
 						--mcl_log("Is it empty: " .. stack:to_string())
 					end
 
-					if i == ent._inv_size and taken_items then
+					if i == self._inv_size and taken_items then
 						mcl_log("We are on last item and still have items left. Set final stack size: " .. items_remaining)
 						current_itemstack:set_count(items_remaining)
 						--mcl_log("Itemstack2: " .. current_itemstack:to_string())
