@@ -11,14 +11,6 @@ mcl_minecarts.check_float_time = 15
 dofile(mcl_minecarts.modpath.."/functions.lua")
 dofile(mcl_minecarts.modpath.."/rails.lua")
 
-local LOGGING_ON = minetest.settings:get_bool("mcl_logging_minecarts", false)
-local function mcl_log(message)
-	if LOGGING_ON then
-		mcl_util.mcl_log(message, "[Minecarts]", true)
-	end
-end
-
-
 local function detach_driver(self)
 	if not self._driver then
 		return
@@ -65,112 +57,63 @@ local function hopper_take_item(self, dtime)
 
 	if not self or self.name ~= "mcl_minecarts:hopper_minecart" then return end
 
-	--mcl_log("self.itemstring: ".. self.itemstring)
-
 	local above_pos = vector.offset(pos, 0, 0.9, 0)
-	--mcl_log("self.itemstring: ".. minetest.pos_to_string(above_pos))
-	local objs = minetest.get_objects_inside_radius(above_pos, 1.25)
 
-	if objs then
+	for k, v in pairs(minetest.get_objects_inside_radius(above_pos, 1.25)) do
+		local ent = v:get_luaentity()
 
-		mcl_log("there is an itemstring. Number of objs: ".. #objs)
+		if ent and not ent._removed and ent.itemstring and ent.itemstring ~= "" then
+			local taken_items = false
 
-		for k, v in pairs(objs) do
-			local ent = v:get_luaentity()
+			local inv = mcl_entity_invs.load_inv(self, 5)
+			if not inv then	return false end
 
-			if ent and not ent._removed and ent.itemstring and ent.itemstring ~= "" then
-				-- Don't forget actual hoppers
+			local current_itemstack = ItemStack(ent.itemstring)
 
-				local taken_items = false
+			if inv:room_for_item("main", current_itemstack) then
+				inv:add_item("main", current_itemstack)
+				v:get_luaentity().itemstring = ""
+				v:remove()
+				taken_items = true
+			end
 
-				mcl_log("ent.name: " .. tostring(ent.name))
-				mcl_log("ent pos: " .. tostring(v:get_pos()))
+			if not taken_items then
+				local items_remaining = current_itemstack:get_count()
+				for i = 1, self._inv_size, 1 do
+					local stack = inv:get_stack("main", i)
 
-				local inv = mcl_entity_invs.load_inv(self, 5)
-
-				if not inv then
-					mcl_log("No inv")
-					return false
-				end
-
-				local current_itemstack = ItemStack(ent.itemstring)
-
-				mcl_log("inv. size: " .. self._inv_size)
-				if inv:room_for_item("main", current_itemstack) then
-					mcl_log("Room")
-					inv:add_item("main", current_itemstack)
-					v:get_luaentity().itemstring = ""
-					v:remove()
-					taken_items = true
-				else
-					mcl_log("no Room")
-				end
-
-				if not taken_items then
-					local items_remaining = current_itemstack:get_count()
-
-					-- This will take part of a floating item stack if no slot can hold the full amount
-					for i = 1, self._inv_size, 1 do
-						local stack = inv:get_stack("main", i)
-
-						mcl_log("i: " .. tostring(i))
-						mcl_log("Items remaining: " .. items_remaining)
-						mcl_log("Name: " .. tostring(stack:get_name()))
-
-						if current_itemstack:get_name() == stack:get_name() then
-							mcl_log("We have a match. Name: " .. tostring(stack:get_name()))
-
-							local room_for = stack:get_stack_max() - stack:get_count()
-							mcl_log("Room for: " .. tostring(room_for))
-
-							if room_for == 0 then
-								-- Do nothing
-								mcl_log("No room")
-							elseif room_for < items_remaining then
-								mcl_log("We have more items remaining than space")
-
-								items_remaining = items_remaining - room_for
-								stack:set_count(stack:get_stack_max())
-								inv:set_stack("main", i, stack)
-								taken_items = true
-							else
-								local new_stack_size = stack:get_count() + items_remaining
-								stack:set_count(new_stack_size)
-								mcl_log("We have more than enough space. Now holds: " .. new_stack_size)
-
-								inv:set_stack("main", i, stack)
-								items_remaining = 0
-
-								v:get_luaentity().itemstring = ""
-								v:remove()
-
-								taken_items = true
-								break
-							end
-
-							mcl_log("Count: " .. tostring(stack:get_count()))
-							mcl_log("stack max: " .. tostring(stack:get_stack_max()))
-							--mcl_log("Is it empty: " .. stack:to_string())
+					if current_itemstack:get_name() == stack:get_name() then
+						local room_for = stack:get_stack_max() - stack:get_count()
+						if room_for == 0 then
+							-- Do nothing
+						elseif room_for < items_remaining then
+							items_remaining = items_remaining - room_for
+							stack:set_count(stack:get_stack_max())
+							inv:set_stack("main", i, stack)
+							taken_items = true
+						else
+							local new_stack_size = stack:get_count() + items_remaining
+							stack:set_count(new_stack_size)
+							inv:set_stack("main", i, stack)
+							items_remaining = 0
+							v:get_luaentity().itemstring = ""
+							v:remove()
+							taken_items = true
+							break
 						end
+					end
 
-						if i == self._inv_size and taken_items then
-							mcl_log("We are on last item and still have items left. Set final stack size: " .. items_remaining)
-							current_itemstack:set_count(items_remaining)
-							--mcl_log("Itemstack2: " .. current_itemstack:to_string())
-							ent.itemstring = current_itemstack:to_string()
-						end
+					if i == self._inv_size and taken_items then
+						current_itemstack:set_count(items_remaining)
+						ent.itemstring = current_itemstack:to_string()
 					end
 				end
 			end
+		end
 
-			--Add in, and delete
-			if taken_items then
-				mcl_log("Saving")
-				mcl_entity_invs.save_inv(ent)
-				return taken_items
-			else
-				mcl_log("No need to save")
-			end
+		if taken_items then
+			mcl_entity_invs.save_inv(ent)
+			return taken_items
 		end
 	end
 
