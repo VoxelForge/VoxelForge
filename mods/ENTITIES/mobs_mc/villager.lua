@@ -586,7 +586,6 @@ local function get_badge_textures(self)
 	local t = professions[self._profession].texture
 	if self._profession == "unemployed"	then
 		t = professions[self._profession].textures -- ideally both scenarios should be textures with a list containing 1 or multiple
-		--mcl_log("t: " .. tostring(t))
 	end
 
 	if self._profession == "unemployed" or self._profession == "nitwit" then return t end
@@ -598,7 +597,6 @@ end
 
 local function set_textures(self)
 	local badge_textures = get_badge_textures(self)
-	--mcl_log("Setting textures: " .. tostring(badge_textures))
 	self.object:set_properties({textures=badge_textures})
 end
 
@@ -652,8 +650,6 @@ local function find_closest_bed (self)
 	local unclaimed_beds = {}
 	local nn2 = minetest.find_nodes_in_area(vector.offset(p,-48,-48,-48),vector.offset(p,48,48,48), {"group:bed"})
 	if nn2 then
-		--mcl_log("All bed parts: " .. #nn2)
-
 		for a,b in pairs(nn2) do
 			mcl_log("b: " .. minetest.pos_to_string(b))
 
@@ -663,7 +659,6 @@ local function find_closest_bed (self)
 
 			local bed_meta = minetest.get_meta(b)
 			local owned_by = bed_meta:get_string("villager")
-			--mcl_log("Owned by villager: ".. tostring(owned_by))
 
 			if (owned_by and owned_by == self._id) then
 				mcl_log("Clear as already owned by me.")
@@ -696,8 +691,6 @@ local function find_closest_bed (self)
 				else
 
 				end
-			else
-				--mcl_log("bed_node name: " .. bed_name)
 			end
 		end
 	end
@@ -929,7 +922,6 @@ local function debug_trades(self)
 	local trades = minetest.deserialize(self._trades)
 	if trades and type(trades) == "table" then
 		for trader, trade in pairs(trades) do
-			--mcl_log("Current record: ".. tostring(trader))
 			for tr3, tr4 in pairs (trade) do
 				mcl_log("Key: ".. tostring(tr3))
 				mcl_log("Value: ".. tostring(tr4))
@@ -969,10 +961,6 @@ local function unlock_trades (self)
 	if trades and type(trades) == "table" then
 		for trader, trade in pairs(trades) do
 			local trade_tier_too_high = trade.tier > self._max_trade_tier
-			--mcl_log("Max trade tier of villager: ".. tostring(self._max_trade_tier))
-			--mcl_log("current trade.tier: ".. tostring(trade.tier))
-			--mcl_log("trade tier too high: ".. tostring(trade_tier_too_high))
-			--mcl_log("locked: ".. tostring(trade["locked"]))
 			if not trade_tier_too_high then
 				if trade["locked"] == true then
 					trade.locked = false
@@ -1082,7 +1070,6 @@ local function retrieve_my_jobsite (self)
 	local n = mcl_vars.get_node(self._jobsite)
 	local m = minetest.get_meta(self._jobsite)
 	if m:get_string("villager") == self._id then
-		--mcl_log("find_jobsite. is my job.")
 		return n
 	else
 		mcl_log("This isn't my jobsite")
@@ -1132,19 +1119,15 @@ local function do_work (self)
 		mcl_log("A child so don't send to work")
 		return
 	end
-	--mcl_log("Time for work")
 
 	-- Don't try if looking_for_work, or gowp possibly
 	if validate_jobsite(self) then
-		--mcl_log("My jobsite is valid. Do i need to travel?")
 
 		local jobsite2 = retrieve_my_jobsite (self)
 		local jobsite = self._jobsite
 
 		if self and jobsite2 and self._jobsite then
 			local distance_to_jobsite = vector.distance(self.object:get_pos(),self._jobsite)
-			--mcl_log("Villager: ".. minetest.pos_to_string(self.object:get_pos()) ..  ", jobsite: " .. minetest.pos_to_string(self._jobsite) .. ", distance to jobsite: ".. distance_to_jobsite)
-
 
 			if distance_to_jobsite < 2 then
 				if self.state ~= PATHFINDING and  self.order ~= WORK then
@@ -1188,10 +1171,8 @@ local function get_ground_below_floating_object (float_pos)
 	until node.name ~= "air"
 	-- If pos is 1 below float_pos, then just return float_pos as there is no air below it
 	if pos.y == float_pos.y - 1 then
-		--mcl_log("pos is only 1 lower than float pos so no air below")
 		return float_pos
 	else
-		--mcl_log("pos is more than 1 lower than float pos so air is below")
 		return pos
 	end
 	return pos
@@ -1199,7 +1180,6 @@ end
 
 local function go_to_town_bell(self)
 	if self.order == GATHERING then
-		--mcl_log("Already gathering")
 		return
 	else
 		mcl_log("Current order" .. self.order)
@@ -1311,7 +1291,6 @@ local function do_activity (self)
 	end
 
 	if wandered_too_far  then
-		--mcl_log("Wandered too far! Return home ")
 		go_home(self, false)
 	elseif get_activity() == SLEEP then
 		go_home(self, true)
