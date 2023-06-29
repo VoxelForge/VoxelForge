@@ -14,7 +14,7 @@ See Minecraft Wiki <http://minecraft.gamepedia.com/Minecraft_Wiki> for more
 information.
 
 How the mod is used
-===================
+-------------------
 
 In MineClone 2, all diggable nodes have the hardness set in the custom field
 "_mcl_hardness" (0 by default).  These values are used together with digging
@@ -57,7 +57,7 @@ or above means that the tool can harvest nodes with that level or below.  See
 "mcl_tools/init.lua" for examples on how "_mcl_diggroups" is used in practice.
 
 Information about the mod
-=========================
+-------------------------
 
 The mod is split up into two parts, mcl_autogroup and _mcl_autogroup.
 mcl_autogroup contains the API functions used to register custom digging groups.

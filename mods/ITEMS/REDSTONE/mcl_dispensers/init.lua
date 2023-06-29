@@ -137,7 +137,7 @@ local dispenserdef = {
 					local iname = stack:get_name()
 					local igroups = stackdef.groups
 
-					--[===[ Dispense item ]===]
+					--[___[ Dispense item ]___]
 
 					-- Hardcoded dispensions --
 
