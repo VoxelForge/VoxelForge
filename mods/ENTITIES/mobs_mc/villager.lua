@@ -33,7 +33,7 @@ local RESETTLE_DISTANCE = 100 -- If a mob is transported this far from home, it 
 
 local PATHFINDING = "gowp"
 
---[=======[ TRADING ]=======]
+--[------[ TRADING ]------]
 
 -- LIST OF VILLAGER PROFESSIONS AND TRADES
 
@@ -1903,7 +1903,7 @@ minetest.register_on_joinplayer(function(player)
 	inv:set_size("offered", 1)
 end)
 
---[=======[ MOB REGISTRATION AND SPAWNING ]=======]
+--[------[ MOB REGISTRATION AND SPAWNING ]-------]
 
 local pick_up = { "mcl_farming:bread", "mcl_farming:carrot_item", "mcl_farming:beetroot_item" , "mcl_farming:potato_item" }
 
