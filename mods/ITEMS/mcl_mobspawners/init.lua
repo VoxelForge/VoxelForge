@@ -106,9 +106,11 @@ All the arguments are optional!
 
 function mcl_mobspawners.setup_spawner(pos, Mob, MinLight, MaxLight, MaxMobsInArea, PlayerDistance, YOffset)
 	-- Activate mob spawner and disable editing functionality
+	local dim = mcl_worlds.pos_to_dimension(pos)
 	if Mob == nil then Mob = default_mob end
-	if MinLight == nil then MinLight = 0 end
-	if MaxLight == nil then MaxLight = 15 end
+	local mn,mx = mcl_mobs.get_mob_light_level(Mob,dim)
+	if MinLight == nil then MinLight = mn end
+	if MaxLight == nil then MaxLight = mx end
 	if MaxMobsInArea == nil then MaxMobsInArea = 4  end
 	if PlayerDistance == nil then PlayerDistance = 15 end
 	if YOffset == nil then YOffset = 0 end
