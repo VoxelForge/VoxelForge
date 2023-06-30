@@ -170,6 +170,16 @@ function mcl_mobs.spawn_setup(def)
 	summary_chance = summary_chance + chance
 end
 
+function mcl_mobs.get_mob_light_level(mob,dim)
+	for _,v in pairs(spawn_dictionary) do
+		if v.name == mob and v.dimension == dim then
+			return v.min_light,v.max_light
+		end
+	end
+	local def = minetest.registered_entities[mob]
+	return def.min_light,def.max_light
+end
+
 local function biome_check(biome_list, biome_goal)
 	if mgname == "singlenode" then return true end
 	return table.indexof(biome_list,biome_goal) ~= -1
