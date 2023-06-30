@@ -293,6 +293,8 @@ function mcl_mobs.register_mob(name, def)
 		noyaw = def.noyaw or false,
 		particlespawners = def.particlespawners,
 		tnt_knockback = true,
+		min_light = def.min_light or (def.spawn_class == "hostile" and 0) or 7,
+		max_light = def.max_light or (def.spawn_class == "hostile" and 7) or minetest.LIGHT_MAX + 1,
 
 		-- End of MCL2 extensions
 		on_spawn = def.on_spawn,

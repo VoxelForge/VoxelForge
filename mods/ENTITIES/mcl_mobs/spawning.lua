@@ -123,8 +123,8 @@ function mcl_mobs.spawn_setup(def)
 	local type_of_spawning = def.type_of_spawning or "ground"
 	local biomes           = def.biomes
 	local biomes_except    = def.biomes_except
-	local min_light        = def.min_light or (mob_def.spawn_class == "hostile" and 0) or 7
-	local max_light        = def.max_light or (mob_def.spawn_class == "hostile" and 7) or minetest.LIGHT_MAX + 1
+	local min_light        = def.min_light or mob_def.min_light or (mob_def.spawn_class == "hostile" and 0) or 7
+	local max_light        = def.max_light or mob_def.min_light or (mob_def.spawn_class == "hostile" and 7) or minetest.LIGHT_MAX + 1
 	local chance           = def.chance or 1000
 	local aoc              = def.aoc or aoc_range
 	local min_height       = def.min_height or mcl_vars["mg_"..dimension.."_min"] or -31000
