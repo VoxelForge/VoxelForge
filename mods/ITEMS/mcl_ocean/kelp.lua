@@ -118,14 +118,6 @@ function kelp.is_falling(pos, node, is_falling, pos_bottom, node_bottom, def_bot
 end
 
 
--- Roll whether to grow kelp or not.
-function kelp.roll_growth(numerator, denominator)
-	-- Optional params: numerator, denominator
-	--return math.random(denominator or kelp.ROLL_GROWTH_DENOMINATOR) <= (numerator or kelp.ROLL_GROWTH_NUMERATOR)
-	return true -- probability done by ABM
-end
-
-
 -- Roll initial age for kelp.
 function kelp.roll_init_age(min, max)
 	-- Optional params
