@@ -19,25 +19,25 @@ function mcl_jukebox.get_random_creeper_loot()
 	local t = table.copy(mcl_jukebox.registered_records)
 	table.shuffle(t)
 	for k,v in pairs(t) do
-		if not v[6] then return k end
+		if not v.exclude_from_creeperdrop then return k end
 	end
 end
 
-function mcl_jukebox.register_record(title, author, identifier, image, sound, nocreeper)
-	mcl_jukebox.registered_records["mcl_jukebox:record_"..identifier] = {title, author, identifier, image, sound, nocreeper}
+function mcl_jukebox.register_record(def)
+	local itemstring = "mcl_jukebox:record_"..def.id
+	mcl_jukebox.registered_records[itemstring] = def
 	local entryname = S("Music Disc")
 	local longdesc = S("A music disc holds a single music track which can be used in a jukebox to play music.")
 	local usagehelp = S("Place a music disc into an empty jukebox to play the music. Use the jukebox again to retrieve the music disc. The music can only be heard by you, not by other players.")
-	minetest.register_craftitem(":mcl_jukebox:record_"..identifier, {
+	minetest.register_craftitem(":"..itemstring, {
 		description =
 			C(mcl_colors.AQUA, S("Music Disc")) .. "\n" ..
-			C(mcl_colors.GRAY, S("@1—@2", author, title)),
+			C(mcl_colors.GRAY, S("@1—@2", def.author, def.title)),
 		_doc_items_create_entry = true,
 		_doc_items_entry_name = entryname,
 		_doc_items_longdesc = longdesc,
 		_doc_items_usagehelp = usagehelp,
-		--inventory_image = "mcl_jukebox_record_"..recorddata[r][3]..".png",
-		inventory_image = image,
+		inventory_image = def.texture,
 		stack_max = 1,
 		groups = { music_record = 1 },
 	})
@@ -46,7 +46,7 @@ end
 local function now_playing(player, name)
 	local playername = player:get_player_name()
 	local hud = active_huds[playername]
-	local text = S("Now playing: @1—@2", mcl_jukebox.registered_records[name][2], mcl_jukebox.registered_records[name][1])
+	local text = S("Now playing: @1—@2", mcl_jukebox.registered_records[name].author, mcl_jukebox.registered_records[name].title)
 
 	if not hud_sequence_numbers[playername] then
 		hud_sequence_numbers[playername] = 1
@@ -110,7 +110,7 @@ local function play_record(pos, itemstack, player)
 			minetest.sound_stop(active_tracks[cname])
 			active_tracks[cname] = nil
 		end
-		active_tracks[cname] = minetest.sound_play(mcl_jukebox.registered_records[name][5], {
+		active_tracks[cname] = minetest.sound_play(mcl_jukebox.registered_records[name].sound, {
 			to_player = cname,
 			gain = 1,
 		})
@@ -237,14 +237,66 @@ minetest.register_craft({
 	burntime = 15,
 })
 
-mcl_jukebox.register_record("The Evil Sister (Jordach's Mix)", "SoundHelix", "13", "mcl_jukebox_record_13.png", "mcl_jukebox_track_1")
-mcl_jukebox.register_record("The Energetic Rat (Jordach's Mix)", "SoundHelix", "wait", "mcl_jukebox_record_wait.png", "mcl_jukebox_track_2")
-mcl_jukebox.register_record("Eastern Feeling", "Jordach", "blocks", "mcl_jukebox_record_blocks.png", "mcl_jukebox_track_3")
-mcl_jukebox.register_record("Minetest", "Jordach", "far", "mcl_jukebox_record_far.png", "mcl_jukebox_track_4")
-mcl_jukebox.register_record("Soaring over the sea", "mactonite", "chirp", "mcl_jukebox_record_chirp.png", "mcl_jukebox_track_5",true)
-mcl_jukebox.register_record("Winter Feeling", "Tom Peter", "strad", "mcl_jukebox_record_strad.png", "mcl_jukebox_track_6")
-mcl_jukebox.register_record("Synthgroove (Jordach's Mix)", "HeroOfTheWinds", "mellohi", "mcl_jukebox_record_mellohi.png", "mcl_jukebox_track_7")
-mcl_jukebox.register_record("The Clueless Frog (Jordach's Mix)", "SoundHelix", "mall", "mcl_jukebox_record_mall.png", "mcl_jukebox_track_8",true)
+mcl_jukebox.register_record({
+	title = "The Evil Sister (Jordach's Mix)",
+	author = "SoundHelix",
+	id = "13",
+	texture = "mcl_jukebox_record_13.png",
+	sound = "mcl_jukebox_track_1",
+	exclude_from_creeperdrop = false,
+})
+mcl_jukebox.register_record({
+	title = "The Energetic Rat (Jordach's Mix)",
+	author = "SoundHelix",
+	id = "wait",
+	texture = "mcl_jukebox_record_wait.png",
+	sound = "mcl_jukebox_track_2"
+})
+mcl_jukebox.register_record({
+	title = "Eastern Feeling",
+	author = "Jordach",
+	id = "blocks",
+	texture = "mcl_jukebox_record_blocks.png",
+	sound = "mcl_jukebox_track_3"
+})
+mcl_jukebox.register_record({
+	title = "Minetest",
+	author = "Jordach",
+	id = "far",
+	texture = "mcl_jukebox_record_far.png",
+	sound = "mcl_jukebox_track_4",
+})
+mcl_jukebox.register_record({
+	title =  "Soaring over the sea",
+	author =  "mactonite",
+	id = "chirp",
+	texture = "mcl_jukebox_record_chirp.png",
+	sound = "mcl_jukebox_track_5",
+	exclude_from_creeperdrop = true,
+})
+mcl_jukebox.register_record({
+	title = "Winter Feeling",
+	author = "Tom Peter",
+	id = "strad",
+	texture = "mcl_jukebox_record_strad.png",
+	sound = "mcl_jukebox_track_6",
+
+})
+mcl_jukebox.register_record({
+	title = "Synthgroove (Jordach's Mix)",
+	author = "HeroOfTheWinds",
+	id = "mellohi",
+	texture = "mcl_jukebox_record_mellohi.png",
+	sound = "mcl_jukebox_track_7"
+})
+mcl_jukebox.register_record({
+	title = "The Clueless Frog (Jordach's Mix)",
+	author = "SoundHelix",
+	id = "mall",
+	texture = "mcl_jukebox_record_mall.png",
+	sound = "mcl_jukebox_track_8",
+	exclude_from_creeperdrop = true,
+})
 
 --add backward compatibility
 minetest.register_alias("mcl_jukebox:record_1", "mcl_jukebox:record_13")
