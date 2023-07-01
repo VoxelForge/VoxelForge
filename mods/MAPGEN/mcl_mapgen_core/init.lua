@@ -277,20 +277,19 @@ end
 -- End block fixes:
 local function end_basic(vm, data, data2, emin, emax, area, minp, maxp, blockseed)
 	if maxp.y < mcl_vars.mg_end_min or minp.y > mcl_vars.mg_end_max then return end
-	local lvm_used = false
 	for z = minp.z, maxp.z do
 	for y = minp.y, maxp.y do
 		local vi = area:index(minp.x, y, z)
 		for x = minp.x, maxp.x do
 			if data[vi] == c_water then
 				data[vi] = c_air
-				lvm_used = true
 			end
 			vi = vi + 1
 		end
 	end
 	end
-	return lvm_used
+	vm:set_lighting({day=15, night=15}, emin, emax)
+	return true
 end
 
 
