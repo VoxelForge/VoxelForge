@@ -23,7 +23,7 @@ function mcl_jukebox.get_random_creeper_loot()
 	end
 end
 
-function mcl_jukebox.register_record(def)
+function mcl_jukebox.register_record_definition(def)
 	local itemstring = "mcl_jukebox:record_"..def.id
 	mcl_jukebox.registered_records[itemstring] = def
 	local entryname = S("Music Disc")
@@ -40,6 +40,21 @@ function mcl_jukebox.register_record(def)
 		inventory_image = def.texture,
 		stack_max = 1,
 		groups = { music_record = 1 },
+	})
+end
+
+-- Old function, for backwards compatibility reasons still allows the old multi argument way of calling it.
+function mcl_jukebox.register_record(title, author, identifier, image, sound, nocreeper)
+	if type(title) == "table" then
+		return mcl_jukebox.register_record_definition(title)
+	end
+	return mcl_jukebox.register_record_definition({
+		title = title,
+		author = author,
+		id = identifier,
+		texture = image,
+		sound = sound,
+		exclude_from_creeperdrop = nocreeper
 	})
 end
 

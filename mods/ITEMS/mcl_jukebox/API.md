@@ -16,3 +16,6 @@ record_definition:
 	sound = "minetest_sound", -- sound file of the track
 	exclude_from_creeperdrop = true, --set to true if this record should be excluded from the random drop when creepers get shot by skeletons.
 }
+
+## mcl_jukebox.register_record(title, author, identifier, image, sound, nocreeper)
+This is the old way to use the register function. It is still provided for backwards compatibility reasons. It will convert the arguments to the definition format.
