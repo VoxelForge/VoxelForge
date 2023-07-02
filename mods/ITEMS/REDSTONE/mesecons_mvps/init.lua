@@ -431,10 +431,8 @@ mesecon.register_mvps_stopper("mesecons_solarpanel:solar_panel_inverted_on")
 mesecon.register_mvps_stopper("mesecons_solarpanel:solar_panel_inverted_off")
 mesecon.register_mvps_stopper("mcl_banners:hanging_banner")
 mesecon.register_mvps_stopper("mcl_banners:standing_banner")
-mesecon.register_mvps_stopper("mcl_campfires:campfire")
-mesecon.register_mvps_stopper("mcl_campfires:campfire_lit")
-mesecon.register_mvps_stopper("mcl_campfires:soul_campfire")
-mesecon.register_mvps_stopper("mcl_campfires:soul_campfire_lit")
+mesecon.register_mvps_stopper("mcl_beehives:bee_nest")
+mesecon.register_mvps_stopper("mcl_beehives:beehive")
 
 -- Unmovable by technical restrictions.
 -- Open formspec would screw up if node is destroyed (minor problem)
@@ -473,12 +471,12 @@ mesecon.register_mvps_stopper("mcl_chests:trapped_chest")
 mesecon.register_mvps_stopper("mcl_chests:trapped_chest_small")
 mesecon.register_mvps_stopper("mcl_chests:trapped_chest_left")
 mesecon.register_mvps_stopper("mcl_chests:trapped_chest_right")
+
 mesecon.register_mvps_stopper("mcl_signs:wall_sign")
 mesecon.register_mvps_stopper("mcl_signs:standing_sign")
 mesecon.register_mvps_stopper("mcl_signs:standing_sign22_5")
 mesecon.register_mvps_stopper("mcl_signs:standing_sign45")
 mesecon.register_mvps_stopper("mcl_signs:standing_sign67_5")
-
 
 
 -- Unmovable by design: objects
@@ -513,6 +511,18 @@ mesecon.register_mvps_unsticky("mcl_colorblocks:glazed_terracotta_black")
 mesecon.register_mvps_unsticky("mcl_colorblocks:glazed_terracotta_brown")
 mesecon.register_mvps_unsticky("mcl_colorblocks:glazed_terracotta_light_blue")
 mesecon.register_mvps_unsticky("mcl_colorblocks:glazed_terracotta_pink")
+
+-- Bamboo
+mesecon.register_mvps_unsticky("mcl_bamboo:bamboo")
+mesecon.register_mvps_unsticky("mcl_bamboo:bamboo_endcap")
+
+mesecon.register_mvps_unsticky("mcl_bamboo:bamboo_1")
+mesecon.register_mvps_unsticky("mcl_bamboo:bamboo_2")
+mesecon.register_mvps_unsticky("mcl_bamboo:bamboo_3")
+
+mesecon.register_mvps_unsticky("mcl_bamboo:bamboo_door")
+mesecon.register_mvps_unsticky("mcl_bamboo:scaffolding")
+
 -- Beds
 mesecon.register_mvps_unsticky("mcl_beds:bed_black_top")
 mesecon.register_mvps_unsticky("mcl_beds:bed_black_bottom")
@@ -546,21 +556,6 @@ mesecon.register_mvps_unsticky("mcl_beds:bed_white_top")
 mesecon.register_mvps_unsticky("mcl_beds:bed_white_bottom")
 mesecon.register_mvps_unsticky("mcl_beds:bed_yellow_top")
 mesecon.register_mvps_unsticky("mcl_beds:bed_yellow_bottom")
--- Buttons
-mesecon.register_mvps_unsticky("mesecons_button:button_stone_off")
-mesecon.register_mvps_unsticky("mesecons_button:button_stone_on")
-mesecon.register_mvps_unsticky("mesecons_button:button_wood_off")
-mesecon.register_mvps_unsticky("mesecons_button:button_wood_on")
-mesecon.register_mvps_unsticky("mesecons_button:button_acaciawood_off")
-mesecon.register_mvps_unsticky("mesecons_button:button_acaciawood_on")
-mesecon.register_mvps_unsticky("mesecons_button:button_birchwood_off")
-mesecon.register_mvps_unsticky("mesecons_button:button_birchwood_on")
-mesecon.register_mvps_unsticky("mesecons_button:button_darkwood_off")
-mesecon.register_mvps_unsticky("mesecons_button:button_darkwood_on")
-mesecon.register_mvps_unsticky("mesecons_button:button_sprucewood_off")
-mesecon.register_mvps_unsticky("mesecons_button:button_sprucewood_on")
-mesecon.register_mvps_unsticky("mesecons_button:button_junglewood_off")
-mesecon.register_mvps_unsticky("mesecons_button:button_junglewood_on")
 -- Cactus, Sugarcane & Vines
 mesecon.register_mvps_unsticky("mcl_core:cactus")
 mesecon.register_mvps_unsticky("mcl_core:reeds")
@@ -573,7 +568,7 @@ mesecon.register_mvps_unsticky("mcl_cake:cake_4")
 mesecon.register_mvps_unsticky("mcl_cake:cake_5")
 mesecon.register_mvps_unsticky("mcl_cake:cake_6")
 mesecon.register_mvps_unsticky("mcl_cake:cake")
--- Carpet
+-- Carpet - pullable in MC but breaks when pulled downwards. At the moment, it just cannot be pulled.
 mesecon.register_mvps_unsticky("mcl_wool:black_carpet")
 mesecon.register_mvps_unsticky("mcl_wool:blue_carpet")
 mesecon.register_mvps_unsticky("mcl_wool:brown_carpet")
