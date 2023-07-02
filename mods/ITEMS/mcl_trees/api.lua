@@ -141,6 +141,23 @@ mcl_trees.tpl_sapling = {
 	_mcl_hardness = 0,
 }
 
+mcl_trees.tpl_door = {
+	_doc_items_longdesc = S("Wooden doors are 2-block high barriers which can be opened or closed by hand and by a redstone signal."),
+	_doc_items_usagehelp = S("To open or close a wooden door, rightclick it or supply its lower half with a redstone signal."),
+	groups = {handy=1,axey=1, material_wood=1, flammable=-1},
+	_mcl_hardness = 3,
+	_mcl_blast_resistance = 3,
+	sounds = mcl_sounds.node_sound_wood_defaults(),
+}
+mcl_trees.tpl_trapdoor = {
+	_doc_items_longdesc = S("Wooden trapdoors are horizontal barriers which can be opened and closed by hand or a redstone signal. They occupy the upper or lower part of a block, depending on how they have been placed. When open, they can be climbed like a ladder."),
+	_doc_items_usagehelp = S("To open or close the trapdoor, rightclick it or send a redstone signal to it."),
+	groups = {handy=1,axey=1, mesecon_effector_on=1, material_wood=1, flammable=-1},
+	_mcl_hardness = 3,
+	_mcl_blast_resistance = 3,
+	sounds = mcl_sounds.node_sound_wood_defaults(),
+}
+
 local function register_leaves(subname, description, longdesc, tiles, sapling, drop_apples, sapling_chances)
 	local apple_chances = {200, 180, 160, 120, 40}
 	local stick_chances = {50, 45, 30, 35, 10}
@@ -313,6 +330,48 @@ function mcl_trees.register_wood(name,p)
 			}
 		})
 	end
+	if p.door == nil or type(p.door) == "table" then
+		mcl_doors:register_door(":mcl_doors:door_"..name,table.merge(mcl_trees.tpl_door,{
+			description = S(rname.." Door"),
+			inventory_image = "mcl_doors_door_"..name..".png",
+			tiles_bottom = {"mcl_doors_door_"..name.."_lower.png", "mcl_doors_door_"..name.."_side_lower.png"},
+			tiles_top = {"mcl_doors_door_"..name.."_upper.png", "mcl_doors_door_"..name.."_side_upper.png"}
+		},p.door or {}))
+		minetest.register_craft({
+			output = "mcl_doors:door_"..name.." 3",
+			recipe = {
+				{"mcl_trees:planks_"..name, "mcl_trees:planks_"..name},
+				{"mcl_trees:planks_"..name, "mcl_trees:planks_"..name},
+				{"mcl_trees:planks_"..name, "mcl_trees:planks_"..name}
+			}
+		})
+		minetest.register_craft({
+			type = "fuel",
+			recipe = "mcl_doors:door_"..name,
+			burntime = 10,
+		})
+	end
+	if p.trapdoor == nil or type(p.trapdoor) == "table" then
+		mcl_doors:register_trapdoor(":mcl_doors:trapdoor_"..name,table.merge(mcl_trees.tpl_trapdoor,{
+			description = S(rname.." Trapdoor"),
+			tile_front = "mcl_doors_trapdoor_"..name..".png",
+			tile_side = "mcl_doors_trapdoor_"..name.."_side.png",
+			wield_image = "mcl_doors_trapdoor_"..name..".png",
+		},p.trapdoor or {}))
+		minetest.register_craft({
+			output = "mcl_doors:trapdoor_"..name.." 2",
+			recipe = {
+				{"mcl_trees:planks_"..name,"mcl_trees:planks_"..name,"mcl_trees:planks_"..name,},
+				{"mcl_trees:planks_"..name,"mcl_trees:planks_"..name,"mcl_trees:planks_"..name,},
+			}
+		})
+		minetest.register_craft({
+			type = "fuel",
+			recipe = "mcl_doors:trapdoor_"..name,
+			burntime = 15,
+		})
+	end
+
 	--[[if p.stairs == nil or type(p.stairs) == "table" then
 		mcl_stairs.register_stair("mcl_trees:planks_"..name,p.stair or {})
 
@@ -327,71 +386,6 @@ function mcl_trees.register_wood(name,p)
 		if bark_stairs then
 			mcl_stairs.register_slab("mcl_trees:bark_"..name, p.slab or {})
 		end
-	end
-
-	if p.fence == nil or type(p.fence) == "table" then
-		mcl_fences.register_fence("mcl_trees:planks_"..name,p.fence or {
-			description = S(rname.." fence"),
-		})
-	end
-	if p.gate == nil or type(p.gate) == "table" then
-		mcl_fences.register_gate("mcl_trees:planks_"..name,p.gate or{
-			description = S(rname.." fence gate"),
-		})
-	end
-
-	if p.door == nil or type(p.door) == "table" then
-		mcl_doors:register_door("mcl_doors:door_"..name,table.merge({
-			description = S(rname.." Door"),
-			_doc_items_longdesc = S("Wooden doors are 2-block high barriers which can be opened or closed by hand and by a redstone signal."),
-			_doc_items_usagehelp = S("To open or close a wooden door, rightclick it or supply its lower half with a redstone signal."),
-			inventory_image = "mcl_doors_door_"..name..".png",
-			groups = {handy=1,axey=1, material_wood=1, flammable=-1},
-			_mcl_hardness = 3,
-			_mcl_blast_resistance = 3,
-			tiles_bottom = {"mcl_doors_door_"..name.."_lower.png", "mcl_trees_planks_"..name..".png"},
-			tiles_top = {"mcl_doors_door_"..name.."_upper.png", "mcl_trees_planks_"..name..".png"},
-			sounds = mcl_sounds.node_sound_wood_defaults(),
-		},p.door or {}))
-		minetest.register_craft({
-			output = "mcl_doors:door_"..name.." 3",
-			recipe = {
-				{ "mcl_trees:planks_"..name,"mcl_trees:planks_"..name },
-				{ "mcl_trees:planks_"..name,"mcl_trees:planks_"..name },
-				{ "mcl_trees:planks_"..name,"mcl_trees:planks_"..name },
-			}
-		})
-		minetest.register_craft({
-			type = "fuel",
-			recipe = "mcl_doors:door_"..name,
-			burntime = 15
-		})
-	end
-	if p.trapdoor == nil or type(p.trapdoor) == "table" then
-		mcl_doors:register_trapdoor("mcl_doors:trapdoor_"..name, table.merge({
-			description = S(rname.." Trapdoor"),
-			_doc_items_longdesc = S("Wooden trapdoors are horizontal barriers which can be opened and closed by hand or a redstone signal. They occupy the upper or lower part of a block, depending on how they have been placed. When open, they can be climbed like a ladder."),
-			_doc_items_usagehelp = S("To open or close the trapdoor, rightclick it or send a redstone signal to it."),
-			tile_front = "mcl_doors_trapdoor_"..name..".png",
-			tile_side = "mcl_trees_planks_"..name..".png",
-			wield_image = "mcl_doors_trapdoor_"..name..".png",
-			groups = {handy=1,axey=1, redstone_effector_on=1, material_wood=1, flammable=-1},
-			_mcl_hardness = 3,
-			_mcl_blast_resistance = 3,
-			sounds = mcl_sounds.node_sound_wood_defaults(),
-		},p.trapdoor or {}))
-		minetest.register_craft({
-			output = "mcl_doors:trapdoor_"..name.." 3",
-			recipe = {
-				{ "mcl_trees:planks_"..name,"mcl_trees:planks_"..name,"mcl_trees:planks_"..name  },
-				{ "mcl_trees:planks_"..name,"mcl_trees:planks_"..name,"mcl_trees:planks_"..name  },
-			}
-		})
-		minetest.register_craft({
-			type = "fuel",
-			recipe = "mcl_doors:trapdoor_"..name,
-			burntime = 12
-		})
 	end
 
 	if p.pressure_plate == nil or type(p.pressure_plate) == "table" then

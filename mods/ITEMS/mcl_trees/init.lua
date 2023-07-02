@@ -25,6 +25,16 @@ mcl_trees.woods = {
 			inventory_image = "default_sapling.png",
 			wield_image = "default_sapling.png",
 		},
+		door = {
+			inventory_image = "doors_item_wood.png",
+			tiles_bottom = {"mcl_doors_door_wood_lower.png", "mcl_doors_door_wood_side_lower.png"},
+			tiles_top = {"mcl_doors_door_wood_upper.png", "mcl_doors_door_wood_side_upper.png"}
+		},
+		trapdoor = {
+			tile_front = "doors_trapdoor.png",
+			tile_side = "doors_trapdoor_side.png",
+			wield_image = "doors_trapdoor.png",
+		},
 	} ,
 	["dark_oak"]={
 		sign_color="#5F4021",
@@ -141,6 +151,16 @@ mcl_trees.woods = {
 		},
 		fence_gate = {
 			tiles = { "mcl_mangrove_fence_gate.png" },
+		},
+		door = {
+			inventory_image = "mcl_mangrove_doors.png",
+			tiles_bottom = {"mcl_mangrove_door_bottom.png", "mcl_mangrove_door_bottom.png"},
+			tiles_top = {"mcl_mangrove_door_top.png", "mcl_mangrove_door_top.png"}
+		},
+		trapdoor = {
+			tile_front = "mcl_mangrove_trapdoor.png",
+			tile_side = "mcl_mangrove_trapdoor.png",
+			wield_image = "mcl_mangrove_trapdoor.png",
 		},
 	},
 	["crimson"]={

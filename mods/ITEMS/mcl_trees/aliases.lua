@@ -92,7 +92,7 @@ minetest.register_alias("mcl_doors:acacia_door","mcl_doors:door_acacia")
 minetest.register_alias("mcl_doors:dark_door","mcl_doors:door_dark_oak")
 minetest.register_alias("mcl_doors:spruce_door","mcl_doors:door_spruce")
 minetest.register_alias("mcl_doors:birch_door","mcl_doors:door_birch")
-minetest.register_alias("mcl_mangrove:mangrove_door","mcl_trees:door_mangrove")
+minetest.register_alias("mcl_mangrove:mangrove_door","mcl_doors:door_mangrove")
 minetest.register_alias("mcl_crimson:warped_door","mcl_trees:door_warped")
 minetest.register_alias("mcl_crimson:crimson_door","mcl_trees:door_crimson")
 
