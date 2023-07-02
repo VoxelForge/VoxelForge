@@ -61,10 +61,9 @@ local function hopper_take_item(self, dtime)
 
 	for k, v in pairs(minetest.get_objects_inside_radius(above_pos, 1.25)) do
 		local ent = v:get_luaentity()
+		local taken_items = false
 
 		if ent and not ent._removed and ent.itemstring and ent.itemstring ~= "" then
-			local taken_items = false
-
 			local inv = mcl_entity_invs.load_inv(self, 5)
 			if not inv then	return false end
 
