@@ -478,18 +478,6 @@ mcl_doors:register_trapdoor("mcl_crimson:crimson_trapdoor", {
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 })
 
-mcl_fences.register_fence_and_fence_gate(
-	"crimson_fence",
-	S("Crimson Fence"),
-	S("Crimson Fence Gate"),
-	"mcl_crimson_crimson_fence.png",
-	{handy=1,axey=1, flammable=2,fence_wood=1, fire_encouragement=5, fire_flammability=20},
-	minetest.registered_nodes["mcl_crimson:crimson_hyphae"]._mcl_hardness,
-	minetest.registered_nodes["mcl_crimson:crimson_hyphae"]._mcl_blast_resistance,
-	{"group:fence_wood"},
-	mcl_sounds.node_sound_wood_defaults())
-
-
 mcl_doors:register_door("mcl_crimson:warped_door", {
 	description = S("Warped Door"),
 	_doc_items_longdesc = S("Wooden doors are 2-block high barriers which can be opened or closed by hand and by a redstone signal."),
@@ -515,17 +503,6 @@ mcl_doors:register_trapdoor("mcl_crimson:warped_trapdoor", {
 	_mcl_blast_resistance = 3,
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 })
-
-mcl_fences.register_fence_and_fence_gate(
-	"warped_fence",
-	S("Warped Fence"),
-	S("Warped Fence Gate"),
-	"mcl_crimson_warped_fence.png",
-	{handy=1,axey=1, flammable=2,fence_wood=1, fire_encouragement=5, fire_flammability=20},
-	minetest.registered_nodes["mcl_crimson:warped_hyphae"]._mcl_hardness,
-	minetest.registered_nodes["mcl_crimson:warped_hyphae"]._mcl_blast_resistance,
-	{"group:fence_wood"},
-	mcl_sounds.node_sound_wood_defaults())
 
 -- Door, Trapdoor, and Fence/Gate Crafting
 local crimson_wood = "mcl_crimson:crimson_hyphae_wood"

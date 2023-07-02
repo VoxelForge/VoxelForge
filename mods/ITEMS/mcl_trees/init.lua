@@ -39,6 +39,12 @@ mcl_trees.woods = {
 			inventory_image = "mcl_core_sapling_big_oak.png",
 			wield_image = "mcl_core_sapling_big_oak.png",
 		},
+		fence = {
+			tiles = { "mcl_fences_fence_big_oak.png" },
+		},
+		fence_gate = {
+			tiles = { "mcl_fences_fence_gate_big_oak.png" },
+		},
 	},
 	["jungle"]={
 		sign_color="#9f4112",
@@ -130,6 +136,12 @@ mcl_trees.woods = {
 		stripped_bark = {
 			tiles = {"mcl_stripped_mangrove_log_side.png"}
 		},
+		fence = {
+			tiles = { "mcl_mangrove_fence.png" },
+		},
+		fence_gate = {
+			tiles = { "mcl_mangrove_fence_gate.png" },
+		},
 	},
 	["crimson"]={
 		sign_color="#c35f51",
@@ -145,6 +157,12 @@ mcl_trees.woods = {
 		stripped_bark = {
 			tiles = {"stripped_crimson_stem_side.png"}
 		},
+		fence = {
+			tiles = { "mcl_crimson_crimson_fence.png" },
+		},
+		fence_gate = {
+			tiles = { "mcl_crimson_crimson_fence.png" },
+		},
 	},
 	["warped"]={
 		sign_color="#9f7dcf",
@@ -159,6 +177,12 @@ mcl_trees.woods = {
 		},
 		stripped_bark = {
 			tiles = {"stripped_warped_stem_side.png"}
+		},
+		fence = {
+			tiles = { "mcl_crimson_warped_fence.png" },
+		},
+		fence_gate = {
+			tiles = { "mcl_crimson_warped_fence.png" },
 		},
 	},
 }
