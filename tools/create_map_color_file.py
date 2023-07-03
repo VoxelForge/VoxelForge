@@ -1,4 +1,4 @@
-import os
+import json, os
 from PIL import Image
 
 colors = {}
@@ -49,43 +49,11 @@ for root, directories, files in os.walk(".."):
 			except IOError:
 				pass
 
-# use this instead of json.dump to have full control over the output
-def dump_json(fp, obj):
-	fp.write("{\n")
-	for item in sorted(obj.items()):
-		fp.write("\t\"" + item[0] + "\": ")
-
-		colors = None
-		ident = None
-
-		value = item[1]
-
-		if isinstance(value, list):
-			colors = value
-			ident = "\t\t"
-
-			fp.write("[\n")
-		else:
-			colors = [value]
-			ident = ""
-
-		for color in colors:
-			fp.write(ident + "[")
-			for idx, x in enumerate(color):
-				fp.write(str(x).rjust(3))
-				if idx < 2:
-					fp.write(",")
-			fp.write("],\n")
-
-		if isinstance(value, list):
-			fp.write("\t],\n")
-
-	fp.write("}\n")
-
 path = "../mods/ITEMS/mcl_maps/"
 
 with open(path + "colors.json", "w") as colorfile:
-	dump_json(colorfile, colors)
+	colorfile.write(json.dumps(colors))
 
 with open(path + "palettes.json", "w") as palettefile:
-	dump_json(palettefile, palettes)
+	palettefile.write(json.dumps(palettes))
+

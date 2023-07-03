@@ -13,7 +13,7 @@ minetest.mkdir(map_textures_path)
 
 local function load_json_file(name)
 	local file = assert(io.open(modpath .. "/" .. name .. ".json", "r"))
-	local data = minetest.parse_json(file:read("*all"))
+	local data = minetest.parse_json(file:read())
 	file:close()
 	return data
 end
