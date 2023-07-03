@@ -372,22 +372,44 @@ function mcl_trees.register_wood(name,p)
 		})
 	end
 
-	--[[if p.stairs == nil or type(p.stairs) == "table" then
-		mcl_stairs.register_stair("mcl_trees:planks_"..name,p.stair or {})
+	if p.stairs == nil or type(p.stairs) == "table" then
+		p.stairs = p.stairs or {}
+		mcl_stairs.register_stair(name, "mcl_core:planks_"..name,
+			{handy=1,axey=1, flammable=3,wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
+			p.planks and p.planks.tiles or {"mcl_core_planks_"..name..".png"},
+			p.stairs.description or S(rname.." Wood Stairs"),
+			mcl_sounds.node_sound_wood_defaults(), 3, 2,
+			"woodlike")
 
 		if bark_stairs then
-			mcl_stairs.register_stair("mcl_trees:bark_"..name,p.stair or {})
+			mcl_stairs.register_stair(name.."_bark", "mcl_core:log_"..name,
+				{handy=1,axey=1, flammable=3,wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
+				p.tree and p.tree.tiles and { p.tree.tiles[3] } or {"mcl_core_log_"..name..".png"},
+				p.stairs.description or S(rname.." bark Stairs"),
+				mcl_sounds.node_sound_wood_defaults(), 3, 2,
+				"woodlike")
 		end
 	end
 
 	if p.slab == nil or type(p.slab) == "table" then
-		mcl_stairs.register_slab("mcl_trees:planks_"..name, p.slab or {})
+		p.slab = p.slab or {}
+		mcl_stairs.register_slab(name, "mcl_core:planks_"..name,
+			{handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
+			p.planks and p.planks.tiles or {"mcl_core_planks_"..name..".png"},
+			p.slab.description or S(rname.." Wood Slab"),
+			mcl_sounds.node_sound_wood_defaults(), 3, 2,
+			S("Double "..rname.." Wood Slab"))
 
 		if bark_stairs then
-			mcl_stairs.register_slab("mcl_trees:bark_"..name, p.slab or {})
+			mcl_stairs.register_slab(name.."_bark", "mcl_core:log_"..name,
+				{handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
+				p.tree and p.tree.tiles and { p.tree.tiles[3] } or {"mcl_core_log_"..name..".png"},
+				p.slab.description or S(rname.." bark Slab"),
+				mcl_sounds.node_sound_wood_defaults(), 3, 2,
+				S("Double "..rname.." bark Slab"))
 		end
 	end
-
+--[[
 	if p.pressure_plate == nil or type(p.pressure_plate) == "table" then
 		redstone.register_pplate("mcl_trees:planks_"..name,p.pressure_plate or {})
 		minetest.register_craft({

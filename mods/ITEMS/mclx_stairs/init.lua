@@ -2,36 +2,6 @@ local S = minetest.get_translator(minetest.get_current_modname())
 local doc_mod = minetest.get_modpath("doc")
 
 
-local barks = {
-	{ "", S("Oak Bark Stairs"), S("Oak Bark Slab"), S("Double Oak Bark Slab") },
-	{ "jungle", S("Jungle Bark Stairs"), S("Jungle Bark Slab"), S("Double Jungle Bark Slab") },
-	{ "acacia", S("Acacia Bark Stairs"), S("Acacia Bark Slab"), S("Double Acacia Bark Slab") },
-	{ "spruce", S("Spruce Bark Stairs"), S("Spruce Bark Slab"), S("Double Spruce Bark Slab") },
-	{ "birch", S("Birch Bark Stairs"), S("Birch Bark Slab"), S("Double Birch Bark Slab") },
-	{ "dark", S("Dark Oak Bark Stairs"), S("Dark Oak Bark Slab"), S("Double Dark Oak Bark Slab") },
-}
-
-for b=1, #barks do
-	local bark = barks[b]
-	local sub = bark[1].."tree_bark"
-	local id = "mcl_core:tree"
-	if bark[1] ~= "" then
-		id = "mcl_core:"..bark[1].."tree"
-	end
-	mcl_stairs.register_stair(sub, id,
-			{handy=1,axey=1, flammable=3, bark_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=5},
-			{minetest.registered_nodes[id].tiles[3]},
-			bark[2],
-			mcl_sounds.node_sound_wood_defaults(), 3, 2,
-			"woodlike")
-	mcl_stairs.register_slab(sub, id,
-			{handy=1,axey=1, flammable=3, bark_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=5},
-			{minetest.registered_nodes[id].tiles[3]},
-			bark[3],
-			mcl_sounds.node_sound_wood_defaults(), 3, 2,
-			bark[4])
-end
-
 mcl_stairs.register_slab("lapisblock", "mcl_core:lapisblock",
 		{pickaxey=3},
 		{"mcl_core_lapis_block.png", "mcl_core_lapis_block.png", "mcl_stairs_lapis_block_slab.png"},
