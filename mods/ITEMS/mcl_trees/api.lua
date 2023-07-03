@@ -253,7 +253,7 @@ function mcl_trees.register_wood(name,p)
 		minetest.register_node(":mcl_trees:bark_"..name,table.merge(mcl_trees.tpl_log,{
 			description = S(rname.." Bark"),
 			_doc_items_longdesc = S("This is a decorative block surrounded by the bark of a tree trunk."),
-			tiles = {"mcl_core_log_"..name..".png"},
+			tiles = p.tree and p.tree.tiles and { p.tree.tiles[3] } or {"mcl_core_log_"..name..".png"},
 			is_ground_content = false,
 			_mcl_stripped_variant = "mcl_trees:bark_stripped_"..name,
 		},p.bark or {}))
@@ -298,7 +298,7 @@ function mcl_trees.register_wood(name,p)
 			tiles = {"mcl_core_sapling_"..name..".png"},
 			inventory_image = "mcl_core_sapling_"..name..".png",
 			wield_image = "mcl_core_sapling_"..name..".png",
-		}))
+		},p.sapling or {}))
 	end
 
 
