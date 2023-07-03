@@ -53,8 +53,7 @@ for root, directories, files in os.walk(".."):
 path = "../mods/ITEMS/mcl_maps/"
 
 with open(path + "colors.json", "w") as colorfile:
-	colorfile.write(json.dumps(colors))
+	colorfile.write(json.dumps(colors, indent = "\t"))
 
 with open(path + "palettes.json", "w") as palettefile:
-	palettefile.write(json.dumps(palettes))
-
+	palettefile.write(json.dumps(palettes, indent = "\t"))
