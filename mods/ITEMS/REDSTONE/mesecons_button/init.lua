@@ -228,39 +228,6 @@ mesecon.register_button(
 	S("A polished blackstone button is a redstone component made out of polished blackstone which can be pushed to provide redstone power. When pushed, it powers adjacent redstone components for 1 second."),
 	"mesecons_button_push")
 
-local woods = {
-	{ "wood", "mcl_core:wood", "default_wood.png", S("Oak Button") },
-	{ "acaciawood", "mcl_core:acaciawood", "default_acacia_wood.png", S("Acacia Button") },
-	{ "birchwood", "mcl_core:birchwood", "mcl_core_planks_birch.png", S("Birch Button") },
-	{ "darkwood", "mcl_core:darkwood", "mcl_core_planks_big_oak.png", S("Dark Oak Button") },
-	{ "sprucewood", "mcl_core:sprucewood", "mcl_core_planks_spruce.png", S("Spruce Button") },
-	{ "junglewood", "mcl_core:junglewood", "default_junglewood.png", S("Jungle Button") },
-
-	{ "mangrove_wood", "mcl_mangrove:mangrove_wood", "mcl_mangrove_planks.png", S("Mangrove Button") },
-	{ "crimson_hyphae_wood", "mcl_crimson:crimson_hyphae_wood", "crimson_hyphae_wood.png", S("Crimson Button") },
-	{ "warped_hyphae_wood", "mcl_crimson:warped_hyphae_wood", "warped_hyphae_wood.png", S("Warped Button") },
-}
-
-for w=1, #woods do
-	mesecon.register_button(
-		woods[w][1],
-		woods[w][4],
-		woods[w][3],
-		woods[w][2],
-		mcl_sounds.node_sound_wood_defaults(),
-		{material_wood=1,handy=1,axey=1},
-		1.5,
-		true,
-		S("A wooden button is a redstone component made out of wood which can be pushed to provide redstone power. When pushed, it powers adjacent redstone components for 1.5 seconds. Wooden buttons may also be pushed by arrows."),
-		"mesecons_button_push_wood")
-
-	minetest.register_craft({
-		type = "fuel",
-		recipe = "mesecons_button:button_"..woods[w][1].."_off",
-		burntime = 5,
-	})
-end
-
 -- Add entry aliases for the Help
 if minetest.get_modpath("doc") then
 	doc.add_entry_alias("nodes", "mesecons_button:button_wood_off", "nodes", "mesecons_button:button_wood_on")

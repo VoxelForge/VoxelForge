@@ -415,28 +415,47 @@ function mcl_trees.register_wood(name,p)
 		)
 		mcl_signs.register_sign_craft("mcl_trees", "mcl_trees:planks_"..name, "_"..name)
 	end
---[[
+
 	if p.pressure_plate == nil or type(p.pressure_plate) == "table" then
-		redstone.register_pplate("mcl_trees:planks_"..name,p.pressure_plate or {})
+		mesecon.register_pressure_plate(
+			"mesecons_pressureplates:pressure_plate_"..name,
+			S(rname.." Pressure Plate"),
+			p.planks and p.planks.tiles or {"mcl_core_planks_"..name..".png"},
+			p.planks and p.planks.tiles or {"mcl_core_planks_"..name..".png"},
+			p.planks and p.planks.tiles[1] or "mcl_core_planks_"..name..".png",
+			nil,
+			{{"mcl_trees:planks_"..name, "mcl_trees:planks_"..name}},
+			mcl_sounds.node_sound_wood_defaults(),
+			{axey=1, material_wood=1},
+			nil,
+			S("A wooden pressure plate is a redstone component which supplies its surrounding blocks with redstone power while any movable object (including dropped items, players and mobs) rests on top of it."))
+
 		minetest.register_craft({
 			type = "fuel",
-			recipe = "redstone_pressureplates:planks_"..name.."_pplate_off",
-			burntime = 10
+			recipe = "mesecons_pressureplates:pressure_plate_"..name.."_off",
+			burntime = 15
 		})
 	end
 	if p.button == nil or type(p.button) == "table" then
-		mesecons.register_button("mcl_trees:planks_"..name,table.merge({
-			groups={material_wood=1,handy=1,axey=1},
-			sounds={dig = "redstone_button_push_wood"},
-			description = S(rname .. " Button"),
-		},p.button or {}))
+		mesecon.register_button(
+			name,
+			S(rname.." Button"),
+			p.planks and p.planks.tiles[1] or "mcl_core_planks_"..name..".png",
+			"mcl_trees:planks_"..name,
+			mcl_sounds.node_sound_wood_defaults(),
+			{material_wood=1,handy=1,axey=1},
+			1.5,
+			true,
+			S("A wooden button is a redstone component made out of wood which can be pushed to provide redstone power. When pushed, it powers adjacent redstone components for 1.5 seconds. Wooden buttons may also be pushed by arrows."),
+			"mesecons_button_push_wood")
+
 		minetest.register_craft({
 			type = "fuel",
-			recipe = "redstone_pressureplates:planks_"..name.."_button_off",
-			burntime = 5
+			recipe = "mesecons_button:button_"..name.."_off",
+			burntime = 5,
 		})
-	end-
-
+	end
+--[[
 	if p.boat == nil or type(p.boat) == "table" then
 		mcl_boats.register_boat({
 			name = "boat_"..name,
