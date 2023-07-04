@@ -12,7 +12,7 @@ if BROKEN_DOORS then
 	top_door_tiles = { "mcl_bamboo_door_top_alt.png", "mcl_bamboo_door_top.png" }
 	bot_door_tiles = { "mcl_bamboo_door_bottom_alt.png", "mcl_bamboo_door_bottom.png" }
 end
-
+--[[
 mcl_doors:register_door("mcl_bamboo:bamboo_door", {
 	description = S("Bamboo Door."),
 	inventory_image = "mcl_bamboo_door_wield.png",
@@ -98,6 +98,7 @@ minetest.register_craft({
 	recipe = "mcl_bamboo:pressure_plate_bamboo_wood_off",
 	burntime = 15
 })
+--]]
 
 mcl_signs.register_sign_custom("mcl_bamboo", "_bamboo", "mcl_bamboo_bamboo_sign.png",
 		"#ffffff", "mcl_bamboo_bamboo_sign_wield.png", "mcl_bamboo_bamboo_sign_wield.png",

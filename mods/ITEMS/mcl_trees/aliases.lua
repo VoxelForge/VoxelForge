@@ -15,6 +15,7 @@ minetest.register_alias("mcl_stairs:stair_junglewood", "mcl_stairs:stair_jungle"
 minetest.register_alias("mcl_stairs:stair_mangrove_wood", "mcl_stairs:stair_mangrove")
 minetest.register_alias("mcl_stairs:stair_crimson_hyphae_wood", "mcl_stairs:stair_crimson")
 minetest.register_alias("mcl_stairs:stair_warped_hyphae_wood", "mcl_stairs:stair_warped")
+minetest.register_alias("mcl_stairs:stair_bamboo_plank", "mcl_stairs:stair_bamboo")
 
 minetest.register_alias("mcl_stairs:stair_wood_inner", "mcl_stairs:stair_oak_inner")
 minetest.register_alias("mcl_stairs:stair_birchwood_inner", "mcl_stairs:stair_birch_inner")
@@ -25,6 +26,7 @@ minetest.register_alias("mcl_stairs:stair_junglewood_inner", "mcl_stairs:stair_j
 minetest.register_alias("mcl_stairs:stair_mangrove_wood_inner", "mcl_stairs:stair_mangrove_inner")
 minetest.register_alias("mcl_stairs:stair_crimson_hyphae_wood_inner", "mcl_stairs:stair_crimson_inner")
 minetest.register_alias("mcl_stairs:stair_warped_hyphae_wood_inner", "mcl_stairs:stair_warped_inner")
+minetest.register_alias("mcl_stairs:stair_bamboo_plank_inner", "mcl_stairs:stair_bamboo_inner")
 
 minetest.register_alias("mcl_stairs:stair_wood_outer", "mcl_stairs:stair_oak_outer")
 minetest.register_alias("mcl_stairs:stair_birchwood_outer", "mcl_stairs:stair_birch_outer")
@@ -35,6 +37,7 @@ minetest.register_alias("mcl_stairs:stair_junglewood_outer", "mcl_stairs:stair_j
 minetest.register_alias("mcl_stairs:stair_mangrove_wood_outer", "mcl_stairs:stair_mangrove_outer")
 minetest.register_alias("mcl_stairs:stair_crimson_hyphae_wood_outer", "mcl_stairs:stair_crimson_outer")
 minetest.register_alias("mcl_stairs:stair_warped_hyphae_wood_outer", "mcl_stairs:stair_warped_outer")
+minetest.register_alias("mcl_stairs:stair_bamboo_plank_outer", "mcl_stairs:stair_bamboo_outer")
 
 minetest.register_alias("mcl_stairs:slab_wood", "mcl_stairs:slab_oak")
 minetest.register_alias("mcl_stairs:slab_birchwood", "mcl_stairs:slab_birch")
@@ -45,6 +48,7 @@ minetest.register_alias("mcl_stairs:slab_junglewood", "mcl_stairs:slab_jungle")
 minetest.register_alias("mcl_stairs:slab_mangrove_wood", "mcl_stairs:slab_mangrove")
 minetest.register_alias("mcl_stairs:slab_crimson_hyphae_wood", "mcl_stairs:slab_crimson")
 minetest.register_alias("mcl_stairs:slab_warped_hyphae_wood", "mcl_stairs:slab_warped")
+minetest.register_alias("mcl_stairs:slab_bamboo_plank", "mcl_stairs:slab_bamboo")
 
 minetest.register_alias("mcl_stairs:slab_wood_top", "mcl_stairs:slab_oak_top")
 minetest.register_alias("mcl_stairs:slab_birchwood_top", "mcl_stairs:slab_birch_top")
@@ -55,6 +59,7 @@ minetest.register_alias("mcl_stairs:slab_junglewood_top", "mcl_stairs:slab_jungl
 minetest.register_alias("mcl_stairs:slab_mangrove_wood_top", "mcl_stairs:slab_mangrove_top")
 minetest.register_alias("mcl_stairs:slab_crimson_hyphae_wood_top", "mcl_stairs:slab_crimson_top")
 minetest.register_alias("mcl_stairs:slab_warped_hyphae_wood_top", "mcl_stairs:slab_warped_top")
+minetest.register_alias("mcl_stairs:slab_bamboo_plank_top", "mcl_stairs:slab_bamboo_top")
 
 minetest.register_alias("mcl_stairs:slab_wood_double", "mcl_stairs:slab_oak_double")
 minetest.register_alias("mcl_stairs:slab_birchwood_double", "mcl_stairs:slab_birch_double")
@@ -65,6 +70,7 @@ minetest.register_alias("mcl_stairs:slab_junglewood_double", "mcl_stairs:slab_ju
 minetest.register_alias("mcl_stairs:slab_mangrove_wood_double", "mcl_stairs:slab_mangrove_double")
 minetest.register_alias("mcl_stairs:slab_crimson_hyphae_wood_double", "mcl_stairs:slab_crimson_double")
 minetest.register_alias("mcl_stairs:slab_warped_hyphae_wood_double", "mcl_stairs:slab_warped_double")
+minetest.register_alias("mcl_stairs:slab_bamboo_plank_double", "mcl_stairs:slab_bamboo_double")
 
 minetest.register_alias("mcl_stairs:stair_tree_bark", "mcl_stairs:stair_oak_bark")
 minetest.register_alias("mcl_stairs:stair_birchtree_bark", "mcl_stairs:stair_birch_bark")
@@ -75,6 +81,7 @@ minetest.register_alias("mcl_stairs:stair_jungletree_bark", "mcl_stairs:stair_ju
 minetest.register_alias("mcl_stairs:stair_mangrove_tree_bark", "mcl_stairs:stair_mangrove_bark")
 minetest.register_alias("mcl_stairs:stair_crimson_hyphae_tree_bark", "mcl_stairs:stair_crimson_bark")
 minetest.register_alias("mcl_stairs:stair_warped_hyphae_tree_bark", "mcl_stairs:stair_warped_bark")
+minetest.register_alias("mcl_stairs:stair_bamboo_block", "mcl_stairs:stair_bamboo_bark")
 
 minetest.register_alias("mcl_stairs:stair_tree_bark_inner", "mcl_stairs:stair_oak_bark_inner")
 minetest.register_alias("mcl_stairs:stair_birchtree_bark_inner", "mcl_stairs:stair_birch_bark_inner")
@@ -85,6 +92,7 @@ minetest.register_alias("mcl_stairs:stair_jungletree_bark_inner", "mcl_stairs:st
 minetest.register_alias("mcl_stairs:stair_mangrove_tree_bark_inner", "mcl_stairs:stair_mangrove_bark_inner")
 minetest.register_alias("mcl_stairs:stair_crimson_hyphae_tree_bark_inner", "mcl_stairs:stair_crimson_bark_inner")
 minetest.register_alias("mcl_stairs:stair_warped_hyphae_tree_bark_inner", "mcl_stairs:stair_warped_bark_inner")
+minetest.register_alias("mcl_stairs:stair_bamboo_block_inner", "mcl_stairs:stair_bamboo_bark_inner")
 
 minetest.register_alias("mcl_stairs:stair_tree_bark_outer", "mcl_stairs:stair_oak_bark_outer")
 minetest.register_alias("mcl_stairs:stair_birchtree_bark_outer", "mcl_stairs:stair_birch_bark_outer")
@@ -95,6 +103,7 @@ minetest.register_alias("mcl_stairs:stair_jungletree_bark_outer", "mcl_stairs:st
 minetest.register_alias("mcl_stairs:stair_mangrove_tree_bark_outer", "mcl_stairs:stair_mangrove_bark_outer")
 minetest.register_alias("mcl_stairs:stair_crimson_hyphae_tree_bark_outer", "mcl_stairs:stair_crimson_bark_outer")
 minetest.register_alias("mcl_stairs:stair_warped_hyphae_tree_bark_outer", "mcl_stairs:stair_warped_bark_outer")
+minetest.register_alias("mcl_stairs:stair_bamboo_block_outer", "mcl_stairs:stair_bamboo_bark_outer")
 
 minetest.register_alias("mcl_stairs:slab_tree_bark", "mcl_stairs:slab_oak_bark")
 minetest.register_alias("mcl_stairs:slab_birchtree_bark", "mcl_stairs:slab_birch_bark")
@@ -105,6 +114,7 @@ minetest.register_alias("mcl_stairs:slab_jungletree_bark", "mcl_stairs:slab_jung
 minetest.register_alias("mcl_stairs:slab_mangrove_tree_bark", "mcl_stairs:slab_mangrove_bark")
 minetest.register_alias("mcl_stairs:slab_crimson_hyphae_tree_bark", "mcl_stairs:slab_crimson_bark")
 minetest.register_alias("mcl_stairs:slab_warped_hyphae_tree_bark", "mcl_stairs:slab_warped_bark")
+minetest.register_alias("mcl_stairs:slab_bamboo_block", "mcl_stairs:slab_bamboo_bark")
 
 minetest.register_alias("mcl_stairs:slab_tree_bark_top", "mcl_stairs:slab_oak_bark_top")
 minetest.register_alias("mcl_stairs:slab_birchtree_bark_top", "mcl_stairs:slab_birch_bark_top")
@@ -115,6 +125,7 @@ minetest.register_alias("mcl_stairs:slab_jungletree_bark_top", "mcl_stairs:slab_
 minetest.register_alias("mcl_stairs:slab_mangrove_tree_bark_top", "mcl_stairs:slab_mangrove_bark_top")
 minetest.register_alias("mcl_stairs:slab_crimson_hyphae_tree_bark_top", "mcl_stairs:slab_crimson_bark_top")
 minetest.register_alias("mcl_stairs:slab_warped_hyphae_tree_bark_top", "mcl_stairs:slab_warped_bark_top")
+minetest.register_alias("mcl_stairs:slab_bamboo_block_top", "mcl_stairs:slab_bamboo_bark_top")
 
 minetest.register_alias("mcl_stairs:slab_tree_bark_double", "mcl_stairs:slab_oak_bark_double")
 minetest.register_alias("mcl_stairs:slab_birchtree_bark_double", "mcl_stairs:slab_birch_bark_double")
@@ -125,7 +136,7 @@ minetest.register_alias("mcl_stairs:slab_jungletree_bark_double", "mcl_stairs:sl
 minetest.register_alias("mcl_stairs:slab_mangrove_tree_bark_double", "mcl_stairs:slab_mangrove_bark_double")
 minetest.register_alias("mcl_stairs:slab_crimson_hyphae_tree_bark_double", "mcl_stairs:slab_crimson_bark_double")
 minetest.register_alias("mcl_stairs:slab_warped_hyphae_tree_bark_double", "mcl_stairs:slab_warped_bark_double")
-
+minetest.register_alias("mcl_stairs:slab_bamboo_block_double", "mcl_stairs:slab_bamboo_bark_double")
 
 minetest.register_alias("mcl_core:birchtree","mcl_trees:tree_birch")
 minetest.register_alias("mcl_core:darktree","mcl_trees:tree_dark_oak")
@@ -137,6 +148,7 @@ minetest.register_alias("default:tree","mcl_trees:tree_oak")
 minetest.register_alias("mcl_mangrove:mangrove_tree","mcl_trees:tree_mangrove")
 minetest.register_alias("mcl_crimson:crimson_hyphae","mcl_trees:tree_crimson")
 minetest.register_alias("mcl_crimson:warped_hyphae","mcl_trees:tree_warped")
+minetest.register_alias("mcl_bamboo:bamboo_block","mcl_trees:tree_bamboo")
 
 minetest.register_alias("mcl_core:birchleaves","mcl_trees:leaves_birch")
 minetest.register_alias("mcl_core:darkleaves","mcl_trees:leaves_dark_oak")
@@ -158,6 +170,7 @@ minetest.register_alias("mcl_crimson:warped_hyphae_wood","mcl_trees:planks_warpe
 minetest.register_alias("mcl_crimson:crimson_hyphae_wood","mcl_trees:planks_crimson")
 minetest.register_alias("mcl_mangrove:mangrove_wood","mcl_trees:planks_mangrove")
 minetest.register_alias("default:wood","mcl_trees:planks_oak")
+minetest.register_alias("mcl_bamboo:bamboo_plank","mcl_trees:planks_bamboo")
 
 minetest.register_alias("mcl_core:birchtree_bark","mcl_trees:bark_birch")
 minetest.register_alias("mcl_core:big_oaktree_bark","mcl_trees:bark_dark_oak")
@@ -189,8 +202,6 @@ minetest.register_alias("mcl_fences:birch_fence","mcl_fences:birch_fence")
 minetest.register_alias("mcl_mangrove:mangrove_wood_fence","mcl_fences:mangrove_fence")
 minetest.register_alias("mcl_crimson:crimson_fence","mcl_fences:crimson_fence")
 minetest.register_alias("mcl_crimson:warped_fence","mcl_fences:warped_fence")
---minetest.register_alias("mcl_fences:nether_brick_fence","mcl_stone:nether_bricks_fence")
---minetest.register_alias("mcl_fences:red_nether_brick_fence","mcl_stone:red_nether_bricks_fence")
 
 minetest.register_alias("mcl_fences:fence_gate","mcl_fences:oak_fence_gate")
 minetest.register_alias("mcl_fences:jungle_fence_gate","mcl_fences:jungle_fence_gate")
@@ -202,12 +213,7 @@ minetest.register_alias("mcl_fences:birch_fence_gate","mcl_fences:birch_fence_ga
 minetest.register_alias("mcl_mangrove:mangrove_wood_fence_gate","mcl_fences:mangrove_fence_gate")
 minetest.register_alias("mcl_crimson:crimson_fence_gate","mcl_fences:crimson_fence_gate")
 minetest.register_alias("mcl_crimson:warped_fence_gate","mcl_fences:warped_fence_gate")
---minetest.register_alias("mcl_fences:nether_brick_fence_gate","mcl_stone:nether_brick_fence_gate")
---minetest.register_alias("mcl_fences:red_nether_brick_fence_gate","mcl_stone:red_nether_brick_fence_gate")
 
---[[
-
---]]
 minetest.register_alias("mcl_doors:wooden_door","mcl_doors:door_oak")
 minetest.register_alias("mcl_doors:jungle_door","mcl_doors:door_jungle")
 minetest.register_alias("mcl_doors:acacia_door","mcl_doors:door_acacia")
@@ -217,10 +223,9 @@ minetest.register_alias("mcl_doors:birch_door","mcl_doors:door_birch")
 minetest.register_alias("mcl_mangrove:mangrove_door","mcl_doors:door_mangrove")
 minetest.register_alias("mcl_crimson:warped_door","mcl_trees:door_warped")
 minetest.register_alias("mcl_crimson:crimson_door","mcl_trees:door_crimson")
-
-minetest.register_alias("mcl_mangrove:mangrove_door","mcl_trees:door_mangrove")
-minetest.register_alias("mcl_crimson:warped_door","mcl_trees:door_warped")
 minetest.register_alias("mcl_crimson:crimson_door","mcl_trees:door_crimson")
+minetest.register_alias("mcl_bamboo:bamboo_door","mcl_doors:door_bamboo")
+
 
 minetest.register_alias("mcl_doors:wooden_door_b_1","mcl_doors:door_oak_b_1")
 minetest.register_alias("mcl_doors:jungle_door_b_1","mcl_doors:door_jungle_b_1")
@@ -231,6 +236,7 @@ minetest.register_alias("mcl_doors:birch_door_b_1","mcl_doors:door_birch_b_1")
 minetest.register_alias("mcl_mangrove:mangrove_door_b_1","mcl_doors:door_mangrove_b_1")
 minetest.register_alias("mcl_crimson:warped_door_b_1","mcl_doors:door_warped_b_1")
 minetest.register_alias("mcl_crimson:crimson_door_b_1","mcl_doors:door_crimson_b_1")
+minetest.register_alias("mcl_bamboo:bamboo_door_b_1","mcl_doors:door_bamboo_b_1")
 
 minetest.register_alias("mcl_doors:wooden_door_t_1","mcl_doors:door_oak_t_1")
 minetest.register_alias("mcl_doors:jungle_door_t_1","mcl_doors:door_jungle_t_1")
@@ -241,7 +247,7 @@ minetest.register_alias("mcl_doors:birch_door_t_1","mcl_doors:door_birch_t_1")
 minetest.register_alias("mcl_mangrove:mangrove_door_t_1","mcl_doors:door_mangrove_t_1")
 minetest.register_alias("mcl_crimson:warped_door_t_1","mcl_doors:door_warped_t_1")
 minetest.register_alias("mcl_crimson:crimson_door_t_1","mcl_doors:door_crimson_t_1")
-
+minetest.register_alias("mcl_bamboo:bamboo_door_t_1","mcl_doors:door_bamboo_t_1")
 
 minetest.register_alias("mcl_doors:wooden_door_b_2","mcl_doors:door_oak_b_2")
 minetest.register_alias("mcl_doors:jungle_door_b_2","mcl_doors:door_jungle_b_2")
@@ -252,6 +258,7 @@ minetest.register_alias("mcl_doors:birch_door_b_2","mcl_doors:door_birch_b_2")
 minetest.register_alias("mcl_mangrove:mangrove_door_b_2","mcl_doors:door_mangrove_b_2")
 minetest.register_alias("mcl_crimson:warped_door_b_2","mcl_doors:door_warped_b_2")
 minetest.register_alias("mcl_crimson:crimson_door_b_2","mcl_doors:door_crimson_b_2")
+minetest.register_alias("mcl_bamboo:bamboo_door_b_2","mcl_doors:door_bamboo_b_2")
 
 minetest.register_alias("mcl_doors:wooden_door_t_2","mcl_doors:door_oak_t_2")
 minetest.register_alias("mcl_doors:jungle_door_t_2","mcl_doors:door_jungle_t_2")
@@ -262,6 +269,7 @@ minetest.register_alias("mcl_doors:birch_door_t_2","mcl_doors:door_birch_t_2")
 minetest.register_alias("mcl_mangrove:mangrove_door_t_2","mcl_doors:door_mangrove_t_2")
 minetest.register_alias("mcl_crimson:warped_door_t_2","mcl_doors:door_warped_t_2")
 minetest.register_alias("mcl_crimson:crimson_door_t_2","mcl_doors:door_crimson_t_2")
+minetest.register_alias("mcl_bamboo:bamboo_door_t_2","mcl_doors:door_bamboo_t_2")
 
 minetest.register_alias("mcl_doors:trapdoor","mcl_doors:trapdoor_oak")
 minetest.register_alias("mcl_doors:spruce_trapdoor","mcl_doors:trapdoor_spruce")
@@ -272,6 +280,7 @@ minetest.register_alias("mcl_doors:dark_oak_trapdoor","mcl_doors:trapdoor_dark_o
 minetest.register_alias("mcl_mangrove:mangrove_trapdoor","mcl_doors:trapdoor_mangrove")
 minetest.register_alias("mcl_crimson:warped_trapdoor","mcl_doors:trapdoor_warped")
 minetest.register_alias("mcl_crimson:crimson_trapdoor","mcl_doors:trapdoor_crimson")
+minetest.register_alias("mcl_bamboo:bamboo_trapdoor","mcl_doors:trapdoor_bamboo")
 
 minetest.register_alias("mcl_doors:trapdoor_open","mcl_doors:trapdoor_oak_open")
 minetest.register_alias("mcl_doors:spruce_trapdoor_open","mcl_doors:trapdoor_spruce_open")
@@ -316,6 +325,7 @@ minetest.register_alias("mcl_core:stripped_birch","mcl_trees:stripped_birch")
 minetest.register_alias("mcl_mangrove:mangrove_stripped_trunk","mcl_trees:stripped_mangrove")
 minetest.register_alias("mcl_crimson:stripped_warped_hyphae","mcl_trees:stripped_warped")
 minetest.register_alias("mcl_crimson:stripped_crimson_hyphae","mcl_trees:stripped_crimson")
+minetest.register_alias("mcl_bamboo:bamboo_block_stripped","mcl_trees:stripped_bamboo")
 
 minetest.register_alias("mcl_core:stripped_oak_bark","mcl_trees:bark_stripped_oak")
 minetest.register_alias("mcl_core:stripped_jungle_bark","mcl_trees:bark_stripped_jungle")

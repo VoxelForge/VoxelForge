@@ -228,7 +228,7 @@ function mcl_trees.register_wood(name,p)
 	local rname = readable_name(name)
 	if p.tree == nil or type(p.tree) == "table" then
 		minetest.register_node(":mcl_trees:".."tree_"..name,table.merge(mcl_trees.tpl_log,{
-			description = S(rname.." Wood"),
+			description = S(rname.." Log"),
 			_doc_items_longdesc = S("The trunk of a "..name.." tree."),
 			tiles = { "mcl_core_log_"..name.."_top.png",  "mcl_core_log_"..name.."_top.png", "mcl_core_log_"..name..".png"},
 			_mcl_stripped_variant = "mcl_trees:stripped_"..name,
@@ -305,7 +305,6 @@ function mcl_trees.register_wood(name,p)
 	if p.leaves == nil or type(p.leaves) == "table" then
 		local wood_groups = {handy=1,axey=1, flammable=2,fence_wood=1, fire_encouragement=5, fire_flammability=20}
 		local wood_sounds = mcl_sounds.node_sound_wood_defaults()
-
 		register_leaves("leaves_"..name, S(rname.." Leaves"), S(rname.." leaves are grown from "..name.." trees."), p.leaves and p.leaves.tiles or { "mcl_core_leaves_"..name..".png"}, "mcl_trees:sapling_"..name, true, {20, 16, 12, 10})
 	end
 	if p.fence == nil or type(p.fence) == "table" then
@@ -331,7 +330,7 @@ function mcl_trees.register_wood(name,p)
 		})
 	end
 	if p.door == nil or type(p.door) == "table" then
-		mcl_doors:register_door(":mcl_doors:door_"..name,table.merge(mcl_trees.tpl_door,{
+		mcl_doors:register_door("mcl_doors:door_"..name,table.merge(mcl_trees.tpl_door,{
 			description = S(rname.." Door"),
 			inventory_image = "mcl_doors_door_"..name..".png",
 			tiles_bottom = {"mcl_doors_door_"..name.."_lower.png", "mcl_doors_door_"..name.."_side_lower.png"},
@@ -352,7 +351,7 @@ function mcl_trees.register_wood(name,p)
 		})
 	end
 	if p.trapdoor == nil or type(p.trapdoor) == "table" then
-		mcl_doors:register_trapdoor(":mcl_doors:trapdoor_"..name,table.merge(mcl_trees.tpl_trapdoor,{
+		mcl_doors:register_trapdoor("mcl_doors:trapdoor_"..name,table.merge(mcl_trees.tpl_trapdoor,{
 			description = S(rname.." Trapdoor"),
 			tile_front = "mcl_doors_trapdoor_"..name..".png",
 			tile_side = "mcl_doors_trapdoor_"..name.."_side.png",
