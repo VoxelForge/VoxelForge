@@ -408,6 +408,13 @@ function mcl_trees.register_wood(name,p)
 				S("Double "..rname.." bark Slab"))
 		end
 	end
+	if p.sign_color and ( p.sign == nil or type(p.sign) == "table" ) then
+		mcl_signs.register_sign_custom("mcl_trees", "_"..name,
+				"mcl_signs_sign_greyscale.png",p.sign_color, "default_sign_greyscale.png",
+				"default_sign_greyscale.png", rname.." Sign"
+		)
+		mcl_signs.register_sign_craft("mcl_trees", "mcl_trees:planks_"..name, "_"..name)
+	end
 --[[
 	if p.pressure_plate == nil or type(p.pressure_plate) == "table" then
 		redstone.register_pplate("mcl_trees:planks_"..name,p.pressure_plate or {})
@@ -429,14 +436,6 @@ function mcl_trees.register_wood(name,p)
 			burntime = 5
 		})
 	end-
-
-	if p.sign_color and ( p.sign == nil or type(p.sign) == "table" ) then
-		mcl_signs.register_sign_custom("mcl_trees", "_"..name,
-				"mcl_signs_sign_greyscale.png",p.sign_color, "default_sign_greyscale.png",
-				"default_sign_greyscale.png", rname.." Sign"
-		)
-		mcl_signs.register_sign_craft("mcl_trees", "mcl_trees:planks_"..name, "_"..name,p.sign or {})
-	end
 
 	if p.boat == nil or type(p.boat) == "table" then
 		mcl_boats.register_boat({

@@ -226,7 +226,7 @@ mcl_trees.woods = {
 		},
 	},
 	["bamboo"]={
-		sign_color="#b8693d",
+		sign_color="#FCE6BC",
 		sapling = false,
 		leaves = false,
 		tree_schems = {
