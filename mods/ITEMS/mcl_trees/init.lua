@@ -183,6 +183,16 @@ mcl_trees.woods = {
 		fence_gate = {
 			tiles = { "mcl_crimson_crimson_fence.png" },
 		},
+		door = {
+			inventory_image = "mcl_crimson_crimson_door.png",
+			tiles_bottom = {"mcl_crimson_crimson_door_bottom.png","mcl_doors_door_crimson_side_upper.png"},
+			tiles_top = {"mcl_crimson_crimson_door_top.png","mcl_doors_door_crimson_side_upper.png"},
+		},
+		trapdoor = {
+			tile_front = "mcl_crimson_crimson_trapdoor.png",
+			tile_side = "mcl_crimson_crimson_trapdoor.png",
+			wield_image = "mcl_crimson_crimson_trapdoor.png",
+		},
 	},
 	["warped"]={
 		sign_color="#9f7dcf",
@@ -203,6 +213,16 @@ mcl_trees.woods = {
 		},
 		fence_gate = {
 			tiles = { "mcl_crimson_warped_fence.png" },
+		},
+		door = {
+			inventory_image = "mcl_crimson_warped_door.png",
+			tiles_bottom = {"mcl_crimson_warped_door_bottom.png","mcl_doors_door_warped_side_upper.png"},
+			tiles_top = {"mcl_crimson_warped_door_top.png","mcl_doors_door_warped_side_upper.png"},
+		},
+		trapdoor = {
+			tile_front = "mcl_crimson_warped_trapdoor.png",
+			tile_side = "mcl_crimson_warped_trapdoor.png",
+			wield_image = "mcl_crimson_warped_trapdoor.png",
 		},
 	},
 	["bamboo"]={
