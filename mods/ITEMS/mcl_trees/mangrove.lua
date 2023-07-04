@@ -31,9 +31,9 @@ minetest.register_node("mcl_trees:mangrove_roots", {
 	waving = 0,
 	place_param2 = 1, -- Prevent leafdecay for placed nodes
 	tiles = {
-		"mcl_trees_mangrove_roots_top.png",
-		"mcl_trees_mangrove_roots_side.png",
-		"mcl_trees_mangrove_roots_side.png",
+		"mcl_mangrove_roots_top.png",
+		"mcl_mangrove_roots_side.png",
+		"mcl_mangrove_roots_side.png",
 	},
 	paramtype = "light",
 	drawtype = "allfaces_optional",
@@ -59,9 +59,9 @@ minetest.register_node("mcl_trees:mangrove_propagule", {
 	drawtype = "plantlike",
 	waving = 1,
 	visual_scale = 1.0,
-	tiles = {"mcl_trees_mangrove_propagule_item.png"},
-	inventory_image = "mcl_trees_mangrove_propagule_item.png",
-	wield_image = "mcl_trees_mangrove_propagule_item.png",
+	tiles = {"mcl_mangrove_propagule_item.png"},
+	inventory_image = "mcl_mangrove_propagule_item.png",
+	wield_image = "mcl_mangrove_propagule_item.png",
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
@@ -122,9 +122,9 @@ minetest.register_node("mcl_trees:mangrove_propagule_hanging", {
 			{-0.125, -0.5, -0.125, 0.125, 0.5, 0.125}, -- Base
 		},
 	},
-	tiles = {"mcl_trees_mangrove_propagule_hanging.png"},
-	inventory_image = "mcl_trees_mangrove_propagule.png",
-	wield_image = "mcl_trees_mangrove_propagule.png",
+	tiles = {"mcl_mangrove_propagule_hanging.png"},
+	inventory_image = "mcl_mangrove_propagule.png",
+	wield_image = "mcl_mangrove_propagule.png",
 })
 
 local propagule_rooted_nodes = {}
@@ -140,9 +140,9 @@ for _,root in pairs(propagule_water_nodes) do
 			paramtype = "light",
 			place_param2 = 1,
 			tiles = tx,
-			special_tiles = { { name = "mcl_trees_mangrove_propagule_item.png" } },
-			inventory_image = "mcl_trees_mangrove_propagule_item.png",
-			wield_image = "mcl_trees_mangrove_propagule.png",
+			special_tiles = { { name = "mcl_mangrove_propagule_item.png" } },
+			inventory_image = "mcl_mangrove_propagule_item.png",
+			wield_image = "mcl_mangrove_propagule.png",
 			selection_box = {
 				type = "fixed",
 				fixed = {
@@ -173,7 +173,7 @@ end
 mcl_flowerpots.register_potted_flower("mcl_trees:propagule", {
 	name = "propagule",
 	desc = S("Mangrove Propagule"),
-	image = "mcl_trees_mangrove_propagule.png",
+	image = "mcl_mangrove_propagule.png",
 })
 
 local wltexture = {
@@ -195,9 +195,9 @@ local wlroots = {
 	tiles = {wltexture},
 	special_tiles = {wltexture},
 	overlay_tiles = {
-		"mcl_trees_mangrove_roots_top.png",
-		"mcl_trees_mangrove_roots_side.png",
-		"mcl_trees_mangrove_roots_side.png",
+		"mcl_mangrove_roots_top.png",
+		"mcl_mangrove_roots_side.png",
+		"mcl_mangrove_roots_side.png",
 	},
 	sounds = mcl_sounds.node_sound_water_defaults(),
 	is_ground_content = false,
@@ -237,9 +237,9 @@ minetest.register_node("mcl_trees:mangrove_roots_mud", {
 	_tt_help = S("crafted with Mud and Mangrove roots"),
 	_doc_items_longdesc = S("Muddy Mangrove Roots is a block from mangrove swamp.It drowns player a bit inside it."),
 	tiles = {
-		"mcl_mud.png^mcl_trees_mangrove_roots_top.png",
-		"mcl_mud.png^mcl_trees_mangrove_roots_side.png",
-		"mcl_mud.png^mcl_trees_mangrove_roots_side.png",
+		"mcl_mud.png^mcl_mangrove_roots_top.png",
+		"mcl_mud.png^mcl_mangrove_roots_side.png",
+		"mcl_mud.png^mcl_mangrove_roots_side.png",
 	},
 	is_ground_content = true,
 	groups = {handy = 1, shovely = 1, axey = 1, building_block = 1},
