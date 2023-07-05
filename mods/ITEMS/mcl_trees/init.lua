@@ -73,7 +73,7 @@ mcl_trees.woods = {
 		planks = { tiles = {"default_junglewood.png"}},
 		sapling = {
 			tiles = {"default_junglesapling.png"},
-			inventory_image = "defaultjungle_sapling.png",
+			inventory_image = "default_junglesapling.png",
 			wield_image = "default_junglesapling.png",
 		},
 	},
