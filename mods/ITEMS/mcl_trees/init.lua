@@ -258,7 +258,6 @@ mcl_trees.woods = {
 
 dofile(modpath.."/functions.lua")
 dofile(modpath.."/api.lua")
-dofile(modpath.."/mangrove.lua")
 dofile(modpath.."/items.lua")
 dofile(modpath.."/recipes.lua")
 dofile(modpath.."/abms.lua")
