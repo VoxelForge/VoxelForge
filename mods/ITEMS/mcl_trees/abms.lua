@@ -116,7 +116,7 @@ function mcl_trees.check_growth(pos, width, height)
 	return true
 end
 
-local function grow_tree(pos,node)
+function mcl_trees.grow_tree(pos,node)
 	local name = node.name:gsub("mcl_trees:sapling_","")
 	local tbt = mcl_trees.check_2by2_saps(pos,node)
 	if node.name:find("propagule") then name = "mangrove" end
@@ -132,7 +132,9 @@ local function grow_tree(pos,node)
 			if not v.file:find("huge") then schem = v end
 		end
 	end
-	if mcl_trees.check_growth(pos,schem.width or 5,schem.height or 10) then
+	local w = schem.width or 5
+	local h = schem.height or 10
+	if mcl_trees.check_growth(pos,w,h) then
 		minetest.remove_node(pos)
 		if tbt then
 			for _,v in pairs(tbt) do
@@ -140,16 +142,25 @@ local function grow_tree(pos,node)
 			end
 		end
 		minetest.place_schematic(vector.offset(pos,0,-1,0),schem.file,"random",nil,false,"place_center_x,place_center_z")
+		local nn = minetest.find_nodes_in_area(vector.offset(pos,-math.ceil(w/2),0,-math.ceil(w/2)),vector.offset(pos,math.ceil(w/2),h,math.ceil(w/2)),{"group:leaves"})
+		for _,v in pairs(nn) do
+			local n = minetest.get_node(v)
+			local p2 = mcl_util.get_pos_p2(v)
+			if n.param2 ~= p2 then
+				n.param2 = p2
+				minetest.swap_node(v,n)
+			end
+		end
 	end
 end
 
 minetest.register_abm({
 	label = "Tree growth",
 	nodenames = {"group:sapling"},
-	neighbors = {"group:soil_sapling"},
+	neighbors = {"group:soil_sapling","group:soil_propagule"},
 	interval = 35,
 	chance = 5,
-	action = grow_tree,
+	action = mcl_trees.grow_tree,
 })
 
 minetest.register_lbm({
