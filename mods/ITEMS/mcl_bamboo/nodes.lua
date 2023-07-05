@@ -83,6 +83,14 @@ local bamboo_def = {
 		end
 		return itemstack
 	end,
+	on_dig = function(pos,node,digger)
+		mcl_util.traverse_tower(pos,1,function(p)
+			minetest.remove_node(p)
+			if not minetest.is_creative_enabled(digger and digger:get_player_name() or "") then
+				minetest.add_item(p,node.name)
+			end
+		end)
+	end,
 	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
 		return mcl_bamboo.grow(pos)
 	end,
@@ -92,7 +100,7 @@ for i,it in pairs(mcl_bamboo.bamboo_itemstrings) do
 	local d = table.copy(bamboo_def)
 	if it ~= "mcl_bamboo:bamboo" then
 		table.update(d,{
-			groups = {handy = 1, axey = 1, choppy = 1, dig_by_piston = 1, plant = 1, non_mycelium_plant = 1, flammable = 3, bamboo = 1, not_in_creative_inventory = 1},
+			groups = {handy = 1, axey = 1, choppy = 1, dig_by_piston = 1, plant = 1, non_mycelium_plant = 1, flammable = 3, bamboo = 1, not_in_creative_inventory = 1, bamboo_tree = 1},
 		})
 	end
 	table.update(d,{

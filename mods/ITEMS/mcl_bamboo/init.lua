@@ -21,15 +21,6 @@ mcl_trees.register_wood("bamboo",{
 		end,
 	},
 	leaves = false,
-	--[[
-	tree_schems = {
-		{ file=modpath.."/schematics/mcl_bamboo_tree_1.mts",width=3,height=6 },
-		{ file=modpath.."/schematics/mcl_bamboo_tree_2.mts",width=3,height=6 },
-		{ file=modpath.."/schematics/mcl_bamboo_tree_3.mts",width=5,height=9 },
-		{ file=modpath.."/schematics/mcl_bamboo_tree_4.mts",width=5,height=9 },
-		{ file=modpath.."/schematics/mcl_bamboo_tree_5.mts",width=5,height=12 },
-	},
-	--]]
 	tree = { tiles = {"mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo_bottom.png","mcl_bamboo_bamboo_block.png" }},
 	stripped = { tiles = {"mcl_bamboo_bamboo_bottom_stripped.png", "mcl_bamboo_bamboo_bottom_stripped.png","mcl_bamboo_bamboo_block_stripped.png" }},
 	bark = { tiles = {"mcl_bamboo_bamboo_block.png"}},
@@ -54,6 +45,11 @@ minetest.register_abm({
 	nodenames = {"group:bamboo_sapling","group:bamboo_tree"},
 	neighbors = {"group:soil_sapling","group:soil_bamboo"},
 	interval = 15,
-	chance = 5,
-	action = mcl_bamboo.grow,
+	chance = 10,
+	action = function(pos,node)
+		if node.name == "mcl_trees:sapling_bamboo" then
+			minetest.set_node(pos,{name=mcl_bamboo.bamboo_itemstrings[math.random(#mcl_bamboo.bamboo_itemstrings)]})
+		end
+		mcl_bamboo.grow(pos)
+	end,
 })

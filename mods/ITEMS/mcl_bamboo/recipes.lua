@@ -13,9 +13,9 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "mcl_bamboo:log_bamboo",
 	recipe = {
-		{"group:bamboo_plant","group:bamboo_plant","group:bamboo_plant"},
-		{"group:bamboo_plant","group:bamboo_plant","group:bamboo_plant"},
-		{"group:bamboo_plant","group:bamboo_plant","group:bamboo_plant"},
+		{"group:bamboo_tree","group:bamboo_tree","group:bamboo_tree"},
+		{"group:bamboo_tree","group:bamboo_tree","group:bamboo_tree"},
+		{"group:bamboo_tree","group:bamboo_tree","group:bamboo_tree"},
 	}
 })
 
