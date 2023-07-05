@@ -2,6 +2,44 @@ local S = minetest.get_translator("mcl_mangrove")
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 
+mcl_trees.register_wood("mangrove",{
+	sign_color="#b8693d",
+	sapling=false,
+	tree_schems = {
+		{ file=modpath.."/schematics/mcl_mangrove_tree_1.mts",width=3,height=6 },
+		{ file=modpath.."/schematics/mcl_mangrove_tree_2.mts",width=3,height=6 },
+		{ file=modpath.."/schematics/mcl_mangrove_tree_3.mts",width=5,height=9 },
+		{ file=modpath.."/schematics/mcl_mangrove_tree_4.mts",width=5,height=9 },
+		{ file=modpath.."/schematics/mcl_mangrove_tree_5.mts",width=5,height=12 },
+	},
+	tree = { tiles = {"mcl_mangrove_log_top.png", "mcl_mangrove_log_top.png","mcl_mangrove_log.png" }},
+	bark = { tiles = {"mcl_mangrove_log.png"}},
+	leaves = { tiles = { "mcl_mangrove_leaves.png" }},
+	planks = { tiles = {"mcl_mangrove_planks.png"}},
+	stripped = {
+		tiles = {"mcl_stripped_mangrove_log_top.png", "mcl_stripped_mangrove_log_top.png","mcl_stripped_mangrove_log_side.png"}
+	},
+	stripped_bark = {
+		tiles = {"mcl_stripped_mangrove_log_side.png"}
+	},
+	fence = {
+		tiles = { "mcl_mangrove_fence.png" },
+	},
+	fence_gate = {
+		tiles = { "mcl_mangrove_fence_gate.png" },
+	},
+	door = {
+		inventory_image = "mcl_mangrove_doors.png",
+		tiles_bottom = {"mcl_mangrove_door_bottom.png", "mcl_mangrove_door_bottom.png"},
+		tiles_top = {"mcl_mangrove_door_top.png", "mcl_mangrove_door_top.png"}
+	},
+	trapdoor = {
+		tile_front = "mcl_mangrove_trapdoor.png",
+		tile_side = "mcl_mangrove_trapdoor.png",
+		wield_image = "mcl_mangrove_trapdoor.png",
+	},
+})
+
 local propagule_allowed_nodes = {
 	"mcl_core:dirt",
 	"mcl_core:coarse_dirt",
