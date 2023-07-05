@@ -129,13 +129,14 @@ mcl_trees.tpl_sapling = {
 		meta:set_int("stage", 0)
 	end,
 	on_place = mcl_util.generate_on_place_plant_function(function(pos, node)
-		local node_below = minetest.get_node_or_nil({x=pos.x,y=pos.y-1,z=pos.z})
+		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
 		if not node_below then return false end
-		local nn = node_below.name
-		return minetest.get_item_group(nn, "grass_block") == 1 or
-				nn == "mcl_flora:dirt_podzol" or nn == "mcl_flora:dirt_podzol_snow" or
-				nn == "mcl_flora:dirt" or nn == "mcl_flora:dirt_mycelium" or nn == "mcl_flora:dirt_coarse"
+		return minetest.get_item_group(node_below.name, "soil_sapling") > 1
 	end),
+	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
+		if math.random() > 0.45 then return end --sapling has a 45% chance to grow when bone mealing
+		return mcl_trees.grow_tree(pos,node)
+	end,
 	node_placement_prediction = "",
 	_mcl_blast_resistance = 0,
 	_mcl_hardness = 0,
