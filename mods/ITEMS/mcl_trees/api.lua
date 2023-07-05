@@ -227,6 +227,9 @@ end
 function mcl_trees.register_wood(name,p)
 	if not p then p = {} end
 	local rname = readable_name(name)
+	if mcl_trees.woods[name] == nil then
+		mcl_trees.woods[name] = p
+	end
 	if p.tree == nil or type(p.tree) == "table" then
 		minetest.register_node(":mcl_trees:".."tree_"..name,table.merge(mcl_trees.tpl_log,{
 			description = S(rname.." Log"),

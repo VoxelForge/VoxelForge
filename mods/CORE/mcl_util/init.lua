@@ -1054,3 +1054,16 @@ function mcl_util.in_cube(tpos,wpos1,wpos2)
 end
 
 vector.in_cube = mcl_util.in_cube
+
+function mcl_util.traverse_tower(pos,dir,callback)
+	local n = minetest.get_node(pos).name
+	local i = 0
+	while minetest.get_node(pos).name == n do
+		if callback and callback(pos,dir) then
+			return pos,i,true
+		end
+		i = i + 1
+		pos = vector.offset(pos,0,dir,0)
+	end
+	return vector.offset(pos,0,-dir,0),i
+end

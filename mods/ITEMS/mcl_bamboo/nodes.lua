@@ -1,6 +1,6 @@
 local S = minetest.get_translator("mcl_bamboo")
 
-local itemstrings = {
+mcl_bamboo.bamboo_itemstrings = {
 	"mcl_bamboo:bamboo",
 	"mcl_bamboo:bamboo_1",
 	"mcl_bamboo:bamboo_2",
@@ -14,12 +14,21 @@ local boxes = {
 	{-0.125, -0.5, 0.125, -0.3125, 0.5, 0.3125},
 }
 
+function mcl_bamboo.grow(pos)
+	local bottom = mcl_util.traverse_tower(pos,-1)
+	local top,h = mcl_util.traverse_tower(bottom,1)
+	if h < 12 then
+		local n = minetest.get_node(pos)
+		minetest.set_node(vector.offset(top,0,1,0),n)
+	end
+end
+
 local bamboo_def = {
 	description = "Bamboo",
 	tiles = {"mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
-	groups = {handy = 1, axey = 1, choppy = 1, dig_by_piston = 1, plant = 1, non_mycelium_plant = 1, flammable = 3, bamboo = 1},
+	groups = {handy = 1, axey = 1, choppy = 1, dig_by_piston = 1, plant = 1, non_mycelium_plant = 1, flammable = 3, bamboo = 1, bamboo_tree = 1},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 
 	drop = {
@@ -61,7 +70,7 @@ local bamboo_def = {
 			if minetest.get_item_group(nu.name,"bamboo") > 0 then
 				fs:set_name(nu.name)
 			else
-				fs:set_name(itemstrings[math.random(#itemstrings)])
+				fs:set_name(mcl_bamboo.bamboo_itemstrings[math.random(#mcl_bamboo.bamboo_itemstrings)])
 			end
 			local _, success = minetest.item_place_node(fs, placer, pointed_thing, minetest.dir_to_facedir(vector.direction(placer:get_pos(),pointed_thing.above)))
 			if not success then
@@ -74,9 +83,12 @@ local bamboo_def = {
 		end
 		return itemstack
 	end,
+	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
+		return mcl_bamboo.grow(pos)
+	end,
 }
 
-for i,it in pairs(itemstrings) do
+for i,it in pairs(mcl_bamboo.bamboo_itemstrings) do
 	local d = table.copy(bamboo_def)
 	if it ~= "mcl_bamboo:bamboo" then
 		table.update(d,{
@@ -116,6 +128,7 @@ table.update(bamboo_top,{
 	drawtype = "plantlike",
 	tiles = {"mcl_bamboo_endcap.png"},
 	on_place = nil,
+	_on_bone_meal = nil,
 })
 
 minetest.register_node("mcl_bamboo:bamboo_endcap", bamboo_top)
@@ -132,4 +145,3 @@ minetest.register_node("mcl_bamboo:bamboo_mosaic",  {
 	_mcl_blast_resistance = 3,
 	_mcl_hardness = 2,
 })
-
