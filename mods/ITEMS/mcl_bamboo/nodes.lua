@@ -1,5 +1,5 @@
 local S = minetest.get_translator("mcl_bamboo")
---[[
+
 local itemstrings = {
 	"mcl_bamboo:bamboo",
 	"mcl_bamboo:bamboo_1",
@@ -120,52 +120,16 @@ table.update(bamboo_top,{
 
 minetest.register_node("mcl_bamboo:bamboo_endcap", bamboo_top)
 
-local bamboo_block_def = {
-	description = "Bamboo Block",
-	tiles = {"mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo_block.png"},
-	groups = {handy = 1, building_block = 1, axey = 1, flammable = 2, material_wood = 1, bamboo_block = 1, fire_encouragement = 5, fire_flammability = 5},
-	sounds = mcl_sounds.node_sound_wood_defaults(),
-	paramtype2 = "facedir",
-	drops = "mcl_bamboo:bamboo_block",
-	_on_axe_place = mcl_core.strip_tree,
-	_mcl_blast_resistance = 3,
-	_mcl_hardness = 2,
-	_mcl_stripped_variant = "mcl_bamboo:bamboo_block_stripped", -- this allows us to use the built in Axe's strip block.
-}
 
-minetest.register_node("mcl_bamboo:bamboo_block", bamboo_block_def)
-
-local bamboo_stripped_block = table.copy(bamboo_block_def)
-table.update(bamboo_stripped_block,{
-	_on_axe_place = nil,
-	description = S("Stripped Bamboo Block"),
-	tiles = {"mcl_bamboo_bamboo_bottom_stripped.png", "mcl_bamboo_bamboo_bottom_stripped.png", "mcl_bamboo_bamboo_block_stripped.png"},
-})
-minetest.register_node("mcl_bamboo:bamboo_block_stripped", bamboo_stripped_block)
-
-local bamboo_plank = {
-	description = S("Bamboo Plank"),
-	_doc_items_longdesc = S("Bamboo Plank"),
-	_doc_items_hidden = false,
-	tiles = {"mcl_bamboo_bamboo_plank.png"},
-	stack_max = 64,
-	is_ground_content = false,
-	groups = {handy = 1, axey = 1, flammable = 3, wood = 1, building_block = 1, material_wood = 1, fire_encouragement = 5, fire_flammability = 20},
-	sounds = mcl_sounds.node_sound_wood_defaults(),
-	_mcl_blast_resistance = 3,
-	_mcl_hardness = 2,
-}
-minetest.register_node("mcl_bamboo:bamboo_plank", bamboo_plank)
-
-
-local bamboo_mosaic = table.copy(bamboo_plank)
-table.update(bamboo_mosaic,{
-	tiles = {"mcl_bamboo_bamboo_plank_mosaic.png"},
-	groups = {handy = 1, axey = 1, flammable = 3, fire_encouragement = 5, fire_flammability = 20},
+minetest.register_node("mcl_bamboo:bamboo_mosaic",  {
 	description = S("Bamboo Mosaic Plank"),
 	_doc_items_longdesc = S("Bamboo Mosaic Plank"),
+	_doc_items_hidden = false,
+	tiles = {"mcl_bamboo_bamboo_plank_mosaic.png"},
+	is_ground_content = false,
+	groups = {handy = 1, axey = 1, flammable = 3, fire_encouragement = 5, fire_flammability = 20},
+	sounds = mcl_sounds.node_sound_wood_defaults(),
+	_mcl_blast_resistance = 3,
+	_mcl_hardness = 2,
 })
-
-minetest.register_node("mcl_bamboo:bamboo_mosaic", bamboo_mosaic)
---]]
 
