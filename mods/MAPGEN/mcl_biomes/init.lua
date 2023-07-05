@@ -3408,6 +3408,31 @@ local function register_decorations()
 		rotation = "random",
 	})
 	minetest.register_decoration({
+		deco_type = "simple",
+		place_on = {"group:grass_block_no_snow", "mcl_core:dirt", "mcl_mud:mud"},
+		fill_ratio = 0.004,
+		height = 7,
+		height_max = 15,
+		biomes = {"Jungle", "JungleM", "JungleEdge", "MangroveSwamp"},
+		y_min = 1,
+		y_max = mcl_vars.mg_overworld_max,
+		decoration = "mcl_bamboo:bamboo" ,
+	})
+	for i=1,3 do
+		minetest.register_decoration({
+			deco_type = "simple",
+			place_on = {"group:grass_block_no_snow", "mcl_core:dirt", "mcl_mud:mud"},
+			fill_ratio = 0.004+(i*0.001),
+			height = 7,
+			height_max = 15,
+			biomes = {"Jungle", "JungleM", "JungleEdge", "MangroveSwamp"},
+			y_min = 1,
+			y_max = mcl_vars.mg_overworld_max,
+			decoration = "mcl_bamboo:bamboo"..i,
+		})
+	end
+
+	minetest.register_decoration({
 		deco_type = "schematic",
 		place_on = {"group:grass_block_no_snow", "mcl_core:dirt"},
 		sidelen = 16,
