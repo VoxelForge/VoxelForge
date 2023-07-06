@@ -15,6 +15,7 @@ local boxes = {
 }
 
 function mcl_bamboo.grow(pos)
+	if minetest.get_node(vector.offset(pos,0,1,0)).name ~= "air" then return end
 	local bottom = mcl_util.traverse_tower(pos,-1)
 	local top,h = mcl_util.traverse_tower(bottom,1)
 	if h < 12 then
