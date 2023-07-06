@@ -20,6 +20,14 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+	output = "mcl_bamboo:planks_bamboo",
+	recipe = {
+		{"group:bamboo_tree","group:bamboo_tree"},
+		{"group:bamboo_tree","group:bamboo_tree"},
+	}
+})
+
+minetest.register_craft({
 	output = "mcl_bamboo:scaffolding 6",
 	recipe = {{"mcl_bamboo:bamboo", "mcl_mobitems:string", "mcl_bamboo:bamboo"},
 			  {"mcl_bamboo:bamboo", "", "mcl_bamboo:bamboo"},

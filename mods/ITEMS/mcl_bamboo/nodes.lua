@@ -20,6 +20,7 @@ function mcl_bamboo.grow(pos)
 	if h < 12 then
 		local n = minetest.get_node(pos)
 		minetest.set_node(vector.offset(top,0,1,0),n)
+		minetest.set_node(vector.offset(top,0,2,0),{name="mcl_bamboo:bamboo_endcap"})
 	end
 end
 
@@ -28,6 +29,7 @@ local bamboo_def = {
 	tiles = {"mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
+	paramtype2 = "4dir",
 	groups = {handy = 1, axey = 1, choppy = 1, dig_by_piston = 1, plant = 1, non_mycelium_plant = 1, flammable = 3, bamboo = 1, bamboo_tree = 1},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 
@@ -50,38 +52,13 @@ local bamboo_def = {
 	_mcl_blast_resistance = 1,
 	_mcl_hardness = 1.5,
 	node_placement_prediction = "",
-	on_place = function(itemstack, placer, pointed_thing)
-		-- Use pointed node's on_rightclick function first, if present
-		local node = minetest.get_node(pointed_thing.under)
-		if placer and not placer:get_player_control().sneak then
-			if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-				return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
-			end
-		end
-
-		if minetest.is_protected(pointed_thing.above, placer:get_player_name()) then
-			minetest.record_protection_violation(pointed_thing.above, pname)
-			return
-		end
-
-		if minetest.dir_to_wallmounted(vector.subtract(pointed_thing.under,  pointed_thing.above)) == 1 then
-			local nu = minetest.get_node(pointed_thing.under)
-			local fs = ItemStack(itemstack)
-			if minetest.get_item_group(nu.name,"bamboo") > 0 then
-				fs:set_name(nu.name)
-			else
-				fs:set_name(mcl_bamboo.bamboo_itemstrings[math.random(#mcl_bamboo.bamboo_itemstrings)])
-			end
-			local _, success = minetest.item_place_node(fs, placer, pointed_thing, minetest.dir_to_facedir(vector.direction(placer:get_pos(),pointed_thing.above)))
-			if not success then
-				return
-			end
-			minetest.sound_play(mcl_sounds.node_sound_wood_defaults().place, {pos=above, gain=1}, true)
-			if not minetest.is_creative_enabled(placer:get_player_name()) then
-				itemstack:take_item()
-			end
-		end
-		return itemstack
+	on_place = mcl_util.generate_on_place_plant_function(function(pos, node)
+		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
+		if not node_below then return false end
+		return minetest.get_item_group(node_below.name, "soil_bamboo") > 0
+	end),
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		minetest.set_node(pos,{name=mcl_bamboo.bamboo_itemstrings[math.random(#mcl_bamboo.bamboo_itemstrings)], param2 = math.random(0,3)})
 	end,
 	on_dig = function(pos,node,digger)
 		mcl_util.traverse_tower(pos,1,function(p)
