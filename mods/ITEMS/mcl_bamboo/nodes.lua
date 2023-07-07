@@ -16,12 +16,13 @@ local boxes = {
 
 function mcl_bamboo.grow(pos)
 	if minetest.get_node(vector.offset(pos,0,1,0)).name ~= "air" then return end
+	local pr = PseudoRandom(minetest.hash_node_position(pos))
+	local max_height = pr:next(12,16)
 	local bottom = mcl_util.traverse_tower(pos,-1)
 	local top,h = mcl_util.traverse_tower(bottom,1)
-	if h < 12 then
+	if h < max_height then
 		local n = minetest.get_node(pos)
 		minetest.set_node(vector.offset(top,0,1,0),n)
-		minetest.set_node(vector.offset(top,0,2,0),{name="mcl_bamboo:bamboo_endcap"})
 	end
 end
 
