@@ -53,11 +53,7 @@ local bamboo_def = {
 	_mcl_blast_resistance = 1,
 	_mcl_hardness = 1.5,
 	node_placement_prediction = "",
-	on_place = mcl_util.generate_on_place_plant_function(function(pos, node)
-		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
-		if not node_below then return false end
-		return minetest.get_item_group(node_below.name, "soil_bamboo") > 0
-	end),
+	on_place = mcl_bamboo.place_bamboo,
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		minetest.set_node(pos,{name=mcl_bamboo.bamboo_itemstrings[math.random(#mcl_bamboo.bamboo_itemstrings)], param2 = math.random(0,3)})
 	end,
