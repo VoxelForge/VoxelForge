@@ -442,7 +442,7 @@ minetest.register_entity("mcl_boats:chest_boat", cboat)
 mcl_entity_invs.register_inv("mcl_boats:chest_boat","Boat",27)
 
 function mcl_boats.register_boat(name,item_def,object_properties,entity_overrides)
-	local itemstring = "mcl_boats:"..name
+	local itemstring = "mcl_boats:boat_"..name
 	local id = name.."_boat"
 
 	local longdesc, usagehelp, tt_help, help, helpname
@@ -534,25 +534,22 @@ function mcl_boats.register_boat(name,item_def,object_properties,entity_override
 	},item_def or {}))
 
 	local c = "mcl_trees:planks_"..name
-	if minetest.registered_nodes[c] then
-		if not itemstring:find("chest") then
-			minetest.register_craft({
-				output = itemstring:gsub(":boat",":chest_boat"),
-				recipe = {
-					{"mcl_chests:chest"},
-					{itemstring},
-				},
-			})
-			minetest.register_craft({
-				output = itemstring,
-				recipe = {
-					{c, "", c},
-					{c, c, c},
-				},
-			})
-		end
-	else
-		minetest.log("warning","registering boat "..itemstring.." without valid craftnode: "..c.." recipes skipped.")
+	if itemstring:find("chest") then
+		minetest.register_craft({
+			output = itemstring,
+			recipe = {
+				{"mcl_chests:chest"},
+				{"mcl_boats:boat_"..name:gsub("_chest","")},
+			},
+		})
+	elseif minetest.registered_nodes[c] then
+		minetest.register_craft({
+			output = itemstring,
+			recipe = {
+				{c, "", c},
+				{c, c, c},
+			},
+		})
 	end
 end
 
