@@ -461,13 +461,17 @@ function mcl_trees.register_wood(name,p)
 	end
 
 	if p.boat == nil or type(p.boat) == "table" then
-		mcl_boats.register_boat(name,{
+		p.boat = p.boat or {}
+		mcl_boats.register_boat(name,table.merge({
 			description = S(rname.." Boat"),
-		})
-
-		mcl_boats.register_boat(name.."_chest",{
+		},p.boat.item or {}),p.boat.object or {},p.boat.entity or {})
+	end
+	if p.chest_boat == nil or type(p.chest_boat) == "table" then
+		p.chest_boat = p.chest_boat or {}
+		mcl_boats.register_boat(name.."_chest",table.merge({
 			description = S(rname.." Chest Boat"),
-		})
+		},p.chest_boat.item or {}),p.chest_boat.object or {},p.chest_boat.entity or {})
+
 	end
 end
 

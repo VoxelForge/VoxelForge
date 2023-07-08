@@ -1,6 +1,8 @@
+mcl_bamboo = {}
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
-mcl_bamboo = {}
+local S = minetest.get_translator("mcl_bamboo")
+
 dofile(modpath .. "/nodes.lua")
 dofile(modpath .. "/recipes.lua")
 
@@ -44,7 +46,24 @@ mcl_trees.register_wood("bamboo",{
 		tile_side = "mcl_bamboo_trapdoor_side.png",
 		wield_image = "mcl_bamboo_trapdoor_side.png",
 	},
-	boat = false, --needs different model
+	boat = {
+		item = {
+			description = S("Bamboo Raft"),
+		},
+		object = {
+			collisionbox = {-0.5, -0.15, -0.5, 0.5, 0.25, 0.5},
+			selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.25, 0.7},
+		},
+	}, --needs different model
+	chest_boat = {
+		item = {
+			description = S("Chest Bamboo Raft"),
+		},
+		object = {
+			collisionbox = {-0.5, -0.15, -0.5, 0.5, 0.25, 0.5},
+			selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.25, 0.7},
+		},
+	},
 })
 
 minetest.register_abm({
