@@ -245,20 +245,3 @@ function mcl_fences.register_fence_and_fence_gate(id, fence_name, fence_gate_nam
 	local gate_id, open_gate_id = mcl_fences.register_fence_gate(id, fence_gate_name, texture_fence_gate, groups, hardness, blast_resistance, sounds, sound_open, sound_close, sound_gain_open, sound_gain_close)
 	return fence_id, gate_id, open_gate_id
 end
-
--- Nether Brick Fence (without fence gate!)
-mcl_fences.register_fence("nether_brick_fence", S("Nether Brick Fence"), "mcl_fences_fence_nether_brick.png", {pickaxey=1, deco_block=1, fence_nether_brick=1}, 2, 30, {"group:fence_nether_brick"}, mcl_sounds.node_sound_stone_defaults())
-
-minetest.register_craft({
-	output = "mcl_fences:nether_brick_fence 6",
-	recipe = {
-		{"mcl_nether:nether_brick", "mcl_nether:netherbrick", "mcl_nether:nether_brick"},
-		{"mcl_nether:nether_brick", "mcl_nether:netherbrick", "mcl_nether:nether_brick"},
-	}
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:fence_wood",
-	burntime = 15,
-})

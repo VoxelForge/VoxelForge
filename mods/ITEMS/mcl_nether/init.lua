@@ -301,6 +301,10 @@ mcl_stairs.register_stair_and_slab("red_nether_brick", "mcl_nether:red_nether_br
 		mcl_sounds.node_sound_stone_defaults(), 6, 2,
 		S("Double Red Nether Brick Slab"), nil)
 
+-- Nether Brick Fence (without fence gate!)
+mcl_fences.register_fence("nether_brick_fence", S("Nether Brick Fence"), "mcl_fences_fence_nether_brick.png", {pickaxey=1, deco_block=1, fence_nether_brick=1}, 2, 30, {"group:fence_nether_brick"}, mcl_sounds.node_sound_stone_defaults())
+
+
 minetest.register_craftitem("mcl_nether:glowstone_dust", {
 	description = S("Glowstone Dust"),
 	_doc_items_longdesc = S("Glowstone dust is the dust which comes out of broken glowstones. It is mainly used in crafting."),
@@ -339,6 +343,20 @@ minetest.register_craftitem("mcl_nether:netherbrick", {
 	inventory_image = "mcl_nether_netherbrick.png",
 	stack_max = 64,
 	groups = { craftitem = 1 },
+})
+
+minetest.register_craft({
+	output = "mcl_fences:nether_brick_fence 6",
+	recipe = {
+		{"mcl_nether:nether_brick", "mcl_nether:netherbrick", "mcl_nether:nether_brick"},
+		{"mcl_nether:nether_brick", "mcl_nether:netherbrick", "mcl_nether:nether_brick"},
+	}
+})
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "group:fence_wood",
+	burntime = 15,
 })
 
 minetest.register_craft({
