@@ -459,20 +459,16 @@ function mcl_trees.register_wood(name,p)
 			burntime = 5,
 		})
 	end
---[[
+
 	if p.boat == nil or type(p.boat) == "table" then
-		mcl_boats.register_boat({
-			name = "boat_"..name,
-			readable_name = rname.." Boat",
-			craftnode = "mcl_trees:planks_"..name
+		mcl_boats.register_boat(name,{
+			description = S(rname.." Boat"),
 		})
 
-		mcl_boats.register_boat({
-			name = "chest_boat_"..name,
-			readable_name = rname.." Chest Boat",
-			craftnode = "mcl_trees:planks_"..name
+		mcl_boats.register_boat(name.."_chest",{
+			description = S(rname.." Chest Boat"),
 		})
-	end-]]
+	end
 end
 
 local modpath = minetest.get_modpath(minetest.get_current_modname())

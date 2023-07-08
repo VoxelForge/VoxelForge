@@ -44,6 +44,7 @@ mcl_trees.register_wood("bamboo",{
 		tile_side = "mcl_bamboo_trapdoor_side.png",
 		wield_image = "mcl_bamboo_trapdoor_side.png",
 	},
+	boat = false, --needs different model
 })
 
 minetest.register_abm({

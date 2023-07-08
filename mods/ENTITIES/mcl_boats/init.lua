@@ -1,3 +1,4 @@
+mcl_boats = {}
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local boat_visual_size = {x = 1, y = 1, z = 1}
@@ -440,12 +441,9 @@ cboat.selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.75, 0.7}
 minetest.register_entity("mcl_boats:chest_boat", cboat)
 mcl_entity_invs.register_inv("mcl_boats:chest_boat","Boat",27)
 
-local boat_ids = { "boat", "boat_spruce", "boat_birch", "boat_jungle", "boat_acacia", "boat_dark_oak", "boat_mangrove", "chest_boat", "chest_boat_spruce", "chest_boat_birch", "chest_boat_jungle", "chest_boat_acacia", "chest_boat_dark_oak", "chest_boat_mangrove" }
-local names = { S("Oak Boat"), S("Spruce Boat"), S("Birch Boat"), S("Jungle Boat"), S("Acacia Boat"), S("Dark Oak Boat"), S("Mangrove Boat"), S("Oak Chest Boat"), S("Spruce Chest Boat"), S("Birch Chest Boat"), S("Jungle Chest Boat"), S("Acacia Chest Boat"), S("Dark Oak Chest Boat"), S("Mangrove Chest Boat") }
-local craftstuffs = { "mcl_core:wood", "mcl_core:sprucewood", "mcl_core:birchwood", "mcl_core:junglewood", "mcl_core:acaciawood", "mcl_core:darkwood", "mcl_mangrove:mangrove_wood" }
-
-for b=1, #boat_ids do
-	local itemstring = "mcl_boats:"..boat_ids[b]
+function mcl_boats.register_boat(name,item_def)
+	local itemstring = "mcl_boats:"..name
+	local id = name.."_boat"
 
 	local longdesc, usagehelp, tt_help, help, helpname
 	help = false
@@ -460,21 +458,20 @@ for b=1, #boat_ids do
 
 	local inventory_image
 	local texture
-	local id = boat_ids[b]
 	if id:find("chest") then
 		if id == "chest_boat" then id = "oak" end
 		local id = id:gsub("chest_boat_", "")
-		inventory_image = "mcl_boats_" .. id .. "_chest_boat.png"
-		texture = "mcl_boats_texture_" .. id .. "_boat.png"
+		inventory_image = "mcl_boats_" .. id .. ".png"
+		texture = "mcl_boats_texture_" .. name .. "_boat.png"
 	else
 		if id == "boat" then id = "oak" end
 		local id = id:gsub("boat_", "")
-		inventory_image = "mcl_boats_" .. id .. "_boat.png"
-		texture = "mcl_boats_texture_" .. id .. "_boat.png"
+		inventory_image = "mcl_boats_" .. name .. "_boat.png"
+		texture = "mcl_boats_texture_" .. name .. "_boat.png"
 	end
 
-	minetest.register_craftitem(itemstring, {
-		description = names[b],
+	minetest.register_craftitem(":"..itemstring, table.merge({
+		description = S(name.." Boat"),
 		_tt_help = tt_help,
 		_doc_items_create_entry = help,
 		_doc_items_entry_name = helpname,
@@ -534,24 +531,28 @@ for b=1, #boat_ids do
 				minetest.add_item(droppos, stack)
 			end
 		end,
-	})
+	},item_def or {}))
 
-	local c = craftstuffs[b]
-	if not itemstring:find("chest") then
-		minetest.register_craft({
-			output = itemstring:gsub(":boat",":chest_boat"),
-			recipe = {
-				{"mcl_chests:chest"},
-				{itemstring},
-			},
-		})
-		minetest.register_craft({
-			output = itemstring,
-			recipe = {
-				{c, "", c},
-				{c, c, c},
-			},
-		})
+	local c = "mcl_trees:planks_"..name
+	if minetest.registered_nodes[c] then
+		if not itemstring:find("chest") then
+			minetest.register_craft({
+				output = itemstring:gsub(":boat",":chest_boat"),
+				recipe = {
+					{"mcl_chests:chest"},
+					{itemstring},
+				},
+			})
+			minetest.register_craft({
+				output = itemstring,
+				recipe = {
+					{c, "", c},
+					{c, c, c},
+				},
+			})
+		end
+	else
+		minetest.log("warning","registering boat "..itemstring.." without valid craftnode: "..c.." recipes skipped.")
 	end
 end
 
