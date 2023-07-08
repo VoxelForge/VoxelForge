@@ -441,7 +441,7 @@ cboat.selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.75, 0.7}
 minetest.register_entity("mcl_boats:chest_boat", cboat)
 mcl_entity_invs.register_inv("mcl_boats:chest_boat","Boat",27)
 
-function mcl_boats.register_boat(name,item_def)
+function mcl_boats.register_boat(name,item_def,object_properties,entity_overrides)
 	local itemstring = "mcl_boats:"..name
 	local id = name.."_boat"
 
@@ -508,9 +508,13 @@ function mcl_boats.register_boat(name,item_def)
 			end
 			local boat = minetest.add_entity(pos, boat_ent)
 			if boat and boat:get_pos() then
-				boat:get_luaentity()._itemstring = itemstring
-				boat:set_properties({ textures = { texture, chest_tex } })
+				local ent = boat:get_luaentity()
+				ent._itemstring = itemstring
+				boat:set_properties(table.merge({ textures = { texture, chest_tex }},object_properties or {}))
 				boat:set_yaw(placer:get_look_horizontal())
+				for k,v in pairs(entity_overrides or {}) do
+					ent[k] = v
+				end
 			end
 			if not minetest.is_creative_enabled(placer:get_player_name()) then
 				itemstack:take_item()
