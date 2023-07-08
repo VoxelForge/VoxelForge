@@ -459,13 +459,9 @@ function mcl_boats.register_boat(name,item_def)
 	local inventory_image
 	local texture
 	if id:find("chest") then
-		if id == "chest_boat" then id = "oak" end
-		local id = id:gsub("chest_boat_", "")
 		inventory_image = "mcl_boats_" .. id .. ".png"
-		texture = "mcl_boats_texture_" .. name .. "_boat.png"
+		texture = "mcl_boats_texture_" .. id:gsub("chest_", "") .. ".png"
 	else
-		if id == "boat" then id = "oak" end
-		local id = id:gsub("boat_", "")
 		inventory_image = "mcl_boats_" .. name .. "_boat.png"
 		texture = "mcl_boats_texture_" .. name .. "_boat.png"
 	end
