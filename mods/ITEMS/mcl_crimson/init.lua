@@ -70,6 +70,7 @@ end
 mcl_trees.register_wood("crimson",{
 	sign_color="#c35f51",
 	boat=false,
+	chest_boat=false,
 	sapling=false,
 	leaves=false,
 	tree = { tiles = {"crimson_hyphae.png", "crimson_hyphae.png","crimson_hyphae_side.png" }},
@@ -102,6 +103,7 @@ mcl_trees.register_wood("crimson",{
 mcl_trees.register_wood("warped",{
 	sign_color="#9f7dcf",
 	boat=false,
+	chest_boat=false,
 	sapling=false,
 	leaves=false,
 	tree = { tiles = {"warped_hyphae.png", "warped_hyphae.png","warped_hyphae_side.png" }},
