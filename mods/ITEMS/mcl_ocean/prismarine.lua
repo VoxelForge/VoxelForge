@@ -68,6 +68,12 @@ minetest.register_node("mcl_ocean:prismarine_dark", {
 	_mcl_hardness = 1.5,
 })
 
+mcl_stairs.register_stair_and_slab_simple("prismarine", "mcl_ocean:prismarine", S("Prismarine Stairs"), S("Prismarine Slab"), S("Double Prismarine Slab"))
+mcl_stairs.register_stair_and_slab_simple("prismarine_brick", "mcl_ocean:prismarine_brick", S("Prismarine Brick Stairs"), S("Prismarine Brick Slab"), S("Double Prismarine Brick Slab"))
+mcl_stairs.register_stair_and_slab_simple("prismarine_dark", "mcl_ocean:prismarine_dark", S("Dark Prismarine Stairs"), S("Dark Prismarine Slab"), S("Double Dark Prismarine Slab"))
+
+
+
 -- Craftitems
 
 minetest.register_craftitem("mcl_ocean:prismarine_crystals", {

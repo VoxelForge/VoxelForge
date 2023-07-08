@@ -270,6 +270,37 @@ minetest.register_node("mcl_nether:quartz_smooth", {
 	_mcl_hardness = 0.8,
 })
 
+
+mcl_stairs.register_stair("quartzblock", "group:quartz_block",
+		{pickaxey=1, material_stone=1},
+		{"mcl_nether_quartz_block_top.png", "mcl_nether_quartz_block_bottom.png", "mcl_nether_quartz_block_side.png"},
+		S("Quartz Stairs"),
+		mcl_sounds.node_sound_stone_defaults(), 0.8, 0.8,
+		nil, "mcl_nether:quartz_block")	--fixme: extra parameter from previous release
+mcl_stairs.register_slab("quartzblock", "group:quartz_block",
+		{pickaxey=1, material_stone=1},
+		{"mcl_nether_quartz_block_top.png", "mcl_nether_quartz_block_bottom.png", "mcl_nether_quartz_block_side.png"},
+		S("Quartz Slab"),
+		mcl_sounds.node_sound_stone_defaults(), 6, 2,
+		S("Double Quartz Slab"), "mcl_nether:quartz_block")	--fixme: extra parameter from previous release
+
+mcl_stairs.register_stair_and_slab_simple("quartz_smooth", "mcl_nether:quartz_smooth", S("Smooth Quartz Stairs"), S("Smooth Quartz Slab"), S("Double Smooth Quartz Slab"))
+
+mcl_stairs.register_stair_and_slab("nether_brick", "mcl_nether:nether_brick",
+		{pickaxey=1, material_stone=1},
+		{"mcl_nether_nether_brick.png"},
+		S("Nether Brick Stairs"),
+		S("Nether Brick Slab"),
+		mcl_sounds.node_sound_stone_defaults(), 6, 2,
+		S("Double Nether Brick Slab"), nil)
+mcl_stairs.register_stair_and_slab("red_nether_brick", "mcl_nether:red_nether_brick",
+		{pickaxey=1, material_stone=1},
+		{"mcl_nether_red_nether_brick.png"},
+		S("Red Nether Brick Stairs"),
+		S("Red Nether Brick Slab"),
+		mcl_sounds.node_sound_stone_defaults(), 6, 2,
+		S("Double Red Nether Brick Slab"), nil)
+
 minetest.register_craftitem("mcl_nether:glowstone_dust", {
 	description = S("Glowstone Dust"),
 	_doc_items_longdesc = S("Glowstone dust is the dust which comes out of broken glowstones. It is mainly used in crafting."),

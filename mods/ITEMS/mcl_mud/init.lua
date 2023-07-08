@@ -44,6 +44,8 @@ minetest.register_node("mcl_mud:mud_bricks", {
 	_mcl_hardness = 1.5,
 })
 
+mcl_stairs.register_stair_and_slab_simple("mud_brick", "mcl_mud:mud_bricks", S("Mud Brick Stair"), S("Mud Brick Slab"), S("Double Mud Brick Slab"))
+
 -- packed mud
 minetest.register_craft({
 	type = "shapeless",

@@ -185,6 +185,20 @@ minetest.register_node("mcl_end:dragon_egg", {
 })
 
 
+mcl_stairs.register_stair_and_slab_simple("end_bricks", "mcl_end:end_bricks", S("End Stone Brick Stairs"), S("End Stone Brick Slab"), S("Double End Stone Brick Slab"))
+
+mcl_stairs.register_stair("purpur_block", "group:purpur_block",
+		{pickaxey=1, material_stone=1},
+		{"mcl_end_purpur_block.png"},
+		S("Purpur Stairs"),
+		mcl_sounds.node_sound_stone_defaults(),	6, 1.5,
+		nil)
+mcl_stairs.register_slab("purpur_block", "group:purpur_block",
+		{pickaxey=1, material_stone=1},
+		{"mcl_end_purpur_block.png"},
+		S("Purpur Slab"),
+		mcl_sounds.node_sound_stone_defaults(),	6, 2,
+		S("Double Purpur Slab"))
 
 -- Crafting recipes
 minetest.register_craft({
