@@ -22,8 +22,6 @@ local nether_plants = {
 	},
 }
 
-
-
 local function spread_nether_plants(pos,node)
 	local n = node.name
 	local nn = minetest.find_nodes_in_area_under_air(vector.offset(pos,-5,-3,-5),vector.offset(pos,5,3,5),{n})
@@ -68,6 +66,70 @@ function grow_vines(pos, moreontop ,vine, dir)
 		end
 	until n.name ~= "air" and n.name ~= vine
 end
+
+mcl_trees.register_wood("crimson",{
+	sign_color="#c35f51",
+	boat=false,
+	sapling=false,
+	leaves=false,
+	tree = { tiles = {"crimson_hyphae.png", "crimson_hyphae.png","crimson_hyphae_side.png" }},
+	bark = { tiles = {"crimson_hyphae_side.png"}},
+	planks = { tiles = {"crimson_hyphae_wood.png"}},
+	stripped = {
+		tiles = {"stripped_crimson_stem_top.png", "stripped_crimson_stem_top.png","stripped_crimson_stem_side.png"}
+	},
+	stripped_bark = {
+		tiles = {"stripped_crimson_stem_side.png"}
+	},
+	fence = {
+		tiles = { "mcl_crimson_crimson_fence.png" },
+	},
+	fence_gate = {
+		tiles = { "mcl_crimson_crimson_fence.png" },
+	},
+	door = {
+		inventory_image = "mcl_crimson_crimson_door.png",
+		tiles_bottom = {"mcl_crimson_crimson_door_bottom.png","mcl_doors_door_crimson_side_upper.png"},
+		tiles_top = {"mcl_crimson_crimson_door_top.png","mcl_doors_door_crimson_side_upper.png"},
+	},
+	trapdoor = {
+		tile_front = "mcl_crimson_crimson_trapdoor.png",
+		tile_side = "mcl_crimson_crimson_trapdoor.png",
+		wield_image = "mcl_crimson_crimson_trapdoor.png",
+	},
+})
+
+mcl_trees.register_wood("warped",{
+	sign_color="#9f7dcf",
+	boat=false,
+	sapling=false,
+	leaves=false,
+	tree = { tiles = {"warped_hyphae.png", "warped_hyphae.png","warped_hyphae_side.png" }},
+	bark = { tiles = {"warped_hyphae_side.png"}},
+	planks = { tiles = {"warped_hyphae_wood.png"}},
+	stripped = {
+		tiles = {"stripped_warped_stem_top.png", "stripped_warped_stem_top.png","stripped_warped_stem_side.png"}
+	},
+	stripped_bark = {
+		tiles = {"stripped_warped_stem_side.png"}
+	},
+	fence = {
+		tiles = { "mcl_crimson_warped_fence.png" },
+	},
+	fence_gate = {
+		tiles = { "mcl_crimson_warped_fence.png" },
+	},
+	door = {
+		inventory_image = "mcl_crimson_warped_door.png",
+		tiles_bottom = {"mcl_crimson_warped_door_bottom.png","mcl_doors_door_warped_side_upper.png"},
+		tiles_top = {"mcl_crimson_warped_door_top.png","mcl_doors_door_warped_side_upper.png"},
+	},
+	trapdoor = {
+		tile_front = "mcl_crimson_warped_trapdoor.png",
+		tile_side = "mcl_crimson_warped_trapdoor.png",
+		wield_image = "mcl_crimson_warped_trapdoor.png",
+	},
+})
 
 minetest.register_node("mcl_crimson:warped_fungus", {
 	description = S("Warped Fungus"),
