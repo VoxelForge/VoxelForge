@@ -559,8 +559,9 @@ minetest.register_craft({
 	burntime = 20,
 })
 
+minetest.register_alias("mcl_boats:boat","mcl_boats:boat_oak")
 --Alias the obsidian boat item that exited in the game for a while to avoid unknown items
-minetest.register_alias("mcl_boats:boat_obsidian","mcl_boats:boat")
+minetest.register_alias("mcl_boats:boat_obsidian","mcl_boats:boat_oak")
 
 if minetest.get_modpath("doc_identifier") then
 	doc.sub.identifier.register_object("mcl_boats:boat", "craftitems", "mcl_boats:boat")
