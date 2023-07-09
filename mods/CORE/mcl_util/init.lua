@@ -1018,6 +1018,20 @@ function mcl_util.check_position_protection(position, player)
 	return false
 end
 
+function mcl_util.safe_place(pos, node, player, itemstack)
+	local name = player and player:get_player_name() or ""
+	local nnode = node or itemstack and {name = itemstack:get_name()} or { name = "air" }
+	if mcl_util.check_position_protection(pos,player) then return false end
+
+	minetest.set_node(pos, nnode)
+
+	if itemstack and not minetest.is_creative_enabled(name) then
+		itemstack:take_item(1)
+		return itemstack
+	end
+	return itemstack or true
+end
+
 function mcl_util.get_pos_p2(pos)
 	return minetest.registered_biomes[minetest.get_biome_name(minetest.get_biome_data(pos).biome)]._mcl_palette_index or 0
 end

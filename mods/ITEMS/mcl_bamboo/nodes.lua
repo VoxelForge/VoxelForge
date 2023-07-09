@@ -1,4 +1,5 @@
 local S = minetest.get_translator("mcl_bamboo")
+local SCAFFOLD_HEIGHT_LIMIT = 320
 
 mcl_bamboo.bamboo_itemstrings = {
 	"mcl_bamboo:bamboo",
@@ -176,10 +177,7 @@ minetest.register_node("mcl_bamboo:scaffolding", {
 			local pp2 = node.param2
 			local np2 = pp2 + 1
 			if minetest.get_node(vector.offset(ptd.above,0,-1,0)).name == "air" and minetest.get_node(ptd.above).name == "air" then
-				minetest.set_node(ptd.above,{name = "mcl_bamboo:scaffolding_horizontal",param2 = np2})
-				if not minetest.is_creative_enabled(placer:get_player_name()) then
-					itemstack:take_item(1)
-				end
+				itemstack = mcl_util.safe_place(ptd.above,{name = "mcl_bamboo:scaffolding_horizontal",param2 = np2}, placer, itemstack) or itemstack
 			end
 			if np2 > 6 then
 				minetest.check_single_for_falling(ptd.above)
@@ -188,35 +186,32 @@ minetest.register_node("mcl_bamboo:scaffolding", {
 			local bottom = mcl_util.traverse_tower(ptd.under,-1)
 			local top,h = mcl_util.traverse_tower(bottom,1)
 			local ppos = vector.offset(top,0,1,0)
-			if h <= 32 and minetest.get_node(ppos).name == "air" then
-				minetest.set_node(ppos, node)
-				if not minetest.is_creative_enabled(placer:get_player_name()) then
-					itemstack:take_item(1)
-				end
+			if h <= SCAFFOLD_HEIGHT_LIMIT and  minetest.get_item_group(minetest.get_node(vector.offset(bottom,0,-1,0)).name, "solid") > 0 and minetest.get_node(ppos).name == "air" then
+				itemstack = mcl_util.safe_place(ppos, node, placer, itemstack) or itemstack
 			end
 
 		elseif minetest.get_item_group(node.name,"solid") > 0 and minetest.get_node(ptd.above).name == "air" then --place on solid
-			minetest.set_node(ptd.above,{name = "mcl_bamboo:scaffolding",param2 = 0})
+			itemstack = mcl_util.safe_place(ptd.above, {name = "mcl_bamboo:scaffolding"}, placer, itemstack) or itemstack
 			minetest.check_single_for_falling(ptd.above)
-			if not minetest.is_creative_enabled(placer:get_player_name()) then
-				itemstack:take_item(1)
-			end
 		end
 		return itemstack
 	end,
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
 		mcl_util.traverse_tower(vector.offset(pos,0,1,0),1,function(pos,dir,node)
 			if node.name ~= "mcl_bamboo:scaffolding" then return true end
-			minetest.remove_node(pos)
-			minetest.add_item(pos,"mcl_bamboo:scaffolding")
-			for _,v in pairs(adjacents) do
-				minetest.check_for_falling(vector.add(pos,v))
+			if mcl_util.safe_place(pos, {name = "air"}, digger) then
+				if not minetest.is_creative_enabled(digger:get_player_name()) then
+					minetest.add_item(pos,"mcl_bamboo:scaffolding")
+				end
+				for _,v in pairs(adjacents) do
+					minetest.check_for_falling(vector.add(pos,v))
+				end
 			end
 		end)
 	end,
 	_mcl_after_falling = function(pos, depth)
 		if minetest.get_node(pos).name == "mcl_bamboo:scaffolding" then
-			minetest.set_node(pos,{name = "mcl_bamboo:scaffolding",param2 = 0})
+			mcl_util.safe_place(pos,{name = "mcl_bamboo:scaffolding"})
 		end
 	end,
 })
@@ -250,10 +245,10 @@ minetest.register_node("mcl_bamboo:scaffolding_horizontal", {
 		if minetest.get_node(pos).name == "mcl_bamboo:scaffolding_horizontal" then
 			local above = vector.offset(pos,0,1,0)
 			if minetest.get_node(pos).name ~= "mcl_bamboo:scaffolding" then
-				minetest.remove_node(pos)
+				mcl_util.safe_place(pos, {name = "air"})
 				minetest.add_item(pos,"mcl_bamboo:scaffolding")
 			elseif minetest.get_node(above).name == "air" then
-				minetest.set_node(above,{name = "mcl_bamboo:scaffolding"})
+				mcl_util.safe_place(above, {name = "mcl_bamboo:scaffolding"})
 			end
 		end
 	end
