@@ -1056,10 +1056,10 @@ end
 vector.in_cube = mcl_util.in_cube
 
 function mcl_util.traverse_tower(pos,dir,callback)
-	local n = minetest.get_node(pos).name
+	local node = minetest.get_node(pos)
 	local i = 0
-	while minetest.get_node(pos).name == n do
-		if callback and callback(pos,dir) then
+	while minetest.get_node(pos).name == node.name do
+		if callback and callback(pos,dir,node) then
 			return pos,i,true
 		end
 		i = i + 1

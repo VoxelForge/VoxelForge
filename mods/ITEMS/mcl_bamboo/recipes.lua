@@ -29,9 +29,15 @@ minetest.register_craft({
 
 minetest.register_craft({
 	output = "mcl_bamboo:scaffolding 6",
-	recipe = {{"mcl_bamboo:bamboo", "mcl_mobitems:string", "mcl_bamboo:bamboo"},
-			  {"mcl_bamboo:bamboo", "", "mcl_bamboo:bamboo"},
-			  {"mcl_bamboo:bamboo", "", "mcl_bamboo:bamboo"}}
+	recipe = {{"group:bamboo_tree", "mcl_mobitems:string", "group:bamboo_tree"},
+			 {"group:bamboo_tree", "", "group:bamboo_tree"},
+			 {"group:bamboo_tree", "", "group:bamboo_tree"}}
+})
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_bamboo:scaffolding",
+	burntime = 20
 })
 
 minetest.register_craft({
@@ -55,10 +61,4 @@ minetest.register_craft({
 	type = "fuel",
 	recipe = "mcl_stairs:stair_bamboo_mosaic",
 	burntime = 15,
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "mcl_bamboo:scaffolding",
-	burntime = 20
 })

@@ -128,3 +128,133 @@ minetest.register_node("mcl_bamboo:bamboo_mosaic",  {
 	_mcl_blast_resistance = 3,
 	_mcl_hardness = 2,
 })
+
+local adjacents = {
+	vector.new(0,0,1),
+	vector.new(0,0,-1),
+	vector.new(1,0,0),
+	vector.new(-1,0,0),
+}
+
+minetest.register_node("mcl_bamboo:scaffolding", {
+	description = S("Scaffolding"),
+	doc_items_longdesc = S("Scaffolding is a temporary structure to easily climb up while building that is easily removed"),
+	doc_items_hidden = false,
+	tiles = {"mcl_bamboo_scaffolding_top.png","mcl_bamboo_scaffolding_side.png","mcl_bamboo_scaffolding_bottom.png"},
+	drawtype = "nodebox",
+	paramtype = "light",
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, 0.375, -0.5, 0.5, 0.5, 0.5},
+			{-0.5, -0.5, -0.5, -0.375, 0.5, -0.375},
+			{0.375, -0.5, -0.5, 0.5, 0.5, -0.375},
+			{0.375, -0.5, 0.375, 0.5, 0.5, 0.5},
+			{-0.5, -0.5, 0.375, -0.375, 0.5, 0.5},
+		}
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
+		},
+	},
+	buildable_to = false,
+	is_ground_content = false,
+	walkable = false,
+	climbable = true,
+	physical = true,
+	node_placement_prediction = "",
+	groups = { handy=1, axey=1, flammable=3, building_block=1, material_wood=1, fire_encouragement=5, fire_flammability=60, falling_node = 1, stack_falling = 1 },
+	sounds = mcl_sounds.node_sound_wood_defaults(),
+	_mcl_blast_resistance = 0,
+	_mcl_hardness = 0,
+	on_place = function(itemstack, placer, ptd)
+		local node = minetest.get_node(ptd.under)
+		local ctrl = placer:get_player_control()
+		if ctrl and ctrl.sneak then -- count param2 up when placing to the sides. Fall when > 6
+			local pp2 = node.param2
+			local np2 = pp2 + 1
+			if minetest.get_node(vector.offset(ptd.above,0,-1,0)).name == "air" and minetest.get_node(ptd.above).name == "air" then
+				minetest.set_node(ptd.above,{name = "mcl_bamboo:scaffolding_horizontal",param2 = np2})
+				if not minetest.is_creative_enabled(placer:get_player_name()) then
+					itemstack:take_item(1)
+				end
+			end
+			if np2 > 6 then
+				minetest.check_single_for_falling(ptd.above)
+			end
+		elseif node.name == "mcl_bamboo:scaffolding" then --tower up
+			local bottom = mcl_util.traverse_tower(ptd.under,-1)
+			local top,h = mcl_util.traverse_tower(bottom,1)
+			local ppos = vector.offset(top,0,1,0)
+			if h <= 32 and minetest.get_node(ppos).name == "air" then
+				minetest.set_node(ppos, node)
+				if not minetest.is_creative_enabled(placer:get_player_name()) then
+					itemstack:take_item(1)
+				end
+			end
+
+		elseif minetest.get_item_group(node.name,"solid") > 0 and minetest.get_node(ptd.above).name == "air" then --place on solid
+			minetest.set_node(ptd.above,{name = "mcl_bamboo:scaffolding",param2 = 0})
+			minetest.check_single_for_falling(ptd.above)
+			if not minetest.is_creative_enabled(placer:get_player_name()) then
+				itemstack:take_item(1)
+			end
+		end
+		return itemstack
+	end,
+	after_dig_node = function(pos, oldnode, oldmetadata, digger)
+		mcl_util.traverse_tower(vector.offset(pos,0,1,0),1,function(pos,dir,node)
+			if node.name ~= "mcl_bamboo:scaffolding" then return true end
+			minetest.remove_node(pos)
+			minetest.add_item(pos,"mcl_bamboo:scaffolding")
+			for _,v in pairs(adjacents) do
+				minetest.check_for_falling(vector.add(pos,v))
+			end
+		end)
+	end,
+	_mcl_after_falling = function(pos, depth)
+		if minetest.get_node(pos).name == "mcl_bamboo:scaffolding" then
+			minetest.set_node(pos,{name = "mcl_bamboo:scaffolding",param2 = 0})
+		end
+	end,
+})
+
+minetest.register_node("mcl_bamboo:scaffolding_horizontal", {
+	description = S("Scaffolding horizontal"),
+	doc_items_longdesc = S("Scaffolding block..."),
+	doc_items_hidden = false,
+	tiles = {"mcl_bamboo_scaffolding_side.png","mcl_bamboo_scaffolding_top.png","mcl_bamboo_scaffolding_bottom.png"},
+	drawtype = "nodebox",
+	paramtype = "light",
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, 0.375, -0.5, 0.5, 0.5, 0.5},
+			{-0.5, -0.5, -0.5, -0.375, 0.5, -0.375},
+			{0.375, -0.5, -0.5, 0.5, 0.5, -0.375},
+			{0.375, -0.5, 0.375, 0.5, 0.5, 0.5},
+			{-0.5, -0.5, 0.375, -0.375, 0.5, 0.5},
+			{-0.5, -0.5, -0.5, 0.5, -0.375, 0.5},
+		}
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
+		},
+	},
+	groups = { handy=1, axey=1, flammable=3, building_block=1, material_wood=1, fire_encouragement=5, fire_flammability=60, not_in_creative_inventory = 1, falling_node = 1 },
+	_mcl_after_falling = function(pos)
+		if minetest.get_node(pos).name == "mcl_bamboo:scaffolding_horizontal" then
+			local above = vector.offset(pos,0,1,0)
+			if minetest.get_node(pos).name ~= "mcl_bamboo:scaffolding" then
+				minetest.remove_node(pos)
+				minetest.add_item(pos,"mcl_bamboo:scaffolding")
+			elseif minetest.get_node(above).name == "air" then
+				minetest.set_node(above,{name = "mcl_bamboo:scaffolding"})
+			end
+		end
+	end
+})
