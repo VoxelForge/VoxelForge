@@ -91,6 +91,7 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 	attack_animals = true,
 	lava_damage = 0,
 	fire_damage = 0,
+	does_not_prevent_sleep = true,
 	on_rightclick = nil,
 	attack_type = "dogshoot",
 	arrow = "mobs_mc:dragon_fireball",

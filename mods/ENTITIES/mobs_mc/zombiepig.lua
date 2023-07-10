@@ -30,6 +30,7 @@ local pigman = {
 	head_eye_height = 1.4,
 	curiosity = 15,
 	collisionbox = {-0.3, -0.01, -0.3, 0.3, 1.94, 0.3},
+	prevents_sleep_when_hostile = true,
 	visual = "mesh",
 	mesh = "mobs_mc_zombie_pigman.b3d",
 	textures = { {

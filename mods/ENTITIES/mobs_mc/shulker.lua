@@ -56,6 +56,7 @@ mcl_mobs.register_mob("mobs_mc:shulker", {
 	jump = false,
 	can_despawn = false,
 	fall_speed = 0,
+	does_not_prevent_sleep = true,
 	drops = {
 		{name = "mcl_mobitems:shulker_shell",
 		chance = 2,

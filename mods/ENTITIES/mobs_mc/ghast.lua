@@ -65,6 +65,7 @@ mcl_mobs.register_mob("mobs_mc:ghast", {
 	makes_footstep_sound = false,
 	instant_death = true,
 	fire_resistant = true,
+	does_not_prevent_sleep = true,
 	can_spawn = function(pos)
 		if not minetest.get_item_group(minetest.get_node(pos).name,"solid") then return false end
 		local p1=vector.offset(pos,-2,1,-2)

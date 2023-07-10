@@ -46,20 +46,6 @@ local function check_in_beds(players)
 	return players_in_bed_setting() <= (player_in_bed * 100) / #players
 end
 
--- These monsters do not prevent sleep
-local monster_exceptions = {
-	["mobs_mc:ghast"] = true,
-	["mobs_mc:enderdragon"] = true,
-	["mobs_mc:killer_bunny"] = true,
-	["mobs_mc:slime_big"] = true,
-	["mobs_mc:slime_small"] = true,
-	["mobs_mc:slime_tiny"] = true,
-	["mobs_mc:magma_cube_big"] = true,
-	["mobs_mc:magma_cube_small"] = true,
-	["mobs_mc:magma_cube_tiny"] = true,
-	["mobs_mc:shulker"] = true,
-}
-
 function mcl_beds.is_night(tod)
 	-- Values taken from Minecraft Wiki with offset of +600
 	if not tod then
@@ -67,6 +53,18 @@ function mcl_beds.is_night(tod)
 	end
 	tod = ( tod * 24000 ) % 24000
 	return  tod > 18541 or tod < 5458
+end
+
+-- monsters prevent sleep unless the "does_not_prevent_sleep" flag is set
+-- other mobs *can* prevent sleep when hostile if the "prevents_sleep_when_hostile"
+-- flag is set. This is needed because zombiefied piglins technically count as
+-- animals.
+local function prevents_sleep(mob_def,mob_ent)
+	if ( mob_def.prevents_sleep_when_hostile and mob_ent.state ~= "attack" )
+	or mob_def.type ~= "monster"
+	or mob_def.does_not_prevent_sleep
+	then return false end
+	return true
 end
 
 local function lay_down(player, pos, bed_pos, state, skip)
@@ -115,15 +113,14 @@ local function lay_down(player, pos, bed_pos, state, skip)
 		end
 
 		-- No sleeping if monsters nearby.
-		-- The exceptions above apply.
-		-- Zombie pigmen only prevent sleep while they are hostle.
 		for _, obj in pairs(minetest.get_objects_inside_radius(bed_pos, 8)) do
 			if obj and not obj:is_player() then
 				local ent = obj:get_luaentity()
 				local mobname = ent.name
 				local def = minetest.registered_entities[mobname]
 				-- Approximation of monster detection range
-				if def.is_mob and ((mobname ~= "mobs_mc:pigman" and def.type == "monster" and not monster_exceptions[mobname]) or (mobname == "mobs_mc:pigman" and ent.state == "attack")) then
+				if def.is_mob and prevents_sleep(def,ent) then
+				--((mobname ~= "mobs_mc:pigman" and def.type == "monster" and not monster_exceptions[mobname]) or (mobname == "mobs_mc:pigman" and ent.state == "attack")) then
 					if math.abs(bed_pos.y - obj:get_pos().y) <= 5 then
 						return false, S("You can't sleep now, monsters are nearby!")
 					end

@@ -211,6 +211,10 @@ sword_piglin.animation = {
 mcl_mobs.register_mob("mobs_mc:sword_piglin", sword_piglin)
 
 local zombified_piglin = table.copy(piglin)
+zombified_piglin.type = "animal"
+zombified_piglin.passive = false
+zombified_piglin.spawn_class = "passive"
+
 zombified_piglin.fire_resistant = 1
 zombified_piglin.do_custom = function()
 	return
@@ -227,6 +231,7 @@ zombified_piglin.attack_animals = true
 zombified_piglin.mesh = "extra_mobs_sword_piglin.b3d"
 zombified_piglin.textures = {"extra_mobs_zombified_piglin.png", "default_tool_goldsword.png", "extra_mobs_trans.png"}
 zombified_piglin.attack_type = "dogfight"
+zombified_piglin.prevents_sleep_when_hostile = true
 zombified_piglin.animation = {
 	stand_speed = 30,
 	walk_speed = 30,

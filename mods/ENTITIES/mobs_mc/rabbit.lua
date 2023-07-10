@@ -113,6 +113,7 @@ killer_bunny.attack_type = "dogfight"
 killer_bunny.specific_attack = { "player", "mobs_mc:wolf", "mobs_mc:dog" }
 killer_bunny.damage = 8
 killer_bunny.passive = false
+killer_bunny.does_not_prevent_sleep = true
 -- 8 armor points
 killer_bunny.armor = 50
 killer_bunny.textures = { "mobs_mc_rabbit_caerbannog.png" }
