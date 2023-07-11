@@ -180,119 +180,112 @@ mcl_mobs.register_mob("mobs_mc:piglin", piglin)
 
 
 local sword_piglin = table.copy(piglin)
-sword_piglin.mesh = "extra_mobs_sword_piglin.b3d"
-sword_piglin.textures = {"extra_mobs_piglin.png", "default_tool_goldsword.png"}
-sword_piglin.on_spawn = function(self)
-	self.gold_items = 0
-	self.weapon = self.base_texture[2]
-	self.object:set_bone_position("Wield_Item", vector.new(0,3.9,1.3), vector.new(90,0,0))
-end
-sword_piglin.drops = {
-	{name = "mcl_tools:sword_gold",
-	chance = 10,
-	min = 1,
-	max = 1,},
-}
-sword_piglin.attack_type = "dogfight"
-sword_piglin.animation = {
-	stand_speed = 30,
-	walk_speed = 30,
-	punch_speed = 45,
-	run_speed = 30,
-	stand_start = 0,
-	stand_end = 79,
-	walk_start = 168,
-	walk_end = 187,
-	run_start = 440,
-	run_end = 459,
-	punch_start = 189,
-	punch_end = 198,
-}
+table.update(sword_piglin,{
+	mesh = "extra_mobs_b3d",
+	textures = {"extra_mobs_piglin.png", "default_tool_goldsword.png"},
+	on_spawn = function(self)
+		self.gold_items = 0
+		self.weapon = self.base_texture[2]
+		self.object:set_bone_position("Wield_Item", vector.new(0,3.9,1.3), vector.new(90,0,0))
+	end,
+	drops = {
+		{name = "mcl_tools:sword_gold",
+		chance = 10,
+		min = 1,
+		max = 1,},
+	},
+	attack_type = "dogfight",
+	animation = {
+		stand_speed = 30,
+		walk_speed = 30,
+		punch_speed = 45,
+		run_speed = 30,
+		stand_start = 0,
+		stand_end = 79,
+		walk_start = 168,
+		walk_end = 187,
+		run_start = 440,
+		run_end = 459,
+		punch_start = 189,
+		punch_end = 198,
+	},
+})
+
 mcl_mobs.register_mob("mobs_mc:sword_piglin", sword_piglin)
 
 local zombified_piglin = table.copy(piglin)
-zombified_piglin.type = "animal"
-zombified_piglin.passive = false
-zombified_piglin.spawn_class = "passive"
+table.update(zombified_piglin,{
+	fire_resistant = 1,
+	do_custom = function() end,
+	on_spawn = function() end,
+	on_rightclick = function() end,
+	lava_damage = 0,
+	fire_damage = 0,
+	attack_animals = true,
+	prevents_sleep_when_hostile = true,
+	mesh = "extra_mobs_sword_piglin.b3d",
+	textures = {"extra_mobs_png", "default_tool_goldsword.png", "extra_mobs_trans.png"},
+	attack_type = "dogfight",
+	animation = {
+		stand_speed = 30,
+		walk_speed = 30,
+		punch_speed = 45,
+		run_speed = 30,
+		stand_start = 0,
+		stand_end = 79,
+		walk_start = 168,
+		walk_end = 187,
+		run_start = 440,
+		run_end = 459,
+		punch_start = 189,
+		punch_end = 198,
+	},
+})
 
-zombified_piglin.fire_resistant = 1
-zombified_piglin.do_custom = function()
-	return
-end
-zombified_piglin.on_spawn = function()
-	return
-end
-zombified_piglin.on_rightclick = function()
-	return
-end
-zombified_piglin.lava_damage = 0
-zombified_piglin.fire_damage = 0
-zombified_piglin.attack_animals = true
-zombified_piglin.mesh = "extra_mobs_sword_piglin.b3d"
-zombified_piglin.textures = {"extra_mobs_zombified_piglin.png", "default_tool_goldsword.png", "extra_mobs_trans.png"}
-zombified_piglin.attack_type = "dogfight"
-zombified_piglin.prevents_sleep_when_hostile = true
-zombified_piglin.animation = {
-	stand_speed = 30,
-	walk_speed = 30,
-	punch_speed = 45,
-	run_speed = 30,
-	stand_start = 0,
-	stand_end = 79,
-	walk_start = 168,
-	walk_end = 187,
-	run_start = 440,
-	run_end = 459,
-	punch_start = 189,
-	punch_end = 198,
-}
 mcl_mobs.register_mob("mobs_mc:zombified_piglin", zombified_piglin)
 
 
 local piglin_brute = table.copy(piglin)
-piglin_brute.xp_min = 20
-piglin_brute.xp_max = 20
-piglin_brute.hp_min = 50
-piglin_brute.hp_max = 50
-piglin_brute.fire_resistant = 1
-piglin_brute.do_custom = function()
-	return
-end
-piglin_brute.on_spawn = function()
-	return
-end
-piglin_brute.on_rightclick = function()
-	return
-end
-piglin_brute.attacks_monsters = true
-piglin_brute.lava_damage = 0
-piglin_brute.fire_damage = 0
-piglin_brute.attack_animals = true
-piglin_brute.mesh = "extra_mobs_sword_piglin.b3d"
-piglin_brute.textures = {"extra_mobs_piglin_brute.png", "default_tool_goldaxe.png", "extra_mobs_trans.png"}
-piglin_brute.attack_type = "dogfight"
-piglin_brute.animation = {
-	stand_speed = 30,
-	walk_speed = 30,
-	punch_speed = 45,
-	run_speed = 30,
-	stand_start = 0,
-	stand_end = 79,
-	walk_start = 168,
-	walk_end = 187,
-	run_start = 440,
-	run_end = 459,
-	punch_start = 189,
-	punch_end = 198,
-}
-piglin_brute.can_despawn = false
-piglin_brute.group_attack = { "mobs_mc:piglin", "mobs_mc:piglin_brute" }
-piglin_brute.drops = {
-	{name = "mcl_tools:axe_gold",
-	chance = 8.5,
-	min = 1,
-	max = 1,},
-}
+table.update(piglin_brute,{
+	xp_min = 20,
+	xp_max = 20,
+	hp_min = 50,
+	hp_max = 50,
+	fire_resistant = 1,
+	do_custom = function() end,
+	on_spawn = function() end,
+	on_rightclick = function() end,
+	attacks_monsters = true,
+	lava_damage = 0,
+	fire_damage = 0,
+	attack_animals = true,
+	mesh = "extra_mobs_sword_piglin.b3d",
+	textures = {"extra_mobs_png", "default_tool_goldaxe.png", "extra_mobs_trans.png"},
+	attack_type = "dogfight",
+	animation = {
+		stand_speed = 30,
+		walk_speed = 30,
+		punch_speed = 45,
+		run_speed = 30,
+		stand_start = 0,
+		stand_end = 79,
+		walk_start = 168,
+		walk_end = 187,
+		run_start = 440,
+		run_end = 459,
+		punch_start = 189,
+		punch_end = 198,
+	},
+	can_despawn = false,
+	group_attack = { "mobs_mc:piglin", "mobs_mc:sword_piglin", "mobs_mc:piglin_brute" },
+	drops = {
+		{name = "mcl_tools:axe_gold",
+		chance = 8.5,
+		min = 1,
+		max = 1,},
+	}
+})
+
 mcl_mobs.register_mob("mobs_mc:piglin_brute", piglin_brute)
 
 
