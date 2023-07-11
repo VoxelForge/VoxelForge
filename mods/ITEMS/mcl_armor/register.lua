@@ -40,6 +40,9 @@ mcl_armor.register_set({
 	cook_material = "mcl_core:gold_nugget",
 	sound_equip = "mcl_armor_equip_iron",
 	sound_unequip = "mcl_armor_unequip_iron",
+	groups = {
+		golden = 1,
+	},
 })
 
 mcl_armor.register_set({

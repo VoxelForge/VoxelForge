@@ -25,7 +25,7 @@ function mobs_mc.player_wears_gold(player)
 	for i=1, 6 do
 		local stack = player:get_inventory():get_stack("armor", i)
 		local item = stack:get_name()
-		if item:find("gold") then
+		if minetest.get_item_group(item, "golden") ~= 0 then
 			return true
 		end
 	end
