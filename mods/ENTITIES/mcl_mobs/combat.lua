@@ -1056,7 +1056,7 @@ function mob_class:do_states_attack (dtime)
 
 			if not self.custom_attack then
 
-				if self.timer > 1 then
+				if self.timer > self.dogfight_interval then
 
 					self.timer = 0
 
@@ -1091,7 +1091,7 @@ function mob_class:do_states_attack (dtime)
 				end
 			else	-- call custom attack every second
 				if self.custom_attack
-						and self.timer > 1 then
+						and self.timer > self.custom_attack_interval then
 
 					self.timer = 0
 

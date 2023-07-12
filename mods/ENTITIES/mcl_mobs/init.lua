@@ -251,6 +251,8 @@ function mcl_mobs.register_mob(name, def)
 		stop_to_explode = def.stop_to_explode ~= false,
 		custom_attack = def.custom_attack,
 		double_melee_attack = def.double_melee_attack,
+		dogfight_interval = def.dogfight_interval or 1,
+		custom_attack_interval = def.custom_attack_interval or 1,
 		dogshoot_switch = def.dogshoot_switch,
 		dogshoot_count = 0,
 		dogshoot_count_max = def.dogshoot_count_max or 5,
