@@ -864,11 +864,6 @@
 		74,
 		67
 	],
-	"mobs_mc_zombie_pigman.png": [
-		164,
-		129,
-		117
-	],
 	"mobs_mc_blaze.png": [
 		84,
 		63,
@@ -3105,9 +3100,9 @@
 		45
 	],
 	"mcl_farming_sweet_berry_bush_0.png": [
-		0,
-		108,
-		28
+		42,
+		83,
+		38
 	],
 	"farming_pumpkin_face.png": [
 		161,
@@ -3130,9 +3125,9 @@
 		65
 	],
 	"mcl_farming_sweet_berry.png": [
-		138,
-		64,
-		39
+		86,
+		74,
+		52
 	],
 	"farming_wheat_harvested.png": [
 		178,
@@ -3145,9 +3140,9 @@
 		58
 	],
 	"mcl_farming_sweet_berry_bush_2.png": [
-		27,
-		96,
-		23
+		72,
+		80,
+		41
 	],
 	"farming_melon.png": [
 		153,
@@ -3285,9 +3280,9 @@
 		66
 	],
 	"mcl_farming_sweet_berry_bush_3.png": [
-		66,
-		82,
-		24
+		87,
+		75,
+		40
 	],
 	"mcl_farming_beetroot_0.png": [
 		56,
@@ -3360,9 +3355,9 @@
 		57
 	],
 	"mcl_farming_sweet_berry_bush_1.png": [
-		0,
-		102,
-		24
+		42,
+		85,
+		38
 	],
 	"mcl_farming_farmland_wet.png": [
 		69,
