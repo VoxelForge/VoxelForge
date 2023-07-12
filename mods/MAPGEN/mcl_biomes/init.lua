@@ -4867,7 +4867,7 @@ local function register_decorations()
 		},
 		y_min = 4,
 		y_max = mcl_vars.mg_overworld_max,
-		biomes = {"Desert", "Mesa", "Mesa_sandlevel", "MesaPlateauF", "MesaPlateauF_sandlevel", "MesaPlateauF_grasstop","MesaBryce","Taiga", "MegaTaiga"},
+		biomes = {"Desert", "Mesa", "Mesa_sandlevel", "MesaPlateauF", "MesaPlateauF_sandlevel", "MesaPlateauF_grasstop","MesaBryce", "MegaTaiga", "MegaSpruceTaiga"},
 		decoration = "mcl_core:deadbush",
 		height = 1,
 	})
