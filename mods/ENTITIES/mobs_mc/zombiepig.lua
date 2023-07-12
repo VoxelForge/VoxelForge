@@ -116,35 +116,5 @@ baby_pigman.child = 1
 
 mcl_mobs.register_mob("mobs_mc:baby_pigman", baby_pigman)
 
-mcl_mobs.spawn_setup({
-	name = "mobs_mc:pigman",
-	type_of_spawning = "lava",
-	dimension = "nether",
-	min_light = 0,
-	max_light = minetest.LIGHT_MAX+1,
-	min_height = mcl_vars.mg_lava_nether_max,
-	aoc = 4,
-	biomes = {
-		"Nether",
-		"CrimsonForest"
-	},
-	chance = 6000,
-})
-
-mcl_mobs.spawn_setup({
-	name = "mobs_mc:baby_pigman",
-	type_of_spawning = "ground",
-	dimension = "nether",
-	min_light = 0,
-	max_light = minetest.LIGHT_MAX+1,
-	min_height = mcl_vars.mg_lava_nether_max,
-	aoc = 4,
-	biomes = {
-		"Nether",
-		"CrimsonForest"
-	},
-	chance = 100000,
-})
-
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:pigman", S("Zombie Pigman"), "#ea9393", "#4c7129", 0)
