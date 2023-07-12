@@ -355,6 +355,21 @@ mcl_mobs.spawn_setup({
 	chance = 6000,
 })
 
+mcl_mobs.spawn_setup({
+	name = "mobs_mc:zombified_piglin",
+	type_of_spawning = "lava",
+	dimension = "nether",
+	min_light = 0,
+	max_light = minetest.LIGHT_MAX+1,
+	min_height = mcl_vars.mg_lava_nether_max,
+	aoc = 4,
+	biomes = {
+		"Nether",
+		"CrimsonForest"
+	},
+	chance = 6000,
+})
+
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:piglin", S("Piglin"), "#7b4a17","#d5c381", 0)
 mcl_mobs.register_egg("mobs_mc:piglin_brute", S("Piglin Brute"), "#562b0c","#ddc89d", 0)
