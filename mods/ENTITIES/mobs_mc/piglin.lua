@@ -248,7 +248,7 @@ table.update(zombified_piglin,{
 	xp_max = 6,
 	armor = {undead = 90, fleshy = 90},
 	attack_type = "dogfight",
-	group_attack = { "mobs_mc:pigman", "mobs_mc:baby_pigman" },
+	group_attack = { "mobs_mc:zombified_piglin" },
 	damage = 9,
 	reach = 2,
 	head_swivel = "head.control",
@@ -295,7 +295,7 @@ table.update(piglin_brute,{
 	fire_damage = 0,
 	attack_animals = true,
 	mesh = "extra_mobs_sword_piglin.b3d",
-	textures = {"extra_mobs_png", "default_tool_goldaxe.png", "extra_mobs_trans.png"},
+	textures = {"extra_mobs_piglin_brute.png", "default_tool_goldaxe.png", "extra_mobs_trans.png"},
 	attack_type = "dogfight",
 	animation = {
 		stand_speed = 30,
