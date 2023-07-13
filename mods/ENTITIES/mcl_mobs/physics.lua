@@ -1038,9 +1038,6 @@ function mob_class:check_suspend()
 			self.object:set_acceleration(vector.new(0,0,0))
 			self.object:set_velocity(vector.new(0,0,0))
 		end
-		if acc.y == 0 and node_under == "air" then
-			self:falling(pos)
-		end
 		return true
 	end
 end
