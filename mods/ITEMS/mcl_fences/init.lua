@@ -80,7 +80,7 @@ function mcl_fences.register_fence_gate(id, fence_gate_name, texture, groups, ha
 		minetest.set_node(pos, node)
 	end
 
-	local gate_id = ":mcl_fences:"..id.."_gate"
+	local gate_id = "mcl_fences:"..id.."_gate"
 	local open_gate_id = gate_id .. "_open"
 	if not sound_open then
 		sound_open = "doors_fencegate_open"
@@ -124,7 +124,7 @@ function mcl_fences.register_fence_gate(id, fence_gate_name, texture, groups, ha
 	cgroups.mesecon_ignore_opaque_dig = 1
 	cgroups.mesecon_effector_on = 1
 	cgroups.fence_gate = 1
-	minetest.register_node(open_gate_id, {
+	minetest.register_node(":"..open_gate_id, {
 		tiles = {texture},
 		paramtype = "light",
 		paramtype2 = "facedir",
@@ -170,7 +170,7 @@ function mcl_fences.register_fence_gate(id, fence_gate_name, texture, groups, ha
 	local cgroups_closed = table.copy(cgroups)
 	cgroups_closed.mesecon_effector_on = nil
 	cgroups_closed.mesecon_effector_off = nil
-	minetest.register_node(gate_id, {
+	minetest.register_node(":"..gate_id, {
 		description = fence_gate_name,
 		_tt_help = S("Openable by players and redstone power"),
 		_doc_items_longdesc = S("Fence gates can be opened or closed and can't be jumped over. Fences will connect nicely to fence gates."),
