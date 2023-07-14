@@ -313,7 +313,7 @@ function mcl_trees.register_wood(name,p)
 	end
 	if p.fence == nil or type(p.fence) == "table" then
 		p.fence = p.fence or {}
-		mcl_fences.register_fence(name.."_fence", p.fence.description or S(rname.." Fence"), p.fence.tiles and p.fence.tiles[1] or "mcl_fences_fence_"..name..".png", p.fence.groups or wood_groups, p.fence._mcl_blast_hardness or 2, p.fence._mcl_blast_resistance or 15 , p.fence.connects_to or {"group:fence_wood"}, p.fence.sounds or wood_sounds)
+		mcl_fences.register_fence(name.."_fence", p.fence.description or S(rname.." Fence"), p.fence.tiles and p.fence.tiles[1] or "mcl_fences_fence_"..name..".png", p.fence.groups or table.merge(wood_groups,{fence_wood = 1}), p.fence._mcl_blast_hardness or 2, p.fence._mcl_blast_resistance or 15 , p.fence.connects_to or {"group:fence_wood","group:fence"}, p.fence.sounds or wood_sounds)
 		minetest.register_craft({
 			output = "mcl_fences:"..name.."_fence 3",
 			recipe = {
