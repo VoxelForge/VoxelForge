@@ -33,6 +33,7 @@ local bamboo_def = {
 	drawtype = "nodebox",
 	paramtype = "light",
 	paramtype2 = "4dir",
+	use_texture_alpha = "clip",
 	groups = {handy = 1, axey = 1, choppy = 1, dig_by_piston = 1, plant = 1, non_mycelium_plant = 1, flammable = 3, bamboo = 1, bamboo_tree = 1},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 
@@ -144,6 +145,7 @@ minetest.register_node("mcl_bamboo:scaffolding", {
 	tiles = {"mcl_bamboo_scaffolding_top.png","mcl_bamboo_scaffolding_side.png","mcl_bamboo_scaffolding_bottom.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
+	use_texture_alpha = "clip",
 	node_box = {
 		type = "fixed",
 		fixed = {

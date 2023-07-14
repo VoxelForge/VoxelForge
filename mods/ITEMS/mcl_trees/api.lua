@@ -11,6 +11,8 @@ local wood_groups = {
 	flammable = 3, fire_encouragement = 5, fire_flammability = 20
 }
 
+local wood_sounds = mcl_sounds.node_sound_wood_defaults()
+
 
 -- Check dug/destroyed tree trunks for orphaned leaves.
 --
@@ -307,8 +309,6 @@ function mcl_trees.register_wood(name,p)
 
 
 	if p.leaves == nil or type(p.leaves) == "table" then
-		local wood_groups = {handy=1,axey=1, flammable=2,fence_wood=1, fire_encouragement=5, fire_flammability=20}
-		local wood_sounds = mcl_sounds.node_sound_wood_defaults()
 		register_leaves("leaves_"..name, S(rname.." Leaves"), S(rname.." leaves are grown from "..name.." trees."), p.leaves and p.leaves.tiles or { "mcl_core_leaves_"..name..".png"}, "mcl_trees:sapling_"..name, true, {20, 16, 12, 10})
 	end
 	if p.fence == nil or type(p.fence) == "table" then
@@ -324,7 +324,7 @@ function mcl_trees.register_wood(name,p)
 	end
 	if p.fence_gate == nil or type(p.fence_gate) == "table" then
 		p.fence_gate = p.fence_gate or {}
-		mcl_fences.register_fence_gate(name.."_fence", p.fence_gate.description or S(rname.." Fence"), p.fence_gate.tiles and p.fence_gate.tiles[1] or "mcl_fences_fence_"..name..".png", p.fence_gate.groups or wood_groups, p.fence_gate._mcl_blast_hardness or 2, p.fence_gate._mcl_blast_resistance or 15,  p.fence_gate.sounds or wood_sounds, sound_open, sound_close, sound_gain_open, sound_gain_close)
+		mcl_fences.register_fence_gate(name.."_fence", p.fence_gate.description or S(rname.." Fence"), p.fence_gate.tiles and p.fence_gate.tiles[1] or "mcl_fences_fence_"..name..".png", p.fence_gate.groups or wood_groups, p.fence_gate._mcl_blast_hardness or 2, p.fence_gate._mcl_blast_resistance or 15,  p.fence_gate.sounds or wood_sounds, p.fence_gate.sound_open, p.fence_gate.sound_close, p.fence_gate.sound_gain_open, p.fence_gate.sound_gain_close)
 		minetest.register_craft({
 			output = "mcl_fences:"..name.."_fence_gate",
 			recipe = {

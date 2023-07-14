@@ -441,6 +441,8 @@ cboat.selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.75, 0.7}
 minetest.register_entity("mcl_boats:chest_boat", cboat)
 mcl_entity_invs.register_inv("mcl_boats:chest_boat","Boat",27)
 
+local entry_created
+
 function mcl_boats.register_boat(name,item_def,object_properties,entity_overrides)
 	local itemstring = "mcl_boats:boat_"..name
 	local id = name.."_boat"
@@ -448,8 +450,9 @@ function mcl_boats.register_boat(name,item_def,object_properties,entity_override
 	local longdesc, usagehelp, tt_help, help, helpname
 	help = false
 	-- Only create one help entry for all boats
-	if b == 1 then
+	if not entry_created then
 		help = true
+		entry_created = true
 		longdesc = S("Boats are used to travel on the surface of water.")
 		usagehelp = S("Rightclick on a water source to place the boat. Rightclick the boat to enter it. Use [Left] and [Right] to steer, [Forwards] to speed up and [Backwards] to slow down or move backwards. Use [Sneak] to leave the boat, punch the boat to make it drop as an item.")
 		helpname = S("Boat")
