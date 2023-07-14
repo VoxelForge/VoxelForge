@@ -1,7 +1,4 @@
 
-minetest.register_alias("mcl_core:apple","mcl_trees:apple")
-minetest.register_alias("mcl_core:paper","mcl_trees:paper")
-
 minetest.register_alias("default:acacia_tree", "mcl_core:acaciatree")
 minetest.register_alias("default:acacia_leaves", "mcl_core:acacialeaves")
 
@@ -428,8 +425,3 @@ minetest.register_alias("mcl_boats:chest_boat_jungle","mcl_trees:chest_boat_jung
 minetest.register_alias("mcl_boats:chest_boat_mangrove","mcl_trees:chest_boat_mangrove")
 minetest.register_alias("mcl_boats:chest_boat_spruce","mcl_trees:chest_boat_spruce")
 minetest.register_alias("mcl_boats:boat_obsidian","mcl_trees:boat_oak")
-
-minetest.register_alias("mcl_core:ladder","mcl_trees:ladder")
-minetest.register_alias("mcl_core:bowl","mcl_trees:bowl")
-minetest.register_alias("mcl_core:brick","mcl_stone:bricks")
-minetest.register_alias("mcl_core:charcoal_lump","mcl_trees:charcoal")

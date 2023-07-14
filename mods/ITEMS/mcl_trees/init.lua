@@ -7,7 +7,6 @@ local S = minetest.get_translator(modname)
 
 dofile(modpath.."/functions.lua")
 dofile(modpath.."/api.lua")
-dofile(modpath.."/items.lua")
 dofile(modpath.."/recipes.lua")
 dofile(modpath.."/abms.lua")
 
