@@ -114,6 +114,16 @@ for k,v in pairs(mcl_dyes.colors) do
 		_doc_items_usagehelp = S("Rightclick on a sheep to dye its wool. Other things are dyed by crafting."),
 		groups = table.update({craftitem = 1, dye = 1}, v.groups),
 		_color = k,
+		on_place = function(itemstack,placer,pointed_thing)
+			local def = minetest.registered_nodes[minetest.get_node(pointed_thing.under).name]
+			if def and def._on_dye_place then
+				local ret = def._on_dye_place(pointed_thing.under,k)
+				if not minetest.is_creative_enabled(placer and placer:get_player_name() or "") then
+					if ret ~= true then itemstack:take_item() end
+				end
+			end
+			return itemstack
+		end,
 	})
 end
 
