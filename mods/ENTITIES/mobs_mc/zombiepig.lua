@@ -2,6 +2,7 @@
 -- existing pigmen into the new zombified piglins.
 
 local pigman = {
+	textures = {{ "" }},
 	after_activate = function(self)
 		self.object = mcl_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
 	end,
