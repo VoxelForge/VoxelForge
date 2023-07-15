@@ -15,6 +15,89 @@ mcl_dyes = {}
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
+mcl_dyes.colors = {
+	["white"] = {
+		description = S("White Dye"),
+		groups = {basecolor_white=1,   excolor_white=1,     unicolor_white=1},
+		rgb = "#D1C6A6",
+	},
+	["grey"] = {
+		description = S("Light Grey Dye"),
+		groups = {basecolor_grey=1,    excolor_grey=1,      unicolor_grey=1},
+		rgb = "#88867C",
+	},
+	["dark_grey"] = {
+		description = S("Grey Dye"),
+		groups = {basecolor_grey=1,    excolor_darkgrey=1,  unicolor_darkgrey=1},
+		rgb = "#60574A",
+	},
+	["black"] = {
+		description = S("Black Dye"),
+		groups = {basecolor_black=1,   excolor_black=1,     unicolor_black=1},
+		rgb = "#171717",
+	},
+	["violet"] = {
+		description = S("Purple Dye"),
+		groups = {basecolor_magenta=1, excolor_violet=1,    unicolor_violet=1},
+		rgb = "#57347C",
+	},
+	["blue"] = {
+		description = S("Blue Dye"),
+		groups = {basecolor_blue=1,    excolor_blue=1,      unicolor_blue=1},
+		rgb = "#42649B",
+	},
+	["lightblue"] = {
+		description = S("Light Blue Dye"),
+		groups = {basecolor_blue=1,    excolor_blue=1,      unicolor_light_blue=1},
+		rgb = "#4083B7",
+	},
+	["cyan"] = {
+		description = S("Cyan Dye"),
+		groups = {basecolor_cyan=1,    excolor_cyan=1,      unicolor_cyan=1},
+		rgb = "#359390",
+	},
+	["dark_green"] = {
+		description = S("Cactus Green"),
+		groups = {basecolor_green=1,   excolor_green=1,     unicolor_dark_green=1},
+		rgb = "#1A4F25",
+	},
+	["green"] = {
+		description = S("Lime Dye"),
+		groups = {basecolor_green=1,   excolor_green=1,     unicolor_green=1},
+		rgb = "#63C863",
+	},
+	["yellow"] = {
+		description = S("Dandelion Yellow"),
+		groups = {basecolor_yellow=1,  excolor_yellow=1,    unicolor_yellow=1},
+		rgb = "#EBB83E",
+	},
+	["brown"] = {
+		description = S("Brown Dye"),
+		groups = {basecolor_brown=1,   excolor_orange=1,    unicolor_dark_orange=1},
+		rgb = "#7C4822",
+	},
+	["orange"] = {
+		description = S("Orange Dye"),
+		groups = {basecolor_orange=1,  excolor_orange=1,    unicolor_orange=1},
+		rgb = "#E0792D",
+	},
+	["red"] = {
+		description = S("Rose Red"),
+		groups = {basecolor_red=1,     excolor_red=1,       unicolor_red=1},
+		rgb = "#89272D",
+	},
+	["magenta"] = {
+		description = S("Magenta Dye"),
+		groups = {basecolor_magenta=1, excolor_red_violet=1,unicolor_red_violet=1},
+		rgb = "#754B8C",
+	},
+	["pink"] = {
+		description = S("Pink Dye"),
+		groups = {basecolor_red=1,     excolor_red=1,       unicolor_light_red=1},
+		rgb = "#C95B99",
+	},
+}
+
 local dyes = {
 	{"white",	S("White Dye"),		{basecolor_white=1,   excolor_white=1,     unicolor_white=1}},
 	{"grey",	S("Light Grey Dye"),	{basecolor_grey=1,    excolor_grey=1,      unicolor_grey=1}},
