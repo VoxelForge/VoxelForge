@@ -98,53 +98,21 @@ mcl_dyes.colors = {
 	},
 }
 
-local dyes = {
-	{"white",	S("White Dye"),		{basecolor_white=1,   excolor_white=1,     unicolor_white=1}},
-	{"grey",	S("Light Grey Dye"),	{basecolor_grey=1,    excolor_grey=1,      unicolor_grey=1}},
-	{"dark_grey",	S("Grey Dye"),		{basecolor_grey=1,    excolor_darkgrey=1,  unicolor_darkgrey=1}},
-	{"black",	S("Black Dye"),		{basecolor_black=1,   excolor_black=1,     unicolor_black=1}},
-	{"violet",	S("Purple Dye"),	{basecolor_magenta=1, excolor_violet=1,    unicolor_violet=1}},
-	{"blue",	S("Blue Dye"),		{basecolor_blue=1,    excolor_blue=1,      unicolor_blue=1}},
-	{"lightblue",	S("Light Blue Dye"),	{basecolor_blue=1,    excolor_blue=1,      unicolor_light_blue=1}},
-	{"cyan",	S("Cyan Dye"),		{basecolor_cyan=1,    excolor_cyan=1,      unicolor_cyan=1}},
-	{"dark_green",	S("Cactus Green"),	{basecolor_green=1,   excolor_green=1,     unicolor_dark_green=1}},
-	{"green",	S("Lime Dye"),		{basecolor_green=1,   excolor_green=1,     unicolor_green=1}},
-	{"yellow",	S("Dandelion Yellow"),	{basecolor_yellow=1,  excolor_yellow=1,    unicolor_yellow=1}},
-	{"brown",	S("Brown Dye"),		{basecolor_brown=1,   excolor_orange=1,    unicolor_dark_orange=1}},
-	{"orange",	S("Orange Dye"),	{basecolor_orange=1,  excolor_orange=1,    unicolor_orange=1}},
-	{"red",		S("Rose Red"),		{basecolor_red=1,     excolor_red=1,       unicolor_red=1}},
-	{"magenta",	S("Magenta Dye"),	{basecolor_magenta=1, excolor_red_violet=1,unicolor_red_violet=1}},
-	{"pink",	S("Pink Dye"),		{basecolor_red=1,     excolor_red=1,       unicolor_light_red=1}},
-}
-
-local unicolor_to_dye_id = {}
-for d = 1, #dyes do
-	for k, _ in pairs(dyes[d][3]) do
-		if string.sub(k, 1, 9) == "unicolor_" then
-			unicolor_to_dye_id[k] = dyes[d][1]
-		end
-	end
-end
-
 -- Takes an unicolor group name (e.g. “unicolor_white”) and returns a
 -- corresponding dye name (if it exists), nil otherwise.
 function mcl_dyes.unicolor_to_dye(unicolor_group)
-	local color = unicolor_to_dye_id[unicolor_group]
-	if color then
-		return "mcl_dyes:" .. color
-	else
-		return nil
+	for k,v in pairs(mcl_dyes.colors) do
+		if v.groups["unicolor_"..unicolor_group] == 1 then return k end
 	end
 end
 
-for _, row in pairs(dyes) do
-	local name, desc, grps = unpack(row)
-	minetest.register_craftitem("mcl_dyes:" .. name, {
-		inventory_image = "mcl_dye_" .. name .. ".png",
-		description = desc,
+for k,v in pairs(mcl_dyes.colors) do
+	minetest.register_craftitem("mcl_dyes:" .. k, {
+		inventory_image = "mcl_dye_" .. k .. ".png",
+		description = v.description,
 		_doc_items_longdesc = S("This item is a dye which is used for dyeing and crafting."),
 		_doc_items_usagehelp = S("Rightclick on a sheep to dye its wool. Other things are dyed by crafting."),
-		groups = table.update({craftitem = 1, dye = 1}, grps)
+		groups = table.update({craftitem = 1, dye = 1}, v.groups)
 	})
 end
 
