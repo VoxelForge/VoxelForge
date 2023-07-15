@@ -15,47 +15,6 @@ mcl_dyes = {}
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
--- Base color groups:
--- - basecolor_white
--- - basecolor_grey
--- - basecolor_black
--- - basecolor_red
--- - basecolor_yellow
--- - basecolor_green
--- - basecolor_cyan
--- - basecolor_blue
--- - basecolor_magenta
-
--- Extended color groups (* = equal to a base color):
--- * excolor_white
--- - excolor_lightgrey
--- * excolor_grey
--- - excolor_darkgrey
--- * excolor_black
--- * excolor_red
--- - excolor_orange
--- * excolor_yellow
--- - excolor_lime
--- * excolor_green
--- - excolor_aqua
--- * excolor_cyan
--- - excolor_sky_blue
--- * excolor_blue
--- - excolor_violet
--- * excolor_magenta
--- - excolor_red_violet
-
--- The whole unifieddyes palette as groups:
--- - unicolor_<excolor>
--- For the following, no white/grey/black is allowed:
--- - unicolor_medium_<excolor>
--- - unicolor_dark_<excolor>
--- - unicolor_light_<excolor>
--- - unicolor_<excolor>_s50
--- - unicolor_medium_<excolor>_s50
--- - unicolor_dark_<excolor>_s50
-
--- This collection of colors is partly a historic thing, partly something else.
 local dyes = {
 	{"white",	S("White Dye"),		{basecolor_white=1,   excolor_white=1,     unicolor_white=1}},
 	{"grey",	S("Light Grey Dye"),	{basecolor_grey=1,    excolor_grey=1,      unicolor_grey=1}},
@@ -74,10 +33,6 @@ local dyes = {
 	{"magenta",	S("Magenta Dye"),	{basecolor_magenta=1, excolor_red_violet=1,unicolor_red_violet=1}},
 	{"pink",	S("Pink Dye"),		{basecolor_red=1,     excolor_red=1,       unicolor_light_red=1}},
 }
-
--- Other mods can use these for looping through available colors
-mcl_dyes.basecolors = {"white", "grey", "black", "magenta", "blue", "cyan", "green", "yellow", "orange", "red", "brown"}
-mcl_dyes.excolors = {"white", "grey", "darkgrey", "black", "violet", "blue", "cyan", "green", "yellow", "orange", "red", "red_violet"}
 
 local unicolor_to_dye_id = {}
 for d = 1, #dyes do
@@ -99,8 +54,6 @@ function mcl_dyes.unicolor_to_dye(unicolor_group)
 	end
 end
 
--- Define dye items.
---
 for _, row in pairs(dyes) do
 	local name, desc, grps = unpack(row)
 	minetest.register_craftitem("mcl_dyes:" .. name, {
@@ -112,8 +65,6 @@ for _, row in pairs(dyes) do
 	})
 end
 
--- Dye creation recipes.
---
 minetest.register_craft({
 	output = "mcl_dyes:white 3",
 	recipe = {{"mcl_bone_meal:bone_meal"}},
