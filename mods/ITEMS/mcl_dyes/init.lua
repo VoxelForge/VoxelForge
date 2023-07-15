@@ -112,7 +112,8 @@ for k,v in pairs(mcl_dyes.colors) do
 		description = v.description,
 		_doc_items_longdesc = S("This item is a dye which is used for dyeing and crafting."),
 		_doc_items_usagehelp = S("Rightclick on a sheep to dye its wool. Other things are dyed by crafting."),
-		groups = table.update({craftitem = 1, dye = 1}, v.groups)
+		groups = table.update({craftitem = 1, dye = 1}, v.groups),
+		_color = k,
 	})
 end
 
