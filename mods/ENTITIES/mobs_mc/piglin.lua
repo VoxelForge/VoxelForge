@@ -181,7 +181,7 @@ mcl_mobs.register_mob("mobs_mc:piglin", piglin)
 
 local sword_piglin = table.copy(piglin)
 table.update(sword_piglin,{
-	mesh = "extra_mobs_b3d",
+	mesh = "extra_mobs_sword_piglin.b3d",
 	textures = {"extra_mobs_piglin.png", "default_tool_goldsword.png"},
 	on_spawn = function(self)
 		self.gold_items = 0
