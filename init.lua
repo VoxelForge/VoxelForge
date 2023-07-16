@@ -72,7 +72,7 @@ local function make_label(format_string, format_string_config, label, start_valu
 		end
 	end
 	local ret
-	if format_string_config.textdomain then
+	if format_string_config.textdomain and minetest.translate then
 		ret = minetest.translate(format_string_config.textdomain, format_string, unpack(params))
 	else
 		ret = S(format_string, unpack(params))
