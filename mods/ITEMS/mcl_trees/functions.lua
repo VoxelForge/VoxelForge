@@ -34,7 +34,7 @@ local diagonals = {
 	vector.new(-1,0,-1),
 }
 
-function mcl_trees.check_2by2_saps(pos,node)
+function mcl_trees.check_2by2_saps(pos, node)
 	local n = node.name
 	-- we need to check 4 possible 2x2 squares on the x/z plane each uniquely defined by one of the
 	-- diagonals of the position we're checking:

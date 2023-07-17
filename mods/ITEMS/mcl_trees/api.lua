@@ -226,7 +226,7 @@ function readable_name(str)
 end
 
 
-function mcl_trees.register_wood(name,p)
+function mcl_trees.register_wood(name, p)
 	if not p then p = {} end
 	local rname = readable_name(name)
 	if mcl_trees.woods[name] == nil then
@@ -256,13 +256,13 @@ function mcl_trees.register_wood(name,p)
 	end
 
 	if p.bark == nil or type(p.bark) == "table" then
-		minetest.register_node(":mcl_trees:bark_"..name,table.merge(mcl_trees.tpl_log,{
+		minetest.register_node(":mcl_trees:bark_"..name,table.merge(mcl_trees.tpl_log, {
 			description = S(rname.." Bark"),
 			_doc_items_longdesc = S("This is a decorative block surrounded by the bark of a tree trunk."),
-			tiles = p.tree and p.tree.tiles and { p.tree.tiles[3] } or {"mcl_core_log_"..name..".png"},
+			tiles = p.tree and p.tree.tiles and {p.tree.tiles[3]} or {"mcl_core_log_"..name..".png"},
 			is_ground_content = false,
 			_mcl_stripped_variant = "mcl_trees:bark_stripped_"..name,
-		},p.bark or {}))
+		}, p.bark or {}))
 		minetest.register_craft({
 			output = "mcl_trees:"..name.."_bark 3",
 			recipe = {
@@ -281,30 +281,30 @@ function mcl_trees.register_wood(name,p)
 	end
 
 	if p.stripped == nil or type(p.stripped) == "table" then
-		minetest.register_node(":mcl_trees:stripped_"..name, table.merge(mcl_trees.tpl_log,{
+		minetest.register_node(":mcl_trees:stripped_"..name, table.merge(mcl_trees.tpl_log, {
 			description = S("Stripped "..rname.." Log"),
 			_doc_items_longdesc = S("The stripped trunk of an "..name.." tree."),
 			_doc_items_hidden = false,
 			tiles = { "mcl_core_stripped_"..name.."_top.png",  "mcl_core_stripped_"..name.."_top.png", "mcl_core_stripped_"..name.."_side.png"},
-		},p.stripped or {}))
+		}, p.stripped or {}))
 	end
 
 	if p.stripped_bark == nil or type(p.stripped_bark) == "table" then
-		minetest.register_node(":mcl_trees:bark_stripped_"..name, table.merge(mcl_trees.tpl_log,{
+		minetest.register_node(":mcl_trees:bark_stripped_"..name, table.merge(mcl_trees.tpl_log, {
 			description = S("Stripped "..rname.." Wood"),
 			_doc_items_longdesc = S("The stripped wood of an "..name.." tree."),
 			tiles = {"mcl_core_stripped_"..name.."_side.png"},
 			is_ground_content = false,
-		},p.stripped_bark or {}))
+		}, p.stripped_bark or {}))
 	end
 
 	if p.sapling == nil or type(p.sapling) == "table" then
-		minetest.register_node(":mcl_trees:sapling_"..name, table.merge(mcl_trees.tpl_sapling,{
+		minetest.register_node(":mcl_trees:sapling_"..name, table.merge(mcl_trees.tpl_sapling, {
 			description = S(rname.." Sapling"),
 			tiles = {"mcl_core_sapling_"..name..".png"},
 			inventory_image = "mcl_core_sapling_"..name..".png",
 			wield_image = "mcl_core_sapling_"..name..".png",
-		},p.sapling or {}))
+		}, p.sapling or {}))
 	end
 
 
@@ -334,12 +334,12 @@ function mcl_trees.register_wood(name,p)
 		})
 	end
 	if p.door == nil or type(p.door) == "table" then
-		mcl_doors:register_door("mcl_doors:door_"..name,table.merge(mcl_trees.tpl_door,{
+		mcl_doors:register_door("mcl_doors:door_"..name,table.merge(mcl_trees.tpl_door, {
 			description = S(rname.." Door"),
 			inventory_image = "mcl_doors_door_"..name..".png",
 			tiles_bottom = {"mcl_doors_door_"..name.."_lower.png", "mcl_doors_door_"..name.."_side_lower.png"},
 			tiles_top = {"mcl_doors_door_"..name.."_upper.png", "mcl_doors_door_"..name.."_side_upper.png"}
-		},p.door or {}))
+		}, p.door or {}))
 		minetest.register_craft({
 			output = "mcl_doors:door_"..name.." 3",
 			recipe = {
@@ -355,12 +355,12 @@ function mcl_trees.register_wood(name,p)
 		})
 	end
 	if p.trapdoor == nil or type(p.trapdoor) == "table" then
-		mcl_doors:register_trapdoor("mcl_doors:trapdoor_"..name,table.merge(mcl_trees.tpl_trapdoor,{
+		mcl_doors:register_trapdoor("mcl_doors:trapdoor_"..name,table.merge(mcl_trees.tpl_trapdoor, {
 			description = S(rname.." Trapdoor"),
 			tile_front = "mcl_doors_trapdoor_"..name..".png",
 			tile_side = "mcl_doors_trapdoor_"..name.."_side.png",
 			wield_image = "mcl_doors_trapdoor_"..name..".png",
-		},p.trapdoor or {}))
+		}, p.trapdoor or {}))
 		minetest.register_craft({
 			output = "mcl_doors:trapdoor_"..name.." 2",
 			recipe = {
@@ -464,24 +464,24 @@ function mcl_trees.register_wood(name,p)
 		p.boat = p.boat or {}
 		mcl_boats.register_boat(name,table.merge({
 			description = S(rname.." Boat"),
-		},p.boat.item or {}),p.boat.object or {},p.boat.entity or {})
+		}, p.boat.item or {}), p.boat.object or {}, p.boat.entity or {})
 	end
 	if p.chest_boat == nil or type(p.chest_boat) == "table" then
 		p.chest_boat = p.chest_boat or {}
 		mcl_boats.register_boat(name.."_chest",table.merge({
 			description = S(rname.." Chest Boat"),
-		},p.chest_boat.item or {}),p.chest_boat.object or {},p.chest_boat.entity or {})
+		}, p.chest_boat.item or {}), p.chest_boat.object or {}, p.chest_boat.entity or {})
 
 	end
 end
 
 local modpath = minetest.get_modpath(minetest.get_current_modname())
 minetest.register_on_mods_loaded(function()
-	mcl_structures.register_structure("wood_test",{
+	mcl_structures.register_structure("wood_test", {
 	filenames = {
 		modpath.."/schematics/wood_test.mts"
 		},
-	},true)
+	}, true)
 end)
 
 local function get_stairs_nodes()
@@ -495,7 +495,7 @@ local function get_stairs_nodes()
 end
 
 minetest.register_on_mods_loaded(function()
-	mcl_structures.register_structure("stairs_test",{
+	mcl_structures.register_structure("stairs_test", {
 	place_func = function(pos,def,pr)
 		local stairs = get_stairs_nodes()
 		local s = math.ceil(math.sqrt(#stairs))
@@ -507,5 +507,5 @@ minetest.register_on_mods_loaded(function()
 			x = x + 1
 		end
 	end,
-	},true)
+	}, true)
 end)
