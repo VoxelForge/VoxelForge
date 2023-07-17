@@ -24,7 +24,7 @@ end
 
 function table.merge(t, ...)
 	local t2 = table.copy(t)
-	return table.update(t2,...)
+	return table.update(t2, ...)
 end
 
 local LOGGING_ON = minetest.settings:get_bool("mcl_logging_default", false)
@@ -1040,7 +1040,7 @@ local function between(x, y, z) -- x is between y and z (inclusive)
 	return y <= x and x <= z
 end
 
-function mcl_util.in_cube(tpos,wpos1,wpos2)
+function mcl_util.in_cube(tpos, wpos1, wpos2)
 	local xmax=wpos2.x
 	local xmin=wpos1.x
 
@@ -1061,7 +1061,7 @@ function mcl_util.in_cube(tpos,wpos1,wpos2)
 		zmax=wpos1.z
 		zmin=wpos2.z
 	end
-	if between(tpos.x,xmin,xmax) and between(tpos.y,ymin,ymax) and between(tpos.z,zmin,zmax) then
+	if between(tpos.x, xmin, xmax) and between(tpos.y, ymin, ymax) and between(tpos.z, zmin, zmax) then
 		return true
 	end
 	return false
@@ -1069,15 +1069,15 @@ end
 
 vector.in_cube = mcl_util.in_cube
 
-function mcl_util.traverse_tower(pos,dir,callback)
+function mcl_util.traverse_tower(pos, dir, callback)
 	local node = minetest.get_node(pos)
 	local i = 0
 	while minetest.get_node(pos).name == node.name do
-		if callback and callback(pos,dir,node) then
+		if callback and callback(pos, dir, node) then
 			return pos,i,true
 		end
 		i = i + 1
-		pos = vector.offset(pos,0,dir,0)
+		pos = vector.offset(pos, 0, dir, 0)
 	end
-	return vector.offset(pos,0,-dir,0),i
+	return vector.offset(pos, 0, -dir, 0), i
 end
