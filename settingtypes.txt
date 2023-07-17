@@ -222,6 +222,9 @@ mcl_bookshelf_inventories (Enable bookshelf inventories) bool true
 # All tameable mobs listen to the "sit" righclick like dogs
 mcl_extended_pet_control (Extended pet control) bool false
 
+# Enable stairs out of wood bark
+mcl_bark_stairs (Bark Stairs) bool true
+
 [Debugging]
 # If enabled, this will show the itemstring of an item in the description.
 mcl_item_id_debug (Item ID Debug) bool false

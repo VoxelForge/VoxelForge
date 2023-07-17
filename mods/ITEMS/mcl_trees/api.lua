@@ -1,18 +1,14 @@
 -- Tree nodes: Wood, Wooden Planks, Sapling, Leaves, Stripped Wood
 local S = minetest.get_translator(minetest.get_current_modname())
-
-local mod_screwdriver = minetest.get_modpath("screwdriver")
-
-local bark_stairs = true --TODO: make a setting
+local bark_stairs = minetest.settings:get_bool("mcl_bark_stairs",true)
 
 local wood_groups = {
 	handy = 1, axey = 1,
-	wood = 1, material_wood = 1, wood_stairs = 1,
+	wood = 1, material_wood = 1,
 	flammable = 3, fire_encouragement = 5, fire_flammability = 20
 }
 
 local wood_sounds = mcl_sounds.node_sound_wood_defaults()
-
 
 -- Check dug/destroyed tree trunks for orphaned leaves.
 --
