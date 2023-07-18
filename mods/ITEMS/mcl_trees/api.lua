@@ -54,7 +54,7 @@ local function update_leaf_p2(pos, placer, itemstack, pointed_thing)
 	end
 end
 
-mcl_trees.tpl_log = {
+local tpl_log = {
 	groups = wood_groups,
 	_doc_items_hidden = false,
 	paramtype2 = "facedir",
@@ -72,7 +72,7 @@ mcl_trees.tpl_log = {
 	_mcl_blast_resistance = 2,
 	_mcl_hardness = 2,
 }
-mcl_trees.tpl_planks = {
+local tpl_planks = {
 	_doc_items_hidden = false,
 	is_ground_content = false,
 	groups = wood_groups,
@@ -80,7 +80,7 @@ mcl_trees.tpl_planks = {
 	_mcl_blast_resistance = 3,
 	_mcl_hardness = 2,
 }
-mcl_trees.tpl_leaves = {
+local tpl_leaves = {
 	_doc_items_hidden = false,
 	drawtype = "allfaces_optional",
 	waving = 2,
@@ -100,7 +100,7 @@ mcl_trees.tpl_leaves = {
 	_mcl_hardness = 0.2,
 	_mcl_silk_touch_drop = true,
 }
-mcl_trees.tpl_sapling = {
+local tpl_sapling = {
 	_doc_items_longdesc = S("When placed on soil (such as dirt) and exposed to light, a sapling will grow into a tree after some time."),
 	_tt_help = S("Needs soil and light to grow"),
 	_doc_items_hidden = false,
@@ -140,7 +140,7 @@ mcl_trees.tpl_sapling = {
 	_mcl_hardness = 0,
 }
 
-mcl_trees.tpl_door = {
+local tpl_door = {
 	_doc_items_longdesc = S("Wooden doors are 2-block high barriers which can be opened or closed by hand and by a redstone signal."),
 	_doc_items_usagehelp = S("To open or close a wooden door, rightclick it or supply its lower half with a redstone signal."),
 	groups = {handy=1,axey=1, material_wood=1, flammable=-1},
@@ -148,7 +148,7 @@ mcl_trees.tpl_door = {
 	_mcl_blast_resistance = 3,
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 }
-mcl_trees.tpl_trapdoor = {
+local tpl_trapdoor = {
 	_doc_items_longdesc = S("Wooden trapdoors are horizontal barriers which can be opened and closed by hand or a redstone signal. They occupy the upper or lower part of a block, depending on how they have been placed. When open, they can be climbed like a ladder."),
 	_doc_items_usagehelp = S("To open or close the trapdoor, rightclick it or send a redstone signal to it."),
 	groups = {handy=1,axey=1, mesecon_effector_on=1, material_wood=1, flammable=-1},
@@ -188,7 +188,7 @@ local function register_leaves(subname, description, longdesc, tiles, sapling, d
 		return drop
 	end
 
-	local l_def = table.merge(mcl_trees.tpl_leaves, {
+	local l_def = table.merge(tpl_leaves, {
 		description = description,
 		_doc_items_longdesc = longdesc,
 		tiles = tiles,
@@ -229,7 +229,7 @@ function mcl_trees.register_wood(name, p)
 		mcl_trees.woods[name] = p
 	end
 	if p.tree == nil or type(p.tree) == "table" then
-		minetest.register_node(":mcl_trees:".."tree_"..name,table.merge(mcl_trees.tpl_log,{
+		minetest.register_node(":mcl_trees:".."tree_"..name,table.merge(tpl_log,{
 			description = S(rname.." Log"),
 			_doc_items_longdesc = S("The trunk of a "..name.." tree."),
 			tiles = { "mcl_core_log_"..name.."_top.png",  "mcl_core_log_"..name.."_top.png", "mcl_core_log_"..name..".png"},
@@ -238,7 +238,7 @@ function mcl_trees.register_wood(name, p)
 	end
 
 	if p.planks == nil or type(p.planks) == "table" then
-		minetest.register_node(":mcl_trees:planks_"..name, table.merge(mcl_trees.tpl_planks,{
+		minetest.register_node(":mcl_trees:planks_"..name, table.merge(tpl_planks,{
 			description =  S(rname.." Wood Planks"),
 			_doc_items_longdesc = doc.sub.items.temp.build,
 			tiles = {"mcl_core_planks_"..name..".png"},
@@ -252,7 +252,7 @@ function mcl_trees.register_wood(name, p)
 	end
 
 	if p.bark == nil or type(p.bark) == "table" then
-		minetest.register_node(":mcl_trees:bark_"..name,table.merge(mcl_trees.tpl_log, {
+		minetest.register_node(":mcl_trees:bark_"..name,table.merge(tpl_log, {
 			description = S(rname.." Bark"),
 			_doc_items_longdesc = S("This is a decorative block surrounded by the bark of a tree trunk."),
 			tiles = p.tree and p.tree.tiles and {p.tree.tiles[3]} or {"mcl_core_log_"..name..".png"},
@@ -277,7 +277,7 @@ function mcl_trees.register_wood(name, p)
 	end
 
 	if p.stripped == nil or type(p.stripped) == "table" then
-		minetest.register_node(":mcl_trees:stripped_"..name, table.merge(mcl_trees.tpl_log, {
+		minetest.register_node(":mcl_trees:stripped_"..name, table.merge(tpl_log, {
 			description = S("Stripped "..rname.." Log"),
 			_doc_items_longdesc = S("The stripped trunk of an "..name.." tree."),
 			_doc_items_hidden = false,
@@ -286,7 +286,7 @@ function mcl_trees.register_wood(name, p)
 	end
 
 	if p.stripped_bark == nil or type(p.stripped_bark) == "table" then
-		minetest.register_node(":mcl_trees:bark_stripped_"..name, table.merge(mcl_trees.tpl_log, {
+		minetest.register_node(":mcl_trees:bark_stripped_"..name, table.merge(tpl_log, {
 			description = S("Stripped "..rname.." Wood"),
 			_doc_items_longdesc = S("The stripped wood of an "..name.." tree."),
 			tiles = {"mcl_core_stripped_"..name.."_side.png"},
@@ -295,7 +295,7 @@ function mcl_trees.register_wood(name, p)
 	end
 
 	if p.sapling == nil or type(p.sapling) == "table" then
-		minetest.register_node(":mcl_trees:sapling_"..name, table.merge(mcl_trees.tpl_sapling, {
+		minetest.register_node(":mcl_trees:sapling_"..name, table.merge(tpl_sapling, {
 			description = S(rname.." Sapling"),
 			tiles = {"mcl_core_sapling_"..name..".png"},
 			inventory_image = "mcl_core_sapling_"..name..".png",
@@ -330,7 +330,7 @@ function mcl_trees.register_wood(name, p)
 		})
 	end
 	if p.door == nil or type(p.door) == "table" then
-		mcl_doors:register_door("mcl_doors:door_"..name,table.merge(mcl_trees.tpl_door, {
+		mcl_doors:register_door("mcl_doors:door_"..name,table.merge(tpl_door, {
 			description = S(rname.." Door"),
 			inventory_image = "mcl_doors_door_"..name..".png",
 			tiles_bottom = {"mcl_doors_door_"..name.."_lower.png", "mcl_doors_door_"..name.."_side_lower.png"},
@@ -351,7 +351,7 @@ function mcl_trees.register_wood(name, p)
 		})
 	end
 	if p.trapdoor == nil or type(p.trapdoor) == "table" then
-		mcl_doors:register_trapdoor("mcl_doors:trapdoor_"..name,table.merge(mcl_trees.tpl_trapdoor, {
+		mcl_doors:register_trapdoor("mcl_doors:trapdoor_"..name,table.merge(tpl_trapdoor, {
 			description = S(rname.." Trapdoor"),
 			tile_front = "mcl_doors_trapdoor_"..name..".png",
 			tile_side = "mcl_doors_trapdoor_"..name.."_side.png",
