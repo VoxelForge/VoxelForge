@@ -50,21 +50,17 @@ function generate_crimson_tree(pos)
 	minetest.place_schematic(pos,modpath.."/schematics/crimson_fungus_1.mts","random",nil,false,"place_center_x,place_center_z")
 end
 
-function grow_vines(pos, moreontop ,vine, dir)
+function grow_vines(pos, amount ,vine, dir)
 	if dir == nil then dir = 1 end
-	local n
-	repeat
-		pos = vector.offset(pos,0,dir,0)
-		n = minetest.get_node(pos)
-		if n.name == "air" then
-			for i=0,math.max(moreontop,1) do
-				if minetest.get_node(pos).name == "air" then
-					minetest.set_node(vector.offset(pos,0,i*dir,0),{name=vine})
-				end
-			end
+	local tip = mcl_util.traverse_tower(pos, dir)
+	for i=1,amount do
+		local p = vector.offset(tip,0,dir*i,0)
+		if minetest.get_node(p).name == "air" then
+			minetest.set_node(p,{name=vine})
+		else
 			break
 		end
-	until n.name ~= "air" and n.name ~= vine
+	end
 end
 
 local nether_wood_groups = { handy = 1, axey = 1, material_wood = 1, }
@@ -239,11 +235,11 @@ minetest.register_node("mcl_crimson:twisting_vines", {
 	end,
 	on_dig = function(pos, node, digger)
 		local above = vector.offset(pos,0,1,0)
-		local abovenode = minetest.get_node(above)
 		minetest.node_dig(pos, node, digger)
-		if abovenode.name == node.name and (not mcl_core.check_vines_supported(above, abovenode)) then
-			minetest.registered_nodes[node.name].on_dig(above, node, digger)
-		end
+		if minetest.get_node(above).name ~= node.name then return end
+		mcl_util.traverse_tower(above,1,function(p, dir, n)
+			minetest.node_dig(p, n, digger)
+		end)
 	end,
 
 	drop = {
@@ -312,14 +308,7 @@ minetest.register_node("mcl_crimson:weeping_vines", {
 		return itemstack
 	end,
 
-	on_dig = function(pos, node, digger)
-		local below = vector.offset(pos,0,-1,0)
-		local belownode = minetest.get_node(below)
-		minetest.node_dig(pos, node, digger)
-		if belownode.name == node.name and (not mcl_core.check_vines_supported(below, belownode)) then
-			minetest.registered_nodes[node.name].on_dig(below, node, digger)
-		end
-	end,
+	on_dig = mcl_core.dig_vines,
 	drop = {
 		max_items = 1,
 		items = {

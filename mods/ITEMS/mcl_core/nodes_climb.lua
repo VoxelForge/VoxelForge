@@ -86,6 +86,15 @@ minetest.register_node("mcl_core:ladder", {
 	on_rotate = rotate_climbable,
 })
 
+function mcl_core.dig_vines(pos, node, digger)
+	local below = vector.offset(pos,0,-1,0)
+	minetest.node_dig(pos, node, digger)
+	if minetest.get_node(below).name ~= node.name then return end
+	mcl_util.traverse_tower(below,-1,function(p, dir, n)
+		if mcl_core.check_vines_supported(p, n) then return true end
+		minetest.node_dig(p, n, digger)
+	end)
+end
 
 minetest.register_node("mcl_core:vine", {
 	description = S("Vines"),
@@ -157,16 +166,7 @@ minetest.register_node("mcl_core:vine", {
 
 	-- If dug, also dig a “dependant” vine below it.
 	-- A vine is dependant if it hangs from this node and has no supporting block.
-	on_dig = function(pos, node, digger)
-		local below = vector.offset(pos,0,-1,0)
-		local belownode = minetest.get_node(below)
-		minetest.node_dig(pos, node, digger)
-		if belownode.name == node.name and (not mcl_core.check_vines_supported(below, belownode)) then
-			minetest.registered_nodes[node.name].on_dig(below, node, digger)
-		end
-	end,
-
-
+	on_dig = mcl_core.dig_vines,
 	_mcl_blast_resistance = 0.2,
 	_mcl_hardness = 0.2,
 	on_rotate = false,
