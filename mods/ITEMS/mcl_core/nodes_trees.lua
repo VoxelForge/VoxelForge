@@ -17,6 +17,8 @@ mcl_trees.register_wood("oak",{
 	},
 	tree = { tiles = {"default_tree_top.png", "default_tree_top.png","default_tree.png"} },
 	leaves = { tiles = { "default_leaves.png" } },
+	sapling_chances = {20, 16, 12, 10},
+	drop_apples = true,
 	planks = { tiles = {"default_wood.png"}},
 	sapling = {
 		tiles = {"default_sapling.png"},
@@ -42,6 +44,8 @@ mcl_trees.register_wood("dark_oak",{
 	},
 	tree = { tiles = {"mcl_core_log_big_oak_top.png", "mcl_core_log_big_oak_top.png","mcl_core_log_big_oak.png"} },
 	leaves = { tiles = { "mcl_core_leaves_big_oak.png" } },
+	sapling_chances = {20, 16, 12, 10},
+	drop_apples = true,
 	planks = { tiles = {"mcl_core_planks_big_oak.png"}},
 	sapling = {
 		tiles = {"mcl_core_sapling_big_oak.png"},
@@ -70,6 +74,7 @@ mcl_trees.register_wood("jungle",{
 	},
 	tree = { tiles = {"default_jungletree_top.png", "default_jungletree_top.png","default_jungletree.png"} },
 	leaves = { tiles = { "default_jungleleaves.png" } },
+	sapling_chances = {40, 26, 32, 24, 10},
 	planks = { tiles = {"default_junglewood.png"}},
 	sapling = {
 		tiles = {"default_junglesapling.png"},
@@ -96,7 +101,8 @@ mcl_trees.register_wood("spruce",{
 		{ file=modpath.."/schematics/mcl_core_spruce_huge_up_1.mts",width=6,height=20 },
 		{ file=modpath.."/schematics/mcl_core_spruce_huge_up_2.mts",width=6,height=20 },
 		{ file=modpath.."/schematics/mcl_core_spruce_huge_up_3.mts",width=6,height=20 },
-	}
+	},
+	sapling_chances = {20, 16, 12, 10},
 })
 
 mcl_trees.register_wood("acacia",{
@@ -113,6 +119,7 @@ mcl_trees.register_wood("acacia",{
 	},
 	tree = { tiles = {"default_acacia_tree_top.png", "default_acacia_tree_top.png","default_acacia_tree.png"} },
 	leaves = { tiles = { "default_acacia_leaves.png" } },
+	sapling_chances = {20, 16, 12, 10},
 	planks = { tiles = {"default_acacia_wood.png"}},
 	sapling = {
 		tiles = {"default_acacia_sapling.png"},
@@ -128,4 +135,5 @@ mcl_trees.register_wood("birch",{
 		{ file=modpath.."/schematics/mcl_core_birch.mts",width=3,height=6 },
 		{ file=modpath.."/schematics/mcl_core_birch_tall.mts",width=3,height=6 },
 	},
+	sapling_chances = {20, 16, 12, 10},
 })

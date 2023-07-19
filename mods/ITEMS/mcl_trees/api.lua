@@ -101,6 +101,7 @@ local tpl_leaves = {
 	_mcl_hardness = 0.2,
 	_mcl_silk_touch_drop = true,
 }
+
 local tpl_sapling = {
 	_doc_items_longdesc = S("When placed on soil (such as dirt) and exposed to light, a sapling will grow into a tree after some time."),
 	_tt_help = S("Needs soil and light to grow"),
@@ -158,7 +159,7 @@ local tpl_trapdoor = {
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 }
 
-local function register_leaves(subname, description, longdesc, tiles, sapling, drop_apples, sapling_chances)
+local function register_leaves(subname, def, sapling, drop_apples, sapling_chances)
 	local apple_chances = {200, 180, 160, 120, 40}
 	local stick_chances = {50, 45, 30, 35, 10}
 
@@ -171,18 +172,18 @@ local function register_leaves(subname, description, longdesc, tiles, sapling, d
 					rarity = sapling_chances[fortune_level + 1] or sapling_chances[fortune_level]
 				},
 				{
-					items = {"mcl_trees:stick 1"},
+					items = {"mcl_core:stick 1"},
 					rarity = stick_chances[fortune_level + 1]
 				},
 				{
-					items = {"mcl_trees:stick 2"},
+					items = {"mcl_core:stick 2"},
 					rarity = stick_chances[fortune_level + 1]
 				},
 			}
 		}
 		if drop_apples then
 			table.insert(drop.items, {
-				items = {"mcl_trees:apple"},
+				items = {"mcl_core:apple"},
 				rarity = apple_chances[fortune_level + 1]
 			})
 		end
@@ -199,7 +200,7 @@ local function register_leaves(subname, description, longdesc, tiles, sapling, d
 			-- manually placed leaves nodes do not decay automatically.
 			minetest.get_meta(pos):set_int("no_decay", "1")
 		end
-	})
+	},def or {})
 
 	minetest.register_node(":mcl_trees:"..subname, l_def)
 
@@ -306,7 +307,16 @@ function mcl_trees.register_wood(name, p)
 
 
 	if p.leaves == nil or type(p.leaves) == "table" then
-		register_leaves("leaves_"..name, S(rname.." Leaves"), S(rname.." leaves are grown from "..name.." trees."), p.leaves and p.leaves.tiles or { "mcl_core_leaves_"..name..".png"}, "mcl_trees:sapling_"..name, true, {20, 16, 12, 10})
+		register_leaves("leaves_"..name,
+			table.merge({
+				description = S(rname.." Leaves"),
+				_doc_items_longdesc = S(rname.." leaves are grown from "..name.." trees."),
+				tiles = { "mcl_core_leaves_"..name..".png"},
+			}, p.leaves or {} ),
+			p.saplingdrop or "mcl_trees:sapling_"..name,
+			p.drop_apples or false,
+			p.sapling_chances or {20, 16, 12, 10}
+		)
 	end
 	if p.fence == nil or type(p.fence) == "table" then
 		p.fence = p.fence or {}

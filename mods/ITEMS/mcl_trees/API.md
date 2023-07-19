@@ -53,6 +53,9 @@ mcl_boats_willow_boat_texture.png
 	},
 	tree = {},                                 -- overrides for the tree/log node definition
 	leaves = {},                               -- overrides for the leaves node definition
+	drop_apples = bool,                        -- wether digging leaves may drop apples
+	sapling_chances = { 1, 2, 3, 4},           -- chances a sapling gets dropped for fortune levels 0-3 (default: {20, 16, 12, 10} )
+	saplingdrop = "itemstring",                -- custom itemstring to drop instead of the API sapling
 	planks = {},                               -- overrides for the planks node definition
 	sapling = {},                              -- overrides for the sapling node definition
 	fence = {},                                -- overrides for the fence node definition
