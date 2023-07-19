@@ -47,6 +47,7 @@ end
 --called from leaves after_place_node
 local function update_leaf_p2(pos, placer, itemstack, pointed_thing)
 	local n = minetest.get_node(pos)
+	if minetest.get_item_group(n.name,"biomecolor") == 0 then return end
 	local p2 = mcl_util.get_pos_p2(pos)
 	if n.param2 ~= p2 then
 		n.param2 = p2

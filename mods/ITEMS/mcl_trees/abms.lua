@@ -145,10 +145,12 @@ function mcl_trees.grow_tree(pos, node)
 		local nn = minetest.find_nodes_in_area(vector.offset(pos, -math.ceil(w/2), 0, -math.ceil(w/2)), vector.offset(pos, math.ceil(w/2), h, math.ceil(w/2)), {"group:leaves"})
 		for _,v in pairs(nn) do
 			local n = minetest.get_node(v)
-			local p2 = mcl_util.get_pos_p2(v)
-			if n.param2 ~= p2 then
-				n.param2 = p2
-				minetest.swap_node(v,n)
+			if minetest.get_item_group(n.name,"biomecolor") > 0 then
+				local p2 = mcl_util.get_pos_p2(v)
+				if n.param2 ~= p2 then
+					n.param2 = p2
+					minetest.swap_node(v,n)
+				end
 			end
 		end
 	end
@@ -169,6 +171,7 @@ minetest.register_lbm({
 	nodenames = {"group:leaves"},
 	run_at_every_load = false,
 	action = function(pos, n)
+		if minetest.get_item_group(n.name,"biomecolor") == 0 then return end
 		local p2 = mcl_util.get_pos_p2(pos)
 		if n.param2 ~= p2 then
 			n.param2 = p2
