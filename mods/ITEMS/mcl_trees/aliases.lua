@@ -35,6 +35,7 @@ minetest.register_alias("mcl_crimson:crimson_hyphae_wood","mcl_trees:wood_crimso
 minetest.register_alias("mcl_mangrove:mangrove_wood","mcl_trees:wood_mangrove")
 minetest.register_alias("default:wood","mcl_trees:wood_oak")
 minetest.register_alias("mcl_bamboo:bamboo_plank","mcl_trees:wood_bamboo")
+minetest.register_alias("mcl_cherry_blossom:cherrywood","mcl_trees:wood_cherry_blossom")
 
 minetest.register_alias("mcl_core:birchtree_bark","mcl_trees:bark_birch")
 minetest.register_alias("mcl_core:big_oaktree_bark","mcl_trees:bark_dark_oak")
