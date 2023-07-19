@@ -1,5 +1,7 @@
 mcl_cherry_blossom = {}
-local modpath = minetest.get_modpath(minetest.get_current_modname())
+local modname = minetest.get_current_modname()
+local modpath = minetest.get_modpath(modname)
+local S = minetest.get_translator(modname)
 
 mcl_trees.register_wood("cherry_blossom",{
 	sign_color="#E1A7A1",
@@ -53,7 +55,7 @@ local cherry_particle = {
 
 minetest.register_abm({
 	label = "Cherry Blossom Particles",
-	nodenames = {"mcl_cherry_blossom:cherryleaves"},
+	nodenames = {"mcl_trees:leaves_cherry_blossom"},
 	interval = 5,
 	chance = 10,
 	action = function(pos, node)

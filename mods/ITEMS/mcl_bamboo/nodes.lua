@@ -243,6 +243,7 @@ minetest.register_node("mcl_bamboo:scaffolding_horizontal", {
 	tiles = {"mcl_bamboo_scaffolding_side.png","mcl_bamboo_scaffolding_top.png","mcl_bamboo_scaffolding_bottom.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
+	use_texture_alpha = "clip",
 	node_box = {
 		type = "fixed",
 		fixed = {
