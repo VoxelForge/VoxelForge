@@ -14,7 +14,6 @@ mcl_trees.register_wood("cherry_blossom",{
 		{ file=modpath.."/schematics/mcl_cherry_blossom_tree_beehive_3.mts",width=7,height=11 },
 	},
 	tree = { tiles = {"mcl_cherry_blossom_log_top.png", "mcl_cherry_blossom_log_top.png","mcl_cherry_blossom_log.png"} },
-	leaves = { tiles = { "mcl_cherry_blossom_leaves.png" } },
 	wood = { tiles = {"mcl_cherry_blossom_planks.png"}},
 	sapling = {
 		tiles = {"mcl_cherry_blossom_sapling.png"},
@@ -23,6 +22,10 @@ mcl_trees.register_wood("cherry_blossom",{
 	},
 	potted_sapling = {
 		image = "mcl_cherry_blossom_sapling.png",
+	},
+	leaves = {
+		tiles = { "mcl_cherry_blossom_leaves.png" },
+		palette = "", --no biome coloring
 	},
 	stripped = {
 		tiles = {"mcl_cherry_blossom_log_top_stripped.png", "mcl_cherry_blossom_log_top_stripped.png","mcl_cherry_blossom_log_stripped.png"}
