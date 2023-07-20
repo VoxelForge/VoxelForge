@@ -2,6 +2,9 @@ mcl_cherry_blossom = {}
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
+local PARTICLE_DISTANCE = 25
+
+local pspawners = {}
 
 mcl_trees.register_wood("cherry_blossom",{
 	sign_color="#E1A7A1",
@@ -80,26 +83,39 @@ minetest.register_node("mcl_cherry_blossom:pink_petals",{
 	_mcl_blast_resistance = 0,
 })
 
-local cherry_particle = {
-	velocity = vector.zero(),
-	acceleration = vector.new(0,-1,0),
-	size = math.random(1.3,2.5),
+local cherry_particlespawner = {
 	texture = "mcl_cherry_blossom_particle.png",
+	amount = 4,
+	time = 25,
+	minvel = vector.zero(),
+	maxvel = vector.zero(),
+	minacc = vector.new(0, -0.4, 0),
+	maxacc = vector.new(0, -0.8, 0),
+	minexptime = 1.5,
+	maxexptime = 4.5,
+	minsize = 0.3,
+	maxsize= 0.8,
+	glow = 1,
+	collisiondetection = true,
 	collision_removal = false,
-	collisiondetection = false,
 }
 
 minetest.register_abm({
 	label = "Cherry Blossom Particles",
 	nodenames = {"mcl_trees:leaves_cherry_blossom"},
-	interval = 5,
+	interval = 25,
 	chance = 10,
 	action = function(pos, node)
-		minetest.after(math.random(0.1,1.5),function()
-			local pt = table.copy(cherry_particle)
-			pt.pos = vector.offset(pos,math.random(-0.5,0.5),-0.51,math.random(-0.5,0.5))
-			pt.expirationtime = math.random(1.2,4.5)
-			minetest.add_particle(pt)
-		end)
+		if minetest.get_node(vector.offset(pos, 0, -1, 0)).name ~= "air" then return end
+		local h = minetest.hash_node_position(pos)
+		for _,pl in pairs(minetest.get_connected_players()) do
+			if vector.distance(pos,pl:get_pos()) < PARTICLE_DISTANCE then
+				minetest.add_particlespawner(table.merge(cherry_particlespawner, {
+					minpos = vector.offset(pos, -0.25, -0.5, -0.25),
+					maxpos = vector.offset(pos, 0.25, -0.5, 0.25),
+					playername = pl:get_player_name(),
+				}))
+			end
+		end
 	end
 })
