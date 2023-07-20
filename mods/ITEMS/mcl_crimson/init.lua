@@ -67,7 +67,7 @@ function grow_vines(pos, moreontop ,vine, dir)
 	until n.name ~= "air" and n.name ~= vine
 end
 
-local nether_wood_groups = { handy = 1, axey = 1, wood = 1, material_wood = 1, }
+local nether_wood_groups = { handy = 1, axey = 1, material_wood = 1, }
 
 mcl_trees.register_wood("crimson",{
 	sign_color="#c35f51",
@@ -77,23 +77,23 @@ mcl_trees.register_wood("crimson",{
 	leaves=false,
 	tree = {
 		tiles = {"crimson_hyphae.png", "crimson_hyphae.png","crimson_hyphae_side.png" },
-		groups = nether_wood_groups,
+		groups = table.merge(nether_wood_groups,{tree = 1}),
 	},
 	bark = {
 		tiles = {"crimson_hyphae_side.png"},
-		groups = nether_wood_groups,
+		groups = table.merge(nether_wood_groups,{tree = 1, bark = 1}),
 	},
 	planks = {
 		tiles = {"crimson_hyphae_wood.png"},
-		groups = nether_wood_groups,
+		groups = table.merge(nether_wood_groups,{wood = 1}),
 	},
 	stripped = {
 		tiles = {"stripped_crimson_stem_top.png", "stripped_crimson_stem_top.png","stripped_crimson_stem_side.png"},
-		groups = nether_wood_groups,
+		groups = table.merge(nether_wood_groups,{tree = 1}),
 	},
 	stripped_bark = {
 		tiles = {"stripped_crimson_stem_side.png"},
-		groups = nether_wood_groups,
+		groups = table.merge(nether_wood_groups,{tree = 1, bark = 1}),
 	},
 	fence = {
 		tiles = { "mcl_crimson_crimson_fence.png" },
@@ -121,23 +121,23 @@ mcl_trees.register_wood("warped",{
 	leaves=false,
 	tree = {
 		tiles = {"warped_hyphae.png", "warped_hyphae.png","warped_hyphae_side.png" },
-		groups = nether_wood_groups,
+		groups = table.merge(nether_wood_groups,{tree = 1}),
 	},
 	bark = {
 		tiles = {"warped_hyphae_side.png"},
-		groups = nether_wood_groups,
+		groups = table.merge(nether_wood_groups,{tree = 1, bark = 1}),
 	},
 	planks = {
 		tiles = {"warped_hyphae_wood.png"},
-		groups = nether_wood_groups,
+		groups = table.merge(nether_wood_groups,{wood = 1}),
 	},
 	stripped = {
 		tiles = {"stripped_warped_stem_top.png", "stripped_warped_stem_top.png","stripped_warped_stem_side.png"},
-		groups = nether_wood_groups,
+		groups = table.merge(nether_wood_groups,{tree = 1}),
 	},
 	stripped_bark = {
 		tiles = {"stripped_warped_stem_side.png"},
-		groups = nether_wood_groups,
+		groups = table.merge(nether_wood_groups,{tree = 1, bark = 1}),
 	},
 	fence = {
 		tiles = { "mcl_crimson_warped_fence.png" },
