@@ -56,11 +56,20 @@ minetest.register_alias("mcl_core:sprucesapling","mcl_trees:sapling_spruce")
 minetest.register_alias("mcl_core:sapling","mcl_trees:sapling_oak")
 minetest.register_alias("default:sapling","mcl_trees:sapling_oak")
 
+
+minetest.register_alias("mcl_flowerpots:flower_pot_birchsapling","mcl_flowerpots:flower_pot_sapling_birch")
+minetest.register_alias("mcl_flowerpots:flower_pot_big_oaksapling","mcl_flowerpots:flower_pot_sapling_dark_oak")
+minetest.register_alias("mcl_flowerpots:flower_pot_darksapling","mcl_flowerpots:flower_pot_sapling_dark_oak")
+minetest.register_alias("mcl_flowerpots:flower_pot_acaciasapling","mcl_flowerpots:flower_pot_sapling_acacia")
+minetest.register_alias("mcl_flowerpots:flower_pot_junglesapling","mcl_flowerpots:flower_pot_sapling_jungle")
+minetest.register_alias("mcl_flowerpots:flower_pot_sprucesapling","mcl_flowerpots:flower_pot_sapling_spruce")
+minetest.register_alias("mcl_flowerpots:flower_pot_sapling","mcl_flowerpots:flower_pot_sapling_oak")
+minetest.register_alias("mcl_flowerpots:flower_pot_bamboo_plant","mcl_flowerpots:flower_pot_bamboo")
+
 minetest.register_alias("mcl_fences:fence","mcl_fences:oak_fence")
 minetest.register_alias("mcl_mangrove:mangrove_wood_fence","mcl_fences:mangrove_fence")
 minetest.register_alias("mcl_crimson:crimson_fence","mcl_fences:crimson_fence")
 minetest.register_alias("mcl_crimson:warped_fence","mcl_fences:warped_fence")
-
 minetest.register_alias("mcl_fences:fence_gate","mcl_fences:oak_fence_gate")
 minetest.register_alias("mcl_mangrove:mangrove_wood_fence_gate","mcl_fences:mangrove_fence_gate")
 minetest.register_alias("mcl_crimson:crimson_fence_gate","mcl_fences:crimson_fence_gate")

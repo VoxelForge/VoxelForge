@@ -166,40 +166,46 @@ mcl_flowerpots.register_potted_flower("mcl_mushrooms:mushroom_red", {
 	image = "farming_mushroom_red.png",
 })
 
-mcl_flowerpots.register_potted_flower("mcl_core:sapling", {
-	name = "sapling",
+mcl_flowerpots.register_potted_flower("mcl_trees:sapling_oak", {
+	name = "sapling_oak",
 	desc = S("Oak Sapling"),
 	image = "default_sapling.png",
 })
 
-mcl_flowerpots.register_potted_flower("mcl_core:acaciasapling", {
-	name = "acaciasapling",
+mcl_flowerpots.register_potted_flower("mcl_trees:sapling_acacia", {
+	name = "sapling_acacia",
 	desc = S("Acacia Sapling"),
 	image = "default_acacia_sapling.png",
 })
 
-mcl_flowerpots.register_potted_flower("mcl_core:junglesapling", {
-	name = "junglesapling",
+mcl_flowerpots.register_potted_flower("mcl_trees:sapling_jungle", {
+	name = "sapling_jungle",
 	desc = S("Jungle Sapling"),
 	image = "default_junglesapling.png",
 })
 
-mcl_flowerpots.register_potted_flower("mcl_core:darksapling", {
-	name = "darksapling",
+mcl_flowerpots.register_potted_flower("mcl_trees:sapling_dark_oak", {
+	name = "sapling_dark_oak",
 	desc = S("Dark Oak Sapling"),
 	image = "mcl_core_sapling_big_oak.png",
 })
 
-mcl_flowerpots.register_potted_flower("mcl_core:sprucesapling", {
-	name = "sprucesapling",
+mcl_flowerpots.register_potted_flower("mcl_trees:sapling_spruce", {
+	name = "sapling_spruce",
 	desc = S("Spruce Sapling"),
 	image = "mcl_core_sapling_spruce.png",
 })
 
-mcl_flowerpots.register_potted_flower("mcl_core:birchsapling", {
-	name = "birchsapling",
+mcl_flowerpots.register_potted_flower("mcl_trees:sapling_birch", {
+	name = "sapling_birch",
 	desc = S("Birch Sapling"),
 	image = "mcl_core_sapling_birch.png",
+})
+
+mcl_flowerpots.register_potted_flower("mcl_bamboo:bamboo", {
+	name = "bamboo",
+	desc = S("Bamboo Plant"),
+	image = "mcl_bamboo_flower_pot.png",
 })
 
 mcl_flowerpots.register_potted_flower("mcl_core:deadbush", {
