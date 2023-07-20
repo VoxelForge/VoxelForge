@@ -70,6 +70,7 @@ minetest.register_node("mcl_cherry_blossom:pink_petals",{
 		flammable=3,
 		attached_node=1,
 		dig_by_piston=1,
+		compostability = 30,
 		--not_in_creative_inventory=1,
 	},
 	use_texture_alpha = "clip",
@@ -81,6 +82,9 @@ minetest.register_node("mcl_cherry_blossom:pink_petals",{
 	},
 	_mcl_hardness = 0,
 	_mcl_blast_resistance = 0,
+	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,n)
+		minetest.add_item(pos,n.name)
+	end
 })
 
 local cherry_particlespawner = {
