@@ -29,7 +29,7 @@ local function hut_placement_callback(pos,def,pr)
 	local hl = def.sidelen / 2
 	local p1 = vector.offset(pos,-hl,-hl,-hl)
 	local p2 = vector.offset(pos,hl,hl,hl)
-	local legs = minetest.find_nodes_in_area(vector.offset(pos,-hl,0,-hl),vector.offset(pos,hl,0,hl), "mcl_core:tree")
+	local legs = minetest.find_nodes_in_area(vector.offset(pos,-hl,0,-hl),vector.offset(pos,hl,0,hl), {"mcl_core:tree","mcl_trees:tree_oak"})
 	local tree = {}
 	for _,leg in pairs(legs) do
 		while minetest.get_item_group(mcl_vars.get_node(vector.offset(leg,0,-1,0), true, 333333).name, "water") ~= 0 do
@@ -37,7 +37,7 @@ local function hut_placement_callback(pos,def,pr)
 			table.insert(tree,leg)
 		end
 	end
-	minetest.bulk_set_node(tree, {name = "mcl_core:tree", param2 = 2})
+	minetest.bulk_set_node(tree, {name = "mcl_trees:tree_oak", param2 = 2})
 	spawn_witch(p1,p2)
 end
 

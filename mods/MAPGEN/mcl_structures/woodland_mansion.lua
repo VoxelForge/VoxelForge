@@ -3,7 +3,7 @@ local S = minetest.get_translator(modname)
 local modpath = minetest.get_modpath(modname)
 local peaceful = minetest.settings:get_bool("only_peaceful_mobs", false)
 
-local spawnon = {"mcl_deepslate:deepslate","mcl_core:birchwood","mcl_wool:red_carpet","mcl_wool:brown_carpet"}
+local spawnon = {"mcl_deepslate:deepslate","mcl_trees:planks_birch","mcl_wool:red_carpet","mcl_wool:brown_carpet"}
 
 mcl_structures.register_structure("woodland_cabin",{
 	place_on = {"group:grass_block","group:dirt","mcl_core:dirt_with_grass"},

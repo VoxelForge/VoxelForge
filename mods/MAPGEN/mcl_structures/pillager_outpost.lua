@@ -50,7 +50,7 @@ mcl_structures.register_structure("pillager_outpost",{
 			stacks_min = 1,
 			stacks_max = 3,
 			items = {
-				{ itemstring = "mcl_core:darktree", amount_min = 2, amount_max=3 },
+				{ itemstring = "mcl_trees:tree_dark_oak", amount_min = 2, amount_max=3 },
 			}
 		},
 		{

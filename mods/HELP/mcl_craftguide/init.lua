@@ -34,7 +34,7 @@ local FMT = {
 }
 
 local group_stereotypes = {
-	wood         = "mcl_core:wood",
+	wood         = "mcl_trees:planks_oak",
 	stone        = "mcl_core:stone",
 	sand         = "mcl_core:sand",
 	wool	     = "mcl_wool:white",

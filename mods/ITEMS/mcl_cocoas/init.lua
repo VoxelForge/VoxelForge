@@ -24,7 +24,7 @@ local function cocoa_place(itemstack, placer, pt, plantname)
 	end
 
 	-- Check if pointing at jungle tree
-	if under.name ~= "mcl_core:jungletree"
+	if under.name ~= "mcl_trees:tree_jungle"
 	or minetest.get_node(pt.above).name ~= "air" then
 		return
 	end
