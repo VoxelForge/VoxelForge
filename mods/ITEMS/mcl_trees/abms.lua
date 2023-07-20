@@ -118,7 +118,7 @@ end
 
 function mcl_trees.grow_tree(pos, node)
 	local name = node.name:gsub("mcl_trees:sapling_","")
-	local tbt = mcl_trees.check_2by2_saps(pos, node)
+	local tbt,ne = mcl_trees.check_2by2_saps(pos, node)
 	if node.name:find("propagule") then name = "mangrove" end
 	if not mcl_trees.woods[name] or not mcl_trees.woods[name].tree_schems then return end
 	local schem = mcl_trees.woods[name].tree_schems[1]
@@ -140,8 +140,9 @@ function mcl_trees.grow_tree(pos, node)
 			for _,v in pairs(tbt) do
 				minetest.remove_node(v)
 			end
+			pos = ne
 		end
-		minetest.place_schematic(vector.offset(pos, 0, -1, 0), schem.file, "random", nil, false, "place_center_x,place_center_z")
+		minetest.place_schematic(vector.subtract(pos, schem.offset or vector.new(w/2, 1, w/2)), schem.file, "random", nil, false)
 		local nn = minetest.find_nodes_in_area(vector.offset(pos, -math.ceil(w/2), 0, -math.ceil(w/2)), vector.offset(pos, math.ceil(w/2), h, math.ceil(w/2)), {"group:leaves"})
 		for _,v in pairs(nn) do
 			local n = minetest.get_node(v)

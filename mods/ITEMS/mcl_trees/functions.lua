@@ -48,7 +48,11 @@ function mcl_trees.check_2by2_saps(pos, node)
 		local zn = minetest.get_node(zp).name
 		if n == dn and n == xn and n == zn then
 			--if all the 3 acquired positions have the same nodename as the original node it must be a square
-			return {d,xp,zp}
+			local ne = pos
+			for _,p in pairs({pos,d,xp,zp}) do
+				if p.x > ne.x or p.z > ne.z then ne = p end
+			end --find northeasternmost node
+			return {d,xp,zp}, ne
 		end
 	end
 end
