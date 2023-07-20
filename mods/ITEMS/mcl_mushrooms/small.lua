@@ -127,6 +127,18 @@ minetest.register_node("mcl_mushrooms:mushroom_red", {
 	_mcl_blast_resistance = 0,
 })
 
+mcl_flowerpots.register_potted_flower("mcl_mushrooms:mushroom_brown", {
+	name = "mushroom_brown",
+	desc = S("Brown Mushroom"),
+	image = "farming_mushroom_brown.png",
+})
+
+mcl_flowerpots.register_potted_flower("mcl_mushrooms:mushroom_red", {
+	name = "mushroom_red",
+	desc = S("Red Mushroom"),
+	image = "farming_mushroom_red.png",
+})
+
 minetest.register_craftitem("mcl_mushrooms:mushroom_stew", {
 	description = S("Mushroom Stew"),
 	_doc_items_longdesc = S("Mushroom stew is a healthy soup which can be consumed to restore some hunger points."),

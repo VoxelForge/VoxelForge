@@ -28,6 +28,7 @@ mcl_trees.register_wood("bamboo",{
 			mcl_bamboo.grow(pos)
 		end,
 	},
+	potted_sapling = false,
 	leaves = false,
 	tree = { tiles = {"mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo_bottom.png","mcl_bamboo_bamboo_block.png" }},
 	stripped = { tiles = {"mcl_bamboo_bamboo_bottom_stripped.png", "mcl_bamboo_bamboo_bottom_stripped.png","mcl_bamboo_bamboo_block_stripped.png" }},

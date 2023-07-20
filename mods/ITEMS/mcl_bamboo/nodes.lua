@@ -103,6 +103,11 @@ for i,it in pairs(mcl_bamboo.bamboo_itemstrings) do
 	minetest.register_node(it,d)
 end
 
+mcl_flowerpots.register_potted_flower("mcl_bamboo:bamboo", {
+	name = "bamboo",
+	desc = S("Bamboo Plant"),
+	image = "mcl_bamboo_flower_pot.png",
+})
 
 local bamboo_top = table.copy(bamboo_def)
 table.update(bamboo_top,{

@@ -467,6 +467,14 @@ function mcl_trees.register_wood(name, p)
 		})
 	end
 
+	if (p.sapling == nil or type(p.sapling) == "table") and (p.potted_sapling == nil or type(p.potted_sapling) == "table") then
+		mcl_flowerpots.register_potted_flower("mcl_trees:sapling_"..name, table.merge({
+			name = "sapling_"..name,
+			desc = S(rname.." Sapling"),
+			image = "mcl_core_sapling_"..name..".png",
+		},p.potted_sapling or {}))
+	end
+
 	if p.boat == nil or type(p.boat) == "table" then
 		p.boat = p.boat or {}
 		mcl_boats.register_boat(name,table.merge({

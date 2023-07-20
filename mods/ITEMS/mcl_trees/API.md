@@ -46,6 +46,8 @@ mcl_boats_willow_chest_boat.png
 mcl_boats_willow_boat_texture.png
 
 ### Wood Definition
+All features can be disabled by setting them to false, nil will assume default values particularly for texture filenames.
+
 {
 	sign_color="#ECA870",                      --color of the sign
 	tree_schems= {                             --a table with schematics for tree growth from sapling
@@ -58,6 +60,7 @@ mcl_boats_willow_boat_texture.png
 	saplingdrop = "itemstring",                -- custom itemstring to drop instead of the API sapling
 	planks = {},                               -- overrides for the planks node definition
 	sapling = {},                              -- overrides for the sapling node definition
+	potted_sapling = {},                       -- mcl_flowerpot definition or empty/nil for defaults
 	fence = {},                                -- overrides for the fence node definition
 	fence_gate = {},                           -- overrides for the fence gate node definition
 	stair = {},                                -- overrides for the stairs node definitions
@@ -76,4 +79,5 @@ mcl_boats_willow_boat_texture.png
 		item = {},                             -- overrides for the boat item definition
 		object = {},                           -- overrides for the boat item definition
 		entity = {},                           -- overrides for the boat lua entity
+	},
 })

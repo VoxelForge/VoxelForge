@@ -35,6 +35,9 @@ mcl_trees.register_wood("oak",{
 		tile_side = "doors_trapdoor_side.png",
 		wield_image = "doors_trapdoor.png",
 	},
+	potted_sapling = {
+		image = "default_sapling.png",
+	},
 })
 
 mcl_trees.register_wood("dark_oak",{
@@ -58,6 +61,9 @@ mcl_trees.register_wood("dark_oak",{
 	fence_gate = {
 		tiles = { "mcl_fences_fence_gate_big_oak.png" },
 	},
+	potted_sapling = {
+		image = "mcl_core_sapling_big_oak.png",
+	},
 })
 
 mcl_trees.register_wood("jungle",{
@@ -80,6 +86,9 @@ mcl_trees.register_wood("jungle",{
 		tiles = {"default_junglesapling.png"},
 		inventory_image = "default_junglesapling.png",
 		wield_image = "default_junglesapling.png",
+	},
+	potted_sapling = {
+		image = "default_junglesapling.png",
 	},
 })
 
@@ -125,6 +134,9 @@ mcl_trees.register_wood("acacia",{
 		tiles = {"default_acacia_sapling.png"},
 		inventory_image = "default_acacia_sapling.png",
 		wield_image = "default_acacia_sapling.png",
+	},
+	potted_sapling = {
+		image = "default_acacia_sapling.png",
 	},
 })
 

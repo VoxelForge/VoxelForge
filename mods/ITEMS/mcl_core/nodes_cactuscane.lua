@@ -50,6 +50,12 @@ minetest.register_node("mcl_core:cactus", {
 	_mcl_hardness = 0.4,
 })
 
+mcl_flowerpots.register_potted_cube("mcl_core:cactus", {
+	name = "cactus",
+	desc = S("Cactus"),
+	image = "mcl_flowerpots_cactus.png",
+})
+
 minetest.register_node("mcl_core:reeds", {
 	description = S("Sugar Canes"),
 	_tt_help = S("Grows on sand or dirt next to water"),
