@@ -95,7 +95,7 @@ All character files must be 5 or 6 pixels wide (5 pixels are preferred)
 local modpath = minetest.get_modpath(minetest.get_current_modname())
 local chars_file = io.open(modpath .. "/characters.txt", "r")
 -- FIXME: Support more characters (many characters are missing). Currently ASCII and Latin-1 Supplement are supported.
-assert(chars_file,"[mcl_signs]","characters.txt not found")
+assert(chars_file,"[mcl_signs] characters.txt not found")
 local charmap = {}
 while true do
 	local char = chars_file:read("*l")
@@ -155,13 +155,9 @@ function mcl_signs.generate_line(s, ypos)
 			file = charmap[s:sub(i, i + 1)]
 			i = i + 2
 		else
-			-- No character image found.
 			-- Use replacement character:
 			file = "_rc"
 			i = i + 1
-			if DEBUG then
-				minetest.log("verbose", "[mcl_signs] Unknown symbol in '" .. s .. "' at " .. i)
-			end
 		end
 		if file then
 			width = width + printed_char_width
@@ -183,7 +179,7 @@ end
 function mcl_signs.generate_texture(data)
 	local lines = mcl_signs.create_lines(data.text or "")
 	local texture = "[combine:" .. SIGN_WIDTH .. "x" .. SIGN_WIDTH
-	local ypos = data.ypos or 0
+	local ypos = 0
 	local letter_color = data.color or DEFAULT_COLOR
 
 	for i = 1, #lines do
@@ -370,7 +366,3 @@ function mcl_signs.register_sign(name,color,def)
 	minetest.register_node(":mcl_signs:"..name.."_sign_hanging",table.update({},sign_hanging,textures,def or {}))
 	minetest.register_node(":mcl_signs:"..name.."_sign",table.update({},sign_wall,textures,def or {}))
 end
-
-mcl_signs.register_sign("redtest","#FF0000")
-mcl_signs.register_sign("bluetest","#0000FF")
-mcl_signs.register_sign("greentest","#00FF00")
