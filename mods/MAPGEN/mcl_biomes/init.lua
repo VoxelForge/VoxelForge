@@ -3416,6 +3416,8 @@ local function register_decorations()
 		biomes = {"Jungle", "JungleM", "JungleEdge", "MangroveSwamp"},
 		y_min = 1,
 		y_max = mcl_vars.mg_overworld_max,
+		param2 = 0,
+		param2_max = 3,
 		decoration = "mcl_bamboo:bamboo" ,
 	})
 	for i=1,3 do
@@ -3425,6 +3427,8 @@ local function register_decorations()
 			fill_ratio = 0.004+(i*0.001),
 			height = 7,
 			height_max = 15,
+			param2 = 0,
+			param2_max = 3,
 			biomes = {"Jungle", "JungleM", "JungleEdge", "MangroveSwamp"},
 			y_min = 1,
 			y_max = mcl_vars.mg_overworld_max,

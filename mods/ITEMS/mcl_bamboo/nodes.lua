@@ -16,13 +16,13 @@ local boxes = {
 }
 
 function mcl_bamboo.grow(pos)
-	if minetest.get_node(vector.offset(pos,0,1,0)).name ~= "air" then return end
 	local pr = PseudoRandom(minetest.hash_node_position(pos))
 	local max_height = pr:next(12,16)
 	local bottom = mcl_util.traverse_tower(pos,-1)
 	local top,h = mcl_util.traverse_tower(bottom,1)
 	if h < max_height then
 		local n = minetest.get_node(pos)
+		if minetest.get_node(vector.offset(top,0,1,0)).name ~= "air" then return end
 		minetest.set_node(vector.offset(top,0,1,0),n)
 	end
 end
@@ -56,9 +56,20 @@ local bamboo_def = {
 	_mcl_blast_resistance = 1,
 	_mcl_hardness = 1.5,
 	node_placement_prediction = "",
-	on_place = mcl_bamboo.place_bamboo,
-	after_place_node = function(pos, placer, itemstack, pointed_thing)
-		minetest.set_node(pos,{name=mcl_bamboo.bamboo_itemstrings[math.random(#mcl_bamboo.bamboo_itemstrings)], param2 = math.random(0,3)})
+	on_place = mcl_util.generate_on_place_plant_function(function(pos, node)
+		local node_below = minetest.get_node(vector.offset(pos,0,-1,0))
+		local bamboo_below = minetest.get_item_group(node_below.name, "bamboo_tree") > 0
+		return (minetest.get_item_group(node_below.name, "soil_bamboo") > 0 or bamboo_below),(bamboo_below and node_below.param2 or math.random(0,3))
+	end),
+	after_place_node  = function(pos)
+		local node = minetest.get_node(pos)
+		local node_below = minetest.get_node(vector.offset(pos,0,-1,0))
+		if minetest.get_item_group(node_below.name, "bamboo_tree") > 0 then
+			node = node_below
+		else
+			node.name = mcl_bamboo.bamboo_itemstrings[math.random(#mcl_bamboo.bamboo_itemstrings)]
+		end
+		minetest.swap_node(pos,node)
 	end,
 	on_dig = function(pos,node,digger)
 		mcl_util.traverse_tower(pos,1,function(p)

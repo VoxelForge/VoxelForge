@@ -6,9 +6,9 @@ local S = minetest.get_translator("mcl_bamboo")
 dofile(modpath .. "/nodes.lua")
 dofile(modpath .. "/recipes.lua")
 
-mcl_bamboo.place_bamboo = mcl_util.generate_on_place_plant_function(function(pos, node)
-	local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
-	return node_below and minetest.get_item_group(node_below.name, "soil_bamboo") > 0
+local place_bamboosap = mcl_util.generate_on_place_plant_function(function(pos, node)
+	local node_below = minetest.get_node(vector.offset(pos,0,-1,0))
+	return minetest.get_item_group(node_below.name, "soil_bamboo") > 0
 end)
 
 mcl_trees.register_wood("bamboo",{
@@ -22,7 +22,7 @@ mcl_trees.register_wood("bamboo",{
 			attached_node = 1, deco_block = 1, plant = 1, bamboo_sapling = 1, non_mycelium_plant = 1,
 			compostability = 30
 		},
-		on_place = mcl_bamboo.place_bamboo,
+		on_place = place_bamboosap,
 		_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
 			minetest.set_node(pos,{name=mcl_bamboo.bamboo_itemstrings[math.random(#mcl_bamboo.bamboo_itemstrings)]})
 			mcl_bamboo.grow(pos)
