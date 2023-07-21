@@ -3,8 +3,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 local bark_stairs = minetest.settings:get_bool("mcl_bark_stairs",true)
 
 local wood_groups = {
-	handy = 1, axey = 1,
-	wood = 1, material_wood = 1,
+	handy = 1, axey = 1, material_wood = 1,
 	flammable = 3, fire_encouragement = 5, fire_flammability = 20
 }
 
@@ -56,7 +55,6 @@ local function update_leaf_p2(pos, placer, itemstack, pointed_thing)
 end
 
 local tpl_log = {
-	groups = wood_groups,
 	_doc_items_hidden = false,
 	paramtype2 = "facedir",
 	groups = {
@@ -73,10 +71,10 @@ local tpl_log = {
 	_mcl_blast_resistance = 2,
 	_mcl_hardness = 2,
 }
-local tpl_planks = {
+local tpl_wood = {
 	_doc_items_hidden = false,
 	is_ground_content = false,
-	groups = wood_groups,
+	groups = table.merge(wood_groups,{wood = 1}),
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_blast_resistance = 3,
 	_mcl_hardness = 2,
@@ -239,14 +237,14 @@ function mcl_trees.register_wood(name, p)
 		},p.tree or {}))
 	end
 
-	if p.planks == nil or type(p.planks) == "table" then
-		minetest.register_node(":mcl_trees:planks_"..name, table.merge(tpl_planks,{
+	if p.wood == nil or type(p.wood) == "table" then
+		minetest.register_node(":mcl_trees:wood_"..name, table.merge(tpl_wood,{
 			description =  S(rname.." Wood Planks"),
 			_doc_items_longdesc = doc.sub.items.temp.build,
 			tiles = {"mcl_core_planks_"..name..".png"},
-		},p.planks or {}))
+		},p.wood or {}))
 		minetest.register_craft({
-			output = "mcl_trees:planks_"..name.." 4",
+			output = "mcl_trees:wood_"..name.." 4",
 			recipe = {
 				{ "mcl_trees:tree_"..name },
 			}
@@ -324,8 +322,8 @@ function mcl_trees.register_wood(name, p)
 		minetest.register_craft({
 			output = "mcl_fences:"..name.."_fence 3",
 			recipe = {
-				{"mcl_trees:planks_"..name, "mcl_core:stick", "mcl_trees:planks_"..name},
-				{"mcl_trees:planks_"..name, "mcl_core:stick", "mcl_trees:planks_"..name},
+				{"mcl_trees:wood_"..name, "mcl_core:stick", "mcl_trees:wood_"..name},
+				{"mcl_trees:wood_"..name, "mcl_core:stick", "mcl_trees:wood_"..name},
 			}
 		})
 	end
@@ -335,8 +333,8 @@ function mcl_trees.register_wood(name, p)
 		minetest.register_craft({
 			output = "mcl_fences:"..name.."_fence_gate",
 			recipe = {
-				{"mcl_core:stick", "mcl_trees:planks_"..name, "mcl_core:stick"},
-				{"mcl_core:stick", "mcl_trees:planks_"..name, "mcl_core:stick"},
+				{"mcl_core:stick", "mcl_trees:wood_"..name, "mcl_core:stick"},
+				{"mcl_core:stick", "mcl_trees:wood_"..name, "mcl_core:stick"},
 			}
 		})
 	end
@@ -350,9 +348,9 @@ function mcl_trees.register_wood(name, p)
 		minetest.register_craft({
 			output = "mcl_doors:door_"..name.." 3",
 			recipe = {
-				{"mcl_trees:planks_"..name, "mcl_trees:planks_"..name},
-				{"mcl_trees:planks_"..name, "mcl_trees:planks_"..name},
-				{"mcl_trees:planks_"..name, "mcl_trees:planks_"..name}
+				{"mcl_trees:wood_"..name, "mcl_trees:wood_"..name},
+				{"mcl_trees:wood_"..name, "mcl_trees:wood_"..name},
+				{"mcl_trees:wood_"..name, "mcl_trees:wood_"..name}
 			}
 		})
 		minetest.register_craft({
@@ -371,8 +369,8 @@ function mcl_trees.register_wood(name, p)
 		minetest.register_craft({
 			output = "mcl_doors:trapdoor_"..name.." 2",
 			recipe = {
-				{"mcl_trees:planks_"..name,"mcl_trees:planks_"..name,"mcl_trees:planks_"..name,},
-				{"mcl_trees:planks_"..name,"mcl_trees:planks_"..name,"mcl_trees:planks_"..name,},
+				{"mcl_trees:wood_"..name,"mcl_trees:wood_"..name,"mcl_trees:wood_"..name,},
+				{"mcl_trees:wood_"..name,"mcl_trees:wood_"..name,"mcl_trees:wood_"..name,},
 			}
 		})
 		minetest.register_craft({
@@ -384,9 +382,9 @@ function mcl_trees.register_wood(name, p)
 
 	if p.stairs == nil or type(p.stairs) == "table" then
 		p.stairs = p.stairs or {}
-		mcl_stairs.register_stair(name, "mcl_core:planks_"..name,
+		mcl_stairs.register_stair(name, "mcl_core:wood_"..name,
 			{handy=1,axey=1, flammable=3,wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
-			p.planks and p.planks.tiles or {"mcl_core_planks_"..name..".png"},
+			p.wood and p.wood.tiles or {"mcl_core_planks_"..name..".png"},
 			p.stairs.description or S(rname.." Wood Stairs"),
 			mcl_sounds.node_sound_wood_defaults(), 3, 2,
 			"woodlike")
@@ -403,9 +401,9 @@ function mcl_trees.register_wood(name, p)
 
 	if p.slab == nil or type(p.slab) == "table" then
 		p.slab = p.slab or {}
-		mcl_stairs.register_slab(name, "mcl_core:planks_"..name,
+		mcl_stairs.register_slab(name, "mcl_core:wood_"..name,
 			{handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
-			p.planks and p.planks.tiles or {"mcl_core_planks_"..name..".png"},
+			p.wood and p.wood.tiles or {"mcl_core_planks_"..name..".png"},
 			p.slab.description or S(rname.." Wood Slab"),
 			mcl_sounds.node_sound_wood_defaults(), 3, 2,
 			S("Double "..rname.." Wood Slab"))
@@ -424,18 +422,18 @@ function mcl_trees.register_wood(name, p)
 				"mcl_signs_sign_greyscale.png",p.sign_color, "default_sign_greyscale.png",
 				"default_sign_greyscale.png", rname.." Sign"
 		)
-		mcl_signs.register_sign_craft("mcl_trees", "mcl_trees:planks_"..name, "_"..name)
+		mcl_signs.register_sign_craft("mcl_trees", "mcl_trees:wood_"..name, "_"..name)
 	end
 
 	if p.pressure_plate == nil or type(p.pressure_plate) == "table" then
 		mesecon.register_pressure_plate(
 			"mesecons_pressureplates:pressure_plate_"..name,
 			S(rname.." Pressure Plate"),
-			p.planks and p.planks.tiles or {"mcl_core_planks_"..name..".png"},
-			p.planks and p.planks.tiles or {"mcl_core_planks_"..name..".png"},
-			p.planks and p.planks.tiles[1] or "mcl_core_planks_"..name..".png",
+			p.wood and p.wood.tiles or {"mcl_core_planks_"..name..".png"},
+			p.wood and p.wood.tiles or {"mcl_core_planks_"..name..".png"},
+			p.wood and p.wood.tiles[1] or "mcl_core_planks_"..name..".png",
 			nil,
-			{{"mcl_trees:planks_"..name, "mcl_trees:planks_"..name}},
+			{{"mcl_trees:wood_"..name, "mcl_trees:wood_"..name}},
 			mcl_sounds.node_sound_wood_defaults(),
 			{axey=1, material_wood=1},
 			nil,
@@ -451,8 +449,8 @@ function mcl_trees.register_wood(name, p)
 		mesecon.register_button(
 			name,
 			S(rname.." Button"),
-			p.planks and p.planks.tiles[1] or "mcl_core_planks_"..name..".png",
-			"mcl_trees:planks_"..name,
+			p.wood and p.wood.tiles[1] or "mcl_core_planks_"..name..".png",
+			"mcl_trees:wood_"..name,
 			mcl_sounds.node_sound_wood_defaults(),
 			{material_wood=1,handy=1,axey=1},
 			1.5,

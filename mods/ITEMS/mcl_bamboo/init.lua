@@ -33,7 +33,7 @@ mcl_trees.register_wood("bamboo",{
 	tree = { tiles = {"mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo_bottom.png","mcl_bamboo_bamboo_block.png" }},
 	stripped = { tiles = {"mcl_bamboo_bamboo_bottom_stripped.png", "mcl_bamboo_bamboo_bottom_stripped.png","mcl_bamboo_bamboo_block_stripped.png" }},
 	bark = { tiles = {"mcl_bamboo_bamboo_block.png"}},
-	planks = { tiles = {"mcl_bamboo_bamboo_plank.png"}},
+	wood = { tiles = {"mcl_bamboo_bamboo_plank.png"}},
 	stripped_bark = { tiles = {"mcl_bamboo_bamboo_block_stripped.png"} },
 	fence = { tiles = { "mcl_bamboo_fence_bamboo.png" },},
 	fence_gate = { tiles = { "mcl_bamboo_fence_gate_bamboo.png" }, },

@@ -20,7 +20,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "mcl_bamboo:planks_bamboo",
+	output = "mcl_bamboo:wood_bamboo",
 	recipe = {
 		{"group:bamboo_tree","group:bamboo_tree"},
 		{"group:bamboo_tree","group:bamboo_tree"},

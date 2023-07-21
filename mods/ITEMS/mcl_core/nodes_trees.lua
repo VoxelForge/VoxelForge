@@ -19,7 +19,7 @@ mcl_trees.register_wood("oak",{
 	leaves = { tiles = { "default_leaves.png" } },
 	sapling_chances = {20, 16, 12, 10},
 	drop_apples = true,
-	planks = { tiles = {"default_wood.png"}},
+	wood = { tiles = {"default_wood.png"}},
 	sapling = {
 		tiles = {"default_sapling.png"},
 		inventory_image = "default_sapling.png",
@@ -49,7 +49,7 @@ mcl_trees.register_wood("dark_oak",{
 	leaves = { tiles = { "mcl_core_leaves_big_oak.png" } },
 	sapling_chances = {20, 16, 12, 10},
 	drop_apples = true,
-	planks = { tiles = {"mcl_core_planks_big_oak.png"}},
+	wood = { tiles = {"mcl_core_planks_big_oak.png"}},
 	sapling = {
 		tiles = {"mcl_core_sapling_big_oak.png"},
 		inventory_image = "mcl_core_sapling_big_oak.png",
@@ -81,7 +81,7 @@ mcl_trees.register_wood("jungle",{
 	tree = { tiles = {"default_jungletree_top.png", "default_jungletree_top.png","default_jungletree.png"} },
 	leaves = { tiles = { "default_jungleleaves.png" } },
 	sapling_chances = {40, 26, 32, 24, 10},
-	planks = { tiles = {"default_junglewood.png"}},
+	wood = { tiles = {"default_junglewood.png"}},
 	sapling = {
 		tiles = {"default_junglesapling.png"},
 		inventory_image = "default_junglesapling.png",
@@ -129,7 +129,7 @@ mcl_trees.register_wood("acacia",{
 	tree = { tiles = {"default_acacia_tree_top.png", "default_acacia_tree_top.png","default_acacia_tree.png"} },
 	leaves = { tiles = { "default_acacia_leaves.png" } },
 	sapling_chances = {20, 16, 12, 10},
-	planks = { tiles = {"default_acacia_wood.png"}},
+	wood = { tiles = {"default_acacia_wood.png"}},
 	sapling = {
 		tiles = {"default_acacia_sapling.png"},
 		inventory_image = "default_acacia_sapling.png",

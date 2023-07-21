@@ -536,7 +536,7 @@ function mcl_boats.register_boat(name,item_def,object_properties,entity_override
 		end,
 	},item_def or {}))
 
-	local c = "mcl_trees:planks_"..name
+	local c = "mcl_trees:wood_"..name
 	if itemstring:find("chest") then
 		minetest.register_craft({
 			output = itemstring,

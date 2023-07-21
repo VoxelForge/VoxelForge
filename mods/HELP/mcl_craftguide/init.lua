@@ -34,12 +34,12 @@ local FMT = {
 }
 
 local group_stereotypes = {
-	wood         = "mcl_trees:planks_oak",
+	wood         = "mcl_trees:wood_oak",
 	stone        = "mcl_core:stone",
 	sand         = "mcl_core:sand",
-	wool	     = "mcl_wool:white",
+	wool         = "mcl_wool:white",
 	carpet       = "mcl_wool:white_carpet",
-	dye	     = "mcl_dyes:red",
+	dye          = "mcl_dyes:red",
 	water_bucket = "mcl_buckets:bucket_water",
 	flower	     = "mcl_flowers:dandelion",
 	mushroom     = "mcl_mushrooms:mushroom_brown",

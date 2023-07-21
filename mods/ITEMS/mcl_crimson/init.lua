@@ -83,7 +83,7 @@ mcl_trees.register_wood("crimson",{
 		tiles = {"crimson_hyphae_side.png"},
 		groups = table.merge(nether_wood_groups,{tree = 1, bark = 1}),
 	},
-	planks = {
+	wood = {
 		tiles = {"crimson_hyphae_wood.png"},
 		groups = table.merge(nether_wood_groups,{wood = 1}),
 	},
@@ -127,7 +127,7 @@ mcl_trees.register_wood("warped",{
 		tiles = {"warped_hyphae_side.png"},
 		groups = table.merge(nether_wood_groups,{tree = 1, bark = 1}),
 	},
-	planks = {
+	wood = {
 		tiles = {"warped_hyphae_wood.png"},
 		groups = table.merge(nether_wood_groups,{wood = 1}),
 	},
