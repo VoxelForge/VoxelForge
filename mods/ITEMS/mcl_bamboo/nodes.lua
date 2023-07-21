@@ -184,14 +184,16 @@ minetest.register_node("mcl_bamboo:scaffolding", {
 	climbable = true,
 	physical = true,
 	node_placement_prediction = "",
-	groups = { handy=1, axey=1, flammable=3, building_block=1, material_wood=1, fire_encouragement=5, fire_flammability=60, falling_node = 1, stack_falling = 1 },
+	groups = { handy=1, axey=1, flammable=3, building_block=1, material_wood=1, fire_encouragement=5, fire_flammability=60, falling_node = 1, stack_falling = 1, scaffolding = 1 },
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_blast_resistance = 0,
 	_mcl_hardness = 0,
 	on_place = function(itemstack, placer, ptd)
-		local node = minetest.get_node(ptd.under)
 		local ctrl = placer:get_player_control()
-		if ctrl and ctrl.sneak then -- count param2 up when placing to the sides. Fall when > 6
+		if mcl_util.call_on_rightclick(itemstack, placer, ptd) then return end
+		local node = minetest.get_node(ptd.under)
+
+		if minetest.get_item_group(node.name,"scaffolding") > 0 and ctrl and ctrl.sneak then -- count param2 up when placing to the sides. Fall when > 6
 			local pp2 = node.param2
 			local np2 = pp2 + 1
 			if minetest.get_node(vector.offset(ptd.above,0,-1,0)).name == "air" and minetest.get_node(ptd.above).name == "air" then
@@ -258,7 +260,7 @@ minetest.register_node("mcl_bamboo:scaffolding_horizontal", {
 			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
 		},
 	},
-	groups = { handy=1, axey=1, flammable=3, building_block=1, material_wood=1, fire_encouragement=5, fire_flammability=60, not_in_creative_inventory = 1, falling_node = 1 },
+	groups = { handy=1, axey=1, flammable=3, building_block=1, material_wood=1, fire_encouragement=5, fire_flammability=60, not_in_creative_inventory = 1, falling_node = 1, scaffolding = 1 },
 	_mcl_after_falling = function(pos)
 		if minetest.get_node(pos).name == "mcl_bamboo:scaffolding_horizontal" then
 			local above = vector.offset(pos,0,1,0)
