@@ -131,26 +131,27 @@ local function normalize_rotation(rot) return math.floor(0.5 + rot / 15) * 15 en
 
 local function get_signdata(pos)
 	local node = minetest.get_node(pos)
-	if minetest.get_item_group(node.name,"sign") == 0 then return end
 	local def = minetest.registered_nodes[node.name]
 	local meta = minetest.get_meta(pos)
 	local text = meta:get_string("text")
 	local color = meta:get_string("color")
 	local yaw, spos
-	local typ = "wall"
-	if def.paramtype2  == "degrotate" then
-		yaw = math.rad(((node.param2 * 1.5 ) + 1 ) % 360)
-		typ = "standing"
-		spos = vector.add(vector.offset(pos,0,0.08,0),minetest.yaw_to_dir(yaw) * -0.05)
-	elseif def.paramtype2 == "facedir" then
-		local dir = minetest.facedir_to_dir(node.param2)
-		spos = vector.add(vector.offset(pos,0,-0.25,0),dir * -0.05 )
-		yaw = minetest.dir_to_yaw(dir)
-		typ = "hanging"
-	else
+	local typ = "standing"
+	if def.paramtype2  == "wallmounted" then
+		typ = "wall"
 		local dir = minetest.wallmounted_to_dir(node.param2)
 		spos = vector.add(vector.offset(pos,0,-0.25,0),dir * 0.41 )
 		yaw = minetest.dir_to_yaw(dir)
+	elseif def.paramtype2 == "facedir" then
+		typ = "hanging"
+		local dir = minetest.facedir_to_dir(node.param2)
+		spos = vector.add(vector.offset(pos,0,-0.25,0),dir * -0.05 )
+		yaw = minetest.dir_to_yaw(dir)
+	else
+		node = minetest.get_node(vector.offset(pos,0,-1,0))
+		yaw = math.rad(((node.param2 * 1.5 ) + 1 ) % 360)
+		local dir = minetest.yaw_to_dir(yaw)
+		spos = vector.add(vector.offset(pos,0,-0.92,0),dir * -0.05)
 	end
 	if color == "" then color = DEFAULT_COLOR end
 	return {
@@ -293,24 +294,12 @@ function mcl_signs.get_text_entity (pos, force_remove)
 end
 
 function mcl_signs.update_sign(pos)
-	local node = minetest.get_node(pos)
 	local data = get_signdata(pos)
 
 	if not data then
 		return false
 	end
-	local dir = minetest.yaw_to_dir(data.yaw or 0)
-	local spos = vector.add(vector.offset(pos,0,0.08,0),dir * -0.05)
-	local yaw = data.yaw
-	if data.typ == "wall" then
-		dir = minetest.wallmounted_to_dir(data.node.param2)
-		spos = vector.add(vector.offset(pos,0,-0.25,0),dir * 0.41 )
-		yaw = minetest.dir_to_yaw(dir)
-	elseif data.typ == "hanging" then
-		dir = minetest.facedir_to_dir(data.node.param2)
-		spos = vector.add(vector.offset(pos,0,-0.25,0),dir * -0.05 )
-		yaw = minetest.dir_to_yaw(dir)
-	end
+
 	local text_entity = mcl_signs.get_text_entity(pos)
 	if not text_entity then
 		text_entity = minetest.add_entity(data.text_pos, "mcl_signs:text")
@@ -320,7 +309,7 @@ function mcl_signs.update_sign(pos)
 	text_entity:set_properties({
 		textures = { mcl_signs.generate_texture(data) },
 	})
-	text_entity:set_yaw(yaw)
+	text_entity:set_yaw(data.yaw)
 	return true
 end
 
