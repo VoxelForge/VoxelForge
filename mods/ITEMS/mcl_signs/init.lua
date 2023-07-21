@@ -148,10 +148,9 @@ local function get_signdata(pos)
 		spos = vector.add(vector.offset(pos,0,-0.25,0),dir * -0.05 )
 		yaw = minetest.dir_to_yaw(dir)
 	else
-		node = minetest.get_node(vector.offset(pos,0,-1,0))
 		yaw = math.rad(((node.param2 * 1.5 ) + 1 ) % 360)
 		local dir = minetest.yaw_to_dir(yaw)
-		spos = vector.add(vector.offset(pos,0,-0.92,0),dir * -0.05)
+		spos = vector.add(vector.offset(pos,0,0.08,0),dir * -0.05)
 	end
 	if color == "" then color = DEFAULT_COLOR end
 	return {
@@ -222,15 +221,14 @@ function sign_tpl.on_place(itemstack, placer, pointed_thing)
 	-- place on wall
 	if wdir ~= 0 and wdir ~= 1 then
 		--placestack:set_name("mcl_signs:sign")
-		itemstack = minetest.item_place(placestack, placer, pointed_thing, wdir)
+		itemstack, pos = minetest.item_place(placestack, placer, pointed_thing, wdir)
 	elseif wdir == 1 then -- standing, not ceiling
 		placestack:set_name(itemstack:get_name().."_standing")
 		local rot = normalize_rotation(placer:get_look_horizontal() * 180 / math.pi / 1.5)
-		itemstack = minetest.item_place(placestack, placer, pointed_thing,  rot) -- param2 value is degrees / 1.5
-		pos = vector.offset(under,0,1,0)
+		itemstack, pos = minetest.item_place(placestack, placer, pointed_thing,  rot) -- param2 value is degrees / 1.5
 	elseif wdir == 0 then --ceiling, hanging sign
 		placestack:set_name(itemstack:get_name().."_hanging")
-		itemstack = minetest.item_place(placestack, placer, pointed_thing, minetest.dir_to_facedir(vector.direction(placer:get_pos(),pointed_thing.above)))
+		itemstack, pos = minetest.item_place(placestack, placer, pointed_thing, minetest.dir_to_facedir(vector.direction(placer:get_pos(),pointed_thing.above)))
 	else
 		return itemstack
 	end
@@ -260,6 +258,7 @@ table.update(sign_hanging,{
 	tiles = { "mcl_signs_sign_hanging.png" },
 	paramtype2 = "facedir",
 	selection_box = { type = "fixed", fixed = { -0.5, -7 / 28, -0.5, -23 / 56, 7 / 28, 0.5 }},
+	groups = { axey = 1, handy = 2, sign = 1, not_in_creative_inventory = 1 },
 })
 
 minetest.register_node("mcl_signs:sign_standing",sign_tpl)
@@ -268,6 +267,7 @@ minetest.register_node("mcl_signs:sign",sign_wall)
 
 function mcl_signs.register_sign(name,color,def)
 	local tiles = { "mcl_signs_sign_greyscale.png^[multiply:"..color }
+	local inventory_image = "default_sign.png^[multiply:"..color
 	def = def or {}
 	minetest.register_node(":mcl_signs:"..name.."_sign_standing",table.update({},sign_tpl,{tiles = tiles},def))
 	minetest.register_node(":mcl_signs:"..name.."_sign_hanging",table.update({},sign_hanging,{tiles = tiles},def))
@@ -359,7 +359,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 end)
 
 minetest.register_lbm({
-	nodenames = {"group:signs"},
+	nodenames = {"group:sign"},
 	name = "mcl_signs:restore_entities",
 	label = "Restore sign text",
 	run_at_every_load = true,
