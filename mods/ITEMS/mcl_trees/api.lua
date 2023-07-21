@@ -529,11 +529,7 @@ function mcl_trees.register_wood(name, p)
 		end
 	end
 	if p.sign_color and ( p.sign == nil or type(p.sign) == "table" ) then
-		mcl_signs.register_sign_custom("mcl_trees", "_"..name,
-				"mcl_signs_sign_greyscale.png",p.sign_color, "default_sign_greyscale.png",
-				"default_sign_greyscale.png", rname.." Sign"
-		)
-		mcl_signs.register_sign_craft("mcl_trees", "mcl_trees:wood_"..name, "_"..name)
+		mcl_signs.register_sign(name,p.sign_color, p.sign or {})
 	end
 
 	if p.pressure_plate == nil or type(p.pressure_plate) == "table" then
