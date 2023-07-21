@@ -17,7 +17,6 @@ mcl_trees.register_wood("oak",{
 	},
 	tree = { tiles = {"default_tree_top.png", "default_tree_top.png","default_tree.png"} },
 	leaves = { tiles = { "default_leaves.png" } },
-	sapling_chances = {20, 16, 12, 10},
 	drop_apples = true,
 	wood = { tiles = {"default_wood.png"}},
 	sapling = {
@@ -47,7 +46,6 @@ mcl_trees.register_wood("dark_oak",{
 	},
 	tree = { tiles = {"mcl_core_log_big_oak_top.png", "mcl_core_log_big_oak_top.png","mcl_core_log_big_oak.png"} },
 	leaves = { tiles = { "mcl_core_leaves_big_oak.png" } },
-	sapling_chances = {20, 16, 12, 10},
 	drop_apples = true,
 	wood = { tiles = {"mcl_core_planks_big_oak.png"}},
 	sapling = {
@@ -111,7 +109,6 @@ mcl_trees.register_wood("spruce",{
 		{ file = modpath.."/schematics/mcl_core_spruce_huge_up_2.mts", width = 10, height = 24 },
 		{ file = modpath.."/schematics/mcl_core_spruce_huge_up_3.mts", width = 8, height = 23 },
 	},
-	sapling_chances = {20, 16, 12, 10},
 })
 
 mcl_trees.register_wood("acacia",{
@@ -128,7 +125,6 @@ mcl_trees.register_wood("acacia",{
 	},
 	tree = { tiles = {"default_acacia_tree_top.png", "default_acacia_tree_top.png","default_acacia_tree.png"} },
 	leaves = { tiles = { "default_acacia_leaves.png" } },
-	sapling_chances = {20, 16, 12, 10},
 	wood = { tiles = {"default_acacia_wood.png"}},
 	sapling = {
 		tiles = {"default_acacia_sapling.png"},
@@ -147,5 +143,4 @@ mcl_trees.register_wood("birch",{
 		{ file = modpath.."/schematics/mcl_core_birch.mts", width = 5, height = 9 },
 		{ file = modpath.."/schematics/mcl_core_birch_tall.mts", width = 5, height = 13 },
 	},
-	sapling_chances = {20, 16, 12, 10},
 })
