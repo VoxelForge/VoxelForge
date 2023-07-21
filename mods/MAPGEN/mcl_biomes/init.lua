@@ -119,6 +119,7 @@ local function register_biomes()
 		"JungleM",
 		"JungleEdge",
 		"JungleEdgeM",
+		"BambooJungle",
 		"MushroomIsland",
 		"Desert",
 		"Savanna",
@@ -1418,6 +1419,43 @@ local end_skycolor = "#000000"
 		heat_point = 81,
 		_mcl_biome_type = "medium",
 		_mcl_palette_index = 25,
+		_mcl_skycolor = ocean_skycolor,
+		_mcl_fogcolor = overworld_fogcolor
+	})
+
+	-- Bamboo Jungle
+	minetest.register_biome({
+		name = "BambooJungle",
+		node_top = "mcl_core:dirt_with_grass",
+		depth_top = 1,
+		node_filler = "mcl_core:dirt",
+		depth_filler = 2,
+		node_riverbed = "mcl_core:sand",
+		depth_riverbed = 2,
+		y_min = 1,
+		y_max = mcl_vars.mg_overworld_max,
+		humidity_point = 90,
+		heat_point = 79,
+		_mcl_biome_type = "medium",
+		_mcl_palette_index = 26,
+		_mcl_skycolor = "#77A8FF",
+		_mcl_fogcolor = overworld_fogcolor
+	})
+
+	minetest.register_biome({
+		name = "BambooJungle_ocean",
+		node_top = "mcl_core:sand",
+		depth_top = 1,
+		node_filler = "mcl_core:sand",
+		depth_filler = 2,
+		node_riverbed = "mcl_core:sand",
+		depth_riverbed = 2,
+		y_min = OCEAN_MIN,
+		y_max = 0,
+		humidity_point = 90,
+		heat_point = 79,
+		_mcl_biome_type = "medium",
+		_mcl_palette_index = 26,
 		_mcl_skycolor = ocean_skycolor,
 		_mcl_fogcolor = overworld_fogcolor
 	})
@@ -2943,6 +2981,7 @@ end
 local coral_min = OCEAN_MIN
 local coral_max = -10
 local warm_oceans = {
+	"BambooJungle_ocean",
 	"JungleEdgeM_ocean",
 	"Jungle_deep_ocean",
 	"Savanna_ocean",
@@ -3400,20 +3439,21 @@ local function register_decorations()
 		place_on = {"group:grass_block_no_snow", "mcl_core:dirt"},
 		sidelen = 80,
 		fill_ratio = 0.0004,
-		biomes = {"JungleEdge", "JungleEdgeM", "Savanna"},
+		biomes = {"BambooJungle", "JungleEdge", "JungleEdgeM", "Savanna"},
 		y_min = 1,
 		y_max = mcl_vars.mg_overworld_max,
 		schematic = mod_mcl_core.."/schematics/mcl_core_oak_classic.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
+
 	minetest.register_decoration({
 		deco_type = "simple",
 		place_on = {"group:grass_block_no_snow", "mcl_core:dirt", "mcl_mud:mud"},
 		fill_ratio = 0.004,
 		height = 7,
 		height_max = 15,
-		biomes = {"Jungle", "JungleM", "JungleEdge", "MangroveSwamp"},
+		biomes = {"BambooJungle", "Jungle", "JungleM", "JungleEdge", "MangroveSwamp"},
 		y_min = 1,
 		y_max = mcl_vars.mg_overworld_max,
 		param2 = 0,
@@ -3429,7 +3469,36 @@ local function register_decorations()
 			height_max = 15,
 			param2 = 0,
 			param2_max = 3,
-			biomes = {"Jungle", "JungleM", "JungleEdge", "MangroveSwamp"},
+			biomes = {"BambooJungle", "Jungle", "JungleM", "JungleEdge", "MangroveSwamp"},
+			y_min = 1,
+			y_max = mcl_vars.mg_overworld_max,
+			decoration = "mcl_bamboo:bamboo"..i,
+		})
+	end
+
+	minetest.register_decoration({
+		deco_type = "simple",
+		place_on = {"group:grass_block_no_snow", "mcl_core:dirt", "mcl_mud:mud"},
+		fill_ratio = 0.1,
+		height = 7,
+		height_max = 15,
+		biomes = { "BambooJungle" },
+		y_min = 1,
+		y_max = mcl_vars.mg_overworld_max,
+		param2 = 0,
+		param2_max = 3,
+		decoration = "mcl_bamboo:bamboo" ,
+	})
+	for i=1,3 do
+		minetest.register_decoration({
+			deco_type = "simple",
+			place_on = {"group:grass_block_no_snow", "mcl_core:dirt", "mcl_mud:mud"},
+			fill_ratio = 0.1+(i*0.001),
+			height = 7,
+			height_max = 15,
+			param2 = 0,
+			param2_max = 3,
+			biomes = { "BambooJungle" },
 			y_min = 1,
 			y_max = mcl_vars.mg_overworld_max,
 			decoration = "mcl_bamboo:bamboo"..i,
@@ -3757,7 +3826,7 @@ local function register_decorations()
 		place_on = {"group:grass_block_no_snow", "mcl_core:dirt"},
 		sidelen = 80,
 		fill_ratio = 0.0045,
-		biomes = {"JungleEdge", "JungleEdgeM"},
+		biomes = {"BambooJungle", "JungleEdge", "JungleEdgeM"},
 		y_min = 1,
 		y_max = mcl_vars.mg_overworld_max,
 		schematic = mod_mcl_core.."/schematics/mcl_core_jungle_tree.mts",
@@ -4331,7 +4400,7 @@ local function register_decorations()
 		end
 	end
 
-	register_double_fern(0.01, 0.03, { "Jungle", "JungleM", "JungleEdge", "JungleEdgeM", "Taiga", "ColdTaiga", "MegaTaiga", "MegaSpruceTaiga" })
+	register_double_fern(0.01, 0.03, { "BambooJungle", "Jungle", "JungleM", "JungleEdge", "JungleEdgeM", "Taiga", "ColdTaiga", "MegaTaiga", "MegaSpruceTaiga" })
 	register_double_fern(0.15, 0.1, { "JungleM" })
 
 	-- Large flowers
@@ -4454,7 +4523,7 @@ local function register_decorations()
 			octaves = 4,
 			persist = 0.6,
 		},
-		biomes = {"JungleEdge", "JungleEdgeM"},
+		biomes = { "BambooJungle", "JungleEdge", "JungleEdgeM"},
 		y_min = 3,
 		y_max = mcl_vars.mg_overworld_max,
 		schematic = mod_mcl_core.."/schematics/mcl_core_jungle_bush_oak_leaves.mts",
@@ -4713,7 +4782,7 @@ local function register_decorations()
 		y_min = 1,
 		y_max = mcl_vars.mg_overworld_max,
 		decoration = "mcl_farming:melon",
-		biomes = { "JungleEdge", "JungleEdgeM" },
+		biomes = { "BambooJungle", "JungleEdge", "JungleEdgeM" },
 	})
 
 	-- Lots of melons in Jungle Edge M
@@ -4758,7 +4827,7 @@ local function register_decorations()
 	-- Grasses and ferns
 	local grass_forest = {"Plains", "Taiga", "Forest", "FlowerForest", "BirchForest", "BirchForestM", "RoofedForest", "Swampland", }
 	local grass_mpf = {"MesaPlateauF_grasstop"}
-	local grass_plains = {"Plains", "SunflowerPlains", "JungleEdge", "JungleEdgeM", "MangroveSwamp" }
+	local grass_plains = {"Plains", "SunflowerPlains", "BambooJungle", "JungleEdge", "JungleEdgeM", "MangroveSwamp" }
 	local grass_savanna = {"Savanna", "SavannaM"}
 	local grass_sparse = {"ExtremeHills", "ExtremeHills+", "ExtremeHills+_snowtop", "ExtremeHillsM", "Jungle" }
 	local grass_mpfm = {"MesaPlateauFM_grasstop" }
@@ -4781,9 +4850,9 @@ local function register_decorations()
 	register_grass_decoration("tallgrass", 0.05, -0.03, grass_sparse)
 	register_grass_decoration("tallgrass", 0.05, 0.05, grass_mpfm)
 
-	local fern_minimal = { "Jungle", "JungleM", "JungleEdge", "JungleEdgeM", "Taiga", "MegaTaiga", "MegaSpruceTaiga", "ColdTaiga", "MangroveSwamp" }
-	local fern_low = { "Jungle", "JungleM", "JungleEdge", "JungleEdgeM", "Taiga", "MegaTaiga", "MegaSpruceTaiga" }
-	local fern_Jungle = { "Jungle", "JungleM", "JungleEdge", "JungleEdgeM" }
+	local fern_minimal = { "Jungle", "JungleM", "BambooJungle", "JungleEdge", "JungleEdgeM", "Taiga", "MegaTaiga", "MegaSpruceTaiga", "ColdTaiga", "MangroveSwamp" }
+	local fern_low = { "Jungle", "JungleM", "BambooJungle", "JungleEdge", "JungleEdgeM", "Taiga", "MegaTaiga", "MegaSpruceTaiga" }
+	local fern_Jungle = { "Jungle", "JungleM", "BambooJungle", "JungleEdge", "JungleEdgeM" }
 	--local fern_JungleM = { "JungleM" },
 
 	register_grass_decoration("fern", -0.03,  0.09, fern_minimal)
@@ -4798,17 +4867,17 @@ local function register_decorations()
 	register_grass_decoration("fern", 0.09, -0.03, fern_Jungle)
 	register_grass_decoration("fern", 0.12, -0.03, {"JungleM"})
 
-	local b_seagrass = {"ColdTaiga_ocean","ExtremeHills_ocean","ExtremeHillsM_ocean","ExtremeHills+_ocean","Taiga_ocean","MegaTaiga_ocean","MegaSpruceTaiga_ocean","StoneBeach_ocean","Plains_ocean","SunflowerPlains_ocean","Forest_ocean","FlowerForest_ocean","BirchForest_ocean","BirchForestM_ocean","RoofedForest_ocean","Swampland_ocean","Jungle_ocean","JungleM_ocean","JungleEdge_ocean","JungleEdgeM_ocean","MushroomIsland_ocean","Desert_ocean","Savanna_ocean","SavannaM_ocean","Mesa_ocean","MesaBryce_ocean","MesaPlateauF_ocean","MesaPlateauFM_ocean",
+	local b_seagrass = {"ColdTaiga_ocean","ExtremeHills_ocean","ExtremeHillsM_ocean","ExtremeHills+_ocean","Taiga_ocean","MegaTaiga_ocean","MegaSpruceTaiga_ocean","StoneBeach_ocean","Plains_ocean","SunflowerPlains_ocean","Forest_ocean","FlowerForest_ocean","BirchForest_ocean","BirchForestM_ocean","RoofedForest_ocean","Swampland_ocean","Jungle_ocean","JungleM_ocean","BambooJungle_ocean", "JungleEdge_ocean","JungleEdgeM_ocean","MushroomIsland_ocean","Desert_ocean","Savanna_ocean","SavannaM_ocean","Mesa_ocean","MesaBryce_ocean","MesaPlateauF_ocean","MesaPlateauFM_ocean",
 "ColdTaiga_deep_ocean","ExtremeHills_deep_ocean","ExtremeHillsM_deep_ocean","ExtremeHills+_deep_ocean","Taiga_deep_ocean","MegaTaiga_deep_ocean","MegaSpruceTaiga_deep_ocean","StoneBeach_deep_ocean","Plains_deep_ocean","SunflowerPlains_deep_ocean","Forest_deep_ocean","FlowerForest_deep_ocean","BirchForest_deep_ocean","BirchForestM_deep_ocean","RoofedForest_deep_ocean","Swampland_deep_ocean","Jungle_deep_ocean","JungleM_deep_ocean","JungleEdge_deep_ocean","JungleEdgeM_deep_ocean","MushroomIsland_deep_ocean","Desert_deep_ocean","Savanna_deep_ocean","SavannaM_deep_ocean","Mesa_deep_ocean","MesaBryce_deep_ocean","MesaPlateauF_deep_ocean","MesaPlateauFM_deep_ocean",
 "Mesa_sandlevel","MesaBryce_sandlevel","MesaPlateauF_sandlevel","MesaPlateauFM_sandlevel","Swampland_shore","Jungle_shore","JungleM_shore","Savanna_beach","FlowerForest_beach","ColdTaiga_beach_water","ExtremeHills_beach"}
-	local b_kelp = {"ExtremeHillsM_ocean","ExtremeHills+_ocean","MegaTaiga_ocean","MegaSpruceTaiga_ocean","Plains_ocean","SunflowerPlains_ocean","Forest_ocean","FlowerForest_ocean","BirchForest_ocean","BirchForestM_ocean","RoofedForest_ocean","Swampland_ocean","Jungle_ocean","JungleM_ocean","JungleEdge_ocean","JungleEdgeM_ocean","MushroomIsland_ocean",
+	local b_kelp = {"ExtremeHillsM_ocean","ExtremeHills+_ocean","MegaTaiga_ocean","MegaSpruceTaiga_ocean","Plains_ocean","SunflowerPlains_ocean","Forest_ocean","FlowerForest_ocean","BirchForest_ocean","BirchForestM_ocean","RoofedForest_ocean","Swampland_ocean","Jungle_ocean","JungleM_ocean","JungleEdge_ocean","JungleEdgeM_ocean","MushroomIsland_ocean","BambooJungle_ocean",
 "ExtremeHillsM_deep_ocean","ExtremeHills+_deep_ocean","MegaTaiga_deep_ocean","MegaSpruceTaiga_deep_ocean","Plains_deep_ocean","SunflowerPlains_deep_ocean","Forest_deep_ocean","FlowerForest_deep_ocean","BirchForest_deep_ocean","BirchForestM_deep_ocean","RoofedForest_deep_ocean","Swampland_deep_ocean","Jungle_deep_ocean","JungleM_deep_ocean","JungleEdge_deep_ocean","JungleEdgeM_deep_ocean","MushroomIsland_deep_ocean"
 }
 
 	register_seagrass_decoration("seagrass", 0, 0.5, b_seagrass)
 	register_seagrass_decoration("kelp", -0.5, 1, b_kelp)
 
-	local b_sponge = {"Plains_deep_ocean","SunflowerPlains_deep_ocean","Forest_deep_ocean","FlowerForest_deep_ocean","BirchForest_deep_ocean","BirchForestM_deep_ocean","RoofedForest_deep_ocean","Jungle_deep_ocean","JungleM_deep_ocean","JungleEdge_deep_ocean","JungleEdgeM_deep_ocean","MushroomIsland_deep_ocean","Desert_deep_ocean","Savanna_deep_ocean","SavannaM_deep_ocean","Mesa_deep_ocean","MesaBryce_deep_ocean","MesaPlateauF_deep_ocean","MesaPlateauFM_deep_ocean"}
+	local b_sponge = {"Plains_deep_ocean","SunflowerPlains_deep_ocean","Forest_deep_ocean","FlowerForest_deep_ocean","BirchForest_deep_ocean","BirchForestM_deep_ocean","RoofedForest_deep_ocean","Jungle_deep_ocean","JungleM_deep_ocean","JungleEdge_deep_ocean","JungleEdgeM_deep_ocean","MushroomIsland_deep_ocean","Desert_deep_ocean","Savanna_deep_ocean","SavannaM_deep_ocean","Mesa_deep_ocean","MesaBryce_deep_ocean","MesaPlateauF_deep_ocean","MesaPlateauFM_deep_ocean","BambooJungle_ocean", }
 	-- Wet Sponge
 	-- TODO: Remove this when we got ocean monuments
 	minetest.register_decoration({
@@ -5090,7 +5159,7 @@ local function register_decorations()
 		end
 	end
 
-	local flower_biomes1 = {"Plains", "SunflowerPlains", "RoofedForest", "Forest", "BirchForest", "BirchForestM", "Taiga", "ColdTaiga", "Jungle", "JungleM", "JungleEdge", "JungleEdgeM", "Savanna", "SavannaM", "ExtremeHills", "ExtremeHillsM", "ExtremeHills+", "ExtremeHills+_snowtop" }
+	local flower_biomes1 = {"Plains", "SunflowerPlains", "RoofedForest", "Forest", "BirchForest", "BirchForestM", "Taiga", "ColdTaiga", "Jungle", "JungleM", "BambooJungle", "JungleEdge", "JungleEdgeM", "Savanna", "SavannaM", "ExtremeHills", "ExtremeHillsM", "ExtremeHills+", "ExtremeHills+_snowtop" }
 
 	register_flower("dandelion", flower_biomes1, 8)
 	register_flower("poppy", flower_biomes1, 9439)
