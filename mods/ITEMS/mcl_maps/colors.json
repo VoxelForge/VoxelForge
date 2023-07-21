@@ -219,6 +219,11 @@
 		82,
 		59
 	],
+	"mcl_boats_bamboo_boat.png": [
+		96,
+		101,
+		57
+	],
 	"mcl_boats_birch_chest_boat.png": [
 		112,
 		90,
@@ -254,6 +259,11 @@
 		76,
 		64
 	],
+	"mcl_boats_bamboo_chest_boat.png": [
+		89,
+		91,
+		56
+	],
 	"mcl_boats_birch_boat.png": [
 		120,
 		95,
@@ -278,6 +288,11 @@
 		93,
 		76,
 		62
+	],
+	"mcl_boats_texture_bamboo_boat.png": [
+		111,
+		115,
+		72
 	],
 	"mcl_boats_dark_oak_boat.png": [
 		89,
@@ -2639,6 +2654,11 @@
 		173,
 		112
 	],
+	"mcl_bamboo_scaffolding_side.png": [
+		143,
+		113,
+		89
+	],
 	"mcl_bamboo_fence_gate_bamboo.png": [
 		192,
 		167,
@@ -2650,9 +2670,9 @@
 		113
 	],
 	"mcl_bamboo_scaffolding_bottom.png": [
-		197,
-		171,
-		110
+		142,
+		113,
+		89
 	],
 	"mcl_bamboo_door_bottom.png": [
 		201,
