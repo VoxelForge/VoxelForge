@@ -232,7 +232,7 @@ function mcl_trees.register_wood(name, p)
 		minetest.register_node(":mcl_trees:".."tree_"..name,table.merge(tpl_log,{
 			description = S(rname.." Log"),
 			_doc_items_longdesc = S("The trunk of a "..name.." tree."),
-			tiles = { "mcl_core_log_"..name.."_top.png",  "mcl_core_log_"..name.."_top.png", "mcl_core_log_"..name..".png"},
+			tiles = { minetest.get_current_modname().."_log_"..name.."_top.png",  "mcl_core_log_"..name.."_top.png", "mcl_core_log_"..name..".png"},
 			_mcl_stripped_variant = "mcl_trees:stripped_"..name,
 		},p.tree or {}))
 	end
@@ -241,7 +241,7 @@ function mcl_trees.register_wood(name, p)
 		minetest.register_node(":mcl_trees:wood_"..name, table.merge(tpl_wood,{
 			description =  S(rname.." Wood Planks"),
 			_doc_items_longdesc = doc.sub.items.temp.build,
-			tiles = {"mcl_core_planks_"..name..".png"},
+			tiles = { minetest.get_current_modname().."_planks_"..name..".png"},
 		},p.wood or {}))
 		minetest.register_craft({
 			output = "mcl_trees:wood_"..name.." 4",
@@ -255,7 +255,7 @@ function mcl_trees.register_wood(name, p)
 		minetest.register_node(":mcl_trees:bark_"..name,table.merge(tpl_log, {
 			description = S(rname.." Bark"),
 			_doc_items_longdesc = S("This is a decorative block surrounded by the bark of a tree trunk."),
-			tiles = p.tree and p.tree.tiles and {p.tree.tiles[3]} or {"mcl_core_log_"..name..".png"},
+			tiles = p.tree and p.tree.tiles and {p.tree.tiles[3]} or { minetest.get_current_modname().."_log_"..name..".png"},
 			is_ground_content = false,
 			_mcl_stripped_variant = "mcl_trees:bark_stripped_"..name,
 		}, p.bark or {}))
@@ -281,7 +281,7 @@ function mcl_trees.register_wood(name, p)
 			description = S("Stripped "..rname.." Log"),
 			_doc_items_longdesc = S("The stripped trunk of an "..name.." tree."),
 			_doc_items_hidden = false,
-			tiles = { "mcl_core_stripped_"..name.."_top.png",  "mcl_core_stripped_"..name.."_top.png", "mcl_core_stripped_"..name.."_side.png"},
+			tiles = { minetest.get_current_modname().."_stripped_"..name.."_top.png",  "mcl_core_stripped_"..name.."_top.png", "mcl_core_stripped_"..name.."_side.png"},
 		}, p.stripped or {}))
 	end
 
@@ -289,7 +289,7 @@ function mcl_trees.register_wood(name, p)
 		minetest.register_node(":mcl_trees:bark_stripped_"..name, table.merge(tpl_log, {
 			description = S("Stripped "..rname.." Wood"),
 			_doc_items_longdesc = S("The stripped wood of an "..name.." tree."),
-			tiles = {"mcl_core_stripped_"..name.."_side.png"},
+			tiles = { minetest.get_current_modname().."_stripped_"..name.."_side.png"},
 			is_ground_content = false,
 		}, p.stripped_bark or {}))
 	end
@@ -297,9 +297,9 @@ function mcl_trees.register_wood(name, p)
 	if p.sapling == nil or type(p.sapling) == "table" then
 		minetest.register_node(":mcl_trees:sapling_"..name, table.merge(tpl_sapling, {
 			description = S(rname.." Sapling"),
-			tiles = {"mcl_core_sapling_"..name..".png"},
-			inventory_image = "mcl_core_sapling_"..name..".png",
-			wield_image = "mcl_core_sapling_"..name..".png",
+			tiles = { minetest.get_current_modname().."_sapling_"..name..".png"},
+			inventory_image = minetest.get_current_modname().."_sapling_"..name..".png",
+			wield_image = minetest.get_current_modname().."_sapling_"..name..".png",
 		}, p.sapling or {}))
 	end
 
@@ -309,7 +309,7 @@ function mcl_trees.register_wood(name, p)
 			table.merge({
 				description = S(rname.." Leaves"),
 				_doc_items_longdesc = S(rname.." leaves are grown from "..name.." trees."),
-				tiles = { "mcl_core_leaves_"..name..".png"},
+				tiles = { minetest.get_current_modname().."_leaves_"..name..".png"},
 			}, p.leaves or {} ),
 			p.saplingdrop or "mcl_trees:sapling_"..name,
 			p.drop_apples or false,
@@ -384,7 +384,7 @@ function mcl_trees.register_wood(name, p)
 		p.stairs = p.stairs or {}
 		mcl_stairs.register_stair(name, "mcl_core:wood_"..name,
 			{handy=1,axey=1, flammable=3,wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
-			p.wood and p.wood.tiles or {"mcl_core_planks_"..name..".png"},
+			p.wood and p.wood.tiles or { minetest.get_current_modname().."_planks_"..name..".png"},
 			p.stairs.description or S(rname.." Wood Stairs"),
 			mcl_sounds.node_sound_wood_defaults(), 3, 2,
 			"woodlike")
@@ -392,7 +392,7 @@ function mcl_trees.register_wood(name, p)
 		if bark_stairs then
 			mcl_stairs.register_stair(name.."_bark", "mcl_core:log_"..name,
 				{handy=1,axey=1, flammable=3,wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
-				p.tree and p.tree.tiles and { p.tree.tiles[3] } or {"mcl_core_log_"..name..".png"},
+				p.tree and p.tree.tiles and { p.tree.tiles[3] } or { minetest.get_current_modname().."_log_"..name..".png"},
 				p.stairs.description or S(rname.." bark Stairs"),
 				mcl_sounds.node_sound_wood_defaults(), 3, 2,
 				"woodlike")
@@ -403,7 +403,7 @@ function mcl_trees.register_wood(name, p)
 		p.slab = p.slab or {}
 		mcl_stairs.register_slab(name, "mcl_core:wood_"..name,
 			{handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
-			p.wood and p.wood.tiles or {"mcl_core_planks_"..name..".png"},
+			p.wood and p.wood.tiles or { minetest.get_current_modname().."_planks_"..name..".png"},
 			p.slab.description or S(rname.." Wood Slab"),
 			mcl_sounds.node_sound_wood_defaults(), 3, 2,
 			S("Double "..rname.." Wood Slab"))
@@ -411,7 +411,7 @@ function mcl_trees.register_wood(name, p)
 		if bark_stairs then
 			mcl_stairs.register_slab(name.."_bark", "mcl_core:log_"..name,
 				{handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
-				p.tree and p.tree.tiles and { p.tree.tiles[3] } or {"mcl_core_log_"..name..".png"},
+				p.tree and p.tree.tiles and { p.tree.tiles[3] } or { minetest.get_current_modname().."_log_"..name..".png"},
 				p.slab.description or S(rname.." bark Slab"),
 				mcl_sounds.node_sound_wood_defaults(), 3, 2,
 				S("Double "..rname.." bark Slab"))
@@ -429,8 +429,8 @@ function mcl_trees.register_wood(name, p)
 		mesecon.register_pressure_plate(
 			"mesecons_pressureplates:pressure_plate_"..name,
 			S(rname.." Pressure Plate"),
-			p.wood and p.wood.tiles or {"mcl_core_planks_"..name..".png"},
-			p.wood and p.wood.tiles or {"mcl_core_planks_"..name..".png"},
+			p.wood and p.wood.tiles or { minetest.get_current_modname().."_planks_"..name..".png"},
+			p.wood and p.wood.tiles or { minetest.get_current_modname().."_planks_"..name..".png"},
 			p.wood and p.wood.tiles[1] or "mcl_core_planks_"..name..".png",
 			nil,
 			{{"mcl_trees:wood_"..name, "mcl_trees:wood_"..name}},
@@ -469,7 +469,7 @@ function mcl_trees.register_wood(name, p)
 		mcl_flowerpots.register_potted_flower("mcl_trees:sapling_"..name, table.merge({
 			name = "sapling_"..name,
 			desc = S(rname.." Sapling"),
-			image = "mcl_core_sapling_"..name..".png",
+			image = minetest.get_current_modname().."_sapling_"..name..".png",
 		},p.potted_sapling or {}))
 	end
 
