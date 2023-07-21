@@ -21,19 +21,19 @@ mcl_trees.register_wood("willow",{
 
 valid fields are: sign_color, sign, leaves, sapling, tree, planks, bark, stripped, stripped_bark, fence, stairs, doors, trapdoors, boat, chest_boat
 
-this expects the following textures unless the feature is turned off. The texture filenames can be overriden by setting the
-tiles/inventory_image/wield_image fields of the registration table.
+This expects the following textures unless that feature is disabled. "mcl_willow" being your modname.
+The texture filenames can be overriden by setting the tiles/inventory_image/wield_image fields of the registration table.
 
-mcl_core_tree_willow.png
-mcl_core_tree_willow_top.png
+mcl_willow_tree_willow.png
+mcl_willow_tree_willow_top.png
 
-mcl_core_stripped_willow.png
-mcl_core_stripped_willow_top.png
+mcl_willow_stripped_willow.png
+mcl_willow_stripped_willow_top.png
 
-mcl_core_planks_willow.png
+mcl_willow_planks_willow.png
 
-mcl_core_leaves_willow.png
-mcl_core_sapling_willow.png
+mcl_willow_leaves_willow.png
+mcl_willow_sapling_willow.png
 
 mcl_doors_trapdoor_willow.png
 mcl_doors_trapdoor_willow_open.png
