@@ -108,7 +108,7 @@ mcl_trees.register_wood("crimson",{
 	},
 	trapdoor = {
 		tile_front = "mcl_crimson_crimson_trapdoor.png",
-		tile_side = "mcl_crimson_crimson_trapdoor.png",
+		tile_side = "mcl_crimson_crimson_trapdoor_side.png",
 		wield_image = "mcl_crimson_crimson_trapdoor.png",
 	},
 })
@@ -152,7 +152,7 @@ mcl_trees.register_wood("warped",{
 	},
 	trapdoor = {
 		tile_front = "mcl_crimson_warped_trapdoor.png",
-		tile_side = "mcl_crimson_warped_trapdoor.png",
+		tile_side = "mcl_crimson_warped_trapdoor_side.png",
 		wield_image = "mcl_crimson_warped_trapdoor.png",
 	},
 })
@@ -536,6 +536,7 @@ minetest.register_craft({
 		{"mcl_nether:netherrack"},
 	},
 })
+
 -- Door, Trapdoor, and Fence/Gate Crafting
 local crimson_wood = "mcl_crimson:crimson_hyphae_wood"
 local warped_wood = "mcl_crimson:warped_hyphae_wood"

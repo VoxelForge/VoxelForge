@@ -36,7 +36,7 @@ mcl_trees.register_wood("mangrove",{
 	},
 	trapdoor = {
 		tile_front = "mcl_mangrove_trapdoor.png",
-		tile_side = "mcl_mangrove_trapdoor.png",
+		tile_side = "mcl_mangrove_trapdoor_side.png",
 		wield_image = "mcl_mangrove_trapdoor.png",
 	},
 })
@@ -359,7 +359,6 @@ minetest.register_node("mcl_mangrove:mangrove_mud_roots", {
 	_mcl_blast_resistance = 0.7,
 	_mcl_hardness = 0.7,
 })
-
 
 minetest.register_craft({
 	output = "mcl_mangrove:mangrove_mud_roots",
