@@ -114,6 +114,8 @@ mcl_mobs.spawn_setup({
 		"MushroomIslandShore",
 		"JungleM_shore",
 		"Jungle_shore",
+		"BambooJungle",
+		"BambooJungle_ocean",
 		"RoofedForest_ocean",
 		"JungleEdgeM_ocean",
 		"BirchForestM_ocean",

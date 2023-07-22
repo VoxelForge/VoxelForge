@@ -233,6 +233,7 @@ mcl_mobs.spawn_setup({
 		"JungleEdgeM",
 		"JungleM",
 		"JungleEdge",
+		"BambooJungle",
 	},
 	chance = 30000,
 })

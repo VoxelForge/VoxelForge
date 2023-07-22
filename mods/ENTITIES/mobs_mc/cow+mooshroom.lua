@@ -198,6 +198,7 @@ mcl_mobs.spawn_setup({
 		"Savanna_beach",
 		"SavannaM",
 		"Jungle",
+		"BambooJungle",
 		"Jungle_shore",
 		"JungleM",
 		"JungleM_shore",

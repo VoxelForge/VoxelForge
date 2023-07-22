@@ -153,6 +153,7 @@ mcl_mobs.spawn_setup({
 		"JungleM_shore",
 		"JungleEdge",
 		"JungleEdgeM",
+		"BambooJungle",
 		"Swampland",
 		"Swampland_shore"
 	},

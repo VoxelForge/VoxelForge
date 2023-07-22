@@ -109,6 +109,7 @@ mcl_mobs.spawn_setup({
 		"Taiga",
 		"ExtremeHills",
 		"Jungle",
+		"BambooJungle",
 		"Savanna",
 		"BirchForest",
 		"MegaSpruceTaiga",

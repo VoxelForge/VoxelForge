@@ -178,6 +178,7 @@ local water_level = mobs_mc.water_level
 local cave_biomes = {
 	"FlowerForest_underground",
 	"JungleEdge_underground",
+	"BambooJungle_underground",
 	"StoneBeach_underground",
 	"MesaBryce_underground",
 	"Mesa_underground",

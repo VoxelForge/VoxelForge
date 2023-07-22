@@ -135,6 +135,7 @@ mcl_mobs.spawn_setup({
 	biomes = {
 		"Mesa",
 		"Jungle",
+		"BambooJungle",
 		"Savanna",
 		"Desert",
 		"MesaPlateauFM_grasstop",
@@ -155,6 +156,7 @@ mcl_mobs.spawn_setup({
 		"Mesa_sandlevel",
 		"JungleEdgeM_ocean",
 		"Jungle_deep_ocean",
+		"BambooJungle_ocean",
 		"Savanna_ocean",
 		"MesaPlateauF_ocean",
 		"Savanna_deep_ocean",
