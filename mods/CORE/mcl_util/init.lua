@@ -1020,8 +1020,9 @@ end
 
 function mcl_util.safe_place(pos, node, player, itemstack)
 	local name = player and player:get_player_name() or ""
-	local nnode = node or itemstack and {name = itemstack:get_name()} or { name = "air" }
-	if mcl_util.check_position_protection(pos,player) then return false end
+	local nnode = node or (itemstack and {name = itemstack:get_name()}) or nil
+	if not nnode then return itemstack end
+	if mcl_util.check_position_protection(pos,player) then return itemstack end
 
 	minetest.set_node(pos, nnode)
 
