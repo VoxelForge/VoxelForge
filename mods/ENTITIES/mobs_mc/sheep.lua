@@ -377,7 +377,8 @@ mcl_mobs.spawn_setup({
 		"JungleEdge",
 		"JungleEdgeM",
 		"Swampland",
-		"Swampland_shore"
+		"Swampland_shore",
+		"CherryGrove",
 	},
 	chance = 15000,
 })

@@ -628,6 +628,7 @@ mcl_mobs.spawn_setup({
 	"SavannaM",
 	"Savanna_beach",
 	"Plains_beach",
+	"CherryGrove",
 	},
 	chance = 15000,
 })

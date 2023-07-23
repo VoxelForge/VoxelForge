@@ -149,7 +149,7 @@ mcl_mobs.spawn_setup({
 	aoc = 9,
 	biomes_except = {
 		"MushroomIslandShore",
-		"MushroomIsland"
+		"MushroomIsland",
 	},
 	chance = 6000,
 })

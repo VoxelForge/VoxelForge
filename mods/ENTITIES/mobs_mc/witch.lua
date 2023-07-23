@@ -101,6 +101,19 @@ mcl_mobs.register_arrow("mobs_mc:potion_arrow", {
 	end
 })
 
+mcl_mobs.spawn_setup({
+	name = "mobs_mc:witch",
+	type_of_spawning = "ground",
+	dimension = "overworld",
+	aoc = 9,
+	biomes_except = {
+		"MushroomIslandShore",
+		"MushroomIsland",
+		"DeepDark",
+	},
+	chance = 26000,
+})
+
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:witch", S("Witch"), "#340000", "#51a03e", 0, true)
 

@@ -148,6 +148,7 @@ mcl_mobs.spawn_setup({
 		"MegaSpruceTaiga",
 		"MegaTaiga",
 		"ColdTaiga",
+		"CherryGrove",
 	},
 	chance = 15000,
 })
