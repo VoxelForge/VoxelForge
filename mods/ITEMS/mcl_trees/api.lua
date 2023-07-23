@@ -74,7 +74,8 @@ local function update_leaves(pos, oldnode)
 
 	local clear_queue = queue()
 	local fill_queue = queue()
-	clear_queue:enqueue({ pos = pos, distance = 0 })
+	clear_queue:enqueue({ pos = pos, distance = get_distance(pos) or 0 })
+	fill_queue:enqueue({ pos = pos, distance = get_distance(pos) or 7 })
 
 	local directions = {
 		vector.new(1, 0, 0),
@@ -146,7 +147,11 @@ local tpl_log = {
 		flammable = 3, fire_encouragement=5, fire_flammability=20
 	},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
-	on_place = mcl_util.rotate_axis,
+	on_place = function(itemstack, placer, pointed_thing)
+		local itemstack = mcl_util.rotate_axis(itemstack, placer, pointed_thing)
+		update_leaves(pointed_thing.above)
+		return itemstack
+	end,
 	after_destruct = update_leaves,
 	on_rotate = screwdriver.rotate_3way,
 	_on_axe_place = mcl_trees.strip_tree,
