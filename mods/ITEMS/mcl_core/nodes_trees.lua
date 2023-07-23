@@ -40,6 +40,9 @@ mcl_trees.register_wood("oak",{
 
 mcl_trees.register_wood("dark_oak",{
 	sign_color="#5F4021",
+	sign = {
+		_dark = true,
+	},
 	tree_schems = {
 		{ file = modpath.."/schematics/mcl_core_dark_oak.mts", width = 8, height = 11 },
 	},
