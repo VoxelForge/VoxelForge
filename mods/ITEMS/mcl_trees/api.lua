@@ -32,7 +32,7 @@ local function queue()
 	}
 end
 
-local function update_leaves(pos, oldnode)
+local function update_leaves(pos)
 	local vm = minetest.get_voxel_manip()
 	local emin, emax = vm:read_from_map(pos:offset(-7, -7, -7), pos:offset(7, 7, 7))
 	local a = VoxelArea:new{
@@ -74,6 +74,7 @@ local function update_leaves(pos, oldnode)
 
 	local clear_queue = queue()
 	local fill_queue = queue()
+
 	clear_queue:enqueue({ pos = pos, distance = get_distance(pos) or 0 })
 	fill_queue:enqueue({ pos = pos, distance = get_distance(pos) or 7 })
 
@@ -127,9 +128,9 @@ local function update_leaves(pos, oldnode)
 end
 
 --called from leaves after_place_node
-local function update_leaf_p2(pos, placer, itemstack, pointed_thing)
+local function update_leaf_p2(pos)
 	local n = minetest.get_node(pos)
-	if minetest.get_item_group(n.name,"biomecolor") == 0 then return end
+	if minetest.get_item_group(n.name, "biomecolor") == 0 then return end
 	local p2 = mcl_util.get_pos_p2(pos)
 	if n.param2 ~= p2 then
 		n.param2 = p2
@@ -147,11 +148,8 @@ local tpl_log = {
 		flammable = 3, fire_encouragement=5, fire_flammability=20
 	},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
-	on_place = function(itemstack, placer, pointed_thing)
-		local itemstack = mcl_util.rotate_axis(itemstack, placer, pointed_thing)
-		update_leaves(pointed_thing.above)
-		return itemstack
-	end,
+	on_place = mcl_util.rotate_axis,
+	on_construct = update_leaves,
 	after_destruct = update_leaves,
 	on_rotate = screwdriver.rotate_3way,
 	_on_axe_place = mcl_trees.strip_tree,
@@ -182,7 +180,9 @@ local tpl_leaves = {
 		flammable = 2, fire_encouragement = 30, fire_flammability = 60,
 		compostability = 30
 	},
+	on_construct = update_leaves,
 	after_place_node = update_leaf_p2,
+	after_destruct = update_leaves,
 	_mcl_shears_drop = true,
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	_mcl_blast_resistance = 0.2,
@@ -286,10 +286,6 @@ local function register_leaves(subname, def, sapling, drop_apples, sapling_chanc
 		_mcl_fortune_drop = { get_drops(1), get_drops(2), get_drops(3), get_drops(4) },
 		_mcl_leaves = leaves_id,
 		_mcl_orphan_leaves = orphan_leaves_id,
-		on_construct = function(pos)
-			-- manually placed leaves nodes do not decay automatically.
-			minetest.get_meta(pos):set_int("no_decay", "1")
-		end
 	},def or {})
 
 	minetest.register_node(":mcl_trees:"..subname, l_def)
