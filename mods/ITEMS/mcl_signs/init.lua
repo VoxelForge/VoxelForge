@@ -201,11 +201,8 @@ function sign_tpl.on_place(itemstack, placer, pointed_thing)
 	local def = minetest.registered_nodes[node.name]
 	if not def then return itemstack end
 
-	-- Allow pointed node's on_rightclick callback to override place.
-	if placer and not placer:get_player_control().sneak then
-		if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-			return minetest.registered_nodes[node.name].on_rightclick(under, node, placer, itemstack) or itemstack
-		end
+	if mcl_util.call_on_rightclick(itemstack, placer, pointed_thing) then
+		return itemstack
 	end
 
 	local above = pointed_thing.above
@@ -361,13 +358,19 @@ minetest.register_entity("mcl_signs:text", {
 	end,
 })
 
+local function colored_texture(texture,color)
+	return texture.."^[multiply:"..color
+end
+
 function mcl_signs.register_sign(name,color,def)
 	local textures = {
-		tiles = { "mcl_signs_sign_greyscale.png^[multiply:"..color },
-		inventory_image = "default_sign_greyscale.png^[multiply:"..color,
-		wield_image = "default_sign_greyscale.png^[multiply:"..color,
+		tiles = { colored_texture("mcl_signs_sign_greyscale.png", color) },
+		inventory_image = colored_texture("default_sign_greyscale.png", color),
+		wield_image = colored_texture("default_sign_greyscale.png", color),
 	}
-	minetest.register_node(":mcl_signs:"..name.."_sign_standing",table.update({},sign_tpl, textures ,def or {}))
-	minetest.register_node(":mcl_signs:"..name.."_sign_hanging",table.update({},sign_hanging,textures,def or {}))
-	minetest.register_node(":mcl_signs:"..name.."_sign",table.update({},sign_wall,textures,def or {}))
+	minetest.register_node(":mcl_signs:"..name.."_sign_standing",table.merge(sign_tpl, textures ,def or {}))
+	minetest.register_node(":mcl_signs:"..name.."_sign",table.merge(sign_wall,textures,def or {}))
+	minetest.register_node(":mcl_signs:"..name.."_sign_hanging",table.merge(sign_hanging,textures,{
+		tiles = { colored_texture("mcl_signs_sign_hanging.png",color), },
+	},def or {}))
 end
