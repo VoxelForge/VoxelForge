@@ -352,10 +352,6 @@ minetest.register_entity("mcl_signs:text", {
 	end,
 })
 
-minetest.register_node("mcl_signs:sign_standing",sign_tpl)
-minetest.register_node("mcl_signs:sign_hanging",sign_hanging)
-minetest.register_node("mcl_signs:sign",sign_wall)
-
 function mcl_signs.register_sign(name,color,def)
 	local textures = {
 		tiles = { "mcl_signs_sign_greyscale.png^[multiply:"..color },
