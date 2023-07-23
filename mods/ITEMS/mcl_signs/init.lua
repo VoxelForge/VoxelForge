@@ -245,16 +245,14 @@ function sign_tpl._on_dye_place(pos,color)
 	mcl_signs.update_sign(pos)
 end
 
-local sign_wall = table.copy(sign_tpl)
-table.update(sign_wall,{
+local sign_wall = table.merge(sign_tpl,{
 	mesh = "mcl_signs_signonwallmount.obj",
 	paramtype2 = "wallmounted",
 	selection_box = { type = "wallmounted", wall_side = { -0.5, -7 / 28, -0.5, -23 / 56, 7 / 28, 0.5 }},
 	groups = { axey = 1, handy = 2, sign = 1 },
 })
 
-local sign_hanging = table.copy(sign_tpl)
-table.update(sign_hanging,{
+local sign_hanging = table.merge(sign_tpl,{
 	mesh = "mcl_signs_sign_hanging.obj",
 	tiles = { "mcl_signs_sign_hanging.png" },
 	paramtype2 = "facedir",
