@@ -357,8 +357,8 @@ minetest.register_entity("mcl_signs:text", {
 function mcl_signs.register_sign(name,color,def)
 	local textures = {
 		tiles = { "mcl_signs_sign_greyscale.png^[multiply:"..color },
-		inventory_image = "default_sign.png^[multiply:"..color,
-		wield_image = "default_sign.png^[multiply:"..color,
+		inventory_image = "default_sign_greyscale.png^[multiply:"..color,
+		wield_image = "default_sign_greyscale.png^[multiply:"..color,
 	}
 	minetest.register_node(":mcl_signs:"..name.."_sign_standing",table.update({},sign_tpl, textures ,def or {}))
 	minetest.register_node(":mcl_signs:"..name.."_sign_hanging",table.update({},sign_hanging,textures,def or {}))
