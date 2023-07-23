@@ -234,6 +234,10 @@ function sign_tpl.on_place(itemstack, placer, pointed_thing)
 	return itemstack
 end
 
+function sign_tpl.after_dig_node(pos)
+	mcl_signs.get_text_entity (pos, true)
+end
+
 function sign_tpl._on_dye_place(pos,color)
 	set_signmeta(pos,{
 		color = mcl_dyes.colors[color].rgb
