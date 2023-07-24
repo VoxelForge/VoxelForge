@@ -111,7 +111,7 @@ mcl_mobs.spawn_setup({
 		"MushroomIsland",
 		"DeepDark",
 	},
-	chance = 26000,
+	chance = 2000,
 })
 
 -- spawn eggs
