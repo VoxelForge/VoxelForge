@@ -127,15 +127,16 @@ local function update_leaves(pos)
 	vm:write_to_map(false)
 end
 
---called from leaves after_place_node
+-- called from leaves after_place_node
 local function update_leaf_p2(pos)
 	local n = minetest.get_node(pos)
-	if minetest.get_item_group(n.name, "biomecolor") == 0 then return end
-	local p2 = mcl_util.get_pos_p2(pos)
-	if n.param2 ~= p2 then
-		n.param2 = p2
-		minetest.swap_node(pos,n)
+	if minetest.get_item_group(n.name, "biomecolor") == 0 then
+		return
 	end
+
+	-- times 8 because of "colorwallmounted"
+	n.param2 = mcl_util.get_pos_p2(pos) * 8 + n.param2
+	minetest.swap_node(pos,n)
 end
 
 local tpl_log = {

@@ -235,20 +235,26 @@ local function world_structure(vm, data, data2, emin, emax, area, minp, maxp, bl
 end
 
 
+-- 0 for no biome coloring
+-- 1 for paramtype2 = "color"
+-- 8 for paramtype2 = "colorwallmounted"
 local biomecolor_cids = {}
+
 local biome_id_p2 = {}
 
 minetest.register_on_mods_loaded(function()
 	local cn = {}
-	for n,d in pairs(minetest.registered_nodes) do
-		if minetest.get_item_group(n,"biomecolor") > 0 then
-			cn[n] = 1
+
+
+	for n, d in pairs(minetest.registered_nodes) do
+		if minetest.get_item_group(n, "biomecolor") > 0 then
+			cn[n] = d.paramtype2 == "colorwallmounted" and 8 or 1
 		end
 	end
-	for k, _ in pairs(cn) do
-		biomecolor_cids[minetest.get_content_id(k)] = 1
+	for k, v in pairs(cn) do
+		biomecolor_cids[minetest.get_content_id(k)] = v
 	end
-	for k,v in pairs(minetest.registered_biomes) do
+	for k, v in pairs(minetest.registered_biomes) do
 		biome_id_p2[minetest.get_biome_id(k)] = v._mcl_palette_index or 255
 	end
 end)
@@ -261,8 +267,10 @@ local function set_param2_nodes(vm, data, data2, emin, emax, area, minp, maxp, b
 		for y = emin.y, emax.y do
 			local vi = area:index(emin.x, y, z)
 			for x = emin.x, emax.x do
-				if biomecolor_cids[data[vi]] then
-					data2[vi] = biome_id_p2[minetest.get_biome_data({x=x,y=y,z=z}).biome] --don't create a vector table here; makes this measurably slower!
+				local biomecolor = biomecolor_cids[data[vi]]
+				if biomecolor then
+					-- don't create a vector table here; makes this measurably slower!
+					data2[vi] = data2[vi] % biomecolor + biomecolor * biome_id_p2[minetest.get_biome_data({x = x, y = y, z = z}).biome]
 					lvm_used = true
 				end
 				vi = vi + 1

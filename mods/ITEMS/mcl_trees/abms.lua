@@ -149,7 +149,7 @@ function mcl_trees.grow_tree(pos, node)
 			if minetest.get_item_group(n.name,"biomecolor") > 0 then
 				local p2 = mcl_util.get_pos_p2(v)
 				if n.param2 ~= p2 then
-					n.param2 = p2
+					n.param2 = n.param2 + p2 * 8
 					minetest.swap_node(v,n)
 				end
 			end
