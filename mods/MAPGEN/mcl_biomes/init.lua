@@ -4140,16 +4140,6 @@ local function register_decorations()
 		})
 	end
 
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"mcl_core:dirt_with_grass"},
-		fill_ratio = 0.6,
-		biomes = {"CherryGrove"},
-		y_min = mcl_vars.mg_overworld_min,
-		y_max = mcl_vars.mg_overworld_max,
-		decoration = "mcl_cherry_blossom:pink_petals",
-	})
-
 
 	local ratio_mushroom = 0.0001
 	local ratio_mushroom_huge = ratio_mushroom * (11/12)
@@ -4893,6 +4883,16 @@ local function register_decorations()
 		},
 		y_min = 1,
 		y_max = mcl_vars.mg_overworld_max,
+	})
+
+	minetest.register_decoration({
+		deco_type = "simple",
+		place_on = {"mcl_core:dirt_with_grass"},
+		fill_ratio = 0.6,
+		biomes = {"CherryGrove"},
+		y_min = mcl_vars.mg_overworld_min,
+		y_max = mcl_vars.mg_overworld_max,
+		decoration = "mcl_cherry_blossom:pink_petals",
 	})
 
 	-- Grasses and ferns
