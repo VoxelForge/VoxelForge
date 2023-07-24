@@ -1,4 +1,4 @@
-# HUD bars
+# HUD Bars
 
 ## Description
 This mod changes the HUD of Minetest. It replaces the default health and breath
