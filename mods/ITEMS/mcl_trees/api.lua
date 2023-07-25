@@ -189,9 +189,6 @@ local function register_leaves(subname, def, sapling, drop_apples, sapling_chanc
 	end
 
 	local l_def = table.merge(tpl_leaves, {
-		description = description,
-		_doc_items_longdesc = longdesc,
-		tiles = tiles,
 		drop = get_drops(0),
 		_mcl_fortune_drop = { get_drops(1), get_drops(2), get_drops(3), get_drops(4) },
 		on_construct = function(pos)
