@@ -7,7 +7,7 @@ local PARTICLE_DISTANCE = 25
 local pspawners = {}
 
 mcl_trees.register_wood("cherry_blossom",{
-	sign_color="#E1A7A1",
+	sign_color="#F29889",
 	tree_schems= {
 		{ file=modpath.."/schematics/mcl_cherry_blossom_tree_1.mts",width=7,height=11 },
 		{ file=modpath.."/schematics/mcl_cherry_blossom_tree_2.mts",width=7,height=11 },
