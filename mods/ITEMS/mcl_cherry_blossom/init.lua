@@ -80,6 +80,7 @@ minetest.register_node("mcl_cherry_blossom:pink_petals",{
 		"mcl_cherry_blossom_pink_petals.png^[transformFY", -- mirror
 		"blank.png" -- empty
 	},
+	inventory_image = "mcl_cherry_blossom_pink_petals_inv.png",
 	_mcl_hardness = 0,
 	_mcl_blast_resistance = 0,
 	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,n)
