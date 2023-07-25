@@ -21,9 +21,12 @@ end
 
 for color,colordef in pairs(mcl_dyes.colors) do
 	local create_entry = false
+	local longdesc_carpet, longdesc_wool, name_carpet, name_wool
 
 	local is_canonical = color == canonical_color
 	if is_canonical then
+		name_carpet = S("Carpet")
+		name_wool = S("Wool")
 		longdesc_wool = S("Wool is a decorative block which comes in many different colors.")
 		longdesc_carpet = S("Carpets are thin floor covers which come in many different colors.")
 		create_entry = true
