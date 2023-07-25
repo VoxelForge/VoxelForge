@@ -83,3 +83,10 @@ minetest.register_craftitem("mcl_sus_stew:stew",{
 })
 
 mcl_hunger.register_food("mcl_sus_stew:stew",6, "mcl_core:bowl")
+
+--compat with old (mcl5) sus_stew
+minetest.register_alias("mcl_sus_stew:poison_stew", "mcl_sus_stew:stew")
+minetest.register_alias("mcl_sus_stew:hunger_stew", "mcl_sus_stew:stew")
+minetest.register_alias("mcl_sus_stew:jump_boost_stew", "mcl_sus_stew:stew")
+minetest.register_alias("mcl_sus_stew:regneration_stew", "mcl_sus_stew:stew")
+minetest.register_alias("mcl_sus_stew:night_vision_stew", "mcl_sus_stew:stew")
