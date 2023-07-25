@@ -139,7 +139,9 @@ end
 
 -- Check if node is replacable with a portal node.
 local function replacable_with_portal(name)
-	return name == "air" or minetest.get_item_group(name, "dig_by_water") ~= 0
+	return name == "air" or
+		minetest.get_item_group(name, "fire") ~= 0 or
+		minetest.get_item_group(name, "dig_by_water") ~= 0
 end
 
 -- Gets the position in a portal which players are teleported to.
@@ -636,6 +638,15 @@ end
 
 local longdesc = minetest.registered_nodes["mcl_core:obsidian"]._doc_items_longdesc .. "\n" .. S("Obsidian is also used as the frame of Nether portals.")
 local usagehelp = S("To open a Nether portal, place an upright frame of obsidian with a width of at least 4 blocks and a height of 5 blocks, leaving only air in the center. After placing this frame, light a fire in the obsidian frame. Nether portals only work in the Overworld and the Nether.")
+
+function mcl_portals.light_nether_portal(pos)
+	for param2 = 0, 1 do
+		if light_nether_portal(pos, param2) then
+			return true
+		end
+	end
+	return false
+end
 
 minetest.override_item("mcl_core:obsidian", {
 	_doc_items_longdesc = longdesc,

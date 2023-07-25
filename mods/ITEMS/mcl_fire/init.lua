@@ -120,6 +120,10 @@ minetest.register_node("mcl_fire:fire", {
 			minetest.swap_node(pos, {name = "mcl_fire:eternal_fire"})
 		end
 
+		if has_mcl_portals then
+			mcl_portals.light_nether_portal(pos)
+		end
+
 		mcl_particles.spawn_smoke(pos, "fire", smoke_pdef)
 	end,
 	on_destruct = function(pos)
@@ -159,6 +163,9 @@ minetest.register_node("mcl_fire:eternal_fire", {
 	end,
 	-- Start burning timer and light Nether portal (if possible)
 	on_construct = function(pos)
+		if has_mcl_portals then --Calling directly minetest.get_modpath consumes 4x more compute time
+			mcl_portals.light_nether_portal(pos)
+		end
 		mcl_particles.spawn_smoke(pos, "fire", smoke_pdef)
 	end,
 	on_destruct = function(pos)
