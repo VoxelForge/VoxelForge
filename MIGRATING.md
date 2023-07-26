@@ -16,6 +16,16 @@ underneath with newly generated mapchunks. This means that migrated worlds will
 no longer be compatible with MineClone 2 until they also increase the overworld
 depth.
 
+## Node name changes
+In Mineclonia 0.84.0 a new mod called `mcl_trees` was added to consolidate the
+registration of wooden items into an API. This has resulted in a change of the
+node ids for trees, wood and leaves. `mcl_core:acaciawood` for example is
+changed to `mcl_trees:wood_acacia`. In Mineclonia old node ids like
+`mcl_core:acaciawood` is aliased to new ones like `mcl_trees:wood_acacia`, but
+MineClone 2 does not have the inverse of such aliases. This means that a
+MineClone 2 world can be migrated to Mineclonia, but attempting to migrate it
+back will result in a lot of unknown nodes for trees and planks.
+
 ## Feature differences
 This section describes feature differences between MineClone 2 and Mineclonia
 which can cause small incompatibilities.
