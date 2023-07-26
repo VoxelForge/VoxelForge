@@ -235,20 +235,15 @@ local function world_structure(vm, data, data2, emin, emax, area, minp, maxp, bl
 end
 
 
--- 0 for no biome coloring
--- 1 for paramtype2 = "color"
--- 8 for paramtype2 = "colorwallmounted"
 local biomecolor_cids = {}
-
 local biome_id_p2 = {}
 
 minetest.register_on_mods_loaded(function()
 	local cn = {}
 
-
 	for n, d in pairs(minetest.registered_nodes) do
 		if minetest.get_item_group(n, "biomecolor") > 0 then
-			cn[n] = d.paramtype2 == "colorwallmounted" and 8 or 1
+			cn[n] = true
 		end
 	end
 	for k, v in pairs(cn) do
@@ -270,7 +265,7 @@ local function set_param2_nodes(vm, data, data2, emin, emax, area, minp, maxp, b
 				local biomecolor = biomecolor_cids[data[vi]]
 				if biomecolor then
 					-- don't create a vector table here; makes this measurably slower!
-					data2[vi] = data2[vi] % biomecolor + biomecolor * biome_id_p2[minetest.get_biome_data({x = x, y = y, z = z}).biome]
+					data2[vi] = math.floor(data2[vi] / 32) * 32 + biome_id_p2[minetest.get_biome_data({x = x, y = y, z = z}).biome]
 					lvm_used = true
 				end
 				vi = vi + 1

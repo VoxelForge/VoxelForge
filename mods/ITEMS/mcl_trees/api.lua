@@ -55,7 +55,7 @@ local function update_leaves(pos)
 			return 0
 		end
 		if minetest.get_item_group(name, "leaves") ~= 0 then
-			return param2_data[idx] % 8
+			return math.floor(param2_data[idx] / 32)
 		end
 	end
 
@@ -69,7 +69,7 @@ local function update_leaves(pos)
 		else
 			data[idx] = minetest.get_content_id(ndef._mcl_orphan_leaves)
 		end
-		param2_data[idx] = math.floor(param2_data[idx] / 8) * 8 + distance
+		param2_data[idx] = distance * 32 + param2_data[idx] % 32
 	end
 
 	local clear_queue = queue()
@@ -134,8 +134,8 @@ local function update_leaf_p2(pos)
 		return
 	end
 
-	-- times 8 because of "colorwallmounted"
-	n.param2 = mcl_util.get_pos_p2(pos) * 8 + n.param2
+	-- preserve the log distances in the upper 3 bits
+	n.param2 = math.floor(n.param2 / 32) * 32 + mcl_util.get_pos_p2(pos)
 	minetest.swap_node(pos,n)
 end
 
@@ -170,10 +170,7 @@ local tpl_leaves = {
 	drawtype = "allfaces_optional",
 	waving = 2,
 	paramtype = "light",
-	-- "colorwallmounted" is used instead of "color" because it has 3 bits
-	-- not used for palette indexing which are used to store the distance to
-	-- the nearest connected tree node.
-	paramtype2 = "colorwallmounted",
+	paramtype2 = "color",
 	palette = "mcl_core_palette_leaves.png",
 	groups = {
 		handy = 1, hoey = 1, shearsy = 1, swordy = 1, dig_by_piston = 1,
