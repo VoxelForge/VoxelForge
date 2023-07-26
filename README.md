@@ -1,7 +1,7 @@
 # Mineclonia
 An unofficial Minecraft-like game for Minetest. Fork of MineClone 2 with focus
-on stability and multiplayer performance. For information about migrating from
-MineClone 2 to Mineclonia, see [MIGRATING.md](./MIGRATING.md).
+on stability, multiplayer performance and features. For information about
+migrating from MineClone 2 to Mineclonia, see [MIGRATING.md](./MIGRATING.md).
 
 Version: 0.83.1
 
