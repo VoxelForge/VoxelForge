@@ -1,26 +1,35 @@
 local S = minetest.get_translator(minetest.get_current_modname())
+local F = minetest.formspec_escape
+local C = minetest.colorize
 
 --[[ BEGIN OF NODE DEFINITIONS ]]
 
-local mcl_hoppers_formspec =
-	"size[9,7]"..
-	"label[2,0;"..minetest.formspec_escape(minetest.colorize("#313131", S("Hopper"))).."]"..
-	"list[context;main;2,0.5;5,1;]"..
-	mcl_formspec.get_itemslot_bg(2,0.5,5,1)..
-	"label[0,2;"..minetest.formspec_escape(minetest.colorize("#313131", S("Inventory"))).."]"..
-	"list[current_player;main;0,2.5;9,3;9]"..
-	mcl_formspec.get_itemslot_bg(0,2.5,9,3)..
-	"list[current_player;main;0,5.74;9,1;]"..
-	mcl_formspec.get_itemslot_bg(0,5.74,9,1)..
-	"listring[context;main]"..
-	"listring[current_player;main]"
+local mcl_hoppers_formspec = table.concat({
+	"formspec_version[4]",
+	"size[11.75,8.175]",
+
+	"label[0.375,0.375;" .. F(C(mcl_formspec.label_color, S("Hopper"))) .. "]",
+
+	mcl_formspec.get_itemslot_bg_v4(2.875, 0.75, 5, 1),
+	"list[context;main;2.875,0.75;5,1;]",
+
+	"label[0.375,2.45;" .. F(C(mcl_formspec.label_color, S("Inventory"))) .. "]",
+
+	mcl_formspec.get_itemslot_bg_v4(0.375, 2.85, 9, 3),
+	"list[current_player;main;0.375,2.85;9,3;9]",
+
+	mcl_formspec.get_itemslot_bg_v4(0.375, 6.8, 9, 1),
+	"list[current_player;main;0.375,6.8;9,1;]",
+
+	"listring[context;main]",
+	"listring[current_player;main]",
+})
 
 -- Downwards hopper (base definition)
-
 local def_hopper = {
 	inventory_image = "mcl_hoppers_item.png",
 	wield_image = "mcl_hoppers_item.png",
-	groups = {pickaxey=1, container=2,deco_block=1,hopper=1},
+	groups = { pickaxey = 1, container = 2, deco_block = 1, hopper = 1 },
 	drawtype = "nodebox",
 	paramtype = "light",
 	-- FIXME: mcl_hoppers_hopper_inside.png is unused by hoppers.
@@ -29,25 +38,25 @@ local def_hopper = {
 		type = "fixed",
 		fixed = {
 			--funnel walls
-			{-0.5, 0.0, 0.4, 0.5, 0.5, 0.5},
-			{0.4, 0.0, -0.5, 0.5, 0.5, 0.5},
-			{-0.5, 0.0, -0.5, -0.4, 0.5, 0.5},
-			{-0.5, 0.0, -0.5, 0.5, 0.5, -0.4},
+			{ -0.5, 0.0, 0.4, 0.5, 0.5, 0.5 },
+			{ 0.4, 0.0, -0.5, 0.5, 0.5, 0.5 },
+			{ -0.5, 0.0, -0.5, -0.4, 0.5, 0.5 },
+			{ -0.5, 0.0, -0.5, 0.5, 0.5, -0.4 },
 			--funnel base
-			{-0.5, 0.0, -0.5, 0.5, 0.1, 0.5},
+			{ -0.5, 0.0, -0.5, 0.5, 0.1, 0.5 },
 			--spout
-			{-0.3, -0.3, -0.3, 0.3, 0.0, 0.3},
-			{-0.1, -0.3, -0.1, 0.1, -0.5, 0.1},
+			{ -0.3, -0.3, -0.3, 0.3, 0.0, 0.3 },
+			{ -0.1, -0.3, -0.1, 0.1, -0.5, 0.1 },
 		},
 	},
 	selection_box = {
 		type = "fixed",
 		fixed = {
 			--funnel
-			{-0.5, 0.0, -0.5, 0.5, 0.5, 0.5},
+			{ -0.5, 0.0, -0.5, 0.5, 0.5, 0.5 },
 			--spout
-			{-0.3, -0.3, -0.3, 0.3, 0.0, 0.3},
-			{-0.1, -0.3, -0.1, 0.1, -0.5, 0.1},
+			{ -0.3, -0.3, -0.3, 0.3, 0.0, 0.3 },
+			{ -0.1, -0.3, -0.1, 0.1, -0.5, 0.1 },
 		},
 	},
 	is_ground_content = false,
@@ -217,25 +226,25 @@ local def_hopper_side = {
 		type = "fixed",
 		fixed = {
 			--funnel walls
-			{-0.5, 0.0, 0.4, 0.5, 0.5, 0.5},
-			{0.4, 0.0, -0.5, 0.5, 0.5, 0.5},
-			{-0.5, 0.0, -0.5, -0.4, 0.5, 0.5},
-			{-0.5, 0.0, -0.5, 0.5, 0.5, -0.4},
+			{ -0.5, 0.0, 0.4, 0.5, 0.5, 0.5 },
+			{ 0.4, 0.0, -0.5, 0.5, 0.5, 0.5 },
+			{ -0.5, 0.0, -0.5, -0.4, 0.5, 0.5 },
+			{ -0.5, 0.0, -0.5, 0.5, 0.5, -0.4 },
 			--funnel base
-			{-0.5, 0.0, -0.5, 0.5, 0.1, 0.5},
+			{ -0.5, 0.0, -0.5, 0.5, 0.1, 0.5 },
 			--spout
-			{-0.3, -0.3, -0.3, 0.3, 0.0, 0.3},
-			{-0.5, -0.3, -0.1, 0.1, -0.1, 0.1},
+			{ -0.3, -0.3, -0.3, 0.3, 0.0, 0.3 },
+			{ -0.5, -0.3, -0.1, 0.1, -0.1, 0.1 },
 		},
 	},
 	selection_box = {
 		type = "fixed",
 		fixed = {
 			--funnel
-			{-0.5, 0.0, -0.5, 0.5, 0.5, 0.5},
+			{ -0.5, 0.0, -0.5, 0.5, 0.5, 0.5 },
 			--spout
-			{-0.3, -0.3, -0.3, 0.3, 0.0, 0.3},
-			{-0.5, -0.3, -0.1, 0.1, -0.1, 0.1},
+			{ -0.3, -0.3, -0.3, 0.3, 0.0, 0.3 },
+			{ -0.5, -0.3, -0.1, 0.1, -0.1, 0.1 },
 		},
 	},
 	is_ground_content = false,
@@ -473,8 +482,8 @@ end
 
 minetest.register_abm({
 	label = "Hopper/container item exchange",
-	nodenames = {"mcl_hoppers:hopper"},
-	neighbors = {"group:container"},
+	nodenames = { "mcl_hoppers:hopper" },
+	neighbors = { "group:container" },
 	interval = 1.0,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
@@ -505,8 +514,8 @@ minetest.register_abm({
 
 minetest.register_abm({
 	label = "Side-hopper/container item exchange",
-	nodenames = {"mcl_hoppers:hopper_side"},
-	neighbors = {"group:container"},
+	nodenames = { "mcl_hoppers:hopper_side" },
+	neighbors = { "group:container" },
 	interval = 1.0,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
