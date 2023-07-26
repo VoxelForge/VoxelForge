@@ -23,6 +23,14 @@ minetest.register_alias("mcl_cherry_blossom:cherryleaves","mcl_trees:leaves_cher
 minetest.register_alias("default:acacia_tree", "mcl_core:acaciatree")
 minetest.register_alias("default:acacia_leaves", "mcl_core:acacialeaves")
 
+minetest.register_alias("mcl_core:birchleaves_orphan","mcl_trees:leaves_birch_orphan")
+minetest.register_alias("mcl_core:darkleaves_orphan","mcl_trees:leaves_dark_oak_orphan")
+minetest.register_alias("mcl_core:acacialeaves_orphan","mcl_trees:leaves_acacia_orphan")
+minetest.register_alias("mcl_core:jungleleaves_orphan","mcl_trees:leaves_jungle_orphan")
+minetest.register_alias("mcl_core:spruceleaves_orphan","mcl_trees:leaves_spruce_orphan")
+minetest.register_alias("mcl_core:leaves_orphan","mcl_trees:leaves_oak_orphan")
+minetest.register_alias("mcl_mangrove:mangroveleaves_orphan","mcl_trees:leaves_mangrove_orphan")
+
 minetest.register_alias("mcl_core:birchwood","mcl_trees:wood_birch")
 minetest.register_alias("mcl_core:big_oakwood","mcl_trees:wood_dark_oak")
 minetest.register_alias("mcl_core:darkwood","mcl_trees:wood_dark_oak")
