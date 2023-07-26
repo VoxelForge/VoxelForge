@@ -1,3 +1,5 @@
+---@diagnostic disable
+
 unused_args = false
 allow_defined_top = true
 max_line_length = false
@@ -231,9 +233,16 @@ read_globals = {
 	--CORE
 	"mcl_vars",
 
+	--GENERAL
+	"default",
+
+
 	--ENTITIES
 	"cmi",
 
 	--HUD
+
 	"cmsg",
+
+	"sfinv", "sfinv_buttons", "unified_inventory", "cmsg", "inventory_plus",
 }
