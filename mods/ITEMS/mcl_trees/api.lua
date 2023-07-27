@@ -54,8 +54,11 @@ local function update_leaves(pos)
 		if minetest.get_item_group(name, "tree") ~= 0 then
 			return 0
 		end
+		if minetest.get_item_group(name, "orphan_leaves") ~= 0 then
+			return 7
+		end
 		if minetest.get_item_group(name, "leaves") ~= 0 then
-			return math.floor(param2_data[idx] / 32)
+			return math.floor(param2_data[idx] / 32) - 1
 		end
 	end
 
@@ -69,7 +72,7 @@ local function update_leaves(pos)
 		else
 			data[idx] = minetest.get_content_id(ndef._mcl_orphan_leaves)
 		end
-		param2_data[idx] = distance * 32 + param2_data[idx] % 32
+		param2_data[idx] = (distance + 1) * 32 + param2_data[idx] % 32
 	end
 
 	local clear_queue = queue()
