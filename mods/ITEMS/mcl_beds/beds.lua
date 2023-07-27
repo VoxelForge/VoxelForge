@@ -3,10 +3,6 @@ local mod_doc = minetest.get_modpath("doc")
 
 local messy_textures = { --translator table for the bed texture filenames names not adhering to the common color names of mcl_dyes
 	["lightblue"] = "light_blue",
-	["violet"] = "purple",
-	["dark_grey"] = "grey",
-	["dark_green"] = "green",
-	["green"] = "lime",
 }
 
 local canonical_color = "red"

@@ -7,9 +7,11 @@ minetest.register_alias("mcl_wool:gold", "wool:yellow")
 
 local messy_textures = { --translator table for the bed texture filenames names not adhering to the common color names of mcl_dyes
 	["lightblue"] = "mcl_wool_light_blue",
-	["dark_grey"] = "wool_grey",
-	["green"] = "mcl_wool_lime",
-	["dark_green"] = "wool_dark_green",
+	["grey"] = "wool_dark_grey",
+	["silver"] = "wool_grey",
+	["green"] = "wool_dark_green",
+	["lime"] = "mcl_wool_lime",
+	["purple"] = "wool_violet",
 }
 
 local canonical_color = "white"

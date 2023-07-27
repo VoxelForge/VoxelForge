@@ -21,12 +21,12 @@ mcl_dyes.colors = {
 		groups = {basecolor_white=1,   excolor_white=1,     unicolor_white=1},
 		rgb = "#D1C6A6",
 	},
-	["grey"] = {
+	["silver"] = {
 		description = S("Light Grey Dye"),
 		groups = {basecolor_grey=1,    excolor_grey=1,      unicolor_grey=1},
 		rgb = "#88867C",
 	},
-	["dark_grey"] = {
+	["grey"] = {
 		description = S("Grey Dye"),
 		groups = {basecolor_grey=1,    excolor_darkgrey=1,  unicolor_darkgrey=1},
 		rgb = "#60574A",
@@ -36,7 +36,7 @@ mcl_dyes.colors = {
 		groups = {basecolor_black=1,   excolor_black=1,     unicolor_black=1},
 		rgb = "#171717",
 	},
-	["violet"] = {
+	["purple"] = {
 		description = S("Purple Dye"),
 		groups = {basecolor_magenta=1, excolor_violet=1,    unicolor_violet=1},
 		rgb = "#57347C",
@@ -56,12 +56,12 @@ mcl_dyes.colors = {
 		groups = {basecolor_cyan=1,    excolor_cyan=1,      unicolor_cyan=1},
 		rgb = "#359390",
 	},
-	["dark_green"] = {
+	["green"] = {
 		description = S("Cactus Green"),
 		groups = {basecolor_green=1,   excolor_green=1,     unicolor_dark_green=1},
 		rgb = "#1A4F25",
 	},
-	["green"] = {
+	["lime"] = {
 		description = S("Lime Dye"),
 		groups = {basecolor_green=1,   excolor_green=1,     unicolor_green=1},
 		rgb = "#63C863",
