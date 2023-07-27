@@ -9,7 +9,7 @@ mcl_inventory.registered_survival_inventory_tabs = {}
 ---@param def {id: string, description: string, item_icon: string, build: (fun(player: ObjectRef): string), handle: fun(player: ObjectRef, fields: table), access: (fun(player): boolean), show_inventory: boolean}
 function mcl_inventory.register_survival_inventory_tab(def)
 	if #mcl_inventory.registered_survival_inventory_tabs == 7 then
-		error("Too much tabs registered!")
+		error("Too many tabs registered!")
 	end
 
 	assert(def.id)
