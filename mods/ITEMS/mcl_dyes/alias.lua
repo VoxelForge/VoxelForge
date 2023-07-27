@@ -1,15 +1,21 @@
-minetest.register_alias("mcl_dye:grey","mcl_dyes:grey")
-minetest.register_alias("mcl_dye:dark_grey","mcl_dyes:dark_grey")
-minetest.register_alias("mcl_dye:violet","mcl_dyes:violet")
+minetest.register_alias("mcl_dye:grey","mcl_dyes:silver")
+minetest.register_alias("mcl_dye:dark_grey","mcl_dyes:grey")
+minetest.register_alias("mcl_dye:violet","mcl_dyes:purple")
 minetest.register_alias("mcl_dye:lightblue","mcl_dyes:lightblue")
 minetest.register_alias("mcl_dye:cyan","mcl_dyes:cyan")
-minetest.register_alias("mcl_dye:dark_green","mcl_dyes:dark_green")
-minetest.register_alias("mcl_dye:green","mcl_dyes:green")
+minetest.register_alias("mcl_dye:dark_green","mcl_dyes:green")
+minetest.register_alias("mcl_dye:green","mcl_dyes:lime")
 minetest.register_alias("mcl_dye:yellow","mcl_dyes:yellow")
 minetest.register_alias("mcl_dye:orange","mcl_dyes:orange")
 minetest.register_alias("mcl_dye:red","mcl_dyes:red")
 minetest.register_alias("mcl_dye:magenta","mcl_dyes:magenta")
 minetest.register_alias("mcl_dye:pink","mcl_dyes:pink")
+
+-- Old messy colornames
+minetest.register_alias("mcl_dyes:dark_green","mcl_dyes:green")
+minetest.register_alias("mcl_dyes:dark_grey","mcl_dyes:grey")
+minetest.register_alias("mcl_dyes:grey","mcl_dyes:silver")
+minetest.register_alias("mcl_dyes:violet","mcl_dyes:purple")
 
 -- these 4 used to double as other items, aliases to the old items
 -- are provided so people do not loose their hard earned lapis etc.
