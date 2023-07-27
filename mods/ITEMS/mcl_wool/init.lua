@@ -111,3 +111,7 @@ minetest.register_craft({
 	-- Original value: 3.35
 	burntime = 3,
 })
+
+--alias old non uniform nodename
+minetest.register_alias("mcl_wool:light_blue","mcl_wool:lightblue")
+minetest.register_alias("mcl_wool:light_blue_carpet","mcl_wool:lightblue_carpet")
