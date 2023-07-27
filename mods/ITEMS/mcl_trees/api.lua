@@ -285,13 +285,12 @@ local function register_leaves(subname, def, sapling, drop_apples, sapling_chanc
 		_mcl_leaves = leaves_id,
 		_mcl_orphan_leaves = orphan_leaves_id,
 	},def or {})
-
-	minetest.register_node(":mcl_trees:"..subname, l_def)
+	minetest.register_node(":" .. leaves_id, l_def)
 
 	local o_def = table.merge(l_def, {
 		_doc_items_create_entry = false,
-		_mcl_shears_drop = {"mcl_trees:" .. subname},
-		_mcl_silk_touch_drop = {"mcl_trees:" .. subname},
+		_mcl_shears_drop = {leaves_id},
+		_mcl_silk_touch_drop = {leaves_id},
 		_mcl_leaves = leaves_id,
 		_mcl_orphan_leaves = orphan_leaves_id,
 		on_construct = nil
@@ -300,8 +299,7 @@ local function register_leaves(subname, def, sapling, drop_apples, sapling_chanc
 		not_in_creative_inventory = 1,
 		orphan_leaves = 1,
 	})
-
-	minetest.register_node(":mcl_trees:" .. subname .. "_orphan", o_def)
+	minetest.register_node(":" .. orphan_leaves_id, o_def)
 end
 
 local function readable_name(str)
