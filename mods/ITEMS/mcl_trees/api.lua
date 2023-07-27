@@ -131,14 +131,15 @@ local function update_leaves(pos)
 end
 
 -- called from leaves after_place_node
-local function update_leaf_p2(pos)
+local function set_placed_leaves_p2(pos)
 	local n = minetest.get_node(pos)
-	if minetest.get_item_group(n.name, "biomecolor") == 0 then
-		return
+	local palette_index = 0
+	if minetest.get_item_group(n.name, "biomecolor") ~= 0 then
+		palette_index = mcl_util.get_pos_p2(pos)
 	end
 
-	-- preserve the log distances in the upper 3 bits
-	n.param2 = math.floor(n.param2 / 32) * 32 + mcl_util.get_pos_p2(pos)
+	-- 32 represents a log distance of 0 (which means the no decay)
+	n.param2 = 32 + palette_index
 	minetest.swap_node(pos,n)
 end
 
@@ -182,7 +183,7 @@ local tpl_leaves = {
 		compostability = 30
 	},
 	on_construct = update_leaves,
-	after_place_node = update_leaf_p2,
+	after_place_node = set_placed_leaves_p2,
 	after_destruct = update_leaves,
 	_mcl_shears_drop = true,
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
