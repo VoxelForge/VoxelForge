@@ -1,28 +1,6 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 local doc_mod = minetest.get_modpath("doc")
 
-local block = {}
-
-block.dyes = {
-	{"white",      S("White Terracotta"),      S("White Glazed Terracotta"),	S("White Concrete Powder"),		S("White Concrete"),		"white"},
-	{"grey",       S("Grey Terracotta"),       S("Grey Glazed Terracotta"),		S("Grey Concrete Powder"),		S("Grey Concrete"),		"dark_grey"},
-	{"silver",     S("Light Grey Terracotta"), S("Light Grey Glazed Terracotta"),	S("Light Grey Concrete Powder"),	S("Light Grey Concrete"),	"grey"},
-	{"black",      S("Black Terracotta"),      S("Black Glazed Terracotta"),	S("Black Concrete Powder"),		S("Black Concrete"),		"black"},
-	{"red",        S("Red Terracotta"),        S("Red Glazed Terracotta"),		S("Red Concrete Powder"),		S("Red Concrete"),		"red"},
-	{"yellow",     S("Yellow Terracotta"),     S("Yellow Glazed Terracotta"),	S("Yellow Concrete Powder"),		S("Yellow Concrete"),		"yellow"},
-	{"green",      S("Green Terracotta"),      S("Green Glazed Terracotta"),	S("Green Concrete Powder"),		S("Green Concrete"),		"dark_green"},
-	{"cyan",       S("Cyan Terracotta"),       S("Cyan Glazed Terracotta"),		S("Cyan Concrete Powder"),		S("Cyan Concrete"),		"cyan"},
-	{"blue",       S("Blue Terracotta"),       S("Blue Glazed Terracotta"),		S("Blue Concrete Powder"),		S("Blue Concrete"),		"blue"},
-	{"magenta",    S("Magenta Terracotta"),    S("Magenta Glazed Terracotta"),	S("Magenta Concrete Powder"),		S("Magenta Concrete"),		"magenta"},
-	{"orange",     S("Orange Terracotta"),     S("Orange Glazed Terracotta"),	S("Orange Concrete Powder"),		S("Orange Concrete"),		"orange"},
-	{"purple",     S("Purple Terracotta"),     S("Purple Glazed Terracotta"),	S("Purple Concrete Powder"),		S("Purple Concrete"),		"violet"},
-	{"brown",      S("Brown Terracotta"),      S("Brown Glazed Terracotta"),	S("Brown Concrete Powder"),		S("Brown Concrete"),		"brown"},
-	{"pink",       S("Pink Terracotta"),       S("Pink Glazed Terracotta"),		S("Pink Concrete Powder"),		S("Pink Concrete"),		"pink"},
-	{"lime",       S("Lime Terracotta"),       S("Lime Glazed Terracotta"),		S("Lime Concrete Powder"),		S("Lime Concrete"),		"green"},
-	{"light_blue", S("Light Blue Terracotta"), S("Light Blue Glazed Terracotta"),	S("Light Blue Concrete Powder"),	S("Light Blue Concrete"),	"lightblue"},
-}
-local canonical_color = "yellow"
-
 local hc_desc = S("Terracotta is a basic building material. It comes in many different colors.")
 local gt_desc = S("Glazed terracotta is a decorative block with a complex pattern. It can be rotated by placing it in different directions.")
 local cp_desc = S("Concrete powder is used for creating concrete, but it can also be used as decoration itself. It comes in different colors. Concrete powder turns into concrete of the same color when it comes in contact with water.")
@@ -52,13 +30,40 @@ if minetest.get_modpath("screwdriver") then
 	on_rotate = screwdriver.rotate_simple
 end
 
-for _, row in ipairs(block.dyes) do
-	local name = row[1]
-	local is_canonical = name == canonical_color
-	local sdesc_hc = row[2]
-	local sdesc_gt = row[3]
-	local sdesc_cp = row[4]
-	local sdesc_c = row[5]
+local messy_textures = { --translator table for the bed texture filenames names not adhering to the common color names of mcl_dyes
+	["purple"] = "violet",
+}
+
+local canonical_color = "yellow"
+
+local function readable_name(str)
+	str = str:gsub("_", " ")
+    return (str:gsub("^%l", string.upper))
+end
+
+for color,colordef in pairs(mcl_dyes.colors) do
+	local create_entry = false
+	local longdesc_carpet, longdesc_wool, name_carpet, name_wool
+
+	local is_canonical = color == canonical_color
+	if is_canonical then
+		name_carpet = S("Carpet")
+		name_wool = S("Wool")
+		longdesc_wool = S("Wool is a decorative block which comes in many different colors.")
+		longdesc_carpet = S("Carpets are thin floor covers which come in many different colors.")
+		create_entry = true
+	else
+	end
+	local texcolor = "wool_"..color
+	if messy_textures[color] then
+		texcolor = messy_textures[color]
+	end
+
+	local is_canonical = color == canonical_color
+	local sdesc_hc = S(readable_name(color).." Terracotta")
+	local sdesc_gt = S(readable_name(color).." Glazed Terracotta")
+	local sdesc_cp = S(readable_name(color).." Concrete Powder")
+	local sdesc_c = S(readable_name(color).." Concrete")
 	local ldesc_hc, ldesc_gt, ldesc_cp, ldesc_c
 	local create_entry
 	local ename_hc, ename_gt, ename_cp, ename_c
@@ -75,14 +80,14 @@ for _, row in ipairs(block.dyes) do
 	else
 		create_entry = false
 	end
-	local craft_color_group = row[6]
+
 	-- Node Definition
-	minetest.register_node("mcl_colorblocks:hardened_clay_"..name, {
+	minetest.register_node("mcl_colorblocks:hardened_clay_"..color, {
 		description = sdesc_hc,
 		_doc_items_longdesc = ldesc_hc,
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = ename_hc,
-		tiles = {"hardened_clay_stained_"..name..".png"},
+		tiles = {"hardened_clay_stained_"..color..".png"},
 		groups = {pickaxey=1, hardened_clay=1,building_block=1, material_stone=1},
 		stack_max = 64,
 		sounds = mcl_sounds.node_sound_stone_defaults(),
@@ -90,13 +95,13 @@ for _, row in ipairs(block.dyes) do
 		_mcl_hardness = 1.25,
 	})
 
-	minetest.register_node("mcl_colorblocks:concrete_powder_"..name, {
+	minetest.register_node("mcl_colorblocks:concrete_powder_"..color, {
 		description = sdesc_cp,
 		_tt_help = ltt_cp,
 		_doc_items_longdesc = ldesc_cp,
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = ename_cp,
-		tiles = {"mcl_colorblocks_concrete_powder_"..name..".png"},
+		tiles = {"mcl_colorblocks_concrete_powder_"..color..".png"},
 		groups = {handy=1,shovely=1, concrete_powder=1,building_block=1,falling_node=1, material_sand=1, float=1},
 		stack_max = 64,
 		is_ground_content = false,
@@ -126,17 +131,17 @@ for _, row in ipairs(block.dyes) do
 		end,
 
 		-- Specify the node to which this node will convert after getting in contact with water
-		_mcl_colorblocks_harden_to = "mcl_colorblocks:concrete_"..name,
+		_mcl_colorblocks_harden_to = "mcl_colorblocks:concrete_"..color,
 		_mcl_blast_resistance = 0.5,
 		_mcl_hardness = 0.5,
 	})
 
-	minetest.register_node("mcl_colorblocks:concrete_"..name, {
+	minetest.register_node("mcl_colorblocks:concrete_"..color, {
 		description = sdesc_c,
 		_doc_items_longdesc = ldesc_c,
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = ename_c,
-		tiles = {"mcl_colorblocks_concrete_"..name..".png"},
+		tiles = {"mcl_colorblocks_concrete_"..color..".png"},
 		groups = {handy=1,pickaxey=1, concrete=1,building_block=1, material_stone=1},
 		stack_max = 64,
 		is_ground_content = false,
@@ -145,9 +150,9 @@ for _, row in ipairs(block.dyes) do
 		_mcl_hardness = 1.8,
 	})
 
-	local tex = "mcl_colorblocks_glazed_terracotta_"..name..".png"
+	local tex = "mcl_colorblocks_glazed_terracotta_"..color..".png"
 	local texes = { tex, tex, tex.."^[transformR180", tex, tex.."^[transformR270", tex.."^[transformR90" }
-	minetest.register_node("mcl_colorblocks:glazed_terracotta_"..name, {
+	minetest.register_node("mcl_colorblocks:glazed_terracotta_"..color, {
 		description = sdesc_gt,
 		_doc_items_longdesc = ldesc_gt,
 		_doc_items_create_entry = create_entry,
@@ -164,39 +169,37 @@ for _, row in ipairs(block.dyes) do
 	})
 
 	if not is_canonical and doc_mod then
-		doc.add_entry_alias("nodes", "mcl_colorblocks:hardened_clay_"..canonical_color, "nodes", "mcl_colorblocks:hardened_clay_"..name)
-		doc.add_entry_alias("nodes", "mcl_colorblocks:glazed_terracotta_"..canonical_color, "nodes", "mcl_colorblocks:glazed_terracotta_"..name)
-		doc.add_entry_alias("nodes", "mcl_colorblocks:concrete_"..canonical_color, "nodes", "mcl_colorblocks:concrete_"..name)
-		doc.add_entry_alias("nodes", "mcl_colorblocks:concrete_powder_"..canonical_color, "nodes", "mcl_colorblocks:concrete_powder_"..name)
+		doc.add_entry_alias("nodes", "mcl_colorblocks:hardened_clay_"..canonical_color, "nodes", "mcl_colorblocks:hardened_clay_"..color)
+		doc.add_entry_alias("nodes", "mcl_colorblocks:glazed_terracotta_"..canonical_color, "nodes", "mcl_colorblocks:glazed_terracotta_"..color)
+		doc.add_entry_alias("nodes", "mcl_colorblocks:concrete_"..canonical_color, "nodes", "mcl_colorblocks:concrete_"..color)
+		doc.add_entry_alias("nodes", "mcl_colorblocks:concrete_powder_"..canonical_color, "nodes", "mcl_colorblocks:concrete_powder_"..color)
 	end
 
 	-- Crafting recipes
-	if craft_color_group then
-		minetest.register_craft({
-			output = "mcl_colorblocks:hardened_clay_"..name.." 8",
-			recipe = {
-					{"mcl_colorblocks:hardened_clay", "mcl_colorblocks:hardened_clay", "mcl_colorblocks:hardened_clay"},
-					{"mcl_colorblocks:hardened_clay", "mcl_dyes:"..craft_color_group, "mcl_colorblocks:hardened_clay"},
-					{"mcl_colorblocks:hardened_clay", "mcl_colorblocks:hardened_clay", "mcl_colorblocks:hardened_clay"},
-			},
-		})
-		minetest.register_craft({
-			type = "shapeless",
-			output = "mcl_colorblocks:concrete_powder_"..name.." 8",
-			recipe = {
-				"mcl_core:sand", "mcl_core:gravel", "mcl_core:sand",
-				"mcl_core:gravel", "mcl_dyes:"..craft_color_group, "mcl_core:gravel",
-				"mcl_core:sand", "mcl_core:gravel", "mcl_core:sand",
-			}
-		})
+	minetest.register_craft({
+		output = "mcl_colorblocks:hardened_clay_"..color.." 8",
+		recipe = {
+				{"mcl_colorblocks:hardened_clay", "mcl_colorblocks:hardened_clay", "mcl_colorblocks:hardened_clay"},
+				{"mcl_colorblocks:hardened_clay", "mcl_dyes:"..color, "mcl_colorblocks:hardened_clay"},
+				{"mcl_colorblocks:hardened_clay", "mcl_colorblocks:hardened_clay", "mcl_colorblocks:hardened_clay"},
+		},
+	})
+	minetest.register_craft({
+		type = "shapeless",
+		output = "mcl_colorblocks:concrete_powder_"..color.." 8",
+		recipe = {
+			"mcl_core:sand", "mcl_core:gravel", "mcl_core:sand",
+			"mcl_core:gravel", "mcl_dyes:"..color, "mcl_core:gravel",
+			"mcl_core:sand", "mcl_core:gravel", "mcl_core:sand",
+		}
+	})
 
-		minetest.register_craft({
-			type = "cooking",
-			output = "mcl_colorblocks:glazed_terracotta_"..name,
-			recipe = "mcl_colorblocks:hardened_clay_"..name,
-			cooktime = 10,
-		})
-	end
+	minetest.register_craft({
+		type = "cooking",
+		output = "mcl_colorblocks:glazed_terracotta_"..color,
+		recipe = "mcl_colorblocks:hardened_clay_"..color,
+		cooktime = 10,
+	})
 end
 
 -- When water touches concrete powder, it turns into concrete of the same color
