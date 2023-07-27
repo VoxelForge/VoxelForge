@@ -1,7 +1,7 @@
 minetest.register_alias("mcl_dye:grey","mcl_dyes:silver")
 minetest.register_alias("mcl_dye:dark_grey","mcl_dyes:grey")
 minetest.register_alias("mcl_dye:violet","mcl_dyes:purple")
-minetest.register_alias("mcl_dye:lightblue","mcl_dyes:lightblue")
+minetest.register_alias("mcl_dye:lightblue","mcl_dyes:light_blue")
 minetest.register_alias("mcl_dye:cyan","mcl_dyes:cyan")
 minetest.register_alias("mcl_dye:dark_green","mcl_dyes:green")
 minetest.register_alias("mcl_dye:green","mcl_dyes:lime")
@@ -16,6 +16,7 @@ minetest.register_alias("mcl_dyes:dark_green","mcl_dyes:green")
 minetest.register_alias("mcl_dyes:dark_grey","mcl_dyes:grey")
 minetest.register_alias("mcl_dyes:grey","mcl_dyes:silver")
 minetest.register_alias("mcl_dyes:violet","mcl_dyes:purple")
+minetest.register_alias("mcl_dyes:lightblue","mcl_dyes:light_blue")
 
 -- these 4 used to double as other items, aliases to the old items
 -- are provided so people do not loose their hard earned lapis etc.

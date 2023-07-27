@@ -6,7 +6,7 @@ minetest.register_alias("mcl_wool:dark_blue", "wool:blue")
 minetest.register_alias("mcl_wool:gold", "wool:yellow")
 
 local messy_textures = { --translator table for the bed texture filenames names not adhering to the common color names of mcl_dyes
-	["lightblue"] = "mcl_wool_light_blue",
+	["light_blue"] = "mcl_wool_light_blue",
 	["grey"] = "wool_dark_grey",
 	["silver"] = "wool_grey",
 	["green"] = "wool_dark_green",
@@ -111,7 +111,3 @@ minetest.register_craft({
 	-- Original value: 3.35
 	burntime = 3,
 })
-
---alias old non uniform nodename
-minetest.register_alias("mcl_wool:light_blue","mcl_wool:lightblue")
-minetest.register_alias("mcl_wool:light_blue_carpet","mcl_wool:lightblue_carpet")

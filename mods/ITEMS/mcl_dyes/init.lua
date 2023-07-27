@@ -46,7 +46,7 @@ mcl_dyes.colors = {
 		groups = {basecolor_blue=1,    excolor_blue=1,      unicolor_blue=1},
 		rgb = "#42649B",
 	},
-	["lightblue"] = {
+	["light_blue"] = {
 		description = S("Light Blue Dye"),
 		groups = {basecolor_blue=1,    excolor_blue=1,      unicolor_light_blue=1},
 		rgb = "#4083B7",
