@@ -8,6 +8,7 @@ Version: 0.83.1
 ### Differences from MineClone 2
 * Overworld depth increased from 64 to 128 nodes to match Minecraft 1.18
 * Improved nether portals
+* Improved leaf decay
 * No in-game music, twice as small compared to MineClone 2
 * No hamburgers
 
