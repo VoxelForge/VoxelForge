@@ -9,6 +9,7 @@ Version: 0.84.0
 * Overworld depth increased from 64 to 128 nodes to match Minecraft 1.18
 * Improved nether portals
 * Improved leaf decay
+* New items and biomes
 * No in-game music, twice as small compared to MineClone 2
 * No hamburgers
 
