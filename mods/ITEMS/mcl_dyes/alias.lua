@@ -22,6 +22,5 @@ minetest.register_alias("mcl_dye:brown","mcl_cocoas:cocoa_beans")
 -- Old messy colornames - not following the color naming scheme most of the codebase uses
 minetest.register_alias("mcl_dyes:dark_green","mcl_dyes:green")
 minetest.register_alias("mcl_dyes:dark_grey","mcl_dyes:grey")
-minetest.register_alias("mcl_dyes:grey","mcl_dyes:silver")
 minetest.register_alias("mcl_dyes:violet","mcl_dyes:purple")
 minetest.register_alias("mcl_dyes:lightblue","mcl_dyes:light_blue")
