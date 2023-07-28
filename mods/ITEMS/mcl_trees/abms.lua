@@ -142,7 +142,8 @@ function mcl_trees.grow_tree(pos, node)
 			end
 			pos = ne
 		end
-		minetest.place_schematic(vector.subtract(pos, schem.offset or vector.new(w/2, 1, w/2)), schem.file, "random", nil, false)
+		minetest.place_schematic(vector.subtract(pos, schem.offset or vector.new(math.ceil(w/2), 1, math.ceil(w/2))), schem.file, "random", nil, false)
+
 		local nn = minetest.find_nodes_in_area(vector.offset(pos, -math.ceil(w/2), 0, -math.ceil(w/2)), vector.offset(pos, math.ceil(w/2), h, math.ceil(w/2)), {"group:leaves"})
 		for _,v in pairs(nn) do
 			local n = minetest.get_node(v)
