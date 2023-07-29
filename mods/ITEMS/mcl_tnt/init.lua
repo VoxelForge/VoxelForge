@@ -114,6 +114,7 @@ minetest.register_node("mcl_tnt:tnt", {
 })
 
 local TNT = {
+	description = S("TNT"),
 	-- Static definition
 	physical = true, -- Collides with things
 	--weight = -100,
