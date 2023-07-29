@@ -110,12 +110,11 @@ mcl_death_messages = {
 			item = W("@1 tried to hurt @2 and died by @3"),
 		},
 		explosion = {
-			-- Killer and item death messages have been disabled due to a bug making them show raw
-			-- entity names (like "mobs_mc:creeper") and sometimes "userdata 0x455c2778".
-			plain = W("@1 blew up"),
-			--killer = W("@1 was blown up by @2"),
-			--item = W("@1 was blown up by @2 using @3"),
-			-- W("@1 was killed by [Intentional Game Design]") -- for exploding bed in nether or end
+			_translator = S,
+			plain = "@1 blew up",
+			killer = W("@1 was blown up by @2"),
+			item = W("@1 was blown up by @2 using @3"),
+			-- "@1 was killed by [Intentional Game Design]" -- for exploding bed in nether or end
 		},
 		cramming = {
 			plain = W("@1 was squished too much"),
