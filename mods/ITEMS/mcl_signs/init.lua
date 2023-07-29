@@ -333,6 +333,7 @@ function mcl_signs.update_sign(pos)
 		textures = { mcl_signs.generate_texture(data) },
 	})
 	text_entity:set_yaw(data.yaw)
+	text_entity:set_armor_groups({ immortal = 1 })
 	return true
 end
 
@@ -355,13 +356,7 @@ minetest.register_entity("mcl_signs:text", {
 
 	on_activate = function(self, staticdata)
 		local pos = self.object:get_pos()
-		local meta = minetest.get_meta(pos)
-		local text = meta:get_string("text")
-		local text_color = meta:get_string("color")
-		self.object:set_properties({
-			textures = { mcl_signs.generate_texture(text, minetest.get_node(pos), text_color) }
-		})
-		self.object:set_armor_groups({ immortal = 1 })
+		mcl_signs.update_sign(pos)
 	end,
 })
 
