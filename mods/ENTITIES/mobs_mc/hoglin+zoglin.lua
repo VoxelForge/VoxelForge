@@ -90,33 +90,30 @@ local hoglin = {
 
 mcl_mobs.register_mob("mobs_mc:hoglin", hoglin)
 
-local zoglin = table.copy(hoglin)
-zoglin.fire_resistant = 1
-zoglin.textures = {"extra_mobs_zoglin.png"}
-zoglin.do_custom = function()
-	return
-end
-zoglin.attacks_monsters = true
-zoglin.lava_damage = 0
-zoglin.fire_damage = 0
-mcl_mobs.register_mob("mobs_mc:zoglin", zoglin)
+mcl_mobs.register_mob("mobs_mc:zoglin",table.merge(hoglin,{
+	description = S("Zoglin"),
+	fire_resistant = 1,
+	textures = {"extra_mobs_zoglin.png"},
+	do_custom = function() end,
+	attacks_monsters = true,
+	lava_damage = 0,
+	fire_damage = 0,
+}))
 
--- Baby hoglin.
-
-local baby_hoglin = table.copy(hoglin)
-baby_hoglin.collisionbox = {-.3, -0.01, -.3, .3, 0.94, .3}
-baby_hoglin.xp_min = 20
-baby_hoglin.xp_max = 20
-baby_hoglin.visual_size = {x=hoglin.visual_size.x/2, y=hoglin.visual_size.y/2}
-textures = { {
-	"extra_mobs_hoglin.png",
-	"extra_mobs_trans.png",
-} }
-baby_hoglin.walk_velocity = 1.2
-baby_hoglin.run_velocity = 2.4
-baby_hoglin.child = 1
-
-mcl_mobs.register_mob("mobs_mc:baby_hoglin", baby_hoglin)
+mcl_mobs.register_mob("mobs_mc:baby_hoglin",table.merge(hoglin,{
+	description = S("Baby Hoglin"),
+	collisionbox = {-.3, -0.01, -.3, .3, 0.94, .3},
+	xp_min = 20,
+	xp_max = 20,
+	visual_size = {x=hoglin.visual_size.x/2, y=hoglin.visual_size.y/2},
+	textures = { {
+		"extra_mobs_hoglin.png",
+		"extra_mobs_trans.png",
+	} },
+	walk_velocity = 1.2,
+	run_velocity = 2.4,
+	child = 1,
+}))
 
 mcl_mobs.spawn_setup({
 	name = "mobs_mc:hoglin",
