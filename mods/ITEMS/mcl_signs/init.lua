@@ -370,19 +370,23 @@ end
 mcl_signs.old_rotnames = {}
 
 function mcl_signs.register_sign(name,color,def)
-	local textures = {
+	local newfields = {
 		tiles = { colored_texture("mcl_signs_sign_greyscale.png", color) },
 		inventory_image = colored_texture("default_sign_greyscale.png", color),
 		wield_image = colored_texture("default_sign_greyscale.png", color),
+		drop = "mcl_signs:wall_sign_"..name,
+		_mcl_sign_wood = name,
 	}
-	minetest.register_node(":mcl_signs:standing_sign_"..name, table.merge({ _mcl_sign_wood = name }, sign_tpl, textures ,def or {}))
-	minetest.register_node(":mcl_signs:wall_sign_"..name,table.merge({ _mcl_sign_wood = name }, sign_wall, textures, def or {}))
-	minetest.register_node(":mcl_signs:hanging_sign_"..name,table.merge({ _mcl_sign_wood = name }, sign_hanging, textures,{
+
+	minetest.register_node(":mcl_signs:standing_sign_"..name, table.merge({ _mcl_sign_wood = name }, sign_tpl, newfields, def or {}))
+	minetest.register_node(":mcl_signs:wall_sign_"..name,table.merge({ _mcl_sign_wood = name }, sign_wall, newfields, def or {}))
+	minetest.register_node(":mcl_signs:hanging_sign_"..name,table.merge( sign_hanging, newfields, {
 		tiles = { colored_texture("mcl_signs_sign_hanging.png",color), },
 	},def or {}))
+
 	table.insert(mcl_signs.old_rotnames,"mcl_signs:standing_sign22_5_"..name)
 	table.insert(mcl_signs.old_rotnames,"mcl_signs:standing_sign45_"..name)
 	table.insert(mcl_signs.old_rotnames,"mcl_signs:standing_sign67_5_"..name)
 end
-
+minetest.register_alias("mcl_signs:sign","mcl_signs:wall_sign_oak")
 dofile(modpath.."/compat.lua")
