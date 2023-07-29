@@ -17,6 +17,7 @@ dofile(modpath.."/geode.lua")
 dofile(modpath.."/pillager_outpost.lua")
 dofile(modpath.."/end_spawn.lua")
 dofile(modpath.."/end_city.lua")
+dofile(modpath.."/ancient_hermitage.lua")
 
 
 mcl_structures.register_structure("desert_well",{
