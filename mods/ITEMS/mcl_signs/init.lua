@@ -35,6 +35,7 @@ local sign_tpl = {
 	stack_max = 16,
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	node_placement_prediction = "",
+	_mcl_sign_type = "standing"
 }
 
 --Signs data / meta
@@ -211,17 +212,19 @@ function sign_tpl.on_place(itemstack, placer, pointed_thing)
 
 	local itemstring = itemstack:get_name()
 	local placestack = ItemStack(itemstack)
+	local def = itemstack:get_definition()
+
 	local pos = above
 	-- place on wall
 	if wdir ~= 0 and wdir ~= 1 then
-		--placestack:set_name("mcl_signs:sign")
+		placestack:set_name("mcl_signs:wall_sign_"..def._mcl_sign_wood)
 		itemstack, pos = minetest.item_place(placestack, placer, pointed_thing, wdir)
 	elseif wdir == 1 then -- standing, not ceiling
-		placestack:set_name(itemstack:get_name().."_standing")
+		placestack:set_name("mcl_signs:standing_sign_"..def._mcl_sign_wood)
 		local rot = normalize_rotation(placer:get_look_horizontal() * 180 / math.pi / 1.5)
 		itemstack, pos = minetest.item_place(placestack, placer, pointed_thing,  rot) -- param2 value is degrees / 1.5
 	elseif wdir == 0 then --ceiling, hanging sign
-		placestack:set_name(itemstack:get_name().."_hanging")
+		placestack:set_name("mcl_signs:hanging_sign_"..def._mcl_sign_wood)
 		itemstack, pos = minetest.item_place(placestack, placer, pointed_thing, minetest.dir_to_facedir(vector.direction(placer:get_pos(),pointed_thing.above)))
 	else
 		return itemstack
@@ -247,6 +250,7 @@ local sign_wall = table.merge(sign_tpl,{
 	paramtype2 = "wallmounted",
 	selection_box = { type = "wallmounted", wall_side = { -0.5, -7 / 28, -0.5, -23 / 56, 7 / 28, 0.5 }},
 	groups = { axey = 1, handy = 2, sign = 1 },
+	_mcl_sign_type = "wall",
 })
 
 local sign_hanging = table.merge(sign_tpl,{
@@ -255,6 +259,7 @@ local sign_hanging = table.merge(sign_tpl,{
 	paramtype2 = "facedir",
 	selection_box = { type = "fixed", fixed = {  -0.5, -0.25, -0.05, 0.5, 0.25, 0.05 }},
 	groups = { axey = 1, handy = 2, sign = 1, not_in_creative_inventory = 1 },
+	_mcl_sign_type = "hanging",
 })
 
 --Formspec
@@ -362,15 +367,22 @@ local function colored_texture(texture,color)
 	return texture.."^[multiply:"..color
 end
 
+mcl_signs.old_rotnames = {}
+
 function mcl_signs.register_sign(name,color,def)
 	local textures = {
 		tiles = { colored_texture("mcl_signs_sign_greyscale.png", color) },
 		inventory_image = colored_texture("default_sign_greyscale.png", color),
 		wield_image = colored_texture("default_sign_greyscale.png", color),
 	}
-	minetest.register_node(":mcl_signs:"..name.."_sign_standing",table.merge(sign_tpl, textures ,def or {}))
-	minetest.register_node(":mcl_signs:"..name.."_sign",table.merge(sign_wall,textures,def or {}))
-	minetest.register_node(":mcl_signs:"..name.."_sign_hanging",table.merge(sign_hanging,textures,{
+	minetest.register_node(":mcl_signs:standing_sign_"..name, table.merge({ _mcl_sign_wood = name }, sign_tpl, textures ,def or {}))
+	minetest.register_node(":mcl_signs:wall_sign_"..name,table.merge({ _mcl_sign_wood = name }, sign_wall, textures, def or {}))
+	minetest.register_node(":mcl_signs:hanging_sign_"..name,table.merge({ _mcl_sign_wood = name }, sign_hanging, textures,{
 		tiles = { colored_texture("mcl_signs_sign_hanging.png",color), },
 	},def or {}))
+	table.insert(mcl_signs.old_rotnames,"mcl_signs:standing_sign22_5_"..name)
+	table.insert(mcl_signs.old_rotnames,"mcl_signs:standing_sign45_"..name)
+	table.insert(mcl_signs.old_rotnames,"mcl_signs:standing_sign67_5_"..name)
 end
+
+dofile(modpath.."/compat.lua")
