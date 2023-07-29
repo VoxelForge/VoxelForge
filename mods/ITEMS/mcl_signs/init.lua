@@ -79,6 +79,7 @@ local function set_signmeta(pos,def)
 	local meta = minetest.get_meta(pos)
 	if def.text then meta:set_string("text",def.text) end
 	if def.color then meta:set_string("color",def.color) end
+	if def.glow then meta:set_string("glow","true") end
 end
 
 -- Text/texture
@@ -355,7 +356,7 @@ minetest.register_entity("mcl_signs:text", {
 		local pos = self.object:get_pos()
 		local meta = minetest.get_meta(pos)
 		local text = meta:get_string("text")
-		local text_color = meta:get_string("mcl_signs:text_color")
+		local text_color = meta:get_string("color")
 		self.object:set_properties({
 			textures = { mcl_signs.generate_texture(text, minetest.get_node(pos), text_color) }
 		})

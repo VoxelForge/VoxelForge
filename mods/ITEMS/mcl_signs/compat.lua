@@ -10,10 +10,10 @@ local rotkeys = {
 --the facedir param2 (+1) mapped to the degrotate param2
 local nidp2_degrotate = {
 	["22_5"] = {
-		15,
+		225,
 		165,
 		105,
-		225,
+		45,
 	},
 	["45"] = {
 		210,
@@ -24,10 +24,26 @@ local nidp2_degrotate = {
 	["67_5"] = {
 		195,
 		135,
+		75,
 		15,
-		225,
 	}
 }
+
+function mcl_signs.upgrade_sign_meta(pos)
+		local m = minetest.get_meta(pos)
+		local col = m:get_string("mcl_signs:text_color")
+		local glo = m:get_string("mcl_signs:glowing_sign")
+		if col ~= "" then
+			s:set_string("color",col)
+			s:set_string("mcl_signs:text_color","")
+		end
+		if glo == "true" then
+			s:set_string("glow",glo)
+		end
+		if glo ~= "" then
+			s:set_string("mcl_signs:glowing_sign","")
+		end
+end
 
 minetest.register_lbm({
 	nodenames = {"group:sign"},
@@ -46,23 +62,27 @@ minetest.register_lbm({
 			end
 		end
 		minetest.swap_node(pos,node)
+		mcl_signs.upgrade_sign_meta(pos)
 		mcl_signs.update_sign(pos)
 	end
 })
+
+function mcl_signs.upgrade_sign_rot(pos,node)
+	for _,v in pairs(rotkeys) do
+		if node.name:find(v) then
+			node.name = node.name:gsub(v,"")
+			node.param2 = nidp2_degrotate[v][node.param2 + 1]
+		end
+	end
+	minetest.swap_node(pos,node)
+	mcl_signs.upgrade_sign_meta(pos)
+	mcl_signs.update_sign(pos)
+end
 
 minetest.register_lbm({
 	nodenames = mcl_signs.old_rotnames,
 	name = "mcl_signs:update_old_rotated_standing",
 	label = "Update old standing rotated signs",
-	run_at_every_load = false,
-	action = function(pos, node)
-		for _,v in pairs(rotkeys) do
-			if node.name:find(v) then
-				node.name = node.name:gsub(v,"")
-				node.param2 = nidp2_degrotate[v][node.param2 + 1]
-			end
-		end
-		minetest.swap_node(pos,node)
-		mcl_signs.update_sign(pos)
-	end
+	run_at_every_load = true, --these nodes are supposed to completely be replaced
+	action = mcl_signs.upgrade_sign_rot
 })
