@@ -114,6 +114,10 @@ end
 mcl_mobs.spawning_mobs = {}
 function mcl_mobs.register_mob(name, def)
 
+	if not def.description then
+		minetest.log("warning","[mcl_mobs] Mob "..name.." registered without description field. This is needed for proper death messages.")
+	end
+
 	mcl_mobs.spawning_mobs[name] = true
 	mcl_mobs.registered_mobs[name] = def
 
