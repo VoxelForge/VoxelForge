@@ -11,6 +11,7 @@ local S = minetest.get_translator("mobs_mc")
 
 
 local strider = {
+	description = S("Strider"),
 	type = "animal",
 	passive = true,
 	spawn_class = "passive",

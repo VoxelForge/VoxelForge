@@ -10,6 +10,7 @@ local S = minetest.get_translator("mobs_mc")
 --###################
 
 local hoglin = {
+	description = S("Hoglin"),
 	type = "monster",
 	passive = false,
 	spawn_class = "hostile",

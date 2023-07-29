@@ -35,6 +35,7 @@ end
 --################### piglin
 --###################
 local piglin = {
+	description = S("Piglin"),
 	type = "monster",
 	passive = false,
 	spawn_class = "hostile",
