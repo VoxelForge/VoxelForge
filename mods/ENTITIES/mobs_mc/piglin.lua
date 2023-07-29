@@ -179,8 +179,7 @@ local piglin = {
 mcl_mobs.register_mob("mobs_mc:piglin", piglin)
 
 
-local sword_piglin = table.copy(piglin)
-table.update(sword_piglin,{
+mcl_mobs.register_mob("mobs_mc:sword_piglin",table.merge(piglin,{
 	mesh = "extra_mobs_sword_piglin.b3d",
 	textures = {"extra_mobs_piglin.png", "default_tool_goldsword.png"},
 	on_spawn = function(self)
@@ -209,12 +208,9 @@ table.update(sword_piglin,{
 		punch_start = 189,
 		punch_end = 198,
 	},
-})
+}))
 
-mcl_mobs.register_mob("mobs_mc:sword_piglin", sword_piglin)
-
-local zombified_piglin = table.copy(piglin)
-table.update(zombified_piglin,{
+mcl_mobs.register_mob("mobs_mc:zombified_piglin",table.merge(piglin,{
 	description = S("Zombiefied Piglin"),
 	-- type="animal", passive=false: This combination is needed for a neutral mob which becomes hostile, if attacked
 	type = "animal",
@@ -275,13 +271,11 @@ table.update(zombified_piglin,{
 		damage = "mobs_mc_zombiepig_hurt",
 		distance = 16,
 	},
-})
-
-mcl_mobs.register_mob("mobs_mc:zombified_piglin", zombified_piglin)
+}))
 
 
-local piglin_brute = table.copy(piglin)
-table.update(piglin_brute,{
+mcl_mobs.register_mob("mobs_mc:piglin_brute",table.merge(piglin,{
+	description = S("Piglin Brute"),
 	xp_min = 20,
 	xp_max = 20,
 	hp_min = 50,
@@ -319,9 +313,7 @@ table.update(piglin_brute,{
 		min = 1,
 		max = 1,},
 	}
-})
-
-mcl_mobs.register_mob("mobs_mc:piglin_brute", piglin_brute)
+}))
 
 
 
