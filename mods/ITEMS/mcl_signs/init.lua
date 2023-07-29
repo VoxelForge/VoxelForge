@@ -57,7 +57,7 @@ local function get_signdata(pos)
 	elseif def.paramtype2 == "facedir" then
 		typ = "hanging"
 		local dir = minetest.facedir_to_dir(node.param2)
-		spos = vector.add(vector.offset(pos,0,-0.25,0),dir * -0.05 )
+		spos = vector.add(vector.offset(pos,0,-0.45,0),dir * -0.05 )
 		yaw = minetest.dir_to_yaw(dir)
 	else
 		yaw = math.rad(((node.param2 * 1.5 ) + 1 ) % 360)
@@ -258,7 +258,8 @@ local sign_hanging = table.merge(sign_tpl,{
 	mesh = "mcl_signs_sign_hanging.obj",
 	tiles = { "mcl_signs_sign_hanging.png" },
 	paramtype2 = "facedir",
-	selection_box = { type = "fixed", fixed = {  -0.5, -0.25, -0.05, 0.5, 0.25, 0.05 }},
+	use_texture_alpha = "alpha",
+	selection_box = { type = "fixed", fixed = {  -0.5, -0.45, -0.05, 0.5, 0.05, 0.05 }},
 	groups = { axey = 1, handy = 2, sign = 1, not_in_creative_inventory = 1 },
 	_mcl_sign_type = "hanging",
 })
