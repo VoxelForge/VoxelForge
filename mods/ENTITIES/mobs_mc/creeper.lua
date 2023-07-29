@@ -11,6 +11,7 @@ local S = minetest.get_translator("mobs_mc")
 
 mcl_mobs.register_mob("mobs_mc:creeper", {
 	type = "monster",
+	description = S("Creeper"),
 	spawn_class = "hostile",
 	spawn_in_group = 1,
 	hp_min = 20,
