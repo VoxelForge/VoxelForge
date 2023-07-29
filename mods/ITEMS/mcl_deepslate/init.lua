@@ -26,6 +26,26 @@ minetest.register_node("mcl_deepslate:deepslate", {
 	_mcl_silk_touch_drop = true,
 })
 
+minetest.register_node("mcl_deepslate:deepslate_reinforced", {
+	description = S("Reinforced Deepslate"),
+	_doc_items_longdesc = S("Reinforced deepslate is a very hard block undestructable by even wither explosions. It is unobtainable in survival mode."),
+	_doc_items_hidden = false,
+	tiles = {
+		"mcl_deepslate_reinforced_top.png",
+		"mcl_deepslate_reinforced_bottom.png",
+		{name="mcl_deepslate_reinforced.png", animation={type="vertical_frames", aspect_w=32, aspect_h=32, length=7.25}}
+	},
+	paramtype2 = "facedir",
+	is_ground_content = true,
+	on_place = mcl_util.rotate_axis,
+	groups = { stone = 1, building_block = 1, material_stone = 1 },
+	drop = "",
+	sounds = mcl_sounds.node_sound_stone_defaults(),
+	on_rotate = screwdriver.rotate_3way,
+	_mcl_blast_resistance = 1200,
+	_mcl_hardness = 55,
+})
+
 minetest.register_node("mcl_deepslate:infested_deepslate", {
 	description = S("Infested Deepslate"),
 	_doc_items_longdesc = S("An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart."),
