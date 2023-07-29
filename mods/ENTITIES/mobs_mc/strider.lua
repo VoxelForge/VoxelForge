@@ -191,21 +191,21 @@ local strider = {
 		end
 	end,
 }
-
-local baby_strider = table.copy(strider)
-baby_strider.collisionbox = {-.3, -0.01, -.3, .3, 0.94, .3}
-baby_strider.xp_min = 13
-baby_strider.xp_max = 13
-textures = { {
-	"extra_mobs_strider.png",
-	"extra_mobs_trans.png",
-} }
-baby_strider.walk_velocity = 1.2
-baby_strider.run_velocity = 2.4
-baby_strider.child = 1
-
 mcl_mobs.register_mob("mobs_mc:strider", strider)
-mcl_mobs.register_mob("mobs_mc:baby_strider", baby_strider)
+
+mcl_mobs.register_mob("mobs_mc:baby_strider",table.merge(strider,{
+	description = S("Baby Strider"),
+	collisionbox = {-.3, -0.01, -.3, .3, 0.94, .3},
+	xp_min = 13,
+	xp_max = 13,
+	textures = { {
+		"extra_mobs_strider.png",
+		"extra_mobs_trans.png",
+	} },
+	walk_velocity = 1.2,
+	run_velocity = 2.4,
+	child = 1,
+}))
 
 mcl_mobs.spawn_setup({
 	name = "mobs_mc:strider",
