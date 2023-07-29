@@ -258,7 +258,7 @@ local sign_hanging = table.merge(sign_tpl,{
 	mesh = "mcl_signs_sign_hanging.obj",
 	tiles = { "mcl_signs_sign_hanging.png" },
 	paramtype2 = "facedir",
-	use_texture_alpha = "alpha",
+	use_texture_alpha = "blend",
 	selection_box = { type = "fixed", fixed = {  -0.5, -0.45, -0.05, 0.5, 0.05, 0.05 }},
 	groups = { axey = 1, handy = 2, sign = 1, not_in_creative_inventory = 1 },
 	_mcl_sign_type = "hanging",
