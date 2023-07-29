@@ -34,15 +34,41 @@ function mcl_signs.upgrade_sign_meta(pos)
 		local col = m:get_string("mcl_signs:text_color")
 		local glo = m:get_string("mcl_signs:glowing_sign")
 		if col ~= "" then
-			s:set_string("color",col)
-			s:set_string("mcl_signs:text_color","")
+			m:set_string("color",col)
+			m:set_string("mcl_signs:text_color","")
 		end
 		if glo == "true" then
-			s:set_string("glow",glo)
+			m:set_string("glow",glo)
 		end
 		if glo ~= "" then
-			s:set_string("mcl_signs:glowing_sign","")
+			m:set_string("mcl_signs:glowing_sign","")
 		end
+end
+
+function mcl_signs.upgrade_sign_rot(pos,node)
+	local numsign = false
+	for _,v in pairs(rotkeys) do
+		if node.name:find(v) then
+			node.name = node.name:gsub(v,"")
+			node.param2 = nidp2_degrotate[v][node.param2 + 1]
+			numsign = true
+		end
+	end
+	if not numsign then
+		local def = minetest.registered_nodes[node.name]
+		if def and def._mcl_sign_type == "standing" then
+			if node.param2 == 1 or node.param2 == 121 then
+				node.param2 = 180
+			elseif node.param2 == 2 or node.param2 == 122 then
+				node.param2 = 120
+			elseif node.param2 == 3 or node.param2 == 123 then
+				node.param2 = 60
+			end
+		end
+	end
+	minetest.swap_node(pos,node)
+	mcl_signs.upgrade_sign_meta(pos)
+	mcl_signs.update_sign(pos)
 end
 
 minetest.register_lbm({
@@ -50,34 +76,8 @@ minetest.register_lbm({
 	name = "mcl_signs:update_old_signs",
 	label = "Update old signs",
 	run_at_every_load = false,
-	action = function(pos, node)
-		local def = minetest.registered_nodes[node.name]
-		if def and def._mcl_sign_type == "standing" then
-			if node.param2 == 1 then
-				node.param2 = 180
-			elseif node.param2 == 2 then
-				node.param2 = 120
-			elseif node.param2 == 3 then
-				node.param2 = 60
-			end
-		end
-		minetest.swap_node(pos,node)
-		mcl_signs.upgrade_sign_meta(pos)
-		mcl_signs.update_sign(pos)
-	end
+	action = mcl_signs.upgrade_sign_rot,
 })
-
-function mcl_signs.upgrade_sign_rot(pos,node)
-	for _,v in pairs(rotkeys) do
-		if node.name:find(v) then
-			node.name = node.name:gsub(v,"")
-			node.param2 = nidp2_degrotate[v][node.param2 + 1]
-		end
-	end
-	minetest.swap_node(pos,node)
-	mcl_signs.upgrade_sign_meta(pos)
-	mcl_signs.update_sign(pos)
-end
 
 minetest.register_lbm({
 	nodenames = mcl_signs.old_rotnames,
