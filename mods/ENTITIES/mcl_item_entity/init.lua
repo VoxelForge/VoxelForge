@@ -3,13 +3,6 @@ local pool = {}
 
 local tick = false
 
-local LOGGING_ON = minetest.settings:get_bool("mcl_logging_item_entities",false)
-local function mcl_log (message)
-	if LOGGING_ON then
-		mcl_util.mcl_log (message, "[Item Entities]", true)
-	end
-end
-
 minetest.register_on_joinplayer(function(player)
 	local name
 	name = player:get_player_name()
@@ -332,7 +325,6 @@ function minetest.handle_node_drops(pos, drops, digger)
 			local obj = minetest.add_item(dpos, drop_item)
 			if obj then
 				-- set the velocity multiplier to the stored amount or if the game dug this node, apply a bigger velocity
-				local v = 1
 				if digger and digger:is_player() then
 					obj:get_luaentity().random_velocity = 1
 				else
