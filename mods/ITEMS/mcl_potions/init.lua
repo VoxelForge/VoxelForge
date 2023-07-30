@@ -190,7 +190,6 @@ local function set_node_empty_bottle(itemstack, placer, pointed_thing, newitemst
 	-- play sound
 	minetest.sound_play("mcl_potions_bottle_pour", {pos=pointed_thing.under, gain=0.5, max_hear_range=16}, true)
 
-	-- 
 	if minetest.is_creative_enabled(placer:get_player_name()) then
 		return itemstack
 	else
