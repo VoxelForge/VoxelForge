@@ -25,7 +25,7 @@ mcl_structures.register_structure("ancient_hermitage",{
 			stacks_min = 3,
 			stacks_max = 3,
 			items = {
-				{ itemstring = "mcl_core:coal", weight = 7, amount_min = 6, amount_max=15 },
+				{ itemstring = "mcl_core:coal_lump", weight = 7, amount_min = 6, amount_max=15 },
 				{ itemstring = "mcl_mobitems:bone", weight = 5, amount_min = 1, amount_max = 15 },
 				{ itemstring = "mcl_blackstone:soul_torch", weight = 5, amount_min = 1, amount_max=15 },
 				{ itemstring = "mcl_books:book", weight = 5, amount_min = 3, amount_max=10 },
