@@ -1,0 +1,20 @@
+#!/bin/bash
+# stolen from https://gist.github.com/Gethe/bbcc180770eb9edeebaf83c96844c5df
+
+# copy file to .git/hooks/pre-commit
+# needs bash and luacheck installed
+
+exitCode=
+for file in $(git diff --cached --name-only | grep -E '\.lua$'); do
+    # we only want to check the staged changes, not any un-staged changes
+    if [[ -f "$file" ]]; then
+        luacheck "$file" --formatter plain
+    fi
+
+    if [[ $? -eq 1 ]]; then
+        # we want to go through all files before we exit, so just store it for now
+        exitCode=1
+    fi
+done
+
+exit $exitCode
