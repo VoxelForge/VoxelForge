@@ -96,7 +96,6 @@ mcl_mobs.register_mob("mobs_mc:guardian", {
 	makes_footstep_sound = false,
 	fly_in = { "mcl_core:water_source", "mclx_core:river_water_source" },
 	jump = false,
-	view_range = 16,
 })
 
 -- spawn eggs
