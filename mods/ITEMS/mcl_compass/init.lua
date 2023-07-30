@@ -195,8 +195,8 @@ minetest.register_globalstep(function(dtime)
 					stack:set_name("mcl_compass:"..random_frame .. "_recovery")
 				else
 					local targetpos = minetest.string_to_pos(posstring)
-					local _, target_dim = y_to_layer(targetpos.y)
-					local _, p_dim = y_to_layer(pos.y)
+					local _, target_dim = mcl_worlds.y_to_layer(targetpos.y)
+					local _, p_dim = mcl_worlds.y_to_layer(pos.y)
 					if p_dim ~= target_dim then
 						stack:set_name("mcl_compass:"..random_frame.."_recovery")
 					else
