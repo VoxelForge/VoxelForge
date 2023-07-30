@@ -315,11 +315,6 @@ function mcl_beds.get_bed_top (pos)
 	local bed_top_pos = vector.add(pos, dir)
 	local bed_top = minetest.get_node(bed_top_pos)
 
-	if bed_top then
-		--mcl_log("Has a bed top")
-	else
-		--mcl_log("No bed top")
-	end
 	return bed_top_pos
 end
 

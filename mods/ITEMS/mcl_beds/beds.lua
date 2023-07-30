@@ -1,5 +1,4 @@
 local S = minetest.get_translator(minetest.get_current_modname())
-local mod_doc = minetest.get_modpath("doc")
 
 local messy_textures = { --translator table for the bed texture filenames names not adhering to the common color names of mcl_dyes
 	["lightblue"] = "light_blue",
