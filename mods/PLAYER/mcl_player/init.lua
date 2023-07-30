@@ -44,7 +44,7 @@ function mcl_player.player_get_animation(player)
 		model = player_model[name],
 		textures = textures,
 		animation = player_anim[name],
-		visibility = player_visibility[name]
+		visibility = player_visible[name]
 	}
 end
 
