@@ -38,7 +38,7 @@ end
 local function update_wear_bar(player, itemstack)
 	local wear_bar_percent = (65535 - offhand_get_wear(player)) / 65535
 
-	local color = {255, 255, 255}
+	local color
 	local wear = itemstack:get_wear() / 65535;
 	local wear_i = math.min(math.floor(wear * 600), 511);
 	wear_i = math.min(wear_i + 10, 511);
@@ -154,7 +154,7 @@ end)
 minetest.register_allow_player_inventory_action(function(player, action, inventory, inventory_info)
 	if action == "move" and inventory_info.to_list == "offhand" then
 		local itemstack = inventory:get_stack(inventory_info.from_list, inventory_info.from_index)
-		if not (minetest.get_item_group(itemstack:get_name(), "offhand_item") > 0)  then
+		if minetest.get_item_group(itemstack:get_name(), "offhand_item") <= 0  then
 			return 0
 		else
 			return itemstack:get_stack_max()
