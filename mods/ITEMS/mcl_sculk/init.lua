@@ -1,7 +1,7 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 mcl_sculk = {}
 
-local mt_sound_play = minetest.sound_play
+--local mt_sound_play = minetest.sound_play
 
 local spread_to = {"mcl_core:stone","mcl_core:dirt","mcl_core:sand","mcl_core:dirt_with_grass","group:grass_block","mcl_core:andesite","mcl_core:diorite","mcl_core:granite","mcl_core:mycelium","group:dirt","mcl_end:end_stone","mcl_nether:netherrack","mcl_blackstone:basalt","mcl_nether:soul_sand","mcl_blackstone:soul_soil","mcl_crimson:warped_nylium","mcl_crimson:crimson_nylium","mcl_core:gravel","mcl_deepslate:deepslate","mcl_deepslate:tuff"}
 
@@ -11,9 +11,9 @@ local sounds = {
 }
 
 local SPREAD_RANGE = 8
-local SENSOR_RANGE = 8
-local SENSOR_DELAY = 0.5
-local SHRIEKER_COOLDOWN = 10
+--local SENSOR_RANGE = 8
+--local SENSOR_DELAY = 0.5
+--local SHRIEKER_COOLDOWN = 10
 
 local adjacents = {
 	vector.new(1,0,0),
@@ -124,7 +124,7 @@ local function spread_sculk (p, xp_amount)
 		local nn = retrieve_close_spreadable_nodes (p)
 		if nn and #nn > 0 then
 			if xp_amount > 0 then
-				local d = math.random(100)
+				--local d = math.random(100)
 				--[[ --enable to generate shriekers and sensors
 				if d <= 1 then
 					minetest.set_node(nn[1],{name = "mcl_sculk:shrieker"})
@@ -140,7 +140,6 @@ local function spread_sculk (p, xp_amount)
 
 
 				local r = math.min(math.random(#nn), xp_amount)
-				--minetest.log("r: ".. r)
 
 				for i=1,r do
 					minetest.set_node(nn[i],{name = "mcl_sculk:sculk" })
@@ -154,8 +153,6 @@ local function spread_sculk (p, xp_amount)
 				end
 				set_node_xp(nn[1],get_node_xp(nn[1]) + xp_amount % r)
 				return true
-				--self.object:remove()
-				--end
 			end
 		end
 	end
@@ -163,16 +160,11 @@ end
 
 function mcl_sculk.handle_death(pos, xp_amount)
 	if not pos or not xp_amount then return end
-	--local nu = minetest.get_node(vector.offset(p,0,-1,0))
 	return spread_sculk (pos, xp_amount)
 end
 
 minetest.register_on_dieplayer(function(player)
-	if mcl_sculk.handle_death(player:get_pos(), 5) then
-		--minetest.log("Player is dead. Sculk")
-	else
-		--minetest.log("Player is dead. not Sculk")
-	end
+	mcl_sculk.handle_death(player:get_pos(), 5)
 end)
 
 minetest.register_node("mcl_sculk:sculk", {
