@@ -2,7 +2,10 @@ unused_args = false
 allow_defined_top = true
 max_line_length = false
 redefined = false
-
+ignore = {
+	--this is used intentionally in the codebase sometimes
+	"512", -- Loop can be executed at most once.
+}
 globals = {
 	"minetest", "core",
 	"doc",
