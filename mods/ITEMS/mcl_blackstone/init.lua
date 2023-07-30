@@ -218,7 +218,6 @@ minetest.register_abm({
 		local water = minetest.find_nodes_in_area({x=pos.x-1, y=pos.y-1, z=pos.z-1}, {x=pos.x+1, y=pos.y+1, z=pos.z+1}, "mcl_core:ice")
 		local lavatype = minetest.registered_nodes[node.name].liquidtype
 		for w=1, #water do
-			local waternode = minetest.get_node(water[w])
 			if water[w].y < pos.y and water[w].x == pos.x and water[w].z == pos.z then
 				minetest.set_node(water[w], {name="mcl_blackstone:basalt"})
 			elseif lavatype == "flowing" and water[w].y == pos.y and (water[w].x == pos.x or water[w].z == pos.z) then
@@ -241,7 +240,6 @@ minetest.register_abm({
 		local water = minetest.find_nodes_in_area({x=pos.x-1, y=pos.y-1, z=pos.z-1}, {x=pos.x+1, y=pos.y+1, z=pos.z+1}, "mcl_core:packed_ice")
 		local lavatype = minetest.registered_nodes[node.name].liquidtype
 		for w=1, #water do
-			local waternode = minetest.get_node(water[w])
 			if water[w].y < pos.y and water[w].x == pos.x and water[w].z == pos.z then
 				minetest.set_node(water[w], {name="mcl_blackstone:blackstone"})
 			elseif lavatype == "flowing" and water[w].y == pos.y and (water[w].x == pos.x or water[w].z == pos.z) then

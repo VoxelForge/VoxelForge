@@ -82,7 +82,7 @@ minetest.register_craftitem("mcl_bone_meal:bone_meal", {
 		else
 			pointed_thing = { above = pos, under = droppos }
 		end
-		return bone_meal(itemstack,nil,pointed_thing)
+		return bone_meal(stack,nil,pointed_thing)
 	end,
 	_dispense_into_walkable = true
 })
