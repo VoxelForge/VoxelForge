@@ -352,11 +352,11 @@ minetest.register_node("mcl_beacons:beacon", {
 mesecon.register_mvps_stopper("mcl_beacons:beacon")
 mcl_wip.register_wip_item("mcl_beacons:beacon")
 
-function register_beaconblock (itemstring)--API function for other mods
+function mcl_beacons.register_beaconblock (itemstring)--API function for other mods
 	table.insert(mcl_beacons.blocks, itemstring)
 end
 
-function register_beaconfuel(itemstring)
+function mcl_beacons.register_beaconfuel(itemstring)
 	table.insert(mcl_beacons.fuel, itemstring)
 end
 
