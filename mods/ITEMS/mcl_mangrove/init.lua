@@ -57,33 +57,6 @@ local propagule_allowed_nodes = {
 local propagule_water_nodes = {"mcl_mud:mud","mcl_core:dirt","mcl_core:coarse_dirt","mcl_core:clay"}
  --"mcl_lush_caves:moss","mcl_lush_caves:rooted_dirt
 
-local function get_drops(fortune_level)
-	local apple_chances = {200, 180, 160, 120, 40}
-	local stick_chances = {50, 45, 30, 35, 10}
-	local sapling_chances = {20, 16, 12, 10}
-	return {
-		max_items = 1,
-		items = {
-			{
-				items = {"mcl_mangrove:propagule"},
-				rarity = sapling_chances[fortune_level + 1] or sapling_chances[fortune_level]
-			},
-			{
-				items = {"mcl_core:stick 1"},
-				rarity = stick_chances[fortune_level + 1]
-			},
-			{
-				items = {"mcl_core:stick 2"},
-				rarity = stick_chances[fortune_level + 1]
-			},
-			{
-				items = {"mcl_core:apple"},
-				rarity = apple_chances[fortune_level + 1]
-			}
-		}
-	}
-end
-
 local propagule_rooted_nodes = {}
 for _,root in pairs(propagule_water_nodes) do
 	local r = root:split(":")[2]
@@ -197,7 +170,7 @@ minetest.register_node("mcl_mangrove:propagule", {
 	_mcl_blast_resistance = 0,
 	_mcl_hardness = 0,
 	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
-		return grow_mangrove(pos,node)
+		return mcl_trees.grow_tree(pos)
 	end,
 	on_place = mcl_util.generate_on_place_plant_function(function(place_pos, place_node,stack)
 		local under = vector.offset(place_pos,0,-1,0)
@@ -251,8 +224,6 @@ mcl_flowerpots.register_potted_flower("mcl_mangrove:propagule", {
 	desc = S("Mangrove Propagule"),
 	image = "mcl_mangrove_propagule.png",
 })
-
-local water_tex = "default_water_source_animated.png^[verticalframe:16:0"
 
 local wlroots = {
 	description = S("water logged mangrove roots"),
@@ -322,14 +293,9 @@ local wlroots = {
 	end
 }
 local rwlroots = table.copy(wlroots)
--- FIXME luacheck complains that this is a repeated definition of water_tex.
--- Maybe the tiles definition below should be replaced with the animated tile
--- definition as per above?
-water_tex = "default_river_water_source_animated.png^[verticalframe:16:0"
+
 rwlroots.tiles = {
-	"("..water_tex..")^mcl_mangrove_roots_top.png",
-	"("..water_tex..")^mcl_mangrove_roots_side.png",
-	"("..water_tex..")^mcl_mangrove_roots_side.png",
+	{name="default_river_water_source_animated.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=5.0}}
 }
 rwlroots.after_dig_node = function(pos)
 	local node = minetest.get_node(pos)
