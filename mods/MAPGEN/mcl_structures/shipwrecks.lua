@@ -2,9 +2,7 @@ local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 --local S = minetest.get_translator(modname)
 
-local seed = minetest.get_mapgen_setting("seed")
 local water_level = minetest.get_mapgen_setting("water_level")
-local pr = PseudoRandom(seed)
 
 --schematics by chmodsayshello
 local schems = {
@@ -78,6 +76,7 @@ local ocean_biomes = {
 	"JungleM_ocean"
 }
 
+--[[
 local beach_biomes = {
 	"FlowerForest_beach",
 	"Forest_beach",
@@ -93,6 +92,7 @@ local beach_biomes = {
 	"JungleM_shore",
 	"Jungle_shore"
 }
+--]] --might be used for buried treasure ..
 
 mcl_structures.register_structure("shipwreck",{
 	place_on = {"group:sand","mcl_core:gravel"},

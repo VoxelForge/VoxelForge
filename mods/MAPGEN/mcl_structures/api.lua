@@ -1,6 +1,8 @@
 mcl_structures.registered_structures = {}
+local modname = minetest.get_current_modname()
+local modpath = minetest.get_modpath(modname)
 
-local place_queue = {}
+--local place_queue = {}
 local disabled_structures = minetest.settings:get("mcl_disabled_structures")
 if disabled_structures then	disabled_structures = disabled_structures:split(",")
 else disabled_structures = {} end
@@ -214,6 +216,7 @@ local function foundation(ground_p1,ground_p2,pos,sidelen)
 	minetest.bulk_set_node(stone,{name=node_stone})
 end
 
+--[[
 local function process_queue()
 	if #place_queue < 1 then return end
 	local s = table.remove(place_queue)
@@ -224,6 +227,7 @@ local function process_queue()
 	end,s.pr)
 	minetest.after(0.5,process_queue)
 end
+--]]
 
 function mcl_structures.spawn_mobs(mob,spawnon,p1,p2,pr,n,water)
 	n = n or 1
@@ -252,7 +256,6 @@ end
 
 function mcl_structures.place_structure(pos, def, pr, blockseed, rot)
 	if not def then	return end
-	if not rot then rot = "random" end
 	local log_enabled = logging and not def.terrain_feature
 	local y_offset = 0
 	if type(def.y_offset) == "function" then
@@ -339,7 +342,6 @@ function mcl_structures.register_structure(name,def,nospawn) --nospawn means it 
 	if mcl_structures.is_disabled(name) then return end
 	local structblock = "mcl_structures:structblock_"..name
 	local flags = "place_center_x, place_center_z, force_placement"
-	local y_offset = 0
 	local sbgroups = { structblock = 1, not_in_creative_inventory=1 }
 	if def.flags then flags = def.flags end
 	def.name = name
@@ -376,7 +378,6 @@ function mcl_structures.register_structure(name,def,nospawn) --nospawn means it 
 	mcl_structures.registered_structures[name] = def
 end
 
-local structure_spawns = {}
 function mcl_structures.register_structure_spawn(def)
 	--name,y_min,y_max,spawnon,biomes,chance,interval,limit
 	minetest.register_abm({
