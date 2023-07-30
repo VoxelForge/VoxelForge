@@ -9,9 +9,9 @@ local POS_CHECK_FREQUENCY = 15
 local HEAL_AMMOUNT = 37
 
 local function heal(self)
-	local o = self.object
 	self.health = math.min(self.hp_max,self.health + HEAL_AMMOUNT)
 end
+
 local function check_beam(self)
 	for _, obj in ipairs(minetest.get_objects_inside_radius(self.object:get_pos(), 80)) do
 		local luaentity = obj:get_luaentity()
@@ -60,7 +60,7 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 	xp_min = 500,
 	xp_max = 500,
 	collisionbox = {-2, 3, -2, 2, 5, 2},
-	physical = false,
+	physical = true,
 	visual = "mesh",
 	mesh = "mobs_mc_dragon.b3d",
 	textures = {
@@ -77,7 +77,6 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 		attack = "mobs_mc_ender_dragon_attack",
 		distance = 60,
 	},
-	physical = true,
 	damage = 10,
 	knock_back = false,
 	jump = true,
@@ -97,8 +96,6 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 	arrow = "mobs_mc:dragon_fireball",
 	shoot_interval = 0.5,
 	shoot_offset = -1.0,
-	xp_min = 500,
-	xp_max = 500,
 	animation = {
 		fly_speed = 8, stand_speed = 8,
 		stand_start = 0,		stand_end = 20,
@@ -128,7 +125,7 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 				minetest.set_node(vector.add(self._portal_pos, vector.new(0, 5, 0)), {name = "mcl_end:dragon_egg"})
 			end
 		end
-		
+
 		-- Free The End Advancement
 		for _,players in pairs(minetest.get_objects_inside_radius(pos,64)) do
 			if players:is_player() then
@@ -138,9 +135,6 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 	end,
 	fire_resistant = true,
 })
-
-
-local mobs_griefing = minetest.settings:get_bool("mobs_griefing") ~= false
 
 -- dragon fireball (projectile)
 mcl_mobs.register_arrow("mobs_mc:dragon_fireball", {
