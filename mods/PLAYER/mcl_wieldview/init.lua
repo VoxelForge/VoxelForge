@@ -21,14 +21,14 @@ local function update_wieldview_entity(player)
 		local item = player:get_wielded_item():get_name()
 
 		if item == luaentity._item then return end
-		
+
 		luaentity._item = item
-			
+
 		local def = player:get_wielded_item():get_definition()
 		if def and def._mcl_wieldview_item then
 			item = def._mcl_wieldview_item
 		end
-			
+
 		local item_def = minetest.registered_items[item]
 		luaentity.object:set_properties({
 			glow = item_def and item_def.light_source or 0,
