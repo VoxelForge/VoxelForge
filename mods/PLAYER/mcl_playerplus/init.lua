@@ -7,7 +7,6 @@ mcl_playerplus = {
 local mcl_playerplus_internal = {}
 
 local time = 0
-local look_pitch = 0
 
 local function player_collision(player)
 
@@ -34,15 +33,6 @@ local function player_collision(player)
 	end
 	return {x,z}
 end
-
-local function walking_player(player, control)
-	if control.up or control.down or control.left or control.right then
-		return true
-	else
-		return false
-	end
-end
-
 
 -- converts yaw to degrees
 local function degrees(rad)
@@ -105,13 +95,9 @@ end
 local node_stand, node_stand_below, node_head, node_feet, node_head_top
 local is_swimming
 
-local function get_overall_velocity(vector)
-	local v = math.sqrt(vector.x^2 + vector.y^2 + vector.z^2)
-	return v
-end
 local function anglediff(a1, a2)
 	local a = a1 - a2
- 	return math.abs((a + math.pi) % (math.pi*2) - math.pi)
+	return math.abs((a + math.pi) % (math.pi*2) - math.pi)
 end
 local function clamp(num, min, max)
 	return math.min(max, math.max(num, min))
