@@ -19,6 +19,16 @@ local function atan(x)
 	end
 end
 
+-- get node but use fallback for nil or unknown
+local function node_ok(pos, fallback)
+	fallback = fallback or mcl_mobs.fallback_node
+	local node = minetest.get_node_or_nil(pos)
+	if node and minetest.registered_nodes[node.name] then
+		return node
+	end
+	return minetest.registered_nodes[fallback]
+end
+
 function mob_class:day_docile()
 	if self.docile_by_day == false then
 		return false
@@ -59,7 +69,6 @@ local function entity_physics(pos,radius)
 		if dist < 1 then dist = 1 end
 
 		local damage = math.floor((4 / dist) * radius)
-		local ent = objs[n]:get_luaentity()
 
 		-- punches work on entities AND players
 		objs[n]:punch(objs[n], 1.0, {
@@ -159,10 +168,9 @@ function mob_class:smart_mobs(s, p, dist, dtime)
 	if use_pathfind then
 		-- lets try find a path, first take care of positions
 		-- since pathfinder is very sensitive
-		local sheight = self.collisionbox[5] - self.collisionbox[2]
-
 		-- round position to center of node to avoid stuck in walls
 		-- also adjust height for player models!
+
 		s.x = math.floor(s.x + 0.5)
 		s.z = math.floor(s.z + 0.5)
 
@@ -722,10 +730,10 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 	-- if skittish then run away
 	if hitter and is_player and hitter:get_pos() and not die and self.runaway == true and self.state ~= "flop" then
 
-		local yaw = self:set_yaw( minetest.dir_to_yaw(vector.direction(hitter:get_pos(), self.object:get_pos())))
+		self:set_yaw( minetest.dir_to_yaw(vector.direction(hitter:get_pos(), self.object:get_pos())))
 		minetest.after(0.2,function()
 			if self and self.object and self.object:get_pos() and hitter and is_player and hitter:get_pos() then
-				yaw = self:set_yaw( minetest.dir_to_yaw(vector.direction(hitter:get_pos(), self.object:get_pos())))
+				self:set_yaw( minetest.dir_to_yaw(vector.direction(hitter:get_pos(), self.object:get_pos())))
 				self:set_velocity( self.run_velocity)
 			end
 		end)
@@ -752,7 +760,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 
 	-- alert others to the attack
 	local objs = minetest.get_objects_inside_radius(hitter:get_pos(), self.view_range)
-	local obj = nil
+	local obj
 
 	for n = 1, #objs do
 
@@ -814,7 +822,7 @@ function mob_class:clear_aggro()
 end
 
 function mob_class:do_states_attack (dtime)
-	local yaw = self.object:get_yaw() or 0
+	local yaw
 
 	local s = self.object:get_pos()
 	local p = self.attack:get_pos() or s
@@ -853,9 +861,9 @@ function mob_class:do_states_attack (dtime)
 
 		if target_line_of_sight then
 			local vec = { x = p.x - s.x, z = p.z - s.z }
-			yaw = (atan(vec.z / vec.x) +math.pi/ 2) - self.rotate
+			local yaw = (atan(vec.z / vec.x) +math.pi/ 2) - self.rotate
 			if p.x > s.x then yaw = yaw +math.pi end
-			yaw = self:set_yaw( yaw, 0, dtime)
+			self:set_yaw( yaw, 0, dtime)
 		end
 
 		local node_break_radius = self.explosion_radius or 1
@@ -1016,7 +1024,7 @@ function mob_class:do_states_attack (dtime)
 
 		if p.x > s.x then yaw = yaw + math.pi end
 
-		yaw = self:set_yaw( yaw, 0, dtime)
+		self:set_yaw( yaw, 0, dtime)
 
 		-- move towards enemy if beyond mob reach
 		if dist > self.reach then
@@ -1033,7 +1041,7 @@ function mob_class:do_states_attack (dtime)
 				self:set_velocity( 0)
 				self:set_animation( "stand")
 				local yaw = self.object:get_yaw() or 0
-				yaw = self:set_yaw( yaw + 0.78, 8)
+				self:set_yaw( yaw + 0.78, 8)
 			else
 
 				if self.path.stuck then
@@ -1121,7 +1129,7 @@ function mob_class:do_states_attack (dtime)
 
 		if p.x > s.x then yaw = yaw +math.pi end
 
-		yaw = self:set_yaw( yaw, 0, dtime)
+		self:set_yaw( yaw, 0, dtime)
 
 		local stay_away_from_player = vector.new(0,0,0)
 
@@ -1196,7 +1204,5 @@ function mob_class:do_states_attack (dtime)
 				end
 			end
 		end
-	else
-
 	end
 end
