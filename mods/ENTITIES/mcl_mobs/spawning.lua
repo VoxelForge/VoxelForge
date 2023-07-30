@@ -70,7 +70,6 @@ local function count_mobs_all()
 	local num = 0
 	for _,entity in pairs(minetest.luaentities) do
 		if entity.is_mob then
-			local mob_type = entity.type -- animal / monster / npc
 			local mob_name = entity.name
 			if mobs_found[mob_name] then
 				mobs_found[mob_name] = mobs_found[mob_name] + 1
@@ -185,11 +184,6 @@ local function biome_check(biome_list, biome_goal)
 	return table.indexof(biome_list,biome_goal) ~= -1
 end
 
-local function is_forbidden_node(pos, node)
-	node = node or minetest.get_node(pos)
-	return minetest.get_item_group(node.name, "stair") > 0 or minetest.get_item_group(node.name, "slab") > 0 or minetest.get_item_group(node.name, "carpet") > 0
-end
-
 local function is_farm_animal(n)
 	return n == "mobs_mc:pig" or n == "mobs_mc:cow" or n == "mobs_mc:sheep" or n == "mobs_mc:chicken" or n == "mobs_mc:horse" or n == "mobs_mc:donkey"
 end
@@ -260,11 +254,11 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 
 	if not pos then return false,"no pos" end
 	if not spawn_def then return false,"no spawn_def" end
-	if not ( mob_count_wide < (mob_cap[mob_type] or 15) ) then return false,"mob cap wide full" end
-	if not ( mob_count < 5 ) then return false, "mob cap full" end
+	if ( mob_count_wide >= (mob_cap[mob_type] or 15) ) then return false,"mob cap wide full" end
+	if ( mob_count >= 5 ) then return false, "local mob cap full" end
 	if not ( spawn_def.min_height and pos.y >= spawn_def.min_height ) then return false, "too low" end
 	if not ( spawn_def.max_height and pos.y <= spawn_def.max_height ) then return false, "too high" end
-	if not spawn_def.dimension == dimension then return false, "wrong dimension" end
+	if spawn_def.dimension ~= dimension then return false, "wrong dimension" end
 	if not ( not spawn_def.biomes_except or (spawn_def.biomes_except and not biome_check(spawn_def.biomes_except, gotten_biome))) then return false, "biomes_except failed" end
 	if not ( not spawn_def.biomes or (spawn_def.biomes and biome_check(spawn_def.biomes, gotten_biome))) then return false, "biome check failed" end
 	if not (is_ground or spawn_def.type_of_spawning ~= "ground") then return false, "not on ground" end
@@ -273,6 +267,7 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 	if not (spawn_def.check_position and spawn_def.check_position(pos) or true) then return false, "check_position failed" end
 	if not (not is_farm_animal(spawn_def.name) or is_grass) then return false, "farm animals only on grass" end
 	if not (spawn_def.type_of_spawning ~= "water" or is_water) then return false, "water mob only on water" end
+	if not (spawn_def.type_of_spawning ~= "lava" or is_lava) then return false, "lava mobs only on lava" end
 	if not ( not spawn_protected or not minetest.is_protected(pos, "") ) then return false, "spawn protected" end
 	if is_bedrock then return false, "no spawn on bedrock" end
 
@@ -389,18 +384,17 @@ if mobs_spawn then
 						return
 					end
 					--everything is correct, spawn mob
-					local object
 					if spawn_in_group and ( mob_type ~= "monster" or math.random(5) == 1 ) then
 						if logging then
 							minetest.log("action", "[mcl_mobs] A group of mob " .. spawn_def.name .. " spawns on " ..minetest.get_node(vector.offset(spawning_position,0,-1,0)).name .." at " .. minetest.pos_to_string(spawning_position, 1))
 						end
-						object = spawn_group(spawning_position,spawn_def,{minetest.get_node(vector.offset(spawning_position,0,-1,0)).name},spawn_in_group,spawn_in_group_min)
+						spawn_group(spawning_position,spawn_def,{minetest.get_node(vector.offset(spawning_position,0,-1,0)).name},spawn_in_group,spawn_in_group_min)
 
 					else
 						if logging then
 							minetest.log("action", "[mcl_mobs] Mob " .. spawn_def.name .. " spawns on " ..minetest.get_node(vector.offset(spawning_position,0,-1,0)).name .." at ".. minetest.pos_to_string(spawning_position, 1))
 						end
-						object = mcl_mobs.spawn(spawning_position, spawn_def.name)
+						mcl_mobs.spawn(spawning_position, spawn_def.name)
 					end
 				end
 			end
@@ -480,7 +474,7 @@ minetest.register_chatcommand("spawn_mob",{
 
 		if mob then
 			for c=1, #modifiers do
-				modifs = modifiers[c]
+				local modifs = modifiers[c]
 
 				local mod1 = string.find(modifs, ":")
 				local mod_start = string.find(modifs, "<")
@@ -492,7 +486,7 @@ minetest.register_chatcommand("spawn_mob",{
 						local variable = string.sub(modifs, mod_start+1, mod_vals-1)
 						local value = string.sub(modifs, mod_vals+1, mod_end-1)
 
-						number_tag = string.find(value, "NUM")
+						local number_tag = string.find(value, "NUM")
 						if number_tag then
 							value = tonumber(string.sub(value, 4, -1))
 						end
