@@ -3,6 +3,7 @@ local mob_class = mcl_mobs.mob_class
 
 local math_round     = function(x) return (x > 0) and math.floor(x + 0.5) or math.ceil(x - 0.5) end
 
+local PASSIVE_INTERVAL = 200
 local dbg_spawn_attempts = 0
 local dbg_spawn_succ = 0
 local dbg_spawn_counts = {}
@@ -329,9 +330,35 @@ mcl_mobs.spawn_group = spawn_group
 
 local S = minetest.get_translator("mcl_mobs")
 
+--extra checks for mob spawning
+local function can_spawn(spawn_def,spawning_position)
+	if spawn_def.type_of_spawning == "water" then
+		spawning_position = get_water_spawn(spawning_position)
+		if not spawning_position then
+			minetest.log("warning","[mcl_mobs] no water spawn for mob "..spawn_def.name.." found at "..minetest.pos_to_string(vector.round(pos)))
+			return
+		end
+	end
+	if minetest.registered_entities[spawn_def.name].can_spawn and not minetest.registered_entities[spawn_def.name].can_spawn(spawning_position) then
+		minetest.log("warning","[mcl_mobs] mob "..spawn_def.name.." refused to spawn at "..minetest.pos_to_string(vector.round(spawning_position)))
+		return false
+	end
+	return true
+end
+
+local passive_timer = PASSIVE_INTERVAL
+
+--timer function to check if passive mobs should spawn (every 20 secs)
+local function check_timer(mob_type,dtime)
+	passive_timer = passive_timer - dtime
+	if mob_type == "passive" and passive_timer > 0 then return false end
+	if passive_timer < 0 then passive_timer = PASSIVE_INTERVAL end
+	return true
+end
+
 if mobs_spawn then
 	local perlin_noise
-	local function spawn_a_mob(pos, dimension)
+	local function spawn_a_mob(pos, dimension, dtime)
 		--create a disconnected clone of the spawn dictionary
 		--prevents memory leak
 		local mob_library_worker_table = table.copy(spawn_dictionary)
@@ -372,29 +399,21 @@ if mobs_spawn then
 				local spawn_in_group_min = minetest.registered_entities[spawn_def.name].spawn_in_group_min or 1
 				local mob_type = minetest.registered_entities[spawn_def.name].type
 				if spawn_check(spawning_position,spawn_def) then
-					if spawn_def.type_of_spawning == "water" then
-						spawning_position = get_water_spawn(spawning_position)
-						if not spawning_position then
-							minetest.log("warning","[mcl_mobs] no water spawn for mob "..spawn_def.name.." found at "..minetest.pos_to_string(vector.round(pos)))
-							return
-						end
-					end
-					if minetest.registered_entities[spawn_def.name].can_spawn and not minetest.registered_entities[spawn_def.name].can_spawn(spawning_position) then
-						minetest.log("warning","[mcl_mobs] mob "..spawn_def.name.." refused to spawn at "..minetest.pos_to_string(vector.round(spawning_position)))
-						return
-					end
-					--everything is correct, spawn mob
-					if spawn_in_group and ( mob_type ~= "monster" or math.random(5) == 1 ) then
-						if logging then
-							minetest.log("action", "[mcl_mobs] A group of mob " .. spawn_def.name .. " spawns on " ..minetest.get_node(vector.offset(spawning_position,0,-1,0)).name .." at " .. minetest.pos_to_string(spawning_position, 1))
-						end
-						spawn_group(spawning_position,spawn_def,{minetest.get_node(vector.offset(spawning_position,0,-1,0)).name},spawn_in_group,spawn_in_group_min)
 
-					else
-						if logging then
-							minetest.log("action", "[mcl_mobs] Mob " .. spawn_def.name .. " spawns on " ..minetest.get_node(vector.offset(spawning_position,0,-1,0)).name .." at ".. minetest.pos_to_string(spawning_position, 1))
+					if can_spawn(spawn_def,spawning_position) and check_timer(spawn_def, dtime) then
+						--everything is correct, spawn mob
+						if spawn_in_group and ( mob_type ~= "monster" or math.random(5) == 1 ) then
+							if logging then
+								minetest.log("action", "[mcl_mobs] A group of mob " .. spawn_def.name .. " spawns on " ..minetest.get_node(vector.offset(spawning_position,0,-1,0)).name .." at " .. minetest.pos_to_string(spawning_position, 1))
+							end
+							spawn_group(spawning_position,spawn_def,{minetest.get_node(vector.offset(spawning_position,0,-1,0)).name},spawn_in_group,spawn_in_group_min)
+
+						else
+							if logging then
+								minetest.log("action", "[mcl_mobs] Mob " .. spawn_def.name .. " spawns on " ..minetest.get_node(vector.offset(spawning_position,0,-1,0)).name .." at ".. minetest.pos_to_string(spawning_position, 1))
+							end
+							mcl_mobs.spawn(spawning_position, spawn_def.name)
 						end
-						mcl_mobs.spawn(spawning_position, spawn_def.name)
 					end
 				end
 			end
@@ -422,7 +441,7 @@ if mobs_spawn then
 			local dimension = mcl_worlds.pos_to_dimension(pos)
 			-- ignore void and unloaded area
 			if dimension ~= "void" and dimension ~= "default" then
-				spawn_a_mob(pos, dimension)
+				spawn_a_mob(pos, dimension, dtime)
 			end
 		end
 	end)
