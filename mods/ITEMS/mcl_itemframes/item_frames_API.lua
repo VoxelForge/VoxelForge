@@ -54,7 +54,7 @@ local function update_roll(self, pos)
 
 	-- * `get_rotation()`: returns the rotation, a vector (radians)
 	local rot = self:get_rotation()
-	local Radians = 0
+	local Radians
 
 	-- Radians = Degrees * (math.pi / 180) degrees to radian formula
 	-- Radian quick chart
@@ -92,7 +92,7 @@ local function set_roll(self, faceDeg)
 
 	-- * `get_rotation()`: returns the rotation, a vector (radians)
 	local rot = self:get_rotation()
-	local Radians = 0
+	local Radians
 
 	-- Radians = Degrees * (math.pi / 180) degrees to radian formula
 	-- Radian quick chart
@@ -110,8 +110,7 @@ end
 
 local function update_map_texture (self, staticdata)
 	self.id = staticdata
-	local result = true
-	result = mcl_maps.load_map(self.id, function(texture)
+	local result = mcl_maps.load_map(self.id, function(texture)
 		-- will not crash even if self.object is invalid by now
 		-- update... quite possibly will screw up with each version of Minetest. >.<
 		if not texture then
@@ -143,7 +142,6 @@ local remove_item_entity = function(pos, node)
 	if name_found == false then
 		for k, v in pairs(mcl_itemframes.frames_registered.standard) do
 			if node.name == v then
-				name_found = true
 				found_name_to_use = v
 				break
 			end
@@ -244,7 +242,7 @@ mcl_itemframes.update_item_entity = function(pos, node, param2)
 		local yaw = math.pi * 2 - param2 * math.pi / 2
 		local map_id = item:get_meta():get_string("mcl_maps:id")
 		local map_id_entity = {}
-		local map_id_lua = {}
+		local map_id_lua
 
 		local timer = minetest.get_node_timer(pos)
 		if map_id == "" then
@@ -352,7 +350,6 @@ function mcl_itemframes.drop_generic_item(pos, node, meta, clicker)
 	if name_found == false then
 		for k, v in pairs(mcl_itemframes.frames_registered.standard) do
 			if node.name == v then
-				name_found = true
 				found_name_to_use = v
 				break
 			end
@@ -539,7 +536,7 @@ function mcl_itemframes.create_custom_frame(modname, name, has_glow, tiles, colo
 	-- make any special frame items.
 	mcl_itemframes.create_custom_items(working_name, has_glow)
 
-	local custom_itemframe_definition = {}
+	local custom_itemframe_definition
 
 	if has_glow == false then
 		custom_itemframe_definition = table.copy(mcl_itemframes.item_frame_base)
@@ -645,7 +642,7 @@ function mcl_itemframes.create_base_definitions()
 			local inv = minetest.get_meta(pos):get_inventory()
 			local stack = inv:get_stack("main", 1)
 			local itemname = stack:get_name()
-			local node = {}
+			local node
 			if minetest.get_item_group(itemname, "clock") > 0 then
 				local new_name = "mcl_clock:clock_" .. (mcl_worlds.clock_works(pos) and mcl_clock.old_time or mcl_clock.random_frame)
 				if itemname ~= new_name then
@@ -778,11 +775,9 @@ function mcl_itemframes.create_base_definitions()
 			--local meta = minetest.get_meta(pos)
 			local node = minetest.get_node(pos)
 
-			local objs = nil
+			local objs
 			local name_found = false
 			local found_name_to_use = ""
-			name_found = false
-			found_name_to_use = ""
 
 			for k, v in pairs(mcl_itemframes.frames_registered.glowing) do
 				if node.name == v then
@@ -796,7 +791,6 @@ function mcl_itemframes.create_base_definitions()
 			if name_found == false then
 				for k, v in pairs(mcl_itemframes.frames_registered.standard) do
 					if node.name == v then
-						name_found = true
 						found_name_to_use = v
 						break
 					end

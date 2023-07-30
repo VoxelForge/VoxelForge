@@ -10,9 +10,6 @@ local modpath = minetest.get_modpath(modname)
 -- Signs API
 dofile(modpath .. "/signs_api.lua")
 
--- LOCALIZATION
-local S = minetest.get_translator(modname)
-
 -- HANDLE THE FORMSPEC CALLBACK
 minetest.register_on_player_receive_fields(function(player, formname, fields)
     if formname:find("mcl_signs:set_text_") == 1 then
