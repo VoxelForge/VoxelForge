@@ -185,7 +185,7 @@ function mob_class:check_breeding()
 
 		local objs = minetest.get_objects_inside_radius(pos, 3)
 		local num = 0
-		local ent = nil
+		local ent
 
 		for n = 1, #objs do
 
@@ -262,9 +262,6 @@ function mob_class:check_breeding()
 					ent_c.tamed = true
 					ent_c.owner = parent1.owner
 				end, self, ent, pos)
-
-				num = 0
-
 				break
 			end
 		end
@@ -281,7 +278,7 @@ function mob_class:toggle_sit(clicker,p)
 		particle = "mobs_mc_wolf_icon_roam.png"
 		self.order = "roam"
 		self.state = "stand"
-		self.walk_chance = default_walk_chance
+		self.walk_chance = 50
 		self.jump = true
 		self:set_animation("stand")
 		-- TODO: Add sitting model
