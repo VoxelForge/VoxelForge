@@ -364,8 +364,6 @@ function mesecon.mvps_move_objects(pos, dir, nodestack)
 					local adjpos = vector.add(np, r)
 					local adjnode = minetest.get_node(adjpos)
 					if minetest.registered_nodes[adjnode.name] and minetest.registered_nodes[adjnode.name].mvps_sticky and adjnode.name == "mcl_core:slimeblock" then
-						local np = vector.add(obj:get_pos(), dir)
-
 						-- Reset acceleration of all objects before launching.
 						-- Fixes eggs, & snowballs thrown by dispensers
 						obj:set_acceleration({x=dir.x, y=-GRAVITY, z=dir.z})

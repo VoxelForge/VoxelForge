@@ -62,10 +62,10 @@ local function pp_on_timer(pos, elapsed)
 
 				if
 					obj_y_min <= plate_y_max and
-					not (obj_x_min >= plate_x_max) and
-					not (obj_x_max <= plate_x_min) and
-					not (obj_z_min >= plate_z_max) and
-					not (obj_z_max <= plate_z_min)
+					(obj_x_min < plate_x_max) and
+					(obj_x_max > plate_x_min) and
+					(obj_z_min < plate_z_max) and
+					(obj_z_max > plate_z_min)
 				then
 					return true
 				end
