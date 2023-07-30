@@ -37,7 +37,6 @@ local function readable_name(str)
 end
 
 for color,colordef in pairs(mcl_dyes.colors) do
-	local create_entry = false
 	local is_canonical = color == canonical_color
 	local sdesc_hc = S(readable_name(color).." Terracotta")
 	local sdesc_gt = S(readable_name(color).." Glazed Terracotta")

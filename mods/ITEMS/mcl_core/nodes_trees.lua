@@ -1,6 +1,5 @@
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
-local S = minetest.get_translator(modname)
 
 mcl_trees.register_wood("oak",{
 	sign_color="#ECA870",

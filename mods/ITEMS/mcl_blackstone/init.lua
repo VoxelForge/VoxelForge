@@ -128,7 +128,6 @@ minetest.register_node("mcl_blackstone:blackstone_brick_polished", {
 minetest.register_node("mcl_blackstone:quartz_brick", {
 	description = S("Quartz Bricks"),
 	tiles = {"mcl_backstone_quartz_bricks.png"},
-	sounds = mcl_sounds.node_sound_stone_defaults(),
 	is_ground_content = false,
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	groups = {cracky = 3, pickaxey=1, material_stone=1},
@@ -220,7 +219,6 @@ minetest.register_abm({
 		local lavatype = minetest.registered_nodes[node.name].liquidtype
 		for w=1, #water do
 			local waternode = minetest.get_node(water[w])
-			local watertype = minetest.registered_nodes[waternode.name].liquidtype
 			if water[w].y < pos.y and water[w].x == pos.x and water[w].z == pos.z then
 				minetest.set_node(water[w], {name="mcl_blackstone:basalt"})
 			elseif lavatype == "flowing" and water[w].y == pos.y and (water[w].x == pos.x or water[w].z == pos.z) then
@@ -244,7 +242,6 @@ minetest.register_abm({
 		local lavatype = minetest.registered_nodes[node.name].liquidtype
 		for w=1, #water do
 			local waternode = minetest.get_node(water[w])
-			local watertype = minetest.registered_nodes[waternode.name].liquidtype
 			if water[w].y < pos.y and water[w].x == pos.x and water[w].z == pos.z then
 				minetest.set_node(water[w], {name="mcl_blackstone:blackstone"})
 			elseif lavatype == "flowing" and water[w].y == pos.y and (water[w].x == pos.x or water[w].z == pos.z) then
