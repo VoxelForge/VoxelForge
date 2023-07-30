@@ -395,7 +395,7 @@ local function banner_pattern_craft(itemstack, player, old_craft_grid, craft_inv
 		return ItemStack("")
 	end
 
-	local matching_pattern
+	local matching_pattern = false
 	local max_i = player:get_inventory():get_size("craft")
 	-- Find the matching pattern
 	for pattern_name, pattern in pairs(patterns) do
