@@ -1,7 +1,4 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
 -- Leaf Decay
-
 local function leafdecay_particles(pos, node)
 	minetest.add_particlespawner({
 		amount = math.random(10, 20),
