@@ -16,6 +16,15 @@ local mod_cherry_blossom = minetest.get_modpath("mcl_cherry_blossom")
 
 local deco_id_chorus_plant
 
+local beach_skycolor = "#78A7FF" -- This is the case for all beach biomes except for the snowy ones! Those beaches will have their own colour instead of this one.
+local ocean_skycolor = "#7BA4FF" -- This is the case for all ocean biomes except for non-deep frozen oceans! Those oceans will have their own colour instead of this one.
+local overworld_fogcolor = "#C0D8FF"
+
+--local nether_skycolor = "#6EB1FF"
+
+--local end_fogcolor = "#A080A0"
+--local end_skycolor = "#000000"
+
 --
 -- Register biomes
 --
@@ -132,14 +141,6 @@ local function register_biomes()
 		"MangroveSwamp",
 	}
 
-local beach_skycolor = "#78A7FF" -- This is the case for all beach biomes except for the snowy ones! Those beaches will have their own colour instead of this one.
-local ocean_skycolor = "#7BA4FF" -- This is the case for all ocean biomes except for non-deep frozen oceans! Those oceans will have their own colour instead of this one.
-local overworld_fogcolor = "#C0D8FF"
-
-local nether_skycolor = "#6EB1FF"
-
-local end_fogcolor = "#A080A0"
-local end_skycolor = "#000000"
 
 	-- Ice Plains Spikes (rare)
 	minetest.register_biome({
@@ -2793,8 +2794,6 @@ local function register_dimension_ores()
 
 	-- Generate fake End
 	-- TODO: Remove the "ores" when there's a better End generator
-
-	local mult = 1.0
 
 	minetest.register_ore({
 		ore_type        = "stratum",
