@@ -261,8 +261,6 @@ function settlements.place_schematics(settlement_info, pr)
 	end
 
 	for i, built_house in ipairs(settlement_info) do
-		local is_last = i == #settlement_info
-
 		for j, schem in ipairs(settlements.schematic_table) do
 			if settlement_info[i]["name"] == schem["name"] then
 				building_all_info = schem
