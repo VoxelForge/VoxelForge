@@ -215,7 +215,7 @@ function sign_tpl.on_place(itemstack, placer, pointed_thing)
 	local placestack = ItemStack(itemstack)
 	local def = itemstack:get_definition()
 
-	local pos = above
+	local pos
 	-- place on wall
 	if wdir ~= 0 and wdir ~= 1 then
 		placestack:set_name("mcl_signs:wall_sign_"..def._mcl_sign_wood)
