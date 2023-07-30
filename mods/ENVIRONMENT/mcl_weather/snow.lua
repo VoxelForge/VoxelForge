@@ -4,41 +4,6 @@ local PARTICLES_COUNT_SNOW = tonumber(minetest.settings:get("mcl_weather_snow_pa
 mcl_weather.snow.init_done = false
 local mgname = minetest.get_mapgen_setting("mg_name")
 
-local snow_biomes = {
-	"ColdTaiga_underground",
-	"IcePlains_underground",
-	"IcePlainsSpikes_underground",
-	"MegaTaiga_underground",
-	"Taiga_underground",
-	"IcePlains_deep_ocean",
-	"MegaSpruceTaiga_deep_ocean",
-	"IcePlainsSpikes_ocean",
-	"StoneBeach_ocean",
-	"ColdTaiga_deep_ocean",
-	"MegaTaiga_ocean",
-	"StoneBeach_deep_ocean",
-	"IcePlainsSpikes_deep_ocean",
-	"ColdTaiga_ocean",
-	"MegaTaiga_deep_ocean",
-	"MegaSpruceTaiga_ocean",
-	"ExtremeHills+_ocean",
-	"IcePlains_ocean",
-	"Taiga_ocean",
-	"Taiga_deep_ocean",
-	"StoneBeach",
-	"ColdTaiga_beach_water",
-	"Taiga_beach",
-	"ColdTaiga_beach",
-	"Taiga",
-	"ExtremeHills+_snowtop",
-	"MegaSpruceTaiga",
-	"MegaTaiga",
-	"ExtremeHills+",
-	"ColdTaiga",
-	"IcePlainsSpikes",
-	"IcePlains",
-}
-
 local psdef= {
 	amount = PARTICLES_COUNT_SNOW,
 	time = 0, --stay on til we turn it off
