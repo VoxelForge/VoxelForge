@@ -313,7 +313,6 @@ function mcl_beds.get_bed_top (pos)
 	local node = minetest.get_node(pos)
 	local dir = minetest.facedir_to_dir(node.param2)
 	local bed_top_pos = vector.add(pos, dir)
-	local bed_top = minetest.get_node(bed_top_pos)
 
 	return bed_top_pos
 end

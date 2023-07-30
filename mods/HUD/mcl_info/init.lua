@@ -2,7 +2,6 @@ mcl_info = {}
 
 local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
-local storage = minetest.get_mod_storage()
 local player_dbg = {}
 
 local refresh_interval      = .63
@@ -70,7 +69,6 @@ local function info()
 	for _, player in pairs(minetest.get_connected_players()) do
 		local name = player:get_player_name()
 		local s = player_setting(player)
-		local pos = player:get_pos()
 		local text = get_text(player, s)
 		local hud = huds[name]
 		if s and not hud then
@@ -178,7 +176,6 @@ mcl_info.register_debug_field("Coords", {
 mcl_info.register_debug_field("Location", {
 	level = 1,
 	func = function(pl, pos)
-		local report_y = 0
 		-- overworld
 		if (pos.y >= mcl_vars.mg_overworld_min) and (pos.y <= mcl_vars.mg_overworld_max) then
 			return string.format("Overworld: x:%.1f y:%.1f z:%.1f", pos.x, pos.y, pos.z)
@@ -186,18 +183,17 @@ mcl_info.register_debug_field("Location", {
 
 		-- nether
 		if (pos.y >= mcl_vars.mg_nether_min) and (pos.y <= mcl_vars.mg_nether_max) then
-			report_y = pos.y - mcl_vars.mg_nether_min
+			local report_y = pos.y - mcl_vars.mg_nether_min
 			return string.format("Nether: x:%.1f y:%.1f z:%.1f", pos.x, report_y, pos.z)
 		end
 
 		-- end
 		if (pos.y >= mcl_vars.mg_end_min) and (pos.y <= mcl_vars.mg_end_max) then
-			report_y = pos.y - mcl_vars.mg_end_min
+			local report_y = pos.y - mcl_vars.mg_end_min
 			return string.format("End: x:%.1f y:%.1f z:%.1f", pos.x, report_y, pos.z)
 		end
 
 		-- outside of scoped bounds.
 		return string.format("Void: x:%.1f y:%.1f z:%.1f", pos.x, pos.y, pos.z)
-
 	end
 })
