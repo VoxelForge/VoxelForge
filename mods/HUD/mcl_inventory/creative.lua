@@ -349,7 +349,7 @@ function mcl_inventory.set_creative_formspec(player)
 		-- Survival inventory slots
 		main_list = "list[current_player;main;0,3.75;9,3;9]" ..
 			mcl_formspec.get_itemslot_bg(0, 3.75, 9, 3) ..
-			
+
 			-- Armor
 			"list[current_player;armor;2.5,1.3;1,1;1]" ..
 			"list[current_player;armor;2.5,2.75;1,1;2]" ..
@@ -362,28 +362,28 @@ function mcl_inventory.set_creative_formspec(player)
 			"list[current_player;offhand;1.5,2.025;1,1]" ..
 			mcl_formspec.get_itemslot_bg(1.5, 2.025, 1, 1) ..
 			armor_slot_imgs ..
-			
+
 			-- Player preview
 			mcl_player.get_player_formspec_model(player, 3.9, 1.4, 1.2333, 2.4666, "") ..
-			
+
 			-- Crafting guide button
 			"image_button[9,1;1,1;craftguide_book.png;__mcl_craftguide;]" ..
 			"tooltip[__mcl_craftguide;"..F(S("Recipe book")) .. "]" ..
-			
+
 			-- Help button
 			"image_button[9,2;1,1;doc_button_icon_lores.png;__mcl_doc;]" ..
 			"tooltip[__mcl_doc;" .. F(S("Help")) .. "]" ..
-			
+
 			-- Achievements button
 			"image_button[9,3;1,1;mcl_achievements_button.png;__mcl_achievements;]" ..
 			--"style_type[image_button;border=;bgimg=;bgimg_pressed=]" ..
 			"tooltip[__mcl_achievements;"..F(S("Advancements")) .. "]" ..
-			
+
 			-- Switch stack size button
 			"image_button[9,4;1,1;default_apple.png;__switch_stack;]" ..
 			"label[9.4,4.4;" .. F(C("#FFFFFF", stack_size ~= 1 and stack_size or "")) .. "]" ..
 			"tooltip[__switch_stack;" .. F(S("Switch stack size")) .. "]"
-			
+
 		-- Skins button
 		if minetest.global_exists("mcl_skins") then
 			main_list = main_list ..
