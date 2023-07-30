@@ -67,6 +67,7 @@ read_globals = {
 	"awards",
 	"mobs_mc",
 	"screwdriver",
+	"playerphysics",
 	"mcl_achievements",
 	"mcl_amethyst",
 	"mcl_anvils",

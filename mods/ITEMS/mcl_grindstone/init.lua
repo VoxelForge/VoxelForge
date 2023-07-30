@@ -96,6 +96,7 @@ local function update_grindstone_slots(meta)
 	local meta = input1:get_meta()
 
 	local new_output
+	local new_item
 
 	-- Both input slots are occupied
 	if (not input1:is_empty() and not input2:is_empty()) then
