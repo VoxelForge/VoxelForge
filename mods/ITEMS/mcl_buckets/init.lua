@@ -10,8 +10,6 @@ minetest.register_alias("bucket:bucket_water", "mcl_buckets:bucket_water")
 minetest.register_alias("bucket:bucket_lava", "mcl_buckets:bucket_lava")
 
 local mod_doc = minetest.get_modpath("doc")
-local mod_mcl_core = minetest.get_modpath("mcl_core")
---local mod_mclx_core = minetest.get_modpath("mclx_core")
 
 minetest.register_craft({
 	output = "mcl_buckets:bucket_empty 1",
@@ -201,7 +199,7 @@ local function on_place_bucket_empty(itemstack, user, pointed_thing)
 		return new_stack
 	end
 
-	local new_bucket
+	local new_bucket = false
 	local under = pointed_thing.under
 	local node_name = minetest.get_node(under).name
 	local def = minetest.registered_nodes[node_name]
