@@ -44,7 +44,7 @@ function image:encode_header()
 end
 
 function image:encode_data()
-	local current_pixel = ''
+	local current_pixel
 	local previous_pixel = ''
 	local count = 1
 	local packets = {}
