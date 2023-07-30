@@ -19,6 +19,7 @@ globals = {
 	"screwdriver",
 	"playerphysics",
 	"xpanes",
+	"tnt",
 	"mcl_achievements",
 	"mcl_amethyst",
 	"mcl_anvils",

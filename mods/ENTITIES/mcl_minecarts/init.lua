@@ -83,18 +83,15 @@ local function hopper_take_item(self, dtime)
 
 					if current_itemstack:get_name() == stack:get_name() then
 						local room_for = stack:get_stack_max() - stack:get_count()
-						if room_for == 0 then
-							-- Do nothing
-						elseif room_for < items_remaining then
+						if room_for < items_remaining then
 							items_remaining = items_remaining - room_for
 							stack:set_count(stack:get_stack_max())
 							inv:set_stack("main", i, stack)
 							taken_items = true
-						else
+						elseif room_for ~= 0 then --do nothing if 0
 							local new_stack_size = stack:get_count() + items_remaining
 							stack:set_count(new_stack_size)
 							inv:set_stack("main", i, stack)
-							items_remaining = 0
 							v:get_luaentity().itemstring = ""
 							v:remove()
 							taken_items = true
@@ -598,7 +595,7 @@ end
 
 -- Place a minecart at pointed_thing
 function mcl_minecarts.place_minecart(itemstack, pointed_thing, placer)
-	if not pointed_thing.type == "node" then
+	if pointed_thing.type ~= "node" then
 		return
 	end
 
@@ -652,7 +649,7 @@ local function register_craftitem(itemstring, entity_id, description, tt_help, l
 	local def = {
 		stack_max = 1,
 		on_place = function(itemstack, placer, pointed_thing)
-			if not pointed_thing.type == "node" then
+			if pointed_thing.type ~= "node" then
 				return
 			end
 
