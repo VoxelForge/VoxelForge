@@ -65,7 +65,7 @@ local function load_default_formspec (ent, text)
 	--mcl_log("Div by 3: ".. tostring(div_by_three))
 	--mcl_log("Div by 2: ".. tostring(div_by_two))
 	--mcl_log("invent_size: ".. tostring(invent_size))
-	local rows = 3
+	local rows
 	if invent_size > 18 or (div_by_three == true and invent_size > 8) then
 		--mcl_log("Div by 3")
 		rows = 3
@@ -198,13 +198,15 @@ function mcl_entity_invs.register_inv(entity_name,show_name,size,no_on_righclick
 	local old_od = minetest.registered_entities[entity_name].on_death
 	minetest.registered_entities[entity_name].on_death = function(self,killer)
 		if not self.is_mob then
-			on_remove(self,killer,old_od)
+			return on_remove(self,killer,old_od)
 		end
+		if old_od then return old_od(self,killer) end
 	end
 	local old_odi = minetest.registered_entities[entity_name].on_die
 	minetest.registered_entities[entity_name].on_die = function(self,killer)
 		if self.is_mob then
-			on_remove(self,killer,old_od)
+			return on_remove(self,killer,old_odi)
 		end
+		if old_odi then return old_odi(self,killer) end
 	end
 end
