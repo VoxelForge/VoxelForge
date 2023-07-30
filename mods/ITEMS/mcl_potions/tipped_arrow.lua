@@ -196,11 +196,6 @@ function mcl_potions.register_arrow(name, desc, color, def)
 					glow = 1,
 				})
 			end
-			-- We just check for any hurtable objects nearby.
-			-- The radius of 3 is fairly liberal, but anything lower than than will cause
-			-- arrow to hilariously go through mobs often.
-			-- TODO: Implement an ACTUAL collision detection (engine support needed).
-			local objs = minetest.get_objects_inside_radius(pos, 1.5)
 			local closest_object
 			local closest_distance
 
