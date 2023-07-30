@@ -1,8 +1,6 @@
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 
-local S = minetest.get_translator(minetest.get_current_modname())
-
 -- mcl_itemframes API
 dofile(modpath .. "/item_frames_API.lua")
 
