@@ -54,7 +54,7 @@ minetest.register_abm({
 			local spos = vector.add(pos, surround[s])
 			local maybe_vine = minetest.get_node(spos)
 			--local surround_inverse = vector.multiply(surround[s], -1)
-			if maybe_vine.name == "mcl_flora:vine" and (not mcl_flora.check_vines_supported(spos, maybe_vine)) then
+			if maybe_vine.name == "mcl_core:vine" and (not mcl_core.check_vines_supported(spos, maybe_vine)) then
 				local def = minetest.registered_nodes[maybe_vine.name]
 				if def and def.on_dig then
 					def.on_dig(spos,maybe_vine,nil)
