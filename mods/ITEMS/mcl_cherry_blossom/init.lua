@@ -1,10 +1,7 @@
-mcl_cherry_blossom = {}
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
 local PARTICLE_DISTANCE = 25
-
-local pspawners = {}
 
 mcl_trees.register_wood("cherry_blossom",{
 	sign_color="#F29889",
@@ -112,7 +109,6 @@ minetest.register_abm({
 	chance = 10,
 	action = function(pos, node)
 		if minetest.get_node(vector.offset(pos, 0, -1, 0)).name ~= "air" then return end
-		local h = minetest.hash_node_position(pos)
 		for _,pl in pairs(minetest.get_connected_players()) do
 			if vector.distance(pos,pl:get_pos()) < PARTICLE_DISTANCE then
 				minetest.add_particlespawner(table.merge(cherry_particlespawner, {
