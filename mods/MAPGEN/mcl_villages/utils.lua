@@ -225,8 +225,6 @@ function settlements.evaluate_heightmap()
 				if current_hm_entry > max_y then
 					max_y = current_hm_entry
 				end
-			else
-				--minetest.log("action", "Failed to get hm index: " .. tostring(i) .. "and ... " .. tostring(#heightmap))
 			end
 		end
 		-- set next line
