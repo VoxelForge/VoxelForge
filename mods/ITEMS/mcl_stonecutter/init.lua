@@ -16,18 +16,18 @@ minetest.register_node("mcl_stonecutter:stonecutter", {
 		"mcl_stonecutter_bottom.png",
 		"mcl_stonecutter_side.png",
 		"mcl_stonecutter_side.png",
-		{name="mcl_stonecutter_saw.png", 
+		{name="mcl_stonecutter_saw.png",
 		animation={
-			type="vertical_frames", 
-			aspect_w=16, 
-			aspect_h=16, 
+			type="vertical_frames",
+			aspect_w=16,
+			aspect_h=16,
 			length=1
 		}},
-		{name="mcl_stonecutter_saw.png", 
+		{name="mcl_stonecutter_saw.png",
 		animation={
-			type="vertical_frames", 
-			aspect_w=16, 
-			aspect_h=16, 
+			type="vertical_frames",
+			aspect_w=16,
+			aspect_h=16,
 			length=1
 		}}
 	},
