@@ -32,7 +32,6 @@ for color,colordef in pairs(mcl_dyes.colors) do
 		longdesc_wool = S("Wool is a decorative block which comes in many different colors.")
 		longdesc_carpet = S("Carpets are thin floor covers which come in many different colors.")
 		create_entry = true
-	else
 	end
 	local texcolor = "wool_"..color
 	if messy_textures[color] then
