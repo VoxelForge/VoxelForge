@@ -49,7 +49,6 @@ function mcl_bows_s.shoot_arrow_crossbow(arrow_item, pos, dir, yaw, shooter, pow
 	if damage == nil then
 		damage = 3
 	end
-	local knockback
 	if crossbow_stack then
 		local enchantments = mcl_enchanting.get_enchantments(crossbow_stack)
 		if enchantments.piercing then
@@ -67,7 +66,6 @@ function mcl_bows_s.shoot_arrow_crossbow(arrow_item, pos, dir, yaw, shooter, pow
 	le._damage = damage
 	le._is_critical = is_critical
 	le._startpos = pos
-	le._knockback = knockback
 	le._collectable = collectable
 	minetest.sound_play("mcl_bows_crossbow_shoot", {pos=pos, max_hear_distance=16}, true)
 	if shooter and shooter:is_player() then
@@ -304,20 +302,12 @@ controls.register_on_press(function(player, key, time)
 		local enchanted = mcl_enchanting.is_enchanted(wielditem:get_name())
 		local speed, damage
 		local p_load = bow_load[player:get_player_name()]
-		local charge
 		-- Type sanity check
-		if type(p_load) == "number" then
-			charge = minetest.get_us_time() - p_load
-		else
+		if type(p_load) ~= "number" then
 			-- In case something goes wrong ...
 			-- Just assume minimum charge.
-			charge = 0
 			minetest.log("warning", "[mcl_bows] Player "..player:get_player_name().." fires arrow with non-numeric bow_load!")
 		end
-		charge = math.max(math.min(charge, BOW_CHARGE_TIME_FULL), 0)
-
-		local charge_ratio = charge / BOW_CHARGE_TIME_FULL
-		charge_ratio = math.max(math.min(charge_ratio, 1), 0)
 
 		-- Calculate damage and speed
 		-- Fully charged
