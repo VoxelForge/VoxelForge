@@ -24,6 +24,8 @@ read_globals = {
 			"insert_all",
 			"key_value_swap",
 			"shuffle",
+			"update",
+			"merge",
 		}
 	},
 
