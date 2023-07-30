@@ -1,6 +1,5 @@
 -- mcl_raids
 mcl_raids = {}
-local S = minetest.get_translator(minetest.get_current_modname())
 
 -- Define the amount of illagers to spawn each wave.
 local waves = {
@@ -153,9 +152,6 @@ mcl_raids.register_possible_raidcaptain("mobs_mc:evoker")
 
 function mcl_raids.spawn_raid(event)
 	local pos = event.pos
-	local wave = event.stage
-	local illager_count = 0
-	local spawnable = false
 	local r = 32
 	local n = 12
 	local i = math.random(1, n)
@@ -228,15 +224,6 @@ function mcl_raids.find_village(pos)
 	if bed and mcl_raids.find_villager(bed) then
 		return bed
 	end
-end
-
-local function get_point_on_circle(pos,r,n)
-	local rt = {}
-	for i=1, n do
-		table.insert(rt,vector.offset(pos,r * math.cos(((i-1)/n) * (2*math.pi)),0,  r* math.sin(((i-1)/n) * (2*math.pi)) ))
-	end
-	table.shuffle(rt)
-	return rt[1]
 end
 
 local function is_player_near(self)
