@@ -5,9 +5,6 @@ local modpath = minetest.get_modpath(modname)
 -- by debiankaios
 -- adapted for mcl2 by cora
 
-local wood_slab_groups = {handy = 1, axey = 1, flammable = 3, material_wood = 1, fire_encouragement = 5, fire_flammability = 20, wood_slab = 1}
-local wood_stair_groups = {handy = 1, axey = 1, flammable = 3, material_wood = 1, fire_encouragement = 5, fire_flammability = 20, wood_stairs = 1}
-
 local nether_plants = {
 	["mcl_crimson:crimson_nylium"] = {
 		"mcl_crimson:crimson_roots",
@@ -36,7 +33,7 @@ local function spread_nether_plants(pos,node)
 end
 
 local function on_bone_meal(itemstack,user,pt,pos,node)
-	if not pt.type == "node" then return end
+	if pt.type ~= "node" then return end
 	if node.name == "mcl_crimson:warped_nylium" or node.name == "mcl_crimson:crimson_nylium" then
 		spread_nether_plants(pt.under,node)
 	end
@@ -218,10 +215,10 @@ minetest.register_node("mcl_crimson:twisting_vines", {
 			end
 			grow_vines(pos, 1, "mcl_crimson:twisting_vines")
 			local idef = itemstack:get_definition()
-			local itemstack, success = minetest.item_place_node(itemstack, placer, pointed_thing)
+			local _, success = minetest.item_place_node(itemstack, clicker, pointed_thing)
 			if success then
 			if idef.sounds and idef.sounds.place then
-				minetest.sound_play(idef.sounds.place, {pos=above, gain=1}, true)
+				minetest.sound_play(idef.sounds.place, {pos=pointed_thing.above, gain=1}, true)
 			end
 		end
 
@@ -253,8 +250,6 @@ minetest.register_node("mcl_crimson:twisting_vines", {
 	_mcl_fortune_drop = {
 		items = {
 			{items = {"mcl_crimson:twisting_vines"}, rarity = 3},
-		},
-		items = {
 			{items = {"mcl_crimson:twisting_vines"}, rarity = 1.8181818181818181},
 		},
 		"mcl_crimson:twisting_vines",
@@ -293,10 +288,10 @@ minetest.register_node("mcl_crimson:weeping_vines", {
 			end
 			grow_vines(pos, 1, "mcl_crimson:weeping_vines", -1)
 			local idef = itemstack:get_definition()
-			local itemstack, success = minetest.item_place_node(itemstack, placer, pointed_thing)
+			local _, success = minetest.item_place_node(itemstack, clicker, pointed_thing)
 			if success then
 			if idef.sounds and idef.sounds.place then
-				minetest.sound_play(idef.sounds.place, {pos=above, gain=1}, true)
+				minetest.sound_play(idef.sounds.place, {pos=pointed_thing.above, gain=1}, true)
 			end
 		end
 		elseif clicker:get_wielded_item():get_name() == "mcl_bone_meal:bone_meal" then
@@ -320,8 +315,6 @@ minetest.register_node("mcl_crimson:weeping_vines", {
 	_mcl_fortune_drop = {
 		items = {
 			{items = {"mcl_crimson:weeping_vines"}, rarity = 3},
-		},
-		items = {
 			{items = {"mcl_crimson:weeping_vines"}, rarity = 1.8181818181818181},
 		},
 		"mcl_crimson:weeping_vines",
