@@ -1,11 +1,6 @@
 --
 -- Lava vs water interactions
 --
-
-local modpath = minetest.get_modpath(minetest.get_current_modname())
-
-local mg_name = minetest.get_mapgen_setting("mg_name")
-
 minetest.register_abm({
 	label = "Lava cooling",
 	nodenames = {"group:lava"},
@@ -832,7 +827,7 @@ function mcl_core.strip_tree(itemstack, placer, pointed_thing)
 	return itemstack,true
 end
 
-function mcl_core.bone_meal_grass(itemstack,placer,pointed_thing,pos,n)
+function mcl_core.bone_meal_grass(itemstack,placer,pointed_thing)
 	local flowers_table_plains = {
 		"mcl_flowers:dandelion",
 		"mcl_flowers:dandelion",
@@ -867,8 +862,8 @@ function mcl_core.bone_meal_grass(itemstack,placer,pointed_thing,pos,n)
 	for i = -7, 7 do
 		for j = -7, 7 do
 			for y = -1, 1 do
-				pos = vector.offset(pointed_thing.above, i, y, j)
-				n = minetest.get_node(pos)
+				local pos = vector.offset(pointed_thing.above, i, y, j)
+				local n = minetest.get_node(pos)
 				local n2 = minetest.get_node(vector.offset(pos, 0, -1, 0))
 
 				if n.name ~= "" and n.name == "air" and (minetest.get_item_group(n2.name, "grass_block_no_snow") == 1) then
