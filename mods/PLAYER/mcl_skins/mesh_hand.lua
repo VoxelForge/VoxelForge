@@ -22,7 +22,7 @@ function mcl_skins.get_skin_list()
 					creative = game_mode == "_crea"
 				}
 				table.insert(list, female)
-				
+
 				local male = {
 					texture = make_texture(base, base_color),
 					slim_arms = false,
