@@ -15,8 +15,6 @@ local function spawn_zombies(self)
 				m:get_luaentity():gopath(self.pos)
 				table.insert(self.mobs, m)
 				self.health_max = self.health_max + l.health
-			else
-				--minetest.log("Failed to spawn zombie at location: " .. minetest.pos_to_string(p))
 			end
 		end
 	end
@@ -30,7 +28,6 @@ mcl_events.register_event("zombie_siege",{
 	exclusive_to_area = 128,
 	enable_bossbar = false,
 	cond_start  = function(self)
-		--minetest.log("Cond start zs")
 		local r = {}
 
 		local t = minetest.get_timeofday()
@@ -38,16 +35,12 @@ mcl_events.register_event("zombie_siege",{
 		local rnd = pr:next(1,10)
 
 		if t < 0.04 and rnd == 1 then
-			--minetest.log("Well, it's siege time")
 			for _,p in pairs(minetest.get_connected_players()) do
 				local village = mcl_raids.find_village(p:get_pos())
 				if village then
-					--minetest.log("Found village")
 					table.insert(r,{ player = p:get_player_name(), pos = village})
 				end
 			end
-		else
-			--minetest.log("Not night for a siege, or not success")
 		end
 		if #r > 0 then return r end
 	end,
@@ -77,7 +70,6 @@ mcl_events.register_event("zombie_siege",{
 		local m = {}
 		for k,o in pairs(self.mobs) do
 			if o and o:get_pos() then
-				local l = o:get_luaentity()
 				table.insert(m,o)
 			end
 		end
@@ -85,6 +77,6 @@ mcl_events.register_event("zombie_siege",{
 	end,
 	on_complete = function(self)
 		--minetest.log("SIEGE complete")
-		--awards.unlock(self.player,"mcl:hero_of_the_village")
+		awards.unlock(self.player,"mcl:hero_of_the_village")
 	end,
 })
