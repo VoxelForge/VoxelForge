@@ -1,5 +1,4 @@
 local mob_class = mcl_mobs.mob_class
-local mob_class_meta = {__index = mcl_mobs.mob_class}
 -- API for Mobs Redo: MineClone 2 Edition (MRM)
 
 local PATHFINDING = "gowp"
@@ -7,19 +6,10 @@ local PATHFINDING = "gowp"
 -- Localize
 local S = minetest.get_translator("mcl_mobs")
 
-local LOGGING_ON = minetest.settings:get_bool("mcl_logging_mobs_villager",false)
-local function mcl_log (message)
-	if LOGGING_ON then
-		mcl_util.mcl_log (message, "[Mobs]", true)
-	end
-end
-
 -- Invisibility mod check
 mcl_mobs.invis = {}
 
 local remove_far = true
-local mobs_griefing = minetest.settings:get_bool("mobs_griefing") ~= false
-local spawn_protected = minetest.settings:get_bool("mobs_spawn_protected") ~= false
 local mobs_debug = minetest.settings:get_bool("mobs_debug", false) -- Shows helpful debug info above each mob
 local spawn_logging = minetest.settings:get_bool("mcl_logging_mobs_spawn",true)
 
@@ -29,15 +19,6 @@ if minetest.settings:get_bool("only_peaceful_mobs", false) then
 		minetest.chat_send_player(player:get_player_name(),
 			S("Peaceful mode active! No monsters will spawn."))
 	end)
-end
-
-local node_ok = function(pos, fallback)
-	fallback = fallback or mcl_mobs.fallback_node
-	local node = minetest.get_node_or_nil(pos)
-	if node and minetest.registered_nodes[node.name] then
-		return node
-	end
-	return minetest.registered_nodes[fallback]
 end
 
 function mob_class:set_properties(prop)
