@@ -12,17 +12,6 @@ local function P(float)
 	return math.floor(32767 * float)
 end
 
--- Probability for every newly generated mapchunk to get corridors
-local probability_railcaves_in_mapchunk = P(0.33333)
-setting = tonumber(minetest.settings:get("tsm_railcorridors_probability_railcaves_in_mapchunk"))
--- Extra check to prevent mod griefing in singlenode, mcimported worlds.
-local mg_name = minetest.get_mapgen_setting("mg_name")
-if mg_name == "singlenode" then
-	probability_railcaves_in_mapchunk = P(0)
-elseif setting then
-	probability_railcaves_in_mapchunk = P(setting)
-end
-
 -- Minimal and maximal value of path length (forks don't look up this value)
 local way_min = 4;
 local way_max = 7;
