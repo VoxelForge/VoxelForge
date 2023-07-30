@@ -357,7 +357,7 @@ function mcl_mobs.register_arrow(name, def)
 		hit_mob = def.hit_mob,
 		hit_object = def.hit_object,
 		drop = def.drop or false, -- drops arrow as registered item when true
-		collisionbox = {0, 0, 0, 0, 0, 0}, -- remove box around arrows
+		collisionbox = def.collisionbox or {0, 0, 0, 0, 0, 0}, -- remove box around arrows
 		timer = 0,
 		switch = 0,
 		owner_id = def.owner_id,
@@ -366,7 +366,6 @@ function mcl_mobs.register_arrow(name, def)
 			local vel = self.object:get_velocity()
 			self.object:set_velocity({x=vel.x * -1, y=vel.y * -1, z=vel.z * -1})
 		end,
-		collisionbox = def.collisionbox or {0, 0, 0, 0, 0, 0},
 		automatic_face_movement_dir = def.rotate
 			and (def.rotate - (math.pi / 180)) or false,
 
