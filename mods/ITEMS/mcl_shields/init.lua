@@ -262,7 +262,6 @@ local function handle_blocking(player)
 	local shield_in_hand = mcl_shields.wielding_shield(player)
 	local not_blocking = player_shield.blocking == 0
 
-	local pos = player:get_pos()
 	if shield_in_hand then
 		if not_blocking then
 			minetest.after(0.25, function()
