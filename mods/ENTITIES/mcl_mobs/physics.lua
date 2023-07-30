@@ -6,7 +6,6 @@ local DEATH_DELAY = 0.5
 local DEFAULT_FALL_SPEED = -9.81*1.5
 
 local PATHFINDING = "gowp"
-local mobs_debug = minetest.settings:get_bool("mobs_debug", false)
 local mobs_drop_items = minetest.settings:get_bool("mobs_drop_items") ~= false
 local mob_active_range = tonumber(minetest.settings:get("mcl_mob_active_range")) or 48
 local show_health = false
@@ -86,7 +85,7 @@ function mob_class:item_drop(cooked, looting_level)
 		return
 	end
 
-	local obj, item, num
+	local obj, item
 	local pos = self.object:get_pos()
 
 	self.drops = self.drops or {}
@@ -154,7 +153,6 @@ end
 function mob_class:collision()
 	local pos = self.object:get_pos()
 	if not pos then return {0,0} end
-	local vel = self.object:get_velocity()
 	local x = 0
 	local z = 0
 	local width = -self.collisionbox[1] + self.collisionbox[4] + 0.5
@@ -481,8 +479,6 @@ function mob_class:check_for_death(cause, cmi_cause)
 					if minetest.is_creative_enabled("") ~= true then
 						mcl_experience.throw_xp(pos, xp_amount)
 					end
-				else
-					--minetest.log("xp thrown")
 				end
 			end
 		end
@@ -510,12 +506,6 @@ function mob_class:check_for_death(cause, cmi_cause)
 	if self.jockey or self.riden_by_jock then
 		self.riden_by_jock = nil
 		self.jockey = nil
-	end
-
-
-	local collisionbox
-	if self.collisionbox then
-		collisionbox = table.copy(self.collisionbox)
 	end
 
 	self.state = "die"
