@@ -56,7 +56,7 @@ minetest.register_node("mcl_lectern:lectern", {
 		end
 
 		if minetest.is_protected(pointed_thing.above, placer:get_player_name()) then
-			minetest.record_protection_violation(pointed_thing.above, pname)
+			minetest.record_protection_violation(pointed_thing.above, placer:get_player_name())
 			return
 		end
 
@@ -65,7 +65,7 @@ minetest.register_node("mcl_lectern:lectern", {
 			if not success then
 				return
 			end
-			minetest.sound_play(mcl_sounds.node_sound_wood_defaults().place, {pos=above, gain=1}, true)
+			minetest.sound_play(mcl_sounds.node_sound_wood_defaults().place, {pos=pointed_thing.above, gain=1}, true)
 		end
 		return itemstack
 	end,
