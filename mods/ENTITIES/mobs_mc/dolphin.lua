@@ -3,25 +3,6 @@
 --made for MC like Survival game
 --License for code WTFPL and otherwise stated in readmes
 
-local atann = math.atan
-local atan = function(x)
-	if not x or x ~= x then
-		return 0
-	else
-		return atann(x)
-	end
-end
-
-local dir_to_pitch = function(dir)
-	local dir2 = vector.normalize(dir)
-	local xz = math.abs(dir.x) + math.abs(dir.z)
-	return -math.atan2(-dir.y, xz)
-end
-
-local function degrees(rad)
-	return rad * 180.0 / math.pi
-end
-
 local S = minetest.get_translator(minetest.get_current_modname())
 
 --###################
