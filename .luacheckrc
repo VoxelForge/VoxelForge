@@ -48,6 +48,9 @@ read_globals = {
 	--MODS
 	------
 
+	--CORE
+	"mcl_vars",
+
 	--ENTITIES
 	"cmi",
 
