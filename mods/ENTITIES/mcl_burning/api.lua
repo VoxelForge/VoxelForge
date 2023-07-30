@@ -95,7 +95,6 @@ function mcl_burning.set_on_fire(obj, burn_time)
 	end
 
 	if obj:is_player() and not enable_damage then
-		burn_time = 0
 		return
 	else
 		local max_fire_prot_lvl = 0
