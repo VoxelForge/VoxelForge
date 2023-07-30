@@ -37,7 +37,6 @@ local same_id = {
 }
 
 tt.register_snippet(function(itemstring)
-    local def = minetest.registered_items[itemstring]
     local item_split = itemstring:find(":")
     local id_string = itemstring:sub(item_split)
     local id_modname = itemstring:sub(1, item_split - 1)
