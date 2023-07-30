@@ -2,10 +2,7 @@ local mob_class = mcl_mobs.mob_class
 local DEFAULT_FALL_SPEED = -9.81*1.5
 local FLOP_HEIGHT = 6
 local FLOP_HOR_SPEED = 1.5
-local PATHFINDING = "gowp"
 
-local node_ice = "mcl_core:ice"
-local node_snowblock = "mcl_core:snowblock"
 local node_snow = "mcl_core:snow"
 
 
@@ -75,7 +72,7 @@ function mob_class:line_of_sight(pos1, pos2, stepsize)
 
 	stepsize = stepsize or 1
 
-	local s, pos = minetest.line_of_sight(pos1, pos2, stepsize)
+	local s, _ = minetest.line_of_sight(pos1, pos2, stepsize)
 
 	-- normal walking and flying mobs can see you through air
 	if s == true then
@@ -275,7 +272,7 @@ function mob_class:env_danger_movement_checks(dtime)
 			self.state = "stand"
 			self:set_animation( "stand")
 			yaw = yaw + math.random(-0.5, 0.5)
-			yaw = self:set_yaw( yaw, 8)
+			self:set_yaw( yaw, 8)
 		end
 	else
 		if self.move_in_group ~= false then
@@ -288,7 +285,7 @@ function mob_class:env_danger_movement_checks(dtime)
 		self.state = "stand"
 		self:set_animation( "stand")
 		local yaw = self.object:get_yaw() or 0
-		yaw = self:set_yaw( yaw + 0.78, 8)
+		self:set_yaw( yaw + 0.78, 8)
 	end
 end
 
@@ -410,7 +407,7 @@ function mob_class:do_jump()
 
 				local yaw = self.object:get_yaw() or 0
 
-				yaw = self:set_yaw( yaw + 1.35, 8)
+				self:set_yaw( yaw + 1.35, 8)
 
 				self.jump_count = 0
 			end
@@ -538,7 +535,7 @@ function mob_class:check_runaway_from()
 	local s = self.object:get_pos()
 	local p, sp, dist
 	local player, obj, min_player
-	local type, name = "", ""
+	local name = ""
 	local min_dist = self.view_range + 1
 	local objs = minetest.get_objects_inside_radius(s, self.view_range)
 
@@ -549,10 +546,9 @@ function mob_class:check_runaway_from()
 			if mcl_mobs.invis[ objs[n]:get_player_name() ]
 			or self.owner == objs[n]:get_player_name()
 			or (not self:object_in_range(objs[n])) then
-				type = ""
+				name = ""
 			else
 				player = objs[n]
-				type = "player"
 				name = "player"
 			end
 		else
@@ -560,7 +556,6 @@ function mob_class:check_runaway_from()
 
 			if obj then
 				player = obj.object
-				type = obj.type
 				name = obj.name or ""
 			end
 		end
@@ -603,7 +598,7 @@ function mob_class:check_runaway_from()
 			yaw = yaw + math.pi
 		end
 
-		yaw = self:set_yaw( yaw, 4)
+		self:set_yaw( yaw, 4)
 		self.state = "runaway"
 		self.runaway_timer = 3
 		self.following = nil
@@ -622,7 +617,6 @@ function mob_class:follow_flop()
 	and self.order ~= "sit"
 	and self.state ~= "runaway" then
 
-		local s = self.object:get_pos()
 		local players = minetest.get_connected_players()
 
 		for n = 1, #players do
@@ -699,7 +693,7 @@ function mob_class:follow_flop()
 				if dist > 3
 				and self.order ~= "stand" then
 
- 					self:set_velocity(self.follow_velocity)
+					self:set_velocity(self.follow_velocity)
 
 					if self.walk_chance ~= 0 then
 						self:set_animation( "run")
@@ -864,12 +858,12 @@ function mob_class:do_states_walk()
 			end
 		end
 
-		yaw = self:set_yaw( yaw, 8)
+		self:set_yaw( yaw, 8)
 
 		-- otherwise randomly turn
 	elseif math.random(1, 100) <= 30 then
 		yaw = yaw + math.random(-0.5, 0.5)
-		yaw = self:set_yaw( yaw, 8)
+		self:set_yaw( yaw, 8)
 	end
 
 	-- stand for great fall or danger or fence in front
@@ -885,7 +879,7 @@ function mob_class:do_states_walk()
 		self.state = "stand"
 		self:set_animation( "stand")
 		local yaw = self.object:get_yaw() or 0
-		yaw = self:set_yaw( yaw + 0.78, 8)
+		self:set_yaw( yaw + 0.78, 8)
 	else
 
 		self:set_velocity(self.walk_velocity)
@@ -931,7 +925,7 @@ function mob_class:do_states_stand()
 			yaw = yaw + math.random(-0.5, 0.5)
 		end
 
-		yaw = self:set_yaw( yaw, 8)
+		self:set_yaw( yaw, 8)
 	end
 	if self.order == "sit" then
 		self:set_animation( "sit")
@@ -943,7 +937,8 @@ function mob_class:do_states_stand()
 
 	-- npc's ordered to stand stay standing
 	if self.order == "stand" or self.order == "sleep" or self.order == "work" then
-
+		self.state = "stand"
+		self:set_animation( "stand")
 	else
 		if self.walk_chance ~= 0
 				and self.facing_fence ~= true
@@ -958,8 +953,6 @@ function mob_class:do_states_stand()
 end
 
 function mob_class:do_states_runaway()
-	local yaw = self.object:get_yaw() or 0
-
 	self.runaway_timer = self.runaway_timer + 1
 
 	-- stop after 5 seconds or when at cliff
@@ -970,7 +963,7 @@ function mob_class:do_states_runaway()
 		self.state = "stand"
 		self:set_animation( "stand")
 		local yaw = self.object:get_yaw() or 0
-		yaw = self:set_yaw( yaw + 0.78, 8)
+		self:set_yaw( yaw + 0.78, 8)
 	else
 		self:set_velocity( self.run_velocity)
 		self:set_animation( "run")
