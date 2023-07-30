@@ -36,7 +36,6 @@ mcl_damage.register_modifier(function(obj, damage, reason)
 			end
 			if wield:get_name() == "mcl_totems:totem" then
 				local ppos = obj:get_pos()
-				local pnname = minetest.get_node(ppos).name
 
 				if obj:get_breath() < 11 then
 					obj:set_breath(10)
