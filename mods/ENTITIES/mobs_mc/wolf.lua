@@ -162,10 +162,6 @@ dog.follow = {
 dog.attack_animals = nil
 dog.specific_attack = nil
 
-local is_food = function(itemstring)
-	return table.indexof(dog.follow, itemstring) ~= -1
-end
-
 dog.on_rightclick = function(self, clicker)
 	local item = clicker:get_wielded_item()
 

@@ -9,6 +9,7 @@ local S = minetest.get_translator("mobs_mc")
 --################### ZOMBIE VILLAGER
 --###################
 
+--[[
 local professions = {
 	farmer = "mobs_mc_villager_farmer.png",
 	fisherman = "mobs_mc_villager_farmer.png",
@@ -24,6 +25,7 @@ local professions = {
 	cleric = "mobs_mc_villager_priest.png",
 	nitwit = "mobs_mc_villager.png",
 }
+--]]
 
 mcl_mobs.register_mob("mobs_mc:villager_zombie", {
 	description = S("Zombie Villager"),

@@ -26,7 +26,6 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 		{"mobs_mc_wither.png"},
 	},
 	visual_size = {x=4, y=4},
-	makes_footstep_sound = true,
 	view_range = 16,
 	fear_height = 4,
 	walk_velocity = 2,
