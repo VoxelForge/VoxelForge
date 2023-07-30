@@ -55,6 +55,10 @@ read_globals = {
 	"cmsg",
 
 	--All modnames
+	"doc",
+	"tt",
+	"mesecon",
+	"lightning",
 	"mcl_achievements",
 	"mcl_amethyst",
 	"mcl_anvils",
