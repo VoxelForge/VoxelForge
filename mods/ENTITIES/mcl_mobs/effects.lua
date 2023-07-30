@@ -152,7 +152,7 @@ function mob_class:remove_texture_mod(mod)
 			table.insert(remove, i)
 		end
 	end
-	for i=#remove, 1 do
+	for i=#remove, 1, -1 do
 		table.remove(self.texture_mods, remove[i])
 	end
 	self.object:set_texture_mod(full_mod)
@@ -337,7 +337,7 @@ function mob_class:check_head_swivel(dtime)
 	self:who_are_you_looking_at()
 
 	local final_rotation = vector.zero()
-	local oldp,oldr = self.object:get_bone_position(self.head_swivel)
+	local _,oldr = self.object:get_bone_position(self.head_swivel)
 
 	if self._locked_object and (self._locked_object:is_player() or self._locked_object:get_luaentity()) and self._locked_object:get_hp() > 0 then
 		local _locked_object_eye_height = 1.5
@@ -379,8 +379,6 @@ function mob_class:check_head_swivel(dtime)
 		end
 	elseif not self._locked_object and math.abs(oldr.y) > 3 and math.abs(oldr.x) < 3 then
 		final_rotation = vector.multiply(oldr, 0.9)
-	else
-		--final_rotation = vector.new(0,0,0)
 	end
 
 	mcl_util.set_bone_position(self.object,self.head_swivel, vector.new(0,self.bone_eye_height,self.horrizonatal_head_height), final_rotation)
