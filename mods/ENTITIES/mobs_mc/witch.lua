@@ -16,7 +16,7 @@ mcl_mobs.register_mob("mobs_mc:witch", {
 	description = S("Witch"),
 	type = "monster",
 	spawn_class = "hostile",
-	can_despawn = false,
+	can_despawn = true,
 	hp_min = 26,
 	hp_max = 26,
 	xp_min = 5,
