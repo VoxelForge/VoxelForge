@@ -1,9 +1,4 @@
 mcl_mapgen_core = {}
-
-local lvm, nodes, param2 = 0, 0, 0
-local lvm_used = false
-local lvm_buffer = {}
-
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 
@@ -39,12 +34,6 @@ local c_realm_barrier = minetest.get_content_id("mcl_core:realm_barrier")
 local c_air = minetest.CONTENT_AIR
 
 local mg_flags = minetest.settings:get_flags("mg_flags")
-
--- Inform other mods of dungeon setting for MCL2-style dungeons
-mcl_vars.mg_dungeons = mg_flags.dungeons and not superflat
-
--- Disable builtin dungeons, we provide our own dungeons
-mg_flags.dungeons = false
 
 if superflat then
 	-- Enforce superflat-like mapgen: no caves, decor, lakes and hills
@@ -86,22 +75,22 @@ minetest.set_mapgen_setting("mg_flags", mg_flags_str, true)
 -- x: The MC probability is 1/x.
 -- minp, maxp: MapBlock limits
 -- returns: Probability (1/return_value) for a single MT mapblock
-local function minecraft_chunk_probability(x, minp, maxp)
+--local function minecraft_chunk_probability(x, minp, maxp)
 	-- 256 is the MC chunk height
-	return x * (((maxp.x-minp.x+1)*(maxp.z-minp.z+1)) / 256)
-end
+--	return x * (((maxp.x-minp.x+1)*(maxp.z-minp.z+1)) / 256)
+--end
 
 -- Takes x and z coordinates and minp and maxp of a generated chunk
 -- (in on_generated callback) and returns a biomemap index)
 -- Inverse function of biomemap_to_xz
-local function xz_to_biomemap_index(x, z, minp, maxp)
-	local xwidth = maxp.x - minp.x + 1
-	local zwidth = maxp.z - minp.z + 1
-	local minix = x % xwidth
-	local miniz = z % zwidth
+--local function xz_to_biomemap_index(x, z, minp, maxp)
+--	local xwidth = maxp.x - minp.x + 1
+--	local zwidth = maxp.z - minp.z + 1
+--	local minix = x % xwidth
+--	local miniz = z % zwidth
 
-	return (minix + miniz * zwidth) + 1
-end
+--	return (minix + miniz * zwidth) + 1
+--end
 
 
 -- Generate basic layer-based nodes: void, bedrock, realm barrier, lava seas, etc.
@@ -181,7 +170,6 @@ end
 
 -- Below the bedrock, generate air/void
 local function world_structure(vm, data, data2, emin, emax, area, minp, maxp, blockseed)
-	local biomemap --ymin, ymax
 	local lvm_used = false
 	local pr = PseudoRandom(blockseed)
 
@@ -306,9 +294,7 @@ end
 -- This should be moved to mcl_structures eventually if the dependencies can be sorted out.
 mcl_mapgen_core.register_generator("structures",nil, function(minp, maxp, blockseed)
 	local gennotify = minetest.get_mapgen_object("gennotify")
-	local has_struct = {}
 	local has = false
-	local poshash = minetest.hash_node_position(minp)
 	for _,struct in pairs(mcl_structures.registered_structures) do
 		local pr = PseudoRandom(blockseed + 42)
 		if struct.deco_id then
