@@ -1063,8 +1063,6 @@ function mcl_util.in_cube(tpos, wpos1, wpos2)
 	return false
 end
 
-vector.in_cube = mcl_util.in_cube
-
 function mcl_util.traverse_tower(pos, dir, callback)
 	local node = minetest.get_node(pos)
 	local i = 0

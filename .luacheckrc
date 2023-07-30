@@ -195,6 +195,7 @@ read_globals = {
 	table = {
 		fields = {
 			update = { read_only = false },
+			update_nil = { read_only = false },
 			merge = { read_only = false },
 			"copy",
 			"indexof",
