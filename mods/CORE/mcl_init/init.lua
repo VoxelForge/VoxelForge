@@ -86,8 +86,6 @@ function mcl_vars.get_chunk_number(pos) -- unsigned int
 		 c.x + k_positive
 end
 
-local convert_old_map_depth = false
-
 if not superflat and not singlenode then
 	-- Normal mode
 	--[[ Realm stacking (h is for height)
@@ -111,7 +109,6 @@ if not superflat and not singlenode then
 	mcl_vars.mg_lava = true
 	mcl_vars.mg_bedrock_is_rough = true
 
-	convert_old_map_depth = true
 elseif singlenode then
 	mcl_vars.mg_overworld_min = -130
 	mcl_vars.mg_overworld_max_official = mcl_vars.mg_overworld_min + minecraft_height_limit
