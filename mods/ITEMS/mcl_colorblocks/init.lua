@@ -29,10 +29,6 @@ if minetest.get_modpath("screwdriver") then
 	on_rotate = screwdriver.rotate_simple
 end
 
-local messy_textures = { --translator table for the bed texture filenames names not adhering to the common color names of mcl_dyes
-	["purple"] = "violet",
-}
-
 local canonical_color = "yellow"
 
 local function readable_name(str)
@@ -42,22 +38,6 @@ end
 
 for color,colordef in pairs(mcl_dyes.colors) do
 	local create_entry = false
-	local longdesc_carpet, longdesc_wool, name_carpet, name_wool
-
-	local is_canonical = color == canonical_color
-	if is_canonical then
-		name_carpet = S("Carpet")
-		name_wool = S("Wool")
-		longdesc_wool = S("Wool is a decorative block which comes in many different colors.")
-		longdesc_carpet = S("Carpets are thin floor covers which come in many different colors.")
-		create_entry = true
-	else
-	end
-	local texcolor = "wool_"..color
-	if messy_textures[color] then
-		texcolor = messy_textures[color]
-	end
-
 	local is_canonical = color == canonical_color
 	local sdesc_hc = S(readable_name(color).." Terracotta")
 	local sdesc_gt = S(readable_name(color).." Glazed Terracotta")
@@ -76,8 +56,7 @@ for color,colordef in pairs(mcl_dyes.colors) do
 		ename_gt = S("Glazed Terracotta")
 		ename_cp = S("Concrete Powder")
 		ename_c = S("Concrete")
-	else
-		create_entry = false
+		create_entry = true
 	end
 
 	-- Node Definition
