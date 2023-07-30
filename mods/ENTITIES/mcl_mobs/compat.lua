@@ -44,7 +44,6 @@ function mcl_mobs.spawn_specific(name, dimension, type_of_spawning, biomes, min_
 		min_height       = min_height,
 		max_height       = max_height,
 		day_toggle       = day_toggle,
-		check_position   = check_position,
 		on_spawn         = on_spawn,
 	})
 end
