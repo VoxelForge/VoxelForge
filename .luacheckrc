@@ -65,6 +65,8 @@ read_globals = {
 	"controls",
 	"flowlib",
 	"awards",
+	"mobs_mc",
+	"screwdriver",
 	"mcl_achievements",
 	"mcl_amethyst",
 	"mcl_anvils",
