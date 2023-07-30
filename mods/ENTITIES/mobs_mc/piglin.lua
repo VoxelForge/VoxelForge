@@ -244,7 +244,6 @@ mcl_mobs.register_mob("mobs_mc:zombified_piglin",table.merge(piglin,{
 	xp_min = 6,
 	xp_max = 6,
 	armor = {undead = 90, fleshy = 90},
-	attack_type = "dogfight",
 	group_attack = { "mobs_mc:zombified_piglin" },
 	damage = 9,
 	reach = 2,
@@ -264,7 +263,6 @@ mcl_mobs.register_mob("mobs_mc:zombified_piglin",table.merge(piglin,{
 	view_range = 16,
 	harmed_by_heal = true,
 	fire_damage_resistant = true,
-	prevents_sleep_when_hostile = true,
 	sounds = {
 		random = "mobs_mc_zombiepig_random",
 		war_cry = "mobs_mc_zombiepig_war_cry",

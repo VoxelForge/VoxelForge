@@ -108,7 +108,7 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 		stand_start = 81, stand_end = 81,
 		walk_start = 81, walk_end = 121, walk_speed = 45,
 		run_start = 81, run_end = 121, run_speed = 60,
-		eat_start = 121, eat_start = 161, eat_loop = false,
+		eat_start = 121, eat_end = 161, eat_loop = false,
 	},
 	follow = { "mcl_farming:wheat_item" },
 	view_range = 12,
@@ -164,7 +164,6 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 	do_custom = function(self, dtime)
 		if not self.initial_color_set then
 			local r = math.random(0,100000)
-			local textures
 			if r <= 81836 then
 				-- 81.836%
 				self.color = "unicolor_white"

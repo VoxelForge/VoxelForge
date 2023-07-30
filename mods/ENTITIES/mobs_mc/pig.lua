@@ -175,7 +175,6 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 		end]]
 
 		-- Mount or detach player
-		local name = clicker:get_player_name()
 		if self.driver and clicker == self.driver then -- and self.driver:get_wielded_item():get_name() ~= "mcl_mobitems:carrot_on_a_stick" then -- Note: This is for when the ability to make the pig go faster is implemented
 			-- Detach if already attached
 			mcl_mobs.detach(clicker, {x=1, y=0, z=0})
