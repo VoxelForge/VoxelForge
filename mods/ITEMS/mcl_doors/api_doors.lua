@@ -210,7 +210,7 @@ function mcl_doors:register_door(name, def)
 		local meta2 = minetest.get_meta(pos)
 
 		-- if name of other door is not the same as check_name -> return
-		if not minetest.get_node(pos).name == check_name  then
+		if minetest.get_node(pos).name ~= check_name  then
 			return
 		end
 

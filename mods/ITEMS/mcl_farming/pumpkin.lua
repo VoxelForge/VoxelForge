@@ -12,7 +12,6 @@ local function on_bone_meal(itemstack,placer,pointed_thing,pos,node)
 end
 
 local function carve_pumpkin(itemstack, placer, pointed_thing)
-	local node = minetest.get_node(pointed_thing.under)
 	-- Only carve pumpkin if used on side
 	if pointed_thing.above.y ~= pointed_thing.under.y then
 		return

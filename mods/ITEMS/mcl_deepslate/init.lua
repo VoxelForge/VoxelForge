@@ -1,7 +1,6 @@
 local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 local cobble = "mcl_deepslate:deepslate_cobbled"
-local stick = "mcl_core:stick"
 
 local function spawn_silverfish(pos, oldnode, oldmetadata, digger)
 	if not minetest.is_creative_enabled("") then
