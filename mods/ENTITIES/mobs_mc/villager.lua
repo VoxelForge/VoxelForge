@@ -45,13 +45,6 @@ local PATHFINDING = "gowp"
 -- these items should be implemented as single items, then everything
 -- will be much easier.
 
-local LOGGING_ON = minetest.settings:get_bool("mcl_logging_mobs_villager",false)
-local function mcl_log (message)
-	if LOGGING_ON then
-		mcl_util.mcl_log (message, "[Mobs - Villager]", true)
-	end
-end
-
 local COMPASS = "mcl_compass:compass"
 if minetest.registered_aliases[COMPASS] then
 	COMPASS = minetest.registered_aliases[COMPASS]
@@ -523,8 +516,8 @@ local professions = {
 				{ E1, { "mcl_colorblocks:hardened_clay_light_blue", 1, 1} },
 				{ E1, { "mcl_colorblocks:hardened_clay_lime", 1, 1} },
 				{ E1, { "mcl_colorblocks:hardened_clay_purple", 1, 1 } },
-	  			},
-	 			{
+				},
+				{
 				{ E1, { "mcl_nether:quartz_pillar", 1, 1 } },
 				{ E1, { "mcl_nether:quartz_block", 1, 1 } },
 				},
@@ -615,7 +608,7 @@ function get_activity(tod)
 	local work_start = 7500
 	local work_end = 16000
 
-	local activity = nil
+	local activity
 	if weather_mod and mcl_weather.get_weather() == "thunder" then
 		activity = SLEEP
 	elseif (tod > work_start and tod < lunch_start) or  (tod > lunch_end and tod < work_end) then
@@ -656,8 +649,6 @@ local function find_closest_bed (self)
 
 				if owned_by == "" and (not owned_by_player or owned_by_player == "") then
 					table.insert(unclaimed_beds, b)
-				else
-
 				end
 			end
 		end
@@ -782,7 +773,7 @@ local function take_bed (entity)
 				entity._bed = closest_block
 			end
 		else
-			local gp = entity:gopath(closest_block,function(self) end)
+			entity:gopath(closest_block,function(self) end)
 		end
 	else
 		if entity.order == "stand" then entity.order = nil end
@@ -790,7 +781,6 @@ local function take_bed (entity)
 end
 
 local function has_golem(pos)
-	local r = false
 	for _,o in pairs(minetest.get_objects_inside_radius(pos,16)) do
 		local l = o:get_luaentity()
 		if l and l.name == "mobs_mc:iron_golem" then return true end
@@ -840,7 +830,7 @@ local function check_summon(self,dtime)
 	end
 	self._summon_timer = self._summon_timer + dtime
 end
-
+--[[
 local function debug_trades(self)
 	if not self or not self._trades then return end
 	local trades = minetest.deserialize(self._trades)
@@ -853,7 +843,7 @@ local function debug_trades(self)
 		end
 	end
 end
-
+--]]
 local function has_traded (self)
 	if not self._trades then
 		return false
@@ -1054,8 +1044,6 @@ local function get_ground_below_floating_object (float_pos)
 	-- If pos is 1 below float_pos, then just return float_pos as there is no air below it
 	if pos.y == float_pos.y - 1 then
 		return float_pos
-	else
-		return pos
 	end
 	return pos
 end
@@ -1093,7 +1081,7 @@ local function go_to_town_bell(self)
 
 	return nil
 end
-
+--[[
 local function validate_bed(self)
 	if not self or not self._bed then
 		return false
@@ -1132,14 +1120,12 @@ local function validate_bed(self)
 	end
 
 end
-
+--]]
 local function do_activity (self)
 	-- Maybe just check we're pathfinding first?
 	if self.following then
 		return
 	end
-
-	local jobsite_valid = false
 
 	if not is_night() then
 		if self.order == SLEEP then self.order = nil end
@@ -1605,8 +1591,9 @@ local trade_inventory = {
 			if not wanted2:is_empty() then
 				inv:remove_item("input", inv:get_stack("wanted", 2))
 			end
+			local name = player:get_player_name()
 			local trader = player_trading_with[name]
-			minetest.sound_play("mobs_mc_villager_accept", {to_player = player:get_player_name(),object=trader.object}, true)
+			minetest.sound_play("mobs_mc_villager_accept", {to_player = name ,object=trader.object}, true)
 		end
 		update_offer(inv, player, true)
 	end,
@@ -1833,6 +1820,7 @@ mcl_mobs.register_mob("mobs_mc:villager", {
 		end
 		-- Don't do at night. Go to bed? Maybe do_activity needs it's own method
 		if validate_jobsite(self) and not self.order == WORK then
+			minetest.log("warning","[mobs_mc] villager has jobsite but doesn't work")
 			--self:gopath(self._jobsite,function()
 			--	minetest.log("sent to jobsite")
 			--end)
