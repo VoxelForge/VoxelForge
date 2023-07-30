@@ -564,10 +564,8 @@ minetest.register_abm({
 	interval = 1.0,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-				local uppos = {x=pos.x,y=pos.y+1,z=pos.z}
-				local downpos = {x=pos.x,y=pos.y-1,z=pos.z}
-			local meta = minetest.get_meta(pos)
-			local inv = meta:get_inventory()
+			local uppos = {x=pos.x,y=pos.y+1,z=pos.z}
+
 			-- Get bonemeal from composter above
 			local upnode = minetest.get_node(uppos)
 			if upnode.name == "mcl_composters:composter_ready" then
