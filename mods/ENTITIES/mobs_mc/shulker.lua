@@ -113,7 +113,6 @@ mcl_mobs.register_mob("mobs_mc:shulker", {
 						local tg = vector.offset(nodepos,0,1,0)
 						if check_spot(tg) then
 							telepos = tg
-							node_ok = true
 						end
 					end
 					if telepos then

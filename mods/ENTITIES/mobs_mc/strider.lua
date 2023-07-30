@@ -161,7 +161,6 @@ local strider = {
 		end
 
 		-- Mount or detach player
-		local name = clicker:get_player_name()
 		if self.driver and clicker == self.driver then
 			-- Detach if already attached
 			mcl_mobs.detach(clicker, {x=1, y=0, z=0})

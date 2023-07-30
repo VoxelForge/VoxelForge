@@ -32,10 +32,6 @@ local skeleton = {
 	mesh = "mobs_mc_skeleton.b3d",
 	shooter_avoid_enemy = true,
 	strafes = true,
-	textures = { {
-		"mcl_bows_bow_0.png", -- bow
-		"mobs_mc_skeleton.png", -- skeleton
-	} },
 	makes_footstep_sound = true,
 	textures = {
 		{
