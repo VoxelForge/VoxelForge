@@ -74,12 +74,11 @@ local function generate_enriched_path(wp_in, door_open_pos, door_close_pos, cur_
 	local wp_out = {}
 
 	-- TODO  Just pass in door position and the index before is open, the index after is close
-	local current_door_index = -1
 
 	for i, cur_pos in pairs(wp_in) do
 		local action = nil
 
-		local cur_pos_to_add = vector.add(cur_pos, one_down)
+		local cur_pos_to_add
 		if door_open_pos and vector.equals (cur_pos, door_open_pos) then
 			mcl_log ("Door open match")
 			action = {type = "door", action = "open", target = cur_door_pos}
@@ -134,11 +133,11 @@ local function calculate_path_through_door (p, cur_door_pos, t)
 		mcl_log("Plot route through door from pos: " .. minetest.pos_to_string(p))
 	end
 
-	local enriched_path = nil
+	local enriched_path
 	local wp, prospective_wp
 
-	local pos_closest_to_door = nil
-	local other_side_of_door = nil
+	local pos_closest_to_door
+	local other_side_of_door
 
 	if cur_door_pos then
 		mcl_log("Found a door near: " .. minetest.pos_to_string(cur_door_pos))
@@ -290,10 +289,6 @@ function mob_class:gopath(target, callback_arrived, prioritised)
 end
 
 function mob_class:interact_with_door(action, target)
-	local p = self.object:get_pos()
-	--local t = minetest.get_timeofday()
-	--local dd = minetest.find_nodes_in_area(vector.offset(p,-1,-1,-1),vector.offset(p,1,1,1),{"group:door"})
-	--for _,d in pairs(dd) do
 	if target then
 		mcl_log("Door target is: ".. minetest.pos_to_string(target))
 
