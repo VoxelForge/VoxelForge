@@ -493,7 +493,7 @@ function mcl_trees.register_wood(name, p)
 
 	if p.stairs == nil or type(p.stairs) == "table" then
 		p.stairs = p.stairs or {}
-		mcl_stairs.register_stair(name, "mcl_core:wood_"..name,
+		mcl_stairs.register_stair(name, "mcl_trees:wood_"..name,
 			{handy=1,axey=1, flammable=3,wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
 			p.wood and p.wood.tiles or { minetest.get_current_modname().."_planks_"..name..".png"},
 			p.stairs.description or S(rname.." Wood Stairs"),
@@ -501,7 +501,7 @@ function mcl_trees.register_wood(name, p)
 			"woodlike")
 
 		if bark_stairs then
-			mcl_stairs.register_stair(name.."_bark", "mcl_core:log_"..name,
+			mcl_stairs.register_stair(name.."_bark", "mcl_trees:tree_"..name,
 				{handy=1,axey=1, flammable=3,wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
 				p.tree and p.tree.tiles and { p.tree.tiles[3] } or { minetest.get_current_modname().."_log_"..name..".png"},
 				p.stairs.description or S(rname.." bark Stairs"),
@@ -512,7 +512,7 @@ function mcl_trees.register_wood(name, p)
 
 	if p.slab == nil or type(p.slab) == "table" then
 		p.slab = p.slab or {}
-		mcl_stairs.register_slab(name, "mcl_core:wood_"..name,
+		mcl_stairs.register_slab(name, "mcl_trees:wood_"..name,
 			{handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
 			p.wood and p.wood.tiles or { minetest.get_current_modname().."_planks_"..name..".png"},
 			p.slab.description or S(rname.." Wood Slab"),
@@ -520,7 +520,7 @@ function mcl_trees.register_wood(name, p)
 			S("Double "..rname.." Wood Slab"))
 
 		if bark_stairs then
-			mcl_stairs.register_slab(name.."_bark", "mcl_core:log_"..name,
+			mcl_stairs.register_slab(name.."_bark", "mcl_trees:tree_"..name,
 				{handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
 				p.tree and p.tree.tiles and { p.tree.tiles[3] } or { minetest.get_current_modname().."_log_"..name..".png"},
 				p.slab.description or S(rname.." bark Slab"),
