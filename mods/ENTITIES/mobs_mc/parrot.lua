@@ -99,7 +99,6 @@ local function check_perch(self,dtime)
 				if l and l.name == "mobs_mc:parrot" then
 					local n1 = minetest.get_node(vector.offset(p:get_pos(),0,-0.6,0)).name
 					local n2 = minetest.get_node(vector.offset(p:get_pos(),0,0,0)).name
-					local n3 = minetest.get_node(vector.offset(p:get_pos(),0,1,0)).name
 					if ( n1 == "air" or minetest.get_item_group(n2,"water") > 0 or minetest.get_item_group(n2,"lava") > 0) and
 					not minetest.is_creative_enabled(p:get_player_name()) then
 						o:set_detach()
@@ -160,7 +159,7 @@ mcl_mobs.register_mob("mobs_mc:parrot", {
 		max = 2,
 		looting = "common",},
 	},
-   	animation = {
+	animation = {
 		stand_speed = 50,
 		walk_speed = 50,
 		fly_speed = 50,
