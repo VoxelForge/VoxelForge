@@ -396,6 +396,7 @@ local function alias_signs(oldwood,newwood)
 	minetest.register_alias("mcl_signs:standing_sign45"..oldwood, "mcl_signs:standing_sign45".. newwood)
 	minetest.register_alias("mcl_signs:standing_sign67_5"..oldwood, "mcl_signs:standing_sign67_5".. newwood)
 end
+minetest.register_alias("mcl_signs:sign","mcl_signs:wall_sign_oak")
 
 alias_signs("","_oak")
 alias_signs("_acaciawood","_acacia")
