@@ -404,9 +404,9 @@ function mcl_signs.register_sign(name,color,def)
 		_mcl_sign_wood = name,
 	}
 
-	minetest.register_node(":mcl_signs:standing_sign_"..name, table.merge({ _mcl_sign_wood = name }, sign_tpl, newfields, def or {}))
-	minetest.register_node(":mcl_signs:wall_sign_"..name,table.merge({ _mcl_sign_wood = name }, sign_wall, newfields, def or {}))
-	minetest.register_node(":mcl_signs:hanging_sign_"..name,table.merge( sign_hanging, newfields, {
+	minetest.register_node(":mcl_signs:standing_sign_"..name, table.merge(sign_tpl, newfields, def or {}))
+	minetest.register_node(":mcl_signs:wall_sign_"..name,table.merge(sign_wall, newfields, def or {}))
+	minetest.register_node(":mcl_signs:hanging_sign_"..name,table.merge(sign_hanging, newfields, {
 		tiles = { colored_texture("mcl_signs_sign_hanging.png",color), },
 	},def or {}))
 
