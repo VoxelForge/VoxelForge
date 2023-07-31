@@ -79,10 +79,25 @@ minetest.register_alias("mcl_fences:fence","mcl_fences:oak_fence")
 minetest.register_alias("mcl_mangrove:mangrove_wood_fence","mcl_fences:mangrove_fence")
 minetest.register_alias("mcl_crimson:crimson_fence","mcl_fences:crimson_fence")
 minetest.register_alias("mcl_crimson:warped_fence","mcl_fences:warped_fence")
+
 minetest.register_alias("mcl_fences:fence_gate","mcl_fences:oak_fence_gate")
 minetest.register_alias("mcl_mangrove:mangrove_wood_fence_gate","mcl_fences:mangrove_fence_gate")
 minetest.register_alias("mcl_crimson:crimson_fence_gate","mcl_fences:crimson_fence_gate")
 minetest.register_alias("mcl_crimson:warped_fence_gate","mcl_fences:warped_fence_gate")
+
+minetest.register_alias("mcl_fences:fence_gate_open","mcl_fences:oak_fence_gate_open")
+minetest.register_alias("mcl_mangrove:mangrove_wood_fence_gate_open","mcl_fences:mangrove_fence_gate_open")
+minetest.register_alias("mcl_crimson:crimson_fence_gate_open","mcl_fences:crimson_fence_gate_open")
+minetest.register_alias("mcl_crimson:warped_fence_gate_open","mcl_fences:warped_fence_gate_open")
+
+minetest.register_alias("mclx_fences:nether_brick_fence_gate","mcl_fences:nether_brick_fence_gate")
+minetest.register_alias("mclx_fences:red_nether_brick_fence_gate","mcl_fences:red_nether_brick_fence_gate")
+
+minetest.register_alias("mclx_fences:nether_brick_fence_gate_open","mcl_fences:nether_brick_fence_gate_open")
+minetest.register_alias("mclx_fences:red_nether_brick_fence_gate_open","mcl_fences:red_nether_brick_fence_gate_open")
+
+minetest.register_alias("mclx_fences:nether_brick_fence","mcl_fences:nether_brick_fence")
+minetest.register_alias("mclx_fences:red_nether_brick_fence","mcl_fences:red_nether_brick_fence")
 
 minetest.register_alias("mcl_doors:wooden_door","mcl_doors:door_oak")
 minetest.register_alias("mcl_doors:jungle_door","mcl_doors:door_jungle")
