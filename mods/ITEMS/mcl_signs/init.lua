@@ -10,6 +10,8 @@ local CHAR_WIDTH = 5
 
 local DEFAULT_COLOR = "#000000"
 
+local SIGN_GLOW_INTENSITY = 14
+
 local S = minetest.get_translator(minetest.get_current_modname())
 local F = minetest.formspec_escape
 
@@ -47,6 +49,12 @@ local function get_signdata(pos)
 	local meta = minetest.get_meta(pos)
 	local text = meta:get_string("text")
 	local color = meta:get_string("color")
+	local glow = meta:get_string("glow")
+	if glow == "true" then
+		glow = true
+	else
+		glow = false
+	end
 	local yaw, spos
 	local typ = "standing"
 	if def.paramtype2  == "wallmounted" then
@@ -71,6 +79,7 @@ local function get_signdata(pos)
 		yaw = yaw,
 		node = node,
 		typ = typ,
+		glow = glow,
 		text_pos = spos,
 	}
 end
@@ -79,7 +88,7 @@ local function set_signmeta(pos,def)
 	local meta = minetest.get_meta(pos)
 	if def.text then meta:set_string("text",def.text) end
 	if def.color then meta:set_string("color",def.color) end
-	if def.glow then meta:set_string("glow","true") end
+	if def.glow then meta:set_string("glow",def.glow) end
 end
 
 -- Text/texture
@@ -235,6 +244,21 @@ function sign_tpl.on_place(itemstack, placer, pointed_thing)
 	return itemstack
 end
 
+function sign_tpl.on_rightclick(pos, node, clicker, itemstack, pointed_thing)
+	if itemstack:get_name() == "mcl_mobitems:glow_ink_sac" then
+		local data = get_signdata(pos)
+		if data.color == "#000000" then
+			data.color = "#7e7e7e" --black doesn't glow in the dark
+		end
+		set_signmeta(pos,{glow="true",color=data.color})
+		mcl_signs.update_sign(pos)
+		if not minetest.is_creative_enabled(clicker:get_player_name()) then
+			itemstack:take_item()
+		end
+	end
+	return itemstack
+end
+
 function sign_tpl.after_dig_node(pos)
 	mcl_signs.get_text_entity (pos, true)
 end
@@ -329,8 +353,13 @@ function mcl_signs.update_sign(pos)
 		if not text_entity or not text_entity:get_pos() then return end
 	end
 
+	local glow
+	if data.glow then
+		glow = SIGN_GLOW_INTENSITY
+	end
 	text_entity:set_properties({
 		textures = { mcl_signs.generate_texture(data) },
+		glow = glow,
 	})
 	text_entity:set_yaw(data.yaw)
 	text_entity:set_armor_groups({ immortal = 1 })
