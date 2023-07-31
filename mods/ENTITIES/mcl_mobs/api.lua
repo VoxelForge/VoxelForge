@@ -84,7 +84,11 @@ function mob_class:jock_to(mob, reletive_pos, rot)
 end
 
 function mob_class:get_staticdata()
-
+	local pos = self.object:get_pos()
+	if not mcl_mobs.check_vector(pos) then
+		self.object:remove()
+		return
+	end
 	for _,p in pairs(minetest.get_connected_players()) do
 		self:remove_particlespawners(p:get_player_name())
 	end
@@ -93,7 +97,7 @@ function mob_class:get_staticdata()
 	and self:despawn_allowed()
 	and self.lifetimer <= 20 then
 		if spawn_logging then
-			minetest.log("action", "[mcl_mobs] Mob "..tostring(self.name).." despawns at "..minetest.pos_to_string(vector.round(self.object:get_pos())) .. " - out of range")
+			minetest.log("action", "[mcl_mobs] Mob "..tostring(self.name).." despawns at "..minetest.pos_to_string(vector.round(pos)) .. " - out of range")
 		end
 
 		return "remove"-- nil
