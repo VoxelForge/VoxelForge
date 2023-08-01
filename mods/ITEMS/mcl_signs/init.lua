@@ -290,6 +290,7 @@ local sign_hanging = table.merge(sign_tpl,{
 
 --Formspec
 function mcl_signs.show_formspec(player, pos)
+	if not pos then return end
 	minetest.show_formspec(
 			player:get_player_name(),
 			"mcl_signs:set_text_" .. pos.x .. "_" .. pos.y .. "_" .. pos.z,
