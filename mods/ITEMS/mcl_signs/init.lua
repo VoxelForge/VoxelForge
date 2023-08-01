@@ -46,6 +46,7 @@ local function normalize_rotation(rot) return math.floor(0.5 + rot / 15) * 15 en
 local function get_signdata(pos)
 	local node = minetest.get_node(pos)
 	local def = minetest.registered_nodes[node.name]
+	if not def or minetest.get_item_group(node.name,"sign") < 1 then return end
 	local meta = minetest.get_meta(pos)
 	local text = meta:get_string("text")
 	local color = meta:get_string("color")
