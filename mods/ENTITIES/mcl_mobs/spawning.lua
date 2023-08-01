@@ -335,7 +335,7 @@ local function can_spawn(spawn_def,spawning_position)
 	if spawn_def.type_of_spawning == "water" then
 		spawning_position = get_water_spawn(spawning_position)
 		if not spawning_position then
-			minetest.log("warning","[mcl_mobs] no water spawn for mob "..spawn_def.name.." found at "..minetest.pos_to_string(vector.round(pos)))
+			minetest.log("warning","[mcl_mobs] no water spawn for mob "..spawn_def.name.." found at "..minetest.pos_to_string(vector.round(spawning_position)))
 			return
 		end
 	end
