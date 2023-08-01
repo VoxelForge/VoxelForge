@@ -188,6 +188,7 @@ globals = {
 	"mcl_wool",
 	"mcl_worlds",
 	"mcl_zombie_sieges",
+	"mcl_lush_caves",
 }
 
 read_globals = {
