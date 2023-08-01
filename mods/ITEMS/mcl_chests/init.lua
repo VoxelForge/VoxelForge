@@ -2,10 +2,6 @@ local S = minetest.get_translator(minetest.get_current_modname())
 local F = minetest.formspec_escape
 local C = minetest.colorize
 
-local string = string
-local table = table
-local math = math
-
 local sf = string.format
 
 local mod_doc = minetest.get_modpath("doc")
