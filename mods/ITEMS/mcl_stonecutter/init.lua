@@ -154,7 +154,7 @@ local function update_stonecutter_slots(meta)
 
 	-- Checks if the chosen item is a slab or not, if it's a slab set the output to be a stack of 2
 	if new_output ~= '' then
-		cut_item = ItemStack(new_output)
+		local cut_item = ItemStack(new_output)
 		if string.find(new_output, "mcl_stairs:slab_") then
 			cut_item:set_count(2)
 		else
@@ -306,7 +306,6 @@ minetest.register_node("mcl_stonecutter:stonecutter", {
 		meta:set_string("formspec", form)
 	end,
 	on_rightclick = function(pos, node, player, itemstack)
-		local name = player:get_player_name()
 		if not player:get_player_control().sneak then
 			local meta = minetest.get_meta(pos)
 			update_stonecutter_slots(meta)
