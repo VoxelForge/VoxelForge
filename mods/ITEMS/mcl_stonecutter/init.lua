@@ -5,37 +5,6 @@
 
 local S = minetest.get_translator("mcl_stonecutter")
 
--- compatible items for the stonecutter
-local compaitble_items = {
-	"mcl_core:cobble",
-	"mcl_core:mossycobble",
-	"mcl_core:stone",
-	"mcl_core:stone_smooth",
-	"mcl_core:granite",
-	"mcl_core:granite_smooth",
-	"mcl_core:diorite",
-	"mcl_core:diorite_smooth",
-	"mcl_core:andesite",
-	"mcl_core:andesite_smooth",
-	"mcl_core:stonebrick",
-	"mcl_core:stonebrickmossy",
-	"mcl_core:sandstone",
-	"mcl_core:redsandstone",
-	"mcl_core:brick_block",
-	"mcl_ocean:prismarine",
-	"mcl_ocean:prismarine_brick",
-	"mcl_ocean:prismarine_dark",
-	"mcl_mud:mud_bricks",
-	"mcl_nether:quartzblock",
-	"mcl_nether:quartz_smooth",
-	"mcl_nether:red_nether_brick",
-	"mcl_nether:nether_brick",
-	"mcl_end:purpur_block",
-	"mcl_end:end_bricks",
-	"mcl_blackstone:blackstone",
-	"mcl_blackstone:blackstone_polished"
-}
-
 local FMT = {
 	item_image_button = "item_image_button[%f,%f;%f,%f;%s;%s;%s]",
 }
@@ -96,16 +65,6 @@ local function get_item_string_name(input)
     end
 end
 
--- Simply checks if the item is compaitble with the stonecutter
-local function is_input_in_table(element)
-	for _, value in ipairs(compaitble_items) do
-		if value == element then
-			return true
-		end
-	end
-	return false
-end
-
 -- Updates the formspec
 local function update_stonecutter_slots(meta)
 	local inv = meta:get_inventory()
@@ -114,7 +73,7 @@ local function update_stonecutter_slots(meta)
 	local new_output = meta:get_string("cut_stone")
 
 	-- Checks if input is in the array
-	if is_input_in_table(name) then
+	if minetest.get_item_group(name,"stonecuttable") > 0 then
 		local cuttable_recipes = {}
 		local name_stripped = get_item_string_name(input:to_string())
 		if name_stripped ~= "" then
