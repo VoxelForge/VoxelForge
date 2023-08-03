@@ -224,6 +224,11 @@
 		101,
 		57
 	],
+	"mcl_boats_cherry_blossom_chest_boat.png": [
+		149,
+		103,
+		97
+	],
 	"mcl_boats_birch_chest_boat.png": [
 		112,
 		90,
@@ -284,6 +289,11 @@
 		78,
 		60
 	],
+	"mcl_boats_texture_cherry_blossom_boat.png": [
+		188,
+		123,
+		115
+	],
 	"mcl_boats_oak_boat.png": [
 		93,
 		76,
@@ -313,6 +323,11 @@
 		17,
 		15,
 		27
+	],
+	"mcl_boats_cherry_blossom_boat.png": [
+		167,
+		113,
+		107
 	],
 	"mobs_mc_chicken.png": [
 		198,
@@ -2384,6 +2399,11 @@
 		60,
 		59
 	],
+	"mcl_deepslate_reinforced_top.png": [
+		67,
+		64,
+		61
+	],
 	"mcl_deepslate_bricks.png": [
 		62,
 		61,
@@ -2398,6 +2418,11 @@
 		89,
 		61,
 		60
+	],
+	"mcl_deepslate_reinforced_bottom.png": [
+		71,
+		68,
+		64
 	],
 	"mcl_deepslate_chiseled.png": [
 		44,
@@ -2438,6 +2463,11 @@
 		47,
 		46,
 		46
+	],
+	"mcl_deepslate_reinforced.png": [
+		84,
+		79,
+		71
 	],
 	"mcl_deepslate.png": [
 		70,
@@ -3569,95 +3599,20 @@
 		54,
 		54
 	],
-	"mcl_dye_blue.png": [
-		106,
-		83,
-		64
-	],
-	"mcl_dye_dark_green.png": [
-		99,
-		81,
-		47
-	],
-	"mcl_dye_violet.png": [
-		107,
-		76,
-		57
-	],
-	"mcl_dye_dark_grey.png": [
-		108,
-		81,
-		52
-	],
-	"mcl_dye_lime.png": [
-		107,
-		91,
-		53
-	],
 	"mcl_dye_white.png": [
 		121,
 		93,
 		63
 	],
-	"mcl_dye_lightblue.png": [
-		103,
-		88,
-		70
-	],
-	"mcl_dye_cyan.png": [
-		104,
-		89,
-		60
-	],
-	"mcl_dye_red.png": [
-		113,
-		74,
-		47
-	],
-	"mcl_dye_grey.png": [
-		113,
-		86,
-		58
+	"mcl_dye_mask.png": [
+		247,
+		243,
+		233
 	],
 	"mcl_bone_meal_bone_meal.png": [
 		121,
 		93,
 		63
-	],
-	"mcl_dye_orange.png": [
-		122,
-		85,
-		48
-	],
-	"mcl_dye_pink.png": [
-		120,
-		81,
-		61
-	],
-	"mcl_dye_black.png": [
-		99,
-		72,
-		45
-	],
-	"mcl_dye_brown.png": [
-		113,
-		79,
-		47
-	],
-	"mcl_dye_yellow.png": [
-		123,
-		91,
-		49
-	],
-	"mcl_dye_green.png": [
-		107,
-		91,
-		53
-	],
-	"mcl_dye_magenta.png": [
-		111,
-		79,
-		59
 	],
 	"mcl_campfires_soul_campfire_inv.png": [
 		63,
@@ -5014,6 +4969,101 @@
 		238,
 		141
 	],
+	"mcl_cherry_blossom_door_bottom.png": [
+		208,
+		132,
+		123
+	],
+	"mcl_cherry_blossom_log_top.png": [
+		191,
+		124,
+		115
+	],
+	"mcl_cherry_blossom_door_top.png": [
+		213,
+		134,
+		124
+	],
+	"mcl_cherry_blossom_pink_petals.png": [
+		245,
+		180,
+		199
+	],
+	"mcl_cherry_blossom_planks.png": [
+		222,
+		140,
+		129
+	],
+	"mcl_cherry_blossom_door_bottom_side.png": [
+		218,
+		127,
+		116
+	],
+	"mcl_cherry_blossom_door_top_side.png": [
+		218,
+		127,
+		116
+	],
+	"mcl_cherry_blossom_particle.png": [
+		235,
+		83,
+		150
+	],
+	"mcl_cherry_blossom_door_inv.png": [
+		207,
+		131,
+		121
+	],
+	"mcl_cherry_blossom_log_top_stripped.png": [
+		215,
+		139,
+		129
+	],
+	"mcl_cherry_blossom_door_bottom_bottompart.png": [
+		208,
+		132,
+		123
+	],
+	"mcl_cherry_blossom_trapdoor_side.png": [
+		223,
+		137,
+		127
+	],
+	"mcl_cherry_blossom_door_top_toppart.png": [
+		215,
+		140,
+		131
+	],
+	"mcl_cherry_blossom_leaves.png": [
+		243,
+		174,
+		194
+	],
+	"mcl_cherry_blossom_log.png": [
+		69,
+		46,
+		47
+	],
+	"mcl_cherry_blossom_trapdoor.png": [
+		212,
+		133,
+		124
+	],
+	"mcl_cherry_blossom_pink_petals_inv.png": [
+		246,
+		182,
+		200
+	],
+	"mcl_cherry_blossom_log_stripped.png": [
+		233,
+		147,
+		133
+	],
+	"mcl_cherry_blossom_sapling.png": [
+		196,
+		136,
+		152
+	],
 	"default_river_water_flowing_animated.png": [
 		0,
 		122,
@@ -5053,6 +5103,11 @@
 		203,
 		180,
 		151
+	],
+	"mcl_book_book_empty_slot.png": [
+		0,
+		0,
+		0
 	],
 	"mcl_books_book_written.png": [
 		110,
@@ -5199,6 +5254,11 @@
 		185,
 		181
 	],
+	"grindstone_gui_9.png": [
+		71,
+		71,
+		71
+	],
 	"grindstone_top.png": [
 		210,
 		208,
@@ -5283,6 +5343,11 @@
 		126,
 		62,
 		56
+	],
+	"mcl_mangrove_trapdoor_side.png": [
+		122,
+		60,
+		54
 	],
 	"mcl_mangrove_propagule_hanging.png": [
 		77,
@@ -6510,9 +6575,9 @@
 		66
 	],
 	"twisting_vines_plant.png": [
-		98,
-		80,
-		129
+		27,
+		99,
+		90
 	],
 	"shroomlight.png": [
 		252,
@@ -6550,9 +6615,9 @@
 		7
 	],
 	"warped_nylium_side.png": [
-		86,
-		72,
-		116
+		61,
+		54,
+		45
 	],
 	"mcl_doors_door_crimson_side_upper.png": [
 		100,
@@ -6580,9 +6645,9 @@
 		69
 	],
 	"farming_warped_fungus.png": [
-		93,
-		57,
-		178
+		3,
+		106,
+		82
 	],
 	"mcl_crimson_crimson_fence_top.png": [
 		51,
@@ -6590,9 +6655,9 @@
 		32
 	],
 	"stripped_warped_stem_top.png": [
-		91,
-		75,
-		122
+		11,
+		92,
+		80
 	],
 	"nether_sprouts.png": [
 		112,
@@ -6610,19 +6675,19 @@
 		47
 	],
 	"warped_hyphae_wood.png": [
-		84,
-		100,
-		140
+		33,
+		69,
+		60
 	],
 	"twisting_vines.png": [
+		27,
 		102,
-		82,
-		134
+		93
 	],
 	"warped_hyphae_side.png": [
-		50,
-		43,
-		60
+		52,
+		44,
+		52
 	],
 	"crimson_roots.png": [
 		124,
@@ -6630,9 +6695,9 @@
 		38
 	],
 	"warped_nylium.png": [
-		85,
-		72,
-		115
+		21,
+		88,
+		78
 	],
 	"warped_stem_stripped_top.png": [
 		11,
@@ -6643,6 +6708,11 @@
 		40,
 		67,
 		61
+	],
+	"mcl_crimson_crimson_trapdoor_side.png": [
+		84,
+		40,
+		47
 	],
 	"mcl_crimson_crimson_fence_side.png": [
 		77,
@@ -6660,9 +6730,14 @@
 		46
 	],
 	"warped_hyphae.png": [
-		85,
-		68,
-		113
+		17,
+		84,
+		78
+	],
+	"mcl_crimson_warped_trapdoor_side.png": [
+		36,
+		62,
+		55
 	],
 	"stripped_crimson_stem_side.png": [
 		116,
@@ -6715,14 +6790,14 @@
 		67
 	],
 	"stripped_warped_stem_side.png": [
-		66,
-		64,
-		92
+		31,
+		74,
+		66
 	],
 	"warped_wart_block.png": [
-		68,
-		55,
-		94
+		0,
+		72,
+		61
 	],
 	"crimson_nylium.png": [
 		132,
@@ -6730,9 +6805,9 @@
 		35
 	],
 	"warped_roots.png": [
-		94,
-		77,
-		124
+		28,
+		95,
+		86
 	],
 	"stripped_crimson_stem.png": [
 		116,
@@ -7984,6 +8059,16 @@
 		50,
 		50
 	],
+	"mcl_anvils_inventory_cross.png": [
+		157,
+		157,
+		157
+	],
+	"mcl_anvils_inventory_hammer.png": [
+		146,
+		138,
+		133
+	],
 	"mcl_anvils_anvil_top_damaged_0.png": [
 		52,
 		52,
@@ -7998,6 +8083,11 @@
 		45,
 		45,
 		45
+	],
+	"mcl_anvils_inventory_arrow.png": [
+		157,
+		157,
+		157
 	],
 	"mcl_anvils_anvil_base.png": [
 		40,
@@ -8053,6 +8143,11 @@
 		85,
 		70,
 		59
+	],
+	"mcl_smithing_table_inventory_hammer.png": [
+		58,
+		50,
+		44
 	],
 	"fletching_table_front.png": [
 		167,
@@ -10234,11 +10329,6 @@
 		110,
 		129
 	],
-	"mcl_mobitems_lead.png": [
-		114,
-		76,
-		9
-	],
 	"mcl_mobitems_shulker_shell.png": [
 		118,
 		68,
@@ -10689,11 +10779,6 @@
 		254,
 		254
 	],
-	"crafting_inventory_creative.png": [
-		206,
-		206,
-		206
-	],
 	"crafting_creative_active.png": [
 		202,
 		202,
@@ -10719,10 +10804,10 @@
 		0,
 		0
 	],
-	"crafting_inventory_creative_survival.png": [
-		195,
-		195,
-		195
+	"mcl_inventory_background9.png": [
+		29,
+		29,
+		29
 	],
 	"crafting_creative_marker.png": [
 		0,
@@ -10753,6 +10838,11 @@
 		196,
 		196,
 		196
+	],
+	"crafting_formspec_arrow.png": [
+		157,
+		157,
+		157
 	],
 	"mcl_inventory_hotbar_selected.png": [
 		113,
@@ -11093,11 +11183,6 @@
 		0,
 		0,
 		0
-	],
-	"mcl_skins_character_2.png": [
-		89,
-		58,
-		62
 	],
 	"mcl_skins_mouth_1.png": [
 		163,
