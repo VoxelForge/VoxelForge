@@ -171,6 +171,7 @@ function mcl_walls.register_wall(nodename, description, source, tiles, inventory
 			sounds = sounds,
 			_mcl_blast_resistance = 6,
 			_mcl_hardness = 2,
+			_mcl_stonecutter_recipes = {source},
 		})
 
 		-- Add entry alias for the Help
@@ -199,6 +200,7 @@ function mcl_walls.register_wall(nodename, description, source, tiles, inventory
 		sounds = sounds,
 		_mcl_blast_resistance = 6,
 		_mcl_hardness = 2,
+		_mcl_stonecutter_recipes = {source},
 	})
 	-- Add entry alias for the Help
 	if minetest.get_modpath("doc") then
@@ -225,6 +227,7 @@ function mcl_walls.register_wall(nodename, description, source, tiles, inventory
 		sounds = sounds,
 		_mcl_blast_resistance = 6,
 		_mcl_hardness = 2,
+		--_mcl_base_node = source,
 	})
 	-- Add entry alias for the Help
 	if minetest.get_modpath("doc") then
@@ -255,6 +258,7 @@ function mcl_walls.register_wall(nodename, description, source, tiles, inventory
 		collisionbox = {-0.2, 0, -0.2, 0.2, 1.4, 0.2},
 		on_construct = update_wall,
 		sounds = sounds,
+		_mcl_stonecutter_recipes = {source},
 		_mcl_blast_resistance = 6,
 		_mcl_hardness = 2,
 	})

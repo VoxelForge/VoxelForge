@@ -9,22 +9,41 @@ local FMT = {
 	item_image_button = "item_image_button[%f,%f;%f,%f;%s;%s;%s]",
 }
 
+local recipe_yield = { --maps itemgroup to the respective recipe yield
+	["wall"] = 1,
+	["slab"] = 2,
+	["stair"] = 1,
+}
+
+local recipes = {}
+
+minetest.register_on_mods_loaded(function()
+	for k,v in pairs(minetest.registered_nodes) do
+		if v._mcl_stonecutter_recipes then
+			for kk,vv in pairs(recipe_yield) do
+				if minetest.get_item_group(k,kk) > 0 and minetest.get_item_group(k,"not_in_creative_inventory") == 0 then
+					for _,vvv in pairs(v._mcl_stonecutter_recipes) do
+						if  minetest.get_item_group(vvv,"stonecuttable") > 0 then
+							if not recipes[vvv] then recipes[vvv] = {} end
+							table.insert(recipes[vvv],k.." "..vv)
+						end
+					end
+				end
+			end
+		end
+	end
+	minetest.log(dump(recipes))
+end)
+
 -- formspecs
-local function show_stonecutter_formspec(items, input)
+local function show_stonecutter_formspec(input)
 	local cut_items = {}
 	local x_len = 0
 	local y_len = 0.5
 
-	-- This loops through all the items that can be made and inserted into the formspec
-	if items ~= nil then
-		for index, value in pairs(items) do
-			x_len = x_len + 1
-			if x_len > 5 then
-				y_len = y_len + 1
-				x_len = 1
-			end
-			local test = string.format(FMT.item_image_button,x_len+1,y_len,1,1, value, "item_button", value)
-			cut_items[index] = test
+	if recipes[input] then
+		for k,v in pairs(recipes[input]) do
+			cut_items[k] = string.format(FMT.item_image_button,x_len+1,y_len,1,1, v, "item_button", v)
 		end
 	end
 
@@ -49,22 +68,6 @@ local function show_stonecutter_formspec(items, input)
 	return formspec
 end
 
--- Strips the start of the item like "mcl_core:" and removes any numbers or whitespaces after it
-local function get_item_string_name(input)
-	local colonIndex = string.find(input, ":")
-	if colonIndex then
-        input = string.sub(input, colonIndex + 1)
-    else
-		return input
-	end
-	local whitespaceIndex = string.find(input, "%s")
-	if whitespaceIndex then
-        return string.sub(input, 1, whitespaceIndex - 1)
-    else
-        return input
-    end
-end
-
 -- Updates the formspec
 local function update_stonecutter_slots(meta)
 	local inv = meta:get_inventory()
@@ -72,41 +75,9 @@ local function update_stonecutter_slots(meta)
 	local name = input:get_name()
 	local new_output = meta:get_string("cut_stone")
 
-	-- Checks if input is in the array
 	if minetest.get_item_group(name,"stonecuttable") > 0 then
-		local cuttable_recipes = {}
-		local name_stripped = get_item_string_name(input:to_string())
-		if name_stripped ~= "" then
-			-- Strings for the possible items it can craft into
-			local stair = "mcl_stairs:stair_"..name_stripped
-			local slab = "mcl_stairs:slab_"..name_stripped
-			local wall = "mcl_walls:"..name_stripped
-			local smooth = "mcl_core:"..name_stripped.."_smooth"
 
-			-- Goes through and checks if the item exists and inserts it into the table
-			if minetest.registered_items[slab] ~= nil then
-				table.insert(cuttable_recipes, slab)
-			end
-			if minetest.registered_items[stair] ~= nil then
-				table.insert(cuttable_recipes, stair)
-			end
-			if minetest.registered_items[wall] ~= nil then
-				table.insert(cuttable_recipes, wall)
-			end
-			if minetest.registered_items[smooth] ~= nil then
-				local smooth_stair = "mcl_stairs:stair_"..name_stripped.."_smooth"
-				local smooth_slab = "mcl_stairs:slab_"..name_stripped.."_smooth"
-
-				table.insert(cuttable_recipes, smooth)
-				if minetest.registered_items[smooth_slab] ~= nil then
-					table.insert(cuttable_recipes, smooth_slab)
-				end
-				if minetest.registered_items[smooth_stair] ~= nil then
-					table.insert(cuttable_recipes, smooth_stair)
-				end
-			end
-		end
-		meta:set_string("formspec", show_stonecutter_formspec(cuttable_recipes))
+		meta:set_string("formspec", show_stonecutter_formspec(name))
 	else
 		meta:set_string("formspec", show_stonecutter_formspec(nil))
 	end

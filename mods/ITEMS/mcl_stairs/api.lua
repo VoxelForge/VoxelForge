@@ -102,7 +102,7 @@ function mcl_stairs.register_stair(subname, recipeitem, groups, images, descript
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		groups = groups,
+		groups = table.merge(groups,{stair = 1}),
 		sounds = sounds,
 		selection_box = {
 			type = "fixed",
@@ -152,6 +152,7 @@ function mcl_stairs.register_stair(subname, recipeitem, groups, images, descript
 		end,
 		_mcl_blast_resistance = blast_resistance,
 		_mcl_hardness = hardness,
+		_mcl_stonecutter_recipes = {recipeitem},
 	})
 
 	if recipeitem then
@@ -279,7 +280,10 @@ function mcl_stairs.register_slab(subname, recipeitem, groups, images, descripti
 		end,
 	}
 
-	minetest.register_node(":"..lower_slab, slabdef)
+	minetest.register_node(":"..lower_slab, table.merge(slabdef,{
+		--_mcl_stonecutter_recipes={recipeitem},
+		groups = table.merge(groups,{slab = 1}),
+	}))
 
 	-- Register the upper slab.
 	-- Using facedir is not an option, as this would rotate the textures as well and would make
