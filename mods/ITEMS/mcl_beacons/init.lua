@@ -86,6 +86,14 @@ local function get_beacon_beam(glass_nodename)
 	return pallete_order[glass_string]
 end
 
+local function set_node_if_clear(pos,node)
+	local tn = minetest.get_node(pos)
+	local def = minetest.registered_nodes[tn.name]
+	if tn.name == "air" or (def and def.buildable_to) then
+		minetest.set_node(pos,node)
+	end
+end
+
 minetest.register_node("mcl_beacons:beacon_beam", {
 	tiles = {"blank.png^[noalpha^[colorize:#b8bab9"},
 	drawtype = "nodebox",
@@ -372,13 +380,13 @@ minetest.register_abm{
 
 		if node_below.name ~= "mcl_beacons:beacon" and minetest.get_item_group(node_below.name,"material_glass") == 0 and node_below.name ~= "mcl_beacons:beacon_beam" then
 			if minetest.get_node({x=pos.x,y=pos.y-2,z=pos.z}).name == "mcl_beacons:beacon" then
-				minetest.set_node({x=pos.x,y=pos.y-1,z=pos.z},{name="mcl_beacons:beacon_beam",param2=0})
+				set_node_if_clear({x=pos.x,y=pos.y-1,z=pos.z},{name="mcl_beacons:beacon_beam",param2=0})
 			end
 			remove_beacon_beam(pos)
 		elseif node_above.name == "air" or (node_above.name == "mcl_beacons:beacon_beam" and node_above.param2 ~= node_current.param2) then
-			minetest.set_node({x=pos.x,y=pos.y+1,z=pos.z},{name="mcl_beacons:beacon_beam",param2=node_current.param2})
+			set_node_if_clear({x=pos.x,y=pos.y+1,z=pos.z},{name="mcl_beacons:beacon_beam",param2=node_current.param2})
 		elseif minetest.get_item_group(node_above.name, "glass") ~= 0 or minetest.get_item_group(node_above.name,"material_glass") ~= 0 then
-			minetest.set_node({x=pos.x,y=pos.y+2,z=pos.z},{name="mcl_beacons:beacon_beam",param2=get_beacon_beam(node_above.name)})
+			set_node_if_clear({x=pos.x,y=pos.y+2,z=pos.z},{name="mcl_beacons:beacon_beam",param2=get_beacon_beam(node_above.name)})
 		end
 	end,
 }
