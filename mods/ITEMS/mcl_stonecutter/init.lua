@@ -15,6 +15,13 @@ local recipe_yield = { --maps itemgroup to the respective recipe yield
 	["stair"] = 1,
 }
 
+-- To add a recipe to the stonecutter:
+-- Put the "ingredient" item in the "stonecuttable" group - this determines
+-- if the item is usable on the stonecutter.
+
+-- Add the _mcl_stonecutter_recipes field which is a table consisting of all
+-- ingredient nodes that will result in this node to the node def of the crafted node.
+
 local recipes = {}
 
 minetest.register_on_mods_loaded(function()

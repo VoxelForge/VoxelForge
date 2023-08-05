@@ -281,7 +281,7 @@ function mcl_stairs.register_slab(subname, recipeitem, groups, images, descripti
 	}
 
 	minetest.register_node(":"..lower_slab, table.merge(slabdef,{
-		--_mcl_stonecutter_recipes={recipeitem},
+		_mcl_stonecutter_recipes={recipeitem},
 		groups = table.merge(groups,{slab = 1}),
 	}))
 
