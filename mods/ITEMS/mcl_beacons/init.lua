@@ -370,7 +370,7 @@ minetest.register_abm{
 		local node_above = minetest.get_node({x=pos.x,y=pos.y+1,z=pos.z})
 		local node_current = minetest.get_node(pos)
 
-		if node_below.name == "air" then
+		if node_below.name ~= "mcl_beacons:beacon" and minetest.get_item_group(node_below.name,"material_glass") == 0 and node_below.name ~= "mcl_beacons:beacon_beam" then
 			if minetest.get_node({x=pos.x,y=pos.y-2,z=pos.z}).name == "mcl_beacons:beacon" then
 				minetest.set_node({x=pos.x,y=pos.y-1,z=pos.z},{name="mcl_beacons:beacon_beam",param2=0})
 			end
