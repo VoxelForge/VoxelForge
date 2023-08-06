@@ -5,10 +5,8 @@
 
 local S = minetest.get_translator("mcl_stonecutter")
 
-local recipe_yield = { --maps itemgroup to the respective recipe yield
-	["wall"] = 1,
+local recipe_yield = { --maps itemgroup to the respective recipe yield, default is 1
 	["slab"] = 2,
-	["stair"] = 1,
 }
 
 -- To add a recipe to the stonecutter:
@@ -19,23 +17,22 @@ local recipe_yield = { --maps itemgroup to the respective recipe yield
 -- ingredient nodes that will result in this node to the node def of the crafted node.
 
 local recipes = {}
+local yields = {}
 
 minetest.register_on_mods_loaded(function()
-	for k,v in pairs(minetest.registered_nodes) do
-		if v._mcl_stonecutter_recipes then
-			for kk,vv in pairs(recipe_yield) do
-				if minetest.get_item_group(k,kk) > 0 and minetest.get_item_group(k,"not_in_creative_inventory") == 0 then
-					for _,vvv in pairs(v._mcl_stonecutter_recipes) do
-						if  minetest.get_item_group(vvv,"stonecuttable") > 0 then
-							if not recipes[vvv] then recipes[vvv] = {} end
-							table.insert(recipes[vvv],k.." "..vv)
-						end
-					end
+	for result,resultdef in pairs(minetest.registered_nodes) do
+		if resultdef._mcl_stonecutter_recipes then
+			local yield = 1
+			for k,v in pairs(recipe_yield) do if minetest.get_item_group(result,k) > 0 then yield = v end end
+			for _,recipe in pairs(resultdef._mcl_stonecutter_recipes) do
+				if minetest.get_item_group(recipe,"stonecuttable") > 0 and minetest.get_item_group(result,"not_in_creative_inventory") == 0 then
+					if not recipes[recipe] then recipes[recipe] = {} end
+					table.insert(recipes[recipe],result)
+					yields[result] = yield
 				end
 			end
 		end
 	end
-	minetest.log(dump(recipes))
 end)
 
 -- formspecs
@@ -91,13 +88,9 @@ local function update_stonecutter_slots(meta)
 	end
 
 	-- Checks if the chosen item is a slab or not, if it's a slab set the output to be a stack of 2
-	if new_output ~= '' then
+	if table.indexof(recipes[name],new_output) ~= -1 and new_output ~= '' then
 		local cut_item = ItemStack(new_output)
-		if string.find(new_output, "mcl_stairs:slab_") then
-			cut_item:set_count(2)
-		else
-			cut_item:set_count(1)
-		end
+		cut_item:set_count(yields[new_output])
 		inv:set_stack("output", 1, cut_item)
 	else
 		inv:set_stack("output", 1, "")
