@@ -48,7 +48,7 @@ local function show_stonecutter_formspec(input)
 				y_len = y_len + 1
 				x_len = 1
 			end
-			table.insert(cut_items,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",x_len+1,y_len,1,1, v, "item_button_"..v, v))
+			table.insert(cut_items,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",x_len+1,y_len,1,1, v, "item_button_"..v, ""))
 		end
 	end
 
