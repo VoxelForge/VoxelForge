@@ -98,6 +98,7 @@ local function drop_stonecutter_items(pos, meta)
 			minetest.add_item(p, stack)
 		end
 	end
+	minetest.set_node(pos,{name="air"}) -- make sure no metadata is left behind, otherwise dupey-dupe
 end
 
 minetest.register_node("mcl_stonecutter:stonecutter", {
