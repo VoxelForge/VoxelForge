@@ -48,7 +48,7 @@ local function show_stonecutter_formspec(input)
 				y_len = y_len + 1
 				x_len = 1
 			end
-			table.insert(cut_items,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",x_len+1,y_len,1,1, v, "item_button", v))
+			table.insert(cut_items,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",x_len+1,y_len,1,1, v, "item_button_"..v, v))
 		end
 	end
 
@@ -74,12 +74,11 @@ local function show_stonecutter_formspec(input)
 end
 
 -- Updates the formspec
-local function update_stonecutter_slots(meta)
+local function update_stonecutter_slots(pos,str)
+	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 	local input = inv:get_stack("input", 1)
 	local name = input:get_name()
-	local new_output = meta:get_string("cut_stone")
-
 	if minetest.get_item_group(name,"stonecuttable") > 0 then
 
 		meta:set_string("formspec", show_stonecutter_formspec(name))
@@ -88,9 +87,9 @@ local function update_stonecutter_slots(meta)
 	end
 
 	-- Checks if the chosen item is a slab or not, if it's a slab set the output to be a stack of 2
-	if table.indexof(recipes[name],new_output) ~= -1 and new_output ~= '' then
-		local cut_item = ItemStack(new_output)
-		cut_item:set_count(yields[new_output])
+	if table.indexof(recipes[name],str) ~= -1 and yields[str] then
+		local cut_item = ItemStack(str)
+		cut_item:set_count(yields[str])
 		inv:set_stack("output", 1, cut_item)
 	else
 		inv:set_stack("output", 1, "")
@@ -194,7 +193,7 @@ minetest.register_node("mcl_stonecutter:stonecutter", {
 				end
 			end
 		end
-		update_stonecutter_slots(meta)
+		update_stonecutter_slots(pos)
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
 		local name = player:get_player_name()
@@ -208,8 +207,7 @@ minetest.register_node("mcl_stonecutter:stonecutter", {
 		end
 	end,
 	on_metadata_inventory_put = function(pos, listname, index, stack, player)
-		local meta = minetest.get_meta(pos)
-		update_stonecutter_slots(meta)
+		update_stonecutter_slots(pos)
 	end,
 	on_metadata_inventory_take = function(pos, listname, index, stack, player)
 		local meta = minetest.get_meta(pos)
@@ -224,7 +222,7 @@ minetest.register_node("mcl_stonecutter:stonecutter", {
 		else
 			meta:set_string("cut_stone", nil)
 		end
-		update_stonecutter_slots(meta)
+		update_stonecutter_slots(pos)
 	end,
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -236,8 +234,7 @@ minetest.register_node("mcl_stonecutter:stonecutter", {
 	end,
 	on_rightclick = function(pos, node, player, itemstack)
 		if not player:get_player_control().sneak then
-			local meta = minetest.get_meta(pos)
-			update_stonecutter_slots(meta)
+			update_stonecutter_slots(pos)
 		end
 	end,
 	on_receive_fields = function(pos, formname, fields, sender)
@@ -246,10 +243,16 @@ minetest.register_node("mcl_stonecutter:stonecutter", {
 			minetest.record_protection_violation(pos, sender_name)
 			return
 		end
-		if fields.item_button then
-			local meta = minetest.get_meta(pos)
-			meta:set_string("cut_stone", fields.item_button)
-			update_stonecutter_slots(meta)
+		if fields then
+			for k,v in pairs(fields) do
+				if tostring(k) then
+					local str = k:gsub("^item_button_","")
+					local def = minetest.registered_nodes[str]
+					if def and def._mcl_stonecutter_recipes then
+						update_stonecutter_slots(pos, str)
+					end
+				end
+			end
 		end
 	end,
 })
