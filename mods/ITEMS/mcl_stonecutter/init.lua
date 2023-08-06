@@ -5,10 +5,6 @@
 
 local S = minetest.get_translator("mcl_stonecutter")
 
-local FMT = {
-	item_image_button = "item_image_button[%f,%f;%f,%f;%s;%s;%s]",
-}
-
 local recipe_yield = { --maps itemgroup to the respective recipe yield
 	["wall"] = 1,
 	["slab"] = 2,
@@ -50,7 +46,12 @@ local function show_stonecutter_formspec(input)
 
 	if recipes[input] then
 		for k,v in pairs(recipes[input]) do
-			cut_items[k] = string.format(FMT.item_image_button,x_len+1,y_len,1,1, v, "item_button", v)
+			x_len = x_len + 1
+			if x_len > 5 then
+				y_len = y_len + 1
+				x_len = 1
+			end
+			table.insert(cut_items,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",x_len+1,y_len,1,1, v, "item_button", v))
 		end
 	end
 
