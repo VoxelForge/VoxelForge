@@ -86,8 +86,7 @@ local function update_stonecutter_slots(pos,str)
 		meta:set_string("formspec", show_stonecutter_formspec(nil))
 	end
 
-	-- Checks if the chosen item is a slab or not, if it's a slab set the output to be a stack of 2
-	if table.indexof(recipes[name],str) ~= -1 and yields[str] then
+	if recipes[name] and table.indexof(recipes[name],str) ~= -1 and yields[str] then
 		local cut_item = ItemStack(str)
 		cut_item:set_count(yields[str])
 		inv:set_stack("output", 1, cut_item)
