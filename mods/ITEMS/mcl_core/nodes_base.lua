@@ -246,6 +246,7 @@ minetest.register_node("mcl_core:stonebrick", {
 	is_ground_content = false,
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 1.5,
+	_mcl_stonecutter_recipes = { "mcl_core:stone" },
 })
 
 minetest.register_node("mcl_core:stonebrickcarved", {
@@ -258,6 +259,7 @@ minetest.register_node("mcl_core:stonebrickcarved", {
 	is_ground_content = false,
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 1.5,
+	_mcl_stonecutter_recipes = { "mcl_core:stone", "mcl_core:stonebrick" },
 })
 
 minetest.register_node("mcl_core:stonebrickcracked", {

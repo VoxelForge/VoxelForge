@@ -279,13 +279,13 @@ mcl_stairs.register_stair("quartzblock", "group:quartz_block",
 		{"mcl_nether_quartz_block_top.png", "mcl_nether_quartz_block_bottom.png", "mcl_nether_quartz_block_side.png"},
 		S("Quartz Stairs"),
 		mcl_sounds.node_sound_stone_defaults(), 0.8, 0.8,
-		nil, "mcl_nether:quartz_block")	--fixme: extra parameter from previous release
+		nil,{_mcl_stonecutter_recipes={"mcl_nether:quartz_block"}})
 mcl_stairs.register_slab("quartzblock", "group:quartz_block",
 		{pickaxey=1, material_stone=1},
 		{"mcl_nether_quartz_block_top.png", "mcl_nether_quartz_block_bottom.png", "mcl_nether_quartz_block_side.png"},
 		S("Quartz Slab"),
 		mcl_sounds.node_sound_stone_defaults(), 6, 2,
-		S("Double Quartz Slab"), "mcl_nether:quartz_block")	--fixme: extra parameter from previous release
+		S("Double Quartz Slab"), {_mcl_stonecutter_recipes = {"mcl_nether:quartz_block"}})
 
 mcl_stairs.register_stair_and_slab_simple("quartz_smooth", "mcl_nether:quartz_smooth", S("Smooth Quartz Stairs"), S("Smooth Quartz Slab"), S("Double Smooth Quartz Slab"))
 
