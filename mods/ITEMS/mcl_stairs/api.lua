@@ -70,7 +70,7 @@ end
 -- Register stairs.
 -- Node will be called mcl_stairs:stair_<subname>
 
-function mcl_stairs.register_stair(subname, recipeitem, groups, images, description, sounds, blast_resistance, hardness, corner_stair_texture_override)
+function mcl_stairs.register_stair(subname, recipeitem, groups, images, description, sounds, blast_resistance, hardness, corner_stair_texture_override, overrides)
 
 	if recipeitem then
 		if not images then
@@ -93,7 +93,7 @@ function mcl_stairs.register_stair(subname, recipeitem, groups, images, descript
 	groups.stair = 1
 	groups.building_block = 1
 
-	minetest.register_node(":mcl_stairs:stair_" .. subname, {
+	minetest.register_node(":mcl_stairs:stair_" .. subname, table.merge({
 		description = description,
 		_doc_items_longdesc = S("Stairs are useful to reach higher places by walking over them; jumping is not required. Placing stairs in a corner pattern will create corner stairs. Stairs placed on the ceiling or at the upper half of the side of a block will be placed upside down."),
 		drawtype = "mesh",
@@ -152,8 +152,7 @@ function mcl_stairs.register_stair(subname, recipeitem, groups, images, descript
 		end,
 		_mcl_blast_resistance = blast_resistance,
 		_mcl_hardness = hardness,
-		_mcl_stonecutter_recipes = {recipeitem},
-	})
+	},overrides or {}))
 
 	if recipeitem then
 		minetest.register_craft({
@@ -188,7 +187,7 @@ end
 
 -- double_description: NEW argument, not supported in Minetest Game
 -- double_description: Description of double slab
-function mcl_stairs.register_slab(subname, recipeitem, groups, images, description, sounds, blast_resistance, hardness, double_description)
+function mcl_stairs.register_slab(subname, recipeitem, groups, images, description, sounds, blast_resistance, hardness, double_description, overrides)
 	local lower_slab = "mcl_stairs:slab_"..subname
 	local upper_slab = lower_slab.."_top"
 	local double_slab = lower_slab.."_double"
@@ -218,7 +217,7 @@ function mcl_stairs.register_slab(subname, recipeitem, groups, images, descripti
 	groups.building_block = 1
 	local longdesc = S("Slabs are half as high as their full block counterparts and occupy either the lower or upper part of a block, depending on how it was placed. Slabs can be easily stepped on without needing to jump. When a slab is placed on another slab of the same type, a double slab is created.")
 
-	local slabdef = {
+	local slabdef = table.merge({
 		description = description,
 		_doc_items_longdesc = longdesc,
 		drawtype = "nodebox",
@@ -278,10 +277,9 @@ function mcl_stairs.register_slab(subname, recipeitem, groups, images, descripti
 			end
 			return false
 		end,
-	}
+	},overrides or {})
 
 	minetest.register_node(":"..lower_slab, table.merge(slabdef,{
-		_mcl_stonecutter_recipes={recipeitem},
 		groups = table.merge(groups,{slab = 1}),
 	}))
 
@@ -359,18 +357,18 @@ end
 
 function mcl_stairs.register_stair_and_slab(subname, recipeitem,
 		groups, images, desc_stair, desc_slab, sounds, blast_resistance, hardness,
-		double_description, corner_stair_texture_override)
+		double_description, corner_stair_texture_override,stairs_overrides, slab_overrides)
 	if desc_stair then
-		mcl_stairs.register_stair(subname, recipeitem, groups, images, desc_stair, sounds, blast_resistance, hardness, corner_stair_texture_override)
+		mcl_stairs.register_stair(subname, recipeitem, groups, images, desc_stair, sounds, blast_resistance, hardness, corner_stair_texture_override, stairs_overrides)
 	end
 	if desc_slab then
-		mcl_stairs.register_slab(subname, recipeitem, groups, images, desc_slab, sounds, blast_resistance, hardness, double_description)
+		mcl_stairs.register_slab(subname, recipeitem, groups, images, desc_slab, sounds, blast_resistance, hardness, double_description, slab_overrides)
 	end
 end
 
 -- Very simple registration function
 -- Makes stair and slab out of a source node
-function mcl_stairs.register_stair_and_slab_simple(subname, sourcenode, desc_stair, desc_slab, desc_double_slab, corner_stair_texture_override)
+function mcl_stairs.register_stair_and_slab_simple(subname, sourcenode, desc_stair, desc_slab, desc_double_slab, corner_stair_texture_override, stairs_overrides, slab_overrides)
 	local def = minetest.registered_nodes[sourcenode]
 	local groups = {}
 	-- Only allow a strict set of groups to be added to stairs and slabs for more predictable results
@@ -380,6 +378,5 @@ function mcl_stairs.register_stair_and_slab_simple(subname, sourcenode, desc_sta
 			groups[allowed_groups[a]] = def.groups[allowed_groups[a]]
 		end
 	end
-	mcl_stairs.register_stair_and_slab(subname, sourcenode, groups, def.tiles, desc_stair, desc_slab, def.sounds, def._mcl_blast_resistance, def._mcl_hardness, desc_double_slab, corner_stair_texture_override)
+	mcl_stairs.register_stair_and_slab(subname, sourcenode, groups, def.tiles, desc_stair, desc_slab, def.sounds, def._mcl_blast_resistance, def._mcl_hardness, desc_double_slab, corner_stair_texture_override, stairs_overrides, slab_overrides)
 end
-
