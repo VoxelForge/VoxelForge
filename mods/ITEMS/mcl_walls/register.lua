@@ -62,7 +62,7 @@ mcl_walls.register_wall_def("mcl_walls:prismarine", {
 mcl_walls.register_wall_def("mcl_walls:endbricks", {
 	description = S("End Stone Brick Wall"),
 	source = "mcl_end:end_bricks",
-	_mcl_stonecutter_recipes = {"mcl_end:end_bricks",},
+	_mcl_stonecutter_recipes = {"mcl_end:end_bricks","mcl_end:end_stone"},
 })
 mcl_walls.register_wall_def("mcl_walls:netherbrick", {
 	description = S("Nether Brick Wall"),

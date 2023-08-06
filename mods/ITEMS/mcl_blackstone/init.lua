@@ -85,7 +85,7 @@ minetest.register_node("mcl_blackstone:basalt", {
 	on_place = mcl_util.rotate_axis,
 	on_rotate = on_rotate,
 	is_ground_content = false,
-	groups = {cracky = 3, pickaxey=1, material_stone=1},
+	groups = {cracky = 3, pickaxey=1, material_stone=1, stonecuttable = 1},
 	_mcl_blast_resistance = 4.2,
 	_mcl_hardness = 1.25,
 })
@@ -97,6 +97,7 @@ minetest.register_node("mcl_blackstone:basalt_smooth", {
 	groups = {cracky = 3, pickaxey=1, material_stone=1},
 	_mcl_blast_resistance = 4.2,
 	_mcl_hardness = 1.25,
+	_mcl_stonecutter_recipes = {"mcl_blackstone:basalt"},
 })
 minetest.register_node("mcl_blackstone:blackstone_polished", {
 	description = S("Polished Blackstone"),
@@ -106,6 +107,7 @@ minetest.register_node("mcl_blackstone:blackstone_polished", {
 	groups = {cracky = 3, pickaxey=1, material_stone=1, stonecuttable = 1},
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 2,
+	_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone"},
 })
 minetest.register_node("mcl_blackstone:blackstone_chiseled_polished", {
 	description = S("Chiseled Polished Blackstone"),
@@ -115,6 +117,7 @@ minetest.register_node("mcl_blackstone:blackstone_chiseled_polished", {
 	groups = {cracky = 3, pickaxey=1, material_stone=1},
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 1.5,
+	_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"},
 })
 minetest.register_node("mcl_blackstone:blackstone_brick_polished", {
 	description = S("Polished Blackstone Bricks"),
@@ -124,6 +127,7 @@ minetest.register_node("mcl_blackstone:blackstone_brick_polished", {
 	groups = {cracky = 3, pickaxey=1, material_stone=1},
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 1.5,
+	_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"},
 })
 minetest.register_node("mcl_blackstone:quartz_brick", {
 	description = S("Quartz Bricks"),
@@ -192,9 +196,9 @@ minetest.registered_nodes["mcl_fire:fire"].on_construct=function(pos)
 end
 
 --slabs/stairs
-mcl_stairs.register_stair_and_slab_simple("blackstone", "mcl_blackstone:blackstone", S("Blackstone Stair"), S("Blackstone Slab"), S("Double Blackstone Slab"))
-mcl_stairs.register_stair_and_slab_simple("blackstone_polished", "mcl_blackstone:blackstone_polished", S("Polished Blackstone Stair"), S("Polished Blackstone Slab"), S("Polished Double Blackstone Slab"))
-mcl_stairs.register_stair_and_slab_simple("blackstone_brick_polished", "mcl_blackstone:blackstone_brick_polished", S("Polished Blackstone Brick Stair"), S("Polished Blackstone Brick Slab"), S("Double Polished Blackstone Brick Slab"))
+mcl_stairs.register_stair_and_slab_simple("blackstone", "mcl_blackstone:blackstone", S("Blackstone Stair"), S("Blackstone Slab"), S("Double Blackstone Slab"),nil,{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone"}},{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone"}})
+mcl_stairs.register_stair_and_slab_simple("blackstone_polished", "mcl_blackstone:blackstone_polished", S("Polished Blackstone Stair"), S("Polished Blackstone Slab"), S("Polished Double Blackstone Slab"),nil,{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}},{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}})
+mcl_stairs.register_stair_and_slab_simple("blackstone_brick_polished", "mcl_blackstone:blackstone_brick_polished", S("Polished Blackstone Brick Stair"), S("Polished Blackstone Brick Slab"), S("Double Polished Blackstone Brick Slab"),nil,{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}},{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}})
 minetest.register_alias("mcl_stairs:slab_blackstone_chiseled_polished_top", "mcl_stairs:slab_blackstone_polished_top")
 minetest.register_alias("mcl_stairs:slab_blackstone_chiseled_polished", "mcl_stairs:slab_blackstone_polished")
 minetest.register_alias("mcl_stairs:slab_blackstone_chiseled_polished_double", "mcl_stairs:slab_blackstone_polished_double")
@@ -203,7 +207,11 @@ minetest.register_alias("mcl_stairs:stair_blackstone_chiseled_polished_inner", "
 minetest.register_alias("mcl_stairs:stair_blackstone_chiseled_polished_outer", "mcl_stairs:stair_blackstone_polished_outer")
 
 --Wall
-mcl_walls.register_wall("mcl_blackstone:wall", S("Blackstone Wall"), "mcl_blackstone:blackstone")
+mcl_walls.register_wall_def("mcl_blackstone:wall",{
+	description = S("Blackstone Wall"),
+	source = "mcl_blackstone:blackstone",
+	_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone"},
+})
 
 --lavacooling
 

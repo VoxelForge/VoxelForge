@@ -320,6 +320,7 @@ minetest.register_node("mcl_core:granite_smooth", {
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 1.5,
+	_mcl_stonecutter_recipes = { "mcl_core:granite" },
 })
 
 minetest.register_node("mcl_core:andesite", {
@@ -344,6 +345,7 @@ minetest.register_node("mcl_core:andesite_smooth", {
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 1.5,
+	_mcl_stonecutter_recipes = { "mcl_core:andesite" },
 })
 
 minetest.register_node("mcl_core:diorite", {
@@ -368,6 +370,7 @@ minetest.register_node("mcl_core:diorite_smooth", {
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 1.5,
+	_mcl_stonecutter_recipes = { "mcl_core:diorite" },
 })
 
 -- Grass Block
@@ -613,6 +616,7 @@ minetest.register_node("mcl_core:sandstonesmooth", {
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 2,
+	_mcl_stonecutter_recipes = { "mcl_core:sandstone" },
 })
 
 minetest.register_node("mcl_core:sandstonecarved", {
@@ -625,6 +629,7 @@ minetest.register_node("mcl_core:sandstonecarved", {
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 0.8,
 	_mcl_hardness = 0.8,
+	_mcl_stonecutter_recipes = { "mcl_core:sandstone" },
 })
 
 minetest.register_node("mcl_core:sandstonesmooth2", {
@@ -638,6 +643,7 @@ minetest.register_node("mcl_core:sandstonesmooth2", {
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 2,
+	_mcl_stonecutter_recipes = { "mcl_core:sandstone" },
 })
 
 -- red sandstone --
@@ -676,6 +682,7 @@ minetest.register_node("mcl_core:redsandstonesmooth", {
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 0.8,
 	_mcl_hardness = 0.8,
+	_mcl_stonecutter_recipes = { "mcl_core:redsandstone" },
 })
 
 minetest.register_node("mcl_core:redsandstonecarved", {
@@ -688,6 +695,7 @@ minetest.register_node("mcl_core:redsandstonecarved", {
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 0.8,
 	_mcl_hardness = 0.8,
+	_mcl_stonecutter_recipes = { "mcl_core:redsandstone" },
 })
 
 minetest.register_node("mcl_core:redsandstonesmooth2", {
@@ -700,6 +708,7 @@ minetest.register_node("mcl_core:redsandstonesmooth2", {
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 0.8,
 	_mcl_hardness = 0.8,
+	_mcl_stonecutter_recipes = { "mcl_core:redsandstone" },
 })
 
 ---

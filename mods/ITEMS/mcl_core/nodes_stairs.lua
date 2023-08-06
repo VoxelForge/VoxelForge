@@ -31,8 +31,9 @@ mcl_stairs.register_slab("sandstone", "group:normal_sandstone",
 		S("Sandstone Slab"),
 		mcl_sounds.node_sound_stone_defaults(),	6, 2,
 		S("Double Sandstone Slab"), {_mcl_stonecutter_recipes = {"mcl_core:sandstone"}})
-mcl_stairs.register_stair_and_slab_simple("sandstonesmooth2", "mcl_core:sandstonesmooth2", S("Smooth Sandstone Stairs"), S("Smooth Sandstone Slab"), S("Double Smooth Sandstone Slab"))
-mcl_stairs.register_stair_and_slab_simple("sandstonesmooth", "mcl_core:sandstonesmooth", nil, S("Cut Sandstone Slab"), S("Double Cut Sandstone Slab"))
+
+mcl_stairs.register_stair_and_slab_simple("sandstonesmooth2", "mcl_core:sandstonesmooth2", S("Smooth Sandstone Stairs"), S("Smooth Sandstone Slab"), S("Double Smooth Sandstone Slab"), {_mcl_stonecutter_recipes = {"mcl_core:sandstone"}}, {_mcl_stonecutter_recipes = {"mcl_core:sandstone"}})
+mcl_stairs.register_stair_and_slab_simple("sandstonesmooth", "mcl_core:sandstonesmooth", nil, S("Cut Sandstone Slab"), S("Double Cut Sandstone Slab"), {_mcl_stonecutter_recipes = {"mcl_core:sandstone"}}, {_mcl_stonecutter_recipes = {"mcl_core:sandstone","mcl_core:sandstonesmooth2"}})
 
 mcl_stairs.register_stair("redsandstone", "mcl_core:red_sandstone",
 		{pickaxey=1, material_stone=1},
@@ -46,8 +47,8 @@ mcl_stairs.register_slab("redsandstone", "group:red_sandstone",
 		S("Red Sandstone Slab"),
 		mcl_sounds.node_sound_stone_defaults(), 6, 2,
 		S("Double Red Sandstone Slab"), {_mcl_stonecutter_recipes={"mcl_core:redsandstone"}})
-mcl_stairs.register_stair_and_slab_simple("redsandstonesmooth2", "mcl_core:redsandstonesmooth2", S("Smooth Red Sandstone Stairs"), S("Smooth Red Sandstone Slab"), S("Double Smooth Red Sandstone Slab"))
-mcl_stairs.register_stair_and_slab_simple("redsandstonesmooth", "mcl_core:redsandstonesmooth", nil, S("Cut Red Sandstone Slab"), S("Double Cut Red Sandstone Slab"))
+mcl_stairs.register_stair_and_slab_simple("redsandstonesmooth2", "mcl_core:redsandstonesmooth2", S("Smooth Red Sandstone Stairs"), S("Smooth Red Sandstone Slab"), S("Double Smooth Red Sandstone Slab"), {_mcl_stonecutter_recipes = {"mcl_core:redsandstone"}}, {_mcl_stonecutter_recipes = {"mcl_core:redsandstone"}})
+mcl_stairs.register_stair_and_slab_simple("redsandstonesmooth", "mcl_core:redsandstonesmooth", nil, S("Cut Red Sandstone Slab"), S("Double Cut Red Sandstone Slab"), {_mcl_stonecutter_recipes = {"mcl_core:redsandstone"}}, {_mcl_stonecutter_recipes = {"mcl_core:redsandstone","mcl_core:redsandstonesmooth2"}})
 
 -- Intentionally not group:stonebrick because of mclx_stairs
 mcl_stairs.register_stair("stonebrick", "mcl_core:stonebrick",
@@ -68,46 +69,53 @@ mcl_stairs.register_slab("andesite_smooth", "mcl_core:andesite_smooth",
 		{"mcl_core_andesite_smooth.png", "mcl_core_andesite_smooth.png", "mcl_stairs_andesite_smooth_slab.png"},
 		S("Polished Andesite Slab"),
 		nil, 6, nil,
-		S("Double Polished Andesite Slab"))
+		S("Double Polished Andesite Slab"),
+		{_mcl_stonecutter_recipes = { "mcl_core:andesite_smooth", "mcl_core:andesite" }})
 mcl_stairs.register_stair("andesite_smooth", "mcl_core:andesite_smooth",
 		{pickaxey=1},
 		{"mcl_stairs_andesite_smooth_slab.png", "mcl_core_andesite_smooth.png", "mcl_core_andesite_smooth.png", "mcl_core_andesite_smooth.png", "mcl_core_andesite_smooth.png", "mcl_stairs_andesite_smooth_slab.png"},
 		S("Polished Andesite Stairs"),
 		nil, 6, nil,
-		"woodlike")
+		"woodlike",
+		{_mcl_stonecutter_recipes = { "mcl_core:andesite_smooth", "mcl_core:andesite" }})
 
 mcl_stairs.register_slab("granite_smooth", "mcl_core:granite_smooth",
 		{pickaxey=1},
 		{"mcl_core_granite_smooth.png", "mcl_core_granite_smooth.png", "mcl_stairs_granite_smooth_slab.png"},
 		S("Polished Granite Slab"),
 		nil, 6, nil,
-		S("Double Polished Granite Slab"))
+		S("Double Polished Granite Slab"),
+		{_mcl_stonecutter_recipes = { "mcl_core:granite_smooth", "mcl_core:granite" }})
 mcl_stairs.register_stair("granite_smooth", "mcl_core:granite_smooth",
 		{pickaxey=1},
 		{"mcl_stairs_granite_smooth_slab.png", "mcl_core_granite_smooth.png", "mcl_core_granite_smooth.png", "mcl_core_granite_smooth.png", "mcl_core_granite_smooth.png", "mcl_stairs_granite_smooth_slab.png"},
 		S("Polished Granite Stairs"),
 		nil, 6, nil,
-		"woodlike")
+		"woodlike",
+		{_mcl_stonecutter_recipes = { "mcl_core:granite_smooth", "mcl_core:granite" }})
 
 mcl_stairs.register_slab("diorite_smooth", "mcl_core:diorite_smooth",
 		{pickaxey=1},
 		{"mcl_core_diorite_smooth.png", "mcl_core_diorite_smooth.png", "mcl_stairs_diorite_smooth_slab.png"},
 		S("Polished Diorite Slab"),
 		nil, 6, nil,
-		S("Double Polished Diorite Slab"))
+		S("Double Polished Diorite Slab"),
+		{_mcl_stonecutter_recipes = { "mcl_core:diorite_smooth", "mcl_core:diorite" }})
 mcl_stairs.register_stair("diorite_smooth", "mcl_core:diorite_smooth",
 		{pickaxey=1},
 		{"mcl_stairs_diorite_smooth_slab.png", "mcl_core_diorite_smooth.png", "mcl_core_diorite_smooth.png", "mcl_core_diorite_smooth.png", "mcl_core_diorite_smooth.png", "mcl_stairs_diorite_smooth_slab.png"},
 		S("Polished Diorite Stairs"),
 		nil, 6, nil,
-		"woodlike")
+		"woodlike",
+		{_mcl_stonecutter_recipes = { "mcl_core:diorite_smooth", "mcl_core:diorite" }})
 
 mcl_stairs.register_stair("stonebrickmossy", "mcl_core:stonebrickmossy",
 		{pickaxey=1},
 		{"mcl_core_stonebrick_mossy.png"},
 		S("Mossy Stone Brick Stairs"),
 		mcl_sounds.node_sound_stone_defaults(), 6, 1.5,
-		nil)
+		nil,
+		{ _mcl_stonecutter_recipes = { "mcl_core:stonebrickmossy" }})
 
 mcl_stairs.register_slab("stonebrickmossy", "mcl_core:stonebrickmossy",
 		{pickaxey=1},

@@ -13,7 +13,7 @@ minetest.register_node("mcl_end:end_stone", {
 	_doc_items_longdesc = doc.sub.items.temp.build,
 	tiles = {"mcl_end_end_stone.png"},
 	stack_max = 64,
-	groups = {pickaxey=1, building_block=1, material_stone=1},
+	groups = {pickaxey=1, building_block=1, material_stone=1, stonecuttable = 1},
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	after_dig_node = mcl_end.check_detach_chorus_plant,
 	_mcl_blast_resistance = 9,
@@ -30,6 +30,7 @@ minetest.register_node("mcl_end:end_bricks", {
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 9,
 	_mcl_hardness = 3,
+	_mcl_stonecutter_recipes = {"mcl_end:end_stone"},
 })
 
 minetest.register_node("mcl_end:purpur_block", {
@@ -185,20 +186,20 @@ minetest.register_node("mcl_end:dragon_egg", {
 })
 
 
-mcl_stairs.register_stair_and_slab_simple("end_bricks", "mcl_end:end_bricks", S("End Stone Brick Stairs"), S("End Stone Brick Slab"), S("Double End Stone Brick Slab"))
+mcl_stairs.register_stair_and_slab_simple("end_bricks", "mcl_end:end_bricks", S("End Stone Brick Stairs"), S("End Stone Brick Slab"), S("Double End Stone Brick Slab"),nil,{_mcl_stonecutter_recipes = {"mcl_end:end_bricks","mcl_end:end_stone"}},{_mcl_stonecutter_recipes = {"mcl_end:end_bricks","mcl_end:end_stone"}})
 
 mcl_stairs.register_stair("purpur_block", "group:purpur_block",
 		{pickaxey=1, material_stone=1},
 		{"mcl_end_purpur_block.png"},
 		S("Purpur Stairs"),
 		mcl_sounds.node_sound_stone_defaults(),	6, 1.5,
-		nil)
+		nil,{_mcl_stonecutter_recipes = {"mcl_end:purpur_block"}})
 mcl_stairs.register_slab("purpur_block", "group:purpur_block",
 		{pickaxey=1, material_stone=1},
 		{"mcl_end_purpur_block.png"},
 		S("Purpur Slab"),
 		mcl_sounds.node_sound_stone_defaults(),	6, 2,
-		S("Double Purpur Slab"))
+		S("Double Purpur Slab"),{_mcl_stonecutter_recipes = {"mcl_end:purpur_block"}})
 
 -- Crafting recipes
 minetest.register_craft({

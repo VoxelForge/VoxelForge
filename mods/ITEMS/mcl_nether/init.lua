@@ -245,6 +245,7 @@ minetest.register_node("mcl_nether:quartz_chiseled", {
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 0.8,
 	_mcl_hardness = 0.8,
+	_mcl_stonecutter_recipes = { "mcl_nether:quartz_block" },
 })
 
 minetest.register_node("mcl_nether:quartz_pillar", {
@@ -260,6 +261,7 @@ minetest.register_node("mcl_nether:quartz_pillar", {
 	on_rotate = on_rotate,
 	_mcl_blast_resistance = 0.8,
 	_mcl_hardness = 0.8,
+	_mcl_stonecutter_recipes = { "mcl_nether:quartz_block" },
 })
 minetest.register_node("mcl_nether:quartz_smooth", {
 	description = S("Smooth Quartz"),
@@ -271,6 +273,7 @@ minetest.register_node("mcl_nether:quartz_smooth", {
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 0.8,
 	_mcl_hardness = 0.8,
+	_mcl_stonecutter_recipes = { "mcl_nether:quartz_block" },
 })
 
 
@@ -287,7 +290,7 @@ mcl_stairs.register_slab("quartzblock", "group:quartz_block",
 		mcl_sounds.node_sound_stone_defaults(), 6, 2,
 		S("Double Quartz Slab"), {_mcl_stonecutter_recipes = {"mcl_nether:quartz_block"}})
 
-mcl_stairs.register_stair_and_slab_simple("quartz_smooth", "mcl_nether:quartz_smooth", S("Smooth Quartz Stairs"), S("Smooth Quartz Slab"), S("Double Smooth Quartz Slab"))
+mcl_stairs.register_stair_and_slab_simple("quartz_smooth", "mcl_nether:quartz_smooth", S("Smooth Quartz Stairs"), S("Smooth Quartz Slab"), S("Double Smooth Quartz Slab"),{_mcl_stonecutter_recipes = {"mcl_nether:quartz_smooth"}})
 
 mcl_stairs.register_stair_and_slab("nether_brick", "mcl_nether:nether_brick",
 		{pickaxey=1, material_stone=1},
@@ -295,14 +298,14 @@ mcl_stairs.register_stair_and_slab("nether_brick", "mcl_nether:nether_brick",
 		S("Nether Brick Stairs"),
 		S("Nether Brick Slab"),
 		mcl_sounds.node_sound_stone_defaults(), 6, 2,
-		S("Double Nether Brick Slab"), nil)
+		S("Double Nether Brick Slab"),nil, {_mcl_stonecutter_recipes = { "mcl_nether:nether_brick" }},{_mcl_stonecutter_recipes = { "mcl_nether:nether_brick" }})
 mcl_stairs.register_stair_and_slab("red_nether_brick", "mcl_nether:red_nether_brick",
 		{pickaxey=1, material_stone=1},
 		{"mcl_nether_red_nether_brick.png"},
 		S("Red Nether Brick Stairs"),
 		S("Red Nether Brick Slab"),
 		mcl_sounds.node_sound_stone_defaults(), 6, 2,
-		S("Double Red Nether Brick Slab"), nil)
+		S("Double Red Nether Brick Slab"),nil, {_mcl_stonecutter_recipes = { "mcl_nether:red_nether_brick" }},{_mcl_stonecutter_recipes = { "mcl_nether:red_nether_brick" },})
 
 -- Nether Brick Fence (without fence gate!)
 mcl_fences.register_fence("nether_brick_fence", S("Nether Brick Fence"), "mcl_fences_fence_nether_brick.png", {pickaxey=1, deco_block=1, fence_nether_brick=1}, 2, 30, {"group:fence_nether_brick"}, mcl_sounds.node_sound_stone_defaults())
