@@ -3239,18 +3239,18 @@ local function register_decorations()
 		flags = "all_ceilings",
 		biomes = lushcaves,
 	})
-	--[[
+
 	minetest.register_decoration({
 		decoration = "mcl_lush_caves:spore_blossom",
 		deco_type = "simple",
-		place_on = {"mcl_lush_caves:moss","group:material_stone"},
+		place_on = {"mcl_lush_caves:moss"},
 		spawn_by = {"air"},
 		num_spawn_by = 4,
-		sidelen = 16,
-		fill_ratio = 0,
-		flags = "place_center_x, place_center_z, force_placement, all_ceilings",
-		biomes = { "LushCaves_underground", "LushCaves_ocean", "LushCaves_deep_ocean" },
-	})--]]
+		fill_ratio = 0.1,
+		param2 = 4,
+		flags = "all_ceilings",
+		biomes = lushcaves_underground,
+	})
 
 	minetest.register_decoration({
 		decoration = "mcl_lush_caves:moss_carpet",
