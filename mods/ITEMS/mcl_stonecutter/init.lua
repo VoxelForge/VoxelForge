@@ -48,7 +48,6 @@ local function show_stonecutter_formspec(input)
 	local formspec = "size[9,8.75]"..
 	"label[0,4.0;"..minetest.formspec_escape(minetest.colorize("#313131", S("Inventory"))).."]"..
 	"label[1,0.1;"..minetest.formspec_escape(minetest.colorize("#313131", S("Stone Cutter"))).."]"..
-	"list[context;main;0,0;8,4;]"..
 	"list[current_player;main;0,4.5;9,3;9]"..
 	mcl_formspec.get_itemslot_bg(0,4.5,9,3)..
 	"list[current_player;main;0,7.74;9,1;]"..
