@@ -3169,6 +3169,7 @@ local function register_decorations()
 
 
 	local lushcaves = { "LushCaves", "LushCaves_underground", "LushCaves_ocean", "LushCaves_deep_ocean"}
+	local lushcaves_underground = { "LushCaves_underground", "LushCaves_ocean", "LushCaves_deep_ocean"}
 
 	minetest.register_decoration({
 		decoration = "mcl_lush_caves:moss",
@@ -3196,7 +3197,7 @@ local function register_decorations()
 		height_max = 4,
 		fill_ratio = 0.2,
 		flags = "all_ceilings",
-		biomes = lushcaves,
+		biomes = lushcaves_underground,
 	})
 	minetest.register_decoration({
 		decoration = "mcl_lush_caves:cave_vines_lit",
@@ -3206,7 +3207,7 @@ local function register_decorations()
 		height_max = 4,
 		fill_ratio = 0.3,
 		flags = "all_ceilings",
-		biomes = lushcaves,
+		biomes = lushcaves_underground,
 	})
 
 	minetest.register_decoration({
@@ -3217,20 +3218,21 @@ local function register_decorations()
 		height_max = 4,
 		fill_ratio = 0.1,
 		flags = "all_ceilings",
-		biomes = lushcaves,
+		biomes = lushcaves_underground,
 	})
 	minetest.register_decoration({
-		decoration = "mcl_lush_caves:cave_vines_lit",
+		decoration = "mcl_lush_caves:cave_vines",
 		deco_type = "simple",
 		place_on = {"mcl_lush_caves:cave_vines_lit","mcl_lush_caves:cave_vines"},
 		height = 1,
-		height_max = 4,
+		height_max = 5,
 		fill_ratio = 0.1,
 		flags = "all_ceilings",
-		biomes = lushcaves,
+		biomes = lushcaves_underground,
 	})
 
 	minetest.register_decoration({
+		place_on = {"mcl_lush_caves:rooted_dirt"},
 		decoration = "mcl_lush_caves:hanging_roots",
 		deco_type = "simple",
 		fill_ratio = 10,
