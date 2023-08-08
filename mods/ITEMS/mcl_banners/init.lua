@@ -482,7 +482,7 @@ for colorid, colortab in pairs(mcl_banners.colors) do
 
 						-- Washing off reduces the water level by 1.
 						-- (It is possible to waste water if the banner had 0 layers.)
-						minetest.set_node(pointed_thing.under, {name=new_node})
+						minetest.swap_node(pointed_thing.under, {name=new_node})
 
 						-- Play sound (from mcl_potions mod)
 						minetest.sound_play("mcl_potions_bottle_pour", {pos=pointed_thing.under, gain=0.5, max_hear_range=16}, true)
