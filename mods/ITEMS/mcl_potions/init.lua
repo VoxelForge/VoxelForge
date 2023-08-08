@@ -80,25 +80,25 @@ minetest.register_craftitem("mcl_potions:glass_bottle", {
 				end
 				if node.name == "mcl_cauldrons:cauldron_3" then
 					get_water = true
-					minetest.set_node(pointed_thing.under, {name="mcl_cauldrons:cauldron_2"})
+					minetest.swap_node(pointed_thing.under, {name="mcl_cauldrons:cauldron_2"})
 				elseif node.name == "mcl_cauldrons:cauldron_2" then
 					get_water = true
-					minetest.set_node(pointed_thing.under, {name="mcl_cauldrons:cauldron_1"})
+					minetest.swap_node(pointed_thing.under, {name="mcl_cauldrons:cauldron_1"})
 				elseif node.name == "mcl_cauldrons:cauldron_1" then
 					get_water = true
-					minetest.set_node(pointed_thing.under, {name="mcl_cauldrons:cauldron"})
+					minetest.swap_node(pointed_thing.under, {name="mcl_cauldrons:cauldron"})
 				elseif node.name == "mcl_cauldrons:cauldron_3r" then
 					get_water = true
 					river_water = true
-					minetest.set_node(pointed_thing.under, {name="mcl_cauldrons:cauldron_2r"})
+					minetest.swap_node(pointed_thing.under, {name="mcl_cauldrons:cauldron_2r"})
 				elseif node.name == "mcl_cauldrons:cauldron_2r" then
 					get_water = true
 					river_water = true
-					minetest.set_node(pointed_thing.under, {name="mcl_cauldrons:cauldron_1r"})
+					minetest.swap_node(pointed_thing.under, {name="mcl_cauldrons:cauldron_1r"})
 				elseif node.name == "mcl_cauldrons:cauldron_1r" then
 					get_water = true
 					river_water = true
-					minetest.set_node(pointed_thing.under, {name="mcl_cauldrons:cauldron"})
+					minetest.swap_node(pointed_thing.under, {name="mcl_cauldrons:cauldron"})
 				end
 			end
 			if get_water then
