@@ -245,15 +245,15 @@ if mcl_weather.allow_abm then
 			-- Rain is equivalent to a water bottle
 			if mcl_weather.rain.raining and mcl_weather.is_outdoor(pos) and mcl_weather.has_rain(pos) then
 				if node.name == "mcl_cauldrons:cauldron" then
-					minetest.set_node(pos, {name="mcl_cauldrons:cauldron_1"})
+					minetest.swap_node(pos, {name="mcl_cauldrons:cauldron_1"})
 				elseif node.name == "mcl_cauldrons:cauldron_1" then
-					minetest.set_node(pos, {name="mcl_cauldrons:cauldron_2"})
+					minetest.swap_node(pos, {name="mcl_cauldrons:cauldron_2"})
 				elseif node.name == "mcl_cauldrons:cauldron_2" then
-					minetest.set_node(pos, {name="mcl_cauldrons:cauldron_3"})
+					minetest.swap_node(pos, {name="mcl_cauldrons:cauldron_3"})
 				elseif node.name == "mcl_cauldrons:cauldron_1r" then
-					minetest.set_node(pos, {name="mcl_cauldrons:cauldron_2r"})
+					minetest.swap_node(pos, {name="mcl_cauldrons:cauldron_2r"})
 				elseif node.name == "mcl_cauldrons:cauldron_2r" then
-					minetest.set_node(pos, {name="mcl_cauldrons:cauldron_3r"})
+					minetest.swap_node(pos, {name="mcl_cauldrons:cauldron_3r"})
 				end
 			end
 		end
