@@ -512,9 +512,8 @@ function mob_class:boom(pos, strength, fire)
 	else
 		mcl_mobs.mob_class.safe_boom(self, pos, strength) --need to call it this way bc self is the "arrow" object here
 	end
-
-	-- delete the object after it punched the player to avoid nil entities in e.g. mcl_shields!!
-	self.object:remove()
+	-- mark object as removed to prevent on_step continuing to run
+	self.removed = true
 end
 
 -- deal damage and effects when mob punched

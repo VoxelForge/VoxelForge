@@ -347,7 +347,7 @@ end
 
 function mob_class:on_step(dtime)
 	local pos = self.object:get_pos()
-	if not pos then return end
+	if not pos or self.removed then return end
 
 	if self:check_despawn(pos, dtime) then return true end
 
