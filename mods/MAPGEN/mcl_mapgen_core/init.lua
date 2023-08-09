@@ -24,6 +24,8 @@ dofile(modpath.."/ores.lua")
 local mg_name = minetest.get_mapgen_setting("mg_name")
 local superflat = mg_name == "flat" and minetest.get_mapgen_setting("mcl_superflat_classic") == "true"
 
+local enable_mt_dungeons = minetest.settings:get_bool("mcl_enable_mt_dungeons",false)
+
 -- Content IDs
 local c_bedrock = minetest.get_content_id("mcl_core:bedrock")
 local c_void = minetest.get_content_id("mcl_core:void")
@@ -41,6 +43,8 @@ if superflat then
 	mg_flags.decorations = false
 	minetest.set_mapgen_setting("mgflat_spflags", "nolakes,nohills", true)
 end
+
+mg_flags.dungeons = enable_mt_dungeons
 
 for _,mg in pairs({"v7","valleys","carpathian","v5","fractal"}) do
 	if mg_name == mg then

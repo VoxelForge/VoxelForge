@@ -225,6 +225,9 @@ mcl_extended_pet_control (Extended pet control) bool false
 # Enable stairs out of wood bark
 mcl_bark_stairs (Bark Stairs) bool true
 
+# Enable minetest mapgen dungeons
+mcl_enable_mt_dungeons (Enable native mt dungeons) bool false
+
 [Debugging]
 # If enabled, this will show the itemstring of an item in the description.
 mcl_item_id_debug (Item ID Debug) bool false
