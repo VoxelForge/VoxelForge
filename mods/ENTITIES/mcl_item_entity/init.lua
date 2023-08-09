@@ -20,6 +20,8 @@ local has_awards = minetest.get_modpath("awards")
 
 local mcl_item_entity = {}
 
+local MULTIPLE_AWARDS_DELAY = 3 --Delay when picking up 1 item prouces multiple awards.
+
 --basic settings
 local item_drop_settings                 = {} --settings table
 item_drop_settings.dug_buffer            = 0.65 -- the warm up period before a dug item can be collected
@@ -41,14 +43,14 @@ end
 
 local registered_pickup_achievement = {}
 
---TODO: remove limitation of 1 award per itemname
 function mcl_item_entity.register_pickup_achievement(itemname, award)
 	if not has_awards then
 		minetest.log("warning", "[mcl_item_entity] Trying to register pickup achievement ["..award.."] for ["..itemname.."] while awards missing")
-	elseif registered_pickup_achievement[itemname] then
-		minetest.log("error", "[mcl_item_entity] Trying to register already existing pickup achievement ["..award.."] for ["..itemname.."]")
 	else
-		registered_pickup_achievement[itemname] = award
+		if not registered_pickup_achievement[itemname] then
+			registered_pickup_achievement[itemname] = {}
+		end
+		table.insert(registered_pickup_achievement[itemname], award)
 	end
 end
 
@@ -65,9 +67,13 @@ local function check_pickup_achievements(object, player)
 	if has_awards then
 		local itemname = ItemStack(object:get_luaentity().itemstring):get_name()
 		local playername = player:get_player_name()
-		for name,award in pairs(registered_pickup_achievement) do
-			if itemname == name or minetest.get_item_group(itemname, name) ~= 0 then
-				awards.unlock(playername, award)
+		for name,awardstable in pairs(registered_pickup_achievement) do
+			for k,award in pairs(awardstable) do
+				if itemname == name or minetest.get_item_group(itemname, name) ~= 0 then
+					minetest.after((k-1) * MULTIPLE_AWARDS_DELAY, function(playername,award)
+						awards.unlock(playername, award)
+					end,playername,award)
+				end
 			end
 		end
 	end
