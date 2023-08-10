@@ -223,12 +223,11 @@ awards.register_achievement("mcl:onARail", {
 	group = "Adventure",
 })
 
--- Triggered in mcl_bows
+-- Triggered in mobs_mc/skeleton+stray.lua
 awards.register_achievement("mcl:snipeSkeleton", {
 	title = S("Sniper Duel"),
-	-- TODO: This achievement should be for killing, not hitting
 	-- TODO: The range should be 50, not 20. Nerfed because of reduced bow range
-	description = S("Hit a skeleton, wither skeleton or stray by bow and arrow from a distance of at least 20 meters."),
+	description = S("Kill a skeleton, wither skeleton or stray by bow and arrow from a distance of at least 20 meters."),
 	icon = "mcl_bows_bow.png",
 	type = "Challenge",
 	group = "Adventure",
