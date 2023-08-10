@@ -29,6 +29,11 @@ local function check_spot(pos)
 	return false
 end
 local pr = PseudoRandom(os.time()*(-334))
+
+local messy_textures = {
+	grey = "mobs_mc_shulker_gray.png",
+}
+
 -- animation 45-80 is transition between passive and attack stance
 mcl_mobs.register_mob("mobs_mc:shulker", {
 	description = S("Shulker"),
@@ -76,6 +81,23 @@ mcl_mobs.register_mob("mobs_mc:shulker", {
 	view_range = 16,
 	fear_height = 0,
 	noyaw = true,
+	on_rightclick = function(self,clicker)
+		if clicker:is_player() then
+			local wstack = clicker:get_wielded_item()
+			if minetest.get_item_group(wstack:get_name(),"dye") > 0 then
+				local color = minetest.registered_items[wstack:get_name()]._color
+				local tx = "mobs_mc_shulker_"..color..".png"
+				if messy_textures[color] then tx = messy_textures[color] end
+				self.object:set_properties({
+					textures = { tx },
+				})
+				if not minetest.is_creative_enabled(clicker:get_player_name()) then
+					wstack:take_item()
+					clicker:set_wielded_item(wstack)
+				end
+			end
+		end
+	end,
 	do_custom = function(self,dtime)
 		local pos = self.object:get_pos()
 		if math.floor(self.object:get_yaw()) ~=0 then
