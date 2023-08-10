@@ -138,13 +138,6 @@ function mcl_mobs.register_mob(name, def)
 		end
 	end
 
-	local collisionbox = def.collisionbox or {-0.25, -0.25, -0.25, 0.25, 0.25, 0.25}
-	-- Workaround for <https://github.com/minetest/minetest/issues/5966>:
-	-- Increase upper Y limit to avoid mobs glitching through solid nodes.
-	-- FIXME: Remove workaround if it's no longer needed.
-	if collisionbox[5] < 0.79 then
-		collisionbox[5] = 0.79
-	end
 	local final_def = {
 		initial_properties = {
 			-- damage_texture_modifier = "^[colorize:#d42222:175", --FIXME: this does not appear to work right now. Custom code for this in physics.lua:433...
@@ -183,7 +176,7 @@ function mcl_mobs.register_mob(name, def)
 		breath_max = def.breath_max or 15,
 		breathes_in_water = def.breathes_in_water or false,
 		physical = true,
-		collisionbox = collisionbox,
+		collisionbox = def.collisionbox or {-0.25, -0.25, -0.25, 0.25, 0.25, 0.25},
 		selectionbox = def.selectionbox or def.collisionbox,
 		visual = def.visual,
 		visual_size = def.visual_size or {x = 1, y = 1},
