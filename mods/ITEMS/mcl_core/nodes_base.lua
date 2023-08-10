@@ -433,7 +433,6 @@ minetest.register_node("mcl_core:grass_path", {
 	_mcl_hardness = 0.6,
 })
 
--- TODO: Add particles
 minetest.register_node("mcl_core:mycelium", {
 	description = S("Mycelium"),
 	_doc_items_longdesc = S("Mycelium is a type of dirt and the ideal soil for mushrooms. Unlike other dirt-type blocks, it can not be turned into farmland with a hoe. In light, mycelium slowly spreads over nearby dirt. Under an opaque block or a liquid, it eventually turns back into dirt."),
