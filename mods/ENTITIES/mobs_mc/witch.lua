@@ -97,7 +97,15 @@ mcl_mobs.register_arrow("mobs_mc:potion_arrow", {
 
 	-- node hit, bursts into flame
 	hit_node = function(self, pos, node)
-		--TODO
+		local p = vector.offset(pos,0,1,0)
+		if minetest.get_node(p).name == "air" then
+			minetest.set_node(p, {name = "mcl_fire:fire"})
+		else
+			local p = minetest.find_node_near(p,1,{"air"})
+			if p then
+				minetest.set_node(p, {name = "mcl_fire:fire"})
+			end
+		end
 	end
 })
 
