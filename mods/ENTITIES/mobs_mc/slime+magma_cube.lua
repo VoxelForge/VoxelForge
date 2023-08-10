@@ -1,8 +1,5 @@
 --License for code WTFPL and otherwise stated in readmes
 
--- FIXME: Slimes should spawn only in "slime chunks" which make up only
--- 10% of the map.
---
 local S = minetest.get_translator("mobs_mc")
 
 local function in_slime_chunk(pos)
