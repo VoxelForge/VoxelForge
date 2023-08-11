@@ -140,7 +140,6 @@ function mcl_mobs.register_mob(name, def)
 
 	local final_def = {
 		initial_properties = {
-			-- damage_texture_modifier = "^[colorize:#d42222:175", --FIXME: this does not appear to work right now. Custom code for this in physics.lua:433...
 		},
 		use_texture_alpha = def.use_texture_alpha,
 		head_swivel = def.head_swivel or nil, -- bool to activate this function
