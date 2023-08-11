@@ -20,6 +20,7 @@ mcl_mobs.register_mob("mobs_mc:iron_golem", {
 	hp_max = 100,
 	breath_max = -1,
 	collisionbox = {-0.7, -0.01, -0.7, 0.7, 2.69, 0.7},
+	doll_size_override = { x = 0.9, y = 0.9 },
 	visual = "mesh",
 	mesh = "mobs_mc_iron_golem.b3d",
 	head_swivel = "head.control",

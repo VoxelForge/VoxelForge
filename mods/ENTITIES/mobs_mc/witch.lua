@@ -22,6 +22,7 @@ mcl_mobs.register_mob("mobs_mc:witch", {
 	xp_min = 5,
 	xp_max = 5,
 	collisionbox = {-0.3, -0.01, -0.3, 0.3, 1.94, 0.3},
+	doll_size_override = { x = 0.95, y = 0.95 },
 	visual = "mesh",
 	mesh = "mobs_mc_witch.b3d",
 	textures = {

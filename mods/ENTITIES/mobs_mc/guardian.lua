@@ -24,6 +24,7 @@ mcl_mobs.register_mob("mobs_mc:guardian", {
 	damage = 6,
 	reach = 3,
 	collisionbox = {-0.425, 0.25, -0.425, 0.425, 1.1, 0.425},
+	doll_size_override = { x = 0.6, y = 0.6 },
 	visual = "mesh",
 	mesh = "mobs_mc_guardian.b3d",
 	textures = {

@@ -265,6 +265,7 @@ mcl_mobs.register_mob("mobs_mc:enderman", {
 	xp_min = 5,
 	xp_max = 5,
 	collisionbox = {-0.3, -0.01, -0.3, 0.3, 2.89, 0.3},
+	doll_size_override = { x = 0.8, y = 0.8 },
 	visual = "mesh",
 	mesh = "mobs_mc_enderman.b3d",
 	textures = create_enderman_textures(),

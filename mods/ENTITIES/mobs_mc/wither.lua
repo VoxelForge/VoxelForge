@@ -20,6 +20,7 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 	armor = {undead = 80, fleshy = 100},
 	-- This deviates from MC Wiki's size, which makes no sense
 	collisionbox = {-0.9, 0.4, -0.9, 0.9, 2.45, 0.9},
+	doll_size_override = { x = 1.2, y = 1.2 },
 	visual = "mesh",
 	mesh = "mobs_mc_wither.b3d",
 	textures = {

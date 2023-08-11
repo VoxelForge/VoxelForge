@@ -60,6 +60,7 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 	xp_min = 500,
 	xp_max = 500,
 	collisionbox = {-2, 3, -2, 2, 5, 2},
+	doll_size_override = { x = 0.16, y = 0.16 },
 	physical = true,
 	visual = "mesh",
 	mesh = "mobs_mc_dragon.b3d",

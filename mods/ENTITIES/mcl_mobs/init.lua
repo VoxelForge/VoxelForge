@@ -263,6 +263,7 @@ function mcl_mobs.register_mob(name, def)
 		pushable = def.pushable or true,
 
 		-- MCL2 extensions
+		doll_size_override = def.doll_size_override,
 		shooter_avoid_enemy = def.shooter_avoid_enemy,
 		strafes = def.strafes,
 		avoid_distance = def.avoid_distance or 9,

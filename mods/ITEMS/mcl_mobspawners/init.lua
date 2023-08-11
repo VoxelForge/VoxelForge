@@ -31,18 +31,6 @@ local function spawn_doll(pos)
 	return minetest.add_entity({x=pos.x, y=pos.y-0.3, z=pos.z}, "mcl_mobspawners:doll")
 end
 
--- Manually set the doll sizes for large mobs
--- TODO: Relocate this code to mobs_mc
-local doll_size_overrides = {
-	["mobs_mc:guardian"] = { x = 0.6, y = 0.6 },
-	["mobs_mc:guardian_elder"] = { x = 0.72, y = 0.72 },
-	["mobs_mc:enderman"] = { x = 0.8, y = 0.8 },
-	["mobs_mc:iron_golem"] = { x = 0.9, y = 0.9 },
-	["mobs_mc:ghast"] = { x = 1.05, y = 1.05 },
-	["mobs_mc:wither"] = { x = 1.2, y = 1.2 },
-	["mobs_mc:enderdragon"] = { x = 0.16, y = 0.16 },
-	["mobs_mc:witch"] = { x = 0.95, y = 0.95 },
-}
 local spawn_count_overrides = {
 	["mobs_mc:enderdragon"] = 1,
 	["mobs_mc:wither"] = 1,
@@ -56,9 +44,9 @@ local function set_doll_properties(doll, mob)
 	local mobinfo = minetest.registered_entities[mob]
 	if not mobinfo then return end
 	local xs, ys
-	if doll_size_overrides[mob] then
-		xs = doll_size_overrides[mob].x
-		ys = doll_size_overrides[mob].y
+	if mobinfo.doll_size_override then
+		xs = mobinfo.doll_size_override.x
+		ys = mobinfo.doll_size_override.y
 	else
 		xs = mobinfo.visual_size.x * 0.33333
 		ys = mobinfo.visual_size.y * 0.33333
