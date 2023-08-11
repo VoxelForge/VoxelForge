@@ -2406,7 +2406,6 @@ local function register_biomelike_ores()
 	-- Small dirt patches in Extreme Hills M
 	minetest.register_ore({
 		ore_type	= "blob",
-		-- TODO: Should be grass block. But generating this as ore means gras blocks will spawn undeground. :-(
 		ore		= "mcl_core:dirt",
 		wherein		= {"mcl_core:gravel"},
 		clust_scarcity	= 5000,
@@ -2417,6 +2416,16 @@ local function register_biomelike_ores()
 		noise_threshold = 0.2,
 		noise_params = {offset=0, scale=5, spread={x=250, y=250, z=250}, seed=64, octaves=3, persist=0.60},
 		biomes = { "ExtremeHillsM" },
+	})
+	minetest.register_decoration({
+		--this decoration "hack" replaces the top layer of the above ore with grass when under air.
+		deco_type = "simple",
+		place_on = {"mcl_core:dirt"},
+		fill_ratio = 10,
+		biomes = { "ExtremeHillsM" },
+		decoration = "mcl_core:dirt_with_grass",
+		place_offset_y = -1,
+		flags = "force_placement",
 	})
 	-- For a transition from stone to hardened clay in mesa biomes that is not perfectly flat
 	minetest.register_ore({
