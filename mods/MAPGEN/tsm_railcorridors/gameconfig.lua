@@ -23,19 +23,14 @@ function tsm_railcorridors.nodes.corridor_woods_function(pos, node)
 	end
 end
 
--- TODO: Use minecart with chest instead of normal minecart
-tsm_railcorridors.carts = { "mcl_minecarts:minecart" }
+tsm_railcorridors.carts = { "mcl_minecarts:chest_minecart" }
 
-function tsm_railcorridors.on_construct_cart(pos, cart)
-	-- TODO: Fill cart with treasures
-
-	-- This is it? There's this giant hack announced in
-	-- the other file and I grep for the function and it's
-	-- a stub? :)
-
-	-- The path here using some minetest.after hackery was
-	-- deactivated in init.lua - reactivate when this does
-	-- something the function is called RecheckCartHack.
+function tsm_railcorridors.on_construct_cart(pos, cart, pr_carts)
+	local l = cart:get_luaentity()
+	local inv = mcl_entity_invs.load_inv(l,27)
+	local items = tsm_railcorridors.get_treasures(pr_carts)
+	mcl_loot.fill_inventory(inv, "main", items, pr_carts)
+	mcl_entity_invs.save_inv(l)
 end
 
 -- Fallback function. Returns a random treasure. This function is called for chests
