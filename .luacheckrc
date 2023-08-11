@@ -22,6 +22,7 @@ globals = {
 	"playerphysics",
 	"xpanes",
 	"tnt",
+	"tsm_railcorridors",
 	"mcl_achievements",
 	"mcl_amethyst",
 	"mcl_anvils",
