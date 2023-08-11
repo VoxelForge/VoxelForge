@@ -382,7 +382,7 @@ local professions = {
 			{ { "mcl_mobitems:beef", 10, 10 }, E1 },
 			},
 			{
-			--{ { "FIXME: Sweet Berries", 10, 10 }, E1 },
+			{ { "mcl_farming:sweet_berry", 10, 10 }, E1 },
 			},
 		},
 	},
