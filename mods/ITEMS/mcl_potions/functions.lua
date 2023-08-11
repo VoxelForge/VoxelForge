@@ -544,15 +544,7 @@ minetest.register_on_joinplayer( function(player)
 	mcl_potions._reset_player_effects(player, false) -- make sure there are no wierd holdover effects
 	mcl_potions._load_player_effects(player)
 	potions_init_icons(player)
-	-- .after required because player:hud_change doesn't work when called
-	-- in same tick as player:hud_add
-	-- (see <https://github.com/minetest/minetest/pull/9611>)
-	-- FIXME: Remove minetest.after
-	minetest.after(3, function(player)
-		if player and player:is_player() then
-			potions_set_hud(player)
-		end
-	end, player)
+	potions_set_hud(player)
 end)
 
 minetest.register_on_shutdown(function()
