@@ -135,6 +135,7 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 		end
 	end,
 	fire_resistant = true,
+	is_boss = true,
 })
 
 -- dragon fireball (projectile)

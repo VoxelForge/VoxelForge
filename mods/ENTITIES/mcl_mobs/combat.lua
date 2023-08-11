@@ -1107,6 +1107,11 @@ function mob_class:do_states_attack (dtime)
 							full_punch_interval = 1.0,
 							damage_groups = {fleshy = self.damage}
 						}, nil)
+						if self.dealt_effect then
+							mcl_mobs.effect_functions[self.dealt_effect.name](
+								self.attack, self.dealt_effect.factor, self.dealt_effect.dur
+							)
+						end
 					end
 				end
 			else	-- call custom attack every second
