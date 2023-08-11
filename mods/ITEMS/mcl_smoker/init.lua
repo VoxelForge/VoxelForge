@@ -34,10 +34,8 @@ local function active_formspec(fuel_percent, item_percent)
 		mcl_formspec.get_itemslot_bg_v4(0.375, 9.05, 9, 1),
 		"list[current_player;main;0.375,9.05;9,1;]",
 
-		-- Craft guide button temporarily removed due to Minetest bug.
-		-- TODO: Add it back when the Minetest bug is fixed.
-		--"image_button[8,0;1,1;craftguide_book.png;craftguide;]"..
-		--"tooltip[craftguide;"..minetest.formspec_escape(S("Recipe book")).."]"..
+		"image_button[7.85,0.6;1,1;craftguide_book.png;craftguide;]"..
+		"tooltip[craftguide;"..minetest.formspec_escape(S("Recipe book")).."]"..
 
 		"listring[context;dst]",
 		"listring[current_player;main]",
@@ -72,10 +70,8 @@ local inactive_formspec = table.concat({
 	mcl_formspec.get_itemslot_bg_v4(0.375, 9.05, 9, 1),
 	"list[current_player;main;0.375,9.05;9,1;]",
 
-	-- Craft guide button temporarily removed due to Minetest bug.
-	-- TODO: Add it back when the Minetest bug is fixed.
-	--"image_button[8,0;1,1;craftguide_book.png;craftguide;]"..
-	--"tooltip[craftguide;"..minetest.formspec_escape(S("Recipe book")).."]"..
+	"image_button[7.85,0.6;1,1;craftguide_book.png;craftguide;]"..
+	"tooltip[craftguide;"..minetest.formspec_escape(S("Recipe book")).."]"..
 
 	"listring[context;dst]",
 	"listring[current_player;main]",
