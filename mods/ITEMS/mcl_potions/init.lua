@@ -353,6 +353,7 @@ local awkward_table = {
 	["mcl_fishing:pufferfish_raw"] = "mcl_potions:water_breathing",
 	["mcl_mobitems:ghast_tear"] = "mcl_potions:regeneration",
 	["mcl_mobitems:spider_eye"] = "mcl_potions:poison",
+	["mcl_flowers:wither_rose"] = "mcl_potions:withering",
 	["mcl_mobitems:rabbit_foot"] = "mcl_potions:leaping",
 }
 
@@ -370,7 +371,7 @@ local potions = {}
 for i, potion in ipairs({"healing","harming","swiftness","slowness",
 	 "leaping","poison","regeneration","invisibility","fire_resistance",
 	 -- "weakness","strength",
-	 "water_breathing","night_vision"}) do
+	 "water_breathing","night_vision", "withering"}) do
 
 	table.insert(potions, potion)
 
@@ -457,6 +458,36 @@ function mcl_potions.get_alchemy(ingr, pot)
 
 	return false
 end
+
+mcl_mobs.effect_functions["poison"] = mcl_potions.poison_func
+mcl_mobs.effect_functions["regeneration"] = mcl_potions.regeneration_func
+mcl_mobs.effect_functions["invisibility"] = mcl_potions.invisiblility_func
+mcl_mobs.effect_functions["fire_resistance"] = mcl_potions.fire_resistance_func
+mcl_mobs.effect_functions["night_vision"] = mcl_potions.night_vision_func
+mcl_mobs.effect_functions["water_breathing"] = mcl_potions.water_breathing_func
+mcl_mobs.effect_functions["leaping"] = mcl_potions.leaping_func
+mcl_mobs.effect_functions["swiftness"] = mcl_potions.swiftness_func
+mcl_mobs.effect_functions["heal"] = mcl_potions.healing_func
+mcl_mobs.effect_functions["bad_omen"] = mcl_potions.bad_omen_func
+mcl_mobs.effect_functions["withering"] = mcl_potions.withering_func
+
+-- give withering when standing in wither rose
+local etime = 0
+minetest.register_globalstep(function(dtime)
+	etime = dtime + etime
+	if etime < 0.5 then return end
+	etime = 0
+	for _,pl in pairs(minetest.get_connected_players()) do
+		local n = minetest.find_node_near(pl:get_pos(),0.4,"mcl_flowers:wither_rose",true)
+		if n then mcl_potions.withering_func(pl, 1, 2) end
+	end
+	for _,ent in pairs(minetest.luaentities) do
+		if ent.object:get_pos() and ent.is_mob then
+			local n = minetest.find_node_near(ent.object:get_pos(),0.4,"mcl_flowers:wither_rose",true)
+			if n then mcl_potions.withering_func(ent.object, 1, 2) end
+		end
+	end
+end)
 
 mcl_wip.register_wip_item("mcl_potions:night_vision")
 mcl_wip.register_wip_item("mcl_potions:night_vision_plus")

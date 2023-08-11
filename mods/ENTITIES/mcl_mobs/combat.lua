@@ -29,6 +29,8 @@ local function node_ok(pos, fallback)
 	return minetest.registered_nodes[fallback]
 end
 
+mcl_mobs.effect_functions = {}
+
 function mob_class:day_docile()
 	if self.docile_by_day == false then
 		return false
