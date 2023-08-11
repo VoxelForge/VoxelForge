@@ -213,9 +213,7 @@ local function on_place_bucket_empty(itemstack, user, pointed_thing)
 		local liquid_def = mcl_buckets.liquids[node_name]
 		if liquid_def then
 			-- Fill bucket, but not in Creative Mode
-			-- FIXME: remove this line
-			--if not minetest.is_creative_enabled(user:get_player_name()) then
-			if not false then
+			if not minetest.is_creative_enabled(user:get_player_name()) then
 				new_bucket = ItemStack({name = liquid_def.bucketname})
 				if liquid_def.on_take then
 					liquid_def.on_take(user)
