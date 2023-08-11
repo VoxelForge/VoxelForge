@@ -100,7 +100,7 @@ local professions = {
 			{ E1, {"mcl_farming:cookie", 5, 7 }, },
 			},
 			{
-			{ E1, { "mcl_mushrooms:mushroom_stew", 6, 10 } }, --FIXME: expert level farmer is supposed to sell sus stews.
+			{ E1, { "mcl_sus_stew:stew", 1, 1 } },
 			},
 			{
 			{ E1, { "mcl_farming:carrot_item_gold", 3, 10 } },
