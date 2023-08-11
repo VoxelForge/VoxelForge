@@ -117,7 +117,7 @@ local professions = {
 			{ { "mcl_fishing:fish_raw", 6, 6, "mcl_core:emerald", 1, 1 },{ "mcl_fishing:fish_cooked", 6, 6 } },
 			{ { "mcl_mobitems:string", 15, 20 }, E1 },
 			{ { "mcl_core:coal_lump", 10, 15 }, E1 },
-			-- FIXME missing: bucket of cod + fish should be cod.
+			{ { "mcl_core:emerald", 3, 3 }, { "mcl_buckets:bucket_cod", 1, 1 }},
 			},
 			{
 			{ { "mcl_fishing:fish_raw", 6, 15,}, E1 },
