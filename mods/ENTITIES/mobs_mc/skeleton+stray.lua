@@ -113,7 +113,7 @@ local skeleton = {
 	on_die = function(self, pos, cmi_cause)
 		if cmi_cause and cmi_cause.puncher then
 			local l = cmi_cause.puncher:get_luaentity()
-			if l and l.name == "mcl_bows:arrow_entity" and l._shooter and l._shooter:is_player() and vector.distance(pos,l._startpos) > 20 then
+			if l and  l.name:sub(-12) == "arrow_entity" and l._shooter and l._shooter:is_player() and vector.distance(pos,l._startpos) > 20 then
 				awards.unlock(l._shooter:get_player_name(), "mcl:snipeSkeleton")
 			end
 		end

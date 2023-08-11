@@ -279,18 +279,6 @@ function mcl_potions.register_arrow(name, desc, color, def)
 								minetest.sound_play({name="mcl_bows_hit_player", gain=0.1}, {to_player=self._shooter:get_player_name()}, true)
 							end
 						end
-
-						if lua then
-							local entity_name = lua.name
-							-- Achievement for hitting skeleton, wither skeleton or stray (TODO) with an arrow at least 50 meters away
-							-- NOTE: Range has been reduced because mobs unload much earlier than that ... >_>
-							-- TODO: This achievement should be given for the kill, not just a hit
-							if self._shooter and self._shooter:is_player() and vector.distance(pos, self._startpos) >= 20 then
-								if mod_awards and (entity_name == "mobs_mc:skeleton" or entity_name == "mobs_mc:stray" or entity_name == "mobs_mc:witherskeleton") then
-									awards.unlock(self._shooter:get_player_name(), "mcl:snipeSkeleton")
-								end
-							end
-						end
 					end
 					self.object:remove()
 					return
