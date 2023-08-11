@@ -26,7 +26,6 @@ end
 
 local how_to_shoot = minetest.registered_items["mcl_bows:arrow"]._doc_items_usagehelp
 
-local mod_awards = minetest.get_modpath("awards") and minetest.get_modpath("mcl_achievements")
 local mod_button = minetest.get_modpath("mesecons_button")
 local enable_pvp = minetest.settings:get_bool("enable_pvp")
 
