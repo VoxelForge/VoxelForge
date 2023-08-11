@@ -263,7 +263,7 @@ doc.sub.items.register_factoid("nodes", "mining", function(itemstring, def)
 	if not blast then
 		blast = 0
 	end
-	-- TODO: Blast resistance as number
+	datastring = datastring .. "\n" .. S("Blast Resistance: @1", string.format("%.2f", blast))
 	if blast >= 1000 then
 		datastring = datastring .. "\n" .. S("This block will not be destroyed by TNT explosions.")
 	end
