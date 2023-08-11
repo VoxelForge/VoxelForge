@@ -46,13 +46,10 @@ mcl_mobs.register_mob("mobs_mc:guardian_elder", {
 		run_start = 0,		run_end = 20,
 	},
 	drops = {
-		-- TODO: Reduce # of drops when ocean monument is ready.
-
-		-- Greatly increased amounts of prismarine
 		{name = "mcl_ocean:prismarine_shard",
 		chance = 1,
-		min = 1,
-		max = 64,
+		min = 0,
+		max = 2,
 		looting = "common",},
 
 		-- TODO: Only drop if killed by player
