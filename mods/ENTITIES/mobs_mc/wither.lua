@@ -53,7 +53,7 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 	},
 	lava_damage = 0,
 	fire_damage = 0,
-	attack_type = "dogshoot",
+	attack_type = "shoot",
 	explosion_strength = 8,
 	dogshoot_stop = true,
 	arrow = "mobs_mc:wither_skull",
@@ -68,30 +68,50 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 	},
 	harmed_by_heal = true,
 	is_boss = true,
-	do_custom = function(self)
+	do_custom = function(self, dtime)
 		local rand_factor
+		if not self._custom_timer then self._custom_timer = 0 end
+		self._custom_timer = self._custom_timer + dtime
+		if self._custom_timer > 1 then
+			self.health = math.min(self.health + 1, self.hp_max)
+			self._custom_timer = self._custom_timer - 1
+		end
 		if self._spawner then
-			local pos = self.object:get_pos()
-			local spw = self._spawner:get_pos()
-			local dist = vector.distance(pos, spw)
-			if dist > 60 then -- teleport to the player who spawned the wither
-				local r = 10
-				pos.x = spw.x + math.random(-r, r)
-				pos.y = spw.y + math.random(-r, r)
-				pos.z = spw.z + math.random(-r, r)
-				self.object:set_pos(pos)
+			local spawner = minetest.get_player_by_name(self._spawner)
+			if spawner then
+				self._death_timer = 0
+				local pos = self.object:get_pos()
+				local spw = spawner:get_pos()
+				local dist = vector.distance(pos, spw)
+				if dist > 60 then -- teleport to the player who spawned the wither
+					local R = 10
+					pos.x = spw.x + math.random(-R, R)
+					pos.y = spw.y + math.random(-R, R)
+					pos.z = spw.z + math.random(-R, R)
+					self.object:set_pos(pos)
+				end
 			end
-		--else	-- TODO implement a death timer here?
+		else
+			if not self._death_timer then self._death_timer = 0 end
+			if not self._health_old then self._health_old = self.health end
+			self._death_timer = self._death_timer + self.health - self._health_old
+			if self.health == self._health_old then self._death_timer = self._death_timer + dtime end
+			if self._death_timer > 100 then
+				self.removed = true
+				self.object:remove()
+				return false
+			end
+			self._health_old = self.health
 		end
 		if self.health < (self.hp_max / 2) then
 			self.base_texture = "mobs_mc_wither_half_health.png"
 			self.fly = false
-			self.armor = {undead = 80, fleshy = 80} -- TODO replace with changed arrow resistance
+			self._arrow_resistant = true
 			rand_factor = 3
 		else
 			self.base_texture = "mobs_mc_wither.png"
 			self.fly = true
-			self.armor = {undead = 80, fleshy = 100} -- TODO replace with changed arrow resistance
+			self._arrow_resistant = false
 			rand_factor = 10
 		end
 		self.object:set_properties({textures={self.base_texture}})
@@ -101,7 +121,15 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 		else
 			self.arrow = "mobs_mc:wither_skull"
 		end
-		-- TODO implement regeneration at rate 1 HP per second
+	end,
+	do_punch = function(self, hitter, tflp, tool_capabilities, dir)
+		local ent = hitter:get_luaentity()
+		if ent and self._arrow_resistant and (string.find(ent.name, "arrow") or string.find(ent.name, "rocket")) then return false end
+		return true
+	end,
+	deal_damage = function(self, damage, mcl_reason)
+		if self._arrow_resistant and mcl_reason.type == "magic" then return end
+		self.health = self.health - damage
 	end,
 	on_spawn = function(self)
 		minetest.sound_play("mobs_mc_wither_spawn", {object=self.object, gain=1.0, max_hear_distance=64})
