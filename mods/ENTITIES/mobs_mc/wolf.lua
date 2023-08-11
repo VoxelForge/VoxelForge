@@ -144,7 +144,6 @@ dog.hp_max = 20
 -- Tamed wolf texture + red collar
 dog.textures = get_dog_textures("unicolor_red")
 dog.owner = ""
--- TODO: Start sitting by default
 dog.order = "sit"
 dog.state = "stand"
 dog.owner_loyal = true
