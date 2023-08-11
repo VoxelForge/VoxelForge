@@ -176,22 +176,6 @@ doc.sub.items.register_factoid(nil, "groups", function(itemstring, def)
 	return s
 end)
 
--- TODO: Move this info to the crafting guide
-doc.sub.items.register_factoid(nil, "groups", function(itemstring, def)
-	if def._repair_material then
-		local mdef = minetest.registered_items[def._repair_material]
-		if mdef and mdef.description and mdef.description ~= "" then
-			return S("This item can be repaired at an anvil with: @1.", mdef.description)
-		elseif def._repair_material == "group:wood" then
-			return S("This item can be repaired at an anvil with any wooden planks.")
-		elseif string.sub(def._repair_material, 1, 6) == "group:" then
-			local group = string.sub(def._repair_material, 7)
-			return S("This item can be repaired at an anvil with any item in the “@1” group.", group)
-		end
-	end
-	return ""
-end)
-
 doc.sub.items.register_factoid(nil, "groups", function(itemstring, def)
 	if minetest.get_item_group(itemstring, "no_rename") == 1 then
 		return S("This item cannot be renamed at an anvil.")

@@ -1097,6 +1097,21 @@ function mcl_craftguide.show(name)
 	minetest.show_formspec(name, "mcl_craftguide", make_formspec(name))
 end
 
+doc.sub.items.register_factoid(nil, "groups", function(itemstring, def)
+	if def._repair_material then
+		local mdef = minetest.registered_items[def._repair_material]
+		if mdef and mdef.description and mdef.description ~= "" then
+			return S("This item can be repaired at an anvil with: @1.", mdef.description)
+		elseif def._repair_material == "group:wood" then
+			return S("This item can be repaired at an anvil with any wooden planks.")
+		elseif string.sub(def._repair_material, 1, 6) == "group:" then
+			local group = string.sub(def._repair_material, 7)
+			return S("This item can be repaired at an anvil with any item in the “@1” group.", group)
+		end
+	end
+	return ""
+end)
+
 --[[ Custom recipes (>3x3) test code
 
 minetest.register_craftitem(":secretstuff:custom_recipe_test", {
