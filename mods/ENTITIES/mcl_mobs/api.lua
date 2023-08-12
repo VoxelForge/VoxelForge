@@ -25,6 +25,13 @@ function mob_class:set_properties(prop)
 	mcl_util.set_properties(self.object, prop)
 end
 
+function mob_class:safe_remove()
+	self.removed = true
+	minetest.after(0,function(obj)
+		if obj and obj:get_pos() then obj:remove() end
+	end,self.object)
+end
+
 function mob_class:update_tag() --update nametag and/or the debug box
 	local tag
 	if mobs_debug then
@@ -347,7 +354,10 @@ end
 
 function mob_class:on_step(dtime)
 	local pos = self.object:get_pos()
-	if not pos or self.removed then return end
+	if not mcl_mobs.check_vector(pos) or self.removed then
+		self:safe_remove()
+		return
+	end
 
 	if self:check_despawn(pos, dtime) then return true end
 
@@ -467,7 +477,7 @@ minetest.register_chatcommand("clearmobs",{
 						(typ == "nametagged" and o.nametag) or
 						(typ == "tamed" and o.tamed and not o.nametag) or
 						(not typ and not o.nametag and not o.tamed) then
-						o.object:remove()
+						o:safe_remove()
 					end
 				end
 			end
