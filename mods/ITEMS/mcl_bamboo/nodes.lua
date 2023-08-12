@@ -36,21 +36,7 @@ local bamboo_def = {
 	use_texture_alpha = "clip",
 	groups = {handy = 1, axey = 1, choppy = 1, dig_by_piston = 1, plant = 1, non_mycelium_plant = 1, flammable = 3, bamboo = 1, bamboo_tree = 1},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
-
-	drop = {
-		max_items = 1,
-		items = {
-			{
-				rarity = 8,
-				items = {"mcl_bamboo:bamboo 2"},
-			},
-			{
-				rarity = 1,
-				items = {"mcl_bamboo:bamboo"},
-			},
-		},
-	},
-
+	drop = "mcl_bamboo:bamboo",
 	inventory_image = "mcl_bamboo_bamboo_shoot.png",
 	wield_image = "mcl_bamboo_bamboo_shoot.png",
 	_mcl_blast_resistance = 1,
