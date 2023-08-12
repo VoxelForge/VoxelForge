@@ -502,6 +502,7 @@ function mob_class:safe_boom(pos, strength)
 	local radius = strength
 	entity_physics(pos, radius)
 	mcl_mobs.effect(pos, 32, "mcl_particles_smoke.png", radius * 3, radius * 5, radius, 1, 0)
+	self:safe_remove()
 end
 
 
@@ -512,8 +513,7 @@ function mob_class:boom(pos, strength, fire)
 	else
 		mcl_mobs.mob_class.safe_boom(self, pos, strength) --need to call it this way bc self is the "arrow" object here
 	end
-	-- mark object as removed to prevent on_step continuing to run
-	self.removed = true
+	self:safe_remove()
 end
 
 -- deal damage and effects when mob punched
@@ -927,8 +927,7 @@ function mob_class:do_states_attack (dtime)
 					self:entity_physics(pos,entity_damage_radius)
 					mcl_mobs.effect(pos, 32, "mcl_particles_smoke.png", nil, nil, node_break_radius, 1, 0)
 				end
-				mcl_burning.extinguish(self.object)
-				self.object:remove()
+				self:safe_remove()
 
 				return true
 			end

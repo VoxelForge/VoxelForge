@@ -28,7 +28,10 @@ end
 function mob_class:safe_remove()
 	self.removed = true
 	minetest.after(0,function(obj)
-		if obj and obj:get_pos() then obj:remove() end
+		if obj and obj:get_pos() then
+			mcl_burning.extinguish(obj)
+			obj:remove()
+		end
 	end,self.object)
 end
 
