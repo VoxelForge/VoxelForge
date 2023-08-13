@@ -726,14 +726,19 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 end)
 
 
-if minetest.is_creative_enabled("") then
-	minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack)
+
+minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack)
+	if minetest.is_creative_enabled(placer:get_player_name()) then
 		-- Place infinite nodes, except for shulker boxes
 		local group = minetest.get_item_group(itemstack:get_name(), "shulker_box")
 		return group == 0 or group == nil
-	end)
+	end
+end)
 
-	function minetest.handle_node_drops(pos, drops, digger)
+local old_mt_handle_node_drops = minetest.handle_node_drops
+
+function minetest.handle_node_drops(pos, drops, digger)
+	if minetest.is_creative_enabled(digger:get_player_name()) then
 		if not digger or not digger:is_player() then
 			for _, item in ipairs(drops) do
 				minetest.add_item(pos, item)
@@ -747,6 +752,8 @@ if minetest.is_creative_enabled("") then
 				end
 			end
 		end
+	else
+		return old_mt_handle_node_drops(pos, drops, digger)
 	end
 end
 
