@@ -61,7 +61,7 @@ local bamboo_def = {
 		mcl_util.traverse_tower(pos,1,function(p)
 			minetest.remove_node(p)
 			if not minetest.is_creative_enabled(digger and digger:get_player_name() or "") then
-				minetest.add_item(p,node.name)
+				minetest.add_item(p,"mcl_bamboo:bamboo")
 			end
 		end)
 	end,
