@@ -313,7 +313,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		local def = minetest.registered_nodes[minetest.get_node(pos).name]
 		local color
 		if def._dark then
-			color = "#FFFFFF"
+			color = mcl_dyes.colors.white.rgb
 		end
 
 		set_signmeta(pos,{
