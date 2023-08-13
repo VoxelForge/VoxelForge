@@ -63,11 +63,6 @@ local function get_signdata(pos)
 		local dir = minetest.wallmounted_to_dir(node.param2)
 		spos = vector.add(vector.offset(pos,0,-0.25,0),dir * 0.41 )
 		yaw = minetest.dir_to_yaw(dir)
-	elseif def.paramtype2 == "facedir" then
-		typ = "hanging"
-		local dir = minetest.facedir_to_dir(node.param2)
-		spos = vector.add(vector.offset(pos,0,-0.45,0),dir * -0.05 )
-		yaw = minetest.dir_to_yaw(dir)
 	else
 		yaw = math.rad(((node.param2 * 1.5 ) + 1 ) % 360)
 		local dir = minetest.yaw_to_dir(yaw)
@@ -234,9 +229,6 @@ function sign_tpl.on_place(itemstack, placer, pointed_thing)
 		placestack:set_name("mcl_signs:standing_sign_"..def._mcl_sign_wood)
 		local rot = normalize_rotation(placer:get_look_horizontal() * 180 / math.pi / 1.5)
 		itemstack, pos = minetest.item_place(placestack, placer, pointed_thing,  rot) -- param2 value is degrees / 1.5
-	elseif wdir == 0 then --ceiling, hanging sign
-		placestack:set_name("mcl_signs:hanging_sign_"..def._mcl_sign_wood)
-		itemstack, pos = minetest.item_place(placestack, placer, pointed_thing, minetest.dir_to_facedir(vector.direction(placer:get_pos(),pointed_thing.above)))
 	else
 		return itemstack
 	end
@@ -277,16 +269,6 @@ local sign_wall = table.merge(sign_tpl,{
 	selection_box = { type = "wallmounted", wall_side = { -0.5, -7 / 28, -0.5, -23 / 56, 7 / 28, 0.5 }},
 	groups = { axey = 1, handy = 2, sign = 1 },
 	_mcl_sign_type = "wall",
-})
-
-local sign_hanging = table.merge(sign_tpl,{
-	mesh = "mcl_signs_sign_hanging.obj",
-	tiles = { "mcl_signs_sign_hanging.png" },
-	paramtype2 = "facedir",
-	use_texture_alpha = "blend",
-	selection_box = { type = "fixed", fixed = {  -0.5, -0.45, -0.05, 0.5, 0.05, 0.05 }},
-	groups = { axey = 1, handy = 2, sign = 1, not_in_creative_inventory = 1 },
-	_mcl_sign_type = "hanging",
 })
 
 --Formspec
@@ -408,9 +390,6 @@ function mcl_signs.register_sign(name,color,def)
 
 	minetest.register_node(":mcl_signs:standing_sign_"..name, table.merge(sign_tpl, newfields, def or {}))
 	minetest.register_node(":mcl_signs:wall_sign_"..name,table.merge(sign_wall, newfields, def or {}))
-	minetest.register_node(":mcl_signs:hanging_sign_"..name,table.merge(sign_hanging, newfields, {
-		tiles = { colored_texture("mcl_signs_sign_hanging.png",color), },
-	},def or {}))
 
 	table.insert(mcl_signs.old_rotnames,"mcl_signs:standing_sign22_5_"..name)
 	table.insert(mcl_signs.old_rotnames,"mcl_signs:standing_sign45_"..name)
