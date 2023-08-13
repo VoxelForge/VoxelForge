@@ -113,6 +113,7 @@ function mcl_potions.register_arrow(name, desc, color, def)
 		_stuckrechecktimer=nil,-- An additional timer for periodically re-checking the stuck status of an arrow
 		_stuckin=nil,	--Position of node in which arow is stuck.
 		_shooter=nil,	-- ObjectRef of player or mob who shot it
+		_is_arrow = true,
 
 		_viscosity=0,   -- Viscosity of node the arrow is currently in
 		_deflection_cooloff=0, -- Cooloff timer after an arrow deflection, to prevent many deflections in quick succession
