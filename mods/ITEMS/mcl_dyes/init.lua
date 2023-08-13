@@ -19,7 +19,7 @@ mcl_dyes.colors = {
 	["white"] = {
 		description = S("White Dye"),
 		groups = {basecolor_white=1,   excolor_white=1,     unicolor_white=1},
-		rgb = "#D1C6A6",
+		rgb = "#C2BCA8",
 	},
 	["silver"] = {
 		description = S("Light Grey Dye"),
