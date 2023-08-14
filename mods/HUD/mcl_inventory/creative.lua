@@ -738,7 +738,7 @@ end)
 local old_mt_handle_node_drops = minetest.handle_node_drops
 
 function minetest.handle_node_drops(pos, drops, digger)
-	if minetest.is_creative_enabled(digger:get_player_name()) then
+	if digger and minetest.is_creative_enabled(digger:get_player_name()) then
 		if not digger or not digger:is_player() then
 			for _, item in ipairs(drops) do
 				minetest.add_item(pos, item)
