@@ -292,15 +292,9 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		if not pos or not pos.x or not pos.y or not pos.z then
 			return
 		end
-		local def = minetest.registered_nodes[minetest.get_node(pos).name]
-		local color
-		if def._dark then
-			color = mcl_dyes.colors.white.rgb
-		end
 
 		set_signmeta(pos,{
 			text = fields.text,
-			color = color,
 		})
 		mcl_signs.update_sign(pos)
 	end
