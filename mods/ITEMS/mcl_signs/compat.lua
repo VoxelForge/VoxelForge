@@ -43,6 +43,7 @@ function mcl_signs.upgrade_sign_meta(pos)
 		if glo ~= "" then
 			m:set_string("mcl_signs:glowing_sign","")
 		end
+		mcl_signs.get_text_entity (pos, true) -- the 2nd "true" arg means deleting the entity for respawn
 end
 
 function mcl_signs.upgrade_sign_rot(pos,node)
