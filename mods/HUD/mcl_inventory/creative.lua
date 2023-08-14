@@ -728,7 +728,7 @@ end)
 
 
 minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack)
-	if minetest.is_creative_enabled(placer:get_player_name()) then
+	if placer and minetest.is_creative_enabled(placer:get_player_name()) then
 		-- Place infinite nodes, except for shulker boxes
 		local group = minetest.get_item_group(itemstack:get_name(), "shulker_box")
 		return group == 0 or group == nil
