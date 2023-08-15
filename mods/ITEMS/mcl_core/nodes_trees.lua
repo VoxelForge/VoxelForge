@@ -2,7 +2,7 @@ local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 
 mcl_trees.register_wood("oak",{
-	sign_color="#ECA870",
+	sign_color="#917056",
 	tree_schems= {
 		{ file = modpath.."/schematics/mcl_core_oak_balloon.mts", width = 5, height = 7 },
 		{ file = modpath.."/schematics/mcl_core_oak_large_1.mts", width = 7, height = 13 },
@@ -39,7 +39,7 @@ mcl_trees.register_wood("oak",{
 })
 
 mcl_trees.register_wood("dark_oak",{
-	sign_color="#5F4021",
+	sign_color="#625048",
 	tree_schems = {
 		{ file = modpath.."/schematics/mcl_core_dark_oak.mts", width = 8, height = 11 },
 	},
@@ -64,7 +64,7 @@ mcl_trees.register_wood("dark_oak",{
 })
 
 mcl_trees.register_wood("jungle",{
-	sign_color="#9f4112",
+	sign_color="#845A43",
 	tree_schems = {
 		{ file = modpath.."/schematics/mcl_core_jungle_tree.mts", width = 5, height = 15 },
 		{ file = modpath.."/schematics/mcl_core_jungle_tree_2.mts", width = 7, height = 15 },
@@ -90,7 +90,7 @@ mcl_trees.register_wood("jungle",{
 })
 
 mcl_trees.register_wood("spruce",{
-	sign_color="#7f5f37",
+	sign_color="#604335",
 	tree_schems = {
 		{ file = modpath.."/schematics/mcl_core_spruce_1.mts", width = 7, height = 12 },
 		{ file = modpath.."/schematics/mcl_core_spruce_2.mts", width = 7, height = 13 },
@@ -111,7 +111,7 @@ mcl_trees.register_wood("spruce",{
 })
 
 mcl_trees.register_wood("acacia",{
-	sign_color="#ea7479",
+	sign_color="#965638",
 	tree_schems ={
 		{ file = modpath.."/schematics/mcl_core_acacia_1.mts", width = 11, height = 9 },
 		{ file = modpath.."/schematics/mcl_core_acacia_2.mts", width = 9, height = 10 },
@@ -136,7 +136,7 @@ mcl_trees.register_wood("acacia",{
 })
 
 mcl_trees.register_wood("birch",{
-	sign_color="#ffdba7",
+	sign_color="#AA907A",
 	tree_schems = {
 		{ file = modpath.."/schematics/mcl_core_birch_bee_nest.mts", width = 5, height = 8 },
 		{ file = modpath.."/schematics/mcl_core_birch.mts", width = 5, height = 9 },
