@@ -214,6 +214,8 @@ function mcl_enchanting.combine(itemstack, combine_with)
 	end
 	if any_enchantment then
 		itemstack:set_name(enchanted_itemname)
+	elseif mcl_enchanting.is_book(combine_name) then
+		return false
 	end
 	mcl_enchanting.set_enchantments(itemstack, enchantments)
 	return true
