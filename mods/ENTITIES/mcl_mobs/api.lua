@@ -403,7 +403,7 @@ function mob_class:on_step(dtime)
 	self:set_armor_texture()
 	self:check_runaway_from()
 
-	self:attack_players()
+	self:attack_players_and_npcs()
 	self:attack_monsters()
 	self:attack_specific()
 

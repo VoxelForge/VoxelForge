@@ -313,7 +313,7 @@ function mob_class:smart_mobs(s, p, dist, dtime)
 	end
 end
 
-function mob_class:attack_players()
+function mob_class:attack_players_and_npcs()
 	if not damage_enabled or
 	self.state == "attack" or
 	(self.passive and not self.aggro) or
@@ -325,7 +325,8 @@ function mob_class:attack_players()
 	local pos = self.object:get_pos()
 	local objs = minetest.get_objects_inside_radius(pos, self.view_range)
 	for _,obj in pairs(objs) do
-		if obj:is_player() and self:line_of_sight(pos, obj:get_pos(), 2) then
+		local l = obj:get_luaentity()
+		if ( obj:is_player() or (l and l.type == "npc") ) and self:line_of_sight(pos, obj:get_pos(), 2) then
 			self:do_attack(obj)
 		end
 	end
