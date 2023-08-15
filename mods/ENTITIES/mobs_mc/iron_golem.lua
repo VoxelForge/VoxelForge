@@ -126,7 +126,7 @@ I = Iron block
 . = Air
 ]]
 
-function mobs_mc.check_iron_golem_summon(pos)
+function mobs_mc.check_iron_golem_summon(pos, player)
 	local checks = {
 		-- These are the possible placement patterns, with offset from the pumpkin block.
 		-- These tables include the positions of the iron blocks (1-4) and air blocks (5-8)
@@ -216,7 +216,9 @@ function mobs_mc.check_iron_golem_summon(pos)
 				place = vector.add(pos, checks[c][4])
 			end
 			place.y = place.y - 0.5
-			minetest.add_entity(place, "mobs_mc:iron_golem")
+			local o = minetest.add_entity(place, "mobs_mc:iron_golem")
+			local l = o:get_luaentity()
+			if l then l.owner = player:get_player_name() end
 			break
 		end
 	end

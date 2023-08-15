@@ -148,10 +148,10 @@ pumpkin_face_base_def._mcl_armor_element = "head"
 pumpkin_face_base_def._mcl_armor_texture = "mcl_farming_pumpkin_face.png"
 pumpkin_face_base_def._on_shears_place = nil
 
-pumpkin_face_base_def.on_construct = function(pos)
+pumpkin_face_base_def.after_place_node = function(pos, placer, itemstack, pointed_thing)
 	-- Attempt to spawn iron golem or snow golem
-	mobs_mc.check_iron_golem_summon(pos)
-	mobs_mc.check_snow_golem_summon(pos)
+	mobs_mc.check_iron_golem_summon(pos, placer)
+	mobs_mc.check_snow_golem_summon(pos, placer)
 end
 
 if minetest.get_modpath("mcl_armor") then
