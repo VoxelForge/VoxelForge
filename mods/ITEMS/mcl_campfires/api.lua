@@ -17,7 +17,7 @@ function mcl_campfires.register_campfire(name, def)
 		paramtype = "light",
 		paramtype2 = "facedir",
 		on_rightclick = function (pos, node, player, itemstack, pointed_thing)
-			if player:get_wielded_item():get_name() == "mcl_fire:flint_and_steel" then
+			if minetest.get_item_group(player:get_wielded_item():get_name(), "flint_and_steel") > 0 then
 				node.name = name.."_lit"
 				minetest.set_node(pos, node)
 			end

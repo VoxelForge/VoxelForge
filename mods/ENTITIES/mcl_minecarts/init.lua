@@ -889,7 +889,7 @@ register_minecart(
 			return
 		end
 		local held = clicker:get_wielded_item()
-		if held:get_name() == "mcl_fire:flint_and_steel" then
+		if minetest.get_item_group(held:get_name(),"flint_and_steel") > 0 then
 			if not minetest.is_creative_enabled(clicker:get_player_name()) then
 				held:add_wear(65535/65) -- 65 uses
 				local index = clicker:get_wield_index()

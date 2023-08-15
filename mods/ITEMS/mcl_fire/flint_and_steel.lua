@@ -9,7 +9,7 @@ minetest.register_tool("mcl_fire:flint_and_steel", {
 	inventory_image = "mcl_fire_flint_and_steel.png",
 	liquids_pointable = false,
 	stack_max = 1,
-	groups = { tool = 1, },
+	groups = { tool = 1, flint_and_steel = 1, enchantability = -1 },
 	on_place = function(itemstack, user, pointed_thing)
 		-- Use pointed node's on_rightclick function first, if present
         local new_stack = mcl_util.call_on_rightclick(itemstack, user, pointed_thing)

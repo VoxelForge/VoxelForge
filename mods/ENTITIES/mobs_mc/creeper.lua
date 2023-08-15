@@ -62,7 +62,7 @@ mcl_mobs.register_mob("mobs_mc:creeper", {
 			return
 		end
 		local item = clicker:get_wielded_item()
-		if item:get_name() == "mcl_fire:flint_and_steel" then
+		if minetest.get_item_group(item:get_name(), "flint_and_steel") > 0 then
 			if not minetest.is_creative_enabled(clicker:get_player_name()) then
 				-- Wear tool
 				local wdef = item:get_definition()
@@ -186,7 +186,7 @@ mcl_mobs.register_mob("mobs_mc:creeper_charged", {
 			return
 		end
 		local item = clicker:get_wielded_item()
-		if item:get_name() == "mcl_fire:flint_and_steel" then
+		if minetest.get_item_group(item:get_name(), "flint_and_steel") > 0 then
 			if not minetest.is_creative_enabled(clicker:get_player_name()) then
 				-- Wear tool
 				local wdef = item:get_definition()
