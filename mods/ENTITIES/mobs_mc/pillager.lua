@@ -107,7 +107,7 @@ pillager = {
 
 		-- 2-4 damage per arrow
 		local dmg = math.max(4, math.random(2, 8))
-		mcl_bows_s.shoot_arrow_crossbow("mcl_bows:arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
+		mcl_bows.shoot_arrow_crossbow("mcl_bows:arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
 
 		-- While we are at it, change the sounds since there is no way to do this in Mobs Redo
 		if self.sounds and self.sounds.random then

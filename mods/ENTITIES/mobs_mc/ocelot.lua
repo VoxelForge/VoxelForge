@@ -91,14 +91,16 @@ local ocelot = {
 			end
 			-- 1/3 chance of getting tamed
 			if math.random(3) == 1 then
-				local yaw = self.object:get_yaw()
-				local cat = minetest.add_entity(self.object:get_pos(), "mobs_mc:cat")
-				cat:set_yaw(yaw)
-				local ent = cat:get_luaentity()
-				ent.owner = clicker:get_player_name()
-				ent.tamed = true
-				self:safe_remove()
-				return
+				local cat = mcl_util.replace_mob(self.object, "mobs_mc:cat")
+				if cat and cat:get_pos() then
+					local ent = cat:get_luaentity()
+					ent.owner = clicker:get_player_name()
+					ent.tamed = true
+					ent.jump = false
+					ent.state = "stand"
+					ent.health = self.health
+					return
+				end
 			end
 		end
 

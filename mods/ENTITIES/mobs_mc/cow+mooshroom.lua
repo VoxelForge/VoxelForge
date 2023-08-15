@@ -114,13 +114,7 @@ mooshroom_def.on_rightclick = function(self, clicker)
 		else
 			minetest.add_item({x=pos.x, y=pos.y+1.4, z=pos.z}, "mcl_mushrooms:mushroom_red 5")
 		end
-
-		local oldyaw = self.object:get_yaw()
-		self.object:remove()
-		local cow = minetest.add_entity(pos, "mobs_mc:cow")
-		if cow and cow:get_pos() then
-			cow:set_yaw(oldyaw)
-		end
+		mcl_util.replace_mob(self.object, "mobs_mc:cow")
 
 		if not minetest.is_creative_enabled(clicker:get_player_name()) then
 			item:add_wear(mobs_mc.shears_wear)

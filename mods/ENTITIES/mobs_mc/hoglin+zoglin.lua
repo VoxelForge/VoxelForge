@@ -80,12 +80,8 @@ local hoglin = {
 		end
 	end,
 	do_custom = function(self)
-		if self.object:get_pos().y > -100 then
-			local zog = minetest.add_entity(self.object:get_pos(), "mobs_mc:zoglin")
-			if zog and zog:get_pos() then
-				zog:set_rotation(self.object:get_rotation())
-				self:safe_remove()
-			end
+		if mcl_worlds.pos_to_dimension(self.object:get_pos()) == "overworld" then
+			mcl_util.replace_mob(self.object, "mobs_mc:zoglin")
 		end
 	end,
 	attack_animals = true,

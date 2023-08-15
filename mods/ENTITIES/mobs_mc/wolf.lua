@@ -66,7 +66,7 @@ local wolf = {
 			-- 1/3 chance of getting tamed
 			if pr:next(1, 3) == 1 then
 				local yaw = self.object:get_yaw()
-				dog = minetest.add_entity(self.object:get_pos(), "mobs_mc:dog")
+				dog = mcl_util.replace_mob(self.object, "mobs_mc:dog")
 				if dog and dog:get_pos() then
 					dog:set_yaw(yaw)
 					ent = dog:get_luaentity()
@@ -79,7 +79,6 @@ local wolf = {
 					-- cornfirm taming
 					minetest.sound_play("mobs_mc_wolf_bark", {object=dog, max_hear_distance=16}, true)
 					-- Replace wolf
-					self:safe_remove()
 				end
 			end
 		end

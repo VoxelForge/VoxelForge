@@ -90,14 +90,8 @@ local piglin = {
 		self.gold_items = 0
 	end,
 	do_custom = function(self)
-		if self.object:get_pos().y > mcl_vars.mg_overworld_min then
-			local zog = minetest.add_entity(self.object:get_pos(), "mobs_mc:zombified_piglin")
-			if zog and zog:get_pos() then
-				zog:set_rotation(self.object:get_rotation())
-				--mcl_util.replace_mob(self.object, "mobs_mc:zombified_piglin"
-				self:safe_remove()
-				return
-			end
+		if mcl_worlds.pos_to_dimension(self.object:get_pos()) == "overworld" then
+			mcl_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
 		elseif self.trading == true then
 			self.state = "trading"
 			self.object:set_bone_position("Arm_Right_Pitch_Control", vector.new(-3,5.785,0), vector.new(20,-20,18))
