@@ -42,7 +42,12 @@ function mob_class:update_tag() --update nametag and/or the debug box
 		if self.nametag and self.nametag ~= "" then
 			name = self.nametag
 		end
+		local profession = ""
+		if self.name == "mobs_mc:villager" then
+			profession = "profession = "..tostring(self._profession).."\n"
+		end
 		tag = "name = '"..tostring(name).."'\n"..
+		profession..
 		"state = '"..tostring(self.state).."'\n"..
 		"order = '"..tostring(self.order).."'\n"..
 		"attack = "..tostring(self.attack).."\n"..
@@ -50,6 +55,7 @@ function mob_class:update_tag() --update nametag and/or the debug box
 		"breath = "..tostring(self.breath).."\n"..
 		"gotten = "..tostring(self.gotten).."\n"..
 		"tamed = "..tostring(self.tamed).."\n"..
+		"owner = "..tostring(self.owner).."\n"..
 		"horny = "..tostring(self.horny).."\n"..
 		"hornytimer = "..tostring(self.hornytimer).."\n"..
 		"runaway_timer = "..tostring(self.runaway_timer).."\n"..
