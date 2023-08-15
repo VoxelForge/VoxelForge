@@ -17,6 +17,7 @@ mcl_mobs.register_mob("mobs_mc:iron_golem", {
 	type = "npc",
 	spawn_class = "passive",
 	passive = true,
+	retaliates = true,
 	hp_min = 100,
 	hp_max = 100,
 	breath_max = -1,

@@ -336,16 +336,22 @@ end
 function mob_class:attack_specific()
 	if not self.specific_attack or
 	self.state == "attack" or
-	( not self.damage or self.damage == 0)
+	(not self.damage or self.damage == 0) or
+	(self.passive and not self.aggro)
 	then return end
 
 	local pos = self.object:get_pos()
 	local objs = minetest.get_objects_inside_radius(pos, self.view_range)
 	for _,obj in pairs(objs) do
+		if obj:is_player() and table.indexof(self.specific_attack,"player") then
+			self:do_attack(obj)
+			break
+		end
 		local l = obj:get_luaentity()
 		if l and l.is_mob then
 			if table.indexof(self.specific_attack,l.name) ~= -1 and self:line_of_sight(pos, obj:get_pos(), 2) then
 				self:do_attack(obj)
+				break
 			end
 		end
 	end
@@ -659,7 +665,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 	local name = hitter:get_player_name() or ""
 
 	-- attack puncher
-	if self.passive == false
+	if ( self.passive == false or self.retaliates )
 	and self.state ~= "flop"
 	and (self.child == false or self.type == "monster")
 	and hitter:get_player_name() ~= self.owner
@@ -668,7 +674,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 			-- attack whoever punched mob
 			self.state = ""
 			self:do_attack(hitter)
-			self.aggro= true
+			self.aggro = true
 		end
 	end
 

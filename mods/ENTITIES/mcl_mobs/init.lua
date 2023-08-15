@@ -209,6 +209,7 @@ function mcl_mobs.register_mob(name, def)
 		attacks_monsters = def.attacks_monsters or false,
 		group_attack = def.group_attack or false,
 		passive = def.passive or false,
+		retaliates = def.retaliates or false,
 		knock_back = def.knock_back ~= false,
 		shoot_offset = def.shoot_offset or 0,
 		floats = def.floats or 1, -- floats in water by default
