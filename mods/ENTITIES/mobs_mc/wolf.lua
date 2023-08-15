@@ -79,7 +79,7 @@ local wolf = {
 					-- cornfirm taming
 					minetest.sound_play("mobs_mc_wolf_bark", {object=dog, max_hear_distance=16}, true)
 					-- Replace wolf
-					self.object:remove()
+					self:safe_remove()
 				end
 			end
 		end

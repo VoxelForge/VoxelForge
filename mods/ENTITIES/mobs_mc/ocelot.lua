@@ -97,7 +97,7 @@ local ocelot = {
 				local ent = cat:get_luaentity()
 				ent.owner = clicker:get_player_name()
 				ent.tamed = true
-				self.object:remove()
+				self:safe_remove()
 				return
 			end
 		end

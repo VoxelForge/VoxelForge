@@ -84,7 +84,7 @@ local hoglin = {
 			local zog = minetest.add_entity(self.object:get_pos(), "mobs_mc:zoglin")
 			if zog and zog:get_pos() then
 				zog:set_rotation(self.object:get_rotation())
-				self.object:remove()
+				self:safe_remove()
 			end
 		end
 	end,

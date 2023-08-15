@@ -94,7 +94,8 @@ local piglin = {
 			local zog = minetest.add_entity(self.object:get_pos(), "mobs_mc:zombified_piglin")
 			if zog and zog:get_pos() then
 				zog:set_rotation(self.object:get_rotation())
-				self.object:remove()
+				--mcl_util.replace_mob(self.object, "mobs_mc:zombified_piglin"
+				self:safe_remove()
 				return
 			end
 		elseif self.trading == true then

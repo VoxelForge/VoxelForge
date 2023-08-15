@@ -61,7 +61,7 @@ local axolotl = {
 				local m = it:get_meta()
 				m:set_string("properties",minetest.serialize(self.object:get_properties()))
 				clicker:set_wielded_item(it)
-				self.object:remove()
+				self:safe_remove()
 			end
 			awards.unlock(clicker:get_player_name(), "mcl:cutestPredator")
 			return

@@ -61,7 +61,7 @@ local salmon = {
 	on_rightclick = function(self, clicker)
 		local bn = clicker:get_wielded_item():get_name()
 		if bn == "mcl_buckets:bucket_water" or bn == "mcl_buckets:bucket_river_water" then
-			self.object:remove()
+			self:safe_remove()
 			clicker:set_wielded_item("mcl_buckets:bucket_salmon")
 			awards.unlock(clicker:get_player_name(), "mcl:tacticalFishing")
 		end
