@@ -397,8 +397,10 @@ function mob_class:on_step(dtime)
 	self:set_armor_texture()
 	self:check_runaway_from()
 
-	self:monster_attack()
-	self:npc_attack()
+	self:attack_players()
+	self:attack_monsters()
+	self:attack_specific()
+
 	self:check_breeding()
 	self:check_aggro(dtime)
 

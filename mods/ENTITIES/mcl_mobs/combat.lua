@@ -313,159 +313,58 @@ function mob_class:smart_mobs(s, p, dist, dtime)
 	end
 end
 
+function mob_class:attack_players()
+	if not damage_enabled or
+	self.state == "attack" or
+	self:day_docile() or
+	(self.type ~= "monster" and not (self.retaliate and self.aggro) ) or
+	( not self.damage or self.damage == 0)
+	then return end
 
--- specific attacks
-local specific_attack = function(list, what)
-
-	-- no list so attack default (player, animals etc.)
-	if list == nil then
-		return true
-	end
-
-	-- found entity on list to attack?
-	for no = 1, #list do
-
-		if list[no] == what then
-			return true
+	local pos = self.object:get_pos()
+	local objs = minetest.get_objects_inside_radius(pos, self.view_range)
+	for _,obj in pairs(objs) do
+		if obj:is_player() and self:line_of_sight(pos, obj:get_pos(), 2) then
+			self:do_attack(obj)
 		end
 	end
 
 	return false
 end
 
-function mob_class:monster_attack()
-	if not damage_enabled
-	or self.passive ~= false
-	or self.state == "attack"
-	or self:day_docile() then
-		return
-	end
+function mob_class:attack_specific()
+	if not self.specific_attack or
+	self.state == "attack" or
+	( not self.damage or self.damage == 0)
+	then return end
 
-	local s = self.object:get_pos()
-	local p, sp, dist
-	local player, obj, min_player
-	local type, name = "", ""
-	local min_dist = self.view_range + 1
-	local objs = minetest.get_objects_inside_radius(s, self.view_range)
-	local blacklist_attack = {}
-
-	for n = 1, #objs do
-		if not objs[n]:is_player() then
-			obj = objs[n]:get_luaentity()
-
-			if obj then
-				player = obj.object
-				name = obj.name or ""
-			end
-			if obj and obj.type == self.type and obj.passive == false and obj.state == "attack" and obj.attack then
-				table.insert(blacklist_attack, obj.attack)
+	local pos = self.object:get_pos()
+	local objs = minetest.get_objects_inside_radius(pos, self.view_range)
+	for _,obj in pairs(objs) do
+		local l = obj:get_luaentity()
+		if l and l.is_mob then
+			if table.indexof(self.specific_attack,l.name) ~= -1 and self:line_of_sight(pos, obj:get_pos(), 2) then
+				self:do_attack(obj)
 			end
 		end
-	end
-
-	for n = 1, #objs do
-
-
-		if objs[n]:is_player() then
-			if mcl_mobs.invis[ objs[n]:get_player_name() ] or (not self:object_in_range(objs[n])) then
-				type = ""
-			elseif (self.type == "monster" or self._aggro) then
-				player = objs[n]
-				type = "player"
-				name = "player"
-			end
-		else
-			obj = objs[n]:get_luaentity()
-
-			if obj then
-				player = obj.object
-				type = obj.type
-				name = obj.name or ""
-			end
-
-		end
-
-		-- find specific mob to attack, failing that attack player/npc/animal
-		if specific_attack(self.specific_attack, name)
-				and (type == "player" or ( type == "npc" and self.attack_npcs )
-				or (type == "animal" and self.attack_animals == true)
-				or (self.extra_hostile and not self.attack_exception(player))) then
-
-			p = player:get_pos()
-			sp = s
-
-			dist = vector.distance(p, s)
-
-			-- aim higher to make looking up hills more realistic
-			p.y = p.y + 1
-			sp.y = sp.y + 1
-
-			local attacked_p = false
-			for c=1, #blacklist_attack do
-				if blacklist_attack[c] == player then
-					attacked_p = true
-				end
-			end
-			-- choose closest player to attack
-			local line_of_sight = self:line_of_sight( sp, p, 2) == true
-			if dist < min_dist and not attacked_p and line_of_sight then
-				min_dist = dist
-				min_player = player
-			end
-		end
-	end
-	if not min_player and #blacklist_attack > 0 then
-		min_player=blacklist_attack[math.random(#blacklist_attack)]
-	end
-	if min_player then
-		self:do_attack(min_player)
 	end
 end
 
+function mob_class:attack_monsters()
+	if self.type ~= "npc" or
+	self.state == "attack" or
+	( not self.damage or self.damage == 0)
+	then return end
 
--- npc, find closest monster to attack
-function mob_class:npc_attack()
-
-	if self.type ~= "npc"
-	or not self.attacks_monsters
-	or self.state == "attack" then
-		return
-	end
-
-	local p, sp, obj, min_player
-	local s = self.object:get_pos()
-	local min_dist = self.view_range + 1
-	local objs = minetest.get_objects_inside_radius(s, self.view_range)
-
-	for n = 1, #objs do
-
-		obj = objs[n]:get_luaentity()
-
-		if obj and obj.type == "monster" then
-
-			p = obj.object:get_pos()
-			sp = s
-
-			local dist = vector.distance(p, s)
-
-			-- aim higher to make looking up hills more realistic
-			p.y = p.y + 1
-			sp.y = sp.y + 1
-
-			if dist < min_dist
-			and self:line_of_sight( sp, p, 2) == true then
-				min_dist = dist
-				min_player = obj.object
-			end
+	local pos = self.object:get_pos()
+	local objs = minetest.get_objects_inside_radius(pos, self.view_range)
+	for _,obj in pairs(objs) do
+		local l = obj:get_luaentity()
+		if l and l.type == "monster" and self:line_of_sight(pos, obj:get_pos(), 2) then
+			self:do_attack(obj)
 		end
 	end
-
-	if min_player then
-		self:do_attack(min_player)
-	end
 end
-
-
 
 -- dogshoot attack switch and counter function
 function mob_class:dogswitch(dtime)
