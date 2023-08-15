@@ -316,9 +316,10 @@ end
 function mob_class:attack_players()
 	if not damage_enabled or
 	self.state == "attack" or
+	(self.passive and not self.aggro) or
 	self:day_docile() or
 	(self.type ~= "monster" and not (self.retaliate and self.aggro) ) or
-	( not self.damage or self.damage == 0)
+	not self.attack_type
 	then return end
 
 	local pos = self.object:get_pos()
@@ -667,7 +668,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 			-- attack whoever punched mob
 			self.state = ""
 			self:do_attack(hitter)
-			self._aggro= true
+			self.aggro= true
 		end
 	end
 
@@ -689,7 +690,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 				elseif type(obj.group_attack) == "table" then
 					for i=1, #obj.group_attack do
 						if obj.group_attack[i] == self.name then
-							obj._aggro = true
+							obj.aggro = true
 							obj:do_attack(hitter)
 							break
 						end
@@ -706,11 +707,11 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 end
 
 function mob_class:check_aggro(dtime)
-	if not self._aggro or not self.attack then return end
+	if not self.aggro or not self.attack then return end
 	if not self._check_aggro_timer or self._check_aggro_timer > 5 then
 		self._check_aggro_timer = 0
 		if not self.attack:get_pos() or vector.distance(self.attack:get_pos(),self.object:get_pos()) > 128 then
-			self._aggro = nil
+			self.aggro = nil
 			self.attack = nil
 			self.state = "stand"
 		end
@@ -726,7 +727,7 @@ function mob_class:clear_aggro()
 	self:set_animation( "stand")
 
 	self.attack = nil
-	self._aggro = nil
+	self.aggro = nil
 
 	self.v_start = false
 	self.timer = 0
