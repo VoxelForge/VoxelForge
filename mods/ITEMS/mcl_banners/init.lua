@@ -176,13 +176,15 @@ function mcl_banners.make_banner_texture(base_color, layers)
 			local finished_banner = base
 			for l=1, #layers do
 				local layerinfo = layers[l]
-				local pattern = "mcl_banners_" .. layerinfo.pattern .. ".png"
-				local color = mcl_banners.colors[layerinfo.color][4]
+				if layerinfo and layerinfo.pattern and layerinfo.color and mcl_banners.colors[layerinfo.color] then
+					local pattern = "mcl_banners_" .. layerinfo.pattern .. ".png"
+					local color = mcl_banners.colors[layerinfo.color][4]
 
-				-- Generate layer texture
-				local layer = "(("..pattern.."^[colorize:"..color..":"..layer_ratio..")^[mask:"..pattern..")"
+					-- Generate layer texture
+					local layer = "(("..pattern.."^[colorize:"..color..":"..layer_ratio..")^[mask:"..pattern..")"
 
-				finished_banner = finished_banner .. "^" .. layer
+					finished_banner = finished_banner .. "^" .. layer
+				end
 			end
 			return finished_banner
 		end
