@@ -34,8 +34,8 @@ mcl_mobs.register_mob("mobs_mc:vex", {
 	damage = 9,
 	reach = 2,
 	view_range = 16,
-	walk_velocity = 3.2,
-	run_velocity = 5.9,
+	walk_velocity = 2,
+	run_velocity = 3,
 	sounds = {
 		-- TODO: random
 		death = "mobs_mc_vex_death",

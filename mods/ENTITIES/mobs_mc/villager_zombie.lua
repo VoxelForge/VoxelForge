@@ -56,8 +56,8 @@ mcl_mobs.register_mob("mobs_mc:villager_zombie", {
 	makes_footstep_sound = true,
 	damage = 3,
 	reach = 2,
-	walk_velocity = 1.2,
-	run_velocity = 1.8,
+	walk_velocity = 0.8,
+	run_velocity = 1.2, -- same as zombie
 	attack_type = "dogfight",
 	group_attack = true,
 	drops = {

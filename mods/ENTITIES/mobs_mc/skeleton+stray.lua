@@ -40,8 +40,8 @@ local skeleton = {
 			"mcl_bows_bow_0.png", -- wielded_item
 		}
 	},
-	walk_velocity = 1.2,
-	run_velocity = 2.0,
+	walk_velocity = 1.0,
+	run_velocity = 2.0, -- skeletons are really anoying in mc, so i made only walkin 0.2 slower
 	damage = 2,
 	reach = 2,
 	drops = {

@@ -39,8 +39,8 @@ mcl_mobs.register_mob("mobs_mc:creeper", {
 		distance = 16,
 	},
 	makes_footstep_sound = true,
-	walk_velocity = 1.05,
-	run_velocity = 2.0,
+	walk_velocity = .8,
+	run_velocity = 1.3, -- not dead yet slow, imagine fast crepeer...
 	runaway_from = { "mobs_mc:ocelot", "mobs_mc:cat" },
 	attack_type = "explode",
 
@@ -51,7 +51,7 @@ mcl_mobs.register_mob("mobs_mc:creeper", {
 	explosion_damage_radius = 3.5,
 	explosiontimer_reset_radius = 6,
 	reach = 3,
-	explosion_timer = 1.5,
+	explosion_timer = 2.5, -- (was 1.5) This was way too fast compare to mc,
 	allow_fuse_reset = true,
 	stop_to_explode = true,
 

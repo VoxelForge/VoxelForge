@@ -294,8 +294,8 @@ mcl_mobs.register_mob("mobs_mc:enderman", {
 		random = {name="mobs_mc_enderman_random", gain=0.5},
 		distance = 16,
 	},
-	walk_velocity = 0.2,
-	run_velocity = 3.4,
+	walk_velocity = 0.5, -- ( was 0.2 ) he isnt that slow in mc?
+	run_velocity = 2.75, -- runs fast!
 	damage = 7,
 	reach = 2,
 	particlespawners = psdefs,

@@ -83,7 +83,7 @@ local spider = {
 		distance = 16,
 	},
 	walk_velocity = 1.3,
-	run_velocity = 2.4,
+	run_velocity = 2.0, -- (was 2.4) a bit slower, they arent much different from running skeletons
 	jump = true,
 	jump_height = 4,
 	view_range = 16,
