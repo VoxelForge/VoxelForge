@@ -268,14 +268,15 @@ function mob_class:is_at_water_danger()
 		return false
 	end
 	local yaw = self.object:get_yaw()
-	local dir_x = -math.sin(yaw) * (self.collisionbox[4] + 0.5)
-	local dir_z = math.cos(yaw) * (self.collisionbox[4] + 0.5)
+	local dir_x = -math.sin(yaw) * (self.collisionbox[4] or 0 + 0.5)
+	local dir_z = math.cos(yaw) * (self.collisionbox[4] or 0 + 0.5)
 	local pos = self.object:get_pos()
 	local ypos = pos.y + self.collisionbox[2] -- just above floor
 
 	local free_fall, blocker = minetest.line_of_sight(
 		{x = pos.x + dir_x, y = ypos, z = pos.z + dir_z},
 		{x = pos.x + dir_x, y = ypos - 3, z = pos.z + dir_z})
+
 	if free_fall then
 		return true
 	else

@@ -325,9 +325,15 @@ function mob_class:attack_players_and_npcs()
 	local pos = self.object:get_pos()
 	local objs = minetest.get_objects_inside_radius(pos, self.view_range)
 	for _,obj in pairs(objs) do
-		local l = obj:get_luaentity()
-		if ( obj:is_player() or (l and l.type == "npc") ) and self:line_of_sight(pos, obj:get_pos(), 2) then
-			self:do_attack(obj)
+		if self:line_of_sight(pos, obj:get_pos(), 2) then
+			local l = obj:get_luaentity()
+			if obj:is_player() then
+				self:do_attack(obj)
+				break
+			elseif self.attack_npcs and (l and l.type == "npc") then
+				self:do_attack(obj)
+				break
+			end
 		end
 	end
 
