@@ -1,5 +1,5 @@
 local S = minetest.get_translator("hudbars")
-local N = function(s) return s end
+local NS = function(s) return s end
 
 hb = {}
 
@@ -153,7 +153,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 		end
 	end
 	if format_string == nil then
-		format_string = N("@1: @2/@3")
+		format_string = NS("@1: @2/@3")
 	end
 	if format_string_config == nil then
 		format_string_config = {}
