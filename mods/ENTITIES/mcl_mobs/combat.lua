@@ -316,9 +316,9 @@ end
 function mob_class:attack_players_and_npcs()
 	if not damage_enabled or
 	self.state == "attack" or
-	(self.passive and not self.aggro) or
+	self.passive or
 	self:day_docile() or
-	(self.type ~= "monster" and not (self.retaliate and self.aggro) ) or
+	self.type ~= "monster" or
 	not self.attack_type
 	then return end
 
@@ -350,7 +350,7 @@ function mob_class:attack_specific()
 	local pos = self.object:get_pos()
 	local objs = minetest.get_objects_inside_radius(pos, self.view_range)
 	for _,obj in pairs(objs) do
-		if obj:is_player() and table.indexof(self.specific_attack,"player") then
+		if obj:is_player() and table.indexof(self.specific_attack,"player") and self.aggro then
 			self:do_attack(obj)
 			break
 		end
