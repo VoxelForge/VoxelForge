@@ -241,7 +241,7 @@ local patterns = {
 		{ e, e, e },
 	},
 }
-
+mcl_banners.patterns = patterns
 -- Just a simple reverse-lookup table from dye itemstring to banner color ID
 -- to avoid some pointless future iterations.
 local dye_to_colorid_mapping = {}
