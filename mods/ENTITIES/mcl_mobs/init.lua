@@ -8,7 +8,7 @@ local S = minetest.get_translator(modname)
 mcl_mobs.fallback_node = minetest.registered_aliases["mapgen_dirt"] or "mcl_core:dirt"
 
 function mcl_mobs.check_vector(v)
-	return v and v.x and v.y and v.z and tonumber(v.x) and tonumber(v.y) and tonumber(v.z)
+	return v and v.x and v.y and v.z and not minetest.is_nan(v.x) and not minetest.is_nan(v.y) and not minetest.is_nan(v.z) and tonumber(v.x) and tonumber(v.y) and tonumber(v.z)
 end
 
 --api and helpers
