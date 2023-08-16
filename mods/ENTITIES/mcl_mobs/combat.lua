@@ -12,7 +12,7 @@ local TIME_TO_FORGET_TARGET = 15
 
 local atann = math.atan
 local function atan(x)
-	if not x or x ~= x then
+	if not x or minetest.is_nan(x) then
 		return 0
 	else
 		return atann(x)
