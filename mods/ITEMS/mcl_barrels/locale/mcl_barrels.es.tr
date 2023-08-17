@@ -1,5 +1,14 @@
 # textdomain: mcl_barrels
-Barrel=Barril
-Barrels are containers which provide 27 inventory slots.=Los barriles son contenedores que proveen 27 ranuras de inventario.
-To access its inventory, rightclick it. When broken, the items will drop out.=Para acceder a su inventario, haz click derecho sobre el. Al romperse, los objetos caerán al suelo.
+
+
+### init.lua ###
+
 27 inventory slots=27 ranuras de inventario
+# textdomain: mcl_barrels
+Barrel=Barril
+Barrel Open=
+Barrels are containers which provide 27 inventory slots.=Los barriles son contenedores que proveen 27 ranuras de inventario.
+Inventory=
+
+To access its inventory, rightclick it. When broken, the items will drop out.=Para acceder a su inventario, haz click derecho sobre el. Al romperse, los objetos caerán al suelo.
+

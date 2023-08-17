@@ -1,2 +1,7 @@
+# textdomain: mcl_paintings
+
+
+### init.lua ###
+
 # textdomain:mcl_paintings
 Painting=Cuadro

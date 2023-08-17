@@ -1,14 +1,19 @@
 # textdomain: mcl_skins
-Skins=Aspectos
-Templates=Plantillas
+
+
+### edit_skin.lua ###
+
 Arm size=Tamaño de los brazos
 Bases=Bases
-Footwears=Calzado
-Eyes=Ojos
-Mouths=Bocas
 Bottoms=Parte inferior
-Tops=Parte superior
+Eyes=Ojos
+Footwears=Calzado
 Hairs=Cabellos
 Headwears=Accesorios para la cabeza
+Mouths=Bocas
 Open skin configuration screen.=Abrir pantalla de configuración de aspectos
 Select=Seleccionar
+# textdomain: mcl_skins
+Skins=Aspectos
+Templates=Plantillas
+Tops=Parte superior

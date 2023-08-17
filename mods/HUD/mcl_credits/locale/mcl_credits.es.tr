@@ -1,14 +1,26 @@
 # textdomain: mcl_credits
-3D Models=
+
+
+### init.lua ###
+
 A faithful Open Source clone of Minecraft=
+Jump to speed up (additionally sprint)=
+Sneak to skip=
+
+### people.lua ###
+
+# textdomain: mcl_credits
+3D Models=
 Contributors=
 Creator of MineClone=
 Creator of MineClone2=
 Developers=
-Jump to speed up (additionally sprint)=
+Funders=
 Maintainers=
-MineClone5=
+Music=
 Original Mod Authors=
-Sneak to skip=
+Past Developers=
+Previous Maintainers=
+Special thanks=
 Textures=
 Translations=
