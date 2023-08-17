@@ -5,33 +5,26 @@
 
 # textdomain: mcl_boats
 Acacia Boat=Barca de acacia
-Acacia Chest Boat=
+Acacia Chest Boat=Barca con cofre de acacia
 Birch Boat=Barca de abedul
-Birch Chest Boat=
+Birch Chest Boat=Barca con cofre de abedul
 Boat=Barca
 Boats are used to travel on the surface of water.=Las barcas se utilizan para viajar en la superficie del agua.
-Cherry Boat=
-Cherry Chest Boat=
+Cherry Boat=Barca de cerezo
+Cherry Chest Boat=Barca con cofre de cerezo
 Dark Oak Boat=Barca de roble oscuro
-Dark Oak Chest Boat=
-Jungle Boat=Barca de la selva
-Jungle Chest Boat=
-Mangrove Boat=
-Mangrove Chest Boat=
+Dark Oak Chest Boat=Barca con cofre de roble oscuro
+Jungle Boat=Barca de Jungla
+Jungle Chest Boat=Barca con cofre de Jungla
+Mangrove Boat=Barca de Manglar
+Mangrove Chest Boat=Barca con cofre de Manglar
 Oak Boat=Barca de roble
-Oak Chest Boat=
+Oak Chest Boat=Barca con cofre de roble
 Obsidian Boat=Barca de obsidiana
 
-Rightclick on a water source to place the boat. Rightclick the boat to enter it. Use [Left] and [Right] to steer, [Forwards] to speed up and [Backwards] to slow down or move backwards. Use [Sneak] to leave the boat, punch the boat to make it drop as an item.=
+Rightclick on a water source to place the boat. Rightclick the boat to enter it. Use [Left] and [Right] to steer, [Forwards] to speed up and [Backwards] to slow down or move backwards. Use [Sneak] to leave the boat, punch the boat to make it drop as an item.=Haga clic derecho en el agua para colocar el barco. Haga clic derecho en el barco para entrar. Utilice [Izquierda] y [Derecha] para dirigir, [Adelante] para acelerar y [Atrás] para reducir la velocidad o retroceder. Agachese para bajarse, golpee el barco para llevartelo.
 
 Sneak to dismount=Agáchate para bajar
 Spruce Boat=Barca de abeto
-Spruce Chest Boat=
+Spruce Chest Boat=Barca con cofre de abeto
 Water vehicle=Vehículo acuático
-
-
-##### not used anymore #####
-
-
-Rightclick on a water source to place the boat. Rightclick the boat to enter it. Use [Left] and [Right] to steer, [Forwards] to speed up and [Backwards] to slow down or move backwards. Rightclick the boat again to leave it, punch the boat to make it drop as an item.=Haga clic derecho en una fuente de agua para colocar el barco. Haga clic derecho en el barco para entrar. Utilice [Izquierda] y [Derecha] para dirigir, [Adelante] para acelerar y [Atrás] para reducir la velocidad o retroceder. Haga clic derecho en el barco nuevamente para dejarlo, golpee el barco para que se caiga como un artículo.
-
