@@ -1,3 +1,6 @@
+local DEF_WIDTH = 5
+local DEF_HEIGHT = 10
+
 -- Leaf Decay
 local function leafdecay_particles(pos, node)
 	minetest.add_particlespawner({
@@ -120,18 +123,25 @@ function mcl_trees.grow_tree(pos, node)
 	if not mcl_trees.woods[name] or not mcl_trees.woods[name].tree_schems then return end
 	local schem = mcl_trees.woods[name].tree_schems[1]
 	table.shuffle(mcl_trees.woods[name].tree_schems)
+	local w,h
+
 	if tbt and ( name == "dark_oak" or name == "jungle" or name == "spruce" ) then
 		for _,v in pairs(mcl_trees.woods[name].tree_schems) do
-			if v.file:find("huge") or name == "dark_oak" then schem = v end
-		end
-	elseif name ~= "dark_oak" then --dark oak only grows "huge" trees
-		for _,v in pairs(mcl_trees.woods[name].tree_schems) do
-			if not v.file:find("huge") then schem = v end
+			w = v.width or DEF_WIDTH
+			h = v.height or DEF_HEIGHT
+			if v.file:find("huge") or name == "dark_oak" and mcl_trees.check_growth(pos,w,h) then schem = v end
 		end
 	end
-	local w = schem.width or 5
-	local h = schem.height or 10
-	if mcl_trees.check_growth(pos, w, h) then
+
+	if (not tbt and name ~= "dark_oak") or not schem then --dark oak only grows "huge" trees
+		for _,v in pairs(mcl_trees.woods[name].tree_schems) do
+			w = v.width or DEF_WIDTH
+			h = v.height or DEF_HEIGHT
+			if not v.file:find("huge") and mcl_trees.check_growth(pos,w,h) then schem = v end
+		end
+	end
+
+	if schem then
 		minetest.remove_node(pos)
 		if tbt then
 			for _,v in pairs(tbt) do
@@ -139,7 +149,7 @@ function mcl_trees.grow_tree(pos, node)
 			end
 			pos = ne
 		end
-		minetest.place_schematic(vector.subtract(pos, schem.offset or vector.new(math.ceil(w/2), 1, math.ceil(w/2))), schem.file, "random", nil, false)
+		minetest.place_schematic(vector.subtract(pos, schem.offset or vector.new(math.floor(w/2), 1, math.floor(w/2))), schem.file, "random", nil, false)
 
 		local nn = minetest.find_nodes_in_area(vector.offset(pos, -math.ceil(w/2), 0, -math.ceil(w/2)), vector.offset(pos, math.ceil(w/2), h, math.ceil(w/2)), {"group:leaves"})
 		for _,v in pairs(nn) do
