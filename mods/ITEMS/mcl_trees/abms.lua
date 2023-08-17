@@ -1,6 +1,3 @@
-local DEF_WIDTH = 5
-local DEF_HEIGHT = 10
-
 -- Leaf Decay
 local function leafdecay_particles(pos, node)
 	minetest.add_particlespawner({
@@ -116,6 +113,18 @@ function mcl_trees.check_growth(pos, width, height)
 	return true
 end
 
+local function check_schem_growth(pos,file)
+	if file then
+		local schem = loadstring(minetest.serialize_schematic(file, "lua", {lua_use_comments = false, lua_num_indent_spaces = 0}) .. " return schematic")()
+		local w = math.max(schem.size.x,schem.size.z)
+		local h = schem.size.y
+		if mcl_trees.check_growth(pos,w,h) then
+			return w,h
+		end
+	end
+	return false, false
+end
+
 function mcl_trees.grow_tree(pos, node)
 	local name = node.name:gsub("mcl_trees:sapling_","")
 	local tbt,ne = mcl_trees.check_2by2_saps(pos, node)
@@ -123,25 +132,23 @@ function mcl_trees.grow_tree(pos, node)
 	if not mcl_trees.woods[name] or not mcl_trees.woods[name].tree_schems then return end
 	local schem = mcl_trees.woods[name].tree_schems[1]
 	table.shuffle(mcl_trees.woods[name].tree_schems)
-	local w,h
+	local w, h
 
 	if tbt and ( name == "dark_oak" or name == "jungle" or name == "spruce" ) then
 		for _,v in pairs(mcl_trees.woods[name].tree_schems) do
-			w = v.width or DEF_WIDTH
-			h = v.height or DEF_HEIGHT
-			if v.file:find("huge") or name == "dark_oak" and mcl_trees.check_growth(pos,w,h) then schem = v end
+			w, h = check_schem_growth(pos,v.file)
+			if v.file:find("huge") or name == "dark_oak" and w and h then schem = v end
 		end
 	end
 
 	if (not tbt and name ~= "dark_oak") or not schem then --dark oak only grows "huge" trees
 		for _,v in pairs(mcl_trees.woods[name].tree_schems) do
-			w = v.width or DEF_WIDTH
-			h = v.height or DEF_HEIGHT
-			if not v.file:find("huge") and mcl_trees.check_growth(pos,w,h) then schem = v end
+			w, h = check_schem_growth(pos,v.file)
+			if not v.file:find("huge") and w and h then schem = v end
 		end
 	end
 
-	if schem then
+	if schem and w and h then
 		minetest.remove_node(pos)
 		if tbt then
 			for _,v in pairs(tbt) do
