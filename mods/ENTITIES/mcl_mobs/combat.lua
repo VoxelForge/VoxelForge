@@ -502,7 +502,11 @@ function mob_class:safe_boom(pos, strength)
 	local radius = strength
 	entity_physics(pos, radius)
 	mcl_mobs.effect(pos, 32, "mcl_particles_smoke.png", radius * 3, radius * 5, radius, 1, 0)
-	self:safe_remove()
+	if self.is_mob then
+		self:safe_remove()
+	else
+		self.object:remove()
+	end
 end
 
 
@@ -511,9 +515,13 @@ function mob_class:boom(pos, strength, fire)
 	if mobs_griefing and not minetest.is_protected(pos, "") then
 		mcl_explosions.explode(pos, strength, { fire = fire }, self.object)
 	else
-		mcl_mobs.mob_class.safe_boom(self, pos, strength) --need to call it this way bc self is the "arrow" object here
+		mcl_mobs.mob_class.safe_boom(self, pos, strength) --need to call it this way bc self can be the "arrow" object here
 	end
-	self:safe_remove()
+	if self.is_mob then
+		self:safe_remove()
+	else
+		self.object:remove()
+	end
 end
 
 -- deal damage and effects when mob punched
