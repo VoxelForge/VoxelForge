@@ -95,6 +95,9 @@
 * Michieal
 * ryvnf
 * SmokeyDope
+* Aeonix_Aeon
+* Nicu
+* Exhale
 
 ## Translations
 * Wuzzy
