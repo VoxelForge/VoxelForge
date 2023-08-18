@@ -21,6 +21,7 @@
 * PrairieWind
 * kabou
 * MrRar
+* ChrisPHP
 * chmodsayshello
 
 ## Previous Contributors
