@@ -142,8 +142,9 @@ minetest.register_node("mcl_loom:loom", {
 							pattern = pattern,
 							color = "unicolor_"..mcl_dyes.colors[cdef._color].unicolor
 						})
-						im:set_string("layers",minetest.serialize(layers))
-						inv:set_stack("output",1,obanner)
+						im:set_string("description", mcl_banners.make_advanced_banner_description(obanner:get_definition().description, layers))
+						im:set_string("layers", minetest.serialize(layers))
+						inv:set_stack("output", 1, obanner)
 					end
 				end
 			end
