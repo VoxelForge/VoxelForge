@@ -88,7 +88,8 @@ local function update_stonecutter_slots(pos,str)
 end
 
 -- Only drop the items that were in the input slot
-local function drop_stonecutter_items(pos, meta)
+local function drop_stonecutter_items(pos)
+	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 	for i=1, inv:get_size("input") do
 		local stack = inv:get_stack("input", i)
@@ -97,7 +98,6 @@ local function drop_stonecutter_items(pos, meta)
 			minetest.add_item(p, stack)
 		end
 	end
-	minetest.set_node(pos,{name="air"}) -- make sure no metadata is left behind, otherwise dupey-dupe
 end
 
 minetest.register_node("mcl_stonecutter:stonecutter", {
@@ -139,12 +139,7 @@ minetest.register_node("mcl_stonecutter:stonecutter", {
 	_mcl_blast_resistance = 3.5,
 	_mcl_hardness = 3.5,
 	sounds = mcl_sounds.node_sound_stone_defaults(),
-
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		local meta = minetest.get_meta(pos)
-		meta:from_table(oldmetadata)
-		drop_stonecutter_items(pos, meta)
-	end,
+	on_destruct = drop_stonecutter_items,
 	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then
