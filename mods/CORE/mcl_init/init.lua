@@ -2,6 +2,7 @@
 mcl_vars = {}
 
 mcl_vars.redstone_tick = 0.1
+mcl_vars.mg_overworld_min_old = -62
 
 --- GUI / inventory menu settings
 mcl_vars.gui_slots = "listcolors[#9990;#FFF7;#FFF0;#000;#FFF]"
@@ -100,8 +101,6 @@ if not superflat and not singlenode then
 
 	-- Overworld
 	mcl_vars.mg_overworld_min = -128
-	mcl_vars.mg_overworld_min_old = -62
-
 	mcl_vars.mg_overworld_max_official = mcl_vars.mg_overworld_min + minecraft_height_limit
 	mcl_vars.mg_bedrock_overworld_min = mcl_vars.mg_overworld_min
 	mcl_vars.mg_bedrock_overworld_max = mcl_vars.mg_bedrock_overworld_min + 4
@@ -111,6 +110,7 @@ if not superflat and not singlenode then
 
 elseif singlenode then
 	mcl_vars.mg_overworld_min = -130
+	mcl_vars.mg_overworld_min_old = -64
 	mcl_vars.mg_overworld_max_official = mcl_vars.mg_overworld_min + minecraft_height_limit
 	mcl_vars.mg_bedrock_overworld_min = mcl_vars.mg_overworld_min
 	mcl_vars.mg_bedrock_overworld_max = mcl_vars.mg_bedrock_overworld_min
@@ -125,6 +125,7 @@ else
 		ground = 8
 	end
 	mcl_vars.mg_overworld_min = ground - 3
+	mcl_vars.mg_overworld_min_old = mcl_vars.overworld_min
 	mcl_vars.mg_overworld_max_official = mcl_vars.mg_overworld_min + minecraft_height_limit
 	mcl_vars.mg_bedrock_overworld_min = mcl_vars.mg_overworld_min
 	mcl_vars.mg_bedrock_overworld_max = mcl_vars.mg_bedrock_overworld_min
