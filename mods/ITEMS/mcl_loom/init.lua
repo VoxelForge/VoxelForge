@@ -48,8 +48,8 @@ local function show_loom_formspec(pos)
 	mcl_formspec.get_itemslot_bg(0.5,0.7,1,1)..
 	"list[context;dye;1.5,0.7;1,1;]"..
 	mcl_formspec.get_itemslot_bg(1.5,0.7,1,1)..
-	"list[context;pattern;0.5,1.7;1,1;]"..
-	mcl_formspec.get_itemslot_bg(0.5,1.7,1,1)..
+	--"list[context;pattern;0.5,1.7;1,1;]"..
+	--mcl_formspec.get_itemslot_bg(0.5,1.7,1,1)..
 	"list[context;output;7.5,0.7;1,1;]"..
 	mcl_formspec.get_itemslot_bg(7.5,0.7,1,1)..
 	"scroll_container[2,0.15;6.8,5;pattern_scroll;vertical;0.1]"..
