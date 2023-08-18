@@ -11,6 +11,21 @@ for name,pattern in pairs(mcl_banners.patterns) do
 	end	end
 end
 
+local function drop_items(pos)
+	local meta = minetest.get_meta(pos)
+	local inv = meta:get_inventory()
+	local bstack = inv:get_stack("banner", 1)
+	local dstack = inv:get_stack("dye", 1)
+	if not bstack:is_empty() then
+		minetest.add_item(pos, bstack)
+	end
+	if not dstack:is_empty() then
+		minetest.add_item(pos, dstack)
+	end
+
+	--minetest.set_node(pos,{name="air"}) -- make sure no metadata is left behind, otherwise dupey-dupe
+end
+
 local function show_loom_formspec(pos)
 	local patterns = {}
 	local count = 0
@@ -102,12 +117,7 @@ minetest.register_node("mcl_loom:loom", {
 		local form = show_loom_formspec(pos)
 		meta:set_string("formspec", form)
 	end,
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		local meta = minetest.get_meta(pos)
-		meta:from_table(oldmetadata)
-		--drop_stonecutter_items(pos, meta)
-	end,
-
+	on_destruct = drop_items,
 	on_rightclick = function(pos, node, player, itemstack)
 		if not player:get_player_control().sneak then
 			update_slots(pos)
