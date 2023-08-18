@@ -13,18 +13,19 @@ end
 
 local function show_loom_formspec(pos)
 	local patterns = {}
+	local count = 0
 	if pos then
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
-		local color = "black"
+		local color
 		local def = minetest.registered_items[inv:get_stack("dye",1):get_name()]
 		if def and def.groups.dye and def._color then color = def._color end
 		local x_len = 0
 		local y_len = 0
-
 		if dyerecipes and color then
 			for k,v in pairs(dyerecipes) do
 				x_len = x_len + 1
+				count = count + 1
 				if x_len > 4 then
 					y_len = y_len + 1
 					x_len = 1
@@ -51,11 +52,11 @@ local function show_loom_formspec(pos)
 	mcl_formspec.get_itemslot_bg(0.5,1.7,1,1)..
 	"list[context;output;7.5,0.7;1,1;]"..
 	mcl_formspec.get_itemslot_bg(7.5,0.7,1,1)..
-	"scroll_container[2,0.15;7,5;pattern_scroll;vertical;0.1]"..
+	"scroll_container[2,0.15;6.8,5;pattern_scroll;vertical;0.1]"..
 	table.concat(patterns)..
 	"scroll_container_end[]"..
-	"scrollbaroptions[arrows=show;thumbsize=1]"..
-	"scrollbar[6.7,0;0.4,4;vertical;pattern_scroll;0.1]"..
+	"scrollbaroptions[arrows=show;thumbsize=30;min=0;max="..(count * 2).."]"..
+	"scrollbar[6.7,0;0.4,4;vertical;pattern_scroll;]"..
 	"listring[context;output]"..
 	"listring[current_player;main]"..
 	"listring[context;input]"..
