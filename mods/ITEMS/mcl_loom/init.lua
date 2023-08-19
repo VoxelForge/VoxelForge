@@ -22,8 +22,6 @@ local function drop_items(pos)
 	if not dstack:is_empty() then
 		minetest.add_item(pos, dstack)
 	end
-
-	--minetest.set_node(pos,{name="air"}) -- make sure no metadata is left behind, otherwise dupey-dupe
 end
 
 local function show_loom_formspec(pos)
