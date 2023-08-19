@@ -1,27 +1,18 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local dyerecipes = {}
-local pattern_recipes = {}
 local preview_item_prefix = "mcl_banners:banner_preview_"
 
 for name,pattern in pairs(mcl_banners.patterns) do
 	local dyes = 0
-	local pattern_item
 	for i=1,3 do for j = 1,3 do
 		if pattern[i] and pattern[i][j] == "group:dye" then
 			dyes = dyes + 1
-			if table.indexof(dyerecipes,name) == -1 then
+			if table.indexof(dyerecipes,name) == -1 and pattern.type ~= "shapeless" then
 				table.insert(dyerecipes,name) break
 			end
 		end
-		if pattern[i] and pattern[i][j] ~= "group:dye" and pattern[i][j] ~= "" then
-			pattern_item = pattern[i][j]
-		end
 	end	end
-	pattern_recipes[name] = {
-		dyes = dyes,
-		pattern_item = pattern_item,
-	}
 end
 
 local function drop_items(pos)
@@ -117,6 +108,7 @@ local function create_banner(stack,pattern,color)
 	})
 	im:set_string("description", mcl_banners.make_advanced_banner_description(stack:get_definition().description, layers))
 	im:set_string("layers", minetest.serialize(layers))
+	stack:set_count(1)
 	return stack
 end
 
@@ -158,25 +150,33 @@ minetest.register_node("mcl_loom:loom", {
 		end
 
 		if fields then
+			local meta = minetest.get_meta(pos)
+			local inv = meta:get_inventory()
 			for k,v in pairs(fields) do
-				if tostring(k) and k:find("^item_button_"..preview_item_prefix) then
+				if tostring(k) and k:find("^item_button_"..preview_item_prefix) and
+				not inv:is_empty("banner") and not inv:is_empty("dye") and inv:is_empty("output") then
 					local str = k:gsub("^item_button_","")
 					str = str:gsub("^"..preview_item_prefix,"")
 					str = str:split("-")
 					local pattern = str[1]
-					local meta = minetest.get_meta(pos)
-					local inv = meta:get_inventory()
 					local cdef = minetest.registered_items[inv:get_stack("dye",1):get_name()]
-					if not inv:is_empty("banner") and not inv:is_empty("dye") then
-						if not inv:is_empty("pattern") then
-							local pdef = minetest.registered_items[inv:get_stack("pattern",1):get_name()]
-							pattern = pdef._pattern
-						elseif not mcl_dyes.colors[cdef._color] or table.indexof(dyerecipes,pattern) == -1 then
-							pattern = nil
-						end
-						if pattern then
-							inv:set_stack("output", 1, create_banner(inv:get_stack("banner",1),pattern,cdef._color))
-						end
+					if not inv:is_empty("pattern") then
+						local pdef = minetest.registered_items[inv:get_stack("pattern",1):get_name()]
+						pattern = pdef._pattern
+						local pattern = inv:get_stack("pattern",1)
+						pattern:take_item()
+						inv:set_stack("pattern", 1, pattern)
+					elseif not mcl_dyes.colors[cdef._color] or table.indexof(dyerecipes,pattern) == -1 then
+						pattern = nil
+					end
+					if pattern then
+						local banner = inv:get_stack("banner",1)
+						local dye = inv:get_stack("dye",1)
+						dye:take_item()
+						banner:take_item()
+						inv:set_stack("dye", 1, dye)
+						inv:set_stack("banner", 1, banner)
+						inv:set_stack("output", 1, create_banner(inv:get_stack("banner",1),pattern,cdef._color))
 					end
 				end
 			end
@@ -191,7 +191,7 @@ minetest.register_node("mcl_loom:loom", {
 			return 0
 		elseif listname == "output" then
 			local inv = minetest.get_meta(pos):get_inventory()
-			return math.min(inv:get_stack("banner",1):get_count(),inv:get_stack("dye",1):get_count())
+			return inv:get_stack("banner",1):get_count()
 		else
 			return stack:get_count()
 		end
@@ -231,18 +231,6 @@ minetest.register_node("mcl_loom:loom", {
 		update_slots(pos)
 	end,
 	on_metadata_inventory_take = function(pos, listname, index, stack, player)
-		local meta = minetest.get_meta(pos)
-		if listname == "output" then
-			local inv = meta:get_inventory()
-			local banner = inv:get_stack("banner", 1)
-			local dye = inv:get_stack("dye", 1)
-			local dye_count = stack:get_count() * (tonumber(pattern_recipes[stack:get_meta():get_string("last_pattern")]) or 1)
-			local banner_count = stack:get_count()
-			banner:take_item(banner_count)
-			dye:take_item(dye_count)
-			inv:set_stack("banner", 1, banner)
-			inv:set_stack("dye", 1, dye)
-		end
 		update_slots(pos)
 	end,
 })
