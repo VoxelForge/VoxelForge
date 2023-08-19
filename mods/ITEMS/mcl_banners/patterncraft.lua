@@ -121,6 +121,16 @@ local patterns = {
 		type = "shapeless",
 		{ e, "mcl_core:apple_gold_enchanted", d },
 	},
+	["globe"] = {
+		name = W("@1 Globe Charge"),
+		type = "shapeless",
+		{ e, "mcl_banners:pattern_globe", d },
+	},
+	["piglin"] = {
+		name = W("@1 Piglin Charge"),
+		type = "shapeless",
+		{ e, "mcl_banners:pattern_piglin", d },
+	},
 	["rhombus"] = {
 		name = W("@1 Lozenge"),
 		{ e, d, e },

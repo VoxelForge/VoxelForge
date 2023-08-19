@@ -9,6 +9,7 @@ local node_sounds
 if minetest.get_modpath("mcl_sounds") then
 	node_sounds = mcl_sounds.node_sound_wood_defaults()
 end
+dofile(modpath.."/items.lua")
 
 -- Helper function
 local function round(num, idp)
@@ -83,6 +84,8 @@ local pattern_names = {
       "triangle_top",
       "triangles_bottom",
       "triangles_top",
+      "globe",
+      "piglin",
 }
 
 local colors_reverse = {}

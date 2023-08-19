@@ -2,7 +2,6 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 local dyerecipes = {}
 local pattern_recipes = {}
-local item_pattern = {}
 local preview_item_prefix = "mcl_banners:banner_preview_"
 
 for name,pattern in pairs(mcl_banners.patterns) do
@@ -23,9 +22,6 @@ for name,pattern in pairs(mcl_banners.patterns) do
 		dyes = dyes,
 		pattern_item = pattern_item,
 	}
-	if pattern_item then
-		item_pattern[pattern_item] = name
-	end
 end
 
 local function drop_items(pos)
@@ -48,17 +44,16 @@ local function show_loom_formspec(pos)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		local color
-		local pattern
 		local def = minetest.registered_items[inv:get_stack("dye",1):get_name()]
 		local pitem = inv:get_stack("pattern",1):get_name()
+		local pdef = minetest.registered_items[pitem]
 		if def and def.groups.dye and def._color then color = def._color end
-		if item_pattern[pitem] then pattern = item_pattern[pitem] end
 		local x_len = 0
 		local y_len = 0
 		if not inv:is_empty("banner") then
-			if color and pattern and pattern_recipes[pattern] then
-				local it = preview_item_prefix .. pattern .. "_" .. color
-				local name = preview_item_prefix .. pattern .. "-" .. color
+			if color and pdef and pdef._pattern then
+				local it = preview_item_prefix .. pdef._pattern .. "_" .. color
+				local name = preview_item_prefix .. pdef._pattern .. "-" .. color
 				table.insert(patterns,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",1,0,1,1, it, "item_button_"..name, ""))
 			elseif dyerecipes and color then
 				for k,v in pairs(dyerecipes) do
@@ -172,9 +167,16 @@ minetest.register_node("mcl_loom:loom", {
 					local meta = minetest.get_meta(pos)
 					local inv = meta:get_inventory()
 					local cdef = minetest.registered_items[inv:get_stack("dye",1):get_name()]
-					if not inv:is_empty("banner") and not inv:is_empty("dye") and cdef
-						and mcl_dyes.colors[cdef._color] and table.indexof(dyerecipes,pattern) ~= -1 then
-						inv:set_stack("output", 1, create_banner(inv:get_stack("banner",1),pattern,cdef._color))
+					if not inv:is_empty("banner") and not inv:is_empty("dye") then
+						if not inv:is_empty("pattern") then
+							local pdef = minetest.registered_items[inv:get_stack("pattern",1):get_name()]
+							pattern = pdef._pattern
+						elseif not mcl_dyes.colors[cdef._color] or table.indexof(dyerecipes,pattern) == -1 then
+							pattern = nil
+						end
+						if pattern then
+							inv:set_stack("output", 1, create_banner(inv:get_stack("banner",1),pattern,cdef._color))
+						end
 					end
 				end
 			end
@@ -205,7 +207,7 @@ minetest.register_node("mcl_loom:loom", {
 		elseif listname == "output" then return 0
 		elseif listname == "banner" and minetest.get_item_group(stack:get_name(),"banner") == 0 then return 0
 		elseif listname == "dye" and minetest.get_item_group(stack:get_name(),"dye") == 0 then return 0
-		elseif listname == "pattern" and not item_pattern[stack:get_name()] then return 0
+		elseif listname == "pattern" and minetest.get_item_group(stack:get_name(),"banner_pattern") == 0 then return 0
 		else
 			return stack:get_count()
 		end
