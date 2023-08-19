@@ -91,6 +91,22 @@ local function update_slots(pos)
 	end
 end
 
+local function create_banner(stack,pattern,color)
+	local im = stack:get_meta()
+	local layers = {}
+	local old_layers = im:get_string("layers")
+	if old_layers ~= "" then
+		layers = minetest.deserialize(old_layers)
+	end
+	table.insert(layers,{
+		pattern = pattern,
+		color = "unicolor_"..mcl_dyes.colors[color].unicolor
+	})
+	im:set_string("description", mcl_banners.make_advanced_banner_description(stack:get_definition().description, layers))
+	im:set_string("layers", minetest.serialize(layers))
+	return stack
+end
+
 minetest.register_node("mcl_loom:loom", {
 	description = S("Loom"),
 	_tt_help = S("Used to create banner designs"),
@@ -140,20 +156,7 @@ minetest.register_node("mcl_loom:loom", {
 					local cdef = minetest.registered_items[inv:get_stack("dye",1):get_name()]
 					if not inv:is_empty("banner") and not inv:is_empty("dye") and cdef
 						and mcl_dyes.colors[cdef._color] and table.indexof(dyerecipes,pattern) ~= -1 then
-						local obanner = inv:get_stack("banner",1)
-						local im = obanner:get_meta()
-						local layers = {}
-						local old_layers = im:get_string("layers")
-						if old_layers ~= "" then
-							layers = minetest.deserialize(old_layers)
-						end
-						table.insert(layers,{
-							pattern = pattern,
-							color = "unicolor_"..mcl_dyes.colors[cdef._color].unicolor
-						})
-						im:set_string("description", mcl_banners.make_advanced_banner_description(obanner:get_definition().description, layers))
-						im:set_string("layers", minetest.serialize(layers))
-						inv:set_stack("output", 1, obanner)
+						inv:set_stack("output", 1, create_banner(inv:get_stack("banner",1),pattern,cdef._color))
 					end
 				end
 			end
