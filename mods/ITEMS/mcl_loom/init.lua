@@ -1,14 +1,31 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local dyerecipes = {}
+local pattern_recipes = {}
+local item_pattern = {}
 local preview_item_prefix = "mcl_banners:banner_preview_"
 
 for name,pattern in pairs(mcl_banners.patterns) do
+	local dyes = 0
+	local pattern_item
 	for i=1,3 do for j = 1,3 do
-		if pattern[i] and pattern[i][j] == "group:dye" and table.indexof(dyerecipes,name) == -1 then
-			table.insert(dyerecipes,name) break
+		if pattern[i] and pattern[i][j] == "group:dye" then
+			dyes = dyes + 1
+			if table.indexof(dyerecipes,name) == -1 then
+				table.insert(dyerecipes,name) break
+			end
+		end
+		if pattern[i] and pattern[i][j] ~= "group:dye" and pattern[i][j] ~= "" then
+			pattern_item = pattern[i][j]
 		end
 	end	end
+	pattern_recipes[name] = {
+		dyes = dyes,
+		pattern_item = pattern_item,
+	}
+	if pattern_item then
+		item_pattern[pattern_item] = name
+	end
 end
 
 local function drop_items(pos)
@@ -31,21 +48,30 @@ local function show_loom_formspec(pos)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		local color
+		local pattern
 		local def = minetest.registered_items[inv:get_stack("dye",1):get_name()]
+		local pitem = inv:get_stack("pattern",1):get_name()
 		if def and def.groups.dye and def._color then color = def._color end
+		if item_pattern[pitem] then pattern = item_pattern[pitem] end
 		local x_len = 0
 		local y_len = 0
-		if dyerecipes and color then
-			for k,v in pairs(dyerecipes) do
-				x_len = x_len + 1
-				count = count + 1
-				if x_len > 4 then
-					y_len = y_len + 1
-					x_len = 1
+		if not inv:is_empty("banner") then
+			if color and pattern and pattern_recipes[pattern] then
+				local it = preview_item_prefix .. pattern .. "_" .. color
+				local name = preview_item_prefix .. pattern .. "-" .. color
+				table.insert(patterns,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",1,0,1,1, it, "item_button_"..name, ""))
+			elseif dyerecipes and color then
+				for k,v in pairs(dyerecipes) do
+					x_len = x_len + 1
+					count = count + 1
+					if x_len > 4 then
+						y_len = y_len + 1
+						x_len = 1
+					end
+					local it = preview_item_prefix .. v .. "_" .. color
+					local name = preview_item_prefix .. v .. "-" .. color
+					table.insert(patterns,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",x_len,y_len,1,1, it, "item_button_"..name, ""))
 				end
-				local it = preview_item_prefix .. v .. "_" .. color
-				local name = preview_item_prefix .. v .. "-" .. color
-				table.insert(patterns,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",x_len,y_len,1,1, it, "item_button_"..name, ""))
 			end
 		end
 	end
@@ -61,8 +87,8 @@ local function show_loom_formspec(pos)
 	mcl_formspec.get_itemslot_bg(0.5,0.7,1,1)..
 	"list[context;dye;1.5,0.7;1,1;]"..
 	mcl_formspec.get_itemslot_bg(1.5,0.7,1,1)..
-	--"list[context;pattern;0.5,1.7;1,1;]"..
-	--mcl_formspec.get_itemslot_bg(0.5,1.7,1,1)..
+	"list[context;pattern;0.5,1.7;1,1;]"..
+	mcl_formspec.get_itemslot_bg(0.5,1.7,1,1)..
 	"list[context;output;7.5,0.7;1,1;]"..
 	mcl_formspec.get_itemslot_bg(7.5,0.7,1,1)..
 	"scroll_container[2,0.15;6.8,5;pattern_scroll;vertical;0.1]"..
@@ -80,15 +106,7 @@ end
 
 local function update_slots(pos)
 	local meta = minetest.get_meta(pos)
-	local inv = meta:get_inventory()
-	--local banner = inv:get_stack("banner", 1)
-	local dye = inv:get_stack("dye", 1)
-	--local pattern = inv:get_stack("pattern", 1)
-	if minetest.get_item_group(dye:get_name(),"dye") > 0 then
-		meta:set_string("formspec", show_loom_formspec(pos))
-	else
-		meta:set_string("formspec", show_loom_formspec(pos))
-	end
+	meta:set_string("formspec", show_loom_formspec(pos))
 end
 
 local function create_banner(stack,pattern,color)
@@ -187,7 +205,7 @@ minetest.register_node("mcl_loom:loom", {
 		elseif listname == "output" then return 0
 		elseif listname == "banner" and minetest.get_item_group(stack:get_name(),"banner") == 0 then return 0
 		elseif listname == "dye" and minetest.get_item_group(stack:get_name(),"dye") == 0 then return 0
-		elseif listname == "pattern" and minetest.get_item_group(stack:get_name(),"banner_pattern") == 0 then return 0
+		elseif listname == "pattern" and not item_pattern[stack:get_name()] then return 0
 		else
 			return stack:get_count()
 		end
@@ -216,8 +234,10 @@ minetest.register_node("mcl_loom:loom", {
 			local inv = meta:get_inventory()
 			local banner = inv:get_stack("banner", 1)
 			local dye = inv:get_stack("dye", 1)
-			banner:take_item(stack:get_count())
-			dye:take_item(stack:get_count())
+			local dye_count = stack:get_count() * (tonumber(pattern_recipes[stack:get_meta():get_string("last_pattern")]) or 1)
+			local banner_count = stack:get_count()
+			banner:take_item(banner_count)
+			dye:take_item(dye_count)
 			inv:set_stack("banner", 1, banner)
 			inv:set_stack("dye", 1, dye)
 		end
