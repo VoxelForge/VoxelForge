@@ -37,7 +37,9 @@ local function wither_spawn(pos)
 			local schem = wither_spawn_schems[d]
 			if check_schem(p, schem) then
 				remove_schem(p, schem)
-				minetest.add_entity(vector.add(p, {x = 0, y = 1, z = 0, [d] = 1}), "mobs_mc:wither")
+				local wither = minetest.add_entity(vector.add(p, {x = 0, y = 1, z = 0, [d] = 1}), "mobs_mc:wither")
+				local wither_ent = wither:get_luaentity()
+				wither_ent._spawner = player:get_player_name()
 				local objects = minetest.get_objects_inside_radius(pos, 20)
 				for _, players in ipairs(objects) do
 					if players:is_player() then
