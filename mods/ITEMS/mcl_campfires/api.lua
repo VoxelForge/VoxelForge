@@ -14,11 +14,10 @@ local drop_inventory = mcl_util.drop_items_from_meta_container("main")
 
 local function campfire_drops(pos, digger, drops, nodename)
 	local wield_item = digger:get_wielded_item()
-	local silk_touch = mcl_enchanting.has_enchantment(wield_item, "silk_touch")
 	local is_creative = minetest.is_creative_enabled(digger:get_player_name())
 	local inv = digger:get_inventory()
 	if not is_creative then
-		if silk_touch then
+		if mcl_enchanting.has_enchantment(wield_item, "silk_touch") then
 			minetest.add_item(pos, nodename)
 		else
 			minetest.add_item(pos, drops)
@@ -38,9 +37,9 @@ local function drop_items(pos, node, oldmeta)
 				if food_entity:get_luaentity().name == "mcl_campfires:food_entity" then
 					food_entity:remove()
 					for i = 1, 4 do
-						meta:set_string("food_x_"..tostring(i), nil)
-						meta:set_string("food_y_"..tostring(i), nil)
-						meta:set_string("food_z_"..tostring(i), nil)
+						meta:set_string("food_x_"..tostring(i), "")
+						meta:set_string("food_y_"..tostring(i), "")
+						meta:set_string("food_z_"..tostring(i), "")
 					end
 				end
 			end
@@ -310,17 +309,17 @@ minetest.register_globalstep(function(dtime)
 	end
 end)
 
-function mcl_campfires.generate_smoke(pos, haybale)
+function mcl_campfires.generate_smoke(pos)
 	local smoke_timer
 
-	if haybale then
+	if minetest.get_node(vector.offset(pos, 0, -1, 0)).name == "mcl_farming:hay_block" then
 		smoke_timer = 8
 	else
 		smoke_timer = 4.75
 	end
 
 	minetest.add_particle({
-		pos = vector.offset(pos, math.random(-0.5, 0.5), 0, math.random(-0.5, 0.5)),
+		pos = vector.offset(pos, math.random(-0.5, 0.5), 0.5, math.random(-0.5, 0.5)),
 		velocity = vector.new(0, 1, 0),
 		texture = "mcl_particles_smoke.png",
 		size = 10,
@@ -330,17 +329,26 @@ function mcl_campfires.generate_smoke(pos, haybale)
 	})
 end
 
+-- Register Visual Food Entity
+minetest.register_entity("mcl_campfires:food_entity", {
+	initial_properties = {
+		physical = false,
+		visual = "wielditem",
+		wield_item = "",
+		wield_image = "blank.png",
+		visual_size = {x=0.25, y=0.25},
+		collisionbox = {0,0,0,0,0,0},
+		pointable = false,
+	},
+	on_activate = function(self, staticdata)
+		self.object:set_rotation({x = math.pi / -2, y = 0, z = 0})
+	end,
+})
+
 minetest.register_abm({
 	label = "Campfire Smoke",
 	nodenames = {"group:lit_campfire"},
 	interval = 2,
 	chance = 2,
-	action = function(pos, node)
-		local node_below = vector.offset(pos, 0, -1, 0)
-		local haybale = false
-		if minetest.get_node(node_below).name == "mcl_farming:hay_block" then
-			haybale = true
-		end
-		mcl_campfires.generate_smoke(pos, haybale)
-	end,
+	action = mcl_campfires.generate_smoke,
 })
