@@ -73,7 +73,7 @@ function mcl_campfires.take_item(pos, node, player, itemstack)
 		if cookable then
 			for space = 1, 4 do -- Cycle through spots
 				local spot = campfire_inv:get_stack("main", space)
-				if not spot or spot == (ItemStack("") or ItemStack("nil")) then -- Check if the spot is empty or not
+				if spot:is_empty() then -- Check if the spot is empty or not
 					if not is_creative then itemstack:take_item(1) end -- Take the item if in creative
 					campfire_inv:set_stack("main", space, stack) -- Set the inventory itemstack at the empty spot
 					campfire_meta:set_int("cooktime_"..tostring(space), COOK_TIME) -- Set the cook time meta
