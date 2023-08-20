@@ -25,6 +25,7 @@ mcl_trees.register_wood("cherry_blossom",{
 	},
 	leaves = {
 		tiles = { "mcl_cherry_blossom_leaves.png" },
+		paramtype2 = "none",
 		palette = "", --no biome coloring
 	},
 	stripped = {

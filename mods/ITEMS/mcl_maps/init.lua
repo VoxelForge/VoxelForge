@@ -70,7 +70,9 @@ function mcl_maps.create_map(pos)
 							local def = minetest.registered_nodes[nodename]
 							if def then
 								local texture
-								if def.palette then
+								if def.palette and def.palette ~= "" and ( def.paramtype2 == "color" or
+									def.paramtype2 == "colorwallmounted" or def.paramtype2 == "colorfacedir" or
+									def.paramtype2 == "color4dir" ) then
 									texture = def.palette
 								elseif def.tiles then
 									texture = def.tiles[1]
@@ -81,7 +83,9 @@ function mcl_maps.create_map(pos)
 								if texture then
 									texture = texture:match("([^=^%^]-([^.]+))$"):split("^")[1]
 								end
-								if def.palette then
+								if def.palette and def.palette ~= "" and ( def.paramtype2 == "color" or
+									def.paramtype2 == "colorwallmounted" or def.paramtype2 == "colorfacedir" or
+									def.paramtype2 == "color4dir" ) then
 									local palette = palettes[texture]
 									color = palette and { palette = palette }
 								elseif texture_colors then

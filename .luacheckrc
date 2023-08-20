@@ -23,6 +23,7 @@ globals = {
 	"xpanes",
 	"tnt",
 	"tsm_railcorridors",
+	"tga_encoder",
 	"mcl_achievements",
 	"mcl_amethyst",
 	"mcl_anvils",
