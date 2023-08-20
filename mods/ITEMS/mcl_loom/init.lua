@@ -1,4 +1,6 @@
 local S = minetest.get_translator(minetest.get_current_modname())
+local C = minetest.colorize
+local F = minetest.formspec_escape
 
 local dyerecipes = {}
 local preview_item_prefix = "mcl_banners:banner_preview_"
@@ -50,7 +52,7 @@ local function show_loom_formspec(pos)
 				for k,v in pairs(dyerecipes) do
 					x_len = x_len + 1
 					count = count + 1
-					if x_len > 4 then
+					if x_len > 5 then
 						y_len = y_len + 1
 						x_len = 1
 					end
@@ -62,31 +64,49 @@ local function show_loom_formspec(pos)
 		end
 	end
 
-	local formspec = "size[9,8.75]"..
-	"label[0,4.0;"..minetest.formspec_escape(minetest.colorize("#313131", S("Inventory"))).."]"..
-	"label[1,0.1;"..minetest.formspec_escape(minetest.colorize("#313131", S("Loom"))).."]"..
-	"list[current_player;main;0,4.5;9,3;9]"..
-	mcl_formspec.get_itemslot_bg(0,4.5,9,3)..
-	"list[current_player;main;0,7.74;9,1;]"..
-	mcl_formspec.get_itemslot_bg(0,7.74,9,1)..
-	"list[context;banner;0.5,0.7;1,1;]"..
-	mcl_formspec.get_itemslot_bg(0.5,0.7,1,1)..
-	"list[context;dye;1.5,0.7;1,1;]"..
-	mcl_formspec.get_itemslot_bg(1.5,0.7,1,1)..
-	"list[context;pattern;0.5,1.7;1,1;]"..
-	mcl_formspec.get_itemslot_bg(0.5,1.7,1,1)..
-	"list[context;output;7.5,0.7;1,1;]"..
-	mcl_formspec.get_itemslot_bg(7.5,0.7,1,1)..
-	"scroll_container[2,0.15;6.8,5;pattern_scroll;vertical;0.1]"..
+	local formspec =
+	"formspec_version[4]"..
+	"size[11.75,10.425]"..
+	"label[0.375,0.375;" .. F(C(mcl_formspec.label_color, S("Loom"))) .. "]"..
+
+		--mcl_formspec.get_itemslot_bg_v4(3.5, 0.75, 1, 1),
+		--"list[context;src;3.5,0.75;1,1;]",
+
+	mcl_formspec.get_itemslot_bg_v4(0.5,1,1,1,0)..
+	mcl_formspec.get_itemslot_bg_v4(0.5,1,1,1,0,"mcl_loom_itemslot_bg_banner.png")..
+	"list[context;banner;0.5,1;1,1;]"..
+	mcl_formspec.get_itemslot_bg_v4(1.75,1,1,1)..
+	mcl_formspec.get_itemslot_bg_v4(1.75,1,1,1,0,"mcl_loom_itemslot_bg_dye.png")..
+	"list[context;dye;1.75,1;1,1;]"..
+	mcl_formspec.get_itemslot_bg_v4(0.5,2.25,1,1)..
+	mcl_formspec.get_itemslot_bg_v4(0.5,2.25,1,1,0,"mcl_loom_itemslot_bg_pattern.png")..
+	"list[context;pattern;0.5,2.25;1,1;]"..
+
+	"scroll_container[2.375,0.375;8.8,4;pattern_scroll;vertical;0.1]"..
 	table.concat(patterns)..
 	"scroll_container_end[]"..
-	"scrollbaroptions[arrows=show;thumbsize=30;min=0;max="..(count * 2).."]"..
-	"scrollbar[6.7,0;0.4,4;vertical;pattern_scroll;]"..
+	"scrollbaroptions[arrows=show;thumbsize=30;min=0;max="..(count).."]"..
+	"scrollbar[8.5,0.375;0.4,4;vertical;pattern_scroll;]"..
+
+
+	mcl_formspec.get_itemslot_bg_v4(9.5,1.5,1,1)..
+	"list[context;output;9.5,1.5;1,1;]"..
+
+	"label[0.375,4.7;" .. F(C(mcl_formspec.label_color, S("Inventory"))) .. "]"..
+	mcl_formspec.get_itemslot_bg_v4(0.375, 5.1, 9, 3)..
+	"list[current_player;main;0.375,5.1;9,3;9]"..
+
+	mcl_formspec.get_itemslot_bg_v4(0.375, 9.05, 9, 1)..
+	"list[current_player;main;0.375,9.05;9,1;]"..
+
 	"listring[context;output]"..
 	"listring[current_player;main]"..
-	"listring[context;input]"..
+	"listring[context;banner]"..
+	"listring[current_player;main]"..
+	"listring[context;dye]"..
+	"listring[current_player;main]"..
+	"listring[context;pattern]"..
 	"listring[current_player;main]"
-
 	return formspec
 end
 
