@@ -109,6 +109,7 @@ mcl_mobs.register_mob("mobs_mc:zombie", zombie)
 
 local baby_zombie = table.merge(zombie, {
 	description = S("Baby Zombie"),
+	visual_size = { x = 0.5, y = 0.5, z = 0.5 },
 	collisionbox = {-0.25, -0.01, -0.25, 0.25, 0.98, 0.25},
 	xp_min = 12,
 	xp_max = 12,
