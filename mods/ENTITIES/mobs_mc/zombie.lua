@@ -107,21 +107,22 @@ mcl_mobs.register_mob("mobs_mc:zombie", zombie)
 -- Baby zombie.
 -- A smaller and more dangerous variant of the zombie
 
-local baby_zombie = table.copy(zombie)
-baby_zombie.description = S("Baby Zombie")
-baby_zombie.collisionbox = {-0.25, -0.01, -0.25, 0.25, 0.98, 0.25}
-baby_zombie.xp_min = 12
-baby_zombie.xp_max = 12
-baby_zombie.walk_velocity = 1.2
-baby_zombie.run_velocity = 2.4
-baby_zombie.child = 1
-baby_zombie.reach = 1
-baby_zombie.animation = {
-	stand_start = 100, stand_end = 109, stand_speed = 2,
-	walk_start = 60, walk_end = 99, speed_normal = 40,
-	run_start = 60, run_end = 99, speed_run = 80,
-	punch_start = 109, punch_end = 119
-}
+local baby_zombie = table.merge(zombie, {
+	description = S("Baby Zombie"),
+	collisionbox = {-0.25, -0.01, -0.25, 0.25, 0.98, 0.25},
+	xp_min = 12,
+	xp_max = 12,
+	walk_velocity = 1.2,
+	run_velocity = 2.4,
+	child = 1,
+	reach = 1,
+	animation = {
+		stand_start = 100, stand_end = 109, stand_speed = 2,
+		walk_start = 60, walk_end = 99, speed_normal = 40,
+		run_start = 60, run_end = 99, speed_run = 80,
+		punch_start = 109, punch_end = 119
+	},
+})
 
 mcl_mobs.register_mob("mobs_mc:baby_zombie", baby_zombie)
 
