@@ -181,7 +181,7 @@ minetest.register_node("mcl_crimson:warped_fungus", {
 })
 
 mcl_flowerpots.register_potted_flower("mcl_crimson:warped_fungus", {
-	name = "warped fungus",
+	name = "warped_fungus",
 	desc = S("Warped Fungus"),
 	image = "farming_warped_fungus.png",
 })
@@ -367,7 +367,7 @@ minetest.register_node("mcl_crimson:warped_roots", {
 })
 
 mcl_flowerpots.register_potted_flower("mcl_crimson:warped_roots", {
-	name = "warped roots",
+	name = "warped_roots",
 	desc = S("Warped Roots"),
 	image = "warped_roots.png",
 })
@@ -460,7 +460,7 @@ minetest.register_node("mcl_crimson:crimson_fungus", {
 })
 
 mcl_flowerpots.register_potted_flower("mcl_crimson:crimson_fungus", {
-	name = "crimson fungus",
+	name = "crimson_fungus",
 	desc = S("Crimson Fungus"),
 	image = "farming_crimson_fungus.png",
 })
@@ -486,7 +486,7 @@ minetest.register_node("mcl_crimson:crimson_roots", {
 })
 
 mcl_flowerpots.register_potted_flower("mcl_crimson:crimson_roots", {
-	name = "crimson roots",
+	name = "crimson_roots",
 	desc = S("Crimson Roots"),
 	image = "crimson_roots.png",
 })
@@ -588,3 +588,5 @@ minetest.register_craft({
 		{"mcl_core:stick", warped_wood, "mcl_core:stick"},
 	}
 })
+
+dofile(modpath.."/alias.lua")
