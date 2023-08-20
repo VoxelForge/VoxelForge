@@ -164,6 +164,7 @@ mcl_structures.register_structure("nether_bulwark",{
 				{ itemstring = "mcl_core:goldblock", weight = 1, },
 				{ itemstring = "mcl_tools:sword_gold", weight = 1, },
 				{ itemstring = "mcl_jukebox:record_8", weight = 5 },
+				{ itemstring = "mcl_banners:pattern_piglin", weight = 9 },
 				{ itemstring = "mcl_tools:axe_gold", weight = 1, func = function(stack, pr)mcl_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
 				{ itemstring = "mcl_armor:helmet_gold", weight = 1, func = function(stack, pr)mcl_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
 				{ itemstring = "mcl_armor:chestplate_gold", weight = 1, func = function(stack, pr)mcl_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },

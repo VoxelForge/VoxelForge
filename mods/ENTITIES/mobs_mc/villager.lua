@@ -267,7 +267,6 @@ local professions = {
 			},
 			{
 			{ { "mcl_core:emerald", 7, 7}, { "mcl_itemframes:item_frame", 1, 1 }},
-
 			{ { "mcl_core:emerald", 7, 7}, { "mcl_banners:banner_item_white", 1, 1 }},
 			{ { "mcl_core:emerald", 7, 7}, { "mcl_banners:banner_item_grey", 1, 1 }},
 			{ { "mcl_core:emerald", 7, 7}, { "mcl_banners:banner_item_silver", 1, 1 }},
@@ -285,7 +284,7 @@ local professions = {
 			{ { "mcl_core:emerald", 7, 7}, { "mcl_banners:banner_item_light_blue", 1, 1 }},
 			},
 			{
-			--{ { "mcl_core:emerald", 8, 8}, { "FIXME: globe banner pattern", 1, 1 } },
+			{ { "mcl_core:emerald", 8, 8}, { "mcl_banners:pattern_globe", 1, 1 } },
 			},
 			-- TODO: special maps
 		},
