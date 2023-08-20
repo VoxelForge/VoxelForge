@@ -51,7 +51,6 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 	jump = true,
 	jump_height = 10,
 	fly = true,
-	makes_footstep_sound = false,
 	dogshoot_switch = 1,
 	dogshoot_count_max = 1,
 	attack_animals = true,
@@ -146,6 +145,7 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 				self._health_old = self.health
 			end
 		end
+		local rand_factor
 		if self.health < (self.hp_max / 2) then
 			self.base_texture = "mobs_mc_wither_half_health.png"
 			self.fly = false

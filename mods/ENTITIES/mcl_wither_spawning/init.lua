@@ -30,7 +30,7 @@ local function remove_schem(pos, schem)
 	end
 end
 
-local function wither_spawn(pos)
+local function wither_spawn(pos, player)
 	for _, d in pairs(dim) do
 		for i = 0, 2 do
 			local p = vector.add(pos, {x = 0, y = -2, z = 0, [d] = -i})
@@ -53,10 +53,12 @@ end
 
 local wither_head = minetest.registered_nodes["mcl_heads:wither_skeleton"]
 local old_on_place = wither_head.on_place
-function wither_head.on_place(itemstack, placer, pointed)
-	local n = minetest.get_node(vector.offset(pointed.above,0,-1,0))
-	if n and n.name  == "mcl_nether:soul_sand" then
-		minetest.after(0, wither_spawn, pointed.above)
+minetest.override_item("mcl_heads:wither_skeleton",{
+	on_place = function(itemstack, placer, pointed)
+		local n = minetest.get_node(vector.offset(pointed.above,0,-1,0))
+		if n and n.name  == "mcl_nether:soul_sand" then
+			minetest.after(0, wither_spawn, pointed.above, placer)
+		end
+		return old_on_place(itemstack, placer, pointed)
 	end
-	return old_on_place(itemstack, placer, pointed)
-end
+})
