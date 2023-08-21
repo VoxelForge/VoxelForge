@@ -8,7 +8,7 @@
 @1 (got)=@1 (получено)
 @1: @2=@1: @2
 @1’s awards:=Награды @1:
-(Secret Award)=(Секретная награда)
+(Secret Advancement)=(Секретное достижение)
 <achievement ID>=<идентификатор достижения>
 <name>=<имя>
 Advancement Made!=Получено достижение!

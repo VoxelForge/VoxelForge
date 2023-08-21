@@ -22,6 +22,7 @@ Bamboo Mosaic Stair=
 Bamboo Plank Slab=
 Bamboo Plank Stair=
 Bamboo Pressure Plate=
+Bamboo Sign=
 Bamboo Slab=
 Bamboo Stair=
 Bamboo Trapdoor.=

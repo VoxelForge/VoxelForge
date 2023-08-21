@@ -1,6 +1,7 @@
 mcl_sus_stew = {}
 mcl_sus_stew.registered_stews = {}
 local item_effect = {}
+local S = minetest.get_translator(minetest.get_current_modname())
 
 local function get_random_effect()
 	local keys = {}
@@ -73,7 +74,7 @@ mcl_sus_stew.register_stew("night_vision","mcl_flowers:poppy",potion_effect)
 mcl_sus_stew.register_stew("harming","mcl_flowers:wither_rose",potion_effect) -- in place of real wither effect
 
 minetest.register_craftitem("mcl_sus_stew:stew",{
-	description = "Suspicious Stew",
+	description = S("Suspicious Stew"),
 	inventory_image = "sus_stew.png",
 	stack_max = 1,
 	on_place = eat_stew,
