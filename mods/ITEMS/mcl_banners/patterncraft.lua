@@ -119,7 +119,7 @@ local patterns = {
 
 		name = W("@1 Thing Charge"),
 		type = "shapeless",
-		{ e, "mcl_core:apple_gold_enchanted", d },
+		{ e, "mcl_banners:pattern_thing", d },
 	},
 	["globe"] = {
 		name = W("@1 Globe Charge"),
@@ -140,7 +140,7 @@ local patterns = {
 	["skull"] = {
 		name = W("@1 Skull Charge"),
 		type = "shapeless",
-		{ e, "mcl_heads:wither_skeleton", d },
+		{ e, "mcl_banners:pattern_skull", d },
 	},
 	["small_stripes"] = {
 		name = W("@1 Paly"),

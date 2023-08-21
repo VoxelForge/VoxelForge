@@ -47,7 +47,7 @@ local function show_loom_formspec(pos)
 			if color and pdef and pdef._pattern then
 				local it = preview_item_prefix .. pdef._pattern .. "_" .. color
 				local name = preview_item_prefix .. pdef._pattern .. "-" .. color
-				table.insert(patterns,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",1,0,1,1, it, "item_button_"..name, ""))
+				table.insert(patterns,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",0.1,0.1,1,1, it, "item_button_"..name, ""))
 			elseif dyerecipes and color then
 				for k,v in pairs(dyerecipes) do
 					if x_len > 5 then
@@ -87,8 +87,7 @@ local function show_loom_formspec(pos)
 	table.concat(patterns)..
 	"scroll_container_end[]"..
 	"scrollbaroptions[arrows=show;thumbsize=30;min=0;max="..(count + 5).."]"..
-	"scrollbar[8.5,0.375;0.4,4;vertical;pattern_scroll;]"..
-
+	"scrollbar[8.5,0.75;0.4,3.5;vertical;pattern_scroll;]"..
 
 	mcl_formspec.get_itemslot_bg_v4(9.5,1.5,1,1)..
 	"list[context;output;9.5,1.5;1,1;]"..
