@@ -4,6 +4,8 @@
 
 
 local S = minetest.get_translator("mcl_stonecutter")
+local C = minetest.colorize
+local F = minetest.formspec_escape
 
 local recipe_yield = { --maps itemgroup to the respective recipe yield, default is 1
 	["slab"] = 2,
@@ -31,32 +33,46 @@ end)
 -- formspecs
 local function show_stonecutter_formspec(input)
 	local cut_items = {}
-	local x_len = 0
-	local y_len = 0.5
-
+	local x_len = 0.1
+	local y_len = 0.1
+	local count = 0
 	if recipes[input] then
 		for k,v in pairs(recipes[input]) do
-			x_len = x_len + 1
 			if x_len > 5 then
 				y_len = y_len + 1
-				x_len = 1
+				x_len = 0.1
 			end
-			table.insert(cut_items,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",x_len+1,y_len,1,1, v, "item_button_"..v, ""))
+			table.insert(cut_items,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",x_len,y_len,1,1, v, "item_button_"..v, ""))
+			x_len = x_len + 1
+			count = count + 1
 		end
 	end
 
-	local formspec = "size[9,8.75]"..
-	"label[0,4.0;"..minetest.formspec_escape(minetest.colorize("#313131", S("Inventory"))).."]"..
-	"label[1,0.1;"..minetest.formspec_escape(minetest.colorize("#313131", S("Stone Cutter"))).."]"..
-	"list[current_player;main;0,4.5;9,3;9]"..
-	mcl_formspec.get_itemslot_bg(0,4.5,9,3)..
-	"list[current_player;main;0,7.74;9,1;]"..
-	mcl_formspec.get_itemslot_bg(0,7.74,9,1)..
-	"list[context;input;0.5,1.7;1,1;]"..
-	mcl_formspec.get_itemslot_bg(0.5,1.7,1,1)..
-	"list[context;output;7.5,1.7;1,1;]"..
-	mcl_formspec.get_itemslot_bg(7.5,1.7,1,1)..
+	local formspec = "formspec_version[4]"..
+	"size[11.75,10.425]"..
+	"label[0.375,0.375;" .. F(C(mcl_formspec.label_color, S("Stonecutter"))) .. "]"..
+
+	mcl_formspec.get_itemslot_bg_v4(1.375,1.5,1,1,0)..
+	--mcl_formspec.get_itemslot_bg_v4(0.5,1,1,1,0,"mcl_loom_itemslot_bg_banner.png")..
+	"list[context;input;1.375,1.5;1,1;]"..
+
+	"box[3.275,0.75;5.2,3.5;"..mcl_colors.DARK_GRAY.."]"..
+	"scroll_container[3.275,0.75;5.5,3.5;recipe_scroll;vertical;0.1]"..
 	table.concat(cut_items)..
+	"scroll_container_end[]"..
+	"scrollbaroptions[arrows=show;thumbsize=30;min=0;max="..(count).."]"..
+	"scrollbar[8.5,0.75;0.4,3.5;vertical;recipe_scroll;]"..
+
+	mcl_formspec.get_itemslot_bg_v4(9.5,1.5,1,1)..
+	"list[context;output;9.5,1.5;1,1;]"..
+
+	"label[0.375,4.7;" .. F(C(mcl_formspec.label_color, S("Inventory"))) .. "]"..
+	mcl_formspec.get_itemslot_bg_v4(0.375, 5.1, 9, 3)..
+	"list[current_player;main;0.375,5.1;9,3;9]"..
+
+	mcl_formspec.get_itemslot_bg_v4(0.375, 9.05, 9, 1)..
+	"list[current_player;main;0.375,9.05;9,1;]"..
+
 	"listring[context;output]"..
 	"listring[current_player;main]"..
 	"listring[context;input]"..
