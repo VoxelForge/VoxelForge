@@ -194,10 +194,10 @@ minetest.register_node("mcl_loom:loom", {
 						local banner = inv:get_stack("banner",1)
 						local dye = inv:get_stack("dye",1)
 						dye:take_item()
-						banner:take_item()
+						local cbanner = banner:take_item()
 						inv:set_stack("dye", 1, dye)
 						inv:set_stack("banner", 1, banner)
-						inv:set_stack("output", 1, create_banner(inv:get_stack("banner",1),pattern,cdef._color))
+						inv:set_stack("output", 1, create_banner(cbanner,pattern,cdef._color))
 					end
 				end
 			end
@@ -210,9 +210,6 @@ minetest.register_node("mcl_loom:loom", {
 		if minetest.is_protected(pos, name) then
 			minetest.record_protection_violation(pos, name)
 			return 0
-		elseif listname == "output" then
-			local inv = minetest.get_meta(pos):get_inventory()
-			return inv:get_stack("banner",1):get_count()
 		else
 			return stack:get_count()
 		end
