@@ -41,8 +41,8 @@ local function show_loom_formspec(pos)
 		local pitem = inv:get_stack("pattern",1):get_name()
 		local pdef = minetest.registered_items[pitem]
 		if def and def.groups.dye and def._color then color = def._color end
-		local x_len = 0
-		local y_len = 0
+		local x_len = 0.1
+		local y_len = 0.1
 		if not inv:is_empty("banner") then
 			if color and pdef and pdef._pattern then
 				local it = preview_item_prefix .. pdef._pattern .. "_" .. color
@@ -50,15 +50,15 @@ local function show_loom_formspec(pos)
 				table.insert(patterns,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",1,0,1,1, it, "item_button_"..name, ""))
 			elseif dyerecipes and color then
 				for k,v in pairs(dyerecipes) do
-					x_len = x_len + 1
-					count = count + 1
 					if x_len > 5 then
 						y_len = y_len + 1
-						x_len = 1
+						x_len = 0.1
 					end
 					local it = preview_item_prefix .. v .. "_" .. color
 					local name = preview_item_prefix .. v .. "-" .. color
 					table.insert(patterns,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",x_len,y_len,1,1, it, "item_button_"..name, ""))
+					x_len = x_len + 1
+					count = count + 1
 				end
 			end
 		end
@@ -82,10 +82,11 @@ local function show_loom_formspec(pos)
 	mcl_formspec.get_itemslot_bg_v4(0.5,2.25,1,1,0,"mcl_loom_itemslot_bg_pattern.png")..
 	"list[context;pattern;0.5,2.25;1,1;]"..
 
-	"scroll_container[2.375,0.375;8.8,4;pattern_scroll;vertical;0.1]"..
+	"box[3.275,0.75;5.2,3.5;"..mcl_colors.DARK_GRAY.."]"..
+	"scroll_container[3.275,0.75;5.5,3.5;pattern_scroll;vertical;0.1]"..
 	table.concat(patterns)..
 	"scroll_container_end[]"..
-	"scrollbaroptions[arrows=show;thumbsize=30;min=0;max="..(count).."]"..
+	"scrollbaroptions[arrows=show;thumbsize=30;min=0;max="..(count + 5).."]"..
 	"scrollbar[8.5,0.375;0.4,4;vertical;pattern_scroll;]"..
 
 
