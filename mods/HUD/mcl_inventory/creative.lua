@@ -509,9 +509,17 @@ function mcl_inventory.set_creative_formspec(player)
 		main_list = table.concat({
 			mcl_formspec.get_itemslot_bg_v4(0.375, 0.875, 9, 5),
 
-			-- Basic code to replace buttons by scrollbar
-			-- Require Minetest 5.8
-			--
+			-- TODO: Enable this code when min supported version is minetest 5.8
+			--This next part implements a scroll_container for the creative inventory
+			--In theory supported since minetest 5.2 this appears to stop working well
+			--When the list becomes very long.
+			--This minetest Patch fixed it: https://github.com/minetest/minetest/pull/13669 (minetest 5.8)
+			--Relevant issue: https://github.com/minetest/minetest/issues/13667
+
+			-- To enable this code uncomment the next part and remove the rest of the formspec
+			-- (The list and the paging buttons)
+			-- Also uncomment the "local nb_lines = .." line above.
+
 			--"scroll_container[0.375,0.875;11.575,6;scroll;vertical;1.25]",
 			--"list[detached:creative_" .. playername .. ";main;0,0;9," .. nb_lines .. ";]",
 			--"scroll_container_end[]",
