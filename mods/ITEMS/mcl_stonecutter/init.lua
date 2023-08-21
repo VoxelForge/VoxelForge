@@ -97,6 +97,10 @@ local function update_stonecutter_slots(pos,str)
 	if recipes[name] and table.indexof(recipes[name],str) ~= -1 and yields[str] then
 		local cut_item = ItemStack(str)
 		cut_item:set_count(yields[str])
+		local output = inv:get_stack("output",1)
+		if output:get_name() == cut_item:get_name() then
+			cut_item:set_count(output:get_count() + yields[output:get_name()])
+		end
 		inv:set_stack("output", 1, cut_item)
 	else
 		inv:set_stack("output", 1, "")
@@ -217,13 +221,8 @@ minetest.register_node("mcl_stonecutter:stonecutter", {
 		if listname == "output" then
 			local inv = meta:get_inventory()
 			local input = inv:get_stack("input", 1)
-			input:take_item()
+			input:take_item(math.ceil(stack:get_count() / yields[stack:get_name()]))
 			inv:set_stack("input", 1, input)
-			if input:get_count() == 0 then
-				meta:set_string("cut_stone", nil)
-			end
-		else
-			meta:set_string("cut_stone", nil)
 		end
 		update_stonecutter_slots(pos)
 	end,
