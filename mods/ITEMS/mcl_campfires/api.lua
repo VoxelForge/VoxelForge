@@ -276,8 +276,6 @@ minetest.register_entity("mcl_campfires:food_entity", {
 	initial_properties = {
 		physical = false,
 		visual = "wielditem",
-		wield_item = "",
-		wield_image = "blank.png",
 		visual_size = {x=0.25, y=0.25},
 		collisionbox = {0,0,0,0,0,0},
 		pointable = false,
@@ -285,15 +283,17 @@ minetest.register_entity("mcl_campfires:food_entity", {
 	on_step = function(self,dtime)
 		self._timer = (self._timer or 1) - dtime
 		if self._timer > 0 then return end
-		if not self._start_time then return end
+		if not self._start_time then
+			self.object:remove()
+		end
 		if minetest.get_gametime() - self._start_time > (self._cook_time or COOK_TIME) then
-			minetest.add_item(self.object:get_pos(), self._drop)
 			if food_entities[self._campfire_poshash] then
 				food_entities[self._campfire_poshash][self._spot] = nil
 			end
 			if count_table(food_entities[self._campfire_poshash]) == 0 then
 				food_entities[self._campfire_poshash or ""] = nil
 			end
+			minetest.add_item(self.object:get_pos() + campfire_spots[self._spot], self._drop)
 			self.object:remove()
 		end
 	end,
@@ -313,10 +313,12 @@ minetest.register_entity("mcl_campfires:food_entity", {
 		if type(s) == "table" then
 			for k,v in pairs(s) do self[k] = v end
 			self.object:set_properties({ wield_item = self._item })
-			local spot = get_free_spot(self._campfire_poshash)
-			if spot then
-				food_entities[self._campfire_poshash][spot] = self
-				self._spot = spot
+			if self._campfire_poshash and not food_entities[self._campfire_poshash] then
+				local spot = get_free_spot(self._campfire_poshash)
+				if spot and self._campfire_poshash then
+					food_entities[self._campfire_poshash][spot] = self
+					self._spot = spot
+				end
 			else
 				self.object:remove()
 				return
@@ -324,6 +326,7 @@ minetest.register_entity("mcl_campfires:food_entity", {
 		end
 		self._start_time = self._start_time or minetest.get_gametime()
 		self.object:set_rotation({x = math.pi / -2, y = 0, z = 0})
+		self.object:set_armor_groups({ immortal = 1 })
 	end,
 })
 
