@@ -14,7 +14,7 @@ local campfire_spots = {
 
 local function count_table(tbl)
 	local count = 0
-	for _,_ in pairs(tbl) do count = count + 1 end
+	if type(tbl) == "table" then for _,_ in pairs(tbl) do count = count + 1 end end
 	return count
 end
 
@@ -80,12 +80,9 @@ function mcl_campfires.take_item(pos, node, player, itemstack)
 			local spot = get_free_spot(ph)
 			if not spot then return end
 
-			local def = itemstack:get_definition()
 			local o = minetest.add_entity(pos + campfire_spots[spot], "mcl_campfires:food_entity")
 			o:set_properties({
 				wield_item = itemstack:get_name(),
-				wield_image = def.wield_image,
-				-- "mcl_mobitems_"..string.sub(itemstack:get_name(), 14).."_raw.png"
 			})
 			local l = o:get_luaentity()
 			l._campfire_poshash = ph
