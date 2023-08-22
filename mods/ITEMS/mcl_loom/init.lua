@@ -132,6 +132,20 @@ local function create_banner(stack,pattern,color)
 	return stack
 end
 
+local function allow_put(pos, listname, index, stack, player)
+	local name = player:get_player_name()
+	if minetest.is_protected(pos, name) then
+		minetest.record_protection_violation(pos, name)
+		return 0
+	elseif listname == "output" then return 0
+	elseif listname == "banner" and minetest.get_item_group(stack:get_name(),"banner") == 0 then return 0
+	elseif listname == "dye" and minetest.get_item_group(stack:get_name(),"dye") == 0 then return 0
+	elseif listname == "pattern" and minetest.get_item_group(stack:get_name(),"banner_pattern") == 0 then return 0
+	else
+		return stack:get_count()
+	end
+end
+
 minetest.register_node("mcl_loom:loom", {
 	description = S("Loom"),
 	_tt_help = S("Used to create banner designs"),
@@ -214,21 +228,11 @@ minetest.register_node("mcl_loom:loom", {
 		end
 	end,
 	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-		return 0
+		local inv = minetest.get_meta(pos):get_inventory()
+		local stack = inv:get_stack(from_list,from_index)
+		return allow_put(pos, to_list, to_index, stack, player)
 	end,
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-		local name = player:get_player_name()
-		if minetest.is_protected(pos, name) then
-			minetest.record_protection_violation(pos, name)
-			return 0
-		elseif listname == "output" then return 0
-		elseif listname == "banner" and minetest.get_item_group(stack:get_name(),"banner") == 0 then return 0
-		elseif listname == "dye" and minetest.get_item_group(stack:get_name(),"dye") == 0 then return 0
-		elseif listname == "pattern" and minetest.get_item_group(stack:get_name(),"banner_pattern") == 0 then return 0
-		else
-			return stack:get_count()
-		end
-	end,
+	allow_metadata_inventory_put = allow_put,
 
 	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
 		local meta = minetest.get_meta(pos)
