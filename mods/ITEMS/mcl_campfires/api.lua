@@ -1,6 +1,8 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 mcl_campfires = {}
 
+local food_entities = {}
+
 local COOK_TIME = 30 -- Time it takes to cook food on a campfire.
 
 local campfire_spots = {
@@ -10,40 +12,36 @@ local campfire_spots = {
 	vector.new(-0.25, -0.04,  0.25),
 }
 
-local drop_inventory = mcl_util.drop_items_from_meta_container("main")
+local function count_table(tbl)
+	local count = 0
+	for _,_ in pairs(tbl) do count = count + 1 end
+	return count
+end
+
+local function drop_items(pos, node, oldmeta)
+	local ph = minetest.hash_node_position(vector.round(pos))
+	if food_entities[ph] then
+		for k,v in pairs(food_entities[ph]) do
+			if v and v.object and v.object:get_pos() then
+				v.object:remove()
+				minetest.add_item(pos, v._item)
+			end
+		end
+		food_entities[ph] = nil
+	end
+end
 
 local function campfire_drops(pos, digger, drops, nodename)
 	local wield_item = digger:get_wielded_item()
-	local is_creative = minetest.is_creative_enabled(digger:get_player_name())
 	local inv = digger:get_inventory()
-	if not is_creative then
+	if not minetest.is_creative_enabled(digger:get_player_name()) then
 		if mcl_enchanting.has_enchantment(wield_item, "silk_touch") then
 			minetest.add_item(pos, nodename)
 		else
 			minetest.add_item(pos, drops)
 		end
-	elseif is_creative and inv:room_for_item("main", nodename) and not inv:contains_item("main", nodename) then
+	elseif inv:room_for_item("main", nodename) and not inv:contains_item("main", nodename) then
 		inv:add_item("main", nodename)
-	end
-end
-
-local function drop_items(pos, node, oldmeta)
-	local meta = minetest.get_meta(pos)
-	drop_inventory(pos, node, oldmeta)
-	local entites = minetest.get_objects_inside_radius(pos, 0.5)
-	if entites then
-		for _, food_entity in ipairs(entites) do
-			if food_entity then
-				if food_entity:get_luaentity().name == "mcl_campfires:food_entity" then
-					food_entity:remove()
-					for i = 1, 4 do
-						meta:set_string("food_x_"..tostring(i), "")
-						meta:set_string("food_y_"..tostring(i), "")
-						meta:set_string("food_z_"..tostring(i), "")
-					end
-				end
-			end
-		end
 	end
 end
 
@@ -59,102 +57,49 @@ function mcl_campfires.light_campfire(pos)
 	minetest.set_node(pos, {name = name, param2 = campfire.param2})
 end
 
--- on_rightclick function to take items that are cookable in a campfire, and put them in the campfire inventory
-function mcl_campfires.take_item(pos, node, player, itemstack)
-	local food_entity = {nil,nil,nil,nil}
-	local is_creative = minetest.is_creative_enabled(player:get_player_name())
-	local campfire_meta = minetest.get_meta(pos)
-	local campfire_inv = campfire_meta:get_inventory()
-	local timer = minetest.get_node_timer(pos)
-	local stack = itemstack:peek_item(1)
-	if minetest.get_item_group(itemstack:get_name(), "campfire_cookable") ~= 0 then
-		local cookable = minetest.get_craft_result({method = "cooking", width = 1, items = {itemstack}})
-		if cookable then
-			for space = 1, 4 do -- Cycle through spots
-				local spot = campfire_inv:get_stack("main", space)
-				if spot:is_empty() then -- Check if the spot is empty or not
-					if not is_creative then itemstack:take_item(1) end -- Take the item if in creative
-					campfire_inv:set_stack("main", space, stack) -- Set the inventory itemstack at the empty spot
-					campfire_meta:set_int("cooktime_"..tostring(space), COOK_TIME) -- Set the cook time meta
-					food_entity[space] = minetest.add_entity(pos + campfire_spots[space], "mcl_campfires:food_entity") -- Spawn food item on the campfire
-					local food_luaentity = food_entity[space]:get_luaentity()
-					food_luaentity.wield_item = campfire_inv:get_stack("main", space):get_name() -- Set the wielditem of the food item to the food on the campfire
-					food_luaentity.wield_image = "mcl_mobitems_"..string.sub(campfire_inv:get_stack("main", space):get_name(), 14).."_raw.png" -- Set the wield_image to the food item on the campfire
-					food_entity[space]:set_properties(food_luaentity) -- Apply changes to the food entity
-					campfire_meta:set_string("food_x_"..tostring(space), tostring(food_entity[space]:get_pos().x))
-					campfire_meta:set_string("food_y_"..tostring(space), tostring(food_entity[space]:get_pos().y))
-					campfire_meta:set_string("food_z_"..tostring(space), tostring(food_entity[space]:get_pos().z))
-					break
-				end
-			end
+local function get_free_spot(ph)
+	if not food_entities[ph] then
+		food_entities[ph] = {}
+		return 1
+	end
+	for i = 1,4 do
+		local v = food_entities[ph][i]
+		if not v or not v.object or not v.object:get_pos() then
+			food_entities[ph][i] = nil
+			return i
 		end
-		timer:start(1) -- Start cook timer
 	end
 end
 
--- on_timer function to run the cook timer and cook items.
-function mcl_campfires.cook_item(pos, elapsed)
-	local meta = minetest.get_meta(pos)
-	local inv = meta:get_inventory()
-	local continue = 0
-	-- Cycle through slots to cook them.
-	for i = 1, 4 do
-		local time_r = meta:get_int("cooktime_"..tostring(i))
-		local item = inv:get_stack("main", i)
-		local food_entity = nil
-		local food_x = tonumber(meta:get_string("food_x_"..tostring(i)))
-		local food_y = tonumber(meta:get_string("food_y_"..tostring(i)))
-		local food_z = tonumber(meta:get_string("food_z_"..tostring(i)))
-		if food_x and food_y and food_z then
-			local entites = minetest.get_objects_inside_radius(vector.new(food_x, food_y, food_z), 0)
-			if entites then
-				for _, entity in ipairs(entites) do
-					if entity then
-						local luaentity = entity:get_luaentity()
-						if luaentity then
-							local name = luaentity.name
-							if name == "mcl_campfires:food_entity" then
-								food_entity = entity
-								food_entity:set_properties({wield_item = inv:get_stack("main", i):get_name()})
-							end
-						end
-					end
-				end
+-- on_rightclick function to take items that are cookable in a campfire, and put them in the campfire inventory
+function mcl_campfires.take_item(pos, node, player, itemstack)
+	if minetest.get_item_group(itemstack:get_name(), "campfire_cookable") ~= 0 then
+		local cookable = minetest.get_craft_result({method = "cooking", width = 1, items = {itemstack}})
+		if cookable then
+			local ph = minetest.hash_node_position(vector.round(pos))
+			local spot = get_free_spot(ph)
+			if not spot then return end
+
+			local def = itemstack:get_definition()
+			local o = minetest.add_entity(pos + campfire_spots[spot], "mcl_campfires:food_entity")
+			o:set_properties({
+				wield_item = itemstack:get_name(),
+				wield_image = def.wield_image,
+				-- "mcl_mobitems_"..string.sub(itemstack:get_name(), 14).."_raw.png"
+			})
+			local l = o:get_luaentity()
+			l._campfire_poshash = ph
+			l._start_time = minetest.get_gametime()
+			--l._cook_time = cookable.time --apparently it always takes 30 secs in mc?
+			l._item = itemstack:get_name()
+			l._drop = cookable.item:get_name()
+			l._spot = spot
+			food_entities[ph][spot] = l
+			if not minetest.is_creative_enabled(player:get_player_name()) then
+				itemstack:take_item()
 			end
+			return itemstack
 		end
-		if item ~= (ItemStack("") or ItemStack("nil")) then
-			-- Item hasn't been cooked completely, continue cook timer countdown.
-			if time_r > 0 then
-				meta:set_int("cooktime_"..tostring(i), time_r - 1)
-			-- Item cook timer is up, finish cooking process and drop cooked item.
-			elseif time_r <= 0 then
-				local cooked = minetest.get_craft_result({method = "cooking", width = 1, items = {item}})
-				if cooked then
-					if food_entity then
-						food_entity:remove() -- Remove visual food entity
-						meta:set_string("food_x_"..tostring(i), nil)
-						meta:set_string("food_y_"..tostring(i), nil)
-						meta:set_string("food_z_"..tostring(i), nil)
-						minetest.add_item(pos, cooked.item) -- Drop Cooked Item
-						-- Throw some Experience Points because why not?
-						-- Food is cooked, xp is deserved for using this unique cooking method. Take that Minecraft ;)
-						local dir = vector.divide(minetest.facedir_to_dir(minetest.get_node(pos).param2),-1.95)
-						mcl_experience.throw_xp(vector.add(pos, dir), 1)
-						inv:set_stack("main", i, "") -- Clear Inventory
-						continue  = continue + 1 -- Indicate that the slot is clear.
-					end
-				end
-			end
-		else
-			continue = continue + 1
-		end
-	end
-	-- Not all slots are empty, continue timer.
-	if continue ~= 4 then
-		return true
-	-- Slots are empty, stop node timer.
-	else
-		return false
 	end
 end
 
@@ -340,6 +285,18 @@ minetest.register_entity("mcl_campfires:food_entity", {
 		collisionbox = {0,0,0,0,0,0},
 		pointable = false,
 	},
+	on_step = function(self,dtime)
+		self._timer = (self._timer or 1) - dtime
+		if self._timer > 0 then return end
+		if minetest.get_gametime() - self._start_time > (self._cook_time or COOK_TIME) then
+			minetest.add_item(self.object:get_pos(), self._drop)
+			food_entities[self._campfire_poshash][self._spot] = nil
+			if count_table(food_entities[self._campfire_poshash]) == 0 then
+				food_entities[self._campfire_poshash] = nil
+			end
+			self.object:remove()
+		end
+	end,
 	on_activate = function(self, staticdata)
 		self.object:set_rotation({x = math.pi / -2, y = 0, z = 0})
 	end,
