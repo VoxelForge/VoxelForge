@@ -285,16 +285,44 @@ minetest.register_entity("mcl_campfires:food_entity", {
 	on_step = function(self,dtime)
 		self._timer = (self._timer or 1) - dtime
 		if self._timer > 0 then return end
+		if not self._start_time then return end
 		if minetest.get_gametime() - self._start_time > (self._cook_time or COOK_TIME) then
 			minetest.add_item(self.object:get_pos(), self._drop)
-			food_entities[self._campfire_poshash][self._spot] = nil
+			if food_entities[self._campfire_poshash] then
+				food_entities[self._campfire_poshash][self._spot] = nil
+			end
 			if count_table(food_entities[self._campfire_poshash]) == 0 then
-				food_entities[self._campfire_poshash] = nil
+				food_entities[self._campfire_poshash or ""] = nil
 			end
 			self.object:remove()
 		end
 	end,
+	get_staticdata = function(self)
+		local d = {}
+		for k,v in pairs(self) do
+			local t = type(v)
+			if  t ~= "function"	and t ~= "nil" and t ~= "userdata" then
+				d[k] = self[k]
+			end
+		end
+		return minetest.serialize(d)
+	end,
 	on_activate = function(self, staticdata)
+		if type(staticdata) == "userdata" then return end
+		local s = minetest.deserialize(staticdata)
+		if type(s) == "table" then
+			for k,v in pairs(s) do self[k] = v end
+			self.object:set_properties({ wield_item = self._item })
+			local spot = get_free_spot(self._campfire_poshash)
+			if spot then
+				food_entities[self._campfire_poshash][spot] = self
+				self._spot = spot
+			else
+				self.object:remove()
+				return
+			end
+		end
+		self._start_time = self._start_time or minetest.get_gametime()
 		self.object:set_rotation({x = math.pi / -2, y = 0, z = 0})
 	end,
 })
