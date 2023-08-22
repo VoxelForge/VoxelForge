@@ -390,6 +390,8 @@ local function drop_item_stack(pos, stack)
 	minetest.add_item(vector.add(pos, drop_offset), stack)
 end
 
+mcl_util.drop_item_stack = drop_item_stack
+
 function mcl_util.drop_items_from_meta_container(listname)
 	return function(pos, oldnode, oldmetadata)
 		if oldmetadata and oldmetadata.inventory then
