@@ -57,6 +57,16 @@ function mcl_campfires.light_campfire(pos)
 	minetest.set_node(pos, {name = name, param2 = campfire.param2})
 end
 
+local function delete_entities(ph)
+	if not food_entities[ph] then return end
+	for k,v in pairs(food_entities[ph]) do
+		if v and v.object then
+			v:remove()
+		end
+	end
+	food_entities[ph] = nil
+end
+
 local function get_free_spot(ph)
 	if not food_entities[ph] then
 		food_entities[ph] = {}
@@ -289,7 +299,7 @@ minetest.register_entity("mcl_campfires:food_entity", {
 				food_entities[self._campfire_poshash][self._spot] = nil
 			end
 			if count_table(food_entities[self._campfire_poshash]) == 0 then
-				food_entities[self._campfire_poshash or ""] = nil
+				delete_entities(self._campfire_poshash or "")
 			end
 			minetest.add_item(self.object:get_pos() + campfire_spots[self._spot], self._drop)
 			self.object:remove()
