@@ -3,8 +3,6 @@ mcl_campfires = {}
 
 local food_entities = {}
 
-local COOK_TIME = 30 -- Time it takes to cook food on a campfire.
-
 local campfire_spots = {
 	vector.new(-0.25, -0.04, -0.25),
 	vector.new( 0.25, -0.04, -0.25),
@@ -97,7 +95,7 @@ function mcl_campfires.take_item(pos, node, player, itemstack)
 			local l = o:get_luaentity()
 			l._campfire_poshash = ph
 			l._start_time = minetest.get_gametime()
-			--l._cook_time = cookable.time --apparently it always takes 30 secs in mc?
+			l._cook_time = cookable.time * 3 --apparently it always takes 30 secs in mc?
 			l._item = itemstack:get_name()
 			l._drop = cookable.item:get_name()
 			l._spot = spot
@@ -294,7 +292,7 @@ minetest.register_entity("mcl_campfires:food_entity", {
 		if not self._start_time then
 			self.object:remove()
 		end
-		if minetest.get_gametime() - self._start_time > (self._cook_time or COOK_TIME) then
+		if minetest.get_gametime() - self._start_time > self._cook_time then
 			if food_entities[self._campfire_poshash] then
 				food_entities[self._campfire_poshash][self._spot] = nil
 			end
