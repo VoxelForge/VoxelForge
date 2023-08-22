@@ -6,9 +6,6 @@ tnt = {}
 tnt.BOOMTIMER = 4
 tnt.BLINKTIMER = 0.25
 
----@param pos Vector
----@param entname string
----@return ObjectRef?
 local function spawn_tnt(pos, entname)
 	minetest.sound_play("tnt_ignite", { pos = pos, gain = 1.0, max_hear_distance = 15 }, true)
 	local ent = minetest.add_entity(pos, entname)
@@ -18,8 +15,6 @@ local function spawn_tnt(pos, entname)
 	return ent
 end
 
----@param pos Vector
----@return ObjectRef?
 function tnt.ignite(pos)
 	minetest.remove_node(pos)
 	local e = spawn_tnt(pos, "mcl_tnt:tnt")
@@ -30,7 +25,6 @@ end
 ---Add smoke particle of entity at pos.
 ---
 ---Intended to be called every step.
----@param pos Vector
 function tnt.smoke_step(pos)
 	minetest.add_particle({
 		pos                = vector.offset(pos, 0, 0.5, 0),

@@ -3,10 +3,8 @@ local has_doc = minetest.get_modpath("doc")
 
 mcl_flowerpots = {}
 
----@type table<string, string>
 mcl_flowerpots.registered_pots = {}
 
----@type nodebox
 local pot_box = {
 	type = "fixed",
 	fixed = {
@@ -60,8 +58,6 @@ minetest.register_craft({
 	},
 })
 
----@param name string
----@param def {name: string, desc: string, image: string}
 function mcl_flowerpots.register_potted_flower(name, def)
 	mcl_flowerpots.registered_pots[name] = def.name
 	minetest.register_node(":mcl_flowerpots:flower_pot_" .. def.name, {
@@ -102,8 +98,6 @@ function mcl_flowerpots.register_potted_flower(name, def)
 	end
 end
 
----@param name string
----@param def {name: string, desc: string, image: string}
 function mcl_flowerpots.register_potted_cube(name, def)
 	mcl_flowerpots.registered_pots[name] = def.name
 	minetest.register_node(":mcl_flowerpots:flower_pot_" .. def.name, {

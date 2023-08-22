@@ -1,5 +1,3 @@
----@diagnostic disable lowercase-global
-
 local S = minetest.get_translator(minetest.get_current_modname())
 local F = minetest.formspec_escape
 local C = minetest.colorize
@@ -35,7 +33,6 @@ mcl_crafting_table.formspec = table.concat({
 	"tooltip[__mcl_craftguide;" .. F(S("Recipe book")) .. "]",
 })
 
----@param player ObjectRef
 function mcl_crafting_table.show_crafting_form(player)
 	local inv = player:get_inventory()
 	if inv then

@@ -34,7 +34,6 @@ local dropper_formspec = table.concat({
 })
 
 ---For after_place_node
----@param pos Vector
 local function setup_dropper(pos)
 	-- Set formspec and inventory
 	local meta = minetest.get_meta(pos)

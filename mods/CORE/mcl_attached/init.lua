@@ -11,7 +11,6 @@
 -- We need this to do the exact same dropping node handling in our override
 -- minetest.check_single_for_falling() function as in the builtin function.
 --
----@param p Vector
 local function drop_attached_node(p)
 	local n = minetest.get_node(p)
 	local drops = minetest.get_node_drops(n, "")

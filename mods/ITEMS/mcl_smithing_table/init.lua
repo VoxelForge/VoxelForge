@@ -7,7 +7,6 @@ local C = minetest.colorize
 mcl_smithing_table = {}
 
 ---Function to upgrade diamond tool/armor to netherite tool/armor
----@param itemstack ItemStack
 function mcl_smithing_table.upgrade_item(itemstack)
 	local def = itemstack:get_definition()
 
@@ -72,7 +71,6 @@ local formspec = table.concat({
 	"listring[context;diamond_item]",
 })
 
----@param pos Vector
 local function reset_upgraded_item(pos)
 	local inv = minetest.get_meta(pos):get_inventory()
 	local upgraded_item

@@ -1,6 +1,5 @@
 local S = minetest.get_translator("mcl_lightning_rods")
 
----@type nodebox
 local cbox = {
 	type = "fixed",
 	fixed = {
@@ -9,7 +8,6 @@ local cbox = {
 	},
 }
 
----@type node_definition
 local rod_def = {
 	description = S("Lightning Rod"),
 	_doc_items_longdesc = S("A block that attracts lightning"),
@@ -91,7 +89,6 @@ rod_def_a.on_timer = function(pos, elapsed)
 end
 
 minetest.register_node("mcl_lightning_rods:rod_powered", rod_def_a)
-
 
 lightning.register_on_strike(function(pos, pos2, objects)
 	local lr = minetest.find_node_near(pos, 128, { "group:attracts_lightning" }, true)

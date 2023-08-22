@@ -8,10 +8,6 @@ dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/survival.lua")
 --local mod_craftguide = minetest.get_modpath("mcl_craftguide")
 
 ---Returns a single itemstack in the given inventory to the main inventory, or drop it when there's no space left.
----@param itemstack mt.ItemStack
----@param dropper mt.ObjectRef
----@param pos mt.Vector
----@param inv mt.InvRef
 local function return_item(itemstack, dropper, pos, inv)
 	if dropper:is_player() then
 		-- Return to main inventory
@@ -40,8 +36,6 @@ local function return_item(itemstack, dropper, pos, inv)
 end
 
 ---Return items in the given inventory list (name) to the main inventory, or drop them if there is no space left.
----@param player mt.PlayerObjectRef
----@param name string
 local function return_fields(player, name)
 	local inv = player:get_inventory()
 
@@ -54,8 +48,6 @@ local function return_fields(player, name)
 	end
 end
 
----@param player mt.PlayerObjectRef
----@param armor_change_only? boolean
 local function set_inventory(player, armor_change_only)
 	if minetest.is_creative_enabled(player:get_player_name()) then
 		if armor_change_only then
@@ -122,7 +114,6 @@ minetest.register_on_joinplayer(function(player)
 	return_fields(player, "enchanting_lapis")
 end)
 
----@param player mt.PlayerObjectRef
 function mcl_inventory.update_inventory(player)
 	local player_gamemode = player:get_meta():get_string("gamemode")
 	if player_gamemode == "" then player_gamemode = "survival" end

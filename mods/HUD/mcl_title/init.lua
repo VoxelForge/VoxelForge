@@ -11,10 +11,7 @@
 --Note that the table storing timeouts use playername as index insteed of player objects (faster)
 --This is intended in order to speedup the process of removing HUD elements the the timeout is up
 
----@type table<string, table<ObjectRef, any>>
 local huds_idx = {}
-
----@type table<string, table<string, number>>
 local hud_hide_timeouts = {}
 
 hud_hide_timeouts.title = {}
@@ -32,8 +29,6 @@ mcl_title.layout.title = { position = { x = 0.5, y = 0.5 }, alignment = { x = 0,
 mcl_title.layout.subtitle = { position = { x = 0.5, y = 0.5 }, alignment = { x = 0, y = 1.7 }, size = 4 }
 mcl_title.layout.actionbar = { position = { x = 0.5, y = 1 }, alignment = { x = 0, y = 0 }, size = 1 }
 
----@param gametick integer
----@return number?
 local function gametick_to_secondes(gametick)
 	if gametick then
 		return gametick / 20
@@ -44,9 +39,6 @@ end
 
 --https://github.com/minetest/minetest/blob/b3b075ea02034306256b486dd45410aa765f035a/doc/lua_api.txt#L8477
 
----@param bold? boolean
----@param italic? boolean
----@return integer
 local function style_to_bits(bold, italic)
 	if bold then
 		if italic then
@@ -66,7 +58,6 @@ end
 local no_style = style_to_bits(false, false)
 
 ---PARAMS SYSTEM
----@type table<ObjectRef, {stay: integer}>
 local player_params = {}
 
 minetest.register_on_joinplayer(function(player)
@@ -127,8 +118,6 @@ minetest.register_on_leaveplayer(function(player)
 	hud_hide_timeouts.actionbar[playername] = nil
 end)
 
----@param player ObjectRef
----@param data {stay: integer}
 function mcl_title.params_set(player, data)
 	player_params[player] = {
 		stay = data.stay or mcl_title.defaults.stay,
@@ -137,18 +126,11 @@ function mcl_title.params_set(player, data)
 	}
 end
 
----@param player ObjectRef
----@return {stay: integer}
 function mcl_title.params_get(player)
 	return player_params[player]
 end
 
 --API FUNCTIONS
-
----@param player ObjectRef
----@param type '"title"'|'"subtitle"'|'"actionbar"'
----@param data {text: string, color: string, stay: integer, bold: boolean, italic: boolean}
----@return boolean
 function mcl_title.set(player, type, data)
 	if not data.color then
 		data.color = "white"
@@ -170,8 +152,6 @@ function mcl_title.set(player, type, data)
 	return true
 end
 
----@param player ObjectRef?
----@param type '"title"'|'"subtitle"'|'"actionbar"'
 function mcl_title.remove(player, type)
 	if player then
 		player:hud_change(huds_idx[type][player], "text", "")
@@ -179,7 +159,6 @@ function mcl_title.remove(player, type)
 	end
 end
 
----@param player ObjectRef
 function mcl_title.clear(player)
 	mcl_title.remove(player, "title")
 	mcl_title.remove(player, "subtitle")

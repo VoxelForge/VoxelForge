@@ -740,8 +740,6 @@ end
 ---Allow to bypass the `buildable_to` node field in a `on_place` callback.
 ---
 ---You have to make sure that the nodes you return true for have `buildable_to = true`.
----@param func fun(node_name: string): boolean Return `true` if node must not replace the buildable_to node which have `node_name`
----@return fun(itemstack: ItemStack, placer: ObjectRef, pointed_thing: pointed_thing, param2: integer): ItemStack?
 function mcl_util.bypass_buildable_to(func)
 	--------------------------
 	-- MINETEST CODE: UTILS --
@@ -972,21 +970,9 @@ function mcl_util.bypass_buildable_to(func)
 	end
 end
 
---[[Check for a protection violation in a given area.
---
+--Check for a protection violation in a given area.
 -- Applies is_protected() to a 3D lattice of points in the defined volume. The points are spaced
 -- evenly throughout the volume and have a spacing similar to, but no larger than, "interval".
---
--- @param pos1          A position table of the area volume's first edge.
--- @param pos2          A position table of the area volume's second edge.
--- @param player        The player performing the action.
--- @param interval	    Optional. Max spacing between checked points at the volume.
---      Default: Same as minetest.is_area_protected.
---
--- @return	true on protection violation detection. false otherwise.
---
--- @notes   *All corners and edges of the defined volume are checked.
-]]
 function mcl_util.check_area_protection(pos1, pos2, player, interval)
 	local name = player and player:get_player_name() or ""
 
@@ -999,13 +985,7 @@ function mcl_util.check_area_protection(pos1, pos2, player, interval)
 	return false
 end
 
---[[Check for a protection violation on a single position.
---
--- @param position      A position table to check for protection violation.
--- @param player        The player performing the action.
---
--- @return	true on protection violation detection. false otherwise.
-]]
+--Check for a protection violation on a single position.
 function mcl_util.check_position_protection(position, player)
 	local name = player and player:get_player_name() or ""
 

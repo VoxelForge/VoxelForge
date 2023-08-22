@@ -588,9 +588,6 @@ minetest.register_abm({
 		end,
 	})
 
-	---@param node node
-	---@return integer?
-	---@nodiscard
 	local function composter_level(node)
 		local nn = node.name
 		if nn == "mcl_composters:composter" then
@@ -642,7 +639,6 @@ minetest.register_abm({
 
 			local downnode = minetest.get_node(downpos)
 
-			---@type integer|string|nil
 			local level = composter_level(downnode)
 
 			--Consume compostable items and update composter below

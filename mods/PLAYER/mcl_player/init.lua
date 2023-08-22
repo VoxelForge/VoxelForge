@@ -117,13 +117,6 @@ function mcl_player.player_set_armor(player, texture)
 	update_player_textures(player)
 end
 
----@param player mt.PlayerObjectRef
----@param x number
----@param y number
----@param w number
----@param h number
----@param fsname string
----@return string
 function mcl_player.get_player_formspec_model(player, x, y, w, h, fsname)
 	local name = player:get_player_name()
 	local model = player_model[name]

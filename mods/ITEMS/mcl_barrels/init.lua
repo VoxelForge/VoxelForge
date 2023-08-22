@@ -8,7 +8,6 @@ local open_barrels = {}
 
 local drop_content = mcl_util.drop_items_from_meta_container("main")
 
----@param pos Vector
 local function on_blast(pos)
 	local node = minetest.get_node(pos)
 	drop_content(pos, node)
@@ -70,7 +69,6 @@ local function barrel_open(pos, node, clicker)
 	minetest.sound_play({ name = "mcl_barrels_default_barrel_open", pos = pos, gain = 0.5, max_hear_distance = 16 }, true)
 end
 
----@param pos Vector
 local function close_forms(pos)
 	local players = minetest.get_connected_players()
 	local formname = "mcl_barrels:barrel_" .. pos.x .. "_" .. pos.y .. "_" .. pos.z
@@ -81,7 +79,6 @@ local function close_forms(pos)
 	end
 end
 
----@param pos Vector
 local function update_after_close(pos)
 	local node = minetest.get_node_or_nil(pos)
 	if not node then return end
@@ -92,7 +89,6 @@ local function update_after_close(pos)
 	end
 end
 
----@param player ObjectRef
 local function close_barrel(player)
 	local name = player:get_player_name()
 	local open = open_barrels[name]

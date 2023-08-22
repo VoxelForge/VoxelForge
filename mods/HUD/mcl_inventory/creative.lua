@@ -3,15 +3,12 @@ local F = minetest.formspec_escape
 local C = minetest.colorize
 
 -- Prepare player info table
----@type table<string, {page: string, filter: string, start_i: integer, inv_size: integer}>
 local players = {}
 
 -- Containing all the items for each Creative Mode tab
----@type table<string, string[]>
 local inventory_lists = {}
 
 -- Create tables
----@type string[]
 local builtin_filter_ids = {
 	"blocks",
 	"deco",
@@ -31,7 +28,6 @@ for _, f in pairs(builtin_filter_ids) do
 	inventory_lists[f] = {}
 end
 
----@param tbl string[]
 local function replace_enchanted_books(tbl)
 	for k, item in ipairs(tbl) do
 		if item:find("mcl_enchanting:book_enchanted") == 1 then
@@ -50,18 +46,15 @@ minetest.register_on_mods_loaded(function()
 	for name, def in pairs(minetest.registered_items) do
 		if (not def.groups.not_in_creative_inventory or def.groups.not_in_creative_inventory == 0) and def.description and
 			def.description ~= "" then
-			---@param def mt.ItemDef|mt.NodeDef
 			local function is_redstone(def)
 				return def.mesecons or def.groups.mesecon or def.groups.mesecon_conductor_craftable or
 					def.groups.mesecon_effecor_off
 			end
 
-			---@param def mt.ItemDef|mt.NodeDef
 			local function is_tool(def)
 				return def.groups.tool or (def.tool_capabilities and def.tool_capabilities.damage_groups == nil)
 			end
 
-			---@param def mt.ItemDef|mt.NodeDef
 			local function is_weapon_or_armor(def)
 				return def.groups.weapon or def.groups.weapon_ranged or def.groups.ammo or def.groups.combat_item or
 					(
@@ -138,11 +131,6 @@ minetest.register_on_mods_loaded(function()
 	end
 end)
 
----@param name string
----@param description string
----@param lang mt.LangCode
----@param filter string
----@return integer
 local function filter_item(name, description, lang, filter)
 	local desc
 	if not lang then
@@ -153,8 +141,6 @@ local function filter_item(name, description, lang, filter)
 	return string.find(name, filter, nil, true) or string.find(desc, filter, nil, true)
 end
 
----@param filter string
----@param player mt.PlayerObjectRef
 local function set_inv_search(filter, player)
 	local playername = player:get_player_name()
 	local inv = minetest.get_inventory({ type = "detached", name = "creative_" .. playername })
@@ -183,8 +169,6 @@ local function set_inv_search(filter, player)
 	inv:set_list("main", creative_list)
 end
 
----@param page string
----@param player mt.PlayerObjectRef
 local function set_inv_page(page, player)
 	local playername = player:get_player_name()
 	local inv = minetest.get_inventory({ type = "detached", name = "creative_" .. playername })
@@ -198,8 +182,6 @@ local function set_inv_page(page, player)
 	inv:set_list("main", creative_list)
 end
 
-
----@param player mt.PlayerObjectRef
 local function init(player)
 	local playername = player:get_player_name()
 	minetest.create_detached_inventory("creative_" .. playername, {
@@ -245,31 +227,24 @@ trash:set_size("main", 1)
 ------------------------------
 
 -- Numeric position of tab background image, indexed by tab name
----@type table<string, {[0]: number, [1]: number}>
 local noffset = {}
 
 -- String position of tab button background image, indexed by tab name
----@type table<string, string>
 local offset = {}
 
 -- String position of tab button, indexed by tab name
----@type table<string, string>
 local boffset = {}
 
 -- Used to determine the tab button background image
----@type table<string, ""|"_down">
 local button_bg_postfix = {}
 
 -- Tab caption/tooltip translated string, indexed by tab name
----@type table<string, string>
 local filtername = {}
 
 local noffset_x_start = 0.2
 local noffset_x = noffset_x_start
 local noffset_y = -1.34
 
----@param id string
----@param right? boolean
 local function next_noffset(id, right)
 	if right then
 		noffset[id] = { 11.3, noffset_y }
@@ -353,7 +328,6 @@ filtername["inv"] = S("Survival Inventory")
 end]]
 
 -- Item name representing a tab, indexed by tab name
----@type table<string, string>
 local tab_icon = {
 	blocks = "mcl_core:brick_block",
 	deco = "mcl_flowers:peony",
@@ -371,15 +345,11 @@ local tab_icon = {
 }
 
 -- Get the player configured stack size when taking items from creative inventory
----@param player mt.PlayerObjectRef
----@return integer
 local function get_stack_size(player)
 	return player:get_meta():get_int("mcl_inventory:switch_stack")
 end
 
 -- Set the player configured stack size when taking items from creative inventory
----@param player mt.PlayerObjectRef
----@param n integer
 local function set_stack_size(player, n)
 	player:get_meta():set_int("mcl_inventory:switch_stack", n)
 end
@@ -390,7 +360,6 @@ minetest.register_on_joinplayer(function(player)
 	end
 end)
 
----@param player mt.PlayerObjectRef
 function mcl_inventory.set_creative_formspec(player)
 	local playername = player:get_player_name()
 	if not players[playername] then return end
@@ -535,9 +504,6 @@ function mcl_inventory.set_creative_formspec(player)
 		})
 	end
 
-	---@param current_tab string
-	---@param this_tab string
-	---@return string
 	local function tab(current_tab, this_tab)
 		local bg_img
 		if current_tab == this_tab then

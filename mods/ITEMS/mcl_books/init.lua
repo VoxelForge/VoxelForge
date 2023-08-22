@@ -378,9 +378,6 @@ local function protection_check_put_take(pos, listname, index, stack, player)
 	end
 end
 
----@param pos Vector
----@param node node
----@param clicker ObjectRef
 local function bookshelf_gui(pos, node, clicker)
 	if not bookshelf_inv then return end
 	local name = minetest.get_meta(pos):get_string("name")

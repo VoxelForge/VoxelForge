@@ -1,15 +1,11 @@
 -- Dripping Water Mod
 -- by kddekadenz
+-- refactored to use particles instead of entities by cora
+-- refactored to allow proper definitions by AFCMS
 -- License of code, textures & sounds: CC0
 
 mcl_dripping = {}
 
-
----@param pos Vector
----@param liquid string
----@param sound SimpleSoundSpec
----@param interval integer
----@param texture string
 local function make_drop(pos, liquid, sound, interval, texture)
 	local pt = {
 		velocity = vector.zero(),
@@ -44,16 +40,6 @@ local function make_drop(pos, liquid, sound, interval, texture)
 	end)
 end
 
----@class mcl_dripping_drop_definition
----@field liquid string The group the liquid's nodes belong to
----@field texture string The texture used (particles will take a random 2x2 area of it)
----@field light integer Define particle glow, ranges from `0` to `minetest.LIGHT_MAX`
----@field nodes string[] The nodes (or node group) the particles will spawn under
----@field interval integer The interval for the ABM to run
----@field chance integer The chance of the ABM
----@field sound SimpleSoundSpec The sound that will be played then the particle detaches from the roof
-
----@param def mcl_dripping_drop_definition
 function mcl_dripping.register_drop(def)
 	minetest.register_abm({
 		label = "Create drops",

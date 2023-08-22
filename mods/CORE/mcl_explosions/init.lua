@@ -408,11 +408,6 @@ end
 -- griefing - If true, the explosion will destroy nodes (default: true)
 -- grief_protected - If true, the explosion will also destroy nodes which have
 --                   been protected (default: false)
----@param pos Vector
----@param strength number
----@param info {drop_chance: number, max_blast_resistance: number, sound: boolean, particles: boolean, fire: boolean, griefing: boolean, grief_protected: boolean}
----@param direct? ObjectRef
----@param source? ObjectRef
 function mcl_explosions.explode(pos, strength, info, direct, source)
 	if info == nil then
 		info = {}

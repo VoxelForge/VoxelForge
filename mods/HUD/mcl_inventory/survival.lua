@@ -1,12 +1,8 @@
----@diagnostic disable need-check-nil
-
 local S = minetest.get_translator("mcl_inventory")
 local F = minetest.formspec_escape
 
----@type {id: string, description: string, item_icon: string, build: (fun(player: ObjectRef): string), handle: fun(player: ObjectRef, fields: table), access: (fun(player): boolean), show_inventory: boolean}[]
 mcl_inventory.registered_survival_inventory_tabs = {}
 
----@param def {id: string, description: string, item_icon: string, build: (fun(player: ObjectRef): string), handle: fun(player: ObjectRef, fields: table), access: (fun(player): boolean), show_inventory: boolean}
 function mcl_inventory.register_survival_inventory_tab(def)
 	if #mcl_inventory.registered_survival_inventory_tabs == 7 then
 		error("Too many tabs registered!")
@@ -45,10 +41,6 @@ minetest.register_on_leaveplayer(function(player, timed_out)
 	player_current_tab[player] = nil
 end)
 
----@param player ObjectRef
----@param content string
----@param inventory boolean
----@param tabname string
 local function build_page(player, content, inventory, tabname)
 	local tab_buttons = "style_type[image;noclip=true]"
 
@@ -177,7 +169,6 @@ mcl_inventory.register_survival_inventory_tab({
 	end,
 })]]
 
----@param player ObjectRef
 function mcl_inventory.build_survival_formspec(player)
 	local inv = player:get_inventory()
 

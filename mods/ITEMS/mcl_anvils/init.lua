@@ -12,7 +12,6 @@ local MATERIAL_TOOL_REPAIR_BOOST = {
 	MAX_WEAR, -- 100%
 }
 
----@param set_name? string
 local function get_anvil_formspec(set_name)
 	if not set_name then
 		set_name = ""
@@ -62,9 +61,6 @@ end
 
 -- Given a tool and material stack, returns how many items of the material stack
 -- needs to be used up to repair the tool.
----@param tool ItemStack
----@param material ItemStack
----@return integer
 local function get_consumed_materials(tool, material)
 	local wear = tool:get_wear()
 	--local health = (MAX_WEAR - wear)
@@ -79,9 +75,6 @@ local function get_consumed_materials(tool, material)
 	return materials_used
 end
 
----@param table table
----@param value any
----@return boolean
 local function contains(table, value)
 	for _, i in pairs(table) do
 		if i == value then
@@ -95,8 +88,6 @@ end
 -- Returns ("tool", input1, input2) if input1 is tool and input2 is material.
 -- Returns ("material", input2, input1) if input1 is material and input2 is tool.
 -- Returns nil otherwise.
----@param input1 ItemStack
----@param input2 ItemStack
 local function distinguish_tool_and_material(input1, input2)
 	local def1 = input1:get_definition()
 	local def2 = input2:get_definition()
@@ -116,7 +107,6 @@ local function distinguish_tool_and_material(input1, input2)
 end
 
 ---Helper function to make sure update_anvil_slots NEVER overstacks the output slot
----@param stack ItemStack
 local function fix_stack_size(stack)
 	if not stack or stack == "" then return "" end
 	local count = stack:get_count()
@@ -131,7 +121,6 @@ end
 
 -- Update the inventory slots of an anvil node.
 -- meta: Metadata of anvil node
----@param meta NodeMetaRef
 local function update_anvil_slots(meta)
 	local inv = meta:get_inventory()
 	local new_name = meta:get_string("set_name")
@@ -265,8 +254,6 @@ local function update_anvil_slots(meta)
 end
 
 ---Drop input items of anvil at pos with metadata meta
----@param pos Vector
----@param meta NodeMetaRef
 local function drop_anvil_items(pos, meta)
 	local inv = meta:get_inventory()
 	for i = 1, inv:get_size("input") do
@@ -278,8 +265,6 @@ local function drop_anvil_items(pos, meta)
 	end
 end
 
----@param pos Vector
----@param node node
 local function damage_particles(pos, node)
 	minetest.add_particlespawner({
 		amount = 30,
@@ -348,7 +333,6 @@ local function damage_anvil(pos)
 end
 
 ---Roll a virtual dice and damage anvil at a low chance.
----@param pos Vector
 local function damage_anvil_by_using(pos)
 	local r = math.random(1, 100)
 	-- 12% chance
@@ -359,8 +343,6 @@ local function damage_anvil_by_using(pos)
 	end
 end
 
----@param pos Vector
----@param distance number
 local function damage_anvil_by_falling(pos, distance)
 	local r = math.random(1, 100)
 	if distance > 1 then
@@ -370,7 +352,6 @@ local function damage_anvil_by_falling(pos, distance)
 	end
 end
 
----@type nodebox
 local anvilbox = {
 	type = "fixed",
 	fixed = {
@@ -378,7 +359,6 @@ local anvilbox = {
 	},
 }
 
----@type node_definition
 local anvildef = {
 	groups = { pickaxey = 1, falling_node = 1, falling_node_damage = 1, crush_after_fall = 1, deco_block = 1, anvil = 1 },
 	tiles = { "mcl_anvils_anvil_top_damaged_0.png^[transformR90", "mcl_anvils_anvil_base.png", "mcl_anvils_anvil_side.png" },
