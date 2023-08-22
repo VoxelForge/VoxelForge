@@ -6,13 +6,10 @@ local dyerecipes = {}
 local preview_item_prefix = "mcl_banners:banner_preview_"
 
 for name,pattern in pairs(mcl_banners.patterns) do
-	local dyes = 0
 	for i=1,3 do for j = 1,3 do
-		if pattern[i] and pattern[i][j] == "group:dye" then
-			dyes = dyes + 1
-			if table.indexof(dyerecipes,name) == -1 and pattern.type ~= "shapeless" then
-				table.insert(dyerecipes,name) break
-			end
+		if pattern[i] and pattern[i][j] == "group:dye" and table.indexof(dyerecipes,name) == -1 and pattern.type ~= "shapeless" then
+			table.insert(dyerecipes,name)
+			break
 		end
 	end	end
 end
@@ -20,25 +17,23 @@ end
 local function drop_items(pos)
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
-	local bstack = inv:get_stack("banner", 1)
-	local dstack = inv:get_stack("dye", 1)
-	if not bstack:is_empty() then
-		minetest.add_item(pos, bstack)
-	end
-	if not dstack:is_empty() then
-		minetest.add_item(pos, dstack)
+	for _, list in pairs({"banner", "dye", "pattern", "output"}) do
+		local stack = inv:get_stack(list, 1)
+		if not stack:is_empty() then
+			mcl_util.drop_item_stack(pos, stack)
+		end
 	end
 end
 
-local function show_loom_formspec(pos)
+local function get_formspec(pos)
 	local patterns = {}
 	local count = 0
 	if pos then
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		local color
-		local def = minetest.registered_items[inv:get_stack("dye",1):get_name()]
-		local pitem = inv:get_stack("pattern",1):get_name()
+		local def = minetest.registered_items[inv:get_stack("dye", 1):get_name()]
+		local pitem = inv:get_stack("pattern", 1):get_name()
 		local pdef = minetest.registered_items[pitem]
 		if def and def.groups.dye and def._color then color = def._color end
 		local x_len = 0.1
@@ -64,13 +59,9 @@ local function show_loom_formspec(pos)
 		end
 	end
 
-	local formspec =
-	"formspec_version[4]"..
+	local formspec = "formspec_version[4]"..
 	"size[11.75,10.425]"..
 	"label[0.375,0.375;" .. F(C(mcl_formspec.label_color, S("Loom"))) .. "]"..
-
-		--mcl_formspec.get_itemslot_bg_v4(3.5, 0.75, 1, 1),
-		--"list[context;src;3.5,0.75;1,1;]",
 
 	mcl_formspec.get_itemslot_bg_v4(0.5,1,1,1,0)..
 	mcl_formspec.get_itemslot_bg_v4(0.5,1,1,1,0,"mcl_loom_itemslot_bg_banner.png")..
@@ -110,12 +101,12 @@ local function show_loom_formspec(pos)
 	return formspec
 end
 
-local function update_slots(pos)
+local function update_formspec(pos)
 	local meta = minetest.get_meta(pos)
-	meta:set_string("formspec", show_loom_formspec(pos))
+	meta:set_string("formspec", get_formspec(pos))
 end
 
-local function create_banner(stack,pattern,color)
+local function create_banner(stack, pattern, color)
 	local im = stack:get_meta()
 	local layers = {}
 	local old_layers = im:get_string("layers")
@@ -128,7 +119,6 @@ local function create_banner(stack,pattern,color)
 	})
 	im:set_string("description", mcl_banners.make_advanced_banner_description(stack:get_definition().description, layers))
 	im:set_string("layers", minetest.serialize(layers))
-	stack:set_count(1)
 	return stack
 end
 
@@ -167,15 +157,10 @@ minetest.register_node("mcl_loom:loom", {
 		inv:set_size("dye", 1)
 		inv:set_size("pattern", 1)
 		inv:set_size("output", 1)
-		local form = show_loom_formspec(pos)
-		meta:set_string("formspec", form)
+		meta:set_string("formspec", get_formspec(pos))
 	end,
 	on_destruct = drop_items,
-	on_rightclick = function(pos, node, player, itemstack)
-		if not player:get_player_control().sneak then
-			update_slots(pos)
-		end
-	end,
+	on_rightclick = update_formspec,
 	on_receive_fields = function(pos, formname, fields, sender)
 		local sender_name = sender:get_player_name()
 		if minetest.is_protected(pos, sender_name) then
@@ -215,7 +200,7 @@ minetest.register_node("mcl_loom:loom", {
 				end
 			end
 		end
-		update_slots(pos)
+		update_formspec(pos)
 	end,
 
 	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
@@ -233,29 +218,10 @@ minetest.register_node("mcl_loom:loom", {
 		return allow_put(pos, to_list, to_index, stack, player)
 	end,
 	allow_metadata_inventory_put = allow_put,
-
-	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-		local meta = minetest.get_meta(pos)
-		if from_list == "output" and to_list == "input" then
-			local inv = meta:get_inventory()
-			for i=1, inv:get_size("input") do
-				if i ~= to_index then
-					local istack = inv:get_stack("input", i)
-					istack:set_count(math.max(0, istack:get_count() - count))
-					inv:set_stack("input", i, istack)
-				end
-			end
-		end
-		update_slots(pos)
-	end,
-	on_metadata_inventory_put = function(pos, listname, index, stack, player)
-		update_slots(pos)
-	end,
-	on_metadata_inventory_take = function(pos, listname, index, stack, player)
-		update_slots(pos)
-	end,
+	on_metadata_inventory_move = update_formspec,
+	on_metadata_inventory_put = update_formspec,
+	on_metadata_inventory_take = update_formspec,
 })
-
 
 minetest.register_craft({
 	output = "mcl_loom:loom",
