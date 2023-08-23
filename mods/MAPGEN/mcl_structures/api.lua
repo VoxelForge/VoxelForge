@@ -90,13 +90,15 @@ mcl_structures.init_node_construct = init_node_construct
 
 function mcl_structures.fill_chests(p1,p2,loot,pr)
 	for it,lt in pairs(loot) do
-		local nodes = minetest.find_nodes_in_area(p1, p2, it)
-		for _,p in pairs(nodes) do
-			local lootitems = mcl_loot.get_multi_loot(lt, pr)
-			mcl_structures.init_node_construct(p)
-			local meta = minetest.get_meta(p)
-			local inv = meta:get_inventory()
-			mcl_loot.fill_inventory(inv, "main", lootitems, pr)
+		if it ~= "SUS" then --don't try to generate loot for "sus nodes" here, this happens when a player brushes a suspicious node
+			local nodes = minetest.find_nodes_in_area(p1, p2, it)
+			for _,p in pairs(nodes) do
+				local lootitems = mcl_loot.get_multi_loot(lt, pr)
+				mcl_structures.init_node_construct(p)
+				local meta = minetest.get_meta(p)
+				local inv = meta:get_inventory()
+				mcl_loot.fill_inventory(inv, "main", lootitems, pr)
+			end
 		end
 	end
 end

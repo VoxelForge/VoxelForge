@@ -29,6 +29,17 @@ local function temple_placement_callback(pos,def, pr)
 			minetest.registered_nodes["mesecons_pressureplates:pressure_plate_stone_off"].on_construct(pplates[p])
 		end
 	end
+	if minetest.registered_nodes["mcl_sus_nodes:sand"] then
+		local sus_poss = minetest.find_nodes_in_area(vector.offset(p1,0,-5,0), vector.offset(p2,0,-hl+5,0), {"mcl_core:sand","mcl_core:sandstone","mcl_core:redsand","mcl_core:redsandstone"})
+		if #sus_poss > 0 then
+			table.shuffle(sus_poss)
+			for i = 1,pr:next(1,#sus_poss) do
+				minetest.set_node(sus_poss[i],{name="mcl_sus_nodes:sand"})
+				local meta = minetest.get_meta(sus_poss[i])
+				meta:set_string("structure","desert_temple")
+			end
+		end
+	end
 end
 
 mcl_structures.register_structure("desert_temple",{
@@ -80,6 +91,27 @@ mcl_structures.register_structure("desert_temple",{
 				{ itemstring = "mcl_core:sand", weight = 10, amount_min = 1, amount_max = 8 },
 				{ itemstring = "mcl_mobitems:string", weight = 10, amount_min = 1, amount_max = 8 },
 			}
-		}}
-	}
+		}},
+		["SUS"] = {
+		{
+			stacks_min = 2,
+			stacks_max = 4,
+			items = {
+				{ itemstring = "mcl_mobitems:bone", weight = 25, amount_min = 4, amount_max=6 },
+				{ itemstring = "mcl_mobitems:rotten_flesh", weight = 25, amount_min = 3, amount_max=7 },
+				{ itemstring = "mcl_mobitems:spider_eye", weight = 25, amount_min = 1, amount_max=3 },
+				{ itemstring = "mcl_mobitems:saddle", weight = 20, },
+				{ itemstring = "mcl_core:apple_gold", weight = 20, },
+				{ itemstring = "mcl_core:gold_ingot", weight = 15, amount_min = 2, amount_max = 7 },
+				{ itemstring = "mcl_core:iron_ingot", weight = 15, amount_min = 1, amount_max = 5 },
+				{ itemstring = "mcl_core:emerald", weight = 15, amount_min = 1, amount_max = 3 },
+				{ itemstring = "", weight = 15, },
+				{ itemstring = "mcl_mobitems:iron_horse_armor", weight = 15, },
+				{ itemstring = "mcl_mobitems:gold_horse_armor", weight = 10, },
+				{ itemstring = "mcl_mobitems:diamond_horse_armor", weight = 5, },
+				{ itemstring = "mcl_core:diamond", weight = 5, amount_min = 1, amount_max = 3 },
+				{ itemstring = "mcl_core:apple_gold_enchanted", weight = 2, },
+			}
+		}},
+	},
 })

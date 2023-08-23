@@ -21,13 +21,23 @@ local sus_drops_default = {
 	"mcl_flowerpots:flower_pot",
 }
 
-function mcl_sus_nodes.get_random_item()
-	table.shuffle(sus_drops_default)
-	return sus_drops_default[1]
+function mcl_sus_nodes.get_random_item(pos)
+	local meta = minetest.get_meta(pos)
+	local struct = meta:get_string("structure")
+	local structdef = mcl_structures.registered_structures[struct]
+	if struct ~= "" and structdef and structdef.loot and structdef.loot["SUS"] then
+		local lootitems = mcl_loot.get_multi_loot(structdef.loot["SUS"], PseudoRandom(minetest.hash_node_position(pos)))
+		if #lootitems > 0 then
+			return lootitems[1]
+		end
+	else
+		table.shuffle(sus_drops_default)
+		return sus_drops_default[1]
+	end
 end
 
 local function brush_node(itemstack, user, pointed_thing)
-	if pointed_thing and pointed_thing.type == "node" then --and itemstack:get_name() == "mcl_sus_nodes:brush"
+	if pointed_thing and pointed_thing.type == "node" then
 		local pos = minetest.get_pointed_thing_position(pointed_thing)
 		local node = minetest.get_node(pos)
 		if minetest.get_item_group(node.name,"brushable") == 0 then return end
@@ -38,7 +48,7 @@ local function brush_node(itemstack, user, pointed_thing)
 		if not item_entities[ph] then
 			local o = minetest.add_entity(pos + (dir * 0.38),"mcl_sus_nodes:item_entity")
 			local l = o:get_luaentity()
-			l._item = mcl_sus_nodes.get_random_item()
+			l._item = mcl_sus_nodes.get_random_item(pos)
 			l._stage = 1
 			l._nodepos = pos
 			l._poshash = ph
@@ -54,7 +64,7 @@ local function brush_node(itemstack, user, pointed_thing)
 			local p = item_entities[ph].object:get_pos()
 			if p then
 				item_entities[ph]._stage = item_entities[ph]._stage + 1
-				item_entities[ph].object:set_pos(p + ( item_entities[ph]._dir * ( 0.02 * item_entities[ph]._stage )))
+				item_entities[ph].object:set_pos(p + ( vector.new(item_entities[ph]._dir) * ( 0.02 * item_entities[ph]._stage )))
 			end
 		end
 		if item_entities[ph]._stage == 5 then
@@ -113,8 +123,8 @@ minetest.register_entity("mcl_sus_nodes:item_entity", {
 	on_step = function(self,dtime)
 		self._timer = (self._timer or 1) - dtime
 		if self._timer > 0 then return end
-		if minetest.get_item_group(minetest.get_node(self._nodepos).name,"suspicious_node") == 0 then
-			item_entities[self._poshash] = nil
+		if minetest.get_item_group(minetest.get_node(self._nodepos or vector.zero()).name,"suspicious_node") == 0 then
+			if self._poshash then item_entities[self._poshash] = nil end
 			self.object:remove()
 			return
 		end
@@ -135,7 +145,7 @@ minetest.register_entity("mcl_sus_nodes:item_entity", {
 		if type(s) == "table" then
 			for k,v in pairs(s) do self[k] = v end
 		end
-		if not item_entities[self._poshash] then
+		if self._poshash and not item_entities[self._poshash] then
 			item_entities[self._poshash] = self
 		end
 		self.object:set_armor_groups({ immortal = 1 })
