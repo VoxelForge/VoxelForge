@@ -319,11 +319,15 @@ minetest.register_entity("mcl_campfires:food_entity", {
 		if type(s) == "table" then
 			for k,v in pairs(s) do self[k] = v end
 			self.object:set_properties({ wield_item = self._item })
-			if self._campfire_poshash and not food_entities[self._campfire_poshash] then
-				local spot = get_free_spot(self._campfire_poshash)
+			if self._campfire_poshash and ( not food_entities[self._campfire_poshash] or not food_entities[self._campfire_poshash][self._spot] ) then
+				local spot = self._spot or get_free_spot(self._campfire_poshash)
 				if spot and self._campfire_poshash then
+					food_entities[self._campfire_poshash] = food_entities[self._campfire_poshash] or {}
 					food_entities[self._campfire_poshash][spot] = self
 					self._spot = spot
+				else
+					self.object:remove()
+					return
 				end
 			else
 				self.object:remove()
