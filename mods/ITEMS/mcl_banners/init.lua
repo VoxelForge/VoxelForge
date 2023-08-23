@@ -528,7 +528,8 @@ for colorid, colortab in pairs(mcl_banners.colors) do
 				hanging = true
 			end
 			local place_pos
-			if minetest.registered_nodes[node_under.name].buildable_to then
+			local def_under = minetest.registered_nodes[node_under.name]
+			if def_under and def_under.buildable_to then
 				place_pos = under
 			else
 				place_pos = above
