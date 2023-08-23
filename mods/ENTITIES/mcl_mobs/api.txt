@@ -263,6 +263,9 @@ functions needed for the mob to work properly which contains the following:
 	'noyaw'				If true this mob will not automatically change yaw
 	'particlespawners'	Table of particlespawners attached to the mob. This is implemented in a coord safe manner i.e. spawners are only sent to players within the player_transfer_distance (and automatically removed). This enables infinitely lived particlespawners.
 	'doll_size_override' visual_size override for use as a "doll" in mobspawners - used for visually large mobs
+	'extra_hostile'		Attacks "everything that moves" (all mobs)
+	'attack_exception'	For "extra_hostile": Function that takes the object as argument. If it returns true that object will not be attacked.
+	'deal_damage'		function(self, damage, mcl_reason) - if present this gets called instead of the normal damage functions
 
 	mobs:gopath(self,target,callback_arrived)		pathfind a way to target and run callback on arrival
 
