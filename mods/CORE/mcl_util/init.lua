@@ -740,6 +740,8 @@ end
 ---Allow to bypass the `buildable_to` node field in a `on_place` callback.
 ---
 ---You have to make sure that the nodes you return true for have `buildable_to = true`.
+-- Arguemnt is a function with the node name as argument. it should return true if the
+-- node should not replace a "buildable_to" node.
 function mcl_util.bypass_buildable_to(func)
 	--------------------------
 	-- MINETEST CODE: UTILS --
