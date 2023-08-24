@@ -52,9 +52,9 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 	jump = true,
 	jump_height = 10,
 	fly = true,
-	dogshoot_switch = 1,
-	dogshoot_count_max = 1,
-	attack_animals = true,
+	makes_footstep_sound = false,
+	dogshoot_switch = 1, -- unused
+	dogshoot_count_max = 1, -- unused
 	can_despawn = false,
 	drops = {
 		{name = "mcl_mobitems:nether_star",
