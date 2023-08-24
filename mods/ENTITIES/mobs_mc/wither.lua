@@ -374,6 +374,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull", {
 	velocity = 7,
 	rotate = 90,
 	_lifetime = 350,
+	on_punch = function(self) end,
 
 	-- direct hit
 	hit_player = function(self, player)
@@ -425,6 +426,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 	velocity = 4,
 	rotate = 90,
 	_lifetime = 500,
+	on_punch = function(self) end,
 
 	-- direct hit
 	hit_player = function(self, player)
