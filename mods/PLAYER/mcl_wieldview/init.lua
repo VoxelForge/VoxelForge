@@ -47,8 +47,7 @@ local function update_wieldview_entity(player)
 		local obj_ref = minetest.add_entity(player:get_pos(), "mcl_wieldview:wieldview")
 		if not obj_ref then return end
 		obj_ref:set_attach(player, "Wield_Item")
-		--offhand_ref:set_attach(player, "Hand_Left", vector.new(0, 1, 0), vector.new(90, 45, 90))
-		--obj_ref:set_attach(player, "Hand_Right", vector.new(0, 1, 0), vector.new(90, 45, 90))
+		obj_ref:set_armor_groups({ immortal = 1 })
 		wieldview_luaentites[player] = obj_ref:get_luaentity()
 	end
 
@@ -73,9 +72,8 @@ local function update_wieldview_entity(player)
 	else
 		local offhand_ref = minetest.add_entity(player:get_pos(), "mcl_wieldview:wieldview")
 		if not offhand_ref then return end
-		--obj_ref:set_attach(player, "Wield_Item")
 		offhand_ref:set_attach(player, "Arm_Left", vector.new(-0.4, 4.5, 2), vector.new(120, 0, 0))
-		--obj_ref:set_attach(player, "Hand_Right", vector.new(0, 1, 0), vector.new(90, 45, 90))
+		offhand_ref:set_armor_groups({ immortal = 1 })
 		offhand_luaentites[player] = offhand_ref:get_luaentity()
 	end
 end
