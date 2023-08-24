@@ -273,8 +273,6 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 		local rand_pos = math.random(1,3)
 		if rand_pos == 1 then m = sr
 		elseif rand_pos == 2 then m = sl end
-		-- TODO multiple targets at once?
-		-- TODO targeting most mobs when no players can be seen/in addition to players
 
 		if self.shoot_interval
 				and self.timer > self.shoot_interval
