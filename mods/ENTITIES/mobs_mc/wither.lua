@@ -348,6 +348,17 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 })
 
 local wither_rose_soil = { "group:grass_block", "mcl_core:dirt", "mcl_core:coarse_dirt", "mcl_nether:netherrack", "group:soul_block", "mcl_mud:mud", "mcl_moss:moss" }
+local function spawn_wither_rose(obj)
+	local n = minetest.find_node_near(obj:get_pos(),2,wither_rose_soil)
+	if n then
+		local p = vector.offset(n,0,1,0)
+		if minetest.get_node(p).name == "air" then
+			if not ( mobs_griefing and minetest.place_node(p,{name="mcl_flowers:wither_rose"}) ) then
+				minetest.add_item(p,"mcl_flowers:wither_rose")
+			end
+		end
+	end
+end
 
 mcl_mobs.register_arrow("mobs_mc:wither_skull", {
 	visual = "cube",
@@ -372,9 +383,10 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull", {
 		}, nil)
 		mcl_mobs.effect_functions["withering"](player, 0.5, 10)
 		mcl_mobs.mob_class.boom(self,self.object:get_pos(), 1)
-		local shooter = self._shooter:get_luaentity()
-		if player:get_hp() <= 0 and shooter then
-			shooter.health = shooter.health + 5
+		if player:get_hp() <= 0 then
+			local shooter = self._shooter:get_luaentity()
+			if shooter then shooter.health = shooter.health + 5 end
+			spawn_wither_rose(player)
 		end
 	end,
 
@@ -389,15 +401,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull", {
 		if l and l.health - 8 <= 0 then
 			local shooter = self._shooter:get_luaentity()
 			if shooter then shooter.health = shooter.health + 5 end
-			local n = minetest.find_node_near(mob:get_pos(),2,wither_rose_soil)
-			if n then
-				local p = vector.offset(n,0,1,0)
-				if minetest.get_node(p).name == "air" then
-					if not ( mobs_griefing and minetest.place_node(p,{name="mcl_flowers:wither_rose"}) ) then
-						minetest.add_item(p,"mcl_flowers:wither_rose")
-					end
-				end
-			end
+			spawn_wither_rose(mob)
 		end
 	end,
 
@@ -435,9 +439,10 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 		else
 			mcl_mobs.mob_class.safe_boom(self, pos, 1) --need to call it this way bc self is the "arrow" object here
 		end
-		local shooter = self._shooter:get_luaentity()
-		if player:get_hp() <= 0 and shooter then
-			shooter.health = shooter.health + 5
+		if player:get_hp() <= 0 then
+			local shooter = self._shooter:get_luaentity()
+			if shooter then shooter.health = shooter.health + 5 end
+			spawn_wither_rose(player)
 		end
 	end,
 
@@ -457,15 +462,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 		if l and l.health - 8 <= 0 then
 			local shooter = self._shooter:get_luaentity()
 			if shooter then shooter.health = shooter.health + 5 end
-			local n = minetest.find_node_near(mob:get_pos(),2,wither_rose_soil)
-			if n then
-				local p = vector.offset(n,0,1,0)
-				if minetest.get_node(p).name == "air" then
-					if not ( mobs_griefing and minetest.place_node(p,{name="mcl_flowers:wither_rose"}) ) then
-						minetest.add_item(p,"mcl_flowers:wither_rose")
-					end
-				end
-			end
+			spawn_wither_rose(mob)
 		end
 	end,
 
