@@ -78,6 +78,14 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 	},
 	harmed_by_heal = true,
 	is_boss = true,
+	extra_hostile = true,
+	attack_exception = function(p)
+		local ent = p:get_luaentity()
+		if not ent then return false end
+		if not ent.is_mob or ent.harmed_by_heal or string.find(ent.name, "ghast") then return true
+		else return false end
+	end,
+
 	do_custom = function(self, dtime)
 		if self._spawning then
 			if not self._spw_max then self._spw_max = self._spawning end
