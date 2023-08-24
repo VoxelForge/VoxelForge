@@ -23,6 +23,8 @@ return {
 		"PrairieWind",
 		"kabou",
 		"MrRar",
+		"DinoNuggies4665",
+		"ChrisPHP",
 		"chmodsayshello",
 	}},
 	{S("Previous Contributors"), 0x52FF00, {
