@@ -5,6 +5,8 @@
 
 local S = minetest.get_translator("mobs_mc")
 local mobs_griefing = minetest.settings:get_bool("mobs_griefing") ~= false
+local follow_spawner = minetest.settings:get_bool("wither_follow_spawner") ~= false
+local w_strafes = minetest.settings:get_bool("wither_strafes") ~= false
 
 local function atan(x)
 	if not x or x ~= x then
@@ -36,12 +38,11 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 		{"mobs_mc_wither.png"},
 	},
 	visual_size = {x=4, y=4},
-	makes_footstep_sound = true,
 	view_range = 50,
 	fear_height = 4,
 	walk_velocity = 2,
 	run_velocity = 4,
-	strafes = true,
+	strafes = w_strafes,
 	sounds = {
 		shoot_attack = "mobs_mc_ender_dragon_shoot",
 		attack = "mobs_mc_ender_dragon_attack",
@@ -135,8 +136,7 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 				local pos = self.object:get_pos()
 				local spw = spawner:get_pos()
 				local dist = vector.distance(pos, spw)
-
-				if dist > 60 then -- teleport to the player who spawned the wither TODO add a setting to disable this
+				if dist > 60 and follow_spawner then -- teleport to the player who spawned the wither
 					local R = 10
 					pos.x = spw.x + math.random(-R, R)
 					pos.y = spw.y + math.random(-R, R)
