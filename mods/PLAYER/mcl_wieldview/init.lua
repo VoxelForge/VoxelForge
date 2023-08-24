@@ -68,6 +68,6 @@ minetest.register_globalstep(function(dtime)
 	local players = minetest.get_connected_players()
 	for i, player in pairs(players) do
 		update_wieldview_entity(player, "Wield_Item", nil, nil, player.get_wielded_item)
-		update_wieldview_entity(player, "Arm_Left", vector.new(-0.4, 4.5, 2), vector.new(120, 0, 0), mcl_offhand.get_offhand)
+		update_wieldview_entity(player, "Arm_Left", vector.new(0, 4.5, 2), vector.new(120, 0, 0), mcl_offhand.get_offhand)
 	end
 end)
