@@ -128,6 +128,7 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 		if self._custom_timer > 1 then
 			self.health = math.min(self.health + 1, self.hp_max)
 			self._custom_timer = self._custom_timer - 1
+			self._xplded_lately = false
 		end
 		if self._spawner then
 			local spawner = minetest.get_player_by_name(self._spawner)
@@ -153,6 +154,25 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 				self._health_old = self.health
 			end
 		end
+
+		local INDESTRUCT_BLASTRES = 1000000
+		local head_pos = vector.offset(self.object:get_pos(),0,self.collisionbox[5],0)
+		local subh_pos = vector.offset(head_pos,0,-1,0)
+		local head_node = minetest.get_node(head_pos).name
+		local subh_node = minetest.get_node(subh_pos).name
+		local hnodef = minetest.registered_nodes[head_node]
+		local subhnodef = minetest.registered_nodes[subh_node]
+		if (hnodef.walkable or subhnodef.walkable) and not self._xplded_lately then
+			if mobs_griefing and not minetest.is_protected(head_pos, "") and hnodef._mcl_blast_resistance < INDESTRUCT_BLASTRES then
+				local hp = self.health
+				mcl_explosions.explode(head_pos, 5, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
+				self._xplded_lately = true
+				self.health = hp
+			else
+				self.object:set_pos(vector.offset(head_pos,0,10,0))
+			end
+		end
+
 		local rand_factor
 		if self.health < (self.hp_max / 2) then
 			self.base_texture = "mobs_mc_wither_half_health.png"
