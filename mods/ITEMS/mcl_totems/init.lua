@@ -15,8 +15,16 @@ minetest.register_craftitem("mcl_totems:totem", {
 	wield_image = "mcl_totems_totem.png",
 	stack_max = 1,
 	groups = {combat_item = 1, offhand_item = 1},
+	_mcl_wieldview_item = "mcl_totems:totem_wielded",
 })
 minetest.register_alias("mobs_mc:totem", "mcl_totems:totem")
+
+minetest.register_craftitem("mcl_totems:totem_wielded", {
+	inventory_image = "mcl_totems_totem.png",
+	wield_image = "mcl_totems_totem_wieldview.png",
+	groups = { not_in_creative_inventory = 1 },
+	stack_max = 1,
+})
 
 local particle_colors = {"98BF22", "C49E09", "337D0B", "B0B021", "1E9200"} -- TODO: real MC colors
 
