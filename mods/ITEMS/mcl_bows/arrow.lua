@@ -462,7 +462,7 @@ function ARROW_ENTITY.get_staticdata(self)
 	if not self._lifetime then
 		self._lifetime = ARROW_TIMEOUT
 	end
-	out.stuckstarttime = minetest.get_gametime() - self._lifetime
+	out.starttime = minetest.get_gametime() - self._lifetime
 	if self._shooter and self._shooter:is_player() then
 		out.shootername = self._shooter:get_player_name()
 	end
@@ -474,9 +474,9 @@ function ARROW_ENTITY.on_activate(self, staticdata, dtime_s)
 	local data = minetest.deserialize(staticdata)
 	if data then
 		-- First, check if the arrow is aleady past its life timer. If
-		-- yes, delete it. If stuckstarttime is nil, make it be deleted
+		-- yes, delete it. If starttime is nil, make it be deleted
 		-- always.
-		self._lifetime = minetest.get_gametime() - (data.stuckstarttime or 0)
+		self._lifetime = minetest.get_gametime() - (data.starttime or 0)
 		if self._lifetime > ARROW_TIMEOUT then
 			mcl_burning.extinguish(self.object)
 			self.object:remove()
