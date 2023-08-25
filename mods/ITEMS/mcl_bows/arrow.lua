@@ -83,6 +83,9 @@ local ARROW_ENTITY={
 local function spawn_item(self, pos)
 	if not minetest.is_creative_enabled("") then
 		local item = minetest.add_item(pos, "mcl_bows:arrow")
+		if self._itemstring and minetest.registered_items[self._itemstring] then
+			item = self._itemstring
+		end
 		item:set_velocity(vector.new(0, 0, 0))
 		item:set_yaw(self.object:get_yaw())
 	end
@@ -452,6 +455,7 @@ function ARROW_ENTITY.get_staticdata(self)
 		stuck = self._stuck,
 		stuckin = self._stuckin,
 		stuckin_player = self._in_player,
+		itemstring = self._itemstring,
 	}
 	-- If _lifetime is missing for some reason, assume the maximum
 	if not self._lifetime then
@@ -490,6 +494,7 @@ function ARROW_ENTITY.on_activate(self, staticdata, dtime_s)
 		self._startpos = data.startpos
 		self._damage = data.damage
 		self._is_critical = data.is_critical
+		self._itemstring = data.itemstring
 		self._is_arrow = true
 		if data.shootername then
 			local shooter = minetest.get_player_by_name(data.shootername)
