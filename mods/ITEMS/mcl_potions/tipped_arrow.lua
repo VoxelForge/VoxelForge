@@ -52,50 +52,6 @@ function mcl_potions.register_arrow(name, desc, color, def)
 		end,
 	})
 
-
-	-- This is a fake node, used as model for the arrow entity.
-	-- It's not supposed to be usable as item or real node.
-	-- TODO: Use a proper mesh for the arrow entity
-	minetest.register_node("mcl_potions:"..name.."_arrow_box", {
-		drawtype = "nodebox",
-		is_ground_content = false,
-		node_box = {
-			type = "fixed",
-			fixed = {
-				-- Shaft
-				{-6.5/17, -1.5/17, -1.5/17, -4.5/17, 1.5/17, 1.5/17},
-				{-4.5/17, -0.5/17, -0.5/17, 5.5/17, 0.5/17, 0.5/17},
-				{5.5/17, -1.5/17, -1.5/17, 6.5/17, 1.5/17, 1.5/17},
-				-- Tip
-				{-4.5/17, 2.5/17, 2.5/17, -3.5/17, -2.5/17, -2.5/17},
-				{-8.5/17, 0.5/17, 0.5/17, -6.5/17, -0.5/17, -0.5/17},
-				-- Fletching
-				{6.5/17, 1.5/17, 1.5/17, 7.5/17, 2.5/17, 2.5/17},
-				{7.5/17, -2.5/17, 2.5/17, 6.5/17, -1.5/17, 1.5/17},
-				{7.5/17, 2.5/17, -2.5/17, 6.5/17, 1.5/17, -1.5/17},
-				{6.5/17, -1.5/17, -1.5/17, 7.5/17, -2.5/17, -2.5/17},
-
-				{7.5/17, 2.5/17, 2.5/17, 8.5/17, 3.5/17, 3.5/17},
-				{8.5/17, -3.5/17, 3.5/17, 7.5/17, -2.5/17, 2.5/17},
-				{8.5/17, 3.5/17, -3.5/17, 7.5/17, 2.5/17, -2.5/17},
-				{7.5/17, -2.5/17, -2.5/17, 8.5/17, -3.5/17, -3.5/17},
-			}
-		},
-		tiles = arrow_image(color, 100),
-		use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
-		paramtype = "light",
-		paramtype2 = "facedir",
-		sunlight_propagates = true,
-		groups = {not_in_creative_inventory=1, dig_immediate=3},
-		drop = "",
-		node_placement_prediction = "",
-		on_construct = function(pos)
-			minetest.log("error", "[mcl_potions] Trying to construct mcl_potions:"..name.."arrow_box at "..minetest.pos_to_string(pos))
-			minetest.remove_node(pos)
-		end,
-	})
-
-
 	local ARROW_ENTITY={
 		physical = true,
 		visual = "mesh",
