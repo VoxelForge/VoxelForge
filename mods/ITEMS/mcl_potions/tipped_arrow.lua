@@ -45,28 +45,7 @@ function mcl_potions.register_arrow(name, desc, color, def)
 		end,
 	})
 
-	local ARROW_ENTITY={
-		physical = true,
-		visual = "mesh",
-		mesh = "mcl_bows_arrow.obj",
-		visual_size = {x=-1, y=1},
-		textures = arrow_image(color, 100),
-		collisionbox = {-0.19, -0.125, -0.19, 0.19, 0.125, 0.19},
-		collide_with_objects = false,
-
-		_lastpos={},
-		_startpos=nil,
-		_damage=1,	-- Damage on impact
-		_stuck=false,   -- Whether arrow is stuck
-		_stucktimer=nil,-- Amount of time (in seconds) the arrow has been stuck so far
-		_stuckrechecktimer=nil,-- An additional timer for periodically re-checking the stuck status of an arrow
-		_stuckin=nil,	--Position of node in which arow is stuck.
-		_shooter=nil,	-- ObjectRef of player or mob who shot it
-		_is_arrow = true,
-
-		_viscosity=0,   -- Viscosity of node the arrow is currently in
-		_deflection_cooloff=0, -- Cooloff timer after an arrow deflection, to prevent many deflections in quick succession
-	}
+	local ARROW_ENTITY = table.copy(minetest.registered_entities["mcl_bows:arrow_entity"])
 
 	-- Destroy arrow entity self at pos and drops it as an item
 	local function spawn_item(self, pos)
