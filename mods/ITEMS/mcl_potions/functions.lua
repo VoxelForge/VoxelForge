@@ -868,6 +868,8 @@ end
 
 function mcl_potions.withering_func(player, factor, duration)
 
+	if player:get_hp() <= 0 then return end
+
 	local entity = player:get_luaentity()
 	if entity and (entity.is_boss or string.find(entity.name, "wither")) then return false end
 
