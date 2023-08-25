@@ -68,7 +68,7 @@ local ARROW_ENTITY={
 	_damage=1,	-- Damage on impact
 	_is_critical=false, -- Whether this arrow would deal critical damage
 	_stuck=false,   -- Whether arrow is stuck
-	_stucktimer=nil,-- Amount of time (in seconds) the arrow has been stuck so far
+	_lifetime=0,-- Amount of time (in seconds) the arrow has existed
 	_stuckrechecktimer=nil,-- An additional timer for periodically re-checking the stuck status of an arrow
 	_stuckin=nil,	--Position of node in which arow is stuck.
 	_shooter=nil,	-- ObjectRef of player or mob who shot it
@@ -121,14 +121,15 @@ function ARROW_ENTITY.on_step(self, dtime)
 	local dpos = vector.round(vector.new(pos)) -- digital pos
 	local node = minetest.get_node(dpos)
 
+	self._lifetime = self._lifetime + dtime
+	if self._lifetime > ARROW_TIMEOUT then
+		mcl_burning.extinguish(self.object)
+		self.object:remove()
+		return
+	end
+
 	if self._stuck then
-		self._stucktimer = self._stucktimer + dtime
 		self._stuckrechecktimer = self._stuckrechecktimer + dtime
-		if self._stucktimer > ARROW_TIMEOUT then
-			mcl_burning.extinguish(self.object)
-			self.object:remove()
-			return
-		end
 		-- Drop arrow as item when it is no longer stuck
 		-- FIXME: Arrows are a bit slow to react and continue to float in mid air for a few seconds.
 		if self._stuckrechecktimer > STUCK_RECHECK_TIME then
@@ -369,7 +370,7 @@ function ARROW_ENTITY.on_step(self, dtime)
 
 				-- Node was walkable, make arrow stuck
 				self._stuck = true
-				self._stucktimer = 0
+				self._lifetime = 0
 				self._stuckrechecktimer = 0
 
 				self.object:set_velocity(vector.new(0, 0, 0))
@@ -449,13 +450,11 @@ function ARROW_ENTITY.get_staticdata(self)
 		stuckin = self._stuckin,
 		stuckin_player = self._in_player,
 	}
-	if self._stuck then
-		-- If _stucktimer is missing for some reason, assume the maximum
-		if not self._stucktimer then
-			self._stucktimer = ARROW_TIMEOUT
-		end
-		out.stuckstarttime = minetest.get_gametime() - self._stucktimer
+	-- If _lifetime is missing for some reason, assume the maximum
+	if not self._lifetime then
+		self._lifetime = ARROW_TIMEOUT
 	end
+	out.stuckstarttime = minetest.get_gametime() - self._lifetime
 	if self._shooter and self._shooter:is_player() then
 		out.shootername = self._shooter:get_player_name()
 	end
@@ -466,19 +465,16 @@ function ARROW_ENTITY.on_activate(self, staticdata, dtime_s)
 	self._time_in_air = 1.0
 	local data = minetest.deserialize(staticdata)
 	if data then
+		-- First, check if the stuck arrow is aleady past its life timer.
+		-- If yes, delete it.
+		self._lifetime = minetest.get_gametime() - data.stuckstarttime
+		if self._lifetime > ARROW_TIMEOUT then
+			mcl_burning.extinguish(self.object)
+			self.object:remove()
+			return
+		end
 		self._stuck = data.stuck
 		if data.stuck then
-			if data.stuckstarttime then
-				-- First, check if the stuck arrow is aleady past its life timer.
-				-- If yes, delete it.
-				self._stucktimer = minetest.get_gametime() - data.stuckstarttime
-				if self._stucktimer > ARROW_TIMEOUT then
-					mcl_burning.extinguish(self.object)
-					self.object:remove()
-					return
-				end
-			end
-
 			-- Perform a stuck recheck on the next step.
 			self._stuckrechecktimer = STUCK_RECHECK_TIME
 
