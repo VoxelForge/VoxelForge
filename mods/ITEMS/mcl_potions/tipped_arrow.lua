@@ -17,13 +17,6 @@ local function dir_to_pitch(dir)
 	return -math.atan2(-dir.y, xz)
 end
 
-local function arrow_image(colorstring, opacity)
-	if not opacity then
-		opacity = 127
-	end
-	return {"mcl_bows_arrow.png^(mcl_bows_arrow_overlay.png^[colorize:"..colorstring..":"..tostring(opacity)..")"}
-end
-
 local how_to_shoot = minetest.registered_items["mcl_bows:arrow"]._doc_items_usagehelp
 
 local mod_button = minetest.get_modpath("mesecons_button")
