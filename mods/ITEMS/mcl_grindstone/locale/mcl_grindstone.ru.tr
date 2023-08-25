@@ -2,7 +2,7 @@
 Inventory=Инвентарь
 Repair & Disenchant=Починить и снять зачарования
 Grindstone=Точило
-Used to disenchant/fix tools=Используется для снятия зачарований и для починки инструментов.
+Used to disenchant/fix tools=Используется для снятия зачарований и для починки инструментов
 Grindstone disenchants tools and armour except for curses, and repairs two items of the same type it is also the weapon smith's work station.=Точило снимает все зачарования с инструментов и брони кроме проклятий, чинит два предмета одного типа, а также служит рабочим местом жителя оружейника.
 To use the grindstone, rightclick it, Two input slots (on the left) and a single output slot.=Чтобы использовать точило кликните правой кнопкой по нему. Два входных слота слева и один выходной слот справа.
 To disenchant an item place enchanted item in one of the input slots and take the disenchanted item from the output.=Чтобы снять зачарования положите предмет в один входной слот и заберите полученный предмет с выходного слота.

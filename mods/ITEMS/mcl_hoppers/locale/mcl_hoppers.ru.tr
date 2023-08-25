@@ -13,4 +13,4 @@ Disabled Side Hopper=Отключенная боковая воронка
 Inventory=Инвентарь
 5 inventory slots=5 слотов инвентаря
 Collects items from above, moves items to container below=Собирает предметы сверху, передаёт их в контейнер ниже
-Can be disabled with redstone power=Может быть отключена с помощью энергии редстоуна
+Can be disabled with redstone power=Может быть отключена с помощью сигнала редстоуна
