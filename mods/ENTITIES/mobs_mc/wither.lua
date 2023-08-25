@@ -162,7 +162,7 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 		local subh_node = minetest.get_node(subh_pos).name
 		local hnodef = minetest.registered_nodes[head_node]
 		local subhnodef = minetest.registered_nodes[subh_node]
-		if (hnodef.walkable or subhnodef.walkable) and not self._xplded_lately then
+		if hnodef and subhnodef and (hnodef.walkable or subhnodef.walkable) and not self._xplded_lately then
 			if mobs_griefing and not minetest.is_protected(head_pos, "") and hnodef._mcl_blast_resistance < INDESTRUCT_BLASTRES then
 				local hp = self.health
 				mcl_explosions.explode(head_pos, 5, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
