@@ -119,7 +119,6 @@ function ARROW_ENTITY.on_step(self, dtime)
 	-- mcl_burning.tick may remove object immediately
 	if not self.object:get_pos() then return end
 
-	self._time_in_air = self._time_in_air + .001
 
 	local pos = self.object:get_pos()
 	local dpos = vector.round(vector.new(pos)) -- digital pos
@@ -229,7 +228,7 @@ function ARROW_ENTITY.on_step(self, dtime)
 			local obj = closest_object
 			local is_player = obj:is_player()
 			local lua = obj:get_luaentity()
-			if obj == self._shooter and self._time_in_air > 1.02 or obj ~= self._shooter and (is_player or (lua and (lua.is_mob or lua._hittable_by_projectile))) then
+			if obj == self._shooter and self._lifetime > 1.02 or obj ~= self._shooter and (is_player or (lua and (lua.is_mob or lua._hittable_by_projectile))) then
 				if obj:get_hp() > 0 then
 					-- Check if there is no solid node between arrow and object
 					local ray = minetest.raycast(self.object:get_pos(), obj:get_pos(), true)
@@ -470,7 +469,6 @@ function ARROW_ENTITY.get_staticdata(self)
 end
 
 function ARROW_ENTITY.on_activate(self, staticdata, dtime_s)
-	self._time_in_air = 1.0
 	local data = minetest.deserialize(staticdata)
 	if data then
 		-- First, check if the arrow is aleady past its life timer. If
