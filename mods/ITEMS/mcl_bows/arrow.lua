@@ -487,6 +487,7 @@ function ARROW_ENTITY.on_activate(self, staticdata, dtime_s)
 		self._startpos = data.startpos
 		self._damage = data.damage
 		self._is_critical = data.is_critical
+		self._is_arrow = true
 		if data.shootername then
 			local shooter = minetest.get_player_by_name(data.shootername)
 			if shooter and shooter:is_player() then

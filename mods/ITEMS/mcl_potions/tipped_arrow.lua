@@ -430,6 +430,7 @@ function mcl_potions.register_arrow(name, desc, color, def)
 			self._lastpos = data.lastpos
 			self._startpos = data.startpos
 			self._damage = data.damage
+			self._is_arrow = true
 			if data.shootername then
 				local shooter = minetest.get_player_by_name(data.shootername)
 				if shooter and shooter:is_player() then
