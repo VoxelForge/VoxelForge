@@ -114,7 +114,7 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 				if mobs_griefing and not minetest.is_protected(pos, "") then
 					mcl_explosions.explode(pos, 10, { drop_chance = 1.0 }, self.object)
 				else
-					mcl_mobs.mob_class.safe_boom(self, pos, 10)
+					mcl_mobs.mob_class.safe_boom(self, pos, 10, true)
 				end
 				self.object:set_texture_mod("")
 				self._spawning = nil
@@ -379,7 +379,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull", {
 	-- direct hit
 	hit_player = function(self, player)
 		mcl_mobs.effect_functions["withering"](player, 0.5, 10)
-		mcl_mobs.mob_class.boom(self,self.object:get_pos(), 1)
+		mcl_mobs.mob_class.boom(self,self.object:get_pos(), 1, false, true)
 		player:punch(self.object, 1.0, {
 			full_punch_interval = 0.5,
 			damage_groups = {fleshy = 8},
@@ -398,7 +398,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull", {
 			damage_groups = {fleshy = 8},
 		}, nil)
 		mcl_mobs.effect_functions["withering"](mob, 0.5, 10)
-		mcl_mobs.mob_class.boom(self,self.object:get_pos(), 1)
+		mcl_mobs.mob_class.boom(self,self.object:get_pos(), 1, false, true)
 		local l = mob:get_luaentity()
 		if l and l.health - 8 <= 0 then
 			local shooter = self._shooter:get_luaentity()
@@ -409,7 +409,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull", {
 
 	-- node hit, explode
 	hit_node = function(self, pos, node)
-		mcl_mobs.mob_class.boom(self,pos, 1)
+		mcl_mobs.mob_class.boom(self,pos, 1, false, true)
 	end
 })
 
@@ -435,7 +435,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 		if mobs_griefing and not minetest.is_protected(pos, "") then
 			mcl_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
 		else
-			mcl_mobs.mob_class.safe_boom(self, pos, 1) --need to call it this way bc self is the "arrow" object here
+			mcl_mobs.mob_class.safe_boom(self, pos, 1, true) --need to call it this way bc self is the "arrow" object here
 		end
 		mcl_mobs.effect_functions["withering"](player, 0.5, 10)
 		player:punch(self.object, 1.0, {
@@ -460,7 +460,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 		if mobs_griefing and not minetest.is_protected(pos, "") then
 			mcl_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
 		else
-			mcl_mobs.mob_class.safe_boom(self, pos, 1) --need to call it this way bc self is the "arrow" object here
+			mcl_mobs.mob_class.safe_boom(self, pos, 1, true) --need to call it this way bc self is the "arrow" object here
 		end
 		local l = mob:get_luaentity()
 		if l and l.health - 8 <= 0 then
@@ -475,7 +475,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 		if mobs_griefing and not minetest.is_protected(pos, "") then
 			mcl_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
 		else
-			mcl_mobs.mob_class.safe_boom(self, pos, 1) --need to call it this way bc self is the "arrow" object here
+			mcl_mobs.mob_class.safe_boom(self, pos, 1, true) --need to call it this way bc self is the "arrow" object here
 		end
 	end
 })

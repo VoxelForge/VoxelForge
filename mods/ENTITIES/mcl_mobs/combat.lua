@@ -496,7 +496,7 @@ function mob_class:dogswitch(dtime)
 end
 
 -- no damage to nodes explosion
-function mob_class:safe_boom(pos, strength)
+function mob_class:safe_boom(pos, strength, no_remove)
 	minetest.sound_play(self.sounds and self.sounds.explode or "tnt_explode", {
 		pos = pos,
 		gain = 1.0,
@@ -505,25 +505,29 @@ function mob_class:safe_boom(pos, strength)
 	local radius = strength
 	entity_physics(pos, radius)
 	mcl_mobs.effect(pos, 32, "mcl_particles_smoke.png", radius * 3, radius * 5, radius, 1, 0)
-	if self.is_mob then
-		self:safe_remove()
-	else
-		self.object:remove()
+	if not no_remove then
+		if self.is_mob then
+			self:safe_remove()
+		else
+			self.object:remove()
+		end
 	end
 end
 
 
 -- make explosion with protection and tnt mod check
-function mob_class:boom(pos, strength, fire)
+function mob_class:boom(pos, strength, fire, no_remove)
 	if mobs_griefing and not minetest.is_protected(pos, "") then
 		mcl_explosions.explode(pos, strength, { fire = fire }, self.object)
 	else
-		mcl_mobs.mob_class.safe_boom(self, pos, strength) --need to call it this way bc self can be the "arrow" object here
+		mcl_mobs.mob_class.safe_boom(self, pos, strength, no_remove) --need to call it this way bc self can be the "arrow" object here
 	end
-	if self.is_mob then
-		self:safe_remove()
-	else
-		self.object:remove()
+	if not no_remove then
+		if self.is_mob then
+			self:safe_remove()
+		else
+			self.object:remove()
+		end
 	end
 end
 
