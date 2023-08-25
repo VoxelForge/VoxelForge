@@ -82,10 +82,11 @@ local ARROW_ENTITY={
 -- Destroy arrow entity self at pos and drops it as an item
 local function spawn_item(self, pos)
 	if not minetest.is_creative_enabled("") then
-		local item = minetest.add_item(pos, "mcl_bows:arrow")
+		local itemstring = "mcl_bows:arrow"
 		if self._itemstring and minetest.registered_items[self._itemstring] then
-			item = self._itemstring
+			itemstring = self._itemstring
 		end
+		local item = minetest.add_item(pos, itemstring)
 		item:set_velocity(vector.new(0, 0, 0))
 		item:set_yaw(self.object:get_yaw())
 	end
