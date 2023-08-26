@@ -22,6 +22,7 @@ globals = {
 	"playerphysics",
 	"xpanes",
 	"tnt",
+	"hb",
 	"tsm_railcorridors",
 	"tga_encoder",
 	"mcl_achievements",
