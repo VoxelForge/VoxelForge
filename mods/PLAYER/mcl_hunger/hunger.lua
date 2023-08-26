@@ -194,6 +194,8 @@ function mcl_hunger.item_eat(hunger_change, replace_with_item, poisontime, poiso
 
 				hb.change_hudbar(user, "hunger", h)
 				mcl_hunger.update_saturation_hud(user, mcl_hunger.get_saturation(user), h)
+			elseif not mcl_hunger.active and hunger_change then
+				user:set_hp(math.min(user:get_properties().hp_max or 20, user:get_hp() + hunger_change))
 			end
 			-- Poison
 			if mcl_hunger.active and poisontime then
