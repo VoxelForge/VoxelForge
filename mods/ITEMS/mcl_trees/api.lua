@@ -532,6 +532,14 @@ function mcl_trees.register_wood(name, p)
 		mcl_signs.register_sign(name,p.sign_color,table.merge({
 			description = S(rname.." Sign"),
 		}, p.sign or {}))
+		minetest.register_craft({
+			output = "mcl_signs:wall_sign_"..name,
+			recipe = {
+				{"mcl_trees:wood_"..name,"mcl_trees:wood_"..name,"mcl_trees:wood_"..name,},
+				{"mcl_trees:wood_"..name,"mcl_trees:wood_"..name,"mcl_trees:wood_"..name,},
+				{"","mcl_core:stick",""},
+			}
+		})
 	end
 
 	if p.pressure_plate == nil or type(p.pressure_plate) == "table" then
