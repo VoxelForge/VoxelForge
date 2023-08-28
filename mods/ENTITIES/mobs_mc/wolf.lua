@@ -194,7 +194,7 @@ dog.on_rightclick = function(self, clicker)
 		-- Huh? This dog has no owner? Let's fix this! This should never happen.
 			self.owner = clicker:get_player_name()
 		end
-		if not minetest.settings:get_bool("mcl_extended_pet_control",true) then
+		if not minetest.settings:get_bool("mcl_extended_pet_control",false) then
 			self:toggle_sit(clicker,-0.4)
 		end
 	end
