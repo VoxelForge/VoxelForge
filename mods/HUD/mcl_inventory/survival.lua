@@ -198,7 +198,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 			if fields["tab_" .. d.id] and d.access(player) then
 				player_current_tab[player] = d.id
 				mcl_inventory.update_inventory(player)
-				return
+				break
 			end
 		end
 
