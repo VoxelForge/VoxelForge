@@ -2,13 +2,13 @@
 Minecart=Вагонетка
 Minecarts can be used for a quick transportion on rails.=Вагонетка может быть использована для быстрого перемещения по рельсам.
 Minecarts only ride on rails and always follow the tracks. At a T-junction with no straight way ahead, they turn left. The speed is affected by the rail type.=Вагонетки едут только по проложенным рельсам. На Т-образной развилке они поворачивают налево. Скорость зависит от типа рельсов.
-You can place the minecart on rails. Right-click it to enter it. Punch it to get it moving.=Вы можете поставить вагонетку на рельсы. Правым кликом сядьте в неё. Ударьте по ней чтобы она поехала.
+You can place the minecart on rails. Right-click it to enter it. Punch it to get it moving.=Вы можете поставить вагонетку на рельсы. Правым кликом сядьте в неё. Ударьте по ней, чтобы она поехала.
 To obtain the minecart, punch it while holding down the sneak key.=Чтобы забрать вагонетку, ударьте по ней, удерживая клавишу [Красться].
 A minecart with TNT is an explosive vehicle that travels on rail.=Вагонетка с ТНТ это взрывающийся железнодорожный транспорт.
 Place it on rails. Punch it to move it. The TNT is ignited with a flint and steel or when the minecart is on an powered activator rail.=Поместите вагонетку на рельсы. Ударьте по ней, чтобы она поехала. ТНТ активируется, если его поджечь огнивом или когда вагонетка проедет через подключенные активирующие рельсы.
 To obtain the minecart and TNT, punch them while holding down the sneak key. You can't do this if the TNT was ignited.=Чтобы забрать вагонетку с ТНТ, ударьте по ней, удерживая клавишу [Красться]. Если ТНТ подожжён, сделать это нельзя.
-A minecart with furnace is a vehicle that travels on rails. It can propel itself with fuel.=Вагонетка с печью - это железнодорожный транспорт. Она может ехать сама за счёт топлива.
-Place it on rails. If you give it some coal, the furnace will start burning for a long time and the minecart will be able to move itself. Punch it to get it moving.=Поставьте вагонетку на рельсы. Если добавить в неё угля, то печь будет гореть продолжительное время и вагонетка сможет поехать сама. Ударьте по ней чтобы она поехала.
+A minecart with furnace is a vehicle that travels on rails. It can propel itself with fuel.=Вагонетка с печью это железнодорожный транспорт. Она может ехать сама за счёт топлива.
+Place it on rails. If you give it some coal, the furnace will start burning for a long time and the minecart will be able to move itself. Punch it to get it moving.=Поставьте вагонетку на рельсы. Если добавить в неё угля, то печь будет гореть продолжительное время и вагонетка сможет поехать сама. Ударьте по ней, чтобы она поехала.
 To obtain the minecart and furnace, punch them while holding down the sneak key.=Чтобы забрать вагонетку с печью, ударьте по ней, удерживая клавишу [Красться].
 Minecart with Chest=Вагонетка с сундуком
 Minecart with Furnace=Вагонетка с печью

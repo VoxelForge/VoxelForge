@@ -3,7 +3,10 @@
 A faithful Open Source clone of Minecraft=
 Creator of MineClone=
 Creator of MineClone2=
+Past Developers=
 Jump to speed up (additionally sprint)=
+Maintainers=
+Previous Maintainers=
 Original Mod Authors=
 Sneak to skip=
 Translations=
@@ -18,3 +21,5 @@ Developers=
 Maintainers=
 MineClone5=
 Textures=
+Music=
+Special thanks=

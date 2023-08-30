@@ -20,6 +20,7 @@ Mule=
 Iron Golem=
 Llama=
 Ocelot=
+Cat=
 Parrot=
 Pig=
 Polar Bear=
@@ -47,8 +48,16 @@ Witch=
 Wither=
 Wolf=
 Husk=
+Baby Husk=
 Zombie=
-Zombie Pigman=
+Baby Zombie=
+Piglin=
+Baby Piglin=
+Zombie Piglin=
+Baby Zombie Piglin=
+Sword Piglin=
+Piglin Brute=
+
 Farmer=
 Fisherman=
 Fletcher=
@@ -83,5 +92,10 @@ Piglin Brute=
 Hoglin=
 Baby Zombie Pigman=
 Strider=
+Baby hoglin=
+Zoglin=
+Strider=
+Glow Squid=
+
 ##### not used anymore #####
 Agent=

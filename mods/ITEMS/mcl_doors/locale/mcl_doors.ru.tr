@@ -22,3 +22,5 @@ Iron Trapdoor=Железный люк
 Iron trapdoors are horizontal barriers which can only be opened and closed by redstone signals, but not by hand. They occupy the upper or lower part of a block, depending on how they have been placed. When open, they can be climbed like a ladder.=Железные люки это горизонтальные преграды, которые можно открывать и закрывать только по сигналу редстоуна, но не вручную. Они занимают верхнюю или нижнюю часть блока, в зависимости от того, как они были установлены. В открытом состоянии по ним можно карабкаться, как по лестницам.
 Openable by players and redstone power=Открывается игроками и сигналом редстоуна
 Openable by redstone power=Открывается сигналом редстоуна
+This door is a 2-block high barrier which can only be opened by redstone power, not by hand.=Эта дверь - преграда высотой в 2 блока, которую можно открывать и закрывать по сигналу редстоуна, но не вручную.
+This door is a 2-block high barrier which can be opened or closed by hand or by redstone power.=Эта дверь - преграда высотой в 2 блока, которую можно открывать и закрывать вручную и по сигналу редстоуна.

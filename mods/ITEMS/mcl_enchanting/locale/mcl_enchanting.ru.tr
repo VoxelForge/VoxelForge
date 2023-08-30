@@ -88,7 +88,7 @@ Level requirement: @1=Требуемый уровень: @1
 
 After finally selecting your enchantment; left-click on the selection, and you will see both the lapis lazuli and your experience levels consumed. And, an enchanted item left in its place.=Кликните на выбранное зачарование - ваш опыт и лазурит потратятся, и зачарованный предмет появится слева.
 
-After placing your items in the slots, the enchanting options will be shown. Hover over the options to read what is available to you.=Варианты зачарований будут показаны как только вы разместите предметы в слоты. Наведите чтобы прочитать что вам доступно.
+After placing your items in the slots, the enchanting options will be shown. Hover over the options to read what is available to you.=Варианты зачарований будут показаны как только вы разместите предметы в слоты. Наведите, чтобы прочитать что вам доступно.
 
 Enchant=Зачаровать
 Enchant an item=Зачаровать предмет
@@ -103,7 +103,7 @@ Forcefully enchant an item=Принудительно зачаровать пр�
 Place a tool, armor, weapon or book into the top left slot, and then place 1-3 Lapis Lazuli in the slot to the right.=Поместите инстумент, броню, оружие или книгу в верхний левый слот, затем поместите 1-3 лазурита в правый слот.
 
 Player '@1' cannot be found.=Не удалось найти игрока '@1'.
-Rightclick the Enchanting Table to open the enchanting menu.=Правый клик по столу зачаровывания чтобы открыть меню зачаровывания.
+Rightclick the Enchanting Table to open the enchanting menu.=Правый клик по столу зачаровывания, чтобы открыть меню зачаровывания.
 Spend experience, and lapis to enchant various items.=Зачаровывает предметы за опыт и лазурит
 
 The number you have entered (@1) is too big, it must be at most @2.=Число, которое вы задали (@1), слишком велико, оно должно быть максимум @2.

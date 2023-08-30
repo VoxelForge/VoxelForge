@@ -8,6 +8,6 @@ Redstone Repeater (Locked)=Повторитель (фиксированный)
 Redstone Repeater (Locked, Powered)=Повторитель (фиксированный, подключённый)
 Redstone Repeater (Delay @1)=Повторитель (задержка @1)
 Redstone Repeater (Delay @1, Powered)=Повторитель (задержка @1, подключённый)
-Transmits redstone power only in one direction=Передаёт энергию редстоуна только в одном направлении
+Transmits redstone power only in one direction=Передаёт сигнал редстоуна только в одном направлении
 Delays signal=Задерживает сигнал
 Output locks when getting active redstone repeater signal from the side=Выход фиксируется при наличии активного сигнала сбоку
