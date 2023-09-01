@@ -51,18 +51,19 @@ local formspec = table.concat({
 	"label[4.125,0.375;" .. F(C(mcl_formspec.label_color, S("Upgrade Gear"))) .. "]",
 	"image[0.875,0.375;1.75,1.75;mcl_smithing_table_inventory_hammer.png]",
 
-	mcl_formspec.get_itemslot_bg(1.625,2.3,1,1),
+	mcl_formspec.get_itemslot_bg_v4(1.625,2.3,1,1),
 	"list[context;upgrade_item;1.625,2.3;1,1;]",
 
 	"image[3.5,2.3;1,1;mcl_anvils_inventory_cross.png]",
 
-	mcl_formspec.get_itemslot_bg(5.375, 2.3,1,1),
+	mcl_formspec.get_itemslot_bg_v4(5.375, 2.3,1,1),
 	"list[context;mineral;5.375, 2.3;1,1;]",
 
-	mcl_formspec.get_itemslot_bg(5.375,3.6,1,1),
+	mcl_formspec.get_itemslot_bg_v4(5.375,3.6,1,1),
+	mcl_formspec.get_itemslot_bg_v4(5.375,3.6,1,1,0,"mcl_smithing_table_inventory_trim_bg.png"),
 	"list[context;template;5.375,3.6;1,1;]",
 
-	mcl_formspec.get_itemslot_bg(9.125, 2.3,1,1),
+	mcl_formspec.get_itemslot_bg_v4(9.125, 2.3,1,1),
 	"list[context;upgraded_item;9.125, 2.3;1,1;]",
 
 	-- Player Inventory
