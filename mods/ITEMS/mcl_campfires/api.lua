@@ -1,6 +1,9 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 mcl_campfires = {}
 
+local PARTICLE_DISTANCE = 75
+
+local player_particlespawners = {}
 local food_entities = {}
 
 local campfire_spots = {
@@ -108,75 +111,6 @@ function mcl_campfires.take_item(pos, node, player, itemstack)
 	end
 end
 
-local function destroy_particle_spawner (pos)
-	local meta = minetest.get_meta(pos)
-	local part_spawn_id = meta:get_int("particle_spawner_id")
-	if part_spawn_id and part_spawn_id > 0 then
-		minetest.delete_particlespawner(part_spawn_id)
-	end
-end
-
-
-local function create_smoke_partspawner (pos, constructor)
-	if not constructor then
-		destroy_particle_spawner (pos)
-	end
-
-	local haybale = false
-
-	local node_below = vector.offset(pos, 0, -1, 0)
-	if minetest.get_node(node_below).name == "mcl_farming:hay_block" then
-		haybale = true
-	end
-
-	local smoke_timer
-
-	if haybale then
-		smoke_timer = 4
-	else
-		smoke_timer = 2.4
-	end
-
-	local spawner_id = minetest.add_particlespawner({
-		amount = 3,
-		time = 0,
-		minpos = vector.add(pos, vector.new(-0.25, 0, -0.25)),
-		maxpos = vector.add(pos, vector.new( 0.25, 0,  0.25)),
-		minvel = vector.new(-0.2, 0.5, -0.2),
-		maxvel = vector.new(0.2, 1,  0.2),
-		minacc = vector.new(0, 0.5, 0),
-		maxacc = vector.new(0, 0.5, 0),
-		minexptime = smoke_timer,
-		maxexptime = smoke_timer * 2,
-		minsize = 6,
-		maxsize = 8,
-		collisiondetection = true,
-		vertical = false,
-		texture = "mcl_campfires_particle_1.png",
-		texpool = {
-			"mcl_campfires_particle_1.png";
-			{ name = "mcl_campfires_particle_1.png", fade = "out" },
-			{ name = "mcl_campfires_particle_2.png", fade = "out" },
-			{ name = "mcl_campfires_particle_3.png", fade = "out" },
-			{ name = "mcl_campfires_particle_4.png", fade = "out" },
-			{ name = "mcl_campfires_particle_5.png", fade = "out" },
-			{ name = "mcl_campfires_particle_6.png", fade = "out" },
-			{ name = "mcl_campfires_particle_7.png", fade = "out" },
-			{ name = "mcl_campfires_particle_8.png", fade = "out" },
-			{ name = "mcl_campfires_particle_9.png", fade = "out" },
-			{ name = "mcl_campfires_particle_10.png", fade = "out" },
-			{ name = "mcl_campfires_particle_11.png", fade = "out" },
-			{ name = "mcl_campfires_particle_11.png", fade = "out" },
-			{ name = "mcl_campfires_particle_12.png", fade = "out" },
-		}
-	})
-
-	local meta = minetest.get_meta(pos)
-	meta:set_int("particle_spawner_id", spawner_id)
-end
-
-
-
 function mcl_campfires.register_campfire(name, def)
 	-- Define Campfire
 	minetest.register_node(name, {
@@ -247,14 +181,14 @@ function mcl_campfires.register_campfire(name, def)
 		groups = { handy=1, axey=1, material_wood=1, lit_campfire=1 },
 		paramtype = "light",
 		paramtype2 = "4dir",
-		on_construct = function(pos)
-			local meta = minetest.get_meta(pos)
-			local inv = meta:get_inventory()
-			inv:set_size("main", 4)
-			create_smoke_partspawner (pos, true)
-		end,
 		on_destruct = function(pos)
-			destroy_particle_spawner (pos)
+			local ph = minetest.hash_node_position(vector.round(pos))
+			for k,v in pairs(player_particlespawners) do
+				if v[ph] then
+					minetest.delete_particlespawner(v[ph])
+					player_particlespawners[k][ph] = nil
+				end
+			end
 		end,
 		on_rightclick = function (pos, node, player, itemstack, pointed_thing)
 			local meta = minetest.get_meta(pos)
@@ -342,16 +276,69 @@ function mcl_campfires.generate_smoke(pos)
 		smoke_timer = 4.75
 	end
 
-	minetest.add_particle({
-		pos = vector.offset(pos, math.random(-0.5, 0.5), 0.5, math.random(-0.5, 0.5)),
-		velocity = vector.new(0, 1, 0),
-		texture = "mcl_campfires_particle_" .. math.random(1, 12) .. ".png",
-		size = 10,
-		acceleration = vector.new(0, 0.5, 0),
-		collisiondetection = true,
-		expirationtime = smoke_timer,
-	})
+	local ph = minetest.hash_node_position(pos)
+	for _,pl in pairs(minetest.get_connected_players()) do
+		if not player_particlespawners[pl] then player_particlespawners[pl] = {} end
+		if not player_particlespawners[pl][ph] and vector.distance(pos, pl:get_pos()) < PARTICLE_DISTANCE then
+			player_particlespawners[pl][ph] = minetest.add_particlespawner({
+				amount = 2,
+				time = 0,
+				minpos = vector.offset(pos,-0.25,0.25,-0.25),
+				maxpos = vector.offset(pos,0.25,0.25,0.25),
+				minvel = vector.new(-0.1,0.5,-0.1),
+				maxvel = vector.new(0.1,1.2,0.1),
+				minacc = vector.new(-0.1,0.2,-0.1),
+				maxacc = vector.new(0.1,0.5,0.1),
+				minexptime = smoke_timer - 2,
+				maxexptime = smoke_timer,
+				minsize = 3,
+				maxsize = 5,
+				collisiondetection = true,
+				vertical = true,
+				texture = "mcl_campfires_particle_9.png",
+				playername = pl:get_player_name(),
+				texpool = {
+					{ name = "mcl_campfires_particle_1.png" },
+					{ name = "mcl_campfires_particle_2.png" },
+					{ name = "mcl_campfires_particle_3.png" },
+					{ name = "mcl_campfires_particle_4.png" },
+					{ name = "mcl_campfires_particle_5.png" },
+					{ name = "mcl_campfires_particle_6.png" },
+					{ name = "mcl_campfires_particle_7.png" },
+					{ name = "mcl_campfires_particle_8.png" },
+					{ name = "mcl_campfires_particle_9.png" },
+					{ name = "mcl_campfires_particle_10.png" },
+					{ name = "mcl_campfires_particle_11.png" },
+					{ name = "mcl_campfires_particle_11.png" },
+					{ name = "mcl_campfires_particle_12.png" },
+				}
+			})
+		end
+	end
+
+	for pl,pt in pairs(player_particlespawners) do
+		for _,sp in pairs(pt) do
+			if not pl or not pl:get_pos() then
+				minetest.delete_particlespawner(sp)
+			elseif player_particlespawners[pl][ph] and vector.distance(pos, pl:get_pos()) > PARTICLE_DISTANCE then
+				minetest.delete_particlespawner(player_particlespawners[pl][ph])
+				player_particlespawners[pl][ph] = nil
+			end
+		end
+		if not pl or not pl:get_pos() then
+			player_particlespawners[pl] = nil
+		end
+	end
 end
+
+minetest.register_on_leaveplayer(function(player)
+	if player_particlespawners[player] then
+		for _,v in pairs(player_particlespawners[player]) do
+			minetest.delete_particlespawner(v)
+		end
+		player_particlespawners[player] = nil
+	end
+end)
 
 -- Register Visual Food Entity
 minetest.register_entity("mcl_campfires:food_entity", {
@@ -416,12 +403,10 @@ minetest.register_entity("mcl_campfires:food_entity", {
 	end,
 })
 
-minetest.register_lbm({
+minetest.register_abm({
 	label = "Campfire Smoke",
-	name = "mcl_campfires:campfire_smoke",
 	nodenames = {"group:lit_campfire"},
-	run_at_every_load = true,
-	action = function(pos, node)
-		create_smoke_partspawner (pos)
-	end,
+	interval = 2,
+	chance = 2,
+	action = mcl_campfires.generate_smoke,
 })
