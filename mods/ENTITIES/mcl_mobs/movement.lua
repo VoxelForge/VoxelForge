@@ -100,9 +100,6 @@ function mob_class:target_visible(origin)
 
 	local origin_eye_pos = vector.offset(origin, 0, self.head_eye_height, 0)
 
-	--minetest.log("origin: " .. dump(origin))
-	--minetest.log("origin_eye_pos: " .. dump(origin_eye_pos))
-
 	local targ_head_height, targ_feet_height
 	if self.attack:is_player() then
 		local cbox = self.object:get_properties().collisionbox
@@ -113,12 +110,10 @@ function mob_class:target_visible(origin)
 		targ_feet_height = vector.offset(target_pos, 0, self.collisionbox[2], 0)
 	end
 
-	--minetest.log("start targ_head_height: " .. dump(targ_head_height))
 	if raycast_line_of_sight (origin_eye_pos, targ_head_height) then
 		return true
 	end
 
-	--minetest.log("Start targ_feet_height: " .. dump(targ_feet_height))
 	if raycast_line_of_sight (origin_eye_pos, targ_feet_height) then
 		return true
 	end
