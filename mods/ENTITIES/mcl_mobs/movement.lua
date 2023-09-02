@@ -67,29 +67,6 @@ function mob_class:is_node_waterhazard(nodename)
 	return false
 end
 
-
-local function raycast_line_of_sight (origin, target)
-	local raycast = minetest.raycast(origin, target, false, true)
-
-	local los_blocked = false
-
-	for hitpoint in raycast do
-		if hitpoint.type == "node" then
-			--TODO type object could block vision, for example chests
-			local node = minetest.get_node(minetest.get_pointed_thing_position(hitpoint))
-
-			if node.name ~= "air" then
-				local nodef = minetest.registered_nodes[node.name]
-				if nodef and nodef.walkable then
-					los_blocked = true
-					break
-				end
-			end
-		end
-	end
-	return not los_blocked
-end
-
 function mob_class:target_visible(origin)
 	if not origin then return end
 
@@ -110,11 +87,11 @@ function mob_class:target_visible(origin)
 		targ_feet_height = vector.offset(target_pos, 0, self.collisionbox[2], 0)
 	end
 
-	if raycast_line_of_sight (origin_eye_pos, targ_head_height) then
+	if minetest.line_of_sight(origin_eye_pos, targ_head_height) then
 		return true
 	end
 
-	if raycast_line_of_sight (origin_eye_pos, targ_feet_height) then
+	if minetest.line_of_sight(origin_eye_pos, targ_feet_height) then
 		return true
 	end
 
