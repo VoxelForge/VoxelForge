@@ -18,35 +18,40 @@ local function on_place_fish(itemstack, placer, pointed_thing)
 		return new_stack
 	end
 
-	local pos = pointed_thing.above or pointed_thing.under
-	if not pos then return end
-	local n = minetest.get_node_or_nil(pos)
-	local def = minetest.registered_nodes[n.name]
-	if def and def.buildable_to or n.name == "mcl_portals:portal" then
-		local fish = itemstack:get_name():gsub(fishbucket_prefix,"")
-		if fish_names[fish] then
-			local o = minetest.add_entity(pos, "mobs_mc:" .. fish)
-			if o and o:get_pos() then
-				local props = itemstack:get_meta():get_string("properties")
-				if props ~= "" then
-					o:set_properties(minetest.deserialize(props))
-				end
-				local water = "mcl_core:water_source"
-				if n.name == "mclx_core:river_water_source" then
-					water = n.name
-				elseif n.name == "mclx_core:river_water_flowing" then
-					water = nil
-				end
-				if mcl_worlds.pos_to_dimension(pos) == "nether" then
-					water = nil
-					minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
-				end
-				if water then
-					minetest.set_node(pos,{name = water})
-				end
-				if not placer or not minetest.is_creative_enabled(placer:get_player_name()) then
-					itemstack = ItemStack("mcl_buckets:bucket_empty")
-				end
+	if pointed_thing.type ~= "node" then return end
+
+	local pos = pointed_thing.above
+	local n = minetest.get_node(pointed_thing.above)
+	local def = minetest.registered_nodes[minetest.get_node(pointed_thing.under).name]
+
+	if ( def and def.buildable_to ) or n.name == "mcl_portals:portal" then
+		pos = pointed_thing.under
+		n = minetest.get_node(pointed_thing.under)
+	end
+
+	local fish = itemstack:get_name():gsub(fishbucket_prefix,"")
+	if fish_names[fish] then
+		local o = minetest.add_entity(pos, "mobs_mc:" .. fish)
+		if o and o:get_pos() then
+			local props = itemstack:get_meta():get_string("properties")
+			if props ~= "" then
+				o:set_properties(minetest.deserialize(props))
+			end
+			local water = "mcl_core:water_source"
+			if n.name == "mclx_core:river_water_source" then
+				water = n.name
+			elseif n.name == "mclx_core:river_water_flowing" then
+				water = nil
+			end
+			if mcl_worlds.pos_to_dimension(pos) == "nether" then
+				water = nil
+				minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
+			end
+			if water then
+				minetest.set_node(pos,{name = water})
+			end
+			if not placer or not minetest.is_creative_enabled(placer:get_player_name()) then
+				itemstack = ItemStack("mcl_buckets:bucket_empty")
 			end
 		end
 	end
