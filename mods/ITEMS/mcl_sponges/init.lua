@@ -46,7 +46,6 @@ minetest.register_node("mcl_sponges:sponge", {
 	pointable = true,
 	diggable = true,
 	buildable_to = false,
-	stack_max = 64,
 	sounds = mcl_sounds.node_sound_dirt_defaults(),
 	groups = {handy=1, hoey=1, building_block=1},
 	on_place = function(itemstack, placer, pointed_thing)
@@ -153,7 +152,6 @@ minetest.register_node("mcl_sponges:sponge_wet", {
 	pointable = true,
 	diggable = true,
 	buildable_to = false,
-	stack_max = 64,
 	sounds = mcl_sounds.node_sound_dirt_defaults(),
 	groups = {handy=1, hoey=1, building_block=1},
 	on_place = place_wet_sponge,
@@ -173,7 +171,6 @@ if minetest.get_modpath("mclx_core") then
 		pointable = true,
 		diggable = true,
 		buildable_to = false,
-		stack_max = 64,
 		sounds = mcl_sounds.node_sound_dirt_defaults(),
 		groups = {handy=1, building_block=1},
 		on_place = place_wet_sponge,

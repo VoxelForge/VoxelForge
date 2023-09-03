@@ -159,7 +159,6 @@ minetest.register_node("mcl_farming:hay_block", {
 	_doc_items_longdesc = S("Hay bales are decorative blocks made from wheat."),
 	tiles = {"mcl_farming_hayblock_top.png", "mcl_farming_hayblock_top.png", "mcl_farming_hayblock_side.png"},
 	is_ground_content = false,
-	stack_max = 64,
 	paramtype2 = "facedir",
 	on_place = mcl_util.rotate_axis,
 	groups = {

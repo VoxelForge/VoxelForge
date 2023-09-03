@@ -36,7 +36,6 @@ minetest.register_craftitem("mcl_farming:pumpkin_seeds", {
 	_tt_help = S("Grows on farmland"),
 	_doc_items_longdesc = S("Grows into a pumpkin stem which in turn grows pumpkins. Chickens like pumpkin seeds."),
 	_doc_items_usagehelp = S("Place the pumpkin seeds on farmland (which can be created with a hoe) to plant a pumpkin stem. Pumpkin stems grow in sunlight and grow faster on hydrated farmland. When mature, the stem attempts to grow a pumpkin next to it. Rightclick an animal to feed it pumpkin seeds."),
-	stack_max = 64,
 	inventory_image = "mcl_farming_pumpkin_seeds.png",
 	groups = {craftitem=1, compostability = 30},
 	on_place = function(itemstack, placer, pointed_thing)
@@ -120,7 +119,6 @@ local pumpkin_base_def = {
 	description = S("Faceless Pumpkin"),
 	_doc_items_longdesc = S("A faceless pumpkin is a decorative block. It can be carved with shears to obtain pumpkin seeds."),
 	_doc_items_usagehelp = S("To carve a face into the pumpkin, use the shears on the side you want to carve."),
-	stack_max = 64,
 	paramtype2 = "facedir",
 	tiles = {"farming_pumpkin_top.png", "farming_pumpkin_top.png", "farming_pumpkin_side.png"},
 	groups = {
@@ -220,7 +218,6 @@ minetest.register_node("mcl_farming:pumpkin_face_light", {
 	description = S("Jack o'Lantern"),
 	_doc_items_longdesc = S("A jack o'lantern is a traditional Halloween decoration made from a pumpkin. It glows brightly."),
 	is_ground_content = false,
-	stack_max = 64,
 	paramtype = "light",
 	paramtype2 = "facedir",
 	light_source = minetest.LIGHT_MAX,
@@ -253,7 +250,6 @@ minetest.register_craft({
 minetest.register_craftitem("mcl_farming:pumpkin_pie", {
 	description = S("Pumpkin Pie"),
 	_doc_items_longdesc = S("A pumpkin pie is a tasty food item which can be eaten."),
-	stack_max = 64,
 	inventory_image = "mcl_farming_pumpkin_pie.png",
 	wield_image = "mcl_farming_pumpkin_pie.png",
 	on_place = minetest.item_eat(8),

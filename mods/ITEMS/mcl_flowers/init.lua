@@ -116,7 +116,6 @@ function mcl_flowers.register_simple_flower(name, def)
 		sunlight_propagates = true,
 		paramtype = "light",
 		walkable = false,
-		stack_max = 64,
 		drop = def.drop,
 		groups = {
 			attached_node = 1, deco_block = 1, dig_by_piston = 1, dig_immediate = 3,

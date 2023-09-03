@@ -18,7 +18,6 @@ minetest.register_craftitem("mcl_books:book", {
 	description = S("Book"),
 	_doc_items_longdesc = S("Books are used to make bookshelves and book and quills."),
 	inventory_image = "default_book.png",
-	stack_max = 64,
 	groups = { book = 1, craftitem = 1, enchantability = 1 },
 	_mcl_enchanting_enchanted_tool = "mcl_enchanting:book_enchanted",
 })
@@ -425,7 +424,6 @@ minetest.register_node("mcl_books:bookshelf", {
 	description = S("Bookshelf"),
 	_doc_items_longdesc = S("Bookshelves are used for decoration."),
 	tiles = { "mcl_books_bookshelf_top.png", "mcl_books_bookshelf_top.png", "default_bookshelf.png" },
-	stack_max = 64,
 	is_ground_content = false,
 	groups = {
 		handy = 1,

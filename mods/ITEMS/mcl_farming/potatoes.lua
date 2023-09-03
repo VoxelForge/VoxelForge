@@ -112,7 +112,6 @@ minetest.register_craftitem("mcl_farming:potato_item", {
 minetest.register_craftitem("mcl_farming:potato_item_baked", {
 	description = S("Baked Potato"),
 	_doc_items_longdesc = S("Baked potatoes are food items which are more filling than the unbaked ones."),
-	stack_max = 64,
 	inventory_image = "farming_potato_baked.png",
 	on_place = minetest.item_eat(5),
 	on_secondary_use = minetest.item_eat(5),
@@ -124,7 +123,6 @@ minetest.register_craftitem("mcl_farming:potato_item_poison", {
 	description = S("Poisonous Potato"),
 	_tt_help = minetest.colorize(mcl_colors.YELLOW, S("60% chance of poisoning")),
 	_doc_items_longdesc = S("This potato doesn't look too healthy. You can eat it to restore hunger points, but there's a 60% chance it will poison you briefly."),
-	stack_max = 64,
 	inventory_image = "farming_potato_poison.png",
 	on_place = minetest.item_eat(2),
 	on_secondary_use = minetest.item_eat(2),

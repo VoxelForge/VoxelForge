@@ -8,7 +8,6 @@ minetest.register_craftitem("mcl_fire:fire_charge", {
 	_doc_items_usagehelp = S("Put the fire charge into a dispenser and supply it with redstone power to launch it. To ignite a fire directly, simply place the fire charge on the ground, which uses it up."),
 	inventory_image = "mcl_fire_fire_charge.png",
 	liquids_pointable = false,
-	stack_max = 64,
 	on_place = function(itemstack, user, pointed_thing)
 		-- Use pointed node's on_rightclick function first, if present
 		local new_stack = mcl_util.call_on_rightclick(itemstack, user, pointed_thing)

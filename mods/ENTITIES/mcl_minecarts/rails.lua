@@ -18,7 +18,6 @@ local function register_rail(itemstring, tiles, def_extras, creative)
 			type = "fixed",
 			fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2},
 		},
-		stack_max = 64,
 		groups = groups,
 		sounds = mcl_sounds.node_sound_metal_defaults(),
 		_mcl_blast_resistance = 0.7,

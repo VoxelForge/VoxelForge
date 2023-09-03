@@ -7,7 +7,6 @@ minetest.register_node("mcl_ocean:sea_lantern", {
 	_doc_items_longdesc = S("Sea lanterns are decorative light sources which look great underwater but can be placed anywhere."),
 	paramtype2 = "facedir",
 	is_ground_content = false,
-	stack_max = 64,
 	light_source = minetest.LIGHT_MAX,
 	drop = {
 		max_items = 1,
@@ -34,7 +33,6 @@ minetest.register_node("mcl_ocean:sea_lantern", {
 minetest.register_node("mcl_ocean:prismarine", {
 	description = S("Prismarine"),
 	_doc_items_longdesc = S("Prismarine is used as a building block. It slowly changes its color."),
-	stack_max = 64,
 	is_ground_content = false,
 	-- Texture should have 22 frames for smooth transitions.
 	tiles = {{name="mcl_ocean_prismarine_anim.png", animation={type="vertical_frames", aspect_w=32, aspect_h=32, length=45.0}}},
@@ -47,7 +45,6 @@ minetest.register_node("mcl_ocean:prismarine", {
 minetest.register_node("mcl_ocean:prismarine_brick", {
 	description = S("Prismarine Bricks"),
 	_doc_items_longdesc = doc.sub.items.temp.build,
-	stack_max = 64,
 	is_ground_content = false,
 	tiles = {"mcl_ocean_prismarine_bricks.png"},
 	groups = {pickaxey=1, building_block=1, material_stone=1, stonecuttable = 1},
@@ -59,7 +56,6 @@ minetest.register_node("mcl_ocean:prismarine_brick", {
 minetest.register_node("mcl_ocean:prismarine_dark", {
 	description = S("Dark Prismarine"),
 	_doc_items_longdesc = doc.sub.items.temp.build,
-	stack_max = 64,
 	is_ground_content = false,
 	tiles = {"mcl_ocean_prismarine_dark.png"},
 	groups = {pickaxey=1, building_block=1, material_stone=1, stonecuttable = 1},
@@ -80,7 +76,6 @@ minetest.register_craftitem("mcl_ocean:prismarine_crystals", {
 	description = S("Prismarine Crystals"),
 	_doc_items_longdesc = doc.sub.items.temp.craftitem,
 	inventory_image = "mcl_ocean_prismarine_crystals.png",
-	stack_max = 64,
 	groups = { craftitem = 1 },
 })
 
@@ -88,7 +83,6 @@ minetest.register_craftitem("mcl_ocean:prismarine_shard", {
 	description = S("Prismarine Shard"),
 	_doc_items_longdesc = doc.sub.items.temp.craftitem,
 	inventory_image = "mcl_ocean_prismarine_shard.png",
-	stack_max = 64,
 	groups = { craftitem = 1 },
 })
 

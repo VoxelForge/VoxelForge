@@ -245,7 +245,6 @@ function mcl_walls.register_wall(nodename, description, source, tiles, inventory
 		tiles = tiles,
 		use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
 		inventory_image = inventory_image,
-		stack_max = 64,
 		drawtype = "nodebox",
 		node_box = {
 			type = "fixed",

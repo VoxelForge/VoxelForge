@@ -148,7 +148,6 @@ minetest.register_entity("mcl_end:crystal_beam", {
 minetest.register_craftitem("mcl_end:crystal", {
 	inventory_image = "mcl_end_crystal_item.png",
 	description = S("End Crystal"),
-	stack_max = 64,
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.type == "node" then
 			local pos = minetest.get_pointed_thing_position(pointed_thing)

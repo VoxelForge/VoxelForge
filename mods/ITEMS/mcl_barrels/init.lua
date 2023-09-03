@@ -114,7 +114,6 @@ minetest.register_node("mcl_barrels:barrel_closed", {
 			, false)
 		return itemstack
 	end,
-	stack_max = 64,
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	groups = { handy = 1, axey = 1, container = 2, material_wood = 1, flammable = -1, deco_block = 1 },
 	on_construct = function(pos)
@@ -158,7 +157,6 @@ minetest.register_node("mcl_barrels:barrel_open", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	drop = "mcl_barrels:barrel_closed",
-	stack_max = 64,
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	groups = {
 		handy = 1,

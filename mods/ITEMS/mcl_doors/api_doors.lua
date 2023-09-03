@@ -105,7 +105,6 @@ function mcl_doors:register_door(name, def)
 		_doc_items_longdesc = longdesc,
 		_doc_items_usagehelp = usagehelp,
 		inventory_image = def.inventory_image,
-		stack_max = 64,
 		groups = craftitem_groups,
 		on_place = function(itemstack, placer, pointed_thing)
 			if not pointed_thing.type == "node" or not placer or not placer:is_player() then

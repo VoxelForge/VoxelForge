@@ -54,7 +54,6 @@ minetest.register_craftitem("mcl_experience:bottle", {
 	description = S("Bottle o' Enchanting"),
 	inventory_image = "mcl_experience_bottle.png",
 	wield_image = "mcl_experience_bottle.png",
-	stack_max = 64,
 	on_use = function(itemstack, placer, pointed_thing)
 		throw_xp_bottle(vector.add(placer:get_pos(), vector.new(0, 1.5, 0)), placer:get_look_dir(), 10)
 		if not minetest.is_creative_enabled(placer:get_player_name()) then

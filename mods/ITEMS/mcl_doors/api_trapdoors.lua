@@ -133,7 +133,6 @@ function mcl_doors:register_trapdoor(name, def)
 		wield_image = def.wield_image,
 		is_ground_content = false,
 		paramtype = "light",
-		stack_max = 64,
 		paramtype2 = "facedir",
 		sunlight_propagates = true,
 		groups = groups_closed,

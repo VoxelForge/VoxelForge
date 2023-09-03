@@ -32,7 +32,6 @@ minetest.register_node("mcl_core:ladder", {
 		type = "wallmounted",
 		wall_side = { -0.5, -0.5, -0.5, -7/16, 0.5, 0.5 },
 	},
-	stack_max = 64,
 	groups = {handy=1,axey=1, attached_node=1, deco_block=1, dig_by_piston=1},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	node_placement_prediction = "",
@@ -112,7 +111,6 @@ minetest.register_node("mcl_core:vine", {
 	selection_box = {
 		type = "wallmounted",
 	},
-	stack_max = 64,
 	groups = {
 		handy = 1, axey = 1, shearsy = 1, swordy = 1, deco_block = 1,
 		dig_by_piston = 1, destroy_by_lava_flow = 1, compostability = 50,
