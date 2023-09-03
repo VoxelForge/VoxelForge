@@ -21,7 +21,8 @@ local function on_place_fish(itemstack, placer, pointed_thing)
 	local pos = pointed_thing.above or pointed_thing.under
 	if not pos then return end
 	local n = minetest.get_node_or_nil(pos)
-	if n.name and minetest.registered_nodes[n.name].buildable_to or n.name == "mcl_portals:portal" then
+	local def = minetest.registered_nodes[n.name]
+	if def and def.buildable_to or n.name == "mcl_portals:portal" then
 		local fish = itemstack:get_name():gsub(fishbucket_prefix,"")
 		if fish_names[fish] then
 			local o = minetest.add_entity(pos, "mobs_mc:" .. fish)
