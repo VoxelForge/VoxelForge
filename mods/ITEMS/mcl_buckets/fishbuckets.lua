@@ -29,7 +29,7 @@ local function on_place_fish(itemstack, placer, pointed_thing)
 		n = minetest.get_node(pointed_thing.under)
 	end
 
-	local fish = itemstack:get_name():gsub(fishbucket_prefix,"")
+	local fish = itemstack:get_definition()._mcl_buckets_fish
 	if fish_names[fish] then
 		local o = minetest.add_entity(pos, "mobs_mc:" .. fish)
 		if o and o:get_pos() then
@@ -68,6 +68,7 @@ for techname, fishname in pairs(fish_names) do
 		stack_max = 1,
 		groups = {bucket = 1, fish_bucket = 1},
 		liquids_pointable = false,
+		_mcl_buckets_fish = techname,
 		on_place = on_place_fish,
 		on_secondary_use = on_place_fish,
 		_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
