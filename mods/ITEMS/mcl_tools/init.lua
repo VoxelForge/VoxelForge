@@ -58,9 +58,11 @@ local function on_tool_place(itemstack, placer, pointed_thing, tool)
 		-- _mcl_diggroups. This assumes the tool only has one diggroups
 		-- (which is the case in Mineclone).
 		local tdef = minetest.registered_tools[itemstack:get_name()]
-		for group, _ in pairs(tdef._mcl_diggroups) do
-			itemstack:add_wear(mcl_autogroup.get_wear(itemstack:get_name(), group))
-			return itemstack
+		if tdef and tdef._mcl_diggroups then
+			for group, _ in pairs(tdef._mcl_diggroups) do
+				itemstack:add_wear(mcl_autogroup.get_wear(itemstack:get_name(), group))
+				return itemstack
+			end
 		end
 		return itemstack
 	end
