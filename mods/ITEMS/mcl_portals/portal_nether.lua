@@ -44,12 +44,12 @@ local link_distance = {
 -- The min and max y levels when searching for a place to generate a new nether
 -- portal.
 local search_y_min = {
-	overworld = mcl_vars.mg_bedrock_overworld_min + 1,
-	nether = mcl_vars.mg_bedrock_nether_bottom_min + 1,
+	overworld = mcl_vars.mg_bedrock_overworld_max + 1,
+	nether = mcl_vars.mg_bedrock_nether_bottom_max + 1,
 }
 local search_y_max = {
 	overworld = mcl_vars.mg_overworld_max_official,
-	nether = mcl_vars.mg_bedrock_nether_top_max - 1,
+	nether = mcl_vars.mg_bedrock_nether_top_min - 6,
 }
 
 -- Table of objects (including players) which were recently teleported by a
