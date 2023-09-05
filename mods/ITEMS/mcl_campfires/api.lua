@@ -19,7 +19,7 @@ local function count_table(tbl)
 	return count
 end
 
-local function drop_items(pos, node, oldmeta)
+local function drop_items(pos)
 	local ph = minetest.hash_node_position(vector.round(pos))
 	if food_entities[ph] then
 		for k,v in pairs(food_entities[ph]) do
@@ -156,26 +156,23 @@ function mcl_campfires.register_campfire(name, def)
 		wield_image = def.inv_texture,
 		drawtype = "mesh",
 		mesh = "mcl_campfires_campfire.obj",
-		tiles = {
-			{
-				name=def.fire_texture,
-				animation={
-					type="vertical_frames",
-					aspect_w=32,
-					aspect_h=16,
-					length=2.0
-				 }}
+		tiles = {{
+			name=def.fire_texture,
+			animation={
+				type="vertical_frames",
+				aspect_w=32,
+				aspect_h=16,
+				length=2.0
+			 }}
 		},
-		overlay_tiles = {
-			{
-				 name=def.lit_logs_texture,
-				 animation = {
-					 type = "vertical_frames",
-					 aspect_w = 32,
-					 aspect_h = 16,
-					 length = 2.0,
-				 }
-			},
+		overlay_tiles = {{
+			 name=def.lit_logs_texture,
+			 animation = {
+				 type = "vertical_frames",
+				 aspect_w = 32,
+				 aspect_h = 16,
+				 length = 2.0,
+			 }}
 		},
 		use_texture_alpha = "clip",
 		groups = { handy=1, axey=1, material_wood=1, lit_campfire=1 },
@@ -191,10 +188,6 @@ function mcl_campfires.register_campfire(name, def)
 			end
 		end,
 		on_rightclick = function (pos, node, player, itemstack, pointed_thing)
-			local meta = minetest.get_meta(pos)
-			local inv = meta:get_inventory()
-			if not inv then inv:set_size("main", 4) end
-
 			if minetest.get_item_group(itemstack:get_name(), "shovel") ~= 0 then
 				local protected = mcl_util.check_position_protection(pos, player)
 				if not protected then
@@ -216,7 +209,6 @@ function mcl_campfires.register_campfire(name, def)
 				minetest.item_place_node(itemstack, player, pointed_thing)
 			end
 		end,
-		on_timer = mcl_campfires.cook_item,
 		drop = "",
 		light_source = def.lightlevel,
 		sounds = mcl_sounds.node_sound_wood_defaults(),
@@ -231,8 +223,8 @@ function mcl_campfires.register_campfire(name, def)
 		_mcl_blast_resistance = 2,
 		_mcl_hardness = 2,
 		on_blast = on_blast,
-		after_dig_node = function(pos, node, oldmeta, digger)
-			drop_items(pos, node, oldmeta)
+		after_dig_node = function(pos, node, _, digger)
+			drop_items(pos)
 			campfire_drops(pos, digger, def.drops, name.."_lit")
 		end,
 		_mcl_campfires_smothered_form = name,
