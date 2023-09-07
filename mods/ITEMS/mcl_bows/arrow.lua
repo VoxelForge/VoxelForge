@@ -471,9 +471,8 @@ end
 function ARROW_ENTITY.on_activate(self, staticdata, dtime_s)
 	local data = minetest.deserialize(staticdata)
 	if data then
-		-- First, check if the arrow is aleady past its life timer. If
-		-- yes, delete it. If starttime is nil, make it be deleted
-		-- always.
+		-- First, check if the arrow is already past its life timer. If
+		-- yes, delete it. If starttime is nil always delete it.
 		self._lifetime = minetest.get_gametime() - (data.starttime or 0)
 		if self._lifetime > ARROW_TIMEOUT then
 			mcl_burning.extinguish(self.object)
