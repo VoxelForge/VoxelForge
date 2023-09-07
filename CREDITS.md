@@ -22,7 +22,9 @@
 * kabou
 * MrRar
 * DinoNuggies4665
+* Nauta Turbidus
 * ChrisPHP
+* the-real-herowl
 * chmodsayshello
 
 ## Previous Contributors

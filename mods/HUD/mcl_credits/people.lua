@@ -24,7 +24,9 @@ return {
 		"kabou",
 		"MrRar",
 		"DinoNuggies4665",
+		"Nauta Turbidus",
 		"ChrisPHP",
+		"the-real-herowl",
 		"chmodsayshello",
 	}},
 	{S("Previous Contributors"), 0x52FF00, {
