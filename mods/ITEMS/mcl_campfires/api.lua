@@ -130,6 +130,11 @@ function mcl_campfires.register_campfire(name, def)
 			mcl_campfires.light_campfire(node.under)
 			return true
 		end,
+		_on_arrow_hit = function(pos, arrowent)
+			if mcl_burning.is_burning(arrowent.object) then
+				mcl_campfires.light_campfire(pos)
+			end
+		end,
 		drop = "",
 		sounds = mcl_sounds.node_sound_wood_defaults(),
 		selection_box = {

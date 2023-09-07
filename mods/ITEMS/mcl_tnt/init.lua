@@ -103,6 +103,11 @@ minetest.register_node("mcl_tnt:tnt", {
 			tnt.ignite(droppos)
 		end
 	end,
+	_on_arrow_hit = function(pos, arrowent)
+		if mcl_burning.is_burning(arrowent.object) then
+			tnt.ignite(arrowent._stuckin)
+		end
+	end,
 	sounds = sounds,
 })
 

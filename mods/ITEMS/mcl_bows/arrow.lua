@@ -1,7 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local mod_target = minetest.get_modpath("mcl_target")
-local mod_campfire = minetest.get_modpath("mcl_campfires")
 local enable_pvp = minetest.settings:get_bool("enable_pvp")
 
 -- Time in seconds after which a stuck arrow is deleted
@@ -32,8 +30,6 @@ local function random_arrow_positions(positions, placement)
 	end
 	return 0
 end
-
-local mod_button = minetest.get_modpath("mesecons_button")
 
 minetest.register_craftitem("mcl_bows:arrow", {
 	description = S("Arrow"),
@@ -384,27 +380,11 @@ function ARROW_ENTITY.on_step(self, dtime)
 
 				minetest.sound_play({name="mcl_bows_hit_other", gain=0.3}, {pos=self.object:get_pos(), max_hear_distance=16}, true)
 
-				if mcl_burning.is_burning(self.object) and snode.name == "mcl_tnt:tnt" then
-					tnt.ignite(self._stuckin)
-				end
-
-				-- Ignite Campfires
-				if mod_campfire and mcl_burning.is_burning(self.object) and minetest.get_item_group(snode.name, "campfire") ~= 0 then
-					mcl_campfires.light_campfire(self._stuckin)
-				end
-
-				-- Activate target
-				if mod_target and snode.name == "mcl_target:target_off" then
-					mcl_target.hit(self._stuckin, 1) --10 redstone ticks
-				end
-
-				-- Push the button! Push, push, push the button!
-				if mod_button and minetest.get_item_group(node.name, "button") > 0 and minetest.get_item_group(node.name, "button_push_by_arrow") == 1 then
-					local bdir = minetest.wallmounted_to_dir(node.param2)
-					-- Check the button orientation
-					if vector.equals(vector.add(dpos, bdir), self._stuckin) then
-						mesecon.push_button(dpos, node)
-					end
+				local bdef = minetest.registered_nodes[node.name]
+				if (bdef and bdef._on_arrow_hit) then
+					bdef._on_arrow_hit(dpos, self)
+				elseif (sdef and sdef._on_arrow_hit) then
+					sdef._on_arrow_hit(self._stuckin, self)
 				end
 			end
 		elseif (def and def.liquidtype ~= "none") then

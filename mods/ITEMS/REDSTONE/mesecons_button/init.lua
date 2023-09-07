@@ -140,6 +140,14 @@ function mesecon.register_button(basename, description, texture, recipeitem, sou
 			state = mesecon.state.off,
 			rules = button_get_output_rules,
 		}},
+		_on_arrow_hit = function(pos, arrowent)
+			local node = minetest.get_node(pos)
+			local bdir = minetest.wallmounted_to_dir(node.param2)
+			if vector.equals(vector.add(pos, bdir), arrowent._stuckin) then
+				mesecon.push_button(pos, node)
+				return true
+			end
+		end,
 		_mcl_button_basename = basename,
 		_mcl_button_timer = button_timer,
 
