@@ -116,13 +116,14 @@ end
 local function check_schem_growth(pos,file)
 	if file then
 		local schem = loadstring(minetest.serialize_schematic(file, "lua", {lua_use_comments = false, lua_num_indent_spaces = 0}) .. " return schematic")()
-		local w = math.max(schem.size.x,schem.size.z)
+		local wx = schem.size.x
+		local wz = schem.size.z
 		local h = schem.size.y
-		if mcl_trees.check_growth(pos,w,h) then
-			return w,h
+		if mcl_trees.check_growth(pos,math.max(wx,wz),h) then
+			return wx, h, wz
 		end
 	end
-	return false, false
+	return false, false, false
 end
 
 function mcl_trees.grow_tree(pos, node)
@@ -130,25 +131,37 @@ function mcl_trees.grow_tree(pos, node)
 	local tbt,ne = mcl_trees.check_2by2_saps(pos, node)
 	if node.name:find("propagule") then name = "mangrove" end
 	if not mcl_trees.woods[name] or not mcl_trees.woods[name].tree_schems then return end
-	local schem = mcl_trees.woods[name].tree_schems[1]
+	local schem, wx, h, wz
 	table.shuffle(mcl_trees.woods[name].tree_schems)
-	local w, h
 
 	if tbt and ( name == "dark_oak" or name == "jungle" or name == "spruce" ) then
 		for _,v in pairs(mcl_trees.woods[name].tree_schems) do
-			w, h = check_schem_growth(pos,v.file)
-			if v.file:find("huge") or name == "dark_oak" and w and h then schem = v end
+			wx, h, wz = check_schem_growth(pos, v.file)
+			if v.file:find("huge") or name == "dark_oak" and wx and h and wz then
+				schem = v
+				break
+			end
+		end
+		if not schem then
+			wx = nil h = nil wz = nil schem = nil tbt = nil
 		end
 	end
 
-	if (not tbt and name ~= "dark_oak") or not schem then --dark oak only grows "huge" trees
+	if ( not tbt and name ~= "dark_oak") or not schem then --dark oak only grows "huge" trees
 		for _,v in pairs(mcl_trees.woods[name].tree_schems) do
-			w, h = check_schem_growth(pos,v.file)
-			if not v.file:find("huge") and w and h then schem = v end
+			wx, h, wz = check_schem_growth(pos, v.file)
+			if not v.file:find("huge") and wx and h and wz then
+				schem = v
+				tbt = nil
+				break
+			end
+		end
+		if not schem then
+			wx = nil h = nil wz = nil schem = nil
 		end
 	end
 
-	if schem and w and h then
+	if schem and wx and h and wz then
 		minetest.remove_node(pos)
 		if tbt then
 			for _,v in pairs(tbt) do
@@ -156,9 +169,9 @@ function mcl_trees.grow_tree(pos, node)
 			end
 			pos = ne
 		end
-		minetest.place_schematic(vector.subtract(pos, schem.offset or vector.new(math.floor(w/2), 1, math.floor(w/2))), schem.file, "random", nil, false)
-
-		local nn = minetest.find_nodes_in_area(vector.offset(pos, -math.ceil(w/2), 0, -math.ceil(w/2)), vector.offset(pos, math.ceil(w/2), h, math.ceil(w/2)), {"group:leaves"})
+		local offset = vector.new(math.floor(wx/2), 0, math.floor(wz/2)) - (schem.offset or vector.zero())
+		minetest.place_schematic(vector.subtract(pos, offset), schem.file, 0, nil, false)
+		local nn = minetest.find_nodes_in_area(vector.offset(pos, -math.floor(wx/2), 0, -math.floor(wz/2)), vector.offset(pos, math.floor(wx/2), h, math.floor(wz/2)), {"group:leaves"})
 		for _,v in pairs(nn) do
 			local n = minetest.get_node(v)
 			if minetest.get_item_group(n.name,"biomecolor") > 0 then
