@@ -6,12 +6,12 @@ local PARTICLE_DISTANCE = 25
 mcl_trees.register_wood("cherry_blossom",{
 	sign_color="#F29889",
 	tree_schems= {
-		{ file=modpath.."/schematics/mcl_cherry_blossom_tree_1.mts",width=7,height=11 },
-		{ file=modpath.."/schematics/mcl_cherry_blossom_tree_2.mts",width=7,height=11 },
-		{ file=modpath.."/schematics/mcl_cherry_blossom_tree_3.mts",width=7,height=11 },
-		{ file=modpath.."/schematics/mcl_cherry_blossom_tree_beehive_1.mts",width=7,height=11 },
-		{ file=modpath.."/schematics/mcl_cherry_blossom_tree_beehive_2.mts",width=7,height=11 },
-		{ file=modpath.."/schematics/mcl_cherry_blossom_tree_beehive_3.mts",width=7,height=11 },
+		{file=modpath.."/schematics/mcl_cherry_blossom_tree_1.mts"},
+		{file=modpath.."/schematics/mcl_cherry_blossom_tree_2.mts", offset = vector.new(0,0,1)},
+		{file=modpath.."/schematics/mcl_cherry_blossom_tree_3.mts"},
+		{file=modpath.."/schematics/mcl_cherry_blossom_tree_beehive_1.mts"},
+		{file=modpath.."/schematics/mcl_cherry_blossom_tree_beehive_2.mts", offset = vector.new(0,0,1)},
+		{file=modpath.."/schematics/mcl_cherry_blossom_tree_beehive_3.mts"},
 	},
 	tree = { tiles = {"mcl_cherry_blossom_log_top.png", "mcl_cherry_blossom_log_top.png","mcl_cherry_blossom_log.png"} },
 	wood = { tiles = {"mcl_cherry_blossom_planks.png"}},
