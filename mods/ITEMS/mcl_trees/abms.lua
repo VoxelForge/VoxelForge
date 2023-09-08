@@ -147,7 +147,7 @@ function mcl_trees.grow_tree(pos, node)
 		end
 	end
 
-	if ( not tbt and name ~= "dark_oak") or not schem then --dark oak only grows "huge" trees
+	if ( not tbt or not schem) and name ~= "dark_oak" then --dark oak only grows "huge" trees
 		for _,v in pairs(mcl_trees.woods[name].tree_schems) do
 			wx, h, wz = check_schem_growth(pos, v.file)
 			if not v.file:find("huge") and wx and h and wz then
