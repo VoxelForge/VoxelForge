@@ -236,6 +236,23 @@ local function apply_effects_to_all_players(pos)
 	end
 end
 
+local function allow_metadata_inventory_take(pos, listname, index, stack, player)
+	local name = player:get_player_name()
+	if minetest.is_protected(pos, name) then
+		minetest.record_protection_violation(pos, name)
+		return 0
+	end
+	return stack:get_count()
+end
+
+local function allow_metadata_inventory_put(pos, listname, index, stack, player)
+	return allow_metadata_inventory_take(pos, listname, index, stack, player)
+end
+
+local function allow_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
+	return 0
+end
+
 minetest.register_node("mcl_beacons:beacon", {
 	description = S"Beacon",
 	drawtype = "mesh",
@@ -259,6 +276,9 @@ minetest.register_node("mcl_beacons:beacon", {
 		end
 		remove_beacon_beam(pos)
 	end,
+	allow_metadata_inventory_put = allow_metadata_inventory_put,
+	allow_metadata_inventory_move = allow_metadata_inventory_move,
+	allow_metadata_inventory_take = allow_metadata_inventory_take,
 	on_receive_fields = function(pos, formname, fields, sender)
 		if fields.swiftness or fields.regeneration or fields.leaping or fields.strenght then
 			local sender_name = sender:get_player_name()
