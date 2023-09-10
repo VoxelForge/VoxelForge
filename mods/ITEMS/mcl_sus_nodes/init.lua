@@ -71,7 +71,7 @@ local function brush_node(itemstack, user, pointed_thing)
 			minetest.add_item(pos+dir,item_entities[ph]._item)
 			item_entities[ph].object:remove()
 			item_entities[ph] = nil
-			minetest.remove_node(pos)
+			minetest.swap_node(pos,{name = def._mcl_sus_nodes_parent})
 		else
 			minetest.swap_node(pos,{name=def._mcl_sus_nodes_main.."_"..item_entities[ph]._stage})
 		end
@@ -99,6 +99,7 @@ function mcl_sus_nodes.register_sus_node(name,source,overrides)
 		tiles = overlay_tiles(sdef.tiles,"mcl_sus_nodes_suspicious_overlay.png"),
 		--overlay_tiles = { "mcl_sus_nodes_suspicious_overlay.png" },
 		drop = source,
+		_mcl_sus_nodes_parent = source,
 		_mcl_sus_nodes_main = main_itemstring,
 		_mcl_sus_nodes_drops = table.copy(sus_drops_default),
 	},overrides or {})
