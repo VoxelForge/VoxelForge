@@ -62,7 +62,7 @@ local function brush_node(itemstack, user, pointed_thing)
 			item_entities[ph] = l
 		else
 			local p = item_entities[ph].object:get_pos()
-			if p then
+			if p and math.random(3) == 1  then
 				item_entities[ph]._stage = item_entities[ph]._stage + 1
 				item_entities[ph].object:set_pos(p + ( vector.new(item_entities[ph]._dir) * ( 0.02 * item_entities[ph]._stage )))
 			end
