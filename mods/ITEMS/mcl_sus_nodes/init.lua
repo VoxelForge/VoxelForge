@@ -49,6 +49,10 @@ local function brush_node(itemstack, user, pointed_thing)
 			local o = minetest.add_entity(pos + (dir * 0.38),"mcl_sus_nodes:item_entity")
 			local l = o:get_luaentity()
 			l._item = mcl_sus_nodes.get_random_item(pos)
+			if not l._item then
+				o:remove()
+				return
+			end
 			l._stage = 1
 			l._nodepos = pos
 			l._poshash = ph
