@@ -197,13 +197,11 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	end
 end)
 
-if minetest.get_modpath("mcl_dye") and minetest.get_modpath("mcl_mobitems") then
-	minetest.register_craft({
-		type = "shapeless",
-		output = "mcl_books:writable_book",
-		recipe = { "mcl_books:book", "mcl_mobitems:ink_sac", "mcl_mobitems:feather" },
-	})
-end
+minetest.register_craft({
+	type = "shapeless",
+	output = "mcl_books:writable_book",
+	recipe = { "mcl_books:book", "mcl_mobitems:ink_sac", "mcl_mobitems:feather" },
+})
 
 -- Written Book
 minetest.register_craftitem("mcl_books:written_book", {
