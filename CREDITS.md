@@ -93,6 +93,7 @@
 * cora
 * Michieal
 * ryvnf
+* SmokeyDope
 
 ## Translations
 * Wuzzy
