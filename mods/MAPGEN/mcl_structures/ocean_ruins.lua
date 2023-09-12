@@ -167,7 +167,7 @@ local warm = table.merge(cold,{
 		modpath.."/schematics/mcl_structures_ocean_ruins_warm_3.mts",
 		modpath.."/schematics/mcl_structures_ocean_ruins_warm_4.mts",
 	},
-	loot = {
+	loot = table.merge(cold.loot,{
 		["SUS"] = {
 			{
 			stacks_min = 1,
@@ -186,7 +186,7 @@ local warm = table.merge(cold,{
 				}
 			}
 		},
-	}
+	}),
 })
 
 mcl_structures.register_structure("cold_ocean_ruins",cold)
