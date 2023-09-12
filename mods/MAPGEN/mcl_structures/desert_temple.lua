@@ -33,7 +33,7 @@ local function temple_placement_callback(pos,def, pr)
 		local sus_poss = minetest.find_nodes_in_area(vector.offset(p1,0,-5,0), vector.offset(p2,0,-hl+5,0), {"mcl_core:sand","mcl_core:sandstone","mcl_core:redsand","mcl_core:redsandstone"})
 		if #sus_poss > 0 then
 			table.shuffle(sus_poss)
-			for i = 1,pr:next(1,#sus_poss) do
+			for i = 1,pr:next(1,math.min(250,#sus_poss)) do
 				minetest.set_node(sus_poss[i],{name="mcl_sus_nodes:sand"})
 				local meta = minetest.get_meta(sus_poss[i])
 				meta:set_string("structure","desert_temple")
