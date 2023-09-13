@@ -722,6 +722,8 @@ end
 
 function mcl_potions.healing_func(player, hp)
 
+	if player:get_hp() <= 0 then return false end
+
 	local obj = player:get_luaentity()
 
 	if player:get_hp() == 0 then
@@ -754,6 +756,8 @@ end
 
 function mcl_potions.swiftness_func(player, factor, duration)
 
+	if player:get_hp() <= 0 then return false end
+
 	local entity = player:get_luaentity()
 	if entity and entity.is_boss then return false end
 
@@ -784,6 +788,8 @@ function mcl_potions.swiftness_func(player, factor, duration)
 end
 
 function mcl_potions.leaping_func(player, factor, duration)
+
+	if player:get_hp() <= 0 then return false end
 
 	local entity = player:get_luaentity()
 	if entity and entity.is_boss then return false end
@@ -816,6 +822,8 @@ end
 
 function mcl_potions.weakness_func(player, factor, duration)
 
+	if player:get_hp() <= 0 then return false end
+
 	local entity = player:get_luaentity()
 	if entity and entity.is_boss then return false end
 
@@ -841,6 +849,8 @@ end
 
 
 function mcl_potions.strength_func(player, factor, duration)
+
+	if player:get_hp() <= 0 then return false end
 
 	local entity = player:get_luaentity()
 	if entity and entity.is_boss then return false end
@@ -868,7 +878,7 @@ end
 
 function mcl_potions.withering_func(player, factor, duration)
 
-	if player:get_hp() <= 0 then return end
+	if player:get_hp() <= 0 then return false end
 
 	local entity = player:get_luaentity()
 	if entity and (entity.is_boss or string.find(entity.name, "wither")) then return false end
@@ -896,6 +906,8 @@ end
 
 function mcl_potions.poison_func(player, factor, duration)
 
+	if player:get_hp() <= 0 then return false end
+
 	local entity = player:get_luaentity()
 	if entity and (entity.is_boss or entity.harmed_by_heal or string.find(entity.name, "spider")) then return false end
 
@@ -921,6 +933,8 @@ end
 
 
 function mcl_potions.regeneration_func(player, factor, duration)
+
+	if player:get_hp() <= 0 then return false end
 
 	local entity = player:get_luaentity()
 	if entity and (entity.is_boss or entity.harmed_by_heal) then return false end
@@ -948,6 +962,8 @@ end
 
 function mcl_potions.invisiblility_func(player, null, duration)
 
+	if player:get_hp() <= 0 then return false end
+
 	local entity = player:get_luaentity()
 	if entity and entity.is_boss then return false end
 
@@ -972,6 +988,8 @@ function mcl_potions.invisiblility_func(player, null, duration)
 end
 
 function mcl_potions.water_breathing_func(player, null, duration)
+
+	if player:get_hp() <= 0 then return false end
 
 	local entity = player:get_luaentity()
 	if entity and entity.is_boss then return false end
@@ -998,6 +1016,8 @@ end
 
 function mcl_potions.fire_resistance_func(player, null, duration)
 
+	if player:get_hp() <= 0 then return false end
+
 	local entity = player:get_luaentity()
 	if entity and entity.is_boss then return false end
 
@@ -1021,6 +1041,8 @@ end
 
 
 function mcl_potions.night_vision_func(player, null, duration)
+
+	if player:get_hp() <= 0 then return false end
 
 	local entity = player:get_luaentity()
 	if entity and entity.is_boss then return false end

@@ -20,6 +20,35 @@ end
 --################### WITHER
 --###################
 
+local function wither_unstuck(self)
+	local pos = self.object:get_pos()
+	if mobs_griefing then
+		local col = self.collisionbox
+		local pos1 = vector.offset(pos, col[1], col[2], col[3])
+		local pos2 = vector.offset(pos, col[4], col[5], col[6])
+		for z = pos1.z, pos2.z do for y = pos1.y, pos2.y do for x = pos1.x, pos2.x do
+			local npos = vector.new(x,y,z)
+			local name = minetest.get_node(npos).name
+			if name ~= "air" then
+				local ndef = minetest.registered_nodes[name]
+				if ndef and ndef._mcl_hardness and ndef._mcl_hardness >= 0 then
+					local drops = minetest.get_node_drops(name, "")
+					if minetest.dig_node(npos) then
+						for _, item in ipairs(drops) do
+							if type(item) ~= "string" then
+								item = item:get_name() .. item:get_count()
+							end
+							minetest.add_item(npos, item)
+						end
+					end
+				end
+			end
+		end end end
+	else
+		mcl_mobs.mob_class.safe_boom(self, pos, 2)
+	end
+end
+
 mcl_mobs.register_mob("mobs_mc:wither", {
 	description = S("Wither"),
 	type = "monster",
@@ -152,25 +181,6 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 					return false
 				end
 				self._health_old = self.health
-			end
-		end
-
-		local INDESTRUCT_BLASTRES = 1000000
-		local cb = self.object:get_properties().collisionbox
-		local head_pos = vector.offset(self.object:get_pos(),0,cb[5],0)
-		local subh_pos = vector.offset(head_pos,0,-1,0)
-		local head_node = minetest.get_node(head_pos).name
-		local subh_node = minetest.get_node(subh_pos).name
-		local hnodef = minetest.registered_nodes[head_node]
-		local subhnodef = minetest.registered_nodes[subh_node]
-		if hnodef and subhnodef and (hnodef.walkable or subhnodef.walkable) and not self._xplded_lately then
-			if mobs_griefing and not minetest.is_protected(head_pos, "") and hnodef._mcl_blast_resistance < INDESTRUCT_BLASTRES then
-				local hp = self.health
-				mcl_explosions.explode(head_pos, 5, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
-				self._xplded_lately = true
-				self.health = hp
-			else
-				self.object:set_pos(vector.offset(head_pos,0,10,0))
 			end
 		end
 
@@ -327,14 +337,16 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 	end,
 
 	do_punch = function(self, hitter, tflp, tool_capabilities, dir)
-		if self._spawning then return false end
+		if self._spawning or hitter == self.object then return false end
 		local ent = hitter:get_luaentity()
 		if ent and self._arrow_resistant and (string.find(ent.name, "arrow") or string.find(ent.name, "rocket")) then return false end
+		wither_unstuck(self)
 		return true
 	end,
 	deal_damage = function(self, damage, mcl_reason)
 		if self._spawning then return end
 		if self._arrow_resistant and mcl_reason.type == "magic" then return end
+		wither_unstuck(self)
 		self.health = self.health - damage
 	end,
 
@@ -395,6 +407,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull", {
 	end,
 
 	hit_mob = function(self, mob)
+		mcl_mobs.effect_functions["withering"](mob, 0.5, 10)
 		mob:punch(self.object, 1.0, {
 			full_punch_interval = 0.5,
 			damage_groups = {fleshy = 8},
@@ -433,12 +446,6 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 
 	-- direct hit
 	hit_player = function(self, player)
-		local pos = self.object:get_pos()
-		if mobs_griefing and not minetest.is_protected(pos, "") then
-			mcl_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
-		else
-			mcl_mobs.mob_class.safe_boom(self, pos, 1, true) --need to call it this way bc self is the "arrow" object here
-		end
 		mcl_mobs.effect_functions["withering"](player, 0.5, 10)
 		player:punch(self.object, 1.0, {
 			full_punch_interval = 0.5,
@@ -453,6 +460,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 	end,
 
 	hit_mob = function(self, mob)
+		mcl_mobs.effect_functions["withering"](mob, 0.5, 10)
 		mob:punch(self.object, 1.0, {
 			full_punch_interval = 0.5,
 			damage_groups = {fleshy = 12},
