@@ -879,4 +879,10 @@ function mcl_itemframes.backwards_compatibility ()
 	minetest.register_entity("mcl_itemframes:glow_item", frame_item_base)
 	minetest.register_entity("mcl_itemframes:glow_map", map_item_base)
 
+	--Entities unmovable by pistons
+	mesecon.register_mvps_unmov("mcl_itemframes:item_frame_item")
+	mesecon.register_mvps_unmov("mcl_itemframes:glow_item_frame_item")
+	mesecon.register_mvps_unmov("mcl_itemframes:item_frame_map")
+	mesecon.register_mvps_unmov("mcl_itemframes:glow_item_frame_map")
+
 end
