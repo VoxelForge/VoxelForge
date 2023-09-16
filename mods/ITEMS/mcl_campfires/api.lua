@@ -210,7 +210,7 @@ function mcl_campfires.register_campfire(name, def)
 				end
 			elseif minetest.get_item_group(itemstack:get_name(), "campfire_cookable") ~= 0 then
 				mcl_campfires.take_item(pos, node, player, itemstack)
-			else
+			elseif itemstack and player and pointed_thing then
 				minetest.item_place_node(itemstack, player, pointed_thing)
 			end
 		end,
