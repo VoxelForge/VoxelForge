@@ -148,9 +148,16 @@ minetest.register_entity("mcl_sus_nodes:item_entity", {
 		local s = minetest.deserialize(staticdata)
 		if type(s) == "table" then
 			for k,v in pairs(s) do self[k] = v end
-		end
-		if self._poshash and not item_entities[self._poshash] then
+			self._poshash = minetest.hash_node_position(self.object:get_pos())
 			item_entities[self._poshash] = self
+			if self._item then
+				self.object:set_properties({
+					wield_item = self._item,
+				})
+			else
+				self.object:remove()
+				return
+			end
 		end
 		self.object:set_armor_groups({ immortal = 1 })
 	end,
