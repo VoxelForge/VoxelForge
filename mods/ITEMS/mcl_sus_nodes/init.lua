@@ -87,7 +87,8 @@ local function overlay_tiles(orig,overlay)
 	for k,v in pairs(tiles) do
 		if v.name then
 			tiles[k].name = tiles[k].name.."^"..overlay
-			else tiles[k] = v.."^"..overlay
+		else
+			tiles[k] = v.."^"..overlay
 		end
 	end
 	return tiles
