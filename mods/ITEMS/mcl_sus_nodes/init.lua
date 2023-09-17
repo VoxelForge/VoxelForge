@@ -102,7 +102,6 @@ function mcl_sus_nodes.register_sus_node(name,source,overrides)
 	local def = table.merge(sdef,tpl,{
 		description = S("Suspicious "..name),
 		tiles = overlay_tiles(sdef.tiles,"mcl_sus_nodes_suspicious_overlay.png"),
-		--overlay_tiles = { "mcl_sus_nodes_suspicious_overlay.png" },
 		drop = source,
 		_mcl_sus_nodes_parent = source,
 		_mcl_sus_nodes_main = main_itemstring,
@@ -112,7 +111,6 @@ function mcl_sus_nodes.register_sus_node(name,source,overrides)
 	for i=1,3 do
 		minetest.register_node(main_itemstring.."_"..i,table.merge(def,{
 			tiles = overlay_tiles(sdef.tiles,"mcl_sus_nodes_suspicious_overlay_"..i..".png"),
-			--overlay_tiles = { "mcl_sus_nodes_suspicious_overlay_"..i..".png" },
 			groups = table.merge(tpl.groups, { suspicious_stage =i, not_in_creative_inventory = 1 }),
 		}))
 	end
