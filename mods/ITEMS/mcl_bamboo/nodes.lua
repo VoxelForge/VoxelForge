@@ -176,7 +176,9 @@ minetest.register_node("mcl_bamboo:scaffolding", {
 	_mcl_hardness = 0,
 	on_place = function(itemstack, placer, ptd)
 		local ctrl = placer:get_player_control()
-		if mcl_util.call_on_rightclick(itemstack, placer, ptd) then return end
+		local rc = mcl_util.call_on_rightclick(itemstack, placer, ptd)
+		if rc then return rc end
+		if not ptd then return end
 		local node = minetest.get_node(ptd.under)
 
 		if minetest.get_item_group(node.name,"scaffolding") > 0 and ctrl and ctrl.sneak then -- count param2 up when placing to the sides. Fall when > 6
