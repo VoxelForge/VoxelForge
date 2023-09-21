@@ -127,7 +127,8 @@ local function play_record(pos, itemstack, player)
 		end
 		active_tracks[cname] = minetest.sound_play(mcl_jukebox.registered_records[name].sound, {
 			gain = 1,
-			pos = pos
+			pos = pos,
+			max_hear_distance = 65,
 		})
 		now_playing(player, name)
 		return true
