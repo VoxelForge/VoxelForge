@@ -145,6 +145,7 @@ local function good_for_respawn(pos, player)
 	local def0 = minetest.registered_nodes[nn0]
 	local def1 = minetest.registered_nodes[nn1]
 	local def2 = minetest.registered_nodes[nn2]
+	if not def0 or not def1 or not def2 then return false end
 	return def0.walkable and (not def1.walkable) and (not def2.walkable) and
 		(def1.damage_per_second == nil or def2.damage_per_second <= 0) and
 		(def1.damage_per_second == nil or def2.damage_per_second <= 0)
