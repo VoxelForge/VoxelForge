@@ -40,6 +40,8 @@ local hoglin = {
 	makes_footstep_sound = true,
 	walk_velocity = 1,
 	run_velocity = 2.5, -- ( was 2.8 )  < 2.4 is slow and 2.6 < is fast
+	retaliates = true,
+	group_attack = true,
 	drops = {
 		{
 			name = "mobs_mcitems:leather",
