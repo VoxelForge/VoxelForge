@@ -200,7 +200,7 @@ mcl_mobs.register_mob("mobs_mc:baby_strider",table.merge(strider,{
 	xp_max = 13,
 	textures = { {
 		"extra_mobs_strider.png",
-		"extra_mobs_trans.png",
+		"blank.png",
 	} },
 	walk_velocity = 1.2,
 	run_velocity = 2.4,

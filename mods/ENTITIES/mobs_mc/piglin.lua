@@ -218,7 +218,7 @@ mcl_mobs.register_mob("mobs_mc:zombified_piglin",table.merge(piglin,{
 	attack_animals = true,
 	prevents_sleep_when_hostile = true,
 	mesh = "extra_mobs_sword_piglin.b3d",
-	textures = {"extra_mobs_zombified_piglin.png", "default_tool_goldsword.png", "extra_mobs_trans.png"},
+	textures = {"extra_mobs_zombified_piglin.png", "default_tool_goldsword.png", "blank.png"},
 	attack_type = "dogfight",
 	animation = {
 		stand_speed = 30,
@@ -283,7 +283,7 @@ mcl_mobs.register_mob("mobs_mc:piglin_brute",table.merge(piglin,{
 	fire_damage = 0,
 	attack_animals = true,
 	mesh = "extra_mobs_sword_piglin.b3d",
-	textures = {"extra_mobs_piglin_brute.png", "default_tool_goldaxe.png", "extra_mobs_trans.png"},
+	textures = { "extra_mobs_piglin_brute.png", "default_tool_goldaxe.png", "blank.png" },
 	attack_type = "dogfight",
 	animation = {
 		stand_speed = 30,

@@ -107,7 +107,7 @@ mcl_mobs.register_mob("mobs_mc:baby_hoglin",table.merge(hoglin,{
 	visual_size = {x=hoglin.visual_size.x/2, y=hoglin.visual_size.y/2},
 	textures = { {
 		"extra_mobs_hoglin.png",
-		"extra_mobs_trans.png",
+		"blank.png",
 	} },
 	walk_velocity = 1.2,
 	run_velocity = 2.4,
