@@ -157,7 +157,6 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 		if self._custom_timer > 1 then
 			self.health = math.min(self.health + 1, self.object:get_properties().hp_max)
 			self._custom_timer = self._custom_timer - 1
-			self._xplded_lately = false
 		end
 		if self._spawner then
 			local spawner = minetest.get_player_by_name(self._spawner)
