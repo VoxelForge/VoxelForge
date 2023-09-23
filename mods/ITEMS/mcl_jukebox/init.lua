@@ -4,6 +4,8 @@ local C = minetest.colorize
 mcl_jukebox = {}
 mcl_jukebox.registered_records = {}
 
+local HEAR_DISTANCE = 65
+
 -- Player name-indexed table containing the currently heard track
 local active_tracks = {}
 
@@ -99,8 +101,25 @@ local function now_playing(player, name)
 	end, {playername, id, hud_sequence_numbers[playername]})
 end
 
+local function check_active_tracks()
+	for k,v in pairs(active_tracks) do
+		local pos = minetest.get_position_from_hash(k)
+		local player_near = false
+		for _,pl in pairs(minetest.get_connected_players()) do
+			if vector.distance(pl:get_pos(), pos) <= HEAR_DISTANCE then
+				player_near = true
+			end
+		end
+		if not player_near then
+			minetest.sound_stop(v)
+			active_tracks[k] = nil
+		end
+	end
+
+end
+
 minetest.register_on_leaveplayer(function(player)
-	active_tracks[player:get_player_name()] = nil
+	check_active_tracks()
 	active_huds[player:get_player_name()] = nil
 	hud_sequence_numbers[player:get_player_name()] = nil
 end)
@@ -119,16 +138,16 @@ local function play_record(pos, itemstack, player)
 	local item_name = itemstack:get_name()
 	-- ensure the jukebox uses the new record names for old records
 	local name = minetest.registered_aliases[item_name] or item_name
+	local ph = minetest.hash_node_position(pos)
 	if mcl_jukebox.registered_records[name] then
-		local cname = player:get_player_name()
-		if active_tracks[cname] then
-			minetest.sound_stop(active_tracks[cname])
-			active_tracks[cname] = nil
+		if active_tracks[ph] then
+			minetest.sound_stop(active_tracks[ph])
+			active_tracks[ph] = nil
 		end
-		active_tracks[cname] = minetest.sound_play(mcl_jukebox.registered_records[name].sound, {
+		active_tracks[ph] = minetest.sound_play(mcl_jukebox.registered_records[name].sound, {
 			gain = 1,
 			pos = pos,
-			max_hear_distance = 65,
+			max_hear_distance = HEAR_DISTANCE,
 		})
 		now_playing(player, name)
 		return true
@@ -154,6 +173,7 @@ minetest.register_node("mcl_jukebox:jukebox", {
 	on_rightclick= function(pos, node, clicker, itemstack, pointed_thing)
 		if not clicker then return end
 		local cname = clicker:get_player_name()
+		local ph = minetest.hash_node_position(pos)
 		if minetest.is_protected(pos, cname) then
 			minetest.record_protection_violation(pos, cname)
 			return
@@ -162,8 +182,8 @@ minetest.register_node("mcl_jukebox:jukebox", {
 		local inv = meta:get_inventory()
 		if not inv:is_empty("main") then
 			-- Jukebox contains a disc: Stop music and remove disc
-			if active_tracks[cname] then
-				minetest.sound_stop(active_tracks[cname])
+			if active_tracks[ph] then
+				minetest.sound_stop(active_tracks[ph])
 			end
 			local lx = pos.x
 			local ly = pos.y+1
@@ -173,9 +193,9 @@ minetest.register_node("mcl_jukebox:jukebox", {
 			-- Rotate record to match with “slot” texture
 			dropped_item:set_yaw(math.pi/2)
 			inv:set_stack("main", 1, "")
-			if active_tracks[cname] then
-				minetest.sound_stop(active_tracks[cname])
-				active_tracks[cname] = nil
+			if active_tracks[ph] then
+				minetest.sound_stop(active_tracks[ph])
+				active_tracks[ph] = nil
 			end
 			if active_huds[cname] then
 				clicker:hud_remove(active_huds[cname])
@@ -224,6 +244,7 @@ minetest.register_node("mcl_jukebox:jukebox", {
 		local name = digger:get_player_name()
 		local meta = minetest.get_meta(pos)
 		local meta2 = meta
+		local ph = minetest.hash_node_position(pos)
 		meta:from_table(oldmetadata)
 		local inv = meta:get_inventory()
 		local stack = inv:get_stack("main", 1)
@@ -232,9 +253,9 @@ minetest.register_node("mcl_jukebox:jukebox", {
 			local dropped_item = minetest.add_item(p, stack)
 			-- Rotate record to match with “slot” texture
 			dropped_item:set_yaw(math.pi/2)
-			if active_tracks[name] then
-				minetest.sound_stop(active_tracks[name])
-				active_tracks[name] = nil
+			if active_tracks[ph] then
+				minetest.sound_stop(active_tracks[ph])
+				active_tracks[ph] = nil
 			end
 			if active_huds[name] then
 				digger:hud_remove(active_huds[name])
