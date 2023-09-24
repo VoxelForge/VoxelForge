@@ -77,14 +77,7 @@ local axolotl = {
 	reach = 2,
 	attack_type = "dogfight",
 	attack_animals = true,
-	specific_attack = {
-		"extra_mobs_cod",
-		"mobs_mc:sheep",
-		"extra_mobs_glow_squid",
-		"extra_mobs_salmon",
-		"extra_mobs_tropical_fish",
-		"mobs_mc_squid"
-		 },
+	specific_attack = { "mobs_mc:cod", "mobs_mc:salmon", "mobs_mc:tropical_fish", "mobs_mc:guardian", "mobs_mc:elder_guardian", "mobs_mc:squid", "mobs_mc:glow_squid" },
 	runaway = true,
 }
 
