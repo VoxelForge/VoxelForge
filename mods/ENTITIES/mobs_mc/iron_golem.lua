@@ -218,7 +218,7 @@ function mobs_mc.check_iron_golem_summon(pos, player)
 			place.y = place.y - 0.5
 			local o = minetest.add_entity(place, "mobs_mc:iron_golem")
 			local l = o:get_luaentity()
-			if l then l.owner = player:get_player_name() end
+			if l then l._creator = player:get_player_name() end
 			break
 		end
 	end
