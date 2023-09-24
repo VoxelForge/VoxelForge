@@ -3,13 +3,15 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local bobber_ENTITY={
-	physical = false,
+	initial_properties = {
+		physical = false,
+		textures = {"mcl_fishing_bobber.png"},
+		visual_size = {x=0.5, y=0.5},
+		collisionbox = {0.45,0.45,0.45,0.45,0.45,0.45},
+		pointable = false,
+		static_save = false,
+	},
 	timer=0,
-	textures = {"mcl_fishing_bobber.png"},
-	visual_size = {x=0.5, y=0.5},
-	collisionbox = {0.45,0.45,0.45,0.45,0.45,0.45},
-	pointable = false,
-	static_save = false,
 
 	_lastpos={},
 	_dive = false,
@@ -303,12 +305,14 @@ bobber_ENTITY.on_step = bobber_on_step
 minetest.register_entity("mcl_fishing:bobber_entity", bobber_ENTITY)
 
 local flying_bobber_ENTITY={
-	physical = false,
+	initial_properties = {
+		physical = false,
+		textures = {"mcl_fishing_bobber.png"}, --FIXME: Replace with correct texture.
+		visual_size = {x=0.5, y=0.5},
+		collisionbox = {0,0,0,0,0,0},
+		pointable = false,
+	},
 	timer=0,
-	textures = {"mcl_fishing_bobber.png"}, --FIXME: Replace with correct texture.
-	visual_size = {x=0.5, y=0.5},
-	collisionbox = {0,0,0,0,0,0},
-	pointable = false,
 
 	get_staticdata = mcl_throwing.get_staticdata,
 	on_activate = mcl_throwing.on_activate,
