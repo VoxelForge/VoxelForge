@@ -940,6 +940,9 @@ function mob_class:falling(pos)
 		if self.floats == 1 and minetest.registered_nodes[node_ok(vector.offset(pos,0,self.collisionbox[5] -0.25,0)).name].groups.water then
 			self.object:set_acceleration(vector.new(0, -self.fall_speed / (math.max(1, v.y) ^ 2), 0))
 		end
+
+		-- Reset fall damage when falling into water first.
+		self.reset_fall_damage = 1
 	else
 
 		-- fall damage onto solid ground
@@ -948,17 +951,18 @@ function mob_class:falling(pos)
 			local n = node_ok(vector.offset(pos,0,-1,0)).name
 			local d = (self.old_y or 0) - self.object:get_pos().y
 
-			if d > 5 and n ~= "air" and n ~= "ignore" then
+			if d > 5 and n ~= "air" and n ~= "ignore" and self.reset_fall_damage ~= 1 then
 				local add = minetest.get_item_group(self.standing_on, "fall_damage_add_percent")
 				local damage = d - 5
 				if add ~= 0 then
 					damage = damage + damage * (add/100)
 				end
 				self:damage_mob("fall",damage)
+				self.reset_fall_damage = 0
 			end
-
 			self.old_y = self.object:get_pos().y
 		end
+		self.reset_fall_damage = 0
 	end
 end
 
