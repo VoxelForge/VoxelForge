@@ -632,13 +632,15 @@ end
 
 -- Banner entities.
 local entity_standing = {
-	physical = false,
-	collide_with_objects = false,
-	visual = "mesh",
-	mesh = "amc_banner.b3d",
-	visual_size = { x=2.499, y=2.499 },
-	textures = {mcl_banners.make_banner_texture()},
-	pointable = false,
+	initial_properties = {
+		physical = false,
+		collide_with_objects = false,
+		visual = "mesh",
+		mesh = "amc_banner.b3d",
+		visual_size = { x=2.499, y=2.499 },
+		textures = {mcl_banners.make_banner_texture()},
+		pointable = false,
+	},
 
 	_base_color = nil, -- base color of banner
 	_layers = nil, -- table of layers painted over the base color.
