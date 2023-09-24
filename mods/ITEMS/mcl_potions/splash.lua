@@ -58,11 +58,13 @@ function mcl_potions.register_splash(name, descr, color, def)
 	local w = 0.7
 
 	minetest.register_entity(id.."_flying",{
-		textures = {splash_image(color)},
-		hp_max = 1,
-		visual_size = {x=w/2,y=w/2},
-		collisionbox = {-0.1,-0.1,-0.1,0.1,0.1,0.1},
-		pointable = false,
+		initial_properties = {
+			textures = {splash_image(color)},
+			hp_max = 1,
+			visual_size = {x=w/2,y=w/2},
+			collisionbox = {-0.1,-0.1,-0.1,0.1,0.1,0.1},
+			pointable = false,
+		},
 		on_step = function(self, dtime)
 			local pos = self.object:get_pos()
 			local node = minetest.get_node(pos)
