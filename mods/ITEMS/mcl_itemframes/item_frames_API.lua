@@ -383,12 +383,14 @@ function mcl_itemframes.create_base_item_entity()
 
 	--"mcl_itemframes:item",
 	frame_item_base = {
-		hp_max = 1,
-		visual = "wielditem",
-		visual_size = { x = VISUAL_SIZE, y = VISUAL_SIZE },
-		physical = false,
-		pointable = false,
-		textures = { "blank.png" },
+		initial_properties = {
+			hp_max = 1,
+			visual = "wielditem",
+			visual_size = { x = VISUAL_SIZE, y = VISUAL_SIZE },
+			physical = false,
+			pointable = false,
+			textures = { "blank.png" },
+		},
 		_texture = "blank.png",
 		_scale = 1,
 		groups = { immortal = 1, },
