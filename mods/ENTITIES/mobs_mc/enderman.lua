@@ -31,11 +31,14 @@ local place_frequency_min = 235
 local place_frequency_max = 245
 
 minetest.register_entity("mobs_mc:ender_eyes", {
-	visual = "mesh",
-	mesh = "mobs_mc_spider.b3d",
-	visual_size = {x=1.01/3, y=1.01/3},
-	textures = {
-		"mobs_mc_enderman_eyes.png",
+	initial_properties = {
+		visual = "mesh",
+		mesh = "mobs_mc_spider.b3d",
+		visual_size = {x=1.01/3, y=1.01/3},
+		glow = 50,
+		textures = {
+			"mobs_mc_enderman_eyes.png",
+		},
 	},
 	on_step = function(self)
 		if self and self.object then
@@ -44,7 +47,6 @@ minetest.register_entity("mobs_mc:ender_eyes", {
 			end
 		end
 	end,
-	glow = 50,
 })
 
 local S = minetest.get_translator("mobs_mc")
