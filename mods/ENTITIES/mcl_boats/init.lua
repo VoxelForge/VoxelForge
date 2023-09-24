@@ -128,18 +128,20 @@ end
 --
 
 local boat = {
-	physical = true,
-	pointable = true,
-	-- Warning: Do not change the position of the collisionbox top surface,
-	-- lowering it causes the boat to fall through the world if underwater
-	collisionbox = {-0.5, -0.15, -0.5, 0.5, 0.55, 0.5},
-	selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.55, 0.7},
-	visual = "mesh",
-	mesh = "mcl_boats_boat.b3d",
-	textures = { "mcl_boats_texture_oak_boat.png", "blank.png" },
-	visual_size = boat_visual_size,
-	hp_max = boat_max_hp,
-	damage_texture_modifier = "^[colorize:white:0",
+	initial_properties = {
+		physical = true,
+		pointable = true,
+		-- Warning: Do not change the position of the collisionbox top surface,
+		-- lowering it causes the boat to fall through the world if underwater
+		collisionbox = {-0.5, -0.15, -0.5, 0.5, 0.55, 0.5},
+		selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.55, 0.7},
+		visual = "mesh",
+		mesh = "mcl_boats_boat.b3d",
+		textures = { "mcl_boats_texture_oak_boat.png", "blank.png" },
+		visual_size = boat_visual_size,
+		hp_max = boat_max_hp,
+		damage_texture_modifier = "^[colorize:white:0",
+	},
 
 	_driver = nil, -- Attached driver (player) or nil if none
 	_passenger = nil,
@@ -433,10 +435,10 @@ end
 minetest.register_entity("mcl_boats:boat", boat)
 
 local cboat = table.copy(boat)
-cboat.textures = { "mcl_boats_texture_oak_chest_boat.png", "mcl_chests_normal.png" }
 cboat._itemstring = "mcl_boats:chest_boat"
-cboat.collisionbox = {-0.5, -0.15, -0.5, 0.5, 0.75, 0.5}
-cboat.selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.75, 0.7}
+cboat.initial_properties.textures = { "mcl_boats_texture_oak_chest_boat.png", "mcl_chests_normal.png" }
+cboat.initial_properties.collisionbox = {-0.5, -0.15, -0.5, 0.5, 0.75, 0.5}
+cboat.initial_properties.selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.75, 0.7}
 
 minetest.register_entity("mcl_boats:chest_boat", cboat)
 mcl_entity_invs.register_inv("mcl_boats:chest_boat","Boat",27)
