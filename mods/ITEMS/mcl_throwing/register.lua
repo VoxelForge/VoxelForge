@@ -4,13 +4,15 @@ local mod_target = minetest.get_modpath("mcl_target")
 
 -- The snowball entity
 local snowball_ENTITY={
-	physical = false,
-	timer=0,
-	textures = {"mcl_throwing_snowball.png"},
-	visual_size = {x=0.5, y=0.5},
-	collisionbox = {0,0,0,0,0,0},
-	pointable = false,
+	initial_properties = {
+		physical = false,
+		textures = {"mcl_throwing_snowball.png"},
+		visual_size = {x=0.5, y=0.5},
+		collisionbox = {0,0,0,0,0,0},
+		pointable = false,
+	},
 
+	timer=0,
 	get_staticdata = mcl_throwing.get_staticdata,
 	on_activate = mcl_throwing.on_activate,
 	_thrower = nil,
@@ -19,13 +21,14 @@ local snowball_ENTITY={
 }
 
 local egg_ENTITY={
-	physical = false,
+	initial_properties = {
+		physical = false,
+		textures = {"mcl_throwing_egg.png"},
+		visual_size = {x=0.45, y=0.45},
+		collisionbox = {0,0,0,0,0,0},
+		pointable = false,
+	},
 	timer=0,
-	textures = {"mcl_throwing_egg.png"},
-	visual_size = {x=0.45, y=0.45},
-	collisionbox = {0,0,0,0,0,0},
-	pointable = false,
-
 	get_staticdata = mcl_throwing.get_staticdata,
 	on_activate = mcl_throwing.on_activate,
 	_thrower = nil,
@@ -35,13 +38,15 @@ local egg_ENTITY={
 
 -- Ender pearl entity
 local pearl_ENTITY={
-	physical = false,
-	timer=0,
-	textures = {"mcl_throwing_ender_pearl.png"},
-	visual_size = {x=0.9, y=0.9},
-	collisionbox = {0,0,0,0,0,0},
-	pointable = false,
+	initial_properties = {
+		physical = false,
+		textures = {"mcl_throwing_ender_pearl.png"},
+		visual_size = {x=0.9, y=0.9},
+		collisionbox = {0,0,0,0,0,0},
+		pointable = false,
+	},
 
+	timer=0,
 	get_staticdata = mcl_throwing.get_staticdata,
 	on_activate = mcl_throwing.on_activate,
 
