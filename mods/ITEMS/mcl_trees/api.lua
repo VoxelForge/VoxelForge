@@ -533,7 +533,7 @@ function mcl_trees.register_wood(name, p)
 			description = S(rname.." Sign"),
 		}, p.sign or {}))
 		minetest.register_craft({
-			output = "mcl_signs:wall_sign_"..name,
+			output = "mcl_signs:wall_sign_"..name.." 3",
 			recipe = {
 				{"mcl_trees:wood_"..name,"mcl_trees:wood_"..name,"mcl_trees:wood_"..name,},
 				{"mcl_trees:wood_"..name,"mcl_trees:wood_"..name,"mcl_trees:wood_"..name,},
