@@ -175,6 +175,15 @@ minetest.register_tool("mcl_sus_nodes:brush", {
 	_mcl_toollike_wield = true,
 })
 
+minetest.register_craft({
+	output = "mcl_sus_nodes:brush",
+	recipe = {
+		{ "mcl_mobitems:feather"},
+		{ "mcl_copper:copper_ingot"},
+		{ "mcl_core:stick"},
+	}
+})
+
 mcl_sus_nodes.register_sus_node("sand","mcl_core:sand",{
 	description = S("Suspicious Sand"),
 })
