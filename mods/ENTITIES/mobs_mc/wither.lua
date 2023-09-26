@@ -8,6 +8,8 @@ local mobs_griefing = minetest.settings:get_bool("mobs_griefing") ~= false
 local follow_spawner = minetest.settings:get_bool("wither_follow_spawner") ~= false
 local w_strafes = minetest.settings:get_bool("wither_strafes") ~= false
 
+local WITHER_INIT_BOOM = 7
+
 local function atan(x)
 	if not x or x ~= x then
 		return 0
@@ -111,8 +113,8 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 	extra_hostile = true,
 	attack_exception = function(p)
 		local ent = p:get_luaentity()
-		if not ent then return false end
-		if not ent.is_mob or ent.harmed_by_heal or string.find(ent.name, "ghast") then return true
+		if p:is_player() then return false end
+		if not ent or not ent.is_mob or ent.harmed_by_heal or string.find(ent.name, "ghast") then return true
 		else return false end
 	end,
 
@@ -141,7 +143,7 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 
 			if self._spawning <= 0 then
 				if mobs_griefing and not minetest.is_protected(pos, "") then
-					mcl_explosions.explode(pos, 10, { drop_chance = 1.0 }, self.object)
+					mcl_explosions.explode(pos, WITHER_INIT_BOOM, { drop_chance = 1.0 }, self.object)
 				else
 					mcl_mobs.mob_class.safe_boom(self, pos, 10, true)
 				end
