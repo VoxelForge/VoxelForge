@@ -360,7 +360,7 @@ function mcl_mobs.drive(entity, moving_anim, stand_anim, can_fly, dtime)
 	entity.v2 = v
 end
 
-function mcl_mobs.fly(entity, dtime, speed, shoots, arrow, moving_anim, stand_anim)
+function mcl_mobs.fly_drive(entity, dtime, speed, shoots, arrow, moving_anim, stand_anim)
 	local ctrl = entity.driver:get_player_control()
 	local velo = entity.object:get_velocity()
 	local dir = entity.driver:get_look_dir()
@@ -419,7 +419,7 @@ function mcl_mobs.fly(entity, dtime, speed, shoots, arrow, moving_anim, stand_an
 end
 
 mcl_mobs.mob_class.drive = mcl_mobs.drive
-mcl_mobs.mob_class.fly = mcl_mobs.fly
+mcl_mobs.mob_class.fly_drive = mcl_mobs.fly_drive
 mcl_mobs.mob_class.attach = mcl_mobs.attach
 
 function mob_class:on_detach_child(child)

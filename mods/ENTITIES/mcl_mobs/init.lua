@@ -279,7 +279,7 @@ function mcl_mobs.register_mob(name, def)
 			return self:mob_activate(staticdata, def, dtime)
 		end,
 	}
-	minetest.register_entity(name, setmetatable(table.merge(final_def,def),mcl_mobs.mob_class_meta))
+	minetest.register_entity(name, setmetatable(table.merge(def,final_def),mcl_mobs.mob_class_meta))
 
 	if minetest.get_modpath("doc_identifier") ~= nil then
 		doc.sub.identifier.register_object(name, "basics", "mobs")
@@ -418,15 +418,12 @@ end
 
 -- Register spawn eggs
 
--- Note: This also introduces the “spawn_egg” group:
--- * spawn_egg=1: Spawn egg (generic mob, no metadata)
--- * spawn_egg=2: Spawn egg (captured/tamed mob, metadata)
 function mcl_mobs.register_egg(mob, desc, background_color, overlay_color, addegg, no_creative)
 
 	local grp = {spawn_egg = 1}
 
 	-- do NOT add this egg to creative inventory (e.g. dungeon master)
-	if no_creative == true then
+	if no_creative then
 		grp.not_in_creative_inventory = 1
 	end
 
