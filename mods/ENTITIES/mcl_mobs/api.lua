@@ -279,9 +279,10 @@ function mob_class:mob_activate(staticdata, def, dtime)
 	self.visual_size = nil
 	self.base_size = self.visual_size
 	if self.child then
+		local vsize = self.object:get_properties().visual_size
 		self.visual_size = {
-			x = self.visual_size.x * 0.5,
-			y = self.visual_size.y * 0.5,
+			x = vsize.x * 0.5,
+			y = vsize.y * 0.5,
 		}
 	end
 

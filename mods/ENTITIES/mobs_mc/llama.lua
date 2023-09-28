@@ -116,6 +116,7 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 
 		-- set needed values if not already present
 		if not self.v3 then
+			local vsize = self.object:get_properties().visual_size
 			self.v3 = 0
 			self.max_speed_forward = 4
 			self.max_speed_reverse = 2
@@ -123,7 +124,7 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 			self.terrain_type = 3
 			self.driver_attach_at = {x = 0, y = 12.7, z = -5}
 			self.driver_eye_offset = {x = 0, y = 6, z = 0}
-			self.driver_scale = {x = 1/self.visual_size.x, y = 1/self.visual_size.y}
+			self.driver_scale = {x = 1/vsize.x, y = 1/vsize.y}
 		end
 
 		-- if driver present allow control of llama

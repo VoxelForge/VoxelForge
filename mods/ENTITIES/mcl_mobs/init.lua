@@ -4,8 +4,9 @@ mcl_mobs.mob_class = {
 		physical = true,
 		collisionbox = {-0.25, -0.25, -0.25, 0.25, 0.25, 0.25},
 		selectionbox = {-0.25, -0.25, -0.25, 0.25, 0.25, 0.25},
-	},
 		visual_size = {x = 1, y = 1},
+	},
+
 		stepheight = 0.6,
 		breath_max = 15,
 		makes_footstep_sound = false,
@@ -253,6 +254,7 @@ function mcl_mobs.register_mob(name, def)
 		initial_properties = table.merge(mcl_mobs.mob_class.initial_properties,{
 			collisionbox = def.collisionbox or mcl_mobs.mob_class.initial_properties.collisionbox,
 			selectionbox = def.selectionbox or def.collisionbox or mcl_mobs.mob_class.initial_properties.selectionbox,
+			visual_size = def.visual_size,
 		}),
 		can_despawn = can_despawn,
 		rotate = math.rad(def.rotate or 0), --  0=front, 90=side, 180=back, 270=side2
@@ -284,6 +286,7 @@ function mcl_mobs.register_mob(name, def)
 	}
 	def.collisionbox = nil
 	def.selectionbox = nil
+	def.visual_size = nil
 	minetest.register_entity(name, setmetatable(table.merge(def,final_def),mcl_mobs.mob_class_meta))
 
 	if minetest.get_modpath("doc_identifier") ~= nil then

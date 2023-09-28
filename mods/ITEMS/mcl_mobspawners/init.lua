@@ -48,8 +48,8 @@ local function set_doll_properties(doll, mob)
 		xs = mobinfo.doll_size_override.x
 		ys = mobinfo.doll_size_override.y
 	else
-		xs = mobinfo.visual_size.x * 0.33333
-		ys = mobinfo.visual_size.y * 0.33333
+		xs = mobinfo.initial_properties.visual_size.x * 0.33333
+		ys = mobinfo.initial_properties.visual_size.y * 0.33333
 	end
 	local prop = {
 		mesh = mobinfo.mesh,

@@ -190,6 +190,7 @@ local horse = {
 			self._regentimer = 0
 		end
 		if not self.v2 then
+			local vsize = self.object:get_properties().visual_size
 			self.v2 = 0
 			self.max_speed_forward = 7
 			self.max_speed_reverse = 2
@@ -197,7 +198,7 @@ local horse = {
 			self.terrain_type = 3
 			self.driver_attach_at = {x = 0, y = 4.17, z = -1.75}
 			self.driver_eye_offset = {x = 0, y = 3, z = 0}
-			self.driver_scale = {x = 1/self.visual_size.x, y = 1/self.visual_size.y}
+			self.driver_scale = {x = 1/vsize.x, y = 1/vsize.y}
 		end
 
 		-- Slowly regenerate health
