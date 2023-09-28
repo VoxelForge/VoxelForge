@@ -5,9 +5,10 @@ mcl_mobs.mob_class = {
 		collisionbox = {-0.25, -0.25, -0.25, 0.25, 0.25, 0.25},
 		selectionbox = {-0.25, -0.25, -0.25, 0.25, 0.25, 0.25},
 		visual_size = {x = 1, y = 1},
+		stepheight = 0.6,
 	},
 
-		stepheight = 0.6,
+
 		breath_max = 15,
 		makes_footstep_sound = false,
 		automatic_face_movement_max_rotation_per_sec = 300,

@@ -88,6 +88,7 @@ local height_switcher = false
 -- path finding and smart mob routine by rnd, line_of_sight and other edits by Elkien3
 function mob_class:smart_mobs(s, p, dist, dtime)
 
+	local stepheight = self.object:get_properties().stepheight
 	local s1 = self.path.lastpos
 
 	local target_pos = self.attack:get_pos()
@@ -154,7 +155,7 @@ function mob_class:smart_mobs(s, p, dist, dtime)
 		end, self)
 	end
 
-	if math.abs(vector.subtract(s,target_pos).y) > self.stepheight then
+	if math.abs(vector.subtract(s,target_pos).y) > stepheight then
 
 		if height_switcher then
 			use_pathfind = true
@@ -195,7 +196,7 @@ function mob_class:smart_mobs(s, p, dist, dtime)
 		local jumpheight = 0
 		if self.jump and self.jump_height >= 4 then
 			jumpheight = math.min(math.ceil(self.jump_height / 4), 4)
-		elseif self.stepheight > 0.5 then
+		elseif stepheight > 0.5 then
 			jumpheight = 1
 		end
 		self.path.way = minetest.find_path(s, p1, 16, jumpheight, dropheight, "A*_noprefetch")
