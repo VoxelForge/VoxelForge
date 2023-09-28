@@ -754,7 +754,7 @@ function mob_class:do_env_damage()
 	end
 
 	-- Drowning damage
-	if self.breath_max ~= -1 then
+	if self.object:get_properties().breath_max ~= -1 then
 		local drowning = false
 		if self.breathes_in_water then
 			if minetest.get_item_group(self.standing_in, "water") == 0 then
@@ -783,7 +783,7 @@ function mob_class:do_env_damage()
 				return true
 			end
 		else
-			self.breath = math.min(self.breath_max, self.breath + 1)
+			self.breath = math.min(self.object:get_properties().breath_max, self.breath + 1)
 		end
 	end
 

@@ -56,7 +56,7 @@ function mob_class:is_node_waterhazard(nodename)
 		end
 	end
 	if minetest.registered_nodes[nn] and minetest.registered_nodes[nn].drowning and minetest.registered_nodes[nn].drowning > 0 then
-		if self.breath_max ~= -1 then
+		if self.object:get_properties().breath_max ~= -1 then
 			-- check if the mob is water-breathing _and_ the block is water; only return true if neither is the case
 			-- this will prevent water-breathing mobs to classify water or e.g. sand below them as dangerous
 			if not self.breathes_in_water and minetest.get_item_group(nn, "water") ~= 0 then
@@ -843,7 +843,7 @@ function mob_class:do_states_walk()
 	-- is there something I need to avoid?
 	if (self.water_damage > 0
 			and self.lava_damage > 0)
-			or self.breath_max ~= -1 then
+			or self.object:get_properties().breath_max ~= -1 then
 		lp = minetest.find_node_near(s, 1, {"group:water", "group:lava"})
 	elseif self.water_damage > 0 then
 		lp = minetest.find_node_near(s, 1, {"group:water"})
