@@ -301,6 +301,28 @@ minetest.register_node("mcl_mobspawners:spawner", {
 		return new_itemstack
 	end,
 
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+		if not clicker:is_player() then return end
+		if minetest.get_item_group(itemstack:get_name(),"spawn_egg") == 0 then return end
+		local name = clicker:get_player_name()
+		local privs = minetest.get_player_privs(name)
+		if minetest.is_protected(pos, name) then
+			minetest.record_protection_violation(pos, name)
+			return itemstack
+		end
+		if not privs.maphack then
+			minetest.chat_send_player(name, S("You need the “maphack” privilege to change the mob spawner."))
+			return itemstack
+		end
+
+		mcl_mobspawners.setup_spawner(pos, itemstack:get_name())
+
+		if not minetest.is_creative_enabled(name) then
+			itemstack:take_item()
+		end
+		return itemstack
+	end,
+
 	on_destruct = function(pos)
 		-- Remove doll (if any)
 		local obj = find_doll(pos)

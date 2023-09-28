@@ -242,6 +242,12 @@ function mcl_mobs.register_mob(name, def)
 		end
 	end
 
+	if def.textures then
+		def.texture_list = table.copy(def.textures)
+		--def.textures = nil
+	end
+
+
 	local final_def = {
 		initial_properties = {
 		},
@@ -452,34 +458,14 @@ function mcl_mobs.register_egg(mob, desc, background_color, overlay_color, addeg
 			local pos = pointed_thing.above
 
 			-- am I clicking on something with existing on_rightclick function?
-			local under = minetest.get_node(pointed_thing.under)
-			local def = minetest.registered_nodes[under.name]
-			if def and def.on_rightclick then
-				return def.on_rightclick(pointed_thing.under, under, placer, itemstack)
-			end
+			local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+			if rc then return rc end
 
 			if pos
 			and within_limits(pos, 0)
 			and not minetest.is_protected(pos, placer:get_player_name()) then
 
 				local name = placer:get_player_name()
-				local privs = minetest.get_player_privs(name)
-				if under.name == "mcl_mobspawners:spawner" then
-					if minetest.is_protected(pointed_thing.under, name) then
-						minetest.record_protection_violation(pointed_thing.under, name)
-						return itemstack
-					end
-					if not privs.maphack then
-						minetest.chat_send_player(name, S("You need the “maphack” privilege to change the mob spawner."))
-						return itemstack
-					end
-					mcl_mobspawners.setup_spawner(pointed_thing.under, itemstack:get_name())
-					if not minetest.is_creative_enabled(name) then
-						itemstack:take_item()
-					end
-					return itemstack
-				end
-
 				if not minetest.registered_entities[mob] then
 					return itemstack
 				end
