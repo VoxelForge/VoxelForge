@@ -9,7 +9,7 @@ local POS_CHECK_FREQUENCY = 15
 local HEAL_AMMOUNT = 37
 
 local function heal(self)
-	self.health = math.min(self.hp_max,self.health + HEAL_AMMOUNT)
+	self.health = math.min(self.object:get_properties().hp_max,self.health + HEAL_AMMOUNT)
 end
 
 local function check_beam(self)

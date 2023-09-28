@@ -9,6 +9,7 @@ mcl_mobs.mob_class = {
 		breath_max = 15,
 		makes_footstep_sound = false,
 		automatic_face_movement_max_rotation_per_sec = 300,
+		hp_max = 20,
 	},
 	head_yaw_offset = 0,
 	head_pitch_multiplier = 1,
@@ -257,11 +258,11 @@ function mcl_mobs.register_mob(name, def)
 			breath_max = def.breath_max,
 			makes_footstep_sound = def.makes_footstep_sound,
 			automatic_face_movement_max_rotation_per_sec = def.automatic_face_movement_max_rotation_per_sec,
+			hp_max = scale_difficulty(def.hp_max, 10, 1),
 		}),
 		can_despawn = can_despawn,
 		rotate = math.rad(def.rotate or 0), --  0=front, 90=side, 180=back, 270=side2
 		hp_min = scale_difficulty(def.hp_min, 5, 1),
-		hp_max = scale_difficulty(def.hp_max, 10, 1),
 		on_rightclick = create_mob_on_rightclick(def.on_rightclick),
 		dogshoot_count2_max = def.dogshoot_count2_max or (def.dogshoot_count_max or 5),
 
@@ -293,6 +294,7 @@ function mcl_mobs.register_mob(name, def)
 	def.breath_max = nil
 	def.makes_footstep_sound = nil
 	def.automatic_face_movement_max_rotation_per_sec = nil
+	def.hp_max = nil
 	minetest.register_entity(name, setmetatable(table.merge(def,final_def),mcl_mobs.mob_class_meta))
 
 	if minetest.get_modpath("doc_identifier") ~= nil then
