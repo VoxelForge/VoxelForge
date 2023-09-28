@@ -294,18 +294,19 @@ function mcl_mobs.register_arrow(name, def)
 	if not name or not def then return end -- errorcheck
 
 	minetest.register_entity(name, {
-
-		physical = false,
-		visual = def.visual,
-		visual_size = def.visual_size,
-		textures = def.textures,
+		initial_properties = {
+			physical = false,
+			visual = def.visual,
+			visual_size = def.visual_size,
+			textures = def.textures,
+			collisionbox = def.collisionbox or {0, 0, 0, 0, 0, 0}, -- remove box around arrows
+		},
 		velocity = def.velocity,
 		hit_player = def.hit_player,
 		hit_node = def.hit_node,
 		hit_mob = def.hit_mob,
 		hit_object = def.hit_object,
 		drop = def.drop or false, -- drops arrow as registered item when true
-		collisionbox = def.collisionbox or {0, 0, 0, 0, 0, 0}, -- remove box around arrows
 		timer = 0,
 		switch = 0,
 		_lifetime = def._lifetime or 150,
@@ -330,8 +331,7 @@ function mcl_mobs.register_arrow(name, def)
 			or self.timer > self._lifetime
 			or not within_limits(pos, 0) then
 				mcl_burning.extinguish(self.object)
-				self.object:remove();
-
+				self.object:remove()
 				return
 			end
 
