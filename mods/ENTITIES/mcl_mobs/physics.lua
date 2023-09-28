@@ -155,7 +155,8 @@ function mob_class:collision()
 	if not pos then return {0,0} end
 	local x = 0
 	local z = 0
-	local width = -self.collisionbox[1] + self.collisionbox[4] + 0.5
+	local cbox = self.object:get_properties().collisionbox
+	local width = -cbox[1] + cbox[4] + 0.5
 	for _,object in pairs(minetest.get_objects_inside_radius(pos, width)) do
 
 		local ent = object:get_luaentity()
@@ -233,7 +234,7 @@ function mob_class:update_roll()
 	rot.z = is_Fleckenstein and math.pi or 0
 	self.object:set_rotation(rot)
 
-	local cbox = table.copy(self.collisionbox)
+	local cbox = table.copy(self.initial_properties.collisionbox)
 	local acbox = self.object:get_properties().collisionbox
 
 	if tonumber(cbox[2]) and tonumber(acbox[2]) and math.abs(cbox[2] - acbox[2]) > 0.1 then
@@ -555,7 +556,7 @@ function mob_class:check_for_death(cause, cmi_cause)
 
 		death_handle(self)
 		local dpos = self.object:get_pos()
-		local cbox = self.collisionbox
+		local cbox = self.object:get_properties().collisionbox
 		local yaw = self.object:get_rotation().y
 		self:safe_remove()
 		mcl_mobs.death_effect(dpos, yaw, cbox, not self.instant_death)
@@ -637,10 +638,11 @@ function mob_class:do_env_damage()
 		end
 	end
 
-	local y_level = self.collisionbox[2]
+	local cbox = self.object:get_properties().collisionbox
+	local y_level = cbox[2]
 
 	if self.child then
-		y_level = self.collisionbox[2] * 0.5
+		y_level = cbox[2] * 0.5
 	end
 
 	-- what is mob standing in?
@@ -937,7 +939,8 @@ function mob_class:falling(pos)
 
 	-- in water then float up
 	if minetest.registered_nodes[node_ok(pos).name].groups.water then
-		if self.floats == 1 and minetest.registered_nodes[node_ok(vector.offset(pos,0,self.collisionbox[5] -0.25,0)).name].groups.water then
+		local cbox = self.object:get_properties().collisionbox
+		if self.floats == 1 and minetest.registered_nodes[node_ok(vector.offset(pos,0,cbox[5] -0.25,0)).name].groups.water then
 			self.object:set_acceleration(vector.new(0, -self.fall_speed / (math.max(1, v.y) ^ 2), 0))
 		end
 

@@ -170,15 +170,16 @@ function mob_class:mob_activate(staticdata, def, dtime)
 			self.texture_selected = math.random(c)
 		end
 
+		local props = self.object:get_properties()
 		self.base_texture = def.textures[self.texture_selected]
-		self.base_mesh = def.mesh
-		self.base_size = self.visual_size
-		self.base_colbox = self.collisionbox
-		self.base_selbox = self.selectionbox
+		self.base_mesh = props.mesh
+		self.base_size = props.visual_size
+		self.base_colbox = props.collisionbox
+		self.base_selbox = props.selectionbox
 	end
 
 	if not self.base_selbox then
-		self.base_selbox = self.selectionbox or self.base_colbox
+		self.base_selbox = self.initial_properties.selectionbox or self.base_colbox
 	end
 
 	local textures = self.base_texture

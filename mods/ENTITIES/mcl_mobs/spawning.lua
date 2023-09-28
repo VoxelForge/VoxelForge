@@ -204,7 +204,7 @@ local function get_water_spawn(p)
 end
 
 local function has_room(self,pos)
-	local cb = self.collisionbox
+	local cb = self.initial_properties.collisionbox
 	local nodes = {}
 	if self.fly_in then
 		local t = type(self.fly_in)

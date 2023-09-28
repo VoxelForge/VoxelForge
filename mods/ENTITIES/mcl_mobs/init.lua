@@ -1,15 +1,16 @@
 mcl_mobs = {}
 mcl_mobs.mob_class = {
-	--initial_properties = {
+	initial_properties = {
 		physical = true,
 		collisionbox = {-0.25, -0.25, -0.25, 0.25, 0.25, 0.25},
 		selectionbox = {-0.25, -0.25, -0.25, 0.25, 0.25, 0.25},
+	},
 		visual_size = {x = 1, y = 1},
 		stepheight = 0.6,
 		breath_max = 15,
 		makes_footstep_sound = false,
 		automatic_face_movement_max_rotation_per_sec = 300,
-	--},
+
 	head_yaw_offset = 0,
 	head_pitch_multiplier = 1,
 	bone_eye_height = 1.4,
@@ -217,7 +218,7 @@ end
 
 mcl_mobs.spawning_mobs = {}
 function mcl_mobs.register_mob(name, def)
-
+	local def = table.copy(def)
 	if not def.description then
 		minetest.log("warning","[mcl_mobs] Mob "..name.." registered without description field. This is needed for proper death messages.")
 	end
@@ -249,8 +250,10 @@ function mcl_mobs.register_mob(name, def)
 
 
 	local final_def = {
-		initial_properties = {
-		},
+		initial_properties = table.merge(mcl_mobs.mob_class.initial_properties,{
+			collisionbox = def.collisionbox or mcl_mobs.mob_class.initial_properties.collisionbox,
+			selectionbox = def.selectionbox or def.collisionbox or mcl_mobs.mob_class.initial_properties.selectionbox,
+		}),
 		can_despawn = can_despawn,
 		rotate = math.rad(def.rotate or 0), --  0=front, 90=side, 180=back, 270=side2
 		hp_min = scale_difficulty(def.hp_min, 5, 1),
@@ -279,6 +282,8 @@ function mcl_mobs.register_mob(name, def)
 			return self:mob_activate(staticdata, def, dtime)
 		end,
 	}
+	def.collisionbox = nil
+	def.selectionbox = nil
 	minetest.register_entity(name, setmetatable(table.merge(def,final_def),mcl_mobs.mob_class_meta))
 
 	if minetest.get_modpath("doc_identifier") ~= nil then

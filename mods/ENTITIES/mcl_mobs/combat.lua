@@ -224,8 +224,8 @@ function mob_class:smart_mobs(s, p, dist, dtime)
 								minetest.set_node(s, {name = mcl_mobs.fallback_node})
 						end
 					end
-
-					local sheight = math.ceil(self.collisionbox[5]) + 1
+					local props = self.object:get_properties()
+					local sheight = math.ceil(props.collisionbox[5]) + 1
 
 					-- assume mob is 2 blocks high so it digs above its head
 					s.y = s.y + sheight
@@ -1086,7 +1086,8 @@ function mob_class:do_states_attack (dtime)
 		end
 
 		local p = self.object:get_pos()
-		p.y = p.y + (self.collisionbox[2] + self.collisionbox[5]) / 2
+		local props = self.object:get_properties()
+		p.y = p.y + (props.collisionbox[2] + props.collisionbox[5]) / 2
 
 		if self.shoot_interval
 				and self.timer > self.shoot_interval

@@ -78,13 +78,13 @@ function mob_class:target_visible(origin)
 	local origin_eye_pos = vector.offset(origin, 0, self.head_eye_height, 0)
 
 	local targ_head_height, targ_feet_height
+	local cbox = self.object:get_properties().collisionbox
 	if self.attack:is_player() then
-		local cbox = self.object:get_properties().collisionbox
 		targ_head_height = vector.offset(target_pos, 0, cbox[5], 0)
 		targ_feet_height = target_pos -- Cbox would put feet under ground which interferes with ray
 	else
-		targ_head_height = vector.offset(target_pos, 0, self.collisionbox[5], 0)
-		targ_feet_height = vector.offset(target_pos, 0, self.collisionbox[2], 0)
+		targ_head_height = vector.offset(target_pos, 0, cbox[5], 0)
+		targ_feet_height = vector.offset(target_pos, 0, cbox[2], 0)
 	end
 
 	if minetest.line_of_sight(origin_eye_pos, targ_head_height) then
@@ -181,8 +181,9 @@ function mob_class:can_jump_cliff()
 	end
 
 	-- where is front
-	local dir_x = -math.sin(yaw) * (self.collisionbox[4] + 0.5)*jump_c_multiplier+0.6
-	local dir_z = math.cos(yaw) * (self.collisionbox[4] + 0.5)*jump_c_multiplier+0.6
+	local cbox = self.object:get_properties().collisionbox
+	local dir_x = -math.sin(yaw) * (cbox[4] + 0.5)*jump_c_multiplier+0.6
+	local dir_z = math.cos(yaw) * (cbox[4] + 0.5)*jump_c_multiplier+0.6
 
 	--is there nothing under the block in front? if so jump the gap.
 	local nodLow = node_ok({
@@ -235,10 +236,11 @@ function mob_class:is_at_cliff_or_danger()
 	end
 
 	local yaw = self.object:get_yaw()
-	local dir_x = -math.sin(yaw) * (self.collisionbox[4] + 0.5)
-	local dir_z = math.cos(yaw) * (self.collisionbox[4] + 0.5)
+	local cbox = self.object:get_properties().collisionbox
+	local dir_x = -math.sin(yaw) * (cbox[4] + 0.5)
+	local dir_z = math.cos(yaw) * (cbox[4] + 0.5)
 	local pos = self.object:get_pos()
-	local ypos = pos.y + self.collisionbox[2] -- just above floor
+	local ypos = pos.y + cbox[2] -- just above floor
 
 	local free_fall, blocker = minetest.line_of_sight(
 		{x = pos.x + dir_x, y = ypos, z = pos.z + dir_z},
@@ -268,10 +270,13 @@ function mob_class:is_at_water_danger()
 		return false
 	end
 	local yaw = self.object:get_yaw()
-	local dir_x = -math.sin(yaw) * (self.collisionbox[4] or 0 + 0.5)
-	local dir_z = math.cos(yaw) * (self.collisionbox[4] or 0 + 0.5)
+
+	local cbox = self.object:get_properties().collisionbox
+	local dir_x = -math.sin(yaw) * (cbox[4] + 0.5)
+	local dir_z = math.cos(yaw) * (cbox[4] + 0.5)
+
 	local pos = self.object:get_pos()
-	local ypos = pos.y + self.collisionbox[2] -- just above floor
+	local ypos = pos.y + cbox[2] -- just above floor
 
 	local free_fall, blocker = minetest.line_of_sight(
 		{x = pos.x + dir_x, y = ypos, z = pos.z + dir_z},
@@ -345,7 +350,8 @@ function mob_class:do_jump()
 	local yaw = self.object:get_yaw()
 
 	-- what is mob standing on?
-	pos.y = pos.y + self.collisionbox[2] - 0.2
+	local cbox = self.object:get_properties().collisionbox
+	pos.y = pos.y + cbox[2] - 0.2
 
 	local nod = node_ok(pos)
 
@@ -363,8 +369,9 @@ function mob_class:do_jump()
 	local yaw_dir = minetest.yaw_to_dir(self.object:get_yaw())
 
 	-- where is front
-	local dir_x = -math.sin(yaw) * (self.collisionbox[4] + 0.5)*jump_c_multiplier+yaw_dir.x
-	local dir_z = math.cos(yaw) * (self.collisionbox[4] + 0.5)*jump_c_multiplier+yaw_dir.z
+	local cbox = self.object:get_properties().collisionbox
+	local dir_x = -math.sin(yaw) * (cbox[4] + 0.5)*jump_c_multiplier+yaw_dir.x
+	local dir_z = math.cos(yaw) * (cbox[4] + 0.5)*jump_c_multiplier+yaw_dir.z
 
 	-- what is in front of mob?
 	nod = node_ok({
@@ -751,7 +758,8 @@ function mob_class:follow_flop()
 			self.object:set_acceleration({x = 0, y = DEFAULT_FALL_SPEED, z = 0})
 
 			local p = self.object:get_pos()
-			local sdef = minetest.registered_nodes[node_ok(vector.add(p, vector.new(0,self.collisionbox[2]-0.2,0))).name]
+			local cbox = self.object:get_properties().collisionbox
+			local sdef = minetest.registered_nodes[node_ok(vector.add(p, vector.new(0,cbox[2]-0.2,0))).name]
 			-- Flop on ground
 			if sdef and sdef.walkable then
 				if self.object:get_velocity().y < 0.1 then
