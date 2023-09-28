@@ -77,10 +77,12 @@ function mcl_bossbars.update_bar(id, def, priority)
 end
 
 function mcl_bossbars.update_boss(object, name, color)
-	local props = object:get_luaentity()
-	if not props or not props.is_mob then
-		props = object:get_properties()
+	local ent = object:get_luaentity()
+	local props = object:get_properties()
+	if not ent or not ent.is_mob then
 		props.health = object:get_hp()
+	else
+		props.health = ent.health
 	end
 
 	local bardef = {
