@@ -135,7 +135,7 @@ function mob_class:valid_texture(def_textures)
 	return false
 end
 
-function mob_class:mob_activate(staticdata, def, dtime)
+function mob_class:mob_activate(staticdata, dtime)
 	if not self.object:get_pos() or staticdata == "remove" then
 		mcl_burning.extinguish(self.object)
 		self.object:remove()
@@ -155,6 +155,8 @@ function mob_class:mob_activate(staticdata, def, dtime)
 			self[_] = stat
 		end
 	end
+
+	local def = mcl_mobs.registered_mobs[self.name]
 
 	--If textures in definition change, reload textures
 	if not self:valid_texture(self.object:get_properties().textures) then

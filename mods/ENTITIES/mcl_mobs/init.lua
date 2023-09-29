@@ -290,7 +290,7 @@ function mcl_mobs.register_mob(name, def)
 				collide_with_objects = false,
 			})
 
-			return self:mob_activate(staticdata, def, dtime)
+			return self:mob_activate(staticdata, dtime)
 		end,
 	}),mcl_mobs.mob_class_meta)
 
