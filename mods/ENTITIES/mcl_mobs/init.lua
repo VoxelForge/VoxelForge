@@ -4,8 +4,6 @@ local modname = minetest.get_current_modname()
 local path = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
 
-local MAX_MOB_NAME_LENGTH = 30
-
 local old_spawn_icons = minetest.settings:get_bool("mcl_old_spawn_icons",false)
 local extended_pet_control = minetest.settings:get_bool("mcl_extended_pet_control",false)
 local difficulty = tonumber(minetest.settings:get("mob_difficulty")) or 1.0
@@ -25,6 +23,7 @@ mcl_mobs.mob_class = {
 		automatic_face_movement_max_rotation_per_sec = 300,
 		hp_max = 20,
 	},
+	max_name_length = 30,
 	head_yaw_offset = 0,
 	head_pitch_multiplier = 1,
 	bone_eye_height = 1.4,
@@ -159,6 +158,17 @@ local node_ok = function(pos, fallback)
 	return minetest.registered_nodes[fallback]
 end
 
+function mcl_mobs.mob_class:set_nametag(name)
+	if name ~= "" then
+		if string.len(name) > self.max_name_length then
+			name = string.sub(name, 1, self.max_name_length)
+		end
+		self.nametag = name
+		self:update_tag()
+		return true
+	end
+end
+
 local on_rightclick_prefix = function(self, clicker)
 	if not clicker:is_player() then return end
 	local item = clicker:get_wielded_item()
@@ -170,21 +180,11 @@ local on_rightclick_prefix = function(self, clicker)
 	item_name = minetest.registered_aliases[item_name] or item_name
 
 	if not self.ignores_nametag and item_name == "mcl_mobitems:nametag" then
-		local tag = item:get_meta():get_string("name")
-		if tag ~= "" then
-			if string.len(tag) > MAX_MOB_NAME_LENGTH then
-				tag = string.sub(tag, 1, MAX_MOB_NAME_LENGTH)
-			end
-			self.nametag = tag
-			self:update_tag()
-
-			if not minetest.is_creative_enabled(clicker:get_player_name()) then
-				item:take_item()
-				clicker:set_wielded_item(item)
-			end
-			return true
+		if self:set_nametag(item:get_meta():get_string("name")) and not minetest.is_creative_enabled(clicker:get_player_name()) then
+			item:take_item()
+			clicker:set_wielded_item(item)
 		end
-
+		return true
 	end
 	return false
 end
@@ -487,14 +487,7 @@ function mcl_mobs.register_egg(mob, desc, background_color, overlay_color, addeg
 				end
 
 				-- set nametag
-				local nametag = itemstack:get_meta():get_string("name")
-				if nametag ~= "" then
-					if string.len(nametag) > MAX_MOB_NAME_LENGTH then
-						nametag = string.sub(nametag, 1, MAX_MOB_NAME_LENGTH)
-					end
-					ent.nametag = nametag
-					ent:update_tag()
-				end
+				ent:set_nametag(itemstack:get_meta():get_string("name"))
 
 				-- if not in creative then take item
 				if not minetest.is_creative_enabled(placer:get_player_name()) then
