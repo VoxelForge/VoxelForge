@@ -52,7 +52,7 @@ local function set_doll_properties(doll, mob)
 		ys = mobinfo.initial_properties.visual_size.y * 0.33333
 	end
 	local prop = {
-		mesh = mobinfo.mesh,
+		mesh = mobinfo.initial_properties.mesh,
 		textures = get_mob_textures(mob),
 		visual_size = {
 			x = xs,
