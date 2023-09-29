@@ -146,6 +146,7 @@ local old_spawn_icons = minetest.settings:get_bool("mcl_old_spawn_icons",false)
 local extended_pet_control = minetest.settings:get_bool("mcl_extended_pet_control",false)
 local difficulty = tonumber(minetest.settings:get("mob_difficulty")) or 1.0
 
+local object_properties = { "hp_max", "breath_max", "zoom_fov", "eye_height", "physical", "collide_with_objects", "collisionbox", "selectionbox", "pointable", "visual", "visual_size", "mesh", "textures", "colors", "use_texture_alpha", "spritediv", "initial_sprite_basepos", "is_visible", "makes_footstep_sound", "automatic_rotate", "stepheight", "automatic_face_movement_dir", "automatic_face_movement_max_rotation_per_sec", "backface_culling", "glow", "nametag", "nametag_color", "nametag_bgcolor", "infotext", "static_save", "damage_texture_modifier", "shaded", "show_on_minimap", }
 -- get node but use fallback for nil or unknown
 local node_ok = function(pos, fallback)
 	fallback = fallback or mcl_mobs.fallback_node
@@ -245,21 +246,27 @@ function mcl_mobs.register_mob(name, def)
 
 	if def.textures then
 		def.texture_list = table.copy(def.textures)
-		--def.textures = nil
+		def.textures = nil
 	end
 
+	local init_props = {}
+	for _,k in pairs(object_properties) do
+		if def[k] ~= nil then
+			if type(def[k]) == "table" then
+				init_props[k] = table.copy(def[k])
+			else
+				init_props[k] = def[k]
+			end
+			def[k] = nil
+		end
+	end
+
+	init_props.hp_max = scale_difficulty(init_props.hp_max, 10, 1)
+	init_props.collisionbox = init_props.collisionbox or mcl_mobs.mob_class.initial_properties.collisionbox
+	init_props.selectionbox = init_props.selectionbox or init_props.collisionbox or mcl_mobs.mob_class.initial_properties.selectionbox
 
 	local final_def = {
-		initial_properties = table.merge(mcl_mobs.mob_class.initial_properties,{
-			collisionbox = def.collisionbox or mcl_mobs.mob_class.initial_properties.collisionbox,
-			selectionbox = def.selectionbox or def.collisionbox or mcl_mobs.mob_class.initial_properties.selectionbox,
-			visual_size = def.visual_size,
-			stepheight = def.stepheight,
-			breath_max = def.breath_max,
-			makes_footstep_sound = def.makes_footstep_sound,
-			automatic_face_movement_max_rotation_per_sec = def.automatic_face_movement_max_rotation_per_sec,
-			hp_max = scale_difficulty(def.hp_max, 10, 1),
-		}),
+		initial_properties = table.merge(mcl_mobs.mob_class.initial_properties,init_props),
 		can_despawn = can_despawn,
 		rotate = math.rad(def.rotate or 0), --  0=front, 90=side, 180=back, 270=side2
 		hp_min = scale_difficulty(def.hp_min, 5, 1),
@@ -287,14 +294,7 @@ function mcl_mobs.register_mob(name, def)
 			return self:mob_activate(staticdata, def, dtime)
 		end,
 	}
-	def.collisionbox = nil
-	def.selectionbox = nil
-	def.visual_size = nil
-	def.stepheight = nil
-	def.breath_max = nil
-	def.makes_footstep_sound = nil
-	def.automatic_face_movement_max_rotation_per_sec = nil
-	def.hp_max = nil
+
 	minetest.register_entity(name, setmetatable(table.merge(def,final_def),mcl_mobs.mob_class_meta))
 
 	if minetest.get_modpath("doc_identifier") ~= nil then

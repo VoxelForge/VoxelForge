@@ -157,21 +157,21 @@ function mob_class:mob_activate(staticdata, def, dtime)
 	end
 
 	--If textures in definition change, reload textures
-	if not self:valid_texture(def.textures) then
+	if not self:valid_texture(def.texture_list) then
 
 		-- compatiblity with old simple mobs textures
-		if type(def.textures[1]) == "string" then
-			def.textures = {def.textures}
+		if type(def.texture_list[1]) == "string" then
+			def.texture_list = {def.texture_list}
 		end
 
 		if not self.texture_selected then
 			local c = 1
-			if #def.textures > c then c = #def.textures end
+			if #def.texture_list > c then c = #def.texture_list end
 			self.texture_selected = math.random(c)
 		end
 
 		local props = self.object:get_properties()
-		self.base_texture = def.textures[self.texture_selected]
+		self.base_texture = def.texture_list[self.texture_selected]
 		self.base_mesh = props.mesh
 		self.base_size = props.visual_size
 		self.base_colbox = props.collisionbox
