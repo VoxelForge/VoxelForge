@@ -135,6 +135,66 @@ function mob_class:valid_texture(def_textures)
 	return false
 end
 
+function mob_class:update_textures()
+	local def = mcl_mobs.registered_mobs[self.name]
+	--If textures in definition change, reload textures
+	if not self:valid_texture(self.object:get_properties().textures) then
+
+		-- compatiblity with old simple mobs textures
+		if type(def.texture_list[1]) == "string" then
+			def.texture_list = {def.texture_list}
+		end
+
+		if not self.texture_selected then
+			local c = 1
+			if #def.texture_list > c then c = #def.texture_list end
+			self.texture_selected = math.random(c)
+		end
+
+		self.base_texture = def.texture_list[self.texture_selected]
+		self.base_mesh = def.initial_properties.mesh
+		self.base_size = def.initial_properties.visual_size
+		self.base_colbox = def.initial_properties.collisionbox
+		self.base_selbox = def.initial_properties.selectionbox
+	end
+end
+
+function mob_class:scale_size(scale, force)
+	if self.scaled and not force then return end
+	self:set_properties({
+		visual_size = {
+			x = self.base_size.x * scale,
+			y = self.base_size.y * scale,
+		},
+		collisionbox = {
+			self.base_colbox[1] * scale,
+			self.base_colbox[2] * scale,
+			self.base_colbox[3] * scale,
+			self.base_colbox[4] * scale,
+			self.base_colbox[5] * scale,
+			self.base_colbox[6] * scale,
+		},
+		selectionbox = {
+			self.base_selbox[1] * scale,
+			self.base_selbox[2] * scale,
+			self.base_selbox[3] * scale,
+			self.base_selbox[4] * scale,
+			self.base_selbox[5] * scale,
+			self.base_selbox[6] * scale,
+		},
+	})
+	self.scaled = true
+end
+
+function mob_class:reset_path()
+	self.path = {}
+	self.path.way = {} -- path to follow, table of positions
+	self.path.lastpos = {x = 0, y = 0, z = 0}
+	self.path.stuck = false
+	self.path.following = false
+	self.path.stuck_timer = 0
+end
+
 function mob_class:mob_activate(staticdata, dtime)
 	if not self.object:get_pos() or staticdata == "remove" then
 		mcl_burning.extinguish(self.object)
@@ -156,77 +216,29 @@ function mob_class:mob_activate(staticdata, dtime)
 		end
 	end
 
-	local def = mcl_mobs.registered_mobs[self.name]
-
-	--If textures in definition change, reload textures
-	if not self:valid_texture(self.object:get_properties().textures) then
-
-		-- compatiblity with old simple mobs textures
-		if type(def.texture_list[1]) == "string" then
-			def.texture_list = {def.texture_list}
-		end
-
-		if not self.texture_selected then
-			local c = 1
-			if #def.texture_list > c then c = #def.texture_list end
-			self.texture_selected = math.random(c)
-		end
-
-		local props = self.object:get_properties()
-		self.base_texture = def.texture_list[self.texture_selected]
-		self.base_mesh = props.mesh
-		self.base_size = props.visual_size
-		self.base_colbox = props.collisionbox
-		self.base_selbox = props.selectionbox
-	end
+	self:update_textures()
+	self:reset_path()
 
 	if not self.base_selbox then
 		self.base_selbox = self.initial_properties.selectionbox or self.base_colbox
 	end
 
-	local textures = self.base_texture
-	local mesh = self.base_mesh
-	local vis_size = self.base_size
-	local colbox = self.base_colbox
-	local selbox = self.base_selbox
-
 	if self.gotten == true
-	and def.gotten_texture then
-		textures = def.gotten_texture
+	and self.gotten_texture then
+		self:set_properties({textures = self.gotten_texture })
 	end
 
 	if self.gotten == true
-	and def.gotten_mesh then
-		mesh = def.gotten_mesh
+	and self.gotten_mesh then
+		self:set_properties({mesh = self.gotten_mesh})
 	end
 
+	local def = mcl_mobs.registered_mobs[self.name]
 	if self.child == true then
-
-		vis_size = {
-			x = self.base_size.x * .5,
-			y = self.base_size.y * .5,
-		}
-
+		self:scale_size(0.5)
 		if def.child_texture then
-			textures = def.child_texture[1]
+			self.base_texture = def.child_texture[1]
 		end
-
-		colbox = {
-			self.base_colbox[1] * .5,
-			self.base_colbox[2] * .5,
-			self.base_colbox[3] * .5,
-			self.base_colbox[4] * .5,
-			self.base_colbox[5] * .5,
-			self.base_colbox[6] * .5
-		}
-		selbox = {
-			self.base_selbox[1] * .5,
-			self.base_selbox[2] * .5,
-			self.base_selbox[3] * .5,
-			self.base_selbox[4] * .5,
-			self.base_selbox[5] * .5,
-			self.base_selbox[6] * .5
-		}
 	end
 
 	if self.health == 0 then
@@ -235,13 +247,6 @@ function mob_class:mob_activate(staticdata, dtime)
 	if self.breath == nil then
 		self.breath = self.object:get_properties().breath_max
 	end
-
-	self.path = {}
-	self.path.way = {} -- path to follow, table of positions
-	self.path.lastpos = {x = 0, y = 0, z = 0}
-	self.path.stuck = false
-	self.path.following = false
-	self.path.stuck_timer = 0
 
 	-- Armor groups
 	-- immortal=1 because we use custom health
@@ -254,57 +259,35 @@ function mob_class:mob_activate(staticdata, dtime)
 		armor = {immortal=1, fleshy = self.armor}
 	end
 	self.object:set_armor_groups(armor)
-	self.old_y = self.object:get_pos().y
-	self.old_health = self.health
 	self.sounds.distance = self.sounds.distance or 10
-	self.textures = textures
-	self.mesh = mesh
-	self.collisionbox = colbox
-	self.selectionbox = selbox
-	self.visual_size = vis_size
-	self.standing_in = "ignore"
-	self.standing_on = "ignore"
-	self.jump_sound_cooloff = 0 -- used to prevent jump sound from being played too often in short time
-	self.opinion_sound_cooloff = 0 -- used to prevent sound spam of particular sound types
 
-	self.texture_mods = {}
 	self.object:set_texture_mod("")
-
-	self.v_start = false
-	self.timer = 0
-	self.blinktimer = 0
-	self.blinkstatus = false
 
 	if not self.nametag then
 		self.nametag = def.nametag
 	end
-	self.visual_size = nil
-	self.base_size = self.visual_size
-	if self.child then
-		local vsize = self.object:get_properties().visual_size
-		self.visual_size = {
-			x = vsize.x * 0.5,
-			y = vsize.y * 0.5,
-		}
+
+	self.base_size = self.object:get_properties().visual_size
+
+	if self.base_texture then
+		self:set_properties({textures = self.base_texture})
 	end
 
-	if self.textures then
-		self:set_properties({textures=self.textures})
-	end
 	self:set_yaw( (math.random(0, 360) - 180) / 180 * math.pi, 6)
 	self:update_tag()
 	self._current_animation = nil
 	self:set_animation( "stand")
-
 
 	if self.riden_by_jock then --- Keep this function before self.on_spawn() is run.
 		self.object:remove()
 		return
 	end
 
-
 	if self.on_spawn and not self.on_spawn_run then
-		if self.on_spawn(self) then
+		if self:on_spawn() == false then
+			self:safe_remove()
+			return
+		else
 			self.on_spawn_run = true
 		end
 	end
@@ -318,9 +301,6 @@ function mob_class:mob_activate(staticdata, dtime)
 		self:set_armor_texture()
 		self._run_armor_init = true
 	end
-
-
-
 
 	if def.after_activate then
 		def.after_activate(self, staticdata, def, dtime)

@@ -414,7 +414,7 @@ function mob_class:check_for_death(cause, cmi_cause)
 		return false
 	end
 
-	local damaged = self.health < self.old_health
+	local damaged = self.health < ( self.old_health or 0 )
 	self.old_health = self.health
 
 	-- still got some health?
