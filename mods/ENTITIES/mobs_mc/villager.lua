@@ -208,11 +208,11 @@ local professions = {
 			},
 
 			{
-			{ { "mcl_dye:black", 12, 12 }, E1 },
-			{ { "mcl_dye:dark_grey", 12, 12 }, E1 },
-			{ { "mcl_dye:green", 12, 12 }, E1 },
-			{ { "mcl_dye:lightblue", 12, 12 }, E1 },
-			{ { "mcl_dye:white", 12, 12 }, E1 },
+			{ { "mcl_dyes:black", 12, 12 }, E1 },
+			{ { "mcl_dyes:dark_grey", 12, 12 }, E1 },
+			{ { "mcl_dyes:green", 12, 12 }, E1 },
+			{ { "mcl_dyes:lightblue", 12, 12 }, E1 },
+			{ { "mcl_dyes:white", 12, 12 }, E1 },
 
 			{ E1, { "mcl_wool:white", 1, 1 } },
 			{ E1, { "mcl_wool:grey", 1, 1 } },
@@ -250,11 +250,11 @@ local professions = {
 			},
 
 			{
-			{ { "mcl_dye:red", 12, 12 }, E1 },
-			{ { "mcl_dye:grey", 12, 12 }, E1 },
-			{ { "mcl_dye:pink", 12, 12 }, E1 },
-			{ { "mcl_dye:yellow", 12, 12 }, E1 },
-			{ { "mcl_dye:orange", 12, 12 }, E1 },
+			{ { "mcl_dyes:red", 12, 12 }, E1 },
+			{ { "mcl_dyes:grey", 12, 12 }, E1 },
+			{ { "mcl_dyes:pink", 12, 12 }, E1 },
+			{ { "mcl_dyes:yellow", 12, 12 }, E1 },
+			{ { "mcl_dyes:orange", 12, 12 }, E1 },
 
 			{ { "mcl_core:emerald", 3, 3 }, { "mcl_beds:bed_red_bottom", 1, 1 } },
 			{ { "mcl_core:emerald", 3, 3 }, { "mcl_beds:bed_blue_bottom", 1, 1 } },
@@ -275,12 +275,12 @@ local professions = {
 			},
 
 			{
-			{ { "mcl_dye:dark_green", 12, 12 }, E1 },
-			{ { "mcl_dye:brown", 12, 12 }, E1 },
-			{ { "mcl_dye:blue", 12, 12 }, E1 },
-			{ { "mcl_dye:violet", 12, 12 }, E1 },
-			{ { "mcl_dye:cyan", 12, 12 }, E1 },
-			{ { "mcl_dye:magenta", 12, 12 }, E1 },
+			{ { "mcl_dyes:dark_green", 12, 12 }, E1 },
+			{ { "mcl_dyes:brown", 12, 12 }, E1 },
+			{ { "mcl_dyes:blue", 12, 12 }, E1 },
+			{ { "mcl_dyes:violet", 12, 12 }, E1 },
+			{ { "mcl_dyes:cyan", 12, 12 }, E1 },
+			{ { "mcl_dyes:magenta", 12, 12 }, E1 },
 
 			{ { "mcl_core:emerald", 3, 3 }, { "mcl_banners:banner_item_white", 1, 1 } },
 			{ { "mcl_core:emerald", 3, 3 }, { "mcl_banners:banner_item_grey", 1, 1 } },
@@ -486,6 +486,9 @@ local professions = {
 
 			{
 			{ { "mcl_ocean:dried_kelp_block", 10, 10 }, E1 },
+			},
+
+			{
 			{ { "mcl_farming:sweet_berry", 10, 10 }, E1 },
 			},
 		},
