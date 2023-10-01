@@ -20,7 +20,6 @@ local function vector_distance_xz(a, b)
 end
 
 dofile(modpath.."/nodes.lua")
-dofile(modpath.."/dripleaf.lua")
 
 local spore_blossom_particlespawner = {
 	texture = "mcl_lush_caves_spore_blossom_particle.png",
@@ -66,12 +65,14 @@ function mcl_lush_caves.makelake(pos,def,pr)
 		   return vector_distance_xz(pos, a) < vector_distance_xz(pos, b)
 	end)
 	if not nn[1] then return end
-	local dripleaves = {}
+	--local dripleaves = {}
 	for i=1,pr:next(1,#nn) do
 		minetest.set_node(nn[i],{name="mcl_core:water_source"})
+		--[[
 		if pr:next(1,20) == 1 then
 			table.insert(dripleaves,nn[i])
 		end
+		--]]
 	end
 	local nnn = minetest.find_nodes_in_area(p1,p2,{"mcl_core:water_source"})
 	for k,v in pairs(nnn) do
@@ -86,6 +87,7 @@ function mcl_lush_caves.makelake(pos,def,pr)
 			end
 		end
 	end
+	--[[
 	for _,d in pairs(dripleaves) do
 		if minetest.get_item_group(minetest.get_node(d).name,"water") > 0 then
 			minetest.set_node(vector.offset(d,0,-1,0),{name="mcl_lush_caves:dripleaf_big_waterroot"})
@@ -95,6 +97,7 @@ function mcl_lush_caves.makelake(pos,def,pr)
 			end
 		end
 	end
+	--]]
 	return true
 end
 
