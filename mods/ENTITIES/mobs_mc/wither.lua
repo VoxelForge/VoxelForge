@@ -156,7 +156,8 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 		end
 
 		local INDESTRUCT_BLASTRES = 1000000
-		local head_pos = vector.offset(self.object:get_pos(),0,self.collisionbox[5],0)
+		local cb = self.object:get_properties().collisionbox
+		local head_pos = vector.offset(self.object:get_pos(),0,cb[5],0)
 		local subh_pos = vector.offset(head_pos,0,-1,0)
 		local head_node = minetest.get_node(head_pos).name
 		local subh_node = minetest.get_node(subh_pos).name
@@ -267,9 +268,10 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 		local sr = self.object:get_pos() + side_cor -- position of side right head
 		local sl = self.object:get_pos() - side_cor -- position of side left head
 		-- height corrections
-		m.y = m.y + self.collisionbox[5]
-		sr.y = sr.y + self.collisionbox[5] - 0.3
-		sl.y = sl.y + self.collisionbox[5] - 0.3
+		local cb = self.object:get_properties().collisionbox
+		m.y = m.y + cb[5]
+		sr.y = sr.y + cb[5] - 0.3
+		sl.y = sl.y + cb[5] - 0.3
 		local rand_pos = math.random(1,3)
 		if rand_pos == 1 then m = sr
 		elseif rand_pos == 2 then m = sl end
