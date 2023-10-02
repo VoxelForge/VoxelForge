@@ -38,13 +38,6 @@ minetest.register_craftitem("mcl_pottery_sherds:blank", {
 	groups = { pottery_sherd = 1, not_in_creative_inventory = 1 },
 })
 
-local pot_box = {
-	type = "fixed",
-	fixed = {
-		{ -0.1875, -0.5, -0.1875, 0.1875, -0.125, 0.1875 },
-	},
-}
-
 minetest.register_entity("mcl_pottery_sherds:pot_face",{
 	initial_properties = {
 		physical = false,
@@ -76,26 +69,36 @@ local function update_entities(pos,rm)
 	end
 end
 
+local potbox = {
+	type = "fixed",
+	fixed = {
+		{ -3/16, -8/16, -3/16,  3/16, -2/16,  3/16 },
+		{ -2/16, -2/16, -2/16,  2/16,  0/16, 2/16 },
+		{ -1/16,  0/16, -1/16,  1/16,  3/16,  1/16 },
+	}
+}
 
 minetest.register_node("mcl_pottery_sherds:pot", {
 	description = S("Decorative Pot"),
 	_tt_help = S("Nice looking pot"),
 	_doc_items_longdesc = S("Pots are decorative blocks."),
 	_doc_items_usagehelp = S("Specially decorated pots can be crafted using pottery sherds"),
-	drawtype = "mesh",
-	mesh = "flowerpot.obj",
+	drawtype = "nodebox",
+	node_box = potbox,
+	selection_box = potbox,
+	collision_box = potbox,
 	tiles = {
-		"mcl_flowerpots_flowerpot.png",
+		"mcl_pottery_sherds_pot.png",
+		"mcl_pottery_sherds_pot.png",
+		"mcl_pottery_sherds_pot.png",
 	},
 	use_texture_alpha = "clip",
-	visual_scale = 0.5,
+	--visual_scale = 0.5,
 	wield_image = "mcl_flowerpots_flowerpot_inventory.png",
+	inventory_image = "mcl_flowerpots_flowerpot_inventory.png",
 	paramtype = "light",
 	sunlight_propagates = true,
-	selection_box = pot_box,
-	collision_box = pot_box,
 	is_ground_content = false,
-	inventory_image = "mcl_flowerpots_flowerpot_inventory.png",
 	groups = { dig_immediate = 3, deco_block = 1, attached_node = 1, dig_by_piston = 1, flower_pot = 1 },
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
