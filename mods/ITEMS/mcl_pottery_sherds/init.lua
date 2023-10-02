@@ -46,6 +46,17 @@ minetest.register_entity("mcl_pottery_sherds:pot_face",{
 		collisionbox = {0,0,0,0,0,0},
 		pointable = true,
 	},
+	on_activate = function(self, staticdata)
+		local s = minetest.deserialize(staticdata)
+		if type(s) == "table" then
+			self.object:set_properties({
+				wield_item = s.wield_item
+			})
+		end
+	end,
+	get_staticdata = function(self)
+		return minetest.serialize({ wield_item = self.wield_item })
+	end
 })
 
 local function update_entities(pos,rm)
@@ -61,8 +72,10 @@ local function update_entities(pos,rm)
 		if not faces then return end
 		for k,v in pairs(pot_face_positions) do
 			local o = minetest.add_entity(pos + v, "mcl_pottery_sherds:pot_face")
+			local e = o:get_luaentity()
+			e.wield_item = "mcl_pottery_sherds:"..faces[k]
 			o:set_properties({
-				wield_item = "mcl_pottery_sherds:"..faces[k]
+				wield_item = e.wield_item
 			})
 			o:set_rotation(pot_face_rotations[k])
 		end
