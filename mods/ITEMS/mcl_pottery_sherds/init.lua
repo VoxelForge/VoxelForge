@@ -56,6 +56,11 @@ minetest.register_entity("mcl_pottery_sherds:pot_face",{
 	end,
 	get_staticdata = function(self)
 		return minetest.serialize({ wield_item = self.wield_item })
+	end,
+	on_step = function(self)
+		if minetest.get_node(self.object:get_pos()).name ~= "mcl_pottery_sherds:pot" then
+			self.object:remove()
+		end
 	end
 })
 
