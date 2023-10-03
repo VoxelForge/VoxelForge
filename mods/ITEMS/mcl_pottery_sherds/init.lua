@@ -5,10 +5,10 @@ local S = minetest.get_translator(modname)
 mcl_pottery_sherds.names = {"angler", "archer", "arms_up", "blade", "brewer", "burn", "danger", "explorer", "friend", "heartbreak", "heart", "howl", "miner", "mourner", "plenty", "mcl_pottery_sherds", "prize", "sheaf", "shelter", "skull", "snort"}
 
 local pot_face_positions = {
-	vector.new(-0.2,-0.3,0),
-	vector.new(0,   -0.3,-0.2),
-	vector.new(0,   -0.3,0.2),
-	vector.new(0.2, -0.3,0),
+	vector.new(-0.18,-0.3, 0),
+	vector.new(0,    -0.3,-0.18),
+	vector.new(0,    -0.3, 0.18),
+	vector.new(0.18, -0.3, 0),
 }
 local pot_face_rotations = {
 	vector.new(0,0.5*math.pi,0),
@@ -101,9 +101,9 @@ minetest.register_node("mcl_pottery_sherds:pot", {
 	selection_box = potbox,
 	collision_box = potbox,
 	tiles = {
-		"mcl_pottery_sherds_pot.png",
-		"mcl_pottery_sherds_pot.png",
-		"mcl_pottery_sherds_pot.png",
+		"mcl_pottery_sherds_pot_top.png",
+		"mcl_pottery_sherds_pot_bottom.png",
+		"mcl_pottery_sherds_pot_side.png",
 	},
 	use_texture_alpha = "clip",
 	--visual_scale = 0.5,
