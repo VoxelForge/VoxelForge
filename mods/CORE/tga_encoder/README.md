@@ -5,8 +5,6 @@ Created by fleckenstein for MineClone2, then improved by erlehmann.
 
 May be used as a Minetest mod.
 
-See `examples.lua` for example code and usage hints.
-
 ## Use Cases for `tga_encoder`
 
 ### Encoding Textures for Editing
@@ -80,8 +78,3 @@ These images contain compressed RGB(A) pixel data.
 * `A1R5G5B5` (16bpp RGBA)
 * `B8G8R8` (24bpp RGB)
 * `B8G8R8A8` (32bpp RGBA)
-
-## TODO
-
-* Actually support `R8G8B8A8` input for `A1R5G5B5` output
-* Add both zoomable and explorable maps to `mcl_maps`.
