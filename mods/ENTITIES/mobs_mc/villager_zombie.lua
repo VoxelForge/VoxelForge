@@ -120,17 +120,10 @@ mcl_mobs.register_mob("mobs_mc:villager_zombie", {
 			self._curing = self._curing - dtime
 			local obj = self.object
 			if self._curing <= 0 then
-				local villager_obj = minetest.add_entity(obj:get_pos(), "mobs_mc:villager")
+				local villager_obj = mcl_util.replace_mob(obj, "mobs_mc:villager")
 				if villager_obj then
 					local villager = villager_obj:get_luaentity()
-					local yaw = obj:get_yaw()
-					villager_obj:set_yaw(yaw)
-					villager.target_yaw = yaw
-					villager.nametag = self.nametag
 					villager._profession = "unemployed"
-					self._curing = nil
-					mcl_burning.extinguish(obj)
-					obj:remove()
 					return false
 				end
 			end
