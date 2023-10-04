@@ -625,9 +625,16 @@ function mcl_util.replace_mob(obj, mob)
 	if not l.is_mob then return end
 	local rot = obj:get_yaw()
 	local pos = obj:get_pos()
+	local n = obj:get_properties().nametag
 	l:safe_remove()
 	obj = minetest.add_entity(pos, mob)
 	if not obj or not obj:get_pos() then return end
+	l = obj:get_luaentity()
+	if l.is_mob then
+		l:set_nametag(n)
+	else
+		obj:set_properties({nametag = n})
+	end
 	obj:set_yaw(rot)
 	return obj
 end
