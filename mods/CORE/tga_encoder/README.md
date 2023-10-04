@@ -23,8 +23,6 @@ Minetest 5.4 did not include `minetest.encode_png()` (or any equvivalent).
 
 Since `tga_encoder` is written in pure Lua, it does not need engine support.
 
-**Tip:** Look at `examples.lua` and the Minetest mod `mcl_maps` for guidance.
-
 ### Advanced Texture Format Control
 
 The function `minetest.encode_png()` always encodes images as 32bpp RGBA.
