@@ -89,12 +89,13 @@ local rabbit = {
 	end,
 	do_custom = function(self)
 		-- Easter egg: Change texture if rabbit is named “Toast”
-		if self.nametag == "Toast" and not self._has_toast_texture then
+		local nametag = self.object:get_properties().nametag
+		if nametag == "Toast" and not self._has_toast_texture then
 			self._original_rabbit_texture = self.base_texture
 			self.base_texture = { "mobs_mc_rabbit_toast.png" }
 			self.object:set_properties({ textures = self.base_texture })
 			self._has_toast_texture = true
-		elseif self.nametag ~= "Toast" and self._has_toast_texture then
+		elseif nametag ~= "Toast" and self._has_toast_texture then
 			self.base_texture = self._original_rabbit_texture
 			self.object:set_properties({ textures = self.base_texture })
 			self._has_toast_texture = false
@@ -123,9 +124,8 @@ killer_bunny.replace_what = nil
 killer_bunny.on_rightclick = nil
 killer_bunny.run_velocity = 6
 killer_bunny.do_custom = function(self)
-	if not self._killer_bunny_nametag_set then
-		self.nametag = "The Killer Bunny"
-		self._killer_bunny_nametag_set = true
+	if self.nametag ~= "The Killer Bunny" then
+		self:set_nametag("The Killer Bunny")
 	end
 end
 

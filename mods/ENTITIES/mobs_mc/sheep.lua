@@ -198,7 +198,7 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 			self.initial_color_set = true
 		end
 
-		local is_kay27 = self.nametag == "kay27"
+		local is_kay27 = self.object:get_properties().nametag == "kay27"
 
 		if self.color_change_timer then
 			local old_color = self.color
