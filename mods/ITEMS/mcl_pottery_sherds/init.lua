@@ -17,9 +17,14 @@ local pot_face_rotations = {
 	vector.new(0,-0.5*math.pi,0),
 }
 
+local function readable_name(str)
+	str = str:gsub("_", " ")
+    return (str:gsub("^%l", string.upper))
+end
+
 for _,name in pairs(mcl_pottery_sherds.names) do
 	minetest.register_craftitem("mcl_pottery_sherds:"..name, {
-		description = S(name.." Pottery Sherd"),
+		description = S(readable_name(name).." Pottery Sherd"),
 		_tt_help = S("Used for crafting decorative pots"),
 		_doc_items_create_entry = false,
 		inventory_image = "mcl_pottery_sherds_"..name..".png",
