@@ -2,7 +2,7 @@ mcl_pottery_sherds = {}
 local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 
-mcl_pottery_sherds.names = {"angler", "archer", "arms_up", "blade", "brewer", "burn", "danger", "explorer", "friend", "heartbreak", "heart", "howl", "miner", "mourner", "plenty", "mcl_pottery_sherds", "prize", "sheaf", "shelter", "skull", "snort"}
+mcl_pottery_sherds.names = {"blank", "angler", "archer", "arms_up", "blade", "brewer", "burn", "danger", "explorer", "friend", "heartbreak", "heart", "howl", "miner", "mourner", "plenty", "prize", "sheaf", "shelter", "skull", "snort"}
 
 local pot_face_positions = {
 	vector.new(-0.18,-0.3, 0),
@@ -25,7 +25,7 @@ end
 for _,name in pairs(mcl_pottery_sherds.names) do
 	minetest.register_craftitem("mcl_pottery_sherds:"..name, {
 		description = S(readable_name(name).." Pottery Sherd"),
-		_tt_help = S("Used for crafting decorative pots"),
+		_tt_help = S("Used for crafting decorated pots"),
 		_doc_items_create_entry = false,
 		inventory_image = "mcl_pottery_sherds_"..name..".png",
 		wield_image = "mcl_pottery_sherds_"..name..".png",
@@ -33,15 +33,6 @@ for _,name in pairs(mcl_pottery_sherds.names) do
 		_mcl_pottery_sherd_name = name,
 	})
 end
-
-minetest.register_craftitem("mcl_pottery_sherds:blank", {
-	description = S("Blank Pottery Sherd"),
-	_tt_help = S("Used for crafting decorative pots"),
-	_doc_items_create_entry = false,
-	inventory_image = "blank.png",
-	wield_image = "blank.png",
-	groups = { pottery_sherd = 1, not_in_creative_inventory = 1 },
-})
 
 minetest.register_entity("mcl_pottery_sherds:pot_face",{
 	initial_properties = {
@@ -95,14 +86,14 @@ end
 local potbox = {
 	type = "fixed",
 	fixed = {
-		{ -3/16, -8/16, -3/16,  3/16, -2/16,  3/16 },
-		{ -2/16, -2/16, -2/16,  2/16,  0/16, 2/16 },
-		{ -1/16,  0/16, -1/16,  1/16,  3/16,  1/16 },
+		{ -7/16, -8/16, -7/16,  7/16, 4/16,  7/16 },
+		{ -2/16, 4/16, -2/16,  2/16,  5/16, 2/16 },
+		{ -5/16,  5/16, -5/16,  5/16,  8/16,  5/16 },
 	}
 }
 
 minetest.register_node("mcl_pottery_sherds:pot", {
-	description = S("Decorative Pot"),
+	description = S("Decorated Pot"),
 	_tt_help = S("Nice looking pot"),
 	_doc_items_longdesc = S("Pots are decorative blocks."),
 	_doc_items_usagehelp = S("Specially decorated pots can be crafted using pottery sherds"),
