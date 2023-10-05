@@ -5,11 +5,12 @@ local S = minetest.get_translator(modname)
 mcl_pottery_sherds.names = {"blank", "angler", "archer", "arms_up", "blade", "brewer", "burn", "danger", "explorer", "friend", "heartbreak", "heart", "howl", "miner", "mourner", "plenty", "prize", "sheaf", "shelter", "skull", "snort"}
 
 local pot_face_positions = {
-	vector.new(-0.18,-0.3, 0),
-	vector.new(0,    -0.3,-0.18),
-	vector.new(0,    -0.3, 0.18),
-	vector.new(0.18, -0.3, 0),
+	vector.new(-0.42,-0.1, 0),
+	vector.new(0,    -0.1,-0.42),
+	vector.new(0,    -0.1, 0.42),
+	vector.new(0.42, -0.1, 0),
 }
+
 local pot_face_rotations = {
 	vector.new(0,0.5*math.pi,0),
 	vector.new(0,0,0),
@@ -38,7 +39,7 @@ minetest.register_entity("mcl_pottery_sherds:pot_face",{
 	initial_properties = {
 		physical = false,
 		visual = "wielditem",
-		visual_size = {x=0.15, y=0.15},
+		visual_size = {x=0.35, y=0.35},
 		collisionbox = {0,0,0,0,0,0},
 		pointable = true,
 	},
@@ -108,8 +109,8 @@ minetest.register_node("mcl_pottery_sherds:pot", {
 	},
 	use_texture_alpha = "clip",
 	--visual_scale = 0.5,
-	wield_image = "mcl_flowerpots_flowerpot_inventory.png",
-	inventory_image = "mcl_flowerpots_flowerpot_inventory.png",
+	wield_image = "mcl_pottery_sherds_pot_side.png",
+	inventory_image = minetest.inventorycube("mcl_pottery_sherds_pot_top.png", "mcl_pottery_sherds_pot_bottom.png", "mcl_pottery_sherds_pot_bottom.png"),
 	paramtype = "light",
 	sunlight_propagates = true,
 	is_ground_content = false,
