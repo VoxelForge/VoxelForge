@@ -112,9 +112,9 @@ minetest.register_node("mcl_pottery_sherds:pot", {
 	selection_box = potbox,
 	collision_box = potbox,
 	tiles = {
-		"mcl_pottery_sherds_pot_top.png",
-		"mcl_pottery_sherds_pot_bottom.png",
-		"mcl_pottery_sherds_pot_side.png",
+		{ name = "mcl_pottery_sherds_pot_top.png", align_style = "world" },
+		{ name = "mcl_pottery_sherds_pot_bottom.png", align_style = "world" },
+		{ name = "mcl_pottery_sherds_pot_side.png", align_style = "world" },
 	},
 	use_texture_alpha = "clip",
 	--visual_scale = 0.5,
