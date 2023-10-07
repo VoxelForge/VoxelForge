@@ -2,7 +2,7 @@ mcl_pottery_sherds = {}
 local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 
-mcl_pottery_sherds.names = {"blank", "angler", "archer", "arms_up", "blade", "brewer", "burn", "danger", "explorer", "friend", "heartbreak", "heart", "howl", "miner", "mourner", "plenty", "prize", "sheaf", "shelter", "skull", "snort"}
+mcl_pottery_sherds.names = {"angler", "archer", "arms_up", "blade", "brewer", "burn", "danger", "explorer", "friend", "heartbreak", "heart", "howl", "miner", "mourner", "plenty", "prize", "sheaf", "shelter", "skull", "snort"}
 
 local pot_face_positions = {
 	vector.new(-7/16 - 0.001, 0 , 0),
@@ -30,10 +30,14 @@ for _,name in pairs(mcl_pottery_sherds.names) do
 		_doc_items_create_entry = false,
 		inventory_image = "mcl_pottery_sherds_"..name..".png",
 		wield_image = "mcl_pottery_sherds_"..name..".png",
-		groups = { pottery_sherd = 1 },
+		groups = { pottery_sherd = 1, decorated_pot_recipe = 1 },
 		_mcl_pottery_sherd_name = name,
 	})
 end
+
+local brick_groups = table.copy(minetest.registered_items["mcl_core:brick"].groups)
+brick_groups["decorated_pot_recipe"] = 1
+minetest.override_item("mcl_core:brick", { groups = brick_groups })
 
 minetest.register_entity("mcl_pottery_sherds:pot_face",{
 	initial_properties = {
@@ -74,13 +78,15 @@ local function update_entities(pos,rm)
 		local faces = minetest.deserialize(meta:get_string("pot_faces"))
 		if not faces then return end
 		for k,v in pairs(pot_face_positions) do
-			local o = minetest.add_entity(pos + v, "mcl_pottery_sherds:pot_face")
-			local e = o:get_luaentity()
-			e.texture = "mcl_pottery_sherds_pattern_"..faces[k]..".png"
-			o:set_properties({
-				textures = { "mcl_pottery_sherds_pattern_"..faces[k]..".png" },
-			})
-			o:set_rotation(pot_face_rotations[k])
+			if faces[k] then
+				local o = minetest.add_entity(pos + v, "mcl_pottery_sherds:pot_face")
+				local e = o:get_luaentity()
+				e.texture = "mcl_pottery_sherds_pattern_"..faces[k]..".png"
+				o:set_properties({
+					textures = { "mcl_pottery_sherds_pattern_"..faces[k]..".png" },
+				})
+				o:set_rotation(pot_face_rotations[k])
+			end
 		end
 	end
 end
@@ -129,7 +135,7 @@ minetest.register_node("mcl_pottery_sherds:pot", {
 
 local function get_sherd_name(itemstack)
 	local def = minetest.registered_items[itemstack:get_name()]
-	local r = "blank"
+	local r = nil
 	if def and def._mcl_pottery_sherd_name then
 		r = def._mcl_pottery_sherd_name
 	end
@@ -140,6 +146,7 @@ minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv
 	if itemstack:get_name() ~= "mcl_pottery_sherds:pot" then return end
 	if old_craft_grid[1][2] == "mcl_core:brick" then return end
 	local meta = itemstack:get_meta()
+
 	meta:set_string("pot_faces",minetest.serialize({
 		get_sherd_name(old_craft_grid[2]),
 		get_sherd_name(old_craft_grid[6]),
@@ -152,17 +159,8 @@ end)
 minetest.register_craft({
 	output = "mcl_pottery_sherds:pot",
 	recipe = {
-		{ "", "group:pottery_sherd", "" },
-		{ "group:pottery_sherd", "", "group:pottery_sherd" },
-		{ "", "group:pottery_sherd", "" },
-	}
-})
-
-minetest.register_craft({
-	output = "mcl_pottery_sherds:pot",
-	recipe = {
-		{ "", "mcl_core:brick", "" },
-		{ "mcl_core:brick", "", "mcl_core:brick" },
-		{ "", "mcl_core:brick", "" },
+		{ "", "group:decorated_pot_recipe", "" },
+		{ "group:decorated_pot_recipe", "", "group:decorated_pot_recipe" },
+		{ "", "group:decorated_pot_recipe", "" },
 	}
 })
