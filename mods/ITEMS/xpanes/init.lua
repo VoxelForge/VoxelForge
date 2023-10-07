@@ -1,4 +1,6 @@
-local S = minetest.get_translator(minetest.get_current_modname())
+local modname = minetest.get_current_modname()
+local modpath = minetest.get_modpath(modname)
+local S = minetest.get_translator(modname)
 local mod_doc = minetest.get_modpath("doc")
 
 local function is_pane(pos)
@@ -253,3 +255,5 @@ pane(S("Light Grey Stained Glass Pane"), "mcl_core:glass_silver", "_silver")
 pane(S("Magenta Stained Glass Pane"), "mcl_core:glass_magenta", "_magenta")
 pane(S("Purple Stained Glass Pane"), "mcl_core:glass_purple", "_purple")
 pane(S("Cyan Stained Glass Pane"), "mcl_core:glass_cyan", "_cyan")
+
+dofile(modpath .. "/alias.lua")
