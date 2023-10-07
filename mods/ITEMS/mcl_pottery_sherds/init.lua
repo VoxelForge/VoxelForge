@@ -117,7 +117,6 @@ minetest.register_node("mcl_pottery_sherds:pot", {
 		{ name = "mcl_pottery_sherds_pot_side.png", align_style = "world" },
 	},
 	use_texture_alpha = "clip",
-	--visual_scale = 0.5,
 	wield_image = "mcl_pottery_sherds_pot_side.png",
 	inventory_image = minetest.inventorycube("mcl_pottery_sherds_pot_top.png", "mcl_pottery_sherds_pot_bottom.png", "mcl_pottery_sherds_pot_bottom.png"),
 	paramtype = "light",
@@ -128,7 +127,6 @@ minetest.register_node("mcl_pottery_sherds:pot", {
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		local meta = minetest.get_meta(pos)
-		--meta:from_table(itemstack:to_table())
 		meta:set_string("pot_faces",itemstack:get_meta():get_string("pot_faces"))
 		update_entities(pos)
 	end,
