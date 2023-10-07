@@ -1964,7 +1964,7 @@ mcl_mobs.register_mob("mobs_mc:villager", {
 			self.attack = nil
 		end
 		-- Don't do at night. Go to bed? Maybe do_activity needs it's own method
-		if validate_jobsite(self) and not self.order == WORK then
+		if validate_jobsite(self) and self.order ~= WORK then
 			minetest.log("warning","[mobs_mc] villager has jobsite but doesn't work")
 			--self:gopath(self._jobsite,function()
 			--	minetest.log("sent to jobsite")
