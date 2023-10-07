@@ -85,9 +85,9 @@ minetest.register_on_dignode(function(pos,node)
 	end
 end)
 
-xpanes = {}
-xpanes.update_pane = update_pane
-function xpanes.register_pane(name, def)
+mcl_panes = {}
+mcl_panes.update_pane = update_pane
+function mcl_panes.register_pane(name, def)
 	for i = 1, 15 do
 		minetest.register_alias("xpanes:" .. name .. "_" .. i, "xpanes:" .. name .. "_flat")
 	end
@@ -188,7 +188,7 @@ local function pane(description, node, append)
 		end
 		texture1 = "mcl_core_glass"..append..".png"
 	end
-	xpanes.register_pane("pane"..append, {
+	mcl_panes.register_pane("pane"..append, {
 		description = description,
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = entry_name,
@@ -216,7 +216,7 @@ local function pane(description, node, append)
 end
 
 -- Iron Bars
-xpanes.register_pane("bar", {
+mcl_panes.register_pane("bar", {
 	description = S("Iron Bars"),
 	_doc_items_longdesc = S("Iron bars neatly connect to their neighbors as you build them."),
 	textures = {"xpanes_pane_iron.png","xpanes_pane_iron.png","xpanes_top_iron.png"},
