@@ -5,10 +5,10 @@ local S = minetest.get_translator(modname)
 mcl_pottery_sherds.names = {"blank", "angler", "archer", "arms_up", "blade", "brewer", "burn", "danger", "explorer", "friend", "heartbreak", "heart", "howl", "miner", "mourner", "plenty", "prize", "sheaf", "shelter", "skull", "snort"}
 
 local pot_face_positions = {
-	vector.new(-0.44,-0.05, 0),
-	vector.new(0,    -0.05,-0.44),
-	vector.new(0,    -0.05, 0.44),
-	vector.new(0.44, -0.05, 0),
+	vector.new(-7/16 - 0.001, 0 , 0),
+	vector.new(0,     0 ,-7/16 - 0.001),
+	vector.new(0,     0 , 7/16 + 0.001),
+	vector.new(7/16 + 0.001,  0 , 0),
 }
 
 local pot_face_rotations = {
@@ -39,7 +39,7 @@ minetest.register_entity("mcl_pottery_sherds:pot_face",{
 	initial_properties = {
 		physical = false,
 		visual = "upright_sprite",
-		visual_size = {x=0.9, y=0.75},
+		visual_size = {x=1.0, y=1.0},
 		collisionbox = {0,0,0,0,0,0},
 		pointable = false,
 	},
@@ -88,9 +88,8 @@ end
 local potbox = {
 	type = "fixed",
 	fixed = {
-		{ -7/16, -8/16, -7/16,  7/16, 6/16,  7/16 },
-		{ -2/16, 6/16, -2/16,  2/16,  7/16, 2/16 },
-		{ -3/16,  7/16, -3/16,  3/16,  8/16,  3/16 },
+		{ -3/16,  8/16, -3/16,  3/16,  12/16,  3/16 },
+		{ -7/16,  -8/16, -7/16,  7/16,  8/16,  7/16 },
 	}
 }
 
