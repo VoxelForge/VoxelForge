@@ -55,8 +55,8 @@ mcl_structures.register_structure("desert_well",{
 			stacks_min = 1,
 			stacks_max = 1,
 			items = {
-				--{ itemstring = "mcl_pottery_sherds:arms_up", weight = 2, },
-				--{ itemstring = "mcl_pottery_sherds:brewer", weight = 2, },
+				{ itemstring = "mcl_pottery_sherds:arms_up", weight = 2, },
+				{ itemstring = "mcl_pottery_sherds:brewer", weight = 2, },
 				{ itemstring = "mcl_core:brick", weight = 1 },
 				{ itemstring = "mcl_core:emerald", weight = 1 },
 				{ itemstring = "mcl_core:stick", weight = 1 },

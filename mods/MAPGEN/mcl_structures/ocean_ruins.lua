@@ -145,10 +145,10 @@ local cold = {
 				{ itemstring = "mcl_farming:wheat_item", weight = 2 },
 				{ itemstring = "mcl_farming:hoe_wood", weight = 2 },
 				{ itemstring = "mcl_core:gold_nugget", weight = 2 },
-				--{ itemstring = "mcl_pottery_sherds:blade", weight = 1, },
-				--{ itemstring = "mcl_pottery_sherds:explorer", weight = 1, },
-				--{ itemstring = "mcl_pottery_sherds:mourner", weight = 1, },
-				--{ itemstring = "mcl_pottery_sherds:plenty", weight = 1, },
+				{ itemstring = "mcl_pottery_sherds:blade", weight = 1, },
+				{ itemstring = "mcl_pottery_sherds:explorer", weight = 1, },
+				{ itemstring = "mcl_pottery_sherds:mourner", weight = 1, },
+				{ itemstring = "mcl_pottery_sherds:plenty", weight = 1, },
 				{ itemstring = "mcl_tools:axe_iron", weight = 1 },
 				}
 			}
@@ -178,10 +178,10 @@ local warm = table.merge(cold,{
 				{ itemstring = "mcl_farming:wheat_item", weight = 2 },
 				{ itemstring = "mcl_farming:hoe_wood", weight = 2 },
 				{ itemstring = "mcl_core:gold_nugget", weight = 2 },
-				--{ itemstring = "mcl_pottery_sherds:angler", weight = 1, },
-				--{ itemstring = "mcl_pottery_sherds:shelter", weight = 1, },
+				{ itemstring = "mcl_pottery_sherds:angler", weight = 1, },
+				{ itemstring = "mcl_pottery_sherds:shelter", weight = 1, },
 				--FIXME: add sniffer egg { itemstring = "mobs_mc:SNIFFER", weight = 1, },
-				--{ itemstring = "mcl_pottery_sherds:snort", weight = 1, },
+				{ itemstring = "mcl_pottery_sherds:snort", weight = 1, },
 				{ itemstring = "mcl_tools:axe_iron", weight = 1 },
 				}
 			}
