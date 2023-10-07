@@ -5,10 +5,10 @@ local S = minetest.get_translator(modname)
 mcl_pottery_sherds.names = {"blank", "angler", "archer", "arms_up", "blade", "brewer", "burn", "danger", "explorer", "friend", "heartbreak", "heart", "howl", "miner", "mourner", "plenty", "prize", "sheaf", "shelter", "skull", "snort"}
 
 local pot_face_positions = {
-	vector.new(-0.42,-0.1, 0),
-	vector.new(0,    -0.1,-0.42),
-	vector.new(0,    -0.1, 0.42),
-	vector.new(0.42, -0.1, 0),
+	vector.new(-0.44,-0.05, 0),
+	vector.new(0,    -0.05,-0.44),
+	vector.new(0,    -0.05, 0.44),
+	vector.new(0.44, -0.05, 0),
 }
 
 local pot_face_rotations = {
@@ -38,21 +38,22 @@ end
 minetest.register_entity("mcl_pottery_sherds:pot_face",{
 	initial_properties = {
 		physical = false,
-		visual = "wielditem",
-		visual_size = {x=0.35, y=0.35},
+		visual = "upright_sprite",
+		visual_size = {x=0.9, y=0.75},
 		collisionbox = {0,0,0,0,0,0},
-		pointable = true,
+		pointable = false,
 	},
 	on_activate = function(self, staticdata)
+		self.object:set_armor_groups({immortal=1})
 		local s = minetest.deserialize(staticdata)
 		if type(s) == "table" then
 			self.object:set_properties({
-				wield_item = s.wield_item
+				textures = { s.texture },
 			})
 		end
 	end,
 	get_staticdata = function(self)
-		return minetest.serialize({ wield_item = self.wield_item })
+		return minetest.serialize({ texture = self.texture })
 	end,
 	on_step = function(self)
 		if minetest.get_node(self.object:get_pos()).name ~= "mcl_pottery_sherds:pot" then
@@ -75,9 +76,9 @@ local function update_entities(pos,rm)
 		for k,v in pairs(pot_face_positions) do
 			local o = minetest.add_entity(pos + v, "mcl_pottery_sherds:pot_face")
 			local e = o:get_luaentity()
-			e.wield_item = "mcl_pottery_sherds:"..faces[k]
+			e.texture = "mcl_pottery_sherds_pattern_"..faces[k]..".png"
 			o:set_properties({
-				wield_item = e.wield_item
+				textures = { "mcl_pottery_sherds_pattern_"..faces[k]..".png" },
 			})
 			o:set_rotation(pot_face_rotations[k])
 		end
@@ -87,9 +88,9 @@ end
 local potbox = {
 	type = "fixed",
 	fixed = {
-		{ -7/16, -8/16, -7/16,  7/16, 4/16,  7/16 },
-		{ -2/16, 4/16, -2/16,  2/16,  5/16, 2/16 },
-		{ -5/16,  5/16, -5/16,  5/16,  8/16,  5/16 },
+		{ -7/16, -8/16, -7/16,  7/16, 6/16,  7/16 },
+		{ -2/16, 6/16, -2/16,  2/16,  7/16, 2/16 },
+		{ -3/16,  7/16, -3/16,  3/16,  8/16,  3/16 },
 	}
 }
 
