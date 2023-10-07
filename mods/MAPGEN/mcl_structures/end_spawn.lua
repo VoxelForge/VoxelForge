@@ -84,9 +84,9 @@ function make_cage(pos,width)
 			table.insert(nodes,vector.add(pos,vector.new(x,y,z)))
 		end
 	end end end
-	minetest.bulk_set_node(nodes,{ name="xpanes:bar_flat"} )
+	minetest.bulk_set_node(nodes,{ name="mcl_panes:bar_flat"} )
 	for _,p in pairs(nodes) do
-		xpanes.update_pane(p)
+		mcl_panes.update_pane(p)
 	end
 end
 

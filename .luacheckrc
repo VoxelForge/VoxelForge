@@ -18,7 +18,7 @@ globals = {
 	"mobs_mc",
 	"screwdriver",
 	"playerphysics",
-	"xpanes",
+	"mcl_panes",
 	"tnt",
 	"hb",
 	"tsm_railcorridors",
