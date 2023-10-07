@@ -20,7 +20,7 @@ local pot_face_rotations = {
 
 local function readable_name(str)
 	str = str:gsub("_", " ")
-    return (str:gsub("^%l", string.upper))
+	return (str:gsub("^%l", string.upper))
 end
 
 for _,name in pairs(mcl_pottery_sherds.names) do
