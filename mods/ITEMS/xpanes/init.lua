@@ -89,17 +89,17 @@ mcl_panes = {}
 mcl_panes.update_pane = update_pane
 function mcl_panes.register_pane(name, def)
 	for i = 1, 15 do
-		minetest.register_alias("xpanes:" .. name .. "_" .. i, "xpanes:" .. name .. "_flat")
+		minetest.register_alias("mcl_panes:" .. name .. "_" .. i, "mcl_panes:" .. name .. "_flat")
 	end
 
 	local flatgroups = table.copy(def.groups)
 	local drop = def.drop
 	if not drop then
-		drop = "xpanes:" .. name .. "_flat"
+		drop = "mcl_panes:" .. name .. "_flat"
 	end
 	flatgroups.pane = 1
 	flatgroups.deco_block = 1
-	minetest.register_node(":xpanes:" .. name .. "_flat", {
+	minetest.register_node(":mcl_panes:" .. name .. "_flat", {
 		description = def.description,
 		_doc_items_create_entry = def._doc_items_create_entry,
 		_doc_items_entry_name = def._doc_items_entry_name,
@@ -128,13 +128,13 @@ function mcl_panes.register_pane(name, def)
 		connect_sides = { "left", "right" },
 		_mcl_blast_resistance = def._mcl_blast_resistance,
 		_mcl_hardness = def._mcl_hardness,
-		_mcl_silk_touch_drop = def._mcl_silk_touch_drop and {"xpanes:" .. name .. "_flat"},
+		_mcl_silk_touch_drop = def._mcl_silk_touch_drop and {"mcl_panes:" .. name .. "_flat"},
 	})
 
 	local groups = table.copy(def.groups)
 	groups.pane = 1
 	groups.not_in_creative_inventory = 1
-	minetest.register_node(":xpanes:" .. name, {
+	minetest.register_node(":mcl_panes:" .. name, {
 		drawtype = "nodebox",
 		paramtype = "light",
 		is_ground_content = false,
@@ -156,16 +156,16 @@ function mcl_panes.register_pane(name, def)
 		connects_to = {"group:pane", "group:stone", "group:glass", "group:wood", "group:tree"},
 		_mcl_blast_resistance = def._mcl_blast_resistance,
 		_mcl_hardness = def._mcl_hardness,
-		_mcl_silk_touch_drop = def._mcl_silk_touch_drop and {"xpanes:" .. name .. "_flat"},
+		_mcl_silk_touch_drop = def._mcl_silk_touch_drop and {"mcl_panes:" .. name .. "_flat"},
 	})
 
 	minetest.register_craft({
-		output = "xpanes:" .. name .. "_flat 16",
+		output = "mcl_panes:" .. name .. "_flat 16",
 		recipe = def.recipe
 	})
 
 	if mod_doc and def._doc_items_create_entry ~= false then
-		doc.add_entry_alias("nodes", "xpanes:" .. name .. "_flat", "nodes", "xpanes:" .. name)
+		doc.add_entry_alias("nodes", "mcl_panes:" .. name .. "_flat", "nodes", "mcl_panes:" .. name)
 	end
 end
 
@@ -210,8 +210,8 @@ local function pane(description, node, append)
 	})
 
 	if mod_doc and not is_canonical then
-		doc.add_entry_alias("nodes", "xpanes:pane_".. canonical_color .. "_flat", "nodes", "xpanes:pane"..append)
-		doc.add_entry_alias("nodes", "xpanes:pane_".. canonical_color .. "_flat", "nodes", "xpanes:pane"..append.."_flat")
+		doc.add_entry_alias("nodes", "mcl_panes:pane_".. canonical_color .. "_flat", "nodes", "mcl_panes:pane"..append)
+		doc.add_entry_alias("nodes", "mcl_panes:pane_".. canonical_color .. "_flat", "nodes", "mcl_panes:pane"..append.."_flat")
 	end
 end
 
