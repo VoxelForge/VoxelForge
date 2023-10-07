@@ -5,17 +5,17 @@ local S = minetest.get_translator(modname)
 mcl_pottery_sherds.names = {"angler", "archer", "arms_up", "blade", "brewer", "burn", "danger", "explorer", "friend", "heartbreak", "heart", "howl", "miner", "mourner", "plenty", "prize", "sheaf", "shelter", "skull", "snort"}
 
 local pot_face_positions = {
-	vector.new(-7/16 - 0.001, 0 , 0),
-	vector.new(0,     0 ,-7/16 - 0.001),
-	vector.new(0,     0 , 7/16 + 0.001),
-	vector.new(7/16 + 0.001,  0 , 0),
+	vector.new(0,0, 7/16 + 0.001),
+	vector.new(-7/16 - 0.001, 0, 0),
+	vector.new(0, 0, -7/16 - 0.001),
+	vector.new(7/16 + 0.001,  0, 0),
 }
 
 local pot_face_rotations = {
-	vector.new(0,0.5*math.pi,0),
-	vector.new(0,0,0),
-	vector.new(0,0,0),
-	vector.new(0,-0.5*math.pi,0),
+	vector.new(0, 0, 0),
+	vector.new(0, 0.5 * math.pi, 0),
+	vector.new(0, 0, 0),
+	vector.new(0, -0.5 * math.pi, 0),
 }
 
 local function readable_name(str)
@@ -68,25 +68,28 @@ minetest.register_entity("mcl_pottery_sherds:pot_face",{
 
 local function update_entities(pos,rm)
 	local pots = {}
-	for _,v in pairs(minetest.get_objects_inside_radius(pos ,0.4, true)) do
-		if v:get_luaentity().name == "mcl_pottery_sherds:pot_face" then table.insert(pots,v) end
+	for _,v in pairs(minetest.get_objects_inside_radius(pos, 0.5, true)) do
+		local ent = v:get_luaentity()
+		if ent and ent.name == "mcl_pottery_sherds:pot_face" then
+			v:remove()
+		end
 	end
-	if #pots ~= 4 or rm then
-		for _,v in pairs(pots) do v:remove() end
-		if rm then return end
-		local meta = minetest.get_meta(pos)
-		local faces = minetest.deserialize(meta:get_string("pot_faces"))
-		if not faces then return end
-		for k,v in pairs(pot_face_positions) do
-			if faces[k] then
-				local o = minetest.add_entity(pos + v, "mcl_pottery_sherds:pot_face")
-				local e = o:get_luaentity()
-				e.texture = "mcl_pottery_sherds_pattern_"..faces[k]..".png"
-				o:set_properties({
-					textures = { "mcl_pottery_sherds_pattern_"..faces[k]..".png" },
-				})
-				o:set_rotation(pot_face_rotations[k])
-			end
+	if rm then return end
+	local param2 = minetest.get_node(pos).param2
+	local meta = minetest.get_meta(pos)
+	local faces = minetest.deserialize(meta:get_string("pot_faces"))
+	if not faces then return end
+	local s = ""
+	for k,v in pairs(pot_face_positions) do
+		local face = faces[(k + param2) % 4 + 1]
+		if face then
+			local o = minetest.add_entity(pos + v, "mcl_pottery_sherds:pot_face")
+			local e = o:get_luaentity()
+			e.texture = "mcl_pottery_sherds_pattern_"..face..".png"
+			o:set_properties({
+				textures = { "mcl_pottery_sherds_pattern_"..face..".png" },
+			})
+			o:set_rotation(pot_face_rotations[k])
 		end
 	end
 end
@@ -118,6 +121,7 @@ minetest.register_node("mcl_pottery_sherds:pot", {
 	wield_image = "mcl_pottery_sherds_pot_side.png",
 	inventory_image = minetest.inventorycube("mcl_pottery_sherds_pot_top.png", "mcl_pottery_sherds_pot_bottom.png", "mcl_pottery_sherds_pot_bottom.png"),
 	paramtype = "light",
+	paramtype2 = "facedir",
 	sunlight_propagates = true,
 	is_ground_content = false,
 	groups = { dig_immediate = 3, deco_block = 1, attached_node = 1, dig_by_piston = 1, flower_pot = 1, not_in_creative_inventory = 1 },
@@ -130,7 +134,15 @@ minetest.register_node("mcl_pottery_sherds:pot", {
 	end,
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
 		update_entities(pos,true)
-	end
+	end,
+	on_rotate = function(pos, _,  _, mode, new_param2)
+		if mode == screwdriver.ROTATE_AXIS then
+			return false
+		end
+	end,
+	after_rotate = function(pos)
+		update_entities(pos)
+	end,
 })
 
 local function get_sherd_name(itemstack)
