@@ -24,6 +24,7 @@ globals = {
 	"tsm_railcorridors",
 	"tga_encoder",
 	"hb",
+	"walkover",
 	"mcl_achievements",
 	"mcl_amethyst",
 	"mcl_anvils",
