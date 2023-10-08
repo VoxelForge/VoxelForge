@@ -5,6 +5,8 @@ migrating from MineClone 2 to Mineclonia, see [MIGRATING.md](./MIGRATING.md).
 
 Version: 0.89.0
 
+[![ContentDB](https://content.minetest.net/packages/ryvnf/mineclonia/shields/downloads/)](https://content.minetest.net/packages/ryvnf/mineclonia/)
+
 ### Differences from MineClone 2
 * Overworld depth increased from 64 to 128 nodes
 * Improved nether portals
