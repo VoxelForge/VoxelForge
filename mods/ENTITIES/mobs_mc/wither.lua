@@ -298,7 +298,6 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 			local pos = table.copy(s)
 			pos.y = pos.y + 2
 			local objs = minetest.get_objects_inside_radius(pos, self.reach)
-			local obj_pos, dist
 			local hit_some = false
 			for n = 1, #objs do
 				objs[n]:punch(objs[n], 1.0, {
