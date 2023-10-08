@@ -6,10 +6,14 @@ migrating from MineClone 2 to Mineclonia, see [MIGRATING.md](./MIGRATING.md).
 Version: 0.89.0
 
 ### Differences from MineClone 2
-* Overworld depth increased from 64 to 128 nodes to match Minecraft 1.18
+* Overworld depth increased from 64 to 128 nodes
 * Improved nether portals
 * Improved leaf decay
-* New items and biomes
+* Suspicious nodes, pottery shreds and decorated pots
+* Deep Dark biome and Ancient hermitage (structure corresponding to Minecraft's ancient city)
+* Functional Loom to apply banner patterns
+* Lush Caves biome
+* Cherry Grove biome
 * No in-game music, twice as small compared to MineClone 2
 * No hamburgers
 
