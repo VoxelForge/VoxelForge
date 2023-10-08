@@ -3,6 +3,16 @@ local modpath = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
 local mod_doc = minetest.get_modpath("doc")
 
+--maps normalized base color name to non-standard texture color names
+local messy_texture_names = {
+	["grey"] = "gray",
+}
+
+local function readable_name(str)
+	str = str:gsub("_", " ")
+	return (str:gsub("^%l", string.upper))
+end
+
 local function is_pane(pos)
 	return minetest.get_item_group(minetest.get_node(pos).name, "pane") > 0
 end
@@ -176,6 +186,11 @@ local canonical_color = "yellow"
 local function pane(description, node, append)
 	local texture1, longdesc, entry_name, create_entry
 	local is_canonical = true
+	local txappend = append
+	if messy_texture_names[append:gsub("_","")] then
+		txappend = "_"..messy_texture_names[append:gsub("_","")]
+	end
+
 	-- Special case: Default (unstained) glass texture
 	if append == "_natural" then
 		texture1 = "default_glass.png"
@@ -188,14 +203,14 @@ local function pane(description, node, append)
 			longdesc = S("Stained glass panes are thin layers of stained glass which neatly connect to their neighbors as you build them. They come in many different colors.")
 			entry_name = S("Stained Glass Pane")
 		end
-		texture1 = "mcl_core_glass"..append..".png"
+		texture1 = "mcl_core_glass"..txappend..".png"
 	end
 	mcl_panes.register_pane("pane"..append, {
 		description = description,
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = entry_name,
 		_doc_items_longdesc = longdesc,
-		textures = {texture1, texture1, "xpanes_top_glass"..append..".png"},
+		textures = {texture1, texture1, "xpanes_top_glass"..txappend..".png"},
 		use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "blend" or true,
 		inventory_image = texture1,
 		wield_image = texture1,
@@ -238,22 +253,9 @@ mcl_panes.register_pane("bar", {
 -- Glass Pane
 pane(S("Glass Pane"), "mcl_core:glass", "_natural") -- triggers special case
 
--- Stained Glass Pane
-pane(S("Red Stained Glass Pane"), "mcl_core:glass_red", "_red")
-pane(S("Green Stained Glass Pane"), "mcl_core:glass_green", "_green")
-pane(S("Blue Stained Glass Pane"), "mcl_core:glass_blue", "_blue")
-pane(S("Light Blue Stained Glass Pane"), "mcl_core:glass_light_blue", "_light_blue")
-pane(S("Black Stained Glass Pane"), "mcl_core:glass_black", "_black")
-pane(S("White Stained Glass Pane"), "mcl_core:glass_white", "_white")
-pane(S("Yellow Stained Glass Pane"), "mcl_core:glass_yellow", "_yellow")
-pane(S("Brown Stained Glass Pane"), "mcl_core:glass_brown", "_brown")
-pane(S("Orange Stained Glass Pane"), "mcl_core:glass_orange", "_orange")
-pane(S("Pink Stained Glass Pane"), "mcl_core:glass_pink", "_pink")
-pane(S("Grey Stained Glass Pane"), "mcl_core:glass_gray", "_gray")
-pane(S("Lime Stained Glass Pane"), "mcl_core:glass_lime", "_lime")
-pane(S("Light Grey Stained Glass Pane"), "mcl_core:glass_silver", "_silver")
-pane(S("Magenta Stained Glass Pane"), "mcl_core:glass_magenta", "_magenta")
-pane(S("Purple Stained Glass Pane"), "mcl_core:glass_purple", "_purple")
-pane(S("Cyan Stained Glass Pane"), "mcl_core:glass_cyan", "_cyan")
+-- Stained Glass Panes
+for k,v in pairs(mcl_dyes.colors) do
+	pane(S(readable_name(k).." Glass Pane"), "mcl_core:glass_"..k, "_"..k)
+end
 
 dofile(modpath .. "/alias.lua")
