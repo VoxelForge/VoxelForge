@@ -441,7 +441,10 @@ local anvildef = {
 		update_anvil_slots(meta)
 
 		if from_list == "output" then
-			local destroyed = damage_anvil_by_using(pos)
+			local destroyed
+			if not minetest.is_creative_enabled(player:get_player_name()) then
+				destroyed = damage_anvil_by_using(pos)
+			end
 			-- Close formspec if anvil was destroyed
 			if destroyed then
 				--[[ Closing the formspec w/ emptyformname is discouraged. But this is justified
@@ -494,7 +497,10 @@ local anvildef = {
 					inv:set_stack("input", 2, input2)
 				end
 			end
-			local destroyed = damage_anvil_by_using(pos)
+			local destroyed
+			if not minetest.is_creative_enabled(player:get_player_name()) then
+				destroyed = damage_anvil_by_using(pos)
+			end
 			-- Close formspec if anvil was destroyed
 			if destroyed then
 				-- See above for justification.
