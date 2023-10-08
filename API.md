@@ -97,9 +97,12 @@ chances are good that it works out of the box.
 * Change player physics: `PLAYER/playerphysics`
 * Select random treasures: `CORE/mcl_loot`
 * Get flowing direction of liquids: `CORE/flowlib`
-* `on_walk_over` callback for nodes: `CORE/walkover` 
+* `on_walk_over` callback for nodes: `CORE/walkover`
+* `_on_arrow_hit` callback when node is hit by an arrow: function(pos, arrow_luaentity)
+* `_on_dye_place` callback when node is rickclicked with a dye: function(pos, color_name)
 * Get node names close to player (to reduce constant querying):
   `PLAYER/mcl_playerinfo`
+* Colors and dyes API: `ITEMS/mcl_dyes`
 * Explosion API
 * Music discs API
 * Flowers and flower pots
