@@ -67,6 +67,7 @@ directory names are relative to `mods/`
 * Buckets: `ITEMS/mcl_buckets`
 * Dispenser support: `ITEMS/REDSTONE/mcl_dispensers`
 * Campfires: `ITEMS/mcl_campfires`
+* Trees and wood related nodes: `ITEMS/mcl_trees`
 
 ### Mobs
 * Mobs: `ENTITIES/mcl_mobs`
@@ -115,9 +116,7 @@ is not as fleshed out as it should be. Use at your own risk!
 * Any other mod not explicitly mentioned above
 
 ### Planned APIs
-* Saplings and trees
 * Custom banner patterns
 * Custom dimensions
 * Custom portals
-* Dispenser and dropper support
 * Proper sky and weather APIs
