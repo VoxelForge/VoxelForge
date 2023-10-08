@@ -9,6 +9,7 @@ local follow_spawner = minetest.settings:get_bool("wither_follow_spawner") ~= fa
 local w_strafes = minetest.settings:get_bool("wither_strafes") ~= false
 
 local WITHER_INIT_BOOM = 7
+local WITHER_MELEE_COOLDOWN = 3
 
 local function atan(x)
 	if not x or x ~= x then
@@ -46,9 +47,8 @@ local function wither_unstuck(self)
 				end
 			end
 		end end end
-	else
-		mcl_mobs.mob_class.safe_boom(self, pos, 2)
 	end
+	mcl_mobs.mob_class.safe_boom(self, pos, 2)
 end
 
 mcl_mobs.register_mob("mobs_mc:wither", {
@@ -100,7 +100,7 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 	dogshoot_stop = true,
 	arrow = "mobs_mc:wither_skull",
 	reach = 5,
-	shoot_interval = 0.5,
+	shoot_interval = 1,
 	shoot_offset = -0.5,
 	animation = {
 		walk_speed = 12, run_speed = 12, stand_speed = 12,
@@ -286,6 +286,42 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 		local rand_pos = math.random(1,3)
 		if rand_pos == 1 then m = sr
 		elseif rand_pos == 2 then m = sl end
+
+		-- melee attack
+		if not self._melee_timer then
+			self._melee_timer = 0
+		end
+		if self._melee_timer < WITHER_MELEE_COOLDOWN then
+			self._melee_timer = self._melee_timer + dtime
+		else
+			self._melee_timer = 0
+			local pos = table.copy(s)
+			pos.y = pos.y + 2
+			local objs = minetest.get_objects_inside_radius(pos, self.reach)
+			local obj_pos, dist
+			local hit_some = false
+			for n = 1, #objs do
+				objs[n]:punch(objs[n], 1.0, {
+					full_punch_interval = 1.0,
+					damage_groups = {fleshy = 4},
+				}, pos)
+				local ent = objs[n]:get_luaentity()
+				if objs[n]:is_player() or ent then
+					mcl_util.deal_damage(objs[n], 8, {type = "magic"})
+					hit_some = true
+				end
+				mcl_mobs.effect_functions["withering"](objs[n], 0.5, 10)
+			end
+			if hit_some then
+				mcl_mobs.effect(pos, 32, "mcl_particles_soul_fire_flame.png", 5, 10, self.reach, 1, 0)
+			end
+		end
+
+		if dist < self.reach then
+			self.shoot_interval = 3
+		else
+			self.shoot_interval = 1
+		end
 
 		if self.shoot_interval
 				and self.timer > self.shoot_interval
