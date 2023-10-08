@@ -11,20 +11,21 @@
 * davedevils
 
 ## Active Contributors
-* Fleckenstein
+* AFCMS
+* Lizzy Fleckenstein
 * Michieal
 * ancientmarinerdev
 * ROllerozxa
-* kabou
-* FossFanatic
-* AFCMS
 * PrairieWind
 * kabou
+* FossFanatic
 * MrRar
 * DinoNuggies4665
+* codiac
 * Nauta Turbidus
 * ChrisPHP
 * the-real-herowl
+* Nils Dagsson Moskopp
 * chmodsayshello
 
 ## Previous Contributors
