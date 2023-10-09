@@ -530,7 +530,8 @@ local function register_chest(basename, desc, longdesc, usagehelp, tt_help, tile
 		_mcl_hardness = 2.5,
 
 		on_rightclick = function(pos, node, clicker)
-			if minetest.registered_nodes[minetest.get_node({ x = pos.x, y = pos.y + 1, z = pos.z }).name].groups.opaque == 1 then
+			local def = minetest.registered_nodes[minetest.get_node({ x = pos.x, y = pos.y + 1, z = pos.z }).name]
+			if not def or def.groups.opaque == 1 then
 				-- won't open if there is no space from the top
 				return false
 			end
@@ -857,9 +858,10 @@ local function register_chest(basename, desc, longdesc, usagehelp, tt_help, tile
 
 		on_rightclick = function(pos, node, clicker)
 			local pos_other = mcl_util.get_double_container_neighbor_pos(pos, node.param2, "right")
-			if minetest.registered_nodes[minetest.get_node(vector.offset(pos, 0, 1, 0)).name].groups.opaque == 1
-				or
-				minetest.registered_nodes[minetest.get_node(vector.offset(pos_other, 0, 1, 0)).name].groups.opaque
+			local def =  minetest.registered_nodes[minetest.get_node(vector.offset(pos, 0, 1, 0)).name]
+			local def_other = minetest.registered_nodes[minetest.get_node(vector.offset(pos_other, 0, 1, 0)).name]
+			if not def or def.groups.opaque == 1
+				or not def_other or def_other.groups.opaque
 				== 1 then
 				-- won't open if there is no space from the top
 				return false
@@ -1148,7 +1150,8 @@ minetest.register_node("mcl_chests:ender_chest_small", {
 			"mcl_chests_enderchest", "mcl_chests_chest", "chest")
 	end,
 	on_rightclick = function(pos, node, clicker)
-		if minetest.registered_nodes[minetest.get_node(vector.offset(pos, 0, 1, 0)).name].groups.opaque == 1 then
+		local def = minetest.registered_nodes[minetest.get_node(vector.offset(pos, 0, 1, 0)).name]
+		if not def or def.groups.opaque == 1 then
 			-- won't open if there is no space from the top
 			return false
 		end
