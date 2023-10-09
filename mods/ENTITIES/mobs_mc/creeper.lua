@@ -42,6 +42,7 @@ mcl_mobs.register_mob("mobs_mc:creeper", {
 	makes_footstep_sound = true,
 	walk_velocity = .8,
 	run_velocity = 1.3, -- not dead yet slow, imagine fast crepeer...
+	runaway = true,
 	runaway_from = { "mobs_mc:ocelot", "mobs_mc:cat" },
 	attack_type = "explode",
 
