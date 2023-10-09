@@ -1341,7 +1341,8 @@ for color, desc in pairs(boxtypes) do
 		end,
 		_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
 			-- Place shulker box as node
-			if minetest.registered_nodes[dropnode.name].buildable_to then
+			local def = minetest.registered_nodes[dropnode.name]
+			if def and def.buildable_to then
 				minetest.set_node(droppos, { name = small_name, param2 = minetest.dir_to_facedir(dropdir) })
 				local ninv = minetest.get_inventory({ type = "node", pos = droppos })
 				local imetadata = stack:get_metadata()

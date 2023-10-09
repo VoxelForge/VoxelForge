@@ -244,7 +244,7 @@ local dispenserdef = {
 						end
 
 						-- Generalized dispension
-					elseif (not dropnodedef.walkable or stackdef._dispense_into_walkable) then
+					elseif dropnodedef and (not dropnodedef.walkable or stackdef._dispense_into_walkable) then
 						--[[ _on_dispense(stack, pos, droppos, dropnode, dropdir)
 							* stack: Itemstack which is dispense
 							* pos: Position of dispenser
