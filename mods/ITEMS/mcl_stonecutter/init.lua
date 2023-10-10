@@ -98,8 +98,9 @@ local function update_stonecutter_slots(pos,str)
 		local cut_item = ItemStack(str)
 		cut_item:set_count(yields[str])
 		local output = inv:get_stack("output",1)
+		local input = inv:get_stack("input",1)
 		if output:get_name() == cut_item:get_name() then
-			cut_item:set_count(output:get_count() + yields[output:get_name()])
+			cut_item:set_count(math.min(output:get_count() + yields[output:get_name()],input:get_count() * yields[str],output:get_stack_max()))
 		end
 		inv:set_stack("output", 1, cut_item)
 	else
