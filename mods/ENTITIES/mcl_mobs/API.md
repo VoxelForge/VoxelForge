@@ -47,3 +47,15 @@ Mobs can be added to the natural spawn cycle using
 * /spawncheck mob_name runs through the natural spawn checks to verify if a mob can spawn at the players position (and if not gives a reason why spawning was denied)
 * /mobstats - gives some statistics about the currently active mobs and spawn attempts on the whole server
 * /clearmobs [<all> | <nametagged> | <tamed>] [<range>] - a safer alternative to /clearobjects that only applies to loaded mobs
+
+## Mobs API functions
+Every luaentity registered by mcl_mobs.register_mob has mcl_mobs.mob_class set as a metatable which, besides default values for fields in the luaentity provides a number of functions. "mob" refers to the luaentity of the mob in the following list:
+
+mob:safe_remove() - removes the mob in the on_step allowing other functions to still run. It also extinguishes the mob if it is burning as to not leave behind flame entities.
+mob:set_nametag(new_name) - sets the nametag of the mob
+mob:set_properties(property_table) - works in the same way as mob.object:set_properties() would except that it will not set fields that are already set to the given value, potentially saving network bandwidth.
+
+## Mob projectiles
+Custom projectiles for mobs can be registered using
+`mcl_mobs.register_arrow(name, arrow_def)`
+### Arrow definition
