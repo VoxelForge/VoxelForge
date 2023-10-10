@@ -166,6 +166,12 @@ minetest.register_node("mcl_stonecutter:stonecutter", {
 			minetest.record_protection_violation(pos, name)
 			return 0
 		else
+			if listname == "output" then
+				local meta = minetest.get_meta(pos)
+				local inv = meta:get_inventory()
+				local input = inv:get_stack("input", 1)
+				return math.min((input:get_count() * yields[stack:get_name()]),stack:get_stack_max())
+			end
 			return stack:get_count()
 		end
 	end,
