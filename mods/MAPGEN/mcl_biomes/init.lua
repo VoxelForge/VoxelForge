@@ -3178,6 +3178,7 @@ local function register_decorations()
 		biomes = lushcaves,
 		fill_ratio = 10,
 		flags = "all_floors, all_ceilings",
+		y_min = mcl_vars.mg_overworld_min,
 	})
 
 	minetest.register_decoration({
@@ -3187,6 +3188,7 @@ local function register_decorations()
 		biomes = lushcaves,
 		fill_ratio = 1,
 		flags = "all_floors",
+		y_min = mcl_vars.mg_overworld_min,
 	})
 
 	minetest.register_decoration({
@@ -3198,6 +3200,7 @@ local function register_decorations()
 		fill_ratio = 0.2,
 		flags = "all_ceilings",
 		biomes = lushcaves_underground,
+		y_min = mcl_vars.mg_overworld_min,
 	})
 	minetest.register_decoration({
 		decoration = "mcl_lush_caves:cave_vines_lit",
@@ -3208,6 +3211,7 @@ local function register_decorations()
 		fill_ratio = 0.3,
 		flags = "all_ceilings",
 		biomes = lushcaves_underground,
+		y_min = mcl_vars.mg_overworld_min,
 	})
 
 	minetest.register_decoration({
@@ -3219,6 +3223,7 @@ local function register_decorations()
 		fill_ratio = 0.1,
 		flags = "all_ceilings",
 		biomes = lushcaves_underground,
+		y_min = mcl_vars.mg_overworld_min,
 	})
 	minetest.register_decoration({
 		decoration = "mcl_lush_caves:cave_vines",
@@ -3229,6 +3234,7 @@ local function register_decorations()
 		fill_ratio = 0.1,
 		flags = "all_ceilings",
 		biomes = lushcaves_underground,
+		y_min = mcl_vars.mg_overworld_min,
 	})
 
 	minetest.register_decoration({
@@ -3238,6 +3244,7 @@ local function register_decorations()
 		fill_ratio = 10,
 		flags = "all_ceilings",
 		biomes = lushcaves,
+		y_min = mcl_vars.mg_overworld_min,
 	})
 
 	minetest.register_decoration({
@@ -3249,6 +3256,7 @@ local function register_decorations()
 		fill_ratio = 0.8,
 		param2 = 4,
 		flags = "all_ceilings",
+		y_min = mcl_vars.mg_overworld_min,
 		biomes = lushcaves_underground,
 	})
 
@@ -3258,6 +3266,7 @@ local function register_decorations()
 		place_on = {"group:material_stone","mcl_core:gravel","mcl_lush_caves:moss"},
 		fill_ratio = 0.1,
 		flags = "all_floors",
+		y_min = mcl_vars.mg_overworld_min,
 		biomes = lushcaves,
 	})
 
@@ -3267,6 +3276,7 @@ local function register_decorations()
 		fill_ratio = 0.5,
 		biomes = lushcaves,
 		decoration = "mcl_flowers:tallgrass",
+		y_min = mcl_vars.mg_overworld_min,
 		flags = "all_floors",
 	})
 
