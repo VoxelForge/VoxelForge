@@ -356,7 +356,7 @@ function mob_class:despawn_allowed()
 	local nametag = self.nametag and self.nametag ~= ""
 	local not_busy = self.state ~= "attack" and self.following == nil
 	if self.can_despawn == true then
-		if not nametag and not_busy and not self.tamed == true and not self.persistent == true then
+		if not nametag and not_busy and not self.tamed and not self.persistent then
 			return true
 		end
 	end
