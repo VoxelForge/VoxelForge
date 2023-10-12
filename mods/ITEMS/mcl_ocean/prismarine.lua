@@ -15,7 +15,7 @@ minetest.register_node("mcl_ocean:sea_lantern", {
 			{ items = {"mcl_ocean:prismarine_crystals 2"}}
 		}
 	},
-	tiles = {{name="mcl_ocean_sea_lantern.png", animation={type="vertical_frames", aspect_w=32, aspect_h=32, length=1.25}}},
+	tiles = {{name="mcl_ocean_sea_lantern.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=1.25}}},
 	groups = {handy=1, building_block=1, material_glass=1},
 	sounds = mcl_sounds.node_sound_glass_defaults(),
 	_mcl_blast_resistance = 0.3,
