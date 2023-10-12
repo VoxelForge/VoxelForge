@@ -11,6 +11,12 @@ local mod_target = minetest.get_modpath("mcl_target")
 --################### BLAZE
 --###################
 
+local function check_light(pos, environmental_light, artificial_light, sky_light)
+	if artificial_light > 11 then
+		return false, "To bright"
+	end
+	return true, ""
+end
 
 mcl_mobs.register_mob("mobs_mc:blaze", {
 	description = S("Blaze"),
@@ -137,6 +143,7 @@ mcl_mobs.register_mob("mobs_mc:blaze", {
 			},
 		})
 	end,
+	check_light = check_light,
 })
 
 -- Blaze fireball

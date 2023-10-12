@@ -4,6 +4,13 @@
 
 local S = minetest.get_translator("mobs_mc")
 
+local function check_light(pos, environmental_light, artificial_light, sky_light)
+	if artificial_light > 11 then
+		return false, "To bright"
+	end
+	return true, ""
+end
+
 mcl_mobs.register_mob("mobs_mc:silverfish", {
 	description = S("Silverfish"),
 	type = "monster",
@@ -53,6 +60,7 @@ mcl_mobs.register_mob("mobs_mc:silverfish", {
 	view_range = 16,
 	attack_type = "dogfight",
 	damage = 1,
+	check_light = check_light,
 })
 
 mcl_mobs.register_egg("mobs_mc:silverfish", S("Silverfish"), "#6d6d6d", "#313131", 0)

@@ -3,6 +3,13 @@ local mob_class = mcl_mobs.mob_class
 
 local math_round     = function(x) return (x > 0) and math.floor(x + 0.5) or math.ceil(x - 0.5) end
 
+local modern_lighting = minetest.settings:get_bool("mcl_mobs_modern_lighting", true)
+local nether_threshold = tonumber(minetest.settings:get("mcl_mobs_nether_threshold")) or 11
+local end_threshold = tonumber(minetest.settings:get("mcl_mobs_end_threshold")) or 0
+local overworld_threshold = tonumber(minetest.settings:get("mcl_mobs_overworld_threshold")) or 0
+local overworld_sky_threshold = tonumber(minetest.settings:get("mcl_mobs_overworld_sky_threshold")) or 7
+local overworld_passive_threshold = tonumber(minetest.settings:get("mcl_mobs_overworld_passive_threshold")) or 7
+
 local PASSIVE_INTERVAL = 200
 local dbg_spawn_attempts = 0
 local dbg_spawn_succ = 0
@@ -273,9 +280,39 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 	if is_bedrock then return false, "no spawn on bedrock" end
 
 	local gotten_light = minetest.get_node_light(pos)
+	local my_node = minetest.get_node(pos)
+	local sky_light = minetest.get_natural_light(pos)
+	local art_light = minetest.get_artificial_light(my_node.param1)
+	if modern_lighting then
 
-	if gotten_light < spawn_def.min_light then return false,"too dark" end
-	if gotten_light > spawn_def.max_light then return false,"too bright" end
+		if dimension == "nether" then
+			if art_light > nether_threshold then
+				return false,"too bright"
+			end
+		elseif dimension == "end" then
+			if art_light > end_threshold then
+				return false,"too bright"
+			end
+		elseif dimension == "overworld" then
+			if mob_type == "monster" then
+				if mob_def.check_light then
+					return mob_def.check_light(pos, gotten_light, art_light, sky_light)
+				elseif art_light > overworld_threshold or sky_light > overworld_sky_threshold then
+					return false,"too bright"
+				end
+			else
+				if mob_def.check_light then
+					return mob_def.check_light(pos, gotten_light, art_light, sky_light)
+				elseif gotten_light <= overworld_passive_threshold then
+					return false, "too dark"
+				end
+			end
+		end
+	else
+		if gotten_light < spawn_def.min_light then return false,"too dark" end
+		if gotten_light > spawn_def.max_light then return false,"too bright" end
+	end
+
 	return true, ""
 end
 

@@ -297,6 +297,7 @@ function mcl_mobs.register_mob(name, def)
 		max_light = def.max_light or (def.spawn_class == "hostile" and 7) or minetest.LIGHT_MAX + 1,
 		does_not_prevent_sleep = def.does_not_prevent_sleep or false,
 		prevents_sleep_when_hostile = def.prevents_sleep_when_hostile or false,
+		check_light = def.check_light,
 
 		-- End of MCL2 extensions
 		on_spawn = def.on_spawn,
