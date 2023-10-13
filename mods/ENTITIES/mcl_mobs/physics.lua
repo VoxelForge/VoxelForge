@@ -474,14 +474,15 @@ function mob_class:check_for_death(cause, cmi_cause)
 			local looting = mcl_enchanting.get_enchantment(wielditem, "looting")
 			self:item_drop(cooked, looting)
 			if killed_by_player then
+				local playername = cmi_cause.puncher:get_player_name()
+				if self.type == "monster" or self.name == "mobs_mc:zombified_piglin" then
+					awards.unlock(playername, "mcl:monsterHunter")
+				end
 				if ((not self.child) or self.type ~= "animal") and (minetest.get_us_time() - self.xp_timestamp <= math.huge) then
 					local pos = self.object:get_pos()
 					local xp_amount = math.random(self.xp_min, self.xp_max)
-
-					if not mcl_sculk.handle_death(pos, xp_amount) then
-						if not minetest.is_creative_enabled(cmi_cause.puncher:get_player_name()) then
-							mcl_experience.throw_xp(pos, xp_amount)
-						end
+					if not minetest.is_creative_enabled(playername) and not mcl_sculk.handle_death(pos, xp_amount) then
+						mcl_experience.throw_xp(pos, xp_amount)
 					end
 				end
 			end

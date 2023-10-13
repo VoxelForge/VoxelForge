@@ -233,6 +233,16 @@ awards.register_achievement("mcl:snipeSkeleton", {
 	group = "Adventure",
 })
 
+--Triggered in mcl_mobs/physics.lua
+
+awards.register_achievement("mcl:monsterHunter", {
+	title = S("Monster Hunter"),
+	description = S("Kill a monster."),
+	icon = "mobs_mc_spawn_icon_zombie.png",
+	type = "Advancement",
+	group = "Adventure",
+})
+
 -- Triggered in mcl_portals
 awards.register_achievement("mcl:buildNetherPortal", {
 	title = S("We Need to Go Deeper"),
