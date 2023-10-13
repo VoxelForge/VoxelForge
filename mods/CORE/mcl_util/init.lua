@@ -1,3 +1,5 @@
+local ground_padding = tonumber(minetest.settings:get("mcl_ground_padding")) or 1
+
 mcl_util = {}
 
 -- Updates all values in t using values from to*.
@@ -25,6 +27,13 @@ end
 function table.merge(t, ...)
 	local t2 = table.copy(t)
 	return table.update(t2, ...)
+end
+
+function table.reverse(t)
+	local len = #t
+	for i = len - 1, 1, -1 do
+		t[len] = table.remove(t, i)
+	end
 end
 
 local LOGGING_ON = minetest.settings:get_bool("mcl_logging_default", false)
@@ -1076,4 +1085,220 @@ function mcl_util.traverse_tower(pos, dir, callback)
 		pos = vector.offset(pos, 0, dir, 0)
 	end
 	return vector.offset(pos, 0, -dir, 0), i
+end
+
+-- Voxel manip function to replace a node type with another in an area
+function mcl_util.replace_node_vm(pos1, pos2, mat_from, mat_to)
+	local c_from = minetest.get_content_id(mat_from)
+	local c_to = minetest.get_content_id(mat_to)
+
+	local vm = minetest.get_voxel_manip()
+	local emin, emax = vm:read_from_map(pos1, pos2)
+	local a = VoxelArea:new({
+		MinEdge = emin,
+		MaxEdge = emax,
+	})
+	local data = vm:get_data()
+
+	-- Modify data
+	for z = pos1.z, pos2.z do
+		for y = pos1.y, pos2.y do
+			for x = pos1.x, pos2.x do
+				local vi = a:index(x, y, z)
+				if data[vi] == c_from then
+					data[vi] = c_to
+				end
+			end
+		end
+	end
+
+	-- Write data
+	vm:set_data(data)
+	vm:write_to_map(true)
+end
+
+-- Voxel manip function to replace a node type with another in a circle
+-- Will also set param2 on changed nodes if provided.
+function mcl_util.circle_replace_node_vm(radius, pos, y, mat_from, mat_to, param2)
+	local c_from = minetest.get_content_id(mat_from)
+	local c_to = minetest.get_content_id(mat_to)
+
+	-- Using new as y is not relative
+	local pos1 = vector.new(pos.x - radius, y, pos.z - radius)
+	local pos2 = vector.new(pos.x + radius, y, pos.z + radius)
+
+	local vm = minetest.get_voxel_manip()
+	local emin, emax = vm:read_from_map(pos1, pos2)
+	local a = VoxelArea:new({
+		MinEdge = emin,
+		MaxEdge = emax,
+	})
+	local data = vm:get_data()
+
+	local param2data = vm:get_param2_data()
+
+	for z = -radius, radius do
+		for x = -radius, radius do
+			if x * x + z * z <= radius * radius + radius * 0.8 then
+				local vi = a:index(pos.x + x, y, pos.z + z)
+				if data[vi] == c_from then
+					data[vi] = c_to
+					if param2 then
+						param2data[vi] = param2
+					end
+				end
+			end
+		end
+	end
+
+	-- Write data
+	vm:set_data(data)
+	if param2 then
+		vm:set_param2_data(param2data)
+	end
+	vm:write_to_map(true)
+end
+
+-- Voxel manip function to change nodes if they don't match in an area.
+function mcl_util.bulk_set_node_vm(pos1, pos2, mat_to)
+	local c_to = minetest.get_content_id(mat_to)
+
+	local vm = minetest.get_voxel_manip()
+	local emin, emax = vm:read_from_map(pos1, pos2)
+	local a = VoxelArea:new({
+		MinEdge = emin,
+		MaxEdge = emax,
+	})
+	local data = vm:get_data()
+
+	-- Modify data
+	for z = pos1.z, pos2.z do
+		for y = pos1.y, pos2.y do
+			for x = pos1.x, pos2.x do
+				local vi = a:index(x, y, z)
+				if data[vi] ~= c_to then
+					data[vi] = c_to
+				end
+			end
+		end
+	end
+
+	-- Write data
+	vm:set_data(data)
+	vm:write_to_map(true)
+end
+
+-- Voxel manip function to change nodes if they don't match in a circle.
+-- Will also set param2 on changed nodes if provided.
+function mcl_util.circle_bulk_set_node_vm(radius, pos, y, mat_to, param2)
+	local c_to = minetest.get_content_id(mat_to)
+
+	-- Using new as y is not relative
+	local pos1 = vector.new(pos.x - radius, y, pos.z - radius)
+	local pos2 = vector.new(pos.x + radius, y, pos.z + radius)
+
+	local vm = minetest.get_voxel_manip()
+	local emin, emax = vm:read_from_map(pos1, pos2)
+	local a = VoxelArea:new({
+		MinEdge = emin,
+		MaxEdge = emax,
+	})
+	local data = vm:get_data()
+
+	local param2data
+
+	if param2 then
+		param2data = vm:get_param2_data()
+	end
+
+	for z = -radius, radius do
+		for x = -radius, radius do
+			if x * x + z * z <= radius * radius + radius * 0.8 then
+				--if x * x + z * z <= radius * radius + radius then
+				local vi = a:index(math.floor(pos.x + x), y, math.floor(pos.z + z))
+				if data[vi] ~= c_to then
+					data[vi] = c_to
+					if param2 then
+						param2data[vi] = param2
+					end
+				end
+			end
+		end
+	end
+
+	-- Write data
+	vm:set_data(data)
+	if param2 then
+		vm:set_param2_data(param2data)
+	end
+	vm:write_to_map(true)
+end
+
+-- This function creates a turnip shape under the selected positon.
+-- The biome for the position will be used to select the top and filler layers.
+-- The shape is slightly altered for sandy top layers.
+-- The radius of the top layer is max(fwidth, fdepth) / 2 + ground_padding
+function mcl_util.create_ground_turnip(pos, fwidth, fdepth)
+
+	local biome_data = minetest.get_biome_data(pos)
+	local biome_name = minetest.get_biome_name(biome_data.biome)
+	local reg_biome = minetest.registered_biomes[biome_name]
+
+	local mat = "mcl_core:dirt"
+	local filler = "mcl_core:dirt"
+	local grass_idx = 0
+
+	-- Use biome info if we have it
+	if reg_biome and reg_biome.node_top then
+		mat = reg_biome.node_top
+		grass_idx = reg_biome._mcl_grass_palette_index
+		filler = reg_biome.node_filler
+		if minetest.get_item_group(filler, "material_sand") > 0 then
+			if reg_biome.node_stone then
+				filler = reg_biome.node_stone
+			end
+		end
+	end
+
+	local y = pos.y
+
+	local radius = math.floor(((math.max(fwidth, fdepth)) / 2)) + ground_padding
+	if radius <= 0 then
+		return
+	end
+
+	-- usually we add 2 layers, each 2 blocks wider, then fill smaller layers below
+	-- but for sand we add 2 layers 1 wider and then make the first fill layer wider
+	-- otherwsie the sand can collapse and as funny as it is, it is annoying
+	local needs_support = minetest.get_item_group(mat, "material_sand") > 0
+
+	if needs_support then
+		radius = radius + 1
+	end
+
+	for count2 = 1, 2 do
+		if not needs_support then
+			radius = radius + 2
+		else
+			radius = radius + 1
+		end
+
+		mcl_util.circle_bulk_set_node_vm(radius, pos, y, mat, grass_idx)
+		y = y - 1
+	end
+
+	if needs_support then
+		radius = radius + 2
+	end
+
+	for count3 = 1, 5 do
+		radius = radius - 1
+
+		if radius <= 2 then
+			break
+		end
+
+		mcl_util.circle_bulk_set_node_vm(radius, pos, y, filler)
+		y = y - 1
+	end
 end

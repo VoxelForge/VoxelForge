@@ -248,6 +248,11 @@ mcl_mobs_overworld_passive_threshold  (Combined light threshold to stop animal a
 # Enable piston movement of Inventory nodes. This does not work in mc java edition due to techical restrictions
 mcl_inv_nodes_movable (Inventory nodes movable) bool true
 
+# Enable workarounds for faulty mob navigation.
+# Hack 1: teleport golems home if they are very far from home
+# Hack 2: villagers teleport home when night is skipped
+mcl_mob_allow_nav_hacks (Mob navigation hacks) bool false
+
 [Debugging]
 # If enabled, this will show the itemstring of an item in the description.
 mcl_item_id_debug (Item ID Debug) bool false
@@ -266,3 +271,35 @@ mcl_logging_mcl_signs (Complete debug logging for mcl_signs) bool false
 
 #Debug logging for mcl_events.
 mcl_logging_event_api (Debug logging for mcl_events) bool false
+
+[Villages]
+
+mcl_villages_new (Enable new village generator) bool false
+
+mcl_villages_min_jobs (The minimum number of jobs to have in a village) int 1
+
+mcl_villages_max_jobs (The maximum number of jobs to have in a village) int 10
+
+mcl_villages_circles (Use circles instead of rectangles for above ground clearing) bool true
+
+mcl_villages_terrace (Terrace above ground instead of having straight sides. Set to false to approximate old style) bool true
+
+mcl_villages_padding (Extra width to clear over ground. Set to zero to approximate old style) int 2
+
+mcl_villages_top_padding (Extra height to clear above building. Set to a big number to approximate old style) int 3
+
+#  This constrains the effect on tall buildings
+mcl_villages_terrace_max_ext (Maximum width terracing is allowed to extend beyond building radius) int 6
+
+mcl_villages_light_threshold (Light level to control lamp placement on paths. Night time light levels below this value will trigger lamp placement) int 5
+
+mcl_villages_village_chance (1 in X chance a village will spawn in a valid chunk. Set to 0 for no villages) int 75
+
+# This controls how job sites and houses are placed during village construction
+# random: shuffles the buildings so they get placed in any order
+# jobs: places the job sites first so they tend to be closer to the bell
+# houses: places the houses first so the tend to be closer to the bell
+mcl_villages_placement_priority (Which buildings should be closer to the bell) enum random random,jobs,houses
+
+# Also affects structures as they now use ground turnips
+mcl_ground_padding (Extra width to add to ground terraform radius) int 1 0 6

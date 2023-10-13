@@ -137,6 +137,7 @@ function mcl_structures.find_highest_y(pp)
 	end
 	return y
 end
+--[[
 
 local function smooth_cube(nn,pos,plane,amnt)
 	local r = {}
@@ -217,6 +218,7 @@ local function foundation(ground_p1,ground_p2,pos,sidelen)
 	minetest.bulk_set_node(filler,{name=node_filler})
 	minetest.bulk_set_node(stone,{name=node_stone})
 end
+]]
 
 --[[
 local function process_queue()
@@ -273,7 +275,7 @@ function mcl_structures.place_structure(pos, def, pr, blockseed, rot)
 		local solid = minetest.find_nodes_in_area(ground_p1,ground_p2,{"group:solid"})
 		if #solid < ( def.sidelen * def.sidelen ) then
 			if def.make_foundation then
-				foundation(vector.offset(pos,-def.sidelen/2 - 3,-1,-def.sidelen/2 - 3),vector.offset(pos,def.sidelen/2 + 3,-1,def.sidelen/2 + 3),pos,def.sidelen)
+				mcl_util.create_ground_turnip(vector.offset(pos, 0, -1, 0), def.sidelen, def.sidelen)
 			else
 				if log_enabled then
 					minetest.log("warning","[mcl_structures] "..def.name.." at "..minetest.pos_to_string(pp).." not placed. No solid ground.")

@@ -1,3 +1,6 @@
+local new_villages = minetest.settings:get_bool("mcl_villages_new", true)
+local water_villages = minetest.settings:get_bool("mcl_villages_allow_water_villages", false)
+
 -- switch for debugging
 function settlements.debug(message)
 	-- minetest.chat_send_all(message)
@@ -37,6 +40,34 @@ function settlements.grundstellungen()
 		--"mcl_core:silver_sand",
 		"mcl_core:snow"
 	}
+
+	-- TODO do we really care as long as it's solid?
+	if new_villages then
+		-- allow villages on more surfaces
+		settlements.surface_mat["mcl_colorblocks:hardened_clay"] = true
+		settlements.surface_mat["mcl_colorblocks:hardened_clay_orange"] = true
+		settlements.surface_mat["mcl_colorblocks:hardened_clay_red"] = true
+		settlements.surface_mat["mcl_colorblocks:hardened_clay_white"] = true
+		settlements.surface_mat["mcl_core:andesite"] = true
+		settlements.surface_mat["mcl_core:coarse_dirt"] = true
+		settlements.surface_mat["mcl_core:diorite"] = true
+		settlements.surface_mat["mcl_core:dirt"] = true
+		settlements.surface_mat["mcl_core:granite"] = true
+		settlements.surface_mat["mcl_core:grass_path"] = true
+		settlements.surface_mat["mcl_core:sandstone"] = true
+		settlements.surface_mat["mcl_core:sandstonesmooth"] = true
+		settlements.surface_mat["mcl_core:sandstonesmooth2"] = true
+		settlements.surface_mat["mcl_core:stone"] = true
+		settlements.surface_mat["mcl_core:stone_with_coal"] = true
+		settlements.surface_mat["mcl_core:stone_with_iron"] = true
+
+		if water_villages then
+			settlements.surface_mat["mcl_core:water_source"] = true
+			settlements.surface_mat["mcl_core:river_water_source"] = true
+			settlements.surface_mat["mcl_core:water_flowing"] = true
+			settlements.surface_mat["mcl_core:river_water_flowing"] = true
+		end
+	end
 end
 --
 -- possible surfaces where buildings can be built
@@ -68,9 +99,196 @@ settlements.schematic_table = {
 --
 -- maximum allowed difference in height for building a sttlement
 --
-max_height_difference = 56
+settlements.max_height_difference = 56
 --
 --
 --
-half_map_chunk_size = 40
+settlements.half_map_chunk_size = 40
 --quarter_map_chunk_size = 20
+
+--
+-- Biome based block substitutions
+--
+-- TODO maybe this should be in the biomes?
+settlements.biome_map = {
+	BambooJungle = "bamboo",
+	BambooJungleEdge = "bamboo",
+	BambooJungleEdgeM = "bamboo",
+	BambooJungleM = "bamboo",
+
+	Jungle = "jungle",
+	JungleEdge = "jungle",
+	JungleEdgeM = "jungle",
+	JungleM = "jungle",
+
+	Desert = "desert",
+
+	Savanna = "acacia",
+	SavannaM = "acacia",
+
+	Mesa = "hardened_clay",
+	MesaBryce = "hardened_clay ",
+	MesaPlateauF = "hardened_clay",
+	MesaPlateauFM = "hardened_clay",
+
+	MangroveSwamp = "mangrove",
+
+	RoofedForest = "dark_oak",
+
+	BirchForest = "birch",
+	BirchForestM = "birch",
+
+	ColdTaiga = "spruce",
+	ExtremeHills = "spruce",
+	ExtremeHillsM = "spruce",
+	IcePlains = "spruce",
+	IcePlainsSpikes = "spruce",
+	MegaSpruceTaiga = "spruce",
+	MegaTaiga = "spruce",
+	Taiga = "spruce",
+	["ExtremeHills+"] = "spruce",
+
+	CherryGrove = "cherry",
+
+	-- no change
+	--FlowerForest = "oak",
+	--Forest = "oak",
+	--MushroomIsland = "",
+	--Plains = "oak",
+	--StoneBeach = "",
+	--SunflowerPlains = "oak",
+	--Swampland = "oak",
+}
+
+-- TODO should we handle stripped bark and the like?
+-- TODO Should we have an API for this?
+settlements.material_substitions = {
+	desert = {
+		{ "mcl_core:tree", "mcl_core:redsandstonecarved" },
+		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:birch_fence%1"' },
+		{
+			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
+			'"mesecons_pressureplates:pressure_plate_birchwood_%1"',
+		},
+		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:birch_trapdoor%1"' },
+
+		{ "mcl_core:wood", "mcl_core:sandstonesmooth" },
+		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_sandstonesmooth2%1"' },
+		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_sandstonesmooth2%1"' },
+
+		{ "mcl_core:cobble", "mcl_core:sandstone" },
+		{ '"mcl_stairs:stair_cobble([^"]*)"', '"mcl_stairs:stair_sandstone%1"' },
+		{ '"mcl_walls:cobble([^"]*)"', '"mcl_walls:sandstone%1"' },
+		{ '"mcl_stairs:slab_cobble([^"]*)"', '"mcl_stairs:slab_sandstone%1"' },
+
+		{ '"mcl_core:stonebrick"', '"mcl_core:redsandstone"' },
+		{ '"mcl_core:stonebrick_([^"]+)"', '"mcl_core:redsandstone_%1"' },
+		{ '"mcl_walls:stonebrick([^"]*)"', '"mcl_walls:redsandstone%1"' },
+		{ '"mcl_stairs:stair_stonebrick"', '"mcl_stairs:stair_redsandstone"' },
+		{ '"mcl_stairs:stair_stonebrick_([^"]+)"', '"mcl_stairs:stair_redsandstone_%1"' },
+
+		{ '"mcl_stairs:slab_brick_block([^"]*)"', '"mcl_core:redsandstonesmooth2%1"' },
+		{ '"mcl_core:brick_block"', '"mcl_core:redsandstonesmooth2"' },
+	},
+	spruce = {
+		{ "mcl_core:tree", "mcl_core:sprucetree" },
+		{ "mcl_core:wood", "mcl_core:sprucewood" },
+		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:spruce_fence%1"' },
+		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_sprucewood%1"' },
+		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_sprucewood%1"' },
+		{
+			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
+			'"mesecons_pressureplates:pressure_plate_sprucewood_%1"',
+		},
+		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:spruce_trapdoor%1"' },
+		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_doors:spruce_door%1"' },
+	},
+	birch = {
+		{ "mcl_core:tree", "mcl_core:birchtree" },
+		{ "mcl_core:wood", "mcl_core:birchwood" },
+		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:birch_fence%1"' },
+		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_birchwood%1"' },
+		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_birchwood%1"' },
+		{
+			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
+			'"mesecons_pressureplates:pressure_plate_birchwood_%1"',
+		},
+		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:birch_trapdoor%1"' },
+		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_doors:birch_door%1"' },
+	},
+	acacia = {
+		{ "mcl_core:tree", "mcl_core:acaciatree" },
+		{ "mcl_core:wood", "mcl_core:acaciawood" },
+		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:acacia_fence%1"' },
+		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_acaciawood%1"' },
+		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_acaciawood%1"' },
+		{
+			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
+			'"mesecons_pressureplates:pressure_plate_acaciawood_%1"',
+		},
+		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:acacia_trapdoor%1"' },
+		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_doors:acacia_door%1"' },
+	},
+	dark_oak = {
+		{ "mcl_core:tree", "mcl_core:darktree" },
+		{ "mcl_core:wood", "mcl_core:darkwood" },
+		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:dark_oak_fence%1"' },
+		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_darkwood%1"' },
+		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_darkwood%1"' },
+		{
+			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
+			'"mesecons_pressureplates:pressure_plate_darkwood_%1"',
+		},
+		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:dark_oak_trapdoor%1"' },
+		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_doors:dark_oak_door%1"' },
+	},
+	jungle = {
+		{ "mcl_core:tree", "mcl_core:jungletree" },
+		{ "mcl_core:wood", "mcl_core:junglewood" },
+		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:jungle_fence%1"' },
+		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_junglewood%1"' },
+		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_junglewood%1"' },
+		{
+			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
+			'"mesecons_pressureplates:pressure_plate_junglewood_%1"',
+		},
+		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:jungle_trapdoor%1"' },
+		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_doors:jungle_door%1"' },
+	},
+	bamboo = {
+		{ "mcl_core:tree", "mcl_core:junglewood" },
+		{ "mcl_core:wood", "mcl_bamboo:bamboo_block" },
+		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:bamboo_fence%1"' },
+		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_bamboo_block%1"' },
+		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_bamboo_block%1"' },
+		{
+			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
+			'"mesecons_pressureplates:pressure_plate_bamboo_%1"',
+		},
+		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:trapdoor_bamboo%1"' },
+		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_bamboo:bamboo_door%1"' },
+
+		--{"mcl_core:cobble", "mcl_bamboo:bamboo_block_stripped"},
+		--{'"mcl_stairs:stair_cobble([^"]*)"', '"mcl_stairs:stair_junglewood%1"'},
+		--{'"mcl_walls:cobble([^"]*)"', '"mcl_walls:mossycobble%1"'},
+		--{'"mcl_stairs:slab_cobble([^"]*)"', '"mcl_stairs:slab_junglewood%1"'},
+
+		{ "mcl_core:cobble", "mcl_core:andesite" },
+		{ '"mcl_stairs:stair_cobble([^"]*)"', '"mcl_stairs:stair_andesite%1"' },
+		{ '"mcl_walls:cobble([^"]*)"', '"mcl_walls:andesite%1"' },
+		{ '"mcl_stairs:slab_cobble([^"]*)"', '"mcl_stairs:slab_andesite%1"' },
+	},
+	cherry = {
+		{ "mcl_core:tree", "mcl_cherry_blossom:cherrytree" },
+		{ "mcl_core:wood", "mcl_cherry_blossom:cherrywood" },
+		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:cherry_blossom_fence%1"' },
+		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_cherry_blossom%1"' },
+		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_cherry_blossom%1"' },
+		{
+			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
+			'"mesecons_pressureplates:pressure_plate_cherry_blossom_%1"',
+		},
+		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:trapdoor_cherry_blossom%1"' },
+		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_doors:door_cherry_blossom%1"' },
+	},
+}

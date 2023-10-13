@@ -15,6 +15,9 @@
 -- TODO: Internal inventory, trade with other villagers
 -- TODO: Schedule stuff (work,sleep,father)
 
+local allow_nav_hacks = minetest.settings:get_bool("mcl_mob_allow_nav_hacks",false)
+local work_dist = 4
+
 local weather_mod = minetest.get_modpath("mcl_weather")
 
 local S = minetest.get_translator("mobs_mc")
@@ -672,24 +675,28 @@ local WORK = "work"
 local SLEEP = "sleep"
 local GATHERING = "gathering"
 
-local profession_names = {}
-for id, _ in pairs(professions) do
-	table.insert(profession_names, id)
-end
+mobs_mc.jobsites = {}
+mobs_mc.professions = {}
 
-local function populate_jobsites (profession)
-	local jobsites_requested={}
-	for _,n in pairs(profession_names) do
-		if n and professions[n].jobsite then
-			if not profession or (profession and profession == n) then
-				table.insert(jobsites_requested,professions[n].jobsite)
-			end
-		end
+function mobs_mc.register_villager_profession(title, record)
+
+	-- TODO should we allow overriding jobs?
+	-- If so what needs to be considered?
+	if mobs_mc.professions[title] then
+		minetest.log("error", "This job already exists")
+		return
 	end
-	return jobsites_requested
+
+	mobs_mc.professions[title] = record
+
+	if record.jobsite then
+		table.insert(mobs_mc.jobsites, record.jobsite)
+	end
 end
 
-jobsites = populate_jobsites()
+for title, record in pairs(professions) do
+	mobs_mc.register_villager_profession(title, record)
+end
 
 local function stand_still(self)
 	self.walk_chance = 0
@@ -709,9 +716,9 @@ local function init_trader_vars(self)
 end
 
 local function get_badge_textures(self)
-	local t = professions[self._profession].texture
+	local t = mobs_mc.professions[self._profession].texture
 	if self._profession == "unemployed"	then
-		t = professions[self._profession].textures -- ideally both scenarios should be textures with a list containing 1 or multiple
+		t = mobs_mc.professions[self._profession].textures -- ideally both scenarios should be textures with a list containing 1 or multiple
 	end
 
 	if self._profession == "unemployed" or self._profession == "nitwit" then return t end
@@ -740,19 +747,17 @@ function get_activity(tod)
 	end
 	tod = ( tod * 24000 ) % 24000
 
-	local lunch_start = 11000
-	local lunch_end = 13500
+	local lunch_start = 11500
+	local lunch_end = 13000
 	local work_start = 7500
 	local work_end = 16000
 
 	local activity
-	if weather_mod and mcl_weather.get_weather() == "thunder" then
+	if is_night() or (weather_mod and mcl_weather.get_weather() == "thunder") then
 		activity = SLEEP
-	elseif (tod > work_start and tod < lunch_start) or  (tod > lunch_end and tod < work_end) then
+	elseif (tod >= work_start and tod < lunch_start) or (tod >= lunch_end and tod < work_end) then
 		activity = WORK
-	elseif is_night() then
-		activity = SLEEP
-	elseif tod > lunch_start and tod < lunch_end then
+	elseif tod >= lunch_start and tod < lunch_end then
 		activity = GATHERING
 	else
 		activity = "chill"
@@ -761,7 +766,7 @@ function get_activity(tod)
 
 end
 
-local function find_closest_bed (self)
+local function find_closest_bed(self)
 	local p = self.object:get_pos()
 
 	local unclaimed_beds = {}
@@ -775,8 +780,10 @@ local function find_closest_bed (self)
 			local bed_meta = minetest.get_meta(b)
 			local owned_by = bed_meta:get_string("villager")
 
+			-- TODO Why is it looking for a new bed if it has a bed and the bed is in the area?
 			if (owned_by and owned_by == self._id) then
 				bed_meta:set_string("villager", nil)
+				bed_meta:set_string("infotext", nil)
 				owned_by = nil
 			end
 
@@ -892,7 +899,7 @@ local function take_bed (entity)
 
 	local p = entity.object:get_pos()
 
-	local closest_block = find_closest_bed (entity)
+	local closest_block = find_closest_bed(entity)
 
 	if closest_block then
 		local distance_to_block = vector.distance(p, closest_block)
@@ -907,6 +914,7 @@ local function take_bed (entity)
 			if entity.order ~= SLEEP then
 				entity.order = SLEEP
 				m:set_string("villager", entity._id)
+				m:set_string("infotext", S("A villager sleeps here"))
 				entity._bed = closest_block
 			end
 		else
@@ -941,14 +949,47 @@ local function has_summon_participants(self)
 	return r > 2
 end
 
+local below_vec = vector.new(0, -1, 0)
+
+local function get_ground_below_floating_object (float_pos)
+	local pos = float_pos
+	repeat
+		pos = vector.add(pos, below_vec)
+		local node = minetest.get_node(pos)
+	until node.name ~= "air"
+
+	-- If pos is 1 below float_pos, then just return float_pos as there is no air below it
+	if pos.y == float_pos.y - 1 then
+		return float_pos
+	end
+
+	return pos
+end
+
 local function summon_golem(self)
 	vector.offset(self.object:get_pos(),-10,-10,-10)
-	local nn = minetest.find_nodes_in_area_under_air(vector.offset(self.object:get_pos(),-10,-10,-10),vector.offset(self.object:get_pos(),10,10,10),{"group:solid","group:water"})
+	local nn = minetest.find_nodes_in_area_under_air(vector.offset(self.object:get_pos(),-8,-6,-8),vector.offset(self.object:get_pos(),8,6,8),{"group:solid","group:water"})
 	table.shuffle(nn)
 	for _,n in pairs(nn) do
 		local up = minetest.find_nodes_in_area(vector.offset(n,0,1,0),vector.offset(n,0,3,0),{"air"})
 		if up and #up >= 3 then
-			return minetest.add_entity(vector.offset(n,0,1,0),"mobs_mc:iron_golem")
+			-- Set home for summoned golem
+			local obj = minetest.add_entity(vector.offset(n,0,1,0),"mobs_mc:iron_golem")
+			local ent = obj:get_luaentity()
+			if ent then
+				local bell = minetest.find_node_near(n, 48, {"mcl_bells:bell"})
+				if not bell and self._bed then
+					bell = minetest.find_node_near(self._bed, 48, {"mcl_bells:bell"})
+				end
+
+				if bell then
+					ent._home = get_ground_below_floating_object(bell)
+				else
+					ent._home = n
+				end
+
+				return obj
+			end
 		end
 	end
 end
@@ -1022,7 +1063,7 @@ end
 
 ----- JOBSITE LOGIC
 local function get_profession_by_jobsite(js)
-	for k,v in pairs(professions) do
+	for k,v in pairs(mobs_mc.professions) do
 		if v.jobsite == js then
 			return k
 		-- Catch Nitwit doesn't have a jobsite
@@ -1041,6 +1082,7 @@ local function employ(self,jobsite_pos)
 	local p = get_profession_by_jobsite(n.name)
 	if p and m:get_string("villager") == "" then
 		m:set_string("villager",self._id)
+		m:set_string("infotext", S("A villager works here"))
 		self._jobsite = jobsite_pos
 
 		if not has_traded(self) then
@@ -1077,9 +1119,9 @@ end
 local function get_a_job(self)
 	if self.order == WORK then self.order = nil end
 
-	local requested_jobsites = jobsites
+	local requested_jobsites = mobs_mc.jobsites
 	if has_traded (self) then
-		requested_jobsites = populate_jobsites(self._profession)
+		requested_jobsites = {mobs_mc.professions[self._profession].jobsite}
 		-- Only pass in my jobsite to two functions here
 	end
 
@@ -1129,6 +1171,7 @@ local function validate_jobsite(self)
 		if resettle then
 			local m = minetest.get_meta(self._jobsite)
 			m:set_string("villager", nil)
+			m:set_string("infotext", nil)
 			remove_job (self)
 			return false
 		end
@@ -1150,7 +1193,7 @@ local function do_work (self)
 		if self and jobsite2 and self._jobsite then
 			local distance_to_jobsite = vector.distance(self.object:get_pos(),self._jobsite)
 
-			if distance_to_jobsite < 2 then
+			if distance_to_jobsite < work_dist then
 				if self.state ~= PATHFINDING and  self.order ~= WORK then
 					self.order = WORK
 					unlock_trades(self)
@@ -1167,7 +1210,7 @@ local function do_work (self)
 					if not self._jobsite then
 						return false
 					end
-					if vector.distance(self.object:get_pos(),self._jobsite) < 2 then
+					if vector.distance(self.object:get_pos(),self._jobsite) < work_dist then
 						return true
 					end
 				end)
@@ -1178,19 +1221,22 @@ local function do_work (self)
 	end
 end
 
-local below_vec = vector.new(0, -1, 0)
+local function teleport_to_town_bell(self)
+	local looking_for_type = {}
+	table.insert(looking_for_type, "mcl_bells:bell")
 
-local function get_ground_below_floating_object (float_pos)
-	local pos = float_pos
-	repeat
-		pos = vector.add(pos, below_vec)
-		local node = minetest.get_node(pos)
-	until node.name ~= "air"
-	-- If pos is 1 below float_pos, then just return float_pos as there is no air below it
-	if pos.y == float_pos.y - 1 then
-		return float_pos
+	local p = self.object:get_pos()
+	local nn =
+		minetest.find_nodes_in_area(vector.offset(p, -48, -48, -48), vector.offset(p, 48, 48, 48), looking_for_type)
+
+	for _, n in pairs(nn) do
+		local target_point = get_ground_below_floating_object(n)
+
+		if target_point then
+			self.object:set_pos(target_point)
+			return
+		end
 	end
-	return pos
 end
 
 local function go_to_town_bell(self)
@@ -1266,42 +1312,87 @@ local function validate_bed(self)
 
 end
 --]]
-local function do_activity (self)
+
+local function sleep_over(self)
+	local p = self.object:get_pos()
+	local distance_to_closest_bed = 1000
+	local closest_bed = nil
+	local nn2 =
+		minetest.find_nodes_in_area(vector.offset(p, -48, -48, -48), vector.offset(p, 48, 48, 48), { "group:bed" })
+
+	if nn2 then
+		for a, b in pairs(nn2) do
+			local distance_to_bed = vector.distance(p, b)
+			if distance_to_closest_bed > distance_to_bed then
+				closest_bed = b
+				distance_to_closest_bed = distance_to_bed
+			end
+		end
+	end
+
+	if closest_bed and distance_to_closest_bed >= 3 then
+		self:gopath(closest_bed)
+	end
+end
+
+local function do_activity(self)
 	-- Maybe just check we're pathfinding first?
 	if self.following then
 		return
 	end
 
+	-- If no bed then it's the first thing to do, even at night
+	if not check_bed(self) then
+		take_bed(self)
+	end
+
 	if not is_night() then
-		if self.order == SLEEP then self.order = nil end
-		take_bed (self)
+		if self.order == SLEEP then
+			self.order = nil
+		end
+	else
+		if allow_nav_hacks then
+			-- When a night is skipped telport villagers to their bed or bell
+			if self.last_skip == nil then
+				self.last_skip = 0
+			end
+			local last_skip = mcl_beds.last_skip()
+			if self.last_skip < last_skip then
+				self.last_skip = last_skip
+				if check_bed(self) then
+					self.object:set_pos(self._bed)
+				else
+					teleport_to_town_bell(self)
+				end
+			end
+		end
 	end
 
 	-- Only check in day or during thunderstorm but wandered_too_far code won't work
 	local wandered_too_far = false
-	if check_bed (self) then
-		wandered_too_far = ( self.state ~= PATHFINDING ) and (vector.distance(self.object:get_pos(),self._bed) > 50 )
+	if check_bed(self) then
+		wandered_too_far = (self.state ~= PATHFINDING) and (vector.distance(self.object:get_pos(), self._bed) > 50)
 	end
 
-	if wandered_too_far  then
-		go_home(self, false)
-	elseif get_activity() == SLEEP then
-		go_home(self, true)
-	elseif get_activity() == WORK then
+	local activity = get_activity()
+
+	-- This needs to be most important to least important
+	if activity == SLEEP then
+		if check_bed(self) then
+			go_home(self, true)
+		else
+			-- If it's sleepy time and we don't have a bed, hide in someone elses house
+			sleep_over(self)
+		end
+	elseif activity == WORK then
 		do_work(self)
-	elseif get_activity() == GATHERING then
+	elseif activity == GATHERING then
 		go_to_town_bell(self)
+	elseif wandered_too_far then
+		go_home(self, false)
 	else
 		self.order = nil
 	end
-
-	-- Daytime is work and play time
-	if not mcl_beds.is_night() then
-		if self.order == SLEEP then self.order = nil end
-	else
-		if self.order == WORK then self.order = nil end
-	end
-
 end
 
 local function update_max_tradenum(self)
@@ -1320,7 +1411,7 @@ local function update_max_tradenum(self)
 end
 
 local function init_trades(self, inv)
-	local profession = professions[self._profession]
+	local profession = mobs_mc.professions[self._profession]
 	local trade_tiers = profession.trades
 	if trade_tiers == nil then
 		-- Empty trades
@@ -1415,7 +1506,7 @@ local function show_trade_formspec(playername, trader, tradenum)
 	end
 	local trades = minetest.deserialize(trader._trades)
 	local trade = trades[tradenum]
-	local profession = professions[trader._profession].name
+	local profession = mobs_mc.professions[trader._profession].name
 	local disabled_img = ""
 	if trade.locked then
 		disabled_img = "image[4.3,2.52;1,1;mobs_mc_trading_formspec_disabled.png]"..
@@ -2080,11 +2171,13 @@ mcl_mobs.register_mob("mobs_mc:villager", {
 		if bed then
 			local bed_meta = minetest.get_meta(bed)
 			bed_meta:set_string("villager", nil)
+			bed_meta:set_string("infotext", nil)
 		end
 		local jobsite = self._jobsite
 		if jobsite then
 			local jobsite_meta = minetest.get_meta(jobsite)
 			jobsite_meta:set_string("villager", nil)
+			jobsite_meta:set_string("infotext", nil)
 		end
 
 		if cmi_cause and cmi_cause.puncher then

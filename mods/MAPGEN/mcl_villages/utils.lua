@@ -20,15 +20,22 @@ end
 -- function to find surface block y coordinate
 -- returns surface postion
 -------------------------------------------------------------------------------
-function settlements.find_surface(pos, wait)
+function settlements.find_surface(pos, wait, quick)
 	local p6 = vector.new(pos)
 	local cnt = 0
 	local itter = 1 -- count up or down
 	local cnt_max = 200
+	local wait_time = 10000000
+
+	if quick then
+		cnt_max = 20
+		wait_time = 2000000
+	end
+
 	-- check, in which direction to look for surface
 	local surface_node
 	if wait then
-		surface_node = mcl_vars.get_node(p6, true, 10000000)
+		surface_node = mcl_vars.get_node(p6, true, wait_time)
 	else
 		surface_node = mcl_vars.get_node(p6)
 	end
@@ -40,7 +47,7 @@ function settlements.find_surface(pos, wait)
 		-- Check Surface_node and Node above
 		--
 		if settlements.surface_mat[surface_node.name] then
-			local surface_node_plus_1 = mcl_vars.get_node({ x=p6.x, y=p6.y+1, z=p6.z})
+			local surface_node_plus_1 = mcl_vars.get_node(vector.offset(p6, 0, 1, 0))
 			if surface_node_plus_1 and surface_node and
 				(string.find(surface_node_plus_1.name,"air") or
 				string.find(surface_node_plus_1.name,"snow") or
@@ -172,7 +179,7 @@ end
 -------------------------------------------------------------------------------
 -- randomize table
 -------------------------------------------------------------------------------
-function shuffle(tbl, pr)
+function settlements.shuffle(tbl, pr)
 	local table = settlements.shallowCopy(tbl)
 	local size = #table
 	for i = size, 1, -1 do
@@ -189,7 +196,7 @@ function settlements.evaluate_heightmap()
 
 	if not heightmap then
 		minetest.log("action", "No heightmap. That should not happen")
-		return max_height_difference + 1
+		return settlements.max_height_difference + 1
 	end
 
 	--minetest.log("action", "heightmap size: " .. tostring(#heightmap))
@@ -217,7 +224,7 @@ function settlements.evaluate_heightmap()
 				-- skip buggy heightmaps, return high value. Converted mcl5 maps can be -31007
 				if current_hm_entry == -31000 or heightmap[i] == 31000 then
 					--minetest.log("action", "incorrect heighmap values. abandon")
-					return max_height_difference + 1
+					return settlements.max_height_difference + 1
 				end
 				if current_hm_entry < min_y then
 					min_y = current_hm_entry
@@ -238,7 +245,7 @@ function settlements.evaluate_heightmap()
 
 	-- filter buggy heightmaps
 	if height_diff <= 1 then
-		return max_height_difference + 1
+		return settlements.max_height_difference + 1
 	end
 	--minetest.log("action", "return heigh diff = " .. tostring(height_diff))
 	-- debug info
@@ -253,4 +260,41 @@ function settlements.Set (list)
 	local set = {}
 	for _, l in ipairs(list) do set[l] = true end
 	return set
+end
+
+-- Function to check if placing a schema at a position would overlap already placed
+-- buildings. Basically it checks if two circles overlap.
+-- Returns if it is OK and the minimal distance required to stop them overlapping if false.
+function settlements.check_radius_distance(settlement_info, building_pos, schem)
+
+	-- terrace_max_ext is to try an avoid the terracing of the overground from
+	-- removing the ground under aother building.
+
+	local r1 = ((math.max(schem["size"]["x"], schem["size"]["z"])) / 2) + 4
+
+	for i, built_house in ipairs(settlement_info) do
+		local r2 = ((math.max(built_house["size"]["x"], built_house["size"]["z"])) / 2) + 4
+		local distance = vector.distance(building_pos, built_house["pos"])
+
+		if distance < r1 + r2 then
+			--minetest.log(string.format("new %s at %s would overlap %s at %s. r1 %d, r2 %d, dist %d, new step %d",schem["name"], minetest.pos_to_string(building_pos), built_house["name"],  minetest.pos_to_string(built_house["pos"]), r1, r2, distance, r1 + r2 - distance + 4 ))
+			return false, r1 + r2 - distance + 4
+		end
+	end
+	return true, 0
+end
+
+-- Load a schema and replace nodes in it based on biome
+function settlements.substitue_materials(pos, schem_lua)
+	local modified_schem_lua = schem_lua
+	local biome_data = minetest.get_biome_data(pos)
+	local biome_name = minetest.get_biome_name(biome_data.biome)
+
+	if settlements.biome_map[biome_name] and settlements.material_substitions[settlements.biome_map[biome_name]] then
+		for _, sub in pairs(settlements.material_substitions[settlements.biome_map[biome_name]]) do
+			modified_schem_lua = modified_schem_lua:gsub(sub[1], sub[2])
+		end
+	end
+
+	return modified_schem_lua
 end

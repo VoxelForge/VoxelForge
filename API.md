@@ -108,6 +108,8 @@ chances are good that it works out of the box.
 * Explosion API
 * Music discs API
 * Flowers and flower pots
+* Add job sites: `ENTITIES/mobs_mc`
+* Add villager professions: `MAGPGEN/mcl_villages`
 
 ### Unstable APIs
 The following APIs may be subject to change in future. You could already use

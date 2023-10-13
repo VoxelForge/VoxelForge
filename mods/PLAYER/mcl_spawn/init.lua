@@ -454,6 +454,7 @@ function mcl_spawn.set_spawn_pos(player, pos, message)
 			if bed_bottom_meta then
 				mcl_log("Removing villager from bed bottom meta")
 				bed_bottom_meta:set_string("villager", nil)
+				bed_bottom_meta:set_string("infotext", nil)
 			else
 				mcl_log("Cannot remove villager from bed bottom meta")
 			end
