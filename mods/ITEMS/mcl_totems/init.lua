@@ -30,7 +30,7 @@ local particle_colors = {"98BF22", "C49E09", "337D0B", "B0B021", "1E9200"} -- TO
 
 -- Save the player from death when holding totem of undying in hand
 mcl_damage.register_modifier(function(obj, damage, reason)
-	if obj:is_player() and not reason.bypasses_totem then
+	if obj:is_player() and not reason.flags.bypasses_totem then
 		local hp = obj:get_hp()
 		if hp - damage <= 0 then
 			local wield = obj:get_wielded_item()
