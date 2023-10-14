@@ -10,7 +10,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 -------------------------------------------------------------------------------
 -- build schematic, replace material, rotation
 -------------------------------------------------------------------------------
-function settlements.build_schematic(vm, data, va, pos, building, replace_wall, name)
+function mcl_villages.build_schematic(vm, data, va, pos, building, replace_wall, name)
   -- get building node material for better integration to surrounding
   local platform_material =  mcl_vars.get_node(pos)
   if not platform_material or (platform_material.name == "air" or platform_material.name == "ignore")  then
@@ -44,7 +44,7 @@ function settlements.build_schematic(vm, data, va, pos, building, replace_wall, 
   local height = schematic["size"]["y"]
   local possible_rotations = {"0", "90", "180", "270"}
   local rotation = possible_rotations[ math.random( #possible_rotations ) ]
-  settlements.foundation(
+  mcl_villages.foundation(
     pos,
     width,
     depth,
@@ -65,11 +65,11 @@ end]]
 -------------------------------------------------------------------------------
 -- initialize settlement_info
 -------------------------------------------------------------------------------
-function settlements.initialize_settlement_info(pr)
+function mcl_villages.initialize_settlement_info(pr)
 	local count_buildings = {}
 
 	-- count_buildings table reset
-	for k,v in pairs(settlements.schematic_table) do
+	for k,v in pairs(mcl_villages.schematic_table) do
 		count_buildings[v["name"]] = 0
 	end
 
@@ -77,10 +77,10 @@ function settlements.initialize_settlement_info(pr)
 	local number_of_buildings = pr:next(10, 25)
 
 	if new_villages then
-		for k, v in pairs(settlements.schematic_houses) do
+		for k, v in pairs(mcl_villages.schematic_houses) do
 			count_buildings[v["name"]] = 0
 		end
-		for k, v in pairs(settlements.schematic_jobs) do
+		for k, v in pairs(mcl_villages.schematic_jobs) do
 			count_buildings[v["name"]] = 0
 		end
 
@@ -89,14 +89,14 @@ function settlements.initialize_settlement_info(pr)
 	end
 
 	local number_built = 1
-	settlements.debug("Village ".. number_of_buildings)
+	mcl_villages.debug("Village ".. number_of_buildings)
 
 	return count_buildings, number_of_buildings, number_built
 end
 -------------------------------------------------------------------------------
 -- fill settlement_info
 --------------------------------------------------------------------------------
-function settlements.create_site_plan(maxp, minp, pr)
+function mcl_villages.create_site_plan(maxp, minp, pr)
 	local settlement_info = {}
 	local building_all_info
 	local possible_rotations = {"0", "90", "180", "270"}
@@ -107,7 +107,7 @@ function settlements.create_site_plan(maxp, minp, pr)
 		z=math.floor((minp.z+maxp.z)/2)
 	}
 	-- find center_surface of chunk
-	local center_surface , surface_material = settlements.find_surface(center, true)
+	local center_surface , surface_material = mcl_villages.find_surface(center, true)
 	local chunks = {}
 	chunks[mcl_vars.get_chunk_number(center)] = true
 
@@ -115,9 +115,9 @@ function settlements.create_site_plan(maxp, minp, pr)
 	if not center_surface then return false end
 
 	-- initialize all settlement_info table
-	local count_buildings, number_of_buildings, number_built = settlements.initialize_settlement_info(pr)
+	local count_buildings, number_of_buildings, number_built = mcl_villages.initialize_settlement_info(pr)
 	-- first building is townhall in the center
-	building_all_info = settlements.schematic_table[1]
+	building_all_info = mcl_villages.schematic_table[1]
 	local rotation = possible_rotations[ pr:next(1, #possible_rotations ) ]
 	-- add to settlement info table
 	local index = 1
@@ -138,20 +138,20 @@ function settlements.create_site_plan(maxp, minp, pr)
 		for j = 0, 360, 15 do
 			local angle = j * math.pi / 180
 			local ptx, ptz = x + r * math.cos( angle ), z + r * math.sin( angle )
-			ptx = settlements.round(ptx, 0)
-			ptz = settlements.round(ptz, 0)
+			ptx = mcl_villages.round(ptx, 0)
+			ptz = mcl_villages.round(ptz, 0)
 			local pos1 = { x=ptx, y=center_surface.y+50, z=ptz}
 			local chunk_number = mcl_vars.get_chunk_number(pos1)
 			local pos_surface, surface_material
 			if chunks[chunk_number] then
-				pos_surface, surface_material = settlements.find_surface(pos1)
+				pos_surface, surface_material = mcl_villages.find_surface(pos1)
 			else
 				chunks[chunk_number] = true
-				pos_surface, surface_material = settlements.find_surface(pos1, true)
+				pos_surface, surface_material = mcl_villages.find_surface(pos1, true)
 			end
 			if not pos_surface then break end
 
-			local randomized_schematic_table = settlements.shuffle(settlements.schematic_table, pr)
+			local randomized_schematic_table = mcl_villages.shuffle(mcl_villages.schematic_table, pr)
 			-- pick schematic
 			local size = #randomized_schematic_table
 			for i = size, 1, -1 do
@@ -159,7 +159,7 @@ function settlements.create_site_plan(maxp, minp, pr)
 				if count_buildings[randomized_schematic_table[i]["name"]] < randomized_schematic_table[i]["max_num"]*number_of_buildings then
 					building_all_info = randomized_schematic_table[i]
 					-- check distance to other buildings
-					local distance_to_other_buildings_ok = settlements.check_distance(settlement_info, pos_surface, building_all_info["hsize"])
+					local distance_to_other_buildings_ok = mcl_villages.check_distance(settlement_info, pos_surface, building_all_info["hsize"])
 					if distance_to_other_buildings_ok then
 						-- count built houses
 						count_buildings[building_all_info["name"]] = count_buildings[building_all_info["name"]] +1
@@ -186,7 +186,7 @@ function settlements.create_site_plan(maxp, minp, pr)
 		end
 		r = r + pr:next(2,5)
 	end
-	settlements.debug("really ".. number_built)
+	mcl_villages.debug("really ".. number_built)
 	return settlement_info
 end
 -------------------------------------------------------------------------------
@@ -270,7 +270,7 @@ local function init_nodes(p1, p2, size, rotation, pr)
 	if cnodes and #cnodes > 0 then
 		for p = 1, #cnodes do
 			local pos = cnodes[p]
-			settlements.fill_chest(pos, pr)
+			mcl_villages.fill_chest(pos, pr)
 		end
 	end
 
@@ -279,12 +279,12 @@ local function init_nodes(p1, p2, size, rotation, pr)
 	if nodes and #nodes > 0 then
 		for p=1, #nodes do
 			local pos = nodes[p]
-			settlements.fill_chest(pos, pr)
+			mcl_villages.fill_chest(pos, pr)
 		end
 	end
 end
 
-function settlements.place_schematics(settlement_info, pr)
+function mcl_villages.place_schematics(settlement_info, pr)
 	local building_all_info
 
 	--attempt to place one belltower in the center of the village - this doesn't always work out great but it's a lot better than doing it first or last.
@@ -292,7 +292,7 @@ function settlements.place_schematics(settlement_info, pr)
 	if belltower then
 		mcl_structures.place_schematic(
 			vector.offset(belltower["pos"],0,0,0),
-			settlements.modpath.."/schematics/belltower.mts",
+			mcl_villages.modpath.."/schematics/belltower.mts",
 			belltower["rotation"],
 			nil,
 			true,
@@ -306,7 +306,7 @@ function settlements.place_schematics(settlement_info, pr)
 	end
 
 	for i, built_house in ipairs(settlement_info) do
-		for j, schem in ipairs(settlements.schematic_table) do
+		for j, schem in ipairs(mcl_villages.schematic_table) do
 			if settlement_info[i]["name"] == schem["name"] then
 				building_all_info = schem
 				break
@@ -395,7 +395,7 @@ local function layout_town(minp, maxp, pr, input_settlement_info)
 	)
 
 	-- find center_surface of village
-	local center_surface, surface_material = settlements.find_surface(center, true)
+	local center_surface, surface_material = mcl_villages.find_surface(center, true)
 
 	-- Cache for chunk surfaces
 	local chunks = {}
@@ -449,8 +449,8 @@ local function layout_town(minp, maxp, pr, input_settlement_info)
 			end
 
 			local ptx, ptz = center.x + r * math.cos(angle), center.z + r * math.sin(angle)
-			ptx = settlements.round(ptx, 0)
-			ptz = settlements.round(ptz, 0)
+			ptx = mcl_villages.round(ptx, 0)
+			ptz = mcl_villages.round(ptz, 0)
 			local pos1 = vector.new(ptx, center_surface.y, ptz)
 
 			local chunk_number = mcl_vars.get_chunk_number(pos1)
@@ -458,15 +458,15 @@ local function layout_town(minp, maxp, pr, input_settlement_info)
 			--minetest.log(string.format("Placing a %s at %s", cur_schem["name"], minetest.pos_to_string(pos1)))
 
 			if chunks[chunk_number] then
-				pos_surface, surface_material = settlements.find_surface(pos1, false, true)
+				pos_surface, surface_material = mcl_villages.find_surface(pos1, false, true)
 			else
 				chunks[chunk_number] = true
-				pos_surface, surface_material = settlements.find_surface(pos1, true, true)
+				pos_surface, surface_material = mcl_villages.find_surface(pos1, true, true)
 			end
 
 			if pos_surface then
 				local distance_to_other_buildings_ok, next_step =
-					settlements.check_radius_distance(settlement_info, pos_surface, cur_schem)
+					mcl_villages.check_radius_distance(settlement_info, pos_surface, cur_schem)
 
 				if distance_to_other_buildings_ok then
 					cur_schem["pos"] = vector.copy(pos_surface)
@@ -501,22 +501,22 @@ local function layout_town(minp, maxp, pr, input_settlement_info)
 	return settlement_info
 end
 
-function settlements.create_site_plan_new(minp, maxp, pr)
+function mcl_villages.create_site_plan_new(minp, maxp, pr)
 	local base_settlement_info = {}
 
 	-- initialize all settlement_info table
-	local count_buildings, number_of_jobs = settlements.initialize_settlement_info(pr)
+	local count_buildings, number_of_jobs = mcl_villages.initialize_settlement_info(pr)
 
 	-- first building is townhall in the center
-	local bindex = pr:next(1, #settlements.schematic_bells)
-	local bell_info = table.copy(settlements.schematic_bells[bindex])
+	local bindex = pr:next(1, #mcl_villages.schematic_bells)
+	local bell_info = table.copy(mcl_villages.schematic_bells[bindex])
 
 	local num_jobs = 0
 	local num_beds = 0
 
 	while num_jobs < number_of_jobs do
-		local rindex = pr:next(1, #settlements.schematic_jobs)
-		local building_info = settlements.schematic_jobs[rindex]
+		local rindex = pr:next(1, #mcl_villages.schematic_jobs)
+		local building_info = mcl_villages.schematic_jobs[rindex]
 
 		if
 			(building_info["min_jobs"] == nil or number_of_jobs >= building_info["min_jobs"])
@@ -539,8 +539,8 @@ function settlements.create_site_plan_new(minp, maxp, pr)
 	end
 
 	while num_beds <= num_jobs do
-		local rindex = pr:next(1, #settlements.schematic_houses)
-		local building_info = settlements.schematic_houses[rindex]
+		local rindex = pr:next(1, #mcl_villages.schematic_houses)
+		local building_info = mcl_villages.schematic_houses[rindex]
 
 		if
 			(building_info["min_jobs"] == nil or number_of_jobs >= building_info["min_jobs"])
@@ -555,8 +555,8 @@ function settlements.create_site_plan_new(minp, maxp, pr)
 	-- Based on number of villagers
 	local num_wells = pr:next(1, math.ceil(num_beds / 10))
 	for i = 1, num_wells do
-		local windex = pr:next(1, #settlements.schematic_wells)
-		local cur_schem = table.copy(settlements.schematic_wells[windex])
+		local windex = pr:next(1, #mcl_villages.schematic_wells)
+		local cur_schem = table.copy(mcl_villages.schematic_wells[windex])
 		table.insert(base_settlement_info, cur_schem)
 	end
 
@@ -567,7 +567,7 @@ function settlements.create_site_plan_new(minp, maxp, pr)
 		shuffled_settlement_info = table.copy(base_settlement_info)
 		table.reverse(shuffled_settlement_info)
 	else
-		shuffled_settlement_info = settlements.shuffle(base_settlement_info, pr)
+		shuffled_settlement_info = mcl_villages.shuffle(base_settlement_info, pr)
 	end
 
 	table.insert(shuffled_settlement_info, 1, bell_info)
@@ -575,7 +575,7 @@ function settlements.create_site_plan_new(minp, maxp, pr)
 	return layout_town(minp, maxp, pr, shuffled_settlement_info)
 end
 
-function settlements.place_schematics_new(settlement_info, pr, blockseed)
+function mcl_villages.place_schematics_new(settlement_info, pr, blockseed)
 
 	local bell_pos = vector.copy(settlement_info[1]["pos"])
 
@@ -589,7 +589,7 @@ function settlements.place_schematics_new(settlement_info, pr, blockseed)
 			placement_pos = vector.offset(pos, 0, settlement_info[i]["yadjust"], 0)
 		end
 
-		local schem_lua = settlements.substitue_materials(pos, settlement_info[i]["schem_lua"])
+		local schem_lua = mcl_villages.substitue_materials(pos, settlement_info[i]["schem_lua"])
 		local schematic = loadstring(schem_lua)()
 
 		local is_belltower = building_all_info["name"] == "belltower"
@@ -616,7 +616,7 @@ function settlements.place_schematics_new(settlement_info, pr, blockseed)
 
 		init_nodes(minp, maxp, size, nil, pr)
 
-		settlements.store_path_ends(minp, maxp, pos, size, blockseed, bell_pos)
+		mcl_villages.store_path_ends(minp, maxp, pos, size, blockseed, bell_pos)
 
 		if is_belltower or has_beds then
 			local center_node = minetest.get_node(pos)
@@ -638,7 +638,7 @@ function settlements.place_schematics_new(settlement_info, pr, blockseed)
 end
 
 -- Complete things that don't work when run in mapgen
-function settlements.post_process_building(minp, maxp, blockseed, has_beds, has_jobs, is_belltower)
+function mcl_villages.post_process_building(minp, maxp, blockseed, has_beds, has_jobs, is_belltower)
 	if is_belltower then
 		local bells = minetest.find_nodes_in_area(minp, maxp, { "mcl_bells:bell" })
 
@@ -646,7 +646,7 @@ function settlements.post_process_building(minp, maxp, blockseed, has_beds, has_
 			local biome_data = minetest.get_biome_data(bell)
 			local biome_name = minetest.get_biome_name(biome_data.biome)
 
-			settlements.paths_new(blockseed, biome_name)
+			mcl_villages.paths_new(blockseed, biome_name)
 
 			-- spawn golem directly under bell
 			local home = vector.offset(bell, 0, -3, 0)

@@ -1,8 +1,5 @@
 # mcl_villages
 
-The existing global for this mod is ```settlements``` this has been retained for
-consistency.
-
 ## Parameter
 
 All of the following functions take a table with the following keys.
@@ -26,19 +23,19 @@ placement, or negative to lower it.
 
 If your schema does not contain a ground layer then set this to 1.
 
-## settlements.register_lamp(table)
+## mcl_villages.register_lamp(table)
 
 Register a structure to use as a lamp. These will be added to the table used when
 adding lamps to paths during village creation.
 
-## settlements.register_bell(table)
+## mcl_villages.register_bell(table)
 
 Register a structure to use as a bell. These will be added to the table used when
 adding the bell during village creation.
 
 There is 1 bell per village.
 
-## settlements.register_well(table)
+## mcl_villages.register_well(table)
 
 Register a structure to use as a well. These will be added to the table used when
 adding the wells during village creation.
@@ -48,7 +45,7 @@ village. Every 10 beds add 1 to the maximum number.
 
 e.g. 8 beds == 1 well, 15 beds == 1 or 2 wells, 22 beds == 1 to 3 wells, etc.
 
-## settlements.register_building(table)
+## mcl_villages.register_building(table)
 
 Register a building used for jobs, houses, or other uses.
 
@@ -63,7 +60,7 @@ the village and will not affect the number of jobs or beds.
 
 ### Additional options
 
-The ```settlements.register_building``` call accepts the following optional
+The ```mcl_villages.register_building``` call accepts the following optional
 parameters in the table.
 
 min_jobs

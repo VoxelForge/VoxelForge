@@ -192,7 +192,7 @@ globals = {
 	"mcl_zombie_sieges",
 	"mcl_lush_caves",
 	"mcl_armor_trims",
-	"settlements",
+	"mcl_villages",
 }
 
 read_globals = {

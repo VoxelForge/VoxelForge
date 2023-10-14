@@ -2,7 +2,7 @@ local new_villages = minetest.settings:get_bool("mcl_villages_new", true)
 local water_villages = minetest.settings:get_bool("mcl_villages_allow_water_villages", false)
 
 -- switch for debugging
-function settlements.debug(message)
+function mcl_villages.debug(message)
 	-- minetest.chat_send_all(message)
 	-- minetest.log("warning", "[mcl_villages] "..message)
 	minetest.log("verbose", "[mcl_villages] "..message)
@@ -23,13 +23,13 @@ local wallmaterial = {
 	"mcl_core:sandstonesmooth2"
 }
 --]]
-settlements.surface_mat = {}
+mcl_villages.surface_mat = {}
 -------------------------------------------------------------------------------
 -- Set array to list
 -- https://stackoverflow.com/questions/656199/search-for-an-item-in-a-lua-list
 -------------------------------------------------------------------------------
-function settlements.grundstellungen()
-	settlements.surface_mat = settlements.Set {
+function mcl_villages.grundstellungen()
+	mcl_villages.surface_mat = mcl_villages.Set {
 		"mcl_core:dirt_with_grass",
 		--"mcl_core:dry_dirt_with_grass",
 		"mcl_core:dirt_with_grass_snow",
@@ -44,28 +44,28 @@ function settlements.grundstellungen()
 	-- TODO do we really care as long as it's solid?
 	if new_villages then
 		-- allow villages on more surfaces
-		settlements.surface_mat["mcl_colorblocks:hardened_clay"] = true
-		settlements.surface_mat["mcl_colorblocks:hardened_clay_orange"] = true
-		settlements.surface_mat["mcl_colorblocks:hardened_clay_red"] = true
-		settlements.surface_mat["mcl_colorblocks:hardened_clay_white"] = true
-		settlements.surface_mat["mcl_core:andesite"] = true
-		settlements.surface_mat["mcl_core:coarse_dirt"] = true
-		settlements.surface_mat["mcl_core:diorite"] = true
-		settlements.surface_mat["mcl_core:dirt"] = true
-		settlements.surface_mat["mcl_core:granite"] = true
-		settlements.surface_mat["mcl_core:grass_path"] = true
-		settlements.surface_mat["mcl_core:sandstone"] = true
-		settlements.surface_mat["mcl_core:sandstonesmooth"] = true
-		settlements.surface_mat["mcl_core:sandstonesmooth2"] = true
-		settlements.surface_mat["mcl_core:stone"] = true
-		settlements.surface_mat["mcl_core:stone_with_coal"] = true
-		settlements.surface_mat["mcl_core:stone_with_iron"] = true
+		mcl_villages.surface_mat["mcl_colorblocks:hardened_clay"] = true
+		mcl_villages.surface_mat["mcl_colorblocks:hardened_clay_orange"] = true
+		mcl_villages.surface_mat["mcl_colorblocks:hardened_clay_red"] = true
+		mcl_villages.surface_mat["mcl_colorblocks:hardened_clay_white"] = true
+		mcl_villages.surface_mat["mcl_core:andesite"] = true
+		mcl_villages.surface_mat["mcl_core:coarse_dirt"] = true
+		mcl_villages.surface_mat["mcl_core:diorite"] = true
+		mcl_villages.surface_mat["mcl_core:dirt"] = true
+		mcl_villages.surface_mat["mcl_core:granite"] = true
+		mcl_villages.surface_mat["mcl_core:grass_path"] = true
+		mcl_villages.surface_mat["mcl_core:sandstone"] = true
+		mcl_villages.surface_mat["mcl_core:sandstonesmooth"] = true
+		mcl_villages.surface_mat["mcl_core:sandstonesmooth2"] = true
+		mcl_villages.surface_mat["mcl_core:stone"] = true
+		mcl_villages.surface_mat["mcl_core:stone_with_coal"] = true
+		mcl_villages.surface_mat["mcl_core:stone_with_iron"] = true
 
 		if water_villages then
-			settlements.surface_mat["mcl_core:water_source"] = true
-			settlements.surface_mat["mcl_core:river_water_source"] = true
-			settlements.surface_mat["mcl_core:water_flowing"] = true
-			settlements.surface_mat["mcl_core:river_water_flowing"] = true
+			mcl_villages.surface_mat["mcl_core:water_source"] = true
+			mcl_villages.surface_mat["mcl_core:river_water_source"] = true
+			mcl_villages.surface_mat["mcl_core:water_flowing"] = true
+			mcl_villages.surface_mat["mcl_core:river_water_flowing"] = true
 		end
 	end
 end
@@ -76,13 +76,13 @@ end
 --
 -- path to schematics
 --
-schem_path = settlements.modpath.."/schematics/"
+schem_path = mcl_villages.modpath.."/schematics/"
 --
 -- list of schematics
 --
 local basic_pseudobiome_villages = minetest.settings:get_bool("basic_pseudobiome_villages", true)
 
-settlements.schematic_table = {
+mcl_villages.schematic_table = {
 	{name = "large_house",	mts = schem_path.."large_house.mts",	hwidth = 11, hdepth = 12, hheight =  9, hsize = 14, max_num = 0.08 , rplc = basic_pseudobiome_villages },
 	{name = "blacksmith",	mts = schem_path.."blacksmith.mts",	hwidth =  7, hdepth =  7, hheight = 13, hsize = 13, max_num = 0.055, rplc = basic_pseudobiome_villages },
 	{name = "butcher",	mts = schem_path.."butcher.mts",	hwidth = 11, hdepth =  8, hheight = 10, hsize = 14, max_num = 0.03 , rplc = basic_pseudobiome_villages },
@@ -99,18 +99,18 @@ settlements.schematic_table = {
 --
 -- maximum allowed difference in height for building a sttlement
 --
-settlements.max_height_difference = 56
+mcl_villages.max_height_difference = 56
 --
 --
 --
-settlements.half_map_chunk_size = 40
+mcl_villages.half_map_chunk_size = 40
 --quarter_map_chunk_size = 20
 
 --
 -- Biome based block substitutions
 --
 -- TODO maybe this should be in the biomes?
-settlements.biome_map = {
+mcl_villages.biome_map = {
 	BambooJungle = "bamboo",
 	BambooJungleEdge = "bamboo",
 	BambooJungleEdgeM = "bamboo",
@@ -162,7 +162,7 @@ settlements.biome_map = {
 
 -- TODO should we handle stripped bark and the like?
 -- TODO Should we have an API for this?
-settlements.material_substitions = {
+mcl_villages.material_substitions = {
 	desert = {
 		{ "mcl_core:tree", "mcl_core:redsandstonecarved" },
 		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:birch_fence%1"' },

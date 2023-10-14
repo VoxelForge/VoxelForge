@@ -4,7 +4,7 @@
 
 local light_threshold = tonumber(minetest.settings:get("mcl_villages_light_threshold")) or 5
 
-function settlements.paths(settlement_info)
+function mcl_villages.paths(settlement_info)
   local starting_point
   local end_point
   local distance
@@ -70,7 +70,7 @@ function settlements.paths(settlement_info)
           distance = dist_east_p_to_end
         end
         -- find surface of new starting point
-        local surface_point, surface_mat = settlements.find_surface(starting_point)
+        local surface_point, surface_mat = mcl_villages.find_surface(starting_point)
         -- replace surface node with mcl_core:grass_path
         if surface_point
         then
@@ -100,12 +100,12 @@ end
 local path_ends = {}
 
 -- helper function to log the path table
-function settlements.dump_path_ends()
+function mcl_villages.dump_path_ends()
 	minetest.log(dump(path_ends))
 end
 
 -- Insert end points in to the nested tables
-function settlements.store_path_ends(minp, maxp, pos, size, blockseed, bell_pos)
+function mcl_villages.store_path_ends(minp, maxp, pos, size, blockseed, bell_pos)
 	local path_end_nodes = minetest.find_nodes_in_area(
 		vector.offset(minp, -4, -4, -4),
 		vector.offset(maxp, 4, 4, 4),
@@ -130,9 +130,9 @@ function settlements.store_path_ends(minp, maxp, pos, size, blockseed, bell_pos)
 end
 
 local function place_lamp(pos, pr)
-	local lamp_index = pr:next(1, #settlements.schematic_lamps)
-	local building_all_info = settlements.schematic_lamps[lamp_index]
-	local schem_lua = settlements.substitue_materials(pos, building_all_info["schem_lua"])
+	local lamp_index = pr:next(1, #mcl_villages.schematic_lamps)
+	local building_all_info = mcl_villages.schematic_lamps[lamp_index]
+	local schem_lua = mcl_villages.substitue_materials(pos, building_all_info["schem_lua"])
 	local schematic = loadstring(schem_lua)()
 
 	minetest.place_schematic(
@@ -269,7 +269,7 @@ end
 
 -- Work out which end points should be connected
 -- works from the outside of the village in
-function settlements.paths_new(blockseed, biome_name)
+function mcl_villages.paths_new(blockseed, biome_name)
 	local pr = PseudoRandom(blockseed)
 
 	if path_ends["block_" .. blockseed] == nil then
@@ -282,8 +282,8 @@ function settlements.paths_new(blockseed, biome_name)
 	local slab = '"mcl_stairs:slab_wood_top"'
 
 	-- Change stair and slab for biome
-	if settlements.biome_map[biome_name] and settlements.material_substitions[settlements.biome_map[biome_name]] then
-		for _, sub in pairs(settlements.material_substitions[settlements.biome_map[biome_name]]) do
+	if mcl_villages.biome_map[biome_name] and mcl_villages.material_substitions[mcl_villages.biome_map[biome_name]] then
+		for _, sub in pairs(mcl_villages.material_substitions[mcl_villages.biome_map[biome_name]]) do
 			stair = stair:gsub(sub[1], sub[2])
 			slab = slab:gsub(sub[1], sub[2])
 		end

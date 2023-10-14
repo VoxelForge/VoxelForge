@@ -1,24 +1,24 @@
-settlements = {}
-settlements.modpath = minetest.get_modpath(minetest.get_current_modname())
+mcl_villages = {}
+mcl_villages.modpath = minetest.get_modpath(minetest.get_current_modname())
 
 local new_villages = minetest.settings:get_bool("mcl_villages_new", true)
 local village_chance = tonumber(minetest.settings:get("mcl_villages_village_chance")) or 75
 
-dofile(settlements.modpath.."/const.lua")
-dofile(settlements.modpath.."/utils.lua")
-dofile(settlements.modpath.."/foundation.lua")
-dofile(settlements.modpath.."/buildings.lua")
-dofile(settlements.modpath.."/paths.lua")
---dofile(settlements.modpath.."/convert_lua_mts.lua")
+dofile(mcl_villages.modpath.."/const.lua")
+dofile(mcl_villages.modpath.."/utils.lua")
+dofile(mcl_villages.modpath.."/foundation.lua")
+dofile(mcl_villages.modpath.."/buildings.lua")
+dofile(mcl_villages.modpath.."/paths.lua")
+--dofile(mcl_villages.modpath.."/convert_lua_mts.lua")
 
 if new_villages then
-	dofile(settlements.modpath .. "/api.lua")
+	dofile(mcl_villages.modpath .. "/api.lua")
 end
 
 --
 -- load settlements on server
 --
-settlements.grundstellungen()
+mcl_villages.grundstellungen()
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
@@ -66,33 +66,33 @@ local function build_a_settlement(minp, maxp, blockseed)
 
 	if not new_villages then
 		-- fill settlement_info with buildings and their data
-		local settlement_info = settlements.create_site_plan(maxp, minp, pr)
+		local settlement_info = mcl_villages.create_site_plan(maxp, minp, pr)
 		if not settlement_info then
 			return
 		end
 
 		-- evaluate settlement_info and prepair terrain
-		settlements.terraform(settlement_info, pr)
+		mcl_villages.terraform(settlement_info, pr)
 
 		-- evaluate settlement_info and build paths between buildings
-		settlements.paths(settlement_info)
+		mcl_villages.paths(settlement_info)
 
 		-- evaluate settlement_info and place schematics
-		settlements.place_schematics(settlement_info, pr)
+		mcl_villages.place_schematics(settlement_info, pr)
 	else
 		--minetest.log("Starting village for " .. minetest.pos_to_string(minp))
-		local settlement_info = settlements.create_site_plan_new(minp, maxp, pr)
+		local settlement_info = mcl_villages.create_site_plan_new(minp, maxp, pr)
 
 		if not settlement_info then
 			--minetest.log("Aborting village for " .. minetest.pos_to_string(minp))
 			return
 		end
 
-		settlements.terraform_new(settlement_info, pr)
-		settlements.place_schematics_new(settlement_info, pr, blockseed)
-		--settlements.dump_path_ends()
+		mcl_villages.terraform_new(settlement_info, pr)
+		mcl_villages.place_schematics_new(settlement_info, pr, blockseed)
+		--mcl_villages.dump_path_ends()
 		-- TODO when run here minetest.find_path regularly fails :(
-		--settlements.paths_new(blockseed)
+		--mcl_villages.paths_new(blockseed)
 		--minetest.log("Completed village for " .. minetest.pos_to_string(minp))
 	end
 end
@@ -144,8 +144,8 @@ if mg_name ~= "singlenode" then
 		--minetest.log("Not in village gen. Put down placeholder: " .. minetest.pos_to_string(minp) .. " || " .. minetest.pos_to_string(maxp))
 		minetest.set_node(minp,{name="mcl_villages:structblock"})
 
-		local height_difference = settlements.evaluate_heightmap()
-		if not height_difference or height_difference > settlements.max_height_difference then
+		local height_difference = mcl_villages.evaluate_heightmap()
+		if not height_difference or height_difference > mcl_villages.max_height_difference then
 			minetest.log("action", "Do not spawn village here as heightmap not good")
 			return
 		end
@@ -174,8 +174,8 @@ minetest.register_on_mods_loaded(function()
 		if p == "village" then
 			local pl = minetest.get_player_by_name(pn)
 			local pos = vector.round(pl:get_pos())
-			local minp = vector.subtract(pos, settlements.half_map_chunk_size)
-			local maxp = vector.add(pos, settlements.half_map_chunk_size)
+			local minp = vector.subtract(pos, mcl_villages.half_map_chunk_size)
+			local maxp = vector.add(pos, mcl_villages.half_map_chunk_size)
 			build_a_settlement(minp, maxp, math.random(0,32767))
 		else
 			return olfunc(pn,p)
@@ -204,7 +204,7 @@ if new_villages then
 			local is_belltower = meta:get_int("is_belltower") > 0 and true or false
 			minetest.get_node_timer(pos):stop()
 			minetest.set_node(pos, { name = node_type })
-			settlements.post_process_building(minp, maxp, blockseed, has_beds, has_jobs, is_belltower)
+			mcl_villages.post_process_building(minp, maxp, blockseed, has_beds, has_jobs, is_belltower)
 			return false
 		end,
 	})
@@ -232,25 +232,25 @@ if new_villages then
 		_mcl_blast_resistance = 0.1,
 	})
 
-	local schem_path = settlements.modpath .. "/schematics/"
+	local schem_path = mcl_villages.modpath .. "/schematics/"
 
-	settlements.register_bell({ name = "belltower", mts = schem_path .. "new_villages/belltower.mts", yadjust = 1 })
+	mcl_villages.register_bell({ name = "belltower", mts = schem_path .. "new_villages/belltower.mts", yadjust = 1 })
 
-	settlements.register_well({
+	mcl_villages.register_well({
 		name = "well",
 		mts = schem_path .. "new_villages/well.mts",
 		yadjust = -1,
 	})
 
 	for i = 1, 6 do
-		settlements.register_lamp({
+		mcl_villages.register_lamp({
 			name = "lamp",
 			mts = schem_path .. "new_villages/lamp_" .. i .. ".mts",
 			yadjust = 1,
 		})
 	end
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "house_big",
 		mts = schem_path .. "new_villages/house_4_bed.mts",
 		min_jobs = 6,
@@ -258,7 +258,7 @@ if new_villages then
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "house_large",
 		mts = schem_path .. "new_villages/house_3_bed.mts",
 		min_jobs = 4,
@@ -266,7 +266,7 @@ if new_villages then
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "house_medium",
 		mts = schem_path .. "new_villages/house_2_bed.mts",
 		min_jobs = 2,
@@ -274,7 +274,7 @@ if new_villages then
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "house_small",
 		mts = schem_path .. "new_villages/house_1_bed.mts",
 		min_jobs = 1,
@@ -282,90 +282,90 @@ if new_villages then
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "blacksmith",
 		mts = schem_path .. "new_villages/blacksmith.mts",
 		num_others = 8,
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "butcher",
 		mts = schem_path .. "new_villages/butcher.mts",
 		num_others = 8,
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "farm",
 		mts = schem_path .. "new_villages/farm.mts",
 		num_others = 3,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "fish_farm",
 		mts = schem_path .. "new_villages/fishery.mts",
 		num_others = 8,
 		yadjust = -2,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "fletcher",
 		mts = schem_path .. "new_villages/fletcher.mts",
 		num_others = 8,
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "library",
 		mts = schem_path .. "new_villages/library.mts",
 		num_others = 15,
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "map_shop",
 		mts = schem_path .. "new_villages/cartographer.mts",
 		num_others = 15,
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "mason",
 		mts = schem_path .. "new_villages/mason.mts",
 		num_others = 8,
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "mill",
 		mts = schem_path .. "new_villages/mill.mts",
 		num_others = 8,
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "tannery",
 		mts = schem_path .. "new_villages/leather_worker.mts",
 		num_others = 8,
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "tool_smith",
 		mts = schem_path .. "new_villages/toolsmith.mts",
 		num_others = 8,
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "weapon_smith",
 		mts = schem_path .. "new_villages/weaponsmith.mts",
 		num_others = 8,
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "chapel",
 		mts = schem_path .. "new_villages/chapel.mts",
 		num_others = 8,
@@ -374,7 +374,7 @@ if new_villages then
 		yadjust = 1,
 	})
 
-	settlements.register_building({
+	mcl_villages.register_building({
 		name = "church",
 		mts = schem_path .. "new_villages/church.mts",
 		num_others = 20,

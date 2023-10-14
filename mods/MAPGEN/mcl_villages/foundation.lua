@@ -9,7 +9,7 @@ local terrace_max_ext = tonumber(minetest.settings:get("mcl_villages_terrace_max
 -------------------------------------------------------------------------------
 -- function to fill empty space below baseplate when building on a hill
 -------------------------------------------------------------------------------
-function settlements.ground(pos, pr) -- role model: Wendelsteinkircherl, Brannenburg
+function mcl_villages.ground(pos, pr) -- role model: Wendelsteinkircherl, Brannenburg
 	local p2 = vector.new(pos)
 	local cnt = 0
 	local mat = "mcl_core:dirt"
@@ -27,12 +27,12 @@ end
 -------------------------------------------------------------------------------
 -- function clear space above baseplate
 -------------------------------------------------------------------------------
-function settlements.terraform(settlement_info, pr)
+function mcl_villages.terraform(settlement_info, pr)
 	local fheight, fwidth, fdepth, schematic_data
 
 	for i, built_house in ipairs(settlement_info) do
 		-- pick right schematic_info to current built_house
-		for j, schem in ipairs(settlements.schematic_table) do
+		for j, schem in ipairs(mcl_villages.schematic_table) do
 			if settlement_info[i]["name"] == schem["name"] then
 				schematic_data = schem
 			        break
@@ -56,7 +56,7 @@ function settlements.terraform(settlement_info, pr)
 				for yi = 0,fheight *3 do
 					if yi == 0 then
 						local p = {x=pos.x+xi, y=pos.y, z=pos.z+zi}
-						settlements.ground(p, pr)
+						mcl_villages.ground(p, pr)
 					else
 						-- write ground
 --						local p = {x=pos.x+xi, y=pos.y+yi, z=pos.z+zi}
@@ -121,7 +121,7 @@ local function overground(pos, fwidth, fdepth, fheight)
 	end
 end
 
-function settlements.terraform_new(settlement_info)
+function mcl_villages.terraform_new(settlement_info)
 	local fheight, fwidth, fdepth
 
 	-- Do ground first so that we can clear overhang for lower buildings

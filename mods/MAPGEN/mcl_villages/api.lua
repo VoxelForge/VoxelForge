@@ -1,8 +1,8 @@
-settlements.schematic_houses = {}
-settlements.schematic_jobs = {}
-settlements.schematic_lamps = {}
-settlements.schematic_bells = {}
-settlements.schematic_wells = {}
+mcl_villages.schematic_houses = {}
+mcl_villages.schematic_jobs = {}
+mcl_villages.schematic_lamps = {}
+mcl_villages.schematic_bells = {}
+mcl_villages.schematic_wells = {}
 
 local function job_count(schem_lua)
 	-- Local copy so we don't trash the schema for other uses, because apparently
@@ -41,33 +41,33 @@ local function load_schema(name, mts)
 	return data
 end
 
-function settlements.register_lamp(record)
+function mcl_villages.register_lamp(record)
 	local data = load_schema(record["name"], record["mts"])
 	if record["yadjust"] then
 		data["yadjust"] = record["yadjust"]
 	end
-	table.insert(settlements.schematic_lamps, data)
+	table.insert(mcl_villages.schematic_lamps, data)
 end
 
-function settlements.register_bell(record)
+function mcl_villages.register_bell(record)
 	local data = load_schema(record["name"], record["mts"])
 	if record["yadjust"] then
 		data["yadjust"] = record["yadjust"]
 	end
-	table.insert(settlements.schematic_bells, data)
+	table.insert(mcl_villages.schematic_bells, data)
 end
 
-function settlements.register_well(record)
+function mcl_villages.register_well(record)
 	local data = load_schema(record["name"], record["mts"])
 	if record["yadjust"] then
 		data["yadjust"] = record["yadjust"]
 	end
-	table.insert(settlements.schematic_wells, data)
+	table.insert(mcl_villages.schematic_wells, data)
 end
 
 local optional_fields = { "min_jobs", "max_jobs", "yadjust", "num_others" }
 
-function settlements.register_building(record)
+function mcl_villages.register_building(record)
 	local data = load_schema(record["name"], record["mts"])
 
 	for _, field in ipairs(optional_fields) do
@@ -88,8 +88,8 @@ function settlements.register_building(record)
 
 	if job_count > 0 then
 		data["num_jobs"] = job_count
-		table.insert(settlements.schematic_jobs, data)
+		table.insert(mcl_villages.schematic_jobs, data)
 	else
-		table.insert(settlements.schematic_houses, data)
+		table.insert(mcl_villages.schematic_houses, data)
 	end
 end
