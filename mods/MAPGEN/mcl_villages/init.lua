@@ -173,7 +173,7 @@ minetest.register_on_mods_loaded(function()
 	minetest.registered_chatcommands["spawnstruct"].func = function(pn,p)
 		if p == "village" then
 			local pl = minetest.get_player_by_name(pn)
-			local pos = vector.offset(pl:get_pos(),0,-1,0)
+			local pos = vector.round(pl:get_pos())
 			local minp = vector.subtract(pos, settlements.half_map_chunk_size)
 			local maxp = vector.add(pos, settlements.half_map_chunk_size)
 			build_a_settlement(minp, maxp, math.random(0,32767))
