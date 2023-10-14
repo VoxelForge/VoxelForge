@@ -186,11 +186,7 @@ local function init(player)
 	local playername = player:get_player_name()
 	minetest.create_detached_inventory("creative_" .. playername, {
 		allow_move = function(inv, from_list, from_index, to_list, to_index, count, player)
-			if minetest.is_creative_enabled(playername) then
-				return count
-			else
-				return 0
-			end
+			return 0
 		end,
 		allow_put = function(inv, listname, index, stack, player)
 			return 0
