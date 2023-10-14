@@ -262,6 +262,7 @@ local function init_nodes(p1, p2, size, rotation, pr)
 	construct_node(p1, p2, "mcl_barrels:barrel_closed")
 	construct_node(p1, p2, "mcl_blast_furnace:blast_furnace")
 	construct_node(p1, p2, "mcl_brewing:stand_000")
+	construct_node(p1, p2, "mcl_loom:loom")
 
 	-- Do new chest nodes first
 	local cnodes = construct_node(p1, p2, "mcl_chests:chest_small")
