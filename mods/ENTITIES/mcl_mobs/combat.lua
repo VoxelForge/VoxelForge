@@ -463,6 +463,8 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 	local is_player = hitter:is_player()
 
 	if is_player then
+		self.last_player_hit_time = minetest.get_gametime()
+		self.last_player_hit_name = hitter:get_player_name()
 		-- is mob protected?
 		if self.protected and minetest.is_protected(self.object:get_pos(), hitter:get_player_name()) then
 			return
