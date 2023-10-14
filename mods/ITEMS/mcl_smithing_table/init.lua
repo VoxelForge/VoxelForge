@@ -152,21 +152,23 @@ minetest.register_node("mcl_smithing_table:table", {
 	end,
 
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-		if
-					listname == "upgrade_item"
-			and	 	string.find(stack:get_name(),"mcl_armor:") -- allow any armor piece to go in (in case the player wants to trim them)
-			and not mcl_armor.trims.blacklisted[stack:get_name()]
-
-			or		listname == "mineral"
-			and		mcl_smithing_table.is_smithing_mineral(stack:get_name())
-
-			or 		listname == "template"
-			and		string.find(stack:get_name(),"mcl_armor")
-		then
-			return stack:get_count()
+		local r = 0
+		if listname == "upgrade_item" then
+			if (minetest.get_item_group(stack:get_name(),"armor") > 0 or minetest.get_item_group(stack:get_name(),"tool") > 0)
+			and not mcl_armor.trims.blacklisted[stack:get_name()] then
+				r = stack:get_count()
+			end
+		elseif listname == "mineral" then
+			if mcl_smithing_table.is_smithing_mineral(stack:get_name()) then
+				r= stack:get_count()
+			end
+		elseif listname == "template" then
+			if minetest.get_item_group(stack:get_name(),"smithing_template") > 0 then
+				r = stack:get_count()
+			end
 		end
 
-		return 0
+		return r
 	end,
 
 	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
