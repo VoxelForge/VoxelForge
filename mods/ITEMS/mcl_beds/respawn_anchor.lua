@@ -45,7 +45,7 @@ for i=0,4 do
 			description=S("Respawn Anchor"),
 			tiles = {
 			{
-				name = "respawn_anchor_top_on.png^[noalpha",
+				name = "respawn_anchor_top_on.png",
 				animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=2.0}
 			},
 				"respawn_anchor_bottom.png",
@@ -62,7 +62,7 @@ for i=0,4 do
 				}
 			},
 			light_source = math.min((4 * i) - 1, minetest.LIGHT_MAX),
-			use_texture_alpha = "blend",
+			use_texture_alpha = "opaque",
 		})
 		mesecon.register_mvps_stopper("mcl_beds:respawn_anchor_charged_"..i)
 	end
