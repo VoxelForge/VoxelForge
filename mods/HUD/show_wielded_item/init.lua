@@ -10,7 +10,7 @@ local hudbars_mod = minetest.get_modpath("hudbars")
 
 local function set_hud(player)
 	if not player:is_player() then return end
-	local player_name = player:get_player_name() 
+	local player_name = player:get_player_name()
 	-- Fixed offset in config file
 	local fixed = tonumber(minetest.settings:get("show_wielded_item_y_offset"))
 	local off
@@ -89,7 +89,7 @@ minetest.register_globalstep(function(dtime)
 			wield[player_name] = wname
 			dtimes[player_name] = 0
 
-			if huds[player_name] then 
+			if huds[player_name] then
 
 				-- Get description (various fallback checks for old Minetest versions)
 				local def = minetest.registered_items[wname]
