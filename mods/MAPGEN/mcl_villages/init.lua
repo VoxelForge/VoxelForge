@@ -183,6 +183,22 @@ if minetest.is_creative_enabled("") then
 	mcl_wip.register_experimental_item("mcl_villages:tool")
 end
 
+minetest.register_on_mods_loaded(function()
+	local olfunc = minetest.registered_chatcommands["spawnstruct"].func
+	minetest.registered_chatcommands["spawnstruct"].func = function(pn,p)
+		if p == "village" then
+			local pl = minetest.get_player_by_name(pn)
+			local pos = vector.offset(pl:get_pos(),0,-1,0)
+			local minp = vector.subtract(pos, settlements.half_map_chunk_size)
+			local maxp = vector.add(pos, settlements.half_map_chunk_size)
+			build_a_settlement(minp, maxp, math.random(0,32767))
+		else
+			return olfunc(pn,p)
+		end
+	end
+	minetest.registered_chatcommands["spawnstruct"].params = minetest.registered_chatcommands["spawnstruct"].params .. "|village"
+end)
+
 if new_villages then
 	-- This is a light source so that lamps don't get placed near it
 	minetest.register_node("mcl_villages:building_block", {
