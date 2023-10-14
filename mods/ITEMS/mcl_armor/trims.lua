@@ -18,31 +18,3 @@ for _, template_name in pairs(mcl_armor.trims.overlays) do
 		}
 	})
 end
-
---temp craft recipies
-minetest.register_craft({
-	output = mod_registername .. "eye",
-	recipe = {
-		{"mcl_core:diamond","mcl_end:ender_eye","mcl_core:diamond"},
-		{"mcl_core:diamond","mcl_end:ender_eye","mcl_core:diamond"},
-		{"mcl_core:diamond","mcl_core:diamond","mcl_core:diamond"},
-	}
-})
-
-minetest.register_craft({
-	output = mod_registername .. "ward",
-	recipe = {
-		{"mcl_core:diamond","mcl_core:diamond","mcl_core:diamond"},
-		{"mcl_core:diamond","mcl_core:apple_gold_enchanted","mcl_core:diamond"},
-		{"mcl_core:diamond","mcl_core:diamond","mcl_core:diamond"},
-	}
-})
-
-minetest.register_craft({
-	output = mod_registername .. "snout",
-	recipe = {
-		{"mcl_core:diamond","mcl_core:diamond","mcl_core:diamond"},
-		{"mcl_core:diamond","mcl_core:goldblock","mcl_core:diamond"},
-		{"mcl_core:diamond","mcl_core:diamond","mcl_core:diamond"},
-	}
-})
