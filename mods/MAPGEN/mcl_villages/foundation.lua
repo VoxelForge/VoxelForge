@@ -79,7 +79,7 @@ local function overground(pos, fwidth, fdepth, fheight)
 		local y = math.ceil(pos.y + 1)
 		local radius_base = math.max(fwidth, fdepth)
 		local radius = math.round((radius_base / 2) + padding)
-		local dome = fheight + top_padding - 3
+		local dome = fheight + top_padding
 
 		for count2 = 1, fheight + top_padding do
 			if terrace and radius_base > 3 then
