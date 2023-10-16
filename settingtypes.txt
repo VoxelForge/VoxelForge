@@ -303,3 +303,6 @@ mcl_villages_placement_priority (Which buildings should be closer to the bell) e
 
 # Also affects structures as they now use ground turnips
 mcl_ground_padding (Extra width to add to ground terraform radius) int 1 0 6
+
+# This is fine for players, but expect all the villagers to die very quickly
+mcl_villages_allow_water_villages (Allow buildings to spawn on top of water) bool false
