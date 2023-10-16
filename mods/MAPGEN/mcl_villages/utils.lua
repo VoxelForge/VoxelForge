@@ -1,3 +1,6 @@
+
+local terrace_max_ext = tonumber(minetest.settings:get("mcl_villages_terrace_max_ext")) or 6
+
 -------------------------------------------------------------------------------
 -- function to copy tables
 -------------------------------------------------------------------------------
@@ -270,10 +273,10 @@ function mcl_villages.check_radius_distance(settlement_info, building_pos, schem
 	-- terrace_max_ext is to try an avoid the terracing of the overground from
 	-- removing the ground under aother building.
 
-	local r1 = ((math.max(schem["size"]["x"], schem["size"]["z"])) / 2) + 4
+	local r1 = ((math.max(schem["size"]["x"], schem["size"]["z"])) / 2) + terrace_max_ext
 
 	for i, built_house in ipairs(settlement_info) do
-		local r2 = ((math.max(built_house["size"]["x"], built_house["size"]["z"])) / 2) + 4
+		local r2 = ((math.max(built_house["size"]["x"], built_house["size"]["z"])) / 2) + terrace_max_ext
 		local distance = vector.distance(building_pos, built_house["pos"])
 
 		if distance < r1 + r2 then
