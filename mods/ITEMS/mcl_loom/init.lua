@@ -14,17 +14,6 @@ for name,pattern in pairs(mcl_banners.patterns) do
 	end	end
 end
 
-local function drop_items(pos)
-	local meta = minetest.get_meta(pos)
-	local inv = meta:get_inventory()
-	for _, list in pairs({"banner", "dye", "pattern", "output"}) do
-		local stack = inv:get_stack(list, 1)
-		if not stack:is_empty() then
-			mcl_util.drop_item_stack(pos, stack)
-		end
-	end
-end
-
 local function get_formspec(pos)
 	local patterns = {}
 	local count = 0
@@ -159,7 +148,7 @@ minetest.register_node("mcl_loom:loom", {
 		inv:set_size("output", 1)
 		meta:set_string("formspec", get_formspec(pos))
 	end,
-	on_destruct = drop_items,
+	after_dig_node = mcl_util.drop_items_from_meta_container({"banner", "dye", "pattern", "output"}),
 	on_rightclick = update_formspec,
 	on_receive_fields = function(pos, formname, fields, sender)
 		local sender_name = sender:get_player_name()
