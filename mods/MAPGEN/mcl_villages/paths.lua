@@ -227,16 +227,9 @@ local function place_path(path, pr, stair, slab)
 		end
 
 		-- Clear space for villagers to walk
-		local over_pos = vector.offset(pos, 0, 1, 0)
-		local m = minetest.get_node(over_pos)
-		if m.name ~= "air" then
-			minetest.swap_node(over_pos, { name = "air" })
-		end
-
-		-- Two spaces over stairs
-		if is_stair then
-			over_pos = vector.offset(over_pos, 0, 1, 0)
-			m = minetest.get_node(over_pos)
+		for j = 1, 2 do
+			local over_pos = vector.offset(pos, 0, j, 0)
+			local m = minetest.get_node(over_pos)
 			if m.name ~= "air" then
 				minetest.swap_node(over_pos, { name = "air" })
 			end
