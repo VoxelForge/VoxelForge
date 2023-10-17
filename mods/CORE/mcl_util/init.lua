@@ -392,20 +392,29 @@ end
 
 mcl_util.drop_item_stack = drop_item_stack
 
-function mcl_util.drop_items_from_meta_container(listname)
+function mcl_util.drop_items_from_meta_container(lists)
+	if type(lists) ~= "table" then
+	--this check is provided as compatibility to the old (pre 0.90) behavior which would essentially always assume "main" as the list to drop
+		lists = { (lists or "main") }
+	end
 	return function(pos, oldnode, oldmetadata)
 		if oldmetadata and oldmetadata.inventory then
-			-- process in after_dig_node callback
-			local main = oldmetadata.inventory.main
-			if not main then return end
-			for _, stack in pairs(main) do
-				drop_item_stack(pos, stack)
+			for _,listname in pairs(lists) do
+				-- process in after_dig_node callback
+				local list = oldmetadata.inventory[listname]
+				if list then
+					for _, stack in pairs(list) do
+						drop_item_stack(pos, stack)
+					end
+				end
 			end
 		else
 			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
-			for i = 1, inv:get_size("main") do
-				drop_item_stack(pos, inv:get_stack("main", i))
+			for listname in pairs(lists) do
+				for i = 1, inv:get_size(listname) do
+					drop_item_stack(pos, inv:get_stack(listname, i))
+				end
 			end
 			meta:from_table()
 		end
