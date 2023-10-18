@@ -1,5 +1,6 @@
 local GRAVITY = tonumber(minetest.settings:get("movement_gravity"))
 
+local inv_nodes_movable = minetest.settings:get_bool("mcl_inv_nodes_movable", true)
 --register stoppers for movestones/pistons
 
 mesecon.mvps_stoppers = {}
@@ -424,12 +425,18 @@ mesecon.register_mvps_stopper("mcl_blast_furnace:blast_furnace_active")
 mesecon.register_mvps_stopper("mcl_smoker:smoker")
 mesecon.register_mvps_stopper("mcl_smoker:smoker_active")
 
-mesecon.register_mvps_stopper("mcl_droppers:dropper")
-mesecon.register_mvps_stopper("mcl_droppers:dropper_up")
-mesecon.register_mvps_stopper("mcl_droppers:dropper_down")
-mesecon.register_mvps_stopper("mcl_dispensers:dispenser")
-mesecon.register_mvps_stopper("mcl_dispensers:dispenser_up")
-mesecon.register_mvps_stopper("mcl_dispensers:dispenser_down")
+-- These are unmovable in java edition due to technical restrictions
+-- disable the setting mcl_nodes_movable
+if not inv_nodes_movable then
+	mesecon.register_mvps_stopper("mcl_hoppers:hopper")
+	mesecon.register_mvps_stopper("mcl_hoppers:hopper_side")
+	mesecon.register_mvps_stopper("mcl_droppers:dropper")
+	mesecon.register_mvps_stopper("mcl_droppers:dropper_up")
+	mesecon.register_mvps_stopper("mcl_droppers:dropper_down")
+	mesecon.register_mvps_stopper("mcl_dispensers:dispenser")
+	mesecon.register_mvps_stopper("mcl_dispensers:dispenser_up")
+	mesecon.register_mvps_stopper("mcl_dispensers:dispenser_down")
+end
 mesecon.register_mvps_stopper("mcl_anvils:anvil")
 mesecon.register_mvps_stopper("mcl_anvils:anvil_damage_1")
 mesecon.register_mvps_stopper("mcl_anvils:anvil_damage_2")
