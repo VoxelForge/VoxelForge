@@ -92,19 +92,8 @@ local dispenserdef = {
 			return stack:get_count()
 		end
 	end,
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		local meta = minetest.get_meta(pos)
-		local meta2 = meta:to_table()
-		meta:from_table(oldmetadata)
-		local inv = meta:get_inventory()
-		for i = 1, inv:get_size("main") do
-			local stack = inv:get_stack("main", i)
-			if not stack:is_empty() then
-				minetest.add_item(vector.offset(pos, math.random(0, 10) / 10 - 0.5, 0, math.random(0, 10) / 10 - 0.5), stack)
-			end
-		end
-		meta:from_table(meta2)
-	end,
+	after_dig_node = mcl_util.drop_items_from_meta_container({"main"}),
+
 	_mcl_blast_resistance = 3.5,
 	_mcl_hardness = 3.5,
 	mesecons = {

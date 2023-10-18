@@ -65,19 +65,7 @@ end
 local dropperdef = {
 	is_ground_content = false,
 	sounds = mcl_sounds.node_sound_stone_defaults(),
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		local meta = minetest.get_meta(pos)
-		local meta2 = meta:to_table()
-		meta:from_table(oldmetadata)
-		local inv = meta:get_inventory()
-		for i = 1, inv:get_size("main") do
-			local stack = inv:get_stack("main", i)
-			if not stack:is_empty() then
-				minetest.add_item(vector.offset(pos, math.random(0, 10) / 10 - 0.5, 0, math.random(0, 10) / 10 - 0.5), stack)
-			end
-		end
-		meta:from_table(meta2)
-	end,
+	after_dig_node = mcl_util.drop_items_from_meta_container({"main"}),
 	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then
