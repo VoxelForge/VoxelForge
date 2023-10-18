@@ -276,33 +276,7 @@ end
 	end
 end]]
 
-
--- Drop input items of brewing_stand at pos with metadata meta
-local function drop_brewing_stand_items(pos, meta)
-
-	local inv = meta:get_inventory()
-
-	local stack = inv:get_stack("fuel", 1)
-	if not stack:is_empty() then
-		local p = {x=pos.x+math.random(0, 10)/10-0.5, y=pos.y, z=pos.z+math.random(0, 10)/10-0.5}
-		minetest.add_item(p, stack)
-	end
-
-	local stack = inv:get_stack("input", 1)
-	if not stack:is_empty() then
-		local p = {x=pos.x+math.random(0, 10)/10-0.5, y=pos.y, z=pos.z+math.random(0, 10)/10-0.5}
-		minetest.add_item(p, stack)
-	end
-
-	for i=1, inv:get_size("stand") do
-		local stack = inv:get_stack("stand", i)
-		if not stack:is_empty() then
-			local p = {x=pos.x+math.random(0, 10)/10-0.5, y=pos.y, z=pos.z+math.random(0, 10)/10-0.5}
-			minetest.add_item(p, stack)
-		end
-	end
-end
-
+local drop_contents = mcl_util.drop_items_from_meta_container({"fuel", "input", "stand"})
 
 local on_rotate
 if minetest.get_modpath("screwdriver") then
@@ -350,17 +324,6 @@ local function on_put(pos, listname, index, stack, player)
 	minetest.swap_node(pos, {name = "mcl_brewing:stand_"..str})
 	minetest.get_node_timer(pos):start(1.0)
 	--some code here to enforce only potions getting placed on stands
-end
-
---[[local function after_dig(pos, oldnode, oldmetadata, digger)
-	local meta = minetest.get_meta(pos)
-	meta:from_table(oldmetadata)
-	drop_brewing_stand_items(pos, meta)
-end]]
-
-local function on_destruct(pos)
-	local meta = minetest.get_meta(pos)
-	drop_brewing_stand_items(pos, meta)
 end
 
 local function allow_take(pos, listname, index, stack, player)
@@ -418,7 +381,7 @@ minetest.register_node("mcl_brewing:stand_000", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 1,
 	_mcl_hardness = 1,
-	on_destruct = on_destruct,
+	after_dig_node = drop_contents,
 	allow_metadata_inventory_take = allow_take,
 	allow_metadata_inventory_put = allow_put,
 	on_metadata_inventory_put = on_put,
@@ -491,7 +454,7 @@ minetest.register_node("mcl_brewing:stand_100", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 1,
 	_mcl_hardness = 1,
-	on_destruct = on_destruct,
+	after_dig_node = drop_contents,
 	allow_metadata_inventory_take = allow_take,
 	allow_metadata_inventory_put = allow_put,
 	on_metadata_inventory_put = on_put,
@@ -563,7 +526,7 @@ minetest.register_node("mcl_brewing:stand_010", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 1,
 	_mcl_hardness = 1,
-	on_destruct = on_destruct,
+	after_dig_node = drop_contents,
 	allow_metadata_inventory_take = allow_take,
 	allow_metadata_inventory_put = allow_put,
 	on_metadata_inventory_put = on_put,
@@ -630,7 +593,7 @@ minetest.register_node("mcl_brewing:stand_001", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 1,
 	_mcl_hardness = 1,
-	on_destruct = on_destruct,
+	after_dig_node = drop_contents,
 	allow_metadata_inventory_take = allow_take,
 	allow_metadata_inventory_put = allow_put,
 	on_metadata_inventory_put = on_put,
@@ -707,7 +670,7 @@ minetest.register_node("mcl_brewing:stand_110", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 1,
 	_mcl_hardness = 1,
-	on_destruct = on_destruct,
+	after_dig_node = drop_contents,
 	allow_metadata_inventory_take = allow_take,
 	allow_metadata_inventory_put = allow_put,
 	on_metadata_inventory_put = on_put,
@@ -780,7 +743,7 @@ minetest.register_node("mcl_brewing:stand_101", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 1,
 	_mcl_hardness = 1,
-	on_destruct = on_destruct,
+	after_dig_node = drop_contents,
 	allow_metadata_inventory_take = allow_take,
 	allow_metadata_inventory_put = allow_put,
 	on_metadata_inventory_put = on_put,
@@ -853,7 +816,7 @@ minetest.register_node("mcl_brewing:stand_011", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 1,
 	_mcl_hardness = 1,
-	on_destruct = on_destruct,
+	after_dig_node = drop_contents,
 	allow_metadata_inventory_take = allow_take,
 	allow_metadata_inventory_put = allow_put,
 	on_metadata_inventory_put = on_put,
@@ -933,7 +896,7 @@ minetest.register_node("mcl_brewing:stand_111", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 1,
 	_mcl_hardness = 1,
-	on_destruct = on_destruct,
+	after_dig_node = drop_contents,
 	allow_metadata_inventory_take = allow_take,
 	allow_metadata_inventory_put = allow_put,
 	on_metadata_inventory_put = on_put,
@@ -976,10 +939,4 @@ if minetest.get_modpath("doc") then
 	doc.add_entry_alias("nodes", "mcl_brewing:stand_000", "nodes", "mcl_brewing:stand_101")
 	doc.add_entry_alias("nodes", "mcl_brewing:stand_000", "nodes", "mcl_brewing:stand_110")
 	doc.add_entry_alias("nodes", "mcl_brewing:stand_000", "nodes", "mcl_brewing:stand_111")
-end
-
-if minetest.get_modpath("mesecons_mvps") then
-	for _, s in ipairs({"000", "001", "010", "011", "100", "101", "110", "111"}) do
-		mesecon.register_mvps_stopper("mcl_brewing:stand_" .. s)
-	end
 end
