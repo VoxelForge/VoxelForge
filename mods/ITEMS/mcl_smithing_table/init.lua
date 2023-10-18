@@ -151,6 +151,8 @@ minetest.register_node("mcl_smithing_table:table", {
 		inv:set_size("upgraded_item", 1)
 	end,
 
+	after_dig_node = mcl_util.drop_items_from_meta_container({"upgrade_item", "mineral", "template"}),
+
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
 		local r = 0
 		if listname == "upgrade_item" then
