@@ -189,6 +189,7 @@ mcl_structures.register_structure("nether_bulwark",{
 			items = {
 				{ itemstring = "mcl_compass:lodestone" },
 				{ itemstring = "mcl_armor:rib" },
+				{ itemstring = "mcl_armor:snout" },
 			}
 		}}
 	},

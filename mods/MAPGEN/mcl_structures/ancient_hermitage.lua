@@ -43,6 +43,8 @@ mcl_structures.register_structure("ancient_hermitage",{
 				--SWIFT SNEAK{ itemstring = "mcl_books:book", weight = 5, func = function(stack, pr)mcl_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
 
 				{ itemstring = "mcl_armor:leggins_iron", weight = 1, func = function(stack, pr)mcl_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
+				{ itemstring = "mcl_armor:ward", weight = 1 },
+				-- { itemstring = "mcl_armor:silence", weight = 1 }, --TODO: Add silence armor trim
 
 				{ itemstring = "mcl_sculk:catalyst", weight = 2, amount_min = 1, amount_max = 2 },
 				{ itemstring = "mcl_compass:compass", weight = 2, amount_min = 1, amount_max = 1 },

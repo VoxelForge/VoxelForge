@@ -49,21 +49,3 @@ minetest.register_craft({
 		{"mcl_core:diamond","mcl_core:diamond","mcl_core:diamond"},
 	}
 })
-
-minetest.register_craft({
-	output = "mcl_armor:ward",
-	recipe = {
-		{"mcl_core:diamond","mcl_core:diamond","mcl_core:diamond"},
-		{"mcl_core:diamond","mcl_core:apple_gold_enchanted","mcl_core:diamond"},
-		{"mcl_core:diamond","mcl_core:diamond","mcl_core:diamond"},
-	}
-})
-
-minetest.register_craft({
-	output = "mcl_armor:snout",
-	recipe = {
-		{"mcl_core:diamond","mcl_core:diamond","mcl_core:diamond"},
-		{"mcl_core:diamond","mcl_core:goldblock","mcl_core:diamond"},
-		{"mcl_core:diamond","mcl_core:diamond","mcl_core:diamond"},
-	}
-})
