@@ -449,7 +449,6 @@ mesecon.register_mvps_stopper("mcl_signs:standing_sign45")
 mesecon.register_mvps_stopper("mcl_signs:standing_sign67_5")
 mesecon.register_mvps_stopper("mcl_barrels:barrel_open")
 mesecon.register_mvps_stopper("mcl_barrels:barrel_closed")
-mesecon.register_mvps_stopper("mcl_stonecutter:stonecutter")
 
 
 -- Unmovable by design: objects
