@@ -274,6 +274,11 @@ local function register_leaves(subname, def, sapling, drop_apples, sapling_chanc
 	local apple_chances = {200, 180, 160, 120, 40}
 	local stick_chances = {50, 45, 30, 35, 10}
 
+	local palette = tpl_leaves.palette
+	if def.palette == "" then
+		palette = def.palette
+	end
+
 	local function get_drops(fortune_level)
 		local drop = {
 			max_items = 1,
@@ -309,7 +314,7 @@ local function register_leaves(subname, def, sapling, drop_apples, sapling_chanc
 		_mcl_fortune_drop = { get_drops(1), get_drops(2), get_drops(3), get_drops(4) },
 		_mcl_leaves = leaves_id,
 		_mcl_orphan_leaves = orphan_leaves_id,
-	},def or {})
+	},def or {}, { palette = palette })
 	minetest.register_node(":" .. leaves_id, l_def)
 
 	local o_def = table.merge(l_def, {

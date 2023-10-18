@@ -26,6 +26,7 @@ mcl_trees.register_wood("cherry_blossom",{
 	leaves = {
 		tiles = { "mcl_cherry_blossom_leaves.png" },
 		paramtype2 = "none",
+		palette = "",
 	},
 	stripped = {
 		tiles = {"mcl_cherry_blossom_log_top_stripped.png", "mcl_cherry_blossom_log_top_stripped.png","mcl_cherry_blossom_log_stripped.png"}
