@@ -245,16 +245,7 @@ local function update_anvil_slots(meta)
 end
 
 ---Drop input items of anvil at pos with metadata meta
-local function drop_anvil_items(pos, meta)
-	local inv = meta:get_inventory()
-	for i = 1, inv:get_size("input") do
-		local stack = inv:get_stack("input", i)
-		if not stack:is_empty() then
-			local p = vector.offset(pos, math.random(0, 10) / 10 - 0.5, 0, math.random(0, 10) / 10 - 0.5)
-			minetest.add_item(p, stack)
-		end
-	end
-end
+local drop_contents = mcl_util.drop_items_from_meta_container({"input"})
 
 local function damage_particles(pos, node)
 	minetest.add_particlespawner({
@@ -312,9 +303,7 @@ local function damage_anvil(pos)
 		minetest.sound_play(mcl_sounds.node_sound_metal_defaults().dig, { pos = pos, max_hear_distance = 16 }, true)
 		return false
 	elseif node.name == "mcl_anvils:anvil_damage_2" then
-		-- Destroy anvil
-		local meta = minetest.get_meta(pos)
-		drop_anvil_items(pos, meta)
+		drop_contents(pos, node, minetest.get_meta(pos))
 		minetest.sound_play(mcl_sounds.node_sound_metal_defaults().dug, { pos = pos, max_hear_distance = 16 }, true)
 		minetest.remove_node(pos)
 		destroy_particles(pos, node)
@@ -376,13 +365,7 @@ local anvildef = {
 	_mcl_hardness = 5,
 	_mcl_after_falling = damage_anvil_by_falling,
 
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		local meta = minetest.get_meta(pos)
-		local meta2 = meta:to_table()
-		meta:from_table(oldmetadata)
-		drop_anvil_items(pos, meta)
-		meta:from_table(meta2)
-	end,
+	after_dig_node = drop_contents,
 	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then

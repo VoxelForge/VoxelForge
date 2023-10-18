@@ -436,10 +436,13 @@ if not inv_nodes_movable then
 	mesecon.register_mvps_stopper("mcl_dispensers:dispenser")
 	mesecon.register_mvps_stopper("mcl_dispensers:dispenser_up")
 	mesecon.register_mvps_stopper("mcl_dispensers:dispenser_down")
+	mesecon.register_mvps_stopper("mcl_barrels:barrel_open")
+	mesecon.register_mvps_stopper("mcl_barrels:barrel_closed")
+	mesecon.register_mvps_stopper("mcl_anvils:anvil")
+	mesecon.register_mvps_stopper("mcl_anvils:anvil_damage_1")
+	mesecon.register_mvps_stopper("mcl_anvils:anvil_damage_2")
 end
-mesecon.register_mvps_stopper("mcl_anvils:anvil")
-mesecon.register_mvps_stopper("mcl_anvils:anvil_damage_1")
-mesecon.register_mvps_stopper("mcl_anvils:anvil_damage_2")
+
 mesecon.register_mvps_stopper("mcl_chests:chest")
 mesecon.register_mvps_stopper("mcl_chests:chest_small")
 mesecon.register_mvps_stopper("mcl_chests:chest_left")
@@ -453,8 +456,7 @@ mesecon.register_mvps_stopper("mcl_signs:standing_sign")
 mesecon.register_mvps_stopper("mcl_signs:standing_sign22_5")
 mesecon.register_mvps_stopper("mcl_signs:standing_sign45")
 mesecon.register_mvps_stopper("mcl_signs:standing_sign67_5")
-mesecon.register_mvps_stopper("mcl_barrels:barrel_open")
-mesecon.register_mvps_stopper("mcl_barrels:barrel_closed")
+
 
 
 -- Unmovable by design: objects
