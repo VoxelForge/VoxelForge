@@ -35,7 +35,7 @@ mcl_structures.register_structure("ancient_hermitage",{
 				--{ itemstring = "mcl_jukebox:disc_fragment", weight = 4, amount_min = 1, amount_max = 3 },
 
 				{ itemstring = "mcl_amethyst:amethyst_shard", weight = 3, amount_min = 1, amount_max = 15 },
-				--{ itemstring = "mcl_lush_caves:glow_berry", weight = 3, amount_min = 1, amount_max = 15 },
+				{ itemstring = "mcl_lush_caves:glow_berry", weight = 3, amount_min = 1, amount_max = 15 },
 				{ itemstring = "mcl_sculk:sculk", weight = 3, amount_min = 4, amount_max = 10 },
 				--{ itemstring = "mcl_candles:candle", weight = 3, amount_min = 1, amount_max = 4 },
 				{ itemstring = "mcl_experience:bottle", weight = 3, amount_min = 1, amount_max = 3 },
