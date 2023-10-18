@@ -29,7 +29,7 @@ mcl_structures.register_structure("ancient_hermitage",{
 				{ itemstring = "mcl_mobitems:bone", weight = 5, amount_min = 1, amount_max = 15 },
 				{ itemstring = "mcl_blackstone:soul_torch", weight = 5, amount_min = 1, amount_max=15 },
 				{ itemstring = "mcl_books:book", weight = 5, amount_min = 3, amount_max=10 },
-				{ itemstring = "mcl_potions:regeneration", weight = 5, amount_min = 1, amount_max=3 },
+				{ itemstring = "mcl_potions:regeneration", weight = 5, amount_min = 1, amount_max=1 },
 				{ itemstring = "mcl_books:book", weight = 5, func = function(stack, pr)mcl_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
 
 				--{ itemstring = "mcl_jukebox:disc_fragment", weight = 4, amount_min = 1, amount_max = 3 },
