@@ -1,10 +1,10 @@
 # textdomain: awards
 
 ### api_awards.lua ###
-Award Unlocked!=
-Award Unlocked: %s=
-Secret Award Unlocked!=
-Secret Award Unlocked: %s=
+Advancement Made!=
+Advancement Made: %s=
+Secret Advancement Made!=
+Secret Advancement Made: %s=
 
 ### awards.lua ###
 A Cat in a Pop-Tart?!=Um Gato em um Pop-Tart?!
