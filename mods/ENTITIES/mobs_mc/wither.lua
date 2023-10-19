@@ -26,7 +26,7 @@ end
 local function wither_unstuck(self)
 	local pos = self.object:get_pos()
 	if mobs_griefing then
-		local col = self.collisionbox
+		local col = self.object:get_properties().collisionbox or mcl_mobs.registered_mobs["mobs_mc:wither"].initial_properties.collisionbox
 		local pos1 = vector.offset(pos, col[1], col[2], col[3])
 		local pos2 = vector.offset(pos, col[4], col[5], col[6])
 		for z = pos1.z, pos2.z do for y = pos1.y, pos2.y do for x = pos1.x, pos2.x do
