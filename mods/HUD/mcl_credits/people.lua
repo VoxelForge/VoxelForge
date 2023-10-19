@@ -97,6 +97,12 @@ return {
 		"Michieal",
 		"ryvnf",
 		"SmokeyDope",
+		"Aeonix_Aeon",
+		"Nicu",
+		"Exhale",
+		"Aeonix_Aeon",
+		"Wbjitscool",
+		"SmokeyDope",
 	}},
 	{S("Translations"), 0xFF9705, {
 		"Wuzzy",
