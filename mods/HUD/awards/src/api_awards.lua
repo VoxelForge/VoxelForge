@@ -137,10 +137,14 @@ function awards.unlock(name, award)
 			alignment = {x = 0, y = -1}
 		})
 		local hud_announce
-		if awdef.secret then
-			hud_announce = S("Secret Award Unlocked!")
+		if awdef.secret == true then
+			hud_announce = S("Secret Advancement Made!")
+		elseif awdef.type == "Goal" then
+			hud_announce = S("Goal Completed!")
+		elseif awdef.type == "Challenge" then
+			hud_announce = S("Challenge Completed!")
 		else
-			hud_announce = S("Award Unlocked!")
+			hud_announce = S("Advancement Made!")
 		end
 		local two = player:hud_add({
 			hud_elem_type = "text",
