@@ -1,4 +1,6 @@
-# textdomain: doc
+# textdomain:doc
+<=
+>=
 Access to the requested entry has been denied; this entry is secret. You may unlock access by progressing in the game. Figure out on your own how to unlock this entry.=
 All entries read.=
 All help entries revealed!=
@@ -7,6 +9,7 @@ Allows you to reveal all hidden help entries with /help_reveal=
 Category list=
 Currently all entries in this category are hidden from you.=
 Unlock new entries by progressing in the game.=
+Help=
 Entry=
 Entry list=
 Error: Access denied.=
@@ -34,19 +37,15 @@ Show category=
 Show next entry=
 Show previous entry=
 This category does not have any entries.=
+This category has the following entries:=
 This category is empty.=
 This is the help.=
 You haven't chosen a category yet. Please choose one in the category list first.=
 You haven't chosen an entry yet. Please choose one in the entry list first.=
+Collection of help texts=
 Notify me when new help is available=
 Play notification sound when new help is available=
 Show previous image=
 Show previous gallery page=
 Show next image=
 Show next gallery page=
-##### not used anymore #####
-<=
->=
-Help=
-This category has the following entries:=
-Collection of help texts=
