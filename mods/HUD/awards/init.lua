@@ -21,11 +21,6 @@ dofile(modpath.."/chat_commands.lua")
 dofile(modpath.."/gui.lua")
 dofile(modpath.."/triggers.lua")
 
--- Optionally add default awards.
-if minetest.settings:get_bool("awards.add_defaults", true) then
-	dofile(modpath.."/awards.lua")
-end
-
 awards.load()
 minetest.register_on_shutdown(awards.save)
 
