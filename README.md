@@ -3,7 +3,7 @@ An unofficial Minecraft-like game for Minetest. Fork of MineClone 2 with focus
 on stability, multiplayer performance and features. For information about
 migrating from MineClone 2 to Mineclonia, see [MIGRATING.md](./MIGRATING.md).
 
-Version: 0.89.0
+Version: 0.90.0
 
 [![ContentDB](https://content.minetest.net/packages/ryvnf/mineclonia/shields/downloads/)](https://content.minetest.net/packages/ryvnf/mineclonia/)
 
