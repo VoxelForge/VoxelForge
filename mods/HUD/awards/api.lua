@@ -163,6 +163,8 @@ function awards.register_achievement(name, def)
 	end
 end
 
+awards.register_award = awards.register_achievement
+
 function awards.enable(name)
 	local data = awards.player(name)
 	if data then
