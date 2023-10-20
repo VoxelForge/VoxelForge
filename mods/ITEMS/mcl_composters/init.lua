@@ -163,6 +163,85 @@ local function composter_get_nodeboxes(level)
 	}
 end
 
+local function composter_level(node)
+	local nn = node.name
+	if nn == "mcl_composters:composter" then
+		return 0
+	elseif nn == "mcl_composters:composter_1" then
+		return 1
+	elseif nn == "mcl_composters:composter_2" then
+		return 2
+	elseif nn == "mcl_composters:composter_3" then
+		return 3
+	elseif nn == "mcl_composters:composter_4" then
+		return 4
+	elseif nn == "mcl_composters:composter_5" then
+		return 5
+	elseif nn == "mcl_composters:composter_6" then
+		return 6
+	elseif nn == "mcl_composters:composter_7" then
+		return 7
+	else
+		return nil
+	end
+end
+
+for i = 1, 7 do
+	assert(composter_level({name = "mcl_composters:composter_" .. i}) == i)
+end
+
+assert(composter_level({name = "mcl_composters:composter"}) == 0)
+assert(composter_level({name = "mcl_composters:some_other_node"}) == nil)
+
+local function on_hopper_suck(uppos, pos)
+	-- Get bonemeal from composter above
+	local upnode = minetest.get_node(uppos)
+	if upnode.name == "mcl_composters:composter_ready" then
+		local meta = minetest.get_meta(pos)
+		local inv = meta:get_inventory()
+
+		minetest.swap_node(uppos, {name = "mcl_composters:composter"})
+
+		inv:add_item("main", "mcl_bone_meal:bone_meal")
+	end
+end
+
+local function on_hopper_push(pos, to_pos)
+	local downpos = vector.offset(pos, 0, -1, 0)
+
+	local downnode = minetest.get_node(downpos)
+
+	local level = composter_level(downnode)
+
+	--Consume compostable items and update composter below
+	if level then
+		local meta = minetest.get_meta(pos)
+		local inv = meta:get_inventory()
+
+		for i = 1, 5 do
+			local stack = inv:get_stack("main", i)
+			local compchance = minetest.get_item_group(stack:get_name(), "compostability")
+
+			if compchance > 0 then
+				stack:take_item()
+				inv:set_stack("main", i, stack)
+
+				if compchance >= math.random(0, 100) then
+					mcl_bone_meal.add_bone_meal_particle(vector.offset(downpos, 0, level / 8, 0))
+					if level < 7 then
+						level = level + 1
+					else
+						level = "ready"
+					end
+					minetest.swap_node(downpos, {name = "mcl_composters:composter_" .. level})
+				end
+				break
+			end
+		end
+	end
+end
+
+
 --- Register empty composter node.
 --
 -- This is the craftable base model that can be placed in an inventory.
@@ -185,12 +264,14 @@ minetest.register_node("mcl_composters:composter", {
 	groups = {
 		handy=1, material_wood=1, deco_block=1, dirtifier=1,
 		flammable=2, fire_encouragement=3, fire_flammability=4,
+		container = 1,
 	},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_hardness = 0.6,
 	_mcl_blast_resistance = 0.6,
 	_mcl_compost_level = 0,
-	on_rightclick = composter_add_item
+	on_rightclick = composter_add_item,
+	_on_hopper_push = on_hopper_push,
 })
 
 --- Template function for composters with compost.
@@ -216,7 +297,7 @@ local function register_filled_composter(level)
 			handy=1, material_wood=1, deco_block=1, dirtifier=1,
 			not_in_creative_inventory=1, not_in_craft_guide=1,
 			flammable=2, fire_encouragement=3, fire_flammability=4,
-			comparator_signal=level
+			comparator_signal=level, container = 1,
 		},
 		sounds = mcl_sounds.node_sound_wood_defaults(),
 		drop = "mcl_composters:composter",
@@ -224,7 +305,8 @@ local function register_filled_composter(level)
 		_mcl_blast_resistance = 0.6,
 		_mcl_compost_level = level,
 		on_rightclick = composter_add_item,
-		on_timer = composter_ready
+		on_timer = composter_ready,
+		_on_hopper_push = on_hopper_push,
 	})
 
 	-- Add entry aliases for the Help
@@ -258,14 +340,15 @@ minetest.register_node("mcl_composters:composter_ready", {
 		handy=1, material_wood=1, deco_block=1, dirtifier=1,
 		not_in_creative_inventory=1, not_in_craft_guide=1,
 		flammable=2, fire_encouragement=3, fire_flammability=4,
-		comparator_signal=8
+		comparator_signal=8, container = 1,
 	},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	drop = "mcl_composters:composter",
 	_mcl_hardness = 0.6,
 	_mcl_blast_resistance = 0.6,
 	_mcl_compost_level = 7,
-	on_rightclick = composter_harvest
+	on_rightclick = composter_harvest,
+	_on_hopper_suck = on_hopper_suck,
 })
 
 -- Add entry aliases for the Help
