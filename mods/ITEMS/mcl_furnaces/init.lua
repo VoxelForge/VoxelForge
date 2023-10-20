@@ -454,6 +454,44 @@ if minetest.get_modpath("screwdriver") then
 	end
 end
 
+-- Returns true if itemstack is fuel, but not for lava bucket if destination already has one
+local is_transferrable_fuel = function(itemstack, src_inventory, src_list, dst_inventory, dst_list)
+	if mcl_util.is_fuel(itemstack) then
+		if itemstack:get_name() == "mcl_buckets:bucket_lava" then
+			return dst_inventory:is_empty(dst_list)
+		else
+			return true
+		end
+	else
+		return false
+	end
+end
+
+local function on_hopper_suck(uppos, pos)
+	local sucked = mcl_util.move_item_container(uppos, pos)
+
+	-- Also suck in non-fuel items from furnace fuel slot
+	if not sucked then
+		local finv = minetest.get_inventory({type="node", pos=uppos})
+		if finv and not mcl_util.is_fuel(finv:get_stack("fuel", 1)) then
+			sucked = mcl_util.move_item_container(uppos, pos, "fuel")
+		end
+	end
+	return sucked
+end
+
+local function on_hopper_push(pos, to_pos)
+	-- Put fuel into fuel slot
+	local sinv = minetest.get_inventory({type="node", pos = pos})
+	local dinv = minetest.get_inventory({type="node", pos = to_pos})
+	local slot_id,_ = mcl_util.get_eligible_transfer_item_slot(sinv, "main", dinv, "fuel", is_transferrable_fuel)
+	local pushed = false
+	if slot_id then
+		pushed = mcl_util.move_item_container(pos, to_pos, nil, slot_id, "fuel")
+	end
+	return pushed
+end
+
 minetest.register_node("mcl_furnaces:furnace", {
 	description = S("Furnace"),
 	_tt_help = S("Uses fuel to smelt or cook items"),
@@ -531,6 +569,8 @@ minetest.register_node("mcl_furnaces:furnace", {
 	allow_metadata_inventory_move = allow_metadata_inventory_move,
 	allow_metadata_inventory_take = allow_metadata_inventory_take,
 	on_receive_fields = receive_fields,
+	_on_hopper_suck = on_hopper_suck,
+	_on_hopper_push = on_hopper_push,
 	_mcl_blast_resistance = 3.5,
 	_mcl_hardness = 3.5,
 	on_rotate = on_rotate,
@@ -584,6 +624,8 @@ minetest.register_node("mcl_furnaces:furnace_active", {
 	on_metadata_inventory_move = on_metadata_inventory_move,
 	on_metadata_inventory_take = on_metadata_inventory_take,
 	on_receive_fields = receive_fields,
+	_on_hopper_suck = on_hopper_suck,
+	_on_hopper_push = on_hopper_push,
 	_mcl_blast_resistance = 3.5,
 	_mcl_hardness = 3.5,
 	on_rotate = on_rotate,
