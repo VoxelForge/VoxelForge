@@ -469,7 +469,7 @@ local is_transferrable_fuel = function(itemstack, src_inventory, src_list, dst_i
 	end
 end
 
-function mcl_furnaces.on_hopper_suck(uppos, pos)
+function mcl_furnaces.on_hopper_out(uppos, pos)
 	local sucked = mcl_util.move_item_container(uppos, pos)
 
 	-- Also suck in non-fuel items from furnace fuel slot
@@ -482,7 +482,7 @@ function mcl_furnaces.on_hopper_suck(uppos, pos)
 	return sucked
 end
 
-function mcl_furnaces.on_hopper_push(pos, to_pos)
+function mcl_furnaces.on_hopper_in(pos, to_pos)
 	-- Put fuel into fuel slot
 	local sinv = minetest.get_inventory({type="node", pos = pos})
 	local dinv = minetest.get_inventory({type="node", pos = to_pos})
@@ -571,8 +571,8 @@ minetest.register_node("mcl_furnaces:furnace", {
 	allow_metadata_inventory_move = allow_metadata_inventory_move,
 	allow_metadata_inventory_take = allow_metadata_inventory_take,
 	on_receive_fields = receive_fields,
-	_on_hopper_suck = mcl_furnaces.on_hopper_suck,
-	_on_hopper_push = mcl_furnaces.on_hopper_push,
+	_on_hopper_in = mcl_furnaces.on_hopper_in,
+	_on_hopper_out = mcl_furnaces.on_hopper_out,
 	_mcl_blast_resistance = 3.5,
 	_mcl_hardness = 3.5,
 	on_rotate = on_rotate,
@@ -626,8 +626,8 @@ minetest.register_node("mcl_furnaces:furnace_active", {
 	on_metadata_inventory_move = on_metadata_inventory_move,
 	on_metadata_inventory_take = on_metadata_inventory_take,
 	on_receive_fields = receive_fields,
-	_on_hopper_suck = mcl_furnaces.on_hopper_suck,
-	_on_hopper_push = mcl_furnaces.on_hopper_push,
+	_on_hopper_in = mcl_furnaces.on_hopper_in,
+	_on_hopper_out = mcl_furnaces.on_hopper_out,
 	_mcl_blast_resistance = 3.5,
 	_mcl_hardness = 3.5,
 	on_rotate = on_rotate,

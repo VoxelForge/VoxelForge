@@ -193,7 +193,7 @@ end
 assert(composter_level({name = "mcl_composters:composter"}) == 0)
 assert(composter_level({name = "mcl_composters:some_other_node"}) == nil)
 
-local function on_hopper_suck(uppos, pos)
+local function on_hopper_out(uppos, pos)
 	-- Get bonemeal from composter above
 	local upnode = minetest.get_node(uppos)
 	if upnode.name == "mcl_composters:composter_ready" then
@@ -206,11 +206,8 @@ local function on_hopper_suck(uppos, pos)
 	end
 end
 
-local function on_hopper_push(pos, to_pos)
-	local downpos = vector.offset(pos, 0, -1, 0)
-
+local function on_hopper_in(pos, downpos)
 	local downnode = minetest.get_node(downpos)
-
 	local level = composter_level(downnode)
 
 	--Consume compostable items and update composter below
@@ -271,7 +268,7 @@ minetest.register_node("mcl_composters:composter", {
 	_mcl_blast_resistance = 0.6,
 	_mcl_compost_level = 0,
 	on_rightclick = composter_add_item,
-	_on_hopper_push = on_hopper_push,
+	_on_hopper_in = on_hopper_in,
 })
 
 --- Template function for composters with compost.
@@ -306,7 +303,7 @@ local function register_filled_composter(level)
 		_mcl_compost_level = level,
 		on_rightclick = composter_add_item,
 		on_timer = composter_ready,
-		_on_hopper_push = on_hopper_push,
+		_on_hopper_in = on_hopper_in,
 	})
 
 	-- Add entry aliases for the Help
@@ -348,7 +345,7 @@ minetest.register_node("mcl_composters:composter_ready", {
 	_mcl_blast_resistance = 0.6,
 	_mcl_compost_level = 7,
 	on_rightclick = composter_harvest,
-	_on_hopper_suck = on_hopper_suck,
+	_on_hopper_out = on_hopper_out,
 })
 
 -- Add entry aliases for the Help

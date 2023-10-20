@@ -448,8 +448,8 @@ local function hopper_suck(pos)
 
 	local success = false
 	if updef then
-		if updef._on_hopper_suck then
-			success = updef._on_hopper_suck(uppos, pos)
+		if updef._on_hopper_out then
+			success = updef._on_hopper_out(uppos, pos)
 		end
 		if not success then
 			success = mcl_util.move_item_container(uppos, pos)
@@ -465,8 +465,8 @@ local function hopper_push(pos, to_pos)
 
 	local success = false
 	if to_def then
-		if to_def._on_hopper_push then
-			success = to_def._on_hopper_push(pos, to_pos)
+		if to_def._on_hopper_in then
+			success = to_def._on_hopper_in(pos, to_pos)
 		end
 		if not success then
 			success = mcl_util.move_item_container(pos, to_pos)
