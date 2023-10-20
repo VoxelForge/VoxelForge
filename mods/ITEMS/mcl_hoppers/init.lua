@@ -439,19 +439,41 @@ minetest.register_abm({
 	end,
 })
 
--- Returns true if itemstack is fuel, but not for lava bucket if destination already has one
-local is_transferrable_fuel = function(itemstack, src_inventory, src_list, dst_inventory, dst_list)
-	if mcl_util.is_fuel(itemstack) then
-		if itemstack:get_name() == "mcl_buckets:bucket_lava" then
-			return dst_inventory:is_empty(dst_list)
-		else
-			return true
+-- Suck an item from the container above into the hopper
+local function hopper_suck(pos)
+	local uppos = vector.offset(pos,0, 1, 0)
+
+	local upnode = minetest.get_node(uppos)
+	local updef = minetest.registered_nodes[upnode.name]
+
+	local success = false
+	if updef then
+		if updef._on_hopper_suck then
+			success = updef._on_hopper_suck(uppos, pos)
 		end
-	else
-		return false
+		if not success then
+			success = mcl_util.move_item_container(uppos, pos)
+		end
 	end
+	return success
 end
 
+-- Move an item from the hopper into container (bottom or side)
+local function hopper_push(pos, to_pos)
+	local to_node = minetest.get_node(to_pos)
+	local to_def = minetest.registered_nodes[to_node.name]
+
+	local success = false
+	if to_def then
+		if to_def._on_hopper_push then
+			success = to_def._on_hopper_push(pos, to_pos)
+		end
+		if not success then
+			success = mcl_util.move_item_container(pos, to_pos)
+		end
+	end
+	return success
+end
 
 
 minetest.register_abm({
@@ -461,28 +483,8 @@ minetest.register_abm({
 	interval = 1.0,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		-- Get node pos' for item transfer
-		local uppos = {x=pos.x,y=pos.y+1,z=pos.z}
-		local downpos = {x=pos.x,y=pos.y-1,z=pos.z}
-
-		-- Suck an item from the container above into the hopper
-		local upnode = minetest.get_node(uppos)
-		if not minetest.registered_nodes[upnode.name] then return end
-		local g = minetest.get_item_group(upnode.name, "container")
-		local sucked = mcl_util.move_item_container(uppos, pos)
-
-		-- Also suck in non-fuel items from furnace fuel slot
-		if not sucked and g == 4 then
-			local finv = minetest.get_inventory({type="node", pos=uppos})
-			if finv and not mcl_util.is_fuel(finv:get_stack("fuel", 1)) then
-				mcl_util.move_item_container(uppos, pos, "fuel")
-			end
-		end
-
-		-- Move an item from the hopper into container below
-		local downnode = minetest.get_node(downpos)
-		if not minetest.registered_nodes[downnode.name] then return end
-		mcl_util.move_item_container(pos, downpos)
+		hopper_suck(pos)
+		hopper_push(pos, vector.offset(pos, 0, -1, 0))
 	end,
 })
 
@@ -493,49 +495,27 @@ minetest.register_abm({
 	interval = 1.0,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
+		hopper_suck(pos)
 		-- Determine to which side the hopper is facing, get nodes
 		local face = minetest.get_node(pos).param2
-		local front = {}
+		local front = vector.zero()
 		if face == 0 then
-			front = {x=pos.x-1,y=pos.y,z=pos.z}
+			front = vector.offset(pos, -1, 0, 0)
 		elseif face == 1 then
-			front = {x=pos.x,y=pos.y,z=pos.z+1}
+			front = vector.offset(pos, 0, 0, 1)
 		elseif face == 2 then
-			front = {x=pos.x+1,y=pos.y,z=pos.z}
+			front = vector.offset(pos, 1, 0, 0)
 		elseif face == 3 then
-			front = {x=pos.x,y=pos.y,z=pos.z-1}
+			front = vector.offset(pos, 0, 0, -1)
 		end
-		local above = {x=pos.x,y=pos.y+1,z=pos.z}
 
 		local frontnode = minetest.get_node(front)
 		if not minetest.registered_nodes[frontnode.name] then return end
 
-		-- Suck an item from the container above into the hopper
-		local abovenode = minetest.get_node(above)
-		if not minetest.registered_nodes[abovenode.name] then return end
-		local g = minetest.get_item_group(abovenode.name, "container")
-		local sucked = mcl_util.move_item_container(above, pos)
-
-		-- Also suck in non-fuel items from furnace fuel slot
-		if not sucked and g == 4 then
-			local finv = minetest.get_inventory({type="node", pos=above})
-			if finv and not mcl_util.is_fuel(finv:get_stack("fuel", 1)) then
-				mcl_util.move_item_container(above, pos, "fuel")
-			end
-		end
-
 		-- Move an item from the hopper into the container to which the hopper points to
 		local g = minetest.get_item_group(frontnode.name, "container")
-		if g == 2 or g == 3 or g == 5 or g == 6 then
-			mcl_util.move_item_container(pos, front)
-		elseif g == 4 then
-			-- Put fuel into fuel slot
-			local sinv = minetest.get_inventory({type="node", pos = pos})
-			local dinv = minetest.get_inventory({type="node", pos = front})
-			local slot_id,_ = mcl_util.get_eligible_transfer_item_slot(sinv, "main", dinv, "fuel", is_transferrable_fuel)
-			if slot_id then
-				mcl_util.move_item_container(pos, front, nil, slot_id, "fuel")
-			end
+		if g >= 2 and g <= 6 then
+			hopper_push(pos, front)
 		end
 	end
 })
