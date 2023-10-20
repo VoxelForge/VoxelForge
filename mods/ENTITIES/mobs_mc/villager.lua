@@ -1803,7 +1803,7 @@ local trade_inventory = {
 					trader._locked_trades = 0
 					-- Also heal trader for unlocking stuff
 					-- TODO: Replace by Regeneration I
-					trader.health = math.min(trader.hp_max, trader.health + 4)
+					trader.health = math.min((trader.object:get_properties().hp_max or 20), trader.health + 4)
 				end
 				trade.trade_counter = trade.trade_counter + 1
 				-- Semi-randomly lock trade for repeated trade (not if there's only 1 trade)
@@ -1834,7 +1834,7 @@ local trade_inventory = {
 						trader._locked_trades = 1
 						-- Also heal trader for unlocking stuff
 						-- TODO: Replace by Regeneration I
-						trader.health = math.min(trader.hp_max, trader.health + 4)
+						trader.health = math.min((trader.object:get_properties().hp_max or 20), trader.health + 4)
 					end
 				end
 				trader._trades = minetest.serialize(trades)
