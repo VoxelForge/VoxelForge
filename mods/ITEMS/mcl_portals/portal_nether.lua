@@ -33,9 +33,7 @@ for dim, key in pairs(mod_storage_keys) do
 	end
 end
 
--- The distance portals can be apart and still link. It is 20 instead of 16
--- because the portal generation position and rounding might make the portals
--- generate a bit further than 16 nodes away.
+-- The distance portals can be apart and still link.
 local link_distance = {
 	overworld = 16 * NETHER_SCALE,
 	nether = 16,
