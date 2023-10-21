@@ -1,7 +1,7 @@
 
 local new_villages = minetest.settings:get_bool("mcl_villages_new", true)
 local min_jobs = tonumber(minetest.settings:get("mcl_villages_min_jobs")) or 1
-local max_jobs = tonumber(minetest.settings:get("mcl_villages_max_jobs")) or 10
+local max_jobs = tonumber(minetest.settings:get("mcl_villages_max_jobs")) or 12
 local placement_priority = minetest.settings:get("mcl_villages_placement_priority") or "random"
 
 local S = minetest.get_translator(minetest.get_current_modname())
@@ -656,6 +656,9 @@ function mcl_villages.post_process_building(minp, maxp, blockseed, has_beds, has
 			else
 				minetest.log("warning", "Could not create a golem!")
 			end
+
+			spawn_cats(bell)
+
 		end
 	end
 

@@ -278,7 +278,7 @@ mcl_villages_new (Enable new village generator) bool false
 
 mcl_villages_min_jobs (The minimum number of jobs to have in a village) int 1
 
-mcl_villages_max_jobs (The maximum number of jobs to have in a village) int 10
+mcl_villages_max_jobs (The maximum number of jobs to have in a village) int 12
 
 mcl_villages_circles (Use circles instead of rectangles for above ground clearing) bool true
 

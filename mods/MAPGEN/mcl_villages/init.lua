@@ -190,7 +190,7 @@ if new_villages then
 		drawtype = "airlike",
 		groups = { not_in_creative_inventory = 1 },
 		light_source = 14,
-		-- Somethinsg don't work reliably when done in the map building
+		-- Somethings don't work reliably when done in the map building
 		-- so we use a timer to run them later when they work more reliably
 		-- e.g. spawning mobs, running minetest.find_path
 		on_timer = function(pos, elapsed)
