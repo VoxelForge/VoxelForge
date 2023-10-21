@@ -99,11 +99,8 @@ function mcl_trees.check_growth(pos, width, height)
 	local pos_space = math.max((width - 1) / 2)
 	for x = -neg_space, pos_space do
 		for z = -neg_space, pos_space do
-			for y = 1, height do
-				local np = vector.new(
-					pos.x + x,
-					pos.y + y,
-					pos.z + z)
+			for y = 0, height - 1 do
+				local np = vector.offset(pos, x, y, z)
 				if node_stops_growth(minetest.get_node(np)) then
 					return false
 				end
