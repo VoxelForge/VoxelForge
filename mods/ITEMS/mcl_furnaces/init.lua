@@ -10,7 +10,7 @@ local LIGHT_ACTIVE_FURNACE = 13
 -- Formspecs
 --
 
-local function active_formspec(fuel_percent, item_percent)
+function mcl_furnaces.active_formspec(fuel_percent, item_percent)
 	return table.concat({
 		"formspec_version[4]",
 		"size[11.75,10.425]",
@@ -48,7 +48,7 @@ local function active_formspec(fuel_percent, item_percent)
 	})
 end
 
-local inactive_formspec = table.concat({
+mcl_furnaces.inactive_formspec = table.concat({
 	"formspec_version[4]",
 	"size[11.75,10.425]",
 	"label[0.375,0.375;" .. F(C(mcl_formspec.label_color, S("Furnace"))) .. "]",
@@ -84,13 +84,13 @@ local inactive_formspec = table.concat({
 })
 
 
-local receive_fields = function(pos, formname, fields, sender)
+function mcl_furnaces.receive_fields(pos, formname, fields, sender)
 	if fields.craftguide then
 		mcl_craftguide.show(sender:get_player_name())
 	end
 end
 
-local function give_xp(pos, player)
+function mcl_furnaces.give_xp(pos, player)
 	local meta = minetest.get_meta(pos)
 	local dir = vector.divide(minetest.facedir_to_dir(minetest.get_node(pos).param2), -1.95)
 	local xp = meta:get_int("xp")
@@ -108,7 +108,7 @@ end
 -- Node callback functions that are the same for active and inactive furnace
 --
 
-local function allow_metadata_inventory_put(pos, listname, index, stack, player)
+function mcl_furnaces.allow_metadata_inventory_put(pos, listname, index, stack, player)
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
@@ -154,14 +154,14 @@ local function allow_metadata_inventory_put(pos, listname, index, stack, player)
 	end
 end
 
-local function allow_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
+function mcl_furnaces.allow_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 	local stack = inv:get_stack(from_list, from_index)
-	return allow_metadata_inventory_put(pos, to_list, to_index, stack, player)
+	return mcl_furnaces.allow_metadata_inventory_put(pos, to_list, to_index, stack, player)
 end
 
-local function allow_metadata_inventory_take(pos, listname, index, stack, player)
+function mcl_furnaces.allow_metadata_inventory_take(pos, listname, index, stack, player)
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
@@ -170,7 +170,7 @@ local function allow_metadata_inventory_take(pos, listname, index, stack, player
 	return stack:get_count()
 end
 
-local function on_metadata_inventory_take(pos, listname, index, stack, player)
+function mcl_furnaces.on_metadata_inventory_take(pos, listname, index, stack, player)
 	-- Award smelting achievements
 	if listname == "dst" then
 		if stack:get_name() == "mcl_core:iron_ingot" then
@@ -178,17 +178,17 @@ local function on_metadata_inventory_take(pos, listname, index, stack, player)
 		elseif stack:get_name() == "mcl_fishing:fish_cooked" then
 			awards.unlock(player:get_player_name(), "mcl:cookFish")
 		end
-		give_xp(pos, player)
+		mcl_furnaces.give_xp(pos, player)
 	end
 end
 
-local function on_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
+function mcl_furnaces.on_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
 	if from_list == "dst" then
-		give_xp(pos, player)
+		mcl_furnaces.give_xp(pos, player)
 	end
 end
 
-local function spawn_flames(pos, param2)
+function mcl_furnaces.spawn_flames(pos, param2)
 	local minrelpos, maxrelpos
 	local dir = minetest.facedir_to_dir(param2)
 	if dir.x > 0 then
@@ -222,7 +222,7 @@ local function spawn_flames(pos, param2)
 	}, "low")
 end
 
-local function swap_node(pos, name)
+function mcl_furnaces.swap_node(pos, name)
 	local node = minetest.get_node(pos)
 	if node.name == name then
 		return
@@ -230,13 +230,13 @@ local function swap_node(pos, name)
 	node.name = name
 	minetest.swap_node(pos, node)
 	if name == "mcl_furnaces:furnace_active" then
-		spawn_flames(pos, node.param2)
+		mcl_furnaces.spawn_flames(pos, node.param2)
 	else
 		mcl_particles.delete_node_particlespawners(pos)
 	end
 end
 
-local function furnace_reset_delta_time(pos)
+function mcl_furnaces.furnace_reset_delta_time(pos)
 	local meta = minetest.get_meta(pos)
 	local time_speed = tonumber(minetest.settings:get("time_speed") or 72)
 	if (time_speed < 0.1) then
@@ -258,7 +258,7 @@ local function furnace_reset_delta_time(pos)
 	meta:set_string("last_gametime", tostring(current_game_time))
 end
 
-local function furnace_get_delta_time(pos, elapsed)
+function mcl_furnaces.furnace_get_delta_time(pos, elapsed)
 	local meta = minetest.get_meta(pos)
 	local time_speed = tonumber(minetest.settings:get("time_speed") or 72)
 	local current_game_time
@@ -286,11 +286,11 @@ local function furnace_get_delta_time(pos, elapsed)
 	return meta, elapsed_game_time
 end
 
-local function furnace_node_timer(pos, elapsed)
+function mcl_furnaces.furnace_node_timer(pos, elapsed)
 	--
 	-- Inizialize metadata
 	--
-	local meta, elapsed_game_time = furnace_get_delta_time(pos, elapsed)
+	local meta, elapsed_game_time = mcl_furnaces.furnace_get_delta_time(pos, elapsed)
 
 	local fuel_time = meta:get_float("fuel_time") or 0
 	local src_time = meta:get_float("src_time") or 0
@@ -404,7 +404,7 @@ local function furnace_node_timer(pos, elapsed)
 	--
 	-- Update formspec and node
 	--
-	local formspec = inactive_formspec
+	local formspec = mcl_furnaces.inactive_formspec
 	local item_percent = 0
 	if cookable then
 		item_percent = math.floor(src_time / cooked.time * 100)
@@ -417,12 +417,12 @@ local function furnace_node_timer(pos, elapsed)
 		if fuel_totaltime > 0 then
 			fuel_percent = math.floor(fuel_time / fuel_totaltime * 100)
 		end
-		formspec = active_formspec(fuel_percent, item_percent)
-		swap_node(pos, "mcl_furnaces:furnace_active")
+		formspec = mcl_furnaces.active_formspec(fuel_percent, item_percent)
+		mcl_furnaces.swap_node(pos, "mcl_furnaces:furnace_active")
 		-- make sure timer restarts automatically
 		result = true
 	else
-		swap_node(pos, "mcl_furnaces:furnace")
+		mcl_furnaces.swap_node(pos, "mcl_furnaces:furnace")
 		-- stop timer on the inactive furnace
 		minetest.get_node_timer(pos):stop()
 	end
@@ -443,21 +443,19 @@ local function furnace_node_timer(pos, elapsed)
 	return result
 end
 
-local on_rotate, after_rotate_active
-if minetest.get_modpath("screwdriver") then
-	on_rotate = screwdriver.rotate_simple
-	after_rotate_active = function(pos)
-		local node = minetest.get_node(pos)
-		mcl_particles.delete_node_particlespawners(pos)
-		if node.name == "mcl_furnaces:furnace" then
-			return
-		end
-		spawn_flames(pos, node.param2)
+mcl_furnaces.on_rotate = screwdriver.rotate_simple
+function mcl_furnaces.after_rotate_active(pos)
+	local node = minetest.get_node(pos)
+	mcl_particles.delete_node_particlespawners(pos)
+	if node.name == "mcl_furnaces:furnace" then
+		return
 	end
+	mcl_furnaces.spawn_flames(pos, node.param2)
 end
 
+
 -- Returns true if itemstack is fuel, but not for lava bucket if destination already has one
-local is_transferrable_fuel = function(itemstack, src_inventory, src_list, dst_inventory, dst_list)
+function mcl_furnaces.is_transferrable_fuel(itemstack, src_inventory, src_list, dst_inventory, dst_list)
 	if mcl_util.is_fuel(itemstack) then
 		if itemstack:get_name() == "mcl_buckets:bucket_lava" then
 			return dst_inventory:is_empty(dst_list)
@@ -516,7 +514,7 @@ minetest.register_node("mcl_furnaces:furnace", {
 	is_ground_content = false,
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 
-	on_timer = furnace_node_timer,
+	on_timer = mcl_furnaces.furnace_node_timer,
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
 		local meta = minetest.get_meta(pos)
 		local meta2 = meta:to_table()
@@ -535,7 +533,7 @@ minetest.register_node("mcl_furnaces:furnace", {
 
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec", inactive_formspec)
+		meta:set_string("formspec", mcl_furnaces.inactive_formspec)
 		local inv = meta:get_inventory()
 		inv:set_size("src", 1)
 		inv:set_size("fuel", 1)
@@ -543,40 +541,40 @@ minetest.register_node("mcl_furnaces:furnace", {
 	end,
 	on_destruct = function(pos)
 		mcl_particles.delete_node_particlespawners(pos)
-		give_xp(pos)
+		mcl_furnaces.give_xp(pos)
 	end,
 
 	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
 		-- Reset accumulated game time when player works with furnace:
-		furnace_reset_delta_time(pos)
+		mcl_furnaces.furnace_reset_delta_time(pos)
 		minetest.get_node_timer(pos):start(1.0)
 
-		on_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
+		mcl_furnaces.on_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
 	end,
 	on_metadata_inventory_put = function(pos)
 		-- Reset accumulated game time when player works with furnace:
-		furnace_reset_delta_time(pos)
+		mcl_furnaces.furnace_reset_delta_time(pos)
 		-- start timer function, it will sort out whether furnace can burn or not.
 		minetest.get_node_timer(pos):start(1.0)
 	end,
 	on_metadata_inventory_take = function(pos, listname, index, stack, player)
 		-- Reset accumulated game time when player works with furnace:
-		furnace_reset_delta_time(pos)
+		mcl_furnaces.furnace_reset_delta_time(pos)
 		-- start timer function, it will helpful if player clears dst slot
 		minetest.get_node_timer(pos):start(1.0)
 
-		on_metadata_inventory_take(pos, listname, index, stack, player)
+		mcl_furnaces.on_metadata_inventory_take(pos, listname, index, stack, player)
 	end,
 
-	allow_metadata_inventory_put = allow_metadata_inventory_put,
-	allow_metadata_inventory_move = allow_metadata_inventory_move,
-	allow_metadata_inventory_take = allow_metadata_inventory_take,
-	on_receive_fields = receive_fields,
+	allow_metadata_inventory_put = mcl_furnaces.allow_metadata_inventory_put,
+	allow_metadata_inventory_move = mcl_furnaces.allow_metadata_inventory_move,
+	allow_metadata_inventory_take = mcl_furnaces.allow_metadata_inventory_take,
+	on_receive_fields = mcl_furnaces.receive_fields,
 	_on_hopper_in = mcl_furnaces.on_hopper_in,
 	_on_hopper_out = mcl_furnaces.on_hopper_out,
 	_mcl_blast_resistance = 3.5,
 	_mcl_hardness = 3.5,
-	on_rotate = on_rotate,
+	on_rotate = mcl_furnaces.on_rotate,
 })
 
 minetest.register_node("mcl_furnaces:furnace_active", {
@@ -594,7 +592,7 @@ minetest.register_node("mcl_furnaces:furnace_active", {
 	groups = { pickaxey = 1, container = 4, deco_block = 1, not_in_creative_inventory = 1, material_stone = 1 },
 	is_ground_content = false,
 	sounds = mcl_sounds.node_sound_stone_defaults(),
-	on_timer = furnace_node_timer,
+	on_timer = mcl_furnaces.furnace_node_timer,
 
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
 		local meta = minetest.get_meta(pos)
@@ -614,25 +612,25 @@ minetest.register_node("mcl_furnaces:furnace_active", {
 
 	on_construct = function(pos)
 		local node = minetest.get_node(pos)
-		spawn_flames(pos, node.param2)
+		mcl_furnaces.spawn_flames(pos, node.param2)
 	end,
 	on_destruct = function(pos)
 		mcl_particles.delete_node_particlespawners(pos)
-		give_xp(pos)
+		mcl_furnaces.give_xp(pos)
 	end,
 
-	allow_metadata_inventory_put = allow_metadata_inventory_put,
-	allow_metadata_inventory_move = allow_metadata_inventory_move,
-	allow_metadata_inventory_take = allow_metadata_inventory_take,
-	on_metadata_inventory_move = on_metadata_inventory_move,
-	on_metadata_inventory_take = on_metadata_inventory_take,
-	on_receive_fields = receive_fields,
+	allow_metadata_inventory_put = mcl_furnaces.allow_metadata_inventory_put,
+	allow_metadata_inventory_move = mcl_furnaces.allow_metadata_inventory_move,
+	allow_metadata_inventory_take = mcl_furnaces.allow_metadata_inventory_take,
+	on_metadata_inventory_move = mcl_furnaces.on_metadata_inventory_move,
+	on_metadata_inventory_take = mcl_furnaces.on_metadata_inventory_take,
+	on_receive_fields = mcl_furnaces.receive_fields,
 	_on_hopper_in = mcl_furnaces.on_hopper_in,
 	_on_hopper_out = mcl_furnaces.on_hopper_out,
 	_mcl_blast_resistance = 3.5,
 	_mcl_hardness = 3.5,
-	on_rotate = on_rotate,
-	after_rotate = after_rotate_active,
+	on_rotate = mcl_furnaces.on_rotate,
+	after_rotate = mcl_furnaces.after_rotate_active,
 })
 
 minetest.register_craft({
@@ -655,7 +653,7 @@ minetest.register_lbm({
 	nodenames = { "mcl_furnaces:furnace_active" },
 	run_at_every_load = true,
 	action = function(pos, node)
-		spawn_flames(pos, node.param2)
+		mcl_furnaces.spawn_flames(pos, node.param2)
 	end,
 })
 
@@ -668,6 +666,6 @@ minetest.register_lbm({
 	run_at_every_load = false,
 	action = function(pos, node)
 		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec", inactive_formspec)
+		meta:set_string("formspec", mcl_furnaces.inactive_formspec)
 	end,
 })
