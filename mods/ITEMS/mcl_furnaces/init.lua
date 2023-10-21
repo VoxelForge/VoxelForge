@@ -493,7 +493,35 @@ function mcl_furnaces.on_hopper_in(pos, to_pos)
 	end
 end
 
-minetest.register_node("mcl_furnaces:furnace", {
+mcl_furnaces.tpl_furnace_node = {
+	paramtype2 = "facedir",
+	paramtype = "light",
+	drop = "mcl_furnaces:furnace",
+	groups = { pickaxey = 1, container = 4, deco_block = 1, not_in_creative_inventory = 1, material_stone = 1 },
+	is_ground_content = false,
+	sounds = mcl_sounds.node_sound_stone_defaults(),
+	_mcl_blast_resistance = 3.5,
+	_mcl_hardness = 3.5,
+
+	on_timer = mcl_furnaces.furnace_node_timer,
+	after_dig_node = mcl_util.drop_items_from_meta_container({"src","dst","fuel"}),
+	on_destruct = function(pos)
+		mcl_particles.delete_node_particlespawners(pos)
+		mcl_furnaces.give_xp(pos)
+	end,
+
+	allow_metadata_inventory_put = mcl_furnaces.allow_metadata_inventory_put,
+	allow_metadata_inventory_move = mcl_furnaces.allow_metadata_inventory_move,
+	allow_metadata_inventory_take = mcl_furnaces.allow_metadata_inventory_take,
+	on_metadata_inventory_move = mcl_furnaces.on_metadata_inventory_move,
+	on_metadata_inventory_take = mcl_furnaces.on_metadata_inventory_take,
+	on_receive_fields = mcl_furnaces.receive_fields,
+	_on_hopper_in = mcl_furnaces.on_hopper_in,
+	_on_hopper_out = mcl_furnaces.on_hopper_out,
+	on_rotate = mcl_furnaces.on_rotate,
+}
+
+mcl_furnaces.tpl_furnace_node_normal = table.merge(mcl_furnaces.tpl_furnace_node,{
 	description = S("Furnace"),
 	_tt_help = S("Uses fuel to smelt or cook items"),
 	_doc_items_longdesc = S("Furnaces cook or smelt several items, using a furnace fuel, into something else."),
@@ -509,27 +537,6 @@ minetest.register_node("mcl_furnaces:furnace", {
 		"default_furnace_side.png", "default_furnace_side.png",
 		"default_furnace_side.png", "default_furnace_front.png"
 	},
-	paramtype2 = "facedir",
-	groups = { pickaxey = 1, container = 4, deco_block = 1, material_stone = 1 },
-	is_ground_content = false,
-	sounds = mcl_sounds.node_sound_stone_defaults(),
-
-	on_timer = mcl_furnaces.furnace_node_timer,
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		local meta = minetest.get_meta(pos)
-		local meta2 = meta:to_table()
-		meta:from_table(oldmetadata)
-		local inv = meta:get_inventory()
-		for _, listname in ipairs({ "src", "dst", "fuel" }) do
-			local stack = inv:get_stack(listname, 1)
-			if not stack:is_empty() then
-				local p = { x = pos.x + math.random(0, 10) / 10 - 0.5, y = pos.y,
-					z = pos.z + math.random(0, 10) / 10 - 0.5 }
-				minetest.add_item(p, stack)
-			end
-		end
-		meta:from_table(meta2)
-	end,
 
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -538,10 +545,6 @@ minetest.register_node("mcl_furnaces:furnace", {
 		inv:set_size("src", 1)
 		inv:set_size("fuel", 1)
 		inv:set_size("dst", 1)
-	end,
-	on_destruct = function(pos)
-		mcl_particles.delete_node_particlespawners(pos)
-		mcl_furnaces.give_xp(pos)
 	end,
 
 	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
@@ -565,19 +568,9 @@ minetest.register_node("mcl_furnaces:furnace", {
 
 		mcl_furnaces.on_metadata_inventory_take(pos, listname, index, stack, player)
 	end,
-
-	allow_metadata_inventory_put = mcl_furnaces.allow_metadata_inventory_put,
-	allow_metadata_inventory_move = mcl_furnaces.allow_metadata_inventory_move,
-	allow_metadata_inventory_take = mcl_furnaces.allow_metadata_inventory_take,
-	on_receive_fields = mcl_furnaces.receive_fields,
-	_on_hopper_in = mcl_furnaces.on_hopper_in,
-	_on_hopper_out = mcl_furnaces.on_hopper_out,
-	_mcl_blast_resistance = 3.5,
-	_mcl_hardness = 3.5,
-	on_rotate = mcl_furnaces.on_rotate,
 })
 
-minetest.register_node("mcl_furnaces:furnace_active", {
+mcl_furnaces.tpl_furnace_node_active = table.merge(mcl_furnaces.tpl_furnace_node,{
 	description = S("Burning Furnace"),
 	_doc_items_create_entry = false,
 	tiles = {
@@ -585,53 +578,17 @@ minetest.register_node("mcl_furnaces:furnace_active", {
 		"default_furnace_side.png", "default_furnace_side.png",
 		"default_furnace_side.png", "default_furnace_front_active.png",
 	},
-	paramtype2 = "facedir",
-	paramtype = "light",
 	light_source = LIGHT_ACTIVE_FURNACE,
-	drop = "mcl_furnaces:furnace",
-	groups = { pickaxey = 1, container = 4, deco_block = 1, not_in_creative_inventory = 1, material_stone = 1 },
-	is_ground_content = false,
-	sounds = mcl_sounds.node_sound_stone_defaults(),
-	on_timer = mcl_furnaces.furnace_node_timer,
-
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		local meta = minetest.get_meta(pos)
-		local meta2 = meta
-		meta:from_table(oldmetadata)
-		local inv = meta:get_inventory()
-		for _, listname in ipairs({ "src", "dst", "fuel" }) do
-			local stack = inv:get_stack(listname, 1)
-			if not stack:is_empty() then
-				local p = { x = pos.x + math.random(0, 10) / 10 - 0.5, y = pos.y,
-					z = pos.z + math.random(0, 10) / 10 - 0.5 }
-				minetest.add_item(p, stack)
-			end
-		end
-		meta:from_table(meta2:to_table())
-	end,
-
 	on_construct = function(pos)
 		local node = minetest.get_node(pos)
 		mcl_furnaces.spawn_flames(pos, node.param2)
 	end,
-	on_destruct = function(pos)
-		mcl_particles.delete_node_particlespawners(pos)
-		mcl_furnaces.give_xp(pos)
-	end,
-
-	allow_metadata_inventory_put = mcl_furnaces.allow_metadata_inventory_put,
-	allow_metadata_inventory_move = mcl_furnaces.allow_metadata_inventory_move,
-	allow_metadata_inventory_take = mcl_furnaces.allow_metadata_inventory_take,
-	on_metadata_inventory_move = mcl_furnaces.on_metadata_inventory_move,
-	on_metadata_inventory_take = mcl_furnaces.on_metadata_inventory_take,
-	on_receive_fields = mcl_furnaces.receive_fields,
-	_on_hopper_in = mcl_furnaces.on_hopper_in,
-	_on_hopper_out = mcl_furnaces.on_hopper_out,
-	_mcl_blast_resistance = 3.5,
-	_mcl_hardness = 3.5,
-	on_rotate = mcl_furnaces.on_rotate,
 	after_rotate = mcl_furnaces.after_rotate_active,
 })
+
+minetest.register_node("mcl_furnaces:furnace", mcl_furnaces.tpl_furnace_node_normal)
+
+minetest.register_node("mcl_furnaces:furnace_active", mcl_furnaces.tpl_furnace_node_active)
 
 minetest.register_craft({
 	output = "mcl_furnaces:furnace",
