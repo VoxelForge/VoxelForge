@@ -49,3 +49,12 @@ minetest.register_craft({
 		{"mcl_core:diamond","mcl_core:diamond","mcl_core:diamond"},
 	}
 })
+
+minetest.register_craft({
+    output = "mcl_armor:wayfinder",
+    recipe = {
+        {"mcl_core:diamond","mcl_core:diamond","mcl_core:diamond"},
+        {"mcl_core:diamond", "mcl_maps:empty_map","mcl_core:diamond"},
+        {"mcl_core:diamond","mcl_core:diamond","mcl_core:diamond"},
+    }
+})

@@ -111,5 +111,9 @@ Hero of the Village=
 Successfully defend a village from a raid=
 Voluntary Exile=
 Kill a raid captain. Maybe consider staying away from the local villages for the time being...=
+Crafting a New Look=
+Craft a trimmed armor at a Smithing Table=
+Smithing with Style=
+Apply these smithing templates at least once: Spire, Snout, Rib, Ward, Silence, Vex, Tide, Wayfinder=
 ##### not used anymore #####
 Sky's The Limit=

@@ -86,6 +86,17 @@ local formspec = table.concat({
 	"listring[context;diamond_item]",
 })
 
+local achievement_trims = {
+	["mcl_armor:spire"]		=	true,
+	["mcl_armor:snout"]		=	true,
+	["mcl_armor:rib"]		=	true,
+	["mcl_armor:ward"]		=	true,
+	["mcl_armor:silence"]	=	true,
+	["mcl_armor:vex"]		=	true,
+	["mcl_armor:tide"]		=	true,
+	["mcl_armor:wayfinder"]	=	true
+}
+
 function mcl_smithing_table.upgrade_trimmed(itemstack, color_mineral, template)
 	--get information required
 	local material_name = color_mineral:get_name()
@@ -189,19 +200,43 @@ minetest.register_node("mcl_smithing_table:table", {
 		end
 
 		if listname == "upgraded_item" then
+			-- ToDo: make epic sound
+			minetest.sound_play("mcl_smithing_table_upgrade", { pos = pos, max_hear_distance = 16 })
+
+			if stack:get_name() == "mcl_farming:hoe_netherite" then
+				awards.unlock(player:get_player_name(), "mcl:seriousDedication")
+			elseif mcl_armor.is_trimmed(stack) then
+				local template_name = inv:get_stack("template", 1):get_name()
+				local playername = player:get_player_name()
+				awards.unlock(playername, "mcl:trim")
+
+				if not awards.players[playername].unlocked["mcl:lots_of_trimming"] and achievement_trims[template_name] then
+					local meta = player:get_meta()
+					local used_achievement_trims = minetest.deserialize(meta:get_string("mcl_smithing_table:achievement_trims")) or {}
+					if not used_achievement_trims[template_name] then
+						used_achievement_trims[template_name] = true
+					end
+
+					local used_all = true
+					for name, _ in pairs(achievement_trims) do
+						if not used_achievement_trims[name] then
+							used_all = false
+							break
+						end
+					end
+
+					if used_all then
+						awards.unlock(playername, "mcl:lots_of_trimming")
+					else
+						meta:set_string("mcl_smithing_table:achievement_trims", minetest.serialize(used_achievement_trims))
+					end
+				end
+			end
+
 			take_item("upgrade_item")
 			take_item("mineral")
 			take_item("template")
-
-			-- ToDo: make epic sound
-			minetest.sound_play("mcl_smithing_table_upgrade", { pos = pos, max_hear_distance = 16 })
 		end
-		if listname == "upgraded_item" then
-			if stack:get_name() == "mcl_farming:hoe_netherite" then
-				awards.unlock(player:get_player_name(), "mcl:seriousDedication")
-			end
-		end
-
 		reset_upgraded_item(pos)
 	end,
 
