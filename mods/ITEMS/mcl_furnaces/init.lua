@@ -10,11 +10,11 @@ local LIGHT_ACTIVE_FURNACE = 13
 -- Formspecs
 --
 
-function mcl_furnaces.active_formspec(fuel_percent, item_percent)
+local function get_active_formspec(fuel_percent, item_percent, name)
 	return table.concat({
 		"formspec_version[4]",
 		"size[11.75,10.425]",
-		"label[0.375,0.375;" .. F(C(mcl_formspec.label_color, S("Furnace"))) .. "]",
+		"label[0.375,0.375;" .. F(C(mcl_formspec.label_color, name)) .. "]",
 		mcl_formspec.get_itemslot_bg_v4(3.5, 0.75, 1, 1),
 		"list[context;src;3.5,0.75;1,1;]",
 
@@ -48,40 +48,42 @@ function mcl_furnaces.active_formspec(fuel_percent, item_percent)
 	})
 end
 
-mcl_furnaces.inactive_formspec = table.concat({
-	"formspec_version[4]",
-	"size[11.75,10.425]",
-	"label[0.375,0.375;" .. F(C(mcl_formspec.label_color, S("Furnace"))) .. "]",
-	mcl_formspec.get_itemslot_bg_v4(3.5, 0.75, 1, 1),
-	"list[context;src;3.5,0.75;1,1;]",
+local function get_inactive_formspec(name)
+	return table.concat({
+		"formspec_version[4]",
+		"size[11.75,10.425]",
+		"label[0.375,0.375;" .. F(C(mcl_formspec.label_color, name)) .. "]",
+		mcl_formspec.get_itemslot_bg_v4(3.5, 0.75, 1, 1),
+		"list[context;src;3.5,0.75;1,1;]",
 
-	"image[3.5,2;1,1;default_furnace_fire_bg.png]",
+		"image[3.5,2;1,1;default_furnace_fire_bg.png]",
 
-	mcl_formspec.get_itemslot_bg_v4(3.5, 3.25, 1, 1),
-	"list[context;fuel;3.5,3.25;1,1;]",
+		mcl_formspec.get_itemslot_bg_v4(3.5, 3.25, 1, 1),
+		"list[context;fuel;3.5,3.25;1,1;]",
 
-	"image[5.25,2;1.5,1;gui_furnace_arrow_bg.png^[transformR270]",
+		"image[5.25,2;1.5,1;gui_furnace_arrow_bg.png^[transformR270]",
 
-	mcl_formspec.get_itemslot_bg_v4(7.875, 2, 1, 1, 0.2),
-	"list[context;dst;7.875,2;1,1;]",
+		mcl_formspec.get_itemslot_bg_v4(7.875, 2, 1, 1, 0.2),
+		"list[context;dst;7.875,2;1,1;]",
 
-	"label[0.375,4.7;" .. F(C(mcl_formspec.label_color, S("Inventory"))) .. "]",
-	mcl_formspec.get_itemslot_bg_v4(0.375, 5.1, 9, 3),
-	"list[current_player;main;0.375,5.1;9,3;9]",
+		"label[0.375,4.7;" .. F(C(mcl_formspec.label_color, S("Inventory"))) .. "]",
+		mcl_formspec.get_itemslot_bg_v4(0.375, 5.1, 9, 3),
+		"list[current_player;main;0.375,5.1;9,3;9]",
 
-	mcl_formspec.get_itemslot_bg_v4(0.375, 9.05, 9, 1),
-	"list[current_player;main;0.375,9.05;9,1;]",
+		mcl_formspec.get_itemslot_bg_v4(0.375, 9.05, 9, 1),
+		"list[current_player;main;0.375,9.05;9,1;]",
 
-	"image_button[7.85,0.6;1,1;craftguide_book.png;craftguide;]"..
-	"tooltip[craftguide;"..minetest.formspec_escape(S("Recipe book")).."]"..
+		"image_button[7.85,0.6;1,1;craftguide_book.png;craftguide;]"..
+		"tooltip[craftguide;"..minetest.formspec_escape(S("Recipe book")).."]"..
 
-	"listring[context;dst]",
-	"listring[current_player;main]",
-	"listring[context;src]",
-	"listring[current_player;main]",
-	"listring[context;fuel]",
-	"listring[current_player;main]",
-})
+		"listring[context;dst]",
+		"listring[current_player;main]",
+		"listring[context;src]",
+		"listring[current_player;main]",
+		"listring[context;fuel]",
+		"listring[current_player;main]",
+	})
+end
 
 
 function mcl_furnaces.receive_fields(pos, formname, fields, sender)
@@ -402,10 +404,13 @@ function mcl_furnaces.get_timer_function(node_normal, node_active, factor, group
 			src_time = 0
 		end
 
-		--
-		-- Update formspec and node
-		--
-		local formspec = mcl_furnaces.inactive_formspec
+		local def = minetest.registered_nodes[node_normal]
+		local name = S("Furnace")
+		if def and def._tt_original_description then
+			name = def._tt_original_description
+		end
+
+		local formspec = get_inactive_formspec(name)
 		local item_percent = 0
 		if cookable then
 			item_percent = math.floor(src_time / cooked.time * 100)
@@ -418,7 +423,7 @@ function mcl_furnaces.get_timer_function(node_normal, node_active, factor, group
 			if fuel_totaltime > 0 then
 				fuel_percent = math.floor(fuel_time / fuel_totaltime * 100)
 			end
-			formspec = mcl_furnaces.active_formspec(fuel_percent, item_percent)
+			formspec = get_active_formspec(fuel_percent, item_percent, name)
 			mcl_furnaces.swap_node(pos, node_active)
 			-- make sure timer restarts automatically
 			result = true
@@ -525,14 +530,6 @@ mcl_furnaces.tpl_furnace_node = {
 
 mcl_furnaces.tpl_furnace_node_normal = table.merge(mcl_furnaces.tpl_furnace_node,{
 	_doc_items_hidden = false,
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec", mcl_furnaces.inactive_formspec)
-		local inv = meta:get_inventory()
-		inv:set_size("src", 1)
-		inv:set_size("fuel", 1)
-		inv:set_size("dst", 1)
-	end,
 
 	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
 		-- Reset accumulated game time when player works with furnace:
@@ -571,6 +568,19 @@ mcl_furnaces.tpl_furnace_node_active = table.merge(mcl_furnaces.tpl_furnace_node
 function mcl_furnaces.register_furnace(nodename, def)
 	local timer_func = mcl_furnaces.get_timer_function(nodename, nodename.."_active", (def.factor or 1), def.cook_group)
 	minetest.register_node(nodename, table.merge(mcl_furnaces.tpl_furnace_node_normal,{
+		on_construct = function(pos)
+			local meta = minetest.get_meta(pos)
+			local name = S("Furnace")
+			local def = minetest.registered_nodes[nodename]
+			if def and def._tt_original_description then
+				name = def._tt_original_description
+			end
+			meta:set_string("formspec", get_inactive_formspec(name))
+			local inv = meta:get_inventory()
+			inv:set_size("src", 1)
+			inv:set_size("fuel", 1)
+			inv:set_size("dst", 1)
+		end,
 		on_timer = timer_func,
 	},def.node_normal))
 	minetest.register_node(nodename.."_active", table.merge(mcl_furnaces.tpl_furnace_node_active,{
