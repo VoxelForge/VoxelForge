@@ -406,8 +406,8 @@ function mcl_furnaces.get_timer_function(node_normal, node_active, factor, group
 
 		local def = minetest.registered_nodes[node_normal]
 		local name = S("Furnace")
-		if def and def._tt_original_description then
-			name = def._tt_original_description
+		if def and def.description then
+			name = def._tt_original_description or def.description
 		end
 
 		local formspec = get_inactive_formspec(name)
@@ -572,8 +572,8 @@ function mcl_furnaces.register_furnace(nodename, def)
 			local meta = minetest.get_meta(pos)
 			local name = S("Furnace")
 			local def = minetest.registered_nodes[nodename]
-			if def and def._tt_original_description then
-				name = def._tt_original_description
+			if def and def.description then
+				name = def._tt_original_description or def.description
 			end
 			meta:set_string("formspec", get_inactive_formspec(name))
 			local inv = meta:get_inventory()
