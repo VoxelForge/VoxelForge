@@ -1,6 +1,5 @@
 mcl_furnaces = {}
 local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
 local C = minetest.colorize
 local F = minetest.formspec_escape
@@ -569,8 +568,7 @@ mcl_furnaces.tpl_furnace_node_active = table.merge(mcl_furnaces.tpl_furnace_node
 	after_rotate = mcl_furnaces.after_rotate_active,
 })
 
-function mcl_furnaces.register_furnace(name,def)
-	local nodename = "mcl_furnaces:"..name
+function mcl_furnaces.register_furnace(nodename, def)
 	local timer_func = mcl_furnaces.get_timer_function(nodename, nodename.."_active", (def.factor or 1), def.cook_group)
 	minetest.register_node(nodename, table.merge(mcl_furnaces.tpl_furnace_node_normal,{
 		on_timer = timer_func,
@@ -581,7 +579,7 @@ function mcl_furnaces.register_furnace(name,def)
 	},def.node_active))
 end
 
-mcl_furnaces.register_furnace("furnace",{
+mcl_furnaces.register_furnace("mcl_furnaces:furnace",{
 	node_normal = {
 		description = S("Furnace"),
 		_tt_help = S("Uses fuel to smelt or cook items"),
@@ -626,11 +624,9 @@ end
 minetest.register_lbm({
 	label = "Active furnace flame particles",
 	name = "mcl_furnaces:flames",
-	nodenames = { "mcl_furnaces:furnace_active" },
+	nodenames = { "group:furnace_active" },
 	run_at_every_load = true,
 	action = function(pos, node)
 		mcl_furnaces.spawn_flames(pos, node.param2)
 	end,
 })
-
-dofile(modpath.."/blast_furnace.lua")
