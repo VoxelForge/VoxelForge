@@ -293,7 +293,7 @@ mcl_villages_terrace_max_ext (Maximum width terracing is allowed to extend beyon
 
 mcl_villages_light_threshold (Light level to control lamp placement on paths. Night time light levels below this value will trigger lamp placement) int 5
 
-mcl_villages_village_chance (1 in X chance a village will spawn in a valid chunk. Set to 0 for no villages) int 75
+mcl_villages_village_chance (1 in X chance a village will spawn in a valid chunk. Set to 0 for no villages) int 100
 
 # This controls how job sites and houses are placed during village construction
 # random: shuffles the buildings so they get placed in any order
