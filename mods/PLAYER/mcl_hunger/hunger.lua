@@ -2,9 +2,7 @@
 
 -- wrapper for minetest.item_eat (this way we make sure other mods can't break this one)
 function minetest.do_item_eat(hp_change, replace_with_item, itemstack, user, pointed_thing)
-	if not user or user:is_player() == false then
-		return itemstack
-	end
+	if not user or not user.is_player or not user:is_player() or user.is_fake_player then return itemstack end
 
 	-- Call on_rightclick if the pointed node defines it
 	if pointed_thing.type == "node" then
@@ -119,6 +117,7 @@ local poisonrandomizer = PseudoRandom(os.time())
 
 function mcl_hunger.item_eat(hunger_change, replace_with_item, poisontime, poison, exhaust, poisonchance, sound)
 	return function(itemstack, user, pointed_thing)
+		if not user or not user.is_player or not user:is_player() or user.is_fake_player then return itemstack end
 		local itemname = itemstack:get_name()
 		local creative = minetest.is_creative_enabled(user:get_player_name())
 		if itemstack:peek_item() and user then
