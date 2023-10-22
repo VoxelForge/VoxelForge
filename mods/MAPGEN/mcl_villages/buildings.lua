@@ -248,21 +248,13 @@ local function init_nodes(p1, p2, size, rotation, pr)
 	construct_node(p1, p2, "mcl_anvils:anvil")
 
 	construct_node(p1, p2, "mcl_books:bookshelf")
-	construct_node(p1, p2, "mcl_grindstone:grindstone")
-	construct_node(p1, p2, "mcl_smithing_table:table")
-	construct_node(p1, p2, "mcl_smoker:smoker")
 	construct_node(p1, p2, "mcl_armor_stand:armor_stand")
 
-	-- No on_construct yet
-	--construct_node(p1, p2, "mcl_cartography_table:cartography_table")
-	--construct_node(p1, p2, "mcl_fletching_table:fletching_table")
-	--construct_node(p1, p2, "mcl_lectern:lectern")
-
-	construct_node(p1, p2, "mcl_stonecutter:stonecutter")
-	construct_node(p1, p2, "mcl_barrels:barrel_closed")
-	construct_node(p1, p2, "mcl_blast_furnace:blast_furnace")
-	construct_node(p1, p2, "mcl_brewing:stand_000")
-	construct_node(p1, p2, "mcl_loom:loom")
+	-- Support mods with custom job sites
+	local job_sites = minetest.find_nodes_in_area(p1, p2, mobs_mc.jobsites)
+	for _, v in pairs(job_sites) do
+		mcl_structures.init_node_construct(v)
+	end
 
 	-- Do new chest nodes first
 	local cnodes = construct_node(p1, p2, "mcl_chests:chest_small")
