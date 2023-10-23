@@ -483,15 +483,16 @@ function mcl_furnaces.on_hopper_out(uppos, pos)
 end
 
 function mcl_furnaces.on_hopper_in(pos, to_pos)
-	-- Put fuel into fuel slot
-	local sinv = minetest.get_inventory({type="node", pos = pos})
-	local dinv = minetest.get_inventory({type="node", pos = to_pos})
-	local slot_id,_ = mcl_util.get_eligible_transfer_item_slot(sinv, "main", dinv, "fuel", is_transferrable_fuel)
-	local pushed = false
-	if slot_id then
-		pushed = mcl_util.move_item_container(pos, to_pos, nil, slot_id, "fuel")
+	if pos.y == to_pos.y then
+		-- Put fuel into fuel slot
+		local sinv = minetest.get_inventory({type="node", pos = pos})
+		local dinv = minetest.get_inventory({type="node", pos = to_pos})
+		local slot_id,_ = mcl_util.get_eligible_transfer_item_slot(sinv, "main", dinv, "fuel", is_transferrable_fuel)
+		if slot_id then
+			mcl_util.move_item_container(pos, to_pos, nil, slot_id, "fuel")
+		end
+		return true
 	end
-	return pushed
 end
 
 minetest.register_node("mcl_furnaces:furnace", {
