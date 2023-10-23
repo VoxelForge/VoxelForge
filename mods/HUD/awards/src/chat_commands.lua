@@ -21,13 +21,6 @@ minetest.register_chatcommand("awards", {
 		else
 			awards.show_to(name, name, nil, false)
 		end
-
-		if (param == "disable" or param == "enable") and minetest.global_exists("sfinv") then
-			local player = minetest.get_player_by_name(name)
-			if player then
-				sfinv.set_player_inventory_formspec(player)
-			end
-		end
 	end
 })
 
