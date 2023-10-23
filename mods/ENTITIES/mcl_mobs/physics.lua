@@ -587,6 +587,13 @@ function mob_class:deal_light_damage(pos, damage)
 	end
 end
 
+function mob_class:is_in_node(itemstring) --can be group:...
+	local cb = self.object:get_properties().collisionbox
+	local pos = self.object:get_pos()
+	local nn = minetest.find_nodes_in_area(vector.offset(pos, cb[1], cb[2], cb[3]), vector.offset(pos, cb[4], cb[5], cb[6]), {itemstring})
+	if nn and #nn > 0 then return true end
+end
+
 -- environmental damage (water, lava, fire, light etc.)
 function mob_class:do_env_damage()
 	-- feed/tame text timer (so mob 'full' messages dont spam chat)
@@ -715,7 +722,7 @@ function mob_class:do_env_damage()
 		end
 	-- lava damage
 	elseif self.lava_damage > 0
-	and (nodef.groups.lava) then
+	and self:is_in_node("group:lava") then
 
 		if self.lava_damage ~= 0 then
 
@@ -732,7 +739,7 @@ function mob_class:do_env_damage()
 
 	-- fire damage
 	elseif self.fire_damage > 0
-	and (nodef.groups.fire) then
+	and self:is_in_node("group:fire") then
 
 		if self.fire_damage ~= 0 then
 
