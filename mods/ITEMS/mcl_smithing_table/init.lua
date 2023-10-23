@@ -7,16 +7,16 @@ local C = minetest.colorize
 mcl_smithing_table = {}
 
 local smithing_materials = {
-	["mcl_nether:netherite_ingot"]	= "netherite",
-	["mcl_core:diamond"]			= "diamond",
-	["mcl_core:lapis"]				= "lapis",
+	["mcl_nether:netherite_ingot"] = "netherite",
+	["mcl_core:diamond"] = "diamond",
+	["mcl_core:lapis"] = "lapis",
 	["mcl_amethyst:amethyst_shard"]	= "amethyst",
-	["mesecons:wire_00000000_off"]	= "redstone",
-	["mcl_core:iron_ingot"]			= "iron",
-	["mcl_core:gold_ingot"]			= "gold",
-	["mcl_copper:copper_ingot"]		= "copper",
-	["mcl_core:emerald"]			= "emerald",
-	["mcl_nether:quartz"]			= "quartz"
+	["mesecons:wire_00000000_off"]= "redstone",
+	["mcl_core:iron_ingot"] = "iron",
+	["mcl_core:gold_ingot"] = "gold",
+	["mcl_copper:copper_ingot"] = "copper",
+	["mcl_core:emerald"] = "emerald",
+	["mcl_nether:quartz"] = "quartz"
 }
 
 ---Function to upgrade diamond tool/armor to netherite tool/armor
@@ -87,14 +87,14 @@ local formspec = table.concat({
 })
 
 local achievement_trims = {
-	["mcl_armor:spire"]		=	true,
-	["mcl_armor:snout"]		=	true,
-	["mcl_armor:rib"]		=	true,
-	["mcl_armor:ward"]		=	true,
-	["mcl_armor:silence"]	=	true,
-	["mcl_armor:vex"]		=	true,
-	["mcl_armor:tide"]		=	true,
-	["mcl_armor:wayfinder"]	=	true
+	["mcl_armor:spire"] = true,
+	["mcl_armor:snout"] = true,
+	["mcl_armor:rib"] = true,
+	["mcl_armor:ward"] = true,
+	["mcl_armor:silence"] = true,
+	["mcl_armor:vex"] = true,
+	["mcl_armor:tide"] = true,
+	["mcl_armor:wayfinder"] = true
 }
 
 function mcl_smithing_table.upgrade_trimmed(itemstack, color_mineral, template)
