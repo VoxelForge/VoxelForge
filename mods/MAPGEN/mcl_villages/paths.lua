@@ -2,7 +2,7 @@
 -- generate paths between buildings
 -------------------------------------------------------------------------------
 
-local light_threshold = tonumber(minetest.settings:get("mcl_villages_light_threshold")) or 5
+local light_threshold = tonumber(minetest.settings:get("mcl_villages_light_threshold")) or 6
 
 function mcl_villages.paths(settlement_info)
   local starting_point
