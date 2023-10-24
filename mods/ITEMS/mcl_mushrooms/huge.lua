@@ -6,7 +6,6 @@ local template = {
 		flammable = -1, compostability = 85
 	},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
-	is_ground_content = true,
 	_mcl_blast_resistance = 0.2,
 	_mcl_hardness = 0.2,
 	_mcl_silk_touch_drop = true,

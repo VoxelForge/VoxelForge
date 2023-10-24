@@ -10,7 +10,6 @@ minetest.register_node("mcl_core:cactus", {
 	drawtype = "nodebox",
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
 	tiles = {"mcl_core_cactus_top.png", "mcl_core_cactus_bottom.png", "mcl_core_cactus_side.png"},
-	is_ground_content = true,
 	groups = {
 		handy = 1, attached_node = 1, deco_block = 1, dig_by_piston = 1,
 		plant = 1, enderman_takable = 1, compostability = 50
@@ -69,7 +68,6 @@ minetest.register_node("mcl_core:reeds", {
 	wield_image = "mcl_core_reeds.png",
 	paramtype = "light",
 	walkable = false,
-	is_ground_content = true,
 	node_box = {
 		type = "fixed",
 		fixed = {

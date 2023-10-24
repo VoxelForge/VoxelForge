@@ -6,7 +6,6 @@ local item_entities = {}
 
 local tpl = {
 	groups = { crumbly = 1, oddly_breakable_by_hand = 3, falling_node = 1, brushable = 1, suspicious_node = 1},
-	is_ground_content = true,
 	paramtype = "light",
 }
 

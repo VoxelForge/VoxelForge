@@ -319,7 +319,6 @@ minetest.register_node("mcl_mangrove:mangrove_mud_roots", {
 		"mcl_mud.png^mcl_mangrove_roots_side.png",
 		"mcl_mud.png^mcl_mangrove_roots_side.png",
 	},
-	is_ground_content = true,
 	groups = {handy = 1, shovely = 1, axey = 1, building_block = 1},
 	sounds = mcl_sounds.node_sound_sand_defaults(),
 	_mcl_blast_resistance = 0.7,

@@ -185,7 +185,6 @@ local def_tallgrass = {
 	sunlight_propagates = true,
 	walkable = false,
 	buildable_to = true,
-	is_ground_content = true,
 	groups = {
 		handy = 1, shearsy = 1, attached_node = 1, deco_block = 1,
 		plant = 1, place_flowerlike = 2, non_mycelium_plant = 1,
