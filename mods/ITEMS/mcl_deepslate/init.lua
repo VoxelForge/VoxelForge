@@ -34,8 +34,8 @@ minetest.register_node("mcl_deepslate:deepslate_reinforced", {
 		"mcl_deepslate_reinforced_bottom.png",
 		{name="mcl_deepslate_reinforced.png", animation={type="vertical_frames", aspect_w=32, aspect_h=32, length=7.25}}
 	},
+	is_ground_content = false,
 	paramtype2 = "facedir",
-	is_ground_content = true,
 	on_place = mcl_util.rotate_axis,
 	groups = { stone = 1, building_block = 1, material_stone = 1 },
 	drop = "",
@@ -124,6 +124,7 @@ local function register_deepslate_variant(item, desc, longdesc, stairs, slab, do
 		_doc_items_longdesc = longdesc,
 		_doc_items_hidden = false,
 		tiles = { "mcl_deepslate_"..item..".png" },
+		is_ground_content = false,
 		groups = { pickaxey = 1, building_block = 1, material_stone = 1 },
 		sounds = mcl_sounds.node_sound_stone_defaults(),
 		_mcl_blast_resistance = 6,
