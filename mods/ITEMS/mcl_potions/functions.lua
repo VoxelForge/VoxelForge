@@ -200,7 +200,7 @@ minetest.register_globalstep(function(dtime)
 				player:set_hp(math.min(player:get_properties().hp_max or 20, player:get_hp() + 1), { type = "set_hp", other = "regeneration" })
 				EF.regenerating[player].heal_timer = 0
 			elseif entity and entity.is_mob then
-				entity.health = math.min(entity.hp_max, entity.health + 1)
+				entity.health = math.min(entity.object:get_properties().hp_max, entity.health + 1)
 				EF.regenerating[player].heal_timer = 0
 			else -- stop regenerating if not a player or mob
 				EF.regenerating[player] = nil
@@ -735,7 +735,7 @@ function mcl_potions.healing_func(player, hp)
 		end
 
 		if obj and obj.is_mob then
-			obj.health = math.max(obj.health + hp, obj.hp_max)
+			obj.health = math.max(obj.health + hp, obj.object:get_properties().hp_max)
 		elseif player:is_player() then
 			player:set_hp(math.min(player:get_hp() + hp, player:get_properties().hp_max), { type = "set_hp", other = "healing" })
 		end
