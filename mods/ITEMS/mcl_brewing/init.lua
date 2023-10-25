@@ -339,13 +339,54 @@ local function allow_take(pos, listname, index, stack, player)
 	end
 end
 
+local function hopper_in(pos, to_pos)
+	local sinv = minetest.get_inventory({type="node", pos = pos})
+	local dinv = minetest.get_inventory({type="node", pos = to_pos})
+	if pos.y == to_pos.y then
+		local slot_id,_ = mcl_util.get_eligible_transfer_item_slot(sinv, "main", dinv, "fuel", function(itemstack)
+			return itemstack:get_name() == "mcl_mobitems:blaze_powder"
+		end)
+		if slot_id then
+			mcl_util.move_item(sinv, "main", slot_id, dinv, "fuel")
+		else
+			local slot_id,_ = mcl_util.get_eligible_transfer_item_slot(sinv, "main", dinv, "stand", function(itemstack)
+				local n = itemstack:get_name()
+				return minetest.get_item_group(n, "water_bottle") > 0
+			end)
+			if slot_id then
+				mcl_util.move_item(sinv, "main", slot_id, dinv, "stand")
+			end
+		end
+		return true
+	end
+	local slot_id,_ = mcl_util.get_eligible_transfer_item_slot(sinv, "main", dinv, "input", function(itemstack)
+		return minetest.get_item_group(itemstack:get_name(), "brewing_ingredient" ) > 0
+	end)
+	if slot_id then
+		mcl_util.move_item(sinv, "main", slot_id, dinv, "input")
+	end
+	return true
+end
+
+local function hopper_out(pos, to_pos)
+	local sinv = minetest.get_inventory({type="node", pos = pos})
+	local dinv = minetest.get_inventory({type="node", pos = to_pos})
+	local slot_id,_ = mcl_util.get_eligible_transfer_item_slot(sinv, "stand", dinv, "main", function(itemstack)
+		--TODO: check if hopper blocked by redstone
+		return true
+	end)
+	if slot_id then
+		mcl_util.move_item(sinv, "stand", slot_id, dinv, "main")
+	end
+	return true
+end
 
 minetest.register_node("mcl_brewing:stand_000", {
 	description = S("Brewing Stand"),
 	_doc_items_longdesc = S("The stand allows you to brew potions!"),
 	_doc_items_usagehelp = doc_string,
 	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, brewitem=1 },
+	groups = {pickaxey=1, brewitem=1, container=1},
 	tiles = tiles,
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
 	drop = "mcl_brewing:stand",
@@ -407,12 +448,14 @@ minetest.register_node("mcl_brewing:stand_000", {
 
 	on_timer = brewing_stand_timer,
 	on_rotate = on_rotate,
+	_on_hopper_in = hopper_in,
+	_on_hopper_out = hopper_out,
 })
 minetest.register_node("mcl_brewing:stand_100", {
 	description = S("Brewing Stand"),
 	_doc_items_create_entry = false,
 	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
+	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
 	tiles = tiles,
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
 	drop = "mcl_brewing:stand",
@@ -477,13 +520,15 @@ minetest.register_node("mcl_brewing:stand_100", {
 	end,
 	on_timer = brewing_stand_timer,
 	on_rotate = on_rotate,
+	_on_hopper_in = hopper_in,
+	_on_hopper_out = hopper_out,
 })
 
 minetest.register_node("mcl_brewing:stand_010", {
 	description = S("Brewing Stand"),
 	_doc_items_create_entry = false,
 	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
+	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
 	tiles = tiles,
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
 	drop = "mcl_brewing:stand",
@@ -549,13 +594,15 @@ minetest.register_node("mcl_brewing:stand_010", {
 	end,
 	on_timer = brewing_stand_timer,
 	on_rotate = on_rotate,
+	_on_hopper_in = hopper_in,
+	_on_hopper_out = hopper_out,
 })
 
 minetest.register_node("mcl_brewing:stand_001", {
 	description = S("Brewing Stand"),
 	_doc_items_create_entry = false,
 	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
+	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
 	tiles = tiles,
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
 	drop = "mcl_brewing:stand",
@@ -616,13 +663,15 @@ minetest.register_node("mcl_brewing:stand_001", {
 	end,
 	on_timer = brewing_stand_timer,
 	on_rotate = on_rotate,
+	_on_hopper_in = hopper_in,
+	_on_hopper_out = hopper_out,
 })
 
 minetest.register_node("mcl_brewing:stand_110", {
 	description = S("Brewing Stand"),
 	_doc_items_create_entry = false,
 	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
+	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
 	tiles = tiles,
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
 	drop = "mcl_brewing:stand",
@@ -693,13 +742,15 @@ minetest.register_node("mcl_brewing:stand_110", {
 	end,
 	on_timer = brewing_stand_timer,
 	on_rotate = on_rotate,
+	_on_hopper_in = hopper_in,
+	_on_hopper_out = hopper_out,
 })
 
 minetest.register_node("mcl_brewing:stand_101", {
 	description = S("Brewing Stand"),
 	_doc_items_create_entry = false,
 	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
+	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
 	tiles = tiles,
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
 	drop = "mcl_brewing:stand",
@@ -766,13 +817,15 @@ minetest.register_node("mcl_brewing:stand_101", {
 	end,
 	on_timer = brewing_stand_timer,
 	on_rotate = on_rotate,
+	_on_hopper_in = hopper_in,
+	_on_hopper_out = hopper_out,
 })
 
 minetest.register_node("mcl_brewing:stand_011", {
 	description = S("Brewing Stand"),
 	_doc_items_create_entry = false,
 	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
+	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
 	tiles = tiles,
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
 	drop = "mcl_brewing:stand",
@@ -839,13 +892,15 @@ minetest.register_node("mcl_brewing:stand_011", {
 	end,
 	on_timer = brewing_stand_timer,
 	on_rotate = on_rotate,
+	_on_hopper_in = hopper_in,
+	_on_hopper_out = hopper_out,
 })
 
 minetest.register_node("mcl_brewing:stand_111", {
 	description = S("Brewing Stand"),
 	_doc_items_create_entry = false,
 	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
+	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
 	tiles = tiles,
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
 	drop = "mcl_brewing:stand",
@@ -919,6 +974,8 @@ minetest.register_node("mcl_brewing:stand_111", {
 	end,
 	on_timer = brewing_stand_timer,
 	on_rotate = on_rotate,
+	_on_hopper_in = hopper_in,
+	_on_hopper_out = hopper_out,
 })
 
 minetest.register_craft({
