@@ -462,13 +462,15 @@ end
 local function hopper_push(pos, to_pos)
 	local to_node = minetest.get_node(to_pos)
 	local to_def = minetest.registered_nodes[to_node.name]
+	local cgroup = minetest.get_item_group(to_node.name, "container")
 
 	local success = false
 	if to_def then
 		if to_def._on_hopper_in then
 			success = to_def._on_hopper_in(pos, to_pos)
 		end
-		if not success then
+		-- Move an item from the hopper into the container to which the hopper points to
+		if not success and cgroup >= 2 and cgroup <= 6 then
 			success = mcl_util.move_item_container(pos, to_pos)
 		end
 	end
@@ -484,7 +486,8 @@ minetest.register_abm({
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
 		hopper_suck(pos)
-		hopper_push(pos, vector.offset(pos, 0, -1, 0))
+		local to_pos = vector.offset(pos, 0, -1, 0)
+		hopper_push(pos, to_pos)
 	end,
 })
 
@@ -512,11 +515,7 @@ minetest.register_abm({
 		local frontnode = minetest.get_node(front)
 		if not minetest.registered_nodes[frontnode.name] then return end
 
-		-- Move an item from the hopper into the container to which the hopper points to
-		local g = minetest.get_item_group(frontnode.name, "container")
-		if g >= 2 and g <= 6 then
-			hopper_push(pos, front)
-		end
+		hopper_push(pos, front)
 	end
 })
 
