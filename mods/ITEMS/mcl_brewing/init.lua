@@ -348,6 +348,7 @@ local function hopper_in(pos, to_pos)
 		end)
 		if slot_id then
 			mcl_util.move_item(sinv, "main", slot_id, dinv, "fuel")
+			minetest.get_node_timer(to_pos):start(1.0)
 		else
 			local slot_id,_ = mcl_util.get_eligible_transfer_item_slot(sinv, "main", dinv, "stand", function(itemstack)
 				local n = itemstack:get_name()
@@ -355,6 +356,7 @@ local function hopper_in(pos, to_pos)
 			end)
 			if slot_id then
 				mcl_util.move_item(sinv, "main", slot_id, dinv, "stand")
+				minetest.get_node_timer(to_pos):start(1.0)
 			end
 		end
 		return true
@@ -364,6 +366,7 @@ local function hopper_in(pos, to_pos)
 	end)
 	if slot_id then
 		mcl_util.move_item(sinv, "main", slot_id, dinv, "input")
+		minetest.get_node_timer(to_pos):start(1.0)
 	end
 	return true
 end
