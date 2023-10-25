@@ -45,7 +45,7 @@ a vertical gradient.
 ### Icon
 A 16×16 image shown left of the HUD bar. This is optional.
 
-### `hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, default_start_hidden, format_string, format_string_config)`
+### `hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, default_start_hidden, format_string, format_string_config, direction)`
 This function registers a new custom HUD bar definition to the HUD bars mod, so it can be later used to be displayed, changed, hidden
 and unhidden on a per-player basis.
 Note this does not yet display the HUD bar.
@@ -72,6 +72,7 @@ for more information.
  * `order`: Table that contains the order of the placeholders. It's also possible to remove placeholders. Default order: `{ "label", "value", "max_value" }`
  * `format_value`: Format string to apply when displaying `value`. Syntax is same as in `string.format`. Default: `"%d"`
  * `format_max_value`: Same as `format_value` but is applied to `max_value`
+* `direction`: Either left to right(0), or right to left(1). - note: this field was moved to the end in mcla 0.91 to restore compatibility with upstream hudbars
 
 #### Example
 Example (mostly) from `hbarmor` mod:

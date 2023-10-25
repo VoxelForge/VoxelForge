@@ -125,35 +125,36 @@ function hb.get_hudbar_position_index(identifier)
 	end
 end
 
-function hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, default_start_hidden, format_string, format_string_config)
+function hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, default_start_hidden, format_string, format_string_config, direction)
 	minetest.log("action", "hb.register_hudbar: "..tostring(identifier))
 	local hudtable = {}
 	local pos, offset
 	local index = math.floor(hb.get_hudbar_position_index(identifier))
+	local direction = tonumber(direction) or 0
 	hb.registered_slots[index] = true
 	if hb.settings.alignment_pattern == "stack_up" then
 		pos = hb.settings.pos_left
 		offset = {
-			x = hb.settings.start_offset_left.x,
+			x = direction == 0 and hb.settings.start_offset_left.x or -hb.settings.start_offset_right.x,
 			y = hb.settings.start_offset_left.y - hb.settings.vmargin * index
 		}
 	elseif hb.settings.alignment_pattern == "stack_down" then
 		pos = hb.settings.pos_left
 		offset = {
-			x = hb.settings.start_offset_left.x,
+			x = direction == 0 and hb.settings.start_offset_right.x or -hb.settings.start_offset_left.x,
 			y = hb.settings.start_offset_left.y + hb.settings.vmargin * index
 		}
 	else
 		if index % 2 == 0 then
 			pos = hb.settings.pos_left
 			offset = {
-				x = hb.settings.start_offset_left.x,
+				x = direction == 0 and hb.settings.start_offset_left.x or (-42+24)/(-258.0) * hb.settings.start_offset_left.x - 24,
 				y = hb.settings.start_offset_left.y - hb.settings.vmargin * (index/2)
 			}
 		else
 			pos = hb.settings.pos_right
 			offset = {
-				x = hb.settings.start_offset_right.x,
+				x = direction == 0 and hb.settings.start_offset_right.x or (234+24)/(16) * hb.settings.start_offset_right.x - 24,
 				y = hb.settings.start_offset_right.y - hb.settings.vmargin * ((index-1)/2)
 			}
 		end
@@ -244,7 +245,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 			item = bgiconnumber,
 			alignment = {x=-1,y=-1},
 			offset = offset,
-			direction = 0,
+			direction = direction,
 			size = bar_size,
 			z_index = 1,
 		})
@@ -255,7 +256,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 				text = text,
 				alignment = {x=1,y=1},
 				number = text_color,
-				direction = 0,
+				direction = direction,
 				offset = { x = offset.x + 2,  y = offset.y - 1},
 				z_index = 2,
 		})
@@ -475,7 +476,7 @@ end
 --register built-in HUD bars
 if minetest.settings:get_bool("enable_damage") or hb.settings.forceload_default_hudbars then
 	hb.register_hudbar("health", 0xFFFFFF, S("Health"), { bar = "hudbars_bar_health.png", icon = "hudbars_icon_health.png", bgicon = "hudbars_bgicon_health.png" }, 20, 20, false)
-	hb.register_hudbar("breath", 0xFFFFFF, S("Breath"), { bar = "hudbars_bar_breath.png", icon = "hudbars_icon_breath.png", bgicon = "hudbars_bgicon_breath.png" }, 10, 10, true)
+	hb.register_hudbar("breath", 0xFFFFFF, S("Breath"), { bar = "hudbars_bar_breath.png", icon = "hudbars_icon_breath.png", bgicon = "hudbars_bgicon_breath.png" }, 10, 10, true, nil, nil, 1)
 end
 
 local function hide_builtin(player)
