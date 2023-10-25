@@ -381,20 +381,54 @@ local function hopper_out(pos, to_pos)
 	return true
 end
 
-minetest.register_node("mcl_brewing:stand_000", {
+local tpl_brewing_stand = {
 	description = S("Brewing Stand"),
+	_doc_items_create_entry = false,
+	_tt_help = S("Brew Potions"),
+	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
+	tiles = tiles,
+	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
+	drop = "mcl_brewing:stand",
+	paramtype = "light",
+	sunlight_propagates = true,
+	is_ground_content = false,
+	paramtype2 = "facedir",
+	drawtype = "nodebox",
+	sounds = mcl_sounds.node_sound_metal_defaults(),
+	_mcl_blast_resistance = 1,
+	_mcl_hardness = 1,
+	after_dig_node = drop_contents,
+	allow_metadata_inventory_take = allow_take,
+	allow_metadata_inventory_put = allow_put,
+	on_metadata_inventory_put = on_put,
+	on_metadata_inventory_take = on_put,
+	on_construct = function(pos)
+		local meta = minetest.get_meta(pos)
+		local inv = meta:get_inventory()
+		inv:set_size("input", 1)
+		inv:set_size("fuel", 1)
+		inv:set_size("stand", 3)
+		local form = brewing_formspec
+		meta:set_string("formspec", form)
+	end,
+	on_receive_fields = function(pos, formname, fields, sender)
+		local sender_name = sender:get_player_name()
+		if minetest.is_protected(pos, sender_name) then
+			minetest.record_protection_violation(pos, sender_name)
+			return
+		end
+	end,
+	on_timer = brewing_stand_timer,
+	on_rotate = on_rotate,
+	_on_hopper_in = hopper_in,
+	_on_hopper_out = hopper_out,
+}
+
+minetest.register_node("mcl_brewing:stand_000", table.merge(tpl_brewing_stand, {
 	_doc_items_longdesc = S("The stand allows you to brew potions!"),
+	_doc_items_create_entry = true,
 	_doc_items_usagehelp = doc_string,
-	_tt_help = S("Brew Potions"),
 	groups = {pickaxey=1, brewitem=1, container=1},
-	tiles = tiles,
-	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
-	drop = "mcl_brewing:stand",
-	paramtype = "light",
-	sunlight_propagates = true,
-	is_ground_content = false,
-	paramtype2 = "facedir",
-	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -419,51 +453,8 @@ minetest.register_node("mcl_brewing:stand_000", {
 			{0/16, 3/16 , 4/16 , 1/16, 6/16, 5/16 }, -- line 3
 		}
 	},
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-	_mcl_blast_resistance = 1,
-	_mcl_hardness = 1,
-	after_dig_node = drop_contents,
-	allow_metadata_inventory_take = allow_take,
-	allow_metadata_inventory_put = allow_put,
-	on_metadata_inventory_put = on_put,
-	on_metadata_inventory_take = on_put,
-
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		inv:set_size("input", 1)
-		inv:set_size("fuel", 1)
-		inv:set_size("stand", 3)
-		local form = brewing_formspec
-		meta:set_string("formspec", form)
-	end,
-
-	on_receive_fields = function(pos, formname, fields, sender)
-		local sender_name = sender:get_player_name()
-		if minetest.is_protected(pos, sender_name) then
-			minetest.record_protection_violation(pos, sender_name)
-			return
-		end
-	end,
-
-	on_timer = brewing_stand_timer,
-	on_rotate = on_rotate,
-	_on_hopper_in = hopper_in,
-	_on_hopper_out = hopper_out,
-})
-minetest.register_node("mcl_brewing:stand_100", {
-	description = S("Brewing Stand"),
-	_doc_items_create_entry = false,
-	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
-	tiles = tiles,
-	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
-	drop = "mcl_brewing:stand",
-	paramtype = "light",
-	sunlight_propagates = true,
-	is_ground_content = false,
-	paramtype2 = "facedir",
-	drawtype = "nodebox",
+}))
+minetest.register_node("mcl_brewing:stand_100", table.merge(tpl_brewing_stand, {
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -494,49 +485,9 @@ minetest.register_node("mcl_brewing:stand_100", {
 			{0/16, 3/16 , 4/16 , 1/16, 6/16, 5/16 }, -- line 3
 		}
 	},
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-	_mcl_blast_resistance = 1,
-	_mcl_hardness = 1,
-	after_dig_node = drop_contents,
-	allow_metadata_inventory_take = allow_take,
-	allow_metadata_inventory_put = allow_put,
-	on_metadata_inventory_put = on_put,
-	on_metadata_inventory_take = on_put,
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		inv:set_size("input", 1)
-		inv:set_size("fuel", 1)
-		inv:set_size("stand", 3)
-		local form = brewing_formspec
-		meta:set_string("formspec", form)
-	end,
-	on_receive_fields = function(pos, formname, fields, sender)
-		local sender_name = sender:get_player_name()
-		if minetest.is_protected(pos, sender_name) then
-			minetest.record_protection_violation(pos, sender_name)
-			return
-		end
-	end,
-	on_timer = brewing_stand_timer,
-	on_rotate = on_rotate,
-	_on_hopper_in = hopper_in,
-	_on_hopper_out = hopper_out,
-})
+}))
 
-minetest.register_node("mcl_brewing:stand_010", {
-	description = S("Brewing Stand"),
-	_doc_items_create_entry = false,
-	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
-	tiles = tiles,
-	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
-	drop = "mcl_brewing:stand",
-	paramtype = "light",
-	sunlight_propagates = true,
-	is_ground_content = false,
-	paramtype2 = "facedir",
-	drawtype = "nodebox",
+minetest.register_node("mcl_brewing:stand_010", table.merge(tpl_brewing_stand, {
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -568,49 +519,9 @@ minetest.register_node("mcl_brewing:stand_010", {
 			{0/16, 3/16 , 4/16 , 1/16, 6/16, 5/16 }, -- line 3
 		}
 	},
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-	_mcl_blast_resistance = 1,
-	_mcl_hardness = 1,
-	after_dig_node = drop_contents,
-	allow_metadata_inventory_take = allow_take,
-	allow_metadata_inventory_put = allow_put,
-	on_metadata_inventory_put = on_put,
-	on_metadata_inventory_take = on_put,
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		inv:set_size("input", 1)
-		inv:set_size("fuel", 1)
-		inv:set_size("stand", 3)
-		local form = brewing_formspec
-		meta:set_string("formspec", form)
-	end,
-	on_receive_fields = function(pos, formname, fields, sender)
-		local sender_name = sender:get_player_name()
-		if minetest.is_protected(pos, sender_name) then
-			minetest.record_protection_violation(pos, sender_name)
-			return
-		end
-	end,
-	on_timer = brewing_stand_timer,
-	on_rotate = on_rotate,
-	_on_hopper_in = hopper_in,
-	_on_hopper_out = hopper_out,
-})
+}))
 
-minetest.register_node("mcl_brewing:stand_001", {
-	description = S("Brewing Stand"),
-	_doc_items_create_entry = false,
-	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
-	tiles = tiles,
-	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
-	drop = "mcl_brewing:stand",
-	paramtype = "light",
-	sunlight_propagates = true,
-	is_ground_content = false,
-	paramtype2 = "facedir",
-	drawtype = "nodebox",
+minetest.register_node("mcl_brewing:stand_001", table.merge(tpl_brewing_stand, {
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -637,49 +548,9 @@ minetest.register_node("mcl_brewing:stand_001", {
 			{0/16, 3/16 , 4/16 , 1/16, 6/16, 5/16 }, -- line 3
 		}
 	},
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-	_mcl_blast_resistance = 1,
-	_mcl_hardness = 1,
-	after_dig_node = drop_contents,
-	allow_metadata_inventory_take = allow_take,
-	allow_metadata_inventory_put = allow_put,
-	on_metadata_inventory_put = on_put,
-	on_metadata_inventory_take = on_put,
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		inv:set_size("input", 1)
-		inv:set_size("fuel", 1)
-		inv:set_size("stand", 3)
-		local form = brewing_formspec
-		meta:set_string("formspec", form)
-	end,
-	on_receive_fields = function(pos, formname, fields, sender)
-		local sender_name = sender:get_player_name()
-		if minetest.is_protected(pos, sender_name) then
-			minetest.record_protection_violation(pos, sender_name)
-			return
-		end
-	end,
-	on_timer = brewing_stand_timer,
-	on_rotate = on_rotate,
-	_on_hopper_in = hopper_in,
-	_on_hopper_out = hopper_out,
-})
+}))
 
-minetest.register_node("mcl_brewing:stand_110", {
-	description = S("Brewing Stand"),
-	_doc_items_create_entry = false,
-	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
-	tiles = tiles,
-	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
-	drop = "mcl_brewing:stand",
-	paramtype = "light",
-	sunlight_propagates = true,
-	is_ground_content = false,
-	paramtype2 = "facedir",
-	drawtype = "nodebox",
+minetest.register_node("mcl_brewing:stand_110", table.merge(tpl_brewing_stand, {
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -716,49 +587,9 @@ minetest.register_node("mcl_brewing:stand_110", {
 			{0/16, 3/16 , 4/16 , 1/16, 6/16, 5/16 }, -- line 3
 		}
 	},
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-	_mcl_blast_resistance = 1,
-	_mcl_hardness = 1,
-	after_dig_node = drop_contents,
-	allow_metadata_inventory_take = allow_take,
-	allow_metadata_inventory_put = allow_put,
-	on_metadata_inventory_put = on_put,
-	on_metadata_inventory_take = on_put,
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		inv:set_size("input", 1)
-		inv:set_size("fuel", 1)
-		inv:set_size("stand", 3)
-		local form = brewing_formspec
-		meta:set_string("formspec", form)
-	end,
-	on_receive_fields = function(pos, formname, fields, sender)
-		local sender_name = sender:get_player_name()
-		if minetest.is_protected(pos, sender_name) then
-			minetest.record_protection_violation(pos, sender_name)
-			return
-		end
-	end,
-	on_timer = brewing_stand_timer,
-	on_rotate = on_rotate,
-	_on_hopper_in = hopper_in,
-	_on_hopper_out = hopper_out,
-})
+}))
 
-minetest.register_node("mcl_brewing:stand_101", {
-	description = S("Brewing Stand"),
-	_doc_items_create_entry = false,
-	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
-	tiles = tiles,
-	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
-	drop = "mcl_brewing:stand",
-	paramtype = "light",
-	sunlight_propagates = true,
-	is_ground_content = false,
-	paramtype2 = "facedir",
-	drawtype = "nodebox",
+minetest.register_node("mcl_brewing:stand_101", table.merge(tpl_brewing_stand, {
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -791,49 +622,9 @@ minetest.register_node("mcl_brewing:stand_101", {
 			{0/16, 3/16 , 4/16 , 1/16, 6/16, 5/16 }, -- line 3
 		}
 	},
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-	_mcl_blast_resistance = 1,
-	_mcl_hardness = 1,
-	after_dig_node = drop_contents,
-	allow_metadata_inventory_take = allow_take,
-	allow_metadata_inventory_put = allow_put,
-	on_metadata_inventory_put = on_put,
-	on_metadata_inventory_take = on_put,
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		inv:set_size("input", 1)
-		inv:set_size("fuel", 1)
-		inv:set_size("stand", 3)
-		local form = brewing_formspec
-		meta:set_string("formspec", form)
-	end,
-	on_receive_fields = function(pos, formname, fields, sender)
-		local sender_name = sender:get_player_name()
-		if minetest.is_protected(pos, sender_name) then
-			minetest.record_protection_violation(pos, sender_name)
-			return
-		end
-	end,
-	on_timer = brewing_stand_timer,
-	on_rotate = on_rotate,
-	_on_hopper_in = hopper_in,
-	_on_hopper_out = hopper_out,
-})
+}))
 
-minetest.register_node("mcl_brewing:stand_011", {
-	description = S("Brewing Stand"),
-	_doc_items_create_entry = false,
-	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
-	tiles = tiles,
-	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
-	drop = "mcl_brewing:stand",
-	paramtype = "light",
-	sunlight_propagates = true,
-	is_ground_content = false,
-	paramtype2 = "facedir",
-	drawtype = "nodebox",
+minetest.register_node("mcl_brewing:stand_011", table.merge(tpl_brewing_stand, {
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -866,49 +657,9 @@ minetest.register_node("mcl_brewing:stand_011", {
 			{0/16, 3/16 , 4/16 , 1/16, 6/16, 5/16 }, -- line 3
 		}
 	},
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-	_mcl_blast_resistance = 1,
-	_mcl_hardness = 1,
-	after_dig_node = drop_contents,
-	allow_metadata_inventory_take = allow_take,
-	allow_metadata_inventory_put = allow_put,
-	on_metadata_inventory_put = on_put,
-	on_metadata_inventory_take = on_put,
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		inv:set_size("input", 1)
-		inv:set_size("fuel", 1)
-		inv:set_size("stand", 3)
-		local form = brewing_formspec
-		meta:set_string("formspec", form)
-	end,
-	on_receive_fields = function(pos, formname, fields, sender)
-		local sender_name = sender:get_player_name()
-		if minetest.is_protected(pos, sender_name) then
-			minetest.record_protection_violation(pos, sender_name)
-			return
-		end
-	end,
-	on_timer = brewing_stand_timer,
-	on_rotate = on_rotate,
-	_on_hopper_in = hopper_in,
-	_on_hopper_out = hopper_out,
-})
+}))
 
-minetest.register_node("mcl_brewing:stand_111", {
-	description = S("Brewing Stand"),
-	_doc_items_create_entry = false,
-	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
-	tiles = tiles,
-	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
-	drop = "mcl_brewing:stand",
-	paramtype = "light",
-	sunlight_propagates = true,
-	is_ground_content = false,
-	paramtype2 = "facedir",
-	drawtype = "nodebox",
+minetest.register_node("mcl_brewing:stand_111", table.merge(tpl_brewing_stand, {
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -948,35 +699,7 @@ minetest.register_node("mcl_brewing:stand_111", {
 			{0/16, 3/16 , 4/16 , 1/16, 6/16, 5/16 }, -- line 3
 		}
 	},
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-	_mcl_blast_resistance = 1,
-	_mcl_hardness = 1,
-	after_dig_node = drop_contents,
-	allow_metadata_inventory_take = allow_take,
-	allow_metadata_inventory_put = allow_put,
-	on_metadata_inventory_put = on_put,
-	on_metadata_inventory_take = on_put,
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		inv:set_size("input", 1)
-		inv:set_size("fuel", 1)
-		inv:set_size("stand", 3)
-		local form = brewing_formspec
-		meta:set_string("formspec", form)
-	end,
-	on_receive_fields = function(pos, formname, fields, sender)
-		local sender_name = sender:get_player_name()
-		if minetest.is_protected(pos, sender_name) then
-			minetest.record_protection_violation(pos, sender_name)
-			return
-		end
-	end,
-	on_timer = brewing_stand_timer,
-	on_rotate = on_rotate,
-	_on_hopper_in = hopper_in,
-	_on_hopper_out = hopper_out,
-})
+}))
 
 minetest.register_craft({
 	output = "mcl_brewing:stand_000",
