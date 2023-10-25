@@ -203,12 +203,13 @@ These groups are used mostly for informational purposes
 * `tool=1`: Item is primarily (!) a tool
 * `craftitem=1`: Item is primarily (!) used for crafting
 * `brewitem=1`: Item is primarily (!) used in brewing
+* `brewing_ingredient`: Item is an ingredient for brewing potions
 * `transport=1`: Item is used for transportation
 * `building_block=1`: Block is a building block
 * `deco_block=1`: Block is a decorational block
 
 * `blast_furnace_smeltable=1` : Item or node is smeltable by a blast furnace
-* `smoker_cookable=1` : Food is cookable by a smoker. 
+* `smoker_cookable=1` : Food is cookable by a smoker.
 
 
 ## Fake item groups

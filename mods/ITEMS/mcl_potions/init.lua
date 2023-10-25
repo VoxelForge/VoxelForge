@@ -363,6 +363,17 @@ local output_table = {
 	["mcl_potions:awkward"] = awkward_table,
 }
 
+minetest.register_on_mods_loaded(function()
+	for k, _ in pairs(table.merge(awkward_table, water_table)) do
+		local def = minetest.registered_items[k]
+		if def then
+			minetest.override_item(k, {
+				groups = table.merge(def.groups, {brewing_ingredient = 1})
+			})
+		end
+	end
+end)
+
 
 local enhancement_table = {}
 local extension_table = {}
