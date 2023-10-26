@@ -179,24 +179,8 @@ mcl_mobs.register_arrow("mobs_mc:shulkerbullet", {
 	visual_size = {x = 0.25, y = 0.25},
 	textures = {"mobs_mc_shulkerbullet.png"},
 	velocity = 6,
-
-	hit_player = function(self, player)
-		player:punch(self.object, 1.0, {
-			full_punch_interval = 1.0,
-			damage_groups = {fleshy = 4},
-		}, nil)
-	end,
-
-	hit_mob = function(self, mob)
-		mob:punch(self.object, 1.0, {
-			full_punch_interval = 1.0,
-			damage_groups = {fleshy = 4},
-		}, nil)
-	end,
-
-	hit_node = function(self, pos, node)
-	end
+	hit_player = mcl_mobs.get_arrow_damage_func(4),
+	hit_mob = mcl_mobs.get_arrow_damage_func(4),
 })
-
 
 mcl_mobs.register_egg("mobs_mc:shulker", S("Shulker"), "#946694", "#4d3852", 0)
