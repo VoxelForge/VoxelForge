@@ -450,11 +450,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull", {
 	hit_player = function(self, player)
 		mcl_mobs.effect_functions["withering"](player, 0.5, 10)
 		mcl_mobs.mob_class.boom(self,self.object:get_pos(), 1, false, true)
-		player:punch(self.object, 1.0, {
-			full_punch_interval = 0.5,
-			damage_groups = {fleshy = 8},
-		}, nil)
-
+		mcl_mobs.get_arrow_damage_func(8, "wither_skull")(self, player)
 		if player:get_hp() <= 0 then
 			local shooter = self._shooter:get_luaentity()
 			if shooter then shooter.health = shooter.health + 5 end
@@ -464,10 +460,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull", {
 
 	hit_mob = function(self, mob)
 		mcl_mobs.effect_functions["withering"](mob, 0.5, 10)
-		mob:punch(self.object, 1.0, {
-			full_punch_interval = 0.5,
-			damage_groups = {fleshy = 8},
-		}, nil)
+		mcl_mobs.get_arrow_damage_func(8, "wither_skull")(self, mob)
 		mcl_mobs.effect_functions["withering"](mob, 0.5, 10)
 		mcl_mobs.mob_class.boom(self,self.object:get_pos(), 1, false, true)
 		local l = mob:get_luaentity()
@@ -503,11 +496,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 	-- direct hit
 	hit_player = function(self, player)
 		mcl_mobs.effect_functions["withering"](player, 0.5, 10)
-		player:punch(self.object, 1.0, {
-			full_punch_interval = 0.5,
-			damage_groups = {fleshy = 12},
-		}, nil)
-
+		mcl_mobs.get_arrow_damage_func(12, "wither_skull")(self, player)
 		if player:get_hp() <= 0 then
 			local shooter = self._shooter:get_luaentity()
 			if shooter then shooter.health = shooter.health + 5 end
@@ -517,10 +506,7 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 
 	hit_mob = function(self, mob)
 		mcl_mobs.effect_functions["withering"](mob, 0.5, 10)
-		mob:punch(self.object, 1.0, {
-			full_punch_interval = 0.5,
-			damage_groups = {fleshy = 12},
-		}, nil)
+		mcl_mobs.get_arrow_damage_func(12, "wither_skull")(self, mob)
 		mcl_mobs.effect_functions["withering"](mob, 0.5, 10)
 		local pos = self.object:get_pos()
 		if mobs_griefing and not minetest.is_protected(pos, "") then
