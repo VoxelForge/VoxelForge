@@ -375,7 +375,6 @@ local function hopper_out(pos, to_pos)
 	local sinv = minetest.get_inventory({type="node", pos = pos})
 	local dinv = minetest.get_inventory({type="node", pos = to_pos})
 	local slot_id,_ = mcl_util.get_eligible_transfer_item_slot(sinv, "stand", dinv, "main", function(itemstack)
-		--TODO: check if hopper blocked by redstone
 		return true
 	end)
 	if slot_id then
