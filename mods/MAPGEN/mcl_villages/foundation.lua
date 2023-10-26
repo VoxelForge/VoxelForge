@@ -2,7 +2,7 @@
 local circles = minetest.settings:get_bool("mcl_villages_circles", true)
 local terrace = minetest.settings:get_bool("mcl_villages_terrace", true)
 local padding = tonumber(minetest.settings:get("mcl_villages_padding")) or 2
-local top_padding = tonumber(minetest.settings:get("mcl_villages_top_padding")) or 5
+local top_padding = tonumber(minetest.settings:get("mcl_villages_top_padding")) or 8
 local terrace_max_ext = tonumber(minetest.settings:get("mcl_villages_terrace_max_ext")) or 6
 
 

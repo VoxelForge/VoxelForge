@@ -286,7 +286,7 @@ mcl_villages_terrace (Terrace above ground instead of having straight sides. Set
 
 mcl_villages_padding (Extra width to clear over ground. Set to zero to approximate old style) int 2
 
-mcl_villages_top_padding (Extra height to clear above building. Set to a big number to approximate old style) int 5
+mcl_villages_top_padding (Extra height to clear above building. Set to a big number to approximate old style) int 8
 
 #  This constrains the effect on tall buildings
 mcl_villages_terrace_max_ext (Maximum width terracing is allowed to extend beyond building radius) int 6
