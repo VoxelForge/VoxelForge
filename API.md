@@ -101,7 +101,7 @@ chances are good that it works out of the box.
 * `_on_arrow_hit` callback when node is hit by an arrow: function(pos, arrow_luaentity)
 * `_on_dye_place` callback when node is rickclicked with a dye: function(pos, color_name)
 * `_on_hopper_in` callback when an item is about to be pushed to the node from a hopper: function(hopper_pos, node_pos)
-* `_on_hopper_out` callback when an item is about to be sucked into a hopper under the node: function(hopper_pos)
+* `_on_hopper_out` callback when an item is about to be sucked into a hopper under the node: function(node_pos, hopper_pos)
 * Get node names close to player (to reduce constant querying):
   `PLAYER/mcl_playerinfo`
 * Colors and dyes API: `ITEMS/mcl_dyes`
