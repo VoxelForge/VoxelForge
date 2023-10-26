@@ -55,6 +55,8 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 	attack_type = "shoot",
 	shoot_interval = 5.5,
 	arrow = "mobs_mc:llamaspit",
+	retaliates = true,
+	specific_attack = { "player" },
 	shoot_offset = 1, --3.5 *would* be a good value visually but it somehow messes with the projectiles trajectory
 	spawn_in_group_min = 4,
 	spawn_in_group = 6,
@@ -260,18 +262,7 @@ mcl_mobs.register_arrow("mobs_mc:llamaspit", {
 	visual_size = {x = 0.10, y = 0.10},
 	textures = {"mobs_mc_llama_spit.png"},
 	velocity = 5,
-	hit_player = function(self, player)
-		player:punch(self.object, 1.0, {
-			full_punch_interval = 1.0,
-			damage_groups = {fleshy = 1},
-		}, nil)
-	end,
-
-	hit_mob = function(self, mob)
-	end,
-
-	hit_node = function(self, pos, node)
-	end
+	hit_player = mcl_mobs.get_arrow_damage_func(1),
 })
 
 
