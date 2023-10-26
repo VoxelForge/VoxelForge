@@ -155,21 +155,8 @@ mcl_mobs.register_arrow("mobs_mc:blaze_fireball", {
 	_is_fireball = true,
 
 	-- Direct hit, no fire... just plenty of pain
-	hit_player = function(self, player)
-		mcl_burning.set_on_fire(player, 5)
-		player:punch(self.object, 1.0, {
-			full_punch_interval = 1.0,
-			damage_groups = {fleshy = 5},
-		}, nil)
-	end,
-
-	hit_mob = function(self, mob)
-		mcl_burning.set_on_fire(mob, 5)
-		mob:punch(self.object, 1.0, {
-			full_punch_interval = 1.0,
-			damage_groups = {fleshy = 5},
-		}, nil)
-	end,
+	hit_player = mcl_mobs.get_arrow_damage_func(5, "fireball"),
+	hit_mob = mcl_mobs.get_arrow_damage_func(5, "fireball"),
 
 	hit_object = function(self, object)
 		local lua = object:get_luaentity()
