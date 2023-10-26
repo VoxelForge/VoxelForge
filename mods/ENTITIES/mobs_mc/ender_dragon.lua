@@ -146,19 +146,11 @@ mcl_mobs.register_arrow("mobs_mc:dragon_fireball", {
 	velocity = 6,
 
 	-- direct hit, no fire... just plenty of pain
-	hit_player = function(self, player)
-		player:punch(self.object, 1.0, {
-			full_punch_interval = 0.5,
-			damage_groups = {fleshy = 12},
-		}, nil)
-	end,
+	hit_player = mcl_mobs.get_arrow_damage_func(12, "dragon_breath"),
 
 	hit_mob = function(self, mob)
 		minetest.sound_play("tnt_explode", {pos = mob:get_pos(), gain = 1.5, max_hear_distance = 2*64}, true)
-		mob:punch(self.object, 1.0, {
-			full_punch_interval = 0.5,
-			damage_groups = {fleshy = 12},
-		}, nil)
+		mcl_mobs.get_arrow_damage_func(12, "dragon_breath")(self, mob)
 	end,
 
 	-- node hit, explode
