@@ -31,7 +31,13 @@ local honey_harvest = function(pos, node, player, itemstack, pointed_thing)
 			if not is_creative then
 				itemstack:take_item()
 			end
-			if not campfire[1] then mcl_util.deal_damage(player, 10) else awards.unlock(player:get_player_name(), "mcl:bee_our_guest") end
+			if not campfire[1] then
+				mcl_util.deal_damage(player, 10, {type = "mob"})
+				--TODO: damage type = "mob" since this is supposed to be done by bee mobs which aren't a thing yet
+				--Once bees exist this branch should spawn them and/or make them aggro
+			else
+				awards.unlock(player:get_player_name(), "mcl:bee_our_guest")
+			end
 		end
 	elseif shears then
 		minetest.add_item(pos, "mcl_honey:honeycomb 3")
