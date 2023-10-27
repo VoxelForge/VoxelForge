@@ -1252,11 +1252,15 @@ function mcl_util.create_ground_turnip(pos, fwidth, fdepth)
 	if reg_biome and reg_biome.node_top then
 		mat = reg_biome.node_top
 		grass_idx = reg_biome._mcl_grass_palette_index
-		filler = reg_biome.node_filler
-		if minetest.get_item_group(filler, "material_sand") > 0 then
-			if reg_biome.node_stone then
-				filler = reg_biome.node_stone
+		if reg_biome.node_filler then
+			filler = reg_biome.node_filler
+			if minetest.get_item_group(filler, "material_sand") > 0 then
+				if reg_biome.node_stone then
+					filler = reg_biome.node_stone
+				end
 			end
+		elseif reg_biome.node_stone then
+			filler = reg_biome.node_stone
 		end
 	end
 
