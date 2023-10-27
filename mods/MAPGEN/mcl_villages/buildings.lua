@@ -395,13 +395,13 @@ local function layout_town(minp, maxp, pr, input_settlement_info)
 
 	-- build settlement around center
 	if not center_surface then
-		minetest.log("action", string.format("Cannot build village at %s", minetest.pos_to_string(center)))
+		minetest.log("action", string.format("[mcl_villages] Cannot build village at %s", minetest.pos_to_string(center)))
 		return false
 	else
 		minetest.log(
 			"action",
 			string.format(
-				"Will build a village at position %s with surface material %s",
+				"[mcl_villages] Will build a village at position %s with surface material %s",
 				minetest.pos_to_string(center_surface),
 				surface_material
 			)

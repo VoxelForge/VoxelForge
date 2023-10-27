@@ -101,7 +101,7 @@ local path_ends = {}
 
 -- helper function to log the path table
 function mcl_villages.dump_path_ends()
-	minetest.log(dump(path_ends))
+	minetest.log("[mcl_villages] " .. dump(path_ends))
 end
 
 -- Insert end points in to the nested tables
@@ -266,7 +266,7 @@ function mcl_villages.paths_new(blockseed, biome_name)
 	local pr = PseudoRandom(blockseed)
 
 	if path_ends["block_" .. blockseed] == nil then
-		minetest.log("warning", string.format("Tried to set paths for block seed that doesn't exist %d", blockseed))
+		minetest.log("warning", string.format("[mcl_villages] Tried to set paths for block seed that doesn't exist %d", blockseed))
 		return
 	end
 
@@ -350,7 +350,7 @@ function mcl_villages.paths_new(blockseed, biome_name)
 						minetest.log(
 							"warning",
 							string.format(
-								"No path from %s to %s, distance %d",
+								"[mcl_villages] No path from %s to %s, distance %d",
 								minetest.pos_to_string(from_ep_pos),
 								minetest.pos_to_string(closest_pos),
 								vector.distance(from_ep_pos, closest_pos)

@@ -146,7 +146,7 @@ if mg_name ~= "singlenode" then
 
 		local height_difference = mcl_villages.evaluate_heightmap()
 		if not height_difference or height_difference > mcl_villages.max_height_difference then
-			minetest.log("action", "Do not spawn village here as heightmap not good")
+			minetest.log("action", "[mcl_villages] Do not spawn village here as heightmap not good")
 			return
 		end
 		--minetest.log("Build me a village: " .. minetest.pos_to_string(minp) .. " || " .. minetest.pos_to_string(maxp))

@@ -198,7 +198,7 @@ function mcl_villages.evaluate_heightmap()
 	local heightmap = minetest.get_mapgen_object("heightmap")
 
 	if not heightmap then
-		minetest.log("action", "No heightmap. That should not happen")
+		minetest.log("action", "[mcl_villages] No heightmap. That should not happen")
 		return mcl_villages.max_height_difference + 1
 	end
 
