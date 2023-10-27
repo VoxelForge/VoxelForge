@@ -274,7 +274,7 @@ mcl_logging_event_api (Debug logging for mcl_events) bool false
 
 [Villages]
 
-mcl_villages_new (Enable new village generator) bool false
+mcl_villages_new (Enable new village generator) bool true
 
 mcl_villages_min_jobs (The minimum number of jobs to have in a village) int 1
 
