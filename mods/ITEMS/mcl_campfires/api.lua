@@ -349,7 +349,8 @@ minetest.register_entity("mcl_campfires:food_entity", {
 	on_step = function(self,dtime)
 		self._timer = (self._timer or 1) - dtime
 		if self._timer > 0 then return end
-		if not self._start_time then
+		if not self._start_time or not self._campfire_poshash then
+			--if self._poshash isn't set that essentially means this campfire entity was migrated. Remove it to let a new one spawn.
 			self.object:remove()
 		end
 		if minetest.get_gametime() - self._start_time > self._cook_time then
