@@ -243,6 +243,14 @@ local function spawn_cats(pos)
 end
 
 local function init_nodes(p1, p2, size, rotation, pr)
+
+	for _, n in pairs(minetest.find_nodes_in_area(p1, p2, { "group:wall" })) do
+		local def = minetest.registered_nodes[minetest.get_node(n).name:gsub("_%d+$", "")]
+		if def and def.on_construct then
+			def.on_construct(n)
+		end
+	end
+
 	construct_node(p1, p2, "mcl_itemframes:item_frame")
 	construct_node(p1, p2, "mcl_furnaces:furnace")
 	construct_node(p1, p2, "mcl_anvils:anvil")
@@ -537,10 +545,18 @@ function mcl_villages.create_site_plan_new(minp, maxp, pr)
 		if
 			(building_info["min_jobs"] == nil or number_of_jobs >= building_info["min_jobs"])
 			and (building_info["max_jobs"] == nil or number_of_jobs <= building_info["max_jobs"])
+			and (
+				building_info["num_others"] == nil
+				or count_buildings[building_info["name"]] == 0
+				or building_info["num_others"] * count_buildings[building_info["name"]] < num_jobs
+			)
 		then
 			local cur_schem = table.copy(building_info)
 			table.insert(base_settlement_info, cur_schem)
-			num_beds = num_beds + cur_schem["num_beds"]
+			count_buildings[cur_schem["name"]] = count_buildings[cur_schem["name"]] + 1
+			if cur_schem["num_beds"] then
+				num_beds = num_beds + cur_schem["num_beds"]
+			end
 		end
 	end
 
@@ -601,10 +617,10 @@ function mcl_villages.place_schematics_new(settlement_info, pr, blockseed)
 			{ place_center_x = true, place_center_y = false, place_center_z = true }
 		)
 
-		local x_adj = size.x / 2
-		local z_adj = size.z / 2
-		local minp = vector.offset(pos, -x_adj, 0, -z_adj)
-		local maxp = vector.offset(pos, x_adj - 1, size.y - 1, z_adj - 1)
+		local x_adj = math.ceil(size.x / 2)
+		local z_adj = math.ceil(size.z / 2)
+		local minp = vector.offset(placement_pos, -x_adj, 0, -z_adj)
+		local maxp = vector.offset(placement_pos, x_adj, size.y, z_adj)
 
 		init_nodes(minp, maxp, size, nil, pr)
 
