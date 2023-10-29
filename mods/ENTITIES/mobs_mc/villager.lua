@@ -730,6 +730,7 @@ end
 
 local function set_textures(self)
 	local badge_textures = get_badge_textures(self)
+	self.base_texture = badge_textures
 	self.object:set_properties({textures=badge_textures})
 end
 
@@ -2154,6 +2155,7 @@ mcl_mobs.register_mob("mobs_mc:villager", {
 		self._id=minetest.sha1(minetest.get_gametime()..minetest.pos_to_string(self.object:get_pos())..tostring(math.random()))
 		set_textures(self)
 	end,
+	after_activate = set_textures,
 	on_die = function(self, pos, cmi_cause)
 		-- Close open trade formspecs and give input back to players
 		local trading_players = self._trading_players
