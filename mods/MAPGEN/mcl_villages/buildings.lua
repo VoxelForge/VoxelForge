@@ -245,10 +245,7 @@ end
 local function init_nodes(p1, p2, size, rotation, pr)
 
 	for _, n in pairs(minetest.find_nodes_in_area(p1, p2, { "group:wall" })) do
-		local def = minetest.registered_nodes[minetest.get_node(n).name:gsub("_%d+$", "")]
-		if def and def.on_construct then
-			def.on_construct(n)
-		end
+		mcl_walls.update_wall(n)
 	end
 
 	construct_node(p1, p2, "mcl_itemframes:item_frame")

@@ -36,3 +36,11 @@ to the `groups` table:
 ### Example
 
     mcl_walls.register_wall("mymod:granitewall", "Granite Wall", {"mymod_granite.png"}, "mymod_granite_wall_inv.png")
+
+## `mcl_walls.update_wall(pos)`
+
+When loading schemas with walls you will need to trigger this to make the walls rotate and join properly.
+
+### Parameters
+
+* `pos`: Position of the wall to update.
