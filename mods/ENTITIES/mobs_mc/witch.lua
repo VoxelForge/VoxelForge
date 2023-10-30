@@ -87,19 +87,8 @@ mcl_mobs.register_arrow("mobs_mc:potion_arrow", {
 	velocity = 6,
 
 	-- direct hit, no fire... just plenty of pain
-	hit_player = function(self, player)
-		player:punch(self.object, 1.0, {
-			full_punch_interval = 1.0,
-			damage_groups = {fleshy = 2},
-		}, nil)
-	end,
-
-	hit_mob = function(self, mob)
-		mob:punch(self.object, 1.0, {
-			full_punch_interval = 1.0,
-			damage_groups = {fleshy = 2},
-		}, nil)
-	end,
+	hit_player = mcl_mobs.get_arrow_damage_func(2, "mob"),
+	hit_mob = mcl_mobs.get_arrow_damage_func(2, "mob"),
 
 	-- node hit, bursts into flame
 	hit_node = function(self, pos, node)
