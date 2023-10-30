@@ -255,10 +255,7 @@ function ARROW_ENTITY.on_step(self, dtime)
 							mcl_burning.set_on_fire(obj, 5)
 						end
 						if not self._in_player and not self._blocked then
-							obj:punch(self.object, 1.0, {
-								full_punch_interval=1.0,
-								damage_groups={fleshy=self._damage},
-							}, self.object:get_velocity())
+							mcl_util.deal_damage(obj, self._damage, {type = "arrow"})
 							if self._extra_hit_func then
 								self._extra_hit_func(obj)
 							end
