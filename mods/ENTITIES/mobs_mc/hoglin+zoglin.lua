@@ -75,10 +75,7 @@ local hoglin = {
 	custom_attack = function(self)
 		if self.state == "attack" and self.reach > vector.distance(self.object:get_pos(), self.attack:get_pos()) then
 			self.attack:add_velocity({x=0,y=13,z=0})
-			self.attack:punch(self.object, 1.0, {
-				full_punch_interval = 1.0,
-				damage_groups = {fleshy = self.damage}
-			}, nil)
+			mcl_util.deal_damage(self.attack, self.damage, {type = "mob"})
 		end
 	end,
 	do_custom = function(self)
