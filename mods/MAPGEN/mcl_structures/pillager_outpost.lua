@@ -67,10 +67,7 @@ mcl_structures.register_structure("pillager_outpost",{
 		mcl_structures.spawn_mobs("mobs_mc:parrot",{"mesecons_pressureplates:pressure_plate_stone_off"},p1,p2,pr,3)
 		mcl_structures.spawn_mobs("mobs_mc:iron_golem",{"mesecons_button:button_stone_off"},p1,p2,pr,1)
 		for _,n in pairs(minetest.find_nodes_in_area(p1,p2,{"group:wall"})) do
-			local def = minetest.registered_nodes[minetest.get_node(n).name:gsub("_%d+$","")]
-			if def and def.on_construct then
-				def.on_construct(n)
-			end
+			mcl_walls.update_wall(n)
 		end
 	end
 })
