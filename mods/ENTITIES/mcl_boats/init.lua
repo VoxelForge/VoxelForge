@@ -565,6 +565,7 @@ minetest.register_craft({
 })
 
 minetest.register_alias("mcl_boats:boat","mcl_boats:boat_oak")
+minetest.register_alias("mcl_boats:chest_boat","mcl_boats:boat_oak_chest")
 --Alias the obsidian boat item that exited in the game for a while to avoid unknown items
 minetest.register_alias("mcl_boats:boat_obsidian","mcl_boats:boat_oak")
 
