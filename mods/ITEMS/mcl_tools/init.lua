@@ -50,7 +50,7 @@ local function on_tool_place(itemstack, placer, pointed_thing, tool)
 
 	if itemstack and type(ndef["_on_"..tool.."_place"]) == "function" then
 		local itemstack, no_wear = ndef["_on_"..tool.."_place"](itemstack, placer, pointed_thing)
-		if minetest.is_creative_enabled(placer:get_player_name()) or no_wear then
+		if minetest.is_creative_enabled(placer:get_player_name()) or no_wear or not itemstack then
 			return itemstack
 		end
 
