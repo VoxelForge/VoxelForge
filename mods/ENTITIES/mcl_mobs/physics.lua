@@ -156,7 +156,7 @@ function mob_class:collision()
 	local x = 0
 	local z = 0
 	local cbox = self.object:get_properties().collisionbox
-	local width = -cbox[1] + cbox[4] + 0.5
+	local width = -cbox[1] + cbox[4]
 	for _,object in pairs(minetest.get_objects_inside_radius(pos, width)) do
 
 		local ent = object:get_luaentity()
@@ -168,7 +168,7 @@ function mob_class:collision()
 
 			local pos2 = object:get_pos()
 			local vec  = {x = pos.x - pos2.x, z = pos.z - pos2.z}
-			local force = (width + 0.5) - vector.distance(
+			local force = width - vector.distance(
 				{x = pos.x, y = 0, z = pos.z},
 				{x = pos2.x, y = 0, z = pos2.z})
 
