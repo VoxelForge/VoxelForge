@@ -966,7 +966,8 @@ function mob_class:falling(pos)
 		if self.fall_damage == 1
 		and self.object:get_velocity().y == 0 then
 			local n = node_ok(vector.offset(pos,0,-1,0)).name
-			local d = (self.old_y or 0) - self.object:get_pos().y
+			-- init old_y to current height if not set.
+			local d = (self.old_y or self.object:get_pos().y) - self.object:get_pos().y
 
 			if d > 5 and n ~= "air" and n ~= "ignore" and self.reset_fall_damage ~= 1 then
 				local add = minetest.get_item_group(self.standing_on, "fall_damage_add_percent")
