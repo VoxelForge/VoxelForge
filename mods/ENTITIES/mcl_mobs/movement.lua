@@ -172,38 +172,20 @@ end
 function mob_class:can_jump_cliff()
 	local yaw = self.object:get_yaw()
 	local pos = self.object:get_pos()
-	local v = self.object:get_velocity()
-
-	local v2 = math.abs(v.x)+math.abs(v.z)*.833
-	local jump_c_multiplier = 1
-	if v2/self.walk_velocity/2>1 then
-		jump_c_multiplier = v2/self.walk_velocity/2
-	end
 
 	-- where is front
 	local cbox = self.object:get_properties().collisionbox
-	local dir_x = -math.sin(yaw) * (cbox[4] + 0.5)*jump_c_multiplier+0.6
-	local dir_z = math.cos(yaw) * (cbox[4] + 0.5)*jump_c_multiplier+0.6
+	local dir_x = -math.sin(yaw) * (cbox[4] + 0.5)
+	local dir_z = math.cos(yaw) * (cbox[4] + 0.5)
 
 	--is there nothing under the block in front? if so jump the gap.
-	local nodLow = node_ok({
-		x = pos.x + dir_x-0.6,
-		y = pos.y - 0.5,
-		z = pos.z + dir_z-0.6
-	}, "air")
+	local pos_low = vector.offset(pos, dir_x, -0.5, dir_z)
+	local pos_far = vector.offset(pos, dir_x * 2, -0.5, dir_z * 2)
+	local pos_far2 = vector.offset(pos, dir_x * 3, -0.5, dir_z * 3)
 
-	local nodFar = node_ok({
-		x = pos.x + dir_x*2,
-		y = pos.y - 0.5,
-		z = pos.z + dir_z*2
-	}, "air")
-
-	local nodFar2 = node_ok({
-		x = pos.x + dir_x*2.5,
-		y = pos.y - 0.5,
-		z = pos.z + dir_z*2.5
-	}, "air")
-
+	local nodLow = node_ok(pos_low, "air")
+	local nodFar = node_ok(pos_far, "air")
+	local nodFar2 = node_ok(pos_far2, "air")
 
 	if minetest.registered_nodes[nodLow.name]
 	and minetest.registered_nodes[nodLow.name].walkable ~= true
@@ -231,7 +213,7 @@ end
 
 -- is mob facing a cliff or danger
 function mob_class:is_at_cliff_or_danger()
-	if self.fear_height == 0 or self:can_jump_cliff() or self._jumping_cliff or not self.object:get_luaentity() then -- 0 for no falling protection!
+	if self.fear_height == 0 or self._jumping_cliff or not self.object:get_luaentity() then -- 0 for no falling protection!
 		return false
 	end
 
@@ -266,7 +248,7 @@ end
 
 -- copy the 'mob facing cliff_or_danger check' from above, and rework to avoid water
 function mob_class:is_at_water_danger()
-	if not self.object:get_luaentity() or self:can_jump_cliff() or self._jumping_cliff then
+	if not self.object:get_luaentity() or self._jumping_cliff then
 		return false
 	end
 	local yaw = self.object:get_yaw()
@@ -789,7 +771,7 @@ function mob_class:go_to_pos(b)
 	if not b then
 		--self.state = "stand"
 		return end
-	if vector.distance(b,s) < 1 then
+	if vector.distance(b,s) < 0.5 then
 		--self:set_velocity(0)
 		return true
 	end
