@@ -64,7 +64,7 @@ local function set_double_attach(boat)
 		{x = 0, y = 0.42, z = 0.8}, {x = 0, y = 0, z = 0})
 	if boat._passenger:is_player() then
 		boat._passenger:set_attach(boat.object, "",
-			{x = 0, y = 0.42, z = -2.2}, {x = 0, y = 0, z = 0})
+			{x = 0, y = 0.42, z = -6.2}, {x = 0, y = 0, z = 0})
 	else
 		boat._passenger:set_attach(boat.object, "",
 			{x = 0, y = 0.42, z = -4.5}, {x = 0, y = 270, z = 0})
