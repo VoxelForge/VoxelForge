@@ -138,6 +138,14 @@ local dispenserdef = {
 					local igroups = stackdef.groups
 
 					--[___[ Dispense item ]___]
+					--dispense item on luaentity
+					for _, obj in pairs(minetest.get_objects_inside_radius(droppos, 1)) do
+						local ent = obj:get_luaentity()
+						if ent and ent._on_dispense then
+							local od_ret = ent:_on_dispense(dropitem, pos, droppos, dropnode, dropdir)
+							if od_ret then return end
+						end
+					end
 
 					-- Hardcoded dispensions --
 
