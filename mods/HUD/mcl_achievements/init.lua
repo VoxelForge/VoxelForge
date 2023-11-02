@@ -1,3 +1,15 @@
+mcl_achievements = {}
+
+function mcl_achievements.award_unlocked(playername, awardname)
+	local unlocked = false
+	for _, aw in pairs(awards.get_award_states(playername)) do
+		if aw.name == awardname and aw.unlocked then
+			unlocked = true
+			break
+		end
+	end
+	return unlocked
+end
 -- Settings
 
 -- If true, activates achievements from other Minecraft editions (XBox, PS, etc.)

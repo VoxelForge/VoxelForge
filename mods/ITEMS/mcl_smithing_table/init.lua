@@ -210,7 +210,7 @@ minetest.register_node("mcl_smithing_table:table", {
 				local playername = player:get_player_name()
 				awards.unlock(playername, "mcl:trim")
 
-				if not awards.players[playername].unlocked["mcl:lots_of_trimming"] and achievement_trims[template_name] then
+				if not mcl_achievements.award_unlocked(playername, "mcl:lots_of_trimming") and achievement_trims[template_name] then
 					local meta = player:get_meta()
 					local used_achievement_trims = minetest.deserialize(meta:get_string("mcl_smithing_table:achievement_trims")) or {}
 					if not used_achievement_trims[template_name] then
