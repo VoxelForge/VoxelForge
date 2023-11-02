@@ -43,7 +43,7 @@ local honey_harvest = function(pos, node, player, itemstack, pointed_thing)
 		minetest.add_item(pos, "mcl_honey:honeycomb 3")
 		node.name = beehive
 		minetest.set_node(pos, node)
-		if not campfire[1] then mcl_util.deal_damage(player, 10) end
+		if not campfire[1] then mcl_util.deal_damage(player, 10, {type = "mob"}) end
 	end
 end
 
@@ -59,7 +59,7 @@ local dig_hive = function(pos, node, oldmetadata, digger)
 	if beehive then
 		if not is_creative then
 			minetest.add_item(pos, "mcl_beehives:beehive")
-			if not silk_touch then mcl_util.deal_damage(digger, 10) end
+			if not silk_touch then mcl_util.deal_damage(digger, 10, {type = "mob"}) end
 		elseif is_creative and inv:room_for_item("main", "mcl_beehives:beehive") and not inv:contains_item("main", "mcl_beehives:beehive") then
 			inv:add_item("main", "mcl_beehives:beehive")
 		end
@@ -69,7 +69,7 @@ local dig_hive = function(pos, node, oldmetadata, digger)
 				minetest.add_item(pos, "mcl_beehives:bee_nest")
 				awards.unlock(digger:get_player_name(), "mcl:total_beelocation")
 			else
-				mcl_util.deal_damage(digger, 10)
+				mcl_util.deal_damage(digger, 10, {type = "mob"})
 			end
 		elseif is_creative and inv:room_for_item("main", "mcl_beehives:bee_nest") and not inv:contains_item("main", "mcl_beehives:bee_nest") then
 			inv:add_item("main", "mcl_beehives:bee_nest")
