@@ -25,14 +25,21 @@ function mcl_mobs.protect(self, clicker)
 	return false
 end
 
+function mob_class:_on_dispense(dropitem, pos, droppos, dropnode, dropdir)
+	local item = dropitem.get_name and dropitem:get_name() or dropitem
+	if self.follow and ( type(self.follow) == "table" and table.indexof(self.follow, item) or item == self.follow ) then
+		return self:feed_tame(nil, 1, true, false)
+	end
+end
+
 function mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
 	if not self.follow then
 		return false
 	end
-	if self.nofollow or self:follow_holding(clicker) then
+	if clicker == nil or self.nofollow or self:follow_holding(clicker) then
 		local consume_food = false
 
-		if tame and not self.child then
+		if clicker and tame and not self.child then
 			if not self.owner or self.owner == "" then
 				self.tamed = true
 				self.owner = clicker:get_player_name()
@@ -66,7 +73,7 @@ function mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
 		end
 
 		self:update_tag()
-		if consume_food then
+		if clicker and consume_food then
 			if not minetest.is_creative_enabled(clicker:get_player_name()) and not notake then
 				local item = clicker:get_wielded_item()
 				item:take_item()
