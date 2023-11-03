@@ -213,6 +213,8 @@ local tpl_leaves = {
 	_mcl_silk_touch_drop = true,
 }
 
+mcl_trees.tpl_leaves = tpl_leaves
+
 local tpl_sapling = {
 	_doc_items_longdesc = S("When placed on soil (such as dirt) and exposed to light, a sapling will grow into a tree after some time."),
 	_tt_help = S("Needs soil and light to grow"),
