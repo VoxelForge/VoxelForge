@@ -895,8 +895,29 @@ function mob_class:do_states_walk()
 	if is_in_danger then
 		cliff_or_danger = self:is_at_cliff_or_danger()
 	end
+
+	local facing_solid = false
+
+	-- No need to check if we are already going to turn
+	if not self.facing_fence and not cliff_or_danger then
+		local cbox = self.object:get_properties().collisionbox
+		local dir_x = -math.sin(yaw) * (cbox[4] + 0.5)
+		local dir_z = math.cos(yaw) * (cbox[4] + 0.5)
+
+		local nod = node_ok({
+			x = s.x + dir_x,
+			y = s.y + 0.5,
+			z = s.z + dir_z,
+		})
+
+		if minetest.registered_nodes[nod.name] and minetest.registered_nodes[nod.name].walkable == true then
+			facing_solid = true
+		end
+	end
+
 	if self.facing_fence == true
 			or cliff_or_danger
+			or facing_solid
 			or math.random(1, 100) <= 30 then
 
 		self:set_velocity(0)
