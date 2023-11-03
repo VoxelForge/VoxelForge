@@ -129,9 +129,11 @@ minetest.register_node("mcl_mangrove:mangrove_roots", {
 		local n = itemstack:get_name():gsub("mcl_buckets:bucket_","")
 		n = "mcl_mangrove:"..n.."_logged_roots"
 		if minetest.registered_nodes[n] then
-			itemstack:take_item()
-			local inv = placer:get_inventory()
-			inv:add_item("main","mcl_buckets:bucket_empty")
+			if not minetest.is_creative_enabled(placer:get_player_name()) then
+				itemstack:take_item()
+				local inv = placer:get_inventory()
+				inv:add_item("main","mcl_buckets:bucket_empty")
+			end
 			minetest.swap_node(pointed_thing.under,{name=n})
 		end
 		return itemstack
