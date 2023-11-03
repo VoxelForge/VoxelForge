@@ -13,6 +13,8 @@ local function get_random_effect()
 end
 
 local function eat_stew(itemstack, placer, pointed_thing)
+	local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+	if rc then return rc end
 	local e = itemstack:get_meta():get_string("effect")
 	local f = mcl_sus_stew.registered_stews[e]
 	if not f then
