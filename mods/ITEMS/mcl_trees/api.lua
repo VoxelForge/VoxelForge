@@ -42,7 +42,7 @@ local function old_update_leaves(pos)
 			if not minetest.find_node_near(lpos, 6, "group:tree") then
 				-- manually placed leaf nodes have "no_decay" set to 1
 				-- in their node meta and will not decay automatically
-				if minetest.get_meta(lpos):get_int("no_decay") == 0 then
+				if minetest.get_meta(lpos):get_int("no_decay") == 0 and minetest.registered_nodes[lnode.name .. "_orphan"] then
 					minetest.swap_node(lpos, { name = lnode.name .. "_orphan", param2 = lnode.param2 })
 				end
 			end
