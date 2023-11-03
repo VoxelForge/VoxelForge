@@ -170,15 +170,10 @@ function mob_class:line_of_sight(pos1, pos2, stepsize)
 end
 
 function mob_class:can_jump_cliff()
-	local yaw = self.object:get_yaw()
 	local pos = self.object:get_pos()
 
-	-- where is front
-	local cbox = self.object:get_properties().collisionbox
-	local dir_x = -math.sin(yaw) * (cbox[4] + 0.5)
-	local dir_z = math.cos(yaw) * (cbox[4] + 0.5)
-
 	--is there nothing under the block in front? if so jump the gap.
+	local dir_x, dir_z = self:forward_directions()
 	local pos_low = vector.offset(pos, dir_x, -0.5, dir_z)
 	local pos_far = vector.offset(pos, dir_x * 2, -0.5, dir_z * 2)
 	local pos_far2 = vector.offset(pos, dir_x * 3, -0.5, dir_z * 3)
@@ -217,16 +212,14 @@ function mob_class:is_at_cliff_or_danger()
 		return false
 	end
 
-	local yaw = self.object:get_yaw()
 	local cbox = self.object:get_properties().collisionbox
-	local dir_x = -math.sin(yaw) * (cbox[4] + 0.5)
-	local dir_z = math.cos(yaw) * (cbox[4] + 0.5)
+	local dir_x, dir_z = self:forward_directions()
 	local pos = self.object:get_pos()
-	local ypos = pos.y + cbox[2] -- just above floor
 
 	local free_fall, blocker = minetest.line_of_sight(
-		{x = pos.x + dir_x, y = ypos, z = pos.z + dir_z},
-		{x = pos.x + dir_x, y = ypos - self.fear_height, z = pos.z + dir_z})
+		vector.offset(pos, dir_x, cbox[2], dir_z),
+		vector.offset(pos, dir_x, -self.fear_height, dir_z))
+
 	if free_fall then
 		return true
 	else
@@ -251,18 +244,14 @@ function mob_class:is_at_water_danger()
 	if not self.object:get_luaentity() or self._jumping_cliff then
 		return false
 	end
-	local yaw = self.object:get_yaw()
 
+	local dir_x, dir_z = self:forward_directions()
 	local cbox = self.object:get_properties().collisionbox
-	local dir_x = -math.sin(yaw) * (cbox[4] + 0.5)
-	local dir_z = math.cos(yaw) * (cbox[4] + 0.5)
-
 	local pos = self.object:get_pos()
-	local ypos = pos.y + cbox[2] -- just above floor
 
 	local free_fall, blocker = minetest.line_of_sight(
-		{x = pos.x + dir_x, y = ypos, z = pos.z + dir_z},
-		{x = pos.x + dir_x, y = ypos - 3, z = pos.z + dir_z})
+		vector.offset(pos, dir_x, cbox[2], dir_z),
+		vector.offset(pos, dir_x, cbox[2] - 3, dir_z))
 
 	if free_fall then
 		return true
@@ -329,47 +318,21 @@ function mob_class:do_jump()
 	end
 
 	local pos = self.object:get_pos()
-	local yaw = self.object:get_yaw()
 
 	-- what is mob standing on?
 	local cbox = self.object:get_properties().collisionbox
-	pos.y = pos.y + cbox[2] - 0.2
-
-	local nod = node_ok(pos)
+	local nod = node_ok(vector.offset(pos, 0, cbox[2] - 0.2, 0))
 
 	if minetest.registered_nodes[nod.name].walkable == false then
 		return false
 	end
 
-	local v = self.object:get_velocity()
-	local v2 = math.abs(v.x)+math.abs(v.z)*.833
-	local jump_c_multiplier = 1
-	if v2/self.walk_velocity/2>1 then
-		jump_c_multiplier = v2/self.walk_velocity/2
-	end
-
-	local yaw_dir = minetest.yaw_to_dir(self.object:get_yaw())
-
-	-- where is front
-	local cbox = self.object:get_properties().collisionbox
-	local dir_x = -math.sin(yaw) * (cbox[4] + 0.5)*jump_c_multiplier+yaw_dir.x
-	local dir_z = math.cos(yaw) * (cbox[4] + 0.5)*jump_c_multiplier+yaw_dir.z
-
 	-- what is in front of mob?
-	nod = node_ok({
-		x = pos.x + dir_x,
-		y = pos.y + 0.5,
-		z = pos.z + dir_z
-	})
+	nod = self:node_infront_ok(pos, 0.5)
 
 	-- this is used to detect if there's a block on top of the block in front of the mob.
 	-- If there is, there is no point in jumping as we won't manage.
-	local nodTop = node_ok({
-		x = pos.x + dir_x,
-		y = pos.y + 1.5,
-		z = pos.z + dir_z
-	}, "air")
-
+	local nodTop = self:node_infront_ok(pos, 1.5, "air")
 
 	-- we don't attempt to jump if there's a stack of blocks blocking
 	if minetest.registered_nodes[nodTop.name].walkable == true and not (self.attack and self.state == "attack") then
@@ -900,15 +863,7 @@ function mob_class:do_states_walk()
 
 	-- No need to check if we are already going to turn
 	if not self.facing_fence and not cliff_or_danger then
-		local cbox = self.object:get_properties().collisionbox
-		local dir_x = -math.sin(yaw) * (cbox[4] + 0.5)
-		local dir_z = math.cos(yaw) * (cbox[4] + 0.5)
-
-		local nod = node_ok({
-			x = s.x + dir_x,
-			y = s.y + 0.5,
-			z = s.z + dir_z,
-		})
+		local nod = self:node_infront_ok(s, 0.5)
 
 		if minetest.registered_nodes[nod.name] and minetest.registered_nodes[nod.name].walkable == true then
 			facing_solid = true

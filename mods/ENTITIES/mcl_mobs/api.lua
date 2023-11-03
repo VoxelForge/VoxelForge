@@ -307,6 +307,28 @@ function mob_class:mob_activate(staticdata, dtime)
 	end
 end
 
+function mob_class:forward_directions()
+	local yaw = self.object:get_yaw()
+	local cbox = self.object:get_properties().collisionbox
+	local dir_x = -math.sin(yaw) * (cbox[4] + 0.5)
+	local dir_z = math.cos(yaw) * (cbox[4] + 0.5)
+
+	return dir_x, dir_z
+end
+
+function mob_class:node_infront_ok(pos, y_adjust, fallback)
+	fallback = fallback or mcl_mobs.fallback_node
+
+	local dir_x, dir_z = self:forward_directions()
+	local node = minetest.get_node_or_nil(vector.offset(pos, dir_x, y_adjust, dir_z))
+
+	if node and minetest.registered_nodes[node.name] then
+		return node
+	end
+
+	return minetest.registered_nodes[fallback]
+end
+
 -- returns true if mob has died
 function mob_class:do_states(dtime)
 	--if self.can_open_doors then check_doors(self) end
