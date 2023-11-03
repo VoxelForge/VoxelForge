@@ -184,6 +184,89 @@ local function stair_connect_to_param(connect, ceiling)
 	return param
 end
 
+local function placement_prevented_inner(params)
+
+	if params == nil or params.itemstack == nil or params.pointed_thing == nil then
+		return true
+	end
+
+	local wield_name = params.itemstack:get_name()
+	local ndef = minetest.registered_nodes[wield_name]
+	local groups = ndef.groups or {}
+
+	local under = params.pointed_thing.under
+	local node = minetest.get_node(under)
+	local above = params.pointed_thing.above
+	local wdir = minetest.dir_to_wallmounted({ x = under.x - above.x, y = under.y - above.y, z = under.z - above.z })
+
+	-- on top of upside down
+	if groups.attaches_to_top and (node.param2 >= 20 and wdir == 1) then
+		return false
+	end
+
+	-- on base of upright stair
+	if groups.attaches_to_base and (node.param2 < 20 and wdir == 0) then
+		return false
+	end
+
+	-- On back of rotated stair, corners have 2 backs
+	if
+		groups.attaches_to_side
+		and (
+			-- upright
+			(node.param2 == 0 and wdir == 2)
+			or (node.param2 == 0 and wdir == 5)
+			or (node.param2 == 1 and wdir == 3)
+			or (node.param2 == 1 and wdir == 5)
+			or (node.param2 == 2 and wdir == 3)
+			or (node.param2 == 2 and wdir == 4)
+			or (node.param2 == 3 and wdir == 2)
+			or (node.param2 == 3 and wdir == 4)
+			-- upside down
+			or (node.param2 == 20 and wdir == 3)
+			or (node.param2 == 20 and wdir == 5)
+			or (node.param2 == 21 and wdir == 2)
+			or (node.param2 == 21 and wdir == 5)
+			or (node.param2 == 22 and wdir == 2)
+			or (node.param2 == 22 and wdir == 4)
+			or (node.param2 == 23 and wdir == 3)
+			or (node.param2 == 23 and wdir == 4)
+		)
+	then
+		return false
+	end
+
+	return true
+end
+
+local function placement_prevented_outer(params)
+
+	if params == nil or params.itemstack == nil or params.pointed_thing == nil then
+		return true
+	end
+
+	local wield_name = params.itemstack:get_name()
+	local ndef = minetest.registered_nodes[wield_name]
+	local groups = ndef.groups or {}
+
+	local under = params.pointed_thing.under
+	local node = minetest.get_node(under)
+	local above = params.pointed_thing.above
+	local wdir = minetest.dir_to_wallmounted({ x = under.x - above.x, y = under.y - above.y, z = under.z - above.z })
+
+	-- on top of upside down
+	if groups.attaches_to_top and (node.param2 >= 20 and wdir == 1) then
+		return false
+	end
+
+	-- on base of upright stair
+	if groups.attaches_to_base and (node.param2 < 20 and wdir == 0) then
+		return false
+	end
+
+	return true
+end
+
 --[[
 mcl_stairs.cornerstair.add(name, stairtiles)
 
@@ -646,6 +729,7 @@ function mcl_stairs.cornerstair.add(name, stairtiles)
 		after_dig_node = function(pos, oldnode) after_dig_node(pos, oldnode) end,
 		_mcl_hardness = node_def._mcl_hardness,
 		on_rotate = false,
+		placement_prevented = placement_prevented_outer,
 	})
 	minetest.register_node(":"..name.."_inner", {
 		description = node_def.description,
@@ -670,6 +754,7 @@ function mcl_stairs.cornerstair.add(name, stairtiles)
 		after_dig_node = function(pos, oldnode) after_dig_node(pos, oldnode) end,
 		_mcl_hardness = node_def._mcl_hardness,
 		on_rotate = false,
+		placement_prevented = placement_prevented_inner,
 	})
 
 	if minetest.get_modpath("doc") then

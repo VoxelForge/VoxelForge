@@ -84,11 +84,20 @@ local function check_placement(node, wdir)
 	end
 end
 
+
 function mcl_lanterns.register_lantern(name, def)
 	local itemstring_floor = "mcl_lanterns:"..name.."_floor"
 	local itemstring_ceiling = "mcl_lanterns:"..name.."_ceiling"
 
 	local sounds = mcl_sounds.node_sound_metal_defaults()
+
+	local groups = def.groups or {}
+	groups.pickaxey = def.pickaxey or 1
+	groups.attached_node = 1
+	groups.deco_block = 1
+	groups.lantern = 1
+	groups.attaches_to_top = 1
+	groups.attaches_to_base = 1
 
 	minetest.register_node(itemstring_floor, {
 		description = def.description,
@@ -110,7 +119,7 @@ function mcl_lanterns.register_lantern(name, def)
 		node_placement_prediction = "",
 		sunlight_propagates = true,
 		light_source = def.light_level,
-		groups = {pickaxey = 1, attached_node = 1, deco_block = 1, lantern = 1, dig_by_piston=1},
+		groups = groups,
 		selection_box = {
 			type = "fixed",
 			fixed = {
@@ -137,11 +146,22 @@ function mcl_lanterns.register_lantern(name, def)
 			local under = pointed_thing.under
 			local above = pointed_thing.above
 			local node = minetest.get_node(under)
+			local def = minetest.registered_nodes[node.name]
 
 			local wdir = minetest.dir_to_wallmounted(vector.subtract(under, above))
 			local fakestack = itemstack
 
-			if check_placement(node, wdir) == false then
+			if def.placement_prevented ~= nil then
+				if
+					def.placement_prevented({
+						itemstack = itemstack,
+						placer = placer,
+						pointed_thing = pointed_thing,
+					})
+				then
+					return itemstack
+				end
+			elseif check_placement(node, wdir) == false then
 				return itemstack
 			end
 

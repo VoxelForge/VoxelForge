@@ -62,7 +62,11 @@ function minetest.check_single_for_falling(pos)
 	end
 
 	local node = minetest.get_node(pos)
-	if minetest.get_item_group(node.name, "attached_node_facedir") ~= 0 then
+	if minetest.get_item_group(node.name, "attached_node_facedir") ~= 0 and
+		minetest.get_item_group(node.name, "attaches_to_base") == 0 and
+		minetest.get_item_group(node.name, "attaches_to_side") == 0 and
+		minetest.get_item_group(node.name, "attaches_to_top") == 0
+	then
 		local dir = minetest.facedir_to_dir(node.param2)
 		if dir then
 			if minetest.get_item_group(minetest.get_node(vector.add(pos, dir)).name, "solid") == 0 then

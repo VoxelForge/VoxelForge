@@ -67,7 +67,22 @@ local function on_button_place(itemstack, placer, pointed_thing)
 	end
 
 	-- Only allow placement on full-cube solid opaque nodes
-	if (not groups) or (not groups.solid) or (not groups.opaque) or (def.node_box and def.node_box.type ~= "regular") then
+	if def.placement_prevented ~= nil then
+		if
+			def.placement_prevented({
+				itemstack = itemstack,
+				placer = placer,
+				pointed_thing = pointed_thing,
+			})
+		then
+			return itemstack
+		end
+	elseif
+		not groups
+		or not groups.solid
+		or not groups.opaque
+		or (def.node_box and def.node_box.type ~= "regular")
+	then
 		return itemstack
 	end
 
@@ -93,6 +108,9 @@ function mesecon.register_button(basename, description, texture, recipeitem, sou
 	groups_off.destroy_by_lava_flow=1
 	groups_off.dig_by_piston=1
 	groups_off.button=1 -- button (off)
+	groups_off.attaches_to_base = 1
+	groups_off.attaches_to_side = 1
+	groups_off.attaches_to_top = 1
 
 	local groups_on = table.copy(groups_off)
 	groups_on.not_in_creative_inventory=1

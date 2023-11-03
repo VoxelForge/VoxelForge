@@ -117,6 +117,7 @@ local function check_placement_allowed(node, wdir)
 	elseif not def.buildable_to then
 		if node.name ~= "mcl_core:ice" and node.name ~= "mcl_nether:soul_sand" and node.name ~= "mcl_mobspawners:spawner" and node.name ~= "mcl_core:barrier" and node.name ~= "mcl_end:chorus_flower" and node.name ~= "mcl_end:chorus_flower_dead" and (not def.groups.glass) and
 				((not def.groups.solid) or (not def.groups.opaque)) then
+
 			-- Only allow top placement on these nodes
 			if node.name == "mcl_end:dragon_egg" or node.name == "mcl_portals:end_portal_frame_eye" or def.groups.fence == 1 or def.groups.wall or def.groups.slab_top == 1 or def.groups.anvil or def.groups.pane or (def.groups.stair == 1 and minetest.facedir_to_dir(node.param2).y ~= 0) then
 				if wdir ~= 1 then
@@ -150,6 +151,8 @@ function mcl_torches.register_torch(def)
 	groups.destroy_by_lava_flow = 1
 	groups.dig_by_piston = 1
 	groups.flame_type = def.flame_type or 1
+	groups.attaches_to_top = 1
+	groups.attaches_to_side = 1
 
 	local floordef = {
 		description = def.description,
@@ -199,9 +202,19 @@ function mcl_torches.register_torch(def)
 			local above = pointed_thing.above
 			local wdir = minetest.dir_to_wallmounted({x = under.x - above.x, y = under.y - above.y, z = under.z - above.z})
 
-			if check_placement_allowed(node, wdir) == false then
+		if def.placement_prevented ~= nil then
+			if
+				def.placement_prevented({
+					itemstack = itemstack,
+					placer = placer,
+					pointed_thing = pointed_thing,
+				})
+			then
 				return itemstack
 			end
+		elseif check_placement_allowed(node, wdir) == false then
+			return itemstack
+		end
 
 			local itemstring = itemstack:get_name()
 			local fakestack = ItemStack(itemstack)

@@ -110,6 +110,15 @@ chances are good that it works out of the box.
 * Flowers and flower pots
 * Add job sites: `ENTITIES/mobs_mc`
 * Add villager professions: `MAGPGEN/mcl_villages`
+* `placement_prevented(table)` callback to see if a node will accept an attachment on the face being attached to. The table takes the following keys:
+
+	```lua
+	{
+		itemstack = itemstack,
+		placer = placer,
+		pointed_thing = pointed_thing,
+	}
+	```
 
 ### Unstable APIs
 The following APIs may be subject to change in future. You could already use

@@ -67,6 +67,53 @@ local function place_stair(itemstack, placer, pointed_thing)
 	return minetest.item_place(itemstack, placer, pointed_thing, param2)
 end
 
+local function placement_prevented(params)
+
+	if params == nil or params.itemstack == nil or params.pointed_thing == nil then
+		return true
+	end
+
+	local wield_name = params.itemstack:get_name()
+	local ndef = minetest.registered_nodes[wield_name]
+	local groups = ndef.groups or {}
+
+	local under = params.pointed_thing.under
+	local node = minetest.get_node(under)
+	local above = params.pointed_thing.above
+	local wdir = minetest.dir_to_wallmounted({ x = under.x - above.x, y = under.y - above.y, z = under.z - above.z })
+
+	-- on top of upside down
+	if groups.attaches_to_top and (node.param2 >= 20 and wdir == 1) then
+		return false
+	end
+
+	-- on base of upright stair
+	if groups.attaches_to_base and (node.param2 < 20 and wdir == 0) then
+		return false
+	end
+
+	-- On back of rotated stair
+	if
+		groups.attaches_to_side
+		and (
+			--upside down
+			(node.param2 == 20 and wdir == 5)
+			or (node.param2 == 21 and wdir == 2)
+			or (node.param2 == 22 and wdir == 4)
+			or (node.param2 == 23 and wdir == 3)
+			-- upright
+			or (node.param2 == 0 and wdir == 5)
+			or (node.param2 == 1 and wdir == 3)
+			or (node.param2 == 2 and wdir == 4)
+			or (node.param2 == 3 and wdir == 2)
+		)
+	then
+		return false
+	end
+
+	return true
+end
+
 -- Register stairs.
 -- Node will be called mcl_stairs:stair_<subname>
 
@@ -164,6 +211,7 @@ function mcl_stairs.register_stair(subname, recipeitem, groups, images, descript
 		end,
 		_mcl_blast_resistance = blast_resistance,
 		_mcl_hardness = hardness,
+		placement_prevented = placement_prevented,
 	},overrides or {}))
 
 	if recipeitem then

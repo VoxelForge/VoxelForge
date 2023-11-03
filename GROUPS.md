@@ -211,6 +211,9 @@ These groups are used mostly for informational purposes
 * `blast_furnace_smeltable=1` : Item or node is smeltable by a blast furnace
 * `smoker_cookable=1` : Food is cookable by a smoker.
 
+* `attaches_to_base=1`: This node can attach to the base of other nodes.
+* `attaches_to_side=1`: This node can attach to the sides of other nodes.
+* `attaches_to_top=1`: This node can attach to the top of other nodes.
 
 ## Fake item groups
 These groups put similar items together which should all be treated by the gameplay or the GUI as a single item.

@@ -44,7 +44,16 @@ minetest.register_node("mesecons_walllever:wall_lever_off", {
 		type = "fixed",
 		fixed = { -3/16, -4/16, 2/16, 3/16, 4/16, 8/16 },
 	},
-	groups = {handy=1, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, attached_node_facedir=1},
+	groups = {
+		handy = 1,
+		dig_by_water = 1,
+		destroy_by_lava_flow = 1,
+		dig_by_piston = 1,
+		attached_node_facedir = 1,
+		attaches_to_base = 1,
+		attaches_to_side = 1,
+		attaches_to_top = 1
+	},
 	is_ground_content = false,
 	description=S("Lever"),
 	_tt_help = S("Provides redstone power while it's turned on"),
@@ -86,7 +95,17 @@ minetest.register_node("mesecons_walllever:wall_lever_off", {
 		end
 
 		-- Only allow placement on full-cube solid opaque nodes
-		if (not groups) or (not groups.solid) or (not groups.opaque) or (def.node_box and def.node_box.type ~= "regular") then
+		if def.placement_prevented ~= nil then
+			if
+				def.placement_prevented({
+					itemstack = itemstack,
+					placer = placer,
+					pointed_thing = pointed_thing,
+				})
+			then
+				return itemstack
+			end
+		elseif (not groups) or (not groups.solid) or (not groups.opaque) or (def.node_box and def.node_box.type ~= "regular") then
 			return itemstack
 		end
 
