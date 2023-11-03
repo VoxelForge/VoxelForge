@@ -47,7 +47,8 @@ end
 -- Is this water?
 -- Returns the liquidtype, if indeed water.
 function kelp.is_submerged(node)
-	if minetest.get_item_group(node.name, "water") ~= 0 then
+	local g = minetest.get_item_group(node.name, "water")
+	if g > 0 and g <= 3  then
 		-- Expected only "source" and "flowing" from water liquids
 		return minetest.registered_nodes[node.name].liquidtype
 	end
@@ -215,7 +216,7 @@ function kelp.next_height(pos, node, pos_tip, node_tip, submerged, downward_flow
 	-- Flowing liquid: Grow 1 step, but also turn the tip node into a liquid source.
 	if downward_flowing then
 		local alt_liq = minetest.registered_nodes[node_tip.name].liquid_alternative_source
-		if alt_liq then
+		if alt_liq and minetest.registered_nodes[alt_liq] then
 			minetest.set_node(pos_tip, {name=alt_liq})
 		end
 	end
