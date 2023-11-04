@@ -11,24 +11,21 @@
 * davedevils
 
 ## Active Contributors
+* codiac
 * AFCMS
-* Lizzy Fleckenstein
 * Michieal
 * ancientmarinerdev
-* ROllerozxa
+* chmodsayshello
 * PrairieWind
-* kabou
-* FossFanatic
-* MrRar
+* the-real-herowl
 * DinoNuggies4665
-* codiac
+* kabou
 * Nauta Turbidus
 * ChrisPHP
-* the-real-herowl
 * Nils Dagsson Moskopp
-* chmodsayshello
 
 ## Previous Contributors
+* Lizzy Fleckenstein
 * NO11
 * Brandon
 * kay27
@@ -37,9 +34,13 @@
 * iliekprogrammar
 * TheOnlyJoeEnderman
 * jordan4ibanez
+* FossFanatic
+* rubenwardy
 * SumianVoice
 * MysticTempest
 * HimbeerserverDE
+* rubenwardy
+* MrRar
 * FaceDeer
 * 3raven
 
