@@ -312,10 +312,10 @@ function mcl_mobs.register_mob(name, def)
 
 end
 
-function mcl_mobs.get_arrow_damage_func(damage, typ)
+function mcl_mobs.get_arrow_damage_func(damage, typ, shooter)
 	local typ = mcl_damage.types[typ] and typ or "arrow"
 	return function(projectile, object)
-		return mcl_util.deal_damage(object, damage, {type = typ})
+		return mcl_util.deal_damage(object, damage, {type = typ, source = shooter or projectile._shooter})
 	end
 end
 
