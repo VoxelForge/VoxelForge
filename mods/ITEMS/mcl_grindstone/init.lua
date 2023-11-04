@@ -52,7 +52,6 @@ local function create_new_item(name_item, meta, wear)
 	end
 	local new_meta = new_item:get_meta()
 	new_meta:set_string("name", meta:get_string("name"))
-	tt.reload_itemstack_description(new_item)
 	return new_item
 end
 
