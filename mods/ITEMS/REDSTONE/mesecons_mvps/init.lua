@@ -148,7 +148,7 @@ function mesecon.mvps_get_stack(pos, dir, maximum, piston_pos)
 			if not node_replaceable(nn.name) then
 				table.insert(nodes, {node = nn, pos = {x=np.x, y=np.y, z=np.z}})
 				if #nodes > maximum then return nil, nil, false, true end
-				
+
 				-- add connected nodes to frontiers, connected is a vector list
 				-- the vectors must be absolute positions
 				local connected = {}
@@ -160,7 +160,7 @@ function mesecon.mvps_get_stack(pos, dir, maximum, piston_pos)
 					end
 				end
 				table.insert(connected, vector.add(np, dir))
-				
+
 				-- Make sure there are no duplicates in frontiers / nodes before
 				-- adding nodes in "connected" to frontiers
 				for _, cp in ipairs(connected) do
