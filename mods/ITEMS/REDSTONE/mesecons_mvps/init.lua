@@ -487,6 +487,12 @@ mesecon.register_mvps_stopper("mcl_signs:standing_sign22_5")
 mesecon.register_mvps_stopper("mcl_signs:standing_sign45")
 mesecon.register_mvps_stopper("mcl_signs:standing_sign67_5")
 
+-- Campfires
+mesecon.register_mvps_stopper("mcl_campfires:campfire")
+mesecon.register_mvps_stopper("mcl_campfires:campfire_lit")
+mesecon.register_mvps_stopper("mcl_campfires:soul_campfire")
+mesecon.register_mvps_stopper("mcl_campfires:soul_campfire_lit")
+
 
 -- Unmovable by design: objects
 mesecon.register_mvps_unmov("mcl_enchanting:book")
@@ -940,11 +946,6 @@ mesecon.register_mvps_unsticky("mcl_farming:wheat_4")
 mesecon.register_mvps_unsticky("mcl_farming:wheat_5")
 mesecon.register_mvps_unsticky("mcl_farming:wheat_6")
 mesecon.register_mvps_unsticky("mcl_farming:wheat_7")
--- Campfires
-mesecon.register_mvps_unsticky("mcl_campfires:campfire")
-mesecon.register_mvps_unsticky("mcl_campfires:campfire_lit")
-mesecon.register_mvps_unsticky("mcl_campfires:soul_campfire")
-mesecon.register_mvps_unsticky("mcl_campfires:soul_campfire_lit")
 
 -- Includes node heat when moving them
 mesecon.register_on_mvps_move(mesecon.move_hot_nodes)
