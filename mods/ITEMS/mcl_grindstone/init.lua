@@ -181,18 +181,6 @@ local function update_grindstone_slots(meta)
 	end
 end
 
--- Drop any items inside the grindstone if destroyed
-local function drop_grindstone_items(pos, meta)
-	local inv = meta:get_inventory()
-	for i = 1, inv:get_size("input") do
-		local stack = inv:get_stack("input", i)
-		if not stack:is_empty() then
-			local p = { x = pos.x + math.random(0, 10) / 10 - 0.5, y = pos.y, z = pos.z + math.random(0, 10) / 10 - 0.5 }
-			minetest.add_item(p, stack)
-		end
-	end
-end
-
 local node_box = {
 	type = "fixed",
 	-- created with nodebox editor
@@ -229,14 +217,7 @@ minetest.register_node("mcl_grindstone:grindstone", {
 	collision_box = node_box,
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	groups = { pickaxey = 1, deco_block = 1 },
-
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		local meta = minetest.get_meta(pos)
-		local meta2 = meta:to_table()
-		meta:from_table(oldmetadata)
-		drop_grindstone_items(pos, meta)
-		meta:from_table(meta2)
-	end,
+	after_dig_node = mcl_util.drop_items_from_meta_container({"input"}),
 	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then
