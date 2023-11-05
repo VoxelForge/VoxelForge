@@ -575,5 +575,7 @@ minetest.register_alias("mcl_boats:chest_boat","mcl_boats:boat_oak_chest")
 minetest.register_alias("mcl_boats:boat_obsidian","mcl_boats:boat_oak")
 
 if minetest.get_modpath("doc_identifier") then
+	-- use the single help entry created and aliased to mcl_boats:boat for chest and non chest boats
 	doc.sub.identifier.register_object("mcl_boats:boat", "craftitems", "mcl_boats:boat")
+	doc.sub.identifier.register_object("mcl_boats:chest_boat", "craftitems", "mcl_boats:boat")
 end
