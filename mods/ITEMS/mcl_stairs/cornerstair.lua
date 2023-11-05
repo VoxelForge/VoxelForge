@@ -286,6 +286,37 @@ Usage:
     * nil: Equivalent to "default"
 ]]
 
+local directions = {
+	{ -1, 0, 0 },
+	{ 1, 0, 0 },
+	{ 0, 0, -1 },
+	{ 0, 0, 1 },
+}
+
+local function check_sides(pos)
+	local source = minetest.get_node(pos)
+
+	local def = minetest.registered_nodes[source.name]
+
+	for _, offset in pairs(directions) do
+		local npos = vector.offset(pos, offset[1], offset[2], offset[3])
+		local node = minetest.get_node(npos)
+		local ndef = minetest.registered_nodes[node.name]
+		local groups = ndef.groups or {}
+
+		if groups.attaches_to_base or groups.attaches_to_side or groups.attaches_to_top then
+			if
+				def.placement_prevented({
+					itemstack = ItemStack(node.name),
+					pointed_thing = { under = pos, above = npos },
+				})
+			then
+				mcl_attached.drop_attached_node(npos)
+			end
+		end
+	end
+end
+
 function mcl_stairs.cornerstair.add(name, stairtiles)
 	local node_def = minetest.registered_nodes[name]
 	local outer_tiles
@@ -343,6 +374,7 @@ function mcl_stairs.cornerstair.add(name, stairtiles)
 			connect[n2] = true
 			local node = get_stair_from_param(stair_connect_to_param(connect, ceiling), t[index].stairs)
 			minetest.swap_node(t[index].pos, node)
+			check_sides(t[index].pos)
 		end
 		if t[3].stairs then
 			if t[7].connect[1] and t[3].connect[6] then
