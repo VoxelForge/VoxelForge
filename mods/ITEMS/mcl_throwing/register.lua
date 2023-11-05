@@ -311,6 +311,7 @@ minetest.register_craftitem("mcl_throwing:egg", {
 	stack_max = 16,
 	on_use = mcl_throwing.get_player_throw_function("mcl_throwing:egg_entity"),
 	_on_dispense = mcl_throwing.dispense_function,
+	_dispense_into_walkable = true,
 	groups = { craftitem = 1 },
 })
 
