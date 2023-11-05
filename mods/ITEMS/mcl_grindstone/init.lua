@@ -101,6 +101,22 @@ local function fix_stack_size(stack)
 	return count
 end
 
+-- Accepts an itemstack and returns the disenchanted version of said stack (curses are kept)
+-- Returns an empty string if nothing changed.
+function mcl_grindstone.disenchant(stack)
+	local def = stack:get_definition()
+	local meta = stack:get_meta()
+	local new_item = ""
+	if def.type == "tool" and mcl_enchanting.is_enchanted(stack:get_name()) then
+		new_item = create_new_item(mcl_grindstone.remove_enchant_name(stack), meta, stack:get_wear())
+		new_item = transfer_curse(stack, new_item)
+	elseif stack:get_name() == "mcl_enchanting:book_enchanted" then
+		new_item = create_new_item("mcl_books:book", meta, nil)
+		new_item = transfer_curse(stack, new_item)
+	end
+	return new_item
+end
+
 -- Update the inventory slots of an grindstone node.
 -- meta: Metadata of grindstone node
 local function update_grindstone_slots(meta)
@@ -110,7 +126,6 @@ local function update_grindstone_slots(meta)
 	local meta = input1:get_meta()
 
 	local new_output = ""
-	local new_item
 
 	-- Both input slots are occupied
 	if not input1:is_empty() and not input2:is_empty() then
@@ -139,29 +154,9 @@ local function update_grindstone_slots(meta)
 		-- Check if the item is's an enchanted book or tool
 	else
 		if input2:is_empty() and not input1:is_empty() then
-			local def1 = input1:get_definition()
-			local meta = input1:get_meta()
-			if def1.type == "tool" and mcl_enchanting.is_enchanted(input1:get_name()) then
-				local name = mcl_grindstone.remove_enchant_name(input1)
-				local wear = input1:get_wear()
-				local new_item = create_new_item(name, meta, wear)
-				new_output = transfer_curse(input1, new_item)
-			elseif input1:get_name() == "mcl_enchanting:book_enchanted" then
-				new_item = create_new_item("mcl_books:book", meta, nil)
-				new_output = transfer_curse(input1, new_item)
-			end
+			new_output = mcl_grindstone.disenchant(input1)
 		elseif input1:is_empty() and not input2:is_empty() then
-			local def2 = input2:get_definition()
-			local meta = input2:get_meta()
-			if def2.type == "tool" and mcl_enchanting.is_enchanted(input2:get_name()) then
-				local name = mcl_grindstone.remove_enchant_name(input2)
-				local wear = input2:get_wear()
-				local new_item = create_new_item(name, meta, wear)
-				new_output = transfer_curse(input2, new_item)
-			elseif input2:get_name() == "mcl_enchanting:book_enchanted" then
-				new_item = create_new_item("mcl_books:book", meta, nil)
-				new_output = transfer_curse(input2, new_item)
-			end
+			new_output = mcl_grindstone.disenchant(input2)
 		end
 	end
 
