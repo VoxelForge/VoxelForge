@@ -151,7 +151,7 @@ function mcl_lanterns.register_lantern(name, def)
 			local wdir = minetest.dir_to_wallmounted(vector.subtract(under, above))
 			local fakestack = itemstack
 
-			if def.placement_prevented ~= nil then
+			if type(def.placement_prevented) == "function" then
 				if
 					def.placement_prevented({
 						itemstack = itemstack,

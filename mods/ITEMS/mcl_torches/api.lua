@@ -202,7 +202,7 @@ function mcl_torches.register_torch(def)
 			local above = pointed_thing.above
 			local wdir = minetest.dir_to_wallmounted({x = under.x - above.x, y = under.y - above.y, z = under.z - above.z})
 
-			if def.placement_prevented ~= nil then
+			if type(def.placement_prevented) == "function" then
 				if
 					def.placement_prevented({
 						itemstack = itemstack,

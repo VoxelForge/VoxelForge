@@ -67,7 +67,7 @@ local function on_button_place(itemstack, placer, pointed_thing)
 	end
 
 	-- Only allow placement on full-cube solid opaque nodes
-	if def.placement_prevented ~= nil then
+	if type(def.placement_prevented) == "function" then
 		if
 			def.placement_prevented({
 				itemstack = itemstack,

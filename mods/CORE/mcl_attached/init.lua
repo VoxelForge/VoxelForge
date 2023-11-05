@@ -11,7 +11,10 @@
 -- We need this to do the exact same dropping node handling in our override
 -- minetest.check_single_for_falling() function as in the builtin function.
 --
-local function drop_attached_node(p)
+
+mcl_attached = {}
+
+function mcl_attached.drop_attached_node(p)
 	local n = minetest.get_node(p)
 	local drops = minetest.get_node_drops(n, "")
 	local def = minetest.registered_nodes[n.name]
@@ -70,7 +73,7 @@ function minetest.check_single_for_falling(pos)
 		local dir = minetest.facedir_to_dir(node.param2)
 		if dir then
 			if minetest.get_item_group(minetest.get_node(vector.add(pos, dir)).name, "solid") == 0 then
-				drop_attached_node(pos)
+				mcl_attached.drop_attached_node(pos)
 				return true
 			end
 		end
@@ -79,7 +82,7 @@ function minetest.check_single_for_falling(pos)
 	if minetest.get_item_group(node.name, "supported_node") ~= 0 then
 		local def = minetest.registered_nodes[minetest.get_node(vector.offset(pos, 0, -1, 0)).name]
 		if def and def.drawtype == "airlike" then
-			drop_attached_node(pos)
+			mcl_attached.drop_attached_node(pos)
 			return true
 		end
 	end

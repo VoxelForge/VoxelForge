@@ -95,7 +95,7 @@ minetest.register_node("mesecons_walllever:wall_lever_off", {
 		end
 
 		-- Only allow placement on full-cube solid opaque nodes
-		if def.placement_prevented ~= nil then
+		if type(def.placement_prevented) == "function" then
 			if
 				def.placement_prevented({
 					itemstack = itemstack,
