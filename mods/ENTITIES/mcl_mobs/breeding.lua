@@ -25,6 +25,16 @@ function mcl_mobs.protect(self, clicker)
 	return false
 end
 
+function mob_class:use_shears(new_textures, shears_stack)
+	if minetest.get_item_group(shears_stack:get_name(), "shears") > 0 then
+		self.object:set_properties({ textures = new_textures })
+		self.gotten = true
+		minetest.sound_play("mcl_tools_shears_cut", { pos = self.object:get_pos() }, true)
+		shears_stack:add_wear(65535 / shears_stack._mcl_diggroups.shearsy.uses)
+	end
+	return shears_stack
+end
+
 function mob_class:_on_dispense(dropitem, pos, droppos, dropnode, dropdir)
 	local item = dropitem.get_name and dropitem:get_name() or dropitem
 	if self.follow and ( type(self.follow) == "table" and table.indexof(self.follow, item) or item == self.follow ) then
