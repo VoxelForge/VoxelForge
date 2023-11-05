@@ -1,5 +1,3 @@
--- Code based from mcl_anvils
-
 mcl_grindstone = {}
 
 local S = minetest.get_translator(minetest.get_current_modname())
@@ -55,15 +53,6 @@ local function create_new_item(name_item, meta, wear)
 	return new_item
 end
 
--- If an item has an enchanment then remove "_enchanted" from the name
-function mcl_grindstone.remove_enchant_name(stack)
-	local name = stack:get_name()
-	if mcl_enchanting.is_enchanted(name) then
-		name = name:gsub("_enchanted$", "")
-	end
-	return name
-end
-
 -- If an input has a curse transfer it to the new item
 local function transfer_curse(old_itemstack, new_itemstack)
 	local enchants = mcl_enchanting.get_enchantments(old_itemstack)
@@ -101,6 +90,15 @@ local function fix_stack_size(stack)
 	return count
 end
 
+-- If an item has an enchanment then remove "_enchanted" from the name
+function mcl_grindstone.remove_enchant_name(stack)
+	local name = stack:get_name()
+	if mcl_enchanting.is_enchanted(name) then
+		name = name:gsub("_enchanted$", "")
+	end
+	return name
+end
+
 -- Accepts an itemstack and returns the disenchanted version of said stack (curses are kept)
 -- Returns an empty string if nothing changed.
 function mcl_grindstone.disenchant(stack)
@@ -127,31 +125,24 @@ local function update_grindstone_slots(meta)
 
 	local new_output = ""
 
-	-- Both input slots are occupied
 	if not input1:is_empty() and not input2:is_empty() then
 		local def1 = input1:get_definition()
 		local def2 = input2:get_definition()
-		-- Remove enchant name if they have one
 		local name1 = mcl_grindstone.remove_enchant_name(input1)
 		local name2 = mcl_grindstone.remove_enchant_name(input2)
 
-		-- Calculate repair
 		local function calculate_repair(dur1, dur2)
 			-- Grindstone gives a 5% bonus to durability
 			local new_durability = (MAX_WEAR - dur1) + (MAX_WEAR - dur2) * 1.05
 			return math.max(0, math.min(MAX_WEAR, MAX_WEAR - new_durability))
 		end
 
-		-- Check if both are tools and have the same tool type
 		if def1.type == "tool" and def2.type == "tool" and name1 == name2 then
 			local new_wear = calculate_repair(input1:get_wear(), input2:get_wear())
 			local new_item = create_new_item(name1, meta, new_wear)
-			-- Transfer curses if both items have any
 			new_output = transfer_curse(input1, new_item)
 			new_output = transfer_curse(input2, new_output)
 		end
-		-- Check if at least one input has an item
-		-- Check if the item is's an enchanted book or tool
 	else
 		if input2:is_empty() and not input1:is_empty() then
 			new_output = mcl_grindstone.disenchant(input1)
@@ -160,7 +151,6 @@ local function update_grindstone_slots(meta)
 		end
 	end
 
-	-- Set the new output slot
 	if new_output then
 		fix_stack_size(new_output)
 		inv:set_stack("output", 1, new_output)
@@ -169,7 +159,6 @@ end
 
 local node_box = {
 	type = "fixed",
-	-- created with nodebox editor
 	fixed = {
 		{ -0.25, -0.25, -0.375, 0.25, 0.5, 0.375 },
 		{ -0.375, -0.0625, -0.1875, -0.25, 0.3125, 0.1875 },
@@ -277,7 +266,6 @@ minetest.register_node("mcl_grindstone:grindstone", {
 				inv:set_stack("input", 1, input1)
 				inv:set_stack("input", 2, input2)
 			else
-				-- If only one input item
 				if not input1:is_empty() then
 					xp_earnt = calculate_xp(input1)
 					input1:set_count(math.max(0, input1:get_count() - stack:get_count()))
@@ -289,7 +277,6 @@ minetest.register_node("mcl_grindstone:grindstone", {
 					inv:set_stack("input", 2, input2)
 				end
 			end
-			-- Give the player xp
 			if mcl_experience.throw_xp and xp_earnt > 0 then
 				mcl_experience.throw_xp(pos, xp_earnt)
 			end
