@@ -57,12 +57,11 @@ end
 
 -- If an item has an enchanment then remove "_enchanted" from the name
 function mcl_grindstone.remove_enchant_name(stack)
-	if mcl_enchanting.is_enchanted(stack:get_name()) then
-		local name = stack:get_name()
-		return name.sub(name, 1, -11)
-	else
-		return stack:get_name()
+	local name = stack:get_name()
+	if mcl_enchanting.is_enchanted(name) then
+		name = name:gsub("_enchanted$", "")
 	end
+	return name
 end
 
 -- If an input has a curse transfer it to the new item
@@ -110,11 +109,11 @@ local function update_grindstone_slots(meta)
 	local input2 = inv:get_stack("input", 2)
 	local meta = input1:get_meta()
 
-	local new_output
+	local new_output = ""
 	local new_item
 
 	-- Both input slots are occupied
-	if (not input1:is_empty() and not input2:is_empty()) then
+	if not input1:is_empty() and not input2:is_empty() then
 		local def1 = input1:get_definition()
 		local def2 = input2:get_definition()
 		-- Remove enchant name if they have one
@@ -135,13 +134,11 @@ local function update_grindstone_slots(meta)
 			-- Transfer curses if both items have any
 			new_output = transfer_curse(input1, new_item)
 			new_output = transfer_curse(input2, new_output)
-		else
-			new_output = ""
 		end
 		-- Check if at least one input has an item
 		-- Check if the item is's an enchanted book or tool
-	elseif (not input1:is_empty() and input2:is_empty()) or (input1:is_empty() and not input2:is_empty()) then
-		if input2:is_empty() then
+	else
+		if input2:is_empty() and not input1:is_empty() then
 			local def1 = input1:get_definition()
 			local meta = input1:get_meta()
 			if def1.type == "tool" and mcl_enchanting.is_enchanted(input1:get_name()) then
@@ -152,10 +149,8 @@ local function update_grindstone_slots(meta)
 			elseif input1:get_name() == "mcl_enchanting:book_enchanted" then
 				new_item = create_new_item("mcl_books:book", meta, nil)
 				new_output = transfer_curse(input1, new_item)
-			else
-				new_output = ""
 			end
-		else
+		elseif input1:is_empty() and not input2:is_empty() then
 			local def2 = input2:get_definition()
 			local meta = input2:get_meta()
 			if def2.type == "tool" and mcl_enchanting.is_enchanted(input2:get_name()) then
@@ -166,12 +161,8 @@ local function update_grindstone_slots(meta)
 			elseif input2:get_name() == "mcl_enchanting:book_enchanted" then
 				new_item = create_new_item("mcl_books:book", meta, nil)
 				new_output = transfer_curse(input2, new_item)
-			else
-				new_output = ""
 			end
 		end
-	else
-		new_output = ""
 	end
 
 	-- Set the new output slot
@@ -248,7 +239,7 @@ minetest.register_node("mcl_grindstone:grindstone", {
 		elseif from_list == "output" and to_list == "input" then
 			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
-			if inv:get_stack(to_list, to_index):is_empty() then
+			if inv:room_for_item(to_list, inv:get_stack(from_list, from_index)) then
 				return count
 			else
 				return 0
