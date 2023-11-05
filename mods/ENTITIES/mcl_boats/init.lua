@@ -448,7 +448,8 @@ cboat.initial_properties.selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.75, 0.7}
 minetest.register_entity("mcl_boats:chest_boat", cboat)
 mcl_entity_invs.register_inv("mcl_boats:chest_boat","Boat",27)
 
-local entry_created
+local doc_itemstring_boat
+local doc_itemstring_chest_boat
 
 function mcl_boats.register_boat(name,item_def,object_properties,entity_overrides)
 	local itemstring = "mcl_boats:boat_"..name
@@ -457,12 +458,15 @@ function mcl_boats.register_boat(name,item_def,object_properties,entity_override
 	local longdesc, usagehelp, tt_help, help, helpname
 	help = false
 	-- Only create one help entry for all boats
-	if not entry_created then
+	if not doc_itemstring_boat then
 		help = true
-		entry_created = true
 		longdesc = S("Boats are used to travel on the surface of water.")
 		usagehelp = S("Rightclick on a water source to place the boat. Rightclick the boat to enter it. Use [Left] and [Right] to steer, [Forwards] to speed up and [Backwards] to slow down or move backwards. Use [Sneak] to leave the boat, punch the boat to make it drop as an item.")
 		helpname = S("Boat")
+		doc_itemstring_boat = itemstring
+		doc.sub.identifier.register_object("mcl_boats:boat", "craftitems", itemstring)
+	else
+		doc.add_entry_alias("craftitems", doc_itemstring_boat, "craftitems", itemstring)
 	end
 	tt_help = S("Water vehicle")
 
@@ -471,6 +475,16 @@ function mcl_boats.register_boat(name,item_def,object_properties,entity_override
 	if id:find("chest") then
 		inventory_image = "mcl_boats_" .. id .. ".png"
 		texture = "mcl_boats_texture_" .. id:gsub("chest_", "") .. ".png"
+		if not doc_itemstring_chest_boat then
+			help = true
+			longdesc = S("Chest Boats are used to travel on the surface of water. And transport goods")
+			usagehelp = S("Rightclick on a water source to place the boat. Rightclick the boat to enter it. Use [Left] and [Right] to steer, [Forwards] to speed up and [Backwards] to slow down or move backwards. Use [Sneak] to leave the boat, punch the boat to make it drop as an item. Use [Sneak] + [Rightclick] to open the boat's chest")
+			helpname = S("Chest Boat")
+			doc_itemstring_chest_boat = itemstring
+			doc.sub.identifier.register_object("mcl_boats:chest_boat", "craftitems", doc_itemstring_chest_boat)
+		else
+			doc.add_entry_alias("craftitems", doc_itemstring_chest_boat, "craftitems", itemstring)
+		end
 	else
 		inventory_image = "mcl_boats_" .. name .. "_boat.png"
 		texture = "mcl_boats_texture_" .. name .. "_boat.png"
@@ -573,9 +587,3 @@ minetest.register_alias("mcl_boats:boat","mcl_boats:boat_oak")
 minetest.register_alias("mcl_boats:chest_boat","mcl_boats:boat_oak_chest")
 --Alias the obsidian boat item that exited in the game for a while to avoid unknown items
 minetest.register_alias("mcl_boats:boat_obsidian","mcl_boats:boat_oak")
-
-if minetest.get_modpath("doc_identifier") then
-	-- use the single help entry created and aliased to mcl_boats:boat for chest and non chest boats
-	doc.sub.identifier.register_object("mcl_boats:boat", "craftitems", "mcl_boats:boat")
-	doc.sub.identifier.register_object("mcl_boats:chest_boat", "craftitems", "mcl_boats:boat")
-end
