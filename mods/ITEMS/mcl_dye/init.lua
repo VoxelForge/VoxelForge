@@ -7,6 +7,12 @@ for k, v in pairs(mcl_dyes.colors) do
 	mcl_dye.mcl2dyes_translate["mcl_dye:"..(v.mcl2 or k)] = "mcl_dyes:"..k
 end
 
+-- Override of minetest.register_craft rewrites crafing recipes that use mcl2 item names to use the mcla eqivalents.
+-- It's necessary to prevent turning old lapis, bone meal, ink sacs and cocoanuts into dye as
+-- before 0.81 the "mcl_dye:blue" item was the same as lapis.
+-- This essentially means in mcla "mcl_dye:blue" is still lapis (via alias) but all recipes
+-- using that itemstring are rewritten to use "mcl_dyes:blue" so they still work the same.
+
 local old_mt_reg_craft = minetest.register_craft
 function minetest.register_craft(recipe)
 	if recipe.recipe and type(recipe.recipe) == "table" then
