@@ -31,17 +31,12 @@ end
 
 local canonical_color = "yellow"
 
-local function readable_name(str)
-	str = str:gsub("_", " ")
-    return (str:gsub("^%l", string.upper))
-end
-
 for color,colordef in pairs(mcl_dyes.colors) do
 	local is_canonical = color == canonical_color
-	local sdesc_hc = S(readable_name(color).." Terracotta")
-	local sdesc_gt = S(readable_name(color).." Glazed Terracotta")
-	local sdesc_cp = S(readable_name(color).." Concrete Powder")
-	local sdesc_c = S(readable_name(color).." Concrete")
+	local sdesc_hc = S(colordef.readable_name.." Terracotta")
+	local sdesc_gt = S(colordef.readable_name.." Glazed Terracotta")
+	local sdesc_cp = S(colordef.readable_name.." Concrete Powder")
+	local sdesc_c = S(colordef.readable_name.." Concrete")
 	local ldesc_hc, ldesc_gt, ldesc_cp, ldesc_c
 	local create_entry
 	local ename_hc, ename_gt, ename_cp, ename_c
