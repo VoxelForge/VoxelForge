@@ -401,11 +401,6 @@ function mob_class:on_step(dtime)
 	self:check_smooth_rotation(dtime)
 	self:check_head_swivel(dtime)
 
-	if self.jump_sound_cooloff > 0 then
-		self.jump_sound_cooloff = self.jump_sound_cooloff - dtime
-	end
-	self:do_jump()
-
 	self:set_armor_texture()
 	self:check_runaway_from()
 
@@ -437,6 +432,11 @@ function mob_class:on_step(dtime)
 
 	if self:env_damage (dtime, pos) then return end
 	if self:do_states(dtime) then return end
+
+	if self.jump_sound_cooloff > 0 then
+		self.jump_sound_cooloff = self.jump_sound_cooloff - dtime
+	end
+	self:do_jump()
 
 	if not self.object:get_luaentity() then
 		return false
