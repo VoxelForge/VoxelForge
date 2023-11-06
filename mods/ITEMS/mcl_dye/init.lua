@@ -27,14 +27,3 @@ function minetest.register_craft(recipe)
 	end
 	return old_mt_reg_craft(recipe)
 end
-
--- TEST RECIPE: this should result in a recipe of 3 blue dyes (not lapis) yielding a stick
-minetest.register_craft({
-    output = "mcl_core:stick",
-    type = "shapeless",
-    recipe = {
-        "mcl_dye:blue",
-        "mcl_dye:blue",
-        "mcl_dye:blue",
-    },
-})
