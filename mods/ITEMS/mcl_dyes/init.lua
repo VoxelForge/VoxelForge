@@ -27,12 +27,14 @@ mcl_dyes.colors = {
 		groups = {basecolor_grey=1,    excolor_grey=1,      unicolor_grey=1},
 		rgb = "#818177",
 		unicolor = "grey",
+		mcl2 = "grey",
 	},
 	["grey"] = {
 		description = S("Grey Dye"),
 		groups = {basecolor_grey=1,    excolor_darkgrey=1,  unicolor_darkgrey=1},
 		rgb = "#383c40",
 		unicolor = "darkgrey",
+		mcl2 = "dark_grey",
 	},
 	["black"] = {
 		description = S("Black Dye"),
@@ -45,6 +47,7 @@ mcl_dyes.colors = {
 		groups = {basecolor_magenta=1, excolor_violet=1,    unicolor_violet=1},
 		rgb = "#6821a0",
 		unicolor = "violet",
+		mcl2 = "violet",
 	},
 	["blue"] = {
 		description = S("Blue Dye"),
@@ -57,6 +60,7 @@ mcl_dyes.colors = {
 		groups = {basecolor_blue=1,    excolor_blue=1,      unicolor_light_blue=1},
 		rgb = "#258ec9",
 		unicolor = "light_blue",
+		mcl2 = "lightblue",
 	},
 	["cyan"] = {
 		description = S("Cyan Dye"),
@@ -69,12 +73,14 @@ mcl_dyes.colors = {
 		groups = {basecolor_green=1,   excolor_green=1,     unicolor_dark_green=1},
 		rgb = "#4b5e25",
 		unicolor = "dark_green",
+		mcl2 = "dark_green",
 	},
 	["lime"] = {
 		description = S("Lime Dye"),
 		groups = {basecolor_green=1,   excolor_green=1,     unicolor_green=1},
 		rgb = "#60ac19",
 		unicolor = "green",
+		mcl2 = "green",
 	},
 	["yellow"] = {
 		description = S("Dandelion Yellow"),
