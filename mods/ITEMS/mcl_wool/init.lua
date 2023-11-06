@@ -16,11 +16,6 @@ local messy_textures = { --translator table for the bed texture filenames names 
 
 local canonical_color = "white"
 
-local function readable_name(str)
-	str = str:gsub("_", " ")
-    return (str:gsub("^%l", string.upper))
-end
-
 for color,colordef in pairs(mcl_dyes.colors) do
 	local create_entry = false
 	local longdesc_carpet, longdesc_wool, name_carpet, name_wool
@@ -39,7 +34,7 @@ for color,colordef in pairs(mcl_dyes.colors) do
 	end
 
 	minetest.register_node("mcl_wool:"..color, {
-		description = S(readable_name(color).." Wool"),
+		description = S(colordef.readable_name.." Wool"),
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = name_wool,
 		_doc_items_longdesc = longdesc_wool,
@@ -51,7 +46,7 @@ for color,colordef in pairs(mcl_dyes.colors) do
 		_mcl_blast_resistance = 0.8,
 	})
 	minetest.register_node("mcl_wool:"..color.."_carpet", {
-		description = S(readable_name(color).." Carpet"),
+		description = S(colordef.readable_name.." Carpet"),
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = name_carpet,
 		_doc_items_longdesc = longdesc_carpet,
