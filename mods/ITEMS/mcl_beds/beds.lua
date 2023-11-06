@@ -6,12 +6,7 @@ local messy_textures = { --translator table for the bed texture filenames names 
 
 local canonical_color = "red"
 
-local function readable_name(str)
-	str = str:gsub("_", " ")
-    return (str:gsub("^%l", string.upper))
-end
-
-for color,colordef in pairs(mcl_dyes.colors) do
+for color, colordef in pairs(mcl_dyes.colors) do
 	local is_canonical =
 
 	minetest.register_craft({
@@ -32,7 +27,7 @@ for color,colordef in pairs(mcl_dyes.colors) do
 	end
 	-- Register bed
 	mcl_beds.register_bed("mcl_beds:bed_"..color, {
-		description = S(readable_name(color).." Bed"),
+		description = S(colordef.readable_name.." Bed"),
 		_doc_items_entry_name = entry_name,
 		_doc_items_create_entry = create_entry,
 		inventory_image = "mcl_beds_bed_"..texcol.."_inv.png",
