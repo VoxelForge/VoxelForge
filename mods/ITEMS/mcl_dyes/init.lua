@@ -18,12 +18,14 @@ local S = minetest.get_translator(minetest.get_current_modname())
 mcl_dyes.colors = {
 	["white"] = {
 		description = S("White Dye"),
+		readable_name = "White",
 		groups = {basecolor_white=1,   excolor_white=1,     unicolor_white=1},
 		rgb = "#d0d6d7",
 		unicolor = "white",
 	},
 	["silver"] = {
 		description = S("Light Grey Dye"),
+		readable_name = "Light Grey",
 		groups = {basecolor_grey=1,    excolor_grey=1,      unicolor_grey=1},
 		rgb = "#818177",
 		unicolor = "grey",
@@ -31,6 +33,7 @@ mcl_dyes.colors = {
 	},
 	["grey"] = {
 		description = S("Grey Dye"),
+		readable_name = "Grey",
 		groups = {basecolor_grey=1,    excolor_darkgrey=1,  unicolor_darkgrey=1},
 		rgb = "#383c40",
 		unicolor = "darkgrey",
@@ -38,12 +41,14 @@ mcl_dyes.colors = {
 	},
 	["black"] = {
 		description = S("Black Dye"),
+		readable_name = "Black",
 		groups = {basecolor_black=1,   excolor_black=1,     unicolor_black=1},
 		rgb = "#080a10",
 		unicolor = "black",
 	},
 	["purple"] = {
 		description = S("Purple Dye"),
+		readable_name = "Purple",
 		groups = {basecolor_magenta=1, excolor_violet=1,    unicolor_violet=1},
 		rgb = "#6821a0",
 		unicolor = "violet",
@@ -51,12 +56,14 @@ mcl_dyes.colors = {
 	},
 	["blue"] = {
 		description = S("Blue Dye"),
+		readable_name = "Blue",
 		groups = {basecolor_blue=1,    excolor_blue=1,      unicolor_blue=1},
 		rgb = "#2e3094",
 		unicolor = "blue",
 	},
 	["light_blue"] = {
 		description = S("Light Blue Dye"),
+		readable_name = "Light Blue",
 		groups = {basecolor_blue=1,    excolor_blue=1,      unicolor_light_blue=1},
 		rgb = "#258ec9",
 		unicolor = "light_blue",
@@ -64,12 +71,14 @@ mcl_dyes.colors = {
 	},
 	["cyan"] = {
 		description = S("Cyan Dye"),
+		readable_name = "Cyan",
 		groups = {basecolor_cyan=1,    excolor_cyan=1,      unicolor_cyan=1},
 		rgb = "#167b8c",
 		unicolor = "cyan",
 	},
 	["green"] = {
 		description = S("Cactus Green"),
+		readable_name = "Dark Green",
 		groups = {basecolor_green=1,   excolor_green=1,     unicolor_dark_green=1},
 		rgb = "#4b5e25",
 		unicolor = "dark_green",
@@ -77,6 +86,7 @@ mcl_dyes.colors = {
 	},
 	["lime"] = {
 		description = S("Lime Dye"),
+		readable_name = "Green",
 		groups = {basecolor_green=1,   excolor_green=1,     unicolor_green=1},
 		rgb = "#60ac19",
 		unicolor = "green",
@@ -84,36 +94,42 @@ mcl_dyes.colors = {
 	},
 	["yellow"] = {
 		description = S("Dandelion Yellow"),
+		readable_name = "Yellow",
 		groups = {basecolor_yellow=1,  excolor_yellow=1,    unicolor_yellow=1},
 		rgb = "#f1b216",
 		unicolor = "yellow",
 	},
 	["brown"] = {
 		description = S("Brown Dye"),
+		readable_name = "Brown",
 		groups = {basecolor_brown=1,   excolor_orange=1,    unicolor_dark_orange=1},
 		rgb = "#633d20",
 		unicolor = "dark_orange",
 	},
 	["orange"] = {
 		description = S("Orange Dye"),
+		readable_name = "Orange",
 		groups = {basecolor_orange=1,  excolor_orange=1,    unicolor_orange=1},
 		rgb = "#e26501",
 		unicolor = "orange",
 	},
 	["red"] = {
 		description = S("Rose Red"),
+		readable_name = "Red",
 		groups = {basecolor_red=1,     excolor_red=1,       unicolor_red=1},
 		rgb = "#912222",
 		unicolor = "red",
 	},
 	["magenta"] = {
 		description = S("Magenta Dye"),
+		readable_name = "Magenta",
 		groups = {basecolor_magenta=1, excolor_red_violet=1,unicolor_red_violet=1},
 		rgb = "#ab31a2",
 		unicolor = "red_violet",
 	},
 	["pink"] = {
 		description = S("Pink Dye"),
+		readable_name = "Pink",
 		groups = {basecolor_red=1,     excolor_red=1,       unicolor_light_red=1},
 		rgb = "#d56791",
 		unicolor = "light_red",
