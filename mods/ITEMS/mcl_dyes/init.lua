@@ -1,20 +1,10 @@
--- To make recipes that will work with any dye ever made by anybody, define
--- them based on groups.
--- You can select any group of groups, based on your need for amount of colors.
--- basecolor: 9, excolor: 17, unicolor: 89
---
--- Example of one shapeless recipe using a color group:
--- Note: As this uses basecolor_*, you'd need 9 of these.
--- minetest.register_craft({
---     type = "shapeless",
---     output = "<mod>:item_yellow",
---     recipe = {"<mod>:item_no_color", "group:basecolor_yellow"},
--- })
-
 mcl_dyes = {}
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
+-- Common color table to be used by other mods. The "mcl2" field if present
+-- represents the name of the color in mcl2 if it is different. This is used
+-- in the mcl_dye compat mod to adabt the recipes.
 mcl_dyes.colors = {
 	["white"] = {
 		description = S("White Dye"),
