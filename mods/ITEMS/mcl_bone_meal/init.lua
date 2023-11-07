@@ -24,8 +24,8 @@ function mcl_bone_meal.add_bone_meal_particle(pos, def)
 	})
 end
 
-local function bone_meal(itemstack,user,pointed_thing)
-	local pname = user:get_player_name()
+local function bone_meal(itemstack, user, pointed_thing)
+	local pname = user and user:get_player_name()
 	local unode = minetest.get_node(pointed_thing.under)
 	local anode = minetest.get_node(pointed_thing.above)
 	local udef = minetest.registered_nodes[unode.name]
