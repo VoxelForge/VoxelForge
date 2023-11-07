@@ -47,7 +47,7 @@ instantly.
 ### Getting started
 * **Punch a tree** trunk until it breaks and collect wood
 * Place the **wood into the 2×2 grid** (your “crafting grid” in your inventory
-  menu and craft 4 wood planks
+  menu) and craft 4 wood planks
 * Place the 4 wood planks in a 2×2 shape in the crafting grid to **make a
   crafting table**
 * **Rightclick the crafting table** for a 3×3 crafting grid to craft more
@@ -60,15 +60,15 @@ instantly.
 
 ### Farming
 * Find seeds
-* Craft hoe
-* Rightclick dirt or similar block with hoe to create farmland
+* Craft a hoe
+* Rightclick dirt or a similar block with a hoe to create farmland
 * Place seeds on farmland and watch them grow
-* Collect plant when fully grown
+* Collect plants when fully grown
 * If near water, farmland becomes wet and speeds up growth
 
 ### Furnace
-* Craft furnace
-* Furnace allows you to obtain more items
+* Craft a furnace
+* The furnace allows you to obtain more items
 * Upper slot must contain a smeltable item (example: iron ore)
 * Lower slot must contain a fuel item (example: coal)
 * See tooltips in crafting guide to learn about fuels and smeltable items
@@ -95,6 +95,13 @@ development versions of Minetest.
 To install Mineclonia (if you haven't already), move this directory into the
 “games” directory of your Minetest data directory. Consult the help of
 Minetest to learn more.
+
+## Useful links
+The Mineclonia repository is hosted at [Codeberg](https://codeberg.org).
+To contribute or report issues, head there.
+
+* Codeberg: <https://codeberg.org/mineclonia/mineclonia>
+* ContentDB: <https://content.minetest.net/packages/ryvnf/mineclonia/>
 
 ## Project description
 The main goal of **Mineclonia** is to be a stable and performant clone of
