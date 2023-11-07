@@ -18,12 +18,7 @@ local grindstone_formspec = table.concat({
 	mcl_formspec.get_itemslot_bg_v4(2.875, 2.625, 1, 1),
 	"list[context;input;2.875,2.625;1,1;1]",
 
-	"image[2.375,1;2,2.875;grindstone_gui_9.png;2]",
-
-	"image[1.875,1.5;0.5,2.875;grindstone_gui_9.png;2]",
-	"image[4.375,1.5;0.5,2.875;grindstone_gui_9.png;2]",
-
-	"image[5.5,1.95;1.5,1;gui_crafting_arrow.png]",
+	"image[5.125,1.95;1.5,1;gui_crafting_arrow.png]",
 
 	mcl_formspec.get_itemslot_bg_v4(7.875, 1.9375, 1, 1),
 	"list[context;output;7.875,1.9375;1,1;]",
