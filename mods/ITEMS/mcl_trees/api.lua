@@ -378,18 +378,10 @@ function mcl_trees.register_wood(name, p)
 			_mcl_stripped_variant = "mcl_trees:bark_stripped_"..name,
 		}, p.bark or {}))
 		minetest.register_craft({
-			output = "mcl_trees:"..name.."_bark 3",
+			output = "mcl_trees:bark_"..name.." 3",
 			recipe = {
-				{ "mcl_trees:"..name, "mcl_trees:"..name },
-				{ "mcl_trees:"..name, "mcl_trees:"..name },
-			}
-		})
-
-		minetest.register_craft({
-			output = "mcl_trees:"..name.."_bark 3",
-			recipe = {
-				{ "mcl_trees:"..name, "mcl_trees:"..name },
-				{ "mcl_trees:"..name, "mcl_trees:"..name },
+				{ "mcl_trees:tree_"..name, "mcl_trees:tree_"..name },
+				{ "mcl_trees:tree_"..name, "mcl_trees:tree_"..name },
 			}
 		})
 	end
