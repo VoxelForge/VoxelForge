@@ -26,19 +26,19 @@ Mobs can be added to the natural spawn cycle using
 
 ### Spawn Definition table
 {
-	name             = name, --name of the mob to be spawned
-	dimension        = dimension, --dimension this spawn rule applies to
+	name             = name,             --name of the mob to be spawned
+	dimension        = dimension,        --dimension this spawn rule applies to
 	type_of_spawning = type_of_spawning, -- "ground", "water" or "lava"
-	biomes           = biomes, --table of biome names this rule applies to
-	biomes_except    = biomes_except, --apply to all biomes of the dimension except the ones in this table (exclusive with biomes)
-	min_light        = min_light, --minimum light value this rule applies to
-	max_light        = max_light, --maximum light value ..
-	chance           = chance, --chance the mob is spawned, higher values make spawning more likely
-	aoc              = aoc, --"active object count", don't spawn mob if this amount of other mobs is already in the area
-	min_height       = min_height, --minimum Y position this rule applies to
-	max_height       = max_height, --maximum Y position this rule applies to
-	check_position   = function(pos), --function to check the position the mob would spawn at, return false to deny spawning
-	on_spawn         = function(pos), --function that will be run when the mob successfully spawned
+	biomes           = biomes,           --table of biome names this rule applies to
+	biomes_except    = biomes_except,    --apply to all biomes of the dimension except the ones in this table (exclusive with biomes)
+	min_light        = min_light,        --minimum light value this rule applies to
+	max_light        = max_light,        --maximum light value ..
+	chance           = chance,           --chance the mob is spawned, higher values make spawning more likely
+	aoc              = aoc,              --"active object count", don't spawn mob if this amount of other mobs is already in the area
+	min_height       = min_height,       --minimum Y position this rule applies to
+	max_height       = max_height,       --maximum Y position this rule applies to
+	check_position   = function(pos),    --function to check the position the mob would spawn at, return false to deny spawning
+	on_spawn         = function(pos),    --function that will be run when the mob successfully spawned
 }
 
 
