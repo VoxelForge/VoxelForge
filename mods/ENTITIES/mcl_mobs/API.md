@@ -293,6 +293,12 @@ Mobs can be added to the natural spawn cycle using
 ## Mob Eggs
 	mcl_mobs.register_egg(mob, desc, background_color, overlay_color, addegg, no_creative)
 
+ * 'name'		this is the name of your new mob to spawn e.g. "mob:sheep"
+ * 'description' the name of the new egg you are creating e.g. "Spawn Sheep"
+ * 'background_color' and 'overlay_color' define the colors for the texture displayed for the egg in inventory
+ * 'addegg'	would you like an egg image in front of your texture (1 = yes, 0 = no)
+ * 'no_creative' when set to true this stops spawn egg appearing in creative mode for destructive mobs like Dungeon Masters.
+
 ## Mob projectiles
 Custom projectiles for mobs can be registered using
  * mcl_mobs.register_arrow(name, arrow_def)
@@ -319,3 +325,15 @@ Custom projectiles for mobs can be registered using
 	 * 'glow'		 has value for how brightly tail glows 1 to 10 (default is 0 for no glow)
 	 * 'rotate'		integer value in degrees to rotate arrow
 	 * 'on_step'	is a custom function when arrow is active, nil for default.
+
+## External Settings for "minetest.conf"
+
+ * 'enable_damage'			if true monsters will attack players (default is true)
+ * 'only_peaceful_mobs'	if true only animals will spawn in game (default is false)
+ * 'mobs_disable_blood'	if false, damage effects appear when mob is hit (default is false)
+ * 'mobs_spawn_protected'	if set to false then mobs will not spawn in protected areas (default is true)
+ * 'mob_difficulty'		sets difficulty level (health and hit damage multiplied by this number), defaults to 1.0.
+ * 'mob_spawn_chance'		multiplies chance of all mobs spawning and can be set to 0.5 to have mobs spawn more or 2.0 to spawn less. e.g.1 in 7000 * 0.5 = 1 in 3500 so better odds of spawning.
+ * 'mobs_spawn'			 if false then mobs no longer spawn without spawner or spawn egg.
+ * 'mobs_drop_items'		when false mobs no longer drop items when they die.
+ * 'mobs_griefing'			when false mobs cannot break blocks when using either pathfinding level 2, replace functions or mobs:boom
