@@ -177,15 +177,98 @@ Fields not mentioned in this document can also be added as custom fields for the
 
 #### Object Properties
 	Object properties can be defined right in the definition table for compatibility reasons. Note that these will be rewritten to "initial_properties" in the final mob entity.
-#### Functions
-	"mob" is the luaentity.
-
-	mcl_mobs.get_arrow_damage_func(damage, damage_type, shooter_object)
-		Returns a damage function to be used in arrow hit functions.
-	mob:gopath(target,callback_arrived)		pathfind a way to target and run callback on arrival
 
 }
 
+### Mobs API functions
+Every luaentity registered by mcl_mobs.register_mob has mcl_mobs.mob_class set as a metatable which, besides default values for fields in the luaentity provides a number of functions. "mob" refers to the luaentity of the mob in the following list:
+
+	mob:safe_remove() - removes the mob in the on_step allowing other functions to still run. It also extinguishes the mob if it is burning as to not leave behind flame entities.
+	mob:set_nametag(new_name) - sets the nametag of the mob
+	mob:set_properties(property_table) - works in the same way as mob.object:set_properties() would except that it will not set fields that are already set to the given value, potentially saving network bandwidth.
+
+#### Breeding
+	mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
+	mob_class:toggle_sit(clicker,p)
+
+#### Combat
+	mob_class:day_docile()
+	mob_class:do_attack(player)
+	mob_class:entity_physics(pos,radius)
+	mob_class:smart_mobs(s, p, dist, dtime)
+	mob_class:attack_players_and_npcs()
+	mob_class:attack_specific()
+	mob_class:attack_monsters()
+	mob_class:dogswitch(dtime)
+	mob_class:safe_boom(pos, strength, no_remove)
+	mob_class:boom(pos, strength, fire, no_remove)
+	mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
+	mob_class:check_aggro(dtime)
+	mob_class:clear_aggro()
+	mob_class:do_states_attack (dtime)
+#### Movement
+	mob_class:is_node_dangerous(nodename)
+	mob_class:is_node_waterhazard(nodename)
+	mob_class:target_visible(origin)
+	mob_class:line_of_sight(pos1, pos2, stepsize)
+	mob_class:can_jump_cliff()
+	mob_class:is_at_cliff_or_danger()
+	mob_class:is_at_water_danger()
+	mob_class:env_danger_movement_checks(dtime)
+	mob_class:do_jump()
+	mob_class:follow_holding(clicker)
+	mob_class:replace(pos)
+	mob_class:check_runaway_from()
+	mob_class:follow_flop()
+	mob_class:go_to_pos(b)
+	mob_class:check_herd(dtime)
+	mob_class:teleport(target)
+	mob_class:do_states_walk()
+	mob_class:do_states_stand()
+	mob_class:do_states_runaway()
+	mob_class:check_smooth_rotation(dtime)
+#### Physics
+	mob_class:player_in_active_range()
+	mob_class:object_in_range(object)
+	mob_class:item_drop(cooked, looting_level)
+	mob_class:collision()
+	mob_class:slow_mob()
+	mob_class:set_velocity(v)
+	mob_class:get_velocity()
+	mob_class:update_roll()
+	mob_class:set_yaw(yaw, delay, dtime)
+	mob_class:flight_check()
+	mob_class:check_for_death(cause, cmi_cause)
+	mob_class:deal_light_damage(pos, damage)
+	mob_class:is_in_node(itemstring) --can be group:...
+	mob_class:do_env_damage()
+	mob_class:env_damage (dtime, pos)
+	mob_class:damage_mob(reason,damage)
+	mob_class:check_entity_cramming()
+	mob_class:falling(pos)
+	mob_class:check_water_flow()
+	mob_class:check_dying()
+	mob_class:check_suspend()
+#### Effects
+	mob_class:mob_sound(soundname, is_opinion, fixed_pitch)
+	mob_class:add_texture_mod(mod)
+	mob_class:remove_texture_mod(mod)
+	mob_class:damage_effect(damage)
+	mob_class:remove_particlespawners(pn)
+	mob_class:add_particlespawners(pn)
+	mob_class:check_particlespawners(dtime)
+	mob_class:set_animation(anim, fixed_frame)
+	mob_class:who_are_you_looking_at()
+	mob_class:check_head_swivel(dtime)
+	mob_class:set_animation_speed()
+
+#### Items
+	mob_class:set_armor_texture()
+	mob_class:check_item_pickup()
+#### Mount
+	mob_class:on_detach_child(child)
+#### Pathfinding
+	mob:gopath(target,callback_arrived)		pathfind a way to target and run callback on arrival
 
 ## Spawning mobs
 Mobs can be added to the natural spawn cycle using
@@ -215,15 +298,13 @@ Mobs can be added to the natural spawn cycle using
 * /spawncheck mob_name runs through the natural spawn checks to verify if a mob can spawn at the players position (and if not gives a reason why spawning was denied)
 * /mobstats - gives some statistics about the currently active mobs and spawn attempts on the whole server
 * /clearmobs [<all> | <nametagged> | <tamed>] [<range>] - a safer alternative to /clearobjects that only applies to loaded mobs
-
-## Mobs API functions
-Every luaentity registered by mcl_mobs.register_mob has mcl_mobs.mob_class set as a metatable which, besides default values for fields in the luaentity provides a number of functions. "mob" refers to the luaentity of the mob in the following list:
-
-mob:safe_remove() - removes the mob in the on_step allowing other functions to still run. It also extinguishes the mob if it is burning as to not leave behind flame entities.
-mob:set_nametag(new_name) - sets the nametag of the mob
-mob:set_properties(property_table) - works in the same way as mob.object:set_properties() would except that it will not set fields that are already set to the given value, potentially saving network bandwidth.
+## Mob Eggs
+	mcl_mobs.register_egg(mob, desc, background_color, overlay_color, addegg, no_creative)
 
 ## Mob projectiles
 Custom projectiles for mobs can be registered using
-`mcl_mobs.register_arrow(name, arrow_def)`
+	mcl_mobs.register_arrow(name, arrow_def)
+	mcl_mobs.get_arrow_damage_func(damage, damage_type, shooter_object)
+		Returns a damage function to be used in arrow hit functions.
+
 ### Arrow definition
