@@ -300,3 +300,22 @@ Custom projectiles for mobs can be registered using
  * 	Returns a damage function to be used in arrow hit functions.
 
 ### Arrow definition
+#### Object Properties
+	Object properties can be defined right in the definition table for compatibility reasons. Note that these will be rewritten to "initial_properties" in the final mob entity.
+
+	 * 'visual'		same is in minetest.register_entity()
+	 * 'visual_size'same is in minetest.register_entity()
+	 * 'textures'	 same is in minetest.register_entity()
+	 * 'velocity'	 the velocity of the arrow
+	 * 'drop'		 if set to true any arrows hitting a node will drop as item
+	 * 'hit_player'	a function that is called when the arrow hits a player; this function should hurt the player, the parameters are (self, player)
+	 * 'hit_mob'	a function that is called when the arrow hits a mob; this function should hurt the mob, the parameters are (self, mob)
+	 * 'hit_object'	a function that is called when the arrow hits an object that is neither a player nor a mob. this function should hurt the object, the parameters are (self, object)
+	 * 'hit_node'	 a function that is called when the arrow hits a node, the parameters are (self, pos, node)
+	 * 'tail'		 when set to 1 adds a trail or tail to mob arrows
+	 * 'tail_texture' texture string used for above effect
+	 * 'tail_size'	has size for above texture (defaults to between 5 and 10)
+	 * 'expire'		contains float value for how long tail appears for (defaults to 0.25)
+	 * 'glow'		 has value for how brightly tail glows 1 to 10 (default is 0 for no glow)
+	 * 'rotate'		integer value in degrees to rotate arrow
+	 * 'on_step'	is a custom function when arrow is active, nil for default.
