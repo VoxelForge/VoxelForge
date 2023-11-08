@@ -15,7 +15,10 @@ mcl_trees.register_wood("mangrove",{
 	},
 	tree = { tiles = {"mcl_mangrove_log_top.png", "mcl_mangrove_log_top.png","mcl_mangrove_log.png" }},
 	bark = { tiles = {"mcl_mangrove_log.png"}},
-	leaves = { tiles = { "mcl_mangrove_leaves.png" }},
+	leaves = {
+		tiles = { "mcl_mangrove_leaves.png" },
+		color = "#6a7039",
+	},
 	wood = { tiles = {"mcl_mangrove_planks.png"}},
 	stripped = {
 		tiles = {"mcl_stripped_mangrove_log_top.png", "mcl_stripped_mangrove_log_top.png","mcl_stripped_mangrove_log_side.png"}
