@@ -220,7 +220,15 @@ function mcl_hunger.item_eat(hunger_change, replace_with_item, poisontime, poiso
 			end
 
 			if not creative then
-				itemstack:add_item(replace_with_item)
+				local nstack = ItemStack(replace_with_item)
+				local inv = user:get_inventory()
+				if itemstack:get_count() == 1 then
+					itemstack:add_item(replace_with_item)
+				elseif inv:room_for_item("main",nstack) then
+					inv:add_item("main", nstack)
+				else
+					minetest.add_item(user:get_pos(), nstack)
+				end
 			end
 		end
 		return itemstack
