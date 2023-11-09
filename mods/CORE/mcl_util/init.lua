@@ -1040,7 +1040,8 @@ function mcl_util.safe_place(pos, node, player, itemstack)
 end
 
 function mcl_util.get_pos_p2(pos)
-	return minetest.registered_biomes[minetest.get_biome_name(minetest.get_biome_data(pos).biome)]._mcl_palette_index or 0
+	local biomedef = minetest.registered_biomes[minetest.get_biome_name(minetest.get_biome_data(pos).biome)]
+	return biomedef and biomedef._mcl_palette_index or 0
 end
 
 local function between(x, y, z) -- x is between y and z (inclusive)
