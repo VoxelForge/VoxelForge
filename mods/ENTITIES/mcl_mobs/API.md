@@ -262,6 +262,88 @@ Every luaentity registered by mcl_mobs.register_mob has mcl_mobs.mob_class set a
 #### Pathfinding
  * mob:gopath(target,callback_arrived)		pathfind a way to target and run callback on arrival
 
+
+#### Custom Definition Functions
+
+Along with the above mob registry settings we can also use custom functions to
+enhance mob functionality and have them do many interesting things:
+
+* `on_die`		 a function that is called when the mob is killed; the parameters are (self, pos). Return true to skip the builtin death animation and death effects
+* `on_rightclick`its same as in minetest.register_entity()
+* `on_blast`		is called when an explosion happens near mob when using TNT functions, parameters are (object, damage) and returns (do_damage, do_knockback, drops)
+* `on_spawn`		is a custom function that runs on mob spawn with `self` as variable, return true at end of function to run only once.
+* `after_activate` is a custom function that runs once mob has been activated with these paramaters (self, staticdata, def, dtime)
+* `on_breed`		called when two similar mobs breed, paramaters are (parent1, parent2) objects, return false to stop child from being resized and owner/tamed flags and child textures being applied.Function itself must spawn new child mob.
+* `on_grown`		is called when a child mob has grown up, only paramater is (self).
+* `do_punch`		called when mob is punched with paramaters (self, hitter, time_from_last_punch, tool_capabilities, direction), return false to stop punch damage and knockback from taking place.
+* `custom_attack`when set this function is called instead of the normal mob melee attack, parameters are (self, to_attack).
+* `on_die`		 a function that is called when mob is killed (self, pos)
+* `do_custom`	a custom function that is called every tick while mob is active and which has access to all of the self.* variables e.g. (self.health for health or self.standing_in for node status), return with `false` to skip remainder of mob API.
+
+#### Internal Variables
+
+The mob api also has some preset variables and functions that it will remember
+for each mob.
+
+* `self.health`		contains current health of mob (cannot exceed
+						self.hp_max)
+* `self.breath`		contains current breath of mob, if mob takes drowning
+						damage at all (cannot exceed self.breath_max). Breath
+						decreases by 1 each second while in a node with drowning
+						damage and increases by 1 each second otherwise.
+* `self.texture_list`contains list of all mob textures
+* `self.child_texture` contains mob child texture when growing up
+* `self.base_texture`contains current skin texture which was randomly
+						selected from textures list
+* `self.gotten`		this is used to track whether some special item has been
+						gotten from the mob, for example, wool from sheep.
+						Initialized as false, and the mob must set this value
+						manually.
+* `self.horny`		 when animal fed enough it is set to true and animal can
+						breed with same animal
+* `self.hornytimer`	background timer that controls breeding functions and
+						mob childhood timings
+* `self.child`		 used for when breeding animals have child, will use
+						child_texture and be half size
+* `self.owner`		 string used to set owner of npc mobs, typically used for
+						dogs
+* `self.order`		 set to "follow" or "stand" so that npc will follow owner
+						or stand it`s ground
+* `self.state`		 Current mob state.
+						"stand": no movement (except turning around)
+						"walk": walk or move around aimlessly
+						"attack": chase and attack enemy
+						"runaway": flee from target
+						"flop": bounce around aimlessly
+								(for swimming mobs that have stranded)
+						"die": during death
+* `self.nametag`		contains the name of the mob which it can show above
+
+
+### Node Replacement
+Mobs can look around for specific nodes as they walk and replace them to mimic
+eating.
+
+* `replace_what`	group of items to replace e.g.
+				{"farming:wheat_8", "farming:carrot_8"}
+				or you can use the specific options of what, with and
+				y offset by using this instead:
+				{
+					{"group:grass", "air", 0},
+					{"default:dirt_with_grass", "default:dirt", -1}
+				}
+* `replace_with`	replace with what e.g. "air" or in chickens case "mobs:egg"
+* `replace_rate`	how random should the replace rate be (typically 10)
+`replace_offset` +/- value to check specific node to replace
+
+* `on_replace(self, pos, oldnode, newnode)`
+	is called when mob is about to replace a node. Also called
+	when not actually replacing due to mobs_griefing setting being false.
+* `self`	ObjectRef of mob
+* `pos`	 Position of node to replace
+* `oldnode` Current node
+* `newnode` What the node will become after replacing. If false is returned, the mob will not replace the node.	By default, replacing sets self.gotten to true and resets the object properties.
+
 ## Spawning mobs
 Mobs can be added to the natural spawn cycle using
 
