@@ -2,9 +2,6 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 mcl_observers = {}
 
--- every second
-local tick = 1.0
-
 local rules_flat = {
 	{ x = 0, y = 0, z = -1, spread = true },
 }
@@ -89,7 +86,7 @@ function mcl_observers.observer_activate(pos)
 			local timer = minetest.get_node_timer(pos)
 			if not timer:is_started() then
 				observer_scan(pos, true)
-				timer:start(tick)
+				timer:start(mcl_vars.redstone_tick)
 			end
 		end
 	end, {x=pos.x, y=pos.y, z=pos.z})
@@ -142,12 +139,12 @@ mesecon.register_node("mcl_observers:observer", {
 			local timer = minetest.get_node_timer(pos)
 			if not timer:is_started() then
 				observer_scan(pos, true)
-				timer:start(tick)
+				timer:start(mcl_vars.redstone_tick)
 			end
 		end,
 		on_timer = function(pos, elapsed)
 			observer_scan(pos)
-			minetest.get_node_timer(pos):start(tick)
+			return true
 		end,
 		after_place_node = observer_orientate,
 	}, {
@@ -174,7 +171,7 @@ mesecon.register_node("mcl_observers:observer", {
 			local node = minetest.get_node(pos)
 			minetest.swap_node(pos, {name = "mcl_observers:observer_off", param2 = node.param2})
 			mesecon.receptor_off(pos, get_rules_flat(node))
-			minetest.get_node_timer(pos):start(tick)
+			return true
 		end,
 	}
 )
@@ -203,12 +200,12 @@ mesecon.register_node("mcl_observers:observer_down", {
 			local timer = minetest.get_node_timer(pos)
 			if not timer:is_started() then
 				observer_scan(pos, true)
-				timer:start(tick)
+				timer:start(mcl_vars.redstone_tick)
 			end
 		end,
 		on_timer = function(pos, elapsed)
 			observer_scan(pos)
-			minetest.get_node_timer(pos):start(tick)
+			return true
 		end,
 	}, {
 		_doc_items_create_entry = false,
@@ -233,7 +230,7 @@ mesecon.register_node("mcl_observers:observer_down", {
 			local node = minetest.get_node(pos)
 			minetest.swap_node(pos, {name = "mcl_observers:observer_down_off", param2 = node.param2})
 			mesecon.receptor_off(pos, rules_down)
-			minetest.get_node_timer(pos):start(tick)
+			return true
 		end,
 	}
 )
@@ -262,12 +259,12 @@ mesecon.register_node("mcl_observers:observer_up", {
 			local timer = minetest.get_node_timer(pos)
 			if not timer:is_started() then
 				observer_scan(pos, true)
-				timer:start(tick)
+				timer:start(mcl_vars.redstone_tick)
 			end
 		end,
 		on_timer = function(pos, elapsed)
 			observer_scan(pos)
-			minetest.get_node_timer(pos):start(tick)
+			return true
 		end,
 	}, {
 		_doc_items_create_entry = false,
@@ -291,7 +288,7 @@ mesecon.register_node("mcl_observers:observer_up", {
 		on_timer = function(pos, elapsed)
 			minetest.swap_node(pos, {name = "mcl_observers:observer_up_off"})
 			mesecon.receptor_off(pos, rules_up)
-			minetest.get_node_timer(pos):start(tick)
+			return true
 		end,
 	}
 )
