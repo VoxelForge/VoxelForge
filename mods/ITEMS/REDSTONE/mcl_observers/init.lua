@@ -19,26 +19,6 @@ end
 local rules_down = {{ x = 0, y = 1, z = 0, spread = true }}
 local rules_up = {{ x = 0, y = -1, z = 0, spread = true }}
 
-function mcl_observers.observer_activate(pos)
-	minetest.after(mcl_vars.redstone_tick, function(pos)
-		local node = minetest.get_node(pos)
-		if not node then
-			return
-		end
-		local nn = node.name
-		if nn == "mcl_observers:observer_off" then
-			minetest.swap_node(pos, {name = "mcl_observers:observer_on", param2 = node.param2})
-			mesecon.receptor_on(pos, get_rules_flat(node))
-		elseif nn == "mcl_observers:observer_down_off" then
-			minetest.swap_node(pos, {name = "mcl_observers:observer_down_on"})
-			mesecon.receptor_on(pos, rules_down)
-		elseif nn == "mcl_observers:observer_up_off" then
-			minetest.swap_node(pos, {name = "mcl_observers:observer_up_on"})
-			mesecon.receptor_on(pos, rules_up)
-		end
-	end, {x=pos.x, y=pos.y, z=pos.z})
-end
-
 -- Scan the node in front of the observer
 -- and update the observer state if needed.
 -- TODO: Also scan metadata changes.
@@ -81,6 +61,38 @@ local function observer_scan(pos, initialize)
 		meta:set_string("node_param2", tostring(frontnode.param2))
 	end
 	return frontnode
+end
+
+function mcl_observers.observer_activate(pos)
+	minetest.after(mcl_vars.redstone_tick, function(pos)
+		local node = minetest.get_node(pos)
+		if not node then
+			return
+		end
+		local nn = node.name
+		local start_timer = false
+		if nn == "mcl_observers:observer_off" then
+			minetest.swap_node(pos, {name = "mcl_observers:observer_on", param2 = node.param2})
+			mesecon.receptor_on(pos, get_rules_flat(node))
+			start_timer = true
+		elseif nn == "mcl_observers:observer_down_off" then
+			minetest.swap_node(pos, {name = "mcl_observers:observer_down_on"})
+			mesecon.receptor_on(pos, rules_down)
+			start_timer = true
+		elseif nn == "mcl_observers:observer_up_off" then
+			minetest.swap_node(pos, {name = "mcl_observers:observer_up_on"})
+			mesecon.receptor_on(pos, rules_up)
+			start_timer = true
+		end
+
+		if start_timer then
+			local timer = minetest.get_node_timer(pos)
+			if not timer:is_started() then
+				observer_scan(pos, true)
+				timer:start(tick)
+			end
+		end
+	end, {x=pos.x, y=pos.y, z=pos.z})
 end
 
 -- Vertical orientation (CURRENTLY DISABLED)
