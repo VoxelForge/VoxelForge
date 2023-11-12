@@ -88,17 +88,22 @@ local function node_stops_growth(node)
 	return true
 end
 
--- Check if a tree can grow at position. The width is the width to check
--- around the tree. A width of 3 and height of 5 will check a 3x3 area, 5
--- nodes above the sapling. If any walkable node other than dirt, wood or
--- leaves occurs in those blocks the tree cannot grow.
-function mcl_trees.check_growth(pos, width, height)
-	-- Huge tree (with even width to check) will check one more node in
-	-- positive x and y directions.
-	local neg_space = math.min((width - 1) / 2)
-	local pos_space = math.max((width - 1) / 2)
-	for x = -neg_space, pos_space do
-		for z = -neg_space, pos_space do
+-- Check the center column starting one node above the sapling
+function mcl_trees.check_growth_simple(pos, height)
+	for y = 1, height - 1 do
+		local np = vector.offset(pos, 0, y, 0)
+		if node_stops_growth(minetest.get_node(np)) then
+			return false
+		end
+	end
+	return true
+end
+
+-- check 6x6 area starting at sapling level
+-- Assumes pos is "north east" sapling
+function mcl_trees.check_growth_giant(pos, height)
+	for x = -3, 2 do
+		for z = -3, 2 do
 			for y = 0, height - 1 do
 				local np = vector.offset(pos, x, y, z)
 				if node_stops_growth(minetest.get_node(np)) then
@@ -110,73 +115,91 @@ function mcl_trees.check_growth(pos, width, height)
 	return true
 end
 
-local function check_schem_growth(pos,file)
+local function check_schem_growth(pos, file, giant)
 	if file then
-		local schem = loadstring(minetest.serialize_schematic(file, "lua", {lua_use_comments = false, lua_num_indent_spaces = 0}) .. " return schematic")()
-		local wx = schem.size.x
-		local wz = schem.size.z
-		local h = schem.size.y
-		if mcl_trees.check_growth(pos,math.max(wx,wz),h) then
-			return wx, h, wz
+		local schem = loadstring(
+			minetest.serialize_schematic(file, "lua", { lua_use_comments = false, lua_num_indent_spaces = 0 })
+				.. " return schematic"
+		)()
+		if schem then
+			local h = schem.size.y
+			if giant then
+				return mcl_trees.check_growth_giant(pos, h)
+			else
+				return mcl_trees.check_growth_simple(pos, h)
+			end
 		end
 	end
-	return false, false, false
+
+	return false
 end
 
 function mcl_trees.grow_tree(pos, node)
-	local name = node.name:gsub("mcl_trees:sapling_","")
-	local tbt,ne = mcl_trees.check_2by2_saps(pos, node)
-	if node.name:find("propagule") then name = "mangrove" end
-	if not mcl_trees.woods[name] or not mcl_trees.woods[name].tree_schems then return end
-	local schem, wx, h, wz
+	local name = node.name:gsub("mcl_trees:sapling_", "")
+	if node.name:find("propagule") then
+		name = "mangrove"
+	end
+	if not mcl_trees.woods[name] or not mcl_trees.woods[name].tree_schems then
+		return
+	end
+
 	table.shuffle(mcl_trees.woods[name].tree_schems)
+	local schem = mcl_trees.woods[name].tree_schems[1]
 
-	if tbt and ( name == "dark_oak" or name == "jungle" or name == "spruce" ) then
-		for _,v in pairs(mcl_trees.woods[name].tree_schems) do
-			wx, h, wz = check_schem_growth(pos, v.file)
-			if v.file:find("huge") or name == "dark_oak" and wx and h and wz then
-				schem = v
-				break
+	local can_grow, tbt, ne
+
+	if name == "dark_oak" or name == "jungle" or name == "spruce" then
+		tbt, ne = mcl_trees.check_2by2_saps(pos, node)
+
+		-- Force a huge schem for these if 2x2
+		if tbt and (name == "jungle" or name == "spruce") and not schem.file:find("huge") then
+			for _, v in pairs(mcl_trees.woods[name].tree_schems) do
+				if v.file:find("huge") then
+					schem = v
+					break
+				end
 			end
-		end
-		if not schem then
-			wx = nil h = nil wz = nil schem = nil tbt = nil
 		end
 	end
 
-	if ( not tbt or not schem) and name ~= "dark_oak" then --dark oak only grows "huge" trees
-		for _,v in pairs(mcl_trees.woods[name].tree_schems) do
-			wx, h, wz = check_schem_growth(pos, v.file)
-			if not v.file:find("huge") and wx and h and wz then
-				schem = v
-				tbt = nil
-				break
-			end
-		end
-		if not schem then
-			wx = nil h = nil wz = nil schem = nil
-		end
+	if tbt then
+		can_grow = check_schem_growth(ne, schem.file, true)
+	elseif name == "dark_oak" then -- must be 2x2 to grow
+		return
+	else
+		can_grow = check_schem_growth(pos, schem.file, false)
 	end
 
-	if schem and wx and h and wz then
+	if can_grow then
+		local place_at = pos
+		local offset = schem.offset
 		minetest.remove_node(pos)
 		if tbt then
-			for _,v in pairs(tbt) do
+			for _, v in pairs(tbt) do
 				minetest.remove_node(v)
 			end
-			pos = ne
-		end
-		local offset = vector.new(math.floor(wx/2), 0, math.floor(wz/2)) - (schem.offset or vector.zero())
-		minetest.place_schematic(vector.subtract(pos, offset), schem.file, 0, nil, true)
-		local nn = minetest.find_nodes_in_area(vector.offset(pos, -math.floor(wx/2), 0, -math.floor(wz/2)), vector.offset(pos, math.floor(wx/2), h, math.floor(wz/2)), {"group:leaves"})
-		for _,v in pairs(nn) do
-			local n = minetest.get_node(v)
-			if minetest.get_item_group(n.name,"biomecolor") > 0 then
-				-- preserve the log distance in the upper 3 bits
-				n.param2 = math.floor(n.param2 / 32) * 32 + mcl_util.get_pos_p2(v)
-				minetest.swap_node(v, n)
+
+			place_at = ne
+
+			-- Assume trunk is in the center of the schema.
+			-- Overide this in tree_schems if it isn't.
+			if not offset then
+				offset = vector.new(1, 0, 1)
 			end
 		end
+
+		if offset then
+			place_at = vector.subtract(place_at, offset)
+		end
+
+		minetest.place_schematic(
+			place_at,
+			schem.file,
+			"random",
+			nil,
+			false,
+			{ place_center_x = true, place_center_y = false, place_center_z = true }
+		)
 	end
 end
 
