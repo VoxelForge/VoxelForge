@@ -366,6 +366,31 @@ function minetest.item_drop(itemstack, dropper, pos)
 	end
 end
 
+-- TODO: remove this workaround if this gets fixed in minetest
+-- Do an additional node_drop here if the tool is about to break
+-- The point here is to do an addtional minetest.handle_node_drops
+-- before calling the original function since that one does it
+-- *after* adding the wear and hence breaking the tool on last use
+-- before dropping things.
+local old_mt_node_dig = minetest.node_dig
+function minetest.node_dig(pos, node, digger)
+	local wielded = digger and digger:is_player() and digger:get_wielded_item()
+	local def = core.registered_nodes[node.name]
+	if wielded and def then
+		local wdef = wielded:get_definition()
+		local tp = wielded:get_tool_capabilities()
+		local dp = minetest.get_dig_params(def and def.groups, tp, wielded:get_wear())
+		if wdef and not wdef.after_use then
+			if not minetest.is_creative_enabled(digger:get_player_name()) then
+				if wielded:get_wear() + dp.wear >= 65535 then
+					minetest.handle_node_drops(pos, minetest.get_node_drops(node, wielded and wielded:get_name()), digger)
+				end
+			end
+		end
+	end
+	return old_mt_node_dig(pos, node, digger)
+end
+
 --modify builtin:item
 
 local time_to_live = tonumber(minetest.settings:get("item_entity_ttl"))
