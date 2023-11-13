@@ -1,4 +1,7 @@
 # mcl_mobs
+This mod was originally based of off "mobs_redo" (https://notabug.org/TenPlus1/mobs_redo) by TenPlus1.
+Heavily modified and adapted for mineclonia / mcl2 by several people.
+
 ## Registering mobs and mob definition
 
 A new mob is registered using
