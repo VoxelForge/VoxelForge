@@ -424,19 +424,31 @@ These functions can be called from the entity as well as overwritten on a per-mo
 
 #### Combat
  * mob:day_docile()
- * mob:do_attack(player)
- * mob:entity_physics(pos,radius)
+	* Used to check if a "docile_by_day" mob is currently docile according to time. Returns true if mob is currently docile, false otherwise.
+ * mob:do_attack(object)
+	* Can be called to immediately attack a known object.
  * mob:smart_mobs(s, p, dist, dtime)
+	* "Smart" pathfinding function to locate targets to attack. Will set the path to the found target.
  * mob:attack_players_and_npcs()
+	* For monsters: function to find players or npcs to attack. Sets targets if found.
  * mob:attack_specific()
+	* For all mobs: function to find specific things(mobs or players) to attack. Sets targets if found.
  * mob:attack_monsters()
+	* For non-monsters: function to find specific monsters to attack. Sets targets if found.
  * mob:dogswitch(dtime)
+	* This functions switches between dogshoot and dofight attack modes
+* mob:boom(pos, strength, fire, no_remove)
+	* Make the mob explode damaging players and entities and destroying nodes.
  * mob:safe_boom(pos, strength, no_remove)
- * mob:boom(pos, strength, fire, no_remove)
+	* Safe explosion that does not remove any nodes (when mobs_griefing is disabled)
  * mob:on_punch(hitter, tflp, tool_capabilities, dir)
+	* Called when the mob is punched. Handles damage by default.
  * mob:check_aggro(dtime)
+	* Periodically called and returns true if mob is still aggressive
  * mob:clear_aggro()
+	* Clear all aggro settings of the mob
  * mob:do_states_attack(dtime)
+	* This function manages the internal state machine of the mob.
 
 #### Movement
  * mob:is_node_dangerous(nodename)
