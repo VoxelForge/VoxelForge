@@ -269,7 +269,8 @@ Fields not mentioned in this document can also be added as custom fields for the
 	pushable = true,
 	-- Allows players, & other mobs to push the mob.
 
-	animation'		holds a table containing animation names and settings for use with mesh models: Using '_loop = false' setting will stop any of the animations from looping. 'speed_normal' is used for animation speed for compatibility with some older mobs.
+	animation =
+	-- holds a table containing animation names and settings for use with mesh models: Using '_loop = false' setting will stop any of the animations from looping. 'speed_normal' is used for animation speed for compatibility with some older mobs.
 	{
 		stand_start = 10,
 		--start frame for when mob stands still.
@@ -401,92 +402,104 @@ Fields not mentioned in this document can also be added as custom fields for the
 ```
 
 ### Mobs API functions
-Every luaentity registered by mcl_mobs.register_mob has mcl_mobs.mob_class set as a metatable which, besides default values for fields in the luaentity provides a number of functions. "mob" refers to the luaentity of the mob in the following list:
+Every luaentity registered by mcl_mobs.register_mob has mcl_mobs.mob_class set as a metatable which, besides default values for fields in the luaentity provides a number of functions.
 
- * mob:safe_remove() - removes the mob in the on_step allowing other functions to still run. It also extinguishes the mob if it is burning as to not leave behind flame entities.
- * mob:set_nametag(new_name) - sets the nametag of the mob
- * mob:set_properties(property_table) - works in the same way as mob.object:set_properties() would except that it will not set fields that are already set to the given value, potentially saving network bandwidth.
+These functions can be called from the entity as well as overwritten on a per-mob basis.
+
+"mob" refers to the luaentity of the mob in the following list:
+
+ * mob:safe_remove()
+	* removes the mob in the on_step allowing other functions to still run. It also extinguishes the mob if it is burning as to not leave behind flame entities.
+ * mob:set_nametag(new_name)
+	* sets the nametag of the mob
+ * mob:set_properties(property_table)
+	* works in the same way as mob.object:set_properties() would except that it will not set fields that are already set to the given value, potentially saving network bandwidth.
 
 #### Breeding
-	mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
-	mob_class:toggle_sit(clicker,p)
+ * mob:feed_tame(clicker, feed_count, breed, tame, notake)
+ * mob:toggle_sit(clicker,p)
 
 #### Combat
- * mob_class:day_docile()
- * mob_class:do_attack(player)
- * mob_class:entity_physics(pos,radius)
- * mob_class:smart_mobs(s, p, dist, dtime)
- * mob_class:attack_players_and_npcs()
- * mob_class:attack_specific()
- * mob_class:attack_monsters()
- * mob_class:dogswitch(dtime)
- * mob_class:safe_boom(pos, strength, no_remove)
- * mob_class:boom(pos, strength, fire, no_remove)
- * mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
- * mob_class:check_aggro(dtime)
- * mob_class:clear_aggro()
- * mob_class:do_states_attack (dtime)
+ * mob:day_docile()
+ * mob:do_attack(player)
+ * mob:entity_physics(pos,radius)
+ * mob:smart_mobs(s, p, dist, dtime)
+ * mob:attack_players_and_npcs()
+ * mob:attack_specific()
+ * mob:attack_monsters()
+ * mob:dogswitch(dtime)
+ * mob:safe_boom(pos, strength, no_remove)
+ * mob:boom(pos, strength, fire, no_remove)
+ * mob:on_punch(hitter, tflp, tool_capabilities, dir)
+ * mob:check_aggro(dtime)
+ * mob:clear_aggro()
+ * mob:do_states_attack(dtime)
+
 #### Movement
- * mob_class:is_node_dangerous(nodename)
- * mob_class:is_node_waterhazard(nodename)
- * mob_class:target_visible(origin)
- * mob_class:line_of_sight(pos1, pos2, stepsize)
- * mob_class:can_jump_cliff()
- * mob_class:is_at_cliff_or_danger()
- * mob_class:is_at_water_danger()
- * mob_class:env_danger_movement_checks(dtime)
- * mob_class:do_jump()
- * mob_class:follow_holding(clicker)
- * mob_class:replace(pos)
- * mob_class:check_runaway_from()
- * mob_class:follow_flop()
- * mob_class:go_to_pos(b)
- * mob_class:check_herd(dtime)
- * mob_class:teleport(target)
- * mob_class:do_states_walk()
- * mob_class:do_states_stand()
- * mob_class:do_states_runaway()
- * mob_class:check_smooth_rotation(dtime)
+ * mob:is_node_dangerous(nodename)
+ * mob:is_node_waterhazard(nodename)
+ * mob:target_visible(origin)
+ * mob:line_of_sight(pos1, pos2, stepsize)
+ * mob:can_jump_cliff()
+ * mob:is_at_cliff_or_danger()
+ * mob:is_at_water_danger()
+ * mob:env_danger_movement_checks(dtime)
+ * mob:do_jump()
+ * mob:follow_holding(clicker)
+ * mob:replace(pos)
+ * mob:check_runaway_from()
+ * mob:follow_flop()
+ * mob:go_to_pos(b)
+ * mob:check_herd(dtime)
+ * mob:teleport(target)
+ * mob:do_states_walk()
+ * mob:do_states_stand()
+ * mob:do_states_runaway()
+ * mob:check_smooth_rotation(dtime)
+
 #### Physics
- * mob_class:player_in_active_range()
- * mob_class:object_in_range(object)
- * mob_class:item_drop(cooked, looting_level)
- * mob_class:collision()
- * mob_class:slow_mob()
- * mob_class:set_velocity(v)
- * mob_class:get_velocity()
- * mob_class:update_roll()
- * mob_class:set_yaw(yaw, delay, dtime)
- * mob_class:flight_check()
- * mob_class:check_for_death(cause, cmi_cause)
- * mob_class:deal_light_damage(pos, damage)
- * mob_class:is_in_node(itemstring) --can be group:...
- * mob_class:do_env_damage()
- * mob_class:env_damage (dtime, pos)
- * mob_class:damage_mob(reason,damage)
- * mob_class:check_entity_cramming()
- * mob_class:falling(pos)
- * mob_class:check_water_flow()
- * mob_class:check_dying()
- * mob_class:check_suspend()
+ * mob:player_in_active_range()
+ * mob:object_in_range(object)
+ * mob:item_drop(cooked, looting_level)
+ * mob:collision()
+ * mob:slow_mob()
+ * mob:set_velocity(v)
+ * mob:get_velocity()
+ * mob:update_roll()
+ * mob:set_yaw(yaw, delay, dtime)
+ * mob:flight_check()
+ * mob:check_for_death(cause, cmi_cause)
+ * mob:deal_light_damage(pos, damage)
+ * mob:is_in_node(itemstring) --can be group:...
+ * mob:do_env_damage()
+ * mob:env_damage (dtime, pos)
+ * mob:damage_mob(reason,damage)
+ * mob:check_entity_cramming()
+ * mob:falling(pos)
+ * mob:check_water_flow()
+ * mob:check_dying()
+ * mob:check_suspend()
+
 #### Effects
- * mob_class:mob_sound(soundname, is_opinion, fixed_pitch)
- * mob_class:add_texture_mod(mod)
- * mob_class:remove_texture_mod(mod)
- * mob_class:damage_effect(damage)
- * mob_class:remove_particlespawners(pn)
- * mob_class:add_particlespawners(pn)
- * mob_class:check_particlespawners(dtime)
- * mob_class:set_animation(anim, fixed_frame)
- * mob_class:who_are_you_looking_at()
- * mob_class:check_head_swivel(dtime)
- * mob_class:set_animation_speed()
+ * mob:mob_sound(soundname, is_opinion, fixed_pitch)
+ * mob:add_texture_mod(mod)
+ * mob:remove_texture_mod(mod)
+ * mob:damage_effect(damage)
+ * mob:remove_particlespawners(pn)
+ * mob:add_particlespawners(pn)
+ * mob:check_particlespawners(dtime)
+ * mob:set_animation(anim, fixed_frame)
+ * mob:who_are_you_looking_at()
+ * mob:check_head_swivel(dtime)
+ * mob:set_animation_speed()
 
 #### Items
- * mob_class:set_armor_texture()
- * mob_class:check_item_pickup()
+ * mob:set_armor_texture()
+ * mob:check_item_pickup()
+
 #### Mount
- * mob_class:on_detach_child(child)
+ * mob:on_detach_child(child)
+
 #### Pathfinding
  * mob:gopath(target,callback_arrived)		pathfind a way to target and run callback on arrival
 
@@ -578,22 +591,48 @@ Mobs can be added to the natural spawn cycle using
 `mcl_mobs.spawn_setup(spawn_definition)`
 
 ### Spawn Definition table
+```lua
 {
- * name             = name,             --name of the mob to be spawned
- * dimension        = dimension,        --dimension this spawn rule applies to
- * type_of_spawning = type_of_spawning, -- "ground", "water" or "lava"
- * biomes           = biomes,           --table of biome names this rule applies to
- * biomes_except    = biomes_except,    --apply to all biomes of the dimension except the ones in this table (exclusive with biomes)
- * min_light        = min_light,        --minimum light value this rule applies to
- * max_light        = max_light,        --maximum light value ..
- * chance           = chance,           --chance the mob is spawned, higher values make spawning more likely
- * aoc              = aoc,              --"active object count", don't spawn mob if this amount of other mobs is already in the area
- * min_height       = min_height,       --minimum Y position this rule applies to
- * max_height       = max_height,       --maximum Y position this rule applies to
- * check_position   = function(pos),    --function to check the position the mob would spawn at, return false to deny spawning
- * on_spawn         = function(pos),    --function that will be run when the mob successfully spawned
-}
+	name = "mobs_mc:mob",
+	--name of the mob to be spawned
 
+	dimension = "overworld",
+	--dimension this spawn rule applies to; overworld | nether | end
+
+	type_of_spawning = "ground",
+	-- "ground", "water" or "lava"
+
+	biomes = nil,
+	--table of biome names this rule applies to
+
+	biomes_except = nil,
+	--apply to all biomes of the dimension except the ones in this table (exclusive with biomes)
+
+	min_light = 0,
+	--minimum light value this rule applies to
+
+	max_light = 15,
+	--maximum light value ..
+
+	chance = 10000,
+	--chance the mob is spawned, higher values make spawning more likely
+
+	aoc = 5,
+	--"active object count", don't spawn mob if this amount of other mobs is already in the area
+
+	min_height = -30912,
+	--minimum Y position this rule applies to
+
+	max_height = 30927,
+	--maximum Y position this rule applies to
+
+	check_position = function(pos) end,
+	--function to check the position the mob would spawn at, return false to deny spawning
+
+	on_spawn = function(pos) end,
+	--function that will be run when the mob successfully spawned
+}
+```
 
 ## Commands
 * /spawn_mob mob_name - spawns a mob at the player position
@@ -619,23 +658,57 @@ Custom projectiles for mobs can be registered using
 #### Object Properties
 	Object properties can be defined right in the definition table for compatibility reasons. Note that these will be rewritten to "initial_properties" in the final mob entity.
 
-	 * 'visual'		same is in minetest.register_entity()
-	 * 'visual_size'same is in minetest.register_entity()
-	 * 'textures'	 same is in minetest.register_entity()
-	 * 'velocity'	 the velocity of the arrow
-	 * 'drop'		 if set to true any arrows hitting a node will drop as item
-	 * 'hit_player'	a function that is called when the arrow hits a player; this function should hurt the player, the parameters are (self, player)
-	 * 'hit_mob'	a function that is called when the arrow hits a mob; this function should hurt the mob, the parameters are (self, mob)
-	 * 'hit_object'	a function that is called when the arrow hits an object that is neither a player nor a mob. this function should hurt the object, the parameters are (self, object)
-	 * 'hit_node'	 a function that is called when the arrow hits a node, the parameters are (self, pos, node)
-	 * 'tail'		 when set to 1 adds a trail or tail to mob arrows
-	 * 'tail_texture' texture string used for above effect
-	 * 'tail_size'	has size for above texture (defaults to between 5 and 10)
-	 * 'expire'		contains float value for how long tail appears for (defaults to 0.25)
-	 * 'glow'		 has value for how brightly tail glows 1 to 10 (default is 0 for no glow)
-	 * 'rotate'		integer value in degrees to rotate arrow
-	 * 'on_step'	is a custom function when arrow is active, nil for default.
+```lua
+{
+	visual = "cube",
+	--Same is in minetest.register_entity()
 
+	visual_size = { x = 1, y = 1},
+	--Same is in minetest.register_entity()
+
+	textures = {},
+	--Same is in minetest.register_entity()
+
+	velocity = 1,
+	--The velocity of the arrow
+
+	drop = "",
+	-- If set to true any arrows hitting a node will drop as item
+
+	hit_player = function(self, player) end,
+	-- A function that is called when the arrow hits a player; this function should hurt the player, the parameters are (self, player)
+
+	hit_mob = function(self, mob) end,
+	-- A function that is called when the arrow hits a mob; this function should hurt the mob, the parameters are (self, mob)
+
+	hit_object = function(self, object) end,
+	--a function that is called when the arrow hits an object that is neither a player nor a mob. this function should hurt the object, the parameters are (self, object)
+
+	hit_node = function(self, pos, node) end,
+	a function that is called when the arrow hits a node, the parameters are (self, pos, node)
+
+	tail = 0,
+	-- When set to 1 adds a trail or tail to mob arrows
+
+	tail_texture = "",
+	-- Texture string used for above effect
+
+	tail_size = 5,
+	-- Has size for above texture (defaults to between 5 and 10)
+
+	expire = 0.25,
+	-- Contains float value for how long tail appears for (defaults to 0.25)
+
+	glow = 0,
+	-- Has value for how brightly tail glows 1 to 10 (default is 0 for no glow)
+
+	rotate = 0,
+	-- Integer value in degrees to rotate arrow
+
+	on_step =  function(dtime) end,
+	-- Is a custom function when arrow is active, nil for default.
+}
+```
 ## External Settings for "minetest.conf"
 
  * 'enable_damage'			if true monsters will attack players (default is true)
