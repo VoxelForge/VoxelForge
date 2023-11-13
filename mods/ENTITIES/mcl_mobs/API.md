@@ -585,6 +585,68 @@ eating.
 * `oldnode` Current node
 * `newnode` What the node will become after replacing. If false is returned, the mob will not replace the node.	By default, replacing sets self.gotten to true and resets the object properties.
 
+### Riding Mobs
+
+Mobs can now be ridden by players and the following shows its functions and
+usage:
+
+
+`mcl_mobs.attach(self, player)`
+
+This function attaches a player to the mob so it can be ridden.
+
+ * 'self'	mob information
+ * 'player' player information
+
+
+`mcl_mobs.detach(player, offset)`
+
+This function will detach the player currently riding a mob to an offset
+position.
+
+ * 'player' player information
+ * 'offset' position table containing offset values
+
+
+`mcl_mobs.drive(self, move_animation, stand_animation, can_fly, dtime)`
+
+This function allows an attached player to move the mob around and animate it at
+same time.
+
+ * 'self'			mob information
+ * 'move_animation'string containing movement animation e.g. "walk"
+ * 'stand_animation' string containing standing animation e.g. "stand"
+ * 'can_fly'		 if true then jump and sneak controls will allow mob to fly up and down
+ * 'dtime'			tick time used inside drive function
+
+
+`mcl_mobs.fly(self, dtime, speed, can_shoot, arrow_entity, move_animation, stand_animation)`
+
+This function allows an attached player to fly the mob around using directional
+controls.
+
+ * 'self'			mob information
+ * 'dtime'			tick time used inside fly function
+ * 'speed'			speed of flight
+ * 'can_shoot'		true if mob can fire arrow (sneak and left mouse button fires)
+ * 'arrow_entity'	name of arrow entity used for firing
+ * 'move_animation'string containing name of pre-defined animation e.g. "walk" or "fly" etc.
+ * 'stand_animation' string containing name of pre-defined animation e.g. "stand" or "blink" etc.
+
+Note: animation names above are from the pre-defined animation lists inside mob
+registry without extensions.
+
+Certain variables need to be set before using the above functions:
+
+ * 'self.v2'				toggle switch used to define below values for the first time
+ * 'self.max_speed_forward' max speed mob can move forward
+ * 'self.max_speed_reverse' max speed mob can move backwards
+ * 'self.accel'			 acceleration speed
+ * 'self.terrain_type'	integer containing terrain mob can walk on (1 = water, 2 or 3 = land)
+ * 'self.driver_attach_at'position offset for attaching player to mob
+ * 'self.driver_eye_offset' position offset for attached player view
+ * 'self.driver_scale'	sets driver scale for mobs larger than {x=1, y=1}
+
 ## Spawning mobs
 Mobs can be added to the natural spawn cycle using
 
