@@ -160,6 +160,16 @@ mcl_mobs.register_mob("mobs_mc:mooshroom", table.merge(cow_def, {
 		self.object:set_properties({ textures = self.base_texture })
 		return true
 	end,
+	_on_dispense = function(self, dropitem, pos, droppos, dropnode, dropdir)
+		local droppos = vector.offset(pos, 0, 1.4, 0)
+		if self.base_texture[1] == "mobs_mc_mooshroom_brown.png" then
+			minetest.add_item(droppos, "mcl_mushrooms:mushroom_brown 5")
+		else
+			minetest.add_item(droppos, "mcl_mushrooms:mushroom_red 5")
+		end
+		mcl_util.replace_mob(self.object, "mobs_mc:cow")
+		return true
+	end,
 }))
 
 mcl_mobs.spawn_setup({

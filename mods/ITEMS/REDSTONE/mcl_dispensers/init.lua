@@ -142,6 +142,7 @@ local dispenserdef = {
 					for _, obj in pairs(minetest.get_objects_inside_radius(droppos, 1)) do
 						local ent = obj:get_luaentity()
 						if ent and ent._on_dispense then
+							local pos = obj:get_pos()
 							local od_ret = ent:_on_dispense(dropitem, pos, droppos, dropnode, dropdir)
 							if od_ret then return end
 						end
@@ -206,16 +207,6 @@ local dispenserdef = {
 										"blank.png", "blank.png",
 										"blank.png", "blank.png",
 									}
-									used = true
-								elseif entname == "mobs_mc:mooshroom" then
-									local droppos = vector.offset(pos, 0, 1.4, 0)
-									if entity.base_texture[1] == "mobs_mc_mooshroom_brown.png" then
-										minetest.add_item(droppos, "mcl_mushrooms:mushroom_brown 5")
-									else
-										minetest.add_item(droppos, "mcl_mushrooms:mushroom_red 5")
-									end
-									obj = mcl_util.replace_mob(obj, "mobs_mc:cow")
-									entity = obj:get_luaentity()
 									used = true
 								end
 								if used then
