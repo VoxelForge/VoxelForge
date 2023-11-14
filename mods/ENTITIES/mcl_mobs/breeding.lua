@@ -30,7 +30,8 @@ function mob_class:use_shears(new_textures, shears_stack)
 		self.object:set_properties({ textures = new_textures })
 		self.gotten = true
 		minetest.sound_play("mcl_tools_shears_cut", { pos = self.object:get_pos() }, true)
-		shears_stack:add_wear(65535 / shears_stack._mcl_diggroups.shearsy.uses)
+		local shears_def = shears_stack:get_definition()
+		shears_stack:add_wear(65535 / shears_def._mcl_diggroups.shearsy.uses)
 	end
 	return shears_stack
 end

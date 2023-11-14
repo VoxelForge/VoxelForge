@@ -143,8 +143,11 @@ local dispenserdef = {
 						local ent = obj:get_luaentity()
 						if ent and ent._on_dispense then
 							local pos = obj:get_pos()
-							local od_ret = ent:_on_dispense(dropitem, pos, droppos, dropnode, dropdir)
-							if od_ret then return end
+							local od_ret = ent:_on_dispense(stack, pos, droppos, dropnode, dropdir)
+							if od_ret then
+								inv:set_stack("main", stack_id, od_ret)
+								return
+							end
 						end
 					end
 
@@ -198,14 +201,6 @@ local dispenserdef = {
 									texture = entity.base_texture
 									entity.drops = {
 										{ name = "mcl_mobitems:mutton", chance = 1, min = 1, max = 2 },
-									}
-									used = true
-								elseif entname == "mobs_mc:snowman" then
-									texture = {
-										"mobs_mc_snowman.png",
-										"blank.png", "blank.png",
-										"blank.png", "blank.png",
-										"blank.png", "blank.png",
 									}
 									used = true
 								end

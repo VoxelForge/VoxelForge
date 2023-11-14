@@ -168,7 +168,7 @@ mcl_mobs.register_mob("mobs_mc:mooshroom", table.merge(cow_def, {
 			minetest.add_item(droppos, "mcl_mushrooms:mushroom_red 5")
 		end
 		mcl_util.replace_mob(self.object, "mobs_mc:cow")
-		return true
+		return dropitem
 	end,
 }))
 
