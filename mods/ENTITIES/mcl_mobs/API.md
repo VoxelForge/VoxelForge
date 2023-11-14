@@ -494,26 +494,45 @@ These functions can be called from the entity as well as overwritten on a per-mo
 
 #### Physics
  * mob:player_in_active_range()
+	* Periodically checks if a player is in active range (default: 48), if it returns false mob will be suspended.
  * mob:object_in_range(object)
+	* Checks if object is in view range of the mob
  * mob:item_drop(cooked, looting_level)
+	* Drop item drops (is run when mob dies)
  * mob:collision()
+	* Mob collision logic
  * mob:slow_mob()
+	* diffuse object velocity, slow down depending on state.
  * mob:set_velocity(v)
+	* Turn in direction of v, set start moving, respects set orders.
  * mob:get_velocity()
- * mob:update_roll()
+	* Get combined mob velocity (speed) - returns a number not a vector!
  * mob:set_yaw(yaw, delay, dtime)
+	* Sets mob yaw using smooth rotation
  * mob:flight_check()
+	* Checks if mob is flying in what it is suppose to
  * mob:check_for_death(cause, cmi_cause)
+	* Checks if mob is dead and runs death logic in that case.
  * mob:deal_light_damage(pos, damage)
- * mob:is_in_node(itemstring) --can be group:...
+	* Deal light damage to mob, returns true if mob died
+ * mob:is_in_node(itemstring)
+	* if mob is within a specific node or a node group (e.g. group:lava)
  * mob:do_env_damage()
+	* Deals environment damage if applicable
  * mob:env_damage (dtime, pos)
- * mob:damage_mob(reason,damage)
+	* Runs periodic checks for entity cramming and environment damage
+ * mob:damage_mob(reason, damage)
+	* Damage the mob
  * mob:check_entity_cramming()
+	* Checks and deals entity cramming damage if applicable
  * mob:falling(pos)
+	* Checks if mob is falling and applies acceleration accordingly
  * mob:check_water_flow()
+	* Checks if mob is in flowing water and applies movement accordingly
  * mob:check_dying()
+	* Checks if mob is currently dying and applies "falling to the side" rotation
  * mob:check_suspend()
+	* Checks and suspends mob if needed.
 
 #### Effects
  * mob:mob_sound(soundname, is_opinion, fixed_pitch)
