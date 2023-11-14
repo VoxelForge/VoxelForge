@@ -452,25 +452,45 @@ These functions can be called from the entity as well as overwritten on a per-mo
 
 #### Movement
  * mob:is_node_dangerous(nodename)
+	* Function that checks if the mob considers the given node dangerous
  * mob:is_node_waterhazard(nodename)
+	* Function that checks if the mob considers the given node a water hazard
  * mob:target_visible(origin)
+	* Function that checks if the selected target is currently visible
  * mob:line_of_sight(pos1, pos2, stepsize)
+	* Wrapper around minetest.line_of_sight that checks some additional stuff.
  * mob:can_jump_cliff()
+	* Checks if mob is at a jumpable cliff.
  * mob:is_at_cliff_or_danger()
+	* Checks if mob is facing a cliff it considers dangerous
  * mob:is_at_water_danger()
+	* Checks if mob is facing water.
  * mob:env_danger_movement_checks(dtime)
+	* This function runs all environment danger checks above.
  * mob:do_jump()
+	* Jump if facing a solid node (not fences or gates)
  * mob:follow_holding(clicker)
+	* Checks if mob should follow 'clicker'
  * mob:replace(pos)
+	* Replaces node at position if node replacement is configured for this mob
  * mob:check_runaway_from()
+	* Checks if there are objects the mob should run away from
  * mob:follow_flop()
+	* Follow player if owner or holding item, if fish outta water then flop
  * mob:go_to_pos(b)
+	* Turn in direction of pos and start moving forward.
  * mob:check_herd(dtime)
+	* Herd movement logic: makes mob turn in the same direction as other mobs of the same type found nearby
  * mob:teleport(target)
+	* Teleports the mobs to target pos
  * mob:do_states_walk()
+	* State logic for the "walk" state
  * mob:do_states_stand()
+	* State logic for the "stand" state
  * mob:do_states_runaway()
+	* State logic for the "runaway" state
  * mob:check_smooth_rotation(dtime)
+	* Turn slightly more towards selected target yaw for smooth rotation
 
 #### Physics
  * mob:player_in_active_range()
