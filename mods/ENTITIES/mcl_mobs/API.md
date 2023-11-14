@@ -535,28 +535,44 @@ These functions can be called from the entity as well as overwritten on a per-mo
 	* Checks and suspends mob if needed.
 
 #### Effects
+ * mcl_mobs.effect(pos, amount, texture, min_size, max_size, radius, gravity, glow, go_down)
+	* Custom particle effect for mobs
  * mob:mob_sound(soundname, is_opinion, fixed_pitch)
+	* Emit a preconfigured mob sound
  * mob:add_texture_mod(mod)
+	* Add a texture modifier to mob
  * mob:remove_texture_mod(mod)
+	* Remove a texture modifier from mob
  * mob:damage_effect(damage)
- * mob:remove_particlespawners(pn)
+	* Display damage effect (black hearts) depending on amount of damage
+ * mob:remove_particlespawners(name)
+	* Remove a permanent named particlespawner from mob
  * mob:add_particlespawners(pn)
+	* Add a permanent named particlespawner to mob
  * mob:check_particlespawners(dtime)
+	* Checks if particlespawners need to be deleted or sent to players
  * mob:set_animation(anim, fixed_frame)
+	* Set a specific mob animation
  * mob:who_are_you_looking_at()
+	* Check what to look at
  * mob:check_head_swivel(dtime)
+	* Checks and applies head movement
  * mob:set_animation_speed()
+	* Sets mob animation speed
 
 #### Items
  * mob:set_armor_texture()
+	* Sets armor textures from mob.armor_list
  * mob:check_item_pickup()
+	* Checks and makes the mob pick up nearby item entities
 
 #### Mount
  * mob:on_detach_child(child)
+	* Kicks out "driver" (rider) if mob is a child and runs custom detach_child function.
 
 #### Pathfinding
- * mob:gopath(target,callback_arrived)		pathfind a way to target and run callback on arrival
-
+ * mob:gopath(target,callback_arrived)
+	* pathfind a way to target and run callback on arrival
 
 #### Custom Definition Functions
 
