@@ -161,14 +161,17 @@ mcl_mobs.register_mob("mobs_mc:mooshroom", table.merge(cow_def, {
 		return true
 	end,
 	_on_dispense = function(self, dropitem, pos, droppos, dropnode, dropdir)
-		local droppos = vector.offset(pos, 0, 1.4, 0)
-		if self.base_texture[1] == "mobs_mc_mooshroom_brown.png" then
-			minetest.add_item(droppos, "mcl_mushrooms:mushroom_brown 5")
-		else
-			minetest.add_item(droppos, "mcl_mushrooms:mushroom_red 5")
+		if minetest.get_item_group(dropitem:get_name(), "shears") > 0 then
+			local droppos = vector.offset(pos, 0, 1.4, 0)
+			if self.base_texture[1] == "mobs_mc_mooshroom_brown.png" then
+				minetest.add_item(droppos, "mcl_mushrooms:mushroom_brown 5")
+			else
+				minetest.add_item(droppos, "mcl_mushrooms:mushroom_red 5")
+			end
+			mcl_util.replace_mob(self.object, "mobs_mc:cow")
+			return dropitem
 		end
-		mcl_util.replace_mob(self.object, "mobs_mc:cow")
-		return dropitem
+		return mcl_mobs.mob_class._on_dispense(self, dropitem, pos, droppos, dropnode, dropdir)
 	end,
 }))
 

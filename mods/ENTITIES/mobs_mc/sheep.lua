@@ -332,18 +332,21 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 		end
 	end,
 	_on_dispense = function(self, dropitem, pos, droppos, dropnode, dropdir)
-		local pos = self.object:get_pos()
-		self.base_texture = { "blank.png", "mobs_mc_sheep.png" }
-		dropitem = self:use_shears({ "blank.png", "mobs_mc_sheep.png" }, dropitem)
+		if minetest.get_item_group(dropitem:get_name(), "shears") > 0 then
+			local pos = self.object:get_pos()
+			self.base_texture = { "blank.png", "mobs_mc_sheep.png" }
+			dropitem = self:use_shears({ "blank.png", "mobs_mc_sheep.png" }, dropitem)
 
-		if not self.color then
-			self.color = "unicolor_white"
+			if not self.color then
+				self.color = "unicolor_white"
+			end
+			if self.drops[2] then
+				minetest.add_item(pos, self.drops[2].name .. " " .. math.random(1, 3))
+			end
+			self.drops = {{ name = "mcl_mobitems:mutton", chance = 1, min = 1, max = 2 },}
+			return dropitem
 		end
-		if self.drops[2] then
-			minetest.add_item(pos, self.drops[2].name .. " " .. math.random(1, 3))
-		end
-		self.drops = {{ name = "mcl_mobitems:mutton", chance = 1, min = 1, max = 2 },}
-		return dropitem
+		return mcl_mobs.mob_class._on_dispense(self, dropitem, pos, droppos, dropnode, dropdir)
 	end
 })
 

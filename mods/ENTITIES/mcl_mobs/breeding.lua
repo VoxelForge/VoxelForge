@@ -39,8 +39,11 @@ end
 function mob_class:_on_dispense(dropitem, pos, droppos, dropnode, dropdir)
 	local item = dropitem.get_name and dropitem:get_name() or dropitem
 	if self.follow and ( type(self.follow) == "table" and table.indexof(self.follow, item) or item == self.follow ) then
-		return self:feed_tame(nil, 1, true, false)
+		if self:feed_tame(nil, 1, true, false) then
+			dropitem:take_item()
+		end
 	end
+	return dropitem
 end
 
 function mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
@@ -95,7 +98,7 @@ function mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
 		else
 			self:mob_sound("random", true)
 		end
-		return true
+		if consume_food then return true end
 	end
 	return false
 end

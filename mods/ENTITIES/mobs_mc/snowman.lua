@@ -136,14 +136,17 @@ mcl_mobs.register_mob("mobs_mc:snowman", {
 		end
 	end,
 	_on_dispense = function(self, dropitem, pos, droppos, dropnode, dropdir)
-		minetest.log(dropitem:get_name())
-		dropitem = self:use_shears({
-			"mobs_mc_snowman.png",
-			"blank.png", "blank.png",
-			"blank.png", "blank.png",
-			"blank.png", "blank.png",
-		}, dropitem)
-		return dropitem
+		if minetest.get_item_group(dropitem:get_name(), "shears") > 0 then
+			minetest.log(dropitem:get_name())
+			dropitem = self:use_shears({
+				"mobs_mc_snowman.png",
+				"blank.png", "blank.png",
+				"blank.png", "blank.png",
+				"blank.png", "blank.png",
+			}, dropitem)
+			return dropitem
+		end
+		return mcl_mobs.mob_class._on_dispense(self, dropitem, pos, droppos, dropnode, dropdir)
 	end,
 })
 
