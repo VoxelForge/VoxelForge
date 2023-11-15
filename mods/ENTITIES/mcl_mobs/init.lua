@@ -319,59 +319,60 @@ function mcl_mobs.get_arrow_damage_func(damage, typ, shooter)
 	end
 end
 
+mcl_mobs.arrow_class = {
+	initial_properties = {
+		physical = false,
+		collisionbox = {0, 0, 0, 0, 0, 0}, -- remove box around arrows
+		automatic_face_movement_dir = false,
+	},
+	velocity = 1,
+	homing = false,
+	drop = false, -- drops arrow as registered item when true
+	timer = 0,
+	switch = 0,
+	_lifetime = 150,
+	on_punch = function(self)
+		local vel = self.object:get_velocity()
+		self.object:set_velocity({x=vel.x * -1, y=vel.y * -1, z=vel.z * -1})
+	end,
+}
+
+mcl_mobs.arrow_class_meta = {__index = mcl_mobs.arrow_class}
+
 -- register arrow for shoot attack
 function mcl_mobs.register_arrow(name, def)
-
 	if not name or not def then return end -- errorcheck
 
-	minetest.register_entity(name, {
-		initial_properties = {
-			physical = false,
-			visual = def.visual,
-			visual_size = def.visual_size,
-			textures = def.textures,
-			collisionbox = def.collisionbox or {0, 0, 0, 0, 0, 0}, -- remove box around arrows
-		},
-		velocity = def.velocity,
-		hit_player = def.hit_player,
-		hit_node = def.hit_node,
-		hit_mob = def.hit_mob,
-		hit_object = def.hit_object,
-		homing = def.homing,
-		drop = def.drop or false, -- drops arrow as registered item when true
-		timer = 0,
-		switch = 0,
-		_lifetime = def._lifetime or 150,
-		owner_id = def.owner_id,
-		rotate = def.rotate,
-		on_punch = def.on_punch or function(self)
-			local vel = self.object:get_velocity()
-			self.object:set_velocity({x=vel.x * -1, y=vel.y * -1, z=vel.z * -1})
-		end,
-		automatic_face_movement_dir = def.rotate
-			and (def.rotate - (math.pi / 180)) or false,
+	local init_props = mcl_mobs.arrow_class.initial_properties
+	for _,k in pairs(object_properties) do
+		if def[k] ~= nil then
+			if type(def[k]) == "table" then
+				init_props[k] = table.copy(def[k])
+			else
+				init_props[k] = def[k]
+			end
+			def[k] = nil
+		end
+	end
 
-		on_activate = def.on_activate,
+	init_props.automatic_face_movement_dir = def.rotate and (def.rotate - (math.pi / 180))
 
-		on_step = def.on_step or function(self, dtime)
+	minetest.register_entity(name,  setmetatable(table.merge({
+		initial_properties = init_props,
+		on_step = function(self, dtime)
 
 			self.timer = self.timer + 1
 
 			local pos = self.object:get_pos()
 
-			if self.switch == 0
-			or self.timer > self._lifetime
-			or not within_limits(pos, 0) then
+			if self.switch == 0	or self.timer > self._lifetime or not within_limits(pos, 0) then
 				mcl_burning.extinguish(self.object)
 				self.object:remove()
 				return
 			end
 
 			-- does arrow have a tail (fireball)
-			if def.tail
-			and def.tail == 1
-			and def.tail_texture then
-
+			if def.tail and def.tail == 1 and def.tail_texture then
 				minetest.add_particle({
 					pos = pos,
 					velocity = {x = 0, y = 0, z = 0},
@@ -411,38 +412,31 @@ function mcl_mobs.register_arrow(name, def)
 
 			if self.hit_player or self.hit_mob or self.hit_object then
 				for _,player in pairs(minetest.get_objects_inside_radius(pos, 1.5)) do
-					if self.hit_player
-					and player:is_player() then
+					if self.hit_player and player:is_player() then
 						self.hit_player(self, player)
 						self.object:remove()
 						return
 					end
 
 					local entity = player:get_luaentity()
-					if entity
-					and self.hit_mob
-					and entity.is_mob == true
-					and tostring(player) ~= self.owner_id
-					and entity.name ~= self.object:get_luaentity().name then
-						self.hit_mob(self, player)
-						self.object:remove();
-						return
-					end
+					if entity then
+						if self.hit_mob	and entity.is_mob and tostring(player) ~= self.owner_id	and entity.name ~= self.object:get_luaentity().name then
+							self.hit_mob(self, player)
+							self.object:remove()
+							return
+						end
 
-					if entity
-					and self.hit_object
-					and (not entity.is_mob)
-					and tostring(player) ~= self.owner_id
-					and entity.name ~= self.object:get_luaentity().name then
-						self.hit_object(self, player)
-						self.object:remove()
-						return
+						if self.hit_object and (not entity.is_mob) and tostring(player) ~= self.owner_id and entity.name ~= self.object:get_luaentity().name then
+							self.hit_object(self, player)
+							self.object:remove()
+							return
+						end
 					end
 				end
 			end
 			self.lastpos = pos
 		end
-	})
+	}, def), mcl_mobs.arrow_class_meta))
 end
 
 -- Register spawn eggs
