@@ -104,7 +104,6 @@ mcl_mobs.register_mob("mobs_mc:shulker", {
 	end,
 	do_custom = function(self,dtime)
 		local pos = self.object:get_pos()
-		self.shoot_interval = math.random(1, 5.5)
 		if math.floor(self.object:get_yaw()) ~=0 then
 			self.object:set_yaw(0)
 			mcl_mobs.yaw(self, 0, 0, dtime)
@@ -174,14 +173,32 @@ mcl_mobs.register_mob("mobs_mc:shulker", {
 	end,
 })
 
+local function reset_shoot_interval(shulker_obj)
+	if shulker_obj then
+		local l = shulker_obj:get_luaentity()
+		if l then
+			l.shoot_interval = 1 + (math.random() * 4.5)
+		end
+	end
+end
+
 -- bullet arrow (weapon)
 mcl_mobs.register_arrow("mobs_mc:shulkerbullet", {
 	visual = "sprite",
 	visual_size = {x = 0.25, y = 0.25},
 	textures = {"mobs_mc_shulkerbullet.png"},
 	velocity = 6,
-	hit_player = mcl_mobs.get_arrow_damage_func(4),
-	hit_mob = mcl_mobs.get_arrow_damage_func(4),
+	hit_player = function(self, player)
+		reset_shoot_interval(self._shooter)
+		return mcl_mobs.get_arrow_damage_func(4)(self, player)
+	end,
+	hit_mob = function(self, mob)
+		reset_shoot_interval(self._shooter)
+		return mcl_mobs.get_arrow_damage_func(4)(self, mob)
+	end,
+	hit_node = function(self, _)
+		reset_shoot_interval(self._shooter)
+	end
 })
 
 mcl_mobs.register_egg("mobs_mc:shulker", S("Shulker"), "#946694", "#4d3852", 0)
