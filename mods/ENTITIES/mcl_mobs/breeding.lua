@@ -41,9 +41,9 @@ function mob_class:_on_dispense(dropitem, pos, droppos, dropnode, dropdir)
 	if self.follow and ( type(self.follow) == "table" and table.indexof(self.follow, item) or item == self.follow ) then
 		if self:feed_tame(nil, 1, true, false) then
 			dropitem:take_item()
+			return dropitem
 		end
 	end
-	return dropitem
 end
 
 function mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
