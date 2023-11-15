@@ -337,6 +337,7 @@ function mcl_mobs.register_arrow(name, def)
 		hit_node = def.hit_node,
 		hit_mob = def.hit_mob,
 		hit_object = def.hit_object,
+		homing = def.homing,
 		drop = def.drop or false, -- drops arrow as registered item when true
 		timer = 0,
 		switch = 0,
@@ -394,6 +395,17 @@ function mcl_mobs.register_arrow(name, def)
 					end
 					self.object:remove()
 					return
+				end
+			end
+
+			if self.homing and self._target then
+				local p = self._target:get_pos()
+				if p then
+					if minetest.line_of_sight(self.object:get_pos(), p) then
+						self.object:set_velocity(vector.direction(self.object:get_pos(), p) * self.velocity)
+					end
+				else
+					self.target = nil
 				end
 			end
 
