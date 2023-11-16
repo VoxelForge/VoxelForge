@@ -187,7 +187,7 @@ mcl_mobs.register_arrow("mobs_mc:shulkerbullet", {
 	visual = "sprite",
 	visual_size = {x = 0.25, y = 0.25},
 	textures = {"mobs_mc_shulkerbullet.png"},
-	velocity = 6,
+	velocity = 5,
 	homing = true,
 	hit_player = function(self, player)
 		reset_shoot_interval(self._shooter)
