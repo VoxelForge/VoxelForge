@@ -831,6 +831,9 @@ Custom projectiles for mobs can be registered using
 	expire = 0.25,
 	-- Contains float value for how long tail appears for (defaults to 0.25)
 
+	homing = false,
+	-- Wether arrow corrects it's trajectory when target is moving.
+
 	glow = 0,
 	-- Has value for how brightly tail glows 1 to 10 (default is 0 for no glow)
 
