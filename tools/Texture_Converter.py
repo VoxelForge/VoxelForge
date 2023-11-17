@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Texture Converter.
 # Converts Minecraft resource packs to Minetest texture packs.
@@ -12,7 +12,7 @@ import shutil, csv, os, tempfile, sys, getopt
 
 # Helper vars
 home = os.environ["HOME"]
-mineclone2_path = home + "/.minetest/games/mineclone2"
+mineclone2_path = home + "/.minetest/games/mineclonia"
 working_dir = os.getcwd()
 appname = "Texture_Converter.py"
 
