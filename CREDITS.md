@@ -23,6 +23,7 @@
 * Nauta Turbidus
 * ChrisPHP
 * Nils Dagsson Moskopp
+* seventeenthShulker
 
 ## Previous Contributors
 * Lizzy Fleckenstein

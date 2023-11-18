@@ -25,6 +25,7 @@ return {
 		"Nauta Turbidus",
 		"ChrisPHP",
 		"Nils Dagsson Moskopp",
+		"seventeenthShulker",
 	}},
 	{S("Previous Contributors"), 0x52FF00, {
 		"Lizzy Fleckenstein",
