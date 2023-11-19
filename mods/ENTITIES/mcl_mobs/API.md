@@ -234,7 +234,8 @@ Fields not mentioned in this document can also be added as custom fields for the
 	}
 	sounds_child = {},
 	-- same as sounds, but for childs. If not defined, childs will use same sound as adults but with higher pitch
-
+	sound_params = {},
+	--optional table of `sound parameters` to be applied to this mobs' sounds
 	drops =
 		-- table of items that are dropped when mob is killed, fields are:
 	{

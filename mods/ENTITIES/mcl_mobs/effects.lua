@@ -116,12 +116,12 @@ function mob_class:mob_sound(soundname, is_opinion, fixed_pitch)
 			pitch = pitch + math.random(-10, 10) * 0.005
 		end
 		-- Should be 0.1 to 0.2 for mobs. Cow and zombie farms loud. At least have cool down.
-		minetest.sound_play(sound, {
-			object = self.object,
-			gain = 1.0,
+		local sound_params = self.sound_params and table.copy(self.sound_params) or {
 			max_hear_distance = self.sounds.distance,
 			pitch = pitch,
-		}, true)
+		}
+		sound_params.object = self.object
+		minetest.sound_play(sound, sound_params, true)
 		self.opinion_sound_cooloff = 1
 	end
 end
