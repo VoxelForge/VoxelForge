@@ -300,11 +300,9 @@ local function add_large_plant(name, desc, longdesc, bottom_img, top_img, inv_im
 			local itemstring = "mcl_flowers:"..name
 
 			-- Call on_rightclick if the pointed node defines it
-			local node = minetest.get_node(pointed_thing.under)
 			if placer and not placer:get_player_control().sneak then
-				if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-					return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
-				end
+				local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+				if rc then return rc end
 			end
 
 			-- Check for a floor and a space of 1×2×1
