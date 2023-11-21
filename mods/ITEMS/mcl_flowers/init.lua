@@ -302,7 +302,7 @@ local function add_large_plant(name, desc, longdesc, bottom_img, top_img, inv_im
 			-- Call on_rightclick if the pointed node defines it
 			if placer and not placer:get_player_control().sneak then
 				local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
-				if rc then return rc end
+				if rc ~= nil then return rc end --check for nil explicitly to determine if on_rightclick existed
 			end
 
 			-- Check for a floor and a space of 1×2×1

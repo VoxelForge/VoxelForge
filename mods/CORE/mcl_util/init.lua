@@ -454,7 +454,7 @@ function mcl_util.generate_on_place_plant_function(condition)
 		local node = minetest.get_node(pointed_thing.under)
 		if placer and not placer:get_player_control().sneak then
 			local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
-			if rc then return rc end
+			if rc ~= nil then return rc end
 		end
 
 		local place_pos
