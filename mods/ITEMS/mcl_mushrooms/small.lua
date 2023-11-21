@@ -184,40 +184,40 @@ minetest.register_abm({
 		local selected_pos = table.copy(pos)
 
 		-- Do two random selections which may place the new mushroom in a 5×5×5 cube
-		local random = vector.new(
+		local rnd = vector.new(
 			selected_pos.x + math.random(-1, 1),
 			selected_pos.y + math.random(0, 1) - math.random(0, 1),
 			selected_pos.z + math.random(-1, 1)
 		)
-		local random_node = minetest.get_node_or_nil(random)
+		local random_node = minetest.get_node_or_nil(rnd)
 		if not random_node or random_node.name ~= "air" then
 			return
 		end
-		local node_under = minetest.get_node_or_nil(vector.offset(random, 0, -1, 0))
+		local node_under = minetest.get_node_or_nil(vector.offset(rnd, 0, -1, 0))
 		if not node_under then
 			return
 		end
 
-		if minetest.get_node_light(random, 0.5) > 12 or (minetest.get_item_group(node_under.name, "opaque") == 0) then
+		if minetest.get_node_light(rnd, 0.5) > 12 or (minetest.get_item_group(node_under.name, "opaque") == 0) then
 			return
 		end
-		local random2 = vector.new(
-			random.x + math.random(-1, 1),
-			random.y,
-			random.z + math.random(-1, 1)
+		local rnd2 = vector.new(
+			rnd.x + math.random(-1, 1),
+			rnd.y,
+			rnd.z + math.random(-1, 1)
 		)
-		random_node = minetest.get_node_or_nil(random2)
+		random_node = minetest.get_node_or_nil(rnd2)
 		if not random_node or random_node.name ~= "air" then
 			return
 		end
-		node_under = minetest.get_node_or_nil(vector.offset(random2, 0, -1, 0))
+		node_under = minetest.get_node_or_nil(vector.offset(rnd2, 0, -1, 0))
 		if not node_under then
 			return
 		end
-		if minetest.get_node_light(random2, 0.5) > 12 or (minetest.get_item_group(node_under.name, "opaque") == 0) or (minetest.get_item_group(node_under.name, "solid") == 0) then
+		if minetest.get_node_light(rnd2, 0.5) > 12 or (minetest.get_item_group(node_under.name, "opaque") == 0) or (minetest.get_item_group(node_under.name, "solid") == 0) then
 			return
 		end
 
-		minetest.set_node(random2, {name = node.name})
+		minetest.set_node(rnd2, {name = node.name})
 	end
 })
