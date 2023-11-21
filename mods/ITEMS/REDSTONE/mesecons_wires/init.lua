@@ -236,7 +236,6 @@ S("Read the help entries on the other redstone components to learn how redstone 
 			desc_on = S("Powered Redstone Spot (@1)", nodeid)
 		else
 			-- Connected redstone wire
-			table.insert(nodebox, box_center)
 			tiles_off = { crossing_off, crossing_off, straight0_off, straight1_off, straight0_off, straight1_off }
 			tiles_on = { crossing_on, crossing_on, straight0_on, straight1_on, straight0_on, straight1_on }
 			wirehelp = false
