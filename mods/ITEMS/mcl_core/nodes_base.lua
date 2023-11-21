@@ -408,7 +408,7 @@ minetest.register_node("mcl_core:mycelium", {
 	description = S("Mycelium"),
 	_doc_items_longdesc = S("Mycelium is a type of dirt and the ideal soil for mushrooms. Unlike other dirt-type blocks, it can not be turned into farmland with a hoe. In light, mycelium slowly spreads over nearby dirt. Under an opaque block or a liquid, it eventually turns back into dirt."),
 	tiles = {"mcl_core_mycelium_top.png", "default_dirt.png", {name="mcl_core_mycelium_side.png", tileable_vertical=false}},
-	groups = { handy = 1, shovely = 1, dirt = 2, spreading_dirt_type = 1, enderman_takable = 1,  building_block = 1, soil_sapling = 2, soil_bamboo = 1, mycelium=1},
+	groups = { handy = 1, shovely = 1, dirt = 2, spreading_dirt_type = 1, enderman_takable = 1,  building_block = 1, soil_sapling = 2, soil_bamboo = 1, mycelium=1, supports_mushrooms=1},
 	drop = "mcl_core:dirt",
 	sounds = mcl_sounds.node_sound_dirt_defaults({
 		footstep = {name="default_grass_footstep", gain=0.1},
@@ -459,7 +459,7 @@ minetest.register_node("mcl_core:podzol", {
 	description = S("Podzol"),
 	_doc_items_longdesc = S("Podzol is a type of dirt found in taiga forests. Only a few plants are able to survive on it."),
 	tiles = {"mcl_core_dirt_podzol_top.png", "default_dirt.png", {name="mcl_core_dirt_podzol_side.png", tileable_vertical=false}},
-	groups = {handy=1,shovely=3, dirt=2,soil=1, soil_sapling=2, soil_sugarcane=1, soil_bamboo = 1, enderman_takable=1, building_block=1},
+	groups = {handy=1,shovely=3, dirt=2,soil=1, soil_sapling=2, soil_sugarcane=1, soil_bamboo = 1, enderman_takable=1, building_block=1, supports_mushrooms=1},
 	drop = "mcl_core:dirt",
 	sounds = mcl_sounds.node_sound_dirt_defaults(),
 	on_construct = mcl_core.on_snowable_construct,

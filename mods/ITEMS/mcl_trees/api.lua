@@ -168,7 +168,8 @@ local tpl_log = {
 		handy = 1, axey = 1,
 		building_block = 1,
 		tree = 1, material_wood=1,
-		flammable = 3, fire_encouragement=5, fire_flammability=20
+		flammable = 3, fire_encouragement=5, fire_flammability=20,
+		supports_mushrooms=1
 	},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	on_place = mcl_util.rotate_axis,

@@ -215,6 +215,7 @@ These groups are used mostly for informational purposes
 * `attaches_to_side=1`: This node can attach to the sides of other nodes.
 * `attaches_to_top=1`: This node can attach to the top of other nodes.
 
+* `supports_mushrooms=1`: Mushrooms stay on this node regardless of light level.
 ## Fake item groups
 These groups put similar items together which should all be treated by the gameplay or the GUI as a single item.
 You should not add custom items to these groups for no good reason, this is likely to cause a ton of conflicts.

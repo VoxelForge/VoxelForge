@@ -167,11 +167,9 @@ minetest.register_abm({
 	chance = 50,
 	action = function(pos, node)
 		local node_soil = minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name
-		-- Mushrooms uproot in light except on podzol or mycelium
-		if node_soil ~= "mcl_core:podzol" and node_soil ~= "mcl_core:mycelium" and
-				node_soil ~= "mcl_core:podzol_snow" and node_soil ~= "mcl_core:mycelium_snow" and
-				minetest.get_item_group(node_soil, "tree") == 0 and minetest.get_node_light(pos, nil) > 12 then
-			minetest.dig_node(pos)
+		-- Mushrooms uproot in light except on nodes of the "supports_mushrooms" group
+			if minetest.get_item_group(node_soil, "supports_mushrooms") == 0 and minetest.get_node_light(pos, nil) > 12 then
+				minetest.dig_node(pos)
 			return
 		end
 
