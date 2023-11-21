@@ -70,6 +70,14 @@ local function register_unpreserve(nodename,od,def)
 		end
 		return itemstack
 	end
+	-- Update appropriate stonecutter recipes for the preserved variant
+	if nd._mcl_stonecutter_recipes then
+		local new_recipes = {}
+		for k,v in pairs(nd._mcl_stonecutter_recipes) do
+			table.insert(new_recipes, v.."_preserved")
+		end
+		nd._mcl_stonecutter_recipes = new_recipes
+	end
 	minetest.register_node(":"..nodename.."_preserved",nd)
 end
 
@@ -169,4 +177,5 @@ minetest.register_on_mods_loaded(function()
 			end
 		end
 	end
+	mcl_stonecutter.refresh_recipes()
 end)

@@ -2,6 +2,7 @@
 --||||| STONECUTTER |||||
 --|||||||||||||||||||||||
 
+mcl_stonecutter = {}
 
 local S = minetest.get_translator("mcl_stonecutter")
 local C = minetest.colorize
@@ -14,7 +15,9 @@ local recipe_yield = { --maps itemgroup to the respective recipe yield, default 
 local recipes = {}
 local yields = {}
 
-minetest.register_on_mods_loaded(function()
+function mcl_stonecutter.refresh_recipes()
+	recipes = {}
+	yields = {}
 	for result,resultdef in pairs(minetest.registered_nodes) do
 		if resultdef._mcl_stonecutter_recipes then
 			local yield = 1
@@ -28,7 +31,9 @@ minetest.register_on_mods_loaded(function()
 			end
 		end
 	end
-end)
+end
+
+minetest.register_on_mods_loaded(mcl_stonecutter.refresh_recipes)
 
 -- formspecs
 local function show_stonecutter_formspec(input)
