@@ -78,6 +78,7 @@ minetest.register_node("mcl_copper:block_cut", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
+	_mcl_stonecutter_recipes = { "mcl_copper:block" },
 })
 
 minetest.register_node("mcl_copper:block_exposed_cut", {
@@ -89,6 +90,7 @@ minetest.register_node("mcl_copper:block_exposed_cut", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
+	_mcl_stonecutter_recipes = { "mcl_copper:block_exposed" },
 })
 
 minetest.register_node("mcl_copper:block_weathered_cut", {
@@ -100,6 +102,7 @@ minetest.register_node("mcl_copper:block_weathered_cut", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
+	_mcl_stonecutter_recipes = { "mcl_copper:block_weathered" },
 })
 
 minetest.register_node("mcl_copper:block_oxidized_cut", {
@@ -111,6 +114,7 @@ minetest.register_node("mcl_copper:block_oxidized_cut", {
 	sounds = mcl_sounds.node_sound_metal_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
+	_mcl_stonecutter_recipes = { "mcl_copper:block_oxidized" },
 })
 
 mcl_stairs.register_slab("copper_cut", "mcl_copper:block_cut",
