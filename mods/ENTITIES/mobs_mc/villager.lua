@@ -673,6 +673,7 @@ local professions = {
 
 local WORK = "work"
 local SLEEP = "sleep"
+local HOME = "home"
 local GATHERING = "gathering"
 
 mobs_mc.jobsites = {}
@@ -734,37 +735,70 @@ local function set_textures(self)
 	self.object:set_properties({textures=badge_textures})
 end
 
--- TODO Pass in self and if nitwit, go to bed later.
-local function is_night()
+local function should_sleep(self)
+	local starts = 18000
+	local ends = 6000
+
+	if self._profession == "nitwit" then
+		starts = 20000
+		ends = 8000
+	end
+
 	local tod = minetest.get_timeofday()
-	tod = ( tod * 24000 ) % 24000
-	return  tod > 17500 or tod < 6500
+	tod = (tod * 24000) % 24000
+	return tod >= starts or tod < ends
 end
 
-function get_activity(tod)
-	-- night hours = tod > 18541 or tod < 5458
+local function should_go_home(self)
+	local weather = ""
+	if weather_mod then
+		weather = mcl_weather.get_weather()
+	end
+
+	if weather == "thunder" or weather == "rain" or weather == "snow" then
+		return true
+	end
+
+	local starts = 17000
+	local ends = 18000
+
+	if self._profession == "nitwit" then
+		starts = 19000
+		ends = 20000
+	end
+
+	local tod = minetest.get_timeofday()
+	tod = (tod * 24000) % 24000
+	return tod >= starts and tod < ends
+end
+
+function get_activity(self, tod)
 	if not tod then
 		tod = minetest.get_timeofday()
 	end
-	tod = ( tod * 24000 ) % 24000
+	tod = (tod * 24000) % 24000
 
-	local lunch_start = 11500
-	local lunch_end = 13000
-	local work_start = 7500
-	local work_end = 16000
+	local work_start = 6000
+	local lunch_start = 14000
+	local lunch_end = 16000
+	local work_end = 17000
 
 	local activity
-	if is_night() or (weather_mod and mcl_weather.get_weather() == "thunder") then
+	if should_sleep(self) then
 		activity = SLEEP
-	elseif (tod >= work_start and tod < lunch_start) or (tod >= lunch_end and tod < work_end) then
-		activity = WORK
+	elseif should_go_home(self) then
+		activity = HOME
+	elseif self._profession == "nitwit" then
+		activity = "chill"
 	elseif tod >= lunch_start and tod < lunch_end then
 		activity = GATHERING
+	elseif tod >= work_start and tod < work_end then
+		activity = WORK
 	else
 		activity = "chill"
 	end
-	return activity
 
+	return activity
 end
 
 local function find_closest_bed(self)
@@ -1347,7 +1381,7 @@ local function do_activity(self)
 		take_bed(self)
 	end
 
-	if not is_night() then
+	if not should_sleep(self) then
 		if self.order == SLEEP then
 			self.order = nil
 		end
@@ -1375,10 +1409,11 @@ local function do_activity(self)
 		wandered_too_far = (self.state ~= PATHFINDING) and (vector.distance(self.object:get_pos(), self._bed) > 50)
 	end
 
-	local activity = get_activity()
+	local activity = get_activity(self)
 
 	-- This needs to be most important to least important
-	if activity == SLEEP then
+	-- TODO separate sleep and home activities when villagers can sleep
+	if activity == SLEEP or activity == HOME then
 		if check_bed(self) then
 			go_home(self, true)
 		else
