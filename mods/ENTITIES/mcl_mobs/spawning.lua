@@ -1,8 +1,6 @@
 --lua locals
 local mob_class = mcl_mobs.mob_class
 
-local math_round     = function(x) return (x > 0) and math.floor(x + 0.5) or math.ceil(x - 0.5) end
-
 local modern_lighting = minetest.settings:get_bool("mcl_mobs_modern_lighting", true)
 local nether_threshold = tonumber(minetest.settings:get("mcl_mobs_nether_threshold")) or 11
 local end_threshold = tonumber(minetest.settings:get("mcl_mobs_end_threshold")) or 0
@@ -398,6 +396,20 @@ local function check_timer(spawn_def, dtime)
 end
 
 if mobs_spawn then
+	local cumulative_chance = nil
+	local mob_library_worker_table = nil
+	local function initialize_spawn_data()
+		if not mob_library_worker_table then
+			mob_library_worker_table = table.copy(spawn_dictionary)
+		end
+		if not cumulative_chance then
+			cumulative_chance = 0
+			for k, v in pairs(mob_library_worker_table) do
+				cumulative_chance = cumulative_chance + v.chance
+			end
+		end
+	end
+
 	local perlin_noise
 	local function spawn_a_mob(pos, dimension, dtime)
 		--create a disconnected clone of the spawn dictionary
@@ -423,13 +435,25 @@ if mobs_spawn then
 		local noise = perlin_noise:get_3d(spawning_position)
 		local current_summary_chance = summary_chance
 		table.shuffle(mob_library_worker_table)
-		while #mob_library_worker_table > 0 do
-			local mob_chance_offset = (math_round(noise * current_summary_chance + 12345) % current_summary_chance) + 1
+		local spawn_loop_counter = #mob_library_worker_table
+
+		while spawn_loop_counter > 0 do
+			table.shuffle(mob_library_worker_table)
+			local mob_chance_offset = math.random(1, cumulative_chance)
 			local mob_index = 1
 			local mob_chance = mob_library_worker_table[mob_index].chance
 			local step_chance = mob_chance
 			while step_chance < mob_chance_offset do
 				mob_index = mob_index + 1
+				if mob_index <= #mob_library_worker_table then
+					mob_chance = mob_library_worker_table[mob_index].chance
+					step_chance = step_chance + mob_chance
+				else
+					step_chance = 1000000
+				end
+				if mob_index > #mob_library_worker_table then
+					mob_index = 1
+				end
 				mob_chance = mob_library_worker_table[mob_index].chance
 				step_chance = step_chance + mob_chance
 			end
@@ -459,7 +483,7 @@ if mobs_spawn then
 				end
 			end
 			current_summary_chance = current_summary_chance - mob_chance
-			table.remove(mob_library_worker_table, mob_index)
+			spawn_loop_counter = spawn_loop_counter - 1
 		end
 	end
 
@@ -478,6 +502,8 @@ if mobs_spawn then
 			minetest.log("action","[mcl_mobs] global mob cap reached. no cycle spawning.")
 			return
 		end --mob cap per player
+
+		initialize_spawn_data()
 		for _, player in pairs(players) do
 			local pos = player:get_pos()
 			local dimension = mcl_worlds.pos_to_dimension(pos)
@@ -602,7 +628,6 @@ minetest.register_chatcommand("spawncheck",{
 		end
 	end
 })
-
 
 minetest.register_chatcommand("mobstats",{
 	privs = { debug = true },
