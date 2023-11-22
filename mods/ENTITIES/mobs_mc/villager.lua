@@ -70,7 +70,7 @@ function mobs_mc.register_villager_profession(title, record)
 	-- TODO should we allow overriding jobs?
 	-- If so what needs to be considered?
 	if mobs_mc.professions[title] then
-		minetest.log("error", "This job already exists")
+		minetest.log("warning", "[mobs_mc] Trying to register villager job "..title.." which already exists. Skipping.")
 		return
 	end
 
