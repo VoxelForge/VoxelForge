@@ -64,6 +64,7 @@ local GATHERING = "gathering"
 
 mobs_mc.jobsites = {}
 mobs_mc.professions = {}
+mobs_mc.villager_mob = {}
 
 function mobs_mc.register_villager_profession(title, record)
 
@@ -1646,7 +1647,177 @@ end)
 
 local pick_up = { "mcl_farming:bread", "mcl_farming:carrot_item", "mcl_farming:beetroot_item" , "mcl_farming:potato_item" }
 
-mcl_mobs.register_mob("mobs_mc:villager", {
+
+function mobs_mc.villager_mob:on_pick_up(itementity)
+	local clicker
+	local it = ItemStack(itementity.itemstring)
+	for _,p in pairs(minetest.get_connected_players()) do
+		if vector.distance(p:get_pos(),self.object:get_pos()) < 10 then
+			clicker = p
+		end
+	end
+	if clicker and not self.horny then
+		self:feed_tame(clicker, 1, true, false, true)
+		it:take_item(1)
+	end
+	return it
+end
+
+function mobs_mc.villager_mob:on_rightclick(clicker)
+	if self.child or self._profession == "unemployed" or self._profession == "nitwit" then
+		self.order = nil
+		return
+	end
+
+	if self.state == PATHFINDING then
+		self.state = "stand"
+	end
+	-- Can we remove now we possibly have fixed root cause
+	if self.state == "attack" then
+		-- Need to stop villager getting in attack state. This is a workaround to allow players to fix broken villager.
+		self.state = "stand"
+		self.attack = nil
+	end
+	-- Don't do at night. Go to bed? Maybe do_activity needs it's own method
+	if validate_jobsite(self) and self.order ~= WORK then
+		minetest.log("warning","[mobs_mc] villager has jobsite but doesn't work")
+		--self:gopath(self._jobsite,function()
+		--	minetest.log("sent to jobsite")
+		--end)
+	else
+		self.state = "stand" -- cancel gowp in case it has messed up
+		--self.order = nil -- cancel work if working
+	end
+
+	-- Initiate trading
+	init_trader_vars(self)
+	local name = clicker:get_player_name()
+	self._trading_players[name] = true
+
+	if self._trades == nil or self._trades == false then
+		--minetest.log("Trades is nil so init")
+		init_trades(self)
+	end
+	update_max_tradenum(self)
+	if self._trades == false then
+		--minetest.log("Trades is false. no right click op")
+		-- Villager has no trades, rightclick is a no-op
+		return
+	end
+
+	player_trading_with[name] = self
+
+	local inv = minetest.get_inventory({type="detached", name="mobs_mc:trade_"..name})
+	if not inv then
+		return
+	end
+
+	set_trade(self, clicker, inv, 1)
+
+	show_trade_formspec(name, self)
+
+	-- Behaviour stuff:
+	-- Make villager look at player and stand still
+	local selfpos = self.object:get_pos()
+	local clickerpos = clicker:get_pos()
+	local dir = vector.direction(selfpos, clickerpos)
+	self.object:set_yaw(minetest.dir_to_yaw(dir))
+	stand_still(self)
+end
+
+function mobs_mc.villager_mob:do_custom(dtime)
+	check_summon(self,dtime)
+
+	-- Stand still if player is nearby.
+	if not self._player_scan_timer then
+		self._player_scan_timer = 0
+	end
+	self._player_scan_timer = self._player_scan_timer + dtime
+
+	-- Check infrequently to keep CPU load low
+	if self._player_scan_timer > PLAYER_SCAN_INTERVAL then
+
+		self._player_scan_timer = 0
+		local selfpos = self.object:get_pos()
+		local objects = minetest.get_objects_inside_radius(selfpos, PLAYER_SCAN_RADIUS)
+		local has_player = false
+
+		for o, obj in pairs(objects) do
+			if obj:is_player() then
+				has_player = true
+				break
+			end
+		end
+		if has_player then
+			--minetest.log("verbose", "[mobs_mc] Player near villager found!")
+			stand_still(self)
+		else
+			--minetest.log("verbose", "[mobs_mc] No player near villager found!")
+			self.walk_chance = DEFAULT_WALK_CHANCE
+			self.jump = true
+		end
+
+		do_activity (self)
+
+	end
+end
+
+function mobs_mc.villager_mob:on_spawn()
+	if not self._profession then
+		self._profession = "unemployed"
+		if math.random(100) == 1 then
+			self._profession = "nitwit"
+		end
+	end
+	if self._id then
+		set_textures(self)
+		return
+	end
+	self._id=minetest.sha1(minetest.get_gametime()..minetest.pos_to_string(self.object:get_pos())..tostring(math.random()))
+	set_textures(self)
+end
+
+function mobs_mc.villager_mob:on_die(pos, cmi_cause)
+	-- Close open trade formspecs and give input back to players
+	local trading_players = self._trading_players
+	if trading_players then
+		for name, _ in pairs(trading_players) do
+			minetest.close_formspec(name, "mobs_mc:trade_"..name)
+			local player = minetest.get_player_by_name(name)
+			if player then
+				return_fields(player)
+			end
+		end
+	end
+
+	local bed = self._bed
+	if bed then
+		local bed_meta = minetest.get_meta(bed)
+		bed_meta:set_string("villager", nil)
+		bed_meta:set_string("infotext", nil)
+	end
+	local jobsite = self._jobsite
+	if jobsite then
+		local jobsite_meta = minetest.get_meta(jobsite)
+		jobsite_meta:set_string("villager", nil)
+		jobsite_meta:set_string("infotext", nil)
+	end
+
+	if cmi_cause and cmi_cause.puncher then
+		local l = cmi_cause.puncher:get_luaentity()
+		if l and math.random(2) == 1 and( l.name == "mobs_mc:zombie" or l.name == "mobs_mc:baby_zombie" or l.name == "mobs_mc:villager_zombie" or l.name == "mobs_mc:husk") then
+			mcl_util.replace_mob(self.object,"mobs_mc:villager_zombie")
+			return true
+		end
+	end
+end
+
+function mobs_mc.villager_mob:on_lightning_strike(pos, pos2, objects)
+	 mcl_util.replace_mob(self.object, "mobs_mc:witch")
+	 return true
+end
+
+mobs_mc.villager_mob = table.update(mobs_mc.villager_mob, {
 	description = S("Villager"),
 	type = "npc",
 	spawn_class = "passive",
@@ -1702,175 +1873,13 @@ mcl_mobs.register_mob("mobs_mc:villager", {
 	look_at_player = true,
 	pick_up = pick_up,
 	can_open_doors = true,
-	on_pick_up = function(self,itementity)
-		local clicker
-		local it = ItemStack(itementity.itemstring)
-		for _,p in pairs(minetest.get_connected_players()) do
-			if vector.distance(p:get_pos(),self.object:get_pos()) < 10 then
-				clicker = p
-			end
-		end
-		if clicker and not self.horny then
-			self:feed_tame(clicker, 1, true, false, true)
-			it:take_item(1)
-		end
-		return it
-	end,
-	on_rightclick = function(self, clicker)
-		if self.child or self._profession == "unemployed" or self._profession == "nitwit" then
-			self.order = nil
-			return
-		end
-
-		if self.state == PATHFINDING then
-			self.state = "stand"
-		end
-		-- Can we remove now we possibly have fixed root cause
-		if self.state == "attack" then
-			-- Need to stop villager getting in attack state. This is a workaround to allow players to fix broken villager.
-			self.state = "stand"
-			self.attack = nil
-		end
-		-- Don't do at night. Go to bed? Maybe do_activity needs it's own method
-		if validate_jobsite(self) and self.order ~= WORK then
-			minetest.log("warning","[mobs_mc] villager has jobsite but doesn't work")
-			--self:gopath(self._jobsite,function()
-			--	minetest.log("sent to jobsite")
-			--end)
-		else
-			self.state = "stand" -- cancel gowp in case it has messed up
-			--self.order = nil -- cancel work if working
-		end
-
-		-- Initiate trading
-		init_trader_vars(self)
-		local name = clicker:get_player_name()
-		self._trading_players[name] = true
-
-		if self._trades == nil or self._trades == false then
-			--minetest.log("Trades is nil so init")
-			init_trades(self)
-		end
-		update_max_tradenum(self)
-		if self._trades == false then
-			--minetest.log("Trades is false. no right click op")
-			-- Villager has no trades, rightclick is a no-op
-			return
-		end
-
-		player_trading_with[name] = self
-
-		local inv = minetest.get_inventory({type="detached", name="mobs_mc:trade_"..name})
-		if not inv then
-			return
-		end
-
-		set_trade(self, clicker, inv, 1)
-
-		show_trade_formspec(name, self)
-
-		-- Behaviour stuff:
-		-- Make villager look at player and stand still
-		local selfpos = self.object:get_pos()
-		local clickerpos = clicker:get_pos()
-		local dir = vector.direction(selfpos, clickerpos)
-		self.object:set_yaw(minetest.dir_to_yaw(dir))
-		stand_still(self)
-	end,
-
 	_player_scan_timer = 0,
 	_trading_players = {}, -- list of playernames currently trading with villager (open formspec)
-	do_custom = function(self, dtime)
-		check_summon(self,dtime)
 
-		-- Stand still if player is nearby.
-		if not self._player_scan_timer then
-			self._player_scan_timer = 0
-		end
-		self._player_scan_timer = self._player_scan_timer + dtime
-
-		-- Check infrequently to keep CPU load low
-		if self._player_scan_timer > PLAYER_SCAN_INTERVAL then
-
-			self._player_scan_timer = 0
-			local selfpos = self.object:get_pos()
-			local objects = minetest.get_objects_inside_radius(selfpos, PLAYER_SCAN_RADIUS)
-			local has_player = false
-
-			for o, obj in pairs(objects) do
-				if obj:is_player() then
-					has_player = true
-					break
-				end
-			end
-			if has_player then
-				--minetest.log("verbose", "[mobs_mc] Player near villager found!")
-				stand_still(self)
-			else
-				--minetest.log("verbose", "[mobs_mc] No player near villager found!")
-				self.walk_chance = DEFAULT_WALK_CHANCE
-				self.jump = true
-			end
-
-			do_activity (self)
-
-		end
-	end,
-
-	on_spawn = function(self)
-		if not self._profession then
-			self._profession = "unemployed"
-			if math.random(100) == 1 then
-				self._profession = "nitwit"
-			end
-		end
-		if self._id then
-			set_textures(self)
-			return
-		end
-		self._id=minetest.sha1(minetest.get_gametime()..minetest.pos_to_string(self.object:get_pos())..tostring(math.random()))
-		set_textures(self)
-	end,
 	after_activate = set_textures,
-	on_die = function(self, pos, cmi_cause)
-		-- Close open trade formspecs and give input back to players
-		local trading_players = self._trading_players
-		if trading_players then
-			for name, _ in pairs(trading_players) do
-				minetest.close_formspec(name, "mobs_mc:trade_"..name)
-				local player = minetest.get_player_by_name(name)
-				if player then
-					return_fields(player)
-				end
-			end
-		end
-
-		local bed = self._bed
-		if bed then
-			local bed_meta = minetest.get_meta(bed)
-			bed_meta:set_string("villager", nil)
-			bed_meta:set_string("infotext", nil)
-		end
-		local jobsite = self._jobsite
-		if jobsite then
-			local jobsite_meta = minetest.get_meta(jobsite)
-			jobsite_meta:set_string("villager", nil)
-			jobsite_meta:set_string("infotext", nil)
-		end
-
-		if cmi_cause and cmi_cause.puncher then
-			local l = cmi_cause.puncher:get_luaentity()
-			if l and math.random(2) == 1 and( l.name == "mobs_mc:zombie" or l.name == "mobs_mc:baby_zombie" or l.name == "mobs_mc:villager_zombie" or l.name == "mobs_mc:husk") then
-				mcl_util.replace_mob(self.object,"mobs_mc:villager_zombie")
-				return true
-			end
-		end
-	end,
-	on_lightning_strike = function(self, pos, pos2, objects)
-		 mcl_util.replace_mob(self.object, "mobs_mc:witch")
-		 return true
-	end,
 })
+
+mcl_mobs.register_mob("mobs_mc:villager", mobs_mc.villager_mob)
 
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:villager", S("Villager"), "#563d33", "#bc8b72", 0)
