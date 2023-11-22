@@ -18,8 +18,6 @@
 local allow_nav_hacks = minetest.settings:get_bool("mcl_mob_allow_nav_hacks",false)
 local work_dist = 4
 
-local weather_mod = minetest.get_modpath("mcl_weather")
-
 local S = minetest.get_translator("mobs_mc")
 local F = minetest.formspec_escape
 
@@ -750,10 +748,7 @@ local function should_sleep(self)
 end
 
 local function should_go_home(self)
-	local weather = ""
-	if weather_mod then
-		weather = mcl_weather.get_weather()
-	end
+	local weather = mcl_weather.get_weather()
 
 	if weather == "thunder" or weather == "rain" or weather == "snow" then
 		return true
