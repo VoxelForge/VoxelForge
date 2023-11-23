@@ -1642,6 +1642,14 @@ listring[%s;input]
 listring[current_player;main]
 ]]
 
+-- set to empty for 1 so no number shows
+local function count_string(count)
+	if count == 1 then
+		count = ""
+	end
+	return count
+end
+
 local function show_trade_formspec(playername, trader, tradenum)
 	if not trader._trades then
 		return
@@ -1662,7 +1670,8 @@ local function show_trade_formspec(playername, trader, tradenum)
 
 	local tiername = tiernames[trader._max_trade_tier] or S("Master")
 
-	local header = string.format(fs_header_template, F(minetest.colorize("#313131", profession .. " - " .. tiername)), tradeinv)
+	local header =
+		string.format(fs_header_template, F(minetest.colorize("#313131", profession .. " - " .. tiername)), tradeinv)
 
 	local formspec = ""
 
@@ -1688,28 +1697,34 @@ local function show_trade_formspec(playername, trader, tradenum)
 		end
 
 		if i == tradenum then
-			header = string.format(fs_header_template, F(minetest.colorize("#313131", profession .. " - " .. tiername)), tradeinv)
+			header = string.format(
+				fs_header_template,
+				F(minetest.colorize("#313131", profession .. " - " .. tiername)),
+				tradeinv
+			)
 			row_str = row_str .. fs_trade_pushed_template
 			wanted[0] = wanted1
 			wanted[1] = wanted2
 		end
 
-		local count = wanted1:get_count()
-		if count == 1 then
-			count = ""
-		end
-
 		row_str = row_str
-			.. string.format(fs_trade_start_template, h, i, wanted1:get_name(), F(wanted1:get_description()), count)
+			.. string.format(
+				fs_trade_start_template,
+				h,
+				i,
+				wanted1:get_name(),
+				F(wanted1:get_description()),
+				count_string(wanted1:get_count())
+			)
 
 		if not wanted2:is_empty() then
-			count = wanted2:get_count()
-			if count == 1 then
-				count = ""
-			end
-
 			row_str = row_str
-				.. string.format(fs_trade_wants2_template, wanted2:get_name(), F(wanted2:get_description()), count)
+				.. string.format(
+					fs_trade_wants2_template,
+					wanted2:get_name(),
+					F(wanted2:get_description()),
+					count_string(wanted2:get_count())
+				)
 		end
 
 		if trade.locked then
@@ -1718,13 +1733,13 @@ local function show_trade_formspec(playername, trader, tradenum)
 			row_str = row_str .. fs_trade_arrow_template
 		end
 
-		count = offered:get_count()
-		if count == 1 then
-			count = ""
-		end
-
 		row_str = row_str
-			.. string.format(fs_trade_end_template, offered:get_name(), F(offered:get_description()), count)
+			.. string.format(
+				fs_trade_end_template,
+				offered:get_name(),
+				F(offered:get_description()),
+				count_string(offered:get_count())
+			)
 
 		if i == tradenum then
 			row_str = row_str .. fs_trade_unpush_template
@@ -1734,11 +1749,11 @@ local function show_trade_formspec(playername, trader, tradenum)
 		h = h + 0.55
 	end
 
---	formspec = formspec .. string.format(fs_footer_template,tradeinv,tradeinv,tradeinv,tradeinv)
-	formspec = header ..formspec .. fs_footer_template
+	formspec = header .. formspec .. fs_footer_template
 
 	if #wanted > 0 then
-		formspec = formspec .. string.format(fs_footer_template2,tradeinv,tradeinv,tradeinv,tradeinv,tradeinv,tradeinv)
+		formspec = formspec
+			.. string.format(fs_footer_template2, tradeinv, tradeinv, tradeinv, tradeinv, tradeinv, tradeinv)
 	end
 
 	minetest.sound_play("mobs_mc_villager_trade", { to_player = playername, object = trader.object }, true)
