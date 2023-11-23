@@ -1733,6 +1733,10 @@ local function show_trade_formspec(playername, trader, tradenum)
 			row_str = row_str .. fs_trade_arrow_template
 		end
 
+		if mcl_enchanting.is_enchanted(offered:get_name()) then
+			mcl_enchanting.load_enchantments(offered)
+		end
+
 		row_str = row_str
 			.. string.format(
 				fs_trade_end_template,
