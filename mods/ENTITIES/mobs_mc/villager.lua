@@ -1492,6 +1492,19 @@ local function init_trades(self, inv)
 	minetest.deserialize(self._trades)
 end
 
+local function move_stack(inv1, list1, inv2, list2, stack, pos)
+	if stack and inv1:contains_item(list1, stack) and inv2:room_for_item(list2, stack) then
+		return inv2:add_item(list2, inv1:remove_item(list1, stack))
+	elseif pos and not inv2:room_for_item(list2, stack) then
+		mcl_util.drop_item_stack(pos, stack)
+		inv1:remove_item(list1, stack)
+	end
+end
+
+local function move_index(inv1, list1, inv2, list2, index, pos)
+	move_stack(inv1, list1, inv2, list2, inv1:get_stack(list1, index), pos)
+end
+
 local function set_trade(trader, player, inv, concrete_tradenum)
 	local trades = minetest.deserialize(trader._trades)
 	if not trades then
@@ -1512,7 +1525,9 @@ local function set_trade(trader, player, inv, concrete_tradenum)
 	end
 	player_tradenum[name] = concrete_tradenum
 	local trade = trades[concrete_tradenum]
-	inv:set_stack("wanted", 1, ItemStack(trade.wanted[1]))
+	local wanted1 = ItemStack(trade.wanted[1])
+	local wanted2 = ItemStack(trade.wanted[2])
+	inv:set_stack("wanted", 1, wanted1)
 	local offered = ItemStack(trade.offered)
 	-- Only load enchantments for enchanted items; fixes unnecessary metadata being applied to regular items from villagers.
 	if mcl_enchanting.is_enchanted(offered:get_name()) then
@@ -1520,10 +1535,20 @@ local function set_trade(trader, player, inv, concrete_tradenum)
 	end
 	inv:set_stack("offered", 1, offered)
 	if trade.wanted[2] then
-		local wanted2 = ItemStack(trade.wanted[2])
 		inv:set_stack("wanted", 2, wanted2)
 	else
 		inv:set_stack("wanted", 2, "")
+	end
+
+	local plinv = player:get_inventory()
+	local pos = player:get_pos()
+	 move_index(inv, "input", plinv, "main", 1, pos)
+	 move_index(inv, "input", plinv, "main", 2, pos)
+	if wanted1 then
+		move_stack(plinv, "main", inv, "input", wanted1)
+	end
+	if wanted2 then
+		move_stack(plinv, "main", inv, "input", wanted2)
 	end
 
 end
