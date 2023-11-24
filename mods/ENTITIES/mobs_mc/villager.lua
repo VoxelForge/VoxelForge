@@ -1533,19 +1533,15 @@ end
 -- arg 1 = %s = inventory
 local fs_header_template = [[
 formspec_version[6]
-size[16,10.3]
+size[15.2,9.3]
 position[0.5,0.5]
 
 label[7.5,0.3;%s]
 style_type[label;textcolor=white]
 
-background[3.6,-1;11.75,11.7;mobs_mc_trading_formspec_bg.png]
-list[current_player;main;3.97,4.98;9,3;9]
-list[current_player;main;3.97,8.98;9,1;]
-
 scrollbaroptions[min=1;max=45;thumbsize=1]
-scrollbar[3.4,0.03;0.2,10.3;vertical;trade_scroller;1]
-scroll_container[0.1,0.1;3.50,11.5;trade_scroller;vertical]
+scrollbar[3.4,0.05;0.2,9.1;vertical;trade_scroller;1]
+scroll_container[0.1,0.1;3.50,9.5;trade_scroller;vertical]
 
 ]]
 
@@ -1623,6 +1619,23 @@ local fs_footer_template = [[
 
 scroll_container_end[]
 
+image[9.5,1.0;1.0,0.5;gui_crafting_arrow.png]
+image[9.5,2.25;1.0,0.5;gui_crafting_arrow.png]
+
+]] ..
+mcl_formspec.get_itemslot_bg_v4(6.4,2.0,2,1)
+..
+mcl_formspec.get_itemslot_bg_v4(11.1,2.0,1,1)
+..
+mcl_formspec.get_itemslot_bg_v4(3.97,3.98,9,3)
+..
+mcl_formspec.get_itemslot_bg_v4(3.97,7.98,9,1)
+ ..
+[[
+
+ list[current_player;main;3.97,3.98;9,3;9]
+ list[current_player;main;3.97,7.98;9,1;]
+
 ]]
 
 -- arg 1 = %s = tradeinv
@@ -1633,8 +1646,8 @@ local fs_footer_template2 = [[
 
 list[%s;wanted;6.4,0.75;2,1;]
 list[%s;offered;11.1,0.75;2,1;]
-list[%s;input;6.4,2.5;2,1;]
-list[%s;output;11.1,2.5;1,1;]
+list[%s;input;6.4,2.0;2,1;]
+list[%s;output;11.1,2.0;1,1;]
 listring[%s;output]
 listring[current_player;main]
 listring[%s;input]
