@@ -1533,33 +1533,28 @@ end
 -- arg 1 = %s = inventory
 local fs_header_template = [[
 formspec_version[6]
-size[13,8.75]
+size[16,10.3]
 position[0.5,0.5]
 
-bgcolor[white]
-style_type[label;bgcolor=white;textcolor=black]
-style_type[button;bgcolor=#006699]
-style_type[button:pressed;bgcolor=#AA6699]
-style_type[list;size=0.75,0.75]
-
 label[7.5,0.3;%s]
+style_type[label;textcolor=white]
 
-background[3.5,-1;9.41,9.49;mobs_mc_trading_formspec_bg.png]
-list[current_player;main;3.85,3.9;9,3;9]
-list[current_player;main;3.8,7.15;9,1;]
+background[3.6,-1;11.75,11.7;mobs_mc_trading_formspec_bg.png]
+list[current_player;main;3.97,4.98;9,3;9]
+list[current_player;main;3.97,8.98;9,1;]
 
 scrollbaroptions[min=1;max=45;thumbsize=1]
-scrollbar[3.4,0.03;0.2,8.7;vertical;trade_scroller;1]
-scroll_container[0.1,0.1;8,8;trade_scroller;vertical]
+scrollbar[3.4,0.03;0.2,10.3;vertical;trade_scroller;1]
+scroll_container[0.1,0.1;3.50,11.5;trade_scroller;vertical]
 
 ]]
 
 -- arg 1 = %f = H
 -- arg 2 = %s = level
 local fs_level_template = [[
-style_type[label;bgcolor=white;textcolor=black]
+style_type[label;textcolor=#323232]
 label[0.1,%f2;%s]
-style_type[label;bgcolor=black;textcolor=white]
+style_type[label;textcolor=white]
 
 ]]
 
@@ -1570,9 +1565,9 @@ style_type[label;bgcolor=black;textcolor=white]
 -- arg 5 = %s = wanted 1 count
 local fs_trade_start_template = [[
 container[0.1,%f2]
-	button[0.0,0.0;3,0.5;trade_%i;]
+	button[0.0,0.0;3.05,0.6;trade_%i;]
 
-	item_image[0.01,0.0;0.5,0.5;%s]
+	item_image[0.02,0.03;0.5,0.5;%s]
 	tooltip[0.1,0.0;0.5,0.5;%s]
 	label[0.3,0.35;%s]
 
@@ -1583,28 +1578,32 @@ container[0.1,%f2]
 -- arg 8 = %s = wanted 2 count
 local fs_trade_wants2_template = [[
 
-	item_image[0.4,0.0;0.5,0.5;%s]
-	tooltip[0.4,0.0;0.5,0.5;%s]
+	item_image[0.4,0.03;0.5,0.5;%s]
+	tooltip[0.4,0.1;0.5,0.5;%s]
 	label[0.7,0.35;%s]
 
 ]]
 
+-- This should be what is in mcl_inventory_button9_pressed with the pressed button
+-- image used as the unpressed option
 local fs_trade_pushed_template = [[
-	style_type[button;bgcolor=#AA6699]
+	style_type[button;border=false;bgimg=mcl_inventory_button9_pressed.png;bgimg_pressed=mcl_inventory_button9_pressed.png;bgimg_middle=2,2]
 
 ]]
 
+-- This should be what is in mcl_inventory_button9
 local fs_trade_unpush_template = [[
-style_type[button;bgcolor=#006699]
+	style_type[button;border=false;bgimg=mcl_inventory_button9.png;bgimg_pressed=mcl_inventory_button9_pressed.png;bgimg_middle=2,2]
 
 ]]
+
 local fs_trade_arrow_template = [[
-	image[1.8,0.1;0.5,0.32;gui_crafting_arrow.png]
+	image[1.8,0.15;0.5,0.32;gui_crafting_arrow.png]
 
 ]]
 
 local fs_trade_diabled_template = [[
-	image[1.8,0.1;0.5,0.32;mobs_mc_trading_formspec_disabled.png]
+	image[1.8,0.15;0.5,0.32;mobs_mc_trading_formspec_disabled.png]
 
 ]]
 
@@ -1612,7 +1611,7 @@ local fs_trade_diabled_template = [[
 -- arg 2 = %s = offered tooltip
 -- arg 3 = %s = offered count
 local fs_trade_end_template = [[
-	item_image[2.5,0.0;0.5,0.5;%s]
+	item_image[2.5,0.03;0.5,0.5;%s]
 	tooltip[2.5,0.0;0.5,0.5;%s]
 	label[2.8,0.35;%s]
 
@@ -1632,10 +1631,10 @@ scroll_container_end[]
 -- arg 1 = %s = tradeinv
 local fs_footer_template2 = [[
 
-list[%s;wanted;5.8,0.5;2,1;]
-list[%s;offered;9.5,0.5;2,1;]
-list[%s;input;5.8,1.9;2,1;]
-list[%s;output;9.5,1.9;1,1;]
+list[%s;wanted;6.4,0.75;2,1;]
+list[%s;offered;11.1,0.75;2,1;]
+list[%s;input;6.4,2.5;2,1;]
+list[%s;output;11.1,2.5;1,1;]
 listring[%s;output]
 listring[current_player;main]
 listring[%s;input]
@@ -1649,6 +1648,8 @@ local function count_string(count)
 	end
 	return count
 end
+
+local button_buffer = 0.65
 
 local function show_trade_formspec(playername, trader, tradenum)
 	if not trader._trades then
@@ -1750,7 +1751,7 @@ local function show_trade_formspec(playername, trader, tradenum)
 		end
 
 		formspec = formspec .. row_str
-		h = h + 0.55
+		h = h + button_buffer
 	end
 
 	formspec = header .. formspec .. fs_footer_template
