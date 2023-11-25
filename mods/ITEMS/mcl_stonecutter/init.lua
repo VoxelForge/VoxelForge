@@ -10,6 +10,7 @@ local F = minetest.formspec_escape
 
 local recipe_yield = { --maps itemgroup to the respective recipe yield, default is 1
 	["slab"] = 2,
+	["cut_copper"] = 4,
 }
 
 local recipes = {}
