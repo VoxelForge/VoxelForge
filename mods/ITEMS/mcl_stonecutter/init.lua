@@ -21,7 +21,7 @@ function mcl_stonecutter.refresh_recipes()
 	for result,resultdef in pairs(minetest.registered_nodes) do
 		if resultdef._mcl_stonecutter_recipes then
 			local yield = 1
-			for k,v in pairs(recipe_yield) do if minetest.get_item_group(result,k) > 0 then yield = v end end
+			for k,v in pairs(recipe_yield) do if minetest.get_item_group(result,k) > 0 then yield = yield * v end end
 			for _,recipe in pairs(resultdef._mcl_stonecutter_recipes) do
 				if minetest.get_item_group(recipe,"stonecuttable") > 0 and minetest.get_item_group(result,"not_in_creative_inventory") == 0 then
 					if not recipes[recipe] then recipes[recipe] = {} end
