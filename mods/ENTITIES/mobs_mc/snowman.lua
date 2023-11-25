@@ -151,9 +151,9 @@ mcl_mobs.register_mob("mobs_mc:snowman", {
 })
 
 local summon_particles = function(obj)
-	local lua = obj:get_luaentity()
-	local min = {x=lua.collisionbox[1], y=lua.collisionbox[2], z=lua.collisionbox[3]}
-	local max = {x=lua.collisionbox[4], y=lua.collisionbox[5], z=lua.collisionbox[6]}
+	local cb = obj:get_properties().collisionbox
+	local min = {x=cb[1], y=cb[2], z=cb[3]}
+	local max = {x=cb[4], y=cb[5], z=cb[6]}
 	local pos = obj:get_pos()
 	minetest.add_particlespawner({
 		amount = 60,
