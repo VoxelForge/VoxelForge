@@ -1555,7 +1555,7 @@ end
 
 -- Trade spec templates, some with args to use with string.format
 -- arg 1 = %s = title
--- arg 1 = %s = inventory
+-- arg 2 = %i = scroller max val
 local fs_header_template = [[
 formspec_version[6]
 size[15.2,9.3]
@@ -1564,7 +1564,7 @@ position[0.5,0.5]
 label[7.5,0.3;%s]
 style_type[label;textcolor=white]
 
-scrollbaroptions[min=1;max=45;thumbsize=1]
+scrollbaroptions[min=1;max=%i;thumbsize=1]
 scrollbar[3.4,0.05;0.2,9.1;vertical;trade_scroller;1]
 scroll_container[0.1,0.1;3.50,9.5;trade_scroller;vertical]
 
@@ -1740,9 +1740,6 @@ local function show_trade_formspec(playername, trader, tradenum)
 
 	local tiername = tiernames[trader._max_trade_tier] or S("Master")
 
-	local header =
-		string.format(fs_header_template, F(minetest.colorize("#313131", profession .. " - " .. tiername)), tradeinv)
-
 	local formspec = ""
 
 	local last_tier = 0
@@ -1771,11 +1768,6 @@ local function show_trade_formspec(playername, trader, tradenum)
 		end
 
 		if i == tradenum then
-			header = string.format(
-				fs_header_template,
-				F(minetest.colorize("#313131", profession .. " - " .. tiername)),
-				tradeinv
-			)
 			row_str = row_str .. fs_trade_pushed_template
 
 			trade_str = string.format(
@@ -1845,6 +1837,9 @@ local function show_trade_formspec(playername, trader, tradenum)
 		formspec = formspec .. row_str
 		h = h + button_buffer
 	end
+
+	local header =
+		string.format(fs_header_template, F(minetest.colorize("#313131", profession .. " - " .. tiername)), h * 5)
 
 	formspec = header .. formspec .. fs_footer_template
 
