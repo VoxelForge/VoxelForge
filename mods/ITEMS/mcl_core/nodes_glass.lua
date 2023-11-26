@@ -28,11 +28,6 @@ local messy_textures = {
 ------------------------
 local canonical_color = "yellow"
 
-local function readable_name(str)
-	str = str:gsub("_", " ")
-    return (str:gsub("^%l", string.upper))
-end
-
 for color,colordef in pairs(mcl_dyes.colors) do
 	local longdesc, create_entry, entry_name
 	if mod_doc then
@@ -48,7 +43,7 @@ for color,colordef in pairs(mcl_dyes.colors) do
 		texcol = messy_textures[color]
 	end
 	minetest.register_node("mcl_core:glass_"..color, {
-		description = S(readable_name(color).." Stained Glass"),
+		description = S(colordef.readable_name.." Stained Glass"),
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = entry_name,
 		_doc_items_longdesc = longdesc,

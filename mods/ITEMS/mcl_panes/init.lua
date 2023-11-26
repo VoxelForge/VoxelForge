@@ -8,11 +8,6 @@ local messy_texture_names = {
 	["grey"] = "gray",
 }
 
-local function readable_name(str)
-	str = str:gsub("_", " ")
-	return (str:gsub("^%l", string.upper))
-end
-
 local function is_pane(pos)
 	return minetest.get_item_group(minetest.get_node(pos).name, "pane") > 0
 end
@@ -255,7 +250,7 @@ pane(S("Glass Pane"), "mcl_core:glass", "_natural") -- triggers special case
 
 -- Stained Glass Panes
 for k,v in pairs(mcl_dyes.colors) do
-	pane(S(readable_name(k).." Glass Pane"), "mcl_core:glass_"..k, "_"..k)
+	pane(S(v.readable_name.." Glass Pane"), "mcl_core:glass_"..k, "_"..k)
 end
 
 dofile(modpath .. "/alias.lua")
