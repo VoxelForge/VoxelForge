@@ -302,7 +302,7 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 	return true, ""
 end
 
-function mcl_mobs.spawn(pos,id)
+function mcl_mobs.spawn(pos,id, staticdata)
 	local def = minetest.registered_entities[id] or minetest.registered_entities["mobs_mc:"..id] or minetest.registered_entities["extra_mobs:"..id]
 	if not def or (def.can_spawn and not def.can_spawn(pos)) or not def.is_mob then
 		return false
@@ -312,7 +312,7 @@ function mcl_mobs.spawn(pos,id)
 	else
 		dbg_spawn_counts[def.name] = dbg_spawn_counts[def.name] + 1
 	end
-	return minetest.add_entity(pos, def.name)
+	return minetest.add_entity(pos, def.name, staticdata)
 end
 
 
@@ -540,7 +540,7 @@ minetest.register_chatcommand("spawn_mob",{
 			mobname = string.sub(param, 1, mod1-1)
 		end
 
-		local mob = mcl_mobs.spawn(pos,mobname)
+		local mob = mcl_mobs.spawn(pos, mobname, minetest.serialize({ persist_in_peaceful = true }))
 
 		if mob then
 			for c=1, #modifiers do
