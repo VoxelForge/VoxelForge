@@ -1594,9 +1594,9 @@ container[0.1,%f2]
 
 ]]
 
--- arg 6 = %s = wanted 2
--- arg 7 = %s = wanted 2 tooltip
--- arg 8 = %s = wanted 2 count
+-- arg 1 = %s = wanted 2
+-- arg 2 = %s = wanted 2 tooltip
+-- arg 3 = %s = wanted 2 count
 local fs_trade_wants2_template = [[
 
 	item_image[0.4,0.03;0.5,0.5;%s]
@@ -1663,14 +1663,45 @@ mcl_formspec.get_itemslot_bg_v4(3.97,7.98,9,1)
 
 ]]
 
+-- arg 1 = %s = wanted
+-- arg 2 = %s = wanted tooltip
+-- arg 3 = %s = wanted count
+local fs_wants_template = [[
+
+	item_image[6.4,0.75;1.0,1.0;%s]
+	tooltip[6.4,0.75;1.0,1.0;%s]
+	label[7.20,1.7;%s]
+
+]]
+
+-- arg 1 = %s = wanted 2
+-- arg 2 = %s = wanted 2 tooltip
+-- arg 3 = %s = wanted 2 count
+local fs_wants2_template = [[
+
+	item_image[7.6,0.75;1.0,1.0;%s]
+	tooltip[7.6,0.75;1.0,1.0;%s]
+	label[8.5,1.7;%s]
+
+]]
+
+-- arg 1 = %s = offered
+-- arg 2 = %s = offered tooltip
+-- arg 3 = %s = offered count
+local fs_offered_template = [[
+
+	item_image[11.1,0.75;1.0,1.0;%s]
+	tooltip[11.1,0.75;1.0,1.0;%s]
+	label[11.95,1.7;%s]
+
+]]
+
 -- arg 1 = %s = tradeinv
--- arg 1 = %s = tradeinv
--- arg 1 = %s = tradeinv
--- arg 1 = %s = tradeinv
+-- arg 2 = %s = tradeinv
+-- arg 3 = %s = tradeinv
+-- arg 4 = %s = tradeinv
 local fs_footer_template2 = [[
 
-list[%s;wanted;6.4,0.75;2,1;]
-list[%s;offered;11.1,0.75;2,1;]
 list[%s;input;6.4,2.0;2,1;]
 list[%s;output;11.1,2.0;1,1;]
 listring[%s;output]
@@ -1716,12 +1747,16 @@ local function show_trade_formspec(playername, trader, tradenum)
 
 	local last_tier = 0
 	local h = 0.0
-	local wanted = {}
+	local trade_str = ""
 
 	for i, trade in pairs(minetest.deserialize(trader._trades)) do
 		local wanted1 = ItemStack(trade.wanted[1])
 		local wanted2 = ItemStack(trade.wanted[2])
 		local offered = ItemStack(trade.offered)
+
+		if mcl_enchanting.is_enchanted(offered:get_name()) then
+			mcl_enchanting.load_enchantments(offered)
+		end
 
 		local row_str = ""
 		if last_tier ~= trade.tier then
@@ -1742,8 +1777,31 @@ local function show_trade_formspec(playername, trader, tradenum)
 				tradeinv
 			)
 			row_str = row_str .. fs_trade_pushed_template
-			wanted[0] = wanted1
-			wanted[1] = wanted2
+
+			trade_str = string.format(
+				fs_wants_template,
+				wanted1:get_name(),
+				F(wanted1:get_description()),
+				count_string(wanted1:get_count())
+			)
+
+			if not wanted2:is_empty() then
+				trade_str = trade_str
+					.. string.format(
+						fs_wants2_template,
+						wanted2:get_name(),
+						F(wanted2:get_description()),
+						count_string(wanted2:get_count())
+					)
+			end
+
+			trade_str = trade_str
+				.. string.format(
+					fs_offered_template,
+					offered:get_name(),
+					F(offered:get_description()),
+					count_string(offered:get_count())
+				)
 		end
 
 		row_str = row_str
@@ -1772,10 +1830,6 @@ local function show_trade_formspec(playername, trader, tradenum)
 			row_str = row_str .. fs_trade_arrow_template
 		end
 
-		if mcl_enchanting.is_enchanted(offered:get_name()) then
-			mcl_enchanting.load_enchantments(offered)
-		end
-
 		row_str = row_str
 			.. string.format(
 				fs_trade_end_template,
@@ -1794,9 +1848,9 @@ local function show_trade_formspec(playername, trader, tradenum)
 
 	formspec = header .. formspec .. fs_footer_template
 
-	if #wanted > 0 then
-		formspec = formspec
-			.. string.format(fs_footer_template2, tradeinv, tradeinv, tradeinv, tradeinv, tradeinv, tradeinv)
+	if trade_str ~= "" then
+		formspec = formspec .. trade_str
+			.. string.format(fs_footer_template2, tradeinv, tradeinv, tradeinv, tradeinv)
 	end
 
 	minetest.sound_play("mobs_mc_villager_trade", { to_player = playername, object = trader.object }, true)
