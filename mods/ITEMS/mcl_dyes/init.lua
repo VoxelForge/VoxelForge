@@ -181,7 +181,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "mcl_dyes:lightblue",
+	output = "mcl_dyes:light_blue",
 	recipe = {{"mcl_flowers:blue_orchid"}},
 })
 
@@ -252,39 +252,39 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "cooking",
-	output = "mcl_dyes:dark_green",
+	output = "mcl_dyes:green",
 	recipe = "mcl_core:cactus",
 	cooktime = 10,
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dyes:dark_grey 2",
+	output = "mcl_dyes:grey 2",
 	recipe = {"mcl_dyes:black", "mcl_dyes:white"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dyes:lightblue 2",
+	output = "mcl_dyes:light_blue 2",
 	recipe = {"mcl_dyes:blue", "mcl_dyes:white"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dyes:grey 3",
+	output = "mcl_dyes:silver 3",
 	recipe = {"mcl_dyes:black", "mcl_dyes:white", "mcl_dyes:white"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dyes:grey 2",
-	recipe = {"mcl_dyes:dark_grey", "mcl_dyes:white"},
+	output = "mcl_dyes:silver 2",
+	recipe = {"mcl_dyes:grey", "mcl_dyes:white"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dyes:green 2",
-	recipe = {"mcl_dyes:dark_green", "mcl_dyes:white"},
+	output = "mcl_dyes:lime 2",
+	recipe = {"mcl_dyes:green", "mcl_dyes:white"},
 })
 
 minetest.register_craft({
@@ -302,7 +302,7 @@ minetest.register_craft({
 minetest.register_craft({
 	type = "shapeless",
 	output = "mcl_dyes:magenta 2",
-	recipe = {"mcl_dyes:violet", "mcl_dyes:pink"},
+	recipe = {"mcl_dyes:purple", "mcl_dyes:pink"},
 })
 
 minetest.register_craft({
@@ -314,12 +314,12 @@ minetest.register_craft({
 minetest.register_craft({
 	type = "shapeless",
 	output = "mcl_dyes:cyan 2",
-	recipe = {"mcl_dyes:blue", "mcl_dyes:dark_green"},
+	recipe = {"mcl_dyes:blue", "mcl_dyes:green"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mcl_dyes:violet 2",
+	output = "mcl_dyes:purple 2",
 	recipe = {"mcl_dyes:blue", "mcl_dyes:red"},
 })
 
@@ -331,14 +331,14 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "cooking",
-	output = "mcl_dyes:dark_green",
+	output = "mcl_dyes:green",
 	recipe = "mcl_core:cactus",
 	cooktime = 10,
 })
 
 minetest.register_craft({
 	type = "cooking",
-	output = "mcl_dyes:green",
+	output = "mcl_dyes:lime",
 	recipe = "group:sea_pickle",
 	cooktime = 10,
 })
