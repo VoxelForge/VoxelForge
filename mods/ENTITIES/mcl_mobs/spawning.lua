@@ -579,9 +579,10 @@ minetest.register_chatcommand("spawncheck",{
 	func = function(n,param)
 		local pl = minetest.get_player_by_name(n)
 		local pos = vector.offset(pl:get_pos(),0,-1,0)
+		local dim = mcl_worlds.pos_to_dimension(pos)
 		local sp
 		for _,v in pairs(spawn_dictionary) do
-			if v.name == param then sp = v end
+			if v.name == param and v.dimension == dim then sp = v end
 		end
 		if sp then
 			minetest.log(dump(sp))
