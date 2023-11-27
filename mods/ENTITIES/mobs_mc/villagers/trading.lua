@@ -114,14 +114,10 @@ function mobs_mc.villager_mob:set_trade(player, inv, concrete_tradenum)
 	if not trades then
 		self:init_trades()
 		trades = minetest.deserialize(self._trades)
-		if not trades then
-			--minetest.log("error", "Failed to select villager trade!")
-			return
-		end
+		if not trades then return end
 	end
 	local name = player:get_player_name()
 
-	-- Stop tradenum from advancing into locked tiers or out-of-range areas
 	if concrete_tradenum > self._max_tradenum then
 		concrete_tradenum = self._max_tradenum
 	elseif concrete_tradenum < 1 then
@@ -133,6 +129,7 @@ function mobs_mc.villager_mob:set_trade(player, inv, concrete_tradenum)
 	local wanted2 = ItemStack(trade.wanted[2])
 	inv:set_stack("wanted", 1, wanted1)
 	local offered = ItemStack(trade.offered)
+
 	-- Only load enchantments for enchanted items; fixes unnecessary metadata being applied to regular items from villagers.
 	if mcl_enchanting.is_enchanted(offered:get_name()) then
 		mcl_enchanting.load_enchantments(offered)
@@ -476,9 +473,6 @@ local function update_offer(inv, player, sound)
 	local input1, input2 = inv:get_stack("input", 1), inv:get_stack("input", 2)
 
 	-- BEGIN OF SPECIAL HANDLING OF COMPASS
-	-- These 2 functions are a complicated check to check if the input contains a
-	-- special item which we cannot check directly against their name, like
-	-- compass.
 	-- TODO: Remove these check functions when compass and clock are implemented
 	-- as single items.
 	local function check_special(special_item, group, wanted1, wanted2, input1, input2)

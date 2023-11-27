@@ -1,19 +1,10 @@
---MCmobs v0.4
---maikerumine
---made for MC like Survival game
---License for code WTFPL and otherwise stated in readmes
-
---###################
---################### VILLAGER
---###################
--- Summary: Villagers are complex NPCs, their main feature allows players to trade with them.
+-- Villager code originally by maikerumine for mobs_mc
+-- massively improved by cora, ancientmarinerdev and codiac
 
 -- TODO: Particles
 -- TODO: 4s Regeneration I after trade unlock
--- TODO: Behaviour:
--- TODO: Run into house on rain or danger, open doors
 -- TODO: Internal inventory, trade with other villagers
--- TODO: Schedule stuff (work,sleep,father)
+
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 
@@ -84,39 +75,19 @@ function mobs_mc.villager_mob:on_rightclick(clicker)
 		return
 	end
 
-	if self.state == "gowp" then
-		self.state = "stand"
-	end
-	-- Can we remove now we possibly have fixed root cause
-	if self.state == "attack" then
-		-- Need to stop villager getting in attack state. This is a workaround to allow players to fix broken villager.
-		self.state = "stand"
-		self.attack = nil
-	end
-	-- Don't do at night. Go to bed? Maybe do_activity needs it's own method
 	if self:validate_jobsite() and self.order ~= "work" then
 		minetest.log("warning","[mobs_mc] villager has jobsite but doesn't work")
-		--self:gopath(self._jobsite,function()
-		--	minetest.log("sent to jobsite")
-		--end)
-	else
-		self.state = "stand" -- cancel gowp in case it has messed up
-		--self.order = nil -- cancel work if working
 	end
 
-	-- Initiate trading
 	self:init_trader_vars()
 	local name = clicker:get_player_name()
 	self._trading_players[name] = true
 
 	if self._trades == nil or self._trades == false then
-		--minetest.log("Trades is nil so init")
 		self:init_trades()
 	end
 	self:update_max_tradenum()
 	if self._trades == false then
-		--minetest.log("Trades is false. no right click op")
-		-- Villager has no trades, rightclick is a no-op
 		return
 	end
 
@@ -129,8 +100,6 @@ function mobs_mc.villager_mob:on_rightclick(clicker)
 
 	self:show_trade_formspec(name)
 
-	-- Behaviour stuff:
-	-- Make villager look at player and stand still
 	local selfpos = self.object:get_pos()
 	local clickerpos = clicker:get_pos()
 	local dir = vector.direction(selfpos, clickerpos)
@@ -141,7 +110,6 @@ end
 function mobs_mc.villager_mob:do_custom(dtime)
 	self:check_summon(dtime)
 
-	-- Stand still if player is nearby.
 	if not self._player_scan_timer then
 		self._player_scan_timer = 0
 	end
@@ -162,10 +130,8 @@ function mobs_mc.villager_mob:do_custom(dtime)
 			end
 		end
 		if has_player then
-			--minetest.log("verbose", "[mobs_mc] Player near villager found!")
 			self:stand_still()
 		else
-			--minetest.log("verbose", "[mobs_mc] No player near villager found!")
 			self.walk_chance = DEFAULT_WALK_CHANCE
 			self.jump = true
 		end
@@ -176,6 +142,11 @@ function mobs_mc.villager_mob:do_custom(dtime)
 end
 
 function mobs_mc.villager_mob:on_spawn()
+	if self.state == "attack" then
+		-- in case a bug in mcl_mobs makes them set this state
+		self.state = "stand"
+		self.attack = nil
+	end
 	if not self._profession then
 		self._profession = "unemployed"
 		if math.random(100) == 1 then
@@ -287,7 +258,7 @@ table.update(mobs_mc.villager_mob, {
 	pick_up = pick_up,
 	can_open_doors = true,
 	_player_scan_timer = 0,
-	_trading_players = {}, -- list of playernames currently trading with villager (open formspec)
+	_trading_players = {},
 
 	after_activate = mobs_mc.villager_mob.set_textures,
 })

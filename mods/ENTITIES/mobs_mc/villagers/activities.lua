@@ -118,8 +118,8 @@ function mobs_mc.villager_mob:find_closest_bed()
 
 			-- TODO Why is it looking for a new bed if it has a bed and the bed is in the area?
 			if (owned_by and owned_by == self._id) then
-				bed_meta:set_string("villager", nil)
-				bed_meta:set_string("infotext", nil)
+				bed_meta:set_string("villager", "")
+				bed_meta:set_string("infotext", "")
 				owned_by = nil
 			end
 
@@ -284,12 +284,10 @@ function mobs_mc.villager_mob:has_summon_participants()
 	return r > 2
 end
 
-local below_vec = vector.new(0, -1, 0)
-
-local function get_ground_below_floating_object (float_pos)
+local function get_ground_below_floating_object(float_pos)
 	local pos = float_pos
 	repeat
-		pos = vector.add(pos, below_vec)
+		pos = vector.offset(pos, 0, -1, 0)
 		local node = minetest.get_node(pos)
 	until node.name ~= "air"
 
@@ -308,7 +306,6 @@ function mobs_mc.villager_mob:summon_golem()
 	for _,n in pairs(nn) do
 		local up = minetest.find_nodes_in_area(vector.offset(n,0,1,0),vector.offset(n,0,3,0),{"air"})
 		if up and #up >= 3 then
-			-- Set home for summoned golem
 			local obj = minetest.add_entity(vector.offset(n,0,1,0),"mobs_mc:iron_golem")
 			local ent = obj:get_luaentity()
 			if ent then
@@ -441,7 +438,6 @@ function mobs_mc.villager_mob:get_a_job()
 	local requested_jobsites = mobs_mc.jobsites
 	if self:has_traded() then
 		requested_jobsites = {mobs_mc.professions[self._profession].jobsite}
-		-- Only pass in my jobsite to two functions here
 	end
 
 	local p = self.object:get_pos()
@@ -503,7 +499,6 @@ function mobs_mc.villager_mob:do_work()
 		return
 	end
 
-	-- Don't try if looking_for_work, or gowp possibly
 	if self:validate_jobsite() then
 
 		local jobsite2 = mobs_mc.villager_mob:retrieve_my_jobsite()
@@ -655,12 +650,10 @@ function mobs_mc.villager_mob:sleep_over()
 end
 
 function mobs_mc.villager_mob:do_activity()
-	-- Maybe just check we're pathfinding first?
-	if self.following then
+	if self.following or self.state == PATHFINDING then
 		return
 	end
 
-	-- If no bed then it's the first thing to do, even at night
 	if not self:check_bed() then
 		self:take_bed()
 	end
@@ -692,10 +685,7 @@ function mobs_mc.villager_mob:do_activity()
 	if self:check_bed() then
 		wandered_too_far = (self.state ~= PATHFINDING) and (vector.distance(self.object:get_pos(), self._bed) > 50)
 	end
-
 	local activity = self:get_activity()
-
-	-- This needs to be most important to least important
 	-- TODO separate sleep and home activities when villagers can sleep
 	if activity == SLEEP or activity == HOME then
 		if self:check_bed() then
