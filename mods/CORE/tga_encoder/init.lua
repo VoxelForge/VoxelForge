@@ -283,16 +283,16 @@ end
 
 function image:encode_data_R8G8B8_as_A1R5G5B5_rle()
 	assert(24 == self.pixel_depth)
-	local colorword = nil
-	local previous_r = nil
-	local previous_g = nil
-	local previous_b = nil
-	local raw_pixel = ''
+	local colorword
+	local previous_r
+	local previous_g
+	local previous_b
+	local raw_pixel
 	local raw_pixels = {}
 	local count = 1
 	local packets = {}
-	local raw_packet = ''
-	local rle_packet = ''
+	local raw_packet
+	local rle_packet
 	-- Sample depth rescaling is done according to the algorithm presented in:
 	-- <https://www.w3.org/TR/2003/REC-PNG-20031110/#13Sample-depth-rescaling>
 	local max_sample_in = math.pow(2, 8) - 1
@@ -353,7 +353,6 @@ function image:encode_data_R8G8B8_as_A1R5G5B5_rle()
 		for i=1, #raw_pixels do
 			packets[#packets +1] = raw_pixels[i]
 		end
-		raw_pixels = {}
 	else
 		-- encode raw pixels, if any
 		if #raw_pixels > 0 then
@@ -362,7 +361,6 @@ function image:encode_data_R8G8B8_as_A1R5G5B5_rle()
 			for i=1, #raw_pixels do
 				packets[#packets +1] = raw_pixels[i]
 			end
-			raw_pixels = {}
 		end
 		-- RLE encoding
 		rle_packet = string.char(128 + count - 1, colorword % 256, math.floor(colorword / 256))
@@ -385,15 +383,15 @@ end
 
 function image:encode_data_R8G8B8_as_B8G8R8_rle()
 	assert(24 == self.pixel_depth)
-	local previous_r = nil
-	local previous_g = nil
-	local previous_b = nil
-	local raw_pixel = ''
+	local previous_r
+	local previous_g
+	local previous_b
+	local raw_pixel
 	local raw_pixels = {}
 	local count = 1
 	local packets = {}
-	local raw_packet = ''
-	local rle_packet = ''
+	local raw_packet
+	local rle_packet
 	for _, row in ipairs(self.pixels) do
 		for _, pixel in ipairs(row) do
 			if pixel[1] ~= previous_r or pixel[2] ~= previous_g or pixel[3] ~= previous_b or count == 128 then
@@ -442,7 +440,6 @@ function image:encode_data_R8G8B8_as_B8G8R8_rle()
 		for i=1, #raw_pixels do
 			packets[#packets +1] = raw_pixels[i]
 		end
-		raw_pixels = {}
 	else
 		-- encode raw pixels, if any
 		if #raw_pixels > 0 then
@@ -451,7 +448,6 @@ function image:encode_data_R8G8B8_as_B8G8R8_rle()
 			for i=1, #raw_pixels do
 				packets[#packets +1] = raw_pixels[i]
 			end
-			raw_pixels = {}
 		end
 		-- RLE encoding
 		rle_packet = string.char(128 + count - 1, previous_b, previous_g, previous_r)
@@ -474,16 +470,16 @@ end
 
 function image:encode_data_R8G8B8A8_as_B8G8R8A8_rle()
 	assert(32 == self.pixel_depth)
-	local previous_r = nil
-	local previous_g = nil
-	local previous_b = nil
-	local previous_a = nil
-	local raw_pixel = ''
+	local previous_r
+	local previous_g
+	local previous_b
+	local previous_a
+	local raw_pixel
 	local raw_pixels = {}
 	local count = 1
 	local packets = {}
-	local raw_packet = ''
-	local rle_packet = ''
+	local raw_packet
+	local rle_packet
 	for _, row in ipairs(self.pixels) do
 		for _, pixel in ipairs(row) do
 			if pixel[1] ~= previous_r or pixel[2] ~= previous_g or pixel[3] ~= previous_b or pixel[4] ~= previous_a or count == 128 then
@@ -533,7 +529,6 @@ function image:encode_data_R8G8B8A8_as_B8G8R8A8_rle()
 		for i=1, #raw_pixels do
 			packets[#packets +1] = raw_pixels[i]
 		end
-		raw_pixels = {}
 	else
 		-- encode raw pixels, if any
 		if #raw_pixels > 0 then
@@ -542,7 +537,6 @@ function image:encode_data_R8G8B8A8_as_B8G8R8A8_rle()
 			for i=1, #raw_pixels do
 				packets[#packets +1] = raw_pixels[i]
 			end
-			raw_pixels = {}
 		end
 		-- RLE encoding
 		rle_packet = string.char(128 + count - 1, previous_b, previous_g, previous_r, previous_a)
