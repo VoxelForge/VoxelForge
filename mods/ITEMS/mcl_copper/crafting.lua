@@ -52,7 +52,7 @@ local waxable_blocks = { "block", "block_cut", "block_exposed", "block_exposed_c
 
 for _, w in ipairs(waxable_blocks) do
 	minetest.register_craft({
-		output = "mcl_copper:waxed_"..w,
+		output = "mcl_copper:"..w.."_preserved",
 		recipe = {
 			{ "mcl_copper:"..w, "mcl_honey:honeycomb" },
 		},
