@@ -285,27 +285,26 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 	local art_light = minetest.get_artificial_light(my_node.param1)
 	if modern_lighting then
 
-		if dimension == "nether" then
-			if art_light > nether_threshold then
-				return false,"too bright"
-			end
-		elseif dimension == "end" then
-			if art_light > end_threshold then
-				return false,"too bright"
-			end
-		elseif dimension == "overworld" then
-			if mob_type == "monster" then
-				if mob_def.check_light then
-					return mob_def.check_light(pos, gotten_light, art_light, sky_light)
-				elseif art_light > overworld_threshold or sky_light > overworld_sky_threshold then
-					return false,"too bright"
+		if mob_def.check_light then
+			return mob_def.check_light(pos, gotten_light, art_light, sky_light)
+		elseif mob_type == "monster" then
+			if dimension == "nether" then
+				if art_light > nether_threshold then
+					return false, "too bright"
 				end
-			else
-				if mob_def.check_light then
-					return mob_def.check_light(pos, gotten_light, art_light, sky_light)
-				elseif gotten_light <= overworld_passive_threshold then
-					return false, "too dark"
+			elseif dimension == "end" then
+				if art_light > end_threshold then
+					return false, "too bright"
 				end
+			elseif dimension == "overworld" then
+				if art_light > overworld_threshold or sky_light > overworld_sky_threshold then
+					return false, "too bright"
+				end
+			end
+		else
+			-- passive threshold is apparently the same in all dimensions ...
+			if gotten_light <= overworld_passive_threshold then
+				return false, "too dark"
 			end
 		end
 	else
