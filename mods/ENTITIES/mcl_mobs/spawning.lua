@@ -32,19 +32,6 @@ local spawn_protected = minetest.settings:get_bool("mobs_spawn_protected") ~= fa
 local logging = minetest.settings:get_bool("mcl_logging_mobs_spawn",true)
 local mgname = minetest.get_mapgen_setting("mgname")
 
-local noise_params = {
-	offset = 0,
-	scale  = 3,
-	spread = {
-		x = 301,
-		y = 50,
-		z = 304,
-	},
-	seed = 100,
-	octaves = 3,
-	persistence = 0.5,
-}
-
 -- count how many mobs are in an area
 local function count_mobs(pos,r,mob_type)
 	local num = 0
@@ -410,7 +397,6 @@ if mobs_spawn then
 		end
 	end
 
-	local perlin_noise
 	local function spawn_a_mob(pos, dimension, dtime)
 		--create a disconnected clone of the spawn dictionary
 		--prevents memory leak
@@ -431,8 +417,6 @@ if mobs_spawn then
 
 		local spawning_position = spawning_position_list[math.random(1, #spawning_position_list)]
 
-		perlin_noise = perlin_noise or minetest.get_perlin(noise_params)
-		local noise = perlin_noise:get_3d(spawning_position)
 		local current_summary_chance = summary_chance
 		table.shuffle(mob_library_worker_table)
 		local spawn_loop_counter = #mob_library_worker_table
