@@ -1839,7 +1839,7 @@ local function show_trade_formspec(playername, trader, tradenum)
 	end
 
 	local header =
-		string.format(fs_header_template, F(minetest.colorize("#313131", profession .. " - " .. tiername)), h * 5)
+		string.format(fs_header_template, F(minetest.colorize("#313131", profession .. " - " .. tiername)), h * 8)
 
 	formspec = header .. formspec .. fs_footer_template
 
