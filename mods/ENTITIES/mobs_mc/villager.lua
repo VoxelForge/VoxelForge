@@ -73,7 +73,7 @@ function mobs_mc.villager_mob:stand_still()
 	self.jump = false
 end
 
-local function get_badge_textures(self)
+function mobs_mc.villager_mob:get_badge_textures()
 	local t = mobs_mc.professions[self._profession].texture
 	if self._profession == "unemployed"	then
 		t = mobs_mc.professions[self._profession].textures -- ideally both scenarios should be textures with a list containing 1 or multiple
@@ -87,12 +87,12 @@ local function get_badge_textures(self)
 end
 
 function mobs_mc.villager_mob:set_textures()
-	local badge_textures = get_badge_textures(self)
+	local badge_textures = self:get_badge_textures()
 	self.base_texture = badge_textures
 	self.object:set_properties({textures=badge_textures})
 end
 
-local function should_sleep(self)
+function mobs_mc.villager_mob:should_sleep()
 	local starts = 18000
 	local ends = 6000
 
@@ -106,7 +106,7 @@ local function should_sleep(self)
 	return tod >= starts or tod < ends
 end
 
-local function should_go_home(self)
+function mobs_mc.villager_mob:should_go_home()
 	local weather = mcl_weather.get_weather()
 
 	if weather == "thunder" or weather == "rain" or weather == "snow" then
@@ -126,7 +126,7 @@ local function should_go_home(self)
 	return tod >= starts and tod < ends
 end
 
-function get_activity(self, tod)
+function mobs_mc.villager_mob:get_activity(tod)
 	if not tod then
 		tod = minetest.get_timeofday()
 	end
@@ -138,9 +138,9 @@ function get_activity(self, tod)
 	local work_end = 17000
 
 	local activity
-	if should_sleep(self) then
+	if self:should_sleep() then
 		activity = SLEEP
-	elseif should_go_home(self) then
+	elseif self:should_go_home() then
 		activity = HOME
 	elseif self._profession == "nitwit" then
 		activity = "chill"
@@ -155,7 +155,7 @@ function get_activity(self, tod)
 	return activity
 end
 
-local function find_closest_bed(self)
+function mobs_mc.villager_mob:find_closest_bed()
 	local p = self.object:get_pos()
 
 	local unclaimed_beds = {}
@@ -203,7 +203,7 @@ local function find_closest_bed(self)
 	return closest_block
 end
 
-local function find_closest_unclaimed_block (p, requested_block_types)
+function mobs_mc.villager.find_closest_unclaimed_block(p, requested_block_types)
 	local nn = minetest.find_nodes_in_area(vector.offset(p,-48,-48,-48),vector.offset(p,48,48,48), requested_block_types)
 
 	local distance_to_closest_block = nil
@@ -223,8 +223,8 @@ local function find_closest_unclaimed_block (p, requested_block_types)
 	return closest_block
 end
 
-local function check_bed (entity)
-	local b = entity._bed
+function mobs_mc.villager_mob:check_bed()
+	local b = self._bed
 	if not b then
 		return false
 	end
@@ -233,38 +233,37 @@ local function check_bed (entity)
 
 	local is_bed_bottom = string.find(n.name,"_bottom")
 	if n and not is_bed_bottom then
-		entity._bed = nil --the stormtroopers have killed uncle owen
+		self._bed = nil --the stormtroopers have killed uncle owen
 		return false
 	else
 		return true
 	end
 end
 
-local function go_home(entity, sleep)
-
-	local b = entity._bed
+function mobs_mc.villager_mob:go_home(sleep)
+	local b = self._bed
 	if not b then
 		return
 	end
 
 	local bed_node = minetest.get_node(b)
 	if not bed_node then
-		entity._bed = nil
+		self._bed = nil
 		return
 	end
 
-	if vector.distance(entity.object:get_pos(),b) < 2 then
+	if vector.distance(self.object:get_pos(),b) < 2 then
 		if sleep then
-			entity.order = SLEEP
+			self.order = SLEEP
 		end
 	else
-		if sleep and entity.order == SLEEP then
-			entity.order = nil
+		if sleep and self.order == SLEEP then
+			self.order = nil
 			return
 		end
 
-		entity:gopath(b,function(entity,b)
-			local b = entity._bed
+		self:gopath(b,function(self,b)
+			local b = self._bed
 
 			if not b then
 				return false
@@ -274,7 +273,7 @@ local function go_home(entity, sleep)
 				return false
 			end
 
-			if vector.distance(entity.object:get_pos(),b) < 2 then
+			if vector.distance(self.object:get_pos(),b) < 2 then
 				return true
 			end
 		end, true)
@@ -283,34 +282,34 @@ end
 
 
 
-local function take_bed (entity)
-	if not entity then return end
+function mobs_mc.villager_mob:take_bed()
+	if not self then return end
 
-	local p = entity.object:get_pos()
+	local p = self.object:get_pos()
 
-	local closest_block = find_closest_bed(entity)
+	local closest_block = self:find_closest_bed()
 
 	if closest_block then
 		local distance_to_block = vector.distance(p, closest_block)
 		if distance_to_block < 2 then
 			local m = minetest.get_meta(closest_block)
 			local owner = m:get_string("villager")
-			if owner and owner ~= "" and owner ~= entity._id then
-				if entity.order == "stand" then entity.order = nil end
+			if owner and owner ~= "" and owner ~= self._id then
+				if self.order == "stand" then self.order = nil end
 				return
 			end
 
-			if entity.order ~= SLEEP then
-				entity.order = SLEEP
-				m:set_string("villager", entity._id)
+			if self.order ~= SLEEP then
+				self.order = SLEEP
+				m:set_string("villager", self._id)
 				m:set_string("infotext", S("A villager sleeps here"))
-				entity._bed = closest_block
+				self._bed = closest_block
 			end
 		else
-			entity:gopath(closest_block,function(self) end)
+			self:gopath(closest_block,function(self) end)
 		end
 	else
-		if entity.order == "stand" then entity.order = nil end
+		if self.order == "stand" then self.order = nil end
 	end
 end
 
@@ -321,14 +320,14 @@ local function has_golem(pos)
 	end
 end
 
-local function monsters_near(self)
+function mobs_mc.villager_mob:monsters_near()
 	for _,o in pairs(minetest.get_objects_inside_radius(self.object:get_pos(),10)) do
 		local l = o:get_luaentity()
 		if l and l.type =="monster" then return true end
 	end
 end
 
-local function has_summon_participants(self)
+function mobs_mc.villager_mob:has_summon_participants()
 	local r = 0
 	for _,o in pairs(minetest.get_objects_inside_radius(self.object:get_pos(),10)) do
 		local l = o:get_luaentity()
@@ -355,7 +354,7 @@ local function get_ground_below_floating_object (float_pos)
 	return pos
 end
 
-local function summon_golem(self)
+function mobs_mc.villager_mob:summon_golem()
 	vector.offset(self.object:get_pos(),-10,-10,-10)
 	local nn = minetest.find_nodes_in_area_under_air(vector.offset(self.object:get_pos(),-8,-6,-8),vector.offset(self.object:get_pos(),8,6,8),{"group:solid","group:water"})
 	table.shuffle(nn)
@@ -383,15 +382,15 @@ local function summon_golem(self)
 	end
 end
 
-local function check_summon(self,dtime)
+function mobs_mc.villager_mob:check_summon(dtime)
 	-- TODO has selpt in last 20?
 	if self._summon_timer and self._summon_timer > 30 then
 		local pos = self.object:get_pos()
 		self._summon_timer = 0
 		if has_golem(pos) then return end
-		if not monsters_near(self) then return end
-		if not has_summon_participants(self) then return end
-		summon_golem(self)
+		if not self:monsters_near() then return end
+		if not self:has_summon_participants() then return end
+		self:summon_golem()
 	elseif self._summon_timer == nil  then
 		self._summon_timer = 0
 	end
@@ -411,7 +410,7 @@ local function debug_trades(self)
 	end
 end
 --]]
-local function has_traded (self)
+function mobs_mc.villager_mob:has_traded()
 	if not self._trades then
 		return false
 	end
@@ -426,7 +425,7 @@ local function has_traded (self)
 	return false
 end
 
-local function unlock_trades (self)
+function mobs_mc.villager_mob:unlock_trades()
 	if not self._trades then
 		return false
 	end
@@ -465,7 +464,7 @@ local function get_profession_by_jobsite(js)
 	end
 end
 
-local function employ(self,jobsite_pos)
+function mobs_mc.villager_mob:employ(jobsite_pos)
 	local n = minetest.get_node(jobsite_pos)
 	local m = minetest.get_meta(jobsite_pos)
 	local p = get_profession_by_jobsite(n.name)
@@ -474,7 +473,7 @@ local function employ(self,jobsite_pos)
 		m:set_string("infotext", S("A villager works here"))
 		self._jobsite = jobsite_pos
 
-		if not has_traded(self) then
+		if not self:has_traded() then
 			self._profession=p
 			self:set_textures()
 		end
@@ -482,11 +481,10 @@ local function employ(self,jobsite_pos)
 	end
 end
 
-
-local function look_for_job(self, requested_jobsites)
+function mobs_mc.villager_mob:look_for_job(requested_jobsites)
 	local p = self.object:get_pos()
 
-	local closest_block = find_closest_unclaimed_block(p, requested_jobsites)
+	local closest_block = mobs_mc.villager.find_closest_unclaimed_block(p, requested_jobsites)
 
 	if closest_block then
 		local gp = self:gopath(closest_block,function(self)
@@ -503,27 +501,25 @@ local function look_for_job(self, requested_jobsites)
 	return nil
 end
 
-
-
-local function get_a_job(self)
+function mobs_mc.villager_mob:get_a_job()
 	if self.order == WORK then self.order = nil end
 
 	local requested_jobsites = mobs_mc.jobsites
-	if has_traded (self) then
+	if self:has_traded() then
 		requested_jobsites = {mobs_mc.professions[self._profession].jobsite}
 		-- Only pass in my jobsite to two functions here
 	end
 
 	local p = self.object:get_pos()
 	local n = minetest.find_node_near(p,1,requested_jobsites)
-	if n and employ(self,n) then return true end
+	if n and self:employ(n) then return true end
 
 	if self.state ~= PATHFINDING then
-		look_for_job(self, requested_jobsites)
+		self:look_for_job(requested_jobsites)
 	end
 end
 
-local function retrieve_my_jobsite (self)
+function mobs_mc.villager_mob:retrieve_my_jobsite()
 	if not self or not self._jobsite then
 		return
 	end
@@ -535,25 +531,25 @@ local function retrieve_my_jobsite (self)
 	return
 end
 
-local function remove_job (self)
+function mobs_mc.villager_mob:remove_job()
 	self._jobsite = nil
-	if not has_traded(self) then
+	if not self:has_traded() then
 		self._profession = "unemployed"
 		self._trades = nil
 		self:set_textures()
 	end
 end
 
-local function validate_jobsite(self)
+function mobs_mc.villager_mob:validate_jobsite()
 	if self._profession == "unemployed" then return false end
 
-	local job_block = retrieve_my_jobsite (self)
+	local job_block = self:retrieve_my_jobsite()
 	if not job_block then
 		if self.order == WORK then
 			self.order = nil
 		end
 
-		remove_job (self)
+		self:remove_job()
 		return false
 	else
 		local resettle = vector.distance(self.object:get_pos(),self._jobsite) > RESETTLE_DISTANCE
@@ -561,22 +557,22 @@ local function validate_jobsite(self)
 			local m = minetest.get_meta(self._jobsite)
 			m:set_string("villager", nil)
 			m:set_string("infotext", nil)
-			remove_job (self)
+			self:remove_job()
 			return false
 		end
 		return true
 	end
 end
 
-local function do_work (self)
+function mobs_mc.villager_mob:do_work()
 	if self.child then
 		return
 	end
 
 	-- Don't try if looking_for_work, or gowp possibly
-	if validate_jobsite(self) then
+	if self:validate_jobsite() then
 
-		local jobsite2 = retrieve_my_jobsite (self)
+		local jobsite2 = mobs_mc.villager_mob:retrieve_my_jobsite()
 		local jobsite = self._jobsite
 
 		if self and jobsite2 and self._jobsite then
@@ -585,7 +581,7 @@ local function do_work (self)
 			if distance_to_jobsite < work_dist then
 				if self.state ~= PATHFINDING and  self.order ~= WORK then
 					self.order = WORK
-					unlock_trades(self)
+					self:unlock_trades()
 				end
 			else
 				if self.order == WORK then
@@ -605,12 +601,12 @@ local function do_work (self)
 				end)
 			end
 		end
-	elseif self._profession == "unemployed" or has_traded(self) then
-		get_a_job(self)
+	elseif self._profession == "unemployed" or self:has_traded() then
+		self:get_a_job()
 	end
 end
 
-local function teleport_to_town_bell(self)
+function mobs_mc.villager_mob:teleport_to_town_bell()
 	local looking_for_type = {}
 	table.insert(looking_for_type, "mcl_bells:bell")
 
@@ -628,7 +624,7 @@ local function teleport_to_town_bell(self)
 	end
 end
 
-local function go_to_town_bell(self)
+function mobs_mc.villager_mob:go_to_town_bell()
 	if self.order == GATHERING then
 		return
 	end
@@ -662,7 +658,7 @@ local function go_to_town_bell(self)
 	return nil
 end
 --[[
-local function validate_bed(self)
+function mobs_mc.villager_mob:validate_bed()
 	if not self or not self._bed then
 		return false
 	end
@@ -702,7 +698,7 @@ local function validate_bed(self)
 end
 --]]
 
-local function sleep_over(self)
+function mobs_mc.villager_mob:sleep_over()
 	local p = self.object:get_pos()
 	local distance_to_closest_bed = 1000
 	local closest_bed = nil
@@ -724,18 +720,18 @@ local function sleep_over(self)
 	end
 end
 
-local function do_activity(self)
+function mobs_mc.villager_mob:do_activity()
 	-- Maybe just check we're pathfinding first?
 	if self.following then
 		return
 	end
 
 	-- If no bed then it's the first thing to do, even at night
-	if not check_bed(self) then
-		take_bed(self)
+	if not self:check_bed() then
+		self:take_bed()
 	end
 
-	if not should_sleep(self) then
+	if not self:should_sleep() then
 		if self.order == SLEEP then
 			self.order = nil
 		end
@@ -748,10 +744,10 @@ local function do_activity(self)
 			local last_skip = mcl_beds.last_skip()
 			if self.last_skip < last_skip then
 				self.last_skip = last_skip
-				if check_bed(self) then
+				if self:check_bed() then
 					self.object:set_pos(self._bed)
 				else
-					teleport_to_town_bell(self)
+					self:teleport_to_town_bell()
 				end
 			end
 		end
@@ -759,27 +755,27 @@ local function do_activity(self)
 
 	-- Only check in day or during thunderstorm but wandered_too_far code won't work
 	local wandered_too_far = false
-	if check_bed(self) then
+	if self:check_bed() then
 		wandered_too_far = (self.state ~= PATHFINDING) and (vector.distance(self.object:get_pos(), self._bed) > 50)
 	end
 
-	local activity = get_activity(self)
+	local activity = self:get_activity()
 
 	-- This needs to be most important to least important
 	-- TODO separate sleep and home activities when villagers can sleep
 	if activity == SLEEP or activity == HOME then
-		if check_bed(self) then
-			go_home(self, true)
+		if self:check_bed() then
+			self:go_home(true)
 		else
 			-- If it's sleepy time and we don't have a bed, hide in someone elses house
-			sleep_over(self)
+			self:sleep_over()
 		end
 	elseif activity == WORK then
-		do_work(self)
+		self:do_work()
 	elseif activity == GATHERING then
-		go_to_town_bell(self)
+		self:go_to_town_bell()
 	elseif wandered_too_far then
-		go_home(self, false)
+		self:go_home(false)
 	else
 		self.order = nil
 	end
@@ -823,7 +819,7 @@ function mobs_mc.villager_mob:on_rightclick(clicker)
 		self.attack = nil
 	end
 	-- Don't do at night. Go to bed? Maybe do_activity needs it's own method
-	if validate_jobsite(self) and self.order ~= WORK then
+	if self:validate_jobsite() and self.order ~= WORK then
 		minetest.log("warning","[mobs_mc] villager has jobsite but doesn't work")
 		--self:gopath(self._jobsite,function()
 		--	minetest.log("sent to jobsite")
@@ -868,7 +864,7 @@ function mobs_mc.villager_mob:on_rightclick(clicker)
 end
 
 function mobs_mc.villager_mob:do_custom(dtime)
-	check_summon(self,dtime)
+	self:check_summon(dtime)
 
 	-- Stand still if player is nearby.
 	if not self._player_scan_timer then
@@ -899,7 +895,7 @@ function mobs_mc.villager_mob:do_custom(dtime)
 			self.jump = true
 		end
 
-		do_activity (self)
+		self:do_activity()
 
 	end
 end
