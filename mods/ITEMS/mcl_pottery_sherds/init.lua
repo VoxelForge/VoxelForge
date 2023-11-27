@@ -67,7 +67,6 @@ minetest.register_entity("mcl_pottery_sherds:pot_face",{
 })
 
 local function update_entities(pos,rm)
-	local pots = {}
 	for _,v in pairs(minetest.get_objects_inside_radius(pos, 0.5, true)) do
 		local ent = v:get_luaentity()
 		if ent and ent.name == "mcl_pottery_sherds:pot_face" then
@@ -79,7 +78,6 @@ local function update_entities(pos,rm)
 	local meta = minetest.get_meta(pos)
 	local faces = minetest.deserialize(meta:get_string("pot_faces"))
 	if not faces then return end
-	local s = ""
 	for k,v in pairs(pot_face_positions) do
 		local face = faces[(k + param2) % 4 + 1]
 		if face then
