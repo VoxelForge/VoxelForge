@@ -231,14 +231,14 @@ minetest.register_globalstep(function(dtime)
 					mcl_player.player_set_animation(player, "sneak_walk_mine", animation_speed_mod)
 				elseif is_sprinting == true and not controls.sneak and not head_in_water then
 					mcl_player.player_set_animation(player, "run_walk", animation_speed_mod)
-				elseif controls.sneak and not get_mouse_button(player) == true then
+				elseif controls.sneak and get_mouse_button(player) ~= true then
 					mcl_player.player_set_animation(player, "sneak_walk", animation_speed_mod)
 				else
 					mcl_player.player_set_animation(player, "walk", animation_speed_mod)
 				end
 			elseif get_mouse_button(player) == true and not controls.sneak and head_in_water and is_sprinting == true then
 				mcl_player.player_set_animation(player, "swim_mine")
-			elseif not get_mouse_button(player) == true and not controls.sneak and head_in_water and is_sprinting == true then
+			elseif get_mouse_button(player) ~= true and not controls.sneak and head_in_water and is_sprinting == true then
 				mcl_player.player_set_animation(player, "swim_stand")
 			elseif get_mouse_button(player) == true and not controls.sneak then
 				mcl_player.player_set_animation(player, "mine")
