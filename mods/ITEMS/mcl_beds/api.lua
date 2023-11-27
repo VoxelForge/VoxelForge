@@ -27,7 +27,7 @@ local function rotate(pos, node, user, mode, new_param2)
 	if not node2 then return end
 
 	local name = node2.name
-	if not minetest.get_item_group(name, "bed") == 2 or not node.param2 == node2.param2 then return false end
+	if minetest.get_item_group(name, "bed") ~= 2 or node.param2 ~= node2.param2 then return false end
 
 	if bottom then
 		name = string.sub(name, 1, -5)
