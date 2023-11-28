@@ -46,6 +46,9 @@ function mcl_weather.has_rain(pos)
 	if  mgname == "singlenode" then return true end
 	local bd = minetest.registered_biomes[minetest.get_biome_name(minetest.get_biome_data(pos).biome)]
 	if bd and bd._mcl_biome_type == "hot" then return false end
+	if not mcl_weather.can_see_outdoors(pos) then
+		return false
+	end
 	return true
 end
 
