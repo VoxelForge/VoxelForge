@@ -45,6 +45,7 @@ Please read <http://minecraft.gamepedia.com/Breaking> to learn how digging times
 * `spreading_dirt_type=1`: A dirt-type block with a cover (e.g. grass) which may spread to neighbor dirt blocks
 * `dirtifies_below_solid=1`: This node turns into dirt immediately when a solid or dirtifier node is placed on top
 * `dirtifier=1`: This node turns nodes the above group into dirt when placed above
+* `converts_to_moss=1`: Block may turn into moss when nearby a moss block that had bone meal used on it.
 * `non_mycelium_plant=1`: A plant which can't grow on mycelium. Placing it on mycelium fails and if mycelium spreads below it, it uproots
 * `soil=1`: Saplings and other small plants can grow on it
 * `soil_sapling=2`: Soil for saplings. Intended to be natural soil. All saplings will grow on this
