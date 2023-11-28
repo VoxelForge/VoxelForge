@@ -107,7 +107,7 @@ function mcl_doors:register_door(name, def)
 		inventory_image = def.inventory_image,
 		groups = craftitem_groups,
 		on_place = function(itemstack, placer, pointed_thing)
-			if not pointed_thing.type == "node" or not placer or not placer:is_player() then
+			if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 				return itemstack
 			end
 			local pn = placer:get_player_name()
