@@ -3215,6 +3215,26 @@ local function register_decorations()
 	})
 
 	minetest.register_decoration({
+			decoration = "mcl_lush_caves:azalea",
+			deco_type = "simple",
+			place_on = {"mcl_lush_caves:moss"},
+			biomes = lushcaves,
+			fill_ratio = 0.2,
+			flags = "all_floors",
+			y_min = mcl_vars.mg_overworld_min,
+	})
+
+	minetest.register_decoration({
+			decoration = "mcl_lush_caves:azalea_flowering",
+			deco_type = "simple",
+			place_on = {"mcl_lush_caves:moss"},
+			biomes = lushcaves,
+			fill_ratio = 0.05,
+			flags = "all_floors",
+			y_min = mcl_vars.mg_overworld_min,
+	})
+
+	minetest.register_decoration({
 		decoration = "mcl_lush_caves:cave_vines_lit",
 		deco_type = "simple",
 		place_on = {"mcl_lush_caves:cave_vines_lit","mcl_lush_caves:cave_vines"},
