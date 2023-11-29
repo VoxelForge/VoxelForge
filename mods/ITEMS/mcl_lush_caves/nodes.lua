@@ -223,8 +223,9 @@ minetest.register_craftitem("mcl_lush_caves:glow_berry", {
 local function register_leaves(subname, def)
 	def.palette = ""
 	def.paramtype2 = "none"
-	-- 'mcl_core:stick' is a temporary placeholder for sapling because of missing 'mcl_lush_caves:azalea'
-	local d = mcl_trees.generate_leaves_def("mcl_lush_caves:", subname, def, "mcl_core:stick", false, {20, 16, 12, 10})
+	local d = mcl_trees.generate_leaves_def(
+		"mcl_lush_caves:", subname, def,
+		{"mcl_lush_caves:azalea_flowering", "mcl_lush_caves:azalea"}, false, {20, 16, 12, 10})
 	d.leaves_def.groups.biomecolor = nil
 	d.orphan_leaves_def.groups.biomecolor = nil
 	minetest.register_node(d["leaves_id"], d["leaves_def"])
