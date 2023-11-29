@@ -273,7 +273,7 @@ local tpl_trapdoor = {
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 }
 
-local function register_leaves(subname, def, sapling, drop_apples, sapling_chances)
+function mcl_trees.generate_leaves_def(modname, subname, def, sapling, drop_apples, sapling_chances)
 	local apple_chances = {200, 180, 160, 120, 40}
 	local stick_chances = {50, 45, 30, 35, 10}
 
@@ -309,8 +309,8 @@ local function register_leaves(subname, def, sapling, drop_apples, sapling_chanc
 		return drop
 	end
 
-	local leaves_id =  "mcl_trees:" .. subname
-	local orphan_leaves_id = "mcl_trees:" .. subname.. "_orphan"
+	local leaves_id = modname .. subname
+	local orphan_leaves_id = modname .. subname.. "_orphan"
 
 	local l_def = table.merge(tpl_leaves, {
 		drop = get_drops(0),
@@ -318,7 +318,6 @@ local function register_leaves(subname, def, sapling, drop_apples, sapling_chanc
 		_mcl_leaves = leaves_id,
 		_mcl_orphan_leaves = orphan_leaves_id,
 	},def or {}, { palette = palette })
-	minetest.register_node(":" .. leaves_id, l_def)
 
 	local o_def = table.merge(l_def, {
 		_doc_items_create_entry = false,
@@ -332,7 +331,19 @@ local function register_leaves(subname, def, sapling, drop_apples, sapling_chanc
 		not_in_creative_inventory = 1,
 		orphan_leaves = 1,
 	})
-	minetest.register_node(":" .. orphan_leaves_id, o_def)
+
+	return {
+		leaves_id = leaves_id,
+		leaves_def = l_def,
+		orphan_leaves_id = orphan_leaves_id,
+		orphan_leaves_def = o_def,
+	}
+end
+
+local function register_leaves(subname, def, sapling, drop_apples, sapling_chances)
+	local d = mcl_trees.generate_leaves_def("mcl_trees:", subname, def, sapling, drop_apples, sapling_chances)
+	minetest.register_node(":" .. d["leaves_id"], d["leaves_def"])
+	minetest.register_node(":" .. d["orphan_leaves_id"], d["orphan_leaves_def"])
 end
 
 local function readable_name(str)
