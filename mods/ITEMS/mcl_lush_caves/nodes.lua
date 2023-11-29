@@ -218,75 +218,35 @@ minetest.register_craftitem("mcl_lush_caves:glow_berry", {
 	_mcl_saturation = 1.2,
 })
 
-local tpl_azleaves = table.merge(mcl_trees.tpl_leaves,{
-	description = S("Azalea Leaves"),
-	_doc_items_longdesc = S("Leaves of an Azalea tree"),
-	tiles = { "mcl_lush_caves_azalea_leaves.png" },
-	drop = {
-			max_items = 1,
-			items = {
-				--{
-				--	items = {sapling},
-				--	rarity = 10
-				--},
-				{
-					items = {"mcl_core:stick 1"},
-					rarity = 3
-				},
-				{
-					items = {"mcl_core:stick 2"},
-					rarity = 6
-				},
-			}
-		},
-	sounds = mcl_sounds.node_sound_leaves_defaults(),
-	palette = "",
-	paramtype2 = "none",
-	_mcl_blast_resistance = 0.2,
-	_mcl_hardness = 0.2,
-	_mcl_shears_drop = true,
-	_mcl_silk_touch_drop = true,
-	_mcl_leaves = "mcl_lush_caves:azalea_leaves",
-	_mcl_orphan_leaves = "mcl_lush_caves:azalea_leaves_orphan",
-})
 
-minetest.register_node("mcl_lush_caves:azalea_leaves", tpl_azleaves)
-minetest.register_node("mcl_lush_caves:azalea_leaves_orphan", table.merge(tpl_azleaves,{
-	_doc_items_create_entry = false,
-	_mcl_shears_drop = {"mcl_lush_caves:azalea_leaves"},
-	_mcl_silk_touch_drop = {"mcl_lush_caves:azalea_leaves"},
-	on_construct = nil,
-	groups = {
-		hoey = 1, shearsy = 1, dig_by_piston = 1,
-		leaves = 1, leafdecay = 5, deco_block = 1,
-		flammable = 2, fire_encouragement = 30, fire_flammability = 60,
-		compostability = 30, not_in_creative_inventory = 1, orphan_leaves = 1,
-	},
-}))
+local function register_leaves(subname, def)
+	def.palette = ""
+	def.paramtype2 = "none"
+	-- 'mcl_core:stick' is a temporary placeholder for sapling because of missing 'mcl_lush_caves:azalea'
+	local d = mcl_trees.generate_leaves_def("mcl_lush_caves:", subname, def, "mcl_core:stick", false, {20, 16, 12, 10})
+	d.leaves_def.groups.biomecolor = nil
+	d.orphan_leaves_def.groups.biomecolor = nil
+	minetest.register_node(d["leaves_id"], d["leaves_def"])
+	minetest.register_node(d["orphan_leaves_id"], d["orphan_leaves_def"])
+end
 
+register_leaves(
+	"azalea_leaves",
+	{
+		description = S("Azalea Leaves"),
+		_doc_items_longdesc = S("Leaves of an Azalea tree"),
+		tiles = { "mcl_lush_caves_azalea_leaves.png" },
+	}
+)
 
-
-minetest.register_node("mcl_lush_caves:azalea_leaves_flowering", table.merge(tpl_azleaves,{
-	description = S("Flowering Azalea Leaves"),
-	_doc_items_longdesc = S("The Flowering Leaves of an Azalea tree"),
-	tiles = { "mcl_lush_caves_azalea_leaves_flowering.png" },
-}))
-
-minetest.register_node("mcl_lush_caves:azalea_leaves_flowering_orphan", table.merge(tpl_azleaves,{
-	description = S("Flowering Azalea Leaves"),
-	_doc_items_longdesc = S("The Flowering Leaves of an Azalea tree"),
-	tiles = { "mcl_lush_caves_azalea_leaves_flowering.png" },
-	_doc_items_create_entry = false,
-	_mcl_shears_drop = {"mcl_lush_caves:azalea_leaves_flowering"},
-	_mcl_silk_touch_drop = {"mcl_lush_caves:azalea_leaves_flowering"},
-	on_construct = nil,
-	groups = {
-		hoey = 1, shearsy = 1, dig_by_piston = 1,
-		leaves = 1, leafdecay = 5, deco_block = 1,
-		flammable = 2, fire_encouragement = 30, fire_flammability = 60,
-		compostability = 30, not_in_creative_inventory = 1, orphan_leaves = 1,
-	},
-}))
+register_leaves(
+	"azalea_leaves_flowering",
+	{
+		description = S("Flowering Azalea Leaves"),
+		_doc_items_longdesc = S("The Flowering Leaves of an Azalea tree"),
+		tiles = { "mcl_lush_caves_azalea_leaves_flowering.png" },
+	}
+)
 
 
 minetest.register_node("mcl_lush_caves:spore_blossom", {
