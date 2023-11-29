@@ -418,7 +418,6 @@ if mobs_spawn then
 		local spawning_position = spawning_position_list[math.random(1, #spawning_position_list)]
 
 		local current_summary_chance = summary_chance
-		table.shuffle(mob_library_worker_table)
 		local spawn_loop_counter = #mob_library_worker_table
 
 		while spawn_loop_counter > 0 do
