@@ -285,10 +285,6 @@ function mcl_trees.generate_leaves_def(modname, subname, def, sapling, drop_appl
 			max_items = 1,
 			items = {
 				{
-					items = {sapling},
-					rarity = sapling_chances[fortune_level + 1] or sapling_chances[fortune_level]
-				},
-				{
 					items = {"mcl_core:stick 1"},
 					rarity = stick_chances[fortune_level + 1]
 				},
@@ -298,6 +294,19 @@ function mcl_trees.generate_leaves_def(modname, subname, def, sapling, drop_appl
 				},
 			}
 		}
+		if type(sapling) == "string" then
+			table.insert(drop.items, {
+				items = {sapling},
+				rarity = sapling_chances[fortune_level + 1] or sapling_chances[fortune_level]
+			})
+		elseif type(sapling) == "table" then
+			for _, s in ipairs(sapling) do
+				table.insert(drop.items, {
+						items = {s},
+						rarity = sapling_chances[fortune_level + 1] or sapling_chances[fortune_level]
+				})
+			end
+		end
 		if drop_apples then
 			table.insert(drop.items, {
 				items = {"mcl_core:apple"},
