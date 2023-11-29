@@ -99,17 +99,3 @@ for i=1, #block.dyes do
 		end
 	end
 end
-
--- Fuel
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:bark_stairs",
-	-- Same as wood stairs
-	burntime = 15,
-})
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:bark_slab",
-	-- Same as wood slab
-	burntime = 8,
-})
