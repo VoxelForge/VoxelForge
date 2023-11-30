@@ -156,6 +156,11 @@ for k,v in pairs(mcl_dyes.colors) do
 end
 
 minetest.register_craft({
+	output = "mcl_dyes:white",
+	recipe = {{"mcl_flowers:lily_of_the_valley"}},
+})
+
+minetest.register_craft({
 	output = "mcl_dyes:white 3",
 	recipe = {{"mcl_bone_meal:bone_meal"}},
 })
