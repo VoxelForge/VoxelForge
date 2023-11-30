@@ -92,6 +92,9 @@ mcl_mobs.register_mob("mobs_mc:villager_zombie", {
 		damage = "mobs_mc_zombie_hurt",
 		distance = 16,
 	},
+	sound_params = {
+		gain = 0.3
+	},
 	animation = {
 		speed_normal = 25,
         speed_run = 50,

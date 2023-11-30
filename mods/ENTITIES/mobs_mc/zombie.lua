@@ -79,6 +79,9 @@ local zombie = {
 		damage = "mobs_mc_zombie_hurt",
 		distance = 16,
 	},
+	sound_params = {
+		gain = 0.3
+	},
 	walk_velocity = .8,
 	run_velocity = 1.2,
 	damage = 3,
