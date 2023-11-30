@@ -353,7 +353,6 @@ local awkward_table = {
 	["mcl_fishing:pufferfish_raw"] = "mcl_potions:water_breathing",
 	["mcl_mobitems:ghast_tear"] = "mcl_potions:regeneration",
 	["mcl_mobitems:spider_eye"] = "mcl_potions:poison",
-	["mcl_flowers:wither_rose"] = "mcl_potions:withering",
 	["mcl_mobitems:rabbit_foot"] = "mcl_potions:leaping",
 }
 
