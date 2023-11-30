@@ -300,7 +300,7 @@ function mcl_trees.generate_leaves_def(modname, subname, def, sapling, drop_appl
 				rarity = sapling_chances[fortune_level + 1] or sapling_chances[fortune_level]
 			})
 		elseif type(sapling) == "table" then
-			for _, s in ipairs(sapling) do
+			for _, s in pairs(sapling) do
 				table.insert(drop.items, {
 						items = {s},
 						rarity = sapling_chances[fortune_level + 1] or sapling_chances[fortune_level]
