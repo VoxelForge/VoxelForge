@@ -10,7 +10,7 @@ local overworld_threshold = tonumber(minetest.settings:get("mcl_mobs_overworld_t
 local overworld_sky_threshold = tonumber(minetest.settings:get("mcl_mobs_overworld_sky_threshold")) or 7
 local overworld_passive_threshold = tonumber(minetest.settings:get("mcl_mobs_overworld_passive_threshold")) or 7
 
-local PASSIVE_INTERVAL = 200
+local PASSIVE_INTERVAL = 20
 local dbg_spawn_attempts = 0
 local dbg_spawn_succ = 0
 local dbg_spawn_counts = {}
@@ -384,11 +384,16 @@ end
 
 local passive_timer = PASSIVE_INTERVAL
 
---timer function to check if passive mobs should spawn (every 20 secs)
-local function check_timer(mob_type,dtime)
-	passive_timer = passive_timer - dtime
-	if mob_type == "passive" and passive_timer > 0 then return false end
-	if passive_timer < 0 then passive_timer = PASSIVE_INTERVAL end
+--timer function to check if passive mobs should spawn (only every 20 secs unlike other mob spawn classes)
+local function check_timer(spawn_def, dtime)
+	local mob_def = minetest.registered_entities[spawn_def.name]
+	if mob_def and mob_def.spawn_class == "passive" then
+		if passive_timer > 0 then
+			return false
+		else
+			passive_timer = PASSIVE_INTERVAL
+		end
+	end
 	return true
 end
 
@@ -463,6 +468,7 @@ if mobs_spawn then
 
 	local timer = 0
 	minetest.register_globalstep(function(dtime)
+		passive_timer = passive_timer - dtime
 		timer = timer + dtime
 		if timer < 10 then return end
 		timer = 0
