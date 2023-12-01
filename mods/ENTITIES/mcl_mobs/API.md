@@ -24,9 +24,9 @@ Fields not mentioned in this document can also be added as custom fields for the
 
 	type = "monster",
 	-- holds the type of mob that inhabits your world e.g.
-		--"animal" usually docile and walking around.
-		-- "monster" attacks player or npc on sight.
-		-- "npc"  walk around and will defend themselves if hit first.
+		--"animal" fights as specified by 'specific_attack', 'group_attack', 'passive', and 'retaliates'. Killing mobs of 'type' "animal" won't award XP.
+		-- "monster" enables attacking players or npcs (depending on 'attack_npcs') on sight in addition to 'specific_attack' processing. This behaviour requires setting 'attack_type' and can be modified using 'passive' and 'docile_by_day'. Even child variants will fight and give loot. Mobs of 'type' "npc" will attack mobs of 'type' "monster" on sight. All mobs of 'type' "monster" can be completely disabled by server setting 'only_peaceful_mobs'. Killing a mob of 'type' "monster" awards "Monster Hunter" achievement.
+		-- "npc"  can follow owner. Fights as specified by 'specific_attack', 'group_attack', 'passive', and 'retaliates'. Will additionally attack all mobs of 'type' "monster" on sight (this is not affected by 'passive', bug or feature?).
 
 	hp_min = 1,
 	-- the minimum health value the mob can spawn with.
@@ -44,10 +44,10 @@ Fields not mentioned in this document can also be added as custom fields for the
 	-- entity armor groups (see lua_api.txt). If table, a list of armor groups like for entities. If number, set value of 'fleshy' armor group only. Note: The 'immortal=1' armor group will automatically be added since this mod handles health and damage manually. Default: 100 (mob will take full dmg from 'fleshy' hits)
 
 	passive = false,
-	--when false allows animals to defend themselves when hit, otherwise they amble onwards.
+	--if true disables standard behaviour of attacking players (and npcs - depending on 'attack_npcs') on sight for mob 'type' "monster", disables processing of the 'specific_attack' table unless aggroed for all mobs, and even prevents retaliation against direct attacks unless overriden by 'retaliates'. 'group_attack' processing is not affected by 'passive' (bug or feature?).
 
 	retaliates = false,
-	-- if true this mob will retaliate against attacks.
+	-- if true this mob will retaliate against direct attacks even if 'passive' is set to true.
 
 	walk_velocity = 4,
 	-- is the speed that your mob can walk around.
@@ -125,16 +125,16 @@ Fields not mentioned in this document can also be added as custom fields for the
 	-- when true has npc's attacking monsters or not.
 
 	attack_animals = false,
-	-- when true will have monsters attacking animals.
+	-- does nothing...use 'specific_attack' instead.
 
 	attack_npcs = false,
-	-- when true will have monsters attacking npcs.
+	-- when true mobs of 'type' "monster" will attack npcs in addition to players.
 
 	owner_loyal = true,
 	-- when true will have tamed mobs attack anything player punches when nearby.
 
 	group_attack = false,
-	-- when true has same mob type grouping together to attack offender. When a table, this is a list of mob types that will get alerted as well (besides same mob type)
+	-- when true all mobs of the same name in range will group together to attack offender if one of them gets attacked. When a table, this is a list of mob names that will get alerted as well (besides same mob). Only mobs that already have any target to attack or are owned by the offender will not participate in the group attack.
 
 	attack_type = "dogfight",
 	-- tells the api what a mob does when attacking the player or another mob:
@@ -323,7 +323,7 @@ Fields not mentioned in this document can also be added as custom fields for the
 	}
 
 	spawn_class = "hostile",
-	-- Classification of mod for the spawning algorithm: "hostile", "passive", "ambient" or "water"
+	-- Classification of mod for the spawning algorithm: "hostile" changes default light levels to 0-7 from 7-max+1, "passive" changes default of 'can_despawn' to false and reduces spawning occurences to the PASSIVE_INTERVAL (20s), "ambient" or "water" (or any other string) have no effect
 
 	ignores_nametag = false,
 	-- if true, mob cannot be named by nametag
@@ -341,7 +341,7 @@ Fields not mentioned in this document can also be added as custom fields for the
 	-- same as in entity definition
 
 	child = false,
-	-- if true, spawn mob as child
+	-- if true, spawn mob as child. Killing child variants of mobs won't award XP.
 
 	shoot_arrow = function(self, pos, dir) end,
 	-- function that is called when mob wants to shoot an arrow. You can spawn your own arrow here. pos is mob position, dir is mob's aiming direction
@@ -389,10 +389,10 @@ Fields not mentioned in this document can also be added as custom fields for the
 	--visual_size override for use as a "doll" in mobspawners - used for visually large mobs
 
 	extra_hostile = false,
-	-- Attacks "everything that moves" (all mobs)
+	-- Attacks "everything that moves" (all mobs). Not implemented.
 
 	attack_exception = function(obj) end,
-	-- For "extra_hostile": Function that takes the object as argument. If it returns true that object will not be attacked.
+	-- Exceptions for 'extra_hostile': Function that takes the object as argument. If it returns true that object will not be attacked. Not implemented.
 
 	deal_damage = function(self, damage, mcl_reason)
 	-- if present this gets called instead of the normal damage functions
