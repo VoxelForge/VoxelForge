@@ -311,9 +311,9 @@ def convert_textures():
 		("rail_activator_powered.png", "rail_normal_turned.png", "mcl_minecarts_rail_activator_d_t_junction.png", "mcl_minecarts_rail_activator_powered_crossing.png"),
 	]
 	for r in rails:
-		os.system("composite -compose Dst_Over "+tex_dir+"/blocks/"+r[0]+" "+tex_dir+"/blocks/"+r[1]+" "+target_dir("/mods/ENTITIES/mcl_minecarts/textures")+"/"+r[2])
-		os.system("convert "+tex_dir+"/blocks/"+r[0]+" -rotate 90 "+tempfile1.name)
-		os.system("composite -compose Dst_Over "+tempfile1.name+" "+tex_dir+"/blocks/"+r[0]+" "+target_dir("/mods/ENTITIES/mcl_minecarts/textures")+"/"+r[3])
+		os.system("composite -compose Dst_Over "+tex_dir+"/block/"+r[0]+" "+tex_dir+"/block/"+r[1]+" "+target_dir("/mods/ENTITIES/mcl_minecarts/textures")+"/"+r[2])
+		os.system("convert "+tex_dir+"/block/"+r[0]+" -rotate 90 "+tempfile1.name)
+		os.system("composite -compose Dst_Over "+tempfile1.name+" "+tex_dir+"/block/"+r[0]+" "+target_dir("/mods/ENTITIES/mcl_minecarts/textures")+"/"+r[3])
 
 	# Convert banner overlays
 	overlays = [
@@ -366,32 +366,32 @@ def convert_textures():
 			os.system("convert "+orig+" -transparent-color white -background black -alpha remove -alpha copy -channel RGB -white-threshold 0 "+dest)
 
 	# Convert grass
-	grass_file = tex_dir + "/blocks/grass_top.png"
+	grass_file = tex_dir + "/block/grass_top.png"
 	if os.path.isfile(grass_file):
 		FOLIAG = tex_dir+"/colormap/foliage.png"
 		GRASS = tex_dir+"/colormap/grass.png"
 
 
 		# Leaves
-		colorize_alpha(FOLIAG, tex_dir+"/blocks/leaves_oak.png", "116+143", str(PXSIZE), target_dir("/mods/ITEMS/mcl_core/textures")+"/default_leaves.png")
-		colorize_alpha(FOLIAG, tex_dir+"/blocks/leaves_big_oak.png", "158+177", str(PXSIZE), target_dir("/mods/ITEMS/mcl_core/textures")+"/mcl_core_leaves_big_oak.png")
-		colorize_alpha(FOLIAG, tex_dir+"/blocks/leaves_acacia.png", "40+255", str(PXSIZE), target_dir("/mods/ITEMS/mcl_core/textures")+"/default_acacia_leaves.png")
-		colorize_alpha(FOLIAG, tex_dir+"/blocks/leaves_spruce.png", "226+230", str(PXSIZE), target_dir("/mods/ITEMS/mcl_core/textures")+"/mcl_core_leaves_spruce.png")
-		colorize_alpha(FOLIAG, tex_dir+"/blocks/leaves_birch.png", "141+186", str(PXSIZE), target_dir("/mods/ITEMS/mcl_core/textures")+"/mcl_core_leaves_birch.png")
-		colorize_alpha(FOLIAG, tex_dir+"/blocks/leaves_jungle.png", "16+39", str(PXSIZE), target_dir("/mods/ITEMS/mcl_core/textures")+"/default_jungleleaves.png")
+		colorize_alpha(FOLIAG, tex_dir+"/block/leaves_oak.png", "116+143", str(PXSIZE), target_dir("/mods/ITEMS/mcl_core/textures")+"/default_leaves.png")
+		colorize_alpha(FOLIAG, tex_dir+"/block/leaves_big_oak.png", "158+177", str(PXSIZE), target_dir("/mods/ITEMS/mcl_core/textures")+"/mcl_core_leaves_big_oak.png")
+		colorize_alpha(FOLIAG, tex_dir+"/block/leaves_acacia.png", "40+255", str(PXSIZE), target_dir("/mods/ITEMS/mcl_core/textures")+"/default_acacia_leaves.png")
+		colorize_alpha(FOLIAG, tex_dir+"/block/leaves_spruce.png", "226+230", str(PXSIZE), target_dir("/mods/ITEMS/mcl_core/textures")+"/mcl_core_leaves_spruce.png")
+		colorize_alpha(FOLIAG, tex_dir+"/block/leaves_birch.png", "141+186", str(PXSIZE), target_dir("/mods/ITEMS/mcl_core/textures")+"/mcl_core_leaves_birch.png")
+		colorize_alpha(FOLIAG, tex_dir+"/block/leaves_jungle.png", "16+39", str(PXSIZE), target_dir("/mods/ITEMS/mcl_core/textures")+"/default_jungleleaves.png")
 
 		# Waterlily
-		colorize_alpha(FOLIAG, tex_dir+"/blocks/waterlily.png", "16+39", str(PXSIZE), target_dir("/mods/ITEMS/mcl_flowers/textures")+"/flowers_waterlily.png")
+		colorize_alpha(FOLIAG, tex_dir+"/block/waterlily.png", "16+39", str(PXSIZE), target_dir("/mods/ITEMS/mcl_flowers/textures")+"/flowers_waterlily.png")
 
 		# Vines
-		colorize_alpha(FOLIAG, tex_dir+"/blocks/vine.png", "16+39", str(PXSIZE), target_dir("/mods/ITEMS/mcl_core/textures")+"/mcl_core_vine.png")
+		colorize_alpha(FOLIAG, tex_dir+"/block/vine.png", "16+39", str(PXSIZE), target_dir("/mods/ITEMS/mcl_core/textures")+"/mcl_core_vine.png")
 
 		# Tall grass, fern (inventory images)
 		pcol = "50+173" # Plains grass color
-		colorize_alpha(GRASS, tex_dir+"/blocks/tallgrass.png", pcol, str(PXSIZE), target_dir("/mods/ITEMS/mcl_flowers/textures")+"/mcl_flowers_tallgrass_inv.png")
-		colorize_alpha(GRASS, tex_dir+"/blocks/fern.png", pcol, str(PXSIZE), target_dir("/mods/ITEMS/mcl_flowers/textures")+"/mcl_flowers_fern_inv.png")
-		colorize_alpha(GRASS, tex_dir+"/blocks/double_plant_fern_top.png", pcol, str(PXSIZE), target_dir("/mods/ITEMS/mcl_flowers/textures")+"/mcl_flowers_double_plant_fern_inv.png")
-		colorize_alpha(GRASS, tex_dir+"/blocks/double_plant_grass_top.png", pcol, str(PXSIZE), target_dir("/mods/ITEMS/mcl_flowers/textures")+"/mcl_flowers_double_plant_grass_inv.png")
+		colorize_alpha(GRASS, tex_dir+"/block/tallgrass.png", pcol, str(PXSIZE), target_dir("/mods/ITEMS/mcl_flowers/textures")+"/mcl_flowers_tallgrass_inv.png")
+		colorize_alpha(GRASS, tex_dir+"/block/fern.png", pcol, str(PXSIZE), target_dir("/mods/ITEMS/mcl_flowers/textures")+"/mcl_flowers_fern_inv.png")
+		colorize_alpha(GRASS, tex_dir+"/block/double_plant_fern_top.png", pcol, str(PXSIZE), target_dir("/mods/ITEMS/mcl_flowers/textures")+"/mcl_flowers_double_plant_fern_inv.png")
+		colorize_alpha(GRASS, tex_dir+"/block/double_plant_grass_top.png", pcol, str(PXSIZE), target_dir("/mods/ITEMS/mcl_flowers/textures")+"/mcl_flowers_double_plant_grass_inv.png")
 
 		# Convert grass palette: https://minecraft.fandom.com/wiki/Tint
 		grass_colors = [
