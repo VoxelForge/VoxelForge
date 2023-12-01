@@ -46,6 +46,32 @@ local function on_bone_meal(itemstack,placer,pointed_thing,pos,n)
 	return false
 end
 
+local scan_area = 9
+local spawn_on = { "mcl_core:dirt", "group:grass_block" }
+
+local function on_bone_meal_simple(itemstack, placer, pointed_thing, pos, n)
+	if n.name ~= "mcl_flowers:wither_rose" then
+		local nn = minetest.find_nodes_in_area_under_air(
+			vector.offset(pos, -scan_area, -3, -scan_area),
+			vector.offset(pos, scan_area, 3, scan_area),
+			spawn_on
+		)
+
+		local any_placed = false
+		if next(nn) ~= nil then
+			table.shuffle(nn)
+			for i = 1, math.random(1, math.min(14, #nn)) do
+				if minetest.add_node(vector.offset(nn[i], 0, 1, 0), { name = n.name }) then
+					any_placed = true
+				end
+			end
+			return any_placed
+		end
+	end
+
+	return false
+end
+
 local get_palette_color_from_pos = function(pos)
 	local biome_data = minetest.get_biome_data(pos)
 	local index = 0
@@ -132,6 +158,7 @@ function mcl_flowers.register_simple_flower(name, def)
 			fixed = def.selection_box,
 		},
 		_mcl_silk_touch_drop = def._mcl_silk_touch_drop,
+		_on_bone_meal = on_bone_meal_simple,
 	})
 	if def.potted and has_mcl_flowerpots then
 		mcl_flowerpots.register_potted_flower(newname, {
