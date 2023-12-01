@@ -125,7 +125,7 @@ mcl_structures.register_structure("shipwreck",{
 				{ itemstring = "mcl_farming:carrot_item", weight = 7, amount_min = 4, amount_max = 8 },
 				{ itemstring = "mcl_farming:potato_item_poison", weight = 7, amount_min = 2, amount_max = 6 },
 				{ itemstring = "mcl_farming:potato_item", weight = 7, amount_min = 2, amount_max = 6 },
-				--{ itemstring = "TODO:moss_block", weight = 7, amount_min = 1, amount_max = 4 },
+				{ itemstring = "mcl_lush_caves:moss", weight = 7, amount_min = 1, amount_max = 4 },
 				{ itemstring = "mcl_core:coal_lump", weight = 6, amount_min = 2, amount_max = 8 },
 				{ itemstring = "mcl_mobitems:rotten_flesh", weight = 5, amount_min = 5, amount_max = 24 },
 				{ itemstring = "mcl_farming:potato_item", weight = 3, amount_min = 1, amount_max = 5 },
