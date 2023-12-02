@@ -89,7 +89,6 @@ end
 
 --this is where all of the spawning information is kept
 local spawn_dictionary = {}
-local summary_chance = 0
 
 function mcl_mobs.spawn_setup(def)
 	if not mobs_spawn then return end
@@ -159,7 +158,6 @@ function mcl_mobs.spawn_setup(def)
 		check_position   = check_position,
 		on_spawn         = on_spawn,
 	}
-	summary_chance = summary_chance + chance
 end
 
 function mcl_mobs.get_mob_light_level(mob,dim)
@@ -417,7 +415,6 @@ if mobs_spawn then
 
 		local spawning_position = spawning_position_list[math.random(1, #spawning_position_list)]
 
-		local current_summary_chance = summary_chance
 		local spawn_loop_counter = #mob_library_worker_table
 
 		while spawn_loop_counter > 0 do
@@ -462,7 +459,6 @@ if mobs_spawn then
 					end
 				end
 			end
-			current_summary_chance = current_summary_chance - mob_chance
 			spawn_loop_counter = spawn_loop_counter - 1
 		end
 	end
