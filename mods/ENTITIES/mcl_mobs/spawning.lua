@@ -417,6 +417,9 @@ if mobs_spawn then
 
 		local spawn_loop_counter = #mob_library_worker_table
 
+		--use random weighted choice with replacement to grab a mob, don't exclude any possibilities
+		--shuffle table once every loop to provide equal inclusion probability to all mobs
+		--repeat grabbing a mob to maintain existing spawn rates
 		while spawn_loop_counter > 0 do
 			table.shuffle(mob_library_worker_table)
 			local mob_chance_offset = math.random(1, cumulative_chance)
