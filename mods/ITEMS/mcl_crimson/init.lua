@@ -415,15 +415,6 @@ minetest.register_node("mcl_crimson:warped_nylium", {
 	_on_bone_meal = on_bone_meal,
 })
 
-
-minetest.register_craft({
-	output = "mcl_crimson:warped_nylium 2",
-	recipe = {
-		{"mcl_crimson:warped_wart_block"},
-		{"mcl_nether:netherrack"},
-	},
-})
-
 minetest.register_node("mcl_crimson:crimson_fungus", {
 	description = S("Crimson Fungus"),
 	_tt_help = S("Crimson fungus is a mushroom found in the nether's crimson forest."),
@@ -507,14 +498,6 @@ minetest.register_node("mcl_crimson:crimson_nylium", {
 	_mcl_blast_resistance = 0.4,
 	_mcl_silk_touch_drop = true,
 	_on_bone_meal = on_bone_meal,
-})
-
-minetest.register_craft({
-	output = "mcl_crimson:crimson_nylium 2",
-	recipe = {
-		{"mcl_nether:nether_wart"},
-		{"mcl_nether:netherrack"},
-	},
 })
 
 -- Door, Trapdoor, and Fence/Gate Crafting
