@@ -2,6 +2,7 @@ local modname = minetest.get_current_modname()
 
 local allow_nav_hacks = minetest.settings:get_bool("mcl_mob_allow_nav_hacks",false)
 local work_dist = 4
+local gather_distance = 10
 
 local RESETTLE_DISTANCE = 100 -- If a mob is transported this far from home, it gives up bed and job and resettles
 
@@ -501,34 +502,30 @@ function mobs_mc.villager_mob:do_work()
 
 	if self:validate_jobsite() then
 
-		local jobsite2 = mobs_mc.villager_mob:retrieve_my_jobsite()
 		local jobsite = self._jobsite
+		local distance_to_jobsite = vector.distance(self.object:get_pos(), jobsite)
 
-		if self and jobsite2 and self._jobsite then
-			local distance_to_jobsite = vector.distance(self.object:get_pos(),self._jobsite)
-
-			if distance_to_jobsite < work_dist then
-				if self.state ~= PATHFINDING and  self.order ~= WORK then
-					self.order = WORK
-					self:unlock_trades()
-				end
-			else
-				if self.order == WORK then
-					self.order = nil
-					return
-				end
-				self:gopath(jobsite, function(self,jobsite)
-					if not self then
-						return false
-					end
-					if not self._jobsite then
-						return false
-					end
-					if vector.distance(self.object:get_pos(),self._jobsite) < work_dist then
-						return true
-					end
-				end)
+		if distance_to_jobsite < work_dist then
+			if self.state ~= PATHFINDING and self.order ~= WORK then
+				self.order = WORK
+				self:unlock_trades()
 			end
+		else
+			if self.order == WORK then
+				self.order = nil
+				return
+			end
+			self:gopath(jobsite, function(self, jobsite)
+				if not self then
+					return false
+				end
+				if not self._jobsite then
+					return false
+				end
+				if vector.distance(self.object:get_pos(), self._jobsite) < work_dist then
+					return true
+				end
+			end)
 		end
 	elseif self._profession == "unemployed" or self:has_traded() then
 		self:get_a_job()
@@ -554,10 +551,6 @@ function mobs_mc.villager_mob:teleport_to_town_bell()
 end
 
 function mobs_mc.villager_mob:go_to_town_bell()
-	if self.order == GATHERING then
-		return
-	end
-
 	if not self:ready_to_path() then
 		return
 	end
@@ -572,14 +565,16 @@ function mobs_mc.villager_mob:go_to_town_bell()
 	for _,n in pairs(nn) do
 		local target_point = get_ground_below_floating_object(n)
 
-		local gp = self:gopath(target_point,function(self)
-			if self then
-				self.order = GATHERING
-			end
-		end)
+		if vector.distance(self.object:get_pos(), target_point) > gather_distance then
+			local gp = self:gopath(target_point, function(self)
+				if self then
+					self.order = GATHERING
+				end
+			end)
 
-		if gp then
-			return n
+			if gp then
+				return n
+			end
 		end
 
 	end
