@@ -2,8 +2,6 @@ local mg_name = minetest.get_mapgen_setting("mg_name")
 local mg_seed = minetest.get_mapgen_setting("seed")
 
 -- Some mapgen settings
-local superflat = mg_name == "flat" and minetest.get_mapgen_setting("mcl_superflat_classic") == "true"
-
 local generate_fallen_logs = minetest.settings:get_bool("mcl_generate_fallen_logs", false)
 
 local mod_mcl_structures = minetest.get_modpath("mcl_structures")
@@ -5823,7 +5821,7 @@ end
 -- Detect mapgen to select functions
 --
 if mg_name ~= "singlenode" then
-	if not superflat then
+	if not mcl_vars.superflat then
 		register_biomes()
 		register_biomelike_ores()
 		register_biome_ores()

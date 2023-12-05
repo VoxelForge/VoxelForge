@@ -16,7 +16,6 @@ local stronghold_rings = {
 }
 
 local mg_name = minetest.get_mapgen_setting("mg_name")
-local superflat = mg_name == "flat" and minetest.get_mapgen_setting("mcl_superflat_classic") == "true"
 local seed = tonumber(minetest.get_mapgen_setting("seed"))
 
 local function init_strongholds()
@@ -36,7 +35,7 @@ local function init_strongholds()
 		for a=1, ring.amount do
 			local dist = pr:next(ring.min, ring.max)
 			local y
-			if superflat then
+			if mcl_vars.superflat then
 				y = mcl_vars.mg_bedrock_overworld_max + 3
 			else
 				y = pr:next(mcl_vars.mg_bedrock_overworld_max+1, mcl_vars.mg_overworld_min+48)

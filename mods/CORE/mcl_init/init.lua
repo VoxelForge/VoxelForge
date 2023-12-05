@@ -1,3 +1,5 @@
+local mod_storage = minetest.get_mod_storage()
+
 -- Some global variables (don't overwrite them!)
 mcl_vars = {}
 
@@ -28,8 +30,16 @@ mcl_vars.tool_wield_scale = { x = 1.8, y = 1.8, z = 1 }
 -- Mapgen variables
 local mg_name = minetest.get_mapgen_setting("mg_name")
 local minecraft_height_limit = 320
-local superflat = mg_name == "flat" and minetest.get_mapgen_setting("mcl_superflat_classic") == "true"
+
 local singlenode = mg_name == "singlenode"
+
+-- The classic superflat setting is stored in mod storage so it remains
+-- constant after the world has been created.
+if not mod_storage:get("mcl_superflat_classic") then
+	local superflat = mg_name == "flat" and minetest.get_mapgen_setting("mcl_superflat_classic") == "true"
+	mod_storage:set_string("mcl_superflat_classic", superflat and "true" or "false")
+end
+mcl_vars.superflat = mod_storage:get_string("mcl_superflat_classic") == "true"
 
 -- Calculate mapgen_edge_min/mapgen_edge_max
 mcl_vars.chunksize = math.max(1, tonumber(minetest.get_mapgen_setting("chunksize")) or 5)
@@ -87,7 +97,7 @@ function mcl_vars.get_chunk_number(pos) -- unsigned int
 		 c.x + k_positive
 end
 
-if not superflat and not singlenode then
+if not mcl_vars.superflat and not singlenode then
 	-- Normal mode
 	--[[ Realm stacking (h is for height)
 	- Overworld (h>=256)
@@ -149,7 +159,7 @@ mcl_vars.mg_nether_max = mcl_vars.mg_nether_min + 128
 mcl_vars.mg_bedrock_nether_bottom_min = mcl_vars.mg_nether_min
 mcl_vars.mg_bedrock_nether_top_max = mcl_vars.mg_nether_max
 mcl_vars.mg_nether_deco_max = mcl_vars.mg_nether_max -11 -- this is so ceiling decorations don't spill into other biomes as bedrock generation calls minetest.generate_decorations to put netherrack under the bedrock
-if not superflat then
+if not mcl_vars.superflat then
 	mcl_vars.mg_bedrock_nether_bottom_max = mcl_vars.mg_bedrock_nether_bottom_min + 4
 	mcl_vars.mg_bedrock_nether_top_min = mcl_vars.mg_bedrock_nether_top_max - 4
 	mcl_vars.mg_lava_nether_max = mcl_vars.mg_nether_min + 31
@@ -160,7 +170,7 @@ else
 	mcl_vars.mg_lava_nether_max = mcl_vars.mg_nether_min + 2
 end
 if mg_name == "flat" then
-	if superflat then
+	if mcl_vars.superflat then
 		mcl_vars.mg_flat_nether_floor = mcl_vars.mg_bedrock_nether_bottom_max + 4
 		mcl_vars.mg_flat_nether_ceiling = mcl_vars.mg_bedrock_nether_bottom_max + 52
 	else

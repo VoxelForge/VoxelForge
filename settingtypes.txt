@@ -185,13 +185,7 @@ mcl_generate_fallen_logs (Generate fallen logs) bool false
 # If disabled, Minetest's default flat map generator is used, that is, trees,
 # caves, and a deeper underground can be generated.
 #
-# Caution: Change this setting with care!
-# If you change this setting, then play on an existing flat world
-# that started with a different setting (e.g. you changed from superflat
-# from “enabled” to “disabled”), there will be continuity errors when players
-# reach new areas. Most importantly, the void is much higher in Superflat than
-# in “normal” Flat.
-# But creating new flat worlds after changing this setting should be safe.
+# Note: This setting has no effect on existing worlds.
 mcl_superflat_classic (Classic superflat map generation) bool false
 
 # If disabled, no deepslate will be generated.

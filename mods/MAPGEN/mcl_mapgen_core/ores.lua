@@ -5,7 +5,6 @@ local deepslate_min = mcl_vars.mg_overworld_min
 local copper_mod = minetest.get_modpath("mcl_copper")
 
 local mg_name = minetest.get_mapgen_setting("mg_name")
-local superflat = mg_name == "flat" and minetest.get_mapgen_setting("mcl_superflat_classic") == "true"
 
 local mountains = {
 	"ExtremeHills", "ExtremeHills_beach", "ExtremeHills_ocean", "ExtremeHills_deep_ocean", "ExtremeHills_underground",
@@ -708,7 +707,7 @@ if minetest.settings:get_bool("mcl_generate_ores", true) then
 	end
 end
 
-if not superflat then
+if not mcl_vars.superflat then
 -- Water and lava springs (single blocks of lava/water source)
 -- Water appears at nearly every height, but not near the bottom
 minetest.register_ore({

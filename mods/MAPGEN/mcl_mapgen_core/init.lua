@@ -22,8 +22,6 @@ dofile(modpath.."/api.lua")
 dofile(modpath.."/ores.lua")
 
 local mg_name = minetest.get_mapgen_setting("mg_name")
-local superflat = mg_name == "flat" and minetest.get_mapgen_setting("mcl_superflat_classic") == "true"
-
 local enable_mt_dungeons = minetest.settings:get_bool("mcl_enable_mt_dungeons",false)
 
 -- Content IDs
@@ -37,7 +35,7 @@ local c_air = minetest.CONTENT_AIR
 
 local mg_flags = minetest.settings:get_flags("mg_flags")
 
-if superflat then
+if mcl_vars.superflat then
 	-- Enforce superflat-like mapgen: no caves, decor, lakes and hills
 	mg_flags.caves = false
 	mg_flags.decorations = false
