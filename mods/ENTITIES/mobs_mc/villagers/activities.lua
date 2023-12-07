@@ -92,6 +92,9 @@ function mobs_mc.villager_mob:get_activity(tod)
 		activity = HOME
 	elseif self._profession == "nitwit" then
 		activity = "chill"
+	elseif self.child then
+		-- TODO should be play
+		activity = "chill"
 	elseif tod >= lunch_start and tod < lunch_end then
 		activity = GATHERING
 	elseif tod >= work_start and tod < work_end then
@@ -551,8 +554,14 @@ function mobs_mc.villager_mob:teleport_to_town_bell()
 end
 
 function mobs_mc.villager_mob:go_to_town_bell()
-	if not self:ready_to_path() then
-		return
+	if not self:ready_to_path(true) then
+		if self._pf_last_failed then
+			if (os.time() - self._pf_last_failed) < 5 then
+				return
+			else
+				self._pf_last_failed = nil
+			end
+		end
 	end
 
 	local looking_for_type={}
@@ -645,6 +654,34 @@ function mobs_mc.villager_mob:sleep_over()
 end
 
 function mobs_mc.villager_mob:do_activity()
+	if allow_nav_hacks then
+		-- When a night is skipped telport villagers to their bed or bell
+		if self.last_skip == nil then
+			self.last_skip = 0
+		end
+		local last_skip = mcl_beds.last_skip()
+		if self.last_skip < last_skip then
+			self.last_skip = last_skip
+			if self:check_bed() then
+				self.object:set_pos(self._bed)
+			else
+				self:teleport_to_town_bell()
+			end
+
+			self.waypoints = nil
+			self._target = nil
+			self.current_target = nil
+			self.attack = nil
+			self.following = nil
+			self.state = "stand"
+			self.order = "stand"
+			self._pf_last_failed = os.time()
+			self.object:set_velocity(vector.zero())
+			self.object:set_acceleration(vector.zero())
+			self:set_animation("stand")
+		end
+	end
+
 	if self.following or self.state == PATHFINDING then
 		return
 	end
@@ -653,26 +690,8 @@ function mobs_mc.villager_mob:do_activity()
 		self:take_bed()
 	end
 
-	if not self:should_sleep() then
-		if self.order == SLEEP then
-			self.order = nil
-		end
-	else
-		if allow_nav_hacks then
-			-- When a night is skipped telport villagers to their bed or bell
-			if self.last_skip == nil then
-				self.last_skip = 0
-			end
-			local last_skip = mcl_beds.last_skip()
-			if self.last_skip < last_skip then
-				self.last_skip = last_skip
-				if self:check_bed() then
-					self.object:set_pos(self._bed)
-				else
-					self:teleport_to_town_bell()
-				end
-			end
-		end
+	if (not self:should_sleep()) and self.order == SLEEP then
+		self.order = nil
 	end
 
 	-- Only check in day or during thunderstorm but wandered_too_far code won't work
