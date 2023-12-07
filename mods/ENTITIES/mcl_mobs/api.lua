@@ -12,9 +12,10 @@ mcl_mobs.invis = {}
 local remove_far = true
 local mobs_debug = minetest.settings:get_bool("mobs_debug", false) -- Shows helpful debug info above each mob
 local spawn_logging = minetest.settings:get_bool("mcl_logging_mobs_spawn", false)
+local peaceful_mode = minetest.settings:get_bool("only_peaceful_mobs", false)
 
 -- Peaceful mode message so players will know there are no monsters
-if minetest.settings:get_bool("only_peaceful_mobs", false) then
+if peaceful_mode then
 	minetest.register_on_joinplayer(function(player)
 		minetest.chat_send_player(player:get_player_name(),
 			S("Peaceful mode active! No monsters will spawn."))
@@ -211,7 +212,7 @@ function mob_class:mob_activate(staticdata, dtime)
 		self.state = nil
 	end
 
-	if minetest.settings:get_bool("only_peaceful_mobs", false) and not self.persist_in_peaceful then
+	if peaceful_mode and not self.persist_in_peaceful then
 		mcl_burning.extinguish(self.object)
 		self.object:remove()
 		return
