@@ -165,8 +165,8 @@ label[7.5,0.3;%s]
 style_type[label;textcolor=white]
 
 scrollbaroptions[min=1;max=%i;thumbsize=1]
-scrollbar[3.4,0.05;0.2,9.1;vertical;trade_scroller;1]
-scroll_container[0.1,0.1;3.50,9.5;trade_scroller;vertical]
+scrollbar[3.3,0.05;0.4,9.1;vertical;trade_scroller;1]
+scroll_container[0.1,0.1;3.2,9.5;trade_scroller;vertical]
 
 ]]
 
