@@ -753,7 +753,7 @@ end
 
 function mob_class:do_states_attack (dtime)
 	local yaw
-
+	local attacked
 	local s = self.object:get_pos()
 	local p = self.attack:get_pos() or s
 
@@ -858,6 +858,10 @@ function mob_class:do_states_attack (dtime)
 					}, true)
 					self:entity_physics(pos,entity_damage_radius)
 					mcl_mobs.effect(pos, 32, "mcl_particles_smoke.png", nil, nil, node_break_radius, 1, 0)
+				end
+
+				if self.on_attack then
+					self:on_attack(dtime)
 				end
 				self:safe_remove()
 
@@ -1033,6 +1037,7 @@ function mob_class:do_states_attack (dtime)
 								self.attack, self.dealt_effect.factor, self.dealt_effect.dur
 							)
 						end
+						attacked = true
 					end
 				end
 			else	-- call custom attack every second
@@ -1041,7 +1046,8 @@ function mob_class:do_states_attack (dtime)
 
 					self.timer = 0
 
-					self.custom_attack(self, p)
+					self:custom_attack(p)
+					attacked = true
 				end
 			end
 		end
@@ -1141,9 +1147,14 @@ function mob_class:do_states_attack (dtime)
 				else
 					arrow:set_velocity(vec)
 				end
+				attacked = true
 			end
 		end
 	elseif self.attack_type == "custom" and self.attack_state then
 		self:attack_state(dtime)
+		attacked = true
+	end
+	if attacked and self.on_attack then
+		self:on_attack(dtime)
 	end
 end
