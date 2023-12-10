@@ -176,16 +176,10 @@ mcl_mobs.register_mob("mobs_mc:shulker", {
 			end
 		end
 	end,
+	on_attack = function(self, dtime)
+		self.shoot_interval = 1 + (math.random() * 4.5)
+	end,
 })
-
-local function reset_shoot_interval(shulker_obj)
-	if shulker_obj then
-		local l = shulker_obj:get_luaentity()
-		if l then
-			l.shoot_interval = 1 + (math.random() * 4.5)
-		end
-	end
-end
 
 -- bullet arrow (weapon)
 mcl_mobs.register_arrow("mobs_mc:shulkerbullet", {
@@ -194,16 +188,10 @@ mcl_mobs.register_arrow("mobs_mc:shulkerbullet", {
 	textures = {"mobs_mc_shulkerbullet.png"},
 	velocity = 5,
 	homing = true,
-	hit_player = function(self, player)
-		reset_shoot_interval(self._shooter)
-		return mcl_mobs.get_arrow_damage_func(4)(self, player)
-	end,
-	hit_mob = function(self, mob)
-		reset_shoot_interval(self._shooter)
-		return mcl_mobs.get_arrow_damage_func(4)(self, mob)
-	end,
+	hit_player = mcl_mobs.get_arrow_damage_func(4),
+	hit_mob = mcl_mobs.get_arrow_damage_func(4),
 	hit_node = function(self, _)
-		reset_shoot_interval(self._shooter)
+		self.object:remove()
 	end
 })
 
