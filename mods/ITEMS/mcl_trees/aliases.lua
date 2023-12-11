@@ -64,7 +64,7 @@ minetest.register_alias("mcl_core:junglesapling","mcl_trees:sapling_jungle")
 minetest.register_alias("mcl_core:sprucesapling","mcl_trees:sapling_spruce")
 minetest.register_alias("mcl_core:sapling","mcl_trees:sapling_oak")
 minetest.register_alias("default:sapling","mcl_trees:sapling_oak")
-
+minetest.register_alias("mcl_cherry_blossom:cherrysapling","mcl_trees:sapling_cherry_blossom")
 
 minetest.register_alias("mcl_flowerpots:flower_pot_birchsapling","mcl_flowerpots:flower_pot_sapling_birch")
 minetest.register_alias("mcl_flowerpots:flower_pot_big_oaksapling","mcl_flowerpots:flower_pot_sapling_dark_oak")
@@ -198,6 +198,7 @@ minetest.register_alias("mcl_doors:dark_oak_trapdoor_open","mcl_doors:trapdoor_d
 minetest.register_alias("mcl_mangrove:mangrove_trapdoor_open","mcl_doors:trapdoor_mangrove_open")
 minetest.register_alias("mcl_crimson:warped_trapdoor_open","mcl_doors:trapdoor_warped_hyphae_open")
 minetest.register_alias("mcl_crimson:crimson_trapdoor_open","mcl_doors:trapdoor_crimson_hyphae_open")
+minetest.register_alias("mcl_cherry_blossom:cherry_trapdoor_open","mcl_doors:trapdoor_cherry_blossom_open")
 
 minetest.register_alias("mcl_crimson:crimson_door","mcl_doors:door_crimson")
 minetest.register_alias("mcl_crimson:warped_door","mcl_doors:door_warped")
@@ -216,6 +217,7 @@ minetest.register_alias("mcl_mangrove:mangrove_stripped_trunk","mcl_trees:stripp
 minetest.register_alias("mcl_crimson:stripped_warped_hyphae","mcl_trees:stripped_warped")
 minetest.register_alias("mcl_crimson:stripped_crimson_hyphae","mcl_trees:stripped_crimson")
 minetest.register_alias("mcl_bamboo:bamboo_block_stripped","mcl_trees:stripped_bamboo")
+minetest.register_alias("mcl_cherry_blossom:stripped_cherrytree","mcl_trees:stripped_cherry_blossom")
 
 minetest.register_alias("mcl_core:stripped_oak_bark","mcl_trees:bark_stripped_oak")
 minetest.register_alias("mcl_core:stripped_jungle_bark","mcl_trees:bark_stripped_jungle")
@@ -226,7 +228,7 @@ minetest.register_alias("mcl_core:stripped_birch_bark","mcl_trees:bark_stripped_
 minetest.register_alias("mcl_mangrove:mangrove_stripped_bark","mcl_trees:bark_stripped_mangrove")
 minetest.register_alias("mcl_crimson:stripped_warped_hyphae_bark","mcl_trees:bark_stripped_warped")
 minetest.register_alias("mcl_crimson:stripped_crimson_hyphae_bark","mcl_trees:bark_stripped_crimson")
-
+minetest.register_alias("mcl_cherry_blossom:stripped_cherrytree_bark","mcl_trees:bark_stripped_cherry_blossom")
 
 minetest.register_alias("mcl_stairs:stair_wood", "mcl_stairs:stair_oak")
 minetest.register_alias("mcl_stairs:stair_birchwood", "mcl_stairs:stair_birch")
@@ -238,6 +240,7 @@ minetest.register_alias("mcl_stairs:stair_mangrove_wood", "mcl_stairs:stair_mang
 minetest.register_alias("mcl_stairs:stair_crimson_hyphae_wood", "mcl_stairs:stair_crimson")
 minetest.register_alias("mcl_stairs:stair_warped_hyphae_wood", "mcl_stairs:stair_warped")
 minetest.register_alias("mcl_stairs:stair_bamboo_plank", "mcl_stairs:stair_bamboo")
+minetest.register_alias("mcl_stairs:stair_cherrywood", "mcl_stairs:stair_cherry_blossom")
 
 minetest.register_alias("mcl_stairs:stair_wood_inner", "mcl_stairs:stair_oak_inner")
 minetest.register_alias("mcl_stairs:stair_birchwood_inner", "mcl_stairs:stair_birch_inner")
@@ -249,6 +252,7 @@ minetest.register_alias("mcl_stairs:stair_mangrove_wood_inner", "mcl_stairs:stai
 minetest.register_alias("mcl_stairs:stair_crimson_hyphae_wood_inner", "mcl_stairs:stair_crimson_inner")
 minetest.register_alias("mcl_stairs:stair_warped_hyphae_wood_inner", "mcl_stairs:stair_warped_inner")
 minetest.register_alias("mcl_stairs:stair_bamboo_plank_inner", "mcl_stairs:stair_bamboo_inner")
+minetest.register_alias("mcl_stairs:stair_cherrywood_inner", "mcl_stairs:stair_cherry_blossom_inner")
 
 minetest.register_alias("mcl_stairs:stair_wood_outer", "mcl_stairs:stair_oak_outer")
 minetest.register_alias("mcl_stairs:stair_birchwood_outer", "mcl_stairs:stair_birch_outer")
@@ -260,6 +264,7 @@ minetest.register_alias("mcl_stairs:stair_mangrove_wood_outer", "mcl_stairs:stai
 minetest.register_alias("mcl_stairs:stair_crimson_hyphae_wood_outer", "mcl_stairs:stair_crimson_outer")
 minetest.register_alias("mcl_stairs:stair_warped_hyphae_wood_outer", "mcl_stairs:stair_warped_outer")
 minetest.register_alias("mcl_stairs:stair_bamboo_plank_outer", "mcl_stairs:stair_bamboo_outer")
+minetest.register_alias("mcl_stairs:stair_cherrywood_outer", "mcl_stairs:stair_cherry_blossom_outer")
 
 minetest.register_alias("mcl_stairs:slab_wood", "mcl_stairs:slab_oak")
 minetest.register_alias("mcl_stairs:slab_birchwood", "mcl_stairs:slab_birch")
@@ -271,6 +276,7 @@ minetest.register_alias("mcl_stairs:slab_mangrove_wood", "mcl_stairs:slab_mangro
 minetest.register_alias("mcl_stairs:slab_crimson_hyphae_wood", "mcl_stairs:slab_crimson")
 minetest.register_alias("mcl_stairs:slab_warped_hyphae_wood", "mcl_stairs:slab_warped")
 minetest.register_alias("mcl_stairs:slab_bamboo_plank", "mcl_stairs:slab_bamboo")
+minetest.register_alias("mcl_stairs:slab_cherrywood", "mcl_stairs:slab_cherry_blossom")
 
 minetest.register_alias("mcl_stairs:slab_wood_top", "mcl_stairs:slab_oak_top")
 minetest.register_alias("mcl_stairs:slab_birchwood_top", "mcl_stairs:slab_birch_top")
@@ -282,6 +288,7 @@ minetest.register_alias("mcl_stairs:slab_mangrove_wood_top", "mcl_stairs:slab_ma
 minetest.register_alias("mcl_stairs:slab_crimson_hyphae_wood_top", "mcl_stairs:slab_crimson_top")
 minetest.register_alias("mcl_stairs:slab_warped_hyphae_wood_top", "mcl_stairs:slab_warped_top")
 minetest.register_alias("mcl_stairs:slab_bamboo_plank_top", "mcl_stairs:slab_bamboo_top")
+minetest.register_alias("mcl_stairs:slab_cherrywood_top", "mcl_stairs:slab_cherry_blossom_top")
 
 minetest.register_alias("mcl_stairs:slab_wood_double", "mcl_stairs:slab_oak_double")
 minetest.register_alias("mcl_stairs:slab_birchwood_double", "mcl_stairs:slab_birch_double")
@@ -293,6 +300,7 @@ minetest.register_alias("mcl_stairs:slab_mangrove_wood_double", "mcl_stairs:slab
 minetest.register_alias("mcl_stairs:slab_crimson_hyphae_wood_double", "mcl_stairs:slab_crimson_double")
 minetest.register_alias("mcl_stairs:slab_warped_hyphae_wood_double", "mcl_stairs:slab_warped_double")
 minetest.register_alias("mcl_stairs:slab_bamboo_plank_double", "mcl_stairs:slab_bamboo_double")
+minetest.register_alias("mcl_stairs:slab_cherrywood_double", "mcl_stairs:slab_cherry_blossom_double")
 
 minetest.register_alias("mcl_stairs:stair_tree_bark", "mcl_stairs:stair_oak_bark")
 minetest.register_alias("mcl_stairs:stair_birchtree_bark", "mcl_stairs:stair_birch_bark")
@@ -369,6 +377,7 @@ minetest.register_alias("mesecons_button:button_darkwood_on","mesecons_button:bu
 minetest.register_alias("mesecons_button:button_warped_hyphae_on","mesecons_button:button_warped_on")
 minetest.register_alias("mesecons_button:button_crimson_hyphae_on","mesecons_button:button_crimson_on")
 minetest.register_alias("mesecons_button:button_mangrove_wood_on","mesecons_button:button_mangrove_on")
+minetest.register_alias("mesecons_button:button_cherrywood_on","mesecons_button:button_cherry_blossom_on")
 
 minetest.register_alias("mesecons_button:button_wood_off","mesecons_button:button_oak_off")
 minetest.register_alias("mesecons_button:button_sprucewood_off","mesecons_button:button_spruce_off")
@@ -379,6 +388,7 @@ minetest.register_alias("mesecons_button:button_darkwood_off","mesecons_button:b
 minetest.register_alias("mesecons_button:button_warped_hyphae_off","mesecons_button:button_warped_off")
 minetest.register_alias("mesecons_button:button_crimson_hyphae_off","mesecons_button:button_crimson_off")
 minetest.register_alias("mesecons_button:button_mangrove_wood_off","mesecons_button:button_mangrove_off")
+minetest.register_alias("mesecons_button:button_cherrywood_off","mesecons_button:button_cherry_blossom_off")
 
 minetest.register_alias("mesecons_pressureplates:pressure_plate_wood_on","mesecons_pressureplates:pressure_plate_oak_on")
 minetest.register_alias("mesecons_pressureplates:pressure_plate_sprucewood_on","mesecons_pressureplates:pressure_plate_spruce_on")
@@ -389,6 +399,7 @@ minetest.register_alias("mesecons_pressureplates:pressure_plate_darkwood_on","me
 minetest.register_alias("mesecons_pressureplates:pressure_plate_warped_hyphae_on","mesecons_pressureplates:pressure_plate_warped_on")
 minetest.register_alias("mesecons_pressureplates:pressure_plate_crimson_hyphae_on","mesecons_pressureplates:pressure_plate_crimson_on")
 minetest.register_alias("mesecons_pressureplates:pressure_plate_mangrove_wood_on","mesecons_pressureplates:pressure_plate_mangrove_on")
+minetest.register_alias("mcl_cherry_blossom:pressure_plate_cherrywood_on","mesecons_pressureplates:pressure_plate_cherry_blossom_on")
 
 minetest.register_alias("mesecons_pressureplates:pressure_plate_wood_off","mesecons_pressureplates:pressure_plate_oak_off")
 minetest.register_alias("mesecons_pressureplates:pressure_plate_sprucewood_off","mesecons_pressureplates:pressure_plate_spruce_off")
@@ -399,7 +410,7 @@ minetest.register_alias("mesecons_pressureplates:pressure_plate_darkwood_off","m
 minetest.register_alias("mesecons_pressureplates:pressure_plate_warped_hyphae_off","mesecons_pressureplates:pressure_plate_warped_off")
 minetest.register_alias("mesecons_pressureplates:pressure_plate_crimson_hyphae_off","mesecons_pressureplates:pressure_plate_crimson_off")
 minetest.register_alias("mesecons_pressureplates:pressure_plate_mangrove_wood_off","mesecons_pressureplates:pressure_plate_mangrove_off")
-
+minetest.register_alias("mcl_cherry_blossom:pressure_plate_cherrywood_off","mesecons_pressureplates:pressure_plate_cherry_blossom_off")
 
 local function alias_signs(oldwood,newwood)
 	minetest.register_alias("mcl_signs:wall_sign"..oldwood, "mcl_signs:wall_sign".. newwood)
