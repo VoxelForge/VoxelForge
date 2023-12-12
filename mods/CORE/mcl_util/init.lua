@@ -1306,3 +1306,14 @@ function mcl_util.create_ground_turnip(pos, fwidth, fdepth)
 		y = y - 1
 	end
 end
+
+local old_get_natural_light = minetest.get_natural_light
+
+function minetest.get_natural_light(pos,tod)
+	--pcall the elusive get_light "out of bounds error" bug
+	-- TODO: remove this hack when this is fixed in minetest.
+	local st,res = xpcall(function() return old_get_natural_light(pos, tod) end, debug.traceback)
+	if st then return res end
+	minetest.log("error","["..minetest.get_current_modname().."] minetest.get_natural_light would have crashed: \n https://codeberg.org/mineclonia/mineclonia/issues/17\n".. tostring(res))
+	return 0
+end
