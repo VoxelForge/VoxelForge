@@ -414,11 +414,7 @@ minetest.register_alias("mcl_cherry_blossom:pressure_plate_cherrywood_off","mese
 
 local function alias_signs(oldwood,newwood)
 	minetest.register_alias("mcl_signs:wall_sign"..oldwood, "mcl_signs:wall_sign".. newwood)
-	minetest.register_alias("mcl_signs:standing_sign"..oldwood, "mcl_signs:standing_sign".. newwood)
-	minetest.register_alias("mcl_signs:standing_sign22_5"..oldwood, "mcl_signs:standing_sign22_5".. newwood)
-	minetest.register_alias("mcl_signs:standing_sign45"..oldwood, "mcl_signs:standing_sign45".. newwood)
-	minetest.register_alias("mcl_signs:standing_sign67_5"..oldwood, "mcl_signs:standing_sign67_5".. newwood)
-end
+end --standing signs conversion in mcl_signs/compat.lua
 minetest.register_alias("mcl_signs:sign","mcl_signs:wall_sign_oak")
 
 alias_signs("","_oak")
