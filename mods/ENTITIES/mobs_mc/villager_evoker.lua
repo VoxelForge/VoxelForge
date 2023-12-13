@@ -42,6 +42,7 @@ mcl_mobs.register_mob("mobs_mc:evoker", {
 	run_velocity = 1.4,
 	group_attack = true,
 	attack_type = "dogfight",
+	custom_attack_interval = 15,
 	-- Summon vexes
 	custom_attack = function(self, to_attack)
 		if not spawned_vexes[self] then spawned_vexes[self] = {} end
@@ -66,7 +67,6 @@ mcl_mobs.register_mob("mobs_mc:evoker", {
 			end
 		end
 	end,
-	shoot_interval = 15,
 	passive = false,
 	drops = {
 		{name = "mcl_core:emerald",
@@ -88,6 +88,11 @@ mcl_mobs.register_mob("mobs_mc:evoker", {
 	},
 	view_range = 16,
 	fear_height = 4,
+
+	on_spawn = function(self)
+		self.timer = 15
+		return true
+	end,
 })
 
 -- spawn eggs
