@@ -55,6 +55,7 @@ minetest.register_alias("mcl_core:tree_bark","mcl_trees:bark_oak")
 minetest.register_alias("mcl_crimson:warped_hyphae_bark","mcl_trees:bark_warped")
 minetest.register_alias("mcl_crimson:crimson_hyphae_bark","mcl_trees:bark_crimson")
 minetest.register_alias("mcl_mangrove:mangrove_tree_bark","mcl_trees:bark_mangrove")
+minetest.register_alias("mcl_cherry_blossom:cherrytree_bark","mcl_trees:bark_cherry_blossom")
 
 minetest.register_alias("mcl_core:birchsapling","mcl_trees:sapling_birch")
 minetest.register_alias("mcl_core:big_oaksapling","mcl_trees:sapling_dark_oak")
