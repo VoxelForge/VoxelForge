@@ -62,13 +62,7 @@ for name,cdef in pairs(mcl_dyes.colors) do
 		S(cdef.readable_name.. " Concrete Stairs"),
 		S(cdef.readable_name.. " Concrete Slab"),
 		S(cdef.readable_name.. " Double Slab"))
-	if cdef.mcl2 then
-		minetest.register_alias("mcl_stairs:slab_concrete_"..cdef.mcl2, "mcl_stairs:slab_concrete_"..name)
-		minetest.register_alias("mcl_stairs:slab_concrete_"..cdef.mcl2.."_double", "mcl_stairs:slab_concrete_"..name.."_double")
-		minetest.register_alias("mcl_stairs:stair_concrete_"..cdef.mcl2, "mcl_stairs:stair_concrete_"..name)
-		minetest.register_alias("mcl_stairs:stair_concrete_"..cdef.mcl2.."_inner", "mcl_stairs:stair_concrete_"..name.."_inner")
-		minetest.register_alias("mcl_stairs:stair_concrete_"..cdef.mcl2.."_outer", "mcl_stairs:stair_concrete_"..name.."_outer")
-	end
+
 	if doc_mod then
 		if not is_canonical then
 			doc.add_entry_alias("nodes", "mcl_stairs:slab_concrete_"..canonical_color, "nodes", "mcl_stairs:slab_concrete_"..name)

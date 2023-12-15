@@ -24,3 +24,20 @@ minetest.register_alias("mcl_dyes:dark_green","mcl_dyes:green")
 minetest.register_alias("mcl_dyes:dark_grey","mcl_dyes:grey")
 minetest.register_alias("mcl_dyes:violet","mcl_dyes:purple")
 minetest.register_alias("mcl_dyes:lightblue","mcl_dyes:light_blue")
+
+function register_alias_if_not_exists(alias, name)
+	if not minetest.registered_nodes[alias] then
+		minetest.register_alias(alias, name)
+	end
+end
+minetest.register_on_mods_loaded(function()
+	for name, cdef in pairs(mcl_dyes.colors) do
+		if cdef.mcl2 then
+			register_alias_if_not_exists("mcl_stairs:slab_concrete_"..cdef.mcl2, "mcl_stairs:slab_concrete_"..name)
+			register_alias_if_not_exists("mcl_stairs:slab_concrete_"..cdef.mcl2.."_double", "mcl_stairs:slab_concrete_"..name.."_double")
+			register_alias_if_not_exists("mcl_stairs:stair_concrete_"..cdef.mcl2, "mcl_stairs:stair_concrete_"..name)
+			register_alias_if_not_exists("mcl_stairs:stair_concrete_"..cdef.mcl2.."_inner", "mcl_stairs:stair_concrete_"..name.."_inner")
+			register_alias_if_not_exists("mcl_stairs:stair_concrete_"..cdef.mcl2.."_outer", "mcl_stairs:stair_concrete_"..name.."_outer")
+		end
+	end
+end)
