@@ -55,47 +55,32 @@ mcl_stairs.register_slab("stonebrickcracked", "mcl_core:stonebrickcracked",
 		mcl_sounds.node_sound_stone_defaults(), 6, 2,
 		S("Double Cracked Stone Brick Slab"))
 
-local block = {}
-block.dyes = {
-	{"white",      S("White Concrete Stairs"),      S("White Concrete Slab"), S("Double White Concrete Slab"), "white"},
-	{"grey",       S("Grey Concrete Stairs"),       S("Grey Concrete Slab"), S("Double Grey Concrete Slab"), "dark_grey"},
-	{"silver",     S("Light Grey Concrete Stairs"), S("Light Grey Concrete Slab"), S("Double Light Grey Concrete Slab"), "grey"},
-	{"black",      S("Black Concrete Stairs"),      S("Black Concrete Slab"), S("Double Black Concrete Slab"), "black"},
-	{"red",        S("Red Concrete Stairs"),        S("Red Concrete Slab"), S("Double Red Concrete Slab"), "red"},
-	{"yellow",     S("Yellow Concrete Stairs"),     S("Yellow Concrete Slab"), S("Double Yellow Concrete Slab"), "yellow"},
-	{"green",      S("Green Concrete Stairs"),      S("Green Concrete Slab"), S("Double Green Concrete Slab"), "dark_green"},
-	{"cyan",       S("Cyan Concrete Stairs"),       S("Cyan Concrete Slab"), S("Double Cyan Concrete Slab"), "cyan"},
-	{"blue",       S("Blue Concrete Stairs"),       S("Blue Concrete Slab"), S("Double Blue Concrete Slab"), "blue"},
-	{"magenta",    S("Magenta Concrete Stairs"),    S("Magenta Concrete Slab"), S("Double Magenta Concrete Slab"), "magenta"},
-	{"orange",     S("Orange Concrete Stairs"),     S("Orange Concrete Slab"), S("Double Orange Concrete Slab"), "orange"},
-	{"purple",     S("Purple Concrete Stairs"),     S("Purple Concrete Slab"), S("Double Purple Concrete Slab"), "violet"},
-	{"brown",      S("Brown Concrete Stairs"),      S("Brown Concrete Slab"), S("Double Brown Concrete Slab"), "brown"},
-	{"pink",       S("Pink Concrete Stairs"),       S("Pink Concrete Slab"), S("Double Pink Concrete Slab"), "pink"},
-	{"lime",       S("Lime Concrete Stairs"),       S("Lime Concrete Slab"), S("Double Lime Concrete Slab"), "green"},
-	{"light_blue", S("Light Blue Concrete Stairs"), S("Light Blue Concrete Slab"), S("Double Light Blue Concrete Slab"), "lightblue"},
-}
 local canonical_color = "yellow"
-
-for i=1, #block.dyes do
-	local c = block.dyes[i][1]
-	local is_canonical = c == canonical_color
-	mcl_stairs.register_stair_and_slab_simple("concrete_"..c, "mcl_colorblocks:concrete_"..c,
-		block.dyes[i][2],
-		block.dyes[i][3],
-		block.dyes[i][4])
-
+for name,cdef in pairs(mcl_dyes.colors) do
+	local is_canonical = name == canonical_color
+	mcl_stairs.register_stair_and_slab_simple("concrete_"..name, "mcl_colorblocks:concrete_"..name,
+		S(cdef.readable_name.. " Concrete Stairs"),
+		S(cdef.readable_name.. " Concrete Slab"),
+		S(cdef.readable_name.. " Double Slab"))
+	if cdef.mcl2 then
+		minetest.register_alias("mcl_stairs:slab_concrete_"..cdef.mcl2, "mcl_stairs:slab_concrete_"..name)
+		minetest.register_alias("mcl_stairs:slab_concrete_"..cdef.mcl2.."_double", "mcl_stairs:slab_concrete_"..name.."_double")
+		minetest.register_alias("mcl_stairs:stair_concrete_"..cdef.mcl2, "mcl_stairs:stair_concrete_"..name)
+		minetest.register_alias("mcl_stairs:stair_concrete_"..cdef.mcl2.."_inner", "mcl_stairs:stair_concrete_"..name.."_inner")
+		minetest.register_alias("mcl_stairs:stair_concrete_"..cdef.mcl2.."_outer", "mcl_stairs:stair_concrete_"..name.."_outer")
+	end
 	if doc_mod then
 		if not is_canonical then
-			doc.add_entry_alias("nodes", "mcl_stairs:slab_concrete_"..canonical_color, "nodes", "mcl_stairs:slab_concrete_"..c)
-			doc.add_entry_alias("nodes", "mcl_stairs:slab_concrete_"..canonical_color.."_double", "nodes", "mcl_stairs:slab_concrete_"..c.."_double")
-			doc.add_entry_alias("nodes", "mcl_stairs:stair_concrete_"..canonical_color, "nodes", "mcl_stairs:stair_concrete_"..c)
-			minetest.override_item("mcl_stairs:slab_concrete_"..c, { _doc_items_create_entry = false })
-			minetest.override_item("mcl_stairs:slab_concrete_"..c.."_double", { _doc_items_create_entry = false })
-			minetest.override_item("mcl_stairs:stair_concrete_"..c, { _doc_items_create_entry = false })
+			doc.add_entry_alias("nodes", "mcl_stairs:slab_concrete_"..canonical_color, "nodes", "mcl_stairs:slab_concrete_"..name)
+			doc.add_entry_alias("nodes", "mcl_stairs:slab_concrete_"..canonical_color.."_double", "nodes", "mcl_stairs:slab_concrete_"..name.."_double")
+			doc.add_entry_alias("nodes", "mcl_stairs:stair_concrete_"..canonical_color, "nodes", "mcl_stairs:stair_concrete_"..name)
+			minetest.override_item("mcl_stairs:slab_concrete_"..name, { _doc_items_create_entry = false })
+			minetest.override_item("mcl_stairs:slab_concrete_"..name.."_double", { _doc_items_create_entry = false })
+			minetest.override_item("mcl_stairs:stair_concrete_"..name, { _doc_items_create_entry = false })
 		else
-			minetest.override_item("mcl_stairs:slab_concrete_"..c, { _doc_items_entry_name = S("Concrete Slab") })
-			minetest.override_item("mcl_stairs:slab_concrete_"..c.."_double", { _doc_items_entry_name = S("Double Concrete Slab") })
-			minetest.override_item("mcl_stairs:stair_concrete_"..c, { _doc_items_entry_name = S("Concrete Stairs") })
+			minetest.override_item("mcl_stairs:slab_concrete_"..name, { _doc_items_entry_name = S("Concrete Slab") })
+			minetest.override_item("mcl_stairs:slab_concrete_"..name.."_double", { _doc_items_entry_name = S("Double Concrete Slab") })
+			minetest.override_item("mcl_stairs:stair_concrete_"..name, { _doc_items_entry_name = S("Concrete Stairs") })
 		end
 	end
 end
