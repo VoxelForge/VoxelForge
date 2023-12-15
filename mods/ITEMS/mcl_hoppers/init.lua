@@ -546,3 +546,5 @@ minetest.register_lbm({
 		meta:set_string("formspec", mcl_hoppers_formspec)
 	end,
 })
+
+dofile(minetest.get_modpath(minetest.get_current_modname()).."/compat.lua")
