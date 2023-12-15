@@ -91,7 +91,7 @@ mcl_mobs.spawn_setup({
 	min_light = 0,
 	max_light = maxlight,
 	aoc = 3,
-	chance = 5000,
+	chance = 100,
 })
 
 -- spawn eggs

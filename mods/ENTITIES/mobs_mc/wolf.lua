@@ -220,7 +220,7 @@ mcl_mobs.spawn_setup({
 		"Taiga_beach",
 		"ColdTaiga_beach",
 	},
-	chance = 15000,
+	chance = 80,
 })
 
 mcl_mobs.register_egg("mobs_mc:wolf", S("Wolf"), "#d7d3d3", "#ceaf96", 0)

@@ -183,7 +183,7 @@ mcl_mobs.spawn_setup({
 		"JungleEdge",
 		"BambooJungle",
 	},
-	chance = 15000,
+	chance = 300,
 })
 
 -- spawn eggs

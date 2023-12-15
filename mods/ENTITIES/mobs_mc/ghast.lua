@@ -99,7 +99,7 @@ mcl_mobs.spawn_setup({
 		"SoulsandValley",
 		"BasaltDelta",
 	},
-	chance = 72000,
+	chance = 400,
 })
 
 -- fireball (projectile)

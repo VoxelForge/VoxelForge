@@ -331,7 +331,7 @@ mcl_mobs.spawn_setup({
 		"Nether",
 		"CrimsonForest"
 	},
-	chance = 6000,
+	chance = 150,
 })
 
 mcl_mobs.spawn_setup({
@@ -346,7 +346,7 @@ mcl_mobs.spawn_setup({
 		"Nether",
 		"CrimsonForest"
 	},
-	chance = 6000,
+	chance = 150,
 })
 
 mcl_mobs.spawn_setup({
@@ -361,8 +361,10 @@ mcl_mobs.spawn_setup({
 		"Nether",
 		"CrimsonForest"
 	},
-	chance = 6000,
+	chance = 1000,
 })
+
+
 
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:piglin", S("Piglin"), "#7b4a17","#d5c381", 0)

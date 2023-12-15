@@ -83,7 +83,7 @@ mcl_mobs.spawn_setup({
 		"IcePlainsSpikes",
 		"IcePlains",
 	},
-	chance = 7000,
+	chance = 50,
 })
 
 -- spawn egg

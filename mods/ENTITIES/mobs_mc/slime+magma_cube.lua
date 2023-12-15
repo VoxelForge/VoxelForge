@@ -228,9 +228,9 @@ local swamp_min = water_level
 local swamp_max = water_level + 27
 
 for slime_name,slime_chance in pairs({
-	["mobs_mc:slime_tiny"] = 1200,
-	["mobs_mc:slime_small"] = 8500,
-	["mobs_mc:slime_big"] = 10000
+	["mobs_mc:slime_tiny"] = 1000,
+	["mobs_mc:slime_small"] = 1000,
+	["mobs_mc:slime_big"] = 1000
 }) do
 	mcl_mobs.spawn_setup({
 		name = slime_name,
@@ -366,9 +366,9 @@ magma_cube_tiny.on_die = nil
 mcl_mobs.register_mob("mobs_mc:magma_cube_tiny", magma_cube_tiny)
 
 for magma_name,magma_chance in pairs({
-	["mobs_mc:magma_cube_tiny"] = 15000,
-	["mobs_mc:magma_cube_small"] = 15500,
-	["mobs_mc:magma_cube_big"] = 16000
+	["mobs_mc:magma_cube_tiny"] = 100,
+	["mobs_mc:magma_cube_small"] = 100,
+	["mobs_mc:magma_cube_big"] = 100
 }) do
 	mcl_mobs.spawn_setup({
 		name = magma_name,

@@ -172,7 +172,7 @@ mcl_mobs.spawn_setup({
 		"MushroomIslandShore",
 		"MushroomIsland"
 	},
-	chance = 6000,
+	chance = 1000,
 })
 
 mcl_mobs.spawn_setup({
@@ -184,7 +184,7 @@ mcl_mobs.spawn_setup({
 		"MushroomIslandShore",
 		"MushroomIsland"
 	},
-	chance = 6000,
+	chance = 50,
 })
 
 mcl_mobs.spawn_setup({
@@ -195,18 +195,18 @@ mcl_mobs.spawn_setup({
 	biomes = {
 		"Desert",
 	},
-	chance = 6500,
+	chance = 2400,
 })
 
 mcl_mobs.spawn_setup({
-	name = "mobs_mc:husk",
+	name = "mobs_mc:baby_husk",
 	type_of_spawning = "ground",
 	dimension = "overworld",
 	aoc = 9,
 	biomes = {
 		"Desert",
 	},
-	chance = 65000,
+	chance = 20,
 })
 
 -- Spawn eggs

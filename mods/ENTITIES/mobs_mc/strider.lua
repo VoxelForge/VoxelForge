@@ -212,14 +212,14 @@ mcl_mobs.spawn_setup({
 	name = "mobs_mc:strider",
 	type_of_spawning = "lava",
 	dimension = "nether",
-	chance = 2000,
+	chance = 200,
 })
 
 mcl_mobs.spawn_setup({
 	name = "mobs_mc:baby_strider",
 	type_of_spawning = "lava",
 	dimension = "nether",
-	chance = 100,
+	chance = 20,
 })
 
 -- spawn eggs

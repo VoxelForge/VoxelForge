@@ -603,7 +603,7 @@ mcl_mobs.spawn_setup({
 	"Savanna_beach",
 	"Plains_beach",
 	},
-	chance = 15000,
+	chance = 40,
 })
 
 mcl_mobs.spawn_setup({
@@ -624,7 +624,7 @@ mcl_mobs.spawn_setup({
 	"Plains_beach",
 	"CherryGrove",
 	},
-	chance = 15000,
+	chance = 10,
 })
 
 -- spawn eggs

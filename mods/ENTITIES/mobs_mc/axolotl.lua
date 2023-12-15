@@ -92,7 +92,7 @@ mcl_mobs.spawn_setup({
 	min_light = 0,
 	max_light = minetest.LIGHT_MAX + 1,
 	aoc = 7,
-	chance = 4000,
+	chance = 100,
 	biomes = {
 		"Swampland",
 		"MushroomIsland",

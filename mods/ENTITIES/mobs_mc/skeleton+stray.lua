@@ -168,7 +168,7 @@ mcl_mobs.spawn_setup({
 		"MushroomIslandShore",
 		"MushroomIsland"
 	},
-	chance = 17000,
+	chance = 800,
 })
 
 mcl_mobs.spawn_setup({
@@ -179,7 +179,7 @@ mcl_mobs.spawn_setup({
 	biomes = {
 		"SoulsandValley",
 	},
-	chance = 10000,
+	chance = 800,
 })
 
 mcl_mobs.spawn_setup({
@@ -193,7 +193,7 @@ mcl_mobs.spawn_setup({
 		"IcePlains",
 		"ExtremeHills+_snowtop",
 	},
-	chance = 19000,
+	chance = 1200,
 })
 
 -- spawn eggs

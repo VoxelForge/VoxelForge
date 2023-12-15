@@ -125,7 +125,7 @@ mcl_mobs.spawn_setup({
 		"Nether",
 		"CrimsonForest"
 	},
-	chance = 6000,
+	chance = 200,
 })
 
 -- spawn eggs

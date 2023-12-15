@@ -396,7 +396,7 @@ mcl_mobs.spawn_setup({
 		"Swampland_shore",
 		"CherryGrove",
 	},
-	chance = 15000,
+	chance = 120,
 })
 
 -- spawn eggs

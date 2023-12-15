@@ -282,7 +282,7 @@ mcl_mobs.spawn_setup({
 		"ExtremeHills_beach",
 		"ExtremeHillsM",
 	},
-	chance = 15000,
+	chance = 50,
 })
 
 -- spawn eggs

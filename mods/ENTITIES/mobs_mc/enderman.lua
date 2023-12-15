@@ -658,7 +658,7 @@ mcl_mobs.spawn_setup({
 	min_height = mcl_vars.mg_end_min,
 	max_height = mcl_vars.mg_end_max,
 	min_light = 0,
-	chance = 3000,
+	chance = 100,
 })
 
 -- Overworld spawn
@@ -675,7 +675,7 @@ mcl_mobs.spawn_setup({
 		"MushroomIslandShore",
 		"MushroomIsland"
 	},
-	chance = 6000,
+	chance = 100,
 })
 -- Nether spawn (rare)
 mcl_mobs.spawn_setup({
@@ -688,7 +688,7 @@ mcl_mobs.spawn_setup({
 		"Nether",
 		"SoulsandValley",
 	},
-	chance = 27500,
+	chance = 1000,
 })
 
 
@@ -701,7 +701,7 @@ mcl_mobs.spawn_setup({
 	biomes = {
 		"WarpedForest",
 	},
-	chance = 5000,
+	chance = 100,
 })
 
 -- spawn eggs

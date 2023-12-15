@@ -150,7 +150,7 @@ mcl_mobs.spawn_setup({
 		"ColdTaiga",
 		"CherryGrove",
 	},
-	chance = 15000,
+	chance = 40,
 })
 
 -- Spawn egg
