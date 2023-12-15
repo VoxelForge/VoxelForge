@@ -163,6 +163,7 @@ function mesecon.register_pressure_plate(basename, description, textures_off, te
 		paramtype = "light",
 		walkable = false,
 		description = description,
+		drop = basename .. "_off",
 		on_timer = pp_on_timer,
 		on_construct = function(pos)
 			minetest.get_node_timer(pos):start(PRESSURE_PLATE_INTERVAL)
