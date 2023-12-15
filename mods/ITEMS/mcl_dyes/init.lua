@@ -68,15 +68,15 @@ mcl_dyes.colors = {
 	},
 	["green"] = {
 		description = S("Cactus Green"),
-		readable_name = "Dark Green",
+		readable_name = "Green",
 		groups = {basecolor_green=1,   excolor_green=1,     unicolor_dark_green=1},
 		rgb = "#4b5e25",
 		unicolor = "dark_green",
 		mcl2 = "dark_green",
 	},
 	["lime"] = {
-		description = S("Green Dye"),
-		readable_name = "Green",
+		description = S("Lime Dye"),
+		readable_name = "Lime",
 		groups = {basecolor_green=1,   excolor_green=1,     unicolor_green=1},
 		rgb = "#60ac19",
 		unicolor = "green",
