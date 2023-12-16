@@ -157,10 +157,6 @@ mcl_default_shadow_intensity (Default shadow intensity) float 0.33 0.0 1.0
 mcl_buckets_use_select_box (Buckets use select box) bool false
 
 [Experimental]
-# Whether to generate fallen logs in some biomes.
-# They might not always look pretty and have strange overhangs.
-mcl_generate_fallen_logs (Generate fallen logs) bool false
-
 # If enabled, the “flat” map generator generates a Classic Superflat world:
 # Completely flat, 1 layer of grass blocks on top of 2 layers of dirt on
 # top of a final layer of bedrock. No caves, trees or plants.
