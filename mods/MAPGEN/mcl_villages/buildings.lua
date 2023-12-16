@@ -1,5 +1,3 @@
-
-local new_villages = minetest.settings:get_bool("mcl_villages_new", true)
 local min_jobs = tonumber(minetest.settings:get("mcl_villages_min_jobs")) or 1
 local max_jobs = tonumber(minetest.settings:get("mcl_villages_max_jobs")) or 12
 local placement_priority = minetest.settings:get("mcl_villages_placement_priority") or "random"
@@ -76,17 +74,15 @@ function mcl_villages.initialize_settlement_info(pr)
 	-- randomize number of buildings
 	local number_of_buildings = pr:next(10, 25)
 
-	if new_villages then
-		for k, v in pairs(mcl_villages.schematic_houses) do
-			count_buildings[v["name"]] = 0
-		end
-		for k, v in pairs(mcl_villages.schematic_jobs) do
-			count_buildings[v["name"]] = 0
-		end
-
-		-- For new villages this is the number of jobs
-		number_of_buildings = pr:next(min_jobs, max_jobs)
+	for k, v in pairs(mcl_villages.schematic_houses) do
+		count_buildings[v["name"]] = 0
 	end
+	for k, v in pairs(mcl_villages.schematic_jobs) do
+		count_buildings[v["name"]] = 0
+	end
+
+	-- For new villages this is the number of jobs
+	number_of_buildings = pr:next(min_jobs, max_jobs)
 
 	local number_built = 1
 	mcl_villages.debug("Village ".. number_of_buildings)

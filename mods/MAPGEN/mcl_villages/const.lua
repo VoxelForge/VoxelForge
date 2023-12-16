@@ -1,4 +1,3 @@
-local new_villages = minetest.settings:get_bool("mcl_villages_new", true)
 local water_villages = minetest.settings:get_bool("mcl_villages_allow_water_villages", false)
 
 -- switch for debugging
@@ -41,32 +40,29 @@ function mcl_villages.grundstellungen()
 		"mcl_core:snow"
 	}
 
-	-- TODO do we really care as long as it's solid?
-	if new_villages then
-		-- allow villages on more surfaces
-		mcl_villages.surface_mat["mcl_colorblocks:hardened_clay"] = true
-		mcl_villages.surface_mat["mcl_colorblocks:hardened_clay_orange"] = true
-		mcl_villages.surface_mat["mcl_colorblocks:hardened_clay_red"] = true
-		mcl_villages.surface_mat["mcl_colorblocks:hardened_clay_white"] = true
-		mcl_villages.surface_mat["mcl_core:andesite"] = true
-		mcl_villages.surface_mat["mcl_core:coarse_dirt"] = true
-		mcl_villages.surface_mat["mcl_core:diorite"] = true
-		mcl_villages.surface_mat["mcl_core:dirt"] = true
-		mcl_villages.surface_mat["mcl_core:granite"] = true
-		mcl_villages.surface_mat["mcl_core:grass_path"] = true
-		mcl_villages.surface_mat["mcl_core:sandstone"] = true
-		mcl_villages.surface_mat["mcl_core:sandstonesmooth"] = true
-		mcl_villages.surface_mat["mcl_core:sandstonesmooth2"] = true
-		mcl_villages.surface_mat["mcl_core:stone"] = true
-		mcl_villages.surface_mat["mcl_core:stone_with_coal"] = true
-		mcl_villages.surface_mat["mcl_core:stone_with_iron"] = true
+	-- allow villages on more surfaces
+	mcl_villages.surface_mat["mcl_colorblocks:hardened_clay"] = true
+	mcl_villages.surface_mat["mcl_colorblocks:hardened_clay_orange"] = true
+	mcl_villages.surface_mat["mcl_colorblocks:hardened_clay_red"] = true
+	mcl_villages.surface_mat["mcl_colorblocks:hardened_clay_white"] = true
+	mcl_villages.surface_mat["mcl_core:andesite"] = true
+	mcl_villages.surface_mat["mcl_core:coarse_dirt"] = true
+	mcl_villages.surface_mat["mcl_core:diorite"] = true
+	mcl_villages.surface_mat["mcl_core:dirt"] = true
+	mcl_villages.surface_mat["mcl_core:granite"] = true
+	mcl_villages.surface_mat["mcl_core:grass_path"] = true
+	mcl_villages.surface_mat["mcl_core:sandstone"] = true
+	mcl_villages.surface_mat["mcl_core:sandstonesmooth"] = true
+	mcl_villages.surface_mat["mcl_core:sandstonesmooth2"] = true
+	mcl_villages.surface_mat["mcl_core:stone"] = true
+	mcl_villages.surface_mat["mcl_core:stone_with_coal"] = true
+	mcl_villages.surface_mat["mcl_core:stone_with_iron"] = true
 
-		if water_villages then
-			mcl_villages.surface_mat["mcl_core:water_source"] = true
-			mcl_villages.surface_mat["mcl_core:river_water_source"] = true
-			mcl_villages.surface_mat["mcl_core:water_flowing"] = true
-			mcl_villages.surface_mat["mcl_core:river_water_flowing"] = true
-		end
+	if water_villages then
+		mcl_villages.surface_mat["mcl_core:water_source"] = true
+		mcl_villages.surface_mat["mcl_core:river_water_source"] = true
+		mcl_villages.surface_mat["mcl_core:water_flowing"] = true
+		mcl_villages.surface_mat["mcl_core:river_water_flowing"] = true
 	end
 end
 --
