@@ -343,7 +343,6 @@ Settings=Настройки
 There is a large variety of settings to configure Minetest. Pretty much every aspect can be changed that way.=Существует много разнообразных настроек Minetest. Почти каждый аспект игры может быть изменён.
 These are a few of the most important gameplay settings:=Вот некоторые наиболее важные настройки:
 • Damage enabled (enable_damage): Enables the health and breath attributes for all players. If disabled, players are immortal=• Урон (enable_damage): включает здоровье и дыхание для всех игроков. Если он выключен, то все игроки бессмертны
-• Creative Mode (creative_mode): Enables sandbox-style gameplay focusing on creativity rather than a challenging gameplay. The meaning depends on the game; usual changes are: Reduced dig times, easy access to almost all items, tools never wear off, etc.=• Творческий режим (creative_mode): позволяет играть в стиле песочницы, сосредоточившись на творчестве, а не на сложном игровом процессе. Смысл зависит от конкретной игры. Основные черты: ускоренное время копания, мгновенный доступ почти ко всем предметам, отсутствует износ инструментов и пр.
 • PvP (enable_pvp): Short for “Player vs Player”. If enabled, players can deal damage to each other=• PvP (enable_pvp): “игрок против игрока”. Если этот режим включён, игроки могут наносить урон друг другу
 For a full list of all available settings, use the “All Settings” dialog in the main menu.=Для получения полного списка настроек вы можете перейти в ”Настройки - Все настройки“ в главном меню Minetest.
 Movement modes=Режимы передвижения

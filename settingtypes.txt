@@ -2,15 +2,6 @@
 # minetest.conf
 
 [World]
-# In creative mode, players are able to dig all kind of blocks
-# instantly, and have access to unlimited resources.
-# Items are not used up, and blocks do not drop.
-# Some of the functionality is only available if this setting is present
-# at startup.
-# This setting may be removed in later version in favor of
-# per-player Creative Mode.
-creative_mode (Creative mode) bool false
-
 # Fire spreads and flammable blocks might be destroyed by nearby fire.
 # Destructive fire may cause severe destruction.
 # Fire blocks will be non-destructive and stops spreading when this

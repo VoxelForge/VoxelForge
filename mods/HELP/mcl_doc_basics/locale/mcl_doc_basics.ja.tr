@@ -343,7 +343,6 @@ Settings=設定
 There is a large variety of settings to configure Minetest. Pretty much every aspect can be changed that way.=Minetest を構成するために、多種多様な設定があります。ほとんどの局面をその方法で変更できます。
 These are a few of the most important gameplay settings:=これらは、最も重要なゲームプレイの設定の一部です：
 • Damage enabled (enable_damage): Enables the health and breath attributes for all players. If disabled, players are immortal=・ダメージを有効化（enable_damage）：全プレイヤーのヘルスと呼吸の設定を有効にする。無効の場合、プレイヤーは不死身になる
-• Creative Mode (creative_mode): Enables sandbox-style gameplay focusing on creativity rather than a challenging gameplay. The meaning depends on the game; usual changes are: Reduced dig times, easy access to almost all items, tools never wear off, etc.=・クリエイティブモード（creative_mode）：挑戦的なゲームプレイではなく、創造性に焦点を当てたサンドボックススタイルのゲームプレイを可能にする。意味はゲームによるが、通常の変更は次の通り：掘る時間が短くなる、ほぼ全てのアイテムが入手しやすくなる、道具が消耗しなくなる、など
 • PvP (enable_pvp): Short for “Player vs Player”. If enabled, players can deal damage to each other=・PvP（enable_pvp）：“Player vs Player”の略。有効にすると、プレイヤー同士がダメージを与え合うことが可能になる
 For a full list of all available settings, use the “All Settings” dialog in the main menu.=利用可能なすべての設定の一覧は、メインメニューの「すべての設定」ダイアログを使用してください。
 Movement modes=移動モード
