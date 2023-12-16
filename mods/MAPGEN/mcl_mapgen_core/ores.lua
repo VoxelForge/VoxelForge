@@ -168,55 +168,50 @@ minetest.register_ore({
 	}
 })
 
--- DEEPSLATE
-if minetest.settings:get_bool("mcl_generate_deepslate", true) then
+minetest.register_ore({
+	ore_type       = "scatter",
+	ore            = "mcl_deepslate:infested_deepslate",
+	wherein        = "mcl_deepslate:deepslate",
+	clust_scarcity = 26 * 26 * 26,
+	clust_num_ores = 3,
+	clust_size     = 2,
+	y_min          = deepslate_min,
+	y_max          = deepslate_max,
+	biomes         = mountains,
+})
 
-	minetest.register_ore({
-		ore_type       = "scatter",
-		ore            = "mcl_deepslate:infested_deepslate",
-		wherein        = "mcl_deepslate:deepslate",
-		clust_scarcity = 26 * 26 * 26,
-		clust_num_ores = 3,
-		clust_size     = 2,
-		y_min          = deepslate_min,
-		y_max          = deepslate_max,
-		biomes         = mountains,
-	})
+minetest.register_ore({
+	ore_type       = "scatter",
+	ore            = "mcl_core:water_source",
+	wherein        = "mcl_deepslate:deepslate",
+	clust_scarcity = 9000,
+	clust_num_ores = 1,
+	clust_size     = 1,
+	y_min          = mcl_worlds.layer_to_y(5),
+	y_max          = deepslate_max,
+})
 
-	minetest.register_ore({
-		ore_type       = "scatter",
-		ore            = "mcl_core:water_source",
-		wherein        = "mcl_deepslate:deepslate",
-		clust_scarcity = 9000,
-		clust_num_ores = 1,
-		clust_size     = 1,
-		y_min          = mcl_worlds.layer_to_y(5),
-		y_max          = deepslate_max,
-	})
+minetest.register_ore({
+	ore_type       = "scatter",
+	ore            = "mcl_core:lava_source",
+	wherein        = "mcl_deepslate:deepslate",
+	clust_scarcity = 2000,
+	clust_num_ores = 1,
+	clust_size     = 1,
+	y_min          = mcl_worlds.layer_to_y(1),
+	y_max          = mcl_worlds.layer_to_y(10),
+})
 
-	minetest.register_ore({
-		ore_type       = "scatter",
-		ore            = "mcl_core:lava_source",
-		wherein        = "mcl_deepslate:deepslate",
-		clust_scarcity = 2000,
-		clust_num_ores = 1,
-		clust_size     = 1,
-		y_min          = mcl_worlds.layer_to_y(1),
-		y_max          = mcl_worlds.layer_to_y(10),
-	})
-
-	minetest.register_ore({
-		ore_type       = "scatter",
-		ore            = "mcl_core:lava_source",
-		wherein        = "mcl_deepslate:deepslate",
-		clust_scarcity = 9000,
-		clust_num_ores = 1,
-		clust_size     = 1,
-		y_min          = mcl_worlds.layer_to_y(11),
-		y_max          = deepslate_max,
-	})
-
-end
+minetest.register_ore({
+	ore_type       = "scatter",
+	ore            = "mcl_core:lava_source",
+	wherein        = "mcl_deepslate:deepslate",
+	clust_scarcity = 9000,
+	clust_num_ores = 1,
+	clust_size     = 1,
+	y_min          = mcl_worlds.layer_to_y(11),
+	y_max          = deepslate_max,
+})
 
 if minetest.settings:get_bool("mcl_generate_ores", true) then
 	--
@@ -637,73 +632,71 @@ if minetest.settings:get_bool("mcl_generate_ores", true) then
 		y_max          = mcl_worlds.layer_to_y(32),
 	})
 
-	if minetest.settings:get_bool("mcl_generate_deepslate", true) then
-			local stonelike = { "mcl_core:stone", "mcl_core:diorite", "mcl_core:andesite", "mcl_core:granite" }
-		local function register_ore_mg(ore, scarcity, num, size, y_min, y_max, biomes)
-			biomes = biomes or ""
-			minetest.register_ore({
-				ore_type       = "scatter",
-				ore            = ore,
-				wherein        = { "mcl_deepslate:deepslate", "mcl_deepslate:tuff" },
-				clust_scarcity = scarcity,
-				clust_num_ores = num,
-				clust_size     = size,
-				y_min          = y_min,
-				y_max          = y_max,
-				biomes		   = biomes,
-			})
-		end
-		local ore_mapgen = {
-			{ "coal", 1575, 5, 3, deepslate_min, deepslate_max },
-			{ "coal", 1530, 8, 3, deepslate_min, deepslate_max },
-			{ "coal", 1500, 12, 3, deepslate_min, deepslate_max },
-			{ "iron", 830, 5, 3, deepslate_min, deepslate_max },
-			{ "gold", 4775, 5, 3, deepslate_min, deepslate_max },
-			{ "gold", 6560, 7, 3, deepslate_min, deepslate_max },
-			{ "diamond", 10000, 4, 3, deepslate_min, mcl_worlds.layer_to_y(12) },
-			{ "diamond", 5000, 2, 3, deepslate_min, mcl_worlds.layer_to_y(12) },
-			{ "diamond", 10000, 8, 3, deepslate_min, mcl_worlds.layer_to_y(12) },
-			{ "diamond", 20000, 1, 1, mcl_worlds.layer_to_y(13), mcl_worlds.layer_to_y(15) },
-			{ "diamond", 20000, 2, 2, mcl_worlds.layer_to_y(13), mcl_worlds.layer_to_y(15) },
-			{ "redstone", 500, 4, 3, deepslate_min, mcl_worlds.layer_to_y(13) },
-			{ "redstone", 800, 7, 4, deepslate_min, mcl_worlds.layer_to_y(13) },
-			{ "redstone", 1000, 4, 3, mcl_worlds.layer_to_y(13), mcl_worlds.layer_to_y(15) },
-			{ "redstone", 1600, 7, 4, mcl_worlds.layer_to_y(13), mcl_worlds.layer_to_y(15) },
-			{ "lapis", 10000, 7, 4, mcl_worlds.layer_to_y(14), deepslate_max },
-			{ "lapis", 12000, 6, 3, mcl_worlds.layer_to_y(10), mcl_worlds.layer_to_y(13) },
-			{ "lapis", 14000, 5, 3, mcl_worlds.layer_to_y(6), mcl_worlds.layer_to_y(9) },
-			{ "lapis", 16000, 4, 3, mcl_worlds.layer_to_y(2), mcl_worlds.layer_to_y(5) },
-			{ "lapis", 18000, 3, 2, mcl_worlds.layer_to_y(0), mcl_worlds.layer_to_y(2) },
-		}
-		for _, o in pairs(ore_mapgen) do
-			register_ore_mg("mcl_deepslate:deepslate_with_"..o[1], o[2], o[3], o[4], o[5], o[6])
-		end
+	local stonelike = { "mcl_core:stone", "mcl_core:diorite", "mcl_core:andesite", "mcl_core:granite" }
+	local function register_ore_mg(ore, scarcity, num, size, y_min, y_max, biomes)
+		biomes = biomes or ""
+		minetest.register_ore({
+			ore_type       = "scatter",
+			ore            = ore,
+			wherein        = { "mcl_deepslate:deepslate", "mcl_deepslate:tuff" },
+			clust_scarcity = scarcity,
+			clust_num_ores = num,
+			clust_size     = size,
+			y_min          = y_min,
+			y_max          = y_max,
+			biomes		   = biomes,
+		})
+	end
+	local ore_mapgen = {
+		{ "coal", 1575, 5, 3, deepslate_min, deepslate_max },
+		{ "coal", 1530, 8, 3, deepslate_min, deepslate_max },
+		{ "coal", 1500, 12, 3, deepslate_min, deepslate_max },
+		{ "iron", 830, 5, 3, deepslate_min, deepslate_max },
+		{ "gold", 4775, 5, 3, deepslate_min, deepslate_max },
+		{ "gold", 6560, 7, 3, deepslate_min, deepslate_max },
+		{ "diamond", 10000, 4, 3, deepslate_min, mcl_worlds.layer_to_y(12) },
+		{ "diamond", 5000, 2, 3, deepslate_min, mcl_worlds.layer_to_y(12) },
+		{ "diamond", 10000, 8, 3, deepslate_min, mcl_worlds.layer_to_y(12) },
+		{ "diamond", 20000, 1, 1, mcl_worlds.layer_to_y(13), mcl_worlds.layer_to_y(15) },
+		{ "diamond", 20000, 2, 2, mcl_worlds.layer_to_y(13), mcl_worlds.layer_to_y(15) },
+		{ "redstone", 500, 4, 3, deepslate_min, mcl_worlds.layer_to_y(13) },
+		{ "redstone", 800, 7, 4, deepslate_min, mcl_worlds.layer_to_y(13) },
+		{ "redstone", 1000, 4, 3, mcl_worlds.layer_to_y(13), mcl_worlds.layer_to_y(15) },
+		{ "redstone", 1600, 7, 4, mcl_worlds.layer_to_y(13), mcl_worlds.layer_to_y(15) },
+		{ "lapis", 10000, 7, 4, mcl_worlds.layer_to_y(14), deepslate_max },
+		{ "lapis", 12000, 6, 3, mcl_worlds.layer_to_y(10), mcl_worlds.layer_to_y(13) },
+		{ "lapis", 14000, 5, 3, mcl_worlds.layer_to_y(6), mcl_worlds.layer_to_y(9) },
+		{ "lapis", 16000, 4, 3, mcl_worlds.layer_to_y(2), mcl_worlds.layer_to_y(5) },
+		{ "lapis", 18000, 3, 2, mcl_worlds.layer_to_y(0), mcl_worlds.layer_to_y(2) },
+	}
+	for _, o in pairs(ore_mapgen) do
+		register_ore_mg("mcl_deepslate:deepslate_with_"..o[1], o[2], o[3], o[4], o[5], o[6])
+	end
 
-		register_ore_mg("mcl_deepslate:deepslate_with_emerald", 16384, 1, 1, mcl_worlds.layer_to_y(4), deepslate_max, mountains)
+	register_ore_mg("mcl_deepslate:deepslate_with_emerald", 16384, 1, 1, mcl_worlds.layer_to_y(4), deepslate_max, mountains)
 
-		if copper_mod then
-			register_ore_mg("mcl_deepslate:deepslate_with_copper", 830, 5, 3, deepslate_min, deepslate_max)
-			minetest.register_ore({
-				ore_type       = "scatter",
-				ore            = "mcl_copper:stone_with_copper",
-				wherein        = stonelike,
-				clust_scarcity = 830,
-				clust_num_ores = 5,
-				clust_size     = 3,
-				y_min          = mcl_vars.mg_overworld_min,
-				y_max          = mcl_worlds.layer_to_y(39),
-			})
-			minetest.register_ore({
-				ore_type       = "scatter",
-				ore            = "mcl_copper:stone_with_copper",
-				wherein        = stonelike,
-				clust_scarcity = 1660,
-				clust_num_ores = 4,
-				clust_size     = 2,
-				y_min          = mcl_worlds.layer_to_y(40),
-				y_max          = mcl_worlds.layer_to_y(63),
-			})
-		end
+	if copper_mod then
+		register_ore_mg("mcl_deepslate:deepslate_with_copper", 830, 5, 3, deepslate_min, deepslate_max)
+		minetest.register_ore({
+			ore_type       = "scatter",
+			ore            = "mcl_copper:stone_with_copper",
+			wherein        = stonelike,
+			clust_scarcity = 830,
+			clust_num_ores = 5,
+			clust_size     = 3,
+			y_min          = mcl_vars.mg_overworld_min,
+			y_max          = mcl_worlds.layer_to_y(39),
+		})
+		minetest.register_ore({
+			ore_type       = "scatter",
+			ore            = "mcl_copper:stone_with_copper",
+			wherein        = stonelike,
+			clust_scarcity = 1660,
+			clust_num_ores = 4,
+			clust_size     = 2,
+			y_min          = mcl_worlds.layer_to_y(40),
+			y_max          = mcl_worlds.layer_to_y(63),
+		})
 	end
 end
 

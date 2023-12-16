@@ -167,9 +167,6 @@ mcl_buckets_use_select_box (Buckets use select box) bool false
 # Note: This setting has no effect on existing worlds.
 mcl_superflat_classic (Classic superflat map generation) bool false
 
-# If disabled, no deepslate will be generated.
-mcl_generate_deepslate (Generate Deepslate) bool true
-
 # If disabled, no ores will be generated.
 mcl_generate_ores (Generate Ores) bool true
 
