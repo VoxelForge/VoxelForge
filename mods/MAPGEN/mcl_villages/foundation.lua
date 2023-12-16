@@ -24,6 +24,7 @@ function mcl_villages.ground(pos, pr) -- role model: Wendelsteinkircherl, Branne
 		p2.y = p2.y-1
 	end
 end
+
 -------------------------------------------------------------------------------
 -- function clear space above baseplate
 -------------------------------------------------------------------------------
@@ -35,7 +36,7 @@ function mcl_villages.terraform(settlement_info, pr)
 		for j, schem in ipairs(mcl_villages.schematic_table) do
 			if settlement_info[i]["name"] == schem["name"] then
 				schematic_data = schem
-			        break
+				break
 			end
 		end
 		local pos = settlement_info[i]["pos"]
@@ -46,8 +47,8 @@ function mcl_villages.terraform(settlement_info, pr)
 			fwidth = schematic_data["hdepth"]
 			fdepth = schematic_data["hwidth"]
 		end
-		--fheight = schematic_data["hheight"] * 3  -- remove trees and leaves above
 		fheight = schematic_data["hheight"]  -- remove trees and leaves above
+
 		--
 		-- now that every info is available -> create platform and clear space above
 		--
@@ -59,11 +60,6 @@ function mcl_villages.terraform(settlement_info, pr)
 						mcl_villages.ground(p, pr)
 					else
 						-- write ground
---						local p = {x=pos.x+xi, y=pos.y+yi, z=pos.z+zi}
---						local node = mcl_vars.get_node(p)
---						if node and node.name ~= "air" then
---							minetest.swap_node(p,{name="air"})
---						end
 						minetest.swap_node({x=pos.x+xi, y=pos.y+yi, z=pos.z+zi},{name="air"})
 					end
 				end

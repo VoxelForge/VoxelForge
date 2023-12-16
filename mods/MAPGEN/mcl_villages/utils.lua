@@ -15,8 +15,8 @@ end
 --
 --
 function mcl_villages.round(num, numDecimalPlaces)
-  local mult = 10^(numDecimalPlaces or 0)
-  return math.floor(num * mult + 0.5) / mult
+	local mult = 10^(numDecimalPlaces or 0)
+	return math.floor(num * mult + 0.5) / mult
 end
 
 -------------------------------------------------------------------------------
@@ -147,37 +147,37 @@ end
 -- initialize furnace
 -------------------------------------------------------------------------------
 function mcl_villages.initialize_furnace(pos)
-  -- find chests within radius
-  local furnacepos = minetest.find_node_near(pos,
-    7, --radius
-    {"mcl_furnaces:furnace"})
-  -- initialize furnacepos (mts furnacepos don't have meta)
-  if furnacepos
-  then
-    local meta = minetest.get_meta(furnacepos)
-    if meta:get_string("infotext") ~= "furnace"
-    then
-      minetest.registered_nodes["mcl_furnaces:furnace"].on_construct(furnacepos)
-    end
-  end
+	-- find chests within radius
+	local furnacepos = minetest.find_node_near(pos,
+		7, --radius
+		{"mcl_furnaces:furnace"})
+	-- initialize furnacepos (mts furnacepos don't have meta)
+	if furnacepos
+	then
+		local meta = minetest.get_meta(furnacepos)
+		if meta:get_string("infotext") ~= "furnace"
+		then
+			minetest.registered_nodes["mcl_furnaces:furnace"].on_construct(furnacepos)
+		end
+	end
 end
 -------------------------------------------------------------------------------
 -- initialize anvil
 -------------------------------------------------------------------------------
 function mcl_villages.initialize_anvil(pos)
-  -- find chests within radius
-  local anvilpos = minetest.find_node_near(pos,
-    7, --radius
-    {"mcl_anvils:anvil"})
-  -- initialize anvilpos (mts anvilpos don't have meta)
-  if anvilpos
-  then
-    local meta = minetest.get_meta(anvilpos)
-    if meta:get_string("infotext") ~= "anvil"
-    then
-      minetest.registered_nodes["mcl_anvils:anvil"].on_construct(anvilpos)
-    end
-  end
+	-- find chests within radius
+	local anvilpos = minetest.find_node_near(pos,
+		7, --radius
+		{"mcl_anvils:anvil"})
+	-- initialize anvilpos (mts anvilpos don't have meta)
+	if anvilpos
+	then
+		local meta = minetest.get_meta(anvilpos)
+		if meta:get_string("infotext") ~= "anvil"
+		then
+			minetest.registered_nodes["mcl_anvils:anvil"].on_construct(anvilpos)
+		end
+	end
 end
 -------------------------------------------------------------------------------
 -- randomize table
@@ -202,8 +202,6 @@ function mcl_villages.evaluate_heightmap()
 		return mcl_villages.max_height_difference + 1
 	end
 
-	--minetest.log("action", "heightmap size: " .. tostring(#heightmap))
-
 	-- max height and min height, initialize with impossible values for easier first time setting
 	local max_y = -50000
 	local min_y = 50000
@@ -211,22 +209,14 @@ function mcl_villages.evaluate_heightmap()
 	local square_start = 1621
 	local square_end = 1661
 	for j = 1 , 40, 1 do
-		if square_start >= #heightmap then
-			--minetest.log("action", "Heightmap size reached. Go no further outside")
-			break
-		end
 		for i = square_start, square_end, 1 do
-			--minetest.log("action", "current hm index: " .. tostring(i) .. "current hm entry: " .. tostring(heightmap[i]))
-
 			if i >= #heightmap then
-				--minetest.log("action", "Heightmap size reached. Go no further")
 				break
 			end
 			local current_hm_entry = heightmap[i]
 			if current_hm_entry then
 				-- skip buggy heightmaps, return high value. Converted mcl5 maps can be -31007
 				if current_hm_entry == -31000 or heightmap[i] == 31000 then
-					--minetest.log("action", "incorrect heighmap values. abandon")
 					return mcl_villages.max_height_difference + 1
 				end
 				if current_hm_entry < min_y then
@@ -244,13 +234,10 @@ function mcl_villages.evaluate_heightmap()
 	-- return the difference between highest and lowest pos in chunk
 	local height_diff = max_y - min_y
 
-	--minetest.log("action", "height_diff = " .. tostring(height_diff))
-
 	-- filter buggy heightmaps
 	if height_diff <= 1 then
 		return mcl_villages.max_height_difference + 1
 	end
-	--minetest.log("action", "return heigh diff = " .. tostring(height_diff))
 	-- debug info
 	mcl_villages.debug("heightdiff ".. height_diff)
 	return height_diff
@@ -280,7 +267,6 @@ function mcl_villages.check_radius_distance(settlement_info, building_pos, schem
 		local distance = vector.distance(building_pos, built_house["pos"])
 
 		if distance < r1 + r2 then
-			--minetest.log(string.format("new %s at %s would overlap %s at %s. r1 %d, r2 %d, dist %d, new step %d",schem["name"], minetest.pos_to_string(building_pos), built_house["name"],  minetest.pos_to_string(built_house["pos"]), r1, r2, distance, r1 + r2 - distance + 4 ))
 			return false, r1 + r2 - distance + 4
 		end
 	end

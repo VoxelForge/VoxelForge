@@ -2,31 +2,11 @@ local water_villages = minetest.settings:get_bool("mcl_villages_allow_water_vill
 
 -- switch for debugging
 function mcl_villages.debug(message)
-	-- minetest.chat_send_all(message)
-	-- minetest.log("warning", "[mcl_villages] "..message)
 	minetest.log("verbose", "[mcl_villages] "..message)
 end
 
---[[ Manually set in 'buildings.lua'
--- material to replace cobblestone with
-local wallmaterial = {
-	"mcl_core:junglewood",
-	"mcl_core:sprucewood",
-	"mcl_core:wood",
-	"mcl_core:birchwood",
-	"mcl_core:acaciawood",
-	"mcl_core:stonebrick",
-	"mcl_core:cobble",
-	"mcl_core:sandstonecarved",
-	"mcl_core:sandstone",
-	"mcl_core:sandstonesmooth2"
-}
---]]
 mcl_villages.surface_mat = {}
--------------------------------------------------------------------------------
--- Set array to list
--- https://stackoverflow.com/questions/656199/search-for-an-item-in-a-lua-list
--------------------------------------------------------------------------------
+
 function mcl_villages.grundstellungen()
 	mcl_villages.surface_mat = mcl_villages.Set {
 		"mcl_core:dirt_with_grass",
@@ -65,6 +45,7 @@ function mcl_villages.grundstellungen()
 		mcl_villages.surface_mat["mcl_core:river_water_flowing"] = true
 	end
 end
+
 --
 -- possible surfaces where buildings can be built
 --
@@ -73,6 +54,7 @@ end
 -- path to schematics
 --
 schem_path = mcl_villages.modpath.."/schematics/"
+
 --
 -- list of schematics
 --
@@ -80,27 +62,23 @@ local basic_pseudobiome_villages = minetest.settings:get_bool("basic_pseudobiome
 
 mcl_villages.schematic_table = {
 	{name = "large_house",	mts = schem_path.."large_house.mts",	hwidth = 11, hdepth = 12, hheight =  9, hsize = 14, max_num = 0.08 , rplc = basic_pseudobiome_villages },
-	{name = "blacksmith",	mts = schem_path.."blacksmith.mts",	hwidth =  7, hdepth =  7, hheight = 13, hsize = 13, max_num = 0.055, rplc = basic_pseudobiome_villages },
+	{name = "blacksmith",	mts = schem_path.."blacksmith.mts",	hwidth =	7, hdepth =  7, hheight = 13, hsize = 13, max_num = 0.055, rplc = basic_pseudobiome_villages },
 	{name = "butcher",	mts = schem_path.."butcher.mts",	hwidth = 11, hdepth =  8, hheight = 10, hsize = 14, max_num = 0.03 , rplc = basic_pseudobiome_villages },
 	{name = "church",	mts = schem_path.."church.mts",		hwidth = 13, hdepth = 13, hheight = 14, hsize = 15, max_num = 0.04 , rplc = basic_pseudobiome_villages },
-	{name = "farm",		mts = schem_path.."farm.mts",		hwidth =  7, hdepth =  7, hheight = 13, hsize = 13, max_num = 0.1  , rplc = basic_pseudobiome_villages },
-	{name = "lamp",		mts = schem_path.."lamp.mts",		hwidth =  3, hdepth =  3, hheight = 13, hsize = 10, max_num = 0.1  , rplc = false                      },
+	{name = "farm",		mts = schem_path.."farm.mts",		hwidth =	7, hdepth =  7, hheight = 13, hsize = 13, max_num = 0.1  , rplc = basic_pseudobiome_villages },
+	{name = "lamp",		mts = schem_path.."lamp.mts",		hwidth =	3, hdepth =  3, hheight = 13, hsize = 10, max_num = 0.1  , rplc = false											 },
 	{name = "library",	mts = schem_path.."library.mts",	hwidth = 12, hdepth = 12, hheight =  8, hsize = 13, max_num = 0.04 , rplc = basic_pseudobiome_villages },
-	{name = "medium_house",	mts = schem_path.."medium_house.mts",	hwidth =  8, hdepth = 12, hheight =  8, hsize = 14, max_num = 0.08 , rplc = basic_pseudobiome_villages },
-	{name = "small_house",	mts = schem_path.."small_house.mts",	hwidth =  9, hdepth =  7, hheight =  8, hsize = 13, max_num = 0.7  , rplc = basic_pseudobiome_villages },
+	{name = "medium_house",	mts = schem_path.."medium_house.mts",	hwidth =	8, hdepth = 12, hheight =  8, hsize = 14, max_num = 0.08 , rplc = basic_pseudobiome_villages },
+	{name = "small_house",	mts = schem_path.."small_house.mts",	hwidth =	9, hdepth =  7, hheight =  8, hsize = 13, max_num = 0.7  , rplc = basic_pseudobiome_villages },
 	{name = "tavern",	mts = schem_path.."tavern.mts",		hwidth = 11, hdepth = 10, hheight = 10, hsize = 13, max_num = 0.050, rplc = basic_pseudobiome_villages },
-	{name = "well",		mts = schem_path.."well.mts",		hwidth =  6, hdepth =  8, hheight =  6, hsize = 10, max_num = 0.045, rplc = basic_pseudobiome_villages },
+	{name = "well",		mts = schem_path.."well.mts",		hwidth =	6, hdepth =  8, hheight =  6, hsize = 10, max_num = 0.045, rplc = basic_pseudobiome_villages },
 }
 
 --
 -- maximum allowed difference in height for building a sttlement
 --
 mcl_villages.max_height_difference = 56
---
---
---
 mcl_villages.half_map_chunk_size = 40
---quarter_map_chunk_size = 20
 
 --
 -- Biome based block substitutions
@@ -263,11 +241,6 @@ mcl_villages.material_substitions = {
 		},
 		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:trapdoor_bamboo%1"' },
 		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_bamboo:bamboo_door%1"' },
-
-		--{"mcl_core:cobble", "mcl_bamboo:bamboo_block_stripped"},
-		--{'"mcl_stairs:stair_cobble([^"]*)"', '"mcl_stairs:stair_junglewood%1"'},
-		--{'"mcl_walls:cobble([^"]*)"', '"mcl_walls:mossycobble%1"'},
-		--{'"mcl_stairs:slab_cobble([^"]*)"', '"mcl_stairs:slab_junglewood%1"'},
 
 		{ "mcl_core:cobble", "mcl_core:andesite" },
 		{ '"mcl_stairs:stair_cobble([^"]*)"', '"mcl_stairs:stair_andesite%1"' },

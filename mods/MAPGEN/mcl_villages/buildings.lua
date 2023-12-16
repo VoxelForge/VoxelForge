@@ -4,62 +4,6 @@ local placement_priority = minetest.settings:get("mcl_villages_placement_priorit
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
---[[
--------------------------------------------------------------------------------
--- build schematic, replace material, rotation
--------------------------------------------------------------------------------
-function mcl_villages.build_schematic(vm, data, va, pos, building, replace_wall, name)
-  -- get building node material for better integration to surrounding
-  local platform_material =  mcl_vars.get_node(pos)
-  if not platform_material or (platform_material.name == "air" or platform_material.name == "ignore")  then
-    return
-  end
-  platform_material = platform_material.name
-  -- pick random material
-  local material = wallmaterial[math.random(1,#wallmaterial)]
-  -- schematic conversion to lua
-  local schem_lua = minetest.serialize_schematic(building,
-    "lua",
-    {lua_use_comments = false, lua_num_indent_spaces = 0}).." return schematic"
-  -- replace material
-  if replace_wall == "y" then
-    schem_lua = schem_lua:gsub("mcl_core:cobble", material)
-  end
-  schem_lua = schem_lua:gsub("mcl_core:dirt_with_grass",
-    platform_material)
-
---  Disable special junglewood for now.
- -- special material for spawning npcs
- -- schem_lua = schem_lua:gsub("mcl_core:junglewood",
- --   "settlements:junglewood")
---
-
-  -- format schematic string
-  local schematic = loadstring(schem_lua)()
-  -- build foundation for the building an make room above
-  local width = schematic["size"]["x"]
-  local depth = schematic["size"]["z"]
-  local height = schematic["size"]["y"]
-  local possible_rotations = {"0", "90", "180", "270"}
-  local rotation = possible_rotations[ math.random( #possible_rotations ) ]
-  mcl_villages.foundation(
-    pos,
-    width,
-    depth,
-    height,
-    rotation)
-  vm:set_data(data)
-  -- place schematic
-
-  minetest.place_schematic_on_vmanip(
-    vm,
-    pos,
-    schematic,
-    rotation,
-    nil,
-    true)
-  vm:write_to_map(true)
-end]]
 -------------------------------------------------------------------------------
 -- initialize settlement_info
 -------------------------------------------------------------------------------
@@ -185,6 +129,7 @@ function mcl_villages.create_site_plan(maxp, minp, pr)
 	mcl_villages.debug("really ".. number_built)
 	return settlement_info
 end
+
 -------------------------------------------------------------------------------
 -- evaluate settlement_info and place schematics
 -------------------------------------------------------------------------------
@@ -308,19 +253,18 @@ function mcl_villages.place_schematics(settlement_info, pr)
 
 		local pos = settlement_info[i]["pos"]
 		local rotation = settlement_info[i]["rotat"]
+
 		-- get building node material for better integration to surrounding
 		local platform_material = settlement_info[i]["surface_mat"]
-		--platform_material_name = minetest.get_name_from_content_id(platform_material)
-		-- pick random material
-		--local material = wallmaterial[pr:next(1,#wallmaterial)]
-		--
 		local building = building_all_info["mts"]
 		local replace_wall = building_all_info["rplc"]
+
 		-- schematic conversion to lua
 		local schem_lua = minetest.serialize_schematic(building,
 			"lua",
 			{lua_use_comments = false, lua_num_indent_spaces = 0}).." return schematic"
 		schem_lua = schem_lua:gsub("mcl_core:stonebrickcarved", "mcl_villages:stonebrickcarved")
+
 		-- replace material
 		if replace_wall then
 			--Note, block substitution isn't matching node names exactly; so nodes that are to be substituted that have the same prefixes cause bugs.
@@ -328,35 +272,21 @@ function mcl_villages.place_schematics(settlement_info, pr)
 			if platform_material == "mcl_core:snow" or platform_material == "mcl_core:dirt_with_grass_snow" or platform_material == "mcl_core:podzol" then
 				schem_lua = schem_lua:gsub("mcl_core:tree", "mcl_core:sprucetree")
 				schem_lua = schem_lua:gsub("mcl_core:wood", "mcl_core:sprucewood")
-				--schem_lua = schem_lua:gsub("mcl_fences:fence", "mcl_fences:spruce_fence")
-				--schem_lua = schem_lua:gsub("mcl_stairs:slab_wood_top", "mcl_stairs:slab_sprucewood_top")
-				--schem_lua = schem_lua:gsub("mcl_stairs:stair_wood", "mcl_stairs:stair_sprucewood")
-				--schem_lua = schem_lua:gsub("mesecons_pressureplates:pressure_plate_wood_off", "mesecons_pressureplates:pressure_plate_sprucewood_off")
 			elseif platform_material == "mcl_core:sand" or platform_material == "mcl_core:redsand" then
 				schem_lua = schem_lua:gsub("mcl_core:tree", "mcl_core:sandstonecarved")
 				schem_lua = schem_lua:gsub("mcl_core:cobble", "mcl_core:sandstone")
 				schem_lua = schem_lua:gsub("mcl_core:wood", "mcl_core:sandstonesmooth")
-				--schem_lua = schem_lua:gsub("mcl_fences:fence", "mcl_fences:birch_fence")
-				--schem_lua = schem_lua:gsub("mcl_stairs:slab_wood_top", "mcl_stairs:slab_birchwood_top")
-				--schem_lua = schem_lua:gsub("mcl_stairs:stair_wood", "mcl_stairs:stair_birchwood")
-				--schem_lua = schem_lua:gsub("mesecons_pressureplates:pressure_plate_wood_off", "mesecons_pressureplates:pressure_plate_birchwood_off")
-				--schem_lua = schem_lua:gsub("mcl_stairs:stair_stonebrick", "mcl_stairs:stair_redsandstone")
-				--schem_lua = schem_lua:gsub("mcl_core:stonebrick", "mcl_core:redsandstonesmooth")
 				schem_lua = schem_lua:gsub("mcl_core:brick_block", "mcl_core:redsandstone")
 			end
 		end
 		schem_lua = schem_lua:gsub("mcl_core:dirt_with_grass", platform_material)
-
-		--[[ Disable special junglewood for now.
-		-- special material for spawning npcs
-		schem_lua = schem_lua:gsub("mcl_core:junglewood", "settlements:junglewood")
-		--]]
 
 		schem_lua = schem_lua:gsub("mcl_stairs:stair_wood_outer", "mcl_stairs:slab_wood")
 		schem_lua = schem_lua:gsub("mcl_stairs:stair_stone_rough_outer", "air")
 
 		-- format schematic string
 		local schematic = loadstring(schem_lua)()
+
 		-- build foundation for the building an make room above
 		-- place schematic
 		mcl_structures.place_schematic(
@@ -428,12 +358,9 @@ local function layout_town(minp, maxp, pr, input_settlement_info)
 		local angle = degrs * math.pi / 180
 		local r = step
 
-		--minetest.log(string.format("Placing a %s for %s", cur_schem["name"], minetest.pos_to_string(center)))
-
 		while not placed do
 			iter = iter + 1
 			r = r + step
-			--minetest.log(string.format("iter %d, step %d, r %d", iter, step, r))
 
 			if r > max_dist then
 				degrs = pr:next(0, 359)
@@ -448,7 +375,6 @@ local function layout_town(minp, maxp, pr, input_settlement_info)
 
 			local chunk_number = mcl_vars.get_chunk_number(pos1)
 			local pos_surface, surface_material
-			--minetest.log(string.format("Placing a %s at %s", cur_schem["name"], minetest.pos_to_string(pos1)))
 
 			if chunks[chunk_number] then
 				pos_surface, surface_material = mcl_villages.find_surface(pos1, false, true)
@@ -468,7 +394,6 @@ local function layout_town(minp, maxp, pr, input_settlement_info)
 					iter = 0
 					placed = true
 				else
-					--minetest.log(string.format("step %d, next step %d",step, next_step))
 					step = next_step
 				end
 			end
@@ -481,11 +406,9 @@ local function layout_town(minp, maxp, pr, input_settlement_info)
 			end
 
 			if not placed and iter == 20 and input_settlement_info[i - 1] and input_settlement_info[i - 1]["pos"] then
-				--minetest.log(string.format("Could not place a %s for %s after 20 tries.", cur_schem["name"], minetest.pos_to_string(center)))
 				center = input_settlement_info[i - 1]["pos"]
 			end
 			if not placed and iter >= 30 then
-				--minetest.log(string.format("Could not place a %s for %s after 30 tries, skipping.", cur_schem["name"], minetest.pos_to_string(center)))
 				break
 			end
 		end

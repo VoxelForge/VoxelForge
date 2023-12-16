@@ -8,7 +8,6 @@ dofile(mcl_villages.modpath.."/utils.lua")
 dofile(mcl_villages.modpath.."/foundation.lua")
 dofile(mcl_villages.modpath.."/buildings.lua")
 dofile(mcl_villages.modpath.."/paths.lua")
---dofile(mcl_villages.modpath.."/convert_lua_mts.lua")
 
 dofile(mcl_villages.modpath .. "/api.lua")
 
@@ -20,6 +19,7 @@ mcl_villages.grundstellungen()
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local villagegen={}
+
 --
 -- register block for npc spawn
 --
@@ -39,39 +39,21 @@ minetest.register_node("mcl_villages:structblock", {drawtype="airlike",groups = 
 
 
 
---[[ Enable for testing, but use MineClone2's own spawn code if/when merging.
---
--- register inhabitants
---
-if minetest.get_modpath("mobs_mc") then
-  mcl_mobs:register_spawn("mobs_mc:villager", --name
-    {"mcl_core:stonebrickcarved"}, --nodes
-    15, --max_light
-    0, --min_light
-    20, --chance
-    7, --active_object_count
-    31000, --max_height
-    nil) --day_toggle
-end
---]]
-
 --
 -- on map generation, try to build a settlement
 --
 local function build_a_settlement(minp, maxp, blockseed)
 	local pr = PseudoRandom(blockseed)
 
-	--minetest.log("Starting village for " .. minetest.pos_to_string(minp))
 	local settlement_info = mcl_villages.create_site_plan_new(minp, maxp, pr)
 
 	if not settlement_info then
-		--minetest.log("Aborting village for " .. minetest.pos_to_string(minp))
 		return
 	end
 
 	mcl_villages.terraform_new(settlement_info, pr)
 	mcl_villages.place_schematics_new(settlement_info, pr, blockseed)
-	--mcl_villages.dump_path_ends()
+
 	-- TODO when run here minetest.find_path regularly fails :(
 	--mcl_villages.paths_new(blockseed)
 	--minetest.log("Completed village for " .. minetest.pos_to_string(minp))
@@ -94,7 +76,6 @@ if mg_name ~= "singlenode" then
 		end
 		local pr = PseudoRandom(blockseed)
 		if pr:next(1, village_chance) == 1 then
-			--minetest.log(string.format( "Potential village site between %s and %s", minetest.pos_to_string(minp), minetest.pos_to_string(maxp)))
 			local big_minp = vector.offset(minp, -16, -16, -16)
 			local big_maxp = vector.offset(maxp, 16, 16, 16)
 			minetest.emerge_area(
@@ -142,6 +123,7 @@ minetest.register_node("mcl_villages:building_block", {
 	drawtype = "airlike",
 	groups = { not_in_creative_inventory = 1 },
 	light_source = 14,
+
 	-- Somethings don't work reliably when done in the map building
 	-- so we use a timer to run them later when they work more reliably
 	-- e.g. spawning mobs, running minetest.find_path
