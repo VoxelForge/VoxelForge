@@ -2,15 +2,8 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 -- Simple solid cubic nodes, most of them are the ground materials and simple building blocks
 
-local translucent_ice = minetest.settings:get_bool("mcl_translucent_ice", false)
-local ice_drawtype, ice_texture_alpha
-if translucent_ice then
-	ice_drawtype = "glasslike"
-	ice_texture_alpha = minetest.features.use_texture_alpha_string_modes and "blend" or true
-else
-	ice_drawtype = "normal"
-	ice_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false
-end
+ice_drawtype = "glasslike"
+ice_texture_alpha = minetest.features.use_texture_alpha_string_modes and "blend" or true
 
 mcl_core.fortune_drop_ore = {
 	discrete_uniform_distribution = true,
