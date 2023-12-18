@@ -18,6 +18,9 @@ mcl_doTileDrops (Blocks have drops) bool true
 # If enabled, explosions destroy blocks.
 mcl_explosions_griefing (Explosions destroy blocks) bool true
 
+# If disabled, no ores will be generated.
+mcl_generate_ores (Generate Ores) bool true
+
 # Comma separated list of disabled structure names
 mcl_disabled_structures (Disabled structures) string
 
@@ -142,9 +145,6 @@ max_bossbars (Maximum Boss bars) int 5
 #
 # Note: This setting has no effect on existing worlds.
 mcl_superflat_classic (Classic superflat map generation) bool false
-
-# If disabled, no ores will be generated.
-mcl_generate_ores (Generate Ores) bool true
 
 # If disabled, command blocks will be unusuable (but still present).
 mcl_enable_commandblocks (Enable Command Blocks) bool true
