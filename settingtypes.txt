@@ -224,9 +224,6 @@ mcl_inv_nodes_movable (Inventory nodes movable) bool true
 mcl_mob_allow_nav_hacks (Mob navigation hacks) bool false
 
 [Debugging]
-# If enabled, this will show the itemstring of an item in the description.
-mcl_item_id_debug (Item ID Debug) bool false
-
 #Log mob spawning and despawning events
 mcl_logging_mobs_spawn (Log Mob Spawning) bool true
 
