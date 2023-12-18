@@ -245,19 +245,6 @@ mcl_villages_min_jobs (The minimum number of jobs to have in a village) int 1
 
 mcl_villages_max_jobs (The maximum number of jobs to have in a village) int 12
 
-mcl_villages_circles (Use circles instead of rectangles for above ground clearing) bool true
-
-mcl_villages_terrace (Terrace above ground instead of having straight sides. Set to false to approximate old style) bool true
-
-mcl_villages_padding (Extra width to clear over ground. Set to zero to approximate old style) int 2
-
-mcl_villages_top_padding (Extra height to clear above building. Set to a big number to approximate old style) int 8
-
-#  This constrains the effect on tall buildings
-mcl_villages_terrace_max_ext (Maximum width terracing is allowed to extend beyond building radius) int 6
-
-mcl_villages_light_threshold (Light level to control lamp placement on paths. Night time light levels below this value will trigger lamp placement) int 6
-
 mcl_villages_village_chance (1 in X chance a village will spawn in a valid chunk. Set to 0 for no villages) int 100
 
 # This controls how job sites and houses are placed during village construction
@@ -265,9 +252,6 @@ mcl_villages_village_chance (1 in X chance a village will spawn in a valid chunk
 # jobs: places the job sites first so they tend to be closer to the bell
 # houses: places the houses first so the tend to be closer to the bell
 mcl_villages_placement_priority (Which buildings should be closer to the bell) enum random random,jobs,houses
-
-# Also affects structures as they now use ground turnips
-mcl_ground_padding (Extra width to add to ground terraform radius) int 1 0 6
 
 # This is fine for players, but expect all the villagers to die very quickly
 mcl_villages_allow_water_villages (Allow buildings to spawn on top of water) bool false
