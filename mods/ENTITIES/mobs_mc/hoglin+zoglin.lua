@@ -97,6 +97,12 @@ mcl_mobs.register_mob("mobs_mc:zoglin",table.merge(hoglin,{
 	attacks_monsters = true,
 	lava_damage = 0,
 	fire_damage = 0,
+	sounds = {
+		random = "extra_mobs_hoglin.2",
+		damage = "extra_mobs_hoglin_hurt",
+		death = "extra_mobs_hoglin_hurt",
+		distance = 16,
+	},
 }))
 
 mcl_mobs.register_mob("mobs_mc:baby_hoglin",table.merge(hoglin,{
