@@ -1,6 +1,6 @@
 mcl_weather.snow = {}
 
-local PARTICLES_COUNT_SNOW = tonumber(minetest.settings:get("mcl_weather_snow_particles")) or 100
+local PARTICLES_COUNT_SNOW = 100
 mcl_weather.snow.init_done = false
 local mgname = minetest.get_mapgen_setting("mg_name")
 

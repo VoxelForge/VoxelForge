@@ -1,5 +1,5 @@
-local PARTICLES_COUNT_RAIN = tonumber(minetest.settings:get("mcl_weather_rain_particles")) or 500
-local PARTICLES_COUNT_THUNDER = tonumber(minetest.settings:get("mcl_weather_thunder_particles")) or 900
+local PARTICLES_COUNT_RAIN = 500
+local PARTICLES_COUNT_THUNDER = 900
 
 local mgname = minetest.get_mapgen_setting("mg_name")
 
