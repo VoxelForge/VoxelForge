@@ -27,6 +27,16 @@ mcl_disabled_structures (Disabled structures) string
 # Comma separated list of disabled event names
 mcl_disabled_events (Disabled events) string
 
+# If enabled, the “flat” map generator generates a Classic Superflat world:
+# Completely flat, 1 layer of grass blocks on top of 2 layers of dirt on
+# top of a final layer of bedrock. No caves, trees or plants.
+# Also, if enabled, the setting “mgflat_flags” is ignored.
+# If disabled, Minetest's default flat map generator is used, that is, trees,
+# caves, and a deeper underground can be generated.
+#
+# Note: This setting has no effect on existing worlds.
+mcl_superflat_classic (Classic superflat map generation) bool false
+
 [Players]
 # If enabled, players respawn at the bed they last lay on instead of normal
 # spawn.
@@ -136,16 +146,6 @@ animated_chests (Animated chests) bool true
 max_bossbars (Maximum Boss bars) int 5
 
 [Experimental]
-# If enabled, the “flat” map generator generates a Classic Superflat world:
-# Completely flat, 1 layer of grass blocks on top of 2 layers of dirt on
-# top of a final layer of bedrock. No caves, trees or plants.
-# Also, if enabled, the setting “mgflat_flags” is ignored.
-# If disabled, Minetest's default flat map generator is used, that is, trees,
-# caves, and a deeper underground can be generated.
-#
-# Note: This setting has no effect on existing worlds.
-mcl_superflat_classic (Classic superflat map generation) bool false
-
 # If disabled, command blocks will be unusuable (but still present).
 mcl_enable_commandblocks (Enable Command Blocks) bool true
 
