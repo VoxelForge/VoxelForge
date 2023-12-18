@@ -186,15 +186,6 @@ mcl_enable_mt_dungeons (Enable native mt dungeons) bool false
 # Disable to use older mob specific light levels.
 mcl_mobs_modern_lighting (Use MC 1.18+ light rules for spawning) bool true
 
-# These only take effect if mcl_mobs_modern_lighting is enabled
-# Light levels greater than these block mobs spawning
-# See https://minecraft.fandom.com/wiki/Light#Internal_light_level
-mcl_mobs_nether_threshold (Artificial light threshold to stop spawns in the Nether) int 11 0 14
-mcl_mobs_end_threshold (Artificial light threshold to stop spawns in the End) int 0 0 14
-mcl_mobs_overworld_threshold (Artificial light threshold to stop monster spawns in the Overworld) int 0 0 14
-mcl_mobs_overworld_sky_threshold (Skylight threshold to stop monster spawns in the Overworld) int 7 0 14
-mcl_mobs_overworld_passive_threshold  (Combined light threshold to stop animal and npc spawns in the Overworld) int 7 0 14
-
 # Enable piston movement of Inventory nodes. This does not work in mc java edition due to techical restrictions
 mcl_inv_nodes_movable (Inventory nodes movable) bool true
 

@@ -2,11 +2,11 @@
 local mob_class = mcl_mobs.mob_class
 
 local modern_lighting = minetest.settings:get_bool("mcl_mobs_modern_lighting", true)
-local nether_threshold = tonumber(minetest.settings:get("mcl_mobs_nether_threshold")) or 11
-local end_threshold = tonumber(minetest.settings:get("mcl_mobs_end_threshold")) or 0
-local overworld_threshold = tonumber(minetest.settings:get("mcl_mobs_overworld_threshold")) or 0
-local overworld_sky_threshold = tonumber(minetest.settings:get("mcl_mobs_overworld_sky_threshold")) or 7
-local overworld_passive_threshold = tonumber(minetest.settings:get("mcl_mobs_overworld_passive_threshold")) or 7
+local nether_threshold = 11
+local end_threshold = 0
+local overworld_threshold = 0
+local overworld_sky_threshold = 7
+local overworld_passive_threshold = 7
 
 local PASSIVE_INTERVAL = 20
 local dbg_spawn_attempts = 0
