@@ -557,9 +557,7 @@ minetest.register_alias("mcl_core:tallgrass", "mcl_flowers:tallgrass")
 local mg_name = minetest.get_mapgen_setting("mg_name")
 local mod_mcimport = minetest.get_modpath("mcimport")
 
-local fix_doubleplants = minetest.settings:get_bool("fix_doubleplants", true)
-
-if mod_mcimport and mg_name == "singlenode" and fix_doubleplants == true then
+if mod_mcimport and mg_name == "singlenode" then
 	local flowernames = { "peony", "rose_bush", "lilac", "sunflower", "double_fern", "double_grass" }
 
 	minetest.register_lbm({
