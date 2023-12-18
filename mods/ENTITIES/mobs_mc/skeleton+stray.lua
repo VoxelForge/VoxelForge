@@ -42,6 +42,12 @@ local skeleton = {
 	},
 	walk_velocity = 1.0,
 	run_velocity = 2.0, -- skeletons are really anoying in mc, so i made only walkin 0.2 slower
+	sounds = {
+		random = "mobs_mc_skeleton_random.2",
+		death = "mobs_mc_skeleton_death",
+		damage = "mobs_mc_skeleton_hurt",
+		distance = 16,
+	},
 	damage = 2,
 	reach = 2,
 	drops = {
