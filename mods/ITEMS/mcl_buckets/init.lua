@@ -2,7 +2,6 @@
 local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 local modpath = minetest.get_modpath(modname)
-local use_select_box = minetest.settings:get_bool("mcl_buckets_use_select_box", false)
 
 -- Compatibility with old bucket mod
 minetest.register_alias("bucket:bucket_empty", "mcl_buckets:bucket_empty")
@@ -132,9 +131,7 @@ local function bucket_get_pointed_thing(user)
 end
 
 local function on_place_bucket(itemstack, user, pointed_thing)
-	if not use_select_box then
-		pointed_thing = bucket_get_pointed_thing(user)
-	end
+	pointed_thing = bucket_get_pointed_thing(user)
 
 	-- Must be pointing to node
 	if not pointed_thing or pointed_thing.type ~= "node" then
@@ -184,9 +181,7 @@ local function on_place_bucket(itemstack, user, pointed_thing)
 end
 
 local function on_place_bucket_empty(itemstack, user, pointed_thing)
-	if not use_select_box then
-		pointed_thing = bucket_get_pointed_thing(user)
-	end
+	pointed_thing = bucket_get_pointed_thing(user)
 
 	-- Must be pointing to node
 	if not pointed_thing or pointed_thing.type ~= "node" then
@@ -268,7 +263,7 @@ function mcl_buckets.register_liquid(def)
 		inventory_image = def.inventory_image,
 		stack_max = 1,
 		groups = def.groups,
-		liquids_pointable = use_select_box,
+		liquids_pointable = false,
 		on_place = on_place_bucket,
 		on_secondary_use = on_place_bucket,
 		_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
@@ -293,7 +288,7 @@ minetest.register_craftitem("mcl_buckets:bucket_empty", {
 	_tt_help = S("Collects liquids"),
 	inventory_image = "bucket.png",
 	stack_max = 16,
-	liquids_pointable = use_select_box,
+	liquids_pointable = false,
 	on_place = on_place_bucket_empty,
 	on_secondary_use = on_place_bucket_empty,
 	_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
