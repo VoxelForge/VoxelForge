@@ -166,14 +166,15 @@ local function get_entity_info(pos, param2, double, dir, entity_pos)
 	return dir, get_entity_pos(pos, dir, double)
 end
 
-local function create_entity(pos, node_name, textures, param2, double, sound_prefix, mesh_prefix, animation_type, dir,
-							 entity_pos)
-	dir, entity_pos = get_entity_info(pos, param2, double, dir, entity_pos)
-	local obj = minetest.add_entity(entity_pos, "mcl_chests:chest")
-	if obj and obj:get_pos() then
-		local luaentity = obj:get_luaentity()
-		luaentity:initialize(pos, node_name, textures, dir, double, sound_prefix, mesh_prefix, animation_type)
-		return luaentity
+local function create_entity(pos, node_name, textures, param2, double, sound_prefix, mesh_prefix, animation_type, dir, entity_pos)
+	if animate_chests or double then
+		dir, entity_pos = get_entity_info(pos, param2, double, dir, entity_pos)
+		local obj = minetest.add_entity(entity_pos, "mcl_chests:chest")
+		if obj and obj:get_pos() then
+			local luaentity = obj:get_luaentity()
+			luaentity:initialize(pos, node_name, textures, dir, double, sound_prefix, mesh_prefix, animation_type)
+			return luaentity
+		end
 	end
 end
 
@@ -181,8 +182,7 @@ local function find_or_create_entity(pos, node_name, textures, param2, double, s
 	, dir, entity_pos)
 	dir, entity_pos = get_entity_info(pos, param2, double, dir, entity_pos)
 	return find_entity(entity_pos) or
-		create_entity(pos, node_name, textures, param2, double, sound_prefix, mesh_prefix, animation_type, dir,
-			entity_pos)
+		create_entity(pos, node_name, textures, param2, double, sound_prefix, mesh_prefix, animation_type, dir, entity_pos)
 end
 
 local no_rotate, simple_rotate
@@ -193,9 +193,7 @@ if minetest.get_modpath("screwdriver") then
 			local nodename = node.name
 			local nodedef = minetest.registered_nodes[nodename]
 			local dir = minetest.facedir_to_dir(new_param2)
-			if animate_chests then
-				find_or_create_entity(pos, nodename, nodedef._chest_entity_textures, new_param2, false, nodedef._chest_entity_sound, nodedef._chest_entity_mesh, nodedef._chest_entity_animation_type, dir):set_yaw(dir)
-			end
+			find_or_create_entity(pos, nodename, nodedef._chest_entity_textures, new_param2, false, nodedef._chest_entity_sound, nodedef._chest_entity_mesh, nodedef._chest_entity_animation_type, dir):set_yaw(dir)
 		else
 			return false
 		end
@@ -270,9 +268,7 @@ local function chest_update_after_close(pos)
 
 	if node.name == "mcl_chests:trapped_chest_on_small" then
 		minetest.swap_node(pos, {name="mcl_chests:trapped_chest_small", param2 = node.param2})
-		if animate_chests then
-			find_or_create_entity(pos, "mcl_chests:trapped_chest_small", {"mcl_chests_trapped.png"}, node.param2, false, "default_chest", "mcl_chests_chest", "chest"):reinitialize("mcl_chests:trapped_chest_small")
-		end
+		find_or_create_entity(pos, "mcl_chests:trapped_chest_small", {"mcl_chests_trapped.png"}, node.param2, false, "default_chest", "mcl_chests_chest", "chest"):reinitialize("mcl_chests:trapped_chest_small")
 		mesecon.receptor_off(pos, trapped_chest_mesecons_rules)
 	elseif node.name == "mcl_chests:trapped_chest_on_left" then
 		minetest.swap_node(pos, { name = "mcl_chests:trapped_chest_left", param2 = node.param2 })
@@ -983,9 +979,7 @@ register_chest("trapped_chest",
 	},
 	function(pos, node, clicker)
 		minetest.swap_node(pos, {name="mcl_chests:trapped_chest_on_small", param2 = node.param2})
-		if animate_chests then
-			find_or_create_entity(pos, "mcl_chests:trapped_chest_on_small", {"mcl_chests_trapped.png"}, node.param2, false, "default_chest", "mcl_chests_chest", "chest"):reinitialize("mcl_chests:trapped_chest_on_small")
-		end
+		find_or_create_entity(pos, "mcl_chests:trapped_chest_on_small", {"mcl_chests_trapped.png"}, node.param2, false, "default_chest", "mcl_chests_chest", "chest"):reinitialize("mcl_chests:trapped_chest_on_small")
 		mesecon.receptor_on(pos, trapped_chest_mesecons_rules)
 	end,
 	function(pos, node, clicker)
@@ -1033,9 +1027,7 @@ register_chest("trapped_chest_on",
 
 	if node.name == "mcl_chests:trapped_chest_on_small" then
 		minetest.swap_node(pos, {name="mcl_chests:trapped_chest_small", param2 = node.param2})
-		if animate_chests then
-			find_or_create_entity(pos, "mcl_chests:trapped_chest_small", {"mcl_chests_trapped.png"}, node.param2, false, "default_chest", "mcl_chests_chest", "chest"):reinitialize("mcl_chests:trapped_chest_small")
-		end
+		find_or_create_entity(pos, "mcl_chests:trapped_chest_small", {"mcl_chests_trapped.png"}, node.param2, false, "default_chest", "mcl_chests_chest", "chest"):reinitialize("mcl_chests:trapped_chest_small")
 		mesecon.receptor_off(pos, trapped_chest_mesecons_rules)
 
 		player_chest_close(player)
@@ -1179,10 +1171,7 @@ minetest.register_node("mcl_chests:ender_chest_small", {
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", formspec_ender_chest)
-
-		if animate_chests then
-			create_entity(pos, "mcl_chests:ender_chest_small", {"mcl_chests_ender.png"}, minetest.get_node(pos).param2, false, "mcl_chests_enderchest", "mcl_chests_chest", "chest")
-		end
+		create_entity(pos, "mcl_chests:ender_chest_small", {"mcl_chests_ender.png"}, minetest.get_node(pos).param2, false, "mcl_chests_enderchest", "mcl_chests_chest", "chest")
 	end,
 	on_rightclick = function(pos, node, clicker)
 		local def = minetest.registered_nodes[minetest.get_node(vector.offset(pos, 0, 1, 0)).name]
@@ -1430,10 +1419,7 @@ for color, desc in pairs(boxtypes) do
 			meta:set_string("formspec", formspec_shulker_box(nil))
 			local inv = meta:get_inventory()
 			inv:set_size("main", 9*3)
-
-			if animate_chests then
-				create_entity(pos, small_name, {mob_texture}, minetest.get_node(pos).param2, false, "mcl_chests_shulker", "mcl_chests_shulker", "shulker")
-			end
+			create_entity(pos, small_name, {mob_texture}, minetest.get_node(pos).param2, false, "mcl_chests_shulker", "mcl_chests_shulker", "shulker")
 		end,
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
 			local nmeta = minetest.get_meta(pos)
