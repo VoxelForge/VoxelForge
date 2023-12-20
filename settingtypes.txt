@@ -139,11 +139,11 @@ fire_animation_frames (Fire Animation Frames) int 8
 # Whether to animate chests when open / close
 animated_chests (Animated chests) bool true
 
-# The maximum number of boss bars to simultaniously display on the screen
+# The maximum number of boss bars to simultaneously display on the screen
 max_bossbars (Maximum Boss bars) int 5
 
 [Experimental]
-# If disabled, command blocks will be unusuable (but still present).
+# If disabled, command blocks will be unusable (but still present).
 mcl_enable_commandblocks (Command blocks) bool true
 
 # Make some blocks emit decorative particles like flames. This setting
@@ -160,7 +160,7 @@ basic_pseudobiome_villages (Pseudobiome-based villages) bool true
 # Enable Bookshelf inventories
 mcl_bookshelf_inventories (Bookshelf inventories) bool true
 
-# All tameable mobs listen to the "sit" righclick like dogs
+# All tameable mobs listen to the "sit" right-click like dogs
 mcl_extended_pet_control (Extended pet control) bool false
 
 # Enable stairs out of wood bark
@@ -169,7 +169,7 @@ mcl_bark_stairs (Bark Stairs) bool true
 # Use light levels from Minecraft 1.18+ for monster spawning. Disable to use older mob specific light levels.
 mcl_mobs_modern_lighting (Modern light rules for spawning) bool true
 
-# Enable piston movement of Inventory nodes. This does not work in mc java edition due to techical restrictions
+# Enable piston movement of inventory nodes.
 mcl_inv_nodes_movable (Inventory nodes movable) bool true
 
 # Make iron golems teleport home when they are far away and villagers teleport
