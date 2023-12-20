@@ -1,6 +1,6 @@
 local mob_class = mcl_mobs.mob_class
 local active_particlespawners = {}
-local disable_blood = minetest.settings:get_bool("mobs_disable_blood")
+local enable_blood = minetest.settings:get_bool("mcl_damage_particles", true)
 local DEFAULT_FALL_SPEED = -9.81*1.5
 
 local player_transfer_distance = tonumber(minetest.settings:get("player_transfer_distance")) or 128
@@ -160,8 +160,7 @@ end
 
 function mob_class:damage_effect(damage)
 	-- damage particles
-	if (not disable_blood) and damage > 0 then
-
+	if enable_blood and damage > 0 then
 		local amount_large = math.floor(damage / 2)
 		local amount_small = damage % 2
 

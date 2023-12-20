@@ -101,8 +101,8 @@ mobs_drop_items (Mob drops) bool true
 # If enabled, mobs can take, place, change and destroy blocks around them.
 mobs_griefing (Mob griefing) bool true
 
-# If enabled, mobs won't damage particles when they got hurt.
-mobs_disable_blood (Disable mob damage particles) bool false
+# If enabled, mobs will emit damage particles when they get hurt.
+mcl_damage_particles (Damage particles) bool true
 
 # Should wither follow the player who spawned him around
 wither_follow_spawner (Wither follows his spawner) bool true

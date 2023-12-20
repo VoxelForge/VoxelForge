@@ -849,7 +849,7 @@ Custom projectiles for mobs can be registered using
 
  * 'enable_damage'			if true monsters will attack players (default is true)
  * 'only_peaceful_mobs'	if true only animals will spawn in game (default is false)
- * 'mobs_disable_blood'	if false, damage effects appear when mob is hit (default is false)
+ * 'mcl_damage_particles'	if true, damage effects appear when mob is hit (default is true)
  * 'mobs_spawn_protected'	if set to false then mobs will not spawn in protected areas (default is true)
  * 'mob_difficulty'		sets difficulty level (health and hit damage multiplied by this number), defaults to 1.0.
  * 'mob_spawn_chance'		multiplies chance of all mobs spawning and can be set to 0.5 to have mobs spawn more or 2.0 to spawn less. e.g.1 in 7000 * 0.5 = 1 in 3500 so better odds of spawning.
