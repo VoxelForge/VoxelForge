@@ -166,9 +166,6 @@ mcl_extended_pet_control (Extended pet control) bool false
 # Enable stairs out of wood bark
 mcl_bark_stairs (Bark Stairs) bool true
 
-# Enable minetest mapgen dungeons
-mcl_enable_mt_dungeons (Native Minetest dungeons) bool false
-
 # Use light levels from Minecraft 1.18+ for monster spawning. Disable to use older mob specific light levels.
 mcl_mobs_modern_lighting (Modern light rules for spawning) bool true
 
