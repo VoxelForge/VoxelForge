@@ -21,12 +21,6 @@ mcl_explosions_griefing (Explosions destroy blocks) bool true
 # If disabled, no ores will be generated.
 mcl_generate_ores (Generate Ores) bool true
 
-# Comma separated list of disabled structure names
-mcl_disabled_structures (Disabled structures) string
-
-# Comma separated list of disabled event names
-mcl_disabled_events (Disabled events) string
-
 # If enabled, the “flat” map generator generates a Classic Superflat world:
 # Completely flat, 1 layer of grass blocks on top of 2 layers of dirt on
 # top of a final layer of bedrock. No caves, trees or plants.
