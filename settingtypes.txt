@@ -183,7 +183,7 @@ mcl_mob_allow_nav_hacks (Mob navigation hacks) bool false
 enable_real_maps (Enable Real Maps) bool true
 
 [Debugging]
-#Log mob spawning and despawning events
+# Log mob spawning and despawning events
 mcl_logging_mobs_spawn (Log Mob Spawning) bool true
 
 # If enabled mapgen timings will be dumped to log
@@ -193,13 +193,12 @@ mcl_logging_mapgen (Chunk generation logging) bool false
 mcl_logging_structures (Structure generation logging) bool true
 
 # Complete debug logging for mcl_signs events. Use this if you have issues with signs.
-mcl_logging_mcl_signs (Debug logging for mcl_signs) bool false
+mcl_logging_mcl_signs (Complete debug logging for mcl_signs) bool false
 
 # Debug logging for mcl_events.
 mcl_logging_event_api (Debug logging for mcl_events) bool false
 
 [Villages]
-
 mcl_villages_min_jobs (The minimum number of jobs to have in a village) int 1
 
 mcl_villages_max_jobs (The maximum number of jobs to have in a village) int 12
