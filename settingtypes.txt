@@ -177,15 +177,15 @@ mcl_villages_village_chance (1 in X chance a village will spawn in a valid chunk
 # houses: places the houses first so the tend to be closer to the bell
 mcl_villages_placement_priority (Which buildings should be closer to the bell) enum random random,jobs,houses
 
-# This is fine for players, but expect all the villagers to die very quickly
-mcl_villages_allow_water_villages (Allow buildings to spawn on top of water) bool false
-
 [Experimental]
 # If disabled, command blocks will be unusable (but still present).
 mcl_enable_commandblocks (Command blocks) bool true
 
 # If enabled, this will substitute a few blocks in village schematics so they blend into normal, snowy, and sandy areas. Defaults to true.
 mcl_pseudobiome_villages (Pseudobiome-based villages) bool true
+
+# This is fine for players, but expect all the villagers to die very quickly
+mcl_villages_allow_water_villages (Allow village buildings to spawn on top of water) bool false
 
 # Make some blocks emit decorative particles like flames. This setting
 # specifies the detail level of particles, with higher levels being
