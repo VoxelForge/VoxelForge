@@ -32,7 +32,8 @@ local function get_anvil_formspec(set_name, player, cost)
 
 		"label[4.125,0.375;" .. F(C(mcl_formspec.label_color, S("Repair and Name"))) .. "]",
 
-		"image[0.875,0.375;1.75,1.75;mcl_anvils_inventory_hammer.png]",
+		"image_button[0.875,0.375;1.75,1.75;mcl_anvils_inventory_hammer.png;anvil_set_name;]",
+		"tooltip[anvil_set_name;" .. F(S("Repair and Name")) .. "]",
 
 		"field[4.125,0.75;7.25,1;name;;" .. F(set_name) .. "]",
 		"field_close_on_enter[name;false]",
