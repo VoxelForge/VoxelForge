@@ -43,7 +43,6 @@ enable_bed_respawn (Respawn at bed) bool true
 # How many players have to sleep to skip the night, in percent.
 # Setting to 0 will mean 1 player is always enough to skip the night. Setting above 100 will prevent skipping the night.
 # 100 by default.
-# The setting can be changed ingame using `/set mcl_playersSleepingPercentage <number>`
 mcl_playersSleepingPercentage (Players Sleeping Percentage) int 100
 
 # Normally, players drop all their items when they die. Enable this
