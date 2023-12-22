@@ -101,9 +101,6 @@ mobs_griefing (Mob griefing) bool true
 # If enabled, mobs won't damage particles when they got hurt.
 mobs_disable_blood (Disable mob damage particles) bool false
 
-# Display mob icons in inventory instead of mc-like spawn eggs
-mcl_old_spawn_icons (Old spawn icons instead of eggs) bool false
-
 # Should wither follow the player who spawned him around
 wither_follow_spawner (Wither follows his spawner) bool true
 
@@ -192,6 +189,10 @@ mcl_pseudobiome_villages (Pseudobiome villages) bool true
 
 # This is fine for players, but expect all the villagers to die very quickly
 mcl_villages_allow_water_villages (Spawn village buildings on top of water) bool false
+
+# Display mob icons in inventory instead of Minecraft-like spawn eggs.
+# Note that mob icons does not exist for all mobs.
+mcl_old_spawn_icons (Old spawn icons instead of eggs) bool false
 
 # Make some blocks emit decorative particles like flames. This setting
 # specifies the detail level of particles, with higher levels being
