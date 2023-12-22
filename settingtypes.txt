@@ -101,6 +101,15 @@ mobs_griefing (Mob griefing) bool true
 # If enabled, mobs won't damage particles when they got hurt.
 mobs_disable_blood (Disable mob damage particles) bool false
 
+#Display mob icons in inventory instead of mc-like spawn eggs
+mcl_old_spawn_icons (Old spawn icons instead of eggs) bool false
+
+#Should wither follow the player who spawned him around
+wither_follow_spawner (Wither following his spawner) bool true
+
+#Should wither strafe while in combat
+wither_strafes (Wither strafes) bool true
+
 #Maximum amount mobs (default:500)
 mcl_mob_cap_total (Global mob cap) int 500 0 2048
 
@@ -115,15 +124,6 @@ mcl_mob_cap_animal (Mob cap animals) int 10 0 1024
 
 #Maximum amount of ambient mobs that will spawn near a player (default:15)
 mcl_mob_cap_ambient (Mob cap ambient mobs) int 15 0 1024
-
-#Should wither follow the player who spawned him around
-wither_follow_spawner (Wither following his spawner) bool true
-
-#Should wither strafe while in combat
-wither_strafes (Wither strafes) bool true
-
-#Display mob icons in inventory instead of mc-like spawn eggs
-mcl_old_spawn_icons (Old spawn icons instead of eggs) bool false
 
 # How far from players should mobs stop moving
 # Larger values will have a larger performance impact (default:48)
