@@ -1,6 +1,7 @@
 mcl_weather.nether_dust = {}
 mcl_weather.nether_dust.particlespawners = {}
 
+local enable_nether_dust = minetest.settings:get_bool("mcl_nether_dust", true)
 local PARTICLES_COUNT_NETHER_DUST = 150
 
 local psdef= {
@@ -30,6 +31,10 @@ local function check_player(player)
 end
 
 mcl_weather.nether_dust.add_particlespawners = function(player)
+	if not enable_nether_dust then
+		return
+	end
+
 	local name=player:get_player_name()
 	mcl_weather.nether_dust.particlespawners[name]={}
 	psdef.playername = name

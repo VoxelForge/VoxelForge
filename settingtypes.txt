@@ -156,6 +156,9 @@ enable_real_maps (Real Maps) bool true
 # Whether to animate chests when open / close
 mcl_animated_chests (Animated chests) bool true
 
+# Enable dust particles in the nether
+mcl_nether_dust (Nether dust particles) bool true
+
 # The maximum number of boss bars to simultaneously display on the screen
 mcl_max_bossbars (Maximum Boss bars) int 5
 
