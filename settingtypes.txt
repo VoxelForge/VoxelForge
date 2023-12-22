@@ -129,7 +129,7 @@ mcl_mob_cap_ambient (Mob cap for ambient mobs) int 15 0 1024
 # Larger values will have a larger performance impact (default:48)
 mcl_mob_active_range (Active mob range) int 48 0 256
 
-[Additional Features]
+[Features]
 # Enable Bookshelf inventories
 mcl_bookshelf_inventories (Bookshelf inventories) bool true
 
