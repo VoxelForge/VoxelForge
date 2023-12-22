@@ -130,32 +130,6 @@ mcl_old_spawn_icons (Old spawn icons instead of eggs) bool false
 # Larger values will have a larger performance impact (default:48)
 mcl_mob_active_range (Active mob range) int 48 0 256
 
-[Graphics]
-# How many vertical animation frames the fire texture (fire_basic_flame_animated.png) has.
-# This may vary depending on the texture pack you use.
-# Form: Image height / Image width
-fire_animation_frames (Fire Animation Frames) int 8
-
-# Whether to animate chests when open / close
-animated_chests (Animated chests) bool true
-
-# The maximum number of boss bars to simultaneously display on the screen
-max_bossbars (Maximum Boss bars) int 5
-
-[Experimental]
-# If disabled, command blocks will be unusable (but still present).
-mcl_enable_commandblocks (Command blocks) bool true
-
-# Make some blocks emit decorative particles like flames. This setting
-# specifies the detail level of particles, with higher levels being
-# more CPU demanding.
-# WARNING: This setting has quite poor performance and can slow down your
-# game by a lot.
-mcl_node_particles (Block particles detail level) enum none high,medium,low,none
-
-# If enabled, this will substitute a few blocks in village schematics so they blend into normal, snowy, and sandy areas. Defaults to true.
-basic_pseudobiome_villages (Pseudobiome-based villages) bool true
-
 [Additional Features]
 # Enable Bookshelf inventories
 mcl_bookshelf_inventories (Bookshelf inventories) bool true
@@ -179,21 +153,17 @@ mcl_mob_allow_nav_hacks (Mob navigation hacks) bool false
 # Allow players to create Minecraft-like maps.
 enable_real_maps (Enable Real Maps) bool true
 
-[Debugging]
-# Log mob spawning and despawning events
-mcl_logging_mobs_spawn (Log Mob Spawning) bool true
+[Graphics]
+# Whether to animate chests when open / close
+mcl_animated_chests (Animated chests) bool true
 
-# If enabled mapgen timings will be dumped to log
-mcl_logging_mapgen (Chunk generation logging) bool false
+# The maximum number of boss bars to simultaneously display on the screen
+mcl_max_bossbars (Maximum Boss bars) int 5
 
-# If enabled generated structures will be logged
-mcl_logging_structures (Structure generation logging) bool true
-
-# Complete debug logging for mcl_signs events. Use this if you have issues with signs.
-mcl_logging_mcl_signs (Complete debug logging for mcl_signs) bool false
-
-# Debug logging for mcl_events.
-mcl_logging_event_api (Debug logging for mcl_events) bool false
+# How many vertical animation frames the fire texture (fire_basic_flame_animated.png) has.
+# This may vary depending on the texture pack you use.
+# Form: Image height / Image width
+fire_animation_frames (Fire animation frames) int 8
 
 [Villages]
 mcl_villages_min_jobs (The minimum number of jobs to have in a village) int 1
@@ -210,3 +180,33 @@ mcl_villages_placement_priority (Which buildings should be closer to the bell) e
 
 # This is fine for players, but expect all the villagers to die very quickly
 mcl_villages_allow_water_villages (Allow buildings to spawn on top of water) bool false
+
+[Experimental]
+# If disabled, command blocks will be unusable (but still present).
+mcl_enable_commandblocks (Command blocks) bool true
+
+# If enabled, this will substitute a few blocks in village schematics so they blend into normal, snowy, and sandy areas. Defaults to true.
+mcl_pseudobiome_villages (Pseudobiome-based villages) bool true
+
+# Make some blocks emit decorative particles like flames. This setting
+# specifies the detail level of particles, with higher levels being
+# more CPU demanding.
+# WARNING: This setting has quite poor performance and can slow down your
+# game by a lot.
+mcl_node_particles (Block particles detail level) enum none high,medium,low,none
+
+[Debugging]
+# Log mob spawning and despawning events
+mcl_logging_mobs_spawn (Log Mob Spawning) bool true
+
+# If enabled mapgen timings will be dumped to log
+mcl_logging_mapgen (Chunk generation logging) bool false
+
+# If enabled generated structures will be logged
+mcl_logging_structures (Structure generation logging) bool true
+
+# Complete debug logging for mcl_signs events. Use this if you have issues with signs.
+mcl_logging_mcl_signs (Debug logging for mcl_signs) bool false
+
+# Debug logging for mcl_events.
+mcl_logging_event_api (Debug logging for mcl_events) bool false
