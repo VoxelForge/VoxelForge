@@ -150,7 +150,7 @@ mcl_inv_nodes_movable (Inventory nodes movable) bool true
 mcl_mob_allow_nav_hacks (Mob navigation hacks) bool false
 
 # Allow players to create Minecraft-like maps.
-enable_real_maps (Enable Real Maps) bool true
+enable_real_maps (Real Maps) bool true
 
 [Graphics]
 # Whether to animate chests when open / close
