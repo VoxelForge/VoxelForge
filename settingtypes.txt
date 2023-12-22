@@ -87,6 +87,9 @@ only_peaceful_mobs (Spawn only peaceful mobs) bool false
 # mob spawners.
 mobs_spawn_protected (Spawn mobs in protected areas) bool false
 
+# Use light levels from Minecraft 1.18+ for monster spawning. Disable to use older mob specific light levels.
+mcl_mobs_modern_lighting (Modern light rules for spawning) bool true
+
 # Mobs difficulty. This is a number that will affect the initial and maximum
 # health and the amount of damage that mobs deal. Health and damage will
 # be multiplied with this number.
@@ -135,9 +138,6 @@ mcl_extended_pet_control (Extended pet control) bool false
 
 # Enable stairs out of wood bark
 mcl_bark_stairs (Bark Stairs) bool true
-
-# Use light levels from Minecraft 1.18+ for monster spawning. Disable to use older mob specific light levels.
-mcl_mobs_modern_lighting (Modern light rules for spawning) bool true
 
 # Enable piston movement of inventory nodes.
 mcl_inv_nodes_movable (Movable inventory nodes) bool true
