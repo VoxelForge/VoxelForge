@@ -9,17 +9,20 @@
 enable_fire (Destructive and spreading fire) bool true
 
 # If enabled, the weather will change naturally over time.
-mcl_doWeatherCycle (Change weather) bool true
+mcl_doWeatherCycle (Changing weather) bool true
 
 # If enabled, breaking blocks will cause them to drop as item.
 # Note that blocks never have drops when in Creative Mode.
 mcl_doTileDrops (Blocks have drops) bool true
 
 # If enabled, explosions destroy blocks.
-mcl_explosions_griefing (Explosions destroy blocks) bool true
+mcl_explosions_griefing (Explosion griefing) bool true
 
 # If disabled, no ores will be generated.
-mcl_generate_ores (Generate Ores) bool true
+mcl_generate_ores (Generate ores) bool true
+
+# Enable minetest mapgen dungeons
+mcl_enable_mt_dungeons (Native Minetest dungeons) bool false
 
 # If enabled, the “flat” map generator generates a Classic Superflat world:
 # Completely flat, 1 layer of grass blocks on top of 2 layers of dirt on
@@ -56,7 +59,7 @@ mcl_showDeathMessages (Show death messages) bool true
 mcl_craftguide_progressive_mode	(Learn crafting recipes progressively) bool true
 
 # If disabled, the skin of all players will be character.png
-mcl_enable_skin_customization (Enable player skin customization) bool true
+mcl_enable_skin_customization (Player skin customization) bool true
 
 # How far the player hand can reach
 # Default:4.5
@@ -68,7 +71,7 @@ mcl_hand_range_creative (Creative mode hand range) float 10 1 128
 
 # If enabled the hunger mechanic will be active
 # If disabled eating food will heal instantly.
-mcl_enable_hunger (Hunger mechanic) bool true
+mcl_enable_hunger (Hunger) bool true
 
 [Mobs]
 # If enabled, mobs will spawn naturally. This does not affect
@@ -94,7 +97,7 @@ mob_difficulty (Mob difficulty factor) float 1.0 0.0
 mobs_drop_items (Mobs drop items) bool true
 
 # If enabled, mobs can take, place, change and destroy blocks around them.
-mobs_griefing (Mobs change blocks) bool true
+mobs_griefing (Mob griefing) bool true
 
 # If enabled, mobs won't damage particles when they got hurt.
 mobs_disable_blood (Disable mob damage particles) bool false
@@ -141,7 +144,7 @@ max_bossbars (Maximum Boss bars) int 5
 
 [Experimental]
 # If disabled, command blocks will be unusuable (but still present).
-mcl_enable_commandblocks (Enable Command Blocks) bool true
+mcl_enable_commandblocks (Command blocks) bool true
 
 # Make some blocks emit decorative particles like flames. This setting
 # specifies the detail level of particles, with higher levels being
@@ -151,11 +154,11 @@ mcl_enable_commandblocks (Enable Command Blocks) bool true
 mcl_node_particles (Block particles detail level) enum none high,medium,low,none
 
 # If enabled, this will substitute a few blocks in village schematics so they blend into normal, snowy, and sandy areas. Defaults to true.
-basic_pseudobiome_villages (Enables very basic, and experimental "pseudobiome-based" villages) bool true
+basic_pseudobiome_villages (Pseudobiome-based villages) bool true
 
 [Additional Features]
 # Enable Bookshelf inventories
-mcl_bookshelf_inventories (Enable bookshelf inventories) bool true
+mcl_bookshelf_inventories (Bookshelf inventories) bool true
 
 # All tameable mobs listen to the "sit" righclick like dogs
 mcl_extended_pet_control (Extended pet control) bool false
@@ -164,18 +167,16 @@ mcl_extended_pet_control (Extended pet control) bool false
 mcl_bark_stairs (Bark Stairs) bool true
 
 # Enable minetest mapgen dungeons
-mcl_enable_mt_dungeons (Enable native mt dungeons) bool false
+mcl_enable_mt_dungeons (Native Minetest dungeons) bool false
 
-# Use MC 1.18+ light levels to control monster spawning.
-# Disable to use older mob specific light levels.
-mcl_mobs_modern_lighting (Use MC 1.18+ light rules for spawning) bool true
+# Use light levels from Minecraft 1.18+ for monster spawning. Disable to use older mob specific light levels.
+mcl_mobs_modern_lighting (Modern light rules for spawning) bool true
 
 # Enable piston movement of Inventory nodes. This does not work in mc java edition due to techical restrictions
 mcl_inv_nodes_movable (Inventory nodes movable) bool true
 
-# Enable workarounds for faulty mob navigation.
-# Hack 1: teleport golems home if they are very far from home
-# Hack 2: villagers teleport home when night is skipped
+# Make iron golems teleport home when they are far away and villagers teleport
+# home when the night is skipped.
 mcl_mob_allow_nav_hacks (Mob navigation hacks) bool false
 
 # Allow players to create Minecraft-like maps.
@@ -191,10 +192,10 @@ mcl_logging_mapgen (Chunk generation logging) bool false
 # If enabled generated structures will be logged
 mcl_logging_structures (Structure generation logging) bool true
 
-#Complete debug logging for mcl_signs events. Use this if you have issues with signs.
-mcl_logging_mcl_signs (Complete debug logging for mcl_signs) bool false
+# Complete debug logging for mcl_signs events. Use this if you have issues with signs.
+mcl_logging_mcl_signs (Debug logging for mcl_signs) bool false
 
-#Debug logging for mcl_events.
+# Debug logging for mcl_events.
 mcl_logging_event_api (Debug logging for mcl_events) bool false
 
 [Villages]
