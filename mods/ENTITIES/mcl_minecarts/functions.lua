@@ -133,3 +133,31 @@ function mcl_minecarts:get_rail_direction(pos_, dir, ctrl, old_switch, railtype)
 	end
 	return {x=0, y=0, z=0}
 end
+
+function mcl_minecarts:get_start_direction(pos)
+	local r = {{x=-1,  y= 0, z= 0},
+		{x= 1,  y= 0, z= 0},
+		{x= 0,  y= 0, z=-1},
+		{x= 0,  y= 0, z= 1},
+	}
+	local dir
+	local i = 0
+	while (not dir and i < #r) do
+		i = i+1
+		local node = minetest.get_node_or_nil(vector.add(pos, r[i]))
+		if node ~= nil
+		and minetest.get_item_group(node.name, "rail") == 0
+		and minetest.get_item_group(node.name, "solid") == 1
+		and minetest.get_item_group(node.name, "opaque") == 1
+		then
+			dir = mcl_minecarts:check_front_up_down(pos, vector.multiply(r[i], -1), true)
+		end
+	end
+	return dir
+end
+
+function mcl_minecarts:set_velocity(obj, dir, factor)
+	obj._velocity = vector.multiply(dir, factor or 3)
+	obj._old_pos = nil
+	obj._punched = true
+end
