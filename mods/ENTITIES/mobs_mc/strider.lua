@@ -31,6 +31,8 @@ local strider = {
 	} },
 	visual_size = {x=3, y=3},
 	sounds = {
+		eat = "mobs_mc_animal_eat_generic",
+		distance = 16,
 	},
 	jump = true,
 	makes_footstep_sound = true,
@@ -52,6 +54,7 @@ local strider = {
 		walk_start = 1,
 		walk_end = 20,
 	},
+	follow = { "mcl_crimson:warped_fungus" },
 	lava_damage = 0,
 	fire_damage = 0,
 	light_damage = 0,
@@ -124,7 +127,7 @@ local strider = {
 
 		local wielditem = clicker:get_wielded_item()
 
-		if wielditem:get_name() ~= "mcl_crimson:warped_fungus" then
+		if wielditem:get_name() == "mcl_crimson:warped_fungus" then
 			if self:feed_tame(clicker, 1, true, true) then return end
 		end
 
