@@ -71,8 +71,13 @@ local strider = {
 	do_custom = function(self, dtime)
 
 		if minetest.find_node_near(self.object:get_pos(), 2, {"mcl_core:lava_source","mcl_core:lava_flowing","mcl_nether:nether_lava_source","mcl_nether:nether_lava_flowing"}) then
-			self.walk_velocity = 2
-			self.run_velocity = 4
+			if self.driver then
+				self.walk_velocity = 4
+				self.run_velocity = 8
+			else
+				self.walk_velocity = 2
+				self.run_velocity = 4
+			end
 			self.base_texture[1] = "extra_mobs_strider.png"
 			self.shaking = false
 		else
