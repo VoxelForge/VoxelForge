@@ -231,7 +231,7 @@ local dispenserdef = {
 								stack:take_item()
 								inv:set_stack("main", stack_id, stack)
 							end
-						else
+						elseif minetest.get_item_group(dropitem:get_name(), "shears") == 0 then
 							-- Drop item otherwise
 							local pos_variation = 100
 							droppos = {
