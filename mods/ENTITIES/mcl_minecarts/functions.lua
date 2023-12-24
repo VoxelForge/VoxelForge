@@ -134,23 +134,25 @@ function mcl_minecarts:get_rail_direction(pos_, dir, ctrl, old_switch, railtype)
 	return {x=0, y=0, z=0}
 end
 
+local plane_adjacents = {
+	vector.new(-1,0,0),
+	vector.new(1,0,0),
+	vector.new(0,0,-1),
+	vector.new(0,0,1),
+}
+
 function mcl_minecarts:get_start_direction(pos)
-	local r = {{x=-1,  y= 0, z= 0},
-		{x= 1,  y= 0, z= 0},
-		{x= 0,  y= 0, z=-1},
-		{x= 0,  y= 0, z= 1},
-	}
 	local dir
 	local i = 0
-	while (not dir and i < #r) do
+	while (not dir and i < #plane_adjacents) do
 		i = i+1
-		local node = minetest.get_node_or_nil(vector.add(pos, r[i]))
+		local node = minetest.get_node_or_nil(vector.add(pos, plane_adjacents[i]))
 		if node ~= nil
 		and minetest.get_item_group(node.name, "rail") == 0
 		and minetest.get_item_group(node.name, "solid") == 1
 		and minetest.get_item_group(node.name, "opaque") == 1
 		then
-			dir = mcl_minecarts:check_front_up_down(pos, vector.multiply(r[i], -1), true)
+			dir = mcl_minecarts:check_front_up_down(pos, vector.multiply(plane_adjacents[i], -1), true)
 		end
 	end
 	return dir
