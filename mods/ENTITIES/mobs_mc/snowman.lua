@@ -43,13 +43,13 @@ mcl_mobs.register_mob("mobs_mc:snowman", {
 		distance = 16,
 	},
 	textures = {
-                "mobs_mc_snowman.png", --snowman texture
-                "farming_pumpkin_side.png", --top
-                "farming_pumpkin_top.png", --down
-                "farming_pumpkin_face.png", --front
-                "farming_pumpkin_side.png", --left
-                "farming_pumpkin_side.png", --right
-                "farming_pumpkin_top.png", --left
+		"mobs_mc_snowman.png", --snowman texture
+		"farming_pumpkin_side.png", --top
+		"farming_pumpkin_top.png", --down
+		"farming_pumpkin_face.png", --front
+		"farming_pumpkin_side.png", --left
+		"farming_pumpkin_side.png", --right
+		"farming_pumpkin_top.png", --left
 	},
 	gotten_texture = gotten_texture,
 	drops = {{ name = "mcl_throwing:snowball", chance = 1, min = 0, max = 15 }},
