@@ -149,6 +149,9 @@ mcl_mob_allow_nav_hacks (Mob navigation hacks) bool false
 # Allow players to create Minecraft-like maps.
 enable_real_maps (Real maps) bool true
 
+# Place bonus chest near players' initial spawn point
+mcl_bonus_chest (Bonus Chest) bool false
+
 [Graphics]
 # Whether to animate chests when open / close
 mcl_animated_chests (Animated chests) bool true

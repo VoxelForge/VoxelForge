@@ -1,5 +1,12 @@
 mcl_bonus_chest = {}
 
+local adj = {
+	vector.new(1,0,0),
+	vector.new(-1,0,0),
+	vector.new(0,0,1),
+	vector.new(0,0,-1),
+}
+
 local bonus_loot = {
 	{
 		stacks_min = 1,
@@ -44,20 +51,41 @@ local bonus_loot = {
 	},
 }
 
-function mcl_bonus_chest.place_bchest(pos, loot, pr)
-	local pr = pr or PseudoRandom(minetest.get_mapgen_setting("seed"))
+function mcl_bonus_chest.place_chest(pos, loot, pr)
+	local pr = pr or PseudoRandom(minetest.hash_node_position(pos) + minetest.get_mapgen_setting("seed"))
 	local loot = loot or bonus_loot
-	minetest.place_node(pos, {name = "mcl_chests:chest"})
-	local m = minetest.get_meta(pos)
-	local inv = m:get_inventory()
-	local items = mcl_loot.get_multi_loot(loot, pr)
-	mcl_loot.fill_inventory(inv, "main", items, pr)
+	local pp = minetest.find_nodes_in_area_under_air(vector.offset(pos, -5,-3,-5), vector.offset(pos, 5,3,5), {"mcl_core:dirt_with_grass", "mcl_core:stone", "group:solid"})
+	if pp and #pp > 0 then
+		local cpos = vector.offset(pp[pr:next(1,#pp)], 0, 1, 0)
+		minetest.place_node(cpos, {name = "mcl_chests:chest"})
+		local m = minetest.get_meta(cpos)
+		local inv = m:get_inventory()
+		local items = mcl_loot.get_multi_loot(loot, pr)
+		mcl_loot.fill_inventory(inv, "main", items, pr)
+		for _,v in pairs(adj) do
+			local tpos = vector.add(cpos, v)
+			local def = minetest.registered_nodes[minetest.get_node(tpos).name]
+			if def and def.buildable_to then
+				minetest.place_node(tpos, {name = "mcl_torches:torch"})
+			end
+		end
+	end
 end
+
+minetest.register_on_newplayer(function(pl)
+	if minetest.settings:get_bool("mcl_bonus_chest", false) then
+		minetest.after(5, function(pl)
+			if pl and pl.get_pos and pl:get_pos() then
+				mcl_bonus_chest.place_chest(pl:get_pos())
+			end
+		end, pl)
+	end
+end)
 
 minetest.register_chatcommand("bonus_chest", {
 	privs = { server = true, },
 	func = function(pn,pr)
 		local pl = minetest.get_player_by_name(pn)
-		mcl_bonus_chest.place_bchest(pl:get_pos())
+		mcl_bonus_chest.place_chest(pl:get_pos())
 	end,
 })
