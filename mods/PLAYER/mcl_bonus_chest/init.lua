@@ -1,5 +1,7 @@
 mcl_bonus_chest = {}
 
+local storage = minetest.get_mod_storage()
+
 local adj = {
 	vector.new(1,0,0),
 	vector.new(-1,0,0),
@@ -73,10 +75,11 @@ function mcl_bonus_chest.place_chest(pos, loot, pr)
 end
 
 minetest.register_on_newplayer(function(pl)
-	if minetest.settings:get_bool("mcl_bonus_chest", false) then
+	if minetest.settings:get_bool("mcl_bonus_chest", false) and storage:get_int("mcl_bonus_chest:deployed") ~= 1 then
 		minetest.after(5, function(pl)
 			if pl and pl.get_pos and pl:get_pos() then
 				mcl_bonus_chest.place_chest(pl:get_pos())
+				storage:set_int("mcl_bonus_chest:deployed", 1)
 			end
 		end, pl)
 	end
