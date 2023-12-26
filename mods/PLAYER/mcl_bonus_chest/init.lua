@@ -33,22 +33,66 @@ mcl_bonus_chest.bonus_loot = {
 			{ itemstring = "mcl_core:apple", amount_min = 1, amount_max=3 },
 			{ itemstring = "mcl_farming:bread", amount_min = 1, amount_max=2 },
 			{ itemstring = "mcl_fishing:salmon_raw", amount_min = 1, amount_max=2 },
+			{ itemstring = "mcl_core:stick", amount_min = 1, amount_max= 12 },
+			{ itemstring = "mcl_trees:wood_oak", amount_min = 1, amount_max= 12 },
+			{ itemstring = "mcl_mushrooms:mushroom_brown", amount_min = 1, amount_max= 12 },
 		}
 	},
 	{
 		stacks_min = 1,
-		stacks_max = 4,
+		stacks_max = 1,
 		items = {
-			{ itemstring = "mcl_trees:wood_oak", amount_min = 1, amount_max= 12 },
-			{ itemstring = "mcl_core:stick", amount_min = 1, amount_max= 12 },
+			{ itemstring = "mcl_trees:sapling_oak", amount_min = 1, amount_max= 4 },
+			{ itemstring = "mcl_trees:sapling_spruce", amount_min = 1, amount_max= 4 },
+			{ itemstring = "mcl_trees:sapling_birch", amount_min = 1, amount_max= 4 },
+			{ itemstring = "mcl_trees:sapling_dark_oak", amount_min = 1, amount_max= 4 },
+			{ itemstring = "mcl_trees:sapling_acacia", amount_min = 1, amount_max= 4 },
+			{ itemstring = "mcl_trees:sapling_jungle", amount_min = 1, amount_max= 4 },
+			{ itemstring = "mcl_trees:sapling_cherry_blossom", amount_min = 1, amount_max= 4 },
+		}
+	},
+	{
+		stacks_min = 1,
+		stacks_max = 1,
+		items = {
 			{ itemstring = "mcl_trees:tree_acacia", amount_min = 1, amount_max=3 },
-			{ itemstring = "mcl_trees:tree_birch", amount_min = 1, amount_max=3 },
 			{ itemstring = "mcl_trees:tree_dark_oak", amount_min = 1, amount_max=3 },
+		}
+	},
+	{
+		stacks_min = 1,
+		stacks_max = 1,
+		items = {
+			{ itemstring = "mcl_trees:tree_birch", amount_min = 1, amount_max=3 },
 			{ itemstring = "mcl_trees:tree_jungle", amount_min = 1, amount_max=3 },
 			{ itemstring = "mcl_trees:tree_oak", amount_min = 1, amount_max=3 },
 			{ itemstring = "mcl_trees:tree_spruce", amount_min = 1, amount_max=3 },
-			{ itemstring = "mcl_trees:tree_mangrove", amount_min = 1, amount_max=3 },
 
+		}
+	},
+	{
+		stacks_min = 1,
+		stacks_max = 1,
+		items = {
+			{ itemstring = "mcl_farming:potato_item", amount_min = 1, amount_max= 2 },
+			{ itemstring = "mcl_farming:carrot_item", amount_min = 1, amount_max= 2 },
+		}
+	},
+	{
+		stacks_min = 1,
+		stacks_max = 1,
+		items = {
+			{ itemstring = "mcl_farming:pumpkin_seeds", amount_min = 1, amount_max= 2 },
+			{ itemstring = "mcl_farming:melon_seeds", amount_min = 1, amount_max= 2 },
+			{ itemstring = "mcl_farming:beetroot_seeds", amount_min = 1, amount_max= 2 },
+		}
+	},
+	{
+		stacks_min = 1,
+		stacks_max = 1,
+		items = {
+			{ itemstring = "mcl_cocoas:cocoa_beans", amount_min = 1, amount_max= 2 },
+			{ itemstring = "mcl_core:cactus", amount_min = 1, amount_max= 2 },
 		}
 	},
 }
