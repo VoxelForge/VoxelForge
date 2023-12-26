@@ -7,7 +7,7 @@ local adj = {
 	vector.new(0,0,-1),
 }
 
-local bonus_loot = {
+mcl_bonus_chest.bonus_loot = {
 	{
 		stacks_min = 1,
 		stacks_max = 1,
@@ -53,7 +53,7 @@ local bonus_loot = {
 
 function mcl_bonus_chest.place_chest(pos, loot, pr)
 	local pr = pr or PseudoRandom(minetest.hash_node_position(pos) + minetest.get_mapgen_setting("seed"))
-	local loot = loot or bonus_loot
+	local loot = loot or mcl_bonus_chest.bonus_loot
 	local pp = minetest.find_nodes_in_area_under_air(vector.offset(pos, -5,-3,-5), vector.offset(pos, 5,3,5), {"mcl_core:dirt_with_grass", "mcl_core:stone", "group:solid"})
 	if pp and #pp > 0 then
 		local cpos = vector.offset(pp[pr:next(1,#pp)], 0, 1, 0)
