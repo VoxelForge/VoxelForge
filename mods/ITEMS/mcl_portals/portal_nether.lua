@@ -761,6 +761,25 @@ minetest.register_node("mcl_portals:portal", {
 	_mcl_blast_resistance = 0,
 })
 
+minetest.register_chatcommand("dumpportals", {
+	description = S("Dump coordinates of registered portals"),
+	privs = { debug = true },
+	params = "[nether | overworld]",
+	func = function(name, param)
+		if param ~= "nether" and param ~= "overworld" then
+			return false, S("Invalid dimension argument.")
+		end
+		local dim = param
+
+		local output = ""
+		for _, portal in pairs(portals[dim]) do
+			output = output .. minetest.pos_to_string(portal) .. "\n"
+		end
+
+		return true, output
+	end,
+})
+
 minetest.register_abm({
 	label = "Nether portal teleportation and particles",
 	nodenames = { "mcl_portals:portal" },
