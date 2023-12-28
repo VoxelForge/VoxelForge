@@ -299,7 +299,6 @@ return {
 			},
 
 			{
-			-- compass subject to special checks
 			{ { "mcl_panes:pane_natural_flat", 11, 11 }, E1 },
 			--{ { "mcl_core:emerald", 13, 13, "mcl_compass:compass", 1, 1 }, { "FIXME:ocean explorer map" 1, 1 } },
 			},
@@ -331,9 +330,8 @@ return {
 			},
 
 			{
-			--{ { "mcl_core:emerald", 8, 8 }, { "FIXME: globe banner pattern", 1, 1 } },
+			{ { "mcl_core:emerald", 8, 8 }, { "mcl_banners:pattern_globe", 1, 1 } },
 			},
-			-- TODO: special maps
 		},
 	},
 	armorer = {
