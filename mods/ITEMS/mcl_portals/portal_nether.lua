@@ -494,7 +494,7 @@ local function portal_emerge_area(blockpos, action, calls_remaining, param)
 
 	-- 5 attempts to find a random spot which is not protected.
 	for i = 1, 5 do
-		local pos = vector.new(target.x, math.random(minpos.y, maxpos.y), target.y)
+		local pos = vector.new(target.x, math.random(minpos.y, maxpos.y), target.z)
 		if can_place_portal(pos, player_name) then
 			finalize(obj, pos, param2, true)
 			return
