@@ -441,7 +441,7 @@ function mobs_mc.villager_mob:show_trade_formspec(playername, tradenum)
 	end
 
 	local header =
-		string.format(fs_header_template, F(minetest.colorize("#313131", profession .. " - " .. tiername)), h * 8)
+		string.format(fs_header_template, F(minetest.colorize("#313131", profession .. " - " .. tiername)), h * 10)
 
 	formspec = header .. formspec .. fs_footer_template
 
