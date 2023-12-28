@@ -55,6 +55,13 @@ function mobs_mc.villager_mob:should_sleep()
 end
 
 function mobs_mc.villager_mob:should_go_home()
+	local tod = (minetest.get_timeofday() * 24000) % 24000
+
+	-- Hide for half an hour
+	if self._last_alarm and self._last_alarm > (tod - 500) then
+		return true
+	end
+
 	local weather = mcl_weather.get_weather()
 
 	if weather == "thunder" or weather == "rain" or weather == "snow" then
@@ -69,8 +76,6 @@ function mobs_mc.villager_mob:should_go_home()
 		ends = 20000
 	end
 
-	local tod = minetest.get_timeofday()
-	tod = (tod * 24000) % 24000
 	return tod >= starts and tod < ends
 end
 
