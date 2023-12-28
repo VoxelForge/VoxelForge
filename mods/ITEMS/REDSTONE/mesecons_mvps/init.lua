@@ -282,6 +282,10 @@ function mesecon.mvps_push_or_pull(pos, stackdir, movedir, maximum, player_name,
 				-- simulate dig_node using handle_node_drops
 				local drops = minetest.get_node_drops(n.node.name, "")
 				local counted_drops = {}
+				local def = minetest.registered_nodes[n.node.name]
+				if def and def.on_dig then
+					def.on_dig(n.pos, n.node)
+				end
 				minetest.remove_node(n.pos)
 				for _, callback in pairs(minetest.registered_on_dignodes) do
 					callback(n.pos, n.node)
