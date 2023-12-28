@@ -342,28 +342,28 @@ local function build_portal(pos, param2, bad_spot)
 	local obsidian = {}
 	local air = {}
 
-	for i = -2, 1 do
+	for i = -1, 2 do
 		table.insert(obsidian, pos + orient(vector.new(i, -1, 0), param2))
 		table.insert(obsidian, pos + orient(vector.new(i, 3, 0), param2))
 	end
 
 	for i = 0, 2 do
-		table.insert(obsidian, pos + orient(vector.new(-2, i, 0), param2))
-		table.insert(portals, pos + orient(vector.new(-1, i, 0), param2))
+		table.insert(obsidian, pos + orient(vector.new(-1, i, 0), param2))
 		table.insert(portals, pos + orient(vector.new(0, i, 0), param2))
-		table.insert(obsidian, pos + orient(vector.new(1, i, 0), param2))
+		table.insert(portals, pos + orient(vector.new(1, i, 0), param2))
+		table.insert(obsidian, pos + orient(vector.new(2, i, 0), param2))
 	end
 
 	if bad_spot then
-		table.insert(obsidian, pos + orient(vector.new(-1, -1, -1), param2))
 		table.insert(obsidian, pos + orient(vector.new(0, -1, -1), param2))
-		table.insert(obsidian, pos + orient(vector.new(-1, -1, 1), param2))
+		table.insert(obsidian, pos + orient(vector.new(1, -1, -1), param2))
 		table.insert(obsidian, pos + orient(vector.new(0, -1, 1), param2))
+		table.insert(obsidian, pos + orient(vector.new(1, -1, 1), param2))
 		for i = 0, 2 do
-			table.insert(air, pos + orient(vector.new(-1, i, -1), param2))
 			table.insert(air, pos + orient(vector.new(0, i, -1), param2))
-			table.insert(air, pos + orient(vector.new(-1, i, 1), param2))
+			table.insert(air, pos + orient(vector.new(1, i, -1), param2))
 			table.insert(air, pos + orient(vector.new(0, i, 1), param2))
+			table.insert(air, pos + orient(vector.new(1, i, 1), param2))
 		end
 	end
 
@@ -413,15 +413,15 @@ end
 
 -- Check if portal with param2 can be placed at position.
 local function suitable_for_portal(pos, param2)
-	local pos1 = pos + orient(vector.new(-2, 0, -1), param2)
-	local pos2 = pos + orient(vector.new(1, 0, 1), param2)
+	local pos1 = pos + orient(vector.new(-1, 0, -1), param2)
+	local pos2 = pos + orient(vector.new(2, 0, 1), param2)
 	local ground_nodes = minetest.find_nodes_in_area(pos1, pos2, portal_search_groups)
 	if #ground_nodes ~= 12 then
 		return false
 	end
 
-	local air_pos1 = pos + orient(vector.new(-2, 1, -1), param2)
-	local air_pos2 = pos + orient(vector.new(1, 4, 1), param2)
+	local air_pos1 = pos + orient(vector.new(-1, 1, -1), param2)
+	local air_pos2 = pos + orient(vector.new(2, 4, 1), param2)
 	local air_nodes = minetest.find_nodes_in_area(air_pos1, air_pos2, { "air" })
 	return #air_nodes == 48
 end
