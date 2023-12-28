@@ -20,24 +20,9 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 local villagegen={}
 
---
--- register block for npc spawn
---
-minetest.register_node("mcl_villages:stonebrickcarved", {
-	description = S("Chiseled Stone Village Bricks"),
-	_doc_items_longdesc = doc.sub.items.temp.build,
-	tiles = {"mcl_core_stonebrick_carved.png"},
-	drop = "mcl_core:stonebrickcarved",
-	groups = {pickaxey=1, stone=1, stonebrick=1, building_block=1, material_stone=1},
-	sounds = mcl_sounds.node_sound_stone_defaults(),
-	is_ground_content = false,
-	_mcl_blast_resistance = 6,
-	_mcl_hardness = 1.5,
-})
+minetest.register_alias("mcl_villages:stonebrickcarved", "mcl_core:stonebrickcarved")
 
 minetest.register_node("mcl_villages:structblock", {drawtype="airlike",groups = {not_in_creative_inventory=1},})
-
-
 
 --
 -- on map generation, try to build a settlement

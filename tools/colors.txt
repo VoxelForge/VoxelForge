@@ -1607,9 +1607,6 @@ mcl_tnt:tnt 134 55 57
 mcl_torches:torch 94 72 58
 mcl_torches:torch_wall 94 72 58
 
-# mcl_villages
-mcl_villages:stonebrickcarved 100 92 88
-
 # mcl_walls
 mcl_walls:andesite 105 111 107
 mcl_walls:andesite_0 105 111 107
