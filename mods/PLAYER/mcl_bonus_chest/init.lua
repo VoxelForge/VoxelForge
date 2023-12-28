@@ -28,13 +28,43 @@ mcl_bonus_chest.bonus_loot = {
 	},
 	{
 		stacks_min = 1,
-		stacks_max = 3,
+		stacks_max = 1,
 		items = {
 			{ itemstring = "mcl_core:apple", amount_min = 1, amount_max=3 },
+		}
+	},
+	{
+		stacks_min = 1,
+		stacks_max = 1,
+		items = {
 			{ itemstring = "mcl_farming:bread", amount_min = 1, amount_max=2 },
+		}
+	},
+	{
+		stacks_min = 1,
+		stacks_max = 1,
+		items = {
 			{ itemstring = "mcl_fishing:salmon_raw", amount_min = 1, amount_max=2 },
+		}
+	},
+	{
+		stacks_min = 1,
+		stacks_max = 1,
+		items = {
 			{ itemstring = "mcl_core:stick", amount_min = 1, amount_max= 12 },
+		}
+	},
+	{
+		stacks_min = 1,
+		stacks_max = 1,
+		items = {
 			{ itemstring = "mcl_trees:wood_oak", amount_min = 1, amount_max= 12 },
+		}
+	},
+	{
+		stacks_min = 1,
+		stacks_max = 1,
+		items = {
 			{ itemstring = "mcl_mushrooms:mushroom_brown", amount_min = 1, amount_max= 12 },
 		}
 	},
