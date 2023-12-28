@@ -478,7 +478,7 @@ local function portal_emerge_area(blockpos, action, calls_remaining, param)
 	local liquid_pos
 	local nodes = minetest.find_nodes_in_area_under_air(minpos, maxpos, portal_search_groups)
 	for _, pos in pairs(nodes) do
-		if suitable_for_portal(pos, param2) and can_place_portal(pos, player_name) and portal_distance(pos, target) <= link_distance[dim] then
+		if suitable_for_portal(pos, param2) and can_place_portal(pos, player_name) and portal_distance(pos, target) < link_distance[dim] then
 			if minetest.get_item_group(minetest.get_node(pos).name, "liquid") <= 0 then
 				finalize(obj, pos, param2, false)
 				return
