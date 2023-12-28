@@ -784,7 +784,7 @@ minetest.register_abm({
 	label = "Nether portal teleportation and particles",
 	nodenames = { "mcl_portals:portal" },
 	interval = 1,
-	chance = 2,
+	chance = 1,
 	action = function(pos, node)
 		emit_portal_particles(pos, node)
 		teleport_objs_in_portal(pos)
