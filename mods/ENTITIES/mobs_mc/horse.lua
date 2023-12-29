@@ -10,7 +10,7 @@ local S = minetest.get_translator("mobs_mc")
 --###################
 
 -- Return overlay texture for horse/donkey/mule, e.g. chest, saddle or horse armor
-local horse_extra_texture = function(horse)
+local function horse_extra_texture(horse)
 	local base = horse._naked_texture
 	local saddle = horse._saddle
 	local chest  = horse._chest
@@ -150,6 +150,10 @@ local horse = {
 		max = 2,
 		looting = "common",},
 	},
+	on_spawn = function(self)
+		local tex = horse_extra_texture(self)
+		self.object:set_properties({textures = tex})
+	end,
 	do_custom = function(self, dtime)
 
 		if not self._horse_speed then
