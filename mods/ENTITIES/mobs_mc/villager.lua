@@ -96,8 +96,6 @@ function mobs_mc.villager_mob:on_rightclick(clicker)
 		return
 	end
 
-	self:set_trade(clicker, inv, 1)
-
 	self:show_trade_formspec(name)
 
 	local selfpos = self.object:get_pos()
