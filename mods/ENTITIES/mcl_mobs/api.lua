@@ -138,7 +138,7 @@ end
 function mob_class:update_textures()
 	local def = mcl_mobs.registered_mobs[self.name]
 	--If textures in definition change, reload textures
-	if not self:valid_texture(self.object:get_properties().textures) then
+	if not self:valid_texture(def.texture_list) then
 
 		-- compatiblity with old simple mobs textures
 		if type(def.texture_list[1]) == "string" then
