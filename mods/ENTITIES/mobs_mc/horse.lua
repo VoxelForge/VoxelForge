@@ -11,7 +11,7 @@ local S = minetest.get_translator("mobs_mc")
 
 -- Return overlay texture for horse/donkey/mule, e.g. chest, saddle or horse armor
 local function horse_extra_texture(horse)
-	local base = horse._naked_texture
+	local base = horse._naked_texture or horse.base_texture[2]
 	local saddle = horse._saddle
 	local chest  = horse._chest
 	local armor = horse._horse_armor
