@@ -296,7 +296,7 @@ local function add_large_plant(name, desc, longdesc, bottom_img, top_img, inv_im
 		drop_bottom = drop
 	end
 	-- Sunflower mesh and tiles
-	local top_drawtype, bottom_drawtype
+	local top_drawtype, bottom_drawtype, uta
 	local bottom_tiles = {}
 	if not mesh then
 		top_drawtype = "plantlike"
@@ -306,6 +306,7 @@ local function add_large_plant(name, desc, longdesc, bottom_img, top_img, inv_im
 		top_drawtype = "airlike"
 		bottom_drawtype = "mesh"
 		bottom_tiles = bottom_img
+		uta = "clip"
 	end
 	-- Bottom
 	minetest.register_node("mcl_flowers:"..name, {
@@ -317,6 +318,7 @@ local function add_large_plant(name, desc, longdesc, bottom_img, top_img, inv_im
 		tiles = bottom_tiles,
 		inventory_image = inv_img,
 		wield_image = inv_img,
+		use_texture_alpha = uta,
 		sunlight_propagates = true,
 		paramtype = "light",
 		paramtype2 = paramtype2,
@@ -425,6 +427,7 @@ local function add_large_plant(name, desc, longdesc, bottom_img, top_img, inv_im
 		palette = palette,
 		walkable = false,
 		buildable_to = false,
+		use_texture_alpha = uta,
 		selection_box = {
 			type = "fixed",
 			fixed = { -selbox_radius, -0.5, -selbox_radius, selbox_radius, selbox_top_height, selbox_radius },
