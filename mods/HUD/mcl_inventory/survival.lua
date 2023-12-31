@@ -123,9 +123,9 @@ local main_page_static = table.concat({
 
 	--Listring
 	"listring[current_player;main]",
-	"listring[current_player;armor]",
-	"listring[current_player;main]",
 	"listring[current_player;craft]",
+	"listring[current_player;main]",
+	"listring[current_player;armor]",
 	"listring[current_player;main]",
 })
 
