@@ -175,7 +175,7 @@ minetest.register_node("mcl_mangrove:propagule", {
 	_mcl_blast_resistance = 0,
 	_mcl_hardness = 0,
 	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
-		return mcl_trees.grow_tree(pos)
+		return mcl_trees.grow_tree(pos, node)
 	end,
 	on_place = mcl_util.generate_on_place_plant_function(function(place_pos, place_node,stack)
 		local under = vector.offset(place_pos,0,-1,0)
