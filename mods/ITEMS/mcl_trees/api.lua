@@ -523,7 +523,7 @@ function mcl_trees.register_wood(name, p)
 		})
 
 		mcl_stairs.register_stair(name.."_bark", {
-			recipeitem="mcl_trees:tree_"..name,
+			recipeitem="mcl_trees:bark_"..name,
 			groups={not_in_creative_inventory=bark_stairs and 0 or 1, handy=1, axey=1, flammable=3, wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
 			tiles=p.tree and p.tree.tiles and { p.tree.tiles[3] } or { minetest.get_current_modname().."_log_"..name..".png"},
 			description=p.stairs.description or S(rname.." bark Stairs"),
@@ -549,7 +549,7 @@ function mcl_trees.register_wood(name, p)
 		})
 
 		mcl_stairs.register_slab(name.."_bark", {
-			recipeitem="mcl_trees:tree_"..name,
+			recipeitem="mcl_trees:bark_"..name,
 			groups={handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
 			tiles=p.tree and p.tree.tiles and { p.tree.tiles[3] } or { minetest.get_current_modname().."_log_"..name..".png"},
 			description=p.slab.description or S(rname.." bark Slab"),
