@@ -19,6 +19,7 @@ Version: 0.93.0
 * Cherry Grove biome
 * No in-game music, twice as small compared to MineClone 2
 * No hamburgers
+* More features but almost 10k lines of code less
 
 ### Gameplay
 You start in a randomly-generated world made entirely of cubes. You can explore
