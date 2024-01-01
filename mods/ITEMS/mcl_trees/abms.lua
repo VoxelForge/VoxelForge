@@ -139,39 +139,33 @@ function mcl_trees.grow_tree(pos, node)
 	if node.name:find("propagule") then
 		name = "mangrove"
 	end
-	if not mcl_trees.woods[name] or not mcl_trees.woods[name].tree_schems then
+	if not mcl_trees.woods[name] or ( not mcl_trees.woods[name].tree_schems and not mcl_trees.woods[name].tree_schems_2x2 ) then
 		return
 	end
 
-	table.shuffle(mcl_trees.woods[name].tree_schems)
-	local schem = mcl_trees.woods[name].tree_schems[1]
+	local schem, can_grow, tbt, ne
+	local place_at = pos
 
-	local can_grow, tbt, ne
-
-	if name == "dark_oak" or name == "jungle" or name == "spruce" then
+	if mcl_trees.woods[name].tree_schems_2x2  then
 		tbt, ne = mcl_trees.check_2by2_saps(pos, node)
-
-		-- Force a huge schem for these if 2x2
-		if tbt and (name == "jungle" or name == "spruce") and not schem.file:find("huge") then
-			for _, v in pairs(mcl_trees.woods[name].tree_schems) do
-				if v.file:find("huge") then
-					schem = v
-					break
-				end
-			end
+		if tbt then
+			table.shuffle(mcl_trees.woods[name].tree_schems_2x2)
+			schem = mcl_trees.woods[name].tree_schems_2x2[1]
+			can_grow = check_schem_growth(ne, schem.file, true)
+			place_at = ne
 		end
 	end
 
-	if tbt then
-		can_grow = check_schem_growth(ne, schem.file, true)
-	elseif name == "dark_oak" then -- must be 2x2 to grow
-		return
-	else
-		can_grow = check_schem_growth(pos, schem.file, false)
+	if not tbt and mcl_trees.woods[name].tree_schems then
+		table.shuffle(mcl_trees.woods[name].tree_schems)
+		schem = mcl_trees.woods[name].tree_schems[1]
+		can_grow = check_schem_growth(place_at, schem.file, false)
 	end
 
+	if not schem then return end
+
 	if can_grow then
-		local place_at = pos
+
 		local offset = schem.offset
 		minetest.remove_node(pos)
 		if tbt then

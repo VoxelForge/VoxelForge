@@ -43,7 +43,7 @@ mcl_trees.register_wood("oak",{
 
 mcl_trees.register_wood("dark_oak",{
 	sign_color="#625048",
-	tree_schems = {
+	tree_schems_2x2 = {
 		{ file = modpath.."/schematics/mcl_core_dark_oak.mts"},
 	},
 	tree = { tiles = {"mcl_core_log_big_oak_top.png", "mcl_core_log_big_oak_top.png","mcl_core_log_big_oak.png"} },
@@ -76,6 +76,8 @@ mcl_trees.register_wood("jungle",{
 		{ file = modpath.."/schematics/mcl_core_jungle_tree_2.mts"},
 		{ file = modpath.."/schematics/mcl_core_jungle_tree_3.mts"},
 		{ file = modpath.."/schematics/mcl_core_jungle_tree_4.mts"},
+	},
+	tree_schems_2x2 = {
 		{ file = modpath.."/schematics/mcl_core_jungle_tree_huge_1.mts"},
 		{ file = modpath.."/schematics/mcl_core_jungle_tree_huge_2.mts"},
 		{ file = modpath.."/schematics/mcl_core_jungle_tree_huge_3.mts"},
@@ -109,6 +111,8 @@ mcl_trees.register_wood("spruce",{
 		{ file = modpath.."/schematics/mcl_core_spruce_lollipop.mts"},
 		{ file = modpath.."/schematics/mcl_core_spruce_matchstick.mts"},
 		{ file = modpath.."/schematics/mcl_core_spruce_tall.mts"},
+	},
+	tree_schems_2x2 = {
 		{ file = modpath.."/schematics/mcl_core_spruce_huge_1.mts"},
 		{ file = modpath.."/schematics/mcl_core_spruce_huge_2.mts"},
 		{ file = modpath.."/schematics/mcl_core_spruce_huge_3.mts"},
