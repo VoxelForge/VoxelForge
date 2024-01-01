@@ -511,40 +511,54 @@ function mcl_trees.register_wood(name, p)
 
 	if p.stairs == nil or type(p.stairs) == "table" then
 		p.stairs = p.stairs or {}
-		mcl_stairs.register_stair(name, "mcl_trees:wood_"..name,
-			{handy=1,axey=1, flammable=3,wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
-			p.wood and p.wood.tiles or { minetest.get_current_modname().."_planks_"..name..".png"},
-			p.stairs.description or S(rname.." Wood Stairs"),
-			mcl_sounds.node_sound_wood_defaults(), 3, 2,
-			"woodlike")
+		mcl_stairs.register_stair(name, {
+			recipeitem="mcl_trees:wood_"..name,
+			groups={handy=1,axey=1, flammable=3,wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
+			tiles=p.wood and p.wood.tiles or { minetest.get_current_modname().."_planks_"..name..".png"},
+			description=p.stairs.description or S(rname.." Wood Stairs"),
+			sounds=mcl_sounds.node_sound_wood_defaults(),
+			blast_resistance=3,
+			hardness=2,
+			corner_stair_texture_override="woodlike",
+		})
 
-		if bark_stairs then
-			mcl_stairs.register_stair(name.."_bark", "mcl_trees:tree_"..name,
-				{handy=1,axey=1, flammable=3,wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
-				p.tree and p.tree.tiles and { p.tree.tiles[3] } or { minetest.get_current_modname().."_log_"..name..".png"},
-				p.stairs.description or S(rname.." bark Stairs"),
-				mcl_sounds.node_sound_wood_defaults(), 3, 2,
-				"woodlike")
-		end
+		mcl_stairs.register_stair(name.."_bark", {
+			recipeitem="mcl_trees:tree_"..name,
+			groups={not_in_creative_inventory=bark_stairs and 0 or 1, handy=1, axey=1, flammable=3, wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
+			tiles=p.tree and p.tree.tiles and { p.tree.tiles[3] } or { minetest.get_current_modname().."_log_"..name..".png"},
+			description=p.stairs.description or S(rname.." bark Stairs"),
+			sounds=mcl_sounds.node_sound_wood_defaults(),
+			blast_resistance=3,
+			hardness=2,
+			corner_stair_texture_override="woodlike",
+			register_craft=bark_stairs,
+		})
 	end
 
 	if p.slab == nil or type(p.slab) == "table" then
 		p.slab = p.slab or {}
-		mcl_stairs.register_slab(name, "mcl_trees:wood_"..name,
-			{handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
-			p.wood and p.wood.tiles or { minetest.get_current_modname().."_planks_"..name..".png"},
-			p.slab.description or S(rname.." Wood Slab"),
-			mcl_sounds.node_sound_wood_defaults(), 3, 2,
-			S("Double "..rname.." Wood Slab"))
+		mcl_stairs.register_slab(name, {
+			recipeitem="mcl_trees:wood_"..name,
+			groups={handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
+			tiles=p.wood and p.wood.tiles or { minetest.get_current_modname().."_planks_"..name..".png"},
+			description=p.slab.description or S(rname.." Wood Slab"),
+			sounds=mcl_sounds.node_sound_wood_defaults(),
+			blast_resistance=3,
+			hardness=2,
+			double_description=S("Double "..rname.." Wood Slab"),
+		})
 
-		if bark_stairs then
-			mcl_stairs.register_slab(name.."_bark", "mcl_trees:tree_"..name,
-				{handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
-				p.tree and p.tree.tiles and { p.tree.tiles[3] } or { minetest.get_current_modname().."_log_"..name..".png"},
-				p.slab.description or S(rname.." bark Slab"),
-				mcl_sounds.node_sound_wood_defaults(), 3, 2,
-				S("Double "..rname.." bark Slab"))
-		end
+		mcl_stairs.register_slab(name.."_bark", {
+			recipeitem="mcl_trees:tree_"..name,
+			groups={handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
+			tiles=p.tree and p.tree.tiles and { p.tree.tiles[3] } or { minetest.get_current_modname().."_log_"..name..".png"},
+			description=p.slab.description or S(rname.." bark Slab"),
+			sounds=mcl_sounds.node_sound_wood_defaults(),
+			blast_resistance=3,
+			hardness=2,
+			double_description=S("Double "..rname.." bark Slab"),
+			register_craft=bark_stairs,
+		})
 	end
 	if p.sign_color and ( p.sign == nil or type(p.sign) == "table" ) then
 		mcl_signs.register_sign(name,p.sign_color,table.merge({
