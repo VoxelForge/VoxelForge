@@ -132,7 +132,7 @@ end
 -- Can be called with the second argument being a table with the following
 -- keys:
 --
---   recipeitem, groups, images, description, sounds, blast_resistance,
+--   recipeitem, groups, tiles, description, sounds, blast_resistance,
 --   hardness, corner_stair_texture_override, overrides
 --
 -- Or with separate arguments in that order (for backwards compatibility).
@@ -142,7 +142,7 @@ function mcl_stairs.register_stair(subname, ...)
 		stairdef = {
 			recipeitem=select(1, ...),
 			groups=select(2, ...),
-			images=select(3, ...),
+			tiles=select(3, ...),
 			description=select(4, ...),
 			sounds=select(5, ...),
 			blast_resistance=select(6, ...),
@@ -153,8 +153,8 @@ function mcl_stairs.register_stair(subname, ...)
 	end
 
 	if stairdef.recipeitem then
-		if not stairdef.images then
-			stairdef.images = minetest.registered_items[stairdef.recipeitem].tiles
+		if not stairdef.tiles then
+			stairdef.tiles = minetest.registered_items[stairdef.recipeitem].tiles
 		end
 		if not stairdef.groups then
 			stairdef.groups = get_stairdef_groups(minetest.registered_items[stairdef.recipeitem])
@@ -174,7 +174,7 @@ function mcl_stairs.register_stair(subname, ...)
 	stairdef.groups.building_block = 1
 
 	local image_table = {}
-	for i, image in ipairs(stairdef.images) do
+	for i, image in pairs(stairdef.tiles) do
 		image_table[i] = type(image) == "string" and { name = image } or table.copy(image)
 		image_table[i].align_style = "world"
 	end
@@ -278,7 +278,7 @@ end
 -- Can be called with the second argument being a table with the following
 -- keys:
 --
---   recipeitem, groups, images, description, sounds, blast_resistance,
+--   recipeitem, groups, tiles, description, sounds, blast_resistance,
 --   hardness, double_description, overrides
 --
 -- Or with separate arguments in that order (for backwards compatibility).
@@ -288,7 +288,7 @@ function mcl_stairs.register_slab(subname, ...)
 		stairdef = {
 			recipeitem=select(1, ...),
 			groups=select(2, ...),
-			images=select(3, ...),
+			tiles=select(3, ...),
 			description=select(4, ...),
 			sounds=select(5, ...),
 			blast_resistance=select(6, ...),
@@ -303,8 +303,8 @@ function mcl_stairs.register_slab(subname, ...)
 	local double_slab = lower_slab.."_double"
 
 	if stairdef.recipeitem then
-		if not stairdef.images then
-			stairdef.images = minetest.registered_items[stairdef.recipeitem].tiles
+		if not stairdef.tiles then
+			stairdef.tiles = minetest.registered_items[stairdef.recipeitem].tiles
 		end
 		if not stairdef.groups then
 			stairdef.groups = minetest.registered_items[stairdef.recipeitem].groups
@@ -331,7 +331,7 @@ function mcl_stairs.register_slab(subname, ...)
 		description = stairdef.description,
 		_doc_items_longdesc = longdesc,
 		drawtype = "nodebox",
-		tiles = stairdef.images,
+		tiles = stairdef.tiles,
 		paramtype = "light",
 		-- Facedir intentionally left out (see below)
 		is_ground_content = false,
@@ -436,7 +436,7 @@ function mcl_stairs.register_slab(subname, ...)
 	minetest.register_node(":"..double_slab, {
 		description = stairdef.double_description,
 		_doc_items_longdesc = S("Double slabs are full blocks which are created by placing two slabs of the same kind on each other."),
-		tiles = stairdef.images,
+		tiles = stairdef.tiles,
 		is_ground_content = false,
 		groups = dgroups,
 		sounds = stairdef.sounds,
@@ -468,7 +468,7 @@ end
 -- Can be called with the second argument being a table with the following
 -- keys:
 --
---   recipeitem, groups, images, stair_description, slab_description, sounds,
+--   recipeitem, groups, tiles, stair_description, slab_description, sounds,
 --   blast_resistance, hardness, double_description,
 --   corner_stair_texture_override, stair_overrides, slab_overrides
 --
@@ -479,7 +479,7 @@ function mcl_stairs.register_stair_and_slab(subname, ...)
 		stairdef = {
 			recipeitem=select(1, ...),
 			groups=select(2, ...),
-			images=select(3, ...),
+			tiles=select(3, ...),
 			stair_description=select(4, ...),
 			slab_description=select(5, ...),
 			sounds=select(6, ...),
