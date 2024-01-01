@@ -1,6 +1,6 @@
 -- Tree nodes: Wood, Wooden Planks, Sapling, Leaves, Stripped Wood
 local S = minetest.get_translator(minetest.get_current_modname())
-local bark_stairs = minetest.settings:get_bool("mcl_bark_stairs",true)
+local bark_stairs = minetest.settings:get_bool("mcl_extra_nodes",true)
 
 local wood_groups = {
 	handy = 1, axey = 1, material_wood = 1,

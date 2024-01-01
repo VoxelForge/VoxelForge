@@ -136,8 +136,8 @@ mcl_bookshelf_inventories (Bookshelf inventories) bool true
 # All tameable mobs listen to the "sit" right-click like dogs
 mcl_extended_pet_control (Extended pet control) bool false
 
-# Enable stairs out of wood bark
-mcl_bark_stairs (Bark Stairs) bool true
+# Enable nodes not in Minecraft. Includes extra stairs and slabs, Red Nether Brick Fence and nether brick fence gates.
+mcl_extra_nodes (Additional nodes) bool true
 
 # Enable piston movement of inventory nodes.
 mcl_inv_nodes_movable (Movable inventory nodes) bool true
