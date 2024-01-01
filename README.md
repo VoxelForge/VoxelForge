@@ -12,6 +12,7 @@ Version: 0.93.0
 * Overworld depth increased from 64 to 128 nodes
 * Improved nether portals
 * Improved leaf decay
+* Improved villages
 * Suspicious nodes, pottery shreds and decorated pots
 * Deep Dark biome and Ancient hermitage (structure corresponding to Minecraft's ancient city)
 * Functional Loom to apply banner patterns
