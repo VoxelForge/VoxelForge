@@ -247,7 +247,7 @@ function mcl_stairs.register_stair(subname, ...)
 		placement_prevented = placement_prevented,
 	},stairdef.overrides or {}))
 
-	if stairdef.recipeitem then
+	if stairdef.recipeitem and stairdef.register_craft ~= false then
 		minetest.register_craft({
 			output = "mcl_stairs:stair_" .. subname .. " 4",
 			recipe = {
@@ -445,7 +445,7 @@ function mcl_stairs.register_slab(subname, ...)
 		_mcl_blast_resistance = stairdef.blast_resistance,
 	})
 
-	if stairdef.recipeitem then
+	if stairdef.recipeitem and stairdef.register_craft ~= false then
 		minetest.register_craft({
 			output = lower_slab .. " 6",
 			recipe = {
@@ -511,7 +511,6 @@ end
 function mcl_stairs.register_stair_and_slab_simple(subname, sourcenode, stair_description, slab_description, double_description, corner_stair_texture_override, stair_overrides, slab_overrides)
 	mcl_stairs.register_stair_and_slab(subname, {
 		recipeitem=sourcenode,
-		groups=groups,
 		stair_description=stair_description,
 		slab_description=slab_description,
 		double_description=double_description,
