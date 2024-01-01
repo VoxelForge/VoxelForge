@@ -101,9 +101,6 @@ mobs_drop_items (Mob drops) bool true
 # If enabled, mobs can take, place, change and destroy blocks around them.
 mobs_griefing (Mob griefing) bool true
 
-# If enabled, mobs will emit damage particles when they get hurt.
-mcl_damage_particles (Damage particles) bool true
-
 # Should wither follow the player who spawned him around
 wither_follow_spawner (Wither follows his spawner) bool true
 
@@ -158,6 +155,9 @@ mcl_animated_chests (Animated chests) bool true
 
 # Enable dust particles in the nether
 mcl_nether_dust (Nether dust particles) bool true
+
+# If enabled, mobs will emit damage particles when they get hurt.
+mcl_damage_particles (Damage particles) bool true
 
 # The maximum number of boss bars to simultaneously display on the screen
 mcl_max_bossbars (Maximum boss bars) int 5
