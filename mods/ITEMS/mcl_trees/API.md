@@ -50,7 +50,10 @@ All features can be disabled by setting them to false, nil will assume default v
 
 {
 	sign_color="#ECA870",                      --color of the sign
-	tree_schems= {                             --a table with schematics for tree growth from sapling
+	tree_schems= {                             --a table with schematics for tree growth from sapling, , no attempts to grow a normal tree will be made if this is absent.
+		{ file="filename",width=7,height=11 },
+	},
+	tree_schems_2x2 = {                        -- Table with the same format as above containing schematics to be grown from 2x2 saplings, no attempts to grow a 2x2 tree will be made if this is absent.
 		{ file="filename",width=7,height=11 },
 	},
 	tree = {},                                 -- overrides for the tree/log node definition
