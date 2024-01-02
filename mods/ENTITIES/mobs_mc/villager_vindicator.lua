@@ -14,7 +14,6 @@ mcl_mobs.register_mob("mobs_mc:vindicator", {
 	description = S("Vindicator"),
 	type = "monster",
 	spawn_class = "hostile",
-	physical = false,
 	pathfinding = 1,
 	hp_min = 24,
 	hp_max = 24,
