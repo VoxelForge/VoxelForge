@@ -501,7 +501,7 @@ function mob_class:check_for_death(cause, cmi_cause)
 		end
 
 		if on_die_exit == true then
-			self.state = "die"
+			self:set_state("die")
 			self:safe_remove()
 			return true
 		end
@@ -511,8 +511,7 @@ function mob_class:check_for_death(cause, cmi_cause)
 		self.riden_by_jock = nil
 		self.jockey = nil
 	end
-
-	self.state = "die"
+	self:set_state("die")
 	self.attack = nil
 	self.v_start = false
 	self.fall_speed = DEFAULT_FALL_SPEED

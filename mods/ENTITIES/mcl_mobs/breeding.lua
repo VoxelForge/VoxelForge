@@ -298,14 +298,14 @@ function mob_class:toggle_sit(clicker,p)
 	if not self.order or self.order == "" or self.order == "sit" then
 		particle = "mobs_mc_wolf_icon_roam.png"
 		self.order = "roam"
-		self.state = "stand"
+		self:set_state("stand")
 		self.walk_chance = 50
 		self.jump = true
 		self:set_animation("stand")
 	else
 		particle = "mobs_mc_wolf_icon_sit.png"
 		self.order = "sit"
-		self.state = "stand"
+		self:set_state("stand")
 		self.walk_chance = 0
 		self.jump = false
 		if self.animation.sit_start then

@@ -278,10 +278,10 @@ function mob_class:gopath(target, callback_arrived, prioritised)
 		end
 		self.current_target = current_location
 		self.waypoints = wp
-		self.state = PATHFINDING
+		self:set_state(PATHFINDING)
 		return true
 	else
-		self.state = "walk"
+		self:set_state("walk")
 		self.waypoints = nil
 		self.current_target = nil
 		--	minetest.log("no path found")
@@ -350,7 +350,7 @@ function mob_class:check_gowp(dtime)
 		self.waypoints = nil
 		self._target = nil
 		self.current_target = nil
-		self.state = "stand"
+		self:set_state("stand")
 		self.order = "stand"
 		self.object:set_velocity({x = 0, y = 0, z = 0})
 		self.object:set_acceleration({x = 0, y = 0, z = 0})
@@ -386,7 +386,7 @@ function mob_class:check_gowp(dtime)
 		local failed_attempts = self.current_target["failed_attempts"]
 		if failed_attempts >= PATHFINDING_FAIL_THRESHOLD then
 			mcl_log("Failed to reach position (" .. minetest.pos_to_string(self.current_target["pos"]) .. ") too many times. Abandon route. Times tried: " .. failed_attempts)
-			self.state = "stand"
+			self:set_state("stand")
 			self.current_target = nil
 			self.waypoints = nil
 			self._target = nil

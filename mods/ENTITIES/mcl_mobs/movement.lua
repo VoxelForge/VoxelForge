@@ -279,7 +279,7 @@ function mob_class:env_danger_movement_checks(dtime)
 	if self:is_at_water_danger() and self.state ~= "attack" then
 		if math.random(1, 10) <= 6 then
 			self:set_velocity(0)
-			self.state = "stand"
+			self:set_state("stand")
 			self:set_animation( "stand")
 			yaw = yaw + math.random(-0.5, 0.5)
 			self:set_yaw( yaw, 8)
@@ -292,7 +292,7 @@ function mob_class:env_danger_movement_checks(dtime)
 
 	if self:is_at_cliff_or_danger() then
 		self:set_velocity(0)
-		self.state = "stand"
+		self:set_state("stand")
 		self:set_animation( "stand")
 		local yaw = self.object:get_yaw() or 0
 		self:set_yaw( yaw + 0.78, 8)
@@ -585,7 +585,7 @@ function mob_class:check_runaway_from()
 		end
 
 		self:set_yaw( yaw, 4)
-		self.state = "runaway"
+		self:set_state("runaway")
 		self.runaway_timer = 3
 		self.following = nil
 	end
@@ -699,7 +699,7 @@ function mob_class:follow_flop()
 		local s = self.object:get_pos()
 		if self:flight_check( s) == false then
 
-			self.state = "flop"
+			self:set_state("flop")
 			self.object:set_acceleration({x = 0, y = DEFAULT_FALL_SPEED, z = 0})
 
 			local p = self.object:get_pos()
@@ -721,7 +721,7 @@ function mob_class:follow_flop()
 
 			return
 		elseif self.state == "flop" then
-			self.state = "stand"
+			self:set_state("stand")
 			self.object:set_acceleration({x = 0, y = 0, z = 0})
 			self:set_velocity(0)
 		end
@@ -732,7 +732,7 @@ function mob_class:go_to_pos(b)
 	if not self then return end
 	local s=self.object:get_pos()
 	if not b then
-		--self.state = "stand"
+		--self:set_state("stand")
 		return end
 	if vector.distance(b,s) < 0.5 then
 		--self:set_velocity(0)
@@ -876,7 +876,7 @@ function mob_class:do_states_walk()
 			or math.random(1, 100) <= 30 then
 
 		self:set_velocity(0)
-		self.state = "stand"
+		self:set_state("stand")
 		self:set_animation( "stand")
 		local yaw = self.object:get_yaw() or 0
 		self:set_yaw( yaw + 0.78, 8)
@@ -937,7 +937,7 @@ function mob_class:do_states_stand()
 
 	-- npc's ordered to stand stay standing
 	if self.order == "stand" or self.order == "sleep" or self.order == "work" then
-		self.state = "stand"
+		self:set_state("stand")
 		self:set_animation( "stand")
 	else
 		if self.walk_chance ~= 0
@@ -946,7 +946,7 @@ function mob_class:do_states_stand()
 				and self:is_at_cliff_or_danger() == false then
 
 			self:set_velocity(self.walk_velocity)
-			self.state = "walk"
+			self:set_state("walk")
 			self:set_animation( "walk")
 		end
 	end
@@ -960,7 +960,7 @@ function mob_class:do_states_runaway()
 			or self:is_at_cliff_or_danger() then
 		self.runaway_timer = 0
 		self:set_velocity(0)
-		self.state = "stand"
+		self:set_state("stand")
 		self:set_animation( "stand")
 		local yaw = self.object:get_yaw() or 0
 		self:set_yaw( yaw + 0.78, 8)

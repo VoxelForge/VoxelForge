@@ -102,7 +102,7 @@ function mob_class:get_staticdata()
 
 	self.attack = nil
 	self.following = nil
-	self.state = "stand"
+	self:set_state("stand")
 
 	local tmp = {}
 
@@ -327,6 +327,13 @@ function mob_class:node_infront_ok(pos, y_adjust, fallback)
 	end
 
 	return minetest.registered_nodes[fallback]
+end
+
+function mob_class:set_state(state)
+	if self.state == "die" then
+		return
+	end
+	self.state = state
 end
 
 -- returns true if mob has died

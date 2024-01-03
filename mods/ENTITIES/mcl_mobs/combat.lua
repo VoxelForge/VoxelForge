@@ -47,7 +47,7 @@ function mob_class:do_attack(player)
 	end
 
 	self.attack = player
-	self.state = "attack"
+	self:set_state("attack")
 
 	-- TODO: Implement war_cry sound without being annoying
 	--if random(0, 100) < 90 then
@@ -201,7 +201,7 @@ function mob_class:smart_mobs(s, p, dist, dtime)
 		end
 		self.path.way = minetest.find_path(s, p1, 16, jumpheight, dropheight, "A*_noprefetch")
 
-		self.state = ""
+		self:set_state("")
 		self:do_attack(self.attack)
 
 		-- no path found, try something else
@@ -667,7 +667,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 				self:set_velocity( self.run_velocity)
 			end
 		end)
-		self.state = "runaway"
+		self:set_state("runaway")
 		self.runaway_timer = 0
 		self.following = nil
 	end
@@ -682,7 +682,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 	and not mcl_mobs.invis[ name ] then
 		if not die then
 			-- attack whoever punched mob
-			self.state = ""
+			self:set_state("")
 			self:do_attack(hitter)
 			self.aggro = true
 		end
@@ -729,7 +729,7 @@ function mob_class:check_aggro(dtime)
 		if not self.attack:get_pos() or vector.distance(self.attack:get_pos(),self.object:get_pos()) > 128 then
 			self.aggro = nil
 			self.attack = nil
-			self.state = "stand"
+			self:set_state("stand")
 		end
 	end
 	self._check_aggro_timer = self._check_aggro_timer + dtime
@@ -738,7 +738,7 @@ end
 
 
 function mob_class:clear_aggro()
-	self.state = "stand"
+	self:set_state("stand")
 	self:set_velocity( 0)
 	self:set_animation( "stand")
 
