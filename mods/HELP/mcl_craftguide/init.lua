@@ -597,6 +597,15 @@ local function get_recipe_fs(data, iY)
 				0.6,
 				0.6,
 				"mcl_craftguide_fuel.png")
+		else
+			fs[#fs + 1] = string.format("item_image_button[%f,%f;%f,%f;%s;%s_inv;%s]",
+				8.5,
+				7.2,
+				1.1,
+				1.1,
+				"mcl_crafting_table:crafting_table",
+				"craft","craft")
+			fs[#fs + 1] = "tooltip[craft;To crafting table]"
 		end
 	end
 
@@ -904,6 +913,9 @@ local function on_receive_fields(player, fields)
 		data.pagenum = 1
 		data.iX = data.iX + (fields.size_inc and 1 or -1)
 		show_fs(player, name)
+	elseif fields.craft_inv and fields.craft_inv == "craft" then
+		mcl_crafting_table.show_crafting_form(player)
+		mcl_crafting_table.put_recipe_from_inv(player, data.recipes[data.rnum])
 	else
 		local item
 		for field in pairs(fields) do

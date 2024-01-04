@@ -43,6 +43,33 @@ function mcl_crafting_table.show_crafting_form(player)
 	minetest.show_formspec(player:get_player_name(), "main", mcl_crafting_table.formspec)
 end
 
+function mcl_crafting_table.has_crafting_table(player)
+	return minetest.is_creative_enabled(player:get_player_name()) or minetest.find_node_near(player:get_pos(), 4, { "mcl_crafting_table:crafting_table" })
+end
+
+function mcl_crafting_table.put_recipe_from_inv(player, craft)
+	--minetest.log(dump(craft))
+	local pinv = player:get_inventory()
+	local c = 1
+	local i = 1
+	if craft.type == "normal" then
+		for _,it in pairs(craft.items) do
+			local pit = ItemStack(it)
+			if pinv:contains_item("main", pit) and pinv:room_for_item("craft", pit) then
+				local stack = pinv:remove_item("main", pit)
+				pinv:set_stack("craft", i, stack)
+				c = c + 1
+				if c >= craft.width then
+					i = i + 1 + c - craft.width
+					c = 1
+				else
+					i = i + 1
+				end
+			end
+		end
+	end
+end
+
 minetest.register_node("mcl_crafting_table:crafting_table", {
 	description = S("Crafting Table"),
 	_tt_help = S("3×3 crafting grid"),
