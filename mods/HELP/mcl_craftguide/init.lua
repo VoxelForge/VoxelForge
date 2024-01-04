@@ -437,7 +437,7 @@ local function get_tooltip(item, groups, cooktime, burntime)
 	return string.format(FMT.tooltip, item, F(tooltip))
 end
 
-local function get_recipe_fs(data, iY)
+local function get_recipe_fs(data, iY, player)
 	local fs = {}
 	local recipe = data.recipes[data.rnum]
 	local width = recipe.width
@@ -597,7 +597,8 @@ local function get_recipe_fs(data, iY)
 				0.6,
 				0.6,
 				"mcl_craftguide_fuel.png")
-		else
+		end
+		if mcl_crafting_table.has_crafting_table(player) then
 			fs[#fs + 1] = string.format("item_image_button[%f,%f;%f,%f;%s;%s_inv;%s]",
 				8.5,
 				7.2,
@@ -696,7 +697,7 @@ local function make_formspec(name)
 	end
 
 	if data.recipes and #data.recipes > 0 then
-		fs[#fs + 1] = get_recipe_fs(data, iY)
+		fs[#fs + 1] = get_recipe_fs(data, iY, minetest.get_player_by_name(name))
 	end
 
 	for elem_name, def in pairs(formspec_elements) do
