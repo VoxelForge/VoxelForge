@@ -175,6 +175,10 @@ minetest.register_node("mcl_bamboo:scaffolding", {
 	_mcl_blast_resistance = 0,
 	_mcl_hardness = 0,
 	on_place = function(itemstack, placer, ptd)
+		if not placer or not placer:is_player() then
+			return itemstack
+		end
+
 		local ctrl = placer:get_player_control()
 		local rc = mcl_util.call_on_rightclick(itemstack, placer, ptd)
 		if rc then return rc end

@@ -193,7 +193,7 @@ function mcl_torches.register_torch(def)
 			if not def then return itemstack end
 
 			-- Call on_rightclick if the pointed node defines it
-			if placer and not placer:get_player_control().sneak then
+			if placer and placer:is_player() and not placer:get_player_control().sneak then
 				local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
 				if rc ~= nil then return rc end --check for nil explicitly to determine if on_rightclick existed
 			end

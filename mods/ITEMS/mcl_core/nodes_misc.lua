@@ -195,7 +195,7 @@ minetest.register_node("mcl_core:barrier", {
 		})
 	end,
 	on_place = function(itemstack, placer, pointed_thing)
-		if pointed_thing.type ~= "node" then
+		if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 			return itemstack
 		end
 
@@ -332,7 +332,6 @@ minetest.register_node("mcl_core:void", {
 			minetest.chat_send_player(placer:get_player_name(),
 				minetest.colorize(mcl_colors.RED, "You can't just place the void by hand!"))
 		end
-		return
 	end,
 	drop = "",
 	-- Infinite blast resistance; it should never be destroyed by explosions

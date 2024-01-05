@@ -960,7 +960,7 @@ for i=1,8 do
 
 		-- Check special rightclick action of pointed node
 		if def and def.on_rightclick then
-			if not placer:get_player_control().sneak then
+			if placer and placer:is_player() and not placer:get_player_control().sneak then
 				return def.on_rightclick(under, unode, placer, itemstack,
 					pointed_thing) or itemstack, false
 			end

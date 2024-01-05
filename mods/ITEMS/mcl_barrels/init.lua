@@ -110,8 +110,11 @@ minetest.register_node("mcl_barrels:barrel_closed", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	on_place = function(itemstack, placer, pointed_thing)
+		if  not placer or not placer:is_player() then
+			return itemstack
+		end
 		minetest.rotate_and_place(itemstack, placer, pointed_thing,
-			minetest.is_creative_enabled(placer:get_player_name()), {}
+			minetest.is_creative_enabled(placer and placer:get_player_name() or ""), {}
 			, false)
 		return itemstack
 	end,

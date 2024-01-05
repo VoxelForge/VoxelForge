@@ -30,7 +30,7 @@ local rod_def = {
 		},
 	},
 	on_place = function(itemstack, placer, pointed_thing)
-		if pointed_thing.type ~= "node" then
+		if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 			return itemstack
 		end
 

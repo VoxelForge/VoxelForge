@@ -199,7 +199,7 @@ function mcl_signs.generate_texture(data)
 end
 
 function sign_tpl.on_place(itemstack, placer, pointed_thing)
-	if pointed_thing.type ~= "node" then
+	if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 		return itemstack
 	end
 

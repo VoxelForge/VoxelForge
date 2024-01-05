@@ -1357,7 +1357,7 @@ for color, desc in pairs(boxtypes) do
 			ninv:set_size("main", 9 * 3)
 			set_shulkerbox_meta(nmeta, itemstack:get_meta())
 
-			if minetest.is_creative_enabled(placer:get_player_name()) then
+			if minetest.is_creative_enabled(placer and placer:get_player_name() or "") then
 				if not ninv:is_empty("main") then
 					return nil
 				else
@@ -1426,6 +1426,10 @@ for color, desc in pairs(boxtypes) do
 			create_entity(pos, small_name, {mob_texture}, minetest.get_node(pos).param2, false, "mcl_chests_shulker", "mcl_chests_shulker", "shulker")
 		end,
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
+			if not placer or not placer:is_player() then
+				return itemstack
+			end
+
 			local nmeta = minetest.get_meta(pos)
 			local imetadata = itemstack:get_metadata()
 			local iinv_main = minetest.deserialize(imetadata)

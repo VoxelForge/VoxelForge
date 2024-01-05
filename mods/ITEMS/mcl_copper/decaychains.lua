@@ -105,7 +105,7 @@ local function register_preserve(nodename,def,chaindef)
 				node.name = node.name.."_preserved"
 				if minetest.registered_nodes[node.name] then
 					minetest.swap_node(pointed_thing.under,node)
-					if not minetest.is_creative_enabled(placer:get_player_name()) then
+					if not minetest.is_creative_enabled(placer and placer:get_player_name() or "") then
 						itemstack:take_item()
 					end
 				end

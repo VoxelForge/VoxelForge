@@ -66,7 +66,7 @@ minetest.register_node("mesecons_walllever:wall_lever_off", {
 	end,
 	node_placement_prediction = "",
 	on_place = function(itemstack, placer, pointed_thing)
-		if pointed_thing.type ~= "node" then
+		if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 			-- no interaction possible with entities
 			return itemstack
 		end
@@ -79,7 +79,7 @@ minetest.register_node("mesecons_walllever:wall_lever_off", {
 
 		-- Check special rightclick action of pointed node
 		if def and def.on_rightclick then
-			if not placer:get_player_control().sneak then
+			if placer and not placer:get_player_control().sneak then
 				return def.on_rightclick(under, node, placer, itemstack,
 					pointed_thing) or itemstack, false
 			end

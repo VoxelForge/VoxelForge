@@ -288,7 +288,7 @@ minetest.register_node("mcl_grindstone:grindstone", {
 		meta:set_string("formspec", grindstone_formspec)
 	end,
 	on_rightclick = function(pos, node, player, itemstack)
-		if not player:get_player_control().sneak then
+		if player and player:is_player() and not player:get_player_control().sneak then
 			local meta = minetest.get_meta(pos)
 			update_grindstone_slots(meta)
 			meta:set_string("formspec", grindstone_formspec)

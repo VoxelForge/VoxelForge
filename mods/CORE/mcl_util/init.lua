@@ -149,10 +149,35 @@ end
 -- Wrapper of above function for use as `on_place` callback (Recommended).
 -- Similar to minetest.rotate_node.
 function mcl_util.rotate_axis(itemstack, placer, pointed_thing)
-	mcl_util.rotate_axis_and_place(itemstack, placer, pointed_thing,
-		minetest.is_creative_enabled(placer:get_player_name()),
-		placer:get_player_control().sneak)
+	if placer and placer:is_player() then
+		mcl_util.rotate_axis_and_place(itemstack, placer, pointed_thing,
+			minetest.is_creative_enabled(placer:get_player_name()),
+			placer:get_player_control().sneak)
+	end
+
 	return itemstack
+end
+
+-- Determine if pointer (player) is pointing above the middle of a pointed thing
+-- Used when placing slabs and stairs.
+function mcl_util.is_pointing_above_middle(pointer, pointed_thing)
+	if
+		not pointer
+		or not pointer:is_player()
+		or not pointed_thing
+		or not pointed_thing.under
+		or not pointed_thing.above
+	then
+		return false
+	end
+	local p0 = pointed_thing.under
+	local p1 = pointed_thing.above
+	local finepos = minetest.pointed_thing_to_face_pos(pointer, pointed_thing).y % 1
+
+	return (
+		p0.y - 1 == p1.y or (finepos > 0 and finepos < 0.5)
+		or (finepos < -0.5 and finepos > -0.999999999)
+	)
 end
 
 -- Returns position of the neighbor of a double chest node
@@ -452,7 +477,7 @@ function mcl_util.generate_on_place_plant_function(condition)
 
 		-- Call on_rightclick if the pointed node defines it
 		local node = minetest.get_node(pointed_thing.under)
-		if placer and not placer:get_player_control().sneak then
+		if placer and placer:is_player() and not placer:get_player_control().sneak then
 			local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
 			if rc ~= nil then return rc end
 		end
@@ -518,7 +543,7 @@ function mcl_util.call_on_rightclick(itemstack, player, pointed_thing)
 	if pointed_thing and pointed_thing.type == "node" then
 		local pos = pointed_thing.under
 		local node = minetest.get_node(pos)
-		if player and not player:get_player_control().sneak then
+		if player and player:is_player() and not player:get_player_control().sneak then
 			local nodedef = minetest.registered_nodes[node.name]
 			local on_rightclick = nodedef and nodedef.on_rightclick
 			if on_rightclick then

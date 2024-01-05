@@ -268,7 +268,7 @@ minetest.register_node("mcl_mobspawners:spawner", {
 
 	-- If placed by player, setup spawner with default settings
 	on_place = function(itemstack, placer, pointed_thing)
-		if pointed_thing.type ~= "node" then
+		if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 			return itemstack
 		end
 

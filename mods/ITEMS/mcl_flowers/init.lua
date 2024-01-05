@@ -508,6 +508,10 @@ minetest.register_node("mcl_flowers:waterlily", {
 	},
 
 	on_place = function(itemstack, placer, pointed_thing)
+		if not placer or not placer:is_player() then
+			return itemstack
+		end
+
 		local pos = pointed_thing.above
 		local node = minetest.get_node(pointed_thing.under)
 		local nodename = node.name

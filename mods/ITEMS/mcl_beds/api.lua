@@ -154,10 +154,10 @@ function mcl_beds.register_bed(name, def)
 
 		on_place = function(itemstack, placer, pointed_thing)
 			local under = pointed_thing.under
-
+			local player_name = placer and placer:get_player_name() or ""
 			-- Use pointed node's on_rightclick function first, if present
 			local node = minetest.get_node(under)
-			if placer and not placer:get_player_control().sneak then
+			if placer and placer:is_player() and not placer:get_player_control().sneak then
 				if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
 					return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
 				end
@@ -171,9 +171,9 @@ function mcl_beds.register_bed(name, def)
 				pos = pointed_thing.above
 			end
 
-			if minetest.is_protected(pos, placer:get_player_name()) and
-					not minetest.check_player_privs(placer, "protection_bypass") then
-				minetest.record_protection_violation(pos, placer:get_player_name())
+			if minetest.is_protected(pos, player_name) and
+					not minetest.check_player_privs(player_name, "protection_bypass") then
+				minetest.record_protection_violation(pos, player_name)
 				return itemstack
 			end
 
@@ -182,12 +182,13 @@ function mcl_beds.register_bed(name, def)
 				return itemstack
 			end
 
-			local dir = minetest.dir_to_facedir(placer:get_look_dir())
+			local dir = placer and placer:is_player() and placer:get_look_dir() and
+				minetest.dir_to_facedir(placer:get_look_dir()) or 0
 			local botpos = vector.add(pos, minetest.facedir_to_dir(dir))
 
-			if minetest.is_protected(botpos, placer:get_player_name()) and
-					not minetest.check_player_privs(placer, "protection_bypass") then
-				minetest.record_protection_violation(botpos, placer:get_player_name())
+			if minetest.is_protected(botpos, player_name) and
+					not minetest.check_player_privs(player_name, "protection_bypass") then
+				minetest.record_protection_violation(botpos, player_name)
 				return itemstack
 			end
 
@@ -199,7 +200,7 @@ function mcl_beds.register_bed(name, def)
 			minetest.set_node(pos, {name = name .. "_bottom", param2 = dir})
 			minetest.set_node(botpos, {name = name .. "_top", param2 = dir})
 
-			if not minetest.is_creative_enabled(placer:get_player_name()) then
+			if not minetest.is_creative_enabled(player_name) then
 				itemstack:take_item()
 			end
 			return itemstack

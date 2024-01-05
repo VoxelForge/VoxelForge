@@ -38,7 +38,7 @@ function mesecon.push_button(pos, node)
 end
 
 local function on_button_place(itemstack, placer, pointed_thing)
-	if pointed_thing.type ~= "node" then
+	if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 		-- no interaction possible with entities
 		return itemstack
 	end

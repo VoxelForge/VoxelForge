@@ -2,34 +2,26 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 -- Core mcl_stairs API
 
--- Wrapper around mintest.pointed_thing_to_face_pos.
-local function get_fpos(placer, pointed_thing)
-	local finepos = minetest.pointed_thing_to_face_pos(placer, pointed_thing)
-	return finepos.y % 1
-end
-
 local function place_slab_normal(itemstack, placer, pointed_thing)
 	-- Use pointed node's on_rightclick function first, if present
 	local node = minetest.get_node(pointed_thing.under)
-	if placer and not placer:get_player_control().sneak then
+	if placer and placer:is_player() and not placer:get_player_control().sneak then
 		if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
 			return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
 		end
 	end
 
-	local p0 = pointed_thing.under
-	local p1 = pointed_thing.above
+	local place = ItemStack(itemstack)
+	local origname = place:get_name()
 
 	--local placer_pos = placer:get_pos()
-
-	local fpos = get_fpos(placer, pointed_thing)
-
-	local place = ItemStack(itemstack)
-	local origname = itemstack:get_name()
-	if p0.y - 1 == p1.y or (fpos > 0 and fpos < 0.5)
-			or (fpos < -0.5 and fpos > -0.999999999) then
+	if
+		placer
+		and mcl_util.is_pointing_above_middle(placer, pointed_thing)
+	then
 		place:set_name(origname .. "_top")
 	end
+
 	local ret = minetest.item_place(place, placer, pointed_thing, 0)
 	ret:set_name(origname)
 	return ret
@@ -38,32 +30,31 @@ end
 local function place_stair(itemstack, placer, pointed_thing)
 	-- Use pointed node's on_rightclick function first, if present
 	local node = minetest.get_node(pointed_thing.under)
-	if placer and not placer:get_player_control().sneak then
+	if placer and placer:is_player() and not placer:get_player_control().sneak then
 		if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
 			return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
 		end
 	end
 
-	local p0 = pointed_thing.under
 	local p1 = pointed_thing.above
 	local param2 = 0
 
-	local placer_pos = placer:get_pos()
-	if placer_pos then
-		param2 = minetest.dir_to_facedir(vector.subtract(p1, placer_pos))
-	end
+	if placer then
+		local placer_pos = placer:get_pos()
+		if placer_pos then
+			param2 = minetest.dir_to_facedir(vector.subtract(p1, placer_pos))
+		end
 
-	local fpos = get_fpos(placer, pointed_thing)
-
-	if p0.y - 1 == p1.y or (fpos > 0 and fpos < 0.5)
-			or (fpos < -0.5 and fpos > -0.999999999) then
-		param2 = param2 + 20
-		if param2 == 21 then
-			param2 = 23
-		elseif param2 == 23 then
-			param2 = 21
+		if mcl_util.is_pointing_above_middle(placer, pointed_thing) then
+			param2 = param2 + 20
+			if param2 == 21 then
+				param2 = 23
+			elseif param2 == 23 then
+				param2 = 21
+			end
 		end
 	end
+
 	return minetest.item_place(itemstack, placer, pointed_thing, param2)
 end
 
@@ -344,7 +335,8 @@ function mcl_stairs.register_slab(subname, ...)
 		on_place = function(itemstack, placer, pointed_thing)
 			local under = minetest.get_node(pointed_thing.under)
 			local wield_item = itemstack:get_name()
-			local creative_enabled = minetest.is_creative_enabled(placer:get_player_name())
+			local player_name = placer and placer:get_player_name() or ""
+			local creative_enabled = minetest.is_creative_enabled(player_name)
 
 			-- place slab using under node orientation
 			local dir = vector.subtract(pointed_thing.above, pointed_thing.under)
@@ -357,9 +349,9 @@ function mcl_stairs.register_slab(subname, ...)
 					not ((dir.y >= 0 and minetest.get_item_group(under.name, "slab_top") == 1) or
 					(dir.y <= 0 and minetest.get_item_group(under.name, "slab_top") == 0)) then
 
-				local player_name = placer:get_player_name()
+
 				if minetest.is_protected(pointed_thing.under, player_name) and not
-						minetest.check_player_privs(placer, "protection_bypass") then
+						minetest.check_player_privs(player_name, "protection_bypass") then
 					minetest.record_protection_violation(pointed_thing.under,
 						player_name)
 					return

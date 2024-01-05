@@ -49,10 +49,12 @@ minetest.register_node("mcl_sponges:sponge", {
 	sounds = mcl_sounds.node_sound_dirt_defaults(),
 	groups = {handy=1, hoey=1, building_block=1},
 	on_place = function(itemstack, placer, pointed_thing)
-		local pn = placer:get_player_name()
-		if pointed_thing.type ~= "node" then
+
+		if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 			return itemstack
 		end
+
+		local pn = placer:get_player_name()
 
 		-- Use pointed node's on_rightclick function first, if present
 		local node = minetest.get_node(pointed_thing.under)
@@ -94,7 +96,7 @@ minetest.register_node("mcl_sponges:sponge", {
 })
 
 function place_wet_sponge(itemstack, placer, pointed_thing)
-	if pointed_thing.type ~= "node" then
+	if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 		return itemstack
 	end
 	-- Use pointed node's on_rightclick function first, if present

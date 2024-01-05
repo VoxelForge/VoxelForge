@@ -150,6 +150,11 @@ function mcl_doors:register_trapdoor(name, def)
 			end),
 		}},
 		on_place = function(itemstack, placer, pointed_thing)
+
+			if not placer or not placer:is_player() then
+				return itemstack
+			end
+
 			local p0 = pointed_thing.under
 			local p1 = pointed_thing.above
 			local param2 = 0

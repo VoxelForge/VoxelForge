@@ -67,7 +67,7 @@ function mcl_heads.deftemplate.on_rotate(pos, node, user, mode, new_param2)
 end
 
 function mcl_heads.deftemplate.on_place(itemstack, placer, pointed_thing)
-	if pointed_thing.type ~= "node" then
+	if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 		return itemstack
 	end
 

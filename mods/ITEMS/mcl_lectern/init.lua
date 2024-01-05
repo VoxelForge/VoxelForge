@@ -47,9 +47,14 @@ minetest.register_node("mcl_lectern:lectern", {
 	},
 
 	on_place = function(itemstack, placer, pointed_thing)
+
+		if not placer or not placer:is_player() then
+			return itemstack
+		end
+
 		-- Use pointed node's on_rightclick function first, if present
 		local node = minetest.get_node(pointed_thing.under)
-		if placer and not placer:get_player_control().sneak then
+		if not placer:get_player_control().sneak then
 			if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
 				return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
 			end
