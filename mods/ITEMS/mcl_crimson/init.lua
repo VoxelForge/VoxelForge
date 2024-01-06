@@ -232,6 +232,19 @@ minetest.register_node("mcl_crimson:twisting_vines", {
 		end
 		return itemstack
 	end,
+	on_place = function(itemstack, placer, pointed_thing)
+		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		if rc then return rc end
+		if pointed_thing.under.y < pointed_thing.above.y then
+			if minetest.get_item_group( minetest.get_node(pointed_thing.under).name, "solid") == 0 or minetest.is_protected(pointed_thing.above, placer:get_player_name()) then
+				return
+			end
+			minetest.item_place_node(itemstack, placer, pointed_thing)
+			if not minetest.is_creative_enabled(placer:get_player_name()) then
+				return itemstack
+			end
+		end
+	end,
 	on_dig = function(pos, node, digger)
 		local above = vector.offset(pos,0,1,0)
 		minetest.node_dig(pos, node, digger)
@@ -304,8 +317,20 @@ minetest.register_node("mcl_crimson:weeping_vines", {
 		end
 		return itemstack
 	end,
-
 	on_dig = mcl_core.dig_vines,
+	on_place = function(itemstack, placer, pointed_thing)
+		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		if rc then return rc end
+		if pointed_thing.under.y > pointed_thing.above.y then
+			if minetest.get_item_group( minetest.get_node(pointed_thing.under).name, "solid") == 0 or minetest.is_protected(pointed_thing.above, placer:get_player_name()) then
+				return
+			end
+			minetest.item_place_node(itemstack, placer, pointed_thing)
+			if not minetest.is_creative_enabled(placer:get_player_name()) then
+				return itemstack
+			end
+		end
+	end,
 	drop = {
 		max_items = 1,
 		items = {
