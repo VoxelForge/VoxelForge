@@ -502,6 +502,20 @@ minetest.register_node("mcl_crimson:crimson_nylium", {
 	_on_bone_meal = on_bone_meal,
 })
 
+minetest.register_abm({
+	label = "Turn Crimson Nylium and Warped Nylium below solid block into Netherrack",
+	nodenames = {"mcl_crimson:crimson_nylium","mcl_crimson:warped_nylium"},
+	neighbors = {"group:solid"},
+	interval = 8,
+	chance = 50,
+	action = function(pos, node)
+		if minetest.get_item_group(minetest.get_node(vector.offset(pos, 0, 1, 0)).name, "solid") > 0 then
+			node.name = "mcl_nether:netherrack"
+			minetest.set_node(pos, node)
+		end
+	end
+})
+
 -- Door, Trapdoor, and Fence/Gate Crafting
 local crimson_wood = "mcl_crimson:crimson_hyphae_wood"
 local warped_wood = "mcl_crimson:warped_hyphae_wood"
