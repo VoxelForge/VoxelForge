@@ -212,9 +212,6 @@ minetest.register_node("mcl_crimson:twisting_vines", {
 			return itemstack
 		end
 		if clicker:get_wielded_item():get_name() == "mcl_crimson:twisting_vines" then
-			if not minetest.is_creative_enabled(clicker:get_player_name()) then
-				itemstack:take_item()
-			end
 			grow_vines(pos, 1, "mcl_crimson:twisting_vines")
 			local idef = itemstack:get_definition()
 			local _, success = minetest.item_place_node(itemstack, clicker, pointed_thing)
@@ -298,9 +295,6 @@ minetest.register_node("mcl_crimson:weeping_vines", {
 			return itemstack
 		end
 		if clicker:get_wielded_item():get_name() == "mcl_crimson:weeping_vines" then
-			if not minetest.is_creative_enabled(clicker:get_player_name()) then
-				itemstack:take_item()
-			end
 			grow_vines(pos, 1, "mcl_crimson:weeping_vines", -1)
 			local idef = itemstack:get_definition()
 			local _, success = minetest.item_place_node(itemstack, clicker, pointed_thing)
