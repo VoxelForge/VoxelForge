@@ -233,9 +233,7 @@ local function player_chest_open(player, pos, node_name, textures, param2, doubl
 		local blocked = not shulker and (back_is_blocked(pos, dir) or double and back_is_blocked(mcl_util.get_double_container_neighbor_pos(pos, param2, node_name:sub(-4)), dir))
 		find_or_create_entity(pos, node_name, textures, param2, double, sound, mesh, shulker and "shulker" or "chest", dir):open(name, blocked)
 	else
-		minetest.sound_play(sound .. "_open", {
-			pos = pos,
-		})
+		minetest.sound_play(sound .. "_open", { pos = pos, gain = 0.5, max_hear_distance = 16 }, true)
 	end
 end
 
@@ -302,9 +300,7 @@ local function player_chest_close(player)
 	if animate_chests then
 		find_or_create_entity(open_chest.pos, open_chest.node_name, open_chest.textures, open_chest.param2, open_chest.double, open_chest.sound, open_chest.mesh, open_chest.shulker and "shulker" or "chest"):close(name)
 	else
-		minetest.sound_play(open_chest.sound .. "_close", {
-			pos = open_chest.pos,
-		})
+		minetest.sound_play(open_chest.sound .. "_close", { pos = open_chest.pos, gain = 0.5, max_hear_distance = 16 }, true)
 	end
 	chest_update_after_close(open_chest.pos)
 
