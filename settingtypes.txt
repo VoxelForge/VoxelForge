@@ -151,7 +151,7 @@ mcl_bonus_chest (Bonus Chest) bool false
 
 [Graphics]
 # Whether to animate chests when open / close
-mcl_animated_chests (Animated chests) bool true
+animated_chests (Animated chests) bool true
 
 # Enable dust particles in the nether
 mcl_nether_dust (Nether dust particles) bool true
