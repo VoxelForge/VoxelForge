@@ -111,7 +111,7 @@ mcl_death_messages = {
 		},
 		explosion = {
 			_translator = S,
-			plain = "@1 blew up",
+			plain = W("@1 blew up"),
 			killer = W("@1 was blown up by @2"),
 			item = W("@1 was blown up by @2 using @3"),
 			-- "@1 was killed by [Intentional Game Design]" -- for exploding bed in nether or end
