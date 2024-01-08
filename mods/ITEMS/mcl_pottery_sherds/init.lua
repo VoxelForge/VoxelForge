@@ -131,6 +131,7 @@ minetest.register_node("mcl_pottery_sherds:pot", {
 	is_ground_content = false,
 	groups = { dig_immediate = 3, deco_block = 1, attached_node = 1, dig_by_piston = 1, flower_pot = 1, not_in_creative_inventory = 1 },
 	sounds = mcl_sounds.node_sound_stone_defaults(),
+	drop = "",
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("pot_faces",itemstack:get_meta():get_string("pot_faces"))
@@ -138,6 +139,13 @@ minetest.register_node("mcl_pottery_sherds:pot", {
 	end,
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
 		update_entities(pos,true)
+	end,
+	on_destruct = function(pos)
+		local meta = minetest.get_meta(pos)
+		local it = ItemStack("mcl_pottery_sherds:pot")
+		local im = it:get_meta()
+		im:set_string("pot_faces", meta:get_string("pot_faces"))
+		minetest.add_item(pos, it)
 	end,
 	on_rotate = function(pos, _,  _, mode, new_param2)
 		if mode == screwdriver.ROTATE_AXIS then
