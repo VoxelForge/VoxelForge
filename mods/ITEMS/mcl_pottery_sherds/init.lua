@@ -39,34 +39,9 @@ local brick_groups = table.copy(minetest.registered_items["mcl_core:brick"].grou
 brick_groups["decorated_pot_recipe"] = 1
 minetest.override_item("mcl_core:brick", { groups = brick_groups })
 
-minetest.register_entity("mcl_pottery_sherds:pot_face",{
-	initial_properties = {
-		physical = false,
-		visual = "upright_sprite",
-		visual_size = {x=1.0, y=1.0},
-		collisionbox = {0,0,0,0,0,0},
-		pointable = false,
-	},
-	on_activate = function(self, staticdata)
-		self.object:set_armor_groups({immortal=1})
-		local s = minetest.deserialize(staticdata)
-		if type(s) == "table" then
-			self.object:set_properties({
-				textures = { s.texture },
-			})
-		end
-	end,
-	get_staticdata = function(self)
-		return minetest.serialize({ texture = self.texture })
-	end,
-	on_step = function(self)
-		if minetest.get_node(self.object:get_pos()).name ~= "mcl_pottery_sherds:pot" then
-			self.object:remove()
-		end
-	end
-})
 
 local function update_entities(pos,rm)
+	pos = vector.round(pos)
 	for _,v in pairs(minetest.get_objects_inside_radius(pos, 0.5, true)) do
 		local ent = v:get_luaentity()
 		if ent and ent.name == "mcl_pottery_sherds:pot_face" then
@@ -91,6 +66,38 @@ local function update_entities(pos,rm)
 		end
 	end
 end
+
+minetest.register_entity("mcl_pottery_sherds:pot_face",{
+	initial_properties = {
+		physical = false,
+		visual = "upright_sprite",
+		visual_size = {x=1.0, y=1.0},
+		collisionbox = {0,0,0,0,0,0},
+		pointable = false,
+	},
+	on_activate = function(self, staticdata)
+		self.object:set_armor_groups({immortal=1})
+		local s = minetest.deserialize(staticdata)
+		if type(s) == "table" then
+			if not s.texture then
+				update_entities(self.object:get_pos())
+				self.object:remove()
+				return
+			end
+			self.object:set_properties({
+				textures = { s.texture },
+			})
+		end
+	end,
+	get_staticdata = function(self)
+		return minetest.serialize({ texture = self.texture })
+	end,
+	on_step = function(self)
+		if minetest.get_node(self.object:get_pos()).name ~= "mcl_pottery_sherds:pot" then
+			self.object:remove()
+		end
+	end
+})
 
 local potbox = {
 	type = "fixed",
