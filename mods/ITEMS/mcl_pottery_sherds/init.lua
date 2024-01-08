@@ -123,8 +123,6 @@ minetest.register_node("mcl_pottery_sherds:pot", {
 		{ name = "mcl_pottery_sherds_pot_side.png", align_style = "world" },
 	},
 	use_texture_alpha = "clip",
-	wield_image = "mcl_pottery_sherds_pot_side.png",
-	inventory_image = minetest.inventorycube("mcl_pottery_sherds_pot_top.png", "mcl_pottery_sherds_pot_bottom.png", "mcl_pottery_sherds_pot_bottom.png"),
 	paramtype = "light",
 	paramtype2 = "facedir",
 	sunlight_propagates = true,
