@@ -71,7 +71,6 @@ minetest.register_entity("mcl_pottery_sherds:pot_face",{
 	initial_properties = {
 		physical = false,
 		visual = "upright_sprite",
-		visual_size = {x=1.0, y=1.0},
 		collisionbox = {0,0,0,0,0,0},
 		pointable = false,
 	},
