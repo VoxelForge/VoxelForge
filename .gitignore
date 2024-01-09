@@ -4,3 +4,7 @@
 *.blend2
 *.blend3
 /.idea/
+*.xcf
+.Rproj.user
+prompt.txt
+__pycache__
