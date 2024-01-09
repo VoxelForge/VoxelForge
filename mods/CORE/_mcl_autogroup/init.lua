@@ -232,7 +232,7 @@ function mcl_autogroup.can_harvest(nodename, toolname, player)
 		local name = player:get_inventory():get_stack("hand", 1):get_name()
 		tdef = minetest.registered_items[name]
 	end
-	if tdef then
+	if tdef and tdef._mcl_diggroups then
 		for g, gdef in pairs(tdef._mcl_diggroups) do
 			if ndef.groups[g] then
 				if ndef.groups[g] <= gdef.level then
