@@ -5,25 +5,31 @@ Register your own wood types. It will automatically register the associated node
 ## Quick start
 
 Simple way of registering willow wood `willow`:
-mcl_trees.register_wood("willow",wood_definition) -- see below for explanation of wood definition
 
+```lua
+mcl_trees.register_wood("willow",wood_definition) -- see below for explanation of wood definition
 ```
+
+```lua
 mcl_trees.register_wood("willow")
 ```
 
 For advanced usage you can override and/or turn on and off certain features for example:
 
+```lua
 mcl_trees.register_wood("willow",{
 	sign_color = "#00FF00", --hex color for the sign
 	sapling = {tiles = { "different_sapling_texture_file.png" } },
 	boat = false, --no willow boat
 })
+```
 
-valid fields are: sign_color, sign, leaves, sapling, tree, planks, bark, stripped, stripped_bark, fence, stairs, doors, trapdoors, boat, chest_boat
+Valid fields are: `sign_color`, `sign`, `leaves`, `sapling`, `tree`, `planks`, `bark`, `stripped`, `stripped_bark`, `fence`, `stairs`, `doors`, `trapdoors`, `boat`, `chest_boat`
 
 This expects the following textures unless that feature is disabled. "mcl_willow" being your modname.
 The texture filenames can be overriden by setting the tiles/inventory_image/wield_image fields of the registration table.
 
+```
 mcl_willow_tree_willow.png
 mcl_willow_tree_willow_top.png
 
@@ -44,10 +50,12 @@ mcl_doors_door_willow_lower.png
 mcl_boats_willow_boat.png
 mcl_boats_willow_chest_boat.png
 mcl_boats_willow_boat_texture.png
+```
 
 ### Wood Definition
 All features can be disabled by setting them to false, nil will assume default values particularly for texture filenames.
 
+```lua
 {
 	sign_color="#ECA870",                      --color of the sign
 	tree_schems= {                             --a table with schematics for tree growth from sapling, , no attempts to grow a normal tree will be made if this is absent.
@@ -84,3 +92,4 @@ All features can be disabled by setting them to false, nil will assume default v
 		entity = {},                           -- overrides for the boat lua entity
 	},
 })
+```
