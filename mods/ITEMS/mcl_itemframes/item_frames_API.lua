@@ -279,7 +279,7 @@ mcl_itemframes.update_item_entity = function(pos, node, param2)
 			else
 				map_id_lua._texture = itemname
 				local def = minetest.registered_items[itemname]
-				map_id_lua._scale = def and def.wield_scale and def.wield_scale.x or 1
+				map_id_lua._scale = def and type(def.wield_scale) == "table" and tonumber(def.wield_scale.x) or 1
 
 				-- fix for /ClearObjects
 				if minetest.get_item_group(itemname, "clock") == 0 then
