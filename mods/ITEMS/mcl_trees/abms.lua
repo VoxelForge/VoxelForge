@@ -83,6 +83,7 @@ local function node_stops_growth(node)
 	if (groups.plant or 0) ~= 0 or
 			(groups.torch or 0) ~= 0 or
 			(groups.dirt or 0) ~= 0 or
+			(groups.dig_by_water or 0) ~= 0 or
 			(groups.tree or 0) ~= 0 or
 			(groups.bark or 0) ~= 0 or
 			(groups.leaves or 0) ~= 0 or
