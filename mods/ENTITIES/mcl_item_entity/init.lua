@@ -510,7 +510,7 @@ minetest.register_entity(":__builtin:item", {
 			glow = def.light_source
 		end
 		local s = 0.2 + 0.1 * (count / max_count)
-		local wield_scale = (def and def.wield_scale and def.wield_scale.x) or 1
+		local wield_scale = (def and type(def.wield_scale) == "table" and tonumber(def.wield_scale.x)) or 1
 		local c = s
 		s = s / wield_scale
 		local prop = {
