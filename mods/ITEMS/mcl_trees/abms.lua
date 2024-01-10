@@ -80,8 +80,13 @@ local function node_stops_growth(node)
 	if not groups then
 		return true
 	end
-	if groups.plant or groups.torch or groups.dirt or groups.tree
-		or groups.bark or groups.leaves or groups.wood then
+	if (groups.plant or 0) ~= 0 or
+			(groups.torch or 0) ~= 0 or
+			(groups.dirt or 0) ~= 0 or
+			(groups.tree or 0) ~= 0 or
+			(groups.bark or 0) ~= 0 or
+			(groups.leaves or 0) ~= 0 or
+			(groups.wood or 0) ~= 0 then
 		return false
 	end
 
