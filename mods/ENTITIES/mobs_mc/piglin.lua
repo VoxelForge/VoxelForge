@@ -66,8 +66,8 @@ local piglin = {
 	sounds = {
 		random = "mobs_mc_zombiepig_random",
 		war_cry = "mobs_mc_zombiepig_war_cry",
-		damage = "mobs_mc_zombiepig_hurt.2",
-		death = "mobs_mc_zombiepig_death.2",
+		damage = "mobs_mc_zombiepig_hurt",
+		death = "mobs_mc_zombiepig_death",
 		distance = 16,
 	},
 	jump = true,

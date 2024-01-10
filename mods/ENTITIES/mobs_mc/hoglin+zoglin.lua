@@ -32,7 +32,7 @@ local hoglin = {
 	} },
 	visual_size = {x=3, y=3},
 	sounds = {
-		random = "extra_mobs_hoglin.1",
+		random = "extra_mobs_hoglin",
 		damage = "extra_mobs_hoglin_hurt",
 		death = "extra_mobs_hoglin_hurt",
 		distance = 16,
@@ -98,7 +98,7 @@ mcl_mobs.register_mob("mobs_mc:zoglin",table.merge(hoglin,{
 	lava_damage = 0,
 	fire_damage = 0,
 	sounds = {
-		random = "extra_mobs_hoglin.2",
+		random = "extra_mobs_hoglin",
 		damage = "extra_mobs_hoglin_hurt",
 		death = "extra_mobs_hoglin_hurt",
 		distance = 16,
