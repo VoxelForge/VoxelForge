@@ -63,6 +63,7 @@ end
 local nether_wood_groups = { handy = 1, axey = 1, material_wood = 1, }
 
 mcl_trees.register_wood("crimson",{
+	readable_name=S("Crimson"),
 	sign_color="#810000",
 	boat=false,
 	chest_boat=false,
@@ -107,6 +108,7 @@ mcl_trees.register_wood("crimson",{
 })
 
 mcl_trees.register_wood("warped",{
+	readable_name=S("Warped"),
 	sign_color="#0E4C4C",
 	boat=false,
 	chest_boat=false,

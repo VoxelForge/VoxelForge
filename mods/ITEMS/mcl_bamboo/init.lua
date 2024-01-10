@@ -12,6 +12,7 @@ local place_bamboosap = mcl_util.generate_on_place_plant_function(function(pos, 
 end)
 
 mcl_trees.register_wood("bamboo",{
+	readable_name = S("Bamboo"),
 	sign_color="#FCE6BC",
 	sapling = {
 		tiles = {"mcl_bamboo_bamboo_shoot.png"},
