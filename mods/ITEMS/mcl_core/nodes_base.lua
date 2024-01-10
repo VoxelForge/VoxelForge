@@ -2,7 +2,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 -- Simple solid cubic nodes, most of them are the ground materials and simple building blocks
 
-ice_drawtype = "glasslike"
+ice_drawtype = "liquid"
 ice_texture_alpha = minetest.features.use_texture_alpha_string_modes and "blend" or true
 
 mcl_core.fortune_drop_ore = {
