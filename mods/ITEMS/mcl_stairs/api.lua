@@ -313,9 +313,6 @@ function mcl_stairs.register_slab(subname, ...)
 
 	-- Automatically generate double slab description if not supplied
 	stairdef.double_description = stairdef.double_description or S("Double @1", stairdef.description)
-
-	stairdef.groups.slab = 1
-	stairdef.groups.building_block = 1
 	local longdesc = S("Slabs are half as high as their full block counterparts and occupy either the lower or upper part of a block, depending on how it was placed. Slabs can be easily stepped on without needing to jump. When a slab is placed on another slab of the same type, a double slab is created.")
 
 	local nodedef = table.merge({
@@ -326,7 +323,7 @@ function mcl_stairs.register_slab(subname, ...)
 		paramtype = "light",
 		-- Facedir intentionally left out (see below)
 		is_ground_content = false,
-		groups = stairdef.groups,
+		groups = table.merge(stairdef.groups, { slab = 1, building_block = 1 }),
 		sounds = stairdef.sounds,
 		node_box = {
 			type = "fixed",
