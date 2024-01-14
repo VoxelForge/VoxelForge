@@ -2,6 +2,8 @@
 
 local S = minetest.get_translator("mobs_mc")
 
+local slime_chunk_spawn_max = mcl_worlds.layer_to_y(40)
+
 local function in_slime_chunk(pos)
 	local pr = PseudoRandom(mcl_mapgen_core.get_block_seed(pos))
 	return pr:next(1,10) == 1
@@ -77,11 +79,11 @@ local swamp_light_max = 7
 local function slime_check_light(pos, environmental_light, artificial_light, sky_light)
 	local maxlight = swamp_light_max
 
-	if in_slime_chunk(pos) then
+	if pos.y <= slime_chunk_spawn_max and in_slime_chunk(pos) then
 		maxlight = minetest.LIGHT_MAX + 1
 	end
 
-	return artificial_light <= maxlight
+	return math.max(artificial_light, sky_light) <= maxlight
 end
 
 -- Slime
