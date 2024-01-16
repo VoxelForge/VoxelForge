@@ -615,7 +615,6 @@ function mob_class:check_runaway_from()
 			and self:line_of_sight(sp, p, 2) == true then
 				min_dist = dist
 				min_player = player
-				minetest.log(self.name .. " is runing away from a " .. name)
 			end
 		end
 	end
