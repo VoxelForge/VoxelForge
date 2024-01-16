@@ -188,10 +188,13 @@ minetest.register_abm({
 	interval = 1,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		for _, object in pairs(minetest.get_objects_inside_radius(pos, 0.9)) do
+		for _, object in pairs(minetest.get_objects_inside_radius(pos, 1.1)) do
 			local entity = object:get_luaentity()
-			if entity and entity.name == "__builtin:item" then
+			local dst = vector.distance(object:get_pos(), pos)
+			if entity and entity.name == "__builtin:item" and dst <= 0.9 then
 				object:remove()
+			elseif entity and entity.is_mob then
+				mcl_util.deal_damage(object, 1, {type = "cactus"})
 			end
 		end
 		local posses = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } }
