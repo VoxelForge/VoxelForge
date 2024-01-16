@@ -257,7 +257,13 @@ table.update(mobs_mc.villager_mob, {
 	can_open_doors = true,
 	_player_scan_timer = 0,
 	_trading_players = {},
-
+	runaway_from = {
+		"mobs_mc:zombie",
+		"mobs_mc:baby_zombie",
+		"mobs_mc:husk",
+		"mobs_mc:baby_husk",
+		"mobs_mc:villager_zombie",
+	},
 	after_activate = mobs_mc.villager_mob.set_textures,
 })
 

@@ -21,6 +21,7 @@ local SLEEP = "sleep"
 local HOME = "home"
 local GATHERING = "gathering"
 local PATHFINDING = "gowp"
+local RUNAWAY = "runaway"
 
 function mobs_mc.villager_mob:stand_still()
 	self.walk_chance = 0
@@ -91,7 +92,9 @@ function mobs_mc.villager_mob:get_activity(tod)
 	local work_end = 17000
 
 	local activity
-	if self:should_sleep() then
+	if self.state == RUNAWAY then
+		activity = RUNAWAY
+	elseif self:should_sleep() then
 		activity = SLEEP
 	elseif self:should_go_home() then
 		activity = HOME

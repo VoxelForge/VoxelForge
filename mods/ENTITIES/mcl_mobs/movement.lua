@@ -274,6 +274,54 @@ function mob_class:is_at_water_danger()
 	return false
 end
 
+function mob_class:should_get_out_of_water()
+
+	if self.breathes_in_water or self.object:get_properties().breath_max == -1 then
+		return false
+	end
+
+	if
+		(
+			minetest.registered_nodes[self.standing_in]
+			and minetest.registered_nodes[self.standing_in].drowning
+			and minetest.registered_nodes[self.standing_in].drowning > 0
+		)
+		and (
+			minetest.registered_nodes[self.standing_on]
+			and minetest.registered_nodes[self.standing_on].drowning
+			and minetest.registered_nodes[self.standing_on].drowning > 0
+		)
+	then
+		return true
+	end
+
+	return false
+end
+
+function mob_class:get_out_of_water()
+	local mypos = self.object:get_pos()
+	local land = minetest.find_nodes_in_area_under_air(
+		vector.offset(mypos, -32, -1, -32),
+		vector.offset(mypos, 32, 1, 32),
+		{ "group:solid" }
+	)
+
+	local closest = 10000
+	local closest_land
+
+	for _, v in pairs(land) do
+		local dst = vector.distance(mypos, v)
+		if dst < closest then
+			closest = dst
+			closest_land = v
+		end
+	end
+
+	if closest_land then
+		self:go_to_pos(closest_land)
+	end
+end
+
 function mob_class:env_danger_movement_checks(dtime)
 	local yaw = 0
 	if self:is_at_water_danger() and self.state ~= "attack" then
@@ -284,6 +332,8 @@ function mob_class:env_danger_movement_checks(dtime)
 			yaw = yaw + math.random(-0.5, 0.5)
 			self:set_yaw( yaw, 8)
 		end
+	elseif self:should_get_out_of_water() and self.state ~= "attack" then
+		self:get_out_of_water()
 	else
 		if self.move_in_group ~= false then
 			self:check_herd(dtime)
@@ -565,6 +615,7 @@ function mob_class:check_runaway_from()
 			and self:line_of_sight(sp, p, 2) == true then
 				min_dist = dist
 				min_player = player
+				minetest.log(self.name .. " is runing away from a " .. name)
 			end
 		end
 	end
