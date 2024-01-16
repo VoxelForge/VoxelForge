@@ -20,12 +20,7 @@ for i=0, 3 do
 		sunlight_propagates = true,
 		paramtype2 = "meshoptions",
 		place_param2 = 3,
-		liquid_viscosity = 7,
-		liquidtype = "source",
-		liquid_alternative_flowing = node_name,
-		liquid_alternative_source = node_name,
-		liquid_renewable = false,
-		liquid_range = 0,
+		move_resistance = 7,
 		walkable = false,
 		-- Dont even create a table if no berries are dropped.
 		drop = not drop_berries and "" or {
