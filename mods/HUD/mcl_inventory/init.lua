@@ -141,13 +141,6 @@ function minetest.is_creative_enabled(name)
 	return false
 end
 
-local function in_table(n,h)
-	for k,v in pairs(h) do
-		if v == n then return true end
-	end
-	return false
-end
-
 local gamemodes = {
 	"survival",
 	"creative"
@@ -183,7 +176,7 @@ minetest.register_chatcommand("gamemode",{
 		if not p then
 			return false, S("Player not online")
 		end
-		if args[1] ~= nil and not in_table(args[1],gamemodes) then
+		if args[1] ~= nil and table.indexof(gamemodes, args[1]) == -1 then
 			return false, S("Gamemode @1 does not exist.", args[1])
 		elseif args[1] ~= nil then
 			mcl_inventory.player_set_gamemode(p,args[1])
