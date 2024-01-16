@@ -2,8 +2,3 @@
 Food=
 Saturation=
 Exhaust.=
-##### not used anymore #####
-@1 succumbed to the poison.=
-%s: %.1f/%d=
-%s: %d/%d=
-@1 starved to death.=

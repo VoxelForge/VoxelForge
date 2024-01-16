@@ -12,8 +12,13 @@ Cyan Shield=Escudo Ciano
 Blue Shield=Escudo Azul
 Magenta Shield=Escudo Magenta
 Orange Shield=Escudo Laranja
-Purple Shield=Escudo Roxo
+Violet Shield=
 Brown Shield=Escudo Marrom
 Pink Shield=Escudo Rosa
 Lime Shield=Escudo Lima
 Light Blue Shield=Escudo Azul Claro
+
+
+##### not used anymore #####
+
+Purple Shield=Escudo Roxo

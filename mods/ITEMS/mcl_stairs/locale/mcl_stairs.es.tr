@@ -1,21 +1,15 @@
 # textdomain: mcl_stairs
-
-
 ### api.lua ###
-
+Stairs are useful to reach higher places by walking over them; jumping is not required. Placing stairs in a corner pattern will create corner stairs. Stairs placed on the ceiling or at the upper half of the side of a block will be placed upside down.=Las escaleras son útiles para llegar a lugares más altos al caminar sobre ellas; No se requiere saltar. Colocar escaleras en un patrón de esquina creará escaleras de esquina. Las escaleras colocadas en el techo o en la mitad superior del lado de un bloque se colocarán boca abajo.
 Double @1=@1 (Doble)
-
+Slabs are half as high as their full block counterparts and occupy either the lower or upper part of a block, depending on how it was placed. Slabs can be easily stepped on without needing to jump. When a slab is placed on another slab of the same type, a double slab is created.=Las losas son la mitad de altas que sus contrapartes de bloque completo y ocupan la parte inferior o superior de un bloque, dependiendo de cómo se haya colocado. Las losas se pueden pisar fácilmente sin necesidad de saltar. Cuando se coloca una losa en otra losa del mismo tipo, se crea una losa doble.
+Upper @1=@1 (Superior)
 Double slabs are full blocks which are created by placing two slabs of the same kind on each other.=Las losas dobles son bloques completos que se crean colocando dos losas del mismo tipo entre sí
 
-Slabs are half as high as their full block counterparts and occupy either the lower or upper part of a block, depending on how it was placed. Slabs can be easily stepped on without needing to jump. When a slab is placed on another slab of the same type, a double slab is created.=Las losas son la mitad de altas que sus contrapartes de bloque completo y ocupan la parte inferior o superior de un bloque, dependiendo de cómo se haya colocado. Las losas se pueden pisar fácilmente sin necesidad de saltar. Cuando se coloca una losa en otra losa del mismo tipo, se crea una losa doble.
 
-# textdomain: mcl_stairs
-Stairs are useful to reach higher places by walking over them; jumping is not required. Placing stairs in a corner pattern will create corner stairs. Stairs placed on the ceiling or at the upper half of the side of a block will be placed upside down.=Las escaleras son útiles para llegar a lugares más altos al caminar sobre ellas; No se requiere saltar. Colocar escaleras en un patrón de esquina creará escaleras de esquina. Las escaleras colocadas en el techo o en la mitad superior del lado de un bloque se colocarán boca abajo.
-
-Upper @1=@1 (Superior)
+##### not used anymore #####
 
 ### register.lua ###
-
 Acacia Wood Slab=Losa de acacia
 Acacia Wood Stairs=Escaleras de acacia
 Andesite Slab=Losa de andesita
@@ -45,7 +39,6 @@ Double Granite Slab=Losa doble de granito
 Double Jungle Wood Slab=Losa doble de la selva
 Double Mossy Cobblestone Slab=Losa doble de roca musgosa
 Double Mossy Stone Brick Slab=Losa de ladrillo de piedra doble musgo
-Double Mud Brick Slab=
 Double Nether Brick Slab=Losa doble de ladrillos del Nether
 Double Oak Wood Slab=Losa doble de roble
 Double Polished Andesite Slab=Losa doble de andesita pulida
@@ -75,8 +68,6 @@ Mossy Cobblestone Slab=Losa de roca musgosa
 Mossy Cobblestone Stairs=Escaleras de roca musgosa
 Mossy Stone Brick Slab=Losa de ladrillos de piedra musgosos
 Mossy Stone Brick Stairs=Escaleras de ladrillos de piedra musgosos
-Mud Brick Slab=
-Mud Brick Stair=
 Nether Brick Slab=Losa de ladrillos del Nether
 Nether Brick Stairs=Escaleras de ladrillos del Nether
 Oak Wood Slab=Losa de roble

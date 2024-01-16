@@ -12,10 +12,8 @@ Cyan Shield=
 Blue Shield=
 Magenta Shield=
 Orange Shield=
+Violet Shield=
 Brown Shield=
 Pink Shield=
 Lime Shield=
 Light Blue Shield=
-Violet Shield=
-##### not used anymore #####
-Purple Shield=

@@ -1,7 +1,9 @@
 # textdomain: mcl_fire
 Fire Charge=
+Dispenser projectile=
 Fire charges are primarily projectiles which can be launched from dispensers, they will fly in a straight line and burst into a fire on impact. Alternatively, they can be used to ignite fires directly.=
 Put the fire charge into a dispenser and supply it with redstone power to launch it. To ignite a fire directly, simply place the fire charge on the ground, which uses it up.=
+Starts fires and ignites blocks=
 Flint and Steel=
 Flint and steel is a tool to start fires and ignite blocks.=
 Rightclick the surface of a block to attempt to light a fire in front of it or ignite the block. A few blocks have an unique reaction when ignited.=
@@ -11,10 +13,3 @@ Eternal fire is a damaging block that might create more fire. It will create fir
 Eternal fire is a damaging block. Eternal fire can be extinguished by punches and nearby water blocks. Other than (normal) fire, eternal fire does not get extinguished on its own and also continues to burn under rain. Punching eternal fire is safe, but it hurts if you stand inside.=
 Fire=
 Eternal Fire=
-Dispenser projectile=
-Starts fires and ignites blocks=
-##### not used anymore #####
-@1 has been cooked crisp.=
-@1 felt the burn.=
-@1 died in the flames.=
-@1 died in a fire.=

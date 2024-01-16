@@ -1,13 +1,5 @@
 # textdomain: hudbars
-
-
 ### init.lua ###
-
-Breath=Aliento
-# textdomain: hudbars
-Health=Salud
-
-
-##### not used anymore #####
-
 @1: @2/@3=@1: @2/@3
+Health=Salud
+Breath=Aliento

@@ -1,11 +1,12 @@
 # textdomain: mcl_furnaces
+Inventory=
+Recipe book=
 Furnace=
+Uses fuel to smelt or cook items=
 Furnaces cook or smelt several items, using a furnace fuel, into something else.=
+Use the furnace to open the furnace menu.=
+Place a furnace fuel in the lower slot and the source material in the upper slot.=
+The furnace will slowly use its fuel to smelt the item.=
+The result will be placed into the output slot at the right side.=
 Use the recipe book to see what you can smelt, what you can use as fuel and how long it will burn.=
 Burning Furnace=
-Inventory=
-Uses fuel to smelt or cook items=
-				Use the furnace to open the furnace menu.@n				Place a furnace fuel in the lower slot and the source material in the upper slot.@n				The furnace will slowly use its fuel to smelt the item.@n				The result will be placed into the output slot at the right side.@n			=
-##### not used anymore #####
-Use the furnace to open the furnace menu. Place a furnace fuel in the lower slot and the source material in the upper slot. The furnace will slowly use its fuel to smelt the item. The result will be placed into the output slot at the right side.=
-Recipe book=

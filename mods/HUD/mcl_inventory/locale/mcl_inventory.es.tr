@@ -1,44 +1,36 @@
 # textdomain: mcl_inventory
-
-
 ### creative.lua ###
-
-@1/@2=
-Brewing=
 Building Blocks=Bloques de construcción
-Combat=Combate
 Decoration Blocks=Bloques de decoración
-Foodstuffs=Productos alimenticios
-Materials=Materiales
-Miscellaneous=Variado
-Mobs=Mobs
 Redstone=Redstone
-Search Items=Buscar artículos
-Survival Inventory=Inventario de supervivencia
-Switch stack size=
-Tools=Herramientas
 Transportation=Transporte
-
+Miscellaneous=Variado
+Search Items=Buscar artículos
+Foodstuffs=Productos alimenticios
+Tools=Herramientas
+Combat=Combate
+Mobs=Mobs
+Brewing=
+Materials=Materiales
+Survival Inventory=Inventario de supervivencia
 ### creative.lua ###
 ### init.lua ###
-
 Advancements=
-Help=Ayuda
-# textdomain: mcl_inventory
+Switch stack size=
+@1 / @2=
 Recipe book=Libro de recetas
+Help=Ayuda
 Select player skin=Seleccionar skin
-
-### init.lua ###
-
-Change gamemode (survival/creative) for yourself or player=
-Crafting=Elaboración
-Gamemode =
-Gamemode for player =
-Inventory=Inventario
-Player not online=
 [<gamemode>] [<player>]=
+### init.lua ###
+Change gamemode (survival/creative) for yourself or player=
+Player not online=
+Gamemode @1 does not exist.=
+Gamemode for player @1: @2=
+Crafting=Elaboración
+Achievements=Logros
 
 
 ##### not used anymore #####
 
-Achievements=Logros
+Inventory=Inventario

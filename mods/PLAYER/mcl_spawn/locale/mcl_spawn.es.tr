@@ -1,15 +1,9 @@
 # textdomain: mcl_spawn
-
-
 ### init.lua ###
-
-Couldn't get level of your respawn anchor!=
-# textdomain: mcl_spawn
-New respawn position set!=¡Nueva posición de reaparición establecida!
 Respawn position cleared!=¡Posición de reaparición eliminada!
-
+New respawn position set!=¡Nueva posición de reaparición establecida!
+Couldn't get level of your respawn anchor!=
 Your spawn bed was missing or blocked, and you had no charged respawn anchor!=
-
 
 
 ##### not used anymore #####

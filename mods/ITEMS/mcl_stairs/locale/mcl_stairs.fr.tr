@@ -4,6 +4,10 @@ Double @1=Double @1
 Slabs are half as high as their full block counterparts and occupy either the lower or upper part of a block, depending on how it was placed. Slabs can be easily stepped on without needing to jump. When a slab is placed on another slab of the same type, a double slab is created.=Les dalles sont deux fois moins hautes que leurs homologues de bloc complet et occupent la partie inférieure ou supérieure d'un bloc, selon la façon dont il a été placé. Les dalles peuvent être facilement franchies sans avoir à sauter. Lorsqu'une dalle est placée sur une autre dalle du même type, une double dalle est créée.
 Upper @1=@1 Supérieur
 Double slabs are full blocks which are created by placing two slabs of the same kind on each other.=Les dalles doubles sont des blocs entiers qui sont créés en plaçant deux dalles du même type l'une sur l'autre.
+
+
+##### not used anymore #####
+
 Oak Wood Stairs=Escalier en Bois de Chêne
 Oak Wood Slab=Dalle en Bois de Chêne
 Double Oak Wood Slab=Double Dalle en Bois de Chêne 

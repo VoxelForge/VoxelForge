@@ -1,4 +1,23 @@
 # textdomain: mclx_stairs
+Lapis Lazuli Slab=Dalle de Lapis Lazuli
+Double Lapis Lazuli Slab=Double Dalle de Lapis Lazuli
+Lapis Lazuli Stairs=Escalier de Lapis Lazuli
+Slab of Gold=Dalle en Or
+Double Slab of Gold=Double Dalle en Or
+Stairs of Gold=Escalier en Or
+Slab of Iron=Dalle en Fer
+Double Slab of Iron=Double Dalle en Fer
+Stairs of Iron=Escalier en Fer
+Cracked Stone Brick Stairs=Escalier en Brique de Pierre Fissurée
+Cracked Stone Brick Slab=Dalle de Brique de Pierre Fissurée
+Double Cracked Stone Brick Slab=Double Dalle de Brique de Pierre Fissurée
+Concrete Slab=Dalle en Béton
+Double Concrete Slab=Double Dalle en Béton
+Concrete Stairs=Escalier en Béton
+
+
+##### not used anymore #####
+
 Oak Bark Stairs=Escalier en écorse de Chêne
 Oak Bark Slab=Plaque d'écorce de Chêne
 Double Oak Bark Slab=Double Dalle d'écorce de Chêne
@@ -17,18 +36,6 @@ Double Jungle Bark Slab=Double Dalle d'écorce d'Acajou
 Dark Oak Bark Stairs=Escalier en écorse de Chêne Noir
 Dark Oak Bark Slab=Plaque d'écorce de Chêne Noir
 Double Dark Oak Bark Slab=Double Dalle d'écorce de Chêne Noir
-Lapis Lazuli Slab=Dalle de Lapis Lazuli
-Double Lapis Lazuli Slab=Double Dalle de Lapis Lazuli
-Lapis Lazuli Stairs=Escalier de Lapis Lazuli
-Slab of Gold=Dalle en Or
-Double Slab of Gold=Double Dalle en Or
-Stairs of Gold=Escalier en Or
-Slab of Iron=Dalle en Fer
-Double Slab of Iron=Double Dalle en Fer
-Stairs of Iron=Escalier en Fer
-Cracked Stone Brick Stairs=Escalier en Brique de Pierre Fissurée
-Cracked Stone Brick Slab=Dalle de Brique de Pierre Fissurée
-Double Cracked Stone Brick Slab=Double Dalle de Brique de Pierre Fissurée
 White Concrete Stairs=Escalier en Béton Blanc
 White Concrete Slab=Dalle en Béton Blanc
 Double White Concrete Slab=Double Dalle en Béton Blanc
@@ -77,6 +84,3 @@ Double Lime Concrete Slab=Double Dalle en Béton Vert Clair
 Light Blue Concrete Stairs=Escalier en Béton Bleu Clair
 Light Blue Concrete Slab=Dalle en Béton Bleu Clair
 Double Light Blue Concrete Slab=Double Dalle en Béton Bleu Clair
-Concrete Slab=Dalle en Béton
-Double Concrete Slab=Double Dalle en Béton
-Concrete Stairs=Escalier en Béton

@@ -1,7 +1,23 @@
 # textdomain: mclx_stairs
-
-
 ### init.lua ###
+Lapis Lazuli Slab=Losa de lapislázuli
+Double Lapis Lazuli Slab=Losa doble de lapislázuli
+Lapis Lazuli Stairs=Escaleras de lapislázuli
+Slab of Gold=Losa de oro
+Double Slab of Gold=Losa doble de oro
+Stairs of Gold=Escaleras de oro
+Slab of Iron=Losa de hierro
+Double Slab of Iron=Losa doble de hierro
+Stairs of Iron=Escaleras de hierro
+Cracked Stone Brick Stairs=Escaleras de ladrillo de piedra agrietada
+Cracked Stone Brick Slab=Losa de ladrillo de piedra agrietada
+Double Cracked Stone Brick Slab=Losa doble de ladrillo de piedra agrietada
+Concrete Slab=Losa de hormigón
+Double Concrete Slab=Losa doble de hormigón
+Concrete Stairs=Escaleras de hormigón
+
+
+##### not used anymore #####
 
 Acacia Bark Slab=Losa de acacia
 Acacia Bark Stairs=Escaleras de acacia
@@ -13,10 +29,6 @@ Blue Concrete Slab=Losa de hormigón azul
 Blue Concrete Stairs=Escaleras de hormigón azul
 Brown Concrete Slab=Losa de hormigón marrón
 Brown Concrete Stairs=Escaleras de hormigón marrón
-Concrete Slab=Losa de hormigón
-Concrete Stairs=Escaleras de hormigón
-Cracked Stone Brick Slab=Losa de ladrillo de piedra agrietada
-Cracked Stone Brick Stairs=Escaleras de ladrillo de piedra agrietada
 Cyan Concrete Slab=Losa de hormigón cian
 Cyan Concrete Stairs=Escaleras de hormigón cian
 Dark Oak Bark Slab=Losa de roble oscuro
@@ -26,14 +38,11 @@ Double Birch Bark Slab=Losa doble de abedul
 Double Black Concrete Slab=Losa doble de hormigón negro
 Double Blue Concrete Slab=Losa doble de hormigón azul
 Double Brown Concrete Slab=Losa doble de hormigón marrón
-Double Concrete Slab=Losa doble de hormigón
-Double Cracked Stone Brick Slab=Losa doble de ladrillo de piedra agrietada
 Double Cyan Concrete Slab=Losa doble de hormigón cian
 Double Dark Oak Bark Slab=Losa doble de roble oscuro
 Double Green Concrete Slab=Losa doble de hormigón verde
 Double Grey Concrete Slab=Losa doble de hormigón gris
 Double Jungle Bark Slab=Losa doble de jungla
-Double Lapis Lazuli Slab=Losa doble de lapislázuli
 Double Light Blue Concrete Slab=Losa doble de hormigón azul claro
 Double Light Grey Concrete Slab=Losa doble de hormigón gris claro
 Double Lime Concrete Slab=Losa doble de hormigón verde lima
@@ -43,8 +52,6 @@ Double Orange Concrete Slab=Losa doble de hormigón naranja
 Double Pink Concrete Slab=Losa doble de hormigón rosa
 Double Purple Concrete Slab=Losa doble de hormigón morado
 Double Red Concrete Slab=Losa doble de hormigón rojo
-Double Slab of Gold=Losa doble de oro
-Double Slab of Iron=Losa doble de hierro
 Double Spruce Bark Slab=Losa doble de abeto
 Double White Concrete Slab=Losa doble de hormigón blanco
 Double Yellow Concrete Slab=Losa doble de hormigón amarillo
@@ -54,8 +61,6 @@ Grey Concrete Slab=Losas de hormigón gris
 Grey Concrete Stairs=Escaleras de hormigón gris
 Jungle Bark Slab=Losa de jungla
 Jungle Bark Stairs=Escaleras de jungla
-Lapis Lazuli Slab=Losa de lapislázuli
-Lapis Lazuli Stairs=Escaleras de lapislázuli
 Light Blue Concrete Slab=Losa de hormigón azul claro
 Light Blue Concrete Stairs=Escaleras de hormigón azul claro
 Light Grey Concrete Slab=Losa de hormigón gris claro
@@ -65,7 +70,6 @@ Lime Concrete Stairs=Escaleras de hormigón verde lima
 Magenta Concrete Slab=Losa de hormigón magenta
 Magenta Concrete Stairs=Escaleras de hormigón magenta
 Oak Bark Slab=Losa de roble
-# textdomain: mclx_stairs
 Oak Bark Stairs=Escaleras de roble
 Orange Concrete Slab=Losa de hormigón naranja
 Orange Concrete Stairs=Escaleras de hormigón naranja
@@ -75,12 +79,8 @@ Purple Concrete Slab=Losa de hormigón morado
 Purple Concrete Stairs=Escaleras de hormigón morado
 Red Concrete Slab=Losa de hormigón rojo
 Red Concrete Stairs=Escaleras de hormigón rojo
-Slab of Gold=Losa de oro
-Slab of Iron=Losa de hierro
 Spruce Bark Slab=Losa de abeto
 Spruce Bark Stairs=Escaleras de abeto
-Stairs of Gold=Escaleras de oro
-Stairs of Iron=Escaleras de hierro
 White Concrete Slab=Losa de hormigón blanco
 White Concrete Stairs=Escaleras de hormigón blanco
 Yellow Concrete Slab=Losa de hormigón amarillo

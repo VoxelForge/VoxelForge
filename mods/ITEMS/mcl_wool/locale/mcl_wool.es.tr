@@ -1,7 +1,12 @@
 # textdomain: mcl_wool
-
-
 ### init.lua ###
+Carpet=Alfombra
+Wool=Lana
+Wool is a decorative block which comes in many different colors.=WLa lana es un bloque decorativo que viene en muchos colores diferentes.
+Carpets are thin floor covers which come in many different colors.=Las alfombras son finas cubiertas para el suelo que vienen en muchos colores diferentes.
+
+
+##### not used anymore #####
 
 Black Carpet=Alfombra negra
 Black Wool=Lana negra
@@ -9,10 +14,6 @@ Blue Carpet=Alfombra azul
 Blue Wool=Lana azul
 Brown Carpet=Alfombra marrón
 Brown Wool=Lana marrón
-Carpet=Alfombra
-
-Carpets are thin floor covers which come in many different colors.=Las alfombras son finas cubiertas para el suelo que vienen en muchos colores diferentes.
-
 Cyan Carpet=Alfombra cian
 Cyan Wool=Lana cian
 Green Carpet=Alfombra verde
@@ -37,10 +38,5 @@ Red Carpet=Alfombra roja
 Red Wool=Lana roja
 White Carpet=Alfombra blanca
 White Wool=Lana blanca
-# textdomain: mcl_wool
-Wool=Lana
-
-Wool is a decorative block which comes in many different colors.=WLa lana es un bloque decorativo que viene en muchos colores diferentes.
-
 Yellow Carpet=Alfombra amarilla
 Yellow Wool=Lana amarilla
