@@ -31,20 +31,20 @@ def convert_standard_textures(
             if first_row:
                 first_row = False
                 continue
-			src_dir = row[0]
-			src_filename = row[1]
-			dst_dir = row[2]
-			dst_filename = row[3]
-			if row[4] != "":
-				xs = int(row[4])
-				ys = int(row[5])
-				xl = int(row[6])
-				yl = int(row[7])
-				xt = int(row[8])
-				yt = int(row[9])
-			else:
-				xs = None
-			blacklisted = row[10]
+            src_dir = row[0]
+            src_filename = row[1]
+            dst_dir = row[2]
+            dst_filename = row[3]
+            if row[4] != "":
+                xs = int(row[4])
+                ys = int(row[5])
+                xl = int(row[6])
+                yl = int(row[7])
+                xt = int(row[8])
+                yt = int(row[9])
+            else:
+                xs = None
+            blacklisted = row[10]
 
             if blacklisted == "y":
                 # Skip blacklisted files
@@ -60,7 +60,7 @@ def convert_standard_textures(
             src_file = base_dir + src_dir + "/" + src_filename  # source file
             src_file_exists = os.path.isfile(src_file)
             dst_file = target_dir(dst_dir, make_texture_pack, output_dir, output_dir_name,
-			                      mineclone2_path) + "/" + dst_filename  # destination file
+                                  mineclone2_path) + "/" + dst_filename  # destination file
 
             if src_file_exists == False:
                 print("WARNING: Source file does not exist: " + src_file)
@@ -81,7 +81,7 @@ def convert_standard_textures(
                 if verbose:
                     print(src_file + " → " + dst_file)
             else:
-				# Copy image verbatim
+                # Copy image verbatim
                 if not dry_run:
                     shutil.copy2(src_file, dst_file)
                 if verbose:
@@ -90,46 +90,46 @@ def convert_standard_textures(
 
 
 def convert_textures(make_texture_pack, dry_run, verbose, base_dir, tex_dir, tempfile1, tempfile2, output_dir, output_dir_name, mineclone2_path, PXSIZE):
-	print("Texture conversion BEGINS NOW!")
+    print("Texture conversion BEGINS NOW!")
 
-	# Convert textures listed in the Conversion_Table.csv
-	failed_conversions = convert_standard_textures(make_texture_pack, dry_run, verbose, base_dir, tex_dir,
-	                          tempfile1, tempfile2, output_dir, output_dir_name, mineclone2_path, PXSIZE)
+    # Convert textures listed in the Conversion_Table.csv
+    failed_conversions = convert_standard_textures(make_texture_pack, dry_run, verbose, base_dir, tex_dir,
+                              tempfile1, tempfile2, output_dir, output_dir_name, mineclone2_path, PXSIZE)
 
-	# Conversion of map backgrounds
-	convert_map_textures(make_texture_pack, dry_run, verbose, base_dir, tex_dir,
-	                     tempfile1, tempfile2, output_dir, output_dir_name, mineclone2_path, PXSIZE)
+    # Conversion of map backgrounds
+    convert_map_textures(make_texture_pack, dry_run, verbose, base_dir, tex_dir,
+                         tempfile1, tempfile2, output_dir, output_dir_name, mineclone2_path, PXSIZE)
 
     # Convert armor textures
-	convert_armor_textures(make_texture_pack, dry_run, verbose, base_dir, tex_dir, tempfile1, tempfile2,output_dir, output_dir_name, mineclone2_path, PXSIZE)
+    convert_armor_textures(make_texture_pack, dry_run, verbose, base_dir, tex_dir, tempfile1, tempfile2,output_dir, output_dir_name, mineclone2_path, PXSIZE)
 
     # Convert chest textures
-	convert_chest_textures(make_texture_pack, dry_run, verbose, base_dir, tex_dir, tempfile1, tempfile2,output_dir, output_dir_name, mineclone2_path, PXSIZE)
+    convert_chest_textures(make_texture_pack, dry_run, verbose, base_dir, tex_dir, tempfile1, tempfile2,output_dir, output_dir_name, mineclone2_path, PXSIZE)
 
     # Generate railway crossings and t-junctions
-	convert_rail_textures(make_texture_pack, dry_run, verbose, base_dir, tex_dir, tempfile1, tempfile2,output_dir, output_dir_name, mineclone2_path, PXSIZE)
+    convert_rail_textures(make_texture_pack, dry_run, verbose, base_dir, tex_dir, tempfile1, tempfile2,output_dir, output_dir_name, mineclone2_path, PXSIZE)
 
     # Convert banner overlays
-	convert_banner_overlays(make_texture_pack, dry_run, verbose, base_dir, tex_dir, tempfile1, tempfile2,output_dir, output_dir_name, mineclone2_path, PXSIZE)
+    convert_banner_overlays(make_texture_pack, dry_run, verbose, base_dir, tex_dir, tempfile1, tempfile2,output_dir, output_dir_name, mineclone2_path, PXSIZE)
 
     # Convert grass and related textures
-	convert_grass_textures(make_texture_pack, dry_run, verbose, base_dir, tex_dir, tempfile1, tempfile2,output_dir, output_dir_name, mineclone2_path, PXSIZE)
+    convert_grass_textures(make_texture_pack, dry_run, verbose, base_dir, tex_dir, tempfile1, tempfile2,output_dir, output_dir_name, mineclone2_path, PXSIZE)
 
-	# Metadata
-	if make_texture_pack:
-		# Create description file
-		description = "Texture pack for MineClone 2. Automatically converted from a Minecraft resource pack by the MineClone 2 Texture Converter. Size: "+str(PXSIZE)+"×"+str(PXSIZE)
-		description_file = open(target_dir("/", make_texture_pack, output_dir, output_dir_name, mineclone2_path) + "/description.txt", "w")
-		description_file.write(description)
-		description_file.close()
+    # Metadata
+    if make_texture_pack:
+        # Create description file
+        description = "Texture pack for MineClone 2. Automatically converted from a Minecraft resource pack by the MineClone 2 Texture Converter. Size: "+str(PXSIZE)+"×"+str(PXSIZE)
+        description_file = open(target_dir("/", make_texture_pack, output_dir, output_dir_name, mineclone2_path) + "/description.txt", "w")
+        description_file.write(description)
+        description_file.close()
 
-		# Create preview image (screenshot.png)
-		os.system("convert -size 300x200 canvas:transparent "+target_dir("/", make_texture_pack, output_dir, output_dir_name, mineclone2_path) + "/screenshot.png")
-		os.system("composite "+base_dir+"/pack.png "+target_dir("/", make_texture_pack, output_dir, output_dir_name, mineclone2_path) + "/screenshot.png -gravity center "+target_dir("/", make_texture_pack, output_dir, output_dir_name, mineclone2_path) + "/screenshot.png")
+        # Create preview image (screenshot.png)
+        os.system("convert -size 300x200 canvas:transparent "+target_dir("/", make_texture_pack, output_dir, output_dir_name, mineclone2_path) + "/screenshot.png")
+        os.system("composite "+base_dir+"/pack.png "+target_dir("/", make_texture_pack, output_dir, output_dir_name, mineclone2_path) + "/screenshot.png -gravity center "+target_dir("/", make_texture_pack, output_dir, output_dir_name, mineclone2_path) + "/screenshot.png")
 
-	print("Textures conversion COMPLETE!")
-	if failed_conversions > 0:
-		print("WARNING: Number of missing files in original resource pack: " + str(failed_conversions))
-	print("NOTE: Please keep in mind this script does not reliably convert all the textures yet.")
-	if make_texture_pack:
-		print("You can now retrieve the texture pack in " + output_dir + "/" + output_dir_name + "/")
+    print("Textures conversion COMPLETE!")
+    if failed_conversions > 0:
+        print("WARNING: Number of missing files in original resource pack: " + str(failed_conversions))
+    print("NOTE: Please keep in mind this script does not reliably convert all the textures yet.")
+    if make_texture_pack:
+        print("You can now retrieve the texture pack in " + output_dir + "/" + output_dir_name + "/")
