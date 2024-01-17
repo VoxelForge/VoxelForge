@@ -279,24 +279,12 @@ function mesecon.mvps_push_or_pull(pos, stackdir, movedir, maximum, player_name,
 		if is_dropper then
 			-- if current node has already been destroyed (e.g. chain reaction of sugar cane breaking), skip it
 			if minetest.get_node(n.pos).name == n.node.name then
-				-- simulate dig_node using handle_node_drops
-				local drops = minetest.get_node_drops(n.node.name, "")
-				local counted_drops = {}
 				local def = minetest.registered_nodes[n.node.name]
-				if def and def.on_dig then
-					def.on_dig(n.pos, n.node)
-				end
+				def.on_dig(n.pos, n.node) --no need to check if it exists since all nodes have this via metatable (defaulting to minetest.node_dig which will handle drops)
 				minetest.remove_node(n.pos)
 				for _, callback in pairs(minetest.registered_on_dignodes) do
 					callback(n.pos, n.node)
 				end
-				for _, item in ipairs(drops) do
-					if type(item) ~= "string" then
-						item = item:get_name() .. item:get_count()
-					end
-					table.insert(counted_drops, item)
-				end
-				minetest.handle_node_drops(n.pos, counted_drops)
 			end
 		else
 			minetest.remove_node(n.pos)
