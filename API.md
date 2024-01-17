@@ -72,8 +72,8 @@ directory names are relative to `mods/`
 ### Mobs
 * Mobs: `ENTITIES/mcl_mobs`
 
-Mineclonia uses its own mobs framework, called “Mobs Redo: Mineclonia Edition”
-or “MRM” for short. This is a fork of Mobs Redo [`mobs`] by TenPlus1.
+Mineclonia uses its own mobs framework, called “mcl_mobs”.
+This is a fork of [mobs redo](https://codeberg.org/tenplus1/mobs_redo) by TenPlus1.
 
 You can add your own mobs, spawn eggs and spawning rules with this mod. API
 documnetation is included in `ENTITIES/mcl_mobs/api.txt`.
