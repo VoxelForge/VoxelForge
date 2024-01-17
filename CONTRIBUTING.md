@@ -9,7 +9,7 @@ license, which means they will become part of a free/libre software.
 
 ## Inclusion criteria
 The project goals are listed under the project description in the
-[README](./README.md). Contributions that do not align with the project goals
+[README](./src/branch/main/README.md). Contributions that do not align with the project goals
 will not be accepted. The main goal of Mineclonia is to be a stable and
 performant clone of Minecraft. We suggest using the
 [Minecraft wiki](https://minecraft.fandom.com/wiki/Minecraft_Wiki) as a
