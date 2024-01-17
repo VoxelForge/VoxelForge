@@ -282,9 +282,6 @@ function mesecon.mvps_push_or_pull(pos, stackdir, movedir, maximum, player_name,
 				local def = minetest.registered_nodes[n.node.name]
 				def.on_dig(n.pos, n.node) --no need to check if it exists since all nodes have this via metatable (defaulting to minetest.node_dig which will handle drops)
 				minetest.remove_node(n.pos)
-				for _, callback in pairs(minetest.registered_on_dignodes) do
-					callback(n.pos, n.node)
-				end
 			end
 		else
 			minetest.remove_node(n.pos)
