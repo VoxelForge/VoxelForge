@@ -373,7 +373,9 @@ function mob_class:do_jump()
 	local cbox = self.object:get_properties().collisionbox
 	local nod = node_ok(vector.offset(pos, 0, cbox[2] - 0.2, 0))
 
-	if minetest.registered_nodes[nod.name].walkable == false then
+	local in_water = minetest.registered_nodes[node_ok(pos).name].groups.water
+
+	if minetest.registered_nodes[nod.name].walkable == false and not in_water then
 		return false
 	end
 
@@ -382,7 +384,11 @@ function mob_class:do_jump()
 
 	-- this is used to detect if there's a block on top of the block in front of the mob.
 	-- If there is, there is no point in jumping as we won't manage.
-	local nodTop = self:node_infront_ok(pos, 1.5, "air")
+	local y_up = 1.5
+	if in_water then
+		y_up = cbox[5]
+	end
+	local nodTop = self:node_infront_ok(pos, y_up, "air")
 
 	-- we don't attempt to jump if there's a stack of blocks blocking
 	if minetest.registered_nodes[nodTop.name].walkable == true and not (self.attack and self.state == "attack") then
@@ -405,8 +411,10 @@ function mob_class:do_jump()
 
 			v.y = self.jump_height + 0.1 * 3
 
-			if self:can_jump_cliff() then
-				v=vector.multiply(v, vector.new(2.8,1,2.8))
+			if in_water then
+				v = vector.multiply(v, vector.new(1.5, 1.7, 1.5))
+			elseif self:can_jump_cliff() then
+				v = vector.multiply(v, vector.new(2.8, 1, 2.8))
 			end
 
 			self:set_animation( "jump") -- only when defined
