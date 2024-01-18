@@ -653,7 +653,7 @@ function mob_class:do_env_damage()
 	self.standing_in = node_ok(pos, "air").name
 	self.standing_on = node_ok(pos2, "air").name
 
-	local pos3 = {x=pos.x, y=pos.y+1, z=pos.z}
+	local pos3 = {x=pos.x, y=pos.y + cbox[5] , z=pos.z}
 	self.standing_under = node_ok(pos3, "air").name
 
 	-- don't fall when on ignore, just stand still
