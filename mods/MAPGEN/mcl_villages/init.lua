@@ -301,3 +301,155 @@ mcl_villages.register_building({
 	max_jobs = 99,
 	yadjust = 1,
 })
+
+mcl_villages.register_building({
+	name = "farm_small",
+	mts = schem_path .. "new_villages/farm_small_1.mts",
+	num_others = 3,
+})
+
+mcl_villages.register_building({
+	name = "farm_small2",
+	mts = schem_path .. "new_villages/farm_small_2.mts",
+	num_others = 3,
+})
+
+mcl_villages.register_building({
+	name = "farm_large",
+	mts = schem_path .. "new_villages/farm_large_1.mts",
+	num_others = 6,
+})
+
+local crop_tile_colours = {
+	grain = {
+		tile_colours = {
+			"wool_white",
+			"wool_red",
+			"wool_blue",
+		},
+	},
+	root = {
+		tile_colours = {
+			"wool_black",
+			"wool_brown",
+			"wool_cyan",
+		},
+	},
+	plant = {
+		tile_colours = {
+			"wool_dark_grey",
+			"mcl_wool_lime",
+			"wool_grey",
+		},
+	},
+	gourd = {
+		tile_colours = {
+			"wool_pink",
+			"wool_violet",
+			"wool_yellow",
+		},
+	},
+}
+
+for crop, crop_def in pairs(crop_tile_colours) do
+	for count = 1, 3 do
+		local tile = crop_def.tile_colours[count] .. ".png"
+		minetest.register_node("mcl_villages:crop_" .. crop .. "_" .. count, {
+			description = S("A place to plant @1 crops", crop),
+			is_ground_content = false,
+			tiles = { tile },
+			wield_image = tile,
+			wield_scale = { x = 1, y = 1, z = 0.5 },
+			groups = { handy = 1, supported_node = 1, deco_block = 1 },
+			--sounds = mcl_sounds.node_sound_wool_defaults(),
+			paramtype = "light",
+			sunlight_propagates = true,
+			stack_max = 64,
+			drawtype = "nodebox",
+			walkable = true,
+			node_box = {
+				type = "fixed",
+				fixed = {
+					{ -8 / 16, -8 / 16, -8 / 16, 8 / 16, -7 / 16, 8 / 16 },
+				},
+			},
+			_mcl_hardness = 0.1,
+			_mcl_blast_resistance = 0.1,
+		})
+	end
+end
+
+mcl_villages.register_crop({
+	type = "grain",
+	node = "mcl_farming:wheat_1",
+	biomes = {
+		acacia = 10,
+		bamboo = 10,
+		desert = 10,
+		jungle = 10,
+		plains = 10,
+		savanna = 10,
+		spruce = 10,
+	},
+})
+
+mcl_villages.register_crop({
+	type = "root",
+	node = "mcl_farming:carrot_1",
+	biomes = {
+		acacia = 10,
+		bamboo = 6,
+		desert = 10,
+		jungle = 6,
+		plains = 6,
+		spruce = 10,
+	},
+})
+
+mcl_villages.register_crop({
+	type = "root",
+	node = "mcl_farming:potato_1",
+	biomes = {
+		acacia = 6,
+		bamboo = 10,
+		desert = 6,
+		jungle = 10,
+		plains = 10,
+		spruce = 6,
+	},
+})
+
+mcl_villages.register_crop({
+	type = "root",
+	node = "mcl_farming:beetroot_0",
+	biomes = {
+		acacia = 3,
+		bamboo = 3,
+		desert = 3,
+		jungle = 3,
+		plains = 3,
+		spruce = 3,
+	},
+})
+
+mcl_villages.register_crop({
+	type = "gourd",
+	node = "mcl_farming:melontige_1",
+	biomes = {
+		bamboo = 10,
+		jungle = 10,
+	},
+})
+
+mcl_villages.register_crop({
+	type = "gourd",
+	node = "mcl_farming:pumpkin_1",
+	biomes = {
+		acacia = 10,
+		bamboo = 5,
+		desert = 10,
+		jungle = 5,
+		plains = 10,
+		spruce = 10,
+	},
+})

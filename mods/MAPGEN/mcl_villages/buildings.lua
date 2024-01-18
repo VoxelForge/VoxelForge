@@ -512,7 +512,7 @@ function mcl_villages.place_schematics_new(settlement_info, pr, blockseed)
 			placement_pos = vector.offset(pos, 0, settlement_info[i]["yadjust"], 0)
 		end
 
-		local schem_lua = mcl_villages.substitue_materials(pos, settlement_info[i]["schem_lua"])
+		local schem_lua = mcl_villages.substitue_materials(pos, settlement_info[i]["schem_lua"], pr)
 		local schematic = loadstring(schem_lua)()
 
 		local is_belltower = building_all_info["name"] == "belltower"

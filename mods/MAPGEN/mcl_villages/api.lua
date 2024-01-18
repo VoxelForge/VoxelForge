@@ -4,6 +4,8 @@ mcl_villages.schematic_lamps = {}
 mcl_villages.schematic_bells = {}
 mcl_villages.schematic_wells = {}
 
+local S = minetest.get_translator(minetest.get_current_modname())
+
 local function job_count(schem_lua)
 	-- Local copy so we don't trash the schema for other uses, because apparently
 	-- there isn't a non-destructive way to count occurrences of a string :(
@@ -91,5 +93,99 @@ function mcl_villages.register_building(record)
 		table.insert(mcl_villages.schematic_jobs, data)
 	else
 		table.insert(mcl_villages.schematic_houses, data)
+	end
+end
+
+local supported_crop_types = {
+	"grain",
+	"root",
+	"gourd",
+	"plant",
+}
+
+local crop_list = {}
+
+function mcl_villages.default_crop()
+	return "mcl_farming:wheat_1"
+end
+
+local weighted_crops = {}
+
+local function adjust_weights(biome, crop_type)
+	if weighted_crops[biome] == nil then
+		weighted_crops[biome] = {}
+	end
+
+	weighted_crops[biome][crop_type] = {}
+
+	local factor = 100 / crop_list[biome][crop_type]["total_weight"]
+	local total = 0
+
+	for node, weight in pairs(crop_list[biome][crop_type]) do
+		if node ~= "total_weight" then
+			total = total + (math.round(weight * factor))
+			table.insert(weighted_crops[biome][crop_type], { total = total, node = node })
+		end
+	end
+
+	table.insert(weighted_crops[biome][crop_type], function(a, b)
+		return a.total < b.total
+	end)
+end
+
+function mcl_villages.get_crop_types()
+	return table.copy(supported_crop_types)
+end
+
+function mcl_villages.get_crops()
+	return table.copy(crop_list)
+end
+
+function mcl_villages.get_weighted_crop(biome, crop_type, pr)
+	if weighted_crops[biome] == nil then
+		biome = "plains"
+	end
+
+	if weighted_crops[biome][crop_type] == nil then
+		return
+	end
+
+	local rand = pr:next(1, 99)
+
+	for i, rec in ipairs(weighted_crops[biome][crop_type]) do
+		local weight = rec.total
+		local node = rec.node
+
+		if rand <= weight then
+			return node
+		end
+	end
+
+	return
+end
+
+function mcl_villages.register_crop(crop_def)
+
+	local node = crop_def.node
+	local crop_type = crop_def.type
+
+	if table.indexof(supported_crop_types, crop_type) == -1 then
+		minetest.log(S("Crop type @1 is not supported", crop_type))
+		return
+	end
+
+	for biome, weight in pairs(crop_def.biomes) do
+
+		if crop_list[biome] == nil then
+			crop_list[biome] = {}
+		end
+
+		if crop_list[biome][crop_type] == nil then
+			crop_list[biome][crop_type] = { total_weight = 0 }
+		end
+
+		crop_list[biome][crop_type][node] = weight
+		crop_list[biome][crop_type]["total_weight"] = crop_list[biome][crop_type]["total_weight"] + weight
+		adjust_weights(biome, crop_type)
 	end
 end

@@ -126,7 +126,7 @@ end
 local function place_lamp(pos, pr)
 	local lamp_index = pr:next(1, #mcl_villages.schematic_lamps)
 	local building_all_info = mcl_villages.schematic_lamps[lamp_index]
-	local schem_lua = mcl_villages.substitue_materials(pos, building_all_info["schem_lua"])
+	local schem_lua = mcl_villages.substitue_materials(pos, building_all_info["schem_lua"], pr)
 	local schematic = loadstring(schem_lua)()
 
 	minetest.place_schematic(

@@ -273,8 +273,29 @@ function mcl_villages.check_radius_distance(settlement_info, building_pos, schem
 	return true, 0
 end
 
+function plant_fields(pos, biome_name, schem_lua, pr)
+	local modified_schem_lua = schem_lua
+
+	local map_name = mcl_villages.biome_map[biome_name] or "plains"
+
+	for _, crop in ipairs(mcl_villages.get_crop_types()) do
+		if string.find(modified_schem_lua, "mcl_villages:crop_" .. crop) then
+			for count = 1, 3 do
+				local name = "mcl_villages:crop_" .. crop .. "_" .. count
+				local replacement = mcl_villages.get_weighted_crop(map_name, crop, pr)
+				if replacement == nil or replacement == "" then
+					replacement = mcl_villages.default_crop()
+				end
+				modified_schem_lua = modified_schem_lua:gsub(name, replacement)
+			end
+		end
+	end
+
+	return modified_schem_lua
+end
+
 -- Load a schema and replace nodes in it based on biome
-function mcl_villages.substitue_materials(pos, schem_lua)
+function mcl_villages.substitue_materials(pos, schem_lua, pr)
 	local modified_schem_lua = schem_lua
 	local biome_data = minetest.get_biome_data(pos)
 	local biome_name = minetest.get_biome_name(biome_data.biome)
@@ -283,6 +304,10 @@ function mcl_villages.substitue_materials(pos, schem_lua)
 		for _, sub in pairs(mcl_villages.material_substitions[mcl_villages.biome_map[biome_name]]) do
 			modified_schem_lua = modified_schem_lua:gsub(sub[1], sub[2])
 		end
+	end
+
+	if string.find(modified_schem_lua, "mcl_villages:crop_") then
+		modified_schem_lua = plant_fields(pos, biome_name, modified_schem_lua, pr)
 	end
 
 	return modified_schem_lua
