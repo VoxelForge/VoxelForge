@@ -373,7 +373,7 @@ function mob_class:do_jump()
 	local cbox = self.object:get_properties().collisionbox
 	local nod = node_ok(vector.offset(pos, 0, cbox[2] - 0.2, 0))
 
-	local in_water = minetest.registered_nodes[node_ok(pos).name].groups.water
+	local in_water = minetest.get_item_group(node_ok(pos).name, "water") > 0
 
 	if minetest.registered_nodes[nod.name].walkable == false and not in_water then
 		return false
