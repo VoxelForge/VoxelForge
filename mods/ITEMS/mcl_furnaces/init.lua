@@ -114,6 +114,13 @@ end
 -- Node callback functions that are the same for active and inactive furnace
 --
 
+local function sort_stack(stack)
+	if mcl_util.is_fuel(stack) then
+		return "fuel"
+	end
+	return "src"
+end
+
 function mcl_furnaces.allow_metadata_inventory_put(pos, listname, index, stack, player)
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
@@ -158,7 +165,16 @@ function mcl_furnaces.allow_metadata_inventory_put(pos, listname, index, stack, 
 	elseif listname == "dst" then
 		return 0
 	elseif listname == "sorter" then
-		return stack:get_count()
+		local inv = minetest.get_meta(pos):get_inventory()
+		local trg = sort_stack(stack)
+		local stack1 = ItemStack(stack):take_item()
+		if inv:room_for_item(trg, stack) then
+			return stack:get_count()
+		elseif inv:room_for_item(trg, stack1) then
+			local tc = inv:get_stack(trg, 1):get_count()
+			return stack:get_stack_max() - tc
+		end
+		return 0
 	end
 end
 
@@ -201,16 +217,7 @@ end
 function mcl_furnaces.on_metadata_inventory_put(pos, listname, index, stack, player)
 	if listname == "sorter" then
 		local inv = minetest.get_meta(pos):get_inventory()
-		local rest
-		if mcl_util.is_fuel(stack) then
-			rest = inv:add_item("fuel", stack)
-		else
-			rest = inv:add_item("src", stack)
-		end
-		if rest and rest:get_count() > 0 then
-			local pinv = player:get_inventory()
-			pinv:add_item("main", rest)
-		end
+		inv:add_item(sort_stack(stack), stack)
 		inv:set_stack("sorter", 1, ItemStack(""))
 	end
 end
