@@ -41,6 +41,8 @@ local function get_active_formspec(fuel_percent, item_percent, name)
 
 		"listring[context;dst]",
 		"listring[current_player;main]",
+		"listring[context;sorter]",
+		"listring[current_player;main]",
 		"listring[context;src]",
 		"listring[current_player;main]",
 		"listring[context;fuel]",
@@ -77,6 +79,8 @@ local function get_inactive_formspec(name)
 		"tooltip[craftguide;"..minetest.formspec_escape(S("Recipe book")).."]"..
 
 		"listring[context;dst]",
+		"listring[current_player;main]",
+		"listring[context;sorter]",
 		"listring[current_player;main]",
 		"listring[context;src]",
 		"listring[current_player;main]",
@@ -153,10 +157,13 @@ function mcl_furnaces.allow_metadata_inventory_put(pos, listname, index, stack, 
 		return stack:get_count()
 	elseif listname == "dst" then
 		return 0
+	elseif listname == "sorter" then
+		return stack:get_count()
 	end
 end
 
 function mcl_furnaces.allow_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
+	if from_list == "sorter" or to_list == "sorter" then return 0 end
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 	local stack = inv:get_stack(from_list, from_index)
@@ -164,6 +171,7 @@ function mcl_furnaces.allow_metadata_inventory_move(pos, from_list, from_index, 
 end
 
 function mcl_furnaces.allow_metadata_inventory_take(pos, listname, index, stack, player)
+	if listname == "sorter" then return 0 end
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
@@ -187,6 +195,23 @@ end
 function mcl_furnaces.on_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
 	if from_list == "dst" then
 		mcl_furnaces.give_xp(pos, player)
+	end
+end
+
+function mcl_furnaces.on_metadata_inventory_put(pos, listname, index, stack, player)
+	if listname == "sorter" then
+		local inv = minetest.get_meta(pos):get_inventory()
+		local rest
+		if mcl_util.is_fuel(stack) then
+			rest = inv:add_item("fuel", stack)
+		else
+			rest = inv:add_item("src", stack)
+		end
+		if rest and rest:get_count() > 0 then
+			local pinv = player:get_inventory()
+			pinv:add_item("main", rest)
+		end
+		inv:set_stack("sorter", 1, ItemStack(""))
 	end
 end
 
@@ -511,7 +536,7 @@ mcl_furnaces.tpl_furnace_node = {
 	_mcl_blast_resistance = 3.5,
 	_mcl_hardness = 3.5,
 
-	after_dig_node = mcl_util.drop_items_from_meta_container({"src","dst","fuel"}),
+	after_dig_node = mcl_util.drop_items_from_meta_container({"src","dst","fuel","sorter"}),
 	on_destruct = function(pos)
 		mcl_particles.delete_node_particlespawners(pos)
 		mcl_furnaces.give_xp(pos)
@@ -522,6 +547,7 @@ mcl_furnaces.tpl_furnace_node = {
 	allow_metadata_inventory_take = mcl_furnaces.allow_metadata_inventory_take,
 	on_metadata_inventory_move = mcl_furnaces.on_metadata_inventory_move,
 	on_metadata_inventory_take = mcl_furnaces.on_metadata_inventory_take,
+	on_metadata_inventory_put = mcl_furnaces.on_metadata_inventory_put,
 	on_receive_fields = mcl_furnaces.receive_fields,
 	_on_hopper_in = mcl_furnaces.on_hopper_in,
 	_on_hopper_out = mcl_furnaces.on_hopper_out,
@@ -538,11 +564,13 @@ mcl_furnaces.tpl_furnace_node_normal = table.merge(mcl_furnaces.tpl_furnace_node
 
 		mcl_furnaces.on_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
 	end,
-	on_metadata_inventory_put = function(pos)
+	on_metadata_inventory_put = function(pos, listname, index, stack, player)
 		-- Reset accumulated game time when player works with furnace:
 		mcl_furnaces.furnace_reset_delta_time(pos)
 		-- start timer function, it will sort out whether furnace can burn or not.
 		minetest.get_node_timer(pos):start(1.0)
+
+		mcl_furnaces.on_metadata_inventory_put(pos, listname, index, stack, player)
 	end,
 	on_metadata_inventory_take = function(pos, listname, index, stack, player)
 		-- Reset accumulated game time when player works with furnace:
@@ -577,6 +605,7 @@ function mcl_furnaces.register_furnace(nodename, def)
 			end
 			meta:set_string("formspec", get_inactive_formspec(name))
 			local inv = meta:get_inventory()
+			inv:set_size("sorter", 1)
 			inv:set_size("src", 1)
 			inv:set_size("fuel", 1)
 			inv:set_size("dst", 1)
