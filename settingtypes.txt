@@ -214,8 +214,5 @@ mcl_logging_mapgen (Log chunk generation) bool false
 # If enabled generated structures will be logged
 mcl_logging_structures (Log structure generation) bool true
 
-# Complete debug logging for mcl_signs events. Use this if you have issues with signs.
-mcl_logging_mcl_signs (Debug logging for mcl_signs) bool false
-
 # Debug logging for mcl_events.
 mcl_logging_event_api (Debug logging for mcl_events) bool false
