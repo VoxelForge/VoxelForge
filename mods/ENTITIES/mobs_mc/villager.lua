@@ -263,6 +263,13 @@ table.update(mobs_mc.villager_mob, {
 		"mobs_mc:husk",
 		"mobs_mc:baby_husk",
 		"mobs_mc:villager_zombie",
+		"mobs_mc:zombified_piglin",
+		"mobs_mc:zoglin",
+		"mobs_mc:pillager",
+		"mobs_mc:vindicator",
+		"mobs_mc:vex",
+		"mobs_mc:evoker",
+		"mobs_mc:illusioner",
 	},
 	after_activate = mobs_mc.villager_mob.set_textures,
 })
