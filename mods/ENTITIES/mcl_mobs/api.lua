@@ -11,7 +11,7 @@ mcl_mobs.invis = {}
 
 local remove_far = true
 local mobs_debug = minetest.settings:get_bool("mobs_debug", false) -- Shows helpful debug info above each mob
-local spawn_logging = minetest.settings:get_bool("mcl_logging_mobs_spawn",true)
+local spawn_logging = minetest.settings:get_bool("mcl_logging_mobs_spawn", false)
 
 -- Peaceful mode message so players will know there are no monsters
 if minetest.settings:get_bool("only_peaceful_mobs", false) then

@@ -29,7 +29,7 @@ local mob_cap = {
 --do mobs spawn?
 local mobs_spawn = minetest.settings:get_bool("mobs_spawn", true) ~= false
 local spawn_protected = minetest.settings:get_bool("mobs_spawn_protected") ~= false
-local logging = minetest.settings:get_bool("mcl_logging_mobs_spawn",true)
+local logging = minetest.settings:get_bool("mcl_logging_mobs_spawn", false)
 local mgname = minetest.get_mapgen_setting("mgname")
 
 -- count how many mobs are in an area

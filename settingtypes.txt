@@ -205,9 +205,6 @@ mcl_old_spawn_icons (Old spawn icons instead of eggs) bool false
 mcl_node_particles (Block particles detail level) enum none high,medium,low,none
 
 [Debugging]
-# Log mob spawning and despawning events
-mcl_logging_mobs_spawn (Log mob spawning) bool true
-
 # If enabled mapgen timings will be dumped to log
 mcl_logging_mapgen (Log chunk generation) bool false
 
