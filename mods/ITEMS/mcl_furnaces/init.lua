@@ -686,3 +686,24 @@ minetest.register_lbm({
 		mcl_furnaces.spawn_flames(pos, node.param2)
 	end,
 })
+
+minetest.register_lbm({
+	label = "Update Furnace formspecs and invs to allow new sneak+click behavior",
+	name = "mcl_furnaces:update_coolsneak",
+	nodenames = { "group:furnace", "group:furnace_active" },
+	run_at_every_load = true,
+	action = function(pos, node)
+		local m = minetest.get_meta(pos)
+		local inv = m:get_inventory()
+		inv:set_size("sorter", 1)
+
+		if minetest.get_item_group(node.name, "furnace_active") == 0 then --active furnaces update the formspec every second by themselves
+			local def = minetest.registered_nodes[node.name]
+			local name = S("Furnace")
+			if def and def.description then
+				name = def._tt_original_description or def.description
+			end
+			m:set_string("formspec", get_inactive_formspec(name))
+		end
+	end,
+})
