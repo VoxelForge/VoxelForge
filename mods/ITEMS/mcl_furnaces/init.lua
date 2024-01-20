@@ -115,8 +115,11 @@ end
 --
 
 local function sort_stack(stack)
-	if mcl_util.is_fuel(stack) then
-		return "fuel"
+    -- FIXME: no API shorthand to check if item is cookable
+	if minetest.get_craft_result({method = "cooking", width = 1, items = {stack}}).time ~= 0 then
+		return "src"
+    elseif mcl_util.is_fuel(stack) then
+        return "fuel"
 	end
 	return "src"
 end
