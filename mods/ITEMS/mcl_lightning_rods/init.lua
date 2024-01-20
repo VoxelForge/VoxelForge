@@ -90,7 +90,7 @@ end
 
 minetest.register_node("mcl_lightning_rods:rod_powered", rod_def_a)
 
-lightning.register_on_strike(function(pos, pos2, objects)
+mcl_lightning.register_on_strike(function(pos, pos2, objects)
 	local lr = minetest.find_node_near(pos, 128, { "group:attracts_lightning" }, true)
 
 	if lr then

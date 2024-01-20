@@ -3,7 +3,7 @@
 Copyright (C) 2016 - Auke Kok <sofar@foo-projects.org>
 Adapted by MineClone2 contributors
 
-"lightning" is free software; you can redistribute it and/or modify
+"mcl_lightning" is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as
 published by the Free Software Foundation; either version 2.1
 of the license, or (at your option) any later version.
@@ -12,7 +12,7 @@ of the license, or (at your option) any later version.
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
-lightning = {
+mcl_lightning = {
 	interval_low = 17,
 	interval_high = 503,
 	range_h = 100,
@@ -42,16 +42,16 @@ end
 
 minetest.register_globalstep(revertsky)
 
--- lightning strike API
+-- mcl_lightning strike API
 
 -- See API.md
 --[[
-	lightning.register_on_strike(function(pos, pos2, objects)
+	mcl_lightning.register_on_strike(function(pos, pos2, objects)
 		-- code
 	end)
 ]]
-function lightning.register_on_strike(func)
-	table.insert(lightning.on_strike_functions, func)
+function mcl_lightning.register_on_strike(func)
+	table.insert(mcl_lightning.on_strike_functions, func)
 end
 
 -- select a random strike point, midpoint
@@ -74,12 +74,12 @@ local function choose_pos(pos)
 			return nil, nil
 		end
 
-		pos.x = math.floor(pos.x - (lightning.range_h / 2) + rng:next(1, lightning.range_h))
-		pos.y = pos.y + (lightning.range_v / 2)
-		pos.z = math.floor(pos.z - (lightning.range_h / 2) + rng:next(1, lightning.range_h))
+		pos.x = math.floor(pos.x - (mcl_lightning.range_h / 2) + rng:next(1, mcl_lightning.range_h))
+		pos.y = pos.y + (mcl_lightning.range_v / 2)
+		pos.z = math.floor(pos.z - (mcl_lightning.range_h / 2) + rng:next(1, mcl_lightning.range_h))
 	end
 
-	local b, pos2 = minetest.line_of_sight(pos, { x = pos.x, y = pos.y - lightning.range_v, z = pos.z }, 1)
+	local b, pos2 = minetest.line_of_sight(pos, { x = pos.x, y = pos.y - mcl_lightning.range_v, z = pos.z }, 1)
 
 	-- nothing but air found
 	if b then
@@ -94,9 +94,9 @@ local function choose_pos(pos)
 	return pos, pos2
 end
 
-function lightning.strike_func(pos, pos2, objects)
-	local particle_pos = vector.offset(pos2, 0, (lightning.size / 2) + 0.5, 0)
-	local particle_size = lightning.size * 10
+function mcl_lightning.strike_func(pos, pos2, objects)
+	local particle_pos = vector.offset(pos2, 0, (mcl_lightning.size / 2) + 0.5, 0)
+	local particle_size = mcl_lightning.size * 10
 	local time = 0.2
 	minetest.add_particlespawner({
 		amount = 1,
@@ -111,7 +111,7 @@ function lightning.strike_func(pos, pos2, objects)
 		collisiondetection = true,
 		vertical = true,
 		-- to make it appear hitting the node that will get set on fire, make sure
-		-- to make the texture lightning bolt hit exactly in the middle of the
+		-- to make the texture mcl_lightning bolt hit exactly in the middle of the
 		-- texture (e.g. 127/128 on a 256x wide texture)
 		texture = "lightning_lightning_" .. rng:next(1,3) .. ".png",
 		glow = minetest.LIGHT_MAX,
@@ -123,7 +123,7 @@ function lightning.strike_func(pos, pos2, objects)
 	for _, obj in pairs(objects) do
 		local lua = obj:get_luaentity()
 		if lua then
-			if not lua.on_lightning_strike or ( lua.on_lightning_strike and lua.on_lightning_strike(lua, pos, pos2, objects) ~= true ) then
+			if not lua.on_mcl_lightning_strike or ( lua.on_mcl_lightning_strike and lua.on_mcl_lightning_strike(lua, pos, pos2, objects) ~= true ) then
 				mcl_util.deal_damage(obj, 5, { type = "lightning_bolt" })
 			end
 		else
@@ -153,14 +153,10 @@ function lightning.strike_func(pos, pos2, objects)
 	-- Events caused by the lightning strike: Fire, damage, mob transformations, rare skeleton spawn
 
 	pos2.y = pos2.y + 1/2
-	local skeleton_lightning = false
-	if rng:next(1,100) <= 3 then
-		skeleton_lightning = true
-	end
 	if minetest.get_item_group(minetest.get_node({ x = pos2.x, y = pos2.y - 1, z = pos2.z }).name, "liquid") < 1 then
 		if minetest.get_node(pos2).name == "air" then
 			-- Low chance for a lightning to spawn skeleton horse + skeletons
-			if skeleton_lightning then
+			if rng:next(1,100) <= 3 then
 				minetest.add_entity(pos2, "mobs_mc:skeleton_horse")
 
 				local angle, posadd
@@ -185,7 +181,7 @@ end
 
 -- * pos: optional, if not given a random pos will be chosen
 -- * returns: bool - success if a strike happened
-function lightning.strike(pos)
+function mcl_lightning.strike(pos)
 	local pos2
 	pos, pos2 = choose_pos(pos)
 
@@ -193,8 +189,8 @@ function lightning.strike(pos)
 		return false
 	end
 	local do_strike = true
-	if lightning.on_strike_functions then
-		for _, func in pairs(lightning.on_strike_functions) do
+	if mcl_lightning.on_strike_functions then
+		for _, func in pairs(mcl_lightning.on_strike_functions) do
 			-- allow on_strike callbacks to destroy entities by re-obtaining objects for each callback
 			local objects = minetest.get_objects_inside_radius(pos2, 3.5)
 			local p,stop = func(pos, pos2, objects)
@@ -206,7 +202,7 @@ function lightning.strike(pos)
 		end
 	end
 	if do_strike then
-		lightning.strike_func(pos,pos2,minetest.get_objects_inside_radius(pos2, 3.5))
+		mcl_lightning.strike_func(pos,pos2,minetest.get_objects_inside_radius(pos2, 3.5))
 	end
 end
 
@@ -232,9 +228,9 @@ minetest.register_chatcommand("lightning", {
 			return false, "No position specified and unknown player"
 		end
 		if pos then
-			lightning.strike(pos)
+			mcl_lightning.strike(pos)
 		elseif player_to_strike then
-			lightning.strike(player_to_strike:get_pos())
+			mcl_lightning.strike(player_to_strike:get_pos())
 		end
 		return true
 	end,

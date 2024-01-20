@@ -28,7 +28,7 @@ minetest.register_globalstep(function(dtime)
 		mcl_weather.thunder.init_done = true
 	end
 	if (mcl_weather.thunder.next_strike <= minetest.get_gametime()) then
-		lightning.strike()
+		mcl_lightning.strike()
 		local delay = math.random(mcl_weather.thunder.min_delay, mcl_weather.thunder.max_delay)
 		mcl_weather.thunder.next_strike = minetest.get_gametime() + delay
 	end

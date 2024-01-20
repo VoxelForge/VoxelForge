@@ -11,7 +11,7 @@ globals = {
 	"doc",
 	"tt",
 	"mesecon",
-	"lightning",
+	"mcl_lightning",
 	"controls",
 	"flowlib",
 	"awards",
