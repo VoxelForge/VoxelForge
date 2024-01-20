@@ -1,6 +1,3 @@
--- turn off lightning mod 'auto mode'
-lightning.auto = false
-
 mcl_weather.thunder = {
 	next_strike = 0,
 	min_delay = 3,

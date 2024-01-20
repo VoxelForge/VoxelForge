@@ -18,8 +18,6 @@ lightning = {
 	range_h = 100,
 	range_v = 50,
 	size = 100,
-	-- disable this to stop lightning mod from striking
-	auto = true,
 	on_strike_functions = {},
 }
 
@@ -188,10 +186,6 @@ end
 -- * pos: optional, if not given a random pos will be chosen
 -- * returns: bool - success if a strike happened
 function lightning.strike(pos)
-	if lightning.auto then
-		minetest.after(rng:next(lightning.interval_low, lightning.interval_high), lightning.strike)
-	end
-
 	local pos2
 	pos, pos2 = choose_pos(pos)
 
@@ -215,14 +209,6 @@ function lightning.strike(pos)
 		lightning.strike_func(pos,pos2,minetest.get_objects_inside_radius(pos2, 3.5))
 	end
 end
-
--- if other mods disable auto lightning during initialization, don't trigger the first lightning.
-minetest.after(5, function(dtime)
-	if lightning.auto then
-		minetest.after(rng:next(lightning.interval_low,
-			lightning.interval_high), lightning.strike)
-	end
-end)
 
 minetest.register_chatcommand("lightning", {
 	params = "[<X> <Y> <Z> | <player name>]",
