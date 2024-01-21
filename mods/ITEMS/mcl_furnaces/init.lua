@@ -113,16 +113,10 @@ end
 --
 -- Node callback functions that are the same for active and inactive furnace
 --
-function mcl_furnaces.is_cookable(stack, pos)
-	if pos then
-		local def = minetest.registered_nodes[minetest.get_node(pos).name]
-		if def and def._mcl_furnaces_cook_group and minetest.get_item_group(stack:get_name(), def._mcl_furnaces_cook_group) == 0 then return false end
-	end
-	return minetest.get_craft_result({method = "cooking", width = 1, items = {stack}}).time ~= 0
-end
 
-local function sort_stack(stack, pos)
-	if mcl_furnaces.is_cookable(stack, pos) then
+local function sort_stack(stack)
+    -- FIXME: no API shorthand to check if item is cookable
+	if minetest.get_craft_result({method = "cooking", width = 1, items = {stack}}).time ~= 0 then
 		return "src"
     elseif mcl_util.is_fuel(stack) then
         return "fuel"
@@ -175,7 +169,7 @@ function mcl_furnaces.allow_metadata_inventory_put(pos, listname, index, stack, 
 		return 0
 	elseif listname == "sorter" then
 		local inv = minetest.get_meta(pos):get_inventory()
-		local trg = sort_stack(stack, pos)
+		local trg = sort_stack(stack)
 		local stack1 = ItemStack(stack):take_item()
 		if inv:room_for_item(trg, stack) then
 			return stack:get_count()
@@ -226,7 +220,7 @@ end
 function mcl_furnaces.on_metadata_inventory_put(pos, listname, index, stack, player)
 	if listname == "sorter" then
 		local inv = minetest.get_meta(pos):get_inventory()
-		inv:add_item(sort_stack(stack, pos), stack)
+		inv:add_item(sort_stack(stack), stack)
 		inv:set_stack("sorter", 1, ItemStack(""))
 	end
 end
@@ -627,7 +621,6 @@ function mcl_furnaces.register_furnace(nodename, def)
 			inv:set_size("dst", 1)
 		end,
 		on_timer = timer_func,
-		_mcl_furnaces_cook_group = def.cook_group,
 	},def.node_normal))
 	minetest.register_node(nodename.."_active", table.merge(mcl_furnaces.tpl_furnace_node_active,{
 		on_timer = timer_func,
