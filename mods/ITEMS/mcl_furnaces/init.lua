@@ -123,7 +123,7 @@ end
 
 local function sort_stack(stack, pos)
 	if mcl_furnaces.is_cookable(stack, pos) then
-		if not minetest.get_meta(pos):get_inventory():room_for_item("src", stack) then
+		if mcl_util.is_fuel(stack) and not minetest.get_meta(pos):get_inventory():room_for_item("src", stack) then
 			return "fuel"
 		end
 	elseif mcl_util.is_fuel(stack) then
