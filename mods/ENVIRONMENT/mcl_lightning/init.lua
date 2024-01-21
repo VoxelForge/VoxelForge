@@ -131,6 +131,14 @@ function mcl_lightning.strike_func(pos, pos2, objects)
 		end
 	end
 
+	--Affect nearby nodes if they define a "_on_lightning_strike" callback
+	for _, npos in pairs(minetest.find_nodes_in_area(vector.offset(pos2, -5,-5,-5), vector.offset(pos2, 5, 5, 5), {"group:affected_by_lightning"})) do
+		local def = minetest.registered_nodes[minetest.get_node(npos).name]
+		if def and def._on_lightning_strike then
+			def._on_lightning_strike(npos, pos, pos2)
+		end
+	end
+
 	local playerlist = minetest.get_connected_players()
 	for i = 1, #playerlist do
 		local player = playerlist[i]
