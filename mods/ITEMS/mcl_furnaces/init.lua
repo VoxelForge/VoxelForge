@@ -122,8 +122,11 @@ function mcl_furnaces.is_cookable(stack, pos)
 end
 
 local function sort_stack(stack, pos)
+	if stack:get_name() == "mcl_buckets:bucket_empty" then
+		return "fuel"
+	end
 	if mcl_furnaces.is_cookable(stack, pos) then
-		if not minetest.get_meta(pos):get_inventory():room_for_item("src", stack) then
+		if mcl_util.is_fuel(stack) and not minetest.get_meta(pos):get_inventory():room_for_item("src", stack) then
 			return "fuel"
 		end
 	elseif mcl_util.is_fuel(stack) then
@@ -143,11 +146,7 @@ function mcl_furnaces.allow_metadata_inventory_put(pos, listname, index, stack, 
 	if listname == "fuel" then
 		-- Special case: empty bucket (not a fuel, but used for sponge drying)
 		if stack:get_name() == "mcl_buckets:bucket_empty" then
-			if inv:get_stack(listname, index):get_count() == 0 then
-				return 1
-			else
-				return 0
-			end
+			return inv:get_stack(listname, index):get_count() == 0 and 1 or 0
 		end
 
 		-- Test stack with size 1 because we burn one fuel at a time
@@ -180,6 +179,9 @@ function mcl_furnaces.allow_metadata_inventory_put(pos, listname, index, stack, 
 		local trg = sort_stack(stack, pos)
 		local stack1 = ItemStack(stack):take_item()
 		if inv:room_for_item(trg, stack) then
+			if stack:get_name() == "mcl_buckets:bucket_empty" then
+				return inv:get_stack("fuel", 1):get_count() == 0 and 1 or 0
+			end
 			return stack:get_count()
 		elseif inv:room_for_item(trg, stack1) then
 			local tc = inv:get_stack(trg, 1):get_count()
