@@ -75,15 +75,14 @@ local formspec = table.concat({
 	"list[current_player;main;0.375,9.05;9,1;]",
 
 	-- Listrings
-
-	"listring[context;diamond_item]",
-	"listring[current_player;main]",
-	"listring[context;netherite]",
-	"listring[current_player;main]",
 	"listring[context;upgraded_item]",
 	"listring[current_player;main]",
+	"listring[context;upgrade_item]",
 	"listring[current_player;main]",
-	"listring[context;diamond_item]",
+	"listring[context;mineral]",
+	"listring[current_player;main]",
+	"listring[context;template]",
+	"listring[current_player;main]",
 })
 
 local achievement_trims = {
