@@ -167,7 +167,9 @@ minetest.register_node("mcl_smithing_table:table", {
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
 		local r = 0
 		if listname == "upgrade_item" then
-			if (minetest.get_item_group(stack:get_name(),"armor") > 0 or minetest.get_item_group(stack:get_name(),"tool") > 0)
+			if (minetest.get_item_group(stack:get_name(),"armor") > 0
+			or minetest.get_item_group(stack:get_name(),"tool") > 0
+			or minetest.get_item_group(stack:get_name(),"sword") > 0)
 			and not mcl_armor.trims.blacklisted[stack:get_name()] then
 				r = stack:get_count()
 			end
