@@ -126,10 +126,10 @@ local function sort_stack(stack, pos)
 		if mcl_util.is_fuel(stack) and not minetest.get_meta(pos):get_inventory():room_for_item("src", stack) then
 			return "fuel"
 		end
+		return "src"
 	elseif mcl_util.is_fuel(stack) or ( mcl_furnaces.is_cookable(ItemStack("mcl_sponges:sponge_wet"), pos) and stack:get_name() == "mcl_buckets:bucket_empty" ) then
 		return "fuel"
 	end
-	return "src"
 end
 
 function mcl_furnaces.allow_metadata_inventory_put(pos, listname, index, stack, player)
@@ -174,15 +174,17 @@ function mcl_furnaces.allow_metadata_inventory_put(pos, listname, index, stack, 
 	elseif listname == "sorter" then
 		local inv = minetest.get_meta(pos):get_inventory()
 		local trg = sort_stack(stack, pos)
-		local stack1 = ItemStack(stack):take_item()
-		if inv:room_for_item(trg, stack) then
-			if stack:get_name() == "mcl_buckets:bucket_empty" then
-				return inv:get_stack("fuel", 1):get_count() == 0 and 1 or 0
+		if trg then
+			local stack1 = ItemStack(stack):take_item()
+			if inv:room_for_item(trg, stack) then
+				if stack:get_name() == "mcl_buckets:bucket_empty" then
+					return inv:get_stack("fuel", 1):get_count() == 0 and 1 or 0
+				end
+				return stack:get_count()
+			elseif inv:room_for_item(trg, stack1) then
+				local tc = inv:get_stack(trg, 1):get_count()
+				return stack:get_stack_max() - tc
 			end
-			return stack:get_count()
-		elseif inv:room_for_item(trg, stack1) then
-			local tc = inv:get_stack(trg, 1):get_count()
-			return stack:get_stack_max() - tc
 		end
 		return 0
 	end
