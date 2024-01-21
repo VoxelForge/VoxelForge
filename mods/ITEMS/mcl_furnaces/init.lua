@@ -126,8 +126,8 @@ local function sort_stack(stack, pos)
 		if not minetest.get_meta(pos):get_inventory():room_for_item("src", stack) then
 			return "fuel"
 		end
-	elseif mcl_util.is_fuel(stack) then
-		return "fuel"
+    elseif mcl_util.is_fuel(stack) then
+        return "fuel"
 	end
 	return "src"
 end
@@ -643,11 +643,11 @@ mcl_furnaces.register_furnace("mcl_furnaces:furnace",{
 		_tt_help = S("Uses fuel to smelt or cook items"),
 		_doc_items_longdesc = S("Furnaces cook or smelt several items, using a furnace fuel, into something else."),
 		_doc_items_usagehelp =
-		S("Use the furnace to open the furnace menu.") .. "\n" ..
-		S("Place a furnace fuel in the lower slot and the source material in the upper slot.") .. "\n" ..
-		S("The furnace will slowly use its fuel to smelt the item.") .. "\n" ..
-		S("The result will be placed into the output slot at the right side.") .. "\n" ..
-		S("Use the recipe book to see what you can smelt, what you can use as fuel and how long it will burn."),
+			S("Use the furnace to open the furnace menu.") .. "\n" ..
+			S("Place a furnace fuel in the lower slot and the source material in the upper slot.") .. "\n" ..
+			S("The furnace will slowly use its fuel to smelt the item.") .. "\n" ..
+			S("The result will be placed into the output slot at the right side.") .. "\n" ..
+			S("Use the recipe book to see what you can smelt, what you can use as fuel and how long it will burn."),
 		tiles = {
 			"default_furnace_top.png", "default_furnace_bottom.png",
 			"default_furnace_side.png", "default_furnace_side.png",
