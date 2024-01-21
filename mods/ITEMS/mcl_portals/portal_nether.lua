@@ -651,15 +651,16 @@ minetest.override_item("mcl_core:obsidian", {
 	_doc_items_usagehelp = usagehelp,
 	on_destruct = function(pos, node)
 		local function check_remove(pos, param2)
-			if minetest.get_node(pos).name == "mcl_portals:portal" then
+			local node = minetest.get_node(pos)
+			if node.name == "mcl_portals:portal" and (not param2 or node.param2 % 2 == param2) then
 				minetest.remove_node(pos)
 			end
 		end
 
-		check_remove({x = pos.x - 1, y = pos.y, z = pos.z})
-		check_remove({x = pos.x + 1, y = pos.y, z = pos.z})
-		check_remove({x = pos.x, y = pos.y, z = pos.z - 1})
-		check_remove({x = pos.x, y = pos.y, z = pos.z + 1})
+		check_remove({x = pos.x - 1, y = pos.y, z = pos.z}, 0)
+		check_remove({x = pos.x + 1, y = pos.y, z = pos.z}, 0)
+		check_remove({x = pos.x, y = pos.y, z = pos.z - 1}, 1)
+		check_remove({x = pos.x, y = pos.y, z = pos.z + 1}, 1)
 		check_remove({x = pos.x, y = pos.y - 1, z = pos.z})
 		check_remove({x = pos.x, y = pos.y + 1, z = pos.z})
 	end,
