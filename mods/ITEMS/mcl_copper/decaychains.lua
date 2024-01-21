@@ -3,19 +3,21 @@ local decay_nodes = {}
 local nodename_chains = {}
 local S = minetest.get_translator("mcl_copper")
 
-function mcl_copper.get_decayed(nodename)
+function mcl_copper.get_decayed(nodename, amount)
+	amount = amount or 1
 	local dc = mcl_copper.registered_decaychains[nodename_chains[nodename]]
 	if not dc then return end
-	local ci = table.indexof(dc.nodes,nodename) + 1
+	local ci = table.indexof(dc.nodes,nodename) + amount
 	if ci < 1 then ci = 1 end
 	if ci > #dc.nodes then ci = #dc.nodes end
 	return dc.nodes[ci]
 end
 
-function mcl_copper.get_undecayed(nodename)
+function mcl_copper.get_undecayed(nodename, amount)
+	amount = amount or 1
 	local dc = mcl_copper.registered_decaychains[nodename_chains[nodename]]
 	if not dc then return end
-	local ci = table.indexof(dc.nodes,nodename) - 1
+	local ci = table.indexof(dc.nodes,nodename) - amount
 	if ci < 1 then ci = 1 end
 	if ci > #dc.nodes then ci = #dc.nodes end
 	return dc.nodes[ci]
@@ -78,6 +80,8 @@ local function register_unpreserve(nodename,od,def)
 		end
 		nd._mcl_stonecutter_recipes = new_recipes
 	end
+	nd.groups = table.merge(nd.groups, { affected_by_lightning = 0 })
+	nd._on_lightning_strike = nil
 	minetest.register_node(":"..nodename.."_preserved",nd)
 end
 
@@ -101,7 +105,7 @@ local function register_preserve(nodename,def,chaindef)
 			local node = minetest.get_node(pointed_thing.under)
 			if table.indexof(chaindef.nodes,node.name) == -1 then
 				if old_op then return old_op(itemstack, placer, pointed_thing) end
-			elseif table.indexof(chaindef.nodes,node.name) < #chaindef.nodes then
+			elseif table.indexof(chaindef.nodes,node.name) <= #chaindef.nodes then
 				node.name = node.name.."_preserved"
 				if minetest.registered_nodes[node.name] then
 					minetest.swap_node(pointed_thing.under,node)
@@ -146,7 +150,7 @@ function mcl_copper.register_decaychain(name,def)
 		nodename_chains[v] = name
 		table.insert(decay_nodes,v)
 
-		if k < #def.nodes and def.unpreserve_callback then --exclude last entry in chain - can't decay further, hence no preservation
+		if k <= #def.nodes and def.unpreserve_callback then
 			register_unpreserve(v,od,def)
 		end
 

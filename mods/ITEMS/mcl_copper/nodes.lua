@@ -1,5 +1,15 @@
 local S = minetest.get_translator("mcl_copper")
 
+local function on_lightning_strike(pos, pos1, pos2)
+	local node = minetest.get_node(pos)
+	if vector.distance(pos, pos2) <= 1 then
+		node.name = mcl_copper.get_undecayed(node.name, 4)
+	else
+		node.name = mcl_copper.get_undecayed(node.name, math.random(4))
+	end
+	minetest.swap_node(pos, node)
+end
+
 minetest.register_node("mcl_copper:stone_with_copper", {
 	description = S("Copper Ore"),
 	_doc_items_longdesc = S("Some copper contained in stone, it is pretty common and can be found below sea level."),
@@ -41,8 +51,9 @@ minetest.register_node("mcl_copper:block_exposed", {
 	_doc_items_longdesc = S("Exposed copper is a decorative block."),
 	tiles = {"mcl_copper_exposed.png"},
 	is_ground_content = false,
-	groups = {pickaxey = 2, building_block = 1, stonecuttable = 11},
+	groups = {pickaxey = 2, building_block = 1, stonecuttable = 1, affected_by_lightning = 1},
 	sounds = mcl_sounds.node_sound_metal_defaults(),
+	_on_lightning_strike = on_lightning_strike,
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
 })
@@ -52,8 +63,9 @@ minetest.register_node("mcl_copper:block_weathered", {
 	_doc_items_longdesc = S("Weathered copper is a decorative block."),
 	tiles = {"mcl_copper_weathered.png"},
 	is_ground_content = false,
-	groups = {pickaxey = 2, building_block = 1, stonecuttable = 1},
+	groups = {pickaxey = 2, building_block = 1, stonecuttable = 1, affected_by_lightning = 1},
 	sounds = mcl_sounds.node_sound_metal_defaults(),
+	_on_lightning_strike = on_lightning_strike,
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
 })
@@ -63,8 +75,9 @@ minetest.register_node("mcl_copper:block_oxidized", {
 	_doc_items_longdesc = S("Oxidized copper is a decorative block."),
 	tiles = {"mcl_copper_oxidized.png"},
 	is_ground_content = false,
-	groups = {pickaxey = 2, building_block = 1, stonecuttable = 1},
+	groups = {pickaxey = 2, building_block = 1, stonecuttable = 1, affected_by_lightning = 1},
 	sounds = mcl_sounds.node_sound_metal_defaults(),
+	_on_lightning_strike = on_lightning_strike,
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
 })
@@ -86,8 +99,9 @@ minetest.register_node("mcl_copper:block_exposed_cut", {
 	_doc_items_longdesc = S("Exposed cut copper is a decorative block."),
 	tiles = {"mcl_copper_exposed_cut.png"},
 	is_ground_content = false,
-	groups = {pickaxey = 2, building_block = 1, stonecuttable = 1, cut_copper = 1},
+	groups = {pickaxey = 2, building_block = 1, stonecuttable = 1, cut_copper = 1, affected_by_lightning = 1},
 	sounds = mcl_sounds.node_sound_metal_defaults(),
+	_on_lightning_strike = on_lightning_strike,
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
 	_mcl_stonecutter_recipes = { "mcl_copper:block_exposed" },
@@ -98,8 +112,9 @@ minetest.register_node("mcl_copper:block_weathered_cut", {
 	_doc_items_longdesc = S("Weathered cut copper is a decorative block."),
 	tiles = {"mcl_copper_weathered_cut.png"},
 	is_ground_content = false,
-	groups = {pickaxey = 2, building_block = 1, stonecuttable = 1, cut_copper = 1},
+	groups = {pickaxey = 2, building_block = 1, stonecuttable = 1, cut_copper = 1, affected_by_lightning = 1},
 	sounds = mcl_sounds.node_sound_metal_defaults(),
+	_on_lightning_strike = on_lightning_strike,
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
 	_mcl_stonecutter_recipes = { "mcl_copper:block_weathered" },
@@ -110,8 +125,9 @@ minetest.register_node("mcl_copper:block_oxidized_cut", {
 	_doc_items_longdesc = S("Oxidized cut copper is a decorative block."),
 	tiles = {"mcl_copper_oxidized_cut.png"},
 	is_ground_content = false,
-	groups = {pickaxey = 2, building_block = 1, stonecuttable = 1, cut_copper = 1},
+	groups = {pickaxey = 2, building_block = 1, stonecuttable = 1, cut_copper = 1, affected_by_lightning = 1},
 	sounds = mcl_sounds.node_sound_metal_defaults(),
+	_on_lightning_strike = on_lightning_strike,
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 5,
 	_mcl_stonecutter_recipes = { "mcl_copper:block_oxidized" },
@@ -125,25 +141,25 @@ mcl_stairs.register_slab("copper_cut", "mcl_copper:block_cut",
 	S("Double Slab of Cut Copper"), {_mcl_stonecutter_recipes = {"mcl_copper:block", "mcl_copper:block_cut"}})
 
 mcl_stairs.register_slab("copper_exposed_cut", "mcl_copper:block_exposed_cut",
-	{pickaxey = 2, cut_copper = 1},
+	{pickaxey = 2, cut_copper = 1, affected_by_lightning = 1},
 	{"mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png"},
 	S("Slab of Exposed Cut Copper"),
 	nil, nil, nil,
-	S("Double Slab of Exposed Cut Copper"), {_mcl_stonecutter_recipes = {"mcl_copper:block_exposed", "mcl_copper:block_exposed_cut"}})
+	S("Double Slab of Exposed Cut Copper"), {_mcl_stonecutter_recipes = {"mcl_copper:block_exposed", "mcl_copper:block_exposed_cut"}, _on_lightning_strike = on_lightning_strike,})
 
 mcl_stairs.register_slab("copper_weathered_cut", "mcl_copper:block_weathered_cut",
-	{pickaxey = 2, cut_copper = 1},
+	{pickaxey = 2, cut_copper = 1, affected_by_lightning = 1},
 	{"mcl_copper_weathered_cut.png", "mcl_copper_weathered_cut.png", "mcl_copper_weathered_cut.png"},
 	S("Slab of Weathered Cut Copper"),
 	nil, nil, nil,
-	S("Double Slab of Weathered Cut Copper"), {_mcl_stonecutter_recipes = {"mcl_copper:block_weathered", "mcl_copper:block_weathered_cut"}})
+	S("Double Slab of Weathered Cut Copper"), {_mcl_stonecutter_recipes = {"mcl_copper:block_weathered", "mcl_copper:block_weathered_cut"}, _on_lightning_strike = on_lightning_strike,})
 
 mcl_stairs.register_slab("copper_oxidized_cut", "mcl_copper:block_oxidized_cut",
-	{pickaxey = 2, cut_copper = 1},
+	{pickaxey = 2, cut_copper = 1, affected_by_lightning = 1},
 	{"mcl_copper_oxidized_cut.png", "mcl_copper_oxidized_cut.png", "mcl_copper_oxidized_cut.png"},
 	S("Slab of Oxidized Cut Copper"),
 	nil, nil, nil,
-	S("Double Slab of Oxidized Cut Copper"),{_mcl_stonecutter_recipes = {"mcl_copper:block_oxidized", "mcl_copper:block_oxidized_cut"}})
+	S("Double Slab of Oxidized Cut Copper"),{_mcl_stonecutter_recipes = {"mcl_copper:block_oxidized", "mcl_copper:block_oxidized_cut"}, _on_lightning_strike = on_lightning_strike,})
 
 mcl_stairs.register_stair("copper_cut", "mcl_copper:block_cut",
 	{pickaxey = 2, cut_copper = 1},
@@ -153,22 +169,22 @@ mcl_stairs.register_stair("copper_cut", "mcl_copper:block_cut",
 	"woodlike", {_mcl_stonecutter_recipes = {"mcl_copper:block", "mcl_copper:block_cut"}})
 
 mcl_stairs.register_stair("copper_exposed_cut", "mcl_copper:block_exposed_cut",
-	{pickaxey = 2, cut_copper = 1},
+	{pickaxey = 2, cut_copper = 1, affected_by_lightning = 1},
 	{"mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png", "mcl_copper_exposed_cut.png"},
 	S("Stairs of Exposed Cut Copper"),
 	nil, 6, nil,
-	"woodlike", {_mcl_stonecutter_recipes = {"mcl_copper:block_exposed", "mcl_copper:block_exposed_cut"}})
+	"woodlike", {_mcl_stonecutter_recipes = {"mcl_copper:block_exposed", "mcl_copper:block_exposed_cut"}, _on_lightning_strike = on_lightning_strike,})
 
 mcl_stairs.register_stair("copper_weathered_cut", "mcl_copper:block_weathered_cut",
-	{pickaxey = 2, cut_copper = 1},
+	{pickaxey = 2, cut_copper = 1, affected_by_lightning = 1},
 	{"mcl_copper_weathered_cut.png", "mcl_copper_weathered_cut.png", "mcl_copper_weathered_cut.png", "mcl_copper_weathered_cut.png", "mcl_copper_weathered_cut.png", "mcl_copper_weathered_cut.png"},
 	S("Stairs of Weathered Cut Copper"),
 	nil, 6, nil,
-	"woodlike", {_mcl_stonecutter_recipes = {"mcl_copper:block_weathered", "mcl_copper:block_weathered_cut"}})
+	"woodlike", {_mcl_stonecutter_recipes = {"mcl_copper:block_weathered", "mcl_copper:block_weathered_cut"}, _on_lightning_strike = on_lightning_strike,})
 
 mcl_stairs.register_stair("copper_oxidized_cut", "mcl_copper:block_oxidized_cut",
-	{pickaxey = 2, cut_copper = 1},
+	{pickaxey = 2, cut_copper = 1, affected_by_lightning = 1},
 	{"mcl_copper_oxidized_cut.png", "mcl_copper_oxidized_cut.png", "mcl_copper_oxidized_cut.png", "mcl_copper_oxidized_cut.png", "mcl_copper_oxidized_cut.png", "mcl_copper_oxidized_cut.png"},
 	S("Stairs of Oxidized Cut Copper"),
 	nil, 6, nil,
-	"woodlike", {_mcl_stonecutter_recipes = {"mcl_copper:block_oxidized", "mcl_copper:block_oxidized_cut"}})
+	"woodlike", {_mcl_stonecutter_recipes = {"mcl_copper:block_oxidized", "mcl_copper:block_oxidized_cut"}, _on_lightning_strike = on_lightning_strike,})
