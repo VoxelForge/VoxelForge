@@ -122,14 +122,11 @@ function mcl_furnaces.is_cookable(stack, pos)
 end
 
 local function sort_stack(stack, pos)
-	if stack:get_name() == "mcl_buckets:bucket_empty" then
-		return "fuel"
-	end
 	if mcl_furnaces.is_cookable(stack, pos) then
 		if mcl_util.is_fuel(stack) and not minetest.get_meta(pos):get_inventory():room_for_item("src", stack) then
 			return "fuel"
 		end
-	elseif mcl_util.is_fuel(stack) then
+	elseif mcl_util.is_fuel(stack) or ( mcl_furnaces.is_cookable(ItemStack("mcl_sponges:sponge_wet"), pos) and stack:get_name() == "mcl_buckets:bucket_empty" ) then
 		return "fuel"
 	end
 	return "src"
