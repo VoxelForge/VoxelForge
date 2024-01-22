@@ -652,11 +652,10 @@ def convert_grass_textures(
 
         # Tall grass, fern (inventory images)
         pcol = "50+173"  # Plains grass color
-        # TODO: TALLGRASS.png does no longer exist
         colorize_alpha(
             GRASS,
             tex_dir +
-            "/block/tallgrass.png",
+            "/block/grass.png",
             pcol,
             str(PXSIZE),
             target_dir(
