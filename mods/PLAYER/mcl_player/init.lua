@@ -1,10 +1,19 @@
 -- Minetest 0.4 mod: player
 -- See README.txt for licensing and other information.
 mcl_player = {}
+mcl_player.registered_player_models = {}
 
 -- Player animation blending
 -- Note: This is currently broken due to a bug in Irrlicht, leave at 0
-local animation_blend = 0
+local animation_blend = 6
+local registered_on_visual_change = {}
+-- Player stats and animations
+local player_model = {}
+local player_textures = {}
+local player_anim = {}
+local player_sneak = {}
+local player_visible = {}
+mcl_player.player_attached = {}
 
 local function get_mouse_button(player)
 	local controls = player:get_player_control()
@@ -18,19 +27,13 @@ local function get_mouse_button(player)
 	end
 end
 
-mcl_player.registered_player_models = {}
-
 function mcl_player.player_register_model(name, def)
 	mcl_player.registered_player_models[name] = def
 end
 
--- Player stats and animations
-local player_model = {}
-local player_textures = {}
-local player_anim = {}
-local player_sneak = {}
-local player_visible = {}
-mcl_player.player_attached = {}
+function mcl_player.register_on_visual_change(func)
+	table.insert(registered_on_visual_change, func)
+end
 
 function mcl_player.player_get_animation(player)
 	local name = player:get_player_name()
@@ -47,12 +50,6 @@ function mcl_player.player_get_animation(player)
 		animation = player_anim[name],
 		visibility = player_visible[name]
 	}
-end
-
-local registered_on_visual_change = {}
-
-function mcl_player.register_on_visual_change(func)
-	table.insert(registered_on_visual_change, func)
 end
 
 local function update_player_textures(player)
