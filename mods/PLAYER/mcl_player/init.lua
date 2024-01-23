@@ -24,6 +24,114 @@ local tpl_playerinfo = {
 	is_swimming = false,
 }
 
+local player_props_elytra = {
+	collisionbox = { -0.35, 0, -0.35, 0.35, 0.8, 0.35 },
+	eye_height = 0.6,
+	nametag_color = { r = 225, b = 225, a = 225, g = 225 }
+}
+local player_props_riding = {
+	collisionbox = { -0.312, 0, -0.312, 0.312, 1.8, 0.312 },
+	eye_height = 1.6,
+	nametag_color = { r = 225, b = 225, a = 225, g = 225 }
+}
+local player_props_sneaking = {
+	collisionbox = { -0.312, 0, -0.312, 0.312, 1.8, 0.312 },
+	eye_height = 1.45,
+	nametag_color = { r = 225, b = 225, a = 0, g = 225 }
+}
+local player_props_swimming = {
+	collisionbox = { -0.312, 0, -0.312, 0.312, 0.8, 0.312 },
+	eye_height = 0.6,
+	nametag_color = { r = 225, b = 225, a = 225, g = 225 }
+}
+local player_props_normal = {
+	collisionbox = { -0.312, 0, -0.312, 0.312, 1.8, 0.312 },
+	eye_height = 1.6,
+	nametag_color = { r = 225, b = 225, a = 225, g = 225 }
+}
+
+local function player_collision(player)
+
+	local pos = player:get_pos()
+	--local vel = player:get_velocity()
+	local x = 0
+	local z = 0
+	local width = .75
+
+	for _,object in pairs(minetest.get_objects_inside_radius(pos, width)) do
+
+		local ent = object:get_luaentity()
+		if (object:is_player() or (ent and ent.is_mob and object ~= player)) then
+
+			local pos2 = object:get_pos()
+			local vec  = {x = pos.x - pos2.x, z = pos.z - pos2.z}
+			local force = (width + 0.5) - vector.distance(
+				{x = pos.x, y = 0, z = pos.z},
+				{x = pos2.x, y = 0, z = pos2.z})
+
+			x = x + (vec.x * force)
+			z = z + (vec.z * force)
+		end
+	end
+	return {x,z}
+end
+
+-- converts yaw to degrees
+local function degrees(rad)
+	return rad * 180.0 / math.pi
+end
+
+local function dir_to_pitch(dir)
+	--local dir2 = vector.normalize(dir)
+	local xz = math.abs(dir.x) + math.abs(dir.z)
+	return -math.atan2(-dir.y, xz)
+end
+
+function limit_vel_yaw(player_vel_yaw, yaw)
+	if player_vel_yaw < 0 then
+		player_vel_yaw = player_vel_yaw + 360
+	end
+
+	if yaw < 0 then
+		yaw = yaw + 360
+	end
+
+	if math.abs(player_vel_yaw - yaw) > 40 then
+		local player_vel_yaw_nm, yaw_nm = player_vel_yaw, yaw
+		if player_vel_yaw > yaw then
+			player_vel_yaw_nm = player_vel_yaw - 360
+		else
+			yaw_nm = yaw - 360
+		end
+		if math.abs(player_vel_yaw_nm - yaw_nm) > 40 then
+			local diff = math.abs(player_vel_yaw - yaw)
+			if diff > 180 and diff < 185 or diff < 180 and diff > 175 then
+				player_vel_yaw = yaw
+			elseif diff < 180 then
+				if player_vel_yaw < yaw then
+					player_vel_yaw = yaw - 40
+				else
+					player_vel_yaw = yaw + 40
+				end
+			else
+				if player_vel_yaw < yaw then
+					player_vel_yaw = yaw + 40
+				else
+					player_vel_yaw = yaw - 40
+				end
+			end
+		end
+	end
+
+	if player_vel_yaw < 0 then
+		player_vel_yaw = player_vel_yaw + 360
+	elseif player_vel_yaw > 360 then
+		player_vel_yaw = player_vel_yaw - 360
+	end
+
+	return player_vel_yaw
+end
+
 local function get_mouse_button(player)
 	local controls = player:get_player_control()
 	local get_wielded_item_name = player:get_wielded_item():get_name()
@@ -258,5 +366,128 @@ mcl_player.register_globalstep(function(player, dtime)
 		else
 			mcl_player.player_set_animation(player, "sneak_stand", animation_speed_mod)
 		end
+	end
+
+	local control = player:get_player_control()
+	local name = player:get_player_name()
+	local parent = player:get_attach()
+	local wielded = player:get_wielded_item()
+	local player_velocity = player:get_velocity()
+	local wielded_def = wielded:get_definition()
+
+	local c_x, c_y = unpack(player_collision(player))
+
+	if player_velocity.x + player_velocity.y < .5 and c_x + c_y > 0 then
+		player:add_velocity({x = c_x, y = 0, z = c_y})
+		player_velocity = player:get_velocity() or player:get_player_velocity()
+	end
+
+	-- control head bone
+	local pitch = - degrees(player:get_look_vertical())
+	local yaw = degrees(player:get_look_horizontal())
+
+	local player_vel_yaw = degrees(minetest.dir_to_yaw(player_velocity))
+	if player_vel_yaw == 0 then
+		player_vel_yaw = mcl_player.players[player].vel_yaw or yaw
+	end
+	player_vel_yaw = limit_vel_yaw(player_vel_yaw, yaw)
+	mcl_player.players[player].vel_yaw = player_vel_yaw
+
+	if wielded_def and wielded_def._mcl_toollike_wield then
+		mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 4.7, 3.1), vector.new(-90, 225, 90))
+	elseif string.find(wielded:get_name(), "mcl_bows:bow") then
+		mcl_util.set_bone_position(player, "Wield_Item", vector.new(1, 4, 0), vector.new(90, 130, 115))
+	elseif string.find(wielded:get_name(), "mcl_bows:crossbow_loaded") then
+		mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 5.2, 1.2), vector.new(0, 180, 73))
+	elseif string.find(wielded:get_name(), "mcl_bows:crossbow") then
+		mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 5.2, 1.2), vector.new(0, 180, 45))
+	elseif wielded_def.inventory_image == "" then
+		mcl_util.set_bone_position(player,"Wield_Item", vector.new(0, 6, 2), vector.new(180, -45, 0))
+	else
+		mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 5.3, 2), vector.new(90, 0, 0))
+	end
+
+	-- controls right and left arms pitch when shooting a bow or blocking
+	if mcl_shields.is_blocking(player) == 2 then
+		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.new(20, -20, 0))
+	elseif mcl_shields.is_blocking(player) == 1 then
+		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.new(20, 20, 0))
+	elseif string.find(wielded:get_name(), "mcl_bows:bow") and control.RMB then
+		local right_arm_rot = vector.new(pitch + 90, -30, pitch * -1 * .35)
+		local left_arm_rot = vector.new(pitch + 90, 43, pitch * .35)
+		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, right_arm_rot)
+		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, left_arm_rot)
+	-- controls right and left arms pitch when holing a loaded crossbow
+	elseif string.find(wielded:get_name(), "mcl_bows:crossbow_loaded") then
+		local right_arm_rot = vector.new(pitch + 90, -30, pitch * -1 * .35)
+		local left_arm_rot = vector.new(pitch + 90, 43, pitch * .35)
+		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, right_arm_rot)
+		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, left_arm_rot)
+	-- controls right and left arms pitch when loading a crossbow
+	elseif string.find(wielded:get_name(), "mcl_bows:crossbow_") then
+		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.new(45, -20, 25))
+		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.new(55, 20, -45))
+	-- when punching
+	elseif control.LMB and not parent then
+		mcl_util.set_bone_position(player,"Arm_Right_Pitch_Control", nil, vector.new(pitch, 0, 0))
+		mcl_util.set_bone_position(player,"Arm_Left_Pitch_Control", nil, vector.zero())
+	-- when holding an item.
+	elseif wielded:get_name() ~= "" then
+		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.new(20, 0, 0))
+		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.zero())
+	-- resets arms pitch
+	else
+		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.zero())
+		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.zero())
+	end
+
+	if mcl_player.players[player].elytra.active then
+		-- set head pitch and yaw when flying
+		local head_rot = vector.new(pitch - degrees(dir_to_pitch(player_velocity)) + 50, player_vel_yaw - yaw, 0)
+		mcl_util.set_bone_position(player,"Head_Control", nil, head_rot)
+
+		-- sets eye height, and nametag color accordingly
+		mcl_util.set_properties(player, player_props_elytra)
+
+		-- control body bone when flying
+		local body_rot = vector.new((75 - degrees(dir_to_pitch(player_velocity))), -player_vel_yaw + yaw, 0)
+		mcl_util.set_bone_position(player, "Body_Control", nil, body_rot)
+	elseif parent then
+		mcl_util.set_properties(player, player_props_riding)
+
+		local parent_yaw = degrees(parent:get_yaw())
+		local head_rot = vector.new(pitch, -limit_vel_yaw(yaw, parent_yaw) + parent_yaw, 0)
+		mcl_util.set_bone_position(player, "Head_Control", nil, head_rot)
+		mcl_util.set_bone_position(player,"Body_Control", nil, vector.zero())
+	elseif control.sneak then
+		-- controls head pitch when sneaking
+		local head_rot = vector.new(pitch, player_vel_yaw - yaw, player_vel_yaw - yaw)
+		mcl_util.set_bone_position(player, "Head_Control", nil, head_rot)
+
+		-- sets eye height, and nametag color accordingly
+		mcl_util.set_properties(player, player_props_sneaking)
+
+		-- sneaking body conrols
+		mcl_util.set_bone_position(player, "Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
+	elseif minetest.get_item_group(mcl_playerinfo[name].node_head, "water") ~= 0 and mcl_sprint.is_sprinting(name) == true then
+		-- set head pitch and yaw when swimming
+		mcl_player.players[player].is_swimming = true
+		local head_rot = vector.new(pitch - degrees(dir_to_pitch(player_velocity)) + 20, player_vel_yaw - yaw, 0)
+		mcl_util.set_bone_position(player, "Head_Control", nil, head_rot)
+
+		-- sets eye height, and nametag color accordingly
+		mcl_util.set_properties(player, player_props_swimming)
+
+		-- control body bone when swimming
+		local body_rot = vector.new((75 + degrees(dir_to_pitch(player_velocity))), player_vel_yaw - yaw, 180)
+		mcl_util.set_bone_position(player,"Body_Control", nil, body_rot)
+	elseif minetest.get_item_group(mcl_playerinfo[name].node_head, "solid") == 0
+	and minetest.get_item_group(mcl_playerinfo[name].node_head_top, "solid") == 0 then
+		-- sets eye height, and nametag color accordingly
+		mcl_player.players[player].is_swimming = false
+		mcl_util.set_properties(player, player_props_normal)
+
+		mcl_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
+		mcl_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 	end
 end)

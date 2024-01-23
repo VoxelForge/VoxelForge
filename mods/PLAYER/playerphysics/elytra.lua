@@ -103,4 +103,5 @@ mcl_player.register_globalstep(function(player, dtime)
 		elytra.rocketing = 0
 		playerphysics.remove_physics_factor(player, "gravity", "mcl_playerplus:elytra")
 	end
+	mcl_player.players[player].elytra.last_yaw = player:get_look_horizontal()
 end)
