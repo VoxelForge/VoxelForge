@@ -19,11 +19,11 @@ minetest.register_globalstep(function(dtime)
 
 			--pos = player:get_pos()
 
-			node_stand = mcl_playerinfo[name].node_stand
-			node_stand_below = mcl_playerinfo[name].node_stand_below
-			node_head = mcl_playerinfo[name].node_head
-			node_feet = mcl_playerinfo[name].node_feet
-			node_head_top = mcl_playerinfo[name].node_head_top
+			node_stand = mcl_player.players[player].nodes.stand
+			node_stand_below = mcl_player.players[player].nodes.stand_below
+			node_head = mcl_player.players[player].nodes.head
+			node_feet = mcl_player.players[player].nodes.feet
+			node_head_top = mcl_player.players[player].nodes.head_top
 			if not node_stand or not node_stand_below or not node_head or not node_feet then
 				return
 			end
@@ -86,11 +86,11 @@ minetest.register_globalstep(function(dtime)
 		local pos = player:get_pos()
 
 		-- what is around me?
-		local node_stand = mcl_playerinfo[name].node_stand
-		local node_stand_below = mcl_playerinfo[name].node_stand_below
-		local node_head = mcl_playerinfo[name].node_head
-		local node_feet = mcl_playerinfo[name].node_feet
-		local node_head_top = mcl_playerinfo[name].node_head_top
+		local node_stand = mcl_player.players[player].nodes.stand
+		local node_stand_below = mcl_player.players[player].nodes.stand_below
+		local node_head = mcl_player.players[player].nodes.head
+		local node_feet = mcl_player.players[player].nodes.feet
+		local node_head_top = mcl_player.players[player].nodes.head_top
 		if not node_stand or not node_stand_below or not node_head or not node_feet or not node_head_top then
 			return
 		end

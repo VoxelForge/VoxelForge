@@ -1,6 +1,7 @@
 mcl_player = {
 	registered_player_models = {},
 	registered_globalsteps = {},
+	registered_globalsteps_slow = {},
 	registered_on_visual_change = {},
 	players = {},
 }
@@ -20,6 +21,21 @@ local tpl_playerinfo = {
 	jump_cooldown = -1,	-- Cooldown timer for jumping, we need this to prevent the jump exhaustion to increase rapidly
 	vel_yaw = nil,
 	is_swimming = false,
+	nodes = {
+		stand = "",
+		stand_below = "",
+		head = "",
+		feet = "",
+		head_top = "",
+	},
+}
+
+local nodeinfo_pos = {
+	stand =       vector.new(0, -0.1, 0),
+	stand_below = vector.new(0, -1.1, 0),
+	head =        vector.new(0, 1.5, 0),
+	head_top =    vector.new(0, 2, 0),
+	feet =        vector.new(0, 0.3, 0),
 }
 
 local player_props_elytra = {
@@ -47,6 +63,8 @@ local player_props_normal = {
 	eye_height = 1.6,
 	nametag_color = { r = 225, b = 225, a = 225, g = 225 }
 }
+
+local slow_gs_timer = 0.5
 
 minetest.register_on_joinplayer(function(player)
 	mcl_player.players[player] = table.copy(tpl_playerinfo)
@@ -142,6 +160,18 @@ function limit_vel_yaw(player_vel_yaw, yaw)
 	return player_vel_yaw
 end
 
+local function node_ok(pos, fallback)
+	fallback = fallback or "air"
+	local node = minetest.get_node_or_nil(pos)
+	if not node then
+		return fallback
+	end
+	if minetest.registered_nodes[node.name] then
+		return node.name
+	end
+	return fallback
+end
+
 local function get_mouse_button(player)
 	local controls = player:get_player_control()
 	local get_wielded_item_name = player:get_wielded_item():get_name()
@@ -155,6 +185,10 @@ local function get_mouse_button(player)
 end
 
 function mcl_player.register_globalstep(func)
+	table.insert(mcl_player.registered_globalsteps, func)
+end
+
+function mcl_player.register_globalstep_slow(func)
 	table.insert(mcl_player.registered_globalsteps, func)
 end
 
@@ -275,6 +309,23 @@ minetest.register_globalstep(function(dtime)
 	end
 end)
 
+minetest.register_globalstep(function(dtime)
+	slow_gs_timer = slow_gs_timer - dtime
+	if slow_gs_timer > 0 then return end
+	slow_gs_timer = 0.5
+	for _, player in pairs(minetest.get_connected_players()) do
+		for _, func in pairs(mcl_player.registered_globalsteps_slow) do
+			func(player, dtime)
+		end
+	end
+end)
+
+mcl_player.register_globalstep_slow(function(player, dtime)
+	for k, v in pairs(nodeinfo_pos) do
+		mcl_player.players[player].nodes[k] = node_ok(vector.add(player:get_pos(), v))
+	end
+end)
+
 mcl_player.register_globalstep(function(player, dtime)
 	local name = player:get_player_name()
 	local model_name = mcl_player.players[player].model
@@ -299,7 +350,7 @@ mcl_player.register_globalstep(function(player, dtime)
 		end
 
 		-- ask if player is swiming
-		local head_in_water = minetest.get_item_group(mcl_playerinfo[name].node_head, "water") ~= 0
+		local head_in_water = minetest.get_item_group(mcl_player.players[player].nodes.head, "water") ~= 0
 		-- ask if player is sprinting
 		local is_sprinting = mcl_sprint.is_sprinting(name)
 
@@ -461,7 +512,7 @@ mcl_player.register_globalstep(function(player, dtime)
 
 		-- sneaking body conrols
 		mcl_util.set_bone_position(player, "Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
-	elseif minetest.get_item_group(mcl_playerinfo[name].node_head, "water") ~= 0 and mcl_sprint.is_sprinting(name) == true then
+	elseif minetest.get_item_group(mcl_player.players[player].nodes.head, "water") ~= 0 and mcl_sprint.is_sprinting(name) == true then
 		-- set head pitch and yaw when swimming
 		mcl_player.players[player].is_swimming = true
 		local head_rot = vector.new(pitch - math.deg(dir_to_pitch(player_velocity)) + 20, player_vel_yaw - yaw, 0)
@@ -473,8 +524,8 @@ mcl_player.register_globalstep(function(player, dtime)
 		-- control body bone when swimming
 		local body_rot = vector.new((75 + math.deg(dir_to_pitch(player_velocity))), player_vel_yaw - yaw, 180)
 		mcl_util.set_bone_position(player,"Body_Control", nil, body_rot)
-	elseif minetest.get_item_group(mcl_playerinfo[name].node_head, "solid") == 0
-	and minetest.get_item_group(mcl_playerinfo[name].node_head_top, "solid") == 0 then
+	elseif minetest.get_item_group(mcl_player.players[player].nodes.head, "solid") == 0
+	and minetest.get_item_group(mcl_player.players[player].nodes.head_top, "solid") == 0 then
 		-- sets eye height, and nametag color accordingly
 		mcl_player.players[player].is_swimming = false
 		mcl_util.set_properties(player, player_props_normal)
