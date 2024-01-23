@@ -1,5 +1,3 @@
--- Minetest 0.4 mod: player
--- See README.txt for licensing and other information.
 mcl_player = {
 	registered_player_models = {},
 	registered_globalsteps = {},
@@ -76,13 +74,7 @@ local function player_collision(player)
 	return {x,z}
 end
 
--- converts yaw to degrees
-local function degrees(rad)
-	return rad * 180.0 / math.pi
-end
-
 local function dir_to_pitch(dir)
-	--local dir2 = vector.normalize(dir)
 	local xz = math.abs(dir.x) + math.abs(dir.z)
 	return -math.atan2(-dir.y, xz)
 end
@@ -383,10 +375,10 @@ mcl_player.register_globalstep(function(player, dtime)
 	end
 
 	-- control head bone
-	local pitch = - degrees(player:get_look_vertical())
-	local yaw = degrees(player:get_look_horizontal())
+	local pitch = - math.deg(player:get_look_vertical())
+	local yaw = math.deg(player:get_look_horizontal())
 
-	local player_vel_yaw = degrees(minetest.dir_to_yaw(player_velocity))
+	local player_vel_yaw = math.deg(minetest.dir_to_yaw(player_velocity))
 	if player_vel_yaw == 0 then
 		player_vel_yaw = mcl_player.players[player].vel_yaw or yaw
 	end
@@ -443,19 +435,19 @@ mcl_player.register_globalstep(function(player, dtime)
 
 	if mcl_player.players[player].elytra.active then
 		-- set head pitch and yaw when flying
-		local head_rot = vector.new(pitch - degrees(dir_to_pitch(player_velocity)) + 50, player_vel_yaw - yaw, 0)
+		local head_rot = vector.new(pitch - math.deg(dir_to_pitch(player_velocity)) + 50, player_vel_yaw - yaw, 0)
 		mcl_util.set_bone_position(player,"Head_Control", nil, head_rot)
 
 		-- sets eye height, and nametag color accordingly
 		mcl_util.set_properties(player, player_props_elytra)
 
 		-- control body bone when flying
-		local body_rot = vector.new((75 - degrees(dir_to_pitch(player_velocity))), -player_vel_yaw + yaw, 0)
+		local body_rot = vector.new((75 - math.deg(dir_to_pitch(player_velocity))), -player_vel_yaw + yaw, 0)
 		mcl_util.set_bone_position(player, "Body_Control", nil, body_rot)
 	elseif parent then
 		mcl_util.set_properties(player, player_props_riding)
 
-		local parent_yaw = degrees(parent:get_yaw())
+		local parent_yaw = math.deg(parent:get_yaw())
 		local head_rot = vector.new(pitch, -limit_vel_yaw(yaw, parent_yaw) + parent_yaw, 0)
 		mcl_util.set_bone_position(player, "Head_Control", nil, head_rot)
 		mcl_util.set_bone_position(player,"Body_Control", nil, vector.zero())
@@ -472,14 +464,14 @@ mcl_player.register_globalstep(function(player, dtime)
 	elseif minetest.get_item_group(mcl_playerinfo[name].node_head, "water") ~= 0 and mcl_sprint.is_sprinting(name) == true then
 		-- set head pitch and yaw when swimming
 		mcl_player.players[player].is_swimming = true
-		local head_rot = vector.new(pitch - degrees(dir_to_pitch(player_velocity)) + 20, player_vel_yaw - yaw, 0)
+		local head_rot = vector.new(pitch - math.deg(dir_to_pitch(player_velocity)) + 20, player_vel_yaw - yaw, 0)
 		mcl_util.set_bone_position(player, "Head_Control", nil, head_rot)
 
 		-- sets eye height, and nametag color accordingly
 		mcl_util.set_properties(player, player_props_swimming)
 
 		-- control body bone when swimming
-		local body_rot = vector.new((75 + degrees(dir_to_pitch(player_velocity))), player_vel_yaw - yaw, 180)
+		local body_rot = vector.new((75 + math.deg(dir_to_pitch(player_velocity))), player_vel_yaw - yaw, 180)
 		mcl_util.set_bone_position(player,"Body_Control", nil, body_rot)
 	elseif minetest.get_item_group(mcl_playerinfo[name].node_head, "solid") == 0
 	and minetest.get_item_group(mcl_playerinfo[name].node_head_top, "solid") == 0 then
