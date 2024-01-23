@@ -15,6 +15,13 @@ local tpl_playerinfo = {
 	sneak = false,
 	visible = true,
 	attached = false,
+	elytra = {active = false, rocketing = 0, speed = 0},
+	is_pressing_jump = {},
+	lastPos = nil,
+	swimDistance = 0,
+	jump_cooldown = -1,	-- Cooldown timer for jumping, we need this to prevent the jump exhaustion to increase rapidly
+	vel_yaw = nil,
+	is_swimming = false,
 }
 
 local function get_mouse_button(player)
@@ -144,9 +151,15 @@ end
 -- Update appearance when the player joins
 minetest.register_on_joinplayer(function(player)
 	mcl_player.players[player] = table.copy(tpl_playerinfo)
-
 	--player:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
 	player:set_fov(86.1) -- see <https://minecraft.gamepedia.com/Options#Video_settings>>>>
+
+	-- Minetest bug: get_bone_position() returns all zeros vectors.
+	-- Workaround: call set_bone_position() one time first.
+	player:set_bone_position("Head_Control", vector.new(0, 6.75, 0))
+	player:set_bone_position("Arm_Right_Pitch_Control", vector.new(-3, 5.785, 0))
+	player:set_bone_position("Arm_Left_Pitch_Control", vector.new(3, 5.785, 0))
+	player:set_bone_position("Body_Control", vector.new(0, 6.75, 0))
 end)
 
 minetest.register_on_leaveplayer(function(player)
@@ -195,7 +208,7 @@ mcl_player.register_globalstep(function(player, dtime)
 		-- Apply animations based on what the player is doing
 		if player:get_hp() == 0 then
 			mcl_player.player_set_animation(player, "die")
-		elseif mcl_playerplus.elytra[player] and mcl_playerplus.elytra[player].active then
+		elseif mcl_player.players[player].elytra and mcl_player.players[player].elytra.active then
 			mcl_player.player_set_animation(player, "stand")
 		elseif walking and velocity.x > 0.35
 			or walking and velocity.x < -0.35

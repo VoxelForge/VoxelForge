@@ -1,11 +1,3 @@
-mcl_playerplus = {
-	elytra = {},
-	is_pressing_jump = {},
-}
-
--- Internal player state
-local mcl_playerplus_internal = {}
-
 local time = 0
 
 local function player_collision(player)
@@ -44,8 +36,6 @@ local function dir_to_pitch(dir)
 	local xz = math.abs(dir.x) + math.abs(dir.z)
 	return -math.atan2(-dir.y, xz)
 end
-
-local player_vel_yaws = {}
 
 function limit_vel_yaw(player_vel_yaw, yaw)
 	if player_vel_yaw < 0 then
@@ -91,9 +81,6 @@ function limit_vel_yaw(player_vel_yaw, yaw)
 
 	return player_vel_yaw
 end
-
-local node_stand, node_stand_below, node_head, node_feet, node_head_top
-local is_swimming
 
 local function anglediff(a1, a2)
 	local a = a1 - a2
@@ -143,7 +130,7 @@ minetest.register_globalstep(function(dtime)
 	time = time + dtime
 
 	for _,player in pairs(minetest.get_connected_players()) do
-
+		local node_stand, node_stand_below, node_head, node_feet, node_head_top
 		--[[
 
 						 _                 _   _
@@ -175,14 +162,14 @@ minetest.register_globalstep(function(dtime)
 
 		local player_vel_yaw = degrees(minetest.dir_to_yaw(player_velocity))
 		if player_vel_yaw == 0 then
-			player_vel_yaw = player_vel_yaws[name] or yaw
+			player_vel_yaw = mcl_player.players[player].vel_yaw or yaw
 		end
 		player_vel_yaw = limit_vel_yaw(player_vel_yaw, yaw)
-		player_vel_yaws[name] = player_vel_yaw
+		mcl_player.players[player].vel_yaw = player_vel_yaw
 
 		local fly_pos = player:get_pos()
 		local fly_node = minetest.get_node({x = fly_pos.x, y = fly_pos.y - 0.1, z = fly_pos.z}).name
-		local elytra = mcl_playerplus.elytra[player]
+		local elytra = mcl_player.players[player].elytra
 
 		if not elytra.active then
 			elytra.speed = 0
@@ -192,8 +179,8 @@ minetest.register_globalstep(function(dtime)
 			elytra.last_yaw = player:get_look_horizontal()
 		end
 
-		local is_just_jumped = control.jump and not mcl_playerplus.is_pressing_jump[name] and not elytra.active
-		mcl_playerplus.is_pressing_jump[name] = control.jump
+		local is_just_jumped = control.jump and not mcl_player.players[player].is_pressing_jump and not elytra.active
+		mcl_player.players[player].is_pressing_jump = control.jump
 		if is_just_jumped and not elytra.active then
 			local direction = player:get_look_dir()
 			elytra.speed = 1 - (direction.y/2 + 0.5)
@@ -344,7 +331,7 @@ minetest.register_globalstep(function(dtime)
 			mcl_util.set_bone_position(player, "Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 		elseif minetest.get_item_group(mcl_playerinfo[name].node_head, "water") ~= 0 and mcl_sprint.is_sprinting(name) == true then
 			-- set head pitch and yaw when swimming
-			is_swimming = true
+			mcl_player.players[player].is_swimming = true
 			local head_rot = vector.new(pitch - degrees(dir_to_pitch(player_velocity)) + 20, player_vel_yaw - yaw, 0)
 			mcl_util.set_bone_position(player, "Head_Control", nil, head_rot)
 
@@ -357,7 +344,7 @@ minetest.register_globalstep(function(dtime)
 		elseif minetest.get_item_group(mcl_playerinfo[name].node_head, "solid") == 0
 		and minetest.get_item_group(mcl_playerinfo[name].node_head_top, "solid") == 0 then
 			-- sets eye height, and nametag color accordingly
-			is_swimming = false
+			mcl_player.players[player].is_swimming = false
 			mcl_util.set_properties(player, player_props_normal)
 
 			mcl_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
@@ -368,11 +355,11 @@ minetest.register_globalstep(function(dtime)
 		-- Update jump status immediately since we need this info in real time.
 		-- WARNING: This section is HACKY as hell since it is all just based on heuristics.
 
-		if mcl_playerplus_internal[name].jump_cooldown > 0 then
-			mcl_playerplus_internal[name].jump_cooldown = mcl_playerplus_internal[name].jump_cooldown - dtime
+		if mcl_player.players[player].jump_cooldown > 0 then
+			mcl_player.players[player].jump_cooldown = mcl_player.players[player].jump_cooldown - dtime
 		end
 
-		if control.jump and mcl_playerplus_internal[name].jump_cooldown <= 0 then
+		if control.jump and mcl_player.players[player].jump_cooldown <= 0 then
 
 			--pos = player:get_pos()
 
@@ -420,7 +407,7 @@ minetest.register_globalstep(function(dtime)
 			end
 
 			-- Reset cooldown timer
-				mcl_playerplus_internal[name].jump_cooldown = 0.45
+				mcl_player.players[player].jump_cooldown = 0.45
 			end
 		end
 	end
@@ -483,7 +470,7 @@ minetest.register_globalstep(function(dtime)
 		-- without group disable_suffocation=1)
 		-- if swimming, check the feet node instead, because the head node will be above the player when swimming
 		local ndef = minetest.registered_nodes[node_head]
-		if is_swimming then
+		if mcl_player.players[player].is_swimming then
 			ndef = minetest.registered_nodes[node_feet]
 		end
 		if (ndef.walkable == nil or ndef.walkable == true)
@@ -520,14 +507,14 @@ minetest.register_globalstep(function(dtime)
 		Head alone does not count. We respect that for now. ]]
 		if not player:get_attach() and (minetest.get_item_group(node_feet, "liquid") ~= 0 or
 				minetest.get_item_group(node_stand, "liquid") ~= 0) then
-			local lastPos = mcl_playerplus_internal[name].lastPos
+			local lastPos = mcl_player.players[player].lastPos
 			if lastPos then
 				local dist = vector.distance(lastPos, pos)
-				mcl_playerplus_internal[name].swimDistance = mcl_playerplus_internal[name].swimDistance + dist
-				if mcl_playerplus_internal[name].swimDistance >= 1 then
-					local superficial = math.floor(mcl_playerplus_internal[name].swimDistance)
+				mcl_player.players[player].swimDistance = mcl_player.players[player].swimDistance + dist
+				if mcl_player.players[player].swimDistance >= 1 then
+					local superficial = math.floor(mcl_player.players[player].swimDistance)
 					mcl_hunger.exhaust(name, mcl_hunger.EXHAUST_SWIM * superficial)
-					mcl_playerplus_internal[name].swimDistance = mcl_playerplus_internal[name].swimDistance - superficial
+					mcl_player.players[player].swimDistance = mcl_player.players[player].swimDistance - superficial
 				end
 			end
 
@@ -595,38 +582,10 @@ minetest.register_globalstep(function(dtime)
 			end
 		end
 
-		-- Update internal values
-		mcl_playerplus_internal[name].lastPos = pos
+		mcl_player.players[player].lastPos = pos
 
 	end
 
-end)
-
--- set to blank on join (for 3rd party mods)
-minetest.register_on_joinplayer(function(player)
-	local name = player:get_player_name()
-
-	mcl_playerplus_internal[name] = {
-		lastPos = nil,
-		swimDistance = 0,
-		jump_cooldown = -1,	-- Cooldown timer for jumping, we need this to prevent the jump exhaustion to increase rapidly
-	}
-	mcl_playerplus.elytra[player] = {active = false, rocketing = 0, speed = 0}
-
-	-- Minetest bug: get_bone_position() returns all zeros vectors.
-	-- Workaround: call set_bone_position() one time first.
-	player:set_bone_position("Head_Control", vector.new(0, 6.75, 0))
-	player:set_bone_position("Arm_Right_Pitch_Control", vector.new(-3, 5.785, 0))
-	player:set_bone_position("Arm_Left_Pitch_Control", vector.new(3, 5.785, 0))
-	player:set_bone_position("Body_Control", vector.new(0, 6.75, 0))
-end)
-
--- clear when player leaves
-minetest.register_on_leaveplayer(function(player)
-	local name = player:get_player_name()
-
-	mcl_playerplus_internal[name] = nil
-	mcl_playerplus.elytra[player] = nil
 end)
 
 -- Don't change HP if the player falls in the water or through End Portal:
