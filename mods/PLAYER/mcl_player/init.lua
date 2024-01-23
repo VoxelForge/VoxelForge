@@ -61,15 +61,11 @@ minetest.register_on_leaveplayer(function(player)
 end)
 
 local function node_ok(pos, fallback)
-	fallback = fallback or "air"
 	local node = minetest.get_node_or_nil(pos)
-	if not node then
-		return fallback
-	end
-	if minetest.registered_nodes[node.name] then
+	if node and node.name and minetest.registered_nodes[node.name] then
 		return node.name
 	end
-	return fallback
+	return fallback or "air"
 end
 
 function mcl_player.register_globalstep(func)
