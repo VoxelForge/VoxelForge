@@ -48,6 +48,24 @@ local player_props_normal = {
 	nametag_color = { r = 225, b = 225, a = 225, g = 225 }
 }
 
+minetest.register_on_joinplayer(function(player)
+	mcl_player.players[player] = table.copy(tpl_playerinfo)
+	player:get_inventory():set_size("hand", 1)
+	--player:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
+	player:set_fov(86.1) -- see <https://minecraft.gamepedia.com/Options#Video_settings>>>>
+
+	-- Minetest bug: get_bone_position() returns all zeros vectors.
+	-- Workaround: call set_bone_position() one time first.
+	player:set_bone_position("Head_Control", vector.new(0, 6.75, 0))
+	player:set_bone_position("Arm_Right_Pitch_Control", vector.new(-3, 5.785, 0))
+	player:set_bone_position("Arm_Left_Pitch_Control", vector.new(3, 5.785, 0))
+	player:set_bone_position("Body_Control", vector.new(0, 6.75, 0))
+end)
+
+minetest.register_on_leaveplayer(function(player)
+	mcl_player.players[player] = nil
+end)
+
 local function player_collision(player)
 
 	local pos = player:get_pos()
@@ -247,24 +265,6 @@ function mcl_player.player_set_animation(player, anim_name, speed)
 	mcl_player.players[player].animation = anim_name
 	player:set_animation(anim, speed or model.animation_speed, animation_blend)
 end
-
--- Update appearance when the player joins
-minetest.register_on_joinplayer(function(player)
-	mcl_player.players[player] = table.copy(tpl_playerinfo)
-	--player:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
-	player:set_fov(86.1) -- see <https://minecraft.gamepedia.com/Options#Video_settings>>>>
-
-	-- Minetest bug: get_bone_position() returns all zeros vectors.
-	-- Workaround: call set_bone_position() one time first.
-	player:set_bone_position("Head_Control", vector.new(0, 6.75, 0))
-	player:set_bone_position("Arm_Right_Pitch_Control", vector.new(-3, 5.785, 0))
-	player:set_bone_position("Arm_Left_Pitch_Control", vector.new(3, 5.785, 0))
-	player:set_bone_position("Body_Control", vector.new(0, 6.75, 0))
-end)
-
-minetest.register_on_leaveplayer(function(player)
-	mcl_player.players[player] = nil
-end)
 
 -- Check each player and run callbacks
 minetest.register_globalstep(function(dtime)
