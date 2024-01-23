@@ -1,8 +1,13 @@
-Player API
-----------
-This is the same as the player API from Minetest Game 0.4.16.
-But `default` has been renamed to `mcl_player`.
+# mcl_player
+## Globalsteps
 
+`mcl_player.register_globalstep(function(player, dtime))`
+Functions registered this way will be run on every globalstep for each player.
+
+`mcl_player.register_globalstep_slow(function(player, dtime))`
+Functions registered this way will be run every 0.5 seconds for each player.
+
+## Animations
 The player API can register player models and update the player's appearence.
 
 `mcl_player.player_register_model(name, def)`
