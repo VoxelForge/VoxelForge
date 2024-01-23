@@ -85,7 +85,7 @@ local function force_detach(player)
 	end
 
 	player:set_detach()
-	mcl_player.player_attached[player:get_player_name()] = false
+	mcl_player.players[player].attached = false
 	player:set_eye_offset({x = 0, y = 0, z = 0}, {x = 0, y = 0, z = 0})
 	mcl_player.player_set_animation(player, "stand" , 30)
 	player:set_properties({visual_size = {x = 1, y = 1} })
@@ -130,7 +130,7 @@ function mcl_mobs.attach(entity, player)
 	force_detach(player)
 
 	player:set_attach(entity.object, "", attach_at, entity.player_rotation)
-	mcl_player.player_attached[player:get_player_name()] = true
+	mcl_player.players[player].attached = true
 	player:set_eye_offset(eye_offset, {x = 0, y = 0, z = 0})
 
 	player:set_properties({

@@ -1,17 +1,21 @@
 -- Minetest 0.4 mod: player
 -- See README.txt for licensing and other information.
-mcl_player = {}
-mcl_player.registered_player_models = {}
-mcl_player.registered_globalsteps = {}
+mcl_player = {
+	registered_player_models = {},
+	registered_globalsteps = {},
+	registered_on_visual_change = {},
+	players = {},
+}
+
 local animation_blend = 0.2
-local registered_on_visual_change = {}
--- Player stats and animations
-mcl_player.player_model = {}
-local player_textures = {}
-local player_anim = {}
-local player_sneak = {}
-local player_visible = {}
-mcl_player.player_attached = {}
+local tpl_playerinfo = {
+	textures = { "character.png", "blank.png", "blank.png" },
+	model = "",
+	animation = "",
+	sneak = false,
+	visible = true,
+	attached = false,
+}
 
 local function get_mouse_button(player)
 	local controls = player:get_player_control()
@@ -34,31 +38,29 @@ function mcl_player.player_register_model(name, def)
 end
 
 function mcl_player.register_on_visual_change(func)
-	table.insert(registered_on_visual_change, func)
+	table.insert(mcl_player.registered_on_visual_change, func)
 end
 
 function mcl_player.player_get_animation(player)
-	local name = player:get_player_name()
-	local textures = player_textures[name]
+	local textures = mcl_player.players[player].textures
 
-	if not player_visible[name] then
+	if not mcl_player.players[player].visible then
 		textures = table.copy(textures)
 		textures[1] = "blank.png"
 	end
 
 	return {
-		model = mcl_player.player_model[name],
-		textures = textures,
-		animation = player_anim[name],
-		visibility = player_visible[name]
+		model = mcl_player.players[player].model,
+		textures =  mcl_player.players[player].textures,
+		animation =  mcl_player.players[player].animation,
+		visibility = mcl_player.players[player].visibility
 	}
 end
 
 local function update_player_textures(player)
-	local name = player:get_player_name()
-	local textures = player_textures[name]
+	local textures = mcl_player.players[player].textures
 
-	if not player_visible[name] then
+	if not mcl_player.players[player].visible then
 		textures = table.copy(textures)
 		textures[1] = "blank.png"
 	end
@@ -70,7 +72,7 @@ local function update_player_textures(player)
 	-- before callbacks run
 	minetest.after(0.1, function()
 		if player:is_player() then
-			for i, func in ipairs(registered_on_visual_change) do
+			for i, func in ipairs(mcl_player.registered_on_visual_change) do
 				func(player)
 			end
 		end
@@ -79,13 +81,12 @@ end
 
 -- Called when a player's appearance needs to be updated
 function mcl_player.player_set_model(player, model_name)
-	local name = player:get_player_name()
 	local model = mcl_player.registered_player_models[model_name]
 	if model then
-		if mcl_player.player_model[name] == model_name then
+		if mcl_player.players[player].model == model_name then
 			return
 		end
-		mcl_player.player_model[name] = model_name
+		mcl_player.players[player].model = model_name
 		player:set_properties({
 			mesh = model_name,
 			visual = "mesh",
@@ -98,30 +99,26 @@ function mcl_player.player_set_model(player, model_name)
 end
 
 function mcl_player.player_set_visibility(player, visible)
-	local name = player:get_player_name()
-	if player_visible[name] == visible then return end
-	player_visible[name] = visible
+	if mcl_player.players[player].visible == visible then return end
+	mcl_player.players[player].visible = visible
 	update_player_textures(player)
 end
 
 function mcl_player.player_set_skin(player, texture)
-	local name = player:get_player_name()
-	player_textures[name][1] = texture
+	mcl_player.players[player].textures[1] = texture
 	update_player_textures(player)
 end
 
 function mcl_player.player_set_armor(player, texture)
-	local name = player:get_player_name()
-	player_textures[name][2] = texture
+	mcl_player.players[player].textures[2] = texture
 	update_player_textures(player)
 end
 
 function mcl_player.get_player_formspec_model(player, x, y, w, h, fsname)
-	local name = player:get_player_name()
-	local model = mcl_player.player_model[name]
-	local anim = mcl_player.registered_player_models[model].animations[player_anim[name]]
-	local textures = table.copy(player_textures[name])
-	if not player_visible[name] then
+	local model = mcl_player.players[player].model
+	local anim = mcl_player.registered_player_models[model].animations[mcl_player.players[player].animation]
+	local textures = table.copy(mcl_player.players[player].textures)
+	if not mcl_player.players[player].visible then
 		textures[1] = "blank.png"
 	end
 	for k,v in pairs(textures) do
@@ -132,40 +129,31 @@ function mcl_player.get_player_formspec_model(player, x, y, w, h, fsname)
 end
 
 function mcl_player.player_set_animation(player, anim_name, speed)
-	local name = player:get_player_name()
-	if player_anim[name] == anim_name then
+	if mcl_player.players[player].animation == anim_name then
 		return
 	end
-	local model = mcl_player.player_model[name] and mcl_player.registered_player_models[mcl_player.player_model[name]]
+	local model = mcl_player.players[player].model and mcl_player.registered_player_models[mcl_player.players[player].model]
 	if not (model and model.animations[anim_name]) then
 		return
 	end
 	local anim = model.animations[anim_name]
-	player_anim[name] = anim_name
+	mcl_player.players[player].animation = anim_name
 	player:set_animation(anim, speed or model.animation_speed, animation_blend)
 end
 
 -- Update appearance when the player joins
 minetest.register_on_joinplayer(function(player)
-	local name = player:get_player_name()
-	mcl_player.player_attached[name] = false
-	player_visible[name] = true
-	player_textures[name] = { "character.png", "blank.png", "blank.png" }
+	mcl_player.players[player] = table.copy(tpl_playerinfo)
 
 	--player:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
 	player:set_fov(86.1) -- see <https://minecraft.gamepedia.com/Options#Video_settings>>>>
 end)
 
 minetest.register_on_leaveplayer(function(player)
-	local name = player:get_player_name()
-	mcl_player.player_model[name] = nil
-	player_anim[name] = nil
-	player_textures[name] = nil
-	player_sneak[name] = nil
-	player_visible[name] = nil
+	mcl_player.players[player] = nil
 end)
 
--- Check each player and apply animations
+-- Check each player and run callbacks
 minetest.register_globalstep(function(dtime)
 	for _, player in pairs(minetest.get_connected_players()) do
 		for _, func in pairs(mcl_player.registered_globalsteps) do
@@ -176,9 +164,9 @@ end)
 
 mcl_player.register_globalstep(function(player, dtime)
 	local name = player:get_player_name()
-	local model_name = mcl_player.player_model[name]
+	local model_name = mcl_player.players[player].model
 	local model = model_name and mcl_player.registered_player_models[model_name]
-	if model and not mcl_player.player_attached[name] then
+	if model and not mcl_player.players[player].attached then
 		local controls = player:get_player_control()
 		local walking = false
 		local animation_speed_mod = model.animation_speed or 30
@@ -217,9 +205,9 @@ mcl_player.register_globalstep(function(player, dtime)
 			local no_arm_moving = string.find(wielded_itemname, "mcl_bows:bow") or
 				mcl_shields.wielding_shield(player, 1) or
 				mcl_shields.wielding_shield(player, 2)
-			if player_sneak[name] ~= controls.sneak then
-				player_anim[name] = nil
-				player_sneak[name] = controls.sneak
+			if mcl_player.players[player].sneak ~= controls.sneak then
+				mcl_player.players[player].animation = nil
+				mcl_player.players[player].sneak = controls.sneak
 			end
 			if get_mouse_button(player) == true and not controls.sneak and head_in_water and is_sprinting == true then
 				mcl_player.player_set_animation(player, "swim_walk_mine", animation_speed_mod)

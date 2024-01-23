@@ -99,7 +99,7 @@ local function attach_object(self, obj)
 
 	if obj:is_player() then
 		local name = obj:get_player_name()
-		mcl_player.player_attached[name] = true
+		mcl_player.players[obj].attached = true
 		minetest.after(0.2, function(name)
 			local player = minetest.get_player_by_name(name)
 			if player then
@@ -118,7 +118,7 @@ local function detach_object(obj, change_pos)
 	obj:set_detach()
 	obj:set_properties({visual_size = get_visual_size(obj)})
 	if obj:is_player() then
-		mcl_player.player_attached[obj:get_player_name()] = false
+		mcl_player.players[obj].attached = nil
 		mcl_player.player_set_animation(obj, "stand" , 30)
 	else
 		obj:get_luaentity()._old_visual_size = nil

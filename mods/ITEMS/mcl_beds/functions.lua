@@ -154,7 +154,7 @@ local function lay_down(player, pos, bed_pos, state, skip)
 		if player:get_look_vertical() > 0 then
 			player:set_look_vertical(0)
 		end
-		mcl_player.player_attached[name] = false
+		mcl_player.players[player].attached = false
 		playerphysics.remove_physics_factor(player, "speed", "mcl_beds:sleeping")
 		playerphysics.remove_physics_factor(player, "jump", "mcl_beds:sleeping")
 		player:get_meta():set_string("mcl_beds:sleeping", "false")
@@ -190,7 +190,7 @@ local function lay_down(player, pos, bed_pos, state, skip)
 		playerphysics.add_physics_factor(player, "speed", "mcl_beds:sleeping", 0)
 		playerphysics.add_physics_factor(player, "jump", "mcl_beds:sleeping", 0)
 		player:set_pos(bed_center)
-		mcl_player.player_attached[name] = true
+		mcl_player.players[player].attached = true
 		hud_flags.wielditem = false
 		mcl_player.player_set_animation(player, "lay" , 0)
 	end

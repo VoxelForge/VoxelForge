@@ -15,11 +15,11 @@ local function detach_driver(self)
 	if not self._driver then
 		return
 	end
-	mcl_player.player_attached[self._driver] = nil
-	local player = minetest.get_player_by_name(self._driver)
 	self._driver = nil
 	self._start_pos = nil
+	local player = minetest.get_player_by_name(self._driver)
 	if player then
+		mcl_player.players[player].attached = nil
 		player:set_detach()
 		player:set_eye_offset({x=0, y=0, z=0},{x=0, y=0, z=0})
 		mcl_player.player_set_animation(player, "stand" , 30)
@@ -316,7 +316,7 @@ local function register_entity(entity_id, mesh, textures, drop, on_rightclick, o
 					if self._old_pos then
 						self.object:set_pos(self._old_pos)
 					end
-					mcl_player.player_attached[self._driver] = nil
+					mcl_player.players[player].attached = nil
 					player:set_detach()
 					player:set_eye_offset({x=0, y=0, z=0},{x=0, y=0, z=0})
 				end
@@ -744,19 +744,17 @@ register_minecart(
 	"mcl_minecarts_minecart_normal.png",
 	{"mcl_minecarts:minecart"},
 	function(self, clicker)
-		local name = clicker:get_player_name()
 		if not clicker or not clicker:is_player() then
 			return
 		end
-		local player_name = clicker:get_player_name()
-		if self._driver and player_name == self._driver then
+		local name = clicker:get_player_name()
+		if self._driver and name == self._driver then
 			detach_driver(self)
 		elseif not self._driver then
-			self._driver = player_name
+			self._driver = name
 			self._start_pos = self.object:get_pos()
-			mcl_player.player_attached[player_name] = true
+			mcl_player.players[clicker].attached = true
 			clicker:set_attach(self.object, "", {x=0, y=-1.75, z=-2}, {x=0, y=0, z=0})
-			mcl_player.player_attached[name] = true
 			minetest.after(0.2, function(name)
 				local player = minetest.get_player_by_name(name)
 				if player then
