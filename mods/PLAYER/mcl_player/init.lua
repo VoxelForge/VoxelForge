@@ -1,8 +1,6 @@
 mcl_player = {
-	registered_player_models = {},
 	registered_globalsteps = {},
 	registered_globalsteps_slow = {},
-	registered_on_visual_change = {},
 	players = {},
 }
 
@@ -73,14 +71,6 @@ end
 
 function mcl_player.register_globalstep_slow(func)
 	table.insert(mcl_player.registered_globalsteps, func)
-end
-
-function mcl_player.player_register_model(name, def)
-	mcl_player.registered_player_models[name] = def
-end
-
-function mcl_player.register_on_visual_change(func)
-	table.insert(mcl_player.registered_on_visual_change, func)
 end
 
 -- Check each player and run callbacks

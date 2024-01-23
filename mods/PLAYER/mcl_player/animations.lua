@@ -1,3 +1,6 @@
+mcl_player.registered_player_models = {}
+mcl_player.registered_on_visual_change = {}
+
 local animation_blend = 0.2
 
 local player_props_elytra = {
@@ -25,6 +28,14 @@ local player_props_normal = {
 	eye_height = 1.6,
 	nametag_color = { r = 225, b = 225, a = 225, g = 225 }
 }
+
+function mcl_player.player_register_model(name, def)
+	mcl_player.registered_player_models[name] = def
+end
+
+function mcl_player.register_on_visual_change(func)
+	table.insert(mcl_player.registered_on_visual_change, func)
+end
 
 local function player_collision(player)
 
