@@ -4,6 +4,8 @@ mcl_player = {
 	players = {},
 }
 
+local default_fov = 86.1 --see <https://minecraft.gamepedia.com/Options#Video_settings>>>>
+
 local tpl_playerinfo = {
 	textures = { "character.png", "blank.png", "blank.png" },
 	model = "",
@@ -29,6 +31,16 @@ local nodeinfo_pos = { --offset positions of the "nodeinfo" nodes.
 	feet =        vector.new(0, 0.3, 0),
 }
 
+-- Minetest bug: get_bone_position() returns all zeros vectors.
+-- Workaround: call set_bone_position() one time first.
+-- (Set in on_joinplayer)
+local bone_start_positions = {
+	Head_Control =            vector.new(0, 6.75, 0),
+	Arm_Right_Pitch_Control = vector.new(-3, 5.785, 0),
+	Arm_Left_Pitch_Control =  vector.new(3, 5.785, 0),
+	Body_Control =            vector.new(0, 6.75, 0),
+}
+
 for k, _ in pairs(nodeinfo_pos) do
 	tpl_playerinfo.nodes[k] = ""
 end
@@ -38,15 +50,10 @@ local slow_gs_timer = 0.5
 minetest.register_on_joinplayer(function(player)
 	mcl_player.players[player] = table.copy(tpl_playerinfo)
 	player:get_inventory():set_size("hand", 1)
-	--player:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
-	player:set_fov(86.1) -- see <https://minecraft.gamepedia.com/Options#Video_settings>>>>
-
-	-- Minetest bug: get_bone_position() returns all zeros vectors.
-	-- Workaround: call set_bone_position() one time first.
-	player:set_bone_position("Head_Control", vector.new(0, 6.75, 0))
-	player:set_bone_position("Arm_Right_Pitch_Control", vector.new(-3, 5.785, 0))
-	player:set_bone_position("Arm_Left_Pitch_Control", vector.new(3, 5.785, 0))
-	player:set_bone_position("Body_Control", vector.new(0, 6.75, 0))
+	player:set_fov(default_fov)
+	for bone, pos in pairs(bone_start_positions) do
+		player:set_bone_position(bone, pos)
+	end
 end)
 
 minetest.register_on_leaveplayer(function(player)
