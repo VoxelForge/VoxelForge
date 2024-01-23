@@ -20,22 +20,20 @@ local tpl_playerinfo = {
 	jump_cooldown = -1,	-- Cooldown timer for jumping, we need this to prevent the jump exhaustion to increase rapidly
 	vel_yaw = nil,
 	is_swimming = false,
-	nodes = {
-		stand = "",
-		stand_below = "",
-		head = "",
-		feet = "",
-		head_top = "",
-	},
+	nodes = {},
 }
 
-local nodeinfo_pos = {
+local nodeinfo_pos = { --offset positions of the "nodeinfo" nodes.
 	stand =       vector.new(0, -0.1, 0),
 	stand_below = vector.new(0, -1.1, 0),
 	head =        vector.new(0, 1.5, 0),
 	head_top =    vector.new(0, 2, 0),
 	feet =        vector.new(0, 0.3, 0),
 }
+
+for k, _ in pairs(nodeinfo_pos) do
+	tpl_playerinfo.nodes[k] = ""
+end
 
 local slow_gs_timer = 0.5
 
