@@ -251,6 +251,26 @@ mcl_player.register_globalstep(function(player, dtime)
 	end
 end)
 
+mcl_player.register_globalstep_slow(function(player, dtime)
+	--[[ Swimming: Cause exhaustion.
+	NOTE: As of 0.4.15, it only counts as swimming when you are with the feet inside the liquid!
+	Head alone does not count. We respect that for now. ]]
+	if not player:get_attach() and (minetest.get_item_group(mcl_player.players[player].nodes.node_feet, "liquid") ~= 0 or
+			minetest.get_item_group(mcl_player.players[player].nodes.node_stand, "liquid") ~= 0) then
+		local lastPos = mcl_player.players[player].lastPos
+		if lastPos then
+			local dist = vector.distance(lastPos, player:get_pos())
+			mcl_player.players[player].swimDistance = mcl_player.players[player].swimDistance + dist
+			if mcl_player.players[player].swimDistance >= 1 then
+				local superficial = math.floor(mcl_player.players[player].swimDistance)
+				mcl_hunger.exhaust(player:get_player_name(), mcl_hunger.EXHAUST_SWIM * superficial)
+				mcl_player.players[player].swimDistance = mcl_player.players[player].swimDistance - superficial
+			end
+		end
+
+	end
+end)
+
 
 --[[ IF HUNGER IS NOT ENABLED ]]
 else
