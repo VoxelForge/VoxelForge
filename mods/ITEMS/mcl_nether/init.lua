@@ -159,8 +159,28 @@ minetest.register_node("mcl_nether:soul_sand", {
 	sounds = mcl_sounds.node_sound_sand_defaults(),
 	_mcl_blast_resistance = 0.5,
 	_mcl_hardness = 0.5,
-	-- Movement handling is done in mcl_playerplus mod
 })
+
+mcl_player.register_globalstep_slow(function(player, dtime)
+	-- Standing on soul sand? If so, walk slower (unless player wears Soul Speed boots)
+	if mcl_player.players[player].nodes.stand == "mcl_nether:soul_sand" then
+		-- TODO: Tweak walk speed
+		-- TODO: Also slow down mobs
+		local boots = player:get_inventory():get_stack("armor", 5)
+		local soul_speed = mcl_enchanting.get_enchantment(boots, "soul_speed")
+		if soul_speed > 0 then
+			playerphysics.add_physics_factor(player, "speed", "mcl_playerplus:soul_sand", soul_speed * 0.105 + 1.3)
+		else
+			if mcl_player.players[player].nodes.stand_below == "mcl_core:ice" or  mcl_player.players[player].nodes.stand_below == "mcl_core:packed_ice" or  mcl_player.players[player].nodes.below == "mcl_core:slimeblock" or  mcl_player.players[player].nodes.stand_below == "mcl_core:water_source" then
+				playerphysics.add_physics_factor(player, "speed", "mcl_playerplus:soul_sand", 0.1)
+			else
+				playerphysics.add_physics_factor(player, "speed", "mcl_playerplus:soul_sand", 0.4)
+			end
+		end
+	else
+		playerphysics.remove_physics_factor(player, "speed", "mcl_playerplus:soul_sand")
+	end
+end)
 
 local nether_brick = {
 	description = S("Nether Brick Block"),

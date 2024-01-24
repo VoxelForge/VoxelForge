@@ -27,32 +27,7 @@ minetest.register_globalstep(function(dtime)
 			return
 		end
 
-		-- Standing on soul sand? If so, walk slower (unless player wears Soul Speed boots)
-		if node_stand == "mcl_nether:soul_sand" then
-			-- TODO: Tweak walk speed
-			-- TODO: Also slow down mobs
-			-- Slow down even more when soul sand is above certain block
-			local boots = player:get_inventory():get_stack("armor", 5)
-			local soul_speed = mcl_enchanting.get_enchantment(boots, "soul_speed")
-			if soul_speed > 0 then
-				playerphysics.add_physics_factor(player, "speed", "mcl_playerplus:surface", soul_speed * 0.105 + 1.3)
-			else
-				if node_stand_below == "mcl_core:ice" or node_stand_below == "mcl_core:packed_ice" or node_stand_below == "mcl_core:slimeblock" or node_stand_below == "mcl_core:water_source" then
-					playerphysics.add_physics_factor(player, "speed", "mcl_playerplus:surface", 0.1)
-				else
-					playerphysics.add_physics_factor(player, "speed", "mcl_playerplus:surface", 0.4)
-				end
-			end
-		elseif minetest.get_item_group(node_feet, "liquid") ~= 0 and mcl_enchanting.get_enchantment(player:get_inventory():get_stack("armor", 5), "depth_strider") then
-			local boots = player:get_inventory():get_stack("armor", 5)
-			local depth_strider = mcl_enchanting.get_enchantment(boots, "depth_strider")
 
-			if depth_strider > 0 then
-				playerphysics.add_physics_factor(player, "speed", "mcl_playerplus:surface", (depth_strider / 3) + 0.75)
-			end
-		else
-			playerphysics.remove_physics_factor(player, "speed", "mcl_playerplus:surface")
-		end
 
 		-- Is player suffocating inside node? (Only for solid full opaque cube type nodes
 		-- without group disable_suffocation=1)

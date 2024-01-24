@@ -67,7 +67,7 @@ mcl_enchanting.enchantments.curse_of_vanishing = {
 	inv_tool_tab = true,
 }
 
--- implemented in mcl_playerplus
+-- implemented below
 mcl_enchanting.enchantments.depth_strider = {
 	name = S("Depth Strider"),
 	max_level = 3,
@@ -85,6 +85,19 @@ mcl_enchanting.enchantments.depth_strider = {
 	inv_combat_tab = true,
 	inv_tool_tab = false,
 }
+
+mcl_player.register_globalstep_slow(function(player, dtime)
+	if minetest.get_item_group(mcl_player.players[player].nodes.feet, "liquid") ~= 0 and mcl_enchanting.get_enchantment(player:get_inventory():get_stack("armor", 5), "depth_strider") then
+		local boots = player:get_inventory():get_stack("armor", 5)
+		local depth_strider = mcl_enchanting.get_enchantment(boots, "depth_strider")
+
+		if depth_strider > 0 then
+			playerphysics.add_physics_factor(player, "speed", "mcl_playerplus:depth_strider", (depth_strider / 3) + 0.75)
+		end
+	else
+		playerphysics.remove_physics_factor(player, "speed", "mcl_playerplus:depth_strider")
+	end
+end)
 
 -- implemented via on_enchant
 mcl_enchanting.enchantments.efficiency = {
