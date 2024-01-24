@@ -434,3 +434,50 @@ mcl_player.register_globalstep(function(player, dtime)
 		mcl_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 	end
 end)
+
+mcl_player.register_globalstep_slow(function(player, dtime)
+	-- Underwater: Spawn bubble particles
+	if minetest.get_item_group(mcl_player.players[player].nodes.head, "water") ~= 0 then
+		minetest.add_particlespawner({
+			amount = 10,
+			time = 0.15,
+			minpos = { x = -0.25, y = 0.3, z = -0.25 },
+			maxpos = { x = 0.25, y = 0.7, z = 0.75 },
+			attached = player,
+			minvel = {x = -0.2, y = 0, z = -0.2},
+			maxvel = {x = 0.5, y = 0, z = 0.5},
+			minacc = {x = -0.4, y = 4, z = -0.4},
+			maxacc = {x = 0.5, y = 1, z = 0.5},
+			minexptime = 0.3,
+			maxexptime = 0.8,
+			minsize = 0.7,
+			maxsize = 2.4,
+			texture = "mcl_particles_bubble.png"
+		})
+	end
+end)
+
+minetest.register_on_respawnplayer(function(player)
+	local pos = player:get_pos()
+	minetest.add_particlespawner({
+		amount = 20,
+		time = 0.001,
+		minpos = vector.add(pos, 0),
+		maxpos = vector.add(pos, 0),
+		minvel = vector.new(-5,-5,-5),
+		maxvel = vector.new(5,5,5),
+		minexptime = 1.1,
+		maxexptime = 1.5,
+		minsize = 1,
+		maxsize = 2,
+		collisiondetection = false,
+		vertical = false,
+		texture = "mcl_particles_mob_death.png^[colorize:#000000:255",
+	})
+
+	minetest.sound_play("mcl_mobs_mob_poof", {
+		pos = pos,
+		gain = 1.0,
+		max_hear_distance = 8,
+	}, true)
+end)
