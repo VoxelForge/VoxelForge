@@ -73,7 +73,7 @@ function mcl_player.register_globalstep(func)
 end
 
 function mcl_player.register_globalstep_slow(func)
-	table.insert(mcl_player.registered_globalsteps, func)
+	table.insert(mcl_player.registered_globalsteps_slow, func)
 end
 
 -- Check each player and run callbacks

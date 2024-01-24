@@ -17,9 +17,6 @@ minetest.register_globalstep(function(dtime)
 		-- who am I?
 		local name = player:get_player_name()
 
-		-- where am I?
-		local pos = player:get_pos()
-
 		-- what is around me?
 		local node_stand = mcl_player.players[player].nodes.stand
 		local node_stand_below = mcl_player.players[player].nodes.stand_below
@@ -77,21 +74,6 @@ minetest.register_globalstep(function(dtime)
 			end
 		end
 
-		-- Am I near a cactus?
-		local near = minetest.find_node_near(pos, 1, "mcl_core:cactus")
-		if not near then
-			near = minetest.find_node_near({x=pos.x, y=pos.y-1, z=pos.z}, 1, "mcl_core:cactus")
-		end
-		if near then
-			-- Am I touching the cactus? If so, it hurts
-			local dist = vector.distance(pos, near)
-			local dist_feet = vector.distance({x=pos.x, y=pos.y-1, z=pos.z}, near)
-			if dist < 1.1 or dist_feet < 1.1 then
-				if player:get_hp() > 0 then
-					mcl_util.deal_damage(player, 1, {type = "cactus"})
-				end
-			end
-		end
 
 		-- Underwater: Spawn bubble particles
 		if minetest.get_item_group(node_head, "water") ~= 0 then
@@ -113,47 +95,7 @@ minetest.register_globalstep(function(dtime)
 			})
 		end
 
-		-- Show positions of barriers when player is wielding a barrier
-		local wi = player:get_wielded_item():get_name()
-		if wi == "mcl_core:barrier" or wi == "mcl_core:realm_barrier" or minetest.get_item_group(wi, "light_block") ~= 0 then
-			local pos = vector.round(player:get_pos())
-			local r = 8
-			local vm = minetest.get_voxel_manip()
-			local emin, emax = vm:read_from_map({x=pos.x-r, y=pos.y-r, z=pos.z-r}, {x=pos.x+r, y=pos.y+r, z=pos.z+r})
-			local area = VoxelArea:new{
-				MinEdge = emin,
-				MaxEdge = emax,
-			}
-			local data = vm:get_data()
-			for x=pos.x-r, pos.x+r do
-			for y=pos.y-r, pos.y+r do
-			for z=pos.z-r, pos.z+r do
-				local vi = area:indexp({x=x, y=y, z=z})
-				local nodename = minetest.get_name_from_content_id(data[vi])
-				local light_block_group = minetest.get_item_group(nodename, "light_block")
 
-				local tex
-				if nodename == "mcl_core:barrier" then
-					tex = "mcl_core_barrier.png"
-				elseif nodename == "mcl_core:realm_barrier" then
-					tex = "mcl_core_barrier.png^[colorize:#FF00FF:127^[transformFX"
-				elseif light_block_group ~= 0 then
-					tex = "mcl_core_light_" .. (light_block_group - 1) .. ".png"
-				end
-				if tex then
-					minetest.add_particle({
-						pos = {x=x, y=y, z=z},
-						expirationtime = 1,
-						size = 8,
-						texture = tex,
-						glow = 14,
-						playername = name
-					})
-				end
-			end
-			end
-			end
-		end
 
 	end
 
