@@ -911,3 +911,47 @@ function mcl_core.bone_meal_grass(itemstack,placer,pointed_thing)
 	end
 	return true
 end
+
+-- Show positions of barriers when player is wielding a barrier
+mcl_player.register_globalstep_slow(function(player, dtime)
+	local wi = player:get_wielded_item():get_name()
+	if wi == "mcl_core:barrier" or wi == "mcl_core:realm_barrier" or minetest.get_item_group(wi, "light_block") ~= 0 then
+		local pos = vector.round(player:get_pos())
+		local r = 8
+		local vm = minetest.get_voxel_manip()
+		local emin, emax = vm:read_from_map({x=pos.x-r, y=pos.y-r, z=pos.z-r}, {x=pos.x+r, y=pos.y+r, z=pos.z+r})
+		local area = VoxelArea:new{
+			MinEdge = emin,
+			MaxEdge = emax,
+		}
+		local data = vm:get_data()
+		for x=pos.x-r, pos.x+r do
+		for y=pos.y-r, pos.y+r do
+		for z=pos.z-r, pos.z+r do
+			local vi = area:indexp({x=x, y=y, z=z})
+			local nodename = minetest.get_name_from_content_id(data[vi])
+			local light_block_group = minetest.get_item_group(nodename, "light_block")
+
+			local tex
+			if nodename == "mcl_core:barrier" then
+				tex = "mcl_core_barrier.png"
+			elseif nodename == "mcl_core:realm_barrier" then
+				tex = "mcl_core_barrier.png^[colorize:#FF00FF:127^[transformFX"
+			elseif light_block_group ~= 0 then
+				tex = "mcl_core_light_" .. (light_block_group - 1) .. ".png"
+			end
+			if tex then
+				minetest.add_particle({
+					pos = {x=x, y=y, z=z},
+					expirationtime = 1,
+					size = 8,
+					texture = tex,
+					glow = 14,
+					playername = player:get_player_name()
+				})
+			end
+		end
+		end
+		end
+	end
+end)

@@ -155,8 +155,6 @@ minetest.register_globalstep(function(dtime)
 			end
 		end
 
-		mcl_player.players[player].lastPos = pos
-
 	end
 
 end)

@@ -91,6 +91,7 @@ minetest.register_globalstep(function(dtime)
 		for _, func in pairs(mcl_player.registered_globalsteps_slow) do
 			func(player, dtime)
 		end
+		mcl_player.players[player].lastPos = player:get_pos()
 	end
 end)
 
