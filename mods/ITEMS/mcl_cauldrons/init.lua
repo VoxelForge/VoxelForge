@@ -152,6 +152,13 @@ local function register_filled_cauldron(water_level, description, liquid)
 				end
 			end
 			return itemstack
+		on_rightclick = function(pos, node, player, itemstack)
+			local outcome = mcl_armor.wash_leather_armor(itemstack)
+			if outcome then
+				minetest.sound_play("mcl_potions_bottle_pour",
+					{pos=pos, gain=0.5, max_hear_range=16},true)
+			end
+			return outcome
 		end,
 	})
 

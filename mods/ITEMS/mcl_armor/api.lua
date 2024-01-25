@@ -126,6 +126,7 @@ function mcl_armor.register_set(def)
 		local groups = table.copy(groups)
 		groups["armor_" .. name] = 1
 		groups["combat_armor_" .. name] = 1
+		groups["armor_" .. def.name] = 1
 		groups.armor = 1
 		groups.combat_armor = 1
 		groups.mcl_armor_points = def.points[name]

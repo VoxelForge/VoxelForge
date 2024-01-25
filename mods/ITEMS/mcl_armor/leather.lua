@@ -52,10 +52,10 @@ local function get_texture_function(texture)
 		end
 
 		if mcl_enchanting.is_enchanted(itemstack:get_name()) then
-			minetest.chat_send_all(out..mcl_enchanting.overlay)
+-- 			minetest.chat_send_all(out..mcl_enchanting.overlay) -- TODO remove
 			return out..mcl_enchanting.overlay
 		else
-			minetest.chat_send_all(out)
+-- 			minetest.chat_send_all(out) -- TODO remove
 			return out
 		end
 	end
@@ -63,6 +63,9 @@ local function get_texture_function(texture)
 end
 
 function mcl_armor.colorize_leather_armor(itemstack, colorstring)
+	if not itemstack or minetest.get_item_group(itemstack:get_name(), "armor_leather") == 0 then
+		return
+	end
 	local color = color_string_to_table(colorstring)
 	local meta = itemstack:get_meta()
 	local old_color = meta:get_string("mcl_armor:color")
