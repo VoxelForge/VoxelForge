@@ -1,26 +1,4 @@
 local C = minetest.colorize
---[[
-local colors = {
-	-- { ID, decription, wool, dye }
-	{ "red", "Red", "mcl_dye:red", "#951d1d" },
-	{ "blue", "Blue", "mcl_dye:blue", "#2a2c94" },
-	{ "cyan", "Cyan", "mcl_dye:cyan", "#0d7d8e" },
-	{ "grey", "Grey", "mcl_dye:dark_grey", "#363a3f" },
-	{ "silver", "Light Grey", "mcl_dye:grey", "#818177" },
-	{ "black", "Black", "mcl_dye:black", "#020307" },
-	{ "yellow", "Yellow", "mcl_dye:yellow", "#f2b410" },
-	{ "green", "Green", "mcl_dye:dark_green", "#495d20" },
-	{ "magenta", "Magenta", "mcl_dye:magenta", "#ae2ea4" },
-	{ "orange", "Orange", "mcl_dye:orange", "#e36501" },
-	{ "purple", "Purple", "mcl_dye:violet", "#681ba1" },
-	{ "brown", "Brown", "mcl_dye:brown", "#623b1a" },
-	{ "pink", "Pink", "mcl_dye:pink", "#d66691" },
-	{ "lime", "Lime", "mcl_dye:green", "#60ad13" },
-	{ "light_blue", "Light Blue", "mcl_dye:lightblue", "#1f8eca" },
-	{ "white", "White", "mcl_dye:white", "#d1d7d8" },
-}
---]]
--- #608b03 from #495d20
 
 local function color_string_to_table(colorstring)
 	return {
@@ -158,33 +136,30 @@ local function colorizing_crafting(itemstack, player, old_craft_grid, craft_inv)
 		return
 	end
 
-	local found_la = nil
-	local dye_color = nil
+	local found_la
+	local dye_color
 	for _, item in pairs(old_craft_grid) do
 		local name = item:get_name()
-		if name == "" then
-			-- continue
-		elseif minetest.get_item_group(name, "armor_leather") > 0 then
-			if found_la then return end
-			found_la = item
-		elseif minetest.get_item_group(name, "dye") > 0 then
-			if dye_color then return end
-			for _, row in pairs(colors) do
-				if row[3] == name then dye_color = row[4] end
-			end
-		else return end
+		if name ~= "" then
+			if minetest.get_item_group(name, "armor_leather") > 0 then
+				if found_la then return end
+				found_la = item
+			elseif minetest.get_item_group(name, "dye") > 0 then
+				if dye_color then return end
+				dye_color = mcl_dyes.colors[minetest.registered_items[name]._color].rgb
+			else return end
+		end
 	end
-
 	return mcl_armor.colorize_leather_armor(found_la, dye_color) or ItemStack()
 end
 
 minetest.register_craft_predict(colorizing_crafting)
 minetest.register_on_craft(colorizing_crafting)
 
-
 minetest.register_chatcommand("color_leather", {
 	params = "<color>",
 	description = "Colorize a piece of leather armor, or wash it",
+	privs = { debug = true, },
 	func = function(name, param)
 		local player = minetest.get_player_by_name(name)
 		if player then
