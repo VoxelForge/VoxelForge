@@ -284,9 +284,8 @@ mcl_player.register_globalstep(function(player, dtime)
 		if player:get_hp() == 0 then
 			mcl_player.player_set_animation(player, "die")
 		elseif elytra then
-			--mcl_player.player_set_animation(player, "stand")
 			mcl_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch - math.deg(dir_to_pitch(player_velocity)) + 50, player_vel_yaw - yaw, 0))
-			mcl_util.set_bone_position(player, "Body_Control", nil, vector.new((75 - math.deg(dir_to_pitch(player_velocity))), -player_vel_yaw + yaw, 0))
+			mcl_util.set_bone_position(player, "Body_Control", nil, vector.new(math.deg(dir_to_pitch(player_velocity)) + 110, -player_vel_yaw + yaw, 180))
 			-- sets eye height, and nametag color accordingly
 			mcl_util.set_properties(player, player_props_elytra)
 		elseif walking and (math.abs(velocity.x) > 0.35 or math.abs(velocity.z) > 0.35) then
