@@ -190,7 +190,7 @@ S("The speed and damage of the arrow increases the longer you charge. The regula
 		itemstack:get_meta():set_string("active", "true")
 		return itemstack
 	end,
-	groups = {weapon=1,weapon_ranged=1,crossbow=1,enchantability=1,not_in_creative_inventory=1},
+	groups = {weapon=1,weapon_ranged=1,crossbow=5,enchantability=1,not_in_creative_inventory=1},
 	_mcl_uses = 326,
 })
 
@@ -235,7 +235,7 @@ for level=0, 2 do
 		wield_scale = mcl_vars.tool_wield_scale,
 		stack_max = 1,
 		range = 0, -- Pointing range to 0 to prevent punching with bow :D
-		groups = {not_in_creative_inventory=1, not_in_craft_guide=1, bow=1, enchantability=1},
+		groups = {not_in_creative_inventory=1, not_in_craft_guide=1, enchantability=1, crossbow=2+level},
 		-- Trick to disable digging as well
 		on_use = function() return end,
 		on_drop = function(itemstack, dropper, pos)

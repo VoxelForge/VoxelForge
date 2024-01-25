@@ -116,8 +116,8 @@ end
 local function get_mouse_button(player)
 	local controls = player:get_player_control()
 	local get_wielded_item_name = player:get_wielded_item():get_name()
-	if controls.RMB and not string.find(get_wielded_item_name, "mcl_bows:bow") and
-		not string.find(get_wielded_item_name, "mcl_bows:crossbow") and
+	if controls.RMB and minetest.get_item_group(get_wielded_item_name, "bow") == 0 and
+		minetest.get_item_group(get_wielded_item_name, "crossbow") == 0 and
 		not mcl_shields.wielding_shield(player, 1) and not mcl_shields.wielding_shield(player, 2) or controls.LMB then
 		return true
 	else
@@ -233,8 +233,9 @@ mcl_player.register_globalstep(function(player, dtime)
 	local control = player:get_player_control()
 	local parent = player:get_attach()
 	local wielded = player:get_wielded_item()
-	local player_velocity = player:get_velocity()
 	local wielded_def = wielded:get_definition()
+	local wielded_itemname = player:get_wielded_item():get_name()
+	local player_velocity = player:get_velocity()
 	local elytra = mcl_player.players[player].elytra and mcl_player.players[player].elytra.active
 
 	local c_x, c_y = unpack(player_collision(player))
@@ -255,9 +256,9 @@ mcl_player.register_globalstep(function(player, dtime)
 	player_vel_yaw = limit_vel_yaw(player_vel_yaw, yaw)
 	mcl_player.players[player].vel_yaw = player_vel_yaw
 
-	if model and not mcl_player.players[player].attached then
+	if not parent then
 		local walking = false
-		local animation_speed_mod = model.animation_speed or 30
+		local animation_speed_mod = model and model.animation_speed or 30
 
 		-- Determine if the player is walking
 		if control.up or control.down or control.left or control.right then
@@ -289,8 +290,8 @@ mcl_player.register_globalstep(function(player, dtime)
 			-- sets eye height, and nametag color accordingly
 			mcl_util.set_properties(player, player_props_elytra)
 		elseif walking and (math.abs(velocity.x) > 0.35 or math.abs(velocity.z) > 0.35) then
-			local wielded_itemname = player:get_wielded_item():get_name()
-			local no_arm_moving = string.find(wielded_itemname, "mcl_bows:bow") or
+			local no_arm_moving = minetest.get_item_group(wielded_itemname, "bow") > 0 or
+				minetest.get_item_group(wielded_itemname, "crossbow") > 0 or
 				mcl_shields.wielding_shield(player, 1) or
 				mcl_shields.wielding_shield(player, 2)
 			if mcl_player.players[player].sneak ~= control.sneak then
@@ -301,9 +302,9 @@ mcl_player.register_globalstep(function(player, dtime)
 				mcl_player.player_set_animation(player, "swim_walk_mine", animation_speed_mod)
 			elseif not control.sneak and head_in_water and is_sprinting == true then
 				mcl_player.player_set_animation(player, "swim_walk", animation_speed_mod)
-			elseif no_arm_moving and control.RMB and control.sneak or string.find(wielded_itemname, "mcl_bows:crossbow_") and control.sneak then
+			elseif no_arm_moving and control.RMB and control.sneak or minetest.get_item_group(wielded_itemname, "crossbow") > 0 and control.sneak then
 				mcl_player.player_set_animation(player, "bow_sneak", animation_speed_mod)
-			elseif no_arm_moving and control.RMB or string.find(wielded_itemname, "mcl_bows:crossbow_") then
+			elseif no_arm_moving and control.RMB or minetest.get_item_group(wielded_itemname, "crossbow") > 0 then
 				mcl_player.player_set_animation(player, "bow_walk", animation_speed_mod)
 			elseif is_sprinting == true and get_mouse_button(player) == true and not control.sneak and not head_in_water then
 				mcl_player.player_set_animation(player, "run_walk_mine", animation_speed_mod)
@@ -337,11 +338,11 @@ mcl_player.register_globalstep(function(player, dtime)
 
 	if wielded_def and wielded_def._mcl_toollike_wield then
 		mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 4.7, 3.1), vector.new(-90, 225, 90))
-	elseif string.find(wielded:get_name(), "mcl_bows:bow") then
+	elseif minetest.get_item_group(wielded_itemname, "bow") > 0 then
 		mcl_util.set_bone_position(player, "Wield_Item", vector.new(1, 4, 0), vector.new(90, 130, 115))
-	elseif string.find(wielded:get_name(), "mcl_bows:crossbow_loaded") then
+	elseif minetest.get_item_group(wielded_itemname, "crossbow") > 4 then
 		mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 5.2, 1.2), vector.new(0, 180, 73))
-	elseif string.find(wielded:get_name(), "mcl_bows:crossbow") then
+	elseif minetest.get_item_group(wielded_itemname, "crossbow") > 0 then
 		mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 5.2, 1.2), vector.new(0, 180, 45))
 	elseif wielded_def.inventory_image == "" then
 		mcl_util.set_bone_position(player,"Wield_Item", vector.new(0, 6, 2), vector.new(180, -45, 0))
@@ -354,21 +355,19 @@ mcl_player.register_globalstep(function(player, dtime)
 		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.new(20, -20, 0))
 	elseif mcl_shields.is_blocking(player) == 1 then
 		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.new(20, 20, 0))
-	elseif string.find(wielded:get_name(), "mcl_bows:bow") and control.RMB then
-		local right_arm_rot = vector.new(pitch + 90, -30, pitch * -1 * .35)
-		local left_arm_rot = vector.new(pitch + 90, 43, pitch * .35)
-		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, right_arm_rot)
-		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, left_arm_rot)
 	-- controls right and left arms pitch when holing a loaded crossbow
-	elseif string.find(wielded:get_name(), "mcl_bows:crossbow_loaded") then
-		local right_arm_rot = vector.new(pitch + 90, -30, pitch * -1 * .35)
-		local left_arm_rot = vector.new(pitch + 90, 43, pitch * .35)
-		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, right_arm_rot)
-		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, left_arm_rot)
+	elseif minetest.get_item_group(wielded_itemname, "crossbow") == 5 then
+		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.new(pitch + 90, -30, pitch * -1 * .35))
+		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.new(pitch + 90, 43, pitch * .35))
 	-- controls right and left arms pitch when loading a crossbow
-	elseif string.find(wielded:get_name(), "mcl_bows:crossbow_") then
+	elseif minetest.get_item_group(wielded_itemname, "crossbow") > 0 then
 		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.new(45, -20, 25))
 		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.new(55, 20, -45))
+	elseif minetest.get_item_group(wielded_itemname, "bow") > 0 and control.RMB then
+		local right_arm_rot = vector.new(pitch + 90, -30, pitch * -1 * .35)
+		local left_arm_rot = vector.new(pitch + 90, 43, pitch * .35)
+		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, right_arm_rot)
+		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, left_arm_rot)
 	-- when punching
 	elseif control.LMB and not parent then
 		mcl_util.set_bone_position(player,"Arm_Right_Pitch_Control", nil, vector.new(pitch, 0, 0))
