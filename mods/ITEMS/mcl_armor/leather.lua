@@ -80,6 +80,7 @@ mcl_armor.register_set({
 		head = "Cap",
 		torso = "Tunic",
 		legs = "Pants",
+		feet = "Boots",
 	},
 	durability = 80,
 	enchantability = 15,
