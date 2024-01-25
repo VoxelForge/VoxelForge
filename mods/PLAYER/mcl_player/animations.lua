@@ -230,18 +230,41 @@ mcl_player.register_globalstep(function(player, dtime)
 	local name = player:get_player_name()
 	local model_name = mcl_player.players[player].model
 	local model = model_name and mcl_player.registered_player_models[model_name]
+	local control = player:get_player_control()
+	local parent = player:get_attach()
+	local wielded = player:get_wielded_item()
+	local player_velocity = player:get_velocity()
+	local wielded_def = wielded:get_definition()
+
+	local c_x, c_y = unpack(player_collision(player))
+
+	if player_velocity.x + player_velocity.y < .5 and c_x + c_y > 0 then
+		player:add_velocity({x = c_x, y = 0, z = c_y})
+		player_velocity = player:get_velocity() or player:get_player_velocity()
+	end
+
+	-- control head bone
+	local pitch = - math.deg(player:get_look_vertical())
+	local yaw = math.deg(player:get_look_horizontal())
+
+	local player_vel_yaw = math.deg(minetest.dir_to_yaw(player_velocity))
+	if player_vel_yaw == 0 then
+		player_vel_yaw = mcl_player.players[player].vel_yaw or yaw
+	end
+	player_vel_yaw = limit_vel_yaw(player_vel_yaw, yaw)
+	mcl_player.players[player].vel_yaw = player_vel_yaw
+
 	if model and not mcl_player.players[player].attached then
-		local controls = player:get_player_control()
 		local walking = false
 		local animation_speed_mod = model.animation_speed or 30
 
 		-- Determine if the player is walking
-		if controls.up or controls.down or controls.left or controls.right then
+		if control.up or control.down or control.left or control.right then
 			walking = true
 		end
 
 		-- Determine if the player is sneaking, and reduce animation speed if so
-		if controls.sneak then
+		if control.sneak then
 			animation_speed_mod = animation_speed_mod / 2
 		end
 
@@ -269,72 +292,47 @@ mcl_player.register_globalstep(function(player, dtime)
 			local no_arm_moving = string.find(wielded_itemname, "mcl_bows:bow") or
 				mcl_shields.wielding_shield(player, 1) or
 				mcl_shields.wielding_shield(player, 2)
-			if mcl_player.players[player].sneak ~= controls.sneak then
+			if mcl_player.players[player].sneak ~= control.sneak then
 				mcl_player.players[player].animation = nil
-				mcl_player.players[player].sneak = controls.sneak
+				mcl_player.players[player].sneak = control.sneak
 			end
-			if get_mouse_button(player) == true and not controls.sneak and head_in_water and is_sprinting == true then
+			if get_mouse_button(player) == true and not control.sneak and head_in_water and is_sprinting == true then
 				mcl_player.player_set_animation(player, "swim_walk_mine", animation_speed_mod)
-			elseif not controls.sneak and head_in_water and is_sprinting == true then
+			elseif not control.sneak and head_in_water and is_sprinting == true then
 				mcl_player.player_set_animation(player, "swim_walk", animation_speed_mod)
-			elseif no_arm_moving and controls.RMB and controls.sneak or string.find(wielded_itemname, "mcl_bows:crossbow_") and controls.sneak then
+			elseif no_arm_moving and control.RMB and control.sneak or string.find(wielded_itemname, "mcl_bows:crossbow_") and control.sneak then
 				mcl_player.player_set_animation(player, "bow_sneak", animation_speed_mod)
-			elseif no_arm_moving and controls.RMB or string.find(wielded_itemname, "mcl_bows:crossbow_") then
+			elseif no_arm_moving and control.RMB or string.find(wielded_itemname, "mcl_bows:crossbow_") then
 				mcl_player.player_set_animation(player, "bow_walk", animation_speed_mod)
-			elseif is_sprinting == true and get_mouse_button(player) == true and not controls.sneak and not head_in_water then
+			elseif is_sprinting == true and get_mouse_button(player) == true and not control.sneak and not head_in_water then
 				mcl_player.player_set_animation(player, "run_walk_mine", animation_speed_mod)
-			elseif get_mouse_button(player) == true and not controls.sneak then
+			elseif get_mouse_button(player) == true and not control.sneak then
 				mcl_player.player_set_animation(player, "walk_mine", animation_speed_mod)
-			elseif get_mouse_button(player) == true and controls.sneak and is_sprinting ~= true then
+			elseif get_mouse_button(player) == true and control.sneak and is_sprinting ~= true then
 				mcl_player.player_set_animation(player, "sneak_walk_mine", animation_speed_mod)
-			elseif is_sprinting == true and not controls.sneak and not head_in_water then
+			elseif is_sprinting == true and not control.sneak and not head_in_water then
 				mcl_player.player_set_animation(player, "run_walk", animation_speed_mod)
-			elseif controls.sneak and get_mouse_button(player) ~= true then
+			elseif control.sneak and get_mouse_button(player) ~= true then
 				mcl_player.player_set_animation(player, "sneak_walk", animation_speed_mod)
 			else
 				mcl_player.player_set_animation(player, "walk", animation_speed_mod)
 			end
-		elseif get_mouse_button(player) == true and not controls.sneak and head_in_water and is_sprinting == true then
+		elseif get_mouse_button(player) == true and not control.sneak and head_in_water and is_sprinting == true then
 			mcl_player.player_set_animation(player, "swim_mine")
-		elseif get_mouse_button(player) ~= true and not controls.sneak and head_in_water and is_sprinting == true then
+		elseif get_mouse_button(player) ~= true and not control.sneak and head_in_water and is_sprinting == true then
 			mcl_player.player_set_animation(player, "swim_stand")
-		elseif get_mouse_button(player) == true and not controls.sneak then
+		elseif get_mouse_button(player) == true and not control.sneak then
 			mcl_player.player_set_animation(player, "mine")
-		elseif get_mouse_button(player) == true and controls.sneak then
+		elseif get_mouse_button(player) == true and control.sneak then
 			mcl_player.player_set_animation(player, "sneak_mine")
-		elseif not controls.sneak and head_in_water and is_sprinting == true then
+		elseif not control.sneak and head_in_water and is_sprinting == true then
 			mcl_player.player_set_animation(player, "swim_stand", animation_speed_mod)
-		elseif not controls.sneak then
+		elseif not control.sneak then
 			mcl_player.player_set_animation(player, "stand", animation_speed_mod)
 		else
 			mcl_player.player_set_animation(player, "sneak_stand", animation_speed_mod)
 		end
 	end
-
-	local control = player:get_player_control()
-	local name = player:get_player_name()
-	local parent = player:get_attach()
-	local wielded = player:get_wielded_item()
-	local player_velocity = player:get_velocity()
-	local wielded_def = wielded:get_definition()
-
-	local c_x, c_y = unpack(player_collision(player))
-
-	if player_velocity.x + player_velocity.y < .5 and c_x + c_y > 0 then
-		player:add_velocity({x = c_x, y = 0, z = c_y})
-		player_velocity = player:get_velocity() or player:get_player_velocity()
-	end
-
-	-- control head bone
-	local pitch = - math.deg(player:get_look_vertical())
-	local yaw = math.deg(player:get_look_horizontal())
-
-	local player_vel_yaw = math.deg(minetest.dir_to_yaw(player_velocity))
-	if player_vel_yaw == 0 then
-		player_vel_yaw = mcl_player.players[player].vel_yaw or yaw
-	end
-	player_vel_yaw = limit_vel_yaw(player_vel_yaw, yaw)
-	mcl_player.players[player].vel_yaw = player_vel_yaw
 
 	if wielded_def and wielded_def._mcl_toollike_wield then
 		mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 4.7, 3.1), vector.new(-90, 225, 90))
