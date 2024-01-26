@@ -119,7 +119,7 @@ generation.
 
 This allows checking what crop types are supported.
 
-Currently they are: grain, root, gourd, plant.
+Currently they are: grain, root, gourd, flower, bush, tree.
 
 Placement of gourds should take in to consideration the way they fruit.
 
@@ -174,7 +174,14 @@ for creating a farm, but you leave out the crops.
 
 Once you have your farm constructed then instead of placing crops you place blocks named `mcl_villages:crop_*` over the dirt in the farm.
 
-Each crop type has 3 blocks that can be used for it. This allows, but does not guarantee, variety of crops in a farm.
+Each crop type has 8 blocks that can be used for it. This allows, but does not
+guarantee, variety of crops in a farm.
+
+Each of the crop tiles has an image of a entity that it represents. This image
+is representative, not explicit.
+
+i.e. The root crop tiles have an image of a carrot on them, but they will be
+swapped for a random root crop, not always carrots.
 
 Each specific node will be replaced by a single item.
 
