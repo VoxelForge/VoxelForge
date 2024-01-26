@@ -156,6 +156,10 @@ mcl_damage.register_modifier(function(obj, damage, reason)
 		return
 	end
 
+	if damager and damager:get_luaentity() and damager:get_luaentity()._piercing and damager:get_luaentity()._piercing > 0 then
+		return
+	end
+
 	local durability = 336
 	local unbreaking = mcl_enchanting.get_enchantment(shieldstack, mcl_shields.enchantments[2])
 	if unbreaking > 0 then
@@ -172,6 +176,23 @@ mcl_damage.register_modifier(function(obj, damage, reason)
 		end
 	end
 	minetest.sound_play({name = "mcl_block"}, {pos = obj:get_pos(), max_hear_distance = 16})
+
+	if mcl_shields.is_blocking(obj) and damager and damager:get_wielded_item() and damager:get_wielded_item():get_name() and
+		(damager:get_wielded_item():get_name() == "mcl_tools:axe_wood" or
+		damager:get_wielded_item():get_name() == "mcl_tools:axe_stone" or
+		damager:get_wielded_item():get_name() == "mcl_tools:axe_iron" or
+		damager:get_wielded_item():get_name() == "mcl_tools:axe_gold" or
+		damager:get_wielded_item():get_name() == "mcl_tools:axe_diamond" or
+		damager:get_wielded_item():get_name() == "mcl_tools:axe_netherite") then
+
+		mcl_shields.players[obj].cooldown = 5
+	elseif mcl_shields.is_blocking(obj) and damager and damager:get_luaentity() and damager:get_luaentity().name and
+		(damager:get_luaentity().name == "mobs_mc:vindicator" or
+		damager:get_luaentity().name == "mobs_mc:piglin_brute") then
+
+		mcl_shields.players[obj].cooldown = 5
+	end
+
 	return 0
 end)
 
@@ -271,11 +292,19 @@ local function handle_blocking(player)
 	local not_blocking = player_shield.blocking == 0
 
 	if shield_in_hand then
+		if mcl_shields.players[player].cooldown ~= 0 then
+			player_shield.blocking = 0
+			return
+		end
 		if not_blocking then
 			minetest.after(0.25, function()
-				if (not_blocking or not shield_in_offhand) and shield_in_hand and rmb then
+				rmb = player:get_player_control().RMB
+				if (not_blocking or not shield_in_offhand) and shield_in_hand and rmb and not mcl_hunger.is_eating(player) and mcl_shields.players[player].cooldown == 0 then
 					player_shield.blocking = 2
 					set_shield(player, true, 2)
+				else
+					player_shield.blocking = 0
+					set_shield(player, false, 2)
 				end
 			end)
 		elseif not shield_in_offhand then
@@ -283,7 +312,7 @@ local function handle_blocking(player)
 		end
 	elseif shield_in_offhand then
 		local pointed_thing = mcl_util.get_pointed_thing(player, true)
-		local offhand_can_block = (wielded_item(player) == "" or not pointed_thing)
+		local offhand_can_block = (wielded_item(player) ~= "mcl_shields:shield")
 		and (minetest.get_item_group(wielded_item(player), "bow") ~= 1 and minetest.get_item_group(wielded_item(player), "crossbow") ~= 1)
 
 		if pointed_thing and pointed_thing.type == "node" then
@@ -295,11 +324,19 @@ local function handle_blocking(player)
 		if not offhand_can_block then
 			return
 		end
+		if mcl_shields.players[player].cooldown ~= 0 then
+			player_shield.blocking = 0
+			return
+		end
 		if not_blocking then
 			minetest.after(0.25, function()
-				if (not_blocking or not shield_in_hand) and shield_in_offhand and rmb  and offhand_can_block then
+				rmb = player:get_player_control().RMB
+				if (not_blocking or not shield_in_hand) and shield_in_offhand and rmb and offhand_can_block and not mcl_hunger.is_eating(player) and mcl_shields.players[player].cooldown == 0 then
 					player_shield.blocking = 1
 					set_shield(player, true, 1)
+				else
+					player_shield.blocking = 0
+					set_shield(player, false, 1)
 				end
 			end)
 		elseif not shield_in_hand then
@@ -396,6 +433,12 @@ end
 
 minetest.register_globalstep(function(dtime)
 	for _, player in pairs(minetest.get_connected_players()) do
+
+		if mcl_shields.players[player].cooldown > 0 then
+			mcl_shields.players[player].cooldown = mcl_shields.players[player].cooldown - dtime
+		elseif mcl_shields.players[player].cooldown < 0 then
+			mcl_shields.players[player].cooldown = 0
+		end
 
 		handle_blocking(player)
 
@@ -543,6 +586,8 @@ minetest.register_on_joinplayer(function(player)
 	mcl_shields.players[player] = {
 		shields = {},
 		blocking = 0,
+		cooldown = 0,
 	}
 	remove_shield_hud(player)
+	playerphysics.remove_physics_factor(player, "speed", "shield_speed")
 end)
