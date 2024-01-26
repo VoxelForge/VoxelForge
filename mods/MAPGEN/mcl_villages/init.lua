@@ -320,42 +320,11 @@ mcl_villages.register_building({
 	num_others = 6,
 })
 
-local crop_tile_colours = {
-	grain = {
-		tile_colours = {
-			"wool_white",
-			"wool_red",
-			"wool_blue",
-		},
-	},
-	root = {
-		tile_colours = {
-			"wool_black",
-			"wool_brown",
-			"wool_cyan",
-		},
-	},
-	plant = {
-		tile_colours = {
-			"wool_dark_grey",
-			"mcl_wool_lime",
-			"wool_grey",
-		},
-	},
-	gourd = {
-		tile_colours = {
-			"wool_pink",
-			"wool_violet",
-			"wool_yellow",
-		},
-	},
-}
-
-for crop, crop_def in pairs(crop_tile_colours) do
-	for count = 1, 3 do
-		local tile = crop_def.tile_colours[count] .. ".png"
-		minetest.register_node("mcl_villages:crop_" .. crop .. "_" .. count, {
-			description = S("A place to plant @1 crops", crop),
+for _, crop_type in pairs(mcl_villages.get_crop_types()) do
+	for count = 1, 8 do
+		local tile = crop_type .. "_" .. count .. ".png"
+		minetest.register_node("mcl_villages:crop_" .. crop_type .. "_" .. count, {
+			description = S("A place to plant @1 crops", crop_type),
 			is_ground_content = false,
 			tiles = { tile },
 			wield_image = tile,

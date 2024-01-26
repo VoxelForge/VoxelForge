@@ -100,7 +100,9 @@ local supported_crop_types = {
 	"grain",
 	"root",
 	"gourd",
-	"plant",
+	"bush",
+	"tree",
+	"flower",
 }
 
 local crop_list = {}
