@@ -31,7 +31,7 @@ local function bone_meal(itemstack, user, pointed_thing)
 	local udef = minetest.registered_nodes[unode.name]
 	local adef = minetest.registered_nodes[anode.name]
 	if udef and udef._on_bone_meal then
-		if minetest.is_protected(pointed_thing.under, pname) then
+		if pname and minetest.is_protected(pointed_thing.under, pname) then
 			minetest.record_protection_violation(pointed_thing.under, pname)
 			return itemstack
 		end
