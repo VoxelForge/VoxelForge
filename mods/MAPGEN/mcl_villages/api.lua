@@ -130,7 +130,7 @@ local function adjust_weights(biome, crop_type)
 		end
 	end
 
-	table.insert(weighted_crops[biome][crop_type], function(a, b)
+	table.sort(weighted_crops[biome][crop_type], function(a, b)
 		return a.total < b.total
 	end)
 end
