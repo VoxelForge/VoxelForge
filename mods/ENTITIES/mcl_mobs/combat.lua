@@ -366,10 +366,7 @@ function mob_class:attack_specific()
 end
 
 function mob_class:attack_monsters()
-	if self.type ~= "npc" or
-	self.state == "attack" or
-	( not self.damage or self.damage == 0)
-	then return end
+	if self.type ~= "npc" or self.state == "attack" then return end
 
 	local pos = self.object:get_pos()
 	local objs = minetest.get_objects_inside_radius(pos, self.view_range)
