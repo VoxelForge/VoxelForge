@@ -101,6 +101,7 @@ mcl_player.register_globalstep(function(player, dtime)
 		player:add_velocity(new_vel)
 	else -- reset things when you stop flying with elytra
 		elytra.rocketing = 0
+		mcl_player.players[player].elytra.active = false
 		playerphysics.remove_physics_factor(player, "gravity", "mcl_playerplus:elytra")
 	end
 	mcl_player.players[player].elytra.last_yaw = player:get_look_horizontal()
