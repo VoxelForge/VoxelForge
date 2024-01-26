@@ -426,10 +426,10 @@ end)
 
 mcl_player.register_globalstep_slow(function(player, dtime)
 	-- Underwater: Spawn bubble particles
-	if minetest.get_item_group(mcl_player.players[player].nodes.head, "water") ~= 0 then
-		minetest.add_particlespawner({
-			amount = 10,
-			time = 0.15,
+	if not mcl_player.players[player].pspawner_underwater and minetest.get_item_group(mcl_player.players[player].nodes.head, "water") > 0 then
+		mcl_player.players[player].pspawner_underwater = minetest.add_particlespawner({
+			amount = 4,
+			time = 0,
 			minpos = { x = -0.25, y = 0.3, z = -0.25 },
 			maxpos = { x = 0.25, y = 0.7, z = 0.75 },
 			attached = player,
@@ -443,6 +443,9 @@ mcl_player.register_globalstep_slow(function(player, dtime)
 			maxsize = 2.4,
 			texture = "mcl_particles_bubble.png"
 		})
+	elseif mcl_player.players[player].pspawner_underwater and minetest.get_item_group(mcl_player.players[player].nodes.head, "water") == 0 then
+		minetest.delete_particlespawner(mcl_player.players[player].pspawner_underwater)
+		mcl_player.players[player].pspawner_underwater = nil
 	end
 end)
 
