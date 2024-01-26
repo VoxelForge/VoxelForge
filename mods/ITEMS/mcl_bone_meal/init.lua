@@ -68,7 +68,8 @@ minetest.register_craftitem("mcl_bone_meal:bone_meal", {
 		local node = minetest.get_node(pointed_thing.under)
 		if user and not user:get_player_control().sneak then
 			if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-				return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, user, itemstack) or itemstack
+				local rc = mcl_util.call_on_rightclick(itemstack, user, pointed_thing)
+				if rc then return rc end
 			end
 		end
 		return bone_meal(itemstack,user,pointed_thing)

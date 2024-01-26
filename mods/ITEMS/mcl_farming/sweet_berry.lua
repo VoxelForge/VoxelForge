@@ -11,6 +11,26 @@ for i=0, 3 do
 	end
 	local drop_berries = (i >= 2)
 	local berries_to_drop = drop_berries and {i - 1, i} or nil
+	local orc
+	if i >= 2 then
+		orc = function(pos, node, clicker, itemstack, pointed_thing)
+			if clicker and clicker:is_player() then
+				local pn = clicker:get_player_name()
+				if minetest.is_protected(pos, pn) then
+					minetest.record_protection_violation(pos, pn)
+					return false
+				end
+				if clicker:get_wielded_item():get_name() == "mcl_bone_meal:bone_meal" then
+					return false
+				end
+			end
+			for j=1, berries_to_drop[math.random(2)] do
+				minetest.add_item(pos, "mcl_farming:sweet_berry")
+			end
+			minetest.swap_node(pos, {name = "mcl_farming:sweet_berry_bush_1"})
+			return itemstack
+		end
+	end
 
 	minetest.register_node(node_name, {
 		drawtype = "plantlike",
@@ -40,28 +60,9 @@ for i=0, 3 do
 		sounds = mcl_sounds.node_sound_leaves_defaults(),
 		_mcl_blast_resistance = 0,
 		_mcl_hardness = 0,
-		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-			local pn = clicker:get_player_name()
-			if clicker:is_player() and minetest.is_protected(pos, pn) then
-				minetest.record_protection_violation(pos, pn)
-				return itemstack
-			end
-
-			if 3 ~= i and clicker:get_wielded_item():get_name() == "mcl_bone_meal:bone_meal" then
-				mcl_farming.on_bone_meal(itemstack,clicker,pointed_thing,pos,node,"plant_sweet_berry_bush",1)
-				if not minetest.is_creative_enabled(pn) then
-					itemstack:take_item()
-				end
-				return
-			end
-
-			if drop_berries then
-				for j=1, berries_to_drop[math.random(2)] do
-					minetest.add_item(pos, "mcl_farming:sweet_berry")
-				end
-				minetest.swap_node(pos, {name = "mcl_farming:sweet_berry_bush_1"})
-			end
-			return itemstack
+		on_rightclick = orc,
+		_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
+			mcl_farming.on_bone_meal(itemstack,placer,pointed_thing,pos,node,"plant_sweet_berry_bush",1)
 		end,
 	})
 	minetest.register_alias("mcl_sweet_berry:sweet_berry_bush_" .. i, node_name)
