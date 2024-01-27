@@ -122,6 +122,12 @@ mcl_mob_cap_animal (Mob cap for animals) int 10 0 1024
 # Maximum amount of ambient mobs that will spawn near a player
 mcl_mob_cap_ambient (Mob cap for ambient mobs) int 15 0 1024
 
+# Maximum amount of water mobs (squids, dolphins) that will spawn near a player
+mcl_mob_cap_water (Mob cap for water mobs) int 5 0 1024
+
+# Maximum amount of ambient water mobs (fish) that will spawn near a player
+mcl_mob_cap_water_ambient (Mob cap for ambient water mobs) int 20 0 1024
+
 # How far from players should mobs stop moving
 # Larger values will have a larger performance impact
 mcl_mob_active_range (Active mob range) int 48 0 256
