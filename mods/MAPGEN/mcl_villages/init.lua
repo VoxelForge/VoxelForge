@@ -128,6 +128,26 @@ minetest.register_node("mcl_villages:building_block", {
 	end,
 })
 
+-- This makes the temporary node invisble unless in creative mode
+local drawtype = "airlike"
+if minetest.is_creative_enabled("") then
+	drawtype = "glasslike"
+end
+
+minetest.register_node("mcl_villages:no_paths", {
+	description = S(
+		"Prevent paths from being placed during villager generation. Replaced by air after village path generation"
+	),
+	walkable = true,
+	paramtype = "light",
+	drawtype = drawtype,
+	inventory_image = "mcl_core_barrier.png",
+	wield_image = "mcl_core_barrier.png",
+	tiles = { "mcl_core_barrier.png" },
+	is_ground_content = false,
+	groups = { creative_breakable = 1, solid = 1 },
+})
+
 minetest.register_node("mcl_villages:path_endpoint", {
 	description = S("Mark the node as a good place for paths to connect to"),
 	is_ground_content = false,
@@ -219,6 +239,7 @@ mcl_villages.register_building({
 	name = "farm",
 	mts = schem_path .. "new_villages/farm.mts",
 	num_others = 3,
+	yadjust = 1,
 })
 
 mcl_villages.register_building({
@@ -306,18 +327,21 @@ mcl_villages.register_building({
 	name = "farm_small",
 	mts = schem_path .. "new_villages/farm_small_1.mts",
 	num_others = 3,
+	yadjust = 1,
 })
 
 mcl_villages.register_building({
 	name = "farm_small2",
 	mts = schem_path .. "new_villages/farm_small_2.mts",
 	num_others = 3,
+	yadjust = 1,
 })
 
 mcl_villages.register_building({
 	name = "farm_large",
 	mts = schem_path .. "new_villages/farm_large_1.mts",
 	num_others = 6,
+	yadjust = 1,
 })
 
 for _, crop_type in pairs(mcl_villages.get_crop_types()) do
@@ -422,3 +446,20 @@ mcl_villages.register_crop({
 		spruce = 10,
 	},
 })
+
+for name, def in pairs(minetest.registered_nodes) do
+	if def.groups["flower"] and not def.groups["double_plant"] and name ~= "mcl_flowers:wither_rose" then
+		mcl_villages.register_crop({
+			type = "flower",
+			node = name,
+			biomes = {
+				acacia = 10,
+				bamboo = 6,
+				desert = 10,
+				jungle = 6,
+				plains = 6,
+				spruce = 10,
+			},
+		})
+	end
+end

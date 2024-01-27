@@ -1,5 +1,10 @@
 # mcl_villages
 
+When creating buildings or farms for use with this mod, you can prevent paths
+from crossing areas by using the `mcl_villages:no_paths` block. You may need to
+stack them 2 high to prevent all paths. After the village paths have be laid
+this block will be replaced by air.
+
 ## Building Interfaces
 
 ### Parameter
