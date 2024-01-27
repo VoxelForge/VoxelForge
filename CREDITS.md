@@ -24,6 +24,7 @@
 * ChrisPHP
 * Nils Dagsson Moskopp
 * seventeenthShulker
+* JoseDouglas26
 
 ## Previous Contributors
 * Lizzy Fleckenstein

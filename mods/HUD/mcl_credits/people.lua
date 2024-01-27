@@ -26,6 +26,7 @@ return {
 		"ChrisPHP",
 		"Nils Dagsson Moskopp",
 		"seventeenthShulker",
+		"JoseDouglas26",
 	}},
 	{S("Previous Contributors"), 0x52FF00, {
 		"Lizzy Fleckenstein",
