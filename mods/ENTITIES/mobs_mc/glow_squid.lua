@@ -93,7 +93,7 @@ mcl_mobs.spawn_setup({
 	type_of_spawning = "water",
 	dimension = "overworld",
 	min_height = mobs_mc.water_level - 125,
-	max_height = mobs_mc.water_level + 1,
+	max_height = mobs_mc.water_level - 32 + 1,
 	min_light = 0,
 	max_light = 7,
 	aoc = 3,
