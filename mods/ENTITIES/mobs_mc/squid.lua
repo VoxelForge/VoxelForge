@@ -17,6 +17,8 @@ mcl_mobs.register_mob("mobs_mc:squid", {
     xp_min = 1,
     xp_max = 3,
     armor = 100,
+    spawn_in_group_min = 2,
+    spawn_in_group = 4,
     -- FIXME: If the squid is near the floor, it turns black
     collisionbox = {-0.4, 0.0, -0.4, 0.4, 0.9, 0.4},
     visual = "mesh",
