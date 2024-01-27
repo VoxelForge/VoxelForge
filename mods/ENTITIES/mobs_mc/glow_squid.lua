@@ -95,7 +95,7 @@ mcl_mobs.spawn_setup({
 	min_height = mobs_mc.water_level - 125,
 	max_height = mobs_mc.water_level - 32 + 1,
 	min_light = 0,
-	max_light = 7,
+	max_light = 0,
 	aoc = 3,
 	chance = 100,
 })
