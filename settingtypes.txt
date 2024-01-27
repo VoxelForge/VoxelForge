@@ -107,23 +107,23 @@ wither_follow_spawner (Wither follows his spawner) bool true
 # Should wither strafe while in combat
 wither_strafes (Wither strafes) bool true
 
-# Maximum amount mobs (default:500)
+# Maximum amount mobs
 mcl_mob_cap_total (Global mob cap) int 500 0 2048
 
-# Maximum amount of mobs per player (default:75)
+# Maximum amount of mobs per player
 mcl_mob_cap_player (Mob cap per player) int 75 0 2048
 
-# Maximum amount of monsters that will spawn near a player (default:70)
+# Maximum amount of monsters that will spawn near a player
 mcl_mob_cap_monster (Mob cap for monsters) int 70 0 2048
 
-# Maximum amount of animals that will spawn near a player (default:10)
+# Maximum amount of animals that will spawn near a player
 mcl_mob_cap_animal (Mob cap for animals) int 10 0 1024
 
-# Maximum amount of ambient mobs that will spawn near a player (default:15)
+# Maximum amount of ambient mobs that will spawn near a player
 mcl_mob_cap_ambient (Mob cap for ambient mobs) int 15 0 1024
 
 # How far from players should mobs stop moving
-# Larger values will have a larger performance impact (default:48)
+# Larger values will have a larger performance impact
 mcl_mob_active_range (Active mob range) int 48 0 256
 
 [Features]
@@ -187,7 +187,7 @@ mcl_villages_placement_priority (Buildings closest to the bell) enum random rand
 # If disabled, command blocks will be unusable (but still present).
 mcl_enable_commandblocks (Command blocks) bool true
 
-# If enabled, this will substitute a few blocks in village schematics so they blend into normal, snowy, and sandy areas. Defaults to true.
+# If enabled, this will substitute a few blocks in village schematics so they blend into normal, snowy, and sandy areas
 mcl_pseudobiome_villages (Pseudobiome villages) bool true
 
 # This is fine for players, but expect all the villagers to die very quickly
