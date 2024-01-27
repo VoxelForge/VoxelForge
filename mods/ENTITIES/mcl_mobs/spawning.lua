@@ -20,8 +20,8 @@ local mob_cap = {
 	monster = tonumber(minetest.settings:get("mcl_mob_cap_monster")) or 70,
 	animal = tonumber(minetest.settings:get("mcl_mob_cap_animal")) or 10,
 	ambient = tonumber(minetest.settings:get("mcl_mob_cap_ambient")) or 15,
-	water = tonumber(minetest.settings:get("mcl_mob_cap_water")) or 5, --currently unused
-	water_ambient = tonumber(minetest.settings:get("mcl_mob_cap_water_ambient")) or 20, --currently unused
+	water = tonumber(minetest.settings:get("mcl_mob_cap_water")) or 5,
+	water_ambient = tonumber(minetest.settings:get("mcl_mob_cap_water_ambient")) or 20,
 	player = tonumber(minetest.settings:get("mcl_mob_cap_player")) or 75,
 	total = tonumber(minetest.settings:get("mcl_mob_cap_total")) or 500,
 }
