@@ -694,7 +694,7 @@ minetest.register_lbm({
 	label = "Update Furnace formspecs and invs to allow new sneak+click behavior",
 	name = "mcl_furnaces:update_coolsneak",
 	nodenames = { "group:furnace", "group:furnace_active" },
-	run_at_every_load = true,
+	run_at_every_load = false,
 	action = function(pos, node)
 		local m = minetest.get_meta(pos)
 		local inv = m:get_inventory()
