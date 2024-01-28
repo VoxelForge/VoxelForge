@@ -465,7 +465,9 @@ function mcl_inventory.set_creative_formspec(player)
 
 		-- For shortcuts
 		listrings = listrings ..
-			"listring[detached:" .. playername .. "_armor;armor]" ..
+			"listring[current_player;armor]"..
+			"listring[current_player;main]"..
+			"listring[current_player;offhand]"..
 			"listring[current_player;main]"
 	else
 
