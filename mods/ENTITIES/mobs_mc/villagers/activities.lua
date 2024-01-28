@@ -163,7 +163,11 @@ function mobs_mc.villager_mob:find_closest_bed()
 end
 
 function mobs_mc.villager.find_closest_unclaimed_block(p, requested_block_types)
-	local nn = minetest.find_nodes_in_area(vector.offset(p,-48,-48,-48),vector.offset(p,48,48,48), requested_block_types)
+	local nn = minetest.find_nodes_in_area(
+		vector.offset(p, -64, -64, -64),
+		vector.offset(p, 64, 64, 64),
+		requested_block_types
+	)
 
 	local distance_to_closest_block = nil
 	local closest_block = nil
@@ -457,7 +461,10 @@ function mobs_mc.villager_mob:get_a_job()
 	if n and self:employ(n) then return true end
 
 	if self.state ~= PATHFINDING then
-		self:look_for_job(requested_jobsites)
+		local job_site = self:look_for_job(requested_jobsites)
+		if not job_site then
+			self:go_to_town_bell()
+		end
 	end
 end
 

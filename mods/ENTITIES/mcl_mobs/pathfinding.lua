@@ -1,10 +1,10 @@
 local mob_class = mcl_mobs.mob_class
 
 local PATHFINDING_FAIL_THRESHOLD = 100 -- no. of ticks to fail before giving up. 20p/s. 5s helps them get through door
-local PATHFINDING_FAIL_WAIT = 30 -- how long to wait before trying to path again
+local PATHFINDING_FAIL_WAIT = 10 -- how long to wait before trying to path again
 local PATHING_START_DELAY = 4 -- When doing non-prioritised pathing, how long to wait until last mob pathed
 
-local PATHFINDING_SEARCH_DISTANCE = 50 -- How big the square is that pathfinding will look
+local PATHFINDING_SEARCH_DISTANCE = 64 -- How big the square is that pathfinding will look
 
 local PATHFINDING = "gowp"
 
@@ -112,7 +112,8 @@ local last_pathing_time = os.time()
 
 function mob_class:ready_to_path(prioritised)
 	mcl_log("Check ready to path")
-	if self._pf_last_failed and (os.time() - self._pf_last_failed) < PATHFINDING_FAIL_WAIT then
+	-- Ensure mobs stuck in the same place don't all retrigger at the same time
+	if self._pf_last_failed and (os.time() - self._pf_last_failed) < (PATHFINDING_FAIL_WAIT + math.random(1, PATHFINDING_FAIL_WAIT)) then
 		mcl_log("Not ready to path as last fail is less than threshold: " .. (os.time() - self._pf_last_failed))
 		return false
 	else
@@ -296,7 +297,8 @@ function mob_class:interact_with_door(action, target)
 		if n.name:find("_b_") or n.name:find("_t_") then
 			mcl_log("Door")
 			local def = minetest.registered_nodes[n.name]
-			local closed = n.name:find("_b_1") or n.name:find("_t_1")
+			local meta = minetest.get_meta(target)
+			local closed = meta:get_int("is_open") == 0
 			--if self.state == PATHFINDING then
 				if closed and action == "open" and def.on_rightclick then
 					mcl_log("Open door")

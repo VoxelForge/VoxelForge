@@ -800,7 +800,7 @@ function mob_class:go_to_pos(b)
 	local yaw = (atann(v.z / v.x) +math.pi/ 2) - self.rotate
 	if b.x > s.x then yaw = yaw +math.pi end
 	self.object:set_yaw(yaw)
-	self:set_velocity(self.follow_velocity)
+	self:set_velocity(self.walk_velocity)
 	self:set_animation("walk")
 end
 
