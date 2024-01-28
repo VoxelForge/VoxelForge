@@ -5,7 +5,7 @@ local extra_nodes = minetest.settings:get_bool("mcl_extra_nodes", true)
 mcl_stairs.register_slab("lapisblock", {
 	recipeitem="mcl_core:lapisblock",
 	groups={pickaxey=3, not_in_creative_inventory=extra_nodes and 0 or 1},
-	tiles={"mcl_core_lapis_block.png", "mcl_core_lapis_block.png", "mcl_stairs_lapis_block_slab.png"},
+	images={"mcl_core_lapis_block.png", "mcl_core_lapis_block.png", "mcl_stairs_lapis_block_slab.png"},
 	description=S("Lapis Lazuli Slab"),
 	double_description=S("Double Lapis Lazuli Slab"),
 	register_craft=extra_nodes,
@@ -13,7 +13,7 @@ mcl_stairs.register_slab("lapisblock", {
 mcl_stairs.register_stair("lapisblock", {
 	recipeitem="mcl_core:lapisblock",
 	groups={pickaxey=3, not_in_creative_inventory=extra_nodes and 0 or 1},
-	tiles={"mcl_stairs_lapis_block_slab.png", "mcl_core_lapis_block.png", "mcl_core_lapis_block.png", "mcl_core_lapis_block.png", "mcl_core_lapis_block.png", "mcl_stairs_lapis_block_slab.png"},
+	images={"mcl_stairs_lapis_block_slab.png", "mcl_core_lapis_block.png", "mcl_core_lapis_block.png", "mcl_core_lapis_block.png", "mcl_core_lapis_block.png", "mcl_stairs_lapis_block_slab.png"},
 	description=S("Lapis Lazuli Stairs"),
 	corner_stair_texture_override="woodlike",
 	register_craft=extra_nodes,
@@ -22,7 +22,7 @@ mcl_stairs.register_stair("lapisblock", {
 mcl_stairs.register_slab("goldblock", {
 	recipeitem="mcl_core:goldblock",
 	groups={pickaxey=4, not_in_creative_inventory=extra_nodes and 0 or 1},
-	tiles={"default_gold_block.png", "default_gold_block.png", "mcl_stairs_gold_block_slab.png"},
+	images={"default_gold_block.png", "default_gold_block.png", "mcl_stairs_gold_block_slab.png"},
 	description=S("Slab of Gold"),
 	double_description=S("Double Slab of Gold"),
 	register_craft=extra_nodes,
@@ -30,7 +30,7 @@ mcl_stairs.register_slab("goldblock", {
 mcl_stairs.register_stair("goldblock", {
 	recipeitem="mcl_core:goldblock",
 	groups={pickaxey=4, not_in_creative_inventory=extra_nodes and 0 or 1},
-	tiles={"mcl_stairs_gold_block_slab.png", "default_gold_block.png", "default_gold_block.png", "default_gold_block.png", "default_gold_block.png", "mcl_stairs_gold_block_slab.png"},
+	images={"mcl_stairs_gold_block_slab.png", "default_gold_block.png", "default_gold_block.png", "default_gold_block.png", "default_gold_block.png", "mcl_stairs_gold_block_slab.png"},
 	description=S("Stairs of Gold"),
 	corner_stair_texture_override="woodlike",
 	register_craft=extra_nodes,
@@ -39,7 +39,7 @@ mcl_stairs.register_stair("goldblock", {
 mcl_stairs.register_slab("ironblock", {
 	recipeitem="mcl_core:ironblock",
 	groups={pickaxey=2, not_in_creative_inventory=extra_nodes and 0 or 1},
-	tiles={"default_steel_block.png", "default_steel_block.png", "mcl_stairs_iron_block_slab.png"},
+	images={"default_steel_block.png", "default_steel_block.png", "mcl_stairs_iron_block_slab.png"},
 	description=S("Slab of Iron"),
 	double_description=S("Double Slab of Iron"),
 	register_craft=extra_nodes,
@@ -47,7 +47,7 @@ mcl_stairs.register_slab("ironblock", {
 mcl_stairs.register_stair("ironblock", {
 	recipeitem="mcl_core:ironblock",
 	groups={pickaxey=2, not_in_creative_inventory=extra_nodes and 0 or 1},
-	tiles={"mcl_stairs_iron_block_slab.png", "default_steel_block.png", "default_steel_block.png", "default_steel_block.png", "default_steel_block.png", "mcl_stairs_iron_block_slab.png"},
+	images={"mcl_stairs_iron_block_slab.png", "default_steel_block.png", "default_steel_block.png", "default_steel_block.png", "default_steel_block.png", "mcl_stairs_iron_block_slab.png"},
 	description=S("Stairs of Iron"),
 	corner_stair_texture_override="woodlike",
 	register_craft=extra_nodes,
@@ -56,7 +56,7 @@ mcl_stairs.register_stair("ironblock", {
 mcl_stairs.register_stair("stonebrickcracked", {
 	recipeitem="mcl_core:stonebrickcracked",
 	groups={pickaxey=1, not_in_creative_inventory=extra_nodes and 0 or 1},
-	tiles={"mcl_core_stonebrick_cracked.png"},
+	images={"mcl_core_stonebrick_cracked.png"},
 	description=S("Cracked Stone Brick Stairs"),
 	corner_stair_texture_override="woodlike",
 	register_craft=extra_nodes,
@@ -64,7 +64,7 @@ mcl_stairs.register_stair("stonebrickcracked", {
 mcl_stairs.register_slab("stonebrickcracked", {
 	recipeitem="mcl_core:stonebrickcracked",
 	groups={pickaxey=1, not_in_creative_inventory=extra_nodes and 0 or 1},
-	tiles={"mcl_core_stonebrick_cracked.png"},
+	images={"mcl_core_stonebrick_cracked.png"},
 	description=S("Cracked Stone Brick Slab"),
 	double_description=S("Double Cracked Stone Brick Slab"),
 	register_craft=extra_nodes,
