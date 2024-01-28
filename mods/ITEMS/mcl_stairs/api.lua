@@ -134,7 +134,7 @@ function mcl_stairs.register_stair(subname, recipeitem, groups, images, descript
 	local image_table = {}
 	for i, image in ipairs(images) do
 		image_table[i] = type(image) == "string" and { name = image } or table.copy(image)
-		image_table[i].align_style = "world"
+		image_table[i].align_style = image_table[i].align_style or "world"
 	end
 
 	minetest.register_node(":mcl_stairs:stair_" .. subname, table.merge({
