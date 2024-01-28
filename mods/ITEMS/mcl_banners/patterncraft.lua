@@ -289,7 +289,7 @@ function mcl_banners.make_advanced_banner_description(description, layers)
 			-- Layer text line.
 			local color = mcl_banners.colors[layers[l].color][6]
 			local pattern_name = patterns[layers[l].pattern].name
-			table.insert(layerstrings, S(pattern_name(color)))
+			table.insert(layerstrings, S(pattern_name, color))
 		end
 		-- Warn about missing information
 		if #layers == max_layer_lines + 1 then
