@@ -123,9 +123,13 @@ local main_page_static = table.concat({
 
 	--Listring
 	"listring[current_player;main]",
+	"listring[current_player;sorter]",
+	"listring[current_player;main]",
 	"listring[current_player;craft]",
 	"listring[current_player;main]",
 	"listring[current_player;armor]",
+	"listring[current_player;main]",
+	"listring[current_player;offhand]",
 	"listring[current_player;main]",
 })
 
@@ -208,5 +212,59 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 				return
 			end
 		end
+	end
+end)
+
+local function sort_stack(stack)
+	if minetest.get_item_group(stack:get_name(), "offhand_item") > 0 then
+		return "offhand"
+	end
+	if minetest.get_item_group(stack:get_name(), "armor") > 0 then
+		return "armor"
+	end
+	return "craft"
+end
+
+minetest.register_on_player_inventory_action(function(player, action, inv, info)
+	if action == "move" and info.to_list == "sorter" then
+		local stack = inv:get_stack(info.to_list, info.to_index)
+		local trg = sort_stack(stack)
+		if trg == "armor" then
+			local newstack = mcl_armor.equip(stack, player, true)
+			if newstack and not newstack:is_empty() then
+				if inv:get_stack(info.from_list, info.from_index):is_empty() then
+					inv:set_stack(info.from_list, info.from_index, newstack)
+				elseif inv:room_for_item(info.from_list, newstack) then
+					inv:add_item(info.from_list, newstack)
+				end
+			end
+		else
+			inv:add_item(trg, stack)
+		end
+		inv:set_stack("sorter", 1, ItemStack(""))
+	end
+end)
+
+minetest.register_allow_player_inventory_action(function(player, action, inv, info)
+	if info.to_list == "sorter" or info.from_list == "sorter" or info.listname == "sorter" then
+		if action == "put" or action == "take" then return 0 end
+		local stack = inv:get_stack(info.from_list, info.from_index)
+		local trg = sort_stack(stack)
+		if trg then
+			if trg == "armor" then
+				return 1
+			end
+			local stack1 = ItemStack(stack):take_item()
+			if inv:room_for_item(trg, stack) then
+				return stack:get_count()
+			elseif inv:room_for_item(trg, stack1) then
+				for k,v in pairs(inv:get_list(trg)) do
+					if v:to_string() == stack:to_string() then
+						return stack:get_stack_max() - inv:get_stack(trg, k):get_count()
+					end
+				end
+			end
+		end
+		return 0
 	end
 end)

@@ -93,6 +93,8 @@ minetest.register_on_joinplayer(function(player)
 	inv:set_width("main", 9)
 	inv:set_size("main", 36)
 	inv:set_size("offhand", 1)
+	inv:set_size("sorter", 1)
+	inv:set_stack("sorter", 1, ItemStack(""))
 
 	--set hotbar size
 	player:hud_set_hotbar_itemcount(9)
