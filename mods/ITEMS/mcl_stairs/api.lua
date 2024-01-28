@@ -105,10 +105,36 @@ local function placement_prevented(params)
 	return true
 end
 
+local function new_register_stair(subname, stairdef)
+	local recipeitem = stairdef.recipeitem
+	local groups = table.merge(minetest.registered_nodes[recipeitem].groups, stairdef.groups or {})
+	local tiles = stairdef.tiles or minetest.registered_nodes[recipeitem].tiles
+	local base_desc = stairdef.base_description or minetest.registered_nodes[recipeitem].description
+	local desc_stair = S("@1 Stairs", base_desc)
+
+	mcl_stairs.register_stair(subname, recipeitem, groups, tiles, desc_stair, nil, nil, nil, nil, nil)
+end
+
+local function new_register_slab(subname, stairdef)
+	local recipeitem = stairdef.recipeitem
+	local groups = table.merge(minetest.registered_nodes[recipeitem].groups, stairdef.groups or {})
+	local tiles = stairdef.tiles or minetest.registered_nodes[recipeitem].tiles
+	local base_desc = stairdef.base_description or minetest.registered_nodes[recipeitem].description
+	local desc_slab = S("@1 Slab", base_desc)
+	local desc_double_slab = S("Double @1 Slab", base_desc)
+
+	mcl_stairs.register_slab(subname, recipeitem, groups, tiles, desc_slab, nil, nil, nil, desc_double_slab, nil)
+end
+
 -- Register stairs.
 -- Node will be called mcl_stairs:stair_<subname>
-
+--
+-- Handles both the new old API versions described in API.md.
 function mcl_stairs.register_stair(subname, recipeitem, groups, images, description, sounds, blast_resistance, hardness, corner_stair_texture_override, overrides)
+	if type(recipeitem) == "table" then
+		new_register_stair(subname, recipeitem)
+		return
+	end
 
 	if recipeitem then
 		if not images then
@@ -239,6 +265,11 @@ end
 -- double_description: NEW argument, not supported in Minetest Game
 -- double_description: Description of double slab
 function mcl_stairs.register_slab(subname, recipeitem, groups, images, description, sounds, blast_resistance, hardness, double_description, overrides)
+	if type(recipeitem) == "table" then
+		new_register_slab(subname, recipeitem)
+		return
+	end
+
 	local lower_slab = "mcl_stairs:slab_"..subname
 	local upper_slab = lower_slab.."_top"
 	local double_slab = lower_slab.."_double"
@@ -410,6 +441,12 @@ end
 function mcl_stairs.register_stair_and_slab(subname, recipeitem,
 		groups, images, desc_stair, desc_slab, sounds, blast_resistance, hardness,
 		double_description, corner_stair_texture_override,stairs_overrides, slab_overrides)
+	if type(recipeitem) == "table" then
+		new_register_stair(subname, recipeitem)
+		new_register_slab(subname, recipeitem)
+		return
+	end
+
 	if desc_stair then
 		mcl_stairs.register_stair(subname, recipeitem, groups, images, desc_stair, sounds, blast_resistance, hardness, corner_stair_texture_override, stairs_overrides)
 	end

@@ -505,54 +505,14 @@ function mcl_trees.register_wood(name, p)
 
 	if p.stairs == nil or type(p.stairs) == "table" then
 		p.stairs = p.stairs or {}
-		mcl_stairs.register_stair(name, {
-			recipeitem="mcl_trees:wood_"..name,
-			groups={handy=1,axey=1, flammable=3,wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
-			tiles=p.wood and p.wood.tiles or { minetest.get_current_modname().."_planks_"..name..".png"},
-			description=p.stairs.description or S("@1 Wood Stairs", rname),
-			sounds=mcl_sounds.node_sound_wood_defaults(),
-			blast_resistance=3,
-			hardness=2,
-			corner_stair_texture_override="woodlike",
-		})
-
-		mcl_stairs.register_stair(name.."_bark", {
-			recipeitem="mcl_trees:bark_"..name,
-			groups={not_in_creative_inventory=bark_stairs and 0 or 1, handy=1, axey=1, flammable=3, wood_stairs=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
-			tiles=p.tree and p.tree.tiles and { p.tree.tiles[3] } or { minetest.get_current_modname().."_log_"..name..".png"},
-			description=p.stairs.description or S("@1 Bark Stairs", rname),
-			sounds=mcl_sounds.node_sound_wood_defaults(),
-			blast_resistance=3,
-			hardness=2,
-			corner_stair_texture_override="woodlike",
-			register_craft=bark_stairs,
-		})
+		mcl_stairs.register_stair_and_slab(name, { recipeitem="mcl_trees:wood_"..name, register_slab = false })
+		mcl_stairs.register_stair_and_slab(name.."_bark", { recipeitem="mcl_trees:bark_"..name, register_slab = false })
 	end
 
 	if p.slab == nil or type(p.slab) == "table" then
 		p.slab = p.slab or {}
-		mcl_stairs.register_slab(name, {
-			recipeitem="mcl_trees:wood_"..name,
-			groups={handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
-			tiles=p.wood and p.wood.tiles or { minetest.get_current_modname().."_planks_"..name..".png"},
-			description=p.slab.description or S("@1 Wood Slab", rname),
-			sounds=mcl_sounds.node_sound_wood_defaults(),
-			blast_resistance=3,
-			hardness=2,
-			double_description=S("Double @1 Wood Slab", rname),
-		})
-
-		mcl_stairs.register_slab(name.."_bark", {
-			recipeitem="mcl_trees:bark_"..name,
-			groups={handy=1,axey=1, flammable=3,wood_slab=1, material_wood=1, fire_encouragement=5, fire_flammability=20},
-			tiles=p.tree and p.tree.tiles and { p.tree.tiles[3] } or { minetest.get_current_modname().."_log_"..name..".png"},
-			description=p.slab.description or S("@1 Bark Slab", rname),
-			sounds=mcl_sounds.node_sound_wood_defaults(),
-			blast_resistance=3,
-			hardness=2,
-			double_description=S("Double @1 Bark Slab", rname),
-			register_craft=bark_stairs,
-		})
+		mcl_stairs.register_stair_and_slab(name, { recipeitem="mcl_trees:wood_"..name, register_stair_and_slab = false })
+		mcl_stairs.register_stair_and_slab(name.."_bark", { recipeitem="mcl_trees:bark_"..name, register_stair_and_slab = false })
 	end
 	if p.sign_color and ( p.sign == nil or type(p.sign) == "table" ) then
 		mcl_signs.register_sign(name,p.sign_color,table.merge({

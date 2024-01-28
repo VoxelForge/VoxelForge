@@ -1,7 +1,7 @@
 # API for `mcl_stairs`
 Register your own stairs and slabs!
 
-This mod has both a new API and an old deprecated one kept for backwards
+This mod has both a new simplified API and an old one kept for backwards
 compatibility.  The primary difference is that the new API takes a definition
 table rather than multiple arguments and that the description of registered
 stair/slabs are generated from a base description which is either specified or
@@ -11,7 +11,7 @@ derived from the node they are based on.
 Register stair and slab based on the node `example:platinumblock`:
 
 ```lua
-mcl_stairs.register_stair("platinum", {
+mcl_stairs.register_stair_and_slab("platinum", {
     recipeitem = "example:platinumblock",
     base_description = S("Platinum"),
 })
@@ -21,19 +21,29 @@ This will register the nodes `mcl_stairs:stair_platinum` and
 `mcl_stairs:slab_platinum`.
 
 ## `mcl_stairs.register_stair(subname, stair definition)`
-Registers stair and slab from the stair definition.  The subname has to be
-unique and not used by any other stair registration.  Properties like groups,
-hardness and blast resistance for the registered nodes are derived from the
-node they are based on.
+Registers stair from the stair definition.  The subname has to be unique and
+not used by any other stair registration.  Properties like groups, hardness and
+blast resistance for the registered nodes are derived from the node they are
+based on.
 
-This function will register the nodes `mcl_stairs:stair_<subname>` and
-`mcl_stairs:slab_<subname>`.  The nodes `mcl_stairs:stair_<subname>_inner`,
-`mcl_stairs:stair_<subname>_outer`, `mcl_stairs:slab_<subname>_top` and
-`mcl_stairs:slab_<subname>_double` which are only used for placed nodes will
-also be registered.
+This function will register the node `mcl_stairs:stair_<subname>`.  The nodes
+`mcl_stairs:stair_<subname>_inner` and `mcl_stairs:stair_<subname>_outer` which
+are only used for placed nodes will also be registered.
+
+## `mcl_stairs.register_slab(subname, stair definition)`
+Same as `mcl_stairs.register_stair` but registers slab instead.
+
+This function will register the node `mcl_stairs:slab_<subname>`.  The nodes
+`mcl_stairs:slab_<subname>_top` and `mcl_stairs:slab_<subname>_double` which
+are only used for placed nodes will also be registered.
+
+## `mcl_stairs.register_stair_and_slab(subname, stair definition)`
+Shorthand for calling both `mcl_stairs.register_stair` and
+`mcl_stairs.register_slab` with the same arguments.
 
 ## Stair definition
-Used by `mcl_stairs.register_stair`.
+Used by `mcl_stairs.register_stair`, `mcl_stairs.register_slab` and
+`mcl_stairs.register_stair_and_slab`.
 
 ```lua
 {
@@ -47,12 +57,6 @@ Used by `mcl_stairs.register_stair`.
     -- "<base_description> Slab".  Defaults to the description of the node
     -- defined in `recipeitem` if left empty.
 
-    register_stair = true,
-    -- If stair should be registered.
-
-    register_slab = true,
-    -- If slab should be registered.
-
     register_craft = true,
     -- If crafting recipes should be registered.
 
@@ -60,6 +64,7 @@ Used by `mcl_stairs.register_stair`.
     -- Additional groups which get added to the registered nodes.
 
     tiles = {},
+    -- Custom tiles for the node.
 }
 ```
 
