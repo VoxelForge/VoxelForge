@@ -69,17 +69,6 @@ local brewing_formspec = "size[9,8.75]"..
 	"listring[context;input]"..
 	"listring[current_player;main]"
 
-
---[[local function swap_node(pos, name)
-	local node = minetest.get_node(pos)
-	if node.name == name then
-		return
-	end
-	node.name = name
-	minetest.swap_node(pos, node)
-end]]
-
-
 local function brewable(inv)
 
 	local ingredient = inv:get_stack("input",1):get_name()
@@ -245,45 +234,6 @@ local function brewing_stand_timer(pos, elapsed)
 
 	return result
 end
-
-
---[[local function allow_metadata_inventory_put(pos, listname, index, stack, player)
-	local name = player:get_player_name()
-	if minetest.is_protected(pos, name) then
-		minetest.record_protection_violation(pos, name)
-		return 0
-	end
-	local meta = minetest.get_meta(pos)
-	local inv = meta:get_inventory()
-	if listname == "fuel" then
-
-		-- Test stack with size 1 because we burn one fuel at a time
-		local teststack = ItemStack(stack)
-		teststack:set_count(1)
-		local output, decremented_input = minetest.get_craft_result({method="fuel", width=1, items={teststack}})
-		if output.time ~= 0 then
-			-- Only allow to place 1 item if fuel get replaced by recipe.
-			-- This is the case for lava buckets.
-			local replace_item = decremented_input.items[1]
-			if replace_item:is_empty() then
-				-- For most fuels, just allow to place everything
-				return stack:get_count()
-			else
-				if inv:get_stack(listname, index):get_count() == 0 then
-					return 1
-				else
-					return 0
-				end
-			end
-		else
-			return 0
-		end
-	elseif listname == "input" then
-		return stack:get_count()
-	elseif listname == "stand" then
-		return 0
-	end
-end]]
 
 local drop_contents = mcl_util.drop_items_from_meta_container({"fuel", "input", "stand"})
 
