@@ -196,9 +196,18 @@ minetest.registered_nodes["mcl_fire:fire"].on_construct=function(pos)
 end
 
 --slabs/stairs
-mcl_stairs.register_stair_and_slab_simple("blackstone", "mcl_blackstone:blackstone", S("Blackstone Stair"), S("Blackstone Slab"), S("Double Blackstone Slab"),nil,{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone"}},{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone"}})
-mcl_stairs.register_stair_and_slab_simple("blackstone_polished", "mcl_blackstone:blackstone_polished", S("Polished Blackstone Stair"), S("Polished Blackstone Slab"), S("Polished Double Blackstone Slab"),nil,{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}},{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}})
-mcl_stairs.register_stair_and_slab_simple("blackstone_brick_polished", "mcl_blackstone:blackstone_brick_polished", S("Polished Blackstone Brick Stair"), S("Polished Blackstone Brick Slab"), S("Double Polished Blackstone Brick Slab"),nil,{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}},{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}})
+mcl_stairs.register_stair_and_slab("blackstone", {
+	recipeitem = "mcl_blackstone:blackstone",
+	extra_fields = {_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone"}},{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone"}}
+})
+mcl_stairs.register_stair_and_slab("blackstone_polished", {
+	recipeitem = "mcl_blackstone:blackstone_polished",
+	extra_fields = {_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}},{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}}
+})
+mcl_stairs.register_stair_and_slab("blackstone_brick_polished", {
+	recipeitem = "mcl_blackstone:blackstone_brick_polished",
+	extra_fields = {_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}},{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}}
+})
 minetest.register_alias("mcl_stairs:slab_blackstone_chiseled_polished_top", "mcl_stairs:slab_blackstone_polished_top")
 minetest.register_alias("mcl_stairs:slab_blackstone_chiseled_polished", "mcl_stairs:slab_blackstone_polished")
 minetest.register_alias("mcl_stairs:slab_blackstone_chiseled_polished_double", "mcl_stairs:slab_blackstone_polished_double")
