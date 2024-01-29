@@ -27,10 +27,15 @@ local function active_brewing_formspec(fuel_percent, brew_percent)
 	"image[2.76,1.4;1,2.15;mcl_brewing_bubbles.png^[lowpart:"..
 	(brew_percent)..":mcl_brewing_bubbles_active.png]"..
 
+	"listring[context;stand]"..
+	"listring[current_player;main]"..
+	"listring[context:sorter]"..
 	"listring[current_player;main]"..
 	"listring[context;fuel]"..
+	"listring[current_player;main]"..
 	"listring[context;input]"..
-	"listring[context;stand]"
+	"listring[current_player;main]"
+
 end
 
 local brewing_formspec = "size[9,8.75]"..
@@ -55,10 +60,14 @@ local brewing_formspec = "size[9,8.75]"..
 	"image[2.7,3.33;1.28,0.41;mcl_brewing_burner.png^[transformR270]"..
 	"image[2.76,1.4;1,2.15;mcl_brewing_bubbles.png]"..
 
+	"listring[context;stand]"..
+	"listring[current_player;main]"..
+	"listring[context;sorter]"..
 	"listring[current_player;main]"..
 	"listring[context;fuel]"..
+	"listring[current_player;main]"..
 	"listring[context;input]"..
-	"listring[context;stand]"
+	"listring[current_player;main]"
 
 
 --[[local function swap_node(pos, name)
@@ -299,17 +308,43 @@ local tiles = {
 	"mcl_brewing_side.png^[transformFX",   --front
 }
 
+local function sort_stack(stack)
+	if stack:get_name() == "mcl_mobitems:blaze_powder" then
+		return "fuel"
+	end
+	if minetest.get_item_group(stack:get_name(), "brewing_ingredient" ) > 0 then
+		return "input"
+	end
+	return "stand"
+end
+
 local function allow_put(pos, listname, index, stack, player)
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
 		return 0
-	else
-		return stack:get_count()
+	elseif listname == "sorter" then
+		local inv = minetest.get_meta(pos):get_inventory()
+		local trg = sort_stack(stack, pos)
+		if trg then
+			local stack1 = ItemStack(stack):take_item()
+			if inv:room_for_item(trg, stack) then
+				return stack:get_count()
+			elseif inv:room_for_item(trg, stack1) then
+				return stack:get_stack_max() - inv:get_stack(trg, 1):get_count()
+			end
+		end
+		return 0
 	end
+	return stack:get_count()
 end
 
 local function on_put(pos, listname, index, stack, player)
+	if listname == "sorter" then
+		local inv = minetest.get_meta(pos):get_inventory()
+		inv:add_item(sort_stack(stack, pos), stack)
+		inv:set_stack("sorter", 1, ItemStack(""))
+	end
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 	local str = ""
@@ -326,7 +361,12 @@ local function on_put(pos, listname, index, stack, player)
 	--some code here to enforce only potions getting placed on stands
 end
 
+local function allow_move(pos, from_list, from_index, to_list, to_index, count, player)
+	if from_list == "sorter" or to_list == "sorter" then return 0 end
+end
+
 local function allow_take(pos, listname, index, stack, player)
+	if listname == "sorter" then return 0 end
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
@@ -387,7 +427,7 @@ local tpl_brewing_stand = {
 	description = S("Brewing Stand"),
 	_doc_items_create_entry = false,
 	_tt_help = S("Brew Potions"),
-	groups = {pickaxey=1, container=1, not_in_creative_inventory = 1, not_in_craft_guide = 1},
+	groups = {pickaxey = 1, container = 1, not_in_creative_inventory = 1, not_in_craft_guide = 1, brewing_stand = 1},
 	tiles = tiles,
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
 	drop = "mcl_brewing:stand",
@@ -402,6 +442,7 @@ local tpl_brewing_stand = {
 	after_dig_node = drop_contents,
 	allow_metadata_inventory_take = allow_take,
 	allow_metadata_inventory_put = allow_put,
+	allow_metadata_inventory_move = allow_move,
 	on_metadata_inventory_put = on_put,
 	on_metadata_inventory_take = on_put,
 	on_construct = function(pos)
@@ -410,6 +451,7 @@ local tpl_brewing_stand = {
 		inv:set_size("input", 1)
 		inv:set_size("fuel", 1)
 		inv:set_size("stand", 3)
+		inv:set_size("sorter", 1)
 		local form = brewing_formspec
 		meta:set_string("formspec", form)
 	end,
@@ -430,7 +472,7 @@ minetest.register_node("mcl_brewing:stand_000", table.merge(tpl_brewing_stand, {
 	_doc_items_longdesc = S("The stand allows you to brew potions!"),
 	_doc_items_create_entry = true,
 	_doc_items_usagehelp = doc_string,
-	groups = {pickaxey=1, brewitem=1, container=1},
+	groups = {pickaxey = 1, brewitem = 1, container = 1, brewing_stand = 1},
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -722,3 +764,15 @@ if minetest.get_modpath("doc") then
 	doc.add_entry_alias("nodes", "mcl_brewing:stand_000", "nodes", "mcl_brewing:stand_110")
 	doc.add_entry_alias("nodes", "mcl_brewing:stand_000", "nodes", "mcl_brewing:stand_111")
 end
+
+minetest.register_lbm({
+	label = "Update brewing stand formspecs and invs to allow new sneak+click behavior",
+	name = "mcl_brewing:update_coolsneak",
+	nodenames = { "group:brewing_stand" },
+	run_at_every_load = false,
+	action = function(pos, node)
+		local m = minetest.get_meta(pos)
+		m:get_inventory():set_size("sorter", 1)
+		m:set_string("formspec", brewing_formspec)
+	end,
+})
