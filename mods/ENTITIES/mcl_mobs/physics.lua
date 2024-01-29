@@ -50,6 +50,12 @@ function mob_class:player_in_active_range()
 	end
 end
 
+function mob_class:object_in_follow_range(object)
+	local dist = 6
+	local p1, p2 = self.object:get_pos(), object:get_pos()
+	return p1 and p2 and (vector.distance(p1, p2) <= dist)
+end
+
 -- Return true if object is in view_range
 function mob_class:object_in_range(object)
 	if not object then

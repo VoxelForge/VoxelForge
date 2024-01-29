@@ -719,7 +719,7 @@ function mob_class:follow_flop()
 			local dist = vector.distance(p, s)
 
 			-- dont follow if out of range
-			if (not self:object_in_range(self.following)) then
+			if (not self:object_in_follow_range(self.following)) then
 				self.following = nil
 			else
 				local vec = {

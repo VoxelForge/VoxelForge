@@ -498,6 +498,8 @@ These functions can be called from the entity as well as overwritten on a per-mo
 	* Periodically checks if a player is in active range (default: 48), if it returns false mob will be suspended.
  * mob:object_in_range(object)
 	* Checks if object is in view range of the mob
+ * mob:object_in_follow_range(object)
+	* Checks if object is in following range of the mob
  * mob:item_drop(cooked, looting_level)
 	* Drop item drops (is run when mob dies)
  * mob:collision()
