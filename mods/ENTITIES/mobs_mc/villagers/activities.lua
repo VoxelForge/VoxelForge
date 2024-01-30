@@ -174,13 +174,8 @@ function mobs_mc.villager.find_closest_unclaimed_block(p, requested_block_types)
 
 	for i,n in pairs(nn) do
 		local m = minetest.get_meta(n)
-		minetest.log("find_closest_unclaimed_block job site " .. minetest.pos_to_string(n))
-		minetest.log("villager " .. m:get_string("villager"))
-
-
 		if m:get_string("villager") == "" then
 			local distance_to_block = vector.distance(p, n)
-			minetest.log("distance_to_block " ..distance_to_block)
 			if not distance_to_closest_block or distance_to_closest_block > distance_to_block then
 				closest_block = n
 				distance_to_closest_block = distance_to_block
@@ -447,7 +442,6 @@ function mobs_mc.villager_mob:look_for_job(requested_jobsites)
 	if closest_block then
 		for _, v in pairs(plane_adjacents) do
 			local jpos = vector.add(closest_block, v)
-			minetest.log("look_for_job jpos " .. minetest.pos_to_string(jpos))
 			local gp = self:gopath(jpos, function(self)
 				if self and self.state == "stand" then
 					self.order = WORK
