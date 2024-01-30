@@ -174,6 +174,7 @@ mcl_villages.material_substitions = {
 		{ "mcl_core:wood", "mcl_core:sprucewood" },
 		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:spruce_fence%1"' },
 		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_sprucewood%1"' },
+		{ '"mcl_stairs:slab_oak([^"]*)"', '"mcl_stairs:slab_sprucewood%1"' },
 		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_sprucewood%1"' },
 		{
 			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
@@ -181,6 +182,7 @@ mcl_villages.material_substitions = {
 		},
 		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:spruce_trapdoor%1"' },
 		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_doors:spruce_door%1"' },
+		{ '"mcl_doors:door_oak([^"]*)"', '"mcl_doors:spruce_door%1"' },
 		{ "mcl_trees:tree_oak", "mcl_trees:tree_spruce" },
 		{ "mcl_trees:wood_oak", "mcl_trees:wood_spruce" },
 		{ '"mcl_fences:oak_fence([^"]*)"', '"mcl_fences:spruce_fence%1"' },
@@ -191,6 +193,7 @@ mcl_villages.material_substitions = {
 		{ "mcl_core:wood", "mcl_core:birchwood" },
 		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:birch_fence%1"' },
 		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_birchwood%1"' },
+		{ '"mcl_stairs:slab_oak([^"]*)"', '"mcl_stairs:slab_birchwood%1"' },
 		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_birchwood%1"' },
 		{
 			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
@@ -198,6 +201,7 @@ mcl_villages.material_substitions = {
 		},
 		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:birch_trapdoor%1"' },
 		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_doors:birch_door%1"' },
+		{ '"mcl_doors:door_oak([^"]*)"', '"mcl_doors:birch_door%1"' },
 		{ "mcl_trees:tree_oak", "mcl_trees:tree_birch" },
 		{ "mcl_trees:wood_oak", "mcl_trees:wood_birch" },
 		{ '"mcl_fences:oak_fence([^"]*)"', '"mcl_fences:birch_fence%1"' },
@@ -208,6 +212,7 @@ mcl_villages.material_substitions = {
 		{ "mcl_core:wood", "mcl_core:acaciawood" },
 		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:acacia_fence%1"' },
 		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_acaciawood%1"' },
+		{ '"mcl_stairs:slab_oak([^"]*)"', '"mcl_stairs:slab_acaciawood%1"' },
 		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_acaciawood%1"' },
 		{
 			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
@@ -215,6 +220,7 @@ mcl_villages.material_substitions = {
 		},
 		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:acacia_trapdoor%1"' },
 		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_doors:acacia_door%1"' },
+		{ '"mcl_doors:door_oak([^"]*)"', '"mcl_doors:acacia_door%1"' },
 		{ "mcl_trees:tree_oak", "mcl_trees:tree_acacia" },
 		{ "mcl_trees:wood_oak", "mcl_trees:wood_acacia" },
 		{ '"mcl_fences:oak_fence([^"]*)"', '"mcl_fences:acacia_fence%1"' },
@@ -225,6 +231,7 @@ mcl_villages.material_substitions = {
 		{ "mcl_core:wood", "mcl_core:darkwood" },
 		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:dark_oak_fence%1"' },
 		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_darkwood%1"' },
+		{ '"mcl_stairs:slab_oak([^"]*)"', '"mcl_stairs:slab_darkwood%1"' },
 		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_darkwood%1"' },
 		{
 			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
@@ -232,6 +239,7 @@ mcl_villages.material_substitions = {
 		},
 		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:dark_oak_trapdoor%1"' },
 		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_doors:dark_oak_door%1"' },
+		{ '"mcl_doors:door_oak([^"]*)"', '"mcl_doors:dark_oak_door%1"' },
 		{ "mcl_trees:tree_oak", "mcl_trees:tree_dark_oak" },
 		{ "mcl_trees:wood_oak", "mcl_trees:wood_dark_oak" },
 		{ '"mcl_fences:oak_fence([^"]*)"', '"mcl_fences:dark_oak_fence%1"' },
@@ -242,6 +250,7 @@ mcl_villages.material_substitions = {
 		{ "mcl_core:wood", "mcl_core:junglewood" },
 		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:jungle_fence%1"' },
 		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_junglewood%1"' },
+		{ '"mcl_stairs:slab_oak([^"]*)"', '"mcl_stairs:slab_junglewood%1"' },
 		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_junglewood%1"' },
 		{
 			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
@@ -249,6 +258,7 @@ mcl_villages.material_substitions = {
 		},
 		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:jungle_trapdoor%1"' },
 		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_doors:jungle_door%1"' },
+		{ '"mcl_doors:door_oak([^"]*)"', '"mcl_doors:jungle_door%1"' },
 		{ "mcl_trees:tree_oak", "mcl_trees:tree_jungle" },
 		{ "mcl_trees:wood_oak", "mcl_trees:wood_jungle" },
 		{ '"mcl_fences:oak_fence([^"]*)"', '"mcl_fences:jungle_fence%1"' },
@@ -259,6 +269,7 @@ mcl_villages.material_substitions = {
 		{ "mcl_core:wood", "mcl_bamboo:bamboo_block" },
 		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:bamboo_fence%1"' },
 		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_bamboo_block%1"' },
+		{ '"mcl_stairs:slab_oak([^"]*)"', '"mcl_stairs:slab_bamboo_block%1"' },
 		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_bamboo_block%1"' },
 		{
 			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
@@ -266,6 +277,7 @@ mcl_villages.material_substitions = {
 		},
 		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:trapdoor_bamboo%1"' },
 		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_bamboo:bamboo_door%1"' },
+		{ '"mcl_doors:door_oak([^"]*)"', '"mcl_doors:bamboo_door%1"' },
 
 		{ "mcl_core:cobble", "mcl_core:andesite" },
 		{ '"mcl_stairs:stair_cobble([^"]*)"', '"mcl_stairs:stair_andesite%1"' },
@@ -281,6 +293,7 @@ mcl_villages.material_substitions = {
 		{ "mcl_core:wood", "mcl_cherry_blossom:cherrywood" },
 		{ '"mcl_fences:fence([^"]*)"', '"mcl_fences:cherry_blossom_fence%1"' },
 		{ '"mcl_stairs:slab_wood([^"]*)"', '"mcl_stairs:slab_cherry_blossom%1"' },
+		{ '"mcl_stairs:slab_oak([^"]*)"', '"mcl_stairs:slab_cherry_blossom%1"' },
 		{ '"mcl_stairs:stair_wood([^"]*)"', '"mcl_stairs:stair_cherry_blossom%1"' },
 		{
 			'"mesecons_pressureplates:pressure_plate_wood_([^"]+)"',
@@ -288,6 +301,7 @@ mcl_villages.material_substitions = {
 		},
 		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:trapdoor_cherry_blossom%1"' },
 		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_doors:door_cherry_blossom%1"' },
+		{ '"mcl_doors:door_oak([^"]*)"', '"mcl_doors:door_cherry_blossom%1"' },
 		{ "mcl_trees:tree_oak", "mcl_trees:tree_cherry_blossom" },
 		{ "mcl_trees:wood_oak", "mcl_trees:wood_cherry_blossom" },
 		{ '"mcl_fences:oak_fence([^"]*)"', '"mcl_fences:cherry_blossom_fence%1"' },
