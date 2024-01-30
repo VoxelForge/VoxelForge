@@ -174,9 +174,13 @@ function mobs_mc.villager.find_closest_unclaimed_block(p, requested_block_types)
 
 	for i,n in pairs(nn) do
 		local m = minetest.get_meta(n)
+		minetest.log("find_closest_unclaimed_block job site " .. minetest.pos_to_string(n))
+		minetest.log("villager " .. m:get_string("villager"))
+
 
 		if m:get_string("villager") == "" then
 			local distance_to_block = vector.distance(p, n)
+			minetest.log("distance_to_block " ..distance_to_block)
 			if not distance_to_closest_block or distance_to_closest_block > distance_to_block then
 				closest_block = n
 				distance_to_closest_block = distance_to_block
@@ -428,20 +432,31 @@ function mobs_mc.villager_mob:employ(jobsite_pos)
 	end
 end
 
+local plane_adjacents = {
+	vector.new(1, 0, 0),
+	vector.new(-1, 0, 0),
+	vector.new(0, 0, 1),
+	vector.new(0, 0, -1),
+}
+
 function mobs_mc.villager_mob:look_for_job(requested_jobsites)
 	local p = self.object:get_pos()
 
 	local closest_block = mobs_mc.villager.find_closest_unclaimed_block(p, requested_jobsites)
 
 	if closest_block then
-		local gp = self:gopath(closest_block,function(self)
-			if self and self.state == "stand" then
-				self.order = WORK
-			end
-		end)
+		for _, v in pairs(plane_adjacents) do
+			local jpos = vector.add(closest_block, v)
+			minetest.log("look_for_job jpos " .. minetest.pos_to_string(jpos))
+			local gp = self:gopath(jpos, function(self)
+				if self and self.state == "stand" then
+					self.order = WORK
+				end
+			end)
 
-		if gp then
-			return closest_block
+			if gp then
+				return closest_block
+			end
 		end
 	end
 
@@ -457,7 +472,7 @@ function mobs_mc.villager_mob:get_a_job()
 	end
 
 	local p = self.object:get_pos()
-	local n = minetest.find_node_near(p,1,requested_jobsites)
+	local n = minetest.find_node_near(p, work_dist, requested_jobsites)
 	if n and self:employ(n) then return true end
 
 	if self.state ~= PATHFINDING then
@@ -533,17 +548,21 @@ function mobs_mc.villager_mob:do_work()
 				self.order = nil
 				return
 			end
-			self:gopath(jobsite, function(self, jobsite)
-				if not self then
-					return false
-				end
-				if not self._jobsite then
-					return false
-				end
-				if vector.distance(self.object:get_pos(), self._jobsite) < work_dist then
-					return true
-				end
-			end)
+
+			for _,v in pairs(plane_adjacents) do
+				local jpos = vector.add(jobsite, v)
+				self:gopath(jpos, function(self, jpos)
+					if not self then
+						return false
+					end
+					if not self._jobsite then
+						return false
+					end
+					if vector.distance(self.object:get_pos(), self._jobsite) < work_dist then
+						return true
+					end
+				end)
+			end
 		end
 	elseif self._profession == "unemployed" or self:has_traded() then
 		self:get_a_job()
