@@ -258,7 +258,7 @@ end
 function mcl_villages.check_radius_distance(settlement_info, building_pos, schem)
 
 	-- terrace_max_ext is to try an avoid the terracing of the overground from
-	-- removing the ground under aother building.
+	-- removing the ground under another building.
 
 	local r1 = ((math.max(schem["size"]["x"], schem["size"]["z"])) / 2) + terrace_max_ext
 
@@ -267,7 +267,7 @@ function mcl_villages.check_radius_distance(settlement_info, building_pos, schem
 		local distance = vector.distance(building_pos, built_house["pos"])
 
 		if distance < r1 + r2 then
-			return false, r1 + r2 - distance + 4
+			return false, r1 + r2 - distance + 1
 		end
 	end
 	return true, 0

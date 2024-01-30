@@ -427,22 +427,20 @@ function mobs_mc.villager_mob:employ(jobsite_pos)
 	end
 end
 
-local plane_adjacents = {
-	vector.new(1, 0, 0),
-	vector.new(-1, 0, 0),
-	vector.new(0, 0, 1),
-	vector.new(0, 0, -1),
-}
-
 function mobs_mc.villager_mob:look_for_job(requested_jobsites)
 	local p = self.object:get_pos()
 
 	local closest_block = mobs_mc.villager.find_closest_unclaimed_block(p, requested_jobsites)
 
 	if closest_block then
-		for _, v in pairs(plane_adjacents) do
-			local jpos = vector.add(closest_block, v)
-			local gp = self:gopath(jpos, function(self)
+		local n = minetest.find_nodes_in_area_under_air(
+			vector.offset(closest_block, -1, -1, -1),
+			vector.offset(closest_block, 1, 1, 1),
+			{ "group:solid" }
+		)
+
+		for _, job_pos in pairs(n) do
+			local gp = self:gopath(job_pos, function(self)
 				if self and self.state == "stand" then
 					self.order = WORK
 				end
@@ -543,9 +541,14 @@ function mobs_mc.villager_mob:do_work()
 				return
 			end
 
-			for _,v in pairs(plane_adjacents) do
-				local jpos = vector.add(jobsite, v)
-				self:gopath(jpos, function(self, jpos)
+			local n = minetest.find_nodes_in_area_under_air(
+				vector.offset(jobsite, -1, -1, -1),
+				vector.offset(jobsite, 1, 1, 1),
+				{ "group:solid" }
+			)
+
+			for _, job_pos in pairs(n) do
+				local gp = self:gopath(job_pos, function(self, job_pos)
 					if not self then
 						return false
 					end
@@ -556,6 +559,10 @@ function mobs_mc.villager_mob:do_work()
 						return true
 					end
 				end)
+
+				if gp then
+					return
+				end
 			end
 		end
 	elseif self._profession == "unemployed" or self:has_traded() then
