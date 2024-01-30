@@ -372,7 +372,7 @@ function mob_class:attack_monsters()
 	local objs = minetest.get_objects_inside_radius(pos, self.view_range)
 	for _,obj in pairs(objs) do
 		local l = obj:get_luaentity()
-		if l and l.type == "monster" and self:line_of_sight(pos, obj:get_pos(), 2) then
+		if l and l.type == "monster" and self:target_visible(pos, obj) then
 			self:do_attack(obj)
 		end
 	end
@@ -1009,14 +1009,7 @@ function mob_class:do_states_attack (dtime)
 						self:set_animation( "punch")
 					end
 
-					local p2 = p
-					local s2 = s
-
-					p2.y = p2.y + .5
-					s2.y = s2.y + .5
-
-					if self:line_of_sight( p2, s2) == true then
-
+					if self:target_visible(self.object:get_pos()) then
 						-- play attack sound
 						self:mob_sound("attack")
 

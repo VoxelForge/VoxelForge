@@ -27,6 +27,7 @@ mcl_mobs.register_mob("mobs_mc:iron_golem", {
 	mesh = "mobs_mc_iron_golem.b3d",
 	head_swivel = "head.control",
 	bone_eye_height = 3.38,
+	head_eye_height = 2.6,
 	curiosity = 10,
 	textures = {
 		{"mobs_mc_iron_golem.png"},

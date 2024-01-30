@@ -67,19 +67,22 @@ function mob_class:is_node_waterhazard(nodename)
 	return false
 end
 
-function mob_class:target_visible(origin)
+function mob_class:target_visible(origin, target)
 	if not origin then return end
 
-	if not self.attack then return end
-	local target_pos = self.attack:get_pos()
+	if not target and self.attack then
+		target = self.attack
+	end
+	if not target then return end
 
+	local target_pos = target:get_pos()
 	if not target_pos then return end
 
 	local origin_eye_pos = vector.offset(origin, 0, self.head_eye_height, 0)
 
 	local targ_head_height, targ_feet_height
 	local cbox = self.object:get_properties().collisionbox
-	if self.attack:is_player() then
+	if target:is_player() then
 		targ_head_height = vector.offset(target_pos, 0, cbox[5], 0)
 		targ_feet_height = target_pos -- Cbox would put feet under ground which interferes with ray
 	else
