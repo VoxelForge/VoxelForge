@@ -360,8 +360,8 @@ function mcl_villages.paths_new(blockseed, biome_name)
 		for _, from_ep in ipairs(path_ends["block_" .. blockseed][from]) do
 			local from_ep_pos = minetest.string_to_pos(from_ep)
 			local no_paths_nodes = minetest.find_nodes_in_area(
-				vector.offset(from_ep_pos, -16, -16, -16),
-				vector.offset(from_ep_pos, 16, 16, 16),
+				vector.offset(from_ep_pos, -32, -32, -32),
+				vector.offset(from_ep_pos, 32, 32, 32),
 				{ "mcl_villages:no_paths" }
 			)
 			if #no_paths_nodes > 0 then

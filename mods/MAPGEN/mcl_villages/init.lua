@@ -128,6 +128,17 @@ minetest.register_node("mcl_villages:building_block", {
 	end,
 })
 
+-- This should not run if the timer for the bell is still active
+-- But how we would know that ...
+minetest.register_lbm({
+	name = "mcl_villages:clear_remains",
+	run_at_every_load = true,
+	nodenames = { "mcl_villages:no_path" },
+	action = function(pos, node)
+		minetest.set_node(pos, { name = "air" })
+	end,
+})
+
 -- This makes the temporary node invisble unless in creative mode
 local drawtype = "airlike"
 if minetest.is_creative_enabled("") then

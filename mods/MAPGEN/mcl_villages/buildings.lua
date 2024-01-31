@@ -555,7 +555,11 @@ function mcl_villages.place_schematics_new(settlement_info, pr, blockseed)
 			meta:set_int("is_belltower", is_belltower and 1 or 0)
 			meta:set_string("infotext", S("The timer for this @1 has not run yet!", stype))
 			local timer = minetest.get_node_timer(pos)
-			timer:start(5.0)
+			if is_belltower then
+				timer:start(4.0)
+			else
+				timer:start(2.0)
+			end
 		end
 	end
 end
