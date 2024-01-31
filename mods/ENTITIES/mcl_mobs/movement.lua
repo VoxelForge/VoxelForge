@@ -252,9 +252,11 @@ function mob_class:is_at_water_danger()
 	local cbox = self.object:get_properties().collisionbox
 	local pos = self.object:get_pos()
 
-	local free_fall, blocker = minetest.line_of_sight(
-		vector.offset(pos, dir_x, cbox[2], dir_z),
-		vector.offset(pos, dir_x, cbox[2] - 3, dir_z))
+	local p1 = vector.offset(pos, dir_x, cbox[2], dir_z)
+	local p2 = vector.offset(pos, dir_x, cbox[2] - 3, dir_z)
+	if not mcl_mobs.check_vector(pos) or not mcl_mobs.check_vector(p1) or not mcl_mobs.check_vector(p2) then return false end
+
+	local free_fall, blocker = minetest.line_of_sight(p1, p2)
 
 	if free_fall then
 		return true
