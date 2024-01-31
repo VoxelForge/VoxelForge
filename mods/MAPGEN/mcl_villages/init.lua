@@ -133,7 +133,7 @@ minetest.register_node("mcl_villages:building_block", {
 minetest.register_lbm({
 	name = "mcl_villages:clear_remains",
 	run_at_every_load = true,
-	nodenames = { "mcl_villages:no_path" },
+	nodenames = { "mcl_villages:no_paths" },
 	action = function(pos, node)
 		minetest.set_node(pos, { name = "air" })
 	end,
