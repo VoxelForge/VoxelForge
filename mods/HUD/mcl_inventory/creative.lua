@@ -2,6 +2,8 @@ local S = minetest.get_translator(minetest.get_current_modname())
 local F = minetest.formspec_escape
 local C = minetest.colorize
 
+local show_nici = minetest.settings:get_bool("mcl_creative_show_nici_tab", false)
+
 -- Prepare player info table
 local players = {}
 
@@ -21,7 +23,8 @@ local builtin_filter_ids = {
 	"brew",
 	"matr",
 	"misc",
-	"all"
+	"all",
+	"nici",
 }
 
 for _, f in pairs(builtin_filter_ids) do
@@ -111,6 +114,8 @@ minetest.register_on_mods_loaded(function()
 			end
 
 			table.insert(inventory_lists["all"], name)
+		elseif minetest.get_item_group(name, "not_in_creative_inventory") > 0 then
+			table.insert(inventory_lists["nici"], name)
 		end
 	end
 
@@ -268,6 +273,7 @@ next_noffset("tools")
 next_noffset("combat")
 next_noffset("mobs")
 next_noffset("matr")
+next_noffset("nici")
 next_noffset("inv", true)
 
 for k, v in pairs(noffset) do
@@ -289,6 +295,7 @@ button_bg_postfix["combat"] = "_down"
 button_bg_postfix["mobs"] = "_down"
 button_bg_postfix["matr"] = "_down"
 button_bg_postfix["inv"] = "_down"
+button_bg_postfix["nici"] = "_down"
 
 filtername["blocks"] = S("Building Blocks")
 filtername["deco"] = S("Decoration Blocks")
@@ -303,6 +310,7 @@ filtername["mobs"] = S("Mobs")
 filtername["brew"] = S("Brewing")
 filtername["matr"] = S("Materials")
 filtername["inv"] = S("Survival Inventory")
+filtername["nici"] = S("Not in Creative Inventory")
 
 --local dark_bg = "crafting_creative_bg_dark.png"
 
@@ -338,6 +346,7 @@ local tab_icon = {
 	brew = "mcl_potions:dragon_breath",
 	matr = "mcl_core:stick",
 	inv = "mcl_chests:chest",
+	nici = "mcl_core:barrier",
 }
 
 -- Get the player configured stack size when taking items from creative inventory
@@ -521,6 +530,12 @@ function mcl_inventory.set_creative_formspec(player)
 		caption = "label[0.375,0.375;" .. F(C(mcl_formspec.label_color, filtername[name])) .. "]"
 	end
 
+	local nici = ""
+	if show_nici then
+		nici = tab(name, "nici") ..
+		"tooltip[nici;"..F(filtername["nici"]).."]"
+	end
+
 	local formspec = table.concat({
 		"formspec_version[6]",
 		"size[13,8.75]",
@@ -565,7 +580,8 @@ function mcl_inventory.set_creative_formspec(player)
 		tab(name, "brew") ..
 		"tooltip[brew;"..F(filtername["brew"]).."]"..
 		tab(name, "matr") ..
-		"tooltip[matr;"..F(filtername["matr"]).."]"..
+		"tooltip[matr;"..F(filtername["matr"]).."]",
+		nici,
 		tab(name, "inv") ..
 		"tooltip[inv;"..F(filtername["inv"]).."]"
 	})
@@ -646,6 +662,10 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		if players[name].page == "matr" then return end
 		set_inv_page("matr", player)
 		page = "matr"
+	elseif fields.nici then
+		if players[name].page == "nici" then return end
+		set_inv_page("nici", player)
+		page = "nici"
 	elseif fields.inv then
 		if players[name].page == "inv" then return end
 		page = "inv"
