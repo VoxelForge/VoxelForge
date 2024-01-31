@@ -199,9 +199,9 @@ container[0.1,%f2]
 -- arg 3 = %s = wanted 2 count
 local fs_trade_wants2_template = [[
 
-	item_image[0.4,0.03;0.5,0.5;%s]
-	tooltip[0.4,0.1;0.5,0.5;%s]
-	label[0.7,0.35;%s]
+	item_image[0.6,0.03;0.5,0.5;%s]
+	tooltip[0.6,0.1;0.5,0.5;%s]
+	label[0.8,0.35;%s]
 
 ]]
 
