@@ -45,7 +45,11 @@ minetest.register_node("mcl_mud:mud_bricks", {
 	_mcl_hardness = 1.5,
 })
 
-mcl_stairs.register_stair_and_slab_simple("mud_brick", "mcl_mud:mud_bricks", S("Mud Brick Stair"), S("Mud Brick Slab"), S("Double Mud Brick Slab"),nil,{_mcl_stonecutter_recipes = {"mcl_mud:mud_bricks"}},{_mcl_stonecutter_recipes = {"mcl_mud:mud_bricks"}})
+mcl_stairs.register_stair_and_slab("mud_brick", {
+	baseitem = "mcl_mud:mud_bricks",
+	basedesc = S("Mud Brick"),
+	extra_fields = {_mcl_stonecutter_recipes = {"mcl_mud:mud_bricks"}},{_mcl_stonecutter_recipes = {"mcl_mud:mud_bricks"}}
+})
 
 -- packed mud
 minetest.register_craft({
