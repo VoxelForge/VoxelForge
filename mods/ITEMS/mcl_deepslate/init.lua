@@ -140,8 +140,6 @@ local function register_deepslate_variant(name, defs)
 		}, defs.cracked))
 	end
 	if defs.stairs then
-		--   recipeitem, groups, tiles, description, sounds, blast_resistance,
-		--   hardness, corner_stair_texture_override, overrides
 		mcl_stairs.register_stair("deepslate_"..name, {
 			description = defs.stairs.description,
 			recipeitem = main_itemstring,
@@ -149,8 +147,6 @@ local function register_deepslate_variant(name, defs)
 		})
 	end
 	if defs.slab then
-	--   recipeitem, groups, tiles, description, sounds, blast_resistance,
-	--   hardness, double_description, overrides
 		mcl_stairs.register_slab("deepslate_"..name, {
 			description = defs.slab.description,
 			double_description = defs.slab.double_description,
@@ -189,20 +185,21 @@ register_deepslate_variant("polished", {
 	node = {
 		description = S("Polished Deepslate"),
 		_doc_items_longdesc = S("Polished deepslate is the stone-like polished version of deepslate."),
-		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", },
+		groups = { stonecuttable = 1 },
+		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled",  },
 	},
 	stairs = {
 		description = S("Polished Deepslate Stairs"),
-		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", },
+		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", "mcl_deepslate:deepslate_polished", },
 	},
 	slab = {
 		description = S("Polished Deepslate Slab"),
 		double_description = S("Double Polished Deepslate Slab"),
-		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", },
+		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", "mcl_deepslate:deepslate_polished", },
 	},
 	wall = {
 		description = S("Polished Deepslate Wall"),
-		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", },
+		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", "mcl_deepslate:deepslate_polished", },
 	}
 })
 
@@ -210,20 +207,21 @@ register_deepslate_variant("bricks", {
 	node = {
 		description = S("Deepslate Bricks"),
 		_doc_items_longdesc = S("Deepslate bricks are the brick version of deepslate."),
-		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", },
+		groups = { stonecuttable = 1 },
+		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", "mcl_deepslate:deepslate_polished", "mcl_deepslate:deepslate_bricks", },
 	},
 	stairs = {
 		description = S("Deepslate Brick Stairs"),
-		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", },
+		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", "mcl_deepslate:deepslate_polished", "mcl_deepslate:deepslate_bricks", },
 	},
 	slab = {
 		description = S("Deepslate Brick Slab"),
 		double_description = S("Double Deepslate Brick Slab"),
-		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", },
+		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", "mcl_deepslate:deepslate_polished", "mcl_deepslate:deepslate_bricks", },
 	},
 	wall = {
 		description = S("Deepslate Brick Wall"),
-		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", },
+		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", "mcl_deepslate:deepslate_polished", "mcl_deepslate:deepslate_bricks", },
 	},
 	cracked = {
 		description = S("Cracked Deepslate Bricks"),
@@ -234,20 +232,21 @@ register_deepslate_variant("tiles", {
 	node = {
 		description = S("Deepslate Tiles"),
 		_doc_items_longdesc = S("Deepslate tiles are a decorative variant of deepslate."),
-		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", },
+		groups = { stonecuttable = 1 },
+		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", "mcl_deepslate:deepslate_polished", "mcl_deepslate:deepslate_bricks", },
 	},
 	stairs = {
 		description = S("Deepslate Tile Stairs"),
-		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", },
+		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", "mcl_deepslate:deepslate_polished", "mcl_deepslate:deepslate_bricks", "mcl_deepslate:deepslate_tiles", },
 	},
 	slab = {
 		description = S("Deepslate Tile Slab"),
 		double_description = S("Double Deepslate Tile Slab"),
-		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", },
+		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", "mcl_deepslate:deepslate_polished", "mcl_deepslate:deepslate_bricks", "mcl_deepslate:deepslate_tiles", },
 	},
 	wall = {
 		description = S("Deepslate Tiles Wall"),
-		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", },
+		_mcl_stonecutter_recipes = { "mcl_deepslate:deepslate_cobbled", "mcl_deepslate:deepslate_polished", "mcl_deepslate:deepslate_bricks", "mcl_deepslate:deepslate_tiles", },
 	},
 	cracked = {
 		description = S("Cracked Deepslate Tiles")
