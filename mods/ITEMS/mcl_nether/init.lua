@@ -279,35 +279,23 @@ minetest.register_node("mcl_nether:quartz_smooth", {
 })
 
 
-mcl_stairs.register_stair("quartzblock", "group:quartz_block",
-		{pickaxey=1, material_stone=1},
-		{"mcl_nether_quartz_block_top.png", "mcl_nether_quartz_block_bottom.png", "mcl_nether_quartz_block_side.png"},
-		S("Quartz Stairs"),
-		mcl_sounds.node_sound_stone_defaults(), 0.8, 0.8,
-		nil,{_mcl_stonecutter_recipes={"mcl_nether:quartz_block"}})
-mcl_stairs.register_slab("quartzblock", "group:quartz_block",
-		{pickaxey=1, material_stone=1},
-		{"mcl_nether_quartz_block_top.png", "mcl_nether_quartz_block_bottom.png", "mcl_nether_quartz_block_side.png"},
-		S("Quartz Slab"),
-		mcl_sounds.node_sound_stone_defaults(), 6, 2,
-		S("Double Quartz Slab"), {_mcl_stonecutter_recipes = {"mcl_nether:quartz_block"}})
+mcl_stairs.register_stair_and_slab("quartzblock", {
+	baseitem = "mcl_nether:quartz_block",
+	basedesc = S("Quartz"),
+	recipeitem = "group:quartz_block",
+	extra_fields = {_mcl_stonecutter_recipes = {"mcl_nether:quartz_block"}},
+})
 
-mcl_stairs.register_stair_and_slab_simple("quartz_smooth", "mcl_nether:quartz_smooth", S("Smooth Quartz Stairs"), S("Smooth Quartz Slab"), S("Double Smooth Quartz Slab"),{_mcl_stonecutter_recipes = {"mcl_nether:quartz_smooth"}})
-
-mcl_stairs.register_stair_and_slab("nether_brick", "mcl_nether:nether_brick",
-		{pickaxey=1, material_stone=1},
-		{"mcl_nether_nether_brick.png"},
-		S("Nether Brick Stairs"),
-		S("Nether Brick Slab"),
-		mcl_sounds.node_sound_stone_defaults(), 6, 2,
-		S("Double Nether Brick Slab"),nil, {_mcl_stonecutter_recipes = { "mcl_nether:nether_brick" }},{_mcl_stonecutter_recipes = { "mcl_nether:nether_brick" }})
-mcl_stairs.register_stair_and_slab("red_nether_brick", "mcl_nether:red_nether_brick",
-		{pickaxey=1, material_stone=1},
-		{"mcl_nether_red_nether_brick.png"},
-		S("Red Nether Brick Stairs"),
-		S("Red Nether Brick Slab"),
-		mcl_sounds.node_sound_stone_defaults(), 6, 2,
-		S("Double Red Nether Brick Slab"),nil, {_mcl_stonecutter_recipes = { "mcl_nether:red_nether_brick" }},{_mcl_stonecutter_recipes = { "mcl_nether:red_nether_brick" },})
+mcl_stairs.register_stair_and_slab("nether_brick", {
+	baseitem = "mcl_nether:nether_brick",
+	basedesc = S("Nether Brick"),
+	extra_fields = {_mcl_stonecutter_recipes = { "mcl_nether:nether_brick" }},{_mcl_stonecutter_recipes = { "mcl_nether:nether_brick" }},
+})
+mcl_stairs.register_stair_and_slab("red_nether_brick", {
+	baseitem = "mcl_nether:red_nether_brick",
+	basedesc = S("Red Nether Brick"),
+	extra_fields = {_mcl_stonecutter_recipes = { "mcl_nether:red_nether_brick" }},{_mcl_stonecutter_recipes = { "mcl_nether:red_nether_brick" }},
+})
 
 -- Nether Brick Fence (without fence gate!)
 mcl_fences.register_fence("nether_brick_fence", S("Nether Brick Fence"), "mcl_fences_fence_nether_brick.png", {pickaxey=1, deco_block=1, fence_nether_brick=1}, 2, 30, {"group:fence_nether_brick"}, mcl_sounds.node_sound_stone_defaults())

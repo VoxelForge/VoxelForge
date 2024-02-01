@@ -408,7 +408,6 @@ function mcl_stairs.register_stair(subname, ...)
 	if type(select(1, ...)) == "table" then
 		local stairdef = select(1, ...)
 		local ndef = minetest.registered_nodes[stairdef.baseitem]
-		if not ndef then error(minetest.serialize(stairdef)) end
 		local basedesc = stairdef.basedesc or ndef.description
 
 		register_stair(subname, {
