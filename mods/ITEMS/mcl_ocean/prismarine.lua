@@ -64,11 +64,19 @@ minetest.register_node("mcl_ocean:prismarine_dark", {
 	_mcl_hardness = 1.5,
 })
 
-mcl_stairs.register_stair_and_slab_simple("prismarine", "mcl_ocean:prismarine", S("Prismarine Stairs"), S("Prismarine Slab"), S("Double Prismarine Slab"),nil,{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine" }},{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine" }})
-mcl_stairs.register_stair_and_slab_simple("prismarine_brick", "mcl_ocean:prismarine_brick", S("Prismarine Brick Stairs"), S("Prismarine Brick Slab"), S("Double Prismarine Brick Slab"),nil,{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_brick" }},{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_brick" }})
-mcl_stairs.register_stair_and_slab_simple("prismarine_dark", "mcl_ocean:prismarine_dark", S("Dark Prismarine Stairs"), S("Dark Prismarine Slab"), S("Double Dark Prismarine Slab"),nil,{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_dark" }},{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_dark" }})
-
-
+mcl_stairs.register_stair_and_slab("prismarine", {
+	baseitem = "mcl_ocean:prismarine",
+	extra_fields = {_mcl_stonecutter_recipes = { "mcl_ocean:prismarine" }},{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine" }}
+})
+mcl_stairs.register_stair_and_slab("prismarine_brick", {
+	baseitem = "mcl_ocean:prismarine_brick",
+	basedesc = S("Prismarine Brick"),
+	extra_fields = {_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_brick" }},{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_brick" }}
+})
+mcl_stairs.register_stair_and_slab("prismarine_dark", {
+	baseitem = "mcl_ocean:prismarine_dark",
+	extra_fields = {_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_dark" }},{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_dark" }}
+})
 
 -- Craftitems
 
