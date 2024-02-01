@@ -197,15 +197,15 @@ end
 
 --slabs/stairs
 mcl_stairs.register_stair_and_slab("blackstone", {
-	recipeitem = "mcl_blackstone:blackstone",
+	baseitem = "mcl_blackstone:blackstone",
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone"}},{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone"}}
 })
 mcl_stairs.register_stair_and_slab("blackstone_polished", {
-	recipeitem = "mcl_blackstone:blackstone_polished",
+	baseitem = "mcl_blackstone:blackstone_polished",
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}},{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}}
 })
 mcl_stairs.register_stair_and_slab("blackstone_brick_polished", {
-	recipeitem = "mcl_blackstone:blackstone_brick_polished",
+	baseitem = "mcl_blackstone:blackstone_brick_polished",
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}},{_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone","mcl_blackstone:blackstone_polished"}}
 })
 minetest.register_alias("mcl_stairs:slab_blackstone_chiseled_polished_top", "mcl_stairs:slab_blackstone_polished_top")

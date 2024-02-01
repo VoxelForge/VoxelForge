@@ -142,7 +142,7 @@ local function register_deepslate_variant(name, defs)
 	if defs.stairs then
 		mcl_stairs.register_stair("deepslate_"..name, {
 			description = defs.stairs.description,
-			recipeitem = main_itemstring,
+			baseitem = main_itemstring,
 			overrides = defs.stairs
 		})
 	end
@@ -150,7 +150,7 @@ local function register_deepslate_variant(name, defs)
 		mcl_stairs.register_slab("deepslate_"..name, {
 			description = defs.slab.description,
 			double_description = defs.slab.double_description,
-			recipeitem = main_itemstring,
+			baseitem = main_itemstring,
 			overrides = defs.slab
 		})
 	end

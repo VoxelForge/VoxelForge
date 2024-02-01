@@ -505,14 +505,14 @@ function mcl_trees.register_wood(name, p)
 
 	if p.stairs == nil or type(p.stairs) == "table" then
 		p.stairs = p.stairs or {}
-		mcl_stairs.register_stair_and_slab(name, { recipeitem="mcl_trees:wood_"..name, register_slab = false })
-		mcl_stairs.register_stair_and_slab(name.."_bark", { recipeitem="mcl_trees:bark_"..name, register_slab = false })
+		mcl_stairs.register_stair_and_slab(name, { baseitem="mcl_trees:wood_"..name, register_slab = false })
+		mcl_stairs.register_stair_and_slab(name.."_bark", { baseitem="mcl_trees:bark_"..name, register_slab = false })
 	end
 
 	if p.slab == nil or type(p.slab) == "table" then
 		p.slab = p.slab or {}
-		mcl_stairs.register_stair_and_slab(name, { recipeitem="mcl_trees:wood_"..name, register_stair_and_slab = false })
-		mcl_stairs.register_stair_and_slab(name.."_bark", { recipeitem="mcl_trees:bark_"..name, register_stair_and_slab = false })
+		mcl_stairs.register_stair_and_slab(name, { baseitem="mcl_trees:wood_"..name, register_stair_and_slab = false })
+		mcl_stairs.register_stair_and_slab(name.."_bark", { baseitem="mcl_trees:bark_"..name, register_stair_and_slab = false })
 	end
 	if p.sign_color and ( p.sign == nil or type(p.sign) == "table" ) then
 		mcl_signs.register_sign(name,p.sign_color,table.merge({

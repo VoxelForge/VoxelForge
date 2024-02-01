@@ -12,8 +12,8 @@ Register stair and slab based on the node `example:platinumblock`:
 
 ```lua
 mcl_stairs.register_stair_and_slab("platinum", {
-    recipeitem = "example:platinumblock",
-    base_description = S("Platinum"),
+    baseitem = "example:platinumblock",
+    basedesc = S("Platinum"),
 })
 ```
 
@@ -47,21 +47,24 @@ Used by `mcl_stairs.register_stair`, `mcl_stairs.register_slab` and
 
 ```lua
 {
-    recipeitem = "",
-    -- Node which the registered stair and slab are based on. It is also
-    -- used for their crafting recipes.
+    baseitem = "",
+    -- Node the registered stair/slab is based on.
 
-    base_description = "",
-    -- String used for generating stair/slab descriptions.  The generated
-    -- descriptions will have the form "<base_description> Stairs" and
-    -- "<base_description> Slab".  Defaults to the description of the node
-    -- defined in `recipeitem` if left empty.
+    basedesc = "",
+    -- String used for the stair/slab description.  Stair and slab
+    -- descriptions have the form "<basedesc> Stairs" and "<basedesc> Slab"
+    -- respectively.  Defaults to the description of the node defined
+    -- `baseitem` if left empty.
+
+    recipeitem = "",
+    -- Item or group used for the crafting recipe.  Defaults to `baseitem` if
+    -- left empty.
 
     register_craft = true,
-    -- If crafting recipes should be registered.
+    -- If crafting recipe should be registered.
 
     extra_groups = {},
-    -- Additional groups which get added to the registered nodes.
+    -- Additional groups added to the registered nodes.
 
     tiles = {},
     -- Custom tiles for the node.

@@ -134,21 +134,21 @@ minetest.register_node("mcl_copper:block_oxidized_cut", {
 })
 
 mcl_stairs.register_stair_and_slab("copper_cut", {
-	recipeitem = "mcl_copper:block_cut",
+	baseitem = "mcl_copper:block_cut",
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_copper:block", "mcl_copper:block_cut"}}
 })
 
 mcl_stairs.register_stair_and_slab("copper_exposed_cut", {
-	recipeitem = "mcl_copper:block_exposed_cut",
+	baseitem = "mcl_copper:block_exposed_cut",
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_copper:block_exposed", "mcl_copper:block_exposed_cut"}, _on_lightning_strike = on_lightning_strike}
 })
 
 mcl_stairs.register_stair_and_slab("copper_weathered_cut", {
-	recipeitem = "mcl_copper:block_weathered_cut",
+	baseitem = "mcl_copper:block_weathered_cut",
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_copper:block_weathered", "mcl_copper:block_weathered_cut"}, _on_lightning_strike = on_lightning_strike}
 })
 
 mcl_stairs.register_stair_and_slab("copper_oxidized_cut", {
-	recipeitem = "mcl_copper:block_oxidized_cut",
+	baseitem = "mcl_copper:block_oxidized_cut",
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_copper:block_oxidized", "mcl_copper:block_oxidized_cut"}, _on_lightning_strike = on_lightning_strike}
 })
