@@ -757,9 +757,12 @@ minetest.register_node("mcl_portals:portal", {
 	sounds = mcl_sounds.node_sound_glass_defaults(),
 	on_destruct = destroy_portal,
 	on_rotate = on_rotate,
-
 	_mcl_hardness = -1,
 	_mcl_blast_resistance = 0,
+	_on_walk_through = function(pos, node, player)
+		emit_portal_particles(pos, node)
+		teleport_objs_in_portal(pos)
+	end,
 })
 
 minetest.register_chatcommand("dumpportals", {
