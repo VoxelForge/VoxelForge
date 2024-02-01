@@ -120,7 +120,7 @@ end
 -- Register stair function used internally for new and old API (not exposed
 -- externally).
 local function register_stair(subname, stairdef)
-	if stairdef.recipeitem then
+	if stairdef.recipeitem and minetest.registered_items[stairdef.recipeitem] then
 		if not stairdef.tiles then
 			stairdef.tiles = minetest.registered_items[stairdef.recipeitem].tiles
 		end
@@ -247,7 +247,7 @@ function register_slab(subname, stairdef)
 	local upper_slab = lower_slab.."_top"
 	local double_slab = lower_slab.."_double"
 
-	if stairdef.recipeitem then
+	if stairdef.recipeitem and minetest.registered_items[stairdef.recipeitem] then
 		if not stairdef.tiles then
 			stairdef.tiles = minetest.registered_items[stairdef.recipeitem].tiles
 		end
