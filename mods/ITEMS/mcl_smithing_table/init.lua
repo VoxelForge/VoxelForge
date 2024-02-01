@@ -77,6 +77,8 @@ local formspec = table.concat({
 	-- Listrings
 	"listring[context;upgraded_item]",
 	"listring[current_player;main]",
+	"listring[context;sorter]",
+	"listring[current_player;main]",
 	"listring[context;upgrade_item]",
 	"listring[current_player;main]",
 	"listring[context;mineral]",
@@ -132,6 +134,19 @@ local function reset_upgraded_item(pos)
 	inv:set_stack("upgraded_item", 1, upgraded_item)
 end
 
+local function sort_stack(stack, pos)
+	if minetest.get_item_group(stack:get_name(), "smithing_template") > 0 then
+		return "template"
+	elseif mcl_smithing_table.is_smithing_mineral(stack:get_name()) then
+		return "mineral"
+	elseif (minetest.get_item_group(stack:get_name(),"armor") > 0
+			or minetest.get_item_group(stack:get_name(),"tool") > 0
+			or minetest.get_item_group(stack:get_name(),"sword") > 0)
+			and not mcl_armor.trims.blacklisted[stack:get_name()] then
+		return "upgrade_item"
+	end
+end
+
 minetest.register_node("mcl_smithing_table:table", {
 	description = S("Smithing table"),
 	-- ToDo: Add _doc_items_longdesc and _doc_items_usagehelp
@@ -159,6 +174,7 @@ minetest.register_node("mcl_smithing_table:table", {
 		inv:set_size("mineral", 1)
 		inv:set_size("template",1)
 		inv:set_size("upgraded_item", 1)
+		inv:set_size("sorter", 1)
 	end,
 
 	after_dig_node = mcl_util.drop_items_from_meta_container({"upgrade_item", "mineral", "template"}),
@@ -180,6 +196,18 @@ minetest.register_node("mcl_smithing_table:table", {
 			if minetest.get_item_group(stack:get_name(),"smithing_template") > 0 then
 				r = stack:get_count()
 			end
+		elseif listname == "sorter" then
+			local inv = minetest.get_meta(pos):get_inventory()
+			local trg = sort_stack(stack, pos)
+			if trg then
+				local stack1 = ItemStack(stack):take_item()
+				if inv:room_for_item(trg, stack) then
+					return stack:get_count()
+				elseif inv:room_for_item(trg, stack1) then
+					return stack:get_stack_max() - inv:get_stack(trg, 1):get_count()
+				end
+			end
+			return 0
 		end
 
 		return r
@@ -189,8 +217,25 @@ minetest.register_node("mcl_smithing_table:table", {
 		return 0
 	end,
 
-	on_metadata_inventory_put = reset_upgraded_item,
+	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+		if listname == "sorter" then return 0 end
+		local name = player:get_player_name()
+		if minetest.is_protected(pos, name) then
+			minetest.record_protection_violation(pos, name)
+			return 0
+		else
+			return stack:get_count()
+		end
+	end,
 
+	on_metadata_inventory_put =  function(pos, listname, index, stack, player)
+		if listname == "sorter" then
+			local inv = minetest.get_meta(pos):get_inventory()
+			inv:add_item(sort_stack(stack, pos), stack)
+			inv:set_stack("sorter", 1, ItemStack(""))
+		end
+		reset_upgraded_item(pos)
+	end,
 	on_metadata_inventory_take = function(pos, listname, index, stack, player)
 		local inv = minetest.get_meta(pos):get_inventory()
 
@@ -259,3 +304,15 @@ minetest.register_craft({
 function mcl_smithing_table.upgrade_item_netherite(itemstack)
 	return mcl_smithing_table.upgrade_item(itemstack)
 end
+
+minetest.register_lbm({
+	label = "Update smithing table formspecs and invs to allow new sneak+click behavior",
+	name = "mcl_smithing_table:update_coolsneak",
+	nodenames = { "mcl_smithing_table:table" },
+	run_at_every_load = false,
+	action = function(pos, node)
+		local m = minetest.get_meta(pos)
+		m:get_inventory():set_size("sorter", 1)
+		m:set_string("formspec", formspec)
+	end,
+})
