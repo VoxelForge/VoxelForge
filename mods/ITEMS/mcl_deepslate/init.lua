@@ -116,12 +116,11 @@ register_deepslate_ore("redstone_lit", S("Lit Deepslate Redstone Ore"), {
 })
 register_deepslate_ore("copper", S("Deepslate Copper Ore"), nil, "mcl_copper:stone_with_copper")
 
-local function register_deepslate_variant(item, desc, longdesc, stairs, slab, double_slab, wall, cracked)
-	local def = {
-		description = desc,
-		_doc_items_longdesc = longdesc,
+local function register_deepslate_variant(name, defs)
+	local main_itemstring = "mcl_deepslate:deepslate_"..name
+	local main_def = {
 		_doc_items_hidden = false,
-		tiles = { "mcl_deepslate_"..item..".png" },
+		tiles = { "mcl_deepslate_"..name..".png" },
 		is_ground_content = false,
 		groups = { pickaxey = 1, building_block = 1, material_stone = 1 },
 		sounds = mcl_sounds.node_sound_stone_defaults(),
@@ -129,64 +128,123 @@ local function register_deepslate_variant(item, desc, longdesc, stairs, slab, do
 		_mcl_hardness = 3.5,
 		_mcl_silk_touch_drop = true,
 	}
-	if item == "cobbled" then
-		def.groups.cobble = 1
-	end
-	minetest.register_node("mcl_deepslate:deepslate_"..item, table.copy(def))
-
-	if cracked then
-		def.description = cracked
-		def._doc_items_longdesc = S("@1 are a cracked variant.", cracked)
-		def.tiles = { "mcl_deepslate_"..item.."_cracked.png" }
-		minetest.register_node("mcl_deepslate:deepslate_"..item.."_cracked", def)
+	if defs.node then
+		if name == "cobbled" then
+			defs.node.groups = table.merge(main_def.groups, defs.node.groups, { cobble = 1 })
+		end
+		minetest.register_node(main_itemstring, table.merge(main_def, defs.node))
 	end
 
-	if stairs and slab and double_slab then
-		mcl_stairs.register_stair_and_slab_simple("deepslate_"..item, "mcl_deepslate:deepslate_"..item, stairs, slab, double_slab)
+	if defs.cracked then
+		minetest.register_node(main_itemstring.."_cracked", table.merge(main_def, {
+			_doc_items_longdesc = S("@1 are a cracked variant.", defs.cracked.description),
+			tiles = { "mcl_deepslate_"..name.."_cracked.png" },
+		}, defs.cracked))
+	end
+	if defs.stairs then
+		--   recipeitem, groups, tiles, description, sounds, blast_resistance,
+		--   hardness, corner_stair_texture_override, overrides
+		mcl_stairs.register_stair("deepslate_"..name, {
+			description = defs.stairs.description,
+			recipeitem = main_itemstring,
+			overrides = defs.stairs
+		})
+	end
+	if defs.slab then
+	--   recipeitem, groups, tiles, description, sounds, blast_resistance,
+	--   hardness, double_description, overrides
+		mcl_stairs.register_slab("deepslate_"..name, {
+			description = defs.slab.description,
+			recipeitem = main_itemstring,
+			overrides = defs.slab
+		})
 	end
 
-	if wall then
-		mcl_walls.register_wall("mcl_deepslate:deepslate"..item.."wall", wall, "mcl_deepslate:deepslate_"..item)
+	if defs.wall then
+		mcl_walls.register_wall("mcl_deepslate:deepslate"..name.."wall", defs.wall.description, main_itemstring, nil, nil, nil, nil, defs.wall)
 	end
 end
 
-register_deepslate_variant("cobbled",
-	S("Cobbled Deepslate"),
-	S("Cobbled deepslate is a stone variant that functions similar to cobblestone or blackstone."),
-	S("Cobbled Deepslate Stairs"),
-	S("Cobbled Deepslate Slab"),
-	S("Double Cobbled Deepslate Slab"),
-	S("Cobbled Deepslate Wall"))
+register_deepslate_variant("cobbled", {
+	node = {
+		description = S("Cobbled Deepslate"),
+		_doc_items_longdesc = S("Cobbled deepslate is a stone variant that functions similar to cobblestone or blackstone."),
+	},
+	stairs = {
+		description = S("Cobbled Deepslate Stairs"),
+	},
+	slab = {
+		description = S("Cobbled Deepslate Slab"),
+		double_slab_description = S("Double Cobbled Deepslate Slab"),
+	},
+	wall = {
+		description = S("Cobbled Deepslate Wall"),
+	},
+})
 
-register_deepslate_variant("polished",
-	S("Polished Deepslate"),
-	S("Polished deepslate is the stone-like polished version of deepslate."),
-	S("Polished Deepslate Stairs"),
-	S("Polished Deepslate Slab"),
-	S("Double Polished Deepslate Slab"),
-	S("Polished Deepslate Wall"))
+register_deepslate_variant("polished", {
+	node = {
+		description = S("Polished Deepslate"),
+		_doc_items_longdesc = S("Polished deepslate is the stone-like polished version of deepslate."),
+	},
+	stairs = {
+		description = S("Polished Deepslate Stairs"),
+	},
+	slab = {
+		description = S("Polished Deepslate Slab"),
+		double_description = S("Double Polished Deepslate Slab"),
+	},
+	wall = {
+		description = S("Polished Deepslate Wall")
+	}
+})
 
-register_deepslate_variant("bricks",
-	S("Deepslate Bricks"),
-	S("Deepslate bricks are the brick version of deepslate."),
-	S("Deepslate Brick Stairs"),
-	S("Deepslate Brick Slab"),
-	S("Double Deepslate Brick Slab"),
-	S("Deepslate Brick Wall"),
-	S("Cracked Deepslate Bricks"))
+register_deepslate_variant("bricks", {
+	node = {
+		description = S("Deepslate Bricks"),
+		_doc_items_longdesc = S("Deepslate bricks are the brick version of deepslate."),
+	},
+	stairs = {
+		description = S("Deepslate Brick Stairs"),
+	},
+	slab = {
+		description = S("Deepslate Brick Slab"),
+		double_description = S("Double Deepslate Brick Slab"),
+	},
+	wall = {
+		description = S("Deepslate Brick Wall"),
+	},
+	cracked = {
+		description = S("Cracked Deepslate Bricks"),
+	}
+})
 
-register_deepslate_variant("tiles",
-	S("Deepslate Tiles"),
-	S("Deepslate tiles are a decorative variant of deepslate."),
-	S("Deepslate Tile Stairs"),
-	S("Deepslate Tile Slab"),
-	S("Double Deepslate Tile Slab"),
-	S("Deepslate Brick Wall"),
-	S("Cracked Deepslate Tiles"))
+register_deepslate_variant("tiles", {
+	node = {
+		description = S("Deepslate Tiles"),
+		_doc_items_longdesc = S("Deepslate tiles are a decorative variant of deepslate."),
+	},
+	stairs = {
+		description = S("Deepslate Tile Stairs"),
+	},
+	slab = {
+		description = S("Deepslate Tile Slab"),
+		double_description = S("Double Deepslate Tile Slab"),
+	},
+	wall = {
+		description = S("Deepslate Tiles Wall"),
+	},
+	cracked = {
+		description = S("Cracked Deepslate Tiles")
+	}
+})
 
-register_deepslate_variant("chiseled",
-	S("Chiseled Deepslate"),
-	S("Deepslate tiles are a decorative variant of deepslate."))
+register_deepslate_variant("chiseled", {
+	node = {
+		description = S("Chiseled Deepslate"),
+		_doc_items_longdesc = S("Deepslate tiles are a decorative variant of deepslate."),
+	}
+})
 
 local deepslate_variants =  {"cobbled", "polished", "bricks", "tiles"}
 for i = 1, 3 do
