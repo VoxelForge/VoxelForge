@@ -134,8 +134,6 @@ mcl_villages.biome_map = {
 	--Swampland = "oak",
 }
 
--- TODO should we handle stripped bark and the like?
--- TODO Should we have an API for this?
 mcl_villages.material_substitions = {
 	desert = {
 		{ "mcl_core:tree", "mcl_core:redsandstonecarved" },
@@ -167,6 +165,7 @@ mcl_villages.material_substitions = {
 		{ "mcl_trees:tree_oak", "mcl_core:redsandstonecarved" },
 		{ "mcl_trees:wood_oak", "mcl_trees:wood_spruce" },
 		{ '"mcl_fences:oak_fence([^"]*)"', '"mcl_fences:birch_fence%1"' },
+		{ '"mcl_stairs:stair_oak_bark([^"]*)"', '"mcl_stairs:stair_sandstonesmooth2%1"' },
 		{ '"mcl_stairs:stair_oak([^"]*)"', '"mcl_stairs:stair_sandstonesmooth2%1"' },
 	},
 	spruce = {
@@ -276,8 +275,8 @@ mcl_villages.material_substitions = {
 			'"mesecons_pressureplates:pressure_plate_bamboo_%1"',
 		},
 		{ '"mcl_doors:trapdoor([^"]*)"', '"mcl_doors:trapdoor_bamboo%1"' },
-		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_bamboo:bamboo_door%1"' },
-		{ '"mcl_doors:door_oak([^"]*)"', '"mcl_doors:bamboo_door%1"' },
+		{ '"mcl_doors:wooden_door([^"]*)"', '"mcl_bamboo:door_bamboo%1"' },
+		{ '"mcl_doors:door_oak([^"]*)"', '"mcl_doors:door_bamboo%1"' },
 
 		{ "mcl_core:cobble", "mcl_core:andesite" },
 		{ '"mcl_stairs:stair_cobble([^"]*)"', '"mcl_stairs:stair_andesite%1"' },
