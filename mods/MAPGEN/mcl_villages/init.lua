@@ -134,9 +134,7 @@ minetest.register_lbm({
 	name = "mcl_villages:clear_remains",
 	run_at_every_load = true,
 	nodenames = { "mcl_villages:no_paths" },
-	action = function(pos, node)
-		minetest.set_node(pos, { name = "air" })
-	end,
+	action = minetest.remove_node,
 })
 
 -- This makes the temporary node invisble unless in creative mode
