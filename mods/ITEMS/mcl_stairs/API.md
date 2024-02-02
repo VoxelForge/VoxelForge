@@ -54,14 +54,11 @@ Used by `mcl_stairs.register_stair`, `mcl_stairs.register_slab` and
     -- String used for the stair/slab description.  Stair and slab
     -- descriptions have the form "<basedesc> Stairs" and "<basedesc> Slab"
     -- respectively.  Defaults to the description of the node defined
-    -- `baseitem` if left empty.
+    -- `baseitem` if unspecified.
 
     recipeitem = "",
     -- Item or group used for the crafting recipe.  Defaults to `baseitem` if
-    -- left empty.
-
-    register_craft = true,
-    -- If crafting recipe should be registered.
+    -- unspecified.  Set to empty string to make uncraftable.
 
     extra_groups = {},
     -- Additional groups added to the registered nodes.

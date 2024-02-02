@@ -215,7 +215,7 @@ local function register_stair(subname, stairdef)
 		placement_prevented = placement_prevented,
 	},stairdef.overrides or {}))
 
-	if stairdef.recipeitem and stairdef.register_craft ~= false then
+	if stairdef.recipeitem and stairdef.recipeitem ~= "" then
 		minetest.register_craft({
 			output = "mcl_stairs:stair_" .. subname .. " 4",
 			recipe = {
@@ -388,7 +388,7 @@ function register_slab(subname, stairdef)
 		_mcl_blast_resistance = stairdef.blast_resistance,
 	})
 
-	if stairdef.recipeitem and stairdef.register_craft ~= false then
+	if stairdef.recipeitem and stairdef.recipeitem ~= "" then
 		minetest.register_craft({
 			output = lower_slab .. " 6",
 			recipe = {
@@ -419,7 +419,6 @@ function mcl_stairs.register_stair(subname, ...)
 			blast_resistance = ndef.blast_resistance,
 			hardness = ndef.hardness,
 			overrides = ndef.extra_fields,
-			register_craft = stairdef.register_craft,
 		})
 	else
 		register_stair(subname, {
