@@ -15,9 +15,9 @@ local function detach_driver(self)
 	if not self._driver then
 		return
 	end
+	local player = minetest.get_player_by_name(self._driver)
 	self._driver = nil
 	self._start_pos = nil
-	local player = minetest.get_player_by_name(self._driver)
 	if player then
 		mcl_player.players[player].attached = nil
 		player:set_detach()
