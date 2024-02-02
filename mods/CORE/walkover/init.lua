@@ -31,7 +31,7 @@ minetest.register_globalstep(function(dtime)
 			local npos = vector.offset(pos, 0, -0.1, 0)
 			local node = minetest.get_node(npos)
 			if on_walk[mcl_player.players[player].nodes.stand] then
-				on_walk[node.name](npos, node, player)
+				on_walk[mcl_player.players[player].nodes.stand](npos, node, player)
 			end
 			for i = 1, #registered_globals do
 				registered_globals[i](npos, node, player)
