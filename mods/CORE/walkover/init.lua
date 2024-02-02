@@ -5,6 +5,12 @@ local on_walk = {}
 local on_walk_through = {}
 local registered_globals = {}
 
+local offsets = {
+	stand = vector.new(0, -0.1 ,0),
+	feet = vector.new(0, 0.3, 0),
+	head = vector.new(0, 1.5, 0),
+}
+
 walkover.registered_globals = registered_globals
 
 function walkover.register_global(func)
@@ -22,29 +28,22 @@ minetest.register_on_mods_loaded(function()
 	end
 end)
 
-local timer = 0
-minetest.register_globalstep(function(dtime)
-	timer = timer + dtime
-	if timer >= 0.6 then
-		for _, player in pairs(minetest.get_connected_players()) do
-			local pos = player:get_pos()
-			local npos = vector.offset(pos, 0, -0.1, 0)
-			local node = minetest.get_node(npos)
-			if on_walk[mcl_player.players[player].nodes.stand] then
-				on_walk[mcl_player.players[player].nodes.stand](npos, node, player)
-			end
-			for i = 1, #registered_globals do
-				registered_globals[i](npos, node, player)
-			end
-			if on_walk_through[mcl_player.players[player].nodes.feet] then
-				local npos = vector.offset(pos, 0, 0.3, 0)
-				on_walk_through[mcl_player.players[player].nodes.feet](npos, minetest.get_node(npos), player)
-			end
-			if on_walk_through[mcl_player.players[player].nodes.head] then
-				local npos = vector.offset(pos, 0, 1.5, 0)
-				on_walk_through[mcl_player.players[player].nodes.head](npos, minetest.get_node(npos), player)
-			end
-		end
-		timer = 0
+mcl_player.register_globalstep_slow(function(player)
+	local pos = player:get_pos()
+	local npos = vector.add(pos, offsets.stand)
+	local node = minetest.get_node(npos)
+	if on_walk[mcl_player.players[player].nodes.stand] then
+		on_walk[mcl_player.players[player].nodes.stand](npos, node, player)
+	end
+	for i = 1, #registered_globals do
+		registered_globals[i](npos, node, player)
+	end
+	if on_walk_through[mcl_player.players[player].nodes.feet] then
+		local npos = vector.add(pos, offsets.feet)
+		on_walk_through[mcl_player.players[player].nodes.feet](npos, minetest.get_node(npos), player)
+	end
+	if on_walk_through[mcl_player.players[player].nodes.head] then
+		local npos = vector.add(pos, offsets.head)
+		on_walk_through[mcl_player.players[player].nodes.head](npos, minetest.get_node(npos), player)
 	end
 end)
