@@ -1,5 +1,7 @@
 local C = minetest.colorize
 
+local base_color = "#794100"
+
 local function color_string_to_table(colorstring)
 	return {
 		r = tonumber(colorstring:sub(2,3), 16), -- 16 as second parameter allows hexadecimal
@@ -20,13 +22,13 @@ local function calculate_color(first, last)
     }
 end
 local function get_texture_function(texture)
-	local function get_texture(_, itemstack)
+	return function(_, itemstack)
 		local out
 		local color = itemstack:get_meta():get_string("mcl_armor:color")
 		if color == "" or color == nil then
 			out = texture
 		else
-			out = texture.."^[hsl:0:100:50^[multiply:"..color
+			out = texture:gsub(".png$", "_desat.png").."^[multiply:"..color
 		end
 
 		if mcl_enchanting.is_enchanted(itemstack:get_name()) then
@@ -35,7 +37,6 @@ local function get_texture_function(texture)
 			return out
 		end
 	end
-	return get_texture
 end
 
 function mcl_armor.colorize_leather_armor(itemstack, colorstring)
@@ -56,7 +57,7 @@ function mcl_armor.colorize_leather_armor(itemstack, colorstring)
 	end
 	meta:set_string("mcl_armor:color", colorstring)
 	meta:set_string("inventory_image",
-		itemstack:get_definition().inventory_image .. "^[hsl:0:100:50^[multiply:" .. colorstring
+		itemstack:get_definition().inventory_image:gsub(".png$", "_desat.png") .. "^[multiply:" .. colorstring
 	)
 	tt.reload_itemstack_description(itemstack)
 	return itemstack
@@ -76,6 +77,7 @@ end
 mcl_armor.register_set({
 	name = "leather",
 	description = "Leather",
+	color = base_color,
 	descriptions = {
 		head = "Cap",
 		torso = "Tunic",
