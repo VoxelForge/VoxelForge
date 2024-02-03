@@ -154,9 +154,10 @@ function TNT:check_water_flow(p)
 		if vec.x ~= 0 or vec.y ~= 0 or vec.z ~= 0 then
 			-- Minecraft Wiki: Flowing speed is "about 1.39 meters per second"
 			local f = 1.39
-			-- Set new item moving speed into the direciton of the liquid
+			-- Set new item moving speed into the direciton of the liquid, keeping vertical acceleration untouched
 			local newv = vector.multiply(vec, f)
-			self.object:set_acceleration({x = 0, y = 0, z = 0})
+			local yaccel = self.object:get_acceleration().y
+			self.object:set_acceleration({x = 0, y = yaccel, z = 0})
 			self.object:set_velocity({x = newv.x, y = -0.22, z = newv.z})
 
 			self.physical_state = true
