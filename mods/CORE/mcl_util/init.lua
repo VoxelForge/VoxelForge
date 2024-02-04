@@ -609,13 +609,16 @@ function mcl_util.deal_damage(target, damage, mcl_reason)
 			end
 			return
 		elseif luaentity.is_mob then
-			if luaentity.health > 0 then
-				if mcl_reason.source and mcl_reason.source.is_player and mcl_reason.source:is_player() then
-					luaentity.last_player_hit_time = minetest.get_gametime()
-					luaentity.last_player_hit_name = mcl_reason.source:get_player_name()
-				end
+			if mcl_reason.source and mcl_reason.source.is_player and mcl_reason.source:is_player() then
+				luaentity.last_player_hit_time = minetest.get_gametime()
+				luaentity.last_player_hit_name = mcl_reason.source:get_player_name()
+			end
+			if luaentity.health - damage > 0 then
 				luaentity.health = luaentity.health - damage
 				mcl_damage.run_damage_callbacks(target, -damage, mcl_reason or {type = "generic"})
+			else
+				luaentity.health = luaentity.health - damage
+				mcl_damage.run_death_callbacks(target, mcl_reason or {type = "generic"})
 			end
 			return
 		else
