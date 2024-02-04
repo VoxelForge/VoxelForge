@@ -600,6 +600,9 @@ function mcl_util.use_item_durability(itemstack, n)
 end
 
 function mcl_util.deal_damage(target, damage, mcl_reason)
+	if not mcl_reason.flags then
+		mcl_damage.finish_reason(mcl_reason)
+	end
 	local luaentity = target:get_luaentity()
 	if luaentity then
 		damage = -mcl_damage.run_modifiers(target, -damage, mcl_reason or {type = "generic"})

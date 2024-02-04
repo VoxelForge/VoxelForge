@@ -94,7 +94,7 @@ end
 
 function mcl_damage.finish_reason(mcl_reason)
 	mcl_reason.source = mcl_reason.source or mcl_reason.direct
-	mcl_reason.flags = mcl_damage.types[mcl_reason.type]
+	mcl_reason.flags = mcl_damage.types[mcl_reason.type] or {}
 end
 
 function mcl_damage.from_mt(mt_reason)
