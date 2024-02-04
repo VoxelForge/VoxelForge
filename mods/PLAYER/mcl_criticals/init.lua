@@ -28,3 +28,7 @@ mcl_damage.register_modifier(function(obj, damage, reason)
 		end
 	end
 end, -100)
+
+mcl_damage.register_on_death(function(obj, reason)
+	minetest.log(dump(reason))
+end)
