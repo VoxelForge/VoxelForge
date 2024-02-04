@@ -590,7 +590,10 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 			self:damage_effect(damage)
 
 			-- do damage
-			self.health = self.health - damage
+			local mcl_reason = {}
+			mcl_damage.from_punch(mcl_reason, hitter)
+			mcl_damage.finish_reason(mcl_reason)
+			mcl_util.deal_damage(self.object, damage, mcl_reason)
 
 			-- skip future functions if dead, except alerting others
 			if self:check_for_death( "hit", {type = "punch", puncher = hitter}) then
