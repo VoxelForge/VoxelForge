@@ -579,7 +579,7 @@ end
 -- Deal light damage to mob, returns true if mob died
 function mob_class:deal_light_damage(pos, damage)
 	if not ((mcl_weather.rain.raining or mcl_weather.state == "snow") and mcl_weather.is_outdoor(pos)) then
-		self.health = self.health - damage
+		self:damage_mob("light", damage)
 
 		mcl_mobs.effect(pos, 5, "mcl_particles_smoke.png")
 
@@ -674,8 +674,7 @@ function mob_class:do_env_damage()
 	-- rain
 	if self.rain_damage > 0 then
 		if mcl_weather.rain.raining and mcl_weather.is_outdoor(pos) then
-
-			self.health = self.health - self.rain_damage
+			self:damage_mob("environment", self.rain_damage)
 
 			if self:check_for_death("rain", {type = "environment",
 					pos = pos, node = self.standing_in}) then
@@ -689,17 +688,13 @@ function mob_class:do_env_damage()
 	-- water damage
 	if self.water_damage > 0
 	and nodef.groups.water then
+		self:damage_mob("environment", self.water_damage)
 
-		if self.water_damage ~= 0 then
+		mcl_mobs.effect(pos, 5, "mcl_particles_smoke.png", nil, nil, 1, nil)
 
-			self.health = self.health - self.water_damage
-
-			mcl_mobs.effect(pos, 5, "mcl_particles_smoke.png", nil, nil, 1, nil)
-
-			if self:check_for_death("water", {type = "environment",
-					pos = pos, node = self.standing_in}) then
-				return true
-			end
+		if self:check_for_death("water", {type = "environment",
+				pos = pos, node = self.standing_in}) then
+			return true
 		end
 	-- magma damage
 	elseif self.fire_damage > 0
@@ -707,7 +702,7 @@ function mob_class:do_env_damage()
 
 		if self.fire_damage ~= 0 then
 
-			self.health = self.health - self.fire_damage
+			self:damage_mob("environment", self.fire_damage)
 
 			if self:check_for_death("fire", {type = "environment",
 					pos = pos, node = self.standing_in}) then
@@ -720,7 +715,7 @@ function mob_class:do_env_damage()
 
 		if self.lava_damage ~= 0 then
 
-			self.health = self.health - self.lava_damage
+			self:damage_mob("environment", self.lava_damage)
 
 			mcl_mobs.effect(pos, 5, "fire_basic_flame.png", nil, nil, 1, nil)
 			mcl_burning.set_on_fire(self.object, 10)
@@ -737,7 +732,7 @@ function mob_class:do_env_damage()
 
 		if self.fire_damage ~= 0 then
 
-			self.health = self.health - self.fire_damage
+			self:damage_mob("environment", self.fire_damage)
 
 			mcl_mobs.effect(pos, 5, "fire_basic_flame.png", nil, nil, 1, nil)
 			mcl_burning.set_on_fire(self.object, 5)
@@ -751,8 +746,7 @@ function mob_class:do_env_damage()
 	-- damage_per_second node check
 	elseif nodef.damage_per_second ~= 0 and not nodef.groups.lava and not nodef.groups.fire then
 
-		self.health = self.health - nodef.damage_per_second
-
+		self:damage_mob("environment", nodef.damage_per_second)
 		mcl_mobs.effect(pos, 5, "mcl_particles_smoke.png")
 
 		if self:check_for_death("dps", {type = "environment",
@@ -784,7 +778,7 @@ function mob_class:do_env_damage()
 					dmg = 4
 				end
 				self:damage_effect(dmg)
-				self.health = self.health - dmg
+				self:damage_mob("environment", dmg)
 			end
 			if self:check_for_death("drowning", {type = "environment",
 					pos = pos, node = self.standing_in}) then
@@ -814,7 +808,7 @@ function mob_class:do_env_damage()
 		if self.suffocation_timer >= 3 then
 			-- 2 damage per second
 			-- TODO: Deal this damage once every 1/2 second
-			self.health = self.health - 2
+			self:damage_mob("environment", 2)
 
 			if self:check_for_death("suffocation", {type = "environment",
 					pos = pos, node = self.standing_in}) then
@@ -847,11 +841,13 @@ function mob_class:env_damage (dtime, pos)
 	end
 end
 
-function mob_class:damage_mob(reason,damage)
+function mob_class:damage_mob(reason, damage)
 	if not self.health then return end
 	damage = math.floor(damage)
 	if damage > 0 then
-		self.health = self.health - damage
+		local mcl_reason = { type = reason }
+		mcl_damage.finish_reason(mcl_reason)
+		mcl_util.deal_damage(self.object, damage, mcl_reason)
 
 		mcl_mobs.effect(self.object:get_pos(), 5, "mcl_particles_smoke.png", 1, 2, 2, nil)
 

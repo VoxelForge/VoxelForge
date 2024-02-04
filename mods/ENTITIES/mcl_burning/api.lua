@@ -178,7 +178,9 @@ function mcl_burning.tick(obj, dtime, storage)
 				local luaentity = obj:get_luaentity()
 
 				if not luaentity or not luaentity.fire_damage_resistant then
-					mcl_util.deal_damage(obj, 1, {type = "on_fire"})
+					local mcl_reason =  { type = "on_fire" }
+					mcl_damage.finish_reason(mcl_reason)
+					mcl_util.deal_damage(obj, 1, mcl_reason)
 				end
 			end
 		end

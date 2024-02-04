@@ -31,6 +31,8 @@ mcl_damage = {
 		explosion = {is_explosion = true},
 		cramming = {bypasses_armor = true}, -- unused
 		fireworks = {is_explosion = true}, -- unused
+		environment = {},
+		light = {},
 	}
 }
 
