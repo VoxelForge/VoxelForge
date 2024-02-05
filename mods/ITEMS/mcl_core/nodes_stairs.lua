@@ -1,5 +1,7 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
+local extra_nodes = minetest.settings:get_bool("mcl_extra_nodes", true)
+
 mcl_stairs.register_stair_and_slab("stone_rough", {
 	baseitem = "mcl_core:stone",
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_core:stone"}},
@@ -10,6 +12,13 @@ mcl_stairs.register_slab("stone", {
 	tiles = {"mcl_stairs_stone_slab_top.png", "mcl_stairs_stone_slab_top.png", "mcl_stairs_stone_slab_side.png"},
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_core:stone_smooth"}},
 })
+mcl_stairs.register_stair("stone", {
+	baseitem = "mcl_core:stone_smooth",
+	recipeitem = extra_nodes and "mcl_core:stone_smooth" or "",
+	extra_fields = {_mcl_stonecutter_recipes = {"mcl_core:stone_smooth"}},
+	extra_groups = {not_in_creative_inventory = extra_nodes and 0 or 1},
+})
+
 
 mcl_stairs.register_stair_and_slab("andesite", {
 	baseitem = "mcl_core:andesite",
