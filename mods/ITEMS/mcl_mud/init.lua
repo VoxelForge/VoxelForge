@@ -48,7 +48,7 @@ minetest.register_node("mcl_mud:mud_bricks", {
 mcl_stairs.register_stair_and_slab("mud_brick", {
 	baseitem = "mcl_mud:mud_bricks",
 	base_description = S("Mud Brick"),
-	extra_fields = {_mcl_stonecutter_recipes = {"mcl_mud:mud_bricks"}},{_mcl_stonecutter_recipes = {"mcl_mud:mud_bricks"}}
+	overrides = {_mcl_stonecutter_recipes = {"mcl_mud:mud_bricks"}},{_mcl_stonecutter_recipes = {"mcl_mud:mud_bricks"}}
 })
 
 -- packed mud

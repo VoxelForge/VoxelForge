@@ -213,7 +213,7 @@ local function register_stair(subname, stairdef)
 		_mcl_blast_resistance = stairdef.blast_resistance,
 		_mcl_hardness = stairdef.hardness,
 		placement_prevented = placement_prevented,
-	},stairdef.overrides or {}))
+	}, stairdef.overrides or {}))
 
 	if stairdef.recipeitem and stairdef.recipeitem ~= "" then
 		minetest.register_craft({
@@ -330,7 +330,7 @@ function register_slab(subname, stairdef)
 			end
 			return false
 		end,
-	},stairdef.overrides or {})
+	}, stairdef.overrides or {})
 
 	minetest.register_node(":"..lower_slab, table.merge(nodedef,{
 		groups = table.merge(stairdef.groups,{slab = 1}),
@@ -418,7 +418,7 @@ function mcl_stairs.register_stair(subname, ...)
 			sounds = ndef.sounds,
 			blast_resistance = ndef.blast_resistance,
 			hardness = ndef.hardness,
-			overrides = ndef.extra_fields,
+			overrides = stairdef.overrides,
 		})
 	else
 		register_stair(subname, {
@@ -450,8 +450,7 @@ function mcl_stairs.register_slab(subname, ...)
 			sounds = ndef.sounds,
 			blast_resistance = ndef.blast_resistance,
 			hardness = ndef.hardness,
-			overrides = ndef.extra_fields,
-			register_craft = stairdef.register_craft,
+			overrides = stairdef.overrides,
 		})
 	else
 		register_slab(subname, {

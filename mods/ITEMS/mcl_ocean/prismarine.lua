@@ -66,16 +66,16 @@ minetest.register_node("mcl_ocean:prismarine_dark", {
 
 mcl_stairs.register_stair_and_slab("prismarine", {
 	baseitem = "mcl_ocean:prismarine",
-	extra_fields = {_mcl_stonecutter_recipes = { "mcl_ocean:prismarine" }},{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine" }}
+	overrides = {_mcl_stonecutter_recipes = { "mcl_ocean:prismarine" }},{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine" }}
 })
 mcl_stairs.register_stair_and_slab("prismarine_brick", {
 	baseitem = "mcl_ocean:prismarine_brick",
 	base_description = S("Prismarine Brick"),
-	extra_fields = {_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_brick" }},{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_brick" }}
+	overrides = {_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_brick" }},{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_brick" }}
 })
 mcl_stairs.register_stair_and_slab("prismarine_dark", {
 	baseitem = "mcl_ocean:prismarine_dark",
-	extra_fields = {_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_dark" }},{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_dark" }}
+	overrides = {_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_dark" }},{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_dark" }}
 })
 
 -- Craftitems

@@ -185,21 +185,21 @@ minetest.register_node("mcl_end:dragon_egg", {
 mcl_stairs.register_stair_and_slab("end_stone", {
 	baseitem = "mcl_end:end_stone",
 	recipeitem = extra_nodes and "mcl_end:end_stone" or "",
-	extra_fields = {_mcl_stonecutter_recipes = {"mcl_end:end_stone"}},
+	overrides = {_mcl_stonecutter_recipes = {"mcl_end:end_stone"}},
 	groups = {not_in_creative_inventory=extra_nodes and 0 or 1},
 })
 
 mcl_stairs.register_stair_and_slab("end_bricks", {
 	baseitem = "mcl_end:end_bricks",
 	base_description = S("End Stone Brick"),
-	extra_fields = {_mcl_stonecutter_recipes = {"mcl_end:end_bricks","mcl_end:end_stone"}},{_mcl_stonecutter_recipes = {"mcl_end:end_bricks","mcl_end:end_stone"}}
+	overrides = {_mcl_stonecutter_recipes = {"mcl_end:end_bricks","mcl_end:end_stone"}},{_mcl_stonecutter_recipes = {"mcl_end:end_bricks","mcl_end:end_stone"}}
 })
 
 mcl_stairs.register_stair_and_slab("purpur_block", {
 	baseitem = "mcl_end:purpur_block",
 	base_description = S("Purpur"),
 	recipeitem = "group:purpur_block",
-	extra_fields = {_mcl_stonecutter_recipes = {"mcl_end:purpur_block"}}
+	overrides = {_mcl_stonecutter_recipes = {"mcl_end:purpur_block"}}
 })
 
 -- Crafting recipes

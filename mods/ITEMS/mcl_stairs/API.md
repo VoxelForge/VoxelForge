@@ -61,10 +61,13 @@ Used by `mcl_stairs.register_stair`, `mcl_stairs.register_slab` and
     -- unspecified.  Set to empty string to make uncraftable.
 
     groups = {},
-    -- Additional groups added to the registered nodes.
+    -- Groups added to the registered node.
 
     tiles = {},
     -- Custom tiles for the node.
+
+    overrides = {},
+    -- Fields added to the registered node.
 }
 ```
 
