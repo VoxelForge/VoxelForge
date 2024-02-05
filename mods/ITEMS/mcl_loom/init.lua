@@ -252,6 +252,12 @@ minetest.register_craft({
 	}
 })
 
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_loom:loom",
+	burntime = 15,
+})
+
 minetest.register_lbm({
 	label = "Update Loom formspecs and invs to allow new sneak+click behavior",
 	name = "mcl_loom:update_coolsneak",

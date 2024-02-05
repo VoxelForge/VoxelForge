@@ -27,3 +27,9 @@ minetest.register_craft({
 		{ "group:wood", "group:wood", "" },
 	}
 })
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_cartography_table:cartography_table",
+	burntime = 15,
+})

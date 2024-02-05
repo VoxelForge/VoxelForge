@@ -165,6 +165,12 @@ mcl_flowerpots.register_potted_flower("mcl_core:deadbush", {
 	image = "default_dry_shrub.png",
 })
 
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_core:deadbush",
+	burntime = 5,
+})
+
 minetest.register_node("mcl_core:barrier", {
 	description = S("Barrier"),
 	_doc_items_longdesc = S("Barriers are invisible walkable blocks. They are used to create boundaries of adventure maps and the like. Monsters and animals won't appear on barriers, and fences do not connect to barriers. Other blocks can be built on barriers like on any other block."),

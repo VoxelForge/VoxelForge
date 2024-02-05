@@ -92,3 +92,9 @@ minetest.register_craft({
 		{"", "group:wood_slab", ""},
 	}
 })
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_lectern:lectern",
+	burntime = 15,
+})

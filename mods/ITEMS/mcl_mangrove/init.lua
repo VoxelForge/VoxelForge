@@ -338,6 +338,12 @@ minetest.register_craft({
 	}
 })
 
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_mangrove:mangrove_roots",
+	burntime = 15,
+})
+
 local adjacents = {
 	vector.new(1,0,0),
 	vector.new(-1,0,0),
