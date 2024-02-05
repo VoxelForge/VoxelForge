@@ -281,19 +281,19 @@ minetest.register_node("mcl_nether:quartz_smooth", {
 
 mcl_stairs.register_stair_and_slab("quartzblock", {
 	baseitem = "mcl_nether:quartz_block",
-	basedesc = S("Quartz"),
+	base_description = S("Quartz"),
 	recipeitem = "group:quartz_block",
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_nether:quartz_block"}},
 })
 
 mcl_stairs.register_stair_and_slab("nether_brick", {
 	baseitem = "mcl_nether:nether_brick",
-	basedesc = S("Nether Brick"),
+	base_description = S("Nether Brick"),
 	extra_fields = {_mcl_stonecutter_recipes = { "mcl_nether:nether_brick" }},{_mcl_stonecutter_recipes = { "mcl_nether:nether_brick" }},
 })
 mcl_stairs.register_stair_and_slab("red_nether_brick", {
 	baseitem = "mcl_nether:red_nether_brick",
-	basedesc = S("Red Nether Brick"),
+	base_description = S("Red Nether Brick"),
 	extra_fields = {_mcl_stonecutter_recipes = { "mcl_nether:red_nether_brick" }},{_mcl_stonecutter_recipes = { "mcl_nether:red_nether_brick" }},
 })
 

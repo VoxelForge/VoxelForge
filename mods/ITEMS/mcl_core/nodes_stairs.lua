@@ -76,7 +76,7 @@ mcl_stairs.register_stair_and_slab("redsandstonesmooth", {
 
 mcl_stairs.register_stair_and_slab("stonebrick", {
 	baseitem = "mcl_core:stonebrick",
-	basedesc = S("Stone Brick"),
+	base_description = S("Stone Brick"),
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_core:stone", "mcl_core:stonebrick"}}
 })
 
@@ -112,6 +112,6 @@ mcl_stairs.register_slab("diorite_smooth", {
 
 mcl_stairs.register_stair("stonebrickmossy", {
 	baseitem = "mcl_core:stonebrickmossy",
-	basedesc = S("Mossy Stone Brick"),
+	base_description = S("Mossy Stone Brick"),
 	{_mcl_stonecutter_recipes = {"mcl_core:stonebrickmossy"}}
 })

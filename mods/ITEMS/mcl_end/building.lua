@@ -191,13 +191,13 @@ mcl_stairs.register_stair_and_slab("end_stone", {
 
 mcl_stairs.register_stair_and_slab("end_bricks", {
 	baseitem = "mcl_end:end_bricks",
-	basedesc = S("End Stone Brick"),
+	base_description = S("End Stone Brick"),
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_end:end_bricks","mcl_end:end_stone"}},{_mcl_stonecutter_recipes = {"mcl_end:end_bricks","mcl_end:end_stone"}}
 })
 
 mcl_stairs.register_stair_and_slab("purpur_block", {
 	baseitem = "mcl_end:purpur_block",
-	basedesc = S("Purpur"),
+	base_description = S("Purpur"),
 	recipeitem = "group:purpur_block",
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_end:purpur_block"}}
 })

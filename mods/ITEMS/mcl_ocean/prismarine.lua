@@ -70,7 +70,7 @@ mcl_stairs.register_stair_and_slab("prismarine", {
 })
 mcl_stairs.register_stair_and_slab("prismarine_brick", {
 	baseitem = "mcl_ocean:prismarine_brick",
-	basedesc = S("Prismarine Brick"),
+	base_description = S("Prismarine Brick"),
 	extra_fields = {_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_brick" }},{_mcl_stonecutter_recipes = { "mcl_ocean:prismarine_brick" }}
 })
 mcl_stairs.register_stair_and_slab("prismarine_dark", {

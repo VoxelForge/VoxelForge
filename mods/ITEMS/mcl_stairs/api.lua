@@ -408,13 +408,13 @@ function mcl_stairs.register_stair(subname, ...)
 	if type(select(1, ...)) == "table" then
 		local stairdef = select(1, ...)
 		local ndef = minetest.registered_nodes[stairdef.baseitem]
-		local basedesc = stairdef.basedesc or ndef.description
+		local base_description = stairdef.base_description or ndef.description
 
 		register_stair(subname, {
 			recipeitem = stairdef.recipeitem or stairdef.baseitem,
 			groups = table.merge(ndef.groups or {}, stairdef.extra_groups or {}),
 			tiles = stairdef.tiles or ndef.tiles,
-			description = S("@1 Stairs", basedesc),
+			description = S("@1 Stairs", base_description),
 			sounds = ndef.sounds,
 			blast_resistance = ndef.blast_resistance,
 			hardness = ndef.hardness,
@@ -439,14 +439,14 @@ function mcl_stairs.register_slab(subname, ...)
 	if type(select(1, ...)) == "table" then
 		local stairdef = select(1, ...)
 		local ndef = minetest.registered_nodes[stairdef.baseitem]
-		local basedesc = stairdef.basedesc or ndef.description
+		local base_description = stairdef.base_description or ndef.description
 
 		register_slab(subname, {
 			recipeitem = stairdef.recipeitem or stairdef.baseitem,
 			groups = table.merge(ndef.groups or {}, stairdef.extra_groups or {}),
 			tiles = stairdef.tiles or ndef.tiles,
-			description = S("@1 Slab", basedesc),
-			double_description = S("Double @1 Slab", basedesc),
+			description = S("@1 Slab", base_description),
+			double_description = S("Double @1 Slab", base_description),
 			sounds = ndef.sounds,
 			blast_resistance = ndef.blast_resistance,
 			hardness = ndef.hardness,
