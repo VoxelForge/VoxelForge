@@ -71,18 +71,33 @@ mcl_stairs.register_stair_and_slab("stonebrick", {
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_core:stone", "mcl_core:stonebrick"}}
 })
 
-mcl_stairs.register_stair_and_slab("andesite_smooth", {
+mcl_stairs.register_stair("andesite_smooth", {
 	baseitem = "mcl_core:andesite_smooth",
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_core:andesite_smooth", "mcl_core:andesite"}}
 })
+mcl_stairs.register_slab("andesite_smooth", {
+	baseitem = "mcl_core:andesite_smooth",
+	tiles={"mcl_core_andesite_smooth.png", "mcl_core_andesite_smooth.png", "mcl_stairs_andesite_smooth_slab.png"},
+	extra_fields = {_mcl_stonecutter_recipes = {"mcl_core:andesite_smooth", "mcl_core:andesite"}}
+})
 
-mcl_stairs.register_stair_and_slab("granite_smooth", {
+mcl_stairs.register_stair("granite_smooth", {
 	baseitem = "mcl_core:granite_smooth",
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_core:granite_smooth", "mcl_core:granite"}}
 })
+mcl_stairs.register_slab("granite_smooth", {
+	baseitem = "mcl_core:granite_smooth",
+	tiles={"mcl_core_granite_smooth.png", "mcl_core_granite_smooth.png", "mcl_stairs_granite_smooth_slab.png"},
+	extra_fields = {_mcl_stonecutter_recipes = {"mcl_core:granite_smooth", "mcl_core:granite"}}
+})
 
-mcl_stairs.register_stair_and_slab("diorite_smooth", {
+mcl_stairs.register_stair("diorite_smooth", {
 	baseitem = "mcl_core:diorite_smooth",
+	extra_fields = {_mcl_stonecutter_recipes = {"mcl_core:diorite_smooth", "mcl_core:diorite"}}
+})
+mcl_stairs.register_slab("diorite_smooth", {
+	baseitem = "mcl_core:diorite_smooth",
+	tiles={"mcl_core_diorite_smooth.png", "mcl_core_diorite_smooth.png", "mcl_stairs_diorite_smooth_slab.png"},
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_core:diorite_smooth", "mcl_core:diorite"}}
 })
 
