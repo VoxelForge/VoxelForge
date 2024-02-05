@@ -371,3 +371,15 @@ local azalea_flowering = table.merge(
 })
 azalea_flowering.groups.compostability = 85
 minetest.register_node("mcl_lush_caves:azalea_flowering", azalea_flowering)
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_lush_caves:azalea",
+	burntime = 32,
+})
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "mcl_lush_caves:azalea_flowering",
+	burntime = 32,
+})

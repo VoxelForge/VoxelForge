@@ -566,6 +566,12 @@ function mcl_trees.register_wood(name, p)
 				{"","mcl_core:stick",""},
 			}
 		})
+
+		minetest.register_craft({
+			type = "fuel",
+			recipe = "mcl_signs:wall_sign_"..name,
+			burntime = 15,
+		})
 	end
 
 	if p.pressure_plate == nil or type(p.pressure_plate) == "table" then
