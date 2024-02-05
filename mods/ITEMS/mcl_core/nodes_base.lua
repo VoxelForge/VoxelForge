@@ -258,7 +258,7 @@ minetest.register_node("mcl_core:stonebrickmossy", {
 })
 
 minetest.register_node("mcl_core:stone_smooth", {
-	description = S("Polished Stone"),
+	description = S("Smooth Stone"),
 	_doc_items_longdesc = doc.sub.items.temp.build,
 	tiles = {"mcl_stairs_stone_slab_top.png"},
 	groups = {pickaxey=1, stone=1, building_block=1, material_stone=1, stonecuttable = 1},
