@@ -1,3 +1,6 @@
+local S = minetest.get_translator("mobs_mc")
+local zombiefication_delay = 15
+
 local trading_items = {
 	{ itemstring = "mcl_core:obsidian", amount_min = 1, amount_max = 1 },
 	{ itemstring = "mcl_core:gravel", amount_min = 8, amount_max = 16 },
@@ -19,8 +22,6 @@ local trading_items = {
 	{ itemstring = "mcl_fire:fire_charge", amount_min = 1, amount_max = 1 },
 	--{ itemstring = "FIXME:spectral_arrow", amount_min = 6, amount_max = 12 },
 }
-
-local S = minetest.get_translator("mobs_mc")
 
 function mobs_mc.player_wears_gold(player)
 	for i=1, 6 do
@@ -97,11 +98,15 @@ local piglin = {
 		self.gold_items = 0
 		self._attacked_by_player = false
 	end,
-	do_custom = function(self)
+	do_custom = function(self, dtime)
 		if mcl_worlds.pos_to_dimension(self.object:get_pos()) == "overworld" then
-			mcl_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
+			self._zombie_timer = (self._zombie_timer or zombiefication_delay) - dtime
+			if self._zombie_timer < 0 then
+				mcl_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
+				return
+			end
 		elseif self.trading then
-			self.state = "trading"
+			self:set_state("stand")
 			mcl_util.set_bone_position(self.object, "Arm_Right_Pitch_Control", vector.new(-3,5.785,0), vector.new(20,-20,18))
 			mcl_util.set_bone_position(self.object, "Head", vector.new(0,6.3,0), vector.new(-40,0,0))
 			self.base_texture[2] = "default_gold_ingot.png"
@@ -112,11 +117,12 @@ local piglin = {
 			mcl_util.set_bone_position(self.object, "Arm_Right_Pitch_Control", vector.new(-3,5.785,0), vector.new(0,0,0))
 			self.base_texture[2] = self.weapon
 			mcl_util.set_properties(self.object, {textures = self.base_texture})
+			self._zombie_timer = nil
 		end
 
 		if self.attack and self.attack:is_player() and mobs_mc.player_wears_gold(self.attack) then
 			if not self._attacked_by_player then
-				self.state = "stand"
+				self:set_state("stand")
 			end
 		end
 	end,
