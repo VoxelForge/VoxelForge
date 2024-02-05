@@ -412,7 +412,7 @@ function mcl_stairs.register_stair(subname, ...)
 
 		register_stair(subname, {
 			recipeitem = stairdef.recipeitem or stairdef.baseitem,
-			groups = table.merge(ndef.groups or {}, stairdef.extra_groups or {}),
+			groups = table.merge(ndef.groups or {}, stairdef.groups or {}),
 			tiles = stairdef.tiles or ndef.tiles,
 			description = S("@1 Stairs", base_description),
 			sounds = ndef.sounds,
@@ -443,7 +443,7 @@ function mcl_stairs.register_slab(subname, ...)
 
 		register_slab(subname, {
 			recipeitem = stairdef.recipeitem or stairdef.baseitem,
-			groups = table.merge(ndef.groups or {}, stairdef.extra_groups or {}),
+			groups = table.merge(ndef.groups or {}, stairdef.groups or {}),
 			tiles = stairdef.tiles or ndef.tiles,
 			description = S("@1 Slab", base_description),
 			double_description = S("Double @1 Slab", base_description),

@@ -16,7 +16,7 @@ mcl_stairs.register_stair("stone", {
 	baseitem = "mcl_core:stone_smooth",
 	recipeitem = extra_nodes and "mcl_core:stone_smooth" or "",
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_core:stone_smooth"}},
-	extra_groups = {not_in_creative_inventory = extra_nodes and 0 or 1},
+	groups = {not_in_creative_inventory = extra_nodes and 0 or 1},
 })
 
 

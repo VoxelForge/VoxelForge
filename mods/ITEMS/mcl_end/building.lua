@@ -186,7 +186,7 @@ mcl_stairs.register_stair_and_slab("end_stone", {
 	baseitem = "mcl_end:end_stone",
 	recipeitem = extra_nodes and "mcl_end:end_stone" or "",
 	extra_fields = {_mcl_stonecutter_recipes = {"mcl_end:end_stone"}},
-	extra_groups = {not_in_creative_inventory=extra_nodes and 0 or 1},
+	groups = {not_in_creative_inventory=extra_nodes and 0 or 1},
 })
 
 mcl_stairs.register_stair_and_slab("end_bricks", {

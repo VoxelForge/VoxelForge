@@ -60,7 +60,7 @@ Used by `mcl_stairs.register_stair`, `mcl_stairs.register_slab` and
     -- Item or group used for the crafting recipe.  Defaults to `baseitem` if
     -- unspecified.  Set to empty string to make uncraftable.
 
-    extra_groups = {},
+    groups = {},
     -- Additional groups added to the registered nodes.
 
     tiles = {},
