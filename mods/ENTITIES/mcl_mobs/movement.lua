@@ -791,6 +791,14 @@ function mob_class:follow_flop()
 	end
 end
 
+function mob_class:look_at(b)
+	local s=self.object:get_pos()
+	local v = { x = b.x - s.x, z = b.z - s.z }
+	local yaw = (atann(v.z / v.x) +math.pi/ 2) - self.rotate
+	if b.x > s.x then yaw = yaw +math.pi end
+	self.object:set_yaw(yaw)
+end
+
 function mob_class:go_to_pos(b)
 	if not self then return end
 	local s=self.object:get_pos()
@@ -801,10 +809,7 @@ function mob_class:go_to_pos(b)
 		--self:set_velocity(0)
 		return true
 	end
-	local v = { x = b.x - s.x, z = b.z - s.z }
-	local yaw = (atann(v.z / v.x) +math.pi/ 2) - self.rotate
-	if b.x > s.x then yaw = yaw +math.pi end
-	self.object:set_yaw(yaw)
+	self:look_at(b)
 	self:set_velocity(self.walk_velocity)
 	self:set_animation("walk")
 end

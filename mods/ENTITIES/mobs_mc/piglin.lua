@@ -125,18 +125,21 @@ local piglin = {
 		local item = it:get_name()
 		if item == "mcl_core:gold_ingot" and self.state ~= "attack" and self.gold_items and self.gold_items < 3 then
 			it:take_item(1)
-			self.state = "stand"
 			self.object:set_animation({x=0,y=79})
 			self.trading = true
 			self.gold_items = self.gold_items + 1
 			mcl_util.set_bone_position(self.object, "Wield_Item", vector.new(-1.5,4.9,1.8), vector.new(135,0,90))
+			for _,v in pairs(minetest.get_objects_inside_radius(self.object:get_pos(), 7)) do
+				if v:is_player() then self:look_at(v:get_pos()) end
+			end
+			self:set_state("stand")
 			minetest.after(5, function(self)
 				local pos
 				if self then
 					self.gold_items = self.gold_items - 1
 					if self.gold_items == 0 then
 						self.trading = false
-						self.state = "stand"
+						self:set_state("stand")
 					end
 					pos = self and self.object and self.object:get_pos()
 				end
