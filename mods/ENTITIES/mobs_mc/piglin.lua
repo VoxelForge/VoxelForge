@@ -1,8 +1,3 @@
---MCmobs v0.4
---maikerumine
---made for MC like Survival game
---License for code WTFPL and otherwise stated in readmes
-
 local trading_items = {
 	{ itemstring = "mcl_core:obsidian", amount_min = 1, amount_max = 1 },
 	{ itemstring = "mcl_core:gravel", amount_min = 8, amount_max = 16 },
@@ -26,7 +21,6 @@ local trading_items = {
 }
 
 local S = minetest.get_translator("mobs_mc")
-local mod_bows = minetest.get_modpath("mcl_bows") ~= nil
 
 function mobs_mc.player_wears_gold(player)
 	for i=1, 6 do
@@ -45,9 +39,6 @@ local function check_light(pos, environmental_light, artificial_light, sky_light
 	return true, ""
 end
 
---###################
---################### piglin
---###################
 local piglin = {
 	description = S("Piglin"),
 	type = "monster",
@@ -104,11 +95,12 @@ local piglin = {
 	on_spawn = function(self)
 		self.weapon = self.base_texture[2]
 		self.gold_items = 0
+		self._attacked_by_player = false
 	end,
 	do_custom = function(self)
 		if mcl_worlds.pos_to_dimension(self.object:get_pos()) == "overworld" then
 			mcl_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
-		elseif self.trading == true then
+		elseif self.trading then
 			self.state = "trading"
 			mcl_util.set_bone_position(self.object, "Arm_Right_Pitch_Control", vector.new(-3,5.785,0), vector.new(20,-20,18))
 			mcl_util.set_bone_position(self.object, "Head", vector.new(0,6.3,0), vector.new(-40,0,0))
@@ -120,20 +112,17 @@ local piglin = {
 			mcl_util.set_bone_position(self.object, "Arm_Right_Pitch_Control", vector.new(-3,5.785,0), vector.new(0,0,0))
 			self.base_texture[2] = self.weapon
 			mcl_util.set_properties(self.object, {textures = self.base_texture})
-
 		end
 
-		if self.state ~= "attack" then
-			self._attacked_by_player = false
-		elseif self.attack:is_player() and mobs_mc.player_wears_gold(self.attack) then
-			if self._attacked_by_player == false then
+		if self.attack and self.attack:is_player() and mobs_mc.player_wears_gold(self.attack) then
+			if not self._attacked_by_player then
 				self.state = "stand"
 			end
 		end
 	end,
 	on_pick_up  = function(self, itementity)
-		local item = itementity.itemstring:split(" ")[1]
 		local it = ItemStack(itementity.itemstring)
+		local item = it:get_name()
 		if item == "mcl_core:gold_ingot" and self.state ~= "attack" and self.gold_items and self.gold_items < 3 then
 			it:take_item(1)
 			self.state = "stand"
@@ -169,14 +158,12 @@ local piglin = {
 	attack_type = "dogshoot",
 	arrow = "mcl_bows:arrow_entity",
 	shoot_arrow = function(self, pos, dir)
-		if mod_bows then
-			if self.attack then
-				self.object:set_yaw(minetest.dir_to_yaw(vector.direction(self.object:get_pos(), self.attack:get_pos())))
-			end
-			-- 2-4 damage per arrow
-			local dmg = math.max(4, math.random(2, 8))
-			mcl_bows.shoot_arrow("mcl_bows:arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
+		if self.attack then
+			self.object:set_yaw(minetest.dir_to_yaw(vector.direction(self.object:get_pos(), self.attack:get_pos())))
 		end
+		-- 2-4 damage per arrow
+		local dmg = math.max(4, math.random(2, 8))
+		mcl_bows.shoot_arrow("mcl_bows:arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
 	end,
 	shoot_interval = 2,
 	shoot_offset = 1.5,
@@ -189,7 +176,6 @@ local piglin = {
 }
 
 mcl_mobs.register_mob("mobs_mc:piglin", piglin)
-
 
 mcl_mobs.register_mob("mobs_mc:sword_piglin",table.merge(piglin,{
 	mesh = "extra_mobs_sword_piglin.b3d",
@@ -283,7 +269,6 @@ mcl_mobs.register_mob("mobs_mc:zombified_piglin",table.merge(piglin,{
 	},
 }))
 
-
 mcl_mobs.register_mob("mobs_mc:piglin_brute",table.merge(piglin,{
 	description = S("Piglin Brute"),
 	xp_min = 20,
@@ -324,8 +309,6 @@ mcl_mobs.register_mob("mobs_mc:piglin_brute",table.merge(piglin,{
 		max = 1,},
 	}
 }))
-
-
 
 mcl_mobs.spawn_setup({
 	name = "mobs_mc:piglin",
@@ -372,9 +355,6 @@ mcl_mobs.spawn_setup({
 	chance = 1000,
 })
 
-
-
--- spawn eggs
 mcl_mobs.register_egg("mobs_mc:piglin", S("Piglin"), "#7b4a17","#d5c381", 0)
 mcl_mobs.register_egg("mobs_mc:piglin_brute", S("Piglin Brute"), "#562b0c","#ddc89d", 0)
 mcl_mobs.register_egg("mobs_mc:zombified_piglin", S("Zombie Piglin"), "#ea9393", "#4c7129", 0)
