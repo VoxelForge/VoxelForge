@@ -16,8 +16,8 @@ local trading_items = {
 	{ itemstring = "mcl_throwing:ender_pearl", amount_min = 2, amount_max = 6 },
 	{ itemstring = "mcl_potions:fire_resistance", amount_min = 1, amount_max = 1 },
 	{ itemstring = "mcl_potions:fire_resistance_splash", amount_min = 1, amount_max = 1 },
-	{ itemstring = "mcl_enchanting:book_enchanted", amount_min = 1, amount_max = 1 },
-	{ itemstring = "mcl_armor:boots_iron_enchanted", amount_min = 1, amount_max = 1 },
+	{ itemstring = "mcl_books:book", weight = 5, func = function(stack, pr) mcl_enchanting.enchant(stack, "soul_speed", mcl_enchanting.random(pr, 1, mcl_enchanting.enchantments["soul_speed"].max_level)) end },
+	{ itemstring = "mcl_armor:boots_iron", weight = 5, func = function(stack, pr) mcl_enchanting.enchant(stack, "soul_speed", mcl_enchanting.random(pr, 1, mcl_enchanting.enchantments["soul_speed"].max_level)) end },
 	{ itemstring = "mcl_blackstone:blackstone", amount_min = 8, amount_max = 16 },
 	{ itemstring = "mcl_bows:arrow", amount_min = 6, amount_max = 12 },
 	{ itemstring = "mcl_core:crying_obsidian", amount_min = 1, amount_max = 1 },
@@ -140,29 +140,23 @@ local piglin = {
 			self.trading = true
 			self.gold_items = self.gold_items + 1
 			self.object:set_bone_position("Wield_Item", vector.new(-1.5,4.9,1.8), vector.new(135,0,90))
-			minetest.after(5, function()
-				self.gold_items = self.gold_items - 1
-				if self.gold_items == 0 then
-					self.trading = false
-					self.state = "stand"
-				end
-				local c_pos = self.object:get_pos()
-				if c_pos then
-					self.what_traded = trading_items[math.random(#trading_items)]
-					local stack = ItemStack(self.what_traded.itemstring)
-					stack:set_count(math.random(self.what_traded.amount_min, self.what_traded.amount_max))
-					if mcl_enchanting.is_enchanted(self.what_traded.itemstring) then
-						local enchantment = "soul_speed"
-						mcl_enchanting.enchant(stack, enchantment, mcl_enchanting.random(nil, 1, mcl_enchanting.enchantments[enchantment].max_level))
+			minetest.after(5, function(self)
+				local pos
+				if self then
+					self.gold_items = self.gold_items - 1
+					if self.gold_items == 0 then
+						self.trading = false
+						self.state = "stand"
 					end
-					local p = c_pos
-					local nn=minetest.find_nodes_in_area_under_air(vector.offset(c_pos,-1,-1,-1),vector.offset(c_pos,1,1,1),{"group:solid"})
-					if nn and #nn > 0 then
-						p = vector.offset(nn[math.random(#nn)],0,1,0)
-					end
-					minetest.add_item(p, stack)
+					pos = self and self.object and self.object:get_pos()
 				end
-			end)
+				if pos then
+					local its = mcl_loot.get_loot({ stacks_min = 1, stacks_max = 1,items = trading_items }, PseudoRandom(minetest.get_gametime()))
+					if its and #its > 0 then
+						mcl_util.drop_item_stack(pos, its[1])
+					end
+				end
+			end, self)
 		end
 		return it
 	end,
