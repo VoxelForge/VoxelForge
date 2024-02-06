@@ -147,3 +147,12 @@ minetest.register_globalstep(function(dtime)
 		huds.new = false
 	end
 end)
+
+minetest.register_chatcommand("endcredits", {
+	description = S("Show the Mineclonia end credits"),
+	func = function(name, param)
+		mcl_credits.show(minetest.get_player_by_name(name))
+
+		return true
+	end,
+})
