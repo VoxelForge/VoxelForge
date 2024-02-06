@@ -49,14 +49,18 @@ mcl_stairs.register_stair_and_slab("stonebrickcracked", {
 	base_description=S("Cracked Stone Brick"),
 	recipeitem=extra_nodes and "mcl_core:stonebrickcracked" or "",
 	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
-	tiles={"mcl_core_stonebrick_cracked.png"},
 })
-mcl_stairs.register_stair_and_slab("stonebrickcracked", {
-	baseitem="mcl_core:stonebrickcracked",
-	base_description=S("Cracked Stone Brick"),
-	recipeitem=extra_nodes and "mcl_core:stonebrickcracked" or "",
+mcl_stairs.register_stair_and_slab("deepslate_bricks_cracked", {
+	baseitem="mcl_deepslate:deepslate_bricks_cracked",
+	base_description=S("Cracked Deepslate Brick"),
+	recipeitem=extra_nodes and "mcl_deepslate:deepslate_bricks_cracked" or "",
 	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
-	tiles={"mcl_core_stonebrick_cracked.png"},
+})
+mcl_stairs.register_stair_and_slab("deepslate_tiles_cracked", {
+	baseitem="mcl_deepslate:deepslate_tiles_cracked",
+	base_description=S("Cracked Deepslate Tile"),
+	recipeitem=extra_nodes and "mcl_deepslate:deepslate_tiles_cracked" or "",
+	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 })
 
 local canonical_color = "yellow"
