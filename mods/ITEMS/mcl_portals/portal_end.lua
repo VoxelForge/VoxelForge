@@ -160,6 +160,16 @@ local function end_portal_area(pos, destroy)
 	minetest.bulk_set_node(posses, {name=name})
 end
 
+local function show_credits(player)
+	local meta = player:get_meta()
+	local completed_end = meta:get_int("completed_end")
+
+	if completed_end == 0 then
+		mcl_credits.show(player)
+		meta:set_int("completed_end", 1)
+	end
+end
+
 function mcl_portals.end_teleport(obj, pos)
 	if not obj then return end
 	local pos = pos or obj:get_pos()
@@ -214,7 +224,7 @@ function mcl_portals.end_teleport(obj, pos)
 			obj:set_look_horizontal(math.pi/2)
 		-- Show credits
 		else
-			mcl_credits.show(obj)
+			show_credits(obj)
 		end
 		mcl_worlds.dimension_change(obj, mcl_worlds.pos_to_dimension(target))
 		minetest.sound_play("mcl_portals_teleport", {pos=target, gain=0.5, max_hear_distance = 16}, true)
