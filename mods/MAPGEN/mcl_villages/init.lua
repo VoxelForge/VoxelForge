@@ -154,7 +154,7 @@ minetest.register_node("mcl_villages:no_paths", {
 	wield_image = "mcl_core_barrier.png",
 	tiles = { "mcl_core_barrier.png" },
 	is_ground_content = false,
-	groups = { creative_breakable = 1, solid = 1 },
+	groups = { creative_breakable = 1, not_solid = 1 },
 })
 
 minetest.register_node("mcl_villages:path_endpoint", {

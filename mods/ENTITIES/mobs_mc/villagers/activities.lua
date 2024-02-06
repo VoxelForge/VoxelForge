@@ -434,7 +434,7 @@ function mobs_mc.villager_mob:look_for_job(requested_jobsites)
 
 	if closest_block then
 		local n = minetest.find_nodes_in_area_under_air(
-			vector.offset(closest_block, -1, -1, -1),
+			vector.offset(closest_block, -1, -2, -1),
 			vector.offset(closest_block, 1, 1, 1),
 			{ "group:solid" }
 		)
