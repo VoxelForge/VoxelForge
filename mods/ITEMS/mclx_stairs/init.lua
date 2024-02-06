@@ -63,6 +63,20 @@ mcl_stairs.register_stair_and_slab("deepslate_tiles_cracked", {
 	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 })
 
+mcl_stairs.register_stair_and_slab("end_stone", {
+	baseitem = "mcl_end:end_stone",
+	recipeitem = extra_nodes and "mcl_end:end_stone" or "",
+	overrides = {_mcl_stonecutter_recipes = {"mcl_end:end_stone"}},
+	groups = {not_in_creative_inventory=extra_nodes and 0 or 1},
+})
+
+mcl_stairs.register_stair("stone", {
+	baseitem = "mcl_core:stone_smooth",
+	recipeitem = extra_nodes and "mcl_core:stone_smooth" or "",
+	overrides = {_mcl_stonecutter_recipes = {"mcl_core:stone_smooth"}},
+	groups = {not_in_creative_inventory = extra_nodes and 0 or 1},
+})
+
 local canonical_color = "yellow"
 for name,cdef in pairs(mcl_dyes.colors) do
 	local is_canonical = name == canonical_color

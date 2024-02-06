@@ -2,7 +2,6 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local mod_screwdriver = minetest.get_modpath("screwdriver")
-local extra_nodes = minetest.settings:get_bool("mcl_extra_nodes", true)
 
 local on_rotate
 if mod_screwdriver then
@@ -180,13 +179,6 @@ minetest.register_node("mcl_end:dragon_egg", {
 			end
 		end
 	end,
-})
-
-mcl_stairs.register_stair_and_slab("end_stone", {
-	baseitem = "mcl_end:end_stone",
-	recipeitem = extra_nodes and "mcl_end:end_stone" or "",
-	overrides = {_mcl_stonecutter_recipes = {"mcl_end:end_stone"}},
-	groups = {not_in_creative_inventory=extra_nodes and 0 or 1},
 })
 
 mcl_stairs.register_stair_and_slab("end_bricks", {
