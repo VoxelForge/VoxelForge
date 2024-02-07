@@ -4,7 +4,8 @@ local allow_nav_hacks = minetest.settings:get_bool("mcl_mob_allow_nav_hacks",fal
 local work_dist = 4
 local gather_distance = 10
 
-local RESETTLE_DISTANCE = 100 -- If a mob is transported this far from home, it gives up bed and job and resettles
+local VIL_DIST = 64
+local RESETTLE_DISTANCE = VIL_DIST * 2 -- If a mob is transported this far from home, it gives up bed and job and resettles
 
 local S = minetest.get_translator(modname)
 
@@ -118,7 +119,11 @@ function mobs_mc.villager_mob:find_closest_bed()
 	local p = self.object:get_pos()
 
 	local unclaimed_beds = {}
-	local nn2 = minetest.find_nodes_in_area(vector.offset(p,-48,-48,-48),vector.offset(p,48,48,48), {"group:bed"})
+	local nn2 = minetest.find_nodes_in_area(
+		vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
+		vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
+		{ "group:bed" }
+	)
 	if nn2 then
 		for a,b in pairs(nn2) do
 			local bed_node = minetest.get_node(b)
@@ -164,8 +169,8 @@ end
 
 function mobs_mc.villager.find_closest_unclaimed_block(p, requested_block_types)
 	local nn = minetest.find_nodes_in_area(
-		vector.offset(p, -64, -64, -64),
-		vector.offset(p, 64, 64, 64),
+		vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
+		vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
 		requested_block_types
 	)
 
@@ -324,9 +329,9 @@ function mobs_mc.villager_mob:summon_golem()
 			local obj = minetest.add_entity(vector.offset(n,0,1,0),"mobs_mc:iron_golem")
 			local ent = obj:get_luaentity()
 			if ent then
-				local bell = minetest.find_node_near(n, 48, {"mcl_bells:bell"})
+				local bell = minetest.find_node_near(n, VIL_DIST, {"mcl_bells:bell"})
 				if not bell and self._bed then
-					bell = minetest.find_node_near(self._bed, 48, {"mcl_bells:bell"})
+					bell = minetest.find_node_near(self._bed, VIL_DIST, {"mcl_bells:bell"})
 				end
 
 				if bell then
@@ -537,12 +542,11 @@ function mobs_mc.villager_mob:do_work()
 			end
 		else
 			if self.order == WORK then
-				self.order = nil
 				return
 			end
 
 			local n = minetest.find_nodes_in_area_under_air(
-				vector.offset(jobsite, -1, -1, -1),
+				vector.offset(jobsite, -1, -2, -1),
 				vector.offset(jobsite, 1, 1, 1),
 				{ "group:solid" }
 			)
@@ -558,7 +562,7 @@ function mobs_mc.villager_mob:do_work()
 					if vector.distance(self.object:get_pos(), self._jobsite) < work_dist then
 						return true
 					end
-				end)
+				end, true)
 
 				if gp then
 					return
@@ -575,14 +579,17 @@ function mobs_mc.villager_mob:teleport_to_town_bell()
 	table.insert(looking_for_type, "mcl_bells:bell")
 
 	local p = self.object:get_pos()
-	local nn =
-		minetest.find_nodes_in_area(vector.offset(p, -48, -48, -48), vector.offset(p, 48, 48, 48), looking_for_type)
+	local nn = minetest.find_nodes_in_area(
+		vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
+		vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
+		looking_for_type
+	)
 
 	for _, n in pairs(nn) do
 		local target_point = get_ground_below_floating_object(n)
 
 		if target_point then
-			self.object:set_pos(target_point)
+			self.object:set_pos(vector.offset(target_point, 0, 1, 0))
 			return
 		end
 	end
@@ -603,7 +610,11 @@ function mobs_mc.villager_mob:go_to_town_bell()
 	table.insert(looking_for_type, "mcl_bells:bell")
 
 	local p = self.object:get_pos()
-	local nn = minetest.find_nodes_in_area(vector.offset(p,-48,-48,-48),vector.offset(p,48,48,48), looking_for_type)
+	local nn = minetest.find_nodes_in_area(
+		vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
+		vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
+		looking_for_type
+	)
 
 	--Ideally should check for closest available. It'll make pathing easier.
 	for _,n in pairs(nn) do
@@ -670,8 +681,11 @@ function mobs_mc.villager_mob:sleep_over()
 	local p = self.object:get_pos()
 	local distance_to_closest_bed = 1000
 	local closest_bed = nil
-	local nn2 =
-		minetest.find_nodes_in_area(vector.offset(p, -48, -48, -48), vector.offset(p, 48, 48, 48), { "group:bed" })
+	local nn2 = minetest.find_nodes_in_area(
+		vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
+		vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
+		{ "group:bed" }
+	)
 
 	if nn2 then
 		for a, b in pairs(nn2) do
@@ -732,7 +746,7 @@ function mobs_mc.villager_mob:do_activity()
 	-- Only check in day or during thunderstorm but wandered_too_far code won't work
 	local wandered_too_far = false
 	if self:check_bed() then
-		wandered_too_far = (self.state ~= PATHFINDING) and (vector.distance(self.object:get_pos(), self._bed) > 50)
+		wandered_too_far = (self.state ~= PATHFINDING) and (vector.distance(self.object:get_pos(), self._bed) > VIL_DIST - 10)
 	end
 	local activity = self:get_activity()
 	-- TODO separate sleep and home activities when villagers can sleep
