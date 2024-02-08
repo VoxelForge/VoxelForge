@@ -554,6 +554,7 @@ function mcl_villages.place_schematics_new(settlement_info, pr, blockseed)
 			meta:set_int("has_jobs", has_jobs and 1 or 0)
 			meta:set_int("is_belltower", is_belltower and 1 or 0)
 			meta:set_string("infotext", S("The timer for this @1 has not run yet!", stype))
+			meta:set_string("bell_pos", minetest.pos_to_string(bell_pos))
 			local timer = minetest.get_node_timer(pos)
 			if is_belltower then
 				timer:start(4.0)
@@ -565,28 +566,23 @@ function mcl_villages.place_schematics_new(settlement_info, pr, blockseed)
 end
 
 -- Complete things that don't work when run in mapgen
-function mcl_villages.post_process_building(minp, maxp, blockseed, has_beds, has_jobs, is_belltower)
+function mcl_villages.post_process_building(minp, maxp, blockseed, has_beds, has_jobs, is_belltower, bell_pos)
+	local bell = vector.offset(bell_pos, 0, 1, 0)
+
 	if is_belltower then
-		local bells = minetest.find_nodes_in_area(minp, maxp, { "mcl_bells:bell" })
+		local biome_data = minetest.get_biome_data(bell_pos)
+		local biome_name = minetest.get_biome_name(biome_data.biome)
 
-		for _, bell in pairs(bells) do
-			local biome_data = minetest.get_biome_data(bell)
-			local biome_name = minetest.get_biome_name(biome_data.biome)
+		mcl_villages.paths_new(blockseed, biome_name)
 
-			mcl_villages.paths_new(blockseed, biome_name)
-
-			-- spawn golem directly under bell
-			local home = vector.offset(bell, 0, -3, 0)
-			local l = minetest.add_entity(home, "mobs_mc:iron_golem"):get_luaentity()
-			if l then
-				l._home = home
-			else
-				minetest.log("warning", "Could not create a golem!")
-			end
-
-			spawn_cats(bell)
-
+		local l = minetest.add_entity(bell, "mobs_mc:iron_golem"):get_luaentity()
+		if l then
+			l._home = bell
+		else
+			minetest.log("warning", "Could not create a golem!")
 		end
+
+		spawn_cats(bell)
 	end
 
 	if has_beds then
@@ -600,11 +596,13 @@ function mcl_villages.post_process_building(minp, maxp, blockseed, has_beds, has
 			-- 1 is bottom, 2 is top
 			if bed_group == 1 then
 				local m = minetest.get_meta(bed)
+				m:set_string("bell_pos", minetest.pos_to_string(bell))
 				if m:get_string("villager") == "" then
 					local v = minetest.add_entity(bed, "mobs_mc:villager")
 					if v then
 						local l = v:get_luaentity()
 						l._bed = bed
+						l._bell = bell
 						m:set_string("villager", l._id)
 						m:set_string("infotext", S("A villager sleeps here"))
 					else

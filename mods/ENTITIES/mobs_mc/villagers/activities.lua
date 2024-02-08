@@ -247,7 +247,49 @@ function mobs_mc.villager_mob:go_home(sleep)
 	end
 end
 
+local function get_ground_below_floating_object(float_pos)
+	local pos = float_pos
+	repeat
+		pos = vector.offset(pos, 0, -1, 0)
+		local node = minetest.get_node(pos)
+	until node.name ~= "air"
 
+	-- If pos is 1 below float_pos, then just return float_pos as there is no air below it
+	if pos.y == float_pos.y - 1 then
+		return float_pos
+	end
+
+	return pos
+end
+
+function mobs_mc.villager_mob:get_bell()
+	if not self._bell then
+		local p = self.object:get_pos()
+		local nn = minetest.find_nodes_in_area(
+			vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
+			vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
+			{ "mcl_bells:bell" }
+		)
+
+		local closest_bell
+		local closest_bell_dist = 1000
+
+		for _, n in pairs(nn) do
+			local target_point = get_ground_below_floating_object(n)
+			local dist = vector.distance(self.object:get_pos(), target_point)
+			if dist < closest_bell_dist then
+				closest_bell_dist = dist
+				closest_bell = target_point
+			end
+		end
+
+		if closest_bell then
+			self._bell = vector.offset(closest_bell, 0, 1, 0)
+		end
+	end
+
+	return self._bell
+end
 
 function mobs_mc.villager_mob:take_bed()
 	if not self then return end
@@ -271,6 +313,15 @@ function mobs_mc.villager_mob:take_bed()
 				m:set_string("villager", self._id)
 				m:set_string("infotext", S("A villager sleeps here"))
 				self._bed = closest_block
+				local bell_pos = m:get_string("bell_pos")
+				if bell_pos ~= "" then
+					self._bell = minetest.string_to_pos(bell_pos)
+				else
+					local bell = self:get_bell()
+					if bell then
+						m:set_string("bell_pos", minetest.pos_to_string(bell))
+					end
+				end
 			end
 		else
 			self:gopath(closest_block,function(self) end)
@@ -304,21 +355,6 @@ function mobs_mc.villager_mob:has_summon_participants()
 	return r > 2
 end
 
-local function get_ground_below_floating_object(float_pos)
-	local pos = float_pos
-	repeat
-		pos = vector.offset(pos, 0, -1, 0)
-		local node = minetest.get_node(pos)
-	until node.name ~= "air"
-
-	-- If pos is 1 below float_pos, then just return float_pos as there is no air below it
-	if pos.y == float_pos.y - 1 then
-		return float_pos
-	end
-
-	return pos
-end
-
 function mobs_mc.villager_mob:summon_golem()
 	vector.offset(self.object:get_pos(),-10,-10,-10)
 	local nn = minetest.find_nodes_in_area_under_air(vector.offset(self.object:get_pos(),-8,-6,-8),vector.offset(self.object:get_pos(),8,6,8),{"group:solid","group:water"})
@@ -329,13 +365,10 @@ function mobs_mc.villager_mob:summon_golem()
 			local obj = minetest.add_entity(vector.offset(n,0,1,0),"mobs_mc:iron_golem")
 			local ent = obj:get_luaentity()
 			if ent then
-				local bell = minetest.find_node_near(n, VIL_DIST, {"mcl_bells:bell"})
-				if not bell and self._bed then
-					bell = minetest.find_node_near(self._bed, VIL_DIST, {"mcl_bells:bell"})
-				end
+				local bell = self:get_bell()
 
 				if bell then
-					ent._home = get_ground_below_floating_object(bell)
+					ent._home = bell
 				else
 					ent._home = n
 				end
@@ -519,6 +552,7 @@ function mobs_mc.villager_mob:validate_jobsite()
 			m:set_string("villager", nil)
 			m:set_string("infotext", nil)
 			self:remove_job()
+			self._bell = nil
 			return false
 		end
 		return true
@@ -575,107 +609,33 @@ function mobs_mc.villager_mob:do_work()
 end
 
 function mobs_mc.villager_mob:teleport_to_town_bell()
-	local looking_for_type = {}
-	table.insert(looking_for_type, "mcl_bells:bell")
+	local bell = self:get_bell()
 
-	local p = self.object:get_pos()
-	local nn = minetest.find_nodes_in_area(
-		vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
-		vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
-		looking_for_type
-	)
-
-	for _, n in pairs(nn) do
-		local target_point = get_ground_below_floating_object(n)
-
-		if target_point then
-			self.object:set_pos(vector.offset(target_point, 0, 1, 0))
-			return
-		end
+	if bell then
+		self.object:set_pos(bell)
 	end
 end
 
 function mobs_mc.villager_mob:go_to_town_bell()
-	if not self:ready_to_path(true) then
-		if self._pf_last_failed then
-			if (os.time() - self._pf_last_failed) < 5 then
-				return
-			else
-				self._pf_last_failed = nil
-			end
-		end
-	end
+	local bell = self:get_bell()
 
-	local looking_for_type={}
-	table.insert(looking_for_type, "mcl_bells:bell")
-
-	local p = self.object:get_pos()
-	local nn = minetest.find_nodes_in_area(
-		vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
-		vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
-		looking_for_type
-	)
-
-	--Ideally should check for closest available. It'll make pathing easier.
-	for _,n in pairs(nn) do
-		local target_point = get_ground_below_floating_object(n)
-
-		if vector.distance(self.object:get_pos(), target_point) > gather_distance then
-			local gp = self:gopath(target_point, function(self)
+	if bell then
+		local dist = vector.distance(self.object:get_pos(), bell)
+		if dist > gather_distance then
+			local gp = self:gopath(bell, function(self)
 				if self then
 					self.order = GATHERING
 				end
-			end)
+			end, true)
 
 			if gp then
-				return n
+				return bell
 			end
 		end
-
 	end
 
 	return nil
 end
---[[
-function mobs_mc.villager_mob:validate_bed()
-	if not self or not self._bed then
-		return false
-	end
-	local n = mcl_vars.get_node(self._bed)
-	if not n then
-		self._bed = nil
-		return false
-	end
-
-	local bed_valid = true
-
-	local m = minetest.get_meta(self._bed)
-
-	local resettle = vector.distance(self.object:get_pos(),self._bed) > RESETTLE_DISTANCE
-	if resettle then
-		m:set_string("villager", nil)
-		self._bed = nil
-		bed_valid = false
-		return false
-	end
-
-	local owned_by_player = m:get_string("player")
-	if owned_by_player ~= "" then
-		m:set_string("villager", nil)
-		self._bed = nil
-		bed_valid = false
-		return false
-	end
-
-	if m:get_string("villager") ~= self._id then
-		self._bed = nil
-		return false
-	else
-		return true
-	end
-
-end
---]]
 
 function mobs_mc.villager_mob:sleep_over()
 	local p = self.object:get_pos()
