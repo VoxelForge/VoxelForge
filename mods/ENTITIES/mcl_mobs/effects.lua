@@ -337,7 +337,16 @@ function mob_class:check_head_swivel(dtime)
 	self:who_are_you_looking_at()
 
 	local final_rotation = vector.zero()
-	local _,oldr = self.object:get_bone_position(self.head_swivel)
+
+	--when < minetest 5.9 isn't supported anymore remove these checks and only use the "override" variant and radians
+	local oldr
+	if self.object.get_bone_override then
+		local ov = self.object:get_bone_override(self.head_swivel)
+		oldr = vector.apply(ov.rotation.vec, math.deg)
+	else
+		local _, oldrot = self.object:get_bone_position(self.head_swivel)
+		oldr = oldrot
+	end
 
 	if self._locked_object and (self._locked_object:is_player() or self._locked_object:get_luaentity()) and self._locked_object:get_hp() > 0 then
 		local _locked_object_eye_height = 1.5

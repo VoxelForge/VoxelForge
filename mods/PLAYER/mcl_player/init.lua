@@ -52,7 +52,7 @@ minetest.register_on_joinplayer(function(player)
 	player:get_inventory():set_size("hand", 1)
 	player:set_fov(default_fov)
 	for bone, pos in pairs(bone_start_positions) do
-		player:set_bone_position(bone, pos)
+		mcl_util.set_bone_position(player, bone, pos, vector.zero())
 	end
 end)
 
