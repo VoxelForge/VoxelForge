@@ -13,6 +13,12 @@ minetest.register_entity("mcl_wieldview:wieldview", {
 	}
 })
 
+-- TODO: when < minetest 5.9 isn't supported anymore, remove this variable check and replace all occurences of [hud_elem_type_field] with type
+local hud_elem_type_field = "type"
+if not minetest.features.hud_def_type_field then
+	hud_elem_type_field = "hud_elem_type"
+end
+
 local wieldview_luaentites = {
 	Wield_Item = {},
 	Arm_Left = {},
@@ -22,7 +28,7 @@ local offhand_huds = {}
 
 local function offhand_hud(player, texture)
 	return player:hud_add({
-		hud_elem_type = "image",
+		[hud_elem_type_field] = "image",
 		position = {x = 0.1, y = 0.90},
 		scale = {x = 25, y = 25},
 		z_index = -200,

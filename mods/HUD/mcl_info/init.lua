@@ -1,5 +1,11 @@
 mcl_info = {}
 
+-- TODO: when < minetest 5.9 isn't supported anymore, remove this variable check and replace all occurences of [hud_elem_type_field] with type
+local hud_elem_type_field = "type"
+if not minetest.features.hud_def_type_field then
+	hud_elem_type_field = "hud_elem_type"
+end
+
 local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 local player_dbg = {}
@@ -73,7 +79,7 @@ local function info()
 		local hud = huds[name]
 		if s and not hud then
 			local def = {
-				hud_elem_type = "text",
+				[hud_elem_type_field] = "text",
 				alignment     = {x = 1, y = -1},
 				scale         = {x = 100, y = 100},
 				position      = {x = 0.0073, y = 0.889},

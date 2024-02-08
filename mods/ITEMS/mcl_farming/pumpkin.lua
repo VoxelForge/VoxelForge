@@ -154,12 +154,18 @@ pumpkin_face_base_def.after_place_node = function(pos, placer, itemstack, pointe
 	mobs_mc.check_snow_golem_summon(pos, placer)
 end
 
+-- TODO: when < minetest 5.9 isn't supported anymore, remove this variable check and replace all occurences of [hud_elem_type_field] with type
+local hud_elem_type_field = "type"
+if not minetest.features.hud_def_type_field then
+	hud_elem_type_field = "hud_elem_type"
+end
+
 if minetest.get_modpath("mcl_armor") then
 	local pumpkin_hud = {}
 	local function add_pumpkin_hud(player)
 		pumpkin_hud[player] = {
 			pumpkin_blur = player:hud_add({
-				hud_elem_type = "image",
+				[hud_elem_type_field] = "image",
 				position = {x = 0.5, y = 0.5},
 				scale = {x = -101, y = -101},
 				text = "mcl_farming_pumpkin_hud.png",
@@ -168,7 +174,7 @@ if minetest.get_modpath("mcl_armor") then
 			--this is a fake crosshair, because hotbar and crosshair doesn't support z_index
 			--TODO: remove this and add correct z_index values
 			fake_crosshair = player:hud_add({
-				hud_elem_type = "image",
+				[hud_elem_type_field] = "image",
 				position = {x = 0.5, y = 0.5},
 				scale = {x = 1, y = 1},
 				text = "crosshair.png",

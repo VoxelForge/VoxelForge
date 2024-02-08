@@ -1,5 +1,11 @@
 local enable_damage = minetest.settings:get_bool("enable_damage")
 
+-- TODO: when < minetest 5.9 isn't supported anymore, remove this variable check and replace all occurences of [hud_elem_type_field] with type
+local hud_elem_type_field = "type"
+if not minetest.features.hud_def_type_field then
+	hud_elem_type_field = "hud_elem_type"
+end
+
 function mcl_burning.get_storage(obj)
 	return obj:is_player() and mcl_burning.storage[obj] or obj:get_luaentity()
 end
@@ -56,7 +62,7 @@ function mcl_burning.update_hud(player)
 	if not storage.fire_hud_id then
 		storage.animation_frame = 1
 		storage.fire_hud_id = player:hud_add({
-			hud_elem_type = "image",
+			[hud_elem_type_field] = "image",
 			position = {x = 0.5, y = 0.5},
 			scale = {x = -100, y = -100},
 			text = hud_flame_animated .. storage.animation_frame,

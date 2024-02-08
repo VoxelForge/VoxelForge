@@ -9,6 +9,12 @@ local worldpath = minetest.get_worldpath()
 local map_textures_path = worldpath .. "/mcl_maps/"
 --local last_finished_id = storage:get_int("next_id") - 1
 
+-- TODO: when < minetest 5.9 isn't supported anymore, remove this variable check and replace all occurences of [hud_elem_type_field] with type
+local hud_elem_type_field = "type"
+if not minetest.features.hud_def_type_field then
+	hud_elem_type_field = "hud_elem_type"
+end
+
 minetest.mkdir(map_textures_path)
 
 local function load_json_file(name)
@@ -312,7 +318,7 @@ local huds = {}
 
 minetest.register_on_joinplayer(function(player)
 	local map_def = {
-		hud_elem_type = "image",
+		[hud_elem_type_field] = "image",
 		text = "blank.png",
 		position = { x = 0.75, y = 0.8 },
 		alignment = { x = 0, y = -1 },

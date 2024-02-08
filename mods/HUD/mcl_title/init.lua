@@ -14,6 +14,12 @@
 local huds_idx = {}
 local hud_hide_timeouts = {}
 
+-- TODO: when < minetest 5.9 isn't supported anymore, remove this variable check and replace all occurences of [hud_elem_type_field] with type
+local hud_elem_type_field = "type"
+if not minetest.features.hud_def_type_field then
+	hud_elem_type_field = "hud_elem_type"
+end
+
 hud_hide_timeouts.title = {}
 hud_hide_timeouts.subtitle = {}
 hud_hide_timeouts.actionbar = {}
@@ -69,7 +75,7 @@ minetest.register_on_joinplayer(function(player)
 	}
 	local _, hex_color = mcl_util.get_color("white")
 	huds_idx.title[player] = player:hud_add({
-		hud_elem_type = "text",
+		[hud_elem_type_field] = "text",
 		position      = mcl_title.layout.title.position,
 		alignment     = mcl_title.layout.title.alignment,
 		text          = "",
@@ -79,7 +85,7 @@ minetest.register_on_joinplayer(function(player)
 		z_index       = 100,
 	})
 	huds_idx.subtitle[player] = player:hud_add({
-		hud_elem_type = "text",
+		[hud_elem_type_field] = "text",
 		position      = mcl_title.layout.subtitle.position,
 		alignment     = mcl_title.layout.subtitle.alignment,
 		text          = "",
@@ -89,7 +95,7 @@ minetest.register_on_joinplayer(function(player)
 		z_index       = 100,
 	})
 	huds_idx.actionbar[player] = player:hud_add({
-		hud_elem_type = "text",
+		[hud_elem_type_field] = "text",
 		position      = mcl_title.layout.actionbar.position,
 		offset        = { x = 0, y = -210 },
 		alignment     = mcl_title.layout.actionbar.alignment,

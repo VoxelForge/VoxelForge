@@ -17,6 +17,12 @@ for _,_ in pairs(EF) do
 	EFFECT_TYPES = EFFECT_TYPES + 1
 end
 
+-- TODO: when < minetest 5.9 isn't supported anymore, remove this variable check and replace all occurences of [hud_elem_type_field] with type
+local hud_elem_type_field = "type"
+if not minetest.features.hud_def_type_field then
+	hud_elem_type_field = "hud_elem_type"
+end
+
 local icon_ids = {}
 
 local function potions_set_hudbar(player)
@@ -42,7 +48,7 @@ local function potions_init_icons(player)
 	for e=1, EFFECT_TYPES do
 		local x = -52 * e - 2
 		local id = player:hud_add({
-			hud_elem_type = "image",
+			[hud_elem_type_field] = "image",
 			text = "blank.png",
 			position = { x = 1, y = 0 },
 			offset = { x = x, y = 3 },

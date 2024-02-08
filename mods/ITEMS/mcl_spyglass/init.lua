@@ -1,5 +1,11 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
+-- TODO: when < minetest 5.9 isn't supported anymore, remove this variable check and replace all occurences of [hud_elem_type_field] with type
+local hud_elem_type_field = "type"
+if not minetest.features.hud_def_type_field then
+	hud_elem_type_field = "hud_elem_type"
+end
+
 minetest.register_tool("mcl_spyglass:spyglass",{
 	description = S("Spyglass"),
 	_doc_items_longdesc = S("A spyglass is an item that can be used for zooming in on specific locations."),
@@ -23,7 +29,7 @@ local function add_scope(player)
 	local wielditem = player:get_wielded_item()
 	if wielditem:get_name() == "mcl_spyglass:spyglass" then
 		spyglass_scope[player] = player:hud_add({
-			hud_elem_type = "image",
+			[hud_elem_type_field] = "image",
 			position = {x = 0.5, y = 0.5},
 			scale = {x = -100, y = -100},
 			text = "mcl_spyglass_scope.png",
