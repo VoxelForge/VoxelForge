@@ -105,18 +105,21 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 	},
 	ignores_nametag = true,
 	player_active_range = 128,
-	do_custom = function(self,dtime)
-		mcl_bossbars.update_boss(self.object, "Ender Dragon", "light_purple")
-		if self._pos_timer == nil or self._pos_timer > POS_CHECK_FREQUENCY then
-			self._pos_timer = 0
+	force_step = function(self, dtime)
+		self._pos_timer = (self._pos_timer or  POS_CHECK_FREQUENCY) - dtime
+		if self._pos_timer < 0 then
+			self._pos_timer = POS_CHECK_FREQUENCY
 			check_pos(self)
 		end
+	end,
+	do_custom = function(self,dtime)
+		mcl_bossbars.update_boss(self.object, "Ender Dragon", "light_purple")
+
 		if self._beam_timer == nil or self._beam_timer > BEAM_CHECK_FREQUENCY then
 			self._beam_timer = 0
 			check_beam(self)
 		end
 		self._beam_timer = self._beam_timer + dtime
-		self._pos_timer = self._pos_timer + dtime
 	end,
 	on_die = function(self, pos, cmi_cause)
 		if self._portal_pos then
