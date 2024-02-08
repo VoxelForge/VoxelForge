@@ -398,6 +398,9 @@ Fields not mentioned in this document can also be added as custom fields for the
 	deal_damage = function(self, damage, mcl_reason)
 	-- if present this gets called instead of the normal damage functions
 
+	player_active_range = 48,
+	-- Mobs further away from the player than this will stop moving (and doing most other things)
+
 -- Object Properties
 --------------------
 --	Object properties can be defined right in the definition table for compatibility reasons. Note that these will be rewritten to "initial_properties" in the final mob entity.
