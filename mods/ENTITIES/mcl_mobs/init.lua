@@ -117,6 +117,7 @@ mcl_mobs.mob_class = {
 	does_not_prevent_sleep = false,
 	prevents_sleep_when_hostile = false,
 	attack_exception = function(p) return false end,
+	player_active_range = tonumber(minetest.settings:get("mcl_mob_active_range")) or 48,
 
 	--internal variables
 	blinktimer = 0,

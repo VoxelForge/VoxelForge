@@ -7,7 +7,6 @@ local DEFAULT_FALL_SPEED = -9.81*1.5
 
 local PATHFINDING = "gowp"
 local mobs_drop_items = minetest.settings:get_bool("mobs_drop_items") ~= false
-local mob_active_range = tonumber(minetest.settings:get("mcl_mob_active_range")) or 48
 local show_health = false
 
 -- get node but use fallback for nil or unknown
@@ -45,7 +44,7 @@ end
 
 function mob_class:player_in_active_range()
 	for _,p in pairs(minetest.get_connected_players()) do
-		if vector.distance(self.object:get_pos(),p:get_pos()) <= mob_active_range then return true end
+		if vector.distance(self.object:get_pos(),p:get_pos()) <= self.player_active_range then return true end
 		-- slightly larger than the mc 32 since mobs spawn on that circle and easily stand still immediately right after spawning.
 	end
 end
