@@ -104,6 +104,7 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 		run_start = 0,		run_end = 40,
 	},
 	ignores_nametag = true,
+	player_active_range = 128,
 	do_custom = function(self,dtime)
 		mcl_bossbars.update_boss(self.object, "Ender Dragon", "light_purple")
 		if self._pos_timer == nil or self._pos_timer > POS_CHECK_FREQUENCY then
