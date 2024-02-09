@@ -265,7 +265,11 @@ local function sort_stack(stack)
 	if minetest.get_item_group(stack:get_name(), "brewing_ingredient" ) > 0 then
 		return "input"
 	end
-	return "stand"
+	for _, g in pairs({"potion", "empty_bottle", "water_bottle"}) do
+		if minetest.get_item_group(stack:get_name(), g ) > 0 then
+			return "stand"
+		end
+	end
 end
 
 local function allow_put(pos, listname, index, stack, player)
@@ -273,6 +277,11 @@ local function allow_put(pos, listname, index, stack, player)
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
 		return 0
+	elseif listname == "stand" then
+		local trg = sort_stack(stack, pos)
+		if trg ~= "stand" then
+			return 0
+		end
 	elseif listname == "sorter" then
 		local inv = minetest.get_meta(pos):get_inventory()
 		local trg = sort_stack(stack, pos)
