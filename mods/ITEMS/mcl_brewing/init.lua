@@ -29,7 +29,7 @@ local function active_brewing_formspec(fuel_percent, brew_percent)
 
 	"listring[context;stand]"..
 	"listring[current_player;main]"..
-	"listring[context:sorter]"..
+	"listring[context;sorter]"..
 	"listring[current_player;main]"..
 	"listring[context;fuel]"..
 	"listring[current_player;main]"..
