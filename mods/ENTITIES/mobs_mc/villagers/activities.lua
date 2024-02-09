@@ -167,7 +167,7 @@ function mobs_mc.villager_mob:find_closest_bed()
 	return closest_block
 end
 
-function mobs_mc.villager.find_closest_unclaimed_block(p, requested_block_types)
+function mobs_mc.villager_mob:find_closest_unclaimed_block(p, requested_block_types)
 	local nn = minetest.find_nodes_in_area(
 		vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
 		vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
@@ -179,7 +179,7 @@ function mobs_mc.villager.find_closest_unclaimed_block(p, requested_block_types)
 
 	for i,n in pairs(nn) do
 		local m = minetest.get_meta(n)
-		if m:get_string("villager") == "" then
+		if m:get_string("villager") == "" or m:get_string("villager") == self._id then
 			local distance_to_block = vector.distance(p, n)
 			if not distance_to_closest_block or distance_to_closest_block > distance_to_block then
 				closest_block = n
@@ -452,7 +452,7 @@ function mobs_mc.villager_mob:employ(jobsite_pos)
 	local n = minetest.get_node(jobsite_pos)
 	local m = minetest.get_meta(jobsite_pos)
 	local p = get_profession_by_jobsite(n.name)
-	if p and m:get_string("villager") == "" then
+	if p and m:get_string("villager") == "" or m:get_string("villager") == self._id then
 		m:set_string("villager",self._id)
 		m:set_string("infotext", S("A villager works here"))
 		self._jobsite = jobsite_pos
@@ -468,7 +468,7 @@ end
 function mobs_mc.villager_mob:look_for_job(requested_jobsites)
 	local p = self.object:get_pos()
 
-	local closest_block = mobs_mc.villager.find_closest_unclaimed_block(p, requested_jobsites)
+	local closest_block = self:find_closest_unclaimed_block(p, requested_jobsites)
 
 	if closest_block then
 		local n = minetest.find_nodes_in_area_under_air(
@@ -519,7 +519,8 @@ function mobs_mc.villager_mob:retrieve_my_jobsite()
 	end
 	local n = mcl_vars.get_node(self._jobsite)
 	local m = minetest.get_meta(self._jobsite)
-	if m:get_string("villager") == self._id then
+	-- If job block isn't loaded then assume it's still valid
+	if n.name == "ignore" or m:get_string("villager") == self._id then
 		return n
 	end
 	return
