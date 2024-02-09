@@ -88,7 +88,7 @@ local spider = {
 	run_velocity = 1, -- (was 2.4) a bit slower, they arent much different from running skeletons
 	jump = true,
 	jump_height = 4,
-	view_range = 8,
+	view_range = 16,
 	floats = 1,
 	drops = {
 		{name = "mcl_mobitems:string", chance = 1, min = 0, max = 2, looting = "common"},
