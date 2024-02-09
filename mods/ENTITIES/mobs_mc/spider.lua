@@ -84,8 +84,8 @@ local spider = {
 		-- TODO: sounds: walk
 		distance = 16,
 	},
-	walk_velocity = 0.6,
-	run_velocity = 1.2, -- (was 2.4) a bit slower, they arent much different from running skeletons
+	walk_velocity = 0.7,
+	run_velocity = 1, -- (was 2.4) a bit slower, they arent much different from running skeletons
 	jump = true,
 	jump_height = 4,
 	view_range = 8,
