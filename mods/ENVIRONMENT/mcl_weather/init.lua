@@ -12,6 +12,6 @@ dofile(modpath.."/snow.lua")
 dofile(modpath.."/rain.lua")
 dofile(modpath.."/nether_dust.lua")
 
-if minetest.get_modpath("lightning") then
+if minetest.get_modpath("mcl_lightning") then
 	dofile(modpath.."/thunder.lua")
 end
