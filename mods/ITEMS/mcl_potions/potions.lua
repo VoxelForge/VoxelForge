@@ -163,7 +163,7 @@ local function register_potion(def)
 		stack_max = def.stack_max or 1,
 		inventory_image = def.image or potion_image(def.color),
 		wield_image = def.image or potion_image(def.color),
-		groups = def.groups or {brewitem=1, food=3, can_eat_when_full=1 },
+		groups = def.groups or {brewitem=1, food=3, can_eat_when_full=1, potion = 1 },
 		on_place = on_use,
 		on_secondary_use = on_use,
 	})
@@ -260,7 +260,7 @@ local function register_potion(def)
 			stack_max = def.stack_max or 1,
 			inventory_image = def.image or potion_image(def.color),
 			wield_image = def.image or potion_image(def.color),
-			groups = def.groups or {brewitem=1, food=3, can_eat_when_full=1},
+			groups = def.groups or {brewitem=1, food=3, can_eat_when_full=1, potion = 2},
 			on_place = on_use,
 			on_secondary_use = on_use,
 		})
@@ -343,7 +343,7 @@ local function register_potion(def)
 			stack_max = 1,
 			inventory_image = def.image or potion_image(def.color),
 			wield_image = def.image or potion_image(def.color),
-			groups = def.groups or {brewitem=1, food=3, can_eat_when_full=1},
+			groups = def.groups or {brewitem=1, food=3, can_eat_when_full=1, potion = 3},
 			on_place = on_use,
 			on_secondary_use = on_use,
 		})
@@ -411,7 +411,7 @@ local awkward_def = {
 	_tt = S("No effect"),
 	_longdesc = S("Has an awkward taste and is used for brewing potions."),
 	color = "#0000FF",
-	groups = {brewitem=1, food=3, can_eat_when_full=1},
+	groups = {brewitem=1, food=3, can_eat_when_full=1, potion = 1},
 	on_use = minetest.item_eat(0, "mcl_potions:glass_bottle"),
 }
 
@@ -450,7 +450,7 @@ local dragon_breath_def = {
 	no_effect = true,
 	_longdesc = S("This item is used in brewing and can be combined with splash potions to create lingering potions."),
 	image = "mcl_potions_dragon_breath.png",
-	groups = { brewitem = 1 },
+	groups = { brewitem = 1, potion = 1},
 	on_use = nil,
 }
 
@@ -628,7 +628,7 @@ end
 -- 	_doc_items_longdesc = brewhelp,
 -- 	wield_image = potion_image("#484D48"),
 -- 	inventory_image = potion_image("#484D48"),
--- 	groups = { brewitem=1, food=3, can_eat_when_full=1 },
+-- 	groups = { brewitem=1, food=3, can_eat_when_full=1, potion = 1 },
 -- 	stack_max = 1,
 --
 -- 	on_place = function(itemstack, user, pointed_thing)
@@ -652,7 +652,7 @@ end
 -- 	_doc_items_longdesc = brewhelp,
 -- 	wield_image = potion_image("#484D48"),
 -- 	inventory_image = potion_image("#484D48"),
--- 	groups = { brewitem=1, food=3, can_eat_when_full=1 },
+-- 	groups = { brewitem=1, food=3, can_eat_when_full=1, potion = 1 },
 -- 	stack_max = 1,
 --
 -- 	on_place = function(itemstack, user, pointed_thing)
@@ -676,7 +676,7 @@ end
 -- 	_doc_items_longdesc = brewhelp,
 -- 	wield_image = potion_image("#932423"),
 -- 	inventory_image = potion_image("#932423"),
--- 	groups = { brewitem=1, food=3, can_eat_when_full=1 },
+-- 	groups = { brewitem=1, food=3, can_eat_when_full=1, potion = 1 },
 -- 	stack_max = 1,
 --
 -- 	on_place = function(itemstack, user, pointed_thing)
@@ -700,7 +700,7 @@ end
 -- 	_doc_items_longdesc = brewhelp,
 -- 	wield_image = potion_image("#932423"),
 -- 	inventory_image = potion_image("#932423"),
--- 	groups = { brewitem=1, food=3, can_eat_when_full=1 },
+-- 	groups = { brewitem=1, food=3, can_eat_when_full=1, potion = 1 },
 -- 	stack_max = 1,
 --
 -- 	on_place = function(itemstack, user, pointed_thing)
@@ -724,7 +724,7 @@ end
 -- 	_doc_items_longdesc = brewhelp,
 -- 	wield_image = potion_image("#932423"),
 -- 	inventory_image = potion_image("#932423"),
--- 	groups = { brewitem=1, food=3, can_eat_when_full=1 },
+-- 	groups = { brewitem=1, food=3, can_eat_when_full=1, potion = 1 },
 -- 	stack_max = 1,
 --
 -- 	on_place = function(itemstack, user, pointed_thing)

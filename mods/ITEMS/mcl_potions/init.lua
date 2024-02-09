@@ -47,7 +47,7 @@ minetest.register_craftitem("mcl_potions:glass_bottle", {
 	_doc_items_usagehelp = S("To collect water, use it on a cauldron with water (which removes a level of water) or any water source (which removes no water)."),
 	inventory_image = "mcl_potions_potion_bottle.png",
 	wield_image = "mcl_potions_potion_bottle.png",
-	groups = {brewitem=1},
+	groups = {brewitem=1, empty_bottle = 1},
 	liquids_pointable = true,
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.type == "node" then
