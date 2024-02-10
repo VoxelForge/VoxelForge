@@ -4,13 +4,13 @@ local extra_nodes = minetest.settings:get_bool("mcl_extra_nodes", true)
 
 mcl_stairs.register_stair("lapisblock", {
 	baseitem="mcl_core:lapisblock",
-	base_description=S("Lapis Lazuli"),
+	description=S("Lapis Lazuli Stairs"),
 	recipeitem=extra_nodes and "mcl_core:lapisblock" or "",
 	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 })
 mcl_stairs.register_slab("lapisblock", {
 	baseitem="mcl_core:lapisblock",
-	base_description=S("Lapis Lazuli"),
+	description=S("Lapis Lazuli Slab"),
 	recipeitem=extra_nodes and "mcl_core:lapisblock" or "",
 	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 	tiles={"mcl_core_lapis_block.png", "mcl_core_lapis_block.png", "mcl_stairs_lapis_block_slab.png"},
@@ -18,13 +18,13 @@ mcl_stairs.register_slab("lapisblock", {
 
 mcl_stairs.register_stair("goldblock", {
 	baseitem="mcl_core:goldblock",
-	base_description=S("Gold"),
+	description=S("Gold Stairs"),
 	recipeitem=extra_nodes and "mcl_core:goldblock" or "",
 	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 })
 mcl_stairs.register_slab("goldblock", {
 	baseitem="mcl_core:goldblock",
-	base_description=S("Gold"),
+	description=S("Gold Slab"),
 	recipeitem=extra_nodes and "mcl_core:goldblock" or "",
 	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 	tiles={"default_gold_block.png", "default_gold_block.png", "mcl_stairs_gold_block_slab.png"},
@@ -32,13 +32,13 @@ mcl_stairs.register_slab("goldblock", {
 
 mcl_stairs.register_stair("ironblock", {
 	baseitem="mcl_core:ironblock",
-	base_description=S("Iron"),
+	description=S("Iron Stairs"),
 	recipeitem=extra_nodes and "mcl_core:ironblock" or "",
 	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 })
 mcl_stairs.register_slab("ironblock", {
 	baseitem="mcl_core:ironblock",
-	base_description=S("Iron"),
+	description=S("Iron Slab"),
 	recipeitem=extra_nodes and "mcl_core:ironblock" or "",
 	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 	tiles={"default_steel_block.png", "default_steel_block.png", "mcl_stairs_iron_block_slab.png"},
@@ -46,25 +46,30 @@ mcl_stairs.register_slab("ironblock", {
 
 mcl_stairs.register_stair_and_slab("stonebrickcracked", {
 	baseitem="mcl_core:stonebrickcracked",
-	base_description=S("Cracked Stone Brick"),
+	description_stair=S("Cracked Stone Brick Stairs"),
+	description_slab=S("Cracked Stone Brick Slab"),
 	recipeitem=extra_nodes and "mcl_core:stonebrickcracked" or "",
 	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 })
 mcl_stairs.register_stair_and_slab("deepslate_bricks_cracked", {
 	baseitem="mcl_deepslate:deepslate_bricks_cracked",
-	base_description=S("Cracked Deepslate Brick"),
+	description_stair=S("Cracked Deepslate Brick Stairs"),
+	description_slab=S("Cracked Deepslate Brick Slab"),
 	recipeitem=extra_nodes and "mcl_deepslate:deepslate_bricks_cracked" or "",
 	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 })
 mcl_stairs.register_stair_and_slab("deepslate_tiles_cracked", {
 	baseitem="mcl_deepslate:deepslate_tiles_cracked",
-	base_description=S("Cracked Deepslate Tile"),
+	description_stair=S("Cracked Deepslate Tile Stairs"),
+	description_slab=S("Cracked Deepslate Tile Slab"),
 	recipeitem=extra_nodes and "mcl_deepslate:deepslate_tiles_cracked" or "",
 	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 })
 
 mcl_stairs.register_stair_and_slab("end_stone", {
 	baseitem = "mcl_end:end_stone",
+	description_stair=S("End Stone Stairs"),
+	description_slab=S("End Stone Slab"),
 	recipeitem = extra_nodes and "mcl_end:end_stone" or "",
 	overrides = {_mcl_stonecutter_recipes = {"mcl_end:end_stone"}},
 	groups = {not_in_creative_inventory=extra_nodes and 0 or 1},
@@ -72,6 +77,7 @@ mcl_stairs.register_stair_and_slab("end_stone", {
 
 mcl_stairs.register_stair("stone", {
 	baseitem = "mcl_core:stone_smooth",
+	description=S("Smooth Stone Stairs"),
 	recipeitem = extra_nodes and "mcl_core:stone_smooth" or "",
 	overrides = {_mcl_stonecutter_recipes = {"mcl_core:stone_smooth"}},
 	groups = {not_in_creative_inventory = extra_nodes and 0 or 1},
@@ -81,6 +87,8 @@ local canonical_color = "yellow"
 for name,cdef in pairs(mcl_dyes.colors) do
 	local is_canonical = name == canonical_color
 	mcl_stairs.register_stair_and_slab("concrete_"..name, {
+		description_stair = S("@1 Concrete Stairs", cdef.readable_name),
+		description_slab = S("@1 Concrete Slab", cdef.readable_name),
 		groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 		baseitem="mcl_colorblocks:concrete_"..name,
 		recipeitem=extra_nodes and "mcl_core:stonebrickcracked" or "",

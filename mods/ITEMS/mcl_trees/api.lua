@@ -505,20 +505,27 @@ function mcl_trees.register_wood(name, p)
 
 	if p.stairs == nil or type(p.stairs) == "table" then
 		p.stairs = p.stairs or {}
-		mcl_stairs.register_stair_and_slab(name, {
+		mcl_stairs.register_stair(name, {
 			baseitem="mcl_trees:wood_"..name,
+			description = S("@1 Stairs", rname),
 		})
 		mcl_stairs.register_stair(name.."_bark", {
 			baseitem="mcl_trees:bark_"..name,
+			description = S("@1 Bark Stairs", rname),
 			recipeitem=bark_stairs and "mcl_trees:bark_"..name or ""
 		})
 	end
 
 	if p.slab == nil or type(p.slab) == "table" then
 		p.slab = p.slab or {}
-		mcl_stairs.register_stair_and_slab(name, { baseitem="mcl_trees:wood_"..name, register_stair_and_slab = false })
+		mcl_stairs.register_slab(name, {
+			baseitem="mcl_trees:wood_"..name,
+			description = S("@1 Slab", rname),
+			register_stair_and_slab = false
+		})
 		mcl_stairs.register_slab(name.."_bark", {
 			baseitem="mcl_trees:bark_"..name,
+			description = S("@1 Bark Slab", rname),
 			recipeitem=bark_stairs and "mcl_trees:bark_"..name or ""
 		})
 	end

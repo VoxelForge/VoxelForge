@@ -408,13 +408,12 @@ function mcl_stairs.register_stair(subname, ...)
 	if type(select(1, ...)) == "table" then
 		local stairdef = select(1, ...)
 		local ndef = minetest.registered_nodes[stairdef.baseitem]
-		local base_description = stairdef.base_description or ndef.description
 
 		register_stair(subname, {
 			recipeitem = stairdef.recipeitem or stairdef.baseitem,
 			groups = table.merge(ndef.groups or {}, stairdef.groups or {}),
 			tiles = stairdef.tiles or ndef.tiles,
-			description = S("@1 Stairs", base_description),
+			description = stairdef.description,
 			sounds = ndef.sounds,
 			blast_resistance = ndef.blast_resistance,
 			hardness = ndef.hardness,
@@ -439,14 +438,13 @@ function mcl_stairs.register_slab(subname, ...)
 	if type(select(1, ...)) == "table" then
 		local stairdef = select(1, ...)
 		local ndef = minetest.registered_nodes[stairdef.baseitem]
-		local base_description = stairdef.base_description or ndef.description
 
 		register_slab(subname, {
 			recipeitem = stairdef.recipeitem or stairdef.baseitem,
 			groups = table.merge(ndef.groups or {}, stairdef.groups or {}),
 			tiles = stairdef.tiles or ndef.tiles,
-			description = S("@1 Slab", base_description),
-			double_description = S("Double @1 Slab", base_description),
+			description = stairdef.description,
+			double_description = S("Double @1", stairdef.description),
 			sounds = ndef.sounds,
 			blast_resistance = ndef.blast_resistance,
 			hardness = ndef.hardness,
@@ -454,48 +452,48 @@ function mcl_stairs.register_slab(subname, ...)
 		})
 	else
 		register_slab(subname, {
-			recipeitem=select(1, ...),
-			groups=select(2, ...),
-			tiles=select(3, ...),
-			description=select(4, ...),
-			sounds=select(5, ...),
-			blast_resistance=select(6, ...),
-			hardness=select(7, ...),
-			double_description=select(8, ...),
-			overrides=select(9, ...),
+			recipeitem = select(1, ...),
+			groups = select(2, ...),
+			tiles = select(3, ...),
+			description = select(4, ...),
+			sounds = select(5, ...),
+			blast_resistance = select(6, ...),
+			hardness = select(7, ...),
+			double_description = select(8, ...),
+			overrides = select(9, ...),
 		})
 	end
 end
 
 
 -- Stair/slab registration function.
-function mcl_stairs.register_stair_and_slab(subname, recipeitem, groups, images, desc_stair, desc_slab, sounds, blast_resistance, hardness,
-	double_description, corner_stair_texture_override)
-	if type(recipeitem) == "table" then
-		mcl_stairs.register_stair(subname, recipeitem)
-		mcl_stairs.register_slab(subname, recipeitem)
+function mcl_stairs.register_stair_and_slab(subname, ...)
+	if type(select(1, ...)) == "table" then
+		local stairdef = select(1, ...)
+		mcl_stairs.register_stair(subname, table.merge(stairdef, { description = stairdef.description_stair }))
+		mcl_stairs.register_slab(subname, table.merge(stairdef, { description = stairdef.description_slab }))
 		return
 	end
 
 	register_stair(subname, {
-		recipeitem = recipeitem,
-		groups = groups,
-		images = images,
-		description = desc_stair,
-		sounds = sounds,
-		blast_resistance = blast_resistance,
-		hardness = hardness,
-		corner_stair_texture_override = corner_stair_texture_override
+		recipeitem = select(1, ...),
+		groups = select(2, ...),
+		tiles = select(3, ...),
+		description = select(4, ...),
+		sounds = select(6, ...),
+		blast_resistance = select(7, ...),
+		hardness = select(8, ...),
+		corner_stair_texture_override = select(10, ...),
 	})
 	register_slab(subname, {
-		recipeitem = recipeitem,
-		groups = groups,
-		images = images,
-		description = desc_slab,
-		sounds = sounds,
-		blast_resistance = blast_resistance,
-		hardness = hardness,
-		double_description = double_description
+		recipeitem = select(1, ...),
+		groups = select(2, ...),
+		tiles = select(3, ...),
+		description = select(5, ...),
+		sounds = select(6, ...),
+		blast_resistance = select(7, ...),
+		hardness = select(8, ...),
+		double_description = select(9, ...),
 	})
 end
 

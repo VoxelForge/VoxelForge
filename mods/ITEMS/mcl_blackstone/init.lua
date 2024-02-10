@@ -198,14 +198,20 @@ end
 --slabs/stairs
 mcl_stairs.register_stair_and_slab("blackstone", {
 	baseitem = "mcl_blackstone:blackstone",
+	description_stair = S("Blackstone Stairs"),
+	description_slab = S("Blackstone Slab"),
 	overrides = {_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone"}}, {_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone"}}
 })
 mcl_stairs.register_stair_and_slab("blackstone_polished", {
 	baseitem = "mcl_blackstone:blackstone_polished",
+	description_stair = S("Polished Blackstone Stairs"),
+	description_slab = S("Polished Blackstone Slab"),
 	overrides = {_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone", "mcl_blackstone:blackstone_polished"}}, {_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone", "mcl_blackstone:blackstone_polished"}}
 })
 mcl_stairs.register_stair_and_slab("blackstone_brick_polished", {
 	baseitem = "mcl_blackstone:blackstone_brick_polished",
+	description_stair = S("Blackstone Brick Stairs"),
+	description_slab = S("Blackstone Brick Slab"),
 	overrides = {_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone", "mcl_blackstone:blackstone_polished"}}, {_mcl_stonecutter_recipes = {"mcl_blackstone:blackstone", "mcl_blackstone:blackstone_polished"}}
 })
 minetest.register_alias("mcl_stairs:slab_blackstone_chiseled_polished_top", "mcl_stairs:slab_blackstone_polished_top")

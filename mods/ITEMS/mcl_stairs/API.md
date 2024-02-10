@@ -31,15 +31,18 @@ This function will register the node `mcl_stairs:stair_<subname>`.  The nodes
 are only used for placed nodes will also be registered.
 
 ## `mcl_stairs.register_slab(subname, stair definition)`
-Same as `mcl_stairs.register_stair` but registers slab instead.
+Same as `register_stair` but registers slab instead.
 
 This function will register the node `mcl_stairs:slab_<subname>`.  The nodes
 `mcl_stairs:slab_<subname>_top` and `mcl_stairs:slab_<subname>_double` which
 are only used for placed nodes will also be registered.
 
 ## `mcl_stairs.register_stair_and_slab(subname, stair definition)`
-Shorthand for calling both `mcl_stairs.register_stair` and
-`mcl_stairs.register_slab` with the same arguments.
+Shorthand for calling `register_stair` and `register_slab` at the same time.
+
+For the second argument `description_stair` get passed as `description` to
+`register_stair` and `description_slab` get passed as `description` to
+`register_slab`.
 
 ## Stair definition
 Used by `mcl_stairs.register_stair`, `mcl_stairs.register_slab` and
@@ -48,13 +51,10 @@ Used by `mcl_stairs.register_stair`, `mcl_stairs.register_slab` and
 ```lua
 {
     baseitem = "",
-    -- Node the registered stair/slab is based on.
+    -- Node the stair/slab is based on.
 
-    base_description = "",
-    -- String used for the stair/slab description.  Stair and slab
-    -- descriptions have the form "<base_description> Stairs" and
-    -- "<base_description> Slab" respectively.  Defaults to the description of
-    -- the `baseitem` node if unspecified.
+    description = "",
+    -- Description for the stair/slab.
 
     recipeitem = "",
     -- Item or group used for the crafting recipe.  Defaults to `baseitem` if

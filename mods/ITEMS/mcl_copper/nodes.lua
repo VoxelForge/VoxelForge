@@ -135,20 +135,28 @@ minetest.register_node("mcl_copper:block_oxidized_cut", {
 
 mcl_stairs.register_stair_and_slab("copper_cut", {
 	baseitem = "mcl_copper:block_cut",
+	description_stair = "Cut Copper Stairs",
+	description_slab = "Cut Copper Slab",
 	overrides = {_mcl_stonecutter_recipes = {"mcl_copper:block", "mcl_copper:block_cut"}}
 })
 
 mcl_stairs.register_stair_and_slab("copper_exposed_cut", {
 	baseitem = "mcl_copper:block_exposed_cut",
+	description_stair = "Exposed Cut Copper Stairs",
+	description_slab = "Exposed Cut Copper Slab",
 	overrides = {_mcl_stonecutter_recipes = {"mcl_copper:block_exposed", "mcl_copper:block_exposed_cut"}, _on_lightning_strike = on_lightning_strike}
 })
 
 mcl_stairs.register_stair_and_slab("copper_weathered_cut", {
 	baseitem = "mcl_copper:block_weathered_cut",
+	description_stair = "Weathered Cut Copper Stairs",
+	description_slab = "Weathered Cut Copper Slab",
 	overrides = {_mcl_stonecutter_recipes = {"mcl_copper:block_weathered", "mcl_copper:block_weathered_cut"}, _on_lightning_strike = on_lightning_strike}
 })
 
 mcl_stairs.register_stair_and_slab("copper_oxidized_cut", {
 	baseitem = "mcl_copper:block_oxidized_cut",
+	description_stair = "Oxidized Cut Copper Stairs",
+	description_slab = "Oxidized Cut Copper Slab",
 	overrides = {_mcl_stonecutter_recipes = {"mcl_copper:block_oxidized", "mcl_copper:block_oxidized_cut"}, _on_lightning_strike = on_lightning_strike}
 })

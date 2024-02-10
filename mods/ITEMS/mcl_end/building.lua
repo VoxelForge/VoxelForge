@@ -183,13 +183,15 @@ minetest.register_node("mcl_end:dragon_egg", {
 
 mcl_stairs.register_stair_and_slab("end_bricks", {
 	baseitem = "mcl_end:end_bricks",
-	base_description = S("End Stone Brick"),
+	description_stair = S("End Stone Brick Stairs"),
+	description_slab = S("End Stone Brick Slab"),
 	overrides = {_mcl_stonecutter_recipes = {"mcl_end:end_bricks","mcl_end:end_stone"}},{_mcl_stonecutter_recipes = {"mcl_end:end_bricks","mcl_end:end_stone"}}
 })
 
 mcl_stairs.register_stair_and_slab("purpur_block", {
 	baseitem = "mcl_end:purpur_block",
-	base_description = S("Purpur"),
+	description_stair = S("Purpur Stairs"),
+	description_slab = S("Purpur Slab"),
 	recipeitem = "group:purpur_block",
 	overrides = {_mcl_stonecutter_recipes = {"mcl_end:purpur_block"}}
 })
