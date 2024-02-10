@@ -721,7 +721,7 @@ Register a minecart
 ]]
 local function register_minecart(itemstring, entity_id, description, tt_help, longdesc, usagehelp, mesh, textures, icon, drop, on_rightclick, on_activate_by_rail, creative)
 	register_entity(entity_id, mesh, textures, drop, on_rightclick, on_activate_by_rail)
-	tt_help = (tt_help and tt_help .. "\n" or "") .. "Sneak-click to remove"
+	tt_help = (tt_help and tt_help .. "\n" or "") .. S("Sneak-click to remove")
 	register_craftitem(itemstring, entity_id, description, tt_help, longdesc, usagehelp, icon, creative)
 	if minetest.get_modpath("doc_identifier") then
 		doc.sub.identifier.register_object(entity_id, "craftitems", itemstring)
