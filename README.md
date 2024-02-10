@@ -4,7 +4,7 @@
 
 An unofficial Minecraft-like game for Minetest. Fork of MineClone 2 with focus
 on stability, multiplayer performance and features. For information about
-migrating from MineClone 2 to Mineclonia, see [MIGRATING.md](./src/branch/main/MIGRATING.md).
+migrating from MineClone 2 to Mineclonia, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
 
 Version: 0.94.0
 
@@ -213,8 +213,8 @@ Technical differences from Minecraft:
 … and finally, Mineclonia is free software (“free” as in “freedom”)!
 
 ## Other readme files
-* [LICENSE.txt](./src/branch/main/LICENSE.txt): The GPLv3 license text
-* [CONTRIBUTING.md](./src/branch/main/CONTRIBUTING.md): Information for those who want to contribute
-* [API.md](./src/branch/main/API.md): For Minetest modders who want to mod this game
-* [LEGAL.md](./src/branch/main/LEGAL.md): Legal information
-* [CREDITS.md](./src/branch/main/CREDITS.md): List of everyone who contributed
+* [LICENSE.txt](../../../src/branch/main/LICENSE.txt): The GPLv3 license text
+* [CONTRIBUTING.md](../../../src/branch/main/CONTRIBUTING.md): Information for those who want to contribute
+* [API.md](../../../src/branch/main/API.md): For Minetest modders who want to mod this game
+* [LEGAL.md](../../../src/branch/main/LEGAL.md): Legal information
+* [CREDITS.md](../../../src/branch/main/CREDITS.md): List of everyone who contributed
