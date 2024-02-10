@@ -33,10 +33,10 @@ local canonical_color = "yellow"
 
 for color,colordef in pairs(mcl_dyes.colors) do
 	local is_canonical = color == canonical_color
-	local sdesc_hc = S(colordef.readable_name.." Terracotta")
-	local sdesc_gt = S(colordef.readable_name.." Glazed Terracotta")
-	local sdesc_cp = S(colordef.readable_name.." Concrete Powder")
-	local sdesc_c = S(colordef.readable_name.." Concrete")
+	local sdesc_hc = S("@1 Terracotta", colordef.readable_name)
+	local sdesc_gt = S("@1 Glazed Terracotta", colordef.readable_name)
+	local sdesc_cp = S("@1 Concrete Powder", colordef.readable_name)
+	local sdesc_c = S("@1 Concrete", colordef.readable_name)
 	local ldesc_hc, ldesc_gt, ldesc_cp, ldesc_c
 	local create_entry
 	local ename_hc, ename_gt, ename_cp, ename_c

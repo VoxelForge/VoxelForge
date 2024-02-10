@@ -76,9 +76,9 @@ for name,cdef in pairs(mcl_dyes.colors) do
 	mcl_stairs.register_stair_and_slab("concrete_"..name, {
 		groups={pickaxey=1, not_in_creative_inventory=extra_nodes and 0 or 1},
 		recipeitem="mcl_colorblocks:concrete_"..name,
-		stair_description=S(cdef.readable_name.. " Concrete Stairs"),
-		slab_description=S(cdef.readable_name.. " Concrete Slab"),
-		double_description=S(cdef.readable_name.. " Double Slab"),
+		stair_description=S("@1 Concrete Stairs", cdef.readable_name),
+		slab_description=S("@1 Concrete Slab", cdef.readable_name),
+		double_description=S("@1 Double Slab", cdef.readable_name),
 		register_craft=extra_nodes,
 	})
 

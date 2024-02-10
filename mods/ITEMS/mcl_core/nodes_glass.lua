@@ -43,7 +43,7 @@ for color,colordef in pairs(mcl_dyes.colors) do
 		texcol = messy_textures[color]
 	end
 	minetest.register_node("mcl_core:glass_"..color, {
-		description = S(colordef.readable_name.." Stained Glass"),
+		description = S("@1 Stained Glass", colordef.readable_name),
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = entry_name,
 		_doc_items_longdesc = longdesc,

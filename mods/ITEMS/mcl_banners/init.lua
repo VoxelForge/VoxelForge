@@ -374,7 +374,7 @@ minetest.register_node("mcl_banners:hanging_banner", {
 for colorid, colortab in pairs(mcl_banners.colors) do
     for i, pattern_name in ipairs(pattern_names) do
 	local itemid = colortab[1]
-	local desc = S(mcl_dyes.colors[itemid].readable_name.." Banner")
+	local desc = S("@1 Banner", mcl_dyes.colors[itemid].readable_name)
 	local wool = colortab[3]
 	local colorize = colortab[4]
 

@@ -34,7 +34,7 @@ for color,colordef in pairs(mcl_dyes.colors) do
 	end
 
 	minetest.register_node("mcl_wool:"..color, {
-		description = S(colordef.readable_name.." Wool"),
+		description = S("@1 Wool", colordef.readable_name),
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = name_wool,
 		_doc_items_longdesc = longdesc_wool,
@@ -46,7 +46,7 @@ for color,colordef in pairs(mcl_dyes.colors) do
 		_mcl_blast_resistance = 0.8,
 	})
 	minetest.register_node("mcl_wool:"..color.."_carpet", {
-		description = S(colordef.readable_name.." Carpet"),
+		description = S("@1 Carpet", colordef.readable_name),
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = name_carpet,
 		_doc_items_longdesc = longdesc_carpet,

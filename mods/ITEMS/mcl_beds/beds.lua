@@ -27,7 +27,7 @@ for color, colordef in pairs(mcl_dyes.colors) do
 	end
 	-- Register bed
 	mcl_beds.register_bed("mcl_beds:bed_"..color, {
-		description = S(colordef.readable_name.." Bed"),
+		description = S("@1 Bed", colordef.readable_name),
 		_doc_items_entry_name = entry_name,
 		_doc_items_create_entry = create_entry,
 		inventory_image = "mcl_beds_bed_"..texcol.."_inv.png",
