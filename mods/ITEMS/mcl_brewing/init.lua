@@ -322,6 +322,11 @@ end
 
 local function allow_move(pos, from_list, from_index, to_list, to_index, count, player)
 	if from_list == "sorter" or to_list == "sorter" then return 0 end
+	local inv = minetest.get_meta(pos):get_inventory()
+	local stack = inv:get_stack(from_list, from_index)
+	local trg = sort_stack(stack, pos)
+	if trg == to_list then return count end
+	return 0
 end
 
 local function allow_take(pos, listname, index, stack, player)
