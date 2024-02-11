@@ -211,8 +211,8 @@ local function get_craft(itemstack, player, old_craft_grid, craft_inv)
 	meta:set_string("pot_faces",minetest.serialize({
 		get_sherd_name(old_craft_grid[2]),
 		get_sherd_name(old_craft_grid[6]),
-		get_sherd_name(old_craft_grid[4]),
 		get_sherd_name(old_craft_grid[8]),
+		get_sherd_name(old_craft_grid[4]),
 	}))
 	tt.reload_itemstack_description(itemstack)
 	return itemstack
