@@ -82,7 +82,7 @@ minetest.register_craftitem("mcl_end:ender_eye", {
 	wield_image = "mcl_end_ender_eye.png",
 	inventory_image = "mcl_end_ender_eye.png",
 	-- Throw eye of ender to make it fly to the closest stronghold
-	on_use = function(itemstack, user, pointed_thing)
+	on_secondary_use = function(itemstack, user, pointed_thing)
 		if user == nil then
 			return
 		end
