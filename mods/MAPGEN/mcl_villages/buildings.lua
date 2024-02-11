@@ -16,7 +16,7 @@ function mcl_villages.initialize_settlement_info(pr)
 	end
 
 	-- randomize number of buildings
-	local number_of_buildings = pr:next(10, 25)
+	local number_of_buildings -- = pr:next(10, 25)
 
 	for k, v in pairs(mcl_villages.schematic_houses) do
 		count_buildings[v["name"]] = 0
