@@ -3,10 +3,10 @@ local S = minetest.get_translator(minetest.get_current_modname())
 local mod_doc = minetest.get_modpath("doc")
 
 local function sea_pickle_on_place(itemstack, placer, pointed_thing, level)
-    if level == nil then level=1 end
-    if pointed_thing.type ~= "node" or not placer then
-        return itemstack
-    end
+	if level == nil then level=1 end
+	if pointed_thing.type ~= "node" or not placer then
+		return itemstack
+	end
 
 	local player_name = placer:get_player_name()
 	local pos_under = pointed_thing.under
@@ -84,49 +84,49 @@ for s=1,4 do
 	end
 	img_off = "mcl_ocean_"..ontop..".png^mcl_ocean_sea_pickle_"..s.."_off.png"
 	local next_on, next_off
-    if s < 4 then
-        next_on = "mcl_ocean:sea_pickle_" .. tostring(s + 1) .. "_" .. ontop
-        next_off = "mcl_ocean:sea_pickle_" .. tostring(s + 1) .. "_off_" .. ontop
-    end
-	
-    local function spread_sea_pickle(pos, placer)
-        local possible_position = {
-            { x =  2, y =  0, z =  0 },
-            { x = -2, y =  0, z =  0 },
-			{ x =  1, y =  0, z =  0 },
-            { x = -1, y =  0, z =  0 },
-            { x =  0, y =  0, z =  1 },
-			{ x =  0, y =  0, z = -1 },
-            { x =  0, y =  0, z =  2 },
-            { x =  0, y =  0, z = -2 },
-            { x =  1, y = -1, z =  0 },
-            { x = -1, y = -1, z =  0 },
-            { x =  0, y = -1, z =  1 },
-            { x =  0, y = -1, z = -1 },
-            { x =  1, y =  0, z =  1 },
-            { x =  1, y =  0, z = -1 },
-            { x = -1, y =  0, z =  1 },
-            { x = -1, y =  0, z = -1 },
-        }
+	if s < 4 then
+		next_on = "mcl_ocean:sea_pickle_" .. tostring(s + 1) .. "_" .. ontop
+		next_off = "mcl_ocean:sea_pickle_" .. tostring(s + 1) .. "_off_" .. ontop
+	end
 
-        for k, v in pairs(possible_position) do
-            sea_pickle_on_place(
+	local function spread_sea_pickle(pos, placer)
+		local possible_position = {
+			{ x =  2, y =  0, z =  0 },
+			{ x = -2, y =  0, z =  0 },
+			{ x =  1, y =  0, z =  0 },
+			{ x = -1, y =  0, z =  0 },
+			{ x =  0, y =  0, z =  1 },
+			{ x =  0, y =  0, z = -1 },
+			{ x =  0, y =  0, z =  2 },
+			{ x =  0, y =  0, z = -2 },
+			{ x =  1, y = -1, z =  0 },
+			{ x = -1, y = -1, z =  0 },
+			{ x =  0, y = -1, z =  1 },
+			{ x =  0, y = -1, z = -1 },
+			{ x =  1, y =  0, z =  1 },
+			{ x =  1, y =  0, z = -1 },
+			{ x = -1, y =  0, z =  1 },
+			{ x = -1, y =  0, z = -1 },
+		}
+
+		for k, v in pairs(possible_position) do
+			sea_pickle_on_place(
 				ItemStack("mcl_ocean:sea_pickle"),
 				placer,
-                {type="node", under=vector.offset(pos,v.x,v.y,v.z), above=vector.offset(pos,v.x,v.y-1,v.z)},
-                math.random(1, 3))
+				{type="node", under=vector.offset(pos,v.x,v.y,v.z), above=vector.offset(pos,v.x,v.y-1,v.z)},
+				math.random(1, 3))
 		end
 	end
 
-    local function on_bone_meal(itemstack, placer, pointed_thing, pos, node)
-        if pointed_thing.type ~= "node" then return end
-        if 4 ~= s then
-            node.name = "mcl_ocean:sea_pickle_" .. (s + 1) .. "_" .. ontop
-            minetest.swap_node(pos, node)
-        end
+	local function on_bone_meal(itemstack, placer, pointed_thing, pos, node)
+		if pointed_thing.type ~= "node" then return end
+		if 4 ~= s then
+			node.name = "mcl_ocean:sea_pickle_" .. (s + 1) .. "_" .. ontop
+			minetest.swap_node(pos, node)
+		end
 		spread_sea_pickle(pos, placer)
-    end
-	
+	end
+
 	minetest.register_node("mcl_ocean:sea_pickle_"..s.."_"..ontop, {
 		description = desc,
 		_tt_help = tt_help,
@@ -172,10 +172,10 @@ for s=1,4 do
 		_mcl_sea_pickle_off = "mcl_ocean:sea_pickle_"..s.."_off_"..ontop,
 		_mcl_sea_pickle_next = next_on,
 		_mcl_hardness = 0,
-        _mcl_blast_resistance = 0,
+		_mcl_blast_resistance = 0,
 		_on_bone_meal = on_bone_meal,
-    })
-	
+	})
+
 	minetest.register_node("mcl_ocean:sea_pickle_"..s.."_off_"..ontop, {
 		drawtype = "plantlike_rooted",
 		paramtype = "light",
