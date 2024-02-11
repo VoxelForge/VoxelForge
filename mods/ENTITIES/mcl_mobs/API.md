@@ -596,7 +596,7 @@ enhance mob functionality and have them do many interesting things:
 * `custom_attack`when set this function is called instead of the normal mob melee attack, parameters are (self, to_attack).
 * `on_die`		 a function that is called when mob is killed (self, pos)
 * `do_custom`	a custom function that is called every tick while mob is active and which has access to all of the self.* variables e.g. (self.health for health or self.standing_in for node status), return with `false` to skip remainder of mob API.
-* `force_step`	Same as do_custom but this is run on every on_step even if no player is within active range. Use with care.
+* `force_step`	a function that will run on every step before the player in range check is run
 
 #### Internal Variables
 
