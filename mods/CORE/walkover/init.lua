@@ -22,7 +22,7 @@ minetest.register_on_mods_loaded(function()
 		if def.on_walk_over then
 			on_walk[name] = def.on_walk_over
 		end
-		if def.on_walk_through then
+		if def._on_walk_through then
 			on_walk_through[name] = def._on_walk_through
 		end
 	end
