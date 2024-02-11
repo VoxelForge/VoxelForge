@@ -65,7 +65,7 @@ end
 
 local function register_unpreserve(nodename,od,def)
 	local nd = table.copy(od)
-	nd.description = (def.preserved_description or S("Preserved ") )..nd.description
+	nd.description = S("Waxed @1", nd.description)
 	nd[def.unpreserve_callback]  = function(itemstack, clicker, pointed_thing)
 		if pointed_thing then
 			return unpreserve(itemstack, clicker, pointed_thing)
@@ -123,8 +123,6 @@ end
 -- name: short string that describes the decaychain; will be used as index of the registration table
 -- def: decaychain definition:
 --{
---	preserved_description = "Waxed",
---		--optional: description of the preserved variant will be prepended with this. Default: "Preserved"
 --	preserve_group = "preserves_copper",
 --		--optional: item group that when used on the node will preserve this state
 --	unpreserve_callback = "_on_axe_place",

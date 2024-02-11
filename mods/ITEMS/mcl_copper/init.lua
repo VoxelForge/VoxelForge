@@ -7,7 +7,6 @@ dofile(path .. "/items.lua")
 dofile(path .. "/crafting.lua")
 
 mcl_copper.register_decaychain("copper",{
-	preserved_description = "Waxed ",
 	preserve_group = "preserves_copper",
 	unpreserve_callback = "_on_axe_place",
 	undecay_callback = "_on_axe_place",
@@ -20,7 +19,6 @@ mcl_copper.register_decaychain("copper",{
 })
 
 mcl_copper.register_decaychain("cut_copper",{
-	preserved_description = "Waxed ",
 	preserve_group = "preserves_copper",
 	unpreserve_callback = "_on_axe_place",
 	undecay_callback = "_on_axe_place",
@@ -36,7 +34,6 @@ mcl_copper.register_decaychain("cut_copper",{
 
 for _,v in pairs({"stair","slab"}) do
 	mcl_copper.register_decaychain("cut_copper_"..v,{
-		preserved_description = "Waxed ",
 		preserve_group = "preserves_copper",
 		unpreserve_callback = "_on_axe_place",
 		undecay_callback = "_on_axe_place",
@@ -51,7 +48,6 @@ end
 
 for _,v in pairs({"inner","outer"}) do
 	mcl_copper.register_decaychain("cut_copper_stair_"..v,{
-		preserved_description = "Waxed ",
 		preserve_group = "preserves_copper",
 		unpreserve_callback = "_on_axe_place",
 		undecay_callback = "_on_axe_place",
@@ -65,7 +61,6 @@ for _,v in pairs({"inner","outer"}) do
 end
 for _,v in pairs({"top","double"}) do
 	mcl_copper.register_decaychain("cut_copper_slab_"..v,{
-		preserved_description = "Waxed ",
 		preserve_group = "preserves_copper",
 		unpreserve_callback = "_on_axe_place",
 		undecay_callback = "_on_axe_place",
