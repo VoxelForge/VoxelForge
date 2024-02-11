@@ -130,8 +130,8 @@ local function bucket_get_pointed_thing(user)
 	end
 end
 
-local function on_place_bucket(itemstack, user, pointed_thing)
-	pointed_thing = bucket_get_pointed_thing(user)
+local function on_place_bucket(itemstack, user, _)
+	local pointed_thing = bucket_get_pointed_thing(user)
 
 	-- Must be pointing to node
 	if not pointed_thing or pointed_thing.type ~= "node" then
@@ -180,8 +180,8 @@ local function on_place_bucket(itemstack, user, pointed_thing)
 	return itemstack
 end
 
-local function on_place_bucket_empty(itemstack, user, pointed_thing)
-	pointed_thing = bucket_get_pointed_thing(user)
+local function on_place_bucket_empty(itemstack, user, _)
+	local pointed_thing = bucket_get_pointed_thing(user)
 
 	-- Must be pointing to node
 	if not pointed_thing or pointed_thing.type ~= "node" then
