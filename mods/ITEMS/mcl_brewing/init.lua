@@ -277,14 +277,16 @@ local function allow_put(pos, listname, index, stack, player)
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
 		return 0
-	elseif listname == "stand" then
-		local trg = sort_stack(stack, pos)
+	end
+	local trg = sort_stack(stack, pos)
+	if listname == "stand" then
 		if trg ~= "stand" then
 			return 0
 		end
+	elseif listname == "fuel" then
+		if trg ~= "fuel" then return 0 end
 	elseif listname == "sorter" then
 		local inv = minetest.get_meta(pos):get_inventory()
-		local trg = sort_stack(stack, pos)
 		if trg then
 			local stack1 = ItemStack(stack):take_item()
 			if inv:room_for_item(trg, stack) then
