@@ -287,6 +287,14 @@ mcl_stairs.register_stair_and_slab("quartzblock", {
 	overrides = {_mcl_stonecutter_recipes = {"mcl_nether:quartz_block"}},
 })
 
+mcl_stairs.register_stair_and_slab("quartz_smooth", {
+	baseitem = "mcl_nether:quartz_smooth",
+	description_stair = S("Smooth Quartz Stairs"),
+	description_slab = S("Smooth Quartz Slab"),
+	recipeitem = "mcl_nether:quartz_smooth",
+	overrides = {_mcl_stonecutter_recipes = {"mcl_nether:quartz_smooth"}},
+})
+
 mcl_stairs.register_stair_and_slab("nether_brick", {
 	baseitem = "mcl_nether:nether_brick",
 	description_stair = S("Nether Brick Stairs"),
