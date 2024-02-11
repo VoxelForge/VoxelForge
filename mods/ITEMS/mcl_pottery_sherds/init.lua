@@ -2,7 +2,28 @@ mcl_pottery_sherds = {}
 local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 
-mcl_pottery_sherds.names = {"angler", "archer", "arms_up", "blade", "brewer", "burn", "danger", "explorer", "friend", "heartbreak", "heart", "howl", "miner", "mourner", "plenty", "prize", "sheaf", "shelter", "skull", "snort"}
+mcl_pottery_sherds.defs = {
+	{ name = "angler", description = S("Angler") },
+	{ name = "archer", description = S("Archer") },
+	{ name = "arms_up", description = S("Arms Up") },
+	{ name = "blade", description = S("Blade") },
+	{ name = "brewer", description = S("Brewer") },
+	{ name = "burn", description = S("Burn") },
+	{ name = "danger", description = S("Danger") },
+	{ name = "explorer", description = S("Explorer") },
+	{ name = "friend", description = S("Friend") },
+	{ name = "heartbreak", description = S("Heartbreak") },
+	{ name = "heart", description = S("Heart") },
+	{ name = "howl", description = S("Howl") },
+	{ name = "miner", description = S("Miner") },
+	{ name = "mourner", description = S("Mourner") },
+	{ name = "plenty", description = S("Plenty") },
+	{ name = "prize", description = S("Prize") },
+	{ name = "sheaf", description = S("Sheaf") },
+	{ name = "shelter", description = S("Shelter") },
+	{ name = "skull", description = S("Skull") },
+	{ name = "snort", description = S("Snort") },
+}
 
 local pot_face_positions = {
 	vector.new(0,0, 7/16 + 0.001),
@@ -18,20 +39,15 @@ local pot_face_rotations = {
 	vector.new(0, -0.5 * math.pi, 0),
 }
 
-local function readable_name(str)
-	str = str:gsub("_", " ")
-	return (str:gsub("^%l", string.upper))
-end
-
-for _,name in pairs(mcl_pottery_sherds.names) do
-	minetest.register_craftitem("mcl_pottery_sherds:"..name, {
-		description = S(readable_name(name).." Pottery Sherd"),
+for _, def in pairs(mcl_pottery_sherds.defs) do
+	minetest.register_craftitem("mcl_pottery_sherds:"..def.name, {
+		description = S("@1 Pottery Sherd", def.description),
 		_tt_help = S("Used for crafting decorated pots"),
 		_doc_items_create_entry = false,
-		inventory_image = "mcl_pottery_sherds_"..name..".png",
-		wield_image = "mcl_pottery_sherds_"..name..".png",
+		inventory_image = "mcl_pottery_sherds_"..def.name..".png",
+		wield_image = "mcl_pottery_sherds_"..def.name..".png",
 		groups = { pottery_sherd = 1, decorated_pot_recipe = 1 },
-		_mcl_pottery_sherd_name = name,
+		_mcl_pottery_sherd_name = def.name,
 	})
 end
 
