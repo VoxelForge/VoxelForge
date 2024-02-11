@@ -4,8 +4,6 @@ local deepslate_min = mcl_vars.mg_overworld_min
 
 local copper_mod = minetest.get_modpath("mcl_copper")
 
-local mg_name = minetest.get_mapgen_setting("mg_name")
-
 local mountains = {
 	"ExtremeHills", "ExtremeHills_beach", "ExtremeHills_ocean", "ExtremeHills_deep_ocean", "ExtremeHills_underground",
 	"ExtremeHills+", "ExtremeHills+_ocean", "ExtremeHills+_deep_ocean", "ExtremeHills+_underground",
