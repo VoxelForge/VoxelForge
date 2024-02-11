@@ -30,6 +30,7 @@ local nodeinfo_pos = { --offset positions of the "nodeinfo" nodes.
 	head_top =    vector.new(0, 2, 0),
 	feet =        vector.new(0, 0.3, 0),
 }
+mcl_player.node_offsets = nodeinfo_pos
 
 -- Minetest bug: get_bone_position() returns all zeros vectors.
 -- Workaround: call set_bone_position() one time first.
