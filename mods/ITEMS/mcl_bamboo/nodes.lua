@@ -28,7 +28,7 @@ function mcl_bamboo.grow(pos)
 end
 
 local bamboo_def = {
-	description = "Bamboo",
+	description = S("Bamboo"),
 	tiles = {"mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo_bottom.png", "mcl_bamboo_bamboo.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
