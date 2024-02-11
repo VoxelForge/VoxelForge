@@ -55,7 +55,6 @@ local brick_groups = table.copy(minetest.registered_items["mcl_core:brick"].grou
 brick_groups["decorated_pot_recipe"] = 1
 minetest.override_item("mcl_core:brick", { groups = brick_groups })
 
-
 local function update_entities(pos,rm)
 	pos = vector.round(pos)
 	for _,v in pairs(minetest.get_objects_inside_radius(pos, 0.5, true)) do
@@ -70,7 +69,7 @@ local function update_entities(pos,rm)
 	local faces = minetest.deserialize(meta:get_string("pot_faces"))
 	if not faces then return end
 	for k,v in pairs(pot_face_positions) do
-		local face = faces[(k + param2) % 4 + 1]
+		local face = faces[(k + param2 - 1) % 4 + 1]
 		if face then
 			local o = minetest.add_entity(pos + v, "mcl_pottery_sherds:pot_face")
 			local e = o:get_luaentity()
