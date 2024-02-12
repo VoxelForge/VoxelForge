@@ -3,3 +3,5 @@ steps:
     image: pipelinecomponents/luacheck
     commands:
       - luacheck -q mods/
+when:
+  - event: push
