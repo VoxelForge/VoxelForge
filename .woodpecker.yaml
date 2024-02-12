@@ -1,5 +1,6 @@
 steps:
   luacheck:
+    name: Luacheck
     image: pipelinecomponents/luacheck
     commands:
       - luacheck -q mods/
