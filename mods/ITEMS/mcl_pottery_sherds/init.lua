@@ -3,26 +3,26 @@ local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 
 mcl_pottery_sherds.defs = {
-	{ name = "angler", description = S("Angler") },
-	{ name = "archer", description = S("Archer") },
-	{ name = "arms_up", description = S("Arms Up") },
-	{ name = "blade", description = S("Blade") },
-	{ name = "brewer", description = S("Brewer") },
-	{ name = "burn", description = S("Burn") },
-	{ name = "danger", description = S("Danger") },
-	{ name = "explorer", description = S("Explorer") },
-	{ name = "friend", description = S("Friend") },
-	{ name = "heartbreak", description = S("Heartbreak") },
-	{ name = "heart", description = S("Heart") },
-	{ name = "howl", description = S("Howl") },
-	{ name = "miner", description = S("Miner") },
-	{ name = "mourner", description = S("Mourner") },
-	{ name = "plenty", description = S("Plenty") },
-	{ name = "prize", description = S("Prize") },
-	{ name = "sheaf", description = S("Sheaf") },
-	{ name = "shelter", description = S("Shelter") },
-	{ name = "skull", description = S("Skull") },
-	{ name = "snort", description = S("Snort") },
+	["angler"] = { description = S("Angler") },
+	["archer"] = { description = S("Archer") },
+	["arms_up"] = { description = S("Arms Up") },
+	["blade"] = { description = S("Blade") },
+	["brewer"] = { description = S("Brewer") },
+	["burn"] = { description = S("Burn") },
+	["danger"] = { description = S("Danger") },
+	["explorer"] = { description = S("Explorer") },
+	["friend"] = { description = S("Friend") },
+	["heartbreak"] = { description = S("Heartbreak") },
+	["heart"] = { description = S("Heart") },
+	["howl"] = { description = S("Howl") },
+	["miner"] = { description = S("Miner") },
+	["mourner"] = { description = S("Mourner") },
+	["plenty"] = { description = S("Plenty") },
+	["prize"] = { description = S("Prize") },
+	["sheaf"] = { description = S("Sheaf") },
+	["shelter"] = { description = S("Shelter") },
+	["skull"] = { description = S("Skull") },
+	["snort"] = { description = S("Snort") },
 }
 
 local pot_face_positions = {
@@ -39,15 +39,15 @@ local pot_face_rotations = {
 	vector.new(0, -0.5 * math.pi, 0),
 }
 
-for _, def in pairs(mcl_pottery_sherds.defs) do
-	minetest.register_craftitem("mcl_pottery_sherds:"..def.name, {
+for name, def in pairs(mcl_pottery_sherds.defs) do
+	minetest.register_craftitem("mcl_pottery_sherds:"..name, {
 		description = S("@1 Pottery Sherd", def.description),
 		_tt_help = S("Used for crafting decorated pots"),
 		_doc_items_create_entry = false,
-		inventory_image = "mcl_pottery_sherds_"..def.name..".png",
-		wield_image = "mcl_pottery_sherds_"..def.name..".png",
+		inventory_image = "mcl_pottery_sherds_"..name..".png",
+		wield_image = "mcl_pottery_sherds_"..name..".png",
 		groups = { pottery_sherd = 1, decorated_pot_recipe = 1 },
-		_mcl_pottery_sherd_name = def.name,
+		_mcl_pottery_sherd_name = name,
 	})
 end
 
@@ -123,9 +123,30 @@ local potbox = {
 	}
 }
 
+local function get_sherd_desc(face)
+	if face == nil then
+		return minetest.registered_items["mcl_core:brick"].description
+	end
+	return S("@1 Pottery Sherd", mcl_pottery_sherds.defs[face].description)
+end
+
+tt.register_snippet(function(itemstring, toolcaps, stack)
+	if not stack then return nil end
+	local meta = stack:get_meta()
+	local faces = minetest.deserialize(meta:get_string("pot_faces"))
+	if not faces then return nil end
+
+	local facedescs = {
+		get_sherd_desc(faces[1]),
+		get_sherd_desc(faces[2]),
+		get_sherd_desc(faces[3]),
+		get_sherd_desc(faces[4]),
+	}
+	return table.concat(facedescs, "\n")
+end)
+
 minetest.register_node("mcl_pottery_sherds:pot", {
 	description = S("Decorated Pot"),
-	_tt_help = S("Nice looking pot"),
 	_doc_items_longdesc = S("Pots are decorative blocks."),
 	_doc_items_usagehelp = S("Specially decorated pots can be crafted using pottery sherds"),
 	drawtype = "nodebox",
@@ -160,6 +181,7 @@ minetest.register_node("mcl_pottery_sherds:pot", {
 		local it = ItemStack("mcl_pottery_sherds:pot")
 		local im = it:get_meta()
 		im:set_string("pot_faces", meta:get_string("pot_faces"))
+		tt.reload_itemstack_description(it)
 		minetest.add_item(pos, it)
 	end,
 	on_rotate = function(pos, _,  _, mode, new_param2)
@@ -181,7 +203,7 @@ local function get_sherd_name(itemstack)
 	return r
 end
 
-minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv)
+local function get_craft(itemstack, player, old_craft_grid, craft_inv)
 	if itemstack:get_name() ~= "mcl_pottery_sherds:pot" then return end
 	if old_craft_grid[1][2] == "mcl_core:brick" then return end
 	local meta = itemstack:get_meta()
@@ -192,8 +214,12 @@ minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv
 		get_sherd_name(old_craft_grid[4]),
 		get_sherd_name(old_craft_grid[8]),
 	}))
+	tt.reload_itemstack_description(itemstack)
 	return itemstack
-end)
+end
+
+minetest.register_craft_predict(get_craft)
+minetest.register_on_craft(get_craft)
 
 minetest.register_craft({
 	output = "mcl_pottery_sherds:pot",
