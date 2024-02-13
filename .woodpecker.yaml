@@ -1,8 +1,8 @@
 steps:
   luacheck:
     name: Luacheck
-    image: pipelinecomponents/luacheck
+    image: mineunit/luacheck
     commands:
-      - luacheck -q mods/
+      - luacheck --std minetest+max --config .luacheckrc mods/
 when:
   - event: push
