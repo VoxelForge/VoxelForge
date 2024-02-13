@@ -39,7 +39,7 @@ mcl_mobs.register_mob("mobs_mc:silverfish", {
 	},
 	makes_footstep_sound = false,
 	walk_velocity = 0.6,
-	run_velocity = 2,
+	run_velocity = 1,
 	jump = true,
 	fear_height = 4,
 	replace_what = {

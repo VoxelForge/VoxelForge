@@ -71,8 +71,8 @@ local piglin = {
 	},
 	jump = true,
 	makes_footstep_sound = true,
-	walk_velocity = 1.4,
-	run_velocity = 2.0, -- (was 2.8) hes fast and has bow, but slower compare to hoglin
+	walk_velocity = 1,
+	run_velocity = 1.4, -- (was 2.8) hes fast and has bow, but slower compare to hoglin
 	drops = {
 		{name = "mcl_bows:crossbow",
 		chance = 10,

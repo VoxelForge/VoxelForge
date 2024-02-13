@@ -40,7 +40,7 @@ local hoglin = {
 	jump = true,
 	makes_footstep_sound = true,
 	walk_velocity = 1,
-	run_velocity = 2.5, -- ( was 2.8 )  < 2.4 is slow and 2.6 < is fast
+	run_velocity = 1.3, -- ( was 2.8 )  < 2.4 is slow and 2.6 < is fast
 	retaliates = true,
 	group_attack = true,
 	drops = {
@@ -121,7 +121,7 @@ mcl_mobs.register_mob("mobs_mc:baby_hoglin",table.merge(hoglin,{
 		"blank.png",
 	} },
 	walk_velocity = 1.2,
-	run_velocity = 2.4,
+	run_velocity = 1.6,
 	child = 1,
 }))
 

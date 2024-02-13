@@ -85,8 +85,8 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 	fly = true,
 	makes_footstep_sound = false,
 	dogshoot_switch = 1,
-	dogshoot_count_max =5,
-	dogshoot_count2_max = 5,
+	dogshoot_count_max =1,
+	dogshoot_count2_max = 25,
 	passive = false,
 	attack_animals = true,
 	lava_damage = 0,
@@ -99,9 +99,9 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 	shoot_offset = -1.0,
 	animation = {
 		fly_speed = 8, stand_speed = 8,
-		stand_start = 0,		stand_end = 20,
-		walk_start = 0,		walk_end = 20,
-		run_start = 0,		run_end = 20,
+		stand_start = 0,	stand_end = 40,	
+		walk_start = 0,		walk_end = 40,		
+		run_start = 0,		run_end = 40,
 	},
 	ignores_nametag = true,
 	do_custom = function(self,dtime)
@@ -143,13 +143,13 @@ mcl_mobs.register_arrow("mobs_mc:dragon_fireball", {
 	visual = "sprite",
 	visual_size = {x = 1.25, y = 1.25},
 	textures = {"mobs_mc_dragon_fireball.png"},
-	velocity = 6,
+	velocity = 10,
 
 	-- direct hit, no fire... just plenty of pain
 	hit_player = mcl_mobs.get_arrow_damage_func(12, "dragon_breath"),
 
 	hit_mob = function(self, mob)
-		minetest.sound_play("tnt_explode", {pos = mob:get_pos(), gain = 1.5, max_hear_distance = 2*64}, true)
+		minetest.sound_play("tnt_explode", {pos = mob:get_pos(), gain = 1, max_hear_distance = 2*64}, true)
 		mcl_mobs.get_arrow_damage_func(12, "dragon_breath")(self, mob)
 	end,
 
