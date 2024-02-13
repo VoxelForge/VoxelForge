@@ -99,8 +99,8 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 	shoot_offset = -1.0,
 	animation = {
 		fly_speed = 8, stand_speed = 8,
-		stand_start = 0,	stand_end = 40,	
-		walk_start = 0,		walk_end = 40,		
+		stand_start = 0,	stand_end = 40,
+		walk_start = 0,		walk_end = 40,
 		run_start = 0,		run_end = 40,
 	},
 	ignores_nametag = true,
