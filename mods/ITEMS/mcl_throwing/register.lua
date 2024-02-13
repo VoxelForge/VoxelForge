@@ -260,8 +260,8 @@ local function pearl_on_step(self, dtime)
 				player:set_pos(telepos)
 				player:set_hp(player:get_hp() - 5, { type = "fall", from = "mod" })
 
-				-- 5% chance to spawn endermite at the player's origin
-				local r = math.random(1,20)
+				-- 10% chance to spawn endermite at the player's origin
+				local r = math.random(1,10)
 				if r == 1 then
 					minetest.add_entity(oldpos, "mobs_mc:endermite")
 				end
