@@ -323,6 +323,7 @@ function mobs_mc.villager_mob:take_bed()
 					end
 				end
 			end
+			return true
 		else
 			self:gopath(closest_block,function(self) end)
 		end
@@ -696,8 +697,9 @@ function mobs_mc.villager_mob:do_activity()
 		return
 	end
 
-	if not self:check_bed() then
-		self:take_bed()
+	local got_bed = self:check_bed()
+	if not got_bed then
+		got_bed = self:take_bed()
 	end
 
 	if (not self:should_sleep()) and self.order == SLEEP then
@@ -712,7 +714,7 @@ function mobs_mc.villager_mob:do_activity()
 	local activity = self:get_activity()
 	-- TODO separate sleep and home activities when villagers can sleep
 	if activity == SLEEP or activity == HOME then
-		if self:check_bed() then
+		if got_bed then
 			self:go_home(true)
 		else
 			-- If it's sleepy time and we don't have a bed, hide in someone elses house
