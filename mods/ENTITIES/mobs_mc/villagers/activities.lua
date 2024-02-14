@@ -152,8 +152,8 @@ function mobs_mc.villager_mob:find_closest_bed()
 		end
 	end
 
-	local distance_to_closest_block = nil
-	local closest_block = nil
+	local distance_to_closest_block
+	local closest_block
 
 	if unclaimed_beds then
 		for i,b in pairs(unclaimed_beds) do
@@ -175,8 +175,8 @@ function mobs_mc.villager_mob:find_closest_unclaimed_block(p, requested_block_ty
 		requested_block_types
 	)
 
-	local distance_to_closest_block = nil
-	local closest_block = nil
+	local distance_to_closest_block
+	local closest_block
 
 	for i,n in pairs(nn) do
 		local m = minetest.get_meta(n)
@@ -643,7 +643,7 @@ end
 function mobs_mc.villager_mob:sleep_over()
 	local p = self.object:get_pos()
 	local distance_to_closest_bed = 1000
-	local closest_bed = nil
+	local closest_bed
 	local nn2 = minetest.find_nodes_in_area(
 		vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
 		vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
