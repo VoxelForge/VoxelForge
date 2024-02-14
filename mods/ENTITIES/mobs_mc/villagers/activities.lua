@@ -116,6 +116,7 @@ function mobs_mc.villager_mob:get_activity(tod)
 end
 
 function mobs_mc.villager_mob:find_closest_bed()
+	-- This is only triggered when villager does not have a bed (see do_activity)
 	local p = self.object:get_pos()
 	if self._bed and vector.distance(p, self._bed) < VIL_DIST then return self._bed end
 
@@ -134,7 +135,6 @@ function mobs_mc.villager_mob:find_closest_bed()
 			local bed_meta = minetest.get_meta(b)
 			local owned_by = bed_meta:get_string("villager")
 
-			-- TODO Why is it looking for a new bed if it has a bed and the bed is in the area?
 			if (owned_by and owned_by == self._id) then
 				bed_meta:set_string("villager", "")
 				bed_meta:set_string("infotext", "")
