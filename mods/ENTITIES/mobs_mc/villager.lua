@@ -134,7 +134,7 @@ function mobs_mc.villager_mob:do_custom(dtime)
 			self.jump = true
 		end
 
-		self:do_activity()
+		self:do_activity(dtime)
 
 	end
 end

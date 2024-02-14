@@ -665,7 +665,7 @@ function mobs_mc.villager_mob:sleep_over()
 	end
 end
 
-function mobs_mc.villager_mob:do_activity()
+function mobs_mc.villager_mob:do_activity(dtime)
 	if allow_nav_hacks then
 		-- When a night is skipped telport villagers to their bed or bell
 		if self.last_skip == nil then
@@ -699,35 +699,45 @@ function mobs_mc.villager_mob:do_activity()
 	end
 
 	local got_bed = self:check_bed()
-	if not got_bed then
-		got_bed = self:take_bed()
+
+	self._bed_timer = (self._bed_timer or (math.random() * 5)) - dtime
+	if self._bed_timer < 0 then
+		self._bed_timer_interval = 5
+		if not got_bed then
+			got_bed = self:take_bed()
+			self._bed_timer_interval = math.min(20,self._bed_timer_interval + 1)
+		end
+		self._bed_timer = self._bed_timer_interval + math.random() * 5
 	end
 
 	if (not self:should_sleep()) and self.order == SLEEP then
 		self.order = nil
 	end
 
-	-- Only check in day or during thunderstorm but wandered_too_far code won't work
-	local wandered_too_far = false
-	if self:check_bed() then
-		wandered_too_far = (self.state ~= PATHFINDING) and (vector.distance(self.object:get_pos(), self._bed) > VIL_DIST - 10)
-	end
-	local activity = self:get_activity()
-	-- TODO separate sleep and home activities when villagers can sleep
-	if activity == SLEEP or activity == HOME then
-		if got_bed then
-			self:go_home(true)
-		else
-			-- If it's sleepy time and we don't have a bed, hide in someone elses house
-			self:sleep_over()
+	self._activity_timer = (self._activity_timer or math.random() * 5) - dtime
+	if self._activity_timer < 0 then
+		-- Only check in day or during thunderstorm but wandered_too_far code won't work
+		local wandered_too_far = false
+		if self:check_bed() then
+			wandered_too_far = (self.state ~= PATHFINDING) and (vector.distance(self.object:get_pos(), self._bed) > VIL_DIST - 10)
 		end
-	elseif activity == WORK then
-		self:do_work()
-	elseif activity == GATHERING then
-		self:go_to_town_bell()
-	elseif wandered_too_far then
-		self:go_home(false)
-	else
-		self.order = nil
+		local activity = self:get_activity()
+		-- TODO separate sleep and home activities when villagers can sleep
+		if activity == SLEEP or activity == HOME then
+			if got_bed then
+				self:go_home(true)
+			else
+				-- If it's sleepy time and we don't have a bed, hide in someone elses house
+				self:sleep_over()
+			end
+		elseif activity == WORK then
+			self:do_work()
+		elseif activity == GATHERING then
+			self:go_to_town_bell()
+		elseif wandered_too_far then
+			self:go_home(false)
+		else
+			self.order = nil
+		end
 	end
 end
