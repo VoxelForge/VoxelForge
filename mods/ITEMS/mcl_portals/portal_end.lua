@@ -355,6 +355,7 @@ end
 --[[ ITEM OVERRIDES ]]
 
 -- Portal opener
+local old_on_place = minetest.registered_items["mcl_end:ender_eye"].on_place
 minetest.override_item("mcl_end:ender_eye", {
 	on_place = function(itemstack, user, pointed_thing)
 		-- Use pointed node's on_rightclick function first, if present
@@ -393,6 +394,8 @@ minetest.override_item("mcl_end:ender_eye", {
 					doc.mark_entry_as_revealed(user:get_player_name(), "nodes", "mcl_portals:portal_end")
 				end
 			end
+		elseif old_on_place then
+			return old_on_place(itemstack, user, pointed_thing)
 		end
 		return itemstack
 	end,

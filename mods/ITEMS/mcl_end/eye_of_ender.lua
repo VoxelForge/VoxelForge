@@ -74,6 +74,73 @@ minetest.register_entity("mcl_end:ender_eye", {
 	_phase = 0, -- phase 0: flying. phase 1: idling in mid air, about to drop or shatter
 })
 
+-- Throw eye of ender to make it fly to the closest stronghold
+local function throw_eye(itemstack, user, pointed_thing)
+	if user == nil then return end
+	local origin = user:get_pos()
+	origin.y = origin.y + 1.5
+	local strongholds = mcl_structures.registered_structures["end_shrine"].static_pos
+	local dim = mcl_worlds.pos_to_dimension(origin)
+	local is_creative = minetest.is_creative_enabled(user:get_player_name())
+
+	-- Just drop the eye of ender if there are no strongholds
+	if #strongholds <= 0 or dim ~= "overworld" then
+		if not is_creative then
+			minetest.item_drop(ItemStack("mcl_end:ender_eye"), user, user:get_pos())
+			itemstack:take_item()
+		end
+		return itemstack
+	end
+
+	-- Find closest stronghold.
+	-- Note: Only the horizontal axes are taken into account.
+	local closest_stronghold
+	local lowest_dist
+	for s=1, #strongholds do
+		local h_pos = table.copy(strongholds[s])
+		local h_origin = table.copy(origin)
+		h_pos.y = 0
+		h_origin.y = 0
+		local dist = vector.distance(h_origin, h_pos)
+		if not closest_stronghold then
+			closest_stronghold = strongholds[s]
+			lowest_dist = dist
+		else
+			if dist < lowest_dist then
+				closest_stronghold = strongholds[s]
+				lowest_dist = dist
+			end
+		end
+	end
+
+	-- Throw it!
+	local obj = minetest.add_entity(origin, "mcl_end:ender_eye")
+	if not obj or not obj:get_pos() then return end
+	local dir
+
+	if lowest_dist <= 25 then
+		local velocity = 4
+		-- Stronghold is close: Fly directly to stronghold and take Y into account.
+		dir = vector.normalize(vector.direction(origin, closest_stronghold))
+		obj:set_velocity({x=dir.x*velocity, y=dir.y*velocity, z=dir.z*velocity})
+	else
+		local velocity = 12
+		-- Don't care about Y if stronghold is still far away.
+		-- Fly to direction of X/Z, and always upwards so it can be seen easily.
+		local o = {x=origin.x, y=0, z=origin.z}
+		local s = {x=closest_stronghold.x, y=0, z=closest_stronghold.z}
+		dir = vector.normalize(vector.direction(o, s))
+		obj:set_acceleration({x=dir.x*-3, y=4, z=dir.z*-3})
+		obj:set_velocity({x=dir.x*velocity, y=3, z=dir.z*velocity})
+	end
+
+
+	if not is_creative then
+		itemstack:take_item()
+	end
+	return itemstack
+end
+
 minetest.register_craftitem("mcl_end:ender_eye", {
 	description = S("Eye of Ender"),
 	_tt_help = S("Guides the way to the mysterious End dimension"),
@@ -81,74 +148,8 @@ minetest.register_craftitem("mcl_end:ender_eye", {
 	_doc_items_usagehelp = S("Use the attack key to release the eye of ender. It will rise and fly in the horizontal direction of the closest end portal shrine. If you're very close, the eye of ender will take the direct path to the End portal shrine instead. After a few seconds, it stops. It may drop as an item, but there's a 20% chance it shatters.") .. "\n" .. S("To activate an End portal, eyes of ender need to be placed into each block of an intact End portal frame."),
 	wield_image = "mcl_end_ender_eye.png",
 	inventory_image = "mcl_end_ender_eye.png",
-	-- Throw eye of ender to make it fly to the closest stronghold
-	on_secondary_use = function(itemstack, user, pointed_thing)
-		if user == nil then
-			return
-		end
-		local origin = user:get_pos()
-		origin.y = origin.y + 1.5
-		local strongholds = mcl_structures.registered_structures["end_shrine"].static_pos
-		local dim = mcl_worlds.pos_to_dimension(origin)
-		local is_creative = minetest.is_creative_enabled(user:get_player_name())
-
-		-- Just drop the eye of ender if there are no strongholds
-		if #strongholds <= 0 or dim ~= "overworld" then
-			if not is_creative then
-				minetest.item_drop(ItemStack("mcl_end:ender_eye"), user, user:get_pos())
-				itemstack:take_item()
-			end
-			return itemstack
-		end
-
-		-- Find closest stronghold.
-		-- Note: Only the horizontal axes are taken into account.
-		local closest_stronghold
-		local lowest_dist
-		for s=1, #strongholds do
-			local h_pos = table.copy(strongholds[s])
-			local h_origin = table.copy(origin)
-			h_pos.y = 0
-			h_origin.y = 0
-			local dist = vector.distance(h_origin, h_pos)
-			if not closest_stronghold then
-				closest_stronghold = strongholds[s]
-				lowest_dist = dist
-			else
-				if dist < lowest_dist then
-					closest_stronghold = strongholds[s]
-					lowest_dist = dist
-				end
-			end
-		end
-
-		-- Throw it!
-		local obj = minetest.add_entity(origin, "mcl_end:ender_eye")
-		if not obj or not obj:get_pos() then return end
-		local dir
-
-		if lowest_dist <= 25 then
-			local velocity = 4
-			-- Stronghold is close: Fly directly to stronghold and take Y into account.
-			dir = vector.normalize(vector.direction(origin, closest_stronghold))
-			obj:set_velocity({x=dir.x*velocity, y=dir.y*velocity, z=dir.z*velocity})
-		else
-			local velocity = 12
-			-- Don't care about Y if stronghold is still far away.
-			-- Fly to direction of X/Z, and always upwards so it can be seen easily.
-			local o = {x=origin.x, y=0, z=origin.z}
-			local s = {x=closest_stronghold.x, y=0, z=closest_stronghold.z}
-			dir = vector.normalize(vector.direction(o, s))
-			obj:set_acceleration({x=dir.x*-3, y=4, z=dir.z*-3})
-			obj:set_velocity({x=dir.x*velocity, y=3, z=dir.z*velocity})
-		end
-
-
-		if not is_creative then
-			itemstack:take_item()
-		end
-		return itemstack
-	end,
+	on_place = throw_eye,
+	on_secondary_use = throw_eye,
 })
 
 minetest.register_craft({
