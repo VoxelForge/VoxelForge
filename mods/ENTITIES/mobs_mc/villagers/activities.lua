@@ -117,6 +117,7 @@ end
 
 function mobs_mc.villager_mob:find_closest_bed()
 	local p = self.object:get_pos()
+	if self._bed and vector.distance(p, self._bed) < VIL_DIST then return self._bed end
 
 	local unclaimed_beds = {}
 	local nn2 = minetest.find_nodes_in_area(
