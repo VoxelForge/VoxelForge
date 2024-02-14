@@ -4,7 +4,7 @@ local allow_nav_hacks = minetest.settings:get_bool("mcl_mob_allow_nav_hacks",fal
 local work_dist = 4
 local gather_distance = 10
 
-local VIL_DIST = 64
+local VIL_DIST = 48
 local RESETTLE_DISTANCE = VIL_DIST * 2 -- If a mob is transported this far from home, it gives up bed and job and resettles
 
 local S = minetest.get_translator(modname)
@@ -121,8 +121,8 @@ function mobs_mc.villager_mob:find_closest_bed()
 
 	local unclaimed_beds = {}
 	local nn2 = minetest.find_nodes_in_area(
-		vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
-		vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
+		vector.offset(p, -VIL_DIST, -VIL_DIST/2, -VIL_DIST),
+		vector.offset(p, VIL_DIST, VIL_DIST/2, VIL_DIST),
 		{ "group:bed" }
 	)
 	if nn2 then
@@ -170,8 +170,8 @@ end
 
 function mobs_mc.villager_mob:find_closest_unclaimed_block(p, requested_block_types)
 	local nn = minetest.find_nodes_in_area(
-		vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
-		vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
+		vector.offset(p, -VIL_DIST, -VIL_DIST/2, -VIL_DIST),
+		vector.offset(p, VIL_DIST, VIL_DIST/2, VIL_DIST),
 		requested_block_types
 	)
 
