@@ -698,13 +698,11 @@ function mobs_mc.villager_mob:do_activity(dtime)
 		return
 	end
 
-	local got_bed = self:check_bed()
-
 	self._bed_timer = (self._bed_timer or (math.random() * 5)) - dtime
 	if self._bed_timer < 0 then
 		self._bed_timer_interval = 5
-		if not got_bed then
-			got_bed = self:take_bed()
+		if not self:check_bed() then
+			self:take_bed()
 			self._bed_timer_interval = math.min(20,self._bed_timer_interval + 1)
 		end
 		self._bed_timer = self._bed_timer_interval + math.random() * 5
@@ -716,6 +714,7 @@ function mobs_mc.villager_mob:do_activity(dtime)
 
 	self._activity_timer = (self._activity_timer or math.random() * 5) - dtime
 	if self._activity_timer < 0 then
+		self._activity_timer = 10 + math.random() * 10
 		-- Only check in day or during thunderstorm but wandered_too_far code won't work
 		local wandered_too_far = false
 		if self:check_bed() then
@@ -724,7 +723,7 @@ function mobs_mc.villager_mob:do_activity(dtime)
 		local activity = self:get_activity()
 		-- TODO separate sleep and home activities when villagers can sleep
 		if activity == SLEEP or activity == HOME then
-			if got_bed then
+			if self:check_bed() then
 				self:go_home(true)
 			else
 				-- If it's sleepy time and we don't have a bed, hide in someone elses house
