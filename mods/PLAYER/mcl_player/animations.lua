@@ -368,7 +368,7 @@ mcl_player.register_globalstep(function(player, dtime)
 			mcl_util.set_bone_position(player, "Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 			mcl_util.set_properties(player, player_props_sneaking)
 			mcl_player.player_set_animation(player, "sneak_stand", animation_speed_mod)
-		else
+		elseif not mcl_player.players[player].attached then
 			mcl_util.set_properties(player, player_props_normal)
 			mcl_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
 			mcl_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))

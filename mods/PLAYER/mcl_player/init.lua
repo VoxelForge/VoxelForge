@@ -165,4 +165,6 @@ mcl_damage.register_modifier(function(obj, damage, reason)
 	end
 end, -200)
 
-dofile(minetest.get_modpath(minetest.get_current_modname()).."/animations.lua")
+local modpath = minetest.get_modpath(minetest.get_current_modname())
+dofile(modpath.."/animations.lua")
+dofile(modpath.."/compat.lua")
