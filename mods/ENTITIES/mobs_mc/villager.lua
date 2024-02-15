@@ -133,10 +133,9 @@ function mobs_mc.villager_mob:do_custom(dtime)
 			self.walk_chance = DEFAULT_WALK_CHANCE
 			self.jump = true
 		end
-
-		self:do_activity(dtime)
-
 	end
+
+	self:do_activity(dtime)
 end
 
 function mobs_mc.villager_mob:on_spawn()
