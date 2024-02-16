@@ -761,22 +761,13 @@ function mcl_util.set_properties(obj, props)
 end
 
 function mcl_util.set_bone_position(obj, bone, pos, rot)
-	local current_pos, current_rot
-	if obj.get_bone_override then --when < minetest 5.9 isn't supported anymore remove these checks and only use the "override" variant and radians
-		local ov = obj:get_bone_override(bone)
-		current_pos = ov.position.vec
-		current_rot = vector.apply(ov.rotation.vec, math.deg)
-	else
-		current_pos, current_rot = obj:get_bone_position(bone)
-	end
+	--TODO: starting with minetest 5.9 this makes deprecation warnings since "set/get_bone_overrides" using radians is now preferred.
+	-- Initial attempts of fixing this (978c97586ef66453162d652265b92bce20e1cd3b) did not work - figure out why.
+	local current_pos, current_rot = obj:get_bone_position(bone)
 	local pos_equal = not pos or vector.equals(vector.round(current_pos), vector.round(pos))
 	local rot_equal = not rot or vector.equals(vector.round(current_rot), vector.round(rot))
 	if not pos_equal or not rot_equal then
-		if obj.set_bone_override then --when < minetest 5.9 isn't supported anymore remove these checks and only use the "override" variant and radians
-			obj:set_bone_override(bone, {position = pos, rotation = vector.apply(rot, math.rad)})
-		else
-			obj:set_bone_position(bone, pos or current_pos, rot or current_rot)
-		end
+		obj:set_bone_position(bone, pos or current_pos, rot or current_rot)
 	end
 end
 
