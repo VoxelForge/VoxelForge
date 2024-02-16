@@ -13,6 +13,10 @@ function mcl_offhand.get_offhand(player)
 	return player:get_inventory():get_stack("offhand", 1)
 end
 
+function mcl_offhand.set_offhand(player, itemstack)
+	return player:get_inventory():set_stack("offhand", 1, itemstack)
+end
+
 local function offhand_get_wear(player)
 	return mcl_offhand.get_offhand(player):get_wear()
 end

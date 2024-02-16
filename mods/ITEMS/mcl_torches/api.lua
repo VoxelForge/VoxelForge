@@ -153,6 +153,8 @@ function mcl_torches.register_torch(def)
 	groups.flame_type = def.flame_type or 1
 	groups.attaches_to_top = 1
 	groups.attaches_to_side = 1
+	groups.offhand_item = 1
+	groups.offhand_placeable = 1
 
 	local floordef = {
 		description = def.description,
