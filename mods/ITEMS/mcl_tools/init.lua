@@ -67,22 +67,7 @@ local function on_tool_place(itemstack, placer, pointed_thing, tool)
 		return itemstack
 	end
 
-	-- Place offhand_placeable nodes
-	local offhand = mcl_offhand.get_offhand(placer)
-	if offhand and minetest.get_item_group(offhand:get_name(), "offhand_placeable") ~= 0 and pointed_thing.above then
-		local new_stack
-		local odef = offhand:get_definition()
-		if odef.on_place then
-			new_stack = odef.on_place(offhand, placer,pointed_thing)
-		else
-			new_stack = minetest.item_place_node(offhand, placer, pointed_thing)
-		end
-		if not new_stack then
-			offhand:set_count(offhand:get_count() - 1)
-		else
-			mcl_offhand.set_offhand(placer, new_stack)
-		end
-	end
+	mcl_offhand.place(placer, pointed_thing)
 
 	return itemstack
 end
