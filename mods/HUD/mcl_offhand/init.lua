@@ -38,6 +38,12 @@ function mcl_offhand.place(placer, pointed_thing)
 	return false
 end
 
+minetest.override_item("", {
+	on_place = function(itemstack, placer, pointed_thing)
+		mcl_offhand.place(placer, pointed_thing)
+	end
+})
+
 local function offhand_get_wear(player)
 	return mcl_offhand.get_offhand(player):get_wear()
 end
