@@ -109,7 +109,7 @@ end
 
 minetest.register_lbm({
 	nodenames = {"group:sign"},
-	name = "mcl_signs:update_old_signs",
+	name = ":mcl_signs:update_old_signs",
 	label = "Update old signs",
 	run_at_every_load = false,
 	action = mcl_signs.upgrade_sign_rot,
@@ -119,7 +119,7 @@ for k,_ in pairs(mcl2rotsigns) do table.insert(mcl_signs.old_rotnames, k) end
 for k,_ in pairs(mcl2standingsigns) do table.insert(mcl_signs.old_rotnames, k) end
 minetest.register_lbm({
 	nodenames = mcl_signs.old_rotnames,
-	name = "mcl_signs:update_old_rotated_standing",
+	name = ":mcl_signs:update_old_rotated_standing",
 	label = "Update old standing rotated signs",
 	run_at_every_load = true, --these nodes are supposed to completely be replaced
 	action = mcl_signs.upgrade_sign_rot

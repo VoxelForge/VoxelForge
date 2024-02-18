@@ -391,5 +391,3 @@ function mcl_signs.register_sign(name,color,def)
 	table.insert(mcl_signs.old_rotnames,"mcl_signs:standing_sign45_"..name)
 	table.insert(mcl_signs.old_rotnames,"mcl_signs:standing_sign67_5_"..name)
 end
-
-dofile(modpath.."/compat.lua")
