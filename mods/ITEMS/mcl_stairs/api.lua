@@ -414,7 +414,11 @@ local copied_groups = {
 	"flammable",
 	"fire_encouragement",
 	"fire_flammability",
+	"affected_by_lightning",
 	"building_block",
+	"material_stone",
+	"not_in_creative_inventory",
+	"not_in_craft_guide",
 }
 
 local function get_groups(basegroups)
