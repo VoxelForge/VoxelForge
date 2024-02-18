@@ -242,7 +242,7 @@ end
 
 -- Register slab function used internally for new and old API (not exposed
 -- externally).
-function register_slab(subname, stairdef)
+local function register_slab(subname, stairdef)
 	local lower_slab = "mcl_stairs:slab_"..subname
 	local upper_slab = lower_slab.."_top"
 	local double_slab = lower_slab.."_double"
