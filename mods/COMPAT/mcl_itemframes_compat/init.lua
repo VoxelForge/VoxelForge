@@ -4,17 +4,17 @@ local entity_stub = {
 	end
 }
 
-minetest.register_entity("mcl_itemframes:item_frame_item", entity_stub)
-minetest.register_entity("mcl_itemframes:item_frame_map", entity_stub)
-minetest.register_entity("mcl_itemframes:glow_item_frame_item", entity_stub)
-minetest.register_entity("mcl_itemframes:glow_item_frame_map", entity_stub)
+minetest.register_entity(":mcl_itemframes:item_frame_item", entity_stub)
+minetest.register_entity(":mcl_itemframes:item_frame_map", entity_stub)
+minetest.register_entity(":mcl_itemframes:glow_item_frame_item", entity_stub)
+minetest.register_entity(":mcl_itemframes:glow_item_frame_map", entity_stub)
 
 minetest.register_alias("mcl_itemframes:item_frame", "mcl_itemframes:frame")
 minetest.register_alias("mcl_itemframes:glow_item_frame", "mcl_itemframes:glow_frame")
 
 minetest.register_lbm({
 	label = "Convert old itemframes",
-	name = "mcl_itemframes:convert_old_itemframes",
+	name = ":mcl_itemframes:convert_old_itemframes",
 	nodenames = { "mcl_itemframes:item_frame", "mcl_itemframes:glow_item_frame" },
 	run_at_every_load = false,
 	action = function(pos, node)
