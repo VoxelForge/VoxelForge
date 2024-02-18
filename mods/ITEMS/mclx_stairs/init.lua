@@ -91,7 +91,7 @@ for name,cdef in pairs(mcl_dyes.colors) do
 		description_slab = S("@1 Concrete Slab", cdef.readable_name),
 		groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 		baseitem="mcl_colorblocks:concrete_"..name,
-		recipeitem=extra_nodes and "mcl_core:stonebrickcracked" or "",
+		recipeitem=extra_nodes and "mcl_colorblocks:concrete_"..name or "",
 	})
 
 	if doc_mod then
