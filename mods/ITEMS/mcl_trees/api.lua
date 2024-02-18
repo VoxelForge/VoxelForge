@@ -508,6 +508,7 @@ function mcl_trees.register_wood(name, p)
 		mcl_stairs.register_stair(name, {
 			baseitem="mcl_trees:wood_"..name,
 			description = S("@1 Stairs", rname),
+			groups = { wood_stair = 1 },
 		})
 		mcl_stairs.register_stair(name.."_bark", {
 			baseitem="mcl_trees:bark_"..name,
@@ -521,6 +522,7 @@ function mcl_trees.register_wood(name, p)
 		mcl_stairs.register_slab(name, {
 			baseitem="mcl_trees:wood_"..name,
 			description = S("@1 Slab", rname),
+			groups = { wood_slab = 1 },
 			register_stair_and_slab = false
 		})
 		mcl_stairs.register_slab(name.."_bark", {
