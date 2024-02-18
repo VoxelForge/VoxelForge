@@ -7,5 +7,3 @@ dofile(modpath.."/functions.lua")
 dofile(modpath.."/api.lua")
 dofile(modpath.."/recipes.lua")
 dofile(modpath.."/abms.lua")
-
-dofile(modpath.."/aliases.lua")
