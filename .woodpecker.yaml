@@ -3,9 +3,6 @@ steps:
     name: Luacheck
     image: mineunit/luacheck
     commands:
-      - luacheck --std minetest+max --config .luacheckrc $(echo $CI_PIPELINE_FILES |tr "," " "|tr -d '[]"') --include-files "mods/**/*.lua"
-    when:
-      - path:
-          include: [ 'mods/**/*.lua' ]
+      - luacheck --quiet --std minetest+max --config .luacheckrc mods/
 when:
   - event: push
