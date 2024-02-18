@@ -404,6 +404,29 @@ local function register_slab(subname, stairdef)
 	end
 end
 
+local copied_groups = {
+	"pickaxey",
+	"axey",
+	"shovely",
+	"handy",
+	"shearsy",
+	"swordy",
+	"flammable",
+	"fire_encouragement",
+	"fire_flammability",
+	"building_block",
+}
+
+local function get_groups(basegroups)
+	local groups = {}
+
+	for group in pairs(copied_groups or {}) do
+		groups[group] = basegroups[group]
+	end
+
+	return groups
+end
+
 function mcl_stairs.register_stair(subname, ...)
 	if type(select(1, ...)) == "table" then
 		local stairdef = select(1, ...)
@@ -411,7 +434,7 @@ function mcl_stairs.register_stair(subname, ...)
 
 		register_stair(subname, {
 			recipeitem = stairdef.recipeitem or stairdef.baseitem,
-			groups = table.merge(ndef.groups or {}, stairdef.groups or {}),
+			groups = table.merge(get_groups(ndef.groups), stairdef.groups or {}),
 			tiles = stairdef.tiles or ndef.tiles,
 			description = stairdef.description,
 			sounds = ndef.sounds,
@@ -441,7 +464,7 @@ function mcl_stairs.register_slab(subname, ...)
 
 		register_slab(subname, {
 			recipeitem = stairdef.recipeitem or stairdef.baseitem,
-			groups = table.merge(ndef.groups or {}, stairdef.groups or {}),
+			groups = table.merge(get_groups(ndef.groups), stairdef.groups or {}),
 			tiles = stairdef.tiles or ndef.tiles,
 			description = stairdef.description,
 			double_description = S("Double @1", stairdef.description),
@@ -464,7 +487,6 @@ function mcl_stairs.register_slab(subname, ...)
 		})
 	end
 end
-
 
 -- Stair/slab registration function.
 function mcl_stairs.register_stair_and_slab(subname, ...)
