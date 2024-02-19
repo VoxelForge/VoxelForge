@@ -1,3 +1,5 @@
+mcl_doors = {}
+
 local S = minetest.get_translator(minetest.get_current_modname())
 
 -- This helper function calls on_place_node callbacks.
