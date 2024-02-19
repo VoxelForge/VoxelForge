@@ -1,5 +1,4 @@
 local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
 local mod_doc = minetest.get_modpath("doc")
 
@@ -252,5 +251,3 @@ pane(S("Glass Pane"), "mcl_core:glass", "_natural") -- triggers special case
 for k,v in pairs(mcl_dyes.colors) do
 	pane(S("@1 Glass Pane", v.readable_name), "mcl_core:glass_"..k, "_"..k)
 end
-
-dofile(modpath .. "/alias.lua")
