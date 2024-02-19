@@ -89,9 +89,6 @@ minetest.register_alias("mcl_crimson:crimson_fence_gate","mcl_fences:crimson_fen
 minetest.register_alias("mcl_crimson:warped_fence_gate","mcl_fences:warped_fence_gate")
 
 minetest.register_alias("mcl_fences:fence_gate_open","mcl_fences:oak_fence_gate_open")
-minetest.register_alias("mcl_mangrove:mangrove_wood_fence_gate_open","mcl_fences:mangrove_fence_gate_open")
-minetest.register_alias("mcl_crimson:crimson_fence_gate_open","mcl_fences:crimson_fence_gate_open")
-minetest.register_alias("mcl_crimson:warped_fence_gate_open","mcl_fences:warped_fence_gate_open")
 minetest.register_alias("mcl_cherry_blossom:cherry_fence_gate","mcl_fences:cherry_blossom_fence_gate")
 minetest.register_alias("mcl_bamboo:bamboo_fence_gate","mcl_fences:bamboo_fence_gate")
 
@@ -107,12 +104,6 @@ minetest.register_alias("mclx_fences:red_nether_brick_fence","mcl_fences:red_net
 minetest.register_alias("mcl_mangrove:mangrove_wood_fence_gate_open","mcl_fences:mangrove_fence_gate_open")
 minetest.register_alias("mcl_crimson:warped_fence_gate_open","mcl_fences:warped_fence_gate_open")
 minetest.register_alias("mcl_crimson:crimson_fence_gate_open","mcl_fences:crimson_fence_gate_open")
-minetest.register_alias("mcl_fences:acacia_fence_gate_open","mcl_fences:acacia_fence_gate_open")
-minetest.register_alias("mcl_fences:birch_fence_gate_open","mcl_fences:birch_fence_gate_open")
-minetest.register_alias("mcl_fences:dark_oak_fence_gate_open","mcl_fences:dark_oak_fence_gate_open")
-minetest.register_alias("mcl_fences:fence_gate_open","mcl_fences:oak_fence_gate_open")
-minetest.register_alias("mcl_fences:jungle_fence_gate_open","mcl_fences:jungle_fence_gate_open")
-minetest.register_alias("mcl_fences:spruce_fence_gate_open","mcl_fences:spruce_fence_gate_open")
 minetest.register_alias("mcl_bamboo:bamboo_fence_gate_open","mcl_fences:bamboo_fence_gate_open")
 minetest.register_alias("mcl_cherry_blossom:cherry_fence_gate_open","mcl_fences:cherry_blossom_fence_gate_open")
 
@@ -231,7 +222,6 @@ minetest.register_alias("mcl_crimson:warped_door","mcl_doors:door_warped")
 minetest.register_alias("mcl_doors:dark_oak_door","mcl_doors:door_dark_oak")
 minetest.register_alias("mcl_crimson:crimson_trapdoor_open","mcl_doors:trapdoor_crimson_open")
 minetest.register_alias("mcl_crimson:warped_trapdoor_open","mcl_doors:trapdoor_warped_open")
-minetest.register_alias("mcl_mangrove:mangrove_door","mcl_doors:door_mangrove")
 
 minetest.register_alias("mcl_core:stripped_oak","mcl_trees:stripped_oak")
 minetest.register_alias("mcl_core:stripped_jungle","mcl_trees:stripped_jungle")
@@ -455,4 +445,5 @@ alias_signs("_warped_hyphae_wood","_warped")
 alias_signs("_cherrywood","_cherry_blossom")
 
 minetest.register_alias("mcl_boats:boat","mcl_boats:boat_oak")
+minetest.register_alias("mcl_boats:chest_boat","mcl_boats:boat_oak_chest")
 minetest.register_alias("mcl_boats:boat_obsidian","mcl_boats:boat_oak")
