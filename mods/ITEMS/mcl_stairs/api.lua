@@ -1,3 +1,5 @@
+mcl_stairs = {}
+
 local S = minetest.get_translator(minetest.get_current_modname())
 
 -- Core mcl_stairs API

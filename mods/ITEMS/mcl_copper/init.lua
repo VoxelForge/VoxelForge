@@ -72,5 +72,3 @@ for _,v in pairs({"top","double"}) do
 		},
 	})
 end
-
-dofile(path .. "/alias.lua")
