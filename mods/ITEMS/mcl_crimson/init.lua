@@ -604,5 +604,3 @@ minetest.register_craft({
 		{"mcl_core:stick", warped_wood, "mcl_core:stick"},
 	}
 })
-
-dofile(modpath.."/alias.lua")
