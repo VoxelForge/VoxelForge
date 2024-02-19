@@ -627,4 +627,3 @@ minetest.register_tool("mcl_tools:shears", {
 
 
 dofile(modpath.."/crafting.lua")
-dofile(modpath.."/aliases.lua")
