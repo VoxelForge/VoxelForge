@@ -336,5 +336,3 @@ minetest.register_craft({
 	recipe = "group:sea_pickle",
 	cooktime = 10,
 })
-
-dofile(minetest.get_modpath(minetest.get_current_modname()).."/alias.lua")
