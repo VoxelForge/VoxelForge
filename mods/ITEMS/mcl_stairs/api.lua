@@ -424,7 +424,7 @@ local copied_groups = {
 local function get_groups(basegroups)
 	local groups = {}
 
-	for group in pairs(copied_groups or {}) do
+	for _, group in pairs(copied_groups or {}) do
 		groups[group] = basegroups[group]
 	end
 
