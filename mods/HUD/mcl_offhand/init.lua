@@ -40,6 +40,8 @@ end
 
 minetest.override_item("", {
 	on_place = function(itemstack, placer, pointed_thing)
+		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		if rc then return rc end
 		mcl_offhand.place(placer, pointed_thing)
 	end
 })
