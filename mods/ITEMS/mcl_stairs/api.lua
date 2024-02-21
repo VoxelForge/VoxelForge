@@ -417,6 +417,7 @@ local copied_groups = {
 	"affected_by_lightning",
 	"building_block",
 	"material_stone",
+	"creative_breakable",
 	"not_in_creative_inventory",
 	"not_in_craft_guide",
 }
