@@ -1,7 +1,10 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local has_doc = minetest.get_modpath("doc")
-
+mcl_portals.registered_on_beat_game = {}
+function mcl_portals.register_on_beat_game(func)
+	table.insert(mcl_portals.registered_on_beat_game, func)
+end
 -- Parameters
 --local SPAWN_MIN = mcl_vars.mg_end_min+70
 --local SPAWN_MAX = mcl_vars.mg_end_min+98
@@ -165,8 +168,11 @@ local function show_credits(player)
 	local completed_end = meta:get_int("completed_end")
 
 	if completed_end == 0 then
-		mcl_credits.show(player)
 		meta:set_int("completed_end", 1)
+		for _, func in ipairs(mcl_portals.registered_on_beat_game) do
+			func(player)
+		end
+		mcl_credits.show(player)
 	end
 end
 
