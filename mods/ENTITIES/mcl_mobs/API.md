@@ -194,9 +194,6 @@ Fields not mentioned in this document can also be added as custom fields for the
 	pathfinding = 1,
 	-- set to 1 for mobs to use pathfinder feature to locate player, set to 2 so they can build/break also (only works with dogfight attack and when 'mobs_griefing' in minetest.conf is not false).
 
-	immune_to = {},
-	-- is a table that holds specific damage when being hit by certain items e.g. {"default:sword_wood",0} -- causes no damage, {"default:gold_lump", -10} -- heals by 10 health points, {"default:coal_block", 20} -- 20 damage when hit on head with coal blocks.
-
 	makes_footstep_sound = true,
 	-- when true you can hear mobs walking.
 

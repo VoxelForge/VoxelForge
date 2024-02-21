@@ -84,7 +84,6 @@ mcl_mobs.mob_class = {
 	time_of_day = 0.5,
 	fear_height = 0,
 	runaway_timer = 0,
-	immune_to = {},
 	explosion_timer = 3,
 	allow_fuse_reset = true,
 	stop_to_explode = true,

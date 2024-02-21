@@ -518,16 +518,6 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 		end
 	end
 
-	-- check for tool immunity or special damage
-	for n = 1, #self.immune_to do
-
-		if self.immune_to[n][1] == weapon:get_name() then
-
-			damage = self.immune_to[n][2] or 0
-			break
-		end
-	end
-
 	-- healing
 	if damage <= -1 then
 		self.health = self.health - math.floor(damage)
