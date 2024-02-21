@@ -496,17 +496,10 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 	-- calculate mob damage
 	local damage = 0
 	local armor = self.object:get_armor_groups() or {}
-	local tmp
-
-	-- quick error check incase it ends up 0 (serialize.h check test)
-	if tflp == 0 then
-		tflp = 0.2
-	end
-
 
 	for group,_ in pairs( (tool_capabilities.damage_groups or {}) ) do
 
-		tmp = tflp / (tool_capabilities.full_punch_interval or 1.4)
+		local tmp = tflp / (tool_capabilities.full_punch_interval or 1.4)
 
 		if tmp < 0 then
 			tmp = 0.0
