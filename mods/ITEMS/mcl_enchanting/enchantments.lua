@@ -27,6 +27,8 @@ mcl_enchanting.enchantments.bane_of_arthropods = {
 	power_range_table = {{5, 25}, {13, 33}, {21, 41}, {29, 49}, {37, 57}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 2,
+	anvil_book_factor = 1,
 }
 
 -- requires missing MineClone2 feature
@@ -46,6 +48,8 @@ mcl_enchanting.enchantments.bane_of_arthropods = {
 	power_range_table = {{25, 50}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 8,
+	anvil_book_factor = 4,
 }]]--
 
 -- implemented in mcl_death_drop
@@ -65,6 +69,8 @@ mcl_enchanting.enchantments.curse_of_vanishing = {
 	power_range_table = {{25, 50}},
 	inv_combat_tab = true,
 	inv_tool_tab = true,
+	anvil_item_factor = 8,
+	anvil_book_factor = 4,
 }
 
 -- implemented below
@@ -84,6 +90,8 @@ mcl_enchanting.enchantments.depth_strider = {
 	power_range_table = {{10, 25}, {20, 35}, {30, 45}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }
 
 mcl_player.register_globalstep_slow(function(player, dtime)
@@ -119,6 +127,8 @@ mcl_enchanting.enchantments.efficiency = {
 	power_range_table = {{1, 61}, {11, 71}, {21, 81}, {31, 91}, {41, 101}},
 	inv_combat_tab = false,
 	inv_tool_tab = true,
+	anvil_item_factor = 1,
+	anvil_book_factor = 1,
 }
 
 -- implemented in mcl_mobs and via register_on_punchplayer callback
@@ -138,6 +148,8 @@ mcl_enchanting.enchantments.fire_aspect = {
 	power_range_table = {{10, 61}, {30, 71}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }
 
 minetest.register_on_punchplayer(function(player, hitter, time_from_last_punch, tool_capabilities, dir, damage)
@@ -168,6 +180,8 @@ mcl_enchanting.enchantments.flame = {
 	power_range_table = {{20, 50}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }
 
 -- implemented in mcl_item_entity
@@ -187,6 +201,8 @@ mcl_enchanting.enchantments.fortune = {
 	power_range_table = {{15, 61}, {24, 71}, {33, 81}},
 	inv_combat_tab = false,
 	inv_tool_tab = true,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }
 
 -- implemented via walkover.register_global
@@ -206,6 +222,8 @@ mcl_enchanting.enchantments.frost_walker = {
 	power_range_table = {{10, 25}, {20, 35}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }
 
 walkover.register_global(function(pos, _, player)
@@ -242,6 +260,8 @@ end)
 	power_range_table = {{1, 21}, {9, 29}, {17, 37}, {25, 45}, {33, 53}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }]]--
 
 -- implemented in mcl_bows
@@ -261,6 +281,8 @@ mcl_enchanting.enchantments.infinity = {
 	power_range_table = {{20, 50}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 8,
+	anvil_book_factor = 4,
 }
 
 -- implemented via minetest.calculate_knockback
@@ -280,6 +302,8 @@ mcl_enchanting.enchantments.knockback = {
 	power_range_table = {{5, 61}, {25, 71}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 2,
+	anvil_book_factor = 1,
 }
 
 local old_calculate_knockback = minetest.calculate_knockback
@@ -392,6 +416,8 @@ mcl_enchanting.enchantments.looting = {
 	power_range_table = {{15, 61}, {24, 71}, {33, 81}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }
 
 -- requires missing MineClone2 feature
@@ -411,6 +437,8 @@ mcl_enchanting.enchantments.looting = {
 	power_range_table = {{12, 50}, {19, 50}, {26, 50}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 1,
+	anvil_book_factor = 1,
 }]]--
 
 -- implemented in mcl_fishing
@@ -430,6 +458,8 @@ mcl_enchanting.enchantments.luck_of_the_sea = {
 	power_range_table = {{15, 61}, {24, 71}, {33, 81}},
 	inv_combat_tab = false,
 	inv_tool_tab = true,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }
 
 -- implemented in mcl_fishing
@@ -449,6 +479,8 @@ mcl_enchanting.enchantments.lure = {
 	power_range_table = {{15, 61}, {24, 71}, {33, 81}},
 	inv_combat_tab = false,
 	inv_tool_tab = true,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }
 
 -- implemented in mcl_experience
@@ -468,6 +500,8 @@ mcl_enchanting.enchantments.mending = {
 	power_range_table = {{25, 75}},
 	inv_combat_tab = true,
 	inv_tool_tab = true,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }
 
 mcl_experience.register_on_add_xp(function(player, xp)
@@ -531,6 +565,8 @@ mcl_enchanting.enchantments.multishot = {
 	power_range_table = {{20, 50}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }
 
 -- requires missing MineClone2 feature
@@ -550,6 +586,8 @@ mcl_enchanting.enchantments.piercing = {
 	power_range_table = {{1, 50}, {11, 50}, {21, 50}, {31, 50}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 1,
+	anvil_book_factor = 1,
 }
 
 -- implemented in mcl_bows
@@ -569,6 +607,8 @@ mcl_enchanting.enchantments.power = {
 	power_range_table = {{1, 16}, {11, 26}, {21, 36}, {31, 46}, {41, 56}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 1,
+	anvil_book_factor = 1,
 }
 
 -- implemented via minetest.calculate_knockback (together with the Knockback enchantment) and mcl_bows
@@ -588,6 +628,8 @@ mcl_enchanting.enchantments.punch = {
 	power_range_table = {{12, 37}, {32, 57}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }
 
 -- requires missing MineClone2 feature
@@ -607,6 +649,8 @@ mcl_enchanting.enchantments.quick_charge = {
 	power_range_table = {{12, 50}, {32, 50}, {52, 50}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 2,
+	anvil_book_factor = 1,
 }
 
 -- unimplemented
@@ -626,6 +670,8 @@ mcl_enchanting.enchantments.quick_charge = {
 	power_range_table = {{10, 40}, {20, 50}, {30, 60}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }]]--
 
 -- requires missing MineClone2 feature
@@ -645,6 +691,8 @@ mcl_enchanting.enchantments.quick_charge = {
 	power_range_table = {{17, 50}, {24, 50}, {31, 50}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }]]--
 
 -- implemented via on_enchant
@@ -664,6 +712,8 @@ mcl_enchanting.enchantments.sharpness = {
 	power_range_table = {{1, 21}, {12, 32}, {23, 43}, {34, 54}, {45, 65}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 1,
+	anvil_book_factor = 1,
 }
 
 -- implemented in mcl_item_entity
@@ -683,6 +733,8 @@ mcl_enchanting.enchantments.silk_touch = {
 	power_range_table = {{15, 61}},
 	inv_combat_tab = false,
 	inv_tool_tab = true,
+	anvil_item_factor = 8,
+	anvil_book_factor = 4,
 }
 
 -- implemented via on_enchant and additions in mobs_mc
@@ -702,6 +754,8 @@ mcl_enchanting.enchantments.smite = {
 	power_range_table = {{5, 25}, {13, 33}, {21, 41}, {29, 49}, {37, 57}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 2,
+	anvil_book_factor = 1,
 }
 
 -- implemented in mcl_playerplus
@@ -721,6 +775,8 @@ mcl_enchanting.enchantments.soul_speed = {
 	power_range_table = {{10, 25}, {20, 35}, {30, 45}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 8,
+	anvil_book_factor = 4,
 }
 
 -- requires missing MineClone2 feature
@@ -740,6 +796,8 @@ mcl_enchanting.enchantments.soul_speed = {
 	power_range_table = {{5, 20}, {14, 29}, {23, 38}},
 	inv_combat_tab = true,
 	inv_tool_tab = false,
+	anvil_item_factor = 4,
+	anvil_book_factor = 2,
 }]]--
 
 -- for tools & weapons implemented via on_enchant; for bows implemented in mcl_bows; for armor implemented in mcl_armor and mcl_tt; for fishing rods implemented in mcl_fishing
@@ -771,4 +829,6 @@ mcl_enchanting.enchantments.unbreaking = {
 	power_range_table = {{5, 61}, {13, 71}, {21, 81}},
 	inv_combat_tab = true,
 	inv_tool_tab = true,
+	anvil_item_factor = 2,
+	anvil_book_factor = 1,
 }

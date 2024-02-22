@@ -217,6 +217,8 @@ function mcl_armor.register_protection_enchantment(def)
 		power_range_table = def.power_range_table,
 		inv_combat_tab = true,
 		inv_tool_tab = false,
+		anvil_item_factor = def.anvil_item_factor or 1,
+		anvil_book_factor = def.anvil_book_factor or 1,
 	}
 end
 
