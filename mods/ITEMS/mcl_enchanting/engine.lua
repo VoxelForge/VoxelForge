@@ -170,6 +170,19 @@ function mcl_enchanting.enchant(itemstack, enchantment, level)
 	return itemstack
 end
 
+function mcl_enchanting.get_prior_work_penalty(itemstack)
+	local m = itemstack:get_meta()
+	return m:get_int("mcl_enchanting:pwp")
+end
+
+function mcl_enchanting.add_prior_work_penalty(itemstack, amount)
+	amount = amount or 1
+	local m = itemstack:get_meta()
+	local old_pwp = m:get_int("mcl_enchanting:pwp")
+	m:set_int("mcl_enchanting:pwp", old_pwp + amount)
+	return itemstack
+end
+
 function mcl_enchanting.combine(itemstack, combine_with)
 	local itemname = itemstack:get_name()
 	local combine_name = combine_with:get_name()
@@ -209,6 +222,7 @@ function mcl_enchanting.combine(itemstack, combine_with)
 		end
 	end
 	if any_new_enchantment then
+		itemstack = mcl_enchanting.add_prior_work_penalty(itemstack)
 		itemstack:set_name(enchanted_itemname)
 		mcl_enchanting.set_enchantments(itemstack, enchantments)
 	end
