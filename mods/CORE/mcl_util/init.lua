@@ -701,6 +701,7 @@ local function close_enough(a, b)
 end
 
 local function props_changed(props, oldprops)
+	if not oldprops then return true, props end
 	local changed = false
 	local p = {}
 	for k, v in pairs(props) do
