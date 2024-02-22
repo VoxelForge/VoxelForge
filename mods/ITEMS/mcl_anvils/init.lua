@@ -525,12 +525,10 @@ if minetest.get_modpath("screwdriver") then
 	anvildef.on_rotate = screwdriver.rotate_simple
 end
 
-local anvildef0 = table.copy(anvildef)
-anvildef0.description = S("Anvil")
-anvildef0._doc_items_longdesc =
-	S("The anvil allows you to repair tools and armor, and to give names to items. It has a limited durability, however. Don't let it fall on your head, it could be quite painful!")
-anvildef0._doc_items_usagehelp =
-	S("To use an anvil, rightclick it. An anvil has 2 input slots (on the left) and one output slot.") .. "\n" ..
+minetest.register_node("mcl_anvils:anvil", table.merge(anvildef, {
+	description = S("Anvil"),
+	_doc_items_longdesc =	S("The anvil allows you to repair tools and armor, and to give names to items. It has a limited durability, however. Don't let it fall on your head, it could be quite painful!"),
+	_doc_items_usagehelp = S("To use an anvil, rightclick it. An anvil has 2 input slots (on the left) and one output slot.") .. "\n" ..
 	S("To rename items, put an item stack in one of the item slots while keeping the other input slot empty. Type in a name, hit enter or “Set Name”, then take the renamed item from the output slot.")
 	.. "\n" ..
 	S("There are two possibilities to repair tools (and armor):") .. "\n" ..
@@ -539,27 +537,22 @@ anvildef0._doc_items_usagehelp =
 	S("• Tool + Material: Some tools can also be repaired by combining them with an item that it's made of. For example, iron pickaxes can be repaired with iron ingots. This repairs the tool by 25%.")
 	.. "\n" ..
 	S("Armor counts as a tool. It is possible to repair and rename a tool in a single step.") .. "\n\n" ..
-	S("The anvil has limited durability and 3 damage levels: undamaged, slightly damaged and very damaged. Each time you repair or rename something, there is a 12% chance the anvil gets damaged. Anvils also have a chance of being damaged when they fall by more than 1 block. If a very damaged anvil is damaged again, it is destroyed.")
+	S("The anvil has limited durability and 3 damage levels: undamaged, slightly damaged and very damaged. Each time you repair or rename something, there is a 12% chance the anvil gets damaged. Anvils also have a chance of being damaged when they fall by more than 1 block. If a very damaged anvil is damaged again, it is destroyed."),
+}))
 
-local anvildef1 = table.copy(anvildef)
-anvildef1.description = S("Slightly Damaged Anvil")
-anvildef1._doc_items_create_entry = false
-anvildef1.groups.anvil = 2
-anvildef1._doc_items_create_entry = false
-anvildef1.tiles = { "mcl_anvils_anvil_top_damaged_1.png^[transformR90", "mcl_anvils_anvil_base.png",
-	"mcl_anvils_anvil_side.png" }
-
-local anvildef2 = table.copy(anvildef)
-anvildef2.description = S("Very Damaged Anvil")
-anvildef2._doc_items_create_entry = false
-anvildef2.groups.anvil = 3
-anvildef2._doc_items_create_entry = false
-anvildef2.tiles = { "mcl_anvils_anvil_top_damaged_2.png^[transformR90", "mcl_anvils_anvil_base.png",
-	"mcl_anvils_anvil_side.png" }
-
-minetest.register_node("mcl_anvils:anvil", anvildef0)
+local anvildef1 = table.merge(anvildef, {
+	description = S("Slightly Damaged Anvil"),
+	_doc_items_create_entry = false,
+	groups = table.merge(anvildef.groups, {anvil = 2}),
+	tiles = { "mcl_anvils_anvil_top_damaged_1.png^[transformR90", "mcl_anvils_anvil_base.png", "mcl_anvils_anvil_side.png" }
+})
 minetest.register_node("mcl_anvils:anvil_damage_1", anvildef1)
-minetest.register_node("mcl_anvils:anvil_damage_2", anvildef2)
+
+minetest.register_node("mcl_anvils:anvil_damage_2", table.merge(anvildef1, {
+	description = S("Very Damaged Anvil"),
+	groups = table.merge(anvildef.groups, {anvil = 3}),
+	tiles = { "mcl_anvils_anvil_top_damaged_2.png^[transformR90", "mcl_anvils_anvil_base.png", "mcl_anvils_anvil_side.png" }
+}))
 
 if minetest.get_modpath("mcl_core") then
 	minetest.register_craft({
