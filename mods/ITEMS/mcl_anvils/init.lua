@@ -119,7 +119,7 @@ end
 
 -- Update the inventory slots of an anvil node.
 -- meta: Metadata of anvil node
-local function update_anvil_slots(meta)
+local function update_anvil_slots(meta, player)
 	local inv = meta:get_inventory()
 	local new_name = meta:get_string("set_name")
 	local input1 = inv:get_stack("input", 1)
@@ -251,7 +251,8 @@ local function update_anvil_slots(meta)
 	end
 
 	-- Set the new output slot
-	if new_output then
+	if minetest.is_creative_enabled(player:get_player_name()) then clear_cost(meta)	end
+	if new_output and mcl_experience.get_level(player) >= meta:get_int("mcl_anvil:xp_cost") then
 		fix_stack_size(new_output)
 		inv:set_stack("output", 1, new_output)
 	end
@@ -384,7 +385,7 @@ local anvildef = {
 		if minetest.is_protected(pos, name) then
 			minetest.record_protection_violation(pos, name)
 			return 0
-		elseif listname == "output" then
+		elseif listname == "output" and not minetest.is_creative_enabled(player:get_player_name()) then
 			local meta = minetest.get_meta(pos)
 			local player_level = mcl_experience.get_level(player)
 			local anvil_costs = meta:get_int("mcl_anvil:xp_cost")
@@ -426,7 +427,7 @@ local anvildef = {
 	end,
 	on_metadata_inventory_put = function(pos, listname, index, stack, player)
 		local meta = minetest.get_meta(pos)
-		update_anvil_slots(meta)
+		update_anvil_slots(meta, player)
 	end,
 	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
 		local meta = minetest.get_meta(pos)
@@ -440,7 +441,7 @@ local anvildef = {
 				end
 			end
 		end
-		update_anvil_slots(meta)
+		update_anvil_slots(meta, player)
 
 		if from_list == "output" then
 			local destroyed
@@ -471,7 +472,9 @@ local anvildef = {
 				return
 			end
 			clear_cost(meta)
-			mcl_experience.set_level(player, player_level - anvil_costs)
+			if not minetest.is_creative_enabled(player:get_player_name()) then
+				mcl_experience.set_level(player, player_level - anvil_costs)
+			end
 
 			-- Both slots occupied?
 			if not input1:is_empty() and not input2:is_empty() then
@@ -518,7 +521,7 @@ local anvildef = {
 				minetest.close_formspec(player:get_player_name(), "")
 			end
 		elseif listname == "input" then
-			update_anvil_slots(meta)
+			update_anvil_slots(meta, player)
 		end
 	end,
 	on_construct = function(pos)
@@ -543,7 +546,7 @@ local anvildef = {
 			local set_name = string.sub(fields.name, 1, MAX_NAME_LENGTH)
 
 			meta:set_string("set_name", set_name)
-			update_anvil_slots(meta)
+			update_anvil_slots(meta, sender)
 			meta:set_string("formspec", get_anvil_formspec(set_name))
 		end
 	end,
