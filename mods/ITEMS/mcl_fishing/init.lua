@@ -1,6 +1,43 @@
+mcl_fishing = {}
 --Fishing Rod, Bobber, and Flying Bobber mechanics and Bobber artwork by Rootyjr.
-
 local S = minetest.get_translator(minetest.get_current_modname())
+
+mcl_fishing.loot_fish = {
+	{ itemstring = "mcl_fishing:fish_raw", weight = 60 },
+	{ itemstring = "mcl_fishing:salmon_raw", weight = 25 },
+	{ itemstring = "mcl_fishing:clownfish_raw", weight = 2 },
+	{ itemstring = "mcl_fishing:pufferfish_raw", weight = 13 },
+}
+
+mcl_fishing.loot_junk = {
+	{ itemstring = "mcl_core:bowl", weight = 10 },
+	{ itemstring = "mcl_fishing:fishing_rod", weight = 2, wear_min = 6554, wear_max = 65535 }, -- 10%-100% damage
+	{ itemstring = "mcl_mobitems:leather", weight = 10 },
+	{ itemstring = "mcl_armor:boots_leather", weight = 10, wear_min = 6554, wear_max = 65535 }, -- 10%-100% damage
+	{ itemstring = "mcl_mobitems:rotten_flesh", weight = 10 },
+	{ itemstring = "mcl_core:stick", weight = 5 },
+	{ itemstring = "mcl_mobitems:string", weight = 5 },
+	{ itemstring = "mcl_potions:water", weight = 10 },
+	{ itemstring = "mcl_mobitems:bone", weight = 10 },
+	{ itemstring = "mcl_mobitems:ink_sac", weight = 1, amount_min = 10, amount_max = 10 },
+	{ itemstring = "mcl_mobitems:string", weight = 10 }, -- TODO: Tripwire Hook
+}
+
+mcl_fishing.loot_treasure = {
+	{ itemstring = "mcl_bows:bow", wear_min = 49144, wear_max = 65535, func = function(stack, pr)
+		mcl_enchanting.enchant_randomly(stack, 30, true, false, false, pr)
+	end }, -- 75%-100% damage
+	{ itemstring = "mcl_books:book", func = function(stack, pr)
+		mcl_enchanting.enchant_randomly(stack, 30, true, true, false, pr)
+	end },
+	{ itemstring = "mcl_fishing:fishing_rod", wear_min = 49144, wear_max = 65535, func = function(stack, pr)
+		mcl_enchanting.enchant_randomly(stack, 30, true, false, false, pr)
+	end }, -- 75%-100% damage
+	{ itemstring = "mcl_mobitems:nametag", },
+	{ itemstring = "mcl_mobitems:saddle", },
+	{ itemstring = "mcl_flowers:waterlily", },
+	{ itemstring = "mcl_mobitems:nautilus_shell", },
+}
 
 local bobber_ENTITY={
 	initial_properties = {
@@ -58,58 +95,12 @@ local function fish(itemstack, player, pointed_thing)
 						local fish_value = fish_values[index]
 						local junk_value = junk_values[index] + fish_value
 						if r <= fish_value then
-							-- Fish
-							items = mcl_loot.get_loot({
-								items = {
-									{ itemstring = "mcl_fishing:fish_raw", weight = 60 },
-									{ itemstring = "mcl_fishing:salmon_raw", weight = 25 },
-									{ itemstring = "mcl_fishing:clownfish_raw", weight = 2 },
-									{ itemstring = "mcl_fishing:pufferfish_raw", weight = 13 },
-								},
-								stacks_min = 1,
-								stacks_max = 1,
-							}, pr)
+							items = mcl_loot.get_loot({ items = mcl_fishing.loot_fish, stacks_min = 1, stacks_max = 1 }, pr)
 							awards.unlock(player:get_player_name(), "mcl:fishyBusiness")
 						elseif r <= junk_value then
-							-- Junk
-							items = mcl_loot.get_loot({
-								items = {
-									{ itemstring = "mcl_core:bowl", weight = 10 },
-									{ itemstring = "mcl_fishing:fishing_rod", weight = 2, wear_min = 6554, wear_max = 65535 }, -- 10%-100% damage
-									{ itemstring = "mcl_mobitems:leather", weight = 10 },
-									{ itemstring = "mcl_armor:boots_leather", weight = 10, wear_min = 6554, wear_max = 65535 }, -- 10%-100% damage
-									{ itemstring = "mcl_mobitems:rotten_flesh", weight = 10 },
-									{ itemstring = "mcl_core:stick", weight = 5 },
-									{ itemstring = "mcl_mobitems:string", weight = 5 },
-									{ itemstring = "mcl_potions:water", weight = 10 },
-									{ itemstring = "mcl_mobitems:bone", weight = 10 },
-									{ itemstring = "mcl_mobitems:ink_sac", weight = 1, amount_min = 10, amount_max = 10 },
-									{ itemstring = "mcl_mobitems:string", weight = 10 }, -- TODO: Tripwire Hook
-								},
-								stacks_min = 1,
-								stacks_max = 1,
-							}, pr)
+							items = mcl_loot.get_loot({ items = mcl_fishing.loot_junk, stacks_min = 1, stacks_max = 1 }, pr)
 						else
-							-- Treasure
-							items = mcl_loot.get_loot({
-								items = {
-									{ itemstring = "mcl_bows:bow", wear_min = 49144, wear_max = 65535, func = function(stack, pr)
-										mcl_enchanting.enchant_randomly(stack, 30, true, false, false, pr)
-									end }, -- 75%-100% damage
-									{ itemstring = "mcl_books:book", func = function(stack, pr)
-										mcl_enchanting.enchant_randomly(stack, 30, true, true, false, pr)
-									end },
-									{ itemstring = "mcl_fishing:fishing_rod", wear_min = 49144, wear_max = 65535, func = function(stack, pr)
-										mcl_enchanting.enchant_randomly(stack, 30, true, false, false, pr)
-									end }, -- 75%-100% damage
-									{ itemstring = "mcl_mobitems:nametag", },
-									{ itemstring = "mcl_mobitems:saddle", },
-									{ itemstring = "mcl_flowers:waterlily", },
-									{ itemstring = "mcl_mobitems:nautilus_shell", },
-								},
-								stacks_min = 1,
-								stacks_max = 1,
-							}, pr)
+							items = mcl_loot.get_loot({ items = mcl_fishing.loot_treasure, stacks_min = 1, stacks_max = 1 }, pr)
 						end
 						local item
 						if #items >= 1 then
