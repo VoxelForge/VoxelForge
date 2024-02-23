@@ -17,7 +17,7 @@ local function get_anvil_formspec(set_name, player, cost)
 		set_name = ""
 	end
 	local cost_label = ""
-	if cost then
+	if not minetest.is_creative_enabled(player:get_player_name()) and cost then
 		local c = "label[6.825,4.425;"
 		cost_label = c..F(C(mcl_formspec.label_color, S("Level cost: ")..tostring(cost))).."]"
 		if player and mcl_experience.get_level(player) < cost then
