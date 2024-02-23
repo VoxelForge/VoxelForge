@@ -12,11 +12,18 @@ local MATERIAL_TOOL_REPAIR_BOOST = {
 	MAX_WEAR, -- 100%
 }
 
-local function get_anvil_formspec(set_name)
+local function get_anvil_formspec(set_name, player, cost)
 	if not set_name then
 		set_name = ""
 	end
-
+	local cost_label = ""
+	if cost then
+		local c = "label[6.825,4.425;"
+		cost_label = c..F(C(mcl_formspec.label_color, S("Level cost: ")..tostring(cost))).."]"
+		if player and mcl_experience.get_level(player) < cost then
+			cost_label = c..F(C(mcl_colors.RED, S("Level cost: ")..tostring(cost).." "..S("(too expensive)"))).."]"
+		end
+	end
 	return table.concat({
 		"formspec_version[4]",
 		"size[11.75,10.425]",
@@ -50,6 +57,7 @@ local function get_anvil_formspec(set_name)
 		mcl_formspec.get_itemslot_bg_v4(0.375, 9.05, 9, 1),
 		"list[current_player;main;0.375,9.05;9,1;]",
 
+		cost_label,
 		-- Listrings
 
 		"listring[context;output]",
@@ -252,9 +260,14 @@ local function update_anvil_slots(meta, player)
 
 	-- Set the new output slot
 	if minetest.is_creative_enabled(player:get_player_name()) then clear_cost(meta)	end
-	if new_output and mcl_experience.get_level(player) >= meta:get_int("mcl_anvil:xp_cost") then
+
+	local cost = meta:get_int("mcl_anvil:xp_cost")
+	if new_output and mcl_experience.get_level(player) >= cost then
+		meta:set_string("formspec", get_anvil_formspec(new_name, player, cost))
 		fix_stack_size(new_output)
 		inv:set_stack("output", 1, new_output)
+	elseif new_output and mcl_experience.get_level(player) < cost then
+		meta:set_string("formspec", get_anvil_formspec(new_name, player, cost))
 	end
 end
 
