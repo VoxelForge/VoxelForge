@@ -110,6 +110,13 @@ local function fix_stack_size(stack)
 	return count
 end
 
+local function clear_cost(meta, cost) meta:set_string("mcl_anvil:xp_cost", "") end
+
+local function add_cost(meta, cost)
+	local old = meta:get_int("mcl_anvil:xp_cost")
+	meta:set_int("mcl_anvil:xp_cost", old + cost)
+end
+
 -- Update the inventory slots of an anvil node.
 -- meta: Metadata of anvil node
 local function update_anvil_slots(meta)
@@ -121,8 +128,10 @@ local function update_anvil_slots(meta)
 	local new_output, name_item
 	local just_rename = false
 
+	clear_cost(meta)
 	-- Both input slots occupied
 	if (not input1:is_empty() and not input2:is_empty()) then
+		add_cost(meta, mcl_enchanting.get_prior_work_penalty(input1) + mcl_enchanting.get_prior_work_penalty(input2))
 		-- Repair, if tool
 		local def1 = input1:get_definition()
 		local def2 = input2:get_definition()
@@ -139,7 +148,7 @@ local function update_anvil_slots(meta)
 			return math.max(0, math.min(MAX_WEAR, MAX_WEAR - new_health))
 		end
 
-		local can_combine = mcl_enchanting.combine(input1, input2)
+		local can_combine, enchanting_level_requirements = mcl_enchanting.combine(input1, input2)
 
 		if can_combine then
 			-- Add tool health together plus a small bonus
@@ -148,6 +157,7 @@ local function update_anvil_slots(meta)
 				input1:set_wear(new_wear)
 			end
 
+			add_cost(meta, enchanting_level_requirements)
 			name_item = input1
 			new_output = name_item
 			-- Tool + repair item
@@ -188,6 +198,7 @@ local function update_anvil_slots(meta)
 				if has_correct_material and tool:get_wear() > 0 then
 					local materials_used = get_consumed_materials(tool, material)
 					local new_wear = calculate_repair(tool:get_wear(), MAX_WEAR, MATERIAL_TOOL_REPAIR_BOOST[materials_used])
+					add_cost(meta, 2)
 					tool:set_wear(new_wear)
 					name_item = tool
 					new_output = name_item
@@ -219,6 +230,8 @@ local function update_anvil_slots(meta)
 		else
 			if new_name == nil then
 				new_name = ""
+			else
+				add_cost(meta, 1)
 			end
 			local meta = name_item:get_meta()
 			local old_name = meta:get_string("name")
@@ -371,9 +384,15 @@ local anvildef = {
 		if minetest.is_protected(pos, name) then
 			minetest.record_protection_violation(pos, name)
 			return 0
-		else
-			return stack:get_count()
+		elseif listname == "output" then
+			local meta = minetest.get_meta(pos)
+			local player_level = mcl_experience.get_level(player)
+			local anvil_costs = meta:get_int("mcl_anvil:xp_cost")
+			if player_level < anvil_costs then
+				return 0
+			end
 		end
+		return stack:get_count()
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
 		local name = player:get_player_name()
@@ -445,6 +464,15 @@ local anvildef = {
 			local inv = meta:get_inventory()
 			local input1 = inv:get_stack("input", 1)
 			local input2 = inv:get_stack("input", 2)
+
+			local player_level = mcl_experience.get_level(player)
+			local anvil_costs = meta:get_int("mcl_anvil:xp_cost")
+			if player_level < anvil_costs then
+				return
+			end
+			clear_cost(meta)
+			mcl_experience.set_level(player, player_level - anvil_costs)
+
 			-- Both slots occupied?
 			if not input1:is_empty() and not input2:is_empty() then
 				-- Take as many items as needed
