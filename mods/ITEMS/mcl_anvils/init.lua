@@ -17,11 +17,13 @@ local function get_anvil_formspec(set_name, player, cost)
 		set_name = ""
 	end
 	local cost_label = ""
-	if not minetest.is_creative_enabled(player:get_player_name()) and cost then
-		local c = "label[6.825,4.425;"
-		cost_label = c..F(C(mcl_formspec.label_color, S("Level cost: ")..tostring(cost))).."]"
+	if player and not minetest.is_creative_enabled(player:get_player_name()) and cost and cost > 0 then
+		local st = S("Levels")
+		if cost == 1 then st = S("Level") end
+		local c = "label[9.125,4.225;"
+		cost_label = c..F(C(mcl_formspec.label_color, tostring(cost).." "..st)).."]"
 		if player and mcl_experience.get_level(player) < cost then
-			cost_label = c..F(C(mcl_colors.RED, S("Level cost: ")..tostring(cost).." "..S("(too expensive)"))).."]"
+			cost_label = c..F(C(mcl_colors.RED, S("Too expensive"))).."]"
 		end
 	end
 	return table.concat({
@@ -262,12 +264,18 @@ local function update_anvil_slots(meta, player)
 	if minetest.is_creative_enabled(player:get_player_name()) then clear_cost(meta)	end
 
 	local cost = meta:get_int("mcl_anvil:xp_cost")
+	local has_result = not ItemStack(new_output):is_empty()
 	if new_output and mcl_experience.get_level(player) >= cost then
 		meta:set_string("formspec", get_anvil_formspec(new_name, player, cost))
 		fix_stack_size(new_output)
 		inv:set_stack("output", 1, new_output)
-	elseif new_output and mcl_experience.get_level(player) < cost then
+	elseif has_result and mcl_experience.get_level(player) < cost then
 		meta:set_string("formspec", get_anvil_formspec(new_name, player, cost))
+	end
+
+	if not has_result then
+		meta:set_string("formspec", get_anvil_formspec())
+		inv:set_stack("output", 1, ItemStack(""))
 	end
 end
 
@@ -560,7 +568,6 @@ local anvildef = {
 
 			meta:set_string("set_name", set_name)
 			update_anvil_slots(meta, sender)
-			meta:set_string("formspec", get_anvil_formspec(set_name))
 		end
 	end,
 }
