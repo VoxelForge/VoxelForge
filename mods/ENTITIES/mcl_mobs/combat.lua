@@ -650,21 +650,10 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 
 	-- if skittish then run away
 	if hitter and is_player and hitter:get_pos() and not die and self.runaway == true and self.state ~= "flop" then
-
-		self:set_yaw( minetest.dir_to_yaw(vector.direction(hitter:get_pos(), self.object:get_pos())))
-		minetest.after(0.2,function()
-			if self and self.object and self.object:get_pos() and hitter and is_player and hitter:get_pos() then
-				self:set_yaw( minetest.dir_to_yaw(vector.direction(hitter:get_pos(), self.object:get_pos())))
-				self:set_velocity( self.run_velocity)
-			end
-		end)
-		self:set_state("runaway")
-		self.runaway_timer = 0
-		self.following = nil
+		self:do_runaway(hitter)
 	end
 
 	local name = hitter:get_player_name() or ""
-
 	-- attack puncher
 	if ( self.passive == false or self.retaliates )
 	and self.state ~= "flop"
@@ -680,34 +669,39 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 	end
 
 	-- alert others to the attack
-	local objs = minetest.get_objects_inside_radius(hitter:get_pos(), self.view_range)
-	local obj
+	self:call_group_attack(hitter)
+end
 
-	for n = 1, #objs do
+function mob_class:do_runaway(hitter)
+	self:set_yaw( minetest.dir_to_yaw(vector.direction(hitter:get_pos(), self.object:get_pos())))
+	self:set_velocity( self.run_velocity)
+	self:set_state("runaway")
+	self.runaway_timer = 0
+	self.following = nil
+end
 
-		obj = objs[n]:get_luaentity()
-
-		if obj then
+function mob_class:call_group_attack(hitter)
+	local name = hitter:get_player_name() or ""
+	for _, obj in pairs(minetest.get_objects_inside_radius(hitter:get_pos(), self.view_range)) do
+		local ent = obj:get_luaentity()
+		if ent then
 			-- only alert members of same mob or friends
-			if obj.group_attack
-			and obj.state ~= "attack"
-			and obj.owner ~= name then
-				if obj.name == self.name then
-					obj:do_attack(hitter)
-				elseif type(obj.group_attack) == "table" then
-					for i=1, #obj.group_attack do
-						if obj.group_attack[i] == self.name then
-							obj.aggro = true
-							obj:do_attack(hitter)
-							break
-						end
+			if ent.group_attack
+			and ent.state ~= "attack"
+			and ent.owner ~= name then
+				if ent.name == self.name then
+					ent:do_attack(hitter)
+				elseif type(ent.group_attack) == "table" then
+					if table.indexof(ent.group_attack, self.name) ~= -1 then
+						ent.aggro = true
+						ent:do_attack(hitter)
 					end
 				end
 			end
 
 			-- have owned mobs attack player threat
-			if obj.owner == name and obj.owner_loyal then
-				obj:do_attack(self.object)
+			if ent.owner == name and ent.owner_loyal then
+				ent:do_attack(self.object)
 			end
 		end
 	end
