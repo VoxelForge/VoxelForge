@@ -194,6 +194,7 @@ function mcl_enchanting.combine(itemstack, combine_with)
 	end
 	local enchantments = mcl_enchanting.get_enchantments(itemstack)
 	local any_new_enchantment = false
+	local incompatible_enchants = 0
 	for enchantment, combine_level in pairs(mcl_enchanting.get_enchantments(combine_with)) do
 		local enchantment_def = mcl_enchanting.enchantments[enchantment]
 		local enchantment_level = enchantments[enchantment]
@@ -208,6 +209,7 @@ function mcl_enchanting.combine(itemstack, combine_with)
 			local supported = true
 			for incompatible in pairs(enchantment_def.incompatible) do
 				if enchantments[incompatible] then
+					incompatible_enchants = incompatible_enchants + 1
 					supported = false
 					break
 				end
@@ -221,12 +223,21 @@ function mcl_enchanting.combine(itemstack, combine_with)
 			enchantments[enchantment] = enchantment_level
 		end
 	end
+	local level_requirement = 0
+	level_requirement = level_requirement + incompatible_enchants
 	if any_new_enchantment then
 		itemstack = mcl_enchanting.add_prior_work_penalty(itemstack)
 		itemstack:set_name(enchanted_itemname)
+		for k,v in pairs(enchantments) do
+			if mcl_enchanting.is_book(combine_name) then
+				level_requirement = level_requirement + ( v * ((mcl_enchanting.enchantments[k] and mcl_enchanting.enchantments[k].anvil_book_cost) or 1))
+			else
+				level_requirement = level_requirement + ( v * ((mcl_enchanting.enchantments[k] and mcl_enchanting.enchantments[k].anvil_item_cost) or 1))
+			end
+		end
 		mcl_enchanting.set_enchantments(itemstack, enchantments)
 	end
-	return any_new_enchantment
+	return any_new_enchantment, level_requirement
 end
 
 function mcl_enchanting.enchantments_snippet(_, _, itemstack)
