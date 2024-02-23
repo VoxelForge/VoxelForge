@@ -567,6 +567,21 @@ end
 
 -- Complete things that don't work when run in mapgen
 function mcl_villages.post_process_building(minp, maxp, blockseed, has_beds, has_jobs, is_belltower, bell_pos)
+
+	if (not bell_pos) or bell_pos == "" then
+		minetest.log(
+			"warning",
+			string.format(
+				"No bell position for village building. blockseed: %s, has_bends: %s, has_jobs: %s, is_belltower: %s",
+				tostring(blockseed),
+				tostring(has_beds),
+				tostring(has_jobs),
+				tostring(is_belltower)
+			)
+		)
+		return
+	end
+
 	local bell = vector.offset(bell_pos, 0, 1, 0)
 
 	if is_belltower then
