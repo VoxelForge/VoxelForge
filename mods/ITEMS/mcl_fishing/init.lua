@@ -22,7 +22,7 @@ local bobber_ENTITY={
 	objtype="fishing",
 }
 
-local fish = function(itemstack, player, pointed_thing)
+local function fish(itemstack, player, pointed_thing)
 	if pointed_thing and pointed_thing.type == "node" then
 		-- Call on_rightclick if the pointed node defines it
 		local rc = mcl_util.call_on_rightclick(itemstack, player, pointed_thing)
@@ -181,7 +181,7 @@ local fish = function(itemstack, player, pointed_thing)
 end
 
 -- Movement function of bobber
-local bobber_on_step = function(self, dtime)
+local function bobber_on_step(self, dtime)
 	self.timer=self.timer+dtime
 	local epos = self.object:get_pos()
 	epos.y = math.floor(epos.y)
