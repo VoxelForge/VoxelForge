@@ -253,3 +253,18 @@ end)
 minetest.register_on_mods_loaded(function()
 	table.sort(mcl_experience.on_add_xp, function(a, b) return a.priority < b.priority end)
 end)
+
+minetest.register_chatcommand("set_xp", {
+	privs = { debug = true },
+	description = "Set experience of current player",
+	params = "<xp>",
+	func = function(pn,param)
+		local player = minetest.get_player_by_name(pn)
+		local num = tonumber(param)
+		local rt = false
+		if num then
+			mcl_experience.set_xp(player, num)
+		end
+		return rt, "XP for player "..pn..": "..tostring(mcl_experience.get_xp(player))
+	end,
+})
