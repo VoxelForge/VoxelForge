@@ -150,8 +150,23 @@ local function fish(itemstack, player, pointed_thing)
 	end
 end
 
+function bobber_ENTITY:check_player()
+	local player
+	if self.player and self.player ~= "" then
+		player = minetest.get_player_by_name(self.player)
+		if player and player:get_pos() and vector.distance(player:get_pos(), self.object:get_pos()) <= 33 and
+			minetest.get_item_group(player:get_wielded_item():get_name(), "fishing_rod") > 0 then
+			return true
+		end
+	end
+	if player then
+		bobbers[player] = nil
+	end
+	self.object:remove()
+end
+
 -- Movement function of bobber
-local function bobber_on_step(self, dtime)
+function bobber_ENTITY:on_step(dtime)
 	self.timer=self.timer+dtime
 	local epos = self.object:get_pos()
 	epos.y = math.floor(epos.y)
@@ -159,26 +174,9 @@ local function bobber_on_step(self, dtime)
 	local def = minetest.registered_nodes[node.name]
 
 	--If we have no player, remove self.
-	if self.player == nil or self.player == "" then
-		self.object:remove()
-		return
-	end
+	if not self:check_player() then return end
 	local player = minetest.get_player_by_name(self.player)
-	if not player or vector.distance(player:get_pos(), self.object:get_pos()) > 64 then
-		bobbers[player] = nil
-		self.object:remove()
-		return
-	end
-	local wield = player:get_wielded_item()
-	--Check if player is nearby
-	if self.player and player then
-		--Destroy bobber if item not wielded.
-		if ((not wield) or (minetest.get_item_group(wield:get_name(), "fishing_rod") <= 0)) then
-			bobbers[player] = nil
-			self.object:remove()
-			return
-		end
-	end
+
 	-- If in water, then bob.
 	if def.liquidtype == "source" and minetest.get_item_group(def.name, "water") ~= 0 then
 		if self._oldy == nil then
@@ -213,9 +211,9 @@ local function bobber_on_step(self, dtime)
 				self._time = 0
 				self._dive = false
 			end
-		else if not self._waittime or self._waittime <= 0 then
+		elseif not self._waittime or self._waittime <= 0 then
 			-- wait for random number of ticks.
-			local lure_enchantment = wield and mcl_enchanting.get_enchantment(wield, "lure") or 0
+			local lure_enchantment = mcl_enchanting.get_enchantment(player:get_wielded_item(), "lure") or 0
 			local reduced = lure_enchantment * 5
 			self._waittime = math.random(math.max(0, 5 - reduced), 30 - reduced)
 		else
@@ -242,9 +240,6 @@ end
 	--	end
 	--end
 	--self._lastpos={x=pos.x, y=pos.y, z=pos.z} -- Set lastpos-->Node will be added at last pos outside the node
-end
-
-bobber_ENTITY.on_step = bobber_on_step
 
 minetest.register_entity("mcl_fishing:bobber_entity", bobber_ENTITY)
 
@@ -285,7 +280,6 @@ local function flying_bobber_on_step(self, dtime)
 			local ent = bobbers[player]:get_luaentity()
 			if ent then
 				ent.player = self._thrower
-				ent.child = true
 				self.object:remove()
 				return
 			end
