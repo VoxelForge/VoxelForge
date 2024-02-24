@@ -78,6 +78,15 @@ local function fish(itemstack, player, pointed_thing)
 	--Check for bobber if so handle.
 	if bobbers[player] then
 		local ent = bobbers[player]:get_luaentity()
+		if ent._hooked and ent._hooked:get_pos() then
+			if ent._hooked:get_luaentity()._mcl_fishing_reelable then
+				local vel = vector.distance(player:get_pos(), ent.object:get_pos())
+				ent._hooked:add_velocity(vector.direction(ent.object:get_pos(), player:get_pos()) * vel)
+			end
+			bobbers[player]:remove()
+			bobbers[player] = nil
+			return
+		end
 		if ent and ent._dive == true then
 			local items
 			local pr = PseudoRandom(os.time() * math.random(1, 100))
@@ -269,8 +278,24 @@ local function flying_bobber_on_step(self, dtime)
 	local def = minetest.registered_nodes[node.name]
 	local player = minetest.get_player_by_name(self._thrower)
 
-	if not player or not player:get_pos() or vector.distance(player:get_pos(), self.object:get_pos()) > 64 then
+	if not player or not player:get_pos() or vector.distance(player:get_pos(), self.object:get_pos()) > 33 then
+		bobbers[player] = nil
 		self.object:remove()
+		return
+	end
+
+	for _, obj in pairs(minetest.get_objects_inside_radius(pos, 0.4)) do
+		local ent = obj:get_luaentity()
+		if ent and ent._mcl_fishing_hookable then
+			bobbers[player] = minetest.add_entity(ent.object:get_pos(), "mcl_fishing:bobber_entity")
+			local bent = bobbers[player]:get_luaentity()
+			if bent then
+				bent.player = self._thrower
+				bent._hooked = ent.object
+				self.object:remove()
+				return
+			end
+		end
 	end
 
 	-- Destroy when hitting a solid node

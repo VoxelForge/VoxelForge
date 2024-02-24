@@ -446,6 +446,9 @@ minetest.register_entity(":__builtin:item", {
 	-- How old it has become in the collection animation
 	collection_age = 0,
 
+	_mcl_fishing_hookable = true,
+	_mcl_fishing_reelable = true,
+
 	-- Function to apply a random velocity
 	apply_random_vel = function(self, speed)
 		if not self or not self.object or not self.object:get_luaentity() then
