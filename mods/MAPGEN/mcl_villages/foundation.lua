@@ -25,49 +25,6 @@ function mcl_villages.ground(pos, pr) -- role model: Wendelsteinkircherl, Branne
 	end
 end
 
--------------------------------------------------------------------------------
--- function clear space above baseplate
--------------------------------------------------------------------------------
-function mcl_villages.terraform(settlement_info, pr)
-	local fheight, fwidth, fdepth, schematic_data
-
-	for i, built_house in ipairs(settlement_info) do
-		-- pick right schematic_info to current built_house
-		for j, schem in ipairs(mcl_villages.schematic_table) do
-			if settlement_info[i]["name"] == schem["name"] then
-				schematic_data = schem
-				break
-			end
-		end
-		local pos = settlement_info[i]["pos"]
-		if settlement_info[i]["rotat"] == "0" or settlement_info[i]["rotat"] == "180" then
-			fwidth = schematic_data["hwidth"]
-			fdepth = schematic_data["hdepth"]
-		else
-			fwidth = schematic_data["hdepth"]
-			fdepth = schematic_data["hwidth"]
-		end
-		fheight = schematic_data["hheight"]  -- remove trees and leaves above
-
-		--
-		-- now that every info is available -> create platform and clear space above
-		--
-		for xi = 0,fwidth-1 do
-			for zi = 0,fdepth-1 do
-				for yi = 0,fheight *3 do
-					if yi == 0 then
-						local p = {x=pos.x+xi, y=pos.y, z=pos.z+zi}
-						mcl_villages.ground(p, pr)
-					else
-						-- write ground
-						minetest.swap_node({x=pos.x+xi, y=pos.y+yi, z=pos.z+zi},{name="air"})
-					end
-				end
-			end
-		end
-	end
-end
-
 -- Empty space above ground
 local function overground(pos, fwidth, fdepth, fheight)
 

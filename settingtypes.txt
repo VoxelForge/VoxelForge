@@ -194,9 +194,6 @@ mcl_villages_placement_priority (Buildings closest to the bell) enum random rand
 # If disabled, command blocks will be unusable (but still present).
 mcl_enable_commandblocks (Command blocks) bool true
 
-# If enabled, this will substitute a few blocks in village schematics so they blend into normal, snowy, and sandy areas
-mcl_pseudobiome_villages (Pseudobiome villages) bool true
-
 # This is fine for players, but expect all the villagers to die very quickly
 mcl_villages_allow_water_villages (Spawn village buildings on top of water) bool false
 

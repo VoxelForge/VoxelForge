@@ -18,11 +18,8 @@ mcl_villages.grundstellungen()
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local villagegen={}
-
 minetest.register_alias("mcl_villages:stonebrickcarved", "mcl_core:stonebrickcarved")
-
-minetest.register_node("mcl_villages:structblock", {drawtype="airlike",groups = {not_in_creative_inventory=1},})
+minetest.register_alias("mcl_villages:structblock", "air")
 
 --
 -- on map generation, try to build a settlement
@@ -72,20 +69,6 @@ if mg_name ~= "singlenode" then
 		end
 	end)
 end
-
-minetest.register_lbm({
-	name = "mcl_villages:structblock",
-	run_at_every_load = true,
-	nodenames = {"mcl_villages:structblock"},
-	action = function(pos, node)
-		minetest.set_node(pos, {name = "air"})
-		if not villagegen[minetest.pos_to_string(pos)] then return end
-		local minp=villagegen[minetest.pos_to_string(pos)].minp
-		local maxp=villagegen[minetest.pos_to_string(pos)].maxp
-		minetest.emerge_area(minp, maxp, ecb_village, villagegen[minetest.pos_to_string(minp)])
-		villagegen[minetest.pos_to_string(minp)]=nil
-	end
-})
 
 minetest.register_on_mods_loaded(function()
 	local olfunc = minetest.registered_chatcommands["spawnstruct"].func
