@@ -79,12 +79,13 @@ local function fish(itemstack, player, pointed_thing)
 	if bobbers[player] then
 		local ent = bobbers[player]:get_luaentity()
 		if ent._hooked and ent._hooked:get_pos() then
-			if ent._hooked:get_luaentity()._mcl_fishing_reelable then
-				local vel = vector.distance(player:get_pos(), ent.object:get_pos())
-				ent._hooked:add_velocity(vector.direction(ent.object:get_pos(), player:get_pos()) * vel)
+			local hent = ent._hooked:get_luaentity()
+			if hent and hent._mcl_fishing_reelable then
+				ent._reeling = true
+			else
+				ent.object:remove()
+				bobbers[player] = nil
 			end
-			bobbers[player]:remove()
-			bobbers[player] = nil
 			return
 		end
 		if ent and ent._dive == true then
@@ -185,6 +186,16 @@ function bobber_ENTITY:on_step(dtime)
 	--If we have no player, remove self.
 	if not self:check_player() then return end
 	local player = minetest.get_player_by_name(self.player)
+
+	if self._hooked and self._reeling then
+		local dst = vector.distance(player:get_pos(), self.object:get_pos())
+		if dst < 0.3 then
+			self.object:remove()
+			bobbers[player] = nil
+			return
+		end
+		self.object:add_velocity(vector.direction(self.object:get_pos(), player:get_pos()) * dst / 10)
+	end
 
 	-- If in water, then bob.
 	if def.liquidtype == "source" and minetest.get_item_group(def.name, "water") ~= 0 then
@@ -288,6 +299,7 @@ local function flying_bobber_on_step(self, dtime)
 		local ent = obj:get_luaentity()
 		if ent and ent._mcl_fishing_hookable then
 			bobbers[player] = minetest.add_entity(ent.object:get_pos(), "mcl_fishing:bobber_entity")
+			ent.object:set_attach(bobbers[player])
 			local bent = bobbers[player]:get_luaentity()
 			if bent then
 				bent.player = self._thrower
