@@ -185,7 +185,7 @@ local function bobber_on_step(self, dtime)
 		return
 	end
 	local player = minetest.get_player_by_name(self.player)
-	if not player then
+	if not player or vector.distance(player:get_pos(), self.object:get_pos()) > 64 then
 		self.object:remove()
 		return
 	end
@@ -315,7 +315,11 @@ local function flying_bobber_on_step(self, dtime)
 	local pos = self.object:get_pos()
 	local node = minetest.get_node(pos)
 	local def = minetest.registered_nodes[node.name]
-	--local player = minetest.get_player_by_name(self._thrower)
+	local player = minetest.get_player_by_name(self._thrower)
+
+	if not player or not player:get_pos() or vector.distance(player:get_pos(), self.object:get_pos()) > 64 then
+		self.object:remove()
+	end
 
 	-- Destroy when hitting a solid node
 	if self._lastpos.x~=nil then
