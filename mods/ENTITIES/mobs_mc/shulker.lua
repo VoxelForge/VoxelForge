@@ -85,6 +85,8 @@ mcl_mobs.register_mob("mobs_mc:shulker", {
 	walk_velocity = 0,
 	run_velocity = 0,
 	noyaw = true,
+	_mcl_fishing_hookable = true,
+	_mcl_fishing_reelable = false,
 	on_rightclick = function(self,clicker)
 		if clicker:is_player() then
 			local wstack = clicker:get_wielded_item()
@@ -188,6 +190,8 @@ mcl_mobs.register_arrow("mobs_mc:shulkerbullet", {
 	textures = {"mobs_mc_shulkerbullet.png"},
 	velocity = 5,
 	homing = true,
+	_mcl_fishing_hookable = true,
+	_mcl_fishing_reelable = true,
 	hit_player = mcl_mobs.get_arrow_damage_func(4),
 	hit_mob = mcl_mobs.get_arrow_damage_func(4),
 	hit_node = function(self, _)

@@ -132,6 +132,8 @@ local TNT = {
 	blinktimer = 0,
 	tnt_knockback = true,
 	blinkstatus = true,
+	_mcl_fishing_hookable = true,
+	_mcl_fishing_reelable = true,
 }
 
 function TNT:check_water_flow(p)

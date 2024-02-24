@@ -119,6 +119,9 @@ mcl_mobs.mob_class = {
 	attack_exception = function(p) return false end,
 	player_active_range = tonumber(minetest.settings:get("mcl_mob_active_range")) or 48,
 
+	_mcl_fishing_hookable = true,
+	_mcl_fishing_reelable = true,
+
 	--internal variables
 	blinktimer = 0,
 	blinkstatus = false,

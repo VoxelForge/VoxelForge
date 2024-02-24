@@ -147,6 +147,8 @@ local function register_entity(entity_id, mesh, textures, drop, on_rightclick, o
 		_old_vel = {x=0, y=0, z=0},
 		_old_switch = 0,
 		_railtype = nil,
+		_mcl_fishing_hookable = true,
+		_mcl_fishing_reelable = true,
 	}
 
 	function cart:on_activate(staticdata, dtime_s)

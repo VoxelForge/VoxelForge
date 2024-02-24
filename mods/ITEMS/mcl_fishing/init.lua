@@ -80,7 +80,8 @@ local function fish(itemstack, player, pointed_thing)
 		local ent = bobbers[player]:get_luaentity()
 		if ent._hooked and ent._hooked:get_pos() then
 			local hent = ent._hooked:get_luaentity()
-			if hent and hent._mcl_fishing_reelable then
+			if not ent._reeling and hent and hent._mcl_fishing_reelable then
+				ent.timer = 0 --restart timer for reeling time limit
 				ent._reeling = true
 			else
 				ent.object:remove()
@@ -189,7 +190,7 @@ function bobber_ENTITY:on_step(dtime)
 
 	if self._hooked and self._reeling then
 		local dst = vector.distance(player:get_pos(), self.object:get_pos())
-		if dst < 0.3 then
+		if dst < 0.3 or self.timer > 10 then
 			self.object:remove()
 			bobbers[player] = nil
 			return

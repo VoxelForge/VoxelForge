@@ -42,6 +42,8 @@ mcl_itemframes.tpl_node = {
 
 mcl_itemframes.tpl_entity = {
 	initial_properties = base_props,
+	_mcl_fishing_hookable = true,
+	_mcl_fishing_reelable = false,
 }
 --Utility functions
 local function find_entity(pos)

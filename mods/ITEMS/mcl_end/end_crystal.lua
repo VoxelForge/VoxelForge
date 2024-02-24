@@ -112,6 +112,8 @@ minetest.register_entity("mcl_end:crystal_beam", {
 		},
 		static_save = false,
 	},
+	_mcl_fishing_hookable = true,
+	_mcl_fishing_reelable = false,
 	spin = 0,
 	init = function(self, dragon, crystal)
 		self.dragon, self.crystal = dragon, crystal

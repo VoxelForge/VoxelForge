@@ -108,6 +108,8 @@ minetest.register_entity("mcl_armor_stand:armor_entity", {
 		timer = 0,
 		static_save = false,
 	},
+	_mcl_fishing_hookable = true,
+	_mcl_fishing_reelable = true,
 	on_activate = function(self)
 		self.object:set_armor_groups({immortal = 1})
 		self.node_pos = vector.round(self.object:get_pos())
