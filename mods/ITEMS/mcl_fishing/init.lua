@@ -39,6 +39,8 @@ mcl_fishing.loot_treasure = {
 	{ itemstring = "mcl_mobitems:nautilus_shell", },
 }
 
+local bobbers = {}
+
 local bobber_ENTITY={
 	initial_properties = {
 		physical = false,
@@ -65,11 +67,7 @@ local function fish(itemstack, player, pointed_thing)
 		local rc = mcl_util.call_on_rightclick(itemstack, player, pointed_thing)
 		if rc then return rc end
 	end
-
 	local pos = player:get_pos()
-
-	local objs = minetest.get_objects_inside_radius(pos, 125)
-	local ent, noent
 
 	local durability = 65
 	local unbreaking = mcl_enchanting.get_enchantment(itemstack, "unbreaking")
@@ -78,96 +76,77 @@ local function fish(itemstack, player, pointed_thing)
 	end
 
 	--Check for bobber if so handle.
-	for n = 1, #objs do
-		ent = objs[n]:get_luaentity()
-		if ent then
-			if ent.player and ent.objtype=="fishing" then
-				if (player:get_player_name() == ent.player) then
-					--noent = false
-					if ent._dive == true then
-						local items
-						local pr = PseudoRandom(os.time() * math.random(1, 100))
-						local r = pr:next(1, 100)
-						local fish_values = {85, 84.8, 84.7, 84.5}
-						local junk_values = {10, 8.1, 6.1, 4.2}
-						local luck_of_the_sea = math.min(mcl_enchanting.get_enchantment(itemstack, "luck_of_the_sea"), 3)
-						local index = luck_of_the_sea + 1
-						local fish_value = fish_values[index]
-						local junk_value = junk_values[index] + fish_value
-						if r <= fish_value then
-							items = mcl_loot.get_loot({ items = mcl_fishing.loot_fish, stacks_min = 1, stacks_max = 1 }, pr)
-							awards.unlock(player:get_player_name(), "mcl:fishyBusiness")
-						elseif r <= junk_value then
-							items = mcl_loot.get_loot({ items = mcl_fishing.loot_junk, stacks_min = 1, stacks_max = 1 }, pr)
-						else
-							items = mcl_loot.get_loot({ items = mcl_fishing.loot_treasure, stacks_min = 1, stacks_max = 1 }, pr)
-						end
-						local item
-						if #items >= 1 then
-							item = ItemStack(items[1])
-						else
-							item = ItemStack()
-						end
-						local inv = player:get_inventory()
-						if inv:room_for_item("main", item) then
-							inv:add_item("main", item)
-							if item:get_name() == "mcl_mobitems:leather" then
-								awards.unlock(player:get_player_name(), "mcl:killCow")
-							end
-						else
-							minetest.add_item(pos, item)
-						end
-						if mcl_experience.throw_xp then
-							minetest.after(0.7, mcl_experience.throw_xp, pos, math.random(1,6))
-						end
+	if bobbers[player] then
+		local ent = bobbers[player]:get_luaentity()
+		if ent and ent._dive == true then
+			local items
+			local pr = PseudoRandom(os.time() * math.random(1, 100))
+			local r = pr:next(1, 100)
+			local fish_values = {85, 84.8, 84.7, 84.5}
+			local junk_values = {10, 8.1, 6.1, 4.2}
+			local luck_of_the_sea = math.min(mcl_enchanting.get_enchantment(itemstack, "luck_of_the_sea"), 3)
+			local index = luck_of_the_sea + 1
+			local fish_value = fish_values[index]
+			local junk_value = junk_values[index] + fish_value
+			if r <= fish_value then
+				items = mcl_loot.get_loot({ items = mcl_fishing.loot_fish, stacks_min = 1, stacks_max = 1 }, pr)
+				awards.unlock(player:get_player_name(), "mcl:fishyBusiness")
+			elseif r <= junk_value then
+				items = mcl_loot.get_loot({ items = mcl_fishing.loot_junk, stacks_min = 1, stacks_max = 1 }, pr)
+			else
+				items = mcl_loot.get_loot({ items = mcl_fishing.loot_treasure, stacks_min = 1, stacks_max = 1 }, pr)
+			end
+			local item
+			if #items >= 1 then
+				item = ItemStack(items[1])
+			else
+				item = ItemStack()
+			end
+			local inv = player:get_inventory()
+			if inv:room_for_item("main", item) then
+				inv:add_item("main", item)
+				if item:get_name() == "mcl_mobitems:leather" then
+					awards.unlock(player:get_player_name(), "mcl:killCow")
+				end
+			else
+				minetest.add_item(pos, item)
+			end
+			if mcl_experience.throw_xp then
+				minetest.after(0.7, mcl_experience.throw_xp, pos, math.random(1,6))
+			end
 
-						if not minetest.is_creative_enabled(player:get_player_name()) then
-							local idef = itemstack:get_definition()
-							itemstack:add_wear(65535/durability) -- 65 uses
-							if itemstack:get_count() == 0 and idef.sound and idef.sound.breaks then
-								minetest.sound_play(idef.sound.breaks, {pos=player:get_pos(), gain=0.5}, true)
-							end
-						end
-					end
-					--Check if object is on land.
-					local epos = ent.object:get_pos()
-					epos.y = math.floor(epos.y)
-					local node = minetest.get_node(epos)
-					local def = minetest.registered_nodes[node.name]
-					if def.walkable then
-						if not minetest.is_creative_enabled(player:get_player_name()) then
-							local idef = itemstack:get_definition()
-							itemstack:add_wear((65535/durability)*2) -- if so and not creative then wear double like in MC.
-							if itemstack:get_count() == 0 and idef.sound and idef.sound.breaks then
-								minetest.sound_play(idef.sound.breaks, {pos=player:get_pos(), gain=0.5}, true)
-							end
-						end
-					end
-					--Destroy bobber.
-					ent.object:remove()
-					minetest.sound_play("reel", {object=player, gain=0.1, max_hear_distance=16}, true)
-					return itemstack
+			if not minetest.is_creative_enabled(player:get_player_name()) then
+				local idef = itemstack:get_definition()
+				itemstack:add_wear(65535/durability) -- 65 uses
+				if itemstack:get_count() == 0 and idef.sound and idef.sound.breaks then
+					minetest.sound_play(idef.sound.breaks, {pos=player:get_pos(), gain=0.5}, true)
 				end
 			end
 		end
-	end
-	--Check for flying bobber.
-	for n = 1, #objs do
-		ent = objs[n]:get_luaentity()
-		if ent then
-			if ent._thrower and ent.objtype=="fishing" then
-				if player:get_player_name() == ent._thrower then
-					noent = false
-					break
+		--Check if object is on land.
+		local epos = ent.object:get_pos()
+		epos.y = math.floor(epos.y)
+		local node = minetest.get_node(epos)
+		local def = minetest.registered_nodes[node.name]
+		if def.walkable then
+			if not minetest.is_creative_enabled(player:get_player_name()) then
+				local idef = itemstack:get_definition()
+				itemstack:add_wear((65535/durability)*2) -- if so and not creative then wear double like in MC.
+				if itemstack:get_count() == 0 and idef.sound and idef.sound.breaks then
+					minetest.sound_play(idef.sound.breaks, {pos=player:get_pos(), gain=0.5}, true)
 				end
 			end
 		end
-	end
+		--Destroy bobber.
+		ent.object:remove()
+		bobbers[player] = nil
+		minetest.sound_play("reel", {object=player, gain=0.1, max_hear_distance=16}, true)
+		return itemstack
 	--If no bobber or flying_bobber exists then throw bobber.
-	if noent ~= false then
+	else
 		local playerpos = player:get_pos()
 		local dir = player:get_look_dir()
-		mcl_throwing.throw("mcl_fishing:flying_bobber", {x=playerpos.x, y=playerpos.y+1.5, z=playerpos.z}, dir, 15, player:get_player_name())
+		bobbers[player] = mcl_throwing.throw("mcl_fishing:flying_bobber", vector.offset(playerpos, 0, 1.5, 0), dir, 15, player:get_player_name())
 	end
 end
 
@@ -186,6 +165,7 @@ local function bobber_on_step(self, dtime)
 	end
 	local player = minetest.get_player_by_name(self.player)
 	if not player or vector.distance(player:get_pos(), self.object:get_pos()) > 64 then
+		bobbers[player] = nil
 		self.object:remove()
 		return
 	end
@@ -194,33 +174,10 @@ local function bobber_on_step(self, dtime)
 	if self.player and player then
 		--Destroy bobber if item not wielded.
 		if ((not wield) or (minetest.get_item_group(wield:get_name(), "fishing_rod") <= 0)) then
+			bobbers[player] = nil
 			self.object:remove()
 			return
 		end
-
-		--Destroy bobber if player is too far away.
-		local objpos = self.object:get_pos()
-		local playerpos = player:get_pos()
-		if (((playerpos.y - objpos.y) >= 33) or ((playerpos.y - objpos.y) <= -33)) then
-			self.object:remove()
-			return
-		elseif (((playerpos.x - objpos.x) >= 33) or ((playerpos.x - objpos.x) <= -33)) then
-			self.object:remove()
-			return
-		elseif (((playerpos.z - objpos.z) >= 33) or ((playerpos.z - objpos.z) <= -33)) then
-			self.object:remove()
-			return
-		elseif ((((playerpos.z + playerpos.x) - (objpos.z + objpos.x)) >= 33) or ((playerpos.z + playerpos.x) - (objpos.z + objpos.x)) <= -33) then
-			self.object:remove()
-			return
-		elseif ((((playerpos.y + playerpos.x) - (objpos.y + objpos.x)) >= 33) or ((playerpos.y + playerpos.x) - (objpos.y + objpos.x)) <= -33) then
-			self.object:remove()
-			return
-		elseif ((((playerpos.z + playerpos.y) - (objpos.z + objpos.y)) >= 33) or ((playerpos.z + playerpos.y) - (objpos.z + objpos.y)) <= -33) then
-			self.object:remove()
-			return
-		end
-
 	end
 	-- If in water, then bob.
 	if def.liquidtype == "source" and minetest.get_item_group(def.name, "water") ~= 0 then
@@ -324,7 +281,8 @@ local function flying_bobber_on_step(self, dtime)
 	-- Destroy when hitting a solid node
 	if self._lastpos.x~=nil then
 		if (def and (def.walkable or def.liquidtype == "flowing" or def.liquidtype == "source")) or not def then
-			local ent = minetest.add_entity(self._lastpos, "mcl_fishing:bobber_entity"):get_luaentity()
+			bobbers[player] = minetest.add_entity(self._lastpos, "mcl_fishing:bobber_entity")
+			local ent = bobbers[player]:get_luaentity()
 			if ent then
 				ent.player = self._thrower
 				ent.child = true
@@ -342,36 +300,15 @@ minetest.register_entity("mcl_fishing:flying_bobber_entity", flying_bobber_ENTIT
 
 mcl_throwing.register_throwable_object("mcl_fishing:flying_bobber", "mcl_fishing:flying_bobber_entity", 5)
 
--- If player leaves area, remove bobber.
-minetest.register_on_leaveplayer(function(player)
-	local objs = minetest.get_objects_inside_radius(player:get_pos(), 250)
-	for n = 1, #objs do
-		local ent = objs[n]:get_luaentity()
-		if ent then
-			if ent.player and ent.objtype=="fishing" then
-				ent.object:remove()
-			elseif ent._thrower and ent.objtype=="fishing" then
-				ent.object:remove()
-			end
-		end
-	end
-end)
-
 -- If player dies, remove bobber.
 minetest.register_on_dieplayer(function(player)
-	local objs = minetest.get_objects_inside_radius(player:get_pos(), 250)
-
-	for n = 1, #objs do
-		local ent = objs[n]:get_luaentity()
-		if ent then
-			if ent.player and ent.objtype=="fishing" then
-				ent.object:remove()
-			elseif ent._thrower and ent.objtype=="fishing" then
-				ent.object:remove()
-			end
-		end
+	if bobbers[player] then
+		bobbers[player]:remove()
+		bobbers[player] = nil
 	end
 end)
+
+minetest.register_on_leaveplayer(function(player) bobbers[player] = nil end)
 
 -- Fishing Rod
 minetest.register_tool("mcl_fishing:fishing_rod", {
