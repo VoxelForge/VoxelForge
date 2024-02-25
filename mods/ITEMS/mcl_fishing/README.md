@@ -1,11 +1,12 @@
-License of media (sounds)
---------------------------------------
-CC0 1.0 Universal (CC0 1.0)                               
-https://creativecommons.org/publicdomain/zero/1.0/
+# mcl_fishing
+## API
+`mcl_fishing.loot_fish`
+`mcl_fishing.loot_junk`
+`mcl_fishing.loot_treasure`
 
-Authors of media files
------------------------
+These are `mcl_loot` loot tables containing the items that fishing will yield.
 
+## Authors of media files
 You're Perfect Studio (CC0)
 https://opengameart.org/content/fisheefects
   reel.wav, bloop.wav
