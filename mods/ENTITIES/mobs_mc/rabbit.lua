@@ -42,6 +42,7 @@ local rabbit = {
 	makes_footstep_sound = false,
 	walk_velocity = 1,
 	run_velocity = 3.7,
+	avoid_from = {"mobs_mc:wolf"},
 	follow_velocity = 1.1,
 	floats = 1,
 	runaway = true,
