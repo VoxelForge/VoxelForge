@@ -174,14 +174,14 @@ function mobs_mc.villager_mob:on_die(pos, cmi_cause)
 	local bed = self._bed
 	if bed then
 		local bed_meta = minetest.get_meta(bed)
-		bed_meta:set_string("villager", nil)
-		bed_meta:set_string("infotext", nil)
+		bed_meta:set_string("villager", "")
+		bed_meta:set_string("infotext", "")
 	end
 	local jobsite = self._jobsite
 	if jobsite then
 		local jobsite_meta = minetest.get_meta(jobsite)
-		jobsite_meta:set_string("villager", nil)
-		jobsite_meta:set_string("infotext", nil)
+		jobsite_meta:set_string("villager", "")
+		jobsite_meta:set_string("infotext", "")
 	end
 
 	if cmi_cause and cmi_cause.puncher then

@@ -552,8 +552,8 @@ function mobs_mc.villager_mob:validate_jobsite()
 		local resettle = vector.distance(self.object:get_pos(),self._jobsite) > RESETTLE_DISTANCE
 		if resettle then
 			local m = minetest.get_meta(self._jobsite)
-			m:set_string("villager", nil)
-			m:set_string("infotext", nil)
+			m:set_string("villager", "")
+			m:set_string("infotext", "")
 			self:remove_job()
 			self._bell = nil
 			return false

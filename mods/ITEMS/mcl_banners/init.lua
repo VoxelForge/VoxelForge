@@ -508,7 +508,7 @@ for colorid, colortab in pairs(mcl_banners.colors) do
 				local banner_description = string.gsub(itemstack:get_definition().description, "White Banner", "Ominous Banner")
 				local description = mcl_banners.make_advanced_banner_description(banner_description, oban_layers)
 				stackmeta:set_string("description", description)
-				stackmeta:set_string("name", nil)
+				stackmeta:set_string("name", "")
 			end
 
 			-- Place the node!
