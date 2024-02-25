@@ -78,6 +78,13 @@ local function fish(itemstack, player, pointed_thing)
 	--Check for bobber if so handle.
 	if bobbers[player] then
 		local ent = bobbers[player]:get_luaentity()
+		if not ent then
+			if bobbers[player] and bobbers[player].remove then
+				bobbers[player]:remove()
+			end
+			bobbers[player] = nil
+			return
+		end
 		if ent._hooked and ent._hooked:get_pos() then
 			local hent = ent._hooked:get_luaentity()
 			if not ent._reeling and hent and hent._mcl_fishing_reelable then
@@ -252,15 +259,6 @@ function bobber_ENTITY:on_step(dtime)
 	end
 end
 
-	-- TODO: Destroy when hitting a solid node
-	--if self._lastpos.x~=nil then
-	--	if (def and def.walkable) or not def then
-			--self.object:remove()
-		--	return
-	--	end
-	--end
-	--self._lastpos={x=pos.x, y=pos.y, z=pos.z} -- Set lastpos-->Node will be added at last pos outside the node
-
 minetest.register_entity("mcl_fishing:bobber_entity", bobber_ENTITY)
 
 local flying_bobber_ENTITY={
@@ -313,13 +311,16 @@ local function flying_bobber_on_step(self, dtime)
 	-- Destroy when hitting a solid node
 	if self._lastpos.x~=nil then
 		if (def and (def.walkable or def.liquidtype == "flowing" or def.liquidtype == "source")) or not def then
-			bobbers[player] = minetest.add_entity(self._lastpos, "mcl_fishing:bobber_entity")
-			local ent = bobbers[player]:get_luaentity()
-			if ent then
-				ent.player = self._thrower
-				self.object:remove()
-				return
+			if minetest.get_item_group(node.name, "water") > 0 then
+				bobbers[player] = minetest.add_entity(self._lastpos, "mcl_fishing:bobber_entity")
+				local ent = bobbers[player]:get_luaentity()
+				if ent then
+					ent.player = self._thrower
+					self.object:remove()
+					return
+				end
 			end
+			bobbers[player] = nil
 		end
 	end
 	self._lastpos={x=pos.x, y=pos.y, z=pos.z} -- Set lastpos-->Node will be added at last pos outside the node
