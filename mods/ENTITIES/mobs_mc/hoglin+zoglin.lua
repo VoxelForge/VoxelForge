@@ -43,6 +43,17 @@ local hoglin = {
 	run_velocity = 1.3, -- ( was 2.8 )  < 2.4 is slow and 2.6 < is fast
 	retaliates = true,
 	group_attack = true,
+
+	runaway_from = {
+		"mcl_crimson:warped_fungus",
+		"mcl_flowerpots:flower_pot_warped_fungus",
+		"mcl_beds:respawn_anchor",
+		"mcl_beds:respawn_anchor_charged_1",
+		"mcl_beds:respawn_anchor_charged_2",
+		"mcl_beds:respawn_anchor_charged_3",
+		"mcl_beds:respawn_anchor_charged_4",
+	},
+	follow = {"mcl_crimson:crimson_fungus"},
 	drops = {
 		{
 			name = "mobs_mcitems:leather",
@@ -89,11 +100,24 @@ local hoglin = {
 			mcl_util.replace_mob(self.object, "mobs_mc:zoglin")
 		end
 	end,
+	on_rightclick = function(self, clicker)
+		if self:feed_tame(clicker, 1, true, false) then return end
+	end,
 	attack_animals = true,
 }
-
 mcl_mobs.register_mob("mobs_mc:hoglin", hoglin)
-
+--[[
+hoglin.on_breed = function(parent1, parent2)
+	local pos = parent1.object:get_pos()
+	local child = mcl_mobs.spawn_child(pos, parent1.name)
+	if child then
+		local ent_c = child:get_luaentity()
+		-- ent_c.tamed = true
+		ent_c.owner = parent1.owner
+		return false
+	end
+end
+--]]
 mcl_mobs.register_mob("mobs_mc:zoglin",table.merge(hoglin,{
 	description = S("Zoglin"),
 	fire_resistant = 1,
