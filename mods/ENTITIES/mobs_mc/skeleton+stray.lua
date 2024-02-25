@@ -48,6 +48,7 @@ local skeleton = {
 		damage = "mobs_mc_skeleton_hurt",
 		distance = 16,
 	},
+	runaway_from = {"mobs_mc:wolf"},
 	damage = 2,
 	reach = 2,
 	drops = {

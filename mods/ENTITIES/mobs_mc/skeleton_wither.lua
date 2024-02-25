@@ -44,6 +44,7 @@ mcl_mobs.register_mob("mobs_mc:witherskeleton", {
 	},
 	walk_velocity = 1,
 	run_velocity = 1.3,
+	runaway_from = {"mobs_mc:wolf"},
 	damage = 7,
 	reach = 2,
 	drops = {

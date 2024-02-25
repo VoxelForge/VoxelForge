@@ -98,7 +98,15 @@ local wolf = {
 	jump = true,
 	attacks_monsters = true,
 	attack_animals = true,
-	specific_attack = { "player", "mobs_mc:sheep", "mobs_mc:skeleton", "mobs_mc:rabbit" },
+	specific_attack = {
+		"player",
+		"mobs_mc:sheep",
+		"mobs_mc:rabbit",
+		"mobs_mc:skeleton",
+		"mobs_mc:stray",
+		"mobs_mc:witherskeleton",
+	},
+	avoid_from = { "mobs_mc:llama" },
 }
 
 mcl_mobs.register_mob("mobs_mc:wolf", wolf)
