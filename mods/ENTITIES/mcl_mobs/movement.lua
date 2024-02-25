@@ -468,6 +468,80 @@ function mob_class:do_jump()
 	return false
 end
 
+local function in_list(list, what)
+	return type(list) == "table" and table.indexof(list, what) ~= -1
+end
+
+function mob_class:is_object_in_view(object_list, object_range, node_range, turn_around)
+	local s = self.object:get_pos()
+	local min_dist = object_range + 1
+	local objs = minetest.get_objects_inside_radius(s, object_range)
+	local object_pos = nil
+
+	for n = 1, #objs do
+		local name = ""
+		local object = objs[n]
+
+		if object:is_player() then
+			if not (mcl_mobs.invis[ object:get_player_name() ]
+			or self.owner == object:get_player_name()
+			or (not self:object_in_range(object))) then
+				name = "player"
+				if not (name ~= self.name
+				and in_list(object_list, name)) then
+					local item = object:get_wielded_item()
+					name = item:get_name() or ""
+				end
+			end
+		else
+			local obj = object:get_luaentity()
+
+			if obj then
+				object = obj.object
+				name = obj.name or ""
+			end
+		end
+
+		-- find specific mob to avoid or runaway from
+		if name ~= "" and name ~= self.name
+		and in_list(object_list, name) then
+
+			local p = object:get_pos()
+			local dist = vector.distance(p, s)
+
+			-- choose closest player/mob to avoid or runaway from
+			if dist < min_dist
+			-- aim higher to make looking up hills more realistic
+			and self:line_of_sight(vector.offset(s, 0,1,0), vector.offset(p, 0,1,0)) == true then
+				min_dist = dist
+				object_pos = p
+			end
+		end
+	end
+
+	if not object_pos then
+
+		-- find specific node to avoid or runaway from
+		local p = minetest.find_node_near(s, node_range, object_list, true)
+		local dist = p and vector.distance(p, s)
+		if dist and dist < min_dist
+		and self:line_of_sight(s, p) == true then
+			object_pos = p
+		end
+	end
+
+	if object_pos and turn_around then
+
+		local vec = vector.subtract(object_pos, s)
+		local yaw = (atan(vec.z / vec.x) + 3 *math.pi/ 2) - self.rotate
+		if object_pos.x > s.x then yaw = yaw + math.pi end
+
+		self:set_yaw(yaw, 4)
+	end
+
+	return object_pos ~= nil
+end
+
 -- should mob follow what I'm holding ?
 function mob_class:follow_holding(clicker)
 	if self.nofollow then return false end
@@ -485,14 +559,8 @@ function mob_class:follow_holding(clicker)
 		return true
 
 	-- multiple items
-	elseif t == "table" then
-
-		for no = 1, #self.follow do
-
-			if self.follow[no] == item:get_name() then
-				return true
-			end
-		end
+	elseif t == "table" and in_list(self.follow, item:get_name()) then
+		return true
 	end
 
 	return false
@@ -552,100 +620,13 @@ function mob_class:replace(pos)
 	end
 end
 
--- specific runaway
-local specific_runaway = function(list, what)
-	-- found entity on list to attack?
-	for no = 1, #list do
-
-		if list[no] == what then
-			return true
-		end
-	end
-
-	return false
-end
-
-
 -- find someone to runaway from
 function mob_class:check_runaway_from()
 	if not self.runaway_from and self.state ~= "flop" then
 		return
 	end
-	if type(self.runaway_from) ~= "table" then
-		return
-	end
-
-	local s = self.object:get_pos()
-	local min_dist = self.view_range + 1
-	local objs = minetest.get_objects_inside_radius(s, self.view_range)
-	local runaway_pos = nil
-
-	for n = 1, #objs do
-		local name = ""
-		local player
-
-		if objs[n]:is_player() then
-
-			if not (mcl_mobs.invis[ objs[n]:get_player_name() ]
-			or self.owner == objs[n]:get_player_name()
-			or (not self:object_in_range(objs[n]))) then
-				player = objs[n]
-				name = "player"
-				if not (name ~= self.name
-				and specific_runaway(self.runaway_from, name)) then
-					local item = player:get_wielded_item()
-					name = item:get_name() or ""
-				end
-			end
-		else
-			local obj = objs[n]:get_luaentity()
-
-			if obj then
-				player = obj.object
-				name = obj.name or ""
-			end
-		end
-
-		-- find specific mob to runaway from
-		if name ~= "" and name ~= self.name
-		and specific_runaway(self.runaway_from, name) then
-
-			local p = player:get_pos()
-			local dist = vector.distance(p, s)
-
-			-- choose closest player/mpb to runaway from
-			if dist < min_dist
-			-- aim higher to make looking up hills more realistic
-			and self:line_of_sight(vector.offset(s, 0,1,0), vector.offset(p, 0,1,0), 2) == true then
-				min_dist = dist
-				runaway_pos = p
-			end
-		end
-	end
-
-	if not runaway_pos then
-
-		-- find specific node to runaway from
-		local p = minetest.find_node_near(s, self.view_range, self.runaway_from, true)
-		local dist = p and vector.distance(p, s)
-		if dist and dist < min_dist
-		--and minetest.line_of_sight(s, p) == true then
-		and self:line_of_sight(s, p) == true then
-			runaway_pos = p
-		end
-	end
-
-	if runaway_pos then
-
-		local vec = vector.subtract(runaway_pos, s)
-		local yaw = (atan(vec.z / vec.x) + 3 *math.pi/ 2) - self.rotate
-
-		if runaway_pos.x > s.x then
-			yaw = yaw + math.pi
-		end
-
-		self:set_yaw( yaw, 4)
-		self:set_state("runaway")
+	if self:is_object_in_view(self.runaway_from, self.view_range, self.view_range / 2, true) then
+		self.state = "runaway"
 		self.runaway_timer = 3
 		self.following = nil
 	end
@@ -899,23 +880,19 @@ function mob_class:do_states_walk()
 
 				end
 			end
-
-			-- A danger is near but mob is not inside
-		else
-
-			-- Randomly turn
-			if math.random(1, 100) <= 30 then
-				yaw = yaw + math.random(-0.5, 0.5)
-				yaw = self:set_yaw( yaw, 8)
-			end
 		end
+	end
 
-		self:set_yaw( yaw, 8)
-
+	if not is_in_danger then
+		local distance = self.avoid_distance or self.view_range / 2
+		-- find specific node to avoid
+		if self:is_object_in_view(self.avoid_nodes, distance, distance, true) then
+			self:set_velocity(self.walk_velocity)
 		-- otherwise randomly turn
-	elseif math.random(1, 100) <= 30 then
-		yaw = yaw + math.random(-0.5, 0.5)
-		self:set_yaw( yaw, 8)
+		elseif math.random(1, 100) <= 30 then
+			yaw = yaw + math.random(-0.5, 0.5)
+			self:set_yaw(yaw, 8)
+		end
 	end
 
 	-- stand for great fall or danger or fence in front
@@ -934,7 +911,6 @@ function mob_class:do_states_walk()
 			facing_solid = true
 		end
 	end
-
 	if self.facing_fence == true
 			or cliff_or_danger
 			or facing_solid

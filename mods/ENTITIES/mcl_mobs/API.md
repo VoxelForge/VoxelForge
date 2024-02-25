@@ -185,6 +185,9 @@ Fields not mentioned in this document can also be added as custom fields for the
 	runaway_from = { "player", "mobs_mc:cat" },
 	-- contains a table with mob/node names to run away from, add "player" to list to runaway from player also.
 
+	avoid_from = {},
+	-- contains a table with mob/node names to avoid from, add "player" to list to avoid from player (wielding) also.
+
 	pathfinding = 1,
 	-- set to 1 for mobs to use pathfinder feature to locate player, set to 2 so they can build/break also (only works with dogfight attack and when 'mobs_griefing' in minetest.conf is not false).
 
@@ -495,6 +498,13 @@ These functions can be called from the entity as well as overwritten on a per-mo
 	* State logic for the "runaway" state
  * mob:check_smooth_rotation(dtime)
 	* Turn slightly more towards selected target yaw for smooth rotation
+ * mob:is_object_in_view(object_list, object_range, node_range, turn_around)
+		Returns 'true' if an object (mob or node) is in the field of view.
+
+			'object_list'		list of mob and/or node names
+			'object_range'		maximum distance to a mob from object_list
+			'node_range'            maximum distance to a node from object_list
+			'turn_around'           true or false
 
 #### Physics
  * mob:player_in_active_range()
