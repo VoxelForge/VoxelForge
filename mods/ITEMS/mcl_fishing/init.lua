@@ -122,9 +122,8 @@ local function fish(itemstack, player, pointed_thing)
 			else
 				minetest.add_item(pos, item)
 			end
-			if mcl_experience.throw_xp then
-				minetest.after(0.7, mcl_experience.throw_xp, pos, math.random(1,6))
-			end
+
+			mcl_experience.throw_xp(pos, math.random(1,6))
 
 			if not minetest.is_creative_enabled(player:get_player_name()) then
 				local idef = itemstack:get_definition()
