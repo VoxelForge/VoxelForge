@@ -264,8 +264,8 @@ function mcl_villages.paths_new(blockseed, biome_name)
 	end
 
 	-- Use the same stair and slab throughout the entire village
-	local stair = '"mcl_stairs:stair_wood"'
-	local slab = '"mcl_stairs:slab_wood_top"'
+	local stair = '"mcl_stairs:stair_oak"'
+	local slab = '"mcl_stairs:slab_oak_top"'
 
 	-- Change stair and slab for biome
 	if mcl_villages.biome_map[biome_name] and mcl_villages.material_substitions[mcl_villages.biome_map[biome_name]] then
