@@ -61,6 +61,17 @@ local bobber_ENTITY={
 	objtype="fishing",
 }
 
+local function remove_bobber(player, object)
+	if player and bobbers[player] and bobbers[player].remove then
+		bobbers[player]:remove()
+		bobbers[player] = nil
+		return
+	end
+	if object and object.remove then
+		object:remove()
+	end
+end
+
 local function fish(itemstack, player, pointed_thing)
 	if pointed_thing and pointed_thing.type == "node" then
 		-- Call on_rightclick if the pointed node defines it
@@ -79,10 +90,7 @@ local function fish(itemstack, player, pointed_thing)
 	if bobbers[player] then
 		local ent = bobbers[player]:get_luaentity()
 		if not ent then
-			if bobbers[player] and bobbers[player].remove then
-				bobbers[player]:remove()
-			end
-			bobbers[player] = nil
+			remove_bobber(player)
 			return
 		end
 		if ent._hooked and ent._hooked:get_pos() then
@@ -91,8 +99,7 @@ local function fish(itemstack, player, pointed_thing)
 				ent.timer = 0 --restart timer for reeling time limit
 				ent._reeling = true
 			else
-				ent.object:remove()
-				bobbers[player] = nil
+				remove_bobber(player)
 			end
 			return
 		end
@@ -155,8 +162,7 @@ local function fish(itemstack, player, pointed_thing)
 			end
 		end
 		--Destroy bobber.
-		ent.object:remove()
-		bobbers[player] = nil
+		remove_bobber(player)
 		minetest.sound_play("reel", {object=player, gain=0.1, max_hear_distance=16}, true)
 		return itemstack
 	--If no bobber or flying_bobber exists then throw bobber.
@@ -176,10 +182,7 @@ function bobber_ENTITY:check_player()
 			return true
 		end
 	end
-	if player then
-		bobbers[player] = nil
-	end
-	self.object:remove()
+	remove_bobber(player, self.object)
 end
 
 -- Movement function of bobber
@@ -197,8 +200,7 @@ function bobber_ENTITY:on_step(dtime)
 	if self._hooked and self._reeling then
 		local dst = vector.distance(player:get_pos(), self.object:get_pos())
 		if dst < 0.3 or self.timer > 10 then
-			self.object:remove()
-			bobbers[player] = nil
+			remove_bobber(player, self.object)
 			return
 		end
 		self.object:add_velocity(vector.direction(self.object:get_pos(), player:get_pos()) * dst / 10)
@@ -288,8 +290,7 @@ local function flying_bobber_on_step(self, dtime)
 	local player = minetest.get_player_by_name(self._thrower)
 
 	if not player or not player:get_pos() or vector.distance(player:get_pos(), self.object:get_pos()) > 33 then
-		bobbers[player] = nil
-		self.object:remove()
+		remove_bobber(player, self.object)
 		return
 	end
 
@@ -320,7 +321,7 @@ local function flying_bobber_on_step(self, dtime)
 					return
 				end
 			end
-			bobbers[player] = nil
+			remove_bobber(player, self.object)
 		end
 	end
 	self._lastpos={x=pos.x, y=pos.y, z=pos.z} -- Set lastpos-->Node will be added at last pos outside the node
@@ -332,15 +333,8 @@ minetest.register_entity("mcl_fishing:flying_bobber_entity", flying_bobber_ENTIT
 
 mcl_throwing.register_throwable_object("mcl_fishing:flying_bobber", "mcl_fishing:flying_bobber_entity", 5)
 
--- If player dies, remove bobber.
-minetest.register_on_dieplayer(function(player)
-	if bobbers[player] then
-		bobbers[player]:remove()
-		bobbers[player] = nil
-	end
-end)
-
-minetest.register_on_leaveplayer(function(player) bobbers[player] = nil end)
+minetest.register_on_dieplayer(remove_bobber)
+minetest.register_on_leaveplayer(remove_bobber)
 
 -- Fishing Rod
 minetest.register_tool("mcl_fishing:fishing_rod", {
