@@ -147,24 +147,25 @@ end
 -- returns true if any node was set and lvm_used otherwise
 local function set_layers(data, area, content_id, check, min, max, minp, maxp, lvm_used, pr)
 	if (maxp.y >= min and minp.y <= max) then
+		for z =minp.z, maxp.z do
 		for y = math.max(min, minp.y), math.min(max, maxp.y) do
+			local vi = area:index(minp.x, y, z)
 			for x = minp.x, maxp.x do
-				for z = minp.z, maxp.z do
-					local p_pos = area:index(x, y, z)
-					if check then
-						if type(check) == "function" and check({x=x,y=y,z=z}, data[p_pos], pr) then
-							data[p_pos] = content_id
-							lvm_used = true
-						elseif check == data[p_pos] then
-							data[p_pos] = content_id
-							lvm_used = true
-						end
-					else
-						data[p_pos] = content_id
+				if check then
+					if type(check) == "function" and check({x=x,y=y,z=z}, data[vi], pr) then
+						data[vi] = content_id
+						lvm_used = true
+					elseif check == data[vi] then
+						data[vi] = content_id
 						lvm_used = true
 					end
+				else
+					data[vi] = content_id
+					lvm_used = true
 				end
+				vi = vi + 1
 			end
+		end
 		end
 	end
 	return lvm_used
@@ -286,7 +287,7 @@ local function end_basic(vm, data, data2, emin, emax, area, minp, maxp, blocksee
 end
 
 
-mcl_mapgen_core.register_generator("world_structure", world_structure, nil, 1, true)
+mcl_mapgen_core.register_generator("world_structure", world_structure, nil, 1, false)
 
 if mg_name ~= "singlenode" then
 	mcl_mapgen_core.register_generator("end_fixes", end_basic,nil, 9999, false)
