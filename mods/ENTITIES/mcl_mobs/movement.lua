@@ -554,15 +554,6 @@ end
 
 -- specific runaway
 local specific_runaway = function(list, what)
-	if type(list) ~= "table" then
-		list = {}
-	end
-
-	-- no list so do not run
-	if list == nil then
-		return false
-	end
-
 	-- found entity on list to attack?
 	for no = 1, #list do
 
@@ -580,28 +571,34 @@ function mob_class:check_runaway_from()
 	if not self.runaway_from and self.state ~= "flop" then
 		return
 	end
+	if type(self.runaway_from) ~= "table" then
+		return
+	end
 
 	local s = self.object:get_pos()
-	local p, sp, dist
-	local player, obj, min_player
-	local name = ""
 	local min_dist = self.view_range + 1
 	local objs = minetest.get_objects_inside_radius(s, self.view_range)
+	local runaway_pos = nil
 
 	for n = 1, #objs do
+		local name = ""
+		local player
 
 		if objs[n]:is_player() then
 
-			if mcl_mobs.invis[ objs[n]:get_player_name() ]
+			if not (mcl_mobs.invis[ objs[n]:get_player_name() ]
 			or self.owner == objs[n]:get_player_name()
-			or (not self:object_in_range(objs[n])) then
-				name = ""
-			else
+			or (not self:object_in_range(objs[n]))) then
 				player = objs[n]
 				name = "player"
+				if not (name ~= self.name
+				and specific_runaway(self.runaway_from, name)) then
+					local item = player:get_wielded_item()
+					name = item:get_name() or ""
+				end
 			end
 		else
-			obj = objs[n]:get_luaentity()
+			local obj = objs[n]:get_luaentity()
 
 			if obj then
 				player = obj.object
@@ -613,37 +610,37 @@ function mob_class:check_runaway_from()
 		if name ~= "" and name ~= self.name
 		and specific_runaway(self.runaway_from, name) then
 
-			p = player:get_pos()
-			sp = s
-
-			-- aim higher to make looking up hills more realistic
-			p.y = p.y + 1
-			sp.y = sp.y + 1
-
-			dist = vector.distance(p, s)
-
+			local p = player:get_pos()
+			local dist = vector.distance(p, s)
 
 			-- choose closest player/mpb to runaway from
 			if dist < min_dist
-			and self:line_of_sight(sp, p, 2) == true then
+			-- aim higher to make looking up hills more realistic
+			and self:line_of_sight(vector.offset(s, 0,1,0), vector.offset(p, 0,1,0), 2) == true then
 				min_dist = dist
-				min_player = player
+				runaway_pos = p
 			end
 		end
 	end
 
-	if min_player then
+	if not runaway_pos then
 
-		local lp = player:get_pos()
-		local vec = {
-			x = lp.x - s.x,
-			y = lp.y - s.y,
-			z = lp.z - s.z
-		}
+		-- find specific node to runaway from
+		local p = minetest.find_node_near(s, self.view_range, self.runaway_from, true)
+		local dist = p and vector.distance(p, s)
+		if dist and dist < min_dist
+		--and minetest.line_of_sight(s, p) == true then
+		and self:line_of_sight(s, p) == true then
+			runaway_pos = p
+		end
+	end
 
+	if runaway_pos then
+
+		local vec = vector.subtract(runaway_pos, s)
 		local yaw = (atan(vec.z / vec.x) + 3 *math.pi/ 2) - self.rotate
 
-		if lp.x > s.x then
+		if runaway_pos.x > s.x then
 			yaw = yaw + math.pi
 		end
 

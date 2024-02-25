@@ -183,7 +183,7 @@ Fields not mentioned in this document can also be added as custom fields for the
 	--has a table of entity names that mob can also attack e.g. {"player", "mobs_animal:chicken"}.
 
 	runaway_from = { "player", "mobs_mc:cat" },
-	-- contains a table with mob names to run away from, add "player" to list to runaway from player also.
+	-- contains a table with mob/node names to run away from, add "player" to list to runaway from player also.
 
 	pathfinding = 1,
 	-- set to 1 for mobs to use pathfinder feature to locate player, set to 2 so they can build/break also (only works with dogfight attack and when 'mobs_griefing' in minetest.conf is not false).
