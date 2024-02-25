@@ -180,17 +180,17 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "mcl_dyes:grey",
+	output = "mcl_dyes:silver",
 	recipe = {{"mcl_flowers:azure_bluet"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dyes:grey",
+	output = "mcl_dyes:silver",
 	recipe = {{"mcl_flowers:oxeye_daisy"}},
 })
 
 minetest.register_craft({
-	output = "mcl_dyes:grey",
+	output = "mcl_dyes:silver",
 	recipe = {{"mcl_flowers:tulip_white"}},
 })
 
