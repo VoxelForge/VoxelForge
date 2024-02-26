@@ -266,6 +266,7 @@ local shield_hud = {}
 
 local function remove_shield_hud(player)
 	set_interact(player, true)
+	playerphysics.remove_physics_factor(player, "speed", "shield_speed")
 
 	if not shield_hud[player] then return end --this function takes a long time. only run it when necessary
 	player:hud_remove(shield_hud[player])
@@ -277,8 +278,6 @@ local function remove_shield_hud(player)
 	if not hf.wielditem then
 		player:hud_set_flags({wielditem = true})
 	end
-
-	playerphysics.remove_physics_factor(player, "speed", "shield_speed")
 end
 
 local function add_shield_entity(player, i)
@@ -616,5 +615,4 @@ minetest.register_on_joinplayer(function(player)
 		cooldown = 0,
 	}
 	remove_shield_hud(player)
-	playerphysics.remove_physics_factor(player, "speed", "shield_speed")
 end)
