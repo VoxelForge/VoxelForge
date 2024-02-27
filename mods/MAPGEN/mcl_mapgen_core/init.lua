@@ -100,8 +100,7 @@ minetest.set_mapgen_setting("mg_flags", mg_flags_str, true)
 
 local bedrock_check
 if mcl_vars.mg_bedrock_is_rough then
-	function bedrock_check(pos, _, pr)
-		local y = pos.y
+	function bedrock_check(_, y, _, _, pr)
 		-- Bedrock layers with increasing levels of roughness, until a perfecly flat bedrock later at the bottom layer
 		-- This code assumes a bedrock height of 5 layers.
 
@@ -152,7 +151,7 @@ local function set_layers(data, area, content_id, check, min, max, minp, maxp, l
 			local vi = area:index(minp.x, y, z)
 			for x = minp.x, maxp.x do
 				if check then
-					if type(check) == "function" and check({x=x,y=y,z=z}, data[vi], pr) then
+					if type(check) == "function" and check(x, y, z, data[vi], pr) then
 						data[vi] = content_id
 						lvm_used = true
 					elseif check == data[vi] then
