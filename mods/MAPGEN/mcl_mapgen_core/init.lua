@@ -226,19 +226,14 @@ local function world_structure(vm, data, data2, emin, emax, area, minp, maxp, bl
 end
 
 
-local biomecolor_cids = {}
 local biome_id_p2 = {}
+local biomecolor_nodes = {}
 
 minetest.register_on_mods_loaded(function()
-	local cn = {}
-
 	for n, d in pairs(minetest.registered_nodes) do
 		if minetest.get_item_group(n, "biomecolor") > 0 then
-			cn[n] = true
+			table.insert(biomecolor_nodes, n)
 		end
-	end
-	for k, v in pairs(cn) do
-		biomecolor_cids[minetest.get_content_id(k)] = v
 	end
 	for k, v in pairs(minetest.registered_biomes) do
 		biome_id_p2[minetest.get_biome_id(k)] = v._mcl_palette_index or 255
@@ -246,22 +241,18 @@ minetest.register_on_mods_loaded(function()
 end)
 
 local function set_param2_nodes(vm, data, data2, emin, emax, area, minp, maxp, blockseed)
+	if emin.y > mcl_vars.mg_overworld_max or emax.y < mcl_vars.mg_overworld_min then return end
+	local biomemap = minetest.get_mapgen_object("biomemap")
+	if not biomemap then return end
 	local lvm_used = false
-
-	if emin.y <= mcl_vars.mg_overworld_max and emax.y >= mcl_vars.mg_overworld_min then
-		for z = emin.z, emax.z do
-		for y = emin.y, emax.y do
-			local vi = area:index(emin.x, y, z)
-			for x = emin.x, emax.x do
-				local biomecolor = biomecolor_cids[data[vi]]
-				if biomecolor then
-					-- don't create a vector table here; makes this measurably slower!
-					data2[vi] = math.floor(data2[vi] / 32) * 32 + biome_id_p2[minetest.get_biome_data({x = x, y = y, z = z}).biome]
-					lvm_used = true
-				end
-				vi = vi + 1
-			end
-		end
+	local aream = VoxelArea:new({MinEdge={x=minp.x, y=0, z=minp.z}, MaxEdge={x=maxp.x, y=0, z=maxp.z}})
+	local nodes = minetest.find_nodes_in_area(minp, maxp, biomecolor_nodes)
+	for _, n in pairs(nodes) do
+		local p_pos = area:index(n.x, n.y, n.z)
+		local p2 = biome_id_p2[biomemap[aream:index(n.x, 0, n.z)]]
+		if p2 then
+			data2[p_pos] = math.floor(data2[p_pos] / 32) * 32 + p2
+			lvm_used = true
 		end
 	end
 	return lvm_used
