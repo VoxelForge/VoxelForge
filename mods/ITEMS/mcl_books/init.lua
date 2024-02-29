@@ -179,6 +179,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 			local text = cap_text_length(get_text(book), max_text_length)
 			meta:set_string("title", title)
 			meta:set_string("author", name)
+			meta:set_int("date", os.time())
 			meta:set_string("text", text)
 			meta:set_string("description", make_description(title, name, 0))
 
@@ -319,8 +320,10 @@ minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv
 		local imeta = itemstack:get_meta()
 		local title = cap_text_length(ometa:get_string("title"), max_title_length)
 		local author = ometa:get_string("author")
+		local date = ometa:get_int("date")
 		imeta:set_string("title", title)
 		imeta:set_string("author", author)
+		imeta:set_int("date", date)
 		imeta:set_string("text", cap_text_length(text, max_text_length))
 
 		-- Increase book generation and update description
