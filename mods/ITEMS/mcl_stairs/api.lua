@@ -443,8 +443,8 @@ function mcl_stairs.register_stair(subname, ...)
 			tiles = stairdef.tiles or ndef.tiles,
 			description = stairdef.description,
 			sounds = ndef.sounds,
-			blast_resistance = ndef.blast_resistance,
-			hardness = ndef.hardness,
+			blast_resistance = ndef._mcl_blast_resistance,
+			hardness = ndef._mcl_hardness,
 			overrides = stairdef.overrides,
 		})
 	else
@@ -474,8 +474,8 @@ function mcl_stairs.register_slab(subname, ...)
 			description = stairdef.description,
 			double_description = S("Double @1", stairdef.description),
 			sounds = ndef.sounds,
-			blast_resistance = ndef.blast_resistance,
-			hardness = ndef.hardness,
+			blast_resistance = ndef._mcl_blast_resistance,
+			hardness = ndef._mcl_hardness,
 			overrides = stairdef.overrides,
 		})
 	else
