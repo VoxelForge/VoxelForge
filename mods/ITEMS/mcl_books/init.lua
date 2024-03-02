@@ -22,13 +22,11 @@ minetest.register_craftitem("mcl_books:book", {
 	_mcl_enchanting_enchanted_tool = "mcl_enchanting:book_enchanted",
 })
 
-if minetest.get_modpath("mcl_core") and minetest.get_modpath("mcl_mobitems") then
-	minetest.register_craft({
-		type = "shapeless",
-		output = "mcl_books:book",
-		recipe = { "mcl_core:paper", "mcl_core:paper", "mcl_core:paper", "mcl_mobitems:leather", }
-	})
-end
+minetest.register_craft({
+	type = "shapeless",
+	output = "mcl_books:book",
+	recipe = { "mcl_core:paper", "mcl_core:paper", "mcl_core:paper", "mcl_mobitems:leather", }
+})
 
 -- Get the included text out of the book item
 -- itemstack: Book item
@@ -290,11 +288,6 @@ minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv
 	craft_inv:set_stack("craft", index, original)
 end)
 
-local wood_sound
-if minetest.get_modpath("mcl_sounds") then
-	wood_sound = mcl_sounds.node_sound_wood_defaults()
-end
-
 -- Bookshelf GUI
 local drop_content = mcl_util.drop_items_from_meta_container("main")
 
@@ -386,7 +379,7 @@ minetest.register_node("mcl_books:bookshelf", {
 		container = 1
 	},
 	drop = "mcl_books:book 3",
-	sounds = wood_sound,
+	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_blast_resistance = 1.5,
 	_mcl_hardness = 1.5,
 	_mcl_silk_touch_drop = true,
