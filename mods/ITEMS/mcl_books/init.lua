@@ -222,26 +222,16 @@ minetest.register_craftitem("mcl_books:written_book", {
 	on_secondary_use = read
 })
 
--- Copy books
+--This adds 8 recipes containing 1 written book and 1-8 writeable book
+for i = 1, 8 do
+	local rc = {}
+	table.insert(rc, "mcl_books:written_book")
+	for j = 1, i do	table.insert(rc, "mcl_books:writable_book") end
 
--- This adds 8 recipes
-local baq = "mcl_books:writable_book"
-local wb = "mcl_books:written_book"
-local recipes = {
-	{ wb,  baq },
-	{ baq, baq, wb },
-	{ baq, baq, wb,  baq },
-	{ baq, baq, baq, baq, wb },
-	{ baq, baq, baq, baq, wb, baq },
-	{ baq, baq, baq, baq, wb, baq, baq },
-	{ baq, baq, baq, baq, wb, baq, baq, baq },
-	{ baq, baq, baq, baq, wb, baq, baq, baq, baq },
-}
-for r = #recipes, 1, -1 do
 	minetest.register_craft({
 		type = "shapeless",
-		output = "mcl_books:written_book " .. r,
-		recipe = recipes[r],
+		output = "mcl_books:written_book " .. i,
+		recipe = rc,
 	})
 end
 
