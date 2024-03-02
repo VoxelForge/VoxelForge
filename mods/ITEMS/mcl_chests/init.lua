@@ -104,11 +104,13 @@ minetest.register_entity("mcl_chests:chest", {
 		self.sound_prefix = sound_prefix
 		self.animation_type = animation_type
 		local obj = self.object
+		obj:set_armor_groups({ immortal = 1 })
 		obj:set_properties({
 			textures = textures,
 			mesh = mesh_prefix .. (double and "_double" or "") .. ".b3d",
 		})
 		self:set_yaw(dir)
+		self.players = {}
 	end,
 
 	reinitialize = function(self, node_name)
@@ -131,9 +133,12 @@ minetest.register_entity("mcl_chests:chest", {
 		return true
 	end,
 
-	on_activate = function(self)
-		self.object:set_armor_groups({ immortal = 1 })
-		self.players = {}
+	on_activate = function(self, initialization_data)
+		if initialization_data:find("^return") then
+			self:initialize(unpack(minetest.deserialize(initialization_data)))
+		else
+			minetest.log("warning", debug.traceback("[mcl_chests] on_activate called without initialization_data"))
+		end
 	end,
 
 	on_step = function(self, dtime)
@@ -169,11 +174,13 @@ end
 local function create_entity(pos, node_name, textures, param2, double, sound_prefix, mesh_prefix, animation_type, dir, entity_pos)
 	if animate_chests or double then
 		dir, entity_pos = get_entity_info(pos, param2, double, dir, entity_pos)
-		local obj = minetest.add_entity(entity_pos, "mcl_chests:chest")
+		local initialization_data = minetest.serialize({pos, node_name, textures, dir, double, sound_prefix, mesh_prefix, animation_type})
+		local obj = minetest.add_entity(entity_pos, "mcl_chests:chest", initialization_data)
 		if obj and obj:get_pos() then
 			local luaentity = obj:get_luaentity()
-			luaentity:initialize(pos, node_name, textures, dir, double, sound_prefix, mesh_prefix, animation_type)
 			return luaentity
+		else
+			minetest.log("warning", "[mcl_chests] Failed to create entity at " .. (entity_pos and minetest.pos_to_string(entity_pos, 1) or "nil"))
 		end
 	end
 end
