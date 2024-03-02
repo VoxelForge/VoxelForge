@@ -235,47 +235,7 @@ for i = 1, 8 do
 	})
 end
 
-minetest.register_craft_predict(function(itemstack, player, old_craft_grid, craft_inv)
-	if itemstack:get_name() ~= "mcl_books:written_book" then
-		return
-	end
-
-	local original
-	for i = 1, player:get_inventory():get_size("craft") do
-		if old_craft_grid[i]:get_name() == "mcl_books:written_book" then
-			original = old_craft_grid[i]
-		end
-	end
-	if not original then
-		return
-	end
-
-	local ometa = original:get_meta()
-	local generation = ometa:get_int("generation")
-
-	-- Check generation, don't allow crafting with copy of copy of book
-	if generation >= 2 then
-		return ItemStack("")
-	else
-		-- Valid copy. Let's update the description field of the result item
-		-- so it is properly displayed in the crafting grid.
-		local imeta = itemstack:get_meta()
-		local title = cap_text_length(ometa:get_string("title"), max_title_length)
-		local author = ometa:get_string("author")
-
-		-- Increase book generation and update description
-		generation = generation + 1
-		if generation < 1 then
-			generation = 1
-		end
-
-		local desc = make_description(title, author, generation)
-		imeta:set_string("description", desc)
-		return itemstack
-	end
-end)
-
-minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv)
+local function craft_copy_book(itemstack, player, old_craft_grid, craft_inv)
 	if itemstack:get_name() ~= "mcl_books:written_book" then
 		return
 	end
@@ -308,12 +268,8 @@ minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv
 
 		-- Copy metadata
 		local imeta = itemstack:get_meta()
-		local title = cap_text_length(ometa:get_string("title"), max_title_length)
-		local author = ometa:get_string("author")
-		local date = ometa:get_int("date")
-		imeta:set_string("title", title)
-		imeta:set_string("author", author)
-		imeta:set_int("date", date)
+		imeta:from_table(ometa:to_table())
+		imeta:set_string("title", cap_text_length(ometa:get_string("title"), max_title_length))
 		imeta:set_string("text", cap_text_length(text, max_text_length))
 
 		-- Increase book generation and update description
@@ -322,12 +278,15 @@ minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv
 			generation = 1
 		end
 
-		local desc = make_description(title, author, generation)
-
-		imeta:set_string("description", desc)
+		imeta:set_string("description", make_description(ometa:get_string("title"), ometa:get_string("author"), generation))
 		imeta:set_int("generation", generation)
 	end
-	-- put the book with metadata back in the craft grid
+	return itemstack, original, index
+end
+minetest.register_craft_predict(craft_copy_book)
+
+minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv)
+	local _, original, index = craft_copy_book(itemstack, player, old_craft_grid, craft_inv)
 	craft_inv:set_stack("craft", index, original)
 end)
 
