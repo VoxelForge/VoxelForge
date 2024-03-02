@@ -155,14 +155,30 @@ function mcl_util.is_pointing_above_middle(pointer, pointed_thing)
 	then
 		return false
 	end
-	local p0 = pointed_thing.under
-	local p1 = pointed_thing.above
-	local finepos = minetest.pointed_thing_to_face_pos(pointer, pointed_thing).y % 1
 
-	return (
-		p0.y - 1 == p1.y or (finepos > 0 and finepos < 0.5)
-		or (finepos < -0.5 and finepos > -0.999999999)
-	)
+	local p1 = pointed_thing.above
+
+	-- this uses placer:get_look_dir() which is not quite right on touch
+	-- with disabled crosshair, but the shootline used on the client isn't
+	-- available to the server; therefore just check the general look
+	-- direction to make it somewhat controllable by touch users (even if
+	-- standing on the pointed node) without changing anything for crosshair
+	-- users
+	--
+	-- if looking at a side face we check whether player is looking more
+	-- than a little bit above the center (keeping default positioning if
+	-- looking more or less at the center of the node) of the pointed node
+	--
+	-- if looking at the top/bottom face never/always return true (this is
+	-- achieved by using y of pointed_thing.above for comparison; note that
+	-- under.y == above.y if looking at a side face)
+	--
+	-- also note that it is actually beneficial that the exact position of
+	-- the touch event is not used, allowing touch users to touch any part
+	-- of the node face
+	local fpos = minetest.pointed_thing_to_face_pos(pointer, pointed_thing).y - p1.y
+
+	return (fpos > 0.05)
 end
 
 -- Returns position of the neighbor of a double chest node
