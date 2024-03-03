@@ -3,13 +3,8 @@ local S = minetest.get_translator(minetest.get_current_modname())
 -- Core mcl_stairs API
 
 local function place_slab_normal(itemstack, placer, pointed_thing)
-	-- Use pointed node's on_rightclick function first, if present
-	local node = minetest.get_node(pointed_thing.under)
-	if placer and placer:is_player() and not placer:get_player_control().sneak then
-		if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-			return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
-		end
-	end
+	local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+	if rc then return rc end
 
 	local place = ItemStack(itemstack)
 	local origname = place:get_name()
@@ -28,13 +23,8 @@ local function place_slab_normal(itemstack, placer, pointed_thing)
 end
 
 local function place_stair(itemstack, placer, pointed_thing)
-	-- Use pointed node's on_rightclick function first, if present
-	local node = minetest.get_node(pointed_thing.under)
-	if placer and placer:is_player() and not placer:get_player_control().sneak then
-		if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-			return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
-		end
-	end
+	local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+	if rc then return rc end
 
 	local p1 = pointed_thing.above
 	local param2 = 0

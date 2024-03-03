@@ -48,15 +48,8 @@ end
 function return_on_use(def, effect, dur)
 	return function (itemstack, user, pointed_thing)
 		if pointed_thing.type == "node" then
-			if user and not user:get_player_control().sneak then
-				-- Use pointed node's on_rightclick function first, if present
-				local node = minetest.get_node(pointed_thing.under)
-				if user and not user:get_player_control().sneak then
-					if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-						return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, user, itemstack) or itemstack
-					end
-				end
-			end
+			local rc = mcl_util.call_on_rightclick(itemstack, user, pointed_thing)
+			if rc then return rc end
 		elseif pointed_thing.type == "object" then
 			return itemstack
 		end

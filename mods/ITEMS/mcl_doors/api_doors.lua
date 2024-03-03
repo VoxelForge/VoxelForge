@@ -116,10 +116,9 @@ function mcl_doors:register_door(name, def)
 			end
 			local ptu = pointed_thing.under
 			local nu = minetest.get_node(ptu)
-			-- Pointed thing's rightclick action takes precedence, unless player holds down the sneak key
-			if minetest.registered_nodes[nu.name] and minetest.registered_nodes[nu.name].on_rightclick and not placer:get_player_control().sneak then
-				return minetest.registered_nodes[nu.name].on_rightclick(ptu, nu, placer, itemstack)
-			end
+
+			local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+			if rc then return rc end
 
 			local pt
 			if minetest.registered_nodes[nu.name] and minetest.registered_nodes[nu.name].buildable_to then

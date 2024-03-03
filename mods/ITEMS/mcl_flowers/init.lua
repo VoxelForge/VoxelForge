@@ -527,6 +527,9 @@ minetest.register_node("mcl_flowers:waterlily", {
 			return itemstack
 		end
 
+		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		if rc then return rc end
+
 		local pos = pointed_thing.above
 		local node = minetest.get_node(pointed_thing.under)
 		local nodename = node.name
@@ -536,13 +539,6 @@ minetest.register_node("mcl_flowers:waterlily", {
 		local player_name = placer:get_player_name()
 
 		if def then
-			-- Use pointed node's on_rightclick function first, if present
-			if placer and not placer:get_player_control().sneak then
-				if def and def.on_rightclick then
-					return def.on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
-				end
-			end
-
 			if (pointed_thing.under.x == pointed_thing.above.x and pointed_thing.under.z == pointed_thing.above.z) and
 					((def.liquidtype == "source" and minetest.get_item_group(nodename, "water") > 0) or
 					(nodename == "mcl_core:ice") or

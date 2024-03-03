@@ -54,12 +54,8 @@ minetest.register_craftitem("mcl_potions:glass_bottle", {
 			local node = minetest.get_node(pointed_thing.under)
 			local def = minetest.registered_nodes[node.name]
 
-			-- Call on_rightclick if the pointed node defines it
-			if placer and not placer:get_player_control().sneak then
-				if def and def.on_rightclick then
-					return def.on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
-				end
-			end
+			local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+			if rc then return rc end
 
 			-- Try to fill glass bottle with water
 			local get_water = false
@@ -216,14 +212,9 @@ end
 local function water_bottle_on_place(itemstack, placer, pointed_thing)
 	if pointed_thing.type == "node" then
 		local node = minetest.get_node(pointed_thing.under)
-		local def = minetest.registered_nodes[node.name]
 
-		-- Call on_rightclick if the pointed node defines it
-		if placer and not placer:get_player_control().sneak then
-			if def and def.on_rightclick then
-				return def.on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
-			end
-		end
+		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		if rc then return rc end
 
 		local cauldron = nil
 		if itemstack:get_name() == "mcl_potions:water" then -- regular water

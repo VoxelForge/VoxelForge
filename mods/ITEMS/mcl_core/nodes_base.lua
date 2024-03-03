@@ -956,15 +956,9 @@ for i=1,8 do
 		local def = minetest.registered_nodes[minetest.get_node(pointed_thing.under).name]
 		local above = pointed_thing.above
 		local under = pointed_thing.under
-		local unode = minetest.get_node(under)
 
-		-- Check special rightclick action of pointed node
-		if def and def.on_rightclick then
-			if placer and placer:is_player() and not placer:get_player_control().sneak then
-				return def.on_rightclick(under, unode, placer, itemstack,
-					pointed_thing) or itemstack, false
-			end
-		end
+		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		if rc then return rc end
 
 		-- Get position where snow would be placed
 		local target

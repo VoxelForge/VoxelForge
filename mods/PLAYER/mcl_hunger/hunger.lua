@@ -4,15 +4,9 @@
 function minetest.do_item_eat(hp_change, replace_with_item, itemstack, user, pointed_thing)
 	if not user or not user.is_player or not user:is_player() or user.is_fake_player then return itemstack end
 
-	-- Call on_rightclick if the pointed node defines it
-	if pointed_thing.type == "node" then
-		local node = minetest.get_node(pointed_thing.under)
-		if user and not user:get_player_control().sneak then
-			if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-				return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, user, itemstack) or itemstack
-			end
-		end
-	end
+	local rc = mcl_util.call_on_rightclick(itemstack, user, pointed_thing)
+	if rc then return rc end
+
 	-- Also don't eat when pointing object (it could be an animal)
 	if pointed_thing.type == "object" then
 		return itemstack

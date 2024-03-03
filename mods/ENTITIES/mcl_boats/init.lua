@@ -506,13 +506,8 @@ function mcl_boats.register_boat(name,item_def,object_properties,entity_override
 				return itemstack
 			end
 
-			-- Call on_rightclick if the pointed node defines it
-			local node = minetest.get_node(pointed_thing.under)
-			if placer and not placer:get_player_control().sneak then
-				if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-					return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
-				end
-			end
+			local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+			if rc then return rc end
 
 			local pos = table.copy(pointed_thing.under)
 			local dir = vector.subtract(pointed_thing.above, pointed_thing.under)

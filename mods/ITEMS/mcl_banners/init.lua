@@ -453,10 +453,8 @@ for colorid, colortab in pairs(mcl_banners.colors) do
 
 			local node_under = minetest.get_node(under)
 			if placer and not placer:get_player_control().sneak then
-				-- Use pointed node's on_rightclick function first, if present
-				if minetest.registered_nodes[node_under.name] and minetest.registered_nodes[node_under.name].on_rightclick then
-					return minetest.registered_nodes[node_under.name].on_rightclick(under, node_under, placer, itemstack) or itemstack
-				end
+				local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+				if rc then return rc end
 
 				if minetest.get_modpath("mcl_cauldrons") then
 					-- Use banner on cauldron to remove the top-most layer. This reduces the water level by 1.

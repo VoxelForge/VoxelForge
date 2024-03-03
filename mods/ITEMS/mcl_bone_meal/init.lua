@@ -64,15 +64,10 @@ minetest.register_craftitem("mcl_bone_meal:bone_meal", {
 	_doc_items_longdesc = S("Bone meal is a white dye and also useful as a fertilizer to speed up the growth of many plants."),
 	_doc_items_usagehelp = S("Rightclick a sheep to turn its wool white. Rightclick a plant to speed up its growth. Note that not all plants can be fertilized like this. When you rightclick a grass block, tall grass and flowers will grow all over the place."),
 	on_place = function(itemstack, user, pointed_thing)
-		-- Use pointed node's on_rightclick function first, if present
-		local node = minetest.get_node(pointed_thing.under)
-		if user and not user:get_player_control().sneak then
-			if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-				local rc = mcl_util.call_on_rightclick(itemstack, user, pointed_thing)
-				if rc then return rc end
-			end
-		end
-		return bone_meal(itemstack,user,pointed_thing)
+		local rc = mcl_util.call_on_rightclick(itemstack, user, pointed_thing)
+		if rc then return rc end
+
+		return bone_meal(itemstack, user, pointed_thing)
 	end,
 	_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
 		-- Apply bone meal, if possible

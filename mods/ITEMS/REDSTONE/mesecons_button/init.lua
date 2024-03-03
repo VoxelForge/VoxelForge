@@ -49,13 +49,8 @@ local function on_button_place(itemstack, placer, pointed_thing)
 	if not def then return end
 	local groups = def.groups
 
-	-- Check special rightclick action of pointed node
-	if def and def.on_rightclick then
-		if not placer:get_player_control().sneak then
-			return def.on_rightclick(under, node, placer, itemstack,
-				pointed_thing) or itemstack, false
-		end
-	end
+	local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+	if rc then return rc end
 
 	-- If the pointed node is buildable, let's look at the node *behind* that node
 	if def.buildable_to then

@@ -141,15 +141,8 @@ S("The speed and damage of the arrow increases the longer you charge. The regula
 	-- Trick to disable digging as well
 	on_use = function() return end,
 	on_place = function(itemstack, player, pointed_thing)
-		if pointed_thing and pointed_thing.type == "node" then
-			-- Call on_rightclick if the pointed node defines it
-			local node = minetest.get_node(pointed_thing.under)
-			if player and not player:get_player_control().sneak then
-				if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-					return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, player, itemstack) or itemstack
-				end
-			end
-		end
+		local rc = mcl_util.call_on_rightclick(itemstack, player, pointed_thing)
+		if rc then return rc end
 
 		itemstack:get_meta():set_string("active", "true")
 		return itemstack

@@ -361,13 +361,9 @@ function kelp.kelp_on_place(itemstack, placer, pointed_thing)
 	local pos_above = pointed_thing.above
 	local node_under = minetest.get_node(pos_under)
 	local nu_name = node_under.name
-	local def_under = minetest.registered_nodes[nu_name]
 
-	-- Allow rightclick to override place.
-	if def_under and def_under.on_rightclick and not placer:get_player_control().sneak then
-		return def_under.on_rightclick(pos_under, node_under,
-				placer, itemstack, pointed_thing) or itemstack
-	end
+	local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+	if rc then return rc end
 
 	-- Protection
 	if minetest.is_protected(pos_under, player_name) or

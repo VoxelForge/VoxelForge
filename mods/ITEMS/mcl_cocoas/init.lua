@@ -16,12 +16,8 @@ local function cocoa_place(itemstack, placer, pt, plantname)
 		return
 	end
 
-	-- Am I right-clicking on something that has a custom on_rightclick set?
-	if placer and not placer:get_player_control().sneak then
-		if minetest.registered_nodes[under.name] and minetest.registered_nodes[under.name].on_rightclick then
-			return minetest.registered_nodes[under.name].on_rightclick(pt.under, under, placer, itemstack) or itemstack
-		end
-	end
+	local rc = mcl_util.call_on_rightclick(itemstack, placer, pt)
+	if rc then return rc end
 
 	-- Check if pointing at jungle tree
 	if under.name ~= "mcl_trees:tree_jungle"

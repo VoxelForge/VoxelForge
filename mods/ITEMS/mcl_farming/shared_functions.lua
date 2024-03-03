@@ -146,13 +146,8 @@ function mcl_farming:place_seed(itemstack, placer, pointed_thing, plantname)
 		return
 	end
 
-	-- Use pointed node's on_rightclick function first, if present
-	local node = minetest.get_node(pt.under)
-	if placer and not placer:get_player_control().sneak then
-		if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-			return minetest.registered_nodes[node.name].on_rightclick(pt.under, node, placer, itemstack) or itemstack
-		end
-	end
+	local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+	if rc then return rc end
 
 	local pos = { x = pt.above.x, y = pt.above.y - 1, z = pt.above.z }
 	local farmland = minetest.get_node(pos)

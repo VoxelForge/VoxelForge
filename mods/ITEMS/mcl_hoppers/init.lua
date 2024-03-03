@@ -137,12 +137,9 @@ def_hopper_enabled.on_place = function(itemstack, placer, pointed_thing)
 	local uposnode = minetest.get_node(upos)
 	local uposnodedef = minetest.registered_nodes[uposnode.name]
 	if not uposnodedef then return itemstack end
-	-- Use pointed node's on_rightclick function first, if present
-	if placer and not placer:get_player_control().sneak then
-		if uposnodedef and uposnodedef.on_rightclick then
-			return uposnodedef.on_rightclick(pointed_thing.under, uposnode, placer, itemstack) or itemstack
-		end
-	end
+
+	local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+	if rc then return rc end
 
 	local x = upos.x - apos.x
 	local z = upos.z - apos.z

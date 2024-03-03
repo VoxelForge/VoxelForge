@@ -25,12 +25,8 @@ local bobber_ENTITY={
 local fish = function(itemstack, player, pointed_thing)
 	if pointed_thing and pointed_thing.type == "node" then
 		-- Call on_rightclick if the pointed node defines it
-		local node = minetest.get_node(pointed_thing.under)
-		if player and not player:get_player_control().sneak then
-			if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-				return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, player, itemstack) or itemstack
-			end
-		end
+		local rc = mcl_util.call_on_rightclick(itemstack, player, pointed_thing)
+		if rc then return rc end
 	end
 
 		local pos = player:get_pos()

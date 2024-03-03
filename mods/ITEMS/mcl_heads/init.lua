@@ -76,12 +76,8 @@ function mcl_heads.deftemplate.on_place(itemstack, placer, pointed_thing)
 	local def = minetest.registered_nodes[node.name]
 	if not def then return itemstack end
 
-	-- Allow pointed node's on_rightclick callback to override place.
-	if placer and not placer:get_player_control().sneak then
-		if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-			return minetest.registered_nodes[node.name].on_rightclick(under, node, placer, itemstack) or itemstack
-		end
-	end
+	local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+	if rc then return rc end
 
 	local above = pointed_thing.above
 	local dir = {x = under.x - above.x, y = under.y - above.y, z = under.z - above.z}

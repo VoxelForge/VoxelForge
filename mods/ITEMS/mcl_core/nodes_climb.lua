@@ -56,13 +56,8 @@ minetest.register_node("mcl_core:ladder", {
 			return itemstack
 		end
 
-		-- Check special rightclick action of pointed node
-		if def and def.on_rightclick then
-			if not placer:get_player_control().sneak then
-				return def.on_rightclick(under, node, placer, itemstack,
-					pointed_thing) or itemstack, false
-			end
-		end
+		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		if rc then return rc end
 		local above = pointed_thing.above
 
 		-- Ladders may not be placed on ceiling or floor
@@ -132,13 +127,8 @@ minetest.register_node("mcl_core:vine", {
 		local def = minetest.registered_nodes[node.name]
 		if not def then return itemstack end
 
-		-- Check special rightclick action of pointed node
-		if def and def.on_rightclick then
-			if not placer:get_player_control().sneak then
-				return def.on_rightclick(under, node, placer, itemstack,
-					pointed_thing) or itemstack, false
-			end
-		end
+		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		if rc then return rc end
 
 		-- Only place on full cubes
 		if not mcl_core.supports_vines(node.name) then
