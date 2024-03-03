@@ -56,13 +56,8 @@ minetest.register_node("mcl_sponges:sponge", {
 
 		local pn = placer:get_player_name()
 
-		-- Use pointed node's on_rightclick function first, if present
-		local node = minetest.get_node(pointed_thing.under)
-		if placer and not placer:get_player_control().sneak then
-			if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-				return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
-			end
-		end
+		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		if rc then return rc end
 
 		if minetest.is_protected(pointed_thing.above, pn) then
 			return itemstack
@@ -99,13 +94,9 @@ function place_wet_sponge(itemstack, placer, pointed_thing)
 	if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 		return itemstack
 	end
-	-- Use pointed node's on_rightclick function first, if present
-	local node = minetest.get_node(pointed_thing.under)
-	if placer and not placer:get_player_control().sneak then
-		if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_rightclick then
-			return minetest.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack) or itemstack
-		end
-	end
+
+	local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+	if rc then return rc end
 
 	local name = placer:get_player_name()
 
