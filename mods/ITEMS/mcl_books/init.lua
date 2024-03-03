@@ -28,35 +28,6 @@ minetest.register_craft({
 	recipe = { "mcl_core:paper", "mcl_core:paper", "mcl_core:paper", "mcl_mobitems:leather", }
 })
 
--- Get the included text out of the book item
--- itemstack: Book item
--- meta: Meta of book (optional)
-local function get_text(itemstack)
-	-- Grab the text
-	local meta = itemstack:get_meta()
-	local text = meta:get_string("text")
-
-	-- Backwards-compability with MCL2 0.21.0
-	-- Remember that get_metadata is deprecated since MT 0.4.16!
-	if text == nil or text == "" then
-		local meta_legacy = itemstack:get_metadata()
-		if itemstack:get_name() == "mcl_books:written_book" then
-			local des = minetest.deserialize(meta_legacy)
-			if des then
-				text = des.text
-			end
-		else
-			text = meta_legacy
-		end
-	end
-
-	-- Security check
-	if not text then
-		text = ""
-	end
-	return text
-end
-
 local function make_description(title, author, generation)
 	local desc
 	if generation == 0 then
@@ -88,7 +59,7 @@ local function write(itemstack, user, pointed_thing)
 		end
 	end
 
-	local text = get_text(itemstack)
+	local text = itemstack:get_meta():get_string("text")
 	local formspec = "size[8,9]" ..
 		header ..
 		"background[-0.5,-0.5;9,10;mcl_books_book_bg.png]" ..
@@ -110,7 +81,7 @@ local function read(itemstack, user, pointed_thing)
 		end
 	end
 
-	local text = get_text(itemstack)
+	local text = itemstack:get_meta():get_string("text")
 	local formspec = "size[8,9]" ..
 		header ..
 		"background[-0.5,-0.5;9,10;mcl_books_book_bg.png]" ..
@@ -174,7 +145,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 			end
 			title = cap_text_length(title, max_title_length)
 			local meta = newbook:get_meta()
-			local text = cap_text_length(get_text(book), max_text_length)
+			local text = cap_text_length(book:get_meta():get_string("text"), max_text_length)
 			meta:set_string("title", title)
 			meta:set_string("author", name)
 			meta:set_int("date", os.time())
@@ -250,35 +221,28 @@ local function craft_copy_book(itemstack, player, old_craft_grid, craft_inv)
 		return
 	end
 
-	-- copy of the book
-	local text = get_text(original)
-	if not text or text == "" then
-		local copymeta = original:get_metadata()
-		itemstack:set_metadata(copymeta)
-	else
-		local ometa = original:get_meta()
-		local generation = ometa:get_int("generation")
+	local ometa = original:get_meta()
+	local generation = ometa:get_int("generation")
 
-		-- No copy of copy of copy of book allowed
-		if generation >= 2 then
-			return ItemStack("")
-		end
-
-		-- Copy metadata
-		local imeta = itemstack:get_meta()
-		imeta:from_table(ometa:to_table())
-		imeta:set_string("title", cap_text_length(ometa:get_string("title"), max_title_length))
-		imeta:set_string("text", cap_text_length(text, max_text_length))
-
-		-- Increase book generation and update description
-		generation = generation + 1
-		if generation < 1 then
-			generation = 1
-		end
-
-		imeta:set_string("description", make_description(ometa:get_string("title"), ometa:get_string("author"), generation))
-		imeta:set_int("generation", generation)
+	-- No copy of copy of copy of book allowed
+	if generation >= 2 then
+		return ItemStack("")
 	end
+
+	-- Copy metadata
+	local imeta = itemstack:get_meta()
+	imeta:from_table(ometa:to_table())
+	imeta:set_string("title", cap_text_length(ometa:get_string("title"), max_title_length))
+	imeta:set_string("text", cap_text_length(ometa:get_string("text"), max_text_length))
+
+	-- Increase book generation and update description
+	generation = generation + 1
+	if generation < 1 then
+		generation = 1
+	end
+
+	imeta:set_string("description", make_description(ometa:get_string("title"), ometa:get_string("author"), generation))
+	imeta:set_int("generation", generation)
 	return itemstack, original, index
 end
 minetest.register_craft_predict(craft_copy_book)
