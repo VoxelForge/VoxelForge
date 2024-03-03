@@ -249,7 +249,7 @@ minetest.register_craft_predict(craft_copy_book)
 
 minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv)
 	local _, original, index = craft_copy_book(itemstack, player, old_craft_grid, craft_inv)
-	craft_inv:set_stack("craft", index, original)
+	if original and index then craft_inv:set_stack("craft", index, original) end
 end)
 
 -- Bookshelf GUI
