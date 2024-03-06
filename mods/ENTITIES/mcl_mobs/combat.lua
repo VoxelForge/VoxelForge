@@ -468,7 +468,13 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 		end
 
 		if minetest.is_creative_enabled(hitter:get_player_name()) then
-			self.health = 0
+			-- Instantly kill mob after a slight delay.
+			-- Without this delay the node behind would be dug by the punch as well.
+			minetest.after(0.15, function(self)
+				if self and self.object and self.object:get_pos() then
+					self.health = 0
+				end
+			end, self)
 		end
 
 		-- set/update 'drop xp' timestamp if hitted by player
