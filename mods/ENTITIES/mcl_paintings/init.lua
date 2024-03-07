@@ -178,10 +178,15 @@ minetest.register_entity("mcl_paintings:painting", {
 				pos = self.object:get_pos()
 			end
 			if not minetest.is_protected(pos, kname) then
-				self.object:remove()
-				if not minetest.is_creative_enabled(kname) then
-					minetest.add_item(pos, "mcl_paintings:painting")
-				end
+				-- Slightly delay removing the painting so nodes behind it won't be dug (particularly in creative mode)
+				minetest.after(0.15, function(object)
+					if object and object:get_pos() then
+						object:remove()
+					end
+					if not minetest.is_creative_enabled(kname) then
+						minetest.add_item(pos, "mcl_paintings:painting")
+					end
+				end, self.object)
 			end
 		end
 	end,
