@@ -58,24 +58,6 @@ local function get_random_painting(x, y)
 	return get_painting(x, y, r), r
 end
 
---[[local function size_to_minmax(size)
-	local min, max
-	if size == 2 then
-		min = -0.5
-		max = 1.5
-	elseif size == 3 then
-		min = -1.5
-		max = 1.5
-	elseif size == 4 then
-		min = -1.5
-		max = 2.5
-	else
-		min = -0.5
-		max = 0.5
-	end
-	return min, max
-end]]
-
 local function size_to_minmax_entity(size)
 	return -size/2, size/2
 end
