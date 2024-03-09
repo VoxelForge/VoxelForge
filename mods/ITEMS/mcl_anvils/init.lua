@@ -23,7 +23,7 @@ local function get_anvil_formspec(set_name, player, cost)
 		local c = "label[9.125,4.225;"
 		cost_label = c..F(C(mcl_formspec.label_color, tostring(cost).." "..st)).."]"
 		if player and mcl_experience.get_level(player) < cost then
-			cost_label = c..F(C(mcl_colors.RED, S("Too expensive"))).."]"
+			cost_label = c..F(C(mcl_colors.RED, S("Too expensive!"))).."]"
 		end
 	end
 	return table.concat({
