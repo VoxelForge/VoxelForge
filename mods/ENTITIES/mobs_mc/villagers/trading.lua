@@ -763,6 +763,18 @@ local trade_inventory = {
 					-- Otherwise, 20% chance to unlock if used freshly reset trade
 					unlock_stuff = true
 				end
+
+				local emeralds
+				if wanted1:get_name() == "mcl_core:emerald" then
+					emeralds = wanted1:get_count()
+				elseif wanted2:get_name() == "mcl_core:emerald" then
+					emeralds = wanted2:get_count()
+				else
+					local offered = inv:get_stack("offered", 1)
+					emeralds = offered:get_name() == "mcl_core:emerald" and offered:get_count() or 0
+				end
+				local xp = 2 + math.ceil(emeralds / (64/4)) -- 1..64 emeralds = 3..6 xp
+
 				local update_formspec = false
 				if unlock_stuff then
 					-- First-time trade unlock all trades and unlock next trade tier
@@ -774,7 +786,13 @@ local trade_inventory = {
 						trader:set_textures()
 						trader:update_max_tradenum()
 						update_formspec = true
+						xp = xp + 5
 					end
+
+					if not minetest.is_creative_enabled(player:get_player_name()) then
+						mcl_experience.throw_xp(trader.object:get_pos(), xp)
+					end
+
 					for t=1, #trades do
 						trades[t].locked = false
 						trades[t].trade_counter = 0
