@@ -63,6 +63,10 @@ local bobber_ENTITY={
 
 local function remove_bobber(player, object)
 	if player and bobbers[player] and bobbers[player].remove then
+		local ent = bobbers[player]:get_luaentity()
+		if ent and ent._reeling and ent._hooked and ent._hooked:get_pos() then
+			ent._hooked:set_acceleration(vector.new(0, -mcl_item_entity.get_gravity(), 0))
+		end
 		bobbers[player]:remove()
 		bobbers[player] = nil
 		return

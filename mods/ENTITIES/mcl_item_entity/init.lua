@@ -18,7 +18,7 @@ end)
 
 local has_awards = minetest.get_modpath("awards")
 
-local mcl_item_entity = {}
+mcl_item_entity = {}
 
 local MULTIPLE_AWARDS_DELAY = 3 --Delay when picking up 1 item prouces multiple awards.
 
@@ -40,6 +40,7 @@ item_drop_settings.magnet_time           = 0.75 -- how many seconds an item foll
 local function get_gravity()
 	return tonumber(minetest.settings:get("movement_gravity")) or 9.81
 end
+mcl_item_entity.get_gravity = get_gravity
 
 local registered_pickup_achievement = {}
 
