@@ -250,6 +250,7 @@ awards.register_achievement("mcl:snipeSkeleton", {
 	icon = "mcl_bows_bow.png",
 	type = "Challenge",
 	group = "Adventure",
+	reward_xp = 50,
 })
 
 --Triggered in mcl_mobs/physics.lua
