@@ -17,6 +17,13 @@ local non_pc_achievements = false
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
+awards.register_on_unlock(function(name, def)
+	if def.reward_xp then
+		local player = minetest.get_player_by_name(name)
+		mcl_experience.throw_xp(player:get_pos(), def.reward_xp)
+	end
+end)
+
 -- Achievements from PC Edition
 
 awards.register_achievement("mcl_buildWorkBench", {
