@@ -12,28 +12,26 @@
 
 ## Active Contributors
 * codiac
-* AFCMS
-* Michieal
-* ancientmarinerdev
+* ShadowRoi
 * chmodsayshello
-* PrairieWind
+* laireia
+* nixnoxus
 * the-real-herowl
-* DinoNuggies4665
-* kabou
-* Nauta Turbidus
-* ChrisPHP
-* Nils Dagsson Moskopp
-* seventeenthShulker
 * JoseDouglas26
+* Eliy21
 
 ## Previous Contributors
 * Lizzy Fleckenstein
+* AFCMS
 * NO11
 * Brandon
 * kay27
 * marcin-serwin
+* Michieal
 * epCode
+* PrairieWind
 * iliekprogrammar
+* ancientmarinerdev
 * TheOnlyJoeEnderman
 * jordan4ibanez
 * FossFanatic
@@ -41,9 +39,11 @@
 * SumianVoice
 * MysticTempest
 * HimbeerserverDE
-* rubenwardy
 * MrRar
+* kabou
 * FaceDeer
+* Nils Dagsson Moskopp
+* ChrisPHP
 * 3raven
 
 ## Original Mod Authors
