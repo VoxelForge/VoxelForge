@@ -209,7 +209,7 @@ function mcl_lightning.strike(pos)
 			do_strike = do_strike and not stop
 		end
 	end
-	if do_strike then
+	if do_strike and pos and pos2 then
 		mcl_lightning.strike_func(pos,pos2,minetest.get_objects_inside_radius(pos2, 3.5))
 	end
 end
