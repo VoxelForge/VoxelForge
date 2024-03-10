@@ -587,6 +587,7 @@ awards.register_achievement("mcl:hero_of_the_village", {
 	type = "Advancement",
 	group = "Adventure",
 	secret = true,
+	reward_xp = 100,
 })
 
 awards.register_achievement("mcl:voluntary_exile", {
