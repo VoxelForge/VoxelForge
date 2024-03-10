@@ -47,6 +47,7 @@ local function return_fields(player, name)
 		inv:set_stack(name, i, stack)
 	end
 end
+mcl_inventory.return_fields = return_fields
 
 local function set_inventory(player, armor_change_only)
 	if minetest.is_creative_enabled(player:get_player_name()) then

@@ -83,10 +83,10 @@ local function get_recipe_groups(pinv, craft)
 end
 
 function mcl_crafting_table.put_recipe_from_inv(player, craft)
+	mcl_inventory.return_fields(player, "craft")
 	local pinv = player:get_inventory()
 	if craft.type == "normal" then
 		local recipe = get_recipe_groups(pinv, craft)
-		minetest.log(dump(recipe))
 		if recipe then
 			for k,it in pairs(recipe) do
 				local pit = ItemStack(it)
