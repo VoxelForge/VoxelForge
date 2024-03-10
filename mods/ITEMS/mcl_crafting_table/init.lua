@@ -51,9 +51,9 @@ function mcl_crafting_table.show_crafting_form(player)
 end
 
 local function get_recipe_groups(pinv, craft)
-	if craft.width > 3 then
-		minetest.log ("error", "[mcl_crafting_table] crafts with width larger than 3 are not supported: "..dump(craft))
-		return false
+	local grid_width = pinv:get_width("craft")
+	if craft.width > grid_width then
+		return false, "Recipe to large for crafting grid of width " .. grid_width
 	end
 	local r = { "", "", "", "", "", "", "", "", "" }
 	local all_found = true
@@ -74,19 +74,23 @@ local function get_recipe_groups(pinv, craft)
 				all_found = false
 			end
 		end
-		-- adapt from craft width to table's craft grid width (== 3)
+		-- adapt from craft width to craft grid width
 		if (k % craft.width) == 0 then
-			i = i + 3 - craft.width
+			i = i + grid_width - craft.width
 		end
 	end
-	return all_found and r or false
+	if all_found then
+		return r
+	else
+		return false, "Some needed items not available"
+	end
 end
 
 function mcl_crafting_table.put_recipe_from_inv(player, craft)
 	mcl_inventory.return_fields(player, "craft")
 	local pinv = player:get_inventory()
 	if craft.type == "normal" then
-		local recipe = get_recipe_groups(pinv, craft)
+		local recipe, msg = get_recipe_groups(pinv, craft)
 		if recipe then
 			for k,it in pairs(recipe) do
 				local pit = ItemStack(it)
@@ -95,6 +99,8 @@ function mcl_crafting_table.put_recipe_from_inv(player, craft)
 					pinv:set_stack("craft", k, stack)
 				end
 			end
+		else
+			minetest.log("error", "Cannot prefill crafting grid: " .. msg)
 		end
 	end
 end

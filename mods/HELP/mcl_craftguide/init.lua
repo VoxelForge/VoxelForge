@@ -598,7 +598,7 @@ local function get_recipe_fs(data, iY, player)
 				0.6,
 				"mcl_craftguide_fuel.png")
 		end
-		if mcl_crafting_table.has_crafting_table(player) then
+		if mcl_crafting_table.has_crafting_table(player) or recipe.width <= 2 then
 			fs[#fs + 1] = string.format("item_image_button[%f,%f;%f,%f;%s;%s_inv;%s]",
 				8.5,
 				7.2,
@@ -915,7 +915,11 @@ local function on_receive_fields(player, fields)
 		data.iX = data.iX + (fields.size_inc and 1 or -1)
 		show_fs(player, name)
 	elseif fields.craft_inv and fields.craft_inv == "craft" then
-		mcl_crafting_table.show_crafting_form(player)
+		if mcl_crafting_table.has_crafting_table(player) then
+			mcl_crafting_table.show_crafting_form(player)
+		else
+			minetest.show_formspec(name, "", player:get_inventory_formspec())
+		end
 		mcl_crafting_table.put_recipe_from_inv(player, data.recipes[data.rnum])
 	else
 		local item
