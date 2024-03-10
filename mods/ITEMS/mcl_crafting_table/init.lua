@@ -34,7 +34,9 @@ mcl_crafting_table.formspec = table.concat({
 })
 
 function mcl_crafting_table.has_crafting_table(player)
-	return minetest.is_creative_enabled(player:get_player_name()) or minetest.find_node_near(player:get_pos(), 4, { "mcl_crafting_table:crafting_table" })
+	local wdef = player:get_wielded_item():get_definition()
+	local range = wdef and wdef.range or ItemStack():get_definition().range or tonumber(minetest.settings:get("mcl_hand_range")) or 4.5
+	return minetest.is_creative_enabled(player:get_player_name()) or minetest.find_node_near(player:get_pos(), range, { "mcl_crafting_table:crafting_table" })
 end
 
 function mcl_crafting_table.show_crafting_form(player)
