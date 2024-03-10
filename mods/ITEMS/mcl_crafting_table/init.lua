@@ -51,37 +51,38 @@ function mcl_crafting_table.show_crafting_form(player)
 end
 
 local function get_recipe_groups(pinv, craft)
+	if craft.width > 3 then
+		minetest.log ("error", "[mcl_crafting_table] crafts with width larger than 3 are not supported: "..dump(craft))
+		return false
+	end
 	local r = { "", "", "", "", "", "", "", "", "" }
 	local all_found = true
-	local c = 1
-	local i = 1
-	for k,it in pairs(craft.items) do
-		if it:sub(1,6) == "group:" then
-			for _, stack in pairs(pinv:get_list("main")) do
-				if minetest.get_item_group(stack:get_name(), it:sub(7)) > 0 then
-					r[i] = stack:get_name()
+	local i = 0
+	for k = 1, 3 * craft.width do
+		local it = craft.items[k]
+		if it then
+			if it:sub(1,6) == "group:" then
+				for _, stack in pairs(pinv:get_list("main")) do
+					if minetest.get_item_group(stack:get_name(), it:sub(7)) > 0 then
+						r[k+i] = stack:get_name()
+					end
 				end
+				all_found = all_found and r[k+i]
+			elseif pinv:contains_item("main", ItemStack(it)) then
+				r[k+i] = it
+			else
+				all_found = false
 			end
-			all_found = all_found and r[i]
-		elseif pinv:contains_item("main", ItemStack(it)) then
-			r[i] = it
-		else
-			all_found = false
 		end
-		if c >= craft.width then
-			i = i + 1 + c - craft.width
-			c = 1
-		else
-			i = i + 1
-			c = c + 1
+		-- adapt from craft width to table's craft grid width (== 3)
+		if (k % craft.width) == 0 then
+			i = i + 3 - craft.width
 		end
-		minetest.log(craft.width)
 	end
 	return all_found and r or false
 end
 
 function mcl_crafting_table.put_recipe_from_inv(player, craft)
-		minetest.log(dump(craft))
 	local pinv = player:get_inventory()
 	if craft.type == "normal" then
 		local recipe = get_recipe_groups(pinv, craft)
