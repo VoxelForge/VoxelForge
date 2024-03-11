@@ -81,7 +81,9 @@ end
 minetest.register_globalstep(function(dtime)
 	for _, player in pairs(minetest.get_connected_players()) do
 		for _, func in pairs(mcl_player.registered_globalsteps) do
-			func(player, dtime)
+			if mcl_player.players[player] then
+				func(player, dtime)
+			end
 		end
 	end
 
@@ -90,7 +92,9 @@ minetest.register_globalstep(function(dtime)
 	slow_gs_timer = 0.5
 	for _, player in pairs(minetest.get_connected_players()) do
 		for _, func in pairs(mcl_player.registered_globalsteps_slow) do
-			func(player, dtime)
+			if mcl_player.players[player] then
+				func(player, dtime)
+			end
 		end
 		mcl_player.players[player].lastPos = player:get_pos()
 	end
