@@ -100,10 +100,13 @@ local main_page_static = table.concat({
 	mcl_formspec.get_itemslot_bg_v4(6.625, 0.875, 2, 2),
 	"list[current_player;craft;6.625,0.875;2,2]",
 
-	"image[9.125,1.5;1,1;crafting_formspec_arrow.png]",
+	"image[9.125,1;1,1;crafting_formspec_arrow.png]",
 
-	mcl_formspec.get_itemslot_bg_v4(10.375, 1.5, 1, 1),
-	"list[current_player;craftpreview;10.375,1.5;1,1;]",
+	mcl_formspec.get_itemslot_bg_v4(10.375, 1, 1, 1),
+	"list[current_player;craftpreview;10.375,1;1,1;]",
+
+	"image_button[9.125,2.125;1,1;mcl_crafting_table_inv_fill.png;__mcl_crafting_fillgrid;]",
+	"tooltip[__mcl_crafting_fillgrid;" .. F(S("Fill Craft Grid")) .. "]",
 
 	--Crafting guide button
 	"image_button[6.575,4.075;1.1,1.1;craftguide_book.png;__mcl_craftguide;]",

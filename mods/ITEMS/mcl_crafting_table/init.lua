@@ -31,6 +31,9 @@ mcl_crafting_table.formspec = table.concat({
 	--Crafting guide button
 	"image_button[0.325,1.95;1.1,1.1;craftguide_book.png;__mcl_craftguide;]",
 	"tooltip[__mcl_craftguide;" .. F(S("Recipe book")) .. "]",
+
+	"image_button[6.025,3.175;1,1;mcl_crafting_table_inv_fill.png;__mcl_crafting_fillgrid;]",
+	"tooltip[__mcl_crafting_fillgrid;" .. F(S("Fill Craft Grid")) .. "]",
 })
 
 function mcl_crafting_table.has_crafting_table(player)
@@ -88,6 +91,17 @@ local function get_recipe_groups(pinv, craft)
 	end
 end
 
+local function get_count_from_inv(itname, inv, list)
+	list = list or "main"
+	local c = 0
+	for _, stack in pairs(inv:get_list(list)) do
+		if stack:get_name() == itname then
+			c = c + stack:get_count()
+		end
+	end
+	return c
+end
+
 function mcl_crafting_table.put_recipe_from_inv(player, craft)
 	mcl_inventory.return_fields(player, "craft")
 	local pinv = player:get_inventory()
@@ -106,6 +120,34 @@ function mcl_crafting_table.put_recipe_from_inv(player, craft)
 		end
 	end
 end
+
+function mcl_crafting_table.fill_grid(player)
+	local inv = player:get_inventory()
+	local itcounts = {}
+	local invcounts = {}
+	for idx, stack in pairs(inv:get_list("craft")) do
+		local name = stack:get_name()
+		if name ~= "" then
+			itcounts[name] = (itcounts[name] or 0) + 1
+			invcounts[name] = get_count_from_inv(name, inv)
+		end
+	end
+	for idx, tstack in pairs(inv:get_list("craft")) do
+		local name = tstack:get_name()
+		if itcounts[name] and invcounts[name] then
+			local it = ItemStack(name)
+			it:set_count(math.min(tstack:get_stack_max() - tstack:get_count(), math.floor(invcounts[name] / itcounts[name] or 1)))
+			tstack:add_item(inv:remove_item("main", it))
+			inv:set_stack("craft", idx, tstack)
+		end
+	end
+end
+
+minetest.register_on_player_receive_fields(function(player, formname, fields)
+	if fields.__mcl_crafting_fillgrid then
+		mcl_crafting_table.fill_grid(player)
+	end
+end)
 
 minetest.register_node("mcl_crafting_table:crafting_table", {
 	description = S("Crafting Table"),
