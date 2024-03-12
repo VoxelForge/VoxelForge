@@ -337,8 +337,8 @@ minetest.register_entity("mcl_fishing:flying_bobber_entity", flying_bobber_ENTIT
 
 mcl_throwing.register_throwable_object("mcl_fishing:flying_bobber", "mcl_fishing:flying_bobber_entity", 5)
 
-minetest.register_on_dieplayer(remove_bobber)
-minetest.register_on_leaveplayer(remove_bobber)
+minetest.register_on_dieplayer(function(player) remove_bobber(player) end)
+minetest.register_on_leaveplayer(function(player) remove_bobber(player) end)
 
 -- Fishing Rod
 minetest.register_tool("mcl_fishing:fishing_rod", {
