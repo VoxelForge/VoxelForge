@@ -1,5 +1,11 @@
 # `mcl_inventory`
 
+## `mcl_inventory.to_craft_grid(player, craft)`
+Puts the specified craft on the players crafting grid from player's inventory. For 3x3 recipes a crafting table needs to be nearby.
+
+## `mcl_inventory.fill_grid(player)`
+Maximizes all itemstacks on the crafting grid grom the player's inventory equally for bulk crafting.
+
 ## `mcl_inventory.register_survival_inventory_tab(def)`
 
 ```lua

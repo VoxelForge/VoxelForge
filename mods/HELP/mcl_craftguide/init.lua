@@ -920,7 +920,7 @@ local function on_receive_fields(player, fields)
 		else
 			minetest.show_formspec(name, "", player:get_inventory_formspec())
 		end
-		mcl_crafting_table.put_recipe_from_inv(player, data.recipes[data.rnum])
+		mcl_inventory.to_craft_grid(player, data.recipes[data.rnum])
 	else
 		local item
 		for field in pairs(fields) do
