@@ -599,13 +599,13 @@ local function get_recipe_fs(data, iY, player)
 				"mcl_craftguide_fuel.png")
 		end
 		if mcl_crafting_table.has_crafting_table(player) or recipe.width <= 2 then
-			fs[#fs + 1] = string.format("item_image_button[%f,%f;%f,%f;%s;%s_inv;%s]",
+			fs[#fs + 1] = string.format("image_button[%f,%f;%f,%f;%s;%s_inv;%s]",
 				8.5,
 				7.2,
 				1.1,
 				1.1,
-				"mcl_crafting_table:crafting_table",
-				"craft","craft")
+				"mcl_crafting_guide_craft.png",
+				"craft","")
 			fs[#fs + 1] = "tooltip[craft;To crafting table]"
 		end
 	end
