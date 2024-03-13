@@ -47,7 +47,6 @@ local function return_fields(player, name)
 		inv:set_stack(name, i, stack)
 	end
 end
-mcl_inventory.return_fields = return_fields
 
 local function set_inventory(player, armor_change_only)
 	if minetest.is_creative_enabled(player:get_player_name()) then
@@ -111,7 +110,7 @@ local function get_count_from_inv(itname, inv, list)
 end
 
 function mcl_inventory.to_craft_grid(player, craft)
-	mcl_inventory.return_fields(player, "craft")
+	return_fields(player, "craft")
 	local pinv = player:get_inventory()
 	if craft.type == "normal" then
 		local recipe, msg = get_recipe_groups(pinv, craft)
