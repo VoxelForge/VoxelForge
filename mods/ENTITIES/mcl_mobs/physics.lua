@@ -3,7 +3,6 @@ local mob_class = mcl_mobs.mob_class
 local ENTITY_CRAMMING_MAX = 24
 local CRAMMING_DAMAGE = 3
 local DEATH_DELAY = 0.5
-local DEFAULT_FALL_SPEED = -9.81*1.5
 
 local PATHFINDING = "gowp"
 local mobs_drop_items = minetest.settings:get_bool("mobs_drop_items") ~= false
@@ -519,7 +518,6 @@ function mob_class:check_for_death(cause, cmi_cause)
 	self:set_state("die")
 	self.attack = nil
 	self.v_start = false
-	self.fall_speed = DEFAULT_FALL_SPEED
 	self.timer = 0
 	self.blinktimer = 0
 	self:remove_texture_mod("^[colorize:#FF000040")
@@ -534,7 +532,7 @@ function mob_class:check_for_death(cause, cmi_cause)
 	self:set_velocity(0)
 	if self.object then
 		local acc = self.object:get_acceleration()
-		acc.x, acc.y, acc.z = 0, DEFAULT_FALL_SPEED, 0
+		acc.x, acc.y, acc.z = 0, self.fall_speed, 0
 		self.object:set_acceleration(acc)
 	end
 
@@ -902,8 +900,6 @@ function mob_class:falling(pos)
 		return
 	end
 
-	if not self.fall_speed then self.fall_speed = DEFAULT_FALL_SPEED end
-
 	if mcl_portals ~= nil then
 		if mcl_portals.nether_portal_cooloff(self.object) then
 			return false -- mob has teleported through Nether portal - it's 99% not falling
@@ -918,7 +914,7 @@ function mob_class:falling(pos)
 		-- apply gravity when moving up
 		self.object:set_acceleration({
 			x = 0,
-			y = DEFAULT_FALL_SPEED,
+			y = self.fall_speed,
 			z = 0
 		})
 
