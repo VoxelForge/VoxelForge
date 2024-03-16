@@ -431,6 +431,8 @@ mesecon.register_mvps_stopper("mcl_banners:standing_banner")
 mesecon.register_mvps_stopper("mcl_beehives:bee_nest")
 mesecon.register_mvps_stopper("mcl_beehives:beehive")
 mesecon.register_mvps_stopper("mcl_compass:lodestone")
+mesecon.register_mvps_stopper("mcl_sculk:sculk")
+mesecon.register_mvps_stopper("mcl_sculk:catalyst")
 
 -- Unmovable by technical restrictions.
 -- Open formspec would screw up if node is destroyed (minor problem)
