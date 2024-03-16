@@ -214,6 +214,7 @@ function mob_class:mob_activate(staticdata, dtime)
 		for _,stat in pairs(tmp) do
 			self[_] = stat
 		end
+		self.state = nil
 	end
 
 	self:update_textures()
