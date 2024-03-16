@@ -79,10 +79,21 @@ local function set_node_xp(pos,xp)
 	return meta:set_int("xp",xp)
 end
 
-local function sculk_on_destruct(pos)
+local function sculk_after_dig_node(pos, oldnode, oldmetadata, digger)
+	-- Check if node will yield its useful drop by the digger's tool
+	if digger and digger:is_player() then
+		local tool = digger:get_wielded_item()
+
+		if mcl_autogroup.can_harvest(oldnode.name, tool:get_name(), digger) then
+			if tool and mcl_enchanting.get_enchantments(tool, "silk_touch").silk_touch then
+				-- Don't drop experience when mined with silk touch
+				return
+			end
+		end
+	end
+
 	local xp = get_node_xp(pos)
-	local n = minetest.get_node(pos)
-	if n.param2 == 1 then
+	if oldnode.param2 == 1 then
 		xp = 1
 	end
 	local obs = mcl_experience.throw_xp(pos,xp)
@@ -183,7 +194,7 @@ minetest.register_node("mcl_sculk:sculk", {
 	place_param2 = 1,
 	sounds = sounds,
 	is_ground_content = false,
-	on_destruct = sculk_on_destruct,
+	after_dig_node = sculk_after_dig_node,
 	_mcl_blast_resistance = 0.2,
 	_mcl_hardness = 0.6,
 	_mcl_silk_touch_drop = true,
@@ -230,7 +241,7 @@ minetest.register_node("mcl_sculk:catalyst", {
 	groups = {handy = 1, hoey = 1, building_block=1, sculk = 1,},
 	place_param2 = 1,
 	is_ground_content = false,
-	on_destruct = sculk_on_destruct,
+	after_dig_node = sculk_after_dig_node,
 	_mcl_blast_resistance = 3,
 	light_source  = 6,
 	_mcl_hardness = 3,
@@ -250,7 +261,7 @@ minetest.register_node("mcl_sculk:sensor", {
 	groups = {handy = 1, hoey = 1, building_block=1, sculk = 1,},
 	place_param2 = 1,
 	is_ground_content = false,
-	on_destruct = sculk_on_destruct,
+	after_dig_node = sculk_after_dig_node,
 	_mcl_blast_resistance = 3,
 	light_source  = 6,
 	_mcl_hardness = 3,
@@ -268,7 +279,7 @@ minetest.register_node("mcl_sculk:shrieker", {
 	groups = {handy = 1, hoey = 1, building_block=1, sculk = 1,},
 	place_param2 = 0,
 	is_ground_content = false,
-	on_destruct = sculk_on_destruct,
+	after_dig_node = sculk_after_dig_node,
 	_mcl_blast_resistance = 3,
 	light_source  = 6,
 	_mcl_hardness = 3,
