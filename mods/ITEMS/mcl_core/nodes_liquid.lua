@@ -130,7 +130,7 @@ minetest.register_node("mcl_core:lava_flowing", {
 	--[[ Drowning in Minecraft deals 2 damage per second.
 	In Minetest, drowning damage is dealt every 2 seconds so this
 	translates to 4 drowning damage ]]
-	drowning = 4,
+	drowning = 0,
 	liquidtype = "flowing",
 	liquid_alternative_flowing = "mcl_core:lava_flowing",
 	liquid_alternative_source = "mcl_core:lava_source",
@@ -184,7 +184,7 @@ S("• When lava is directly above water, the water turns into stone."),
 	diggable = false,
 	buildable_to = true,
 	drop = "",
-	drowning = 4,
+	drowning = 0,
 	liquidtype = "source",
 	liquid_alternative_flowing = "mcl_core:lava_flowing",
 	liquid_alternative_source = "mcl_core:lava_source",
