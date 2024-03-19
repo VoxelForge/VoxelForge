@@ -598,7 +598,8 @@ local function get_recipe_fs(data, iY, player)
 				0.6,
 				"mcl_craftguide_fuel.png")
 		end
-		if mcl_crafting_table.has_crafting_table(player) or recipe.width <= 2 then
+		local pinv = player:get_inventory()
+		if mcl_crafting_table.has_crafting_table(player) or ( recipe.width <= pinv:get_width("craft") and #recipe.items <= pinv:get_size("craft")) then
 			fs[#fs + 1] = string.format("image_button[%f,%f;%f,%f;%s;%s_inv;%s]",
 				8.5,
 				7.2,
@@ -710,9 +711,9 @@ local function make_formspec(name)
 			fs[#fs + 1] = string.format(FMT[def.type], unpack(element))
 		end
 	end
-
 	return table.concat(fs)
 end
+mcl_craftguide.make_formspec = make_formspec
 
 local function show_fs(player, name)
 	minetest.show_formspec(name, "mcl_craftguide", make_formspec(name))
@@ -915,10 +916,13 @@ local function on_receive_fields(player, fields)
 		data.iX = data.iX + (fields.size_inc and 1 or -1)
 		show_fs(player, name)
 	elseif fields.craft_inv and fields.craft_inv == "craft" then
+		local pinv = player:get_inventory()
 		if mcl_crafting_table.has_crafting_table(player) then
 			mcl_crafting_table.show_crafting_form(player)
-		else
+		elseif data.recipes[data.rnum].width <= pinv:get_width("craft") and #data.recipes[data.rnum].items <= pinv:get_size("craft") then
 			minetest.show_formspec(name, "", player:get_inventory_formspec())
+		else
+			return
 		end
 		mcl_inventory.to_craft_grid(player, data.recipes[data.rnum])
 	else
