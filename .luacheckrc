@@ -216,6 +216,7 @@ read_globals = {
 			"key_value_swap",
 			"shuffle",
 			reverse = { read_only = false },
+			count = { read_only = false },
 		}
 	},
 
