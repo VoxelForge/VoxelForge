@@ -64,7 +64,7 @@ end
 
 function mcl_inventory.get_recipe_groups(pinv, craft)
 	local grid_width = pinv:get_width("craft")
-	if craft.width > grid_width or pinv:get_size("craft") < #craft.items then
+	if craft.width > grid_width or pinv:get_size("craft") < table.count(craft.items, function(_,v) return not ItemStack(v):is_empty()  end) then
 		return false
 	end
 	local r = { "", "", "", "", "", "", "", "", "" }
