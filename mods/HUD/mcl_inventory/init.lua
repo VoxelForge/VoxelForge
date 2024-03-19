@@ -166,6 +166,18 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	end
 end)
 
+function mcl_inventory.reset_craft_grid(player)
+	local inv = player:get_inventory()
+	if inv:get_size("craft") > 4 and not mcl_crafting_table.has_crafting_table(player) then
+		return_fields(player, "craft")
+		inv:set_width("craft", 2)
+		inv:set_size("craft", 4)
+	end
+end
+
+minetest.register_craft_predict(function(itemstack, player, old_craft_grid, inv)
+	mcl_inventory.reset_craft_grid(player)
+end)
 
 function mcl_inventory.update_inventory_formspec(player)
 	set_inventory(player)

@@ -438,6 +438,7 @@ local function get_tooltip(item, groups, cooktime, burntime)
 end
 
 local function get_recipe_fs(data, iY, player)
+	mcl_inventory.reset_craft_grid(player)
 	local fs = {}
 	local recipe = data.recipes[data.rnum]
 	local width = recipe.width
@@ -618,6 +619,7 @@ local function get_recipe_fs(data, iY, player)
 end
 
 local function make_formspec(name)
+	mcl_inventory.reset_craft_grid(minetest.get_player_by_name(name))
 	local data = player_data[name]
 	local iY = data.iX - 5
 	local ipp = data.iX * iY
