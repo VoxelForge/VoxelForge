@@ -598,8 +598,11 @@ local function get_recipe_fs(data, iY, player)
 				0.6,
 				"mcl_craftguide_fuel.png")
 		end
+		--show the button crafting button if recipe items are in inventory and the recipe fits the available crafting grid
 		local pinv = player:get_inventory()
-		if mcl_crafting_table.has_crafting_table(player) or ( recipe.width <= pinv:get_width("craft") and #recipe.items <= pinv:get_size("craft")) then
+		if mcl_inventory.get_recipe_groups(pinv, recipe) and
+			( mcl_crafting_table.has_crafting_table(player) or
+			( recipe.width <= pinv:get_width("craft") and #recipe.items <= pinv:get_size("craft"))) then
 			fs[#fs + 1] = string.format("image_button[%f,%f;%f,%f;%s;%s_inv;%s]",
 				8.5,
 				7.2,
@@ -917,6 +920,7 @@ local function on_receive_fields(player, fields)
 		show_fs(player, name)
 	elseif fields.craft_inv and fields.craft_inv == "craft" then
 		local pinv = player:get_inventory()
+		if not mcl_inventory.get_recipe_groups(pinv, data.recipes[data.rnum]) then return end
 		if mcl_crafting_table.has_crafting_table(player) then
 			mcl_crafting_table.show_crafting_form(player)
 		elseif data.recipes[data.rnum].width <= pinv:get_width("craft") and #data.recipes[data.rnum].items <= pinv:get_size("craft") then

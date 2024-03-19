@@ -62,10 +62,10 @@ local function set_inventory(player, armor_change_only)
 	player:set_inventory_formspec(mcl_inventory.build_survival_formspec(player))
 end
 
-local function get_recipe_groups(pinv, craft)
+function mcl_inventory.get_recipe_groups(pinv, craft)
 	local grid_width = pinv:get_width("craft")
 	if craft.width > grid_width then
-		return false, "Recipe to large for crafting grid of width " .. grid_width
+		return false
 	end
 	local r = { "", "", "", "", "", "", "", "", "" }
 	local all_found = true
@@ -94,7 +94,7 @@ local function get_recipe_groups(pinv, craft)
 	if all_found then
 		return r
 	else
-		return false, "Some needed items not available"
+		return false
 	end
 end
 
@@ -113,7 +113,7 @@ function mcl_inventory.to_craft_grid(player, craft)
 	return_fields(player, "craft")
 	local pinv = player:get_inventory()
 	if craft.type == "normal" then
-		local recipe, msg = get_recipe_groups(pinv, craft)
+		local recipe = mcl_inventory.get_recipe_groups(pinv, craft)
 		if recipe then
 			for k,it in pairs(recipe) do
 				local pit = ItemStack(it)
@@ -122,8 +122,6 @@ function mcl_inventory.to_craft_grid(player, craft)
 					pinv:set_stack("craft", k, stack)
 				end
 			end
-		else
-			minetest.log("error", "Cannot prefill crafting grid: " .. msg)
 		end
 	end
 end
