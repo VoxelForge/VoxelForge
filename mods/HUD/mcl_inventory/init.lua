@@ -64,13 +64,13 @@ end
 
 function mcl_inventory.get_recipe_groups(pinv, craft)
 	local grid_width = pinv:get_width("craft")
-	if craft.width > grid_width then
+	if craft.width > grid_width or pinv:get_size("craft") < #craft.items then
 		return false
 	end
 	local r = { "", "", "", "", "", "", "", "", "" }
 	local all_found = true
 	local i = 0
-	for k = 1, 3 * craft.width do
+	for k = 1, pinv:get_size("craft") do
 		local it = craft.items[k]
 		if it then
 			if it:sub(1,6) == "group:" then
