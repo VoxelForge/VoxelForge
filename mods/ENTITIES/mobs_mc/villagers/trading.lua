@@ -789,10 +789,6 @@ local trade_inventory = {
 						xp = xp + 5
 					end
 
-					if not minetest.is_creative_enabled(player:get_player_name()) then
-						mcl_experience.throw_xp(trader.object:get_pos(), xp)
-					end
-
 					for t=1, #trades do
 						trades[t].locked = false
 						trades[t].trade_counter = 0
@@ -802,6 +798,11 @@ local trade_inventory = {
 					-- TODO: Replace by Regeneration I
 					trader.health = math.min((trader.object:get_properties().hp_max or 20), trader.health + 4)
 				end
+
+				if not minetest.is_creative_enabled(player:get_player_name()) then
+					mcl_experience.throw_xp(trader.object:get_pos(), xp)
+				end
+
 				trade.trade_counter = trade.trade_counter + 1
 				-- Semi-randomly lock trade for repeated trade (not if there's only 1 trade)
 				if trader._max_tradenum > 1 then
