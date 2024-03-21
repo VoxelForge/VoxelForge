@@ -211,7 +211,7 @@ local function light_nether_portal(pos, param2)
 			param2 = param2,
 		})
 		init_portal_meta(nodes, center)
-                register_portal(center)
+		register_portal(center)
 		return true
 	end
 	return false
@@ -551,7 +551,7 @@ local function teleport(obj)
 		return
 	end
 
-        register_portal(portal) -- Register portal if not already registered.
+	register_portal(portal) -- Register portal if not already registered.
 	portal_cooloff[obj] = true
 
 	local linked_portal = get_linked_portal(dim, target)
