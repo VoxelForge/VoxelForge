@@ -395,6 +395,11 @@ local function finalize_teleport(obj, pos, old_param2, new_param2)
 		minetest.sound_play("mcl_portals_teleport", {pos = pos, gain = 0.5, max_hear_distance = 1}, true)
 		mcl_worlds.dimension_change(obj)
 		minetest.log("action", "[mcl_portal] " .. obj:get_player_name() .. " teleported to " .. tostring(pos))
+	else
+		local l = obj:get_luaentity()
+		if l and l.is_mob then
+			l._just_portaled = 5
+		end
 	end
 
 	teleport_finished(obj)

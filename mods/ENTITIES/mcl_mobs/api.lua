@@ -429,6 +429,13 @@ function mob_class:on_step(dtime)
 		end
 	end
 
+	if self._just_portaled then
+		self._just_portaled = self._just_portaled - dtime
+		if self._just_portaled < 0 then
+			self._just_portaled = nil
+		end
+	end
+
 	if update_timers(self, dtime) then return end
 
 	self:check_particlespawners(dtime)

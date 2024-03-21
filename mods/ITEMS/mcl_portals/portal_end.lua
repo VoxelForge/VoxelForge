@@ -234,6 +234,11 @@ function mcl_portals.end_teleport(obj, pos)
 		end
 		mcl_worlds.dimension_change(obj, mcl_worlds.pos_to_dimension(target))
 		minetest.sound_play("mcl_portals_teleport", {pos=target, gain=0.5, max_hear_distance = 16}, true)
+	else
+		local l = obj:get_luaentity()
+		if l and l.is_mob then
+			l._just_portaled = 5
+		end
 	end
 end
 
