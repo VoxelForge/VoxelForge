@@ -101,29 +101,6 @@ minetest.register_node("mcl_portals:portal_end", {
 	_mcl_blast_resistance = 3600000,
 })
 
--- Obsidian platform at the End portal destination in the End
-local function build_end_portal_destination(pos)
-	local p1 = {x = pos.x - 2, y = pos.y, z = pos.z-2}
-	local p2 = {x = pos.x + 2, y = pos.y+2, z = pos.z+2}
-
-	for x = p1.x, p2.x do
-	for y = p1.y, p2.y do
-	for z = p1.z, p2.z do
-		local newp = {x=x,y=y,z=z}
-		-- Build obsidian platform
-		if minetest.registered_nodes[minetest.get_node(newp).name].is_ground_content then
-			if y == p1.y then
-				minetest.set_node(newp, {name="mcl_core:obsidian"})
-			else
-				minetest.remove_node(newp)
-			end
-		end
-	end
-	end
-	end
-end
-
-
 -- Check if pos is part of a valid end portal frame, filled with eyes of ender.
 local function check_end_portal_frame(pos)
 	for i = 1, 12 do
@@ -193,8 +170,8 @@ function mcl_portals.end_teleport(obj, pos)
 		target = target or mcl_spawn.get_world_spawn_pos(obj)
 	else
 		-- End portal in any other dimension:
-		-- Teleport to the End at a fixed position and generate a
-		-- 5×5 obsidian platform below.
+		-- Teleport to the End at a fixed position.
+		-- The destination is built by mcl_structures.
 
 		local platform_pos = mcl_vars.mg_end_platform_pos
 		-- force emerge of target1 area
@@ -202,20 +179,6 @@ function mcl_portals.end_teleport(obj, pos)
 		if not minetest.get_node_or_nil(platform_pos) then
 			minetest.emerge_area(vector.subtract(platform_pos, 3), vector.add(platform_pos, 3))
 		end
-
-		-- Build destination
-		local function check_and_build_end_portal_destination(pos)
-			local n = minetest.get_node_or_nil(pos)
-			if n and n.name ~= "mcl_core:obsidian" then
-				build_end_portal_destination(pos)
-				minetest.after(2, check_and_build_end_portal_destination, pos)
-			elseif not n then
-				minetest.after(1, check_and_build_end_portal_destination, pos)
-			end
-		end
-
-		build_end_portal_destination(platform_pos)
-		check_and_build_end_portal_destination(platform_pos)
 
 		target = table.copy(platform_pos)
 		target.y = target.y + 1
