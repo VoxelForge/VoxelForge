@@ -378,7 +378,7 @@ end
 
 local function teleport_finished(obj)
 	minetest.after(TELEPORT_COOLOFF, function(obj)
-		portal_cooloff[obj] = false
+		portal_cooloff[obj] = nil
 	end, obj)
 end
 
@@ -461,7 +461,7 @@ local function portal_emerge_area(blockpos, action, calls_remaining, param)
 	-- Since there is a significant delay until the callback is run, we do
 	-- another check if the player is still standing in the portal.
 	if not in_portal(obj) then
-		portal_cooloff[obj] = false
+		portal_cooloff[obj] = nil
 	end
 
 	local function finalize(obj, pos, param2, bad_pos)
