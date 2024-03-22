@@ -274,6 +274,9 @@ mcl_player.register_globalstep(function(player, dtime)
 			local parent_yaw = math.deg(parent:get_yaw())
 			mcl_util.set_bone_position(player, "Head_Control", nil, vector.new(pitch, -limit_vel_yaw(yaw, parent_yaw) + parent_yaw, 0))
 			mcl_util.set_bone_position(player,"Body_Control", nil, vector.zero())
+		else
+			mcl_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
+			mcl_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 		end
 	else
 		local walking = control.up or control.down or control.left or control.right
