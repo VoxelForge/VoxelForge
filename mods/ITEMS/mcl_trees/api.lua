@@ -508,11 +508,12 @@ function mcl_trees.register_wood(name, p)
 		mcl_stairs.register_stair(name, {
 			baseitem="mcl_trees:wood_"..name,
 			description = S("@1 Stairs", rname),
-			groups = { wood_stair = 1 },
+			groups = { wood_stairs = 1 },
 		})
 		mcl_stairs.register_stair(name.."_bark", {
 			baseitem="mcl_trees:bark_"..name,
 			description = S("@1 Bark Stairs", rname),
+			groups = { bark_stairs = 1 },
 			recipeitem=bark_stairs and "mcl_trees:bark_"..name or ""
 		})
 	end
@@ -528,6 +529,7 @@ function mcl_trees.register_wood(name, p)
 		mcl_stairs.register_slab(name.."_bark", {
 			baseitem="mcl_trees:bark_"..name,
 			description = S("@1 Bark Slab", rname),
+			groups = { bark_slab = 1 },
 			recipeitem=bark_stairs and "mcl_trees:bark_"..name or ""
 		})
 	end
@@ -547,7 +549,7 @@ function mcl_trees.register_wood(name, p)
 		minetest.register_craft({
 			type = "fuel",
 			recipe = "mcl_signs:wall_sign_"..name,
-			burntime = 15,
+			burntime = 10,
 		})
 	end
 
