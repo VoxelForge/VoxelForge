@@ -429,6 +429,12 @@ if minetest.get_modpath("mcl_core") and minetest.get_modpath("mcl_mobitems") the
 	})
 end
 
+minetest.register_craft({
+	type = "fuel",
+	recipe = "group:crossbow",
+	burntime = 15,
+})
+
 -- Add entry aliases for the Help
 if minetest.get_modpath("doc") then
 	doc.add_entry_alias("tools", "mcl_bows:crossbow", "tools", "mcl_bows:crossbow_0")
