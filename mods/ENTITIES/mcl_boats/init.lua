@@ -186,6 +186,9 @@ function boat.on_activate(self, staticdata, dtime_s)
 
 		-- Update the texutes for existing old boat entity instances.
 		-- Maybe remove this in the future.
+		if #data.textures >= 1 and data.textures[1] == "mcl_boats_texture_cherry_boat.png" then
+			data.textures[1] = "mcl_boats_texture_cherry_blossom_boat.png"
+		end
 		if #data.textures ~= 2 then
 			local has_chest = self._itemstring:find("chest")
 			data.textures = {
