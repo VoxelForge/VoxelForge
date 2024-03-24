@@ -119,6 +119,16 @@ function mcl_armor.register_set(def)
 	local durabilities = def.durabilities or {}
 	local element_groups = def.element_groups or {}
 
+	-- backwards compatibility
+	local descriptions = def.descriptions or {}
+	if def.description then
+		minetest.log("warning", "[mcl_armor] using the description field of armor set definitions is deprecated, please provide the localized strings in def.descriptions instead. Currently processing " .. def.name)
+		local S = minetest.get_translator(modname)
+		for name, element in pairs(mcl_armor.elements) do
+			descriptions[name] = S(def.description .. " " .. (descriptions[name] or element.description))
+		end
+	end
+
 	for name, element in pairs(mcl_armor.elements) do
 		local itemname = element.name .. "_" .. def.name
 		local itemstring = modname .. ":" .. itemname
@@ -143,7 +153,7 @@ function mcl_armor.register_set(def)
 		end
 
 		minetest.register_tool(itemstring, {
-			description = def.descriptions[name],
+			description = descriptions[name],
 			_doc_items_longdesc = mcl_armor.longdesc,
 			_doc_items_usagehelp = mcl_armor.usage,
 			inventory_image = modname .. "_inv_" .. itemname .. ".png",

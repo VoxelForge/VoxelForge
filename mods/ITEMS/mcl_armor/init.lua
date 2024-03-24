@@ -6,6 +6,7 @@ mcl_armor = {
 	elements = {
 		head = {
 			name = "helmet",
+			description = "Helmet", -- provided for backwards compatability
 			durability = 0.6857,
 			index = 2,
 			craft = function(m)
@@ -18,6 +19,7 @@ mcl_armor = {
 		},
 		torso = {
 			name = "chestplate",
+			description = "Chestplate", -- provided for backwards compatability
 			durability = 1.0,
 			index = 3,
 			craft = function(m)
@@ -30,6 +32,7 @@ mcl_armor = {
 		},
 		legs = {
 			name = "leggings",
+			description = "Leggings", -- provided for backwards compatability
 			durability = 0.9375,
 			index = 4,
 			craft = function(m)
@@ -42,6 +45,7 @@ mcl_armor = {
 		},
 		feet = {
 			name = "boots",
+			description = "Boots", -- provided for backwards compatability
 			durability = 0.8125,
 			index = 5,
 			craft = function(m)
