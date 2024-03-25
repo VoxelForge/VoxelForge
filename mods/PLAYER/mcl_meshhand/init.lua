@@ -106,6 +106,8 @@ else
 	minetest.register_on_joinplayer(mcl_meshhand.update_player)
 end
 
+mcl_gamemode.register_on_gamemode_change(mcl_meshhand.update_player)
+
 -- This is needed to deal damage when punching mobs
 -- with random items in hand in survival mode
 minetest.override_item("", {

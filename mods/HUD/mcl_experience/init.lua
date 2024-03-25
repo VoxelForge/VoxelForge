@@ -254,6 +254,15 @@ minetest.register_on_mods_loaded(function()
 	table.sort(mcl_experience.on_add_xp, function(a, b) return a.priority < b.priority end)
 end)
 
+mcl_gamemode.register_on_gamemode_change(function(p, old_gm, gm)
+	if gm == "survival" then
+		 mcl_experience.setup_hud(p)
+		 mcl_experience.update(p)
+	elseif gm == "creative" then
+		 mcl_experience.remove_hud(p)
+	end
+end)
+
 minetest.register_chatcommand("set_xp", {
 	privs = { debug = true },
 	description = "Set experience of current player",

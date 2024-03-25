@@ -1,11 +1,6 @@
 mcl_inventory = {}
-local S = minetest.get_translator("mcl_inventory")
-
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/creative.lua")
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/survival.lua")
-
---local mod_player = minetest.get_modpath("mcl_player")
---local mod_craftguide = minetest.get_modpath("mcl_craftguide")
 
 ---Returns a single itemstack in the given inventory to the main inventory, or drop it when there's no space left.
 local function return_item(itemstack, dropper, pos, inv)
@@ -234,63 +229,6 @@ end
 
 mcl_player.register_on_visual_change(mcl_inventory.update_inventory_formspec)
 
-local old_is_creative_enabled = minetest.is_creative_enabled
-
-function minetest.is_creative_enabled(name)
-	if old_is_creative_enabled(name) then return true end
-	if not name then return false end
-	assert(type(name) == "string", "minetest.is_creative_enabled requires a string (the playername) argument. This is likely an error in a non-mineclonia mod.")
-	local p = minetest.get_player_by_name(name)
-	if p then
-		return p:get_meta():get_string("gamemode") == "creative"
-	end
-	return false
-end
-
-local gamemodes = {
-	"survival",
-	"creative"
-}
-
-function mcl_inventory.player_set_gamemode(p,g)
-	local m = p:get_meta()
-	m:set_string("gamemode",g)
-	if g == "survival" then
-		 mcl_experience.setup_hud(p)
-		 mcl_experience.update(p)
-	elseif g == "creative" then
-		 mcl_experience.remove_hud(p)
-	end
-	mcl_meshhand.update_player(p)
+mcl_gamemode.register_on_gamemode_change(function(p, old_gm, gm)
 	set_inventory(p)
-end
-
-minetest.register_chatcommand("gamemode",{
-	params = S("[<gamemode>] [<player>]"),
-	description = S("Change gamemode (survival/creative) for yourself or player"),
-	privs = { server = true },
-	func = function(n,param)
-		-- Full input validation ( just for @erlehmann <3 )
-		local p
-		local args = param:split(" ")
-		if args[2] ~= nil then
-			p = minetest.get_player_by_name(args[2])
-			n = args[2]
-		else
-			p = minetest.get_player_by_name(n)
-		end
-		if not p then
-			return false, S("Player not online")
-		end
-		if args[1] ~= nil and table.indexof(gamemodes, args[1]) == -1 then
-			return false, S("Gamemode @1 does not exist.", args[1])
-		elseif args[1] ~= nil then
-			mcl_inventory.player_set_gamemode(p,args[1])
-		end
-
-		--Result message - show effective game mode
-		local gm = p:get_meta():get_string("gamemode")
-		if gm == "" then gm = gamemodes[1] end
-		return true, S("Gamemode for player @1: @2", n, gm)
-	end
-})
+end)
