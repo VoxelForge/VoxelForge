@@ -156,6 +156,9 @@ enable_real_maps (Real maps) bool true
 # Place bonus chest near players' initial spawn point
 mcl_bonus_chest (Bonus Chest) bool false
 
+# Allow editing signs
+mcl_signs_editable (Allow Editing Signs) bool false
+
 [Graphics]
 # Whether to animate chests when open / close
 animated_chests (Animated chests) bool true
