@@ -204,9 +204,6 @@ local tpl_leaves = {
 		flammable = 2, fire_encouragement = 30, fire_flammability = 60,
 		compostability = 30
 	},
-	on_construct = update_leaves,
-	after_place_node = set_placed_leaves_p2,
-	after_destruct = update_leaves,
 	_mcl_shears_drop = true,
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	_mcl_blast_resistance = 0.2,
@@ -321,6 +318,9 @@ function mcl_trees.generate_leaves_def(modname, subname, def, sapling, drop_appl
 
 	local l_def = table.merge(tpl_leaves, {
 		drop = get_drops(0),
+		on_construct = update_leaves,
+		after_place_node = set_placed_leaves_p2,
+		after_destruct = update_leaves,
 		_mcl_fortune_drop = { get_drops(1), get_drops(2), get_drops(3), get_drops(4) },
 		_mcl_leaves = leaves_id,
 		_mcl_orphan_leaves = orphan_leaves_id,
@@ -332,7 +332,6 @@ function mcl_trees.generate_leaves_def(modname, subname, def, sapling, drop_appl
 		_mcl_silk_touch_drop = {leaves_id},
 		_mcl_leaves = leaves_id,
 		_mcl_orphan_leaves = orphan_leaves_id,
-		on_construct = nil
 	})
 	o_def.groups = table.merge(l_def.groups, {
 		not_in_creative_inventory = 1,
