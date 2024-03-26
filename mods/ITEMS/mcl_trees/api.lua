@@ -117,13 +117,13 @@ local function update_leaves(pos)
 			local pos2 = pos:add(dir)
 			local distance2 = get_distance(pos2)
 			if distance2 then
-				if distance2 > distance and distance2 < 7 then
+				if distance2 == 0 then
+					fill_queue:enqueue({ pos = pos2, distance = distance2 })
+				elseif distance + 1 < 7 and distance2 ~= 7 then
 					if is_leaves(pos2) then
 						update_distance(pos2, 7)
-						clear_queue:enqueue({ pos = pos2, distance = distance2 })
+						clear_queue:enqueue({ pos = pos2, distance = distance + 1 })
 					end
-				elseif distance2 < 7 then
-					fill_queue:enqueue({ pos = pos2, distance = distance2 })
 				end
 			end
 		end
