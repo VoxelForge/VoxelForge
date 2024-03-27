@@ -82,7 +82,7 @@ function mcl_armor.equip_on_use(itemstack, player, pointed_thing)
 		return new_stack
 	end
 
-	return mcl_armor.equip(itemstack, player)
+	return mcl_armor.equip(itemstack, player, true)
 end
 
 local function get_armor_texture(textures, name, modname, itemname, itemstring)
