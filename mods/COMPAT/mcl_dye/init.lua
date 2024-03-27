@@ -1,6 +1,8 @@
 mcl_dye = {}
+mcl_dye.bone_meal_callbacks = {}
 mcl_dye.colors = mcl_dyes.colors
 mcl_dye.unicolor_to_dye = mcl_dyes.unicolor_to_dye
+mcl_dye.add_bone_meal_particle = mcl_bone_meal.add_bone_meal_particle
 
 mcl_dye.mcl2dyes_translate = {}
 for k, v in pairs(mcl_dyes.colors) do
@@ -33,3 +35,25 @@ function minetest.register_craft(recipe)
 	end
 	return old_mt_reg_craft(recipe)
 end
+
+function mcl_dye.register_on_bone_meal_apply(func)
+	table.insert(mcl_dye.bone_meal_callbacks, func)
+end
+
+local old_on_place = minetest.registered_items["mcl_bone_meal:bone_meal"].on_place
+minetest.override_item("mcl_bone_meal:bone_meal", {
+	on_place = function(itemstack, placer, pointed_thing)
+		if #mcl_dye.bone_meal_callbacks > 0 then
+			local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+			if rc then return rc end
+
+			for _, func in pairs(mcl_dye.bone_meal_callbacks) do
+				if func(pointed_thing, placer) then
+					itemstack:take_item()
+					return itemstack
+				end
+			end
+		end
+		return old_on_place(itemstack, placer, pointed_thing)
+	end
+})
