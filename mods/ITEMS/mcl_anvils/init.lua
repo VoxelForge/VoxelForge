@@ -18,12 +18,11 @@ local function get_anvil_formspec(set_name, player, cost)
 	end
 	local cost_label = ""
 	if player and not minetest.is_creative_enabled(player:get_player_name()) and cost and cost > 0 then
-		local st = S("Levels")
-		if cost == 1 then st = S("Level") end
-		local c = "label[9.125,4.225;"
-		cost_label = c..F(C(mcl_formspec.label_color, tostring(cost).." "..st)).."]"
+		local st = S("Enchantment Cost: ").." "..tostring(cost)
+		local c = "label[5.375,4.225;"
+		cost_label = c..F(C(mcl_formspec.label_color, st)).."]"
 		if player and mcl_experience.get_level(player) < cost then
-			cost_label = c..F(C(mcl_colors.RED, S("Too expensive!"))).."]"
+			cost_label = c..F(C(mcl_colors.RED, st)).."]"
 		end
 	end
 	return table.concat({
