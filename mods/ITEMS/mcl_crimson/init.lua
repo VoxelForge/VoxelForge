@@ -500,7 +500,7 @@ minetest.register_abm({
 	interval = 47 * 2.5,
 	chance = 4,
 	action = function(pos, node)
-		if node.param2 < max_vines_age then
+		if grow_vines_direction[node.name] and node.param2 < max_vines_age then
 			grow_vines(pos, 1, node.name, nil, max_vines_age)
 		end
 	end
