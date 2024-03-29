@@ -11,7 +11,7 @@ mcl_flowers.registered_simple_flowers = {}
 local smallflowerlongdesc = S("This is a small flower. Small flowers are mainly used for dye production and can also be potted.")
 local plant_usage_help = S("It can only be placed on a block on which it would also survive.")
 
-local function on_bone_meal(itemstack,placer,pointed_thing,pos,n)
+function mcl_flowers.on_bone_meal(itemstack,placer,pointed_thing,pos,n)
 	if n.name == "mcl_flowers:rose_bush" or n.name == "mcl_flowers:rose_bush_top" then
 		minetest.add_item(pos, "mcl_flowers:rose_bush")
 		return true
@@ -46,10 +46,12 @@ local function on_bone_meal(itemstack,placer,pointed_thing,pos,n)
 	return false
 end
 
+local on_bone_meal = mcl_flowers.on_bone_meal
+
 local scan_area = 9
 local spawn_on = { "mcl_core:dirt", "group:grass_block" }
 
-local function on_bone_meal_simple(itemstack, placer, pointed_thing, pos, n)
+function mcl_flowers.on_bone_meal_simple(itemstack, placer, pointed_thing, pos, n)
 	if n.name ~= "mcl_flowers:wither_rose" then
 		local nn = minetest.find_nodes_in_area_under_air(
 			vector.offset(pos, -scan_area, -3, -scan_area),
@@ -72,7 +74,9 @@ local function on_bone_meal_simple(itemstack, placer, pointed_thing, pos, n)
 	return false
 end
 
-local get_palette_color_from_pos = function(pos)
+local on_bone_meal_simple = mcl_flowers.on_bone_meal_simple
+
+function mcl_flowers.get_palette_color_from_pos(pos)
 	local biome_data = minetest.get_biome_data(pos)
 	local index = 0
 	if biome_data then
@@ -86,8 +90,10 @@ local get_palette_color_from_pos = function(pos)
 	return index
 end
 
+local get_palette_color_from_pos = mcl_flowers.get_palette_color_from_pos
+
 -- on_place function for flowers
-local on_place_flower = mcl_util.generate_on_place_plant_function(function(pos, node, itemstack)
+mcl_flowers.on_place_flower = mcl_util.generate_on_place_plant_function(function(pos, node, itemstack)
 	local below = {x=pos.x, y=pos.y-1, z=pos.z}
 	local soil_node = minetest.get_node_or_nil(below)
 	if not soil_node then return false end
@@ -119,6 +125,8 @@ local on_place_flower = mcl_util.generate_on_place_plant_function(function(pos, 
 	local ok = (soil_node.name == "mcl_core:dirt" or minetest.get_item_group(soil_node.name, "grass_block") == 1 or soil_node.name == "mcl_lush_caves:moss" or (not is_flower and (soil_node.name == "mcl_core:coarse_dirt" or soil_node.name == "mcl_core:podzol" or soil_node.name == "mcl_core:podzol_snow"))) and light_ok
 	return ok, colorize
 end)
+
+local on_place_flower = mcl_flowers.on_place_flower
 
 function mcl_flowers.register_simple_flower(name, def)
 	local newname = "mcl_flowers:"..name
@@ -252,7 +260,7 @@ if has_mcl_flowerpots then
 	})
 end
 
-local function add_large_plant(name, desc, longdesc, bottom_img, top_img, inv_img, selbox_radius, selbox_top_height, drop, shears_drop, is_flower, grass_color, fortune_drop, mesh)
+function mcl_flowers.add_large_plant(name, desc, longdesc, bottom_img, top_img, inv_img, selbox_radius, selbox_top_height, drop, shears_drop, is_flower, grass_color, fortune_drop, mesh)
 	if not inv_img then
 		inv_img = top_img
 	end
@@ -454,6 +462,8 @@ local function add_large_plant(name, desc, longdesc, bottom_img, top_img, inv_im
 	end
 
 end
+
+local add_large_plant = mcl_flowers.add_large_plant
 
 add_large_plant("peony", S("Peony"), S("A peony is a large plant which occupies two blocks. It is mainly used in dye production."), "mcl_flowers_double_plant_paeonia_bottom.png", "mcl_flowers_double_plant_paeonia_top.png", nil, 5/16, 6/16)
 add_large_plant("rose_bush", S("Rose Bush"), S("A rose bush is a large plant which occupies two blocks. It is safe to touch it. Rose bushes are mainly used in dye production."), "mcl_flowers_double_plant_rose_bottom.png", "mcl_flowers_double_plant_rose_top.png", nil, 5/16, 1/16)

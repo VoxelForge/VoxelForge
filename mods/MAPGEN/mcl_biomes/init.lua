@@ -20,6 +20,8 @@ local overworld_fogcolor = "#C0D8FF"
 --local end_fogcolor = "#A080A0"
 --local end_skycolor = "#000000"
 
+mcl_biomes = {}
+
 --
 -- Register biomes
 --
@@ -2974,7 +2976,7 @@ end
 -- All mapgens
 
 -- Template to register a grass or fern decoration
-local function register_grass_decoration(grasstype, offset, scale, biomes)
+function mcl_biomes.register_grass_decoration(grasstype, offset, scale, biomes)
 	local place_on, seed, node
 	if grasstype == "fern" then
 		node = "mcl_flowers:fern"
@@ -3009,7 +3011,9 @@ local function register_grass_decoration(grasstype, offset, scale, biomes)
 	end
 end
 
-local function register_seagrass_decoration(grasstype, offset, scale, biomes)
+local register_grass_decoration = mcl_biomes.register_grass_decoration
+
+function mcl_biomes.register_seagrass_decoration(grasstype, offset, scale, biomes)
 	local seed, nodes, surfaces, param2, param2_max, y_max
 	if grasstype == "seagrass" then
 		seed = 16
@@ -3051,6 +3055,8 @@ local function register_seagrass_decoration(grasstype, offset, scale, biomes)
 		})
 	end
 end
+
+local register_seagrass_decoration = mcl_biomes.register_seagrass_decoration
 
 local coral_min = OCEAN_MIN
 local coral_max = -10
@@ -4584,7 +4590,7 @@ local function register_decorations()
 	})
 
 	-- Doubletall grass
-	local function register_doubletall_grass(offset, scale, biomes)
+	function mcl_biomes.register_doubletall_grass(offset, scale, biomes)
 
 		for b=1, #biomes do
 			local param2 = minetest.registered_biomes[biomes[b]]._mcl_palette_index
@@ -4615,12 +4621,14 @@ local function register_decorations()
 		end
 	end
 
+	local register_doubletall_grass = mcl_biomes.register_doubletall_grass
+
 	register_doubletall_grass(-0.01, 0.03, {"Taiga", "Forest", "FlowerForest", "BirchForest", "BirchForestM", "RoofedForest"})
 	register_doubletall_grass(-0.002, 0.03, {"Plains", "SunflowerPlains", "CherryGrove"})
 	register_doubletall_grass(-0.0005, -0.03, {"Savanna", "SavannaM"})
 
 	-- Large ferns
-	local function register_double_fern(offset, scale, biomes)
+	function mcl_biomes.register_double_fern(offset, scale, biomes)
 		for b=1, #biomes do
 			local param2 = minetest.registered_biomes[biomes[b]]._mcl_palette_index
 			minetest.register_decoration({
@@ -4650,11 +4658,13 @@ local function register_decorations()
 		end
 	end
 
+	local register_double_fern = mcl_biomes.register_double_fern
+
 	register_double_fern(0.01, 0.03, { "BambooJungle", "Jungle", "JungleM", "JungleEdge", "JungleEdgeM", "Taiga", "ColdTaiga", "MegaTaiga", "MegaSpruceTaiga" })
 	register_double_fern(0.15, 0.1, { "JungleM" })
 
 	-- Large flowers
-	local function register_large_flower(name, biomes, seed, offset, flower_forest_offset)
+	function mcl_biomes.register_large_flower(name, biomes, seed, offset, flower_forest_offset)
 		local maxi
 		if flower_forest_offset then
 			maxi = 2
@@ -4699,6 +4709,8 @@ local function register_decorations()
 			})
 		end
 	end
+
+	local register_large_flower = mcl_biomes.register_large_flower
 
 	register_large_flower("rose_bush", {"Forest"}, 9350, -0.008, 0.003)
 	register_large_flower("peony", {"Forest"}, 10450, -0.008, 0.003)
@@ -5188,7 +5200,8 @@ local function register_decorations()
 			num_spawn_by = 1,
 		})
 	end
-	local function register_flower(name, biomes, seed, is_in_flower_forest)
+
+	function mcl_biomes.register_flower(name, biomes, seed, is_in_flower_forest)
 		if is_in_flower_forest == nil then
 			is_in_flower_forest = true
 		end
@@ -5231,6 +5244,8 @@ local function register_decorations()
 			})
 		end
 	end
+
+	local register_flower = mcl_biomes.register_flower
 
 	local flower_biomes1 = {"Plains", "SunflowerPlains", "RoofedForest", "Forest", "BirchForest", "BirchForestM", "Taiga", "ColdTaiga", "Jungle", "JungleM", "BambooJungle", "JungleEdge", "JungleEdgeM", "Savanna", "SavannaM", "ExtremeHills", "ExtremeHillsM", "ExtremeHills+", "ExtremeHills+_snowtop", "CherryGrove" }
 
