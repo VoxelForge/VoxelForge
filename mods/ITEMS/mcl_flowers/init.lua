@@ -238,19 +238,18 @@ minetest.register_node("mcl_flowers:tallgrass", def_tallgrass)
 
 --- Fern ---
 -- The fern is very similar to tall grass, so we can copy a lot from it.
-local def_fern = table.copy(def_tallgrass)
-def_fern.description = S("Fern")
-def_fern._doc_items_longdesc = S("Ferns are small plants which occur naturally in jungles and taigas. They can be harvested for wheat seeds. By using bone meal, a fern can be turned into a large fern which is two blocks high.")
-def_fern.tiles = { "mcl_flowers_fern.png" }
-def_fern.inventory_image = "mcl_flowers_fern_inv.png"
-def_fern.wield_image = "mcl_flowers_fern_inv.png"
-def_fern.selection_box = {
-	type = "fixed",
-	fixed = { -6/16, -0.5, -6/16, 6/16, 5/16, 6/16 },
-}
-def_fern.groups.compostability = 65
-
-minetest.register_node("mcl_flowers:fern", def_fern)
+minetest.register_node("mcl_flowers:fern", table.merge(def_tallgrass, {
+	description = S("Fern"),
+	_doc_items_longdesc = S("Ferns are small plants which occur naturally in jungles and taigas. They can be harvested for wheat seeds. By using bone meal, a fern can be turned into a large fern which is two blocks high."),
+	tiles = { "mcl_flowers_fern.png" },
+	inventory_image = "mcl_flowers_fern_inv.png",
+	wield_image = "mcl_flowers_fern_inv.png",
+	selection_box = {
+		type = "fixed",
+		fixed = { -6/16, -0.5, -6/16, 6/16, 5/16, 6/16 },
+	},
+	groups = table.merge(def_tallgrass.groups, { compostability = 65 })
+}))
 
 if has_mcl_flowerpots then
 	mcl_flowerpots.register_potted_flower("mcl_flowers:fern", {
