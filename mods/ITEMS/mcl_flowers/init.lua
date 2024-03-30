@@ -2,9 +2,6 @@ local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
 
-local mod_screwdriver = minetest.get_modpath("screwdriver")
-local has_mcl_flowerpots = minetest.get_modpath("mcl_flowerpots")
-
 mcl_flowers = {}
 mcl_flowers.registered_simple_flowers = {}
 -- Simple flower template
@@ -168,7 +165,7 @@ function mcl_flowers.register_simple_flower(name, def)
 		_mcl_silk_touch_drop = def._mcl_silk_touch_drop,
 		_on_bone_meal = on_bone_meal_simple,
 	})
-	if def.potted and has_mcl_flowerpots then
+	if def.potted then
 		mcl_flowerpots.register_potted_flower(newname, {
 			name = name,
 			desc = def.desc,
@@ -251,13 +248,11 @@ minetest.register_node("mcl_flowers:fern", table.merge(def_tallgrass, {
 	groups = table.merge(def_tallgrass.groups, { compostability = 65 })
 }))
 
-if has_mcl_flowerpots then
-	mcl_flowerpots.register_potted_flower("mcl_flowers:fern", {
-		name = "fern",
-		desc = S("Fern"),
-		image = "mcl_flowers_fern_inv.png",
-	})
-end
+mcl_flowerpots.register_potted_flower("mcl_flowers:fern", {
+	name = "fern",
+	desc = S("Fern"),
+	image = "mcl_flowers_fern_inv.png",
+})
 
 function mcl_flowers.add_large_plant(name, desc, longdesc, bottom_img, top_img, inv_img, selbox_radius, selbox_top_height, drop, shears_drop, is_flower, grass_color, fortune_drop, mesh)
 	if not inv_img then
@@ -497,11 +492,6 @@ minetest.register_abm({
 	end,
 })
 
-local on_rotate
-if mod_screwdriver then
-	on_rotate = screwdriver.rotate_simple
-end
-
 -- Lily Pad
 minetest.register_node("mcl_flowers:waterlily", {
 	description = S("Lily Pad"),
@@ -571,7 +561,7 @@ minetest.register_node("mcl_flowers:waterlily", {
 		end
 		return itemstack
 	end,
-	on_rotate = on_rotate,
+	on_rotate = screwdriver.rotate_simple,
 })
 
 -- Legacy support
