@@ -43,8 +43,6 @@ function mcl_flowers.on_bone_meal(itemstack,placer,pointed_thing,pos,n)
 	return false
 end
 
-local on_bone_meal = mcl_flowers.on_bone_meal
-
 local scan_area = 9
 local spawn_on = { "mcl_core:dirt", "group:grass_block" }
 
@@ -71,8 +69,6 @@ function mcl_flowers.on_bone_meal_simple(itemstack, placer, pointed_thing, pos, 
 	return false
 end
 
-local on_bone_meal_simple = mcl_flowers.on_bone_meal_simple
-
 function mcl_flowers.get_palette_color_from_pos(pos)
 	local biome_data = minetest.get_biome_data(pos)
 	local index = 0
@@ -87,8 +83,6 @@ function mcl_flowers.get_palette_color_from_pos(pos)
 	return index
 end
 
-local get_palette_color_from_pos = mcl_flowers.get_palette_color_from_pos
-
 -- on_place function for flowers
 mcl_flowers.on_place_flower = mcl_util.generate_on_place_plant_function(function(pos, node, itemstack)
 	local below = {x=pos.x, y=pos.y-1, z=pos.z}
@@ -98,7 +92,7 @@ mcl_flowers.on_place_flower = mcl_util.generate_on_place_plant_function(function
 	local has_palette = minetest.registered_nodes[itemstack:get_name()].palette ~= nil
 	local colorize
 	if has_palette then
-		colorize = get_palette_color_from_pos(pos)
+		colorize = mcl_flowers.get_palette_color_from_pos(pos)
 	end
 	if not colorize then
 		colorize = 0
@@ -163,7 +157,7 @@ function mcl_flowers.register_simple_flower(name, def)
 			fixed = def.selection_box,
 		},
 		_mcl_silk_touch_drop = def._mcl_silk_touch_drop,
-		_on_bone_meal = on_bone_meal_simple,
+		_on_bone_meal = mcl_flowers.on_bone_meal_simple,
 	})
 	if def.potted then
 		mcl_flowerpots.register_potted_flower(newname, {
@@ -229,7 +223,7 @@ local def_tallgrass = {
 	on_place = on_place_flower,
 	_mcl_blast_resistance = 0,
 	_mcl_hardness = 0,
-	_on_bone_meal = on_bone_meal,
+	_on_bone_meal = mcl_flowers.on_bone_meal,
 }
 minetest.register_node("mcl_flowers:tallgrass", def_tallgrass)
 
@@ -386,7 +380,7 @@ function mcl_flowers.add_large_plant(name, desc, longdesc, bottom_img, top_img, 
 			if (floor.name == "mcl_core:dirt" or minetest.get_item_group(floor.name, "grass_block") == 1 or floor.name == "mcl_lush_caves:moss" or (not is_flower and (floor.name == "mcl_core:coarse_dirt" or floor.name == "mcl_core:podzol" or floor.name == "mcl_core:podzol_snow"))) and bottom_buildable and top_buildable and light_ok then
 				local param2
 				if grass_color then
-					param2 = get_palette_color_from_pos(bottom)
+					param2 = mcl_flowers.get_palette_color_from_pos(bottom)
 				end
 				-- Success! We can now place the flower
 				minetest.sound_play(minetest.registered_nodes[itemstring].sounds.place, {pos = bottom, gain=1}, true)
@@ -408,7 +402,7 @@ function mcl_flowers.add_large_plant(name, desc, longdesc, bottom_img, top_img, 
 		end,
 		groups = bottom_groups,
 		sounds = mcl_sounds.node_sound_leaves_defaults(),
-		_on_bone_meal = on_bone_meal,
+		_on_bone_meal = mcl_flowers.on_bone_meal,
 		mesh = mesh
 	})
 
@@ -447,7 +441,7 @@ function mcl_flowers.add_large_plant(name, desc, longdesc, bottom_img, top_img, 
 		end,
 		groups = top_groups,
 		sounds = mcl_sounds.node_sound_leaves_defaults(),
-		_on_bone_meal = on_bone_meal,
+		_on_bone_meal = mcl_flowers.on_bone_meal,
 	})
 
 	if minetest.get_modpath("doc") and longdesc then
