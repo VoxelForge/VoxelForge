@@ -21,5 +21,22 @@ Register a simple flower:
 
 ## mcl_flowers.on_place_flower(pos, node, itemstack)
 
-## mcl_flowers.add_large_plant(name, desc, longdesc, bottom_img, top_img, inv_img, selbox_radius, selbox_top_height, drop, shears_drop, is_flower, grass_color, fortune_drop, mesh)
+## mcl_flowers.add_large_plant(name, large_plant_definition)
 
+### Large plant definition
+```lua
+{
+	bottom = {
+		tiles = { "tile1.png" },
+		-- any node definition fields for the bottom node
+	},
+	top = {
+		--optional: any node definition fields for the top node
+	},
+	tiles_top = { "tile1_top.png" }, -- this may be used as a shortcut for top = { tiles = { "tile1_top.png" }},
+	selbox_radius = 5/16,            --radius of the selection box
+	selbox_top_height = 5/16,        --height or the selection box of the top part
+	grass_color = false,             -- if grasslike param2 coloring should be used for this plant
+	is_flower = false,               -- if plant is considered a flower
+}
+```
