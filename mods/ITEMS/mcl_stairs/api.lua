@@ -231,6 +231,13 @@ local function register_stair(subname, stairdef)
 	mcl_stairs.cornerstair.add("mcl_stairs:stair_"..subname, stairdef.corner_stair_texture_override)
 end
 
+function mcl_stairs.get_base_itemstring(itemstring)
+	local is = itemstring:gsub("_top", "")
+	is = is:gsub("_double", "")
+	is = is:gsub("_inner", "")
+	is = is:gsub("_outer", "")
+	return is
+end
 
 -- Register slab function used internally for new and old API (not exposed
 -- externally).

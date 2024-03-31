@@ -82,6 +82,18 @@ local function register_unpreserve(nodename,od,def)
 	end
 	nd.groups = table.merge(nd.groups, { affected_by_lightning = 0 })
 	nd._on_lightning_strike = nil
+	if od._mcl_other_slab_half then
+		nd._mcl_other_slab_half = od._mcl_other_slab_half.."_preserved"
+	end
+	if od.stairs then
+		nd.stairs = { od.stairs[1].."_preserved", od.stairs[1].."_outer_preserved", od.stairs[1].."_inner_preserved" }
+		nd.drop = mcl_stairs.get_base_itemstring(nodename).."_preserved"
+	end
+	if minetest.get_item_group(nodename, "double_slab") > 0 then
+		nd.drop = mcl_stairs.get_base_itemstring(nodename).."_preserved 2"
+	elseif minetest.get_item_group(nodename, "slab_top") > 0 then
+		nd.drop = mcl_stairs.get_base_itemstring(nodename).."_preserved"
+	end
 	minetest.register_node(":"..nodename.."_preserved",nd)
 end
 
