@@ -10,13 +10,14 @@ local function place_slab_normal(itemstack, placer, pointed_thing)
 
 	local place = ItemStack(itemstack)
 	local origname = place:get_name()
+	local origdef = minetest.registered_nodes[origname]
 
 	--local placer_pos = placer:get_pos()
-	if
-		placer
+	if placer
 		and mcl_util.is_pointing_above_middle(placer, pointed_thing)
+		and origdef and origdef._mcl_other_slab_half
 	then
-		place:set_name(origname .. "_top")
+		place:set_name(origdef._mcl_other_slab_half)
 	end
 
 	local ret = minetest.item_place(place, placer, pointed_thing, 0)
@@ -287,6 +288,7 @@ local function register_slab(subname, stairdef)
 			local wield_item = itemstack:get_name()
 			local player_name = placer and placer:get_player_name() or ""
 			local creative_enabled = minetest.is_creative_enabled(player_name)
+			local def = minetest.registered_nodes[wield_item]
 
 			-- place slab using under node orientation
 			local dir = vector.subtract(pointed_thing.above, pointed_thing.under)
@@ -306,7 +308,7 @@ local function register_slab(subname, stairdef)
 						player_name)
 					return
 				end
-				local newnode = double_slab
+				local newnode = def._mcl_stairs_double_slab or double_slab
 				minetest.set_node(pointed_thing.under, {name = newnode, param2 = p2})
 				if not creative_enabled then
 					itemstack:take_item()

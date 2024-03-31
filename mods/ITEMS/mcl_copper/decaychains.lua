@@ -93,6 +93,8 @@ local function register_unpreserve(nodename,od,def)
 		nd.drop = mcl_stairs.get_base_itemstring(nodename).."_preserved 2"
 	elseif minetest.get_item_group(nodename, "slab_top") > 0 then
 		nd.drop = mcl_stairs.get_base_itemstring(nodename).."_preserved"
+	elseif minetest.get_item_group(nodename, "slab") > 0 then
+		nd._mcl_stairs_double_slab = nodename.."_double_preserved"
 	end
 	minetest.register_node(":"..nodename.."_preserved",nd)
 end

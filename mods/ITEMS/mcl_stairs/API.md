@@ -71,6 +71,11 @@ Used by `mcl_stairs.register_stair`, `mcl_stairs.register_slab` and
 }
 ```
 
+## Special node definition fields
+### Slabs
+* `_mcl_stairs_double_slab` -- This optionally references the node name of the double slab variant for placement
+* `_mcl_other_slab_half` -- This references the node name of the other slab half for upper and lower slabs - automatically set in normal operation.
+
 ## Backwards compatible API
 This section describes old `mcl_stairs` API which has been deprecated.
 
