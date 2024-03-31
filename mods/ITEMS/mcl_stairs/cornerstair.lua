@@ -501,9 +501,10 @@ function mcl_stairs.cornerstair.add(name, stairtiles)
 				end
 			end
 			local connect = stair_param_to_connect(get_stair_param(node), ceiling)
+			local def = minetest.registered_nodes[name]
 			local t = {
 				{pos = {x = pos.x - 1, y = pos.y, z = pos.z + 1}}, {pos = {x = pos.x, y = pos.y, z = pos.z + 1}}, {pos = {x = pos.x + 1, y = pos.y, z = pos.z + 1}},
-				{pos = {x = pos.x - 1, y = pos.y, z = pos.z}}, {pos = pos, stairs = {name, name.."_outer", name.."_inner"}, connect = connect}, {pos = {x = pos.x + 1, y = pos.y, z = pos.z}},
+				{pos = {x = pos.x - 1, y = pos.y, z = pos.z}}, {pos = pos, stairs = {name, def.stairs[2], def.stairs[3]}, connect = connect}, {pos = {x = pos.x + 1, y = pos.y, z = pos.z}},
 				{pos = {x = pos.x - 1, y = pos.y, z = pos.z - 1}}, {pos = {x = pos.x, y = pos.y, z = pos.z - 1}}, {pos = {x = pos.x + 1, y = pos.y, z = pos.z - 1}},
 			}
 			for i,v in ipairs(t) do
