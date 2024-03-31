@@ -2,11 +2,10 @@
 #Translations of enchantements
 This is a piece of equippable armor which reduces the amount of damage you receive.=
 To equip it, put it on the corresponding armor slot in your inventory menu.=
-Leather=
-Cap=
-Tunic=
-Pants=
-Boots=
+Leather Cap=
+Leather Tunic=
+Leather Pants=
+Leather Boots=
 Colorize a piece of leather armor, or wash it=
 Not leather armor.=
 Washed.=
