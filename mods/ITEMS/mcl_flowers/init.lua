@@ -127,7 +127,7 @@ function mcl_flowers.register_simple_flower(name, def)
 		image=def.image,
 		simple_selection_box=def.simple_selection_box,
 	}
-	minetest.register_node(newname, {
+	minetest.register_node(":"..newname, {
 		description = def.desc,
 		_doc_items_longdesc = smallflowerlongdesc,
 		_doc_items_usagehelp = mcl_flowers.plant_usage_help,
@@ -289,7 +289,7 @@ function mcl_flowers.add_large_plant(name, def)
 	local selbox_top_height = def.selbox_top_height or 0.5
 	local inv_img = def.bottom.inventory_image or (def.tiles_top and def.tiles_top[1]) or (def.top.tiles and def.top.tiles[1])
 	-- Bottom
-	minetest.register_node("mcl_flowers:"..name, table.merge(tpl_large_plant_bottom,{
+	minetest.register_node(":mcl_flowers:"..name, table.merge(tpl_large_plant_bottom,{
 		node_placement_prediction = "",
 		inventory_image = inv_img,
 		wield_image = inv_img,
@@ -300,7 +300,7 @@ function mcl_flowers.add_large_plant(name, def)
 	}, def.bottom or {}))
 
 	-- Top
-	minetest.register_node("mcl_flowers:"..name.."_top", table.merge(tpl_large_plant_top, {
+	minetest.register_node(":mcl_flowers:"..name.."_top", table.merge(tpl_large_plant_top, {
 		description = S("@1 (Top Part)", def.bottom.description or name),
 		selection_box = {
 			type = "fixed",
