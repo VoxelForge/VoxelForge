@@ -28,12 +28,17 @@ Register a simple flower:
 {
 	bottom = {
 		tiles = { "tile1.png" },
-		-- any node definition fields for the bottom node
+		-- optional: any node definition fields for the bottom node
 	},
 	top = {
 		--optional: any node definition fields for the top node
+		--some fields e.g. "drop" and related are copied from the bottom node if not specified explicitly
 	},
+	desc = "Short Description",
+	longdesc = "Crazy Long description",
+	inv_img = "image.png",           -- inventory and wield image
 	tiles_top = { "tile1_top.png" }, -- this may be used as a shortcut for top = { tiles = { "tile1_top.png" }},
+	tiles_bottom = { "tile1_bottom.png" }, -- this may be used as a shortcut for bottom = { tiles = { "tile1_bottom.png" }},
 	selbox_radius = 5/16,            --radius of the selection box
 	selbox_top_height = 5/16,        --height or the selection box of the top part
 	grass_color = false,             -- if grasslike param2 coloring should be used for this plant

@@ -287,12 +287,16 @@ function mcl_flowers.add_large_plant(name, def)
 
 	local selbox_radius = def.selbox_radius or 0.5
 	local selbox_top_height = def.selbox_top_height or 0.5
-	local inv_img = def.bottom.inventory_image or (def.tiles_top and def.tiles_top[1]) or (def.top.tiles and def.top.tiles[1])
+	local inv_img = def.inv_img or def.bottom.inventory_image or (def.tiles_top and def.tiles_top[1]) or (def.top.tiles and def.top.tiles[1])
 	-- Bottom
 	minetest.register_node(":mcl_flowers:"..name, table.merge(tpl_large_plant_bottom,{
+		description = def.desc,
+		_doc_items_longdesc = def.longdesc,
+		tiles = def.tiles_bottom,
 		node_placement_prediction = "",
 		inventory_image = inv_img,
 		wield_image = inv_img,
+		drop = "mcl_flowers:"..name,
 		selection_box = {
 			type = "fixed",
 			fixed = { -selbox_radius, -0.5, -selbox_radius, selbox_radius, 0.5, selbox_radius },
@@ -301,7 +305,8 @@ function mcl_flowers.add_large_plant(name, def)
 
 	-- Top
 	minetest.register_node(":mcl_flowers:"..name.."_top", table.merge(tpl_large_plant_top, {
-		description = S("@1 (Top Part)", def.bottom.description or name),
+		description = S("@1 (Top Part)", def.desc or def.bottom.description or name),
+		_doc_items_create_entry = false,
 		selection_box = {
 			type = "fixed",
 			fixed = { -selbox_radius, -0.5, -selbox_radius, selbox_radius, selbox_top_height, selbox_radius },
