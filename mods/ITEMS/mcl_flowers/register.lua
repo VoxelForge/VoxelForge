@@ -250,3 +250,74 @@ mcl_flowerpots.register_potted_flower("mcl_flowers:fern", {
 	desc = S("Fern"),
 	image = "mcl_flowers_fern_inv.png",
 })
+
+minetest.register_node("mcl_flowers:waterlily", {
+	description = S("Lily Pad"),
+	_doc_items_longdesc = S("A lily pad is a flat plant block which can be walked on. They can be placed on water sources, ice and frosted ice."),
+	drawtype = "nodebox",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	tiles = {"flowers_waterlily.png", "flowers_waterlily.png^[transformFY"},
+	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
+	inventory_image = "flowers_waterlily.png",
+	wield_image = "flowers_waterlily.png",
+	liquids_pointable = true,
+	walkable = true,
+	sunlight_propagates = true,
+	groups = {
+		deco_block = 1, plant = 1, compostability = 65, destroy_by_lava_flow = 1,
+		dig_immediate = 3, dig_by_water = 1, dig_by_piston = 1, dig_by_boat = 1,
+	},
+	sounds = mcl_sounds.node_sound_leaves_defaults(),
+	node_placement_prediction = "",
+	node_box = {
+		type = "fixed",
+		fixed = {-0.5, -31/64, -0.5, 0.5, -15/32, 0.5}
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {-7 / 16, -0.5, -7 / 16, 7 / 16, -15 / 32, 7 / 16}
+	},
+
+	on_place = function(itemstack, placer, pointed_thing)
+		if not placer or not placer:is_player() then
+			return itemstack
+		end
+
+		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		if rc then return rc end
+
+		local pos = pointed_thing.above
+		local node = minetest.get_node(pointed_thing.under)
+		local nodename = node.name
+		local def = minetest.registered_nodes[nodename]
+		local node_above = minetest.get_node(pointed_thing.above).name
+		local def_above = minetest.registered_nodes[node_above]
+		local player_name = placer:get_player_name()
+
+		if def then
+			if (pointed_thing.under.x == pointed_thing.above.x and pointed_thing.under.z == pointed_thing.above.z) and
+					((def.liquidtype == "source" and minetest.get_item_group(nodename, "water") > 0) or
+					(nodename == "mcl_core:ice") or
+					(minetest.get_item_group(nodename, "frosted_ice") > 0)) and
+					(def_above.buildable_to and minetest.get_item_group(node_above, "liquid") == 0) then
+				if not minetest.is_protected(pos, player_name) then
+					minetest.set_node(pos, {name = "mcl_flowers:waterlily", param2 = math.random(0, 3)})
+					local idef = itemstack:get_definition()
+
+					if idef.sounds and idef.sounds.place then
+						minetest.sound_play(idef.sounds.place, {pos=pointed_thing.above, gain=1}, true)
+					end
+
+					if not minetest.is_creative_enabled(player_name) then
+						itemstack:take_item()
+					end
+				else
+					minetest.record_protection_violation(pos, player_name)
+				end
+			end
+		end
+		return itemstack
+	end,
+	on_rotate = screwdriver.rotate_simple,
+})
