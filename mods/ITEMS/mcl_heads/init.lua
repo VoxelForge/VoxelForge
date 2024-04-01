@@ -124,7 +124,7 @@ end
 --- registers a head
 --- @param head_def HeadDef head node definition
 function mcl_heads.register_head(head_def)
-	local name = "mcl_heads:" ..head_def.name
+	local name = ":mcl_heads:" ..head_def.name
 
 	-- register the floor head node
 	minetest.register_node(name, table.update(table.copy(mcl_heads.deftemplate), {
