@@ -91,8 +91,8 @@ end
 minetest.register_node("mcl_lightning_rods:rod_powered", rod_def_a)
 
 mcl_lightning.register_on_strike(function(pos, pos2, objects)
-	local lr = minetest.find_node_near(pos, 128, { "group:attracts_lightning" }, true)
-
+	local lr = minetest.find_nodes_in_area_under_air(vector.offset(pos, -64, -32, -64), vector.offset(pos, 64, 64, 64), { "group:attracts_lightning" }, true)
+	lr = (lr and #lr > 0 and lr[1]) or false
 	if lr then
 		local node = minetest.get_node(lr)
 
