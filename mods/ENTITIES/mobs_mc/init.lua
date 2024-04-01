@@ -72,9 +72,16 @@ end
 
 mobs_mc.shears_wear = 276
 mobs_mc.water_level = tonumber(minetest.settings:get("water_level")) or 0
-
--- Animals
 local path = minetest.get_modpath("mobs_mc")
+for _, file in pairs(minetest.get_dir_list(path, false)) do
+	if file:sub(-4) == ".lua" and file ~= "init.lua" then
+		dofile(path .. "/" ..file)
+	end
+end
+
+--[[
+-- Animals
+
 dofile(path .. "/axolotl.lua") -- Mesh and animation by JoeEnderman, Textures by Nova Wustra, modified by JoeEnderman
 dofile(path .. "/bat.lua") -- Mesh and animation by toby109tt  / https://github.com/22i
 dofile(path .. "/rabbit.lua") -- Mesh and animation byExeterDad
@@ -136,3 +143,4 @@ dofile(path .. "/piglin.lua")
 dofile(path .. "/hoglin+zoglin.lua")
 
 dofile(path .. "/strider.lua")
+--]]
