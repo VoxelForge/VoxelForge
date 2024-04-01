@@ -32,24 +32,6 @@ local function queue()
 	}
 end
 
-local function old_update_leaves(pos)
-	local pos1, pos2 = vector.offset(pos, -6, -6, -6), vector.offset(pos, 6, 6, 6)
-	local leaves = minetest.find_nodes_in_area(pos1, pos2, "group:leaves")
-	for _, lpos in pairs(leaves) do
-		local lnode = minetest.get_node(lpos)
-		-- skip orphan leaves and leaves which have log distance
-		if math.floor(lnode.param2 / 32) == 0 and minetest.get_item_group(lnode.name, "orphan_leaves") ~= 1 then
-			if not minetest.find_node_near(lpos, 6, "group:tree") then
-				-- manually placed leaf nodes have "no_decay" set to 1
-				-- in their node meta and will not decay automatically
-				if minetest.get_meta(lpos):get_int("no_decay") == 0 and minetest.registered_nodes[lnode.name .. "_orphan"] then
-					minetest.swap_node(lpos, { name = lnode.name .. "_orphan", param2 = lnode.param2 })
-				end
-			end
-		end
-	end
-end
-
 local function update_leaves(pos)
 	local vm = minetest.get_voxel_manip()
 	local emin, emax = vm:read_from_map(pos:offset(-7, -7, -7), pos:offset(7, 7, 7))
@@ -175,7 +157,6 @@ local tpl_log = {
 	on_place = mcl_util.rotate_axis,
 	on_construct = update_leaves,
 	after_destruct = function(pos)
-		old_update_leaves(pos)
 		update_leaves(pos)
 	end,
 	on_rotate = screwdriver.rotate_3way,
