@@ -19,6 +19,10 @@ mcl_trees.register_wood("mangrove",{
 	leaves = {
 		tiles = { "mcl_mangrove_leaves.png" },
 		color = "#6a7039",
+		_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
+			local upos = vector.offset(pos, 0,-1,0)
+			return minetest.get_node(upos).name == "air" and minetest.set_node(upos, {name="mcl_mangrove:hanging_propagule_1"})
+		end,
 	},
 	wood = { tiles = {"mcl_mangrove_planks.png"}},
 	stripped = {
