@@ -971,7 +971,16 @@ for i=1,8 do
 
 		-- Stack snow
 		local g = minetest.get_item_group(tnode.name, "top_snow")
-		if g > 0 then
+		if g == 8 then
+			local p = vector.offset(target, 0,1,0)
+			if minetest.get_node(p).name == "air" then
+				minetest.set_node(p, {name="mcl_core:snow"})
+				if not minetest.is_creative_enabled(placer:get_player_name()) then
+					itemstack:take_item()
+				end
+			end
+			return itemstack
+		elseif g > 0 then
 			local itemstring = itemstack:get_name()
 			local itemcount = itemstack:get_count()
 			local fakestack = ItemStack(itemstring.." "..itemcount)
