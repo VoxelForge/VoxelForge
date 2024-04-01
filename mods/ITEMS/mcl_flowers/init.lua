@@ -271,7 +271,7 @@ function mcl_flowers.add_large_plant(name, def)
 		table.update(def.bottom.groups, { place_flowerlike = 2, handy = 1, shearsy = 1 })
 	end
 
-	table.update(def.top.groups, { not_in_creative_inventory=1, double_plant=2, attached_node=nil })
+	table.update(def.top.groups, { not_in_creative_inventory=1, handy = 1, shearsy = 1, double_plant=2, attached_node=nil })
 
 	if def.grass_color then
 		def.bottom.paramtype2 = "color"
