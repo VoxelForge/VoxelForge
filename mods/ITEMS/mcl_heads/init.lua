@@ -124,10 +124,10 @@ end
 --- registers a head
 --- @param head_def HeadDef head node definition
 function mcl_heads.register_head(head_def)
-	local name = ":mcl_heads:" ..head_def.name
+	local name = "mcl_heads:" ..head_def.name
 
 	-- register the floor head node
-	minetest.register_node(name, table.update(table.copy(mcl_heads.deftemplate), {
+	minetest.register_node(":"..name, table.update(table.copy(mcl_heads.deftemplate), {
 		description = head_def.description,
 		_doc_items_longdesc = head_def.longdesc,
 		tiles = { head_def.texture },
@@ -137,7 +137,7 @@ function mcl_heads.register_head(head_def)
 		_mcl_armor_texture = "[combine:64x32:32,0=" ..head_def.texture,
 	}))
 
-	minetest.register_node(name.."_ceiling", table.update(table.copy(mcl_heads.deftemplate), {
+	minetest.register_node(":"..name.."_ceiling", table.update(table.copy(mcl_heads.deftemplate), {
 		mesh = "mcl_heads_ceiling.obj",
 		groups = {
 			handy = 1,
@@ -165,7 +165,7 @@ function mcl_heads.register_head(head_def)
 	}))
 
 	-- register the wall head node
-	minetest.register_node(name .."_wall", table.update(table.copy(mcl_heads.deftemplate), {
+	minetest.register_node(":"..name .."_wall", table.update(table.copy(mcl_heads.deftemplate), {
 		drawtype = "nodebox",
 		paramtype = "light",
 		paramtype2 = "wallmounted",
