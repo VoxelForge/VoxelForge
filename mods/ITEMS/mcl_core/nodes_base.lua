@@ -923,6 +923,62 @@ for i=0,3 do
 	end
 end
 
+local function on_place(itemstack, placer, pointed_thing)
+	-- Placement is only allowed on top of solid blocks
+	if pointed_thing.type ~= "node" then
+		-- no interaction possible with entities
+		return itemstack
+	end
+	local def = minetest.registered_nodes[minetest.get_node(pointed_thing.under).name]
+	local above = pointed_thing.above
+	local under = pointed_thing.under
+
+	local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+	if rc then return rc end
+
+	-- Get position where snow would be placed
+	local target
+	if def and def.buildable_to then
+		target = under
+	else
+		target = above
+	end
+	local tnode = minetest.get_node(target)
+
+	-- Stack snow
+	local g = minetest.get_item_group(tnode.name, "top_snow")
+	if g == 8 then
+		local p = vector.offset(target, 0,1,0)
+		if minetest.get_node(p).name == "air" then
+			minetest.set_node(p, {name="mcl_core:snow"})
+			if not minetest.is_creative_enabled(placer:get_player_name()) then
+				itemstack:take_item()
+			end
+		end
+		return itemstack
+	elseif g > 0 then
+		local itemstring = itemstack:get_name()
+		local itemcount = itemstack:get_count()
+		local fakestack = ItemStack(itemstring.." "..itemcount)
+		fakestack:set_name("mcl_core:snow_"..(g+1))
+		itemstack = minetest.item_place(fakestack, placer, pointed_thing)
+		minetest.sound_play(mcl_sounds.node_sound_snow_defaults().place, {pos = pointed_thing.under}, true)
+		itemstack:set_name(itemstring)
+		return itemstack
+	end
+
+	-- Place snow normally
+	local below = {x=target.x, y=target.y-1, z=target.z}
+	local bnode = minetest.get_node(below)
+
+	if minetest.get_item_group(bnode.name, "solid") == 1 then
+		minetest.sound_play(mcl_sounds.node_sound_snow_defaults().place, {pos = below}, true)
+		return minetest.item_place_node(itemstack, placer, pointed_thing)
+	else
+		return itemstack
+	end
+end
+
 for i=1,8 do
 	local id, desc, longdesc, usagehelp, tt_help, help, walkable, drawtype, node_box
 	if i == 1 then
@@ -946,61 +1002,6 @@ for i=1,8 do
 			type = "fixed",
 			fixed = { -0.5, -0.5, -0.5, 0.5, -0.5 + (2*i)/16, 0.5 },
 		}
-	end
-	local function on_place(itemstack, placer, pointed_thing)
-		-- Placement is only allowed on top of solid blocks
-		if pointed_thing.type ~= "node" then
-			-- no interaction possible with entities
-			return itemstack
-		end
-		local def = minetest.registered_nodes[minetest.get_node(pointed_thing.under).name]
-		local above = pointed_thing.above
-		local under = pointed_thing.under
-
-		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
-		if rc then return rc end
-
-		-- Get position where snow would be placed
-		local target
-		if def and def.buildable_to then
-			target = under
-		else
-			target = above
-		end
-		local tnode = minetest.get_node(target)
-
-		-- Stack snow
-		local g = minetest.get_item_group(tnode.name, "top_snow")
-		if g == 8 then
-			local p = vector.offset(target, 0,1,0)
-			if minetest.get_node(p).name == "air" then
-				minetest.set_node(p, {name="mcl_core:snow"})
-				if not minetest.is_creative_enabled(placer:get_player_name()) then
-					itemstack:take_item()
-				end
-			end
-			return itemstack
-		elseif g > 0 then
-			local itemstring = itemstack:get_name()
-			local itemcount = itemstack:get_count()
-			local fakestack = ItemStack(itemstring.." "..itemcount)
-			fakestack:set_name("mcl_core:snow_"..math.min(8, (i+g)))
-			itemstack = minetest.item_place(fakestack, placer, pointed_thing)
-			minetest.sound_play(mcl_sounds.node_sound_snow_defaults().place, {pos = pointed_thing.under}, true)
-			itemstack:set_name(itemstring)
-			return itemstack
-		end
-
-		-- Place snow normally
-		local below = {x=target.x, y=target.y-1, z=target.z}
-		local bnode = minetest.get_node(below)
-
-		if minetest.get_item_group(bnode.name, "solid") == 1 then
-			minetest.sound_play(mcl_sounds.node_sound_snow_defaults().place, {pos = below}, true)
-			return minetest.item_place_node(itemstack, placer, pointed_thing)
-		else
-			return itemstack
-		end
 	end
 
 	minetest.register_node(id, {
