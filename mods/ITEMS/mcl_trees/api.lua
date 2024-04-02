@@ -164,9 +164,7 @@ local tpl_log = {
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	on_place = mcl_util.rotate_axis,
 	on_construct = update_leaves,
-	after_destruct = function(pos)
-		update_leaves(pos)
-	end,
+	after_destruct = update_leaves,
 	on_rotate = screwdriver.rotate_3way,
 	_on_axe_place = mcl_trees.strip_tree,
 	_mcl_blast_resistance = 2,
