@@ -2,7 +2,7 @@
 
 _Adapted from the [Repixture](https://codeberg.org/Wuzzy/Repixture) translation maintenance workflow._
 
-This document is directed to *developers* describing what to do how to make sure the Mineclonia translation files stay up to date and functional.
+This document is directed to *developers* describing how to make sure the Mineclonia translation files stay up to date and functional.
 
 **If you just want to translate, go to:** <https://translate.codeberg.org/projects/mineclonia/> (you can ignore the rest of the document)
 
