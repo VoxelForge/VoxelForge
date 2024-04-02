@@ -204,13 +204,6 @@ mcl_villages_allow_water_villages (Spawn village buildings on top of water) bool
 # Note that mob icons does not exist for all mobs.
 mcl_old_spawn_icons (Old spawn icons instead of eggs) bool false
 
-# Make some blocks emit decorative particles like flames. This setting
-# specifies the detail level of particles, with higher levels being
-# more CPU demanding.
-# WARNING: This setting has quite poor performance and can slow down your
-# game by a lot.
-mcl_node_particles (Block particles detail level) enum none high,medium,low,none
-
 [Debugging]
 # If enabled mapgen timings will be dumped to log
 mcl_logging_mapgen (Log chunk generation) bool false

@@ -234,40 +234,6 @@ function mcl_furnaces.on_metadata_inventory_put(pos, listname, index, stack, pla
 	end
 end
 
-function mcl_furnaces.spawn_flames(pos, param2)
-	local minrelpos, maxrelpos
-	local dir = minetest.facedir_to_dir(param2)
-	if dir.x > 0 then
-		minrelpos = { x = -0.6, y = -0.05, z = -0.25 }
-		maxrelpos = { x = -0.55, y = -0.45, z = 0.25 }
-	elseif dir.x < 0 then
-		minrelpos = { x = 0.55, y = -0.05, z = -0.25 }
-		maxrelpos = { x = 0.6, y = -0.45, z = 0.25 }
-	elseif dir.z > 0 then
-		minrelpos = { x = -0.25, y = -0.05, z = -0.6 }
-		maxrelpos = { x = 0.25, y = -0.45, z = -0.55 }
-	elseif dir.z < 0 then
-		minrelpos = { x = -0.25, y = -0.05, z = 0.55 }
-		maxrelpos = { x = 0.25, y = -0.45, z = 0.6 }
-	else
-		return
-	end
-	mcl_particles.add_node_particlespawner(pos, {
-		amount = 4,
-		time = 0,
-		minpos = vector.add(pos, minrelpos),
-		maxpos = vector.add(pos, maxrelpos),
-		minvel = { x = -0.01, y = 0, z = -0.01 },
-		maxvel = { x = 0.01, y = 0.1, z = 0.01 },
-		minexptime = 0.3,
-		maxexptime = 0.6,
-		minsize = 0.4,
-		maxsize = 0.8,
-		texture = "mcl_particles_flame.png",
-		glow = LIGHT_ACTIVE_FURNACE,
-	}, "low")
-end
-
 function mcl_furnaces.swap_node(pos, name)
 	local node = minetest.get_node(pos)
 	if node.name == name then
@@ -275,11 +241,6 @@ function mcl_furnaces.swap_node(pos, name)
 	end
 	node.name = name
 	minetest.swap_node(pos, node)
-	if name == "mcl_furnaces:furnace_active" then
-		mcl_furnaces.spawn_flames(pos, node.param2)
-	else
-		mcl_particles.delete_node_particlespawners(pos)
-	end
 end
 
 function mcl_furnaces.furnace_reset_delta_time(pos)
@@ -497,15 +458,6 @@ end
 mcl_furnaces.furnace_node_timer = mcl_furnaces.get_timer_function()
 
 mcl_furnaces.on_rotate = screwdriver.rotate_simple
-function mcl_furnaces.after_rotate_active(pos)
-	local node = minetest.get_node(pos)
-	mcl_particles.delete_node_particlespawners(pos)
-	if minetest.get_item_group(node.name, "furnace_active") == 0 then
-		return
-	end
-	mcl_furnaces.spawn_flames(pos, node.param2)
-end
-
 
 -- Returns true if itemstack is fuel, but not for lava bucket if destination already has one
 function mcl_furnaces.is_transferrable_fuel(itemstack, src_inventory, src_list, dst_inventory, dst_list)
@@ -557,7 +509,6 @@ mcl_furnaces.tpl_furnace_node = {
 
 	after_dig_node = mcl_util.drop_items_from_meta_container({"src","dst","fuel","sorter"}),
 	on_destruct = function(pos)
-		mcl_particles.delete_node_particlespawners(pos)
 		mcl_furnaces.give_xp(pos)
 	end,
 
@@ -605,11 +556,6 @@ mcl_furnaces.tpl_furnace_node_active = table.merge(mcl_furnaces.tpl_furnace_node
 	groups = { pickaxey = 1, container = 4, deco_block = 1, material_stone = 1, furnace = 1, furnace_active = 1, not_in_creative_inventory = 1 },
 	_doc_items_create_entry = false,
 	light_source = LIGHT_ACTIVE_FURNACE,
-	on_construct = function(pos)
-		local node = minetest.get_node(pos)
-		mcl_furnaces.spawn_flames(pos, node.param2)
-	end,
-	after_rotate = mcl_furnaces.after_rotate_active,
 })
 
 function mcl_furnaces.register_furnace(nodename, def)
@@ -679,16 +625,6 @@ minetest.register_craft({
 if minetest.get_modpath("doc") then
 	doc.add_entry_alias("nodes", "mcl_furnaces:furnace", "nodes", "mcl_furnaces:furnace_active")
 end
-
-minetest.register_lbm({
-	label = "Active furnace flame particles",
-	name = "mcl_furnaces:flames",
-	nodenames = { "group:furnace_active" },
-	run_at_every_load = true,
-	action = function(pos, node)
-		mcl_furnaces.spawn_flames(pos, node.param2)
-	end,
-})
 
 minetest.register_lbm({
 	label = "Update Furnace formspecs and invs to allow new sneak+click behavior",

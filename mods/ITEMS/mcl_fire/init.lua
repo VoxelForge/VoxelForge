@@ -35,25 +35,6 @@ local function has_flammable(pos)
 	end
 end
 
-local smoke_pdef = {
-	amount = 0.009,
-	maxexptime = 4.0,
-	minvel = { x = -0.1, y = 0.3, z = -0.1 },
-	maxvel = { x = 0.1, y = 1.6, z = 0.1 },
-	minsize = 4.0,
-	maxsize = 4.5,
-	minrelpos = { x = -0.45, y = -0.45, z = -0.45 },
-	maxrelpos = { x = 0.45, y = 0.45, z = 0.45 },
-}
-
---
--- Items
---
-
--- Flame nodes
-
--- Fire settings
-
 -- When enabled, fire destroys other blocks.
 local fire_enabled = minetest.settings:get_bool("enable_fire", true)
 
@@ -120,11 +101,6 @@ minetest.register_node("mcl_fire:fire", {
 		if has_mcl_portals then
 			mcl_portals.light_nether_portal(pos)
 		end
-
-		mcl_particles.spawn_smoke(pos, "fire", smoke_pdef)
-	end,
-	on_destruct = function(pos)
-		mcl_particles.delete_node_particlespawners(pos)
 	end,
 	_mcl_blast_resistance = 0,
 })
@@ -163,10 +139,6 @@ minetest.register_node("mcl_fire:eternal_fire", {
 		if has_mcl_portals then --Calling directly minetest.get_modpath consumes 4x more compute time
 			mcl_portals.light_nether_portal(pos)
 		end
-		mcl_particles.spawn_smoke(pos, "fire", smoke_pdef)
-	end,
-	on_destruct = function(pos)
-		mcl_particles.delete_node_particlespawners(pos)
 	end,
 	sounds = {},
 	drop = "",
@@ -449,16 +421,6 @@ function mcl_fire.set_fire(pointed_thing, player, allow_on_fire)
 
 	minetest.set_node(pointed_thing.above, {name="mcl_fire:fire"})
 end
-
-minetest.register_lbm({
-	label = "Smoke particles from fire",
-	name = "mcl_fire:smoke",
-	nodenames = {"group:fire"},
-	run_at_every_load = true,
-	action = function(pos, node)
-		mcl_particles.spawn_smoke(pos, "fire", smoke_pdef)
-	end,
-})
 
 minetest.register_alias("mcl_fire:basic_flame", "mcl_fire:fire")
 minetest.register_alias("fire:basic_flame", "mcl_fire:fire")

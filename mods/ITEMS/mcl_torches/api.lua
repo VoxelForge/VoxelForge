@@ -1,100 +1,3 @@
-local flame_texture = {"mcl_particles_flame.png", "mcl_particles_soul_fire_flame.png"}
-
-local smoke_pdef = {
-	amount = 0.5,
-	maxexptime = 2.0,
-	minvel = { x = 0.0, y = 0.5, z = 0.0 },
-	maxvel = { x = 0.0, y = 0.6, z = 0.0 },
-	minsize = 1.5,
-	maxsize = 1.5,
-	minrelpos = { x = -1/16, y = 0.04, z = -1/16 },
-	maxrelpos = { x =  1/16, y = 0.06, z =  1/16 },
-}
-
-local function spawn_flames_floor(pos, flame_type)
-
-	-- Flames
-	mcl_particles.add_node_particlespawner(pos, {
-		amount = 8,
-		time = 0,
-		minpos = vector.add(pos, { x = -0.1, y = 0.05, z = -0.1 }),
-		maxpos = vector.add(pos, { x = 0.1, y = 0.15, z = 0.1 }),
-		minvel = { x = -0.01, y = 0, z = -0.01 },
-		maxvel = { x = 0.01, y = 0.1, z = 0.01 },
-		minexptime = 0.3,
-		maxexptime = 0.6,
-		minsize = 0.7,
-		maxsize = 2,
-		texture = flame_texture[flame_type],
-		glow = minetest.registered_nodes[minetest.get_node(pos).name].light_source,
-	}, "low")
-	-- Smoke
-	mcl_particles.spawn_smoke(pos, "torch", smoke_pdef)
-end
-
-local function spawn_flames_wall(pos, flame_type)
-	--local minrelpos, maxrelpos
-	local node = minetest.get_node(pos)
-	local dir = minetest.wallmounted_to_dir(node.param2)
-
-	local smoke_pdef = table.copy(smoke_pdef)
-
-	if dir.x < 0 then
-		smoke_pdef.minrelpos = { x = -0.38, y = 0.24, z = -0.1 }
-		smoke_pdef.maxrelpos = { x = -0.2, y = 0.34, z = 0.1 }
-	elseif dir.x > 0 then
-		smoke_pdef.minrelpos = { x = 0.2, y = 0.24, z = -0.1 }
-		smoke_pdef.maxrelpos = { x = 0.38, y = 0.34, z = 0.1 }
-	elseif dir.z < 0 then
-		smoke_pdef.minrelpos = { x = -0.1, y = 0.24, z = -0.38 }
-		smoke_pdef.maxrelpos = { x = 0.1, y = 0.34, z = -0.2 }
-	elseif dir.z > 0 then
-		smoke_pdef.minrelpos = { x = -0.1, y = 0.24, z = 0.2 }
-		smoke_pdef.maxrelpos = { x = 0.1, y = 0.34, z = 0.38 }
-	else
-		return
-	end
-
-
-	-- Flames
-	mcl_particles.add_node_particlespawner(pos, {
-		amount = 8,
-		time = 0,
-		minpos = vector.add(pos, smoke_pdef.minrelpos),
-		maxpos = vector.add(pos, smoke_pdef.maxrelpos),
-		minvel = { x = -0.01, y = 0, z = -0.01 },
-		maxvel = { x = 0.01, y = 0.1, z = 0.01 },
-		minexptime = 0.3,
-		maxexptime = 0.6,
-		minsize = 0.7,
-		maxsize = 2,
-		texture = flame_texture[flame_type],
-		glow = minetest.registered_nodes[node.name].light_source,
-	}, "low")
-	-- Smoke
-	mcl_particles.spawn_smoke(pos, "torch", smoke_pdef)
-end
-
-local function set_flames(pos, flame_type, attached_to)
-	if attached_to == "wall" then
-		return function(pos)
-			spawn_flames_wall(pos, flame_type)
-		end
-	end
-
-	return function(pos)
-		spawn_flames_floor(pos, flame_type)
-	end
-end
-
-local function remove_flames(pos)
-	mcl_particles.delete_node_particlespawners(pos)
-end
-
---
--- 3d torch part
---
-
 -- Check if placement at given node is allowed
 local function check_placement_allowed(node, wdir)
 	-- Torch placement rules: Disallow placement on some nodes. General rule: Solid, opaque, full cube collision box nodes are allowed.
@@ -241,12 +144,6 @@ function mcl_torches.register_torch(def)
 			return itemstack
 		end,
 		on_rotate = false,
-		on_construct = function(pos)
-			if def.particles then
-				set_flames(pos, def.flame_type, "floor")
-			end
-		end,
-		on_destruct = def.particles and remove_flames,
 	}
 	minetest.register_node(itemstring, floordef)
 
@@ -272,12 +169,6 @@ function mcl_torches.register_torch(def)
 		},
 		sounds = def.sounds,
 		on_rotate = false,
-		on_construct = function(pos)
-			if def.particles then
-				set_flames(pos, def.flame_type, "wall")
-			end
-		end,
-		on_destruct = def.particles and remove_flames,
 	}
 	minetest.register_node(itemstring_wall, walldef)
 
@@ -286,18 +177,3 @@ function mcl_torches.register_torch(def)
 		doc.add_entry_alias("nodes", itemstring, "nodes", itemstring_wall)
 	end
 end
-
-minetest.register_lbm({
-	label = "Torch flame particles",
-	name = "mcl_torches:flames",
-	nodenames = {"group:torch_particles"},
-	run_at_every_load = true,
-	action = function(pos, node)
-		local torch_group = minetest.get_item_group(node.name, "torch")
-		if torch_group == 1 then
-			spawn_flames_floor(pos, minetest.get_item_group(node.name, "flame_type"))
-		elseif torch_group == 2 then
-			spawn_flames_wall(pos, minetest.get_item_group(node.name, "flame_type"))
-		end
-	end,
-})
