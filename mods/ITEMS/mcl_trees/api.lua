@@ -44,12 +44,20 @@ local function update_leaves(pos)
 
 	local function is_leaves(pos)
 		local idx = a:index(pos.x, pos.y, pos.z)
+		if not data[idx] then
+			return false
+		end
+
 		local name = minetest.get_name_from_content_id(data[idx])
 		return minetest.get_item_group(name, "leaves") ~= 0
 	end
 
 	local function get_distance(pos)
 		local idx = a:index(pos.x, pos.y, pos.z)
+		if not data[idx] then
+			return 7
+		end
+
 		local name = minetest.get_name_from_content_id(data[idx])
 		if minetest.get_item_group(name, "tree") ~= 0 then
 			return 0
