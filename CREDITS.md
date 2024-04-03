@@ -16,7 +16,6 @@
 * nixnoxus
 * chmodsayshello
 * laireia
-* nixnoxus
 * the-real-herowl
 * JoseDouglas26
 * Eliy21
