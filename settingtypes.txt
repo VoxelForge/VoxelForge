@@ -154,7 +154,7 @@ mcl_mob_allow_nav_hacks (Mob navigation hacks) bool false
 enable_real_maps (Real maps) bool true
 
 # Place bonus chest near players' initial spawn point
-mcl_bonus_chest (Bonus Chest) bool false
+mcl_bonus_chest (Bonus chest) bool false
 
 # Allow editing signs
 mcl_signs_editable (Editable signs) bool false
