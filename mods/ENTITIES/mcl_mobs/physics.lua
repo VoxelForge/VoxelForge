@@ -479,7 +479,7 @@ function mob_class:check_for_death(cause, cmi_cause)
 			local looting = mcl_enchanting.get_enchantment(wielditem, "looting")
 			self:item_drop(cooked, looting)
 			if killed_by_player then
-				if self.type == "monster" or self.name == "mobs_mc:zombified_piglin" then
+				if self.type == "monster" or self.name == "mobs_mc:zombified_piglin" and self.last_player_hit_name then
 					awards.unlock(self.last_player_hit_name, "mcl:monsterHunter")
 				end
 				if ((not self.child) or self.type ~= "animal") and (minetest.get_us_time() - self.xp_timestamp <= math.huge) then

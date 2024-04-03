@@ -610,6 +610,10 @@ function mcl_util.deal_damage(target, damage, mcl_reason)
 			-- local puncher = mcl_reason and mcl_reason.direct or target
 			-- target:punch(puncher, 1.0, {full_punch_interval = 1.0, damage_groups = {fleshy = damage}}, vector.direction(puncher:get_pos(), target:get_pos()), damage)
 			if luaentity.health > 0 then
+				if mcl_reason.source and mcl_reason.source.is_player and mcl_reason.source:is_player() then
+					luaentity.last_player_hit_time = minetest.get_gametime()
+					luaentity.last_player_hit_name = mcl_reason.source:get_player_name()
+				end
 				luaentity.health = luaentity.health - damage
 			end
 			return
