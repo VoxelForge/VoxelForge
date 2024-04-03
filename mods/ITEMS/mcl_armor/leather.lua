@@ -78,7 +78,6 @@ end
 
 mcl_armor.register_set({
 	name = "leather",
-	description = S("Leather"),
 	color = base_color,
 	descriptions = {
 		head = S("Leather Cap"),
