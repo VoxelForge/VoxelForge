@@ -64,7 +64,6 @@ function mcl_armor.colorize_leather_armor(itemstack, colorstring)
 	return itemstack
 end
 
-local S = minetest.get_translator(minetest.get_current_modname())
 
 function mcl_armor.wash_leather_armor(itemstack)
 	if not itemstack or itemstack:get_definition().groups.armor_leather ~= 1 then
