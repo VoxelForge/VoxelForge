@@ -444,6 +444,7 @@ local dragon_breath_def = {
 	_longdesc = S("This item is used in brewing and can be combined with splash potions to create lingering potions."),
 	image = "mcl_potions_dragon_breath.png",
 	groups = { brewitem = 1, potion = 1},
+	stack_max = 64,
 	on_use = nil,
 }
 
