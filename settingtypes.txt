@@ -157,7 +157,7 @@ enable_real_maps (Real maps) bool true
 mcl_bonus_chest (Bonus Chest) bool false
 
 # Allow editing signs
-mcl_signs_editable (Allow Editing Signs) bool false
+mcl_signs_editable (Editable signs) bool false
 
 [Graphics]
 # Whether to animate chests when open / close
