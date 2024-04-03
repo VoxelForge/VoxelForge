@@ -15,6 +15,7 @@ return {
 	{S("Active Contributors"), 0xF84355, {
 		"codiac",
 		"ShadowRoi",
+		"nixnoxus",
 		"chmodsayshello",
 		"laireia",
 		"nixnoxus",

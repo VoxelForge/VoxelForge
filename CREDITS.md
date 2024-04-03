@@ -13,6 +13,7 @@
 ## Active Contributors
 * codiac
 * ShadowRoi
+* nixnoxus
 * chmodsayshello
 * laireia
 * nixnoxus
