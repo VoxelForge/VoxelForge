@@ -45,6 +45,7 @@ local piglin = {
 	type = "monster",
 	passive = false,
 	spawn_class = "hostile",
+	persist_in_peaceful = true,
 	hp_min = 16,
 	hp_max = 16,
 	xp_min = 9,
@@ -280,6 +281,7 @@ mcl_mobs.register_mob("mobs_mc:zombified_piglin",table.merge(piglin,{
 
 mcl_mobs.register_mob("mobs_mc:piglin_brute",table.merge(piglin,{
 	description = S("Piglin Brute"),
+	persist_in_peaceful = false,
 	xp_min = 20,
 	xp_max = 20,
 	hp_min = 50,

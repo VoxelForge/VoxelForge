@@ -52,6 +52,7 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 	description = S("Ender Dragon"),
 	type = "monster",
 	spawn_class = "hostile",
+	persist_in_peaceful = true,
 	pathfinding = 1,
 	attacks_animals = true,
 	walk_chance = 100,

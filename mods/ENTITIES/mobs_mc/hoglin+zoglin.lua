@@ -14,6 +14,7 @@ local hoglin = {
 	type = "monster",
 	passive = false,
 	spawn_class = "hostile",
+	persist_in_peaceful = true,
 	hp_min = 40,
 	hp_max = 40,
 	xp_min = 9,
