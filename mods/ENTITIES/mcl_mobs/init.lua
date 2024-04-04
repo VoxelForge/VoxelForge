@@ -493,15 +493,9 @@ function mcl_mobs.register_egg(mob, desc, background_color, overlay_color, addeg
 					return itemstack
 				end
 
-				if minetest.settings:get_bool("only_peaceful_mobs", false)
-						and minetest.registered_entities[mob].type == "monster" then
-					minetest.chat_send_player(name, S("Only peaceful mobs allowed!"))
-					return itemstack
-				end
-
 				pos.y = pos.y - 0.5
 
-				local mob = minetest.add_entity(pos, mob)
+				local mob = minetest.add_entity(pos, mob, minetest.serialize({ persist_in_peaceful = true }))
 				local entityname = itemstack:get_name()
 				minetest.log("action", "Player " ..name.." spawned "..entityname.." at "..minetest.pos_to_string(pos))
 				local ent = mob:get_luaentity()
