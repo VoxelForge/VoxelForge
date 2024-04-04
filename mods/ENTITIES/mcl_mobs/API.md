@@ -29,7 +29,7 @@ Fields not mentioned in this document can also be added as custom fields for the
 		-- "npc"  can follow owner. Fights as specified by 'specific_attack', 'group_attack', 'passive', and 'retaliates'. Will additionally attack all mobs of 'type' "monster" on sight (this is not affected by 'passive', bug or feature?).
 
 	persist_in_peaceful = false,
-	-- if true this mob will not be removed in peaceful mode despite being classified as "monster". It will however not attack the player.
+	-- Default is false for monsters and true for all other mobs. If false mob will immediately be removed in peaceful mode.
 
 	hp_min = 1,
 	-- the minimum health value the mob can spawn with.

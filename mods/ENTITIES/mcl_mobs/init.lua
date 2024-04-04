@@ -118,7 +118,7 @@ mcl_mobs.mob_class = {
 	prevents_sleep_when_hostile = false,
 	attack_exception = function(p) return false end,
 	player_active_range = tonumber(minetest.settings:get("mcl_mob_active_range")) or 48,
-	persist_in_peaceful = false,
+	persist_in_peaceful = true,
 
 	_mcl_fishing_hookable = true,
 	_mcl_fishing_reelable = true,
@@ -272,6 +272,10 @@ function mcl_mobs.register_mob(name, def)
 			end
 			def[k] = nil
 		end
+	end
+
+	if def.persist_in_peaceful == nil and def.type == "monster" then
+		def.persist_in_peaceful = false
 	end
 
 	init_props.hp_max = scale_difficulty(init_props.hp_max, 10, 1)
