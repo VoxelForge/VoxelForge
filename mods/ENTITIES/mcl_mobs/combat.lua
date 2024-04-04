@@ -1,6 +1,7 @@
 local mob_class = mcl_mobs.mob_class
 
-local damage_enabled = minetest.settings:get_bool("enable_damage")
+local damage_enabled = minetest.settings:get_bool("enable_damage", true)
+local peaceful_mode = minetest.settings:get_bool("only_peaceful_mobs", false)
 local mobs_griefing = minetest.settings:get_bool("mobs_griefing") ~= false
 
 local stuck_timeout = 3 -- how long before mob gets stuck in place and starts searching
@@ -316,6 +317,7 @@ end
 
 function mob_class:attack_players_and_npcs()
 	if not damage_enabled or
+	peaceful_mode or
 	self.state == "attack" or
 	self.passive or
 	self:day_docile() or
