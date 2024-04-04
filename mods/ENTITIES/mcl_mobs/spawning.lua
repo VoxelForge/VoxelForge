@@ -2,6 +2,8 @@
 local mob_class = mcl_mobs.mob_class
 
 local modern_lighting = minetest.settings:get_bool("mcl_mobs_modern_lighting", true)
+local peaceful_mode = minetest.settings:get_bool("only_peaceful_mobs", false)
+
 local nether_threshold = 11
 local end_threshold = 15
 local overworld_threshold = 0
@@ -109,6 +111,8 @@ function mcl_mobs.spawn_setup(def)
 		minetest.log("warning","spawn definition with invalid entity: "..tostring(def.name))
 		return
 	end
+
+	if peaceful_mode and not mob_def.persist_in_peaceful then return end
 
 	local dimension        = def.dimension or "overworld"
 	local type_of_spawning = def.type_of_spawning or "ground"
