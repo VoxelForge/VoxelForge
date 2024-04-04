@@ -201,12 +201,6 @@ function mob_class:mob_activate(staticdata, dtime)
 		self.object:remove()
 		return
 	end
-	if self.type == "monster"
-	and minetest.settings:get_bool("only_peaceful_mobs", false) then
-		mcl_burning.extinguish(self.object)
-		self.object:remove()
-		return
-	end
 
 	local tmp = minetest.deserialize(staticdata)
 
@@ -215,6 +209,13 @@ function mob_class:mob_activate(staticdata, dtime)
 			self[_] = stat
 		end
 		self.state = nil
+	end
+
+	if minetest.settings:get_bool("only_peaceful_mobs", false) and
+	( self.type == "monster" and not self.persist_in_peaceful )	then
+		mcl_burning.extinguish(self.object)
+		self.object:remove()
+		return
 	end
 
 	self:update_textures()
