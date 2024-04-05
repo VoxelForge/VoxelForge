@@ -53,7 +53,7 @@ local spawn_children_on_die = function(child_mob, spawn_distance, eject_speed)
 					eject_speed = eject_speed * 0.5
 				end
 			end
-			local mob = minetest.add_entity(newpos, child_mob)
+			local mob = minetest.add_entity(newpos, child_mob, minetest.serialize({ persist_in_peaceful = self.persist_in_peaceful }))
 			if mob and mob:get_pos() and not mother_stuck then
 				mob:set_velocity(dir * eject_speed)
 			end
