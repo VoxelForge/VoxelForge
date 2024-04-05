@@ -55,7 +55,7 @@ minetest.register_chatcommand("gamemode",{
 		if not p then
 			return false, S("Player not online")
 		end
-		if mcl_gamemode.set_gamemode(p, args[1]) == false then
+		if args[1] and mcl_gamemode.set_gamemode(p, args[1]) == false then
 			return false, S("Failed to set Gamemode @1 for player @2", args[1], p:get_player_name())
 		end
 		--Result message - show effective game mode
