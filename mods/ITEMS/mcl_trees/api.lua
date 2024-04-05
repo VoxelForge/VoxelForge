@@ -66,7 +66,8 @@ local function update_leaves(pos)
 			return 7
 		end
 		if minetest.get_item_group(name, "leaves") ~= 0 then
-			return math.max(math.floor(param2_data[idx] / 32) - 1, 0)
+			local dist = math.floor(param2_data[idx] / 32)
+			return dist == 0 and 1 or dist - 1
 		end
 	end
 
