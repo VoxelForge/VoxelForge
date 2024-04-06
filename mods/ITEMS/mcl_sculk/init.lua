@@ -6,8 +6,8 @@ mcl_sculk = {}
 local spread_to = {"mcl_core:stone","mcl_core:dirt","mcl_core:sand","mcl_core:dirt_with_grass","group:grass_block","mcl_core:andesite","mcl_core:diorite","mcl_core:granite","mcl_core:mycelium","group:dirt","mcl_end:end_stone","mcl_nether:netherrack","mcl_blackstone:basalt","mcl_nether:soul_sand","mcl_blackstone:soul_soil","mcl_crimson:warped_nylium","mcl_crimson:crimson_nylium","mcl_core:gravel","mcl_deepslate:deepslate","mcl_deepslate:tuff"}
 
 local sounds = {
-	footstep = {name = "mcl_sculk_block", },
-	dug      = {name = "mcl_sculk_block", },
+	footstep = {name = "mcl_sculk_block", gain = 0.2},
+	dug      = {name = "mcl_sculk_block", gain = 0.2},
 }
 
 local SPREAD_RANGE = 8
