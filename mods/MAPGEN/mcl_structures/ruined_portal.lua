@@ -27,12 +27,12 @@ local def = {
 		modpath.."/schematics/mcl_structures_ruined_portal_3.mts",
 		modpath.."/schematics/mcl_structures_ruined_portal_4.mts",
 		modpath.."/schematics/mcl_structures_ruined_portal_5.mts",
+		modpath.."/schematics/mcl_structures_ruined_portal_6.mts",
 		modpath.."/schematics/mcl_structures_ruined_portal_99.mts",
 	},
-	after_place = function(pos,def,pr)
-		local hl = def.sidelen / 2
-		local p1 = vector.offset(pos,-hl,-hl,-hl)
-		local p2 = vector.offset(pos,hl,hl,hl)
+	after_place = function(pos, def, pr)
+		local p1 = vector.offset(pos,-9, -1, -9)
+		local p2 = vector.offset(pos,9, 16 ,9)
 		local gold = minetest.find_nodes_in_area(p1,p2,{"mcl_core:goldblock"})
 		local lava = minetest.find_nodes_in_area(p1,p2,{"mcl_core:lava_source"})
 		local rack = minetest.find_nodes_in_area(p1,p2,{"mcl_nether:netherrack"})
