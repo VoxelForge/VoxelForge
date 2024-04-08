@@ -106,8 +106,10 @@ function mcl_smithing_table.upgrade_trimmed(itemstack, color_mineral, template)
 	local overlay = template:get_name():gsub("mcl_armor:","")
 
 	--trimming process
-	mcl_armor.trim(itemstack, overlay, material_name)
-	tt.reload_itemstack_description(itemstack)
+	if minetest.get_item_group(template:get_name(), "smithing_template") > 0 then
+		mcl_armor.trim(itemstack, overlay, material_name)
+		tt.reload_itemstack_description(itemstack)
+	end
 
 	return itemstack
 end
@@ -121,11 +123,12 @@ local function reset_upgraded_item(pos)
 	local upgraded_item
 
 	local original_itemname = inv:get_stack("upgrade_item", 1):get_name()
-	local template_present = inv:get_stack("template",1):get_name() ~= ""
+	local template_present = minetest.get_item_group(inv:get_stack("template",1):get_name(), "smithing_template") > 0
+	local upgrade_template_present = inv:get_stack("template",1):get_name() == "mcl_nether:netherite_upgrade_template"
 	local is_armor = original_itemname:find("mcl_armor:") ~= nil
 	local is_trimmed = original_itemname:find("_trimmed") ~= nil
 
-	if inv:get_stack("mineral", 1):get_name() == "mcl_nether:netherite_ingot" and not template_present then
+	if inv:get_stack("mineral", 1):get_name() == "mcl_nether:netherite_ingot" and upgrade_template_present then
 		upgraded_item = mcl_smithing_table.upgrade_item(inv:get_stack("upgrade_item", 1))
 	elseif template_present and is_armor and not is_trimmed and mcl_smithing_table.is_smithing_mineral(inv:get_stack("mineral", 1):get_name()) then
 		upgraded_item = mcl_smithing_table.upgrade_trimmed(inv:get_stack("upgrade_item", 1),inv:get_stack("mineral", 1),inv:get_stack("template", 1))
@@ -135,7 +138,7 @@ local function reset_upgraded_item(pos)
 end
 
 local function sort_stack(stack, pos)
-	if minetest.get_item_group(stack:get_name(), "smithing_template") > 0 then
+	if minetest.get_item_group(stack:get_name(), "smithing_template") > 0 or minetest.get_item_group(stack:get_name(), "upgrade_template") > 0 then
 		return "template"
 	elseif mcl_smithing_table.is_smithing_mineral(stack:get_name()) then
 		return "mineral"
@@ -193,7 +196,7 @@ minetest.register_node("mcl_smithing_table:table", {
 				r= stack:get_count()
 			end
 		elseif listname == "template" then
-			if minetest.get_item_group(stack:get_name(),"smithing_template") > 0 then
+			if minetest.get_item_group(stack:get_name(),"smithing_template") > 0 or  minetest.get_item_group(stack:get_name(),"upgrade_template") > 0 then
 				r = stack:get_count()
 			end
 		elseif listname == "sorter" then
