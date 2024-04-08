@@ -358,6 +358,15 @@ minetest.register_craftitem("mcl_nether:netherite_upgrade_template", {
 })
 
 minetest.register_craft({
+    output = "mcl_nether:netherite_upgrade_template 2",
+    recipe = {
+        {"mcl_core:diamond", "mcl_nether:netherite_upgrade_template","mcl_core:diamond"},
+        {"mcl_core:diamond", "mcl_nether:netherrack","mcl_core:diamond"},
+        {"mcl_core:diamond","mcl_core:diamond","mcl_core:diamond"},
+    }
+})
+
+minetest.register_craft({
 	output = "mcl_fences:nether_brick_fence 6",
 	recipe = {
 		{"mcl_nether:nether_brick", "mcl_nether:netherbrick", "mcl_nether:nether_brick"},
