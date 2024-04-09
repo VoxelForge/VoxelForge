@@ -32,20 +32,29 @@ local function queue()
 	}
 end
 
-local function old_update_leaves(pos)
-	local pos1, pos2 = vector.offset(pos, -6, -6, -6), vector.offset(pos, 6, 6, 6)
-	local leaves = minetest.find_nodes_in_area(pos1, pos2, "group:leaves")
-	for _, lpos in pairs(leaves) do
-		local lnode = minetest.get_node(lpos)
-		-- skip orphan leaves and leaves which have log distance
-		if math.floor(lnode.param2 / 32) == 0 and minetest.get_item_group(lnode.name, "orphan_leaves") ~= 1 then
-			if not minetest.find_node_near(lpos, 6, "group:tree") then
-				-- manually placed leaf nodes have "no_decay" set to 1
-				-- in their node meta and will not decay automatically
-				if minetest.get_meta(lpos):get_int("no_decay") == 0 and minetest.registered_nodes[lnode.name .. "_orphan"] then
-					minetest.swap_node(lpos, { name = lnode.name .. "_orphan", param2 = lnode.param2 })
-				end
+-- This function makes all leaves which do not have a log within 6 nodes
+-- orphan. It present for backwards compatibility but also because
+-- update_leaves sometimes misses leaves with incorrect param2 values due to
+-- schematics clipping into each other.
+local function update_far_away_leaves(pos)
+	local logs = minetest.find_nodes_in_area(pos:subtract(12), pos:add(12), "group:tree")
+
+	local function log_in_range(lpos)
+		for _, tpos in pairs(logs) do
+			if lpos:in_area(tpos:subtract(6), tpos:add(6)) then
+				return true
 			end
+		end
+		return false
+	end
+
+	local leaves = minetest.find_nodes_in_area(pos:subtract(6), pos:add(6), "group:leaves")
+	for _, lpos in pairs(leaves) do
+		if not log_in_range(lpos) then
+			local node = minetest.get_node(lpos)
+			minetest.swap_node(lpos, {
+				name = minetest.registered_nodes[node.name]._mcl_orphan_leaves
+			})
 		end
 	end
 end
@@ -183,7 +192,7 @@ local tpl_log = {
 		update_leaves(pos)
 	end,
 	after_destruct = function(pos)
-		old_update_leaves(pos)
+		update_far_away_leaves(pos)
 		update_leaves(pos, 0)
 	end,
 	on_rotate = screwdriver.rotate_3way,
