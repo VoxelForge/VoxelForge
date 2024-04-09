@@ -91,7 +91,7 @@ end)
 
 local function update_leaves(pos, old_distance)
 	local vm = minetest.get_voxel_manip()
-	local emin, emax = vm:read_from_map(pos:offset(-7, -7, -7), pos:offset(7, 7, 7))
+	local emin, emax = vm:read_from_map(pos:offset(-8, -8, -8), pos:offset(8, 8, 8))
 	local a = VoxelArea:new{MinEdge = emin, MaxEdge = emax}
 	local data = vm:get_data()
 	local param2_data = vm:get_param2_data()
