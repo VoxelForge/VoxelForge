@@ -32,72 +32,84 @@ local function queue()
 	}
 end
 
-local function update_leaves(pos)
+local function old_update_leaves(pos)
+	local pos1, pos2 = vector.offset(pos, -6, -6, -6), vector.offset(pos, 6, 6, 6)
+	local leaves = minetest.find_nodes_in_area(pos1, pos2, "group:leaves")
+	for _, lpos in pairs(leaves) do
+		local lnode = minetest.get_node(lpos)
+		-- skip orphan leaves and leaves which have log distance
+		if math.floor(lnode.param2 / 32) == 0 and minetest.get_item_group(lnode.name, "orphan_leaves") ~= 1 then
+			if not minetest.find_node_near(lpos, 6, "group:tree") then
+				-- manually placed leaf nodes have "no_decay" set to 1
+				-- in their node meta and will not decay automatically
+				if minetest.get_meta(lpos):get_int("no_decay") == 0 and minetest.registered_nodes[lnode.name .. "_orphan"] then
+					minetest.swap_node(lpos, { name = lnode.name .. "_orphan", param2 = lnode.param2 })
+				end
+			end
+		end
+	end
+end
+
+local tree_tab = {}
+local leaves_tab = {}
+local orphan_tab = {}
+
+local directions = {
+	vector.new(1, 0, 0),
+	vector.new(-1, 0, 0),
+	vector.new(0, 1, 0),
+	vector.new(0, -1, 0),
+	vector.new(0, 0, 1),
+	vector.new(0, 0, -1),
+}
+
+minetest.register_on_mods_loaded(function()
+	for name, ndef in pairs(minetest.registered_nodes) do
+		local cid = minetest.get_content_id(name)
+		tree_tab[cid] = minetest.get_item_group(name, "tree") ~= 0 and true or nil
+		if minetest.get_item_group(name, "leaves") ~= 0 then
+			local def = {
+				c_leaves = minetest.get_content_id(ndef._mcl_leaves),
+				c_orphan_leaves = minetest.get_content_id(ndef._mcl_orphan_leaves),
+			}
+			leaves_tab[cid] = def
+			orphan_tab[cid] = minetest.get_item_group(name, "orphan_leaves") ~= 0 and def or nil
+		end
+	end
+end)
+
+local function update_leaves(pos, old_distance)
 	local vm = minetest.get_voxel_manip()
 	local emin, emax = vm:read_from_map(pos:offset(-7, -7, -7), pos:offset(7, 7, 7))
-	local a = VoxelArea:new{
-	    MinEdge = emin,
-	    MaxEdge = emax
-	}
+	local a = VoxelArea:new{MinEdge = emin, MaxEdge = emax}
 	local data = vm:get_data()
 	local param2_data = vm:get_param2_data()
 
-	local function is_leaves(pos)
-		local idx = a:index(pos.x, pos.y, pos.z)
-		if not data[idx] then
-			return false
-		end
-
-		local name = minetest.get_name_from_content_id(data[idx])
-		return minetest.get_item_group(name, "leaves") ~= 0
-	end
-
-	local function get_distance(pos)
-		local idx = a:index(pos.x, pos.y, pos.z)
-		if not data[idx] then
-			return 7
-		end
-
-		local name = minetest.get_name_from_content_id(data[idx])
-		if minetest.get_item_group(name, "tree") ~= 0 then
+	local function get_distance(ind)
+		local cid = data[ind]
+		if tree_tab[cid] then
 			return 0
-		end
-		if minetest.get_item_group(name, "orphan_leaves") ~= 0 then
+		elseif orphan_tab[cid] then
 			return 7
-		end
-		if minetest.get_item_group(name, "leaves") ~= 0 then
-			local dist = math.floor(param2_data[idx] / 32)
-			return dist == 0 and 1 or dist - 1
+		elseif leaves_tab[cid] then
+			return math.max(math.floor(param2_data[ind] / 32) - 1, 0)
 		end
 	end
 
-	local function update_distance(pos, distance)
-		local idx = a:index(pos.x, pos.y, pos.z)
-		local name = minetest.get_name_from_content_id(data[idx])
-		local ndef = minetest.registered_nodes[name]
-
-		if distance < 7 and ndef._mcl_orphan_leaves then
-			data[idx] = minetest.get_content_id(ndef._mcl_leaves)
-		else
-			data[idx] = minetest.get_content_id(ndef._mcl_orphan_leaves)
-		end
-		param2_data[idx] = (distance + 1) * 32 + param2_data[idx] % 32
+	local function update_distance(ind, distance)
+		data[ind] = distance < 7 and leaves_tab[data[ind]].c_leaves or
+				leaves_tab[data[ind]].c_orphan_leaves
+		param2_data[ind] = (distance + 1) * 32 + param2_data[ind] % 32
 	end
 
 	local clear_queue = queue()
 	local fill_queue = queue()
-
-	clear_queue:enqueue({ pos = pos, distance = get_distance(pos) or 0 })
-	fill_queue:enqueue({ pos = pos, distance = get_distance(pos) or 7 })
-
-	local directions = {
-		vector.new(1, 0, 0),
-		vector.new(-1, 0, 0),
-		vector.new(0, 1, 0),
-		vector.new(0, -1, 0),
-		vector.new(0, 0, 1),
-		vector.new(0, 0, -1),
-	}
+	if old_distance then
+		clear_queue:enqueue({ pos = pos, distance = old_distance })
+	end
+	if get_distance(a:indexp(pos)) then
+		fill_queue:enqueue({ pos = pos, distance = get_distance(a:indexp(pos)) })
+	end
 
 	while clear_queue:size() > 0 do
 		local entry = clear_queue:dequeue()
@@ -106,15 +118,16 @@ local function update_leaves(pos)
 
 		for _, dir in pairs(directions) do
 			local pos2 = pos:add(dir)
-			local distance2 = get_distance(pos2)
-			if distance2 then
-				if distance2 == 0 then
-					fill_queue:enqueue({ pos = pos2, distance = distance2 })
-				elseif distance + 1 < 7 and distance2 ~= 7 then
-					if is_leaves(pos2) then
-						update_distance(pos2, 7)
+			local ind2 = a:indexp(pos2)
+			local distance2 = get_distance(ind2)
+			if distance2 and distance2 < 7 then
+				if distance2 > distance then
+					if leaves_tab[data[ind2]] then
+						update_distance(ind2, 7)
 						clear_queue:enqueue({ pos = pos2, distance = distance + 1 })
 					end
+				else
+					fill_queue:enqueue({ pos = pos2, distance = distance2 })
 				end
 			end
 		end
@@ -123,13 +136,15 @@ local function update_leaves(pos)
 	while fill_queue:size() > 0 do
 		local entry = fill_queue:dequeue()
 		local pos = entry.pos
-		local neigh_distance = entry.distance + 1
+		local ind = entry.pos
+		local distance2 = entry.distance + 1
 
 		for _, dir in pairs(directions) do
 			local pos2 = pos:add(dir)
-			if is_leaves(pos2) and get_distance(pos2) > neigh_distance then
-				update_distance(pos2, neigh_distance)
-				fill_queue:enqueue({ pos = pos2, distance = neigh_distance })
+			local ind2 = a:indexp(pos2)
+			if leaves_tab[data[ind2]] and get_distance(ind2) > distance2 then
+				update_distance(ind2, distance2)
+				fill_queue:enqueue({ pos = pos2, distance = distance2 })
 			end
 		end
 	end
@@ -164,8 +179,13 @@ local tpl_log = {
 	},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	on_place = mcl_util.rotate_axis,
-	on_construct = update_leaves,
-	after_destruct = update_leaves,
+	on_construct = function(pos)
+		update_leaves(pos)
+	end,
+	after_destruct = function(pos)
+		old_update_leaves(pos)
+		update_leaves(pos, 0)
+	end,
 	on_rotate = screwdriver.rotate_3way,
 	_on_axe_place = mcl_trees.strip_tree,
 	_mcl_blast_resistance = 2,
@@ -306,9 +326,13 @@ function mcl_trees.generate_leaves_def(modname, subname, def, sapling, drop_appl
 
 	local l_def = table.merge(tpl_leaves, {
 		drop = get_drops(0),
-		on_construct = update_leaves,
+		on_construct = function(pos)
+			update_leaves(pos)
+		end,
 		after_place_node = set_placed_leaves_p2,
-		after_destruct = update_leaves,
+		after_destruct = function(pos, oldnode)
+			update_leaves(pos, math.max(math.floor(oldnode.param2 / 32) - 1, 0))
+		end,
 		_mcl_fortune_drop = { get_drops(1), get_drops(2), get_drops(3), get_drops(4) },
 		_mcl_leaves = leaves_id,
 		_mcl_orphan_leaves = orphan_leaves_id,
