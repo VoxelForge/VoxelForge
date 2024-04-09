@@ -335,26 +335,26 @@ function mcl_trees.generate_leaves_def(modname, subname, def, sapling, drop_appl
 	local leaves_id = modname .. subname
 	local orphan_leaves_id = modname .. subname.. "_orphan"
 
-	local l_def = table.merge(tpl_leaves, {
+	local basedef = table.merge(tpl_leaves, {
 		drop = get_drops(0),
-		on_construct = function(pos)
-			update_leaves(pos)
-		end,
 		after_place_node = set_placed_leaves_p2,
-		after_destruct = function(pos, oldnode)
-			update_leaves(pos, math.max(math.floor(oldnode.param2 / 32) - 1, 0))
-		end,
 		_mcl_fortune_drop = { get_drops(1), get_drops(2), get_drops(3), get_drops(4) },
 		_mcl_leaves = leaves_id,
 		_mcl_orphan_leaves = orphan_leaves_id,
-	},def or {}, { palette = palette })
+	}, def or {}, { palette = palette })
 
-	local o_def = table.merge(l_def, {
+	local l_def = table.merge(basedef, {
+		on_construct = function(pos)
+			update_leaves(pos)
+		end,
+		after_destruct = function(pos, oldnode)
+			update_leaves(pos, math.max(math.floor(oldnode.param2 / 32) - 1, 0))
+		end,
+	})
+	local o_def = table.merge(basedef, {
 		_doc_items_create_entry = false,
 		_mcl_shears_drop = {leaves_id},
 		_mcl_silk_touch_drop = {leaves_id},
-		_mcl_leaves = leaves_id,
-		_mcl_orphan_leaves = orphan_leaves_id,
 	})
 	o_def.groups = table.merge(l_def.groups, {
 		not_in_creative_inventory = 1,
