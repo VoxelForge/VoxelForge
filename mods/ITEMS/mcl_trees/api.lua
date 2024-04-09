@@ -32,10 +32,10 @@ local function queue()
 	}
 end
 
--- This function makes all leaves which do not have a log within 6 nodes
--- orphan. It present for backwards compatibility but also because
--- update_leaves sometimes misses leaves with incorrect param2 values due to
--- schematics clipping into each other.
+-- This function updates leaves which do not have a log within 6 nodes. It
+-- present for backwards compatibility but also because update_leaves sometimes
+-- misses leaves with incorrect param2 values due to schematics clipping into
+-- each other.
 local function update_far_away_leaves(pos)
 	local logs = minetest.find_nodes_in_area(pos:subtract(12), pos:add(12), "group:tree")
 
@@ -52,9 +52,11 @@ local function update_far_away_leaves(pos)
 	for _, lpos in pairs(leaves) do
 		if not log_in_range(lpos) then
 			local node = minetest.get_node(lpos)
-			minetest.swap_node(lpos, {
-				name = minetest.registered_nodes[node.name]._mcl_orphan_leaves
-			})
+			if math.floor(node.param2 / 32) ~= 1 then
+				minetest.swap_node(lpos, {
+					name = minetest.registered_nodes[node.name]._mcl_orphan_leaves
+				})
+			end
 		end
 	end
 end
