@@ -32,16 +32,17 @@ local function queue()
 	}
 end
 
--- This function updates leaves which do not have a log within 6 nodes. It
--- present for backwards compatibility but also because update_leaves sometimes
--- misses leaves with incorrect param2 values due to schematics clipping into
--- each other.
+-- Make leaves which do not have a log within 6 nodes orphan.
 local function update_far_away_leaves(pos)
 	local logs = minetest.find_nodes_in_area(pos:subtract(12), pos:add(12), "group:tree")
 
+	local function distance(a, b)
+		return math.abs(a.x - b.x) + math.abs(a.y - b.y) + math.abs(a.z - b.z)
+	end
+
 	local function log_in_range(lpos)
 		for _, tpos in pairs(logs) do
-			if lpos:in_area(tpos:subtract(6), tpos:add(6)) then
+			if distance(lpos, tpos) <= 6 then
 				return true
 			end
 		end
