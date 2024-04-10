@@ -147,7 +147,6 @@ local function update_leaves(pos, old_distance)
 	while fill_queue:size() > 0 do
 		local entry = fill_queue:dequeue()
 		local pos = entry.pos
-		local ind = entry.pos
 		local distance2 = entry.distance + 1
 
 		for _, dir in pairs(directions) do
