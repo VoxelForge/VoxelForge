@@ -445,7 +445,7 @@ local function in_portal(obj)
 end
 
 local function portal_distance(a, b)
-	return math.max(math.abs(a.x - b.x), math.abs(math.abs(a.z - b.z)))
+	return math.max(math.abs(a.x - b.x), math.abs(a.z - b.z))
 end
 
 -- Scan emerged area and build a portal at a suitable spot. If no suitable spot
