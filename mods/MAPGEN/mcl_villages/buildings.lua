@@ -60,7 +60,7 @@ local function init_nodes(p1, p2, size, rotation, pr)
 		mcl_walls.update_wall(n)
 	end
 
-	construct_node(p1, p2, "mcl_itemframes:item_frame")
+	construct_node(p1, p2, "mcl_itemframes:frame")
 	construct_node(p1, p2, "mcl_furnaces:furnace")
 	construct_node(p1, p2, "mcl_anvils:anvil")
 
