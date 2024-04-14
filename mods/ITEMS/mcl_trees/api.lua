@@ -55,7 +55,8 @@ local function update_far_away_leaves(pos)
 			local node = minetest.get_node(lpos)
 			if math.floor(node.param2 / 32) ~= 1 then
 				minetest.swap_node(lpos, {
-					name = minetest.registered_nodes[node.name]._mcl_orphan_leaves
+					name = minetest.registered_nodes[node.name]._mcl_orphan_leaves,
+					param2 = node.param2,
 				})
 			end
 		end
