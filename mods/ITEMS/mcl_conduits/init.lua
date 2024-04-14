@@ -96,6 +96,7 @@ minetest.register_entity("mcl_conduits:conduit", {
 		if d then
 			self._pos = d._pos
 		end
+		self.object:set_armor_groups({immortal = 1})
 		self.object:set_animation({x = 0, y = 120}, 3)
 	end,
 	get_staticdata = function(self)
