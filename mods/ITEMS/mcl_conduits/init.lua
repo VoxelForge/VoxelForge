@@ -1,4 +1,7 @@
 mcl_conduits = {}
+local modname = minetest.get_current_modname()
+local S = minetest.get_translator(modname)
+
 local check_interval = 5
 local conduit_nodes = { "mcl_ocean:prismarine", "mcl_ocean:prismarine_dark", "mcl_ocean:sea_lantern" }
 
@@ -119,9 +122,22 @@ minetest.register_entity("mcl_conduits:conduit", {
 		end
 	end
 })
-
+local conduit_box = { -0.25, -0.25, -0.25, 0.25, 0.25, 0.25, }
 minetest.register_node("mcl_conduits:conduit", {
+	description = S("Conduit"),
+	_doc_longdesc = S("A conduit provides certain status effects to nearby players much like a beacon but under water"),
+	drawtype = "nodebox",
+	node_box = {
+		type = "fixed",
+		fixed = conduit_box,
+	},
+	collisionbox = conduit_box,
+	selectionbox = conduit_box,
+	groups = { pickaxey = 1 },
+	light_source = 15,
 	tiles = { "mcl_conduit_conduit_node.png", },
+	_mcl_hardness = 3,
+	_mcl_blast_resistance = 3,
 })
 
 minetest.register_abm({
