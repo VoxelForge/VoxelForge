@@ -63,7 +63,8 @@ local entity_pos_offset = vector.new(0, -1.25, 0)
 
 local function check_conduit(pos)
 	local water = minetest.find_nodes_in_area(vector.offset(pos, -1,-1,-1), vector.offset(pos, 1, 1, 1), {"group:water"})
-	if #water < 26 then return false end
+	local cname = minetest.get_node(pos).name
+	if #water < 26 or ( cname ~= "mcl_conduits:conduit" and #water < 27 ) then return false end
 	local pn = 0
 	for _, v in pairs(frame_offsets) do
 		if table.indexof(conduit_nodes, minetest.get_node(vector.add(pos, v)).name) ~= -1 then
@@ -71,7 +72,7 @@ local function check_conduit(pos)
 		end
 	end
 	if pn < 16 then return false end
-	return pn
+	return math.floor(pn / 7) * 16
 end
 
 function mcl_conduits.player_effect(player)
