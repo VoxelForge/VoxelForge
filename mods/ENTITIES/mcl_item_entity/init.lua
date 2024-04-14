@@ -3,17 +3,8 @@ local pool = {}
 
 local tick = false
 
-minetest.register_on_joinplayer(function(player)
-	local name
-	name = player:get_player_name()
-	pool[name] = 0
-end)
-
-minetest.register_on_leaveplayer(function(player)
-	local name
-	name = player:get_player_name()
-	pool[name] = nil
-end)
+minetest.register_on_joinplayer(function(player) pool[player] = 0 end)
+minetest.register_on_leaveplayer(function(player) pool[player] = nil end)
 
 
 local has_awards = minetest.get_modpath("awards")
@@ -136,8 +127,7 @@ local function try_object_pickup(player, inv, object, checkpos)
 		object:move_to(checkpos)
 
 		-- Update sound pool
-		local name = player:get_player_name()
-		pool[name] = ( pool[name] or 0 ) + 1
+		pool[player] = ( pool[player] or 0 ) + 1
 
 		-- Make sure the object gets removed
 		minetest.after(0.25, function()
@@ -157,22 +147,19 @@ minetest.register_globalstep(function(_)
 
 	for _,player in pairs(minetest.get_connected_players()) do
 		if player:get_hp() > 0 or not minetest.settings:get_bool("enable_damage") then
-
-			local name = player:get_player_name()
-
 			local pos = player:get_pos()
 
-			if tick == true and pool[name] > 0 then
+			if tick == true and pool[player] > 0 then
 				minetest.sound_play("item_drop_pickup", {
 					pos = pos,
 					gain = 0.3,
 					max_hear_distance = 16,
 					pitch = math.random(70,110)/100
 				})
-				if pool[name] > 6 then
-					pool[name] = 6
+				if pool[player] > 6 then
+					pool[player] = 6
 				else
-					pool[name] = pool[name] - 1
+					pool[player] = pool[player] - 1
 				end
 			end
 
