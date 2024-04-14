@@ -92,47 +92,6 @@ local function disable_physics(object, luaentity, ignore_check, reset_movement)
 	end
 end
 
-local function try_object_pickup(player, inv, object, checkpos)
-	if not inv then return end
-
-	local le = object:get_luaentity()
-
-	-- Don't try to collect again
-	if le._removed then return end
-
-	-- Check magnet timer
-	if le._magnet_timer < 0 then return end
-	if le._magnet_timer >= item_drop_settings.magnet_time then return end
-
-
-	-- Ignore if itemstring is not set yet
-	if le.itemstring == "" then return end
-
-	-- Add what we can to the inventory
-	local itemstack = ItemStack(le.itemstring)
-	local leftovers = inv:add_item("main", itemstack )
-
-	check_pickup_achievements(object, player)
-
-	if leftovers:is_empty() then
-		-- Destroy entity
-		-- This just prevents this section to be run again because object:remove() doesn't remove the item immediately.
-		le.target = checkpos
-		le:safe_remove()
-
-		-- Stop the object
-		object:set_velocity(vector.zero())
-		object:set_acceleration(vector.zero())
-		object:move_to(checkpos)
-
-		-- Update sound pool
-		pool[player] = ( pool[player] or 0 ) + 1
-	else
-		-- Update entity itemstring
-		le.itemstring = leftovers:to_string()
-	end
-end
-
 mcl_player.register_globalstep(function(player)
 	if player:get_hp() > 0 or not minetest.settings:get_bool("enable_damage") then
 		local pos = player:get_pos()
@@ -151,20 +110,20 @@ mcl_player.register_globalstep(function(player)
 			end
 		end
 
-		local inv = player:get_inventory()
 		local checkpos = vector.offset(pos, 0, item_drop_settings.player_collect_height, 0)
-
 		--magnet and collection
 		for _,object in pairs(minetest.get_objects_inside_radius(checkpos, item_drop_settings.xp_radius_magnet)) do
-			if not object:is_player() and vector.distance(checkpos, object:get_pos()) < item_drop_settings.radius_magnet and object:get_luaentity() and object:get_luaentity().name == "__builtin:item" and object:get_luaentity()._magnet_timer and (object:get_luaentity()._insta_collect or (object:get_luaentity().age > item_drop_settings.age)) then
-				try_object_pickup( player, inv, object, checkpos )
-			elseif not object:is_player() and object:get_luaentity() and object:get_luaentity().name == "mcl_experience:orb" then
-				local entity = object:get_luaentity()
-				entity.collector = player:get_player_name()
-				entity.collected = true
+			if not object:is_player() then
+				local le = object:get_luaentity()
+				if vector.distance(checkpos, object:get_pos()) < item_drop_settings.radius_magnet and le and le.name == "__builtin:item" and le._magnet_timer and (le._insta_collect or (le.age > item_drop_settings.age)) then
+					le:pickup(player)
+				elseif object:get_luaentity() and object:get_luaentity().name == "mcl_experience:orb" then
+					local entity = object:get_luaentity()
+					entity.collector = player:get_player_name()
+					entity.collected = true
+				end
 			end
 		end
-
 	end
 end)
 
@@ -436,6 +395,46 @@ minetest.register_entity(":__builtin:item", {
 
 	_mcl_fishing_hookable = true,
 	_mcl_fishing_reelable = true,
+
+	pickup = function(self, player)
+		-- Don't try to collect again
+		if self._removed then return end
+		if not player or not player:get_pos() then return end
+
+		local inv = player:get_inventory()
+		local checkpos = vector.offset(player:get_pos(), 0, item_drop_settings.player_collect_height, 0)
+
+		-- Check magnet timer
+		if self._magnet_timer < 0 then return end
+		if self._magnet_timer >= item_drop_settings.magnet_time then return end
+
+		-- Ignore if itemstring is not set yet
+		if self.itemstring == "" then return end
+
+		-- Add what we can to the inventory
+		local itemstack = ItemStack(self.itemstring)
+		local leftovers = inv:add_item("main", itemstack )
+
+		check_pickup_achievements(self.object, player)
+
+		if leftovers:is_empty() then
+			-- Destroy entity
+			-- This just prevents this section to be run again because object:remove() doesn't remove the item immediately.
+			self.target = checkpos
+			self:safe_remove()
+
+			-- Stop the object
+			self.object:set_velocity(vector.zero())
+			self.object:set_acceleration(vector.zero())
+			self.object:move_to(checkpos)
+
+			-- Update sound pool
+			pool[player] = ( pool[player] or 0 ) + 1
+		else
+			-- Update entity itemstring
+			self.itemstring = leftovers:to_string()
+		end
+	end,
 
 	-- Function to apply a random velocity
 	apply_random_vel = function(self, speed)
