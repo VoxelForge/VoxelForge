@@ -163,8 +163,6 @@ minetest.register_globalstep(function(_)
 				end
 			end
 
-
-
 			local inv = player:get_inventory()
 			local checkpos = {x=pos.x,y=pos.y + item_drop_settings.player_collect_height,z=pos.z}
 
