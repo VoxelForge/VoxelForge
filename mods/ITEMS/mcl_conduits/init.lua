@@ -3,7 +3,7 @@ local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 
 local check_interval = 5
-local conduit_nodes = { "mcl_ocean:prismarine", "mcl_ocean:prismarine_dark", "mcl_ocean:sea_lantern" }
+local conduit_nodes = { "mcl_ocean:prismarine",  "mcl_ocean:prismarine_brick", "mcl_ocean:prismarine_dark", "mcl_ocean:sea_lantern" }
 
 local frame_offsets = {
 	vector.new(1, 2, 0),
