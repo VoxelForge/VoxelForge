@@ -97,12 +97,13 @@ local function try_object_pickup(player, inv, object, checkpos)
 
 	local le = object:get_luaentity()
 
+	-- Don't try to collect again
+	if le._removed then return end
+
 	-- Check magnet timer
 	if le._magnet_timer < 0 then return end
 	if le._magnet_timer >= item_drop_settings.magnet_time then return end
 
-	-- Don't try to collect again
-	if le._removed then return end
 
 	-- Ignore if itemstring is not set yet
 	if le.itemstring == "" then return end
@@ -117,7 +118,7 @@ local function try_object_pickup(player, inv, object, checkpos)
 		-- Destroy entity
 		-- This just prevents this section to be run again because object:remove() doesn't remove the item immediately.
 		le.target = checkpos
-		le._removed = true
+		le:safe_remove()
 
 		-- Stop the object
 		object:set_velocity(vector.zero())
@@ -126,14 +127,6 @@ local function try_object_pickup(player, inv, object, checkpos)
 
 		-- Update sound pool
 		pool[player] = ( pool[player] or 0 ) + 1
-
-		-- Make sure the object gets removed
-		minetest.after(0.25, function()
-			--safety check
-			if object and object:get_luaentity() then
-				object:remove()
-			end
-		end)
 	else
 		-- Update entity itemstring
 		le.itemstring = leftovers:to_string()
@@ -169,7 +162,6 @@ mcl_player.register_globalstep(function(player)
 				local entity = object:get_luaentity()
 				entity.collector = player:get_player_name()
 				entity.collected = true
-
 			end
 		end
 
@@ -666,6 +658,9 @@ minetest.register_entity(":__builtin:item", {
 		return true
 	end,
 
+	safe_remove = function(self)
+		self._removed = true
+	end,
 	on_step = function(self, dtime, moveresult)
 		if self._removed then
 			self.object:set_properties({
@@ -673,6 +668,10 @@ minetest.register_entity(":__builtin:item", {
 			})
 			self.object:set_velocity({x=0,y=0,z=0})
 			self.object:set_acceleration({x=0,y=0,z=0})
+			self._removal_timer = (self._removal_timer or 0.25) - dtime
+			if self._removal_timer < 0 then
+				self.object:remove()
+			end
 			return
 		end
 
