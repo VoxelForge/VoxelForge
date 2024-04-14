@@ -1,8 +1,6 @@
 --this is used for the player pool in the sound buffer
 local pool = {}
 
-local tick = false
-
 minetest.register_on_joinplayer(function(player) pool[player] = 0 end)
 minetest.register_on_leaveplayer(function(player) pool[player] = nil end)
 
@@ -142,43 +140,39 @@ local function try_object_pickup(player, inv, object, checkpos)
 	end
 end
 
-minetest.register_globalstep(function(_)
-	tick = not tick
+mcl_player.register_globalstep(function(player)
+	if player:get_hp() > 0 or not minetest.settings:get_bool("enable_damage") then
+		local pos = player:get_pos()
 
-	for _,player in pairs(minetest.get_connected_players()) do
-		if player:get_hp() > 0 or not minetest.settings:get_bool("enable_damage") then
-			local pos = player:get_pos()
-
-			if tick == true and pool[player] > 0 then
-				minetest.sound_play("item_drop_pickup", {
-					pos = pos,
-					gain = 0.3,
-					max_hear_distance = 16,
-					pitch = math.random(70,110)/100
-				})
-				if pool[player] > 6 then
-					pool[player] = 6
-				else
-					pool[player] = pool[player] - 1
-				end
+		if pool[player] > 0 then
+			minetest.sound_play("item_drop_pickup", {
+				pos = pos,
+				gain = 0.3,
+				max_hear_distance = 16,
+				pitch = math.random(70,110)/100
+			})
+			if pool[player] > 6 then
+				pool[player] = 6
+			else
+				pool[player] = pool[player] - 1
 			end
-
-			local inv = player:get_inventory()
-			local checkpos = {x=pos.x,y=pos.y + item_drop_settings.player_collect_height,z=pos.z}
-
-			--magnet and collection
-			for _,object in pairs(minetest.get_objects_inside_radius(checkpos, item_drop_settings.xp_radius_magnet)) do
-				if not object:is_player() and vector.distance(checkpos, object:get_pos()) < item_drop_settings.radius_magnet and object:get_luaentity() and object:get_luaentity().name == "__builtin:item" and object:get_luaentity()._magnet_timer and (object:get_luaentity()._insta_collect or (object:get_luaentity().age > item_drop_settings.age)) then
-					try_object_pickup( player, inv, object, checkpos )
-				elseif not object:is_player() and object:get_luaentity() and object:get_luaentity().name == "mcl_experience:orb" then
-					local entity = object:get_luaentity()
-					entity.collector = player:get_player_name()
-					entity.collected = true
-
-				end
-			end
-
 		end
+
+		local inv = player:get_inventory()
+		local checkpos = vector.offset(pos, 0, item_drop_settings.player_collect_height, 0)
+
+		--magnet and collection
+		for _,object in pairs(minetest.get_objects_inside_radius(checkpos, item_drop_settings.xp_radius_magnet)) do
+			if not object:is_player() and vector.distance(checkpos, object:get_pos()) < item_drop_settings.radius_magnet and object:get_luaentity() and object:get_luaentity().name == "__builtin:item" and object:get_luaentity()._magnet_timer and (object:get_luaentity()._insta_collect or (object:get_luaentity().age > item_drop_settings.age)) then
+				try_object_pickup( player, inv, object, checkpos )
+			elseif not object:is_player() and object:get_luaentity() and object:get_luaentity().name == "mcl_experience:orb" then
+				local entity = object:get_luaentity()
+				entity.collector = player:get_player_name()
+				entity.collected = true
+
+			end
+		end
+
 	end
 end)
 
