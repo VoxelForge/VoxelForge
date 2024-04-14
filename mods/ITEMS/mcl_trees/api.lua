@@ -53,9 +53,10 @@ local function update_far_away_leaves(pos)
 	for _, lpos in pairs(leaves) do
 		if not log_in_range(lpos) then
 			local node = minetest.get_node(lpos)
-			if math.floor(node.param2 / 32) ~= 1 then
+			local ndef = minetest.registered_nodes[node.name]
+			if math.floor(node.param2 / 32) ~= 1 and ndef._mcl_leaves then
 				minetest.swap_node(lpos, {
-					name = minetest.registered_nodes[node.name]._mcl_orphan_leaves,
+					name = ndef._mcl_orphan_leaves,
 					param2 = node.param2,
 				})
 			end
@@ -80,7 +81,7 @@ minetest.register_on_mods_loaded(function()
 	for name, ndef in pairs(minetest.registered_nodes) do
 		local cid = minetest.get_content_id(name)
 		tree_tab[cid] = minetest.get_item_group(name, "tree") ~= 0 and true or nil
-		if minetest.get_item_group(name, "leaves") ~= 0 then
+		if minetest.get_item_group(name, "leaves") ~= 0 and ndef._mcl_leaves then
 			local def = {
 				c_leaves = minetest.get_content_id(ndef._mcl_leaves),
 				c_orphan_leaves = minetest.get_content_id(ndef._mcl_orphan_leaves),
