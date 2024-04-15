@@ -649,11 +649,7 @@ minetest.register_entity(":__builtin:item", {
 		end
 
 		local p = self.object:get_pos()
-
-		local node = minetest.get_node(p)
-		local in_unloaded = node.name == "ignore"
-
-		if in_unloaded then
+		if minetest.get_node(p).name == "ignore" then
 			-- Don't infinetly fall into unloaded map
 			self:disable_physics()
 			return
@@ -665,6 +661,17 @@ minetest.register_entity(":__builtin:item", {
 			})
 		end
 
+		-- If no collector was found for a long enough time, declare the magnet as disabled
+		if self._magnet_active and (self._collector_timer == nil or (self._collector_timer > item_drop_settings.magnet_time)) then
+			self._magnet_active = false
+			self:enable_physics()
+			return
+		end
+		self:apply_physics(dtime, moveresult)
+	end,
+	apply_physics = function(self, dtime, moveresult)
+		local p = self.object:get_pos()
+		local node = minetest.get_node(p)
 		local nn = node.name
 		local is_in_water = (minetest.get_item_group(nn, "liquid") ~= 0)
 		local nn_above = minetest.get_node({x=p.x, y=p.y+0.1, z=p.z}).name
@@ -684,12 +691,7 @@ minetest.register_entity(":__builtin:item", {
 			self.object:set_acceleration({x = 0, y = 0, z = 0})
 			self:disable_physics()
 		end
-		-- If no collector was found for a long enough time, declare the magnet as disabled
-		if self._magnet_active and (self._collector_timer == nil or (self._collector_timer > item_drop_settings.magnet_time)) then
-			self._magnet_active = false
-			self:enable_physics()
-			return
-		end
+
 
 		-- Destroy item in lava, fire or special nodes
 
@@ -883,7 +885,6 @@ minetest.register_entity(":__builtin:item", {
 				self:enable_physics()
 			end
 		end
-
 	end,
 	-- Note: on_punch intentionally left out. The player should *not* be able to collect items by punching
 })
