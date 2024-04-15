@@ -69,29 +69,6 @@ local function check_pickup_achievements(object, player)
 	end
 end
 
-local function enable_physics(object, luaentity, ignore_check)
-	if luaentity.physical_state == false or ignore_check == true then
-		luaentity.physical_state = true
-		object:set_properties({
-			physical = true
-		})
-		object:set_acceleration({x=0,y=-get_gravity(),z=0})
-	end
-end
-
-local function disable_physics(object, luaentity, ignore_check, reset_movement)
-	if luaentity.physical_state == true or ignore_check == true then
-		luaentity.physical_state = false
-		object:set_properties({
-			physical = false
-		})
-		if reset_movement ~= false then
-			object:set_velocity({x=0,y=0,z=0})
-			object:set_acceleration({x=0,y=0,z=0})
-		end
-	end
-end
-
 mcl_player.register_globalstep(function(player)
 	if player:get_hp() > 0 or not minetest.settings:get_bool("enable_damage") then
 		local pos = player:get_pos()
@@ -392,6 +369,29 @@ minetest.register_entity(":__builtin:item", {
 
 	_mcl_fishing_hookable = true,
 	_mcl_fishing_reelable = true,
+
+	enable_physics = function(self, ignore_check)
+		if self.physical_state == false or ignore_check == true then
+			self.physical_state = true
+			self.object:set_properties({
+				physical = true
+			})
+			self.object:set_acceleration({x=0,y=-get_gravity(),z=0})
+		end
+	end,
+
+	disable_physics = function(self, ignore_check, reset_movement)
+		if self.physical_state == true or ignore_check == true then
+			self.physical_state = false
+			self.object:set_properties({
+				physical = false
+			})
+			if reset_movement ~= false then
+				self.object:set_velocity({x=0,y=0,z=0})
+				self.object:set_acceleration({x=0,y=0,z=0})
+			end
+		end
+	end,
 
 	pickup = function(self, player)
 		-- Don't try to collect again
@@ -697,7 +697,7 @@ minetest.register_entity(":__builtin:item", {
 
 		if in_unloaded then
 			-- Don't infinetly fall into unloaded map
-			disable_physics(self.object, self)
+			self:disable_physics()
 			return
 		end
 
@@ -727,12 +727,12 @@ minetest.register_entity(":__builtin:item", {
 		if is_floating and self.physical_state == true then
 			self.object:set_velocity({x = 0, y = 0, z = 0})
 			self.object:set_acceleration({x = 0, y = 0, z = 0})
-			disable_physics(self.object, self)
+			self:disable_physics()
 		end
 		-- If no collector was found for a long enough time, declare the magnet as disabled
 		if self._magnet_active and (self._collector_timer == nil or (self._collector_timer > item_drop_settings.magnet_time)) then
 			self._magnet_active = false
-			enable_physics(self.object, self)
+			self:enable_physics()
 			return
 		end
 
@@ -810,7 +810,7 @@ minetest.register_entity(":__builtin:item", {
 			local newv = vector.multiply(shootdir, 3)
 			self.object:set_acceleration({x = 0, y = 0, z = 0})
 			self.object:set_velocity(newv)
-			disable_physics(self.object, self, false, false)
+			self:disable_physics(false, false)
 
 
 			if shootdir.y == 0 then
@@ -838,14 +838,14 @@ minetest.register_entity(":__builtin:item", {
 			if ok then
 				self._forcetimer = -1
 				self._force = nil
-				enable_physics(self.object, self)
+				self:enable_physics()
 			else
 				self._forcetimer = self._forcetimer - dtime
 			end
 			return
 		elseif self._force then
 			self._force = nil
-			enable_physics(self.object, self)
+			self:enable_physics()
 			return
 		end
 
@@ -898,7 +898,7 @@ minetest.register_entity(":__builtin:item", {
 		elseif self._flowing == true and not is_in_water and not is_floating then
 			-- Disable flowing physics if not on/in flowing liquid
 			self._flowing = false
-			enable_physics(self.object, self, true)
+			self:enable_physics(true)
 			return
 		end
 
@@ -923,12 +923,12 @@ minetest.register_entity(":__builtin:item", {
 				end
 				-- don't disable if underwater
 				if not is_in_water then
-					disable_physics(self.object, self)
+					self:disable_physics()
 				end
 			end
 		else
 			if self._magnet_active == false and not is_floating then
-				enable_physics(self.object, self)
+				self:enable_physics()
 			end
 		end
 
