@@ -277,10 +277,7 @@ end
 
 --modify builtin:item
 
-local time_to_live = tonumber(minetest.settings:get("item_entity_ttl"))
-if not time_to_live then
-	time_to_live = 300
-end
+local time_to_live = tonumber(minetest.settings:get("item_entity_ttl")) or 300
 
 local function cxcz(o, cw, one, zero)
 	if cw < 0 then
