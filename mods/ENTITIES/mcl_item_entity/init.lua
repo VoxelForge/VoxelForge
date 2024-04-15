@@ -302,7 +302,7 @@ minetest.register_entity(":__builtin:item", {
 		pointable = false,
 		visual = "wielditem",
 		visual_size = {x = 0.4, y = 0.4},
-		textures = {""},
+		wield_item = "",
 		spritediv = {x = 1, y = 1},
 		initial_sprite_basepos = {x = 0, y = 0},
 		automatic_rotate = math.pi * 0.5,
@@ -482,7 +482,7 @@ minetest.register_entity(":__builtin:item", {
 		local c = s
 		s = s / wield_scale
 		self.object:set_properties({
-			textures = { stack:get_name() },
+			wield_item = stack:get_name(),
 			visual_size = {x = s, y = s},
 			collisionbox = {-c, -c, -c, c, c, c},
 			infotext = def.description,
@@ -676,7 +676,7 @@ minetest.register_entity(":__builtin:item", {
 
 		if self.is_clock then
 			self.object:set_properties({
-				textures = {"mcl_clock:clock_" .. (mcl_worlds.clock_works(p) and mcl_clock.old_time or mcl_clock.random_frame)}
+				wield_item = "mcl_clock:clock_" .. (mcl_worlds.clock_works(p) and mcl_clock.old_time or mcl_clock.random_frame)
 			})
 		end
 
