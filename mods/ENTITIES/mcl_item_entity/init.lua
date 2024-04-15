@@ -131,12 +131,8 @@ end)
 -- Create a temporary table in minetest.registered_nodes that contains the proper drops,
 -- because unfortunately minetest.get_node_drops needs the drop table to be inside a registered node definition
 -- (very ugly)
-
-local tmp_id = 0
-
 local function get_drops(drop, toolname, param2, paramtype2)
-	tmp_id = tmp_id + 1
-	local tmp_node_name = "mcl_item_entity:" .. tmp_id
+	local tmp_node_name = "mcl_item_entity:TMP_NODE"
 	minetest.registered_nodes[tmp_node_name] = {
 		name = tmp_node_name,
 		drop = drop,
