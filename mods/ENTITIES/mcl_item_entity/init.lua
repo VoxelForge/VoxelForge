@@ -591,20 +591,19 @@ minetest.register_entity(":__builtin:item", {
 		self._forcetimer = 0
 
 		self.object:set_armor_groups({immortal = 1})
-		-- self.object:set_velocity({x = 0, y = 2, z = 0})
 		self.object:set_acceleration({x = 0, y = -get_gravity(), z = 0})
 		self:set_item(self.itemstring)
 	end,
 
-	try_merge_with = function(self, own_stack, object, entity)
+	merge_with = function(self, entity)
 		if self.age == entity.age or entity._removed then
 			-- Can not merge with itself and remove entity
 			return false
 		end
 
+		local own_stack = ItemStack(self.itemstring)
 		local stack = ItemStack(entity.itemstring)
-		local name = stack:get_name()
-		if own_stack:get_name() ~= name or
+		if own_stack:get_name() ~= stack:get_name() or
 				own_stack:get_meta() ~= stack:get_meta() or
 				own_stack:get_wear() ~= stack:get_wear() or
 				own_stack:get_free_space() == 0 then
@@ -622,7 +621,7 @@ minetest.register_entity(":__builtin:item", {
 
 		-- Merge the remote stack into this one
 		local self_pos = self.object:get_pos()
-		local pos = object:get_pos()
+		local pos = entity.object:get_pos()
 
 		--local y = pos.y + ((total_count - count) / max_count) * 0.15
 		local x_diff = (self_pos.x - pos.x) / 2
@@ -639,7 +638,7 @@ minetest.register_entity(":__builtin:item", {
 		self:set_item(own_stack:to_string())
 
 		entity._removed = true
-		object:remove()
+		entity.object:remove()
 		return true
 	end,
 
@@ -888,21 +887,18 @@ minetest.register_entity(":__builtin:item", {
 		end
 
 		-- If node is not registered or node is walkably solid and resting on nodebox
-		local nn = minetest.get_node({x=p.x, y=p.y-0.5, z=p.z}).name
+		local nn = minetest.get_node(vector.offset(p, 0, -0.5, 0)).name
 		local def = minetest.registered_nodes[nn]
 		local v = self.object:get_velocity()
-		local is_on_floor = def and (def.walkable
-			and not def.groups.slippery and v.y == 0)
+		local is_on_floor = def and (def.walkable and not def.groups.slippery and v.y == 0)
 
 		if not minetest.registered_nodes[nn] or is_floating or is_on_floor then
-
-			local own_stack = ItemStack(self.object:get_luaentity().itemstring)
 			-- Merge with close entities of the same item
 			for _, object in pairs(minetest.get_objects_inside_radius(p, 0.8)) do
-				local obj = object:get_luaentity()
+				local l = object:get_luaentity()
 
-				if obj and obj.name == "__builtin:item" and obj.physical_state == false then
-					if self:try_merge_with(own_stack, object, obj) then
+				if l and l.name == "__builtin:item" and l.physical_state == false then
+					if self:merge_with(l) then
 						return
 					end
 				end
