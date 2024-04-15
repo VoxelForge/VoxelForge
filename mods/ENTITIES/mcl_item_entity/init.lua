@@ -692,15 +692,11 @@ minetest.register_entity(":__builtin:item", {
 		local node = minetest.get_node(p)
 		local in_unloaded = node.name == "ignore"
 
-
 		if in_unloaded then
 			-- Don't infinetly fall into unloaded map
 			self:disable_physics()
 			return
 		end
-
-
-
 
 		if self.is_clock then
 			self.object:set_properties({
@@ -931,6 +927,5 @@ minetest.register_entity(":__builtin:item", {
 		end
 
 	end,
-
 	-- Note: on_punch intentionally left out. The player should *not* be able to collect items by punching
 })
