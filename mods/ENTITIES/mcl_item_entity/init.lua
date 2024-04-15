@@ -328,6 +328,8 @@ minetest.register_entity(":__builtin:item", {
 
 	-- How old it has become in the collection animation
 	collection_age = 0,
+	_magnet_timer = 0,
+	_forcetimer = 0,
 
 	_mcl_fishing_hookable = true,
 	_mcl_fishing_reelable = true,
@@ -555,26 +557,11 @@ minetest.register_entity(":__builtin:item", {
 		else
 			self.itemstring = staticdata
 		end
+
 		if self._removed then
-			self._removed = true
-			self.object:remove()
+			self:safe_remove(true)
 			return
 		end
-		if self._insta_collect == nil then
-			-- Intentionally default, since delayed collection is rare
-			self._insta_collect = true
-		end
-		if self._flowing == nil then
-			self._flowing = false
-		end
-		self._magnet_timer = 0
-		self._magnet_active = false
-		-- How long ago the last possible collector was detected. nil = none in this session
-		self._collector_timer = nil
-		-- Used to apply additional force
-		self._force = nil
-		self._forcestart = nil
-		self._forcetimer = 0
 
 		self.object:set_armor_groups({immortal = 1})
 		self.object:set_acceleration({x = 0, y = -get_gravity(), z = 0})
