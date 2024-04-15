@@ -325,6 +325,7 @@ minetest.register_entity(":__builtin:item", {
 
 	-- How old it has become in the collection animation
 	collection_age = 0,
+	_magnet_active = false,
 	_magnet_timer = 0,
 	_forcetimer = 0,
 
