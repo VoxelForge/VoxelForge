@@ -326,8 +326,7 @@ minetest.register_entity(":__builtin:item", {
 		textures = {""},
 		spritediv = {x = 1, y = 1},
 		initial_sprite_basepos = {x = 0, y = 0},
-		is_visible = false,
-		infotext = "",
+		automatic_rotate = math.pi * 0.5,
 	},
 
 	-- Itemstring of dropped item. The empty string is used when the item is not yet initialized yet.
@@ -464,51 +463,45 @@ minetest.register_entity(":__builtin:item", {
 			return
 		end
 		local stack = ItemStack(itemstring)
+
+		if not stack:get_definition() then
+			self:safe_remove()
+			return
+		end
+
 		if minetest.get_item_group(stack:get_name(), "compass") > 0 then
+			self.is_compass = true
 			if string.find(stack:get_name(), "_lodestone") then
 				stack:set_name("mcl_compass:18_lodestone")
 			else
 				stack:set_name("mcl_compass:18")
 			end
-			itemstring = stack:to_string()
-			self.itemstring = itemstring
 		end
+
 		if minetest.get_item_group(stack:get_name(), "clock") > 0 then
 			self.is_clock = true
 		end
+
 		local count = stack:get_count()
 		local max_count = stack:get_stack_max()
 		if count > max_count then
-			count = max_count
-			self.itemstring = stack:get_name().." "..max_count
+			stack:set_count(max_count)
 		end
-		local itemtable = stack:to_table()
-		local itemname = nil
-		local description = ""
-		if itemtable then
-			itemname = stack:to_table().name
-		end
-		local glow
-		local def = minetest.registered_items[itemname]
-		if def then
-			description = def.description
-			glow = def.light_source
-		end
+
+		self.itemstring = stack:to_string()
+
+		local def = stack:get_definition()
 		local s = 0.2 + 0.1 * (count / max_count)
 		local wield_scale = (def and type(def.wield_scale) == "table" and tonumber(def.wield_scale.x)) or 1
 		local c = s
 		s = s / wield_scale
-		local prop = {
-			is_visible = true,
-			visual = "wielditem",
-			textures = {itemname},
+		self.object:set_properties({
+			textures = { stack:get_name() },
 			visual_size = {x = s, y = s},
 			collisionbox = {-c, -c, -c, c, c, c},
-			automatic_rotate = math.pi * 0.5,
-			infotext = description,
-			glow = glow,
-		}
-		self.object:set_properties(prop)
+			infotext = def.description,
+			glow = def.light_source,
+		})
 		if item_drop_settings.random_item_velocity == true and self.age < 1 then
 			minetest.after(0, self.apply_random_vel, self)
 		end
@@ -566,8 +559,6 @@ minetest.register_entity(":__builtin:item", {
 				self.always_collect = data.always_collect
 				if data.age then
 					self.age = data.age
-				else
-					self.age = self.age
 				end
 				--remember collection data
 				-- If true, can collect item without delay
