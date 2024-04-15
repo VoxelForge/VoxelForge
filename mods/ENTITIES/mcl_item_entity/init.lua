@@ -115,12 +115,13 @@ mcl_player.register_globalstep(function(player)
 		for _,object in pairs(minetest.get_objects_inside_radius(checkpos, item_drop_settings.xp_radius_magnet)) do
 			if not object:is_player() then
 				local le = object:get_luaentity()
-				if vector.distance(checkpos, object:get_pos()) < item_drop_settings.radius_magnet and le and le.name == "__builtin:item" and le._magnet_timer and (le._insta_collect or (le.age > item_drop_settings.age)) then
+				if le and le.name == "__builtin:item" and
+				vector.distance(checkpos, object:get_pos()) < item_drop_settings.radius_magnet and
+				le._magnet_timer and (le._insta_collect or (le.age > item_drop_settings.age)) then
 					le:pickup(player)
-				elseif object:get_luaentity() and object:get_luaentity().name == "mcl_experience:orb" then
-					local entity = object:get_luaentity()
-					entity.collector = player:get_player_name()
-					entity.collected = true
+				elseif le and le.name == "mcl_experience:orb" and not le.collected then
+					le.collector = player:get_player_name()
+					le.collected = true
 				end
 			end
 		end
