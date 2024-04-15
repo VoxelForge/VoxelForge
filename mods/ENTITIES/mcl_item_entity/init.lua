@@ -431,11 +431,11 @@ minetest.register_entity(":__builtin:item", {
 
 		if vel and vel.x == 0 and vel.z == 0 and self.random_velocity > 0 then
 			local v = self.random_velocity
-
-			local x = math.random(5, max_vel) / 10 * v
-			if math.random(0, 10) < 5 then x = -x end
-			local z = math.random(5, max_vel) / 10 * v
-			if math.random(0, 10) < 5 then z = -z end
+			local m = max_vel - 5
+			local x = (5 + ( math.random() * m ) ) / 10 * v
+			local z = (5 + ( math.random() * m ) ) / 10 * v
+			if math.random(10) < 6 then x = -x end
+			if math.random(10) < 6 then z = -z end
 			local y = math.random(1, 2)
 			self.object:set_velocity(vector.new(x, y, z))
 		end
