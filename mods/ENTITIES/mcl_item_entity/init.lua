@@ -1,10 +1,3 @@
---this is used for the player pool in the sound buffer
-local pool = {}
-
-minetest.register_on_joinplayer(function(player) pool[player] = 0 end)
-minetest.register_on_leaveplayer(function(player) pool[player] = nil end)
-
-
 local has_awards = minetest.get_modpath("awards")
 
 mcl_item_entity = {}
@@ -56,20 +49,6 @@ mcl_item_entity.register_pickup_achievement("mcl_armor:elytra", "mcl:skysTheLimi
 mcl_player.register_globalstep(function(player)
 	if player:get_hp() > 0 or not minetest.settings:get_bool("enable_damage") then
 		local pos = player:get_pos()
-
-		if pool[player] > 0 then
-			minetest.sound_play("item_drop_pickup", {
-				pos = pos,
-				gain = 0.3,
-				max_hear_distance = 16,
-				pitch = math.random(70,110)/100
-			})
-			if pool[player] > 6 then
-				pool[player] = 6
-			else
-				pool[player] = pool[player] - 1
-			end
-		end
 
 		local checkpos = vector.offset(pos, 0, item_drop_settings.player_collect_height, 0)
 		--magnet and collection
@@ -397,6 +376,16 @@ minetest.register_entity(":__builtin:item", {
 
 		self:check_pickup_achievements(player)
 
+		if leftovers:get_count() < itemstack:get_count() then
+			-- play sound if something was picked up
+			minetest.sound_play("item_drop_pickup", {
+				pos = player:get_pos(),
+				gain = 0.3,
+				max_hear_distance = 16,
+				pitch = math.random(70,110)/100
+			}, true)
+		end
+
 		if leftovers:is_empty() then
 			-- Destroy entity
 			-- This just prevents this section to be run again because object:remove() doesn't remove the item immediately.
@@ -407,9 +396,6 @@ minetest.register_entity(":__builtin:item", {
 			self.object:set_velocity(vector.zero())
 			self.object:set_acceleration(vector.zero())
 			self.object:move_to(checkpos)
-
-			-- Update sound pool
-			pool[player] = ( pool[player] or 0 ) + 1
 		else
 			-- Update entity itemstring
 			self.itemstring = leftovers:to_string()
