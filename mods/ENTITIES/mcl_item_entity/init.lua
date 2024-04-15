@@ -53,22 +53,6 @@ mcl_item_entity.register_pickup_achievement("mcl_nether:ancient_debris", "mcl:hi
 mcl_item_entity.register_pickup_achievement("mcl_end:dragon_egg", "mcl:PickUpDragonEgg")
 mcl_item_entity.register_pickup_achievement("mcl_armor:elytra", "mcl:skysTheLimit")
 
-local function check_pickup_achievements(object, player)
-	if has_awards then
-		local itemname = ItemStack(object:get_luaentity().itemstring):get_name()
-		local playername = player:get_player_name()
-		for name,awardstable in pairs(registered_pickup_achievement) do
-			for k,award in pairs(awardstable) do
-				if itemname == name or minetest.get_item_group(itemname, name) ~= 0 then
-					minetest.after((k-1) * MULTIPLE_AWARDS_DELAY, function(playername,award)
-						awards.unlock(playername, award)
-					end,playername,award)
-				end
-			end
-		end
-	end
-end
-
 mcl_player.register_globalstep(function(player)
 	if player:get_hp() > 0 or not minetest.settings:get_bool("enable_damage") then
 		local pos = player:get_pos()
@@ -412,7 +396,7 @@ minetest.register_entity(":__builtin:item", {
 		local itemstack = ItemStack(self.itemstring)
 		local leftovers = inv:add_item("main", itemstack )
 
-		check_pickup_achievements(self.object, player)
+		self:check_pickup_achievements(player)
 
 		if leftovers:is_empty() then
 			-- Destroy entity
@@ -430,6 +414,20 @@ minetest.register_entity(":__builtin:item", {
 		else
 			-- Update entity itemstring
 			self.itemstring = leftovers:to_string()
+		end
+	end,
+
+	check_pickup_achievements = function(self, player)
+		local itemname = ItemStack(self.itemstring):get_name()
+		local playername = player:get_player_name()
+		for name,awardstable in pairs(registered_pickup_achievement) do
+			for k,award in pairs(awardstable) do
+				if itemname == name or minetest.get_item_group(itemname, name) ~= 0 then
+					minetest.after((k-1) * MULTIPLE_AWARDS_DELAY, function(playername,award)
+						awards.unlock(playername, award)
+					end,playername,award)
+				end
+			end
 		end
 	end,
 
