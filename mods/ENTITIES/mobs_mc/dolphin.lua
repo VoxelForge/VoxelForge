@@ -1,13 +1,4 @@
---MCmobs v0.4
---maikerumine
---made for MC like Survival game
---License for code WTFPL and otherwise stated in readmes
-
 local S = minetest.get_translator(minetest.get_current_modname())
-
---###################
---################### dolphin
---###################
 
 local food_items = {
 	"mcl_fishing:fish_raw",
@@ -15,7 +6,7 @@ local food_items = {
 	"mcl_fishing:clownfish_raw",
 }
 
-local dolphin = {
+mcl_mobs.register_mob("mobs_mc:dolphin", {
 	description = S("Dolphin"),
 	type = "animal",
 	spawn_class = "water",
@@ -67,16 +58,6 @@ local dolphin = {
 	reach = 2,
 	damage = 2.5,
 	attack_type = "dogfight",
-	do_custom = function(self,dtime)
-			--[[ this is supposed to make them jump out the water but doesn't appear to work very well
-		self.object:set_bone_position("body", vector.new(0,1,0), vector.new(degrees(dir_to_pitch(self.object:get_velocity())) * -1 + 90,0,0))
-		if minetest.get_item_group(self.standing_in, "water") ~= 0 then
-			if self.object:get_velocity().y < 5 then
-				self.object:add_velocity({ x = 0 , y = math.random(-.007, .007), z = 0 })
-			end
-		end
-		--]]
-	end,
 	on_rightclick = function(self, clicker)
 		local wi = clicker:get_wielded_item()
 		if table.indexof(food_items, wi:get_name()) ~= -1 then
@@ -94,9 +75,8 @@ local dolphin = {
 			end
 		end
 	end,
-}
+})
 
-mcl_mobs.register_mob("mobs_mc:dolphin", dolphin)
 mcl_mobs.spawn_setup({
 	name = "mobs_mc:dolphin",
 	type_of_spawning = "water",
@@ -250,5 +230,4 @@ mcl_mobs.spawn_setup({
 	},
 })
 
---spawn egg
 mcl_mobs.register_egg("mobs_mc:dolphin", S("Dolphin"), "#223b4d", "#f9f9f9", 0)
