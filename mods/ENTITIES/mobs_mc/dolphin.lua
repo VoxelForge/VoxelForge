@@ -9,6 +9,12 @@ local S = minetest.get_translator(minetest.get_current_modname())
 --################### dolphin
 --###################
 
+local food_items = {
+	"mcl_fishing:fish_raw",
+	"mcl_fishing:salmon_raw",
+	"mcl_fishing:clownfish_raw",
+}
+
 local dolphin = {
 	description = S("Dolphin"),
 	type = "animal",
@@ -70,6 +76,23 @@ local dolphin = {
 			end
 		end
 		--]]
+	end,
+	on_rightclick = function(self, clicker)
+		local wi = clicker:get_wielded_item()
+		if table.indexof(food_items, wi:get_name()) ~= -1 then
+			if not minetest.is_creative_enabled(clicker:get_player_name()) then
+				wi:take_item()
+				clicker:set_wielded_item(wi)
+			end
+			local p = self.object:get_pos()
+			local p1 = vector.offset(p, -64, -16, -64)
+			local p2 = vector.offset(p, 64, math.min(1, p.y+16), 64)
+			local chests = minetest.find_nodes_in_area(p1, p2, {"mcl_chests:chest_small"})
+			if chests and #chests > 0 then
+				table.sort(chests, function(a, b) return vector.distance(p, a) < vector.distance(p, b) end)
+				self:go_to_pos(chests[1])
+			end
+		end
 	end,
 }
 
