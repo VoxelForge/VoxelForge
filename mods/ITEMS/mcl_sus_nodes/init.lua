@@ -74,11 +74,13 @@ local function brush_node(itemstack, user, pointed_thing)
 				item_entities[ph].object:set_pos(p + ( vector.new(item_entities[ph]._dir) * ( 0.02 * item_entities[ph]._stage )))
 			end
 		end
-		if item_entities[ph]._stage == 4 then
+		if item_entities[ph]._stage >= 4 then
 			minetest.add_item(pos+dir,item_entities[ph]._item)
 			item_entities[ph].object:remove()
 			item_entities[ph] = nil
 			minetest.swap_node(pos,{name = def._mcl_sus_nodes_parent})
+		elseif item_entities[ph]._stage <= 0 then
+			minetest.swap_node(pos,{name=def._mcl_sus_nodes_main})
 		else
 			minetest.swap_node(pos,{name=def._mcl_sus_nodes_main.."_"..item_entities[ph]._stage})
 		end
@@ -140,6 +142,12 @@ minetest.register_entity("mcl_sus_nodes:item_entity", {
 			if self._hide then
 				self._stage = self._stage - 1
 				self.object:set_pos(self.object:get_pos() - ( vector.new(self._dir) * ( 0.02 * self._stage )))
+				local def = minetest.registered_nodes[minetest.get_node(self._nodepos).name]
+				if self._stage <= 0 then
+					minetest.swap_node(self._nodepos, {name=def._mcl_sus_nodes_main})
+				else
+					minetest.swap_node(self._nodepos, {name=def._mcl_sus_nodes_main.."_"..self._stage})
+				end
 			end
 			self._timer = 1
 		end
@@ -170,7 +178,6 @@ minetest.register_entity("mcl_sus_nodes:item_entity", {
 		local s = minetest.deserialize(staticdata)
 		if type(s) == "table" then
 			for k,v in pairs(s) do self[k] = v end
-			self._poshash = minetest.hash_node_position(self.object:get_pos())
 			item_entities[self._poshash] = self
 			if self._item then
 				self.object:set_properties({
@@ -180,6 +187,8 @@ minetest.register_entity("mcl_sus_nodes:item_entity", {
 				self.object:remove()
 				return
 			end
+		else
+			self._poshash = minetest.hash_node_position(self.object:get_pos())
 		end
 		self.object:set_armor_groups({ immortal = 1 })
 	end,
