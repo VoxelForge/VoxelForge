@@ -4,6 +4,8 @@ local S = minetest.get_translator(modname)
 
 local item_entities = {}
 
+local HIDE_DELAY = 5
+
 local tpl = {
 	groups = { crumbly = 1, oddly_breakable_by_hand = 3, falling_node = 1, brushable = 1, suspicious_node = 1},
 	paramtype = "light",
@@ -24,14 +26,14 @@ function mcl_sus_nodes.get_random_item(pos)
 	local meta = minetest.get_meta(pos)
 	local struct = meta:get_string("structure")
 	local structdef = mcl_structures.registered_structures[struct]
+	local pr = PseudoRandom(minetest.hash_node_position(pos))
 	if struct ~= "" and structdef and structdef.loot and structdef.loot["SUS"] then
-		local lootitems = mcl_loot.get_multi_loot(structdef.loot["SUS"], PseudoRandom(minetest.hash_node_position(pos)))
+		local lootitems = mcl_loot.get_multi_loot(structdef.loot["SUS"], pr)
 		if #lootitems > 0 then
 			return lootitems[1]
 		end
 	else
-		table.shuffle(sus_drops_default)
-		return sus_drops_default[1]
+		return sus_drops_default[pr:next(1, #sus_drops_default)]
 	end
 end
 
@@ -65,6 +67,8 @@ local function brush_node(itemstack, user, pointed_thing)
 			item_entities[ph] = l
 		else
 			local p = item_entities[ph].object:get_pos()
+			item_entities[ph]._hide = nil
+			item_entities[ph]._hide_timer = HIDE_DELAY
 			if p and math.random(3) == 1  then
 				item_entities[ph]._stage = item_entities[ph]._stage + 1
 				item_entities[ph].object:set_pos(p + ( vector.new(item_entities[ph]._dir) * ( 0.02 * item_entities[ph]._stage )))
@@ -123,14 +127,26 @@ minetest.register_entity("mcl_sus_nodes:item_entity", {
 		visual_size = {x=0.25, y=0.25},
 		collisionbox = {0,0,0,0,0,0},
 		pointable = true,
+		--static_save = false,
 	},
-	on_step = function(self,dtime)
+	on_step = function(self, dtime)
 		self._timer = (self._timer or 1) - dtime
-		if self._timer > 0 then return end
-		if minetest.get_item_group(minetest.get_node(self._nodepos or vector.zero()).name,"suspicious_node") == 0 then
-			if self._poshash then item_entities[self._poshash] = nil end
-			self.object:remove()
-			return
+		if self._timer < 0 then
+			if minetest.get_item_group(minetest.get_node(self._nodepos or vector.zero()).name,"suspicious_node") == 0 or self._stage <= 0 or not self._dir then
+				if self._poshash then item_entities[self._poshash] = nil end
+				self.object:remove()
+				return
+			end
+			if self._hide then
+				self._stage = self._stage - 1
+				self.object:set_pos(self.object:get_pos() - ( vector.new(self._dir) * ( 0.02 * self._stage )))
+			end
+			self._timer = 1
+		end
+		self._hide_timer = ( self._hide_timer or HIDE_DELAY ) - dtime
+		if self._hide_timer < 0 then
+			self._hide = true
+			self._hide_timer = HIDE_DELAY
 		end
 	end,
 	get_staticdata = function(self)
@@ -143,7 +159,13 @@ minetest.register_entity("mcl_sus_nodes:item_entity", {
 		end
 		return minetest.serialize(d)
 	end,
-	on_activate = function(self, staticdata)
+	on_activate = function(self, staticdata, dtime_s)
+		if dtime_s and dtime_s > 5 then
+			self.object:remove()
+			return
+		elseif dtime_s then
+			self._hide_timer = 5 - dtime_s
+		end
 		if type(staticdata) == "userdata" then return end
 		local s = minetest.deserialize(staticdata)
 		if type(s) == "table" then
