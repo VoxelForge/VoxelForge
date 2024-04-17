@@ -81,6 +81,11 @@ function mcl_conduits.player_effect(player)
 	mcl_potions.swiftness_func(player, 2, 13)
 end
 
+function mcl_conduits.conduit_damage(ent)
+	if minetest.get_item_group(minetest.get_node(ent.object:get_pos()).name, "water") == 0 then return end
+	mcl_util.deal_damage(ent.object, 4, {type = "magic"})
+end
+
 minetest.register_entity("mcl_conduits:conduit", {
 	initial_properties = {
 		physical = true,
@@ -120,6 +125,11 @@ minetest.register_entity("mcl_conduits:conduit", {
 		for _, pl in pairs(minetest.get_connected_players()) do
 			if vector.distance(self._pos, pl:get_pos()) < dst then
 				mcl_conduits.player_effect(pl)
+			end
+		end
+		for _, ent in pairs(minetest.luaentities) do
+			if ent.is_mob and ent.type == "monster" and vector.distance(self._pos, ent.object:get_pos()) < 9 then
+				mcl_conduits.conduit_damage(ent)
 			end
 		end
 	end
