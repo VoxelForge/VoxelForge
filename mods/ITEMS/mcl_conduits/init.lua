@@ -148,7 +148,7 @@ minetest.register_abm({
 	interval = check_interval,
 	chance = 1,
 	action = function(pos, node)
-		for _, v in pairs(minetest.get_objects_inside_radius(vector.subtract(pos, entity_pos_offset), 1.5)) do
+		for _, v in pairs(minetest.get_objects_inside_radius(vector.subtract(pos, entity_pos_offset), 0.5)) do
 			if v.name == "mcl_conduits:conduit" then return end
 		end
 		if check_conduit(pos) then
