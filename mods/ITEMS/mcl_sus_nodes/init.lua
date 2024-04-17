@@ -105,6 +105,7 @@ function mcl_sus_nodes.register_sus_node(name,source,overrides)
 		_mcl_sus_nodes_parent = source,
 		_mcl_sus_nodes_main = main_itemstring,
 		_mcl_sus_nodes_drops = table.copy(sus_drops_default),
+		_mcl_falling_node_alternative = source,
 	},overrides or {})
 	minetest.register_node(main_itemstring,def)
 	for i=1,3 do
