@@ -8,45 +8,27 @@ local S = minetest.get_translator("mobs_mc")
 
 local WOOL_REPLACE_RATE = 80
 
-local colors = {
-	-- group = { wool, textures }
-	unicolor_white = { "mcl_wool:white", "#FFFFFF00" },
-	unicolor_dark_orange = { "mcl_wool:brown", "#502A00D0" },
-	unicolor_grey = { "mcl_wool:silver", "#5B5B5BD0" },
-	unicolor_darkgrey = { "mcl_wool:grey", "#303030D0" },
-	unicolor_blue = { "mcl_wool:blue", "#0000CCD0" },
-	unicolor_dark_green = { "mcl_wool:green", "#005000D0" },
-	unicolor_green = { "mcl_wool:lime", "#50CC00D0" },
-	unicolor_violet = { "mcl_wool:purple" , "#5000CCD0" },
-	unicolor_light_red = { "mcl_wool:pink", "#FF5050D0" },
-	unicolor_yellow = { "mcl_wool:yellow", "#CCCC00D0" },
-	unicolor_orange = { "mcl_wool:orange", "#CC5000D0" },
-	unicolor_red = { "mcl_wool:red", "#CC0000D0" },
-	unicolor_cyan  = { "mcl_wool:cyan", "#00CCCCD0" },
-	unicolor_red_violet = { "mcl_wool:magenta", "#CC0050D0" },
-	unicolor_black = { "mcl_wool:black", "#000000D0" },
-	unicolor_light_blue = { "mcl_wool:light_blue", "#5050FFD0" },
-}
+local rainbow_colors = {}
+for k, v in pairs(mcl_dyes.colors) do
+	table.insert(rainbow_colors, "unicolor_"..v.unicolor)
+end
 
-local rainbow_colors = {
-	"unicolor_light_red",
-	"unicolor_red",
-	"unicolor_orange",
-	"unicolor_yellow",
-	"unicolor_green",
-	"unicolor_dark_green",
-	"unicolor_light_blue",
-	"unicolor_blue",
-	"unicolor_violet",
-	"unicolor_red_violet"
-}
+local function unicolor_to_wool(unicolor_group)
+	local d = mcl_dyes.unicolor_to_dye(unicolor_group)
+	if d then
+		return "mcl_wool:"..d:gsub("^mcl_dyes:","")
+	end
+	return "mcl_wool:white"
+end
 
-local sheep_texture = function(color_group)
-	if not color_group then
-		color_group = "unicolor_white"
+local function sheep_texture(unicolor_group)
+	local color = mcl_dyes.colors["white"].rgb
+	local d = mcl_dyes.unicolor_to_dye(unicolor_group)
+	if d then
+		color = mcl_dyes.colors[d:gsub("^mcl_dyes:","")].rgb
 	end
 	return {
-		"mobs_mc_sheep_fur.png^[colorize:"..colors[color_group][2],
+		"mobs_mc_sheep_fur.png^[colorize:"..color,
 		"mobs_mc_sheep.png",
 	}
 end
@@ -79,12 +61,13 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 	runaway = true,
 	runaway_from = {"mobs_mc:wolf"},
 	drops = {
-		{name = "mcl_mobitems:mutton",
+		{
+		name = "mcl_mobitems:mutton",
 		chance = 1,
 		min = 1,
 		max = 2,
 		looting = "common",},
-		{name = colors["unicolor_white"][1],
+		{name = unicolor_to_wool("unicolor_white"),
 		chance = 1,
 		min = 1,
 		max = 1,
@@ -122,9 +105,7 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 	},
 	-- Properly regrow wool after eating grass
 	on_replace = function(self, pos, oldnode, newnode)
-		if not self.color or not colors[self.color] then
-			self.color = "unicolor_white"
-		end
+		self.color = self.color or "unicolor_white"
 		self.base_texture = sheep_texture(self.color)
 
 		self.drops = {
@@ -132,7 +113,7 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 			 chance = 1,
 			 min = 1,
 			 max = 2,},
-			{name = colors[self.color][1],
+			{name = unicolor_to_wool(self.color),
 			 chance = 1,
 			 min = 1,
 			 max = 1,},
@@ -190,7 +171,7 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 				chance = 1,
 				min = 1,
 				max = 2,},
-				{name = colors[self.color][1],
+				{name = unicolor_to_wool(self.color),
 				chance = 1,
 				min = 1,
 				max = 1,},
@@ -240,7 +221,7 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 			if not self.color then
 				self.color = "unicolor_white"
 			end
-			minetest.add_item(pos, ItemStack(colors[self.color][1].." "..math.random(1,3)))
+			minetest.add_item(pos, ItemStack(unicolor_to_wool(self.color).." "..math.random(1,3)))
 			self.base_texture = gotten_texture
 			self.object:set_properties({
 				textures = self.base_texture,
@@ -253,34 +234,30 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 		end
 		-- Dye sheep
 		if minetest.get_item_group(item:get_name(), "dye") == 1 and not self.gotten then
+			local idef = item:get_definition()
+			local cgroup = "unicolor_"..mcl_dyes.colors[idef._color].unicolor
 			minetest.log("verbose", "[mobs_mc] " ..item:get_name() .. " " .. minetest.get_item_group(item:get_name(), "dye"))
-			for group, colordata in pairs(colors) do
-				if minetest.get_item_group(item:get_name(), group) == 1 then
-					if not minetest.is_creative_enabled(clicker:get_player_name()) then
-						item:take_item()
-						clicker:set_wielded_item(item)
-					end
-					self.base_texture = sheep_texture(group)
-					self.object:set_properties({
-						textures = self.base_texture,
-					})
-					self.color = group
-					self.drops = {
-						{name = "mcl_mobitems:mutton",
-						chance = 1,
-						min = 1,
-						max = 2,},
-						{name = colordata[1],
-						chance = 1,
-						min = 1,
-						max = 1,},
-					}
-					break
-				end
+			if not minetest.is_creative_enabled(clicker:get_player_name()) then
+				item:take_item()
+				clicker:set_wielded_item(item)
 			end
+			self.color = cgroup
+			self.base_texture = sheep_texture(cgroup)
+			self.object:set_properties({
+				textures = self.base_texture,
+			})
+			self.drops = {
+				{name = "mcl_mobitems:mutton",
+				chance = 1,
+				min = 1,
+				max = 2,},
+				{name = unicolor_to_wool(cgroup),
+				chance = 1,
+				min = 1,
+				max = 1,},
+			}
 			return
 		end
-		if mcl_mobs.capture_mob(self, clicker, 0, 5, 70, false, nil) then return end
 	end,
 	on_breed = function(parent1, parent2)
 		-- Breed sheep and choose a fur color for the child.
