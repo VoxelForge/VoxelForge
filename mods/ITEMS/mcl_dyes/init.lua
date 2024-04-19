@@ -114,7 +114,7 @@ mcl_dyes.colors = {
 -- corresponding dye name (if it exists), nil otherwise.
 function mcl_dyes.unicolor_to_dye(unicolor_group)
 	for k,v in pairs(mcl_dyes.colors) do
-		if v.groups["unicolor_"..unicolor_group] == 1 then return k end
+		if v.groups[unicolor_group] == 1 then return "mcl_dyes:"..k end
 	end
 end
 
