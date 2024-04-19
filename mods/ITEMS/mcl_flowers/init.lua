@@ -280,7 +280,7 @@ function mcl_flowers.add_large_plant(name, def)
 		def.top.palette = "mcl_core_palette_grass.png"
 	end
 
-	if def.bottom._doc_items_longdesc == nil then
+	if def.bottom._doc_items_longdesc == nil and def.longdesc == nil then
 		def.bottom.groups.not_in_creative_inventory = 1
 		def.bottom._doc_items_create_entry = false
 	end
