@@ -169,6 +169,7 @@ end
 local tpl_large_plant_top = {
 	drawtype = "plantlike",
 	_doc_items_create_entry = true,
+	_doc_items_usagehelp = mcl_flowers.plant_usage_help,
 	sunlight_propagates = true,
 	paramtype = "light",
 	walkable = false,
@@ -260,8 +261,8 @@ local tpl_large_plant_bottom = table.merge(tpl_large_plant_top, {
 })
 
 function mcl_flowers.add_large_plant(name, def)
-	def.bottom = def.bottom or {}
-	def.bottom.groups = def.bottom.groups or {}
+	def.bottom =  def.bottom or {}
+	def.bottom.groups = table.merge(tpl_large_plant_bottom.groups, def.bottom.groups or {})
 	def.top = def.top or {}
 	def.top.groups = def.top.groups or {}
 
