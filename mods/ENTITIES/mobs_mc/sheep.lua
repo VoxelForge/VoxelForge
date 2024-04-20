@@ -199,39 +199,18 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 	end,
 
 	on_rightclick = function(self, clicker)
-		local item = clicker:get_wielded_item()
-
 		if self:feed_tame(clicker, 1, true, false) then return end
 		if mcl_mobs.protect(self, clicker) then return end
 
-		if minetest.get_item_group(item:get_name(), "shears") > 0 and not self.gotten and not self.child then
-			self.gotten = true
-			local pos = self.object:get_pos()
-			minetest.sound_play("mcl_tools_shears_cut", {pos = pos}, true)
-			pos.y = pos.y + 0.5
-			if not self.color then
-				self.color = "unicolor_white"
-			end
-			minetest.add_item(pos, ItemStack(unicolor_to_wool(self.color).." "..math.random(1,3)))
-			self.base_texture = gotten_texture
-			self.object:set_properties({
-				textures = self.base_texture,
-			})
-			if not minetest.is_creative_enabled(clicker:get_player_name()) then
-				item:add_wear(mobs_mc.shears_wear)
-				clicker:get_inventory():set_stack("main", clicker:get_wield_index(), item)
-			end
-			return
-		end
+		local item = clicker:get_wielded_item()
 		-- Dye sheep
 		if minetest.get_item_group(item:get_name(), "dye") == 1 and not self.gotten then
-			local idef = item:get_definition()
-			local cgroup = "unicolor_"..mcl_dyes.colors[idef._color].unicolor
-			minetest.log("verbose", "[mobs_mc] " ..item:get_name() .. " " .. minetest.get_item_group(item:get_name(), "dye"))
 			if not minetest.is_creative_enabled(clicker:get_player_name()) then
 				item:take_item()
 				clicker:set_wielded_item(item)
 			end
+			local idef = item:get_definition()
+			local cgroup = "unicolor_"..mcl_dyes.colors[idef._color].unicolor
 			self.color = cgroup
 			self.base_texture = sheep_texture(cgroup)
 			self.object:set_properties({
@@ -250,6 +229,22 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 					max = 1,
 				},
 			}
+			return
+		end
+		if self.child then return end
+		if minetest.get_item_group(item:get_name(), "shears") > 0 and not self.gotten then
+			self.gotten = true
+			local pos = self.object:get_pos()
+			minetest.sound_play("mcl_tools_shears_cut", {pos = pos}, true)
+			pos.y = pos.y + 0.5
+			self.color = self.color or "unicolor_white"
+			minetest.add_item(pos, ItemStack(unicolor_to_wool(self.color).." "..math.random(1,3)))
+			self.base_texture = gotten_texture
+			self.object:set_properties({ textures = self.base_texture })
+			if not minetest.is_creative_enabled(clicker:get_player_name()) then
+				item:add_wear(mobs_mc.shears_wear)
+				clicker:get_inventory():set_stack("main", clicker:get_wield_index(), item)
+			end
 			return
 		end
 	end,
