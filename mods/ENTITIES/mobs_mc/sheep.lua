@@ -108,13 +108,13 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 		self:set_animation("eat")
 		self:set_velocity(0)
 
-		minetest.after(self.replace_delay, function()
+		minetest.after(self.replace_delay, function(self)
 			if self and self.object and self.object:get_velocity() and self.health > 0 then
 				self.object:set_velocity(vector.zero())
 				self.gotten = false
 				self.object:set_properties({ textures = self.base_texture })
 			end
-		end)
+		end, self)
 
 		minetest.after(2.5, function(self)
 			if self and self.object and  self.object:get_pos() and self.state == 'eat' and self.health > 0 then
