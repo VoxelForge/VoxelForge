@@ -249,11 +249,9 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 			self.base_texture = { "blank.png", "mobs_mc_sheep.png" }
 			dropitem = self:use_shears({ "blank.png", "mobs_mc_sheep.png" }, dropitem)
 
-			if not self.color then
-				self.color = "unicolor_white"
-			end
+			self.color = self.color or "unicolor_white"
 			if self.drops[2] then
-				minetest.add_item(pos, self.drops[2].name .. " " .. math.random(1, 3))
+				minetest.add_item(pos, unicolor_to_wool(self.color) .. " " .. math.random(1, 3))
 			end
 			self.drops = {{ name = "mcl_mobitems:mutton", chance = 1, min = 1, max = 2 },}
 			return dropitem
