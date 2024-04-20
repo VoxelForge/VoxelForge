@@ -27,6 +27,25 @@ local function sheep_texture(unicolor_group)
 	}
 end
 
+local function get_sheep_drops(unicolor_group)
+	local wool = unicolor_to_wool(unicolor_group)
+	return {
+		{
+			name = "mcl_mobitems:mutton",
+			 chance = 1,
+			 min = 1,
+			 max = 2,
+			 looting = "common",
+		 },{
+			name = wool,
+			chance = 1,
+			min = 1,
+			max = 1,
+			looting = "common",
+		 },
+	}
+end
+
 mcl_mobs.register_mob("mobs_mc:sheep", {
 	description = S("Sheep"),
 	type = "animal",
@@ -51,21 +70,7 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 	walk_velocity = 1,
 	runaway = true,
 	runaway_from = {"mobs_mc:wolf"},
-	drops = {
-		{
-			name = "mcl_mobitems:mutton",
-			chance = 1,
-			min = 1,
-			max = 2,
-			looting = "common",
-		},{
-			name = unicolor_to_wool("unicolor_white"),
-			chance = 1,
-			min = 1,
-			max = 1,
-			looting = "common",
-		},
-	},
+	drops = get_sheep_drops(),
 	fear_height = 4,
 	sounds = {
 		random = "mobs_sheep",
@@ -98,26 +103,10 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 	on_replace = function(self, pos, oldnode, newnode)
 		self.color = self.color or "unicolor_white"
 		self.base_texture = sheep_texture(self.color)
-
-		self.drops = {
-			{
-				name = "mcl_mobitems:mutton",
-				 chance = 1,
-				 min = 1,
-				 max = 2,
-			 },{
-				name = unicolor_to_wool(self.color),
-				chance = 1,
-				min = 1,
-				max = 1,
-			 },
-		}
-
+		self.drops = get_sheep_drops(self.color)
 		self.state = "eat"
 		self:set_animation("eat")
 		self:set_velocity(0)
-
-
 
 		minetest.after(self.replace_delay, function()
 			if self and self.object and self.object:get_velocity() and self.health > 0 then
@@ -153,19 +142,7 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 			end
 			self.base_texture = sheep_texture(self.color)
 			self.object:set_properties({ textures = self.base_texture })
-			self.drops = {
-				{
-					name = "mcl_mobitems:mutton",
-					chance = 1,
-					min = 1,
-					max = 2,
-				},{
-					name = unicolor_to_wool(self.color),
-					chance = 1,
-					min = 1,
-					max = 1,
-				},
-			}
+			self.drops = get_sheep_drops(self.color)
 			self.initial_color_set = true
 		end
 
@@ -216,19 +193,7 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 			self.object:set_properties({
 				textures = self.base_texture,
 			})
-			self.drops = {
-				{
-					name = "mcl_mobitems:mutton",
-					chance = 1,
-					min = 1,
-					max = 2,
-				},{
-					name = unicolor_to_wool(cgroup),
-					chance = 1,
-					min = 1,
-					max = 1,
-				},
-			}
+			self.drops = get_sheep_drops(cgroup)
 			return
 		end
 		if self.child then return end
