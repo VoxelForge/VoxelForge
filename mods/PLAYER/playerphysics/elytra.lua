@@ -39,7 +39,7 @@ mcl_player.register_globalstep(function(player, dtime)
 	end
 
 	local fly_node_walkable = minetest.registered_nodes[fly_node] and minetest.registered_nodes[fly_node].walkable
-	elytra.active = player:get_inventory():get_stack("armor", 3):get_name() == "mcl_armor:elytra"
+	elytra.active = minetest.get_item_group(player:get_inventory():get_stack("armor", 3):get_name(), "elytra") ~= 0
 		and not player:get_attach()
 		and (elytra.active or (is_just_jumped and player_vel.y < -0))
 		and ((not fly_node_walkable) or fly_node == "ignore")
