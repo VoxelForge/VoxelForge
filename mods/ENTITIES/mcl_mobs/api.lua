@@ -14,14 +14,6 @@ local mobs_debug = minetest.settings:get_bool("mobs_debug", false) -- Shows help
 local spawn_logging = minetest.settings:get_bool("mcl_logging_mobs_spawn", false)
 local peaceful_mode = minetest.settings:get_bool("only_peaceful_mobs", false)
 
--- Peaceful mode message so players will know there are no monsters
-if peaceful_mode then
-	minetest.register_on_joinplayer(function(player)
-		minetest.chat_send_player(player:get_player_name(),
-			S("Peaceful mode active! No monsters will spawn."))
-	end)
-end
-
 function mob_class:set_properties(prop)
 	mcl_util.set_properties(self.object, prop)
 end
