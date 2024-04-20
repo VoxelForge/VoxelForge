@@ -173,11 +173,7 @@ mcl_player.register_globalstep_slow(function(player, dtime)
 			playerphysics.add_physics_factor(player, "speed", "mcl_playerplus:soul_sand", soul_speed * 0.105 + 1.3)
 		-- otherwise walk slower on soul sand
 		elseif mcl_player.players[player].nodes.stand == "mcl_nether:soul_sand" then
-			if mcl_player.players[player].nodes.stand_below == "mcl_core:ice" or  mcl_player.players[player].nodes.stand_below == "mcl_core:packed_ice" or  mcl_player.players[player].nodes.below == "mcl_core:slimeblock" or  mcl_player.players[player].nodes.stand_below == "mcl_core:water_source" then
-				playerphysics.add_physics_factor(player, "speed", "mcl_playerplus:soul_sand", 0.1)
-			else
-				playerphysics.add_physics_factor(player, "speed", "mcl_playerplus:soul_sand", 0.4)
-			end
+			playerphysics.add_physics_factor(player, "speed", "mcl_playerplus:soul_sand", 0.4)
 		else
 			playerphysics.remove_physics_factor(player, "speed", "mcl_playerplus:soul_sand")
 		end
