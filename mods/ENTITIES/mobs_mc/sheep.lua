@@ -1,14 +1,8 @@
---License for code WTFPL and otherwise stated in readmes
-
 local S = minetest.get_translator("mobs_mc")
-
---###################
---################### SHEEP
---###################
-
 local WOOL_REPLACE_RATE = 80
-
+local gotten_texture = { "blank.png", "mobs_mc_sheep.png" }
 local rainbow_colors = {}
+
 for k, v in pairs(mcl_dyes.colors) do
 	table.insert(rainbow_colors, "unicolor_"..v.unicolor)
 end
@@ -33,9 +27,6 @@ local function sheep_texture(unicolor_group)
 	}
 end
 
-local gotten_texture = { "blank.png", "mobs_mc_sheep.png" }
-
---mcsheep
 mcl_mobs.register_mob("mobs_mc:sheep", {
 	description = S("Sheep"),
 	type = "animal",
@@ -98,14 +89,12 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 	follow = { "mcl_farming:wheat_item" },
 	view_range = 12,
 
-	-- Eat grass
 	replace_rate = WOOL_REPLACE_RATE,
 	replace_delay = 1.3,
 	replace_what = {
 		{ "mcl_core:dirt_with_grass", "mcl_core:dirt", -1 },
 		{ "mcl_flowers:tallgrass", "air", 0 },
 	},
-	-- Properly regrow wool after eating grass
 	on_replace = function(self, pos, oldnode, newnode)
 		self.color = self.color or "unicolor_white"
 		self.base_texture = sheep_texture(self.color)
@@ -146,27 +135,20 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 
 	end,
 
-	-- Set random color on spawn
 	do_custom = function(self, dtime)
 		if not self.initial_color_set then
 			local r = math.random(0,100000)
-			if r <= 81836 then
-				-- 81.836%
+			if r <= 81836 then -- 81.836%
 				self.color = "unicolor_white"
-			elseif r <= 81836 + 5000 then
-				-- 5%
+			elseif r <= 81836 + 5000 then -- 5%
 				self.color = "unicolor_grey"
-			elseif r <= 81836 + 5000 + 5000 then
-				-- 5%
+			elseif r <= 81836 + 5000 + 5000 then-- 5%
 				self.color = "unicolor_darkgrey"
-			elseif r <= 81836 + 5000 + 5000 + 5000 then
-				-- 5%
+			elseif r <= 81836 + 5000 + 5000 + 5000 then -- 5%
 				self.color = "unicolor_black"
-			elseif r <= 81836 + 5000 + 5000 + 5000 + 3000 then
-				-- 3%
+			elseif r <= 81836 + 5000 + 5000 + 5000 + 3000 then -- 3%
 				self.color = "unicolor_dark_orange"
-			else
-				-- 0.164%
+			else-- 0.164%
 				self.color = "unicolor_light_red"
 			end
 			self.base_texture = sheep_texture(self.color)
@@ -272,7 +254,6 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 		end
 	end,
 	on_breed = function(parent1, parent2)
-		-- Breed sheep and choose a fur color for the child.
 		local pos = parent1.object:get_pos()
 		local child = mcl_mobs.spawn_child(pos, parent1.name)
 		if child then
@@ -282,12 +263,10 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 			local dye1 = mcl_dyes.unicolor_to_dye(color[1])
 			local dye2 = mcl_dyes.unicolor_to_dye(color[2])
 			local output
-			-- Check if parent colors could be mixed as dyes
 			if dye1 and dye2 then
 				output = minetest.get_craft_result({items = {dye1, dye2}, method="normal"})
 			end
 			if output and not output.item:is_empty() then
-				-- Try to mix dyes and use that as new fur color
 				local ndef = output.item:get_definition()
 				local cgroup = "unicolor_"..mcl_dyes.colors[ndef._color].unicolor
 				ent_c.color = cgroup
@@ -372,5 +351,4 @@ mcl_mobs.spawn_setup({
 	chance = 120,
 })
 
--- spawn eggs
 mcl_mobs.register_egg("mobs_mc:sheep", S("Sheep"), "#e7e7e7", "#ffb5b5", 0)
