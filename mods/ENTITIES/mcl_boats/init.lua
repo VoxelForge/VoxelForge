@@ -104,6 +104,7 @@ local function attach_object(self, obj)
 			local player = minetest.get_player_by_name(name)
 			if player then
 				mcl_player.player_set_animation(player, "sit" , 30)
+				player:set_eye_offset({x=0, y=-5.5, z=0},{x=0, y=-4, z=0})
 			end
 		end, name)
 		obj:set_look_horizontal(yaw)
@@ -119,6 +120,7 @@ local function detach_object(obj, change_pos)
 	obj:set_properties({visual_size = get_visual_size(obj)})
 	if obj:is_player() then
 		mcl_player.players[obj].attached = nil
+		obj:set_eye_offset({x=0, y=0, z=0},{x=0, y=0, z=0})
 		mcl_player.player_set_animation(obj, "stand" , 30)
 	else
 		obj:get_luaentity()._old_visual_size = nil
