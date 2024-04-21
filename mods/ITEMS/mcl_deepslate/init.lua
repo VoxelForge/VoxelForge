@@ -69,7 +69,7 @@ minetest.register_node("mcl_deepslate:tuff", {
 	_mcl_silk_touch_drop = true,
 })
 
-local function register_deepslate_ore(item, desc, extra, basename, drop)
+local function register_deepslate_ore(item, desc, extra, basename)
 	local nodename = "mcl_deepslate:deepslate_with_"..item
 	local basename = basename or "mcl_core:stone_with_" .. item
 
@@ -77,7 +77,6 @@ local function register_deepslate_ore(item, desc, extra, basename, drop)
 	def._doc_items_longdesc = S("@1 is a variant of @2 that can generate in deepslate and tuff blobs.", desc, def.description)
 	def.description = desc
 	def.tiles = { "mcl_deepslate_" .. item .. "_ore.png" }
-	def.drop = drop
 
 	table.update(def,extra or {})
 
@@ -115,15 +114,7 @@ register_deepslate_ore("redstone_lit", S("Lit Deepslate Redstone Ore"), {
 	_mcl_ore_unlit = "mcl_deepslate:deepslate_with_redstone",
 	_mcl_silk_touch_drop = { "mcl_deepslate:deepslate_with_redstone" },
 })
-register_deepslate_ore("copper", S("Deepslate Copper Ore"), nil, "mcl_copper:stone_with_copper",{
-	max_items = 1,
-	items = {
-		{items = {"mcl_copper:raw_copper 5"},rarity = 5},
-		{items = {"mcl_copper:raw_copper 4"},rarity = 5},
-		{items = {"mcl_copper:raw_copper 3"},rarity = 5},
-		{items = {"mcl_copper:raw_copper 2"}},
-	}
-})
+register_deepslate_ore("copper", S("Deepslate Copper Ore"), nil, "mcl_copper:stone_with_copper")
 
 local function register_deepslate_variant(name, defs)
 	local main_itemstring = "mcl_deepslate:deepslate_"..name
