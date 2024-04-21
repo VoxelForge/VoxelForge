@@ -16,10 +16,10 @@ local function unicolor_to_wool(unicolor_group)
 end
 
 local function sheep_texture(unicolor_group)
-	local color = mcl_dyes.colors["white"].rgb
+	local color = mcl_dyes.colors["white"].rgb.."00"
 	local d = mcl_dyes.unicolor_to_dye(unicolor_group)
 	if d then
-		color = mcl_dyes.colors[d:gsub("^mcl_dyes:","")].rgb
+		color = mcl_dyes.colors[d:gsub("^mcl_dyes:","")].rgb.."D0"
 	end
 	return {
 		"mobs_mc_sheep_fur.png^[colorize:"..color,
