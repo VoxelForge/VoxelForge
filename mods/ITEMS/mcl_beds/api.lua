@@ -112,12 +112,9 @@ else
 	beddesc = beddesc .. "\n" .. S("Sleeping allows you to skip the night. The night is skipped when all players in this world went to sleep. The night is skipped after sleeping for a few seconds. Thunderstorms can be skipped in the same manner.")
 end
 
-local default_sounds
-if minetest.get_modpath("mcl_sounds") then
-	default_sounds = mcl_sounds.node_sound_wood_defaults({
-		footstep = mcl_sounds.node_sound_wool_defaults().footstep,
-	})
-end
+local default_sounds = mcl_sounds.node_sound_wood_defaults({
+	footstep = mcl_sounds.node_sound_wool_defaults().footstep,
+})
 
 function mcl_beds.register_bed(name, def)
 	local common_box = {
