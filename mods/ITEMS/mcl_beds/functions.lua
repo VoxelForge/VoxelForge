@@ -5,10 +5,6 @@ local allow_nav_hacks = minetest.settings:get_bool("mcl_mob_allow_nav_hacks", fa
 
 local player_in_bed = 0
 local is_sp = minetest.is_singleplayer()
-local weather_mod = minetest.get_modpath("mcl_weather")
-local explosions_mod = minetest.get_modpath("mcl_explosions")
-local spawn_mod = minetest.get_modpath("mcl_spawn")
-local pos_to_dim = minetest.get_modpath("mcl_worlds") and mcl_worlds.pos_to_dimension or function(pos) return "overworld" end
 
 local function mcl_log (message)
 	mcl_util.mcl_log (message, "[Beds]")
@@ -41,7 +37,7 @@ end
 local function players_in_overworld(players)
 	local count = 0
 	for _, player in pairs(players) do
-		if player and pos_to_dim(player:get_pos()) == "overworld" then
+		if player and mcl_worlds.pos_to_dimension(player:get_pos()) == "overworld" then
 			count = count +1
 		end
 	end
@@ -95,13 +91,13 @@ local function lay_down(player, pos, bed_pos, state, skip)
 		bed_center = {x = bed_pos.x - dir.x/2, y = bed_pos.y + 0.1, z = bed_pos.z - dir.z/2}
 
 		-- save respawn position when entering bed
-		if spawn_mod and mcl_spawn.set_spawn_pos(player, bed_pos, nil) then
+		if mcl_spawn.set_spawn_pos(player, bed_pos, nil) then
 			minetest.chat_send_player(name, S("New respawn position set!"))
 			awards.unlock(player:get_player_name(), "mcl:sweetDreams")
 		end
 
 
-		if not mcl_beds.is_night() and (not weather_mod or (mcl_weather.get_weather() ~= "thunder")) then
+		if not mcl_beds.is_night() and mcl_weather.get_weather() ~= "thunder" then
 			return false, S("You can only sleep at night or during a thunderstorm.")
 		end
 
@@ -276,7 +272,7 @@ end
 -- Handle environment stuff related to sleeping: skip night and thunderstorm
 function mcl_beds.sleep()
 	if is_night_skip_enabled() then
-		if weather_mod and mcl_weather.get_weather() == "thunder" then
+		if mcl_weather.get_weather() == "thunder" then
 			local endtime = (mcl_weather.end_time - minetest.get_gametime()) * 72 / 24000
 			minetest.set_timeofday((minetest.get_timeofday() + endtime) %1)
 			if mcl_beds.is_night() then
@@ -287,11 +283,11 @@ function mcl_beds.sleep()
 			end
 			-- Always clear weather
 			mcl_weather.change_weather("none")
-		elseif mcl_beds.is_night() and weather_mod then
+		elseif mcl_beds.is_night() then
 			mcl_beds.skip_night()
 			mcl_beds.kick_players()
 			mcl_weather.change_weather("none")
-		elseif mcl_beds.is_night() and not weather_mod then
+		elseif mcl_beds.is_night() then
 			mcl_beds.skip_night()
 			mcl_beds.kick_players()
 		end
@@ -375,7 +371,7 @@ function mcl_beds.on_rightclick(pos, player, is_top)
 	if player:get_meta():get_string("mcl_beds:sleeping") == "true" then
 		return
 	end
-	local dim = pos_to_dim(pos)
+	local dim = mcl_worlds.pos_to_dimension(pos)
 	if dim == "nether" or dim == "end" then
 		-- Bed goes BOOM in the Nether or End.
 		local node = minetest.get_node(pos)
@@ -383,9 +379,7 @@ function mcl_beds.on_rightclick(pos, player, is_top)
 
 		minetest.remove_node(pos)
 		minetest.remove_node(string.sub(node.name, -4) == "_top" and vector.subtract(pos, dir) or vector.add(pos, dir))
-		if explosions_mod then
-			mcl_explosions.explode(pos, 5, {fire = true})
-		end
+		mcl_explosions.explode(pos, 5, {fire = true})
 		return
 	end
 	local name = player:get_player_name()
@@ -408,7 +402,7 @@ function mcl_beds.on_rightclick(pos, player, is_top)
 			local sleep_hud_message = S("@1/@2 players currently in bed.", player_in_bed, math.ceil(players_in_bed_setting() * ges / 100))
 			for _, player in pairs(connected_players) do
 				-- only send message to players not sleeping and in the "overworld"
-				if not mcl_beds.player[player:get_player_name()] and pos_to_dim(player:get_pos()) == "overworld" then
+				if not mcl_beds.player[player:get_player_name()] and mcl_worlds.pos_to_dimension(player:get_pos()) == "overworld" then
 					-- clear, old message is still being displayed
 					if mcl_title.params_get(player) then mcl_title.clear(player) end
 					mcl_title.set(player, "actionbar", {text=sleep_hud_message, color="white", stay=60})
