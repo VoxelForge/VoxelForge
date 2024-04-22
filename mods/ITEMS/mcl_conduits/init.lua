@@ -128,7 +128,7 @@ minetest.register_entity("mcl_conduits:conduit", {
 			end
 		end
 		for _, ent in pairs(minetest.luaentities) do
-			if ent.is_mob and ent.type == "monster" and vector.distance(self._pos, ent.object:get_pos()) < 9 then
+			if ent.is_mob and ent.type == "monster" and ent.object and ent.object:get_pos() and vector.distance(self._pos, ent.object:get_pos()) < 9 then
 				mcl_conduits.conduit_damage(ent)
 			end
 		end
