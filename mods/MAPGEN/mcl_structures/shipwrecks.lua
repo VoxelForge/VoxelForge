@@ -114,7 +114,7 @@ local buried_treasure = {
 		stacks_min = 0,
 		stacks_max = 1,
 		items = {
-			{ itemstring = "mcl_armor:chesplate_leather", weight = 1, amount_min = 1, amount_max = 1 },
+			{ itemstring = "mcl_armor:chestplate_leather", weight = 1, amount_min = 1, amount_max = 1 },
 			{ itemstring = "mcl_tools:sword_iron", weight = 1, amount_min = 1, amount_max = 1 },
 		}
 	},
