@@ -1,9 +1,5 @@
 local S = minetest.get_translator("mobs_mc")
 
---###################
---################### LLAMA
---###################
-
 local carpets = {
 	-- group = { carpet , short_texture_name }
 	unicolor_white = { "mcl_wool:white_carpet", "white" },
@@ -115,8 +111,6 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 	follow = { "mcl_farming:wheat_item", "mcl_farming:hay_block" },
 	view_range = 16,
 	do_custom = function(self, dtime)
-
-		-- set needed values if not already present
 		if not self.v3 then
 			local vsize = self.object:get_properties().visual_size
 			self.v3 = 0
@@ -129,20 +123,15 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 			self.driver_scale = {x = 1/vsize.x, y = 1/vsize.y}
 		end
 
-		-- if driver present allow control of llama
 		if self.driver then
-
 			mcl_mobs.drive(self, "walk", "stand", false, dtime)
-
-			return false -- skip rest of mob functions
+			return false
 		end
 
 		return true
 	end,
 
 	on_die = function(self, pos)
-
-		-- detach from llama properly
 		if self.driver then
 			mcl_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
 		end
@@ -150,15 +139,12 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 	end,
 
 	on_rightclick = function(self, clicker)
-
-		-- Make sure player is clicking
 		if not clicker or not clicker:is_player() then
 			return
 		end
 
 		local item = clicker:get_wielded_item()
 		if item:get_name() == "mcl_farming:hay_block" then
-			-- Breed with hay bale
 			if self:feed_tame(clicker, 1, true, false) then return end
 		elseif not self._has_chest and item:get_name() == "mcl_chests:chest" then
 			item:take_item()
@@ -175,14 +161,11 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 			mcl_entity_invs.show_inv_form(self,clicker," - Strength "..math.floor(self._inv_size / 3))
 			return
 		else
-			-- Feed with anything else
 			if self:feed_tame(clicker, 1, false, true) then return end
 		end
 		if mcl_mobs.protect(self, clicker) then return end
 
-		-- Make sure tamed llama is mature and being clicked by owner only
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
-			-- Place carpet
 			local creative = minetest.is_creative_enabled(clicker:get_player_name())
 			if minetest.get_item_group(item:get_name(), "carpet") == 1 then
 				if self.carpet and not creative then
@@ -208,10 +191,8 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 				end
 			end
 
-			-- detatch player already riding llama
 			if self.driver and clicker == self.driver then
 				mcl_mobs.detach(clicker, {x = 1, y = 0, z = 1})
-			-- attach player to llama
 			elseif not self.driver then
 				self.object:set_properties({stepheight = 1.1})
 				mcl_mobs.attach(self, clicker)
@@ -220,7 +201,6 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 	end,
 
 	on_breed = function(parent1, parent2)
-		-- When breeding, make sure the child has no carpet
 		local pos = parent1.object:get_pos()
 		local child, parent
 		if math.random(1,2) == 1 then
@@ -260,7 +240,6 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 
 mcl_entity_invs.register_inv("mobs_mc:llama","Llama",nil,true)
 
--- spit arrow (weapon)
 mcl_mobs.register_arrow("mobs_mc:llamaspit", {
 	visual = "sprite",
 	visual_size = {x = 0.10, y = 0.10},
@@ -289,5 +268,4 @@ mcl_mobs.spawn_setup({
 	chance = 50,
 })
 
--- spawn eggs
 mcl_mobs.register_egg("mobs_mc:llama", S("Llama"), "#c09e7d", "#995f40", 0)
