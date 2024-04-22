@@ -146,7 +146,7 @@ minetest.register_node("mcl_conduits:conduit", {
 	collisionbox = conduit_box,
 	selectionbox = conduit_box,
 	groups = { pickaxey = 1 },
-	light_source = 15,
+	light_source = 14,
 	tiles = { "mcl_conduit_conduit_node.png", },
 	_mcl_hardness = 3,
 	_mcl_blast_resistance = 3,
