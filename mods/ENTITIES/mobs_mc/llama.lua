@@ -183,7 +183,11 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 		-- Make sure tamed llama is mature and being clicked by owner only
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
 			-- Place carpet
-			if minetest.get_item_group(item:get_name(), "carpet") == 1 and not self.carpet then
+			local creative = minetest.is_creative_enabled(clicker:get_player_name())
+			if minetest.get_item_group(item:get_name(), "carpet") == 1 then
+				if self.carpet and not creative then
+					minetest.add_item(self.object:get_pos(), self.carpet)
+				end
 				for group, carpetdata in pairs(carpets) do
 					if minetest.get_item_group(item:get_name(), group) == 1 then
 						if not minetest.is_creative_enabled(clicker:get_player_name()) then
