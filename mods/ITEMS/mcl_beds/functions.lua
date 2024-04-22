@@ -35,13 +35,9 @@ local function is_night_skip_enabled()
 end
 
 local function players_in_overworld(players)
-	local count = 0
-	for _, player in pairs(players) do
-		if player and mcl_worlds.pos_to_dimension(player:get_pos()) == "overworld" then
-			count = count +1
-		end
-	end
-	return count
+	return table.count(players, function(_, player)
+		return mcl_worlds.pos_to_dimension(player:get_pos()) == "overworld"
+	end)
 end
 
 local function check_in_beds(players)
