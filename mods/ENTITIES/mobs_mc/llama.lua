@@ -21,8 +21,8 @@ local carpets = {
 }
 
 local function get_drops(self)
-	self.drops = {}
-	table.insert(self.drops,
+	local drops = {}
+	table.insert(drops,
 		{name = "mcl_mobitems:leather",
 		chance = 1,
 		min = 0,
@@ -30,17 +30,18 @@ local function get_drops(self)
 		looting = "common",
 		})
 	if self.carpet then
-		table.insert(self.drops,{name = self.carpet,
+		table.insert(drops,{name = self.carpet,
 		chance = 1,
 		min = 1,
 		max = 1,})
 	end
 	if self._has_chest then
-		table.insert(self.drops,{name = "mcl_chests:chest",
+		table.insert(drops,{name = "mcl_chests:chest",
 		chance = 1,
 		min = 1,
 		max = 1,})
 	end
+	return drops
 end
 
 mcl_mobs.register_mob("mobs_mc:llama", {
@@ -155,7 +156,7 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 			self.object:set_properties({
 				textures = self.base_texture,
 			})
-			get_drops(self)
+			self.drops = get_drops(self)
 			return
 		elseif self._has_chest and clicker:get_player_control().sneak then
 			mcl_entity_invs.show_inv_form(self,clicker," - Strength "..math.floor(self._inv_size / 3))
@@ -185,7 +186,7 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 							textures = self.base_texture,
 						})
 						self.carpet = item:get_name()
-						get_drops(self)
+						self.drops = get_drops(self)
 						return
 					end
 				end
