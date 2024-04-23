@@ -1,23 +1,9 @@
 local S = minetest.get_translator("mobs_mc")
 
-local carpets = {
-	-- group = { carpet , short_texture_name }
-	unicolor_white = { "mcl_wool:white_carpet", "white" },
-	unicolor_dark_orange = { "mcl_wool:brown_carpet", "brown" },
-	unicolor_grey = { "mcl_wool:silver_carpet", "light_gray" },
-	unicolor_darkgrey = { "mcl_wool:grey_carpet", "gray" },
-	unicolor_blue = { "mcl_wool:blue_carpet", "blue" },
-	unicolor_dark_green = { "mcl_wool:green_carpet", "green" },
-	unicolor_green = { "mcl_wool:lime_carpet", "lime" },
-	unicolor_violet = { "mcl_wool:purple_carpet", "purple" },
-	unicolor_light_red = { "mcl_wool:pink_carpet", "pink" },
-	unicolor_yellow = { "mcl_wool:yellow_carpet", "yellow" },
-	unicolor_orange = { "mcl_wool:orange_carpet", "orange" },
-	unicolor_red = { "mcl_wool:red_carpet", "red" },
-	unicolor_cyan = { "mcl_wool:cyan_carpet", "cyan" },
-	unicolor_red_violet = { "mcl_wool:magenta_carpet", "magenta" },
-	unicolor_black = { "mcl_wool:black_carpet", "black" },
-	unicolor_light_blue = { "mcl_wool:light_blue_carpet", "light_blue" },
+-- table mapping unified color names to non-conforming color names in carpet texture filenames
+local messytextures = {
+	grey = "gray",
+	silver = "light_gray",
 }
 
 local function get_drops(self)
@@ -156,7 +142,7 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 			self.object:set_properties({
 				textures = self.base_texture,
 			})
-			self.drops = get_drops(self)
+			self:update_drops()
 			return
 		elseif self._has_chest and clicker:get_player_control().sneak then
 			mcl_entity_invs.show_inv_form(self,clicker," - Strength "..math.floor(self._inv_size / 3))
@@ -167,29 +153,8 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 		if mcl_mobs.protect(self, clicker) then return end
 
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
-			local creative = minetest.is_creative_enabled(clicker:get_player_name())
-			if minetest.get_item_group(item:get_name(), "carpet") == 1 then
-				if self.carpet and not creative then
-					minetest.add_item(self.object:get_pos(), self.carpet)
-				end
-				for group, carpetdata in pairs(carpets) do
-					if minetest.get_item_group(item:get_name(), group) == 1 then
-						if not minetest.is_creative_enabled(clicker:get_player_name()) then
-							item:take_item()
-							clicker:set_wielded_item(item)
-						end
-						local substr = carpetdata[2]
-						local tex_carpet = "mobs_mc_llama_decor_"..substr..".png"
-						self.base_texture = table.copy(self.base_texture)
-						self.base_texture[2] = tex_carpet
-						self.object:set_properties({
-							textures = self.base_texture,
-						})
-						self.carpet = item:get_name()
-						self.drops = get_drops(self)
-						return
-					end
-				end
+			if minetest.get_item_group(item:get_name(), "carpet") == 1 and self:set_carpet(item, clicker) then
+				return
 			end
 
 			if self.driver and clicker == self.driver then
@@ -197,6 +162,30 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 			elseif not self.driver then
 				self.object:set_properties({stepheight = 1.1})
 				mcl_mobs.attach(self, clicker)
+			end
+		end
+	end,
+	update_drops = function(self)
+		self.drops = get_drops(self)
+	end,
+	set_carpet = function(self, item, clicker)
+		if self.carpet ~= item:get_name() then
+			local idef = item:get_definition()
+			if idef._color then
+				if not minetest.is_creative_enabled(clicker:get_player_name()) then
+					item:take_item()
+					clicker:set_wielded_item(item)
+					if self.carpet then
+						minetest.add_item(self.object:get_pos(), self.carpet)
+					end
+				end
+				self.base_texture[2] = "mobs_mc_llama_decor_"..(messytextures[idef._color] or idef._color)..".png"
+				self.object:set_properties({
+					textures = self.base_texture,
+				})
+				self.carpet = item:get_name()
+				self:update_drops()
+				return true
 			end
 		end
 	end,

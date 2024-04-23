@@ -42,6 +42,7 @@ for color,colordef in pairs(mcl_dyes.colors) do
 		tiles = {texcolor..".png"},
 		groups = {handy=1,shearsy_wool=1, flammable=1,fire_encouragement=30, fire_flammability=60, wool=1,building_block=1,["unicolor_"..color]=1},
 		sounds = mcl_sounds.node_sound_wool_defaults(),
+		_color = color,
 		_mcl_hardness = 0.8,
 		_mcl_blast_resistance = 0.8,
 	})
@@ -65,6 +66,7 @@ for color,colordef in pairs(mcl_dyes.colors) do
 				{-8/16, -8/16, -8/16, 8/16, -7/16, 8/16},
 			},
 		},
+		_color = color,
 		_mcl_hardness = 0.1,
 		_mcl_blast_resistance = 0.1,
 	})
