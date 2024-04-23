@@ -24,18 +24,6 @@ local function horse_extra_texture(horse)
 	return textures
 end
 
-
-local function get_drops(self)
-	self.drops = {}
-	table.insert(self.drops,
-		{name = "mcl_mobitems:leather",
-		chance = 1,
-		min = 0,
-		max = 2,
-		looting = "common",
-		})
-end
-
 local can_equip_horse_armor = function(entity_id)
 	return entity_id == "mobs_mc:horse" or entity_id == "mobs_mc:skeleton_horse" or entity_id == "mobs_mc:zombie_horse"
 end
@@ -229,7 +217,7 @@ local horse = {
 				local tex = horse_extra_texture(self)
 				self.base_texture = tex
 				self.object:set_properties({textures = self.base_texture})
-				get_drops(self)
+				self:update_drops()
 				return
 			elseif self._chest and clicker:get_player_control().sneak then
 				mcl_entity_invs.show_inv_form(self,clicker)
@@ -298,49 +286,90 @@ local horse = {
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
 			if self.driver and clicker == self.driver then
 				mcl_mobs.detach(clicker, {x = 1, y = 0, z = 1})
-			elseif not self.driver and not self._saddle and iname == "mcl_mobitems:saddle" then
-				local w = clicker:get_wielded_item()
-				self._saddle = true
-				if not minetest.is_creative_enabled(clicker:get_player_name()) then
-					w:take_item()
-					clicker:set_wielded_item(w)
-				end
-				if not self._naked_texture then
-					self._naked_texture = self.base_texture[2]
-				end
-				local tex = horse_extra_texture(self)
-				self.base_texture = tex
-				self.object:set_properties({textures = self.base_texture})
-				minetest.sound_play({name = "mcl_armor_equip_leather"}, {gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
-				get_drops(self)
-			elseif minetest.get_item_group(iname, "horse_armor") > 0 and can_equip_horse_armor(self.name) and not self.driver and not self._horse_armor then
-				local armor = minetest.get_item_group(iname, "horse_armor")
-				self._horse_armor = iname
-				self._wearing_armor = true
-				local w = clicker:get_wielded_item()
-				if not minetest.is_creative_enabled(clicker:get_player_name()) then
-					w:take_item()
-					clicker:set_wielded_item(w)
-				end
-				self.armor = armor
-				local agroups = self.object:get_armor_groups()
-				agroups.fleshy = self.armor
-				self.object:set_armor_groups(agroups)
-
-				if not self._naked_texture then
-					self._naked_texture = self.base_texture[2]
-				end
-				local tex = horse_extra_texture(self)
-				self.base_texture = tex
-				self.object:set_properties({textures = self.base_texture})
-				local def = w:get_definition()
-				if def.sounds and def.sounds._mcl_armor_equip then
-					minetest.sound_play({name = def.sounds._mcl_armor_equip}, {gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
-				end
+			elseif not self.driver and iname == "mcl_mobitems:saddle" and self:set_saddle(clicker) then
+				return
+			elseif minetest.get_item_group(iname, "horse_armor") > 0 and can_equip_horse_armor(self.name) and not self.driver and self:set_armor(clicker) then
+				return
 			elseif not self.driver and self._saddle then
 				self.object:set_properties({stepheight = 1.1})
 				mcl_mobs.attach(self, clicker)
 			end
+		end
+	end,
+	set_saddle = function(self, clicker)
+		if not self._saddle then
+			local w = clicker:get_wielded_item()
+			self._saddle = true
+			if not minetest.is_creative_enabled(clicker:get_player_name()) then
+				w:take_item()
+				clicker:set_wielded_item(w)
+			end
+			if not self._naked_texture then
+				self._naked_texture = self.base_texture[2]
+			end
+			local tex = horse_extra_texture(self)
+			self.base_texture = tex
+			self.object:set_properties({textures = self.base_texture})
+			minetest.sound_play({name = "mcl_armor_equip_leather"}, {gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
+			self:update_drops()
+			return true
+		end
+	end,
+	set_armor = function(self, clicker)
+		local w = clicker:get_wielded_item()
+		local iname = w:get_name()
+		if iname ~= self._horse_armor then
+			if not minetest.is_creative_enabled(clicker:get_player_name()) then
+				w:take_item()
+				clicker:set_wielded_item(w)
+				if self._horse_armor then
+					minetest.add_item(self.object:get_pos(), self._horse_armor)
+				end
+			end
+			local armor = minetest.get_item_group(iname, "horse_armor")
+			self._wearing_armor = true
+			self._horse_armor = iname
+			self.armor = armor
+			local agroups = self.object:get_armor_groups()
+			agroups.fleshy = self.armor
+			self.object:set_armor_groups(agroups)
+			if not self._naked_texture then
+				self._naked_texture = self.base_texture[2]
+			end
+			local tex = horse_extra_texture(self)
+			self.base_texture = tex
+			self.object:set_properties({textures = self.base_texture})
+			local def = w:get_definition()
+			if def.sounds and def.sounds._mcl_armor_equip then
+				minetest.sound_play({name = def.sounds._mcl_armor_equip}, {gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
+			end
+			return true
+		end
+	end,
+	update_drops = function(self)
+		self.drops = {}
+		table.insert(self.drops,
+			{name = "mcl_mobitems:leather",
+			chance = 1,
+			min = 0,
+			max = 2,
+			looting = "common",
+		})
+		if self._saddle then
+			table.insert(self.drops,{
+				name = "mcl_mobitems:saddle",
+				chance = 1,
+				min = 1,
+				max = 1,
+			})
+		end
+		if self._horse_armor then
+			table.insert(self.drops,{
+				name = self._horse_armor,
+				chance = 1,
+				min = 1,
+				max = 1,
+			})
 		end
 	end,
 
