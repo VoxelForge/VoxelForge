@@ -416,100 +416,102 @@ local horse = {
 
 mcl_mobs.register_mob("mobs_mc:horse", horse)
 
-local skeleton_horse = table.copy(horse)
-skeleton_horse.description = S("Skeleton Horse")
-skeleton_horse.breath_max = -1
-skeleton_horse.armor = {undead = 100, fleshy = 100}
-skeleton_horse.textures = {{"blank.png", "mobs_mc_horse_skeleton.png", "blank.png"}}
-skeleton_horse.drops = {
-	{name = "mcl_mobitems:bone",
-	chance = 1,
-	min = 0,
-	max = 2,},
-}
-skeleton_horse.sounds = {
-	random = "mobs_mc_skeleton_random",
-	death = "mobs_mc_skeleton_death",
-	damage = "mobs_mc_skeleton_hurt",
-	eat = "mobs_mc_animal_eat_generic",
-	base_pitch = 0.95,
-	distance = 16,
-}
-skeleton_horse.harmed_by_heal = true
+local skeleton_horse = table.merge(horse, {
+	description = S("Skeleton Horse"),
+	breath_max = -1,
+	armor = {undead = 100, fleshy = 100},
+	textures = {{"blank.png", "mobs_mc_horse_skeleton.png", "blank.png"}},
+	drops = {
+		{name = "mcl_mobitems:bone",
+		chance = 1,
+		min = 0,
+		max = 2,},
+	},
+	sounds = {
+		random = "mobs_mc_skeleton_random",
+		death = "mobs_mc_skeleton_death",
+		damage = "mobs_mc_skeleton_hurt",
+		eat = "mobs_mc_animal_eat_generic",
+		base_pitch = 0.95,
+		distance = 16,
+	},
+	harmed_by_heal = true,
+})
 mcl_mobs.register_mob("mobs_mc:skeleton_horse", skeleton_horse)
 
-local zombie_horse = table.copy(horse)
-zombie_horse.description = S("Zombie Horse")
-zombie_horse.breath_max = -1
-zombie_horse.armor = {undead = 100, fleshy = 100}
-zombie_horse.textures = {{"blank.png", "mobs_mc_horse_zombie.png", "blank.png"}}
-zombie_horse.drops = {
-	{name = "mcl_mobitems:rotten_flesh",
-	chance = 1,
-	min = 0,
-	max = 2,},
-}
-zombie_horse.sounds = {
-	random = "mobs_mc_horse_random",
-	-- TODO: Separate damage sound
-	damage = "mobs_mc_horse_death",
-	death = "mobs_mc_horse_death",
-	eat = "mobs_mc_animal_eat_generic",
-	base_pitch = 0.5,
-	distance = 16,
-}
-zombie_horse.harmed_by_heal = true
-mcl_mobs.register_mob("mobs_mc:zombie_horse", zombie_horse)
+mcl_mobs.register_mob("mobs_mc:zombie_horse", table.merge(skeleton_horse, {
+	description = S("Zombie Horse"),
+	textures = {{"blank.png", "mobs_mc_horse_zombie.png", "blank.png"}},
+	drops = {
+		{
+			name = "mcl_mobitems:rotten_flesh",
+			chance = 1,
+			min = 0,
+			max = 2,
+		},
+	},
+	sounds = {
+		random = "mobs_mc_horse_random",
+		-- TODO: Separate damage sound
+		damage = "mobs_mc_horse_death",
+		death = "mobs_mc_horse_death",
+		eat = "mobs_mc_animal_eat_generic",
+		base_pitch = 0.5,
+		distance = 16,
+	},
+}))
 
 local d = 0.86
-local donkey = table.copy(horse)
-donkey.description = S("Donkey")
-donkey.textures = {{"blank.png", "mobs_mc_donkey.png", "blank.png"}}
-donkey.spawn_in_group = 3
-donkey.spawn_in_group_min = 1
-donkey.animation = {
-	speed_normal = 25,
-	stand_start = 0, stand_end = 0,
-	walk_start = 0, walk_end = 40,
-}
-donkey.sounds = {
-	random = "mobs_mc_donkey_random",
-	damage = "mobs_mc_donkey_hurt",
-	death = "mobs_mc_donkey_death",
-	eat = "mobs_mc_animal_eat_generic",
-	distance = 16,
-}
-donkey.visual_size = { x=horse.visual_size.x*d, y=horse.visual_size.y*d }
-donkey.collisionbox = {
-	horse.collisionbox[1] * d,
-	horse.collisionbox[2] * d,
-	horse.collisionbox[3] * d,
-	horse.collisionbox[4] * d,
-	horse.collisionbox[5] * d,
-	horse.collisionbox[6] * d,
-}
-donkey.jump = true
-donkey.jump_height = 3.75
+local donkey = table.merge(horse, {
+	description = S("Donkey"),
+	textures = {{"blank.png", "mobs_mc_donkey.png", "blank.png"}},
+	spawn_in_group = 3,
+	spawn_in_group_min = 1,
+	animation = {
+		speed_normal = 25,
+		stand_start = 0, stand_end = 0,
+		walk_start = 0, walk_end = 40,
+	},
+	sounds = {
+		random = "mobs_mc_donkey_random",
+		damage = "mobs_mc_donkey_hurt",
+		death = "mobs_mc_donkey_death",
+		eat = "mobs_mc_animal_eat_generic",
+		distance = 16,
+	},
+	visual_size = { x=horse.visual_size.x*d, y=horse.visual_size.y*d },
+	collisionbox = {
+		horse.collisionbox[1] * d,
+		horse.collisionbox[2] * d,
+		horse.collisionbox[3] * d,
+		horse.collisionbox[4] * d,
+		horse.collisionbox[5] * d,
+		horse.collisionbox[6] * d,
+	},
+	jump = true,
+	jump_height = 3.75,
+})
 
 mcl_mobs.register_mob("mobs_mc:donkey", donkey)
 mcl_entity_invs.register_inv("mobs_mc:donkey","Donkey",15,true)
 
 local m = 0.94
-local mule = table.copy(donkey)
-mule.description = S("Mule")
-mule.textures = {{"blank.png", "mobs_mc_mule.png", "blank.png"}}
-mule.visual_size = { x=horse.visual_size.x*m, y=horse.visual_size.y*m }
-mule.sounds = table.copy(donkey.sounds)
-mule.sounds.base_pitch = 1.15
-mule.collisionbox = {
-	horse.collisionbox[1] * m,
-	horse.collisionbox[2] * m,
-	horse.collisionbox[3] * m,
-	horse.collisionbox[4] * m,
-	horse.collisionbox[5] * m,
-	horse.collisionbox[6] * m,
-}
-mcl_mobs.register_mob("mobs_mc:mule", mule)
+mcl_mobs.register_mob("mobs_mc:mule", table.merge(donkey, {
+	description = S("Mule"),
+	textures = {{"blank.png", "mobs_mc_mule.png", "blank.png"}},
+	visual_size = { x=horse.visual_size.x*m, y=horse.visual_size.y*m },
+	sounds = table.merge(donkey.sounds, {
+		base_pitch = 1.15,
+	}),
+	collisionbox = {
+		horse.collisionbox[1] * m,
+		horse.collisionbox[2] * m,
+		horse.collisionbox[3] * m,
+		horse.collisionbox[4] * m,
+		horse.collisionbox[5] * m,
+		horse.collisionbox[6] * m,
+	},
+}))
 mcl_entity_invs.register_inv("mobs_mc:mule","Mule",15,true)
 
 mcl_mobs.spawn_setup({
