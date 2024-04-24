@@ -1,5 +1,13 @@
 local S = minetest.get_translator("mobs_mc")
 
+local base_drop = {
+	name = "mcl_mobitems:leather",
+	chance = 1,
+	min = 0,
+	max = 2,
+	looting = "common",
+}
+
 local function horse_extra_texture(horse)
 	local base = horse._naked_texture or horse.base_texture[2]
 	local saddle = horse._saddle
@@ -117,13 +125,7 @@ local horse = {
 	makes_footstep_sound = true,
 	jump = true,
 	jump_height = 5.75,
-	drops = {
-		{name = "mcl_mobitems:leather",
-		chance = 1,
-		min = 0,
-		max = 2,
-		looting = "common",},
-	},
+	drops = { base_drop },
 	on_spawn = function(self)
 		local tex = horse_extra_texture(self)
 		self.object:set_properties({textures = tex})
@@ -181,15 +183,6 @@ local horse = {
 	end,
 
 	on_die = function(self, pos)
-		if self._saddle then
-			minetest.add_item(pos, "mcl_mobitems:saddle")
-		end
-		if self._chest then
-			minetest.add_item(pos, "mcl_chests:chest")
-		end
-		if self._wearing_armor then
-			minetest.add_item(pos, self._horse_armor)
-		end
 		if self.driver then
 			mcl_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
 		end
@@ -347,14 +340,7 @@ local horse = {
 		end
 	end,
 	update_drops = function(self)
-		self.drops = {}
-		table.insert(self.drops,
-			{name = "mcl_mobitems:leather",
-			chance = 1,
-			min = 0,
-			max = 2,
-			looting = "common",
-		})
+		self.drops = { base_drop }
 		if self._saddle then
 			table.insert(self.drops,{
 				name = "mcl_mobitems:saddle",
@@ -366,6 +352,14 @@ local horse = {
 		if self._horse_armor then
 			table.insert(self.drops,{
 				name = self._horse_armor,
+				chance = 1,
+				min = 1,
+				max = 1,
+			})
+		end
+		if self._chest then
+			table.insert(self.drops,{
+				name = "mcl_chests:chest",
 				chance = 1,
 				min = 1,
 				max = 1,
