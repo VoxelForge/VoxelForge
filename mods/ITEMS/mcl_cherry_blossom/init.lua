@@ -88,7 +88,8 @@ minetest.register_node("mcl_cherry_blossom:pink_petals",{
 })
 
 local cherry_particlespawner = {
-	texture = "mcl_cherry_blossom_particle.png",
+	texture = "mcl_cherry_blossom_particle_1.png",
+	texpool = {},
 	amount = 4,
 	time = 25,
 	minvel = vector.zero(),
@@ -103,6 +104,9 @@ local cherry_particlespawner = {
 	collisiondetection = true,
 	collision_removal = false,
 }
+for i=1,12 do
+	table.insert(cherry_particlespawner.texpool, { name = "mcl_cherry_blossom_particle_"..i..".png"})
+end
 
 minetest.register_abm({
 	label = "Cherry Blossom Particles",
