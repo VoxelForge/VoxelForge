@@ -216,7 +216,7 @@ function mcl_raids.find_villager(pos)
 end
 
 function mcl_raids.find_bed(pos)
-	return minetest.find_node_near(pos,32,{"mcl_beds:bed_red_bottom"})
+	return minetest.find_node_near(pos,32,{"group:bed"})
 end
 
 function mcl_raids.find_village(pos)
