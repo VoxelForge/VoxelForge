@@ -168,20 +168,30 @@ mcl_mobs.register_mob("mobs_mc:wandering_trader", wandering_trader)
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:wandering_trader", S("Wandering Trader"), "#1E90FF", "#bc8b72", 0)
 
-function mobs_mc.spawn_trader_llama(pos)
+function mobs_mc.spawn_trader_llama(pos, wt)
 	local o = minetest.add_entity(pos, "mobs_mc:llama")
 	if o then
 		local ot = o:get_properties().textures
+		local l = o:get_luaentity()
+		local tx = {"blank.png", "mobs_mc_llama_decor_wandering_trader.png", ot[3]}
+		l.base_texture = tx
+		l.following = wt
+		l._follow_trader = wt._id
 		o:set_properties({
-			textures = {"blank.png", "mobs_mc_llama_decor_wandering_trader.png", ot[3]},
+			textures = tx,
 		})
 	end
 end
 
 function mobs_mc.spawn_wandering_trader(pos)
-	minetest.add_entity(pos, "mobs_mc:wandering_trader")
-	for i=1,math.random(2) do
-		mobs_mc.spawn_trader_llama(pos)
+	local trader = minetest.add_entity(pos, "mobs_mc:wandering_trader")
+	if trader then
+		local nn = minetest.find_nodes_in_area_under_air(vector.offset(pos, -5, -5 , -5), vector.offset(pos, 5, 5, 5), {"group:solid"})
+		if nn and #nn > 0 then
+			for i=1,math.random(2) do
+				mobs_mc.spawn_trader_llama(nn[i] or nn[i - 1], trader)
+			end
+		end
 	end
 end
 
@@ -193,6 +203,14 @@ minetest.register_chatcommand("spawn_wandering_trader", {
 	end,
 })
 
+local function get_points_on_circle(pos,r,n)
+	local rt = {}
+	for i=1, n do
+		table.insert(rt,vector.offset(pos,r * math.cos(((i-1)/n) * (2*math.pi)),0,  r* math.sin(((i-1)/n) * (2*math.pi)) ))
+	end
+	return rt
+end
+
 local function attempt_trader_spawn()
 	if math.random(100) < current_chance then
 		current_chance = 25
@@ -203,7 +221,15 @@ local function attempt_trader_spawn()
 			end
 		end
 		table.shuffle(ow_players)
-
+		local pl = ow_players[1]
+		local poss = get_points_on_circle(pl:get_pos(), 50, 24)
+		table.shuffle(poss)
+		for _, sp in pairs(poss) do
+			local nn = minetest.find_nodes_in_area_under_air(vector.offset(sp, -5, -5 , -5), vector.offset(sp, 5, 5, 5), {"group:solid"})
+			if nn and #nn > 0 then
+				mobs_mc.spawn_wandering_trader(nn[1])
+			end
+		end
 		--spawn_trader
 	else
 		current_chance = current_chance + 25
