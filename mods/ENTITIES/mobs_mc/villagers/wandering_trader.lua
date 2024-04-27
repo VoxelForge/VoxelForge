@@ -167,6 +167,7 @@ table.update(wandering_trader, {
 		"mobs_mc_villager.png", --hat
 	},
 	_profession = "wandering_trader",
+	_notiers = true,
 })
 
 mcl_mobs.register_mob("mobs_mc:wandering_trader", wandering_trader)
