@@ -183,14 +183,15 @@ function mobs_mc.spawn_trader_llama(pos, wt)
 end
 
 function mobs_mc.spawn_wandering_trader(pos)
-	local trader = minetest.add_entity(pos, "mobs_mc:wandering_trader")
+	local trader = minetest.add_entity(vector.offset(pos, 0, 1, 0), "mobs_mc:wandering_trader")
 	if trader then
 		local nn = minetest.find_nodes_in_area_under_air(vector.offset(pos, -5, -5 , -5), vector.offset(pos, 5, 5, 5), {"group:solid"})
 		if nn and #nn > 0 then
 			for i=1,math.random(2) do
-				mobs_mc.spawn_trader_llama(nn[i] or nn[i - 1], trader)
+				mobs_mc.spawn_trader_llama(vector.offset((nn[i] or nn[i - 1]), 0, 1, 0), trader)
 			end
 		end
+		return true
 	end
 end
 
@@ -232,8 +233,9 @@ local function attempt_trader_spawn()
 		for _, sp in pairs(poss) do
 			local nn = minetest.find_nodes_in_area_under_air(vector.offset(sp, -5, -5 , -5), vector.offset(sp, 5, 5, 5), {"group:solid"})
 			if nn and #nn > 0 then
-				mobs_mc.spawn_wandering_trader(nn[1])
-				break
+				if mobs_mc.spawn_wandering_trader(nn[1]) then
+					break
+				end
 			end
 		end
 		--spawn_trader
