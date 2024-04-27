@@ -117,9 +117,16 @@ end
 function wandering_trader:on_spawn(dtime)
 	if self._id then
 		self:set_textures()
+		for _, lid in pairs(self._llamas) do
+			local e = mcl_util.get_luaentity_by_id(lid)
+			if e then
+				e.following = self.object
+			end
+		end
 		return
 	end
 	self._id = minetest.sha1(minetest.get_gametime()..minetest.pos_to_string(self.object:get_pos())..tostring(math.random()))
+	self._llamas = {}
 	self._spawn_time = os.time()
 	self:set_textures()
 end
@@ -172,6 +179,9 @@ function mobs_mc.spawn_trader_llama(pos, wt)
 	if o then
 		local ot = o:get_properties().textures
 		local l = o:get_luaentity()
+		local wl = wt:get_luaentity()
+		l._id = minetest.sha1(minetest.get_gametime()..minetest.pos_to_string(o:get_pos())..tostring(math.random()))
+		table.insert(wl._llamas, l._id)
 		local tx = {"blank.png", "mobs_mc_llama_decor_wandering_trader.png", ot[3]}
 		l.base_texture = tx
 		l.following = wt
@@ -185,7 +195,7 @@ end
 function mobs_mc.spawn_wandering_trader(pos)
 	local trader = minetest.add_entity(vector.offset(pos, 0, 1, 0), "mobs_mc:wandering_trader")
 	if trader then
-		local nn = minetest.find_nodes_in_area_under_air(vector.offset(pos, -5, -5 , -5), vector.offset(pos, 5, 5, 5), {"group:solid"})
+		local nn = minetest.find_nodes_in_area_under_air(vector.offset(pos, -5, -5 , -5), vector.offset(pos, 5, 5, 5), {"group:opaque"})
 		if nn and #nn > 0 then
 			for i=1,math.random(2) do
 				mobs_mc.spawn_trader_llama(vector.offset((nn[i] or nn[i - 1]), 0, 1, 0), trader)
