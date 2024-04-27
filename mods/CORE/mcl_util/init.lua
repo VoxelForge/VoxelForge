@@ -46,6 +46,15 @@ function table.count(t, does_it_count)
 	return r
 end
 
+function table.random_element(t)
+	local keyset = {}
+	for k, _ in pairs(t) do
+		table.insert(keyset, k)
+	end
+	local rk = keyset[math.random(#keyset)]
+	return t[rk], rk
+end
+
 local LOGGING_ON = minetest.settings:get_bool("mcl_logging_default", false)
 local LOG_MODULE = "[MCL2]"
 function mcl_util.mcl_log(message, module, bypass_default_logger)

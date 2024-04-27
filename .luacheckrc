@@ -218,6 +218,7 @@ read_globals = {
 			"shuffle",
 			reverse = { read_only = false },
 			count = { read_only = false },
+			random_element = { read_only = false },
 		}
 	},
 
