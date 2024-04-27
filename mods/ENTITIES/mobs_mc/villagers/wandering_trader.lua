@@ -109,14 +109,13 @@ local function get_wandering_trades()
 end
 
 function wandering_trader:do_custom(dtime)
-
+	if os.time() - self._spawn_time > max_lifetime then
+		self:safe_remove()
+	end
 end
 
 function wandering_trader:on_spawn(dtime)
 	if self._id then
-		if os.time() - self._spawn_time > max_lifetime then
-			self:safe_remove()
-		end
 		self:set_textures()
 		return
 	end
@@ -212,7 +211,13 @@ local function get_points_on_circle(pos,r,n)
 end
 
 local function attempt_trader_spawn()
-	if math.random(100) < current_chance then
+	local exists = false
+	for _, v in pairs(minetest.luaentities) do
+		if v.name == "mobs_mc:wandering_trader" then
+			exists = true
+		end
+	end
+	if not exists and math.random(100) < current_chance then
 		current_chance = 25
 		local ow_players = {}
 		for _, pl in pairs(minetest.get_connected_players()) do
@@ -231,7 +236,7 @@ local function attempt_trader_spawn()
 			end
 		end
 		--spawn_trader
-	else
+	elseif not exists then
 		current_chance = current_chance + 25
 	end
 	minetest.after(spawn_interval, attempt_trader_spawn)
