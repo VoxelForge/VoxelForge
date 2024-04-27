@@ -617,35 +617,6 @@ return {
 	wandering_trader = {
 		name = S("Wandering Trader"),
 		texture = "mobs_mc_villager_wandering_trader.png",
-		trades = {
-			{
-			{ { "mcl_farming:wheat_item", 20, 20, }, E() },
-			{ { "mcl_farming:potato_item", 26, 26, }, E() },
-			{ { "mcl_farming:carrot_item", 22, 22, }, E() },
-			{ { "mcl_farming:beetroot_item", 15, 15 }, E() },
-			{ E(), { "mcl_farming:bread", 6, 6 } },
-			},
-
-			{
-			{ { "mcl_farming:pumpkin", 6, 6 }, E() },
-			{ E(), { "mcl_farming:pumpkin_pie", 4, 4 } },
-			{ E(), { "mcl_core:apple", 4, 4 } },
-			},
-
-			{
-			{ { "mcl_farming:melon", 4, 4 }, E() },
-			{ E(3), {"mcl_farming:cookie", 18, 18 }, },
-			},
-
-			{
-			{ E(), { "mcl_cake:cake", 1, 1 } },
-			{ E(), { "mcl_sus_stew:stew", 1, 1 } },
-			},
-
-			{
-			{ E(3), { "mcl_farming:carrot_item_gold", 3, 3 } },
-			{ E(4), { "mcl_potions:speckled_melon", 3, 3 } },
-			},
-		}
+		trades = {},
 	},
 }
