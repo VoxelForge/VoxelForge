@@ -278,3 +278,5 @@ mcl_mobs.register_mob("mobs_mc:villager", mobs_mc.villager_mob)
 
 -- spawn eggs
 mcl_mobs.register_egg("mobs_mc:villager", S("Villager"), "#563d33", "#bc8b72", 0)
+
+dofile(modpath.."/villagers/wandering_trader.lua")
