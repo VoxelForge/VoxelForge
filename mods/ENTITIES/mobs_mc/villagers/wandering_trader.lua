@@ -1,6 +1,7 @@
 local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 local spawn_interval = 20 * 60
+local max_lifetime = 60 * 60
 local current_chance = 25
 local wandering_trader = table.copy(mobs_mc.villager_mob)
 
@@ -10,10 +11,14 @@ end
 
 function wandering_trader:on_spawn(dtime)
 	if self._id then
+		if os.time() - self._spawn_time > max_lifetime then
+			self:safe_remove()
+		end
 		self:set_textures()
 		return
 	end
-	self._id=minetest.sha1(minetest.get_gametime()..minetest.pos_to_string(self.object:get_pos())..tostring(math.random()))
+	self._id = minetest.sha1(minetest.get_gametime()..minetest.pos_to_string(self.object:get_pos())..tostring(math.random()))
+	self._spawn_time = os.time()
 	self:set_textures()
 end
 
