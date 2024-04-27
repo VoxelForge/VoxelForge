@@ -66,7 +66,6 @@ minetest.register_node("mcl_deepslate:tuff", {
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 1.5,
-	_mcl_silk_touch_drop = true,
 })
 
 local function register_deepslate_ore(item, desc, extra, basename)
