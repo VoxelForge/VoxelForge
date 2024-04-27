@@ -58,6 +58,14 @@ function mobs_mc.villager_mob:init_trader_vars()
 	end
 end
 
+local function func_or_it(item)
+	if type(item) == "function" then
+		return item()
+	else
+		return item
+	end
+end
+
 function mobs_mc.villager_mob:init_trades(inv)
 	local profession = mobs_mc.professions[self._profession]
 	local trade_tiers = profession.trades
@@ -73,9 +81,9 @@ function mobs_mc.villager_mob:init_trades(inv)
 		local tier = trade_tiers[tiernum]
 		for tradenum=1, #tier do
 			local trade = tier[tradenum]
-			local wanted1_item = trade[1][1]
+			local wanted1_item = func_or_it(trade[1][1])
 			local wanted1_count = math.random(trade[1][2], trade[1][3])
-			local offered_item = trade[2][1]
+			local offered_item = func_or_it(trade[2][1])
 			local offered_count = math.random(trade[2][2], trade[2][3])
 
 			local offered_stack = ItemStack({name = offered_item, count = offered_count})
