@@ -233,6 +233,7 @@ local function attempt_trader_spawn()
 			local nn = minetest.find_nodes_in_area_under_air(vector.offset(sp, -5, -5 , -5), vector.offset(sp, 5, 5, 5), {"group:solid"})
 			if nn and #nn > 0 then
 				mobs_mc.spawn_wandering_trader(nn[1])
+				break
 			end
 		end
 		--spawn_trader
