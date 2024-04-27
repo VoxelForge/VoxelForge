@@ -692,9 +692,9 @@ function mob_class:follow_flop()
 
 			p = self.following:get_pos()
 
-		elseif self.following.object then
+		elseif self.following.get_luaentity then
 
-			p = self.following.object:get_pos()
+			p = self.following:get_pos()
 		end
 
 		if p then
