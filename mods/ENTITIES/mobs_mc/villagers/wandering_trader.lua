@@ -39,7 +39,7 @@ local function get_random_flower()
 	return flower
 end
 
-local wandering_trader_purchasing_table = {
+local purchasing_table = {
 	{ { "mcl_potions:water", 1, 1, }, E() },
 	{ { "mcl_buckets:bucket_water", 1, 1, }, E(2) },
 	{ { "mcl_mobitems:milk_bucket", 1, 1, }, E(2) },
@@ -48,7 +48,7 @@ local wandering_trader_purchasing_table = {
 	{ { "mcl_farming:hay_block", 1, 1, }, E(1) },
 }
 
-local wandering_trader_special_table = {
+local special_table = {
 	{ E(), { "mcl_core:packed_ice", 1, 1, } },
 	{ E(), { "mcl_mobitems:gunpowder", 4, 4, } },
 	{ E(), { get_random_tree, 8, 8, } },
@@ -57,7 +57,8 @@ local wandering_trader_special_table = {
 	{ E(6), { "mcl_potions:invisibility", 1, 1, } },
 	{ E(6, 20), { "mcl_tools:pick_diamond_enchanted", 1, 1 } },
 }
-local wandering_trader_ordinary_table = {
+
+local ordinary_table = {
 	{ E(), { "mcl_flowers:fern", 1, 1, } },
 	{ E(), { "mcl_core:reeds", 1, 1, } },
 	{ E(), { "mcl_farming:pumpkin", 1, 1, } },
@@ -67,7 +68,6 @@ local wandering_trader_ordinary_table = {
 	{ E(), { "mcl_farming:beetroot_seeds", 1, 1, } },
 	{ E(), { "mcl_farming:pumpkin_seeds", 1, 1, } },
 	{ E(), { "mcl_farming:melon_seeds", 1, 1, } },
-	{ E(5), { get_random_sapling, 8, 8, } },
 	{ E(), { get_random_dye, 1, 1, } },
 	{ E(), { "mcl_core:vine", 3, 3, } },
 	{ E(), { "mcl_flowers:waterlily", 3, 3, } },
@@ -76,17 +76,34 @@ local wandering_trader_ordinary_table = {
 	--{ E(), { "TODO: small_dripleaf", 3, 3, } },
 	{ E(), { "mcl_mushrooms:mushroom_brown", 3, 3, } },
 	{ E(), { "mcl_mushrooms:mushroom_red", 3, 3, } },
+	--{ E(), { "TODO:pointed_dripstone", 2, 5, } },
+	{ E(), { "mcl_lush_caves:rooted_dirt", 2, 2, } },
+	{ E(), { "mcl_lush_caves:moss", 2, 2, } },
+	{ E(2), { "mcl_ocean:sea_pickle_1_dead_brain_coral_block", 1, 1, } },
+	{ E(2), { "mcl_nether:glowstone", 1, 5, } },
+	{ E(3), { "mcl_buckets:bucket_tropical_fish", 1, 1, } },
+	--{ E(3), { "TODO: mcl_buckets:bucket_pufferfish", 1, 5, } },
+	{ E(3), { "mcl_ocean:kelp", 1, 1, } },
+	{ E(3), { "mcl_core:cactus", 1, 1, } },
+	{ E(3), { "mcl_ocean:brain_coral_block", 1, 1, } },
+	{ E(3), { "mcl_ocean:tube_coral_block", 1, 1, } },
+	{ E(3), { "mcl_ocean:bubble_coral_block", 1, 1, } },
+	{ E(3), { "mcl_ocean:fire_coral_block", 1, 1, } },
+	{ E(3), { "mcl_ocean:horn_coral_block", 1, 1, } },
+	{ E(4), { "mcl_mobitems:slimeball", 1, 1, } },
+	{ E(5), { get_random_sapling, 8, 8, } },
+	{ E(5), { "mcl_mobitems:nautilus_shell", 1, 1, } },
 }
 
 
 local function get_wandering_trades()
 	local t = {}
 	for i=1,2 do
-		table.insert(t, wandering_trader_purchasing_table[math.random(#wandering_trader_purchasing_table)])
-		table.insert(t, wandering_trader_special_table[math.random(#wandering_trader_special_table)])
+		table.insert(t, purchasing_table[math.random(#purchasing_table)])
+		table.insert(t, special_table[math.random(#special_table)])
 	end
 	for i=1,5 do
-		table.insert(t, wandering_trader_ordinary_table[math.random(#wandering_trader_ordinary_table)])
+		table.insert(t, ordinary_table[math.random(#ordinary_table)])
 	end
 	return { t }
 end
