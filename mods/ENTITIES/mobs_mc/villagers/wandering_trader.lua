@@ -206,14 +206,6 @@ function mobs_mc.spawn_wandering_trader(pos)
 	end
 end
 
-minetest.register_chatcommand("spawn_wandering_trader", {
-	privs = { debug = true, },
-	func = function(pn, pr)
-		local pl = minetest.get_player_by_name(pn)
-		mobs_mc.spawn_wandering_trader(pl:get_pos())
-	end,
-})
-
 local function get_points_on_circle(pos,r,n)
 	local rt = {}
 	for i=1, n do
@@ -222,8 +214,9 @@ local function get_points_on_circle(pos,r,n)
 	return rt
 end
 
-local function attempt_trader_spawn()
+local function attempt_trader_spawn(manual)
 	local exists = false
+	local spawned = false
 	for _, v in pairs(minetest.luaentities) do
 		if v.name == "mobs_mc:wandering_trader" then
 			exists = true
@@ -249,11 +242,29 @@ local function attempt_trader_spawn()
 				end
 			end
 		end
-		--spawn_trader
+		spawned = true
 	elseif not exists then
 		current_chance = math.min(75, current_chance + 25)
 	end
-	minetest.after(spawn_interval, attempt_trader_spawn)
+
+	if not manual then
+		if mobs_mc.wandering_trader_spawn_job then
+			mobs_mc.wandering_trader_spawn_job:cancel()
+			--prevent multiple spawn jobs from being run
+		end
+		mobs_mc.wandering_trader_spawn_job = minetest.after(spawn_interval, attempt_trader_spawn)
+	end
+	return spawned
 end
 
-minetest.after(spawn_interval, attempt_trader_spawn)
+mobs_mc.wandering_trader_spawn_job = minetest.after(spawn_interval, attempt_trader_spawn)
+
+minetest.register_chatcommand("spawn_wandering_trader", {
+	privs = { debug = true, },
+	func = function(pn, pr)
+		minetest.log("current wandering trader spawn chance: "..tostring(current_chance))
+		if attempt_trader_spawn(true) then
+			minetest.log("wandering trader spawned")
+		end
+	end,
+})
