@@ -20,6 +20,12 @@ local function register_block(name, description)
 			minetest.add_entity(pos, "mobs_mc:silverfish")
 		end
 	end
+	def.on_blast = function (pos, intensity)
+		minetest.remove_node(pos)
+		if not minetest.is_creative_enabled("") then
+			minetest.add_entity(pos, "mobs_mc:silverfish")
+		end
+	end
 	def._tt_help = S("Hides a silverfish")
 	def._doc_items_longdesc = S([[
 		An infested block is a block from which a silverfish will pop out when it is broken.
