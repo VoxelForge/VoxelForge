@@ -257,7 +257,9 @@ local function attempt_trader_spawn(manual)
 	return spawned
 end
 
-mobs_mc.wandering_trader_spawn_job = minetest.after(spawn_interval, attempt_trader_spawn)
+if minetest.settings:get_bool("mobs_spawn", true) then
+	mobs_mc.wandering_trader_spawn_job = minetest.after(spawn_interval, attempt_trader_spawn)
+end
 
 minetest.register_chatcommand("spawn_wandering_trader", {
 	privs = { debug = true, },
