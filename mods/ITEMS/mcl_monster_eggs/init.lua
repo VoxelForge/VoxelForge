@@ -12,8 +12,11 @@ local function register_block(name, description)
 	def.description = description
 	table.update(def.groups, {spawns_silverfish = 1})
 	def.drop = ""
+	def._mcl_silk_touch_drop = {name}
 	def.after_dig_node = function (pos, oldnode, oldmetadata, digger)
-		if not minetest.is_creative_enabled("") then
+		local itemstack = digger:get_wielded_item()
+		if not mcl_enchanting.has_enchantment(itemstack, "silk_touch")
+		and not minetest.is_creative_enabled("") then
 			minetest.add_entity(pos, "mobs_mc:silverfish")
 		end
 	end
