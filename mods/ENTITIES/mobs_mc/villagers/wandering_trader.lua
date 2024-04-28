@@ -251,7 +251,7 @@ local function attempt_trader_spawn()
 		end
 		--spawn_trader
 	elseif not exists then
-		current_chance = current_chance + 25
+		current_chance = math.min(75, current_chance + 25)
 	end
 	minetest.after(spawn_interval, attempt_trader_spawn)
 end
