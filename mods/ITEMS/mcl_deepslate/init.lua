@@ -62,7 +62,7 @@ minetest.register_node("mcl_deepslate:tuff", {
 	_doc_items_longdesc = S("Tuff is an ornamental rock formed from volcanic ash, occurring in underground blobs below Y=16."),
 	_doc_items_hidden = false,
 	tiles = { "mcl_deepslate_tuff.png" },
-	groups = { pickaxey = 1, deco_block = 1, converts_to_moss = 1 },
+	groups = { pickaxey = 1, converts_to_moss = 1 },
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 6,
 	_mcl_hardness = 1.5,
