@@ -3,11 +3,6 @@
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local function spawn_silverfish(pos, oldnode, oldmetadata, digger)
-	if not minetest.is_creative_enabled("") then
-		minetest.add_entity(pos, "mobs_mc:silverfish")
-	end
-end
 
 -- Template function for registering monster egg blocks
 local function register_block(subname, description, tiles, is_ground_content)
@@ -21,7 +16,11 @@ local function register_block(subname, description, tiles, is_ground_content)
 		groups = {dig_immediate = 3, spawns_silverfish = 1, deco_block = 1},
 		drop = "",
 		sounds = mcl_sounds.node_sound_stone_defaults(),
-		after_dig_node = spawn_silverfish,
+		after_dig_node = function (pos, oldnode, oldmetadata, digger)
+			if not minetest.is_creative_enabled("") then
+				minetest.add_entity(pos, "mobs_mc:silverfish")
+			end
+		end,
 		_tt_help = S("Hides a silverfish"),
 		_doc_items_longdesc = S([[
 			An infested block is a block from which a silverfish will pop out when it is broken.
