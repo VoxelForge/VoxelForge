@@ -3,9 +3,10 @@
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
+mcl_monster_eggs = {}
 
 -- Template function for registering monster egg blocks
-local function register_block(name, description)
+local function register_infested_block(name, description)
 
 	local def = table.copy(minetest.registered_nodes[name])
 
@@ -36,13 +37,15 @@ local function register_block(name, description)
 
 	local base = name:gsub("^[_%w]*:", "")
 
-	minetest.register_node("mcl_monster_eggs:monster_egg_"..base, def)
+	minetest.register_node(":mcl_monster_eggs:monster_egg_"..base, def)
 end
 
+mcl_monster_eggs.register_infested_block = register_infested_block
+
 -- Register all the monster egg blocks
-register_block("mcl_core:stone", S("Infested Stone"))
-register_block("mcl_core:cobble", S("Infested Cobblestone"))
-register_block("mcl_core:stonebrick", S("Infested Stone Bricks"))
-register_block("mcl_core:stonebrickcracked", S("Infested Cracked Stone Bricks"))
-register_block("mcl_core:stonebrickmossy", S("Infested Mossy Stone Bricks"))
-register_block("mcl_core:stonebrickcarved", S("Infested Chiseled Stone Bricks"))
+register_infested_block("mcl_core:stone", S("Infested Stone"))
+register_infested_block("mcl_core:cobble", S("Infested Cobblestone"))
+register_infested_block("mcl_core:stonebrick", S("Infested Stone Bricks"))
+register_infested_block("mcl_core:stonebrickcracked", S("Infested Cracked Stone Bricks"))
+register_infested_block("mcl_core:stonebrickmossy", S("Infested Mossy Stone Bricks"))
+register_infested_block("mcl_core:stonebrickcarved", S("Infested Chiseled Stone Bricks"))

@@ -2,12 +2,6 @@ local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 local cobble = "mcl_deepslate:deepslate_cobbled"
 
-local function spawn_silverfish(pos, oldnode, oldmetadata, digger)
-	if not minetest.is_creative_enabled("") then
-		minetest.add_entity(pos, "mobs_mc:silverfish")
-	end
-end
-
 minetest.register_node("mcl_deepslate:deepslate", {
 	description = S("Deepslate"),
 	_doc_items_longdesc = S("Deepslate is a stone type found deep underground in the Overworld that functions similar to regular stone but is harder than the stone."),
@@ -23,6 +17,10 @@ minetest.register_node("mcl_deepslate:deepslate", {
 	_mcl_hardness = 3,
 	_mcl_silk_touch_drop = true,
 })
+
+mcl_monster_eggs.register_infested_block("mcl_deepslate:deepslate", S("Infested Deepslate"))
+
+minetest.register_alias("mcl_deepslate:infested_deepslate", "mcl_monster_eggs:monster_egg_deepslate")
 
 minetest.register_node("mcl_deepslate:deepslate_reinforced", {
 	description = S("Reinforced Deepslate"),
@@ -42,19 +40,6 @@ minetest.register_node("mcl_deepslate:deepslate_reinforced", {
 	on_rotate = screwdriver.rotate_3way,
 	_mcl_blast_resistance = 1200,
 	_mcl_hardness = 55,
-})
-
-minetest.register_node("mcl_deepslate:infested_deepslate", {
-	description = S("Infested Deepslate"),
-	_doc_items_longdesc = S("An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart."),
-	_tt_help = S("Hides a silverfish"),
-	tiles = { "mcl_deepslate_top.png", "mcl_deepslate_top.png", "mcl_deepslate.png" },
-	groups = { dig_immediate = 3, spawns_silverfish = 1, deco_block = 1 },
-	drop = "",
-	sounds = mcl_sounds.node_sound_stone_defaults(),
-	after_dig_node = spawn_silverfish,
-	_mcl_hardness = 0,
-	_mcl_blast_resistance = 0.5,
 })
 
 minetest.register_node("mcl_deepslate:tuff", {
