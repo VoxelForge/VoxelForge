@@ -246,7 +246,6 @@ for i = 1, 4 do
 		},
 		use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
 		--wield_image = "mesecons_delayer_off.png",
-		walkable = true,
 		selection_box = {
 			type = "fixed",
 			fixed = { -8/16, -8/16, -8/16, 8/16, -6/16, 8/16 },
@@ -262,7 +261,6 @@ for i = 1, 4 do
 		groups = groups,
 		paramtype = "light",
 		paramtype2 = "facedir",
-		sunlight_propagates = false,
 		is_ground_content = false,
 		drop = "mesecons_delayer:delayer_off_1",
 		on_rightclick = function(pos, node, clicker)
@@ -312,7 +310,6 @@ for i = 1, 4 do
 			"mesecons_delayer_ends_on.png",
 		},
 		use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
-		walkable = true,
 		selection_box = {
 			type = "fixed",
 			fixed = { -8/16, -8/16, -8/16, 8/16, -6/16, 8/16 },
@@ -328,7 +325,6 @@ for i = 1, 4 do
 		groups = {dig_immediate = 3, dig_by_water=1,destroy_by_lava_flow=1, dig_by_piston=1, attached_node=1, redstone_repeater=i, not_in_creative_inventory = 1},
 		paramtype = "light",
 		paramtype2 = "facedir",
-		sunlight_propagates = false,
 		is_ground_content = false,
 		drop = "mesecons_delayer:delayer_off_1",
 		on_rightclick = function(pos, node, clicker)
@@ -388,7 +384,6 @@ minetest.register_node("mesecons_delayer:delayer_off_locked", {
 	},
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
 	wield_image = "mesecons_delayer_locked_off.png",
-	walkable = true,
 	selection_box = {
 		type = "fixed",
 		fixed = { -8/16, -8/16, -8/16, 8/16, -6/16, 8/16 },
@@ -408,7 +403,6 @@ minetest.register_node("mesecons_delayer:delayer_off_locked", {
 	groups = {dig_immediate = 3, dig_by_water=1,destroy_by_lava_flow=1, dig_by_piston=1, attached_node=1, redstone_repeater=5, not_in_creative_inventory = 1},
 	paramtype = "light",
 	paramtype2 = "facedir",
-	sunlight_propagates = false,
 	is_ground_content = false,
 	drop = "mesecons_delayer:delayer_off_1",
 	delayer_time = DEFAULT_DELAY,
@@ -440,7 +434,6 @@ minetest.register_node("mesecons_delayer:delayer_on_locked", {
 		"mesecons_delayer_end_locked_on.png",
 	},
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
-	walkable = true,
 	selection_box = {
 		type = "fixed",
 		fixed = { -8/16, -8/16, -8/16, 8/16, -6/16, 8/16 },
@@ -463,7 +456,6 @@ minetest.register_node("mesecons_delayer:delayer_on_locked", {
 	groups = {dig_immediate = 3, dig_by_water=1,destroy_by_lava_flow=1, dig_by_piston=1, attached_node=1, redstone_repeater=5, not_in_creative_inventory = 1},
 	paramtype = "light",
 	paramtype2 = "facedir",
-	sunlight_propagates = false,
 	is_ground_content = false,
 	drop = "mesecons_delayer:delayer_off_1",
 	delayer_time = DEFAULT_DELAY,

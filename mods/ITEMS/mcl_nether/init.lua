@@ -124,7 +124,6 @@ minetest.register_node("mcl_nether:magma", {
 	_doc_items_longdesc = S("Magma blocks are hot solid blocks which hurt anyone standing on it, unless they have fire resistance. Starting a fire on this block will create an eternal fire."),
 	tiles = {{name="mcl_nether_magma.png", animation={type="vertical_frames", aspect_w=32, aspect_h=32, length=1.5}}},
 	light_source = 3,
-	sunlight_propagates = false,
 	groups = {pickaxey=1, building_block=1, material_stone=1, fire=1},
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	-- From walkover mod

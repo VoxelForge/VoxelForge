@@ -131,7 +131,6 @@ minetest.register_node("mcl_villages:no_paths", {
 	description = S(
 		"Prevent paths from being placed during villager generation. Replaced by air after village path generation"
 	),
-	walkable = true,
 	paramtype = "light",
 	drawtype = drawtype,
 	inventory_image = "mcl_core_barrier.png",
@@ -151,9 +150,7 @@ minetest.register_node("mcl_villages:path_endpoint", {
 	sounds = mcl_sounds.node_sound_wool_defaults(),
 	paramtype = "light",
 	sunlight_propagates = true,
-	stack_max = 64,
 	drawtype = "nodebox",
-	walkable = true,
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -349,9 +346,7 @@ for _, crop_type in pairs(mcl_villages.get_crop_types()) do
 			groups = { handy = 1, supported_node = 1, not_in_creative_inventory = 1 },
 			paramtype = "light",
 			sunlight_propagates = true,
-			stack_max = 64,
 			drawtype = "nodebox",
-			walkable = true,
 			node_box = {
 				type = "fixed",
 				fixed = {

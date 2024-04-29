@@ -747,7 +747,6 @@ minetest.register_node("mcl_portals:portal", {
 	sunlight_propagates = true,
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "blend" or true,
 	walkable = false,
-	buildable_to = false,
 	is_ground_content = false,
 	drop = "",
 	light_source = 11,

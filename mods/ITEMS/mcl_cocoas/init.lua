@@ -71,7 +71,6 @@ local crop_def = {
 	paramtype = "light",
 	sunlight_propagates = true,
 	paramtype2 = "facedir",
-	walkable = true,
 	drop = "mcl_cocoas:cocoa_beans",
 	collision_box = {
 		type = "fixed",

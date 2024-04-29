@@ -257,7 +257,6 @@ minetest.register_node("mcl_mobspawners:spawner", {
 	tiles = {"mob_spawner.png"},
 	drawtype = "glasslike",
 	paramtype = "light",
-	walkable = true,
 	description = S("Mob Spawner"),
 	_tt_help = S("Makes mobs appear"),
 	_doc_items_longdesc = S("A mob spawner regularily causes mobs to appear around it while a player is nearby. Some mob spawners are disabled while in light."),

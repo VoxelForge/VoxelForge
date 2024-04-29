@@ -22,7 +22,6 @@ minetest.register_node("mcl_core:ladder", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	paramtype2 = "wallmounted",
-	walkable = true,
 	climbable = true,
 	node_box = {
 		type = "wallmounted",

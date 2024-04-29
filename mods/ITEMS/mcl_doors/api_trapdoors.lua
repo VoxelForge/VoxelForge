@@ -209,7 +209,6 @@ function mcl_doors:register_trapdoor(name, def)
 		-- Current behavour: Always climbable
 		climbable = true,
 		sunlight_propagates = true,
-		pointable = true,
 		groups = groups_open,
 		_mcl_hardness = def._mcl_hardness,
 		_mcl_blast_resistance = def._mcl_blast_resistance,

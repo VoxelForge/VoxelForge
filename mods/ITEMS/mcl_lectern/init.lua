@@ -22,7 +22,6 @@ minetest.register_node("mcl_lectern:lectern", {
 	tiles = {"mcl_lectern_lectern.png", },
 	groups = {handy = 1, axey = 1, flammable = 2, fire_encouragement = 5, fire_flammability = 5, solid = 1},
 	sunlight_propagates = true,
-	walkable = true,
 	is_ground_content = false,
 	node_placement_prediction = "",
 	_mcl_blast_resistance = 3,

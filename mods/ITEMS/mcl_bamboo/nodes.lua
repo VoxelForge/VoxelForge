@@ -164,7 +164,6 @@ minetest.register_node("mcl_bamboo:scaffolding", {
 			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
 		},
 	},
-	buildable_to = false,
 	is_ground_content = false,
 	walkable = false,
 	climbable = true,

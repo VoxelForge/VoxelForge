@@ -254,7 +254,6 @@ for _, mode in pairs{"comp", "sub"} do
 			tiles = get_tiles(state_str, mode),
 			use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
 			--wield_image = "mcl_comparators_off.png",
-			walkable = true,
 			selection_box = collision_box,
 			collision_box = collision_box,
 			node_box = {
@@ -264,7 +263,6 @@ for _, mode in pairs{"comp", "sub"} do
 			groups = groups,
 			paramtype = "light",
 			paramtype2 = "facedir",
-			sunlight_propagates = false,
 			is_ground_content = false,
 			drop = "mcl_comparators:comparator_off_comp",
 			on_construct = update_self,

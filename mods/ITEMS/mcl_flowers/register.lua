@@ -252,7 +252,6 @@ minetest.register_node("mcl_flowers:waterlily", {
 	inventory_image = "flowers_waterlily.png",
 	wield_image = "flowers_waterlily.png",
 	liquids_pointable = true,
-	walkable = true,
 	sunlight_propagates = true,
 	groups = {
 		deco_block = 1, plant = 1, compostability = 65, destroy_by_lava_flow = 1,

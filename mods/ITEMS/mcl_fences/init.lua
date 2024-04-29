@@ -181,7 +181,6 @@ function mcl_fences.register_fence_gate(id, fence_gate_name, texture, groups, ha
 		is_ground_content = false,
 		paramtype2 = "facedir",
 		sunlight_propagates = true,
-		walkable = true,
 		groups = cgroups_closed,
 		drawtype = "nodebox",
 		node_box = {

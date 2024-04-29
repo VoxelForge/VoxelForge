@@ -74,7 +74,6 @@ minetest.register_node("mcl_portals:portal_end", {
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "blend" or true,
 	walkable = false,
 	diggable = false,
-	pointable = false,
 	buildable_to = false,
 	is_ground_content = false,
 	drop = "",
@@ -274,7 +273,6 @@ minetest.register_node("mcl_portals:end_portal_frame", {
 	is_ground_content = false,
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	paramtype = "light",
-	sunlight_propagates = false,
 	light_source = 1,
 
 	on_rotate = rotate_frame,
@@ -304,7 +302,6 @@ minetest.register_node("mcl_portals:end_portal_frame_eye", {
 	is_ground_content = false,
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	paramtype = "light",
-	sunlight_propagates = false,
 	light_source = 1,
 	on_destruct = function(pos)
 		local ok, ppos = check_end_portal_frame(pos)

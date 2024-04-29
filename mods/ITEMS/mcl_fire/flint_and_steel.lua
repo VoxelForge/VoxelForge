@@ -7,7 +7,6 @@ minetest.register_tool("mcl_fire:flint_and_steel", {
 	_doc_items_longdesc = S("Flint and steel is a tool to start fires and ignite blocks."),
 	_doc_items_usagehelp = S("Rightclick the surface of a block to attempt to light a fire in front of it or ignite the block. A few blocks have an unique reaction when ignited."),
 	inventory_image = "mcl_fire_flint_and_steel.png",
-	liquids_pointable = false,
 	stack_max = 1,
 	groups = { tool = 1, flint_and_steel = 1, enchantability = -1 },
 	on_place = function(itemstack, user, pointed_thing)

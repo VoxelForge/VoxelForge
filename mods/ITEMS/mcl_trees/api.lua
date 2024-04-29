@@ -238,7 +238,6 @@ local tpl_sapling = {
 	_doc_items_hidden = false,
 	drawtype = "plantlike",
 	waving = 1,
-	visual_scale = 1.0,
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,

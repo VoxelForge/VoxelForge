@@ -75,7 +75,6 @@ function mcl_torches.register_torch(def)
 		sunlight_propagates = true,
 		is_ground_content = false,
 		walkable = false,
-		liquids_pointable = false,
 		light_source = def.light,
 		groups = groups,
 		drop = def.drop or itemstring,

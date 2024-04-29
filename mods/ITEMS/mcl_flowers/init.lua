@@ -173,7 +173,6 @@ local tpl_large_plant_top = {
 	sunlight_propagates = true,
 	paramtype = "light",
 	walkable = false,
-	buildable_to = false,
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	_on_bone_meal = mcl_flowers.on_bone_meal,
 }
