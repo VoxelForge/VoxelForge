@@ -77,9 +77,9 @@ local zombie = {
 		war_cry = "mobs_mc_zombie_growl",
 		death = "mobs_mc_zombie_death",
 		damage = "mobs_mc_zombie_hurt",
-		distance = 16,
 	},
 	sound_params = {
+		max_hear_distance = 16,
 		gain = 0.3
 	},
 	walk_velocity = .8,
