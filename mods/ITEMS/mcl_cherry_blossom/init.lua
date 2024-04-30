@@ -118,9 +118,14 @@ minetest.register_abm({
 	chance = 2,
 	action = function(pos, node)
 		if minetest.get_node(vector.offset(pos, 0, -1, 0)).name ~= "air" then return end
+		local pr = PseudoRandom(math.ceil(os.time() / 60 / 10)) -- make particles change direction every 10 minutes
+		local v = vector.new(pr:next(-2, 2)/10, 0, pr:next(-2, 2)/10)
+		v.y = pr:next(-9, -4) / 10
 		for _,pl in pairs(minetest.get_connected_players()) do
 			if vector.distance(pos,pl:get_pos()) < PARTICLE_DISTANCE then
 				minetest.add_particlespawner(table.merge(cherry_particlespawner, {
+					minacc = v,
+					maxacc = v,
 					minpos = vector.offset(pos, -0.25, -0.5, -0.25),
 					maxpos = vector.offset(pos, 0.25, -0.5, 0.25),
 					playername = pl:get_player_name(),
