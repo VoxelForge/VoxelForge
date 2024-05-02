@@ -163,6 +163,7 @@ local boat = {
 	_mcl_fishing_reelable = true,
 	on_detach_child = function(self, child)
 		if self._driver and minetest.is_player(child) and minetest.is_player(self._driver) and self._driver == child then
+			detach_object(self._driver)
 			self._driver = nil
 		end
 	end,
