@@ -271,6 +271,7 @@ table.update(mobs_mc.villager_mob, {
 		"mobs_mc:illusioner",
 	},
 	after_activate = mobs_mc.villager_mob.set_textures,
+	mob_pushable = false,
 })
 
 mcl_mobs.register_mob("mobs_mc:villager", mobs_mc.villager_mob)

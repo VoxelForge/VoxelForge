@@ -274,7 +274,10 @@ Fields not mentioned in this document can also be added as custom fields for the
 	-- when true has the api choose between 'punch' and 'punch2' animations.
 
 	pushable = true,
-	-- Allows players, & other mobs to push the mob.
+	-- Allows players to push the mob.
+
+	mob_pushable = true,
+	-- Allows other mobs to push the mob.
 
 	animation =
 	-- holds a table containing animation names and settings for use with mesh models: Using '_loop = false' setting will stop any of the animations from looping. 'speed_normal' is used for animation speed for compatibility with some older mobs.

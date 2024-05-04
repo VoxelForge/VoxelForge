@@ -164,7 +164,8 @@ function mob_class:collision()
 	for _,object in pairs(minetest.get_objects_inside_radius(pos, width)) do
 
 		local ent = object:get_luaentity()
-		if object:is_player() or (ent and ent.is_mob and object ~= self.object) then
+		if (self.pushable and object:is_player()) or
+		   (self.mob_pushable and ent and ent.is_mob and object ~= self.object) then
 
 			if object:is_player() and mcl_burning.is_burning(self.object) then
 				mcl_burning.set_on_fire(object, 4)
@@ -202,7 +203,7 @@ function mob_class:set_velocity(v)
 	local c_x, c_y = 0, 0
 
 	-- can mob be pushed, if so calculate direction
-	if self.pushable then
+	if self.pushable or self.mob_pushable then
 		c_x, c_y = unpack(self:collision())
 	end
 
