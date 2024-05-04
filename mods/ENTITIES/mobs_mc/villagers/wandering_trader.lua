@@ -38,8 +38,8 @@ local function get_random_flower()
 	local _, flower = table.random_element(mcl_flowers.registered_simple_flowers)
 	return flower
 end
-
-local purchasing_table = {
+mobs_mc.wandering_trader = {}
+mobs_mc.wandering_trader.trades_purchasing_table = {
 	{ { "mcl_potions:water", 1, 1, }, E() },
 	{ { "mcl_buckets:bucket_water", 1, 1, }, E(2) },
 	{ { "mcl_mobitems:milk_bucket", 1, 1, }, E(2) },
@@ -48,7 +48,7 @@ local purchasing_table = {
 	{ { "mcl_farming:hay_block", 1, 1, }, E(1) },
 }
 
-local special_table = {
+mobs_mc.wandering_trader.trades_special_table = {
 	{ E(), { "mcl_core:packed_ice", 1, 1, } },
 	{ E(), { "mcl_mobitems:gunpowder", 4, 4, } },
 	{ E(), { get_random_tree, 8, 8, } },
@@ -58,7 +58,7 @@ local special_table = {
 	{ E(6, 20), { "mcl_tools:pick_diamond_enchanted", 1, 1 } },
 }
 
-local ordinary_table = {
+mobs_mc.wandering_trader.trades_ordinary_table = {
 	{ E(), { "mcl_flowers:fern", 1, 1, } },
 	{ E(), { "mcl_core:reeds", 1, 1, } },
 	{ E(), { "mcl_farming:pumpkin", 1, 1, } },
@@ -99,11 +99,11 @@ local ordinary_table = {
 local function get_wandering_trades()
 	local t = {}
 	for i=1,2 do
-		table.insert(t, purchasing_table[math.random(#purchasing_table)])
-		table.insert(t, special_table[math.random(#special_table)])
+		table.insert(t, mobs_mc.wandering_trader.trades_purchasing_table[math.random(#mobs_mc.wandering_trader.trades_purchasing_table)])
+		table.insert(t, mobs_mc.wandering_trader.trades_special_table[math.random(#mobs_mc.wandering_trader.trades_special_table)])
 	end
 	for i=1,5 do
-		table.insert(t, ordinary_table[math.random(#ordinary_table)])
+		table.insert(t, mobs_mc.wandering_trader.trades_ordinary_table[math.random(#mobs_mc.wandering_trader.trades_ordinary_table)])
 	end
 	return { t }
 end
