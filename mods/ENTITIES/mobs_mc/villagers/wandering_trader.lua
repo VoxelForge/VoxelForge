@@ -97,13 +97,16 @@ mobs_mc.wandering_trader.trades_ordinary_table = {
 
 
 local function get_wandering_trades()
+	local purch = table.copy(mobs_mc.wandering_trader.trades_purchasing_table)
+	local speci = table.copy(mobs_mc.wandering_trader.trades_special_table)
+	local ordin = table.copy(mobs_mc.wandering_trader.trades_ordinary_table)
 	local t = {}
 	for i=1,2 do
-		table.insert(t, mobs_mc.wandering_trader.trades_purchasing_table[math.random(#mobs_mc.wandering_trader.trades_purchasing_table)])
-		table.insert(t, mobs_mc.wandering_trader.trades_special_table[math.random(#mobs_mc.wandering_trader.trades_special_table)])
+		table.insert(t, table.remove(purch, math.random(#purch)))
+		table.insert(t, table.remove(speci, math.random(#speci)))
 	end
 	for i=1,5 do
-		table.insert(t, mobs_mc.wandering_trader.trades_ordinary_table[math.random(#mobs_mc.wandering_trader.trades_ordinary_table)])
+		table.insert(t, table.remove(ordin, math.random(#ordin)))
 	end
 	return { t }
 end
