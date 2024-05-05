@@ -182,11 +182,11 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 		local item = clicker:get_wielded_item()
 		-- Dye sheep
 		if minetest.get_item_group(item:get_name(), "dye") == 1 and not self.gotten then
+			local idef = item:get_definition()
 			if not minetest.is_creative_enabled(clicker:get_player_name()) then
 				item:take_item()
 				clicker:set_wielded_item(item)
 			end
-			local idef = item:get_definition()
 			local cgroup = "unicolor_"..mcl_dyes.colors[idef._color].unicolor
 			self.color = cgroup
 			self.base_texture = sheep_texture(cgroup)
