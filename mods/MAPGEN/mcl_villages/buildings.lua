@@ -371,7 +371,7 @@ function mcl_villages.post_process_building(minp, maxp, blockseed, has_beds, has
 		return
 	end
 
-	local bell = vector.offset(bell_pos, 0, 1, 0)
+	local bell = vector.offset(bell_pos, 0, 2, 0)
 
 	if is_belltower then
 		local biome_data = minetest.get_biome_data(bell_pos)
