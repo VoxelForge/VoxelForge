@@ -94,6 +94,14 @@ for name,cdef in pairs(mcl_dyes.colors) do
 		recipeitem=extra_nodes and "mcl_colorblocks:concrete_"..name or "",
 	})
 
+	mcl_stairs.register_stair_and_slab("hardened_clay_"..name, {
+		description_stair = S("@1 Terracotta Stairs", cdef.readable_name),
+		description_slab = S("@1 Terracotta Slab", cdef.readable_name),
+		groups={not_in_creative_inventory=extra_nodes and 0 or 1},
+		baseitem="mcl_colorblocks:hardened_clay_"..name,
+		recipeitem=extra_nodes and "mcl_colorblocks:hardened_clay_"..name or "",
+	})
+
 	if doc_mod then
 		if not is_canonical then
 			doc.add_entry_alias("nodes", "mcl_stairs:slab_concrete_"..canonical_color, "nodes", "mcl_stairs:slab_concrete_"..name)
@@ -108,4 +116,20 @@ for name,cdef in pairs(mcl_dyes.colors) do
 			minetest.override_item("mcl_stairs:stair_concrete_"..name, { _doc_items_entry_name = S("Concrete Stairs") })
 		end
 	end
+
+	if doc_mod then
+		if not is_canonical then
+			doc.add_entry_alias("nodes", "mcl_stairs:slab_hardened_clay_"..canonical_color, "nodes", "mcl_stairs:slab_hardened_clay_"..name)
+			doc.add_entry_alias("nodes", "mcl_stairs:slab_hardened_clay_"..canonical_color.."_double", "nodes", "mcl_stairs:slab_hardened_clay_"..name.."_double")
+			doc.add_entry_alias("nodes", "mcl_stairs:stair_hardened_clay_"..canonical_color, "nodes", "mcl_stairs:stair_hardened_clay_"..name)
+			minetest.override_item("mcl_stairs:slab_hardened_clay_"..name, { _doc_items_create_entry = false })
+			minetest.override_item("mcl_stairs:slab_hardened_clay_"..name.."_double", { _doc_items_create_entry = false })
+			minetest.override_item("mcl_stairs:stair_hardened_clay_"..name, { _doc_items_create_entry = false })
+		else
+			minetest.override_item("mcl_stairs:slab_hardened_clay_"..name, { _doc_items_entry_name = S("Terracotta Slab") })
+			minetest.override_item("mcl_stairs:slab_hardened_clay_"..name.."_double", { _doc_items_entry_name = S("Double Terracotta Slab") })
+			minetest.override_item("mcl_stairs:stair_hardened_clay_"..name, { _doc_items_entry_name = S("Terracotta Stairs") })
+		end
+	end
+
 end
