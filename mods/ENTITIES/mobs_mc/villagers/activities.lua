@@ -203,9 +203,23 @@ function mobs_mc.villager_mob:check_bed()
 	if n and not is_bed_bottom then
 		self._bed = nil --the stormtroopers have killed uncle owen
 		return false
-	else
-		return true
 	end
+
+	local m = minetest.get_meta(b)
+	local owner = m:get_string("villager")
+
+	if not owner or owner == "" or owner ~= self._id then
+		self._bed = nil
+		return false
+	end
+
+	local infotext = m:get_string("infotext")
+
+	if self.nametag and self.nametag ~= "" and not string.match(infotext, self.nametag) then
+		m:set_string("infotext", S("@1 sleeps here", self.nametag))
+	end
+
+	return true
 end
 
 function mobs_mc.villager_mob:go_home(sleep)
@@ -312,7 +326,13 @@ function mobs_mc.villager_mob:take_bed()
 			if self.order ~= SLEEP then
 				self.order = SLEEP
 				m:set_string("villager", self._id)
-				m:set_string("infotext", S("A villager sleeps here"))
+
+				if self.nametag  and self.nametag ~= "" then
+					m:set_string("infotext", S("@1 sleeps here", self.nametag))
+				else
+					m:set_string("infotext", S("A villager sleeps here"))
+				end
+
 				self._bed = closest_block
 				local bell_pos = m:get_string("bell_pos")
 				if bell_pos ~= "" then
@@ -456,7 +476,12 @@ function mobs_mc.villager_mob:employ(jobsite_pos)
 	local p = get_profession_by_jobsite(n.name)
 	if p and m:get_string("villager") == "" or m:get_string("villager") == self._id then
 		m:set_string("villager",self._id)
-		m:set_string("infotext", S("A villager works here"))
+		if self.nametag and self.nametag ~= "" then
+			m:set_string("infotext", S("@1 works here", self.nametag))
+		else
+			m:set_string("infotext", S("A villager works here"))
+		end
+
 		self._jobsite = jobsite_pos
 
 		if not self:has_traded() then
@@ -529,6 +554,15 @@ function mobs_mc.villager_mob:retrieve_my_jobsite()
 end
 
 function mobs_mc.villager_mob:remove_job()
+	if self._jobsite then
+		local m = minetest.get_meta(self._jobsite)
+		local owner = m:get_string("villager")
+		if owner and owner ~= self._id then
+			m:set_string("villager", "")
+			m:set_string("infotext", "")
+		end
+	end
+
 	self._jobsite = nil
 	if not self:has_traded() then
 		self._profession = "unemployed"
@@ -548,18 +582,25 @@ function mobs_mc.villager_mob:validate_jobsite()
 
 		self:remove_job()
 		return false
-	else
-		local resettle = vector.distance(self.object:get_pos(),self._jobsite) > RESETTLE_DISTANCE
-		if resettle then
-			local m = minetest.get_meta(self._jobsite)
-			m:set_string("villager", "")
-			m:set_string("infotext", "")
-			self:remove_job()
-			self._bell = nil
-			return false
-		end
-		return true
 	end
+
+	--BUGBUG doing this here will mean you can't relocate unemployed villagers
+	-- and it doesn't reset their bed ...
+	local resettle = vector.distance(self.object:get_pos(),self._jobsite) > RESETTLE_DISTANCE
+	if resettle then
+		self:remove_job()
+		self._bell = nil
+		return false
+	end
+
+	local m = minetest.get_meta(self._jobsite)
+	local infotext = m:get_string("infotext")
+
+	if self.nametag and self.nametag ~= "" and not string.match(infotext, self.nametag) then
+		m:set_string("infotext", S("@1 works here", self.nametag))
+	end
+
+	return true
 end
 
 function mobs_mc.villager_mob:do_work()
