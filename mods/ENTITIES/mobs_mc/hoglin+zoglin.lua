@@ -87,8 +87,7 @@ local hoglin = {
 	floats = 0,
 	custom_attack = function(self)
 		if self.state == "attack" and self.reach > vector.distance(self.object:get_pos(), self.attack:get_pos()) then
-			local shield_dot = vector.dot(self.attack:get_look_dir(), vector.subtract(self.object:get_pos(), self.attack:get_pos()))
-			if self.attack:is_player() and mcl_shields and mcl_shields.is_blocking and mcl_shields.is_blocking(self.attack) and shield_dot >= 0 then
+			if self.attack:is_player() and mcl_shields and mcl_shields.is_blocking and mcl_shields.is_blocking(self.attack) then
 				self.attack:add_velocity({x=0,y=9.75,z=0})
 			else
 				self.attack:add_velocity({x=0,y=13,z=0})
