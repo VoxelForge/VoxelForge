@@ -301,11 +301,7 @@ local function trace_explode(pos, strength, raydirs, radius, info, direct, sourc
 				mcl_util.deal_damage(obj, damage, { type = "explosion", direct = direct, source = source })
 
 				if obj:is_player() or ent.tnt_knockback then
-					if obj:is_player() and mcl_shields and mcl_shields.is_blocking and mcl_shields.is_blocking(obj) then
-						obj:add_velocity(vector.multiply(punch_dir, impact * 10))
-					else
-						obj:add_velocity(vector.multiply(punch_dir, impact * 20))
-					end
+					obj:add_velocity(vector.multiply(punch_dir, impact * 20))
 				end
 			end
 		end
