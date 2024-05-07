@@ -178,6 +178,7 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 		if self.carpet ~= item:get_name() then
 			local idef = item:get_definition()
 			if idef._color then
+				local iname = item:get_name()
 				if not minetest.is_creative_enabled(clicker:get_player_name()) then
 					item:take_item()
 					clicker:set_wielded_item(item)
@@ -189,7 +190,7 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 				self.object:set_properties({
 					textures = self.base_texture,
 				})
-				self.carpet = item:get_name()
+				self.carpet = iname
 				self:update_drops()
 				return true
 			end
