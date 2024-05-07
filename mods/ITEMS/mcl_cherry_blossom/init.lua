@@ -98,13 +98,13 @@ local cherry_particlespawner = {
 	maxacc = vector.new(0.2, -0.9, 0.2),
 	minexptime = 1.5,
 	maxexptime = 4.5,
-	minsize = 0.3,
-	maxsize= 0.8,
+	minsize = 1.0,
+	maxsize= 1.25,
 	glow = 1,
 	collisiondetection = true,
-	collision_removal = false,
+	collision_removal = true,
 }
-for i=1,1 do
+for i=1,3 do
 	table.insert(cherry_particlespawner.texpool, {
 		name = "mcl_cherry_blossom_particle_"..i..".png",
 		animation={type="vertical_frames", aspect_w=3, aspect_h=3, length=0.78},
@@ -114,8 +114,8 @@ end
 minetest.register_abm({
 	label = "Cherry Blossom Particles",
 	nodenames = {"mcl_trees:leaves_cherry_blossom"},
-	interval = 1,
-	chance = 1,
+	interval = 25,
+	chance = 2,
 	action = function(pos, node)
 		if minetest.get_node(vector.offset(pos, 0, -1, 0)).name ~= "air" then return end
 		for _,pl in pairs(minetest.get_connected_players()) do
