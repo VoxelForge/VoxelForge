@@ -110,6 +110,10 @@ minetest.register_node("mcl_lush_caves:moss_carpet", {
 	_mcl_hardness = 0.1,
 	_mcl_blast_resistance = 0.1,
 })
+minetest.register_craft({
+	output = "mcl_lush_caves:moss_carpet 3",
+	recipe = {{"mcl_lush_caves:moss", "mcl_lush_caves:moss"}},
+})
 
 minetest.register_node("mcl_lush_caves:hanging_roots", {
 	description = S("Hanging roots"),
