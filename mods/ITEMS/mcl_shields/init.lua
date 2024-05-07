@@ -317,11 +317,7 @@ local function handle_blocking(player)
 		if not_blocking then
 			minetest.after(0.25, function()
 				rmb = player:get_player_control().RMB
-				local is_eating = false
-				if mcl_hunger.is_eating then
-					is_eating = mcl_hunger.is_eating(player)
-				end
-				if (not_blocking or not shield_in_offhand) and shield_in_hand and rmb and not is_eating and mcl_shields.players[player].cooldown == 0 then
+				if (not_blocking or not shield_in_offhand) and shield_in_hand and rmb and not mcl_hunger.is_eating(player) and mcl_shields.players[player].cooldown == 0 then
 					player_shield.blocking = 2
 					set_shield(player, true, 2)
 				else
@@ -353,11 +349,7 @@ local function handle_blocking(player)
 		if not_blocking then
 			minetest.after(0.25, function()
 				rmb = player:get_player_control().RMB
-				local is_eating = false
-				if mcl_hunger.is_eating then
-					is_eating = mcl_hunger.is_eating(player)
-				end
-				if (not_blocking or not shield_in_hand) and shield_in_offhand and rmb and offhand_can_block and not is_eating and mcl_shields.players[player].cooldown == 0 then
+				if (not_blocking or not shield_in_hand) and shield_in_offhand and rmb and offhand_can_block and not mcl_hunger.is_eating(player) and mcl_shields.players[player].cooldown == 0 then
 					player_shield.blocking = 1
 					set_shield(player, true, 1)
 				else
