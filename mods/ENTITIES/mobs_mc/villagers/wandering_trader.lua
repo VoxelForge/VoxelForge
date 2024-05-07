@@ -233,19 +233,21 @@ local function attempt_trader_spawn(manual)
 				table.insert(ow_players, pl)
 			end
 		end
-		table.shuffle(ow_players)
-		local pl = ow_players[1]
-		local poss = get_points_on_circle(pl:get_pos(), 50, 24)
-		table.shuffle(poss)
-		for _, sp in pairs(poss) do
-			local nn = minetest.find_nodes_in_area_under_air(vector.offset(sp, -5, -5 , -5), vector.offset(sp, 5, 5, 5), {"group:solid"})
-			if nn and #nn > 0 then
-				if mobs_mc.spawn_wandering_trader(nn[1]) then
-					break
+		if #ow_players > 0 then
+			table.shuffle(ow_players)
+			local pl = ow_players[1]
+			local poss = get_points_on_circle(pl:get_pos(), 50, 24)
+			table.shuffle(poss)
+			for _, sp in pairs(poss) do
+				local nn = minetest.find_nodes_in_area_under_air(vector.offset(sp, -5, -5 , -5), vector.offset(sp, 5, 5, 5), {"group:solid"})
+				if nn and #nn > 0 then
+					if mobs_mc.spawn_wandering_trader(nn[1]) then
+						break
+					end
 				end
 			end
+			spawned = true
 		end
-		spawned = true
 	elseif not exists then
 		current_chance = math.min(75, current_chance + 25)
 	end
