@@ -151,7 +151,7 @@ local function sort_stack(stack, pos)
 end
 
 minetest.register_node("mcl_smithing_table:table", {
-	description = S("Smithing table"),
+	description = S("Smithing Table"),
 	-- ToDo: Add _doc_items_longdesc and _doc_items_usagehelp
 
 	groups = { pickaxey = 2, deco_block = 1 },
