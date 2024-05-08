@@ -118,7 +118,7 @@ end
 function mobs_mc.villager_mob:find_closest_bed()
 	-- This is only triggered when villager does not have a bed (see do_activity)
 	local p = self.object:get_pos()
-	if self._bed and vector.distance(p, self._bed) < VIL_DIST then return self._bed end
+	if self._bed and vector.distance(p, self._bed) < VIL_DIST * 2 then return self._bed end
 
 	local unclaimed_beds = {}
 	local nn2 = minetest.find_nodes_in_area(
@@ -191,6 +191,24 @@ function mobs_mc.villager_mob:find_closest_unclaimed_block(p, requested_block_ty
 	return closest_block
 end
 
+function mobs_mc.villager_mob:remove_bed()
+	local b = self._bed
+	if not b then
+		return
+	end
+
+	local bed_meta = minetest.get_meta(b)
+	local owner = bed_meta:get_string("villager")
+
+	if owner and owner == self._id then
+		bed_meta:set_string("villager", "")
+		bed_meta:set_string("infotext", "")
+	end
+
+	self._bed = nil
+
+end
+
 function mobs_mc.villager_mob:check_bed()
 	local b = self._bed
 	if not b then
@@ -201,7 +219,7 @@ function mobs_mc.villager_mob:check_bed()
 
 	local is_bed_bottom = string.find(n.name,"_bottom")
 	if n and not is_bed_bottom then
-		self._bed = nil --the stormtroopers have killed uncle owen
+		self:remove_bed()
 		return false
 	end
 
@@ -209,7 +227,7 @@ function mobs_mc.villager_mob:check_bed()
 	local owner = m:get_string("villager")
 
 	if not owner or owner == "" or owner ~= self._id then
-		self._bed = nil
+		self:remove_bed()
 		return false
 	end
 
@@ -557,7 +575,7 @@ function mobs_mc.villager_mob:remove_job()
 	if self._jobsite then
 		local m = minetest.get_meta(self._jobsite)
 		local owner = m:get_string("villager")
-		if owner and owner ~= self._id then
+		if owner and owner == self._id then
 			m:set_string("villager", "")
 			m:set_string("infotext", "")
 		end
@@ -571,6 +589,29 @@ function mobs_mc.villager_mob:remove_job()
 	end
 end
 
+function mobs_mc.villager_mob:resettle_check()
+
+	local home
+
+	if self._bed then
+		home = self._bed
+	elseif self._jobsite then
+		home = self._jobsite
+	elseif self._bell then
+		home = self._bell
+	end
+
+	if home then
+		local resettle = vector.distance(self.object:get_pos(), home) > RESETTLE_DISTANCE
+		if resettle then
+			self:remove_job()
+			self:remove_bed()
+			self._bell = nil
+			return
+		end
+	end
+end
+
 function mobs_mc.villager_mob:validate_jobsite()
 	if self._profession == "unemployed" then return false end
 
@@ -581,15 +622,6 @@ function mobs_mc.villager_mob:validate_jobsite()
 		end
 
 		self:remove_job()
-		return false
-	end
-
-	--BUGBUG doing this here will mean you can't relocate unemployed villagers
-	-- and it doesn't reset their bed ...
-	local resettle = vector.distance(self.object:get_pos(),self._jobsite) > RESETTLE_DISTANCE
-	if resettle then
-		self:remove_job()
-		self._bell = nil
 		return false
 	end
 
@@ -707,6 +739,13 @@ function mobs_mc.villager_mob:sleep_over()
 end
 
 function mobs_mc.villager_mob:do_activity(dtime)
+	-- Don't do this often, but do it first so it preempts everything else.
+	self._resettle_timer = (self._resettle_timer or (math.random() * 60)) - dtime
+	if self._resettle_timer < 0 then
+		self._resettle_timer = 60
+		self:resettle_check()
+	end
+
 	if allow_nav_hacks then
 		-- When a night is skipped telport villagers to their bed or bell
 		if self.last_skip == nil then
