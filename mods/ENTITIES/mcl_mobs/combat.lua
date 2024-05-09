@@ -682,6 +682,7 @@ end
 
 function mob_class:call_group_attack(hitter)
 	local name = hitter:get_player_name() or ""
+	if not hitter or not hitter:get_pos() then return end
 	for _, obj in pairs(minetest.get_objects_inside_radius(hitter:get_pos(), self.view_range)) do
 		local ent = obj:get_luaentity()
 		if ent then
