@@ -198,6 +198,6 @@ function mcl_villages.register_on_village_placed(func)
 	table.insert(mcl_villages.on_village_placed, func)
 end
 
-function mcl_villages.register_on_villager_placed(func)
+function mcl_villages.register_on_villager_spawned(func)
 	table.insert(mcl_villages.on_villager_placed, func)
 end

@@ -137,7 +137,7 @@ end
 mcl_villages.register_on_village_placed(my_village_hook)
 ```
 
-### mcl_villages.register_on_villager_placed(func)
+### mcl_villages.register_on_villager_spawned(func)
 
 This function allows registering functions to be called after a villager is
 placed as part of village generation.
@@ -153,7 +153,7 @@ local function my_villager_hook(villager_ent, blockseed)
 	minetest.log("The villager's id is " .. l._id)
 end
 
-mcl_villages.register_on_villager_placed(my_villager_hook)
+mcl_villages.register_on_villager_spawned(my_villager_hook)
 ```
 
 ## Farm Interface
