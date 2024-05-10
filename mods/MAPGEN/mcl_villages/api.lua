@@ -3,6 +3,8 @@ mcl_villages.schematic_jobs = {}
 mcl_villages.schematic_lamps = {}
 mcl_villages.schematic_bells = {}
 mcl_villages.schematic_wells = {}
+mcl_villages.on_village_placed = {}
+mcl_villages.on_villager_placed = {}
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
@@ -190,4 +192,12 @@ function mcl_villages.register_crop(crop_def)
 		crop_list[biome][crop_type]["total_weight"] = crop_list[biome][crop_type]["total_weight"] + weight
 		adjust_weights(biome, crop_type)
 	end
+end
+
+function mcl_villages.register_on_village_placed(func)
+	table.insert(mcl_villages.on_village_placed, func)
+end
+
+function mcl_villages.register_on_villager_placed(func)
+	table.insert(mcl_villages.on_villager_placed, func)
 end

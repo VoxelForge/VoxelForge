@@ -409,6 +409,9 @@ function mcl_villages.post_process_building(minp, maxp, blockseed, has_beds, has
 						l._bell = bell
 						m:set_string("villager", l._id)
 						m:set_string("infotext", S("A villager sleeps here"))
+						for _, callback in pairs(mcl_villages.on_villager_placed) do
+							callback(v, blockseed)
+						end
 					else
 						minetest.log("warning", "Could not create a villager!")
 					end

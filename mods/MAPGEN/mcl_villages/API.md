@@ -115,6 +115,47 @@ It takes 2 arguments.
 You can access the current profession and job site data in
 ```mobs_mc.professions``` and ```mobs_mc.jobsites```.
 
+### mcl_villages.register_on_village_placed(func)
+
+This function allows registering functions to be called after a village is
+laid out.
+
+Note that the village may not be completed as the building post processing is
+non-deterministic to avoid overloading the server.
+
+`settlement_info` is a table containing data for all the buildings in the
+village. The bell is always the first entry in the table.
+
+`blockseed` is the block seed for the chunk the village was generated for.
+Villages can extend outside of this chunk.
+
+```lua
+local function my_village_hook(settlement_info, blockseed)
+	minetest.log("The village has " .. #settlement_info .. " buildings in it!")
+end
+
+mcl_villages.register_on_village_placed(my_village_hook)
+```
+
+### mcl_villages.register_on_villager_placed(func)
+
+This function allows registering functions to be called after a villager is
+placed as part of village generation.
+
+`villager_ent` is the entity created by `minetest.add_entity`.
+
+`blockseed` is the block seed for the chunk the village was generated for.
+Villages can extend outside of this chunk.
+
+```lua
+local function my_villager_hook(villager_ent, blockseed)
+	local l = villager_ent:get_luaentity()
+	minetest.log("The villager's id is " .. l._id)
+end
+
+mcl_villages.register_on_villager_placed(my_villager_hook)
+```
+
 ## Farm Interface
 
 These functions aid creating crops for use use in farms placed during village

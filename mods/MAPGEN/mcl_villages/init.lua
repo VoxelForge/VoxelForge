@@ -39,6 +39,10 @@ local function build_a_settlement(minp, maxp, blockseed)
 	-- TODO when run here minetest.find_path regularly fails :(
 	--mcl_villages.paths_new(blockseed)
 	--minetest.log("Completed village for " .. minetest.pos_to_string(minp))
+
+	for _, on_village_placed_callback in pairs(mcl_villages.on_village_placed) do
+		on_village_placed_callback(settlement_info, blockseed)
+	end
 end
 
 local function ecb_village(blockpos, action, calls_remaining, param)
