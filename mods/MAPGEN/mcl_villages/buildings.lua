@@ -61,6 +61,7 @@ local function init_nodes(p1, p2, size, rotation, pr)
 	end
 
 	construct_node(p1, p2, "mcl_itemframes:frame")
+	construct_node(p1, p2, "mcl_itemframes:glow_frame")
 	construct_node(p1, p2, "mcl_furnaces:furnace")
 	construct_node(p1, p2, "mcl_anvils:anvil")
 
