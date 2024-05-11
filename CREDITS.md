@@ -14,7 +14,6 @@
 * codiac
 * ShadowRoi
 * nixnoxus
-* chmodsayshello
 * laireia
 * the-real-herowl
 * JoseDouglas26
@@ -30,6 +29,7 @@
 * Michieal
 * epCode
 * PrairieWind
+* chmodsayshello
 * iliekprogrammar
 * ancientmarinerdev
 * TheOnlyJoeEnderman
