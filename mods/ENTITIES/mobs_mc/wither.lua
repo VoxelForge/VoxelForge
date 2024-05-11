@@ -48,7 +48,7 @@ local function wither_unstuck(self)
 			end
 		end end end
 	end
-	mcl_mobs.mob_class.safe_boom(self, pos, 2)
+	self:safe_boom(pos, 2, true)
 end
 
 local function get_dim_relative_y(pos)
