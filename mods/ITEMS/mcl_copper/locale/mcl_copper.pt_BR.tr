@@ -1,5 +1,5 @@
 # textdomain: mcl_copper
-Preserved =
+Waxed @1=
 Copper Ingot=Lingote de Cobre
 Molten Raw Copper. It is used to craft blocks.=Minério de Cobre Fundido. É utilizado para fabricar blocos.
 Raw Copper=Cobre Crú
@@ -24,6 +24,10 @@ Weathered Cut Copper=Cobre Lapidado Desgastado
 Weathered cut copper is a decorative block.=Cobre lapidado desgastado é um bloco decorativo.
 Oxidized Cut Copper=Cobre Lapidado Oxidado
 Oxidized cut copper is a decorative block.=Cobre lapidado oxidado é um bloco decorativo.
+
+
+##### not used anymore #####
+
 Slab of Cut Copper=Laje de Cobre Lapidado
 Double Slab of Cut Copper=Laje Dupla de Cobre Lapidado
 Slab of Exposed Cut Copper=Laje de Cobre Lapidado Exposto
@@ -36,10 +40,6 @@ Stairs of Cut Copper=Escadas de Cobre Lapidado
 Stairs of Exposed Cut Copper=Escadas de Cobre Lapidado Exposto
 Stairs of Weathered Cut Copper=Escadas de Cobre Lapidado Desgastado
 Stairs of Oxidized Cut Copper=Escadas de Cobre Lapidado Oxidado
-
-
-##### not used anymore #####
-
 Waxed Block of Copper=Bloco de Cobre Encerado
 Waxed Cut Copper=Cobre Lapidado Encerado
 Waxed Double Slab of Cut Copper=Laje Dupla de Cobre Lapidado Encerado

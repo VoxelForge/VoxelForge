@@ -1,17 +1,11 @@
-# textdomain:doc_items
+# textdomain: doc_items
 Using it as fuel turns it into: @1.=Использование в качестве топлива превращает это в: @1.
 @1 seconds=@1 секунд(ы)
-# Item count times item name
 @1×@2=@1×@2
-# Itemname (25%)
 @1 (@2%)=@1 (@2%)
-# Itemname (<0.5%)
 @1 (<0.5%)=@1 (<0.5%)
-# Itemname (ca. 25%)
 @1 (ca. @2%)=@1 (прибл. @2%)
-# List separator (e.g. “one, two, three”)
 , =, 
-# Final list separator (e.g. “One, two and three”)
  and = и 
 1 second=1 секунда
 A transparent block, basically empty space. It is usually left behind after digging something.=Прозрачный блок, проще говоря, пустое пространство. Обычно оно остаётся, если выкопать что-то.
@@ -46,13 +40,10 @@ Punches with this block don't work as usual; melee combat and mining are either 
 Punches with this item don't work as usual; melee combat and mining are either not possible or work differently.=Удар этим предметом работает не так, как обычно; ближний бой и копание либо невозможны, либо работают по-другому.
 Punches with this tool don't work as usual; melee combat and mining are either not possible or work differently.=Удар этим инструментом работает не так, как обычно; ближний бой и копание либо невозможны, либо работают по-другому.
 Range: @1=Дальность: @1
-# Range: <Hand> (<Range>)
 Range: @1 (@2)=Дальность: @1 (@2)
 Range: 4=Дальность: 4
-# Rating used for digging times
 Rating @1=Скорость добывания @1
-# @1 is minimal rating, @2 is maximum rating
-Rating @1-@2=Скорость добывания @1-@2=
+Rating @1-@2=Скорость добывания @1-@2
 The fall damage on this block is increased by @1%.=При падении на этот блок получаемый урон увеличивается на @1%.
 The fall damage on this block is reduced by @1%.=При падении на этот блок получаемый урон уменьшается на @1%.
 This block allows light to propagate with a small loss of brightness, and sunlight can even go through losslessly.=Этот блок позволяет свету распространяться с небольшой потерей яркости, а солнечный свет может проходить без потерь.

@@ -9,8 +9,4 @@ Eggs can be thrown or launched from a dispenser and breaks on impact. There is a
 Ender Pearl=エンダーパール
 Teleports you on impact for cost of 5 HP=HPを5消費し衝撃でテレポート
 An ender pearl is an item which can be used for teleportation at the cost of health. It can be thrown and teleport the thrower to its impact location when it hits a solid block or a plant. Each teleportation hurts the user by 5 hit points.=エンダーパールは、ヘルスを消費してテレポートができるアイテムです。投げることができ、固体ブロックや植物にぶつかると、投擲者がその衝突した場所にテレポートします。テレポートするたびに、使用者は5ヒットポイントずつダメージを受けます。
-
-
-##### not used anymore #####
-
-@1 used the ender pearl too often.=@1 はエンダーパールを使いすぎました。
+Use the place/use key to throw.=

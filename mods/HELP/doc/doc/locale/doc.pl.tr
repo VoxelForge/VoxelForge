@@ -1,4 +1,4 @@
-# textdomain:doc
+# textdomain: doc
 <=<
 >=>
 Access to the requested entry has been denied; this entry is secret. You may unlock access by progressing in the game. Figure out on your own how to unlock this entry.=Brak dostępu do zażądanego wpisu; ten wpis jest tajemnicą. Możesz odblokować do niego dostęp przez robienie postępów w grze. Wymyśl jak go odblokować.
@@ -49,4 +49,3 @@ Show previous image=Pokaż poprzedni obrazek
 Show previous gallery page=Pokaż poprzednią stronę galerii
 Show next image=Pokaż następny obrazek
 Show next gallery page=Pokaż następną stronę galerii
-

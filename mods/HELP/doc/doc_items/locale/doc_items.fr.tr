@@ -1,17 +1,11 @@
-# textdomain:doc_items
+# textdomain: doc_items
 Using it as fuel turns it into: @1.=L'utiliser comme combustible le transforme en : @1.
 @1 seconds=@1 secondes
-# Item count times item name
 @1×@2=@1×@2
-# Itemname (25%)
 @1 (@2%)=@1 (@2%)
-# Itemname (<0.5%)
 @1 (<0.5%)=@1 (<0.5%)
-# Itemname (ca. 25%)
 @1 (ca. @2%)=@1 (ca. @2%)
-# List separator (e.g. “one, two, three”)
 , =, 
-# Final list separator (e.g. “One, two and three”)
  and = et 
 1 second=1 seconde
 A transparent block, basically empty space. It is usually left behind after digging something.=Un bloc transparent, tout simplement un espace vide. Il apparaît généralement après avoir creusé quelque chose.
@@ -46,12 +40,9 @@ Punches with this block don't work as usual; melee combat and mining are either 
 Punches with this item don't work as usual; melee combat and mining are either not possible or work differently.=Les frappes avec cet objet ne fonctionnent pas de la manière usuelle ; le combat au corps à corps et le minage ne sont soit pas possible ou fonctionnent différemment.
 Punches with this tool don't work as usual; melee combat and mining are either not possible or work differently.=Les frappes avec cet outil ne fonctionnent pas de la manière usuelle ; le combat au corps à corps et le minage ne sont soit pas possible ou fonctionnent différemment.
 Range: @1=Portée : @1
-# Range: <Hand> (<Range>)
 Range: @1 (@2)=Portée : @1 (@2)
 Range: 4=Portée : 4
-# Rating used for digging times
 Rating @1=Note @1
-# @1 is minimal rating, @2 is maximum rating
 Rating @1-@2=Note @1-@2
 The fall damage on this block is increased by @1%.=Les domages de chute sur ce bloc sont augmentés de @1%.
 The fall damage on this block is reduced by @1%.=Les domages de chute sur ce bloc sont réduits de @1%.

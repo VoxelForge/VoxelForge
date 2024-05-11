@@ -1,8 +1,8 @@
 # textdomain: mcl_buckets
-Bucket of @1=
-This bucket is filled with water and @1.=
-Place it to empty the bucket and place a @1. Obtain by right clicking on a @2 with a bucket of water.=
-Places a water source and a @1.=
+Bucket of @1=Eimer von @1
+This bucket is filled with water and @1.=Dieser Eimer ist gefüllt mit Wasser und @1.
+Place it to empty the bucket and place a @1. Obtain by right clicking on a @2 with a bucket of water.=Platzieren um den Eimer zu leeren und ein @1 zu platzieren. Erhalten beim Rechtsklick auf ein @2 mit einem Wassereimer.
+Places a water source and a @1.=Platziert eine Wasserquelle und ein @1.
 Empty Bucket=Leerer Eimer
 A bucket can be used to collect and release liquids.=Ein Eimer kann benutzt werden, um Flüssigkeiten aufzusammeln und wieder freizulassen.
 Punch a liquid source to collect it. You can then use the filled bucket to place the liquid somewhere else.=Hauen Sie auf eine Flüssigkeitsquelle, um sie aufzusammeln. Sie können den vollen Eimer dann benutzen, um die Flüssigkeit woanders zu platzieren.

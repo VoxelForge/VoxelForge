@@ -27,16 +27,12 @@ Pillar Quartz Block=クォーツブロックピラー
 Smooth Quartz=滑らかなクォーツ
 Quartz Stairs=
 Quartz Slab=
-Double Quartz Slab=
 Smooth Quartz Stairs=
 Smooth Quartz Slab=
-Double Smooth Quartz Slab=
 Nether Brick Stairs=
 Nether Brick Slab=
-Double Nether Brick Slab=
 Red Nether Brick Stairs=
 Red Nether Brick Slab=
-Double Red Nether Brick Slab=
 Nether Brick Fence=
 Glowstone Dust=グローストーンダスト
 Glowstone dust is the dust which comes out of broken glowstones. It is mainly used in crafting.=グローストーンダストは、グローストーンが割れたときに出る粉です。主にクラフトに使用されます。
@@ -60,8 +56,3 @@ Nether Wart=ネザーウォート
 Grows on soul sand=ソウルサンドの上で育つ
 Nether warts are plants home to the Nether. They can be planted on soul sand and grow in 4 stages.=ネザーウォート（ウォート＝イボ）は、ネザーに生息する植物です。ソウルサンドに植えることができ、4段階に分けて成長します。
 Place this item on soul sand to plant it and watch it grow.=このアイテムをソウルサンドの上に置いて植えると、その成長を見ることができます。
-
-
-##### not used anymore #####
-
-@1 stood too long on a magma block.=@1 はマグマブロックの上に長く立ちすぎました。

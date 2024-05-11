@@ -27,16 +27,12 @@ Pillar Quartz Block=Bloc de Quartz rayé
 Smooth Quartz=Quartz Lisse
 Quartz Stairs=
 Quartz Slab=
-Double Quartz Slab=
 Smooth Quartz Stairs=
 Smooth Quartz Slab=
-Double Smooth Quartz Slab=
 Nether Brick Stairs=
 Nether Brick Slab=
-Double Nether Brick Slab=
 Red Nether Brick Stairs=
 Red Nether Brick Slab=
-Double Red Nether Brick Slab=
 Nether Brick Fence=
 Glowstone Dust=Poudre Lumineuse
 Glowstone dust is the dust which comes out of broken glowstones. It is mainly used in crafting.=La poudre lumineuse est la poussière qui sort des pierres lumineuses brisées. Elle est principalement utilisée dans l'artisanat.
@@ -60,8 +56,3 @@ Nether Wart=Verrues du Nether
 Grows on soul sand=Pousse sur le sable de l'âme
 Nether warts are plants home to the Nether. They can be planted on soul sand and grow in 4 stages.=Les verrues du Nether sont des plantes originaires du Nether. Elles peuvent être plantées sur du sable d'âme et se développer en 4 étapes.
 Place this item on soul sand to plant it and watch it grow.=Placez cet article sur du sable d'âme pour le planter et regardez-le grandir.
-
-
-##### not used anymore #####
-
-@1 stood too long on a magma block.=@1 s'est tenu trop longtemps sur un bloc de magma.

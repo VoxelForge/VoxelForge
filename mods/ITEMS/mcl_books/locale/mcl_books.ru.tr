@@ -6,7 +6,6 @@ Copy of “@1”=Копия “@1”
 Copy of Copy of “@1”=Копия копии “@1”
 Tattered Book=Потрёпанная книга
 by @1=игрока @1
-# as in “to sign a book”
 Sign=Подписать
 Done=Готово
 Book and Quill=Книга с пером
@@ -24,5 +23,5 @@ Written books contain some text written by someone. They can be read and copied,
 Hold it in your hand, then rightclick to read the book.=Удерживая в руке, кликните правой кнопкой мыши, чтобы прочитать книгу.
 To copy the text of the written book, place it into the crafting grid together with a book and quill (or multiple of those) and craft. The written book will not be consumed. Copies of copies can not be copied.=Чтобы скопировать текст подписанной книги, поместите её в сетку крафта вместе с книгой с пером (или сразу несколькими) и скрафтите. Подписанная книга не израсходуется. Копии копий нельзя скопировать.
 Bookshelf=Книжная полка
-Inventory=
+Inventory=Инвентарь
 Bookshelves are used for decoration.=Книжные полки используют в качестве декораций

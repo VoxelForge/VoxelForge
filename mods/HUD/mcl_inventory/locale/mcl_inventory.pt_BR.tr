@@ -12,6 +12,7 @@ Mobs=Mobs
 Brewing=Fermentação
 Materials=Materiais
 Survival Inventory=Inventário do Sobrevivência
+Not in Creative Inventory=
 Advancements=Progressos
 Switch stack size=Trocar tamanho da pilha
 @1 / @2=
@@ -25,9 +26,3 @@ Gamemode @1 does not exist.=
 Gamemode for player @1: @2=
 Crafting=Fabricação
 Achievements=
-
-
-##### not used anymore #####
-
-Inventory=Inventário
-@1/@2=@1/@2

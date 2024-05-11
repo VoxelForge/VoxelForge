@@ -1,26 +1,39 @@
 # textdomain: mcl_dye
-White Dye=
-Light Grey Dye=薄灰色の染料
-Grey Dye=灰色の染料
-Black Dye=
-Purple Dye=紫色の染料
-Blue Dye=
-Light Blue Dye=空色の染料
-Cyan Dye=青緑色の染料
-Cactus Green=緑色の染料
-Lime Dye=黄緑色の染料
-Dandelion Yellow=黄色の染料
-Brown Dye=
-Orange Dye=橙色の染料
-Rose Red=赤色の染料
-Magenta Dye=赤紫色の染料
-Pink Dye=桃色の染料
+White=
+Light Grey=
+Grey=
+Black=
+Purple=
+Blue=
+Light Blue=
+Cyan=
+Green=
+Lime=
+Yellow=
+Brown=
+Orange=
+Red=
+Magenta=
+Pink=
+@1 Dye=
 This item is a dye which is used for dyeing and crafting.=このアイテムは、染色や クラフトに使用される染料です。
 Rightclick on a sheep to dye its wool. Other things are dyed by crafting.=ヒツジを右クリックすると毛を染められます。それ以外のものはクラフトによって染めます。
 
 
 ##### not used anymore #####
 
+Light Grey Dye=薄灰色の染料
+Grey Dye=灰色の染料
+Purple Dye=紫色の染料
+Light Blue Dye=空色の染料
+Cyan Dye=青緑色の染料
+Cactus Green=緑色の染料
+Lime Dye=黄緑色の染料
+Dandelion Yellow=黄色の染料
+Orange Dye=橙色の染料
+Rose Red=赤色の染料
+Magenta Dye=赤紫色の染料
+Pink Dye=桃色の染料
 Bone Meal=骨粉
 Ink Sac=イカスミ
 Lapis Lazuli=ラピスラズリ

@@ -1,5 +1,4 @@
 # textdomain: mcl_armor_stand
-### init.lua ###
 Armor Stand=Soporte para armadura
 Displays pieces of armor=
 An armor stand is a decorative object which can display different pieces of armor. Anything which players can wear as armor can also be put on an armor stand.=Un soporte para armadura es un objeto decorativo que puede mostrar diferentes piezas de armadura. Cualquier cosa que los jugadores puedan usar como armadura también se puede poner en un soporte para armadura.

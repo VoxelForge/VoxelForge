@@ -1,0 +1,300 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Minetest textdomain mcl_potions x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.0\n"
+
+msgid "<effect> <duration> [<factor>]"
+msgstr "<эффект> <длительность> [<сила>]"
+
+msgid "Add a status effect to yourself. Arguments: <effect>: name of status effect, e.g. poison. <duration>: duration in seconds. <factor>: effect strength multiplier (1 = 100%)"
+msgstr "Добавляет вам эффект. Параметры: <эффект> - название эффекта , например, poison. <Длительность> - длительность в секундах. <Сила> - коэффициент силы эффекта (1 = 100%)"
+
+msgid "Missing effect parameter!"
+msgstr "Отсутствует параметр эффекта!"
+
+msgid "Missing or invalid duration parameter!"
+msgstr "Отсутствует либо неправильно задан параметр длительности!"
+
+msgid "Invalid factor parameter!"
+msgstr "Отсутствует параметр силы!"
+
+msgid "@1 is not an available status effect."
+msgstr "@1 не является допустимым эффектом."
+
+msgid "Fermented Spider Eye"
+msgstr "Приготовленный паучий глаз"
+
+msgid "Glass Bottle"
+msgstr "Пузырёк"
+
+msgid "Liquid container"
+msgstr "Контейнер для жидкостей"
+
+msgid "A glass bottle is used as a container for liquids and can be used to collect water directly."
+msgstr "Стеклянный пузырёк используется для хранения жидкостей, её также можно использовать для сбора воды."
+
+msgid "To collect water, use it on a cauldron with water (which removes a level of water) or any water source (which removes no water)."
+msgstr "Воду в пузырёк можно набрать из котла (это уменьшает уровень воды в котле) или из другого источника (уровень которого не уменьшится)."
+
+msgid "Water Bottle"
+msgstr "Пузырёк с водой"
+
+msgid "Water bottles can be used to fill cauldrons. Drinking water has no effect."
+msgstr "Пузырёк с водой можно использовать для наполнения котла. Выпивание воды не даст никакого эффекта."
+
+msgid "Use the “Place” key to drink. Place this item on a cauldron to pour the water into the cauldron."
+msgstr "Используйте правую кнопку мыши, чтобы выпить. Используйте этот предмет на котле, чтобы вылить воду в котёл."
+
+msgid "River Water Bottle"
+msgstr "Пузырёк с речной водой"
+
+msgid "River water bottles can be used to fill cauldrons. Drinking it has no effect."
+msgstr "Пузырёк с речной водой можно использовать для наполнения котла. Выпивание воды не даст никакого эффекта."
+
+msgid "Use the “Place” key to drink. Place this item on a cauldron to pour the river water into the cauldron."
+msgstr "Используйте правую кнопку мыши, чтобы выпить. Используйте этот предмет на котле, чтобы вылить речную воду в котёл."
+
+msgid "Splash Water Bottle"
+msgstr "Взрывное зелье"
+
+msgid "Extinguishes fire and hurts some mobs"
+msgstr "Тушит огонь и ранит некоторых мобов"
+
+msgid "A throwable water bottle that will shatter on impact, where it extinguishes nearby fire and hurts mobs that are vulnerable to water."
+msgstr "Пузырёк с водой, который можно метать. Он разбивается при ударе, тушит ближайший огонь и ранит мобов, уязвимых к воде."
+
+msgid "Lingering Water Bottle"
+msgstr "Туманное зелье"
+
+msgid "A throwable water bottle that will shatter on impact, where it creates a cloud of water vapor that lingers on the ground for a while. This cloud extinguishes fire and hurts mobs that are vulnerable to water."
+msgstr "Пузырёк с водой, который можно метать. Он разбивается при ударе, образуя облако пара, которое оседает на землю через некоторое время. Это облако тушит огонь и ранит мобов, уязвимых к воде."
+
+msgid "Glistering Melon"
+msgstr "Сверкающий ломтик арбуза"
+
+msgid "This shiny melon is full of tiny gold nuggets and would be nice in an item frame. It isn't edible and not useful for anything else."
+msgstr "Сверкающий ломтик арбуза содержит в себе золотые самородки и может отлично смотреться в рамке. Ломтик не съедобен."
+
+msgid "Try different combinations to create potions."
+msgstr "Пробуйте разные сочетания для приготовления зелий."
+
+msgid "No effect"
+msgstr "без эффекта"
+
+msgid "A throwable potion that will shatter on impact, where it creates a magic cloud that lingers around for a while. Any player or mob inside the cloud will receive the potion's effect, possibly repeatedly."
+msgstr "Зелье, которое можно метать. При ударе оно разбивается, создавая волшебное облако, которое задерживается на некоторое время. Любой игрок или моб внутри облака получит эффект зелья, возможно, неоднократно."
+
+msgid "Use the “Punch” key to throw it."
+msgstr "Нажмите [Ударить], чтобы бросить."
+
+msgid "Use the “Place” key to drink it."
+msgstr "Нажмите [Использовать], чтобы выпить."
+
+msgid "Drinking a potion gives you a particular effect."
+msgstr "Выпивание зелья даёт вам определённый эффект."
+
+msgid "1 HP/@1s | @2"
+msgstr "1 HP/@1с | @2"
+
+msgid "@1 HP"
+msgstr "@1 HP"
+
+msgid "@1 Potion"
+msgstr "Зелье @1"
+
+msgid "Splash @1 Potion"
+msgstr "Взрывное зелье @1"
+
+msgid "Lingering @1 Potion"
+msgstr "Туманное зелье @1"
+
+msgid "Arrow of @1"
+msgstr "Стрела @1"
+
+msgid " II"
+msgstr " II"
+
+msgid " IV"
+msgstr " IV"
+
+msgid "@1 Potion@2"
+msgstr "Зелье @1 @2"
+
+msgid "Splash @1@2 Potion"
+msgstr "Взрывное зелье @1@2"
+
+msgid "Lingering @1@2 Potion"
+msgstr "Туманное зелье @1@2"
+
+msgid "Arrow of @1@2"
+msgstr "Стрела @1@2"
+
+msgid "@1 + Potion"
+msgstr "Зелье @1+"
+
+msgid "Splash @1 + Potion"
+msgstr "Взрывное зелье @1+"
+
+msgid "Lingering @1 + Potion"
+msgstr "Туманное зелье @1+"
+
+msgid "Arrow of @1 +"
+msgstr "Стрела @1+"
+
+msgid "Awkward Potion"
+msgstr "Грубое зелье"
+
+msgid "Awkward Splash Potion"
+msgstr "Взрывное грубое зелье"
+
+msgid "Awkward Lingering Potion"
+msgstr "Туманное грубое зелье"
+
+msgid "Has an awkward taste and is used for brewing potions."
+msgstr "Имеет неприятный вкус и используется для приготовления других зелий."
+
+msgid "Mundane Potion"
+msgstr "Непримечательное зелье"
+
+msgid "Mundane Splash Potion"
+msgstr "Взрывное непримечательное взрывное зелье"
+
+msgid "Mundane Lingering Potion"
+msgstr "Туманное непримечательное зелье"
+
+msgid "Has a terrible taste and is not useful for brewing potions."
+msgstr "Имеет отвратительный вкус и используется для приготовления других зелий."
+
+msgid "Thick Potion"
+msgstr "Густое зелье"
+
+msgid "Thick Splash Potion"
+msgstr "Взрывное густое зелье"
+
+msgid "Thick Lingering Potion"
+msgstr "Туманное густое зелье"
+
+msgid "Has a bitter taste and is not useful for brewing potions."
+msgstr "Имеет горький вкус и используется для приготовления других зелий."
+
+msgid "Dragon's Breath"
+msgstr "Дыхание дракона"
+
+msgid "This item is used in brewing and can be combined with splash potions to create lingering potions."
+msgstr "Этот предмет используется в зельеварении и может объединяться со взрывающимися зельями, чтобы создать эффект оседания"
+
+msgid "Healing"
+msgstr "исцеления"
+
+msgid "+4 HP"
+msgstr "+4 HP"
+
+msgid "+8 HP"
+msgstr "+8 HP"
+
+msgid "Instantly heals."
+msgstr "Мгновенно исцеляет."
+
+msgid "Harming"
+msgstr "урона"
+
+msgid "-6 HP"
+msgstr "-6 HP"
+
+msgid "-12 HP"
+msgstr "-12 HP"
+
+msgid "Instantly deals damage."
+msgstr "Наносит мгновенный урон."
+
+msgid "Night Vision"
+msgstr "ночного зрения"
+
+msgid "Increases the perceived brightness of light under a dark sky."
+msgstr "Усиливает восприятие яркости освещения в тёмных местах."
+
+msgid "Swiftness"
+msgstr "стремительности"
+
+msgid "Increases walking speed."
+msgstr "Увеличивает скорость ходьбы"
+
+msgid "Slowness"
+msgstr "замедления"
+
+msgid "Decreases walking speed."
+msgstr "Уменьшает скорость ходьбы"
+
+msgid "Leaping"
+msgstr "прыгучести"
+
+msgid "Increases jump strength."
+msgstr "Увеличивает силу прыжка"
+
+msgid "Withering"
+msgstr ""
+
+msgid "Applies the withering effect which deals damage at a regular interval and can kill."
+msgstr ""
+
+msgid "Poison"
+msgstr "отравления"
+
+msgid "Applies the poison effect which deals damage at a regular interval."
+msgstr "Наносит эффект яда, который вызывает урон через равные промежутки времени."
+
+msgid "Regeneration"
+msgstr "регенерации"
+
+msgid "Regenerates health over time."
+msgstr "Восстанавливает здоровье со временем."
+
+msgid "Invisibility"
+msgstr "невидимости"
+
+msgid "Grants invisibility."
+msgstr "Делает невидимым."
+
+msgid "Water Breathing"
+msgstr "подводного дыхания"
+
+msgid "Grants limitless breath underwater."
+msgstr "Даёт возможность дышать под водой."
+
+msgid "Fire Resistance"
+msgstr "огнестойкости"
+
+msgid "Grants immunity to damage from heat sources like fire."
+msgstr "Делает невосприимчивым к урону от источников тепла, например, от огня."
+
+msgid "Weakness"
+msgstr "слабости+"
+
+msgid "Weakness +"
+msgstr "слабости+"
+
+msgid "Strength"
+msgstr "силы"
+
+msgid "Strength II"
+msgstr "силы II"
+
+msgid "Strength +"
+msgstr "силы+"
+
+msgid "A throwable potion that will shatter on impact, where it gives all nearby players and mobs a status effect."
+msgstr "Метательное зелье разобьется при столкновении и даст ближайшим игрокам и мобам эффект."
+
+msgid "This particular arrow is tipped and will give an effect when it hits a player or mob."
+msgstr "Эта обмакнутая в зелье стрела даёт эффект при попадании в игрока или моба."
+

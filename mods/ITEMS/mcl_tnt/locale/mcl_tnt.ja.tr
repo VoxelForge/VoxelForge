@@ -5,8 +5,3 @@ TNT=TNT
 Ignited by tools, explosions, fire, lava, redstone power=道具、爆発、火、溶岩、レッドストーン動力で点火
 Explosion radius: @1=爆発半径： @1
 Place the TNT and ignite it with one of the methods above. Quickly get in safe distance. The TNT will start to be affected by gravity and explodes in 4 seconds.=TNTを設置し、上記のいずれかの方法で点火します。速やかに安全な距離をとって。TNTは重力の影響を受け始め、4秒後に爆発します。
-
-
-##### not used anymore #####
-
-@1 was caught in an explosion.=@1 は爆発に巻き込まれました。

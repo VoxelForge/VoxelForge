@@ -3,9 +3,4 @@ Generate a pre-defined structure near your position.=Générez une structure pr�
 Structure placed.=Structure placée.
 Error: No structure type given. Please use “/spawnstruct <type>”.=Erreur: Aucun type de structure indiqué. Veuillez utiliser "/spawnstruct <type>".
 Error: Unknown structure type. Please use “/spawnstruct <type>”.=Erreur: Type de structure inconnu. Veuillez utiliser "/spawnstruct <type>".
-Use /help spawnstruct to see a list of available types.=Utilisez /help spawnstruct pour voir une liste des types disponibles.
-
-
-##### not used anymore #####
-
-Village built. WARNING: Villages are experimental and might have bugs.=Village construit. AVERTISSEMENT: les villages sont expérimentaux et peuvent avoir des bogues.
+Use /help spawnstruct to see a list of avaiable types.=Utilisez /help spawnstruct pour voir une liste des types disponibles.

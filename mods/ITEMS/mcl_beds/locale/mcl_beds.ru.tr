@@ -7,6 +7,7 @@ In this world, going to bed won't skip the night, but it will skip thunderstorms
 Sleeping allows you to skip the night. The night is skipped when all players in this world went to sleep. The night is skipped after sleeping for a few seconds. Thunderstorms can be skipped in the same manner.=Сон позволяет вам пропустить ночь. Если все игроки в этом мире лягут спать, ночь будет пропущена. Она пропустится через несколько секунд после сна. Таким же способом можно пропускать грозу.
 Allows you to sleep=Можно спать
 Bed=Кровать
+@1 Bed=
 New respawn position set!=Задана новая точка возрождения!
 You can only sleep at night or during a thunderstorm.=Вы можете спать только ночью или во время грозы.
 You can't sleep, the bed's too far away!=Вы не можете спать, кровать слишком далеко!
@@ -31,24 +32,3 @@ You are missing the 'shout' privilege! It's required in order to talk in chat...
 Sorry, but you have to wait @1 seconds until you may use this button again!=Вам нужно подождать еще @1 с. прежде чем вы сможете нажать эту кнопку снова!
 Hey! Would you guys mind sleeping?=Эй, ребята, не хотите поспать?
 Respawn Anchor=Якорь возрождения
-
-
-##### not used anymore #####
-
-Red Bed=Красная кровать
-Blue Bed=Синяя кровать
-Cyan Bed=Бирюзовая кровать
-Grey Bed=Серая кровать
-Light Grey Bed=Светло-серая кровать
-Black Bed=Чёрная кровать
-Yellow Bed=Жёлтая кровать
-Green Bed=Зелёная кровать
-Magenta Bed=Сиреневая кровать
-Orange Bed=Оранжевая кровать
-Purple Bed=Фиолетовая кровать
-Brown Bed=Коричневая кровать
-Pink Bed=Розовая кровать
-Lime Bed=Лаймовая кровать
-Light Blue Bed=Голубая кровать
-White Bed=Белая кровать
-New respawn position set! But you can only sleep at night or during a thunderstorm.=Новая точка возрождения успешно задана! Но спать вы можете только ночью или во время грозы.

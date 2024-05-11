@@ -1,4 +1,4 @@
-# textdomain:doc_identifier
+# textdomain: doc_identifier
 Error: This node, item or object is undefined. This is always an error.=Ошибка: Данный узел, предмет или объект не определён. Это всегда вызывает ошибку.
 This can happen for the following reasons:=Это может произойти по одной из причин:
 • The mod which is required for it is not enabled=• Не включён требуемый мод

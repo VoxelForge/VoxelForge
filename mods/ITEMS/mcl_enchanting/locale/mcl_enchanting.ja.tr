@@ -1,5 +1,4 @@
 # textdomain: mcl_enchanting
-### enchantments.lua ###
 Bane of Arthropods=殺虫力
 Increases damage and applies Slowness IV to arthropod mobs (spiders, cave spiders, silverfish and endermites).=虫系のMOB（クモ、洞窟グモ、シルバーフィッシュ、エンダーマイト）に対してダメージが増加し、鈍化IVを適用します。
 Channeling=召雷
@@ -62,7 +61,6 @@ Unbreaking=耐久力
 Increases item durability.=アイテムの耐久度が向上します。
 Inventory=インベントリ
 @1 Lapis Lazuli=@1 ラピスラズリ
-### engine.lua ###
 @1 Enchantment Levels=@1 エンチャントレベル
 Level requirement: @1=必要レベル：@1
 Enchant an item=アイテムにエンチャントする
@@ -72,7 +70,6 @@ Player '@1' cannot be found.=プレイヤー'@1'が見つかりません。
 There is no such enchantment '@1'.='@1'というエンチャントはありません。
 The target doesn't hold an item.=対象がアイテムを保持していません。
 The selected enchantment can't be added to the target item.=選択したエンチャントは、対象アイテムに付加できません。
-### init.lua ###
 '@1' is not a valid number='@1'は有効ではない数字
 The number you have entered (@1) is too big, it must be at most @2.=入力した数値（@1）は大きすぎます、@2以下である必要があります。
 The number you have entered (@1) is too small, it must be at least @2.=入力した数値（@1）は小さすぎます、@2以上である必要があります。
@@ -93,23 +90,3 @@ These options are randomized, and dependent on experience level; but the enchant
 To increase the enchantment strength, place bookshelves around the enchanting table. However, you will need to keep 1 air node between the table, & the bookshelves to empower the enchanting table.=エンチャントテーブルの周囲に本棚を置くと、エンチャントを強化できます。ただし、テーブルと本棚の間に空気ノードを1つ入れないと、エンチャントテーブルに力を与えられません。
 After finally selecting your enchantment; left-click on the selection, and you will see both the lapis lazuli and your experience levels consumed. And, an enchanted item left in its place.=最終的にエンチャントを決めたら；選ぶ箇所を左クリックすると、ラピスラズリと経験値の両方が消費されているのがわかります。そしてエンチャントしたアイテムがその場に残されます。
 Enchant=エンチャント
-
-
-##### not used anymore #####
-
-Aqua Affinity=水中採掘
-Increases underwater mining speed.=水中での採掘速度が向上します。
-Blast Protection=爆風耐性
-Reduces explosion damage and knockback.=爆発ダメージとノックバックを軽減します。
-Curse of Binding=束縛の呪い
-Item cannot be removed from armor slots except due to death, breaking or in Creative Mode.=次の場合を除き、防具スロットからアイテムを外せません；アイテムが破損／自身が死亡／クリエイティブモード中
-Feather Falling=落下耐性
-Reduces fall damage.=落下ダメージを軽減します。
-Fire Protection=炎上耐性
-Reduces fire damage.=火炎ダメージを軽減します（溶岩は対象外）。
-Projectile Protection=飛来物耐性
-Reduces projectile damage.=飛来物ダメージを軽減します。
-Protection=外傷耐性
-Reduces most types of damage by 4% for each level.=体の外からのダメージ全般を軽減します（レベル毎に+4%）。
-Thorns=イバラ
-Reflects some of the damage taken when hit, at the cost of reducing durability with each proc.=受けたダメージの一部を与え返せますが、その代わり耐久度が余計に削られます。

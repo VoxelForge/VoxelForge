@@ -31,10 +31,3 @@ Golden Sword=Золотой меч
 Diamond Sword=Алмазный меч
 Netherite Sword=Незеритовый меч
 Shears=Ножницы
-
-
-##### not used anymore #####
-
-You use your bare hand whenever you are not wielding any item. With your hand you can mine most blocks, but this is the slowest method and only the weakest blocks will yield their useful drop. The hand also deals minor damage by punching. Using the hand is often a last resort, as proper mining tools and weapons are much better.=Вы используете руку, если не держите в ней никакого предмета. Пустой рукой вы можете добывать большинство блоков, но это самый медленный метод, который позволит добыть что-то полезное только из самых слабых блоков. Рука также наносит небольшой урон при ударе. Использование руки часто является последним средством, поскольку гораздо предпочтительнее использовать правильные подобранные инструменты и оружие.
-When you are wielding an item which is not a mining tool or a weapon, it will behave as if it were the hand when you start mining or punching.=Когда вы держите предмет, не являющийся инструментом добычи или оружием, то при добыче или ударах он будет вести себя так, как если бы это была пустая рука.
-In Creative Mode, the hand is able to break all blocks instantly.=В творческом режиме рука мгновенно ломает любой блок.

@@ -13,11 +13,3 @@ Eternal fire is a damaging block that might create more fire. It will create fir
 Eternal fire is a damaging block. Eternal fire can be extinguished by punches and nearby water blocks. Other than (normal) fire, eternal fire does not get extinguished on its own and also continues to burn under rain. Punching eternal fire is safe, but it hurts if you stand inside.=永続的な炎はダメージを与えるブロックです。パンチや近くの水ブロックによって消せます。（通常の）炎以外の永続的な炎は、それ自体では消えず、雨の下でも燃え続けます。永続的な炎をパンチするのは安全ですが、中に立つと痛いです。
 Fire=炎
 Eternal Fire=永続的な炎
-
-
-##### not used anymore #####
-
-@1 has been cooked crisp.=@1はカリッと焼けた。
-@1 felt the burn.=@1は火傷を感じた。
-@1 died in the flames.=@1は炎の中で死亡した。
-@1 died in a fire.=@1は火災で死亡した。

@@ -6,13 +6,3 @@ This allows you to place a single mob.=これにより、1体のMOBを配置で�
 Just place it where you want the mob to appear. Animals will spawn tamed, unless you hold down the sneak key while placing. If you place this on a mob spawner, you change the mob it spawns.=MOBを出現させたい場所に、置くだけです。スニークキーを押しながら配置しない限り、動物は飼いならされた状態でスポーンします。MOBスポナーに設置すると、スポーンするMOBが変わります。
 Only peaceful mobs allowed!=平和的なMOBのみ許可！
 spawn_mob is a chatcommand that allows you to type in the name of a mob without 'typing mobs_mc:' all the time like so; 'spawn_mob spider'. however, there is more you can do with this special command, currently you can edit any number, boolean, and string variable you choose with this format: spawn_mob 'any_mob:var<mobs_variable@=variable_value>:'. any_mob being your mob of choice, mobs_variable being the variable, and variable value being the value of the chosen variable. and example of this format: @n spawn_mob skeleton:var<passive@=true>:@n this would spawn a skeleton that wouldn't attack you. REMEMBER-THIS> when changing a number value always prefix it with 'NUM', example: @n spawn_mob skeleton:var<jump_height@=NUM10>:@n this setting the skelly's jump height to 10. if you want to make multiple changes to a mob, you can, example: @n spawn_mob skeleton:var<passive@=true>::var<jump_height@=NUM10>::var<fly_in@=air>::var<fly@=true>:@n etc.=
-
-
-##### not used anymore #####
-
-You need the “maphack” privilege to change the mob spawner.=MOBスポナーを変更するには、"maphack"権限が必要です。
-Name Tag=名札
-A name tag is an item to name a mob.=名札は、MOBに名前をつけるためのアイテムです。
-Before you use the name tag, you need to set a name at an anvil. Then you can use the name tag to name a mob. This uses up the name tag.=名札を使用する前に、金床で名前の設定をする必要があります。その後、MOBに名前をつけるために名札が使えます。これで名札は使い切ります。
-Give names to mobs=MOBに名前を付与
-Set name at anvil=金床で名前の設定

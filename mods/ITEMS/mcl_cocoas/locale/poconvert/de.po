@@ -1,0 +1,42 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Minetest textdomain mcl_cocoas x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.0\n"
+
+msgid "Premature Cocoa Pod"
+msgstr "Junge Kakaoschote"
+
+msgid "Cocoa pods grow on the side of jungle trees in 3 stages."
+msgstr "Kakaoschoten wachsen an der Seite von Dschungelbäumen in 3 Stufen."
+
+msgid "Medium Cocoa Pod"
+msgstr "Mittelgroße Kakaoschote"
+
+msgid "Mature Cocoa Pod"
+msgstr "Ausgewachsene Kakaoschote"
+
+msgid "A mature cocoa pod grew on a jungle tree to its full size and it is ready to be harvested for cocoa beans. It won't grow any further."
+msgstr "Eine ausgewachsene Kakaoschote wuchs an einem Dschugelbaum zur vollen Größe heran. Sie ist erntereif und kann für Kakaobohnen geerntet werden. Sie wird nicht weiter wachsen."
+
+msgid "Cocoa Beans"
+msgstr "Kakaobohnen"
+
+msgid "Grows at the side of jungle trees"
+msgstr "Wächst an der Seite von Dschungelbäumen"
+
+msgid "Cocoa beans can be used to plant cocoa, bake cookies or craft brown dye."
+msgstr ""
+
+msgid "Right click on the side of a jungle tree trunk (Jungle Wood) to plant a young cocoa."
+msgstr "Rechtsklicken Sie an die Seite eines Dschungelbaumstamms (Dschungelholz), um eine junge Kakaoschote zu pflanzen."
+

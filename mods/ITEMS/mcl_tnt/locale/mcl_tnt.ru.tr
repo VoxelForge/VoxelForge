@@ -5,8 +5,3 @@ TNT=ТНТ
 Ignited by tools, explosions, fire, lava, redstone power=Зажигается инструментами, взрывом, огнём, лавой, сигналом редстоуна
 Explosion radius: @1=Радиус взрыва: @1
 Place the TNT and ignite it with one of the methods above. Quickly get in safe distance. The TNT will start to be affected by gravity and explodes in 4 seconds.=Разместите ТНТ, зажгите его одним из методов, описанных выше. Отбегите на безопасное расстояние. ТНТ начнет подвергаться воздействию силы тяжести и взорвётся через 4 секунды.
-
-
-##### not used anymore #####
-
-@1 was caught in an explosion.=@1 попал(а) под взрыв.

@@ -12,6 +12,7 @@ Mobs=Moby
 Brewing=Warzenie
 Materials=Materiały
 Survival Inventory=Ekwipunek przetrwania
+Not in Creative Inventory=
 Advancements=
 Switch stack size=
 @1 / @2=
@@ -25,9 +26,3 @@ Gamemode @1 does not exist.=
 Gamemode for player @1: @2=
 Crafting=Wytwarzanie
 Achievements=Osiągnięcia
-
-
-##### not used anymore #####
-
-Inventory=Ekwipunek
-@1/@2=@1/@2

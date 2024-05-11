@@ -1,7 +1,6 @@
 # textdomain: mcl_doc_basics
 Advanced usage=Zaawansowane użycie
 Advanced information which may be nice to know, but is not crucial to gameplay=Zaawansowane informacje które mogą być przydatne, ale nie są niezbędne podczas grania
-# MCL2 extensions
 Creative Mode=Tryb kreatywny
 Enabling Creative Mode in MineClone 2 applies the following changes:=Włączenie trybu kreatywnego w MineClone 2 aplikuje następujące zmiany:
 • You keep the things you've placed=• Nie tracisz postawionych rzeczy
@@ -464,82 +463,3 @@ Minetest is a free software game engine for games based on voxel gameplay, inspi
 A core feature of Minetest is the built-in modding capability, which all games consist of too. They can be as simple as adding a few decorational blocks or be very complex by e.g. introducing completely new gameplay concepts, generating a completely different kind of world, and many other things.=
 Minetest can be played alone or online together with multiple players. Online play will work out of the box with any mods, with no need for additional software as they are entirely provided by the server.=W Minetest można grać samotnie lub online z kilkoma graczami. Gra online będzie działać od razu z modami, bez potrzeby dodatkowych programów jako, że są one całkowicie dostarczane przez serwer.
 MineClonia is a game that is built on top of the Minetest engine that intends to create a game that is as close to Minecraft as possible. There are many other games for Minetest however, that can be installed from the main menu content browser.=
-
-
-##### not used anymore #####
-
-This is a very brief introduction to the basic gameplay:=Jest to bardzo krótki wstęp do podstawowej rozgrywki:
-Basic controls:=Podstawowe sterowanie:
-• Move mouse to look=• Porusz myszą by się rozglądać
-• [W], [A], [S] and [D] to move=• Użyj [W], [A], [S] i [D] aby się poruszać
-• [E] to sprint=• Użyj [E] aby biegać
-• [Space] to jump or move upwards=• Użyj [Spacja] aby skakać lub poruszać się w górę
-• [Shift] to sneak or move downwards=• Użyj [Shift] aby się skradać lub poruszać w dół
-• Mouse wheel or [1]-[9] to select item=• Użyj kółka myszy lub klawiszy [1]-[9] aby wybrać przedmiot
-• Left-click to mine blocks or attack=• Kliknij lewym przyciskiem by kopać bloki lub atakować
-• Recover from swings to deal full damage=• Poczekaj aż ochłoniesz po zamachu, aby zadać pełne obrażenia
-• Right-click to build blocks and use things=• Kliknij prawym przyciskiem aby kłaść bloki lub używać rzeczy
-• [I] for the inventory=• Użyj [I] aby otworzyć ekwipunek
-• First items in inventory appear in hotbar below=• Pierwsze przedmioty w ekwipunku pojawią się w pasku szybkiego dostępu
-• Lowest row in inventory appears in hotbar below=• Najniższy wiersz ekwipunku pojawi się w pasku szybkiego dostępu
-• [Esc] to close this window=• Użyj [Esc] aby zamknąć okno
-• Continue playing as you wish. There's no goal. Have fun!=• Graj tak jak chcesz. Nie ma żadnego celu. Miłej zabawy!
-The player is thrown into a huge world made out of cubes or blocks. These cubes usually make the landscape they blocks can be removed and placed almost entirely freely. Using the collected items, new tools and other items can be crafted. Games in Minetest can, however, be much more complex than this.=Gracz jest wrzucony do ogromnego świata stworzonego z sześcianów lub bloków. Te sześciany zwykle tworzą widoczny krajobraz i mogą być usuwane oraz stawiane niemal całkowicie dowolnie. Korzystając z zebranych przedmiotów nowe narzędzia i inne rzeczy mogą zostać utworzone. Gry w Minetest mogą jednak być dużo bardziej skomplikowane niż to.
-A core feature of Minetest is the built-in modding capability. Mods modify existing gameplay. They can be as simple as adding a few decorational blocks or be very complex by e.g. introducing completely new gameplay concepts, generating a completely different kind of world, and many other things.=Główną cechą Minetesta jest wbudowana możliwość budowania. Mody modyfikują istniejącą rozgrywkę. Mogą być tak proste jak dodanie kilku bloków dekoracyjnych, lub bardzo skomplikowane np. wprowadzając zupełnie nowe sposoby rozgrywki, generując zupełnie inny rodzaj świata i wiele innych rzeczy.
-Minetest is usually bundled with a simple default game, named “Minetest Game” (shown in images 1 and 2). You probably already have it. Other games for Minetest can be downloaded from the official Minetest forums <https://forum.minetest.net/viewforum.php?f@=48>.=Minetest jest zwykle dystrybuowany wraz z prostą domyślną grą, nazwaną "Gra Minetest" (pokazana na obrazka 1 i 2). Prawdopodobnie już ją masz. Inne gry dla Minetesta mogą być pobrane z oficjalnych forum Minetesta <https://forum.minetest.net/viewforum.php?f@=48>.
-Minetest as well as Minetest Game are both unfinished at the moment, so please forgive us when not everything works out perfectly.=Zarówno Minetest jak i Gra Minetest są aktualnie niedokończone, więc prosimy o wybaczenie jeśli nie wszystkie rzeczy działają idealnie.
-• Sneak: [Shift]=• Skradanie: [Shift]
-If you jump while holding the sneak key, you also jump slightly higher than usual.=Jeśli skoczysz podczas skradania, skoczysz nieco wyżej niż zwykle.
-Sneaking might be disabled by mods. In this case, you still walk slower by sneaking, but you will no longer be stopped at ledges.=Skradanie może być wyłączone przez mody. W takim przypadku wciąż będziesz chodziła wolniej przy skradaniu, ale wciąż będziesz mogła spaść z bloków.
-These are the default controls:=To jest domyślne sterowanie:
-• E: Sprint=• E: Biegnij
-• E: Move even faster when in fast mode=• E: Poruszaj się jeszcze szybciej w trybie szybkim
-• Left mouse button: Punch / mine blocks / take items=• Lewy przycisk myszy: Uderz / kop bloki / weź przedmiot
-• Roll mouse wheel: Select next/previous item in hotbar=• Kręć kółkiem myszy: Wybierz następny/poprzedni przedmiot w pasku szybkiego dostępu
-• Z: Zoom=• Z: Przybliż
-• F8: Toggle cinematic mode=• F8: Zmień na tryb kinowy
-• R: Toggle far view (disables all fog and allows viewing far away, can make game very slow)=• R: Przełącz tryb dalekiego widzenia (wyłącza mgłę i pozwala widzieć odległe obiekty, może znacząco spowolnić grę)
-• P: Only useful for developers. Writes current stack traces=• P: Przydatne tylko dla deweloperów. Zapisuje aktualny zrzut stosu
-Players (actually: “player characters”) are the characters which users control.=Gracze (właściwie "postacie graczy") są postaciami kontrolowanymi przez użytkowników.
-Players can take damage for a variety of reasons, here are some:=Gracze mogą otrzymać obrażenia z wielu powodów, oto niektóre:
-At a health of 0, the player dies. The player can just respawn in the world.=Gdy zdrowie osiągnie poziom 0, gracz umiera. Gracz może wtedy odrodzić się w świecie.
-Other consequences of death depend on the game. The player could lose all items, or lose the round in a competitive game.=Inne konsekwencje śmierci zależą od gry. Gracz może stracić wszystkie przedmioty, lub stracić punkty w grze konkurencyjnej.
-In multi-player mode, the name of other players is written above their head.=W trybie wieloosobowym imię innych graczy jest napisane powyżej ich głów.
-Dropped item stacks will be collected automatically when you stand close to them.=Upuszczone grupy przedmiotów zostaną podniesione automatycznie gdy staniesz w ich pobliżu.
-A common subset of tools is mining tools. These are important to break all kinds of blocks. Weapons are a kind of tool. There are of course many other possible tools. Special actions of tools are usually done by left-click or right-click.=Częstym podzbiorem narzędzi są narzędzia do kopania. Są one istotne przy niszczeniu różnych typów bloków. Bronie są innym rodzajem narzędzia. Jest oczywiście wiele innych możliwych narzędzi. Specjalne akcje narzędzi są zwykle aktywowane przy użyciu lewego lub prawego przycisku myszy.
-When nothing is wielded, players use their hand which may act as tool and weapon.=Gdy nic nie jest trzymane, gracze używają swojej ręki, która może służyć jako narzędzie i broń.
-Mining tools are important to break all kinds of blocks. Weapons are another kind of tool. There are some other more specialized tools. Special actions of tools are usually done by right-click.=Narzędzia do kopania są istotne do niszczenia różnych bloków. Innym rodzajem narzędzi są bronie. Istnieją również inne, bardzie wyspecjalizowane narzędzia. Specjalne akcje narzędzi są zwykle wykonywane przy użyciu lewego oraz prawego przycisku myszy.
-When nothing is wielded, players use their hand which may act as tool and weapon. The hand is capable of punching and deals minimum damage.=Gdy nic nie jest trzymane gracze używają swojej dłoni, która może służyć za narzędzie i za broń. Ręką można uderzać co zadaje minimalne obrażenia.
-Many tools will wear off when using them and may eventually get destroyed. The damage is displayed in a damage bar below the tool icon. If no damage bar is shown, the tool is in mint condition. Tools may be repairable by crafting, see “Basics > Crafting”.=Wiele narzędzi będzie się zużywać podczas używania, co w końcu sprawi, że zostaną zniszczone. Zużycie jest wyświetlane jako pasek poniżej ikony narzędzia. Jeśli pasek nie jest pokazywany, narzędzie jest w idealnym stanie. Narzędzia mogą być naprawiane przez wytwarzania, zobacz "Podstawy > Wytwarzanie".
-You can change the camera mode by pressing [F7].=Możesz zmienić widok kamery naciskając [F7].
-You might be able to zoom with [Z] to zoom the view at the crosshair. This allows you to look further.=Możesz być w stanie przybliżać widok naciskając [Z]. To pozawala spojrzeć dalej w kierunku celownika.
-Zooming is a gameplay feature that might be enabled or disabled by the game. By default, zooming is enabled when in Creative Mode but disabled otherwise.=Przybliżanie jako cecha rozgrywki może być włączone lub wyłączone przez grę. Domyślnie przybliżanie jest włączone w trybie Kreatywny i wyłączone w przeciwnym przypadku.
-There is also Cinematic Mode which can be toggled with [F8]. With Cinematic Mode enabled, the camera movements become more smooth. Some players don't like it, it is a matter of taste.=Istnieje również tryb kinowy, który może być włączony naciskając [F8]. Gdy jest on włączony ruchy kamery są bardziej wygładzone. Niektórzy gracze go nie lubią, jest to kwestia gustu.
-By holding down [Z], you can zoom the view at your crosshair. You need the “zoom” privilege to do this.=Przytrzymując [Z] możesz przybliżyć widok na swoim celowniku. Potrzebujesz przywileju "zoom" aby to zrobić.
-• Toggle Cinematic Mode: [F8]=• Przełącz tryb kinowy: [F8]
-• Zoom: [Z]=• Przybliż: [Z]
-The world of MineClone 2 is made entirely out of blocks (voxels, to be precise). Blocks can be added or removed with the correct tools.=Świat MineClone 2 jest w całości złożony z bloków (a bardziej precyzyjnie voxeli). Bloki mogą być dodawane lub usuwane przy użyciu odpowiednich narzędzi.
-To craft something, you need one or more items, a crafting grid (C) and a crafting recipe. A crafting grid is like a normal inventory which can also be used for crafting. Items need to be put in a certain pattern into the crafting grid. Next to the crafting grid is an output slot (O). Here the result will appear when you placed items correctly. This is just a preview, not the actual item. Crafting grids can come in different sizes which limits the possible recipes you can craft.=Aby coś wytworzyć potrzebujesz jednego lub więcej przedmiotów, siatki do wytwarzania oraz receptury. Siatka do wytwarzania jest jak zwykły ekwipunek, który może być użyty do wytwarzania. Przedmioty muszą być ułożone w konkretny wzór w siatce do wytwarzania. Obok siatki wytwarzania jest miejsce wyjściowe (O). Tutaj pojawi się rezultat gdy poprawnie umieścisz przedmioty. Jest to tylko podgląd, a nie faktyczny przedmiot. Siatki do wytwarzania mogą mieć różne rozmiary, co ogranicza liczbę receptur które możesz wytworzyć.
-A description on how to craft an item is called a “crafting recipe”. You need this knowledge to craft. There are multiple ways to learn crafting recipes. One way is by using a crafting guide, which contains a list of available crafting recipes. Some games provide crafting guides. There are also some mods which you can download online for installing a crafting guide. Another way is by reading the online manual of the game (if one is available).=Opis w jaki sposób uzyskać dany przedmiot nazywa się "recepturą wytwarzania". Potrzebujesz tej wiedzy do wytwarzania. Jest kilka sposobów by je poznać. Jednym z nich jest korzystanie z przewodnika do wytwarzania, który zawiera listę dostępnych receptur do wytwarzania. Niektóre gry dostarczają takie przewodniki. Istnieją także mody, które możesz pobrać z internetu dodające przewodniki. Innym sposobem jest przeczytanie instrukcji gry w internecie (jeśli taka jest dostępna).
-• Shaped (image 2): Items need to be placed in a particular shape=• Kształtne (obrazek 2): Przedmioty muszą być ułożone w konkretny kształt
-• Shapeless (images 3 and 4): Items need to be placed somewhere in input (both images show the same recipe)=• Bezkształtne (obrazki 3 i 4): Przedmioty muszą być ułożone gdzieś w wejściu (oba obrazki pokazują tę samą recepturę)
-• Repairing (image 5): Place two damaged tools into the crafting grid anywhere to get a tool which is repaired by 5%=• Naprawianie (obrazek 5): Postaw dwa uszkodzone narzędzia w siatce do wytwarzania w dowolnym miejscu aby uzyskać narzędzie naprawione o 5%
-In some crafting recipes, some input items do not need to be a concrete item, instead they need to be a member of a group (see “Basics > Groups”). These recipes offer a bit more freedom in the input items. Images 6-8 show the same group-based recipe. Here, 8 items of the “stone” group are required, which is true for all of the shown items.=W niektórych recepturach, niektóre przedmioty wejściowe nie muszą być konkretnymi przedmiotami, tylko przynależeć do pewnej grupy (zobacz "Podstawy > Grupy"). Te receptury są nieco mniej restrykcyjne jeśli chodzi o wejściowe przedmioty. Obrazki 6-8 pokazują tę samą recepturę opartą o grupy. W tym przypadku 8 przedmiotów z grupy "kamień" są potrzebne, a wszystkie pokazane przedmioty do niej należą.
-At the bottom of the screen you see some squares. This is called the “hotbar”. The hotbar allows you to quickly access the first items from your player inventory.=Na dole swojego ekwipunku możesz zobaczyć kwadraty. To nazywa się "pasek szybkiego dostępu". Pozwala on na szybki dostęp do pierwszych przedmiotów z twojego ekwipunku.
-You can change the selected item with the mouse wheel or the keyboard.=Możesz zmieniać wybrany przedmiot przy użyciu kółka myszy lub klawiatury.
-If you have a map item in any of your hotbar slots, you can use the minimap.=Jeśli masz przedmiot mapy w swoim pasku szybkiego dostępu możesz korzystać z minimapy.
-In some games, the minimap may be disabled.=W niektórych grach minimapa może być wyłączona.
-You have your own inventory which is called your “player inventory”, you can open it with the inventory key (default: [I]). The first inventory slots are also used as slots in your hotbar.=Posiadasz swój własny ekwipunek nazywany "ekwipunkiem gracza", możesz go otworzyć klikając przycisk inwentarza (domyślnie: [I]). Pierwsze miejsca ekwipunku są również wykorzystywane jako miejsca na pasku szybkiego dostępu.
-• Right click: put 1 item of the item stack=• Prawy przycisk: Wstaw 1 przedmiot z grupy
-Throwing away: If you hold an item stack and click with it somewhere outside the menu, the item stack gets thrown away into the environment.=Wyrzucanie: Jeśli trzymasz grupę przedmiotów i klikniesz poza menu ekwipunku, grupa przedmiotów zostanie wyrzucona w świat.
-Quick transfer: You can quickly transfer an item stack to/from the player inventory to/from another item's inventory slot like a furnace, chest, or any other item with an inventory slot when that item's inventory is accessed. The target inventory is generally the most relevant inventory in this context.=Szybki transfer: Możesz szybko przemieszczać grupę przedmiotów z/do ekwipunku gracza do/z ekwipunku innego przedmiotu, takich jak piec, skrzynia czy innego z ekwipunkiem, gdy jego ekwipunek jest otworzony. Docelowy ekwipunek jest najczęściej najbardziej istotnym ekwipunkiem w takim kontekście.
-• Sneak+Left click: Automatically transfer item stack=• Skradanie+Lewy przycisk: Automatycznie przenieś grupę przedmiotów
-You may want to check out these online resources related to MineClone 2.=Możesz chcieć zobaczyć na te zasoby online powiązane z MineClone 2.
-MineClone 2 download and forum discussion: <https://forum.minetest.net/viewtopic.php?f@=50&t@=16407>=MineClone 2 pobieranie oraz dyskusja na forum: <https://forum.minetest.net/viewtopic.php?f@=50&t@=16407>
-Here you find the most recent version of MineClone 2 and can discuss it.=Tutaj możesz znaleźć najnowszą wersję MineClone 2 i porozmawiać o niej
-Bug tracker: <https://github.com/Wuzzy2/MineClone2-Bugs>=Śledzenie błędów: <https://github.com/Wuzzy2/MineClone2-Bugs>
-Report bugs here.=Zgłaszaj tu zauważone błędy.
-Minetest links:=Linki dotyczące Minetest:
-The main place to find the most recent version of Minetest, the engine used by MineClone 2.=Miejsce gdzie można znaleźć najnowszą wersję Minetesta, silnika wykorzystywanego przez MineClone 2.
-Minetest forums: <https://forums.minetest.net/>=Forum Minetest: <https://forums.minetest.net/>
-• MineClone 2: What you play right now=• MineClone 2: To w co teraz grasz

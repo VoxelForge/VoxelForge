@@ -76,11 +76,3 @@ Block breaking strength: @1=ブロック破壊力：@1
 This is a melee weapon which deals damage by punching.=これは殴りつけることでダメージを与える近接武器です。
 Maximum damage: @1 HP=最大ダメージ：@1 HP
 Full punch interval: @1 s=全力攻撃の間隔：@1秒
-
-
-##### not used anymore #####
-
-Saturation points restored: @1%.1f=隠し満腹度回復：@1.1f
-This item can be repaired at an anvil with: @1.=このアイテムは、金床と次のもので修理できます：@1
-This item can be repaired at an anvil with any wooden planks.=このアイテムは、金床と板材で修理できます。
-This item can be repaired at an anvil with any item in the “@1” group.=このアイテムは、金床と"@1"グループのアイテムで修理できます。

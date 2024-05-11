@@ -1,4 +1,4 @@
-# textdomain:doc_identifier
+# textdomain: doc_identifier
 Error: This node, item or object is undefined. This is always an error.=エラー：このノード、アイテム、またはオブジェクトは未定義です。これは常にエラーになります。
 This can happen for the following reasons:=これは、次のような理由で起こり得ます：
 • The mod which is required for it is not enabled=・そのために必要なMODが有効になっていない

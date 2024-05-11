@@ -12,6 +12,7 @@ Mobs=Mob
 Brewing=醸造
 Materials=素材
 Survival Inventory=サバイバル インベントリ
+Not in Creative Inventory=
 Advancements=進捗
 Switch stack size=
 @1 / @2=
@@ -25,9 +26,3 @@ Gamemode @1 does not exist.=
 Gamemode for player @1: @2=
 Crafting=クラフト
 Achievements=
-
-
-##### not used anymore #####
-
-Inventory=インベントリ
-@1/@2=@1/@2

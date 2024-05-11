@@ -1,5 +1,4 @@
 # textdomain: mcl_hoppers
-### init.lua ###
 Hopper=Tolva
 Inventory=Inventario
 5 inventory slots=

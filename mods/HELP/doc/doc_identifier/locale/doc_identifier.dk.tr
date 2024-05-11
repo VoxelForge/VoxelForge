@@ -1,4 +1,4 @@
-# textdomain:doc_identifier
+# textdomain: doc_identifier
 Error: This node, item or object is undefined. This is always an error.=Fejl: Dette knudepunkt, genstand eller objekt er ikke defineret.
 This can happen for the following reasons:=Dette kan ske af følgende grunde:
 • The mod which is required for it is not enabled=• Det mod som er krævet er ikke aktiveret

@@ -7,6 +7,7 @@ In this world, going to bed won't skip the night, but it will skip thunderstorms
 Sleeping allows you to skip the night. The night is skipped when all players in this world went to sleep. The night is skipped after sleeping for a few seconds. Thunderstorms can be skipped in the same manner.=Spanie pozwala pominąć noc. Noc jest pomijana gdy wszyscy gracze w tym świecie pójdą spać. Jest ona pomijana po kilku sekundach. Burze można pomijać w ten sam sposób.
 Allows you to sleep=Pozwala spać
 Bed=Łóżko
+@1 Bed=
 New respawn position set!=Nowa pozycja odradzania ustawiona!
 You can only sleep at night or during a thunderstorm.=Możesz spać tylko podczas nocy, bądź burzy.
 You can't sleep, the bed's too far away!=Nie możesz spać, łóżko jest zbyt daleko!
@@ -31,24 +32,3 @@ You are missing the 'shout' privilege! It's required in order to talk in chat...
 Sorry, but you have to wait @1 seconds until you may use this button again!=
 Hey! Would you guys mind sleeping?=
 Respawn Anchor=
-
-
-##### not used anymore #####
-
-Red Bed=Czerwone łóżko
-Blue Bed=Niebieskie łóżko
-Cyan Bed=Błękitne łóżko
-Grey Bed=Szare łóżko
-Light Grey Bed=Jasnoszare łóżko
-Black Bed=Czarne łóżko
-Yellow Bed=Żółte łóżko
-Green Bed=Zielone łóżko
-Magenta Bed=Karmazynowe łóżko
-Orange Bed=Pomarańczowe łóżko
-Purple Bed=Fioletowe łóżko
-Brown Bed=Brązowe łóżko
-Pink Bed=Różowe łóżko
-Lime Bed=Jasnozielone łóżko
-Light Blue Bed=Jasnoniebieskie łóżko
-White Bed=Białe łóżko
-New respawn position set! But you can only sleep at night or during a thunderstorm.=Nowa pozycja do odrodzenia ustawiona! Ale możesz spać tylko podczas nocy, bądź burzy.

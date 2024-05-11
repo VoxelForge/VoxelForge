@@ -1,5 +1,4 @@
 # textdomain: mcl_crafting_table
-### init.lua ###
 Crafting=Elaboración
 Inventory=Inventario
 Recipe book=Libro de recetas

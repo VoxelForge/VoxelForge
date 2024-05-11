@@ -1,17 +1,11 @@
-# textdomain:doc_items
+# textdomain: doc_items
 Using it as fuel turns it into: @1.=燃料として使うと次のように変化します：@1.
 @1 seconds=@1秒
-# Item count times item name
 @1×@2=@1×@2
-# Itemname (25%)
 @1 (@2%)=@1 (@2%)
-# Itemname (<0.5%)
 @1 (<0.5%)=@1 (<0.5%)
-# Itemname (ca. 25%)
 @1 (ca. @2%)=@1 (ca. @2%)
-# List separator (e.g. “one, two, three”)
 , =、
-# Final list separator (e.g. “One, two and three”)
  and =＆
 1 second=1秒
 A transparent block, basically empty space. It is usually left behind after digging something.=透明なブロックで、基本的には何もない空間です。たいていは何かを掘った後に残ります。
@@ -46,12 +40,9 @@ Punches with this block don't work as usual; melee combat and mining are either 
 Punches with this item don't work as usual; melee combat and mining are either not possible or work differently.=このアイテムでのパンチは、普段通りには機能しません：近接戦闘と採掘は不可能か、動作が異なります。
 Punches with this tool don't work as usual; melee combat and mining are either not possible or work differently.=この道具でのパンチは、普段通りには機能しません：近接戦闘と採掘は不可能か、動作が異なります。
 Range: @1=範囲：@1
-# Range: <Hand> (<Range>)
 Range: @1 (@2)=範囲：@1 (@2)
 Range: 4=範囲：4
-# Rating used for digging times
 Rating @1=レート@1
-# @1 is minimal rating, @2 is maximum rating
 Rating @1-@2=レート@1-@2
 The fall damage on this block is increased by @1%.=このブロックでの落下ダメージが@1%増加する。
 The fall damage on this block is reduced by @1%.=このブロックでの落下ダメージが@1%軽減する。

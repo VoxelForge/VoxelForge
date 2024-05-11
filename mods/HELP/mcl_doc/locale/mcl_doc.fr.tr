@@ -76,11 +76,3 @@ Block breaking strength: @1=Résistance de rupture de bloc: @1
 This is a melee weapon which deals damage by punching.=Il s'agit d'une arme de mêlée qui inflige des dégâts en frappant.
 Maximum damage: @1 HP=Dégâts maximum: @1
 Full punch interval: @1 s=Interval de coup: @1 s
-
-
-##### not used anymore #####
-
-Saturation points restored: @1%.1f=Points de saturation restaurés: @1%.1f
-This item can be repaired at an anvil with: @1.=Cet article peut être réparé sur une enclume avec: @1.
-This item can be repaired at an anvil with any wooden planks.=Cet article peut être réparé sur une enclume avec n'importe quelle planche de bois.
-This item can be repaired at an anvil with any item in the “@1” group.=Cet article peut être réparé sur une enclume avec n'importe quel article du groupe “@1”.

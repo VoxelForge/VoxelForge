@@ -1,5 +1,4 @@
 # textdomain: mcl_books
-### init.lua ###
 Book=Libro
 Books are used to make bookshelves and book and quills.=Los libros se usan para hacer estanterías, libros y plumas.
 “@1”="@1“
@@ -7,7 +6,6 @@ Copy of “@1”=Copia de "@1“
 Copy of Copy of “@1”=Copia de la copia de "@1"
 Tattered Book=
 by @1=por @1
-# as in “to sign a book”
 Sign=Firmar
 Done=Hecho
 Book and Quill=Libro y pluma
@@ -25,10 +23,5 @@ Written books contain some text written by someone. They can be read and copied,
 Hold it in your hand, then rightclick to read the book.=Sostenlo en tu mano, luego haz clic derecho para leer el libro.
 To copy the text of the written book, place it into the crafting grid together with a book and quill (or multiple of those) and craft. The written book will not be consumed. Copies of copies can not be copied.=Para copiar el texto del libro escrito, colóquelo en la cuadrícula de elaboración junto con un libro y pluma (o varios de esos) y haga manualidades. El libro escrito no se consumirá. Las copias de copias no se pueden copiar.
 Bookshelf=Librería
-Inventory=
+Inventory=Inventario
 Bookshelves are used for decoration.=Las librerías se utilizan para la decoración.
-
-
-##### not used anymore #####
-
-Tatter ed Book=Libro andrajoso

@@ -31,10 +31,3 @@ Golden Sword=Épée en Or
 Diamond Sword=Épée en Diamant
 Netherite Sword=Épée en Netherite
 Shears=Cisailles
-
-
-##### not used anymore #####
-
-You use your bare hand whenever you are not wielding any item. With your hand you can mine most blocks, but this is the slowest method and only the weakest blocks will yield their useful drop. The hand also deals minor damage by punching. Using the hand is often a last resort, as proper mining tools and weapons are much better.=Vous utilisez votre main nue lorsque vous ne portez aucun objet. Avec votre main, vous pouvez miner la plupart des blocs, mais c'est la méthode la plus lente et seuls les blocs les plus faibles donneront des éléments utiles. La main inflige également des dégâts mineurs en frappant. L'utilisation de la main est souvent un dernier recours, car les outils et les armes d'extraction appropriées sont bien meilleures.
-When you are wielding an item which is not a mining tool or a weapon, it will behave as if it were the hand when you start mining or punching.=Lorsque vous maniez un objet qui n'est ni un outil d'extraction ni une arme, il se comportera comme s'il s'agissait de la main lorsque vous commencez à extraire ou à frapper.
-In Creative Mode, the hand is able to break all blocks instantly.=En mode créatif, la main est capable de briser tous les blocs instantanément.

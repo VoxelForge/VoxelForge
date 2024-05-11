@@ -1,7 +1,6 @@
 # textdomain: mcl_doc_basics
 Advanced usage=高度な使用方法
 Advanced information which may be nice to know, but is not crucial to gameplay=知っておくと便利だが、ゲームプレイには重要でない高度な情報
-# MCL2 extensions
 Creative Mode=クリエイティブモード
 Enabling Creative Mode in MineClone 2 applies the following changes:=MineClone 2 で Creative Mode を有効にすると、以下の変更が適用されます：
 • You keep the things you've placed=・あなたが置いたものを保つ
@@ -464,82 +463,3 @@ Minetest is a free software game engine for games based on voxel gameplay, inspi
 A core feature of Minetest is the built-in modding capability, which all games consist of too. They can be as simple as adding a few decorational blocks or be very complex by e.g. introducing completely new gameplay concepts, generating a completely different kind of world, and many other things.=
 Minetest can be played alone or online together with multiple players. Online play will work out of the box with any mods, with no need for additional software as they are entirely provided by the server.=Minetestは、一人でプレイすることも、複数のプレイヤーと一緒にオンラインでプレイすることも可能です。サーバーが全てを提供するため、どんなMODでもオンラインプレイはそのまま動作し、追加のソフトウェアも要りません。
 MineClonia is a game that is built on top of the Minetest engine that intends to create a game that is as close to Minecraft as possible. There are many other games for Minetest however, that can be installed from the main menu content browser.=
-
-
-##### not used anymore #####
-
-This is a very brief introduction to the basic gameplay:=基本的なゲームプレイの簡素な紹介：
-Basic controls:=基本操作：
-• Move mouse to look=・マウスを動かして見る
-• [W], [A], [S] and [D] to move=・[W]、[A]、[S]、[D]で移動
-• [E] to sprint=・[E]で走る
-• [Space] to jump or move upwards=・[Space]でジャンプ ／ 上昇
-• [Shift] to sneak or move downwards=・[Shift]でスニーク ／ 下降
-• Mouse wheel or [1]-[9] to select item=・マウスホイールか[1]-[9]でアイテム選択
-• Left-click to mine blocks or attack=・左クリックでブロックを掘る ／ 攻撃
-• Recover from swings to deal full damage=・最大ダメージを与えるには攻撃間隔にインターバルが必要
-• Right-click to build blocks and use things=・右クリックでブロックを積む ／ モノを使う
-• [I] for the inventory=・[I]でインベントリ画面
-• First items in inventory appear in hotbar below=・インベントリの最初のアイテムが、下のホットバーに表示される
-• Lowest row in inventory appears in hotbar below=・インベントリ最後尾のアイテムが、下のホットバーに表示される
-• [Esc] to close this window=・[Esc]でこのウィンドウを閉じる
-• Continue playing as you wish. There's no goal. Have fun!=・思いのままにプレイを続けよう。ゴールはありません。楽しんで！
-The player is thrown into a huge world made out of cubes or blocks. These cubes usually make the landscape they blocks can be removed and placed almost entirely freely. Using the collected items, new tools and other items can be crafted. Games in Minetest can, however, be much more complex than this.=プレイヤーは、立方体やブロックでできた巨大な世界に放り込まれます。これらのキューブは大抵、ほぼ自由にブロックを削除・配置でき、景観を作りあげます。収集したアイテムを使って、新しい道具や他のアイテムを作れます。Minetestのゲームは、しかし、これよりもはるかに複雑にできます。
-A core feature of Minetest is the built-in modding capability. Mods modify existing gameplay. They can be as simple as adding a few decorational blocks or be very complex by e.g. introducing completely new gameplay concepts, generating a completely different kind of world, and many other things.=Minetestの中核を成すのは、組み込みのMOD（モディファイ）機能です。MODとは、既存のゲームプレイを改造するものです。装飾ブロックを追加するだけの簡単なものから、全く新しいゲームプレイコンセプトを導入したり、全く異なる種類の世界を生成したりする非常に複雑なものまで、多岐にわたります。
-Minetest is usually bundled with a simple default game, named “Minetest Game” (shown in images 1 and 2). You probably already have it. Other games for Minetest can be downloaded from the official Minetest forums <https://forum.minetest.net/viewforum.php?f@=48>.=Minetestには通常、「Minetest Game」という名前のシンプルな基本のゲームが同梱されています（画像1、2のとおり）。おそらく、すでにお持ちでしょう。Minetest用の他のゲームは、Minetestの公式フォーラム <https://forum.minetest.net/viewforum.php?f@=48> からダウンロードできます。
-Minetest as well as Minetest Game are both unfinished at the moment, so please forgive us when not everything works out perfectly.=MinetestもMinetest Gameも現在未完成なので、すべてが完璧とは言えませんが、ご容赦を。
-• Sneak: [Shift]=・スニーク：[Shift]
-If you jump while holding the sneak key, you also jump slightly higher than usual.=スニークキーを押しながらジャンプすると、通常より少し高くジャンプするようにもなっています。
-Sneaking might be disabled by mods. In this case, you still walk slower by sneaking, but you will no longer be stopped at ledges.=スニーキングはMODによって無効化される場合があります。この場合、歩行の鈍化は残りますが、崖っぷちに留まる機能は無くなっています。
-These are the default controls:=デフォルトの操作：
-• E: Sprint=・E：走る
-• E: Move even faster when in fast mode=・E：高速モードではさらに速く移動
-• Left mouse button: Punch / mine blocks / take items=・左クリック：叩く ／ ブロック採掘 ／ アイテム取得
-• Roll mouse wheel: Select next/previous item in hotbar=・マウスホイール回転：ホットバーのアイテム選択 次/前
-• Z: Zoom=・Z：ズーム
-• F8: Toggle cinematic mode=・F8：シネマティックモード切替
-• R: Toggle far view (disables all fog and allows viewing far away, can make game very slow)=・R：遠景の切替え（すべてのフォグを無効にして遠景を望めるが、ゲームを非常に遅くする場合あり）
-• P: Only useful for developers. Writes current stack traces=・P：開発者のみに有用。現在のスタックトレースを書き込む
-Players (actually: “player characters”) are the characters which users control.=プレイヤー（正しくは「プレイヤーキャラクター」）とは、ユーザーが操作するキャラクターを指します。
-Players can take damage for a variety of reasons, here are some:=プレイヤーはさまざまな理由でダメージを受けますが、いくつか紹介します：
-At a health of 0, the player dies. The player can just respawn in the world.=体力が0になると、プレイヤーは死亡します。プレイヤーはワールドにただリスポーンします。
-Other consequences of death depend on the game. The player could lose all items, or lose the round in a competitive game.=その他、死亡した場合の結果はゲームによって異なります。プレイヤーはすべてのアイテムを失ったり、対戦ゲームでは失点する可能性があります。
-In multi-player mode, the name of other players is written above their head.=マルチプレイモードでは、他のプレイヤーの頭上に名前が表示されます。
-Dropped item stacks will be collected automatically when you stand close to them.=ドロップしたアイテムスタックは、近くに立つと自動的に回収されます。
-A common subset of tools is mining tools. These are important to break all kinds of blocks. Weapons are a kind of tool. There are of course many other possible tools. Special actions of tools are usually done by left-click or right-click.=道具の中の分類で一般的なのは、採掘道具です。これらは、あらゆるブロックを壊すために重要です。武器も道具の一種です。もちろん、他にも多くの道具があります。道具の特殊な操作は、通常、左クリックか右クリックで行います。
-When nothing is wielded, players use their hand which may act as tool and weapon.=何も手に持っていないとき、プレイヤーは、道具や武器としても振る舞う自分の手を使います。
-Mining tools are important to break all kinds of blocks. Weapons are another kind of tool. There are some other more specialized tools. Special actions of tools are usually done by right-click.=採掘道具は、あらゆるブロックを壊すために重要な道具です。武器も道具の一種です。その他にも、より専門的な道具があります。道具の特殊な動作は、たいてい右クリックで行います。
-When nothing is wielded, players use their hand which may act as tool and weapon. The hand is capable of punching and deals minimum damage.=何も手に持っていないとき、プレイヤーは、道具や武器としても機能する自分の手を使います。手は、最小限のダメージを与える攻撃ができます。
-Many tools will wear off when using them and may eventually get destroyed. The damage is displayed in a damage bar below the tool icon. If no damage bar is shown, the tool is in mint condition. Tools may be repairable by crafting, see “Basics > Crafting”.=多くの道具は使っていると消耗していき、ついには壊れてしまうこともあります。ダメージは、道具のアイコンの下にあるダメージバーで表示されます。ダメージバーが表示されていない場合、その道具は新品同様です。道具はクラフトで修理できる場合があります。“Basics > Crafting”を参照してください。
-You can change the camera mode by pressing [F7].=[F7]を押すと、カメラモードを変更できます。
-You might be able to zoom with [Z] to zoom the view at the crosshair. This allows you to look further.=[Z]を押すと十字線に沿った視界をズームできる、かもしれません。これによって、より遠くを望めます。
-Zooming is a gameplay feature that might be enabled or disabled by the game. By default, zooming is enabled when in Creative Mode but disabled otherwise.=ズーム操作は、ゲームによって有効または無効になる可能性のあるゲームプレイ機能です。デフォルトでは、ズームが有効なのはクリエイティブモードのみで、それ以外なら無効化されています。
-There is also Cinematic Mode which can be toggled with [F8]. With Cinematic Mode enabled, the camera movements become more smooth. Some players don't like it, it is a matter of taste.=また、[F8]で切替え可能なシネマティックモードもあります。シネマティックモードを有効にすると、カメラの動きがより滑らかになります。好みによりますが、苦手なプレイヤーもいるようです。
-By holding down [Z], you can zoom the view at your crosshair. You need the “zoom” privilege to do this.=[Z]を押していると、 十字線に沿った視界をズームできます。このためには“zoom”権限が必要です。
-• Toggle Cinematic Mode: [F8]=・シネマティックモードの切替：[F8]
-• Zoom: [Z]=・ズーム：[Z]
-The world of MineClone 2 is made entirely out of blocks (voxels, to be precise). Blocks can be added or removed with the correct tools.=MineClone 2のワールドは、すべてがブロック（正確にはボクセル）で構成されています。ブロックは、適切なツールで追加や削除ができます。
-To craft something, you need one or more items, a crafting grid (C) and a crafting recipe. A crafting grid is like a normal inventory which can also be used for crafting. Items need to be put in a certain pattern into the crafting grid. Next to the crafting grid is an output slot (O). Here the result will appear when you placed items correctly. This is just a preview, not the actual item. Crafting grids can come in different sizes which limits the possible recipes you can craft.=何かをクラフトするには、１つ以上のアイテム、クラフトグリッド（C）、クラフトレシピが必要です。クラフトグリッドは通常のインベントリのようなもので、クラフトにも使えます。アイテムは、クラフトグリッドに一定のパターンで配置する必要があります。クラフトグリッドの隣には、アウトプットスロット（O）があります。ここにアイテムを正しく配置すると、結果が表示されます。これはあくまでプレビューであり、実際のアイテムではありません。クラフトグリッドの大きさはまちまちなため、クラフトできるレシピが制限されたりもします。
-A description on how to craft an item is called a “crafting recipe”. You need this knowledge to craft. There are multiple ways to learn crafting recipes. One way is by using a crafting guide, which contains a list of available crafting recipes. Some games provide crafting guides. There are also some mods which you can download online for installing a crafting guide. Another way is by reading the online manual of the game (if one is available).=アイテムのクラフト方法を記したものを「クラフトレシピ」と呼びます。この知識は、クラフトをするのに必要です。クラフトレシピを覚えるには、複数の方法があります。1つは、クラフトレシピの使用可能なリストを含むクラフトガイドを使用する方法です。いくつかのゲームではクラフトガイドを提供しています。また、クラフトガイドをインストールするために、オンラインでダウンロードできるMODがいくつかあります。もう1つの方法は、ゲームのオンラインマニュアルを読むことです（利用可能な場合）。
-• Shaped (image 2): Items need to be placed in a particular shape=・整形（画像2）：アイテムは特定の形に配置する必要がある
-• Shapeless (images 3 and 4): Items need to be placed somewhere in input (both images show the same recipe)=形なし（画像3、4）：アイテムは入力のどこかしらに置く必要がある（両画像とも同じレシピを表示）
-• Repairing (image 5): Place two damaged tools into the crafting grid anywhere to get a tool which is repaired by 5%=修復（画像5）：損傷した道具を2つ、任意のクラフトグリッドに置くと、5%修復された道具が手に入る
-In some crafting recipes, some input items do not need to be a concrete item, instead they need to be a member of a group (see “Basics > Groups”). These recipes offer a bit more freedom in the input items. Images 6-8 show the same group-based recipe. Here, 8 items of the “stone” group are required, which is true for all of the shown items.=・クラフトレシピの中には、入力アイテムが具体的でなくてもよいものがあり、その代わりグループに属している必要があります（“Basics > Groups”参照）。これらのレシピでは、入力アイテムにいくらか自由度があります。画像6-8は、同じグループ基準のレシピを示したものです。ここでは"stone "グループのアイテムが8つ必要であり、これは表示されているすべてのアイテムに当てはまります。
-At the bottom of the screen you see some squares. This is called the “hotbar”. The hotbar allows you to quickly access the first items from your player inventory.=画面の下に、いくつか四角いものが見えます。これは「ホットバー」と呼ばれるものです。ホットバーを使うと、インベントリの初段のアイテムに素早くアクセスできます。
-You can change the selected item with the mouse wheel or the keyboard.=選択した項目は、マウスホイールやキーボードで変更できます。
-If you have a map item in any of your hotbar slots, you can use the minimap.=いずれかのホットバースロットにマップアイテムがあれば、ミニマップが使えます。
-In some games, the minimap may be disabled.=ゲームによっては、ミニマップが無効になっている場合があります。
-You have your own inventory which is called your “player inventory”, you can open it with the inventory key (default: [I]). The first inventory slots are also used as slots in your hotbar.=「プレイヤーインベントリ」と呼ばれる自分専用のインベントリがあり、インベントリキー（デフォルト：[I]）で開けます。インベントリの初段スロットは、ホットバーのスロットとしても機能します。
-• Right click: put 1 item of the item stack=・右クリック：アイテムをスタックから1個置く
-Throwing away: If you hold an item stack and click with it somewhere outside the menu, the item stack gets thrown away into the environment.=捨てる：アイテムスタックを保持し、メニュー外のどこかをクリックすると、アイテムスタックがその辺に投げ捨てられます。
-Quick transfer: You can quickly transfer an item stack to/from the player inventory to/from another item's inventory slot like a furnace, chest, or any other item with an inventory slot when that item's inventory is accessed. The target inventory is generally the most relevant inventory in this context.=直送する：炉やチェストなどのインベントリスロットに対しては、プレイヤーインベントリからアイテムスタックを直送できます。この場合対象となるのは、一般的に最も関連性の高いインベントリスロットです。
-• Sneak+Left click: Automatically transfer item stack=・スニークキー + 左クリック：アイテムスタックの自動転送
-You may want to check out these online resources related to MineClone 2.=MineClone 2 に関連するオンライン資料もチェックしてみてください。
-MineClone 2 download and forum discussion: <https://forum.minetest.net/viewtopic.php?f@=50&t@=16407>=MineClone 2 のダウンロードと掲示板での意見交換：<https://forum.minetest.net/viewtopic.php?f@=50&t@=16407>
-Here you find the most recent version of MineClone 2 and can discuss it.=ここでは MineClone 2 の最新バージョンを確認し、意見を交換できます。
-Bug tracker: <https://github.com/Wuzzy2/MineClone2-Bugs>=バグ追跡：<https://github.com/Wuzzy2/MineClone2-Bugs>
-Report bugs here.=バグの報告はこちら。
-Minetest links:=Minetest リンク：
-The main place to find the most recent version of Minetest, the engine used by MineClone 2.=MineClone 2 で使用されているエンジン、Minetest の最新版を入手できるメインサイトです。
-Minetest forums: <https://forums.minetest.net/>=Minetest の掲示板：<https://forums.minetest.net/>
-• MineClone 2: What you play right now=・MineClone 2：マインクローン2。今、プレイしているもの

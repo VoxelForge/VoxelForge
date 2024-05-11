@@ -23,9 +23,3 @@ Play a sound. Arguments: <sound>: name of the sound. <target>: Target.=
 Sound name is invalid!=
 Target is invalid!!=
 Only peaceful mobs allowed!=平和的なモブのみ許されます！
-
-
-##### not used anymore #####
-
-@1 committed suicide.=@1 は自害しました。
-@1 was killed by @2.=@1 は @2 に殺られました。

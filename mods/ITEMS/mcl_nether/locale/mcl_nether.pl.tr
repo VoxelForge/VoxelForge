@@ -27,16 +27,12 @@ Pillar Quartz Block=Filarowy blok kwarcu
 Smooth Quartz=Gładki kwarc
 Quartz Stairs=
 Quartz Slab=
-Double Quartz Slab=
 Smooth Quartz Stairs=
 Smooth Quartz Slab=
-Double Smooth Quartz Slab=
 Nether Brick Stairs=
 Nether Brick Slab=
-Double Nether Brick Slab=
 Red Nether Brick Stairs=
 Red Nether Brick Slab=
-Double Red Nether Brick Slab=
 Nether Brick Fence=
 Glowstone Dust=Pył jasnogłazu
 Glowstone dust is the dust which comes out of broken glowstones. It is mainly used in crafting.=Pył jasnogłazu to pył wyrzucany przez rozbite jasnogłazy. Jest głównie wykorzystywany w wytwarzaniu.
@@ -60,8 +56,3 @@ Nether Wart=Netherowa brodawka
 Grows on soul sand=Rośnie na piasku dusz
 Nether warts are plants home to the Nether. They can be planted on soul sand and grow in 4 stages.=Netherowe brodawki to rośliny występujące w Netherze. Mogą być posadzone na piasku dusz i wyrosną w 4 fazach.
 Place this item on soul sand to plant it and watch it grow.=Postaw ten przedmiot na piasku dusz aby zasadzić go i patrz jak rośnie.
-
-
-##### not used anymore #####
-
-@1 stood too long on a magma block.=@1 zbyt długo stała na bloku magmy.

@@ -1,8 +1,8 @@
 # textdomain: mcl_bamboo
 ### bamboo_base.lua ###
-Bamboo=
 Bamboo Raft=
 Chest Bamboo Raft=
+Bamboo=
 Bamboo Plant=
 Bamboo Mosaic Plank=
 Scaffolding=

@@ -1,10 +1,6 @@
 # textdomain: mcl_armor
 This is a piece of equippable armor which reduces the amount of damage you receive.=Jest to część możliwej do założenia zbroi, która zmniejsza otrzymywane obrażenia.
 To equip it, put it on the corresponding armor slot in your inventory menu.=Aby ją założyć, upuść ją na odpowiadającym miejscu na zbroję na ekranie ekwipunku.
-Leather Cap=Skórzana czapka
-Leather Tunic=Skórzana tunika
-Leather Pants=Skórzane spodnie
-Leather Boots=Skórzane buty
 Golden Helmet=Złoty hełm
 Golden Chestplate=Złoty napierśnik
 Golden Leggings=Złote nogawice
@@ -48,11 +44,3 @@ Applies to:=
 Armor=
 Ingredients:=
 Ingot & Crystals=
-
-
-##### not used anymore #####
-
-Chain Helmet=Kolczy hełm
-Chain Chestplate=Kolczy napierśnik
-Chain Leggings=Kolcze nogawice
-Chain Boots=Kolcze buty

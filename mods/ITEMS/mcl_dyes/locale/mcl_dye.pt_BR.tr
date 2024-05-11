@@ -1,26 +1,39 @@
 # textdomain: mcl_dye
-White Dye=
-Light Grey Dye=Tintura Cinza Claro
-Grey Dye=Tintura Cinza
-Black Dye=
-Purple Dye=Tintura Roxa
-Blue Dye=
-Light Blue Dye=Tintura Azul Claro
-Cyan Dye=Tintura Ciano
-Cactus Green=Verde Cacto
-Lime Dye=Tintura Lima
-Dandelion Yellow=Dente-de-leão Amarelo
-Brown Dye=
-Orange Dye=Tintura Laranja
-Rose Red=Tintura Vermelha
-Magenta Dye=Tintura Magenta
-Pink Dye=Tintura Rosa
+White=
+Light Grey=
+Grey=
+Black=
+Purple=
+Blue=
+Light Blue=
+Cyan=
+Green=
+Lime=
+Yellow=
+Brown=
+Orange=
+Red=
+Magenta=
+Pink=
+@1 Dye=
 This item is a dye which is used for dyeing and crafting.=Este item é uma tintura e pode ser usado para tingir ou fabricar.
 Rightclick on a sheep to dye its wool. Other things are dyed by crafting.=Clique com o botão direito em uma ovelha para tingir sua lã. Outras coisas são tingidas ao fabricá-las.
 
 
 ##### not used anymore #####
 
+Light Grey Dye=Tintura Cinza Claro
+Grey Dye=Tintura Cinza
+Purple Dye=Tintura Roxa
+Light Blue Dye=Tintura Azul Claro
+Cyan Dye=Tintura Ciano
+Cactus Green=Verde Cacto
+Lime Dye=Tintura Lima
+Dandelion Yellow=Dente-de-leão Amarelo
+Orange Dye=Tintura Laranja
+Rose Red=Tintura Vermelha
+Magenta Dye=Tintura Magenta
+Pink Dye=Tintura Rosa
 Bone Meal=Farinha de Osso
 Ink Sac=Saco de Tinta
 Lapis Lazuli=Lápis-lazuli

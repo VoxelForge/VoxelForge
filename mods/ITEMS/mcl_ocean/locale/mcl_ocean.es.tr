@@ -1,5 +1,4 @@
 # textdomain: mcl_ocean
-### corals.lua ###
 Tube Coral Block=Bloque de coral de tubo
 Dead Tube Coral Block=Bloque de coral de tubo muerto
 Tube Coral=Coral de tubo
@@ -40,36 +39,27 @@ Kelp grows inside water on top of dirt, sand or gravel.=Las algas crecen dentro 
 Dried Kelp=Algas secas
 Dried kelp is a food item.=Las algas secas son un alimento.
 Dried Kelp Block=Bloque de algas secas
-### kelp.lua ###
 A decorative block that serves as a great furnace fuel.=Un bloque decorativo que sirve como un gran combustible de horno.
-### kelp.lua ###
-### seagrass.lua ###
 Grows in water on dirt, sand, gravel=
 Sea Lantern=Linterna de mar
 Sea lanterns are decorative light sources which look great underwater but can be placed anywhere.=Las linternas marinas son fuentes de luz decorativas que se ven muy bien bajo el agua pero se pueden colocar en cualquier lugar.
 Prismarine=Prismarina
 Prismarine is used as a building block. It slowly changes its color.=La prismarina se usa como bloque de construcción. Poco a poco cambia su color.
 Prismarine Bricks=Ladrillos de prismarina
-### prismarine.lua ###
 Dark Prismarine=Prismarina oscura
 Prismarine Stairs=
 Prismarine Slab=
-Double Prismarine Slab=
 Prismarine Brick Stairs=
 Prismarine Brick Slab=
-Double Prismarine Brick Slab=
 Dark Prismarine Stairs=
 Dark Prismarine Slab=
-Double Dark Prismarine Slab=
 Prismarine Crystals=Cristales de prismatina
 Prismarine Shard=Fragmento de prismatina
 Sea Pickle=
 Sea pickles grow on dead brain coral blocks and provide light when underwater. They come in 4 sizes that vary in brightness.=
 It can only be placed on top of dead brain coral blocks. Placing a sea pickle on another sea pickle will make it grow and brighter.=
 Glows in the water=
-### sea_pickle.lua ###
 4 possible sizes=
 Grows on dead brain coral block=
-### seagrass.lua ###
 Seagrass=Hierba marina
 Seagrass grows inside water on top of dirt, sand or gravel.=La hierba marina crece dentro del agua sobre tierra, arena o grava.

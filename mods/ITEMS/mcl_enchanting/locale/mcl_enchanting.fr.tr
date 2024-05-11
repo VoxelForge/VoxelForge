@@ -1,5 +1,4 @@
 # textdomain: mcl_enchanting
-### enchantments.lua ###
 Bane of Arthropods=Fléau des arthropodes
 Increases damage and applies Slowness IV to arthropod mobs (spiders, cave spiders, silverfish and endermites).=Augmente les dégâts et applique la lenteur IV aux mobs arthropodes (araignées, araignées des cavernes, lépismes argentés et endermites).
 Channeling=Canalisation
@@ -62,7 +61,6 @@ Unbreaking=Solidité
 Increases item durability.=Augmente la durabilité des objets.
 Inventory=Inventaire
 @1 Lapis Lazuli=@1 Lapis Lazuli
-### engine.lua ###
 @1 Enchantment Levels=@1 Niveaux d'enchantement
 Level requirement: @1=Niveau requis: @1
 Enchant an item=Enchanter un objet
@@ -72,7 +70,6 @@ Player '@1' cannot be found.=Le joueur '@1' est introuvable.
 There is no such enchantment '@1'.=Il n'y a pas un tel enchantement '@1'.
 The target doesn't hold an item.=La cible ne contient aucun élément.
 The selected enchantment can't be added to the target item.=L'enchantement sélectionné ne peut pas être ajouté à la cible.
-### init.lua ###
 '@1' is not a valid number='@1' n'est pas un nombre valide
 The number you have entered (@1) is too big, it must be at most @2.=Le nombre que vous avez entré (@1) est trop grand, il doit être au plus de @2.
 The number you have entered (@1) is too small, it must be at least @2.=Le nombre que vous avez entré (@1) est trop petit, il doit être au moins de @2.
@@ -93,23 +90,3 @@ These options are randomized, and dependent on experience level; but the enchant
 To increase the enchantment strength, place bookshelves around the enchanting table. However, you will need to keep 1 air node between the table, & the bookshelves to empower the enchanting table.=Pour augmenter la force d'enchantement, placer des bibliothèques autour de la table d'enchantement. Cependant, vous devrez garder au moins un bloc d'air entre la table et les bibliothèques pour alimenter la table d'enchantement.
 After finally selecting your enchantment; left-click on the selection, and you will see both the lapis lazuli and your experience levels consumed. And, an enchanted item left in its place.=Après avoir finalement sélectionné un enchantement ; cliquer gauche la sélection, et vous verrez à la fois les lapis-lazuli et vos niveaux d'expérience consommés. Un objet enchanté est laissé à leur place.
 Enchant=Enchantement
-
-
-##### not used anymore #####
-
-Aqua Affinity=Affinité aquatique
-Increases underwater mining speed.=Augmente la vitesse de minage sous-marine.
-Blast Protection=Protection contre les explosions
-Reduces explosion damage and knockback.=Réduit les dégâts d'explosion et de recul.
-Curse of Binding=Malédiction du lien éternel
-Item cannot be removed from armor slots except due to death, breaking or in Creative Mode.=L'objet ne peut pas être retiré des emplacements d'armure sauf en cas de mort, de rupture ou en mode créatif.
-Feather Falling=Chute amortie
-Reduces fall damage.=Reduit les dégats de chute.
-Fire Protection=Protection contre le feu
-Reduces fire damage.=Reduit les dégats de feu.
-Projectile Protection=Protection contre les projectiles
-Reduces projectile damage.=Réduit les dommages causés par les projectiles.
-Protection=Protection
-Reduces most types of damage by 4% for each level.=éduit la plupart des types de dégâts de 4% pour chaque niveau.
-Reflects some of the damage taken when hit, at the cost of reducing durability with each proc.=Reflète une partie des dégâts subis lors de la frappe, au prix d'une réduction de la durabilité à chaque déclenchement.
-Thorns=Épines

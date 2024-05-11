@@ -76,11 +76,3 @@ Block breaking strength: @1=Blokkens brudstyrke: @1
 This is a melee weapon which deals damage by punching.=Dette er et nærkampsvåben som giver skade ved at slå. 
 Maximum damage: @1 HP=Højeste skade: @1
 Full punch interval: @1 s=Helt interval mellem slag: @1 s
-
-
-##### not used anymore #####
-
-Saturation points restored: @1%.1f=Mæthedspoint genvundet: @1%.1f
-This item can be repaired at an anvil with: @1.=Denne genstand kan repareres ved en ambolt med: @1.
-This item can be repaired at an anvil with any wooden planks.=Denne genstand kan repareres ved en ambolt med hvilkensomhelst træplanke.
-This item can be repaired at an anvil with any item in the “@1” group.=Denne genstand kan repareres ved en ambolt med hvilkensomhelst genstand i "@1"gruppen

@@ -1,5 +1,28 @@
 # textdomain: mcl_dye
 ### init.lua ###
+White=
+Light Grey=
+Grey=
+Black=
+Purple=
+Blue=
+Light Blue=
+Cyan=
+Green=
+Lime=
+Yellow=
+Brown=
+Orange=
+Red=
+Magenta=
+Pink=
+@1 Dye=
+This item is a dye which is used for dyeing and crafting.=Este artículo es un tinte que se utiliza para teñir y elaborar.
+Rightclick on a sheep to dye its wool. Other things are dyed by crafting.=Haga clic derecho sobre una oveja para teñir su lana. Otras cosas pueden ser teñidas mediante la elaboración.
+
+
+##### not used anymore #####
+
 White Dye=Tinte blanca
 Light Grey Dye=Tinte gris claro
 Grey Dye=Tinte gris
@@ -16,12 +39,6 @@ Orange Dye=Tinte naranja
 Rose Red=Tinte rojo
 Magenta Dye=Tinte magenta
 Pink Dye=Tinte rosado
-This item is a dye which is used for dyeing and crafting.=Este artículo es un tinte que se utiliza para teñir y elaborar.
-Rightclick on a sheep to dye its wool. Other things are dyed by crafting.=Haga clic derecho sobre una oveja para teñir su lana. Otras cosas pueden ser teñidas mediante la elaboración.
-
-
-##### not used anymore #####
-
 Bone Meal=Harina de hueso
 Bone meal is a white dye and also useful as a fertilizer to speed up the growth of many plants.=La harina de hueso es un tinte blanco y también es útil como fertilizante para acelerar el crecimiento de muchas plantas.
 Green Dye=Tinte verde

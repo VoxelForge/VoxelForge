@@ -1,4 +1,4 @@
-# textdomain:doc_identifier
+# textdomain: doc_identifier
 Error: This node, item or object is undefined. This is always an error.=Błąd: Ten węzeł, przedmiot lub obiekt nie jest zdefiniowany. To zawsze jest błąd.
 This can happen for the following reasons:=To może się zdarzyć z następujących powodów:
 • The mod which is required for it is not enabled=• Mod który jest do tego potrzebny nie jest włączony

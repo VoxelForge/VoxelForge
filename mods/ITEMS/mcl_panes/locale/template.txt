@@ -5,3 +5,4 @@ Stained Glass Pane=
 Iron Bars=
 Iron bars neatly connect to their neighbors as you build them.=
 Glass Pane=
+@1 Glass Pane=

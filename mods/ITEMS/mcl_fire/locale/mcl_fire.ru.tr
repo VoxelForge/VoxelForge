@@ -13,11 +13,3 @@ Eternal fire is a damaging block that might create more fire. It will create fir
 Eternal fire is a damaging block. Eternal fire can be extinguished by punches and nearby water blocks. Other than (normal) fire, eternal fire does not get extinguished on its own and also continues to burn under rain. Punching eternal fire is safe, but it hurts if you stand inside.=Вечный огонь это поджигающий блок. В этом мире огонь не распространяется на соседние блоки. Вечный огонь можно потушить ударом или водой. В отличие от обычного огня, вечный огонь не гаснет сам по себе и также продолжает гореть под дождем. Бить вечный огонь безопасно, но он причиняет урон, если вы стоите внутри огня.
 Fire=Огонь
 Eternal Fire=Вечный огонь
-
-
-##### not used anymore #####
-
-@1 has been cooked crisp.=@1 был(а) зажарен(а) до хрустящей корочки.
-@1 felt the burn.=@1 сгорел(а).
-@1 died in the flames.=@1 погиб(ла) в пламени.
-@1 died in a fire.=@1 погиб(ла) в огне.

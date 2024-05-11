@@ -7,6 +7,7 @@ In this world, going to bed won't skip the night, but it will skip thunderstorms
 Sleeping allows you to skip the night. The night is skipped when all players in this world went to sleep. The night is skipped after sleeping for a few seconds. Thunderstorms can be skipped in the same manner.=Mit Schlaf können Sie die Nacht überspringen. Die Nacht wird übersprungen, wenn alle Spieler in dieser Welt sich schlafen gelegt haben. Die Nacht wird dann nach ein paar Sekunden übersprungen. Gewitterstürme werden auf die gleiche Weise übersprungen.
 Allows you to sleep=Zum Einschafen
 Bed=Bett
+@1 Bed=@1 Bett
 New respawn position set!=Neue Wiedereinstiegsposition gesetzt!
 You can only sleep at night or during a thunderstorm.=Sie können nur nachts oder während eines Gewittersturms schlafen.
 You can't sleep, the bed's too far away!=Sie können nicht schlafen, das Bett ist zu weit weg!
@@ -31,24 +32,3 @@ You are missing the 'shout' privilege! It's required in order to talk in chat...
 Sorry, but you have to wait @1 seconds until you may use this button again!=Sie müssen leider noch @1 Sekunden warten, bevor sie diesen Knopf erneut benutzen können!
 Hey! Would you guys mind sleeping?=Hey, würdet Ihr bitte zu Bett gehen?
 Respawn Anchor=Seelenanker
-
-
-##### not used anymore #####
-
-Red Bed=Rotes Bett
-Blue Bed=Blaues Bett
-Cyan Bed=Türkises Bett
-Grey Bed=Graues Bett
-Light Grey Bed=Hellgraues Bett
-Black Bed=Schwarzes Bett
-Yellow Bed=Gelbes Bett
-Green Bed=Grünes Bett
-Magenta Bed=Magenta Bett
-Orange Bed=Orange Bett
-Purple Bed=Violettes Bett
-Brown Bed=Braunes Bett
-Pink Bed=Rosa Bett
-Lime Bed=Lindgrünes Bett
-Light Blue Bed=Hellblaues Bett
-White Bed=Weißes Bett
-New respawn position set! But you can only sleep at night or during a thunderstorm.=Neue Wiedereinstiegsposition gesetzt! Aber Sie können nur nachts oder während eines Gewittersturms schlafen.

@@ -120,7 +120,7 @@ function awards.show_to(name, to, sid, text)
 			minetest.chat_send_player(to, S("You have not unlocked any awards."))
 			return
 		end
-		minetest.chat_send_player(to, string.format(S("%s’s awards:"), name))
+		minetest.chat_send_player(to, S("@1’s awards:", name))
 
 		for str, _ in pairs(data.unlocked) do
 			local def = awards.registered_awards[str]

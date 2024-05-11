@@ -23,9 +23,3 @@ Play a sound. Arguments: <sound>: name of the sound. <target>: Target.=
 Sound name is invalid!=
 Target is invalid!!=
 Only peaceful mobs allowed!=Apenas mobs pacíficos permitidos!
-
-
-##### not used anymore #####
-
-@1 committed suicide.=@1 cometeu suícidio.
-@1 was killed by @2.=@1 foi morto(a) por @2.

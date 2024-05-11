@@ -1,4 +1,4 @@
-# textdomain:doc
+# textdomain: doc
 <=
 >=
 Access to the requested entry has been denied; this entry is secret. You may unlock access by progressing in the game. Figure out on your own how to unlock this entry.=O acesso à entrada solicitada foi negado; essa entrada é secreta. Você pode desbloquear o acesso progredindo no jogo. Descobrir por conta própria como desbloquear essa entrada.
@@ -7,7 +7,7 @@ All help entries revealed!=Todas as entradas de ajuda reveladas!
 All help entries are already revealed.=Todas as entradas de ajuda já foram reveladas.
 Allows you to reveal all hidden help entries with /help_reveal=Permite revelar todas as entradas de ajuda ocultas com /help_reveal
 Category list=Lista de Categorias
-Currently all entries in this category are hidden from you.\\nUnlock new entries by progressing in the game.=Atualmente, todas as entradas nessa categoria estão ocultas a você.\\nDesbloqueie novas entradas progredindo no jogo.
+Currently all entries in this category are hidden from you.\@nUnlock new entries by progressing in the game.=Atualmente, todas as entradas nessa categoria estão ocultas a você.\@nDesbloqueie novas entradas progredindo no jogo.
 Help=Ajuda
 Entry=Entrada
 Entry list=Lista de Entradas
@@ -23,7 +23,7 @@ Hidden entries: @1=Entradas ocultas: @1
 Nameless entry (@1)=Entrada sem nome (@1)
 New entries: @1=Novas entradas: (@1)
 New help entry unlocked: @1 > @2=Nova entrada de ajuda desbloqueada: @1 > @2
-No categories have been registered, but they are required to provide help.\nThe Documentation System [doc] does not come with help contents on its own, it needs additional mods to add help content. Please make sure such mods are enabled on for this world, and try again.=Nenhuma categoria foi registrada, mas é necessário fornecer ajuda.\nO Sistema de Documentação [doc] não vem com o conteúdo de ajuda, ele precisa de mods adicionais para adicionar conteúdo de ajuda. Por favor, certifique-se de que os mods estão habilitados para este mundo e tente novamente.
+No categories have been registered, but they are required to provide help.@nThe Documentation System [doc] does not come with help contents on its own, it needs additional mods to add help content. Please make sure such mods are enabled on for this world, and try again.=Nenhuma categoria foi registrada, mas é necessário fornecer ajuda.@nO Sistema de Documentação [doc] não vem com o conteúdo de ajuda, ele precisa de mods adicionais para adicionar conteúdo de ajuda. Por favor, certifique-se de que os mods estão habilitados para este mundo e tente novamente.
 Number of entries: @1=Número de entradas: @1
 OK=OK
 Open a window providing help entries about Minetest and more=Abra uma janela fornecendo entradas de ajuda sobre o Minetest e mais

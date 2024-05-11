@@ -19,13 +19,3 @@ River Water Bucket=河川水入りバケツ
 A bucket can be used to collect and release liquids. This one is filled with river water.=バケツは、液体を集めたり出したりするのに使えます。これは河川水で満たされています。
 Place it to empty the bucket and create a river water source.=これを置いてバケツを空にし、河川水源を作ります。
 Places a river water source=河川水源を配置
-
-
-##### not used anymore #####
-
-Axolotl=ウーパールーパー
-Cod=タラ
-Salmon=サケ
-Tropical Fish=クマノミ
-Place it to empty the bucket and place a @1. Obtain by right clicking on a @2 fish with a bucket of water.=バケツを空にするために@1を置きます。@2入りバケツを右クリックすると魚を入手します。
-Places a water source and a @1 fish.=水源と、@1の魚を配置

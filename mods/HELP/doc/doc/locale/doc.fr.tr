@@ -1,4 +1,4 @@
-# textdomain:doc
+# textdomain: doc
 <=<
 >=>
 Access to the requested entry has been denied; this entry is secret. You may unlock access by progressing in the game. Figure out on your own how to unlock this entry.=L'accès à cette page a été refusé; cette page est secrète. Vous pouvez débloquer l'accès en progressant dans le jeu. Trouvez comment débloquer cette page.
@@ -14,7 +14,6 @@ Entry=Page
 Entry list=Liste des pages
 Error: Access denied.=Erreur : Accès refusé.
 Error: No help available.=Erreur : Aucune aide disponible.
-# Affichage dans un bouton court
 Go to category list=Voir les catégories
 Go to entry list=Voir les pages
 Help > @1=Aide > @1

@@ -1,4 +1,27 @@
 # textdomain: mcl_dye
+White=
+Light Grey=
+Grey=
+Black=
+Purple=
+Blue=
+Light Blue=
+Cyan=
+Green=
+Lime=
+Yellow=
+Brown=
+Orange=
+Red=
+Magenta=
+Pink=
+@1 Dye=
+This item is a dye which is used for dyeing and crafting.=Это краситель, который используется для окрашивания и крафта.
+Rightclick on a sheep to dye its wool. Other things are dyed by crafting.=Кликните правой по овце, чтобы окрасить её шерсть. Остальные вещи окрашиваются путём крафта.
+
+
+##### not used anymore #####
+
 White Dye=Белый краситель
 Light Grey Dye=Светло-серый краситель
 Grey Dye=Серый краситель
@@ -7,20 +30,11 @@ Purple Dye=Фиолетовый краситель
 Blue Dye=Синий краситель
 Light Blue Dye=Голубой краситель
 Cyan Dye=Бирюзовый краситель
-Cactus Green=
 Lime Dye=Лаймовый краситель
-Dandelion Yellow=
 Brown Dye=Коричневый краситель
 Orange Dye=Оранжевый краситель
-Rose Red=
 Magenta Dye=Сиреневый краситель
 Pink Dye=Розовый краситель
-This item is a dye which is used for dyeing and crafting.=Это краситель, который используется для окрашивания и крафта.
-Rightclick on a sheep to dye its wool. Other things are dyed by crafting.=Кликните правой по овце, чтобы окрасить её шерсть. Остальные вещи окрашиваются путём крафта.
-
-
-##### not used anymore #####
-
 Green Dye=Зеленый краситель
 Yellow Dye=Желтый краситель
 Red Dye=Красный краситель

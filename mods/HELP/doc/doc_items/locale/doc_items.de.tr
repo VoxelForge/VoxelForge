@@ -1,17 +1,11 @@
-# textdomain:doc_items
- Using it as fuel turns it into: @1.= Wird dieser Gegenstand als Brennstoff verwendet, verwandelt er sich zu: @1.
+# textdomain: doc_items
+Using it as fuel turns it into: @1.= Wird dieser Gegenstand als Brennstoff verwendet, verwandelt er sich zu: @1.
 @1 seconds=@1 Sekunden
-# Item count times item name
 @1×@2=@1×@2
-# Itemname (25%)
 @1 (@2%)=@1 (@2%)
-# Itemname (<0.5%)
 @1 (<0.5%)=@1 (<0,5%)
-# Itemname (ca. 25%)
 @1 (ca. @2%)=@1 (ca. @2%)
-# List separator (e.g. “one, two, three”)
 , =,
-# Final list separator (e.g. “One, two and three”)
  and = und
 1 second=1 Sekunde
 A transparent block, basically empty space. It is usually left behind after digging something.=Ein transparenter Block, praktisch leerer Raum. Er wird üblicherweise hinterlassen, nachdem man etwas ausgegraben hat.
@@ -46,10 +40,8 @@ Punches with this block don't work as usual; melee combat and mining are either 
 Punches with this item don't work as usual; melee combat and mining are either not possible or work differently.=Schläge mit diesem Gegenstand funktionieren nicht auf die übliche Weise; Nahkampf und Graben sind damit entweder nicht möglich oder funktionieren auf andere Weise.
 Punches with this tool don't work as usual; melee combat and mining are either not possible or work differently.=Schläge mit diesem Werkzeug funktionieren nicht auf die übliche Weise; Nahkampf und Graben sind damit entweder nicht möglich oder funktionieren auf andere Weise.
 Range: @1=Reichweite: @1
-# Range: <Hand> (<Range>)
 Range: @1 (@2)=Reichweite: @1 (@2)
 Range: 4=Reichweite: 4
-# Rating used for digging times
 Rating @1=Wertung @1
 Rating @1-@2=Wertung @1-@2
 The fall damage on this block is increased by @1%.=Der Fallschaden auf diesem Block ist um @1% erhöht.

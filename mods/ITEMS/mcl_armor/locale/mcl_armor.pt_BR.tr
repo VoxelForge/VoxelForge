@@ -1,10 +1,6 @@
 # textdomain: mcl_armor
 This is a piece of equippable armor which reduces the amount of damage you receive.=
 To equip it, put it on the corresponding armor slot in your inventory menu.=
-Leather Cap=Chapéu de Couro
-Leather Tunic=Túnica de Couro
-Leather Pants=Calças de Couro
-Leather Boots=Botas de Couro
 Golden Helmet=Capacete de Ouro
 Golden Chestplate=Peitoral de Ouro
 Golden Leggings=Perneiras de Ouro
@@ -53,6 +49,10 @@ Ingot & Crystals=
 
 ##### not used anymore #####
 
+Leather Cap=Chapéu de Couro
+Leather Tunic=Túnica de Couro
+Leather Pants=Calças de Couro
+Leather Boots=Botas de Couro
 Chain Helmet=Capacete de Cota de Malha
 Chain Chestplate=Peitoral de Cota de Malha
 Chain Leggings=Perneiras de Cota de Malha

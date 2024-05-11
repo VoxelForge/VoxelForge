@@ -1,5 +1,4 @@
 # textdomain: mcl_mobspawners
-### init.lua ###
 Mob Spawner=Generador de criaturas
 Makes mobs appear=
 A mob spawner regularily causes mobs to appear around it while a player is nearby. Some mob spawners are disabled while in light.=Un generador de criaturas regularmente hace que aparezcan mobs a su alrededor mientras un jugador está cerca. Algunos reproductores de las criaturas están deshabilitados mientras están a la luz.

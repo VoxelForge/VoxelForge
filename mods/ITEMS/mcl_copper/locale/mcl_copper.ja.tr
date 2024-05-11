@@ -1,5 +1,5 @@
 # textdomain: mcl_copper
-Preserved =
+Waxed @1=
 Copper Ingot=銅インゴット
 Molten Raw Copper. It is used to craft blocks.=溶けた未処理の銅。ブロックのクラフトに使われます。
 Raw Copper=銅の粗鉱
@@ -24,39 +24,3 @@ Weathered Cut Copper=半ば酸化した溝入り銅
 Weathered cut copper is a decorative block.=半ば酸化した溝入り銅は、装飾ブロックです。
 Oxidized Cut Copper=殆ど酸化した溝入り銅
 Oxidized cut copper is a decorative block.=殆ど酸化した溝入り銅は、装飾ブロックです。
-Slab of Cut Copper=溝入り銅のスラブ
-Double Slab of Cut Copper=溝入り銅の２重スラブ
-Slab of Exposed Cut Copper=少し酸化した溝入り銅のスラブ
-Double Slab of Exposed Cut Copper=少し酸化した溝入り銅の２重スラブ
-Slab of Weathered Cut Copper=半ば酸化した溝入り銅のスラブ
-Double Slab of Weathered Cut Copper=半ば酸化した溝入り銅の２重スラブ
-Slab of Oxidized Cut Copper=殆ど酸化した溝入り銅のスラブ
-Double Slab of Oxidized Cut Copper=殆ど酸化した溝入り銅の２重スラブ
-Stairs of Cut Copper=溝入り銅の階段
-Stairs of Exposed Cut Copper=少し酸化した溝入り銅の階段
-Stairs of Weathered Cut Copper=半ば酸化した溝入り銅の階段
-Stairs of Oxidized Cut Copper=殆ど酸化した溝入り銅の階段
-
-
-##### not used anymore #####
-
-Waxed Block of Copper=錆止め済み銅ブロック
-Waxed Cut Copper=錆止め済み溝入り銅
-Waxed Double Slab of Cut Copper=錆止め済み溝入り銅の２重スラブ
-Waxed Double Slab of Exposed Cut Copper=少し酸化した錆止め済み溝入り銅の２重スラブ
-Waxed Double Slab of Oxidized Cut Copper=殆ど酸化した錆止め済み溝入り銅の２重スラブ
-Waxed Double Slab of Weathered Cut Copper=半ば酸化した錆止め済み溝入り銅の２重スラブ
-Waxed Exposed Copper=少し酸化した錆止め済み銅
-Waxed Exposed Cut Copper=少し酸化した錆止め済み溝入り銅
-Waxed Oxidized Copper=殆ど酸化した錆止め済み銅
-Waxed Oxidized Cut Copper=殆ど酸化した錆止め済み溝入り銅
-Waxed Slab of Cut Copper=錆止め済み溝入り銅のスラブ
-Waxed Slab of Exposed Cut Copper=少し酸化した錆止め済み溝入り銅のスラブ
-Waxed Slab of Oxidized Cut Copper=殆ど酸化した錆止め済み溝入り銅のスラブ
-Waxed Slab of Weathered Cut Copper=半ば酸化した錆止め済み溝入り銅のスラブ
-Waxed Stairs of Cut Copper=錆止め済み溝入り銅の階段
-Waxed Stairs of Exposed Cut Copper=少し酸化した錆止め済み溝入り銅の階段
-Waxed Stairs of Oxidized Cut Copper=殆ど酸化した錆止め済み溝入り銅の階段
-Waxed Stairs of Weathered Cut Copper=半ば酸化した錆止め済み溝入り銅の階段
-Waxed Weathered Copper=半ば酸化した錆止め済み銅
-Waxed Weathered Cut Copper=半ば酸化した錆止め済み溝入り銅

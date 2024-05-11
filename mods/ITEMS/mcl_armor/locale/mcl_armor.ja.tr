@@ -1,10 +1,6 @@
 # textdomain: mcl_armor
 This is a piece of equippable armor which reduces the amount of damage you receive.=被ダメージを軽減する、装備可能な防具です。
 To equip it, put it on the corresponding armor slot in your inventory menu.=装備するには、インベントリメニュー中の対応する防具スロットに置いてください。
-Leather Cap=革のキャップ
-Leather Tunic=革のチュニック
-Leather Pants=革のズボン
-Leather Boots=革のブーツ
 Golden Helmet=金のヘルメット
 Golden Chestplate=金のチェストプレート
 Golden Leggings=金のレギンス
@@ -36,7 +32,6 @@ Reduces most types of damage by 4% for each level.=体の外からのダメー�
 Feather Falling=落下耐性
 Reduces fall damage.=落下ダメージを軽減します。
 Aqua Affinity=水中採掘
-#Translations of enchantements
 Increases underwater mining speed.=水中でも採掘速度が低下しません。
 Curse of Binding=束縛の呪い
 Item cannot be removed from armor slots except due to death, breaking or in Creative Mode.=次の場合を除き、防具スロットからアイテムを外せません；アイテムが破損／自身が死亡／クリエイティブモード中
@@ -49,13 +44,3 @@ Applies to:=
 Armor=
 Ingredients:=
 Ingot & Crystals=
-
-
-##### not used anymore #####
-
-Chain Helmet=鎖のヘルメット
-Chain Chestplate=鎖のチェストプレート
-Chain Leggings=鎖のレギンス
-Chain Boots=鎖のブーツ
-Shooting consumes no regular arrows.=普通の矢なら放っても消費しません。
-Shoot 3 arrows at the cost of one.=1本分のコストで3本の矢を放ちます。

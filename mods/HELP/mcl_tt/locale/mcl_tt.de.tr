@@ -47,9 +47,3 @@ Zombie view range: -50%=Zombiesichtweite: -50%
 Skeleton view range: -50%=Skelettsichtweite: -50%
 Creeper view range: -50%=Creepersichtweite: -50%
 Durability: @1=Haltbarkeit: @1
-
-
-##### not used anymore #####
-
-Damage (@1): @2=Schaden (@1): @2
-Healing (@1): @2=Heilung (@1): @2

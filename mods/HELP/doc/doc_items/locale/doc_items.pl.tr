@@ -1,17 +1,11 @@
-# textdomain:doc_items
+# textdomain: doc_items
 Using it as fuel turns it into: @1.=Używanie tego jako paliwa zamienia to w: @1.
 @1 seconds=@1 sekund(y)
-# Item count times item name
 @1×@2=@1×@2
-# Itemname (25%)
 @1 (@2%)=@1 (@2%)
-# Itemname (<0.5%)
 @1 (<0.5%)=@1 (<0.5%)
-# Itemname (ca. 25%)
 @1 (ca. @2%)=@1 (ca. @2%)
-# List separator (e.g. “one, two, three”)
 , =, 
-# Final list separator (e.g. “One, two and three”)
  and = oraz 
 1 second=1 sekunda
 A transparent block, basically empty space. It is usually left behind after digging something.=Przezroczysty blok, praktycznie puste miejsce. Jest zwykle pozostawiany po wykopaniu czegoś.
@@ -46,12 +40,9 @@ Punches with this block don't work as usual; melee combat and mining are either 
 Punches with this item don't work as usual; melee combat and mining are either not possible or work differently.=Uderzanie tym przedmiotem nie działa tak jak zwykle; walka wręcz i kopanie są niemożliwe lub działają inaczej.
 Punches with this tool don't work as usual; melee combat and mining are either not possible or work differently.=Uderzanie tym narzędziem nie działa tak jak zwykle; walka wręcz i kopanie są niemożliwe lub działają inaczej.
 Range: @1=Zasięg: @1
-# Range: <Hand> (<Range>)
 Range: @1 (@2)=Zasięg @1 (@2)
 Range: 4=Zasięg: 4
-# Rating used for digging times
 Rating @1=Klasyfikacja @1
-# @1 is minimal rating, @2 is maximum rating
 Rating @1-@2=Klasyfikacja od @1 do @2
 The fall damage on this block is increased by @1%.=Obrażenia od upadku na tym bloku są zwiększone o @1%.
 The fall damage on this block is reduced by @1%.=Obrażenia od upadku na tym bloku są zmniejszone o @1%.
@@ -141,4 +132,3 @@ Mining durability:=Wytrzymałość kopania:
 This block's rotation is affected by the way you place it: Place it on the floor or ceiling for a vertical orientation; place it at the side for a horizontal orientation. Sneaking while placing it leads to a perpendicular orientation instead.=Na rotację tego bloku wpływa sposób postawienia: Postaw go na podłodze lub suficie aby uzyskać pionową orientację; postaw go na boku by uzyskać poziomą orientację. Skradanie się podczas postawiania sprawia, że zostanie postawiony prostopadle.
 Toughness level: @1=Poziom twardości: @1
 This block is slippery.=Ten blok jest śliski.
-

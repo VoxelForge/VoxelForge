@@ -13,11 +13,3 @@ Eternal fire is a damaging block that might create more fire. It will create fir
 Eternal fire is a damaging block. Eternal fire can be extinguished by punches and nearby water blocks. Other than (normal) fire, eternal fire does not get extinguished on its own and also continues to burn under rain. Punching eternal fire is safe, but it hurts if you stand inside.=Ewiges Feuer ist ein schädlicher Block. Ewiges Feuer kann von Schlägen und Wasserblöcken in der Nähe gelöscht werden. Anders als (normales) Feuer geht ein ewiges Feuer nicht von alleine aus, auch nicht unter Regen. Es ist sicher, ein ewiges Feuer zu schlagen, aber es tut weh, wenn man direkt in einem steht.
 Fire=Feuer
 Eternal Fire=Ewiges Feuer
-
-
-##### not used anymore #####
-
-@1 has been cooked crisp.=@1 wurde knusprig gebraten.
-@1 felt the burn.=@1 ist völlig verbrannt.
-@1 died in the flames.=@1 starb in den Flammen.
-@1 died in a fire.=@1 starb in einem Feuer.

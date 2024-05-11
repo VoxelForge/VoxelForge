@@ -1,10 +1,6 @@
 # textdomain: mcl_armor
 This is a piece of equippable armor which reduces the amount of damage you receive.=Il s'agit d'un morceau d'armure équipable qui réduit la quantité de dégâts que vous recevez.
 To equip it, put it on the corresponding armor slot in your inventory menu.=Pour l'équiper, placez-le sur l'emplacement d'armure correspondant dans votre menu d'inventaire.
-Leather Cap=Casquette en Cuir
-Leather Tunic=Tunique en Cuir
-Leather Pants=Pantalon de Cuir
-Leather Boots=Bottes de Cuir
 Golden Helmet=Casque d'Or
 Golden Chestplate=Plastron d'Or
 Golden Leggings=Jambières d'Or
@@ -36,7 +32,6 @@ Reduces most types of damage by 4% for each level.=Réduit la plupart des types 
 Feather Falling=Chute amortie
 Reduces fall damage.=Réduit les dégats de chute.
 Aqua Affinity=Affinité aquatique
-#Translations of enchantements
 Increases underwater mining speed.=Augmente la vitesse de minage sous-marine.
 Curse of Binding=Malédiction du lien éternel
 Item cannot be removed from armor slots except due to death, breaking or in Creative Mode.=L'objet ne peut pas être retiré des emplacements d'armure sauf en cas de mort, de rupture ou en mode créatif.
@@ -49,13 +44,3 @@ Applies to:=
 Armor=
 Ingredients:=
 Ingot & Crystals=
-
-
-##### not used anymore #####
-
-Chain Helmet=Casque de Mailles
-Chain Chestplate=Cotte de Mailles
-Chain Leggings=Jambières de Mailles
-Chain Boots=Bottes de Mailles
-Shooting consumes no regular arrows.=Le tir ne consomme pas de flèches standard.
-Shoot 3 arrows at the cost of one.=Tirez sur 3 flèches au prix d'une.

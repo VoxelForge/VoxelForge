@@ -47,9 +47,3 @@ Zombie view range: -50%=ゾンビに見つかる距離：-50%
 Skeleton view range: -50%=スケルトンに見つかる距離：-50%
 Creeper view range: -50%=クリーパーに見つかる距離：-50%
 Durability: @1=耐久度：@1
-
-
-##### not used anymore #####
-
-Damage (@1): @2=ダメージ (@1)：@2
-Healing (@1): @2=回復 (@1)：@2

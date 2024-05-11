@@ -19,12 +19,3 @@ River Water Bucket=Seau d'Eau de Rivière
 A bucket can be used to collect and release liquids. This one is filled with river water.=Un seau peut être utilisé pour recueillir et libérer les liquides. Celui-ci est rempli d'eau de rivière.
 Place it to empty the bucket and create a river water source.=Placez-le pour vider le seau et créer une source d'eau de rivière.
 Places a river water source=Place une source d'eau de rivière
-
-
-##### not used anymore #####
-
-Cod=Morue
-Salmon=Saumon
-Tropical Fish=Poisson Tropical
-Place it to empty the bucket and place a @1. Obtain by right clicking on a @2 fish with a bucket of water.=Le placer pour vider le seau et placer un @1. S'obtient en faisant un clic droit sur un poisson @2 avec un seau d'eau.
-Places a water source and a @1 fish.=Placer une source d'eau et un poisson @1.

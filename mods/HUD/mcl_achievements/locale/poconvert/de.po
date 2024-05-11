@@ -1,0 +1,382 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Minetest textdomain mcl_achievements x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.0\n"
+
+msgid "Benchmarking"
+msgstr "Tischler"
+
+msgid "Craft a crafting table from 4 wooden planks."
+msgstr "Fertigen Sie eine Werkbank aus 4 Holzplanken."
+
+msgid "Time to Mine!"
+msgstr "Zeit zum Graben!"
+
+msgid "Use a crafting table to craft a wooden pickaxe from wooden planks and sticks."
+msgstr "Benutzen Sie eine Werkbank, um eine Holzspitzhacke aus Holzplanken und Stöcken zu fertigen."
+
+msgid "Hot Topic"
+msgstr "Heißes Eisen"
+
+msgid "Use 8 cobblestones to craft a furnace."
+msgstr "Benutzen Sie 8 Kopfsteinpflaster, um einen Ofen zu fertigen."
+
+msgid "Time to Farm!"
+msgstr "Bauernzeit"
+
+msgid "Use a crafting table to craft a wooden hoe from wooden planks and sticks."
+msgstr "Benutzen Sie eine Werkbank, um eine Holzhacke aus Holzplanken und Stöcken zu fertigen."
+
+msgid "Bake Bread"
+msgstr "Brot backen"
+
+msgid "Use wheat to craft a bread."
+msgstr "Benutzen Sie Weizen, um ein Brot zu machen."
+
+msgid "The Lie"
+msgstr "Die Lüge"
+
+msgid "Craft a cake using wheat, sugar, milk and an egg."
+msgstr "Fertigen Sie einen Kuchen aus Weizen, Zucker, Milch und einem Ei."
+
+msgid "Getting an Upgrade"
+msgstr "Aufwertung"
+
+msgid "Craft a stone pickaxe using sticks and cobblestone."
+msgstr "Fertigen Sie eine Steinspitzhacke aus Stöcken und Kopfsteinpflaster."
+
+msgid "Time to Strike!"
+msgstr "Zuschlagen!"
+
+msgid "Craft a wooden sword using wooden planks and sticks on a crafting table."
+msgstr "Fertigen Sie ein Holzschwert aus Holzplanken und Stöcken an einer Werkbank."
+
+msgid "Librarian"
+msgstr "Bibliothekar"
+
+msgid "Craft a bookshelf."
+msgstr "Fertigen Sie ein Bücherregal."
+
+msgid "Isn't It Iron Pick"
+msgstr ""
+
+msgid "Craft a iron pickaxe using sticks and iron."
+msgstr ""
+
+msgid "DIAMONDS!"
+msgstr "DIAMANTEN!"
+
+msgid "Pick up a diamond from the floor."
+msgstr "Sammeln Sie einen Diamanten vom Boden auf."
+
+msgid "Into Fire"
+msgstr "In das Feuer"
+
+msgid "Pick up a blaze rod from the floor."
+msgstr "Sammeln Sie eine Lohenrute vom Boden auf."
+
+msgid "Cow Tipper"
+msgstr "Kuhschubser"
+
+msgid "Pick up leather from the floor.\n"
+"Hint: Cows and some other animals have a chance to drop leather, when killed."
+msgstr "Sammeln Sie Leder vom Boden auf.\n"
+"Tipp: Kühe und einige andere Tiere werfen vielleicht Leder ab, wenn sie sterben."
+
+msgid "Getting Wood"
+msgstr "Holzhacker"
+
+msgid "Pick up a wood item from the ground.\n"
+"Hint: Punch a tree trunk until it pops out as an item."
+msgstr "Sammeln Sie ein Stück Holz vom Boden auf.\n"
+"Tipp: Hauen Sie einen Baumstamm, bis er als Gegenstand herausploppt."
+
+msgid "Who is Cutting Onions?"
+msgstr ""
+
+msgid "Pick up a crying obsidian from the floor."
+msgstr ""
+
+msgid "Hidden in the Depths"
+msgstr ""
+
+msgid "Pick up an Ancient Debris from the floor."
+msgstr ""
+
+msgid "The Next Generation"
+msgstr ""
+
+msgid "Hold the Dragon Egg.\n"
+"Hint: Pick up the egg from the ground and have it in your inventory."
+msgstr ""
+
+msgid "Sky's the Limit"
+msgstr ""
+
+msgid "Find the elytra and prepare to fly above and beyond!"
+msgstr ""
+
+msgid "Acquire Hardware"
+msgstr "Schmied"
+
+msgid "Take an iron ingot from a furnace's output slot.\n"
+"Hint: To smelt an iron ingot, put a fuel (like coal) and iron ore into a furnace."
+msgstr "Nehmen Sie einen Eisenbarren aus dem Ausgabeschlitz eines Ofens.\n"
+"Tipp: Um einen Eisenbarren zu erhalten, platzieren Sie einen Brennstoff (wie Kohle) und Eisenerz in einen Ofen."
+
+msgid "Delicious Fish"
+msgstr "Leckerer Fisch"
+
+msgid "Take a cooked fish from a furnace.\n"
+"Hint: Use a fishing rod to catch a fish and cook it in a furnace."
+msgstr "Nehmen Sie einen gekochten Fisch aus einem Ofen.\n"
+"Tipp: Benutzen Sie eine Angel, um einen Fisch zu fangen und kochen Sie ihn in einem Ofen."
+
+msgid "On A Rail"
+msgstr "Auf der Schiene"
+
+msgid "Travel by minecart for at least 1000 meters from your starting point in a single ride."
+msgstr "Reisen Sie mit einer Lore für mindestens 1000 Meter vom Startpunkt aus in einer einzigen Fahrt."
+
+msgid "Sniper Duel"
+msgstr "Scharfschützenduell"
+
+msgid "Kill a skeleton, wither skeleton or stray by bow and arrow from a distance of at least 20 meters."
+msgstr ""
+
+msgid "Monster Hunter"
+msgstr ""
+
+msgid "Kill a monster."
+msgstr ""
+
+msgid "We Need to Go Deeper"
+msgstr ""
+
+msgid "Use obsidian and a fire starter to construct a Nether portal."
+msgstr "Benutzen Sie Obsidian und ein Feuerzeug, um ein Netherportal zu errichten."
+
+msgid "The End?"
+msgstr ""
+
+msgid "Or the beginning?\n"
+"Hint: Enter an end portal."
+msgstr ""
+
+msgid "The Nether"
+msgstr ""
+
+msgid "Bring summer clothes.\n"
+"Hint: Enter the Nether."
+msgstr ""
+
+msgid "Postmortal"
+msgstr ""
+
+msgid "Use a Totem of Undying to cheat death."
+msgstr ""
+
+msgid "Sweet Dreams"
+msgstr ""
+
+msgid "Sleep in a bed to change your respawn point."
+msgstr ""
+
+msgid "Not Quite \"Nine\" Lives"
+msgstr ""
+
+msgid "Charge a Respawn Anchor to the maximum."
+msgstr ""
+
+msgid "What A Deal!"
+msgstr ""
+
+msgid "Successfully trade with a Villager."
+msgstr ""
+
+msgid "Tactical Fishing"
+msgstr ""
+
+msgid "Catch a fish... without a fishing rod!"
+msgstr ""
+
+msgid "The Cutest Predator"
+msgstr ""
+
+msgid "Catch an Axolotl with a bucket!"
+msgstr ""
+
+msgid "Withering Heights"
+msgstr ""
+
+msgid "Summon the wither from the dead."
+msgstr ""
+
+msgid "Free the End"
+msgstr ""
+
+msgid "Kill the ender dragon. Good Luck!"
+msgstr ""
+
+msgid "Fishy Business"
+msgstr ""
+
+msgid "Catch a fish.\n"
+"Hint: Catch a fish, salmon, clownfish, or pufferfish."
+msgstr ""
+
+msgid "Country Lode, Take Me Home"
+msgstr ""
+
+msgid "Use a compass on a Lodestone."
+msgstr ""
+
+msgid "Serious Dedication"
+msgstr ""
+
+msgid "Use a Netherite Ingot to upgrade a hoe, and then completely reevaluate your life choices."
+msgstr ""
+
+msgid "Local Brewery"
+msgstr ""
+
+msgid "Brew a Potion.\n"
+"Hint: Take a potion or glass bottle out of the brewing stand."
+msgstr ""
+
+msgid "Enchanter"
+msgstr ""
+
+msgid "Enchant an item using an Enchantment Table."
+msgstr ""
+
+msgid "Bring Home the Beacon"
+msgstr "Den Nachbarn heimleuchten"
+
+msgid "Use a beacon."
+msgstr "Benutzen Sie ein Leuchtfeuer."
+
+msgid "Beaconator"
+msgstr "Leuchtturmwärter"
+
+msgid "Use a fully powered beacon."
+msgstr "Benutzen Sie ein vollständiges Leuchtfeuer."
+
+msgid "The End... Again..."
+msgstr ""
+
+msgid "Respawn the Ender Dragon."
+msgstr ""
+
+msgid "Bee Our Guest"
+msgstr ""
+
+msgid "Use a campfire to collect a bottle of honey from a beehive without aggrivating the bees inside."
+msgstr ""
+
+msgid "Total Beelocation"
+msgstr ""
+
+msgid "Move a bee nest, with 3 bees inside, using a silk touch enchanted tool."
+msgstr ""
+
+msgid "Wax On"
+msgstr ""
+
+msgid "Apply honeycomb to a copper block to protect it from the elements."
+msgstr ""
+
+msgid "Wax Off"
+msgstr ""
+
+msgid "Scrape wax off of a copper block."
+msgstr ""
+
+msgid "Crafting a New Look"
+msgstr "Ein neues Aussehen"
+
+msgid "Craft a trimmed armor at a Smithing Table"
+msgstr "Versieh ein Rüstungsteil an einem Schmiedetisch mit einem Rüstungsbesatz "
+
+msgid "Smithing with Style"
+msgstr "Schmieden mit Stil"
+
+msgid "Apply these smithing templates at least once: Spire, Snout, Rib, Ward, Silence, Vex, Tide, Wayfinder"
+msgstr "Wende jede dieser Schmiedevorlagen mindestens einmal an: Turmspitze, Schnauze, Rippe, Warthof, Stille, Plagegeist, Gezeiten und Wegfinder"
+
+msgid "Dispense With This"
+msgstr "Ein Auge darauf werfen"
+
+msgid "Place a dispenser."
+msgstr "Platzieren Sie einen Werfer"
+
+msgid "Pork Chop"
+msgstr "Kassler"
+
+msgid "Eat a cooked porkchop."
+msgstr "Essen Sie ein gekochtes Schweinekotelett"
+
+msgid "Rabbit Season"
+msgstr "Kaninchensaison"
+
+msgid "Eat a cooked rabbit."
+msgstr "Essen Sie ein gekochtes Kaninchen"
+
+msgid "Iron Belly"
+msgstr "Eiserner Magen"
+
+msgid "Get really desperate and eat rotten flesh."
+msgstr "Verzweifeln Sie und essen Sie Gammelfleisch."
+
+msgid "Pot Planter"
+msgstr "Topfpflanzer"
+
+msgid "Place a flower pot."
+msgstr "Platzieren Sie einen Blumentopf"
+
+msgid "The Haggler"
+msgstr "Der Sammler"
+
+msgid "Mine emerald ore."
+msgstr "Bauen Sie Smaragderz ab."
+
+msgid "Stone Age"
+msgstr ""
+
+msgid "Mine a stone with new pickaxe."
+msgstr ""
+
+msgid "Hot Stuff"
+msgstr ""
+
+msgid "Put lava in a bucket."
+msgstr ""
+
+msgid "Ice Bucket Challenge"
+msgstr ""
+
+msgid "Obtain an obsidian block."
+msgstr ""
+
+msgid "Hero of the Village"
+msgstr ""
+
+msgid "Successfully defend a village from a raid"
+msgstr ""
+
+msgid "Voluntary Exile"
+msgstr ""
+
+msgid "Kill a raid captain. Maybe consider staying away from the local villages for the time being..."
+msgstr ""
+

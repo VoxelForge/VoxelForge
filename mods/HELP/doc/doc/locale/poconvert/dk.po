@@ -1,0 +1,165 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Minetest textdomain doc x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: dk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.0\n"
+
+msgid "<"
+msgstr "<"
+
+msgid ">"
+msgstr ">"
+
+msgid "Access to the requested entry has been denied; this entry is secret. You may unlock access by progressing in the game. Figure out on your own how to unlock this entry."
+msgstr "Adgang til det forespurgte blev nægtet; det er hemmeligt. Du kan få adgang ved at nå længere i spillet. Find selv ud af, hvordan du får adgang."
+
+msgid "All entries read."
+msgstr "Alle indtastninger læst."
+
+msgid "All help entries revealed!"
+msgstr "Alle hjælpeindtastninger afsløret!"
+
+msgid "All help entries are already revealed."
+msgstr "Alle hjælpeindtasterninger er allerede afsløret."
+
+msgid "Allows you to reveal all hidden help entries with /help_reveal"
+msgstr "Gør dig i stand til at afsløre alle skjulte hjælpeindtaster med /help_reveal"
+
+msgid "Category list"
+msgstr "Kategoriliste"
+
+msgid "Currently all entries in this category are hidden from you."
+msgstr "Alle indtastninger i denne kategori er i øjeblikket skjult for dig."
+
+msgid "Unlock new entries by progressing in the game."
+msgstr "Lås nye indtastninger op ved at nå længere i spillet."
+
+msgid "Help"
+msgstr "Hjælp"
+
+msgid "Entry"
+msgstr "Indtastning"
+
+msgid "Entry list"
+msgstr "Indtastningsliste"
+
+msgid "Error: Access denied."
+msgstr "Fejl: Adgang nægtet."
+
+msgid "Error: No help available."
+msgstr "Fejl: Igen hjælp tilgængelig."
+
+msgid "Go to category list"
+msgstr "Gå til kategoriliste"
+
+msgid "Go to entry list"
+msgstr "Gå til indtastningsliste"
+
+msgid "Help > @1"
+msgstr "Hjælp > @1"
+
+msgid "Help > @1 > @2"
+msgstr " Hjælp > @1 > @2"
+
+msgid "Help > @1 > (No Entry)"
+msgstr "Hjælp > @1 > (Ingen indtasting)"
+
+msgid "Help > (No Category)"
+msgstr "Hjælp > (Ingen kategori)"
+
+msgid "Hidden entries: @1"
+msgstr "Skjult indtastning: @1"
+
+msgid "Nameless entry (@1)"
+msgstr "Unavngiven indtastning (@1)"
+
+msgid "New entries: @1"
+msgstr "Nye indtastninger: @1"
+
+msgid "New help entry unlocked: @1 > @2"
+msgstr "Ny hjælpeindtastning låst op: @1 > @2"
+
+msgid "No categories have been registered, but they are required to provide help."
+msgstr "Nye kategorier er blevet registreret, men de er påkrævede for at give hjælp."
+
+msgid "The Documentation System [doc] does not come with help contents on its own, it needs additional mods to add help content. Please make sure such mods are enabled on for this world, and try again."
+msgstr " Dokumentationssystemet [doc] har ikke medfølgende hjælpeindhold, det behøver yderligere mods for at tilføje hjælpeindhold."
+
+msgid "Number of entries: @1"
+msgstr "Antal indtastninger: @1"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Open a window providing help entries about Minetest and more"
+msgstr "Åbn et vindue med hjælpeindtastninger om Minetest og mere"
+
+msgid "Please select a category you wish to learn more about:"
+msgstr "Vælg venlist en kategori som du ønsker at lære mere om:"
+
+msgid "Recommended mods: doc_basics, doc_items, doc_identifier, doc_encyclopedia."
+msgstr "Anbefalede mods: doc_basics, doc_items, doc_identifier, doc_encyclopedia."
+
+msgid "Reveal all hidden help entries to you"
+msgstr "Afslør alle gemte hjælpeindtastninger for dig."
+
+msgid "Show entry"
+msgstr "Vis indtastning"
+
+msgid "Show category"
+msgstr "Vis kategori"
+
+msgid "Show next entry"
+msgstr "Vis næste indtastning"
+
+msgid "Show previous entry"
+msgstr "Vis forrige indtastning"
+
+msgid "This category does not have any entries."
+msgstr "Denne kategori har ingen indtastninger."
+
+msgid "This category has the following entries:"
+msgstr "Denne kategori har følgende indtastninger:"
+
+msgid "This category is empty."
+msgstr "Denne kategori er tom."
+
+msgid "This is the help."
+msgstr "Dette er hjælpen."
+
+msgid "You haven't chosen a category yet. Please choose one in the category list first."
+msgstr "Du har endnu ikke vagt en kategori. Vælg venligst én i kategoriliste før."
+
+msgid "You haven't chosen an entry yet. Please choose one in the entry list first."
+msgstr "Du har ikke valgt en indtastning endnu. Vælg venligst en fra indtastningslisten først."
+
+msgid "Collection of help texts"
+msgstr "Samling at hjælpetekster."
+
+msgid "Notify me when new help is available"
+msgstr "Giv mig besked når ny hjælp er tilgængelig."
+
+msgid "Play notification sound when new help is available"
+msgstr "Afspil lyd når ny hjælp er tilgængeig."
+
+msgid "Show previous image"
+msgstr "Vis forrige billede"
+
+msgid "Show previous gallery page"
+msgstr "Vis forrige galleriside"
+
+msgid "Show next image"
+msgstr "Vis næste billede"
+
+msgid "Show next gallery page"
+msgstr "Vis næste galleriside"
+

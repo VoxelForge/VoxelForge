@@ -1,10 +1,6 @@
 # textdomain: mcl_armor
 This is a piece of equippable armor which reduces the amount of damage you receive.=Это часть надеваемой брони, уменьшающая получаемый вами урон.
 To equip it, put it on the corresponding armor slot in your inventory menu.=Чтобы надеть, поместите в соответствующий слот брони в вашем инвентаря.
-Leather Cap=Кожаный шлем
-Leather Tunic=Кожаная кираса
-Leather Pants=Кожаные поножи
-Leather Boots=Кожаные ботинки
 Golden Helmet=Золотой шлем
 Golden Chestplate=Золотая кираса
 Golden Leggings=Золотые поножи
@@ -36,7 +32,6 @@ Reduces most types of damage by 4% for each level.=Уменьшает больш
 Feather Falling=Невесомость
 Reduces fall damage.=Уменьшает урон от падения.
 Aqua Affinity=Подводник
-#Translations of enchantements
 Increases underwater mining speed.=Увеличивает скорость добычи под водой.
 Curse of Binding=Проклятие несъёмности
 Item cannot be removed from armor slots except due to death, breaking or in Creative Mode.=Броню нельзя снять из слота, кроме как умерев, сломав или в режиме творчества.
@@ -49,13 +44,3 @@ Applies to:=
 Armor=
 Ingredients:=
 Ingot & Crystals=
-
-
-##### not used anymore #####
-
-Chain Helmet=Кольчужный шлем
-Chain Chestplate=Кольчуга
-Chain Leggings=Кольчужные поножи
-Chain Boots=Кольчужные ботинки
-Shooting consumes no regular arrows.=Для стрельбы не требуются обычные стрелы.
-Shoot 3 arrows at the cost of one.=Стреляет за раз 3 стрелами тратя только одну.

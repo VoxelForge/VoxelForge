@@ -1,17 +1,11 @@
-# textdomain:doc_items
+# textdomain: doc_items
 Using it as fuel turns it into: @1.=At bruge det som brændstof laver det om til: @1.
 @1 seconds=@1 sekunder
-# Item count times item name
 @1×@2=@1x@2
-# Itemname (25%)
 @1 (@2%)=@1 (@2%)
-# Itemname (<0.5%)
 @1 (<0.5%)= @1 (<0.5%)
-# Itemname (ca. 25%)
 @1 (ca. @2%)=@1 (ca. @2%)
-# List separator (e.g. “one, two, three”)
 , = ,
-# Final list separator (e.g. “One, two and three”)
  and = and
 1 second=1 sekund
 A transparent block, basically empty space. It is usually left behind after digging something.=En gennemsigtig blok, egentlig bare tom luft. Det efterlades typisk efter at have gravet.
@@ -46,12 +40,9 @@ Punches with this block don't work as usual; melee combat and mining are either 
 Punches with this item don't work as usual; melee combat and mining are either not possible or work differently.=Slag med dette objekt virker ikke som normalt; nærkamp og udvinding er enten umulig eller virker anderledes.
 Punches with this tool don't work as usual; melee combat and mining are either not possible or work differently.=Slag med dette værktøj virker ikke som normalt; nærkamp og udvinding er enten umulig eller virker anderledes.
 Range: @1=Rækkevidde: @1
-# Range: <Hand> (<Range>)
 Range: @1 (@2)=Rækkevidde: @1 (@2)
 Range: 4=Rækkevidde: 4
-# Rating used for digging times
 Rating @1=Vurdering: @1
-# @1 is minimal rating, @2 is maximum rating
 Rating @1-@2=Vurdering @1-@2
 The fall damage on this block is increased by @1%.=Faldskade på denne blok er øget med @1%.
 The fall damage on this block is reduced by @1%.=Faldskade på denne blok er reduceret med @1%.

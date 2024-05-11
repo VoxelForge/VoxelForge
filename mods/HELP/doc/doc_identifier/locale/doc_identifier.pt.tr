@@ -1,5 +1,5 @@
-# textdomain:doc_identifier
-Error: This node, item or object is undefined. This is always an error.\\nThis can happen for the following reasons:\\n• The mod which is required for it is not enabled\\n• The author of the game or a mod has made a mistake=Erro: Esse bloco, item ou objeto é indefinido. Isso é sempre um erro.\\n Isso pode ter acontecido pelas seguintes rasões:\\n• O mod o qual ele precisa não está habilitado\\n• O autor do jogo ou mod comoteu um erro
+# textdomain: doc_identifier
+Error: This node, item or object is undefined. This is always an error.\@nThis can happen for the following reasons:\@n• The mod which is required for it is not enabled\@n• The author of the game or a mod has made a mistake=Erro: Esse bloco, item ou objeto é indefinido. Isso é sempre um erro.\@n Isso pode ter acontecido pelas seguintes rasões:\@n• O mod o qual ele precisa não está habilitado\@n• O autor do jogo ou mod comoteu um erro
 It appears to originate from the mod “%s”, which is enabled.=Parece originar do mod “%s”, que está habilitado.
 It appears to originate from the mod “%s”, which is not enabled!=Parece originar do mod “%s”, que não está habilitado.
 Its identifier is “%s”.=Seu identificador é “%s”.
