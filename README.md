@@ -16,7 +16,7 @@ Version: 0.100.0
 * Wandering traders and trader llamas
 * Suspicious nodes, pottery shreds and decorated pots
 * Conduits
-* Deep Dark biome and Ancient hermitage (structure corresponding to Minecraft's ancient city)
+* Deep Dark biome and Ancient hermitage (structure corresponding to ancient city)
 * Functional Loom to apply banner patterns
 * Lush Caves biome
 * Cherry Grove biome
@@ -205,6 +205,7 @@ Technical differences from Minecraft:
     * Ocean Temple (Monument)
     * Nether Bulwark (Bastion)
     * End Shipwreck & End Boat (End city)
+    * Ancient hermitage (Ancient city)
 * A few items have slightly different names to make them easier to distinguish
 * Different music for jukebox
 * Different textures (Pixel Perfection)
