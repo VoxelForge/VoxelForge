@@ -1,11 +1,9 @@
 # textdomain: mcl_deepslate
 Deepslate=Ardósia
 Deepslate is a stone type found deep underground in the Overworld that functions similar to regular stone but is harder than the stone.=Ardósia é um tipo de rocha encontrado nas profundezas do subterrâneo que possui funções similares às rochas comuns, mas é mais dura que elas.
+Infested Deepslate=Ardósia Infestada
 Reinforced Deepslate=
 Reinforced deepslate is a very hard block undestructable by even wither explosions. It is unobtainable in survival mode.=
-Infested Deepslate=Ardósia Infestada
-An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart.=Um bloco infestado é um bloco no qual um silverfish surgirá quando quebrado. Parece idêntico à sua contraparte normal.
-Hides a silverfish=Esconde um silverfish
 Tuff=Tufo
 Tuff is an ornamental rock formed from volcanic ash, occurring in underground blobs below Y@=16.=
 @1 is a variant of @2 that can generate in deepslate and tuff blobs.=
@@ -46,5 +44,7 @@ Chiseled Deepslate=Ardósia Cinzelada
 
 ##### not used anymore #####
 
+An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart.=Um bloco infestado é um bloco no qual um silverfish surgirá quando quebrado. Parece idêntico à sua contraparte normal.
+Hides a silverfish=Esconde um silverfish
 Double Cobbled Deepslate Slab=Laje Dupla de Pedregulhos de Ardósia
 Double Polished Deepslate Slab=Laje Dupla de Ardósia Polida

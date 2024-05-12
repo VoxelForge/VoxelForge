@@ -1,11 +1,9 @@
 # textdomain: mcl_deepslate
 Deepslate=Tiefenschiefer
 Deepslate is a stone type found deep underground in the Overworld that functions similar to regular stone but is harder than the stone.=Tiefenschiefer ist eine Gesteinsart. Er kann als dekorativer Block verwendet und in viele Varianten weiterverarbeitet werden.
+Infested Deepslate=Befallener Tiefenschiefer
 Reinforced Deepslate=
 Reinforced deepslate is a very hard block undestructable by even wither explosions. It is unobtainable in survival mode.=
-Infested Deepslate=Befallener Tiefenschiefer
-An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart.=Ein befallener Block ist ein Block, aus dem ein Silberfisch herausspringt, wenn er abgebaut wird. Er sieht genauso aus wie sein normales Gegenstück.
-Hides a silverfish=Versteckt einen Silberfisch
 Tuff=Tuffstein
 Tuff is an ornamental rock formed from volcanic ash, occurring in underground blobs below Y@=16.=
 @1 is a variant of @2 that can generate in deepslate and tuff blobs.=@1 ist eine Variante von @2, die in Tiefenschiefer und Tuff generiert werden kann.
@@ -42,3 +40,9 @@ Deepslate Tile Slab=
 Deepslate Tiles Wall=
 Cracked Deepslate Tiles=Rissige Tiefenschieferfliesen
 Chiseled Deepslate=Gemeißelter Tiefenschiefer
+
+
+##### not used anymore #####
+
+An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart.=Ein befallener Block ist ein Block, aus dem ein Silberfisch herausspringt, wenn er abgebaut wird. Er sieht genauso aus wie sein normales Gegenstück.
+Hides a silverfish=Versteckt einen Silberfisch

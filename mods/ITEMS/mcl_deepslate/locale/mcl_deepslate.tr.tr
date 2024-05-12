@@ -1,11 +1,9 @@
 # textdomain: mcl_deepslate
 Deepslate=
 Deepslate is a stone type found deep underground in the Overworld that functions similar to regular stone but is harder than the stone.=
+Infested Deepslate=
 Reinforced Deepslate=
 Reinforced deepslate is a very hard block undestructable by even wither explosions. It is unobtainable in survival mode.=
-Infested Deepslate=
-An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart.=
-Hides a silverfish=
 Tuff=
 Tuff is an ornamental rock formed from volcanic ash, occurring in underground blobs below Y@=16.=
 @1 is a variant of @2 that can generate in deepslate and tuff blobs.=

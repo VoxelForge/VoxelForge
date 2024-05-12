@@ -1,11 +1,9 @@
 # textdomain: mcl_deepslate
 Deepslate=Ardoise des abîmes
 Deepslate is a stone type found deep underground in the Overworld that functions similar to regular stone but is harder than the stone.=L'ardoise des abîmes est un type de roche présente dans les profondeurs de l'Overworld qui fonctionne de manière similaire à la roche classique mais en plus dur.
+Infested Deepslate=Ardoise des abîmes infestée
 Reinforced Deepslate=
 Reinforced deepslate is a very hard block undestructable by even wither explosions. It is unobtainable in survival mode.=
-Infested Deepslate=Ardoise des abîmes infestée
-An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart.=Un bloc infesté est un bloc dont va sortir un poisson d'argent lorsqu'il sera cassé. Il a la même apparence que son équivalent normal.
-Hides a silverfish=Cache un poisson d'argent
 Tuff=Tuf
 Tuff is an ornamental rock formed from volcanic ash, occurring in underground blobs below Y@=16.=
 @1 is a variant of @2 that can generate in deepslate and tuff blobs.=Le @1 est une variante de @2 qui apparaît dans l'ardoise des abîmes et les filons de tuf.
@@ -42,3 +40,9 @@ Deepslate Tile Slab=
 Deepslate Tiles Wall=
 Cracked Deepslate Tiles=Ardoise des abîmes carrelée craquelée
 Chiseled Deepslate=Ardoise des abîmes sculptée
+
+
+##### not used anymore #####
+
+An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart.=Un bloc infesté est un bloc dont va sortir un poisson d'argent lorsqu'il sera cassé. Il a la même apparence que son équivalent normal.
+Hides a silverfish=Cache un poisson d'argent

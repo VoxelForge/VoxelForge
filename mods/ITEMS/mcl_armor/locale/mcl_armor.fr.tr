@@ -1,6 +1,16 @@
 # textdomain: mcl_armor
+#Translations of enchantements
 This is a piece of equippable armor which reduces the amount of damage you receive.=Il s'agit d'un morceau d'armure équipable qui réduit la quantité de dégâts que vous recevez.
 To equip it, put it on the corresponding armor slot in your inventory menu.=Pour l'équiper, placez-le sur l'emplacement d'armure correspondant dans votre menu d'inventaire.
+Leather Cap=
+Leather Tunic=
+Leather Pants=
+Leather Boots=
+Colorize a piece of leather armor, or wash it=
+Not leather armor.=
+Washed.=
+Done: @1=
+Player isn't online=
 Golden Helmet=Casque d'Or
 Golden Chestplate=Plastron d'Or
 Golden Leggings=Jambières d'Or

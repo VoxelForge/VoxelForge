@@ -1,11 +1,9 @@
 # textdomain: mcl_deepslate
 Deepslate=Глубинный сланец
 Deepslate is a stone type found deep underground in the Overworld that functions similar to regular stone but is harder than the stone.=Глубинный сланец это камень, который можно найти в глубине Верхнего мира. Схож с обычным камнем, но сланец твёрже.
+Infested Deepslate=Заражённый глубинный сланец
 Reinforced Deepslate=
 Reinforced deepslate is a very hard block undestructable by even wither explosions. It is unobtainable in survival mode.=
-Infested Deepslate=Заражённый глубинный сланец
-An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart.=Заражённый блок это блок, после добычи которого спаунится чешуйница. Блок выглядит идентично своему нормальному варианту.
-Hides a silverfish=Прячет в себе чешуйницу
 Tuff=Туф
 Tuff is an ornamental rock formed from volcanic ash, occurring in underground blobs below Y@=16.=Туф орнаментальный камень сформированный из вулканического пепла, появляется в виде подземных скоплений ниже Y@=16.
 @1 is a variant of @2 that can generate in deepslate and tuff blobs.=
@@ -42,3 +40,9 @@ Deepslate Tile Slab=
 Deepslate Tiles Wall=Стена из сланцевой плитки
 Cracked Deepslate Tiles=Потрескавшаяся сланцевая плитка
 Chiseled Deepslate=Резной сланец
+
+
+##### not used anymore #####
+
+An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart.=Заражённый блок это блок, после добычи которого спаунится чешуйница. Блок выглядит идентично своему нормальному варианту.
+Hides a silverfish=Прячет в себе чешуйницу
