@@ -13,6 +13,7 @@ Version: 0.100.0
 * Improved nether portals
 * Improved leaf decay
 * Improved villages
+* Wandering traders and trader llamas
 * Suspicious nodes, pottery shreds and decorated pots
 * Deep Dark biome and Ancient hermitage (structure corresponding to Minecraft's ancient city)
 * Functional Loom to apply banner patterns
