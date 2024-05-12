@@ -148,6 +148,21 @@ msgstr "Netherziegel"
 msgid "Nether bricks are the main crafting ingredient for crafting nether brick blocks and nether fences."
 msgstr "Netherziegel werden hauptsächlich zur Fertigung von Netherziegelblöcken und Netherzäunen benutzt."
 
+msgid "Netherite Upgrade Template"
+msgstr ""
+
+msgid "Applies to:"
+msgstr ""
+
+msgid "Diamond Armor"
+msgstr ""
+
+msgid "Diamond Tools"
+msgstr ""
+
+msgid "Ingredients:"
+msgstr ""
+
 msgid "Nether Lava Source"
 msgstr "Netherlavaquelle"
 

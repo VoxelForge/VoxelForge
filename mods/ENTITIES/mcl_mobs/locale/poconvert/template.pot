@@ -13,9 +13,6 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: mtt_convert 0.1.0\n"
 
-msgid "Peaceful mode active! No monsters will spawn."
-msgstr ""
-
 msgid "Remove all, nametagged or tamed mobs within the specified distance or everywhere. When unspecified remove all mobs except tamed and nametagged ones."
 msgstr ""
 
@@ -26,9 +23,6 @@ msgid "This allows you to place a single mob."
 msgstr ""
 
 msgid "Just place it where you want the mob to appear. Animals will spawn tamed, unless you hold down the sneak key while placing. If you place this on a mob spawner, you change the mob it spawns."
-msgstr ""
-
-msgid "Only peaceful mobs allowed!"
 msgstr ""
 
 msgid "spawn_mob is a chatcommand that allows you to type in the name of a mob without 'typing mobs_mc:' all the time like so; 'spawn_mob spider'. however, there is more you can do with this special command, currently you can edit any number, boolean, and string variable you choose with this format: spawn_mob 'any_mob:var<mobs_variable=variable_value>:'. any_mob being your mob of choice, mobs_variable being the variable, and variable value being the value of the chosen variable. and example of this format: \n"

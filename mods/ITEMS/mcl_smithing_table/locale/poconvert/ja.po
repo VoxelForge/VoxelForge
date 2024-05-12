@@ -16,6 +16,6 @@ msgstr ""
 msgid "Upgrade Gear"
 msgstr ""
 
-msgid "Smithing table"
-msgstr "鍛冶台"
+msgid "Smithing Table"
+msgstr ""
 

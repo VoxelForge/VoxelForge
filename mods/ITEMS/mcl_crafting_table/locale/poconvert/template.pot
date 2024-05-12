@@ -22,6 +22,9 @@ msgstr ""
 msgid "Recipe book"
 msgstr ""
 
+msgid "Fill Craft Grid"
+msgstr ""
+
 msgid "Crafting Table"
 msgstr ""
 

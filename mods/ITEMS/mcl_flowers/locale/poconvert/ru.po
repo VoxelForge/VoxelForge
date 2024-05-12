@@ -19,62 +19,8 @@ msgstr "Это небольшой цветок. Такие цветы в осн�
 msgid "It can only be placed on a block on which it would also survive."
 msgstr "Это можно высаживать только на те блоки, на которых оно может расти."
 
-msgid "Tall Grass"
-msgstr "Высокая трава"
-
-msgid "Tall grass is a small plant which often occurs on the surface of grasslands. It can be harvested for wheat seeds. By using bone meal, tall grass can be turned into double tallgrass which is two blocks high."
-msgstr "Высокая трава это маленькое растение, часто встречающееся на поверхности лугов. Их можно собирать, добывая семена пшеницы. С помощью костной муки высокая трава может быть превращена в двойную высокую траву (2 блока в высоту)."
-
-msgid "Fern"
-msgstr "Папоротник"
-
-msgid "Ferns are small plants which occur naturally in jungles and taigas. They can be harvested for wheat seeds. By using bone meal, a fern can be turned into a large fern which is two blocks high."
-msgstr "Папоротники - маленькие растения, встречающиеся в тайге и джунглях. Их можно собирать, добывая семена пшеницы. С помощью костной муки папоротник может быть превращён в большой папоротник высотой в два блока."
-
-msgid "(Top Part)"
-msgstr "(верхняя часть)"
-
-msgid "Peony"
-msgstr "Пион"
-
-msgid "A peony is a large plant which occupies two blocks. It is mainly used in dye production."
-msgstr "Пион - большое растение, занимающее два блока. В основном используется для производства красителя."
-
-msgid "Rose Bush"
-msgstr "Розовый куст"
-
-msgid "A rose bush is a large plant which occupies two blocks. It is safe to touch it. Rose bushes are mainly used in dye production."
-msgstr "Розовый куст - большое растение, занимающее два блока. Трогать его не опасно. В основном используется для производства красителя."
-
-msgid "Lilac"
-msgstr "Сирень"
-
-msgid "A lilac is a large plant which occupies two blocks. It is mainly used in dye production."
-msgstr "Сирень - большое растение, занимающее два блока. В основном используется для производства красителя."
-
-msgid "Sunflower"
-msgstr "Подсолнух"
-
-msgid "A sunflower is a large plant which occupies two blocks. It is mainly used in dye production."
-msgstr "Подсолнух - большое растение, занимающее два блока. В основном используется для производства красителя."
-
-msgid "Double tallgrass a variant of tall grass and occupies two blocks. It can be harvested for wheat seeds."
-msgstr "Двойная высокая трава - большое растение, занимающее два блока. Её можно собирать, добывая семена пшеницы."
-
-msgid "Large fern is a variant of fern and occupies two blocks. It can be harvested for wheat seeds."
-msgstr "Большой папоротник - вид папоротника, занимающий два блока. Его можно собирать, добывая семена пшеницы."
-
-msgid "Double Tallgrass"
-msgstr "Двойная высокая трава"
-
-msgid "Large Fern"
-msgstr "Большой папоротник"
-
-msgid "Lily Pad"
-msgstr "Кувшинка"
-
-msgid "A lily pad is a flat plant block which can be walked on. They can be placed on water sources, ice and frosted ice."
-msgstr "Кувшинка это плоский растительный блок, по которому можно ходить. Он размещается на водных источниках, а также на льду и замороженном льду."
+msgid "@1 (Top Part)"
+msgstr ""
 
 msgid "Poppy"
 msgstr "Мак"
@@ -114,4 +60,58 @@ msgstr "Ландыш"
 
 msgid "Cornflower"
 msgstr "Василёк"
+
+msgid "Peony"
+msgstr "Пион"
+
+msgid "A peony is a large plant which occupies two blocks. It is mainly used in dye production."
+msgstr "Пион - большое растение, занимающее два блока. В основном используется для производства красителя."
+
+msgid "Rose Bush"
+msgstr "Розовый куст"
+
+msgid "A rose bush is a large plant which occupies two blocks. It is safe to touch it. Rose bushes are mainly used in dye production."
+msgstr "Розовый куст - большое растение, занимающее два блока. Трогать его не опасно. В основном используется для производства красителя."
+
+msgid "Lilac"
+msgstr "Сирень"
+
+msgid "A lilac is a large plant which occupies two blocks. It is mainly used in dye production."
+msgstr "Сирень - большое растение, занимающее два блока. В основном используется для производства красителя."
+
+msgid "Sunflower"
+msgstr "Подсолнух"
+
+msgid "A sunflower is a large plant which occupies two blocks. It is mainly used in dye production."
+msgstr "Подсолнух - большое растение, занимающее два блока. В основном используется для производства красителя."
+
+msgid "Double Tallgrass"
+msgstr "Двойная высокая трава"
+
+msgid "Double tallgrass a variant of tall grass and occupies two blocks. It can be harvested for wheat seeds."
+msgstr "Двойная высокая трава - большое растение, занимающее два блока. Её можно собирать, добывая семена пшеницы."
+
+msgid "Large Fern"
+msgstr "Большой папоротник"
+
+msgid "Large fern is a variant of fern and occupies two blocks. It can be harvested for wheat seeds."
+msgstr "Большой папоротник - вид папоротника, занимающий два блока. Его можно собирать, добывая семена пшеницы."
+
+msgid "Tall Grass"
+msgstr "Высокая трава"
+
+msgid "Tall grass is a small plant which often occurs on the surface of grasslands. It can be harvested for wheat seeds. By using bone meal, tall grass can be turned into double tallgrass which is two blocks high."
+msgstr "Высокая трава это маленькое растение, часто встречающееся на поверхности лугов. Их можно собирать, добывая семена пшеницы. С помощью костной муки высокая трава может быть превращена в двойную высокую траву (2 блока в высоту)."
+
+msgid "Fern"
+msgstr "Папоротник"
+
+msgid "Ferns are small plants which occur naturally in jungles and taigas. They can be harvested for wheat seeds. By using bone meal, a fern can be turned into a large fern which is two blocks high."
+msgstr "Папоротники - маленькие растения, встречающиеся в тайге и джунглях. Их можно собирать, добывая семена пшеницы. С помощью костной муки папоротник может быть превращён в большой папоротник высотой в два блока."
+
+msgid "Lily Pad"
+msgstr "Кувшинка"
+
+msgid "A lily pad is a flat plant block which can be walked on. They can be placed on water sources, ice and frosted ice."
+msgstr "Кувшинка это плоский растительный блок, по которому можно ходить. Он размещается на водных источниках, а также на льду и замороженном льду."
 

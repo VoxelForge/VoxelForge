@@ -3,22 +3,48 @@ msgstr ""
 "Project-Id-Version: Minetest textdomain mcl_armor x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-05-04 21:18+0000\n"
-"Last-Translator: fnetX <otto@codeberg.org>\n"
-"Language-Team: German <https://translate.codeberg.org/projects/mineclonia/"
-"mcl_armor/de/>\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.2\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.0\n"
 
 msgid "This is a piece of equippable armor which reduces the amount of damage you receive."
 msgstr "Dies ist ein Teil einer tragbaren Rüstung, die die Menge an Schaden, den Sie erleiden, reduziert."
 
 msgid "To equip it, put it on the corresponding armor slot in your inventory menu."
 msgstr "Um es zu tragen, legen Sie es in den passenden Rüstungsplatz in ihrem Inventarmenü."
+
+msgid "Leather Cap"
+msgstr ""
+
+msgid "Leather Tunic"
+msgstr ""
+
+msgid "Leather Pants"
+msgstr ""
+
+msgid "Leather Boots"
+msgstr ""
+
+msgid "Colorize a piece of leather armor, or wash it"
+msgstr ""
+
+msgid "Not leather armor."
+msgstr ""
+
+msgid "Washed."
+msgstr ""
+
+msgid "Done: @1"
+msgstr ""
+
+msgid "Player isn't online"
+msgstr ""
 
 msgid "Golden Helmet"
 msgstr "Goldhelm"
@@ -120,17 +146,13 @@ msgid "Curse of Binding"
 msgstr "Fluch der Bindung"
 
 msgid "Item cannot be removed from armor slots except due to death, breaking or in Creative Mode."
-msgstr ""
-"Der Gegenstand kann nicht aus Rüstungsslots genommen werden, außer durch "
-"Tod, Zerbruch oder im Kreativmodus."
+msgstr "Der Gegenstand kann nicht aus Rüstungsslots genommen werden, außer durch Tod, Zerbruch oder im Kreativmodus."
 
 msgid "Thorns"
 msgstr "Dornen"
 
 msgid "Reflects some of the damage taken when hit, at the cost of reducing durability with each proc."
-msgstr ""
-"Reflektiert einen Teil des Schadens sobald getroffen, jedoch auf Kosten der "
-"Haltbarkeit."
+msgstr "Reflektiert einen Teil des Schadens sobald getroffen, jedoch auf Kosten der Haltbarkeit."
 
 msgid "Elytra"
 msgstr "Elytren"
@@ -152,3 +174,4 @@ msgstr ""
 
 msgid "Ingot & Crystals"
 msgstr ""
+

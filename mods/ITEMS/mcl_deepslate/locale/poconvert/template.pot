@@ -19,19 +19,13 @@ msgstr ""
 msgid "Deepslate is a stone type found deep underground in the Overworld that functions similar to regular stone but is harder than the stone."
 msgstr ""
 
+msgid "Infested Deepslate"
+msgstr ""
+
 msgid "Reinforced Deepslate"
 msgstr ""
 
 msgid "Reinforced deepslate is a very hard block undestructable by even wither explosions. It is unobtainable in survival mode."
-msgstr ""
-
-msgid "Infested Deepslate"
-msgstr ""
-
-msgid "An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart."
-msgstr ""
-
-msgid "Hides a silverfish"
 msgstr ""
 
 msgid "Tuff"

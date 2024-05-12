@@ -22,6 +22,9 @@ msgstr "Инвентарь"
 msgid "Recipe book"
 msgstr "Книга рецептов"
 
+msgid "Fill Craft Grid"
+msgstr ""
+
 msgid "Crafting Table"
 msgstr "Верстак"
 

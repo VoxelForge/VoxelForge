@@ -19,6 +19,33 @@ msgstr "Dette er et stykke rustning du kan tage på for at reducere den mængde 
 msgid "To equip it, put it on the corresponding armor slot in your inventory menu."
 msgstr "For at tage den på, skal du putte den i den tilsvarende rustningsplads i din oppakningsmenu."
 
+msgid "Leather Cap"
+msgstr ""
+
+msgid "Leather Tunic"
+msgstr ""
+
+msgid "Leather Pants"
+msgstr ""
+
+msgid "Leather Boots"
+msgstr ""
+
+msgid "Colorize a piece of leather armor, or wash it"
+msgstr ""
+
+msgid "Not leather armor."
+msgstr ""
+
+msgid "Washed."
+msgstr ""
+
+msgid "Done: @1"
+msgstr ""
+
+msgid "Player isn't online"
+msgstr ""
+
 msgid "Golden Helmet"
 msgstr "Guldhjelm"
 

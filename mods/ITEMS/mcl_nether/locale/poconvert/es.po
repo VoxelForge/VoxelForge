@@ -148,6 +148,21 @@ msgstr "Ladrillos del Nether"
 msgid "Nether bricks are the main crafting ingredient for crafting nether brick blocks and nether fences."
 msgstr "Los ladrillos abisales son el ingrediente principal para la elaboración de bloques de ladrillo y cercas inferiores."
 
+msgid "Netherite Upgrade Template"
+msgstr ""
+
+msgid "Applies to:"
+msgstr ""
+
+msgid "Diamond Armor"
+msgstr ""
+
+msgid "Diamond Tools"
+msgstr ""
+
+msgid "Ingredients:"
+msgstr ""
+
 msgid "Nether Lava Source"
 msgstr "Fuente de lava del Nether"
 

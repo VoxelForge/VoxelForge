@@ -19,20 +19,14 @@ msgstr "深層岩"
 msgid "Deepslate is a stone type found deep underground in the Overworld that functions similar to regular stone but is harder than the stone."
 msgstr "深層岩は、オーバーワールドの地中深くで見られる石種で、機能的には通常の石と同様ながら、石よりも硬いのが特徴です。"
 
+msgid "Infested Deepslate"
+msgstr "虫喰い深層岩"
+
 msgid "Reinforced Deepslate"
 msgstr ""
 
 msgid "Reinforced deepslate is a very hard block undestructable by even wither explosions. It is unobtainable in survival mode."
 msgstr ""
-
-msgid "Infested Deepslate"
-msgstr "虫喰い深層岩"
-
-msgid "An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart."
-msgstr "虫喰いブロックは、壊すとシルバーフィッシュが飛び出してくるブロックです。見た目は通常のブロックと同じです。"
-
-msgid "Hides a silverfish"
-msgstr "シルバーフィッシュが潜む"
 
 msgid "Tuff"
 msgstr "凝灰岩"

@@ -22,6 +22,9 @@ msgstr "Ekwipunek"
 msgid "Recipe book"
 msgstr "Księga receptur"
 
+msgid "Fill Craft Grid"
+msgstr ""
+
 msgid "Crafting Table"
 msgstr "Stół rzemieślniczy"
 

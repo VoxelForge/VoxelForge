@@ -25,6 +25,6 @@ msgstr "エラー：構造体タイプが指定されていません。 \"/spawn
 msgid "Error: Unknown structure type. Please use “/spawnstruct <type>”."
 msgstr "エラー：構造体タイプが不明です。 \"/spawnstruct <type>\" を使用してください。"
 
-msgid "Use /help spawnstruct to see a list of avaiable types."
-msgstr "使用可能なタイプのリストを見るには、 /help spawnstruct を使用してください。"
+msgid "Use /help spawnstruct to see a list of available types."
+msgstr ""
 

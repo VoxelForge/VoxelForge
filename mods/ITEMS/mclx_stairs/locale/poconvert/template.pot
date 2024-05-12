@@ -64,6 +64,12 @@ msgstr ""
 msgid "@1 Concrete Slab"
 msgstr ""
 
+msgid "@1 Terracotta Stairs"
+msgstr ""
+
+msgid "@1 Terracotta Slab"
+msgstr ""
+
 msgid "Concrete Slab"
 msgstr ""
 
@@ -71,5 +77,14 @@ msgid "Double Concrete Slab"
 msgstr ""
 
 msgid "Concrete Stairs"
+msgstr ""
+
+msgid "Terracotta Slab"
+msgstr ""
+
+msgid "Double Terracotta Slab"
+msgstr ""
+
+msgid "Terracotta Stairs"
 msgstr ""
 

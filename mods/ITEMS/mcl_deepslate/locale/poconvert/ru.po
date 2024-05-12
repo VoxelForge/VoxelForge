@@ -19,20 +19,14 @@ msgstr "Глубинный сланец"
 msgid "Deepslate is a stone type found deep underground in the Overworld that functions similar to regular stone but is harder than the stone."
 msgstr "Глубинный сланец это камень, который можно найти в глубине Верхнего мира. Схож с обычным камнем, но сланец твёрже."
 
+msgid "Infested Deepslate"
+msgstr "Заражённый глубинный сланец"
+
 msgid "Reinforced Deepslate"
 msgstr ""
 
 msgid "Reinforced deepslate is a very hard block undestructable by even wither explosions. It is unobtainable in survival mode."
 msgstr ""
-
-msgid "Infested Deepslate"
-msgstr "Заражённый глубинный сланец"
-
-msgid "An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart."
-msgstr "Заражённый блок это блок, после добычи которого спаунится чешуйница. Блок выглядит идентично своему нормальному варианту."
-
-msgid "Hides a silverfish"
-msgstr "Прячет в себе чешуйницу"
 
 msgid "Tuff"
 msgstr "Туф"

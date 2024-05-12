@@ -148,6 +148,21 @@ msgstr "Brique du Nether"
 msgid "Nether bricks are the main crafting ingredient for crafting nether brick blocks and nether fences."
 msgstr "Les briques du Nether sont le principal ingrédient pour la fabrication de blocs de briques et de clôtures du Nether."
 
+msgid "Netherite Upgrade Template"
+msgstr ""
+
+msgid "Applies to:"
+msgstr ""
+
+msgid "Diamond Armor"
+msgstr ""
+
+msgid "Diamond Tools"
+msgstr ""
+
+msgid "Ingredients:"
+msgstr ""
+
 msgid "Nether Lava Source"
 msgstr "Source de Lave du Nether"
 

@@ -22,6 +22,9 @@ msgstr "Inventar"
 msgid "Recipe book"
 msgstr "Fertigungsbuch"
 
+msgid "Fill Craft Grid"
+msgstr ""
+
 msgid "Crafting Table"
 msgstr "Werkbank"
 

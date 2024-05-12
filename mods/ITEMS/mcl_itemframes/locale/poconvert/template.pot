@@ -31,3 +31,9 @@ msgstr ""
 msgid "Can hold an item and glows"
 msgstr ""
 
+msgid "Glow and Behold!"
+msgstr ""
+
+msgid "Craft a glow item frame."
+msgstr ""
+

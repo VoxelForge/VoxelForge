@@ -73,23 +73,11 @@ msgstr "Aide"
 msgid "Select player skin"
 msgstr "Sélectionnez l'apparence du joueur"
 
-msgid "[<gamemode>] [<player>]"
-msgstr ""
-
-msgid "Change gamemode (survival/creative) for yourself or player"
-msgstr ""
-
-msgid "Player not online"
-msgstr ""
-
-msgid "Gamemode @1 does not exist."
-msgstr ""
-
-msgid "Gamemode for player @1: @2"
-msgstr ""
-
 msgid "Crafting"
 msgstr "Artisanat"
+
+msgid "Fill Craft Grid"
+msgstr ""
 
 msgid "Achievements"
 msgstr "Accomplissements"

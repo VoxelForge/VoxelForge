@@ -31,3 +31,9 @@ msgstr "発光するアイテムフレーム"
 msgid "Can hold an item and glows"
 msgstr "アイテムを保持でき、発光する"
 
+msgid "Glow and Behold!"
+msgstr ""
+
+msgid "Craft a glow item frame."
+msgstr ""
+

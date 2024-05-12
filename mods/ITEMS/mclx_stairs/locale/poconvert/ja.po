@@ -64,6 +64,12 @@ msgstr ""
 msgid "@1 Concrete Slab"
 msgstr ""
 
+msgid "@1 Terracotta Stairs"
+msgstr ""
+
+msgid "@1 Terracotta Slab"
+msgstr ""
+
 msgid "Concrete Slab"
 msgstr "コンクリートのスラブ"
 
@@ -72,4 +78,13 @@ msgstr "コンクリートの２重スラブ"
 
 msgid "Concrete Stairs"
 msgstr "コンクリートの階段"
+
+msgid "Terracotta Slab"
+msgstr ""
+
+msgid "Double Terracotta Slab"
+msgstr ""
+
+msgid "Terracotta Stairs"
+msgstr ""
 

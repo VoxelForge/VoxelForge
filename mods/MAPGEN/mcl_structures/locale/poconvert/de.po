@@ -25,6 +25,6 @@ msgstr "Fehler: Kein Gebäudetyp angegeben. Bitte benutzen Sie „/spawnstruct <
 msgid "Error: Unknown structure type. Please use “/spawnstruct <type>”."
 msgstr "Fehler: Unbekannter Gebäudetyp. Bitte benutzen Sie „/spawnstruct <Typ>“."
 
-msgid "Use /help spawnstruct to see a list of avaiable types."
-msgstr "Benutzen Sie „/help spawnstruct“, um eine Liste der vorhandenen Typen zu sehen."
+msgid "Use /help spawnstruct to see a list of available types."
+msgstr ""
 

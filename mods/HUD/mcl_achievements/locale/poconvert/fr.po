@@ -234,7 +234,8 @@ msgstr "Merci pour le poisson"
 
 msgid "Catch a fish.\n"
 "Hint: Catch a fish, salmon, clownfish, or pufferfish."
-msgstr "Attrapez un poisson. \nAstuce : attrapez un poisson, saumon, poisson-clown, ou poisson-globe."
+msgstr "Attrapez un poisson. \n"
+"Astuce : attrapez un poisson, saumon, poisson-clown, ou poisson-globe."
 
 msgid "Country Lode, Take Me Home"
 msgstr "Petit Poucet"

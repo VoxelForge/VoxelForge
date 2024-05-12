@@ -22,6 +22,9 @@ msgstr "インベントリ"
 msgid "Recipe book"
 msgstr "レシピ本"
 
+msgid "Fill Craft Grid"
+msgstr ""
+
 msgid "Crafting Table"
 msgstr "作業台"
 

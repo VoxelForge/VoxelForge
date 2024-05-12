@@ -148,6 +148,21 @@ msgstr "Адский кирпич"
 msgid "Nether bricks are the main crafting ingredient for crafting nether brick blocks and nether fences."
 msgstr "Адские кирпичи это главный материал для создания блоков адских кирпичей."
 
+msgid "Netherite Upgrade Template"
+msgstr ""
+
+msgid "Applies to:"
+msgstr ""
+
+msgid "Diamond Armor"
+msgstr ""
+
+msgid "Diamond Tools"
+msgstr ""
+
+msgid "Ingredients:"
+msgstr ""
+
 msgid "Nether Lava Source"
 msgstr "Адский источник лавы"
 

@@ -13,6 +13,9 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: mtt_convert 0.1.0\n"
 
+msgid "Enchantment Cost: "
+msgstr ""
+
 msgid "Repair and Name"
 msgstr "Napraw i nazwij"
 

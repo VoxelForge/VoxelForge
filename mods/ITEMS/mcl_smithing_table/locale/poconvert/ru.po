@@ -16,6 +16,6 @@ msgstr ""
 msgid "Upgrade Gear"
 msgstr "Улучшить"
 
-msgid "Smithing table"
-msgstr "Кузнечный стол"
+msgid "Smithing Table"
+msgstr ""
 

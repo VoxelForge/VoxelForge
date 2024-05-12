@@ -19,6 +19,33 @@ msgstr "Это часть надеваемой брони, уменьшающа�
 msgid "To equip it, put it on the corresponding armor slot in your inventory menu."
 msgstr "Чтобы надеть, поместите в соответствующий слот брони в вашем инвентаря."
 
+msgid "Leather Cap"
+msgstr ""
+
+msgid "Leather Tunic"
+msgstr ""
+
+msgid "Leather Pants"
+msgstr ""
+
+msgid "Leather Boots"
+msgstr ""
+
+msgid "Colorize a piece of leather armor, or wash it"
+msgstr ""
+
+msgid "Not leather armor."
+msgstr ""
+
+msgid "Washed."
+msgstr ""
+
+msgid "Done: @1"
+msgstr ""
+
+msgid "Player isn't online"
+msgstr ""
+
 msgid "Golden Helmet"
 msgstr "Золотой шлем"
 

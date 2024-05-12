@@ -19,20 +19,14 @@ msgstr "Ardoise des abîmes"
 msgid "Deepslate is a stone type found deep underground in the Overworld that functions similar to regular stone but is harder than the stone."
 msgstr "L'ardoise des abîmes est un type de roche présente dans les profondeurs de l'Overworld qui fonctionne de manière similaire à la roche classique mais en plus dur."
 
+msgid "Infested Deepslate"
+msgstr "Ardoise des abîmes infestée"
+
 msgid "Reinforced Deepslate"
 msgstr ""
 
 msgid "Reinforced deepslate is a very hard block undestructable by even wither explosions. It is unobtainable in survival mode."
 msgstr ""
-
-msgid "Infested Deepslate"
-msgstr "Ardoise des abîmes infestée"
-
-msgid "An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart."
-msgstr "Un bloc infesté est un bloc dont va sortir un poisson d'argent lorsqu'il sera cassé. Il a la même apparence que son équivalent normal."
-
-msgid "Hides a silverfish"
-msgstr "Cache un poisson d'argent"
 
 msgid "Tuff"
 msgstr "Tuf"

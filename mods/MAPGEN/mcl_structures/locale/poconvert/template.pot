@@ -25,6 +25,6 @@ msgstr ""
 msgid "Error: Unknown structure type. Please use “/spawnstruct <type>”."
 msgstr ""
 
-msgid "Use /help spawnstruct to see a list of avaiable types."
+msgid "Use /help spawnstruct to see a list of available types."
 msgstr ""
 
