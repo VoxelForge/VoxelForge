@@ -180,6 +180,8 @@ for i = 1, 6 do
 		name = "lamp",
 		mts = schem_path .. "new_villages/lamp_" .. i .. ".mts",
 		yadjust = 1,
+		no_ground_turnip = true,
+		no_clearance = true,
 	})
 end
 

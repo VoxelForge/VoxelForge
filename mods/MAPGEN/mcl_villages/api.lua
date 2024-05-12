@@ -45,34 +45,40 @@ local function load_schema(name, mts)
 	return data
 end
 
+local all_optional = { "yadjust", "no_ground_turnip", "no_clearance" }
+
+local function set_all_optional(record, data)
+	for _, field in ipairs(all_optional) do
+		if record[field] then
+			data[field] = record[field]
+		end
+	end
+end
+
 function mcl_villages.register_lamp(record)
 	local data = load_schema(record["name"], record["mts"])
-	if record["yadjust"] then
-		data["yadjust"] = record["yadjust"]
-	end
+	set_all_optional(record, data)
 	table.insert(mcl_villages.schematic_lamps, data)
 end
 
 function mcl_villages.register_bell(record)
 	local data = load_schema(record["name"], record["mts"])
-	if record["yadjust"] then
-		data["yadjust"] = record["yadjust"]
-	end
+	set_all_optional(record, data)
 	table.insert(mcl_villages.schematic_bells, data)
 end
 
 function mcl_villages.register_well(record)
 	local data = load_schema(record["name"], record["mts"])
-	if record["yadjust"] then
-		data["yadjust"] = record["yadjust"]
-	end
+	set_all_optional(record, data)
 	table.insert(mcl_villages.schematic_wells, data)
 end
 
-local optional_fields = { "min_jobs", "max_jobs", "yadjust", "num_others" }
+local optional_fields = { "min_jobs", "max_jobs", "num_others" }
 
 function mcl_villages.register_building(record)
 	local data = load_schema(record["name"], record["mts"])
+
+	set_all_optional(record, data)
 
 	for _, field in ipairs(optional_fields) do
 		if record[field] then

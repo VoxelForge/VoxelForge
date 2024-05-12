@@ -83,7 +83,7 @@ function mcl_villages.terraform_new(settlement_info)
 		fwidth = schematic_data["size"]["x"]
 		fdepth = schematic_data["size"]["z"]
 
-		if schematic_data["name"] ~= "lamp" then
+		if not schematic_data["no_ground_turnip"] then
 			mcl_util.create_ground_turnip(pos, fwidth, fdepth)
 		end
 	end
@@ -95,7 +95,7 @@ function mcl_villages.terraform_new(settlement_info)
 		fdepth = schematic_data["size"]["z"]
 		fheight = schematic_data["size"]["y"]
 
-		if schematic_data["name"] ~= "lamp" then
+		if  not schematic_data["no_clearance"] then
 			overground(pos, fwidth, fdepth, fheight)
 		end
 	end

@@ -28,7 +28,21 @@ yadjust
 : Y axis adjustment when placing the schema. This can be positive to raise the
 placement, or negative to lower it.
 
-If your schema does not contain a ground layer then set this to 1.
+	If your schema does not contain a ground layer then set this to 1.
+
+no_ground_turnip
+
+: If you don't want the foundation under the building modified, you can disable
+the ground turnip by setting this to true.
+
+	Mainly useful for small thing such as lamps, planters, etc.
+
+no_clearance
+
+: If you don't want the area around and above the building modified, you can
+disable the overground clearance by setting this to true.
+
+	Mainly useful for small thing such as lamps, planters, etc.
 
 ### mcl_villages.register_lamp(table)
 
