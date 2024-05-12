@@ -384,7 +384,7 @@ function mcl_trees.register_wood(name, p)
 	end
 	if p.tree == nil or type(p.tree) == "table" then
 		minetest.register_node(":mcl_trees:".."tree_"..name,table.merge(tpl_log,{
-			description = S("@1 Wood", rname),
+			description = S("@1 Log", rname),
 			_doc_items_longdesc = S("The trunk of a @1 tree.", rname),
 			tiles = { minetest.get_current_modname().."_log_"..name.."_top.png",  "mcl_core_log_"..name.."_top.png", "mcl_core_log_"..name..".png"},
 			_mcl_stripped_variant = "mcl_trees:stripped_"..name,
@@ -393,7 +393,7 @@ function mcl_trees.register_wood(name, p)
 
 	if p.wood == nil or type(p.wood) == "table" then
 		minetest.register_node(":mcl_trees:wood_"..name, table.merge(tpl_wood,{
-			description =  S("@1 Wood Planks", rname),
+			description =  S("@1 Planks", rname),
 			_doc_items_longdesc = doc.sub.items.temp.build,
 			tiles = { minetest.get_current_modname().."_planks_"..name..".png"},
 		},p.wood or {}))
@@ -424,7 +424,7 @@ function mcl_trees.register_wood(name, p)
 
 	if p.stripped == nil or type(p.stripped) == "table" then
 		minetest.register_node(":mcl_trees:stripped_"..name, table.merge(tpl_log, {
-			description = S("Stripped @1 Wood", rname),
+			description = S("Stripped @1 Log", rname),
 			_doc_items_longdesc = S("The stripped trunk of an @1 tree.", rname),
 			_doc_items_hidden = false,
 			tiles = { minetest.get_current_modname().."_stripped_"..name.."_top.png",  "mcl_core_stripped_"..name.."_top.png", "mcl_core_stripped_"..name.."_side.png"},
