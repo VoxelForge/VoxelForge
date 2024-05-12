@@ -15,6 +15,7 @@ Version: 0.100.0
 * Improved villages
 * Wandering traders and trader llamas
 * Suspicious nodes, pottery shreds and decorated pots
+* Conduits
 * Deep Dark biome and Ancient hermitage (structure corresponding to Minecraft's ancient city)
 * Functional Loom to apply banner patterns
 * Lush Caves biome
