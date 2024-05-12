@@ -104,6 +104,10 @@ these jobs sites.
 
   This is used to influence the ratio of buildings in a village.
 
+is_mandatory
+
+: This ensures that each village will have at least one of these buildings.
+
 ### mobs_mc.register_villager_profession(title, table)
 
 **TODO** this should be somewhere else.

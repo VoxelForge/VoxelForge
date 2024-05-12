@@ -8,7 +8,11 @@ local S = minetest.get_translator(minetest.get_current_modname())
 -- initialize settlement_info
 -------------------------------------------------------------------------------
 function mcl_villages.initialize_settlement_info(pr)
-	local count_buildings = {}
+	local count_buildings = {
+		number_of_jobs = pr:next(min_jobs, max_jobs),
+		num_jobs = 0,
+		num_beds = 0,
+	}
 
 	for k, v in pairs(mcl_villages.schematic_houses) do
 		count_buildings[v["name"]] = 0
@@ -17,13 +21,7 @@ function mcl_villages.initialize_settlement_info(pr)
 		count_buildings[v["name"]] = 0
 	end
 
-	-- For new villages this is the number of jobs
-	local number_of_buildings = pr:next(min_jobs, max_jobs)
-
-	local number_built = 1
-	mcl_villages.debug("Village ".. number_of_buildings)
-
-	return count_buildings, number_of_buildings, number_built
+	return count_buildings
 end
 
 -------------------------------------------------------------------------------
@@ -206,67 +204,89 @@ local function layout_town(minp, maxp, pr, input_settlement_info)
 	return settlement_info
 end
 
+local function add_building(base_settlement_info, building_info, count_buildings)
+	local cur_schem = table.copy(building_info)
+	table.insert(base_settlement_info, cur_schem)
+
+	count_buildings[cur_schem["name"]] = count_buildings[cur_schem["name"]] + 1
+
+	if cur_schem["num_jobs"] then
+		count_buildings.num_jobs = count_buildings.num_jobs + cur_schem["num_jobs"]
+	end
+
+	if cur_schem["num_beds"] then
+		count_buildings.num_beds = count_buildings.num_beds + cur_schem["num_beds"]
+	end
+end
+
+local function info_for_building(bld_name, schem_table)
+	for _, building_info in pairs(schem_table) do
+		if building_info.name == bld_name then
+			return table.copy(building_info)
+		end
+	end
+end
+
 function mcl_villages.create_site_plan_new(minp, maxp, pr)
 	local base_settlement_info = {}
 
 	-- initialize all settlement_info table
-	local count_buildings, number_of_jobs = mcl_villages.initialize_settlement_info(pr)
+	local count_buildings = mcl_villages.initialize_settlement_info(pr)
 
 	-- first building is townhall in the center
 	local bindex = pr:next(1, #mcl_villages.schematic_bells)
 	local bell_info = table.copy(mcl_villages.schematic_bells[bindex])
 
-	local num_jobs = 0
-	local num_beds = 0
+	if mcl_villages.mandatory_buildings['jobs'] then
+		for _, bld_name in pairs(mcl_villages.mandatory_buildings['jobs']) do
+			local building_info = info_for_building(bld_name, mcl_villages.schematic_jobs)
+			add_building(base_settlement_info, building_info, count_buildings)
+		end
+	end
 
-	while num_jobs < number_of_jobs do
+	while count_buildings.num_jobs < count_buildings.number_of_jobs do
 		local rindex = pr:next(1, #mcl_villages.schematic_jobs)
 		local building_info = mcl_villages.schematic_jobs[rindex]
 
 		if
-			(building_info["min_jobs"] == nil or number_of_jobs >= building_info["min_jobs"])
-			and (building_info["max_jobs"] == nil or number_of_jobs <= building_info["max_jobs"])
+			(building_info["min_jobs"] == nil or count_buildings.number_of_jobs >= building_info["min_jobs"])
+			and (building_info["max_jobs"] == nil or count_buildings.number_of_jobs <= building_info["max_jobs"])
 			and (
 				building_info["num_others"] == nil
 				or count_buildings[building_info["name"]] == 0
-				or building_info["num_others"] * count_buildings[building_info["name"]] < num_jobs
+				or building_info["num_others"] * count_buildings[building_info["name"]] < count_buildings.num_jobs
 			)
 		then
-			local cur_schem = table.copy(building_info)
-			table.insert(base_settlement_info, cur_schem)
-			num_jobs = num_jobs + cur_schem["num_jobs"]
-			count_buildings[cur_schem["name"]] = count_buildings[cur_schem["name"]] + 1
-
-			if cur_schem["num_beds"] then
-				num_beds = num_beds + cur_schem["num_beds"]
-			end
+			add_building(base_settlement_info, building_info, count_buildings)
 		end
 	end
 
-	while num_beds <= num_jobs do
+	if mcl_villages.mandatory_buildings['houses'] then
+		for _, bld_name in pairs(mcl_villages.mandatory_buildings['houses']) do
+			local building_info = info_for_building(bld_name, mcl_villages.schematic_houses)
+			add_building(base_settlement_info, building_info, count_buildings)
+		end
+	end
+
+	while count_buildings.num_beds <= count_buildings.num_jobs do
 		local rindex = pr:next(1, #mcl_villages.schematic_houses)
 		local building_info = mcl_villages.schematic_houses[rindex]
 
 		if
-			(building_info["min_jobs"] == nil or number_of_jobs >= building_info["min_jobs"])
-			and (building_info["max_jobs"] == nil or number_of_jobs <= building_info["max_jobs"])
+			(building_info["min_jobs"] == nil or count_buildings.number_of_jobs >= building_info["min_jobs"])
+			and (building_info["max_jobs"] == nil or count_buildings.number_of_jobs <= building_info["max_jobs"])
 			and (
 				building_info["num_others"] == nil
 				or count_buildings[building_info["name"]] == 0
-				or building_info["num_others"] * count_buildings[building_info["name"]] < num_jobs
+				or building_info["num_others"] * count_buildings[building_info["name"]] < count_buildings.num_jobs
 			)
 		then
-			local cur_schem = table.copy(building_info)
-			table.insert(base_settlement_info, cur_schem)
-			count_buildings[cur_schem["name"]] = count_buildings[cur_schem["name"]] + 1
-			if cur_schem["num_beds"] then
-				num_beds = num_beds + cur_schem["num_beds"]
-			end
+			add_building(base_settlement_info, building_info, count_buildings)
 		end
 	end
 
 	-- Based on number of villagers
-	local num_wells = pr:next(1, math.ceil(num_beds / 10))
+	local num_wells = pr:next(1, math.ceil(count_buildings.num_beds / 10))
 	for i = 1, num_wells do
 		local windex = pr:next(1, #mcl_villages.schematic_wells)
 		local cur_schem = table.copy(mcl_villages.schematic_wells[windex])

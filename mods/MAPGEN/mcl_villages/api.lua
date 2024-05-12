@@ -5,6 +5,7 @@ mcl_villages.schematic_bells = {}
 mcl_villages.schematic_wells = {}
 mcl_villages.on_village_placed = {}
 mcl_villages.on_villager_placed = {}
+mcl_villages.mandatory_buildings = {}
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
@@ -55,25 +56,38 @@ local function set_all_optional(record, data)
 	end
 end
 
+local function set_mandatory(record, type)
+	if record['is_mandatory'] then
+		if not mcl_villages.mandatory_buildings[type] then
+			mcl_villages.mandatory_buildings[type] = {}
+		end
+
+		table.insert(mcl_villages.mandatory_buildings[type], record["name"])
+	end
+end
+
 function mcl_villages.register_lamp(record)
 	local data = load_schema(record["name"], record["mts"])
 	set_all_optional(record, data)
 	table.insert(mcl_villages.schematic_lamps, data)
+	set_mandatory(record, 'lamps')
 end
 
 function mcl_villages.register_bell(record)
 	local data = load_schema(record["name"], record["mts"])
 	set_all_optional(record, data)
 	table.insert(mcl_villages.schematic_bells, data)
+	set_mandatory(record, 'bells')
 end
 
 function mcl_villages.register_well(record)
 	local data = load_schema(record["name"], record["mts"])
 	set_all_optional(record, data)
 	table.insert(mcl_villages.schematic_wells, data)
+	set_mandatory(record, 'wells')
 end
 
-local optional_fields = { "min_jobs", "max_jobs", "num_others" }
+local optional_fields = { "min_jobs", "max_jobs", "num_others", "is_mandatory" }
 
 function mcl_villages.register_building(record)
 	local data = load_schema(record["name"], record["mts"])
@@ -99,8 +113,10 @@ function mcl_villages.register_building(record)
 	if job_count > 0 then
 		data["num_jobs"] = job_count
 		table.insert(mcl_villages.schematic_jobs, data)
+		set_mandatory(record, 'jobs')
 	else
 		table.insert(mcl_villages.schematic_houses, data)
+		set_mandatory(record, 'houses')
 	end
 end
 
