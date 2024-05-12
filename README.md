@@ -16,10 +16,10 @@ Version: 0.100.0
 * Wandering traders and trader llamas
 * Suspicious nodes, pottery shreds and decorated pots
 * Conduits
-* Deep Dark biome and Ancient hermitage (structure corresponding to ancient city)
-* Functional Loom to apply banner patterns
-* Lush Caves biome
-* Cherry Grove biome
+* Deep dark biome and ancient hermitage (structure corresponding to ancient city)
+* Functional loom to apply banner patterns
+* Lush caves biome
+* Cherry grove biome
 * No in-game music, twice as small compared to MineClone 2
 * No hamburgers
 * More features but almost 10k lines of code less
@@ -200,12 +200,12 @@ Technical differences from Minecraft:
 * Blocks, items, enemies and other features are missing
 * Structure replacements - these small variants of Minecraft structures serve as
   replacements until we can get large structures working:
-    * Woodland Cabin (Mansions)
+    * Woodland Cabin (Mansion)
     * Nether Outpost (Fortress)
     * Ocean Temple (Monument)
     * Nether Bulwark (Bastion)
-    * End Shipwreck & End Boat (End city)
-    * Ancient hermitage (Ancient city)
+    * End Shipwreck & End Boat (End City)
+    * Ancient Hermitage (Ancient City)
 * A few items have slightly different names to make them easier to distinguish
 * Different music for jukebox
 * Different textures (Pixel Perfection)
