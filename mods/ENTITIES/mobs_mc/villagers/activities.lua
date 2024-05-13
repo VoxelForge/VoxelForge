@@ -524,6 +524,7 @@ function mobs_mc.villager_mob:look_for_job(requested_jobsites)
 
 		for _, job_pos in pairs(n) do
 			local gp = self:gopath(job_pos, function(self)
+				self:get_a_job()
 				if self and self.state == "stand" then
 					self.order = WORK
 				end
