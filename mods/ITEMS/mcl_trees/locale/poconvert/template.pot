@@ -31,13 +31,13 @@ msgstr ""
 msgid "To open or close the trapdoor, rightclick it or send a redstone signal to it."
 msgstr ""
 
-msgid "@1 Wood"
+msgid "@1 Log"
 msgstr ""
 
 msgid "The trunk of a @1 tree."
 msgstr ""
 
-msgid "@1 Wood Planks"
+msgid "@1 Planks"
 msgstr ""
 
 msgid "@1 Bark"
@@ -46,10 +46,13 @@ msgstr ""
 msgid "This is a decorative block surrounded by the bark of a tree trunk."
 msgstr ""
 
-msgid "Stripped @1 Wood"
+msgid "Stripped @1 Log"
 msgstr ""
 
 msgid "The stripped trunk of an @1 tree."
+msgstr ""
+
+msgid "Stripped @1 Wood"
 msgstr ""
 
 msgid "The stripped wood of an @1 tree."
