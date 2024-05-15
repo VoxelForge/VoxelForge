@@ -415,7 +415,12 @@ function mcl_furnaces.get_timer_function(node_normal, node_active, factor, group
 			name = def._tt_original_description or def.description
 		end
 
-		local formspec = get_inactive_formspec(name)
+		local formspec
+		if def._mcl_furnaces_get_inactive_formspec then
+			formspec = def._mcl_furnaces_get_inactive_formspec(name)
+		else
+			formspec = get_inactive_formspec(name)
+		end
 		local item_percent = 0
 		if cookable then
 			item_percent = math.floor(src_time / cooked.time * 100)
@@ -428,7 +433,11 @@ function mcl_furnaces.get_timer_function(node_normal, node_active, factor, group
 			if fuel_totaltime > 0 then
 				fuel_percent = math.floor(fuel_time / fuel_totaltime * 100)
 			end
-			formspec = get_active_formspec(fuel_percent, item_percent, name)
+			if def._mcl_furnaces_get_active_formspec then
+				formspec = def._mcl_furnaces_get_active_formspec(fuel_percent, item_percent, name)
+			else
+				formspec = get_active_formspec(fuel_percent, item_percent, name)
+			end
 			mcl_furnaces.swap_node(pos, node_active)
 			-- make sure timer restarts automatically
 			result = true
@@ -568,7 +577,11 @@ function mcl_furnaces.register_furnace(nodename, def)
 			if def and def.description then
 				name = def._tt_original_description or def.description
 			end
-			meta:set_string("formspec", get_inactive_formspec(name))
+			if def.get_inactive_formspec then
+				meta:set_string("formspec", def.get_inactive_formspec(name))
+			else
+				meta:set_string("formspec", get_inactive_formspec(name))
+			end
 			local inv = meta:get_inventory()
 			inv:set_size("sorter", 1)
 			inv:set_size("src", 1)
@@ -577,6 +590,8 @@ function mcl_furnaces.register_furnace(nodename, def)
 		end,
 		on_timer = timer_func,
 		_mcl_furnaces_cook_group = def.cook_group,
+		_mcl_furnaces_get_active_formspec = def.get_active_formspec,
+		_mcl_furnaces_get_inactive_formspec = def.get_inactive_formspec,
 	},def.node_normal))
 	minetest.register_node(nodename.."_active", table.merge(mcl_furnaces.tpl_furnace_node_active,{
 		on_timer = timer_func,
@@ -642,7 +657,11 @@ minetest.register_lbm({
 			if def and def.description then
 				name = def._tt_original_description or def.description
 			end
-			m:set_string("formspec", get_inactive_formspec(name))
+			if def._mcl_furnaces_get_inactive_formspec then
+				m:set_string("formspec", def._mcl_furnaces_get_inactive_formspec(name))
+			else
+				m:set_string("formspec", get_inactive_formspec(name))
+			end
 		end
 	end,
 })
