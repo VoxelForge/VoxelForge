@@ -132,7 +132,7 @@ function hb.get_hudbar_position_index(identifier)
 end
 
 function hb.register_hudbar(identifier, text_color, label, textures, default_start_value, default_start_max, default_start_hidden, format_string, format_string_config, direction)
-	minetest.log("action", "hb.register_hudbar: "..tostring(identifier))
+	minetest.log("info", "hb.register_hudbar: "..tostring(identifier))
 	local hudtable = {}
 	local pos, offset
 	local index = math.floor(hb.get_hudbar_position_index(identifier))

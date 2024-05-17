@@ -192,7 +192,7 @@ function mcl_weather.change_weather(new_weather, explicit_end_time, changer_name
 		if new_weather == "none" then
 			new_weather = "clear"
 		end
-		minetest.log("action", "[mcl_weather] " .. changer_name .. " changed the weather from " .. old_weather .. " to " .. new_weather)
+		minetest.log("info", "[mcl_weather] " .. changer_name .. " changed the weather from " .. old_weather .. " to " .. new_weather)
 
 		local weather_meta = mcl_weather.reg_weathers[mcl_weather.state]
 		if explicit_end_time then
@@ -291,9 +291,9 @@ local function load_weather()
 			-- Fallback in case of corrupted end time
 			mcl_weather.end_time = mcl_weather.min_duration
 		end
-		minetest.log("action", "[mcl_weather] Weather restored.")
+		minetest.log("info", "[mcl_weather] Weather restored.")
 	else
-		minetest.log("action", "[mcl_weather] No weather data found. Starting with clear weather.")
+		minetest.log("info", "[mcl_weather] No weather data found. Starting with clear weather.")
 	end
 end
 

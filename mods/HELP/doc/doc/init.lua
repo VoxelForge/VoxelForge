@@ -609,7 +609,7 @@ do
 	local filepath = minetest.get_worldpath().."/doc.mt"
 	local file = io.open(filepath, "r")
 	if file then
-		minetest.log("action", "[doc] doc.mt opened.")
+		minetest.log("info", "[doc] doc.mt opened.")
 		local string = file:read()
 		io.close(file)
 		if(string ~= nil) then
@@ -618,7 +618,7 @@ do
 				doc.data.players[name] = {}
 				doc.data.players[name].stored_data = players_stored_data
 			end
-			minetest.log("action", "[doc] doc.mt successfully read.")
+			minetest.log("info", "[doc] doc.mt successfully read.")
 		end
 	end
 end
@@ -637,7 +637,7 @@ function doc.save_to_file()
 	if file then
 		file:write(savestring)
 		io.close(file)
-		minetest.log("action", "[doc] Wrote player data into "..filepath..".")
+		minetest.log("info", "[doc] Wrote player data into "..filepath..".")
 	else
 		minetest.log("error", "[doc] Failed to write player data into "..filepath..".")
 	end
@@ -648,7 +648,7 @@ minetest.register_on_leaveplayer(function(player)
 end)
 
 minetest.register_on_shutdown(function()
-	minetest.log("action", "[doc] Server shuts down. Player data is about to be saved.")
+	minetest.log("info", "[doc] Server shuts down. Player data is about to be saved.")
 	doc.save_to_file()
 end)
 
