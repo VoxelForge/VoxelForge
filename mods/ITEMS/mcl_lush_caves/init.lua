@@ -174,7 +174,7 @@ function mcl_lush_caves.makeazalea(pos, def, pr)
 	)
 	vm:calc_lighting()
 	vm:write_to_map()
-	minetest.log("action","[mcl_lush_caves] Azalea generated at "..minetest.pos_to_string(surface_pos))
+	minetest.log("info","[mcl_lush_caves] Azalea generated at "..minetest.pos_to_string(surface_pos))
 	return true
 end
 

@@ -323,7 +323,7 @@ function mcl_structures.place_structure(pos, def, pr, blockseed, rot)
 				return ap(pp,def,pr,blockseed,p1,p2,size,rotation)
 			end,pr)
 			if log_enabled then
-				minetest.log("action","[mcl_structures] "..def.name.." placed at "..minetest.pos_to_string(pp))
+				minetest.log("info","[mcl_structures] "..def.name.." placed at "..minetest.pos_to_string(pp))
 			end
 			return true
 		end
@@ -332,7 +332,7 @@ function mcl_structures.place_structure(pos, def, pr, blockseed, rot)
 			if def.loot then generate_loot(pp,def,pr,blockseed) end
 			if def.construct_nodes then construct_nodes(pp,def,pr,blockseed) end
 			if log_enabled then
-				minetest.log("action","[mcl_structures] "..def.name.." placed at "..minetest.pos_to_string(pp))
+				minetest.log("info","[mcl_structures] "..def.name.." placed at "..minetest.pos_to_string(pp))
 			end
 			return true
 		end

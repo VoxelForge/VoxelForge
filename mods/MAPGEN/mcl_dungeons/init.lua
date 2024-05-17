@@ -204,7 +204,7 @@ local function ecb_spawn_dungeon(blockpos, action, calls_remaining, param)
 	-- Check conditions. If okay, start generating
 	if check and (openings_counter < 1 or openings_counter > 5) then return end
 
-	minetest.log("action","[mcl_dungeons] Placing new dungeon at "..minetest.pos_to_string({x=x,y=y,z=z}))
+	minetest.log("info","[mcl_dungeons] Placing new dungeon at "..minetest.pos_to_string({x=x,y=y,z=z}))
 	-- Okay! Spawning starts!
 
 	-- Remember spawner chest positions to set metadata later
@@ -339,7 +339,7 @@ local function ecb_spawn_dungeon(blockpos, action, calls_remaining, param)
 
 		minetest.set_node(pos, {name="mcl_chests:chest", param2=facedir})
 		local meta = minetest.get_meta(pos)
-		minetest.log("action", "[mcl_dungeons] Filling chest " .. tostring(c) .. " at " .. minetest.pos_to_string(pos))
+		minetest.log("info", "[mcl_dungeons] Filling chest " .. tostring(c) .. " at " .. minetest.pos_to_string(pos))
 		mcl_loot.fill_inventory(meta:get_inventory(), "main", mcl_loot.get_multi_loot(loottable, pr), pr)
 	end
 
