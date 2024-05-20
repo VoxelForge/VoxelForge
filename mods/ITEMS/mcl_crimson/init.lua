@@ -204,7 +204,7 @@ minetest.register_node("mcl_crimson:warped_fungus", {
 	on_rightclick = function(pos, node, pointed_thing, player, itemstack)
 		if pointed_thing:get_wielded_item():get_name() == "mcl_bone_meal:bone_meal" then
 			local nodepos = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
-			if nodepos.name == "mcl_crimson:warped_nylium" or nodepos.name == "mcl_nether:netherrack" then
+			if nodepos.name == "mcl_crimson:warped_nylium" then
 				local random = math.random(1, 5)
 				if random == 1 then
 					minetest.remove_node(pos)
@@ -440,7 +440,7 @@ minetest.register_node("mcl_crimson:crimson_fungus", {
 	on_rightclick = function(pos, node, pointed_thing, player)
 		if pointed_thing:get_wielded_item():get_name() == "mcl_bone_meal:bone_meal" then
 			local nodepos = minetest.get_node(vector.offset(pos, 0, -1, 0))
-			if nodepos.name == "mcl_crimson:crimson_nylium" or nodepos.name == "mcl_nether:netherrack" then
+			if nodepos.name == "mcl_crimson:crimson_nylium" then
 				local random = math.random(1, 5)
 				if random == 1 then
 					minetest.remove_node(pos)
