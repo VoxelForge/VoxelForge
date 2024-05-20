@@ -193,7 +193,7 @@ minetest.register_node("mcl_crimson:warped_fungus", {
 		fixed = { -3/16, -0.5, -3/16, 3/16, 7/16, 3/16 },
 	},
 	on_place = function(itemstack, placer, pointed_thing)
-		local placer_dir = minetest.get_node(pointed_thing.under)
+		local placer_dir = minetest.get_node(vector.offset(pointed_thing.above, 0, -1, 0))
 		for index, value in ipairs(fungus_soil) do
 			if value == placer_dir.name then
 				minetest.item_place(itemstack, placer, pointed_thing)
@@ -429,7 +429,7 @@ minetest.register_node("mcl_crimson:crimson_fungus", {
 	},
 	node_placement_prediction = "",
 	on_place = function(itemstack, placer, pointed_thing)
-		local placer_dir = minetest.get_node(pointed_thing.under)
+		local placer_dir = minetest.get_node(vector.offset(pointed_thing.above, 0, -1, 0))
 		for index, value in ipairs(fungus_soil) do
 			if value == placer_dir.name then
 				minetest.item_place(itemstack, placer, pointed_thing)
