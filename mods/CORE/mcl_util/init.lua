@@ -620,7 +620,7 @@ function mcl_util.deal_damage(target, damage, mcl_reason)
 	end
 	local luaentity = target:get_luaentity()
 	if luaentity then
-		damage = -mcl_damage.run_modifiers(target, -damage, mcl_reason or {type = "generic"})
+		damage = mcl_damage.run_modifiers(target, damage, mcl_reason or {type = "generic"})
 		if luaentity.deal_damage then
 			if luaentity:deal_damage(damage, mcl_reason or {type = "generic"}) ~= true then
 				mcl_damage.run_damage_callbacks(target, -damage, mcl_reason or {type = "generic"})
