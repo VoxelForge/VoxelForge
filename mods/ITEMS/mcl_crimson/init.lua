@@ -18,6 +18,7 @@ local nether_plants = {
 		"mcl_crimson:nether_sprouts",
 	},
 }
+local fungus_soil = {"mcl_core:dirt_with_grass", "mcl_core:dirt", "mcl_core:coarse_dirt", "mcl_core:podzol", "mcl_farming:soil", "mcl_lush_caves:rooted_dirt", "mcl_lush_caves:moss", "mcl_crimson:warped_nylium", "mcl_crimson:crimson_nylium", "mcl_core:mycelium", "mcl_blackstone:soul_soil", "mcl_mud:mud", "mcl_mangrove:mangrove_mud_roots"}
 
 local function spread_nether_plants(pos,node)
 	local n = node.name
@@ -187,6 +188,15 @@ minetest.register_node("mcl_crimson:warped_fungus", {
 	groups = {dig_immediate=3,mushroom=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1,enderman_takable=1,deco_block=1,compostability=65},
 	light_source = 1,
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
+	on_place = function(itemstack, placer, pointed_thing)
+		local placer_dir = minetest.get_node(pointed_thing.under)
+		for index, value in ipairs(fungus_soil) do
+			if value == placer_dir.name then
+				minetest.item_place(itemstack, placer, pointed_thing)
+				return itemstack
+			end
+		end
+	end,
 	on_rightclick = function(pos, node, pointed_thing, player, itemstack)
 		if pointed_thing:get_wielded_item():get_name() == "mcl_bone_meal:bone_meal" then
 			local nodepos = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
@@ -414,6 +424,15 @@ minetest.register_node("mcl_crimson:crimson_fungus", {
 		fixed = { -3/16, -0.5, -3/16, 3/16, -2/16, 3/16 },
 	},
 	node_placement_prediction = "",
+	on_place = function(itemstack, placer, pointed_thing)
+		local placer_dir = minetest.get_node(pointed_thing.under)
+		for index, value in ipairs(fungus_soil) do
+			if value == placer_dir.name then
+				minetest.item_place(itemstack, placer, pointed_thing)
+				return itemstack
+			end
+		end
+	end,
 	on_rightclick = function(pos, node, pointed_thing, player)
 		if pointed_thing:get_wielded_item():get_name() == "mcl_bone_meal:bone_meal" then
 			local nodepos = minetest.get_node(vector.offset(pos, 0, -1, 0))
