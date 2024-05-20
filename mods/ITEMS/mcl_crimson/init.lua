@@ -188,6 +188,10 @@ minetest.register_node("mcl_crimson:warped_fungus", {
 	groups = {dig_immediate=3,mushroom=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1,enderman_takable=1,deco_block=1,compostability=65},
 	light_source = 1,
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
+	selection_box = {
+		type = "fixed",
+		fixed = { -3/16, -0.5, -3/16, 3/16, 7/16, 3/16 },
+	},
 	on_place = function(itemstack, placer, pointed_thing)
 		local placer_dir = minetest.get_node(pointed_thing.under)
 		for index, value in ipairs(fungus_soil) do
@@ -421,7 +425,7 @@ minetest.register_node("mcl_crimson:crimson_fungus", {
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
-		fixed = { -3/16, -0.5, -3/16, 3/16, -2/16, 3/16 },
+		fixed = { -3/16, -0.5, -3/16, 3/16, 7/16, 3/16 },
 	},
 	node_placement_prediction = "",
 	on_place = function(itemstack, placer, pointed_thing)
