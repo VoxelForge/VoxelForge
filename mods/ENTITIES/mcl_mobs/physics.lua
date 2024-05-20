@@ -763,7 +763,7 @@ function mob_class:do_env_damage()
 			if minetest.get_item_group(self.standing_in, "water") == 0 then
 				drowning = true
 			end
-		elseif nodef.drowning > 0 and (nodef3.drowning > 0 or nodef3.groups.solid) then
+		elseif nodef.drowning > 0 and (nodef3.drowning > 0 or minetest.get_item_group(self.standing_under, "solid") > 0) then
 			drowning = true
 		end
 		if drowning then
