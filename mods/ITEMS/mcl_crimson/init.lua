@@ -192,6 +192,7 @@ minetest.register_node("mcl_crimson:warped_fungus", {
 		type = "fixed",
 		fixed = { -3/16, -0.5, -3/16, 3/16, 7/16, 3/16 },
 	},
+	node_placement_prediction = "",
 	on_place = function(itemstack, placer, pointed_thing)
 		local placer_dir = minetest.get_node(vector.offset(pointed_thing.above, 0, -1, 0))
 		for index, value in ipairs(fungus_soil) do
