@@ -202,17 +202,23 @@ minetest.register_node("mcl_crimson:warped_fungus", {
 			end
 		end
 	end,
-	on_rightclick = function(pos, node, pointed_thing, player, itemstack)
-		if pointed_thing:get_wielded_item():get_name() == "mcl_bone_meal:bone_meal" then
+	on_rightclick = function(pos, node, player, itemstack)
+		if itemstack:get_name() == "mcl_bone_meal:bone_meal" then
 			local nodepos = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
 			if nodepos.name == "mcl_crimson:warped_nylium" then
 				local random = math.random(1, 5)
-				if random == 1 then
+				if random <= 2 then
 					minetest.remove_node(pos)
 					generate_warped_tree(pos)
 				end
+
+				if not minetest.is_creative_enabled(player:get_player_name()) then
+					itemstack:take_item()
+				end
 			end
 		end
+
+		return itemstack
 	end,
 	_mcl_blast_resistance = 0,
 })
@@ -438,17 +444,23 @@ minetest.register_node("mcl_crimson:crimson_fungus", {
 			end
 		end
 	end,
-	on_rightclick = function(pos, node, pointed_thing, player)
-		if pointed_thing:get_wielded_item():get_name() == "mcl_bone_meal:bone_meal" then
+	on_rightclick = function(pos, node, player, itemstack)
+		if itemstack:get_name() == "mcl_bone_meal:bone_meal" then
 			local nodepos = minetest.get_node(vector.offset(pos, 0, -1, 0))
 			if nodepos.name == "mcl_crimson:crimson_nylium" then
 				local random = math.random(1, 5)
-				if random == 1 then
+				if random <= 2 then
 					minetest.remove_node(pos)
 					generate_crimson_tree(pos)
 				end
+
+				if not minetest.is_creative_enabled(player:get_player_name()) then
+					itemstack:take_item()
+				end
 			end
 		end
+
+		return itemstack
 	end,
 	_mcl_blast_resistance = 0,
 })
