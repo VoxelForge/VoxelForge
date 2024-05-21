@@ -44,6 +44,11 @@ local function on_bone_meal(itemstack,user,pt,pos,node)
 	end
 end
 
+local function check_for_bedrock(pos)
+	local br = minetest.find_nodes_in_area(pos, vector.offset(pos, 0, 12, 0), {"mcl_core:bedrock"})
+	return br and #br > 0
+end
+
 local function generate_fungus_tree(pos, typ)
 	return minetest.place_schematic(pos,modpath.."/schematics/"..typ.."_fungus_"..tostring(math.random(1,3))..".mts","random",nil,false,"place_center_x,place_center_z")
 end
@@ -198,6 +203,7 @@ minetest.register_node("mcl_crimson:warped_fungus", {
 		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
 		if node_below.name == "mcl_crimson:warped_nylium" then
 			if math.random() > 0.40 then return end --fungus has a 40% chance to grow when bone mealing
+			if check_for_bedrock(pos) then return false end
 			minetest.remove_node(pos)
 			return generate_fungus_tree(pos, "warped")
 		end
@@ -422,6 +428,7 @@ minetest.register_node("mcl_crimson:crimson_fungus", {
 		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
 		if node_below.name == "mcl_crimson:crimson_nylium" then
 			if math.random() > 0.40 then return end --fungus has a 40% chance to grow when bone mealing
+			if check_for_bedrock(pos) then return false end
 			minetest.remove_node(pos)
 			return generate_fungus_tree(pos, "crimson")
 		end
