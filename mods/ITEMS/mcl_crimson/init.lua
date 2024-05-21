@@ -44,12 +44,8 @@ local function on_bone_meal(itemstack,user,pt,pos,node)
 	end
 end
 
-local function generate_warped_tree(pos)
-	minetest.place_schematic(pos,modpath.."/schematics/warped_fungus_1.mts","random",nil,false,"place_center_x,place_center_z")
-end
-
-function generate_crimson_tree(pos)
-	minetest.place_schematic(pos,modpath.."/schematics/crimson_fungus_1.mts","random",nil,false,"place_center_x,place_center_z")
+local function generate_fungus_tree(pos, typ)
+	return minetest.place_schematic(pos,modpath.."/schematics/"..typ.."_fungus_"..tostring(math.random(1,3))..".mts","random",nil,false,"place_center_x,place_center_z")
 end
 
 local max_vines_age = 25
@@ -203,7 +199,7 @@ minetest.register_node("mcl_crimson:warped_fungus", {
 		if node_below.name == "mcl_crimson:warped_nylium" then
 			if math.random() > 0.40 then return end --fungus has a 40% chance to grow when bone mealing
 			minetest.remove_node(pos)
-			return generate_warped_tree(pos)
+			return generate_fungus_tree(pos, "warped")
 		end
 	end,
 	_mcl_blast_resistance = 0,
@@ -427,7 +423,7 @@ minetest.register_node("mcl_crimson:crimson_fungus", {
 		if node_below.name == "mcl_crimson:crimson_nylium" then
 			if math.random() > 0.40 then return end --fungus has a 40% chance to grow when bone mealing
 			minetest.remove_node(pos)
-			return generate_crimson_tree(pos)
+			return generate_fungus_tree(pos, "crimson")
 		end
 	end,
 	_mcl_blast_resistance = 0,
