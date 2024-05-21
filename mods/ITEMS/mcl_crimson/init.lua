@@ -20,8 +20,7 @@ local nether_plants = {
 }
 
 local place_fungus = mcl_util.generate_on_place_plant_function(function(pos, node)
-	local node_below = minetest.get_node(vector.offset(pos,0,-1,0))
-	return minetest.get_item_group(node_below.name, "soil_fungus") > 0
+	return minetest.get_item_group(minetest.get_node(vector.offset(pos,0,-1,0)).name, "soil_fungus") > 0
 end)
 
 local function spread_nether_plants(pos,node)
@@ -200,8 +199,7 @@ minetest.register_node("mcl_crimson:warped_fungus", {
 	node_placement_prediction = "",
 	on_place = place_fungus,
 	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
-		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
-		if node_below.name == "mcl_crimson:warped_nylium" then
+		if minetest.get_node_or_nil(vector.offset(pos,0,-1,0)).name == "mcl_crimson:warped_nylium" then
 			if math.random() > 0.40 then return end --fungus has a 40% chance to grow when bone mealing
 			if check_for_bedrock(pos) then return false end
 			minetest.remove_node(pos)
@@ -425,8 +423,7 @@ minetest.register_node("mcl_crimson:crimson_fungus", {
 	node_placement_prediction = "",
 	on_place = place_fungus,
 	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
-		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
-		if node_below.name == "mcl_crimson:crimson_nylium" then
+		if minetest.get_node(vector.offset(pos,0,-1,0)).name == "mcl_crimson:crimson_nylium" then
 			if math.random() > 0.40 then return end --fungus has a 40% chance to grow when bone mealing
 			if check_for_bedrock(pos) then return false end
 			minetest.remove_node(pos)
