@@ -194,12 +194,9 @@ minetest.register_node("mcl_crimson:warped_fungus", {
 	},
 	node_placement_prediction = "",
 	on_place = function(itemstack, placer, pointed_thing)
-		local placer_dir = minetest.get_node(vector.offset(pointed_thing.above, 0, -1, 0))
-		for index, value in pairs(fungus_soil) do
-			if value == placer_dir.name then
-				minetest.item_place(itemstack, placer, pointed_thing)
-				return itemstack
-			end
+		local node_below = minetest.get_node(vector.offset(pointed_thing.above, 0, -1, 0))
+		if table.indexof(fungus_soil, node_below.name) >= 1 then
+			minetest.item_place(itemstack, placer, pointed_thing)
 		end
 	end,
 	on_rightclick = function(pos, node, player, itemstack)
@@ -436,12 +433,9 @@ minetest.register_node("mcl_crimson:crimson_fungus", {
 	},
 	node_placement_prediction = "",
 	on_place = function(itemstack, placer, pointed_thing)
-		local placer_dir = minetest.get_node(vector.offset(pointed_thing.above, 0, -1, 0))
-		for index, value in pairs(fungus_soil) do
-			if value == placer_dir.name then
-				minetest.item_place(itemstack, placer, pointed_thing)
-				return itemstack
-			end
+		local node_below = minetest.get_node(vector.offset(pointed_thing.above, 0, -1, 0))
+		if table.indexof(fungus_soil, node_below.name) >= 1 then
+			minetest.item_place(itemstack, placer, pointed_thing)
 		end
 	end,
 	on_rightclick = function(pos, node, player, itemstack)
