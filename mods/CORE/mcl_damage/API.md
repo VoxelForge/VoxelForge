@@ -6,7 +6,12 @@ WARNING: Not using it inside your mods may cause strange bugs (using the native 
 
 ## Functions
 `mcl_damage.run_modifiers(obj, damage, reason)`
-	* Runs all registered damage modifiers for obj. Returns the modified damage.
+	* Runs all registered damage modifiers for obj, ordered by priority,
+          highest priority first. Feeds modified damage into next modifier,
+          returns final damage.
+        * if modifier returns 0, stop loop and return 0.
+        * if modifier returns nil, continue with previous damage value.
+        * damage may be positive or negative (i.e. healing).
 `mcl_damage.run_damage_callbacks(obj, damage, reason)`
 	* Runs all registered damage callbacks for obj
 `mcl_damage.run_death_callbacks(obj, reason)`
