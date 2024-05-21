@@ -193,29 +193,17 @@ minetest.register_node("mcl_crimson:warped_fungus", {
 		fixed = { -3/16, -0.5, -3/16, 3/16, 7/16, 3/16 },
 	},
 	node_placement_prediction = "",
-	on_place = function(itemstack, placer, pointed_thing)
-		local node_below = minetest.get_node(vector.offset(pointed_thing.above, 0, -1, 0))
-		if table.indexof(fungus_soil, node_below.name) >= 1 then
-			minetest.item_place(itemstack, placer, pointed_thing)
+	on_place = mcl_util.generate_on_place_plant_function(function(pos, node)
+		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
+		return node_below and (table.indexof(fungus_soil, node_below.name) >= 1)
+	end),
+	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
+		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
+		if node_below.name == "mcl_crimson:warped_nylium" then
+			if math.random() > 0.40 then return end --fungus has a 40% chance to grow when bone mealing
+			minetest.remove_node(pos)
+			return generate_warped_tree(pos)
 		end
-	end,
-	on_rightclick = function(pos, node, player, itemstack)
-		if itemstack:get_name() == "mcl_bone_meal:bone_meal" then
-			local nodepos = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
-			if nodepos.name == "mcl_crimson:warped_nylium" then
-				local random = math.random(1, 5)
-				if random <= 2 then
-					minetest.remove_node(pos)
-					generate_warped_tree(pos)
-				end
-
-				if not minetest.is_creative_enabled(player:get_player_name()) then
-					itemstack:take_item()
-				end
-			end
-		end
-
-		return itemstack
 	end,
 	_mcl_blast_resistance = 0,
 })
@@ -432,29 +420,17 @@ minetest.register_node("mcl_crimson:crimson_fungus", {
 		fixed = { -3/16, -0.5, -3/16, 3/16, 7/16, 3/16 },
 	},
 	node_placement_prediction = "",
-	on_place = function(itemstack, placer, pointed_thing)
-		local node_below = minetest.get_node(vector.offset(pointed_thing.above, 0, -1, 0))
-		if table.indexof(fungus_soil, node_below.name) >= 1 then
-			minetest.item_place(itemstack, placer, pointed_thing)
+	on_place = mcl_util.generate_on_place_plant_function(function(pos, node)
+		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
+		return node_below and (table.indexof(fungus_soil, node_below.name) >= 1)
+	end),
+	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
+		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
+		if node_below.name == "mcl_crimson:crimson_nylium" then
+			if math.random() > 0.40 then return end --fungus has a 40% chance to grow when bone mealing
+			minetest.remove_node(pos)
+			return generate_crimson_tree(pos)
 		end
-	end,
-	on_rightclick = function(pos, node, player, itemstack)
-		if itemstack:get_name() == "mcl_bone_meal:bone_meal" then
-			local nodepos = minetest.get_node(vector.offset(pos, 0, -1, 0))
-			if nodepos.name == "mcl_crimson:crimson_nylium" then
-				local random = math.random(1, 5)
-				if random <= 2 then
-					minetest.remove_node(pos)
-					generate_crimson_tree(pos)
-				end
-
-				if not minetest.is_creative_enabled(player:get_player_name()) then
-					itemstack:take_item()
-				end
-			end
-		end
-
-		return itemstack
 	end,
 	_mcl_blast_resistance = 0,
 })
