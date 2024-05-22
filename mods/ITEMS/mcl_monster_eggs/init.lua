@@ -35,6 +35,7 @@ local function register_infested_block(name, description)
 			end
 		end
 	})
+	newdef._mcl_stonecutter_recipes = nil
 	local base = name:gsub("^[_%w]*:", "")
 	minetest.register_node(":mcl_monster_eggs:monster_egg_"..base, newdef)
 end
