@@ -20,8 +20,21 @@ local function job_count(schem_lua)
 			if n == "group:cauldron" then
 				count = count + select(2, string.gsub(str, '"mcl_cauldrons:cauldron', ""))
 			else
-				minetest.log("warning", string.format("[mcl_villages] Don't know how to handle group %s counting it as 1 job site", n))
-				count = count + 1
+				local name = string.sub(n, 6, -1)
+				local num = select(2, string.gsub(str, name, ""))
+				if num then
+					minetest.log(
+						"warning",
+						string.format("[mcl_villages] Guessing how to handle %s counting it as %d job sites", name, num)
+					)
+					count = count + num
+				else
+					minetest.log(
+						"warning",
+						string.format("[mcl_villages] Don't know how to handle group %s counting it as 1 job site", n)
+					)
+					count = count + 1
+				end
 			end
 		else
 			count = count + select(2, string.gsub(str, '{name="' .. n .. '"', ""))
