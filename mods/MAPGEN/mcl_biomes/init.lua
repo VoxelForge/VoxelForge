@@ -30,6 +30,7 @@ local OCEAN_MIN = -15
 local DEEP_OCEAN_MAX = OCEAN_MIN - 1
 local DEEP_OCEAN_MIN = -31
 
+local stonelike = {"mcl_core:stone", "mcl_core:diorite", "mcl_core:andesite", "mcl_core:granite"}
 --[[ Special biome field: _mcl_biome_type:
 Rough categorization of biomes: One of "snowy", "cold", "medium" and "hot"
 Based off <https://minecraft.gamepedia.com/Biomes> ]]
@@ -1736,7 +1737,7 @@ local function register_biomes()
 	})
 	minetest.register_decoration({
 		deco_type = "simple",
-		place_on = {"group:material_stone","mcl_deepslate:deepslate"},
+		place_on = table.merge(stonelike, {"mcl_deepslate:deepslate"}),
 		sidelen = 16,
 		fill_ratio = 10,
 		biomes = { "DeepDark" },
@@ -2207,8 +2208,6 @@ end
 
 -- Register ores which are limited by biomes. For all mapgens except flat and singlenode.
 local function register_biome_ores()
-	local stonelike = {"mcl_core:stone", "mcl_core:diorite", "mcl_core:andesite", "mcl_core:granite"}
-
 	-- Emeralds
 	minetest.register_ore({
 		ore_type       = "scatter",
@@ -3175,7 +3174,7 @@ local function register_decorations()
 	minetest.register_decoration({
 		decoration = "mcl_lush_caves:moss",
 		deco_type = "simple",
-		place_on = {"mcl_core:stone","mcl_deepslate:deepslate","mcl_deepslate:tuff","group:material_stone", "mcl_core:gravel", "mcl_core:bedrock"},
+		place_on = table.merge(stonelike, {"mcl_core:stone","mcl_deepslate:deepslate","mcl_deepslate:tuff", "mcl_core:gravel", "mcl_core:bedrock"}),
 		biomes = lushcaves,
 		fill_ratio = 10,
 		flags = "all_floors, all_ceilings",
@@ -3284,7 +3283,7 @@ local function register_decorations()
 	minetest.register_decoration({
 		decoration = "mcl_lush_caves:moss_carpet",
 		deco_type = "simple",
-		place_on = {"group:material_stone","mcl_core:gravel","mcl_lush_caves:moss"},
+		place_on = table.merge(stonelike, {"mcl_deepslate:deepslate", "mcl_core:gravel","mcl_lush_caves:moss"}),
 		fill_ratio = 0.1,
 		flags = "all_floors",
 		y_min = mcl_vars.mg_overworld_min,
@@ -4460,7 +4459,7 @@ local function register_decorations()
 	--Mushrooms in caves
 	minetest.register_decoration({
 		deco_type = "simple",
-		place_on = {"group:material_stone"},
+		place_on = table.merge(stonelike, {"mcl_deepslate:deepslate"}),
 		sidelen = 80,
 		fill_ratio = 0.009,
 		noise_threshold = 2.0,
@@ -4471,7 +4470,7 @@ local function register_decorations()
 	})
 	minetest.register_decoration({
 		deco_type = "simple",
-		place_on = {"group:material_stone"},
+		place_on = table.merge(stonelike, {"mcl_deepslate:deepslate"}),
 		sidelen = 80,
 		fill_ratio = 0.009,
 		noise_threshold = 2.0,
