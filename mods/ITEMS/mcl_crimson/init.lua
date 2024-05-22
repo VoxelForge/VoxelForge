@@ -18,7 +18,11 @@ local nether_plants = {
 		"mcl_crimson:nether_sprouts",
 	},
 }
-local fungus_soil = {"mcl_core:dirt_with_grass", "mcl_core:dirt", "mcl_core:coarse_dirt", "mcl_core:podzol", "mcl_farming:soil", "mcl_lush_caves:rooted_dirt", "mcl_lush_caves:moss", "mcl_crimson:warped_nylium", "mcl_crimson:crimson_nylium", "mcl_core:mycelium", "mcl_blackstone:soul_soil", "mcl_mud:mud", "mcl_mangrove:mangrove_mud_roots"}
+
+local place_fungus = mcl_util.generate_on_place_plant_function(function(pos, node)
+	local node_below = minetest.get_node(vector.offset(pos,0,-1,0))
+	return minetest.get_item_group(node_below.name, "soil_nether_fungus") > 0
+end)
 
 local function spread_nether_plants(pos,node)
 	local n = node.name
@@ -193,10 +197,7 @@ minetest.register_node("mcl_crimson:warped_fungus", {
 		fixed = { -3/16, -0.5, -3/16, 3/16, 7/16, 3/16 },
 	},
 	node_placement_prediction = "",
-	on_place = mcl_util.generate_on_place_plant_function(function(pos, node)
-		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
-		return node_below and (table.indexof(fungus_soil, node_below.name) >= 1)
-	end),
+	on_place = place_fungus,
 	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
 		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
 		if node_below.name == "mcl_crimson:warped_nylium" then
@@ -393,7 +394,7 @@ minetest.register_node("mcl_crimson:warped_nylium", {
 		"mcl_nether_netherrack.png^warped_nylium_side.png",
 	},
 	drop = "mcl_nether:netherrack",
-	groups = {pickaxey=1, building_block=1, material_stone=1},
+	groups = {pickaxey=1, soil_nether_fungus=1, building_block=1, material_stone=1},
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_hardness = 0.4,
 	_mcl_blast_resistance = 0.4,
@@ -420,10 +421,7 @@ minetest.register_node("mcl_crimson:crimson_fungus", {
 		fixed = { -3/16, -0.5, -3/16, 3/16, 7/16, 3/16 },
 	},
 	node_placement_prediction = "",
-	on_place = mcl_util.generate_on_place_plant_function(function(pos, node)
-		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
-		return node_below and (table.indexof(fungus_soil, node_below.name) >= 1)
-	end),
+	on_place = place_fungus,
 	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
 		local node_below = minetest.get_node_or_nil(vector.offset(pos,0,-1,0))
 		if node_below.name == "mcl_crimson:crimson_nylium" then
@@ -477,7 +475,7 @@ minetest.register_node("mcl_crimson:crimson_nylium", {
 		"mcl_nether_netherrack.png^crimson_nylium_side.png",
 		"mcl_nether_netherrack.png^crimson_nylium_side.png",
 	},
-	groups = {pickaxey = 1, building_block = 1, material_stone = 1},
+	groups = {pickaxey=1, soil_nether_fungus=1, building_block=1, material_stone=1},
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	drop = "mcl_nether:netherrack",
 	_mcl_hardness = 0.4,
