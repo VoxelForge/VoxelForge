@@ -281,7 +281,7 @@ local function is_node_stack(itemstack)
 end
 
 local function is_rmb_conflicting_node(nodename)
-	nodedef = minetest.registered_nodes[nodename]
+	local nodedef = minetest.registered_nodes[nodename]
 	return nodedef.on_rightclick
 end
 
@@ -297,7 +297,6 @@ local function handle_blocking(player)
 	local shield_in_hand = mcl_shields.wielding_shield(player)
 	local not_blocking = player_shield.blocking == 0
 
-	local pos = player:get_pos()
 	if shield_in_hand then
 		if not_blocking then
 			minetest.after(0.05, function()
