@@ -143,7 +143,7 @@ minetest.register_node("mcl_blackstone:soul_soil", {
 	tiles = {"mcl_blackstone_soul_soil.png"},
 	is_ground_content = false,
 	sounds = mcl_sounds.node_sound_sand_defaults(),
-	groups = { cracky=3, handy=1, shovely=1, soul_block=1, soil_nether_fungus=1 },
+	groups = { cracky=3, handy=1, shovely=1, soul_block=1, soil_fungus=1 },
 	_mcl_blast_resistance = 0.5,
 	_mcl_hardness = 0.5,
 })

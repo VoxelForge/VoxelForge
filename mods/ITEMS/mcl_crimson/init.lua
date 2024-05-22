@@ -21,7 +21,7 @@ local nether_plants = {
 
 local place_fungus = mcl_util.generate_on_place_plant_function(function(pos, node)
 	local node_below = minetest.get_node(vector.offset(pos,0,-1,0))
-	return minetest.get_item_group(node_below.name, "soil_nether_fungus") > 0
+	return minetest.get_item_group(node_below.name, "soil_fungus") > 0
 end)
 
 local function spread_nether_plants(pos,node)
@@ -394,7 +394,7 @@ minetest.register_node("mcl_crimson:warped_nylium", {
 		"mcl_nether_netherrack.png^warped_nylium_side.png",
 	},
 	drop = "mcl_nether:netherrack",
-	groups = {pickaxey=1, soil_nether_fungus=1, building_block=1, material_stone=1},
+	groups = {pickaxey=1, soil_fungus=1, building_block=1, material_stone=1},
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_hardness = 0.4,
 	_mcl_blast_resistance = 0.4,
@@ -475,7 +475,7 @@ minetest.register_node("mcl_crimson:crimson_nylium", {
 		"mcl_nether_netherrack.png^crimson_nylium_side.png",
 		"mcl_nether_netherrack.png^crimson_nylium_side.png",
 	},
-	groups = {pickaxey=1, soil_nether_fungus=1, building_block=1, material_stone=1},
+	groups = {pickaxey=1, soil_fungus=1, building_block=1, material_stone=1},
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	drop = "mcl_nether:netherrack",
 	_mcl_hardness = 0.4,
