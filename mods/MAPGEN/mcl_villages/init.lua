@@ -25,6 +25,10 @@ minetest.register_alias("mcl_villages:structblock", "air")
 -- on map generation, try to build a settlement
 --
 local function build_a_settlement(minp, maxp, blockseed)
+	if mcl_villages.village_exists(blockseed) then
+		return
+	end
+
 	local pr = PseudoRandom(blockseed)
 
 	local settlement_info = mcl_villages.create_site_plan_new(minp, maxp, pr)
@@ -39,6 +43,8 @@ local function build_a_settlement(minp, maxp, blockseed)
 	-- TODO when run here minetest.find_path regularly fails :(
 	--mcl_villages.paths_new(blockseed)
 	--minetest.log("Completed village for " .. minetest.pos_to_string(minp))
+
+	mcl_villages.add_village(blockseed, settlement_info)
 
 	for _, on_village_placed_callback in pairs(mcl_villages.on_village_placed) do
 		on_village_placed_callback(settlement_info, blockseed)
@@ -90,6 +96,26 @@ minetest.register_on_mods_loaded(function()
 	minetest.registered_chatcommands["spawnstruct"].params = minetest.registered_chatcommands["spawnstruct"].params .. "|village"
 end)
 
+-- This is a light source so that lamps don't get placed near it
+minetest.register_node("mcl_villages:village_block", {
+	drawtype = "airlike",
+	groups = { not_in_creative_inventory = 1 },
+	light_source = 14,
+
+	-- Somethings don't work reliably when done in the map building
+	-- so we use a timer to run them later when they work more reliably
+	-- e.g. spawning mobs, running minetest.find_path
+	on_timer = function(pos, elapsed)
+		local meta = minetest.get_meta(pos)
+		local blockseed = meta:get_string("blockseed")
+		local node_type = meta:get_string("node_type")
+		minetest.set_node(pos, { name = node_type })
+		mcl_villages.post_process_village(blockseed)
+		return false
+	end,
+})
+
+-- TODO This should be removed in the future once all villages using it have been generated.
 -- This is a light source so that lamps don't get placed near it
 minetest.register_node("mcl_villages:building_block", {
 	drawtype = "airlike",

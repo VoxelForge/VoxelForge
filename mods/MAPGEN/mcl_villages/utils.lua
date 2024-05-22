@@ -262,3 +262,48 @@ function mcl_villages.substitue_materials(pos, schem_lua, pr)
 
 	return modified_schem_lua
 end
+
+local villages = {}
+local mod_storage = minetest.get_mod_storage()
+
+local function lazy_load_village(name)
+	if not villages[name] then
+		local json = mod_storage:get("mcl_villages." .. name)
+		if json then
+			villages[name] = minetest.parse_json(json)
+			return table.copy(villages[name])
+		end
+	end
+end
+
+function mcl_villages.get_village(name)
+	lazy_load_village(name)
+
+	if villages[name] then
+		return table.copy(villages[name])
+	end
+end
+
+function mcl_villages.village_exists(name)
+	lazy_load_village(name)
+
+	if villages[name] then
+		return true
+	end
+
+	return false
+end
+
+function mcl_villages.add_village(name, data)
+	lazy_load_village(name)
+
+	if villages[name] then
+		minetest.log("Village already exists: " .. name )
+		return false
+	end
+
+	local new_village = {name = name, data = data}
+	mod_storage:set_string("mcl_villages." .. name, minetest.write_json(new_village))
+
+	return true
+end
