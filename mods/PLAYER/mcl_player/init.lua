@@ -26,9 +26,9 @@ local tpl_playerinfo = {
 local nodeinfo_pos = { --offset positions of the "nodeinfo" nodes.
 	stand =       vector.new(0, -0.1, 0),
 	stand_below = vector.new(0, -1.1, 0),
-	head =        vector.new(0, 1.5, 0),
-	head_top =    vector.new(0, 2, 0),
-	feet =        vector.new(0, 0.3, 0),
+	head =        vector.new(0, 1.4, 0),
+	head_top =    vector.new(0, 1.9, 0),
+	feet =        vector.new(0, 0.2, 0),
 }
 mcl_player.node_offsets = nodeinfo_pos
 
