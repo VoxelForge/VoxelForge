@@ -113,11 +113,11 @@ local function layout_town(minp, maxp, pr, input_settlement_info)
 
 	-- build settlement around center
 	if not center_surface then
-		minetest.log("action", string.format("[mcl_villages] Cannot build village at %s", minetest.pos_to_string(center)))
+		minetest.log("info", string.format("[mcl_villages] Cannot build village at %s", minetest.pos_to_string(center)))
 		return false
 	else
 		minetest.log(
-			"action",
+			"info",
 			string.format(
 				"[mcl_villages] Will build a village at position %s with surface material %s",
 				minetest.pos_to_string(center_surface),
@@ -380,7 +380,7 @@ function mcl_villages.post_process_building(minp, maxp, blockseed, has_beds, has
 
 	if (not bell_pos) or bell_pos == "" then
 		minetest.log(
-			"warning",
+			"info",
 			string.format(
 				"No bell position for village building. blockseed: %s, has_bends: %s, has_jobs: %s, is_belltower: %s",
 				tostring(blockseed),
@@ -404,7 +404,7 @@ function mcl_villages.post_process_building(minp, maxp, blockseed, has_beds, has
 		if l then
 			l._home = bell
 		else
-			minetest.log("warning", "Could not create a golem!")
+			minetest.log("info", "Could not create a golem!")
 		end
 
 		spawn_cats(bell)
@@ -434,7 +434,7 @@ function mcl_villages.post_process_building(minp, maxp, blockseed, has_beds, has
 							callback(v, blockseed)
 						end
 					else
-						minetest.log("warning", "Could not create a villager!")
+						minetest.log("info", "Could not create a villager!")
 					end
 				end
 			end
@@ -459,7 +459,7 @@ function mcl_villages.post_process_village(blockseed)
 	if l then
 		l._home = bell
 	else
-		minetest.log("warning", "Could not create a golem!")
+		minetest.log("info", "Could not create a golem!")
 	end
 
 	spawn_cats(bell)
@@ -517,10 +517,10 @@ function mcl_villages.post_process_village(blockseed)
 						callback(v, blockseed)
 					end
 				else
-					minetest.log("warning", "Could not create a villager!")
+					minetest.log("info", "Could not create a villager!")
 				end
 			else
-				minetest.log("warning", "bed already owned by " .. m:get_string("villager"))
+				minetest.log("info", "bed already owned by " .. m:get_string("villager"))
 			end
 		end
 	end

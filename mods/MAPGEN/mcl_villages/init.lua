@@ -42,7 +42,7 @@ local function build_a_settlement(minp, maxp, blockseed)
 
 	-- TODO when run here minetest.find_path regularly fails :(
 	--mcl_villages.paths_new(blockseed)
-	--minetest.log("Completed village for " .. minetest.pos_to_string(minp))
+	--minetest.log("info", "Completed village for " .. minetest.pos_to_string(minp))
 
 	mcl_villages.add_village(blockseed, settlement_info)
 

@@ -24,7 +24,7 @@ local function job_count(schem_lua)
 				local num = select(2, string.gsub(str, name, ""))
 				if num then
 					minetest.log(
-						"warning",
+						"info",
 						string.format("[mcl_villages] Guessing how to handle %s counting it as %d job sites", name, num)
 					)
 					count = count + num
@@ -209,7 +209,7 @@ function mcl_villages.register_crop(crop_def)
 	local crop_type = crop_def.type
 
 	if table.indexof(supported_crop_types, crop_type) == -1 then
-		minetest.log(S("Crop type @1 is not supported", crop_type))
+		minetest.log("warning", S("Crop type @1 is not supported", crop_type))
 		return
 	end
 

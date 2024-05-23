@@ -297,7 +297,7 @@ function mcl_villages.add_village(name, data)
 	lazy_load_village(name)
 
 	if villages[name] then
-		minetest.log("Village already exists: " .. name )
+		minetest.log("info","Village already exists: " .. name )
 		return false
 	end
 

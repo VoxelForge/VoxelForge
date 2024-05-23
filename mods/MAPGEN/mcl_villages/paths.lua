@@ -95,7 +95,7 @@ local path_ends = {}
 
 -- helper function to log the path table
 function mcl_villages.dump_path_ends()
-	minetest.log("[mcl_villages] " .. dump(path_ends))
+	minetest.log("info", "[mcl_villages] " .. dump(path_ends))
 end
 
 -- Insert end points in to the nested tables
