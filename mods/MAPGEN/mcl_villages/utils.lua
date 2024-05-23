@@ -268,9 +268,9 @@ local mod_storage = minetest.get_mod_storage()
 
 local function lazy_load_village(name)
 	if not villages[name] then
-		local json = mod_storage:get("mcl_villages." .. name)
-		if json then
-			villages[name] = minetest.parse_json(json)
+		local data = mod_storage:get("mcl_villages." .. name)
+		if data then
+			villages[name] = minetest.deserialize(data)
 			return table.copy(villages[name])
 		end
 	end
@@ -303,7 +303,7 @@ function mcl_villages.add_village(name, data)
 	end
 
 	local new_village = {name = name, data = data}
-	mod_storage:set_string("mcl_villages." .. name, minetest.write_json(new_village))
+	mod_storage:set_string("mcl_villages." .. name, minetest.serialize(new_village))
 
 	return true
 end
