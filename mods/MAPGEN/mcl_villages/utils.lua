@@ -271,7 +271,6 @@ local function lazy_load_village(name)
 		local data = mod_storage:get("mcl_villages." .. name)
 		if data then
 			villages[name] = minetest.deserialize(data)
-			return table.copy(villages[name])
 		end
 	end
 end
