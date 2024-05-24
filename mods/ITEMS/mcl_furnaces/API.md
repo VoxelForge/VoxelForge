@@ -11,6 +11,6 @@ Registeres a new type of furnace
 		tiles = {}, --...
 	},
 	node_active = { }, --node definition of the active furnace node (node_basename.."_active")
-	formspec_active = function(fuel_percent, item_percent, name) end, --optional: function that returns the active furnace's formspec
-	formsepc_inactive = function(name) end, -- optional: function that returns the inactive furnace's formspec
+	get_active_formspec = function(fuel_percent, item_percent, name) end, --optional: function that returns the active furnace's formspec
+	get_inactive_formspec = function(name) end, -- optional: function that returns the inactive furnace's formspec
 }
