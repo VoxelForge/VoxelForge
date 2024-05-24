@@ -334,9 +334,7 @@ end
 function mob_class:do_states(dtime)
 	--if self.can_open_doors then check_doors(self) end
 
-	if self.state == "stand" then
-		self:do_states_stand()
-	elseif self.state == PATHFINDING then
+	if self.state == PATHFINDING then
 		self:check_gowp(dtime)
 	elseif self.state == "walk" then
 		self:do_states_walk()
@@ -346,6 +344,8 @@ function mob_class:do_states(dtime)
 		if self:do_states_attack(dtime) then
 			return true
 		end
+	else
+		self:do_states_stand()
 	end
 end
 
