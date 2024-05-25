@@ -305,9 +305,32 @@ function mcl_autogroup.get_wear(toolname, diggroup)
 	return math.ceil(65535 / uses)
 end
 
+local groups_mtg2mcl = {
+	["choppy"] = "axey",
+	["oddly_breakable_by_hand"] = "handy",
+	["cracky"] = "pickaxey",
+	["crumbly"] = "shovely",
+	["snappy"] = "swordy",
+}
+
+local function convert_mtg_groups(nname, oldgroups)
+	local groups = table.copy(oldgroups)
+	if not minetest.registered_nodes[nname]._mcl_hardness then --if _mcl_hardness is defined the node is clearly intended for mcl specifically, don't mess with the groups in that case
+		for mtg, mcl in pairs(groups_mtg2mcl) do
+			local g_mtg = minetest.get_item_group(nname, mtg)
+			local g_mcl = minetest.get_item_group(nname, mcl)
+			if g_mtg > 0 and g_mcl == 0 then
+				groups[mcl] = g_mtg
+				groups[mtg] = nil
+			end
+		end
+	end
+	return groups
+end
+
 local function overwrite()
 	for nname, ndef in pairs(minetest.registered_nodes) do
-		local newgroups = table.copy(ndef.groups)
+		local newgroups = convert_mtg_groups(nname, ndef.groups)
 		if (nname ~= "ignore" and ndef.diggable) then
 			-- Automatically assign the "solid" group for solid nodes
 			if (ndef.walkable == nil or ndef.walkable == true)
@@ -322,18 +345,15 @@ local function overwrite()
 				newgroups.opaque = 1
 			end
 
-			--local creative_breakable = false
-
 			-- Assign groups used for digging this node depending on
 			-- the registered digging groups
 			for g, gdef in pairs(mcl_autogroup.registered_diggroups) do
-				--creative_breakable = true
-				local index = hardness_lookup[g][ndef._mcl_hardness or 0]
-				if ndef.groups[g] then
+				local index = hardness_lookup[g][ndef._mcl_hardness] or newgroups[g] or hardness_lookup[g][0]
+				if newgroups[g] then
 					if gdef.levels then
 						newgroups[g .. "_dig_default"] = index
 
-						for i = ndef.groups[g], #gdef.levels do
+						for i = newgroups[g], #gdef.levels do
 							newgroups[g .. "_dig_" .. gdef.levels[i]] = index
 						end
 					else
