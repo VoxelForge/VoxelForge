@@ -5131,7 +5131,7 @@ local function register_decorations()
 			place_on = {"mcl_core:podzol"},
 			sidelen = 80,
 			fill_ratio = 0.003,
-			biomes = {"Taiga", "MegaTaiga", "MegaSpruceTaiga"},
+			biomes = {"MegaTaiga", "MegaSpruceTaiga"},
 			y_min = mcl_vars.mg_overworld_min,
 			y_max = mcl_vars.mg_overworld_max,
 			decoration = mushrooms[m],
