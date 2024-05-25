@@ -31,13 +31,14 @@ local function build_a_settlement(minp, maxp, blockseed)
 
 	local pr = PseudoRandom(blockseed)
 
-	local settlement_info = mcl_villages.create_site_plan_new(minp, maxp, pr)
+	local settlement_info, grid = mcl_villages.create_site_plan_new(minp, maxp, pr)
 
 	if not settlement_info then
+		minetest.log("No village for " .. blockseed)
 		return
 	end
 
-	mcl_villages.terraform_new(settlement_info, pr)
+	mcl_villages.terraform_new(settlement_info, grid)
 	mcl_villages.place_schematics_new(settlement_info, pr, blockseed)
 
 	-- TODO when run here minetest.find_path regularly fails :(

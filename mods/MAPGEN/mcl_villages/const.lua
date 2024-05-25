@@ -17,7 +17,7 @@ function mcl_villages.grundstellungen()
 		"mcl_core:sand",
 		"mcl_core:redsand",
 		--"mcl_core:silver_sand",
-		"mcl_core:snow"
+		--"mcl_core:snow"
 	}
 
 	-- allow villages on more surfaces

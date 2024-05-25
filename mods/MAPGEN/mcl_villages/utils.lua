@@ -1,5 +1,5 @@
 
-local terrace_max_ext = tonumber(minetest.settings:get("mcl_villages_terrace_max_ext")) or 6
+local terrace_max_ext = 6
 
 -------------------------------------------------------------------------------
 -- function to copy tables
@@ -26,7 +26,7 @@ end
 function mcl_villages.find_surface(pos, wait, quick)
 	local p6 = vector.new(pos)
 	local cnt = 0
-	local itter = 1 -- count up or down
+	local itter = 1 -- look up
 	local cnt_max = 200
 	local wait_time = 10000000
 
@@ -42,9 +42,18 @@ function mcl_villages.find_surface(pos, wait, quick)
 	else
 		surface_node = mcl_vars.get_node(p6)
 	end
-	if surface_node.name=="air" or surface_node.name=="ignore" then
-		itter = -1
+
+	if
+		surface_node.name == "air"
+		or surface_node.name == "ignore"
+		or surface_node.name == "mcl_core:snow"
+		or (minetest.get_item_group(surface_node.name, "deco_block") > 0)
+		or (minetest.get_item_group(surface_node.name, "plant") > 0)
+		or (minetest.get_item_group(surface_node.name, "tree") > 0)
+	then
+		itter = -1 -- look down
 	end
+
 	-- go through nodes an find surface
 	while cnt < cnt_max do
 		-- Check Surface_node and Node above
@@ -63,7 +72,7 @@ function mcl_villages.find_surface(pos, wait, quick)
 					mcl_villages.debug("find_surface7: " ..surface_node.name.. " " .. surface_node_plus_1.name)
 					return p6, surface_node.name
 			else
-				mcl_villages.debug("find_surface2: wrong surface+1")
+				mcl_villages.debug("find_surface2: wrong layer above " .. surface_node_plus_1.name)
 			end
 		else
 			mcl_villages.debug("find_surface3: wrong surface "..surface_node.name.." at pos "..minetest.pos_to_string(p6))

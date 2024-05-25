@@ -1161,9 +1161,17 @@ function mcl_util.traverse_tower(pos, dir, callback)
 end
 
 -- Voxel manip function to replace a node type with another in an area
-function mcl_util.replace_node_vm(pos1, pos2, mat_from, mat_to)
-	local c_from = minetest.get_content_id(mat_from)
+function mcl_util.replace_node_vm(pos1, pos2, mat_from, mat_to, is_group)
 	local c_to = minetest.get_content_id(mat_to)
+
+	local group_name
+	local c_from
+
+	if is_group then
+		group_name = string.match(mat_from, "group:(.+)")
+	else
+		c_from = minetest.get_content_id(mat_from)
+	end
 
 	local vm = minetest.get_voxel_manip()
 	local emin, emax = vm:read_from_map(pos1, pos2)
@@ -1178,8 +1186,15 @@ function mcl_util.replace_node_vm(pos1, pos2, mat_from, mat_to)
 		for y = pos1.y, pos2.y do
 			for x = pos1.x, pos2.x do
 				local vi = a:index(x, y, z)
-				if data[vi] == c_from then
-					data[vi] = c_to
+				if is_group then
+					local node_name = minetest.get_name_from_content_id(data[vi])
+					if minetest.get_item_group(node_name, group_name) > 0 then
+						data[vi] = c_to
+					end
+				else
+					if data[vi] == c_from then
+						data[vi] = c_to
+					end
 				end
 			end
 		end

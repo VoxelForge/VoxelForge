@@ -92,48 +92,186 @@ local function init_nodes(p1, p2, size, rotation, pr)
 	end
 end
 
-local function layout_town(minp, maxp, pr, input_settlement_info)
-	local settlement_info = {}
-	local xdist = math.abs(minp.x - maxp.x)
-	local zdist = math.abs(minp.z - maxp.z)
+-- TODO consided using mod_storage to persist this...
+local areas = AreaStore()
+areas:set_cache_params({ enabled = true, block_radius = 16, limit = 100 })
 
-	-- find center of village within interior of chunk
-	local center = vector.new(
-		minp.x + pr:next(math.floor(xdist * 0.2), math.floor(xdist * 0.8)),
-		maxp.y,
-		minp.z + pr:next(math.floor(zdist * 0.2), math.floor(zdist * 0.8))
-	)
+local function record_building(record)
+	local placement_pos = vector.copy(record.pos)
 
-	-- find center_surface of village
-	local center_surface, surface_material = mcl_villages.find_surface(center, true)
+	-- Allow adjusting y axis
+	if record.yadjust then
+		placement_pos = vector.offset(placement_pos, 0, record.yadjust, 0)
+	end
+
+	local size = math.ceil(math.max(record.size.x, record.size.z) / 2)
+	local minp = vector.offset(placement_pos, -size, -10, -size)
+	local maxp = vector.offset(placement_pos, size, record.size.y + 10, size)
+
+	areas:insert_area(minp, maxp, record.name)
+end
+
+-- TODO is there a good way to calculate this?
+local squares = {
+	-- center
+	{ x = 0, z = 0 },
+
+	--around center
+	{ x = 1, z = 0 },
+	{ x = -1, z = 0 },
+	{ x = 1, z = 1 },
+	{ x = -1, z = -1 },
+	{ x = 1, z = -1 },
+	{ x = -1, z = -1 },
+	{ x = 0, z = 1 },
+	{ x = 0, z = -1 },
+
+	--one out
+	{ x = 2, z = 0 },
+	{ x = -2, z = 0 },
+
+	{ x = 2, z = 1 },
+	{ x = -2, z = -1 },
+	{ x = 2, z = -1 },
+	{ x = -2, z = 1 },
+
+	{ x = 2, z = 2 },
+	{ x = -2, z = -2 },
+	{ x = 2, z = -2 },
+	{ x = -2, z = 2 },
+
+	{ x = 0, z = 2 },
+	{ x = 0, z = -2 },
+	{ x = 1, z = 2 },
+	{ x = -1, z = -2 },
+	{ x = 1, z = -2 },
+	{ x = -1, z = 2 },
+
+	--two out
+	{ x = 3, z = 0 }, --25
+	{ x = -3, z = 0 },
+
+	{ x = 0, z = 3 },
+	{ x = 0, z = -3 },
+	{ x = 3, z = 1 },
+	{ x = -3, z = -1 },
+
+	{ x = -1, z = 3 },
+	{ x = 1, z = -3 },
+	{ x = 3, z = -1 },
+	{ x = -3, z = 1 },
+
+	{ x = 1, z = 3 },
+	{ x = -1, z = -3 },
+	{ x = 3, z = 2 },
+	{ x = -3, z = -2 },
+	{ x = 3, z = -2 },
+	{ x = -3, z = 2 }, --40
+
+	{ x = 3, z = -2 },
+	{ x = -3, z = 2 },
+	{ x = 2, z = 3 },
+	{ x = -2, z = -3 },
+	{ x = 3, z = 3 },
+	{ x = -3, z = -3 },
+	{ x = -3, z = 3 },
+	{ x = 3, z = -3 },
+}
+
+local function layout_grid(pr, input_settlement_info, settlement_info, center)
+
+	local bell_schem = settlement_info[1]
+	record_building(bell_schem)
+	local center_surface = bell_schem.pos
+
+	for i = 2, #input_settlement_info do
+		if i > #squares then
+			minetest.log("warning", "Too many buldings for grid layout, remaining buildings will be missing.")
+			return settlement_info
+		end
+
+		local cur_schem = input_settlement_info[i]
+		local placed = false
+		local iter = 0
+
+		local x_step = squares[i].x
+		local z_step = squares[i].z
+
+		local b_length = math.max(bell_schem.size.x, bell_schem.size.z)
+		local c_length = math.max(cur_schem.size.x, cur_schem.size.z)
+
+		local dist = math.ceil(b_length + c_length / 2)
+		local half_dist = math.ceil(dist / 2)
+
+		local next_x = bell_schem.pos.x + ((dist + 1) * x_step)
+		local next_z = bell_schem.pos.z + ((dist + 1) * z_step)
+
+		while not placed do
+			iter = iter + 1
+
+			local pos = vector.new(next_x, center_surface.y, next_z)
+			local pos_surface, surface_material = mcl_villages.find_surface(pos)
+
+			if pos_surface then
+				pos_surface = vector.round(pos_surface)
+
+				local minp = vector.offset(pos_surface, -half_dist, 0, -half_dist)
+				local maxp = vector.offset(pos_surface, half_dist, cur_schem.size.y, half_dist)
+
+				local collisons = areas:get_areas_in_area(minp, maxp, true, true, true)
+
+				if table.count(collisons) == 0 then
+					cur_schem.pos = vector.copy(pos_surface)
+					cur_schem.surface_mat = surface_material
+					record_building(cur_schem)
+					table.insert(settlement_info, cur_schem)
+					placed = true
+				else
+					local col
+					-- sometimes this is a table with keys, and sometimes not ...
+					for k, v in pairs(collisons) do
+						col = v
+						break
+					end
+
+					if z_step < 0 then
+						next_z = col.max.z + half_dist + 1
+					elseif z_step > 0 then
+						next_z = col.min.z - half_dist - 1
+					elseif x_step < 0 then
+						next_x = col.min.x - half_dist - 1
+					elseif x_step > 0 then
+						next_x = col.max.x + half_dist + 1
+					end
+				end
+			else
+				next_x = next_x + (dist + 1 * x_step)
+				next_z = next_z + (dist + 1 * z_step)
+			end
+
+			if not placed and (iter % 5 == 0) then
+				x_step = squares[i + (iter % 10)].x
+				z_step = squares[i + (iter % 10)].z
+				next_x = bell_schem.pos.x + ((dist + 1) * x_step)
+				next_z = bell_schem.pos.z + ((dist + 1) * z_step)
+			end
+
+			if not placed and iter >= 30 then
+				minetest.log("warning", "Could not place " .. cur_schem.name)
+				break
+			end
+		end
+	end
+end
+
+local function layout_circles(pr, input_settlement_info, settlement_info, center)
+	local center_surface = settlement_info[1].pos
+	local size = #input_settlement_info
+	local max_dist = 20 + (size * 3)
 
 	-- Cache for chunk surfaces
 	local chunks = {}
 	chunks[mcl_vars.get_chunk_number(center)] = true
-
-	-- build settlement around center
-	if not center_surface then
-		minetest.log("info", string.format("[mcl_villages] Cannot build village at %s", minetest.pos_to_string(center)))
-		return false
-	else
-		minetest.log(
-			"info",
-			string.format(
-				"[mcl_villages] Will build a village at position %s with surface material %s",
-				minetest.pos_to_string(center_surface),
-				surface_material
-			)
-		)
-	end
-
-	local bell_info = table.copy(input_settlement_info[1])
-	bell_info["pos"] = vector.copy(center_surface)
-	bell_info["surface_mat"] = surface_material
-
-	table.insert(settlement_info, bell_info)
-
-	local size = #input_settlement_info
-	local max_dist = 20 + (size * 3)
 
 	for i = 2, size do
 		local cur_schem = input_settlement_info[i]
@@ -199,6 +337,52 @@ local function layout_town(minp, maxp, pr, input_settlement_info)
 				break
 			end
 		end
+	end
+end
+
+local function layout_town(minp, maxp, pr, input_settlement_info, grid)
+	local settlement_info = {}
+	local xdist = math.abs(minp.x - maxp.x)
+	local zdist = math.abs(minp.z - maxp.z)
+
+	-- find center of village within interior of chunk
+	local center = vector.new(
+		minp.x + pr:next(math.floor(xdist * 0.2), math.floor(xdist * 0.8)),
+		maxp.y,
+		minp.z + pr:next(math.floor(zdist * 0.2), math.floor(zdist * 0.8))
+	)
+
+	-- find center_surface of village
+	local center_surface, surface_material = mcl_villages.find_surface(center, true)
+
+	-- build settlement around center
+	if not center_surface then
+		minetest.log(
+			"info",
+			string.format("[mcl_villages] Cannot build village at %s", minetest.pos_to_string(center))
+		)
+		return false
+	else
+		minetest.log(
+			"info",
+			string.format(
+				"[mcl_villages] Will build a village at position %s with surface material %s",
+				minetest.pos_to_string(center_surface),
+				surface_material
+			)
+		)
+	end
+
+	local bell_info = table.copy(input_settlement_info[1])
+	bell_info["pos"] = vector.copy(center_surface)
+	bell_info["surface_mat"] = surface_material
+
+	table.insert(settlement_info, bell_info)
+
+	if grid then
+		layout_grid(pr, input_settlement_info, settlement_info, center)
+	else
+		layout_circles(pr, input_settlement_info, settlement_info, center)
 	end
 
 	return settlement_info
@@ -305,7 +489,13 @@ function mcl_villages.create_site_plan_new(minp, maxp, pr)
 
 	table.insert(shuffled_settlement_info, 1, bell_info)
 
-	return layout_town(minp, maxp, pr, shuffled_settlement_info)
+	-- More jobs increases chances of grid layout
+	local grid = false
+	if pr:next(1, count_buildings.num_jobs) > 4 then
+		grid = true
+	end
+
+	return layout_town(minp, maxp, pr, shuffled_settlement_info, grid), grid
 end
 
 function mcl_villages.place_schematics_new(settlement_info, pr, blockseed)

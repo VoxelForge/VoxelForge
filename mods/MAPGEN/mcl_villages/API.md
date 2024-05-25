@@ -276,3 +276,26 @@ If a crop cannot be found for a crop type in a biome, then a default will be
 used. This ensure all farming blocks are full, ven if it's al the same crop.
 
 The default is wheat.
+
+## Village Layout
+
+There are two methods for layout out villages, circle layout is more likely to be
+used for small villages and grid for large villages.
+
+The circle layout uses circles (surprise) to calculate if buildings overlap. It
+creates fairly widely spaced layouts.
+
+The grid layout uses a predetermined grid layout to positions buildings and uses
+AreaStore to adjust building position if there are collisions.
+
+The predetermined grid is below, position 0 is the bell, the other numbers are the order of placement.
+
+||||||||
+| -- | -- | -- | -- | -- | -- | -- |
+|48|41|33|25|29|37|45|
+|40|17|13| 9|11|15|43|
+|32|19| 5| 1| 3|22|35|
+|28|23| 7| 0| 8|24|27|
+|36|21| 4| 2| 6|20|31|
+|44|16|12|10|14|18|39|
+|46|38|30|26|34|42|47|
