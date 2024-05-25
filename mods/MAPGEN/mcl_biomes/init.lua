@@ -5108,56 +5108,34 @@ local function register_decorations()
 		height = 1,
 	})
 
-	-- Mushrooms in mushroom biome
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"mcl_core:mycelium"},
-		sidelen = 80,
-		fill_ratio = 0.009,
-		biomes = {"MushroomIsland", "MushroomIslandShore"},
-		noise_threshold = 2.0,
-		y_min = mcl_vars.mg_overworld_min,
-		y_max = mcl_vars.mg_overworld_max,
-		decoration = "mcl_mushrooms:mushroom_red",
-	})
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"mcl_core:mycelium"},
-		sidelen = 80,
-		fill_ratio = 0.009,
-		biomes = {"MushroomIsland", "MushroomIslandShore"},
-		y_min = mcl_vars.mg_overworld_min,
-		y_max = mcl_vars.mg_overworld_max,
-		decoration = "mcl_mushrooms:mushroom_brown",
-	})
 
-	-- Mushrooms in Taiga
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"mcl_core:podzol"},
-		sidelen = 80,
-		fill_ratio = 0.003,
-		biomes = {"Taiga", "MegaTaiga", "MegaSpruceTaiga"},
-		y_min = mcl_vars.mg_overworld_min,
-		y_max = mcl_vars.mg_overworld_max,
-		decoration = "mcl_mushrooms:mushroom_red",
-	})
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"mcl_core:podzol"},
-		sidelen = 80,
-		fill_ratio = 0.003,
-		biomes = {"Taiga", "MegaTaiga", "MegaSpruceTaiga"},
-		y_min = mcl_vars.mg_overworld_min,
-		y_max = mcl_vars.mg_overworld_max,
-		decoration = "mcl_mushrooms:mushroom_brown",
-	})
-
-
-	-- Mushrooms next to trees
+	-- Small Mushrooms
 	local mushrooms = {"mcl_mushrooms:mushroom_red", "mcl_mushrooms:mushroom_brown"}
 	local mseeds = { 7133, 8244 }
 	for m=1, #mushrooms do
+		-- Mushrooms in mushroom biome
+		minetest.register_decoration({
+			deco_type = "simple",
+			place_on = {"mcl_core:mycelium"},
+			sidelen = 80,
+			fill_ratio = 0.009,
+			biomes = {"MushroomIsland", "MushroomIslandShore"},
+			noise_threshold = 2.0,
+			y_min = mcl_vars.mg_overworld_min,
+			y_max = mcl_vars.mg_overworld_max,
+			decoration = mushrooms[m],
+		})
+		-- Mushrooms in Taiga
+		minetest.register_decoration({
+			deco_type = "simple",
+			place_on = {"mcl_core:podzol"},
+			sidelen = 80,
+			fill_ratio = 0.003,
+			biomes = {"Taiga", "MegaTaiga", "MegaSpruceTaiga"},
+			y_min = mcl_vars.mg_overworld_min,
+			y_max = mcl_vars.mg_overworld_max,
+			decoration = mushrooms[m],
+		})
 		-- Mushrooms next to trees
 		minetest.register_decoration({
 			deco_type = "simple",
