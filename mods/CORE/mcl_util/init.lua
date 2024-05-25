@@ -623,7 +623,7 @@ function mcl_util.deal_damage(target, damage, mcl_reason)
 		damage = mcl_damage.run_modifiers(target, damage, mcl_reason or {type = "generic"})
 		if luaentity.deal_damage then
 			if luaentity:deal_damage(damage, mcl_reason or {type = "generic"}) ~= true then
-				mcl_damage.run_damage_callbacks(target, -damage, mcl_reason or {type = "generic"})
+				mcl_damage.run_damage_callbacks(target, damage, mcl_reason or {type = "generic"})
 			end
 			return
 		elseif luaentity.is_mob then
@@ -633,7 +633,7 @@ function mcl_util.deal_damage(target, damage, mcl_reason)
 			end
 			if luaentity.health - damage > 0 then
 				luaentity.health = luaentity.health - damage
-				mcl_damage.run_damage_callbacks(target, -damage, mcl_reason or {type = "generic"})
+				mcl_damage.run_damage_callbacks(target, damage, mcl_reason or {type = "generic"})
 			else
 				luaentity.health = luaentity.health - damage
 				mcl_damage.run_death_callbacks(target, mcl_reason or {type = "generic"})
