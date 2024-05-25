@@ -71,6 +71,43 @@ dependency.
 
 assert(minetest.get_modpath("mcl_autogroup"), "This mod requires the mod mcl_autogroup to function")
 
+local groups_mtg2mcl = {
+	["choppy"] = { group = "axey", hardness = 2 },
+	["oddly_breakable_by_hand"] = { group = "handy", hardness = 0 },
+	["cracky"] = { group = "pickaxey", hardness = 1.5 },
+	["crumbly"] = { group = "shovely", hardness = 0.5 },
+	["snappy"] = { group = "swordy", hardness = 0.2 },
+}
+
+-- Get new groups and hardness
+local function convert_mtg_groups(nname)
+	local groups = table.copy(minetest.registered_nodes[nname].groups)
+	local hardness = minetest.registered_nodes[nname]._mcl_hardness
+
+	if not hardness then --if _mcl_hardness is defined the node is clearly intended for mcl specifically, don't mess with the groups in that case
+		for mtg, mcl in pairs(groups_mtg2mcl) do
+			local g_mtg = minetest.get_item_group(nname, mtg)
+			local g_mcl = minetest.get_item_group(nname, mcl.group)
+			if g_mtg > 0 and g_mcl == 0 then
+				groups[mcl.group] = g_mtg
+				groups[mtg] = nil
+
+				hardness = math.max(hardness or 0, g_mtg * mcl.hardness)
+			end
+		end
+	end
+	return groups, hardness
+end
+
+for nname, ndef in pairs(minetest.registered_nodes) do
+	local newgroups, newhardness = convert_mtg_groups(nname)
+
+	minetest.override_item(nname, {
+		groups = newgroups,
+		_mcl_hardness = newhardness,
+	})
+end
+
 -- Returns a table containing the unique "_mcl_hardness" for nodes belonging to
 -- each diggroup.
 local function get_hardness_values_for_groups()
@@ -101,7 +138,7 @@ local function get_hardness_values_for_groups()
 	return values
 end
 
--- Returns a table containing a table indexed by "_mcl_hardness_value" to get
+-- Returns a table containing a table indexed by "_mcl_hardness" value to get
 -- its index in the list of unique hardnesses for each diggroup.
 local function get_hardness_lookup_for_groups(hardness_values)
 	local map = {}
@@ -305,32 +342,10 @@ function mcl_autogroup.get_wear(toolname, diggroup)
 	return math.ceil(65535 / uses)
 end
 
-local groups_mtg2mcl = {
-	["choppy"] = "axey",
-	["oddly_breakable_by_hand"] = "handy",
-	["cracky"] = "pickaxey",
-	["crumbly"] = "shovely",
-	["snappy"] = "swordy",
-}
-
-local function convert_mtg_groups(nname, oldgroups)
-	local groups = table.copy(oldgroups)
-	if not minetest.registered_nodes[nname]._mcl_hardness then --if _mcl_hardness is defined the node is clearly intended for mcl specifically, don't mess with the groups in that case
-		for mtg, mcl in pairs(groups_mtg2mcl) do
-			local g_mtg = minetest.get_item_group(nname, mtg)
-			local g_mcl = minetest.get_item_group(nname, mcl)
-			if g_mtg > 0 and g_mcl == 0 then
-				groups[mcl] = g_mtg
-				groups[mtg] = nil
-			end
-		end
-	end
-	return groups
-end
-
 local function overwrite()
 	for nname, ndef in pairs(minetest.registered_nodes) do
-		local newgroups = convert_mtg_groups(nname, ndef.groups)
+		local newgroups = table.copy(ndef.groups)
+
 		if (nname ~= "ignore" and ndef.diggable) then
 			-- Automatically assign the "solid" group for solid nodes
 			if (ndef.walkable == nil or ndef.walkable == true)
@@ -368,7 +383,7 @@ local function overwrite()
 			newgroups["creative_breakable"] = 1
 
 			minetest.override_item(nname, {
-				groups = newgroups
+				groups = newgroups,
 			})
 		end
 	end
