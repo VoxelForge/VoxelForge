@@ -167,6 +167,10 @@ minetest.register_node("mcl_lush_caves:cave_vines", {
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	_mcl_blast_resistance = 0,
 	_mcl_blast_hardness = 0,
+	_on_bone_meal = function(itemstack, placer, pointed_thing, pos)
+		minetest.set_node(pos,{name="mcl_lush_caves:cave_vines_lit"})
+		return true
+	end,
 })
 
 minetest.register_node("mcl_lush_caves:cave_vines_lit", {
