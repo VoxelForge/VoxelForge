@@ -326,11 +326,11 @@ local tpl_azalea = {
 				return true
 			end
 	end),
-  _on_bone_meal = function(itemstack, placer, pointed_thing, pos)
+	_on_bone_meal = function(itemstack, placer, pointed_thing, pos)
 		if math.random() > 0.45 or not mcl_trees.check_growth_simple(pos, 6) then return end
 		minetest.set_node(vector.offset(pos, 0, -1, 0), { name = "mcl_lush_caves:rooted_dirt" })
-    minetest.remove_node(pos)
-    minetest.place_schematic(
+		minetest.remove_node(pos)
+		minetest.place_schematic(
 			vector.offset(pos, -3, 0, -3),
 			modpath.."/schematics/azalea1.mts",
 			"random",
@@ -338,8 +338,8 @@ local tpl_azalea = {
 			false,
 			"place_center_x place_center_z"
 		)
-    return true
-  end
+		return true
+	end
 }
 
 local azalea = table.merge(
