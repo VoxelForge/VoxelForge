@@ -309,7 +309,7 @@ local tpl_azalea = {
 		handy = 1, shearsy = 1,
 		plant = 1, non_mycelium_plant = 1,
 		dig_by_piston = 1, dig_by_water = 1,
-		flammable = 2, fire_encouragement = 15, fire_flammability = 40,
+		flammable = 2, fire_encouragement = 30, fire_flammability = 60,
 		deco_block = 1,
 	},
 	sounds = mcl_sounds.node_sound_dirt_defaults(),
