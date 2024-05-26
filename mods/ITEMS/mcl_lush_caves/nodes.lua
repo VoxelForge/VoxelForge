@@ -229,10 +229,28 @@ minetest.register_craftitem("mcl_lush_caves:glow_berry", {
 	description = S("Glow berry"),
 	_doc_items_longdesc = S("This is a food item which can be eaten."),
 	inventory_image = "mcl_lush_caves_glow_berries.png",
-	on_place = minetest.item_eat(2),
 	on_secondary_use = minetest.item_eat(2),
 	groups = {food = 2, eatable = 2, compostability = 50},
 	_mcl_saturation = 1.2,
+        on_place = function(itemstack, placer, pointed_thing)
+		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		if rc then return rc end
+
+		if vector.direction(pointed_thing.under, pointed_thing.above).y ~= -1 then return end
+
+		if mcl_util.check_position_protection(pointed_thing.above, placer) then return end
+
+		local node = minetest.get_node(pointed_thing.under)
+		if minetest.get_item_group(node.name, "solid") == 0 then return end
+
+		local vine = "mcl_lush_caves:cave_vines"
+		minetest.place_node(pointed_thing.under, {name=vine}, placer)
+		minetest.sound_play(minetest.registered_nodes[vine].sounds.place, {pos=pointed_thing.above, gain=1}, true)
+		if not minetest.is_creative_enabled(placer:get_player_name()) then
+			itemstack:take_item(1)
+		end
+		return itemstack
+        end
 })
 
 
