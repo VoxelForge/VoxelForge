@@ -10,40 +10,39 @@ local honey_harvest = function(pos, node, player, itemstack, pointed_thing)
 	local inv = player:get_inventory()
 	local shears = minetest.get_item_group(player:get_wielded_item():get_name(), "shears") > 0
 	local bottle = player:get_wielded_item():get_name() == "mcl_potions:glass_bottle"
-	local beehive = "mcl_beehives:beehive"
+	local original_block = "mcl_beehives:bee_nest"
 	local is_creative = minetest.is_creative_enabled(player:get_player_name())
-
 	if node.name == "mcl_beehives:beehive_5" then
-		beehive = "mcl_beehives:beehive"
-	elseif node.name == "mcl_beehives:bee_nest_5" then
-		beehive = "mcl_beehives:bee_nest"
+		original_block = "mcl_beehives:beehive"
 	end
 
 	local campfire_area = vector.offset(pos, 0, -5, 0)
 	local campfire = minetest.find_nodes_in_area(pos, campfire_area, "group:lit_campfire")
 
-	if bottle then
-		local honey = "mcl_honey:honey_bottle"
-		if inv:room_for_item("main", honey) then
-			node.name = beehive
-			minetest.set_node(pos, node)
-			inv:add_item("main", "mcl_honey:honey_bottle")
-			if not is_creative then
-				itemstack:take_item()
-			end
-			if not campfire[1] then
-				mcl_util.deal_damage(player, 10, {type = "mob"})
-				--TODO: damage type = "mob" since this is supposed to be done by bee mobs which aren't a thing yet
-				--Once bees exist this branch should spawn them and/or make them aggro
-			else
-				awards.unlock(player:get_player_name(), "mcl:bee_our_guest")
-			end
+	if bottle or shears then
+		local name = player:get_player_name()
+		if minetest.is_protected(pos, name) then
+			minetest.record_protection_violation(pos, name)
+			return itemstack
 		end
-	elseif shears then
-		minetest.add_item(pos, "mcl_honey:honeycomb 3")
-		node.name = beehive
-		minetest.set_node(pos, node)
+		if bottle then
+			local honey = "mcl_honey:honey_bottle"
+			if inv:room_for_item("main", honey) then
+				inv:add_item("main", "mcl_honey:honey_bottle")
+				if not is_creative then
+					itemstack:take_item()
+				end
+				if campfire[1] then
+					awards.unlock(player:get_player_name(), "mcl:bee_our_guest")
+				end
+			end
+		else --Must be shears
+			minetest.add_item(pos, "mcl_honey:honeycomb 3")
+		end
+		--TODO: damage type = "mob" since this is supposed to be done by bee mobs which aren't a thing yet
+		--Once bees exist this branch should spawn them and/or make them aggro
 		if not campfire[1] then mcl_util.deal_damage(player, 10, {type = "mob"}) end
+		minetest.swap_node(pos, {name = original_block})
 	end
 end
 
@@ -91,6 +90,7 @@ minetest.register_node("mcl_beehives:beehive", {
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_blast_resistance = 0.6,
 	_mcl_hardness = 0.6,
+	_mcl_honey_level = 0,
 	drop = "",
 	after_dig_node = dig_hive,
 })
@@ -109,6 +109,7 @@ for l = 1, 4 do
 		sounds = mcl_sounds.node_sound_wood_defaults(),
 		_mcl_blast_resistance = 0.6,
 		_mcl_hardness = 0.6,
+		_mcl_honey_level = l,
 		drop = "",
 		after_dig_node = dig_hive,
 	})
@@ -127,6 +128,7 @@ minetest.register_node("mcl_beehives:beehive_5", {
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_blast_resistance = 0.6,
 	_mcl_hardness = 0.6,
+	_mcl_honey_level = 5,
 	on_rightclick = honey_harvest,
 	drop = "",
 	after_dig_node = dig_hive,
@@ -146,6 +148,7 @@ minetest.register_node("mcl_beehives:bee_nest", {
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_blast_resistance = 0.3,
 	_mcl_hardness = 0.3,
+	_mcl_honey_level = 0,
 	drop = "",
 	after_dig_node = dig_hive,
 })
@@ -164,6 +167,7 @@ for i = 1, 4 do
 		sounds = mcl_sounds.node_sound_wood_defaults(),
 		_mcl_blast_resistance = 0.3,
 		_mcl_hardness = 0.3,
+		_mcl_honey_level = i,
 		drop = "",
 		after_dig_node = dig_hive,
 	})
@@ -182,6 +186,7 @@ minetest.register_node("mcl_beehives:bee_nest_5", {
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_blast_resistance = 0.3,
 	_mcl_hardness = 0.3,
+	_mcl_honey_level = 5,
 	on_rightclick = honey_harvest,
 	drop = "",
 	after_dig_node = dig_hive,
@@ -211,53 +216,25 @@ minetest.register_craft({
 
 -- Temporary ABM to update honey levels
 minetest.register_abm({
-	label = "Update Beehive Honey Levels",
-	nodenames = "group:beehive",
-	interval = 500,
+	label = "Update Beehive or Beenest Honey Levels",
+	nodenames = {"mcl_beehives:bee_nest", "mcl_beehives:bee_nest_1" , "mcl_beehives:bee_nest_2", "mcl_beehives:bee_nest_3", "mcl_beehives:bee_nest_4", "mcl_beehives:beehive", "mcl_beehives:beehive_1", "mcl_beehives:beehive_2", "mcl_beehives:beehive_3", "mcl_beehives:beehive_4"}, --Register for all levels but 5 for simpler logic and honeyed hives not constantly updating themselves
+	interval = 75, --This is similar to what the situation would be for 2 bees (~5 to reach flower, 20 to harvest pollen, ~5 to return, 120 to process).
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		local beehive = "mcl_beehives:beehive"
-		if node.name == beehive then
-			node.name = beehive.."_1"
-			minetest.set_node(pos, node)
-		elseif node.name == beehive.."_1" then
-			node.name = beehive.."_2"
-			minetest.set_node(pos, node)
-		elseif node.name == beehive.."_2" then
-			node.name = beehive.."_3"
-			minetest.set_node(pos, node)
-		elseif node.name == beehive.."_3" then
-			node.name = beehive.."_4"
-			minetest.set_node(pos, node)
-		elseif node.name == beehive.."_4" then
-			node.name = beehive.."_5"
-			minetest.set_node(pos, node)
-		end
-	end,
-})
-
-minetest.register_abm({
-	label = "Update Bee Nest Honey Levels",
-	nodenames = "group:bee_nest",
-	interval = 500,
-	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
-		local beehive = "mcl_beehives:bee_nest"
-		if node.name == beehive then
-			node.name = beehive.."_1"
-			minetest.set_node(pos, node)
-		elseif node.name == beehive.."_1" then
-			node.name = beehive.."_2"
-			minetest.set_node(pos, node)
-		elseif node.name == beehive.."_2" then
-			node.name = beehive.."_3"
-			minetest.set_node(pos, node)
-		elseif node.name == beehive.."_3" then
-			node.name = beehive.."_4"
-			minetest.set_node(pos, node)
-		elseif node.name == beehive.."_4" then
-			node.name = beehive.."_5"
-			minetest.set_node(pos, node)
+		local flower = minetest.find_nodes_in_area(vector.subtract(pos, 5), vector.add(pos, 5), "group:flower")
+		local tod = minetest.get_timeofday() * 24000 --Bees need to sleep (note in Minecraft, they don't in the Nether/End, which is ridiculous)
+		if tod > 6000 and tod < 18000 and flower[1] and mcl_weather.get_weather() ~= "rain" then
+			local node_name = node.name
+			local honey_level = minetest.registered_nodes[node_name]["_mcl_honey_level"]
+			local original_block = "mcl_beehives:bee_nest"
+			if minetest.get_item_group(node_name, "beehive") == 1 then
+				original_block = "mcl_beehives:beehive"
+			end
+			if honey_level == nil then
+				honey_level = 0
+			end
+			honey_level = honey_level + 1
+			minetest.swap_node(pos, {name = original_block.."_"..honey_level})
 		end
 	end,
 })
