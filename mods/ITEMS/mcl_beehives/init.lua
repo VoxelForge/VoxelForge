@@ -221,9 +221,9 @@ minetest.register_abm({
 	interval = 75, --This is similar to what the situation would be for 2 bees (~5 to reach flower, 20 to harvest pollen, ~5 to return, 120 to process).
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		local flower = minetest.find_nodes_in_area(vector.subtract(pos, 5), vector.add(pos, 5), "group:flower")
+		local flower = minetest.find_node_near(pos, 5, "group:flower")
 		local tod = minetest.get_timeofday() * 24000 --Bees need to sleep (note in Minecraft, they don't in the Nether/End, which is ridiculous)
-		if tod > 6000 and tod < 18000 and flower[1] and mcl_weather.get_weather() ~= "rain" then
+		if tod > 6000 and tod < 18000 and flower and mcl_weather.get_weather() ~= "rain" then
 			local node_name = node.name
 			local honey_level = minetest.get_item_group(node.name, "honey_level")
 			local original_block = "mcl_beehives:bee_nest"
