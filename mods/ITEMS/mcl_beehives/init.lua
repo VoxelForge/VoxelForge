@@ -90,7 +90,6 @@ minetest.register_node("mcl_beehives:beehive", {
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_blast_resistance = 0.6,
 	_mcl_hardness = 0.6,
-	_mcl_honey_level = 0,
 	drop = "",
 	after_dig_node = dig_hive,
 })
@@ -105,11 +104,10 @@ for l = 1, 4 do
 			"mcl_beehives_beehive_side.png", "mcl_beehives_beehive_front.png",
 		},
 		paramtype2 = "facedir",
-		groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 5, material_wood = 1, not_in_creative_inventory = 1, beehive = 1 },
+		groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 5, material_wood = 1, not_in_creative_inventory = 1, beehive = 1, honey_level = l },
 		sounds = mcl_sounds.node_sound_wood_defaults(),
 		_mcl_blast_resistance = 0.6,
 		_mcl_hardness = 0.6,
-		_mcl_honey_level = l,
 		drop = "",
 		after_dig_node = dig_hive,
 	})
@@ -124,11 +122,10 @@ minetest.register_node("mcl_beehives:beehive_5", {
 		"mcl_beehives_beehive_side.png", "mcl_beehives_beehive_front_honey.png",
 	},
 	paramtype2 = "facedir",
-	groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 5, material_wood = 1, not_in_creative_inventory = 1, beehive = 1 },
+	groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 5, material_wood = 1, not_in_creative_inventory = 1, beehive = 1, honey_level = 5 },
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_blast_resistance = 0.6,
 	_mcl_hardness = 0.6,
-	_mcl_honey_level = 5,
 	on_rightclick = honey_harvest,
 	drop = "",
 	after_dig_node = dig_hive,
@@ -148,7 +145,6 @@ minetest.register_node("mcl_beehives:bee_nest", {
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_blast_resistance = 0.3,
 	_mcl_hardness = 0.3,
-	_mcl_honey_level = 0,
 	drop = "",
 	after_dig_node = dig_hive,
 })
@@ -163,11 +159,10 @@ for i = 1, 4 do
 			"mcl_beehives_bee_nest_side.png", "mcl_beehives_bee_nest_front.png",
 		},
 		paramtype2 = "facedir",
-		groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 30, not_in_creative_inventory = 1, bee_nest = 1 },
+		groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 30, not_in_creative_inventory = 1, bee_nest = 1, honey_level = i },
 		sounds = mcl_sounds.node_sound_wood_defaults(),
 		_mcl_blast_resistance = 0.3,
 		_mcl_hardness = 0.3,
-		_mcl_honey_level = i,
 		drop = "",
 		after_dig_node = dig_hive,
 	})
@@ -182,7 +177,7 @@ minetest.register_node("mcl_beehives:bee_nest_5", {
 		"mcl_beehives_bee_nest_side.png", "mcl_beehives_bee_nest_front_honey.png",
 	},
 	paramtype2 = "facedir",
-	groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 30, not_in_creative_inventory = 1, bee_nest = 1 },
+	groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 30, not_in_creative_inventory = 1, bee_nest = 1, honey_level = 5 },
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_blast_resistance = 0.3,
 	_mcl_hardness = 0.3,
@@ -225,16 +220,12 @@ minetest.register_abm({
 		local tod = minetest.get_timeofday() * 24000 --Bees need to sleep (note in Minecraft, they don't in the Nether/End, which is ridiculous)
 		if tod > 6000 and tod < 18000 and flower[1] and mcl_weather.get_weather() ~= "rain" then
 			local node_name = node.name
-			local honey_level = minetest.registered_nodes[node_name]["_mcl_honey_level"]
+			local honey_level = minetest.get_item_group(node.name, "honey_level")
 			local original_block = "mcl_beehives:bee_nest"
 			if minetest.get_item_group(node_name, "beehive") == 1 then
 				original_block = "mcl_beehives:beehive"
 			end
-			if honey_level == nil then
-				honey_level = 0
-			end
-			honey_level = honey_level + 1
-			minetest.swap_node(pos, {name = original_block.."_"..honey_level})
+			minetest.swap_node(pos, {name = original_block.."_"..math.min(honey_level + 1, 5)})
 		end
 	end,
 })
