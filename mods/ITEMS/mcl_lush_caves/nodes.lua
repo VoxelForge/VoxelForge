@@ -165,6 +165,7 @@ minetest.register_node("mcl_lush_caves:cave_vines", {
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	_mcl_blast_resistance = 0,
 	_mcl_blast_hardness = 0,
+	drop = "",
 	_on_bone_meal = function(itemstack, placer, pointed_thing, pos)
 		minetest.set_node(pos,{name="mcl_lush_caves:cave_vines_lit"})
 		return true
@@ -197,17 +198,7 @@ minetest.register_node("mcl_lush_caves:cave_vines_lit", {
 	_mcl_blast_resistance = 0,
 	_mcl_blast_hardness = 1,
 	_mcl_shears_drop = true,
-	 drop = {
-		max_items = 2,
-		items = {
-			{
-				items = {
-				"mcl_lush_caves:glow_berry ",
-				"mcl_lush_caves:cave_vines",
-				},
-			},
-		},
-	},
+	drop = "mcl_lush_caves:glow_berry",
 	on_rightclick = function(pos)
 		minetest.add_item(pos,"mcl_lush_caves:glow_berry")
 		minetest.set_node(pos,{name="mcl_lush_caves:cave_vines"})
