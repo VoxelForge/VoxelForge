@@ -5,6 +5,7 @@
 -- Variables
 local S = minetest.get_translator(minetest.get_current_modname())
 
+local abm_nodes = { "mcl_beehives:beehive", "mcl_beehives:bee_nest" }
 -- Function to allow harvesting honey and honeycomb from the beehive and bee nest.
 local honey_harvest = function(pos, node, player, itemstack, pointed_thing)
 	local inv = player:get_inventory()
@@ -95,7 +96,9 @@ minetest.register_node("mcl_beehives:beehive", {
 })
 
 for l = 1, 4 do
-	minetest.register_node("mcl_beehives:beehive_" .. l, {
+	local name = "mcl_beehives:beehive_" .. l
+	table.insert(abm_nodes, name)
+	minetest.register_node(name, {
 		description = S("Beehive"),
 		_doc_items_longdesc = S("Artificial bee nest."),
 		tiles = {
@@ -150,7 +153,9 @@ minetest.register_node("mcl_beehives:bee_nest", {
 })
 
 for i = 1, 4 do
-	minetest.register_node("mcl_beehives:bee_nest_"..i, {
+	local name = "mcl_beehives:bee_nest_"..i
+	table.insert(abm_nodes, name)
+	minetest.register_node(name, {
 		description = S("Bee Nest"),
 		_doc_items_longdesc = S("A naturally generating block that houses bees and a tasty treat...if you can get it."),
 		tiles = {
@@ -212,7 +217,7 @@ minetest.register_craft({
 -- Temporary ABM to update honey levels
 minetest.register_abm({
 	label = "Update Beehive or Beenest Honey Levels",
-	nodenames = {"mcl_beehives:bee_nest", "mcl_beehives:bee_nest_1" , "mcl_beehives:bee_nest_2", "mcl_beehives:bee_nest_3", "mcl_beehives:bee_nest_4", "mcl_beehives:beehive", "mcl_beehives:beehive_1", "mcl_beehives:beehive_2", "mcl_beehives:beehive_3", "mcl_beehives:beehive_4"}, --Register for all levels but 5 for simpler logic and honeyed hives not constantly updating themselves
+	nodenames = abm_nodes,
 	interval = 75, --This is similar to what the situation would be for 2 bees (~5 to reach flower, 20 to harvest pollen, ~5 to return, 120 to process).
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
