@@ -225,7 +225,7 @@ minetest.register_craftitem("mcl_lush_caves:glow_berry", {
 	on_secondary_use = minetest.item_eat(2),
 	groups = {food = 2, eatable = 2, compostability = 50},
 	_mcl_saturation = 1.2,
-        on_place = function(itemstack, placer, pointed_thing)
+	on_place = function(itemstack, placer, pointed_thing)
 		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
 		if rc then return rc end
 
@@ -243,7 +243,7 @@ minetest.register_craftitem("mcl_lush_caves:glow_berry", {
 			itemstack:take_item(1)
 		end
 		return itemstack
-        end
+	end
 })
 
 
@@ -308,14 +308,14 @@ minetest.register_node("mcl_lush_caves:spore_blossom", {
 local tpl_azalea = {
 	_tt_help = S("Needs soil and bone meal to grow"),
 	_doc_items_hidden = false,
-  drawtype = "nodebox",
+	drawtype = "nodebox",
 	node_box = {
-    type = "fixed",
-    fixed = {
-      { -8/16, -4/16, -8/16, 8/16, 8/16, 8/16 },
-      { -2/16, -8/16, -2/16, 2/16, -4/16, 2/16 },
-    }
-  },
+		type = "fixed",
+		fixed = {
+			{ -8/16, -4/16, -8/16, 8/16, 8/16, 8/16 },
+			{ -2/16, -8/16, -2/16, 2/16, -4/16, 2/16 },
+		}
+	},
 	is_ground_content = false,
 	groups = {
 		handy = 1, shearsy = 1,
