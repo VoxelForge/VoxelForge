@@ -139,6 +139,8 @@ minetest.register_node("mcl_lush_caves:hanging_roots", {
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	_mcl_blast_resistance = 0,
 	_mcl_blast_hardness = 0,
+	drop = "",
+	_mcl_shears_drop = true,
 })
 
 minetest.register_node("mcl_lush_caves:cave_vines", {
