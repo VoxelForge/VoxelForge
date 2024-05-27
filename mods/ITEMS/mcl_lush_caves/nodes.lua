@@ -238,7 +238,13 @@ minetest.register_craftitem("mcl_lush_caves:glow_berry", {
 		local node = minetest.get_node(pointed_thing.under)
 		if minetest.get_item_group(node.name, "solid") == 0 then return end
 
-		local vine = "mcl_lush_caves:cave_vines"
+		local vine
+		if math.random() < 0.11 then
+			vine = "mcl_lush_caves:cave_vines_lit"
+		else
+			vine = "mcl_lush_caves:cave_vines"
+		end
+
 		minetest.place_node(pointed_thing.under, {name=vine}, placer)
 		minetest.sound_play(minetest.registered_nodes[vine].sounds.place, {pos=pointed_thing.above, gain=1}, true)
 		if not minetest.is_creative_enabled(placer:get_player_name()) then
