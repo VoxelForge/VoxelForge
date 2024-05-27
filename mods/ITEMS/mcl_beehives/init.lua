@@ -4,6 +4,7 @@
 
 -- Variables
 local S = minetest.get_translator(minetest.get_current_modname())
+local abm_nodes = { "mcl_beehives:beehive", "mcl_beehives:bee_nest" }
 
 -- Function to allow harvesting honey and honeycomb from the beehive and bee nest.
 local honey_harvest = function(pos, node, player, itemstack, pointed_thing)
@@ -216,7 +217,7 @@ minetest.register_craft({
 -- Temporary ABM to update honey levels
 minetest.register_abm({
 	label = "Update Beehive or Beenest Honey Levels",
-	nodenames = "group:honey_level_nonfull", --Register for all levels but 5 so honeyed hives aren't constantly updating themselves
+	nodenames = abm_nodes, --Register for all levels but 5 so honeyed hives aren't constantly updating themselves
 	interval = 75, --This is similar to what the situation would be for 2 bees (~5 to reach flower, 20 to harvest pollen, ~5 to return, 120 to process).
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
