@@ -5,7 +5,6 @@
 -- Variables
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local abm_nodes = { "mcl_beehives:beehive", "mcl_beehives:bee_nest" }
 -- Function to allow harvesting honey and honeycomb from the beehive and bee nest.
 local honey_harvest = function(pos, node, player, itemstack, pointed_thing)
 	local inv = player:get_inventory()
@@ -87,7 +86,7 @@ minetest.register_node("mcl_beehives:beehive", {
 		"mcl_beehives_beehive_side.png", "mcl_beehives_beehive_front.png",
 	},
 	paramtype2 = "facedir",
-	groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 5, material_wood = 1, beehive = 1 },
+	groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 5, material_wood = 1, beehive = 1, honey_level_nonfull = 1 },
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_blast_resistance = 0.6,
 	_mcl_hardness = 0.6,
@@ -107,7 +106,7 @@ for l = 1, 4 do
 			"mcl_beehives_beehive_side.png", "mcl_beehives_beehive_front.png",
 		},
 		paramtype2 = "facedir",
-		groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 5, material_wood = 1, not_in_creative_inventory = 1, beehive = 1, honey_level = l },
+		groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 5, material_wood = 1, not_in_creative_inventory = 1, beehive = 1, honey_level = l, honey_level_nonfull = 1 },
 		sounds = mcl_sounds.node_sound_wood_defaults(),
 		_mcl_blast_resistance = 0.6,
 		_mcl_hardness = 0.6,
@@ -144,7 +143,7 @@ minetest.register_node("mcl_beehives:bee_nest", {
 		"mcl_beehives_bee_nest_side.png", "mcl_beehives_bee_nest_front.png",
 	},
 	paramtype2 = "facedir",
-	groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 30, bee_nest = 1 },
+	groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 30, bee_nest = 1, honey_level_nonfull = 1 },
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	_mcl_blast_resistance = 0.3,
 	_mcl_hardness = 0.3,
@@ -164,7 +163,7 @@ for i = 1, 4 do
 			"mcl_beehives_bee_nest_side.png", "mcl_beehives_bee_nest_front.png",
 		},
 		paramtype2 = "facedir",
-		groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 30, not_in_creative_inventory = 1, bee_nest = 1, honey_level = i },
+		groups = { axey = 1, deco_block = 1, flammable = 0, fire_flammability = 30, not_in_creative_inventory = 1, bee_nest = 1, honey_level = i, honey_level_nonfull = 1 },
 		sounds = mcl_sounds.node_sound_wood_defaults(),
 		_mcl_blast_resistance = 0.3,
 		_mcl_hardness = 0.3,
@@ -217,7 +216,7 @@ minetest.register_craft({
 -- Temporary ABM to update honey levels
 minetest.register_abm({
 	label = "Update Beehive or Beenest Honey Levels",
-	nodenames = abm_nodes,
+	nodenames = "group:honey_level_nonfull", --Register for all levels but 5 so honeyed hives aren't constantly updating themselves
 	interval = 75, --This is similar to what the situation would be for 2 bees (~5 to reach flower, 20 to harvest pollen, ~5 to return, 120 to process).
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
@@ -230,7 +229,9 @@ minetest.register_abm({
 			if minetest.get_item_group(node_name, "beehive") == 1 then
 				original_block = "mcl_beehives:beehive"
 			end
-			minetest.swap_node(pos, {name = original_block.."_"..math.min(honey_level + 1, 5)})
+			local honey_level = minetest.get_item_group(node_name, "honey_level")
+			honey_level = math.min(honey_level + (math.random(100) == 100 and 2 or 1), 5)
+			minetest.swap_node(pos, {name = original_block.."_"..honey_level})
 		end
 	end,
 })
