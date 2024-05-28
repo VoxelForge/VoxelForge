@@ -6,6 +6,7 @@ mcl_villages.schematic_wells = {}
 mcl_villages.on_village_placed = {}
 mcl_villages.on_villager_placed = {}
 mcl_villages.mandatory_buildings = {}
+mcl_villages.forced_blocks = {}
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
