@@ -174,7 +174,7 @@ end
 -- This is to be called when a pumpkin or jack'o lantern has been placed. Recommended: In the on_construct function
 -- of the node.
 -- This summons a snow golen when pos is next to a row of two snow blocks.
-function mobs_mc.check_snow_golem_summon(pos)
+function mobs_mc.check_snow_golem_summon(pos, player)
 	local checks = {
 		-- These are the possible placement patterns
 		-- { snow block pos. 1, snow block pos. 2, snow golem spawn position }
@@ -203,6 +203,8 @@ function mobs_mc.check_snow_golem_summon(pos)
 			local obj = minetest.add_entity(place, "mobs_mc:snowman")
 			if obj then
 				summon_particles(obj)
+				local l = obj:get_luaentity()
+				if l and player then l._creator = player:get_player_name() end
 			end
 			break
 		end
