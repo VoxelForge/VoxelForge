@@ -43,7 +43,8 @@ local honey_harvest = function(pos, node, player, itemstack, pointed_thing)
 		--TODO: damage type = "mob" since this is supposed to be done by bee mobs which aren't a thing yet
 		--Once bees exist this branch should spawn them and/or make them aggro
 		if not campfire[1] then mcl_util.deal_damage(player, 10, {type = "mob"}) end
-		minetest.swap_node(pos, {name = original_block})
+		node.name = original_block
+		minetest.swap_node(pos, node)
 	end
 end
 
@@ -232,7 +233,8 @@ minetest.register_abm({
 			end
 			local honey_level = minetest.get_item_group(node_name, "honey_level")
 			honey_level = math.min(honey_level + (math.random(100) == 100 and 2 or 1), 5)
-			minetest.swap_node(pos, {name = original_block.."_"..honey_level})
+			node.name = original_block.."_"..honey_level
+			minetest.swap_node(pos, node)
 		end
 	end,
 })
