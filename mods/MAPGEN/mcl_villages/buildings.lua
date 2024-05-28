@@ -687,7 +687,10 @@ function mcl_villages.post_process_village(blockseed)
 
 	if beds then
 		for _, bed_pos in pairs(beds) do
-			minetest.forceload_block(bed_pos, true)
+			local res = minetest.forceload_block(bed_pos, true)
+			if res then
+				mcl_villages.forced_blocks[minetest.pos_to_string(bed_pos)] = minetest.get_us_time()
+			end
 			local m = minetest.get_meta(bed_pos)
 			m:set_string("bell_pos", minetest.pos_to_string(bell_pos))
 			if m:get_string("villager") == "" then
