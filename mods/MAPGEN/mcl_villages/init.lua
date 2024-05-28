@@ -159,7 +159,6 @@ minetest.register_abm({
 	chance = 2,
 	action = function(pos, node, active_object_count, active_object_count_wider)
 		local bell_pos = minetest.pos_to_string(pos)
-		minetest.log(dump(mcl_villages.forced_blocks))
 		if
 			mcl_villages.forced_blocks[bell_pos]
 			and mcl_villages.forced_blocks[bell_pos] < minetest.get_us_time() - 10000000
