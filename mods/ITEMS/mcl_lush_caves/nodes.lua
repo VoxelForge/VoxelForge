@@ -164,7 +164,7 @@ minetest.register_node("mcl_lush_caves:cave_vines", {
 			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5}
 		},
 	},
-	groups = {handy=1, plant=1, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1},
+	groups = {handy=1, plant=1, vinelike_node=2, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1},
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	_mcl_blast_resistance = 0,
 	_mcl_blast_hardness = 0,
@@ -197,7 +197,7 @@ minetest.register_node("mcl_lush_caves:cave_vines_lit", {
 			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5}
 		},
 	},
-	groups = {handy=1, plant=1, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1},
+	groups = {handy=1, plant=1, vinelike_node=2, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1},
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	_mcl_blast_resistance = 0,
 	_mcl_blast_hardness = 1,
