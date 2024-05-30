@@ -459,10 +459,11 @@ local function get_recipe_fs(data, iY, player)
 	local rows = math.ceil(table.maxn(recipe.items) / width)
 	local rightest, btn_size, s_btn_size = 0, 1.1
 	local btn_lab = data.show_usages and S("Usages") or S("Recipes")
+	local text_y = iY + 3.3 + (0.8 / 4)
 
-	fs[#fs + 1] = "label["..data.iX - 2.6 + 0.705 ..","..iY + 2.75 ..";"..btn_lab.."]" ..
+	fs[#fs + 1] = "label["..data.iX - 2.6 - 1.15 ..",".. text_y ..";"..btn_lab.."]" ..
 		"image_button["..data.iX - 2.6 ..","..iY + 3.3 ..";0.8,0.8;craftguide_prev_icon.png;prev_alternate;]"..
-		"label["..data.iX - 2.6 + 0.705 ..","..iY + 3.35 ..";"..S("@1 of @2", data.rnum, #data.recipes).."]" ..
+		"label["..data.iX - 2.6 + 0.705 ..",".. text_y ..";"..S("@1 of @2", data.rnum, #data.recipes).."]" ..
 		"image_button["..data.iX - 2.6 + 1.5 ..","..iY + 3.3 ..";0.8,0.8;craftguide_next_icon.png;next_alternate;]"
 
 	if width > GRID_LIMIT or rows > GRID_LIMIT then
