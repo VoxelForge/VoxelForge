@@ -60,6 +60,11 @@ Please read <http://minecraft.gamepedia.com/Breaking> to learn how digging times
 * `can_eat_when_full=1`: Only for foodstuffs. This item can be eaten when the user has a full hunger bar
 * `attached_node_facedir=1`: Like `attached_node`, but for facedir nodes
 * `supported_node=1`: Like `attached_node`, but can be placed on any nodes that do not have the `drawtype="airlike"` attribute.
+* `vinelike_node`: Like `attached_node`, but attaches also to other nodes with the same `vinelike_node` group rating
+    * `vinelike_node=1`: attaches to the top of either a vinelike node or a solid block below it
+    * `vinelike_node=2`: attaches to the bottom of either a vinelike node or a solid block above it
+    * `vinelike_node=3`: like 1, but can also be attached to the side of any solid block.
+    * `vinelike_node=4`: like 2, but can also be attached to the side of any solid block.
 * `cauldron`: Cauldron. 1: Empty. 2-4: Water height
 * `anvil`: Anvil. 1: No damage. 2-3: Higher damage levels
 * `no_rename=1`: Item cannot be renamed by anvil

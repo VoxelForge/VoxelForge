@@ -87,5 +87,31 @@ function minetest.check_single_for_falling(pos)
 		end
 	end
 
+	local vine_group = minetest.get_item_group(node.name, "vinelike_node")
+	if vine_group ~= 0 then
+		local apos
+		if vine_group == 1 or vine_group == 3 then
+			-- attached to bottom of same node type
+			apos = vector.offset(pos, 0, -1, 0)
+		elseif vine_group == 2 or vine_group == 4 then
+			-- attached to top of same node type
+			apos = vector.offset(pos, 0, 1, 0)
+		end
+		local aname = minetest.get_node(apos).name
+		if minetest.get_item_group(aname, "vinelike_node") ~= vine_group and
+			minetest.get_item_group(aname, "solid") == 0
+		then
+			if vine_group == 3 or vine_group == 4 then
+				apos = vector.add(pos, minetest.wallmounted_to_dir(node.param2))
+				aname = minetest.get_node(apos).name
+				if minetest.get_item_group(aname, "solid") ~= 0 then
+					return false
+				end
+			end
+			mcl_attached.drop_attached_node(pos)
+			return true
+		end
+	end
+
 	return false
 end
