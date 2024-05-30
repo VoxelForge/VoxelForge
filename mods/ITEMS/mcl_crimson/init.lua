@@ -261,7 +261,7 @@ local function register_vines(name, def)
 		walkable = false,
 		climbable = true,
 		buildable_to = true,
-		groups = {dig_immediate=3, shearsy=1, vines=1, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, deco_block=1, compostability=50},
+		groups = {dig_immediate=3, shearsy=1, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, deco_block=1, compostability=50},
 		sounds = mcl_sounds.node_sound_leaves_defaults(),
 		node_placement_prediction = "",
 		on_place = call_on_place,
@@ -320,7 +320,7 @@ minetest.register_node("mcl_crimson:nether_sprouts", {
 	paramtype = "light",
 	walkable = false,
 	buildable_to = true,
-	groups = {dig_immediate=3,vines=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1,deco_block=1,shearsy=1,compostability=50},
+	groups = {dig_immediate=3, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, deco_block=1, shearsy=1, compostability=50},
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -342,7 +342,7 @@ minetest.register_node("mcl_crimson:warped_roots", {
 	paramtype = "light",
 	walkable = false,
 	buildable_to = true,
-	groups = {dig_immediate=3,vines=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1,deco_block=1,shearsy = 1,compostability=65},
+	groups = {dig_immediate=3, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, deco_block=1, shearsy = 1, compostability=65},
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -413,7 +413,7 @@ minetest.register_node("mcl_crimson:crimson_fungus", {
 	sunlight_propagates = true,
 	paramtype = "light",
 	walkable = false,
-	groups = {dig_immediate=3,mushroom=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1,enderman_takable=1,deco_block=1,compostability=65},
+	groups = {dig_immediate=3 ,mushroom=1 ,attached_node=1 ,dig_by_water=1 ,destroy_by_lava_flow=1 ,dig_by_piston=1 ,enderman_takable=1, deco_block=1, compostability=65},
 	light_source = 1,
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	selection_box = {
@@ -448,7 +448,7 @@ minetest.register_node("mcl_crimson:crimson_roots", {
 	paramtype = "light",
 	walkable = false,
 	buildable_to = true,
-	groups = {dig_immediate=3,vines=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1,deco_block=1,shearsy = 1,compostability=65},
+	groups = {dig_immediate=3 ,dig_by_water=1 ,destroy_by_lava_flow=1 ,dig_by_piston=1, deco_block=1, shearsy=1, compostability=65},
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
