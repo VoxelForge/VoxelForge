@@ -759,23 +759,25 @@ local function search(data)
 	for i = 1, #data.items_raw do
 		local item = data.items_raw[i]
 		local def  = minetest.registered_items[item]
-		local desc = string.lower(minetest.get_translated_string(data.lang_code, def.description))
-		local search_in = item .. desc
-		local to_add
+		if def then
+			local desc = string.lower(minetest.get_translated_string(data.lang_code, def.description))
+			local search_in = item .. desc
+			local to_add
 
-		if search_filter then
-			for filter_name, values in pairs(filters) do
-				local func = search_filters[filter_name]
-				to_add = func(item, values) and (search_filter == "" or
-					string.find(search_in, search_filter, 1, true))
+			if search_filter then
+				for filter_name, values in pairs(filters) do
+					local func = search_filters[filter_name]
+					to_add = func(item, values) and (search_filter == "" or
+						string.find(search_in, search_filter, 1, true))
+				end
+			else
+				to_add = string.find(search_in, filter, 1, true)
 			end
-		else
-			to_add = string.find(search_in, filter, 1, true)
-		end
 
-		if to_add then
-			c = c + 1
-			filtered_list[c] = item
+			if to_add then
+				c = c + 1
+				filtered_list[c] = item
+			end
 		end
 	end
 
