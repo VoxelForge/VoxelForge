@@ -53,10 +53,10 @@ local function generate_fungus_tree(pos, typ)
 end
 
 local max_vines_age = 25
-local grow_vines_direction = { ["mcl_crimson:twisting_vines"] = 1, ["mcl_crimson:weeping_vines"] = -1 }
+local grow_vines_direction = {[1] = 1, [2] = -1}
 
 function set_vines_age(pos, node)
-	local dir = grow_vines_direction[node.name]
+	local dir = grow_vines_direction[minetest.get_item_group(node.name, "vinelike_node")]
 	local vpos, i = mcl_util.traverse_tower(pos, -dir)
 	for i = 1, i do
 		minetest.swap_node(vpos, { name = node.name, param2 = i })
@@ -71,7 +71,7 @@ function get_vines_age(pos)
 end
 
 function grow_vines(pos, amount, vine, dir, max_age)
-	dir = dir or grow_vines_direction[vine] or 1
+	dir = dir or grow_vines_direction[minetest.get_item_group(vine, "vinelike_node")] or 1
 	local tip, i = mcl_util.traverse_tower(pos, dir)
 	local age = get_vines_age(pos) + i -1
 	amount = math.min(amount, max_age and max_age - age or amount)
@@ -223,12 +223,13 @@ local call_on_place = function(itemstack, placer, pointed_thing)
 	local node = minetest.get_node(pointed_thing.under)
 	local idef = itemstack:get_definition()
 
-	local pos = vector.offset(pointed_thing.under, 0, grow_vines_direction[idef.name], 0)
+	local grow_dir = grow_vines_direction[minetest.get_item_group(idef.name, "vinelike_node")]
+	local pos = vector.offset(pointed_thing.under, 0, grow_dir, 0)
 	if mcl_util.check_position_protection(pos, placer) then return itemstack end
 
 	if node.name == idef.name then
 		if grow_vines(pointed_thing.under, 1, node.name) == 0 then return end
-	elseif grow_vines_direction[idef.name] == dir and minetest.get_item_group(node.name, "solid") ~= 0 then
+	elseif grow_dir == dir and minetest.get_item_group(node.name, "solid") ~= 0 then
 		minetest.item_place_node(itemstack, placer, pointed_thing, 1)
 	else
 		return itemstack
@@ -243,17 +244,10 @@ local call_on_place = function(itemstack, placer, pointed_thing)
 	return itemstack
 end
 
-local call_on_dig = function(pos, node, digger)
-	local dir = grow_vines_direction[node.name]
-	local descendent = vector.offset(pos,0,dir,0)
-	minetest.node_dig(pos, node, digger)
-	if minetest.get_node(descendent).name ~= node.name then return end
-	mcl_util.traverse_tower(descendent, dir, function(p, dir, n)
-		minetest.node_dig(p, n, digger)
-	end)
-end
-
-local function register_vines(name, def)
+local function register_vines(name, def, extra_groups)
+	local groups = table.merge({
+		dig_immediate=3, shearsy=1, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, deco_block=1, compostability=50
+	}, extra_groups or {})
 	minetest.register_node(name, table.merge({
 		drawtype = "plantlike",
 		sunlight_propagates = true,
@@ -261,11 +255,10 @@ local function register_vines(name, def)
 		walkable = false,
 		climbable = true,
 		buildable_to = true,
-		groups = {dig_immediate=3, shearsy=1, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, deco_block=1, compostability=50},
+		groups = groups,
 		sounds = mcl_sounds.node_sound_leaves_defaults(),
 		node_placement_prediction = "",
 		on_place = call_on_place,
-		on_dig = call_on_dig,
 		drop = {
 			max_items = 1,
 			items = {
@@ -298,7 +291,7 @@ register_vines("mcl_crimson:twisting_vines", {
 		type = "fixed",
 		fixed = { -3/16, -0.5, -3/16, 3/16, 0.5, 3/16 },
 	},
-})
+}, {vinelike_node=1})
 
 register_vines("mcl_crimson:weeping_vines", {
 	description = S("Weeping Vines"),
@@ -309,7 +302,7 @@ register_vines("mcl_crimson:weeping_vines", {
 		type = "fixed",
 		fixed = { -3/16, -0.5, -3/16, 3/16, 0.5, 3/16 },
 	},
-})
+}, {vinelike_node=2})
 
 minetest.register_node("mcl_crimson:nether_sprouts", {
 	description = S("Nether Sprouts"),
@@ -504,7 +497,7 @@ minetest.register_abm({
 	interval = 47 * 2.5,
 	chance = 4,
 	action = function(pos, node)
-		if grow_vines_direction[node.name] and node.param2 < max_vines_age then
+		if grow_vines_direction[minetest.get_item_group(node.name, "vinelike_node")] and node.param2 < max_vines_age then
 			grow_vines(pos, 1, node.name, nil, max_vines_age)
 		end
 	end
