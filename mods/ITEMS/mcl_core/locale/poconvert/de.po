@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: Minetest textdomain mcl_core x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2024-05-21 23:40+0000\n"
+"Last-Translator: j-r <j-r@users.noreply.translate.codeberg.org>\n"
+"Language-Team: German <https://translate.codeberg.org/projects/mineclonia/"
+"mcl_core/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5.5\n"
 
 msgid "Stick"
 msgstr "Stock"
@@ -77,7 +78,7 @@ msgid "Emerald"
 msgstr "Smaragd"
 
 msgid "Emeralds are used in villager trades as currency."
-msgstr ""
+msgstr "Smaragde werden als Währung für den Handel mit Dorfbewohnern genutzt."
 
 msgid "Lapis Lazuli"
 msgstr "Lapislazuli"
@@ -122,7 +123,7 @@ msgid "Golden apples are precious food items which can be eaten."
 msgstr "Goldene Äpfel sind kostbare Lebensmittel."
 
 msgid "Enchanted Golden Apple"
-msgstr ""
+msgstr "Verzauberter goldener Apfel"
 
 msgid "Stone"
 msgstr "Stein"
@@ -233,7 +234,7 @@ msgid "A grass block is dirt with a grass cover. Grass blocks are resourceful bl
 msgstr "Ein Grasblock ist Erde mit einer Grasschicht. Grasblöcke sind vielseitige Blöcke, die das Wachstum aller möglichen Pflanzen fördern. Mit einer Hacke kann man das Land bestellen und einen Ackerboden machen. Mit einer Schaufel verwandelt man ihn in einen Graspfad. Im Licht wird das Gras sich langsam auf benachbarte Erde ausbreiten. Unter einem lichtundurchlässigen Block kann sich dieser Block wieder zurück zu Erde verwandeln."
 
 msgid "Dirt with Snow"
-msgstr ""
+msgstr "Erde mit Schnee"
 
 msgid "Grass Path"
 msgstr "Graspfad"
@@ -248,7 +249,7 @@ msgid "Mycelium is a type of dirt and the ideal soil for mushrooms. Unlike other
 msgstr "Myzel ist eine Art Erde und der perfekte Nährboden für Pilze. Anders als bei anderen erdähnlichen Blöcken kann es mit einer Hacke nicht zu Ackerboden verwandelt werden. Im Licht wird sich Myzel langsam auf benachbarte Erde ausbreiten. Unter einem lichtundurchlässigen Block oder einer Flüssigkeit wird es sich früher oder später zurück zu Erde verwandeln."
 
 msgid "Mycelium with Snow"
-msgstr ""
+msgstr "Myzel mit Schnee"
 
 msgid "Podzol"
 msgstr "Podsol"
@@ -257,7 +258,7 @@ msgid "Podzol is a type of dirt found in taiga forests. Only a few plants are ab
 msgstr "Podsol ist eine Art Erde, die man in Taigawäldern finden kann. Nur wenige Pflanzen können hierauf wachsen."
 
 msgid "Podzol with Snow"
-msgstr ""
+msgstr "Podsol mit Schnee"
 
 msgid "Dirt"
 msgstr "Erde"
@@ -503,7 +504,7 @@ msgid "Stained Glass"
 msgstr "Buntglas"
 
 msgid "@1 Stained Glass"
-msgstr ""
+msgstr "@1 getöntes Glas"
 
 msgid "Flowing Water"
 msgstr "Fließendes Wasser"
@@ -590,7 +591,7 @@ msgid "Realm Barrier"
 msgstr "Reichsbarriere"
 
 msgid "Light"
-msgstr ""
+msgstr "Licht"
 
 msgid "Lights are invisible blocks. They are used to light up adventure maps and the like."
 msgstr ""
@@ -602,10 +603,10 @@ msgid "Void"
 msgstr "Leere"
 
 msgid "Stone Stairs"
-msgstr ""
+msgstr "Steintreppe"
 
 msgid "Stone Slab"
-msgstr ""
+msgstr "Steinplatte"
 
 msgid "Smooth Stone Slab"
 msgstr ""
@@ -729,4 +730,3 @@ msgstr ""
 
 msgid "Birch"
 msgstr ""
-

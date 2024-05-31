@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: Minetest textdomain mcl_doc_basics x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2024-05-22 06:30+0000\n"
+"Last-Translator: j-r <j-r@users.noreply.translate.codeberg.org>\n"
+"Language-Team: German <https://translate.codeberg.org/projects/mineclonia/"
+"mcl_doc_basics/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5.5\n"
 
 msgid "Advanced usage"
 msgstr "Fortgeschrittenes"
@@ -245,7 +246,10 @@ msgid "Fast mode:"
 msgstr "Schnellmodus:"
 
 msgid "• Description: Allows you to move much faster. Hold down the the “Use” key [E] to move faster. In the client configuration, you can further customize fast mode."
-msgstr "• Beschreibung: Damit bewegen Sie sich viel schneller. In der Client-Konfiguration können Sie den Schnellmodus ferner anpassen"
+msgstr ""
+"• Beschreibung: Ermöglicht sehr schnelle Fortbewegung. Drücke [E] um sich "
+"schneller zu bewegen. In der Client-Konfiguration kannst Du diesen "
+"Schnellmodus weiter anpassen."
 
 msgid "• Default key: [J]"
 msgstr "• Standardtaste: [J]"
@@ -254,7 +258,7 @@ msgid "• Required privilege: fast"
 msgstr "• Benötigtes Privileg: fast"
 
 msgid "Fly mode:"
-msgstr "Flugmodus"
+msgstr "Flugmodus:"
 
 msgid "• Description: Gravity doesn't affect you and you can move freely in all directions. Use the jump key to rise and the sneak key to sink."
 msgstr "• Beschreibung: Schwerkraft beeinflusst Sie nicht und Sie können sich in alle Richtungen schnell bewegen. Benutzen Sie die Sprungtaste zum Aufsteigen und die Schleichentaste zum Absinken."
@@ -326,7 +330,10 @@ msgid "These are a few of the most important gameplay settings:"
 msgstr "Dies sind ein paar der wichtigsten Spieleinstellungen:"
 
 msgid "• Damage enabled (enable_damage): Enables the health and breath attributes for all players. If disabled, players are immortal"
-msgstr "• Schaden aktiviert (enable_damage): Aktiviert die Gesundheits- und Atemattribute für alle Spieler. Wird dies deaktiviert, sind Spieler unsterblich."
+msgstr ""
+"• Schaden aktiviert (enable_damage): Aktiviert die Gesundheits- und "
+"Atemattribute für alle Spieler. Wird dies deaktiviert, sind Spieler "
+"unsterblich"
 
 msgid "• Creative Mode (creative_mode): Enables sandbox-style gameplay focusing on creativity rather than a challenging gameplay. The meaning depends on the game; usual changes are: Reduced dig times, easy access to almost all items, tools never wear off, etc."
 msgstr ""
@@ -380,7 +387,7 @@ msgid "This is a very brief introduction to the basic gameplay."
 msgstr ""
 
 msgid "How to play:"
-msgstr "Spielanleitung"
+msgstr "Spielanleitung:"
 
 msgid "• Punch a tree trunk until it breaks and collect wood"
 msgstr "• Hauen Sie einen Baumstamm, bis er bricht und sammeln Sie Holz auf"
@@ -452,7 +459,9 @@ msgid "• Shift: Sneak"
 msgstr "• Umschalt: Schleichen"
 
 msgid "While on a ladder, swimming in a liquid or fly mode is active"
-msgstr "An einer Leiter, beim Tauchen oder im Flugmodus:"
+msgstr ""
+"Beim Klettern an einer Leiter, beim Schwimmen in einer Flüssigkeit oder im "
+"Flugmodus"
 
 msgid "• Space: Move up"
 msgstr "• Leertaste: Hoch"
@@ -704,7 +713,9 @@ msgid "Some items are usable as a melee weapon when wielded. Weapons share most 
 msgstr "Einige Gegenstände sind als Nahkampfwaffen zu gebrauchen. Waffen teilen die meisten Eigenschaften mit Werkzeugen."
 
 msgid "Melee weapons deal damage by punching players and other animate objects. There are two ways to attack:"
-msgstr "Nahkampfwaffen richten Schaden an, indem Spieler und andere aktive Objekte geschlagen werden."
+msgstr ""
+"Nahkampfwaffen richten Schaden an, indem Spieler und andere aktive Objekte "
+"geschlagen werden. Es gibt zwei Arten anzugreifen:"
 
 msgid "• Single punch: Left-click once to deal a single punch"
 msgstr "• Einzelner Schlag: Einmal links klicken"
@@ -734,13 +745,20 @@ msgid "The world is made entirely out of blocks (voxels, to be precise). Blocks 
 msgstr "Die Welt besteht aus Blöcken (oder Voxeln, um genau zu sein). Blöcke können mit den richtigen Werkzeugen gebaut oder entfernt werden."
 
 msgid "Blocks can have a wide range of different properties which determine mining times, behavior, looks, shape, and much more. Their properties include:"
-msgstr "Blöcke haben eine Reihe an verschiedenen Eigenschaften, die die Abbauzeit, ihr Verhalten, Aussehen, Form und vieles mehr beeinflussen. Zu ihren Eigenschaften zählen:"
+msgstr ""
+"Blöcke haben eine Reihe an verschiedenen Eigenschaften, die ihre Abbauzeit, "
+"Verhalten, Aussehen, Form und vieles mehr beeinflussen. Zu ihren "
+"Eigenschaften zählen:"
 
 msgid "• Collidable: Collidable blocks can not be passed through; players can walk on them. Non-collidable blocks can be passed through freely"
 msgstr "• Kollisionsfähig: Kollisionsfähige Blöcke können nicht passiert werden, Spieler können auf ihnen gehen. Nicht kollisionsfähige Blöcke können frei passiert werden"
 
 msgid "• Pointable: Pointable blocks show a wireframe or a halo box when pointed. But you will just point through non-pointable blocks. Liquids are usually non-pointable but they can be pointed at by some special tools"
-msgstr "• Zeigbar: Zeigbare Blöcke zeigen ein Drahtmodell oder eine scheinende Box, wenn sie gezeigt werden. Aber durch nicht-zeigbare Blöcke werden Sie hindurch zeigen. Flüssigkeiten sind üblicherweise nicht-zeigbar, aber mit besonderen Werkzeugen können sie gezeigt werden."
+msgstr ""
+"• Auswählbar: auswählbare Blöcke zeigen ein Drahtmodell oder eine Umrandung, "
+"wenn auf sie gezeigt wird. Durch nicht-auswählbare Blöcke zeigst Du "
+"hindurch. Flüssigkeiten sind üblicherweise nicht-auswählbar, aber mit "
+"besonderen Werkzeugen kann auf sie gezeigt werden"
 
 msgid "• Mining properties: By which tools it can be mined, how fast and how much it wears off tools"
 msgstr "• Grabeeigenschaften: Von welchen Werkzeugen es abgebaut werden kann, wie schnell und wie stark es Werkzeuge abnutzt"
@@ -797,7 +815,7 @@ msgid "Normally, blocks are built in front of the pointed side of the pointed bl
 msgstr "Normalerweise werden Blöcke vor der gezeigten Seite des gezeigten Blocks gebaut. Ein paar Blöcke sind anders: Wenn Sie an sie anbauen, werden sie ersetzt."
 
 msgid "Crafting"
-msgstr "Fertigung"
+msgstr "Fertigen"
 
 msgid "Crafting is the task of combining several items to form a new item."
 msgstr "Fertigen ist die Tätigkeit, in der man mehrere Gegenstände kombiniert, um einen neuen zu erhalten."
@@ -1127,7 +1145,12 @@ msgid "• Renewability: Renewable liquids can create new sources"
 msgstr "• Erneuerbarkeit: Erneuerbare Flüssigkeiten können neue Quellen erschaffen"
 
 msgid "• Flowing range: How many flowing liquids are created at maximum per liquid source, it determines how far the liquid will spread. Possible are ranges from 0 to 8. At 0, no flowing liquids will be created. Image 5 shows a liquid of flowing range 2"
-msgstr "• Fließreichweite: Wie viele fließende Flüssigkeiten maximal je Flüssigkeitsquelle erschaffen werden; das bestimmt, wie weit die Flüssigkeit fließen wird. Mögliche Reichweiten sind zwischen 0 bis 8. Bei 0 werden keine fließenden Flüssigkeiten erzeugt. Bild 5 zeigt eine Flüssigkeit mit einer Fließreichweite von 2."
+msgstr ""
+"• Fließreichweite: Wie viel fließende Flüssigkeit maximal je "
+"Flüssigkeitsquelle erschaffen werden; das bestimmt, wie weit die Flüssigkeit "
+"fließen kann. Mögliche Reichweiten sind zwischen 0 bis 8. Bei 0 werden keine "
+"fließenden Flüssigkeiten erzeugt. Bild 5 zeigt eine Flüssigkeit mit einer "
+"Fließreichweite von 2"
 
 msgid "• Viscosity: How slow players move through it and how slow the liquid spreads"
 msgstr "• Zähflüssigkeit: Wie langsam sich Spieler durch sie bewegen und wie langsam sich die Flüssigkeit ausbreitet"
@@ -1163,7 +1186,13 @@ msgid "• There is no fall damage for falling into a liquid as such"
 msgstr "• Es gibt keinen Fallschaden für das Eintauchen in einer Flüssigkeit als solche"
 
 msgid "• If you fall into a liquid, you will be slowed down on impact (but don't stop instantly). Your impact depth is determined by your speed and the liquid viscosity. For a safe high drop into a liquid, make sure there is enough liquid above the ground, otherwise you might hit the ground and take fall damage"
-msgstr "• Wenn Sie in eine Flüssigkeit stürzen, werden Sie bei Kontakt verlangsamt (aber Sie halten nicht sofort an). Ihre Falltiefe hängt von Ihrer Geschwindigkeit und der Zähflüssigkeit ab. Für einen sicheren hohen Sturz in eine Flüssigkeit, stellen Sie sicher, dass genug Flüssigkeit über dem Boden ist, sonst könnten Sie auf den Boden aufschlagen und Fallschaden nehmen."
+msgstr ""
+"• Wenn Sie in eine Flüssigkeit stürzen, werden Sie bei Kontakt verlangsamt ("
+"aber Sie halten nicht sofort an). Ihre Falltiefe hängt von Ihrer "
+"Geschwindigkeit und der Viskosität (Zähflüssigkeit) der Flüssigkeit ab. Für "
+"einen sicheren hohen Sturz in eine Flüssigkeit, musst Du sicherstellen, dass "
+"genug Flüssigkeit über dem Boden ist, sonst könntest Du auf den Boden "
+"aufschlagen und Fallschaden erleiden"
 
 msgid "Liquids are often not pointable. But some special items are able to point all liquids."
 msgstr "Flüssigkeiten sind generell nicht zeigbar. Aber ein paar besondere Werkzeuge können auf alle Flüssigkeiten zeigen."
@@ -1367,7 +1396,9 @@ msgid "• Griefing: Destroying the buildings of other players against their wil
 msgstr "• Griefen: Gebäude anderer Spieler gegen ihren Willen zerstören"
 
 msgid "• Protection: Mechanism to own areas of the world, which only allows the owners to modify blocks inside"
-msgstr "• Schutz: Mechanismus, um Eigentum an Gebieten in der der Welt zu erlangen, wodurch nur der Eigentümer die Blöcke verändern kann"
+msgstr ""
+"• Schutz: Mechanismus, um Eigentum an Gebieten in der Welt zu erlangen, "
+"wodurch nur der Eigentümer die Blöcke verändern kann"
 
 msgid "Technical terms:"
 msgstr "Technische Begriffe:"
@@ -1404,4 +1435,3 @@ msgstr "Minetest kann alleine oder online mit mehreren Spielern gespielt werden.
 
 msgid "MineClonia is a game that is built on top of the Minetest engine that intends to create a game that is as close to Minecraft as possible. There are many other games for Minetest however, that can be installed from the main menu content browser."
 msgstr ""
-

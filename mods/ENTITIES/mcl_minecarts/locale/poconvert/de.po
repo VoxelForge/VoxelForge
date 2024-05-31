@@ -3,18 +3,19 @@ msgstr ""
 "Project-Id-Version: Minetest textdomain mcl_minecarts x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2024-05-21 19:25+0000\n"
+"Last-Translator: j-r <j-r@users.noreply.translate.codeberg.org>\n"
+"Language-Team: German <https://translate.codeberg.org/projects/mineclonia/"
+"mcl_minecarts/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5.5\n"
 
 msgid "Sneak-click to remove"
-msgstr ""
+msgstr "Schleichen und Klicken zum Entfernen"
 
 msgid "Minecart"
 msgstr "Lore"
@@ -36,6 +37,7 @@ msgstr "Um die Lore aufzusammeln, schlagen Sie sie, während Sie die Schleichen-
 
 msgid "If it moves over a powered activator rail, you'll get ejected."
 msgstr ""
+"Wenn sie sich über eine Aktivatorschiene bewegt, wirst du herausgeschleudert."
 
 msgid "Sneak to dismount"
 msgstr "Zum Aussteigen schleichen"
@@ -98,7 +100,9 @@ msgid "Rails can be used to build transport tracks for minecarts. Powered rails 
 msgstr "Schienen können benutzt werden, um Strecken für Loren zu bauen. Antriebsschienen können Loren beschleunigen und abbremsen."
 
 msgid "Without redstone power, the rail will brake minecarts. To make this rail accelerate minecarts, power it with redstone power."
-msgstr "Ohne Redstone-Energie wird die Schiene Loren abbremsen. Mit Redstone-Energie wird sie sie beschleunigen."
+msgstr ""
+"Ohne Redstone-Energie wird die Schiene Loren abbremsen, mit Redstone-Energie "
+"beschleunigen."
 
 msgid "Activator Rail"
 msgstr "Aktivierungsschiene"
@@ -123,4 +127,3 @@ msgstr "Schienen können benutzt werden, um Strecken für Loren zu bauen. Eine S
 
 msgid "To detect a minecart and provide redstone power, connect it to redstone trails or redstone mechanisms and send any minecart over the rail."
 msgstr "Um eine Lore zu erkennen und die Redstone-Energie zu aktivieren, verbinden Sie die Schiene mit Redstonestaub oder Redstone-Mechanismen und schicken Sie eine beliebige Lore über die Schiene."
-

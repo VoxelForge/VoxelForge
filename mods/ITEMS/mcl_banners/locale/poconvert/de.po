@@ -3,81 +3,82 @@ msgstr ""
 "Project-Id-Version: Minetest textdomain mcl_banners x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2024-05-23 07:18+0000\n"
+"Last-Translator: j-r <j-r@users.noreply.translate.codeberg.org>\n"
+"Language-Team: German <https://translate.codeberg.org/projects/mineclonia/"
+"mcl_banners/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5.5\n"
 
 msgid "White Banner"
 msgstr "Weißes Banner"
 
 msgid "White"
-msgstr "weiß"
+msgstr "Weißer"
 
 msgid "Grey Banner"
 msgstr "Graues Banner"
 
 msgid "Grey"
-msgstr "grau"
+msgstr "Grauer"
 
 msgid "Light Grey Banner"
 msgstr "Hellgraues Banner"
 
 msgid "Light Grey"
-msgstr "hellgrau"
+msgstr "Hellgrauer"
 
 msgid "Black Banner"
 msgstr "Schwarzes Banner"
 
 msgid "Black"
-msgstr "schwarz"
+msgstr "Schwarzer"
 
 msgid "Red Banner"
 msgstr "Rotes Banner"
 
 msgid "Red"
-msgstr "rot"
+msgstr "Roter"
 
 msgid "Yellow Banner"
 msgstr "Gelbes Banner"
 
 msgid "Yellow"
-msgstr "gelb"
+msgstr "Gelber"
 
 msgid "Green Banner"
 msgstr "Grünes Banner"
 
 msgid "Green"
-msgstr "grün"
+msgstr "Grüner"
 
 msgid "Cyan Banner"
 msgstr "Türkises Banner"
 
 msgid "Cyan"
-msgstr "türkis"
+msgstr "Türkiser"
 
 msgid "Blue Banner"
 msgstr "Blaues Banner"
 
 msgid "Blue"
-msgstr "blau"
+msgstr "Blauer"
 
 msgid "Magenta Banner"
 msgstr "Magenta Banner"
 
 msgid "Magenta"
-msgstr "magenta"
+msgstr "Magenta"
 
 msgid "Orange Banner"
 msgstr "Orange Banner"
 
 msgid "Orange"
-msgstr "orange"
+msgstr "Oranger"
 
 msgid "Purple Banner"
 msgstr "Violettes Banner"
@@ -89,52 +90,62 @@ msgid "Brown Banner"
 msgstr "Braunes Banner"
 
 msgid "Brown"
-msgstr "braun"
+msgstr "Brauner"
 
 msgid "Pink Banner"
 msgstr "Rosa Banner"
 
 msgid "Pink"
-msgstr "rosa"
+msgstr "Rosa"
 
 msgid "Lime Banner"
 msgstr "Lindgrünes Banner"
 
 msgid "Lime"
-msgstr "lindgrün"
+msgstr "Hellgrüner"
 
 msgid "Light Blue Banner"
 msgstr "Hellblaues Banner"
 
 msgid "Light Blue"
-msgstr "hellblau"
+msgstr "Hellblauer"
 
 msgid "Banner"
-msgstr ""
+msgstr "Banner"
 
 msgid "Banners are tall colorful decorative blocks. They can be placed on the floor and at walls. Banners can be emblazoned with a variety of patterns using a lot of dye in crafting."
 msgstr "Banner sind hohe farbige dekorative Blöcke. Sie können auf dem Boden und an Wände platziert werden. Banner können mit einer Vielzahl von Mustern mit Hilfe von Farbstoffen in der Fertigung bemalt werden."
 
 msgid "Use crafting to draw a pattern on top of the banner. Emblazoned banners can be emblazoned again to combine various patterns. You can draw up to 12 layers on a banner that way. If the banner includes a gradient, only 3 layers are possible."
-msgstr "Benutzen Sie die Fertigung, um ein Muster auf einem Banner zu malen. Bemalte Banner können erneut bemalt werden, um verschiedene Muster zu ergeben. Sie können bis zu 12 Schichten auf einen Banner malen. Wenn ein Banner einen Farbverlauf hat, sind nur 3 Schichten möglich."
+msgstr ""
+"Benutze die Fertigung, um ein Muster auf einem Banner zu malen. Bemalte "
+"Banner können erneut bemalt werden, um verschiedene Muster zu ergeben. Du "
+"kannst bis zu 12 Schichten auf einen Banner malen. Wenn ein Banner einen "
+"Farbverlauf hat, sind nur drei Schichten möglich."
 
 msgid "You can copy the pattern of a banner by placing two banners of the same color in the crafting grid—one needs to be emblazoned, the other one must be clean. Finally, you can use a banner on a cauldron with water to wash off its top-most layer."
-msgstr "Sie können ein Muster eines Banners kopieren, indem Sie zwei Banner der selben Grundfarbe in das Fertigungsgitter platzieren: Das eine muss bemalt sein, das andere leer. Außerdem können Sie ein Banner an einem Kessel mit Wasser benutzen, um seine oberste Schicht abzuwaschen."
+msgstr ""
+"Du kannst ein Muster eines Banners kopieren, indem du zwei Banner der selben "
+"Grundfarbe in das Fertigungsgitter platzierst: Das eine muss bemalt sein, "
+"das andere leer. Außerdem kannst du ein Banner an einem Kessel mit Wasser "
+"benutzen, um seine oberste Schicht abzuwaschen."
 
 msgid "@1 Banner"
-msgstr ""
+msgstr "@1-Banner"
 
 msgid "Preview Banner"
-msgstr ""
+msgstr "Banner-Vorschau"
 
 msgid "Paintable decoration"
 msgstr "Bemalbare Dekoration"
 
 msgid "Can be used to craft special banner designs on the loom"
 msgstr ""
+"Kann verwendet werden, um spezielle Bannermotive auf dem Webstuhl "
+"herzustellen"
 
 msgid "Special Banner Pattern"
-msgstr ""
+msgstr "Besondere Banner-Muster"
 
 msgid "@1 Bordure"
 msgstr "Bord (@1)"
@@ -191,10 +202,10 @@ msgid "@1 Thing Charge"
 msgstr "Dingsfigur (@1)"
 
 msgid "@1 Globe Charge"
-msgstr ""
+msgstr "@1-Globusvorlage"
 
 msgid "@1 Piglin Charge"
-msgstr ""
+msgstr "@1-Piglin-Vorlage"
 
 msgid "@1 Lozenge"
 msgstr "Raute (@1)"
@@ -261,4 +272,3 @@ msgstr "Und eine zusätzliche Schicht"
 
 msgid "And @1 additional layers"
 msgstr "Und @1 zusätzliche Schichten"
-

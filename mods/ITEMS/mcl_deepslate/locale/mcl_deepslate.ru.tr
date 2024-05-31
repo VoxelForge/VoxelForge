@@ -40,9 +40,3 @@ Deepslate Tile Slab=
 Deepslate Tiles Wall=Стена из сланцевой плитки
 Cracked Deepslate Tiles=Потрескавшаяся сланцевая плитка
 Chiseled Deepslate=Резной сланец
-
-
-##### not used anymore #####
-
-An infested block is a block from which a silverfish will pop out when it is broken. It looks identical to its normal counterpart.=Заражённый блок это блок, после добычи которого спаунится чешуйница. Блок выглядит идентично своему нормальному варианту.
-Hides a silverfish=Прячет в себе чешуйницу

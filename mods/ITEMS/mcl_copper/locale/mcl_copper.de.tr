@@ -1,9 +1,9 @@
 # textdomain: mcl_copper
-Waxed @1=
-Copper Ingot=Kupfer Barren
-Molten Raw Copper. It is used to craft blocks.=Geschmolzenes Rohkupfer. Es wird verwendet, um Blöcke herzustellen. 
+Waxed @1=@1, gewachst
+Copper Ingot=Kupferbarren
+Molten Raw Copper. It is used to craft blocks.=Geschmolzenes Rohkupfer. Es wird verwendet, um Blöcke herzustellen.
 Raw Copper=Rohkupfer
-Raw Copper. Mine a Copper Ore to get it.=Bauen sie ein Kupfererz ab, um es zu erhalten.
+Raw Copper. Mine a Copper Ore to get it.=Baue Kupfererz ab, um Rohkupfer zu erhalten.
 Copper Ore=Kupfererz
 Some copper contained in stone, it is pretty common and can be found below sea level.=Stein, in dem etwas Kupfer enthalten ist. Es ist ziemlich häufig und kann unter dem Meeresspiegel gefunden werden.
 Block of Raw Copper=Rohkupferblock

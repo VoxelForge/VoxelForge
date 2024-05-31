@@ -2,7 +2,7 @@
 Chest=Truhe
 Inventory=Inventar
 Large Chest=Große Truhe
-To access its inventory, rightclick it. When broken, the items will drop out.=Um auf das Inventar zuzugreifen, rechtsklicken Sie darauf. Wenn abgebaut, wird der Inhalt hinausfallen.
+To access its inventory, rightclick it. When broken, the items will drop out.=Um auf das Inventar zuzugreifen, rechtsklicke darauf. Wenn abgebaut, wird der Inhalt hinausfallen.
 Chests are containers which provide 27 inventory slots. Chests can be turned into large chests with double the capacity by placing two chests next to each other.=Truhen sind Behälter, die 27 Inventarplätze Platz bieten. Truhen verwandeln sich in große Truhen mit der doppelten Kapazität, wenn zwei Truhen nebeneinander platziert werden.
 27 inventory slots=27 Inventarplätze
 Can be combined to a large chest=Kann zu einer großen Truhe kombiniert werden
@@ -32,5 +32,5 @@ Grey Shulker Box=Graue Schulkerkiste
 Black Shulker Box=Schwarze Schulkerkiste
 Shulker Box=Schulkerkiste
 A shulker box is a portable container which provides 27 inventory slots for any item except shulker boxes. Shulker boxes keep their inventory when broken, so shulker boxes as well as their contents can be taken as a single item. Shulker boxes come in many different colors.=Eine Schulkerkiste ist ein tragbarer Behälter, der 27 Inventarplätze für alle Gegenstände außer Schulkerkisten bietet. Schulkerkisten behalten ihr Inventar, wenn sie abgebaut werden, also können Schulkerkisten so wie ihr Inhalt als einzelne Gegenstände mitgenommen werden. Schulkerkisten gibt es in vielen verschiedenen Farben.
-To access the inventory of a shulker box, place and right-click it. To take a shulker box and its contents with you, just break and collect it, the items will not fall out. Place the shulker box again to be able to retrieve its contents.=
+To access the inventory of a shulker box, place and right-click it. To take a shulker box and its contents with you, just break and collect it, the items will not fall out. Place the shulker box again to be able to retrieve its contents.=Um auf das Inventar einer Shulker-Kiste zuzugreifen, platziere sie und klicke mit der rechten Maustaste darauf. Um eine Shulker-Kiste und ihren Inhalt mitzunehmen, baue sie einfach ab und sammle sie ein; die Gegenstände werden nicht herausfallen. Stelle die Kiste wieder auf, um auf ihren Inhalt zuzugreifen.
 Can be carried around with its contents=Kann mitsamt Inhalt transportiert werden

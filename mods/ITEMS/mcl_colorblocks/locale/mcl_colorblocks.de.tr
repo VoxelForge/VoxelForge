@@ -6,10 +6,10 @@ Concrete is a decorative block which comes in many different colors. It is notab
 Turns into concrete on water contact=Wird zu Beton bei Wasserkontakt
 Terracotta=Terrakotta
 Terracotta is a basic building material which comes in many different colors. This particular block is uncolored.=Terrakotta ist ein Baumaterial, welches in vielen verschiedenen Farben vorkommt. Diese Variante ist ungefärbt.
-@1 Terracotta=
-@1 Glazed Terracotta=
-@1 Concrete Powder=
-@1 Concrete=
+@1 Terracotta=@1 Terrakotta
+@1 Glazed Terracotta=@1 Glasierte Terrakotta
+@1 Concrete Powder=@1 Betonpulver
+@1 Concrete=@1 Beton
 Colored Terracotta=Gefärbte Terrakotta
 Glazed Terracotta=Glasierte Terrakotta
 Concrete Powder=Betonpulver

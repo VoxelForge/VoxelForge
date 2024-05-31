@@ -3,70 +3,74 @@ msgstr ""
 "Project-Id-Version: Minetest textdomain mcl_dyes x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2024-05-23 07:18+0000\n"
+"Last-Translator: j-r <j-r@users.noreply.translate.codeberg.org>\n"
+"Language-Team: German <https://translate.codeberg.org/projects/mineclonia/"
+"mcl_dyes/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5.5\n"
 
 msgid "White"
-msgstr ""
+msgstr "Weißer"
 
 msgid "Light Grey"
-msgstr ""
+msgstr "Hellgrauer"
 
 msgid "Grey"
-msgstr ""
+msgstr "Grauer"
 
 msgid "Black"
-msgstr ""
+msgstr "Schwarzer"
 
 msgid "Purple"
-msgstr ""
+msgstr "Violetter"
 
 msgid "Blue"
-msgstr ""
+msgstr "Blauer"
 
 msgid "Light Blue"
-msgstr ""
+msgstr "Hellblauer"
 
 msgid "Cyan"
-msgstr ""
+msgstr "Türkiser"
 
 msgid "Green"
-msgstr ""
+msgstr "Grüner"
 
 msgid "Lime"
-msgstr ""
+msgstr "Hellgrüner"
 
 msgid "Yellow"
-msgstr ""
+msgstr "Gelber"
 
 msgid "Brown"
-msgstr ""
+msgstr "Brauner"
 
 msgid "Orange"
-msgstr ""
+msgstr "Oranger"
 
 msgid "Red"
-msgstr ""
+msgstr "Roter"
 
 msgid "Magenta"
-msgstr ""
+msgstr "Magenta"
 
 msgid "Pink"
-msgstr ""
+msgstr "Rosa"
 
 msgid "@1 Dye"
-msgstr ""
+msgstr "@1 Farbstoff"
 
 msgid "This item is a dye which is used for dyeing and crafting."
-msgstr "Dieser Gegenstand ist ein Farbstoff, der zum Einfärben und in der Herstellung benutzt werden kann."
+msgstr ""
+"Dieser Gegenstand ist ein Farbstoff, der zum Färben und in der Herstellung "
+"benutzt werden kann."
 
 msgid "Rightclick on a sheep to dye its wool. Other things are dyed by crafting."
-msgstr "Rechtsklicken Sie auf ein Schaf, um seine Wolle zu färben. Andere Dinge werden mit der Fertigung eingefärbt."
-
+msgstr ""
+"Rechtsklicke ein Schaf, um seine Wolle zu färben. Andere Dinge werden mit "
+"der Fertigung eingefärbt."

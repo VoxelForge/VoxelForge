@@ -1,7 +1,7 @@
 # textdomain: mcl_flowers
 This is a small flower. Small flowers are mainly used for dye production and can also be potted.=Dies ist eine kleine Blume. Kleine Blumen werden hauptsächlich in der Farbenproduktion benutzt, können aber auch in Blumentöpfen platziert werden.
 It can only be placed on a block on which it would also survive.=Diese Pflanze kann nur auf einem Block platziert werden, auf dem sie auch überleben würde.
-@1 (Top Part)=
+@1 (Top Part)=@1 (Oberer Teil)
 Poppy=Mohn
 Dandelion=Löwenzahn
 Oxeye Daisy=Margerite
@@ -12,9 +12,9 @@ White Tulip=Weiße Tulpe
 Allium=Sternlauch
 Azure Bluet=Porzellansternchen
 Blue Orchid=Blaue Orchidee
-Wither Rose=
-Lily of the Valley=
-Cornflower=
+Wither Rose=Wither-Rose
+Lily of the Valley=Maiglöckchen
+Cornflower=Kornblume
 Peony=Pfingstrose
 A peony is a large plant which occupies two blocks. It is mainly used in dye production.=Eine Pfingstrose ist eine große Pflanze, die zwei Blöcke hoch ist. Sie wird hauptsächlich für die Farbenproduktion gebraucht.
 Rose Bush=Rosenbusch
@@ -33,8 +33,3 @@ Fern=Farn
 Ferns are small plants which occur naturally in jungles and taigas. They can be harvested for wheat seeds. By using bone meal, a fern can be turned into a large fern which is two blocks high.=Farne sind kleine Pflanzen, die oft in Dschungeln und Taigas vorkommen. Sie können für Weizensamen abgeerntet werden. Mit Knochenmehl lässt sich ein Farn zu einem großen Farn, der zwei Blöcke hoch ist, verwandeln.
 Lily Pad=Seerosenblatt
 A lily pad is a flat plant block which can be walked on. They can be placed on water sources, ice and frosted ice.=Ein Seerosenblatt ist eine flache Pflanze, die eine stabile begehbare Oberfläche ist. Sie kann auf Wasserquellen, auf Eis und brüchigem Eis platziert werden.
-
-
-##### not used anymore #####
-
-(Top Part)=(Oberseite)
