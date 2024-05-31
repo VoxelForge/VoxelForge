@@ -156,8 +156,8 @@ function mcl_entity_invs.register_inv(entity_name,show_name,size,no_on_righclick
 
 	local old_gsd = minetest.registered_entities[entity_name].get_staticdata
 	minetest.registered_entities[entity_name].get_staticdata  = function(self)
-		local old_sd = old_gsd(self)
-		local d = minetest.deserialize(old_sd)
+		local old_sd = old_gsd and old_gsd(self)
+		local d = old_sd and minetest.deserialize(old_sd) or {}
 		assert(type(d) == "table","mcl_entity_invs currently only works with entities that return a (serialized) table in get_staticdata. "..tostring(self.name).." returned: "..tostring(old_sd))
 		d._inv_id = self._inv_id
 		d._inv_size = self._inv_size
