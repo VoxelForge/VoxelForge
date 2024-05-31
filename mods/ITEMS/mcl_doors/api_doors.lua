@@ -204,41 +204,41 @@ function mcl_doors:register_door(name, def)
 	local tt = def.tiles_top
 	local tb = def.tiles_bottom
 
-local function on_open_close(pos, dir, check_name, replace, replace_dir)
-	local meta1 = minetest.get_meta(pos)
-	pos.y = pos.y+dir
-	local meta2 = minetest.get_meta(pos)
+	local function on_open_close(pos, dir, check_name, replace, replace_dir)
+		local meta1 = minetest.get_meta(pos)
+		pos.y = pos.y+dir
+		local meta2 = minetest.get_meta(pos)
 
-	-- if name of other door is not the same as check_name -> return
-	if minetest.get_node(pos).name ~= check_name  then
-		return
+		-- if name of other door is not the same as check_name -> return
+		if minetest.get_node(pos).name ~= check_name  then
+			return
+		end
+
+		-- swap directions if mirrored
+		local params = {3,0,1,2}
+		if meta1:get_int("is_open") == 0 and meta2:get_int("is_mirrored") == 0 or meta1:get_int("is_open") == 1 and meta2:get_int("is_mirrored") == 1 then
+			params = {1,2,3,0}
+		end
+
+		local p2 = minetest.get_node(pos).param2
+		local np2 = params[p2+1]
+
+		minetest.swap_node(pos, {name=replace_dir, param2=np2})
+		pos.y = pos.y-dir
+		minetest.swap_node(pos, {name=replace, param2=np2})
+
+		local door_switching_sound
+		if meta1:get_int("is_open") == 1 then
+			door_switching_sound = def.sound_close
+			meta1:set_int("is_open", 0)
+			meta2:set_int("is_open", 0)
+		else
+			door_switching_sound = def.sound_open
+			meta1:set_int("is_open", 1)
+			meta2:set_int("is_open", 1)
+		end
+		minetest.sound_play(door_switching_sound, {pos = pos, gain = 0.5, max_hear_distance = 16}, true)
 	end
-
-	-- swap directions if mirrored
-	local params = {3,0,1,2}
-	if meta1:get_int("is_open") == 0 and meta2:get_int("is_mirrored") == 0 or meta1:get_int("is_open") == 1 and meta2:get_int("is_mirrored") == 1 then
-		params = {1,2,3,0}
-	end
-
-	local p2 = minetest.get_node(pos).param2
-	local np2 = params[p2+1]
-
-	minetest.swap_node(pos, {name=replace_dir, param2=np2})
-	pos.y = pos.y-dir
-	minetest.swap_node(pos, {name=replace, param2=np2})
-
-	local door_switching_sound
-	if meta1:get_int("is_open") == 1 then
-		door_switching_sound = def.sound_close
-		meta1:set_int("is_open", 0)
-		meta2:set_int("is_open", 0)
-	else
-		door_switching_sound = def.sound_open
-		meta1:set_int("is_open", 1)
-		meta2:set_int("is_open", 1)
-	end
-	minetest.sound_play(door_switching_sound, {pos = pos, gain = 0.5, max_hear_distance = 16}, true)
-end
 
 	local function on_mesecons_signal_open(pos, node)
 		on_open_close(pos, 1, name.."_t_1", name.."_b_2", name.."_t_2")
