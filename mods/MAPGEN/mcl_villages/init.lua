@@ -34,7 +34,6 @@ local function build_a_settlement(minp, maxp, blockseed)
 	local settlement_info, grid = mcl_villages.create_site_plan_new(minp, maxp, pr)
 
 	if not settlement_info then
-		minetest.log("No village for " .. blockseed)
 		return
 	end
 
