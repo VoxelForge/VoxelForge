@@ -204,7 +204,7 @@ function mcl_doors:register_door(name, def)
 	local tt = def.tiles_top
 	local tb = def.tiles_bottom
 
-function on_open_close(pos, dir, check_name, replace, replace_dir)
+local function on_open_close(pos, dir, check_name, replace, replace_dir)
 	local meta1 = minetest.get_meta(pos)
 	pos.y = pos.y+dir
 	local meta2 = minetest.get_meta(pos)
@@ -314,7 +314,7 @@ end
 		on_rightclick = on_rightclick,
 		_on_wind_charge_hit = function(pos)
 			local node = minetest.get_node(pos)
-			if not node.name == "mcl_doors:iron_door_b_1" then
+			if node.name ~= "mcl_doors:iron_door_b_1" then
 				on_mesecons_signal_open(pos, node)
 			end
 			return true
@@ -392,7 +392,7 @@ end
 		on_rightclick = on_rightclick,
 		_on_wind_charge_hit = function(pos)
 			local node = minetest.get_node(pos)
-			if not node.name == "mcl_doors:iron_door_t_1" then
+			if node.name ~= "mcl_doors:iron_door_t_1" then
 				on_mesecons_signal_open_top(pos, node)
 			end
 			return true
@@ -472,7 +472,7 @@ end
 		on_rightclick = on_rightclick,
 		_on_wind_charge_hit = function(pos)
 			local node = minetest.get_node(pos)
-			if not node.name == "mcl_doors:iron_door_b_2" then
+			if node.name ~= "mcl_doors:iron_door_b_2" then
 				on_mesecons_signal_close(pos, node)
 			end
 			return true
@@ -550,7 +550,7 @@ end
 		on_rightclick = on_rightclick,
 		_on_wind_charge_hit = function(pos)
 			local node = minetest.get_node(pos)
-			if not node.name == "mcl_doors:iron_door_t_2" then
+			if node.name ~= "mcl_doors:iron_door_t_2" then
 				on_mesecons_signal_close_top(pos, node)
 			end
 			return true

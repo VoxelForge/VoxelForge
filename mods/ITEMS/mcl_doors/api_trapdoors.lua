@@ -182,7 +182,7 @@ function mcl_doors:register_trapdoor(name, def)
 		on_rotate = on_rotate,
 		_on_wind_charge_hit = function(pos)
 			local node = minetest.get_node(pos)
-			if not node.name == "mcl_doors:iron_trapdoor" then
+			if node.name ~= "mcl_doors:iron_trapdoor" then
 				punch(pos)
 			end
 			return true
@@ -234,7 +234,7 @@ function mcl_doors:register_trapdoor(name, def)
 		on_rotate = on_rotate,
 		_on_wind_charge_hit = function(pos)
 			local node = minetest.get_node(pos)
-			if not node.name == "mcl_doors:iron_trapdoor_open" then
+			if node.name ~= "mcl_doors:iron_trapdoor_open" then
 				punch(pos)
 			end
 			return true
