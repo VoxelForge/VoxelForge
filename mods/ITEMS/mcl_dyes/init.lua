@@ -133,7 +133,11 @@ for k,v in pairs(mcl_dyes.colors) do
 				if not minetest.is_creative_enabled(placer and placer:get_player_name() or "") then
 					if ret ~= true then itemstack:take_item() end
 				end
+			else
+				local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+				if rc then return rc end
 			end
+
 			return itemstack
 		end,
 	})
