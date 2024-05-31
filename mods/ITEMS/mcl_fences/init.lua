@@ -164,6 +164,11 @@ function mcl_fences.register_fence_gate(id, fence_gate_name, texture, groups, ha
 		sounds = sounds,
 		_mcl_blast_resistance = blast_resistance,
 		_mcl_hardness = hardness,
+		_on_wind_charge_hit = function(pos)
+			local node = minetest.get_node(pos)
+				punch_gate(pos, node)
+			return true
+		end,
 	})
 
 	local cgroups_closed = table.copy(cgroups)
@@ -225,6 +230,11 @@ function mcl_fences.register_fence_gate(id, fence_gate_name, texture, groups, ha
 		sounds = sounds,
 		_mcl_blast_resistance = blast_resistance,
 		_mcl_hardness = hardness,
+		_on_wind_charge_hit = function(pos)
+			local node = minetest.get_node(pos)
+				punch_gate(pos, node)
+			return true
+		end,
 	})
 
 	if minetest.get_modpath("doc") then

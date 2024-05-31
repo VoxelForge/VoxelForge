@@ -180,6 +180,13 @@ function mcl_doors:register_trapdoor(name, def)
 		end,
 		on_rightclick = on_rightclick,
 		on_rotate = on_rotate,
+		_on_wind_charge_hit = function(pos)
+			local node = minetest.get_node(pos)
+			if not node.name == "mcl_doors:iron_trapdoor" then
+				punch(pos)
+			end
+			return true
+		end,
 	})
 
 	-- Open trapdoor
@@ -225,6 +232,13 @@ function mcl_doors:register_trapdoor(name, def)
 			end),
 		}},
 		on_rotate = on_rotate,
+		_on_wind_charge_hit = function(pos)
+			local node = minetest.get_node(pos)
+			if not node.name == "mcl_doors:iron_trapdoor_open" then
+				punch(pos)
+			end
+			return true
+		end,
 	})
 
 	if minetest.get_modpath("doc") then
