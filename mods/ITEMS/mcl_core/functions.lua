@@ -448,14 +448,6 @@ minetest.register_abm({
 	chance = 4,
 	action = function(pos, node, active_object_count, active_object_count_wider)
 
-		-- First of all, check if we are even supported, otherwise, let's die!
-		if not mcl_core.check_vines_supported(pos, node) then
-			minetest.remove_node(pos)
-			vinedecay_particles(pos, node)
-			minetest.check_for_falling(pos)
-			return
-		end
-
 		-- Add vines below pos (if empty)
 		local function spread_down(origin, target, dir, node)
 			if math.random(1, 2) == 1 then
@@ -529,28 +521,6 @@ function mcl_core.supports_vines(nodename)
 			(def.node_box == nil or def.node_box.type == "regular") and
 			(def.collision_box == nil or def.collision_box.type == "regular")
 end
-
--- Remove vines which are not supported by anything, similar to leaf decay.
---[[ TODO: Vines are supposed to die immediately when they supporting block is destroyed.
-But doing this in Minetest would be too complicated / hacky. This vines decay is a simple
-way to make sure that all floating vines are destroyed eventually. ]]
-minetest.register_abm({
-	label = "Vines decay",
-	nodenames = {"mcl_core:vine"},
-	neighbors = {"air"},
-	-- A low interval and a high inverse chance spreads the load
-	interval = 4,
-	chance = 8,
-	action = function(p0, node, _, _)
-		if not mcl_core.check_vines_supported(p0, node) then
-			-- Vines must die!
-			minetest.remove_node(p0)
-			vinedecay_particles(p0, node)
-			-- Just in case a falling node happens to float above vines
-			minetest.check_for_falling(p0)
-		end
-	end
-})
 
 -- Melt snow
 minetest.register_abm({

@@ -79,16 +79,6 @@ minetest.register_node("mcl_core:ladder", {
 	on_rotate = rotate_climbable,
 })
 
-function mcl_core.dig_vines(pos, node, digger)
-	local below = vector.offset(pos,0,-1,0)
-	minetest.node_dig(pos, node, digger)
-	if minetest.get_node(below).name ~= node.name then return end
-	mcl_util.traverse_tower(below,-1,function(p, dir, n)
-		if mcl_core.check_vines_supported(p, n) then return true end
-		minetest.node_dig(p, n, digger)
-	end)
-end
-
 minetest.register_node("mcl_core:vine", {
 	description = S("Vines"),
 	_doc_items_longdesc = S("Vines are climbable blocks which can be placed on the sides of solid full-cube blocks. Vines slowly grow and spread."),
@@ -106,7 +96,7 @@ minetest.register_node("mcl_core:vine", {
 		type = "wallmounted",
 	},
 	groups = {
-		handy = 1, axey = 1, shearsy = 1, swordy = 1, deco_block = 1,
+		handy = 1, axey = 1, shearsy = 1, swordy = 1, deco_block = 1, vinelike_node = 4,
 		dig_by_piston = 1, destroy_by_lava_flow = 1, compostability = 50,
 		flammable = 2, fire_encouragement = 15, fire_flammability = 100
 	},
@@ -153,7 +143,6 @@ minetest.register_node("mcl_core:vine", {
 
 	-- If dug, also dig a “dependant” vine below it.
 	-- A vine is dependant if it hangs from this node and has no supporting block.
-	on_dig = mcl_core.dig_vines,
 	_mcl_blast_resistance = 0.2,
 	_mcl_hardness = 0.2,
 	on_rotate = false,
