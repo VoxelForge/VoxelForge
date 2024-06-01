@@ -18,10 +18,11 @@
 * the-real-herowl
 * JoseDouglas26
 * Eliy21
+* AFCMS
+* amino
 
 ## Previous Contributors
 * Lizzy Fleckenstein
-* AFCMS
 * NO11
 * Brandon
 * kay27

@@ -20,10 +20,11 @@ return {
 		"the-real-herowl",
 		"JoseDouglas26",
 		"Eliy21",
+		"AFCMS",
+		"amino",
 	}},
 	{S("Previous Contributors"), 0x52FF00, {
 		"Lizzy Fleckenstein",
-		"AFCMS",
 		"NO11",
 		"Brandon",
 		"kay27",
