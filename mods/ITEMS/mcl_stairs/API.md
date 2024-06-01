@@ -2,10 +2,8 @@
 Register your own stairs and slabs!
 
 This mod has both a new simplified API and an old one kept for backwards
-compatibility.  The primary difference is that the new API takes a definition
-table rather than multiple arguments and that the description of registered
-stair/slabs are generated from a base description which is either specified or
-derived from the node they are based on.
+compatibility.  The difference is that the new API takes a definition table
+rather than multiple arguments.
 
 ## Example
 Register stair and slab based on the node `example:platinumblock`:
@@ -13,7 +11,8 @@ Register stair and slab based on the node `example:platinumblock`:
 ```lua
 mcl_stairs.register_stair_and_slab("platinum", {
     baseitem = "example:platinumblock",
-    base_description = S("Platinum"),
+    description_stair = S("Platinum Stairs"),
+    description_slab = S("Platinum Slab"),
 })
 ```
 
