@@ -22,23 +22,6 @@ end
 
 dofile(modpath.."/nodes.lua")
 
-local spore_blossom_particlespawner = {
-	texture = "mcl_lush_caves_spore_blossom_particle.png",
-	amount = 32,
-	time = 25,
-	minvel = vector.zero(),
-	maxvel = vector.zero(),
-	minacc = vector.new(-0.2, -0.1, -0.2),
-	maxacc = vector.new(0.2, -0.3, 0.2),
-	minexptime = 1.5,
-	maxexptime = 8.5,
-	minsize = 0.1,
-	maxsize= 0.4,
-	glow = 4,
-	collisiondetection = true,
-	collision_removal = true,
-}
-
 minetest.register_abm({
 	label = "Spore Blossom Particles",
 	nodenames = {"mcl_lush_caves:spore_blossom"},
@@ -48,11 +31,25 @@ minetest.register_abm({
 		if minetest.get_node(vector.offset(pos, 0, -1, 0)).name ~= "air" then return end
 		for _,pl in pairs(minetest.get_connected_players()) do
 			if vector.distance(pos,pl:get_pos()) < PARTICLE_DISTANCE then
-				minetest.add_particlespawner(table.merge(spore_blossom_particlespawner, {
+				minetest.add_particlespawner({
+					texture = "mcl_lush_caves_spore_blossom_particle.png",
+					amount = 32,
+					time = 25,
+					minvel = vector.zero(),
+					maxvel = vector.zero(),
+					minacc = vector.new(-0.2, -0.1, -0.2),
+					maxacc = vector.new(0.2, -0.3, 0.2),
+					minexptime = 1.5,
+					maxexptime = 8.5,
+					minsize = 0.1,
+					maxsize= 0.4,
+					glow = 4,
+					collisiondetection = true,
+					collision_removal = true,
 					minpos = vector.offset(pos, -0.25, -0.5, -0.25),
 					maxpos = vector.offset(pos, 0.25, -0.5, 0.25),
 					playername = pl:get_player_name(),
-				}))
+				})
 			end
 		end
 	end
