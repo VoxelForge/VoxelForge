@@ -515,32 +515,6 @@ minetest.register_abm({
 	end
 })
 
---[[ Call this for vines nodes only.
-Given the pos and node of a vines node, this returns true if the vines are supported
-and false if the vines are currently floating.
-Vines are considered “supported” if they face a walkable+solid block or “hang” from a vines node above. ]]
-function mcl_core.check_vines_supported(pos, node)
-	local supported = false
-	local dir = minetest.wallmounted_to_dir(node.param2)
-	local pos1 = vector.add(pos, dir)
-	local node_neighbor = minetest.get_node(pos1)
-	-- Check if vines are attached to a solid block.
-	-- If ignore, we assume its solid.
-	if node_neighbor.name == "ignore" or mcl_core.supports_vines(node_neighbor.name) then
-		supported = true
-	elseif dir.y == 0 then
-		-- Vines are not attached, now we check if the vines are “hanging” below another vines block
-		-- of equal orientation.
-		local pos2 = vector.add(pos, {x=0, y=1, z=0})
-		local node2 = minetest.get_node(pos2)
-		-- Again, ignore means we assume its supported
-		if node2.name == "ignore" or (node2.name == "mcl_core:vine" and node2.param2 == node.param2) then
-			supported = true
-		end
-	end
-	return supported
-end
-
 -- Melt ice at pos. mcl_core:ice MUST be at pos if you call this!
 function mcl_core.melt_ice(pos)
 	-- Create a water source if ice is destroyed and there was something below it
