@@ -41,26 +41,6 @@ minetest.register_abm({
 		minetest.remove_node(pos)
 		leafdecay_particles(pos, node)
 		minetest.check_for_falling(pos)
-
-		-- Kill depending vines immediately to skip the vines decay delay
-		local surround = {
-			{ x = 0, y = 0, z = -1 },
-			{ x = 0, y = 0, z = 1 },
-			{ x = -1, y = 0, z = 0 },
-			{ x = 1, y = 0, z = 0 },
-			{ x = 0, y = -1, z = -1 },
-		}
-		for s=1, #surround do
-			local spos = vector.add(pos, surround[s])
-			local maybe_vine = minetest.get_node(spos)
-			--local surround_inverse = vector.multiply(surround[s], -1)
-			if maybe_vine.name == "mcl_core:vine" and (not mcl_core.check_vines_supported(spos, maybe_vine)) then
-				local def = minetest.registered_nodes[maybe_vine.name]
-				if def and def.on_dig then
-					def.on_dig(spos,maybe_vine,nil)
-				end
-			end
-		end
 	end
 })
 
