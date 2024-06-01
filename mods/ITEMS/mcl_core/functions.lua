@@ -226,25 +226,6 @@ minetest.register_abm({
 	end,
 })
 
---
--- Sugar canes drop
---
-
-local timber_nodenames={"mcl_core:reeds"}
-
-minetest.register_on_dignode(function(pos, node)
-	local i=1
-	while timber_nodenames[i]~=nil do
-		local np={x=pos.x, y=pos.y+1, z=pos.z}
-		while minetest.get_node(np).name==timber_nodenames[i] do
-			minetest.remove_node(np)
-			minetest.add_item(np, timber_nodenames[i])
-			np={x=np.x, y=np.y+1, z=np.z}
-		end
-		i=i+1
-	end
-end)
-
 local grass_spread_randomizer = PseudoRandom(minetest.get_mapgen_setting("seed"))
 
 function mcl_core.get_grass_palette_index(pos)

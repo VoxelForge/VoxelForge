@@ -106,6 +106,7 @@ minetest.register_node("mcl_core:reeds", {
 	groups = {
 		dig_immediate = 3, craftitem = 1, deco_block = 1, dig_by_piston = 1,
 		plant = 1, non_mycelium_plant = 1, compostability = 50, biomecolor = 1,
+		vinelike_node = 1,
 	},
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	node_placement_prediction = "",
