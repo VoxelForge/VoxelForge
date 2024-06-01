@@ -178,7 +178,6 @@ function mcl_lush_caves.makeazalea(pos, def, pr)
 	return true
 end
 
-local lushcaves = { "LushCaves", "LushCaves_underground", "LushCaves_ocean", "LushCaves_deep_ocean"}
 minetest.register_abm({
 	label = "Cave vines grow",
 	nodenames = {"mcl_lush_caves:cave_vines_lit","mcl_lush_caves:cave_vines"},
@@ -198,6 +197,8 @@ minetest.register_abm({
 		end
 	end
 })
+
+local lushcaves = { "LushCaves", "LushCaves_underground", "LushCaves_ocean", "LushCaves_deep_ocean"}
 
 mcl_structures.register_structure("clay_pool",{
 	place_on = {"group:material_stone","mcl_core:gravel","mcl_lush_caves:moss","mcl_core:clay"},
