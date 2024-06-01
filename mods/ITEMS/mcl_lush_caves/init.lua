@@ -178,8 +178,6 @@ function mcl_lush_caves.makeazalea(pos, def, pr)
 	return true
 end
 
-
-
 local lushcaves = { "LushCaves", "LushCaves_underground", "LushCaves_ocean", "LushCaves_deep_ocean"}
 minetest.register_abm({
 	label = "Cave vines grow",
@@ -187,27 +185,19 @@ minetest.register_abm({
 	interval = 180,
 	chance = 5,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		local pu = vector.offset(pos,0,1,0)
-		local pun = minetest.get_node(pu).name
-		local pd = vector.offset(pos,0,-1,0)
-		local pd2 = minetest.get_node(vector.offset(pos,0,-2,0)).name
-		if pun ~= "mcl_lush_caves:cave_vines_lit" and pun ~= "mcl_lush_caves:cave_vines"  and pun ~= "mcl_lush_caves:moss" then
-			minetest.set_node(pos,{name="air"})
-			return
-		end
+		local pd1 = vector.offset(pos,0,-1,0)
+		local pd2 = vector.offset(pos,0,-2,0)
 		node.name = "mcl_lush_caves:cave_vines"
 		if  math.random(5) == 1 then
 			node.name="mcl_lush_caves:cave_vines_lit"
 		end
-		if minetest.get_node(pd).name == "air" and pd2 == "air" then
-			minetest.swap_node(pd,node)
+		if minetest.get_node(pd1).name == "air" and minetest.get_node(pd2).name == "air" then
+			minetest.swap_node(pd1,node)
 		else
 			minetest.swap_node(pos,{name="mcl_lush_caves:cave_vines_lit"})
 		end
 	end
 })
-
-
 
 mcl_structures.register_structure("clay_pool",{
 	place_on = {"group:material_stone","mcl_core:gravel","mcl_lush_caves:moss","mcl_core:clay"},
