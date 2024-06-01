@@ -6,7 +6,7 @@ An unofficial Minecraft-like game for Minetest. Fork of MineClone 2 with focus
 on stability, multiplayer performance and features. For information about
 migrating from MineClone 2 to Mineclonia, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
 
-Version: 0.100.0
+Version: 0.101.0
 
 ### Differences from MineClone 2
 * Overworld depth increased from 64 to 128 nodes
