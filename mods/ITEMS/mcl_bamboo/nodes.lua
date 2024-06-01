@@ -34,7 +34,7 @@ local bamboo_def = {
 	paramtype = "light",
 	paramtype2 = "4dir",
 	use_texture_alpha = "clip",
-	groups = {handy = 1, axey = 1, choppy = 1, dig_by_piston = 1, plant = 1, non_mycelium_plant = 1, flammable = 3, bamboo = 1, bamboo_tree = 1},
+	groups = {handy = 1, axey = 1, choppy = 1, dig_by_piston = 1, plant = 1, non_mycelium_plant = 1, flammable = 3, bamboo = 1, bamboo_tree = 1, vinelike_node = 1},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	drop = "mcl_bamboo:bamboo",
 	inventory_image = "mcl_bamboo_bamboo_shoot.png",
@@ -57,14 +57,6 @@ local bamboo_def = {
 		end
 		minetest.swap_node(pos,node)
 	end,
-	on_dig = function(pos, node, digger)
-		mcl_util.traverse_tower(pos,1,function(p)
-			minetest.remove_node(p)
-			if not digger or not minetest.is_creative_enabled(digger:get_player_name()) then
-				minetest.add_item(p,"mcl_bamboo:bamboo")
-			end
-		end)
-	end,
 	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
 		return mcl_bamboo.grow(pos)
 	end,
@@ -73,9 +65,7 @@ local bamboo_def = {
 for i,it in pairs(mcl_bamboo.bamboo_itemstrings) do
 	local d = table.copy(bamboo_def)
 	if it ~= "mcl_bamboo:bamboo" then
-		table.update(d,{
-			groups = {handy = 1, axey = 1, choppy = 1, dig_by_piston = 1, plant = 1, non_mycelium_plant = 1, flammable = 3, bamboo = 1, not_in_creative_inventory = 1, bamboo_tree = 1},
-		})
+		table.update(d, {groups = table.merge(bamboo_def.groups, {not_in_creative_inventory = 1})})
 	end
 	table.update(d,{
 		node_box = {
@@ -108,7 +98,7 @@ mcl_flowerpots.register_potted_flower("mcl_bamboo:bamboo", {
 
 local bamboo_top = table.copy(bamboo_def)
 table.update(bamboo_top,{
-	groups = {not_in_creative_inventory = 1, handy = 1, axey = 1, choppy = 1, flammable = 3},
+	groups = {not_in_creative_inventory = 1, handy = 1, axey = 1, choppy = 1, flammable = 3, vinelike_node = 1},
 	nodebox = nil,
 	selection_box = nil,
 	collision_box = nil,
