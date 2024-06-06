@@ -33,23 +33,23 @@ local function makegeode(pos,def,pr)
 		end)
 
 		for i=1,pr:next(1, math.max(2, #nn - math.ceil(#nn/5) )) do
-			set_node_no_bedrock(nn[i],{name="mcl_amethyst:amethyst_block"})
+			set_node_no_bedrock(nn[i],{name="vlc_amethyst:amethyst_block"})
 		end
 
-		for k,v in pairs(minetest.find_nodes_in_area(p1,p2,{"mcl_amethyst:amethyst_block"})) do
+		for k,v in pairs(minetest.find_nodes_in_area(p1,p2,{"vlc_amethyst:amethyst_block"})) do
 			local all_amethyst = true
 			for kk,vv in pairs(adjacents) do
 				local pp = vector.add(v,vv)
 				local an = minetest.get_node(pp)
-				if an.name ~= "mcl_amethyst:amethyst_block" then
+				if an.name ~= "vlc_amethyst:amethyst_block" then
 					if minetest.get_item_group(an.name,"material_stone") > 0 then
-						set_node_no_bedrock(pp,{name="mcl_amethyst:calcite"})
+						set_node_no_bedrock(pp,{name="vlc_amethyst:calcite"})
 						table.insert(calcite,pp)
 						if pr:next(1,5) == 1 then
-							set_node_no_bedrock(v,{name="mcl_amethyst:budding_amethyst_block"})
+							set_node_no_bedrock(v,{name="vlc_amethyst:budding_amethyst"})
 						end
 						all_amethyst = false
-					elseif an.name ~= "mcl_amethyst:amethyst_block" and an.name ~= "air" and an.name ~= "mcl_amethyst:budding_amethyst_block" then
+					elseif an.name ~= "vlc_amethyst:amethyst_block" and an.name ~= "air" and an.name ~= "vlc_amethyst:budding_amethyst" then
 						all_amethyst = false
 					end
 				end
@@ -63,10 +63,10 @@ local function makegeode(pos,def,pr)
 			end
 		end
 
-		for k,v in pairs(minetest.find_nodes_in_area_under_air(p1,p2,{"mcl_amethyst:amethyst_block","mcl_amethyst:budding_amethyst_block"})) do
+		for k,v in pairs(minetest.find_nodes_in_area_under_air(p1,p2,{"vlc_amethyst:amethyst_block","vlc_amethyst:budding_amethyst"})) do
 			local r = pr:next(1,50)
 			if r < 10 then
-				set_node_no_bedrock(vector.offset(v,0,1,0),{name="mcl_amethyst:amethyst_cluster",param2=1})
+				set_node_no_bedrock(vector.offset(v,0,1,0),{name="vlc_amethyst:amethyst_cluster",param2=1})
 			end
 		end
 		return true
