@@ -1,6 +1,6 @@
 # VoxelCraft
 
-[![Github Traffic](https://github.com/Minetest-VoxelCraft/VoxelCraft/graphs/traffic)
+[![Github Traffic](https://github.com/Minetest-VoxelCraft/VoxelCraft/graphs/commit-activity)
 
 An unofficial Minecraft-like game for Minetest. Fork of MineClone 2 with focus
 on stability, multiplayer performance and features. For information about
