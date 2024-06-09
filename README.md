@@ -2,29 +2,34 @@
 
 [![Github Traffic](https://github.com/Minetest-VoxelCraft/VoxelCraft/graphs/commit-activity)
 
-An unofficial Minecraft-like game for Minetest. Fork of MineClone 2 with focus
-on stability, multiplayer performance and features. For information about
-migrating from MineClone 2 to Mineclonia, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
+An unofficial Minecraft-like game for Minetest. Fork of MineClonia that focuses on being more minecraft like, while hopefully 
+simplifying the coding process see.
+To migrate from Mineclone2 or Mineclonia see: note. Needs updating [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
 
-Version: 0.101.0
+Version: 0.1.0 - Beta
 
-### Differences from Mineclonia
+### Differences from Mineclonia (All Coming soon, but not yet)
+* Uses JSON file format for many node registries.
+* Increases cloud height.
+* More copper blocks.
+* better ancient city.
+* better woodland mansion.
 
 ### Differences from MineClone 2
-* Overworld depth increased from 64 to 128 nodes
-* Improved nether portals
-* Improved leaf decay
-* Improved villages
-* Wandering traders and trader llamas
-* Suspicious nodes, pottery shreds and decorated pots
-* Conduits
-* Deep dark biome and ancient hermitage (structure corresponding to ancient city)
-* Functional loom to apply banner patterns
-* Lush caves biome
-* Cherry grove biome
-* No in-game music, twice as small compared to MineClone 2
-* No hamburgers
-* More features but almost 10k lines of code less
+* Overworld depth increased from 64 to 128 nodes.
+* Improved nether portals.
+* Improved leaf decay.
+* Improved villages.
+* Wandering traders and trader llamas.
+* Suspicious nodes, pottery shreds and decorated pots.
+* Conduits.
+* Deep dark biome and ancient hermitage (structure corresponding to ancient city).
+* Functional loom to apply banner patterns.
+* Lush caves biome.
+* Cherry grove biome.
+* No in-game music, twice as small compared to MineClone 2.
+* No hamburgers.
+* More features but almost 10k lines of code less.
 
 ### Gameplay
 You start in a randomly-generated world made entirely of cubes. You can explore
@@ -98,19 +103,19 @@ later). So you need to install Minetest first. Only stable versions of Minetest
 are officially supported. There is no support for running Mineclonia in
 development versions of Minetest.
 
-To install Mineclonia (if you haven't already), move this directory into the
+To install VoxelCraft (if you haven't already), move this directory into the
 “games” directory of your Minetest data directory. Consult the help of
 Minetest to learn more.
 
 ## Useful links
-The Mineclonia repository is hosted at [Codeberg](https://codeberg.org).
+The VoxelCraft repository is hosted at [Github](https://github.com/Minetest-VoxelCraft/VoxelCraft).
 To contribute or report issues, head there.
 
-* Codeberg: <https://codeberg.org/mineclonia/mineclonia>
+* Codeberg: <https://github.com/Minetest-VoxelCraft/VoxelCraft>
 * ContentDB: <https://content.minetest.net/packages/ryvnf/mineclonia/>
 
 ## Project description
-The main goal of **Mineclonia** is to be a stable and performant clone of
+The main goal of **VoxelCraft** is to be a stable, performant, and very close overall clone of
 Minecraft released as free software.
 
 * Minecraft is aimed to be cloned as well as Minetest currently permits without
@@ -215,7 +220,7 @@ Technical differences from Minecraft:
 * Different engine (Minetest)
 * Different easter eggs
 
-… and finally, Mineclonia is free software (“free” as in “freedom”)!
+… and finally, VoxelCraft is free software (“free” as in “freedom”)!
 
 ## Other readme files
 * [LICENSE.txt](../../../src/branch/main/LICENSE.txt): The GPLv3 license text
