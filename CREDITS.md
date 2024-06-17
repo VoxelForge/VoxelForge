@@ -1,8 +1,14 @@
 # Credits
 
+## Creator of VoxelCraft
+* DragonWrangler
+
 ## Creators of Mineclonia
 * ryvnf
 * cora
+
+## Creator of MineClone 5
+* kay27
 
 ## Creator of MineClone 2
 * Wuzzy
@@ -14,7 +20,6 @@
 * codiac
 * ShadowRoi
 * nixnoxus
-* DragonWrangler1
 * laireia
 * the-real-herowl
 * JoseDouglas26
@@ -79,6 +84,7 @@
 * jordan4ibanez
 * paramat
 * cora
+* DragonWrangler1
 
 ## 3D Models
 * 22i
@@ -106,6 +112,7 @@
 * Aeonix_Aeon
 * Wbjitscool
 * SmokeyDope
+* DragonWrangler1
 
 ## Translations
 * Wuzzy
