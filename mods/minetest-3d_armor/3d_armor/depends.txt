@@ -1,0 +1,6 @@
+mcl_core
+inventory_plus?
+unified_inventory?
+fire?
+ethereal?
+bakedclay?
