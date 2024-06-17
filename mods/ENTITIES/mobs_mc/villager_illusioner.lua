@@ -4,21 +4,21 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mod_bows = minetest.get_modpath("mcl_bows") ~= nil
+local mod_bows = minetest.get_modpath("vlc_bows") ~= nil
 
-mcl_mobs.register_mob("mobs_mc:illusioner", {
+vlc_mobs.register_mob("mobs_mc:illusioner", {
 	description = S("Illusioner"),
 	type = "monster",
 	spawn_class = "hostile",
 	attack_type = "shoot",
 	shoot_interval = 2.5,
 	shoot_offset = 1.5,
-	arrow = "mcl_bows:arrow_entity",
+	arrow = "vlc_bows:arrow_entity",
 	shoot_arrow = function(self, pos, dir)
 		if mod_bows then
 			-- 1-4 damage per arrow
 			local dmg = math.random(1, 4)
-			mcl_bows.shoot_arrow("mcl_bows:arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
+			vlc_bows.shoot_arrow("vlc_bows:arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
 		end
 	end,
 	hp_min = 32,
@@ -31,7 +31,7 @@ mcl_mobs.register_mob("mobs_mc:illusioner", {
 	textures = { {
 		"mobs_mc_illusionist.png",
 		"mobs_mc_illusionist.png", --hat
-		"mcl_bows_bow.png",
+		"vlc_bows_bow.png",
 	}, },
 	head_swivel = "head.control",
 	bone_eye_height = 2.2,
@@ -65,4 +65,4 @@ mcl_mobs.register_mob("mobs_mc:illusioner", {
 	fear_height = 4,
 })
 
-mcl_mobs.register_egg("mobs_mc:illusioner", S("Illusioner"), "#3f5cbb", "#8a8686", 0)
+vlc_mobs.register_egg("mobs_mc:illusioner", S("Illusioner"), "#3f5cbb", "#8a8686", 0)

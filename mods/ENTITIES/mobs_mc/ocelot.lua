@@ -12,10 +12,10 @@ local S = minetest.get_translator("mobs_mc")
 local default_walk_chance = 70
 
 local follow = {
-	"mcl_fishing:fish_raw",
-	"mcl_fishing:salmon_raw",
-	"mcl_fishing:clownfish_raw",
-	"mcl_fishing:pufferfish_raw",
+	"vlc_fishing:fish_raw",
+	"vlc_fishing:salmon_raw",
+	"vlc_fishing:clownfish_raw",
+	"vlc_fishing:pufferfish_raw",
 }
 
 local function is_food(itemstring)
@@ -92,7 +92,7 @@ local ocelot = {
 			end
 			-- 1/3 chance of getting tamed
 			if math.random(3) == 1 then
-				local cat = mcl_util.replace_mob(self.object, "mobs_mc:cat")
+				local cat = vlc_util.replace_mob(self.object, "mobs_mc:cat")
 				if cat and cat:get_pos() then
 					local ent = cat:get_luaentity()
 					ent.owner = clicker:get_player_name()
@@ -108,7 +108,7 @@ local ocelot = {
 	end,
 }
 
-mcl_mobs.register_mob("mobs_mc:ocelot", ocelot)
+vlc_mobs.register_mob("mobs_mc:ocelot", ocelot)
 
 -- Cat
 local cat = table.copy(ocelot)
@@ -134,8 +134,8 @@ table.update(cat,{
 	},
 	on_rightclick = function(self, clicker)
 		if self:feed_tame(clicker, 1, true, false) then return end
-		if mcl_mobs.capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
-		if mcl_mobs.protect(self, clicker) then return end
+		if vlc_mobs.capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
+		if vlc_mobs.protect(self, clicker) then return end
 
 		if self.child then return end
 
@@ -169,9 +169,9 @@ table.update(cat,{
 	end
 })
 
-mcl_mobs.register_mob("mobs_mc:cat", cat)
+vlc_mobs.register_mob("mobs_mc:cat", cat)
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:ocelot",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -188,5 +188,5 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:ocelot", S("Ocelot"), "#efde7d", "#564434", 0)
-mcl_mobs.register_egg("mobs_mc:cat", S("Cat"), "#AA8755", "#505438", 0)
+vlc_mobs.register_egg("mobs_mc:ocelot", S("Ocelot"), "#efde7d", "#564434", 0)
+vlc_mobs.register_egg("mobs_mc:cat", S("Cat"), "#AA8755", "#505438", 0)

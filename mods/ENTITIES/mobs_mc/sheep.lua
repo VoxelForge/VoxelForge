@@ -3,23 +3,23 @@ local WOOL_REPLACE_RATE = 80
 local gotten_texture = { "blank.png", "mobs_mc_sheep.png" }
 local rainbow_colors = {}
 
-for k, v in pairs(mcl_dyes.colors) do
+for k, v in pairs(vlc_dyes.colors) do
 	table.insert(rainbow_colors, "unicolor_"..v.unicolor)
 end
 
 local function unicolor_to_wool(unicolor_group)
-	local d = mcl_dyes.unicolor_to_dye(unicolor_group)
+	local d = vlc_dyes.unicolor_to_dye(unicolor_group)
 	if d then
-		return "mcl_wool:"..d:gsub("^mcl_dyes:","")
+		return "vlc_wool:"..d:gsub("^vlc_dyes:","")
 	end
-	return "mcl_wool:white"
+	return "vlc_wool:white"
 end
 
 local function sheep_texture(unicolor_group)
-	local color = mcl_dyes.colors["white"].rgb.."00"
-	local d = mcl_dyes.unicolor_to_dye(unicolor_group)
+	local color = vlc_dyes.colors["white"].rgb.."00"
+	local d = vlc_dyes.unicolor_to_dye(unicolor_group)
 	if d then
-		color = mcl_dyes.colors[d:gsub("^mcl_dyes:","")].rgb.."D0"
+		color = vlc_dyes.colors[d:gsub("^vlc_dyes:","")].rgb.."D0"
 	end
 	return {
 		"mobs_mc_sheep_fur.png^[colorize:"..color,
@@ -31,7 +31,7 @@ local function get_sheep_drops(unicolor_group)
 	local wool = unicolor_to_wool(unicolor_group)
 	return {
 		{
-			name = "mcl_mobitems:mutton",
+			name = "vlc_mobitems:mutton",
 			 chance = 1,
 			 min = 1,
 			 max = 2,
@@ -46,7 +46,7 @@ local function get_sheep_drops(unicolor_group)
 	}
 end
 
-mcl_mobs.register_mob("mobs_mc:sheep", {
+vlc_mobs.register_mob("mobs_mc:sheep", {
 	description = S("Sheep"),
 	type = "animal",
 	spawn_class = "passive",
@@ -91,14 +91,14 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 		run_start = 81, run_end = 121, run_speed = 60,
 		eat_start = 121, eat_end = 161, eat_loop = false,
 	},
-	follow = { "mcl_farming:wheat_item" },
+	follow = { "vlc_farming:wheat_item" },
 	view_range = 12,
 
 	replace_rate = WOOL_REPLACE_RATE,
 	replace_delay = 1.3,
 	replace_what = {
-		{ "mcl_core:dirt_with_grass", "mcl_core:dirt", -1 },
-		{ "mcl_flowers:tallgrass", "air", 0 },
+		{ "vlc_core:dirt_with_grass", "vlc_core:dirt", -1 },
+		{ "vlc_flowers:tallgrass", "air", 0 },
 	},
 	on_replace = function(self, pos, oldnode, newnode)
 		self.color = self.color or "unicolor_white"
@@ -177,7 +177,7 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 
 	on_rightclick = function(self, clicker)
 		if self:feed_tame(clicker, 1, true, false) then return end
-		if mcl_mobs.protect(self, clicker) then return end
+		if vlc_mobs.protect(self, clicker) then return end
 
 		local item = clicker:get_wielded_item()
 		-- Dye sheep
@@ -187,7 +187,7 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 				item:take_item()
 				clicker:set_wielded_item(item)
 			end
-			local cgroup = "unicolor_"..mcl_dyes.colors[idef._color].unicolor
+			local cgroup = "unicolor_"..vlc_dyes.colors[idef._color].unicolor
 			self.color = cgroup
 			self.base_texture = sheep_texture(cgroup)
 			self.object:set_properties({
@@ -200,7 +200,7 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 		if minetest.get_item_group(item:get_name(), "shears") > 0 and not self.gotten then
 			self.gotten = true
 			local pos = self.object:get_pos()
-			minetest.sound_play("mcl_tools_shears_cut", {pos = pos}, true)
+			minetest.sound_play("vlc_tools_shears_cut", {pos = pos}, true)
 			pos.y = pos.y + 0.5
 			self.color = self.color or "unicolor_white"
 			minetest.add_item(pos, ItemStack(unicolor_to_wool(self.color).." "..math.random(1,3)))
@@ -215,20 +215,20 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 	end,
 	on_breed = function(parent1, parent2)
 		local pos = parent1.object:get_pos()
-		local child = mcl_mobs.spawn_child(pos, parent1.name)
+		local child = vlc_mobs.spawn_child(pos, parent1.name)
 		if child then
 			local ent_c = child:get_luaentity()
 			local color = { parent1.color, parent2.color }
 
-			local dye1 = mcl_dyes.unicolor_to_dye(color[1])
-			local dye2 = mcl_dyes.unicolor_to_dye(color[2])
+			local dye1 = vlc_dyes.unicolor_to_dye(color[1])
+			local dye2 = vlc_dyes.unicolor_to_dye(color[2])
 			local output
 			if dye1 and dye2 then
 				output = minetest.get_craft_result({items = {dye1, dye2}, method="normal"})
 			end
 			if output and not output.item:is_empty() then
 				local ndef = output.item:get_definition()
-				local cgroup = "unicolor_"..mcl_dyes.colors[ndef._color].unicolor
+				local cgroup = "unicolor_"..vlc_dyes.colors[ndef._color].unicolor
 				ent_c.color = cgroup
 				ent_c.base_texture = sheep_texture(cgroup)
 			else
@@ -253,14 +253,14 @@ mcl_mobs.register_mob("mobs_mc:sheep", {
 			if self.drops[2] then
 				minetest.add_item(pos, unicolor_to_wool(self.color) .. " " .. math.random(1, 3))
 			end
-			self.drops = {{ name = "mcl_mobitems:mutton", chance = 1, min = 1, max = 2 },}
+			self.drops = {{ name = "vlc_mobitems:mutton", chance = 1, min = 1, max = 2 },}
 			return dropitem
 		end
-		return mcl_mobs.mob_class._on_dispense(self, dropitem, pos, droppos, dropnode, dropdir)
+		return vlc_mobs.mob_class._on_dispense(self, dropitem, pos, droppos, dropnode, dropdir)
 	end
 })
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:sheep",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -309,4 +309,4 @@ mcl_mobs.spawn_setup({
 	chance = 120,
 })
 
-mcl_mobs.register_egg("mobs_mc:sheep", S("Sheep"), "#e7e7e7", "#ffb5b5", 0)
+vlc_mobs.register_egg("mobs_mc:sheep", S("Sheep"), "#e7e7e7", "#ffb5b5", 0)

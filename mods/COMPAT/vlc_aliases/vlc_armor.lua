@@ -1,0 +1,23 @@
+minetest.register_alias("3d_armor:helmet_leather", "vlc_armor:helmet_leather")
+minetest.register_alias("3d_armor:helmet_iron", "vlc_armor:helmet_iron")
+minetest.register_alias("3d_armor:helmet_chain", "vlc_armor:helmet_chain")
+minetest.register_alias("3d_armor:helmet_gold", "vlc_armor:helmet_gold")
+minetest.register_alias("3d_armor:helmet_diamond", "vlc_armor:helmet_diamond")
+
+minetest.register_alias("3d_armor:chestplate_leather", "vlc_armor:chestplate_leather")
+minetest.register_alias("3d_armor:chestplate_iron", "vlc_armor:chestplate_iron")
+minetest.register_alias("3d_armor:chestplate_chain", "vlc_armor:chestplate_chain")
+minetest.register_alias("3d_armor:chestplate_gold", "vlc_armor:chestplate_gold")
+minetest.register_alias("3d_armor:chestplate_diamond", "vlc_armor:chestplate_diamond")
+
+minetest.register_alias("3d_armor:leggings_leather", "vlc_armor:leggings_leather")
+minetest.register_alias("3d_armor:leggings_iron", "vlc_armor:leggings_iron")
+minetest.register_alias("3d_armor:leggings_chain", "vlc_armor:leggings_chain")
+minetest.register_alias("3d_armor:leggings_gold", "vlc_armor:leggings_gold")
+minetest.register_alias("3d_armor:leggings_diamond", "vlc_armor:leggings_diamond")
+
+minetest.register_alias("3d_armor:boots_leather", "vlc_armor:boots_leather")
+minetest.register_alias("3d_armor:boots_iron", "vlc_armor:boots_iron")
+minetest.register_alias("3d_armor:boots_chain", "vlc_armor:boots_chain")
+minetest.register_alias("3d_armor:boots_gold", "vlc_armor:boots_gold")
+minetest.register_alias("3d_armor:boots_diamond", "vlc_armor:boots_diamond")

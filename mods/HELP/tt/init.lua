@@ -1,8 +1,8 @@
 tt = {}
-tt.COLOR_DEFAULT = mcl_colors.GREEN
-tt.COLOR_DANGER = mcl_colors.YELLOW
-tt.COLOR_GOOD = mcl_colors.GREEN
-tt.NAME_COLOR = mcl_colors.YELLOW
+tt.COLOR_DEFAULT = vlc_colors.GREEN
+tt.COLOR_DANGER = vlc_colors.YELLOW
+tt.COLOR_GOOD = vlc_colors.GREEN
+tt.NAME_COLOR = vlc_colors.YELLOW
 
 -- API
 tt.registered_snippets = {}
@@ -64,8 +64,8 @@ function tt.reload_itemstack_description(itemstack)
 	local itemstring = itemstack:get_name()
 	local def = itemstack:get_definition()
 	local meta = itemstack:get_meta()
-	if def and def._mcl_generate_description then
-		def._mcl_generate_description(itemstack)
+	if def and def._vlc_generate_description then
+		def._vlc_generate_description(itemstack)
 	elseif should_change(itemstring, def) then
 		local toolcaps
 		if def.tool_capabilities then

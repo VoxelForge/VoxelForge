@@ -2,10 +2,10 @@ local S = minetest.get_translator("mobs_mc")
 
 local function reload(self)
 	if not self.object:get_pos() then return end
-	minetest.sound_play("mcl_bows_crossbow_drawback_1", {object = self.object, max_hear_distance=16}, true)
+	minetest.sound_play("vlc_bows_crossbow_drawback_1", {object = self.object, max_hear_distance=16}, true)
 	local props = self.object:get_properties()
 	if not props then return end
-	props.textures[2] = "mcl_bows_crossbow_3.png^[resize:16x16"
+	props.textures[2] = "vlc_bows_crossbow_3.png^[resize:16x16"
 	self.object:set_properties(props)
 end
 
@@ -40,7 +40,7 @@ pillager = {
 	run_velocity = 4,
 	view_range = 16,
 	fear_height = 4,
-	arrow = "mcl_bows:arrow_entity",
+	arrow = "vlc_bows:arrow_entity",
 	attack_type = "dogshoot", -- Alternate punching/shooting
 	attack_npcs = true,
 	reach = 0, -- Punching max distance
@@ -58,19 +58,19 @@ pillager = {
 	textures = {
 		{
 			"mobs_mc_pillager.png", -- Skin
-			"mcl_bows_crossbow_3.png^[resize:16x16", -- Wielded item
+			"vlc_bows_crossbow_3.png^[resize:16x16", -- Wielded item
 		}
 	},
 	drops = {
 		{
-			name = "mcl_bows:arrow",
+			name = "vlc_bows:arrow",
 			chance = 1,
 			min = 0,
 			max = 2,
 			looting = "common",
 		},
 		{
-			name = "mcl_bows:crossbow",
+			name = "vlc_bows:crossbow",
 			chance = 100 / 8.5,
 			min = 1,
 			max = 1,
@@ -90,9 +90,9 @@ pillager = {
 		die_loop = false,
 	},
 	shoot_arrow = function(self, pos, dir)
-		minetest.sound_play("mcl_bows_crossbow_shoot", {object = self.object, max_hear_distance=16}, true)
+		minetest.sound_play("vlc_bows_crossbow_shoot", {object = self.object, max_hear_distance=16}, true)
 		local props = self.object:get_properties()
-		props.textures[2] = "mcl_bows_crossbow_0.png^[resize:16x16"
+		props.textures[2] = "vlc_bows_crossbow_0.png^[resize:16x16"
 		self.object:set_properties(props)
 		local old_anim = self._current_animation
 		if old_anim == "run" or old_anim == "walk" then
@@ -107,7 +107,7 @@ pillager = {
 
 		-- 2-4 damage per arrow
 		local dmg = math.max(4, math.random(2, 8))
-		mcl_bows.shoot_arrow_crossbow("mcl_bows:arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
+		vlc_bows.shoot_arrow_crossbow("vlc_bows:arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
 
 		-- While we are at it, change the sounds since there is no way to do this in Mobs Redo
 		if self.sounds and self.sounds.random then
@@ -120,5 +120,5 @@ pillager = {
 	end,
 }
 
-mcl_mobs.register_mob("mobs_mc:pillager", pillager)
-mcl_mobs.register_egg("mobs_mc:pillager", S("Pillager"), "#532f36", "#959b9b", 0)
+vlc_mobs.register_mob("mobs_mc:pillager", pillager)
+vlc_mobs.register_egg("mobs_mc:pillager", S("Pillager"), "#532f36", "#959b9b", 0)

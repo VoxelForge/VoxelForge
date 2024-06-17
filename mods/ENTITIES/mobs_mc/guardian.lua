@@ -4,7 +4,7 @@
 
 local S = minetest.get_translator("mobs_mc")
 
-mcl_mobs.register_mob("mobs_mc:guardian", {
+vlc_mobs.register_mob("mobs_mc:guardian", {
 	description = S("Guardian"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -47,7 +47,7 @@ mcl_mobs.register_mob("mobs_mc:guardian", {
 	},
 	drops = {
 		-- Greatly increased amounts of prismarine
-		{name = "mcl_ocean:prismarine_shard",
+		{name = "vlc_ocean:prismarine_shard",
 		chance = 1,
 		min = 0,
 		max = 32,
@@ -56,37 +56,37 @@ mcl_mobs.register_mob("mobs_mc:guardian", {
 
 		-- The following drops are approximations
 		-- Fish / prismarine crystal
-		{name = "mcl_fishing:fish_raw",
+		{name = "vlc_fishing:fish_raw",
 		chance = 4,
 		min = 1,
 		max = 1,
 		looting = "common",},
-		{name = "mcl_ocean:prismarine_crystals",
+		{name = "vlc_ocean:prismarine_crystals",
 		chance = 4,
 		min = 1,
 		max = 2,
 		looting = "common",},
 
 		-- Rare drop: fish
-		{name = "mcl_fishing:fish_raw",
+		{name = "vlc_fishing:fish_raw",
 		chance = 160, -- 2.5% / 4
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.0025,},
-		{name = "mcl_fishing:salmon_raw",
+		{name = "vlc_fishing:salmon_raw",
 		chance = 160,
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.0025,},
-		{name = "mcl_fishing:clownfish_raw",
+		{name = "vlc_fishing:clownfish_raw",
 		chance = 160,
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.0025,},
-		{name = "mcl_fishing:pufferfish_raw",
+		{name = "vlc_fishing:pufferfish_raw",
 		chance = 160,
 		min = 1,
 		max = 1,
@@ -95,9 +95,9 @@ mcl_mobs.register_mob("mobs_mc:guardian", {
 	},
 	fly = true,
 	makes_footstep_sound = false,
-	fly_in = { "mcl_core:water_source", "mclx_core:river_water_source" },
+	fly_in = { "vlc_core:water_source", "vlcx_core:river_water_source" },
 	jump = false,
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:guardian", S("Guardian"), "#5a8272", "#f17d31", 0)
+vlc_mobs.register_egg("mobs_mc:guardian", S("Guardian"), "#5a8272", "#f17d31", 0)

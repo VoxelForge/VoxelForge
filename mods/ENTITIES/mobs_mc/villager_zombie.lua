@@ -27,7 +27,7 @@ local professions = {
 }
 --]]
 
-mcl_mobs.register_mob("mobs_mc:villager_zombie", {
+vlc_mobs.register_mob("mobs_mc:villager_zombie", {
 	description = S("Zombie Villager"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -61,24 +61,24 @@ mcl_mobs.register_mob("mobs_mc:villager_zombie", {
 	attack_type = "dogfight",
 	group_attack = true,
 	drops = {
-		{name = "mcl_mobitems:rotten_flesh",
+		{name = "vlc_mobitems:rotten_flesh",
 		chance = 1,
 		min = 0,
 		max = 2,
 		looting = "common",},
-		{name = "mcl_core:iron_ingot",
+		{name = "vlc_core:iron_ingot",
 		chance = 120, -- 2.5% / 3
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.01 / 3,},
-		{name = "mcl_farming:carrot_item",
+		{name = "vlc_farming:carrot_item",
 		chance = 120, -- 2.5% / 3
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.01 / 3,},
-		{name = "mcl_farming:potato_item",
+		{name = "vlc_farming:potato_item",
 		chance = 120, -- 2.5% / 3
 		min = 1,
 		max = 1,
@@ -109,7 +109,7 @@ mcl_mobs.register_mob("mobs_mc:villager_zombie", {
 		if not self._curing and clicker and clicker:is_player() then
 			local wielditem = clicker:get_wielded_item()
 			-- ToDo: Only cure if zombie villager has the weakness effect
-			if wielditem:get_name() == "mcl_core:apple_gold" then
+			if wielditem:get_name() == "vlc_core:apple_gold" then
 				wielditem:take_item()
 				clicker:set_wielded_item(wielditem)
 				self._curing = math.random(3 * 60, 5 * 60)
@@ -123,7 +123,7 @@ mcl_mobs.register_mob("mobs_mc:villager_zombie", {
 			self._curing = self._curing - dtime
 			local obj = self.object
 			if self._curing <= 0 then
-				local villager_obj = mcl_util.replace_mob(obj, "mobs_mc:villager")
+				local villager_obj = vlc_util.replace_mob(obj, "mobs_mc:villager")
 				if villager_obj then
 					local villager = villager_obj:get_luaentity()
 					villager._profession = "unemployed"
@@ -140,7 +140,7 @@ mcl_mobs.register_mob("mobs_mc:villager_zombie", {
 	attack_npcs = true,
 })
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:villager_zombie",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -153,4 +153,4 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:villager_zombie", S("Zombie Villager"), "#563d33", "#799c66", 0)
+vlc_mobs.register_egg("mobs_mc:villager_zombie", S("Zombie Villager"), "#563d33", "#799c66", 0)

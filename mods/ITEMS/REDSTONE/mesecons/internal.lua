@@ -406,7 +406,7 @@ function mesecon.turnon(pos, link)
 		if node and f.link.spread and minetest.get_item_group(node.name, "opaque") == 1 then
 			-- Call turnon on neighbors
 			-- Warning: A LOT of nodes need to be looked at for this to work
-			for _, r in pairs(mesecon.rule2meta(f.link, mesecon.rules.mcl_alldirs_spread)) do
+			for _, r in pairs(mesecon.rule2meta(f.link, mesecon.rules.vlc_alldirs_spread)) do
 				local np = vector.add(f.pos, r)
 				for _, l in pairs(mesecon.rules_link_rule_all(f.pos, r)) do
 					local nlink = table.copy(l)
@@ -479,7 +479,7 @@ function mesecon.turnoff(pos, link)
 			-- Call turnoff on neighbors
 			-- Warning: A LOT of nodes need to be looked at for this to work
 			local fpos = f.pos
-			for _, r in pairs(mesecon.rule2meta(f.link, mesecon.rules.mcl_alldirs_spread)) do
+			for _, r in pairs(mesecon.rule2meta(f.link, mesecon.rules.vlc_alldirs_spread)) do
 				local np = {x=fpos.x+r.x, y=fpos.y+r.y, z=fpos.z+r.z}
 				local n = mesecon.get_node_force(np)
 				if n and is_receptor_on(n.name) then

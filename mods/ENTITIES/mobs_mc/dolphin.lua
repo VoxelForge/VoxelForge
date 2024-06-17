@@ -1,12 +1,12 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local food_items = {
-	"mcl_fishing:fish_raw",
-	"mcl_fishing:salmon_raw",
-	"mcl_fishing:clownfish_raw",
+	"vlc_fishing:fish_raw",
+	"vlc_fishing:salmon_raw",
+	"vlc_fishing:clownfish_raw",
 }
 
-mcl_mobs.register_mob("mobs_mc:dolphin", {
+vlc_mobs.register_mob("mobs_mc:dolphin", {
 	description = S("Dolphin"),
 	type = "animal",
 	spawn_class = "water",
@@ -40,7 +40,7 @@ mcl_mobs.register_mob("mobs_mc:dolphin", {
 		run_end = 45,
 		},
 		drops = {
-			{name = "mcl_fishing:fish_raw",
+			{name = "vlc_fishing:fish_raw",
 			chance = 1,
 			min = 0,
 			max = 1,},
@@ -48,7 +48,7 @@ mcl_mobs.register_mob("mobs_mc:dolphin", {
 	visual_size = {x=3, y=3},
 	makes_footstep_sound = false,
     fly = true,
-    fly_in = { "mcl_core:water_source", "mclx_core:river_water_source" },
+    fly_in = { "vlc_core:water_source", "vlcx_core:river_water_source" },
 	breathes_in_water = true,
 	jump = false,
 	view_range = 16,
@@ -68,7 +68,7 @@ mcl_mobs.register_mob("mobs_mc:dolphin", {
 			local p = self.object:get_pos()
 			local p1 = vector.offset(p, -64, -16, -64)
 			local p2 = vector.offset(p, 64, math.min(1, p.y+16), 64)
-			local chests = minetest.find_nodes_in_area(p1, p2, {"mcl_chests:chest_small"})
+			local chests = minetest.find_nodes_in_area(p1, p2, {"vlc_chests:chest_small"})
 			if chests and #chests > 0 then
 				table.sort(chests, function(a, b) return vector.distance(p, a) < vector.distance(p, b) end)
 				self:go_to_pos(chests[1])
@@ -77,7 +77,7 @@ mcl_mobs.register_mob("mobs_mc:dolphin", {
 	end,
 })
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:dolphin",
 	type_of_spawning = "water",
 	dimension = "overworld",
@@ -230,4 +230,4 @@ mcl_mobs.spawn_setup({
 	},
 })
 
-mcl_mobs.register_egg("mobs_mc:dolphin", S("Dolphin"), "#223b4d", "#f9f9f9", 0)
+vlc_mobs.register_egg("mobs_mc:dolphin", S("Dolphin"), "#223b4d", "#f9f9f9", 0)

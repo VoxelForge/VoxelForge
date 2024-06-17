@@ -1,7 +1,7 @@
 local S = minetest.get_translator("mobs_mc")
 
 local base_drop = {
-	name = "mcl_mobitems:leather",
+	name = "vlc_mobitems:leather",
 	chance = 1,
 	min = 0,
 	max = 2,
@@ -109,12 +109,12 @@ local horse = {
 	walk_chance = 60,
 	view_range = 16,
 	follow = {
-		"mcl_core:apple",
-		"mcl_core:sugar",
-		"mcl_farming:wheat_item",
-		"mcl_farming:hay_block",
-		"mcl_core:apple_gold",
-		"mcl_farming:carrot_item_gold",
+		"vlc_core:apple",
+		"vlc_core:sugar",
+		"vlc_farming:wheat_item",
+		"vlc_farming:hay_block",
+		"vlc_core:apple_gold",
+		"vlc_farming:carrot_item_gold",
 	},
 	passive = true,
 	hp_min = 15,
@@ -160,7 +160,7 @@ local horse = {
 
 		if self.driver and not self.tamed and self.buck_off_time <= 0 then
 			if math.random() < 0.2 then
-				mcl_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
+				vlc_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
 				-- TODO bucking animation
 			else
 				self.buck_off_time = 20
@@ -176,7 +176,7 @@ local horse = {
 		end
 
 		if self.driver and self._saddle then
-			mcl_mobs.drive(self, "walk", "stand", false, dtime)
+			vlc_mobs.drive(self, "walk", "stand", false, dtime)
 			return false
 		end
 		return true
@@ -184,7 +184,7 @@ local horse = {
 
 	on_die = function(self, pos)
 		if self.driver then
-			mcl_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
+			vlc_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
 		end
 	end,
 
@@ -198,7 +198,7 @@ local horse = {
 		local heal = 0
 
 		if self._inv_id then
-			if not self._chest and item:get_name() == "mcl_chests:chest" then
+			if not self._chest and item:get_name() == "vlc_chests:chest" then
 				item:take_item()
 				clicker:set_wielded_item(item)
 				self._chest = true
@@ -213,7 +213,7 @@ local horse = {
 				self:update_drops()
 				return
 			elseif self._chest and clicker:get_player_control().sneak then
-				mcl_entity_invs.show_inv_form(self,clicker)
+				vlc_entity_invs.show_inv_form(self,clicker)
 				return
 			end
 		end
@@ -221,19 +221,19 @@ local horse = {
 		self.temper = self.temper or (math.random(1,100))
 		if not self.tamed then
 			local temper_increase = 0
-			if (iname == "mcl_core:sugar") then
+			if (iname == "vlc_core:sugar") then
 				temper_increase = 3
-			elseif (iname == "mcl_farming:wheat_item") then
+			elseif (iname == "vlc_farming:wheat_item") then
 				temper_increase = 3
-			elseif (iname == "mcl_core:apple") then
+			elseif (iname == "vlc_core:apple") then
 				temper_increase = 3
-			elseif (iname == "mcl_farming:carrot_item_gold") then
+			elseif (iname == "vlc_farming:carrot_item_gold") then
 				temper_increase = 5
-			elseif (iname == "mcl_core:apple_gold") then
+			elseif (iname == "vlc_core:apple_gold") then
 				temper_increase = 10
 			elseif not self.driver then
 				self.object:set_properties({stepheight = 1.1})
-				mcl_mobs.attach(self, clicker)
+				vlc_mobs.attach(self, clicker)
 				self.buck_off_time = 40 -- TODO how long does it take in minecraft?
 				if self.temper > 100 then
 					self.tamed = true -- NOTE taming can only be finished by riding the horse
@@ -243,49 +243,49 @@ local horse = {
 				end
 				temper_increase = 5
 			elseif self.driver and self.driver == clicker then
-				mcl_mobs.detach(clicker, {x = 1, y = 0, z = 1})
+				vlc_mobs.detach(clicker, {x = 1, y = 0, z = 1})
 			end
 			self.temper = self.temper + temper_increase
 			return
 		end
 
 		if can_breed(self.name) then
-			if (iname == "mcl_core:apple_gold") then
+			if (iname == "vlc_core:apple_gold") then
 				heal = 10
-			elseif (iname == "mcl_farming:carrot_item_gold") then
+			elseif (iname == "vlc_farming:carrot_item_gold") then
 				heal = 4
 			end
 			if heal > 0 and self:feed_tame(clicker, heal, true, false) then
 				return
 			end
 		end
-		if (iname == "mcl_core:sugar") then
+		if (iname == "vlc_core:sugar") then
 			heal = 1
-		elseif (iname == "mcl_farming:wheat_item") then
+		elseif (iname == "vlc_farming:wheat_item") then
 			heal = 2
-		elseif (iname == "mcl_core:apple") then
+		elseif (iname == "vlc_core:apple") then
 			heal = 3
-		elseif (iname == "mcl_farming:hay_block") then
+		elseif (iname == "vlc_farming:hay_block") then
 			heal = 20
 		end
 		if heal > 0 and self:feed_tame(clicker, heal, false, false) then
 			return
 		end
 
-		if mcl_mobs.protect(self, clicker) then
+		if vlc_mobs.protect(self, clicker) then
 			return
 		end
 
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
 			if self.driver and clicker == self.driver then
-				mcl_mobs.detach(clicker, {x = 1, y = 0, z = 1})
-			elseif not self.driver and iname == "mcl_mobitems:saddle" and self:set_saddle(clicker) then
+				vlc_mobs.detach(clicker, {x = 1, y = 0, z = 1})
+			elseif not self.driver and iname == "vlc_mobitems:saddle" and self:set_saddle(clicker) then
 				return
 			elseif minetest.get_item_group(iname, "horse_armor") > 0 and can_equip_horse_armor(self.name) and not self.driver and self:set_armor(clicker) then
 				return
 			elseif not self.driver and self._saddle then
 				self.object:set_properties({stepheight = 1.1})
-				mcl_mobs.attach(self, clicker)
+				vlc_mobs.attach(self, clicker)
 			end
 		end
 	end,
@@ -303,7 +303,7 @@ local horse = {
 			local tex = horse_extra_texture(self)
 			self.base_texture = tex
 			self.object:set_properties({textures = self.base_texture})
-			minetest.sound_play({name = "mcl_armor_equip_leather"}, {gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
+			minetest.sound_play({name = "vlc_armor_equip_leather"}, {gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
 			self:update_drops()
 			return true
 		end
@@ -333,8 +333,8 @@ local horse = {
 			self.base_texture = tex
 			self.object:set_properties({textures = self.base_texture})
 			local def = w:get_definition()
-			if def.sounds and def.sounds._mcl_armor_equip then
-				minetest.sound_play({name = def.sounds._mcl_armor_equip}, {gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
+			if def.sounds and def.sounds._vlc_armor_equip then
+				minetest.sound_play({name = def.sounds._vlc_armor_equip}, {gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
 			end
 			return true
 		end
@@ -343,7 +343,7 @@ local horse = {
 		self.drops = { base_drop }
 		if self._saddle then
 			table.insert(self.drops,{
-				name = "mcl_mobitems:saddle",
+				name = "vlc_mobitems:saddle",
 				chance = 1,
 				min = 1,
 				max = 1,
@@ -359,7 +359,7 @@ local horse = {
 		end
 		if self._chest then
 			table.insert(self.drops,{
-				name = "mcl_chests:chest",
+				name = "vlc_chests:chest",
 				chance = 1,
 				min = 1,
 				max = 1,
@@ -369,7 +369,7 @@ local horse = {
 
 	on_breed = function(parent1, parent2)
 		local pos = parent1.object:get_pos()
-		local child = mcl_mobs.spawn_child(pos, parent1.name)
+		local child = vlc_mobs.spawn_child(pos, parent1.name)
 		if child then
 			local ent_c = child:get_luaentity()
 			local p = math.random(1, 2)
@@ -414,7 +414,7 @@ local horse = {
 	end,
 }
 
-mcl_mobs.register_mob("mobs_mc:horse", horse)
+vlc_mobs.register_mob("mobs_mc:horse", horse)
 
 local skeleton_horse = table.merge(horse, {
 	description = S("Skeleton Horse"),
@@ -422,7 +422,7 @@ local skeleton_horse = table.merge(horse, {
 	armor = {undead = 100, fleshy = 100},
 	textures = {{"blank.png", "mobs_mc_horse_skeleton.png", "blank.png"}},
 	drops = {
-		{name = "mcl_mobitems:bone",
+		{name = "vlc_mobitems:bone",
 		chance = 1,
 		min = 0,
 		max = 2,},
@@ -437,14 +437,14 @@ local skeleton_horse = table.merge(horse, {
 	},
 	harmed_by_heal = true,
 })
-mcl_mobs.register_mob("mobs_mc:skeleton_horse", skeleton_horse)
+vlc_mobs.register_mob("mobs_mc:skeleton_horse", skeleton_horse)
 
-mcl_mobs.register_mob("mobs_mc:zombie_horse", table.merge(skeleton_horse, {
+vlc_mobs.register_mob("mobs_mc:zombie_horse", table.merge(skeleton_horse, {
 	description = S("Zombie Horse"),
 	textures = {{"blank.png", "mobs_mc_horse_zombie.png", "blank.png"}},
 	drops = {
 		{
-			name = "mcl_mobitems:rotten_flesh",
+			name = "vlc_mobitems:rotten_flesh",
 			chance = 1,
 			min = 0,
 			max = 2,
@@ -492,11 +492,11 @@ local donkey = table.merge(horse, {
 	jump_height = 3.75,
 })
 
-mcl_mobs.register_mob("mobs_mc:donkey", donkey)
-mcl_entity_invs.register_inv("mobs_mc:donkey","Donkey",15,true)
+vlc_mobs.register_mob("mobs_mc:donkey", donkey)
+vlc_entity_invs.register_inv("mobs_mc:donkey","Donkey",15,true)
 
 local m = 0.94
-mcl_mobs.register_mob("mobs_mc:mule", table.merge(donkey, {
+vlc_mobs.register_mob("mobs_mc:mule", table.merge(donkey, {
 	description = S("Mule"),
 	textures = {{"blank.png", "mobs_mc_mule.png", "blank.png"}},
 	visual_size = { x=horse.visual_size.x*m, y=horse.visual_size.y*m },
@@ -512,9 +512,9 @@ mcl_mobs.register_mob("mobs_mc:mule", table.merge(donkey, {
 		horse.collisionbox[6] * m,
 	},
 }))
-mcl_entity_invs.register_inv("mobs_mc:mule","Mule",15,true)
+vlc_entity_invs.register_inv("mobs_mc:mule","Mule",15,true)
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:horse",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -534,7 +534,7 @@ mcl_mobs.spawn_setup({
 	chance = 40,
 })
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:donkey",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -555,8 +555,8 @@ mcl_mobs.spawn_setup({
 	chance = 10,
 })
 
-mcl_mobs.register_egg("mobs_mc:horse", S("Horse"), "#c09e7d", "#eee500", 0)
-mcl_mobs.register_egg("mobs_mc:skeleton_horse", S("Skeleton Horse"), "#68684f", "#e5e5d8", 0)
-mcl_mobs.register_egg("mobs_mc:zombie_horse", S("Zombie Horse"), "#2a5a37", "#84d080", 0)
-mcl_mobs.register_egg("mobs_mc:donkey", S("Donkey"), "#534539", "#867566", 0)
-mcl_mobs.register_egg("mobs_mc:mule", S("Mule"), "#1b0200", "#51331d", 0)
+vlc_mobs.register_egg("mobs_mc:horse", S("Horse"), "#c09e7d", "#eee500", 0)
+vlc_mobs.register_egg("mobs_mc:skeleton_horse", S("Skeleton Horse"), "#68684f", "#e5e5d8", 0)
+vlc_mobs.register_egg("mobs_mc:zombie_horse", S("Zombie Horse"), "#2a5a37", "#84d080", 0)
+vlc_mobs.register_egg("mobs_mc:donkey", S("Donkey"), "#534539", "#867566", 0)
+vlc_mobs.register_egg("mobs_mc:mule", S("Mule"), "#1b0200", "#51331d", 0)

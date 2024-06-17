@@ -40,7 +40,7 @@ local strider = {
 	run_velocity = 4,
 	runaway = true,
 	drops = {
-		{name = "mcl_mobsitems:string",
+		{name = "vlc_mobsitems:string",
 		chance = 1,
 		min = 2,
 		max = 5,},
@@ -54,7 +54,7 @@ local strider = {
 		walk_start = 1,
 		walk_end = 20,
 	},
-	follow = { "mcl_crimson:warped_fungus" },
+	follow = { "vlc_crimson:warped_fungus" },
 	lava_damage = 0,
 	fire_damage = 0,
 	light_damage = 0,
@@ -65,12 +65,12 @@ local strider = {
 	floats_on_lava = 1,
 	floats = 0,
 	can_spawn = function(pos)
-		local l = minetest.find_node_near(pos,2,{"mcl_nether:nether_lava_source","mcl_nether:nether_lava_flowing"})
+		local l = minetest.find_node_near(pos,2,{"vlc_nether:nether_lava_source","vlc_nether:nether_lava_flowing"})
 		return l ~= nil
 	end,
 	do_custom = function(self, dtime)
 
-		if minetest.find_node_near(self.object:get_pos(), 2, {"mcl_core:lava_source","mcl_core:lava_flowing","mcl_nether:nether_lava_source","mcl_nether:nether_lava_flowing"}) then
+		if minetest.find_node_near(self.object:get_pos(), 2, {"vlc_core:lava_source","vlc_core:lava_flowing","vlc_nether:nether_lava_source","vlc_nether:nether_lava_flowing"}) then
 			if self.driver then
 				self.walk_velocity = 4
 				self.run_velocity = 8
@@ -107,7 +107,7 @@ local strider = {
 			local pos = self.object:get_pos()
 			local v = self.object:get_velocity()
 			self.object:set_velocity(vector.new(v.x,0,v.z))
-			mcl_mobs.drive(self, "walk", "stand", false, dtime)
+			vlc_mobs.drive(self, "walk", "stand", false, dtime)
 			local l = minetest.find_node_near(pos,2,{"group:lava"})
 			if l then self.object:set_pos(vector.new(pos.x,l.y+0.5,pos.z)) end
 			return false -- skip rest of mob functions
@@ -121,7 +121,7 @@ local strider = {
 		-- drop saddle when horse is killed while riding
 		-- also detach from horse properly
 		if self.driver then
-			mcl_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
+			vlc_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
 		end
 	end,
 
@@ -132,7 +132,7 @@ local strider = {
 
 		local wielditem = clicker:get_wielded_item()
 
-		if wielditem:get_name() == "mcl_crimson:warped_fungus" then
+		if wielditem:get_name() == "vlc_crimson:warped_fungus" then
 			if self:feed_tame(clicker, 1, true, true) then return end
 		end
 
@@ -141,7 +141,7 @@ local strider = {
 		end
 
 		local item = clicker:get_wielded_item()
-		if item:get_name() == "mcl_mobitems:saddle" and self.saddle ~= "yes" then
+		if item:get_name() == "vlc_mobitems:saddle" and self.saddle ~= "yes" then
 			self.base_texture = {
 				"extra_mobs_strider.png",
 				"mobs_mc_pig_saddle.png", -- saddle
@@ -152,11 +152,11 @@ local strider = {
 			self.saddle = "yes"
 			self.tamed = true
 			self.drops = {
-				{name = "mcl_mobitems:string",
+				{name = "vlc_mobitems:string",
 				chance = 1,
 				min = 1,
 				max = 3,},
-				{name = "mcl_mobitems:saddle",
+				{name = "vlc_mobitems:saddle",
 				chance = 1,
 				min = 1,
 				max = 1,},
@@ -165,20 +165,20 @@ local strider = {
 				wielditem:take_item(1)
 				clicker:get_inventory():set_stack("main", clicker:get_wield_index(), wielditem)
 			end
-			minetest.sound_play({name = "mcl_armor_equip_leather"}, {gain=0.5, max_hear_distance=8, pos=self.object:get_pos()}, true)
+			minetest.sound_play({name = "vlc_armor_equip_leather"}, {gain=0.5, max_hear_distance=8, pos=self.object:get_pos()}, true)
 			return
 		end
 
 		-- Mount or detach player
 		if self.driver and clicker == self.driver then
 			-- Detach if already attached
-			mcl_mobs.detach(clicker, {x=1, y=0, z=0})
+			vlc_mobs.detach(clicker, {x=1, y=0, z=0})
 			return
 
-		elseif not self.driver and self.saddle == "yes" and wielditem:get_name() == "mcl_mobitems:warped_fungus_on_a_stick" then
+		elseif not self.driver and self.saddle == "yes" and wielditem:get_name() == "vlc_mobitems:warped_fungus_on_a_stick" then
 			-- Ride pig if it has a saddle and player uses a carrot on a stick
 
-			mcl_mobs.attach(self, clicker)
+			vlc_mobs.attach(self, clicker)
 
 			if not minetest.is_creative_enabled(clicker:get_player_name()) then
 
@@ -200,9 +200,9 @@ local strider = {
 		end
 	end,
 }
-mcl_mobs.register_mob("mobs_mc:strider", strider)
+vlc_mobs.register_mob("mobs_mc:strider", strider)
 
-mcl_mobs.register_mob("mobs_mc:baby_strider",table.merge(strider,{
+vlc_mobs.register_mob("mobs_mc:baby_strider",table.merge(strider,{
 	description = S("Baby Strider"),
 	collisionbox = {-.3, -0.01, -.3, .3, 0.94, .3},
 	xp_min = 13,
@@ -216,14 +216,14 @@ mcl_mobs.register_mob("mobs_mc:baby_strider",table.merge(strider,{
 	child = 1,
 }))
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:strider",
 	type_of_spawning = "lava",
 	dimension = "nether",
 	chance = 200,
 })
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:baby_strider",
 	type_of_spawning = "lava",
 	dimension = "nether",
@@ -231,4 +231,4 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:strider", S("Strider"), "#000000", "#FF0000", 0)
+vlc_mobs.register_egg("mobs_mc:strider", S("Strider"), "#000000", "#FF0000", 0)

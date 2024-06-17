@@ -47,7 +47,7 @@ local axolotl = {
 	},
 
 	follow = {
-		"mcl_fishing:clownfish_raw"
+		"vlc_fishing:clownfish_raw"
 	},
 
 	view_range = 16,
@@ -55,22 +55,22 @@ local axolotl = {
 
 	on_rightclick = function(self, clicker)
 		local bn = clicker:get_wielded_item():get_name()
-		if bn == "mcl_buckets:bucket_water" or bn == "mcl_buckets:bucket_river_water" then
-			if clicker:set_wielded_item("mcl_buckets:bucket_axolotl") then
+		if bn == "vlc_buckets:bucket_water" or bn == "vlc_buckets:bucket_river_water" then
+			if clicker:set_wielded_item("vlc_buckets:bucket_axolotl") then
 				local it = clicker:get_wielded_item()
 				local m = it:get_meta()
 				m:set_string("properties",minetest.serialize(self.object:get_properties()))
 				clicker:set_wielded_item(it)
 				self:safe_remove()
 			end
-			awards.unlock(clicker:get_player_name(), "mcl:cutestPredator")
+			awards.unlock(clicker:get_player_name(), "vlc:cutestPredator")
 			return
 		end
 		if self:feed_tame(clicker, 1, true, false) then return end
 	end,
 	makes_footstep_sound = false,
 	fly = true,
-	fly_in = { "mcl_core:water_source", "mclx_core:river_water_source" },
+	fly_in = { "vlc_core:water_source", "vlcx_core:river_water_source" },
 	breathes_in_water = true,
 	jump = true,
 	damage = 2,
@@ -81,9 +81,9 @@ local axolotl = {
 	runaway = true,
 }
 
-mcl_mobs.register_mob("mobs_mc:axolotl", axolotl)
+vlc_mobs.register_mob("mobs_mc:axolotl", axolotl)
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:axolotl",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -172,4 +172,4 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:axolotl", S("Axolotl"), "#e890bf", "#b83D7e", 0)
+vlc_mobs.register_egg("mobs_mc:axolotl", S("Axolotl"), "#e890bf", "#b83D7e", 0)

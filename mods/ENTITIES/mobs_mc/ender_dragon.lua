@@ -15,7 +15,7 @@ end
 local function check_beam(self)
 	for _, obj in ipairs(minetest.get_objects_inside_radius(self.object:get_pos(), 80)) do
 		local luaentity = obj:get_luaentity()
-		if luaentity and luaentity.name == "mcl_end:crystal" then
+		if luaentity and luaentity.name == "vlc_end:crystal" then
 			if luaentity.beam then
 				if luaentity.beam == self.beam then
 					heal(self)
@@ -25,7 +25,7 @@ local function check_beam(self)
 				if self.beam then
 					self.beam:remove()
 				end
-				minetest.add_entity(self.object:get_pos(), "mcl_end:crystal_beam"):get_luaentity():init(self.object, obj)
+				minetest.add_entity(self.object:get_pos(), "vlc_end:crystal_beam"):get_luaentity():init(self.object, obj)
 				break
 			end
 		end
@@ -48,7 +48,7 @@ local function check_pos(self)
 	end
 end
 
-mcl_mobs.register_mob("mobs_mc:enderdragon", {
+vlc_mobs.register_mob("mobs_mc:enderdragon", {
 	description = S("Ender Dragon"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -114,7 +114,7 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 		end
 	end,
 	do_custom = function(self,dtime)
-		mcl_bossbars.update_boss(self.object, "Ender Dragon", "light_purple")
+		vlc_bossbars.update_boss(self.object, "Ender Dragon", "light_purple")
 
 		if self._beam_timer == nil or self._beam_timer > BEAM_CHECK_FREQUENCY then
 			self._beam_timer = 0
@@ -124,18 +124,18 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 	end,
 	on_die = function(self, pos, cmi_cause)
 		if self._portal_pos then
-			mcl_portals.spawn_gateway_portal()
-			mcl_structures.place_structure(self._portal_pos,mcl_structures.registered_structures["end_exit_portal_open"],PseudoRandom(minetest.get_mapgen_setting("seed")),-1)
+			vlc_portals.spawn_gateway_portal()
+			vlc_structures.place_structure(self._portal_pos,vlc_structures.registered_structures["end_exit_portal_open"],PseudoRandom(minetest.get_mapgen_setting("seed")),-1)
 			if self._initial then
-				mcl_experience.throw_xp(pos, 11500) -- 500 + 11500 = 12000
-				minetest.set_node(vector.add(self._portal_pos, vector.new(0, 5, 0)), {name = "mcl_end:dragon_egg"})
+				vlc_experience.throw_xp(pos, 11500) -- 500 + 11500 = 12000
+				minetest.set_node(vector.add(self._portal_pos, vector.new(0, 5, 0)), {name = "vlc_end:dragon_egg"})
 			end
 		end
 
 		-- Free The End Advancement
 		for _,players in pairs(minetest.get_objects_inside_radius(pos,64)) do
 			if players:is_player() then
-				awards.unlock(players:get_player_name(), "mcl:freeTheEnd")
+				awards.unlock(players:get_player_name(), "vlc:freeTheEnd")
 			end
 		end
 	end,
@@ -144,27 +144,27 @@ mcl_mobs.register_mob("mobs_mc:enderdragon", {
 })
 
 -- dragon fireball (projectile)
-mcl_mobs.register_arrow("mobs_mc:dragon_fireball", {
+vlc_mobs.register_arrow("mobs_mc:dragon_fireball", {
 	visual = "sprite",
 	visual_size = {x = 1.25, y = 1.25},
 	textures = {"mobs_mc_dragon_fireball.png"},
 	velocity = 10,
 
 	-- direct hit, no fire... just plenty of pain
-	hit_player = mcl_mobs.get_arrow_damage_func(12, "dragon_breath"),
+	hit_player = vlc_mobs.get_arrow_damage_func(12, "dragon_breath"),
 
 	hit_mob = function(self, mob)
 		minetest.sound_play("tnt_explode", {pos = mob:get_pos(), gain = 1, max_hear_distance = 2*64}, true)
-		mcl_mobs.get_arrow_damage_func(12, "dragon_breath")(self, mob)
+		vlc_mobs.get_arrow_damage_func(12, "dragon_breath")(self, mob)
 	end,
 
 	-- node hit, explode
 	hit_node = function(self, pos, node)
-		mcl_mobs.mob_class.boom(self,pos, 2)
+		vlc_mobs.mob_class.boom(self,pos, 2)
 	end
 })
 
-mcl_mobs.register_egg("mobs_mc:enderdragon", S("Ender Dragon"), "#252525", "#b313c9", 0, true)
+vlc_mobs.register_egg("mobs_mc:enderdragon", S("Ender Dragon"), "#252525", "#b313c9", 0, true)
 
 
-mcl_wip.register_wip_item("mobs_mc:enderdragon")
+vlc_wip.register_wip_item("mobs_mc:enderdragon")

@@ -10,24 +10,24 @@ local S = minetest.get_translator("mobs_mc")
 --###################
 
 local drops_common = {
-	{name = "mcl_mobitems:rotten_flesh",
+	{name = "vlc_mobitems:rotten_flesh",
 	chance = 1,
 	min = 0,
 	max = 2,
 	looting = "common",},
-	{name = "mcl_core:iron_ingot",
+	{name = "vlc_core:iron_ingot",
 	chance = 120, -- 2.5% / 3
 	min = 1,
 	max = 1,
 	looting = "rare",
 	looting_factor = 0.01 / 3,},
-	{name = "mcl_farming:carrot_item",
+	{name = "vlc_farming:carrot_item",
 	chance = 120, -- 2.5% / 3
 	min = 1,
 	max = 1,
 	looting = "rare",
 	looting_factor = 0.01 / 3,},
-	{name = "mcl_farming:potato_item",
+	{name = "vlc_farming:potato_item",
 	chance = 120, -- 2.5% / 3
 	min = 1,
 	max = 1,
@@ -39,7 +39,7 @@ local drops_zombie = table.copy(drops_common)
 table.insert(drops_zombie, {
 	-- Zombie Head
 	-- TODO: Only drop if killed by charged creeper
-	name = "mcl_heads:zombie",
+	name = "vlc_heads:zombie",
 	chance = 200, -- 0.5%
 	min = 1,
 	max = 1,
@@ -106,7 +106,7 @@ local zombie = {
 	attack_npcs = true,
 }
 
-mcl_mobs.register_mob("mobs_mc:zombie", zombie)
+vlc_mobs.register_mob("mobs_mc:zombie", zombie)
 
 -- Baby zombie.
 -- A smaller and more dangerous variant of the zombie
@@ -129,7 +129,7 @@ local baby_zombie = table.merge(zombie, {
 	},
 })
 
-mcl_mobs.register_mob("mobs_mc:baby_zombie", baby_zombie)
+vlc_mobs.register_mob("mobs_mc:baby_zombie", baby_zombie)
 
 -- Husk.
 -- Desert variant of the zombie
@@ -146,7 +146,7 @@ husk.sunlight_damage = 0
 husk.drops = drops_common
 -- TODO: Husks avoid water
 
-mcl_mobs.register_mob("mobs_mc:husk", husk)
+vlc_mobs.register_mob("mobs_mc:husk", husk)
 
 -- Baby husk.
 -- A smaller and more dangerous variant of the husk
@@ -160,10 +160,10 @@ baby_husk.ignited_by_sunlight = false
 baby_husk.sunlight_damage = 0
 baby_husk.drops = drops_common
 
-mcl_mobs.register_mob("mobs_mc:baby_husk", baby_husk)
+vlc_mobs.register_mob("mobs_mc:baby_husk", baby_husk)
 
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:zombie",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -175,7 +175,7 @@ mcl_mobs.spawn_setup({
 	chance = 1000,
 })
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:baby_zombie",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -187,7 +187,7 @@ mcl_mobs.spawn_setup({
 	chance = 50,
 })
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:husk",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -198,7 +198,7 @@ mcl_mobs.spawn_setup({
 	chance = 2400,
 })
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:baby_husk",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -210,5 +210,5 @@ mcl_mobs.spawn_setup({
 })
 
 -- Spawn eggs
-mcl_mobs.register_egg("mobs_mc:husk", S("Husk"), "#777361", "#ded88f", 0)
-mcl_mobs.register_egg("mobs_mc:zombie", S("Zombie"), "#00afaf", "#799c66", 0)
+vlc_mobs.register_egg("mobs_mc:husk", S("Husk"), "#777361", "#ded88f", 0)
+vlc_mobs.register_egg("mobs_mc:zombie", S("Zombie"), "#00afaf", "#799c66", 0)

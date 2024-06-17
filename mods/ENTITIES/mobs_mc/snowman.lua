@@ -8,7 +8,7 @@ local S = minetest.get_translator("mobs_mc")
 local snow_trail_frequency = 0.5 -- Time in seconds for checking to add a new snow trail
 
 local mobs_griefing = minetest.settings:get_bool("mobs_griefing") ~= false
-local mod_throwing = minetest.get_modpath("mcl_throwing") ~= nil
+local mod_throwing = minetest.get_modpath("vlc_throwing") ~= nil
 
 local gotten_texture = {
 	"mobs_mc_snowman.png",
@@ -20,7 +20,7 @@ local gotten_texture = {
 	"blank.png",
 }
 
-mcl_mobs.register_mob("mobs_mc:snowman", {
+vlc_mobs.register_mob("mobs_mc:snowman", {
 	description = S("Snow Golem"),
 	type = "npc",
 	spawn_class = "passive",
@@ -52,17 +52,17 @@ mcl_mobs.register_mob("mobs_mc:snowman", {
 		"farming_pumpkin_top.png", --left
 	},
 	gotten_texture = gotten_texture,
-	drops = {{ name = "mcl_throwing:snowball", chance = 1, min = 0, max = 15 }},
+	drops = {{ name = "vlc_throwing:snowball", chance = 1, min = 0, max = 15 }},
 	visual_size = {x=3, y=3},
 	walk_velocity = 0.6,
 	run_velocity = 2,
 	jump = true,
 	makes_footstep_sound = true,
 	attack_type = "shoot",
-	arrow = "mcl_throwing:snowball_entity",
+	arrow = "vlc_throwing:snowball_entity",
 	shoot_arrow = function(self, pos, dir)
 		if mod_throwing then
-			mcl_throwing.throw("mcl_throwing:snowball", pos, dir, nil, self.object)
+			vlc_throwing.throw("vlc_throwing:snowball", pos, dir, nil, self.object)
 		end
 	end,
 	shoot_interval = 1,
@@ -106,7 +106,7 @@ mcl_mobs.register_mob("mobs_mc:snowman", {
 				local belowdef = minetest.registered_nodes[minetest.get_node(below).name]
 				if belowdef and belowdef.walkable and (belowdef.node_box == nil or belowdef.node_box.type == "regular") then
 					-- Place top snow
-					minetest.set_node(pos, {name = "mcl_core:snow"})
+					minetest.set_node(pos, {name = "vlc_core:snow"})
 				end
 			end
 		end
@@ -122,10 +122,10 @@ mcl_mobs.register_mob("mobs_mc:snowman", {
 			})
 
 			local pos = self.object:get_pos()
-			minetest.sound_play("mcl_tools_shears_cut", {pos = pos}, true)
+			minetest.sound_play("vlc_tools_shears_cut", {pos = pos}, true)
 
-			if minetest.registered_items["mcl_farming:pumpkin_face"] then
-				minetest.add_item({x=pos.x, y=pos.y+1.4, z=pos.z}, "mcl_farming:pumpkin_face")
+			if minetest.registered_items["vlc_farming:pumpkin_face"] then
+				minetest.add_item({x=pos.x, y=pos.y+1.4, z=pos.z}, "vlc_farming:pumpkin_face")
 			end
 
 			-- Wear out
@@ -147,7 +147,7 @@ mcl_mobs.register_mob("mobs_mc:snowman", {
 				return dropitem
 			end
 		end
-		return mcl_mobs.mob_class._on_dispense(self, dropitem, pos, droppos, dropnode, dropdir)
+		return vlc_mobs.mob_class._on_dispense(self, dropitem, pos, droppos, dropnode, dropdir)
 	end,
 })
 
@@ -167,7 +167,7 @@ local summon_particles = function(obj)
 		maxexptime = 2.0,
 		minsize = 2.0,
 		maxsize = 3.0,
-		texture = "mcl_particles_smoke.png",
+		texture = "vlc_particles_smoke.png",
 	})
 end
 
@@ -192,7 +192,7 @@ function mobs_mc.check_snow_golem_summon(pos, player)
 		local place = checks[c][3]
 		local b1n = minetest.get_node(b1)
 		local b2n = minetest.get_node(b2)
-		if b1n.name == "mcl_core:snowblock" and b2n.name == "mcl_core:snowblock" then
+		if b1n.name == "vlc_core:snowblock" and b2n.name == "vlc_core:snowblock" then
 			-- Remove the pumpkin and both snow blocks and summon the snow golem
 			minetest.remove_node(pos)
 			minetest.remove_node(b1)
@@ -212,4 +212,4 @@ function mobs_mc.check_snow_golem_summon(pos, player)
 end
 
 -- Spawn egg
-mcl_mobs.register_egg("mobs_mc:snowman", S("Snow Golem"), "#f2f2f2", "#fd8f47", 0)
+vlc_mobs.register_egg("mobs_mc:snowman", S("Snow Golem"), "#f2f2f2", "#fd8f47", 0)

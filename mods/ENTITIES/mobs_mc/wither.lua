@@ -26,7 +26,7 @@ end
 local function wither_unstuck(self)
 	local pos = self.object:get_pos()
 	if mobs_griefing then
-		local col = self.object:get_properties().collisionbox or mcl_mobs.registered_mobs["mobs_mc:wither"].initial_properties.collisionbox
+		local col = self.object:get_properties().collisionbox or vlc_mobs.registered_mobs["mobs_mc:wither"].initial_properties.collisionbox
 		local pos1 = vector.offset(pos, col[1], col[2], col[3])
 		local pos2 = vector.offset(pos, col[4], col[5], col[6])
 		for z = pos1.z, pos2.z do for y = pos1.y, pos2.y do for x = pos1.x, pos2.x do
@@ -34,7 +34,7 @@ local function wither_unstuck(self)
 			local name = minetest.get_node(npos).name
 			if name ~= "air" then
 				local ndef = minetest.registered_nodes[name]
-				if ndef and ndef._mcl_hardness and ndef._mcl_hardness >= 0 then
+				if ndef and ndef._vlc_hardness and ndef._vlc_hardness >= 0 then
 					local drops = minetest.get_node_drops(name, "")
 					if minetest.dig_node(npos) then
 						for _, item in ipairs(drops) do
@@ -52,16 +52,16 @@ local function wither_unstuck(self)
 end
 
 local function get_dim_relative_y(pos)
-		if (pos.y >= mcl_vars.mg_realm_barrier_overworld_end_max) then
+		if (pos.y >= vlc_vars.mg_realm_barrier_overworld_end_max) then
 			return pos.y
-		elseif (pos.y <= mcl_vars.mg_nether_max + 200) then
-			return (pos.y - mcl_vars.mg_nether_min - 20)
+		elseif (pos.y <= vlc_vars.mg_nether_max + 200) then
+			return (pos.y - vlc_vars.mg_nether_min - 20)
 		else
-			return (pos.y - mcl_vars.mg_end_min - 50)
+			return (pos.y - vlc_vars.mg_end_min - 50)
 		end
 end
 
-mcl_mobs.register_mob("mobs_mc:wither", {
+vlc_mobs.register_mob("mobs_mc:wither", {
 	description = S("Wither"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -98,7 +98,7 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 	dogshoot_count_max = 1, -- unused
 	can_despawn = false,
 	drops = {
-		{name = "mcl_mobitems:nether_star",
+		{name = "vlc_mobitems:nether_star",
 		chance = 1,
 		min = 1,
 		max = 1},
@@ -142,7 +142,7 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 			for _, player in pairs(minetest.get_connected_players()) do
 				local d = vector.distance(pos, player:get_pos())
 				if d <= 80 then
-					mcl_bossbars.add_bar(player, bardef, true, d)
+					vlc_bossbars.add_bar(player, bardef, true, d)
 				end
 			end
 			self.object:set_yaw(self._spawning*10)
@@ -153,9 +153,9 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 
 			if self._spawning <= 0 then
 				if mobs_griefing and not minetest.is_protected(pos, "") then
-					mcl_explosions.explode(pos, WITHER_INIT_BOOM, { drop_chance = 1.0 }, self.object)
+					vlc_explosions.explode(pos, WITHER_INIT_BOOM, { drop_chance = 1.0 }, self.object)
 				else
-					mcl_mobs.mob_class.safe_boom(self, pos, WITHER_INIT_BOOM)
+					vlc_mobs.mob_class.safe_boom(self, pos, WITHER_INIT_BOOM)
 				end
 				self.object:set_texture_mod("")
 				self._spawning = nil
@@ -218,7 +218,7 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 			end
 		end
 		self.object:set_properties({textures={self.base_texture}})
-		mcl_bossbars.update_boss(self.object, "Wither", "dark_purple")
+		vlc_bossbars.update_boss(self.object, "Wither", "dark_purple")
 		if math.random(1, rand_factor) < 2 then
 			self.arrow = "mobs_mc:wither_skull_strong"
 		else
@@ -326,13 +326,13 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 				}, pos)
 				local ent = objs[n]:get_luaentity()
 				if objs[n]:is_player() or (ent and ent ~= self and (not ent._shooter or ent._shooter ~= self)) then
-					mcl_util.deal_damage(objs[n], 8, {type = "magic"})
+					vlc_util.deal_damage(objs[n], 8, {type = "magic"})
 					hit_some = true
 				end
-				mcl_mobs.effect_functions["withering"](objs[n], 0.5, 10)
+				vlc_mobs.effect_functions["withering"](objs[n], 0.5, 10)
 			end
 			if hit_some then
-				mcl_mobs.effect(pos, 32, "mcl_particles_soul_fire_flame.png", 5, 10, self.reach, 1, 0)
+				vlc_mobs.effect(pos, 32, "vlc_particles_soul_fire_flame.png", 5, 10, self.reach, 1, 0)
 			end
 		end
 
@@ -371,7 +371,7 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 					ent.switch = 1
 					ent.owner_id = tostring(self.object) -- add unique owner id to arrow
 
-					-- important for mcl_shields
+					-- important for vlc_shields
 					ent._shooter = self.object
 					ent._saved_shooter_pos = self.object:get_pos()
 				end
@@ -399,9 +399,9 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 		wither_unstuck(self)
 		return true
 	end,
-	deal_damage = function(self, damage, mcl_reason)
+	deal_damage = function(self, damage, vlc_reason)
 		if self._spawning then return end
-		if self._arrow_resistant and mcl_reason.type == "magic" then return end
+		if self._arrow_resistant and vlc_reason.type == "magic" then return end
 		wither_unstuck(self)
 		self.health = self.health - damage
 	end,
@@ -417,20 +417,20 @@ mcl_mobs.register_mob("mobs_mc:wither", {
 
 })
 
-local wither_rose_soil = { "group:grass_block", "mcl_core:dirt", "mcl_core:coarse_dirt", "mcl_nether:netherrack", "group:soul_block", "mcl_mud:mud", "mcl_lush_caves:moss" }
+local wither_rose_soil = { "group:grass_block", "vlc_core:dirt", "vlc_core:coarse_dirt", "vlc_nether:netherrack", "group:soul_block", "vlc_mud:mud", "vlc_lush_caves:moss" }
 local function spawn_wither_rose(obj)
 	local n = minetest.find_node_near(obj:get_pos(),2,wither_rose_soil)
 	if n then
 		local p = vector.offset(n,0,1,0)
 		if minetest.get_node(p).name == "air" then
-			if not ( mobs_griefing and minetest.place_node(p,{name="mcl_flowers:wither_rose"}) ) then
-				minetest.add_item(p,"mcl_flowers:wither_rose")
+			if not ( mobs_griefing and minetest.place_node(p,{name="vlc_flowers:wither_rose"}) ) then
+				minetest.add_item(p,"vlc_flowers:wither_rose")
 			end
 		end
 	end
 end
 
-mcl_mobs.register_arrow("mobs_mc:wither_skull", {
+vlc_mobs.register_arrow("mobs_mc:wither_skull", {
 	visual = "cube",
 	visual_size = {x = 0.3, y = 0.3},
 	textures = {
@@ -448,9 +448,9 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull", {
 
 	-- direct hit
 	hit_player = function(self, player)
-		mcl_mobs.effect_functions["withering"](player, 0.5, 10)
-		mcl_mobs.mob_class.boom(self,self.object:get_pos(), 1, false, true)
-		mcl_mobs.get_arrow_damage_func(8, "wither_skull")(self, player)
+		vlc_mobs.effect_functions["withering"](player, 0.5, 10)
+		vlc_mobs.mob_class.boom(self,self.object:get_pos(), 1, false, true)
+		vlc_mobs.get_arrow_damage_func(8, "wither_skull")(self, player)
 		if player:get_hp() <= 0 then
 			local shooter = self._shooter:get_luaentity()
 			if shooter then shooter.health = shooter.health + 5 end
@@ -459,10 +459,10 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull", {
 	end,
 
 	hit_mob = function(self, mob)
-		mcl_mobs.effect_functions["withering"](mob, 0.5, 10)
-		mcl_mobs.get_arrow_damage_func(8, "wither_skull")(self, mob)
-		mcl_mobs.effect_functions["withering"](mob, 0.5, 10)
-		mcl_mobs.mob_class.boom(self,self.object:get_pos(), 1, false, true)
+		vlc_mobs.effect_functions["withering"](mob, 0.5, 10)
+		vlc_mobs.get_arrow_damage_func(8, "wither_skull")(self, mob)
+		vlc_mobs.effect_functions["withering"](mob, 0.5, 10)
+		vlc_mobs.mob_class.boom(self,self.object:get_pos(), 1, false, true)
 		local l = mob:get_luaentity()
 		if l and l.health - 8 <= 0 then
 			local shooter = self._shooter:get_luaentity()
@@ -473,11 +473,11 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull", {
 
 	-- node hit, explode
 	hit_node = function(self, pos, node)
-		mcl_mobs.mob_class.boom(self,pos, 1, false, true)
+		vlc_mobs.mob_class.boom(self,pos, 1, false, true)
 	end
 })
 
-mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", {
+vlc_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 	visual = "cube",
 	visual_size = {x = 0.35, y = 0.35},
 	textures = {
@@ -495,8 +495,8 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 
 	-- direct hit
 	hit_player = function(self, player)
-		mcl_mobs.effect_functions["withering"](player, 0.5, 10)
-		mcl_mobs.get_arrow_damage_func(12, "wither_skull")(self, player)
+		vlc_mobs.effect_functions["withering"](player, 0.5, 10)
+		vlc_mobs.get_arrow_damage_func(12, "wither_skull")(self, player)
 		if player:get_hp() <= 0 then
 			local shooter = self._shooter:get_luaentity()
 			if shooter then shooter.health = shooter.health + 5 end
@@ -505,14 +505,14 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 	end,
 
 	hit_mob = function(self, mob)
-		mcl_mobs.effect_functions["withering"](mob, 0.5, 10)
-		mcl_mobs.get_arrow_damage_func(12, "wither_skull")(self, mob)
-		mcl_mobs.effect_functions["withering"](mob, 0.5, 10)
+		vlc_mobs.effect_functions["withering"](mob, 0.5, 10)
+		vlc_mobs.get_arrow_damage_func(12, "wither_skull")(self, mob)
+		vlc_mobs.effect_functions["withering"](mob, 0.5, 10)
 		local pos = self.object:get_pos()
 		if mobs_griefing and not minetest.is_protected(pos, "") then
-			mcl_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
+			vlc_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
 		else
-			mcl_mobs.mob_class.safe_boom(self, pos, 1, true) --need to call it this way bc self is the "arrow" object here
+			vlc_mobs.mob_class.safe_boom(self, pos, 1, true) --need to call it this way bc self is the "arrow" object here
 		end
 		local l = mob:get_luaentity()
 		if l and l.health - 8 <= 0 then
@@ -525,14 +525,14 @@ mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 	-- node hit, explode
 	hit_node = function(self, pos, node)
 		if mobs_griefing and not minetest.is_protected(pos, "") then
-			mcl_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
+			vlc_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
 		else
-			mcl_mobs.mob_class.safe_boom(self, pos, 1, true) --need to call it this way bc self is the "arrow" object here
+			vlc_mobs.mob_class.safe_boom(self, pos, 1, true) --need to call it this way bc self is the "arrow" object here
 		end
 	end
 })
 
 --Spawn egg
-mcl_mobs.register_egg("mobs_mc:wither", S("Wither"), "#4f4f4f", "#4f4f4f", 0, true)
+vlc_mobs.register_egg("mobs_mc:wither", S("Wither"), "#4f4f4f", "#4f4f4f", 0, true)
 
-mcl_wip.register_wip_item("mobs_mc:wither")
+vlc_wip.register_wip_item("mobs_mc:wither")

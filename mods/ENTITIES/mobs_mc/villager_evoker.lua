@@ -13,7 +13,7 @@ local pr = PseudoRandom(os.time()*666)
 
 local spawned_vexes = {} --this is stored locally so the mobs engine doesn't try to store it in staticdata
 
-mcl_mobs.register_mob("mobs_mc:evoker", {
+vlc_mobs.register_mob("mobs_mc:evoker", {
 	description = S("Evoker"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -69,12 +69,12 @@ mcl_mobs.register_mob("mobs_mc:evoker", {
 	end,
 	passive = false,
 	drops = {
-		{name = "mcl_core:emerald",
+		{name = "vlc_core:emerald",
 		chance = 1,
 		min = 0,
 		max = 1,
 		looting = "common",},
-		{name = "mcl_totems:totem",
+		{name = "vlc_totems:totem",
 		chance = 1,
 		min = 1,
 		max = 1,},
@@ -96,4 +96,4 @@ mcl_mobs.register_mob("mobs_mc:evoker", {
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:evoker", S("Evoker"), "#959b9b", "#1e1c1a", 0)
+vlc_mobs.register_egg("mobs_mc:evoker", S("Evoker"), "#959b9b", "#1e1c1a", 0)

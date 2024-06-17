@@ -51,7 +51,7 @@ end
 
 --[------[ MOB REGISTRATION AND SPAWNING ]-------]
 
-local pick_up = { "mcl_farming:bread", "mcl_farming:carrot_item", "mcl_farming:beetroot_item" , "mcl_farming:potato_item" }
+local pick_up = { "vlc_farming:bread", "vlc_farming:carrot_item", "vlc_farming:beetroot_item" , "vlc_farming:potato_item" }
 
 
 function mobs_mc.villager_mob:on_pick_up(itementity)
@@ -140,7 +140,7 @@ end
 
 function mobs_mc.villager_mob:on_spawn()
 	if self.state == "attack" then
-		-- in case a bug in mcl_mobs makes them set this state
+		-- in case a bug in vlc_mobs makes them set this state
 		self.state = "stand"
 		self.attack = nil
 	end
@@ -187,14 +187,14 @@ function mobs_mc.villager_mob:on_die(pos, cmi_cause)
 	if cmi_cause and cmi_cause.puncher then
 		local l = cmi_cause.puncher:get_luaentity()
 		if l and math.random(2) == 1 and( l.name == "mobs_mc:zombie" or l.name == "mobs_mc:baby_zombie" or l.name == "mobs_mc:villager_zombie" or l.name == "mobs_mc:husk") then
-			mcl_util.replace_mob(self.object,"mobs_mc:villager_zombie")
+			vlc_util.replace_mob(self.object,"mobs_mc:villager_zombie")
 			return true
 		end
 	end
 end
 
 function mobs_mc.villager_mob:on_lightning_strike(pos, pos2, objects)
-	 mcl_util.replace_mob(self.object, "mobs_mc:witch")
+	 vlc_util.replace_mob(self.object, "mobs_mc:witch")
 	 return true
 end
 
@@ -274,9 +274,9 @@ table.update(mobs_mc.villager_mob, {
 	mob_pushable = false,
 })
 
-mcl_mobs.register_mob("mobs_mc:villager", mobs_mc.villager_mob)
+vlc_mobs.register_mob("mobs_mc:villager", mobs_mc.villager_mob)
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:villager", S("Villager"), "#563d33", "#bc8b72", 0)
+vlc_mobs.register_egg("mobs_mc:villager", S("Villager"), "#563d33", "#bc8b72", 0)
 
 dofile(modpath.."/villagers/wandering_trader.lua")

@@ -9,7 +9,7 @@ local S = minetest.get_translator("mobs_mc")
 --################### WITHER SKELETON
 --###################
 
-mcl_mobs.register_mob("mobs_mc:witherskeleton", {
+vlc_mobs.register_mob("mobs_mc:witherskeleton", {
 	description = S("Wither Skeleton"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -48,19 +48,19 @@ mcl_mobs.register_mob("mobs_mc:witherskeleton", {
 	damage = 7,
 	reach = 2,
 	drops = {
-		{name = "mcl_core:coal_lump",
+		{name = "vlc_core:coal_lump",
 		chance = 1,
 		min = 0,
 		max = 1,
 		looting = "common",},
-		{name = "mcl_mobitems:bone",
+		{name = "vlc_mobitems:bone",
 		chance = 1,
 		min = 0,
 		max = 2,
 		looting = "common",},
 
 		-- Head
-		{name = "mcl_heads:wither_skeleton",
+		{name = "vlc_heads:wither_skeleton",
 		chance = 40, -- 2.5% chance
 		min = 1,
 		max = 1,
@@ -105,4 +105,4 @@ mcl_mobs.register_mob("mobs_mc:witherskeleton", {
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:witherskeleton", S("Wither Skeleton"), "#141414", "#474d4d", 0)
+vlc_mobs.register_egg("mobs_mc:witherskeleton", S("Wither Skeleton"), "#141414", "#474d4d", 0)

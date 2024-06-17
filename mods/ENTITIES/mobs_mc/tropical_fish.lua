@@ -84,11 +84,11 @@ local tropical_fish = {
 		run_end = 40,
 	},
 	drops = {
-		{name = "mcl_fishing:clownfish_raw",
+		{name = "vlc_fishing:clownfish_raw",
 		chance = 1,
 		min = 1,
 		max = 1,},
-		{name = "mcl_bone_meal:bone_meal",
+		{name = "vlc_bone_meal:bone_meal",
 		chance = 20,
 		min = 1,
 		max = 1,},
@@ -97,7 +97,7 @@ local tropical_fish = {
 	makes_footstep_sound = false,
 	swim = true,
 	fly = true,
-	fly_in = "mcl_core:water_source",
+	fly_in = "vlc_core:water_source",
 	breathes_in_water = true,
 	jump = false,
 	view_range = 16,
@@ -105,23 +105,23 @@ local tropical_fish = {
 	fear_height = 4,
 	on_rightclick = function(self, clicker)
 		local bn = clicker:get_wielded_item():get_name()
-		if bn == "mcl_buckets:bucket_water" or bn == "mcl_buckets:bucket_river_water" then
-			if clicker:set_wielded_item("mcl_buckets:bucket_tropical_fish") then
+		if bn == "vlc_buckets:bucket_water" or bn == "vlc_buckets:bucket_river_water" then
+			if clicker:set_wielded_item("vlc_buckets:bucket_tropical_fish") then
 				local it = clicker:get_wielded_item()
 				local m = it:get_meta()
 				m:set_string("properties",minetest.serialize(self.object:get_properties()))
 				clicker:set_wielded_item(it)
 				self:safe_remove()
 			end
-			awards.unlock(clicker:get_player_name(), "mcl:tacticalFishing")
+			awards.unlock(clicker:get_player_name(), "vlc:tacticalFishing")
 		end
 	end,
 	on_spawn = set_textures,
 }
 
-mcl_mobs.register_mob("mobs_mc:tropical_fish", tropical_fish)
+vlc_mobs.register_mob("mobs_mc:tropical_fish", tropical_fish)
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:tropical_fish",
 	type_of_spawning = "water",
 	dimension = "overworld",
@@ -191,4 +191,4 @@ mcl_mobs.spawn_setup({
 })
 
 --spawn egg
-mcl_mobs.register_egg("mobs_mc:tropical_fish", S("Tropical fish"), "#ef6915", "#fff9ef", 0)
+vlc_mobs.register_egg("mobs_mc:tropical_fish", S("Tropical fish"), "#ef6915", "#fff9ef", 0)

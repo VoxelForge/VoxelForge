@@ -10,7 +10,7 @@ local S = minetest.get_translator("mobs_mc")
 --###################
 
 
-mcl_mobs.register_mob("mobs_mc:ghast", {
+vlc_mobs.register_mob("mobs_mc:ghast", {
 	description = S("Ghast"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -41,8 +41,8 @@ mcl_mobs.register_mob("mobs_mc:ghast", {
 	walk_velocity = 1.6,
 	run_velocity = 3, -- (was 3.2) since player can run, this is ok for a flying mob
 	drops = {
-		{name = "mcl_mobitems:gunpowder", chance = 1, min = 0, max = 2, looting = "common"},
-		{name = "mcl_mobitems:ghast_tear", chance = 10/6, min = 0, max = 1, looting = "common", looting_ignore_chance = true},
+		{name = "vlc_mobitems:gunpowder", chance = 1, min = 0, max = 2, looting = "common"},
+		{name = "vlc_mobitems:ghast_tear", chance = 10/6, min = 0, max = 1, looting = "common", looting_ignore_chance = true},
 	},
 	animation = {
 		stand_speed = 50, walk_speed = 50, run_speed = 50,
@@ -87,7 +87,7 @@ mcl_mobs.register_mob("mobs_mc:ghast", {
 })
 
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:ghast",
 	type_of_spawning = "ground",
 	dimension = "nether",
@@ -103,33 +103,33 @@ mcl_mobs.spawn_setup({
 })
 
 -- fireball (projectile)
-mcl_mobs.register_arrow("mobs_mc:fireball", {
+vlc_mobs.register_arrow("mobs_mc:fireball", {
 	description = S("Ghast Fireball"),
 	visual = "sprite",
 	visual_size = {x = 1, y = 1},
-	textures = {"mcl_fire_fire_charge.png"},
+	textures = {"vlc_fire_fire_charge.png"},
 	velocity = 5,
 	collisionbox = {-.5, -.5, -.5, .5, .5, .5},
 	_is_fireball = true,
-	_mcl_fishing_hookable = true,
-	_mcl_fishing_reelable = true,
+	_vlc_fishing_hookable = true,
+	_vlc_fishing_reelable = true,
 	hit_player = function(self, player)
-		mcl_mobs.get_arrow_damage_func(6, "fireball")(self, player)
+		vlc_mobs.get_arrow_damage_func(6, "fireball")(self, player)
 		local p = self.object:get_pos()
 		if p then
-			mcl_mobs.mob_class.boom(self,p, 1, true)
+			vlc_mobs.mob_class.boom(self,p, 1, true)
 		else
-			mcl_mobs.mob_class.boom(self,player:get_pos(), 1, true)
+			vlc_mobs.mob_class.boom(self,player:get_pos(), 1, true)
 		end
 	end,
 
 	hit_mob = function(self, mob)
-		mcl_mobs.get_arrow_damage_func(6, "fireball")(self, mob)
-		mcl_mobs.mob_class.boom(self,self.object:get_pos(), 1, true)
+		vlc_mobs.get_arrow_damage_func(6, "fireball")(self, mob)
+		vlc_mobs.mob_class.boom(self,self.object:get_pos(), 1, true)
 	end,
 
 	hit_node = function(self, pos, node)
-		mcl_mobs.mob_class.boom(self,pos, 1, true)
+		vlc_mobs.mob_class.boom(self,pos, 1, true)
 	end
 })
 
@@ -137,4 +137,4 @@ mcl_mobs.register_arrow("mobs_mc:fireball", {
 
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:ghast", S("Ghast"), "#f9f9f9", "#bcbcbc", 0)
+vlc_mobs.register_egg("mobs_mc:ghast", S("Ghast"), "#f9f9f9", "#bcbcbc", 0)

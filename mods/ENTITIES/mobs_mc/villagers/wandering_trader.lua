@@ -6,27 +6,27 @@ local current_chance = 25
 local wandering_trader = table.copy(mobs_mc.villager_mob)
 
 local function E(f, t)
-	return { "mcl_core:emerald", f or 1, t or f or 1 }
+	return { "vlc_core:emerald", f or 1, t or f or 1 }
 end
 
 local function get_random_color()
-	local _, color = table.random_element(mcl_dyes.colors)
+	local _, color = table.random_element(vlc_dyes.colors)
 	return color
 end
 
 local function get_random_dye()
-	return "mcl_dyes:"..get_random_color()
+	return "vlc_dyes:"..get_random_color()
 end
 
 local function get_random_tree()
-	local _, wood = table.random_element(mcl_trees.woods)
-	return "mcl_trees:tree_"..wood
+	local _, wood = table.random_element(vlc_trees.woods)
+	return "vlc_trees:tree_"..wood
 end
 
 local function get_random_sapling()
 	local r = {}
-	for k, v in pairs(mcl_trees.woods) do
-		local sap = "mcl_trees:sapling_"..k
+	for k, v in pairs(vlc_trees.woods) do
+		local sap = "vlc_trees:sapling_"..k
 		if minetest.registered_nodes[sap] then
 			table.insert(r, sap)
 		end
@@ -35,64 +35,64 @@ local function get_random_sapling()
 end
 
 local function get_random_flower()
-	local _, flower = table.random_element(mcl_flowers.registered_simple_flowers)
+	local _, flower = table.random_element(vlc_flowers.registered_simple_flowers)
 	return flower
 end
 mobs_mc.wandering_trader = {}
 mobs_mc.wandering_trader.trades_purchasing_table = {
-	{ { "mcl_potions:water", 1, 1, }, E() },
-	{ { "mcl_buckets:bucket_water", 1, 1, }, E(2) },
-	{ { "mcl_mobitems:milk_bucket", 1, 1, }, E(2) },
-	{ { "mcl_potions:fermented_spider_eye", 1, 1, }, E(3) },
-	{ { "mcl_farming:potato_item_baked", 1, 1, }, E(1) },
-	{ { "mcl_farming:hay_block", 1, 1, }, E(1) },
+	{ { "vlc_potions:water", 1, 1, }, E() },
+	{ { "vlc_buckets:bucket_water", 1, 1, }, E(2) },
+	{ { "vlc_mobitems:milk_bucket", 1, 1, }, E(2) },
+	{ { "vlc_potions:fermented_spider_eye", 1, 1, }, E(3) },
+	{ { "vlc_farming:potato_item_baked", 1, 1, }, E(1) },
+	{ { "vlc_farming:hay_block", 1, 1, }, E(1) },
 }
 
 mobs_mc.wandering_trader.trades_special_table = {
-	{ E(), { "mcl_core:packed_ice", 1, 1, } },
-	{ E(), { "mcl_mobitems:gunpowder", 4, 4, } },
+	{ E(), { "vlc_core:packed_ice", 1, 1, } },
+	{ E(), { "vlc_mobitems:gunpowder", 4, 4, } },
 	{ E(), { get_random_tree, 8, 8, } },
-	{ E(3), { "mcl_core:podzol", 3, 3, } },
-	{ E(5), { "mcl_core:ice", 1, 1, } },
-	{ E(6), { "mcl_potions:invisibility", 1, 1, } },
-	{ E(6, 20), { "mcl_tools:pick_diamond_enchanted", 1, 1 } },
+	{ E(3), { "vlc_core:podzol", 3, 3, } },
+	{ E(5), { "vlc_core:ice", 1, 1, } },
+	{ E(6), { "vlc_potions:invisibility", 1, 1, } },
+	{ E(6, 20), { "vlc_tools:pick_diamond_enchanted", 1, 1 } },
 }
 
 mobs_mc.wandering_trader.trades_ordinary_table = {
-	{ E(), { "mcl_flowers:fern", 1, 1, } },
-	{ E(), { "mcl_core:reeds", 1, 1, } },
-	{ E(), { "mcl_farming:pumpkin", 1, 1, } },
+	{ E(), { "vlc_flowers:fern", 1, 1, } },
+	{ E(), { "vlc_core:reeds", 1, 1, } },
+	{ E(), { "vlc_farming:pumpkin", 1, 1, } },
 	{ E(), { get_random_flower, 1, 1, } },
 
-	{ E(), { "mcl_farming:wheat_seeds", 1, 1, } },
-	{ E(), { "mcl_farming:beetroot_seeds", 1, 1, } },
-	{ E(), { "mcl_farming:pumpkin_seeds", 1, 1, } },
-	{ E(), { "mcl_farming:melon_seeds", 1, 1, } },
+	{ E(), { "vlc_farming:wheat_seeds", 1, 1, } },
+	{ E(), { "vlc_farming:beetroot_seeds", 1, 1, } },
+	{ E(), { "vlc_farming:pumpkin_seeds", 1, 1, } },
+	{ E(), { "vlc_farming:melon_seeds", 1, 1, } },
 	{ E(), { get_random_dye, 1, 1, } },
-	{ E(), { "mcl_core:vine", 3, 3, } },
-	{ E(), { "mcl_flowers:waterlily", 3, 3, } },
-	{ E(), { "mcl_core:sand", 3, 3, } },
-	{ E(), { "mcl_core:redsand", 3, 3, } },
+	{ E(), { "vlc_core:vine", 3, 3, } },
+	{ E(), { "vlc_flowers:waterlily", 3, 3, } },
+	{ E(), { "vlc_core:sand", 3, 3, } },
+	{ E(), { "vlc_core:redsand", 3, 3, } },
 	--{ E(), { "TODO: small_dripleaf", 3, 3, } },
-	{ E(), { "mcl_mushrooms:mushroom_brown", 3, 3, } },
-	{ E(), { "mcl_mushrooms:mushroom_red", 3, 3, } },
+	{ E(), { "vlc_mushrooms:mushroom_brown", 3, 3, } },
+	{ E(), { "vlc_mushrooms:mushroom_red", 3, 3, } },
 	--{ E(), { "TODO:pointed_dripstone", 2, 5, } },
-	{ E(), { "mcl_lush_caves:rooted_dirt", 2, 2, } },
-	{ E(), { "mcl_lush_caves:moss", 2, 2, } },
-	{ E(2), { "mcl_ocean:sea_pickle_1_dead_brain_coral_block", 1, 1, } },
-	{ E(2), { "mcl_nether:glowstone", 1, 5, } },
-	{ E(3), { "mcl_buckets:bucket_tropical_fish", 1, 1, } },
-	--{ E(3), { "TODO: mcl_buckets:bucket_pufferfish", 1, 5, } },
-	{ E(3), { "mcl_ocean:kelp", 1, 1, } },
-	{ E(3), { "mcl_core:cactus", 1, 1, } },
-	{ E(3), { "mcl_ocean:brain_coral_block", 1, 1, } },
-	{ E(3), { "mcl_ocean:tube_coral_block", 1, 1, } },
-	{ E(3), { "mcl_ocean:bubble_coral_block", 1, 1, } },
-	{ E(3), { "mcl_ocean:fire_coral_block", 1, 1, } },
-	{ E(3), { "mcl_ocean:horn_coral_block", 1, 1, } },
-	{ E(4), { "mcl_mobitems:slimeball", 1, 1, } },
+	{ E(), { "vlc_lush_caves:rooted_dirt", 2, 2, } },
+	{ E(), { "vlc_lush_caves:moss", 2, 2, } },
+	{ E(2), { "vlc_ocean:sea_pickle_1_dead_brain_coral_block", 1, 1, } },
+	{ E(2), { "vlc_nether:glowstone", 1, 5, } },
+	{ E(3), { "vlc_buckets:bucket_tropical_fish", 1, 1, } },
+	--{ E(3), { "TODO: vlc_buckets:bucket_pufferfish", 1, 5, } },
+	{ E(3), { "vlc_ocean:kelp", 1, 1, } },
+	{ E(3), { "vlc_core:cactus", 1, 1, } },
+	{ E(3), { "vlc_ocean:brain_coral_block", 1, 1, } },
+	{ E(3), { "vlc_ocean:tube_coral_block", 1, 1, } },
+	{ E(3), { "vlc_ocean:bubble_coral_block", 1, 1, } },
+	{ E(3), { "vlc_ocean:fire_coral_block", 1, 1, } },
+	{ E(3), { "vlc_ocean:horn_coral_block", 1, 1, } },
+	{ E(4), { "vlc_mobitems:slimeball", 1, 1, } },
 	{ E(5), { get_random_sapling, 8, 8, } },
-	{ E(5), { "mcl_mobitems:nautilus_shell", 1, 1, } },
+	{ E(5), { "vlc_mobitems:nautilus_shell", 1, 1, } },
 }
 
 
@@ -121,7 +121,7 @@ function wandering_trader:on_spawn(dtime)
 	if self._id then
 		self:set_textures()
 		for _, lid in pairs(self._llamas) do
-			local e = mcl_util.get_luaentity_by_id(lid)
+			local e = vlc_util.get_luaentity_by_id(lid)
 			if e then
 				e.following = self.object
 			end
@@ -173,10 +173,10 @@ table.update(wandering_trader, {
 	_notiers = true,
 })
 
-mcl_mobs.register_mob("mobs_mc:wandering_trader", wandering_trader)
+vlc_mobs.register_mob("mobs_mc:wandering_trader", wandering_trader)
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:wandering_trader", S("Wandering Trader"), "#1E90FF", "#bc8b72", 0)
+vlc_mobs.register_egg("mobs_mc:wandering_trader", S("Wandering Trader"), "#1E90FF", "#bc8b72", 0)
 
 function mobs_mc.spawn_trader_llama(pos, wt)
 	local o = minetest.add_entity(pos, "mobs_mc:llama")
@@ -229,7 +229,7 @@ local function attempt_trader_spawn(manual)
 		current_chance = 25
 		local ow_players = {}
 		for _, pl in pairs(minetest.get_connected_players()) do
-			if mcl_worlds.pos_to_dimension(pl:get_pos()) == "overworld" then
+			if vlc_worlds.pos_to_dimension(pl:get_pos()) == "overworld" then
 				table.insert(ow_players, pl)
 			end
 		end

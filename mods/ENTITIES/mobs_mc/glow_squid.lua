@@ -29,7 +29,7 @@ for i=1,4 do
 	table.insert(psdefs,p)
 end
 
-mcl_mobs.register_mob("mobs_mc:glow_squid", {
+vlc_mobs.register_mob("mobs_mc:glow_squid", {
 	description = S("Glow Squid"),
 	type = "animal",
 	spawn_class = "water",
@@ -67,7 +67,7 @@ mcl_mobs.register_mob("mobs_mc:glow_squid", {
 		run_end = 60,
 	},
 	drops = {
-		{ name = "mcl_mobitems:glow_ink_sac",
+		{ name = "vlc_mobitems:glow_ink_sac",
 		  chance = 1,
 		  min = 1,
 		  max = 3,
@@ -82,15 +82,15 @@ mcl_mobs.register_mob("mobs_mc:glow_squid", {
 	runaway = true,
 	fear_height = 4,
 	fly = true,
-	fly_in = { "mcl_core:water_source", "mclx_core:river_water_source" },
-		-- don't add "mcl_core:water_flowing", or it won't move vertically.
+	fly_in = { "vlc_core:water_source", "vlcx_core:river_water_source" },
+		-- don't add "vlc_core:water_flowing", or it won't move vertically.
 
 	glow = minetest.LIGHT_MAX,
 	particlespawners = psdefs,
 })
 
 -- spawning
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:glow_squid",
 	type_of_spawning = "water",
 	dimension = "overworld",
@@ -103,4 +103,4 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn egg
-mcl_mobs.register_egg("mobs_mc:glow_squid", S("Glow Squid"), "#095757", "#87f6c0", 0)
+vlc_mobs.register_egg("mobs_mc:glow_squid", S("Glow Squid"), "#095757", "#87f6c0", 0)

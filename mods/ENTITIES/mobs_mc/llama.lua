@@ -9,7 +9,7 @@ local messytextures = {
 local function get_drops(self)
 	local drops = {}
 	table.insert(drops,
-		{name = "mcl_mobitems:leather",
+		{name = "vlc_mobitems:leather",
 		chance = 1,
 		min = 0,
 		max = 2,
@@ -22,7 +22,7 @@ local function get_drops(self)
 		max = 1,})
 	end
 	if self._has_chest then
-		table.insert(drops,{name = "mcl_chests:chest",
+		table.insert(drops,{name = "vlc_chests:chest",
 		chance = 1,
 		min = 1,
 		max = 1,})
@@ -30,7 +30,7 @@ local function get_drops(self)
 	return drops
 end
 
-mcl_mobs.register_mob("mobs_mc:llama", {
+vlc_mobs.register_mob("mobs_mc:llama", {
 	description = S("Llama"),
 	type = "animal",
 	spawn_class = "passive",
@@ -72,7 +72,7 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 	follow_velocity = 4.4,
 	floats = 1,
 	drops = {
-		{name = "mcl_mobitems:leather",
+		{name = "vlc_mobitems:leather",
 		chance = 1,
 		min = 0,
 		max = 2,
@@ -95,7 +95,7 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 		walk_start = 41, walk_end = 81, walk_speed = 50,
 		run_start = 41, run_end = 81, run_speed = 75,
 	},
-	follow = { "mcl_farming:wheat_item", "mcl_farming:hay_block" },
+	follow = { "vlc_farming:wheat_item", "vlc_farming:hay_block" },
 	view_range = 16,
 	do_custom = function(self, dtime)
 		if not self.v3 then
@@ -111,7 +111,7 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 		end
 
 		if self.driver then
-			mcl_mobs.drive(self, "walk", "stand", false, dtime)
+			vlc_mobs.drive(self, "walk", "stand", false, dtime)
 			return false
 		end
 
@@ -120,7 +120,7 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 
 	on_die = function(self, pos)
 		if self.driver then
-			mcl_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
+			vlc_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
 		end
 
 	end,
@@ -131,28 +131,28 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 		end
 
 		local item = clicker:get_wielded_item()
-		if item:get_name() == "mcl_farming:hay_block" and self:feed_tame(clicker, 1, true, false) then
+		if item:get_name() == "vlc_farming:hay_block" and self:feed_tame(clicker, 1, true, false) then
 			return
-		elseif item:get_name() == "mcl_chests:chest" and self:set_chest(item, clicker) then
+		elseif item:get_name() == "vlc_chests:chest" and self:set_chest(item, clicker) then
 			return
 		elseif self._has_chest and clicker:get_player_control().sneak then
-			mcl_entity_invs.show_inv_form(self,clicker," - Strength "..math.floor(self._inv_size / 3))
+			vlc_entity_invs.show_inv_form(self,clicker," - Strength "..math.floor(self._inv_size / 3))
 			return
 		elseif self:feed_tame(clicker, 1, false, true) then
 			return
 		end
 
-		if mcl_mobs.protect(self, clicker) then return end
+		if vlc_mobs.protect(self, clicker) then return end
 
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
 			if minetest.get_item_group(item:get_name(), "carpet") == 1 and self:set_carpet(item, clicker) then
 				return
 			end
 			if self.driver and clicker == self.driver then
-				mcl_mobs.detach(clicker, {x = 1, y = 0, z = 1})
+				vlc_mobs.detach(clicker, {x = 1, y = 0, z = 1})
 			elseif not self.driver then
 				self.object:set_properties({stepheight = 1.1})
-				mcl_mobs.attach(self, clicker)
+				vlc_mobs.attach(self, clicker)
 			end
 		end
 	end,
@@ -205,7 +205,7 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 		else
 			parent = parent2
 		end
-		child = mcl_mobs.spawn_child(pos, parent.name)
+		child = vlc_mobs.spawn_child(pos, parent.name)
 		if child then
 			local ent_c = child:get_luaentity()
 			ent_c.base_texture = table.copy(ent_c.base_texture)
@@ -235,18 +235,18 @@ mcl_mobs.register_mob("mobs_mc:llama", {
 	end,
 })
 
-mcl_entity_invs.register_inv("mobs_mc:llama","Llama",nil,true)
+vlc_entity_invs.register_inv("mobs_mc:llama","Llama",nil,true)
 
-mcl_mobs.register_arrow("mobs_mc:llamaspit", {
+vlc_mobs.register_arrow("mobs_mc:llamaspit", {
 	visual = "sprite",
 	visual_size = {x = 0.10, y = 0.10},
 	textures = {"mobs_mc_llama_spit.png"},
 	velocity = 5,
-	hit_player = mcl_mobs.get_arrow_damage_func(1),
+	hit_player = vlc_mobs.get_arrow_damage_func(1),
 })
 
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:llama",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -265,4 +265,4 @@ mcl_mobs.spawn_setup({
 	chance = 50,
 })
 
-mcl_mobs.register_egg("mobs_mc:llama", S("Llama"), "#c09e7d", "#995f40", 0)
+vlc_mobs.register_egg("mobs_mc:llama", S("Llama"), "#c09e7d", "#995f40", 0)

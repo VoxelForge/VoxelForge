@@ -8,7 +8,7 @@ local S = minetest.get_translator("mobs_mc")
 
 
 
-mcl_mobs.register_mob("mobs_mc:chicken", {
+vlc_mobs.register_mob("mobs_mc:chicken", {
 	description = S("Chicken"),
 	type = "animal",
 	spawn_class = "passive",
@@ -37,12 +37,12 @@ mcl_mobs.register_mob("mobs_mc:chicken", {
 	walk_velocity = 1,
 	jump_height = 1.5,
 	drops = {
-		{name = "mcl_mobitems:chicken",
+		{name = "vlc_mobitems:chicken",
 		chance = 1,
 		min = 1,
 		max = 1,
 		looting = "common",},
-		{name = "mcl_mobitems:feather",
+		{name = "vlc_mobitems:feather",
 		chance = 1,
 		min = 0,
 		max = 2,
@@ -75,18 +75,18 @@ mcl_mobs.register_mob("mobs_mc:chicken", {
 		run_start = 31, run_end = 51, run_speed = 75,
 	},
 	follow = {
-		"mcl_farming:wheat_seeds",
-		"mcl_farming:melon_seeds",
-		"mcl_farming:pumpkin_seeds",
-		"mcl_farming:beetroot_seeds",
+		"vlc_farming:wheat_seeds",
+		"vlc_farming:melon_seeds",
+		"vlc_farming:pumpkin_seeds",
+		"vlc_farming:beetroot_seeds",
 	},
 	view_range = 16,
 	fear_height = 4,
 
 	on_rightclick = function(self, clicker)
 		if self:feed_tame(clicker, 1, true, false) then return end
-		if mcl_mobs.protect(self, clicker) then return end
-		if mcl_mobs.capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
+		if vlc_mobs.protect(self, clicker) then return end
+		if vlc_mobs.capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
 	end,
 
 	do_custom = function(self, dtime)
@@ -99,7 +99,7 @@ mcl_mobs.register_mob("mobs_mc:chicken", {
 
 		local pos = self.object:get_pos()
 
-		minetest.add_item(pos, "mcl_throwing:egg")
+		minetest.add_item(pos, "vlc_throwing:egg")
 
 		minetest.sound_play("mobs_mc_chicken_lay_egg", {
 			pos = pos,
@@ -110,7 +110,7 @@ mcl_mobs.register_mob("mobs_mc:chicken", {
 
 })
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:chicken",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -157,4 +157,4 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:chicken", S("Chicken"), "#a1a1a1", "#ff0000", 0)
+vlc_mobs.register_egg("mobs_mc:chicken", S("Chicken"), "#a1a1a1", "#ff0000", 0)

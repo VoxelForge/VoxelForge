@@ -1,0 +1,126 @@
+
+[
+	{
+		"name": "vlc_amethyst:amethyst_block",
+		"groups": {"pickaxey": 1, "building_block": 1, "natural_block": 1},
+		"is_ground_content": true,
+		"_vlc_hardness": 1.5,
+		"_vlc_blast_resistance": 1.5,
+		"sounds": "vlc_sounds.node_sound_glass_defaults"
+	},
+	{
+		"name": "vlc_amethyst:budding_amethyst",
+		"groups": {"pickaxey": 1, "building_block": 1, "dig_by_piston": 1},
+		"drop": "",
+		"is_ground_content": true,
+		"_vlc_hardness": 1.5,
+		"_vlc_blast_resistance": 1.5,
+		"sounds": "vlc_sounds.node_sound_glass_defaults"
+	},
+	{
+		"name": "vlc_amethyst:calcite",
+		"groups": {"pickaxey": 1, "natural_block": 1},
+		"_vlc_hardness": 0.75,
+		"_vlc_blast_resistance": 0.75,
+		"sounds": "vlc_sounds.node_sound_stone_defaults"
+	},
+	{
+		"name": "vlc_amethyst:tinted_glass",
+		"groups": {"handy": 1, "color_block": 1},
+		"_vlc_hardness": 0.3,
+		"_vlc_blast_resistance": 0.3,
+		"drawtype": "glasslike",
+		"use_texture_alpha": "blend",
+		"sunlight_propagates": false,
+		"sounds": "vlc_sounds.node_sound_glass_defaults"
+	},
+	{
+		"name": "vlc_amethyst:small_amethyst_bud",
+		"groups": {"destroy_by_lava_flow": 1, "dig_by_piston": 1, "pickaxey": 1, "natural_block": 1, "amethyst_buds": 1, "attached_node": 1},
+		"drop": "",
+		"inventory_image": "vlc_amethyst_small_amethyst_bud.png",
+		"paramtype1": "light",
+		"paramtype2": "wallmounted",
+		"drawtype": "plantlike",
+		"use_texture_alpha": "clip",
+		"sunlight_propogates": true,
+		"walkable": false,
+		"light_source": 3,
+		"sounds": "vlc_sounds.node_sound_glass_defaults",
+		"_vlc_hardness": 1.5,
+		"_vlc_blast_resistance": 1.5,
+		"_vlc_silk_touch_drop": true,
+		"_vlc_amethyst_next_grade": "vlc_amethyst:medium_amethyst_bud",
+		"selection_box": {
+			"type": "fixed",
+			"fixed": [[-0.25, -0.5, -0.25, 0.25, -0.15, 0.25]]
+		}
+	},
+	{
+		"name": "vlc_amethyst:medium_amethyst_bud",
+		"groups": {"destroy_by_lava_flow": 1, "dig_by_piston": 1, "pickaxey": 1, "natural_block": 1, "amethyst_buds": 1, "attached_node": 1},
+		"drop": "",
+		"inventory_image": "vlc_amethyst_medium_amethyst_bud.png",
+		"paramtype1": "light",
+		"paramtype2": "wallmounted",
+		"drawtype": "plantlike",
+		"use_texture_alpha": "clip",
+		"sunlight_propogates": true,
+		"walkable": false,
+		"light_source": 4,
+		"sounds": "vlc_sounds.node_sound_glass_defaults",
+		"_vlc_hardness": 1.5,
+		"_vlc_blast_resistance": 1.5,
+		"_vlc_silk_touch_drop": true,
+		"_vlc_amethyst_next_grade": "vlc_amethyst:large_amethyst_bud",
+		"selection_box": {
+			"type": "fixed",
+			"fixed": [[-0.3, -0.5, -0.3, 0.3, -0.05, 0.3]]
+		}
+	},
+	{
+		"name": "vlc_amethyst:large_amethyst_bud",
+		"groups": {"destroy_by_lava_flow": 1, "dig_by_piston": 1, "pickaxey": 1, "natural_block": 1, "amethyst_buds": 1, "attached_node": 1},
+		"drop": "",
+		"inventory_image": "vlc_amethyst_large_amethyst_bud.png",
+		"paramtype1": "light",
+		"paramtype2": "wallmounted",
+		"drawtype": "plantlike",
+		"use_texture_alpha": "clip",
+		"sunlight_propogates": true,
+		"walkable": false,
+		"light_source": 5,
+		"sounds": "vlc_sounds.node_sound_glass_defaults",
+		"_vlc_hardness": 1.5,
+		"_vlc_blast_resistance": 1.5,
+		"_vlc_silk_touch_drop": true,
+		"_vlc_amethyst_next_grade": "vlc_amethyst:amethyst_cluster",
+		"selection_box": {
+			"type": "fixed",
+			"fixed": [[-0.3, -0.5, -0.3, 0.3, 0.05, 0.3]]
+		}
+	},
+	{
+		"name": "vlc_amethyst:amethyst_cluster",
+		"groups": {"destroy_by_lava_flow": 1, "dig_by_piston": 1, "pickaxey": 1, "natural_block": 1, "attached_node": 1},
+		"inventory_image": "vlc_amethyst_amethyst_cluster.png",
+		"paramtype1": "light",
+		"paramtype2": "wallmounted",
+		"drawtype": "plantlike",
+		"use_texture_alpha": "clip",
+		"sunlight_propogates": true,
+		"walkable": false,
+		"light_source": 7,
+		"sounds": "vlc_sounds.node_sound_glass_defaults",
+		"_vlc_hardness": 1.5,
+		"_vlc_blast_resistance": 1.5,
+		"_vlc_silk_touch_drop": true,
+		"selection_box": {
+			"type": "fixed",
+			"fixed": [[-0.35, -0.5, -0.35, 0.35, 0.3, 0.35]]
+		},
+	},
+    	
+]
+
+

@@ -124,7 +124,7 @@ local function check_perch(self,dtime)
 	end
 end
 
-mcl_mobs.register_mob("mobs_mc:parrot", {
+vlc_mobs.register_mob("mobs_mc:parrot", {
 	description = S("Parrot"),
 	type = "animal",
 	spawn_class = "passive",
@@ -153,7 +153,7 @@ mcl_mobs.register_mob("mobs_mc:parrot", {
 		distance = 16,
 	},
 	drops = {
-		{name = "mcl_mobitems:feather",
+		{name = "vlc_mobitems:feather",
 		chance = 1,
 		min = 1,
 		max = 2,
@@ -185,16 +185,16 @@ mcl_mobs.register_mob("mobs_mc:parrot", {
 	fear_height = 0,
 	view_range = 16,
 	follow = {
-		"mcl_farming:wheat_seeds",
-		"mcl_farming:melon_seeds",
-		"mcl_farming:pumpkin_seeds",
-		"mcl_farming:beetroot_seeds",
+		"vlc_farming:wheat_seeds",
+		"vlc_farming:melon_seeds",
+		"vlc_farming:pumpkin_seeds",
+		"vlc_farming:beetroot_seeds",
 	},
 	on_rightclick = function(self, clicker)
 		if self._doomed then return end
 		local item = clicker:get_wielded_item()
 		-- Kill parrot if fed with cookie
-		if item:get_name() == "mcl_farming:cookie" then
+		if item:get_name() == "vlc_farming:cookie" then
 			minetest.sound_play("mobs_mc_animal_eat_generic", {object = self.object, max_hear_distance=16}, true)
 			self.health = 0
 			-- Doomed to die
@@ -213,20 +213,20 @@ mcl_mobs.register_mob("mobs_mc:parrot", {
 		check_perch(self,dtime)
 		check_mobimitate(self,dtime)
 	end,
-	do_punch = function(self,puncher) --do_punch is the mcl_mobs_redo variant - it gets called by on_punch later....
+	do_punch = function(self,puncher) --do_punch is the vlc_mobs_redo variant - it gets called by on_punch later....
 		if self.object:get_attach() == puncher then
-			return false --return false explicitly here. mcl_mobs checks for that
+			return false --return false explicitly here. vlc_mobs checks for that
 		end
 	end,
 })
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:parrot",
 	type_of_spawning = "ground",
 	dimension = "overworld",
 	aoc = 3,
 	min_height = mobs_mc.water_level+7,
-	max_height = mcl_vars.mg_overworld_max,
+	max_height = vlc_vars.mg_overworld_max,
 	biomes = {
 		"Jungle",
 		"JungleEdgeM",
@@ -238,4 +238,4 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:parrot", S("Parrot"), "#0da70a", "#ff0000", 0)
+vlc_mobs.register_egg("mobs_mc:parrot", S("Parrot"), "#0da70a", "#ff0000", 0)

@@ -35,7 +35,7 @@ local messy_textures = {
 }
 
 -- animation 45-80 is transition between passive and attack stance
-mcl_mobs.register_mob("mobs_mc:shulker", {
+vlc_mobs.register_mob("mobs_mc:shulker", {
 	description = S("Shulker"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -64,7 +64,7 @@ mcl_mobs.register_mob("mobs_mc:shulker", {
 	fall_speed = 0,
 	does_not_prevent_sleep = true,
 	drops = {
-		{name = "mcl_mobitems:shulker_shell",
+		{name = "vlc_mobitems:shulker_shell",
 		chance = 2,
 		min = 1,
 		max = 1,
@@ -86,8 +86,8 @@ mcl_mobs.register_mob("mobs_mc:shulker", {
 	walk_velocity = 0,
 	run_velocity = 0,
 	noyaw = true,
-	_mcl_fishing_hookable = true,
-	_mcl_fishing_reelable = false,
+	_vlc_fishing_hookable = true,
+	_vlc_fishing_reelable = false,
 	on_rightclick = function(self,clicker)
 		if clicker:is_player() then
 			local wstack = clicker:get_wielded_item()
@@ -109,7 +109,7 @@ mcl_mobs.register_mob("mobs_mc:shulker", {
 		local pos = self.object:get_pos()
 		if math.floor(self.object:get_yaw()) ~=0 then
 			self.object:set_yaw(0)
-			mcl_mobs.yaw(self, 0, 0, dtime)
+			vlc_mobs.yaw(self, 0, 0, dtime)
 		end
 		if self.state == "attack" then
 			self:set_animation("run")
@@ -185,19 +185,19 @@ mcl_mobs.register_mob("mobs_mc:shulker", {
 })
 
 -- bullet arrow (weapon)
-mcl_mobs.register_arrow("mobs_mc:shulkerbullet", {
+vlc_mobs.register_arrow("mobs_mc:shulkerbullet", {
 	visual = "sprite",
 	visual_size = {x = 0.25, y = 0.25},
 	textures = {"mobs_mc_shulkerbullet.png"},
 	velocity = 5,
 	homing = true,
-	_mcl_fishing_hookable = true,
-	_mcl_fishing_reelable = true,
-	hit_player = mcl_mobs.get_arrow_damage_func(4),
-	hit_mob = mcl_mobs.get_arrow_damage_func(4),
+	_vlc_fishing_hookable = true,
+	_vlc_fishing_reelable = true,
+	hit_player = vlc_mobs.get_arrow_damage_func(4),
+	hit_mob = vlc_mobs.get_arrow_damage_func(4),
 	hit_node = function(self, _)
 		self.object:remove()
 	end
 })
 
-mcl_mobs.register_egg("mobs_mc:shulker", S("Shulker"), "#946694", "#4d3852", 0)
+vlc_mobs.register_egg("mobs_mc:shulker", S("Shulker"), "#946694", "#4d3852", 0)

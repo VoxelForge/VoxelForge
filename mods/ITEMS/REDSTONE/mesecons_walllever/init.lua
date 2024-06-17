@@ -77,7 +77,7 @@ minetest.register_node("mesecons_walllever:wall_lever_off", {
 		if not def then return end
 		local groups = def.groups
 
-		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		local rc = vlc_util.call_on_rightclick(itemstack, placer, pointed_thing)
 		if rc then return rc end
 
 		-- If the pointed node is buildable, let's look at the node *behind* that node
@@ -136,14 +136,14 @@ minetest.register_node("mesecons_walllever:wall_lever_off", {
 		return itemstack
 	end,
 
-	sounds = mcl_sounds.node_sound_stone_defaults(),
+	sounds = vlc_sounds.node_sound_stone_defaults(),
 	mesecons = {receptor = {
 		rules = lever_get_output_rules,
 		state = mesecon.state.off
 	}},
 	on_rotate = on_rotate,
-	_mcl_blast_resistance = 0.5,
-	_mcl_hardness = 0.5,
+	_vlc_blast_resistance = 0.5,
+	_vlc_hardness = 0.5,
 	_on_wind_charge_hit = function(pos)
 		local node = minetest.get_node(pos)
 			minetest.swap_node(pos, {name="mesecons_walllever:wall_lever_on", param2=node.param2})
@@ -176,14 +176,14 @@ minetest.register_node("mesecons_walllever:wall_lever_on", {
 		mesecon.receptor_off(pos, lever_get_output_rules(node))
 		minetest.sound_play("mesecons_button_push", {pos=pos, max_hear_distance=16, pitch=0.9}, true)
 	end,
-	sounds = mcl_sounds.node_sound_stone_defaults(),
+	sounds = vlc_sounds.node_sound_stone_defaults(),
 	mesecons = {receptor = {
 		rules = lever_get_output_rules,
 		state = mesecon.state.on
 	}},
 	on_rotate = on_rotate,
-	_mcl_blast_resistance = 0.5,
-	_mcl_hardness = 0.5,
+	_vlc_blast_resistance = 0.5,
+	_vlc_hardness = 0.5,
 	_on_wind_charge_hit = function(pos)
 		local node = minetest.get_node(pos)
 			minetest.swap_node(pos, {name="mesecons_walllever:wall_lever_off", param2=node.param2})
@@ -196,8 +196,8 @@ minetest.register_node("mesecons_walllever:wall_lever_on", {
 minetest.register_craft({
 	output = "mesecons_walllever:wall_lever_off",
 	recipe = {
-		{"mcl_core:stick"},
-		{"mcl_core:cobble"},
+		{"vlc_core:stick"},
+		{"vlc_core:cobble"},
 	}
 })
 

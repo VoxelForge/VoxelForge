@@ -45,16 +45,16 @@ local hoglin = {
 	retaliates = true,
 	group_attack = true,
 	avoid_from = {
-		"mcl_crimson:warped_fungus",
-		"mcl_flowerpots:flower_pot_warped_fungus",
-		"mcl_portals:portal",
-		"mcl_beds:respawn_anchor",
-		"mcl_beds:respawn_anchor_charged_1",
-		"mcl_beds:respawn_anchor_charged_2",
-		"mcl_beds:respawn_anchor_charged_3",
-		"mcl_beds:respawn_anchor_charged_4",
+		"vlc_crimson:warped_fungus",
+		"vlc_flowerpots:flower_pot_warped_fungus",
+		"vlc_portals:portal",
+		"vlc_beds:respawn_anchor",
+		"vlc_beds:respawn_anchor_charged_1",
+		"vlc_beds:respawn_anchor_charged_2",
+		"vlc_beds:respawn_anchor_charged_3",
+		"vlc_beds:respawn_anchor_charged_4",
 	},
-	follow = {"mcl_crimson:crimson_fungus"},
+	follow = {"vlc_crimson:crimson_fungus"},
 	drops = {
 		{
 			name = "mobs_mcitems:leather",
@@ -63,7 +63,7 @@ local hoglin = {
 			max = 1,
 		},
 		{
-			name = "mcl_mobitems:porkchop",
+			name = "vlc_mobitems:porkchop",
 			chance = 1,
 			min = 2,
 			max = 4,
@@ -88,12 +88,12 @@ local hoglin = {
 	custom_attack = function(self)
 		if self.state == "attack" and self.reach > vector.distance(self.object:get_pos(), self.attack:get_pos()) then
 			self.attack:add_velocity({x=0,y=13,z=0})
-			mcl_util.deal_damage(self.attack, self.damage, {type = "mob"})
+			vlc_util.deal_damage(self.attack, self.damage, {type = "mob"})
 		end
 	end,
 	do_custom = function(self)
-		if mcl_worlds.pos_to_dimension(self.object:get_pos()) == "overworld" then
-			mcl_util.replace_mob(self.object, "mobs_mc:zoglin")
+		if vlc_worlds.pos_to_dimension(self.object:get_pos()) == "overworld" then
+			vlc_util.replace_mob(self.object, "mobs_mc:zoglin")
 		end
 	end,
 	on_rightclick = function(self, clicker)
@@ -101,9 +101,9 @@ local hoglin = {
 	end,
 	attack_animals = true,
 }
-mcl_mobs.register_mob("mobs_mc:hoglin", hoglin)
+vlc_mobs.register_mob("mobs_mc:hoglin", hoglin)
 
-mcl_mobs.register_mob("mobs_mc:zoglin",table.merge(hoglin,{
+vlc_mobs.register_mob("mobs_mc:zoglin",table.merge(hoglin,{
 	description = S("Zoglin"),
 	fire_resistant = 1,
 	textures = {"extra_mobs_zoglin.png"},
@@ -119,7 +119,7 @@ mcl_mobs.register_mob("mobs_mc:zoglin",table.merge(hoglin,{
 	},
 }))
 
-mcl_mobs.register_mob("mobs_mc:baby_hoglin",table.merge(hoglin,{
+vlc_mobs.register_mob("mobs_mc:baby_hoglin",table.merge(hoglin,{
 	description = S("Baby Hoglin"),
 	collisionbox = {-.3, -0.01, -.3, .3, 0.94, .3},
 	xp_min = 20,
@@ -134,13 +134,13 @@ mcl_mobs.register_mob("mobs_mc:baby_hoglin",table.merge(hoglin,{
 	child = 1,
 }))
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:hoglin",
 	type_of_spawning = "ground",
 	dimension = "nether",
 	min_light = 0,
 	max_light = minetest.LIGHT_MAX+1,
-	min_height = mcl_vars.mg_lava_nether_max,
+	min_height = vlc_vars.mg_lava_nether_max,
 	aoc = 3,
 	biomes = {
 		"Nether",
@@ -150,4 +150,4 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:hoglin", S("Hoglin"), "#85682e", "#2b2140", 0)
+vlc_mobs.register_egg("mobs_mc:hoglin", S("Hoglin"), "#85682e", "#2b2140", 0)

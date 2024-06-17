@@ -12,7 +12,7 @@ local S = minetest.get_translator("mobs_mc")
 local walk_dist = 40
 local tele_dist = 80
 
-mcl_mobs.register_mob("mobs_mc:iron_golem", {
+vlc_mobs.register_mob("mobs_mc:iron_golem", {
 	description = S("Iron Golem"),
 	type = "npc",
 	spawn_class = "passive",
@@ -50,10 +50,10 @@ mcl_mobs.register_mob("mobs_mc:iron_golem", {
 	attacks_monsters = true,
 	attack_type = "dogfight",
 	_got_poppy = false,
-	pick_up = {"mcl_flowers:poppy"},
+	pick_up = {"vlc_flowers:poppy"},
 	on_pick_up = function(self,n)
 		local it = ItemStack(n.itemstring)
-		if it:get_name() == "mcl_flowers:poppy" then
+		if it:get_name() == "vlc_flowers:poppy" then
 			if not self._got_poppy then
 				self._got_poppy=true
 				it:take_item(1)
@@ -61,21 +61,21 @@ mcl_mobs.register_mob("mobs_mc:iron_golem", {
 		end
 		return it
 	end,
-	replace_what = {"mcl_flowers:poppy"},
+	replace_what = {"vlc_flowers:poppy"},
 	replace_with = {"air"},
 	on_replace = function(self, pos, oldnode, newnode)
-		if not self.got_poppy and oldnode.name == "mcl_flowers:poppy" then
+		if not self.got_poppy and oldnode.name == "vlc_flowers:poppy" then
 			self._got_poppy=true
 			return
 		end
 		return false
 	end,
 	drops = {
-		{name = "mcl_core:iron_ingot",
+		{name = "vlc_core:iron_ingot",
 		chance = 1,
 		min = 3,
 		max = 5,},
-		{name = "mcl_flowers:poppy",
+		{name = "vlc_flowers:poppy",
 		chance = 1,
 		min = 0,
 		max = 2,},
@@ -113,7 +113,7 @@ mcl_mobs.register_mob("mobs_mc:iron_golem", {
 
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:iron_golem", S("Iron Golem"), "#3b3b3b", "#f57223", 0)
+vlc_mobs.register_egg("mobs_mc:iron_golem", S("Iron Golem"), "#3b3b3b", "#f57223", 0)
 
 --[[ This is to be called when a pumpkin or jack'o lantern has been placed. Recommended: In the on_construct function of the node.
 This summons an iron golen if placing the pumpkin created an iron golem summon pattern:
@@ -185,7 +185,7 @@ function mobs_mc.check_iron_golem_summon(pos, player)
 		for i=1, 4 do
 			local cpos = vector.add(pos, checks[c][i])
 			local node = minetest.get_node(cpos)
-			if node.name ~= "mcl_core:ironblock" then
+			if node.name ~= "vlc_core:ironblock" then
 				ok = false
 				break
 			end
