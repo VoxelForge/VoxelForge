@@ -1,5 +1,0 @@
-mcl_core
-mcl_mobitems
-mcl_dye
-mcl_end
-mesecons_materials

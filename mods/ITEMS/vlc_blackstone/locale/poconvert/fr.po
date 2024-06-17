@@ -1,0 +1,78 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Minetest textdomain mcl_blackstone x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.0\n"
+
+msgid "Blackstone"
+msgstr "Roche noire"
+
+msgid "Gilded Blackstone"
+msgstr "Roche noire dorée"
+
+msgid "Nether Gold Ore"
+msgstr "Minerai d'or du Nether"
+
+msgid "Polished Basalt"
+msgstr "Basalte taillé"
+
+msgid "Basalt"
+msgstr "Basalte"
+
+msgid "Smooth Basalt"
+msgstr "Basalte lisse"
+
+msgid "Polished Blackstone"
+msgstr "Pierre noire"
+
+msgid "Chiseled Polished Blackstone"
+msgstr "Pierre noire sculptée"
+
+msgid "Polished Blackstone Bricks"
+msgstr "Briques de pierre noire"
+
+msgid "Quartz Bricks"
+msgstr "Briques de quartz"
+
+msgid "Soul Soil"
+msgstr "Terre des âmes"
+
+msgid "Eternal Soul Fire"
+msgstr "Feu éternel des âmes"
+
+msgid "Blackstone Stairs"
+msgstr ""
+
+msgid "Blackstone Slab"
+msgstr "Dalle de roche noire"
+
+msgid "Polished Blackstone Stairs"
+msgstr ""
+
+msgid "Polished Blackstone Slab"
+msgstr "Dalle de pierre noire"
+
+msgid "Blackstone Brick Stairs"
+msgstr ""
+
+msgid "Blackstone Brick Slab"
+msgstr ""
+
+msgid "Blackstone Wall"
+msgstr "Muret de Roche noire"
+
+msgid "Soul Torch"
+msgstr "Torche des âmes"
+
+msgid "Torches are light sources which can be placed at the side or on the top of most blocks."
+msgstr ""
+

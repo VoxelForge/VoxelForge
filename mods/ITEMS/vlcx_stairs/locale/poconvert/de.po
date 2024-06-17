@@ -1,0 +1,90 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Minetest textdomain mclx_stairs x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2024-05-22 06:30+0000\n"
+"Last-Translator: j-r <j-r@users.noreply.translate.codeberg.org>\n"
+"Language-Team: German <https://translate.codeberg.org/projects/mineclonia/"
+"mclx_stairs/de/>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5.5\n"
+
+msgid "Lapis Lazuli Stairs"
+msgstr "Lapislazulitreppe"
+
+msgid "Lapis Lazuli Slab"
+msgstr "Lapislazuliplatte"
+
+msgid "Gold Stairs"
+msgstr "Goldtreppe"
+
+msgid "Gold Slab"
+msgstr ""
+
+msgid "Iron Stairs"
+msgstr ""
+
+msgid "Iron Slab"
+msgstr ""
+
+msgid "Cracked Stone Brick Stairs"
+msgstr "Rissige Steinziegeltreppe"
+
+msgid "Cracked Stone Brick Slab"
+msgstr "Rissige Steinziegelplatte"
+
+msgid "Cracked Deepslate Brick Stairs"
+msgstr ""
+
+msgid "Cracked Deepslate Brick Slab"
+msgstr ""
+
+msgid "Cracked Deepslate Tile Stairs"
+msgstr ""
+
+msgid "Cracked Deepslate Tile Slab"
+msgstr ""
+
+msgid "End Stone Stairs"
+msgstr ""
+
+msgid "End Stone Slab"
+msgstr ""
+
+msgid "Smooth Stone Stairs"
+msgstr ""
+
+msgid "@1 Concrete Stairs"
+msgstr ""
+
+msgid "@1 Concrete Slab"
+msgstr ""
+
+msgid "@1 Terracotta Stairs"
+msgstr ""
+
+msgid "@1 Terracotta Slab"
+msgstr ""
+
+msgid "Concrete Slab"
+msgstr "Betonplatte"
+
+msgid "Double Concrete Slab"
+msgstr "Doppelte Betonplatte"
+
+msgid "Concrete Stairs"
+msgstr "Betontreppe"
+
+msgid "Terracotta Slab"
+msgstr ""
+
+msgid "Double Terracotta Slab"
+msgstr ""
+
+msgid "Terracotta Stairs"
+msgstr ""

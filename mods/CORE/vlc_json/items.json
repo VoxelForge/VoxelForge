@@ -1,0 +1,22 @@
+[
+	{
+		"name": "vlc_amethyst:amethyst_shard",
+		"groups": {"craftitem": 1},
+	},
+	{
+		"name": "vlc_totems:totem_of_undying",
+		"wield_image": "vlc_totems_totem.png",
+		"stack_max": 1,
+		"groups": {"combat_item": 1, "offhand_item": 1},
+		"_vlc_wieldview_item": "vlc_totems:totem",
+	},
+	{
+		"name": "vlc_totems:totem",
+		"wield_image": "vlc_totems_totem_wieldview.png",
+		"stack_max": 1,
+		"groups": {"not_in_creative_inventory": 1},
+	}
+		
+]
+
+
