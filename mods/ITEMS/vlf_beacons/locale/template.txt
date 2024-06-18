@@ -1,4 +1,0 @@
-# textdomain: vlf_beacons
-Beacon:=
-Primary Power:=
-Inventory:=
