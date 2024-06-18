@@ -1,9 +1,0 @@
-vlc_trees = {}
-vlc_trees.woods = {}
-
-local modpath = minetest.get_modpath(minetest.get_current_modname())
-
-dofile(modpath.."/functions.lua")
-dofile(modpath.."/api.lua")
-dofile(modpath.."/recipes.lua")
-dofile(modpath.."/abms.lua")
