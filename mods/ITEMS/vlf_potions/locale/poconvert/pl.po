@@ -1,0 +1,300 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Minetest textdomain mcl_potions x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.0\n"
+
+msgid "<effect> <duration> [<factor>]"
+msgstr "<efekt> <czas trwania> [<czynnik>]"
+
+msgid "Add a status effect to yourself. Arguments: <effect>: name of status effect, e.g. poison. <duration>: duration in seconds. <factor>: effect strength multiplier (1 = 100%)"
+msgstr "Dodaj status na siebie. Argumenty: <efekt>: nazwa efektu statusu, np. trucizna. <czas trwania>: czas trwania w sekundach. <czynnik>: czynnik siły efektu (1 = 100%)"
+
+msgid "Missing effect parameter!"
+msgstr "Brak parametru efektu!"
+
+msgid "Missing or invalid duration parameter!"
+msgstr "Brak lub nieprawidłowy parametr czasu trwania!"
+
+msgid "Invalid factor parameter!"
+msgstr "Nieprawidłowy parametr czynnika!"
+
+msgid "@1 is not an available status effect."
+msgstr "@1 nie jest dostępnym efektem statusu."
+
+msgid "Fermented Spider Eye"
+msgstr "Fermentowane oko pająka"
+
+msgid "Glass Bottle"
+msgstr "Szklana butelka"
+
+msgid "Liquid container"
+msgstr "Pojemnik na płyn"
+
+msgid "A glass bottle is used as a container for liquids and can be used to collect water directly."
+msgstr "Szklana butelka jest używana jako pojemnik na płyny i może być wykorzystana bezpośrednio do pozyskiwania wody."
+
+msgid "To collect water, use it on a cauldron with water (which removes a level of water) or any water source (which removes no water)."
+msgstr "Aby pozyskać wodę użyj jej na kotle z wodą (co usunie jeden poziom wody) lub jakimkolwiek źródle wody (co nie usunie wody)."
+
+msgid "Water Bottle"
+msgstr "Butelka wody"
+
+msgid "Water bottles can be used to fill cauldrons. Drinking water has no effect."
+msgstr "Butelka wody może być wykorzystana do napełniania kotłów. Picie wody nie ma żadnych efektów."
+
+msgid "Use the “Place” key to drink. Place this item on a cauldron to pour the water into the cauldron."
+msgstr "Użyj przycisku do stawiania aby pić. Postaw ten przedmiot na kotle aby wylać wodę do kotła."
+
+msgid "River Water Bottle"
+msgstr "Butelka wody rzecznej"
+
+msgid "River water bottles can be used to fill cauldrons. Drinking it has no effect."
+msgstr "Butelka wody rzecznej może być wykorzystana do napełniania kotłów. Picie jej nie ma żadnego efektu."
+
+msgid "Use the “Place” key to drink. Place this item on a cauldron to pour the river water into the cauldron."
+msgstr "Użyj przycisku do stawiania aby pić. Postaw ten przedmiot na kotle aby wylać wodę rzeczną do kotła."
+
+msgid "Splash Water Bottle"
+msgstr "Miotana butelka wody"
+
+msgid "Extinguishes fire and hurts some mobs"
+msgstr "Gasi ogień i rani niektóre moby"
+
+msgid "A throwable water bottle that will shatter on impact, where it extinguishes nearby fire and hurts mobs that are vulnerable to water."
+msgstr "Butelka wody którą można rzucać i roztrzaska się przy uderzeniu, gdzie ugasi ogień i rani moby podatne na wodę."
+
+msgid "Lingering Water Bottle"
+msgstr "Trwała miotana butelka wody"
+
+msgid "A throwable water bottle that will shatter on impact, where it creates a cloud of water vapor that lingers on the ground for a while. This cloud extinguishes fire and hurts mobs that are vulnerable to water."
+msgstr "Butelka wody którą można rzucać i roztrzaska się przy uderzeniu tworząc opary wody pozostające przez chwilę na ziemi. Opary te gaszą ogień i ranią moby podatne na wodę."
+
+msgid "Glistering Melon"
+msgstr "Błyszczący arbuz"
+
+msgid "This shiny melon is full of tiny gold nuggets and would be nice in an item frame. It isn't edible and not useful for anything else."
+msgstr "Ten błyszczący arbuz jest pełen tycich odłamków złota i wygląda ładnie w ramkach na przedmioty. Nie jest jadalny ani użyteczny do innych rzeczy."
+
+msgid "Try different combinations to create potions."
+msgstr "Spróbuj innej kombinacji aby stworzyć miksturę."
+
+msgid "No effect"
+msgstr "Brak efektu"
+
+msgid "A throwable potion that will shatter on impact, where it creates a magic cloud that lingers around for a while. Any player or mob inside the cloud will receive the potion's effect, possibly repeatedly."
+msgstr "Mikstura którą można rzucać i roztrzaska się przy uderzeniu tworząc magiczne opary pozostające przez chwilę na ziemi. Jakikolwiek gracz lub mob wewnątrz oparów będzie wystawiony na efekt mikstury."
+
+msgid "Use the “Punch” key to throw it."
+msgstr "Użyj przycisku \"Uderz\" by rzucić."
+
+msgid "Use the “Place” key to drink it."
+msgstr "Użyj przycisku \"Postaw\" by wypić."
+
+msgid "Drinking a potion gives you a particular effect."
+msgstr "Wypicie mikstury sprawi, że będziesz wystawiona na jej efekty."
+
+msgid "1 HP/@1s | @2"
+msgstr "1 HP/@1s | @2"
+
+msgid "@1 HP"
+msgstr "@1 HP"
+
+msgid "@1 Potion"
+msgstr "Mikstura @1"
+
+msgid "Splash @1 Potion"
+msgstr "Miotana mikstura @1"
+
+msgid "Lingering @1 Potion"
+msgstr "Trwała miotana mikstura @1"
+
+msgid "Arrow of @1"
+msgstr "Strzała @1"
+
+msgid " II"
+msgstr " II"
+
+msgid " IV"
+msgstr " IV"
+
+msgid "@1 Potion@2"
+msgstr "Mikstura @1@2"
+
+msgid "Splash @1@2 Potion"
+msgstr "Miotana mikstura @1@2"
+
+msgid "Lingering @1@2 Potion"
+msgstr "Trwała miotana mikstura @1@2"
+
+msgid "Arrow of @1@2"
+msgstr "Strzała @1@2"
+
+msgid "@1 + Potion"
+msgstr "Mikstura @1 +"
+
+msgid "Splash @1 + Potion"
+msgstr "Miotana mikstura @1 +"
+
+msgid "Lingering @1 + Potion"
+msgstr "Trwała miotana mikstura @1 +"
+
+msgid "Arrow of @1 +"
+msgstr "Strzała @1 +"
+
+msgid "Awkward Potion"
+msgstr "Klarowna mikstura"
+
+msgid "Awkward Splash Potion"
+msgstr "Klarowna miotana mikstura"
+
+msgid "Awkward Lingering Potion"
+msgstr "Klarowna trwała miotana mikstura"
+
+msgid "Has an awkward taste and is used for brewing potions."
+msgstr "Ma dziwny smak i jest użyteczna przy warzenia mikstur."
+
+msgid "Mundane Potion"
+msgstr "Mdła mikstura"
+
+msgid "Mundane Splash Potion"
+msgstr "Mdła miotana mikstura"
+
+msgid "Mundane Lingering Potion"
+msgstr "Mdła trwała miotana mikstura"
+
+msgid "Has a terrible taste and is not useful for brewing potions."
+msgstr "Ma ohydny smak i nie jest użyteczna przy warzenia mikstur."
+
+msgid "Thick Potion"
+msgstr "Gęsta mikstura"
+
+msgid "Thick Splash Potion"
+msgstr "Gęsta miotana mikstura"
+
+msgid "Thick Lingering Potion"
+msgstr "Gęsta trwała miotana mikstura"
+
+msgid "Has a bitter taste and is not useful for brewing potions."
+msgstr "Ma cierpki smak i nie jest użyteczna przy warzenia mikstur."
+
+msgid "Dragon's Breath"
+msgstr "Oddech smoka"
+
+msgid "This item is used in brewing and can be combined with splash potions to create lingering potions."
+msgstr "Ten przedmiot jest używany przy warzeniu i może zostać dodany do miotanych mikstur aby uczynić je trwałymi."
+
+msgid "Healing"
+msgstr "leczenia"
+
+msgid "+4 HP"
+msgstr "+4 HP"
+
+msgid "+8 HP"
+msgstr "+8 HP"
+
+msgid "Instantly heals."
+msgstr "Natychmiastowo leczy."
+
+msgid "Harming"
+msgstr "obrażeń"
+
+msgid "-6 HP"
+msgstr "-6 HP"
+
+msgid "-12 HP"
+msgstr "-12 HP"
+
+msgid "Instantly deals damage."
+msgstr "Natychmiastowo zadaje obrażenia."
+
+msgid "Night Vision"
+msgstr "widzenia w ciemności"
+
+msgid "Increases the perceived brightness of light under a dark sky."
+msgstr "Zwiększa postrzeganą jasność przy ciemnym niebie."
+
+msgid "Swiftness"
+msgstr "prędkości"
+
+msgid "Increases walking speed."
+msgstr "Zwiększa prędkość poruszania."
+
+msgid "Slowness"
+msgstr "spowolnienia"
+
+msgid "Decreases walking speed."
+msgstr "Zmniejsza prędkość poruszania."
+
+msgid "Leaping"
+msgstr "skakania"
+
+msgid "Increases jump strength."
+msgstr "Zwiększa siłę skoku."
+
+msgid "Withering"
+msgstr ""
+
+msgid "Applies the withering effect which deals damage at a regular interval and can kill."
+msgstr ""
+
+msgid "Poison"
+msgstr "trucizny"
+
+msgid "Applies the poison effect which deals damage at a regular interval."
+msgstr "Aplikuje efekt trucizny zadający obrażenia w regularnych odstępach czasu."
+
+msgid "Regeneration"
+msgstr "regeneracji"
+
+msgid "Regenerates health over time."
+msgstr "Regeneruje życie przez pewien czas."
+
+msgid "Invisibility"
+msgstr "niewidzialności"
+
+msgid "Grants invisibility."
+msgstr "Sprawia, że cel jest niewidzialny."
+
+msgid "Water Breathing"
+msgstr "oddychania pod wodą"
+
+msgid "Grants limitless breath underwater."
+msgstr "Sprawia, że cel może oddychać pod wodą."
+
+msgid "Fire Resistance"
+msgstr "odporności na ogień"
+
+msgid "Grants immunity to damage from heat sources like fire."
+msgstr "Sprawia, że cel jest odporny na obrażenia od źródeł ciepła takich jak ogień."
+
+msgid "Weakness"
+msgstr "słabości"
+
+msgid "Weakness +"
+msgstr "słabości +"
+
+msgid "Strength"
+msgstr "siły"
+
+msgid "Strength II"
+msgstr "siły II"
+
+msgid "Strength +"
+msgstr "siły +"
+
+msgid "A throwable potion that will shatter on impact, where it gives all nearby players and mobs a status effect."
+msgstr "Mikstura, którą można rzucić i rozbije się przy uderzeniu wystawiając wszystkich pobliskich graczy i moby na efekt jej działania."
+
+msgid "This particular arrow is tipped and will give an effect when it hits a player or mob."
+msgstr "Czubek tej strzały jest zanurzony w miksturze co wystawi jej cel na efekt jej działania."
+

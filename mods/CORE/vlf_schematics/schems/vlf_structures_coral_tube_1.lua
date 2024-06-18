@@ -1,0 +1,28 @@
+schematic = {
+	size = {x=2, y=3, z=3},
+	yslice_prob = {
+		{ypos=0, prob=254},
+		{ypos=1, prob=254},
+		{ypos=2, prob=254},
+	},
+	data = {
+		{name="air", prob=0, param2=0},
+		{name="air", prob=0, param2=0},
+		{name="air", prob=0, param2=0},
+		{name="air", prob=0, param2=0},
+		{name="air", prob=0, param2=0},
+		{name="vlf_ocean:tube_coral", prob=254, param2=9},
+		{name="air", prob=0, param2=0},
+		{name="air", prob=0, param2=0},
+		{name="air", prob=0, param2=0},
+		{name="air", prob=0, param2=0},
+		{name="vlf_ocean:tube_coral", prob=254, param2=1},
+		{name="vlf_ocean:tube_coral", prob=254, param2=9},
+		{name="vlf_ocean:tube_coral_block", prob=254, param2=0},
+		{name="air", prob=0, param2=0},
+		{name="vlf_ocean:tube_coral_block", prob=254, param2=0},
+		{name="air", prob=0, param2=0},
+		{name="vlf_ocean:tube_coral_fan", prob=254, param2=4},
+		{name="air", prob=0, param2=0},
+	},
+}

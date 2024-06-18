@@ -1,0 +1,60 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Minetest textdomain mcl_crimson x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2024-05-21 19:25+0000\n"
+"Last-Translator: Kyoushi <Kyoushi@users.noreply.translate.codeberg.org>\n"
+"Language-Team: German <https://translate.codeberg.org/projects/mineclonia/"
+"mcl_crimson/de/>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5.5\n"
+
+msgid "Crimson"
+msgstr "Karmesin"
+
+msgid "Warped"
+msgstr "Wirr"
+
+msgid "Warped Fungus"
+msgstr "Wirrpilz"
+
+msgid "Warped fungus is a mushroom found in the nether's warped forest."
+msgstr "Der Wirrpilz kann im Wirrwald der Netherwelt gefunden werden."
+
+msgid "Twisting Vines"
+msgstr "Zwirbelranken"
+
+msgid "Weeping Vines"
+msgstr "Trauerranken"
+
+msgid "Nether Sprouts"
+msgstr "Nethersprossen"
+
+msgid "Warped Roots"
+msgstr "Wirrwurzeln"
+
+msgid "Warped Wart Block"
+msgstr "Wirrwarzenblock"
+
+msgid "Shroomlight"
+msgstr "Pilzlicht"
+
+msgid "Warped Nylium"
+msgstr "Wirr-Nezel"
+
+msgid "Crimson Fungus"
+msgstr "Karmesinpilz"
+
+msgid "Crimson fungus is a mushroom found in the nether's crimson forest."
+msgstr "Der Karmesinpilz kann im Karmesinwald im Nether gefunden werden."
+
+msgid "Crimson Roots"
+msgstr "Karmesinwurzeln"
+
+msgid "Crimson Nylium"
+msgstr "Karmesin-Nezel"
