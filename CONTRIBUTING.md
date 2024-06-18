@@ -1,11 +1,13 @@
 # Contributing to Mineclonia
-So you want to contribute to Mineclonia?
+So you want to contribute to VoxelCraft?
 
 Wow, thank you! :-)
 
-Mineclonia is maintained by ryvnf and cora. By asking us to include your
-changes in this game, you agree that they fall under the terms of the GPLv3
-license, which means they will become part of a free/libre software.
+VoxelCraft is maintained by DragonWrangler1. By requesting that we to include your
+changes in this game, you agree that they fall under one of the following two licenses:
+GPLv3
+GPLv2
+which means they will become part of a free/libre software.
 
 ## Inclusion criteria
 The project goals are listed under the project description in the
@@ -30,16 +32,16 @@ textures must come from sources which allow their use.
 
 ## Code Guidelines
 * Each mod must provide `mod.conf`.
-* Mod names are snake case, and newly added mods start with `mcl_`, e.g.
-  `mcl_core`, `mcl_farming`, `mcl_monster_eggs`. Keep in mind Minetest does not
+* Mod names are snake case, and newly added mods start with `vlc_`, e.g.
+  `vlc_core`, `vlc_farming`, `vlc_monster_eggs`. Keep in mind Minetest does not
   support capital letters in mod names.
 * To export functions, store them inside a global table named like the mod,
   e.g.
 
 ```lua
-mcl_example = {}
+vlc_example = {}
 
-function mcl_example.do_something()
+function vlc_example.do_something()
 	-- ...
 end
 ```
@@ -49,11 +51,11 @@ end
 
 ```lua
 -- bad
-function mcl_example:do_something()
+function vlc_example:do_something()
 end
 
 -- good
-function mcl_example.do_something()
+function vlc_example.do_something()
 end
 ```
 

@@ -1,35 +1,28 @@
 # VoxelCraft
 
-[![Github Traffic](https://github.com/Minetest-VoxelCraft/VoxelCraft/graphs/commit-activity)
+[![ContentDB](https://content.minetest.net/packages/DragonWrangler/voxelcraft/shields/downloads/)](https://content.minetest.net/packages/DragonWrangler/voxelcraft/)
 
-An unofficial Minecraft-like game for Minetest. Fork of MineClonia that focuses on being more minecraft like, while hopefully 
-simplifying the coding process see.
-To migrate from Mineclone2 or Mineclonia see: note. Needs updating [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
+An unofficial Minecraft-like game for Minetest. Fork of MineClone 2 with focus
+on stability, multiplayer performance and features. For information about
+migrating from MineClone 2 or Mineclonia to VoxelCraft, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
 
-Version: 0.1.0 - Beta
-
-### Differences from Mineclonia (All Coming soon, but not yet)
-* Uses JSON file format for many node registries.
-* Increases cloud height.
-* More copper blocks.
-* better ancient city.
-* better woodland mansion.
+Version: 0.101.0
 
 ### Differences from MineClone 2
-* Overworld depth increased from 64 to 128 nodes.
-* Improved nether portals.
-* Improved leaf decay.
-* Improved villages.
-* Wandering traders and trader llamas.
-* Suspicious nodes, pottery shreds and decorated pots.
-* Conduits.
-* Deep dark biome and ancient hermitage (structure corresponding to ancient city).
-* Functional loom to apply banner patterns.
-* Lush caves biome.
-* Cherry grove biome.
-* No in-game music, twice as small compared to MineClone 2.
-* No hamburgers.
-* More features but almost 10k lines of code less.
+* Overworld depth increased from 64 to 128 nodes
+* Improved nether portals
+* Improved leaf decay
+* Improved villages
+* Wandering traders and trader llamas
+* Suspicious nodes, pottery shreds and decorated pots
+* Conduits
+* Deep dark biome and ancient hermitage (structure corresponding to ancient city)
+* Functional loom to apply banner patterns
+* Lush caves biome
+* Cherry grove biome
+* No in-game music, twice as small compared to MineClone 2
+* No hamburgers
+* More features but almost 10k lines of code less
 
 ### Gameplay
 You start in a randomly-generated world made entirely of cubes. You can explore
@@ -92,7 +85,7 @@ inside the game. You can access the help from your inventory menu.
 The following items are interesting for Creative Mode and for adventure
 map builders. They can not be obtained in-game or in the creative inventory.
 
-* Barrier: `mcl_core:barrier`
+* Barrier: `vlc_core:barrier`
 
 Use the `/giveme` chat command to obtain them. See the in-game help for
 an explanation.
@@ -100,29 +93,32 @@ an explanation.
 ## Installation
 This game requires [Minetest](http://minetest.net) to run (version 5.5.1 or
 later). So you need to install Minetest first. Only stable versions of Minetest
-are officially supported. There is no support for running Mineclonia in
-development versions of Minetest.
+are officially supported. There is no support for running VoxelCraft in
+development versions of Minetest. If you have issues in dev versions, 
+then we will attempt to reproduce them in stable versions, 
+and if we can't then the issue will be closed, 
+and it will be looked into at the next release.
 
 To install VoxelCraft (if you haven't already), move this directory into the
 “games” directory of your Minetest data directory. Consult the help of
 Minetest to learn more.
 
 ## Useful links
-The VoxelCraft repository is hosted at [Github](https://github.com/Minetest-VoxelCraft/VoxelCraft).
+The VoxelCraft repository is hosted at [Codeberg](https://codeberg.org).
 To contribute or report issues, head there.
 
-* Codeberg: <https://github.com/Minetest-VoxelCraft/VoxelCraft>
-* ContentDB: <https://content.minetest.net/packages/ryvnf/mineclonia/>
+* Codeberg: <https://github/minetest-voxelcraft/voxelcraft>
+* ContentDB: <https://content.minetest.net/packages/DragonWrangler/voxelcraft>
 
 ## Project description
-The main goal of **VoxelCraft** is to be a stable, performant, and very close overall clone of
+The main goal of **VoxelCraft** is to be a stable and performant clone of
 Minecraft released as free software.
 
 * Minecraft is aimed to be cloned as well as Minetest currently permits without
   resorting to hacks which are too heavyweight or complicated to maintain
 * Cloning the gameplay has highest priority
 * Cloning the interface has low priority. It will only be roughly imitated
-* Mineclonia will use different graphics and sounds, but with a similar style
+* VoxelCraft will use different graphics and sounds, but with a similar style
 
 ## Completion status
 This game is currently in **beta** stage.
@@ -228,3 +224,4 @@ Technical differences from Minecraft:
 * [API.md](../../../src/branch/main/API.md): For Minetest modders who want to mod this game
 * [LEGAL.md](../../../src/branch/main/LEGAL.md): Legal information
 * [CREDITS.md](../../../src/branch/main/CREDITS.md): List of everyone who contributed
+# VLC
