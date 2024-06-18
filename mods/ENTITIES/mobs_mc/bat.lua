@@ -18,7 +18,11 @@ local function check_light(pos, environmental_light, artificial_light, sky_light
 	return true, ""
 end
 
-mcl_mobs.register_mob("mobs_mc:bat", {
+<<<<<<< HEAD
+vlc_mobs.register_mob("mobs_mc:bat", {
+=======
+vlf_mobs.register_mob("mobs_mc:bat", {
+>>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Bat"),
 	type = "animal",
 	spawn_class = "ambient",
@@ -82,11 +86,19 @@ else
 	maxlight = 3
 end
 
-mcl_mobs.spawn_setup({
+<<<<<<< HEAD
+vlc_mobs.spawn_setup({
 	name = "mobs_mc:bat",
 	type_of_spawning = "ground",
 	dimension = "overworld",
-	min_height = mcl_vars.mg_overworld_min,
+	min_height = vlc_vars.mg_overworld_min,
+=======
+vlf_mobs.spawn_setup({
+	name = "mobs_mc:bat",
+	type_of_spawning = "ground",
+	dimension = "overworld",
+	min_height = vlf_vars.mg_overworld_min,
+>>>>>>> 3eb27be82 (change naming in mods)
 	max_height = mobs_mc.water_level - 1,
 	min_light = 0,
 	max_light = maxlight,
@@ -95,4 +107,8 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:bat", S("Bat"), "#4c3e30", "#0f0f0f", 0)
+<<<<<<< HEAD
+vlc_mobs.register_egg("mobs_mc:bat", S("Bat"), "#4c3e30", "#0f0f0f", 0)
+=======
+vlf_mobs.register_egg("mobs_mc:bat", S("Bat"), "#4c3e30", "#0f0f0f", 0)
+>>>>>>> 3eb27be82 (change naming in mods)

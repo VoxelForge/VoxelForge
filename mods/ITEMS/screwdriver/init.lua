@@ -189,13 +189,22 @@ minetest.register_tool("screwdriver:screwdriver", {
 	end,
 })
 
-mcl_wip.register_wip_item("screwdriver:screwdriver")
+<<<<<<< HEAD
+vlc_wip.register_wip_item("screwdriver:screwdriver")
+=======
+vlf_wip.register_wip_item("screwdriver:screwdriver")
+>>>>>>> 3eb27be82 (change naming in mods)
 
 minetest.register_craft({
 	output = "screwdriver:screwdriver",
 	recipe = {
-		{"mcl_core:iron_ingot"},
-		{"mcl_core:stick"}
+<<<<<<< HEAD
+		{"vlc_core:iron_ingot"},
+		{"vlc_core:stick"}
+=======
+		{"vlf_core:iron_ingot"},
+		{"vlf_core:stick"}
+>>>>>>> 3eb27be82 (change naming in mods)
 	}
 })
 

@@ -4,7 +4,11 @@
 
 local S = minetest.get_translator("mobs_mc")
 
-mcl_mobs.register_mob("mobs_mc:guardian", {
+<<<<<<< HEAD
+vlc_mobs.register_mob("mobs_mc:guardian", {
+=======
+vlf_mobs.register_mob("mobs_mc:guardian", {
+>>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Guardian"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -47,7 +51,11 @@ mcl_mobs.register_mob("mobs_mc:guardian", {
 	},
 	drops = {
 		-- Greatly increased amounts of prismarine
-		{name = "mcl_ocean:prismarine_shard",
+<<<<<<< HEAD
+		{name = "vlc_ocean:prismarine_shard",
+=======
+		{name = "vlf_ocean:prismarine_shard",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 32,
@@ -56,37 +64,61 @@ mcl_mobs.register_mob("mobs_mc:guardian", {
 
 		-- The following drops are approximations
 		-- Fish / prismarine crystal
-		{name = "mcl_fishing:fish_raw",
+<<<<<<< HEAD
+		{name = "vlc_fishing:fish_raw",
+=======
+		{name = "vlf_fishing:fish_raw",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 4,
 		min = 1,
 		max = 1,
 		looting = "common",},
-		{name = "mcl_ocean:prismarine_crystals",
+<<<<<<< HEAD
+		{name = "vlc_ocean:prismarine_crystals",
+=======
+		{name = "vlf_ocean:prismarine_crystals",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 4,
 		min = 1,
 		max = 2,
 		looting = "common",},
 
 		-- Rare drop: fish
-		{name = "mcl_fishing:fish_raw",
+<<<<<<< HEAD
+		{name = "vlc_fishing:fish_raw",
+=======
+		{name = "vlf_fishing:fish_raw",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 160, -- 2.5% / 4
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.0025,},
-		{name = "mcl_fishing:salmon_raw",
+<<<<<<< HEAD
+		{name = "vlc_fishing:salmon_raw",
+=======
+		{name = "vlf_fishing:salmon_raw",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 160,
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.0025,},
-		{name = "mcl_fishing:clownfish_raw",
+<<<<<<< HEAD
+		{name = "vlc_fishing:clownfish_raw",
+=======
+		{name = "vlf_fishing:clownfish_raw",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 160,
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.0025,},
-		{name = "mcl_fishing:pufferfish_raw",
+<<<<<<< HEAD
+		{name = "vlc_fishing:pufferfish_raw",
+=======
+		{name = "vlf_fishing:pufferfish_raw",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 160,
 		min = 1,
 		max = 1,
@@ -95,9 +127,17 @@ mcl_mobs.register_mob("mobs_mc:guardian", {
 	},
 	fly = true,
 	makes_footstep_sound = false,
-	fly_in = { "mcl_core:water_source", "mclx_core:river_water_source" },
+<<<<<<< HEAD
+	fly_in = { "vlc_core:water_source", "vlcx_core:river_water_source" },
+=======
+	fly_in = { "vlf_core:water_source", "vlfx_core:river_water_source" },
+>>>>>>> 3eb27be82 (change naming in mods)
 	jump = false,
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:guardian", S("Guardian"), "#5a8272", "#f17d31", 0)
+<<<<<<< HEAD
+vlc_mobs.register_egg("mobs_mc:guardian", S("Guardian"), "#5a8272", "#f17d31", 0)
+=======
+vlf_mobs.register_egg("mobs_mc:guardian", S("Guardian"), "#5a8272", "#f17d31", 0)
+>>>>>>> 3eb27be82 (change naming in mods)

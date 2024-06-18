@@ -5,7 +5,11 @@
 
 local S = minetest.get_translator("mobs_mc")
 
-local mod_target = minetest.get_modpath("mcl_target")
+<<<<<<< HEAD
+local mod_target = minetest.get_modpath("vlc_target")
+=======
+local mod_target = minetest.get_modpath("vlf_target")
+>>>>>>> 3eb27be82 (change naming in mods)
 
 --###################
 --################### BLAZE
@@ -18,7 +22,11 @@ local function check_light(pos, environmental_light, artificial_light, sky_light
 	return true, ""
 end
 
-mcl_mobs.register_mob("mobs_mc:blaze", {
+<<<<<<< HEAD
+vlc_mobs.register_mob("mobs_mc:blaze", {
+=======
+vlf_mobs.register_mob("mobs_mc:blaze", {
+>>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Blaze"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -55,7 +63,11 @@ mcl_mobs.register_mob("mobs_mc:blaze", {
 	reach = 2,
 	pathfinding = 1,
 	drops = {
-		{name = "mcl_mobitems:blaze_rod",
+<<<<<<< HEAD
+		{name = "vlc_mobitems:blaze_rod",
+=======
+		{name = "vlf_mobitems:blaze_rod",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 1,
@@ -94,7 +106,11 @@ mcl_mobs.register_mob("mobs_mc:blaze", {
 	fire_resistant = true,
 	do_custom = function(self)
 		if self.state == "attack" and self.attack:get_pos() and vector.distance(self.object:get_pos(), self.attack:get_pos()) < 1.2 then
-			mcl_burning.set_on_fire(self.attack, 5)
+<<<<<<< HEAD
+			vlc_burning.set_on_fire(self.attack, 5)
+=======
+			vlf_burning.set_on_fire(self.attack, 5)
+>>>>>>> 3eb27be82 (change naming in mods)
 		end
 		local pos = self.object:get_pos()
 		minetest.add_particle({
@@ -104,7 +120,11 @@ mcl_mobs.register_mob("mobs_mc:blaze", {
 			size = math.random(1, 4),
 			collisiondetection = true,
 			vertical = false,
-			texture = "mcl_particles_smoke_anim.png^[colorize:#2c2c2c:255",
+<<<<<<< HEAD
+			texture = "vlc_particles_smoke_anim.png^[colorize:#2c2c2c:255",
+=======
+			texture = "vlf_particles_smoke_anim.png^[colorize:#2c2c2c:255",
+>>>>>>> 3eb27be82 (change naming in mods)
 			animation = {
 				type = "vertical_frames",
 				aspect_w = 8,
@@ -119,7 +139,11 @@ mcl_mobs.register_mob("mobs_mc:blaze", {
 			size = math.random(1, 4),
 			collisiondetection = true,
 			vertical = false,
-			texture = "mcl_particles_smoke_anim.png^[colorize:#424242:255",
+<<<<<<< HEAD
+			texture = "vlc_particles_smoke_anim.png^[colorize:#424242:255",
+=======
+			texture = "vlf_particles_smoke_anim.png^[colorize:#424242:255",
+>>>>>>> 3eb27be82 (change naming in mods)
 			animation = {
 				type = "vertical_frames",
 				aspect_w = 8,
@@ -134,7 +158,11 @@ mcl_mobs.register_mob("mobs_mc:blaze", {
 			size = math.random(1, 4),
 			collisiondetection = true,
 			vertical = false,
-			texture = "mcl_particles_smoke_anim.png^[colorize:#0f0f0f:255",
+<<<<<<< HEAD
+			texture = "vlc_particles_smoke_anim.png^[colorize:#0f0f0f:255",
+=======
+			texture = "vlf_particles_smoke_anim.png^[colorize:#0f0f0f:255",
+>>>>>>> 3eb27be82 (change naming in mods)
 			animation = {
 				type = "vertical_frames",
 				aspect_w = 8,
@@ -147,21 +175,37 @@ mcl_mobs.register_mob("mobs_mc:blaze", {
 })
 
 -- Blaze fireball
-mcl_mobs.register_arrow("mobs_mc:blaze_fireball", {
+<<<<<<< HEAD
+vlc_mobs.register_arrow("mobs_mc:blaze_fireball", {
 	visual = "sprite",
 	visual_size = {x = 0.3, y = 0.3},
-	textures = {"mcl_fire_fire_charge.png"},
+	textures = {"vlc_fire_fire_charge.png"},
+=======
+vlf_mobs.register_arrow("mobs_mc:blaze_fireball", {
+	visual = "sprite",
+	visual_size = {x = 0.3, y = 0.3},
+	textures = {"vlf_fire_fire_charge.png"},
+>>>>>>> 3eb27be82 (change naming in mods)
 	velocity = 15,
 	_is_fireball = true,
 
 	-- Direct hit, no fire... just plenty of pain
-	hit_player = mcl_mobs.get_arrow_damage_func(5, "fireball"),
-	hit_mob = mcl_mobs.get_arrow_damage_func(5, "fireball"),
+<<<<<<< HEAD
+	hit_player = vlc_mobs.get_arrow_damage_func(5, "fireball"),
+	hit_mob = vlc_mobs.get_arrow_damage_func(5, "fireball"),
+=======
+	hit_player = vlf_mobs.get_arrow_damage_func(5, "fireball"),
+	hit_mob = vlf_mobs.get_arrow_damage_func(5, "fireball"),
+>>>>>>> 3eb27be82 (change naming in mods)
 
 	hit_object = function(self, object)
 		local lua = object:get_luaentity()
 		if lua then
-			if lua.name == "mcl_minecarts:tnt_minecart" then
+<<<<<<< HEAD
+			if lua.name == "vlc_minecarts:tnt_minecart" then
+=======
+			if lua.name == "vlf_minecarts:tnt_minecart" then
+>>>>>>> 3eb27be82 (change naming in mods)
 				lua:on_activate_by_rail(2)
 			end
 		end
@@ -170,10 +214,17 @@ mcl_mobs.register_arrow("mobs_mc:blaze_fireball", {
 	-- Node hit, make fire
 	hit_node = function(self, pos, node)
 		if node == "air" then
-			minetest.set_node(pos, {name = "mcl_fire:fire"})
+<<<<<<< HEAD
+			minetest.set_node(pos, {name = "vlc_fire:fire"})
 		else
-			if self._shot_from_dispenser and mod_target and node == "mcl_target:target_off" then
-				mcl_target.hit(vector.round(pos), 0.4) --4 redstone ticks
+			if self._shot_from_dispenser and mod_target and node == "vlc_target:target_off" then
+				vlc_target.hit(vector.round(pos), 0.4) --4 redstone ticks
+=======
+			minetest.set_node(pos, {name = "vlf_fire:fire"})
+		else
+			if self._shot_from_dispenser and mod_target and node == "vlf_target:target_off" then
+				vlf_target.hit(vector.round(pos), 0.4) --4 redstone ticks
+>>>>>>> 3eb27be82 (change naming in mods)
 			end
 			local v = vector.normalize(self.object:get_velocity())
 			local crashpos = vector.subtract(pos, v)
@@ -182,11 +233,19 @@ mcl_mobs.register_arrow("mobs_mc:blaze_fireball", {
 			-- Set fire if node is air, or a replacable flammable node (e.g. a plant)
 			if crashnode.name == "air" or
 					(cndef and cndef.buildable_to and minetest.get_item_group(crashnode.name, "flammable") >= 1) then
-				minetest.set_node(crashpos, {name = "mcl_fire:fire"})
+<<<<<<< HEAD
+				minetest.set_node(crashpos, {name = "vlc_fire:fire"})
+=======
+				minetest.set_node(crashpos, {name = "vlf_fire:fire"})
+>>>>>>> 3eb27be82 (change naming in mods)
 			end
 		end
 	end
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:blaze", S("Blaze"), "#f6b201", "#fff87e", 0)
+<<<<<<< HEAD
+vlc_mobs.register_egg("mobs_mc:blaze", S("Blaze"), "#f6b201", "#fff87e", 0)
+=======
+vlf_mobs.register_egg("mobs_mc:blaze", S("Blaze"), "#f6b201", "#fff87e", 0)
+>>>>>>> 3eb27be82 (change naming in mods)

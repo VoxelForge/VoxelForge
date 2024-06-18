@@ -137,7 +137,11 @@ end
 function doc_identifier.solid_mode(itemstack, user, pointed_thing)
 	-- Use pointed node's on_rightclick function first, if present
 	if pointed_thing.type == "node" then
+<<<<<<< HEAD
 		local rc = mcl_util.call_on_rightclick(itemstack, user, pointed_thing)
+=======
+		local rc = vlf_util.call_on_rightclick(itemstack, user, pointed_thing)
+>>>>>>> 3eb27be82 (change naming in mods)
 		if rc then return rc end
 	end
 
@@ -147,7 +151,11 @@ end
 function doc_identifier.liquid_mode(itemstack, user, pointed_thing)
 	-- Use pointed node's on_rightclick function first, if present
 	if pointed_thing.type == "node" then
+<<<<<<< HEAD
 		local rc = mcl_util.call_on_rightclick(itemstack, user, pointed_thing)
+=======
+		local rc = vlf_util.call_on_rightclick(itemstack, user, pointed_thing)
+>>>>>>> 3eb27be82 (change naming in mods)
 		if rc then return rc end
 	end
 
@@ -190,10 +198,17 @@ minetest.register_craft({
 		   {"group:stick", ""} }
 })
 
+<<<<<<< HEAD
 if minetest.get_modpath("mcl_core") then
 	minetest.register_craft({
 		output = "doc_identifier:identifier_solid",
 		recipe = { { "mcl_core:glass" },
+=======
+if minetest.get_modpath("vlf_core") then
+	minetest.register_craft({
+		output = "doc_identifier:identifier_solid",
+		recipe = { { "vlf_core:glass" },
+>>>>>>> 3eb27be82 (change naming in mods)
 			   { "group:stick" } }
 	})
 end

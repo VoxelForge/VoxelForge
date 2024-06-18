@@ -172,8 +172,13 @@ function mesecon.register_pressure_plate(basename, description, textures_off, te
 		is_ground_content = false,
 		pressureplate_basename = basename,
 		pressureplate_activated_by = activated_by,
-		_mcl_blast_resistance = 0.5,
-		_mcl_hardness = 0.5,
+<<<<<<< HEAD
+		_vlc_blast_resistance = 0.5,
+		_vlc_hardness = 0.5,
+=======
+		_vlf_blast_resistance = 0.5,
+		_vlf_hardness = 0.5,
+>>>>>>> 3eb27be82 (change naming in mods)
 	},{
 		node_box = pp_box_off,
 		selection_box = pp_box_off,
@@ -211,8 +216,13 @@ mesecon.register_pressure_plate(
 	{"default_stone.png"},
 	"default_stone.png",
 	nil,
-	{{"mcl_core:stone", "mcl_core:stone"}},
-	mcl_sounds.node_sound_stone_defaults(),
+<<<<<<< HEAD
+	{{"vlc_core:stone", "vlc_core:stone"}},
+	vlc_sounds.node_sound_stone_defaults(),
+=======
+	{{"vlf_core:stone", "vlf_core:stone"}},
+	vlf_sounds.node_sound_stone_defaults(),
+>>>>>>> 3eb27be82 (change naming in mods)
 	{pickaxey=1, material_stone=1},
 	{ player = true, mob = true },
 	S("A stone pressure plate is a redstone component which supplies its surrounding blocks with redstone power while a player or mob stands on top of it. It is not triggered by anything else."))
@@ -220,12 +230,21 @@ mesecon.register_pressure_plate(
 mesecon.register_pressure_plate(
 	"mesecons_pressureplates:pressure_plate_polished_blackstone",
 	S("Polished Blackstone Pressure Plate"),
-	{"mcl_blackstone_polished.png"},
-	{"mcl_blackstone_polished.png"},
-	"mcl_blackstone_polished.png",
+<<<<<<< HEAD
+	{"vlc_blackstone_polished.png"},
+	{"vlc_blackstone_polished.png"},
+	"vlc_blackstone_polished.png",
 	nil,
-	{{"mcl_blackstone:blackstone_polished", "mcl_blackstone:blackstone_polished"}},
-	mcl_sounds.node_sound_stone_defaults(),
+	{{"vlc_blackstone:blackstone_polished", "vlc_blackstone:blackstone_polished"}},
+	vlc_sounds.node_sound_stone_defaults(),
+=======
+	{"vlf_blackstone_polished.png"},
+	{"vlf_blackstone_polished.png"},
+	"vlf_blackstone_polished.png",
+	nil,
+	{{"vlf_blackstone:blackstone_polished", "vlf_blackstone:blackstone_polished"}},
+	vlf_sounds.node_sound_stone_defaults(),
+>>>>>>> 3eb27be82 (change naming in mods)
 	{pickaxey=1, material_stone=1},
 	{ player = true, mob = true },
 	S("A polished blackstone pressure plate is a redstone component which supplies its surrounding blocks with redstone power while a player or mob stands on top of it. It is not triggered by anything else."))

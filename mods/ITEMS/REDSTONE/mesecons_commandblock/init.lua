@@ -1,7 +1,11 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 local F = minetest.formspec_escape
 
-local command_blocks_activated = minetest.settings:get_bool("mcl_enable_commandblocks", true)
+<<<<<<< HEAD
+local command_blocks_activated = minetest.settings:get_bool("vlc_enable_commandblocks", true)
+=======
+local command_blocks_activated = minetest.settings:get_bool("vlf_enable_commandblocks", true)
+>>>>>>> 3eb27be82 (change naming in mods)
 local msg_not_activated = S("Command blocks are not enabled on this server")
 
 local function construct(pos)
@@ -81,7 +85,11 @@ local function check_commands(commands, player_name)
 			if string.sub(cmd, 1, 1) == "/" then
 				msg = S("Error: The command “@1” does not exist; your command block has not been changed. Use the “help” chat command for a list of available commands. Hint: Try to remove the leading slash.", cmd)
 			end
-			return false, minetest.colorize(mcl_colors.RED, msg)
+<<<<<<< HEAD
+			return false, minetest.colorize(vlc_colors.RED, msg)
+=======
+			return false, minetest.colorize(vlf_colors.RED, msg)
+>>>>>>> 3eb27be82 (change naming in mods)
 		end
 		if player_name then
 			local player_privs = minetest.get_player_privs(player_name)
@@ -89,7 +97,11 @@ local function check_commands(commands, player_name)
 			for cmd_priv, _ in pairs(cmddef.privs) do
 				if player_privs[cmd_priv] ~= true then
 					local msg = S("Error: You have insufficient privileges to use the command “@1” (missing privilege: @2)! The command block has not been changed.", cmd, cmd_priv)
-					return false, minetest.colorize(mcl_colors.RED, msg)
+<<<<<<< HEAD
+					return false, minetest.colorize(vlc_colors.RED, msg)
+=======
+					return false, minetest.colorize(vlf_colors.RED, msg)
+>>>>>>> 3eb27be82 (change naming in mods)
 				end
 			end
 		end
@@ -196,7 +208,11 @@ local function on_place(itemstack, placer, pointed_thing)
 	end
 
 	-- Use pointed node's on_rightclick function first, if present
-    local new_stack = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+<<<<<<< HEAD
+    local new_stack = vlc_util.call_on_rightclick(itemstack, placer, pointed_thing)
+=======
+    local new_stack = vlf_util.call_on_rightclick(itemstack, placer, pointed_thing)
+>>>>>>> 3eb27be82 (change naming in mods)
     if new_stack then
         return new_stack
     end
@@ -237,7 +253,11 @@ S("• “@@@@”: literal “@@” sign").."\n\n"..
 
 S("Example 1:\n    time 12000\nSets the game clock to 12:00").."\n\n"..
 
-S("Example 2:\n    give @@n mcl_core:apple 5\nGives the nearest player 5 apples"),
+<<<<<<< HEAD
+S("Example 2:\n    give @@n vlc_core:apple 5\nGives the nearest player 5 apples"),
+=======
+S("Example 2:\n    give @@n vlf_core:apple 5\nGives the nearest player 5 apples"),
+>>>>>>> 3eb27be82 (change naming in mods)
 
 	tiles = {{name="jeija_commandblock_off.png", animation={type="vertical_frames", aspect_w=32, aspect_h=32, length=2}}},
 	groups = {creative_breakable=1, mesecon_effector_off=1},
@@ -248,13 +268,22 @@ S("Example 2:\n    give @@n mcl_core:apple 5\nGives the nearest player 5 apples"
 	on_place = on_place,
 	after_place_node = after_place,
 	on_rightclick = on_rightclick,
-	sounds = mcl_sounds.node_sound_stone_defaults(),
+<<<<<<< HEAD
+	sounds = vlc_sounds.node_sound_stone_defaults(),
+=======
+	sounds = vlf_sounds.node_sound_stone_defaults(),
+>>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {effector = {
 		action_on = commandblock_action_on,
 		rules = mesecon.rules.alldirs,
 	}},
-	_mcl_blast_resistance = 3600000,
-	_mcl_hardness = -1,
+<<<<<<< HEAD
+	_vlc_blast_resistance = 3600000,
+	_vlc_hardness = -1,
+=======
+	_vlf_blast_resistance = 3600000,
+	_vlf_hardness = -1,
+>>>>>>> 3eb27be82 (change naming in mods)
 })
 
 minetest.register_node("mesecons_commandblock:commandblock_on", {
@@ -267,13 +296,22 @@ minetest.register_node("mesecons_commandblock:commandblock_on", {
 	on_place = on_place,
 	after_place_node = after_place,
 	on_rightclick = on_rightclick,
-	sounds = mcl_sounds.node_sound_stone_defaults(),
+<<<<<<< HEAD
+	sounds = vlc_sounds.node_sound_stone_defaults(),
+=======
+	sounds = vlf_sounds.node_sound_stone_defaults(),
+>>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {effector = {
 		action_off = commandblock_action_off,
 		rules = mesecon.rules.alldirs,
 	}},
-	_mcl_blast_resistance = 3600000,
-	_mcl_hardness = -1,
+<<<<<<< HEAD
+	_vlc_blast_resistance = 3600000,
+	_vlc_hardness = -1,
+=======
+	_vlf_blast_resistance = 3600000,
+	_vlf_hardness = -1,
+>>>>>>> 3eb27be82 (change naming in mods)
 })
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)

@@ -12,7 +12,11 @@ local S = minetest.get_translator("mobs_mc")
 
 
 
-mcl_mobs.register_mob("mobs_mc:witch", {
+<<<<<<< HEAD
+vlc_mobs.register_mob("mobs_mc:witch", {
+=======
+vlf_mobs.register_mob("mobs_mc:witch", {
+>>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Witch"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -44,13 +48,23 @@ mcl_mobs.register_mob("mobs_mc:witch", {
 	dogshoot_count_max =1.8,
 	max_drops = 3,
 	drops = {
-		{name = "mcl_potions:glass_bottle", chance = 8, min = 0, max = 2, looting = "common",},
-		{name = "mcl_nether:glowstone_dust", chance = 8, min = 0, max = 2, looting = "common",},
-		{name = "mcl_mobitems:gunpowder", chance = 8, min = 0, max = 2, looting = "common",},
+<<<<<<< HEAD
+		{name = "vlc_potions:glass_bottle", chance = 8, min = 0, max = 2, looting = "common",},
+		{name = "vlc_nether:glowstone_dust", chance = 8, min = 0, max = 2, looting = "common",},
+		{name = "vlc_mobitems:gunpowder", chance = 8, min = 0, max = 2, looting = "common",},
 		{name = "mesecons:redstone", chance = 8, min = 0, max = 2, looting = "common",},
-		{name = "mcl_mobitems:spider_eye", chance = 8, min = 0, max = 2, looting = "common",},
-		{name = "mcl_core:sugar", chance = 8, min = 0, max = 2, looting = "common",},
-		{name = "mcl_core:stick", chance = 4, min = 0, max = 2, looting = "common",},
+		{name = "vlc_mobitems:spider_eye", chance = 8, min = 0, max = 2, looting = "common",},
+		{name = "vlc_core:sugar", chance = 8, min = 0, max = 2, looting = "common",},
+		{name = "vlc_core:stick", chance = 4, min = 0, max = 2, looting = "common",},
+=======
+		{name = "vlf_potions:glass_bottle", chance = 8, min = 0, max = 2, looting = "common",},
+		{name = "vlf_nether:glowstone_dust", chance = 8, min = 0, max = 2, looting = "common",},
+		{name = "vlf_mobitems:gunpowder", chance = 8, min = 0, max = 2, looting = "common",},
+		{name = "mesecons:redstone", chance = 8, min = 0, max = 2, looting = "common",},
+		{name = "vlf_mobitems:spider_eye", chance = 8, min = 0, max = 2, looting = "common",},
+		{name = "vlf_core:sugar", chance = 8, min = 0, max = 2, looting = "common",},
+		{name = "vlf_core:stick", chance = 4, min = 0, max = 2, looting = "common",},
+>>>>>>> 3eb27be82 (change naming in mods)
 	},
 	-- TODO: sounds
 	animation = {
@@ -71,40 +85,71 @@ mcl_mobs.register_mob("mobs_mc:witch", {
 	},
 	view_range = 16,
 	fear_height = 4,
-	deal_damage = function(self, damage, mcl_reason)
+<<<<<<< HEAD
+	deal_damage = function(self, damage, vlc_reason)
 		local factor = 1
-		if mcl_reason.type == "magic" then factor = 0.15 end
+		if vlc_reason.type == "magic" then factor = 0.15 end
+=======
+	deal_damage = function(self, damage, vlf_reason)
+		local factor = 1
+		if vlf_reason.type == "magic" then factor = 0.15 end
+>>>>>>> 3eb27be82 (change naming in mods)
 		self.health = self.health - factor*damage
 	end,
 })
 
 -- potion projectile (EXPERIMENTAL)
-mcl_mobs.register_arrow("mobs_mc:potion_arrow", {
+<<<<<<< HEAD
+vlc_mobs.register_arrow("mobs_mc:potion_arrow", {
 	visual = "sprite",
 	visual_size = {x = 0.5, y = 0.5},
 	--textures = {"vessels_glass_bottle.png"},  --TODO fix to else if default
-	textures = {"mcl_potions_dragon_breath.png"},
+	textures = {"vlc_potions_dragon_breath.png"},
 	velocity = 6,
 
 	-- direct hit, no fire... just plenty of pain
-	hit_player = mcl_mobs.get_arrow_damage_func(2, "mob"),
-	hit_mob = mcl_mobs.get_arrow_damage_func(2, "mob"),
+	hit_player = vlc_mobs.get_arrow_damage_func(2, "mob"),
+	hit_mob = vlc_mobs.get_arrow_damage_func(2, "mob"),
+=======
+vlf_mobs.register_arrow("mobs_mc:potion_arrow", {
+	visual = "sprite",
+	visual_size = {x = 0.5, y = 0.5},
+	--textures = {"vessels_glass_bottle.png"},  --TODO fix to else if default
+	textures = {"vlf_potions_dragon_breath.png"},
+	velocity = 6,
+
+	-- direct hit, no fire... just plenty of pain
+	hit_player = vlf_mobs.get_arrow_damage_func(2, "mob"),
+	hit_mob = vlf_mobs.get_arrow_damage_func(2, "mob"),
+>>>>>>> 3eb27be82 (change naming in mods)
 
 	-- node hit, bursts into flame
 	hit_node = function(self, pos, node)
 		local p = vector.offset(pos,0,1,0)
 		if minetest.get_node(p).name == "air" then
-			minetest.set_node(p, {name = "mcl_fire:fire"})
+<<<<<<< HEAD
+			minetest.set_node(p, {name = "vlc_fire:fire"})
 		else
 			local p = minetest.find_node_near(p,1,{"air"})
 			if p then
-				minetest.set_node(p, {name = "mcl_fire:fire"})
+				minetest.set_node(p, {name = "vlc_fire:fire"})
+=======
+			minetest.set_node(p, {name = "vlf_fire:fire"})
+		else
+			local p = minetest.find_node_near(p,1,{"air"})
+			if p then
+				minetest.set_node(p, {name = "vlf_fire:fire"})
+>>>>>>> 3eb27be82 (change naming in mods)
 			end
 		end
 	end
 })
 
-mcl_mobs.spawn_setup({
+<<<<<<< HEAD
+vlc_mobs.spawn_setup({
+=======
+vlf_mobs.spawn_setup({
+>>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:witch",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -118,6 +163,12 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:witch", S("Witch"), "#340000", "#51a03e", 0, true)
+<<<<<<< HEAD
+vlc_mobs.register_egg("mobs_mc:witch", S("Witch"), "#340000", "#51a03e", 0, true)
 
-mcl_wip.register_wip_item("mobs_mc:witch")
+vlc_wip.register_wip_item("mobs_mc:witch")
+=======
+vlf_mobs.register_egg("mobs_mc:witch", S("Witch"), "#340000", "#51a03e", 0, true)
+
+vlf_wip.register_wip_item("mobs_mc:witch")
+>>>>>>> 3eb27be82 (change naming in mods)

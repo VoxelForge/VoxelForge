@@ -27,7 +27,11 @@ local professions = {
 }
 --]]
 
-mcl_mobs.register_mob("mobs_mc:villager_zombie", {
+<<<<<<< HEAD
+vlc_mobs.register_mob("mobs_mc:villager_zombie", {
+=======
+vlf_mobs.register_mob("mobs_mc:villager_zombie", {
+>>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Zombie Villager"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -61,24 +65,40 @@ mcl_mobs.register_mob("mobs_mc:villager_zombie", {
 	attack_type = "dogfight",
 	group_attack = true,
 	drops = {
-		{name = "mcl_mobitems:rotten_flesh",
+<<<<<<< HEAD
+		{name = "vlc_mobitems:rotten_flesh",
+=======
+		{name = "vlf_mobitems:rotten_flesh",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 2,
 		looting = "common",},
-		{name = "mcl_core:iron_ingot",
+<<<<<<< HEAD
+		{name = "vlc_core:iron_ingot",
+=======
+		{name = "vlf_core:iron_ingot",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 120, -- 2.5% / 3
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.01 / 3,},
-		{name = "mcl_farming:carrot_item",
+<<<<<<< HEAD
+		{name = "vlc_farming:carrot_item",
+=======
+		{name = "vlf_farming:carrot_item",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 120, -- 2.5% / 3
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.01 / 3,},
-		{name = "mcl_farming:potato_item",
+<<<<<<< HEAD
+		{name = "vlc_farming:potato_item",
+=======
+		{name = "vlf_farming:potato_item",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 120, -- 2.5% / 3
 		min = 1,
 		max = 1,
@@ -109,7 +129,11 @@ mcl_mobs.register_mob("mobs_mc:villager_zombie", {
 		if not self._curing and clicker and clicker:is_player() then
 			local wielditem = clicker:get_wielded_item()
 			-- ToDo: Only cure if zombie villager has the weakness effect
-			if wielditem:get_name() == "mcl_core:apple_gold" then
+<<<<<<< HEAD
+			if wielditem:get_name() == "vlc_core:apple_gold" then
+=======
+			if wielditem:get_name() == "vlf_core:apple_gold" then
+>>>>>>> 3eb27be82 (change naming in mods)
 				wielditem:take_item()
 				clicker:set_wielded_item(wielditem)
 				self._curing = math.random(3 * 60, 5 * 60)
@@ -123,7 +147,11 @@ mcl_mobs.register_mob("mobs_mc:villager_zombie", {
 			self._curing = self._curing - dtime
 			local obj = self.object
 			if self._curing <= 0 then
-				local villager_obj = mcl_util.replace_mob(obj, "mobs_mc:villager")
+<<<<<<< HEAD
+				local villager_obj = vlc_util.replace_mob(obj, "mobs_mc:villager")
+=======
+				local villager_obj = vlf_util.replace_mob(obj, "mobs_mc:villager")
+>>>>>>> 3eb27be82 (change naming in mods)
 				if villager_obj then
 					local villager = villager_obj:get_luaentity()
 					villager._profession = "unemployed"
@@ -140,7 +168,11 @@ mcl_mobs.register_mob("mobs_mc:villager_zombie", {
 	attack_npcs = true,
 })
 
-mcl_mobs.spawn_setup({
+<<<<<<< HEAD
+vlc_mobs.spawn_setup({
+=======
+vlf_mobs.spawn_setup({
+>>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:villager_zombie",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -153,4 +185,8 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:villager_zombie", S("Zombie Villager"), "#563d33", "#799c66", 0)
+<<<<<<< HEAD
+vlc_mobs.register_egg("mobs_mc:villager_zombie", S("Zombie Villager"), "#563d33", "#799c66", 0)
+=======
+vlf_mobs.register_egg("mobs_mc:villager_zombie", S("Zombie Villager"), "#563d33", "#799c66", 0)
+>>>>>>> 3eb27be82 (change naming in mods)

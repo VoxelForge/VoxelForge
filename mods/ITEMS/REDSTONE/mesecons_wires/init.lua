@@ -252,7 +252,11 @@ S("Read the help entries on the other redstone components to learn how redstone 
 			node_box = nodebox,
 			walkable = false,
 			drop = "mesecons:wire_00000000_off",
-			sounds = mcl_sounds.node_sound_defaults(),
+<<<<<<< HEAD
+			sounds = vlc_sounds.node_sound_defaults(),
+=======
+			sounds = vlf_sounds.node_sound_defaults(),
+>>>>>>> 3eb27be82 (change naming in mods)
 			is_ground_content = false,
 			mesecon_wire = true
 		},{
@@ -292,7 +296,11 @@ minetest.register_alias("mesecons:redstone", "mesecons:wire_00000000_off")
 minetest.register_craft({
 	type = "cooking",
 	output = "mesecons:redstone",
-	recipe = "mcl_core:stone_with_redstone",
+<<<<<<< HEAD
+	recipe = "vlc_core:stone_with_redstone",
+=======
+	recipe = "vlf_core:stone_with_redstone",
+>>>>>>> 3eb27be82 (change naming in mods)
 	cooktime = 10,
 })
 

@@ -5,9 +5,9 @@ Copying is an act of love. Please copy and share! <3
 Here's the detailed legalese for those who need it:
 
 ## License of source code
-Mineclonia is an imitation of Minecraft.
+VoxelCraft is an imitation of Minecraft.
 
-Mineclonia is free software: you can redistribute it and/or modify it under the
+VoxelCraft is free software: you can redistribute it and/or modify it under the
 terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
 version.
@@ -19,11 +19,11 @@ for more details.
 
 In the mods you might find in the readme or license text files a different
 license. This counts as dual-licensing. You can choose which license applies to
-you: Either the license of Mineclonia (GNU GPLv3) or the mod's license.
+you: Either the license of VoxelCraft (GNU GPLv3) or the mod's license.
 
 See the content of each mod directory for information about the author and
 license. For mods that do not have such a file, the license is the source code
-license of Mineclonia.
+license of VoxelCraft.
 
 ## License of media (textures and sounds)
 No non-free licenses are used anywhere.

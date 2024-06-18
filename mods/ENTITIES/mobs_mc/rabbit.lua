@@ -48,9 +48,15 @@ local rabbit = {
 	runaway = true,
 	jump = true,
 	drops = {
-		{name = "mcl_mobitems:rabbit", chance = 1, min = 0, max = 1, looting = "common",},
-		{name = "mcl_mobitems:rabbit_hide", chance = 1, min = 0, max = 1, looting = "common",},
-		{name = "mcl_mobitems:rabbit_foot", chance = 10, min = 0, max = 1, looting = "rare", looting_factor = 0.03,},
+<<<<<<< HEAD
+		{name = "vlc_mobitems:rabbit", chance = 1, min = 0, max = 1, looting = "common",},
+		{name = "vlc_mobitems:rabbit_hide", chance = 1, min = 0, max = 1, looting = "common",},
+		{name = "vlc_mobitems:rabbit_foot", chance = 10, min = 0, max = 1, looting = "rare", looting_factor = 0.03,},
+=======
+		{name = "vlf_mobitems:rabbit", chance = 1, min = 0, max = 1, looting = "common",},
+		{name = "vlf_mobitems:rabbit_hide", chance = 1, min = 0, max = 1, looting = "common",},
+		{name = "vlf_mobitems:rabbit_foot", chance = 10, min = 0, max = 1, looting = "rare", looting_factor = 0.03,},
+>>>>>>> 3eb27be82 (change naming in mods)
 	},
 	fear_height = 4,
 	animation = {
@@ -65,28 +71,50 @@ local rabbit = {
 	},
 	-- Follow (yellow) dangelions, carrots and golden carrots
 	follow = {
-		"mcl_flowers:dandelion",
-		"mcl_farming:carrot_item",
-		"mcl_farming:carrot_item_gold",
+<<<<<<< HEAD
+		"vlc_flowers:dandelion",
+		"vlc_farming:carrot_item",
+		"vlc_farming:carrot_item_gold",
+=======
+		"vlf_flowers:dandelion",
+		"vlf_farming:carrot_item",
+		"vlf_farming:carrot_item_gold",
+>>>>>>> 3eb27be82 (change naming in mods)
 	},
 	view_range = 8,
 	-- Eat carrots and reduce their growth stage by 1
 	replace_rate = 10,
 	replace_what = {
-		{"mcl_farming:carrot", "mcl_farming:carrot_7", 0},
-		{"mcl_farming:carrot_7", "mcl_farming:carrot_6", 0},
-		{"mcl_farming:carrot_6", "mcl_farming:carrot_5", 0},
-		{"mcl_farming:carrot_5", "mcl_farming:carrot_4", 0},
-		{"mcl_farming:carrot_4", "mcl_farming:carrot_3", 0},
-		{"mcl_farming:carrot_3", "mcl_farming:carrot_2", 0},
-		{"mcl_farming:carrot_2", "mcl_farming:carrot_1", 0},
-		{"mcl_farming:carrot_1", "air", 0},
+<<<<<<< HEAD
+		{"vlc_farming:carrot", "vlc_farming:carrot_7", 0},
+		{"vlc_farming:carrot_7", "vlc_farming:carrot_6", 0},
+		{"vlc_farming:carrot_6", "vlc_farming:carrot_5", 0},
+		{"vlc_farming:carrot_5", "vlc_farming:carrot_4", 0},
+		{"vlc_farming:carrot_4", "vlc_farming:carrot_3", 0},
+		{"vlc_farming:carrot_3", "vlc_farming:carrot_2", 0},
+		{"vlc_farming:carrot_2", "vlc_farming:carrot_1", 0},
+		{"vlc_farming:carrot_1", "air", 0},
+=======
+		{"vlf_farming:carrot", "vlf_farming:carrot_7", 0},
+		{"vlf_farming:carrot_7", "vlf_farming:carrot_6", 0},
+		{"vlf_farming:carrot_6", "vlf_farming:carrot_5", 0},
+		{"vlf_farming:carrot_5", "vlf_farming:carrot_4", 0},
+		{"vlf_farming:carrot_4", "vlf_farming:carrot_3", 0},
+		{"vlf_farming:carrot_3", "vlf_farming:carrot_2", 0},
+		{"vlf_farming:carrot_2", "vlf_farming:carrot_1", 0},
+		{"vlf_farming:carrot_1", "air", 0},
+>>>>>>> 3eb27be82 (change naming in mods)
 	},
 	on_rightclick = function(self, clicker)
 		-- Feed, tame protect or capture
 		if self:feed_tame(clicker, 1, true, false) then return end
-		if mcl_mobs.protect(self, clicker) then return end
-		if mcl_mobs.capture_mob(self, clicker, 0, 50, 80, false, nil) then return end
+<<<<<<< HEAD
+		if vlc_mobs.protect(self, clicker) then return end
+		if vlc_mobs.capture_mob(self, clicker, 0, 50, 80, false, nil) then return end
+=======
+		if vlf_mobs.protect(self, clicker) then return end
+		if vlf_mobs.capture_mob(self, clicker, 0, 50, 80, false, nil) then return end
+>>>>>>> 3eb27be82 (change naming in mods)
 	end,
 	do_custom = function(self)
 		-- Easter egg: Change texture if rabbit is named “Toast”
@@ -104,7 +132,11 @@ local rabbit = {
 	end,
 }
 
-mcl_mobs.register_mob("mobs_mc:rabbit", rabbit)
+<<<<<<< HEAD
+vlc_mobs.register_mob("mobs_mc:rabbit", rabbit)
+=======
+vlf_mobs.register_mob("mobs_mc:rabbit", rabbit)
+>>>>>>> 3eb27be82 (change naming in mods)
 
 -- The killer bunny (Only with spawn egg)
 local killer_bunny = table.copy(rabbit)
@@ -130,12 +162,20 @@ killer_bunny.do_custom = function(self)
 	end
 end
 
-mcl_mobs.register_mob("mobs_mc:killer_bunny", killer_bunny)
+<<<<<<< HEAD
+vlc_mobs.register_mob("mobs_mc:killer_bunny", killer_bunny)
+=======
+vlf_mobs.register_mob("mobs_mc:killer_bunny", killer_bunny)
+>>>>>>> 3eb27be82 (change naming in mods)
 
 -- Mob spawning rules.
 -- Different skins depending on spawn location <- we'll get to this when the spawning algorithm is fleshed out
 
-mcl_mobs.spawn_setup({
+<<<<<<< HEAD
+vlc_mobs.spawn_setup({
+=======
+vlf_mobs.spawn_setup({
+>>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:rabbit",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -155,7 +195,14 @@ mcl_mobs.spawn_setup({
 })
 
 -- Spawn egg
-mcl_mobs.register_egg("mobs_mc:rabbit", S("Rabbit"), "#995f40", "#734831", 0)
+<<<<<<< HEAD
+vlc_mobs.register_egg("mobs_mc:rabbit", S("Rabbit"), "#995f40", "#734831", 0)
 
 -- Note: This spawn egg does not exist in Minecraft
-mcl_mobs.register_egg("mobs_mc:killer_bunny", S("Killer Bunny"), "#f2f2f2", "#ff0000", 0)
+vlc_mobs.register_egg("mobs_mc:killer_bunny", S("Killer Bunny"), "#f2f2f2", "#ff0000", 0)
+=======
+vlf_mobs.register_egg("mobs_mc:rabbit", S("Rabbit"), "#995f40", "#734831", 0)
+
+-- Note: This spawn egg does not exist in Minecraft
+vlf_mobs.register_egg("mobs_mc:killer_bunny", S("Killer Bunny"), "#f2f2f2", "#ff0000", 0)
+>>>>>>> 3eb27be82 (change naming in mods)

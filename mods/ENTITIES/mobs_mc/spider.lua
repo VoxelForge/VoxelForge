@@ -91,8 +91,13 @@ local spider = {
 	view_range = 16,
 	floats = 1,
 	drops = {
-		{name = "mcl_mobitems:string", chance = 1, min = 0, max = 2, looting = "common"},
-		{name = "mcl_mobitems:spider_eye", chance = 3, min = 1, max = 1, looting = "common", looting_chance_function = function(lvl)
+<<<<<<< HEAD
+		{name = "vlc_mobitems:string", chance = 1, min = 0, max = 2, looting = "common"},
+		{name = "vlc_mobitems:spider_eye", chance = 3, min = 1, max = 1, looting = "common", looting_chance_function = function(lvl)
+=======
+		{name = "vlf_mobitems:string", chance = 1, min = 0, max = 2, looting = "common"},
+		{name = "vlf_mobitems:spider_eye", chance = 3, min = 1, max = 1, looting = "common", looting_chance_function = function(lvl)
+>>>>>>> 3eb27be82 (change naming in mods)
 			return 1 - 2 / (lvl + 3)
 		end},
 	},
@@ -110,7 +115,11 @@ local spider = {
 		run_end = 20,
 	},
 }
-mcl_mobs.register_mob("mobs_mc:spider", spider)
+<<<<<<< HEAD
+vlc_mobs.register_mob("mobs_mc:spider", spider)
+=======
+vlf_mobs.register_mob("mobs_mc:spider", spider)
+>>>>>>> 3eb27be82 (change naming in mods)
 
 -- Cave spider
 local cave_spider = table.copy(spider)
@@ -143,9 +152,15 @@ cave_spider.dealt_effect = {
 	factor = 2.5,
 	dur = 7,
 }
-mcl_mobs.register_mob("mobs_mc:cave_spider", cave_spider)
+<<<<<<< HEAD
+vlc_mobs.register_mob("mobs_mc:cave_spider", cave_spider)
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
+=======
+vlf_mobs.register_mob("mobs_mc:cave_spider", cave_spider)
+
+vlf_mobs.spawn_setup({
+>>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:spider",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -158,5 +173,10 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:spider", S("Spider"), "#342d26", "#a80e0e", 0)
-mcl_mobs.register_egg("mobs_mc:cave_spider", S("Cave Spider"), "#0c424e", "#a80e0e", 0)
+<<<<<<< HEAD
+vlc_mobs.register_egg("mobs_mc:spider", S("Spider"), "#342d26", "#a80e0e", 0)
+vlc_mobs.register_egg("mobs_mc:cave_spider", S("Cave Spider"), "#0c424e", "#a80e0e", 0)
+=======
+vlf_mobs.register_egg("mobs_mc:spider", S("Spider"), "#342d26", "#a80e0e", 0)
+vlf_mobs.register_egg("mobs_mc:cave_spider", S("Cave Spider"), "#0c424e", "#a80e0e", 0)
+>>>>>>> 3eb27be82 (change naming in mods)

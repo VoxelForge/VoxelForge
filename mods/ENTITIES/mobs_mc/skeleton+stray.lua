@@ -4,7 +4,11 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mod_bows = minetest.get_modpath("mcl_bows") ~= nil
+<<<<<<< HEAD
+local mod_bows = minetest.get_modpath("vlc_bows") ~= nil
+=======
+local mod_bows = minetest.get_modpath("vlf_bows") ~= nil
+>>>>>>> 3eb27be82 (change naming in mods)
 
 --###################
 --################### SKELETON
@@ -37,7 +41,11 @@ local skeleton = {
 		{
 			"mobs_mc_empty.png", -- armor
 			"mobs_mc_skeleton.png", -- texture
-			"mcl_bows_bow_0.png", -- wielded_item
+<<<<<<< HEAD
+			"vlc_bows_bow_0.png", -- wielded_item
+=======
+			"vlf_bows_bow_0.png", -- wielded_item
+>>>>>>> 3eb27be82 (change naming in mods)
 		}
 	},
 	walk_velocity = 1.1,
@@ -52,17 +60,29 @@ local skeleton = {
 	damage = 2,
 	reach = 2,
 	drops = {
-		{name = "mcl_bows:arrow",
+<<<<<<< HEAD
+		{name = "vlc_bows:arrow",
+=======
+		{name = "vlf_bows:arrow",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 2,
 		looting = "common",},
-		{name = "mcl_bows:bow",
+<<<<<<< HEAD
+		{name = "vlc_bows:bow",
+=======
+		{name = "vlf_bows:bow",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 100 / 8.5,
 		min = 1,
 		max = 1,
 		looting = "rare",},
-		{name = "mcl_mobitems:bone",
+<<<<<<< HEAD
+		{name = "vlc_mobitems:bone",
+=======
+		{name = "vlf_mobitems:bone",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 2,
@@ -70,7 +90,11 @@ local skeleton = {
 
 		-- Head
 		-- TODO: Only drop if killed by charged creeper
-		{name = "mcl_heads:skeleton",
+<<<<<<< HEAD
+		{name = "vlc_heads:skeleton",
+=======
+		{name = "vlf_heads:skeleton",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 200, -- 0.5% chance
 		min = 1,
 		max = 1,},
@@ -102,14 +126,22 @@ local skeleton = {
 	view_range = 16,
 	fear_height = 4,
 	attack_type = "dogshoot",
-	arrow = "mcl_bows:arrow_entity",
+<<<<<<< HEAD
+	arrow = "vlc_bows:arrow_entity",
+=======
+	arrow = "vlf_bows:arrow_entity",
+>>>>>>> 3eb27be82 (change naming in mods)
 	shoot_arrow = function(self, pos, dir)
 		if mod_bows then
 			if self.attack then
 				self.object:set_yaw(minetest.dir_to_yaw(vector.direction(self.object:get_pos(), self.attack:get_pos())))
 			end
 			local dmg = math.random(3, 4)
-			mcl_bows.shoot_arrow("mcl_bows:arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
+<<<<<<< HEAD
+			vlc_bows.shoot_arrow("vlc_bows:arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
+=======
+			vlf_bows.shoot_arrow("vlf_bows:arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
+>>>>>>> 3eb27be82 (change naming in mods)
 		end
 	end,
 	shoot_interval = 2,
@@ -121,13 +153,21 @@ local skeleton = {
 		if cmi_cause and cmi_cause.puncher then
 			local l = cmi_cause.puncher:get_luaentity()
 			if l and  l._is_arrow and l._shooter and l._shooter:is_player() and vector.distance(pos,l._startpos) > 20 then
-				awards.unlock(l._shooter:get_player_name(), "mcl:snipeSkeleton")
+<<<<<<< HEAD
+				awards.unlock(l._shooter:get_player_name(), "vlc:snipeSkeleton")
+=======
+				awards.unlock(l._shooter:get_player_name(), "vlf:snipeSkeleton")
+>>>>>>> 3eb27be82 (change naming in mods)
 			end
 		end
 	end,
 }
 
-mcl_mobs.register_mob("mobs_mc:skeleton", skeleton)
+<<<<<<< HEAD
+vlc_mobs.register_mob("mobs_mc:skeleton", skeleton)
+=======
+vlf_mobs.register_mob("mobs_mc:skeleton", skeleton)
+>>>>>>> 3eb27be82 (change naming in mods)
 
 
 --###################
@@ -141,13 +181,21 @@ stray.textures = {
 	{
 		"mobs_mc_stray_overlay.png",
 		"mobs_mc_stray.png",
-		"mcl_bows_bow_0.png",
+<<<<<<< HEAD
+		"vlc_bows_bow_0.png",
+=======
+		"vlf_bows_bow_0.png",
+>>>>>>> 3eb27be82 (change naming in mods)
 	},
 }
 -- TODO: different sound (w/ echo)
 -- TODO: stray's arrow inflicts slowness status
 table.insert(stray.drops, {
-	name = "mcl_potions:slowness_arrow",
+<<<<<<< HEAD
+	name = "vlc_potions:slowness_arrow",
+=======
+	name = "vlf_potions:slowness_arrow",
+>>>>>>> 3eb27be82 (change naming in mods)
 	chance = 2,
 	min = 1,
 	max = 1,
@@ -164,9 +212,15 @@ table.insert(stray.drops, {
 	end,
 })
 
-mcl_mobs.register_mob("mobs_mc:stray", stray)
+<<<<<<< HEAD
+vlc_mobs.register_mob("mobs_mc:stray", stray)
 
-mcl_mobs.spawn_setup({
+vlc_mobs.spawn_setup({
+=======
+vlf_mobs.register_mob("mobs_mc:stray", stray)
+
+vlf_mobs.spawn_setup({
+>>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:skeleton",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -178,7 +232,11 @@ mcl_mobs.spawn_setup({
 	chance = 800,
 })
 
-mcl_mobs.spawn_setup({
+<<<<<<< HEAD
+vlc_mobs.spawn_setup({
+=======
+vlf_mobs.spawn_setup({
+>>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:skeleton",
 	type_of_spawning = "ground",
 	dimension = "nether",
@@ -189,7 +247,11 @@ mcl_mobs.spawn_setup({
 	chance = 800,
 })
 
-mcl_mobs.spawn_setup({
+<<<<<<< HEAD
+vlc_mobs.spawn_setup({
+=======
+vlf_mobs.spawn_setup({
+>>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:stray",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -204,6 +266,12 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:skeleton", S("Skeleton"), "#c1c1c1", "#494949", 0)
+<<<<<<< HEAD
+vlc_mobs.register_egg("mobs_mc:skeleton", S("Skeleton"), "#c1c1c1", "#494949", 0)
 
-mcl_mobs.register_egg("mobs_mc:stray", S("Stray"), "#5f7476", "#dae8e7", 0)
+vlc_mobs.register_egg("mobs_mc:stray", S("Stray"), "#5f7476", "#dae8e7", 0)
+=======
+vlf_mobs.register_egg("mobs_mc:skeleton", S("Skeleton"), "#c1c1c1", "#494949", 0)
+
+vlf_mobs.register_egg("mobs_mc:stray", S("Stray"), "#5f7476", "#dae8e7", 0)
+>>>>>>> 3eb27be82 (change naming in mods)

@@ -5,9 +5,18 @@ local pigman = {
 	description = S("Zombified Piglin"),
 	textures = {{ "" }},
 	after_activate = function(self)
-		self.object = mcl_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
+<<<<<<< HEAD
+		self.object = vlc_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
 	end,
 }
 
-mcl_mobs.register_mob("mobs_mc:pigman", pigman)
-mcl_mobs.register_mob("mobs_mc:baby_pigman", pigman)
+vlc_mobs.register_mob("mobs_mc:pigman", pigman)
+vlc_mobs.register_mob("mobs_mc:baby_pigman", pigman)
+=======
+		self.object = vlf_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
+	end,
+}
+
+vlf_mobs.register_mob("mobs_mc:pigman", pigman)
+vlf_mobs.register_mob("mobs_mc:baby_pigman", pigman)
+>>>>>>> 3eb27be82 (change naming in mods)

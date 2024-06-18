@@ -5,7 +5,11 @@ local F = minetest.formspec_escape
 local player_tradenum = {}
 local player_trading_with = {}
 
-local COMPASS = "mcl_compass:compass"
+<<<<<<< HEAD
+local COMPASS = "vlc_compass:compass"
+=======
+local COMPASS = "vlf_compass:compass"
+>>>>>>> 3eb27be82 (change naming in mods)
 if minetest.registered_aliases[COMPASS] then
 	COMPASS = minetest.registered_aliases[COMPASS]
 end
@@ -22,7 +26,11 @@ local function move_stack(inv1, list1, inv2, list2, stack, pos)
 	if stack and inv1:contains_item(list1, stack) and inv2:room_for_item(list2, stack) then
 		return inv2:add_item(list2, inv1:remove_item(list1, stack))
 	elseif pos and not inv2:room_for_item(list2, stack) then
-		mcl_util.drop_item_stack(pos, stack)
+<<<<<<< HEAD
+		vlc_util.drop_item_stack(pos, stack)
+=======
+		vlf_util.drop_item_stack(pos, stack)
+>>>>>>> 3eb27be82 (change naming in mods)
 		inv1:remove_item(list1, stack)
 	end
 end
@@ -87,12 +95,21 @@ function mobs_mc.villager_mob:init_trades(inv)
 			local offered_count = math.random(trade[2][2], trade[2][3])
 
 			local offered_stack = ItemStack({name = offered_item, count = offered_count})
-			if mcl_enchanting.is_enchanted(offered_item) then
-				if mcl_enchanting.is_book(offered_item) then
-					offered_stack = mcl_enchanting.enchant_uniform_randomly(offered_stack, {"soul_speed"})
+<<<<<<< HEAD
+			if vlc_enchanting.is_enchanted(offered_item) then
+				if vlc_enchanting.is_book(offered_item) then
+					offered_stack = vlc_enchanting.enchant_uniform_randomly(offered_stack, {"soul_speed"})
 				else
-					mcl_enchanting.enchant_randomly(offered_stack, math.random(5, 19), false, false, true)
-					mcl_enchanting.unload_enchantments(offered_stack)
+					vlc_enchanting.enchant_randomly(offered_stack, math.random(5, 19), false, false, true)
+					vlc_enchanting.unload_enchantments(offered_stack)
+=======
+			if vlf_enchanting.is_enchanted(offered_item) then
+				if vlf_enchanting.is_book(offered_item) then
+					offered_stack = vlf_enchanting.enchant_uniform_randomly(offered_stack, {"soul_speed"})
+				else
+					vlf_enchanting.enchant_randomly(offered_stack, math.random(5, 19), false, false, true)
+					vlf_enchanting.unload_enchantments(offered_stack)
+>>>>>>> 3eb27be82 (change naming in mods)
 				end
 			end
 
@@ -139,8 +156,13 @@ function mobs_mc.villager_mob:set_trade(player, inv, concrete_tradenum)
 	local offered = ItemStack(trade.offered)
 
 	-- Only load enchantments for enchanted items; fixes unnecessary metadata being applied to regular items from villagers.
-	if mcl_enchanting.is_enchanted(offered:get_name()) then
-		mcl_enchanting.load_enchantments(offered)
+<<<<<<< HEAD
+	if vlc_enchanting.is_enchanted(offered:get_name()) then
+		vlc_enchanting.load_enchantments(offered)
+=======
+	if vlf_enchanting.is_enchanted(offered:get_name()) then
+		vlf_enchanting.load_enchantments(offered)
+>>>>>>> 3eb27be82 (change naming in mods)
 	end
 	inv:set_stack("offered", 1, offered)
 	if trade.wanted[2] then
@@ -213,16 +235,29 @@ local fs_trade_wants2_template = [[
 
 ]]
 
--- This should be what is in mcl_inventory_button9_pressed with the pressed button
+<<<<<<< HEAD
+-- This should be what is in vlc_inventory_button9_pressed with the pressed button
 -- image used as the unpressed option
 local fs_trade_pushed_template = [[
-	style_type[button;border=false;bgimg=mcl_inventory_button9_pressed.png;bgimg_pressed=mcl_inventory_button9_pressed.png;bgimg_middle=2,2]
+	style_type[button;border=false;bgimg=vlc_inventory_button9_pressed.png;bgimg_pressed=vlc_inventory_button9_pressed.png;bgimg_middle=2,2]
 
 ]]
 
--- This should be what is in mcl_inventory_button9
+-- This should be what is in vlc_inventory_button9
 local fs_trade_unpush_template = [[
-	style_type[button;border=false;bgimg=mcl_inventory_button9.png;bgimg_pressed=mcl_inventory_button9_pressed.png;bgimg_middle=2,2]
+	style_type[button;border=false;bgimg=vlc_inventory_button9.png;bgimg_pressed=vlc_inventory_button9_pressed.png;bgimg_middle=2,2]
+=======
+-- This should be what is in vlf_inventory_button9_pressed with the pressed button
+-- image used as the unpressed option
+local fs_trade_pushed_template = [[
+	style_type[button;border=false;bgimg=vlf_inventory_button9_pressed.png;bgimg_pressed=vlf_inventory_button9_pressed.png;bgimg_middle=2,2]
+
+]]
+
+-- This should be what is in vlf_inventory_button9
+local fs_trade_unpush_template = [[
+	style_type[button;border=false;bgimg=vlf_inventory_button9.png;bgimg_pressed=vlf_inventory_button9_pressed.png;bgimg_middle=2,2]
+>>>>>>> 3eb27be82 (change naming in mods)
 
 ]]
 
@@ -256,13 +291,23 @@ image[9.5,1.0;1.0,0.5;gui_crafting_arrow.png]
 image[9.5,2.25;1.0,0.5;gui_crafting_arrow.png]
 
 ]] ..
-mcl_formspec.get_itemslot_bg_v4(6.4,2.0,2,1)
+<<<<<<< HEAD
+vlc_formspec.get_itemslot_bg_v4(6.4,2.0,2,1)
 ..
-mcl_formspec.get_itemslot_bg_v4(11.1,2.0,1,1)
+vlc_formspec.get_itemslot_bg_v4(11.1,2.0,1,1)
 ..
-mcl_formspec.get_itemslot_bg_v4(3.97,3.98,9,3)
+vlc_formspec.get_itemslot_bg_v4(3.97,3.98,9,3)
 ..
-mcl_formspec.get_itemslot_bg_v4(3.97,7.98,9,1)
+vlc_formspec.get_itemslot_bg_v4(3.97,7.98,9,1)
+=======
+vlf_formspec.get_itemslot_bg_v4(6.4,2.0,2,1)
+..
+vlf_formspec.get_itemslot_bg_v4(11.1,2.0,1,1)
+..
+vlf_formspec.get_itemslot_bg_v4(3.97,3.98,9,3)
+..
+vlf_formspec.get_itemslot_bg_v4(3.97,7.98,9,1)
+>>>>>>> 3eb27be82 (change naming in mods)
  ..
 [[
 
@@ -361,8 +406,13 @@ function mobs_mc.villager_mob:show_trade_formspec(playername, tradenum)
 		local wanted2 = ItemStack(trade.wanted[2])
 		local offered = ItemStack(trade.offered)
 
-		if mcl_enchanting.is_enchanted(offered:get_name()) then
-			mcl_enchanting.load_enchantments(offered)
+<<<<<<< HEAD
+		if vlc_enchanting.is_enchanted(offered:get_name()) then
+			vlc_enchanting.load_enchantments(offered)
+=======
+		if vlf_enchanting.is_enchanted(offered:get_name()) then
+			vlf_enchanting.load_enchantments(offered)
+>>>>>>> 3eb27be82 (change naming in mods)
 		end
 
 		local row_str = ""
@@ -642,7 +692,11 @@ local trade_inventory = {
 			-- Begin Award Code
 			-- May need to be moved if award gets unlocked in the wrong cases.
 			elseif trader_exists(player:get_player_name()) then
-				awards.unlock(player:get_player_name(), "mcl:whatAdeal")
+<<<<<<< HEAD
+				awards.unlock(player:get_player_name(), "vlc:whatAdeal")
+=======
+				awards.unlock(player:get_player_name(), "vlf:whatAdeal")
+>>>>>>> 3eb27be82 (change naming in mods)
 			-- End Award Code
 			end
 			-- Only allow taking full stack
@@ -777,13 +831,23 @@ local trade_inventory = {
 				end
 
 				local emeralds
-				if wanted1:get_name() == "mcl_core:emerald" then
+<<<<<<< HEAD
+				if wanted1:get_name() == "vlc_core:emerald" then
 					emeralds = wanted1:get_count()
-				elseif wanted2:get_name() == "mcl_core:emerald" then
+				elseif wanted2:get_name() == "vlc_core:emerald" then
 					emeralds = wanted2:get_count()
 				else
 					local offered = inv:get_stack("offered", 1)
-					emeralds = offered:get_name() == "mcl_core:emerald" and offered:get_count() or 0
+					emeralds = offered:get_name() == "vlc_core:emerald" and offered:get_count() or 0
+=======
+				if wanted1:get_name() == "vlf_core:emerald" then
+					emeralds = wanted1:get_count()
+				elseif wanted2:get_name() == "vlf_core:emerald" then
+					emeralds = wanted2:get_count()
+				else
+					local offered = inv:get_stack("offered", 1)
+					emeralds = offered:get_name() == "vlf_core:emerald" and offered:get_count() or 0
+>>>>>>> 3eb27be82 (change naming in mods)
 				end
 				local xp = 2 + math.ceil(emeralds / (64/4)) -- 1..64 emeralds = 3..6 xp
 
@@ -812,7 +876,11 @@ local trade_inventory = {
 				end
 
 				if not minetest.is_creative_enabled(player:get_player_name()) then
-					mcl_experience.throw_xp(trader.object:get_pos(), xp)
+<<<<<<< HEAD
+					vlc_experience.throw_xp(trader.object:get_pos(), xp)
+=======
+					vlf_experience.throw_xp(trader.object:get_pos(), xp)
+>>>>>>> 3eb27be82 (change naming in mods)
 				end
 
 				trade.trade_counter = trade.trade_counter + 1

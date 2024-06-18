@@ -53,7 +53,11 @@ end
 -- Load default settings
 dofile(minetest.get_modpath("hudbars").."/default_settings.lua")
 
-if minetest.get_modpath("mcl_experience") and not minetest.is_creative_enabled("") then
+<<<<<<< HEAD
+if minetest.get_modpath("vlc_experience") and not minetest.is_creative_enabled("") then
+=======
+if minetest.get_modpath("vlf_experience") and not minetest.is_creative_enabled("") then
+>>>>>>> 3eb27be82 (change naming in mods)
 	-- reserve some space for experience bar:
 	hb.settings.start_offset_left.y = hb.settings.start_offset_left.y - 20
 	hb.settings.start_offset_right.y = hb.settings.start_offset_right.y - 20

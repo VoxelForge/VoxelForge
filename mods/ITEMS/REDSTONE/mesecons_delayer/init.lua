@@ -238,7 +238,11 @@ for i = 1, 4 do
 		drawtype = "nodebox",
 		tiles = {
 			"mesecons_delayer_off.png",
-			"mcl_stairs_stone_slab_top.png",
+<<<<<<< HEAD
+			"vlc_stairs_stone_slab_top.png",
+=======
+			"vlf_stairs_stone_slab_top.png",
+>>>>>>> 3eb27be82 (change naming in mods)
 			"mesecons_delayer_sides_off.png",
 			"mesecons_delayer_sides_off.png",
 			"mesecons_delayer_ends_off.png",
@@ -283,7 +287,11 @@ for i = 1, 4 do
 		delayer_time = delaytime,
 		delayer_onstate = "mesecons_delayer:delayer_on_"..tostring(i),
 		delayer_lockstate = "mesecons_delayer:delayer_off_locked",
-		sounds = mcl_sounds.node_sound_stone_defaults(),
+<<<<<<< HEAD
+		sounds = vlc_sounds.node_sound_stone_defaults(),
+=======
+		sounds = vlf_sounds.node_sound_stone_defaults(),
+>>>>>>> 3eb27be82 (change naming in mods)
 		mesecons = {
 			receptor = {
 				state = mesecon.state.off,
@@ -303,7 +311,11 @@ for i = 1, 4 do
 		drawtype = "nodebox",
 		tiles = {
 			"mesecons_delayer_on.png",
-			"mcl_stairs_stone_slab_top.png",
+<<<<<<< HEAD
+			"vlc_stairs_stone_slab_top.png",
+=======
+			"vlf_stairs_stone_slab_top.png",
+>>>>>>> 3eb27be82 (change naming in mods)
 			"mesecons_delayer_sides_on.png",
 			"mesecons_delayer_sides_on.png",
 			"mesecons_delayer_ends_on.png",
@@ -350,7 +362,11 @@ for i = 1, 4 do
 		delayer_time = delaytime,
 		delayer_offstate = "mesecons_delayer:delayer_off_"..tostring(i),
 		delayer_lockstate = "mesecons_delayer:delayer_on_locked",
-		sounds = mcl_sounds.node_sound_stone_defaults(),
+<<<<<<< HEAD
+		sounds = vlc_sounds.node_sound_stone_defaults(),
+=======
+		sounds = vlf_sounds.node_sound_stone_defaults(),
+>>>>>>> 3eb27be82 (change naming in mods)
 		mesecons = {
 			receptor = {
 				state = mesecon.state.on,
@@ -376,7 +392,11 @@ minetest.register_node("mesecons_delayer:delayer_off_locked", {
 	-- So this needs to be turned into a mesh.
 	tiles = {
 		"mesecons_delayer_locked_off.png",
-		"mcl_stairs_stone_slab_top.png",
+<<<<<<< HEAD
+		"vlc_stairs_stone_slab_top.png",
+=======
+		"vlf_stairs_stone_slab_top.png",
+>>>>>>> 3eb27be82 (change naming in mods)
 		"mesecons_delayer_sides_locked_off.png",
 		"mesecons_delayer_sides_locked_off.png",
 		"mesecons_delayer_front_locked_off.png",
@@ -406,7 +426,11 @@ minetest.register_node("mesecons_delayer:delayer_off_locked", {
 	is_ground_content = false,
 	drop = "mesecons_delayer:delayer_off_1",
 	delayer_time = DEFAULT_DELAY,
-	sounds = mcl_sounds.node_sound_stone_defaults(),
+<<<<<<< HEAD
+	sounds = vlc_sounds.node_sound_stone_defaults(),
+=======
+	sounds = vlf_sounds.node_sound_stone_defaults(),
+>>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {
 		receptor =
 		{
@@ -427,7 +451,11 @@ minetest.register_node("mesecons_delayer:delayer_on_locked", {
 	drawtype = "nodebox",
 	tiles = {
 		"mesecons_delayer_locked_on.png",
-		"mcl_stairs_stone_slab_top.png",
+<<<<<<< HEAD
+		"vlc_stairs_stone_slab_top.png",
+=======
+		"vlf_stairs_stone_slab_top.png",
+>>>>>>> 3eb27be82 (change naming in mods)
 		"mesecons_delayer_sides_locked_on.png",
 		"mesecons_delayer_sides_locked_on.png",
 		"mesecons_delayer_front_locked_on.png",
@@ -459,7 +487,11 @@ minetest.register_node("mesecons_delayer:delayer_on_locked", {
 	is_ground_content = false,
 	drop = "mesecons_delayer:delayer_off_1",
 	delayer_time = DEFAULT_DELAY,
-	sounds = mcl_sounds.node_sound_stone_defaults(),
+<<<<<<< HEAD
+	sounds = vlc_sounds.node_sound_stone_defaults(),
+=======
+	sounds = vlf_sounds.node_sound_stone_defaults(),
+>>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {
 		receptor =
 		{
@@ -478,7 +510,11 @@ minetest.register_craft({
 	output = "mesecons_delayer:delayer_off_1",
 	recipe = {
 		{"mesecons_torch:mesecon_torch_on", "mesecons:redstone", "mesecons_torch:mesecon_torch_on"},
-		{"mcl_core:stone","mcl_core:stone", "mcl_core:stone"},
+<<<<<<< HEAD
+		{"vlc_core:stone","vlc_core:stone", "vlc_core:stone"},
+=======
+		{"vlf_core:stone","vlf_core:stone", "vlf_core:stone"},
+>>>>>>> 3eb27be82 (change naming in mods)
 	}
 })
 

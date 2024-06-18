@@ -2,7 +2,11 @@
 
 local S = minetest.get_translator("mobs_mc")
 
-mcl_mobs.register_mob("mobs_mc:pig", {
+<<<<<<< HEAD
+vlc_mobs.register_mob("mobs_mc:pig", {
+=======
+vlf_mobs.register_mob("mobs_mc:pig", {
+>>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Pig"),
 	type = "animal",
 	spawn_class = "passive",
@@ -29,7 +33,11 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 	run_velocity = 3,
 	follow_velocity = 3.4,
 	drops = {
-		{name = "mcl_mobitems:porkchop",
+<<<<<<< HEAD
+		{name = "vlc_mobitems:porkchop",
+=======
+		{name = "vlf_mobitems:porkchop",
+>>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 1,
 		max = 3,
@@ -54,14 +62,25 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 		run_start = 41, run_end = 81, run_speed = 135,
 	},
 	follow = {
-		"mcl_farming:potato_item",
-		"mcl_farming:carrot_item",
-		"mcl_farming:beetroot_item",
-		"mcl_mobitems:carrot_on_a_stick"
+<<<<<<< HEAD
+		"vlc_farming:potato_item",
+		"vlc_farming:carrot_item",
+		"vlc_farming:beetroot_item",
+		"vlc_mobitems:carrot_on_a_stick"
 	},
 	view_range = 8,
 	on_lightning_strike = function(self, pos, pos2, objects)
-		 mcl_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
+		 vlc_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
+=======
+		"vlf_farming:potato_item",
+		"vlf_farming:carrot_item",
+		"vlf_farming:beetroot_item",
+		"vlf_mobitems:carrot_on_a_stick"
+	},
+	view_range = 8,
+	on_lightning_strike = function(self, pos, pos2, objects)
+		 vlf_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
+>>>>>>> 3eb27be82 (change naming in mods)
 		 return true
 	end,
 	do_custom = function(self, dtime)
@@ -82,9 +101,15 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 		end
 
 		-- if driver present allow control of horse
-		if self.driver and self.driver:get_wielded_item():get_name() == "mcl_mobitems:carrot_on_a_stick" then
+<<<<<<< HEAD
+		if self.driver and self.driver:get_wielded_item():get_name() == "vlc_mobitems:carrot_on_a_stick" then
 
-			mcl_mobs.drive(self, "walk", "stand", false, dtime)
+			vlc_mobs.drive(self, "walk", "stand", false, dtime)
+=======
+		if self.driver and self.driver:get_wielded_item():get_name() == "vlf_mobitems:carrot_on_a_stick" then
+
+			vlf_mobs.drive(self, "walk", "stand", false, dtime)
+>>>>>>> 3eb27be82 (change naming in mods)
 
 			return false -- skip rest of mob functions
 		end
@@ -97,7 +122,11 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 		-- drop saddle when horse is killed while riding
 		-- also detach from horse properly
 		if self.driver then
-			mcl_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
+<<<<<<< HEAD
+			vlc_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
+=======
+			vlf_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
+>>>>>>> 3eb27be82 (change naming in mods)
 		end
 	end,
 
@@ -108,10 +137,17 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 
 		local wielditem = clicker:get_wielded_item()
 		-- Feed pig
-		if wielditem:get_name() ~= "mcl_mobitems:carrot_on_a_stick" then
+<<<<<<< HEAD
+		if wielditem:get_name() ~= "vlc_mobitems:carrot_on_a_stick" then
 			if self:feed_tame(clicker, 1, true, false) then return end
 		end
-		if mcl_mobs.protect(self, clicker) then return end
+		if vlc_mobs.protect(self, clicker) then return end
+=======
+		if wielditem:get_name() ~= "vlf_mobitems:carrot_on_a_stick" then
+			if self:feed_tame(clicker, 1, true, false) then return end
+		end
+		if vlf_mobs.protect(self, clicker) then return end
+>>>>>>> 3eb27be82 (change naming in mods)
 
 		if self.child then
 			return
@@ -119,7 +155,11 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 
 		-- Put saddle on pig
 		local item = clicker:get_wielded_item()
-		if item:get_name() == "mcl_mobitems:saddle" and self.saddle ~= "yes" then
+<<<<<<< HEAD
+		if item:get_name() == "vlc_mobitems:saddle" and self.saddle ~= "yes" then
+=======
+		if item:get_name() == "vlf_mobitems:saddle" and self.saddle ~= "yes" then
+>>>>>>> 3eb27be82 (change naming in mods)
 			self.base_texture = {
 				"mobs_mc_pig.png", -- base
 				"mobs_mc_pig_saddle.png", -- saddle
@@ -130,11 +170,19 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 			self.saddle = "yes"
 			self.tamed = true
 			self.drops = {
-				{name = "mcl_mobitems:porkchop",
+<<<<<<< HEAD
+				{name = "vlc_mobitems:porkchop",
 				chance = 1,
 				min = 1,
 				max = 3,},
-				{name = "mcl_mobitems:saddle",
+				{name = "vlc_mobitems:saddle",
+=======
+				{name = "vlf_mobitems:porkchop",
+				chance = 1,
+				min = 1,
+				max = 3,},
+				{name = "vlf_mobitems:saddle",
+>>>>>>> 3eb27be82 (change naming in mods)
 				chance = 1,
 				min = 1,
 				max = 1,},
@@ -145,13 +193,21 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 				stack:take_item()
 				inv:set_stack("main", clicker:get_wield_index(), stack)
 			end
-			minetest.sound_play({name = "mcl_armor_equip_leather"}, {gain=0.5, max_hear_distance=8, pos=self.object:get_pos()}, true)
+<<<<<<< HEAD
+			minetest.sound_play({name = "vlc_armor_equip_leather"}, {gain=0.5, max_hear_distance=8, pos=self.object:get_pos()}, true)
+=======
+			minetest.sound_play({name = "vlf_armor_equip_leather"}, {gain=0.5, max_hear_distance=8, pos=self.object:get_pos()}, true)
+>>>>>>> 3eb27be82 (change naming in mods)
 			return
 		end
 
 			-- Should make pig go faster when right clicked with carrot on a stick.
 			-- FIXME: needs work on the going faster part.
-		--[[if self.driver and clicker == self.driver and self.driver:get_wielded_item():get_name() == "mcl_mobitems:carrot_on_a_stick" then
+<<<<<<< HEAD
+		--[[if self.driver and clicker == self.driver and self.driver:get_wielded_item():get_name() == "vlc_mobitems:carrot_on_a_stick" then
+=======
+		--[[if self.driver and clicker == self.driver and self.driver:get_wielded_item():get_name() == "vlf_mobitems:carrot_on_a_stick" then
+>>>>>>> 3eb27be82 (change naming in mods)
 			if not self.v3 then
 				self.v3 = 0
 				self.max_speed_forward = 100
@@ -167,7 +223,11 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 					if def.sounds and def.sounds.breaks then
 						minetest.sound_play(def.sounds.breaks, {pos = clicker:get_pos(), max_hear_distance = 8, gain = 0.5}, true)
 					end
-					wielditem = {name = "mcl_fishing:fishing_rod", count = 1}
+<<<<<<< HEAD
+					wielditem = {name = "vlc_fishing:fishing_rod", count = 1}
+=======
+					wielditem = {name = "vlf_fishing:fishing_rod", count = 1}
+>>>>>>> 3eb27be82 (change naming in mods)
 				else
 					wielditem:add_wear(2521)
 				end
@@ -176,26 +236,44 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 		end]]
 
 		-- Mount or detach player
-		if self.driver and clicker == self.driver then -- and self.driver:get_wielded_item():get_name() ~= "mcl_mobitems:carrot_on_a_stick" then -- Note: This is for when the ability to make the pig go faster is implemented
+<<<<<<< HEAD
+		if self.driver and clicker == self.driver then -- and self.driver:get_wielded_item():get_name() ~= "vlc_mobitems:carrot_on_a_stick" then -- Note: This is for when the ability to make the pig go faster is implemented
 			-- Detach if already attached
-			mcl_mobs.detach(clicker, {x=1, y=0, z=0})
+			vlc_mobs.detach(clicker, {x=1, y=0, z=0})
+=======
+		if self.driver and clicker == self.driver then -- and self.driver:get_wielded_item():get_name() ~= "vlf_mobitems:carrot_on_a_stick" then -- Note: This is for when the ability to make the pig go faster is implemented
+			-- Detach if already attached
+			vlf_mobs.detach(clicker, {x=1, y=0, z=0})
+>>>>>>> 3eb27be82 (change naming in mods)
 			return
 
 		elseif not self.driver and self.saddle == "yes" then
 			-- Ride pig if it has a saddle
 
-			mcl_mobs.attach(self, clicker)
+<<<<<<< HEAD
+			vlc_mobs.attach(self, clicker)
+=======
+			vlf_mobs.attach(self, clicker)
+>>>>>>> 3eb27be82 (change naming in mods)
 			return
 
 		-- Capture pig
 		elseif not self.driver and clicker:get_wielded_item():get_name() ~= "" then
-			mcl_mobs.capture_mob(self, clicker, 0, 5, 60, false, nil)
+<<<<<<< HEAD
+			vlc_mobs.capture_mob(self, clicker, 0, 5, 60, false, nil)
+=======
+			vlf_mobs.capture_mob(self, clicker, 0, 5, 60, false, nil)
+>>>>>>> 3eb27be82 (change naming in mods)
 		end
 	end,
 
 	on_breed = function(parent1, parent2)
 		local pos = parent1.object:get_pos()
-		local child = mcl_mobs.spawn_child(pos, parent1.name)
+<<<<<<< HEAD
+		local child = vlc_mobs.spawn_child(pos, parent1.name)
+=======
+		local child = vlf_mobs.spawn_child(pos, parent1.name)
+>>>>>>> 3eb27be82 (change naming in mods)
 		if child then
 			local ent_c = child:get_luaentity()
 			ent_c.tamed = true
@@ -217,7 +295,11 @@ mcl_mobs.register_mob("mobs_mc:pig", {
 	end,
 })
 
-mcl_mobs.spawn_setup({
+<<<<<<< HEAD
+vlc_mobs.spawn_setup({
+=======
+vlf_mobs.spawn_setup({
+>>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:pig",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -261,4 +343,8 @@ mcl_mobs.spawn_setup({
 })
 
 -- spawn eggs
-mcl_mobs.register_egg("mobs_mc:pig", S("Pig"), "#f0a5a2", "#db635f", 0)
+<<<<<<< HEAD
+vlc_mobs.register_egg("mobs_mc:pig", S("Pig"), "#f0a5a2", "#db635f", 0)
+=======
+vlf_mobs.register_egg("mobs_mc:pig", S("Pig"), "#f0a5a2", "#db635f", 0)
+>>>>>>> 3eb27be82 (change naming in mods)

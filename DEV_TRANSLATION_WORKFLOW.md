@@ -1,19 +1,19 @@
-# The Mineclonia Translation Maintenance Workflow
+# The VoxelCraft Translation Maintenance Workflow
 
 _Adapted from the [Repixture](https://codeberg.org/Wuzzy/Repixture) translation maintenance workflow._
 
-This document is directed to *developers* describing how to make sure the Mineclonia translation files stay up to date and functional.
+This document is directed to *developers* describing how to make sure the VoxelCraft translation files stay up to date and functional.
 
-**If you just want to translate, go to:** <https://translate.codeberg.org/projects/mineclonia/> (you can ignore the rest of the document)
+**If you just want to translate, go to:** <https://translate.codeberg.org/projects/VoxelCraft/> (you can ignore the rest of the document)
 
 ## Introduction
 
-Mineclonia translations utilize Weblate to allow translators to translate the game online. But for this to work, the workflow to maintain translations is a little bit more involved.
+VoxelCraft translations utilize Weblate to allow translators to translate the game online. But for this to work, the workflow to maintain translations is a little bit more involved.
 
-Rather than translating strings directly in the TR files, translators are encouraged to go to <https://translate.codeberg.org/projects/mineclonia/> to translate the string. The Mineclonia maintainer(s) do the rest.
+Rather than translating strings directly in the TR files, translators are encouraged to go to <https://translate.codeberg.org/projects/VoxelCraft/> to translate the string. The VoxelCraft maintainer(s) do the rest.
 
-* **TR files** (`*.tr`) contain the translation that Mineclonia actually uses in the game. They can be found in the `locale` subdirectories of the mods
-* **PO files** (`*.po`) are automatically generated and are required for Weblate to work. Mineclonia ignores them. They can be found in the `poconvert` subdirectory of those `locale` directories
+* **TR files** (`*.tr`) contain the translation that VoxelCraft actually uses in the game. They can be found in the `locale` subdirectories of the mods
+* **PO files** (`*.po`) are automatically generated and are required for Weblate to work. VoxelCraft ignores them. They can be found in the `poconvert` subdirectory of those `locale` directories
 
 **IMPORTANT**: Translators should NOT translate the TR or PO files in this game repository, as it disrupts the workflow. They are adviced to go to the aforementioned website instead.
 

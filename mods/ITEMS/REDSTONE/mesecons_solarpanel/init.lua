@@ -27,7 +27,11 @@ minetest.register_node("mesecons_solarpanel:solar_panel_on", {
 	drop = "mesecons_solarpanel:solar_panel_off",
 	_doc_items_create_entry = false,
 	groups = {handy=1,axey=1, not_in_creative_inventory = 1, material_wood=1, flammable=-1},
-	sounds = mcl_sounds.node_sound_glass_defaults(),
+<<<<<<< HEAD
+	sounds = vlc_sounds.node_sound_glass_defaults(),
+=======
+	sounds = vlf_sounds.node_sound_glass_defaults(),
+>>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {receptor = {
 		state = mesecon.state.on,
 		rules = mesecon.rules.pplate,
@@ -41,8 +45,13 @@ minetest.register_node("mesecons_solarpanel:solar_panel_on", {
 		minetest.swap_node(pos, {name = "mesecons_solarpanel:solar_panel_inverted_off"})
 		mesecon.receptor_off(pos, mesecon.rules.pplate)
 	end,
-	_mcl_blast_resistance = 0.2,
-	_mcl_hardness = 0.2,
+<<<<<<< HEAD
+	_vlc_blast_resistance = 0.2,
+	_vlc_hardness = 0.2,
+=======
+	_vlf_blast_resistance = 0.2,
+	_vlf_hardness = 0.2,
+>>>>>>> 3eb27be82 (change naming in mods)
 })
 
 minetest.register_node("mesecons_solarpanel:solar_panel_off", {
@@ -67,7 +76,11 @@ minetest.register_node("mesecons_solarpanel:solar_panel_off", {
 	_doc_items_longdesc = S("Daylight sensors are redstone components which provide redstone power when they are in sunlight and no power otherwise. They can also be inverted.").."\n"..
 		S("In inverted state, they provide redstone power when they are not in sunlight and no power otherwise."),
 	_doc_items_usagehelp = S("Use the daylight sensor to toggle its state."),
-	sounds = mcl_sounds.node_sound_glass_defaults(),
+<<<<<<< HEAD
+	sounds = vlc_sounds.node_sound_glass_defaults(),
+=======
+	sounds = vlf_sounds.node_sound_glass_defaults(),
+>>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {receptor = {
 		state = mesecon.state.off,
 		rules = mesecon.rules.pplate,
@@ -81,15 +94,25 @@ minetest.register_node("mesecons_solarpanel:solar_panel_off", {
 		minetest.swap_node(pos, {name = "mesecons_solarpanel:solar_panel_inverted_on"})
 		mesecon.receptor_on(pos, mesecon.rules.pplate)
 	end,
-	_mcl_blast_resistance = 0.2,
-	_mcl_hardness = 0.2,
+<<<<<<< HEAD
+	_vlc_blast_resistance = 0.2,
+	_vlc_hardness = 0.2,
+=======
+	_vlf_blast_resistance = 0.2,
+	_vlf_hardness = 0.2,
+>>>>>>> 3eb27be82 (change naming in mods)
 })
 
 minetest.register_craft({
 	output = "mesecons_solarpanel:solar_panel_off",
 	recipe = {
-		{"mcl_core:glass", "mcl_core:glass", "mcl_core:glass"},
-		{"mcl_nether:quartz", "mcl_nether:quartz", "mcl_nether:quartz"},
+<<<<<<< HEAD
+		{"vlc_core:glass", "vlc_core:glass", "vlc_core:glass"},
+		{"vlc_nether:quartz", "vlc_nether:quartz", "vlc_nether:quartz"},
+=======
+		{"vlf_core:glass", "vlf_core:glass", "vlf_core:glass"},
+		{"vlf_nether:quartz", "vlf_nether:quartz", "vlf_nether:quartz"},
+>>>>>>> 3eb27be82 (change naming in mods)
 		{"group:wood_slab", "group:wood_slab", "group:wood_slab"},
 	}
 })
@@ -141,7 +164,11 @@ minetest.register_node("mesecons_solarpanel:solar_panel_inverted_on", {
 	drop = "mesecons_solarpanel:solar_panel_off",
 	groups = {handy=1,axey=1, not_in_creative_inventory = 1, material_wood=1},
 	_doc_items_create_entry = false,
-	sounds = mcl_sounds.node_sound_glass_defaults(),
+<<<<<<< HEAD
+	sounds = vlc_sounds.node_sound_glass_defaults(),
+=======
+	sounds = vlf_sounds.node_sound_glass_defaults(),
+>>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {receptor = {
 		state = mesecon.state.on,
 		rules = mesecon.rules.pplate,
@@ -155,8 +182,13 @@ minetest.register_node("mesecons_solarpanel:solar_panel_inverted_on", {
 		minetest.swap_node(pos, {name = "mesecons_solarpanel:solar_panel_off"})
 		mesecon.receptor_off(pos, mesecon.rules.pplate)
 	end,
-	_mcl_blast_resistance = 0.2,
-	_mcl_hardness = 0.2,
+<<<<<<< HEAD
+	_vlc_blast_resistance = 0.2,
+	_vlc_hardness = 0.2,
+=======
+	_vlf_blast_resistance = 0.2,
+	_vlf_hardness = 0.2,
+>>>>>>> 3eb27be82 (change naming in mods)
 })
 
 minetest.register_node("mesecons_solarpanel:solar_panel_inverted_off", {
@@ -179,7 +211,11 @@ minetest.register_node("mesecons_solarpanel:solar_panel_inverted_off", {
 	groups = {handy=1,axey=1, not_in_creative_inventory=1, material_wood=1},
 	description=S("Inverted Daylight Sensor"),
 	_doc_items_create_entry = false,
-	sounds = mcl_sounds.node_sound_glass_defaults(),
+<<<<<<< HEAD
+	sounds = vlc_sounds.node_sound_glass_defaults(),
+=======
+	sounds = vlf_sounds.node_sound_glass_defaults(),
+>>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {receptor = {
 		state = mesecon.state.off,
 		rules = mesecon.rules.pplate,
@@ -193,8 +229,13 @@ minetest.register_node("mesecons_solarpanel:solar_panel_inverted_off", {
 		minetest.swap_node(pos, {name = "mesecons_solarpanel:solar_panel_on"})
 		mesecon.receptor_on(pos, mesecon.rules.pplate)
 	end,
-	_mcl_blast_resistance = 0.2,
-	_mcl_hardness = 0.2,
+<<<<<<< HEAD
+	_vlc_blast_resistance = 0.2,
+	_vlc_hardness = 0.2,
+=======
+	_vlf_blast_resistance = 0.2,
+	_vlf_hardness = 0.2,
+>>>>>>> 3eb27be82 (change naming in mods)
 })
 
 minetest.register_abm({
