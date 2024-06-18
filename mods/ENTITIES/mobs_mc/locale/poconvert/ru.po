@@ -1,0 +1,300 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Minetest textdomain mobs_mc x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.0\n"
+
+msgid "Axolotl"
+msgstr "Аксолотль"
+
+msgid "Bat"
+msgstr "Летучая мышь"
+
+msgid "Blaze"
+msgstr "Ифрит"
+
+msgid "Chicken"
+msgstr "Курица"
+
+msgid "Cod"
+msgstr "Треска"
+
+msgid "Cow"
+msgstr "Корова"
+
+msgid "Mooshroom"
+msgstr "Грибная корова"
+
+msgid "Creeper"
+msgstr "Крипер"
+
+msgid "Dolphin"
+msgstr "Дельфин"
+
+msgid "Ender Dragon"
+msgstr "Дракон Края"
+
+msgid "Enderman"
+msgstr "Эндермен"
+
+msgid "Endermite"
+msgstr "Эндермит"
+
+msgid "Ghast"
+msgstr "Гаст"
+
+msgid "Ghast Fireball"
+msgstr ""
+
+msgid "Glow Squid"
+msgstr "Светящийся спрут"
+
+msgid "Guardian"
+msgstr "Страж"
+
+msgid "Elder Guardian"
+msgstr "Древний страж"
+
+msgid "Hoglin"
+msgstr "Хоглин"
+
+msgid "Zoglin"
+msgstr "Зоглин"
+
+msgid "Baby Hoglin"
+msgstr ""
+
+msgid "Horse"
+msgstr "Лошадь"
+
+msgid "Skeleton Horse"
+msgstr "Лошадь-скелет"
+
+msgid "Zombie Horse"
+msgstr "Лошадь-зомби"
+
+msgid "Donkey"
+msgstr "Ослик"
+
+msgid "Mule"
+msgstr "Мул"
+
+msgid "Iron Golem"
+msgstr "Железный голем"
+
+msgid "Llama"
+msgstr "Лама"
+
+msgid "Ocelot"
+msgstr "Оцелот"
+
+msgid "Cat"
+msgstr "Кошка"
+
+msgid "Parrot"
+msgstr "Попугай"
+
+msgid "Pig"
+msgstr "Свинья"
+
+msgid "Piglin"
+msgstr "Пиглин"
+
+msgid "Zombiefied Piglin"
+msgstr ""
+
+msgid "Piglin Brute"
+msgstr "Жестокий пиглин"
+
+msgid "Zombie Piglin"
+msgstr "Зомби-пиглин"
+
+msgid "Pillager"
+msgstr "Разбойник"
+
+msgid "Polar Bear"
+msgstr "Полярный медведь"
+
+msgid "Rabbit"
+msgstr "Кролик"
+
+msgid "Killer Bunny"
+msgstr "Кролик-убийца"
+
+msgid "Salmon"
+msgstr "Лосось"
+
+msgid "Sheep"
+msgstr "Овца"
+
+msgid "Shulker"
+msgstr "Шалкер"
+
+msgid "Silverfish"
+msgstr "Чешуйница"
+
+msgid "Skeleton"
+msgstr "Скелет"
+
+msgid "Stray"
+msgstr "Странник"
+
+msgid "Wither Skeleton"
+msgstr "Скелет-иссушитель"
+
+msgid "Slime"
+msgstr "Слизень"
+
+msgid "Magma Cube"
+msgstr "Лавовый куб"
+
+msgid "Snow Golem"
+msgstr "Снежный голем"
+
+msgid "Spider"
+msgstr "Паук"
+
+msgid "Cave Spider"
+msgstr "Пещерный паук"
+
+msgid "Squid"
+msgstr "Спрут"
+
+msgid "Strider"
+msgstr "Страйдер"
+
+msgid "Baby Strider"
+msgstr ""
+
+msgid "Tropical Fish"
+msgstr ""
+
+msgid "Tropical fish"
+msgstr "Тропическая рыба"
+
+msgid "Vex"
+msgstr "Досаждатель"
+
+msgid "Villager"
+msgstr "Житель"
+
+msgid "Evoker"
+msgstr "Вызыватель"
+
+msgid "Illusioner"
+msgstr "Иллюзор"
+
+msgid "Vindicator"
+msgstr "Поборник"
+
+msgid "Zombie Villager"
+msgstr "Зомби-житель"
+
+msgid "@1 sleeps here"
+msgstr ""
+
+msgid "A villager sleeps here"
+msgstr ""
+
+msgid "@1 works here"
+msgstr ""
+
+msgid "A villager works here"
+msgstr ""
+
+msgid "Unemployed"
+msgstr ""
+
+msgid "Farmer"
+msgstr "Фермер"
+
+msgid "Fisherman"
+msgstr "Рыбак"
+
+msgid "Fletcher"
+msgstr "Лучник"
+
+msgid "Shepherd"
+msgstr "Пастух"
+
+msgid "Librarian"
+msgstr "Библиотекарь"
+
+msgid "Cartographer"
+msgstr "Картограф"
+
+msgid "Armorer"
+msgstr "Бронник"
+
+msgid "Leatherworker"
+msgstr "Кожевник"
+
+msgid "Butcher"
+msgstr "Мясник"
+
+msgid "Weapon Smith"
+msgstr "Оружейник"
+
+msgid "Tool Smith"
+msgstr "Инструментальщик"
+
+msgid "Cleric"
+msgstr "Церковник"
+
+msgid "Mason"
+msgstr ""
+
+msgid "Nitwit"
+msgstr "Нищий"
+
+msgid "Wandering Trader"
+msgstr ""
+
+msgid "Novice"
+msgstr ""
+
+msgid "Apprentice"
+msgstr ""
+
+msgid "Journeyman"
+msgstr ""
+
+msgid "Expert"
+msgstr ""
+
+msgid "Master"
+msgstr ""
+
+msgid "Witch"
+msgstr "Ведьма"
+
+msgid "Wither"
+msgstr "Иссушитель"
+
+msgid "Wolf"
+msgstr "Волк"
+
+msgid "Zombie"
+msgstr "Зомби"
+
+msgid "Baby Zombie"
+msgstr "Зомби-ребёнок"
+
+msgid "Husk"
+msgstr "Кадавр"
+
+msgid "Baby Husk"
+msgstr "Кадавр-ребёнок"
+
+msgid "Zombified Piglin"
+msgstr ""
+

@@ -1,0 +1,57 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Minetest textdomain mcl_credits x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2024-05-23 07:18+0000\n"
+"Last-Translator: j-r <j-r@users.noreply.translate.codeberg.org>\n"
+"Language-Team: German <https://translate.codeberg.org/projects/mineclonia/"
+"mcl_credits/de/>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5.5\n"
+
+msgid "A faithful Open Source clone of Minecraft"
+msgstr "Ein treuer Open-Source-Klon von Minecraft"
+
+msgid "Sneak to skip"
+msgstr "Schleichen zum Überspringen"
+
+msgid "Jump to speed up (additionally sprint)"
+msgstr "Springen, um zu beschleunigen (zusätzlich sprinten)"
+
+msgid "Show the Mineclonia end credits"
+msgstr "Den Abspann von Mineclonia anzeigen"
+
+msgid "Creators of Mineclonia"
+msgstr "Die Schöpfer von Mineclonia"
+
+msgid "Creator of MineClone 2"
+msgstr "Die Schöpfer von MineClone 2"
+
+msgid "Creator of MineClone"
+msgstr "Schöpfer von MineClone"
+
+msgid "Active Contributors"
+msgstr "Aktive Mitarbeiter"
+
+msgid "Previous Contributors"
+msgstr "Frühere Mitwirkende"
+
+msgid "Original Mod Authors"
+msgstr "Original-Mod-Autoren"
+
+msgid "3D Models"
+msgstr "3D Modelle"
+
+msgid "Textures and menu images"
+msgstr "Texturen und Menübilder"
+
+msgid "Translations"
+msgstr "Übersetzungen"
+
+msgid "Special thanks"
+msgstr "Besonderer Dank"
