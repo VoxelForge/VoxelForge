@@ -26,11 +26,7 @@ end
 local function wither_unstuck(self)
 	local pos = self.object:get_pos()
 	if mobs_griefing then
-<<<<<<< HEAD
-		local col = self.object:get_properties().collisionbox or vlc_mobs.registered_mobs["mobs_mc:wither"].initial_properties.collisionbox
-=======
 		local col = self.object:get_properties().collisionbox or vlf_mobs.registered_mobs["mobs_mc:wither"].initial_properties.collisionbox
->>>>>>> 3eb27be82 (change naming in mods)
 		local pos1 = vector.offset(pos, col[1], col[2], col[3])
 		local pos2 = vector.offset(pos, col[4], col[5], col[6])
 		for z = pos1.z, pos2.z do for y = pos1.y, pos2.y do for x = pos1.x, pos2.x do
@@ -38,11 +34,7 @@ local function wither_unstuck(self)
 			local name = minetest.get_node(npos).name
 			if name ~= "air" then
 				local ndef = minetest.registered_nodes[name]
-<<<<<<< HEAD
-				if ndef and ndef._vlc_hardness and ndef._vlc_hardness >= 0 then
-=======
 				if ndef and ndef._vlf_hardness and ndef._vlf_hardness >= 0 then
->>>>>>> 3eb27be82 (change naming in mods)
 					local drops = minetest.get_node_drops(name, "")
 					if minetest.dig_node(npos) then
 						for _, item in ipairs(drops) do
@@ -60,18 +52,6 @@ local function wither_unstuck(self)
 end
 
 local function get_dim_relative_y(pos)
-<<<<<<< HEAD
-		if (pos.y >= vlc_vars.mg_realm_barrier_overworld_end_max) then
-			return pos.y
-		elseif (pos.y <= vlc_vars.mg_nether_max + 200) then
-			return (pos.y - vlc_vars.mg_nether_min - 20)
-		else
-			return (pos.y - vlc_vars.mg_end_min - 50)
-		end
-end
-
-vlc_mobs.register_mob("mobs_mc:wither", {
-=======
 		if (pos.y >= vlf_vars.mg_realm_barrier_overworld_end_max) then
 			return pos.y
 		elseif (pos.y <= vlf_vars.mg_nether_max + 200) then
@@ -82,7 +62,6 @@ vlc_mobs.register_mob("mobs_mc:wither", {
 end
 
 vlf_mobs.register_mob("mobs_mc:wither", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Wither"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -119,11 +98,7 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 	dogshoot_count_max = 1, -- unused
 	can_despawn = false,
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_mobitems:nether_star",
-=======
 		{name = "vlf_mobitems:nether_star",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 1,
 		max = 1},
@@ -167,11 +142,7 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 			for _, player in pairs(minetest.get_connected_players()) do
 				local d = vector.distance(pos, player:get_pos())
 				if d <= 80 then
-<<<<<<< HEAD
-					vlc_bossbars.add_bar(player, bardef, true, d)
-=======
 					vlf_bossbars.add_bar(player, bardef, true, d)
->>>>>>> 3eb27be82 (change naming in mods)
 				end
 			end
 			self.object:set_yaw(self._spawning*10)
@@ -182,15 +153,9 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 
 			if self._spawning <= 0 then
 				if mobs_griefing and not minetest.is_protected(pos, "") then
-<<<<<<< HEAD
-					vlc_explosions.explode(pos, WITHER_INIT_BOOM, { drop_chance = 1.0 }, self.object)
-				else
-					vlc_mobs.mob_class.safe_boom(self, pos, WITHER_INIT_BOOM)
-=======
 					vlf_explosions.explode(pos, WITHER_INIT_BOOM, { drop_chance = 1.0 }, self.object)
 				else
 					vlf_mobs.mob_class.safe_boom(self, pos, WITHER_INIT_BOOM)
->>>>>>> 3eb27be82 (change naming in mods)
 				end
 				self.object:set_texture_mod("")
 				self._spawning = nil
@@ -253,11 +218,7 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 			end
 		end
 		self.object:set_properties({textures={self.base_texture}})
-<<<<<<< HEAD
-		vlc_bossbars.update_boss(self.object, "Wither", "dark_purple")
-=======
 		vlf_bossbars.update_boss(self.object, "Wither", "dark_purple")
->>>>>>> 3eb27be82 (change naming in mods)
 		if math.random(1, rand_factor) < 2 then
 			self.arrow = "mobs_mc:wither_skull_strong"
 		else
@@ -365,15 +326,6 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 				}, pos)
 				local ent = objs[n]:get_luaentity()
 				if objs[n]:is_player() or (ent and ent ~= self and (not ent._shooter or ent._shooter ~= self)) then
-<<<<<<< HEAD
-					vlc_util.deal_damage(objs[n], 8, {type = "magic"})
-					hit_some = true
-				end
-				vlc_mobs.effect_functions["withering"](objs[n], 0.5, 10)
-			end
-			if hit_some then
-				vlc_mobs.effect(pos, 32, "vlc_particles_soul_fire_flame.png", 5, 10, self.reach, 1, 0)
-=======
 					vlf_util.deal_damage(objs[n], 8, {type = "magic"})
 					hit_some = true
 				end
@@ -381,7 +333,6 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 			end
 			if hit_some then
 				vlf_mobs.effect(pos, 32, "vlf_particles_soul_fire_flame.png", 5, 10, self.reach, 1, 0)
->>>>>>> 3eb27be82 (change naming in mods)
 			end
 		end
 
@@ -420,11 +371,7 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 					ent.switch = 1
 					ent.owner_id = tostring(self.object) -- add unique owner id to arrow
 
-<<<<<<< HEAD
-					-- important for vlc_shields
-=======
 					-- important for vlf_shields
->>>>>>> 3eb27be82 (change naming in mods)
 					ent._shooter = self.object
 					ent._saved_shooter_pos = self.object:get_pos()
 				end
@@ -452,15 +399,9 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 		wither_unstuck(self)
 		return true
 	end,
-<<<<<<< HEAD
-	deal_damage = function(self, damage, vlc_reason)
-		if self._spawning then return end
-		if self._arrow_resistant and vlc_reason.type == "magic" then return end
-=======
 	deal_damage = function(self, damage, vlf_reason)
 		if self._spawning then return end
 		if self._arrow_resistant and vlf_reason.type == "magic" then return end
->>>>>>> 3eb27be82 (change naming in mods)
 		wither_unstuck(self)
 		self.health = self.health - damage
 	end,
@@ -476,33 +417,20 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 
 })
 
-<<<<<<< HEAD
-local wither_rose_soil = { "group:grass_block", "vlc_core:dirt", "vlc_core:coarse_dirt", "vlc_nether:netherrack", "group:soul_block", "vlc_mud:mud", "vlc_lush_caves:moss" }
-=======
 local wither_rose_soil = { "group:grass_block", "vlf_core:dirt", "vlf_core:coarse_dirt", "vlf_nether:netherrack", "group:soul_block", "vlf_mud:mud", "vlf_lush_caves:moss" }
->>>>>>> 3eb27be82 (change naming in mods)
 local function spawn_wither_rose(obj)
 	local n = minetest.find_node_near(obj:get_pos(),2,wither_rose_soil)
 	if n then
 		local p = vector.offset(n,0,1,0)
 		if minetest.get_node(p).name == "air" then
-<<<<<<< HEAD
-			if not ( mobs_griefing and minetest.place_node(p,{name="vlc_flowers:wither_rose"}) ) then
-				minetest.add_item(p,"vlc_flowers:wither_rose")
-=======
 			if not ( mobs_griefing and minetest.place_node(p,{name="vlf_flowers:wither_rose"}) ) then
 				minetest.add_item(p,"vlf_flowers:wither_rose")
->>>>>>> 3eb27be82 (change naming in mods)
 			end
 		end
 	end
 end
 
-<<<<<<< HEAD
-vlc_mobs.register_arrow("mobs_mc:wither_skull", {
-=======
 vlf_mobs.register_arrow("mobs_mc:wither_skull", {
->>>>>>> 3eb27be82 (change naming in mods)
 	visual = "cube",
 	visual_size = {x = 0.3, y = 0.3},
 	textures = {
@@ -520,15 +448,9 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull", {
 
 	-- direct hit
 	hit_player = function(self, player)
-<<<<<<< HEAD
-		vlc_mobs.effect_functions["withering"](player, 0.5, 10)
-		vlc_mobs.mob_class.boom(self,self.object:get_pos(), 1, false, true)
-		vlc_mobs.get_arrow_damage_func(8, "wither_skull")(self, player)
-=======
 		vlf_mobs.effect_functions["withering"](player, 0.5, 10)
 		vlf_mobs.mob_class.boom(self,self.object:get_pos(), 1, false, true)
 		vlf_mobs.get_arrow_damage_func(8, "wither_skull")(self, player)
->>>>>>> 3eb27be82 (change naming in mods)
 		if player:get_hp() <= 0 then
 			local shooter = self._shooter:get_luaentity()
 			if shooter then shooter.health = shooter.health + 5 end
@@ -537,17 +459,10 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull", {
 	end,
 
 	hit_mob = function(self, mob)
-<<<<<<< HEAD
-		vlc_mobs.effect_functions["withering"](mob, 0.5, 10)
-		vlc_mobs.get_arrow_damage_func(8, "wither_skull")(self, mob)
-		vlc_mobs.effect_functions["withering"](mob, 0.5, 10)
-		vlc_mobs.mob_class.boom(self,self.object:get_pos(), 1, false, true)
-=======
 		vlf_mobs.effect_functions["withering"](mob, 0.5, 10)
 		vlf_mobs.get_arrow_damage_func(8, "wither_skull")(self, mob)
 		vlf_mobs.effect_functions["withering"](mob, 0.5, 10)
 		vlf_mobs.mob_class.boom(self,self.object:get_pos(), 1, false, true)
->>>>>>> 3eb27be82 (change naming in mods)
 		local l = mob:get_luaentity()
 		if l and l.health - 8 <= 0 then
 			local shooter = self._shooter:get_luaentity()
@@ -558,19 +473,11 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull", {
 
 	-- node hit, explode
 	hit_node = function(self, pos, node)
-<<<<<<< HEAD
-		vlc_mobs.mob_class.boom(self,pos, 1, false, true)
-	end
-})
-
-vlc_mobs.register_arrow("mobs_mc:wither_skull_strong", {
-=======
 		vlf_mobs.mob_class.boom(self,pos, 1, false, true)
 	end
 })
 
 vlf_mobs.register_arrow("mobs_mc:wither_skull_strong", {
->>>>>>> 3eb27be82 (change naming in mods)
 	visual = "cube",
 	visual_size = {x = 0.35, y = 0.35},
 	textures = {
@@ -588,13 +495,8 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 
 	-- direct hit
 	hit_player = function(self, player)
-<<<<<<< HEAD
-		vlc_mobs.effect_functions["withering"](player, 0.5, 10)
-		vlc_mobs.get_arrow_damage_func(12, "wither_skull")(self, player)
-=======
 		vlf_mobs.effect_functions["withering"](player, 0.5, 10)
 		vlf_mobs.get_arrow_damage_func(12, "wither_skull")(self, player)
->>>>>>> 3eb27be82 (change naming in mods)
 		if player:get_hp() <= 0 then
 			local shooter = self._shooter:get_luaentity()
 			if shooter then shooter.health = shooter.health + 5 end
@@ -603,16 +505,6 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 	end,
 
 	hit_mob = function(self, mob)
-<<<<<<< HEAD
-		vlc_mobs.effect_functions["withering"](mob, 0.5, 10)
-		vlc_mobs.get_arrow_damage_func(12, "wither_skull")(self, mob)
-		vlc_mobs.effect_functions["withering"](mob, 0.5, 10)
-		local pos = self.object:get_pos()
-		if mobs_griefing and not minetest.is_protected(pos, "") then
-			vlc_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
-		else
-			vlc_mobs.mob_class.safe_boom(self, pos, 1, true) --need to call it this way bc self is the "arrow" object here
-=======
 		vlf_mobs.effect_functions["withering"](mob, 0.5, 10)
 		vlf_mobs.get_arrow_damage_func(12, "wither_skull")(self, mob)
 		vlf_mobs.effect_functions["withering"](mob, 0.5, 10)
@@ -621,7 +513,6 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 			vlf_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
 		else
 			vlf_mobs.mob_class.safe_boom(self, pos, 1, true) --need to call it this way bc self is the "arrow" object here
->>>>>>> 3eb27be82 (change naming in mods)
 		end
 		local l = mob:get_luaentity()
 		if l and l.health - 8 <= 0 then
@@ -634,26 +525,14 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 	-- node hit, explode
 	hit_node = function(self, pos, node)
 		if mobs_griefing and not minetest.is_protected(pos, "") then
-<<<<<<< HEAD
-			vlc_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
-		else
-			vlc_mobs.mob_class.safe_boom(self, pos, 1, true) --need to call it this way bc self is the "arrow" object here
-=======
 			vlf_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
 		else
 			vlf_mobs.mob_class.safe_boom(self, pos, 1, true) --need to call it this way bc self is the "arrow" object here
->>>>>>> 3eb27be82 (change naming in mods)
 		end
 	end
 })
 
 --Spawn egg
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:wither", S("Wither"), "#4f4f4f", "#4f4f4f", 0, true)
-
-vlc_wip.register_wip_item("mobs_mc:wither")
-=======
 vlf_mobs.register_egg("mobs_mc:wither", S("Wither"), "#4f4f4f", "#4f4f4f", 0, true)
 
 vlf_wip.register_wip_item("mobs_mc:wither")
->>>>>>> 3eb27be82 (change naming in mods)

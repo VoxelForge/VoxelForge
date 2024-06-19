@@ -56,11 +56,7 @@ local function torch_overheated(pos)
 		velocity = {x = 0, y = 0.6, z = 0},
 		expirationtime = 1.2,
 		size = 1.5,
-<<<<<<< HEAD
-		texture = "vlc_particles_smoke.png",
-=======
 		texture = "vlf_particles_smoke.png",
->>>>>>> 3eb27be82 (change naming in mods)
 	})
 	local timer = minetest.get_node_timer(pos)
 	timer:start(TORCH_COOLOFF)
@@ -118,11 +114,7 @@ minetest.register_craft({
 	output = "mesecons_torch:mesecon_torch_on",
 	recipe = {
 	{"mesecons:redstone"},
-<<<<<<< HEAD
-	{"vlc_core:stick"},}
-=======
 	{"vlf_core:stick"},}
->>>>>>> 3eb27be82 (change naming in mods)
 })
 
 local off_def = {
@@ -133,19 +125,11 @@ local off_def = {
 	tiles = {"jeija_torches_off.png"},
 	light = 0,
 	groups = {dig_immediate=3, dig_by_water=1, redstone_torch=2, mesecon_ignore_opaque_dig=1, not_in_creative_inventory=1},
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_wood_defaults(),
-	drop = "mesecons_torch:mesecon_torch_on",
-}
-
-vlc_torches.register_torch(off_def)
-=======
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	drop = "mesecons_torch:mesecon_torch_on",
 }
 
 vlf_torches.register_torch(off_def)
->>>>>>> 3eb27be82 (change naming in mods)
 
 local off_override = {
 	mesecons = {
@@ -168,11 +152,7 @@ local overheated_def = table.copy(off_def)
 overheated_def.name = "mesecon_torch_overheated"
 overheated_def.description = S("Redstone Torch (overheated)")
 
-<<<<<<< HEAD
-vlc_torches.register_torch(overheated_def)
-=======
 vlf_torches.register_torch(overheated_def)
->>>>>>> 3eb27be82 (change naming in mods)
 
 local overheated_override = {
 	on_timer = function(pos, elapsed)
@@ -195,17 +175,10 @@ local on_def = {
 	tiles = {"jeija_torches_on.png"},
 	light = 7,
 	groups = {dig_immediate=3, dig_by_water=1, redstone_torch=1, mesecon_ignore_opaque_dig=1},
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_wood_defaults(),
-}
-
-vlc_torches.register_torch(on_def)
-=======
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 }
 
 vlf_torches.register_torch(on_def)
->>>>>>> 3eb27be82 (change naming in mods)
 
 local on_override = {
 	on_destruct = function(pos, oldnode)
@@ -235,23 +208,14 @@ minetest.register_node("mesecons_torch:redstoneblock", {
 	_doc_items_longdesc = S("A block of redstone permanently supplies redstone power to its surrounding blocks."),
 	tiles = {"redstone_redstone_block.png"},
 	groups = {pickaxey=1},
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_stone_defaults(),
-=======
 	sounds = vlf_sounds.node_sound_stone_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	is_ground_content = false,
 	mesecons = {receptor = {
 		state = mesecon.state.on,
 		rules = mesecon.rules.alldirs,
 	}},
-<<<<<<< HEAD
-	_vlc_blast_resistance = 6,
-	_vlc_hardness = 5,
-=======
 	_vlf_blast_resistance = 6,
 	_vlf_hardness = 5,
->>>>>>> 3eb27be82 (change naming in mods)
 })
 
 minetest.register_craft({

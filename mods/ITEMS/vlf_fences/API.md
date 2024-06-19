@@ -1,8 +1,8 @@
 # API for adding MineClone 2 fences
 This API allows you to add fences and fence gates.
-The recommended function is `vlf_fences.register_fence_and_fence_gate`.
+The recommended function is `mcl_fences.register_fence_and_fence_gate`.
 
-## ` vlf_fences.register_fence = function(id, fence_name, texture, groups, connects_to, sounds)`
+## ` mcl_fences.register_fence = function(id, fence_name, texture, groups, connects_to, sounds)`
 Adds a fence without crafting recipe. A single node is created.
 
 ### Parameter
@@ -20,7 +20,7 @@ The full itemstring of the new fence node.
 
 Notes: Fences will always have the group `fence=1`. They will always connect to solid nodes (group `solid=1`).
 
-## `vlf_fences.register_fence_gate = function(id, fence_gate_name, texture, groups, sounds, sound_open, sound_close, sound_gain_open, sound_gain_close)`
+## `mcl_fences.register_fence_gate = function(id, fence_gate_name, texture, groups, sounds, sound_open, sound_close, sound_gain_open, sound_gain_close)`
 Adds a fence gate without crafting recipe. This will create 2 nodes.
 
 ### Parameters
@@ -44,7 +44,7 @@ This function returns 2 values, in the following order:
 1. Itemstring of the closed fence gate
 2. Itemstring of the open fence gate
 
-## `vlf_fences.register_fence_and_fence_gate = function(id, fence_name, fence_gate_name, texture, groups, connects_to, sounds, sound_open, sound_close, sound_gain_open, sound_gain_close)`
+## `mcl_fences.register_fence_and_fence_gate = function(id, fence_name, fence_gate_name, texture, groups, connects_to, sounds, sound_open, sound_close, sound_gain_open, sound_gain_close)`
 Registers a fence and fence gate. This is basically a combination of the two functions above. This is the recommended way to add a fence / fence gate pair.
 This will register 3 nodes in total without crafting recipes.
 

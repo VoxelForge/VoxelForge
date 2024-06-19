@@ -124,11 +124,7 @@ local function check_perch(self,dtime)
 	end
 end
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:parrot", {
-=======
 vlf_mobs.register_mob("mobs_mc:parrot", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Parrot"),
 	type = "animal",
 	spawn_class = "passive",
@@ -157,11 +153,7 @@ vlf_mobs.register_mob("mobs_mc:parrot", {
 		distance = 16,
 	},
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_mobitems:feather",
-=======
 		{name = "vlf_mobitems:feather",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 1,
 		max = 2,
@@ -193,27 +185,16 @@ vlf_mobs.register_mob("mobs_mc:parrot", {
 	fear_height = 0,
 	view_range = 16,
 	follow = {
-<<<<<<< HEAD
-		"vlc_farming:wheat_seeds",
-		"vlc_farming:melon_seeds",
-		"vlc_farming:pumpkin_seeds",
-		"vlc_farming:beetroot_seeds",
-=======
 		"vlf_farming:wheat_seeds",
 		"vlf_farming:melon_seeds",
 		"vlf_farming:pumpkin_seeds",
 		"vlf_farming:beetroot_seeds",
->>>>>>> 3eb27be82 (change naming in mods)
 	},
 	on_rightclick = function(self, clicker)
 		if self._doomed then return end
 		local item = clicker:get_wielded_item()
 		-- Kill parrot if fed with cookie
-<<<<<<< HEAD
-		if item:get_name() == "vlc_farming:cookie" then
-=======
 		if item:get_name() == "vlf_farming:cookie" then
->>>>>>> 3eb27be82 (change naming in mods)
 			minetest.sound_play("mobs_mc_animal_eat_generic", {object = self.object, max_hear_distance=16}, true)
 			self.health = 0
 			-- Doomed to die
@@ -232,34 +213,20 @@ vlf_mobs.register_mob("mobs_mc:parrot", {
 		check_perch(self,dtime)
 		check_mobimitate(self,dtime)
 	end,
-<<<<<<< HEAD
-	do_punch = function(self,puncher) --do_punch is the vlc_mobs_redo variant - it gets called by on_punch later....
-		if self.object:get_attach() == puncher then
-			return false --return false explicitly here. vlc_mobs checks for that
-=======
 	do_punch = function(self,puncher) --do_punch is the vlf_mobs_redo variant - it gets called by on_punch later....
 		if self.object:get_attach() == puncher then
 			return false --return false explicitly here. vlf_mobs checks for that
->>>>>>> 3eb27be82 (change naming in mods)
 		end
 	end,
 })
 
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:parrot",
 	type_of_spawning = "ground",
 	dimension = "overworld",
 	aoc = 3,
 	min_height = mobs_mc.water_level+7,
-<<<<<<< HEAD
-	max_height = vlc_vars.mg_overworld_max,
-=======
 	max_height = vlf_vars.mg_overworld_max,
->>>>>>> 3eb27be82 (change naming in mods)
 	biomes = {
 		"Jungle",
 		"JungleEdgeM",
@@ -271,8 +238,4 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn eggs
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:parrot", S("Parrot"), "#0da70a", "#ff0000", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:parrot", S("Parrot"), "#0da70a", "#ff0000", 0)
->>>>>>> 3eb27be82 (change naming in mods)

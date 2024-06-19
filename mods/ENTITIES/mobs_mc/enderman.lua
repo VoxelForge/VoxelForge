@@ -16,19 +16,11 @@
 -- implemented teleport to avoid rain.
 -- implemented teleport to chase.
 -- added enderman particles.
-<<<<<<< HEAD
--- drew vlc_portal_particle1.png
--- drew vlc_portal_particle2.png
--- drew vlc_portal_particle3.png
--- drew vlc_portal_particle4.png
--- drew vlc_portal_particle5.png
-=======
 -- drew vlf_portal_particle1.png
 -- drew vlf_portal_particle2.png
 -- drew vlf_portal_particle3.png
 -- drew vlf_portal_particle4.png
 -- drew vlf_portal_particle5.png
->>>>>>> 3eb27be82 (change naming in mods)
 -- added rain damage.
 -- fixed the grass_with_dirt issue.
 
@@ -81,11 +73,7 @@ local pr = PseudoRandom(os.time()*(-334))
 local block_texture_overrides
 do
 	local cbackground = "mobs_mc_enderman_cactus_background.png"
-<<<<<<< HEAD
-	local ctiles = minetest.registered_nodes["vlc_core:cactus"].tiles
-=======
 	local ctiles = minetest.registered_nodes["vlf_core:cactus"].tiles
->>>>>>> 3eb27be82 (change naming in mods)
 
 	local ctable = {}
 	local last
@@ -97,18 +85,6 @@ do
 	end
 
 	block_texture_overrides = {
-<<<<<<< HEAD
-		["vlc_core:cactus"] = ctable,
-		-- FIXME: replace colorize colors with colors from palette
-		["vlc_core:dirt_with_grass"] =
-		{
-		"vlc_core_grass_block_top.png^[colorize:green:90",
-		"default_dirt.png",
-		"default_dirt.png^(vlc_core_grass_block_side_overlay.png^[colorize:green:90)",
-		"default_dirt.png^(vlc_core_grass_block_side_overlay.png^[colorize:green:90)",
-		"default_dirt.png^(vlc_core_grass_block_side_overlay.png^[colorize:green:90)",
-		"default_dirt.png^(vlc_core_grass_block_side_overlay.png^[colorize:green:90)"}
-=======
 		["vlf_core:cactus"] = ctable,
 		-- FIXME: replace colorize colors with colors from palette
 		["vlf_core:dirt_with_grass"] =
@@ -119,7 +95,6 @@ do
 		"default_dirt.png^(vlf_core_grass_block_side_overlay.png^[colorize:green:90)",
 		"default_dirt.png^(vlf_core_grass_block_side_overlay.png^[colorize:green:90)",
 		"default_dirt.png^(vlf_core_grass_block_side_overlay.png^[colorize:green:90)"}
->>>>>>> 3eb27be82 (change naming in mods)
 	}
 end
 
@@ -278,17 +253,10 @@ local psdefs = {{
 	collisiondetection = true,
 	vertical = false,
 	time = 0,
-<<<<<<< HEAD
-	texture = "vlc_portals_particle"..math.random(1, 5)..".png",
-}}
-
-vlc_mobs.register_mob("mobs_mc:enderman", {
-=======
 	texture = "vlf_portals_particle"..math.random(1, 5)..".png",
 }}
 
 vlf_mobs.register_mob("mobs_mc:enderman", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Enderman"),
 	type = "monster",
 	spawn_class = "passive",
@@ -334,11 +302,7 @@ vlf_mobs.register_mob("mobs_mc:enderman", {
 	reach = 2,
 	particlespawners = psdefs,
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_throwing:ender_pearl",
-=======
 		{name = "vlf_throwing:ender_pearl",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 1,
@@ -352,15 +316,9 @@ vlf_mobs.register_mob("mobs_mc:enderman", {
 	do_custom = function(self, dtime)
 		-- RAIN DAMAGE / EVASIVE WARP BEHAVIOUR HERE.
 		local enderpos = self.object:get_pos()
-<<<<<<< HEAD
-		local dim = vlc_worlds.pos_to_dimension(enderpos)
-		if dim == "overworld" then
-			if vlc_weather.state == "rain" or vlc_weather.state == "lightning" then
-=======
 		local dim = vlf_worlds.pos_to_dimension(enderpos)
 		if dim == "overworld" then
 			if vlf_weather.state == "rain" or vlf_weather.state == "lightning" then
->>>>>>> 3eb27be82 (change naming in mods)
 				local damage = true
 				local enderpos = self.object:get_pos()
 				enderpos.y = enderpos.y+2.89
@@ -423,11 +381,7 @@ vlf_mobs.register_mob("mobs_mc:enderman", {
 				if not minetest.is_player(obj) then
 					local lua = obj:get_luaentity()
 					if lua then
-<<<<<<< HEAD
-						if lua.name == "vlc_bows:arrow_entity" or lua.name == "vlc_throwing:snowball_entity" then
-=======
 						if lua.name == "vlf_bows:arrow_entity" or lua.name == "vlf_throwing:snowball_entity" then
->>>>>>> 3eb27be82 (change naming in mods)
 							self:teleport(nil)
 						end
 					end
@@ -696,45 +650,27 @@ vlf_mobs.register_mob("mobs_mc:enderman", {
 })
 
 -- End spawn
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:enderman",
 	type_of_spawning = "ground",
 	dimension = "end",
 	aoc = 9,
-<<<<<<< HEAD
-	min_height = vlc_vars.mg_end_min,
-	max_height = vlc_vars.mg_end_max,
-=======
 	min_height = vlf_vars.mg_end_min,
 	max_height = vlf_vars.mg_end_max,
->>>>>>> 3eb27be82 (change naming in mods)
 	min_light = 0,
 	chance = 100,
 })
 
 -- Overworld spawn
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:enderman",
 	type_of_spawning = "ground",
 	dimension = "overworld",
 	aoc = 9,
 	min_light = 0,
 	max_light = 7,
-<<<<<<< HEAD
-	min_height = vlc_vars.mg_overworld_min,
-	max_height = vlc_vars.mg_overworld_max,
-=======
 	min_height = vlf_vars.mg_overworld_min,
 	max_height = vlf_vars.mg_overworld_max,
->>>>>>> 3eb27be82 (change naming in mods)
 	biomes_except = {
 		"MushroomIslandShore",
 		"MushroomIsland"
@@ -742,11 +678,7 @@ vlf_mobs.spawn_setup({
 	chance = 100,
 })
 -- Nether spawn (rare)
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:enderman",
 	type_of_spawning = "ground",
 	dimension = "nether",
@@ -761,11 +693,7 @@ vlf_mobs.spawn_setup({
 
 
 -- Warped Forest spawn (common)
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:enderman",
 	type_of_spawning = "ground",
 	dimension = "nether",
@@ -777,8 +705,4 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn eggs
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:enderman", S("Enderman"), "#252525", "#151515", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:enderman", S("Enderman"), "#252525", "#151515", 0)
->>>>>>> 3eb27be82 (change naming in mods)

@@ -13,7 +13,7 @@ And, in Creative Mode; also comes with a debug tool for spawning in villages.
 -------------
 MCL2 Credits:
 -------------
-Code forked from: https://github.com/MysticTempest/settlements/tree/vlf_villages
+Code forked from: https://github.com/MysticTempest/settlements/tree/mcl_villages
 	Commit: e24b4be
 ================================================================================
 Basic conversion of Settlements mod for compatibility with VoxeLibre, plus new schematics: MysticTempest

@@ -14,8 +14,8 @@ Liscense: CC0 1.0 Universal (CC0 1.0)
 Files:
 	mud_footsteps.ogg
 	mud_place_dug.ogg
-	vlf_mud_bricks.png
-	vlf_mud_packed_mud.png
-	vlf_mud.png
+	mcl_mud_bricks.png
+	mcl_mud_packed_mud.png
+	mcl_mud.png
 
 See https://creativecommons.org/publicdomain/zero/1.0/legalcode for further information

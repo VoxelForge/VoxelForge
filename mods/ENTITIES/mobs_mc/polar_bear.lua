@@ -7,11 +7,7 @@ local S = minetest.get_translator("mobs_mc")
 --###################
 
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:polar_bear", {
-=======
 vlf_mobs.register_mob("mobs_mc:polar_bear", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Polar Bear"),
 	type = "animal",
 	spawn_class = "passive",
@@ -44,21 +40,13 @@ vlf_mobs.register_mob("mobs_mc:polar_bear", {
 	attack_type = "dogfight",
 	drops = {
 		-- 3/4 chance to drop raw fish (poor approximation)
-<<<<<<< HEAD
-		{name = "vlc_fishing:fish_raw",
-=======
 		{name = "vlf_fishing:fish_raw",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 2,
 		min = 0,
 		max = 2,
 		looting = "common",},
 		-- 1/4 to drop raw salmon
-<<<<<<< HEAD
-		{name = "vlc_fishing:salmon_raw",
-=======
 		{name = "vlf_fishing:salmon_raw",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 4,
 		min = 0,
 		max = 2,
@@ -85,11 +73,7 @@ vlf_mobs.register_mob("mobs_mc:polar_bear", {
 	view_range = 16,
 })
 
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:polar_bear",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -103,8 +87,4 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn egg
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:polar_bear", S("Polar Bear"), "#f2f2f2", "#959590", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:polar_bear", S("Polar Bear"), "#f2f2f2", "#959590", 0)
->>>>>>> 3eb27be82 (change naming in mods)

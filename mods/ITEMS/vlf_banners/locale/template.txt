@@ -1,4 +1,4 @@
-# textdomain: vlf_banners
+# textdomain: mcl_banners
 White Banner=
 White=
 Grey Banner=

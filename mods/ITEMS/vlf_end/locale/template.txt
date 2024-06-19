@@ -1,4 +1,4 @@
-# textdomain: vlf_end
+# textdomain: mcl_end
 End Stone=
 End Stone Bricks=
 Purpur Block=

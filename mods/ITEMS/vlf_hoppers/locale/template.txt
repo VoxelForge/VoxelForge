@@ -1,4 +1,4 @@
-# textdomain: vlf_hoppers
+# textdomain: mcl_hoppers
 Hopper=
 Inventory=
 5 inventory slots=

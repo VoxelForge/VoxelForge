@@ -1,2 +1,2 @@
-# textdomain: vlf_paintings
+# textdomain: mcl_paintings
 Painting=

@@ -1,4 +1,4 @@
-# textdomain: vlf_wool
+# textdomain: mcl_wool
 Carpet=
 Wool=
 Wool is a decorative block which comes in many different colors.=

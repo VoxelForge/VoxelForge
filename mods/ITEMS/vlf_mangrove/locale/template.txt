@@ -1,4 +1,4 @@
-# textdomain: vlf_mangrove
+# textdomain: mcl_mangrove
 Mangrove=
 Mangrove Roots=
 Mangrove roots are decorative blocks that form as part of mangrove trees.=

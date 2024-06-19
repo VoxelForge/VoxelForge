@@ -1,4 +1,4 @@
-# textdomain: vlf_deepslate
+# textdomain: mcl_deepslate
 Deepslate=
 Deepslate is a stone type found deep underground in the Overworld that functions similar to regular stone but is harder than the stone.=
 Infested Deepslate=

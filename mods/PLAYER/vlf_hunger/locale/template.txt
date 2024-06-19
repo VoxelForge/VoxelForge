@@ -1,4 +1,4 @@
-# textdomain: vlf_hunger
+# textdomain: mcl_hunger
 Food=
 Saturation=
 Exhaust.=

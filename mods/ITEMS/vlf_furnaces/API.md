@@ -1,6 +1,6 @@
-## vlf_furnaces
+## mcl_furnaces
 
-### vlf_furnaces.register_furnace(node_basename, furnace_definition)
+### mcl_furnaces.register_furnace(node_basename, furnace_definition)
 Registeres a new type of furnace
 
 ### Furnace definition

@@ -12,11 +12,7 @@ local S = minetest.get_translator("mobs_mc")
 local walk_dist = 40
 local tele_dist = 80
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:iron_golem", {
-=======
 vlf_mobs.register_mob("mobs_mc:iron_golem", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Iron Golem"),
 	type = "npc",
 	spawn_class = "passive",
@@ -54,17 +50,10 @@ vlf_mobs.register_mob("mobs_mc:iron_golem", {
 	attacks_monsters = true,
 	attack_type = "dogfight",
 	_got_poppy = false,
-<<<<<<< HEAD
-	pick_up = {"vlc_flowers:poppy"},
-	on_pick_up = function(self,n)
-		local it = ItemStack(n.itemstring)
-		if it:get_name() == "vlc_flowers:poppy" then
-=======
 	pick_up = {"vlf_flowers:poppy"},
 	on_pick_up = function(self,n)
 		local it = ItemStack(n.itemstring)
 		if it:get_name() == "vlf_flowers:poppy" then
->>>>>>> 3eb27be82 (change naming in mods)
 			if not self._got_poppy then
 				self._got_poppy=true
 				it:take_item(1)
@@ -72,36 +61,21 @@ vlf_mobs.register_mob("mobs_mc:iron_golem", {
 		end
 		return it
 	end,
-<<<<<<< HEAD
-	replace_what = {"vlc_flowers:poppy"},
-	replace_with = {"air"},
-	on_replace = function(self, pos, oldnode, newnode)
-		if not self.got_poppy and oldnode.name == "vlc_flowers:poppy" then
-=======
 	replace_what = {"vlf_flowers:poppy"},
 	replace_with = {"air"},
 	on_replace = function(self, pos, oldnode, newnode)
 		if not self.got_poppy and oldnode.name == "vlf_flowers:poppy" then
->>>>>>> 3eb27be82 (change naming in mods)
 			self._got_poppy=true
 			return
 		end
 		return false
 	end,
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_core:iron_ingot",
-		chance = 1,
-		min = 3,
-		max = 5,},
-		{name = "vlc_flowers:poppy",
-=======
 		{name = "vlf_core:iron_ingot",
 		chance = 1,
 		min = 3,
 		max = 5,},
 		{name = "vlf_flowers:poppy",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 2,},
@@ -139,11 +113,7 @@ vlf_mobs.register_mob("mobs_mc:iron_golem", {
 
 
 -- spawn eggs
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:iron_golem", S("Iron Golem"), "#3b3b3b", "#f57223", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:iron_golem", S("Iron Golem"), "#3b3b3b", "#f57223", 0)
->>>>>>> 3eb27be82 (change naming in mods)
 
 --[[ This is to be called when a pumpkin or jack'o lantern has been placed. Recommended: In the on_construct function of the node.
 This summons an iron golen if placing the pumpkin created an iron golem summon pattern:
@@ -215,11 +185,7 @@ function mobs_mc.check_iron_golem_summon(pos, player)
 		for i=1, 4 do
 			local cpos = vector.add(pos, checks[c][i])
 			local node = minetest.get_node(cpos)
-<<<<<<< HEAD
-			if node.name ~= "vlc_core:ironblock" then
-=======
 			if node.name ~= "vlf_core:ironblock" then
->>>>>>> 3eb27be82 (change naming in mods)
 				ok = false
 				break
 			end

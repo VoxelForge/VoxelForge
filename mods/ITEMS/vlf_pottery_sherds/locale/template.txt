@@ -1,4 +1,4 @@
-# textdomain: vlf_pottery_sherds
+# textdomain: mcl_pottery_sherds
 Angler=
 Archer=
 Arms Up=

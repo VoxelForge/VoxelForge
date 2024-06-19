@@ -27,10 +27,10 @@ Same as media license for MineClone 2 (see root directory).
 
 With modifications by GitHub user kingoscargames:
 - `doors_item_steel.png`
-- `vlf_doors_door_iron_lower.png`
-- `vlf_doors_door_iron_upper.png`
-- `vlf_doors_trapdoor_acaica.png`
-- `vlf_doors_trapdoor_birch.png`
-- `vlf_doors_trapdoor_spruce.png`
-- `vlf_doors_trapdoor_dark_oak.png`
-- `vlf_doors_trapdoor_jungle.png`
+- `mcl_doors_door_iron_lower.png`
+- `mcl_doors_door_iron_upper.png`
+- `mcl_doors_trapdoor_acaica.png`
+- `mcl_doors_trapdoor_birch.png`
+- `mcl_doors_trapdoor_spruce.png`
+- `mcl_doors_trapdoor_dark_oak.png`
+- `mcl_doors_trapdoor_jungle.png`

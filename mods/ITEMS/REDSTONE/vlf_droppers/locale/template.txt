@@ -1,4 +1,4 @@
-# textdomain: vlf_droppers
+# textdomain: mcl_droppers
 Dropper=
 Inventory=
 9 inventory slots=

@@ -35,11 +35,7 @@ local messy_textures = {
 }
 
 -- animation 45-80 is transition between passive and attack stance
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:shulker", {
-=======
 vlf_mobs.register_mob("mobs_mc:shulker", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Shulker"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -68,11 +64,7 @@ vlf_mobs.register_mob("mobs_mc:shulker", {
 	fall_speed = 0,
 	does_not_prevent_sleep = true,
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_mobitems:shulker_shell",
-=======
 		{name = "vlf_mobitems:shulker_shell",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 2,
 		min = 1,
 		max = 1,
@@ -94,13 +86,8 @@ vlf_mobs.register_mob("mobs_mc:shulker", {
 	walk_velocity = 0,
 	run_velocity = 0,
 	noyaw = true,
-<<<<<<< HEAD
-	_vlc_fishing_hookable = true,
-	_vlc_fishing_reelable = false,
-=======
 	_vlf_fishing_hookable = true,
 	_vlf_fishing_reelable = false,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rightclick = function(self,clicker)
 		if clicker:is_player() then
 			local wstack = clicker:get_wielded_item()
@@ -122,11 +109,7 @@ vlf_mobs.register_mob("mobs_mc:shulker", {
 		local pos = self.object:get_pos()
 		if math.floor(self.object:get_yaw()) ~=0 then
 			self.object:set_yaw(0)
-<<<<<<< HEAD
-			vlc_mobs.yaw(self, 0, 0, dtime)
-=======
 			vlf_mobs.yaw(self, 0, 0, dtime)
->>>>>>> 3eb27be82 (change naming in mods)
 		end
 		if self.state == "attack" then
 			self:set_animation("run")
@@ -202,34 +185,19 @@ vlf_mobs.register_mob("mobs_mc:shulker", {
 })
 
 -- bullet arrow (weapon)
-<<<<<<< HEAD
-vlc_mobs.register_arrow("mobs_mc:shulkerbullet", {
-=======
 vlf_mobs.register_arrow("mobs_mc:shulkerbullet", {
->>>>>>> 3eb27be82 (change naming in mods)
 	visual = "sprite",
 	visual_size = {x = 0.25, y = 0.25},
 	textures = {"mobs_mc_shulkerbullet.png"},
 	velocity = 5,
 	homing = true,
-<<<<<<< HEAD
-	_vlc_fishing_hookable = true,
-	_vlc_fishing_reelable = true,
-	hit_player = vlc_mobs.get_arrow_damage_func(4),
-	hit_mob = vlc_mobs.get_arrow_damage_func(4),
-=======
 	_vlf_fishing_hookable = true,
 	_vlf_fishing_reelable = true,
 	hit_player = vlf_mobs.get_arrow_damage_func(4),
 	hit_mob = vlf_mobs.get_arrow_damage_func(4),
->>>>>>> 3eb27be82 (change naming in mods)
 	hit_node = function(self, _)
 		self.object:remove()
 	end
 })
 
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:shulker", S("Shulker"), "#946694", "#4d3852", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:shulker", S("Shulker"), "#946694", "#4d3852", 0)
->>>>>>> 3eb27be82 (change naming in mods)

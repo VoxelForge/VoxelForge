@@ -1,4 +1,4 @@
-# textdomain: vlf_beehives
+# textdomain: mcl_beehives
 Beehive=
 Artificial bee nest.=
 Bee Nest=

@@ -4,11 +4,7 @@
 
 local S = minetest.get_translator("mobs_mc")
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:endermite", {
-=======
 vlf_mobs.register_mob("mobs_mc:endermite", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Endermite"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -42,8 +38,4 @@ vlf_mobs.register_mob("mobs_mc:endermite", {
 	reach = 1,
 })
 
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:endermite", S("Endermite"), "#161616", "#6d6d6d", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:endermite", S("Endermite"), "#161616", "#6d6d6d", 0)
->>>>>>> 3eb27be82 (change naming in mods)

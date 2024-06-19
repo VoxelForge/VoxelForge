@@ -1,4 +1,4 @@
-# textdomain: vlf_shields
+# textdomain: mcl_shields
 Shield=
 A shield is a tool used for protecting the player against attacks.=
 White Shield=

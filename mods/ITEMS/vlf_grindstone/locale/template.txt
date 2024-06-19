@@ -1,4 +1,4 @@
-# textdomain: vlf_grindstone
+# textdomain: mcl_grindstone
 Repair & Disenchant=
 Inventory=
 Grindstone=

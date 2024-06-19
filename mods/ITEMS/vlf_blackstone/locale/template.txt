@@ -1,4 +1,4 @@
-# textdomain: vlf_blackstone
+# textdomain: mcl_blackstone
 Blackstone=
 Gilded Blackstone=
 Nether Gold Ore=

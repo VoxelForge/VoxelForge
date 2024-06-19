@@ -1,4 +1,4 @@
-vlf_fletching_table
+mcl_fletching_table
 -------------------
 Fletching Tables, by PrairieWind
 

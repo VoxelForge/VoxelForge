@@ -1,4 +1,4 @@
-# textdomain: vlf_cherry_blossom
+# textdomain: mcl_cherry_blossom
 Cherry=
 Pink Petals=
 Pink Petals are ground decoration of cherry grove biomes=

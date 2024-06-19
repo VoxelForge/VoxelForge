@@ -1,4 +1,4 @@
-# textdomain: vlf_skins
+# textdomain: mcl_skins
 Templates=
 Arm size=
 Bases=

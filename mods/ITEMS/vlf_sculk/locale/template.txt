@@ -1,4 +1,4 @@
-# textdomain: vlf_sculk
+# textdomain: mcl_sculk
 Sculk=
 Sculk Vein=
 Sculk vein.=

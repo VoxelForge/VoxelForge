@@ -1,4 +1,4 @@
-# textdomain: vlf_flowers
+# textdomain: mcl_flowers
 This is a small flower. Small flowers are mainly used for dye production and can also be potted.=
 It can only be placed on a block on which it would also survive.=
 @1 (Top Part)=

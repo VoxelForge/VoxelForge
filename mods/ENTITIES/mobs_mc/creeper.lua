@@ -9,11 +9,7 @@ local S = minetest.get_translator("mobs_mc")
 
 
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:creeper", {
-=======
 vlf_mobs.register_mob("mobs_mc:creeper", {
->>>>>>> 3eb27be82 (change naming in mods)
 	type = "monster",
 	description = S("Creeper"),
 	spawn_class = "hostile",
@@ -87,11 +83,7 @@ vlf_mobs.register_mob("mobs_mc:creeper", {
 		if self._forced_explosion_countdown_timer ~= nil then
 			self._forced_explosion_countdown_timer = self._forced_explosion_countdown_timer - dtime
 			if self._forced_explosion_countdown_timer <= 0 then
-<<<<<<< HEAD
-				self:boom(vlc_util.get_object_center(self.object), self.explosion_strength)
-=======
 				self:boom(vlf_util.get_object_center(self.object), self.explosion_strength)
->>>>>>> 3eb27be82 (change naming in mods)
 			end
 		end
 	end,
@@ -102,11 +94,7 @@ vlf_mobs.register_mob("mobs_mc:creeper", {
 			if luaentity and luaentity.name:find("arrow") then
 				local shooter_luaentity = luaentity._shooter and luaentity._shooter:get_luaentity()
 				if shooter_luaentity and (shooter_luaentity.name == "mobs_mc:skeleton" or shooter_luaentity.name == "mobs_mc:stray") then
-<<<<<<< HEAD
-					local loot = vlc_jukebox.get_random_creeper_loot()
-=======
 					local loot = vlf_jukebox.get_random_creeper_loot()
->>>>>>> 3eb27be82 (change naming in mods)
 					if loot then
 						minetest.add_item({x=pos.x, y=pos.y+1, z=pos.z}, loot)
 					end
@@ -116,11 +104,7 @@ vlf_mobs.register_mob("mobs_mc:creeper", {
 	end,
 	maxdrops = 2,
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_mobitems:gunpowder",
-=======
 		{name = "vlf_mobitems:gunpowder",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 2,
@@ -128,11 +112,7 @@ vlf_mobs.register_mob("mobs_mc:creeper", {
 
 		-- Head
 		-- TODO: Only drop if killed by charged creeper
-<<<<<<< HEAD
-		{name = "vlc_heads:creeper",
-=======
 		{name = "vlf_heads:creeper",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 200, -- 0.5%
 		min = 1,
 		max = 1,},
@@ -158,11 +138,7 @@ vlf_mobs.register_mob("mobs_mc:creeper", {
 	view_range = 16,
 })
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:creeper_charged", {
-=======
 vlf_mobs.register_mob("mobs_mc:creeper_charged", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Creeper"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -231,11 +207,7 @@ vlf_mobs.register_mob("mobs_mc:creeper_charged", {
 		if self._forced_explosion_countdown_timer ~= nil then
 			self._forced_explosion_countdown_timer = self._forced_explosion_countdown_timer - dtime
 			if self._forced_explosion_countdown_timer <= 0 then
-<<<<<<< HEAD
-				self:boom(vlc_util.get_object_center(self.object), self.explosion_strength)
-=======
 				self:boom(vlf_util.get_object_center(self.object), self.explosion_strength)
->>>>>>> 3eb27be82 (change naming in mods)
 			end
 		end
 	end,
@@ -246,11 +218,7 @@ vlf_mobs.register_mob("mobs_mc:creeper_charged", {
 			if luaentity and luaentity.name:find("arrow") then
 				local shooter_luaentity = luaentity._shooter and luaentity._shooter:get_luaentity()
 				if shooter_luaentity and (shooter_luaentity.name == "mobs_mc:skeleton" or shooter_luaentity.name == "mobs_mc:stray") then
-<<<<<<< HEAD
-					local loot = vlc_jukebox.get_random_creeper_loot()
-=======
 					local loot = vlf_jukebox.get_random_creeper_loot()
->>>>>>> 3eb27be82 (change naming in mods)
 					if loot then
 						minetest.add_item({x=pos.x, y=pos.y+1, z=pos.z}, loot)
 					end
@@ -259,20 +227,12 @@ vlf_mobs.register_mob("mobs_mc:creeper_charged", {
 		end
 	end,
 	on_lightning_strike = function(self, pos, pos2, objects)
-<<<<<<< HEAD
-		 vlc_util.replace_mob(self.object, "mobs_mc:creeper_charged")
-=======
 		 vlf_util.replace_mob(self.object, "mobs_mc:creeper_charged")
->>>>>>> 3eb27be82 (change naming in mods)
 		 return true
 	end,
 	maxdrops = 2,
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_mobitems:gunpowder",
-=======
 		{name = "vlf_mobitems:gunpowder",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 2,
@@ -280,11 +240,7 @@ vlf_mobs.register_mob("mobs_mc:creeper_charged", {
 
 		-- Head
 		-- TODO: Only drop if killed by charged creeper
-<<<<<<< HEAD
-		{name = "vlc_heads:creeper",
-=======
 		{name = "vlf_heads:creeper",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 200, -- 0.5%
 		min = 1,
 		max = 1,},
@@ -313,11 +269,7 @@ vlf_mobs.register_mob("mobs_mc:creeper_charged", {
 	glow = 3,
 })
 
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:creeper",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -330,8 +282,4 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn eggs
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:creeper", S("Creeper"), "#0da70a", "#000000", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:creeper", S("Creeper"), "#0da70a", "#000000", 0)
->>>>>>> 3eb27be82 (change naming in mods)

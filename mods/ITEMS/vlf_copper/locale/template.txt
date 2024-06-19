@@ -1,4 +1,4 @@
-# textdomain: vlf_copper
+# textdomain: mcl_copper
 A block of copper is mostly a decorative block.=
 A block used for compact raw copper storage.=
 Block of Copper=

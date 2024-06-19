@@ -1,4 +1,4 @@
-# textdomain: vlf_experience
+# textdomain: mcl_experience
 Bottle o' Enchanting=
 [[<player>] <xp>]=
 Gives a player some XP=

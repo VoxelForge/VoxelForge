@@ -1,4 +1,4 @@
-# textdomain: vlf_anvils
+# textdomain: mcl_anvils
 Enchantment Cost: =
 Repair and Name=
 Repair and rename items=

@@ -1,4 +1,4 @@
-# textdomain: vlf_heads
+# textdomain: mcl_heads
 Zombie Head=
 A zombie head is a small decorative block which resembles the head of a zombie. It can also be worn as a helmet, which reduces the detection range of zombies by 50%.=
 Creeper Head=

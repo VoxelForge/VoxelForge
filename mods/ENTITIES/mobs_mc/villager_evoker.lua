@@ -13,11 +13,7 @@ local pr = PseudoRandom(os.time()*666)
 
 local spawned_vexes = {} --this is stored locally so the mobs engine doesn't try to store it in staticdata
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:evoker", {
-=======
 vlf_mobs.register_mob("mobs_mc:evoker", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Evoker"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -73,20 +69,12 @@ vlf_mobs.register_mob("mobs_mc:evoker", {
 	end,
 	passive = false,
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_core:emerald",
-=======
 		{name = "vlf_core:emerald",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 1,
 		looting = "common",},
-<<<<<<< HEAD
-		{name = "vlc_totems:totem",
-=======
 		{name = "vlf_totems:totem",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 1,
 		max = 1,},
@@ -108,8 +96,4 @@ vlf_mobs.register_mob("mobs_mc:evoker", {
 })
 
 -- spawn eggs
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:evoker", S("Evoker"), "#959b9b", "#1e1c1a", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:evoker", S("Evoker"), "#959b9b", "#1e1c1a", 0)
->>>>>>> 3eb27be82 (change naming in mods)

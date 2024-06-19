@@ -1,4 +1,4 @@
-# textdomain: vlf_amethyst
+# textdomain: mcl_amethyst
 Block of Amethyst=
 The Block of Amethyst is a decoration block crafted from amethyst shards.=
 Budding Amethyst=

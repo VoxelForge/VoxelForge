@@ -1,6 +1,6 @@
-[mod] 3d Armor Stand [vlf_armor_stand]
+[mod] 3d Armor Stand [mcl_armor_stand]
 ======================================
 
-Depends: vlf_armor
+Depends: mcl_armor
 
 Adds an armor stand for armor storage and display.

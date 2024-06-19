@@ -1,4 +1,4 @@
-# textdomain: vlfx_stairs
+# textdomain: mclx_stairs
 Lapis Lazuli Stairs=
 Lapis Lazuli Slab=
 Gold Stairs=

@@ -41,24 +41,15 @@ S("The note block will only play a note when it is below air, otherwise, it stay
 	on_punch = function(pos, node) -- play current sound when punched
 		mesecon.noteblock_play(pos, node.param2)
 	end,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_wood_defaults(),
-=======
 	sounds = vlf_sounds.node_sound_wood_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {effector = { -- play sound when activated
 		action_on = function(pos, node)
 			mesecon.noteblock_play(pos, node.param2)
 		end,
 		rules = mesecon.rules.alldirs,
 	}},
-<<<<<<< HEAD
-	_vlc_blast_resistance = 0.8,
-	_vlc_hardness = 0.8,
-=======
 	_vlf_blast_resistance = 0.8,
 	_vlf_hardness = 0.8,
->>>>>>> 3eb27be82 (change naming in mods)
 })
 
 minetest.register_craft({
@@ -147,25 +138,6 @@ function mesecon.noteblock_play(pos, param2)
 	local block_below_name = minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name
 	local pitched = false
 	local soundname, pitch
-<<<<<<< HEAD
-	if block_below_name == "vlc_core:goldblock" then
-		soundname="mesecons_noteblock_bell"
-	elseif block_below_name == "vlc_core:clay" then
-		soundname="mesecons_noteblock_flute"
-	elseif block_below_name == "vlc_core:packed_ice" then
-		soundname="mesecons_noteblock_chime"
-	elseif block_below_name == "vlc_core:bone_block" then
-		soundname="mesecons_noteblock_xylophone_wood"
-	elseif block_below_name == "vlc_core:ironblock" then
-		soundname="mesecons_noteblock_xylophone_metal"
-	elseif block_below_name == "vlc_nether:soul_sand" then
-		soundname="mesecons_noteblock_cowbell"
-	elseif block_below_name == "vlc_core:emeraldblock" then
-		soundname="mesecons_noteblock_squarewave"
-	elseif block_below_name == "vlc_farming:hay_block" then
-		soundname="mesecons_noteblock_banjo"
-	elseif block_below_name == "vlc_nether:glowstone" then
-=======
 	if block_below_name == "vlf_core:goldblock" then
 		soundname="mesecons_noteblock_bell"
 	elseif block_below_name == "vlf_core:clay" then
@@ -183,7 +155,6 @@ function mesecon.noteblock_play(pos, param2)
 	elseif block_below_name == "vlf_farming:hay_block" then
 		soundname="mesecons_noteblock_banjo"
 	elseif block_below_name == "vlf_nether:glowstone" then
->>>>>>> 3eb27be82 (change naming in mods)
 		soundname="mesecons_noteblock_piano_digital"
 	elseif minetest.get_item_group(block_below_name, "wool") ~= 0 then
 		soundname="mesecons_noteblock_guitar"
@@ -213,11 +184,7 @@ function mesecon.noteblock_play(pos, param2)
 	local note_color = param2_to_note_color(param2)
 
 	minetest.add_particle({
-<<<<<<< HEAD
-		texture = "vlc_particles_note.png^[colorize:"..note_color..":92",
-=======
 		texture = "vlf_particles_note.png^[colorize:"..note_color..":92",
->>>>>>> 3eb27be82 (change naming in mods)
 		pos = { x = pos.x, y = pos.y + 0.35, z = pos.z },
 		velocity = { x = 0, y = 2, z = 0 },
 		acceleration = { x = 0, y = -2, z = 0 },

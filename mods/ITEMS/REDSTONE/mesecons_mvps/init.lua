@@ -1,10 +1,6 @@
 local GRAVITY = tonumber(minetest.settings:get("movement_gravity"))
 
-<<<<<<< HEAD
-local inv_nodes_movable = minetest.settings:get_bool("vlc_inv_nodes_movable", true)
-=======
 local inv_nodes_movable = minetest.settings:get_bool("vlf_inv_nodes_movable", true)
->>>>>>> 3eb27be82 (change naming in mods)
 --register stoppers for movestones/pistons
 
 mesecon.mvps_stoppers = {}
@@ -319,15 +315,9 @@ function mesecon.mvps_push_or_pull(pos, stackdir, movedir, maximum, player_name,
 		if n.node_timer then
 			minetest.get_node_timer(np):set(unpack(n.node_timer))
 		end
-<<<<<<< HEAD
-		if string.find(n.node.name, "vlc_observers:observer") then
-			-- It also counts as a block update when the observer itself is moved by a piston (Wiki):
-			vlc_observers.observer_activate(np)
-=======
 		if string.find(n.node.name, "vlf_observers:observer") then
 			-- It also counts as a block update when the observer itself is moved by a piston (Wiki):
 			vlf_observers.observer_activate(np)
->>>>>>> 3eb27be82 (change naming in mods)
 		end
 	end
 
@@ -392,11 +382,7 @@ function mesecon.mvps_move_objects(pos, dir, nodestack)
 				for _, r in ipairs(mesecon.rules.alldirs) do
 					local adjpos = vector.add(np, r)
 					local adjnode = minetest.get_node(adjpos)
-<<<<<<< HEAD
-					if minetest.registered_nodes[adjnode.name] and minetest.registered_nodes[adjnode.name].mvps_sticky and adjnode.name == "vlc_core:slimeblock" then
-=======
 					if minetest.registered_nodes[adjnode.name] and minetest.registered_nodes[adjnode.name].mvps_sticky and adjnode.name == "vlf_core:slimeblock" then
->>>>>>> 3eb27be82 (change naming in mods)
 						-- Reset acceleration of all objects before launching.
 						-- Fixes eggs, & snowballs thrown by dispensers
 						obj:set_acceleration({x=dir.x, y=-GRAVITY, z=dir.z})
@@ -419,25 +405,6 @@ function mesecon.mvps_move_objects(pos, dir, nodestack)
 end
 
 -- Unmovable by design: nodes
-<<<<<<< HEAD
-mesecon.register_mvps_stopper("vlc_core:barrier")
-mesecon.register_mvps_stopper("vlc_core:realm_barrier")
-mesecon.register_mvps_stopper("vlc_core:void")
-mesecon.register_mvps_stopper("vlc_core:bedrock")
-mesecon.register_mvps_stopper("vlc_core:obsidian")
-mesecon.register_mvps_stopper("vlc_core:crying_obsidian")
-mesecon.register_mvps_stopper("vlc_chests:ender_chest")
-mesecon.register_mvps_stopper("vlc_chests:ender_chest_small")
-mesecon.register_mvps_stopper("vlc_mobspawners:spawner")
-mesecon.register_mvps_stopper("mesecons_commandblock:commandblock_off")
-mesecon.register_mvps_stopper("mesecons_commandblock:commandblock_on")
-mesecon.register_mvps_stopper("vlc_portals:portal")
-mesecon.register_mvps_stopper("vlc_portals:portal_end")
-mesecon.register_mvps_stopper("vlc_portals:end_portal_frame")
-mesecon.register_mvps_stopper("vlc_portals:end_portal_frame_eye")
-mesecon.register_mvps_stopper("vlc_enchanting:table")
-mesecon.register_mvps_stopper("vlc_jukebox:jukebox")
-=======
 mesecon.register_mvps_stopper("vlf_core:barrier")
 mesecon.register_mvps_stopper("vlf_core:realm_barrier")
 mesecon.register_mvps_stopper("vlf_core:void")
@@ -455,20 +422,10 @@ mesecon.register_mvps_stopper("vlf_portals:end_portal_frame")
 mesecon.register_mvps_stopper("vlf_portals:end_portal_frame_eye")
 mesecon.register_mvps_stopper("vlf_enchanting:table")
 mesecon.register_mvps_stopper("vlf_jukebox:jukebox")
->>>>>>> 3eb27be82 (change naming in mods)
 mesecon.register_mvps_stopper("mesecons_solarpanel:solar_panel_on")
 mesecon.register_mvps_stopper("mesecons_solarpanel:solar_panel_off")
 mesecon.register_mvps_stopper("mesecons_solarpanel:solar_panel_inverted_on")
 mesecon.register_mvps_stopper("mesecons_solarpanel:solar_panel_inverted_off")
-<<<<<<< HEAD
-mesecon.register_mvps_stopper("vlc_banners:hanging_banner")
-mesecon.register_mvps_stopper("vlc_banners:standing_banner")
-mesecon.register_mvps_stopper("vlc_beehives:bee_nest")
-mesecon.register_mvps_stopper("vlc_beehives:beehive")
-mesecon.register_mvps_stopper("vlc_compass:lodestone")
-mesecon.register_mvps_stopper("vlc_sculk:sculk")
-mesecon.register_mvps_stopper("vlc_sculk:catalyst")
-=======
 mesecon.register_mvps_stopper("vlf_banners:hanging_banner")
 mesecon.register_mvps_stopper("vlf_banners:standing_banner")
 mesecon.register_mvps_stopper("vlf_beehives:bee_nest")
@@ -476,73 +433,11 @@ mesecon.register_mvps_stopper("vlf_beehives:beehive")
 mesecon.register_mvps_stopper("vlf_compass:lodestone")
 mesecon.register_mvps_stopper("vlf_sculk:sculk")
 mesecon.register_mvps_stopper("vlf_sculk:catalyst")
->>>>>>> 3eb27be82 (change naming in mods)
 
 -- Unmovable by technical restrictions.
 -- Open formspec would screw up if node is destroyed (minor problem)
 -- Would screw up on/off state of trapped chest (big problem)
 -- Would duplicate xp when moved
-<<<<<<< HEAD
-mesecon.register_mvps_stopper("vlc_furnaces:furnace")
-mesecon.register_mvps_stopper("vlc_furnaces:furnace_active")
-mesecon.register_mvps_stopper("vlc_blast_furnace:blast_furnace")
-mesecon.register_mvps_stopper("vlc_blast_furnace:blast_furnace_active")
-mesecon.register_mvps_stopper("vlc_smoker:smoker")
-mesecon.register_mvps_stopper("vlc_smoker:smoker_active")
-
--- These are unmovable in java edition due to technical restrictions
--- disable the setting vlc_nodes_movable
-if not inv_nodes_movable then
-	mesecon.register_mvps_stopper("vlc_hoppers:hopper")
-	mesecon.register_mvps_stopper("vlc_hoppers:hopper_side")
-	mesecon.register_mvps_stopper("vlc_droppers:dropper")
-	mesecon.register_mvps_stopper("vlc_droppers:dropper_up")
-	mesecon.register_mvps_stopper("vlc_droppers:dropper_down")
-	mesecon.register_mvps_stopper("vlc_dispensers:dispenser")
-	mesecon.register_mvps_stopper("vlc_dispensers:dispenser_up")
-	mesecon.register_mvps_stopper("vlc_dispensers:dispenser_down")
-	mesecon.register_mvps_stopper("vlc_barrels:barrel_open")
-	mesecon.register_mvps_stopper("vlc_barrels:barrel_closed")
-	mesecon.register_mvps_stopper("vlc_anvils:anvil")
-	mesecon.register_mvps_stopper("vlc_anvils:anvil_damage_1")
-	mesecon.register_mvps_stopper("vlc_anvils:anvil_damage_2")
-end
-
-mesecon.register_mvps_stopper("vlc_chests:chest")
-mesecon.register_mvps_stopper("vlc_chests:chest_small")
-mesecon.register_mvps_stopper("vlc_chests:chest_left")
-mesecon.register_mvps_stopper("vlc_chests:chest_right")
-mesecon.register_mvps_stopper("vlc_chests:trapped_chest")
-mesecon.register_mvps_stopper("vlc_chests:trapped_chest_small")
-mesecon.register_mvps_stopper("vlc_chests:trapped_chest_left")
-mesecon.register_mvps_stopper("vlc_chests:trapped_chest_right")
-
-mesecon.register_mvps_stopper("vlc_signs:wall_sign")
-mesecon.register_mvps_stopper("vlc_signs:standing_sign")
-mesecon.register_mvps_stopper("vlc_signs:standing_sign22_5")
-mesecon.register_mvps_stopper("vlc_signs:standing_sign45")
-mesecon.register_mvps_stopper("vlc_signs:standing_sign67_5")
-
--- Campfires
-mesecon.register_mvps_stopper("vlc_campfires:campfire")
-mesecon.register_mvps_stopper("vlc_campfires:campfire_lit")
-mesecon.register_mvps_stopper("vlc_campfires:soul_campfire")
-mesecon.register_mvps_stopper("vlc_campfires:soul_campfire_lit")
-
-
--- Unmovable by design: objects
-mesecon.register_mvps_unmov("vlc_enchanting:book")
-mesecon.register_mvps_unmov("vlc_chests:chest")
-mesecon.register_mvps_unmov("vlc_banners:hanging_banner")
-mesecon.register_mvps_unmov("vlc_banners:standing_banner")
-mesecon.register_mvps_unmov("vlc_signs:text")
-mesecon.register_mvps_unmov("vlc_mobspawners:doll")
-mesecon.register_mvps_unmov("vlc_armor_stand:armor_entity")
-mesecon.register_mvps_unmov("vlc_itemframes:item")
-mesecon.register_mvps_unmov("vlc_itemframes:map")
-mesecon.register_mvps_unmov("vlc_paintings:painting")
-mesecon.register_mvps_unmov("vlc_end:crystal")
-=======
 mesecon.register_mvps_stopper("vlf_furnaces:furnace")
 mesecon.register_mvps_stopper("vlf_furnaces:furnace_active")
 mesecon.register_mvps_stopper("vlf_blast_furnace:blast_furnace")
@@ -602,199 +497,10 @@ mesecon.register_mvps_unmov("vlf_itemframes:item")
 mesecon.register_mvps_unmov("vlf_itemframes:map")
 mesecon.register_mvps_unmov("vlf_paintings:painting")
 mesecon.register_mvps_unmov("vlf_end:crystal")
->>>>>>> 3eb27be82 (change naming in mods)
 
 
 -- Unpullable by design: nodes
 -- Glazed Terracotta
-<<<<<<< HEAD
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_red")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_orange")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_yellow")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_green")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_lime")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_purple")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_magenta")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_blue")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_cyan")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_white")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_grey")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_silver")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_black")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_brown")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_light_blue")
-mesecon.register_mvps_unsticky("vlc_colorblocks:glazed_terracotta_pink")
-
--- Bamboo
-mesecon.register_mvps_unsticky("vlc_bamboo:bamboo")
-mesecon.register_mvps_unsticky("vlc_bamboo:bamboo_endcap")
-
-mesecon.register_mvps_unsticky("vlc_bamboo:bamboo_1")
-mesecon.register_mvps_unsticky("vlc_bamboo:bamboo_2")
-mesecon.register_mvps_unsticky("vlc_bamboo:bamboo_3")
-
-mesecon.register_mvps_unsticky("vlc_bamboo:bamboo_door")
-mesecon.register_mvps_unsticky("vlc_bamboo:scaffolding")
-
--- Beds
-mesecon.register_mvps_unsticky("vlc_beds:bed_black_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_black_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_blue_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_blue_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_brown_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_brown_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_cyan_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_cyan_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_green_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_green_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_grey_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_grey_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_light_blue_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_light_blue_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_lime_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_lime_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_magenta_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_magenta_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_orange_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_orange_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_pink_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_pink_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_purple_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_purple_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_red_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_red_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_silver_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_silver_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_white_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_white_bottom")
-mesecon.register_mvps_unsticky("vlc_beds:bed_yellow_top")
-mesecon.register_mvps_unsticky("vlc_beds:bed_yellow_bottom")
--- Cactus, Sugarcane & Vines
-mesecon.register_mvps_unsticky("vlc_core:cactus")
-mesecon.register_mvps_unsticky("vlc_core:reeds")
-mesecon.register_mvps_unsticky("vlc_core:vine")
--- Cake
-mesecon.register_mvps_unsticky("vlc_cake:cake_1")
-mesecon.register_mvps_unsticky("vlc_cake:cake_2")
-mesecon.register_mvps_unsticky("vlc_cake:cake_3")
-mesecon.register_mvps_unsticky("vlc_cake:cake_4")
-mesecon.register_mvps_unsticky("vlc_cake:cake_5")
-mesecon.register_mvps_unsticky("vlc_cake:cake_6")
-mesecon.register_mvps_unsticky("vlc_cake:cake")
--- Carved & Jack O'Lantern Pumpkins, Pumpkin & Melon
-mesecon.register_mvps_unsticky("vlc_farming:pumpkin_face")
-mesecon.register_mvps_unsticky("vlc_farming:pumpkin_face_light")
-mesecon.register_mvps_unsticky("vlc_farming:pumpkin")
-mesecon.register_mvps_unsticky("vlc_farming:melon")
--- Chorus Plant & Flower
-mesecon.register_mvps_unsticky("vlc_end:chorus_plant")
-mesecon.register_mvps_unsticky("vlc_end:chorus_flower")
--- Cobweb
-mesecon.register_mvps_unsticky("vlc_core:cobweb")
--- Cocoa
-mesecon.register_mvps_unsticky("vlc_cocoas:cocoa_1")
-mesecon.register_mvps_unsticky("vlc_cocoas:cocoa_2")
-mesecon.register_mvps_unsticky("vlc_cocoas:cocoa_3")
--- Doors
-mesecon.register_mvps_unsticky("vlc_doors:wooden_door_t_1")
-mesecon.register_mvps_unsticky("vlc_doors:wooden_door_b_1")
-mesecon.register_mvps_unsticky("vlc_doors:wooden_door_t_2")
-mesecon.register_mvps_unsticky("vlc_doors:wooden_door_b_2")
-mesecon.register_mvps_unsticky("vlc_doors:iron_door_t_1")
-mesecon.register_mvps_unsticky("vlc_doors:iron_door_b_1")
-mesecon.register_mvps_unsticky("vlc_doors:iron_door_t_2")
-mesecon.register_mvps_unsticky("vlc_doors:iron_door_b_2")
-mesecon.register_mvps_unsticky("vlc_doors:acacia_door_t_1")
-mesecon.register_mvps_unsticky("vlc_doors:acacia_door_b_1")
-mesecon.register_mvps_unsticky("vlc_doors:acacia_door_t_2")
-mesecon.register_mvps_unsticky("vlc_doors:acacia_door_b_2")
-mesecon.register_mvps_unsticky("vlc_doors:birch_door_t_1")
-mesecon.register_mvps_unsticky("vlc_doors:birch_door_b_1")
-mesecon.register_mvps_unsticky("vlc_doors:birch_door_t_2")
-mesecon.register_mvps_unsticky("vlc_doors:birch_door_b_2")
-mesecon.register_mvps_unsticky("vlc_doors:dark_oak_door_t_1")
-mesecon.register_mvps_unsticky("vlc_doors:dark_oak_door_b_1")
-mesecon.register_mvps_unsticky("vlc_doors:dark_oak_door_t_2")
-mesecon.register_mvps_unsticky("vlc_doors:dark_oak_door_b_2")
-mesecon.register_mvps_unsticky("vlc_doors:spruce_door_t_1")
-mesecon.register_mvps_unsticky("vlc_doors:spruce_door_b_1")
-mesecon.register_mvps_unsticky("vlc_doors:spruce_door_t_2")
-mesecon.register_mvps_unsticky("vlc_doors:spruce_door_b_2")
-mesecon.register_mvps_unsticky("vlc_doors:jungle_door_t_1")
-mesecon.register_mvps_unsticky("vlc_doors:jungle_door_b_1")
-mesecon.register_mvps_unsticky("vlc_doors:jungle_door_t_2")
-mesecon.register_mvps_unsticky("vlc_doors:jungle_door_b_2")
--- Dragon Egg
-mesecon.register_mvps_unsticky("vlc_end:dragon_egg")
--- Fire
-mesecon.register_mvps_unsticky("vlc_fire:fire")
-mesecon.register_mvps_unsticky("vlc_fire:eternal_fire")
--- Flower Pots
-mesecon.register_mvps_unsticky("vlc_flowerpots:flower_pot")
-mesecon.register_mvps_unsticky("vlc_flowerpots:flower_pot_allium")
-mesecon.register_mvps_unsticky("vlc_flowerpots:flower_pot_azure_bluet")
-mesecon.register_mvps_unsticky("vlc_flowerpots:flower_pot_blue_orchid")
-mesecon.register_mvps_unsticky("vlc_flowerpots:flower_pot_dandelion")
-mesecon.register_mvps_unsticky("vlc_flowerpots:flower_pot_fern")
-mesecon.register_mvps_unsticky("vlc_flowerpots:flower_pot_oxeye_daisy")
-mesecon.register_mvps_unsticky("vlc_flowerpots:flower_pot_poppy")
-mesecon.register_mvps_unsticky("vlc_flowerpots:flower_pot_tulip_orange")
-mesecon.register_mvps_unsticky("vlc_flowerpots:flower_pot_tulip_pink")
-mesecon.register_mvps_unsticky("vlc_flowerpots:flower_pot_tulip_red")
-mesecon.register_mvps_unsticky("vlc_flowerpots:flower_pot_tulip_white")
--- Flowers, Lilypad & Dead Bush
-mesecon.register_mvps_unsticky("vlc_core:deadbush")
-mesecon.register_mvps_unsticky("vlc_flowers:allium")
-mesecon.register_mvps_unsticky("vlc_flowers:azure_bluet")
-mesecon.register_mvps_unsticky("vlc_flowers:blue_orchid")
-mesecon.register_mvps_unsticky("vlc_flowers:dandelion")
-mesecon.register_mvps_unsticky("vlc_flowers:double_fern")
-mesecon.register_mvps_unsticky("vlc_flowers:double_fern_top")
-mesecon.register_mvps_unsticky("vlc_flowers:fern")
-mesecon.register_mvps_unsticky("vlc_flowers:lilac")
-mesecon.register_mvps_unsticky("vlc_flowers:lilac_top")
-mesecon.register_mvps_unsticky("vlc_flowers:oxeye_daisy")
-mesecon.register_mvps_unsticky("vlc_flowers:peony")
-mesecon.register_mvps_unsticky("vlc_flowers:peony_top")
-mesecon.register_mvps_unsticky("vlc_flowers:poppy")
-mesecon.register_mvps_unsticky("vlc_flowers:rose_bush")
-mesecon.register_mvps_unsticky("vlc_flowers:rose_bush_top")
-mesecon.register_mvps_unsticky("vlc_flowers:sunflower")
-mesecon.register_mvps_unsticky("vlc_flowers:sunflower_top")
-mesecon.register_mvps_unsticky("vlc_flowers:tallgrass")
-mesecon.register_mvps_unsticky("vlc_flowers:double_grass")
-mesecon.register_mvps_unsticky("vlc_flowers:double_grass_top")
-mesecon.register_mvps_unsticky("vlc_flowers:tulip_orange")
-mesecon.register_mvps_unsticky("vlc_flowers:tulip_pink")
-mesecon.register_mvps_unsticky("vlc_flowers:tulip_red")
-mesecon.register_mvps_unsticky("vlc_flowers:tulip_white")
-mesecon.register_mvps_unsticky("vlc_flowers:waterlily")
--- Heads
-mesecon.register_mvps_unsticky("vlc_heads:creeper")
-mesecon.register_mvps_unsticky("vlc_heads:skeleton")
-mesecon.register_mvps_unsticky("vlc_heads:steve")
-mesecon.register_mvps_unsticky("vlc_heads:wither_skeleton")
-mesecon.register_mvps_unsticky("vlc_heads:zombie")
--- Item Frame
-mesecon.register_mvps_unsticky("vlc_itemframes:frame")
-mesecon.register_mvps_unsticky("vlc_itemframes:glow_frame")
--- Ladder
-mesecon.register_mvps_unsticky("vlc_core:ladder")
--- Lava & Water
-mesecon.register_mvps_unsticky("vlc_core:lava_source")
-mesecon.register_mvps_unsticky("vlc_core:lava_flowing")
-mesecon.register_mvps_unsticky("vlc_core:water_source")
-mesecon.register_mvps_unsticky("vlc_core:water_flowing")
-mesecon.register_mvps_unsticky("vlcx_core:river_water_source")
-mesecon.register_mvps_unsticky("vlcx_core:river_water_flowing")
--- Leaves
-mesecon.register_mvps_unsticky("vlc_core:leaves")
-mesecon.register_mvps_unsticky("vlc_core:acacialeaves")
-mesecon.register_mvps_unsticky("vlc_core:birchleaves")
-mesecon.register_mvps_unsticky("vlc_core:darkleaves")
-mesecon.register_mvps_unsticky("vlc_core:spruceleaves")
-mesecon.register_mvps_unsticky("vlc_core:jungleleaves")
-=======
 mesecon.register_mvps_unsticky("vlf_colorblocks:glazed_terracotta_red")
 mesecon.register_mvps_unsticky("vlf_colorblocks:glazed_terracotta_orange")
 mesecon.register_mvps_unsticky("vlf_colorblocks:glazed_terracotta_yellow")
@@ -981,21 +687,10 @@ mesecon.register_mvps_unsticky("vlf_core:birchleaves")
 mesecon.register_mvps_unsticky("vlf_core:darkleaves")
 mesecon.register_mvps_unsticky("vlf_core:spruceleaves")
 mesecon.register_mvps_unsticky("vlf_core:jungleleaves")
->>>>>>> 3eb27be82 (change naming in mods)
 -- Lever
 mesecon.register_mvps_unsticky("mesecons_walllever:wall_lever_off")
 mesecon.register_mvps_unsticky("mesecons_walllever:wall_lever_on")
 -- Mushrooms, Nether Wart & Amethyst
-<<<<<<< HEAD
-mesecon.register_mvps_unsticky("vlc_mushroom:mushroom_brown")
-mesecon.register_mvps_unsticky("vlc_mushroom:mushroom_red")
-mesecon.register_mvps_unsticky("vlc_nether:nether_wart_0")
-mesecon.register_mvps_unsticky("vlc_nether:nether_wart_1")
-mesecon.register_mvps_unsticky("vlc_nether:nether_wart_2")
-mesecon.register_mvps_unsticky("vlc_nether:nether_wart")
-mesecon.register_mvps_unsticky("vlc_amethyst:amethyst_cluster")
-mesecon.register_mvps_unsticky("vlc_amethyst:budding_amethyst")
-=======
 mesecon.register_mvps_unsticky("vlf_mushroom:mushroom_brown")
 mesecon.register_mvps_unsticky("vlf_mushroom:mushroom_red")
 mesecon.register_mvps_unsticky("vlf_nether:nether_wart_0")
@@ -1004,7 +699,6 @@ mesecon.register_mvps_unsticky("vlf_nether:nether_wart_2")
 mesecon.register_mvps_unsticky("vlf_nether:nether_wart")
 mesecon.register_mvps_unsticky("vlf_amethyst:amethyst_cluster")
 mesecon.register_mvps_unsticky("vlf_amethyst:budding_amethyst")
->>>>>>> 3eb27be82 (change naming in mods)
 -- Pressure Plates
 mesecon.register_mvps_unsticky("mesecons_pressureplates:pressure_plate_wood_on")
 mesecon.register_mvps_unsticky("mesecons_pressureplates:pressure_plate_wood_off")
@@ -1021,17 +715,10 @@ mesecon.register_mvps_unsticky("mesecons_pressureplates:pressure_plate_sprucewoo
 mesecon.register_mvps_unsticky("mesecons_pressureplates:pressure_plate_junglewood_on")
 mesecon.register_mvps_unsticky("mesecons_pressureplates:pressure_plate_junglewood_off")
 -- Redstone Comparators
-<<<<<<< HEAD
-mesecon.register_mvps_unsticky("vlc_comparators:comparator_on_sub")
-mesecon.register_mvps_unsticky("vlc_comparators:comparator_off_sub")
-mesecon.register_mvps_unsticky("vlc_comparators:comparator_on_comp")
-mesecon.register_mvps_unsticky("vlc_comparators:comparator_off_comp")
-=======
 mesecon.register_mvps_unsticky("vlf_comparators:comparator_on_sub")
 mesecon.register_mvps_unsticky("vlf_comparators:comparator_off_sub")
 mesecon.register_mvps_unsticky("vlf_comparators:comparator_on_comp")
 mesecon.register_mvps_unsticky("vlf_comparators:comparator_off_comp")
->>>>>>> 3eb27be82 (change naming in mods)
 -- Redstone Dust
 mesecon.register_mvps_unsticky("mesecons:wire_00000000_on")
 mesecon.register_mvps_unsticky("mesecons:wire_00000000_off")
@@ -1210,49 +897,6 @@ mesecon.register_mvps_unsticky("mesecons_torch:mesecon_torch_off")
 mesecon.register_mvps_unsticky("mesecons_torch:mesecon_torch_on_wall")
 mesecon.register_mvps_unsticky("mesecons_torch:mesecon_torch_off_wall")
 -- Sea Pickle
-<<<<<<< HEAD
-mesecon.register_mvps_unsticky("vlc_ocean:sea_pickle_1_dead_brain_coral_block")
-mesecon.register_mvps_unsticky("vlc_ocean:sea_pickle_2_dead_brain_coral_block")
-mesecon.register_mvps_unsticky("vlc_ocean:sea_pickle_3_dead_brain_coral_block")
-mesecon.register_mvps_unsticky("vlc_ocean:sea_pickle_4_dead_brain_coral_block")
--- Shulker chests
-mesecon.register_mvps_unsticky("vlc_chests:black_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:blue_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:brown_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:cyan_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:dark_green_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:dark_grey_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:lightblue_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:green_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:orange_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:magenta_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:pink_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:violet_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:red_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:grey_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:white_shulker_box_small")
-mesecon.register_mvps_unsticky("vlc_chests:yellow_shulker_box_small")
--- Snow
-mesecon.register_mvps_unsticky("vlc_core:snow")
-mesecon.register_mvps_unsticky("vlc_core:snow_2")
-mesecon.register_mvps_unsticky("vlc_core:snow_3")
-mesecon.register_mvps_unsticky("vlc_core:snow_4")
-mesecon.register_mvps_unsticky("vlc_core:snow_5")
-mesecon.register_mvps_unsticky("vlc_core:snow_6")
-mesecon.register_mvps_unsticky("vlc_core:snow_7")
-mesecon.register_mvps_unsticky("vlc_core:snow_8")
--- Torch
-mesecon.register_mvps_unsticky("vlc_torches:torch")
-mesecon.register_mvps_unsticky("vlc_torches:torch_wall")
--- Wheat
-mesecon.register_mvps_unsticky("vlc_farming:wheat")
-mesecon.register_mvps_unsticky("vlc_farming:wheat_2")
-mesecon.register_mvps_unsticky("vlc_farming:wheat_3")
-mesecon.register_mvps_unsticky("vlc_farming:wheat_4")
-mesecon.register_mvps_unsticky("vlc_farming:wheat_5")
-mesecon.register_mvps_unsticky("vlc_farming:wheat_6")
-mesecon.register_mvps_unsticky("vlc_farming:wheat_7")
-=======
 mesecon.register_mvps_unsticky("vlf_ocean:sea_pickle_1_dead_brain_coral_block")
 mesecon.register_mvps_unsticky("vlf_ocean:sea_pickle_2_dead_brain_coral_block")
 mesecon.register_mvps_unsticky("vlf_ocean:sea_pickle_3_dead_brain_coral_block")
@@ -1294,7 +938,6 @@ mesecon.register_mvps_unsticky("vlf_farming:wheat_4")
 mesecon.register_mvps_unsticky("vlf_farming:wheat_5")
 mesecon.register_mvps_unsticky("vlf_farming:wheat_6")
 mesecon.register_mvps_unsticky("vlf_farming:wheat_7")
->>>>>>> 3eb27be82 (change naming in mods)
 
 -- Includes node heat when moving them
 mesecon.register_on_mvps_move(mesecon.move_hot_nodes)

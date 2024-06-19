@@ -1,10 +1,6 @@
 local modname = minetest.get_current_modname()
 
-<<<<<<< HEAD
-local allow_nav_hacks = minetest.settings:get_bool("vlc_mob_allow_nav_hacks",false)
-=======
 local allow_nav_hacks = minetest.settings:get_bool("vlf_mob_allow_nav_hacks",false)
->>>>>>> 3eb27be82 (change naming in mods)
 local work_dist = 4
 local gather_distance = 10
 
@@ -68,11 +64,7 @@ function mobs_mc.villager_mob:should_go_home()
 		return true
 	end
 
-<<<<<<< HEAD
-	local weather = vlc_weather.get_weather()
-=======
 	local weather = vlf_weather.get_weather()
->>>>>>> 3eb27be82 (change naming in mods)
 
 	if weather == "thunder" or weather == "rain" or weather == "snow" then
 		return true
@@ -150,11 +142,7 @@ function mobs_mc.villager_mob:find_closest_bed()
 			end
 
 			if is_bed_bottom then
-<<<<<<< HEAD
-				local bed_top_meta = minetest.get_meta(vlc_beds.get_bed_top (b))
-=======
 				local bed_top_meta = minetest.get_meta(vlf_beds.get_bed_top (b))
->>>>>>> 3eb27be82 (change naming in mods)
 				local owned_by_player = bed_top_meta:get_string("player")
 
 				if owned_by == "" and (not owned_by_player or owned_by_player == "") then
@@ -313,11 +301,7 @@ function mobs_mc.villager_mob:get_bell()
 		local nn = minetest.find_nodes_in_area(
 			vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
 			vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
-<<<<<<< HEAD
-			{ "vlc_bells:bell" }
-=======
 			{ "vlf_bells:bell" }
->>>>>>> 3eb27be82 (change naming in mods)
 		)
 
 		local closest_bell
@@ -579,11 +563,7 @@ function mobs_mc.villager_mob:retrieve_my_jobsite()
 	if not self or not self._jobsite then
 		return
 	end
-<<<<<<< HEAD
-	local n = vlc_vars.get_node(self._jobsite)
-=======
 	local n = vlf_vars.get_node(self._jobsite)
->>>>>>> 3eb27be82 (change naming in mods)
 	local m = minetest.get_meta(self._jobsite)
 	-- If job block isn't loaded then assume it's still valid
 	if n.name == "ignore" or m:get_string("villager") == self._id then
@@ -772,11 +752,7 @@ function mobs_mc.villager_mob:do_activity(dtime)
 		if self.last_skip == nil then
 			self.last_skip = 0
 		end
-<<<<<<< HEAD
-		local last_skip = vlc_beds.last_skip()
-=======
 		local last_skip = vlf_beds.last_skip()
->>>>>>> 3eb27be82 (change naming in mods)
 		if self.last_skip < last_skip then
 			self.last_skip = last_skip
 			if self:check_bed() then

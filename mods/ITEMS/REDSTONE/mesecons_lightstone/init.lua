@@ -9,24 +9,15 @@ minetest.register_node("mesecons_lightstone:lightstone_off", {
 	description= S("Redstone Lamp"),
 	_tt_help = S("Glows when powered by redstone power"),
 	_doc_items_longdesc = S("Redstone lamps are simple redstone components which glow brightly (light level @1) when they receive redstone power.", light),
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_glass_defaults(),
-=======
 	sounds = vlf_sounds.node_sound_glass_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {effector = {
 		action_on = function(pos, node)
 			minetest.swap_node(pos, {name="mesecons_lightstone:lightstone_on", param2 = node.param2})
 		end,
 		rules = mesecon.rules.alldirs,
 	}},
-<<<<<<< HEAD
-	_vlc_blast_resistance = 0.3,
-	_vlc_hardness = 0.3,
-=======
 	_vlf_blast_resistance = 0.3,
 	_vlf_hardness = 0.3,
->>>>>>> 3eb27be82 (change naming in mods)
 })
 
 minetest.register_node("mesecons_lightstone:lightstone_on", {
@@ -36,11 +27,7 @@ minetest.register_node("mesecons_lightstone:lightstone_on", {
 	is_ground_content = false,
 	paramtype = "light",
 	light_source = light,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_glass_defaults(),
-=======
 	sounds = vlf_sounds.node_sound_glass_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {effector = {
 		action_off = function(pos)
 			local timer = minetest.get_node_timer(pos)
@@ -52,24 +39,15 @@ minetest.register_node("mesecons_lightstone:lightstone_on", {
 		minetest.swap_node(pos, { name = "mesecons_lightstone:lightstone_off", param2 = minetest.get_node(pos).param2 })
 		return false
 	end,
-<<<<<<< HEAD
-	_vlc_blast_resistance = 0.3,
-	_vlc_hardness = 0.3,
-=======
 	_vlf_blast_resistance = 0.3,
 	_vlf_hardness = 0.3,
->>>>>>> 3eb27be82 (change naming in mods)
 })
 
 minetest.register_craft({
     output = "mesecons_lightstone:lightstone_off",
     recipe = {
 	    {"","mesecons:redstone",""},
-<<<<<<< HEAD
-	    {"mesecons:redstone","vlc_nether:glowstone","mesecons:redstone"},
-=======
 	    {"mesecons:redstone","vlf_nether:glowstone","mesecons:redstone"},
->>>>>>> 3eb27be82 (change naming in mods)
 	    {"","mesecons:redstone",""},
     }
 })

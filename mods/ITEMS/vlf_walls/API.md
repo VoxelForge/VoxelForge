@@ -2,7 +2,7 @@
 
 This API allows you to add more walls (like the cobblestone wall) to MineClone 2.
 
-## `vlf_walls.register_wall(nodename, description, craft_material, tiles, invtex, groups, sounds)`
+## `mcl_walls.register_wall(nodename, description, craft_material, tiles, invtex, groups, sounds)`
 
 Adds a new wall type. This is optimized for stone-based walls, but other materials are theoretically possible, too.
 
@@ -35,9 +35,9 @@ to the `groups` table:
 
 ### Example
 
-    vlf_walls.register_wall("mymod:granitewall", "Granite Wall", {"mymod_granite.png"}, "mymod_granite_wall_inv.png")
+    mcl_walls.register_wall("mymod:granitewall", "Granite Wall", {"mymod_granite.png"}, "mymod_granite_wall_inv.png")
 
-## `vlf_walls.update_wall(pos)`
+## `mcl_walls.update_wall(pos)`
 
 When loading schemas with walls you will need to trigger this to make the walls rotate and join properly.
 

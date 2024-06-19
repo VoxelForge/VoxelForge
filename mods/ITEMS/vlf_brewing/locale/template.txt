@@ -1,4 +1,4 @@
-# textdomain: vlf_brewing
+# textdomain: mcl_brewing
 Brewing Stand=
 Inventory=
 To use a brewing stand, rightclick it.=

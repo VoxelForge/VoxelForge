@@ -1,4 +1,4 @@
-# textdomain: vlf_villages
+# textdomain: mcl_villages
 Chiseled Stone Village Bricks=
-vlf_villages build tool=
+mcl_villages build tool=
 Placement denied. You need the “server” privilege to place villages.=

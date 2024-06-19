@@ -1,4 +1,4 @@
-# textdomain: vlf_fishing
+# textdomain: mcl_fishing
 Fishing Rod=
 Catches fish in water=
 Fishing rods can be used to catch fish.=

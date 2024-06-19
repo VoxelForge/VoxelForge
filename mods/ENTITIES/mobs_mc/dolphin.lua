@@ -1,21 +1,12 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local food_items = {
-<<<<<<< HEAD
-	"vlc_fishing:fish_raw",
-	"vlc_fishing:salmon_raw",
-	"vlc_fishing:clownfish_raw",
-}
-
-vlc_mobs.register_mob("mobs_mc:dolphin", {
-=======
 	"vlf_fishing:fish_raw",
 	"vlf_fishing:salmon_raw",
 	"vlf_fishing:clownfish_raw",
 }
 
 vlf_mobs.register_mob("mobs_mc:dolphin", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Dolphin"),
 	type = "animal",
 	spawn_class = "water",
@@ -49,11 +40,7 @@ vlf_mobs.register_mob("mobs_mc:dolphin", {
 		run_end = 45,
 		},
 		drops = {
-<<<<<<< HEAD
-			{name = "vlc_fishing:fish_raw",
-=======
 			{name = "vlf_fishing:fish_raw",
->>>>>>> 3eb27be82 (change naming in mods)
 			chance = 1,
 			min = 0,
 			max = 1,},
@@ -61,11 +48,7 @@ vlf_mobs.register_mob("mobs_mc:dolphin", {
 	visual_size = {x=3, y=3},
 	makes_footstep_sound = false,
     fly = true,
-<<<<<<< HEAD
-    fly_in = { "vlc_core:water_source", "vlcx_core:river_water_source" },
-=======
     fly_in = { "vlf_core:water_source", "vlfx_core:river_water_source" },
->>>>>>> 3eb27be82 (change naming in mods)
 	breathes_in_water = true,
 	jump = false,
 	view_range = 16,
@@ -85,11 +68,7 @@ vlf_mobs.register_mob("mobs_mc:dolphin", {
 			local p = self.object:get_pos()
 			local p1 = vector.offset(p, -64, -16, -64)
 			local p2 = vector.offset(p, 64, math.min(1, p.y+16), 64)
-<<<<<<< HEAD
-			local chests = minetest.find_nodes_in_area(p1, p2, {"vlc_chests:chest_small"})
-=======
 			local chests = minetest.find_nodes_in_area(p1, p2, {"vlf_chests:chest_small"})
->>>>>>> 3eb27be82 (change naming in mods)
 			if chests and #chests > 0 then
 				table.sort(chests, function(a, b) return vector.distance(p, a) < vector.distance(p, b) end)
 				self:go_to_pos(chests[1])
@@ -98,11 +77,7 @@ vlf_mobs.register_mob("mobs_mc:dolphin", {
 	end,
 })
 
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:dolphin",
 	type_of_spawning = "water",
 	dimension = "overworld",
@@ -255,8 +230,4 @@ vlf_mobs.spawn_setup({
 	},
 })
 
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:dolphin", S("Dolphin"), "#223b4d", "#f9f9f9", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:dolphin", S("Dolphin"), "#223b4d", "#f9f9f9", 0)
->>>>>>> 3eb27be82 (change naming in mods)

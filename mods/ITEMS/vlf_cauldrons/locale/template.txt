@@ -1,4 +1,4 @@
-# textdomain: vlf_cauldrons
+# textdomain: mcl_cauldrons
 Cauldron=
 Stores water=
 Cauldrons are used to store water and slowly fill up under rain.=

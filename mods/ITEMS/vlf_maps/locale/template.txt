@@ -1,4 +1,4 @@
-# textdomain: vlf_maps
+# textdomain: mcl_maps
 Empty Map=
 Empty maps are not useful as maps, but they can be stacked and turned to maps which can be used.=
 Rightclick to create a filled map (which can't be stacked anymore).=

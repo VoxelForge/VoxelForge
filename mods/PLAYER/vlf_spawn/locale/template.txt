@@ -1,4 +1,4 @@
-# textdomain: vlf_spawn
+# textdomain: mcl_spawn
 Respawn position cleared!=
 New respawn position set!=
 Couldn't get level of your respawn anchor!=

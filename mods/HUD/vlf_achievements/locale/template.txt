@@ -1,4 +1,4 @@
-# textdomain:vlf_achievements
+# textdomain:mcl_achievements
 Benchmarking=
 Craft a crafting table from 4 wooden planks.=
 Time to Mine!=

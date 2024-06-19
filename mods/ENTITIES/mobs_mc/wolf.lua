@@ -50,15 +50,6 @@ local wolf = {
 	reach = 2,
 	attack_type = "dogfight",
 	fear_height = 4,
-<<<<<<< HEAD
-	follow = { "vlc_mobitems:bone" },
-	on_rightclick = function(self, clicker)
-		-- Try to tame wolf (intentionally does NOT use vlc_mobs.feed_tame)
-		local tool = clicker:get_wielded_item()
-
-		local dog, ent
-		if tool:get_name() == "vlc_mobitems:bone" then
-=======
 	follow = { "vlf_mobitems:bone" },
 	on_rightclick = function(self, clicker)
 		-- Try to tame wolf (intentionally does NOT use vlf_mobs.feed_tame)
@@ -66,7 +57,6 @@ local wolf = {
 
 		local dog, ent
 		if tool:get_name() == "vlf_mobitems:bone" then
->>>>>>> 3eb27be82 (change naming in mods)
 
 			minetest.sound_play("mobs_mc_wolf_take_bone", {object=self.object, max_hear_distance=16}, true)
 			if not minetest.is_creative_enabled(clicker:get_player_name()) then
@@ -76,11 +66,7 @@ local wolf = {
 			-- 1/3 chance of getting tamed
 			if pr:next(1, 3) == 1 then
 				local yaw = self.object:get_yaw()
-<<<<<<< HEAD
-				dog = vlc_util.replace_mob(self.object, "mobs_mc:dog")
-=======
 				dog = vlf_util.replace_mob(self.object, "mobs_mc:dog")
->>>>>>> 3eb27be82 (change naming in mods)
 				if dog and dog:get_pos() then
 					dog:set_yaw(yaw)
 					ent = dog:get_luaentity()
@@ -123,11 +109,7 @@ local wolf = {
 	avoid_from = { "mobs_mc:llama" },
 }
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:wolf", wolf)
-=======
 vlf_mobs.register_mob("mobs_mc:wolf", wolf)
->>>>>>> 3eb27be82 (change naming in mods)
 
 -- Tamed wolf
 
@@ -176,21 +158,12 @@ dog.follow_velocity = 3.2
 -- Automatically teleport dog to owner
 dog.do_custom = mobs_mc.make_owner_teleport_function(12)
 dog.follow = {
-<<<<<<< HEAD
-	"vlc_mobitems:rabbit", "vlc_mobitems:cooked_rabbit",
-	"vlc_mobitems:mutton", "vlc_mobitems:cooked_mutton",
-	"vlc_mobitems:beef", "vlc_mobitems:cooked_beef",
-	"vlc_mobitems:chicken", "vlc_mobitems:cooked_chicken",
-	"vlc_mobitems:porkchop", "vlc_mobitems:cooked_porkchop",
-	"vlc_mobitems:rotten_flesh",
-=======
 	"vlf_mobitems:rabbit", "vlf_mobitems:cooked_rabbit",
 	"vlf_mobitems:mutton", "vlf_mobitems:cooked_mutton",
 	"vlf_mobitems:beef", "vlf_mobitems:cooked_beef",
 	"vlf_mobitems:chicken", "vlf_mobitems:cooked_chicken",
 	"vlf_mobitems:porkchop", "vlf_mobitems:cooked_porkchop",
 	"vlf_mobitems:rotten_flesh",
->>>>>>> 3eb27be82 (change naming in mods)
 }
 dog.attack_animals = nil
 dog.specific_attack = nil
@@ -200,15 +173,9 @@ dog.on_rightclick = function(self, clicker)
 
 	if self:feed_tame(clicker, 1, true, false) then
 		return
-<<<<<<< HEAD
-	elseif vlc_mobs.protect(self, clicker) then
-		return
-	elseif item:get_name() ~= "" and vlc_mobs.capture_mob(self, clicker, 0, 2, 80, false, nil) then
-=======
 	elseif vlf_mobs.protect(self, clicker) then
 		return
 	elseif item:get_name() ~= "" and vlf_mobs.capture_mob(self, clicker, 0, 2, 80, false, nil) then
->>>>>>> 3eb27be82 (change naming in mods)
 		return
 	elseif minetest.get_item_group(item:get_name(), "dye") == 1 then
 		-- Dye (if possible)
@@ -235,25 +202,15 @@ dog.on_rightclick = function(self, clicker)
 		-- Huh? This dog has no owner? Let's fix this! This should never happen.
 			self.owner = clicker:get_player_name()
 		end
-<<<<<<< HEAD
-		if not minetest.settings:get_bool("vlc_extended_pet_control",false) then
-=======
 		if not minetest.settings:get_bool("vlf_extended_pet_control",false) then
->>>>>>> 3eb27be82 (change naming in mods)
 			self:toggle_sit(clicker,-0.4)
 		end
 	end
 end
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:dog", dog)
-
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.register_mob("mobs_mc:dog", dog)
 
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:wolf",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -274,8 +231,4 @@ vlf_mobs.spawn_setup({
 	chance = 80,
 })
 
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:wolf", S("Wolf"), "#d7d3d3", "#ceaf96", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:wolf", S("Wolf"), "#d7d3d3", "#ceaf96", 0)
->>>>>>> 3eb27be82 (change naming in mods)

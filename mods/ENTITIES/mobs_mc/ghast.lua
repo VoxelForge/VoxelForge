@@ -10,11 +10,7 @@ local S = minetest.get_translator("mobs_mc")
 --###################
 
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:ghast", {
-=======
 vlf_mobs.register_mob("mobs_mc:ghast", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Ghast"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -45,13 +41,8 @@ vlf_mobs.register_mob("mobs_mc:ghast", {
 	walk_velocity = 1.6,
 	run_velocity = 3, -- (was 3.2) since player can run, this is ok for a flying mob
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_mobitems:gunpowder", chance = 1, min = 0, max = 2, looting = "common"},
-		{name = "vlc_mobitems:ghast_tear", chance = 10/6, min = 0, max = 1, looting = "common", looting_ignore_chance = true},
-=======
 		{name = "vlf_mobitems:gunpowder", chance = 1, min = 0, max = 2, looting = "common"},
 		{name = "vlf_mobitems:ghast_tear", chance = 10/6, min = 0, max = 1, looting = "common", looting_ignore_chance = true},
->>>>>>> 3eb27be82 (change naming in mods)
 	},
 	animation = {
 		stand_speed = 50, walk_speed = 50, run_speed = 50,
@@ -96,11 +87,7 @@ vlf_mobs.register_mob("mobs_mc:ghast", {
 })
 
 
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:ghast",
 	type_of_spawning = "ground",
 	dimension = "nether",
@@ -116,25 +103,6 @@ vlf_mobs.spawn_setup({
 })
 
 -- fireball (projectile)
-<<<<<<< HEAD
-vlc_mobs.register_arrow("mobs_mc:fireball", {
-	description = S("Ghast Fireball"),
-	visual = "sprite",
-	visual_size = {x = 1, y = 1},
-	textures = {"vlc_fire_fire_charge.png"},
-	velocity = 5,
-	collisionbox = {-.5, -.5, -.5, .5, .5, .5},
-	_is_fireball = true,
-	_vlc_fishing_hookable = true,
-	_vlc_fishing_reelable = true,
-	hit_player = function(self, player)
-		vlc_mobs.get_arrow_damage_func(6, "fireball")(self, player)
-		local p = self.object:get_pos()
-		if p then
-			vlc_mobs.mob_class.boom(self,p, 1, true)
-		else
-			vlc_mobs.mob_class.boom(self,player:get_pos(), 1, true)
-=======
 vlf_mobs.register_arrow("mobs_mc:fireball", {
 	description = S("Ghast Fireball"),
 	visual = "sprite",
@@ -152,26 +120,16 @@ vlf_mobs.register_arrow("mobs_mc:fireball", {
 			vlf_mobs.mob_class.boom(self,p, 1, true)
 		else
 			vlf_mobs.mob_class.boom(self,player:get_pos(), 1, true)
->>>>>>> 3eb27be82 (change naming in mods)
 		end
 	end,
 
 	hit_mob = function(self, mob)
-<<<<<<< HEAD
-		vlc_mobs.get_arrow_damage_func(6, "fireball")(self, mob)
-		vlc_mobs.mob_class.boom(self,self.object:get_pos(), 1, true)
-	end,
-
-	hit_node = function(self, pos, node)
-		vlc_mobs.mob_class.boom(self,pos, 1, true)
-=======
 		vlf_mobs.get_arrow_damage_func(6, "fireball")(self, mob)
 		vlf_mobs.mob_class.boom(self,self.object:get_pos(), 1, true)
 	end,
 
 	hit_node = function(self, pos, node)
 		vlf_mobs.mob_class.boom(self,pos, 1, true)
->>>>>>> 3eb27be82 (change naming in mods)
 	end
 })
 
@@ -179,8 +137,4 @@ vlf_mobs.register_arrow("mobs_mc:fireball", {
 
 
 -- spawn eggs
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:ghast", S("Ghast"), "#f9f9f9", "#bcbcbc", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:ghast", S("Ghast"), "#f9f9f9", "#bcbcbc", 0)
->>>>>>> 3eb27be82 (change naming in mods)

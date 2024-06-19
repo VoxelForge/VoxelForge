@@ -27,22 +27,14 @@ function mesecon.push_button(pos, node)
 		return
 	end
 	local def = minetest.registered_nodes[node.name]
-<<<<<<< HEAD
-	minetest.set_node(pos, {name="mesecons_button:button_"..def._vlc_button_basename.."_on", param2=node.param2})
-=======
 	minetest.set_node(pos, {name="mesecons_button:button_"..def._vlf_button_basename.."_on", param2=node.param2})
->>>>>>> 3eb27be82 (change naming in mods)
 	mesecon.receptor_on(pos, button_get_output_rules(node))
 	local sfx = button_sounds[node.name]
 	if sfx then
 		minetest.sound_play(sfx, {pos=pos}, true)
 	end
 	local timer = minetest.get_node_timer(pos)
-<<<<<<< HEAD
-	timer:start(def._vlc_button_timer)
-=======
 	timer:start(def._vlf_button_timer)
->>>>>>> 3eb27be82 (change naming in mods)
 end
 
 local function on_button_place(itemstack, placer, pointed_thing)
@@ -57,11 +49,7 @@ local function on_button_place(itemstack, placer, pointed_thing)
 	if not def then return end
 	local groups = def.groups
 
-<<<<<<< HEAD
-	local rc = vlc_util.call_on_rightclick(itemstack, placer, pointed_thing)
-=======
 	local rc = vlf_util.call_on_rightclick(itemstack, placer, pointed_thing)
->>>>>>> 3eb27be82 (change naming in mods)
 	if rc then return rc end
 
 	-- If the pointed node is buildable, let's look at the node *behind* that node
@@ -178,19 +166,11 @@ function mesecon.register_button(basename, description, texture, recipeitem, sou
 				mesecon.push_button(pos, node)
 			return true
 		end,
-<<<<<<< HEAD
-		_vlc_button_basename = basename,
-		_vlc_button_timer = button_timer,
-
-		_vlc_blast_resistance = 0.5,
-		_vlc_hardness = 0.5,
-=======
 		_vlf_button_basename = basename,
 		_vlf_button_timer = button_timer,
 
 		_vlf_blast_resistance = 0.5,
 		_vlf_hardness = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	})
 
 	minetest.register_node(":mesecons_button:button_"..basename.."_on", {
@@ -213,13 +193,8 @@ function mesecon.register_button(basename, description, texture, recipeitem, sou
 			state = mesecon.state.on,
 			rules = button_get_output_rules
 		}},
-<<<<<<< HEAD
-		_vlc_button_basename = basename,
-		_vlc_button_timer = button_timer,
-=======
 		_vlf_button_basename = basename,
 		_vlf_button_timer = button_timer,
->>>>>>> 3eb27be82 (change naming in mods)
 		on_timer = function(pos, elapsed)
 			local node = minetest.get_node(pos)
 			if node.name=="mesecons_button:button_"..basename.."_on" then --has not been dug
@@ -230,11 +205,7 @@ function mesecon.register_button(basename, description, texture, recipeitem, sou
 					local objs = minetest.get_objects_inside_radius(pos, 1)
 					for o=1, #objs do
 						local entity = objs[o]:get_luaentity()
-<<<<<<< HEAD
-						if entity and entity.name == "vlc_bows:arrow_entity" then
-=======
 						if entity and entity.name == "vlf_bows:arrow_entity" then
->>>>>>> 3eb27be82 (change naming in mods)
 							local timer = minetest.get_node_timer(pos)
 							timer:start(button_timer)
 							return
@@ -249,13 +220,8 @@ function mesecon.register_button(basename, description, texture, recipeitem, sou
 			end
 		end,
 
-<<<<<<< HEAD
-		_vlc_blast_resistance = 0.5,
-		_vlc_hardness = 0.5,
-=======
 		_vlf_blast_resistance = 0.5,
 		_vlf_hardness = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	})
 
 	minetest.register_craft({
@@ -273,13 +239,8 @@ mesecon.register_button(
 	"stone",
 	S("Stone Button"),
 	"default_stone.png",
-<<<<<<< HEAD
-	"vlc_core:stone",
-	vlc_sounds.node_sound_stone_defaults(),
-=======
 	"vlf_core:stone",
 	vlf_sounds.node_sound_stone_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	{material_stone=1,handy=1,pickaxey=1},
 	1,
 	false,
@@ -289,15 +250,9 @@ mesecon.register_button(
 mesecon.register_button(
 	"polished_blackstone",
 	S("Polished Blackstone Button"),
-<<<<<<< HEAD
-	"vlc_blackstone_polished.png",
-	"vlc_blackstone:blackstone_polished",
-	vlc_sounds.node_sound_stone_defaults(),
-=======
 	"vlf_blackstone_polished.png",
 	"vlf_blackstone:blackstone_polished",
 	vlf_sounds.node_sound_stone_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	{material_stone=1,handy=1,pickaxey=1},
 	1,
 	false,

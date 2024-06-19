@@ -1,11 +1,11 @@
-# vlf_jukebox
+# mcl_jukebox
 
-## vlf_jukebox.registered_records
+## mcl_jukebox.registered_records
 
 Table indexed by item name containing record definitions
 
 
-## vlf_jukebox.register_record(record_definition)
+## mcl_jukebox.register_record(record_definition)
 
 record_definition:
 {
@@ -17,5 +17,5 @@ record_definition:
 	exclude_from_creeperdrop = true, --set to true if this record should be excluded from the random drop when creepers get shot by skeletons.
 }
 
-## vlf_jukebox.register_record(title, author, identifier, image, sound, nocreeper)
+## mcl_jukebox.register_record(title, author, identifier, image, sound, nocreeper)
 This is the old way to use the register function. It is still provided for backwards compatibility reasons. It will convert the arguments to the definition format.

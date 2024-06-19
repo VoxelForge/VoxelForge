@@ -1,4 +1,4 @@
-# textdomain: vlfx_core
+# textdomain: mclx_core
 River Water Source=
 River water has the same properties as water, but has a reduced flowing distance and is not renewable.=
 River Water=

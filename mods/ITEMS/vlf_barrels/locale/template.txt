@@ -1,4 +1,4 @@
-# textdomain: vlf_barrels
+# textdomain: mcl_barrels
 Barrel=
 Inventory=
 27 inventory slots=

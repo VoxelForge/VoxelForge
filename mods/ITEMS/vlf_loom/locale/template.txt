@@ -1,4 +1,4 @@
-# textdomain: vlf_loom
+# textdomain: mcl_loom
 Loom=
 Inventory=
 Used to create banner designs=

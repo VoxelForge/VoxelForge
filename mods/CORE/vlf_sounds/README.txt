@@ -85,8 +85,8 @@ https://freesound.org/people/Angel_Perez_Grandi/sounds/49190/
   default_ice_dug.ogg
 
 Voxelands project <http://www.voxelands.com/> (CC BY-SA 3.0):
-  vlf_sounds_place_node_water.ogg
-  vlf_sounds_dug_water.ogg
+  mcl_sounds_place_node_water.ogg
+  mcl_sounds_dug_water.ogg
 
 (Note: Artists from the Voxelands project include: sdzen, darkrose, sapier,
       Tom Peter, Telaron, juskiddink)
@@ -99,7 +99,7 @@ Adam_N (CC0 1.0):
     Source: <https://www.freesound.org/people/Adam_N/sounds/346692/>
 
 Alecia Shepherd (CC BY-SA 4.0):
-  vlf_sounds_cloth.*.ogg
+  mcl_sounds_cloth.*.ogg
     Source: SnowSong sound and music pack <https://opengameart.org/content/snowsong-sound-and-music-pack>
 
 Unknown authors (WTFPL):

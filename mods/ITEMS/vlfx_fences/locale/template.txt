@@ -1,4 +1,4 @@
-# textdomain: vlfx_fences
+# textdomain: mclx_fences
 Red Nether Brick Fence=
 Red Nether Brick Fence Gate=
 Nether Brick Fence Gate=

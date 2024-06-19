@@ -4,7 +4,7 @@ Flower mod for MineClonia
 
 # Functions
 
-## vlf_flowers.register_simple_flower(name, desc, image, simple_selection_box)
+## mcl_flowers.register_simple_flower(name, desc, image, simple_selection_box)
 
 Register a simple flower:
 
@@ -13,15 +13,15 @@ Register a simple flower:
 * image: texture
 * simple_selection_box: nodebox of the flower
 
-## vlf_flowers.on_bone_meal(itemstack, placer, pointed_thing, pos, n)
+## mcl_flowers.on_bone_meal(itemstack, placer, pointed_thing, pos, n)
 
-## vlf_flowers.on_bone_meal_simple(itemstack, placer, pointed_thing, pos, n)
+## mcl_flowers.on_bone_meal_simple(itemstack, placer, pointed_thing, pos, n)
 
-## vlf_flowers.get_palette_color_from_pos(pos)
+## mcl_flowers.get_palette_color_from_pos(pos)
 
-## vlf_flowers.on_place_flower(pos, node, itemstack)
+## mcl_flowers.on_place_flower(pos, node, itemstack)
 
-## vlf_flowers.add_large_plant(name, large_plant_definition)
+## mcl_flowers.add_large_plant(name, large_plant_definition)
 
 ### Large plant definition
 ```lua

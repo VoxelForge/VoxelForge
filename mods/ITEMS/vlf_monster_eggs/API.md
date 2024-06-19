@@ -13,4 +13,4 @@ are changed.
 * description: a short description.
 
 Example: when called with "mymod:mynode" as argument, an infested node is
-registered with the name "vlf_monster_eggs:monster_egg_mynode".
+registered with the name "mcl_monster_eggs:monster_egg_mynode".

@@ -10,40 +10,24 @@ local S = minetest.get_translator("mobs_mc")
 --###################
 
 local drops_common = {
-<<<<<<< HEAD
-	{name = "vlc_mobitems:rotten_flesh",
-=======
 	{name = "vlf_mobitems:rotten_flesh",
->>>>>>> 3eb27be82 (change naming in mods)
 	chance = 1,
 	min = 0,
 	max = 2,
 	looting = "common",},
-<<<<<<< HEAD
-	{name = "vlc_core:iron_ingot",
-=======
 	{name = "vlf_core:iron_ingot",
->>>>>>> 3eb27be82 (change naming in mods)
 	chance = 120, -- 2.5% / 3
 	min = 1,
 	max = 1,
 	looting = "rare",
 	looting_factor = 0.01 / 3,},
-<<<<<<< HEAD
-	{name = "vlc_farming:carrot_item",
-=======
 	{name = "vlf_farming:carrot_item",
->>>>>>> 3eb27be82 (change naming in mods)
 	chance = 120, -- 2.5% / 3
 	min = 1,
 	max = 1,
 	looting = "rare",
 	looting_factor = 0.01 / 3,},
-<<<<<<< HEAD
-	{name = "vlc_farming:potato_item",
-=======
 	{name = "vlf_farming:potato_item",
->>>>>>> 3eb27be82 (change naming in mods)
 	chance = 120, -- 2.5% / 3
 	min = 1,
 	max = 1,
@@ -55,11 +39,7 @@ local drops_zombie = table.copy(drops_common)
 table.insert(drops_zombie, {
 	-- Zombie Head
 	-- TODO: Only drop if killed by charged creeper
-<<<<<<< HEAD
-	name = "vlc_heads:zombie",
-=======
 	name = "vlf_heads:zombie",
->>>>>>> 3eb27be82 (change naming in mods)
 	chance = 200, -- 0.5%
 	min = 1,
 	max = 1,
@@ -126,11 +106,7 @@ local zombie = {
 	attack_npcs = true,
 }
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:zombie", zombie)
-=======
 vlf_mobs.register_mob("mobs_mc:zombie", zombie)
->>>>>>> 3eb27be82 (change naming in mods)
 
 -- Baby zombie.
 -- A smaller and more dangerous variant of the zombie
@@ -153,11 +129,7 @@ local baby_zombie = table.merge(zombie, {
 	},
 })
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:baby_zombie", baby_zombie)
-=======
 vlf_mobs.register_mob("mobs_mc:baby_zombie", baby_zombie)
->>>>>>> 3eb27be82 (change naming in mods)
 
 -- Husk.
 -- Desert variant of the zombie
@@ -174,11 +146,7 @@ husk.sunlight_damage = 0
 husk.drops = drops_common
 -- TODO: Husks avoid water
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:husk", husk)
-=======
 vlf_mobs.register_mob("mobs_mc:husk", husk)
->>>>>>> 3eb27be82 (change naming in mods)
 
 -- Baby husk.
 -- A smaller and more dangerous variant of the husk
@@ -192,17 +160,10 @@ baby_husk.ignited_by_sunlight = false
 baby_husk.sunlight_damage = 0
 baby_husk.drops = drops_common
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:baby_husk", baby_husk)
-
-
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.register_mob("mobs_mc:baby_husk", baby_husk)
 
 
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:zombie",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -214,11 +175,7 @@ vlf_mobs.spawn_setup({
 	chance = 1000,
 })
 
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:baby_zombie",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -230,11 +187,7 @@ vlf_mobs.spawn_setup({
 	chance = 50,
 })
 
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:husk",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -245,11 +198,7 @@ vlf_mobs.spawn_setup({
 	chance = 2400,
 })
 
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:baby_husk",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -261,10 +210,5 @@ vlf_mobs.spawn_setup({
 })
 
 -- Spawn eggs
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:husk", S("Husk"), "#777361", "#ded88f", 0)
-vlc_mobs.register_egg("mobs_mc:zombie", S("Zombie"), "#00afaf", "#799c66", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:husk", S("Husk"), "#777361", "#ded88f", 0)
 vlf_mobs.register_egg("mobs_mc:zombie", S("Zombie"), "#00afaf", "#799c66", 0)
->>>>>>> 3eb27be82 (change naming in mods)

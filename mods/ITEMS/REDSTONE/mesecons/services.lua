@@ -52,11 +52,7 @@ function mesecon.on_placenode(pos, node)
 	end
 
 	if minetest.get_item_group(node.name, "opaque") == 1 then
-<<<<<<< HEAD
-		local neighbors = mesecon.vlc_get_neighbors(pos)
-=======
 		local neighbors = mesecon.vlf_get_neighbors(pos)
->>>>>>> 3eb27be82 (change naming in mods)
 		local is_powered, direct_source = mesecon.is_powered(pos)
 		if is_powered and direct_source then
 			for n=1, #neighbors do
@@ -82,11 +78,7 @@ function mesecon.on_dignode(pos, node)
 	end
 	if minetest.get_item_group(node.name, "opaque") == 1 then
 		--local sources = mesecon.is_powered(pos)
-<<<<<<< HEAD
-		local neighbors = mesecon.vlc_get_neighbors(pos)
-=======
 		local neighbors = mesecon.vlf_get_neighbors(pos)
->>>>>>> 3eb27be82 (change naming in mods)
 		for n=1, #neighbors do
 			local npos = neighbors[n].pos
 			local nlink = neighbors[n].link

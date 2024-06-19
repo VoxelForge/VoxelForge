@@ -1,4 +1,4 @@
-# textdomain: vlf_itemframes
+# textdomain: mcl_itemframes
 Item Frame=
 Can hold an item=
 Item frames are decorative blocks in which items can be placed.=

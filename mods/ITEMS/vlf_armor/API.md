@@ -1,15 +1,15 @@
-# vlf_armor
+# mcl_armor
 
 This mod implements the ability of registering armors.
 
 ## Registering an Armor Set
 
-The `vlf_armor.register_set()` function aims to simplify the process of registering a full set of armor.
+The `mcl_armor.register_set()` function aims to simplify the process of registering a full set of armor.
 
 This function register four pieces of armor (head, torso, leggings, feets) based on a definition table:
 
 ```lua
-vlf_armor.register_set({
+mcl_armor.register_set({
 	--name of the armor material (used for generating itemstrings)
 	name = "dummy_armor",
 
@@ -76,7 +76,7 @@ vlf_armor.register_set({
 
 	--this field is used to specify some items groups that will be added to each piece of armor
 	--please note that some groups do NOT need to be added by hand, because they are already handeled by the register function:
-	--(armor, combat_armor, armor_<element>, combat_armor_<element>, vlf_armor_points, vlf_armor_toughness, vlf_armor_uses, enchantability)
+	--(armor, combat_armor, armor_<element>, combat_armor_<element>, mcl_armor_points, mcl_armor_toughness, mcl_armor_uses, enchantability)
 	groups = {op_armor = 1},
 
 	--specify textures that will be overlayed on the entity wearing the armor
@@ -87,13 +87,13 @@ vlf_armor.register_set({
 		legs = "dummy_texture.png",  --default: "<modname>_leggings_<material>.png"
 		feet = "dummy_texture.png",  --default: "<modname>_boots_<material>.png"
 	},
-	--you can also define these fields as functions, that will be called each time the API function vlf_armor.update(obj) is called (every time you equip/unequip some armor piece, take damage, and more)
+	--you can also define these fields as functions, that will be called each time the API function mcl_armor.update(obj) is called (every time you equip/unequip some armor piece, take damage, and more)
 	--note that the enchanting overlay will not appear unless you implement it in the function
 	--this allow to make armors where the textures change whitout needing to register many other armors with different textures
 	textures = {
 		head = function(obj, itemstack)
-			if vlf_enchanting.is_enchanted(itemstack) then
-				return "dummy_texture.png^"..vlf_enchanting.overlay
+			if mcl_enchanting.is_enchanted(itemstack) then
+				return "dummy_texture.png^"..mcl_enchanting.overlay
 			else
 				return "dummy_texture.png"
 			end
@@ -107,7 +107,7 @@ vlf_armor.register_set({
 	--legs: "<modname>_inv_leggings_<material>.png
 	--feet: "<modname>_inv_boots_<material>.png
 
-	--this callback table allow you to define functions that will be called each time an entity equip an armor piece or the vlf_armor.on_equip() function is called
+	--this callback table allow you to define functions that will be called each time an entity equip an armor piece or the mcl_armor.on_equip() function is called
 	--the functions accept two arguments: obj and itemstack
 	on_equip_callbacks = {
 		head = function(obj, itemstack)
@@ -115,7 +115,7 @@ vlf_armor.register_set({
 		end,
 	},
 
-	--this callback table allow you to define functions that will be called each time an entity unequip an armor piece or the vlf_armor.on_unequip() function is called
+	--this callback table allow you to define functions that will be called each time an entity unequip an armor piece or the mcl_armor.on_unequip() function is called
 	--the functions accept two arguments: obj and itemstack
 	on_unequip_callbacks = {
 		head = function(obj, itemstack)
@@ -134,16 +134,16 @@ vlf_armor.register_set({
 
 	--this is used to generate automaticaly armor crafts based on each element type folowing the regular minecraft pattern
 	--if set to nil no craft will be added
-	craft_material = "vlf_mobitems:leather",
+	craft_material = "mcl_mobitems:leather",
 
 	--this is used to generate cooking crafts for each piece of armor
 	--if set to nil no craft will be added
-	cook_material = "vlf_core:gold_nugget", --cooking any piece of this armor will output a gold nugged
+	cook_material = "mcl_core:gold_nugget", --cooking any piece of this armor will output a gold nugged
 
 	--this is used for allowing each piece of the armor to be repaired by using an anvil with repair_material as aditionnal material
 	--it basicaly set the _repair_material item field of each piece of the armor
 	--if set to nil no repair material will be added
-	repair_material = "vlf_core:iron_ingot",
+	repair_material = "mcl_core:iron_ingot",
 })
 ```
 
@@ -156,48 +156,48 @@ minetest.register_tool("dummy_mod:random_armor", {
 	description = S("Random Armor"),
 
 	--these two item fields are used for ingame documentation
-	--the vlf_armor.longdesc and vlf_armor.usage vars contains the basic usage and purpose of a piece of armor
+	--the mcl_armor.longdesc and mcl_armor.usage vars contains the basic usage and purpose of a piece of armor
 	--these vars may not be enough for that you want to do, so you may add some extra informations like that:
-	--_doc_items_longdesc = vlf_armor.longdesc.." "..S("Some extra informations.")
-	_doc_items_longdesc = vlf_armor.longdesc,
-	_doc_items_usagehelp = vlf_armor.usage,
+	--_doc_items_longdesc = mcl_armor.longdesc.." "..S("Some extra informations.")
+	_doc_items_longdesc = mcl_armor.longdesc,
+	_doc_items_usagehelp = mcl_armor.usage,
 
 	--this field is similar to any item definition in minetest
 	--it just set the image shown then the armor is dropped as an item or inside an inventory
-	inventory_image = "vlf_armor_inv_elytra.png",
+	inventory_image = "mcl_armor_inv_elytra.png",
 
 	--this field is used by minetest internally and also by some helper functions
 	--in order for the tool to be shown is the right creative inventory tab, the right groups should be added
-	--"vlf_armor_uses" is required to give your armor a durability
+	--"mcl_armor_uses" is required to give your armor a durability
 	--in that case, the armor can be worn by 10 points before breaking
 	--if you want the armor to be enchantable, you should also add the "enchantability" group, with the highest number the better enchants you can apply
-	groups = {armor = 1, non_combat_armor = 1, armor_torso = 1, non_combat_torso = 1, vlf_armor_uses = 10},
+	groups = {armor = 1, non_combat_armor = 1, armor_torso = 1, non_combat_torso = 1, mcl_armor_uses = 10},
 
 	--this table is used by minetest for seraching item specific sounds
-	--the _vlf_armor_equip and _vlf_armor_unequip are used by the armor implementation to play sounds on equip and unequip
+	--the _mcl_armor_equip and _mcl_armor_unequip are used by the armor implementation to play sounds on equip and unequip
 	--note that you don't need to provide any file extention
 	sounds = {
-		_vlf_armor_equip = "vlf_armor_equip_leather",
-		_vlf_armor_unequip = "vlf_armor_unequip_leather",
+		_mcl_armor_equip = "mcl_armor_equip_leather",
+		_mcl_armor_unequip = "mcl_armor_unequip_leather",
 	},
 
 	--these fields should be initialised like that in most cases
-	--vlf_armor.equip_on_use is a function that try to equip the piece of armor you have in hand inside the right armor slot if the slot is empty
-	on_place = vlf_armor.equip_on_use,
-	on_secondary_use = vlf_armor.equip_on_use,
+	--mcl_armor.equip_on_use is a function that try to equip the piece of armor you have in hand inside the right armor slot if the slot is empty
+	on_place = mcl_armor.equip_on_use,
+	on_secondary_use = mcl_armor.equip_on_use,
 
 	--this field define that the tool is ACTUALLY an armor piece and in which armor slot you can put it
 	--it should be set to "head", "torso", "legs" or "feet"
-	_vlf_armor_element = "torso",
+	_mcl_armor_element = "torso",
 
 
 	--this field is used to provide the texture that will be overlayed on the object (player or mob) skin
-	--this field can be a texture name or a function that will be called each time the vlf_armor.update(obj) function is called
-	--see the vlf_armor.register_set() documentation for more explanations
-	_vlf_armor_texture = "vlf_armor_elytra.png"
+	--this field can be a texture name or a function that will be called each time the mcl_armor.update(obj) function is called
+	--see the mcl_armor.register_set() documentation for more explanations
+	_mcl_armor_texture = "mcl_armor_elytra.png"
 
 	--callbacks
-	--see the vlf_armor.register_set() documentation for more explanations
+	--see the mcl_armor.register_set() documentation for more explanations
 
 	_on_equip = function(obj, itemstack)
 	end,
@@ -214,16 +214,16 @@ Mods may want to interact with armor of an entity.
 
 Most global functions not described here may not be stable or may be for internal use only.
 
-You can equip a piece of armor on an entity inside a mod by using `vlf_armor.equip()`.
+You can equip a piece of armor on an entity inside a mod by using `mcl_armor.equip()`.
 
 ```lua
 --itemstack: an itemstack containing the armor piece to equip
 --obj: the entity you want to equip the armor on
 --swap: boolean, force equiping the armor piece, even if the entity already have one of the same type
-vlf_armor.equip(itemstack, obj, swap)
+mcl_armor.equip(itemstack, obj, swap)
 ```
 
-You can update the entity apparence by using `vlf_armor.update()`.
+You can update the entity apparence by using `mcl_armor.update()`.
 
 This function put the armor overlay on the object's base texture.
 If the object is player it will update his displayed armor points count in HUD.
@@ -232,7 +232,7 @@ This function will work both on players and mobs.
 
 ```lua
 --obj: the entity you want the apparence to be updated
-vlf_armor.update(obj)
+mcl_armor.update(obj)
 ```
 
 ## Handling Enchantments
@@ -243,10 +243,10 @@ The enchanting part of MineClone2 is separated from the armor part, but closely 
 
 Existing armor enchantments in Minecraft improve most of the time how the armor protect the entity from damage.
 
-The `vlf_armor.register_protection_enchantment()` function aims to simplificate the creation of such enchants.
+The `mcl_armor.register_protection_enchantment()` function aims to simplificate the creation of such enchants.
 
 ```lua
-vlf_armor.register_protection_enchantment({
+mcl_armor.register_protection_enchantment({
 	--this field is the id that will be used for registering enchanted book and store the enchant inside armor metadata.
 	--(his internal name)
 	id = "magic_protection",
@@ -294,7 +294,7 @@ vlf_armor.register_protection_enchantment({
 	--allow to protect from many type of damage at once
 	--this is much less specific than damage_type and also much more customisable
 	--the "is_magic" flag is used in the "magic", "dragon_breath", "wither_skull" and "thorns" damage types
-	--you can checkout the vlf_damage source code for a list of availlable damage types and associated flags
+	--you can checkout the mcl_damage source code for a list of availlable damage types and associated flags
 	--but be warned that mods can register additionnal damage types
 	damage_flag = "is_magic",
 })

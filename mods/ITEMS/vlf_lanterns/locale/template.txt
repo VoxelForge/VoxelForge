@@ -1,4 +1,4 @@
-# textdomain: vlf_lanterns
+# textdomain: mcl_lanterns
 Chain=
 Chains are metallic decoration blocks.=
 Lantern=

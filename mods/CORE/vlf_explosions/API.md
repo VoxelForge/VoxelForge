@@ -1,7 +1,7 @@
-# vlf_explosions
+# mcl_explosions
 This mod provide helper functions to create explosions.
 
-## vlf_explosions.explode(pos, strength, info, puncher)
+## mcl_explosions.explode(pos, strength, info, puncher)
 * pos: position, initial position of the explosion
 * strenght: number, radius of the explosion
 * info: table, explosion informations:

@@ -2,17 +2,10 @@
 
 local S = minetest.get_translator("mobs_mc")
 
-<<<<<<< HEAD
-local slime_chunk_spawn_max = vlc_worlds.layer_to_y(40)
-
-local function in_slime_chunk(pos)
-	local pr = PseudoRandom(vlc_mapgen_core.get_block_seed(pos))
-=======
 local slime_chunk_spawn_max = vlf_worlds.layer_to_y(40)
 
 local function in_slime_chunk(pos)
 	local pr = PseudoRandom(vlf_mapgen_core.get_block_seed(pos))
->>>>>>> 3eb27be82 (change naming in mods)
 	return pr:next(1,10) == 1
 end
 
@@ -24,11 +17,7 @@ end
 
 local function swamp_spawn(pos)
 	if minetest.get_node_light(pos) > math.random(0,7) then return false end
-<<<<<<< HEAD
-	if math.abs(4 - vlc_moon.get_moon_phase()) / 4 < math.random() then return false end --moon phase 4 is new moon in vlc_moon
-=======
 	if math.abs(4 - vlf_moon.get_moon_phase()) / 4 < math.random() then return false end --moon phase 4 is new moon in vlf_moon
->>>>>>> 3eb27be82 (change naming in mods)
 	if math.random(2) == 2 then return false end
 	return true
 end
@@ -152,11 +141,7 @@ local slime_big = {
 	use_texture_alpha = true,
 	check_light = slime_check_light,
 }
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:slime_big", slime_big)
-=======
 vlf_mobs.register_mob("mobs_mc:slime_big", slime_big)
->>>>>>> 3eb27be82 (change naming in mods)
 
 local slime_small = table.copy(slime_big)
 slime_small.sounds.base_pitch = 1.15
@@ -173,11 +158,7 @@ slime_small.run_velocity = 1.45
 slime_small.jump_height = 4.3
 slime_small.spawn_small_alternative = "mobs_mc:slime_tiny"
 slime_small.on_die = spawn_children_on_die("mobs_mc:slime_tiny", 0.6, 1.0)
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:slime_small", slime_small)
-=======
 vlf_mobs.register_mob("mobs_mc:slime_small", slime_small)
->>>>>>> 3eb27be82 (change naming in mods)
 
 local slime_tiny = table.copy(slime_big)
 slime_tiny.sounds.base_pitch = 1.3
@@ -191,11 +172,7 @@ slime_tiny.damage = 0
 slime_tiny.reach = 2.5
 slime_tiny.drops = {
 	-- slimeball
-<<<<<<< HEAD
-	{name = "vlc_mobitems:slimeball",
-=======
 	{name = "vlf_mobitems:slimeball",
->>>>>>> 3eb27be82 (change naming in mods)
 	chance = 1,
 	min = 0,
 	max = 2,},
@@ -206,11 +183,7 @@ slime_tiny.jump_height = 3
 slime_tiny.spawn_small_alternative = nil
 slime_tiny.on_die = nil
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:slime_tiny", slime_tiny)
-=======
 vlf_mobs.register_mob("mobs_mc:slime_tiny", slime_tiny)
->>>>>>> 3eb27be82 (change naming in mods)
 
 local water_level = mobs_mc.water_level
 
@@ -249,11 +222,7 @@ local cave_biomes = {
 	"MangroveSwamp_underground"
 }
 
-<<<<<<< HEAD
-local cave_min = vlc_vars.mg_overworld_min
-=======
 local cave_min = vlf_vars.mg_overworld_min
->>>>>>> 3eb27be82 (change naming in mods)
 local cave_max = water_level - 23
 
 local swampy_biomes = {"Swampland", "MangroveSwamp"}
@@ -265,11 +234,7 @@ for slime_name,slime_chance in pairs({
 	["mobs_mc:slime_small"] = 1000,
 	["mobs_mc:slime_big"] = 1000
 }) do
-<<<<<<< HEAD
-	vlc_mobs.spawn_setup({
-=======
 	vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 		name = slime_name,
 		type_of_spawning = "ground",
 		dimension = "overworld",
@@ -282,11 +247,7 @@ for slime_name,slime_chance in pairs({
 		check_position = in_slime_chunk,
 	})
 
-<<<<<<< HEAD
-	vlc_mobs.spawn_setup({
-=======
 	vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 		name = slime_name,
 		type_of_spawning = "ground",
 		dimension = "overworld",
@@ -328,11 +289,7 @@ local magma_cube_big = {
 	reach = 3,
 	armor = 53,
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_mobitems:magma_cream",
-=======
 		{name = "vlf_mobitems:magma_cream",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 4,
 		min = 1,
 		max = 1,},
@@ -365,11 +322,7 @@ local magma_cube_big = {
 	on_die = spawn_children_on_die("mobs_mc:magma_cube_small", 0.8, 1.5),
 	fire_resistant = true,
 }
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:magma_cube_big", magma_cube_big)
-=======
 vlf_mobs.register_mob("mobs_mc:magma_cube_big", magma_cube_big)
->>>>>>> 3eb27be82 (change naming in mods)
 
 local magma_cube_small = table.copy(magma_cube_big)
 magma_cube_small.sounds.jump = "mobs_mc_magma_cube_small"
@@ -390,11 +343,7 @@ magma_cube_small.reach = 2.75
 magma_cube_small.armor = 66
 magma_cube_small.spawn_small_alternative = "mobs_mc:magma_cube_tiny"
 magma_cube_small.on_die = spawn_children_on_die("mobs_mc:magma_cube_tiny", 0.6, 1.0)
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:magma_cube_small", magma_cube_small)
-=======
 vlf_mobs.register_mob("mobs_mc:magma_cube_small", magma_cube_small)
->>>>>>> 3eb27be82 (change naming in mods)
 
 local magma_cube_tiny = table.copy(magma_cube_big)
 magma_cube_tiny.sounds.jump = "mobs_mc_magma_cube_small"
@@ -416,22 +365,14 @@ magma_cube_tiny.drops = {}
 magma_cube_tiny.spawn_small_alternative = nil
 magma_cube_tiny.on_die = nil
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:magma_cube_tiny", magma_cube_tiny)
-=======
 vlf_mobs.register_mob("mobs_mc:magma_cube_tiny", magma_cube_tiny)
->>>>>>> 3eb27be82 (change naming in mods)
 
 for magma_name,magma_chance in pairs({
 	["mobs_mc:magma_cube_tiny"] = 100,
 	["mobs_mc:magma_cube_small"] = 100,
 	["mobs_mc:magma_cube_big"] = 100
 }) do
-<<<<<<< HEAD
-	vlc_mobs.spawn_setup({
-=======
 	vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 		name = magma_name,
 		type_of_spawning = "ground",
 		dimension = "nether",
@@ -443,12 +384,6 @@ for magma_name,magma_chance in pairs({
 end
 
 -- spawn eggs
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:magma_cube_big", S("Magma Cube"), "#350000", "#fcfc00")
-
-vlc_mobs.register_egg("mobs_mc:slime_big", S("Slime"), "#52a03e", "#7ebf6d")
-=======
 vlf_mobs.register_egg("mobs_mc:magma_cube_big", S("Magma Cube"), "#350000", "#fcfc00")
 
 vlf_mobs.register_egg("mobs_mc:slime_big", S("Slime"), "#52a03e", "#7ebf6d")
->>>>>>> 3eb27be82 (change naming in mods)

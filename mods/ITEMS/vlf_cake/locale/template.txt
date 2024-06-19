@@ -1,4 +1,4 @@
-# textdomain: vlf_cake
+# textdomain: mcl_cake
 Cake=
 With 7 tasty slices!=
 Hunger points: +@1 per slice=

@@ -1,4 +1,4 @@
-# textdomain: vlf_dispensers
+# textdomain: mcl_dispensers
 Dispenser=
 Inventory=
 9 inventory slots=

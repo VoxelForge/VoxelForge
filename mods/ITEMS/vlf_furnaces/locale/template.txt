@@ -1,4 +1,4 @@
-# textdomain: vlf_furnaces
+# textdomain: mcl_furnaces
 Inventory=
 Recipe book=
 Furnace=

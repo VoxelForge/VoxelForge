@@ -1,4 +1,4 @@
-# textdomain: vlf_weather
+# textdomain: mcl_weather
 Gives ability to control weather=
 Changes the weather to the specified parameter.=
 Error: No weather specified.=

@@ -22,34 +22,16 @@ minetest.register_on_mods_loaded(function()
 	end
 end)
 
-<<<<<<< HEAD
-vlc_player.register_globalstep_slow(function(player)
-	local pos = player:get_pos()
-	local npos = vector.add(pos, vlc_player.node_offsets.stand)
-	local node = minetest.get_node(npos)
-	if on_walk[vlc_player.players[player].nodes.stand] then
-		on_walk[vlc_player.players[player].nodes.stand](npos, node, player)
-=======
 vlf_player.register_globalstep_slow(function(player)
 	local pos = player:get_pos()
 	local npos = vector.add(pos, vlf_player.node_offsets.stand)
 	local node = minetest.get_node(npos)
 	if on_walk[vlf_player.players[player].nodes.stand] then
 		on_walk[vlf_player.players[player].nodes.stand](npos, node, player)
->>>>>>> 3eb27be82 (change naming in mods)
 	end
 	for i = 1, #registered_globals do
 		registered_globals[i](npos, node, player)
 	end
-<<<<<<< HEAD
-	if on_walk_through[vlc_player.players[player].nodes.feet] then
-		local npos = vector.add(pos, vlc_player.node_offsets.feet)
-		on_walk_through[vlc_player.players[player].nodes.feet](npos, minetest.get_node(npos), player)
-	end
-	if on_walk_through[vlc_player.players[player].nodes.head] then
-		local npos = vector.add(pos, vlc_player.node_offsets.head)
-		on_walk_through[vlc_player.players[player].nodes.head](npos, minetest.get_node(npos), player)
-=======
 	if on_walk_through[vlf_player.players[player].nodes.feet] then
 		local npos = vector.add(pos, vlf_player.node_offsets.feet)
 		on_walk_through[vlf_player.players[player].nodes.feet](npos, minetest.get_node(npos), player)
@@ -57,6 +39,5 @@ vlf_player.register_globalstep_slow(function(player)
 	if on_walk_through[vlf_player.players[player].nodes.head] then
 		local npos = vector.add(pos, vlf_player.node_offsets.head)
 		on_walk_through[vlf_player.players[player].nodes.head](npos, minetest.get_node(npos), player)
->>>>>>> 3eb27be82 (change naming in mods)
 	end
 end)

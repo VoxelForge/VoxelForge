@@ -11,11 +11,7 @@ local function check_light(pos, environmental_light, artificial_light, sky_light
 	return true, ""
 end
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:silverfish", {
-=======
 vlf_mobs.register_mob("mobs_mc:silverfish", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Silverfish"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -47,21 +43,12 @@ vlf_mobs.register_mob("mobs_mc:silverfish", {
 	jump = true,
 	fear_height = 4,
 	replace_what = {
-<<<<<<< HEAD
-		{"vlc_core:stone", "vlc_monster_eggs:monster_egg_stone", -1},
-		{"vlc_core:cobble", "vlc_monster_eggs:monster_egg_cobble", -1},
-		{"vlc_core:stonebrick", "vlc_monster_eggs:monster_egg_stonebrick", -1},
-		{"vlc_core:stonebrickmossy", "vlc_monster_eggs:monster_egg_stonebrickmossy", -1},
-		{"vlc_core:stonebrickcracked", "vlc_monster_eggs:monster_egg_stonebrickcracked", -1},
-		{"vlc_core:stonebrickcarved", "vlc_monster_eggs:monster_egg_stonebrickcarved", -1},
-=======
 		{"vlf_core:stone", "vlf_monster_eggs:monster_egg_stone", -1},
 		{"vlf_core:cobble", "vlf_monster_eggs:monster_egg_cobble", -1},
 		{"vlf_core:stonebrick", "vlf_monster_eggs:monster_egg_stonebrick", -1},
 		{"vlf_core:stonebrickmossy", "vlf_monster_eggs:monster_egg_stonebrickmossy", -1},
 		{"vlf_core:stonebrickcracked", "vlf_monster_eggs:monster_egg_stonebrickcracked", -1},
 		{"vlf_core:stonebrickcarved", "vlf_monster_eggs:monster_egg_stonebrickcarved", -1},
->>>>>>> 3eb27be82 (change naming in mods)
 	},
 	replace_rate = 2,
 	animation = {
@@ -76,8 +63,4 @@ vlf_mobs.register_mob("mobs_mc:silverfish", {
 	check_light = check_light,
 })
 
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:silverfish", S("Silverfish"), "#6d6d6d", "#313131", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:silverfish", S("Silverfish"), "#6d6d6d", "#313131", 0)
->>>>>>> 3eb27be82 (change naming in mods)

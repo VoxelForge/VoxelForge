@@ -8,11 +8,7 @@ local S = minetest.get_translator("mobs_mc")
 local snow_trail_frequency = 0.5 -- Time in seconds for checking to add a new snow trail
 
 local mobs_griefing = minetest.settings:get_bool("mobs_griefing") ~= false
-<<<<<<< HEAD
-local mod_throwing = minetest.get_modpath("vlc_throwing") ~= nil
-=======
 local mod_throwing = minetest.get_modpath("vlf_throwing") ~= nil
->>>>>>> 3eb27be82 (change naming in mods)
 
 local gotten_texture = {
 	"mobs_mc_snowman.png",
@@ -24,11 +20,7 @@ local gotten_texture = {
 	"blank.png",
 }
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:snowman", {
-=======
 vlf_mobs.register_mob("mobs_mc:snowman", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Snow Golem"),
 	type = "npc",
 	spawn_class = "passive",
@@ -60,28 +52,17 @@ vlf_mobs.register_mob("mobs_mc:snowman", {
 		"farming_pumpkin_top.png", --left
 	},
 	gotten_texture = gotten_texture,
-<<<<<<< HEAD
-	drops = {{ name = "vlc_throwing:snowball", chance = 1, min = 0, max = 15 }},
-=======
 	drops = {{ name = "vlf_throwing:snowball", chance = 1, min = 0, max = 15 }},
->>>>>>> 3eb27be82 (change naming in mods)
 	visual_size = {x=3, y=3},
 	walk_velocity = 0.6,
 	run_velocity = 2,
 	jump = true,
 	makes_footstep_sound = true,
 	attack_type = "shoot",
-<<<<<<< HEAD
-	arrow = "vlc_throwing:snowball_entity",
-	shoot_arrow = function(self, pos, dir)
-		if mod_throwing then
-			vlc_throwing.throw("vlc_throwing:snowball", pos, dir, nil, self.object)
-=======
 	arrow = "vlf_throwing:snowball_entity",
 	shoot_arrow = function(self, pos, dir)
 		if mod_throwing then
 			vlf_throwing.throw("vlf_throwing:snowball", pos, dir, nil, self.object)
->>>>>>> 3eb27be82 (change naming in mods)
 		end
 	end,
 	shoot_interval = 1,
@@ -125,11 +106,7 @@ vlf_mobs.register_mob("mobs_mc:snowman", {
 				local belowdef = minetest.registered_nodes[minetest.get_node(below).name]
 				if belowdef and belowdef.walkable and (belowdef.node_box == nil or belowdef.node_box.type == "regular") then
 					-- Place top snow
-<<<<<<< HEAD
-					minetest.set_node(pos, {name = "vlc_core:snow"})
-=======
 					minetest.set_node(pos, {name = "vlf_core:snow"})
->>>>>>> 3eb27be82 (change naming in mods)
 				end
 			end
 		end
@@ -145,17 +122,10 @@ vlf_mobs.register_mob("mobs_mc:snowman", {
 			})
 
 			local pos = self.object:get_pos()
-<<<<<<< HEAD
-			minetest.sound_play("vlc_tools_shears_cut", {pos = pos}, true)
-
-			if minetest.registered_items["vlc_farming:pumpkin_face"] then
-				minetest.add_item({x=pos.x, y=pos.y+1.4, z=pos.z}, "vlc_farming:pumpkin_face")
-=======
 			minetest.sound_play("vlf_tools_shears_cut", {pos = pos}, true)
 
 			if minetest.registered_items["vlf_farming:pumpkin_face"] then
 				minetest.add_item({x=pos.x, y=pos.y+1.4, z=pos.z}, "vlf_farming:pumpkin_face")
->>>>>>> 3eb27be82 (change naming in mods)
 			end
 
 			-- Wear out
@@ -177,11 +147,7 @@ vlf_mobs.register_mob("mobs_mc:snowman", {
 				return dropitem
 			end
 		end
-<<<<<<< HEAD
-		return vlc_mobs.mob_class._on_dispense(self, dropitem, pos, droppos, dropnode, dropdir)
-=======
 		return vlf_mobs.mob_class._on_dispense(self, dropitem, pos, droppos, dropnode, dropdir)
->>>>>>> 3eb27be82 (change naming in mods)
 	end,
 })
 
@@ -201,11 +167,7 @@ local summon_particles = function(obj)
 		maxexptime = 2.0,
 		minsize = 2.0,
 		maxsize = 3.0,
-<<<<<<< HEAD
-		texture = "vlc_particles_smoke.png",
-=======
 		texture = "vlf_particles_smoke.png",
->>>>>>> 3eb27be82 (change naming in mods)
 	})
 end
 
@@ -230,11 +192,7 @@ function mobs_mc.check_snow_golem_summon(pos, player)
 		local place = checks[c][3]
 		local b1n = minetest.get_node(b1)
 		local b2n = minetest.get_node(b2)
-<<<<<<< HEAD
-		if b1n.name == "vlc_core:snowblock" and b2n.name == "vlc_core:snowblock" then
-=======
 		if b1n.name == "vlf_core:snowblock" and b2n.name == "vlf_core:snowblock" then
->>>>>>> 3eb27be82 (change naming in mods)
 			-- Remove the pumpkin and both snow blocks and summon the snow golem
 			minetest.remove_node(pos)
 			minetest.remove_node(b1)
@@ -254,8 +212,4 @@ function mobs_mc.check_snow_golem_summon(pos, player)
 end
 
 -- Spawn egg
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:snowman", S("Snow Golem"), "#f2f2f2", "#fd8f47", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:snowman", S("Snow Golem"), "#f2f2f2", "#fd8f47", 0)
->>>>>>> 3eb27be82 (change naming in mods)

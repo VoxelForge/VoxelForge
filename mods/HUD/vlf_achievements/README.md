@@ -1,4 +1,4 @@
-# vlf_achievements
+# mcl_achievements
 This registers the achievements for mineclonia using the awards mod.
 
 ## API

@@ -1,4 +1,4 @@
-# textdomain: vlf_ocean
+# textdomain: mcl_ocean
 Tube Coral Block=
 Dead Tube Coral Block=
 Tube Coral=

@@ -1,7 +1,7 @@
-# vlf_buckets
-Add an API to register buckets to vlf
+# mcl_buckets
+Add an API to register buckets to mcl
 
-## vlf_buckets.register_liquid(def)
+## mcl_buckets.register_liquid(def)
 
 Register a new liquid
 Accept folowing params:
@@ -21,7 +21,7 @@ Accept folowing params:
 
 **Usage exemple:**
 ```lua
-vlf_buckets.register_liquid({
+mcl_buckets.register_liquid({
 	bucketname = "dummy:bucket_dummy",
 	--source_place = "dummy:dummy_source",
 	source_place = function(pos)

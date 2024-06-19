@@ -1,11 +1,7 @@
 local S = minetest.get_translator("mobs_mc")
 
 local base_drop = {
-<<<<<<< HEAD
-	name = "vlc_mobitems:leather",
-=======
 	name = "vlf_mobitems:leather",
->>>>>>> 3eb27be82 (change naming in mods)
 	chance = 1,
 	min = 0,
 	max = 2,
@@ -113,21 +109,12 @@ local horse = {
 	walk_chance = 60,
 	view_range = 16,
 	follow = {
-<<<<<<< HEAD
-		"vlc_core:apple",
-		"vlc_core:sugar",
-		"vlc_farming:wheat_item",
-		"vlc_farming:hay_block",
-		"vlc_core:apple_gold",
-		"vlc_farming:carrot_item_gold",
-=======
 		"vlf_core:apple",
 		"vlf_core:sugar",
 		"vlf_farming:wheat_item",
 		"vlf_farming:hay_block",
 		"vlf_core:apple_gold",
 		"vlf_farming:carrot_item_gold",
->>>>>>> 3eb27be82 (change naming in mods)
 	},
 	passive = true,
 	hp_min = 15,
@@ -173,11 +160,7 @@ local horse = {
 
 		if self.driver and not self.tamed and self.buck_off_time <= 0 then
 			if math.random() < 0.2 then
-<<<<<<< HEAD
-				vlc_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
-=======
 				vlf_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
->>>>>>> 3eb27be82 (change naming in mods)
 				-- TODO bucking animation
 			else
 				self.buck_off_time = 20
@@ -193,11 +176,7 @@ local horse = {
 		end
 
 		if self.driver and self._saddle then
-<<<<<<< HEAD
-			vlc_mobs.drive(self, "walk", "stand", false, dtime)
-=======
 			vlf_mobs.drive(self, "walk", "stand", false, dtime)
->>>>>>> 3eb27be82 (change naming in mods)
 			return false
 		end
 		return true
@@ -205,11 +184,7 @@ local horse = {
 
 	on_die = function(self, pos)
 		if self.driver then
-<<<<<<< HEAD
-			vlc_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
-=======
 			vlf_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
->>>>>>> 3eb27be82 (change naming in mods)
 		end
 	end,
 
@@ -223,11 +198,7 @@ local horse = {
 		local heal = 0
 
 		if self._inv_id then
-<<<<<<< HEAD
-			if not self._chest and item:get_name() == "vlc_chests:chest" then
-=======
 			if not self._chest and item:get_name() == "vlf_chests:chest" then
->>>>>>> 3eb27be82 (change naming in mods)
 				item:take_item()
 				clicker:set_wielded_item(item)
 				self._chest = true
@@ -242,11 +213,7 @@ local horse = {
 				self:update_drops()
 				return
 			elseif self._chest and clicker:get_player_control().sneak then
-<<<<<<< HEAD
-				vlc_entity_invs.show_inv_form(self,clicker)
-=======
 				vlf_entity_invs.show_inv_form(self,clicker)
->>>>>>> 3eb27be82 (change naming in mods)
 				return
 			end
 		end
@@ -254,21 +221,6 @@ local horse = {
 		self.temper = self.temper or (math.random(1,100))
 		if not self.tamed then
 			local temper_increase = 0
-<<<<<<< HEAD
-			if (iname == "vlc_core:sugar") then
-				temper_increase = 3
-			elseif (iname == "vlc_farming:wheat_item") then
-				temper_increase = 3
-			elseif (iname == "vlc_core:apple") then
-				temper_increase = 3
-			elseif (iname == "vlc_farming:carrot_item_gold") then
-				temper_increase = 5
-			elseif (iname == "vlc_core:apple_gold") then
-				temper_increase = 10
-			elseif not self.driver then
-				self.object:set_properties({stepheight = 1.1})
-				vlc_mobs.attach(self, clicker)
-=======
 			if (iname == "vlf_core:sugar") then
 				temper_increase = 3
 			elseif (iname == "vlf_farming:wheat_item") then
@@ -282,7 +234,6 @@ local horse = {
 			elseif not self.driver then
 				self.object:set_properties({stepheight = 1.1})
 				vlf_mobs.attach(self, clicker)
->>>>>>> 3eb27be82 (change naming in mods)
 				self.buck_off_time = 40 -- TODO how long does it take in minecraft?
 				if self.temper > 100 then
 					self.tamed = true -- NOTE taming can only be finished by riding the horse
@@ -292,41 +243,22 @@ local horse = {
 				end
 				temper_increase = 5
 			elseif self.driver and self.driver == clicker then
-<<<<<<< HEAD
-				vlc_mobs.detach(clicker, {x = 1, y = 0, z = 1})
-=======
 				vlf_mobs.detach(clicker, {x = 1, y = 0, z = 1})
->>>>>>> 3eb27be82 (change naming in mods)
 			end
 			self.temper = self.temper + temper_increase
 			return
 		end
 
 		if can_breed(self.name) then
-<<<<<<< HEAD
-			if (iname == "vlc_core:apple_gold") then
-				heal = 10
-			elseif (iname == "vlc_farming:carrot_item_gold") then
-=======
 			if (iname == "vlf_core:apple_gold") then
 				heal = 10
 			elseif (iname == "vlf_farming:carrot_item_gold") then
->>>>>>> 3eb27be82 (change naming in mods)
 				heal = 4
 			end
 			if heal > 0 and self:feed_tame(clicker, heal, true, false) then
 				return
 			end
 		end
-<<<<<<< HEAD
-		if (iname == "vlc_core:sugar") then
-			heal = 1
-		elseif (iname == "vlc_farming:wheat_item") then
-			heal = 2
-		elseif (iname == "vlc_core:apple") then
-			heal = 3
-		elseif (iname == "vlc_farming:hay_block") then
-=======
 		if (iname == "vlf_core:sugar") then
 			heal = 1
 		elseif (iname == "vlf_farming:wheat_item") then
@@ -334,40 +266,26 @@ local horse = {
 		elseif (iname == "vlf_core:apple") then
 			heal = 3
 		elseif (iname == "vlf_farming:hay_block") then
->>>>>>> 3eb27be82 (change naming in mods)
 			heal = 20
 		end
 		if heal > 0 and self:feed_tame(clicker, heal, false, false) then
 			return
 		end
 
-<<<<<<< HEAD
-		if vlc_mobs.protect(self, clicker) then
-=======
 		if vlf_mobs.protect(self, clicker) then
->>>>>>> 3eb27be82 (change naming in mods)
 			return
 		end
 
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
 			if self.driver and clicker == self.driver then
-<<<<<<< HEAD
-				vlc_mobs.detach(clicker, {x = 1, y = 0, z = 1})
-			elseif not self.driver and iname == "vlc_mobitems:saddle" and self:set_saddle(clicker) then
-=======
 				vlf_mobs.detach(clicker, {x = 1, y = 0, z = 1})
 			elseif not self.driver and iname == "vlf_mobitems:saddle" and self:set_saddle(clicker) then
->>>>>>> 3eb27be82 (change naming in mods)
 				return
 			elseif minetest.get_item_group(iname, "horse_armor") > 0 and can_equip_horse_armor(self.name) and not self.driver and self:set_armor(clicker) then
 				return
 			elseif not self.driver and self._saddle then
 				self.object:set_properties({stepheight = 1.1})
-<<<<<<< HEAD
-				vlc_mobs.attach(self, clicker)
-=======
 				vlf_mobs.attach(self, clicker)
->>>>>>> 3eb27be82 (change naming in mods)
 			end
 		end
 	end,
@@ -385,11 +303,7 @@ local horse = {
 			local tex = horse_extra_texture(self)
 			self.base_texture = tex
 			self.object:set_properties({textures = self.base_texture})
-<<<<<<< HEAD
-			minetest.sound_play({name = "vlc_armor_equip_leather"}, {gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
-=======
 			minetest.sound_play({name = "vlf_armor_equip_leather"}, {gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
->>>>>>> 3eb27be82 (change naming in mods)
 			self:update_drops()
 			return true
 		end
@@ -419,13 +333,8 @@ local horse = {
 			self.base_texture = tex
 			self.object:set_properties({textures = self.base_texture})
 			local def = w:get_definition()
-<<<<<<< HEAD
-			if def.sounds and def.sounds._vlc_armor_equip then
-				minetest.sound_play({name = def.sounds._vlc_armor_equip}, {gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
-=======
 			if def.sounds and def.sounds._vlf_armor_equip then
 				minetest.sound_play({name = def.sounds._vlf_armor_equip}, {gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
->>>>>>> 3eb27be82 (change naming in mods)
 			end
 			return true
 		end
@@ -434,11 +343,7 @@ local horse = {
 		self.drops = { base_drop }
 		if self._saddle then
 			table.insert(self.drops,{
-<<<<<<< HEAD
-				name = "vlc_mobitems:saddle",
-=======
 				name = "vlf_mobitems:saddle",
->>>>>>> 3eb27be82 (change naming in mods)
 				chance = 1,
 				min = 1,
 				max = 1,
@@ -454,11 +359,7 @@ local horse = {
 		end
 		if self._chest then
 			table.insert(self.drops,{
-<<<<<<< HEAD
-				name = "vlc_chests:chest",
-=======
 				name = "vlf_chests:chest",
->>>>>>> 3eb27be82 (change naming in mods)
 				chance = 1,
 				min = 1,
 				max = 1,
@@ -468,11 +369,7 @@ local horse = {
 
 	on_breed = function(parent1, parent2)
 		local pos = parent1.object:get_pos()
-<<<<<<< HEAD
-		local child = vlc_mobs.spawn_child(pos, parent1.name)
-=======
 		local child = vlf_mobs.spawn_child(pos, parent1.name)
->>>>>>> 3eb27be82 (change naming in mods)
 		if child then
 			local ent_c = child:get_luaentity()
 			local p = math.random(1, 2)
@@ -517,11 +414,7 @@ local horse = {
 	end,
 }
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:horse", horse)
-=======
 vlf_mobs.register_mob("mobs_mc:horse", horse)
->>>>>>> 3eb27be82 (change naming in mods)
 
 local skeleton_horse = table.merge(horse, {
 	description = S("Skeleton Horse"),
@@ -529,11 +422,7 @@ local skeleton_horse = table.merge(horse, {
 	armor = {undead = 100, fleshy = 100},
 	textures = {{"blank.png", "mobs_mc_horse_skeleton.png", "blank.png"}},
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_mobitems:bone",
-=======
 		{name = "vlf_mobitems:bone",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 2,},
@@ -548,24 +437,14 @@ local skeleton_horse = table.merge(horse, {
 	},
 	harmed_by_heal = true,
 })
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:skeleton_horse", skeleton_horse)
-
-vlc_mobs.register_mob("mobs_mc:zombie_horse", table.merge(skeleton_horse, {
-=======
 vlf_mobs.register_mob("mobs_mc:skeleton_horse", skeleton_horse)
 
 vlf_mobs.register_mob("mobs_mc:zombie_horse", table.merge(skeleton_horse, {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Zombie Horse"),
 	textures = {{"blank.png", "mobs_mc_horse_zombie.png", "blank.png"}},
 	drops = {
 		{
-<<<<<<< HEAD
-			name = "vlc_mobitems:rotten_flesh",
-=======
 			name = "vlf_mobitems:rotten_flesh",
->>>>>>> 3eb27be82 (change naming in mods)
 			chance = 1,
 			min = 0,
 			max = 2,
@@ -613,19 +492,11 @@ local donkey = table.merge(horse, {
 	jump_height = 3.75,
 })
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:donkey", donkey)
-vlc_entity_invs.register_inv("mobs_mc:donkey","Donkey",15,true)
-
-local m = 0.94
-vlc_mobs.register_mob("mobs_mc:mule", table.merge(donkey, {
-=======
 vlf_mobs.register_mob("mobs_mc:donkey", donkey)
 vlf_entity_invs.register_inv("mobs_mc:donkey","Donkey",15,true)
 
 local m = 0.94
 vlf_mobs.register_mob("mobs_mc:mule", table.merge(donkey, {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Mule"),
 	textures = {{"blank.png", "mobs_mc_mule.png", "blank.png"}},
 	visual_size = { x=horse.visual_size.x*m, y=horse.visual_size.y*m },
@@ -641,15 +512,9 @@ vlf_mobs.register_mob("mobs_mc:mule", table.merge(donkey, {
 		horse.collisionbox[6] * m,
 	},
 }))
-<<<<<<< HEAD
-vlc_entity_invs.register_inv("mobs_mc:mule","Mule",15,true)
-
-vlc_mobs.spawn_setup({
-=======
 vlf_entity_invs.register_inv("mobs_mc:mule","Mule",15,true)
 
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:horse",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -669,11 +534,7 @@ vlf_mobs.spawn_setup({
 	chance = 40,
 })
 
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:donkey",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -694,16 +555,8 @@ vlf_mobs.spawn_setup({
 	chance = 10,
 })
 
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:horse", S("Horse"), "#c09e7d", "#eee500", 0)
-vlc_mobs.register_egg("mobs_mc:skeleton_horse", S("Skeleton Horse"), "#68684f", "#e5e5d8", 0)
-vlc_mobs.register_egg("mobs_mc:zombie_horse", S("Zombie Horse"), "#2a5a37", "#84d080", 0)
-vlc_mobs.register_egg("mobs_mc:donkey", S("Donkey"), "#534539", "#867566", 0)
-vlc_mobs.register_egg("mobs_mc:mule", S("Mule"), "#1b0200", "#51331d", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:horse", S("Horse"), "#c09e7d", "#eee500", 0)
 vlf_mobs.register_egg("mobs_mc:skeleton_horse", S("Skeleton Horse"), "#68684f", "#e5e5d8", 0)
 vlf_mobs.register_egg("mobs_mc:zombie_horse", S("Zombie Horse"), "#2a5a37", "#84d080", 0)
 vlf_mobs.register_egg("mobs_mc:donkey", S("Donkey"), "#534539", "#867566", 0)
 vlf_mobs.register_egg("mobs_mc:mule", S("Mule"), "#1b0200", "#51331d", 0)
->>>>>>> 3eb27be82 (change naming in mods)

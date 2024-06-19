@@ -10,11 +10,7 @@ local S = minetest.get_translator("mobs_mc")
 --###################
 
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:vindicator", {
-=======
 vlf_mobs.register_mob("mobs_mc:vindicator", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Vindicator"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -47,20 +43,12 @@ vlf_mobs.register_mob("mobs_mc:vindicator", {
 	attack_type = "dogfight",
 	attack_npcs = true,
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_core:emerald",
-=======
 		{name = "vlf_core:emerald",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 1,
 		looting = "common",},
-<<<<<<< HEAD
-		{name = "vlc_tools:axe_iron",
-=======
 		{name = "vlf_tools:axe_iron",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 100 / 8.5,
 		min = 1,
 		max = 1,
@@ -88,8 +76,4 @@ vlf_mobs.register_mob("mobs_mc:vindicator", {
 })
 
 -- spawn eggs
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:vindicator", S("Vindicator"), "#959b9b", "#275e61", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:vindicator", S("Vindicator"), "#959b9b", "#275e61", 0)
->>>>>>> 3eb27be82 (change naming in mods)

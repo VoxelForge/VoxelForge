@@ -6,11 +6,7 @@
 
 local S = minetest.get_translator("mobs_mc")
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:squid", {
-=======
 vlf_mobs.register_mob("mobs_mc:squid", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Squid"),
     type = "animal",
     spawn_class = "water",
@@ -46,11 +42,7 @@ vlf_mobs.register_mob("mobs_mc:squid", {
 		run_end = 60,
 	},
     drops = {
-<<<<<<< HEAD
-		{name = "vlc_mobitems:ink_sac",
-=======
 		{name = "vlf_mobitems:ink_sac",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 1,
 		max = 3,
@@ -59,11 +51,7 @@ vlf_mobs.register_mob("mobs_mc:squid", {
     visual_size = {x=3, y=3},
     makes_footstep_sound = false,
     fly = true,
-<<<<<<< HEAD
-    fly_in = { "vlc_core:water_source", "vlcx_core:river_water_source" },
-=======
     fly_in = { "vlf_core:water_source", "vlfx_core:river_water_source" },
->>>>>>> 3eb27be82 (change naming in mods)
     breathes_in_water = true,
     jump = false,
     view_range = 16,
@@ -75,11 +63,7 @@ vlf_mobs.register_mob("mobs_mc:squid", {
 
 -- Spawn near the water surface
 
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:squid",
 	type_of_spawning = "water",
 	dimension = "overworld",
@@ -92,8 +76,4 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn eggs
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:squid", S("Squid"), "#223b4d", "#708999", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:squid", S("Squid"), "#223b4d", "#708999", 0)
->>>>>>> 3eb27be82 (change naming in mods)

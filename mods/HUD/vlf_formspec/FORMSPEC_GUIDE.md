@@ -10,7 +10,7 @@ The typical width of an 9 slots width inventory formspec is `0.375 + 9 + ((9-1) 
 
 Margins are 0.375.
 
-The labels color is `vlf_formspec.label_color`
+The labels color is `mcl_formspec.label_color`
 
 Space between 1st inventory line and the rest of inventory is 0.45
 

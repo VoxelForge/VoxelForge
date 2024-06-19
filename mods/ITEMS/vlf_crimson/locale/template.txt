@@ -1,4 +1,4 @@
-# textdomain: vlf_crimson
+# textdomain: mcl_crimson
 Crimson=
 Warped=
 Warped Fungus=

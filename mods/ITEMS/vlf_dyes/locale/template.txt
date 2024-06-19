@@ -1,4 +1,4 @@
-# textdomain: vlf_dye
+# textdomain: mcl_dye
 White=
 Light Grey=
 Grey=

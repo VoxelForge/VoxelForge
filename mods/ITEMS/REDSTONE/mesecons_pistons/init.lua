@@ -107,13 +107,8 @@ local function piston_on(pos, node)
 		minetest.swap_node(pos, {param2 = node.param2, name = pistonspec.onname})
 		minetest.set_node(np, {param2 = node.param2, name = pistonspec.pusher})
 		local below = minetest.get_node({x=np.x,y=np.y-1,z=np.z})
-<<<<<<< HEAD
-		if below.name == "vlc_farming:soil" or below.name == "vlc_farming:soil_wet" then
-			minetest.set_node({x=np.x,y=np.y-1,z=np.z}, {name = "vlc_core:dirt"})
-=======
 		if below.name == "vlf_farming:soil" or below.name == "vlf_farming:soil_wet" then
 			minetest.set_node({x=np.x,y=np.y-1,z=np.z}, {name = "vlf_core:dirt"})
->>>>>>> 3eb27be82 (change naming in mods)
 		end
 		mesecon.mvps_process_stack(stack)
 		mesecon.mvps_move_objects(np, dir, oldstack)
@@ -215,24 +210,15 @@ minetest.register_node("mesecons_pistons:piston_normal_off", {
 	is_ground_content = false,
 	after_place_node = piston_orientate,
 	mesecons_piston = pistonspec_normal,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_stone_defaults(),
-=======
 	sounds = vlf_sounds.node_sound_stone_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {
 		effector = {
 			action_on = piston_on,
 			rules = piston_get_rules
 		},
 	},
-<<<<<<< HEAD
-	_vlc_blast_resistance = 0.5,
-	_vlc_hardness = 0.5,
-=======
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = function(pos, node, user, mode)
 		if mode == screwdriver.ROTATE_AXIS then
 			minetest.set_node(pos, {name="mesecons_pistons:piston_up_normal_off"})
@@ -261,24 +247,15 @@ minetest.register_node("mesecons_pistons:piston_normal_on", {
 	node_box = piston_on_box,
 	selection_box = piston_on_box,
 	mesecons_piston = pistonspec_normal,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_stone_defaults(),
-=======
 	sounds = vlf_sounds.node_sound_stone_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {
 		effector = {
 			action_off = piston_off,
 			rules = piston_get_rules
 		},
 	},
-<<<<<<< HEAD
-	_vlc_blast_resistance = 0.5,
-	_vlc_hardness = 0.5,
-=======
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = false,
 })
 
@@ -303,13 +280,8 @@ minetest.register_node("mesecons_pistons:piston_pusher_normal", {
 	corresponding_piston = "mesecons_pistons:piston_normal_on",
 	selection_box = piston_pusher_box,
 	node_box = piston_pusher_box,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_wood_defaults(),
-	_vlc_blast_resistance = 0.5,
-=======
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	_vlf_blast_resistance = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = false,
 })
 
@@ -346,24 +318,15 @@ minetest.register_node("mesecons_pistons:piston_sticky_off", {
 	is_ground_content = false,
 	after_place_node = piston_orientate,
 	mesecons_piston = pistonspec_sticky,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_stone_defaults(),
-=======
 	sounds = vlf_sounds.node_sound_stone_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {
 		effector = {
 			action_on = piston_on,
 			rules = piston_get_rules
 		},
 	},
-<<<<<<< HEAD
-	_vlc_blast_resistance = 0.5,
-	_vlc_hardness = 0.5,
-=======
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = function(pos, node, user, mode)
 		if mode == screwdriver.ROTATE_AXIS then
 			minetest.set_node(pos, {name="mesecons_pistons:piston_up_sticky_off"})
@@ -392,24 +355,15 @@ minetest.register_node("mesecons_pistons:piston_sticky_on", {
 	node_box = piston_on_box,
 	selection_box = piston_on_box,
 	mesecons_piston = pistonspec_sticky,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_stone_defaults(),
-=======
 	sounds = vlf_sounds.node_sound_stone_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {
 		effector = {
 			action_off = piston_off,
 			rules = piston_get_rules
 		},
 	},
-<<<<<<< HEAD
-	_vlc_blast_resistance = 0.5,
-	_vlc_hardness = 0.5,
-=======
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = false,
 })
 
@@ -434,13 +388,8 @@ minetest.register_node("mesecons_pistons:piston_pusher_sticky", {
 	corresponding_piston = "mesecons_pistons:piston_sticky_on",
 	selection_box = piston_pusher_box,
 	node_box = piston_pusher_box,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_wood_defaults(),
-	_vlc_blast_resistance = 0.5,
-=======
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	_vlf_blast_resistance = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = false,
 })
 
@@ -496,19 +445,11 @@ minetest.register_node("mesecons_pistons:piston_up_normal_off", {
 			rules = piston_up_rules,
 		},
 	},
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_stone_defaults({
-		footstep = vlc_sounds.node_sound_wood_defaults().footstep
-	}),
-	_vlc_blast_resistance = 0.5,
-	_vlc_hardness = 0.5,
-=======
 	sounds = vlf_sounds.node_sound_stone_defaults({
 		footstep = vlf_sounds.node_sound_wood_defaults().footstep
 	}),
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = function(pos, node, user, mode)
 		if mode == screwdriver.ROTATE_AXIS then
 			minetest.set_node(pos, {name="mesecons_pistons:piston_down_normal_off"})
@@ -538,24 +479,15 @@ minetest.register_node("mesecons_pistons:piston_up_normal_on", {
 	node_box = piston_up_on_box,
 	selection_box = piston_up_on_box,
 	mesecons_piston = pistonspec_normal_up,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_stone_defaults(),
-=======
 	sounds = vlf_sounds.node_sound_stone_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {
 		effector = {
 			action_off = piston_off,
 			rules = piston_up_rules,
 		},
 	},
-<<<<<<< HEAD
-	_vlc_blast_resistance = 0.5,
-	_vlc_hardness = 0.5,
-=======
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = false,
 })
 
@@ -580,13 +512,8 @@ minetest.register_node("mesecons_pistons:piston_up_pusher_normal", {
 	corresponding_piston = "mesecons_pistons:piston_up_normal_on",
 	selection_box = piston_up_pusher_box,
 	node_box = piston_up_pusher_box,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_wood_defaults(),
-	_vlc_blast_resistance = 0.5,
-=======
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	_vlf_blast_resistance = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = false,
 })
 
@@ -619,13 +546,8 @@ minetest.register_node("mesecons_pistons:piston_up_sticky_off", {
 	is_ground_content = false,
 	drop = "mesecons_pistons:piston_sticky_off",
 	mesecons_piston = pistonspec_sticky_up,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_stone_defaults({
-		footstep = vlc_sounds.node_sound_wood_defaults().footstep
-=======
 	sounds = vlf_sounds.node_sound_stone_defaults({
 		footstep = vlf_sounds.node_sound_wood_defaults().footstep
->>>>>>> 3eb27be82 (change naming in mods)
 	}),
 	mesecons = {
 		effector = {
@@ -633,13 +555,8 @@ minetest.register_node("mesecons_pistons:piston_up_sticky_off", {
 			rules = piston_up_rules,
 		},
 	},
-<<<<<<< HEAD
-	_vlc_blast_resistance = 0.5,
-	_vlc_hardness = 0.5,
-=======
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = function(pos, node, user, mode)
 		if mode == screwdriver.ROTATE_AXIS then
 			minetest.set_node(pos, {name="mesecons_pistons:piston_down_sticky_off"})
@@ -669,24 +586,15 @@ minetest.register_node("mesecons_pistons:piston_up_sticky_on", {
 	node_box = piston_up_on_box,
 	selection_box = piston_up_on_box,
 	mesecons_piston = pistonspec_sticky_up,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_stone_defaults(),
-=======
 	sounds = vlf_sounds.node_sound_stone_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {
 		effector = {
 			action_off = piston_off,
 			rules = piston_up_rules,
 		},
 	},
-<<<<<<< HEAD
-	_vlc_blast_resistance = 0.5,
-	_vlc_hardness = 0.5,
-=======
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = false,
 })
 
@@ -711,13 +619,8 @@ minetest.register_node("mesecons_pistons:piston_up_pusher_sticky", {
 	corresponding_piston = "mesecons_pistons:piston_up_sticky_on",
 	selection_box = piston_up_pusher_box,
 	node_box = piston_up_pusher_box,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_wood_defaults(),
-	_vlc_blast_resistance = 0.5,
-=======
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	_vlf_blast_resistance = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = false,
 })
 
@@ -769,24 +672,15 @@ minetest.register_node("mesecons_pistons:piston_down_normal_off", {
 	is_ground_content = false,
 	drop = "mesecons_pistons:piston_normal_off",
 	mesecons_piston = pistonspec_normal_down,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_stone_defaults(),
-=======
 	sounds = vlf_sounds.node_sound_stone_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {
 		effector = {
 			action_on = piston_on,
 			rules = piston_down_rules,
 		},
 	},
-<<<<<<< HEAD
-	_vlc_blast_resistance = 0.5,
-	_vlc_hardness = 0.5,
-=======
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = function(pos, node, user, mode)
 		if mode == screwdriver.ROTATE_AXIS then
 			minetest.set_node(pos, {name="mesecons_pistons:piston_normal_off"})
@@ -816,24 +710,15 @@ minetest.register_node("mesecons_pistons:piston_down_normal_on", {
 	node_box = piston_down_on_box,
 	selection_box = piston_down_on_box,
 	mesecons_piston = pistonspec_normal_down,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_stone_defaults(),
-=======
 	sounds = vlf_sounds.node_sound_stone_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {
 		effector = {
 			action_off = piston_off,
 			rules = piston_down_rules,
 		},
 	},
-<<<<<<< HEAD
-	_vlc_blast_resistance = 0.5,
-	_vlc_hardness = 0.5,
-=======
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = false,
 })
 
@@ -858,13 +743,8 @@ minetest.register_node("mesecons_pistons:piston_down_pusher_normal", {
 	corresponding_piston = "mesecons_pistons:piston_down_normal_on",
 	selection_box = piston_down_pusher_box,
 	node_box = piston_down_pusher_box,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_wood_defaults(),
-	_vlc_blast_resistance = 0.5,
-=======
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	_vlf_blast_resistance = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = false,
 })
 
@@ -894,24 +774,15 @@ minetest.register_node("mesecons_pistons:piston_down_sticky_off", {
 	is_ground_content = false,
 	drop = "mesecons_pistons:piston_sticky_off",
 	mesecons_piston = pistonspec_sticky_down,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_stone_defaults(),
-=======
 	sounds = vlf_sounds.node_sound_stone_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {
 		effector = {
 			action_on = piston_on,
 			rules = piston_down_rules,
 		},
 	},
-<<<<<<< HEAD
-	_vlc_blast_resistance = 0.5,
-	_vlc_hardness = 0.5,
-=======
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = function(pos, node, user, mode)
 		if mode == screwdriver.ROTATE_AXIS then
 			minetest.set_node(pos, {name="mesecons_pistons:piston_sticky_off"})
@@ -941,24 +812,15 @@ minetest.register_node("mesecons_pistons:piston_down_sticky_on", {
 	node_box = piston_down_on_box,
 	selection_box = piston_down_on_box,
 	mesecons_piston = pistonspec_sticky_down,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_stone_defaults(),
-=======
 	sounds = vlf_sounds.node_sound_stone_defaults(),
->>>>>>> 3eb27be82 (change naming in mods)
 	mesecons = {
 		effector = {
 			action_off = piston_off,
 			rules = piston_down_rules,
 		},
 	},
-<<<<<<< HEAD
-	_vlc_blast_resistance = 0.5,
-	_vlc_hardness = 0.5,
-=======
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = false,
 })
 
@@ -983,13 +845,8 @@ minetest.register_node("mesecons_pistons:piston_down_pusher_sticky", {
 	corresponding_piston = "mesecons_pistons:piston_down_sticky_on",
 	selection_box = piston_down_pusher_box,
 	node_box = piston_down_pusher_box,
-<<<<<<< HEAD
-	sounds = vlc_sounds.node_sound_wood_defaults(),
-	_vlc_blast_resistance = 0.5,
-=======
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	_vlf_blast_resistance = 0.5,
->>>>>>> 3eb27be82 (change naming in mods)
 	on_rotate = false,
 })
 
@@ -1012,24 +869,15 @@ minetest.register_craft({
 	output = "mesecons_pistons:piston_normal_off",
 	recipe = {
 		{"group:wood", "group:wood", "group:wood"},
-<<<<<<< HEAD
-		{"vlc_core:cobble", "vlc_core:iron_ingot", "vlc_core:cobble"},
-		{"vlc_core:cobble", "mesecons:redstone", "vlc_core:cobble"},
-=======
 		{"vlf_core:cobble", "vlf_core:iron_ingot", "vlf_core:cobble"},
 		{"vlf_core:cobble", "mesecons:redstone", "vlf_core:cobble"},
->>>>>>> 3eb27be82 (change naming in mods)
 	},
 })
 
 minetest.register_craft({
 	output = "mesecons_pistons:piston_sticky_off",
 	recipe = {
-<<<<<<< HEAD
-		{"vlc_mobitems:slimeball"},
-=======
 		{"vlf_mobitems:slimeball"},
->>>>>>> 3eb27be82 (change naming in mods)
 		{"mesecons_pistons:piston_normal_off"},
 	},
 })

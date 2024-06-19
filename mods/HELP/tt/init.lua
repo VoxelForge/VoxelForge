@@ -1,15 +1,8 @@
 tt = {}
-<<<<<<< HEAD
-tt.COLOR_DEFAULT = vlc_colors.GREEN
-tt.COLOR_DANGER = vlc_colors.YELLOW
-tt.COLOR_GOOD = vlc_colors.GREEN
-tt.NAME_COLOR = vlc_colors.YELLOW
-=======
 tt.COLOR_DEFAULT = vlf_colors.GREEN
 tt.COLOR_DANGER = vlf_colors.YELLOW
 tt.COLOR_GOOD = vlf_colors.GREEN
 tt.NAME_COLOR = vlf_colors.YELLOW
->>>>>>> 3eb27be82 (change naming in mods)
 
 -- API
 tt.registered_snippets = {}
@@ -71,13 +64,8 @@ function tt.reload_itemstack_description(itemstack)
 	local itemstring = itemstack:get_name()
 	local def = itemstack:get_definition()
 	local meta = itemstack:get_meta()
-<<<<<<< HEAD
-	if def and def._vlc_generate_description then
-		def._vlc_generate_description(itemstack)
-=======
 	if def and def._vlf_generate_description then
 		def._vlf_generate_description(itemstack)
->>>>>>> 3eb27be82 (change naming in mods)
 	elseif should_change(itemstring, def) then
 		local toolcaps
 		if def.tool_capabilities then

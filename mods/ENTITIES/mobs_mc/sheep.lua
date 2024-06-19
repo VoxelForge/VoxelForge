@@ -3,29 +3,11 @@ local WOOL_REPLACE_RATE = 80
 local gotten_texture = { "blank.png", "mobs_mc_sheep.png" }
 local rainbow_colors = {}
 
-<<<<<<< HEAD
-for k, v in pairs(vlc_dyes.colors) do
-=======
 for k, v in pairs(vlf_dyes.colors) do
->>>>>>> 3eb27be82 (change naming in mods)
 	table.insert(rainbow_colors, "unicolor_"..v.unicolor)
 end
 
 local function unicolor_to_wool(unicolor_group)
-<<<<<<< HEAD
-	local d = vlc_dyes.unicolor_to_dye(unicolor_group)
-	if d then
-		return "vlc_wool:"..d:gsub("^vlc_dyes:","")
-	end
-	return "vlc_wool:white"
-end
-
-local function sheep_texture(unicolor_group)
-	local color = vlc_dyes.colors["white"].rgb.."00"
-	local d = vlc_dyes.unicolor_to_dye(unicolor_group)
-	if d then
-		color = vlc_dyes.colors[d:gsub("^vlc_dyes:","")].rgb.."D0"
-=======
 	local d = vlf_dyes.unicolor_to_dye(unicolor_group)
 	if d then
 		return "vlf_wool:"..d:gsub("^vlf_dyes:","")
@@ -38,7 +20,6 @@ local function sheep_texture(unicolor_group)
 	local d = vlf_dyes.unicolor_to_dye(unicolor_group)
 	if d then
 		color = vlf_dyes.colors[d:gsub("^vlf_dyes:","")].rgb.."D0"
->>>>>>> 3eb27be82 (change naming in mods)
 	end
 	return {
 		"mobs_mc_sheep_fur.png^[colorize:"..color,
@@ -50,11 +31,7 @@ local function get_sheep_drops(unicolor_group)
 	local wool = unicolor_to_wool(unicolor_group)
 	return {
 		{
-<<<<<<< HEAD
-			name = "vlc_mobitems:mutton",
-=======
 			name = "vlf_mobitems:mutton",
->>>>>>> 3eb27be82 (change naming in mods)
 			 chance = 1,
 			 min = 1,
 			 max = 2,
@@ -69,11 +46,7 @@ local function get_sheep_drops(unicolor_group)
 	}
 end
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:sheep", {
-=======
 vlf_mobs.register_mob("mobs_mc:sheep", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Sheep"),
 	type = "animal",
 	spawn_class = "passive",
@@ -118,23 +91,14 @@ vlf_mobs.register_mob("mobs_mc:sheep", {
 		run_start = 81, run_end = 121, run_speed = 60,
 		eat_start = 121, eat_end = 161, eat_loop = false,
 	},
-<<<<<<< HEAD
-	follow = { "vlc_farming:wheat_item" },
-=======
 	follow = { "vlf_farming:wheat_item" },
->>>>>>> 3eb27be82 (change naming in mods)
 	view_range = 12,
 
 	replace_rate = WOOL_REPLACE_RATE,
 	replace_delay = 1.3,
 	replace_what = {
-<<<<<<< HEAD
-		{ "vlc_core:dirt_with_grass", "vlc_core:dirt", -1 },
-		{ "vlc_flowers:tallgrass", "air", 0 },
-=======
 		{ "vlf_core:dirt_with_grass", "vlf_core:dirt", -1 },
 		{ "vlf_flowers:tallgrass", "air", 0 },
->>>>>>> 3eb27be82 (change naming in mods)
 	},
 	on_replace = function(self, pos, oldnode, newnode)
 		self.color = self.color or "unicolor_white"
@@ -213,11 +177,7 @@ vlf_mobs.register_mob("mobs_mc:sheep", {
 
 	on_rightclick = function(self, clicker)
 		if self:feed_tame(clicker, 1, true, false) then return end
-<<<<<<< HEAD
-		if vlc_mobs.protect(self, clicker) then return end
-=======
 		if vlf_mobs.protect(self, clicker) then return end
->>>>>>> 3eb27be82 (change naming in mods)
 
 		local item = clicker:get_wielded_item()
 		-- Dye sheep
@@ -227,11 +187,7 @@ vlf_mobs.register_mob("mobs_mc:sheep", {
 				item:take_item()
 				clicker:set_wielded_item(item)
 			end
-<<<<<<< HEAD
-			local cgroup = "unicolor_"..vlc_dyes.colors[idef._color].unicolor
-=======
 			local cgroup = "unicolor_"..vlf_dyes.colors[idef._color].unicolor
->>>>>>> 3eb27be82 (change naming in mods)
 			self.color = cgroup
 			self.base_texture = sheep_texture(cgroup)
 			self.object:set_properties({
@@ -244,11 +200,7 @@ vlf_mobs.register_mob("mobs_mc:sheep", {
 		if minetest.get_item_group(item:get_name(), "shears") > 0 and not self.gotten then
 			self.gotten = true
 			local pos = self.object:get_pos()
-<<<<<<< HEAD
-			minetest.sound_play("vlc_tools_shears_cut", {pos = pos}, true)
-=======
 			minetest.sound_play("vlf_tools_shears_cut", {pos = pos}, true)
->>>>>>> 3eb27be82 (change naming in mods)
 			pos.y = pos.y + 0.5
 			self.color = self.color or "unicolor_white"
 			minetest.add_item(pos, ItemStack(unicolor_to_wool(self.color).." "..math.random(1,3)))
@@ -263,33 +215,20 @@ vlf_mobs.register_mob("mobs_mc:sheep", {
 	end,
 	on_breed = function(parent1, parent2)
 		local pos = parent1.object:get_pos()
-<<<<<<< HEAD
-		local child = vlc_mobs.spawn_child(pos, parent1.name)
-=======
 		local child = vlf_mobs.spawn_child(pos, parent1.name)
->>>>>>> 3eb27be82 (change naming in mods)
 		if child then
 			local ent_c = child:get_luaentity()
 			local color = { parent1.color, parent2.color }
 
-<<<<<<< HEAD
-			local dye1 = vlc_dyes.unicolor_to_dye(color[1])
-			local dye2 = vlc_dyes.unicolor_to_dye(color[2])
-=======
 			local dye1 = vlf_dyes.unicolor_to_dye(color[1])
 			local dye2 = vlf_dyes.unicolor_to_dye(color[2])
->>>>>>> 3eb27be82 (change naming in mods)
 			local output
 			if dye1 and dye2 then
 				output = minetest.get_craft_result({items = {dye1, dye2}, method="normal"})
 			end
 			if output and not output.item:is_empty() then
 				local ndef = output.item:get_definition()
-<<<<<<< HEAD
-				local cgroup = "unicolor_"..vlc_dyes.colors[ndef._color].unicolor
-=======
 				local cgroup = "unicolor_"..vlf_dyes.colors[ndef._color].unicolor
->>>>>>> 3eb27be82 (change naming in mods)
 				ent_c.color = cgroup
 				ent_c.base_texture = sheep_texture(cgroup)
 			else
@@ -314,16 +253,6 @@ vlf_mobs.register_mob("mobs_mc:sheep", {
 			if self.drops[2] then
 				minetest.add_item(pos, unicolor_to_wool(self.color) .. " " .. math.random(1, 3))
 			end
-<<<<<<< HEAD
-			self.drops = {{ name = "vlc_mobitems:mutton", chance = 1, min = 1, max = 2 },}
-			return dropitem
-		end
-		return vlc_mobs.mob_class._on_dispense(self, dropitem, pos, droppos, dropnode, dropdir)
-	end
-})
-
-vlc_mobs.spawn_setup({
-=======
 			self.drops = {{ name = "vlf_mobitems:mutton", chance = 1, min = 1, max = 2 },}
 			return dropitem
 		end
@@ -332,7 +261,6 @@ vlc_mobs.spawn_setup({
 })
 
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:sheep",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -381,8 +309,4 @@ vlf_mobs.spawn_setup({
 	chance = 120,
 })
 
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:sheep", S("Sheep"), "#e7e7e7", "#ffb5b5", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:sheep", S("Sheep"), "#e7e7e7", "#ffb5b5", 0)
->>>>>>> 3eb27be82 (change naming in mods)

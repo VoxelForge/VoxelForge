@@ -1,4 +1,4 @@
-# textdomain: vlf_throwing
+# textdomain: mcl_throwing
 Use the punch key to throw.=
 Snowball=
 Throwable=

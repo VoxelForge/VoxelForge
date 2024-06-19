@@ -1,4 +1,4 @@
-# textdomain: vlf_signs
+# textdomain: mcl_signs
 Sign=
 Can be written=
 Signs can be written and come in two variants: Wall sign and sign on a sign post. Signs can be placed on the top and the sides of other blocks, but not below them.=

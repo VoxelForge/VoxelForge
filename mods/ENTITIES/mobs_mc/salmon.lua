@@ -39,19 +39,11 @@ local salmon = {
 		run_end = 20,
 	},
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_fishing:salmon_raw",
-		chance = 1,
-		min = 1,
-		max = 1,},
-		{name = "vlc_bone_meal:bone_meal",
-=======
 		{name = "vlf_fishing:salmon_raw",
 		chance = 1,
 		min = 1,
 		max = 1,},
 		{name = "vlf_bone_meal:bone_meal",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 20,
 		min = 1,
 		max = 1,},
@@ -60,11 +52,7 @@ local salmon = {
 	makes_footstep_sound = false,
 	swim = true,
 	fly = true,
-<<<<<<< HEAD
-	fly_in = "vlc_core:water_source",
-=======
 	fly_in = "vlf_core:water_source",
->>>>>>> 3eb27be82 (change naming in mods)
 	breathes_in_water = true,
 	jump = false,
 	view_range = 16,
@@ -72,30 +60,17 @@ local salmon = {
 	fear_height = 4,
 	on_rightclick = function(self, clicker)
 		local bn = clicker:get_wielded_item():get_name()
-<<<<<<< HEAD
-		if bn == "vlc_buckets:bucket_water" or bn == "vlc_buckets:bucket_river_water" then
-			self:safe_remove()
-			clicker:set_wielded_item("vlc_buckets:bucket_salmon")
-			awards.unlock(clicker:get_player_name(), "vlc:tacticalFishing")
-=======
 		if bn == "vlf_buckets:bucket_water" or bn == "vlf_buckets:bucket_river_water" then
 			self:safe_remove()
 			clicker:set_wielded_item("vlf_buckets:bucket_salmon")
 			awards.unlock(clicker:get_player_name(), "vlf:tacticalFishing")
->>>>>>> 3eb27be82 (change naming in mods)
 		end
 	end
 }
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:salmon", salmon)
-
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.register_mob("mobs_mc:salmon", salmon)
 
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:salmon",
 	type_of_spawning = "water",
 	dimension = "overworld",
@@ -108,8 +83,4 @@ vlf_mobs.spawn_setup({
 })
 
 --spawn egg
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:salmon", S("Salmon"), "#a00f10", "#0e8474", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:salmon", S("Salmon"), "#a00f10", "#0e8474", 0)
->>>>>>> 3eb27be82 (change naming in mods)

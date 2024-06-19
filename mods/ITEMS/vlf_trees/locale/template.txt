@@ -1,4 +1,4 @@
-# textdomain: vlf_trees
+# textdomain: mcl_trees
 When placed on soil (such as dirt) and exposed to light, a sapling will grow into a tree after some time.=
 Needs soil and light to grow=
 Wooden doors are 2-block high barriers which can be opened or closed by hand and by a redstone signal.=

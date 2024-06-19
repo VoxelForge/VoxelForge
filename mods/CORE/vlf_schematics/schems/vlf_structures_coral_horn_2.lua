@@ -5,11 +5,11 @@ schematic = {
 		{ypos=1, prob=254},
 	},
 	data = {
-		{name="air", prob=254, param2=0},
-		{name="air", prob=254, param2=1},
+		{name="vlf_ocean:horn_coral_block", prob=254, param2=0},
+		{name="vlf_ocean:horn_coral", prob=254, param2=1},
 		{name="air", prob=0, param2=0},
-		{name="air", prob=254, param2=12},
+		{name="vlf_ocean:horn_coral_fan", prob=254, param2=12},
 		{name="air", prob=0, param2=0},
-		{name="air", prob=254, param2=1},
+		{name="vlf_ocean:horn_coral", prob=254, param2=1},
 	},
 }

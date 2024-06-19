@@ -1,4 +1,4 @@
-# textdomain: vlf_flowerpots
+# textdomain: mcl_flowerpots
 Flower Pot=
 Can hold a small flower or plant=
 Flower pots are decorative blocks in which flowers and other small plants can be placed.=

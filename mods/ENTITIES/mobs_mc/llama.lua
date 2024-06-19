@@ -9,11 +9,7 @@ local messytextures = {
 local function get_drops(self)
 	local drops = {}
 	table.insert(drops,
-<<<<<<< HEAD
-		{name = "vlc_mobitems:leather",
-=======
 		{name = "vlf_mobitems:leather",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 2,
@@ -26,11 +22,7 @@ local function get_drops(self)
 		max = 1,})
 	end
 	if self._has_chest then
-<<<<<<< HEAD
-		table.insert(drops,{name = "vlc_chests:chest",
-=======
 		table.insert(drops,{name = "vlf_chests:chest",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 1,
 		max = 1,})
@@ -38,11 +30,7 @@ local function get_drops(self)
 	return drops
 end
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:llama", {
-=======
 vlf_mobs.register_mob("mobs_mc:llama", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Llama"),
 	type = "animal",
 	spawn_class = "passive",
@@ -84,11 +72,7 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 	follow_velocity = 4.4,
 	floats = 1,
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_mobitems:leather",
-=======
 		{name = "vlf_mobitems:leather",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 2,
@@ -111,11 +95,7 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 		walk_start = 41, walk_end = 81, walk_speed = 50,
 		run_start = 41, run_end = 81, run_speed = 75,
 	},
-<<<<<<< HEAD
-	follow = { "vlc_farming:wheat_item", "vlc_farming:hay_block" },
-=======
 	follow = { "vlf_farming:wheat_item", "vlf_farming:hay_block" },
->>>>>>> 3eb27be82 (change naming in mods)
 	view_range = 16,
 	do_custom = function(self, dtime)
 		if not self.v3 then
@@ -131,11 +111,7 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 		end
 
 		if self.driver then
-<<<<<<< HEAD
-			vlc_mobs.drive(self, "walk", "stand", false, dtime)
-=======
 			vlf_mobs.drive(self, "walk", "stand", false, dtime)
->>>>>>> 3eb27be82 (change naming in mods)
 			return false
 		end
 
@@ -144,11 +120,7 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 
 	on_die = function(self, pos)
 		if self.driver then
-<<<<<<< HEAD
-			vlc_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
-=======
 			vlf_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
->>>>>>> 3eb27be82 (change naming in mods)
 		end
 
 	end,
@@ -159,48 +131,28 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 		end
 
 		local item = clicker:get_wielded_item()
-<<<<<<< HEAD
-		if item:get_name() == "vlc_farming:hay_block" and self:feed_tame(clicker, 1, true, false) then
-			return
-		elseif item:get_name() == "vlc_chests:chest" and self:set_chest(item, clicker) then
-			return
-		elseif self._has_chest and clicker:get_player_control().sneak then
-			vlc_entity_invs.show_inv_form(self,clicker," - Strength "..math.floor(self._inv_size / 3))
-=======
 		if item:get_name() == "vlf_farming:hay_block" and self:feed_tame(clicker, 1, true, false) then
 			return
 		elseif item:get_name() == "vlf_chests:chest" and self:set_chest(item, clicker) then
 			return
 		elseif self._has_chest and clicker:get_player_control().sneak then
 			vlf_entity_invs.show_inv_form(self,clicker," - Strength "..math.floor(self._inv_size / 3))
->>>>>>> 3eb27be82 (change naming in mods)
 			return
 		elseif self:feed_tame(clicker, 1, false, true) then
 			return
 		end
 
-<<<<<<< HEAD
-		if vlc_mobs.protect(self, clicker) then return end
-=======
 		if vlf_mobs.protect(self, clicker) then return end
->>>>>>> 3eb27be82 (change naming in mods)
 
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
 			if minetest.get_item_group(item:get_name(), "carpet") == 1 and self:set_carpet(item, clicker) then
 				return
 			end
 			if self.driver and clicker == self.driver then
-<<<<<<< HEAD
-				vlc_mobs.detach(clicker, {x = 1, y = 0, z = 1})
-			elseif not self.driver then
-				self.object:set_properties({stepheight = 1.1})
-				vlc_mobs.attach(self, clicker)
-=======
 				vlf_mobs.detach(clicker, {x = 1, y = 0, z = 1})
 			elseif not self.driver then
 				self.object:set_properties({stepheight = 1.1})
 				vlf_mobs.attach(self, clicker)
->>>>>>> 3eb27be82 (change naming in mods)
 			end
 		end
 	end,
@@ -253,11 +205,7 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 		else
 			parent = parent2
 		end
-<<<<<<< HEAD
-		child = vlc_mobs.spawn_child(pos, parent.name)
-=======
 		child = vlf_mobs.spawn_child(pos, parent.name)
->>>>>>> 3eb27be82 (change naming in mods)
 		if child then
 			local ent_c = child:get_luaentity()
 			ent_c.base_texture = table.copy(ent_c.base_texture)
@@ -287,32 +235,18 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 	end,
 })
 
-<<<<<<< HEAD
-vlc_entity_invs.register_inv("mobs_mc:llama","Llama",nil,true)
-
-vlc_mobs.register_arrow("mobs_mc:llamaspit", {
-=======
 vlf_entity_invs.register_inv("mobs_mc:llama","Llama",nil,true)
 
 vlf_mobs.register_arrow("mobs_mc:llamaspit", {
->>>>>>> 3eb27be82 (change naming in mods)
 	visual = "sprite",
 	visual_size = {x = 0.10, y = 0.10},
 	textures = {"mobs_mc_llama_spit.png"},
 	velocity = 5,
-<<<<<<< HEAD
-	hit_player = vlc_mobs.get_arrow_damage_func(1),
-})
-
-
-vlc_mobs.spawn_setup({
-=======
 	hit_player = vlf_mobs.get_arrow_damage_func(1),
 })
 
 
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:llama",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -331,8 +265,4 @@ vlf_mobs.spawn_setup({
 	chance = 50,
 })
 
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:llama", S("Llama"), "#c09e7d", "#995f40", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:llama", S("Llama"), "#c09e7d", "#995f40", 0)
->>>>>>> 3eb27be82 (change naming in mods)

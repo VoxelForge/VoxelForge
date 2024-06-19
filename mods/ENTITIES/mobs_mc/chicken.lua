@@ -8,11 +8,7 @@ local S = minetest.get_translator("mobs_mc")
 
 
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:chicken", {
-=======
 vlf_mobs.register_mob("mobs_mc:chicken", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Chicken"),
 	type = "animal",
 	spawn_class = "passive",
@@ -41,20 +37,12 @@ vlf_mobs.register_mob("mobs_mc:chicken", {
 	walk_velocity = 1,
 	jump_height = 1.5,
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_mobitems:chicken",
-=======
 		{name = "vlf_mobitems:chicken",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 1,
 		max = 1,
 		looting = "common",},
-<<<<<<< HEAD
-		{name = "vlc_mobitems:feather",
-=======
 		{name = "vlf_mobitems:feather",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 2,
@@ -87,30 +75,18 @@ vlf_mobs.register_mob("mobs_mc:chicken", {
 		run_start = 31, run_end = 51, run_speed = 75,
 	},
 	follow = {
-<<<<<<< HEAD
-		"vlc_farming:wheat_seeds",
-		"vlc_farming:melon_seeds",
-		"vlc_farming:pumpkin_seeds",
-		"vlc_farming:beetroot_seeds",
-=======
 		"vlf_farming:wheat_seeds",
 		"vlf_farming:melon_seeds",
 		"vlf_farming:pumpkin_seeds",
 		"vlf_farming:beetroot_seeds",
->>>>>>> 3eb27be82 (change naming in mods)
 	},
 	view_range = 16,
 	fear_height = 4,
 
 	on_rightclick = function(self, clicker)
 		if self:feed_tame(clicker, 1, true, false) then return end
-<<<<<<< HEAD
-		if vlc_mobs.protect(self, clicker) then return end
-		if vlc_mobs.capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
-=======
 		if vlf_mobs.protect(self, clicker) then return end
 		if vlf_mobs.capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
->>>>>>> 3eb27be82 (change naming in mods)
 	end,
 
 	do_custom = function(self, dtime)
@@ -123,11 +99,7 @@ vlf_mobs.register_mob("mobs_mc:chicken", {
 
 		local pos = self.object:get_pos()
 
-<<<<<<< HEAD
-		minetest.add_item(pos, "vlc_throwing:egg")
-=======
 		minetest.add_item(pos, "vlf_throwing:egg")
->>>>>>> 3eb27be82 (change naming in mods)
 
 		minetest.sound_play("mobs_mc_chicken_lay_egg", {
 			pos = pos,
@@ -138,11 +110,7 @@ vlf_mobs.register_mob("mobs_mc:chicken", {
 
 })
 
-<<<<<<< HEAD
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:chicken",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -189,8 +157,4 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn eggs
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:chicken", S("Chicken"), "#a1a1a1", "#ff0000", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:chicken", S("Chicken"), "#a1a1a1", "#ff0000", 0)
->>>>>>> 3eb27be82 (change naming in mods)

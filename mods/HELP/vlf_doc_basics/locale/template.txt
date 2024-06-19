@@ -1,4 +1,4 @@
-# textdomain: vlf_doc_basics
+# textdomain: mcl_doc_basics
 Advanced usage=
 Advanced information which may be nice to know, but is not crucial to gameplay=
 # MCL2 extensions
@@ -359,7 +359,7 @@ Players can take damage for a variety of reasons:=
 • Drowning=
 • Being attacked by another player=
 • Being attacked by a computer enemy=
-At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless vlf_keepInventory is enabled)=
+At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless mcl_keepInventory is enabled)=
 Some blocks reduce breath. While being with the head in a block which causes drowning, the breath points are reduced by 1 for every 2 seconds. When all breath is gone, the player starts to suffer drowning damage. Breath is quickly restored in any other block.=
 Damage can be disabled on any world. Without damage, players are immortal and health and breath are unimportant.=
 In multiplayer, the name of other players is written above their head.=

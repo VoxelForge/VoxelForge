@@ -12,17 +12,10 @@ local S = minetest.get_translator("mobs_mc")
 local default_walk_chance = 70
 
 local follow = {
-<<<<<<< HEAD
-	"vlc_fishing:fish_raw",
-	"vlc_fishing:salmon_raw",
-	"vlc_fishing:clownfish_raw",
-	"vlc_fishing:pufferfish_raw",
-=======
 	"vlf_fishing:fish_raw",
 	"vlf_fishing:salmon_raw",
 	"vlf_fishing:clownfish_raw",
 	"vlf_fishing:pufferfish_raw",
->>>>>>> 3eb27be82 (change naming in mods)
 }
 
 local function is_food(itemstring)
@@ -99,11 +92,7 @@ local ocelot = {
 			end
 			-- 1/3 chance of getting tamed
 			if math.random(3) == 1 then
-<<<<<<< HEAD
-				local cat = vlc_util.replace_mob(self.object, "mobs_mc:cat")
-=======
 				local cat = vlf_util.replace_mob(self.object, "mobs_mc:cat")
->>>>>>> 3eb27be82 (change naming in mods)
 				if cat and cat:get_pos() then
 					local ent = cat:get_luaentity()
 					ent.owner = clicker:get_player_name()
@@ -119,11 +108,7 @@ local ocelot = {
 	end,
 }
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:ocelot", ocelot)
-=======
 vlf_mobs.register_mob("mobs_mc:ocelot", ocelot)
->>>>>>> 3eb27be82 (change naming in mods)
 
 -- Cat
 local cat = table.copy(ocelot)
@@ -149,13 +134,8 @@ table.update(cat,{
 	},
 	on_rightclick = function(self, clicker)
 		if self:feed_tame(clicker, 1, true, false) then return end
-<<<<<<< HEAD
-		if vlc_mobs.capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
-		if vlc_mobs.protect(self, clicker) then return end
-=======
 		if vlf_mobs.capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
 		if vlf_mobs.protect(self, clicker) then return end
->>>>>>> 3eb27be82 (change naming in mods)
 
 		if self.child then return end
 
@@ -189,15 +169,9 @@ table.update(cat,{
 	end
 })
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:cat", cat)
-
-vlc_mobs.spawn_setup({
-=======
 vlf_mobs.register_mob("mobs_mc:cat", cat)
 
 vlf_mobs.spawn_setup({
->>>>>>> 3eb27be82 (change naming in mods)
 	name = "mobs_mc:ocelot",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -214,10 +188,5 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn eggs
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:ocelot", S("Ocelot"), "#efde7d", "#564434", 0)
-vlc_mobs.register_egg("mobs_mc:cat", S("Cat"), "#AA8755", "#505438", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:ocelot", S("Ocelot"), "#efde7d", "#564434", 0)
 vlf_mobs.register_egg("mobs_mc:cat", S("Cat"), "#AA8755", "#505438", 0)
->>>>>>> 3eb27be82 (change naming in mods)

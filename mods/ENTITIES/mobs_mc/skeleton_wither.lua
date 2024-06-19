@@ -9,11 +9,7 @@ local S = minetest.get_translator("mobs_mc")
 --################### WITHER SKELETON
 --###################
 
-<<<<<<< HEAD
-vlc_mobs.register_mob("mobs_mc:witherskeleton", {
-=======
 vlf_mobs.register_mob("mobs_mc:witherskeleton", {
->>>>>>> 3eb27be82 (change naming in mods)
 	description = S("Wither Skeleton"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -52,31 +48,19 @@ vlf_mobs.register_mob("mobs_mc:witherskeleton", {
 	damage = 7,
 	reach = 2,
 	drops = {
-<<<<<<< HEAD
-		{name = "vlc_core:coal_lump",
-=======
 		{name = "vlf_core:coal_lump",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 1,
 		looting = "common",},
-<<<<<<< HEAD
-		{name = "vlc_mobitems:bone",
-=======
 		{name = "vlf_mobitems:bone",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 1,
 		min = 0,
 		max = 2,
 		looting = "common",},
 
 		-- Head
-<<<<<<< HEAD
-		{name = "vlc_heads:wither_skeleton",
-=======
 		{name = "vlf_heads:wither_skeleton",
->>>>>>> 3eb27be82 (change naming in mods)
 		chance = 40, -- 2.5% chance
 		min = 1,
 		max = 1,
@@ -121,8 +105,4 @@ vlf_mobs.register_mob("mobs_mc:witherskeleton", {
 })
 
 -- spawn eggs
-<<<<<<< HEAD
-vlc_mobs.register_egg("mobs_mc:witherskeleton", S("Wither Skeleton"), "#141414", "#474d4d", 0)
-=======
 vlf_mobs.register_egg("mobs_mc:witherskeleton", S("Wither Skeleton"), "#141414", "#474d4d", 0)
->>>>>>> 3eb27be82 (change naming in mods)

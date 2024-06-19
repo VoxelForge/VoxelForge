@@ -1,7 +1,7 @@
-# `vlf_moon` API
+# `mcl_moon` API
 This API has one function:
 
-## `vlf_moon.get_moon_phase()`
+## `mcl_moon.get_moon_phase()`
 
 Returns current moon phase (0-7).
 

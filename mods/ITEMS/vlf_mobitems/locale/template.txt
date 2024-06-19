@@ -1,4 +1,4 @@
-# textdomain: vlf_mobitems
+# textdomain: mcl_mobitems
 Rotten Flesh=
 80% chance of food poisoning=
 Yuck! This piece of flesh clearly has seen better days. If you're really desperate, you can eat it to restore a few hunger points, but there's a 80% chance it causes food poisoning, which increases your hunger for a while.=
