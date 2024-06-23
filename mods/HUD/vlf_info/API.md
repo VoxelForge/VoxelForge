@@ -1,5 +1,5 @@
 ## vlf_info
-An api to make custom entries in the vlf2 debug hud.
+An api to make custom entries in the mcl2 debug hud.
 
 ### vlf_info.register_debug_field(name,defintion)
 Debug field defintion example:

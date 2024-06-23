@@ -6,7 +6,7 @@ vlf_deepslate.translator = minetest.get_translator(modname)
 local S = vlf_deepslate.translator
 
 function vlf_deepslate.register_deepslate_ore(item, desc, extra, basename)
-	local nodename = "vlf_deepslate:deepslate_with_".. item
+	local nodename = "vlf_deepslate:deepslate_".. item .. "_ore"
 	local basename = basename or "vlf_core:".. item .. "_ore"
 
 	local def = table.copy(minetest.registered_nodes[basename])

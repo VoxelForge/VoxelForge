@@ -1,4 +1,4 @@
--- Legacy (vlf2) "vlf_dye" itemstrings
+-- Legacy (mcl2) "vlf_dye" itemstrings
 minetest.register_alias("vlf_dye:grey","vlf_dyes:silver")
 minetest.register_alias("vlf_dye:dark_grey","vlf_dyes:grey")
 minetest.register_alias("vlf_dye:violet","vlf_dyes:purple")
@@ -32,12 +32,12 @@ function register_alias_if_not_exists(alias, name)
 end
 minetest.register_on_mods_loaded(function()
 	for name, cdef in pairs(vlf_dyes.colors) do
-		if cdef.vlf2 then
-			register_alias_if_not_exists("vlf_stairs:slab_concrete_"..cdef.vlf2, "vlf_stairs:slab_concrete_"..name)
-			register_alias_if_not_exists("vlf_stairs:slab_concrete_"..cdef.vlf2.."_double", "vlf_stairs:slab_concrete_"..name.."_double")
-			register_alias_if_not_exists("vlf_stairs:stair_concrete_"..cdef.vlf2, "vlf_stairs:stair_concrete_"..name)
-			register_alias_if_not_exists("vlf_stairs:stair_concrete_"..cdef.vlf2.."_inner", "vlf_stairs:stair_concrete_"..name.."_inner")
-			register_alias_if_not_exists("vlf_stairs:stair_concrete_"..cdef.vlf2.."_outer", "vlf_stairs:stair_concrete_"..name.."_outer")
+		if cdef.mcl2 then
+			register_alias_if_not_exists("vlf_stairs:slab_concrete_"..cdef.mcl2, "vlf_stairs:slab_concrete_"..name)
+			register_alias_if_not_exists("vlf_stairs:slab_concrete_"..cdef.mcl2.."_double", "vlf_stairs:slab_concrete_"..name.."_double")
+			register_alias_if_not_exists("vlf_stairs:stair_concrete_"..cdef.mcl2, "vlf_stairs:stair_concrete_"..name)
+			register_alias_if_not_exists("vlf_stairs:stair_concrete_"..cdef.mcl2.."_inner", "vlf_stairs:stair_concrete_"..name.."_inner")
+			register_alias_if_not_exists("vlf_stairs:stair_concrete_"..cdef.mcl2.."_outer", "vlf_stairs:stair_concrete_"..name.."_outer")
 		end
 	end
 end)

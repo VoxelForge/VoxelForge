@@ -2,8 +2,8 @@ vlf_dyes = {}
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
--- Common color table to be used by other mods. The "vlf2" field if present
--- represents the name of the color in vlf2 if it is different. This is used
+-- Common color table to be used by other mods. The "mcl2" field if present
+-- represents the name of the color in mcl2 if it is different. This is used
 -- in the vlf_dye compat mod to adabt the recipes.
 vlf_dyes.colors = {
 	["white"] = {
@@ -18,7 +18,7 @@ vlf_dyes.colors = {
 		groups = {basecolor_grey=1,    excolor_grey=1,      unicolor_grey=1},
 		rgb = "#818177",
 		unicolor = "grey",
-		vlf2 = "grey",
+		mcl2 = "grey",
 		palette_index = 1,
 	},
 	["grey"] = {
@@ -26,7 +26,7 @@ vlf_dyes.colors = {
 		groups = {basecolor_grey=1,    excolor_darkgrey=1,  unicolor_darkgrey=1},
 		rgb = "#383c40",
 		unicolor = "darkgrey",
-		vlf2 = "dark_grey",
+		mcl2 = "dark_grey",
 		palette_index = 2,
 	},
 	["black"] = {
@@ -41,7 +41,7 @@ vlf_dyes.colors = {
 		groups = {basecolor_magenta=1, excolor_violet=1,    unicolor_violet=1},
 		rgb = "#6821a0",
 		unicolor = "violet",
-		vlf2 = "violet",
+		mcl2 = "violet",
 		palette_index = 4,
 	},
 	["blue"] = {
@@ -56,7 +56,7 @@ vlf_dyes.colors = {
 		groups = {basecolor_blue=1,    excolor_blue=1,      unicolor_light_blue=1},
 		rgb = "#258ec9",
 		unicolor = "light_blue",
-		vlf2 = "lightblue",
+		mcl2 = "lightblue",
 		palette_index = 6,
 	},
 	["cyan"] = {
@@ -71,7 +71,7 @@ vlf_dyes.colors = {
 		groups = {basecolor_green=1,   excolor_green=1,     unicolor_dark_green=1},
 		rgb = "#4b5e25",
 		unicolor = "dark_green",
-		vlf2 = "dark_green",
+		mcl2 = "dark_green",
 		palette_index = 8,
 	},
 	["lime"] = {
@@ -79,7 +79,7 @@ vlf_dyes.colors = {
 		groups = {basecolor_green=1,   excolor_green=1,     unicolor_green=1},
 		rgb = "#60ac19",
 		unicolor = "green",
-		vlf2 = "green",
+		mcl2 = "green",
 		palette_index = 9,
 	},
 	["yellow"] = {
