@@ -1,0 +1,80 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Minetest textdomain mcl_blackstone x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2024-05-21 19:25+0000\n"
+"Last-Translator: Kyoushi <Kyoushi@users.noreply.translate.codeberg.org>\n"
+"Language-Team: German <https://translate.codeberg.org/projects/mineclonia/"
+"mcl_blackstone/de/>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5.5\n"
+
+msgid "Blackstone"
+msgstr "Schwarzstein"
+
+msgid "Gilded Blackstone"
+msgstr "Vergoldeter Schwarzstein"
+
+msgid "Nether Gold Ore"
+msgstr "Nethergolderz"
+
+msgid "Polished Basalt"
+msgstr "Polierter Basalt"
+
+msgid "Basalt"
+msgstr "Basalt"
+
+msgid "Smooth Basalt"
+msgstr "Glatter Basalt"
+
+msgid "Polished Blackstone"
+msgstr "Polierter Schwarzstein"
+
+msgid "Chiseled Polished Blackstone"
+msgstr "Gemeißelter polierter Schwarzstein"
+
+msgid "Polished Blackstone Bricks"
+msgstr "Polierter Schwarzsteinziegel"
+
+msgid "Quartz Bricks"
+msgstr "Quartz Ziegel"
+
+msgid "Soul Soil"
+msgstr "Seelenerde"
+
+msgid "Eternal Soul Fire"
+msgstr "Seelenfeuer"
+
+msgid "Blackstone Stairs"
+msgstr "Schwarzstein Treppe"
+
+msgid "Blackstone Slab"
+msgstr "Schwarzstein Stufe"
+
+msgid "Polished Blackstone Stairs"
+msgstr "Polierte Schwarzstein Treppe"
+
+msgid "Polished Blackstone Slab"
+msgstr "Polierte Schwarzstein Stufe"
+
+msgid "Blackstone Brick Stairs"
+msgstr "Schwarzstein-Ziegelsteintreppe"
+
+msgid "Blackstone Brick Slab"
+msgstr "Schwarzstein-Ziegelsteinplatte"
+
+msgid "Blackstone Wall"
+msgstr "Schwarzsteinmauer"
+
+msgid "Soul Torch"
+msgstr "Seelenfakel"
+
+msgid "Torches are light sources which can be placed at the side or on the top of most blocks."
+msgstr ""
+"Fackeln sind Lichtquellen, die an der Seite oder der Oberseite der meisten "
+"Blöcke platziert werden können."
