@@ -14,3 +14,10 @@ minetest.register_alias("mc2mt:waxed_copper_bulb", "vlf_copper:waxed_copper_bulb
 minetest.register_alias("mc2mt:waxed_exposed_copper_bulb", "vlf_copper:waxed_exposed_copper_bulb_lit")
 minetest.register_alias("mc2mt:waxed_chiseled_copper", "vlf_copper:waxed_chiseled_copper")
 minetest.register_alias("wood", "vlf_copper:waxed_copper")
+
+minetest.register_alias("vlf_deepslate:deepslate_with_coal", "vlf_deepslate:deepslate_coal_ore")
+minetest.register_alias("vlf_deepslate:deepslate_with_copper", "vlf_deepslate:deepslate_copper_ore")
+minetest.register_alias("vlf_deepslate:deepslate_with_diamond", "vlf_deepslate:deepslate_diamond_ore")
+minetest.register_alias("vlf_deepslate:deepslate_with_gold", "vlf_deepslate:deepslate_gold_ore")
+minetest.register_alias("vlf_deepslate:deepslate_with_iron", "vlf_deepslate:deepslate_iron_ore")
+minetest.register_alias("vlf_deepslate:deepslate_with_redstone", "vlf_deepslate:deepslate_redstone_ore")

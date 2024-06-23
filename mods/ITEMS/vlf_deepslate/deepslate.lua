@@ -54,14 +54,14 @@ vlf_deepslate.register_deepslate_ore("emerald", S("Deepslate Emerald Ore"), nil,
 vlf_deepslate.register_deepslate_ore("diamond", S("Deepslate Diamond Ore"), nil, "vlf_core:diamond_ore")
 vlf_deepslate.register_deepslate_ore("lapis", S("Deepslate Lapis Lazuli Ore"), nil, "vlf_core:lapis_ore")
 vlf_deepslate.register_deepslate_ore("redstone", S("Deepslate Redstone Ore"), {
-	_vlf_ore_lit = "vlf_deepslate:redstone_ore_lit",
+	_vlf_ore_lit = "vlf_deepslate:redstone_lit_ore",
 	_vlf_ore_unlit = "vlf_deepslate:redstone_ore",
 }, "vlf_core:redstone_ore")
-vlf_deepslate.register_deepslate_ore("redstone_ore_lit", S("Lit Deepslate Redstone Ore"), {
+vlf_deepslate.register_deepslate_ore("redstone_lit", S("Lit Deepslate Redstone Ore"), {
 	tiles = { "vlf_deepslate_redstone_ore.png" },
-	_vlf_ore_lit = "vlf_deepslate:deepslate_with_redstone_lit",
-	_vlf_ore_unlit = "vlf_deepslate:deepslate_with_redstone",
-	_vlf_silk_touch_drop = { "vlf_deepslate:deepslate_with_redstone" },
+	_vlf_ore_lit = "vlf_deepslate:redstone_lit_ore",
+	_vlf_ore_unlit = "vlf_deepslate:redstone_ore",
+	_vlf_silk_touch_drop = { "vlf_deepslate:redstone_ore" },
 }, "vlf_core:redstone_ore_lit")
 vlf_deepslate.register_deepslate_ore("copper", S("Deepslate Copper Ore"), nil, "vlf_copper:copper_ore")
 

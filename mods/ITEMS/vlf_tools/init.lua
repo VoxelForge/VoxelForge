@@ -1,7 +1,9 @@
+local cooldown_time = 2
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
 vlf_tools = {}
+vlf_tools.mace_cooldown = {}
 
 -- mods/default/tools.lua
 
@@ -28,6 +30,7 @@ local shovel_longdesc = S("Shovels are tools for digging coarse blocks, such as 
 local shovel_use = S("To turn a grass block into a grass path, hold the shovel in your hand, then use (rightclick) the top or side of a grass block. This only works when there's air above the grass block.")
 local shears_longdesc = S("Shears are tools to shear sheep and to mine a few block types. Shears are a special mining tool and can be used to obtain the original item from grass, leaves and similar blocks that require cutting.")
 local shears_use = S("To shear sheep or carve faceless pumpkins, use the “place” key on them. Faces can only be carved at the side of faceless pumpkins. Mining works as usual, but the drops are different for a few blocks.")
+local mace_longdesc = S("The mace is a slow melee weapon that deals incredible damage. “dig” key to use it. This weapon has a cooldown of 1.6 seconds, but if you fall the mace will deal more damage than if you are on the ground. The further you fall the more damage done. If you hit a mob or player then you will receive no fall damage, but beware. If you miss you will die. ")
 
 local wield_scale = vlf_vars.tool_wield_scale
 
@@ -675,6 +678,71 @@ minetest.register_tool("vlf_tools:shears", {
 		shearsy_cobweb = { speed = 15, level = 1, uses = 238 }
 	},
 })
+ -- Mace
+ minetest.register_tool("vlf_tools:mace", {
+	description = "" ..minetest.colorize(vlf_colors.DARK_PURPLE, S("Mace")),--S("Mace"),
+	_doc_items_longdesc = mace_longdesc,
+	inventory_image = "vlf_tools_mace.png",
+	groups = { weapon=1, mace=1, dig_speed_class=1, enchantability=10, sword=1 },
+	tool_capabilities = {
+		full_punch_interval = 1.6,
+		max_drop_level = 1,
+		groupcaps = {
+			snappy = {times = {1.5, 0.9, 0.4}, uses = 50, maxlevel = 3},
+		},
+		damage_groups = {fleshy = 0},
+	},
+	_repair_material = "vlf_mobitems:breeze_rod",
+	_vlf_toollike_wield = true,
 
+	on_use = function(itemstack, user, pointed_thing)
+			local damage_multiplier = -1.6
+			local fall_distance = user:get_velocity().y
+			local base_damage = 6
+			vlf_tools.entity = pointed_thing.ref
+			local additional_damage = fall_distance * damage_multiplier
+			local total_damage = base_damage * additional_damage
+			if pointed_thing.type == "object" then
+				if vlf_tools.mace_cooldown[user] == nil then
+					vlf_tools.mace_cooldown[user] = vlf_tools.mace_cooldown[user] or 0
+				end
+				local current_time = minetest.get_gametime()
+				if current_time - vlf_tools.mace_cooldown[user] >= cooldown_time then
+					vlf_tools.mace_cooldown[user] = current_time
+					if fall_distance < 0 then
+						if vlf_tools.entity:is_player() or vlf_tools.entity:get_luaentity() then
+							vlf_tools.entity:punch(user, 1.6, {
+							full_punch_interval = 1.6,
+							damage_groups = {fleshy = -6 * fall_distance / 5.5},
+							}, nil)
+ 						end
+					else
+					if vlf_tools.entity:is_player() or vlf_tools.entity:get_luaentity() then
+						vlf_tools.entity:punch(user, 1.6, {
+						full_punch_interval = 1.6,
+						damage_groups = {fleshy = 6},
+						}, nil)
+					end
+				end
+			end
+			if not minetest.is_creative_enabled(user:get_player_name()) then
+				itemstack:add_wear(65535 / 500)
+				return itemstack
+			end
+		end
+	end,
+})
 
+dofile(modpath.."/heavy_core.lua")
 dofile(modpath.."/crafting.lua")
+
+minetest.register_on_leaveplayer(function(player)
+	vlf_tools.mace_cooldown[player] = nil
+end)
+
+-- By Cora
+vlf_damage.register_modifier(function(obj, damage, reason)
+	if reason.type == "fall" and vlf_tools.mace_cooldown[obj] and minetest.get_gametime() - vlf_tools.mace_cooldown[obj] < 2 then
+			return 0
+	end
+end)

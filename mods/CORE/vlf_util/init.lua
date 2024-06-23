@@ -1322,11 +1322,11 @@ function vlf_util.circle_bulk_set_node_vm(radius, pos, y, mat_to, param2)
 	vm:write_to_map(true)
 end
 
--- This function creates a turnip shape under the selected positon.
+-- This function creates a slope shape under the selected positon.
 -- The biome for the position will be used to select the top and filler layers.
 -- The shape is slightly altered for sandy top layers.
 -- The radius of the top layer is max(fwidth, fdepth) / 2 + ground_padding
-function vlf_util.create_ground_turnip(pos, fwidth, fdepth)
+function vlf_util.create_ground_slope_village(pos, fwidth, fdepth)
 
 	local biome_data = minetest.get_biome_data(pos)
 	local biome_name = minetest.get_biome_name(biome_data.biome)
@@ -1354,21 +1354,18 @@ function vlf_util.create_ground_turnip(pos, fwidth, fdepth)
 
 	local y = pos.y
 
-	local radius = math.floor(((math.max(fwidth, fdepth)) / 2)) + ground_padding
+	local radius = math.floor(((math.max(fwidth, fdepth)) / 4)) + ground_padding
 	if radius <= 0 then
 		return
 	end
 
-	-- usually we add 2 layers, each 2 blocks wider, then fill smaller layers below
-	-- but for sand we add 2 layers 1 wider and then make the first fill layer wider
-	-- otherwsie the sand can collapse and as funny as it is, it is annoying
 	local needs_support = minetest.get_item_group(mat, "material_sand") > 0
 
 	if needs_support then
 		radius = radius + 1
 	end
 
-	for count2 = 1, 2 do
+	for count2 = 1, 3 do
 		if not needs_support then
 			radius = radius + 2
 		else
@@ -1382,18 +1379,100 @@ function vlf_util.create_ground_turnip(pos, fwidth, fdepth)
 	if needs_support then
 		radius = radius + 2
 	end
-
-	for count3 = 1, 5 do
-		radius = radius - 1
-
+	local node = minetest.get_node(pos).name == "air"
+--This allows for 20 nodes to get modified.
+	for count3 = 1, 10 do
+		radius = radius + 1
 		if radius <= 2 then
 			break
 		end
-
-		vlf_util.circle_bulk_set_node_vm(radius, pos, y, filler)
+		vlf_util.circle_bulk_set_node_vm(radius, pos, y, mat, grass_idx)
+		y = y - 1
+	end
+	for count4 = 11, 20 do
+		radius = radius - math.random(0, 1)
+		if radius <= 2 then
+			break
+		end
+		vlf_util.circle_bulk_set_node_vm(radius, pos, y, mat, filler)
 		y = y - 1
 	end
 end
+
+function vlf_util.create_ground_slope(pos, fwidth, fdepth)
+
+	local biome_data = minetest.get_biome_data(pos)
+	local biome_name = minetest.get_biome_name(biome_data.biome)
+	local reg_biome = minetest.registered_biomes[biome_name]
+
+	local mat = "vlf_core:dirt_with_grass"
+	local filler = "vlf_core:dirt"
+	local stone = "vlf_core:stone"
+	local grass_idx = 0
+
+	-- Use biome info if we have it
+	if reg_biome and reg_biome.node_top then
+		mat = reg_biome.node_top
+		grass_idx = reg_biome._vlf_palette_index or 0
+		if reg_biome.node_filler then
+			filler = reg_biome.node_filler
+			if minetest.get_item_group(filler, "material_sand") > 0 then
+				if reg_biome.node_stone then
+					filler = reg_biome.node_stone
+				end
+			end
+		elseif reg_biome.node_stone then
+			filler = reg_biome.node_stone
+		end
+	end
+
+	local y = pos.y
+
+	local radius = math.floor(((math.max(fwidth, fdepth)) / 4)) + ground_padding
+	if radius <= 0 then
+		return
+	end
+
+	local needs_support = minetest.get_item_group(mat, "material_sand") > 0
+
+	if needs_support then
+		radius = radius + 1
+	end
+
+	for count2 = 1, 1 do
+		if not needs_support then
+			radius = radius + 2
+		else
+			radius = radius + 1
+		end
+
+		vlf_util.circle_bulk_set_node_vm(radius, pos, y, mat, grass_idx)
+		y = y - 1
+	end
+
+	if needs_support then
+		radius = radius + 2
+	end
+	local node = minetest.get_node(pos).name == "air"
+		for count3 = 1, 10 do
+			radius = radius + 1
+	
+			if radius <= 2 then
+				break
+			end
+			vlf_util.circle_bulk_set_node_vm(radius, pos, y, mat, grass_idx)
+			y = y - 1
+		end
+		-- this function gives 20 nodes that can be modified for structures.
+		for count4 = 11, 20 do
+			radius = radius - 2
+			if radius <= 4 then
+				break
+			end
+			vlf_util.circle_bulk_set_node_vm(radius, pos, y, stone)
+			y = y - 1
+		end
+	end
 
 local old_get_natural_light = minetest.get_natural_light
 

@@ -1,9 +1,10 @@
-local get_node = vlf_vars.get_node
+
+local terrace_max_ext = 6
 
 -------------------------------------------------------------------------------
 -- function to copy tables
 -------------------------------------------------------------------------------
-function settlements.shallowCopy(original)
+function vlf_villages.shallowCopy(original)
 	local copy = {}
 	for key, value in pairs(original) do
 		copy[key] = value
@@ -13,79 +14,85 @@ end
 --
 --
 --
-function settlements.round(num, numDecimalPlaces)
-  local mult = 10^(numDecimalPlaces or 0)
-  return math.floor(num * mult + 0.5) / mult
+function vlf_villages.round(num, numDecimalPlaces)
+	local mult = 10^(numDecimalPlaces or 0)
+	return math.floor(num * mult + 0.5) / mult
 end
 
 -------------------------------------------------------------------------------
 -- function to find surface block y coordinate
 -- returns surface postion
 -------------------------------------------------------------------------------
-function settlements.find_surface(pos, wait)
+function vlf_villages.find_surface(pos, wait, quick)
 	local p6 = vector.new(pos)
 	local cnt = 0
-	local itter = 1 -- count up or down
+	local itter = 1 -- look up
 	local cnt_max = 200
+	local wait_time = 10000000
+
+	if quick then
+		cnt_max = 20
+		wait_time = 2000000
+	end
+
 	-- check, in which direction to look for surface
 	local surface_node
 	if wait then
-		surface_node = get_node(p6, true, 10000000)
+		surface_node = vlf_vars.get_node(p6, true, wait_time)
 	else
-		surface_node = get_node(p6)
+		surface_node = vlf_vars.get_node(p6)
 	end
-	if surface_node.name=="air" or surface_node.name=="ignore" then
-		itter = -1
+
+	if
+		surface_node.name == "air"
+		or surface_node.name == "ignore"
+		or surface_node.name == "vlf_core:snow"
+		or (minetest.get_item_group(surface_node.name, "deco_block") > 0)
+		or (minetest.get_item_group(surface_node.name, "plant") > 0)
+		or (minetest.get_item_group(surface_node.name, "tree") > 0)
+	then
+		itter = -1 -- look down
 	end
+
 	-- go through nodes an find surface
 	while cnt < cnt_max do
 		-- Check Surface_node and Node above
-		if surface_node and settlements.surface_mat[surface_node.name] then
-			local surface_node_plus_1 = get_node({ x=p6.x, y=p6.y+1, z=p6.z})
-
-			if surface_node_plus_1 then
-
-				local surface_node_minus_1 = get_node({ x=p6.x, y=p6.y-1, z=p6.z})
-				local is_leaf_below  = minetest.get_item_group(surface_node_minus_1, "leaves") ~= 0 or
-						string.find(surface_node_minus_1.name,"leaves")
-
-				if not is_leaf_below and ((string.find(surface_node_plus_1.name,"air") or
-					string.find(surface_node_plus_1.name,"fern") or
-					string.find(surface_node_plus_1.name,"flower") or
-					string.find(surface_node_plus_1.name,"bush") or
-					string.find(surface_node_plus_1.name,"tree") or
-					string.find(surface_node_plus_1.name,"grass")) or
-					string.find(surface_node_plus_1.name,"snow"))
+		--
+		if vlf_villages.surface_mat[surface_node.name] then
+			local surface_node_plus_1 = vlf_vars.get_node(vector.offset(p6, 0, 1, 0))
+			if surface_node_plus_1 and surface_node and
+				(string.find(surface_node_plus_1.name,"air") or
+				string.find(surface_node_plus_1.name,"snow") or
+				string.find(surface_node_plus_1.name,"fern") or
+				string.find(surface_node_plus_1.name,"flower") or
+				string.find(surface_node_plus_1.name,"bush") or
+				string.find(surface_node_plus_1.name,"tree") or
+				string.find(surface_node_plus_1.name,"grass"))
 				then
-					settlements.debug("find_surface success: " ..surface_node.name.. " " .. surface_node_plus_1.name)
-					settlements.debug("node below: " .. tostring(surface_node_minus_1.name))
-					settlements.debug("node below leaves group: " .. tostring(minetest.get_item_group(surface_node_minus_1, "leaves")))
+					vlf_villages.debug("find_surface7: " ..surface_node.name.. " " .. surface_node_plus_1.name)
 					return p6, surface_node.name
-				else
-					settlements.debug("find_surface2: wrong surface+1")
-				end
 			else
-				settlements.debug("find_surface8: missing node or plus_1")
+				vlf_villages.debug("find_surface2: wrong layer above " .. surface_node_plus_1.name)
 			end
 		else
-			settlements.debug("find_surface3: wrong surface "..surface_node.name.." at pos "..minetest.pos_to_string(p6))
+			vlf_villages.debug("find_surface3: wrong surface "..surface_node.name.." at pos "..minetest.pos_to_string(p6))
 		end
 
 		p6.y = p6.y + itter
 		if p6.y < 0 then
-			settlements.debug("find_surface4: y<0")
+			vlf_villages.debug("find_surface4: y<0")
 			return nil
 		end
 		cnt = cnt+1
-		surface_node = get_node(p6)
+		surface_node = vlf_vars.get_node(p6)
 	end
-	settlements.debug("find_surface5: cnt_max overflow")
+	vlf_villages.debug("find_surface5: cnt_max overflow")
 	return nil
 end
 -------------------------------------------------------------------------------
 -- check distance for new building
 -------------------------------------------------------------------------------
-function settlements.check_distance(settlement_info, building_pos, building_size)
+function vlf_villages.check_distance(settlement_info, building_pos, building_size)
 	local distance
 	for i, built_house in ipairs(settlement_info) do
 		distance = math.sqrt(
@@ -100,7 +107,7 @@ end
 -------------------------------------------------------------------------------
 -- fill chests
 -------------------------------------------------------------------------------
-function settlements.fill_chest(pos, pr)
+function vlf_villages.fill_chest(pos, pr)
 	-- initialize chest (mts chests don't have meta)
 	local meta = minetest.get_meta(pos)
 	if meta:get_string("infotext") ~= "Chest" then
@@ -148,44 +155,44 @@ end
 -------------------------------------------------------------------------------
 -- initialize furnace
 -------------------------------------------------------------------------------
-function settlements.initialize_furnace(pos)
-  -- find chests within radius
-  local furnacepos = minetest.find_node_near(pos,
-    7, --radius
-    {"vlf_furnaces:furnace"})
-  -- initialize furnacepos (mts furnacepos don't have meta)
-  if furnacepos
-  then
-    local meta = minetest.get_meta(furnacepos)
-    if meta:get_string("infotext") ~= "furnace"
-    then
-      minetest.registered_nodes["vlf_furnaces:furnace"].on_construct(furnacepos)
-    end
-  end
+function vlf_villages.initialize_furnace(pos)
+	-- find chests within radius
+	local furnacepos = minetest.find_node_near(pos,
+		7, --radius
+		{"vlf_furnaces:furnace"})
+	-- initialize furnacepos (mts furnacepos don't have meta)
+	if furnacepos
+	then
+		local meta = minetest.get_meta(furnacepos)
+		if meta:get_string("infotext") ~= "furnace"
+		then
+			minetest.registered_nodes["vlf_furnaces:furnace"].on_construct(furnacepos)
+		end
+	end
 end
 -------------------------------------------------------------------------------
 -- initialize anvil
 -------------------------------------------------------------------------------
-function settlements.initialize_anvil(pos)
-  -- find chests within radius
-  local anvilpos = minetest.find_node_near(pos,
-    7, --radius
-    {"vlf_anvils:anvil"})
-  -- initialize anvilpos (mts anvilpos don't have meta)
-  if anvilpos
-  then
-    local meta = minetest.get_meta(anvilpos)
-    if meta:get_string("infotext") ~= "anvil"
-    then
-      minetest.registered_nodes["vlf_anvils:anvil"].on_construct(anvilpos)
-    end
-  end
+function vlf_villages.initialize_anvil(pos)
+	-- find chests within radius
+	local anvilpos = minetest.find_node_near(pos,
+		7, --radius
+		{"vlf_anvils:anvil"})
+	-- initialize anvilpos (mts anvilpos don't have meta)
+	if anvilpos
+	then
+		local meta = minetest.get_meta(anvilpos)
+		if meta:get_string("infotext") ~= "anvil"
+		then
+			minetest.registered_nodes["vlf_anvils:anvil"].on_construct(anvilpos)
+		end
+	end
 end
 -------------------------------------------------------------------------------
 -- randomize table
 -------------------------------------------------------------------------------
-function shuffle(tbl, pr)
-	local table = settlements.shallowCopy(tbl)
+function vlf_villages.shuffle(tbl, pr)
+	local table = vlf_villages.shallowCopy(tbl)
 	local size = #table
 	for i = size, 1, -1 do
 		local rand = pr:next(1, size)
@@ -193,78 +200,118 @@ function shuffle(tbl, pr)
 	end
 	return table
 end
--------------------------------------------------------------------------------
--- evaluate heightmap
--------------------------------------------------------------------------------
-function settlements.evaluate_heightmap()
-	local heightmap = minetest.get_mapgen_object("heightmap")
 
-	if not heightmap then
-		minetest.log("action", "No heightmap. That should not happen")
-		return max_height_difference + 1
-	end
-
-	--minetest.log("action", "heightmap size: " .. tostring(#heightmap))
-
-	-- max height and min height, initialize with impossible values for easier first time setting
-	local max_y = -50000
-	local min_y = 50000
-	-- only evaluate the center square of heightmap 40 x 40
-	local square_start = 1621
-	local square_end = 1661
-	for j = 1 , 40, 1 do
-		if square_start >= #heightmap then
-			--minetest.log("action", "Heightmap size reached. Go no further outside")
-			break
-		end
-		for i = square_start, square_end, 1 do
-			--minetest.log("action", "current hm index: " .. tostring(i) .. "current hm entry: " .. tostring(heightmap[i]))
-
-			if i >= #heightmap then
-				--minetest.log("action", "Heightmap size reached. Go no further")
-				break
-			end
-			local current_hm_entry = heightmap[i]
-			if current_hm_entry then
-				-- skip buggy heightmaps, return high value. Converted vlf5 maps can be -31007
-				if current_hm_entry == -31000 or heightmap[i] == 31000 then
-					--minetest.log("action", "incorrect heighmap values. abandon")
-					return max_height_difference + 1
-				end
-				if current_hm_entry < min_y then
-					min_y = current_hm_entry
-				end
-				if current_hm_entry > max_y then
-					max_y = current_hm_entry
-				end
-			else
-				--minetest.log("action", "Failed to get hm index: " .. tostring(i) .. "and ... " .. tostring(#heightmap))
-			end
-		end
-		-- set next line
-		square_start = square_start + 80
-		square_end = square_end + 80
-	end
-	-- return the difference between highest and lowest pos in chunk
-	local height_diff = max_y - min_y
-
-	--minetest.log("action", "height_diff = " .. tostring(height_diff))
-
-	-- filter buggy heightmaps
-	if height_diff <= 1 then
-		return max_height_difference + 1
-	end
-	--minetest.log("action", "return heigh diff = " .. tostring(height_diff))
-	-- debug info
-	settlements.debug("heightdiff ".. height_diff)
-	return height_diff
-end
 -------------------------------------------------------------------------------
 -- Set array to list
 -- https://stackoverflow.com/questions/656199/search-for-an-item-in-a-lua-list
 -------------------------------------------------------------------------------
-function settlements.Set (list)
+function vlf_villages.Set (list)
 	local set = {}
 	for _, l in ipairs(list) do set[l] = true end
 	return set
+end
+
+-- Function to check if placing a schema at a position would overlap already placed
+-- buildings. Basically it checks if two circles overlap.
+-- Returns if it is OK and the minimal distance required to stop them overlapping if false.
+function vlf_villages.check_radius_distance(settlement_info, building_pos, schem)
+
+	-- terrace_max_ext is to try an avoid the terracing of the overground from
+	-- removing the ground under another building.
+
+	local r1 = ((math.max(schem["size"]["x"], schem["size"]["z"])) / 2) + terrace_max_ext
+
+	for i, built_house in ipairs(settlement_info) do
+		local r2 = ((math.max(built_house["size"]["x"], built_house["size"]["z"])) / 2) + terrace_max_ext
+		local distance = vector.distance(building_pos, built_house["pos"])
+
+		if distance < r1 + r2 then
+			return false, r1 + r2 - distance + 1
+		end
+	end
+	return true, 0
+end
+
+function plant_fields(pos, biome_name, schem_lua, pr)
+	local modified_schem_lua = schem_lua
+
+	local map_name = vlf_villages.biome_map[biome_name] or "plains"
+
+	for _, crop in ipairs(vlf_villages.get_crop_types()) do
+		if string.find(modified_schem_lua, "vlf_villages:crop_" .. crop) then
+			for count = 1, 8 do
+				local name = "vlf_villages:crop_" .. crop .. "_" .. count
+				local replacement = vlf_villages.get_weighted_crop(map_name, crop, pr)
+				if replacement == nil or replacement == "" then
+					replacement = vlf_villages.default_crop()
+				end
+				modified_schem_lua = modified_schem_lua:gsub(name, replacement)
+			end
+		end
+	end
+
+	return modified_schem_lua
+end
+
+-- Load a schema and replace nodes in it based on biome
+function vlf_villages.substitue_materials(pos, schem_lua, pr)
+	local modified_schem_lua = schem_lua
+	local biome_data = minetest.get_biome_data(pos)
+	local biome_name = minetest.get_biome_name(biome_data.biome)
+
+	if vlf_villages.biome_map[biome_name] and vlf_villages.material_substitions[vlf_villages.biome_map[biome_name]] then
+		for _, sub in pairs(vlf_villages.material_substitions[vlf_villages.biome_map[biome_name]]) do
+			modified_schem_lua = modified_schem_lua:gsub(sub[1], sub[2])
+		end
+	end
+
+	if string.find(modified_schem_lua, "vlf_villages:crop_") then
+		modified_schem_lua = plant_fields(pos, biome_name, modified_schem_lua, pr)
+	end
+
+	return modified_schem_lua
+end
+
+local villages = {}
+local mod_storage = minetest.get_mod_storage()
+
+local function lazy_load_village(name)
+	if not villages[name] then
+		local data = mod_storage:get("vlf_villages." .. name)
+		if data then
+			villages[name] = minetest.deserialize(data)
+		end
+	end
+end
+
+function vlf_villages.get_village(name)
+	lazy_load_village(name)
+
+	if villages[name] then
+		return table.copy(villages[name])
+	end
+end
+
+function vlf_villages.village_exists(name)
+	lazy_load_village(name)
+
+	if villages[name] then
+		return true
+	end
+
+	return false
+end
+
+function vlf_villages.add_village(name, data)
+	lazy_load_village(name)
+
+	if villages[name] then
+		minetest.log("info","Village already exists: " .. name )
+		return false
+	end
+
+	local new_village = {name = name, data = data}
+	mod_storage:set_string("vlf_villages." .. name, minetest.serialize(new_village))
+
+	return true
 end

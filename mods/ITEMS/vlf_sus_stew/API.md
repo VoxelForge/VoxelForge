@@ -1,9 +1,9 @@
-# API for `mcl_sus_stew`
+# API for `vlf_sus_stew`
 
 Register your own sus stews!
 
 ```
-mcl_sus_stew.register_stew(name,item,effect_function)
+vlf_sus_stew.register_stew(name,item,effect_function)
 
 ```
 

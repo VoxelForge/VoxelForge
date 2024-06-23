@@ -1,4 +1,4 @@
-# textdomain: mcl_gamemode
+# textdomain: vlf_gamemode
 [<gamemode>] [<player>]=
 Change gamemode (survival/creative) for yourself or player=
 Player not online=

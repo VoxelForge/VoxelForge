@@ -1,4 +1,4 @@
-mcl_campfires
+vlf_campfires
 ===============
 Adds the campfire and its soul variant.
 
@@ -18,7 +18,7 @@ License of media
 See the main MineClone 2 README.md file for license on most of the textures.
 
 For the following textures:
-mcl_campfires_campfire_inv.png
-mcl_campfires_soul_campfire_inv.png
+vlf_campfires_campfire_inv.png
+vlf_campfires_soul_campfire_inv.png
 License: CC0 1.0 Universal (CC0 1.0)
 Author: RandomLegoBrick

@@ -1,90 +1,97 @@
-local function vlf_log (message)
-	vlf_util.vlf_log (message, "[Village - Foundation]")
-end
 
-local foundation_materials = {}
-
-foundation_materials["vlf_core:sand"] = "vlf_core:sandstone"
---"vlf_core:sandstonecarved"
+local padding = 2
+local top_padding = 20
+local terrace_max_ext = 6
 
 -------------------------------------------------------------------------------
 -- function to fill empty space below baseplate when building on a hill
 -------------------------------------------------------------------------------
-function settlements.ground(pos, pr, platform_material) -- role model: Wendelsteinkircherl, Brannenburg
+function vlf_villages.ground(pos, pr) -- role model: Wendelsteinkircherl, Brannenburg
 	local p2 = vector.new(pos)
 	local cnt = 0
-
 	local mat = "vlf_core:dirt"
-	if not platform_material then
-		mat = "vlf_core:dirt"
-	else
-		mat = platform_material
-	end
-
 	p2.y = p2.y-1
 	while true do
 		cnt = cnt+1
 		if cnt > 20 then break end
 		if cnt>pr:next(2,4) then
-			if not platform_material then
-				mat = "vlf_core:stone"
-			end
+			mat = "vlf_core:stone"
 		end
 		minetest.swap_node(p2, {name=mat})
 		p2.y = p2.y-1
 	end
 end
--------------------------------------------------------------------------------
--- function clear space above baseplate
--------------------------------------------------------------------------------
-function settlements.terraform(settlement_info, pr)
-	local fheight, fwidth, fdepth, schematic_data
 
-	for i, built_house in ipairs(settlement_info) do
-		-- pick right schematic_info to current built_house
-		for j, schem in ipairs(settlements.schematic_table) do
-			if settlement_info[i]["name"] == schem["name"] then
-				schematic_data = schem
-			        break
-			end
-		end
-		local pos = settlement_info[i]["pos"]
-		if settlement_info[i]["rotat"] == "0" or settlement_info[i]["rotat"] == "180" then
-			fwidth = schematic_data["hwidth"]
-			fdepth = schematic_data["hdepth"]
-		else
-			fwidth = schematic_data["hdepth"]
-			fdepth = schematic_data["hwidth"]
-		end
-		--fheight = schematic_data["hheight"] * 3  -- remove trees and leaves above
-		fheight = schematic_data["hheight"]  -- remove trees and leaves above
+-- Empty space above ground
+local function overground(pos, fwidth, fdepth, fheight, grid)
 
-		local surface_mat = settlement_info[i]["surface_mat"]
-		vlf_log("Surface material: " .. tostring(surface_mat))
-		local platform_mat = foundation_materials[surface_mat]
-		vlf_log("Foundation material: " .. tostring(platform_mat))
+	if not grid then
+		local y = math.ceil(pos.y + 1)
+		local radius_base = math.max(fwidth, fdepth)
+		local radius = math.round((radius_base / 2) + padding)
+		local dome = fheight + top_padding
 
-		--
-		-- now that every info is available -> create platform and clear space above
-		--
-		for xi = 0,fwidth-1 do
-			for zi = 0,fdepth-1 do
-				for yi = 0,fheight *3 do
-					if yi == 0 then
-						local p = {x=pos.x+xi, y=pos.y, z=pos.z+zi}
-						-- Pass in biome info and make foundations of same material (seed: apple for desert)
-						settlements.ground(p, pr, platform_mat)
-					else
-						-- write ground
---						local p = {x=pos.x+xi, y=pos.y+yi, z=pos.z+zi}
---						local node = vlf_vars.get_node(p)
---						if node and node.name ~= "air" then
---							minetest.swap_node(p,{name="air"})
---						end
-						minetest.swap_node({x=pos.x+xi, y=pos.y+yi, z=pos.z+zi},{name="air"})
-					end
+		for count2 = 1, fheight + top_padding do
+			if radius_base > 3 then
+				if count2 > dome then
+					radius = radius - 1
+				elseif count2 <= terrace_max_ext then
+					radius = radius + 1
 				end
 			end
+
+			vlf_util.circle_bulk_set_node_vm(radius, pos, y, "air")
+
+			y = y + 1
+		end
+	else
+		local count = 1
+
+		-- Must treat as square because rotation is random
+		local adjust = math.round(math.max(fwidth, fdepth) / 2)
+
+		for y_adj = 1, fheight + top_padding do
+			local pos1 = vector.offset(pos, -(adjust + count), y_adj, -(adjust + count))
+			local pos2 = vector.offset(pos, adjust + count, y_adj, adjust + count)
+			vlf_util.bulk_set_node_vm(pos1, pos2, "air")
+
+			-- Grid layout requires minimal terracing
+			if count <= padding then
+				count = count + 1
+			end
+		end
+
+		-- clean out stumps and leaves
+		local pos1 = vector.offset(pos, -(adjust + count), 1, -(adjust + count))
+		local pos2 = vector.offset(pos, adjust + count, fheight + top_padding, adjust + count)
+		vlf_util.replace_node_vm(pos1, pos2, "group:tree", "air", true)
+		vlf_util.replace_node_vm(pos1, pos2, "group:leaves", "air", true)
+	end
+end
+
+function vlf_villages.terraform_new(settlement_info, grid)
+	local fheight, fwidth, fdepth
+
+	-- Do ground first so that we can clear overhang for lower buildings
+	for i, schematic_data in ipairs(settlement_info) do
+		local pos = vector.copy(schematic_data["pos"])
+		fwidth = schematic_data["size"]["x"]
+		fdepth = schematic_data["size"]["z"]
+
+		if not schematic_data["no_ground_turnip"] then
+			vlf_util.create_ground_slope_village(pos, fwidth, fdepth)
+		end
+	end
+
+	for i, schematic_data in ipairs(settlement_info) do
+		local pos = vector.copy(schematic_data["pos"])
+
+		fwidth = schematic_data["size"]["x"]
+		fdepth = schematic_data["size"]["z"]
+		fheight = schematic_data["size"]["y"] * 2
+
+		if  not schematic_data["no_clearance"] then
+			overground(pos, fwidth, fdepth, fheight, grid)
 		end
 	end
 end

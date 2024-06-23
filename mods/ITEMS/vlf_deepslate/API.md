@@ -1,17 +1,15 @@
-# mcl_deepslate
+# vlf_deepslate
 
-`mcl_deepslate.register_variants(name, def)`
-`mcl_deepslate.register_deepslate_variant(name, def)`
-`mcl_deepslate.register_tuff_variant(name, def)`
+`vlf_deepslate.register_variants(name, def)`
 
 ## Variant definition
 
 ```lua
 {
 	basename = "deepslate",
-	basetiles = "mcl_deepslate",
+	basetiles = "vlf_deepslate",
 	basedef = {
-		_mcl_hardness = 5,
+		_vlf_hardness = 5,
 	},
 
 	-- the following should contain additional node definition fields of the individual variants, most importantly description and _doc_longdesc fields.

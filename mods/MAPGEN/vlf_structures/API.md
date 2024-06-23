@@ -1,7 +1,7 @@
-# mcl_structures
+# vlf_structures
 Structure placement API for MCL2.
 
-## mcl_structures.register_structure(name,structure definition,nospawn)
+## vlf_structures.register_structure(name,structure definition,nospawn)
 If nospawn is truthy the structure will not be placed by mapgen and the decoration parameters can be omitted. This is intended for secondary structures the placement of which gets triggered by the placement of other structures. It can also be used to register testing structures so they can be used with /spawnstruct.
 
 ### structure definition
@@ -17,7 +17,7 @@ If nospawn is truthy the structure will not be placed by mapgen and the decorati
 	(same as decoration def)
 	y_offset =, 	--can be a number or a function returning a number
 	filenames = {} OR place_func = function(pos,def,pr)
-					-- filenames can be a list of any schematics accepted by mcl_structures.place_schematic / minetest.place_schematic
+					-- filenames can be a list of any schematics accepted by vlf_structures.place_schematic / minetest.place_schematic
 	on_place = function(pos,def,pr) end,
 					-- called before placement. denies placement when returning falsy.
 	after_place = function(pos,def,pr)
@@ -26,13 +26,13 @@ If nospawn is truthy the structure will not be placed by mapgen and the decorati
 	solid_ground = bool, -- structure requires solid ground
 	make_foundation = bool, -- a foundation is automatically built for the structure. needs the sidelen param
 	loot = ,
-					--a table of loot tables for mcl_loot indexed by node names
-					-- e.g. { ["mcl_chests:chest_small"] = {loot},... }
+					--a table of loot tables for vlf_loot indexed by node names
+					-- e.g. { ["vlf_chests:chest_small"] = {loot},... }
 }
-## mcl_structures.registered_structures
+## vlf_structures.registered_structures
 Table of the registered structure defintions indexed by name.
 
-## mcl_structures.place_structure(pos, def, pr)
+## vlf_structures.place_structure(pos, def, pr)
 Places a structure using the mapgen placement function
 
-## mcl_structures.place_schematic(pos, schematic, rotation, replacements, force_placement, flags, after_placement_callback, pr, callback_param)
+## vlf_structures.place_schematic(pos, schematic, rotation, replacements, force_placement, flags, after_placement_callback, pr, callback_param)

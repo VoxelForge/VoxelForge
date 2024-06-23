@@ -1,5 +1,5 @@
-local PARTICLES_COUNT_RAIN = 500
-local PARTICLES_COUNT_THUNDER = 900
+local PARTICLES_COUNT_RAIN = 800
+local PARTICLES_COUNT_THUNDER = 1700
 
 local mgname = minetest.get_mapgen_setting("mg_name")
 
@@ -281,14 +281,14 @@ end
 if vlf_weather.reg_weathers.rain == nil then
 	vlf_weather.reg_weathers.rain = {
 		clear = vlf_weather.rain.clear,
-		light_factor = 0.6,
+		light_factor = 0.9,
 		-- 10min - 20min
 		min_duration = 600,
 		max_duration = 1200,
 		transitions = {
-			[65] = "none",
-			[70] = "snow",
-			[100] = "thunder",
+			[30] = "none",
+			[40] = "snow",
+			[60] = "thunder",
 		}
 	}
 end

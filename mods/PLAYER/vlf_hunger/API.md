@@ -8,7 +8,7 @@ This may change in the future development of MineClone 2. Hopefully.
 ## Mod state
 The hunger mechanic is disabled when damage is disabled
 (setting `enable_damage=false`).
-You can check the hunger state with `mcl_hunger.active`. If it's true,
+You can check the hunger state with `vlf_hunger.active`. If it's true,
 then hunger is active.
 
 If the hunger is disabled, most of the functions are no-ops or return
@@ -30,17 +30,17 @@ To be written ...
 This API documentation is not complete yet, more documentation will
 come.
 
-### `mcl_hunger.get_hunger(player)`
+### `vlf_hunger.get_hunger(player)`
 Returns the current hunger level of `player` (ObjectRef).
 
-### `mcl_hunger.set_hunger(player, hunger)`
+### `vlf_hunger.set_hunger(player, hunger)`
 Sets the hunger level of `player` (ObjectRef) to `hunger` immediately.
 `hunger` ***must*** be between 0 and 20 inclusive.
 
-### `mcl_hunger.exhaust(player, exhaust)`
+### `vlf_hunger.exhaust(player, exhaust)`
 Increase exhaustion of player by `exhaust`.
 
-### `mcl_hunger.stop_poison(player)`
+### `vlf_hunger.stop_poison(player)`
 Immediately stops food poisoning for player.
 
 ### More functions ...

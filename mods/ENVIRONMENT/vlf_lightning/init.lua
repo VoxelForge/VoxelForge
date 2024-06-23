@@ -113,7 +113,7 @@ function vlf_lightning.strike_func(pos, pos2, objects)
 		-- to make it appear hitting the node that will get set on fire, make sure
 		-- to make the texture vlf_lightning bolt hit exactly in the middle of the
 		-- texture (e.g. 127/128 on a 256x wide texture)
-		texture = "lightning_lightning_" .. rng:next(1,3) .. ".png",
+		texture = "lightning_lightning_" .. rng:next(1,4) .. ".png",
 		glow = minetest.LIGHT_MAX,
 	})
 

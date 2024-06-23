@@ -1,15 +1,15 @@
-# mcl_boats
+# vlf_boats
 This mod add an API for drivable boats.
 
-mcl_boats.register_boat(name,item_overrides,object_properties,entity_overrides)
-	name - name (usually the type of wood) of the boat type, if the name contains the string "chest" it will be assumed to be a chest boat and an mcl_entity_inv will be attached to it.
+vlf_boats.register_boat(name,item_overrides,object_properties,entity_overrides)
+	name - name (usually the type of wood) of the boat type, if the name contains the string "chest" it will be assumed to be a chest boat and an vlf_entity_inv will be attached to it.
 	item_overrides - fields in this table if supplied will be applied to the boat's craftitem
 	object_properties - fields in this table if supplied will be applied to the spawned boat object as object properties
 	entity_overrides - fields in this table if supplied will be applied to the luaentity of the spawned boat object
 
 # Credits
 ## Mesh
-Boat mesh (`models/mcl_boats_boat.b3d`) created by 22i.
+Boat mesh (`models/vlf_boats_boat.b3d`) created by 22i.
 Source: https://github.com/22i/minecraft-voxel-blender-models
 
 License of boat model:

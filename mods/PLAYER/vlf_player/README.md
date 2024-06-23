@@ -1,4 +1,4 @@
-# MineClone 2 mod: mcl_player
+# MineClone 2 mod: vlf_player
 Adds the 3D player model, originally taken from Minetest Game 0.4.16.
 
 Programmers: See `API.md` for the API definition.
@@ -9,7 +9,7 @@ Various Minetest developers and contributors (LGPL 2.1)
 
 Heavily modified for MineClone2 Wuzzy and various MineClone2 contributors.
 
-Major refactor and consolidation with mcl_playerplus, mcl_playerinfo, mcl_player_init by cora (2024)
+Major refactor and consolidation with vlf_playerplus, vlf_playerinfo, vlf_player_init by cora (2024)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by

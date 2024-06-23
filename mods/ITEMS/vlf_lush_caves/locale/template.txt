@@ -1,4 +1,4 @@
-# textdomain: mcl_lush_caves
+# textdomain: vlf_lush_caves
 Azalea Plant=
 Flowering Azalea Plant=
 Moss=

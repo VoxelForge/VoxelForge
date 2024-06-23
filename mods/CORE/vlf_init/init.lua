@@ -1,4 +1,5 @@
 local mod_storage = minetest.get_mod_storage()
+local modpath = minetest.get_modpath("vlf_init")
 
 -- Some global variables (don't overwrite them!)
 vlf_vars = {}

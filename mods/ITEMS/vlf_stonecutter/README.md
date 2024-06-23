@@ -1,10 +1,10 @@
-mcl_stonecutter
+vlf_stonecutter
 ===============
 Adds the stonecutter block. Used to cut stone like materials into stairs, slabs, etc. Also used as the Stone Mason Villager's jobsite.
 
 ### Adding recipes
 
-* To add a new custom stonecutter recipe, use `mcl_stonecutter.register_recipe(input, output, count)`
+* To add a new custom stonecutter recipe, use `vlf_stonecutter.register_recipe(input, output, count)`
 * `input` must be a name of a registered item
 * `output` must also be a name of a registered item
 * `count` should be a number denoting output count, this defaults to 1 for `nil` and invalid values
@@ -14,7 +14,7 @@ Adds the stonecutter block. Used to cut stone like materials into stairs, slabs,
 
 ### Displaying the Stonecutter menu
 
-* To display the stonecutter formspec to a player use `mcl_stonecutter.show_stonecutter_form(player)`
+* To display the stonecutter formspec to a player use `vlf_stonecutter.show_stonecutter_form(player)`
 
 License of code
 ---------------
@@ -23,9 +23,9 @@ Author: PrairieWind, ChrisPHP, cora, Herowl, AFCMS
 
 License of media
 ----------------
-mcl_stonecutter_bottom.png
-mcl_stonecutter_side.png
-mcl_stonecutter_top.png
-mcl_stonecutter_saw.png
+vlf_stonecutter_bottom.png
+vlf_stonecutter_side.png
+vlf_stonecutter_top.png
+vlf_stonecutter_saw.png
 License: CC0 1.0 Universal (CC0 1.0)
 Author: RandomLegoBrick

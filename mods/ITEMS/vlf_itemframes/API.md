@@ -1,9 +1,9 @@
-# mcl_itemframes
+# vlf_itemframes
 ## Functions
-* mcl_itemframes.register_itemframe(name, itemframe_definition)
-* mcl_itemframes.remove_entity(pos)
+* vlf_itemframes.register_itemframe(name, itemframe_definition)
+* vlf_itemframes.remove_entity(pos)
 	* Removes the item entity belonging to the itemframe at `pos`, does not delete the item(inventory) of the itemframe.
-* mcl_itemframes.update_entity(pos)
+* vlf_itemframes.update_entity(pos)
 	* Updates the item entity belonging to the itemframe at `pos` according to it's set item (node inventory)
 
 ## Itemframe definition

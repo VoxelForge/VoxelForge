@@ -144,7 +144,7 @@ local boat = {
 		selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.55, 0.7},
 		visual = "mesh",
 		mesh = "boat.b3d",
-		textures = { "oak_boat.png", "blank.png" },
+		textures = { "vlf_boats_oak_boat.png", "blank.png" },
 		visual_size = boat_visual_size,
 		hp_max = boat_max_hp,
 		damage_texture_modifier = "^[colorize:white:0",
@@ -189,8 +189,8 @@ function boat.on_activate(self, staticdata, dtime_s)
 
 		-- Update the texutes for existing old boat entity instances.
 		-- Maybe remove this in the future.
-		if #data.textures >= 1 and data.textures[1] == "cherry_boat.png" then
-			data.textures[1] = "cherry_boat.png"
+		if #data.textures >= 1 and data.textures[1] == "vlf_boats_cherry_blossom_boat.png" then
+			data.textures[1] = "vlf_boats_cherry_blossom_boat.png"
 		end
 		if #data.textures ~= 2 then
 			local has_chest = self._itemstring:find("chest")
@@ -449,7 +449,7 @@ minetest.register_entity("vlf_boats:boat", boat)
 
 local cboat = table.copy(boat)
 cboat._itemstring = "vlf_boats:chest_boat"
-cboat.initial_properties.textures = { "oak_chest_boat.png", "vlf_chests_normal.png" }
+cboat.initial_properties.textures = { "vlf_boats_oak_chest_boat.png", "vlf_chests_normal.png" }
 cboat.initial_properties.collisionbox = {-0.5, -0.15, -0.5, 0.5, 0.75, 0.5}
 cboat.initial_properties.selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.75, 0.7}
 
@@ -481,8 +481,8 @@ function vlf_boats.register_boat(name,item_def,object_properties,entity_override
 	local inventory_image
 	local texture
 	if id:find("chest") then
-		inventory_image = "" .. id .. ".png"
-		texture = "" .. id:gsub("chest_", "") .. ".png"
+		inventory_image = "vlf_boats_" .. id .. ".png"
+		texture = "vlf_boats_" .. id:gsub("chest_", "") .. ".png"
 		if not doc_itemstring_chest_boat then
 			help = true
 			longdesc = S("Chest Boats are used to travel on the surface of water. And transport goods")
@@ -494,8 +494,8 @@ function vlf_boats.register_boat(name,item_def,object_properties,entity_override
 			doc.add_entry_alias("craftitems", doc_itemstring_chest_boat, "craftitems", itemstring)
 		end
 	else
-		inventory_image = "" .. name .. "_boat.png"
-		texture = "" .. name .. "_boat.png"
+		inventory_image = "vlf_boats_" .. name .. "_boat.png"
+		texture = "vlf_boats_" .. name .. "_boat.png"
 	end
 
 	minetest.register_craftitem(":"..itemstring, table.merge({

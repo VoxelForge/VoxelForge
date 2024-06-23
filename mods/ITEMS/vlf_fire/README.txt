@@ -1,4 +1,4 @@
-mcl_fire: Fire mod for MineClone 2
+vlf_fire: Fire mod for MineClone 2
 Based on fire from Minetest Game
 ==================================
 

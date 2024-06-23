@@ -1,4 +1,4 @@
-[mod] Visible Player Armor [mcl_armor]
+[mod] Visible Player Armor [vlf_armor]
 ======================================
 
 Adds craftable armor that is visible to other players. Each armor item worn contributes to
@@ -10,18 +10,18 @@ This mod is based on 3D Armor mod by stu.
 
 Media credits
 -------------
-* mcl_armor_equip_diamond.ogg
-* mcl_armor_unequip_diamond.ogg
+* vlf_armor_equip_diamond.ogg
+* vlf_armor_unequip_diamond.ogg
 Licensed CC0, by Freesound.org user juryduty.
 Source: <https://freesound.org/people/juryduty/sounds/180231/>
 
-* mcl_armor_equip_iron.ogg
-* mcl_armor_unequip_iron.ogg
+* vlf_armor_equip_iron.ogg
+* vlf_armor_unequip_iron.ogg
 Licensed CC0, by Freesound.org user mtchanary.
 Source: <https://freesound.org/people/mitchanary/sounds/506148/>
 
-* mcl_armor_equip_generic.ogg
-* mcl_armor_unequip_generic.ogg
+* vlf_armor_equip_generic.ogg
+* vlf_armor_unequip_generic.ogg
 Licensed (CC BY-SA 3.0) by Mito551
 
 All other sounds licensed CC0 by OpenGameArt.org user artisticdude.

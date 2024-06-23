@@ -1,6 +1,6 @@
 vlf_weather.snow = {}
 
-local PARTICLES_COUNT_SNOW = 100
+local PARTICLES_COUNT_SNOW = 200
 vlf_weather.snow.init_done = false
 local mgname = minetest.get_mapgen_setting("mg_name")
 
@@ -101,7 +101,7 @@ end)
 if vlf_weather.reg_weathers.snow == nil then
 	vlf_weather.reg_weathers.snow = {
 		clear = vlf_weather.snow.clear,
-		light_factor = 0.6,
+		light_factor = 0.8,
 		-- 10min - 20min
 		min_duration = 600,
 		max_duration = 1200,

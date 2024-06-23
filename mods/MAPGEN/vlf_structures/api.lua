@@ -275,7 +275,7 @@ function vlf_structures.place_structure(pos, def, pr, blockseed, rot)
 		local solid = minetest.find_nodes_in_area(ground_p1,ground_p2,{"group:solid"})
 		if #solid < ( def.sidelen * def.sidelen ) then
 			if def.make_foundation then
-				vlf_util.create_ground_turnip(vector.offset(pos, 0, -1, 0), def.sidelen, def.sidelen)
+				vlf_util.create_ground_slope(vector.offset(pos, 0, -1, 0), def.sidelen, def.sidelen)
 			else
 				if log_enabled then
 					minetest.log("warning","[vlf_structures] "..def.name.." at "..minetest.pos_to_string(pp).." not placed. No solid ground.")

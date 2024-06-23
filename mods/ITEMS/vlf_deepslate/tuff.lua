@@ -9,15 +9,6 @@ local function register_tuff_variant(name, defs)
 		},
 	}, defs))
 end
-local function register_tuff_polished_variant(name, defs)
-	vlf_deepslate.register_polished_variant(name,table.update({
-		basename = "polished_tuff",
-		basetiles = "vlf_deepslate_tuff",
-		basedef = {
-			_vlf_hardness = 1.5,
-		},
-	}, defs))
-end
 
 minetest.register_node("vlf_deepslate:tuff", {
 	description = S("Tuff"),
@@ -30,7 +21,7 @@ minetest.register_node("vlf_deepslate:tuff", {
 	_vlf_hardness = 1.5,
 })
 
-minetest.register_node("vlf_deepslate:chiseled_tuff", {
+minetest.register_node("vlf_deepslate:tuff_chiseled", {
     description = S("Chiseled Tuff"),
     _doc_items_longdesc = S("Chiseled tuff is a chiseled variant of tuff."),
     _doc_items_hidden = false,
@@ -42,7 +33,7 @@ minetest.register_node("vlf_deepslate:chiseled_tuff", {
     _vlf_stonecutter_recipes = { "vlf_deepslate:tuff", },
 })
 
-minetest.register_node("vlf_deepslate:chiseled_tuff_bricks", {
+minetest.register_node("vlf_deepslate:tuff_chiseled_bricks", {
     description = S("Chiseled Tuff Bricks"),
     _doc_items_longdesc = S("Chiseled tuff bricks are a variant of tuff bricks, featuring a large brick in the center of the block, with geometric design above and below."),
     _doc_items_hidden = false,
@@ -51,7 +42,7 @@ minetest.register_node("vlf_deepslate:chiseled_tuff_bricks", {
     sounds = vlf_sounds.node_sound_stone_defaults(),
     _vlf_blast_resistance = 6,
     _vlf_hardness = 1.5,
-    _vlf_stonecutter_recipes = { "vlf_deepslate:tuff", "vlf_deepslate:polished_tuff", "vlf_deepslate:tuff_bricks", },
+    _vlf_stonecutter_recipes = { "vlf_deepslate:tuff", "vlf_deepslate:tuff_polished", "vlf_deepslate:tuff_bricks", },
 })
 
 register_tuff_variant("", {
@@ -69,7 +60,7 @@ register_tuff_variant("", {
     },
 })
 
-register_tuff_polished_variant("polished", {
+register_tuff_variant("polished", {
     node = {
         description = S("Polished Tuff"),
         _doc_items_longdesc = S("Polished tuff is a polished variant of the tuff block."),
@@ -111,20 +102,21 @@ register_tuff_variant("bricks", {
     },
 })
 
-local tuff_variants = {"tuff", "polished", "bricks"}
-for i = 1, 2 do
-    local s = "vlf_deepslate:tuff_"..tuff_variants[i]
-    minetest.register_craft({
-        output = "vlf_deepslate:tuff_"..tuff_variants[i+1].." 4",
-		recipe = { { s, s }, { s, s } }
-    })
-end
+minetest.register_craft({
+	output = "vlf_deepslate:tuff_polished 4",
+	recipe = { { "vlf_deepslate:tuff", "vlf_deepslate:tuff" }, { "vlf_deepslate:tuff", "vlf_deepslate:tuff" } }
+})
+
+minetest.register_craft({
+	output = "vlf_deepslate:tuff_bricks 4",
+	recipe = { { "vlf_deepslate:tuff_polished", "vlf_deepslate:tuff_polished" }, { "vlf_deepslate:tuff_polished", "vlf_deepslate:tuff_polished" } }
+})
 
 minetest.register_craft({
 	output = "vlf_deepslate:tuff_chiseled",
 	recipe = {
-		{ "vlf_stairs:slab_tuff" },
-		{ "vlf_stairs:slab_tuff" },
+		{ "vlf_stairs:slab_tuff_polished" },
+		{ "vlf_stairs:slab_tuff_polished" },
 	},
 })
 

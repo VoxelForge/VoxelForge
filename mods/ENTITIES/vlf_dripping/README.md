@@ -1,4 +1,4 @@
-# mcl_dripping
+# vlf_dripping
 
 Dripping Mod by kddekadenz, modified for MineClone 2 by Wuzzy, NO11 and AFCM
 
@@ -17,7 +17,7 @@ code & sounds: CC0
 ## API
 
 ```lua
-mcl_dripping.register_drop({
+vlf_dripping.register_drop({
 	-- The group the liquid's nodes belong to
 	liquid   = "water",
 	-- The texture used (particles will take a random 2x2 area of it)

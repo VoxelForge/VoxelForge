@@ -95,7 +95,7 @@ for i=1,4 do
 	}
 	local creative_group
 	if i ~= 1 then creative_group = { not_in_creative_inventory = 1 } end
-	--[[minetest.register_node("vlf_candles:candle_"..i,table.merge(tpl_candle, candle_n,{
+	minetest.register_node("vlf_candles:candle_"..i,table.merge(tpl_candle, candle_n,{
 		groups = table.merge(tpl_candle.groups, { candles = i, unlit_candles = i }, creative_group),
 	}))
 	minetest.register_node("vlf_candles:candle_lit_"..i,table.merge(tpl_candle, tpl_lit_candle, candle_n,{
@@ -103,7 +103,7 @@ for i=1,4 do
 		groups = table.merge(tpl_lit_candle.groups, { candles = i, lit_candles = i }),
 		_on_ignite = nil,
 		on_rightclick = extinguish,
-	}))]]
+	}))
 end
 
 local function candle_craft(itemstack, player, old_craft_grid, craft_inv)

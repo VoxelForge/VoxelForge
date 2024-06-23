@@ -1,7 +1,7 @@
-## mcl_info
+## vlf_info
 An api to make custom entries in the mcl2 debug hud.
 
-### mcl_info.register_debug_field(name,defintion)
+### vlf_info.register_debug_field(name,defintion)
 Debug field defintion example:
 {
 	level = 3,
@@ -14,5 +14,5 @@ Debug field defintion example:
 	-- the content of the debug field.
 }
 
-### mcl_info.registered_debug_fields
-Table the debug definitions are stored in. Do not modify this directly. If you need to overwrite a field just set it again with mcl_info.register_debug_field().
+### vlf_info.registered_debug_fields
+Table the debug definitions are stored in. Do not modify this directly. If you need to overwrite a field just set it again with vlf_info.register_debug_field().

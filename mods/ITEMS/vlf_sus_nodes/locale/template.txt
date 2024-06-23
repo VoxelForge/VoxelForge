@@ -1,4 +1,4 @@
-# textdomain: mcl_sus_nodes
+# textdomain: vlf_sus_nodes
 Brush=
 Brushes are used in archeology to discover hidden items=
 Use the brush on a suspicious node to uncover its secrets=

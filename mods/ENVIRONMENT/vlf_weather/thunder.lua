@@ -45,7 +45,7 @@ end
 if vlf_weather.reg_weathers.thunder == nil then
 	vlf_weather.reg_weathers.thunder = {
 		clear = vlf_weather.thunder.clear,
-		light_factor = 0.33333,
+		light_factor = 0.7,
 		-- 10min - 20min
 		min_duration = 600,
 		max_duration = 1200,

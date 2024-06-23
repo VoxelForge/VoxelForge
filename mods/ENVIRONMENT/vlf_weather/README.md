@@ -1,4 +1,4 @@
-`mcl_weather`
+`vlf_weather`
 =======================
 Weather mod for MineClone 2. Forked from the `weather_pack` mod by xeranas.
 

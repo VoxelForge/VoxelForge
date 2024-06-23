@@ -63,6 +63,7 @@ local function get_text(player, bits)
 		if def then
 			if def.level == nil or def.level <= bits then
 				r = r ..key..": "..tostring(def.func(player,pos)).."\n"
+				--r = r ..key..": "..tostring(def.func(player,pointed_thing)).."\n"
 			end
 		else
 			r = r ..key..": <Unknown Field>\n"
@@ -80,7 +81,7 @@ local function info()
 		if s and not hud then
 			local def = {
 				[hud_elem_type_field] = "text",
-				alignment     = {x = 1, y = -1},
+				alignment     = {x = 1, y = -6.5},
 				scale         = {x = 100, y = 100},
 				position      = {x = 0.0073, y = 0.889},
 				text          = text,

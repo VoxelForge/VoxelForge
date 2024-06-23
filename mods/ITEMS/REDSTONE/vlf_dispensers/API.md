@@ -31,5 +31,5 @@ But if this value is set If `true`, the item can be dispensed into walkable node
 This is a function which is called when an item is dropped out of the dispenser
 on an entity. Should return leftover itemstack.
 
-Call mcl_mobs.mob_class._on_dispense to call the original _on_dispense function
+Call vlf_mobs.mob_class._on_dispense to call the original _on_dispense function
 for mobs e.g. to feed them.
