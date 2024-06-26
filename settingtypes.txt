@@ -9,20 +9,20 @@
 enable_fire (Destructive and spreading fire) bool true
 
 # If enabled, the weather will change naturally over time.
-vlc_doWeatherCycle (Changing weather) bool true
+vlf_doWeatherCycle (Changing weather) bool true
 
 # If enabled, breaking blocks will cause them to drop as item.
 # Note that blocks never have drops when in Creative Mode.
-vlc_doTileDrops (Blocks have drops) bool true
+vlf_doTileDrops (Blocks have drops) bool true
 
 # If enabled, explosions destroy blocks.
-vlc_explosions_griefing (Explosion griefing) bool true
+vlf_explosions_griefing (Explosion griefing) bool true
 
 # If disabled, no ores will be generated.
-vlc_generate_ores (Generate ores) bool true
+vlf_generate_ores (Generate ores) bool true
 
 # Enable minetest mapgen dungeons
-vlc_enable_mt_dungeons (Native Minetest dungeons) bool false
+vlf_enable_mt_dungeons (Native Minetest dungeons) bool false
 
 # If enabled, the “flat” map generator generates a Classic Superflat world:
 # Completely flat, 1 layer of grass blocks on top of 2 layers of dirt on
@@ -32,7 +32,7 @@ vlc_enable_mt_dungeons (Native Minetest dungeons) bool false
 # caves, and a deeper underground can be generated.
 #
 # Note: This setting has no effect on existing worlds.
-vlc_superflat_classic (Classic superflat map generation) bool false
+vlf_superflat_classic (Classic superflat map generation) bool false
 
 [Players]
 # If enabled, players respawn at the bed they last lay on instead of normal
@@ -43,34 +43,34 @@ enable_bed_respawn (Respawn at bed) bool true
 # How many players have to sleep to skip the night, in percent.
 # Setting to 0 will mean 1 player is always enough to skip the night. Setting above 100 will prevent skipping the night.
 # 100 by default.
-vlc_playersSleepingPercentage (Player sleeping percentage) int 100
+vlf_playersSleepingPercentage (Player sleeping percentage) int 100
 
 # Normally, players drop all their items when they die. Enable this
 # setting, so players always keep their inventory on death.
-vlc_keepInventory (Keep inventory on death) bool false
+vlf_keepInventory (Keep inventory on death) bool false
 
 # If enabled, chat messages are shown to everyone when a player dies.
-vlc_showDeathMessages (Show death messages) bool true
+vlf_showDeathMessages (Show death messages) bool true
 
 # If enabled, the recipe book will progressively be filled with new recipes that can be crafted from all items you ever have had in your inventory.
 # Recommended for new players and for a spoiler-free gameplay experience.
 # If disabled, all recipes will be shown.
-vlc_craftguide_progressive_mode	(Learn crafting recipes progressively) bool true
+vlf_craftguide_progressive_mode	(Learn crafting recipes progressively) bool true
 
 # If disabled, the skin of all players will be character.png
-vlc_enable_skin_customization (Player skin customization) bool true
+vlf_enable_skin_customization (Player skin customization) bool true
 
 # How far the player hand can reach
 # Default:4.5
-vlc_hand_range (Hand range) float 4.5 1 128
+vlf_hand_range (Hand range) float 4.5 1 128
 
 # How far the player hand can reach in creative mode
 # Default:10
-vlc_hand_range_creative (Creative mode hand range) float 10 1 128
+vlf_hand_range_creative (Creative mode hand range) float 10 1 128
 
 # If enabled the hunger mechanic will be active
 # If disabled eating food will heal instantly.
-vlc_enable_hunger (Hunger) bool true
+vlf_enable_hunger (Hunger) bool true
 
 [Mobs]
 # If enabled, mobs will spawn naturally. This does not affect
@@ -88,7 +88,7 @@ only_peaceful_mobs (Spawn only peaceful mobs) bool false
 mobs_spawn_protected (Spawn mobs in protected areas) bool false
 
 # Use light levels from Minecraft 1.18+ for monster spawning. Disable to use older mob specific light levels.
-vlc_mobs_modern_lighting (Modern light rules for spawning) bool true
+vlf_mobs_modern_lighting (Modern light rules for spawning) bool true
 
 # Mobs difficulty. This is a number that will affect the initial and maximum
 # health and the amount of damage that mobs deal. Health and damage will
@@ -109,68 +109,68 @@ wither_strafes (Wither strafes) bool true
 
 # How far from players should mobs stop moving
 # Larger values will have a larger performance impact
-vlc_mob_active_range (Active mob range) int 48 0 256
+vlf_mob_active_range (Active mob range) int 48 0 256
 
 [Mob caps]
 # Maximum amount mobs
-vlc_mob_cap_total (Global mob cap) int 500 0 2048
+vlf_mob_cap_total (Global mob cap) int 500 0 2048
 
 # Maximum amount of mobs per player
-vlc_mob_cap_player (Mob cap per player) int 75 0 2048
+vlf_mob_cap_player (Mob cap per player) int 75 0 2048
 
 # Maximum amount of monsters that will spawn near a player
-vlc_mob_cap_monster (Mob cap for monsters) int 70 0 2048
+vlf_mob_cap_monster (Mob cap for monsters) int 70 0 2048
 
 # Maximum amount of animals that will spawn near a player
-vlc_mob_cap_animal (Mob cap for animals) int 10 0 1024
+vlf_mob_cap_animal (Mob cap for animals) int 10 0 1024
 
 # Maximum amount of ambient mobs that will spawn near a player
-vlc_mob_cap_ambient (Mob cap for ambient mobs) int 15 0 1024
+vlf_mob_cap_ambient (Mob cap for ambient mobs) int 15 0 1024
 
 # Maximum amount of water mobs (squids, dolphins) that will spawn near a player
-vlc_mob_cap_water (Mob cap for water mobs) int 5 0 1024
+vlf_mob_cap_water (Mob cap for water mobs) int 5 0 1024
 
 # Maximum amount of ambient water mobs (fish) that will spawn near a player
-vlc_mob_cap_water_ambient (Mob cap for ambient water mobs) int 20 0 1024
+vlf_mob_cap_water_ambient (Mob cap for ambient water mobs) int 20 0 1024
 
 [Features]
 # Enable Bookshelf inventories
-vlc_bookshelf_inventories (Bookshelf inventories) bool true
+vlf_bookshelf_inventories (Bookshelf inventories) bool true
 
 # All tameable mobs listen to the "sit" right-click like dogs
-vlc_extended_pet_control (Extended pet control) bool false
+vlf_extended_pet_control (Extended pet control) bool false
 
 # Enable nodes not in Minecraft. Includes extra stairs and slabs, Red Nether Brick Fence and nether brick fence gates.
-vlc_extra_nodes (Additional nodes) bool true
+vlf_extra_nodes (Additional nodes) bool true
 
 # Enable piston movement of inventory nodes.
-vlc_inv_nodes_movable (Movable inventory nodes) bool true
+vlf_inv_nodes_movable (Movable inventory nodes) bool true
 
 # Make iron golems teleport home when they are far away and villagers teleport
 # home when the night is skipped.
-vlc_mob_allow_nav_hacks (Mob navigation hacks) bool false
+vlf_mob_allow_nav_hacks (Mob navigation hacks) bool false
 
 # Allow players to create Minecraft-like maps.
 enable_real_maps (Real maps) bool true
 
 # Place bonus chest near players' initial spawn point
-vlc_bonus_chest (Bonus chest) bool false
+vlf_bonus_chest (Bonus chest) bool false
 
 # Allow editing signs
-vlc_signs_editable (Editable signs) bool false
+vlf_signs_editable (Editable signs) bool false
 
 [Graphics]
 # Whether to animate chests when open / close
 animated_chests (Animated chests) bool true
 
 # Enable dust particles in the nether
-vlc_nether_dust (Nether dust particles) bool true
+vlf_nether_dust (Nether dust particles) bool true
 
 # If enabled, mobs will emit damage particles when they get hurt.
-vlc_damage_particles (Damage particles) bool true
+vlf_damage_particles (Damage particles) bool true
 
 # The maximum number of boss bars to simultaneously display on the screen
-vlc_max_bossbars (Maximum boss bars) int 5
+vlf_max_bossbars (Maximum boss bars) int 5
 
 # How many vertical animation frames the fire texture (fire_basic_flame_animated.png) has.
 # This may vary depending on the texture pack you use.
@@ -179,47 +179,47 @@ fire_animation_frames (Fire animation frames) int 8
 
 [Villages]
 # Minimum number of job sites which are placed during village generation
-vlc_villages_min_jobs (Minimum number of jobs in village) int 1
+vlf_villages_min_jobs (Minimum number of jobs in village) int 1
 
 # Maximum number of job sites which are placed during village generation
-vlc_villages_max_jobs (Maximum number of jobs in village) int 12
+vlf_villages_max_jobs (Maximum number of jobs in village) int 12
 
 # 1 in X chance a village will spawn in a valid chunk. Set to 0 for no villages
-vlc_villages_village_chance (Village chance) int 100
+vlf_villages_village_chance (Village chance) int 100
 
 # This controls how job sites and houses are placed during village generation
 # random: shuffles the buildings so they get placed in any order
 # jobs: places the job sites first so they tend to be closer to the bell
 # houses: places the houses first so the tend to be closer to the bell
-vlc_villages_placement_priority (Buildings closest to the bell) enum random random,jobs,houses
+vlf_villages_placement_priority (Buildings closest to the bell) enum random random,jobs,houses
 
 [Experimental]
 # If disabled, command blocks will be unusable (but still present).
-vlc_enable_commandblocks (Command blocks) bool true
+vlf_enable_commandblocks (Command blocks) bool true
 
 # This is fine for players, but expect all the villagers to die very quickly
-vlc_villages_allow_water_villages (Spawn village buildings on top of water) bool false
+vlf_villages_allow_water_villages (Spawn village buildings on top of water) bool false
 
 # Display mob icons in inventory instead of Minecraft-like spawn eggs.
 # Note that mob icons does not exist for all mobs.
-vlc_old_spawn_icons (Old spawn icons instead of eggs) bool false
+vlf_old_spawn_icons (Old spawn icons instead of eggs) bool false
 
 [Debugging]
 # If enabled mapgen timings will be dumped to log
-vlc_logging_mapgen (Log chunk generation) bool false
+vlf_logging_mapgen (Log chunk generation) bool false
 
 # If enabled generated structures will be logged
-vlc_logging_structures (Log structure generation) bool true
+vlf_logging_structures (Log structure generation) bool true
 
-# Debug logging for vlc_events.
-vlc_logging_event_api (Debug logging for vlc_events) bool false
+# Debug logging for vlf_events.
+vlf_logging_event_api (Debug logging for vlf_events) bool false
 
 [Nodes]
 # If enabled, exporting a schematic will also create a .lua file
 # in addition to the .mts file.
-vlc_structure_block_export_lua (.lua file schematic export) bool true
+vlf_structure_block_export_lua (.lua file schematic export) bool true
 
 # Specify the style of the visual border markers.
 # * edges: Show borders at the edges
 # * checkers: Checker pattern at the sides
-vlc_structure_block_border_style (Border style) enum edges edges,checkers
+vlf_structure_block_border_style (Border style) enum edges edges,checkers

@@ -53,10 +53,12 @@ function vlf_weather.has_rain(pos)
 end
 
 function vlf_weather.rain.sound_handler(player)
-	return minetest.sound_play("weather_rain", {
-		to_player = player:get_player_name(),
-		loop = true,
-	})
+	for i = 1, 8 do
+		return minetest.sound_play("weather_rain_"..i.."", {
+			to_player = player:get_player_name(),
+			loop = false,
+		})
+	end
 end
 
 -- set skybox based on time (uses skycolor api)

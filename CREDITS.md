@@ -130,7 +130,7 @@
 
 ## Special thanks
 * celeron55 for creating Minetest
-* Jordach for the jukebox music compilation from Big Freaking Dig
+* Sn0wShepherd for making the very nice MineCraft themed music from the Sn0wSong resource pack.
 * The workaholics who spent way too much time writing for the Minecraft Wiki.
   It's an invaluable resource for creating this game
 * Notch and Jeb for being the major forces behind Minecraft

@@ -275,63 +275,95 @@ minetest.register_craft({
 })
 
 vlf_jukebox.register_record({
-	title = "The Evil Sister (Jordach's Mix)",
-	author = "SoundHelix",
-	id = "13",
-	texture = "vlf_jukebox_record_13.png",
-	sound = "vlf_jukebox_track_1",
+	title = "11",
+	author = "Sn0wShepherd",
+	id = "11",
+	texture = "vlf_jukebox_record_11.png",
+	sound = "vlf_jukebox_11",
 	exclude_from_creeperdrop = false,
 })
 vlf_jukebox.register_record({
-	title = "The Energetic Rat (Jordach's Mix)",
-	author = "SoundHelix",
-	id = "wait",
+	title = "13",
+	author = "Sn0wShepherd",
+	id = "13",
 	texture = "vlf_jukebox_record_wait.png",
-	sound = "vlf_jukebox_track_2"
+	sound = "vlf_jukebox_13"
 })
 vlf_jukebox.register_record({
-	title = "Eastern Feeling",
-	author = "Jordach",
+	title = "Blocks",
+	author = "Sn0wShepherd",
 	id = "blocks",
 	texture = "vlf_jukebox_record_blocks.png",
-	sound = "vlf_jukebox_track_3"
+	sound = "vlf_jukebox_blocks"
 })
 vlf_jukebox.register_record({
-	title = "Minetest",
-	author = "Jordach",
-	id = "far",
-	texture = "vlf_jukebox_record_far.png",
-	sound = "vlf_jukebox_track_4",
+	title = "Cat",
+	author = "Sn0wShepherd",
+	id = "cat",
+	texture = "vlf_jukebox_record_cat.png",
+	sound = "vlf_jukebox_cat",
 })
 vlf_jukebox.register_record({
-	title =  "Soaring over the sea",
-	author =  "mactonite",
-	id = "chirp",
+	title =  "Chirp",
+	author =  "Sn0wShepherd",
+	id = "Chirp",
 	texture = "vlf_jukebox_record_chirp.png",
-	sound = "vlf_jukebox_track_5",
+	sound = "vlf_jukebox_chirp",
 	exclude_from_creeperdrop = true,
 })
 vlf_jukebox.register_record({
-	title = "Winter Feeling",
-	author = "Tom Peter",
-	id = "strad",
-	texture = "vlf_jukebox_record_strad.png",
-	sound = "vlf_jukebox_track_6",
+	title = "Far",
+	author = "Sn0wShepherd",
+	id = "far",
+	texture = "vlf_jukebox_record_far.png",
+	sound = "vlf_jukebox_far",
 
 })
 vlf_jukebox.register_record({
-	title = "Synthgroove (Jordach's Mix)",
-	author = "HeroOfTheWinds",
-	id = "mellohi",
-	texture = "vlf_jukebox_record_mellohi.png",
-	sound = "vlf_jukebox_track_7"
-})
-vlf_jukebox.register_record({
-	title = "The Clueless Frog (Jordach's Mix)",
-	author = "SoundHelix",
+	title = "Mall",
+	author = "Sn0wShepherd",
 	id = "mall",
 	texture = "vlf_jukebox_record_mall.png",
-	sound = "vlf_jukebox_track_8",
+	sound = "vlf_jukebox_mall"
+})
+vlf_jukebox.register_record({
+	title = "Mellohi",
+	author = "Sn0wShepherd",
+	id = "mellohi",
+	texture = "vlf_jukebox_record_mellohi.png",
+	sound = "vlf_jukebox_mellohi",
+	exclude_from_creeperdrop = true,
+})
+vlf_jukebox.register_record({
+	title = "Stal",
+	author = "Sn0wShepherd",
+	id = "stal",
+	texture = "vlf_jukebox_record_stal.png",
+	sound = "vlf_jukebox_stall",
+	exclude_from_creeperdrop = true,
+})
+vlf_jukebox.register_record({
+	title = "Strad",
+	author = "Sn0wShepherd",
+	id = "strad",
+	texture = "vlf_jukebox_record_strad.png",
+	sound = "vlf_jukebox_track_strad",
+	exclude_from_creeperdrop = true,
+})
+vlf_jukebox.register_record({
+	title = "Wait",
+	author = "Sn0wShepherd",
+	id = "wait",
+	texture = "vlf_jukebox_record_wait.png",
+	sound = "vlf_jukebox_track_wait",
+	exclude_from_creeperdrop = true,
+})
+vlf_jukebox.register_record({
+	title = "Ward",
+	author = "Sn0wShepherd",
+	id = "ward",
+	texture = "vlf_jukebox_record_ward.png",
+	sound = "vlf_jukebox_track_ward",
 	exclude_from_creeperdrop = true,
 })
 

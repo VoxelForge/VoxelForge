@@ -1,12 +1,12 @@
 # API
 ## Groups
-VoxelCraft makes very extensive use of groups. Making sure your items and
+VoxelForge makes very extensive use of groups. Making sure your items and
 objects have the correct group memberships is very important. Groups are
 explained in `GROUPS.md`.
 
 ## Mod naming convention
-Mods mods in VoxelCraft follow a simple naming convention: Mods with the prefix
-“`vlc_`” are specific to VoxelCraft, although they may be based on an existing
+Mods mods in VoxelForge follow a simple naming convention: Mods with the prefix
+“`vlc_`” are specific to VoxelForge, although they may be based on an existing
 standalone. Mods which lack this prefix are *usually* verbatim copies of a
 standalone mod. Some modifications may still have been applied, but the APIs are
 held compatible.
@@ -55,7 +55,7 @@ Use the `vlc_sounds` mod for the sounds.
 ## APIs
 A lot of things are possible by using one of the APIs in the mods. Note that not
 all APIs are documented yet, but it is planned. The following APIs should be
-more or less stable but keep in mind that VoxelCraft is still unfinished. All
+more or less stable but keep in mind that VoxelForge is still unfinished. All
 directory names are relative to `mods/`
 
 ### Items
@@ -72,7 +72,7 @@ directory names are relative to `mods/`
 ### Mobs
 * Mobs: `ENTITIES/vlc_mobs`
 
-VoxelCraft uses its own mobs framework, called “vlc_mobs”.
+VoxelForge uses its own mobs framework, called “vlc_mobs”.
 This is a fork of [mobs redo](https://codeberg.org/tenplus1/mobs_redo) by TenPlus1.
 
 You can add your own mobs, spawn eggs and spawning rules with this mod. API
@@ -82,7 +82,7 @@ This mod includes modificiations from the original Mobs Redo. Some items have
 been removed or moved to other mods. The API is mostly identical, but a few
 features have been added. Compability is not really a goal, but function and
 attribute names of Mobs Redo 1.41 are kept. If you have code for a mod which
-works fine under Mobs Redo, it should be easy to make it work in VoxelCraft,
+works fine under Mobs Redo, it should be easy to make it work in VoxelForge,
 chances are good that it works out of the box.
 
 ### Help

@@ -1,8 +1,8 @@
-# Mineclonia
+# VoxelForge
 
-[![ContentDB](https://content.minetest.net/packages/ryvnf/mineclonia/shields/downloads/)](https://content.minetest.net/packages/ryvnf/mineclonia/)
+[![ContentDB](https://content.minetest.net/packages/DragonWrangler/voxelforge/shields/downloads/)](https://content.minetest.net/packages/DragonWrangler/voxelforge/)
 
-Неофициальная игра в стиле Minecraft для Minetest. Форк MineClone 2 с фокусом на стабильность, производительность и возможности мультиплеера.
+Неофициальная игра в стиле Minecraft для Minetest. Форк Voxelibre с фокусом на стабильность, производительность и возможности мультиплеера.
 Разработана многими людьми. Не разработана и не одобрена Mojang AB.
 
 ### Игровой процесс
@@ -70,17 +70,17 @@
 ## Установка
 Эта игра требует [Minetest](http://minetest.net) для запуска (версия 5.5.1 или
 выше). Вам нужно сперва установить Minetest. Только стабильные версии поддерживаются
-официально. Не поддерживается запуск Mineclonia на разрабатываемых версиях Minetest.
+официально. Не поддерживается запуск VoxelForge на разрабатываемых версиях Minetest.
 
-Чтобы установить Mineclonia (если вы этого ещё не сделали), переместите эту папку в
+Чтобы установить VoxelForge (если вы этого ещё не сделали), переместите эту папку в
 “games” в папке данных Minetest. Смотрите справку Minetest, чтобы узнать больше.
 
 ## Полезные ссылки
-Репозиторий Mineclonia размещён на [Codeberg](https://codeberg.org).
+Репозиторий VoxelForge размещён на [Codeberg](https://codeberg.org).
 Зайдите туда, чтобы оставить запрос или поучаствовать в разработке.
 
-* Codeberg: <https://codeberg.org/mineclonia/mineclonia>
-* ContentDB: <https://content.minetest.net/packages/ryvnf/mineclonia/>
+* Codeberg: <https://codeberg.org/VoxelForge/VoxelForge>
+* ContentDB: <https://content.minetest.net/packages/ryvnf/VoxelForge/>
 
 ## Цели
 - Создать стабильную, модифицируемую, бесплатную и свободную игру основанную на
@@ -175,7 +175,7 @@ Edition** уже реализовано и доработка имеющегос
 * Другой движок (Minetest)
 * Другие пасхалки
 
-… и наконец, Mineclonia — это свободное программное обеспечение!
+… и наконец, VoxelForge — это свободное программное обеспечение!
 
 ## Другие readme файлы
 
