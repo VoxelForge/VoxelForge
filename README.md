@@ -116,7 +116,7 @@ To install VoxelForge (if you haven't already), move this directory into the
 Minetest to learn more.
 
 ## Useful links
-The VoxelForge repository is hosted at [Codeberg](https://codeberg.org).
+The VoxelForge repository is hosted at [Github](https://github.com).
 To contribute or report issues, head there.
 
 * Github: <https://github/VoxelForge/VoxelForge>
