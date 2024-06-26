@@ -188,7 +188,7 @@ local function door_alias(oldmod,oldwood,newwood)
 	minetest.register_alias(oldmod..":"..oldwood.."_door_b_2", "vlf_doors:door_"..newwood.."_b_2")
 	minetest.register_alias(oldmod..":"..oldwood.."_door_t_2", "vlf_doors:door_"..newwood.."_t_2")
 
-	--alias mcl2's strange _3 and _4 doors
+	--alias mcl's strange _3 and _4 doors
 	minetest.register_alias(oldmod..":"..oldwood.."_door_b_3", "vlf_doors:door_"..newwood.."_b_1")
 	minetest.register_alias(oldmod..":"..oldwood.."_door_t_3", "vlf_doors:door_"..newwood.."_t_1")
 	minetest.register_alias(oldmod..":"..oldwood.."_door_b_4", "vlf_doors:door_"..newwood.."_b_2")

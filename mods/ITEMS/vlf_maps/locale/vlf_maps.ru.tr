@@ -1,4 +1,4 @@
-# textdomain: mcl_maps
+# textdomain: vlf_maps
 Empty Map=Пустая карта
 Empty maps are not useful as maps, but they can be stacked and turned to maps which can be used.=Пустые карты не так полезны как карты, но могут складываться в стопки, а также могут быть превращены в полноценные карты.
 Rightclick to create a filled map (which can't be stacked anymore).=Правый клик, чтобы заполнить карту (больше не может складываться в стопки).

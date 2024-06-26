@@ -64,7 +64,7 @@ function vlf_credits.show(player)
 	}
 	add_hud_element({
 		[hud_elem_type_field] = "image",
-		text = "mineclonia_logo.png",
+		text = "voxelforge_logo.png",
 		scale = {x = 1, y = 1},
 	}, huds, 300, 0)
 	add_hud_element({
@@ -95,7 +95,7 @@ function vlf_credits.show(player)
 	end
 	huds.icon = add_hud_element({
 		[hud_elem_type_field] = "image",
-		text = "mineclonia_icon.png",
+		text = "voxelforge_icon.png",
 		scale = {x = 1, y = 1},
 	}, huds, y)
 	vlf_credits.players[name] = huds

@@ -1,4 +1,4 @@
-# textdomain: mcl_observers
+# textdomain: vlf_observers
 Observer=Observador
 Emits redstone pulse when block in front changes=
 An observer is a redstone component which observes the block in front of it and sends a very short redstone pulse whenever this block changes.=Un observador es un componente de redstone que observa el bloque frente a él y envía un pulso muy corto de redstone cada vez que este bloque cambia.

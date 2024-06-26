@@ -1,4 +1,4 @@
-# textdomain: mcl_observers
+# textdomain: vlf_observers
 Observer=Detektor
 Emits redstone pulse when block in front changes=Wysyła sygnał czerwienitowy gdy blok przed nim się zmienia
 An observer is a redstone component which observes the block in front of it and sends a very short redstone pulse whenever this block changes.=Detektor jest mechanizmem czerwienitowym, który obserwuje blok przed sobą i wysyła krótki puls energii czerwienitowej gdy blok ten się zmienia.

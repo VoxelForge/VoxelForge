@@ -1,4 +1,4 @@
-# textdomain: mcl_fire
+# textdomain: vlf_fire
 Fire Charge=Ładunek ognia
 Dispenser projectile=Pocisk do dozownika
 Fire charges are primarily projectiles which can be launched from dispensers, they will fly in a straight line and burst into a fire on impact. Alternatively, they can be used to ignite fires directly.=Ładunki ognia są pociskami, którymi można strzelać z dozowników. Lecą one w linii prostej a po zderzeniu zamieniają się w ogień.

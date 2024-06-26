@@ -1,4 +1,4 @@
-# textdomain: mcl_sponges
+# textdomain: vlf_sponges
 Sponge=
 Removes water on contact=
 Sponges are blocks which remove water around them when they are placed or come in contact with water, turning it into a wet sponge.=

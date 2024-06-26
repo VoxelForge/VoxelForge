@@ -1,4 +1,4 @@
-# textdomain: mcl_smoker
+# textdomain: vlf_smoker
 Smoker=Fumoir
 Cooks food faster than furnace=Cuit la nourriture plus vite qu'un fourneau
 Smokers cook several items, mainly raw foods, into cooked foods, but twice as fast as a normal furnace.=Les fumoirs cuisent plusieurs objets, surtout de la nourriture crue, en de la nourriture cuite.

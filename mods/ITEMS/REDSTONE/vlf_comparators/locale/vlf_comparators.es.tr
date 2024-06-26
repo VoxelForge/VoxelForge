@@ -1,4 +1,4 @@
-# textdomain: mcl_comparators
+# textdomain: vlf_comparators
 Redstone comparators are multi-purpose redstone components.=Los comparadores de Redstone son componentes multipropósito de redstone.
 They can transmit a redstone signal, detect whether a block contains any items and compare multiple signals.=Pueden transmitir una señal de redstone, detectar si un bloque contiene algún elemento y comparar múltiples señales.
 A redstone comparator has 1 main input, 2 side inputs and 1 output. The output is in arrow direction, the main input is in the opposite direction. The other 2 sides are the side inputs.=Un comparador redstone tiene 1 entrada principal, 2 entradas laterales y 1 salida. La salida está en la dirección de la flecha, la entrada principal está en la dirección opuesta. Los otros 2 lados son las entradas laterales.

@@ -1,7 +1,7 @@
-# mcl_villages
+# vlf_villages
 
 When creating buildings or farms for use with this mod, you can prevent paths
-from crossing areas by using the `mcl_villages:no_paths` block. You may need to
+from crossing areas by using the `vlf_villages:no_paths` block. You may need to
 stack them 2 high to prevent all paths. After the village paths have be laid
 this block will be replaced by air.
 
@@ -44,19 +44,19 @@ disable the overground clearance by setting this to true.
 
 	Mainly useful for small thing such as lamps, planters, etc.
 
-### mcl_villages.register_lamp(table)
+### vlf_villages.register_lamp(table)
 
 Register a structure to use as a lamp. These will be added to the table used when
 adding lamps to paths during village creation.
 
-### mcl_villages.register_bell(table)
+### vlf_villages.register_bell(table)
 
 Register a structure to use as a bell. These will be added to the table used when
 adding the bell during village creation.
 
 There is 1 bell per village.
 
-### mcl_villages.register_well(table)
+### vlf_villages.register_well(table)
 
 Register a structure to use as a well. These will be added to the table used when
 adding the wells during village creation.
@@ -66,7 +66,7 @@ village. Every 10 beds add 1 to the maximum number.
 
 e.g. 8 beds == 1 well, 15 beds == 1 or 2 wells, 22 beds == 1 to 3 wells, etc.
 
-### mcl_villages.register_building(table)
+### vlf_villages.register_building(table)
 
 Register a building used for jobs, houses, or other uses.
 
@@ -81,7 +81,7 @@ the village and will not affect the number of jobs or beds.
 
 #### Additional options
 
-The ```mcl_villages.register_building``` call accepts the following optional
+The ```vlf_villages.register_building``` call accepts the following optional
 parameters in the table.
 
 min_jobs
@@ -133,7 +133,7 @@ It takes 2 arguments.
 You can access the current profession and job site data in
 ```mobs_mc.professions``` and ```mobs_mc.jobsites```.
 
-### mcl_villages.register_on_village_placed(func)
+### vlf_villages.register_on_village_placed(func)
 
 This function allows registering functions to be called after a village is
 laid out.
@@ -152,10 +152,10 @@ local function my_village_hook(settlement_info, blockseed)
 	minetest.log("The village has " .. #settlement_info .. " buildings in it!")
 end
 
-mcl_villages.register_on_village_placed(my_village_hook)
+vlf_villages.register_on_village_placed(my_village_hook)
 ```
 
-### mcl_villages.register_on_villager_spawned(func)
+### vlf_villages.register_on_villager_spawned(func)
 
 This function allows registering functions to be called after a villager is
 placed as part of village generation.
@@ -171,7 +171,7 @@ local function my_villager_hook(villager_ent, blockseed)
 	minetest.log("The villager's id is " .. l._id)
 end
 
-mcl_villages.register_on_villager_spawned(my_villager_hook)
+vlf_villages.register_on_villager_spawned(my_villager_hook)
 ```
 
 ## Farm Interface
@@ -179,7 +179,7 @@ mcl_villages.register_on_villager_spawned(my_villager_hook)
 These functions aid creating crops for use use in farms placed during village
 generation.
 
-### mcl_villages.get_crop_types()
+### vlf_villages.get_crop_types()
 
 This allows checking what crop types are supported.
 
@@ -187,21 +187,21 @@ Currently they are: grain, root, gourd, flower, bush, tree.
 
 Placement of gourds should take in to consideration the way they fruit.
 
-### mcl_villages.get_crops()
+### vlf_villages.get_crops()
 
 Returns a table containing all registered crops.
 
-### mcl_villages.get_weighted_crop(biome, crop_type, pr)
+### vlf_villages.get_weighted_crop(biome, crop_type, pr)
 
 Gets a random crop for the biome and crop type.
 
-### mcl_villages.register_crop(crop_def)
+### vlf_villages.register_crop(crop_def)
 
 Registers a crop for use on farms.
 
 crop_def is a table with the following fields:
 
-* `node` the name of the crop node to place. e.g. `mcl_farming:wheat_1`.
+* `node` the name of the crop node to place. e.g. `vlf_farming:wheat_1`.
 * `crop_type` the type crop. e.g. `grain`
 * `biomes` a table containing the weighting to give the crop.
   * Supported biome values are:
@@ -216,9 +216,9 @@ crop_def is a table with the following fields:
 e.g.
 
 ```lua
-mcl_villages.register_crop({
+vlf_villages.register_crop({
 	type = "grain",
-	node = "mcl_farming:wheat_1",
+	node = "vlf_farming:wheat_1",
 	biomes = {
 		acacia = 10,
 		bamboo = 10,
@@ -236,7 +236,7 @@ mcl_villages.register_crop({
 To create a farm that will utilize registered crops you follow the basic process
 for creating a farm, but you leave out the crops.
 
-Once you have your farm constructed then instead of placing crops you place blocks named `mcl_villages:crop_*` over the dirt in the farm.
+Once you have your farm constructed then instead of placing crops you place blocks named `vlf_villages:crop_*` over the dirt in the farm.
 
 Each crop type has 8 blocks that can be used for it. This allows, but does not
 guarantee, variety of crops in a farm.
@@ -249,7 +249,7 @@ swapped for a random root crop, not always carrots.
 
 Each specific node will be replaced by a single item.
 
-e.g. if you use `mcl_villages:crop_root_1` and `mcl_villages:crop_root_2` in your farm then all there will be at most 2 types of root crops on the farm.
+e.g. if you use `vlf_villages:crop_root_1` and `vlf_villages:crop_root_2` in your farm then all there will be at most 2 types of root crops on the farm.
 
 It is random, so both types may get replaced by the same crop.
 
@@ -262,7 +262,7 @@ Once you have saved the schema for your farm you register it with the building i
 e.g.
 
 ```lua
-mcl_villages.register_building({
+vlf_villages.register_building({
 	name = "my_farm",
 	mts = schem_path .. "/my_farm.mts",
 	num_others = 3,

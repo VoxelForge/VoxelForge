@@ -28,31 +28,31 @@ local nidp2_degrotate = {
 		15,
 	}
 }
-local mcl2standingsigns = {}
-mcl2standingsigns["vlf_signs:standing_sign"] = "vlf_signs:standing_sign_oak"
-mcl2standingsigns["vlf_signs:standing_sign_acaciawood"] = "vlf_signs:standing_sign_acacia"
-mcl2standingsigns["vlf_signs:standing_sign_junglewood"] = "vlf_signs:standing_sign_jungle"
-mcl2standingsigns["vlf_signs:standing_sign_birchwood"] = "vlf_signs:standing_sign_birch"
-mcl2standingsigns["vlf_signs:standing_sign_darkwood"] = "vlf_signs:standing_sign_dark_oak"
-mcl2standingsigns["vlf_signs:standing_sign_sprucewood"] = "vlf_signs:standing_sign_spruce"
-mcl2standingsigns["vlf_signs:standing_sign_mangrove_wood"] = "vlf_signs:standing_sign_mangrove"
-mcl2standingsigns["vlf_signs:standing_sign_crimson_hyphae_wood"] = "vlf_signs:standing_sign_crimson"
-mcl2standingsigns["vlf_signs:standing_sign_warped_hyphae_wood"] = "vlf_signs:standing_sign_warped"
-mcl2standingsigns["vlf_signs:standing_sign_cherrywood"] = "vlf_signs:standing_sign_cherry_blossom"
+local mclstandingsigns = {}
+mclstandingsigns["vlf_signs:standing_sign"] = "vlf_signs:standing_sign_oak"
+mclstandingsigns["vlf_signs:standing_sign_acaciawood"] = "vlf_signs:standing_sign_acacia"
+mclstandingsigns["vlf_signs:standing_sign_junglewood"] = "vlf_signs:standing_sign_jungle"
+mclstandingsigns["vlf_signs:standing_sign_birchwood"] = "vlf_signs:standing_sign_birch"
+mclstandingsigns["vlf_signs:standing_sign_darkwood"] = "vlf_signs:standing_sign_dark_oak"
+mclstandingsigns["vlf_signs:standing_sign_sprucewood"] = "vlf_signs:standing_sign_spruce"
+mclstandingsigns["vlf_signs:standing_sign_mangrove_wood"] = "vlf_signs:standing_sign_mangrove"
+mclstandingsigns["vlf_signs:standing_sign_crimson_hyphae_wood"] = "vlf_signs:standing_sign_crimson"
+mclstandingsigns["vlf_signs:standing_sign_warped_hyphae_wood"] = "vlf_signs:standing_sign_warped"
+mclstandingsigns["vlf_signs:standing_sign_cherrywood"] = "vlf_signs:standing_sign_cherry_blossom"
 
-local mcl2rotsigns = {}
+local mclrotsigns = {}
 
 for _,v in pairs(rotkeys) do
-	mcl2rotsigns["vlf_signs:standing_sign"..v] = "vlf_signs:standing_sign_oak"
-	mcl2rotsigns["vlf_signs:standing_sign"..v.."_acaciawood"] = "vlf_signs:standing_sign_acacia"
-	mcl2rotsigns["vlf_signs:standing_sign"..v.."_junglewood"] = "vlf_signs:standing_sign_jungle"
-	mcl2rotsigns["vlf_signs:standing_sign"..v.."_birchwood"] = "vlf_signs:standing_sign_birch"
-	mcl2rotsigns["vlf_signs:standing_sign"..v.."_darkwood"] = "vlf_signs:standing_sign_dark_oak"
-	mcl2rotsigns["vlf_signs:standing_sign"..v.."_sprucewood"] = "vlf_signs:standing_sign_spruce"
-	mcl2rotsigns["vlf_signs:standing_sign"..v.."_mangrove_wood"] = "vlf_signs:standing_sign_mangrove"
-	mcl2rotsigns["vlf_signs:standing_sign"..v.."_crimson_hyphae_wood"] = "vlf_signs:standing_sign_crimson"
-	mcl2rotsigns["vlf_signs:standing_sign"..v.."_warped_hyphae_wood"] = "vlf_signs:standing_sign_warped"
-	mcl2rotsigns["vlf_signs:standing_sign"..v.."_cherrywood"] = "vlf_signs:standing_sign_cherry_blossom"
+	mclrotsigns["vlf_signs:standing_sign"..v] = "vlf_signs:standing_sign_oak"
+	mclrotsigns["vlf_signs:standing_sign"..v.."_acaciawood"] = "vlf_signs:standing_sign_acacia"
+	mclrotsigns["vlf_signs:standing_sign"..v.."_junglewood"] = "vlf_signs:standing_sign_jungle"
+	mclrotsigns["vlf_signs:standing_sign"..v.."_birchwood"] = "vlf_signs:standing_sign_birch"
+	mclrotsigns["vlf_signs:standing_sign"..v.."_darkwood"] = "vlf_signs:standing_sign_dark_oak"
+	mclrotsigns["vlf_signs:standing_sign"..v.."_sprucewood"] = "vlf_signs:standing_sign_spruce"
+	mclrotsigns["vlf_signs:standing_sign"..v.."_mangrove_wood"] = "vlf_signs:standing_sign_mangrove"
+	mclrotsigns["vlf_signs:standing_sign"..v.."_crimson_hyphae_wood"] = "vlf_signs:standing_sign_crimson"
+	mclrotsigns["vlf_signs:standing_sign"..v.."_warped_hyphae_wood"] = "vlf_signs:standing_sign_warped"
+	mclrotsigns["vlf_signs:standing_sign"..v.."_cherrywood"] = "vlf_signs:standing_sign_cherry_blossom"
 end
 
 function vlf_signs.upgrade_sign_meta(pos)
@@ -76,8 +76,8 @@ function vlf_signs.upgrade_sign_rot(pos,node)
 	local numsign = false
 
 	for _,v in pairs(rotkeys) do
-		if mcl2rotsigns[node.name] then
-			node.name = mcl2rotsigns[node.name]
+		if mclrotsigns[node.name] then
+			node.name = mclrotsigns[node.name]
 			node.param2 = nidp2_degrotate[v][node.param2 + 1]
 			numsign = true
 		elseif node.name:find(v) then
@@ -88,8 +88,8 @@ function vlf_signs.upgrade_sign_rot(pos,node)
 	end
 
 	if not numsign then
-		if mcl2standingsigns[node.name] then
-			node.name = mcl2standingsigns[node.name]
+		if mclstandingsigns[node.name] then
+			node.name = mclstandingsigns[node.name]
 		end
 		local def = minetest.registered_nodes[node.name]
 		if def and def._vlf_sign_type == "standing" then
@@ -115,8 +115,8 @@ minetest.register_lbm({
 	action = vlf_signs.upgrade_sign_rot,
 })
 
-for k,_ in pairs(mcl2rotsigns) do table.insert(vlf_signs.old_rotnames, k) end
-for k,_ in pairs(mcl2standingsigns) do table.insert(vlf_signs.old_rotnames, k) end
+for k,_ in pairs(mclrotsigns) do table.insert(vlf_signs.old_rotnames, k) end
+for k,_ in pairs(mclstandingsigns) do table.insert(vlf_signs.old_rotnames, k) end
 minetest.register_lbm({
 	nodenames = vlf_signs.old_rotnames,
 	name = ":vlf_signs:update_old_rotated_standing",

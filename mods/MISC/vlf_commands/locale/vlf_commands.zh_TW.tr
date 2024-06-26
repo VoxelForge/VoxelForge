@@ -1,4 +1,4 @@
-# textdomain: mcl_commands
+# textdomain: vlf_commands
 List bans=查看封鎖列表
 Ban list: @1=封鎖列表：@1
 Players can't be killed right now, damage has been disabled.=玩家現在不能被殺死，傷害已被禁用。

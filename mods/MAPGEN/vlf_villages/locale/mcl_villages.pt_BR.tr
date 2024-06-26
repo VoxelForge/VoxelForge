@@ -1,4 +1,4 @@
-# textdomain: mcl_villages
+# textdomain: vlf_villages
 Crop type @1 is not supported=
 The timer for this @1 has not run yet!=
 A villager sleeps here=
@@ -10,4 +10,4 @@ A place to plant @1 crops=
 ##### not used anymore #####
 
 Chiseled Stone Village Bricks=Tijolos de Aldeia de Pedra Cinzelada
-mcl_villages build tool=ferramenta de construção mcl_villages
+vlf_villages build tool=ferramenta de construção vlf_villages

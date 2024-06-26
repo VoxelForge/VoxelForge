@@ -1,4 +1,4 @@
-# textdomain: mcl_portals
+# textdomain: vlf_portals
 End Portal=終界傳送門
 Used to construct end portals=用於建造終界傳送門
 An End portal teleports creatures and objects to the mysterious End dimension (and back!).=終界傳送門用於將生物和實體到達終末之界（或回來！）。

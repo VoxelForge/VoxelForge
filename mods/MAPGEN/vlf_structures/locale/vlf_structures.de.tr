@@ -1,4 +1,4 @@
-# textdomain: mcl_structures
+# textdomain: vlf_structures
 Generate a pre-defined structure near your position.=Erzeugt ein vordefiniertes Gebäude in Ihrer Nähe.
 Structure placed.=Gebäude platziert.
 Error: No structure type given. Please use “/spawnstruct <type>”.=Fehler: Kein Gebäudetyp angegeben. Bitte benutzen Sie „/spawnstruct <Typ>“.

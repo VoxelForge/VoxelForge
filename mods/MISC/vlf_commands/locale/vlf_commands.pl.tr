@@ -1,4 +1,4 @@
-# textdomain: mcl_commands
+# textdomain: vlf_commands
 List bans=Pokaż zbanowanych
 Ban list: @1=Lista zbanowanych: @1
 Players can't be killed right now, damage has been disabled.=Gracze nie mogą się zabić, obrażenia zostały wyłączone.

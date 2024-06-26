@@ -1,4 +1,4 @@
-# textdomain: mcl_fire
+# textdomain: vlf_fire
 Fire Charge=Boule de Feu
 Dispenser projectile=Distributeur de Projectile
 Fire charges are primarily projectiles which can be launched from dispensers, they will fly in a straight line and burst into a fire on impact. Alternatively, they can be used to ignite fires directly.=Les boules de feu sont principalement des projectiles qui peuvent être lancés à partir de distributeurs, ils voleront en ligne droite et éclateront en feu à l'impact. Alternativement, ils peuvent être utilisés pour allumer des incendies directement.

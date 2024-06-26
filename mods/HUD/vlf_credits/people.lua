@@ -2,12 +2,20 @@ local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 
 return {
+	{S("Creator of VoxelCraft"), 0xFFD332, {
+		"DragonWrangler1",
+	}},
 	{S("Creators of Mineclonia"), 0x0A9400, {
 		"ryvnf",
 		"cora",
 	}},
-	{S("Creator of MineClone 2"), 0xFFFFFF, {
+	{S("Creator of MineClone 5"), 0xA6A6A6, {
+		"kay27"
+	}},
+	{S("Creators of Voxelibre (Formerly Mineclone 2)"), 0xFFFFFF, {
 		"Wuzzy",
+		"the-real-herowl",
+		"ancientmarinerdev",
 	}},
 	{S("Creator of MineClone"), 0xFF51D5, {
 		"davedevils",
@@ -81,6 +89,7 @@ return {
 		"jordan4ibanez",
 		"paramat",
 		"cora",
+		"DragonWrangler1",
 	}},
 	{S("3D Models"), 0x343434, {
 		"22i",
@@ -108,6 +117,7 @@ return {
 		"Aeonix_Aeon",
 		"Wbjitscool",
 		"SmokeyDope",
+		"DragonWrangler1",
 	}},
 	{S("Translations"), 0xFF9705, {
 		"Wuzzy",
@@ -125,7 +135,7 @@ return {
 	}},
 	{S("Special thanks"), 0x00FF60, {
 		"celeron55 for creating Minetest",
-		"Jordach for the jukebox music compilation from Big Freaking Dig",
+		"Sn0wShepherd for making the very nice MineCraft themed music from the Sn0wSong resource pack",
 		"The workaholics who spent way too much time writing for the Minecraft Wiki.",
 		"Notch and Jeb for being the major forces behind Minecraft",
 	}},

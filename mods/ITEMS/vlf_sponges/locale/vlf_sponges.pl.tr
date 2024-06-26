@@ -1,4 +1,4 @@
-# textdomain: mcl_sponges
+# textdomain: vlf_sponges
 Sponge=Gąbka
 Removes water on contact=Usuwa dotkniętą wodę
 Sponges are blocks which remove water around them when they are placed or come in contact with water, turning it into a wet sponge.=Gąbki to bloki które usuwają wodę wokół siebie gdy są postawione, lub gdy wejdą w kontakt z wodą, zamieniając się w mokre gąbki.

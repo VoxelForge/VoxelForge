@@ -1,4 +1,4 @@
-# textdomain: mcl_commands
+# textdomain: vlf_commands
 List bans=Список банов
 Ban list: @1=Список банов: @1
 Players can't be killed right now, damage has been disabled.=Игроки не могут быть убиты прямо сейчас, урон отключён.

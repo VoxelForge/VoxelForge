@@ -1,4 +1,4 @@
--- compatibility layer with the new mcl2 hopper API
+-- compatibility layer with the new mcl hopper API
 function vlf_util.select_stack(src_inventory, src_list, dst_inventory, dst_list, condition)
 	local src_size = src_inventory:get_size(src_list)
 	local stack

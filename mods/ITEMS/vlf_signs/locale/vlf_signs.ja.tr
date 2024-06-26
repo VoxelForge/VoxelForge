@@ -1,4 +1,4 @@
-# textdomain: mcl_signs
+# textdomain: vlf_signs
 Sign=看板
 Can be written=書き込み可能
 Signs can be written and come in two variants: Wall sign and sign on a sign post. Signs can be placed on the top and the sides of other blocks, but not below them.=看板は書くことができ、2つのバリエーションがあります（壁かけ看板と立て看板）。看板の設置は、他のブロックの上部と側面にできますが、下部にはできません。

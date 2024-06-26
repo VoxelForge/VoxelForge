@@ -1,4 +1,4 @@
-# textdomain: mcl_portals
+# textdomain: vlf_portals
 End Portal=エンドポータル
 Used to construct end portals=エンドポータルの構築に使用
 An End portal teleports creatures and objects to the mysterious End dimension (and back!).=エンドポータルは、生物や物を不可思議なエンドの次元にテレポートさせます（また戻ってくる事も可能）。

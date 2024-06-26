@@ -1,4 +1,4 @@
-# textdomain: mcl_mobspawners
+# textdomain: vlf_mobspawners
 Mob Spawner=
 Makes mobs appear=
 A mob spawner regularily causes mobs to appear around it while a player is nearby. Some mob spawners are disabled while in light.=

@@ -1,4 +1,4 @@
-# textdomain: mcl_books
+# textdomain: vlf_books
 Book=本
 Books are used to make bookshelves and book and quills.=本は、本棚や本と羽根ペンの材料として使われています。
 “@1”=“@1”

@@ -1,4 +1,4 @@
-# textdomain: mcl_books
+# textdomain: vlf_books
 Book=Książka
 Books are used to make bookshelves and book and quills.=Książki są używane do tworzenia półek z książkami oraz książek z piórem.
 “@1”=„@1”

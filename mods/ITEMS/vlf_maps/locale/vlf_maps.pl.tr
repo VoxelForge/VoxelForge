@@ -1,4 +1,4 @@
-# textdomain: mcl_maps
+# textdomain: vlf_maps
 Empty Map=Pusta mapa
 Empty maps are not useful as maps, but they can be stacked and turned to maps which can be used.=Puste mapy nie są tak użyteczne jak mapy ale mogą być grupowane i zamienione w mapy które już są pożyteczne.
 Rightclick to create a filled map (which can't be stacked anymore).=Kliknij prawy przycisk aby stworzyć wypełnioną mapę (nie będzie już jej można grupować).

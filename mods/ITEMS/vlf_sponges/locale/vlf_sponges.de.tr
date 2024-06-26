@@ -1,4 +1,4 @@
-# textdomain: mcl_sponges
+# textdomain: vlf_sponges
 Sponge=Schwamm
 Removes water on contact=Entfernt Wasser bei Berührung
 Sponges are blocks which remove water around them when they are placed or come in contact with water, turning it into a wet sponge.=Schwämme sind Blöcke, die Wasser um sie herum entfernen, wenn sie platziert wurden oder in Berührung mit Wasser kommen, was sie in einen nassen Schwamm verwandelt.

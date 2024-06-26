@@ -1,4 +1,4 @@
-# textdomain: mcl_maps
+# textdomain: vlf_maps
 Empty Map=空地圖
 Empty maps are not useful as maps, but they can be stacked and turned to maps which can be used.=空的地圖作為地圖是沒有用的，但它們可以被疊加，並變成可以使用的地圖。
 Rightclick to create a filled map (which can't be stacked anymore).=

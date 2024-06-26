@@ -1,4 +1,4 @@
-# textdomain: mcl_fire
+# textdomain: vlf_fire
 Fire Charge=Feuerkugel
 Dispenser projectile=Werferprojektil
 Fire charges are primarily projectiles which can be launched from dispensers, they will fly in a straight line and burst into a fire on impact. Alternatively, they can be used to ignite fires directly.=Feuerkugeln sind hauptsächlich Projektile, die von Werfern geworfen werden können, sie werden in einer geraden Linie fliegen und gehen beim Einschlag in Flammen auf. Alternativ können sie benutzt werden, um direkt ein Feuer zu entfachen.

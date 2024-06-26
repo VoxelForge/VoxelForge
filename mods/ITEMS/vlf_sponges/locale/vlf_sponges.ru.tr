@@ -1,4 +1,4 @@
-# textdomain: mcl_sponges
+# textdomain: vlf_sponges
 Sponge=Губка
 Removes water on contact=Убирает воду вблизи
 Sponges are blocks which remove water around them when they are placed or come in contact with water, turning it into a wet sponge.=Губка это блок, который убирает воду вокруг себя, превращаясь в мокрую губку.

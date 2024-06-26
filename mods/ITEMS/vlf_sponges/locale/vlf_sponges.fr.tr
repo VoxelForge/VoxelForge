@@ -1,4 +1,4 @@
-# textdomain: mcl_sponges
+# textdomain: vlf_sponges
 Sponge=Éponge
 Removes water on contact=Élimine l'eau au contact
 Sponges are blocks which remove water around them when they are placed or come in contact with water, turning it into a wet sponge.=Les éponges sont des blocs qui éliminent l'eau autour d'eux lorsqu'ils sont placés ou entrent en contact avec l'eau, la transformant en une éponge humide.

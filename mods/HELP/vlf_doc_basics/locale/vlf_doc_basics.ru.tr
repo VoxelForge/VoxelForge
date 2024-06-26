@@ -1,4 +1,4 @@
-# textdomain: mcl_doc_basics
+# textdomain: vlf_doc_basics
 Advanced usage=Продвинутое использование
 Advanced information which may be nice to know, but is not crucial to gameplay=Дополнительная информация, которую хорошо было бы знать, но не критично для хода игры
 Creative Mode=Творческий режим
@@ -50,9 +50,9 @@ In the command reference, you see some placeholders which you need to replace wi
 Here are some examples to illustrate the command syntax:=Вот несколько примеров, иллюстрирующих синтаксис команды:
 • /mods: No parameters. Just enter “/mods”=• /mods: нет параметров. Просто введите “/mods”
 • /me <action>: 1 parameter. You have to enter “/me ” followed by any text, e.g. “/me orders pizza”=• /me <действие>: 1 параметр. Вы должны ввести “/me“, а затем любой текст, например “/me orders pizza”
-• /give <name> <ItemString>: Two parameters. Example: “/give Player default:apple”=• /give <имя> <ТехническоеНазвание>: два параметра. Пример: “/give Player mcl_core:apple”
+• /give <name> <ItemString>: Two parameters. Example: “/give Player default:apple”=• /give <имя> <ТехническоеНазвание>: два параметра. Пример: “/give Player vlf_core:apple”
 • /help [all|privs|<cmd>]: Valid inputs are “/help”, “/help all”, “/help privs”, or “/help ” followed by a command name, like “/help time”=• /help [all|privs|<команда>]: допустимыми командами будут являться: “/help”, “/help all”, “/help privs” или “/help ” и имя команды, например: “/help time”
-• /spawnentity <EntityName> [<X>,<Y>,<Z>]: Valid inputs include “/spawnentity boats:boat” and “/spawnentity boats:boat 0,0,0”=• /spawnentity <ИмяСущности> [<Х>,<У>,<Z>]: допустимыми командами будут являться: “/spawnentity mcl_boats:boat” и “/spawnentity mcl_boats:boat 0,0,0”
+• /spawnentity <EntityName> [<X>,<Y>,<Z>]: Valid inputs include “/spawnentity boats:boat” and “/spawnentity boats:boat 0,0,0”=• /spawnentity <ИмяСущности> [<Х>,<У>,<Z>]: допустимыми командами будут являться: “/spawnentity vlf_boats:boat” и “/spawnentity vlf_boats:boat 0,0,0”
 Some final remarks:=Некоторые заключительные замечания:
 • For /give and /giveme, you need an itemstring. This is an internally used unique item identifier which you may find in the item help if you have the “give” or “debug” privilege=• Для /give и /giveme вам понадобится “техническое название” (ItemString). Это уникальный идентификатор предмета для внутреннего использования, его можно найти в справке по предмету, если у вас есть привилегия “give” или  “debug”
 • For /spawnentity you need an entity name, which is another identifier=• Для /spawnentity вам нужно имя сущности, которое также является идентификатором
@@ -358,7 +358,7 @@ Players can take damage for a variety of reasons:=
 • Drowning=• Утопление
 • Being attacked by another player=• Нападение другого игрока
 • Being attacked by a computer enemy=• Нападение компьютерного врага
-At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless mcl_keepInventory is enabled)=
+At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless vlf_keepInventory is enabled)=
 Some blocks reduce breath. While being with the head in a block which causes drowning, the breath points are reduced by 1 for every 2 seconds. When all breath is gone, the player starts to suffer drowning damage. Breath is quickly restored in any other block.=Некоторые блоки уменьшают дыхание. При нахождении с головой в блоке, который вызывает утопление, очки дыхания уменьшаются на 1 каждые 2 секунды. Когда все очки дыхания пропадают, игрок начинает получать урон от утопления. Очки дыхания быстро восстанавливаются в любом другом блоке.
 Damage can be disabled on any world. Without damage, players are immortal and health and breath are unimportant.=Урон можно отключить в любом мире. Без включенного урона игроки бессмертны, и здоровье и дыхание для них неважны.
 In multiplayer, the name of other players is written above their head.=

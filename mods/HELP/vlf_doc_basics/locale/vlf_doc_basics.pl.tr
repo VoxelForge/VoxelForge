@@ -1,4 +1,4 @@
-# textdomain: mcl_doc_basics
+# textdomain: vlf_doc_basics
 Advanced usage=Zaawansowane użycie
 Advanced information which may be nice to know, but is not crucial to gameplay=Zaawansowane informacje które mogą być przydatne, ale nie są niezbędne podczas grania
 Creative Mode=Tryb kreatywny
@@ -358,7 +358,7 @@ Players can take damage for a variety of reasons:=
 • Drowning=• Tonięcie
 • Being attacked by another player=• Zaatakowanie przez innego gracza
 • Being attacked by a computer enemy=• Zaatakowanie przez przeciwnika sterowanego przez komputer
-At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless mcl_keepInventory is enabled)=
+At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless vlf_keepInventory is enabled)=
 Some blocks reduce breath. While being with the head in a block which causes drowning, the breath points are reduced by 1 for every 2 seconds. When all breath is gone, the player starts to suffer drowning damage. Breath is quickly restored in any other block.=Niektóre bloki zmniejszają oddech. Podczas przebywania w bloku powodującym topienie się, punkty oddechu są zmniejszane o 1 co 2 sekundy. Gdy punkty oddechu się skończą, gracz zacznie otrzymywać obrażenia od tonięcia. Oddech szybko odnawia się w dowolnym innym bloku.
 Damage can be disabled on any world. Without damage, players are immortal and health and breath are unimportant.=Obrażenia mogą zostać wyłączone w dowolnym świecie. Bez obrażeń gracze są nieśmiertelni, a ich życie i oddech są nieistotne.
 In multiplayer, the name of other players is written above their head.=

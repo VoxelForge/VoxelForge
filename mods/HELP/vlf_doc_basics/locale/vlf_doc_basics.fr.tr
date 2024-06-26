@@ -1,4 +1,4 @@
-# textdomain: mcl_doc_basics
+# textdomain: vlf_doc_basics
 Advanced usage=Utilisation avancée
 Advanced information which may be nice to know, but is not crucial to gameplay=Informations avancées qui peuvent être agréables à connaître, mais qui ne sont pas cruciales pour le gameplay
 Creative Mode=Mode Creatif
@@ -358,7 +358,7 @@ Players can take damage for a variety of reasons:=
 • Drowning=• Noyade
 • Being attacked by another player=• Être attaqué par un autre joueur
 • Being attacked by a computer enemy=• Être attaqué par un ennemi informatique
-At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless mcl_keepInventory is enabled)=
+At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless vlf_keepInventory is enabled)=
 Some blocks reduce breath. While being with the head in a block which causes drowning, the breath points are reduced by 1 for every 2 seconds. When all breath is gone, the player starts to suffer drowning damage. Breath is quickly restored in any other block.=Certains blocs réduisent la respiration. Tout en étant avec la tête dans un bloc qui provoque la noyade, les points de respiration sont réduits de 1 toutes les 2 secondes. Quand tout le souffle est parti, le joueur commence à subir des dégâts de noyade. Le souffle est rapidement rétabli dans tout autre bloc.
 Damage can be disabled on any world. Without damage, players are immortal and health and breath are unimportant.=Les dégâts peuvent être désactivés sur n'importe quel monde. Sans dégâts, les joueurs sont immortels et la santé et le souffle sont sans importance.
 In multiplayer, the name of other players is written above their head.=

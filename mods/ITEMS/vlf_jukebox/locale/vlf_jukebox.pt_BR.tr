@@ -1,4 +1,4 @@
-# textdomain: mcl_jukebox
+# textdomain: vlf_jukebox
 Music Disc=Disco de Música
 A music disc holds a single music track which can be used in a jukebox to play music.=Um disco de música contém uma única faixa de música ao qual pode ser usado em uma jukebox para tocar música.
 Place a music disc into an empty jukebox to play the music. Use the jukebox again to retrieve the music disc. The music can only be heard by you, not by other players.=Posicione um disco de música em uma jukebox vazia para tocar a música. Use novamente a jukebox para pegar o disco de música de volta. A música pode ser ouvida apenas por você, não por outros jogadores.
