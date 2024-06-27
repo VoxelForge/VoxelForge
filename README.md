@@ -235,4 +235,4 @@ Technical differences from Minecraft:
 * [API.md](../../../src/branch/main/API.md): For Minetest modders who want to mod this game
 * [LEGAL.md](../../../src/branch/main/LEGAL.md): Legal information
 * [CREDITS.md](../../../src/branch/main/CREDITS.md): List of everyone who contributed
-# VLC
+# VLF
