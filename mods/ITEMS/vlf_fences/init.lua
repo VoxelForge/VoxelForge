@@ -82,10 +82,10 @@ function vlf_fences.register_fence_gate(id, fence_gate_name, texture, groups, ha
 	local gate_id = "vlf_fences:"..id.."_gate"
 	local open_gate_id = gate_id .. "_open"
 	if not sound_open then
-		sound_open = "doors_fencegate_open"
+		sound_open = "vlf_fences_fencegate_open"
 	end
 	if not sound_close then
-		sound_close = "doors_fencegate_close"
+		sound_close = "vlf_fences_fencegate_close"
 	end
 	if not sound_gain_open then
 		sound_gain_open = 0.3

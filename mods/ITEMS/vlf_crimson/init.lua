@@ -4,7 +4,7 @@ local modpath = minetest.get_modpath(modname)
 local schempath = minetest.get_modpath("vlf_schematics")
 -- Warped and Crimson fungus
 -- by debiankaios
--- adapted for mcl2 by cora
+-- adapted for mcl by cora
 
 local nether_plants = {
 	["vlf_crimson:crimson_nylium"] = {

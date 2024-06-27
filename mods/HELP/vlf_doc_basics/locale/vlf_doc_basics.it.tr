@@ -1,4 +1,4 @@
-# textdomain: mcl_doc_basics
+# textdomain: vlf_doc_basics
 Advanced usage=Utilizzo avanzato
 Advanced information which may be nice to know, but is not crucial to gameplay=
 Creative Mode=
@@ -358,7 +358,7 @@ Players can take damage for a variety of reasons:=
 • Drowning=
 • Being attacked by another player=
 • Being attacked by a computer enemy=
-At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless mcl_keepInventory is enabled)=
+At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless vlf_keepInventory is enabled)=
 Some blocks reduce breath. While being with the head in a block which causes drowning, the breath points are reduced by 1 for every 2 seconds. When all breath is gone, the player starts to suffer drowning damage. Breath is quickly restored in any other block.=Alcuni blocchi riducono l'ossigeno. Stando con la testa in un blocco che causa l'annegamento, i punti ossigeno vengono ridotti di uno ogni due secondi. Quando tutto l'ossigeno è finito, il/la utente inizia a subire il ferimento da annegamento. L'ossigeno viene ripristinato rapidamente in ogni altro blocco.
 Damage can be disabled on any world. Without damage, players are immortal and health and breath are unimportant.=Il ferimento può essere disabilitato in qualunque mondo. Senza ferimento, gli/le utenti sono immortali, e salute e ossigeno non hanno importanza.
 In multiplayer, the name of other players is written above their head.=

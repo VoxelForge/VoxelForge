@@ -373,3 +373,90 @@ end
 register_nodes_from_json("nodes.json")
 dofile(minetest.get_modpath("vlf_json") .. "/items.lua")
 
+
+--[[ Required
+local minetest = minetest or {}
+
+-- Function to read a file and return its contents as a string
+local function read_file(file_path)
+    local file = io.open(file_path, "r")
+    if not file then
+        return nil, "Could not open file: " .. file_path
+    end
+    local content = file:read("*all")
+    file:close()
+    return content
+end
+
+-- Function to parse C++ file and extract functions
+local function parse_cpp_file(content)
+    local functions = {}
+    for return_type, func_name, params in content:gmatch("([%w_][%w%s_%*&:]*)%s+([%w_][%w_]*)%s*%(([^)]*)%)") do
+        local func = {
+            return_type = return_type,
+            name = func_name,
+            parameters = params
+        }
+        table.insert(functions, func)
+    end
+    return functions
+end
+
+-- Function to convert the extracted functions into a Lua table
+local function cpp_to_lua(file_path)
+    local content, err = read_file(file_path)
+    if not content then
+        return nil, err
+    end
+    local functions = parse_cpp_file(content)
+    return functions
+end
+
+-- Function to get all enabled mods
+local function get_enabled_mods()
+    return minetest.get_modnames()
+end
+
+-- Function to get the path of a mod
+local function get_mod_path(modname)
+    return minetest.get_modpath(modname)
+end
+
+-- Main function to parse .cpp files from all enabled mods
+local function parse_cpp_from_enabled_mods()
+    local enabled_mods = get_enabled_mods()
+    local all_functions = {}
+
+    for _, modname in ipairs(enabled_mods) do
+        local modpath = get_mod_path(modname)
+        if modpath then
+            for file in io.popen('find "' .. modpath .. '" -name "*.cpp"'):lines() do
+                local functions, err = cpp_to_lua(file)
+                if functions then
+                    all_functions[modname] = all_functions[modname] or {}
+                    for _, func in ipairs(functions) do
+                        table.insert(all_functions[modname], func)
+                    end
+                else
+                    print("Error parsing file " .. file .. ": " .. err)
+                end
+            end
+        else
+            print("Could not get path for mod: " .. modname)
+        end
+    end
+
+    return all_functions
+end
+
+-- Example usage
+local all_functions = parse_cpp_from_enabled_mods()
+for modname, functions in pairs(all_functions) do
+    print("Mod: " .. modname)
+    for _, func in ipairs(functions) do
+        print("  Function Name: " .. func.name)
+        print("  Return Type: " .. func.return_type)
+        print("  Parameters: " .. func.parameters)
+    end
+end
+]]

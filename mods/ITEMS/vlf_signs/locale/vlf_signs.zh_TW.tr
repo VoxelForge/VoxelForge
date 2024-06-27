@@ -1,4 +1,4 @@
-# textdomain: mcl_signs
+# textdomain: vlf_signs
 Sign=告示牌
 Can be written=可以寫字
 Signs can be written and come in two variants: Wall sign and sign on a sign post. Signs can be placed on the top and the sides of other blocks, but not below them.=告示牌可以寫字，有兩種變體：牆上的告示牌和柱上的告示牌。告示牌可以放在其他方塊的頂部和側面，但不能放在下面。

@@ -1,4 +1,4 @@
-# textdomain: mcl_fire
+# textdomain: vlf_fire
 Fire Charge=火焰彈
 Dispenser projectile=發射器投射物
 Fire charges are primarily projectiles which can be launched from dispensers, they will fly in a straight line and burst into a fire on impact. Alternatively, they can be used to ignite fires directly.=火焰彈主要是可以從發射器中發射的投射物，它們會沿直線飛行，並在撞擊時爆裂成火。另外，它們也可以用來直接點燃火焰。

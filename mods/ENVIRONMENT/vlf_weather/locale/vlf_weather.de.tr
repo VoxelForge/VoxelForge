@@ -1,4 +1,4 @@
-# textdomain: mcl_weather
+# textdomain: vlf_weather
 Gives ability to control weather=Fähigkeit, das Wetter zu beeinflussen
 Changes the weather to the specified parameter.=Ändert das Wetter.
 Error: No weather specified.=Fehler: Kein Wetter angegeben.

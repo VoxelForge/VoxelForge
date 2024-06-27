@@ -1,4 +1,4 @@
-# textdomain: mcl_comparators
+# textdomain: vlf_comparators
 Redstone comparators are multi-purpose redstone components.=レッドストーンコンパレータは、多目的なレッドストーン部品です。
 They can transmit a redstone signal, detect whether a block contains any items and compare multiple signals.=レッドストーン信号の送信、ブロックにアイテムが含まれているかどうかの検出、複数の信号の比較などが可能です。
 A redstone comparator has 1 main input, 2 side inputs and 1 output. The output is in arrow direction, the main input is in the opposite direction. The other 2 sides are the side inputs.=レッドストーンコンパレータは、1つのメイン入力、2つのサイド入力、1つの出力を持ちます。出力は矢印方向で、メイン入力はその反対方向です。残りの2辺はサイド入力です。

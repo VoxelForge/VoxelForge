@@ -1,14 +1,26 @@
-# VoxelCraft
+# VoxelForge
 
-[![ContentDB](https://content.minetest.net/packages/DragonWrangler/voxelcraft/shields/downloads/)](https://content.minetest.net/packages/DragonWrangler/voxelcraft/)
+[![ContentDB](https://content.minetest.net/packages/DragonWrangler/voxelforge/shields/downloads/)](https://content.minetest.net/packages/DragonWrangler/VoxelForge/)
 
-An unofficial Minecraft-like game for Minetest. Fork of MineClone 2 with focus
+An unofficial Minecraft-like game for Minetest. Fork of Voxelibre and Mineclonia with focus
 on stability, multiplayer performance and features. For information about
-migrating from MineClone 2 or Mineclonia to VoxelCraft, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
+migrating from Voxelibre or Mineclonia to VoxelForge, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
 
-Version: 0.101.0
+Version: Dev-0.2.0
 
-### Differences from MineClone 2
+### Differences from Mineclonia
+* More copper
+* More minecraft like font.
+* Menu Music and different Jukebox music
+* better structure platforms
+* bubble columns
+
+### Differences from Voxelibre
+* Mace
+* More minecraft like font.
+* Different Jukebox music
+* Better structure platforms
+* bubble columns
 * Overworld depth increased from 64 to 128 nodes
 * Improved nether portals
 * Improved leaf decay
@@ -20,7 +32,7 @@ Version: 0.101.0
 * Functional loom to apply banner patterns
 * Lush caves biome
 * Cherry grove biome
-* No in-game music, twice as small compared to MineClone 2
+* No in-game music, twice as small compared to Voxelibre
 * No hamburgers
 * More features but almost 10k lines of code less
 
@@ -93,35 +105,34 @@ an explanation.
 ## Installation
 This game requires [Minetest](http://minetest.net) to run (version 5.5.1 or
 later). So you need to install Minetest first. Only stable versions of Minetest
-are officially supported. There is no support for running VoxelCraft in
+are officially supported. There is no support for running VoxelForge in
 development versions of Minetest. If you have issues in dev versions, 
 then we will attempt to reproduce them in stable versions, 
 and if we can't then the issue will be closed, 
 and it will be looked into at the next release.
 
-To install VoxelCraft (if you haven't already), move this directory into the
+To install VoxelForge (if you haven't already), move this directory into the
 “games” directory of your Minetest data directory. Consult the help of
 Minetest to learn more.
 
 ## Useful links
-The VoxelCraft repository is hosted at [Codeberg](https://codeberg.org).
+The VoxelForge repository is hosted at [Github](https://github.com).
 To contribute or report issues, head there.
 
-* Codeberg: <https://github/minetest-voxelcraft/voxelcraft>
-* ContentDB: <https://content.minetest.net/packages/DragonWrangler/voxelcraft>
+* Github: <https://github/VoxelForge/VoxelForge>
+* ContentDB: <https://content.minetest.net/packages/DragonWrangler/VoxelForge>
 
 ## Project description
-The main goal of **VoxelCraft** is to be a stable and performant clone of
-Minecraft released as free software.
+The main goal of **VoxelForge** is to be a very close but stable and performant 
+Minecraft clone. released as free software.
 
-* Minecraft is aimed to be cloned as well as Minetest currently permits without
+* We try to clone Minecraft as well as Minetest currently permits without
   resorting to hacks which are too heavyweight or complicated to maintain
-* Cloning the gameplay has highest priority
-* Cloning the interface has low priority. It will only be roughly imitated
-* VoxelCraft will use different graphics and sounds, but with a similar style
+* Cloning the gameplay has highest priority. And overall looks
+* VoxelForge will use different graphics and sounds, but with a similar style
 
 ## Completion status
-This game is currently in **beta** stage.
+This game is currently in **Dev** stage.
 It is playable, but not yet feature-complete.
 Backwards-compatibility is not guaranteed, updating your world might cause bugs
 and things to behave differently.
@@ -216,7 +227,7 @@ Technical differences from Minecraft:
 * Different engine (Minetest)
 * Different easter eggs
 
-… and finally, VoxelCraft is free software (“free” as in “freedom”)!
+… and finally, VoxelForge is free software
 
 ## Other readme files
 * [LICENSE.txt](../../../src/branch/main/LICENSE.txt): The GPLv3 license text

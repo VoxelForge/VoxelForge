@@ -1,4 +1,4 @@
-# textdomain: mcl_experience
+# textdomain: vlf_experience
 Bottle o' Enchanting=
 [[<player>] <xp>]=[[<玩家名字>] <經驗值>]
 Gives a player some XP=給予玩家經驗值

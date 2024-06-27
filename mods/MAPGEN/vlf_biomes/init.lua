@@ -2205,7 +2205,7 @@ local function register_biome_ores()
 	-- Emeralds
 	minetest.register_ore({
 		ore_type       = "scatter",
-		ore            = "vlf_core:stone_with_emerald",
+		ore            = "vlf_core:emerald_ore",
 		wherein        = stonelike,
 		clust_scarcity = 16384,
 		clust_num_ores = 1,
@@ -2239,7 +2239,7 @@ local function register_biome_ores()
 	-- Bonus gold spawn in Mesa
 	minetest.register_ore({
 		ore_type       = "scatter",
-		ore            = "vlf_core:stone_with_gold",
+		ore            = "vlf_core:gold_ore",
 		wherein        = stonelike,
 		clust_scarcity = 3333,
 		clust_num_ores = 5,

@@ -1,4 +1,4 @@
-# textdomain: mcl_structures
+# textdomain: vlf_structures
 Generate a pre-defined structure near your position.=在你的位置附近生成一個預定義的結構。
 Structure placed.=結構已生成。
 Error: No structure type given. Please use “/spawnstruct <type>”.=錯誤：未提供結構類型。請使用「/spawnstruct <種類>」。

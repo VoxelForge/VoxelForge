@@ -1,4 +1,4 @@
-# textdomain: mcl_weather
+# textdomain: vlf_weather
 Gives ability to control weather=Предоставляет возможность управлять погодой
 Changes the weather to the specified parameter.=Меняет погоду на заданное значение.
 Error: No weather specified.=Ошибка: Не указана погода.

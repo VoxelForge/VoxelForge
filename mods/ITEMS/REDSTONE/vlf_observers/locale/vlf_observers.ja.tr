@@ -1,4 +1,4 @@
-# textdomain: mcl_observers
+# textdomain: vlf_observers
 Observer=オブザーバー
 Emits redstone pulse when block in front changes=前方のブロックが変更されると、レッドストーンパルスを送信
 An observer is a redstone component which observes the block in front of it and sends a very short redstone pulse whenever this block changes.=オブザーバーはレッドストーン部品で、目前のブロックを観察し、このブロックが変更されるたびに非常に短いレッドストーンパルスを送信します。

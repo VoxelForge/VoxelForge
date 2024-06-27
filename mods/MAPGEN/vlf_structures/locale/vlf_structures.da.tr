@@ -1,4 +1,4 @@
-# textdomain: mcl_structures
+# textdomain: vlf_structures
 Generate a pre-defined structure near your position.=
 Structure placed.=
 Error: No structure type given. Please use “/spawnstruct <type>”.=

@@ -1,4 +1,4 @@
-# textdomain: mcl_beacons
+# textdomain: vlf_beacons
 Beacon:=Sinalizador:
 Primary Power:=Poder Primário:
 Inventory:=Inventário:

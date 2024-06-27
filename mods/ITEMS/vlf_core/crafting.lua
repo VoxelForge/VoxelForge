@@ -441,7 +441,7 @@ minetest.register_craft({
 minetest.register_craft({
 	type = "cooking",
 	output = "vlf_core:gold_ingot",
-	recipe = "vlf_core:stone_with_gold",
+	recipe = "vlf_core:gold_ore",
 	cooktime = 10,
 })
 
@@ -476,7 +476,7 @@ minetest.register_craft({
 minetest.register_craft({
 	type = "cooking",
 	output = "vlf_core:emerald",
-	recipe = "vlf_core:stone_with_emerald",
+	recipe = "vlf_core:emerald_ore",
 	cooktime = 10,
 })
 

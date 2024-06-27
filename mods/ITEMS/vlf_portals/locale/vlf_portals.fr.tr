@@ -1,4 +1,4 @@
-# textdomain: mcl_portals
+# textdomain: vlf_portals
 End Portal=Portail de l'End
 Used to construct end portals=Utilisé pour construire des portails d'End
 An End portal teleports creatures and objects to the mysterious End dimension (and back!).=Un portail de l'End téléporte des créatures et des objets dans la mystérieuse dimension End (et vice-versa!).

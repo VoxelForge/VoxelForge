@@ -1,4 +1,4 @@
-# textdomain: mcl_observers
+# textdomain: vlf_observers
 Observer=Wächter
 Emits redstone pulse when block in front changes=Macht einen Redstonepuls, wenn der Block vor ihm sich ändert
 An observer is a redstone component which observes the block in front of it and sends a very short redstone pulse whenever this block changes.=Ein Wächter ist eine Redstonekomponente, die den Block vor ihm beobachtet und einen sehr kurzen Redstoneimpuls sendet, wenn sich dieser Block ändert.

@@ -1,4 +1,4 @@
-# textdomain: mcl_mobspawners
+# textdomain: vlf_mobspawners
 Mob Spawner=Spawner mobów
 Makes mobs appear=Tworzy moby
 A mob spawner regularily causes mobs to appear around it while a player is nearby. Some mob spawners are disabled while in light.=Spawner mobów sprawia, że wokół niego regularnie pojawiają się moby, gdy w pobliżu jest gracz. Niektóre spawnery są wyłączone w świetle.

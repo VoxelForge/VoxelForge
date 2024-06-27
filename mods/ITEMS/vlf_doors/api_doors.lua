@@ -49,10 +49,10 @@ function vlf_doors:register_door(name, def)
 	def.groups.mesecon_ignore_opaque_dig = 1
 
 	if not def.sound_open then
-		def.sound_open = "doors_door_open"
+		def.sound_open = "vlf_doors_door_open"
 	end
 	if not def.sound_close then
-		def.sound_close = "doors_door_close"
+		def.sound_close = "vlf_doors_door_close"
 	end
 
 	local box = {{-8/16, -8/16, -8/16, 8/16, 8/16, -5/16}}

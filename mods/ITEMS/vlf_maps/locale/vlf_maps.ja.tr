@@ -1,4 +1,4 @@
-# textdomain: mcl_maps
+# textdomain: vlf_maps
 Empty Map=白紙の地図
 Empty maps are not useful as maps, but they can be stacked and turned to maps which can be used.=白紙の地図は地図として使えませんが、スタックしたり、使える地図に変えられます。
 Rightclick to create a filled map (which can't be stacked anymore).=右クリックで塗りつぶしたマップを作成します（スタックはできなくなります）。

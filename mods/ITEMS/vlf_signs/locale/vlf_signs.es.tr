@@ -1,4 +1,4 @@
-# textdomain: mcl_signs
+# textdomain: vlf_signs
 Sign=Signo / Firmar
 Can be written=Los letreros se pueden escribir
 Signs can be written and come in two variants: Wall sign and sign on a sign post. Signs can be placed on the top and the sides of other blocks, but not below them.=Los letreros se pueden escribir y vienen en dos variantes: letrero de muro y letrero en un poste de letrero. Los letreros se pueden colocar en la parte superior y en los costados de otros bloques, pero no debajo de ellos.

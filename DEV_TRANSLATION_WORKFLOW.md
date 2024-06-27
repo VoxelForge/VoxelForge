@@ -1,19 +1,16 @@
-# The VoxelCraft Translation Maintenance Workflow
+# The VoxelForge Translation Maintenance Workflow
 
 _Adapted from the [Repixture](https://codeberg.org/Wuzzy/Repixture) translation maintenance workflow._
 
-This document is directed to *developers* describing how to make sure the VoxelCraft translation files stay up to date and functional.
-
-**If you just want to translate, go to:** <https://translate.codeberg.org/projects/VoxelCraft/> (you can ignore the rest of the document)
+This document is directed to *developers* describing how to make sure the VoxelForge translation files stay up to date and functional.
 
 ## Introduction
 
-VoxelCraft translations utilize Weblate to allow translators to translate the game online. But for this to work, the workflow to maintain translations is a little bit more involved.
+VoxelForge translations utilize Weblate to allow translators to translate the game online. But for this to work, the workflow to maintain translations is a little bit more involved.
 
-Rather than translating strings directly in the TR files, translators are encouraged to go to <https://translate.codeberg.org/projects/VoxelCraft/> to translate the string. The VoxelCraft maintainer(s) do the rest.
 
-* **TR files** (`*.tr`) contain the translation that VoxelCraft actually uses in the game. They can be found in the `locale` subdirectories of the mods
-* **PO files** (`*.po`) are automatically generated and are required for Weblate to work. VoxelCraft ignores them. They can be found in the `poconvert` subdirectory of those `locale` directories
+* **TR files** (`*.tr`) contain the translation that VoxelForge actually uses in the game. They can be found in the `locale` subdirectories of the mods
+* **PO files** (`*.po`) are automatically generated and are required for Weblate to work. VoxelForge ignores them. They can be found in the `poconvert` subdirectory of those `locale` directories
 
 **IMPORTANT**: Translators should NOT translate the TR or PO files in this game repository, as it disrupts the workflow. They are adviced to go to the aforementioned website instead.
 

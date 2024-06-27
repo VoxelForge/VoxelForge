@@ -1,4 +1,4 @@
-# textdomain: mcl_commands
+# textdomain: vlf_commands
 List bans=
 Ban list: @1=
 Players can't be killed right now, damage has been disabled.=

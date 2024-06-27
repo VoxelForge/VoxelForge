@@ -1,4 +1,4 @@
-# textdomain: mcl_doc_basics
+# textdomain: vlf_doc_basics
 Advanced usage=高度な使用方法
 Advanced information which may be nice to know, but is not crucial to gameplay=知っておくと便利だが、ゲームプレイには重要でない高度な情報
 Creative Mode=クリエイティブモード
@@ -358,7 +358,7 @@ Players can take damage for a variety of reasons:=
 • Drowning=・溺れる
 • Being attacked by another player=・他のプレイヤーから攻撃される
 • Being attacked by a computer enemy=・コンピュータの敵から攻撃される
-At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless mcl_keepInventory is enabled)=
+At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless vlf_keepInventory is enabled)=
 Some blocks reduce breath. While being with the head in a block which causes drowning, the breath points are reduced by 1 for every 2 seconds. When all breath is gone, the player starts to suffer drowning damage. Breath is quickly restored in any other block.=いくつかの溺れる効果のあるブロックに頭を入れている間は、2秒ごとにBP（ブレスポイント）が1ずつ減少します。息がなくなると、溺水ダメージを受けるようになります。そのほかのブロックではすぐに呼吸が回復します。
 Damage can be disabled on any world. Without damage, players are immortal and health and breath are unimportant.=ダメージはどのワールドでも無効にできます。 ダメージがなければプレイヤーは不死であり、ヘルスやブレスは重要ではありません。
 In multiplayer, the name of other players is written above their head.=

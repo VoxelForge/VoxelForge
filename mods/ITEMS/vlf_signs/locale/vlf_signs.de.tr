@@ -1,4 +1,4 @@
-# textdomain: mcl_signs
+# textdomain: vlf_signs
 Sign=Zeichen / Schild
 Can be written=Kann beschriftet werden
 Signs can be written and come in two variants: Wall sign and sign on a sign post. Signs can be placed on the top and the sides of other blocks, but not below them.=Schilder können beschrieben werden und kommen in zwei Varianten: Wandschild und stehendes Schild. Sie können auf und an den Seiten von anderen Blöclen platziert werden, aber nicht unter ihnen.

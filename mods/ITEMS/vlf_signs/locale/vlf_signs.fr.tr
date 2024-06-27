@@ -1,4 +1,4 @@
-# textdomain: mcl_signs
+# textdomain: vlf_signs
 Sign=Panneau / signe
 Can be written=Peut être écrit
 Signs can be written and come in two variants: Wall sign and sign on a sign post. Signs can be placed on the top and the sides of other blocks, but not below them.=Les panneaux peuvent être écrits et se déclinent en deux variantes: panneau mural et panneau sur poteau. Des panneaux peuvent être placés en haut et sur les côtés des autres blocs, mais pas en dessous.

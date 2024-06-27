@@ -24,7 +24,7 @@ Command blocks support placeholders, insert one of these placeholders and they w
 • “@@r”: random player currently in the world=• „@@r“: Zufälliger Spieler in der Welt
 • “@@@@”: literal “@@” sign=• „@@@@“: Nur das „@@“-Zeichen
 Example 1:@n    time 12000@nSets the game clock to 12:00=1. Beispiel:@n    time 12000@nSetzt die Spieluhr auf 12:00 Uhr
-Example 2:@n    give @@n mcl_core:apple 5@nGives the nearest player 5 apples=2. Beispiel:@n    give @@n mcl_core:apple 5@nGibt dem nächsten Spieler 5 Äpfel
+Example 2:@n    give @@n vlf_core:apple 5@nGives the nearest player 5 apples=2. Beispiel:@n    give @@n vlf_core:apple 5@nGibt dem nächsten Spieler 5 Äpfel
 Access denied. You need the “maphack” privilege to edit command blocks.=Zugriff verweigert. Sie brauchen das „maphack“-Privileg, um Befehlsblöcke zu bearbeiten.
 Editing the command block has failed! You can only change the command block in Creative Mode!=Bearbeitung des Befehlsblocks fehlgeschlagen! Sie können den Befehlsblock nur im Kreativmodus ändern!
 Editing the command block has failed! The command block is gone.=Bearbeiten des Befehlsblocks fehlgeschlagen! Der Befehlsblock ist verschwunden.

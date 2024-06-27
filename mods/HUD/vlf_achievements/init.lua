@@ -543,7 +543,7 @@ if non_pc_achievements then
 		icon = "default_emerald.png",
 		trigger = {
 			type = "dig",
-			node = "vlf_core:stone_with_emerald",
+			node = "vlf_core:emerald_ore",
 			target = 1,
 		}
 	})

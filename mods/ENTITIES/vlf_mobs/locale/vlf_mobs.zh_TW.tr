@@ -1,4 +1,4 @@
-# textdomain: mcl_mobs
+# textdomain: vlf_mobs
 Remove all, nametagged or tamed mobs within the specified distance or everywhere. When unspecified remove all mobs except tamed and nametagged ones.=
 Invalid syntax.=
 This allows you to place a single mob.=允許你放置一個生物。

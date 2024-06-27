@@ -34,7 +34,7 @@ Nodes indicate that they belong to a particular digging group by being member of
 the digging group in their node definition.  "vlf_core:dirt" for example has
 shovely=1 in its groups.  If the digging group has multiple levels the value of
 the group indicates which digging level the node requires.
-"vlf_core:stone_with_gold" for example has pickaxey=4 because it requires a
+"vlf_core:gold_ore" for example has pickaxey=4 because it requires a
 pickaxe of level 4 be mined.
 
 For tools to be able to dig nodes of digging groups they need to use the have

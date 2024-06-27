@@ -243,12 +243,12 @@ local function chest_update_after_close(pos)
 	if node.name == "vlf_chests:trapped_chest_on_small" then
 		minetest.swap_node(pos, { name = "vlf_chests:trapped_chest_small", param2 = node.param2 })
 		find_or_create_entity(pos, "vlf_chests:trapped_chest_small", { "vlf_chests_trapped.png" }, node.param2, false,
-			"default_chest", "vlf_chests_chest", "chest"):reinitialize("vlf_chests:trapped_chest_small")
+			"vlf_chests", "vlf_chests_chest", "chest"):reinitialize("vlf_chests:trapped_chest_small")
 		mesecon.receptor_off(pos, mesecon.rules.pplate)
 	elseif node.name == "vlf_chests:trapped_chest_on_left" then
 		minetest.swap_node(pos, { name = "vlf_chests:trapped_chest_left", param2 = node.param2 })
 		find_or_create_entity(pos, "vlf_chests:trapped_chest_left", vlf_chests.tiles.chest_trapped_double, node.param2, true,
-			"default_chest", "vlf_chests_chest", "chest"):reinitialize("vlf_chests:trapped_chest_left")
+			"vlf_chests", "vlf_chests_chest", "chest"):reinitialize("vlf_chests:trapped_chest_left")
 		mesecon.receptor_off(pos, mesecon.rules.pplate)
 
 		local pos_other = get_double_container_neighbor_pos(pos, node.param2, "left")
@@ -261,7 +261,7 @@ local function chest_update_after_close(pos)
 		local pos_other = get_double_container_neighbor_pos(pos, node.param2, "right")
 		minetest.swap_node(pos_other, { name = "vlf_chests:trapped_chest_left", param2 = node.param2 })
 		find_or_create_entity(pos_other, "vlf_chests:trapped_chest_left", vlf_chests.tiles.chest_trapped_double,
-			node.param2, true, "default_chest", "vlf_chests_chest", "chest")
+			node.param2, true, "vlf_chests", "vlf_chests_chest", "chest")
 			:reinitialize("vlf_chests:trapped_chest_left")
 		mesecon.receptor_off(pos_other, mesecon.rules.pplate)
 	end
@@ -411,7 +411,7 @@ function vlf_chests.register_chest(basename, d)
 		tiles = { "blank.png^[resize:16x16" },
 		use_texture_alpha = "clip",
 		_chest_entity_textures = small_textures,
-		_chest_entity_sound = "default_chest",
+		_chest_entity_sound = "vlf_chests",
 		_chest_entity_mesh = "vlf_chests_chest",
 		_chest_entity_animation_type = "chest",
 		paramtype = "light",
@@ -464,18 +464,18 @@ function vlf_chests.register_chest(basename, d)
 				minetest.swap_node(pos, { name = right_name, param2 = param2 })
 				local p = get_double_container_neighbor_pos(pos, param2, "right")
 				minetest.swap_node(p, { name = left_name, param2 = param2 })
-				create_entity(p, left_name, double_textures, param2, true, "default_chest",
+				create_entity(p, left_name, double_textures, param2, true, "vlf_chests",
 					"vlf_chests_chest", "chest")
 			elseif minetest.get_node(get_double_container_neighbor_pos(pos, param2, "left")).name ==
 					small_name then
 				minetest.swap_node(pos, { name = left_name, param2 = param2 })
-				create_entity(pos, left_name, double_textures, param2, true, "default_chest",
+				create_entity(pos, left_name, double_textures, param2, true, "vlf_chests",
 					"vlf_chests_chest", "chest")
 				local p = get_double_container_neighbor_pos(pos, param2, "left")
 				minetest.swap_node(p, { name = right_name, param2 = param2 })
 			else
 				minetest.swap_node(pos, { name = small_name, param2 = param2 })
-				create_entity(pos, small_name, small_textures, param2, false, "default_chest",
+				create_entity(pos, small_name, small_textures, param2, false, "vlf_chests",
 					"vlf_chests_chest", "chest")
 			end
 		end,
@@ -545,7 +545,7 @@ function vlf_chests.register_chest(basename, d)
 				d.on_rightclick(pos, node, clicker)
 			end
 
-			player_chest_open(clicker, pos, small_name, small_textures, node.param2, false, "default_chest",
+			player_chest_open(clicker, pos, small_name, small_textures, node.param2, false, "vlf_chests",
 				"vlf_chests_chest")
 		end,
 
@@ -565,7 +565,7 @@ function vlf_chests.register_chest(basename, d)
 		tiles = { "blank.png^[resize:16x16" },
 		use_texture_alpha = "clip",
 		_chest_entity_textures = double_textures,
-		_chest_entity_sound = "default_chest",
+		_chest_entity_sound = "vlf_chests",
 		_chest_entity_mesh = "vlf_chests_chest",
 		_chest_entity_animation_type = "chest",
 		paramtype = "light",
@@ -591,7 +591,7 @@ function vlf_chests.register_chest(basename, d)
 				n.name = "vlf_chests:" .. d.canonical_basename .. "_small"
 				minetest.swap_node(pos, n)
 			end
-			create_entity(pos, left_name, double_textures, param2, true, "default_chest", "vlf_chests_chest", "chest")
+			create_entity(pos, left_name, double_textures, param2, true, "vlf_chests", "vlf_chests_chest", "chest")
 		end,
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
 			minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
@@ -612,7 +612,7 @@ function vlf_chests.register_chest(basename, d)
 			close_forms(d.canonical_basename, p)
 
 			minetest.swap_node(p, { name = small_name, param2 = param2 })
-			create_entity(p, small_name, small_textures, param2, false, "default_chest", "vlf_chests_chest", "chest")
+			create_entity(p, small_name, small_textures, param2, false, "vlf_chests", "vlf_chests_chest", "chest")
 		end,
 		after_dig_node = drop_items_chest,
 		on_blast = on_chest_blast,
@@ -716,7 +716,7 @@ function vlf_chests.register_chest(basename, d)
 				d.on_rightclick_left(pos, node, clicker)
 			end
 
-			player_chest_open(clicker, pos, left_name, double_textures, node.param2, true, "default_chest",
+			player_chest_open(clicker, pos, left_name, double_textures, node.param2, true, "vlf_chests",
 				"vlf_chests_chest")
 		end,
 		mesecons = d.mesecons,
@@ -805,7 +805,7 @@ function vlf_chests.register_chest(basename, d)
 			close_forms(d.canonical_basename, p)
 
 			minetest.swap_node(p, { name = small_name, param2 = param2 })
-			create_entity(p, small_name, small_textures, param2, false, "default_chest", "vlf_chests_chest", "chest")
+			create_entity(p, small_name, small_textures, param2, false, "vlf_chests", "vlf_chests_chest", "chest")
 		end,
 		after_dig_node = drop_items_chest,
 		on_blast = on_chest_blast,
@@ -909,7 +909,7 @@ function vlf_chests.register_chest(basename, d)
 				d.on_rightclick_right(pos, node, clicker)
 			end
 
-			player_chest_open(clicker, pos_other, left_name, double_textures, node.param2, true, "default_chest",
+			player_chest_open(clicker, pos_other, left_name, double_textures, node.param2, true, "vlf_chests",
 				"vlf_chests_chest")
 		end,
 		mesecons = d.mesecons,
