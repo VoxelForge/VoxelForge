@@ -28,7 +28,6 @@ vlf_vars.inventory_header = ""
 -- Tool wield size
 vlf_vars.tool_wield_scale = { x = 1.8, y = 1.8, z = 1 }
 
---minetest.register_on_joinplayer(function(player)
 minetest.register_on_mods_loaded(function()
 	minetest.settings:set("font_path", modpath.."/fonts/voxelforge.ttf")
 	minetest.settings:set("font_shadow", "3")
@@ -38,7 +37,7 @@ minetest.register_on_mods_loaded(function()
 end)
 
 minetest.register_on_shutdown(function()
-	minetest.settings:set("font_path", "")
+	minetest.settings:set("font_path", "") -- One day hopefully this will be replaced by a setting that players can set so it's  their default font.
 	minetest.settings:set("font_shadow", "1")
 	minetest.settings:set("font_size", "16")
 	minetest.settings:set("chat_font_size", "")
@@ -186,9 +185,6 @@ minetest.register_globalstep(function(dtime)
 			end
 		end
 end)
-
-
-
 
 -- Mapgen variables
 local mg_name = minetest.get_mapgen_setting("mg_name")

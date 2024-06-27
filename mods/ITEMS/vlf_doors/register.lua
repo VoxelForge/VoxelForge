@@ -12,8 +12,8 @@ vlf_doors:register_door("vlf_doors:iron_door", {
 	tiles_bottom = {"vlf_doors_door_iron_lower.png^[transformFX", "vlf_doors_door_iron_side_lower.png"},
 	tiles_top = {"vlf_doors_door_iron_upper.png^[transformFX", "vlf_doors_door_iron_side_upper.png"},
 	sounds = vlf_sounds.node_sound_metal_defaults(),
-	sound_open = "doors_steel_door_open",
-	sound_close = "doors_steel_door_close",
+	sound_open = "vlf_doors_iron_door_open",
+	sound_close = "vlf_doors_iron_door_close",
 
 	only_redstone_can_open = true,
 })
@@ -37,8 +37,8 @@ vlf_doors:register_trapdoor("vlf_doors:iron_trapdoor", {
 	_vlf_hardness = 5,
 	_vlf_blast_resistance = 5,
 	sounds = vlf_sounds.node_sound_metal_defaults(),
-	sound_open = "doors_steel_door_open",
-	sound_close = "doors_steel_door_close",
+	sound_open = "vlf_doors_iron_trapdoor_open",
+	sound_close = "vlf_doors_iron_trapdoor_close",
 
 	only_redstone_can_open = true,
 })

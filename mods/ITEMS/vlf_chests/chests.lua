@@ -54,7 +54,7 @@ vlf_chests.register_chest("trapped_chest", {
 	on_rightclick = function(pos, node, clicker)
 		minetest.swap_node(pos, { name = "vlf_chests:trapped_chest_on_small", param2 = node.param2 })
 		vlf_chests.find_or_create_entity(pos, "vlf_chests:trapped_chest_on_small", { "vlf_chests_trapped.png" },
-			node.param2, false, "default_chest", "vlf_chests_chest", "chest")
+			node.param2, false, "vlf_chests", "vlf_chests_chest", "chest")
 			:reinitialize("vlf_chests:trapped_chest_on_small")
 		mesecon.receptor_on(pos, trapped_chest_mesecons_rules)
 	end,
@@ -64,7 +64,7 @@ vlf_chests.register_chest("trapped_chest", {
 
 		minetest.swap_node(pos, { name = "vlf_chests:trapped_chest_on_left", param2 = node.param2 })
 		vlf_chests.find_or_create_entity(pos, "vlf_chests:trapped_chest_on_left",
-			vlf_chests.tiles.chest_trapped_double, node.param2, true, "default_chest", "vlf_chests_chest",
+			vlf_chests.tiles.chest_trapped_double, node.param2, true, "vlf_chests", "vlf_chests_chest",
 			"chest"):reinitialize("vlf_chests:trapped_chest_on_left")
 		mesecon.receptor_on(pos, trapped_chest_mesecons_rules)
 
@@ -80,7 +80,7 @@ vlf_chests.register_chest("trapped_chest", {
 
 		minetest.swap_node(pos_other, { name = "vlf_chests:trapped_chest_on_left", param2 = node.param2 })
 		vlf_chests.find_or_create_entity(pos_other, "vlf_chests:trapped_chest_on_left",
-			vlf_chests.tiles.chest_trapped_double, node.param2, true, "default_chest", "vlf_chests_chest",
+			vlf_chests.tiles.chest_trapped_double, node.param2, true, "vlf_chests", "vlf_chests_chest",
 			"chest"):reinitialize("vlf_chests:trapped_chest_on_left")
 		mesecon.receptor_on(pos_other, trapped_chest_mesecons_rules)
 	end

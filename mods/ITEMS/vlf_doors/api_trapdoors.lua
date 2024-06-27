@@ -56,10 +56,10 @@ function vlf_doors:register_trapdoor(name, def)
 	groups.mesecon_ignore_opaque_dig = 1
 
 	if not def.sound_open then
-		def.sound_open = "doors_door_open"
+		def.sound_open = "vlf_doors_trapdoor_open"
 	end
 	if not def.sound_close then
-		def.sound_close = "doors_door_close"
+		def.sound_close = "vlf_doors_trapdoor_close"
 	end
 
 	local function punch(pos)

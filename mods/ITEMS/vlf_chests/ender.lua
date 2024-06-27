@@ -60,7 +60,7 @@ minetest.register_node("vlf_chests:ender_chest_small", {
 		fixed = { -0.4375, -0.5, -0.4375, 0.4375, 0.375, 0.4375 },
 	},
 	_chest_entity_textures = vlf_chests.tiles.ender_chest_texture,
-	_chest_entity_sound = "vlf_chests_enderchest",
+	_chest_entity_sound = "vlf_chests_ender_chest",
 	_chest_entity_mesh = "vlf_chests_chest",
 	_chest_entity_animation_type = "chest",
 	tiles = { "blank.png^[resize:16x16" },
