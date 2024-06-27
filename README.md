@@ -6,35 +6,35 @@ An unofficial Minecraft-like game for Minetest. Fork of Voxelibre and Mineclonia
 on stability, multiplayer performance and features. For information about
 migrating from Voxelibre or Mineclonia to VoxelForge, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
 
-Version: Dev-0.2.0
+Version: Alpha 0.3.0
 
 ### Differences from Mineclonia
-* More copper
+* More copper.
 * More minecraft like font.
-* Menu Music and different Jukebox music
-* better structure platforms
-* bubble columns
+* Menu Music and different Jukebox music.
+* better structure platforms.
+* bubble columns.
+* Different Chat hud.
+* Ingame music.
 
 ### Differences from Voxelibre
 * Mace
 * More minecraft like font.
-* Different Jukebox music
-* Better structure platforms
-* bubble columns
-* Overworld depth increased from 64 to 128 nodes
-* Improved nether portals
-* Improved leaf decay
-* Improved villages
-* Wandering traders and trader llamas
-* Suspicious nodes, pottery shreds and decorated pots
-* Conduits
-* Deep dark biome and ancient hermitage (structure corresponding to ancient city)
-* Functional loom to apply banner patterns
-* Lush caves biome
-* Cherry grove biome
-* No in-game music, twice as small compared to Voxelibre
-* No hamburgers
-* More features but almost 10k lines of code less
+* Different Jukebox music.
+* Better structure platforms.
+* bubble columns.
+* Overworld depth increased from 64 to 128 nodes.
+* Improved nether portals.
+* Improved leaf decay.
+* Improved villages.
+* Wandering traders and trader llamas.
+* Suspicious nodes, pottery shreds and decorated pots.
+* Conduits.
+* Deep dark biome and ancient hermitage (structure corresponding to ancient city).
+* Functional loom to apply banner patterns.
+* Lush caves biome.
+* Cherry grove biome.
+* No hamburgers.
 
 ### Gameplay
 You start in a randomly-generated world made entirely of cubes. You can explore
