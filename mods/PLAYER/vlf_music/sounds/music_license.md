@@ -16,3 +16,7 @@ Minetest Forum says it's CC-BY-SA 4.0
 and CurseForge says Apache License Version 2.0
 
 I will use the CC-BY-SA license.
+
+end.ogg is from MCL2. 
+
+Creative Commons Attribution-ShareAlike 3.0 Unported: [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/)
