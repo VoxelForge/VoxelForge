@@ -21,6 +21,9 @@ vlf_explosions_griefing (Explosion griefing) bool true
 # If disabled, no ores will be generated.
 vlf_generate_ores (Generate ores) bool true
 
+# If disabled, then no music will be heard in the game, except from the menu and jukeboxes.
+vlf_game_music (Play Music) bool true
+
 # Enable minetest mapgen dungeons
 vlf_enable_mt_dungeons (Native Minetest dungeons) bool false
 

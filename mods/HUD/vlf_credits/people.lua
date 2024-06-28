@@ -2,7 +2,7 @@ local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 
 return {
-	{S("Creator of VoxelCraft"), 0xFFD332, {
+	{S("Creator of VoxelForge"), 0xFFD332, {
 		"DragonWrangler1",
 	}},
 	{S("Creators of Mineclonia"), 0x0A9400, {
@@ -12,7 +12,7 @@ return {
 	{S("Creator of MineClone 5"), 0xA6A6A6, {
 		"kay27"
 	}},
-	{S("Creators of Voxelibre (Formerly Mineclone 2)"), 0xFFFFFF, {
+	{S("Creators of Voxelibre (Formerly Mineclone 2)"), 0x7C7A59, {
 		"Wuzzy",
 		"the-real-herowl",
 		"ancientmarinerdev",
@@ -24,7 +24,6 @@ return {
 		"codiac",
 		"ShadowRoi",
 		"nixnoxus",
-		"DragonWrangler1",
 		"laireia",
 		"the-real-herowl",
 		"JoseDouglas26",
