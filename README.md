@@ -6,7 +6,7 @@ An unofficial Minecraft-like game for Minetest. Fork of Voxelibre and Mineclonia
 on stability, multiplayer performance and features. For information about
 migrating from Voxelibre or Mineclonia to VoxelForge, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
 
-Version: Alpha 0.3.0
+Version: Alpha 0.3.1
 
 ### Differences from Mineclonia
 * More copper.
