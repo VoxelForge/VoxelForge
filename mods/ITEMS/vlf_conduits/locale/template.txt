@@ -1,0 +1,3 @@
+# textdomain: vlf_conduits
+Conduit=
+A conduit provides certain status effects to nearby players much like a beacon but under water=

@@ -1,0 +1,4 @@
+# textdomain: vlf_wip
+# WIP means “Work in Progress”
+(WIP)=
+(Temporary)=
