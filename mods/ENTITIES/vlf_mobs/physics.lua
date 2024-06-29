@@ -972,7 +972,7 @@ function mob_class:falling(pos)
 end
 
 function mob_class:check_water_flow()
-	-- Add water flowing for mobs from vlf_item_entity
+	-- Add water flowing for mobs from mcl_item_entity
 	local p, node, nn, def
 	p = self.object:get_pos()
 	node = minetest.get_node_or_nil(p)
@@ -980,10 +980,8 @@ function mob_class:check_water_flow()
 		nn = node.name
 		def = minetest.registered_nodes[nn]
 	end
-
 	-- Move item around on flowing liquids
 	if def and def.liquidtype == "flowing" then
-
 		--[[ Get flowing direction (function call from flowlib), if there's a liquid.
 		NOTE: According to Qwertymine, flowlib.quickflow is only reliable for liquids with a flowing distance of 7.
 		Luckily, this is exactly what we need if we only care about water, which has this flowing distance. ]]
@@ -996,7 +994,6 @@ function mob_class:check_water_flow()
 			local newv = vector.multiply(vec, f)
 			self.object:set_acceleration({x = 0, y = 0, z = 0})
 			self.object:set_velocity({x = newv.x, y = -0.22, z = newv.z})
-
 			self.physical_state = true
 			self._flowing = true
 			self.object:set_properties({
