@@ -1,2 +1,0 @@
-vlf_chests_open and close sounds - From Sn0wSong. CC-BY-SA 4.0
-vlf_chests_enderchest_open and vlf_chests_enderchest_close - Sn0wSong. CC-BY-SA 4.0
