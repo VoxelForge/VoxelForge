@@ -183,6 +183,9 @@ fire_animation_frames (Fire animation frames) int 8
 # The font size.
 vlf_font_size (Font Size) int 30
 
+# The font size for in-game chat.
+vlf_chat_font_size (Chat Font Size) int 24
+
 # The font shadow size, in pixels of offset.
 vlf_font_shadow_size (Font Shadow Size) int 3
 
