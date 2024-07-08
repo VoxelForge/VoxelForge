@@ -29,9 +29,11 @@ vlf_vars.inventory_header = ""
 vlf_vars.tool_wield_scale = { x = 1.8, y = 1.8, z = 1 }
 
 minetest.register_on_mods_loaded(function()
+    local font_size = minetest.settings:get("vlf_font_size") or 30
+    local font_shadow_size = minetest.settings:get("vlf_font_shadow_size") or 3
 	minetest.settings:set("font_path", modpath.."/fonts/voxelforge.ttf")
-	minetest.settings:set("font_shadow", "3")
-	minetest.settings:set("font_size", "30")
+	minetest.settings:set("font_shadow", font_shadow_size)
+	minetest.settings:set("font_size", font_size)
 	minetest.settings:set("chat_font_size", "24")
 	minetest.settings:set("font_shadow_alpha", "225")
 end)

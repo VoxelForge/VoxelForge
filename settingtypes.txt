@@ -180,6 +180,12 @@ vlf_max_bossbars (Maximum boss bars) int 5
 # Form: Image height / Image width
 fire_animation_frames (Fire animation frames) int 8
 
+# The font size.
+vlf_font_size (Font Size) int 30
+
+# The font shadow size, in pixels of offset.
+vlf_font_shadow_size (Font Shadow Size) int 3
+
 [Villages]
 # Minimum number of job sites which are placed during village generation
 vlf_villages_min_jobs (Minimum number of jobs in village) int 1
