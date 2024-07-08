@@ -1,6 +1,6 @@
 # Credits
 
-## Creator of VoxelCraft
+## Creator of VoxelForge
 * DragonWrangler
 
 ## Creators of Mineclonia
