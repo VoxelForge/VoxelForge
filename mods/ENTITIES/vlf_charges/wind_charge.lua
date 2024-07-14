@@ -11,8 +11,10 @@ register_charge("wind_charge", "Wind Charge", {
 		vlf_charges.wind_burst(pos, damage_radius)
 		local pr = PseudoRandom(math.ceil(os.time() / 60 / 10)) -- make particles change direction every 10 minutes
 		local v = vector.new(pr:next(-2, 2)/10, 0, pr:next(-2, 2)/10)
+		local amount = 6
 			v.y = pr:next(-9, -4) / 10
 					minetest.add_particlespawner(table.merge(wind_burst_spawner, {
+						amount = amount,
 						minacc = v,
 						maxacc = v,
 						minpos = vector.offset(pos, -0.8, 0.6, -0.8),

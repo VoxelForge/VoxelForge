@@ -131,7 +131,8 @@ function vlf_flowers.register_simple_flower(name, def)
 		description = def.desc,
 		_doc_items_longdesc = smallflowerlongdesc,
 		_doc_items_usagehelp = vlf_flowers.plant_usage_help,
-		drawtype = "plantlike",
+		drawtype = "mesh",
+		mesh = "mc_plant.obj",
 		waving = 1,
 		tiles = { def.image },
 		inventory_image = def.image,
@@ -167,7 +168,8 @@ function vlf_flowers.register_simple_flower(name, def)
 end
 
 local tpl_large_plant_top = {
-	drawtype = "plantlike",
+	drawtype = "mesh",
+	mesh = "mc_plant.obj",
 	_doc_items_create_entry = true,
 	_doc_items_usagehelp = vlf_flowers.plant_usage_help,
 	sunlight_propagates = true,
@@ -236,7 +238,7 @@ local tpl_large_plant_bottom = table.merge(tpl_large_plant_top, {
 		if (floor.name == "vlf_core:dirt" or minetest.get_item_group(floor.name, "grass_block") == 1 or floor.name == "vlf_lush_caves:moss" or (not is_flower and (floor.name == "vlf_core:coarse_dirt" or floor.name == "vlf_core:podzol" or floor.name == "vlf_core:podzol_snow"))) and bottom_buildable and top_buildable and light_ok then
 			local param2
 			local def = minetest.registered_nodes[floor.name]
-			if def and def.paramtype2 == "color" then
+			if def and def.paramtype2 == "color4dir" then
 				param2 = vlf_flowers.get_palette_color_from_pos(bottom)
 			end
 			-- Success! We can now place the flower
@@ -274,8 +276,8 @@ function vlf_flowers.add_large_plant(name, def)
 	table.update(def.top.groups, { not_in_creative_inventory=1, handy = 1, shearsy = 1, double_plant=2, attached_node=nil })
 
 	if def.grass_color then
-		def.bottom.paramtype2 = "color"
-		def.top.paramtype2 = "color"
+		def.bottom.paramtype2 = "color4dir"
+		def.top.paramtype2 = "color4dir"
 		def.bottom.palette = "vlf_core_palette_grass.png"
 		def.top.palette = "vlf_core_palette_grass.png"
 	end

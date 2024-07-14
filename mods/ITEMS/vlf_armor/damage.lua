@@ -19,12 +19,17 @@ vlf_damage.register_modifier(function(obj, damage, reason)
 	local points = 0
 	local toughness = 0
 	local enchantment_protection_factor = 0
+	local breach_level = 0
 
 	local thorns_damage_regular = 0
 	local thorns_damage_irregular = 0
 	local thorns_pieces = {}
 
 	local inv = vlf_util.get_inventory(obj)
+	
+	if reason.source and vlf_tools.mace_cooldown[reason.source] and vlf_tools.mace_cooldown[reason.source] and minetest.get_gametime() - vlf_tools.mace_cooldown[reason.source] < 2 then
+		breach_level = vlf_enchanting.get_enchantment(reason.source:get_wielded_item(), "breach") or 0
+	end
 
 	if inv then
 		for name, element in pairs(vlf_armor.elements) do
@@ -86,6 +91,7 @@ vlf_damage.register_modifier(function(obj, damage, reason)
 	-- https://minecraft.gamepedia.com/Armor#Enchantments
 	damage = damage * (1 - math.min(20, enchantment_protection_factor) / 25)
 
+	damage = damage + ( damage / 100 * 15 * breach_level )
 	local thorns_damage = thorns_damage_regular + thorns_damage_irregular
 
 	if thorns_damage > 0 and reason.type ~= "thorns" and reason.source ~= obj then

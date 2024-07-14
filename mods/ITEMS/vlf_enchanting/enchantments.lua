@@ -755,3 +755,66 @@ vlf_enchanting.enchantments.unbreaking = {
 	anvil_item_factor = 2,
 	anvil_book_factor = 1,
 }
+
+	-- implemented in mcl_tools
+vlf_enchanting.enchantments.density = {
+	name = S("Density"),
+	max_level = 5,
+	primary = { mace = true},
+	secondary = { mace = true},
+	disallow = {},
+	incompatible = {breach = true, bane_of_arthropods = true, smite = true},
+	weight = 2,
+	description = S("Increases mace damage when falling."),
+	curse = false,
+	on_enchant = function() end,
+	requires_tool = false,
+	treasure = true,
+	power_range_table = {{10, 25}, {20, 35}, {30, 45}},
+	inv_combat_tab = true,
+	inv_tool_tab = false,
+	anvil_item_factor = 8,
+	anvil_book_factor = 4,
+}
+
+-- implemented in mcl_armor
+vlf_enchanting.enchantments.breach = {
+	name = S("Breach"),
+	max_level = 4,
+	primary = { mace = true},
+	secondary = { mace = true},
+	disallow = {},
+	incompatible = {density = true, bane_of_arthropods = true, smite = true},
+	weight = 2,
+	description = S("Reduces target's armor effectiveness."),
+	curse = false,
+	on_enchant = function() end,
+	requires_tool = false,
+	treasure = true,
+	power_range_table = {{10, 25}, {20, 35}, {30, 45}},
+	inv_combat_tab = true,
+	inv_tool_tab = false,
+	anvil_item_factor = 8,
+	anvil_book_factor = 4,
+}
+
+-- implemented in mcl_tools
+vlf_enchanting.enchantments.wind_burst = {
+	name = S("Wind Burst"),
+	max_level = 3,
+	primary = { mace = true},
+	secondary = { mace = true},
+	disallow = {},
+	incompatible = {},
+	weight = 2,
+	description = S("Emits a burst of wind from a mace smash attack."),
+	curse = false,
+	on_enchant = function() end,
+	requires_tool = false,
+	treasure = true,
+	power_range_table = {{10, 25}, {20, 35}, {30, 45}},
+	inv_combat_tab = true,
+	inv_tool_tab = false,
+	anvil_item_factor = 8,
+	anvil_book_factor = 4,
+}
