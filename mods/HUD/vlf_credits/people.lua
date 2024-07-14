@@ -21,15 +21,7 @@ return {
 		"davedevils",
 	}},
 	{S("Active Contributors"), 0xF84355, {
-		"codiac",
-		"ShadowRoi",
-		"nixnoxus",
-		"laireia",
-		"the-real-herowl",
-		"JoseDouglas26",
-		"Eliy21",
-		"AFCMS",
-		"amino",
+		"SamMatzko",
 	}},
 	{S("Previous Contributors"), 0x52FF00, {
 		"Lizzy Fleckenstein",

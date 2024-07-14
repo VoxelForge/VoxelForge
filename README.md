@@ -1,9 +1,9 @@
 # VoxelForge
 
-[![ContentDB](https://content.minetest.net/packages/DragonWrangler/voxelforge/shields/downloads/)](https://content.minetest.net/packages/DragonWrangler/VoxelForge/)
+[![ContentDB](https://content.minetest.net/packages/VoxelForge/voxelforge/shields/downloads/)](https://content.minetest.net/packages/VoxelForge/voxelforge/)
 
-An unofficial Minecraft-like game for Minetest. Fork of Voxelibre and Mineclonia with focus
-on stability, multiplayer performance and features. For information about
+An unofficial Minecraft-like game for Minetest. Fork of Mineclonia with focus
+on stability, performance and features. For information about
 migrating from Voxelibre or Mineclonia to VoxelForge, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
 
 Version: Alpha 0.3.1
@@ -120,7 +120,7 @@ The VoxelForge repository is hosted at [Github](https://github.com).
 To contribute or report issues, head there.
 
 * Github: <https://github/VoxelForge/VoxelForge>
-* ContentDB: <https://content.minetest.net/packages/DragonWrangler/VoxelForge>
+* ContentDB: <https://content.minetest.net/packages/VoxelForge/voxelforge>
 
 ## Project description
 The main goal of **VoxelForge** is to be a very close but stable and performant 

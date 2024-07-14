@@ -1,6 +1,6 @@
 # Credits
 
-## Creator of VoxelCraft
+## Creator of VoxelForge
 * DragonWrangler
 
 ## Creators of Mineclonia
@@ -17,15 +17,7 @@
 * davedevils
 
 ## Active Contributors
-* codiac
-* ShadowRoi
-* nixnoxus
-* laireia
-* the-real-herowl
-* JoseDouglas26
-* Eliy21
-* AFCMS
-* amino
+* SamMatzko
 
 ## Previous Contributors
 * Lizzy Fleckenstein
