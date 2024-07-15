@@ -23,13 +23,9 @@ local function eject_items(pos, name, list)
 		minetest.swap_node(pos, node)
 		return
 	end
-	minetest.add_item(vector.offset(pos, 0, 0.5, 0), table.remove(list))
+	minetest.add_item(vector.offset(pos, 0, 1, 0), table.remove(list))
 	minetest.after(0.5, eject_items, pos, name, list)
 end
-
-minetest.register_craftitem("vlf_trials:trial_key", {
-	inventory_image = "vlf_trials_trial_key.png",
-})
 
 local tpl = {
 	drawtype = "allfaces_optional",

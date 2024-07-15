@@ -15,8 +15,12 @@
 		"wield_image": "vlf_totems_totem_wieldview.png",
 		"stack_max": 1,
 		"groups": {"not_in_creative_inventory": 1},
-	}
-		
+	},
+	{
+		"name": "vlf_trials:trial_key",
+		"inventory_image": "vlf_trials_trial_key.png",
+		"groups": {"ingredients": 1},
+	}		
 ]
 
 

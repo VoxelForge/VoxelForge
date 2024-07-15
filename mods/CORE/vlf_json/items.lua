@@ -20,7 +20,9 @@ local function generate_description(item_name, groups)
     end
 
     if groups["combat_item"] then
-        description = description .. core.colorize("#3056ce","\nCombat")
+        description = description .. core.colorize("#3056CE","\nCombat")
+    elseif groups["ingredients"] then
+    	description = description .. core.colorize("#3056CE","\nIngredients")
     end
 
     return description
