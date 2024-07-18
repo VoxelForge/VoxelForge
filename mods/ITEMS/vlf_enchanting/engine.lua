@@ -233,7 +233,8 @@ function vlf_enchanting.combine(itemstack, combine_with)
 			enchantments[enchantment] = enchantment_level
 		end
 	end
-end
+--end
+--end
 	local level_requirement = 0
 	level_requirement = level_requirement + incompatible_enchants
 	if any_new_enchantment then
