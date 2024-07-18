@@ -96,7 +96,7 @@ local function update_chat_hud(player)
 		local message = chat_history[i]
 		local message_time = message.time or current_time
 		if current_time - message_time <= message_lifetime then
-			local formatted_message = ""
+			local formatted_message
 			formatted_message = message.message
 			local words = {}
 			for word in formatted_message:gmatch("%S+") do
@@ -114,7 +114,7 @@ local function update_chat_hud(player)
 				end
 				if line ~= "" then
 					line = line .. " "
- 					line_length = line_length + 1
+					line_length = line_length + 1
 				end
 				line = line .. word
 				line_length = line_length + word_length
@@ -154,7 +154,7 @@ local function add_chat_message(name, message)
 end
 minetest.register_on_joinplayer(function(player)
 	local player_name = player:get_player_name()
- 	hide_default_chat(player)
+	hide_default_chat(player)
 	create_chat_hud(player)
 	add_chat_message("", player_name .. " has joined the game.")
 end)

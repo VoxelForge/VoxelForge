@@ -22,7 +22,7 @@ local function generate_description(item_name, groups)
     if groups["combat_item"] then
         description = description .. core.colorize("#3056CE","\nCombat")
     elseif groups["ingredients"] then
-    	description = description .. core.colorize("#3056CE","\nIngredients")
+	description = description .. core.colorize("#3056CE","\nIngredients")
     end
 
     return description
@@ -43,7 +43,7 @@ local function register_craftitems_from_json(filename)
 
     -- Parse JSON data
     local craftitems = json.decode(data)
-    
+
     if not craftitems then
      error("Invalid JSON data in file: " .. filename)
     end

@@ -1330,6 +1330,7 @@ function vlf_util.create_ground_slope(pos, fwidth, fdepth)
 
 	local mat = "vlf_core:dirt_with_grass"
 	--local filler = "vlf_core:dirt"
+	local filler
 	local stone = "vlf_core:stone"
 	local grass_idx = 0
 
@@ -1376,10 +1377,10 @@ function vlf_util.create_ground_slope(pos, fwidth, fdepth)
 	if needs_support then
 		radius = radius + 2
 	end
-	local node = minetest.get_node(pos).name == "air"
+--	local node = minetest.get_node(pos).name == "air"
 		for count3 = 1, 10 do
 			radius = radius + 1
-	
+
 			if radius <= 2 then
 				break
 			end
