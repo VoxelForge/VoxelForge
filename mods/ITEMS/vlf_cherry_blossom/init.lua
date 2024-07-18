@@ -1,4 +1,4 @@
-local S = minetest.get_translator(modname)
+local S = minetest.get_translator("vlf_cherry_blossom")
 local schempath = minetest.get_modpath("vlf_schematics")
 local PARTICLE_DISTANCE = 25
 

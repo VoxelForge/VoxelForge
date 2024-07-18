@@ -1,6 +1,3 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
-
 local function temple_placement_callback(pos,def, pr)
 	local hl = def.sidelen / 2
 	local p1 = vector.offset(pos,-hl,-hl,-hl)

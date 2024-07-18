@@ -140,7 +140,7 @@ local function play()
 					--minetest.log("no track found. weird")
 				end
 			else
-				NOTHING --minetest.log("else")
+				--minetest.log("else")
 			end
 		end
 	end

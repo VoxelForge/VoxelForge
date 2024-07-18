@@ -1,8 +1,5 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
---local S = minetest.get_translator(modname)
-
 local water_level = minetest.get_mapgen_setting("water_level")
+local modpath = minetest.get_modpath("vlf_structures")
 
 --schematics by chmodsayshello
 local schems = {

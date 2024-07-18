@@ -1,6 +1,3 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
-
 function vlf_structures.generate_igloo_top(pos, pr)
 	-- Furnace does ot work atm because apparently meta is not set. Need a bit of help with fixing this for furnaces, bookshelves, and brewing stands.
 	local newpos = {x=pos.x,y=pos.y-2,z=pos.z}

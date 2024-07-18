@@ -61,7 +61,6 @@ minetest.register_entity("vlf_trials:item_entity", {
 		-- Adjust the visual size based on the inventory image size
 		local item_def = minetest.registered_items[item_name]
 		if item_def and item_def.inventory_image then
-			local image = item_def.inventory_image
 			-- Here we are assuming image is square and using a fixed scale factor
 			local scale_factor = 0.15 -- Adjust as necessary
 			self.object:set_properties({
@@ -77,13 +76,13 @@ minetest.register_entity("vlf_trials:item_entity", {
 	on_step = function(self, dtime)
 		self._timer = (self._timer or SHOWITEM_INTERVAL) - dtime
 		self._rotate_timer = (self._rotate_timer or 0) + dtime
-		
+
 		if self._rotate_timer > 0.1 then  -- Adjust the rotation speed here
 			self._rotate_timer = 0
 			local yaw = self.object:get_yaw() or 0
 			self.object:set_yaw(yaw + math.rad(30))  -- Rotate by 10 degrees each step
 		end
-		
+
 		if self._timer < 0 then
 			if minetest.get_item_group(minetest.get_node(self.object:get_pos()).name, "vault") <= 1 then
 				self.object:remove()
@@ -125,15 +124,6 @@ function vlf_trials.activate(pos)
 		node.name = "vlf_trials:"..def._vlf_vault_name.."_on"
 		minetest.swap_node(pos, node)
 		create_display_item(pos, vlf_trials.registered_vaults[def._vlf_vault_name])
-	end
-end
-
-local function timer(pos)
-	if not minetest.get_node_timer(pos):start(1, 0) then
-		minetest.get_node_timer(pos):start(1, 0)
-	else
-		minetest.get_node_timer(pos):start(1, 0)
-		return true
 	end
 end
 

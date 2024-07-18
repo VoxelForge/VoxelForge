@@ -1,4 +1,4 @@
-local S = minetest.get_translator(modname)
+local S = minetest.get_translator("vlf_crimson")
 local schempath = minetest.get_modpath("vlf_schematics")
 -- Warped and Crimson fungus
 -- by debiankaios

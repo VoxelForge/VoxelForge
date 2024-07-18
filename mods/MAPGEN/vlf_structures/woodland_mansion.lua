@@ -1,6 +1,3 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
-
 local spawnon = {"vlf_deepslate:deepslate","vlf_trees:wood_birch","vlf_wool:red_carpet","vlf_wool:brown_carpet"}
 
 vlf_structures.register_structure("woodland_cabin",{

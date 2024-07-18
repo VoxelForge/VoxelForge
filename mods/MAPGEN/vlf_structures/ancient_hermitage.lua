@@ -1,5 +1,3 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
 -- Ancient Hermitage - mini ancient city
 
 vlf_structures.register_structure("ancient_hermitage",{

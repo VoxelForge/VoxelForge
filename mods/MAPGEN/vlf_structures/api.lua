@@ -1,6 +1,4 @@
 vlf_structures.registered_structures = {}
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
 
 --local place_queue = {}
 local disabled_structures = minetest.settings:get("vlf_disabled_structures")

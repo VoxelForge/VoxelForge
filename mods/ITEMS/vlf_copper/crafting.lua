@@ -57,7 +57,7 @@ end
 
 function vlf_copper.register_variants_recipes(name, material, amount)
 	local names
-	local materials = {}
+	local materials
 	if name ~= "cut" then
 		names = {
 			name, "waxed_"..name,

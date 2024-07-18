@@ -1,6 +1,3 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
-
 local cold_oceans = {
 	"RoofedForest_ocean",
 	"BirchForestM_ocean",
