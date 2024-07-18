@@ -202,8 +202,9 @@ globals = {
 }
 
 exclude_files = {
-   "mods/PLAYER/vlf_music/init.lua",
-   "pattern/*"
+	"mods/PLAYER/vlf_music/init.lua",
+	"mods/ITEMS/vlf_bubble_columns/init.lua",
+	"pattern/*"
 }
 
 read_globals = {
