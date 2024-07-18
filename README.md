@@ -1,6 +1,7 @@
 # VoxelForge
 
 [![ContentDB](https://content.minetest.net/packages/VoxelForge/voxelforge/shields/downloads/)](https://content.minetest.net/packages/VoxelForge/voxelforge/)
+[![Luacheck](https://github.com/VoxelForge/VoxelForge/actions/workflows/luacheck.yml/badge.svg)](https://github.com/VoxelForge/VoxelForge/actions/workflows/luacheck.yml)
 
 An unofficial Minecraft-like game for Minetest. Fork of Mineclonia with focus
 on stability, performance and features. For information about
