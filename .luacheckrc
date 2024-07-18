@@ -203,7 +203,7 @@ globals = {
 
 exclude_files = {
 	"mods/PLAYER/vlf_music/init.lua",
-	"mods/ITEMS/vlf_bubble_columns/init.lua",
+	"mods/ITEMS/vlf_bubble_column/init.lua",
 	"pattern/*"
 }
 
