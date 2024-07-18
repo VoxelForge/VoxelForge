@@ -29,9 +29,9 @@ vlf_vars.inventory_header = ""
 vlf_vars.tool_wield_scale = { x = 1.8, y = 1.8, z = 1 }
 
 minetest.register_on_mods_loaded(function()
-    local font_size = minetest.settings:get("vlf_font_size") or 30
-    local font_shadow_size = minetest.settings:get("vlf_font_shadow_size") or 3
-    local chat_font_size = minetest.settings:get("vlf_chat_font_size") or 24
+	local font_size = minetest.settings:get("vlf_font_size") or 30
+	local font_shadow_size = minetest.settings:get("vlf_font_shadow_size") or 3
+	local chat_font_size = minetest.settings:get("vlf_chat_font_size") or 24
 	minetest.settings:set("font_path", modpath.."/fonts/voxelforge.ttf")
 	minetest.settings:set("font_shadow", font_shadow_size)
 	minetest.settings:set("font_size", font_size)
@@ -46,10 +46,6 @@ minetest.register_on_shutdown(function()
 	minetest.settings:set("chat_font_size", "")
 	minetest.settings:set("font_shadow_alpha", "172")
 end)
-
--- Define the mod name and namespace
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
 
 -- Table to store player chat HUD IDs and chat history
 local player_chat_huds = {}
@@ -100,7 +96,7 @@ local function update_chat_hud(player)
 		local message = chat_history[i]
 		local message_time = message.time or current_time
 		if current_time - message_time <= message_lifetime then
-			local formatted_message = ""
+			local formatted_message
 			formatted_message = message.message
 			local words = {}
 			for word in formatted_message:gmatch("%S+") do
@@ -118,7 +114,7 @@ local function update_chat_hud(player)
 				end
 				if line ~= "" then
 					line = line .. " "
- 					line_length = line_length + 1
+					line_length = line_length + 1
 				end
 				line = line .. word
 				line_length = line_length + word_length
@@ -158,7 +154,7 @@ local function add_chat_message(name, message)
 end
 minetest.register_on_joinplayer(function(player)
 	local player_name = player:get_player_name()
- 	hide_default_chat(player)
+	hide_default_chat(player)
 	create_chat_hud(player)
 	add_chat_message("", player_name .. " has joined the game.")
 end)

@@ -1,8 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
-
 local music_enabled = minetest.settings:get_bool("vlf_game_music", true)
 
 local calm1  = "calm1"
@@ -185,7 +182,7 @@ minetest.register_chatcommand("music", {
 		local playername = argtable[2]
 
 		local sender = minetest.get_player_by_name(sender_name)
-		local target_player = nil
+		local target_player-- = nil
 
 		if not action or action == "" then action = "invert" end
 
@@ -222,8 +219,8 @@ minetest.register_chatcommand("music", {
 			meta:set_int("vlf_music:disable", 1)
 			display_new_state = S("off")
 		end
-		
+
 		stop_music_for_listener_name(playername)
 		minetest.chat_send_player(sender_name, S("Set music for @1 to: @2", playername, display_new_state))
-	end, 
+	end,
 })

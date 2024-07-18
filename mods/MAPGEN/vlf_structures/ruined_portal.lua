@@ -1,6 +1,3 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
-
 local function get_replacements(b,c,pr)
 	local r = {}
 	if not b then return r end

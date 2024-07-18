@@ -57,7 +57,7 @@ end
 
 function vlf_copper.register_variants_recipes(name, material, amount)
 	local names
-	local materials = {}
+	local materials
 	if name ~= "cut" then
 		names = {
 			name, "waxed_"..name,
@@ -73,7 +73,7 @@ function vlf_copper.register_variants_recipes(name, material, amount)
 			"block_oxidized_"..name, "waxed_block_oxidized_"..name
 		}
 	end
-	
+
 	if type(material) == "string" then
 		materials = {
 			"vlf_copper:"..material, "vlf_copper:waxed_"..material,
@@ -150,7 +150,7 @@ for _, w in ipairs(waxable_blocks) do
 	})
 end
 
-local cuttable_blocks = {
+--[[local cuttable_blocks = {
 	"block",
 	"waxed_block",
 	"block_exposed",
@@ -159,7 +159,7 @@ local cuttable_blocks = {
 	"waxed_block_weathered",
 	"block_oxidized",
 	"waxed_block_oxidized"
-}
+}]]
 
 --[[for _, c in ipairs(cuttable_blocks) do
 	vlf_stonecutter.register_recipe("vlf_copper:"..c, "vlf_copper:"..c.."_cut", 4)

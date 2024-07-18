@@ -1,6 +1,3 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
-
 local peaceful = minetest.settings:get_bool("only_peaceful_mobs", false)
 
 local function spawn_witch(p1,p2)

@@ -1,6 +1,3 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
-
 local spawnon = {"vlf_end:purpur_block"}
 
 local function spawn_shulkers(pos,def,pr)

@@ -52,7 +52,7 @@ end
 local function transfer_curse(old_itemstack, new_itemstack)
 	local enchants = vlf_enchanting.get_enchantments(old_itemstack)
 	for enchant, level in pairs(enchants) do
-		if vlf_enchanting.enchantments[enchant].curse == true then
+		if vlf_enchanting.is_curse(enchant) then
 			new_itemstack = vlf_enchanting.enchant(new_itemstack, enchant, level)
 		end
 	end
@@ -64,7 +64,7 @@ local function calculate_xp(stack)
 	local xp = 0
 	local enchants = vlf_enchanting.get_enchantments(stack)
 	for enchant, level in pairs(enchants) do
-		if level > 0 and vlf_enchanting.enchantments[enchant].curse == false then
+		if level > 0 and vlf_enchanting.is_curse(enchant) then
 			-- Add a bit of uniform randomisation
 			xp = xp + math.random(7, 13) * level
 		end

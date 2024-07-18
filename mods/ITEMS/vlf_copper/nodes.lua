@@ -137,7 +137,7 @@ function vlf_copper.register_copper_variants(name, definitions)
 		end
 
 		if definitions._vlf_doors then
-			local itemimg, lowertext, uppertext, frontimg, sideimg
+			local itemimg, lowertext, uppertext, frontimg, sideimg, lowerside, upperside
 			local door_groups = set_groups(names[i]:gsub(name, "door"), definitions.groups)
 			local trapdoor_groups = set_groups(names[i]:gsub(name, "trapdoor"), definitions.groups)
 
@@ -209,7 +209,6 @@ minetest.register_node("vlf_copper:raw_copper_block", {
 	_doc_items_longdesc = S("A block used for compact raw copper storage."),
 	tiles = {"vlf_copper_raw_copper_block.png"},
 	is_ground_content = false,
-	groups = {pickaxey = 2, building_block = 1, blast_furnace_smeltable = 1 },
 	groups = {pickaxey = 2, building_block = 1, blast_furnace_smeltable = 1},
 	sounds = vlf_sounds.node_sound_metal_defaults(),
 	_vlf_blast_resistance = 6,

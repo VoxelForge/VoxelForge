@@ -459,6 +459,8 @@ minetest.register_entity(":__builtin:item", {
 			self.is_compass = true
 			if string.find(stack:get_name(), "_lodestone") then
 				stack:set_name("vlf_compass:18_lodestone")
+			elseif string.find(stack:get_name(), "_recovery") then
+				stack:set_name("vlf_compass:18_recovery")
 			else
 				stack:set_name("vlf_compass:18")
 			end

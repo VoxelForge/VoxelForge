@@ -1,7 +1,3 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
-
-
 vlf_structures.register_structure("end_spawn_obsidian_platform",{
 	static_pos ={vlf_vars.mg_end_platform_pos},
 	place_func = function(pos,def,pr)

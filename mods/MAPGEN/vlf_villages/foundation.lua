@@ -79,7 +79,7 @@ function vlf_villages.terraform_new(settlement_info, grid)
 		fdepth = schematic_data["size"]["z"]
 
 		if not schematic_data["no_ground_turnip"] then
-			vlf_util.create_ground_slope_village(pos, fwidth, fdepth)
+			vlf_util.create_ground_slope(pos, fwidth, fdepth)
 		end
 	end
 

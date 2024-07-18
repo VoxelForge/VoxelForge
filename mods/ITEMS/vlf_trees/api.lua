@@ -639,7 +639,6 @@ function vlf_trees.register_wood(name, p)
 	end
 end
 
-local modpath = minetest.get_modpath(minetest.get_current_modname())
 local schempath = minetest.get_modpath("vlf_schematics")
 minetest.register_on_mods_loaded(function()
 	vlf_structures.register_structure("wood_test", {

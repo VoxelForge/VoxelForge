@@ -1,6 +1,3 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
-
 local spawnon = {"vlf_core:stripped_oak","vlf_stairs:slab_birchwood_top"}
 
 vlf_structures.register_structure("pillager_outpost",{

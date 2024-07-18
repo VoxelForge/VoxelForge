@@ -1,8 +1,5 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
---local S = minetest.get_translator(modname)
-
 local water_level = minetest.get_mapgen_setting("water_level")
+local modpath = minetest.get_modpath("vlf_structures")
 
 --schematics by chmodsayshello
 local schems = {
@@ -169,31 +166,32 @@ vlf_structures.register_structure("shipwreck",{
 	end,
 	loot = {
 		["vlf_chests:chest_small"] = {
-			stacks_min = 3,
-			stacks_max = 10,
-			items = {
-				{ itemstring = "vlf_sus_stew:stew", weight = 10, amount_min = 1, amount_max = 1 },
-				{ itemstring = "vlf_core:paper", weight = 8, amount_min = 1, amount_max = 12 },
-				{ itemstring = "vlf_farming:wheat_item", weight = 7, amount_min = 8, amount_max = 21 },
-				{ itemstring = "vlf_farming:carrot_item", weight = 7, amount_min = 4, amount_max = 8 },
-				{ itemstring = "vlf_farming:potato_item_poison", weight = 7, amount_min = 2, amount_max = 6 },
-				{ itemstring = "vlf_farming:potato_item", weight = 7, amount_min = 2, amount_max = 6 },
-				{ itemstring = "vlf_lush_caves:moss", weight = 7, amount_min = 1, amount_max = 4 },
-				{ itemstring = "vlf_core:coal_lump", weight = 6, amount_min = 2, amount_max = 8 },
-				{ itemstring = "vlf_mobitems:rotten_flesh", weight = 5, amount_min = 5, amount_max = 24 },
-				{ itemstring = "vlf_farming:potato_item", weight = 3, amount_min = 1, amount_max = 5 },
-				{ itemstring = "vlf_armor:helmet_leather_enchanted", weight = 3, func = function(stack, pr)
-						vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}) end },
-				{ itemstring = "vlf_armor:chestplate_leather_enchanted", weight = 3, func = function(stack, pr)
-						vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}) end },
-				{ itemstring = "vlf_armor:leggings_leather_enchanted", weight = 3, func = function(stack, pr)
-						vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}) end },
-				{ itemstring = "vlf_armor:boots_leather_enchanted", weight = 3, func = function(stack, pr)
-						vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}) end },
-				{ itemstring = "vlf_bamboo:bamboo", weight = 2, amount_min = 1, amount_max = 3 },
-				{ itemstring = "vlf_farming:pumpkin", weight = 2, amount_min = 1, amount_max = 3 },
-				{ itemstring = "vlf_tnt:tnt", weight = 1, amount_min = 1, amount_max = 2 },
-
+			{
+				stacks_min = 3,
+				stacks_max = 10,
+				items = {
+					{ itemstring = "vlf_sus_stew:stew", weight = 10, amount_min = 1, amount_max = 1 },
+					{ itemstring = "vlf_core:paper", weight = 8, amount_min = 1, amount_max = 12 },
+					{ itemstring = "vlf_farming:wheat_item", weight = 7, amount_min = 8, amount_max = 21 },
+					{ itemstring = "vlf_farming:carrot_item", weight = 7, amount_min = 4, amount_max = 8 },
+					{ itemstring = "vlf_farming:potato_item_poison", weight = 7, amount_min = 2, amount_max = 6 },
+					{ itemstring = "vlf_farming:potato_item", weight = 7, amount_min = 2, amount_max = 6 },
+					{ itemstring = "vlf_lush_caves:moss", weight = 7, amount_min = 1, amount_max = 4 },
+					{ itemstring = "vlf_core:coal_lump", weight = 6, amount_min = 2, amount_max = 8 },
+					{ itemstring = "vlf_mobitems:rotten_flesh", weight = 5, amount_min = 5, amount_max = 24 },
+					{ itemstring = "vlf_farming:potato_item", weight = 3, amount_min = 1, amount_max = 5 },
+					{ itemstring = "vlf_armor:helmet_leather_enchanted", weight = 3, func = function(stack, pr)
+							vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}) end },
+					{ itemstring = "vlf_armor:chestplate_leather_enchanted", weight = 3, func = function(stack, pr)
+							vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}) end },
+					{ itemstring = "vlf_armor:leggings_leather_enchanted", weight = 3, func = function(stack, pr)
+							vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}) end },
+					{ itemstring = "vlf_armor:boots_leather_enchanted", weight = 3, func = function(stack, pr)
+							vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}) end },
+					{ itemstring = "vlf_bamboo:bamboo", weight = 2, amount_min = 1, amount_max = 3 },
+					{ itemstring = "vlf_farming:pumpkin", weight = 2, amount_min = 1, amount_max = 3 },
+					{ itemstring = "vlf_tnt:tnt", weight = 1, amount_min = 1, amount_max = 2 },
+				}
 			},
 			{
 			stacks_min = 2,
@@ -260,35 +258,37 @@ vlf_structures.register_structure("ocean_temple",{
 	end,
 	loot = {
 		["vlf_chests:chest_small"] = {
-			stacks_min = 3,
-			stacks_max = 10,
-			items = {
-				{ itemstring = "vlf_sus_stew:stew", weight = 10, amount_min = 1, amount_max = 1 },
-				{ itemstring = "vlf_core:paper", weight = 8, amount_min = 1, amount_max = 12 },
-				{ itemstring = "vlf_fishing:fish_raw", weight = 5, amount_min = 8, amount_max = 21 },
-				{ itemstring = "vlf_fishing:salmon_raw", weight = 7, amount_min = 4, amount_max = 8 },
-				{ itemstring = "vlf_tnt:tnt", weight = 1, amount_min = 1, amount_max = 2 },
-			},
 			{
-			stacks_min = 2,
-			stacks_max = 6,
-			items = {
-				{ itemstring = "vlf_core:iron_ingot", weight = 10, amount_min = 1, amount_max = 5 },
-				{ itemstring = "vlf_core:goldblock", weight = 1, amount_min = 1, amount_max = 2 },
-				{ itemstring = "vlf_experience:bottle", weight = 5, amount_min = 1, amount_max = 1 },
-				{ itemstring = "vlf_core:diamond", weight = 5, amount_min = 1, amount_max = 1 },
-				{ itemstring = "vlf_fishing:fishing_rod", weight = 1, amount_min = 1, amount_max = 1 },
+				stacks_min = 3,
+				stacks_max = 10,
+				items = {
+					{ itemstring = "vlf_sus_stew:stew", weight = 10, amount_min = 1, amount_max = 1 },
+					{ itemstring = "vlf_core:paper", weight = 8, amount_min = 1, amount_max = 12 },
+					{ itemstring = "vlf_fishing:fish_raw", weight = 5, amount_min = 8, amount_max = 21 },
+					{ itemstring = "vlf_fishing:salmon_raw", weight = 7, amount_min = 4, amount_max = 8 },
+					{ itemstring = "vlf_tnt:tnt", weight = 1, amount_min = 1, amount_max = 2 },
 				}
 			},
 			{
-			stacks_min = 4,
-			stacks_max = 4,
-			items = {
-				--{ itemstring = "FIXME TREASURE MAP", weight = 8, amount_min = 1, amount_max = 5 },
-				{ itemstring = "vlf_books:book", weight = 1, amount_min = 1, amount_max = 5 },
-				{ itemstring = "vlf_clock:clock", weight = 1, amount_min = 1, amount_max = 1 },
-				{ itemstring = "vlf_compass:compass", weight = 1, amount_min = 1, amount_max = 1 },
-				{ itemstring = "vlf_maps:empty_map", weight = 1, amount_min = 1, amount_max = 1 },
+				stacks_min = 2,
+				stacks_max = 6,
+				items = {
+					{ itemstring = "vlf_core:iron_ingot", weight = 10, amount_min = 1, amount_max = 5 },
+					{ itemstring = "vlf_core:goldblock", weight = 1, amount_min = 1, amount_max = 2 },
+					{ itemstring = "vlf_experience:bottle", weight = 5, amount_min = 1, amount_max = 1 },
+					{ itemstring = "vlf_core:diamond", weight = 5, amount_min = 1, amount_max = 1 },
+					{ itemstring = "vlf_fishing:fishing_rod", weight = 1, amount_min = 1, amount_max = 1 },
+				}
+			},
+			{
+				stacks_min = 4,
+				stacks_max = 4,
+				items = {
+					--{ itemstring = "FIXME TREASURE MAP", weight = 8, amount_min = 1, amount_max = 5 },
+					{ itemstring = "vlf_books:book", weight = 1, amount_min = 1, amount_max = 5 },
+					{ itemstring = "vlf_clock:clock", weight = 1, amount_min = 1, amount_max = 1 },
+					{ itemstring = "vlf_compass:compass", weight = 1, amount_min = 1, amount_max = 1 },
+					{ itemstring = "vlf_maps:empty_map", weight = 1, amount_min = 1, amount_max = 1 },
 				}
 			},
 		}

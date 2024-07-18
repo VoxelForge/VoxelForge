@@ -1,6 +1,4 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
-local S = minetest.get_translator(modname)
+local S = minetest.get_translator("vlf_cherry_blossom")
 local schempath = minetest.get_modpath("vlf_schematics")
 local PARTICLE_DISTANCE = 25
 
@@ -40,8 +38,8 @@ vlf_trees.register_wood("cherry_blossom",{
 	fence_gate = { tiles = {"vlf_cherry_blossom_planks.png"},},
 	door = {
 		inventory_image = "vlf_cherry_blossom_door_inv.png",
-		tiles_bottom = {"vlf_cherry_blossom_door_bottom.png", "vlf_cherry_blossom_door_bottom_side.png"},
-		tiles_top = {"vlf_cherry_blossom_door_top.png", "vlf_cherry_blossom_door_top_side.png"},
+		tiles_bottom = {"vlf_cherry_blossom_door_bottom.png", "vlf_cherry_blossom_door_bottom.png"},
+		tiles_top = {"vlf_cherry_blossom_door_top.png", "vlf_cherry_blossom_door_top.png"},
 	},
 	trapdoor = {
 		tile_front = "vlf_cherry_blossom_trapdoor.png",

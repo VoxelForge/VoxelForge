@@ -1,5 +1,3 @@
-local modpath = minetest.get_modpath(minetest.get_current_modname())
-
 minetest.register_alias("mc2mt:tuff_bricks","vlf_deepslate:tuff_bricks")
 minetest.register_alias("mc2mt:chiseled_tuff_bricks", "vlf_deepslate:chiseled_tuff_bricks")
 minetest.register_alias("mc2mt:waxed_copper_grate", "vlf_copper:waxed_copper_grate")

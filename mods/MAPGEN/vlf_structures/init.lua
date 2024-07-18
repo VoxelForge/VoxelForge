@@ -1,7 +1,5 @@
-local modname = minetest.get_current_modname()
-local S = minetest.get_translator(modname)
-local modpath = minetest.get_modpath(modname)
-
+local S = minetest.get_translator("vlf_structures")
+local modpath = minetest.get_modpath("vlf_structures")
 vlf_structures = {}
 vlf_structures.schempath = minetest.get_modpath("vlf_schematics")
 

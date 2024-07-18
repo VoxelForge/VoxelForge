@@ -1,7 +1,4 @@
 local S = minetest.get_translator("vlf_portals")
-
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
 local schempath = minetest.get_modpath("vlf_schematics")
 local portal_search_groups = { "group:building_block", "group:dig_by_water", "group:liquid" }
 

@@ -696,29 +696,45 @@ minetest.register_tool("vlf_tools:shears", {
 	_vlf_toollike_wield = true,
 
 	on_use = function(itemstack, user, pointed_thing)
-			local damage_multiplier = -1.6
-			local fall_distance = user:get_velocity().y
-			local base_damage = 6
-			vlf_tools.entity = pointed_thing.ref
-			local additional_damage = fall_distance * damage_multiplier
-			local total_damage = base_damage * additional_damage
-			if pointed_thing.type == "object" then
-				if vlf_tools.mace_cooldown[user] == nil then
-					vlf_tools.mace_cooldown[user] = vlf_tools.mace_cooldown[user] or 0
-				end
-				local current_time = minetest.get_gametime()
-				if current_time - vlf_tools.mace_cooldown[user] >= cooldown_time then
-					vlf_tools.mace_cooldown[user] = current_time
-					if fall_distance < 0 then
-						if vlf_tools.entity:is_player() or vlf_tools.entity:get_luaentity() then
-							vlf_tools.entity:punch(user, 1.6, {
-							full_punch_interval = 1.6,
-							damage_groups = {fleshy = -6 * fall_distance / 5.5},
-							}, nil)
- 						end
-					else
-					if vlf_tools.entity:is_player() or vlf_tools.entity:get_luaentity() then
-						vlf_tools.entity:punch(user, 1.6, {
+		local fall_distance = user:get_velocity().y
+		local obj = pointed_thing.ref
+		if pointed_thing.type == "object" then
+			if vlf_tools.mace_cooldown[user] == nil then
+				vlf_tools.mace_cooldown[user] = vlf_tools.mace_cooldown[user] or 0
+			end
+			local current_time = minetest.get_gametime()
+			if current_time - vlf_tools.mace_cooldown[user] >= cooldown_time then
+				local wind_burst = vlf_enchanting.get_enchantment(itemstack, "wind_burst")
+				local density_add = (vlf_enchanting.get_enchantment(itemstack, "density") or 0) * 0.5 * fall_distance
+				vlf_tools.mace_cooldown[user] = current_time
+				if fall_distance < 0 then
+					if obj:is_player() or obj:get_luaentity() then
+						obj:punch(user, 1.6, {
+						full_punch_interval = 1.6,
+						damage_groups = {fleshy = -6 * fall_distance / 5.5 + density_add},
+						}, nil)
+					end
+					if wind_burst then
+						local v = user:get_velocity()
+						user:set_velocity(vector.new(v.x, 0, v.z))
+						local pos = user:get_pos()
+						-- set vertical V to 0  first otherwise this is highly dependent on falling speed
+						user:add_velocity(vector.new(0, 30 + (wind_burst * 5), 0))
+						local pr = PseudoRandom(math.ceil(os.time() / 60 / 10)) -- make particles change direction every 10 minutes
+						local vr = vector.new(pr:next(-2, 2)/10, 0, pr:next(-2, 2)/10)
+						local amount = 20
+						vr.y = pr:next(-9, -4) / 10
+						minetest.add_particlespawner(table.merge(wind_burst_spawner, {
+							amount = amount,
+							minacc = vr,
+							maxacc = vr,
+							minpos = vector.offset(pos, -2, 3, -2),
+							maxpos = vector.offset(pos, 2, 0.3, 2),
+						}))
+					end
+				else
+					if obj:is_player() or obj:get_luaentity() then
+						obj:punch(user, 1.6, {
 						full_punch_interval = 1.6,
 						damage_groups = {fleshy = 6},
 						}, nil)

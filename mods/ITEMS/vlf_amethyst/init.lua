@@ -1,4 +1,4 @@
-vlf_amethyst = {}
+--vlf_amethyst = {}
 
 -- Register Crafts
 minetest.register_craft({
@@ -39,23 +39,6 @@ end
 
 -- Amethyst Growing
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/grow.lua")
-
-minetest.register_globalstep(function(dtime)
-    for _, player in ipairs(minetest.get_connected_players()) do
-        local pos = player:get_pos()
-        local node = minetest.get_node(pos)
-        
-        if node.name == "vlf_core:water_source" then
-            -- If the player is in water, reduce the gravity to make them fall slowly
-            player:set_physics_override({gravity = 0.1})
-        elseif node.name == "vlf_core:water_flowing" then
-            player:set_physics_override({gravity = 0.1})
-        else
-            -- Reset gravity to normal when the player is not in water
-            player:set_physics_override({gravity = 1.0})
-        end
-    end
-end)
 
 vlf_wip.register_wip_item("vlf_amethyst:budding_amethyst")
 

@@ -1,6 +1,4 @@
 local S = minetest.get_translator("vlf_mangrove")
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
 local schempath = minetest.get_modpath("vlf_schematics")
 
 vlf_trees.register_wood("mangrove",{

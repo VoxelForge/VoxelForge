@@ -3,78 +3,91 @@ local S = minetest.get_translator(minetest.get_current_modname())
 vlf_flowers.register_simple_flower("poppy", {
 	desc = S("Poppy"),
 	image = "vlf_flowers_poppy.png",
+	paramtype2 = "4dir",
 	selection_box = { -5/16, -0.5, -5/16, 5/16, 5/16, 5/16 },
 	potted = true,
 })
 vlf_flowers.register_simple_flower("dandelion", {
 	desc = S("Dandelion"),
 	image = "flowers_dandelion_yellow.png",
+	paramtype2 = "4dir",
 	selection_box = { -4/16, -0.5, -4/16, 4/16, 3/16, 4/16 },
 	potted = true,
 })
 vlf_flowers.register_simple_flower("oxeye_daisy", {
 	desc = S("Oxeye Daisy"),
 	image = "vlf_flowers_oxeye_daisy.png",
+	paramtype2 = "4dir",
 	selection_box = { -4/16, -0.5, -4/16, 4/16, 4/16, 4/16 },
 	potted = true,
 })
 vlf_flowers.register_simple_flower("tulip_orange", {
 	desc = S("Orange Tulip"),
 	image = "flowers_tulip.png",
+	paramtype2 = "4dir",
 	selection_box = { -3/16, -0.5, -3/16, 3/16, 5/16, 3/16 },
 	potted = true,
 })
 vlf_flowers.register_simple_flower("tulip_pink", {
 	desc = S("Pink Tulip"),
 	image = "vlf_flowers_tulip_pink.png",
+	paramtype2 = "4dir",
 	selection_box = { -3/16, -0.5, -3/16, 3/16, 5/16, 3/16 },
 	potted = true,
 })
 vlf_flowers.register_simple_flower("tulip_red", {
 	desc = S("Red Tulip"),
 	image = "vlf_flowers_tulip_red.png",
+	paramtype2 = "4dir",
 	selection_box = { -3/16, -0.5, -3/16, 3/16, 6/16, 3/16 },
 	potted = true,
 })
 vlf_flowers.register_simple_flower("tulip_white", {
 	desc = S("White Tulip"),
 	image = "vlf_flowers_tulip_white.png",
+	paramtype2 = "4dir",
 	selection_box = { -3/16, -0.5, -3/16, 3/16, 4/16, 3/16 },
 	potted = true,
 })
 vlf_flowers.register_simple_flower("allium", {
 	desc = S("Allium"),
 	image = "vlf_flowers_allium.png",
+	paramtype2 = "4dir",
 	selection_box = { -3/16, -0.5, -3/16, 3/16, 6/16, 3/16 },
 	potted = true,
 })
 vlf_flowers.register_simple_flower("azure_bluet", {
 	desc = S("Azure Bluet"),
 	image = "vlf_flowers_azure_bluet.png",
+	paramtype2 = "4dir",
 	selection_box = { -5/16, -0.5, -5/16, 5/16, 3/16, 5/16 },
 	potted = true,
 })
 vlf_flowers.register_simple_flower("blue_orchid", {
 	desc = S("Blue Orchid"),
 	image = "vlf_flowers_blue_orchid.png",
+	paramtype2 = "4dir",
 	selection_box = { -5/16, -0.5, -5/16, 5/16, 7/16, 5/16 },
 	potted = true,
 })
 vlf_flowers.register_simple_flower("wither_rose", {
 	desc = S("Wither Rose"),
 	image = "vlf_flowers_wither_rose.png",
+	paramtype2 = "4dir",
 	selection_box = { -3/16, -0.5, -3/16, 3/16, 6/16, 3/16 },
 	potted = true,
 })
 vlf_flowers.register_simple_flower("lily_of_the_valley", {
 	desc = S("Lily of the Valley"),
 	image = "vlf_flowers_lily_of_the_valley.png",
+	paramtype2 = "4dir",
 	selection_box = { -5/16, -0.5, -5/16, 4/16, 5/16, 5/16 },
 	potted = true,
 })
 vlf_flowers.register_simple_flower("cornflower", {
 	desc = S("Cornflower"),
 	image = "vlf_flowers_cornflower.png",
+	paramtype2 = "4dir",
 	selection_box = { -4/16, -0.5, -4/16, 4/16, 3/16, 4/16 },
 	potted = true,
 })
@@ -186,7 +199,8 @@ vlf_flowers.add_large_plant("double_fern", {
 
 local def_tallgrass = {
 	description = S("Tall Grass"),
-	drawtype = "plantlike",
+	drawtype = "mesh",
+	mesh = "mc_plant.obj",
 	longdesc = S("Tall grass is a small plant which often occurs on the surface of grasslands. It can be harvested for wheat seeds. By using bone meal, tall grass can be turned into double tallgrass which is two blocks high."),
 	_doc_items_usagehelp = vlf_flowers.plant_usage_help,
 	_doc_items_hidden = false,
@@ -199,7 +213,7 @@ local def_tallgrass = {
 		fixed = {{ -6/16, -8/16, -6/16, 6/16, 4/16, 6/16 }},
 	},
 	paramtype = "light",
-	paramtype2 = "color",
+	paramtype2 = "color4dir",
 	palette = "vlf_core_palette_grass.png",
 	sunlight_propagates = true,
 	walkable = false,

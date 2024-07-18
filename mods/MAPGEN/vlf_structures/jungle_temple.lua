@@ -1,6 +1,3 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
-
 vlf_structures.register_structure("jungle_temple",{
 	place_on = {"group:grass_block","group:dirt","vlf_core:dirt_with_grass"},
 	fill_ratio = 0.01,

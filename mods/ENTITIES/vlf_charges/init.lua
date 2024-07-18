@@ -15,7 +15,7 @@ local S = minetest.get_translator("vlf_charges")
 wind_burst_spawner = {
 	texture = "vlf_charges_wind_burst_1.png",
 	texpool = {},
-	amount = 6,
+	--amount = 6,
 	time = 0.2,
 	minvel = vector.zero(),
 	maxvel = vector.zero(),
@@ -71,61 +71,43 @@ function vlf_charges.pot_effects(pos, radius)
 			collisiondetection = true,
 		})
 end
--- Initial knockback function
+-- knockback function
 function vlf_charges.wind_burst_velocity(pos1, pos2, old_vel, power)
-		if vector.equals(pos1, pos2) then
-	return old_vel
-end
+	if vector.equals(pos1, pos2) then
+		return old_vel
+	end
 
-	local vel = vector.direction(pos1, pos2)
+	local vel = vector.multiply(vector.normalize(vector.direction(pos1, pos2)), power)
+	vel = vector.add(vel, old_vel)
+	vel = vector.add(vel, {x = math.random() - 0.5, y = math.random() - 0.5, z = math.random() - 0.5})
+
+	if vector.length(vel) > 250 then
 		vel = vector.normalize(vel)
-		vel = vector.multiply(vel, power)
+		vel = vector.multiply(vel, 250)
+	end
 
-	local dist = vector.distance(pos1, pos2)
-		dist = math.max(dist, 1)
-		vel = vector.divide(vel, dist)
-		vel = vector.add(vel, old_vel)
-		vel = vector.add(vel, {
-		x = math.random() - 0.5,
-		y = math.random() - 0.5,
-		z = math.random() - 0.5,
-	})
-
-	dist = vector.length(vel)
-		if dist > 250 then
-			vel = vector.divide(vel, dist / 250)
-		end
 	return vel
 end
+
 local RADIUS = 4
+
 -- Wind Burst registry
 function vlf_charges.wind_burst(pos, radius)
-	local objs = minetest.get_objects_inside_radius(pos, radius)
-		for _, obj in pairs(objs) do
-			local obj_pos = obj:get_pos()
-			local dist = math.max(1, vector.distance(pos, obj_pos))
-			local damage = (0 / dist) * radius
-				if obj:is_player() then
-					local dir = vector.normalize(vector.subtract(obj_pos, pos))
-					local moveoff = vector.multiply(dir, math.random(1.5, 1.8) / dist * RADIUS)
-						obj:add_velocity(moveoff)
-						obj:set_hp(obj:get_hp() - damage)
-				else
-					local luaobj = obj:get_luaentity()
-						if luaobj then
-							local do_knockback = true
-							local objdef = minetest.registered_entities[luaobj.name]
-								if objdef and objdef.on_blast then
-									do_knockback = objdef.on_blast(luaobj, damage)
-								end
-									if do_knockback then
-										local obj_vel = obj:get_velocity()
-											obj:set_velocity(vlf_charges.wind_burst_velocity(pos, obj_pos, obj_vel, radius * 3))
-								end
-						end
-				end
+	for _, obj in ipairs(minetest.get_objects_inside_radius(pos, radius)) do
+		local obj_pos = obj:get_pos()
+		local dist = math.max(1, vector.distance(pos, obj_pos))
+
+		if obj:is_player() then
+			obj:add_velocity(vector.multiply(vector.normalize(vector.subtract(obj_pos, pos)), math.random(1.8, 2.0) / dist * RADIUS))
+		else
+			local luaobj = obj:get_luaentity()
+			if luaobj and (not minetest.registered_entities[luaobj.name].on_blast or minetest.registered_entities[luaobj.name].on_blast(luaobj, 0)) then
+				obj:set_velocity(vlf_charges.wind_burst_velocity(pos, obj_pos, obj:get_velocity(), radius * 3))
+			end
 		end
+	end
 end
+
 --throwable charge registry
 function register_charge(name, descr, def)
 	minetest.register_craftitem("vlf_charges:" .. name .. "", {

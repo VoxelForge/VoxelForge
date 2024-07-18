@@ -1,5 +1,3 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
 local schempath = minetest.get_modpath("vlf_schematics")
 
 local BLAZE_SPAWNER_MAX_LIGHT = 11

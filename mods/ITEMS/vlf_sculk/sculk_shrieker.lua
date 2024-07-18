@@ -6,8 +6,6 @@
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local mt_sound_play = minetest.sound_play
-
 local sounds = {
     footstep = {name = "vlf_sculk_block_2", },
     place = {name = "vlf_sculk_block_2", },
@@ -172,7 +170,7 @@ end
 -- Function to register particle emitter node
 local function register_sculk_shrieker(name, description, texture_inside, water_texture, sound)
     minetest.register_node(name, {
-        description = description,
+        description = S(description),
         tiles = {
 	{
 	name = "vlf_sculk_shrieker_top.png",
@@ -225,18 +223,17 @@ local function register_sculk_shrieker(name, description, texture_inside, water_
 	backface_culling = true,
 	}
 		},
-	sounds = sounds,
-	use_texture_alpha = "blend",	
+	use_texture_alpha = "blend",
 	drawtype = 'mesh',
 	mesh = 'vlf_sculk_shrieker.obj',
 	collision_box = {
 		type = 'fixed',
 		fixed = {-0.5000, -0.5000, -0.5000, 0.5000, 0.000, 0.5000}
 	},
-   	selection_box = {
-  	 	type = "fixed",
-   		fixed = {-0.5, -0.5, -0.5, 0.5, 0.25, 0.5},
-   	},
+	selection_box = {
+		type = "fixed",
+		fixed = {-0.5, -0.5, -0.5, 0.5, 0.25, 0.5},
+	},
 	drop = "",
 	sounds = sounds,
 	groups = {handy = 1, hoey = 1, building_block=1, sculk = 1,  xp=5},
@@ -292,28 +289,3 @@ minetest.override_item("vlf_sculk:shrieker_w_logged",{
 		end
 	end,
 })
---------------------------------------------------
---[[--Add this in vlf_deepslate----------------------
-if minetest.get_modpath("vlf_deepslate") then
-
-minetest.register_node("vlf_deepslate:reinforced_deepslate", {
-	description = S("Reinforced Deepslate"),
-	tiles = {
-		"vlf_deepslate_reinforced_deepslate_top.png",
-		"vlf_deepslate_reinforced_deepslate_bottom.png",
-		"vlf_deepslate_reinforced_deepslate_side.png"
-	},
-	drop = "",
-	sounds = vlf_sounds.node_sound_stone_defaults(),
-	groups = {creative_breakable=1, building_block=1, material_stone=1, },
-	sounds = vlf_sounds.node_sound_stone_defaults(),
-	is_ground_content = false,
-	on_blast = function() end,
-	drop = "",
-	_vlf_blast_resistance = 3600000,
-	_vlf_hardness = -1,
-	_vlf_silk_touch_drop = false,
-})
-end
---]]
-
