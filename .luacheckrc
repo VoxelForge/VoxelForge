@@ -201,6 +201,11 @@ globals = {
 	"AreaStore",
 }
 
+exclude_files = {
+   "mods/PLAYER/vlf_music/init.lua",
+   "pattern/*"
+}
+
 read_globals = {
 	"DIR_DELIM",
 	"dump", "dump2",
