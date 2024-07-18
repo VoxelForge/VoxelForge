@@ -9,4 +9,4 @@ jobs:
       - name: Luacheck linter
         uses: lunarmodules/luacheck@v1
         with:
-            args: myfile.lua
+            args: .
