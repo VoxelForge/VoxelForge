@@ -96,7 +96,7 @@ function vlf_raids.promote_to_raidcaptain(c) -- object
 	l._banner = minetest.add_entity(pos,"vlf_raids:ominous_banner")
 	if not l._banner or not l._banner:get_pos() then return end
 	l._banner:set_properties({textures = {vlf_banners.make_banner_texture("unicolor_white", oban_layers)}})
-	l._banner:set_attach(c,"",vector.new(0,5.5,0),vector.new(0,0,0),true)
+	l._banner:set_attach(c, "", vector.new(0, 6, -1), vector.new(0, 0, 0), true)
 	l._raidcaptain = true
 	local old_ondie = l.on_die
 	l.on_die = function(self, pos, cmi_cause)
