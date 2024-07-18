@@ -10,15 +10,15 @@ local atan = function(x)
 	end
 end
 
-local dir_to_pitch = function(dir)
+--[[local dir_to_pitch = function(dir)
 	local dir2 = vector.normalize(dir)
 	local xz = math.abs(dir.x) + math.abs(dir.z)
 	return -math.atan2(-dir.y, xz)
-end
+end]]
 
-local function degrees(rad)
+--[[local function degrees(rad)
 	return rad * 180.0 / math.pi
-end
+end]]
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
@@ -34,7 +34,7 @@ local tadpole = {
 	armor = 100,
 	rotate = 180,
 	spawn_in_group_min = 2,
-	spawn_in_group = 4, 
+	spawn_in_group = 4,
 	tilt_swim = true,
 	collisionbox = {-0.2, -0.01, -0.2, 0.2, 0.69, 0.2},
 	visual = "mesh",
@@ -99,7 +99,7 @@ local tadpole = {
 			clicker:set_wielded_item("vlf_buckets:bucket_tadpole")
 			awards.unlock(clicker:get_player_name(), "vlf:bukkit_bukkit")
 		end
-		
+
 		if self:feed_tame(clicker, 4, false, true) then return end
 		if vlf_mobs:protect(self, clicker) then return end
 		if vlf_mobs:capture_mob(self, clicker, 0, 60, 5, false, nil) then return end

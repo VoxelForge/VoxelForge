@@ -194,22 +194,3 @@ minetest.register_craft({
 		{ "vlf_stairs:slab_deepslate_cobbled" },
 	},
 })
-
-minetest.register_node("vlf_deepslate:reinforced_deepslate", {
-	description = S("Reinforced Deepslate"),
-	tiles = {
-		"vlf_deepslate_reinforced_deepslate_top.png",
-		"vlf_deepslate_reinforced_deepslate_bottom.png",
-		"vlf_deepslate_reinforced_deepslate_side.png"
-	},
-	drop = "",
-	sounds = vlf_sounds.node_sound_stone_defaults(),
-	groups = {creative_breakable=1, building_block=1, material_stone=1, },
-	sounds = vlf_sounds.node_sound_stone_defaults(),
-	is_ground_content = false,
-	on_blast = function() end,
-	drop = "",
-	_vlf_blast_resistance = 3600000,
-	_vlf_hardness = -1,
-	_vlf_silk_touch_drop = false,
-})

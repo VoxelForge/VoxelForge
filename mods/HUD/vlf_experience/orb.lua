@@ -108,7 +108,7 @@ local function xp_step(self, dtime)
 	if not self.physical_state then
 		return -- Don't do anything
 	end
-	
+
 	-- Slide on slippery nodes
 	vel = self.object:get_velocity()
 	def = node and minetest.registered_nodes[node.name]

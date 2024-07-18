@@ -1,4 +1,4 @@
-vlf_amethyst = {}
+--vlf_amethyst = {}
 
 -- Register Crafts
 minetest.register_craft({

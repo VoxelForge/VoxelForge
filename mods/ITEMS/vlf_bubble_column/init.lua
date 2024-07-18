@@ -1,11 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local WATER_VISC = 1
-local USE_TEXTURE_ALPHA = true
-if minetest.features.use_texture_alpha_string_modes then
-    USE_TEXTURE_ALPHA = "blend"
-end
-
 local positions = {}
 local entity_breath_timers = {}
 
