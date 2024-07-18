@@ -30,8 +30,7 @@ local function node_ok(pos, fallback)
 	return minetest.registered_nodes[fallback]
 end
 
-vlf_mobs.effect_functions = {}
-
+-- check if daytime and also if mob is docile during daylight hours
 function mob_class:day_docile()
 	if self.docile_by_day == false then
 		return false
@@ -468,8 +467,8 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 		if self.protected and minetest.is_protected(self.object:get_pos(), hitter:get_player_name()) then
 			return
 		end
-
-		if minetest.is_creative_enabled(hitter:get_player_name()) then
+		vlf_potions.update_haste_and_fatigue(hitter)
+		if minetest.if_creative_enabled(hitter:get_player_name()) then
 			-- Instantly kill mob after a slight delay.
 			-- Without this delay the node behind would be dug by the punch as well.
 			minetest.after(0.15, function(self)
@@ -511,6 +510,13 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 			* tmp * ((armor[group] or 0) / 100.0)
 	end
 
+	-- strength and weakness effects
+	local strength = vlf_potions.get_effect(hitter, "strength")
+	local weakness = vlf_potions.get_effect(hitter, "weakness")
+	local str_fac = strength and strength.factor or 1
+	local weak_fac = weakness and weakness.factor or 1
+	damage = damage * str_fac * weak_fac
+	
 	if weapon then
 		local fire_aspect_level = vlf_enchanting.get_enchantment(weapon, "fire_aspect")
 		if fire_aspect_level > 0 then
@@ -1012,9 +1018,7 @@ function mob_class:do_states_attack (dtime)
 							damage_groups = {fleshy = self.damage}
 						}, nil)
 						if self.dealt_effect then
-							vlf_mobs.effect_functions[self.dealt_effect.name](
-								self.attack, self.dealt_effect.factor, self.dealt_effect.dur
-							)
+							vlf_potions.give_effect_by_level(self.dealt_effect.name, self.attack, self.dealt_effect.level, self.dealt_effect.dur)
 						end
 						attacked = true
 					end

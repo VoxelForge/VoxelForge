@@ -99,7 +99,7 @@ vlf_mobs.register_mob("mobs_mc:witherskeleton", {
 	fire_resistant = true,
 	dealt_effect = {
 		name = "withering",
-		factor = 1,
+		level = 1,
 		dur = 10,
 	},
 })

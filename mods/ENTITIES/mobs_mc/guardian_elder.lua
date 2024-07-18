@@ -102,6 +102,11 @@ vlf_mobs.register_mob("mobs_mc:guardian_elder", {
 	makes_footstep_sound = false,
 	fly_in = { "vlf_core:water_source", "vlfx_core:river_water_source" },
 	jump = false,
+	dealt_effect = {
+		name = "fatigue",
+		level = 3,
+		dur = 30,
+	},
 })
 
 -- spawn eggs

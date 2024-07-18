@@ -372,6 +372,7 @@ minetest.register_entity(":__builtin:item", {
 
 		-- Add what we can to the inventory
 		local itemstack = ItemStack(self.itemstring)
+		tt.reload_itemstack_description(itemstack)
 		local leftovers = inv:add_item("main", itemstack )
 
 		self:check_pickup_achievements(player)
