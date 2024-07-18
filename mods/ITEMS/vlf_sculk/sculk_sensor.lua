@@ -8,8 +8,6 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 vlf_sculk = {}
 
-local mt_sound_play = minetest.sound_play
-
 local sounds = {
 	footstep = {name = "vlf_sculk_block_2", },
 	place = {name = "vlf_sculk_block_2", },
@@ -120,7 +118,6 @@ minetest.register_entity("vlf_sculk:vibration", {
 	textures = {"vlf_vibration.png"},
 	target = nil,
 	on_step = function(self, _)
-		local pos = self.object:get_pos()
 		if self.target then
 			local pos = self.object:get_pos()
 			local dir = vector.direction(pos, self.target)
@@ -169,7 +166,7 @@ minetest.register_entity("vlf_sculk:vibration", {
 end,
 })
 --------------------------------------------
---FIXME Experimental water logging code, to be redo 
+--FIXME Experimental water logging code, to be redo
 -- List of sculk nodes
 local sculk_nodes = {
 	"vlf_sculk:sculk_sensor_inactive",
@@ -215,7 +212,7 @@ local function handle_bucket_rightclick(pos, node_name, clicker)
 		local itemstack = clicker:get_wielded_item()
 		if itemstack:get_name() == "vlf_buckets:bucket_empty" then
 			-- Replace empty bucket with water bucket
-			clicker:set_wielded_item("vlf_buckets:bucket_water")  -- Set the wielded item   
+			clicker:set_wielded_item("vlf_buckets:bucket_water")  -- Set the wielded item
 			return
 		elseif itemstack:get_name() == "vlf_buckets:bucket_water" then
 			-- Replace water bucket with empty bucket
@@ -303,7 +300,7 @@ end
 -- Node Change Detection logic
 --TODO other nodes such as chest, noteblock, bell, etc will be needing other callbacks
 local function scan_and_spawn_vibration(center_pos, spawn_pos)
-	local range = 8 
+	local range = 8
 	-- Iterate through nearby nodes within the detection range
 	for x = -range, range do
 		for y = -range, range do
@@ -321,7 +318,7 @@ local function scan_and_spawn_vibration(center_pos, spawn_pos)
 end
 ---------
 local function handleNodeAction(pos)
-	local range = 8 
+	local range = 8
 	-- Include both inactive and inactive water logged nodes in the search
 	local node_names = {"vlf_sculk:sculk_sensor_inactive", "vlf_sculk:sculk_sensor_inactive_w_logged"}
 	local node_pos = minetest.find_node_near(pos, range, node_names)
@@ -499,7 +496,7 @@ minetest.register_craftitem("vlf_sculk:vibration", {
 -------------------------------------------------
 -------------------------------------------------
 minetest.register_node("vlf_sculk:sculk_sensor", {
-description = "Sculk Sensor",
+description = S("Sculk Sensor"),
 	tiles = {
 	{
 	name = "vlf_sculk_sensor_tendril_inactive.png",
@@ -553,7 +550,7 @@ description = "Sculk Sensor",
 	backface_culling = false,
 	}
 		},
-	use_texture_alpha = "blend",		
+	use_texture_alpha = "blend",
 	drop = "",
 	sounds = sounds,
 	drawtype = 'mesh',
@@ -582,7 +579,7 @@ description = "Sculk Sensor",
 })
 
 minetest.register_node("vlf_sculk:sculk_sensor_inactive", {
-description = "Sculk Sensor Inactive",
+description = S("Sculk Sensor Inactive"),
 	tiles = {
 	{
 	name = "vlf_sculk_sensor_tendril_inactive.png",
@@ -636,7 +633,7 @@ description = "Sculk Sensor Inactive",
 	backface_culling = false,
 	}
 		},
-	use_texture_alpha = "blend",		
+	use_texture_alpha = "blend",
 	drop = "",
 	sounds = sounds,
 	drawtype = 'mesh',
@@ -671,7 +668,7 @@ description = "Sculk Sensor Inactive",
 })
 
 minetest.register_node("vlf_sculk:sculk_sensor_active", {
-description = "Sculk Sensor Active",
+description = S("Sculk Sensor Active"),
 	tiles = {
 	{
 	name = "vlf_sculk_sensor_tendril_active.png",
@@ -727,7 +724,6 @@ description = "Sculk Sensor Active",
 	use_texture_alpha = "blend",
 	drop = "",
 	sounds = sounds,
-	use_texture_alpha = "clip",
 	drawtype = 'mesh',
 	mesh = 'vlf_sculk_sensor.obj',
 	collision_box = {
@@ -774,7 +770,7 @@ description = "Sculk Sensor Active",
 ----------------water_logged
 
 minetest.register_node("vlf_sculk:sculk_sensor_w_logged", {
-	description = "Sculk Sensor Inactive Water Logged",
+	description = S("Sculk Sensor Inactive Water Logged"),
 	drawtype = 'mesh',
 	mesh = 'vlf_sculk_sensor.obj',
 	tiles = {
@@ -829,7 +825,7 @@ minetest.register_node("vlf_sculk:sculk_sensor_w_logged", {
 	backface_culling = false,
 	}
 		},
-	use_texture_alpha = "blend",		
+	use_texture_alpha = "blend",
 	drop = "",
 	sounds = sounds,
 	collision_box = {
@@ -871,7 +867,7 @@ minetest.register_node("vlf_sculk:sculk_sensor_w_logged", {
 })
 
 minetest.register_node("vlf_sculk:sculk_sensor_inactive_w_logged", {
-	description = "Sculk Sensor Inactive Water Logged",
+	description = S("Sculk Sensor Inactive Water Logged"),
 	drawtype = 'mesh',
 	mesh = 'vlf_sculk_sensor.obj',
 	tiles = {
@@ -926,7 +922,7 @@ minetest.register_node("vlf_sculk:sculk_sensor_inactive_w_logged", {
 	backface_culling = false,
 	}
 		},
-	use_texture_alpha = "blend",		
+	use_texture_alpha = "blend",
 	drop = "",
 	sounds = sounds,
 	collision_box = {
@@ -968,7 +964,7 @@ minetest.register_node("vlf_sculk:sculk_sensor_inactive_w_logged", {
 })
 
 minetest.register_node("vlf_sculk:sculk_sensor_active_w_logged", {
-	description = "Sculk Sensor Active Water Logged",
+	description = S("Sculk Sensor Active Water Logged"),
 	drawtype = 'mesh',
 	mesh = 'vlf_sculk_sensor.obj',
 	tiles = {
@@ -1024,7 +1020,7 @@ minetest.register_node("vlf_sculk:sculk_sensor_active_w_logged", {
 	backface_culling = false,
 	}
 		},
-	use_texture_alpha = "blend",		
+	use_texture_alpha = "blend",
 	drop = "",
 	sounds = sounds,
 	collision_box = {

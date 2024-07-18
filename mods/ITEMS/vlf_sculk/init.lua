@@ -18,8 +18,6 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 vlf_sculk = {}
 
-local mt_sound_play = minetest.sound_play
-
 local spread_to = {"vlf_core:stone","vlf_core:dirt","vlf_core:sand","vlf_core:dirt_with_grass","group:grass_block","vlf_core:andesite","vlf_core:diorite","vlf_core:granite","vlf_core:mycelium","group:dirt","vlf_end:end_stone","vlf_nether:netherrack","vlf_blackstone:basalt","vlf_nether:soul_sand","vlf_blackstone:soul_soil","vlf_crimson:warped_nylium","vlf_crimson:crimson_nylium","vlf_core:gravel"}
 
 local sounds = {
@@ -164,7 +162,7 @@ minetest.register_node("vlf_sculk:sculk", {
 	place_param2 = 1,
 	sounds = sounds,
 	is_ground_content = false,
-	--on_destruct = sculk_on_destruct,
+	on_destruct = sculk_on_destruct,
 	_vlf_blast_resistance = 0.2,
 	_vlf_hardness = 0.2,
 	_vlf_silk_touch_drop = true,
@@ -186,7 +184,7 @@ minetest.register_node("vlf_sculk:catalyst", {
 	groups = {handy = 1, hoey = 1, building_block=1, sculk = 1, xp=5},
 	place_param2 = 1,
 	is_ground_content = false,
-	--on_destruct = sculk_on_destruct,
+	on_destruct = sculk_on_destruct,
 	_vlf_blast_resistance = 3,
 	light_source  = 6,
 	_vlf_hardness = 3,
@@ -219,7 +217,7 @@ minetest.register_node("vlf_sculk:catalyst_bloom", {
 	groups = {handy = 1, hoey = 1, building_block=1, sculk = 1, not_in_creative_inventory=1, xp=5},
 	place_param2 = 1,
 	is_ground_content = false,
-	--on_destruct = sculk_on_destruct,
+	on_destruct = sculk_on_destruct,
 	_vlf_blast_resistance = 3,
 	light_source  = 6,
 	_vlf_hardness = 3,
