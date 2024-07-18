@@ -13,6 +13,10 @@ function vlf_enchanting.get_enchantments(itemstack)
 	return minetest.deserialize(itemstack:get_meta():get_string("vlf_enchanting:enchantments")) or {}
 end
 
+function vlf_enchanting.is_curse(enchantment)
+	return vlf_enchanting.enchantments[enchantment] and vlf_enchanting.enchantments[enchantment].curse
+end
+
 function vlf_enchanting.unload_enchantments(itemstack)
 	local itemdef = itemstack:get_definition()
 	local meta = itemstack:get_meta()
@@ -31,7 +35,7 @@ function vlf_enchanting.load_enchantments(itemstack, enchantments)
 		vlf_enchanting.unload_enchantments(itemstack)
 		for enchantment, level in pairs(enchantments or vlf_enchanting.get_enchantments(itemstack)) do
 			local enchantment_def = vlf_enchanting.enchantments[enchantment]
-			if enchantment_def.on_enchant then
+			if enchantment_def and enchantment_def.on_enchant then
 				enchantment_def.on_enchant(itemstack, level)
 			end
 		end
@@ -55,13 +59,19 @@ end
 
 function vlf_enchanting.get_enchantment_description(enchantment, level)
 	local enchantment_def = vlf_enchanting.enchantments[enchantment]
-	return enchantment_def.name ..
-		(enchantment_def.max_level == 1 and "" or " " .. vlf_enchanting.roman_numerals.toRoman(level))
+	if enchantment_def then
+		return enchantment_def.name ..
+			(enchantment_def.max_level == 1 and "" or " " .. vlf_enchanting.roman_numerals.toRoman(level))
+	end
+	return S("Unknown Enchantment")..": "..tostring(enchantment)
 end
 
 function vlf_enchanting.get_colorized_enchantment_description(enchantment, level)
-	return minetest.colorize(vlf_enchanting.enchantments[enchantment].curse and vlf_colors.RED or vlf_colors.GRAY,
-		vlf_enchanting.get_enchantment_description(enchantment, level))
+	if vlf_enchanting.enchantments[enchantment] then
+		return minetest.colorize(vlf_enchanting.enchantments[enchantment].curse and vlf_colors.RED or vlf_colors.GRAY,
+			vlf_enchanting.get_enchantment_description(enchantment, level))
+	end
+	return minetest.colorize(vlf_colors.DARK_GRAY, S("Unknown Enchantment")..": "..tostring(enchantment))
 end
 
 function vlf_enchanting.get_enchanted_itemstring(itemname)
@@ -99,6 +109,8 @@ function vlf_enchanting.item_supports_enchantment(itemname, enchantment, early)
 		return false
 	end
 	local enchantment_def = vlf_enchanting.enchantments[enchantment]
+	if not enchantment_def then return false end
+	
 	if vlf_enchanting.is_book(itemname) then
 		return true, (not enchantment_def.treasure)
 	end
@@ -194,9 +206,7 @@ function vlf_enchanting.combine(itemstack, combine_with)
 	end
 	local enchantments = vlf_enchanting.get_enchantments(itemstack)
 	local any_new_enchantment = false
-	local incompatible_enchants = 0
-	for enchantment, combine_level in pairs(vlf_enchanting.get_enchantments(combine_with)) do
-		local enchantment_def = vlf_enchanting.enchantments[enchantment]
+	if enchantment_def then
 		local enchantment_level = enchantments[enchantment]
 		if enchantment_level then -- The enchantment already exist in the provided item
 			if enchantment_level == combine_level then
@@ -223,6 +233,7 @@ function vlf_enchanting.combine(itemstack, combine_with)
 			enchantments[enchantment] = enchantment_level
 		end
 	end
+end
 	local level_requirement = 0
 	level_requirement = level_requirement + incompatible_enchants
 	if any_new_enchantment then
