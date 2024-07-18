@@ -26,7 +26,7 @@ vlf_damage.register_modifier(function(obj, damage, reason)
 	local thorns_pieces = {}
 
 	local inv = vlf_util.get_inventory(obj)
-	
+
 	if reason.source and vlf_tools.mace_cooldown[reason.source] and vlf_tools.mace_cooldown[reason.source] and minetest.get_gametime() - vlf_tools.mace_cooldown[reason.source] < 2 then
 		breach_level = vlf_enchanting.get_enchantment(reason.source:get_wielded_item(), "breach") or 0
 	end

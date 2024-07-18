@@ -17,7 +17,7 @@ vlf_enchanting.enchantments.bane_of_arthropods = {
 	primary = {sword = true},
 	secondary = {axe = true},
 	disallow = {},
-	incompatible = {smite = true, sharpness = true},
+	incompatible = {smite = true, sharpness = true, density = true, breach = true},
 	weight = 5,
 	description = S("Increases damage and applies Slowness IV to arthropod mobs (spiders, cave spiders, silverfish and endermites)."),
 	curse = false,
@@ -667,7 +667,7 @@ vlf_enchanting.enchantments.smite = {
 	primary = {sword = true},
 	secondary = {axe = true},
 	disallow = {},
-	incompatible = {bane_of_arthropods = true, sharpness = true},
+	incompatible = {bane_of_arthropods = true, sharpness = true, density = true, breach = true},
 	weight = 5,
 	description = S("Increases damage to undead mobs."),
 	curse = false,
@@ -756,14 +756,14 @@ vlf_enchanting.enchantments.unbreaking = {
 	anvil_book_factor = 1,
 }
 
-	-- implemented in mcl_tools
+-- implemented in vlf_tools
 vlf_enchanting.enchantments.density = {
 	name = S("Density"),
 	max_level = 5,
 	primary = { mace = true},
 	secondary = { mace = true},
 	disallow = {},
-	incompatible = {breach = true, bane_of_arthropods = true, smite = true},
+	incompatible = { breach = true, bane_of_arthropods = true, smite = true },
 	weight = 2,
 	description = S("Increases mace damage when falling."),
 	curse = false,
@@ -777,14 +777,14 @@ vlf_enchanting.enchantments.density = {
 	anvil_book_factor = 4,
 }
 
--- implemented in mcl_armor
+-- implemented in vlf_armor
 vlf_enchanting.enchantments.breach = {
 	name = S("Breach"),
 	max_level = 4,
 	primary = { mace = true},
 	secondary = { mace = true},
 	disallow = {},
-	incompatible = {density = true, bane_of_arthropods = true, smite = true},
+	incompatible = { density = true, bane_of_arthropods = true, smite = true },
 	weight = 2,
 	description = S("Reduces target's armor effectiveness."),
 	curse = false,
@@ -798,7 +798,7 @@ vlf_enchanting.enchantments.breach = {
 	anvil_book_factor = 4,
 }
 
--- implemented in mcl_tools
+-- implemented in vlf_tools
 vlf_enchanting.enchantments.wind_burst = {
 	name = S("Wind Burst"),
 	max_level = 3,

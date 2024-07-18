@@ -110,7 +110,7 @@ function vlf_enchanting.item_supports_enchantment(itemname, enchantment, early)
 	end
 	local enchantment_def = vlf_enchanting.enchantments[enchantment]
 	if not enchantment_def then return false end
-	
+
 	if vlf_enchanting.is_book(itemname) then
 		return true, (not enchantment_def.treasure)
 	end
@@ -206,35 +206,37 @@ function vlf_enchanting.combine(itemstack, combine_with)
 	end
 	local enchantments = vlf_enchanting.get_enchantments(itemstack)
 	local any_new_enchantment = false
-	if enchantment_def then
-		local enchantment_level = enchantments[enchantment]
-		if enchantment_level then -- The enchantment already exist in the provided item
-			if enchantment_level == combine_level then
-				enchantment_level = math.min(enchantment_level + 1, enchantment_def.max_level)
-			else
-				enchantment_level = math.max(enchantment_level, combine_level)
-			end
-			any_new_enchantment = any_new_enchantment or ( enchantment_level ~= enchantments[enchantment] )
-		elseif vlf_enchanting.item_supports_enchantment(itemname, enchantment) then -- this is a new enchantement to try to add
-			local supported = true
-			for incompatible in pairs(enchantment_def.incompatible) do
-				if enchantments[incompatible] then
-					incompatible_enchants = incompatible_enchants + 1
-					supported = false
-					break
+	local incompatible_enchants = 0
+	for enchantment, combine_level in pairs(vlf_enchanting.get_enchantments(combine_with)) do
+		local enchantment_def = vlf_enchanting.enchantments[enchantment]
+		if enchantment_def then
+			local enchantment_level = enchantments[enchantment]
+			if enchantment_level then -- The enchantment already exist in the provided item
+				if enchantment_level == combine_level then
+					enchantment_level = math.min(enchantment_level + 1, enchantment_def.max_level)
+				else
+					enchantment_level = math.max(enchantment_level, combine_level)
+				end
+				any_new_enchantment = any_new_enchantment or ( enchantment_level ~= enchantments[enchantment] )
+			elseif vlf_enchanting.item_supports_enchantment(itemname, enchantment) then -- this is a new enchantement to try to add
+				local supported = true
+				for incompatible in pairs(enchantment_def.incompatible) do
+					if enchantments[incompatible] then
+						incompatible_enchants = incompatible_enchants + 1
+						supported = false
+						break
+					end
+				end
+				if supported then
+					enchantment_level = combine_level
+					any_new_enchantment = true
 				end
 			end
-			if supported then
-				enchantment_level = combine_level
-				any_new_enchantment = true
+			if enchantment_level and enchantment_level > 0 then
+				enchantments[enchantment] = enchantment_level
 			end
 		end
-		if enchantment_level and enchantment_level > 0 then
-			enchantments[enchantment] = enchantment_level
-		end
 	end
---end
---end
 	local level_requirement = 0
 	level_requirement = level_requirement + incompatible_enchants
 	if any_new_enchantment then

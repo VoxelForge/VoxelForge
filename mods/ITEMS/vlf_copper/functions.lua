@@ -23,7 +23,7 @@ minetest.register_abm({
 
 function vlf_copper.register_oxidation_and_scraping(mod_name, subname, decay_chain)
 	local item, oxidized_item
-	local door_item, door_oxidized_item
+	--local door_item, door_oxidized_item
 	for i = 1, #decay_chain - 1 do
 		item = mod_name..":"..subname..decay_chain[i]
 		oxidized_item = mod_name..":"..subname..decay_chain[i + 1]

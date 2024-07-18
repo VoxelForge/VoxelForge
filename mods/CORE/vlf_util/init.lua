@@ -1330,7 +1330,6 @@ function vlf_util.create_ground_slope(pos, fwidth, fdepth)
 
 	local mat = "vlf_core:dirt_with_grass"
 	--local filler = "vlf_core:dirt"
-	local filler
 	local stone = "vlf_core:stone"
 	local grass_idx = 0
 

@@ -140,7 +140,7 @@ local function play()
 					--minetest.log("no track found. weird")
 				end
 			else
-				--minetest.log("else")
+				NOTHING --minetest.log("else")
 			end
 		end
 	end
@@ -182,7 +182,7 @@ minetest.register_chatcommand("music", {
 		local playername = argtable[2]
 
 		local sender = minetest.get_player_by_name(sender_name)
-		local target_player = nil
+		local target_player-- = nil
 
 		if not action or action == "" then action = "invert" end
 

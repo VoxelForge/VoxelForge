@@ -1,5 +1,3 @@
-local S = minetest.get_translator(minetest.get_current_modname())
-
 local positions = {}
 local entity_breath_timers = {}
 
