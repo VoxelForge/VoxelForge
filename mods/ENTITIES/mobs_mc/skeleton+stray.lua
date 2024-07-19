@@ -109,7 +109,7 @@ local skeleton = {
 				self.object:set_yaw(minetest.dir_to_yaw(vector.direction(self.object:get_pos(), self.attack:get_pos())))
 			end
 			local dmg = math.random(2, 4)
-			vlf_bows.shoot_arrow(self.arrow, pos, dir, self.object:get_yaw(), self.object, nil, dmg)
+			vlf_bows.shoot_arrow("vlf_bows:arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
 		end
 	end,
 	shoot_interval = 2,
