@@ -1,4 +1,4 @@
-# textdomain: mcl_potions
+# textdomain: vlf_effects
 Invisibility=
 body is invisible=
 

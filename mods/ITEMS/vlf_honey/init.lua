@@ -107,8 +107,8 @@ minetest.register_craftitem("vlf_honey:honey_bottle", {
 	_doc_items_usagehelp = S("Drinking will restore 6 hunger points. Can also be used to craft honey blocks."),
 	inventory_image = "vlf_honey_honey_bottle.png",
 	groups = { craftitem = 1, food = 3, eatable = 6, can_eat_when_full=1 },
-	on_place = minetest.item_eat(6, "vlf_potions:glass_bottle"),
-	on_secondary_use = minetest.item_eat(6, "vlf_potions:glass_bottle"),
+	on_place = minetest.item_eat(6, "vlf_effects:glass_bottle"),
+	on_secondary_use = minetest.item_eat(6, "vlf_effects:glass_bottle"),
 	_vlf_saturation = 1.2,
 	stack_max = 16,
 })
@@ -186,18 +186,18 @@ minetest.register_craft({
 		{ "vlf_honey:honey_bottle", "vlf_honey:honey_bottle" },
 	},
 	replacements = {
-		{ "vlf_honey:honey_bottle", "vlf_potions:glass_bottle" },
-		{ "vlf_honey:honey_bottle", "vlf_potions:glass_bottle" },
-		{ "vlf_honey:honey_bottle", "vlf_potions:glass_bottle" },
-		{ "vlf_honey:honey_bottle", "vlf_potions:glass_bottle" },
+		{ "vlf_honey:honey_bottle", "vlf_effects:glass_bottle" },
+		{ "vlf_honey:honey_bottle", "vlf_effects:glass_bottle" },
+		{ "vlf_honey:honey_bottle", "vlf_effects:glass_bottle" },
+		{ "vlf_honey:honey_bottle", "vlf_effects:glass_bottle" },
 	},
 })
 
 minetest.register_craft({
 	output = "vlf_honey:honey_bottle 4",
 	recipe = {
-		{ "vlf_potions:glass_bottle", "vlf_potions:glass_bottle", "vlf_honey:honey_block" },
-		{ "vlf_potions:glass_bottle", "vlf_potions:glass_bottle", "" },
+		{ "vlf_effects:glass_bottle", "vlf_effects:glass_bottle", "vlf_honey:honey_block" },
+		{ "vlf_effects:glass_bottle", "vlf_effects:glass_bottle", "" },
 	},
 })
 
@@ -206,6 +206,6 @@ minetest.register_craft({
 	output = "vlf_core:sugar 3",
 	recipe = { "vlf_honey:honey_bottle" },
 	replacements = {
-		{ "vlf_honey:honey_bottle", "vlf_potions:glass_bottle" },
+		{ "vlf_honey:honey_bottle", "vlf_effects:glass_bottle" },
 	},
 })

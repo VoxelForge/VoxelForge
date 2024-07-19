@@ -156,7 +156,7 @@ local function register_filled_cauldron(water_level, description, liquid)
 		on_rightclick = function(pos, node, player, itemstack)
 			local outcome = vlf_armor.wash_leather_armor(itemstack)
 			if outcome then
-				minetest.sound_play("vlf_potions_bottle_pour",
+				minetest.sound_play("vlf_effects_bottle_pour",
 					{pos=pos, gain=0.5, max_hear_range=16},true)
 			end
 			return outcome

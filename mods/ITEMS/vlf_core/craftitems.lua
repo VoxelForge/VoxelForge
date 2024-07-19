@@ -147,12 +147,12 @@ local function eat_gapple(itemstack, placer, pointed_thing)
 	local regen_duration, absorption = 5, 1
 	if itemstack:get_name() == "vlf_core:apple_gold_enchanted" then
 		regen_duration, absorption = 20, 4
-		vlf_potions.give_effect("fire_resistance", placer, 1, 300)
-		vlf_potions.give_effect_by_level("leaping", placer, 1, 300)
-		vlf_potions.swiftness_func(placer, 1.2, 300)
+		vlf_effects.give_effect("fire_resistance", placer, 1, 300)
+		vlf_effects.give_effect_by_level("leaping", placer, 1, 300)
+		vlf_effects.swiftness_func(placer, 1.2, 300)
 	end
-		vlf_potions.give_effect_by_level("absorption", placer, absorption, 120)
-		vlf_potions.give_effect_by_level("regeneration", placer, 2, regen_duration)		
+		vlf_effects.give_effect_by_level("absorption", placer, absorption, 120)
+		vlf_effects.give_effect_by_level("regeneration", placer, 2, regen_duration)		
 	return gapple_hunger_restore(itemstack, placer, pointed_thing)
 end
 

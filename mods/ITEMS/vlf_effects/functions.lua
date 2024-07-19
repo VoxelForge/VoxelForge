@@ -1,8 +1,8 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local EF = {}
-vlf_potions.registered_effects = {}
-local registered_effects = vlf_potions.registered_effects -- shorthand ref
+vlf_effects.registered_effects = {}
+local registered_effects = vlf_effects.registered_effects -- shorthand ref
 
 -- effects affecting item speed utilize numerous hacks, so they have to be counted separately
 local item_speed_effects = {}
@@ -119,7 +119,7 @@ end
 -- -- --   - values of factor higher than 1 will have a positive effect regardless
 -- -- --   - values of factor lower than 0 will have a negative effect regardless
 -- -- --   - open an issue on our tracker if you have a usage that isn't supported by this API
-function vlf_potions.register_effect(def)
+function vlf_effects.register_effect(def)
 	local modname = minetest.get_current_modname()
 	local name = def.name
 	if name == nil then
@@ -197,26 +197,26 @@ function vlf_potions.register_effect(def)
 	item_speed_effects[name] = def.affects_item_speed
 end
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "invisibility",
 	description = S("Invisiblity"),
 	get_tt = function(factor)
 		return S("body is invisible")
 	end,
 	on_start = function(object, factor)
-		vlf_potions.make_invisible(object, true)
+		vlf_effects.make_invisible(object, true)
 	end,
 	on_load = function(object, factor)
-		vlf_potions.make_invisible(object, true)
+		vlf_effects.make_invisible(object, true)
 	end,
 	on_end = function(object)
-		vlf_potions.make_invisible(object, false)
+		vlf_effects.make_invisible(object, false)
 	end,
 	particle_color = "#7F8392",
 	uses_factor = false,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "poison",
 	description = S("Poison"),
 	get_tt = function(factor)
@@ -238,7 +238,7 @@ vlf_potions.register_effect({
 	timer_uses_factor = true,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "regeneration",
 	description = S("Regeneration"),
 	get_tt = function(factor)
@@ -263,7 +263,7 @@ vlf_potions.register_effect({
 	timer_uses_factor = true,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "strength",
 	description = S("Strength"),
 	get_tt = function(factor)
@@ -275,7 +275,7 @@ vlf_potions.register_effect({
 	lvl2_factor = 1.6,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "weakness",
 	description = S("Weakness"),
 	get_tt = function(factor)
@@ -301,7 +301,7 @@ vlf_damage.register_modifier(function(object, damage, reason)
 	end
 end, 0)
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "water_breathing",
 	description = S("Water Breathing"),
 	get_tt = function(factor)
@@ -320,7 +320,7 @@ vlf_potions.register_effect({
 	uses_factor = false,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "dolphin_grace",
 	description = S("Dolphin's Grace"),
 	get_tt = function(factor)
@@ -333,9 +333,9 @@ vlf_potions.register_effect({
 		local node = minetest.get_node_or_nil(object:get_pos())
 		if node and minetest.registered_nodes[node.name]
 			and minetest.get_item_group(node.name, "liquid") ~= 0 then
-				playerphysics.add_physics_factor(object, "speed", "vlf_potions:dolphin", 2)
+				playerphysics.add_physics_factor(object, "speed", "vlf_effects:dolphin", 2)
 		else
-			playerphysics.remove_physics_factor(object, "speed", "vlf_potions:dolphin", 2)
+			playerphysics.remove_physics_factor(object, "speed", "vlf_effects:dolphin", 2)
 		end
 	end,
 	particle_color = "#6AABFD",
@@ -344,7 +344,7 @@ vlf_potions.register_effect({
 	hit_timer_step = 1,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "leaping",
 	description = S("Leaping"),
 	get_tt = function(factor)
@@ -355,10 +355,10 @@ vlf_potions.register_effect({
 		return (not object:is_player()) -- TODO needs mob physics factor API
 	end,
 	on_start = function(object, factor)
-		playerphysics.add_physics_factor(object, "jump", "vlf_potions:leaping", 1+factor)
+		playerphysics.add_physics_factor(object, "jump", "vlf_effects:leaping", 1+factor)
 	end,
 	on_end = function(object)
-		playerphysics.remove_physics_factor(object, "jump", "vlf_potions:leaping")
+		playerphysics.remove_physics_factor(object, "jump", "vlf_effects:leaping")
 	end,
 	particle_color = "#22FF4C",
 	uses_factor = true,
@@ -366,7 +366,7 @@ vlf_potions.register_effect({
 	lvl2_factor = 1,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "slow_falling",
 	description = S("Slow Falling"),
 	get_tt = function(factor)
@@ -376,19 +376,19 @@ vlf_potions.register_effect({
 		return (not object:is_player()) -- TODO needs mob physics factor API
 	end,
 	on_start = function(object, factor)
-		playerphysics.add_physics_factor(object, "gravity", "vlf_potions:slow_falling", 0.5)
+		playerphysics.add_physics_factor(object, "gravity", "vlf_effects:slow_falling", 0.5)
 	end,
 	on_step = function(dtime, object, factor, duration)
 		local vel = object:get_velocity().y
 		if vel < -3 then object:add_velocity(vector.new(0,-3-vel,0)) end
 	end,
 	on_end = function(object)
-		playerphysics.remove_physics_factor(object, "gravity", "vlf_potions:slow_falling")
+		playerphysics.remove_physics_factor(object, "gravity", "vlf_effects:slow_falling")
 	end,
 	particle_color = "#ACCCFF",
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "swiftness",
 	description = S("Swiftness"),
 	get_tt = function(factor)
@@ -398,10 +398,10 @@ vlf_potions.register_effect({
 		return (not object:is_player()) -- TODO needs mob physics factor API
 	end,
 	on_start = function(object, factor)
-		playerphysics.add_physics_factor(object, "speed", "vlf_potions:swiftness", 1+factor)
+		playerphysics.add_physics_factor(object, "speed", "vlf_effects:swiftness", 1+factor)
 	end,
 	on_end = function(object)
-		playerphysics.remove_physics_factor(object, "speed", "vlf_potions:swiftness")
+		playerphysics.remove_physics_factor(object, "speed", "vlf_effects:swiftness")
 	end,
 	particle_color = "#7CAFC6",
 	uses_factor = true,
@@ -409,7 +409,7 @@ vlf_potions.register_effect({
 	lvl2_factor = 0.4,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "slowness",
 	description = S("Slowness"),
 	get_tt = function(factor)
@@ -419,10 +419,10 @@ vlf_potions.register_effect({
 		return (not object:is_player()) -- TODO needs mob physics factor API
 	end,
 	on_start = function(object, factor)
-		playerphysics.add_physics_factor(object, "speed", "vlf_potions:slowness", 1-factor)
+		playerphysics.add_physics_factor(object, "speed", "vlf_effects:slowness", 1-factor)
 	end,
 	on_end = function(object)
-		playerphysics.remove_physics_factor(object, "speed", "vlf_potions:slowness")
+		playerphysics.remove_physics_factor(object, "speed", "vlf_effects:slowness")
 	end,
 	particle_color = "#5A6C81",
 	uses_factor = true,
@@ -430,7 +430,7 @@ vlf_potions.register_effect({
 	lvl2_factor = 0.3,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "levitation",
 	description = S("Levitation"),
 	get_tt = function(factor)
@@ -446,7 +446,7 @@ vlf_potions.register_effect({
 	lvl2_factor = 1.8,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "night_vision",
 	description = S("Night Vision"),
 	get_tt = function(factor)
@@ -471,7 +471,7 @@ vlf_potions.register_effect({
 	uses_factor = false,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "darkness",
 	description = S("Darkness"),
 	get_tt = function(factor)
@@ -526,7 +526,7 @@ local MAX_GLOW_SCALE = 4
 local SCALE_DIFF = MAX_GLOW_SCALE - MIN_GLOW_SCALE
 local SCALE_FACTOR = (GLOW_DISTANCE - CLOSE_GLOW_LIMIT) / SCALE_DIFF
 local abs = math.abs
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "glowing",
 	description = S("Glowing"),
 	get_tt = function(factor)
@@ -558,7 +558,7 @@ vlf_potions.register_effect({
 								hud_elem_type = "image_waypoint",
 								position = {x = 0.5, y = 0.5},
 								scale = {x = scale, y = scale},
-								text = "vlf_potions_glow_waypoint.png",
+								text = "vlf_effects_glow_waypoint.png",
 								alignment = {x = 0, y = -1},
 								world_pos = pos,
 							})
@@ -585,7 +585,7 @@ vlf_potions.register_effect({
 	uses_factor = false,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "health_boost",
 	description = S("Health Boost"),
 	get_tt = function(factor)
@@ -606,7 +606,7 @@ vlf_potions.register_effect({
 	lvl2_factor = 8,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "absorption",
 	description = S("Absorption"),
 	get_tt = function(factor)
@@ -646,7 +646,7 @@ vlf_potions.register_effect({
 	end,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "fire_resistance",
 	description = S("Fire Resistance"),
 	get_tt = function(factor)
@@ -660,7 +660,7 @@ vlf_potions.register_effect({
 	damage_modifier = "is_fire",
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "resistance",
 	description = S("Resistance"),
 	get_tt = function(factor)
@@ -679,7 +679,7 @@ vlf_potions.register_effect({
 	end,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "luck",
 	description = S("Luck"),
 	particle_color = "#7BFF42",
@@ -687,18 +687,18 @@ vlf_potions.register_effect({
 		return (not object:is_player()) -- TODO what should it do for mobs?
 	end,
 	on_start = function(object, factor)
-		vlf_luck.apply_luck_modifier(object:get_player_name(), "vlf_potions:luck", factor)
+		vlf_luck.apply_luck_modifier(object:get_player_name(), "vlf_effects:luck", factor)
 	end,
 	on_load = function(object, factor)
-		vlf_luck.apply_luck_modifier(object:get_player_name(), "vlf_potions:luck", factor)
+		vlf_luck.apply_luck_modifier(object:get_player_name(), "vlf_effects:luck", factor)
 	end,
 	on_end = function(object)
-		vlf_luck.remove_luck_modifier(object:get_player_name(), "vlf_potions:luck")
+		vlf_luck.remove_luck_modifier(object:get_player_name(), "vlf_effects:luck")
 	end,
 	uses_factor = true,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "bad_luck",
 	description = S("Bad Luck"),
 	particle_color = "#887343",
@@ -706,18 +706,18 @@ vlf_potions.register_effect({
 		return (not object:is_player()) -- TODO what should it do for mobs?
 	end,
 	on_start = function(object, factor)
-		vlf_luck.apply_luck_modifier(object:get_player_name(), "vlf_potions:bad_luck", -factor)
+		vlf_luck.apply_luck_modifier(object:get_player_name(), "vlf_effects:bad_luck", -factor)
 	end,
 	on_load = function(object, factor)
-		vlf_luck.apply_luck_modifier(object:get_player_name(), "vlf_potions:bad_luck", -factor)
+		vlf_luck.apply_luck_modifier(object:get_player_name(), "vlf_effects:bad_luck", -factor)
 	end,
 	on_end = function(object)
-		vlf_luck.remove_luck_modifier(object:get_player_name(), "vlf_potions:bad_luck")
+		vlf_luck.remove_luck_modifier(object:get_player_name(), "vlf_effects:bad_luck")
 	end,
 	uses_factor = true,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "bad_omen",
 	description = S("Bad Omen"),
 	get_tt = function(factor)
@@ -727,13 +727,13 @@ vlf_potions.register_effect({
 	uses_factor = true,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "hero_of_village",
 	description = S("Hero of the Village"),
 	particle_color = "#006D2A",
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "withering",
 	description = S("Withering"),
 	get_tt = function(factor)
@@ -755,7 +755,7 @@ vlf_potions.register_effect({
 	timer_uses_factor = true,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "frost",
 	description = S("Frost"),
 	get_tt = function(factor)
@@ -766,13 +766,13 @@ vlf_potions.register_effect({
 	end,
 	on_start = function(object, factor)
 		vlf_burning.extinguish(object)
-		playerphysics.add_physics_factor(object, "speed", "vlf_potions:frost", 1-factor)
+		playerphysics.add_physics_factor(object, "speed", "vlf_effects:frost", 1-factor)
 		if EF.frost[object].vignette then return end
 		EF.frost[object].vignette = object:hud_add({
 			hud_elem_type = "image",
 			position = {x = 0.5, y = 0.5},
 			scale = {x = -101, y = -101},
-			text = "vlf_potions_frost_hud.png",
+			text = "vlf_effects_frost_hud.png",
 			z_index = -400
 		})
 	end,
@@ -781,7 +781,7 @@ vlf_potions.register_effect({
 			hud_elem_type = "image",
 			position = {x = 0.5, y = 0.5},
 			scale = {x = -101, y = -101},
-			text = "vlf_potions_frost_hud.png",
+			text = "vlf_effects_frost_hud.png",
 			z_index = -400
 		})
 	end,
@@ -791,7 +791,7 @@ vlf_potions.register_effect({
 		end
 	end,
 	on_end = function(object)
-		playerphysics.remove_physics_factor(object, "speed", "vlf_potions:frost")
+		playerphysics.remove_physics_factor(object, "speed", "vlf_effects:frost")
 		if not EF.frost[object] then return end
 		object:hud_remove(EF.frost[object].vignette)
 	end,
@@ -808,7 +808,7 @@ vlf_potions.register_effect({
 	end,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "blindness",
 	description = "Blindness",
 	get_tt = function(factor)
@@ -822,23 +822,23 @@ vlf_potions.register_effect({
 			hud_elem_type = "image",
 			position = {x = 0.5, y = 0.5},
 			scale = {x = -101, y = -101},
-			text = "vlf_potions_blindness_hud.png",
+			text = "vlf_effects_blindness_hud.png",
 			z_index = -401
 		})
-		--TODO: vlf_fovapi.apply_modifier(object, "vlf_potions:blindness")
+		--TODO: vlf_fovapi.apply_modifier(object, "vlf_effects:blindness")
 	end,
 	on_load = function(object, factor)
 		EF.blindness[object].vignette = object:hud_add({
 			hud_elem_type = "image",
 			position = {x = 0.5, y = 0.5},
 			scale = {x = -101, y = -101},
-			text = "vlf_potions_blindness_hud.png",
+			text = "vlf_effects_blindness_hud.png",
 			z_index = -401
 		})
-		-- TODO: vlf_fovapi.apply_modifier(object, "vlf_potions:blindness")
+		-- TODO: vlf_fovapi.apply_modifier(object, "vlf_effects:blindness")
 	end,
 	on_end = function(object)
-		--TODO: vlf_fovapi.remove_modifier(object, "vlf_potions:blindness")
+		--TODO: vlf_fovapi.remove_modifier(object, "vlf_effects:blindness")
 		if not EF.blindness[object] then return end
 		object:hud_remove(EF.blindness[object].vignette)
 	end,
@@ -850,12 +850,12 @@ vlf_potions.register_effect({
 
 TODO
 ]vlf_fovapi.register_modifier({
-	name = "vlf_potions:blindness",
+	name = "vlf_effects:blindness",
 	fov_factor = 0.6,
 	time = 1,
 })
 --]]
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "nausea",
 	description = S("Nausea"),
 	get_tt = function(factor)
@@ -871,12 +871,12 @@ vlf_potions.register_effect({
 	end,
 	on_hit_timer = function(object, factor, duration)
 		if EF.nausea[object].high then
-			--TODO: vlf_fovapi.remove_modifier(object, "vlf_potions:nausea_high")
-			--TODO: vlf_fovapi.apply_modifier(object, "vlf_potions:nausea_low")
+			--TODO: vlf_fovapi.remove_modifier(object, "vlf_effects:nausea_high")
+			--TODO: vlf_fovapi.apply_modifier(object, "vlf_effects:nausea_low")
 			EF.nausea[object].high = false
 		else
-			--TODO: vlf_fovapi.apply_modifier(object, "vlf_potions:nausea_high")
-			--TODO: vlf_fovapi.remove_modifier(object, "vlf_potions:nausea_low")
+			--TODO: vlf_fovapi.apply_modifier(object, "vlf_effects:nausea_high")
+			--TODO: vlf_fovapi.remove_modifier(object, "vlf_effects:nausea_low")
 			EF.nausea[object].high = true
 		end
 	end,
@@ -884,8 +884,8 @@ vlf_potions.register_effect({
 		object:set_lighting({
 			saturation = 1.0,
 		})
-		--TODO: vlf_fovapi.remove_modifier(object, "vlf_potions:nausea_high")
-		--TODO: vlf_fovapi.remove_modifier(object, "vlf_potions:nausea_low")
+		--TODO: vlf_fovapi.remove_modifier(object, "vlf_effects:nausea_high")
+		--TODO: vlf_fovapi.remove_modifier(object, "vlf_effects:nausea_low")
 	end,
 	particle_color = "#60AA30",
 	uses_factor = true,
@@ -895,17 +895,17 @@ vlf_potions.register_effect({
 })
 --[[TODO:
 vlf_fovapi.register_modifier({
-	name = "vlf_potions:nausea_high",
+	name = "vlf_effects:nausea_high",
 	fov_factor = 2.2,
 	time = 1,
 })
 vlf_fovapi.register_modifier({
-	name = "vlf_potions:nausea_low",
+	name = "vlf_effects:nausea_low",
 	fov_factor = 0.2,
 	time = 1,
 })
 --]]
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "food_poisoning",
 	description = S("Food Poisoning"),
 	get_tt = function(factor)
@@ -938,7 +938,7 @@ vlf_potions.register_effect({
 	lvl2_factor = 200,
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "saturation",
 	description = S("Saturation"),
 	get_tt = function(factor)
@@ -958,10 +958,10 @@ vlf_potions.register_effect({
 -- constants relevant for effects altering mining and attack speed
 local LONGEST_MINING_TIME = 300
 local LONGEST_PUNCH_INTERVAL = 10
-vlf_potions.LONGEST_MINING_TIME = LONGEST_MINING_TIME
-vlf_potions.LONGEST_PUNCH_INTERVAL = LONGEST_PUNCH_INTERVAL
+vlf_effects.LONGEST_MINING_TIME = LONGEST_MINING_TIME
+vlf_effects.LONGEST_PUNCH_INTERVAL = LONGEST_PUNCH_INTERVAL
 
-function vlf_potions.apply_haste_fatigue(toolcaps, h_fac, f_fac)
+function vlf_effects.apply_haste_fatigue(toolcaps, h_fac, f_fac)
 	if f_fac == 0 then
 		local fpi = toolcaps.full_punch_interval
 		toolcaps.full_punch_interval = fpi > LONGEST_PUNCH_INTERVAL and fpi or LONGEST_PUNCH_INTERVAL
@@ -985,13 +985,13 @@ function vlf_potions.apply_haste_fatigue(toolcaps, h_fac, f_fac)
 	return toolcaps
 end
 
-function vlf_potions.hf_update_internal(hand, object)
+function vlf_effects.hf_update_internal(hand, object)
 	-- TODO add a check for creative mode?
 	local meta = hand:get_meta()
-	local h_fac = vlf_potions.get_total_haste(object)
-	local f_fac = vlf_potions.get_total_fatigue(object)
+	local h_fac = vlf_effects.get_total_haste(object)
+	local f_fac = vlf_effects.get_total_fatigue(object)
 	local toolcaps = hand:get_tool_capabilities()
-	meta:set_tool_capabilities(vlf_potions.apply_haste_fatigue(toolcaps, h_fac, f_fac))
+	meta:set_tool_capabilities(vlf_effects.apply_haste_fatigue(toolcaps, h_fac, f_fac))
 	return hand
 end
 
@@ -999,10 +999,10 @@ local function haste_fatigue_hand_update(object)
 	local inventory = object:get_inventory()
 	if not inventory or inventory:get_size("hand") < 1 then return end
 	local hand = inventory:get_stack("hand", 1)
-	inventory:set_stack("hand", 1, vlf_potions.hf_update_internal(hand, object))
+	inventory:set_stack("hand", 1, vlf_effects.hf_update_internal(hand, object))
 end
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "haste",
 	description = S("Haste"),
 	get_tt = function(factor)
@@ -1014,7 +1014,7 @@ vlf_potions.register_effect({
 	on_start = haste_fatigue_hand_update,
 	after_end = function(object)
 		haste_fatigue_hand_update(object)
-		vlf_potions._reset_haste_fatigue_item_meta(object)
+		vlf_effects._reset_haste_fatigue_item_meta(object)
 	end,
 	particle_color = "#FFFF00",
 	uses_factor = true,
@@ -1023,7 +1023,7 @@ vlf_potions.register_effect({
 	affects_item_speed = {factor_is_positive = true},
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "fatigue",
 	description = S("Fatigue"),
 	get_tt = function(factor)
@@ -1035,7 +1035,7 @@ vlf_potions.register_effect({
 	on_start = haste_fatigue_hand_update,
 	after_end = function(object)
 		haste_fatigue_hand_update(object)
-		vlf_potions._reset_haste_fatigue_item_meta(object)
+		vlf_effects._reset_haste_fatigue_item_meta(object)
 	end,
 	particle_color = "#64643D",
 	uses_factor = true,
@@ -1044,7 +1044,7 @@ vlf_potions.register_effect({
 	affects_item_speed = {},
 })
 
-vlf_potions.register_effect({
+vlf_effects.register_effect({
 	name = "conduit_power",
 	description = S("Conduit Power"),
 	get_tt = function(factor)
@@ -1072,7 +1072,7 @@ vlf_potions.register_effect({
 	end,
 	after_end = function(object)
 		haste_fatigue_hand_update(object)
-		vlf_potions._reset_haste_fatigue_item_meta(object)
+		vlf_effects._reset_haste_fatigue_item_meta(object)
 	end,
 	particle_color = "#1FB1BA",
 	uses_factor = true,
@@ -1082,19 +1082,19 @@ vlf_potions.register_effect({
 })
 
 -- implementation of haste and fatigue effects
-function vlf_potions.update_haste_and_fatigue(player)
+function vlf_effects.update_haste_and_fatigue(player)
 	if vlf_gamemode.get_gamemode(player) == "creative" then return end
 	local item = player:get_wielded_item()
 	local meta = item:get_meta()
-	local item_haste = meta:get_float("vlf_potions:haste")
-	local item_fatig = 1 - meta:get_float("vlf_potions:fatigue")
-	local h_fac = vlf_potions.get_total_haste(player)
-	local f_fac = vlf_potions.get_total_fatigue(player)
+	local item_haste = meta:get_float("vlf_effects:haste")
+	local item_fatig = 1 - meta:get_float("vlf_effects:fatigue")
+	local h_fac = vlf_effects.get_total_haste(player)
+	local f_fac = vlf_effects.get_total_fatigue(player)
 	if item_haste ~= h_fac or item_fatig ~= f_fac then
-		if h_fac ~= 0 then meta:set_float("vlf_potions:haste", h_fac)
-		else meta:set_string("vlf_potions:haste", "") end
-		if f_fac ~= 1 then meta:set_float("vlf_potions:fatigue", 1 - f_fac)
-		else meta:set_string("vlf_potions:fatigue", "") end
+		if h_fac ~= 0 then meta:set_float("vlf_effects:haste", h_fac)
+		else meta:set_string("vlf_effects:haste", "") end
+		if f_fac ~= 1 then meta:set_float("vlf_effects:fatigue", 1 - f_fac)
+		else meta:set_string("vlf_effects:fatigue", "") end
 		meta:set_tool_capabilities()
 		vlf_enchanting.update_groupcaps(item)
 		if h_fac == 0 and f_fac == 1 then
@@ -1102,17 +1102,17 @@ function vlf_potions.update_haste_and_fatigue(player)
 			return
 		end
 		local toolcaps = item:get_tool_capabilities()
-		meta:set_tool_capabilities(vlf_potions.apply_haste_fatigue(toolcaps, h_fac, f_fac))
+		meta:set_tool_capabilities(vlf_effects.apply_haste_fatigue(toolcaps, h_fac, f_fac))
 		player:set_wielded_item(item)
 	end
 	haste_fatigue_hand_update(player, h_fac, f_fac)
 end
 minetest.register_on_punchnode(function(pos, node, puncher, pointed_thing)
-	vlf_potions.update_haste_and_fatigue(puncher)
+	vlf_effects.update_haste_and_fatigue(puncher)
 end)
 minetest.register_on_punchplayer(function(player, hitter)
 	if not hitter:is_player() then return end -- TODO implement haste and fatigue support for mobs?
-	vlf_potions.update_haste_and_fatigue(hitter)
+	vlf_effects.update_haste_and_fatigue(hitter)
 end)
 -- update when hitting mob implemented in vlf_mobs/combat.lua
 
@@ -1132,7 +1132,7 @@ end)
 -- ██║░░██║╚██████╔╝██████╦╝
 -- ╚═╝░░╚═╝░╚═════╝░╚═════╝░
 
-hb.register_hudbar("absorption", 0xFFFFFF, S("Absorption"), {bar = "[fill:2x16:#B59500", icon = "vlf_potions_icon_absorb.png"}, 0, 0, 0, false)
+hb.register_hudbar("absorption", 0xFFFFFF, S("Absorption"), {bar = "[fill:2x16:#B59500", icon = "vlf_effects_icon_absorb.png"}, 0, 0, 0, false)
 
 local hp_hudbar_modifiers = {}
 
@@ -1141,7 +1141,7 @@ local hp_hudbar_modifiers = {}
 -- predicate - function(player) - returns true if player fulfills the requirements (eg. has the effects) for the hudbar look
 -- icon - string - name of the icon to which the modifier should change the HP hudbar heart
 -- priority - signed int - lower gets checked first, and first fulfilled predicate applies its modifier
-function vlf_potions.register_hp_hudbar_modifier(def)
+function vlf_effects.register_hp_hudbar_modifier(def)
 	if type(def.predicate) ~= "function" then error("Predicate must be a function") end
 	if not def.icon then error("No icon provided") end
 	if not def.priority then error("No priority provided") end
@@ -1153,23 +1153,23 @@ function vlf_potions.register_hp_hudbar_modifier(def)
 	table.sort(hp_hudbar_modifiers, function(a, b) return a.priority <= b.priority end)
 end
 
-vlf_potions.register_hp_hudbar_modifier({
+vlf_effects.register_hp_hudbar_modifier({
 	predicate = function(player)
 		if EF.withering[player] and EF.regeneration[player] then return true end
 	end,
-	icon = "vlf_potions_icon_regen_wither.png",
+	icon = "vlf_effects_icon_regen_wither.png",
 	priority = -30,
 })
 
-vlf_potions.register_hp_hudbar_modifier({
+vlf_effects.register_hp_hudbar_modifier({
 	predicate = function(player)
 		if EF.withering[player] then return true end
 	end,
-	icon = "vlf_potions_icon_wither.png",
+	icon = "vlf_effects_icon_wither.png",
 	priority = -20,
 })
 
-vlf_potions.register_hp_hudbar_modifier({
+vlf_effects.register_hp_hudbar_modifier({
 	predicate = function(player)
 		if EF.poison[player] and EF.regeneration[player] then return true end
 	end,
@@ -1177,7 +1177,7 @@ vlf_potions.register_hp_hudbar_modifier({
 	priority = -10,
 })
 
-vlf_potions.register_hp_hudbar_modifier({
+vlf_effects.register_hp_hudbar_modifier({
 	predicate = function(player)
 		if EF.poison[player] then return true end
 	end,
@@ -1185,23 +1185,23 @@ vlf_potions.register_hp_hudbar_modifier({
 	priority = 0,
 })
 
-vlf_potions.register_hp_hudbar_modifier({
+vlf_effects.register_hp_hudbar_modifier({
 	predicate = function(player)
 		if EF.frost[player] and EF.regeneration[player] then return true end
 	end,
-	icon = "vlf_potions_icon_regen_frost.png",
+	icon = "vlf_effects_icon_regen_frost.png",
 	priority = 10,
 })
 
-vlf_potions.register_hp_hudbar_modifier({
+vlf_effects.register_hp_hudbar_modifier({
 	predicate = function(player)
 		if EF.frost[player] then return true end
 	end,
-	icon = "vlf_potions_icon_frost.png",
+	icon = "vlf_effects_icon_frost.png",
 	priority = 20,
 })
 
-vlf_potions.register_hp_hudbar_modifier({
+vlf_effects.register_hp_hudbar_modifier({
 	predicate = function(player)
 		if EF.regeneration[player] then return true end
 	end,
@@ -1336,7 +1336,7 @@ minetest.register_globalstep(function(dtime)
 		for object, vals in pairs(EF[name]) do
 			if vals.dur ~= math.huge then EF[name][object].timer = vals.timer + dtime end
 
-			if object:get_pos() and not vals.no_particles then vlf_potions._add_spawner(object, effect.particle_color) end
+			if object:get_pos() and not vals.no_particles then vlf_effects._add_spawner(object, effect.particle_color) end
 			if effect.on_step then effect.on_step(dtime, object, vals.factor, vals.dur) end
 			if effect.on_hit_timer then
 				EF[name][object].hit_timer = (vals.hit_timer or 0) + dtime
@@ -1352,12 +1352,12 @@ minetest.register_globalstep(function(dtime)
 				if effect.after_end then effect.after_end(object) end
 				if object:is_player() then
 					local meta = object:get_meta()
-					meta:set_string("vlf_potions:_EF_"..name, "")
+					meta:set_string("vlf_effects:_EF_"..name, "")
 					potions_set_hud(object)
 				else
 					local ent = object:get_luaentity()
 					if ent then
-						ent._vlf_potions["_EF_"..name] = nil
+						ent._vlf_effects["_EF_"..name] = nil
 					end
 				end
 			elseif object:is_player() then
@@ -1372,7 +1372,7 @@ minetest.register_globalstep(function(dtime)
 			else
 				local ent = object:get_luaentity()
 				if ent then
-					ent._vlf_potions["_EF_"..name] = EF[name][object]
+					ent._vlf_effects["_EF_"..name] = EF[name][object]
 				end
 			end
 		end
@@ -1394,24 +1394,24 @@ end)
 -- ███████╗╚█████╔╝██║░░██║██████╔╝██╔╝░░░██████╔╝██║░░██║░░╚██╔╝░░███████╗
 -- ╚══════╝░╚════╝░╚═╝░░╚═╝╚═════╝░╚═╝░░░░╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░╚══════╝
 
-function vlf_potions._reset_haste_fatigue_item_meta(player)
+function vlf_effects._reset_haste_fatigue_item_meta(player)
 	local inv = player:get_inventory()
 	if not inv then return end
 	local lists = inv:get_lists()
 	for _, list in pairs(lists) do
 		for _, item in pairs(list) do
 			local meta = item:get_meta()
-			meta:set_string("vlf_potions:haste", "")
-			meta:set_string("vlf_potions:fatigue", "")
+			meta:set_string("vlf_effects:haste", "")
+			meta:set_string("vlf_effects:fatigue", "")
 			meta:set_tool_capabilities()
 			vlf_enchanting.update_groupcaps(item)
 		end
 	end
 	inv:set_lists(lists)
 end
-vlf_gamemode.register_on_gamemode_change(vlf_potions._reset_haste_fatigue_item_meta)
+vlf_gamemode.register_on_gamemode_change(vlf_effects._reset_haste_fatigue_item_meta)
 
-function vlf_potions._clear_cached_effect_data(object)
+function vlf_effects._clear_cached_effect_data(object)
 	for name, effect in pairs(EF) do
 		effect[object] = nil
 	end
@@ -1420,7 +1420,7 @@ function vlf_potions._clear_cached_effect_data(object)
 	meta:set_int("night_vision", 0)
 end
 
-function vlf_potions._reset_effects(object, set_hud)
+function vlf_effects._reset_effects(object, set_hud)
 	local set_hud = set_hud
 	if not object:is_player() then
 		set_hud = false
@@ -1432,7 +1432,7 @@ function vlf_potions._reset_effects(object, set_hud)
 		if effect.after_end then table.insert(removed_effects, effect.after_end) end
 	end
 
-	vlf_potions._clear_cached_effect_data(object)
+	vlf_effects._clear_cached_effect_data(object)
 
 	for i=1, #removed_effects do
 		removed_effects[i](object)
@@ -1443,7 +1443,7 @@ function vlf_potions._reset_effects(object, set_hud)
 	end
 end
 
-function vlf_potions._save_player_effects(player)
+function vlf_effects._save_player_effects(player)
 	if not player:is_player() then
 		return
 	end
@@ -1451,11 +1451,11 @@ function vlf_potions._save_player_effects(player)
 
 	for name, effect in pairs(registered_effects) do
 		if effect.on_save_effect and EF[name][player] then effect.on_save_effect(player) end
-		meta:set_string("vlf_potions:_EF_"..name, minetest.serialize(EF[name][player]))
+		meta:set_string("vlf_effects:_EF_"..name, minetest.serialize(EF[name][player]))
 	end
 end
 
-function vlf_potions._load_player_effects(player)
+function vlf_effects._load_player_effects(player)
 	if not player:is_player() then
 		return
 	end
@@ -1525,7 +1525,7 @@ function vlf_potions._load_player_effects(player)
 
 	-- new API effects + on_load for loaded legacy effects
 	for name, effect in pairs(registered_effects) do
-		local loaded = minetest.deserialize(meta:get_string("vlf_potions:_EF_"..name))
+		local loaded = minetest.deserialize(meta:get_string("vlf_effects:_EF_"..name))
 		if loaded then
 			EF[name][player] = loaded
 			if effect.on_load then
@@ -1535,14 +1535,14 @@ function vlf_potions._load_player_effects(player)
 	end
 end
 
-function vlf_potions._load_entity_effects(entity)
-	if not entity or not entity._vlf_potions or entity._vlf_potions == {} then
+function vlf_effects._load_entity_effects(entity)
+	if not entity or not entity._vlf_effects or entity._vlf_effects == {} then
 		return
 	end
 	local object = entity.object
 	if not object or not object:get_pos() then return end
 	for name, effect in pairs(registered_effects) do
-		local loaded = entity._vlf_potions["_EF_"..name]
+		local loaded = entity._vlf_effects["_EF_"..name]
 		if loaded then
 			EF[name][object] = loaded
 			if effect.on_load then
@@ -1553,21 +1553,21 @@ function vlf_potions._load_entity_effects(entity)
 end
 
 -- Returns true if object has given effect
-function vlf_potions.has_effect(object, effect_name)
+function vlf_effects.has_effect(object, effect_name)
 	if not EF[effect_name] then
 		return false
 	end
 	return EF[effect_name][object] ~= nil
 end
 
-function vlf_potions.get_effect(object, effect_name)
+function vlf_effects.get_effect(object, effect_name)
 	if not EF[effect_name] or not EF[effect_name][object] then
 		return false
 	end
 	return EF[effect_name][object]
 end
 
-function vlf_potions.get_effect_level(object, effect_name)
+function vlf_effects.get_effect_level(object, effect_name)
 	if not EF[effect_name] then return end
 	local effect = EF[effect_name][object]
 	if not effect then return 0 end
@@ -1575,7 +1575,7 @@ function vlf_potions.get_effect_level(object, effect_name)
 	return registered_effects[effect_name].factor_to_level(effect.factor)
 end
 
-function vlf_potions.get_total_haste(object)
+function vlf_effects.get_total_haste(object)
 	local accum_factor = 1
 	for name, def in pairs(item_speed_effects) do
 		if EF[name][object] and not EF[name][object].blocked then
@@ -1587,7 +1587,7 @@ function vlf_potions.get_total_haste(object)
 	return accum_factor - 1
 end
 
-function vlf_potions.get_total_fatigue(object)
+function vlf_effects.get_total_fatigue(object)
 	local accum_factor = 1
 	for name, def in pairs(item_speed_effects) do
 		if EF[name][object] and not EF[name][object].blocked then
@@ -1600,9 +1600,9 @@ function vlf_potions.get_total_fatigue(object)
 	return accum_factor
 end
 
-function vlf_potions.clear_effect(object, effect)
+function vlf_effects.clear_effect(object, effect)
 	if not EF[effect] then
-		minetest.log("warning", "[vlf_potions] Tried to remove an effect that is not registered: " .. dump(effect))
+		minetest.log("warning", "[vlf_effects] Tried to remove an effect that is not registered: " .. dump(effect))
 		return false
 	end
 	local def = registered_effects[effect]
@@ -1616,20 +1616,20 @@ function vlf_potions.clear_effect(object, effect)
 end
 
 minetest.register_on_leaveplayer( function(player)
-	vlf_potions._save_player_effects(player)
-	vlf_potions._clear_cached_effect_data(player) -- clear the buffer to prevent looking for a player not there
+	vlf_effects._save_player_effects(player)
+	vlf_effects._clear_cached_effect_data(player) -- clear the buffer to prevent looking for a player not there
 	icon_ids[player:get_player_name()] = nil
 end)
 
 minetest.register_on_dieplayer( function(player)
-	vlf_potions._reset_effects(player)
+	vlf_effects._reset_effects(player)
 	potions_set_hud(player)
 end)
 
 minetest.register_on_joinplayer( function(player)
-	vlf_potions._reset_effects(player, false) -- make sure there are no weird holdover effects
-	vlf_potions._load_player_effects(player)
-	vlf_potions._reset_haste_fatigue_item_meta(player)
+	vlf_effects._reset_effects(player, false) -- make sure there are no weird holdover effects
+	vlf_effects._load_player_effects(player)
+	vlf_effects._reset_haste_fatigue_item_meta(player)
 	potions_init_icons(player)
 	potions_set_hud(player)
 end)
@@ -1637,7 +1637,7 @@ end)
 minetest.register_on_shutdown(function()
 	-- save player effects on server shutdown
 	for _,player in pairs(minetest.get_connected_players()) do
-		vlf_potions._save_player_effects(player)
+		vlf_effects._save_player_effects(player)
 	end
 end)
 
@@ -1655,7 +1655,7 @@ end)
 -- ██║░░░░░╚██████╔╝██║░╚███║╚█████╔╝░░░██║░░░██║╚█████╔╝██║░╚███║██████╔╝
 -- ╚═╝░░░░░░╚═════╝░╚═╝░░╚══╝░╚════╝░░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░
 
-function vlf_potions.is_obj_hit(self, pos)
+function vlf_effects.is_obj_hit(self, pos)
 
 	local entity
 	for _,object in pairs(minetest.get_objects_inside_radius(pos, 1.1)) do
@@ -1677,7 +1677,7 @@ function vlf_potions.is_obj_hit(self, pos)
 end
 
 
-function vlf_potions.make_invisible(obj_ref, hide)
+function vlf_effects.make_invisible(obj_ref, hide)
 	if obj_ref:is_player() then
 		if hide then
 			vlf_player.player_set_visibility(obj_ref, false)
@@ -1698,10 +1698,10 @@ function vlf_potions.make_invisible(obj_ref, hide)
 end
 
 
-function vlf_potions._use_potion(obj, color)
+function vlf_effects._use_potion(obj, color)
 	local d = 0.1
 	local pos = obj:get_pos()
-	minetest.sound_play("vlf_potions_drinking", {pos = pos, max_hear_distance = 6, gain = 1})
+	minetest.sound_play("vlf_effects_drinking", {pos = pos, max_hear_distance = 6, gain = 1})
 	minetest.add_particlespawner({
 		amount = 25,
 		time = 1,
@@ -1722,7 +1722,7 @@ function vlf_potions._use_potion(obj, color)
 end
 
 
-function vlf_potions._add_spawner(obj, color)
+function vlf_effects._add_spawner(obj, color)
 	local d = 0.2
 	local pos = obj:get_pos()
 	minetest.add_particlespawner({
@@ -1772,7 +1772,7 @@ local registered_res_predicates = {}
 -- This is supposed to add custom resistance functions independent of effects
 -- E.g. some entity could be resistant to all (or some) effects under specific conditions
 -- predicate - function(object, effect_name) - return true if resists effect
-function vlf_potions.register_generic_resistance_predicate(predicate)
+function vlf_effects.register_generic_resistance_predicate(predicate)
 	if type(predicate) == "function" then
 		table.insert(registered_res_predicates, predicate)
 	else
@@ -1794,7 +1794,7 @@ local function target_valid(object, name)
 		and registered_effects[name].res_condition(object)) then return true end
 end
 
-function vlf_potions.give_effect(name, object, factor, duration, no_particles)
+function vlf_effects.give_effect(name, object, factor, duration, no_particles)
 	local edef = registered_effects[name]
 	if not edef or not target_valid(object, name) then return false end
 	if not EF[name][object] then
@@ -1835,16 +1835,16 @@ function vlf_potions.give_effect(name, object, factor, duration, no_particles)
 	return true
 end
 
-function vlf_potions.give_effect_by_level(name, object, level, duration, no_particles)
+function vlf_effects.give_effect_by_level(name, object, level, duration, no_particles)
 	if level == 0 then return false end
 	if not registered_effects[name].uses_factor then
-		return vlf_potions.give_effect(name, object, 0, duration, no_particles)
+		return vlf_effects.give_effect(name, object, 0, duration, no_particles)
 	end
 	local factor = registered_effects[name].level_to_factor(level)
-	return vlf_potions.give_effect(name, object, factor, duration, no_particles)
+	return vlf_effects.give_effect(name, object, factor, duration, no_particles)
 end
 
-function vlf_potions.healing_func(object, hp)
+function vlf_effects.healing_func(object, hp)
 	if not object or object:get_hp() <= 0 then return false end
 	local ent = object:get_luaentity()
 
@@ -1871,55 +1871,55 @@ function vlf_potions.healing_func(object, hp)
 	end
 end
 
-function vlf_potions.strength_func(object, factor, duration)
-	return vlf_potions.give_effect("strength", object, factor, duration)
+function vlf_effects.strength_func(object, factor, duration)
+	return vlf_effects.give_effect("strength", object, factor, duration)
 end
-function vlf_potions.leaping_func(object, factor, duration)
-	return vlf_potions.give_effect("leaping", object, factor, duration)
+function vlf_effects.leaping_func(object, factor, duration)
+	return vlf_effects.give_effect("leaping", object, factor, duration)
 end
-function vlf_potions.weakness_func(object, factor, duration)
-	return vlf_potions.give_effect("weakness", object, factor, duration)
+function vlf_effects.weakness_func(object, factor, duration)
+	return vlf_effects.give_effect("weakness", object, factor, duration)
 end
-function vlf_potions.swiftness_func(object, factor, duration)
-	return vlf_potions.give_effect("swiftness", object, factor, duration)
+function vlf_effects.swiftness_func(object, factor, duration)
+	return vlf_effects.give_effect("swiftness", object, factor, duration)
 end
-function vlf_potions.slowness_func(object, factor, duration)
-	return vlf_potions.give_effect("slowness", object, factor, duration)
-end
-
-function vlf_potions.withering_func(object, factor, duration)
-	return vlf_potions.give_effect("withering", object, factor, duration)
+function vlf_effects.slowness_func(object, factor, duration)
+	return vlf_effects.give_effect("slowness", object, factor, duration)
 end
 
-function vlf_potions.poison_func(object, factor, duration)
-	return vlf_potions.give_effect("poison", object, factor, duration)
+function vlf_effects.withering_func(object, factor, duration)
+	return vlf_effects.give_effect("withering", object, factor, duration)
 end
 
-
-function vlf_potions.regeneration_func(object, factor, duration)
-	return vlf_potions.give_effect("regeneration", object, factor, duration)
+function vlf_effects.poison_func(object, factor, duration)
+	return vlf_effects.give_effect("poison", object, factor, duration)
 end
 
 
-function vlf_potions.invisiblility_func(object, null, duration)
-	return vlf_potions.give_effect("invisibility", object, null, duration)
-end
-
-function vlf_potions.water_breathing_func(object, null, duration)
-	return vlf_potions.give_effect("water_breathing", object, null, duration)
+function vlf_effects.regeneration_func(object, factor, duration)
+	return vlf_effects.give_effect("regeneration", object, factor, duration)
 end
 
 
-function vlf_potions.fire_resistance_func(object, null, duration)
-	return vlf_potions.give_effect("fire_resistance", object, null, duration)
+function vlf_effects.invisiblility_func(object, null, duration)
+	return vlf_effects.give_effect("invisibility", object, null, duration)
+end
+
+function vlf_effects.water_breathing_func(object, null, duration)
+	return vlf_effects.give_effect("water_breathing", object, null, duration)
 end
 
 
-function vlf_potions.night_vision_func(object, null, duration)
-	return vlf_potions.give_effect("night_vision", object, null, duration)
+function vlf_effects.fire_resistance_func(object, null, duration)
+	return vlf_effects.give_effect("fire_resistance", object, null, duration)
 end
 
-function vlf_potions._extinguish_nearby_fire(pos, radius)
+
+function vlf_effects.night_vision_func(object, null, duration)
+	return vlf_effects.give_effect("night_vision", object, null, duration)
+end
+
+function vlf_effects._extinguish_nearby_fire(pos, radius)
 	local epos = {x=pos.x, y=pos.y+0.5, z=pos.z}
 	local dnode = minetest.get_node({x=pos.x,y=pos.y-0.5,z=pos.z})
 	if minetest.get_item_group(dnode.name, "fire") ~= 0 or minetest.get_item_group(dnode.name, "lit_campfire") ~= 0 then
@@ -1970,6 +1970,6 @@ function vlf_potions._extinguish_nearby_fire(pos, radius)
 	return exting
 end
 
-function vlf_potions.bad_omen_func(object, factor, duration)
-	vlf_potions.give_effect("bad_omen", object, factor, duration)
+function vlf_effects.bad_omen_func(object, factor, duration)
+	vlf_effects.give_effect("bad_omen", object, factor, duration)
 end

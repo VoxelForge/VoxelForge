@@ -10,7 +10,7 @@ local abm_nodes = { "vlf_beehives:beehive", "vlf_beehives:bee_nest" }
 local honey_harvest = function(pos, node, player, itemstack, pointed_thing)
 	local inv = player:get_inventory()
 	local shears = minetest.get_item_group(player:get_wielded_item():get_name(), "shears") > 0
-	local bottle = player:get_wielded_item():get_name() == "vlf_potions:glass_bottle"
+	local bottle = player:get_wielded_item():get_name() == "vlf_effects:glass_bottle"
 	local original_block = "vlf_beehives:bee_nest"
 	local is_creative = minetest.is_creative_enabled(player:get_player_name())
 	if node.name == "vlf_beehives:beehive_5" then

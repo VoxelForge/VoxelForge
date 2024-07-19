@@ -122,13 +122,13 @@ tt.register_snippet(function(itemstring, _, itemstack)
 
 	local s = ""
 	local meta = itemstack:get_meta()
-	local potency = meta:get_int("vlf_potions:potion_potent")
-	local plus = meta:get_int("vlf_potions:potion_plus")
+	local potency = meta:get_int("vlf_effects:potion_potent")
+	local plus = meta:get_int("vlf_effects:potion_plus")
 	local sl_factor = 1
 	if def.groups.splash_potion == 1 then
-		sl_factor = vlf_potions.SPLASH_FACTOR
+		sl_factor = vlf_effects.SPLASH_FACTOR
 	elseif def.groups.ling_potion == 1 then
-		sl_factor = vlf_potions.LINGERING_FACTOR
+		sl_factor = vlf_effects.LINGERING_FACTOR
 	end
 	if def._dynamic_tt then s = s.. def._dynamic_tt((potency+1)*sl_factor).. "\n" end
 	local effects = def._effect_list
@@ -141,11 +141,11 @@ tt.register_snippet(function(itemstring, _, itemstack)
 		local factor
 		local ef_tt
 		for name, details in pairs(effects) do
-			effect = vlf_potions.registered_effects[name]
+			effect = vlf_effects.registered_effects[name]
 			if details.dur_variable then
-				dur = details.dur * math.pow(vlf_potions.PLUS_FACTOR, plus) * sl_factor
+				dur = details.dur * math.pow(vlf_effects.PLUS_FACTOR, plus) * sl_factor
 				if potency > 0 and details.uses_level then
-					dur = dur / math.pow(vlf_potions.POTENT_FACTOR, potency)
+					dur = dur / math.pow(vlf_effects.POTENT_FACTOR, potency)
 				end
 			else
 				dur = details.dur

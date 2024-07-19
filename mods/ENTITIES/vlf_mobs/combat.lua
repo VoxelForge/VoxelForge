@@ -467,7 +467,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 		if self.protected and minetest.is_protected(self.object:get_pos(), hitter:get_player_name()) then
 			return
 		end
-		vlf_potions.update_haste_and_fatigue(hitter)
+		vlf_effects.update_haste_and_fatigue(hitter)
 		if minetest.is_creative_enabled(hitter:get_player_name()) then
 			-- Instantly kill mob after a slight delay.
 			-- Without this delay the node behind would be dug by the punch as well.
@@ -511,8 +511,8 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 	end
 
 	-- strength and weakness effects
-	local strength = vlf_potions.get_effect(hitter, "strength")
-	local weakness = vlf_potions.get_effect(hitter, "weakness")
+	local strength = vlf_effects.get_effect(hitter, "strength")
+	local weakness = vlf_effects.get_effect(hitter, "weakness")
 	local str_fac = strength and strength.factor or 1
 	local weak_fac = weakness and weakness.factor or 1
 	damage = damage * str_fac * weak_fac
@@ -1018,7 +1018,7 @@ function mob_class:do_states_attack (dtime)
 							damage_groups = {fleshy = self.damage}
 						}, nil)
 						if self.dealt_effect then
-							vlf_potions.give_effect_by_level(self.dealt_effect.name, self.attack, self.dealt_effect.level, self.dealt_effect.dur)
+							vlf_effects.give_effect_by_level(self.dealt_effect.name, self.attack, self.dealt_effect.level, self.dealt_effect.dur)
 						end
 						attacked = true
 					end

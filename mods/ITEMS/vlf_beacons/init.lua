@@ -132,16 +132,16 @@ local formspec_string=
 	"image[1,4.5;1,1;custom_beacom_symbol_2.png]"..
 	"image[1,6;1,1;custom_beacom_symbol_1.png]"..
 
-	"image_button[5.2,1.5;1,1;vlf_potions_effect_swiftness.png;swiftness;]"..
-	"image_button[8.5,1.5;1,1;vlf_potions_effect_haste.png;haste;]"..
-	"image_button[5.2,3;1,1;vlf_potions_effect_leaping.png;leaping;]"..
-	"image_button[8.5,3;1,1;vlf_potions_effect_resistance.png;resistance;]"..
+	"image_button[5.2,1.5;1,1;vlf_effects_effect_swiftness.png;swiftness;]"..
+	"image_button[8.5,1.5;1,1;vlf_effects_effect_haste.png;haste;]"..
+	"image_button[5.2,3;1,1;vlf_effects_effect_leaping.png;leaping;]"..
+	"image_button[8.5,3;1,1;vlf_effects_effect_resistance.png;resistance;]"..
 
-	"image_button[5.2,4.5;1,1;vlf_potions_effect_strength.png;strength;]"..
-	"image_button[8.5,4.5;1,1;vlf_potions_effect_absorption.png;absorption;]"..
+	"image_button[5.2,4.5;1,1;vlf_effects_effect_strength.png;strength;]"..
+	"image_button[8.5,4.5;1,1;vlf_effects_effect_absorption.png;absorption;]"..
 
-	"image_button[5.2,6;1,1;vlf_potions_effect_regeneration.png;regeneration;]"..
-	"image_button[8.5,6;1,1;vlf_potions_effect_slow_falling.png;slow_falling;]"..
+	"image_button[5.2,6;1,1;vlf_effects_effect_regeneration.png;regeneration;]"..
+	"image_button[8.5,6;1,1;vlf_effects_effect_slow_falling.png;slow_falling;]"..
 
 	"item_image[1,7;1,1;vlf_core:diamond]"..
 	"item_image[2.2,7;1,1;vlf_core:emerald]"..
@@ -213,7 +213,7 @@ end
 local function effect_player(effect,pos,power_level, effect_level,player)
 	local distance =  vector.distance(player:get_pos(), pos)
 	if distance > (power_level+1)*10 then return end
-	vlf_potions.give_effect_by_level(effect, player, effect_level, 16)
+	vlf_effects.give_effect_by_level(effect, player, effect_level, 16)
 end
 
 local function apply_effects_to_all_players(pos)

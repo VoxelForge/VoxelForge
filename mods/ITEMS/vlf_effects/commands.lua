@@ -25,7 +25,7 @@ minetest.register_chatcommand("effect",{
 			return false, S("Missing effect parameter!")
 		elseif P[1] == "list" then
 			local effects = "heal"
-			for effect, _ in pairs(vlf_potions.registered_effects) do
+			for effect, _ in pairs(vlf_effects.registered_effects) do
 				effects = effects .. ", " .. effect
 			end
 			return true, effects
@@ -34,7 +34,7 @@ minetest.register_chatcommand("effect",{
 			if not hp or hp == 0 then
 				return false, S("Missing or invalid heal amount parameter!")
 			else
-				vlf_potions.healing_func(minetest.get_player_by_name(name), hp)
+				vlf_effects.healing_func(minetest.get_player_by_name(name), hp)
 				if hp > 0 then
 					if hp < 1 then hp = 1 end
 					return true, S("Player @1 healed by @2 HP.", name, hp)
@@ -44,14 +44,14 @@ minetest.register_chatcommand("effect",{
 				end
 			end
 		elseif P[1] == "clear" then
-			vlf_potions._reset_effects(minetest.get_player_by_name(name))
+			vlf_effects._reset_effects(minetest.get_player_by_name(name))
 			return true, S("Effects cleared for player @1", name)
 		elseif P[1] == "remove" then
 			if not P[2] then
 				return false, S("Missing effect parameter!")
 			end
-			if vlf_potions.registered_effects[P[2]] then
-				vlf_potions.clear_effect(minetest.get_player_by_name(name), P[2])
+			if vlf_effects.registered_effects[P[2]] then
+				vlf_effects.clear_effect(minetest.get_player_by_name(name), P[2])
 				return true, S("Removed effect @1 from player @2", P[2], name)
 			else
 				return false, S("@1 is not an available status effect.", P[2])
@@ -81,10 +81,10 @@ minetest.register_chatcommand("effect",{
 			nopart = P[4] == "NOPART"
 		end
 
-		local def = vlf_potions.registered_effects[P[1]]
+		local def = vlf_effects.registered_effects[P[1]]
 		if def then
 			if P[3] == "F" then
-				local given = vlf_potions.give_effect(P[1], minetest.get_player_by_name(name), tonumber(P[4]), inf and "INF" or tonumber(P[2]), nopart)
+				local given = vlf_effects.give_effect(P[1], minetest.get_player_by_name(name), tonumber(P[4]), inf and "INF" or tonumber(P[2]), nopart)
 				if given then
 					if def.uses_factor then
 						return true, S("@1 effect given to player @2 for @3 seconds with factor of @4.", def.description, name, P[2], P[4])
@@ -95,7 +95,7 @@ minetest.register_chatcommand("effect",{
 					return false, S("Giving effect @1 to player @2 failed.", def.description, name)
 				end
 			else
-				local given = vlf_potions.give_effect_by_level(P[1], minetest.get_player_by_name(name), tonumber(P[3]), inf and "INF" or tonumber(P[2]), nopart)
+				local given = vlf_effects.give_effect_by_level(P[1], minetest.get_player_by_name(name), tonumber(P[3]), inf and "INF" or tonumber(P[2]), nopart)
 				if given then
 					if def.uses_factor then
 						return true, S("@1 effect on level @2 given to player @3 for @4 seconds.", def.description, P[3], name, P[2])

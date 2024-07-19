@@ -329,7 +329,7 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 					vlf_util.deal_damage(objs[n], 8, {type = "magic"})
 					hit_some = true
 				end
-				vlf_potions.give_effect("withering", objs[n], 2, 10)
+				vlf_effects.give_effect("withering", objs[n], 2, 10)
 			end
 			if hit_some then
 				vlf_mobs.effect(pos, 32, "vlf_particles_soul_fire_flame.png", 5, 10, self.reach, 1, 0)
@@ -449,7 +449,7 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull", {
 	-- direct hit
 	hit_player = function(self, player)
 		local pos = vector.new(self.object:get_pos())
-		vlf_potions.give_effect("withering", player, 2, 10)
+		vlf_effects.give_effect("withering", player, 2, 10)
 		player:punch(self.object, 1.0, {
 			full_punch_interval = 0.5,
 			damage_groups = {fleshy = 8},
@@ -464,7 +464,7 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull", {
 
 	hit_mob = function(self, mob)
 		local pos = vector.new(self.object:get_pos())
-		vlf_potions.give_effect("withering", mob, 2, 10)
+		vlf_effects.give_effect("withering", mob, 2, 10)
 		mob:punch(self.object, 1.0, {
 			full_punch_interval = 0.5,
 			damage_groups = {fleshy = 8},
@@ -503,7 +503,7 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 	-- direct hit
 	hit_player = function(self, player)
 		local pos = vector.new(self.object:get_pos())
-		vlf_potions.give_effect("withering", player, 2, 10)
+		vlf_effects.give_effect("withering", player, 2, 10)
 		player:punch(self.object, 1.0, {
 			full_punch_interval = 0.5,
 			damage_groups = {fleshy = 12},
@@ -522,7 +522,7 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 
 	hit_mob = function(self, mob)
 		local pos = vector.new(self.object:get_pos())
-		vlf_potions.give_effect("withering", mob, 2, 10)
+		vlf_effects.give_effect("withering", mob, 2, 10)
 		mob:punch(self.object, 1.0, {
 			full_punch_interval = 0.5,
 			damage_groups = {fleshy = 12},

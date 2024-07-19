@@ -81,7 +81,7 @@ local function brewable(inv)
 	for i=1,stand_size do
 
 		bottle = inv:get_stack("stand", i)
-		alchemy = vlf_potions.get_alchemy(ingredient, bottle)
+		alchemy = vlf_effects.get_alchemy(ingredient, bottle)
 
 		if alchemy then
 			stands[i] = alchemy
@@ -182,7 +182,7 @@ local function brewing_stand_timer(pos, elapsed)
 					if brew_output[i] then
 						minetest.sound_play("vlf_brewing_complete", {pos=pos, gain=0.4, max_hear_range=6}, true)
 						inv:set_stack("stand", i, brew_output[i])
-						minetest.sound_play("vlf_potions_bottle_pour", {pos=pos, gain=0.6, max_hear_range=6}, true)
+						minetest.sound_play("vlf_effects_bottle_pour", {pos=pos, gain=0.6, max_hear_range=6}, true)
 					end
 				end
 				stand_timer = 0

@@ -55,8 +55,8 @@ local function hunger_effect(itemstack, placer, pointed_thing)
 end
 
 local function potion_effect(itemstack, placer, pointed_thing,effect)
-	if vlf_potions[effect.."_func"] then
-		vlf_potions[effect.."_func"](placer, 1, 6)
+	if vlf_effects[effect.."_func"] then
+		vlf_effects[effect.."_func"](placer, 1, 6)
 	end
 	return eat(itemstack, placer, pointed_thing)
 end

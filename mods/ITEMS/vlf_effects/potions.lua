@@ -1,14 +1,14 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-vlf_potions.registered_potions = {}
+vlf_effects.registered_potions = {}
 -- shorthand
-local registered_potions = vlf_potions.registered_potions
+local registered_potions = vlf_effects.registered_potions
 
 local function potion_image(colorstring, opacity)
 	if not opacity then
 		opacity = 127
 	end
-	return "vlf_potions_potion_overlay.png^[colorize:"..colorstring..":"..tostring(opacity).."^vlf_potions_potion_bottle.png"
+	return "vlf_effects_potion_overlay.png^[colorize:"..colorstring..":"..tostring(opacity).."^vlf_effects_potion_bottle.png"
 end
 
 local how_to_drink = S("Use the “Place” key to drink it.")
@@ -41,8 +41,8 @@ local function generate_on_use(effects, color, on_use, custom_effect)
 			return itemstack
 		end
 
-		local potency = itemstack:get_meta():get_int("vlf_potions:potion_potent")
-		local plus = itemstack:get_meta():get_int("vlf_potions:potion_plus")
+		local potency = itemstack:get_meta():get_int("vlf_effects:potion_potent")
+		local plus = itemstack:get_meta():get_int("vlf_effects:potion_plus")
 		local ef_level
 		local dur
 		for name, details in pairs(effects) do
@@ -52,24 +52,24 @@ local function generate_on_use(effects, color, on_use, custom_effect)
 				ef_level = details.level
 			end
 			if details.dur_variable then
-				dur = details.dur * math.pow(vlf_potions.PLUS_FACTOR, plus)
+				dur = details.dur * math.pow(vlf_effects.PLUS_FACTOR, plus)
 				if potency>0 and details.uses_level then
-					dur = dur / math.pow(vlf_potions.POTENT_FACTOR, potency)
+					dur = dur / math.pow(vlf_effects.POTENT_FACTOR, potency)
 				end
 			else
 				dur = details.dur
 			end
 			if details.effect_stacks then
-				ef_level = ef_level + vlf_potions.get_effect_level(user, name)
+				ef_level = ef_level + vlf_effects.get_effect_level(user, name)
 			end
-			vlf_potions.give_effect_by_level(name, user, ef_level, dur)
+			vlf_effects.give_effect_by_level(name, user, ef_level, dur)
 		end
 
 		if on_use then on_use(user, potency+1) end
 		if custom_effect then custom_effect(user, potency+1, plus) end
 
-		itemstack = minetest.do_item_eat(0, "vlf_potions:glass_bottle", itemstack, user, pointed_thing)
-		if itemstack then vlf_potions._use_potion(user, color) end
+		itemstack = minetest.do_item_eat(0, "vlf_effects:glass_bottle", itemstack, user, pointed_thing)
+		if itemstack then vlf_effects._use_potion(user, color) end
 
 		return itemstack
 	end
@@ -98,7 +98,7 @@ end
 -- -- -- level - int - used as the effect level if uses_level is false and for lvl1 potions - defaults to 1
 -- -- -- level_scaling - int - used as the number of effect levels added per potion level - defaults to 1 -
 -- -- --   - this has no effect if uses_level is false
--- -- -- dur - float - duration of the effect in seconds - defaults to vlf_potions.DURATION
+-- -- -- dur - float - duration of the effect in seconds - defaults to vlf_effects.DURATION
 -- -- -- dur_variable - bool - whether variants of the potion should have the length of this effect changed -
 -- -- --   - defaults to true
 -- -- --   - if at least one effect has this set to true, the potion has a "plus" variant
@@ -117,7 +117,7 @@ end
 -- custom_splash_effect - function(pos, level) - called when the splash potion explodes, returns true on success
 -- custom_linger_effect - function(pos, radius, level) - called on the lingering potion step, returns true on success
 
-function vlf_potions.register_potion(def)
+function vlf_effects.register_potion(def)
 	local modname = minetest.get_current_modname()
 	local name = def.name
 	if name == nil then
@@ -157,7 +157,7 @@ function vlf_potions.register_potion(def)
 	local has_plus = false
 	if def._effect_list then
 		for name, details in pairs(def._effect_list) do
-			effect = vlf_potions.registered_effects[name]
+			effect = vlf_effects.registered_effects[name]
 			if effect then
 				local ulvl
 				if details.uses_level ~= nil then ulvl = details.uses_level
@@ -170,7 +170,7 @@ function vlf_potions.register_potion(def)
 					uses_level = ulvl,
 					level = details.level or 1,
 					level_scaling = details.level_scaling or 1,
-					dur = details.dur or vlf_potions.DURATION,
+					dur = details.dur or vlf_effects.DURATION,
 					dur_variable = durvar,
 					effect_stacks = details.effect_stacks and true or false
 				}
@@ -213,7 +213,7 @@ function vlf_potions.register_potion(def)
 		sdef.custom_effect = def.custom_effect
 		sdef.on_splash = def.custom_splash_effect
 		if not def._effect_list then sdef.instant = true end
-		vlf_potions.register_splash(name, splash_desc, color, sdef)
+		vlf_effects.register_splash(name, splash_desc, color, sdef)
 		internal_def.has_splash = true
 	end
 
@@ -235,7 +235,7 @@ function vlf_potions.register_potion(def)
 		ldef.on_splash = def.custom_splash_effect
 		ldef.while_lingering = def.custom_linger_effect
 		if not def._effect_list then ldef.instant = true end
-		vlf_potions.register_lingering(name, ling_desc, color, ldef)
+		vlf_effects.register_lingering(name, ling_desc, color, ldef)
 		internal_def.has_lingering = true
 	end
 
@@ -263,14 +263,14 @@ function vlf_potions.register_potion(def)
 		adef._default_extend_level = pdef._default_extend_level
 		adef.custom_effect = def.custom_effect
 		if not def._effect_list then adef.instant = true end
-		vlf_potions.register_arrow(name, arr_desc, color, adef)
+		vlf_effects.register_arrow(name, arr_desc, color, adef)
 		internal_def.has_arrow = true
 	end
 
-	vlf_potions.registered_potions[modname..":"..name] = internal_def
+	vlf_effects.registered_potions[modname..":"..name] = internal_def
 end
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "trolling",
 	desc_prefix = S("Mighty"),
 	desc_suffix = S("of Trolling"),
@@ -312,15 +312,15 @@ vlf_potions.register_potion({
 -- ╚═════╝░╚══════╝╚═╝░░░░░╚═╝╚═╝░░╚══╝╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░
 
 
-minetest.register_craftitem("vlf_potions:dragon_breath", {
+minetest.register_craftitem("vlf_effects:dragon_breath", {
 	description = S("Dragon's Breath"),
 	_longdesc = S("This item is used in brewing and can be combined with splash potions to create lingering potions."),
-	image = "vlf_potions_dragon_breath.png",
+	image = "vlf_effects_dragon_breath.png",
 	groups = { brewitem = 1, bottle = 1 },
 	stack_max = 64,
 })
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "awkward",
 	desc_prefix = S("Awkward"),
 	_tt = S("No effect"),
@@ -328,7 +328,7 @@ vlf_potions.register_potion({
 	color = "#0000FF",
 })
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "mundane",
 	desc_prefix = S("Mundane"),
 	_tt = S("No effect"),
@@ -336,15 +336,7 @@ vlf_potions.register_potion({
 	color = "#0000FF",
 })
 
-vlf_potions.register_potion({
-	name = "thick",
-	desc_prefix = S("Thick"),
-	_tt = S("No effect"),
-	_longdesc = S("Has a bitter taste and may be useful for brewing potions."),
-	color = "#0000FF",
-})
-
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "healing",
 	desc_suffix = S("of Healing"),
 	_dynamic_tt = function(level)
@@ -355,11 +347,11 @@ vlf_potions.register_potion({
 	uses_level = true,
 	has_arrow = true,
 	custom_effect = function(object, level)
-		return vlf_potions.healing_func(object, 4 * level)
+		return vlf_effects.healing_func(object, 4 * level)
 	end,
 })
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "harming",
 	desc_suffix = S("of Harming"),
 	_dynamic_tt = function(level)
@@ -370,11 +362,11 @@ vlf_potions.register_potion({
 	uses_level = true,
 	has_arrow = true,
 	custom_effect = function(object, level)
-		return vlf_potions.healing_func(object, -6 * level)
+		return vlf_effects.healing_func(object, -6 * level)
 	end,
 })
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "night_vision",
 	desc_suffix = S("of Night Vision"),
 	_tt = nil,
@@ -386,7 +378,7 @@ vlf_potions.register_potion({
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "swiftness",
 	desc_suffix = S("of Swiftness"),
 	_tt = nil,
@@ -398,20 +390,20 @@ vlf_potions.register_potion({
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "slowness",
 	desc_suffix = S("of Slowness"),
 	_tt = nil,
 	_longdesc = S("Decreases walking speed."),
 	color = "#5A6C81",
 	_effect_list = {
-		slowness = {dur=vlf_potions.DURATION_INV},
+		slowness = {dur=vlf_effects.DURATION_INV},
 	},
 	default_potent_level = 4,
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "leaping",
 	desc_suffix = S("of Leaping"),
 	_tt = nil,
@@ -423,43 +415,31 @@ vlf_potions.register_potion({
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "withering",
 	desc_suffix = S("of Withering"),
 	_tt = nil,
 	_longdesc = S("Applies the withering effect which deals damage at a regular interval and can kill."),
 	color = "#292929",
 	_effect_list = {
-		withering = {dur=vlf_potions.DURATION_POISON},
+		withering = {dur=vlf_effects.DURATION_POISON},
 	},
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "poison",
 	desc_suffix = S("of Poison"),
 	_tt = nil,
 	_longdesc = S("Applies the poison effect which deals damage at a regular interval."),
 	color = "#4E9331",
 	_effect_list = {
-		poison = {dur=vlf_potions.DURATION_POISON},
+		poison = {dur=vlf_effects.DURATION_POISON},
 	},
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
-	name = "regeneration",
-	desc_suffix = S("of Regeneration"),
-	_tt = nil,
-	_longdesc = S("Regenerates health over time."),
-	color = "#CD5CAB",
-	_effect_list = {
-		regeneration = {dur=vlf_potions.DURATION_POISON},
-	},
-	has_arrow = true,
-})
-
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "invisibility",
 	desc_suffix = S("of Invisibility"),
 	_tt = nil,
@@ -471,7 +451,7 @@ vlf_potions.register_potion({
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "water_breathing",
 	desc_suffix = S("of Water Breathing"),
 	_tt = nil,
@@ -483,7 +463,7 @@ vlf_potions.register_potion({
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "fire_resistance",
 	desc_suffix = S("of Fire Resistance"),
 	_tt = nil,
@@ -495,7 +475,7 @@ vlf_potions.register_potion({
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "strength",
 	desc_suffix = S("of Strength"),
 	_tt = nil,
@@ -507,7 +487,7 @@ vlf_potions.register_potion({
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "weakness",
 	desc_suffix = S("of Weakness"),
 	_tt = nil,
@@ -519,7 +499,7 @@ vlf_potions.register_potion({
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "slow_falling",
 	desc_suffix = S("of Slow Falling"),
 	_tt = nil,
@@ -531,19 +511,7 @@ vlf_potions.register_potion({
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
-	name = "levitation",
-	desc_suffix = S("of Levitation"),
-	_tt = nil,
-	_longdesc = S("Floats body slowly upwards."),
-	color = "#420E7E",
-	_effect_list = {
-		levitation = {},
-	},
-	has_arrow = true,
-})
-
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "darkness",
 	desc_suffix = S("of Darkness"),
 	_tt = nil,
@@ -555,19 +523,7 @@ vlf_potions.register_potion({
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
-	name = "glowing",
-	desc_suffix = S("of Glowing"),
-	_tt = nil,
-	_longdesc = S("Highlights for others to see."),
-	color = "#FFFF77",
-	_effect_list = {
-		glowing = {},
-	},
-	has_arrow = false, -- TODO add a spectral arrow instead (in vlf_bows?)
-})
-
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "health_boost",
 	desc_suffix = S("of Health Boost"),
 	_tt = nil,
@@ -579,19 +535,7 @@ vlf_potions.register_potion({
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
-	name = "absorption",
-	desc_suffix = S("of Absorption"),
-	_tt = nil,
-	_longdesc = S("Absorbs some incoming damage."),
-	color = "#B59500",
-	_effect_list = {
-		absorption = {},
-	},
-	has_arrow = true,
-})
-
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "resistance",
 	desc_suffix = S("of Resistance"),
 	_tt = nil,
@@ -603,27 +547,7 @@ vlf_potions.register_potion({
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
-	name = "stone_cloak",
-	desc_suffix = S("of Stone Cloak"),
-	_tt = nil,
-	_longdesc = S("Decreases damage taken at the cost of speed."),
-	color = "#255235",
-	_effect_list = {
-		resistance = {
-			level = 3,
-			dur = 20,
-		},
-		slowness = {
-			level = 4,
-			level_scaling = 2,
-			dur = 20,
-		},
-	},
-	has_arrow = true,
-})
-
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "luck",
 	desc_suffix = S("of Luck"),
 	_tt = nil,
@@ -635,58 +559,7 @@ vlf_potions.register_potion({
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
-	name = "bad_luck",
-	desc_suffix = S("of Bad Luck"),
-	_tt = nil,
-	_longdesc = S("Decreases luck."),
-	color = "#887343",
-	_effect_list = {
-		bad_luck = {},
-	},
-	has_arrow = true,
-})
-
-vlf_potions.register_potion({
-	name = "frost",
-	desc_suffix = S("of Frost"),
-	_tt = nil,
-	_longdesc = S("Freezes..."),
-	color = "#5B7DAA",
-	_effect_list = {
-		frost = {
-			dur = vlf_potions.DURATION_POISON,
-			effect_stacks = true,
-		},
-	},
-	has_arrow = true,
-})
-
-vlf_potions.register_potion({
-	name = "blindness",
-	desc_suffix = S("of Blindness"),
-	_tt = nil,
-	_longdesc = S("Impairs sight."),
-	color = "#586868",
-	_effect_list = {
-		blindness = {},
-	},
-	has_arrow = true,
-})
-
-vlf_potions.register_potion({
-	name = "nausea",
-	desc_suffix = S("of Nausea"),
-	_tt = nil,
-	_longdesc = S("Disintegrates senses."),
-	color = "#715C7F",
-	_effect_list = {
-		nausea = {},
-	},
-	has_arrow = true,
-})
-
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "food_poisoning",
 	desc_suffix = S("of Food Poisoning"),
 	_tt = nil,
@@ -694,58 +567,22 @@ vlf_potions.register_potion({
 	color = "#83A061",
 	_effect_list = {
 		food_poisoning = {
-			dur = vlf_potions.DURATION_POISON,
+			dur = vlf_effects.DURATION_POISON,
 			effect_stacks = true,
 		},
 	},
 	has_arrow = true,
 })
 
-vlf_potions.register_potion({
-	name = "saturation",
-	desc_suffix = S("of Saturation"),
-	_tt = nil,
-	_longdesc = S("Satisfies hunger."),
-	color = "#CEAE29",
-	_effect_list = {
-		saturation = {dur=vlf_potions.DURATION_POISON},
-	},
-	has_arrow = true,
-})
-
-vlf_potions.register_potion({
-	name = "haste",
-	desc_suffix = S("of Haste"),
-	_tt = nil,
-	_longdesc = S("Increases digging and attack speed."),
-	color = "#FFFF00",
-	_effect_list = {
-		haste = {},
-	},
-	has_arrow = true,
-})
-
-vlf_potions.register_potion({
-	name = "fatigue",
-	desc_suffix = S("of Fatigue"),
-	_tt = nil,
-	_longdesc = S("Decreases digging and attack speed."),
-	color = "#64643D",
-	_effect_list = {
-		fatigue = {},
-	},
-	has_arrow = true,
-})
-
-vlf_potions.register_potion({
+vlf_effects.register_potion({
 	name = "ominous",
 	desc_prefix = S("Ominous"),
 	_tt = nil,
 	_longdesc = S("Attracts danger."),
 	image = table.concat({
-		"(vlf_potions_potion_overlay.png^[colorize:red:100)",
-		"^vlf_potions_splash_overlay.png^[colorize:black:100",
-		"^vlf_potions_potion_bottle.png",
+		"(vlf_effects_potion_overlay.png^[colorize:red:100)",
+		"^vlf_effects_splash_overlay.png^[colorize:black:100",
+		"^vlf_effects_potion_bottle.png",
 	}),
 	_effect_list = {
 		bad_omen = {dur = 6000},
@@ -778,7 +615,7 @@ local function replace_legacy_potion(itemstack)
 	local new_stack
 	if new_name then
 		new_stack = ItemStack(new_name..suffix)
-		new_stack:get_meta():set_int("vlf_potions:potion_plus",
+		new_stack:get_meta():set_int("vlf_effects:potion_plus",
 			registered_potions[new_name]._default_extend_level)
 		new_stack:set_count(itemstack:get_count())
 		tt.reload_itemstack_description(new_stack)
@@ -786,26 +623,26 @@ local function replace_legacy_potion(itemstack)
 	new_name = bare_name:match("^(.+)_2$")
 	if new_name then
 		new_stack = ItemStack(new_name..suffix)
-		new_stack:get_meta():set_int("vlf_potions:potion_potent",
+		new_stack:get_meta():set_int("vlf_effects:potion_potent",
 			registered_potions[new_name]._default_potent_level-1)
 		new_stack:set_count(itemstack:get_count())
 		tt.reload_itemstack_description(new_stack)
 	end
 	return new_stack
 end
-local compat = "vlf_potions:compat_potion"
-local compat_arrow = "vlf_potions:compat_arrow"
+local compat = "vlf_effects:compat_potion"
+local compat_arrow = "vlf_effects:compat_arrow"
 minetest.register_craftitem(compat, {
 	description = S("Unknown Potion"),
 	_tt_help = S("Right-click to identify"),
-	image = "vlf_potions_potion_overlay.png^[colorize:#00F:127^vlf_potions_potion_bottle.png^vl_unknown.png",
+	image = "vlf_effects_potion_overlay.png^[colorize:#00F:127^vlf_effects_potion_bottle.png^vl_unknown.png",
 	on_secondary_use = replace_legacy_potion,
 	on_place = replace_legacy_potion,
 })
 minetest.register_craftitem(compat_arrow, {
 	description = S("Unknown Tipped Arrow"),
 	_tt_help = S("Right-click to identify"),
-	image = "vlf_bows_arrow_inv.png^(vlf_potions_arrow_inv.png^[colorize:#FFF:100)^vl_unknown.png",
+	image = "vlf_bows_arrow_inv.png^(vlf_effects_arrow_inv.png^[colorize:#FFF:100)^vl_unknown.png",
 	on_secondary_use = replace_legacy_potion,
 	on_place = replace_legacy_potion,
 })
@@ -820,14 +657,14 @@ local old_potions_2 = {
 }
 
 for _, name in pairs(old_potions_2) do
-	minetest.register_alias("vlf_potions:" .. name .. "_2", compat)
-	minetest.register_alias("vlf_potions:" .. name .. "_2_splash", compat)
-	minetest.register_alias("vlf_potions:" .. name .. "_2_lingering", compat)
-	minetest.register_alias("vlf_potions:" .. name .. "_2_arrow", compat_arrow)
+	minetest.register_alias("vlf_effects:" .. name .. "_2", compat)
+	minetest.register_alias("vlf_effects:" .. name .. "_2_splash", compat)
+	minetest.register_alias("vlf_effects:" .. name .. "_2_lingering", compat)
+	minetest.register_alias("vlf_effects:" .. name .. "_2_arrow", compat_arrow)
 end
 for _, name in pairs(old_potions_plus) do
-	minetest.register_alias("vlf_potions:" .. name .. "_plus", compat)
-	minetest.register_alias("vlf_potions:" .. name .. "_plus_splash", compat)
-	minetest.register_alias("vlf_potions:" .. name .. "_plus_lingering", compat)
-	minetest.register_alias("vlf_potions:" .. name .. "_plus_arrow", compat_arrow)
+	minetest.register_alias("vlf_effects:" .. name .. "_plus", compat)
+	minetest.register_alias("vlf_effects:" .. name .. "_plus_splash", compat)
+	minetest.register_alias("vlf_effects:" .. name .. "_plus_lingering", compat)
+	minetest.register_alias("vlf_effects:" .. name .. "_plus_arrow", compat_arrow)
 end

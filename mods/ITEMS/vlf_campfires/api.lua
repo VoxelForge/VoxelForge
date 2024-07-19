@@ -253,7 +253,7 @@ minetest.register_globalstep(function(dtime)
 	etime = 0
 	for _,pl in pairs(minetest.get_connected_players()) do
 		local armor_feet = pl:get_inventory():get_stack("armor", 5)
-		if pl and not pl:get_player_control().sneak and not vlf_enchanting.has_enchantment(armor_feet, "frost_walker") and not vlf_potions.has_effect(pl, "fire_resistance") then
+		if pl and not pl:get_player_control().sneak and not vlf_enchanting.has_enchantment(armor_feet, "frost_walker") and not vlf_effects.has_effect(pl, "fire_resistance") then
 			burn_in_campfire(pl)
 		end
 	end

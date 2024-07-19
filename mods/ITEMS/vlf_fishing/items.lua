@@ -51,7 +51,7 @@ minetest.register_craftitem("vlf_fishing:clownfish_raw", {
 })
 
 local function eat_pufferfish(itemstack, placer, pointed_thing)
-	vlf_potions.poison_func(placer, 1/3, 60)
+	vlf_effects.poison_func(placer, 1/3, 60)
 	return minetest.item_eat(1)(itemstack, placer, pointed_thing)
 end
 minetest.register_craftitem("vlf_fishing:pufferfish_raw", {

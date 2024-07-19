@@ -75,8 +75,8 @@ function tt.reload_itemstack_description(itemstack)
 		if meta:get_string("name") ~= "" then
 			orig_desc = minetest.colorize(tt.NAME_COLOR, meta:get_string("name"))
 		elseif def.groups._vlf_potion == 1 then
-			local potency = meta:get_int("vlf_potions:potion_potent")
-			local plus = meta:get_int("vlf_potions:potion_plus")
+			local potency = meta:get_int("vlf_effects:potion_potent")
+			local plus = meta:get_int("vlf_effects:potion_plus")
 			if potency > 0 then
 				local sym_potency = vlf_util.to_roman(potency+1)
 				orig_desc = orig_desc.. " ".. sym_potency

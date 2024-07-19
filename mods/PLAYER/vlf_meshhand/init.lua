@@ -90,6 +90,8 @@ else
 	minetest.register_node("vlf_meshhand:hand_crea", node_def)
 end
 
+local hand
+
 function vlf_meshhand.update_player(player)
 	if vlf_skins_enabled then
 		local node_id = vlf_skins.get_node_id_by_player(player)
@@ -98,8 +100,8 @@ function vlf_meshhand.update_player(player)
 		local creative = minetest.is_creative_enabled(player:get_player_name())
 		hand = ItemStack("vlf_meshhand:hand" .. (creative and "_crea" or "_surv"))
 	end
-	if not vlf_potions then player:get_inventory():set_stack("hand", 1, hand) end
-	player:get_inventory():set_stack("hand", 1, vlf_potions.hf_update_internal(hand, player))
+	if not vlf_effects then player:get_inventory():set_stack("hand", 1, hand) end
+	player:get_inventory():set_stack("hand", 1, vlf_effects.hf_update_internal(hand, player))
 end
 
 if vlf_skins_enabled then

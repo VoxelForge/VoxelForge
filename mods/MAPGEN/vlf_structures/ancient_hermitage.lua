@@ -27,7 +27,7 @@ vlf_structures.register_structure("ancient_hermitage",{
 				{ itemstring = "vlf_mobitems:bone", weight = 5, amount_min = 1, amount_max = 15 },
 				{ itemstring = "vlf_blackstone:soul_torch", weight = 5, amount_min = 1, amount_max=15 },
 				{ itemstring = "vlf_books:book", weight = 5, amount_min = 3, amount_max=10 },
-				{ itemstring = "vlf_potions:regeneration", weight = 5, amount_min = 1, amount_max=1 },
+				{ itemstring = "vlf_effects:regeneration", weight = 5, amount_min = 1, amount_max=1 },
 				{ itemstring = "vlf_books:book", weight = 5, func = function(stack, pr)vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
 
 				--{ itemstring = "vlf_jukebox:disc_fragment", weight = 4, amount_min = 1, amount_max = 3 },
