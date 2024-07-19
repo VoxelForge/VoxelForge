@@ -300,12 +300,12 @@ function mob_class:mob_activate(staticdata, dtime)
 		self:set_armor_texture()
 		self._run_armor_init = true
 	end
-	
+
 	if not self._vlf_effects then
 		self._vlf_effects = {}
 	end
 	vlf_effects._load_entity_effects(self)
-	
+
 	if def.after_activate then
 		def.after_activate(self, staticdata, def, dtime)
 	end

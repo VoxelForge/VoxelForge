@@ -516,7 +516,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 	local str_fac = strength and strength.factor or 1
 	local weak_fac = weakness and weakness.factor or 1
 	damage = damage * str_fac * weak_fac
-	
+
 	if weapon then
 		local fire_aspect_level = vlf_enchanting.get_enchantment(weapon, "fire_aspect")
 		if fire_aspect_level > 0 then

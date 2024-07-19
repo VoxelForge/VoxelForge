@@ -113,10 +113,10 @@ vlf_weather.skycolor = {
 				arg = math.max(ratio, NIGHT_VISION_RATIO)
 			end
 		elseif has_darkness then
-			if has_night_vision then 
+			if has_night_vision then
 				arg = 0.1
-			else 
-				arg = 0 
+			else
+				arg = 0
 			end
 		else
 			-- Apply night vision only for dark sky

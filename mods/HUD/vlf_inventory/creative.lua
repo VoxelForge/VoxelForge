@@ -135,7 +135,7 @@ minetest.register_on_mods_loaded(function()
 					table.insert(inventory_lists["brew"], stack:to_string())
 				end
 			end
-			
+
 			table.insert(inventory_lists["all"], name)
 		elseif minetest.get_item_group(name, "not_in_creative_inventory") > 0 then
 			table.insert(inventory_lists["nici"], name)
