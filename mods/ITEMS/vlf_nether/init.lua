@@ -129,7 +129,7 @@ minetest.register_node("vlf_nether:magma", {
 	-- From walkover mod
 	on_walk_over = function(loc, nodeiamon, player)
 		local armor_feet = player:get_inventory():get_stack("armor", 5)
-		if player and player:get_player_control().sneak or (minetest.global_exists("vlf_enchanting") and vlf_enchanting.has_enchantment(armor_feet, "frost_walker")) or (minetest.global_exists("vlf_effects") and vlf_effects.has_effect(player, "fire_resistance")) then
+		if player and player:get_player_control().sneak or (minetest.global_exists("vlf_enchanting") and vlf_enchanting.has_enchantment(armor_feet, "frost_walker")) or (minetest.global_exists("vlf_entity_effects") and vlf_entity_effects.has_effect(player, "fire_resistance")) then
 			return
 		end
 		-- Hurt players standing on top of this block

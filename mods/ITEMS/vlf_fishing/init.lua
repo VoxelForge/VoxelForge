@@ -17,7 +17,7 @@ vlf_fishing.loot_junk = {
 	{ itemstring = "vlf_mobitems:rotten_flesh", weight = 10 },
 	{ itemstring = "vlf_core:stick", weight = 5 },
 	{ itemstring = "vlf_mobitems:string", weight = 5 },
-	{ itemstring = "vlf_effects:water", weight = 10 },
+	{ itemstring = "vlf_entity_effects:water", weight = 10 },
 	{ itemstring = "vlf_mobitems:bone", weight = 10 },
 	{ itemstring = "vlf_mobitems:ink_sac", weight = 1, amount_min = 10, amount_max = 10 },
 	{ itemstring = "vlf_mobitems:string", weight = 10 }, -- TODO: Tripwire Hook

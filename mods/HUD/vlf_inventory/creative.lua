@@ -102,7 +102,7 @@ minetest.register_on_mods_loaded(function()
 			end
 			if def.groups.brewitem then
 				local str = name
-				if def.groups._vlf_potion == 1 then
+				if def.groups._vlf_entity_effect == 1 then
 					local stack = ItemStack(name)
 					tt.reload_itemstack_description(stack)
 					str = stack:to_string()
@@ -119,18 +119,18 @@ minetest.register_on_mods_loaded(function()
 				table.insert(inventory_lists["misc"], name)
 			end
 
-			if def.groups._vlf_potion == 1 then
+			if def.groups._vlf_entity_effect == 1 then
 				if def.has_potent then
 					local stack = ItemStack(name)
 					local potency = def._default_potent_level - 1
-					stack:get_meta():set_int("vlf_effects:potion_potent", potency)
+					stack:get_meta():set_int("vlf_entity_effects:entity_effect_potent", potency)
 					tt.reload_itemstack_description(stack)
 					table.insert(inventory_lists["brew"], stack:to_string())
 				end
 				if def.has_plus then
 					local stack = ItemStack(name)
 					local extend = def._default_extend_level
-					stack:get_meta():set_int("vlf_effects:potion_plus", extend)
+					stack:get_meta():set_int("vlf_entity_effects:entity_effect_plus", extend)
 					tt.reload_itemstack_description(stack)
 					table.insert(inventory_lists["brew"], stack:to_string())
 				end
@@ -366,7 +366,7 @@ local tab_icon = {
 	tools = "vlf_core:axe_iron",
 	combat = "vlf_core:sword_gold",
 	mobs = "mobs_mc:cow",
-	brew = "vlf_effects:dragon_breath",
+	brew = "vlf_entity_effects:dragon_breath",
 	matr = "vlf_core:stick",
 	inv = "vlf_chests:chest",
 	nici = "vlf_core:barrier",

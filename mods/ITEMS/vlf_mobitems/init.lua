@@ -130,7 +130,7 @@ local function drink_milk(itemstack, player, pointed_thing)
 	if vlf_hunger.active and (bucket:get_name() ~= "vlf_mobitems:milk_bucket" or minetest.is_creative_enabled(player:get_player_name())) then
 		vlf_hunger.stop_poison(player)
 	end
-	vlf_effects._reset_effects(player)
+	vlf_entity_effects._reset_effects(player)
 	return bucket
 end
 
@@ -539,6 +539,6 @@ minetest.register_craft({
 
 minetest.register_on_item_eat(function (hp_change, replace_with_item, itemstack, user, pointed_thing)	-- poisoning with spider eye
 	if itemstack:get_name() == "vlf_mobitems:spider_eye" then
-		vlf_effects.give_effect_by_level("poison", user, 1, 4)
+		vlf_entity_effects.give_effect_by_level("poison", user, 1, 4)
 	end
 end)

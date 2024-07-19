@@ -151,7 +151,7 @@ minetest.register_on_item_eat(function (hp_change, replace_with_item, itemstack,
 	-- 60% chance of poisoning with poisonous potato
 	if itemstack:get_name() == "vlf_farming:potato_item_poison" then
 		if math.random(1,10) >= 6 then
-			vlf_effects.give_effect_by_level("poison", user, 1, 5)
+			vlf_entity_effects.give_effect_by_level("poison", user, 1, 5)
 		end
 	end
 

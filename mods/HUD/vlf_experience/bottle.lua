@@ -15,7 +15,7 @@ minetest.register_entity("vlf_experience:bottle",{
 		local node = minetest.get_node(pos)
 		local n = node.name
 		if n ~= "air" and n ~= "vlf_portals:portal" and n ~= "vlf_portals:portal_end" and minetest.get_item_group(n, "liquid") == 0 then
-			minetest.sound_play("vlf_effects_breaking_glass", {pos = pos, max_hear_distance = 16, gain = 1})
+			minetest.sound_play("vlf_entity_effects_breaking_glass", {pos = pos, max_hear_distance = 16, gain = 1})
 			vlf_experience.throw_xp(pos, math.random(3, 11))
 			minetest.add_particlespawner({
 				amount = 50,

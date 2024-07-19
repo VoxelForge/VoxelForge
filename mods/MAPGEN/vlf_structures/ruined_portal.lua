@@ -86,7 +86,7 @@ local def = {
 					vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr)
 				end },
 
-				{ itemstring = "vlf_effects:speckled_melon", weight = 5, amount_min = 4, amount_max = 12 },
+				{ itemstring = "vlf_entity_effects:speckled_melon", weight = 5, amount_min = 4, amount_max = 12 },
 				{ itemstring = "vlf_farming:carrot_item_gold", weight = 5, amount_min = 4, amount_max = 12 },
 
 				{ itemstring = "vlf_core:gold_ingot", weight = 5, amount_min = 2, amount_max = 8 },

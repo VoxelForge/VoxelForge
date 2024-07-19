@@ -491,8 +491,8 @@ for colorid, colortab in pairs(vlf_banners.colors) do
 						-- (It is possible to waste water if the banner had 0 layers.)
 						minetest.swap_node(pointed_thing.under, {name=new_node})
 
-						-- Play sound (from vlf_effects mod)
-						minetest.sound_play("vlf_effects_bottle_pour", {pos=pointed_thing.under, gain=0.5, max_hear_range=16}, true)
+						-- Play sound (from vlf_entity_effects mod)
+						minetest.sound_play("vlf_entity_effects_bottle_pour", {pos=pointed_thing.under, gain=0.5, max_hear_range=16}, true)
 
 						return itemstack
 					end

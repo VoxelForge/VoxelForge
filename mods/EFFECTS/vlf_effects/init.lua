@@ -2,56 +2,56 @@ local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
 
-vlf_effects = {}
+vlf_entity_effects = {}
 
 -- duration effects of redstone are a factor of 8/3
 -- duration effects of glowstone are a time factor of 1/2
--- splash potion duration effects are reduced by a factor of 3/4
+-- splash entity_effect duration effects are reduced by a factor of 3/4
 
-vlf_effects.POTENT_FACTOR = 2
-vlf_effects.PLUS_FACTOR = 8/3
-vlf_effects.INV_FACTOR = 0.50
+vlf_entity_effects.POTENT_FACTOR = 2
+vlf_entity_effects.PLUS_FACTOR = 8/3
+vlf_entity_effects.INV_FACTOR = 0.50
 
-vlf_effects.DURATION = 180
-vlf_effects.DURATION_INV = vlf_effects.DURATION * vlf_effects.INV_FACTOR
-vlf_effects.DURATION_POISON = 45
+vlf_entity_effects.DURATION = 180
+vlf_entity_effects.DURATION_INV = vlf_entity_effects.DURATION * vlf_entity_effects.INV_FACTOR
+vlf_entity_effects.DURATION_POISON = 45
 
-vlf_effects.II_FACTOR = vlf_effects.POTENT_FACTOR -- TODO remove at some point
-vlf_effects.DURATION_PLUS = vlf_effects.DURATION * vlf_effects.PLUS_FACTOR -- TODO remove at some point
-vlf_effects.DURATION_2 = vlf_effects.DURATION / vlf_effects.II_FACTOR -- TODO remove at some point
+vlf_entity_effects.II_FACTOR = vlf_entity_effects.POTENT_FACTOR -- TODO remove at some point
+vlf_entity_effects.DURATION_PLUS = vlf_entity_effects.DURATION * vlf_entity_effects.PLUS_FACTOR -- TODO remove at some point
+vlf_entity_effects.DURATION_2 = vlf_entity_effects.DURATION / vlf_entity_effects.II_FACTOR -- TODO remove at some point
 
-vlf_effects.SPLASH_FACTOR = 0.75
-vlf_effects.LINGERING_FACTOR = 0.25
+vlf_entity_effects.SPLASH_FACTOR = 0.75
+vlf_entity_effects.LINGERING_FACTOR = 0.25
 
 dofile(modpath .. "/functions.lua")
 dofile(modpath .. "/commands.lua")
 dofile(modpath .. "/splash.lua")
 dofile(modpath .. "/lingering.lua")
 dofile(modpath .. "/tipped_arrow.lua")
-dofile(modpath .. "/potions.lua")
-local potions = vlf_effects.registered_potions
+dofile(modpath .. "/entity_effects.lua")
+local entity_effects = vlf_entity_effects.registered_entity_effects
 
-minetest.register_craftitem("vlf_effects:fermented_spider_eye", {
+minetest.register_craftitem("vlf_entity_effects:fermented_spider_eye", {
 	description = S("Fermented Spider Eye"),
-	_doc_items_longdesc = S("Try different combinations to create potions."),
-	wield_image = "vlf_effects_spider_eye_fermented.png",
-	inventory_image = "vlf_effects_spider_eye_fermented.png",
+	_doc_items_longdesc = S("Try different combinations to create entity_effects."),
+	wield_image = "vlf_entity_effects_spider_eye_fermented.png",
+	inventory_image = "vlf_entity_effects_spider_eye_fermented.png",
 	groups = { brewitem = 1, },
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "vlf_effects:fermented_spider_eye",
+	output = "vlf_entity_effects:fermented_spider_eye",
 	recipe = { "vlf_mushrooms:mushroom_brown", "vlf_core:sugar", "vlf_mobitems:spider_eye" },
 })
 
-minetest.register_craftitem("vlf_effects:glass_bottle", {
+minetest.register_craftitem("vlf_entity_effects:glass_bottle", {
 	description = S("Glass Bottle"),
 	_tt_help = S("Liquid container"),
 	_doc_items_longdesc = S("A glass bottle is used as a container for liquids and can be used to collect water directly."),
 	_doc_items_usagehelp = S("To collect water, use it on a cauldron with water (which removes a level of water) or any water source (which removes no water)."),
-	inventory_image = "vlf_effects_potion_bottle.png",
-	wield_image = "vlf_effects_potion_bottle.png",
+	inventory_image = "vlf_entity_effects_entity_effect_bottle.png",
+	wield_image = "vlf_entity_effects_entity_effect_bottle.png",
 	groups = {brewitem=1, empty_bottle = 1},
 	liquids_pointable = true,
 	on_place = function(itemstack, placer, pointed_thing)
@@ -104,14 +104,14 @@ minetest.register_craftitem("vlf_effects:glass_bottle", {
 			if get_water then
 				local water_bottle
 				if river_water then
-					water_bottle = ItemStack("vlf_effects:river_water")
+					water_bottle = ItemStack("vlf_entity_effects:river_water")
 				else
-					water_bottle = ItemStack("vlf_effects:water")
+					water_bottle = ItemStack("vlf_entity_effects:water")
 				end
 				-- Replace with water bottle, if possible, otherwise
-				-- place the water potion at a place where's space
+				-- place the water entity_effect at a place where's space
 				local inv = placer:get_inventory()
-				minetest.sound_play("vlf_effects_bottle_fill", {pos=pointed_thing.under, gain=0.5, max_hear_range=16}, true)
+				minetest.sound_play("vlf_entity_effects_bottle_fill", {pos=pointed_thing.under, gain=0.5, max_hear_range=16}, true)
 				if minetest.is_creative_enabled(placer:get_player_name()) then
 					-- Don't replace empty bottle in creative for convenience reasons
 					if not inv:contains_item("main", water_bottle) then
@@ -134,21 +134,21 @@ minetest.register_craftitem("vlf_effects:glass_bottle", {
 })
 
 minetest.register_craft( {
-	output = "vlf_effects:glass_bottle 3",
+	output = "vlf_entity_effects:glass_bottle 3",
 	recipe = {
 		{ "vlf_core:glass", "", "vlf_core:glass" },
 		{ "", "vlf_core:glass", "" }
 	}
 })
 
--- Template function for creating images of filled potions
+-- Template function for creating images of filled entity_effects
 -- - colorstring must be a ColorString of form “#RRGGBB”, e.g. “#0000FF” for blue.
 -- - opacity is optional opacity from 0-255 (default: 127)
-local function potion_image(colorstring, opacity)
+local function entity_effect_image(colorstring, opacity)
 	if not opacity then
 		opacity = 127
 	end
-	return "vlf_effects_potion_overlay.png^[colorize:"..colorstring..":"..tostring(opacity).."^vlf_effects_potion_bottle.png"
+	return "vlf_entity_effects_entity_effect_overlay.png^[colorize:"..colorstring..":"..tostring(opacity).."^vlf_entity_effects_entity_effect_bottle.png"
 end
 
 
@@ -188,12 +188,12 @@ local function set_node_empty_bottle(itemstack, placer, pointed_thing, newitemst
 	minetest.set_node(pointed_thing.under, {name=newitemstring})
 
 	-- play sound
-	minetest.sound_play("vlf_effects_bottle_pour", {pos=pointed_thing.under, gain=0.5, max_hear_range=16}, true)
+	minetest.sound_play("vlf_entity_effects_bottle_pour", {pos=pointed_thing.under, gain=0.5, max_hear_range=16}, true)
 
 	if minetest.is_creative_enabled(placer:get_player_name()) then
 		return itemstack
 	else
-		return "vlf_effects:glass_bottle"
+		return "vlf_entity_effects:glass_bottle"
 	end
 end
 
@@ -203,8 +203,8 @@ local function dispense_water_bottle(stack, pos, droppos)
 	if node.name == "vlf_core:dirt" or node.name == "vlf_core:coarse_dirt" then
 		-- convert dirt/coarse dirt to mud
 		minetest.set_node(droppos, {name = "vlf_mud:mud"})
-		minetest.sound_play("vlf_effects_bottle_pour", {pos=droppos, gain=0.5, max_hear_range=16}, true)
-		return ItemStack("vlf_effects:glass_bottle")
+		minetest.sound_play("vlf_entity_effects_bottle_pour", {pos=droppos, gain=0.5, max_hear_range=16}, true)
+		return ItemStack("vlf_entity_effects:glass_bottle")
 
 	elseif node.name == "vlf_mud:mud" then
 		-- dont dispense into mud
@@ -212,7 +212,7 @@ local function dispense_water_bottle(stack, pos, droppos)
 	end
 end
 
--- on_place function for `vlf_effects:water` and `vlf_effects:river_water`
+-- on_place function for `vlf_entity_effects:water` and `vlf_entity_effects:river_water`
 
 local function water_bottle_on_place(itemstack, placer, pointed_thing)
 	if pointed_thing.type == "node" then
@@ -222,9 +222,9 @@ local function water_bottle_on_place(itemstack, placer, pointed_thing)
 		if rc then return rc end
 
 		local cauldron = nil
-		if itemstack:get_name() == "vlf_effects:water" then -- regular water
+		if itemstack:get_name() == "vlf_entity_effects:water" then -- regular water
 			cauldron = fill_cauldron(node.name, "vlf_core:water_source")
-		elseif itemstack:get_name() == "vlf_effects:river_water" then -- river water
+		elseif itemstack:get_name() == "vlf_entity_effects:river_water" then -- river water
 			cauldron = fill_cauldron(node.name, "vlfx_core:river_water_source")
 		end
 
@@ -237,41 +237,41 @@ local function water_bottle_on_place(itemstack, placer, pointed_thing)
 	end
 
 	-- Drink the water by default
-	return minetest.do_item_eat(0, "vlf_effects:glass_bottle", itemstack, placer, pointed_thing)
+	return minetest.do_item_eat(0, "vlf_entity_effects:glass_bottle", itemstack, placer, pointed_thing)
 end
 
--- Itemstring of potions is “vlf_effects:<NBT Potion Tag>”
+-- Itemstring of entity_effects is “vlf_entity_effects:<NBT Potion Tag>”
 
-minetest.register_craftitem("vlf_effects:water", {
+minetest.register_craftitem("vlf_entity_effects:water", {
 	description = S("Water Bottle"),
 	_tt_help = S("No effect"),
 	_doc_items_longdesc = S("Water bottles can be used to fill cauldrons. Drinking water has no effect."),
 	_doc_items_usagehelp = S("Use the “Place” key to drink. Place this item on a cauldron to pour the water into the cauldron."),
 	stack_max = 1,
-	inventory_image = potion_image("#0022FF"),
-	wield_image = potion_image("#0022FF"),
+	inventory_image = entity_effect_image("#0022FF"),
+	wield_image = entity_effect_image("#0022FF"),
 	groups = {brewitem=1, food=3, can_eat_when_full=1, water_bottle=1},
 	on_place = water_bottle_on_place,
 	_on_dispense = dispense_water_bottle,
 	_dispense_into_walkable = true,
-	on_secondary_use = minetest.item_eat(0, "vlf_effects:glass_bottle"),
+	on_secondary_use = minetest.item_eat(0, "vlf_entity_effects:glass_bottle"),
 })
 
 
-minetest.register_craftitem("vlf_effects:river_water", {
+minetest.register_craftitem("vlf_entity_effects:river_water", {
 	description = S("River Water Bottle"),
 	_tt_help = S("No effect"),
 	_doc_items_longdesc = S("River water bottles can be used to fill cauldrons. Drinking it has no effect."),
 	_doc_items_usagehelp = S("Use the “Place” key to drink. Place this item on a cauldron to pour the river water into the cauldron."),
 
 	stack_max = 1,
-	inventory_image = potion_image("#0044FF"),
-	wield_image = potion_image("#0044FF"),
+	inventory_image = entity_effect_image("#0044FF"),
+	wield_image = entity_effect_image("#0044FF"),
 	groups = {brewitem=1, food=3, can_eat_when_full=1, water_bottle=1},
 	on_place = water_bottle_on_place,
 	_on_dispense = dispense_water_bottle,
 	_dispense_into_walkable = true,
-	on_secondary_use = minetest.item_eat(0, "vlf_effects:glass_bottle"),
+	on_secondary_use = minetest.item_eat(0, "vlf_entity_effects:glass_bottle"),
 
 })
 
@@ -293,30 +293,30 @@ local function water_splash(obj, damage)
 	end
 end
 
-vlf_effects.register_splash("water", S("Splash Water Bottle"), "#0022FF", {
+vlf_entity_effects.register_splash("water", S("Splash Water Bottle"), "#0022FF", {
 	tt=S("Extinguishes fire and hurts some mobs"),
 	longdesc=S("A throwable water bottle that will shatter on impact, where it extinguishes nearby fire and hurts mobs that are vulnerable to water."),
 	no_effect=true,
-	potion_fun=water_splash,
+	entity_effect_fun=water_splash,
 	effect=1
 })
-vlf_effects.register_lingering("water", S("Lingering Water Bottle"), "#0022FF", {
+vlf_entity_effects.register_lingering("water", S("Lingering Water Bottle"), "#0022FF", {
 	tt=S("Extinguishes fire and hurts some mobs"),
 	longdesc=S("A throwable water bottle that will shatter on impact, where it creates a cloud of water vapor that lingers on the ground for a while. This cloud extinguishes fire and hurts mobs that are vulnerable to water."),
 	no_effect=true,
-	potion_fun=water_splash,
+	entity_effect_fun=water_splash,
 	effect=1
 })
 
-minetest.register_craftitem("vlf_effects:speckled_melon", {
+minetest.register_craftitem("vlf_entity_effects:speckled_melon", {
 	description = S("Glistering Melon"),
 	_doc_items_longdesc = S("This shiny melon is full of tiny gold nuggets and would be nice in an item frame. It isn't edible and not useful for anything else."),
 	groups = { brewitem = 1, },
-	inventory_image = "vlf_effects_melon_speckled.png",
+	inventory_image = "vlf_entity_effects_melon_speckled.png",
 })
 
 minetest.register_craft({
-	output = "vlf_effects:speckled_melon",
+	output = "vlf_entity_effects:speckled_melon",
 	recipe = {
 		{"vlf_core:gold_nugget", "vlf_core:gold_nugget", "vlf_core:gold_nugget"},
 		{"vlf_core:gold_nugget", "vlf_farming:melon_item", "vlf_core:gold_nugget"},
@@ -329,9 +329,9 @@ minetest.register_craft({
 local output_table = { }
 
 -- API
--- registers a potion that can be combined with multiple ingredients for different outcomes
+-- registers a entity_effect that can be combined with multiple ingredients for different outcomes
 -- out_table contains the recipes for those outcomes
-function vlf_effects.register_ingredient_potion(input, out_table)
+function vlf_entity_effects.register_ingredient_entity_effect(input, out_table)
 	if output_table[input] then
 		error("Attempt to register the same ingredient twice!")
 	end
@@ -345,49 +345,48 @@ function vlf_effects.register_ingredient_potion(input, out_table)
 end
 
 local water_table = {
-	["vlf_nether:nether_wart_item"] = "vlf_effects:awkward",
-	["vlf_effects:fermented_spider_eye"] = "vlf_effects:weakness",
-	["vlf_effects:speckled_melon"] = "vlf_effects:mundane",
-	["vlf_core:sugar"] = "vlf_effects:mundane",
-	["vlf_mobitems:magma_cream"] = "vlf_effects:mundane",
-	["vlf_mobitems:blaze_powder"] = "vlf_effects:mundane",
-	["mesecons:wire_00000000_off"] = "vlf_effects:mundane",
-	["vlf_mobitems:ghast_tear"] = "vlf_effects:mundane",
-	["vlf_mobitems:spider_eye"] = "vlf_effects:mundane",
-	["vlf_mobitems:rabbit_foot"] = "vlf_effects:mundane",
-	["vlf_mobitems:gunpowder"] = "vlf_effects:water_splash"
+	["vlf_nether:nether_wart_item"] = "vlf_entity_effects:awkward",
+	["vlf_entity_effects:fermented_spider_eye"] = "vlf_entity_effects:weakness",
+	["vlf_entity_effects:speckled_melon"] = "vlf_entity_effects:mundane",
+	["vlf_core:sugar"] = "vlf_entity_effects:mundane",
+	["vlf_mobitems:magma_cream"] = "vlf_entity_effects:mundane",
+	["vlf_mobitems:blaze_powder"] = "vlf_entity_effects:mundane",
+	["mesecons:wire_00000000_off"] = "vlf_entity_effects:mundane",
+	["vlf_mobitems:ghast_tear"] = "vlf_entity_effects:mundane",
+	["vlf_mobitems:spider_eye"] = "vlf_entity_effects:mundane",
+	["vlf_mobitems:rabbit_foot"] = "vlf_entity_effects:mundane",
+	["vlf_mobitems:gunpowder"] = "vlf_entity_effects:water_splash"
 }
 -- API
--- register a potion recipe brewed from water
-function vlf_effects.register_water_brew(ingr, potion)
+-- register a entity_effect recipe brewed from water
+function vlf_entity_effects.register_water_brew(ingr, entity_effect)
 	if water_table[ingr] then
 		error("Attempt to register the same ingredient twice!")
 	end
 	if type(ingr) ~= "string" then
 		error("Invalid argument! ingr must be a string")
 	end
-	if type(potion) ~= "string" then
-		error("Invalid argument! potion must be a string")
+	if type(entity_effect) ~= "string" then
+		error("Invalid argument! entity_effect must be a string")
 	end
-	water_table[ingr] = potion
+	water_table[ingr] = entity_effect
 end
-vlf_effects.register_ingredient_potion("vlf_effects:river_water", water_table)
-vlf_effects.register_ingredient_potion("vlf_effects:water", water_table)
+vlf_entity_effects.register_ingredient_entity_effect("vlf_entity_effects:river_water", water_table)
+vlf_entity_effects.register_ingredient_entity_effect("vlf_entity_effects:water", water_table)
 
 local awkward_table = {
-	["vlf_effects:speckled_melon"] = "vlf_effects:healing",
-	["vlf_farming:carrot_item_gold"] = "vlf_effects:night_vision",
-	["vlf_core:sugar"] = "vlf_effects:swiftness",
-	["vlf_mobitems:magma_cream"] = "vlf_effects:fire_resistance",
-	["vlf_mobitems:blaze_powder"] = "vlf_effects:strength",
-	["vlf_fishing:pufferfish_raw"] = "vlf_effects:water_breathing",
-	["vlf_mobitems:ghast_tear"] = "vlf_effects:regeneration",
-	["vlf_mobitems:spider_eye"] = "vlf_effects:poison",
-	["vlf_mobitems:rabbit_foot"] = "vlf_effects:leaping",
+	["vlf_entity_effects:speckled_melon"] = "vlf_entity_effects:healing",
+	["vlf_farming:carrot_item_gold"] = "vlf_entity_effects:night_vision",
+	["vlf_core:sugar"] = "vlf_entity_effects:swiftness",
+	["vlf_mobitems:magma_cream"] = "vlf_entity_effects:fire_resistance",
+	["vlf_mobitems:blaze_powder"] = "vlf_entity_effects:strength",
+	["vlf_fishing:pufferfish_raw"] = "vlf_entity_effects:water_breathing",
+	["vlf_mobitems:ghast_tear"] = "vlf_entity_effects:regeneration",
+	["vlf_mobitems:spider_eye"] = "vlf_entity_effects:poison",
+	["vlf_mobitems:rabbit_foot"] = "vlf_entity_effects:leaping",
 
-	["vlf_flowers:fourleaf_clover"] = "vlf_effects:luck",
-	["vlf_mobitems:phantom_membrane"] = "vlf_effects:slow_falling", -- TODO add phantom membranes
-	["vlf_core:apple_gold"] = "vlf_effects:resistance",
+	["vlf_mobitems:phantom_membrane"] = "vlf_entity_effects:slow_falling", -- TODO add phantom membranes
+	["vlf_core:apple_gold"] = "vlf_entity_effects:resistance",
 
 	-- TODO darkness - sculk?
 	-- TODO absorption - water element?
@@ -396,69 +395,69 @@ local awkward_table = {
 	-- TODO haste - air element?
 }
 -- API
--- register a potion recipe brewed from awkward potion
-function vlf_effects.register_awkward_brew(ingr, potion)
+-- register a entity_effect recipe brewed from awkward entity_effect
+function vlf_entity_effects.register_awkward_brew(ingr, entity_effect)
 	if awkward_table[ingr] then
 		error("Attempt to register the same ingredient twice!")
 	end
 	if type(ingr) ~= "string" then
 		error("Invalid argument! ingr must be a string")
 	end
-	if type(potion) ~= "string" then
-		error("Invalid argument! potion must be a string")
+	if type(entity_effect) ~= "string" then
+		error("Invalid argument! entity_effect must be a string")
 	end
-	awkward_table[ingr] = potion
+	awkward_table[ingr] = entity_effect
 end
-vlf_effects.register_ingredient_potion("vlf_effects:awkward", awkward_table)
+vlf_entity_effects.register_ingredient_entity_effect("vlf_entity_effects:awkward", awkward_table)
 
 local mundane_table = {
-	["vlf_effects:fermented_spider_eye"] = "vlf_effects:weakness",
+	["vlf_entity_effects:fermented_spider_eye"] = "vlf_entity_effects:weakness",
 }
 -- API
--- register a potion recipe brewed from mundane potion
-function vlf_effects.register_mundane_brew(ingr, potion)
+-- register a entity_effect recipe brewed from mundane entity_effect
+function vlf_entity_effects.register_mundane_brew(ingr, entity_effect)
 	if mundane_table[ingr] then
 		error("Attempt to register the same ingredient twice!")
 	end
 	if type(ingr) ~= "string" then
 		error("Invalid argument! ingr must be a string")
 	end
-	if type(potion) ~= "string" then
-		error("Invalid argument! potion must be a string")
+	if type(entity_effect) ~= "string" then
+		error("Invalid argument! entity_effect must be a string")
 	end
-	mundane_table[ingr] = potion
+	mundane_table[ingr] = entity_effect
 end
-vlf_effects.register_ingredient_potion("vlf_effects:mundane", mundane_table)
+vlf_entity_effects.register_ingredient_entity_effect("vlf_entity_effects:mundane", mundane_table)
 
 local thick_table = {
-	["vlf_crimson:shroomlight"] = "vlf_effects:glowing",
-	["vlf_mobitems:nether_star"] = "vlf_effects:ominous",
-	["vlf_mobitems:ink_sac"] = "vlf_effects:blindness",
-	["vlf_farming:carrot_item_gold"] = "vlf_effects:saturation",
+	["vlf_crimson:shroomlight"] = "vlf_entity_effects:glowing",
+	["vlf_mobitems:nether_star"] = "vlf_entity_effects:ominous",
+	["vlf_mobitems:ink_sac"] = "vlf_entity_effects:blindness",
+	["vlf_farming:carrot_item_gold"] = "vlf_entity_effects:saturation",
 }
 -- API
--- register a potion recipe brewed from thick potion
-function vlf_effects.register_thick_brew(ingr, potion)
+-- register a entity_effect recipe brewed from thick entity_effect
+function vlf_entity_effects.register_thick_brew(ingr, entity_effect)
 	if thick_table[ingr] then
 		error("Attempt to register the same ingredient twice!")
 	end
 	if type(ingr) ~= "string" then
 		error("Invalid argument! ingr must be a string")
 	end
-	if type(potion) ~= "string" then
-		error("Invalid argument! potion must be a string")
+	if type(entity_effect) ~= "string" then
+		error("Invalid argument! entity_effect must be a string")
 	end
-	thick_table[ingr] = potion
+	thick_table[ingr] = entity_effect
 end
-vlf_effects.register_ingredient_potion("vlf_effects:thick", thick_table)
+vlf_entity_effects.register_ingredient_entity_effect("vlf_entity_effects:thick", thick_table)
 
 
 local mod_table = { }
 
 -- API
--- registers a brewing recipe altering the potion using a table
+-- registers a brewing recipe altering the entity_effect using a table
 -- this is supposed to substitute one item with another
-function vlf_effects.register_table_modifier(ingr, modifier)
+function vlf_entity_effects.register_table_modifier(ingr, modifier)
 	if mod_table[ingr] then
 		error("Attempt to register the same ingredient twice!")
 	end
@@ -484,14 +483,14 @@ end)
 
 local inversion_table = {
 	-- Effect Bottle Table.
-	["vlf_effects:healing"] = "vlf_effects:harming",
-	["vlf_effects:swiftness"] = "vlf_effects:slowness",
-	["vlf_effects:leaping"] = "vlf_effects:slowness",
-	["vlf_effects:night_vision"] = "vlf_effects:invisibility",
-	["vlf_effects:poison"] = "vlf_effects:harming",
+	["vlf_entity_effects:healing"] = "vlf_entity_effects:harming",
+	["vlf_entity_effects:swiftness"] = "vlf_entity_effects:slowness",
+	["vlf_entity_effects:leaping"] = "vlf_entity_effects:slowness",
+	["vlf_entity_effects:night_vision"] = "vlf_entity_effects:invisibility",
+	["vlf_entity_effects:poison"] = "vlf_entity_effects:harming",
 }
 -- API
-function vlf_effects.register_inversion_recipe(input, output)
+function vlf_entity_effects.register_inversion_recipe(input, output)
 	if inversion_table[input] then
 		error("Attempt to register the same input twice!")
 	end
@@ -506,38 +505,38 @@ end
 local function fill_inversion_table() -- autofills with splash and lingering inversion recipes
 	local filling_table = { }
 	for input, output in pairs(inversion_table) do
-		if potions[input].has_splash and potions[output].has_splash then
+		if entity_effects[input].has_splash and entity_effects[output].has_splash then
 			filling_table[input.."_splash"] = output .. "_splash"
-			if potions[input].has_lingering and potions[output].has_lingering then
+			if entity_effects[input].has_lingering and entity_effects[output].has_lingering then
 				filling_table[input.."_lingering"] = output .. "_lingering"
 			end
 		end
 	end
 	table.update(inversion_table, filling_table)
-	vlf_effects.register_table_modifier("vlf_effects:fermented_spider_eye", inversion_table)
+	vlf_entity_effects.register_table_modifier("vlf_entity_effects:fermented_spider_eye", inversion_table)
 end
 minetest.register_on_mods_loaded(fill_inversion_table)
 
 local splash_table = {}
 local lingering_table = {}
-for potion, def in pairs(potions) do
+for entity_effect, def in pairs(entity_effects) do
 	if def.has_splash then
-		splash_table[potion] = potion.."_splash"
+		splash_table[entity_effect] = entity_effect.."_splash"
 		if def.has_lingering then
-			lingering_table[potion.."_splash"] = potion.."_lingering"
+			lingering_table[entity_effect.."_splash"] = entity_effect.."_lingering"
 		end
 	end
 end
-vlf_effects.register_table_modifier("vlf_mobitems:gunpowder", splash_table)
-vlf_effects.register_table_modifier("vlf_effects:dragon_breath", lingering_table)
+vlf_entity_effects.register_table_modifier("vlf_mobitems:gunpowder", splash_table)
+vlf_entity_effects.register_table_modifier("vlf_entity_effects:dragon_breath", lingering_table)
 
 
 local meta_mod_table = { }
 
 -- API
--- registers a brewing recipe altering the potion using a function
+-- registers a brewing recipe altering the entity_effect using a function
 -- this is supposed to be a recipe that changes metadata only
-function vlf_effects.register_meta_modifier(ingr, mod_func)
+function vlf_entity_effects.register_meta_modifier(ingr, mod_func)
 	if meta_mod_table[ingr] then
 		error("Attempt to register the same ingredient twice!")
 	end
@@ -550,50 +549,50 @@ function vlf_effects.register_meta_modifier(ingr, mod_func)
 	meta_mod_table[ingr] = mod_func
 end
 
-local function extend_dur(potionstack)
-	local def = potions[potionstack:get_name()]
+local function extend_dur(entity_effectstack)
+	local def = entity_effects[entity_effectstack:get_name()]
 	if not def then return false end
 	if not def.has_plus then return false end -- bail out if can't be extended
-	local potionstack = ItemStack(potionstack)
-	local meta = potionstack:get_meta()
-	local potent = meta:get_int("vlf_effects:potion_potent")
-	local plus = meta:get_int("vlf_effects:potion_plus")
+	local entity_effectstack = ItemStack(entity_effectstack)
+	local meta = entity_effectstack:get_meta()
+	local potent = meta:get_int("vlf_entity_effects:entity_effect_potent")
+	local plus = meta:get_int("vlf_entity_effects:entity_effect_plus")
 	if plus == 0 then
 		if potent ~= 0 then
-			meta:set_int("vlf_effects:potion_potent", 0)
+			meta:set_int("vlf_entity_effects:entity_effect_potent", 0)
 		end
-		meta:set_int("vlf_effects:potion_plus", def._default_extend_level)
-		tt.reload_itemstack_description(potionstack)
-		return potionstack
+		meta:set_int("vlf_entity_effects:entity_effect_plus", def._default_extend_level)
+		tt.reload_itemstack_description(entity_effectstack)
+		return entity_effectstack
 	end
 	return false
 end
-vlf_effects.register_meta_modifier("mesecons:wire_00000000_off", extend_dur)
+vlf_entity_effects.register_meta_modifier("mesecons:wire_00000000_off", extend_dur)
 
-local function enhance_pow(potionstack)
-	local def = potions[potionstack:get_name()]
+local function enhance_pow(entity_effectstack)
+	local def = entity_effects[entity_effectstack:get_name()]
 	if not def then return false end
 	if not def.has_potent then return false end -- bail out if has no potent variant
-	local potionstack = ItemStack(potionstack)
-	local meta = potionstack:get_meta()
-	local potent = meta:get_int("vlf_effects:potion_potent")
-	local plus = meta:get_int("vlf_effects:potion_plus")
+	local entity_effectstack = ItemStack(entity_effectstack)
+	local meta = entity_effectstack:get_meta()
+	local potent = meta:get_int("vlf_entity_effects:entity_effect_potent")
+	local plus = meta:get_int("vlf_entity_effects:entity_effect_plus")
 	if potent == 0 then
 		if plus ~= 0 then
-			meta:set_int("vlf_effects:potion_plus", 0)
+			meta:set_int("vlf_entity_effects:entity_effect_plus", 0)
 		end
-		meta:set_int("vlf_effects:potion_potent", def._default_potent_level-1)
-		tt.reload_itemstack_description(potionstack)
-		return potionstack
+		meta:set_int("vlf_entity_effects:entity_effect_potent", def._default_potent_level-1)
+		tt.reload_itemstack_description(entity_effectstack)
+		return entity_effectstack
 	end
 	return false
 end
-vlf_effects.register_meta_modifier("vlf_nether:glowstone_dust", enhance_pow)
+vlf_entity_effects.register_meta_modifier("vlf_nether:glowstone_dust", enhance_pow)
 
 
--- Find an alchemical recipe for given ingredient and potion
+-- Find an alchemical recipe for given ingredient and entity_effect
 -- returns outcome
-function vlf_effects.get_alchemy(ingr, pot)
+function vlf_entity_effects.get_alchemy(ingr, pot)
 	local brew_selector = output_table[pot:get_name()]
 	if brew_selector and brew_selector[ingr] then
 		local meta = pot:get_meta():to_table()
@@ -634,11 +633,11 @@ minetest.register_globalstep(function(dtime)
 	for _,pl in pairs(minetest.get_connected_players()) do
 		local npos = vector.offset(pl:get_pos(), 0, 0.2, 0)
 		local n = minetest.get_node(npos)
-		if n.name == "vlf_flowers:wither_rose" then vlf_effects.withering_func(pl, 1, 2) end
+		if n.name == "vlf_flowers:wither_rose" then vlf_entity_effects.withering_func(pl, 1, 2) end
 	end
 end)
 
-vlf_wip.register_wip_item("vlf_effects:night_vision")
-vlf_wip.register_wip_item("vlf_effects:night_vision_splash")
-vlf_wip.register_wip_item("vlf_effects:night_vision_lingering")
-vlf_wip.register_wip_item("vlf_effects:night_vision_arrow")
+vlf_wip.register_wip_item("vlf_entity_effects:night_vision")
+vlf_wip.register_wip_item("vlf_entity_effects:night_vision_splash")
+vlf_wip.register_wip_item("vlf_entity_effects:night_vision_lingering")
+vlf_wip.register_wip_item("vlf_entity_effects:night_vision_arrow")

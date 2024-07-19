@@ -1,4 +1,4 @@
-# textdomain: vlf_effects
+# textdomain: vlf_entity_effects
 Invisibility=
 body is invisible=
 
@@ -117,18 +117,18 @@ Giving effect @1 to player @2 failed.=
 @1 effect on level @2 given to player @3 for @4 seconds.=
 
 
-A throwable potion that will shatter on impact, where it gives all nearby players and mobs a status effect or a set of status effects.=
+A throwable entity_effect that will shatter on impact, where it gives all nearby players and mobs a status effect or a set of status effects.=
 Use the “Punch” key to throw it.=
 
 
-A throwable potion that will shatter on impact, where it creates a magic cloud that lingers around for a while. Any player or mob inside the cloud will receive the potion's effect or set of effects, possibly repeatedly.=
+A throwable entity_effect that will shatter on impact, where it creates a magic cloud that lingers around for a while. Any player or mob inside the cloud will receive the entity_effect's effect or set of effects, possibly repeatedly.=
 
 
 This particular arrow is tipped and will give an effect when it hits a player or mob.=
 
 
 Use the “Place” key to drink it.=
-Drinking a potion gives you a particular effect or set of effects.=
+Drinking a entity_effect gives you a particular effect or set of effects.=
 
 @1 Potion @2=
 @1 Potion=
@@ -146,17 +146,17 @@ Mighty=
 of Trolling=
 
 Dragon's Breath=
-This item is used in brewing and can be combined with splash potions to create lingering potions.=
+This item is used in brewing and can be combined with splash entity_effects to create lingering entity_effects.=
 
 Awkward=
 No effect=
-Has an awkward taste and is used for brewing potions.=
+Has an awkward taste and is used for brewing entity_effects.=
 
 Mundane=
-Has a terrible taste and is not really useful for brewing potions.=
+Has a terrible taste and is not really useful for brewing entity_effects.=
 
 Thick=
-Has a bitter taste and may be useful for brewing potions.=
+Has a bitter taste and may be useful for brewing entity_effects.=
 
 of Healing=
 +@1 HP=
@@ -262,7 +262,7 @@ Unknown Tipped Arrow=
 
 
 Fermented Spider Eye=
-Try different combinations to create potions.=
+Try different combinations to create entity_effects.=
 
 Glass Bottle=
 Liquid container=

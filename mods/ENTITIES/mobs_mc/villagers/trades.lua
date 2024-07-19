@@ -58,7 +58,7 @@ return {
 
 			{
 			{ E(3), { "vlf_farming:carrot_item_gold", 3, 3 } },
-			{ E(4), { "vlf_effects:speckled_melon", 3, 3 } },
+			{ E(4), { "vlf_entity_effects:speckled_melon", 3, 3 } },
 			},
 		}
 	},
@@ -130,17 +130,17 @@ return {
 			{
 			--FIXME: supposed to be tripwire hook{ { "tripwirehook", 8, 8 }, E() },
 			{ E(8, 22) , { "vlf_bows:crossbow_enchanted", 1, 1 } },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_effects:healing_arrow", 5, 5 } },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_effects:harming_arrow", 5, 5 } },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_effects:night_vision_arrow", 5, 5 } },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_effects:swiftness_arrow", 5, 5 } },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_effects:slowness_arrow", 5, 5 } },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_effects:leaping_arrow", 5, 5 } },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_effects:poison_arrow", 5, 5 } },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_effects:regeneration_arrow", 5, 5 } },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_effects:invisibility_arrow", 5, 5 } },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_effects:water_breathing_arrow", 5, 5 } },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_effects:fire_resistance_arrow", 5, 5 } },
+			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_entity_effects:healing_arrow", 5, 5 } },
+			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_entity_effects:harming_arrow", 5, 5 } },
+			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_entity_effects:night_vision_arrow", 5, 5 } },
+			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_entity_effects:swiftness_arrow", 5, 5 } },
+			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_entity_effects:slowness_arrow", 5, 5 } },
+			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_entity_effects:leaping_arrow", 5, 5 } },
+			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_entity_effects:poison_arrow", 5, 5 } },
+			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_entity_effects:regeneration_arrow", 5, 5 } },
+			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_entity_effects:invisibility_arrow", 5, 5 } },
+			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_entity_effects:water_breathing_arrow", 5, 5 } },
+			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_entity_effects:fire_resistance_arrow", 5, 5 } },
 			},
 		}
 	},
@@ -530,7 +530,7 @@ return {
 
 			{
 			--{ { "FIXME: scute", 4, 4 }, E() },
-			{ { "vlf_effects:glass_bottle", 9, 9 }, E() },
+			{ { "vlf_entity_effects:glass_bottle", 9, 9 }, E() },
 			{ E(5), { "vlf_throwing:ender_pearl", 1, 1 } },
 			},
 

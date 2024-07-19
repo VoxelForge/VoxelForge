@@ -1,4 +1,4 @@
-# textdomain: vlf_effects
+# textdomain: vlf_entity_effects
 Invisibility=Niewidzialność
 body is invisible=ciało jest niewidzialne
 
@@ -117,18 +117,18 @@ Giving effect @1 to player @2 failed.=Nadawanie efektu @1 dla gracza @2 nie powi
 @1 effect on level @2 given to player @3 for @4 seconds.=Efekt @1 na poziomie @2 nadany dla gracza @3 na @4 sekund.
 
 
-A throwable potion that will shatter on impact, where it gives all nearby players and mobs a status effect or a set of status effects.=Mikstura, którą można rzucić, a rozbije się przy uderzeniu, wystawiając wszystkich pobliskich graczy i moby na skutki jej działania.
+A throwable entity_effect that will shatter on impact, where it gives all nearby players and mobs a status effect or a set of status effects.=Mikstura, którą można rzucić, a rozbije się przy uderzeniu, wystawiając wszystkich pobliskich graczy i moby na skutki jej działania.
 Use the “Punch” key to throw it.=Użyj przycisku "Uderz" by rzucić.
 
 
-A throwable potion that will shatter on impact, where it creates a magic cloud that lingers around for a while. Any player or mob inside the cloud will receive the potion's effect or set of effects, possibly repeatedly.=Mikstura, którą można rzucić, a roztrzaska się przy uderzeniu, tworząc magiczne opary pozostające przez chwilę na ziemi. Jakikolwiek gracz lub mob wewnątrz oparów będzie wystawiony na skutki mikstury, być może wielokrotnie.
+A throwable entity_effect that will shatter on impact, where it creates a magic cloud that lingers around for a while. Any player or mob inside the cloud will receive the entity_effect's effect or set of effects, possibly repeatedly.=Mikstura, którą można rzucić, a roztrzaska się przy uderzeniu, tworząc magiczne opary pozostające przez chwilę na ziemi. Jakikolwiek gracz lub mob wewnątrz oparów będzie wystawiony na skutki mikstury, być może wielokrotnie.
 
 
 This particular arrow is tipped and will give an effect when it hits a player or mob.=Czubek tej strzały jest zanurzony w miksturze, co wystawi jej cel na skutki jej działania.
 
 
 Use the “Place” key to drink it.=Użyj przycisku "Postaw" by wypić.
-Drinking a potion gives you a particular effect or set of effects.=Wypicie mikstury wywoła u ciebie określone skutki.
+Drinking a entity_effect gives you a particular effect or set of effects.=Wypicie mikstury wywoła u ciebie określone skutki.
 
 @1 Potion @2=@1 Mikstura @2
 @1 Potion=@1 Mikstura
@@ -146,17 +146,17 @@ Mighty=Potężna
 of Trolling=Trollowania
 
 Dragon's Breath=Oddech Smoka
-This item is used in brewing and can be combined with splash potions to create lingering potions.=Ten przedmiot jest używany przy warzeniu i może zostać dodany do miotanych mikstur, aby uczynić je trwałymi.
+This item is used in brewing and can be combined with splash entity_effects to create lingering entity_effects.=Ten przedmiot jest używany przy warzeniu i może zostać dodany do miotanych mikstur, aby uczynić je trwałymi.
 
 Awkward=Klarowna
 No effect=Brak efektu
-Has an awkward taste and is used for brewing potions.=Ma dziwny smak i jest używana do warzenia mikstur.
+Has an awkward taste and is used for brewing entity_effects.=Ma dziwny smak i jest używana do warzenia mikstur.
 
 Mundane=Mdła
-Has a terrible taste and is not really useful for brewing potions.=Ma ohydny smak i nie jest zbyt użyteczna przy warzeniu mikstur.
+Has a terrible taste and is not really useful for brewing entity_effects.=Ma ohydny smak i nie jest zbyt użyteczna przy warzeniu mikstur.
 
 Thick=Gęsta
-Has a bitter taste and may be useful for brewing potions.=Ma cierpki smak i może być użyteczna przy warzeniu mikstur.
+Has a bitter taste and may be useful for brewing entity_effects.=Ma cierpki smak i może być użyteczna przy warzeniu mikstur.
 
 of Healing=Leczenia
 +@1 HP=+@1 PŻ
@@ -262,7 +262,7 @@ Unknown Tipped Arrow=Strzała z Nieznanym Grotem
 
 
 Fermented Spider Eye=Fermentowane oko pająka
-Try different combinations to create potions.=Wypróbuj różne kombinacje, by stworzyć mikstury.
+Try different combinations to create entity_effects.=Wypróbuj różne kombinacje, by stworzyć mikstury.
 
 Glass Bottle=Szklana butelka
 Liquid container=Zbiornik na ciecz

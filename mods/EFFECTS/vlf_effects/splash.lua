@@ -7,20 +7,20 @@ local function splash_image(colorstring, opacity)
 	if not opacity then
 		opacity = 127
 	end
-	return "vlf_effects_splash_overlay.png^[colorize:"..colorstring..":"..tostring(opacity).."^vlf_effects_splash_bottle.png"
+	return "vlf_entity_effects_splash_overlay.png^[colorize:"..colorstring..":"..tostring(opacity).."^vlf_entity_effects_splash_bottle.png"
 end
 
 
-function vlf_effects.register_splash(name, descr, color, def)
-	local id = "vlf_effects:"..name.."_splash"
+function vlf_entity_effects.register_splash(name, descr, color, def)
+	local id = "vlf_entity_effects:"..name.."_splash"
 	local longdesc = def.longdesc
 	if not def.no_effect then
-		longdesc = S("A throwable potion that will shatter on impact, where it gives all nearby players and mobs a status effect.")
+		longdesc = S("A throwable entity_effect that will shatter on impact, where it gives all nearby players and mobs a status effect.")
 		if def.longdesc then
 			longdesc = longdesc .. "\n" .. def.longdesc
 		end
 	end
-	local groups = {brewitem=1, bottle=1, splash_potion=1, _vlf_potion=1}
+	local groups = {brewitem=1, bottle=1, splash_entity_effect=1, _vlf_entity_effect=1}
 	if def.nocreative then groups.not_in_creative_inventory = 1 end
 	minetest.register_craftitem(id, {
 		description = descr,
@@ -77,8 +77,8 @@ function vlf_effects.register_splash(name, descr, color, def)
 			if mod_target and n == "vlf_target:target_off" then
 				vlf_target.hit(vector.round(pos), 0.4) --4 redstone ticks
 			end
-			if n ~= "air" and n ~= "vlf_portals:portal" and n ~= "vlf_portals:portal_end" and g == 0 or vlf_effects.is_obj_hit(self, pos) then
-				minetest.sound_play("vlf_effects_breaking_glass", {pos = pos, max_hear_distance = 16, gain = 1})
+			if n ~= "air" and n ~= "vlf_portals:portal" and n ~= "vlf_portals:portal_end" and g == 0 or vlf_entity_effects.is_obj_hit(self, pos) then
+				minetest.sound_play("vlf_entity_effects_breaking_glass", {pos = pos, max_hear_distance = 16, gain = 1})
 				local texture, acc
 				if name == "water" then
 					texture = "vlf_particles_droplet_bottle.png"
@@ -110,7 +110,7 @@ function vlf_effects.register_splash(name, descr, color, def)
 				})
 
 				if name == "water" then
-					vlf_effects._extinguish_nearby_fire(pos)
+					vlf_entity_effects._extinguish_nearby_fire(pos)
 				end
 				self.object:remove()
 				for _,obj in pairs(minetest.get_objects_inside_radius(pos, 4)) do
@@ -131,27 +131,27 @@ function vlf_effects.register_splash(name, descr, color, def)
 									ef_level = details.level
 								end
 								if details.dur_variable then
-									dur = details.dur * math.pow(vlf_effects.PLUS_FACTOR, plus)
+									dur = details.dur * math.pow(vlf_entity_effects.PLUS_FACTOR, plus)
 									if potency>0 and details.uses_level then
-										dur = dur / math.pow(vlf_effects.POTENT_FACTOR, potency)
+										dur = dur / math.pow(vlf_entity_effects.POTENT_FACTOR, potency)
 									end
-									dur = dur * vlf_effects.SPLASH_FACTOR
+									dur = dur * vlf_entity_effects.SPLASH_FACTOR
 								else
 									dur = details.dur
 								end
 								if details.effect_stacks then
-									ef_level = ef_level + vlf_effects.get_effect_level(obj, name)
+									ef_level = ef_level + vlf_entity_effects.get_effect_level(obj, name)
 								end
 								if rad > 0 then
-									vlf_effects.give_effect_by_level(name, obj, ef_level, redux_map[rad]*dur)
+									vlf_entity_effects.give_effect_by_level(name, obj, ef_level, redux_map[rad]*dur)
 								else
-									vlf_effects.give_effect_by_level(name, obj, ef_level, dur)
+									vlf_entity_effects.give_effect_by_level(name, obj, ef_level, dur)
 								end
 							end
 						end
 
 						if def.custom_effect then
-							local power = (potency+1) * vlf_effects.SPLASH_FACTOR
+							local power = (potency+1) * vlf_entity_effects.SPLASH_FACTOR
 							if rad > 0 then
 								def.custom_effect(obj, redux_map[rad] * power, plus)
 							else

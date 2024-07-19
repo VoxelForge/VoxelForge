@@ -107,10 +107,10 @@ function mob_class:get_staticdata()
 		end
 	end
 
-	tmp._vlf_effects = self._vlf_effects
-	if tmp._vlf_effects then
-		for name_raw, data in pairs(tmp._vlf_effects) do
-			local def = vlf_effects.registered_effects[name_raw:match("^_EF_(.+)$")]
+	tmp._vlf_entity_effects = self._vlf_entity_effects
+	if tmp._vlf_entity_effects then
+		for name_raw, data in pairs(tmp._vlf_entity_effects) do
+			local def = vlf_entity_effects.registered_effects[name_raw:match("^_EF_(.+)$")]
 			if def and def.on_save_effect then def.on_save_effect(self.object) end
 		end
 	end
@@ -301,10 +301,10 @@ function mob_class:mob_activate(staticdata, dtime)
 		self._run_armor_init = true
 	end
 
-	if not self._vlf_effects then
-		self._vlf_effects = {}
+	if not self._vlf_entity_effects then
+		self._vlf_entity_effects = {}
 	end
-	vlf_effects._load_entity_effects(self)
+	vlf_entity_effects._load_entity_effects(self)
 
 	if def.after_activate then
 		def.after_activate(self, staticdata, def, dtime)

@@ -77,8 +77,8 @@ end
 
 function vlf_conduits.player_effect(player)
 	if minetest.get_item_group(vlf_player.players[player].nodes.feet, "water") == 0 then return end
-	vlf_effects.water_breathing_func(player, 2, 13)
-	vlf_effects.swiftness_func(player, 2, 13)
+	vlf_entity_effects.water_breathing_func(player, 2, 13)
+	vlf_entity_effects.swiftness_func(player, 2, 13)
 end
 
 function vlf_conduits.conduit_damage(ent)

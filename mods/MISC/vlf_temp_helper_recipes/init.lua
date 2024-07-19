@@ -33,10 +33,10 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "vlf_effects:dragon_breath 3",
+	output = "vlf_entity_effects:dragon_breath 3",
 	recipe = {
 		{"","vlf_end:chorus_flower",""},
-		{"vlf_effects:glass_bottle","vlf_effects:glass_bottle","vlf_effects:glass_bottle"},
+		{"vlf_entity_effects:glass_bottle","vlf_entity_effects:glass_bottle","vlf_entity_effects:glass_bottle"},
 	}
 })
 

@@ -37,14 +37,14 @@ vlf_mobs.register_mob("mobs_mc:witch", {
 	pathfinding = 1,
 	group_attack = true,
 	attack_type = "dogshoot",
-	arrow = "mobs_mc:potion_arrow",
+	arrow = "mobs_mc:entity_effect_arrow",
 	shoot_interval = 2.5,
 	shoot_offset = 1,
 	dogshoot_switch = 1,
 	dogshoot_count_max =1.8,
 	max_drops = 3,
 	drops = {
-		{name = "vlf_effects:glass_bottle", chance = 8, min = 0, max = 2, looting = "common",},
+		{name = "vlf_entity_effects:glass_bottle", chance = 8, min = 0, max = 2, looting = "common",},
 		{name = "vlf_nether:glowstone_dust", chance = 8, min = 0, max = 2, looting = "common",},
 		{name = "vlf_mobitems:gunpowder", chance = 8, min = 0, max = 2, looting = "common",},
 		{name = "mesecons:redstone", chance = 8, min = 0, max = 2, looting = "common",},
@@ -78,12 +78,12 @@ vlf_mobs.register_mob("mobs_mc:witch", {
 	end,
 })
 
--- potion projectile (EXPERIMENTAL)
-vlf_mobs.register_arrow("mobs_mc:potion_arrow", {
+-- entity_effect projectile (EXPERIMENTAL)
+vlf_mobs.register_arrow("mobs_mc:entity_effect_arrow", {
 	visual = "sprite",
 	visual_size = {x = 0.5, y = 0.5},
 	--textures = {"vessels_glass_bottle.png"},  --TODO fix to else if default
-	textures = {"vlf_effects_dragon_breath.png"},
+	textures = {"vlf_entity_effects_dragon_breath.png"},
 	velocity = 6,
 
 	-- direct hit, no fire... just plenty of pain

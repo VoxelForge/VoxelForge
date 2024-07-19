@@ -132,7 +132,7 @@ vlf_mobs.mob_class = {
 	jump_sound_cooloff = 0, -- used to prevent jump sound from being played too often in short time
 	opinion_sound_cooloff = 0, -- used to prevent sound spam of particular sound types
 	_spawner = nil,
-	_vlf_effects = {},
+	_vlf_entity_effects = {},
 }
 vlf_mobs.mob_class_meta = {__index = vlf_mobs.mob_class}
 vlf_mobs.fallback_node = minetest.registered_aliases["mapgen_dirt"] or "vlf_core:dirt"

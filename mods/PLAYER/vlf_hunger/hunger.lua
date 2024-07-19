@@ -165,8 +165,8 @@ function vlf_hunger.item_eat(hunger_change, replace_with_item, poisontime, poiso
 					do_poison = true
 				end
 				if do_poison then
-					local level = vlf_effects.get_effect_level(user, "food_poisoning")
-					vlf_effects.give_effect_by_level("food_poisoning", user, level+exhaust, poisontime)
+					local level = vlf_entity_effects.get_effect_level(user, "food_poisoning")
+					vlf_entity_effects.give_effect_by_level("food_poisoning", user, level+exhaust, poisontime)
 				end
 			end
 
