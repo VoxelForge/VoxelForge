@@ -121,8 +121,19 @@ minetest.register_node("vlf_lush_caves:hanging_roots", {
 	_doc_items_entry_name = S("Hanging roots"),
 	_doc_items_longdesc = S("Hanging roots"),
 	paramtype = "light",
-	--paramtype2 = "meshoptions",
-	--place_param2 = 3,
+	on_place = function(itemstack, placer, pointed_thing)
+		local rc = vlf_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		if rc then
+			return rc
+		end
+		if pointed_thing.type ~= "node" then
+			return itemstack
+		end
+		if pointed_thing.under.y > pointed_thing.above.y then
+			return minetest.item_place(itemstack, placer, pointed_thing)
+		end
+	end,
+	node_placement_prediction = "",
 	sunlight_propagates = true,
 	walkable = false,
 	drawtype = "plantlike",
@@ -135,7 +146,7 @@ minetest.register_node("vlf_lush_caves:hanging_roots", {
 			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5}
 		},
 	},
-	groups = {handy=1, plant=1, flammable=2, fire_encouragement=30, fire_flammability=60, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, compostability=30, cultivatable=1},
+	groups = {handy=1, plant=1, flammable=2, fire_encouragement=30, fire_flammability=60, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, compostability=30, attached_node=4},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	_vlf_blast_resistance = 0,
 	_vlf_blast_hardness = 0,
@@ -214,10 +225,21 @@ minetest.register_node("vlf_lush_caves:rooted_dirt", {
 	_doc_items_longdesc = S("Rooted dirt"),
 	_doc_items_hidden = false,
 	tiles = {"vlf_lush_caves_rooted_dirt.png"},
-	groups = {handy=1, shovely=1, dirt=1, soil_fungus=1, building_block=1, path_creation_possible=1, converts_to_moss=1},
+	groups = {handy=1, shovely=1, dirt=1, soil_fungus=1, building_block=1, path_creation_possible=1, converts_to_moss=1, cultivatable=1},
 	sounds = vlf_sounds.node_sound_dirt_defaults(),
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
+	_on_hoe_place = function(itemstack, placer, pointed_thing)
+		local below = vector.offset(pointed_thing.under, 0, -1, 0)
+		if minetest.get_node(below).name == "vlf_lush_caves:hanging_roots" then
+			minetest.remove_node(below)
+			if not minetest.is_creative_enabled(placer:get_player_name()) then
+				minetest.add_item(below, ItemStack("vlf_lush_caves:hanging_roots"))
+			end
+		end
+		-- no truthy return to not interrupt normal hoe_on_place
+		-- as this turns the rooted dirt to dirt as per cultivatable = 1 group
+	end,
 })
 
 minetest.register_craftitem("vlf_lush_caves:glow_berry", {

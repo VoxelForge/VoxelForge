@@ -4,8 +4,12 @@ there are strings in meta, which are being used to see which effect will be give
 Valid strings:
 	swiftness
 	leaping
-	strenght
+	strength
 	regeneration
+	haste
+	resistance
+	slow_falling
+	absorption
 ]]--
 
 vlf_beacons = {
@@ -128,10 +132,16 @@ local formspec_string=
 	"image[1,4.5;1,1;custom_beacom_symbol_2.png]"..
 	"image[1,6;1,1;custom_beacom_symbol_1.png]"..
 
-	"image_button[5.2,1.5;1,1;vlf_potions_effect_swift.png;swiftness;]"..
-	"image_button[5.2,3;1,1;vlf_potions_effect_leaping.png;leaping;]"..
-	"image_button[5.2,4.5;1,1;vlf_potions_effect_strong.png;strenght;]"..
-	"image_button[5.2,6;1,1;vlf_potions_effect_regenerating.png;regeneration;]"..
+	"image_button[5.2,1.5;1,1;vlf_entity_effects_effect_swiftness.png;swiftness;]"..
+	"image_button[8.5,1.5;1,1;vlf_entity_effects_effect_haste.png;haste;]"..
+	"image_button[5.2,3;1,1;vlf_entity_effects_effect_leaping.png;leaping;]"..
+	"image_button[8.5,3;1,1;vlf_entity_effects_effect_resistance.png;resistance;]"..
+
+	"image_button[5.2,4.5;1,1;vlf_entity_effects_effect_strength.png;strength;]"..
+	"image_button[8.5,4.5;1,1;vlf_entity_effects_effect_absorption.png;absorption;]"..
+
+	"image_button[5.2,6;1,1;vlf_entity_effects_effect_regeneration.png;regeneration;]"..
+	"image_button[8.5,6;1,1;vlf_entity_effects_effect_slow_falling.png;slow_falling;]"..
 
 	"item_image[1,7;1,1;vlf_core:diamond]"..
 	"item_image[2.2,7;1,1;vlf_core:emerald]"..
@@ -203,15 +213,7 @@ end
 local function effect_player(effect,pos,power_level, effect_level,player)
 	local distance =  vector.distance(player:get_pos(), pos)
 	if distance > (power_level+1)*10 then return end
-	if effect == "swiftness" then
-		vlf_potions.swiftness_func(player,effect_level,16)
-	elseif effect == "leaping" then
-		vlf_potions.leaping_func(player, effect_level, 16)
-	elseif effect == "strenght" then
-		vlf_potions.strength_func(player, effect_level, 16)
-	elseif effect == "regeneration" then
-		vlf_potions.regeneration_func(player, effect_level, 16)
-	end
+	vlf_entity_effects.give_effect_by_level(effect, player, effect_level, 16)
 end
 
 local function apply_effects_to_all_players(pos)
@@ -281,7 +283,7 @@ minetest.register_node("vlf_beacons:beacon", {
 	allow_metadata_inventory_move = allow_metadata_inventory_move,
 	allow_metadata_inventory_take = allow_metadata_inventory_take,
 	on_receive_fields = function(pos, formname, fields, sender)
-		if fields.swiftness or fields.regeneration or fields.leaping or fields.strenght then
+		if fields.swiftness or fields.regeneration or fields.leaping or fields.strenght or fields.haste or fields.resistance or fields.absorption or fields.slow_falling then
 			local sender_name = sender:get_player_name()
 			local power_level = beacon_blockcheck(pos)
 			if minetest.is_protected(pos, sender_name) then
@@ -320,6 +322,14 @@ minetest.register_node("vlf_beacons:beacon", {
 				end
 				minetest.get_meta(pos):set_string("effect","swiftness")
 				successful = true
+			elseif fields.haste then
+				if power_level == 4 then
+					minetest.get_meta(pos):set_int("effect_level",2)
+				else
+					minetest.get_meta(pos):set_int("effect_level",1)
+				end
+				minetest.get_meta(pos):set_string("effect","haste")
+				successful = true
 			elseif fields.leaping and power_level >= 2 then
 				if power_level == 4 then
 					minetest.get_meta(pos):set_int("effect_level",2)
@@ -328,17 +338,37 @@ minetest.register_node("vlf_beacons:beacon", {
 				end
 				minetest.get_meta(pos):set_string("effect","leaping")
 				successful = true
+			elseif fields.resistance and power_level >= 2 then
+				if power_level == 4 then
+					minetest.get_meta(pos):set_int("effect_level",2)
+				else
+					minetest.get_meta(pos):set_int("effect_level",1)
+				end
+				minetest.get_meta(pos):set_string("effect","resistance")
+				successful = true
 			elseif fields.strenght and power_level >= 3 then
 				if power_level == 4 then
 					minetest.get_meta(pos):set_int("effect_level",2)
 				else
 					minetest.get_meta(pos):set_int("effect_level",1)
 				end
-				minetest.get_meta(pos):set_string("effect","strenght")
+				minetest.get_meta(pos):set_string("effect","strength")
+				successful = true
+			elseif fields.absorption and power_level >= 3 then
+				if power_level == 4 then
+					minetest.get_meta(pos):set_int("effect_level",2)
+				else
+					minetest.get_meta(pos):set_int("effect_level",1)
+				end
+				minetest.get_meta(pos):set_string("effect","absorption")
 				successful = true
 			elseif fields.regeneration and power_level == 4 then
 				minetest.get_meta(pos):set_int("effect_level",2)
 				minetest.get_meta(pos):set_string("effect","regeneration")
+				successful = true
+			elseif fields.slow_falling and power_level == 4 then
+				minetest.get_meta(pos):set_int("effect_level",2)
+				minetest.get_meta(pos):set_string("effect","slow_falling")
 				successful = true
 			end
 			if successful then

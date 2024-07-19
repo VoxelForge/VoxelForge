@@ -99,6 +99,7 @@ local skeleton = {
 		return true
 	end,
 	ignited_by_sunlight = true,
+	floats = 0,
 	view_range = 16,
 	fear_height = 4,
 	attack_type = "dogshoot",
@@ -108,7 +109,7 @@ local skeleton = {
 			if self.attack then
 				self.object:set_yaw(minetest.dir_to_yaw(vector.direction(self.object:get_pos(), self.attack:get_pos())))
 			end
-			local dmg = math.random(3, 4)
+			local dmg = math.random(2, 4)
 			vlf_bows.shoot_arrow("vlf_bows:arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
 		end
 	end,
@@ -144,10 +145,11 @@ stray.textures = {
 		"vlf_bows_bow_0.png",
 	},
 }
+stray.arrow = "vlf_entity_effects:frost_arrow_entity"
 -- TODO: different sound (w/ echo)
 -- TODO: stray's arrow inflicts slowness status
 table.insert(stray.drops, {
-	name = "vlf_potions:slowness_arrow",
+	name = "vlf_entity_effects:frost_arrow",
 	chance = 2,
 	min = 1,
 	max = 1,

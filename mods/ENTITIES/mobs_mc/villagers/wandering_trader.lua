@@ -40,10 +40,10 @@ local function get_random_flower()
 end
 mobs_mc.wandering_trader = {}
 mobs_mc.wandering_trader.trades_purchasing_table = {
-	{ { "vlf_potions:water", 1, 1, }, E() },
+	{ { "vlf_entity_effects:water", 1, 1, }, E() },
 	{ { "vlf_buckets:bucket_water", 1, 1, }, E(2) },
 	{ { "vlf_mobitems:milk_bucket", 1, 1, }, E(2) },
-	{ { "vlf_potions:fermented_spider_eye", 1, 1, }, E(3) },
+	{ { "vlf_entity_effects:fermented_spider_eye", 1, 1, }, E(3) },
 	{ { "vlf_farming:potato_item_baked", 1, 1, }, E(1) },
 	{ { "vlf_farming:hay_block", 1, 1, }, E(1) },
 }
@@ -54,7 +54,7 @@ mobs_mc.wandering_trader.trades_special_table = {
 	{ E(), { get_random_tree, 8, 8, } },
 	{ E(3), { "vlf_core:podzol", 3, 3, } },
 	{ E(5), { "vlf_core:ice", 1, 1, } },
-	{ E(6), { "vlf_potions:invisibility", 1, 1, } },
+	{ E(6), { "vlf_entity_effects:invisibility", 1, 1, } },
 	{ E(6, 20), { "vlf_tools:pick_diamond_enchanted", 1, 1 } },
 }
 

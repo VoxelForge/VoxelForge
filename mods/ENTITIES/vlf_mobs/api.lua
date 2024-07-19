@@ -99,14 +99,19 @@ function mob_class:get_staticdata()
 
 	local tmp = {}
 
-	for _,stat in pairs(self) do
+	for tag, stat in pairs(self) do
 
 		local t = type(stat)
+		if  t ~= "function" and t ~= "nil" and t ~= "userdata" then
+			tmp[tag] = self[tag]
+		end
+	end
 
-		if  t ~= "function"
-		and t ~= "nil"
-		and t ~= "userdata" then
-			tmp[_] = self[_]
+	tmp._vlf_entity_effects = self._vlf_entity_effects
+	if tmp._vlf_entity_effects then
+		for name_raw, data in pairs(tmp._vlf_entity_effects) do
+			local def = vlf_entity_effects.registered_effects[name_raw:match("^_EF_(.+)$")]
+			if def and def.on_save_effect then def.on_save_effect(self.object) end
 		end
 	end
 
@@ -295,6 +300,11 @@ function mob_class:mob_activate(staticdata, dtime)
 		self:set_armor_texture()
 		self._run_armor_init = true
 	end
+
+	if not self._vlf_entity_effects then
+		self._vlf_entity_effects = {}
+	end
+	vlf_entity_effects._load_entity_effects(self)
 
 	if def.after_activate then
 		def.after_activate(self, staticdata, def, dtime)

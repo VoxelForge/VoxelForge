@@ -67,7 +67,7 @@ Here's what it could look like:
 
 Potions mod:
 ```
-playerphysics.add_physics_factor(player, "speed", "run_potion", 2)
+playerphysics.add_physics_factor(player, "speed", "run_entity_effect", 2)
 ```
 
 Exhaustion mod:

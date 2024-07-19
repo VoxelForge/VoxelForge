@@ -106,11 +106,11 @@ function vlf_raids.promote_to_raidcaptain(c) -- object
 			vlf_raids.drop_obanner(pos)
 			if cmi_cause and cmi_cause.type == "punch" and cmi_cause.puncher:is_player() then
 				awards.unlock(cmi_cause.puncher:get_player_name(), "vlf:voluntary_exile")
-				local lv = vlf_potions.player_get_effect(cmi_cause.puncher, "bad_omen")
+				local lv = vlf_entity_effects.get_effect_level(cmi_cause.puncher, "bad_omen")
 				if not lv then lv = 0
 				else lv = lv.factor end
 				lv = math.max(5,lv + 1)
-				vlf_potions.bad_omen_func(cmi_cause.puncher,lv,6000)
+				vlf_entity_effects.give_effect_by_level("bad_omen", cmi_cause.puncher, lv, 6000)
 			end
 		end
 		if old_ondie then return old_ondie(self,pos,cmi_cause) end
@@ -267,7 +267,7 @@ vlf_events.register_event("raid",{
 		--minetest.log("Cond start raid")
 		local r = {}
 		for _,p in pairs(minetest.get_connected_players()) do
-			if vlf_potions.player_has_effect(p,"bad_omen") then
+			if vlf_entity_effects.has_effect(p,"bad_omen") then
 				local raid_pos = vlf_raids.find_village(p:get_pos())
 				if raid_pos then
 					--minetest.log("We have a raid position. Start raid")
@@ -281,7 +281,7 @@ vlf_events.register_event("raid",{
 		self.mobs = {}
 		self.health_max = 1
 		self.health = 0
-		local lv = vlf_potions.player_get_effect(minetest.get_player_by_name(self.player), "bad_omen")
+		local lv = vlf_entity_effects.get_effect_level(minetest.get_player_by_name(self.player), "bad_omen")
 		if lv and lv.factor and lv.factor > 1 then self.max_stage = 6 end
 	end,
 	cond_progress = function(self)
@@ -302,7 +302,7 @@ vlf_events.register_event("raid",{
 	end,
 	on_complete = function(self)
 		awards.unlock(self.player,"vlf:hero_of_the_village")
-		vlf_potions.player_clear_effect(minetest.get_player_by_name(self.player),"bad_omen")
+		vlf_entity_effects.clear_effect(minetest.get_player_by_name(self.player),"bad_omen")
 	end,
 })
 

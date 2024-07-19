@@ -329,7 +329,7 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 					vlf_util.deal_damage(objs[n], 8, {type = "magic"})
 					hit_some = true
 				end
-				vlf_mobs.effect_functions["withering"](objs[n], 0.5, 10)
+				vlf_entity_effects.give_effect("withering", objs[n], 2, 10)
 			end
 			if hit_some then
 				vlf_mobs.effect(pos, 32, "vlf_particles_soul_fire_flame.png", 5, 10, self.reach, 1, 0)
@@ -448,9 +448,13 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull", {
 
 	-- direct hit
 	hit_player = function(self, player)
-		vlf_mobs.effect_functions["withering"](player, 0.5, 10)
-		vlf_mobs.mob_class.boom(self,self.object:get_pos(), 1, false, true)
-		vlf_mobs.get_arrow_damage_func(8, "wither_skull")(self, player)
+		local pos = vector.new(self.object:get_pos())
+		vlf_entity_effects.give_effect("withering", player, 2, 10)
+		player:punch(self.object, 1.0, {
+			full_punch_interval = 0.5,
+			damage_groups = {fleshy = 8},
+		}, nil)
+		vlf_mobs.mob_class.boom(self, pos, 1)
 		if player:get_hp() <= 0 then
 			local shooter = self._shooter:get_luaentity()
 			if shooter then shooter.health = shooter.health + 5 end
@@ -459,10 +463,13 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull", {
 	end,
 
 	hit_mob = function(self, mob)
-		vlf_mobs.effect_functions["withering"](mob, 0.5, 10)
-		vlf_mobs.get_arrow_damage_func(8, "wither_skull")(self, mob)
-		vlf_mobs.effect_functions["withering"](mob, 0.5, 10)
-		vlf_mobs.mob_class.boom(self,self.object:get_pos(), 1, false, true)
+		local pos = vector.new(self.object:get_pos())
+		vlf_entity_effects.give_effect("withering", mob, 2, 10)
+		mob:punch(self.object, 1.0, {
+			full_punch_interval = 0.5,
+			damage_groups = {fleshy = 8},
+		}, nil)
+		vlf_mobs.mob_class.boom(self, pos, 1)
 		local l = mob:get_luaentity()
 		if l and l.health - 8 <= 0 then
 			local shooter = self._shooter:get_luaentity()
@@ -495,8 +502,17 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 
 	-- direct hit
 	hit_player = function(self, player)
-		vlf_mobs.effect_functions["withering"](player, 0.5, 10)
-		vlf_mobs.get_arrow_damage_func(12, "wither_skull")(self, player)
+		local pos = vector.new(self.object:get_pos())
+		vlf_entity_effects.give_effect("withering", player, 2, 10)
+		player:punch(self.object, 1.0, {
+			full_punch_interval = 0.5,
+			damage_groups = {fleshy = 12},
+		}, nil)
+		if mobs_griefing and not minetest.is_protected(pos, "") then
+			vlf_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
+		else
+			vlf_mobs.mob_class.safe_boom(self, pos, 1) --need to call it this way bc self is the "arrow" object here
+		end
 		if player:get_hp() <= 0 then
 			local shooter = self._shooter:get_luaentity()
 			if shooter then shooter.health = shooter.health + 5 end
@@ -505,10 +521,12 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 	end,
 
 	hit_mob = function(self, mob)
-		vlf_mobs.effect_functions["withering"](mob, 0.5, 10)
-		vlf_mobs.get_arrow_damage_func(12, "wither_skull")(self, mob)
-		vlf_mobs.effect_functions["withering"](mob, 0.5, 10)
-		local pos = self.object:get_pos()
+		local pos = vector.new(self.object:get_pos())
+		vlf_entity_effects.give_effect("withering", mob, 2, 10)
+		mob:punch(self.object, 1.0, {
+			full_punch_interval = 0.5,
+			damage_groups = {fleshy = 12},
+		}, nil)
 		if mobs_griefing and not minetest.is_protected(pos, "") then
 			vlf_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
 		else

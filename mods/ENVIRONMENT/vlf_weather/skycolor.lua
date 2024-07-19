@@ -103,6 +103,7 @@ vlf_weather.skycolor = {
 		local arg
 		-- Apply night vision only for dark sky
 		local is_dark = minetest.get_timeofday() > 0.8 or minetest.get_timeofday() < 0.2 or vlf_weather.state ~= "none"
+		local has_darkness = meta:get_int("darkness") == 1
 		local pos = player:get_pos()
 		local dim = vlf_worlds.pos_to_dimension(pos)
 		if has_night_vision and is_dark and dim ~= "nether" and dim ~= "end" then
@@ -111,8 +112,26 @@ vlf_weather.skycolor = {
 			else
 				arg = math.max(ratio, NIGHT_VISION_RATIO)
 			end
+		elseif has_darkness then
+			if has_night_vision then
+				arg = 0.1
+			else
+				arg = 0
+			end
 		else
-			arg = ratio
+			-- Apply night vision only for dark sky
+			local is_dark = minetest.get_timeofday() > 0.8 or minetest.get_timeofday() < 0.2 or vlf_weather.state ~= "none"
+			local pos = player:get_pos()
+			local dim = vlf_worlds.pos_to_dimension(pos)
+			if (has_night_vision) and is_dark and dim ~= "nether" and dim ~= "end" then
+				if ratio == nil then
+					arg = NIGHT_VISION_RATIO
+				else
+					arg = math.max(ratio, NIGHT_VISION_RATIO)
+				end
+			else
+				arg = ratio
+			end
 		end
 		player:override_day_night_ratio(arg)
 	end,

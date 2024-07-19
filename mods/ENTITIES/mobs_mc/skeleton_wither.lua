@@ -95,11 +95,12 @@ vlf_mobs.register_mob("mobs_mc:witherskeleton", {
 	dogshoot_switch = 1,
 	dogshoot_count_max =0.5,
 	fear_height = 4,
+	floats = 0,
 	harmed_by_heal = true,
 	fire_resistant = true,
 	dealt_effect = {
 		name = "withering",
-		factor = 1,
+		level = 1,
 		dur = 10,
 	},
 })
