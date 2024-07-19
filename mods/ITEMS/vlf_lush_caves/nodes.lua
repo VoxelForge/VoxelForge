@@ -123,8 +123,8 @@ minetest.register_node("vlf_lush_caves:hanging_roots", {
 	paramtype = "light",
 	on_place = function(itemstack, placer, pointed_thing)
 		local rc = vlf_util.call_on_rightclick(itemstack, placer, pointed_thing)
-		if rc then 
-			return rc 
+		if rc then
+			return rc
 		end
 		if pointed_thing.type ~= "node" then
 			return itemstack
