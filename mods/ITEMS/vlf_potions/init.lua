@@ -8,14 +8,18 @@ vlf_potions = {}
 -- duration effects of glowstone are a time factor of 1/2
 -- splash potion duration effects are reduced by a factor of 3/4
 
-vlf_potions.II_FACTOR = 2
+vlf_potions.POTENT_FACTOR = 2
 vlf_potions.PLUS_FACTOR = 8/3
+vlf_potions.INV_FACTOR = 0.50
 
 vlf_potions.DURATION = 180
-vlf_potions.DURATION_PLUS = vlf_potions.DURATION * vlf_potions.PLUS_FACTOR
-vlf_potions.DURATION_2 = vlf_potions.DURATION / vlf_potions.II_FACTOR
+vlf_potions.DURATION_INV = vlf_potions.DURATION * vlf_potions.INV_FACTOR
+vlf_potions.DURATION_POISON = 45
 
-vlf_potions.INV_FACTOR = 0.50
+vlf_potions.II_FACTOR = vlf_potions.POTENT_FACTOR -- TODO remove at some point
+vlf_potions.DURATION_PLUS = vlf_potions.DURATION * vlf_potions.PLUS_FACTOR -- TODO remove at some point
+vlf_potions.DURATION_2 = vlf_potions.DURATION / vlf_potions.II_FACTOR -- TODO remove at some point
+
 vlf_potions.SPLASH_FACTOR = 0.75
 vlf_potions.LINGERING_FACTOR = 0.25
 
@@ -25,6 +29,7 @@ dofile(modpath .. "/splash.lua")
 dofile(modpath .. "/lingering.lua")
 dofile(modpath .. "/tipped_arrow.lua")
 dofile(modpath .. "/potions.lua")
+local potions = vlf_potions.registered_potions
 
 minetest.register_craftitem("vlf_potions:fermented_spider_eye", {
 	description = S("Fermented Spider Eye"),
@@ -320,9 +325,28 @@ minetest.register_craft({
 })
 
 
+
+local output_table = { }
+
+-- API
+-- registers a potion that can be combined with multiple ingredients for different outcomes
+-- out_table contains the recipes for those outcomes
+function vlf_potions.register_ingredient_potion(input, out_table)
+	if output_table[input] then
+		error("Attempt to register the same ingredient twice!")
+	end
+	if type(input) ~= "string" then
+		error("Invalid argument! input must be a string")
+	end
+	if type(out_table) ~= "table" then
+		error("Invalid argument! out_table must be a table")
+	end
+	output_table[input] = out_table
+end
+
 local water_table = {
 	["vlf_nether:nether_wart_item"] = "vlf_potions:awkward",
-	-- ["vlf_potions:fermented_spider_eye"] = "vlf_potions:weakness",
+	["vlf_potions:fermented_spider_eye"] = "vlf_potions:weakness",
 	["vlf_potions:speckled_melon"] = "vlf_potions:mundane",
 	["vlf_core:sugar"] = "vlf_potions:mundane",
 	["vlf_mobitems:magma_cream"] = "vlf_potions:mundane",
@@ -334,24 +358,120 @@ local water_table = {
 	["vlf_nether:glowstone_dust"] = "vlf_potions:thick",
 	["vlf_mobitems:gunpowder"] = "vlf_potions:water_splash"
 }
+-- API
+-- register a potion recipe brewed from water
+function vlf_potions.register_water_brew(ingr, potion)
+	if water_table[ingr] then
+		error("Attempt to register the same ingredient twice!")
+	end
+	if type(ingr) ~= "string" then
+		error("Invalid argument! ingr must be a string")
+	end
+	if type(potion) ~= "string" then
+		error("Invalid argument! potion must be a string")
+	end
+	water_table[ingr] = potion
+end
+vlf_potions.register_ingredient_potion("vlf_potions:river_water", water_table)
+vlf_potions.register_ingredient_potion("vlf_potions:water", water_table)
 
 local awkward_table = {
 	["vlf_potions:speckled_melon"] = "vlf_potions:healing",
 	["vlf_farming:carrot_item_gold"] = "vlf_potions:night_vision",
 	["vlf_core:sugar"] = "vlf_potions:swiftness",
 	["vlf_mobitems:magma_cream"] = "vlf_potions:fire_resistance",
-	-- ["vlf_mobitems:blaze_powder"] = "vlf_potions:strength",
+	["vlf_mobitems:blaze_powder"] = "vlf_potions:strength",
 	["vlf_fishing:pufferfish_raw"] = "vlf_potions:water_breathing",
 	["vlf_mobitems:ghast_tear"] = "vlf_potions:regeneration",
 	["vlf_mobitems:spider_eye"] = "vlf_potions:poison",
 	["vlf_mobitems:rabbit_foot"] = "vlf_potions:leaping",
-}
 
-local output_table = {
-	["vlf_potions:river_water"] = water_table,
-	["vlf_potions:water"] = water_table,
-	["vlf_potions:awkward"] = awkward_table,
+	["vlf_flowers:fourleaf_clover"] = "vlf_potions:luck",
+	["vlf_farming:potato_item_poison"] = "vlf_potions:nausea",
+	["vlf_mobitems:phantom_membrane"] = "vlf_potions:slow_falling", -- TODO add phantom membranes
+	["vlf_core:apple_gold"] = "vlf_potions:resistance",
+
+	-- TODO darkness - sculk?
+	-- TODO absorption - water element?
+	-- TODO turtle master - earth element?
+	-- TODO frost - frost element?
+	-- TODO haste - air element?
 }
+-- API
+-- register a potion recipe brewed from awkward potion
+function vlf_potions.register_awkward_brew(ingr, potion)
+	if awkward_table[ingr] then
+		error("Attempt to register the same ingredient twice!")
+	end
+	if type(ingr) ~= "string" then
+		error("Invalid argument! ingr must be a string")
+	end
+	if type(potion) ~= "string" then
+		error("Invalid argument! potion must be a string")
+	end
+	awkward_table[ingr] = potion
+end
+vlf_potions.register_ingredient_potion("vlf_potions:awkward", awkward_table)
+
+local mundane_table = {
+	["vlf_potions:fermented_spider_eye"] = "vlf_potions:weakness",
+}
+-- API
+-- register a potion recipe brewed from mundane potion
+function vlf_potions.register_mundane_brew(ingr, potion)
+	if mundane_table[ingr] then
+		error("Attempt to register the same ingredient twice!")
+	end
+	if type(ingr) ~= "string" then
+		error("Invalid argument! ingr must be a string")
+	end
+	if type(potion) ~= "string" then
+		error("Invalid argument! potion must be a string")
+	end
+	mundane_table[ingr] = potion
+end
+vlf_potions.register_ingredient_potion("vlf_potions:mundane", mundane_table)
+
+local thick_table = {
+	["vlf_crimson:shroomlight"] = "vlf_potions:glowing",
+	["vlf_mobitems:nether_star"] = "vlf_potions:ominous",
+	["vlf_mobitems:ink_sac"] = "vlf_potions:blindness",
+	["vlf_farming:carrot_item_gold"] = "vlf_potions:saturation",
+}
+-- API
+-- register a potion recipe brewed from thick potion
+function vlf_potions.register_thick_brew(ingr, potion)
+	if thick_table[ingr] then
+		error("Attempt to register the same ingredient twice!")
+	end
+	if type(ingr) ~= "string" then
+		error("Invalid argument! ingr must be a string")
+	end
+	if type(potion) ~= "string" then
+		error("Invalid argument! potion must be a string")
+	end
+	thick_table[ingr] = potion
+end
+vlf_potions.register_ingredient_potion("vlf_potions:thick", thick_table)
+
+
+local mod_table = { }
+
+-- API
+-- registers a brewing recipe altering the potion using a table
+-- this is supposed to substitute one item with another
+function vlf_potions.register_table_modifier(ingr, modifier)
+	if mod_table[ingr] then
+		error("Attempt to register the same ingredient twice!")
+	end
+	if type(ingr) ~= "string" then
+		error("Invalid argument! ingr must be a string")
+	end
+	if type(modifier) ~= "table" then
+		error("Invalid argument! modifier must be a table")
+	end
+	mod_table[ingr] = modifier
+end
 
 minetest.register_on_mods_loaded(function()
 	for k, _ in pairs(table.merge(awkward_table, water_table)) do
@@ -364,113 +484,153 @@ minetest.register_on_mods_loaded(function()
 	end
 end)
 
-
-local enhancement_table = {}
-local extension_table = {}
-local potions = {}
-
-for i, potion in ipairs({"healing","harming","swiftness","slowness",
-	 "leaping","poison","regeneration","invisibility","fire_resistance",
-	 -- "weakness","strength",
-	 "water_breathing","night_vision", "withering"}) do
-
-	table.insert(potions, potion)
-
-	if potion ~= "invisibility" and potion ~= "night_vision" and potion ~= "weakness" and potion ~= "water_breathing" and potion ~= "fire_resistance" then
-		enhancement_table["vlf_potions:"..potion] = "vlf_potions:"..potion.."_2"
-		enhancement_table["vlf_potions:"..potion.."_splash"] = "vlf_potions:"..potion.."_2_splash"
-		table.insert(potions, potion.."_2")
-	end
-
-	if potion ~= "healing" and potion ~= "harming" then
-		extension_table["vlf_potions:"..potion.."_splash"] = "vlf_potions:"..potion.."_plus_splash"
-		extension_table["vlf_potions:"..potion] = "vlf_potions:"..potion.."_plus"
-		table.insert(potions, potion.."_plus")
-	end
-
-end
-
-for i, potion in ipairs({"awkward", "mundane", "thick", "water"}) do
-	table.insert(potions, potion)
-end
-
-
 local inversion_table = {
 	["vlf_potions:healing"] = "vlf_potions:harming",
-	["vlf_potions:healing_2"] = "vlf_potions:harming_2",
 	["vlf_potions:swiftness"] = "vlf_potions:slowness",
-	["vlf_potions:swiftness_plus"] = "vlf_potions:slowness_plus",
 	["vlf_potions:leaping"] = "vlf_potions:slowness",
-	["vlf_potions:leaping_plus"] = "vlf_potions:slowness_plus",
 	["vlf_potions:night_vision"] = "vlf_potions:invisibility",
-	["vlf_potions:night_vision_plus"] = "vlf_potions:invisibility_plus",
 	["vlf_potions:poison"] = "vlf_potions:harming",
-	["vlf_potions:poison_2"] = "vlf_potions:harming_2",
-	["vlf_potions:healing_splash"] = "vlf_potions:harming_splash",
-	["vlf_potions:healing_2_splash"] = "vlf_potions:harming_2_splash",
-	["vlf_potions:swiftness_splash"] = "vlf_potions:slowness_splash",
-	["vlf_potions:swiftness_plus_splash"] = "vlf_potions:slowness_plus_splash",
-	["vlf_potions:leaping_splash"] = "vlf_potions:slowness_splash",
-	["vlf_potions:leaping_plus_splash"] = "vlf_potions:slowness_plus_splash",
-	["vlf_potions:night_vision_splash"] = "vlf_potions:invisibility_splash",
-	["vlf_potions:night_vision_plus_splash"] = "vlf_potions:invisibility_plus_splash",
-	["vlf_potions:poison_splash"] = "vlf_potions:harming_splash",
-	["vlf_potions:poison_2_splash"] = "vlf_potions:harming_2_splash",
+	["vlf_potions:luck"] = "vlf_potions:bad_luck",
+	["vlf_potions:haste"] = "vlf_potions:fatigue",
+	["vlf_potions:saturation"] = "vlf_potions:food_poisoning",
+	["vlf_potions:slow_falling"] = "vlf_potions:levitation",
+	["vlf_potions:absorption"] = "vlf_potions:health_boost",
+	["vlf_potions:glowing"] = "vlf_potions:darkness", -- TODO remove after adding a direct recipe?
 }
-
+-- API
+function vlf_potions.register_inversion_recipe(input, output)
+	if inversion_table[input] then
+		error("Attempt to register the same input twice!")
+	end
+	if type(input) ~= "string" then
+		error("Invalid argument! input must be a string")
+	end
+	if type(output) ~= "string" then
+		error("Invalid argument! output must be a string")
+	end
+	inversion_table[input] = output
+end
+local function fill_inversion_table() -- autofills with splash and lingering inversion recipes
+	local filling_table = { }
+	for input, output in pairs(inversion_table) do
+		if potions[input].has_splash and potions[output].has_splash then
+			filling_table[input.."_splash"] = output .. "_splash"
+			if potions[input].has_lingering and potions[output].has_lingering then
+				filling_table[input.."_lingering"] = output .. "_lingering"
+			end
+		end
+	end
+	table.update(inversion_table, filling_table)
+	vlf_potions.register_table_modifier("vlf_potions:fermented_spider_eye", inversion_table)
+end
+minetest.register_on_mods_loaded(fill_inversion_table)
 
 local splash_table = {}
 local lingering_table = {}
+for potion, def in pairs(potions) do
+	if def.has_splash then
+		splash_table[potion] = potion.."_splash"
+		if def.has_lingering then
+			lingering_table[potion.."_splash"] = potion.."_lingering"
+		end
+	end
+end
+vlf_potions.register_table_modifier("vlf_mobitems:gunpowder", splash_table)
+vlf_potions.register_table_modifier("vlf_potions:dragon_breath", lingering_table)
 
-for i, potion in ipairs(potions) do
-	splash_table["vlf_potions:"..potion] = "vlf_potions:"..potion.."_splash"
-	lingering_table["vlf_potions:"..potion.."_splash"] = "vlf_potions:"..potion.."_lingering"
+
+local meta_mod_table = { }
+
+-- API
+-- registers a brewing recipe altering the potion using a function
+-- this is supposed to be a recipe that changes metadata only
+function vlf_potions.register_meta_modifier(ingr, mod_func)
+	if meta_mod_table[ingr] then
+		error("Attempt to register the same ingredient twice!")
+	end
+	if type(ingr) ~= "string" then
+		error("Invalid argument! ingr must be a string")
+	end
+	if type(mod_func) ~= "function" then
+		error("Invalid argument! mod_func must be a function")
+	end
+	meta_mod_table[ingr] = mod_func
 end
 
+local function extend_dur(potionstack)
+	local def = potions[potionstack:get_name()]
+	if not def then return false end
+	if not def.has_plus then return false end -- bail out if can't be extended
+	local potionstack = ItemStack(potionstack)
+	local meta = potionstack:get_meta()
+	local potent = meta:get_int("vlf_potions:potion_potent")
+	local plus = meta:get_int("vlf_potions:potion_plus")
+	if plus == 0 then
+		if potent ~= 0 then
+			meta:set_int("vlf_potions:potion_potent", 0)
+		end
+		meta:set_int("vlf_potions:potion_plus", def._default_extend_level)
+		tt.reload_itemstack_description(potionstack)
+		return potionstack
+	end
+	return false
+end
+vlf_potions.register_meta_modifier("mesecons:wire_00000000_off", extend_dur)
 
-local mod_table = {
-	["mesecons:wire_00000000_off"] = extension_table,
-	["vlf_potions:fermented_spider_eye"] = inversion_table,
-	["vlf_nether:glowstone_dust"] = enhancement_table,
-	["vlf_mobitems:gunpowder"] = splash_table,
-	["vlf_potions:dragon_breath"] = lingering_table,
-}
+local function enhance_pow(potionstack)
+	local def = potions[potionstack:get_name()]
+	if not def then return false end
+	if not def.has_potent then return false end -- bail out if has no potent variant
+	local potionstack = ItemStack(potionstack)
+	local meta = potionstack:get_meta()
+	local potent = meta:get_int("vlf_potions:potion_potent")
+	local plus = meta:get_int("vlf_potions:potion_plus")
+	if potent == 0 then
+		if plus ~= 0 then
+			meta:set_int("vlf_potions:potion_plus", 0)
+		end
+		meta:set_int("vlf_potions:potion_potent", def._default_potent_level-1)
+		tt.reload_itemstack_description(potionstack)
+		return potionstack
+	end
+	return false
+end
+vlf_potions.register_meta_modifier("vlf_nether:glowstone_dust", enhance_pow)
 
--- Compare two ingredients for compatable alchemy
+
+-- Find an alchemical recipe for given ingredient and potion
+-- returns outcome
 function vlf_potions.get_alchemy(ingr, pot)
-	if output_table[pot] then
+	local brew_selector = output_table[pot:get_name()]
+	if brew_selector and brew_selector[ingr] then
+		local meta = pot:get_meta():to_table()
+		local alchemy = ItemStack(brew_selector[ingr])
+		local metaref = alchemy:get_meta()
+		metaref:from_table(meta)
+		tt.reload_itemstack_description(alchemy)
+		return alchemy
+	end
 
-		local brew_table = output_table[pot]
-
-		if brew_table[ingr] then
-			return brew_table[ingr]
+	brew_selector = mod_table[ingr]
+	if brew_selector then
+		local brew = brew_selector[pot:get_name()]
+		if brew then
+			local meta = pot:get_meta():to_table()
+			local alchemy = ItemStack(brew)
+			local metaref = alchemy:get_meta()
+			metaref:from_table(meta)
+			tt.reload_itemstack_description(alchemy)
+			return alchemy
 		end
 	end
 
-	if mod_table[ingr] then
-
-		local brew_table = mod_table[ingr]
-
-		if brew_table[pot] then
-			return brew_table[pot]
-		end
-
+	if meta_mod_table[ingr] then
+		local brew_func = meta_mod_table[ingr]
+		if brew_func then return brew_func(pot) end
 	end
 
 	return false
 end
-
-vlf_mobs.effect_functions["poison"] = vlf_potions.poison_func
-vlf_mobs.effect_functions["regeneration"] = vlf_potions.regeneration_func
-vlf_mobs.effect_functions["invisibility"] = vlf_potions.invisiblility_func
-vlf_mobs.effect_functions["fire_resistance"] = vlf_potions.fire_resistance_func
-vlf_mobs.effect_functions["night_vision"] = vlf_potions.night_vision_func
-vlf_mobs.effect_functions["water_breathing"] = vlf_potions.water_breathing_func
-vlf_mobs.effect_functions["leaping"] = vlf_potions.leaping_func
-vlf_mobs.effect_functions["swiftness"] = vlf_potions.swiftness_func
-vlf_mobs.effect_functions["heal"] = vlf_potions.healing_func
-vlf_mobs.effect_functions["bad_omen"] = vlf_potions.bad_omen_func
-vlf_mobs.effect_functions["withering"] = vlf_potions.withering_func
 
 -- give withering to players in a wither rose
 local etime = 0
@@ -486,10 +646,6 @@ minetest.register_globalstep(function(dtime)
 end)
 
 vlf_wip.register_wip_item("vlf_potions:night_vision")
-vlf_wip.register_wip_item("vlf_potions:night_vision_plus")
 vlf_wip.register_wip_item("vlf_potions:night_vision_splash")
-vlf_wip.register_wip_item("vlf_potions:night_vision_plus_splash")
 vlf_wip.register_wip_item("vlf_potions:night_vision_lingering")
-vlf_wip.register_wip_item("vlf_potions:night_vision_plus_lingering")
 vlf_wip.register_wip_item("vlf_potions:night_vision_arrow")
-vlf_wip.register_wip_item("vlf_potions:night_vision_plus_arrow")

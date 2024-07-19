@@ -20,13 +20,15 @@ function vlf_potions.register_splash(name, descr, color, def)
 			longdesc = longdesc .. "\n" .. def.longdesc
 		end
 	end
+	local groups = {brewitem=1, bottle=1, splash_potion=1, _vlf_potion=1}
+	if def.nocreative then groups.not_in_creative_inventory = 1 end
 	minetest.register_craftitem(id, {
 		description = descr,
 		_tt_help = def.tt,
 		_doc_items_longdesc = longdesc,
 		_doc_items_usagehelp = S("Use the “Punch” key to throw it."),
 		inventory_image = splash_image(color),
-		groups = {brewitem=1, not_in_creative_inventory=0, potion = 1},
+		groups = groups,
 		on_use = function(item, placer, pointed_thing)
 			local velocity = 10
 			local dir = placer:get_look_dir();
@@ -115,13 +117,46 @@ function vlf_potions.register_splash(name, descr, color, def)
 
 					local entity = obj:get_luaentity()
 					if obj:is_player() or entity and entity.is_mob then
-
+						local potency = 1
+						local plus = 1
 						local pos2 = obj:get_pos()
 						local rad = math.floor(math.sqrt((pos2.x-pos.x)^2 + (pos2.y-pos.y)^2 + (pos2.z-pos.z)^2))
-						if rad > 0 then
-							def.potion_fun(obj, redux_map[rad])
-						else
-							def.potion_fun(obj, 1)
+						if def._effect_list then
+							local ef_level
+							local dur
+							for name, details in pairs(def._effect_list) do
+								if details.uses_level then
+									ef_level = details.level + details.level_scaling * (potency)
+								else
+									ef_level = details.level
+								end
+								if details.dur_variable then
+									dur = details.dur * math.pow(vlf_potions.PLUS_FACTOR, plus)
+									if potency>0 and details.uses_level then
+										dur = dur / math.pow(vlf_potions.POTENT_FACTOR, potency)
+									end
+									dur = dur * vlf_potions.SPLASH_FACTOR
+								else
+									dur = details.dur
+								end
+								if details.effect_stacks then
+									ef_level = ef_level + vlf_potions.get_effect_level(obj, name)
+								end
+								if rad > 0 then
+									vlf_potions.give_effect_by_level(name, obj, ef_level, redux_map[rad]*dur)
+								else
+									vlf_potions.give_effect_by_level(name, obj, ef_level, dur)
+								end
+							end
+						end
+
+						if def.custom_effect then
+							local power = (potency+1) * vlf_potions.SPLASH_FACTOR
+							if rad > 0 then
+								def.custom_effect(obj, redux_map[rad] * power, plus)
+							else
+								def.custom_effect(obj, power, plus)
+							end
 						end
 					end
 				end

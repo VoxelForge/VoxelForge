@@ -144,11 +144,11 @@ stray.textures = {
 		"vlf_bows_bow_0.png",
 	},
 }
-stray.arrow = "vlf_potions:slowness_arrow_entity"
+stray.arrow = "vlf_potions:frost_arrow_entity"
 -- TODO: different sound (w/ echo)
 -- TODO: stray's arrow inflicts slowness status
 table.insert(stray.drops, {
-	name = "vlf_potions:slowness_arrow",
+	name = "vlf_potions:frost_arrow",
 	chance = 2,
 	min = 1,
 	max = 1,

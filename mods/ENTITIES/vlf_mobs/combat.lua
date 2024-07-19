@@ -468,7 +468,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 			return
 		end
 		vlf_potions.update_haste_and_fatigue(hitter)
-		if minetest.if_creative_enabled(hitter:get_player_name()) then
+		if minetest.is_creative_enabled(hitter:get_player_name()) then
 			-- Instantly kill mob after a slight delay.
 			-- Without this delay the node behind would be dug by the punch as well.
 			minetest.after(0.15, function(self)

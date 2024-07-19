@@ -1,4 +1,4 @@
-# textdomain: vlf_potions
+# textdomain: mcl_potions
 <effect> <duration> [<factor>]=<エフェクト> <デュレーション> [<ファクター>]
 Add a status effect to yourself. Arguments: <effect>: name of status effect, e.g. poison. <duration>: duration in seconds. <factor>: effect strength multiplier (1 @= 100%)=自分自身にステータス効果を付加する。引数は以下の通り。<エフェクト>: ステータス効果の名前。 <デュレーション>：継続時間(秒)。 <ファクター>: 効果の強さの倍率 (1 @= 100%)。
 Missing effect parameter!=エフェクト のパラメータがありません！

@@ -1,4 +1,4 @@
-# textdomain: vlf_potions
+# textdomain: mcl_potions
 <effect> <duration> [<factor>]=<Effekt> <Dauer> [<Faktor>]
 Add a status effect to yourself. Arguments: <effect>: name of status effect, e.g. poison. <duration>: duration in seconds. <factor>: effect strength multiplier (1 @= 100%)=Ihnen einen Statuseffekt geben. Parameter: <Effekt>: Name des Statuseffekts, z.B. „poison“. <Dauer>: Dauer in Sekunden. <Faktor>: Effektstärkenmultiplikator (1 @= 100%)
 Missing effect parameter!=Fehlender Effektparameter!
@@ -44,7 +44,7 @@ Arrow of @1@2=Pfeil der @1@2
 @1 + Potion=Trank der @1 +
 Splash @1 + Potion=Wurftrank der @1 +
 Lingering @1 + Potion=Verweiltrank der @1 +
-Arrow of @1 +=Pfeil der @1 +
+Arrow of @1 +=Pfeil der @1
 Awkward Potion=Seltsamer Trank
 Awkward Splash Potion=Seltsamer Wurftrank
 Awkward Lingering Potion=Seltsamer Verweiltrank
@@ -75,8 +75,8 @@ Slowness=Langsamkeit
 Decreases walking speed.=Verringert Gehgeschwindigkeit.
 Leaping=Sprungkraft
 Increases jump strength.=Erhöht Sprungstärke.
-Withering=Verwelken
-Applies the withering effect which deals damage at a regular interval and can kill.=Wendet den Verwelkungseffekt an, der in regelmäßigen Abständen Schaden verursacht und töten kann.
+Withering=
+Applies the withering effect which deals damage at a regular interval and can kill.=
 Poison=Vergiftung
 Applies the poison effect which deals damage at a regular interval.=Gibt den Gifteffekt, der Schaden in regelmäßigen Abständen anrichtet.
 Regeneration=Regenerierung

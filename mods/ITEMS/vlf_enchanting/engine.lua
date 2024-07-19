@@ -61,7 +61,7 @@ function vlf_enchanting.get_enchantment_description(enchantment, level)
 	local enchantment_def = vlf_enchanting.enchantments[enchantment]
 	if enchantment_def then
 		return enchantment_def.name ..
-			(enchantment_def.max_level == 1 and "" or " " .. vlf_enchanting.roman_numerals.toRoman(level))
+			(enchantment_def.max_level == 1 and "" or " " .. vlf_util.to_roman(level))
 	end
 	return S("Unknown Enchantment")..": "..tostring(enchantment)
 end

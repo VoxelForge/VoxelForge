@@ -55,23 +55,56 @@ minetest.register_globalstep(function(dtime)
 			end
 			linger_particles(pos, d, texture, vals.color)
 
-			-- Extinguish fire if water bottle
-			if vals.is_water then
-				if vlf_potions._extinguish_nearby_fire(pos, d) then
-					vals.timer = vals.timer - 3.25
-				end
+-- 			-- Extinguish fire if water bottle
+-- 			if vals.is_water then
+-- 				if vlf_potions._extinguish_nearby_fire(pos, d) then
+-- 					vals.timer = vals.timer - 3.25
+-- 				end
+-- 			end
+
+			if vals.def.while_lingering and vals.def.while_lingering(pos, d, vals.potency+1) then
+				vals.timer = vals.timer - 3.25
 			end
 
 			-- Affect players and mobs
 			for _, obj in pairs(minetest.get_objects_inside_radius(pos, d)) do
 
 				local entity = obj:get_luaentity()
-				if obj:is_player() or entity.is_mob then
+				if obj:is_player() or entity and entity.is_mob then
+					local applied = false
+					if vals.def._effect_list then
+						local ef_level
+						local dur
+						for name, details in pairs(vals.def._effect_list) do
+							if details.uses_level then
+								ef_level = details.level + details.level_scaling * (vals.potency)
+							else
+								ef_level = details.level
+							end
+							if details.dur_variable then
+								dur = details.dur * math.pow(vlf_potions.PLUS_FACTOR, vals.plus)
+								if vals.potency>0 and details.uses_level then
+									dur = dur / math.pow(vlf_potions.POTENT_FACTOR, vals.potency)
+								end
+								dur = dur * vlf_potions.LINGERING_FACTOR
+							else
+								dur = details.dur
+							end
+							if details.effect_stacks then
+								ef_level = ef_level + vlf_potions.get_effect_level(obj, name)
+							end
+							if vlf_potions.give_effect_by_level(name, obj, ef_level, dur) then
+								applied = true
+							end
+						end
+					end
 
-					vals.def.potion_fun(obj)
-					-- TODO: Apply timer penalty only if the potion effect was acutally applied
-					vals.timer = vals.timer - 3.25
+					if vals.def.custom_effect
+						and vals.def.custom_effect(obj, (vals.potency+1) * vlf_potions.LINGERING_FACTOR, vals.plus) then
+							applied = true
+					end
 
+					if applied then vals.timer = vals.timer - 3.25 end
 				end
 			end
 
@@ -96,13 +129,15 @@ function vlf_potions.register_lingering(name, descr, color, def)
 			longdesc = longdesc .. "\n" .. def.longdesc
 		end
 	end
+	local groups = {brewitem=1, bottle=1, ling_potion=1, _vlf_potion=1}
+	if def.nocreative then groups.not_in_creative_inventory = 1 end
 	minetest.register_craftitem(id, {
 		description = descr,
 		_tt_help = def.tt,
 		_doc_items_longdesc = longdesc,
 		_doc_items_usagehelp = S("Use the “Punch” key to throw it."),
 		inventory_image = lingering_image(color),
-		groups = {brewitem=1, not_in_creative_inventory=0, potion = 1},
+		groups = groups,
 		on_use = function(item, placer, pointed_thing)
 			local velocity = 10
 			local dir = placer:get_look_dir();

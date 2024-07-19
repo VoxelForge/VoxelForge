@@ -1,4 +1,4 @@
-# textdomain: vlf_potions
+# textdomain: mcl_potions
 <effect> <duration> [<factor>]=
 Add a status effect to yourself. Arguments: <effect>: name of status effect, e.g. poison. <duration>: duration in seconds. <factor>: effect strength multiplier (1 @= 100%)=
 Missing effect parameter!=
