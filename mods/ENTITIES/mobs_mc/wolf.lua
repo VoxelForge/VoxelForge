@@ -45,7 +45,7 @@ local wolf = {
 	view_range = 16,
 	walk_chance = default_walk_chance,
 	walk_velocity = 2,
-	run_velocity = 3,
+	run_velocity = 2.5,
 	damage = 4,
 	reach = 2,
 	attack_type = "dogfight",
@@ -85,11 +85,11 @@ local wolf = {
 	end,
 	animation = {
 		stand_start = 0, stand_end = 0,
-		walk_start = 0, walk_end = 40, walk_speed = 50,
+		walk_start = 0, walk_end = 40, walk_speed = 60,
 		run_start = 0, run_end = 40, run_speed = 100,
 		sit_start = 45, sit_end = 45,
 	},
-	child_animations = {
+	_child_animations = {
 		stand_start = 46, stand_end = 46,
 		walk_start = 46, walk_end = 86, walk_speed = 75,
 		run_start = 46, run_end = 86, run_speed = 150,
@@ -144,6 +144,7 @@ end
 
 -- Tamed wolf (aka “dog”)
 local dog = table.copy(wolf)
+dog.description = S("Dog")
 dog.can_despawn = false
 dog.passive = true
 dog.hp_min = 20
@@ -172,10 +173,6 @@ dog.on_rightclick = function(self, clicker)
 	local item = clicker:get_wielded_item()
 
 	if self:feed_tame(clicker, 1, true, false) then
-		return
-	elseif vlf_mobs.protect(self, clicker) then
-		return
-	elseif item:get_name() ~= "" and vlf_mobs.capture_mob(self, clicker, 0, 2, 80, false, nil) then
 		return
 	elseif minetest.get_item_group(item:get_name(), "dye") == 1 then
 		-- Dye (if possible)

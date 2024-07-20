@@ -134,13 +134,14 @@ cave_spider.on_spawn = function(self)
 		minetest.add_entity(self.object:get_pos(), "mobs_mc:spider_eyes"):set_attach(self.object, "body.head", vector.new(0,-0.98,2), vector.new(90,180,180))
 	end
 end
-cave_spider.walk_velocity = 1.3
-cave_spider.run_velocity = 3.2
+cave_spider.walk_velocity = 1
+cave_spider.run_velocity = 1.3
+cave_spider.animation.walk_speed = 40
 cave_spider.sounds = table.copy(spider.sounds)
 cave_spider.sounds.base_pitch = 1.25
 cave_spider.dealt_effect = {
 	name = "poison",
-	level = 2,
+	level = 2.5,
 	dur = 7,
 }
 vlf_mobs.register_mob("mobs_mc:cave_spider", cave_spider)

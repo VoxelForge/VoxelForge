@@ -4,12 +4,12 @@ vlf_dye.colors = vlf_dyes.colors
 vlf_dye.unicolor_to_dye = vlf_dyes.unicolor_to_dye
 vlf_dye.add_bone_meal_particle = vlf_bone_meal.add_bone_meal_particle
 
-vlf_dye.mcldyes_translate = {}
+vlf_dye.vlfdyes_translate = {}
 for k, v in pairs(vlf_dyes.colors) do
-	vlf_dye.mcldyes_translate["vlf_dye:"..(v.mcl or k)] = "vlf_dyes:"..k
+	vlf_dye.vlfdyes_translate["vlf_dye:"..(v.vlf or k)] = "vlf_dyes:"..k
 end
 
--- Override of minetest.register_craft rewrites crafing recipes that use mcl item names to use the vlfa eqivalents.
+-- Override of minetest.register_craft rewrites crafing recipes that use vlf item names to use the vlfa eqivalents.
 -- It's necessary to prevent turning old lapis, bone meal, ink sacs and cocoanuts into dye as
 -- before 0.81 the "vlf_dye:blue" item was the same as lapis.
 -- This essentially means in vlfa "vlf_dye:blue" is still lapis (via alias) but all recipes
@@ -22,13 +22,13 @@ function minetest.register_craft(recipe)
 		for k,v in pairs(recipe.recipe) do
 			if type(v) == "table" then
 				for l,w in pairs(v) do
-					if vlf_dye.mcldyes_translate[w] then
-						recipe.recipe[k][l] = vlf_dye.mcldyes_translate[w]
+					if vlf_dye.vlfdyes_translate[w] then
+						recipe.recipe[k][l] = vlf_dye.vlfdyes_translate[w]
 					end
 				end
 			elseif type(v) == "string"then
-				if vlf_dye.mcldyes_translate[v] then
-					recipe.recipe[k] = vlf_dye.mcldyes_translate[v]
+				if vlf_dye.vlfdyes_translate[v] then
+					recipe.recipe[k] = vlf_dye.vlfdyes_translate[v]
 				end
 			end
 		end

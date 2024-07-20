@@ -32,12 +32,9 @@ vlf_mobs.register_mob("mobs_mc:dolphin", {
 	sounds = {
 	},
 	animation = {
-		stand_start = 20,
-		stand_end = 20,
-		walk_start = 0,
-		walk_end = 15,
-		run_start = 30,
-		run_end = 45,
+		stand_start = 0, stand_end = 15, stand_speed = 20,
+		walk_start = 0, walk_end = 15, walk_speed = 60,
+		run_start = 0, run_end = 15, run_speed = 60,
 		},
 		drops = {
 			{name = "vlf_fishing:fish_raw",

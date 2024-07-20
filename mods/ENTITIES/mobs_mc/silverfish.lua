@@ -52,10 +52,9 @@ vlf_mobs.register_mob("mobs_mc:silverfish", {
 	},
 	replace_rate = 2,
 	animation = {
-		speed_normal = 25,		speed_run = 50,
-		stand_start = 0,		stand_end = 20,
-		walk_start = 0,		walk_end = 20,
-		run_start = 0,		run_end = 20,
+		stand_start = 0, stand_end = 20, stand_speed = 15,
+		walk_start = 0, walk_end = 20, walk_speed = 30,
+		run_start = 0, run_end = 20, run_speed = 50,
 	},
 	view_range = 16,
 	attack_type = "dogfight",

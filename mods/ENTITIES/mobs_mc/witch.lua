@@ -37,7 +37,7 @@ vlf_mobs.register_mob("mobs_mc:witch", {
 	pathfinding = 1,
 	group_attack = true,
 	attack_type = "dogshoot",
-	arrow = "mobs_mc:entity_effect_arrow",
+	arrow = "mobs_mc:potion_arrow",
 	shoot_interval = 2.5,
 	shoot_offset = 1,
 	dogshoot_switch = 1,
@@ -78,7 +78,7 @@ vlf_mobs.register_mob("mobs_mc:witch", {
 	end,
 })
 
--- entity_effect projectile (EXPERIMENTAL)
+-- potion projectile (EXPERIMENTAL)
 vlf_mobs.register_arrow("mobs_mc:entity_effect_arrow", {
 	visual = "sprite",
 	visual_size = {x = 0.5, y = 0.5},

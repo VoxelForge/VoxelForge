@@ -38,8 +38,8 @@ vlf_mobs.register_mob("mobs_mc:evoker", {
 	} },
 	makes_footstep_sound = true,
 	damage = 6,
-	walk_velocity = 0.2,
-	run_velocity = 1.4,
+	walk_velocity = 1.2,
+	run_velocity = 1.5,
 	group_attack = true,
 	attack_type = "dogfight",
 	custom_attack_interval = 15,
@@ -82,8 +82,8 @@ vlf_mobs.register_mob("mobs_mc:evoker", {
 	-- TODO: sounds
 	animation = {
 		stand_start = 0, stand_end = 0,
-		walk_start = 0, walk_end = 40, walk_speed = 6,
-		run_start = 0, run_end = 40, run_speed = 24,
+		walk_start = 0, walk_end = 40, walk_speed = 50,
+		run_start = 0, run_end = 40, run_speed = 25,
 		shoot_start = 142, shoot_end = 152, -- Magic arm swinging
 	},
 	view_range = 16,

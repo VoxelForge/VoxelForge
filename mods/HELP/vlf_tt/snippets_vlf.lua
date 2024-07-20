@@ -118,7 +118,7 @@ end)
 tt.register_snippet(function(itemstring, _, itemstack)
 	if not itemstack then return end
 	local def = itemstack:get_definition()
-	if def.groups._vlf_entity_effect ~= 1 then return end
+	if def.groups._vlf_entity_effects ~= 1 then return end
 
 	local s = ""
 	local meta = itemstack:get_meta()

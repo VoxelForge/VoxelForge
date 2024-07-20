@@ -972,7 +972,7 @@ function mob_class:falling(pos)
 end
 
 function mob_class:check_water_flow()
-	-- Add water flowing for mobs from mcl_item_entity
+	-- Add water flowing for mobs from vlf_item_entity
 	local p, node, nn, def
 	p = self.object:get_pos()
 	node = minetest.get_node_or_nil(p)

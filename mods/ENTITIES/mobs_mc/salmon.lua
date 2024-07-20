@@ -31,12 +31,9 @@ local salmon = {
 	sounds = {
 	},
 	animation = {
-		stand_start = 1,
-		stand_end = 20,
-		walk_start = 1,
-		walk_end = 20,
-		run_start = 1,
-		run_end = 20,
+		stand_start = 1, stand_end = 20,
+		walk_start = 1, walk_end = 20,
+		run_start = 1, run_end = 20,
 	},
 	drops = {
 		{name = "vlf_fishing:salmon_raw",

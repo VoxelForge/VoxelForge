@@ -63,14 +63,14 @@ local ocelot = {
 	},
 	animation = {
 		stand_start = 0, stand_end = 0,
-		walk_start = 0, walk_end = 40, walk_speed = 40,
-		run_start = 0, run_end = 40, run_speed = 50,
+		walk_start = 0, walk_end = 40, walk_speed = 110,
+		run_start = 0, run_end = 40, run_speed = 110,
 		sit_start = 50, sit_end = 50,
 	},
-	child_animations = {
+	_child_animations = {
 		stand_start = 51, stand_end = 51,
-		walk_start = 51, walk_end = 91, walk_speed = 60,
-		run_start = 51, run_end = 91, run_speed = 75,
+		walk_start = 51, walk_end = 91, walk_speed = 160,
+		run_start = 51, run_end = 91, run_speed = 160,
 		sit_start = 101, sit_end = 101,
 	},
 	follow = follow,
@@ -134,9 +134,6 @@ table.update(cat,{
 	},
 	on_rightclick = function(self, clicker)
 		if self:feed_tame(clicker, 1, true, false) then return end
-		if vlf_mobs.capture_mob(self, clicker, 0, 60, 5, false, nil) then return end
-		if vlf_mobs.protect(self, clicker) then return end
-
 		if self.child then return end
 
 		-- Toggle sitting order

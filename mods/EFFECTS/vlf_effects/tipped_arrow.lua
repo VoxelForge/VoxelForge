@@ -5,7 +5,7 @@ local arrow_longdesc = arrow_def._doc_items_longdesc or ""
 local arrow_tt = arrow_def._tt_help or ""
 
 function vlf_entity_effects.register_arrow(name, desc, color, def)
-	local groups = {ammo=1, ammo_bow=1, brewitem=1, _vlf_entity_effect=1}
+	local groups = {ammo=1, ammo_bow=1, brewitem=1, _vlf_entity_effects=1}
 	if def.nocreative then groups.not_in_creative_inventory = 1 end
 	minetest.register_craftitem("vlf_entity_effects:"..name.."_arrow",table.merge(arrow_def, {
 		description = desc,
