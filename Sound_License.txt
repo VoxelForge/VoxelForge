@@ -15,4 +15,4 @@ Planet MineCraft and the downloaded zip file both have The above, CREATIVE END U
 Minetest Forum says it's CC-BY-SA 4.0
 and CurseForge says Apache License Version 2.0
 
-I will use the CC-BY-SA license.
+I will use the CC-BY-SA 4.0 license since Sn0wShepherd's own forum topic says that.
