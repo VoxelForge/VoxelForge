@@ -49,6 +49,7 @@ itsself.
 * _on_sword_place(itemstack,placer,pointed_thing)
 * _on_pickaxe_place(itemstack,placer,pointed_thing)
 * _on_shears_place(itemstack,placer,pointed_thing)
+* _on_hoe_place(itemstack,placer,pointed_thing)
 
 Use the `vlf_sounds` mod for the sounds.
 
