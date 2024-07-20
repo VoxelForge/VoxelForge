@@ -27,7 +27,10 @@ local cow_def = {
 	curiosity = 2,
 	head_yaw="z",
 	makes_footstep_sound = true,
-	walk_velocity = 1,
+	walk_velocity = 0.7,
+	run_velocity = 1.5,
+	follow_velocity = 1.5,
+	walk_chance = 15,
 	drops = {
 		{name = "vlf_mobitems:beef",
 		chance = 1,
@@ -50,21 +53,17 @@ local cow_def = {
 	},
 	animation = {
 		stand_start = 0, stand_end = 0,
-		walk_start = 0, walk_end = 40, walk_speed = 30,
+		walk_start = 0, walk_end = 40, walk_speed = 40,
 		run_start = 0, run_end = 40, run_speed = 40,
 	},
-	child_animations = {
+	_child_animations = {
 		stand_start = 41, stand_end = 41,
-		walk_start = 41, walk_end = 81, walk_speed = 45,
-		run_start = 41, run_end = 81, run_speed = 60,
+		walk_start = 41, walk_end = 81, walk_speed = 80,
+		run_start = 41, run_end = 81, run_speed = 80,
 	},
 	on_rightclick = function(self, clicker)
 		if self:feed_tame(clicker, 1, true, false) then return end
-		if vlf_mobs.protect(self, clicker) then return end
-
-		if self.child then
-			return
-		end
+		if self.child then return end
 
 		local item = clicker:get_wielded_item()
 		if item:get_name() == "vlf_buckets:bucket_empty" and clicker:get_inventory() then
@@ -81,9 +80,8 @@ local cow_def = {
 			end
 			return
 		end
-		vlf_mobs.capture_mob(self, clicker, 0, 5, 60, false, nil)
 	end,
-	follow = "vlf_farming:wheat_item",
+	follow = { "vlf_farming:wheat_item" },
 	view_range = 10,
 	fear_height = 4,
 }
@@ -99,11 +97,8 @@ vlf_mobs.register_mob("mobs_mc:mooshroom", table.merge(cow_def, {
 	textures = { {"mobs_mc_mooshroom.png", "mobs_mc_mushroom_red.png"}, {"mobs_mc_mooshroom_brown.png", "mobs_mc_mushroom_brown.png" } },
 	on_rightclick = function(self, clicker)
 		if self:feed_tame(clicker, 1, true, false) then return end
-		if vlf_mobs.protect(self, clicker) then return end
+		if self.child then return end
 
-		if self.child then
-			return
-		end
 		local item = clicker:get_wielded_item()
 		-- Use shears to get mushrooms and turn mooshroom into cow
 		if minetest.get_item_group(item:get_name(), "shears") > 0 then
@@ -148,7 +143,6 @@ vlf_mobs.register_mob("mobs_mc:mooshroom", table.merge(cow_def, {
 				minetest.add_item(pos, {name = "vlf_mushrooms:mushroom_stew"})
 			end
 		end
-		vlf_mobs.capture_mob(self, clicker, 0, 5, 60, false, nil)
 	end,
 
 	on_lightning_strike = function(self, pos, pos2, objects)

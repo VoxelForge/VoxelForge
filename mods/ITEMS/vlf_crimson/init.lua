@@ -2,7 +2,7 @@ local S = minetest.get_translator("vlf_crimson")
 local schempath = minetest.get_modpath("vlf_schematics")
 -- Warped and Crimson fungus
 -- by debiankaios
--- adapted for mcl by cora
+-- adapted for vlf by cora
 
 local nether_plants = {
 	["vlf_crimson:crimson_nylium"] = {

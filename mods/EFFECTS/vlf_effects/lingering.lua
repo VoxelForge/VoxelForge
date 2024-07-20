@@ -129,7 +129,7 @@ function vlf_entity_effects.register_lingering(name, descr, color, def)
 			longdesc = longdesc .. "\n" .. def.longdesc
 		end
 	end
-	local groups = {brewitem=1, bottle=1, ling_entity_effect=1, _vlf_entity_effect=1}
+	local groups = {brewitem=1, bottle=1, ling_entity_effect=1, _vlf_entity_effects=1}
 	if def.nocreative then groups.not_in_creative_inventory = 1 end
 	minetest.register_craftitem(id, {
 		description = descr,

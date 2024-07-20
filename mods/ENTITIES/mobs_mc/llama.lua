@@ -66,10 +66,10 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 		{"blank.png", "blank.png", "mobs_mc_llama.png"},
 	},
 	makes_footstep_sound = true,
-	runaway = false,
+	runaway = true,
 	walk_velocity = 1,
-	run_velocity = 4.4,
-	follow_velocity = 4.4,
+	run_velocity = 1.5,
+	follow_velocity = 1.5,
 	floats = 1,
 	drops = {
 		{name = "vlf_mobitems:leather",
@@ -87,7 +87,7 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 	},
 	animation = {
 		stand_start = 0, stand_end = 0,
-		walk_start = 0, walk_end = 40, walk_speed = 35,
+		walk_start = 0, walk_end = 40, walk_speed = 50,
 		run_start = 0, run_end = 40, run_speed = 50,
 	},
 	child_animations = {
@@ -111,7 +111,7 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 		end
 
 		if self.driver then
-			vlf_mobs.drive(self, "walk", "stand", false, dtime)
+			self:drive("walk", "stand", false, dtime)
 			return false
 		end
 
@@ -131,18 +131,14 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 		end
 
 		local item = clicker:get_wielded_item()
-		if item:get_name() == "vlf_farming:hay_block" and self:feed_tame(clicker, 1, true, false) then
+		if self:break_in(clicker) then
 			return
 		elseif item:get_name() == "vlf_chests:chest" and self:set_chest(item, clicker) then
 			return
 		elseif self._has_chest and clicker:get_player_control().sneak then
 			vlf_entity_invs.show_inv_form(self,clicker," - Strength "..math.floor(self._inv_size / 3))
 			return
-		elseif self:feed_tame(clicker, 1, false, true) then
-			return
 		end
-
-		if vlf_mobs.protect(self, clicker) then return end
 
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
 			if minetest.get_item_group(item:get_name(), "carpet") == 1 and self:set_carpet(item, clicker) then
@@ -152,7 +148,7 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 				vlf_mobs.detach(clicker, {x = 1, y = 0, z = 1})
 			elseif not self.driver then
 				self.object:set_properties({stepheight = 1.1})
-				vlf_mobs.attach(self, clicker)
+				self:attach(clicker)
 			end
 		end
 	end,

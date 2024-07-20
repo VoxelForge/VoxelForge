@@ -31,6 +31,10 @@ vlf_mobs.register_mob("mobs_mc:endermite", {
 	},
 	walk_velocity = 1,
 	run_velocity = 2,
+	animation = {
+		stand_start = 0, stand_end = 0,
+		walk_start = 0, walk_end = 20, walk_speed = 55
+	},
 	jump = true,
 	fear_height = 4,
 	view_range = 16,

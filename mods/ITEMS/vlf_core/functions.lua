@@ -631,7 +631,7 @@ end
 
 -- A snow cover node is a node which turns a snowed dirtlike --
 -- node into its snowed form while it is placed above.
--- mcl's snow cover nodes are Top Snow (vlf_core:snow) and Snow (vlf_core:snowblock).
+-- vlf's snow cover nodes are Top Snow (vlf_core:snow) and Snow (vlf_core:snowblock).
 
 -- Always add the following functions to snow cover nodes:
 

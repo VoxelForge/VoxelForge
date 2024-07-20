@@ -400,7 +400,7 @@ return {
 			{
 			--{ { "FIXME: scute", 4, 4 }, E() },
 			{ E(8, 10), { "vlf_mobitems:saddle", 1, 1 } },
-			{ { "vlf_core:emerald", 6, 6 }, { "vlf_mobitems:leather_horse_armor", 1, 1 } },
+			--FIXME: { { "vlf_core:emerald", 6, 6 }, { "vlf_mobitems:leather_horse_armor", 1, 1 } },
 			},
 
 			{

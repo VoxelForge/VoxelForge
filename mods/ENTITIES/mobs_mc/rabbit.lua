@@ -41,7 +41,7 @@ local rabbit = {
 	},
 	makes_footstep_sound = false,
 	walk_velocity = 1,
-	run_velocity = 3.7,
+	run_velocity = 2, -- was 3.7, we can make it faster if we have run with jumping animation
 	avoid_from = {"mobs_mc:wolf"},
 	follow_velocity = 1.1,
 	floats = 1,
@@ -55,10 +55,10 @@ local rabbit = {
 	fear_height = 4,
 	animation = {
 		stand_start = 0, stand_end = 0,
-		walk_start = 0, walk_end = 20, walk_speed = 20,
-		run_start = 0, run_end = 20, run_speed = 30,
+		walk_start = 0, walk_end = 20, walk_speed = 60,
+		run_start = 0, run_end = 20, run_speed = 5,
 	},
-	child_animations = {
+	_child_animations = {
 		stand_start = 21, stand_end = 21,
 		walk_start = 21, walk_end = 41, walk_speed = 30,
 		run_start = 21, run_end = 41, run_speed = 45,
@@ -83,10 +83,7 @@ local rabbit = {
 		{"vlf_farming:carrot_1", "air", 0},
 	},
 	on_rightclick = function(self, clicker)
-		-- Feed, tame protect or capture
 		if self:feed_tame(clicker, 1, true, false) then return end
-		if vlf_mobs.protect(self, clicker) then return end
-		if vlf_mobs.capture_mob(self, clicker, 0, 50, 80, false, nil) then return end
 	end,
 	do_custom = function(self)
 		-- Easter egg: Change texture if rabbit is named “Toast”

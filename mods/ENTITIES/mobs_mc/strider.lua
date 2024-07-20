@@ -107,7 +107,7 @@ local strider = {
 			local pos = self.object:get_pos()
 			local v = self.object:get_velocity()
 			self.object:set_velocity(vector.new(v.x,0,v.z))
-			vlf_mobs.drive(self, "walk", "stand", false, dtime)
+			self:drive("walk", "stand", false, dtime)
 			local l = minetest.find_node_near(pos,2,{"group:lava"})
 			if l then self.object:set_pos(vector.new(pos.x,l.y+0.5,pos.z)) end
 			return false -- skip rest of mob functions
@@ -177,9 +177,7 @@ local strider = {
 
 		elseif not self.driver and self.saddle == "yes" and wielditem:get_name() == "vlf_mobitems:warped_fungus_on_a_stick" then
 			-- Ride pig if it has a saddle and player uses a carrot on a stick
-
-			vlf_mobs.attach(self, clicker)
-
+			self:attach(clicker)
 			if not minetest.is_creative_enabled(clicker:get_player_name()) then
 
 				local inv = self.driver:get_inventory()

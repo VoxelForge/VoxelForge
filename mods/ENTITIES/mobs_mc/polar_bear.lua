@@ -64,10 +64,9 @@ vlf_mobs.register_mob("mobs_mc:polar_bear", {
 		distance = 16,
 	},
 	animation = {
-		speed_normal = 25,		speed_run = 50,
-		stand_start = 0,		stand_end = 0,
-		walk_start = 0,		walk_end = 40,
-		run_start = 0,		run_end = 40,
+		stand_start = 0, stand_end = 0,
+		walk_start = 0, walk_end = 40, walk_speed = 40,
+		run_start = 0, run_end = 40, run_speed = 40,
 	},
 
 	view_range = 16,

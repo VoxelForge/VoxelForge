@@ -1,11 +1,6 @@
 local S = minetest.get_translator("mobs_mc")
 local WOOL_REPLACE_RATE = 80
 local gotten_texture = { "blank.png", "mobs_mc_sheep.png" }
-local rainbow_colors = {}
-
-for k, v in pairs(vlf_dyes.colors) do
-	table.insert(rainbow_colors, "unicolor_"..v.unicolor)
-end
 
 local function unicolor_to_wool(unicolor_group)
 	local d = vlf_dyes.unicolor_to_dye(unicolor_group)
@@ -67,7 +62,9 @@ vlf_mobs.register_mob("mobs_mc:sheep", {
 	gotten_texture = gotten_texture,
 	color = "unicolor_white",
 	makes_footstep_sound = true,
-	walk_velocity = 1,
+	walk_velocity = 0.9,
+	run_velocity = 1.5,
+	follow_velocity = 1.5,
 	runaway = true,
 	runaway_from = {"mobs_mc:wolf"},
 	drops = get_sheep_drops(),
@@ -81,14 +78,14 @@ vlf_mobs.register_mob("mobs_mc:sheep", {
 	},
 	animation = {
 		stand_start = 0, stand_end = 0,
-		walk_start = 0, walk_end = 40, walk_speed = 30,
+		walk_start = 0, walk_end = 40, walk_speed = 40,
 		run_start = 0, run_end = 40, run_speed = 40,
 		eat_start = 40, eat_end = 80, eat_loop = false,
 	},
-	child_animations = {
+	_child_animations = {
 		stand_start = 81, stand_end = 81,
-		walk_start = 81, walk_end = 121, walk_speed = 45,
-		run_start = 81, run_end = 121, run_speed = 60,
+		walk_start = 81, walk_end = 121, walk_speed = 80,
+		run_start = 81, run_end = 121, run_speed = 80,
 		eat_start = 121, eat_end = 161, eat_loop = false,
 	},
 	follow = { "vlf_farming:wheat_item" },
@@ -145,39 +142,10 @@ vlf_mobs.register_mob("mobs_mc:sheep", {
 			self.drops = get_sheep_drops(self.color)
 			self.initial_color_set = true
 		end
-
-		local is_kay27 = self.object:get_properties().nametag == "kay27"
-
-		if self.color_change_timer then
-			local old_color = self.color
-			if is_kay27 then
-				self.color_change_timer = self.color_change_timer - dtime
-				if self.color_change_timer < 0 then
-					self.color_change_timer = 0.5
-					self.color_index = (self.color_index + 1) % #rainbow_colors
-					self.color = rainbow_colors[self.color_index + 1]
-					table.shuffle(rainbow_colors)
-				end
-			else
-				self.color_change_timer = nil
-				self.color_index = nil
-				self.color = self.initial_color
-			end
-
-			if old_color ~= self.color then
-				self.base_texture = sheep_texture(self.color)
-				self.object:set_properties({textures = self.base_texture})
-			end
-		elseif is_kay27 then
-			self.initial_color = self.color
-			self.color_change_timer = 0
-			self.color_index = -1
-		end
 	end,
 
 	on_rightclick = function(self, clicker)
 		if self:feed_tame(clicker, 1, true, false) then return end
-		if vlf_mobs.protect(self, clicker) then return end
 
 		local item = clicker:get_wielded_item()
 		-- Dye sheep
