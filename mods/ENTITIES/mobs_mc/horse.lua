@@ -8,14 +8,18 @@ local base_drop = {
 	looting = "common",
 }
 
-local function horse_extra_texture(horse)
+local function horse_extra_texture(horse, cstring)
 	local base = horse._naked_texture or horse.base_texture[2]
 	local saddle = horse._saddle
 	local chest  = horse._chest
 	local armor = horse._horse_armor
 	local textures = {}
 	if armor and minetest.get_item_group(armor, "horse_armor") > 0 then
-		textures[2] = base .. "^" .. minetest.registered_items[armor]._horse_overlay_image
+		if cstring then
+			textures[2] = base .. "^(" .. minetest.registered_items[armor]._horse_overlay_image:gsub(".png$", "_desat.png").."^[multiply:"..cstring..")"
+		else
+			textures[2] = base .. "^" .. minetest.registered_items[armor]._horse_overlay_image
+		end
 	else
 		textures[2] = base
 	end
@@ -84,16 +88,13 @@ local horse = {
 	mesh = "mobs_mc_horse.b3d",
 	visual_size = {x=3.0, y=3.0},
 	collisionbox = {-0.69825, -0.01, -0.69825, 0.69825, 1.59, 0.69825},
+	runaway = true,
+	run_velocity = 2,
+	follow_velocity = 1.5,
 	animation = {
-		stand_speed = 25,
-		stand_start = 0,
-		stand_end = 0,
-		walk_speed = 25,
-		walk_start = 0,
-		walk_end = 40,
-		run_speed = 60,
-		run_start = 0,
-		run_end = 40,
+		stand_start = 0, stand_end = 0, stand_speed = 25,
+		walk_start = 0, walk_end = 40, walk_speed = 25,
+		run_start = 0, run_end = 40, run_speed = 50,
 	},
 	textures = horse_textures,
 	sounds = {
@@ -116,6 +117,13 @@ local horse = {
 		"vlf_core:apple_gold",
 		"vlf_farming:carrot_item_gold",
 	},
+	_temper_increase = {
+		["vlf_core:sugar"] = 3,
+		["vlf_farming:wheat_item"] = 3,
+		["vlf_core:apple"] = 3,
+	    ["vlf_farming:carrot_item_gold"] = 5,
+		["vlf_core:apple_gold"] = 10
+	},
 	passive = true,
 	hp_min = 15,
 	hp_max = 30,
@@ -129,13 +137,23 @@ local horse = {
 	on_spawn = function(self)
 		local tex = horse_extra_texture(self)
 		self.object:set_properties({textures = tex})
+
+		if not self._runaway_velocity then
+			self._runaway_velocity = self.run_velocity
+		end
 	end,
 	do_custom = function(self, dtime)
 
 		if not self._horse_speed then
 			self._horse_speed = math.random(486, 1457)/100
-		elseif self.run_velocity ~= self._horse_speed then
-			self.run_velocity = self._horse_speed
+		end
+
+		if self.driver then
+			if self.run_velocity ~= self._horse_speed then
+				self.run_velocity = self._horse_speed
+			end
+		else
+			self.run_velocity = self._runaway_velocity
 		end
 
 		if not self.v2 then
@@ -176,7 +194,7 @@ local horse = {
 		end
 
 		if self.driver and self._saddle then
-			vlf_mobs.drive(self, "walk", "stand", false, dtime)
+			self:drive("walk", "stand", false, dtime)
 			return false
 		end
 		return true
@@ -218,36 +236,7 @@ local horse = {
 			end
 		end
 
-		self.temper = self.temper or (math.random(1,100))
-		if not self.tamed then
-			local temper_increase = 0
-			if (iname == "vlf_core:sugar") then
-				temper_increase = 3
-			elseif (iname == "vlf_farming:wheat_item") then
-				temper_increase = 3
-			elseif (iname == "vlf_core:apple") then
-				temper_increase = 3
-			elseif (iname == "vlf_farming:carrot_item_gold") then
-				temper_increase = 5
-			elseif (iname == "vlf_core:apple_gold") then
-				temper_increase = 10
-			elseif not self.driver then
-				self.object:set_properties({stepheight = 1.1})
-				vlf_mobs.attach(self, clicker)
-				self.buck_off_time = 40 -- TODO how long does it take in minecraft?
-				if self.temper > 100 then
-					self.tamed = true -- NOTE taming can only be finished by riding the horse
-					if not self.owner or self.owner == "" then
-						self.owner = clicker:get_player_name()
-					end
-				end
-				temper_increase = 5
-			elseif self.driver and self.driver == clicker then
-				vlf_mobs.detach(clicker, {x = 1, y = 0, z = 1})
-			end
-			self.temper = self.temper + temper_increase
-			return
-		end
+		if self:break_in(clicker) then return end
 
 		if can_breed(self.name) then
 			if (iname == "vlf_core:apple_gold") then
@@ -272,10 +261,6 @@ local horse = {
 			return
 		end
 
-		if vlf_mobs.protect(self, clicker) then
-			return
-		end
-
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
 			if self.driver and clicker == self.driver then
 				vlf_mobs.detach(clicker, {x = 1, y = 0, z = 1})
@@ -283,9 +268,9 @@ local horse = {
 				return
 			elseif minetest.get_item_group(iname, "horse_armor") > 0 and can_equip_horse_armor(self.name) and not self.driver and self:set_armor(clicker) then
 				return
-			elseif not self.driver and self._saddle then
+			elseif not self.driver then
 				self.object:set_properties({stepheight = 1.1})
-				vlf_mobs.attach(self, clicker)
+				self:attach(clicker)
 			end
 		end
 	end,
@@ -312,6 +297,12 @@ local horse = {
 		local w = clicker:get_wielded_item()
 		local iname = w:get_name()
 		if iname ~= self._horse_armor then
+			local cstring
+			if minetest.get_item_group(iname, "armor_leather") > 0 then
+				local m = w:get_meta()
+				local cs = m:get_string("vlf_armor:color")
+				cstring = cs ~= "" and cs or nil
+			end
 			if not minetest.is_creative_enabled(clicker:get_player_name()) then
 				w:take_item()
 				clicker:set_wielded_item(w)
@@ -329,7 +320,7 @@ local horse = {
 			if not self._naked_texture then
 				self._naked_texture = self.base_texture[2]
 			end
-			local tex = horse_extra_texture(self)
+			local tex = horse_extra_texture(self, cstring)
 			self.base_texture = tex
 			self.object:set_properties({textures = self.base_texture})
 			local def = w:get_definition()

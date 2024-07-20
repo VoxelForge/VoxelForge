@@ -76,12 +76,9 @@ local tropical_fish = {
 	textures = { "extra_mobs_tropical_fish_a.png" }, -- to be populated on_spawn
 	sounds = {},
 	animation = {
-		stand_start = 0,
-		stand_end = 20,
-		walk_start = 20,
-		walk_end = 40,
-		run_start = 20,
-		run_end = 40,
+		stand_start = 0, stand_end = 20,
+		walk_start = 20, walk_end = 40, walk_speed = 50,
+		run_start = 20, run_end = 40, run_speed = 50,
 	},
 	drops = {
 		{name = "vlf_fishing:clownfish_raw",

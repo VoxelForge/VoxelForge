@@ -26,8 +26,8 @@ vlf_mobs.register_mob("mobs_mc:pig", {
 	head_yaw="z",
 	makes_footstep_sound = true,
 	walk_velocity = 1,
-	run_velocity = 3,
-	follow_velocity = 3.4,
+	run_velocity = 1.5,
+	follow_velocity = 1.5,
 	drops = {
 		{name = "vlf_mobitems:porkchop",
 		chance = 1,
@@ -45,13 +45,13 @@ vlf_mobs.register_mob("mobs_mc:pig", {
 	},
 	animation = {
 		stand_start = 0, stand_end = 0,
-		walk_start = 0, walk_end = 40, walk_speed = 60,
-		run_start = 0, run_end = 40, run_speed = 90,
+		walk_start = 0, walk_end = 40, walk_speed = 55,
+		run_start = 0, run_end = 40, run_speed = 55,
 	},
-	child_animations = {
+	_child_animations = {
 		stand_start = 41, stand_end = 41,
 		walk_start = 41, walk_end = 81, walk_speed = 90,
-		run_start = 41, run_end = 81, run_speed = 135,
+		run_start = 41, run_end = 81, run_speed = 90,
 	},
 	follow = {
 		"vlf_farming:potato_item",
@@ -83,9 +83,7 @@ vlf_mobs.register_mob("mobs_mc:pig", {
 
 		-- if driver present allow control of horse
 		if self.driver and self.driver:get_wielded_item():get_name() == "vlf_mobitems:carrot_on_a_stick" then
-
-			vlf_mobs.drive(self, "walk", "stand", false, dtime)
-
+			self:drive("walk", "stand", false, dtime)
 			return false -- skip rest of mob functions
 		end
 
@@ -111,7 +109,6 @@ vlf_mobs.register_mob("mobs_mc:pig", {
 		if wielditem:get_name() ~= "vlf_mobitems:carrot_on_a_stick" then
 			if self:feed_tame(clicker, 1, true, false) then return end
 		end
-		if vlf_mobs.protect(self, clicker) then return end
 
 		if self.child then
 			return
@@ -184,12 +181,8 @@ vlf_mobs.register_mob("mobs_mc:pig", {
 		elseif not self.driver and self.saddle == "yes" then
 			-- Ride pig if it has a saddle
 
-			vlf_mobs.attach(self, clicker)
+			self:attach(clicker)
 			return
-
-		-- Capture pig
-		elseif not self.driver and clicker:get_wielded_item():get_name() ~= "" then
-			vlf_mobs.capture_mob(self, clicker, 0, 5, 60, false, nil)
 		end
 	end,
 

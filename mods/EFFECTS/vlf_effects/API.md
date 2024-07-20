@@ -254,8 +254,8 @@ def = {
     image = string, -- name of a custom texture of the entity_effect icon
     color = string, -- colorstring for entity_effect icon when image is not defined - defaults to #0000FF
     groups = table, -- item groups definition for the regular entity_effect, not splash or lingering -
---   - must contain _vlf_entity_effect=1 for tooltip to include dynamic_tt and effects
---   - defaults to {brewitem=1, food=3, can_eat_when_full=1, _vlf_entity_effect=1}
+--   - must contain _vlf_entity_effects=1 for tooltip to include dynamic_tt and effects
+--   - defaults to {brewitem=1, food=3, can_eat_when_full=1, _vlf_entity_effects=1}
     nocreative = bool, -- adds a not_in_creative_inventory=1 group - defaults to false
     _effect_list = {, -- all the effects dealt by the entity_effect in the format of tables
 -- -- the name of each sub-table should be a name of a registered effect, and fields can be the following:

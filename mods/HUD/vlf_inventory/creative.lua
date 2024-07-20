@@ -102,7 +102,7 @@ minetest.register_on_mods_loaded(function()
 			end
 			if def.groups.brewitem then
 				local str = name
-				if def.groups._vlf_entity_effect == 1 then
+				if def.groups._vlf_entity_effects == 1 then
 					local stack = ItemStack(name)
 					tt.reload_itemstack_description(stack)
 					str = stack:to_string()
@@ -119,7 +119,7 @@ minetest.register_on_mods_loaded(function()
 				table.insert(inventory_lists["misc"], name)
 			end
 
-			if def.groups._vlf_entity_effect == 1 then
+			if def.groups._vlf_entity_effects == 1 then
 				if def.has_potent then
 					local stack = ItemStack(name)
 					local potency = def._default_potent_level - 1

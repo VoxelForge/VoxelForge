@@ -88,7 +88,7 @@ end
 
 -- Slime
 local slime_big = {
-	description = S("Slime"),
+	description = S("Slime - big"),
 	type = "monster",
 	spawn_class = "hostile",
 	group_attack = { "mobs_mc:slime_big", "mobs_mc:slime_small", "mobs_mc:slime_tiny" },
@@ -144,6 +144,7 @@ local slime_big = {
 vlf_mobs.register_mob("mobs_mc:slime_big", slime_big)
 
 local slime_small = table.copy(slime_big)
+slime_small.description = S("Slime - small")
 slime_small.sounds.base_pitch = 1.15
 slime_small.hp_min = 4
 slime_small.hp_max = 4
@@ -161,6 +162,7 @@ slime_small.on_die = spawn_children_on_die("mobs_mc:slime_tiny", 0.6, 1.0)
 vlf_mobs.register_mob("mobs_mc:slime_small", slime_small)
 
 local slime_tiny = table.copy(slime_big)
+slime_tiny.description = S("Slime - tiny")
 slime_tiny.sounds.base_pitch = 1.3
 slime_tiny.hp_min = 1
 slime_tiny.hp_max = 1
@@ -263,7 +265,7 @@ end
 
 -- Magma cube
 local magma_cube_big = {
-	description = S("Magma Cube"),
+	description = S("Magma Cube - big"),
 	type = "monster",
 	spawn_class = "hostile",
 	hp_min = 16,
@@ -325,6 +327,7 @@ local magma_cube_big = {
 vlf_mobs.register_mob("mobs_mc:magma_cube_big", magma_cube_big)
 
 local magma_cube_small = table.copy(magma_cube_big)
+magma_cube_small.description = S("Magma Cube - small")
 magma_cube_small.sounds.jump = "mobs_mc_magma_cube_small"
 magma_cube_small.sounds.death = "mobs_mc_magma_cube_small"
 magma_cube_small.hp_min = 4
@@ -346,6 +349,7 @@ magma_cube_small.on_die = spawn_children_on_die("mobs_mc:magma_cube_tiny", 0.6, 
 vlf_mobs.register_mob("mobs_mc:magma_cube_small", magma_cube_small)
 
 local magma_cube_tiny = table.copy(magma_cube_big)
+magma_cube_tiny.description = S("Magma Cube - tiny")
 magma_cube_tiny.sounds.jump = "mobs_mc_magma_cube_small"
 magma_cube_tiny.sounds.death = "mobs_mc_magma_cube_small"
 magma_cube_tiny.sounds.base_pitch = 1.25
