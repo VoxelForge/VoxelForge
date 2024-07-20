@@ -105,21 +105,36 @@ function mobs_mc.villager_mob:on_rightclick(clicker)
 	self:stand_still()
 end
 
-function mobs_mc.villager_mob:stand_near_players()
+function mobs_mc.villager_mob:do_custom(dtime)
+	self:check_summon(dtime)
+
+	if not self._player_scan_timer then
+		self._player_scan_timer = 0
+	end
+	self._player_scan_timer = self._player_scan_timer + dtime
+
 	-- Check infrequently to keep CPU load low
-	if self:check_timer("player_scan", PLAYER_SCAN_INTERVAL) then
-		if table.count(minetest.get_objects_inside_radius(self.object:get_pos(), PLAYER_SCAN_RADIUS), function(_, pl) return pl:is_player() end) > 0 then
+	if self._player_scan_timer > PLAYER_SCAN_INTERVAL then
+
+		self._player_scan_timer = 0
+		local selfpos = self.object:get_pos()
+		local objects = minetest.get_objects_inside_radius(selfpos, PLAYER_SCAN_RADIUS)
+		local has_player = false
+
+		for o, obj in pairs(objects) do
+			if obj:is_player() then
+				has_player = true
+				break
+			end
+		end
+		if has_player then
 			self:stand_still()
 		else
 			self.walk_chance = DEFAULT_WALK_CHANCE
 			self.jump = true
 		end
 	end
-end
 
-function mobs_mc.villager_mob:do_custom(dtime)
-	self:check_summon(dtime)
-	self:stand_near_players()
 	self:do_activity(dtime)
 end
 
@@ -203,8 +218,8 @@ table.update(mobs_mc.villager_mob, {
 		"mobs_mc_villager.png", --hat
 	},
 	makes_footstep_sound = true,
-	walk_velocity = 1,
-	run_velocity = 1.5,
+	walk_velocity = 1.2,
+	run_velocity = 2.4,
 	drops = {},
 	can_despawn = false,
 	-- TODO: sounds
@@ -215,15 +230,15 @@ table.update(mobs_mc.villager_mob, {
 	},
 	animation = {
 		stand_start = 0, stand_end = 0,
-		walk_start = 0, walk_end = 40, walk_speed = 35,
+		walk_start = 0, walk_end = 40, walk_speed = 25,
 		run_start = 0, run_end = 40, run_speed = 25,
 		head_shake_start = 60, head_shake_end = 70, head_shake_loop = false,
 		head_nod_start = 50, head_nod_end = 60, head_nod_loop = false,
 	},
-	_child_animations = {
+	child_animations = {
 		stand_start = 71, stand_end = 71,
-		walk_start = 71, walk_end = 111, walk_speed = 60,
-		run_start = 71, run_end = 111, run_speed = 50,
+		walk_start = 71, walk_end = 111, walk_speed = 37,
+		run_start = 71, run_end = 111, run_speed = 37,
 		head_shake_start = 131, head_shake_end = 141, head_shake_loop = false,
 		head_nod_start = 121, head_nod_end = 131, head_nod_loop = false,
 	},
@@ -240,8 +255,6 @@ table.update(mobs_mc.villager_mob, {
 	pick_up = pick_up,
 	can_open_doors = true,
 	_player_scan_timer = 0,
-	_bed_search_interval = 10,
-	_sleep_over_interval = 10,
 	_trading_players = {},
 	runaway_from = {
 		"mobs_mc:zombie",
