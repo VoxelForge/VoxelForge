@@ -1398,7 +1398,7 @@ function vlf_util.create_ground_slope(pos, fwidth, fdepth)
 			y = y - 1
 		end
 	end
-	
+
 -- This function creates a slope shape under the selected positon.
 -- The biome for the position will be used to select the top and filler layers.
 -- The shape is slightly altered for sandy top layers.
@@ -1456,7 +1456,6 @@ function vlf_util.create_ground_slope_village(pos, fwidth, fdepth)
 	if needs_support then
 		radius = radius + 2
 	end
-	local node = minetest.get_node(pos).name == "air"
 --This allows for 20 nodes to get modified.
 	for count3 = 1, 10 do
 		radius = radius + 1
