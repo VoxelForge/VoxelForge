@@ -1,0 +1,10 @@
+name: Label
+on: [issue, pull_request]
+jobs:
+  sile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: IssueOps Label Manager
+      uses: issue-ops/labeler@main
+        with:
+          args: .
