@@ -1,10 +1,31 @@
-name: Label
-on: [issue, pull_request]
 jobs:
-  sile:
+  example:
+    name: Example
     runs-on: ubuntu-latest
+
+    # Write permissions to issues is required
+    permissions:
+      issues: write
+
     steps:
-      - name: IssueOps Label Manager
-      uses: issue-ops/labeler@main
+      # Add labels to an issue in this repository
+      - name: Add Labels
+        id: add-labels
+        uses: issue-ops/labeler@v2.0.0
         with:
-          args: .
+          action: add
+          issue_number: 1
+          labels: |
+            enhancement
+            great-first-issue
+
+      # Remove labels from an issue in this repository
+      - name: Remove Labels
+        id: remove-labels
+        uses: issue-ops/labeler@v2.0.0
+        with:
+          action: remove
+          issue_number: 1
+          labels: |
+            enhancement
+            great-first-issue
