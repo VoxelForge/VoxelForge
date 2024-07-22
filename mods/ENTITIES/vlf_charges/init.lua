@@ -15,7 +15,7 @@ local S = minetest.get_translator("vlf_charges")
 wind_burst_spawner = {
 	texture = "vlf_charges_wind_burst_1.png",
 	texpool = {},
-	--amount = 6,
+	amount = 6,
 	time = 0.2,
 	minvel = vector.zero(),
 	maxvel = vector.zero(),
@@ -135,7 +135,7 @@ function vlf_charges.wind_burst(pos, radius)
 		local dist = math.max(1, vector.distance(pos, obj_pos))
 
 		if obj:is_player() then
-			obj:add_velocity(vector.multiply(vector.normalize(vector.subtract(obj_pos, pos)), math.random(1.8, 2.0) / dist * radius))
+			obj:add_velocity(vector.multiply(vector.normalize(vector.subtract(obj_pos, pos)), math.random(1.8, 2.0) / dist * RADIUS))
 		else
 			local luaobj = obj:get_luaentity()
 			if luaobj then
