@@ -941,14 +941,14 @@ vlf_entity_effects.register_effect({
 	name = "saturation",
 	description = S("Saturation"),
 	get_tt = function(factor)
-		return S("saturates by @1 per second", factor)
+		return S("saturates by @1 per second", factor*20)
 	end,
 	res_condition = function(object)
 		return (not object:is_player()) -- TODO what should it do for mobs?
 	end,
 	on_step = function(dtime, object, factor, duration)
-		vlf_hunger.set_hunger(object, math.min(vlf_hunger.get_hunger(object)+dtime*factor, 20))
-		vlf_hunger.saturate(object:get_player_name(), dtime*factor)
+		vlf_hunger.set_hunger(object, math.min(vlf_hunger.get_hunger(object)+dtime*factor*20, 20))
+		vlf_hunger.saturate(object:get_player_name(), dtime*factor*40)
 	end,
 	particle_color = "#CEAE29",
 	uses_factor = true,
