@@ -720,7 +720,7 @@ minetest.register_tool("vlf_tools:shears", {
 						local pos = user:get_pos()
 						-- set vertical V to 0  first otherwise this is highly dependent on falling speed
 						user:add_velocity(vector.new(0, 30 + (wind_burst * 5), 0))
-						local pr = PseudoRandom(math.ceil(os.time() / 60 / 10)) -- make particles change direction every 10 minutes
+						local pr = PseudoRandom(math.ceil(os.time() / 60 / 10))
 						local vr = vector.new(pr:next(-2, 2)/10, 0, pr:next(-2, 2)/10)
 						local amount = 20
 						vr.y = pr:next(-9, -4) / 10

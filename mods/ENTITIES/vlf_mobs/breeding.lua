@@ -202,7 +202,9 @@ function mob_class:check_breeding()
 
 		local pos = self.object:get_pos()
 
-		vlf_mobs.effect({x = pos.x, y = pos.y + 1, z = pos.z}, 8, "heart.png", 3, 4, 1, 0.1)
+		if (self.hornytimer % 20) == 0.0 then
+			vlf_mobs.effect({x = pos.x, y = pos.y + 1, z = pos.z}, 8, "heart.png", 3, 4, 1, 0.1)
+		end
 
 		local objs = minetest.get_objects_inside_radius(pos, 3)
 		local num = 0
