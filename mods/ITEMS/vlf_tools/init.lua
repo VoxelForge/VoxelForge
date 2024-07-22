@@ -714,7 +714,7 @@ minetest.register_tool("vlf_tools:shears", {
 						damage_groups = {fleshy = -6 * fall_distance / 5.5 + density_add},
 						}, nil)
 					end
-					if wind_burst then
+					if wind_burst >= 1 then
 						local v = user:get_velocity()
 						user:set_velocity(vector.new(v.x, 0, v.z))
 						local pos = user:get_pos()
