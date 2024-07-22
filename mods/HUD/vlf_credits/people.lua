@@ -22,6 +22,7 @@ return {
 	}},
 	{S("Active Contributors"), 0xF84355, {
 		"SamMatzko",
+		"crispiebacon",
 	}},
 	{S("Previous Contributors"), 0x52FF00, {
 		"Lizzy Fleckenstein",
@@ -109,6 +110,7 @@ return {
 		"Wbjitscool",
 		"SmokeyDope",
 		"DragonWrangler1",
+		"crispiebacon",
 	}},
 	{S("Translations"), 0xFF9705, {
 		"Wuzzy",

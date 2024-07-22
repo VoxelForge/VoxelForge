@@ -173,3 +173,45 @@ local modpath = minetest.get_modpath(minetest.get_current_modname())
 dofile(modpath.."/animations.lua")
 dofile(modpath.."/compat.lua")
 
+local hud_def = {
+	hud_id = {},
+	image = "underwater_overlay.png",
+	position = {x=0.5, y=0.5},
+	offset = {x=0, y=0},
+	size = {x=100, y=100},
+	alignment = {x=0, y=0},
+	scale = {x=300, y=100},
+}
+
+local function is_player_underwater(player)
+	local pos = player:get_pos()
+	local node = minetest.get_node_or_nil({x = pos.x, y = pos.y + 1.5, z = pos.z})
+	if node and minetest.get_item_group(node.name, "water") > 0 then
+		return true
+	end
+	return false
+end
+
+minetest.register_globalstep(function(dtime)
+	for _, player in ipairs(minetest.get_connected_players()) do
+		local player_name = player:get_player_name()
+		if is_player_underwater(player) then
+			if not hud_def.hud_id[player_name] then
+				hud_def.hud_id[player_name] = player:hud_add({
+					hud_elem_type = "image",
+					position = hud_def.position,
+					offset = hud_def.offset,
+					text = hud_def.image,
+					alignment = hud_def.alignment,
+					scale = hud_def.scale,
+					size = hud_def.size,
+				})
+			end
+		else
+			if hud_def.hud_id[player_name] then
+				player:hud_remove(hud_def.hud_id[player_name])
+				hud_def.hud_id[player_name] = nil
+			end
+		end
+	end
+end)

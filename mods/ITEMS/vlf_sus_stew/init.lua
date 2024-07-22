@@ -47,18 +47,16 @@ function vlf_sus_stew.register_stew(name,recipe_item,effect_func)
 	})
 end
 
-local eat = minetest.item_eat(6, "vlf_core:bowl")
-
 local function hunger_effect(itemstack, placer, pointed_thing)
 	vlf_hunger.item_eat(6, "vlf_core:bowl", 3.5, 0, 100)
-	return eat(itemstack, placer, pointed_thing)
+	return itemstack
 end
 
 local function entity_effect_effect(itemstack, placer, pointed_thing,effect)
 	if vlf_entity_effects[effect.."_func"] then
 		vlf_entity_effects[effect.."_func"](placer, 1, 6)
 	end
-	return eat(itemstack, placer, pointed_thing)
+	return itemstack
 end
 
 vlf_sus_stew.register_stew("fire_resistance","vlf_flowers:allium",entity_effect_effect)

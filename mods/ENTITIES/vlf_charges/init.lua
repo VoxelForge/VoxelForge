@@ -15,7 +15,7 @@ local S = minetest.get_translator("vlf_charges")
 wind_burst_spawner = {
 	texture = "vlf_charges_wind_burst_1.png",
 	texpool = {},
-	--amount = 6,
+	amount = 6,
 	time = 0.2,
 	minvel = vector.zero(),
 	maxvel = vector.zero(),
@@ -101,12 +101,19 @@ function vlf_charges.wind_burst(pos, radius)
 			obj:add_velocity(vector.multiply(vector.normalize(vector.subtract(obj_pos, pos)), math.random(1.8, 2.0) / dist * RADIUS))
 		else
 			local luaobj = obj:get_luaentity()
-			if luaobj and (not minetest.registered_entities[luaobj.name].on_blast or minetest.registered_entities[luaobj.name].on_blast(luaobj, 0)) then
-				obj:set_velocity(vlf_charges.wind_burst_velocity(pos, obj_pos, obj:get_velocity(), radius * 3))
+			if luaobj then
+				local is_builtin_item = luaobj.name == "__builtin:item"
+				if luaobj.is_mob or is_builtin_item then
+					local entity_def = minetest.registered_entities[luaobj.name]
+					if not entity_def.on_blast or entity_def.on_blast(luaobj, 0) then
+						obj:set_velocity(vlf_charges.wind_burst_velocity(pos, obj_pos, obj:get_velocity(), radius * 3))
+					end
+				end
 			end
 		end
 	end
 end
+
 
 --throwable charge registry
 function register_charge(name, descr, def)
