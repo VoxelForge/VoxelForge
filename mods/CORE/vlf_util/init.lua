@@ -102,16 +102,8 @@ The Minetest function is seen as inappropriate because this includes mirror
 images of possible orientations, causing problems with pillar shadings.
 ]]
 function vlf_util.rotate_axis_and_place(itemstack, placer, pointed_thing, infinitestacks, invert_wall)
-	local unode = minetest.get_node_or_nil(pointed_thing.under)
-	if not unode then
-		return
-	end
-	local undef = minetest.registered_nodes[unode.name]
-	if undef and undef.on_rightclick and not invert_wall then
-		undef.on_rightclick(pointed_thing.under, unode, placer,
-			itemstack, pointed_thing)
-		return
-	end
+	local rc = vlf_util.call_on_rightclick(itemstack, placer, pointed_thing)
+	if rc then return rc end
 	local wield_name = itemstack:get_name()
 
 	local above = pointed_thing.above
@@ -119,6 +111,11 @@ function vlf_util.rotate_axis_and_place(itemstack, placer, pointed_thing, infini
 	local is_x = (above.x ~= under.x)
 	local is_y = (above.y ~= under.y)
 	local is_z = (above.z ~= under.z)
+	
+	local unode = minetest.get_node_or_nil(under)
+	if not unode then
+		return
+	end
 
 	local anode = minetest.get_node_or_nil(above)
 	if not anode then
@@ -127,6 +124,7 @@ function vlf_util.rotate_axis_and_place(itemstack, placer, pointed_thing, infini
 	local pos = pointed_thing.above
 	local node = anode
 
+	local undef = minetest.registered_nodes[unode.name]
 	if undef and undef.buildable_to then
 		pos = pointed_thing.under
 		node = unode
@@ -162,7 +160,7 @@ end
 -- Similar to minetest.rotate_node.
 function vlf_util.rotate_axis(itemstack, placer, pointed_thing)
 	if placer and placer:is_player() then
-		vlf_util.rotate_axis_and_place(itemstack, placer, pointed_thing,
+		return vlf_util.rotate_axis_and_place(itemstack, placer, pointed_thing,
 			minetest.is_creative_enabled(placer:get_player_name()),
 			placer:get_player_control().sneak)
 	end

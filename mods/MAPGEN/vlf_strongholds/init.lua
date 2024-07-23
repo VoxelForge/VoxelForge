@@ -54,8 +54,50 @@ end
 
 vlf_structures.register_structure("end_shrine",{
 	static_pos = init_strongholds(),
+	sidelen = 32,
 	filenames = {
 		minetest.get_modpath("vlf_structures").."/schematics/vlf_structures_end_portal_room_simple.mts"
+	},
+	loot = {
+		["vlf_chests:chest_small" ] ={{
+			stacks_min = 2,
+			stacks_max = 3,
+			items = {
+				{ itemstring = "vlf_core:apple", weight = 15, amount_min = 1, amount_max = 3 },
+				{ itemstring = "vlf_farming:bread", weight = 15, amount_min = 1, amount_max = 3 },
+				{ itemstring = "vlf_core:iron_ingot", weight = 10, amount_min = 1, amount_max = 5 },
+				{ itemstring = "vlf_throwing:ender_pearl", weight = 10, amount_min = 1, amount_max = 1 },
+				{ itemstring = "mesecons:wire_00000000_off", weight = 5, amount_min = 4, amount_max = 9 },
+				{ itemstring = "vlf_core:gold_ingot", weight = 5, amount_min = 1, amount_max = 3 },
+
+				{ itemstring = "vlf_tools:pick_iron", weight = 5, amount_min = 1, amount_max=3 },
+				{ itemstring = "vlf_tools:sword_iron", weight = 5, amount_min = 1, amount_max=3 },
+
+				{ itemstring = "vlf_armor:helmet_iron", weight = 5, amount_min = 1, amount_max=3 },
+				{ itemstring = "vlf_armor:chestplate_iron", weight = 5, amount_min = 1, amount_max=3 },
+				{ itemstring = "vlf_armor:leggings_iron", weight = 5, amount_min = 1, amount_max=3 },
+				{ itemstring = "vlf_armor:boots_iron", weight = 5, amount_min = 1, amount_max=3 },
+
+				{ itemstring = "vlf_core:diamond", weight = 3, amount_min = 1, amount_max = 3 },
+
+				{ itemstring = "vlf_jukebox:record_7", weight = 1, },
+				{ itemstring = "vlf_books:book", weight = 1, func = function(stack, pr)
+					vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr)
+				end },
+				{ itemstring = "vlf_mobitems:saddle", weight = 1, },
+				{ itemstring = "vlf_mobitems:iron_horse_armor", weight = 1, },
+				{ itemstring = "vlf_mobitems:gold_horse_armor", weight = 1, },
+				{ itemstring = "vlf_mobitems:diamond_horse_armor", weight = 1, },
+				{ itemstring = "vlf_core:apple_gold", weight = 1, },
+			}
+		},
+		{
+			stacks_min = 1,
+			stacks_max = 1,
+			items = {
+				{ itemstring = "vlf_armor:eye", weight = 1, amount_min = 1, amount_max = 1 },
+			}
+		}}
 	},
 	after_place = function(pos,def,pr,blockseed,p1,p2,size,rotation)
 		local p1 = vector.subtract(pos,size)
