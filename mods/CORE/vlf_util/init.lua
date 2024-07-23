@@ -111,7 +111,7 @@ function vlf_util.rotate_axis_and_place(itemstack, placer, pointed_thing, infini
 	local is_x = (above.x ~= under.x)
 	local is_y = (above.y ~= under.y)
 	local is_z = (above.z ~= under.z)
-	
+
 	local unode = minetest.get_node_or_nil(under)
 	if not unode then
 		return
