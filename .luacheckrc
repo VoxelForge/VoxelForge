@@ -198,6 +198,7 @@ globals = {
 	"vlf_textures",
 	"vlf_json",
 	"vlf_tridents",
+	"vlf_bundles",
 	"AreaStore",
 }
 
