@@ -236,16 +236,16 @@ function vlf_util.get_double_container_neighbor_pos(pos, param2, side)
 	end
 end
 
--- Iterates through all items in the given inventory and
--- returns the slot of the first item which matches a condition.
--- Returns nil if no item was found.
+--- Iterates through all items in the given inventory and
+--- returns the slot of the first item which matches a condition.
+--- Returns nil if no item was found.
 --- source_inventory: Inventory to take the item from
 --- source_list: List name of the source inventory from which to take the item
 --- destination_inventory: Put item into this inventory
 --- destination_list: List name of the destination inventory to which to put the item into
 --- condition: Function which takes an itemstack and returns true if it matches the desired item condition.
----            If set to nil, the slot of the first item stack will be taken unconditionally.
--- dst_inventory and dst_list can also be nil if condition is nil.
+--- If set to nil, the slot of the first item stack will be taken unconditionally.
+--- dst_inventory and dst_list can also be nil if condition is nil.
 function vlf_util.get_eligible_transfer_item_slot(src_inventory, src_list, dst_inventory, dst_list, condition)
 	local size = src_inventory:get_size(src_list)
 	local stack
