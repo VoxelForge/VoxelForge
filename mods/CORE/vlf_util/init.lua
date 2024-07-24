@@ -102,16 +102,8 @@ The Minetest function is seen as inappropriate because this includes mirror
 images of possible orientations, causing problems with pillar shadings.
 ]]
 function vlf_util.rotate_axis_and_place(itemstack, placer, pointed_thing, infinitestacks, invert_wall)
-	local unode = minetest.get_node_or_nil(pointed_thing.under)
-	if not unode then
-		return
-	end
-	local undef = minetest.registered_nodes[unode.name]
-	if undef and undef.on_rightclick and not invert_wall then
-		undef.on_rightclick(pointed_thing.under, unode, placer,
-			itemstack, pointed_thing)
-		return
-	end
+	local rc = vlf_util.call_on_rightclick(itemstack, placer, pointed_thing)
+	if rc then return rc end
 	local wield_name = itemstack:get_name()
 
 	local above = pointed_thing.above
@@ -120,6 +112,11 @@ function vlf_util.rotate_axis_and_place(itemstack, placer, pointed_thing, infini
 	local is_y = (above.y ~= under.y)
 	local is_z = (above.z ~= under.z)
 
+	local unode = minetest.get_node_or_nil(under)
+	if not unode then
+		return
+	end
+
 	local anode = minetest.get_node_or_nil(above)
 	if not anode then
 		return
@@ -127,6 +124,7 @@ function vlf_util.rotate_axis_and_place(itemstack, placer, pointed_thing, infini
 	local pos = pointed_thing.above
 	local node = anode
 
+	local undef = minetest.registered_nodes[unode.name]
 	if undef and undef.buildable_to then
 		pos = pointed_thing.under
 		node = unode
@@ -162,7 +160,7 @@ end
 -- Similar to minetest.rotate_node.
 function vlf_util.rotate_axis(itemstack, placer, pointed_thing)
 	if placer and placer:is_player() then
-		vlf_util.rotate_axis_and_place(itemstack, placer, pointed_thing,
+		return vlf_util.rotate_axis_and_place(itemstack, placer, pointed_thing,
 			minetest.is_creative_enabled(placer:get_player_name()),
 			placer:get_player_control().sneak)
 	end
@@ -238,16 +236,16 @@ function vlf_util.get_double_container_neighbor_pos(pos, param2, side)
 	end
 end
 
--- Iterates through all items in the given inventory and
--- returns the slot of the first item which matches a condition.
--- Returns nil if no item was found.
+--- Iterates through all items in the given inventory and
+--- returns the slot of the first item which matches a condition.
+--- Returns nil if no item was found.
 --- source_inventory: Inventory to take the item from
 --- source_list: List name of the source inventory from which to take the item
 --- destination_inventory: Put item into this inventory
 --- destination_list: List name of the destination inventory to which to put the item into
 --- condition: Function which takes an itemstack and returns true if it matches the desired item condition.
----            If set to nil, the slot of the first item stack will be taken unconditionally.
--- dst_inventory and dst_list can also be nil if condition is nil.
+--- If set to nil, the slot of the first item stack will be taken unconditionally.
+--- dst_inventory and dst_list can also be nil if condition is nil.
 function vlf_util.get_eligible_transfer_item_slot(src_inventory, src_list, dst_inventory, dst_list, condition)
 	local size = src_inventory:get_size(src_list)
 	local stack
