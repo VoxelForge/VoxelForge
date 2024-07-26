@@ -1,3 +1,5 @@
+if minetest.settings:get_bool('bundles', true) then
+
 local max_storage = 64
 
 local function on_rightclick(itemstack, placer, pointed_thing)
@@ -14,14 +16,14 @@ local function on_rightclick(itemstack, placer, pointed_thing)
 	for _, item in ipairs(items) do
 		local dropped_item = minetest.add_item(placer:get_pos(), item)
 		if dropped_item then
-			dropped_item:get_luaentity().itemstring = ItemStack(item):to_string()
+			--dropped_item:get_luaentity().itemstring = ItemStack(item):to_string()
 		end
 	end
 
 	-- Clear the stored items
 	meta:set_string("stored_items", "")
 	itemstack:set_name("vlf_bundles:bundle")
-	itemstack:set_wear(0)
+	--itemstack:set_wear(0)
 	return itemstack
 end
 
@@ -49,8 +51,6 @@ minetest.register_craftitem("vlf_bundles:bundle", {
 	description = "Bundle",
 	inventory_image = "vlf_bundles_bundle.png",
 	stack_max = 1,
-		on_place = on_rightclick,
-		on_secondary_use = on_rightclick,
 })
 
 local function update_bundle_item(bundle_stack)
@@ -94,3 +94,5 @@ minetest.register_on_player_inventory_action(function(player, action, inventory,
 		end
 	end
 end)
+
+end

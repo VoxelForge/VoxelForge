@@ -591,6 +591,42 @@ vlf_entity_effects.register_entity_effect({
 	has_lingering = false,
 })
 
+vlf_entity_effects.register_entity_effect({
+	name = "infestation",
+	desc_suffix = S("of Infestation"),
+	_tt = nil,
+	_longdesc = S("Causes 1-2 silverfish to spawn with a 10% chance when damaged"),
+	color = "#472331",
+	_effect_list = {
+		infested = {},
+	},
+	has_arrow = true,
+})
+
+vlf_entity_effects.register_entity_effect({
+	name = "oozing",
+	desc_suffix = S("of Oozing"),
+	_tt = nil,
+	_longdesc = S("Causes 2 medium slimes to spawn on death"),
+	color = "#60AA30",
+	_effect_list = {
+		oozing = {},
+	},
+	has_arrow = true,
+})
+
+vlf_entity_effects.register_entity_effect({
+	name = "weaving",
+	desc_suffix = S("of Weaving"),
+	_tt = nil,
+	_longdesc = S("Causes 2-3 cobwebs to appear on death"),
+	color = "#ACCCFF",
+	_effect_list = {
+		weaving = {},
+	},
+	has_arrow = true,
+})
+
 -- COMPAT CODE
 local function replace_legacy_entity_effect(itemstack)
 	local name = itemstack:get_name()
