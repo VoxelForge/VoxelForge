@@ -422,6 +422,8 @@ function mob_class:check_for_death(cause, cmi_cause)
 	local damaged = self.health < ( self.old_health or 0 )
 	self.old_health = self.health
 
+	vlf_entity_effects.check_infested_on_damage(self.object)
+
 	-- still got some health?
 	if self.health > 0 then
 
@@ -459,6 +461,9 @@ function mob_class:check_for_death(cause, cmi_cause)
 	end
 
 	self:mob_sound("death")
+
+	vlf_entity_effects.check_oozing_on_death(self.object)
+	vlf_entity_effects.check_weaving_on_death(self.object)
 
 	local function death_handle(self)
 		local killed_by_player = false

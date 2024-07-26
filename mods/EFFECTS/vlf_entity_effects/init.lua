@@ -385,6 +385,10 @@ local awkward_table = {
 	["vlf_mobitems:spider_eye"] = "vlf_entity_effects:poison",
 	["vlf_mobitems:rabbit_foot"] = "vlf_entity_effects:leaping",
 
+	["vlf_core:stone"] = "vlf_entity_effects:infestation",
+	["vlf_core:slimeblock"] = "vlf_entity_effects:oozing",
+	["vlf_core:cobweb"] = "vlf_entity_effects:weaving",
+
 	["vlf_mobitems:phantom_membrane"] = "vlf_entity_effects:slow_falling", -- TODO add phantom membranes
 	["vlf_core:apple_gold"] = "vlf_entity_effects:resistance",
 
