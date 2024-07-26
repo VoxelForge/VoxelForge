@@ -1187,7 +1187,7 @@ function vlf_entity_effects.check_weaving_on_death(obj)
 		-- Use distance of 1 for 3x3x3 area as find_nodes_in_area is quite zealous with valid nodes
 		-- TODO: Cobwebs should probably be able to replace replaceable nodes (e.g. grass)
 		local nodes_under_air = minetest.find_nodes_in_area_under_air(vector.offset(pos, -1, -1, -1), vector.offset(pos, 1, 1, 1), "group:solid")
-		minetest.debug(#nodes_under_air, dump(pos), dump(nodes))
+		--minetest.debug(#nodes_under_air, dump(pos), dump(nodes))
 		-- spawn 2-3 cobwebs
 		local num_cobwebs = math.random(2, 3)
 		for i=1,num_cobwebs do

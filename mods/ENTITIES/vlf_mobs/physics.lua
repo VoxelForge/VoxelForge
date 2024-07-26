@@ -461,7 +461,7 @@ function mob_class:check_for_death(cause, cmi_cause)
 	end
 
 	self:mob_sound("death")
-	
+
 	vlf_entity_effects.check_oozing_on_death(self.object)
 	vlf_entity_effects.check_weaving_on_death(self.object)
 

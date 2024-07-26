@@ -16,7 +16,7 @@ local function on_rightclick(itemstack, placer, pointed_thing)
 	for _, item in ipairs(items) do
 		local dropped_item = minetest.add_item(placer:get_pos(), item)
 		if dropped_item then
-			--dropped_item:get_luaentity().itemstring = ItemStack(item):to_string()
+			dropped_item:get_luaentity().itemstring = ItemStack(item):to_string()
 		end
 	end
 
