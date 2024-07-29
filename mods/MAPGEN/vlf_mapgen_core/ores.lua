@@ -669,7 +669,7 @@ if minetest.settings:get_bool("vlf_generate_ores", true) then
 		{ "lapis", 18000, 3, 2, vlf_worlds.layer_to_y(0), vlf_worlds.layer_to_y(2) },
 	}
 	for _, o in pairs(ore_mapgen) do
-		register_ore_mg("vlf_deepslate:deepslate_"..o[1].."_ore", o[2].."_ore", o[3].."_ore", o[4].."_ore", o[5].."_ore", o[6].."_ore")
+		register_ore_mg("vlf_deepslate:deepslate_"..o[1].."_ore", o[2], o[3], o[4], o[5], o[6])
 	end
 
 	register_ore_mg("vlf_deepslate:deepslate_emerald_ore", 16384, 1, 1, vlf_worlds.layer_to_y(4), deepslate_max, mountains)
