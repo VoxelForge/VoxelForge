@@ -4,6 +4,8 @@
 [![Luacheck](https://github.com/VoxelForge/VoxelForge/actions/workflows/luacheck.yml/badge.svg)](https://github.com/VoxelForge/VoxelForge/actions/workflows/luacheck.yml)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/VoxelForge/VoxelForge)
 
+___________________________________________________________________________________________________________________________________________________________________________________
+
 An unofficial Minecraft-like game for Minetest. Fork of Mineclonia with focus
 on stability, performance and features. For information about
 migrating from Voxelibre or Mineclonia to VoxelForge, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
