@@ -134,19 +134,20 @@ function vlf_trials.register_vault(name, def)
 	vlf_trials.registered_vaults[name] = def
 
 	minetest.register_node("vlf_trials:"..name, table.merge(tpl, {
+		paramtype = "light",
+		light_source = 6,
 		_vlf_vault_name = name,
-		--[[on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-			if itemstack:get_name() == def.key and can_open(pos, clicker) then
-				vlf_trials.activate(pos)
-			end
-		end]]
 	}, def.node_off))
 	minetest.register_node("vlf_trials:"..name.."_ejecting", table.merge(tpl, {
+		paramtype = "light",
+		light_source = 12,
 		_vlf_vault_name = name,
 		groups = table.merge(tpl.groups, { vault = 3 }),
 	}, def.node_ejecting))
 
 	minetest.register_node("vlf_trials:"..name.."_on", table.merge(tpl, {
+		paramtype = "light",
+		light_source = 12,
 		_vlf_vault_name = name,
 		groups = table.merge(tpl.groups, { vault = 2 }),
 		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
