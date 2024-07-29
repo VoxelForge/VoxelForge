@@ -199,6 +199,7 @@ globals = {
 	"vlf_json",
 	"vlf_tridents",
 	"vlf_bundles",
+	"vlf_tripwire",
 	"AreaStore",
 }
 
