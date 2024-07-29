@@ -202,7 +202,7 @@ minetest.register_craftitem("vlf_mobitems:string", {
 		if not minetest.is_creative_enabled(player_name) then
 			itemstack:take_item()
 		end
-		
+
 		return itemstack
 	end,
 })
