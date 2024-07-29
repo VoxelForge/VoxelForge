@@ -22,7 +22,7 @@ minetest.register_node("vlf_tripwire:tripwire_hook", {
 	mesh = "tripwire_hook.obj",
 	tiles = {"tripwire_hook.png"},
 	visual_scale = "0.5",
- 	on_construct = function(pos)
+	on_construct = function(pos)
 		minetest.get_node_timer(pos):start(0.25)
 	end,
 	on_timer = function(pos, elapsed)
@@ -76,7 +76,7 @@ function tripwire_on(pos, pos2)
 	minetest.set_node(pos2, {name = "vlf_tripwire:tripwire_hook_on", param2=paramtype2_pos2})
 	local meta = minetest.get_meta(pos)
 	meta:set_string("connected", minetest.write_json(pos2))
- 	neta = minetest.get_meta(pos2)
+	meta = minetest.get_meta(pos2)
 	meta:set_string("connected", minetest.write_json(pos))
 end
 
@@ -133,7 +133,7 @@ minetest.register_craft({
 		{"group:wool"},
 		{"group:wool"},
 		{"group:wool"},
-    	}
+	}
 })
 
 
