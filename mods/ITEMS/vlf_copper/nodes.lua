@@ -110,6 +110,7 @@ function vlf_copper.register_copper_variants(name, definitions)
 			paramtype = definitions.paramtype or "none",
 			paramtype2 = definitions.paramtype2 or "none",
 			sounds = vlf_sounds.node_sound_metal_defaults(),
+			sunlight_propagates = definitions.sunlight_propagates or false,
 			tiles = {set_tiles(tiles, i)},
 			_doc_items_longdesc = S(vlf_copper.copper_longdescs[name][math.ceil(i/2)]),
 			_vlf_blast_resistance = 6,
@@ -227,8 +228,10 @@ vlf_copper.register_copper_variants("cut_copper", {
 
 vlf_copper.register_copper_variants("copper_grate", {
 	drawtype = "allfaces",
+	paramtype = "light",
 	groups = {pickaxey = 2, building_block = 1, disable_suffocation = 1, grate = 1, stonecuttable = 1},
 	sunlight_propagates = true,
+	light_propagates = true,
 })
 
 vlf_copper.register_copper_variants("chiseled_copper", {
@@ -244,6 +247,8 @@ vlf_copper.register_copper_variants("copper_bulb", {
 			end
 		},
 	},
+	sunlight_propagates = true,
+	light_propagates = true,
 })
 
 vlf_copper.register_copper_variants("copper_bulb_lit", {
@@ -257,7 +262,9 @@ vlf_copper.register_copper_variants("copper_bulb_lit", {
 			end
 		},
 	},
-	paramtype = "light"
+	paramtype = "light",
+	sunlight_propagates = true,
+	light_propagates = true,
 })
 
 vlf_copper.register_copper_variants("copper_bulb_powered", {
@@ -269,7 +276,9 @@ vlf_copper.register_copper_variants("copper_bulb_powered", {
 				minetest.swap_node(pos, {name = node.name:gsub("copper_bulb_powered", "copper_bulb")})
 			end
 		}
-	}
+	},
+	sunlight_propagates = true,
+	light_propagates = true,
 })
 
 vlf_copper.register_copper_variants("copper_bulb_lit_powered", {
@@ -283,5 +292,7 @@ vlf_copper.register_copper_variants("copper_bulb_lit_powered", {
 			end
 		}
 	},
-	paramtype = "light"
+	paramtype = "light",
+	sunlight_propagates = true,
+	light_propagates = true,
 })

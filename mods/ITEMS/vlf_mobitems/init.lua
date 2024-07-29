@@ -175,13 +175,37 @@ minetest.register_craftitem("vlf_mobitems:ink_sac", {
 	groups = { craftitem = 1 },
 })
 
-minetest.register_craftitem("vlf_mobitems:string",{
+minetest.register_craftitem("vlf_mobitems:string", {
 	description = S("String"),
 	_doc_items_longdesc = S("Strings are used in crafting."),
 	inventory_image = "vlf_mobitems_string.png",
 	groups = { craftitem = 1 },
-})
+	on_place = function(itemstack, placer, pointed_thing)
+		-- Check if the pointed thing is a node
+		if pointed_thing.type ~= "node" then
+			return itemstack
+		end
 
+		local pos = pointed_thing.above
+		local player_name = placer:get_player_name()
+
+		-- Check if the position is protected
+		if minetest.is_protected(pos, player_name) then
+			minetest.record_protection_violation(pos, player_name)
+			return itemstack
+		end
+
+		-- Place the tripwire block at the pointed position
+		minetest.set_node(pos, {name = "vlf_tripwire:tripwire"})
+
+		-- Reduce the item stack by one unless the player is in creative mode
+		if not minetest.is_creative_enabled(player_name) then
+			itemstack:take_item()
+		end
+
+		return itemstack
+	end,
+})
 minetest.register_craftitem("vlf_mobitems:blaze_rod", {
 	description = S("Blaze Rod"),
 	_doc_items_longdesc = S("This is a crafting component dropped from dead blazes."),
