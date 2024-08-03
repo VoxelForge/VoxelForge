@@ -1,4 +1,4 @@
-# textdomain: vlf_mobs
+# textdomain: mcl_mobs
 Remove all, nametagged or tamed mobs within the specified distance or everywhere. When unspecified remove all mobs except tamed and nametagged ones.=Entfernt alle benannten oder gezähmten Mobs innerhalb der angegebenen Entfernung oder überall. Wenn nicht angegeben, werden alle Mobs außer gezähmten und mit einem Namen versehenen Mobs entfernt.
 Invalid syntax.=Ungültige Syntax.
 This allows you to place a single mob.=Damit kann man einen Mob platzieren.

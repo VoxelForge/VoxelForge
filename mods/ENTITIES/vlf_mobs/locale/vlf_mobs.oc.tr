@@ -1,4 +1,4 @@
-# textdomain: vlf_mobs
+# textdomain: mcl_mobs
 Remove all, nametagged or tamed mobs within the specified distance or everywhere. When unspecified remove all mobs except tamed and nametagged ones.=
 Invalid syntax.=
 This allows you to place a single mob.=Quo permet de plaça una creatura.

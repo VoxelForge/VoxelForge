@@ -10,7 +10,6 @@ local S = minetest.get_translator("vlf_mobs")
 vlf_mobs.invis = {}
 
 local remove_far = true
-local mobs_debug = minetest.settings:get_bool("mobs_debug", false) -- Shows helpful debug info above each mob
 local spawn_logging = minetest.settings:get_bool("vlf_logging_mobs_spawn", false)
 local peaceful_mode = minetest.settings:get_bool("only_peaceful_mobs", false)
 
@@ -28,39 +27,31 @@ function mob_class:safe_remove()
 	end,self.object)
 end
 
-function mob_class:update_tag() --update nametag and/or the debug box
-	local tag
-	if mobs_debug then
-		local name = self.name
-		if self.nametag and self.nametag ~= "" then
-			name = self.nametag
-		end
-		local profession = ""
-		if self.name == "mobs_mc:villager" then
-			profession = "profession = "..tostring(self._profession).."\n"
-		end
-		tag = "name = '"..tostring(name).."'\n"..
-		profession..
-		"state = '"..tostring(self.state).."'\n"..
-		"order = '"..tostring(self.order).."'\n"..
-		"attack = "..tostring(self.attack).."\n"..
-		"health = "..tostring(self.health).."\n"..
-		"breath = "..tostring(self.breath).."\n"..
-		"gotten = "..tostring(self.gotten).."\n"..
-		"tamed = "..tostring(self.tamed).."\n"..
-		"owner = "..tostring(self.owner).."\n"..
-		"horny = "..tostring(self.horny).."\n"..
-		"hornytimer = "..tostring(self.hornytimer).."\n"..
-		"runaway_timer = "..tostring(self.runaway_timer).."\n"..
-		"following = "..tostring(self.following).."\n"..
-		"lifetimer = "..tostring(self.lifetimer)
-	else
-		tag = self.nametag
-	end
+function mob_class:get_nametag()
+	return self.nametag or ""
+end
 
+function mob_class:update_tag() --update nametag and/or the debug box
 	self:set_properties({
-		nametag = tag,
+		nametag = self:get_nametag(),
 	})
+end
+
+function mob_class:update_timers(dtime)
+	for k, v in pairs(self._timers) do
+		self._timers[k] = v - dtime
+	end
+end
+
+function mob_class:check_timer(timer, interval)
+	if not self._timers[timer] then
+		self._timers[timer] = math.random() * interval --start with a random time to avoid many timers firing simultaneously
+	end
+	if self._timers[timer] <= 0  then
+		self._timers[timer] = interval
+		return true
+	end
+	return false
 end
 
 function mob_class:jock_to(mob, reletive_pos, rot)
@@ -102,7 +93,10 @@ function mob_class:get_staticdata()
 	for tag, stat in pairs(self) do
 
 		local t = type(stat)
-		if  t ~= "function" and t ~= "nil" and t ~= "userdata" then
+
+		if  t ~= "function"
+		and t ~= "nil"
+		and t ~= "userdata" then
 			tmp[tag] = self[tag]
 		end
 	end
@@ -200,13 +194,15 @@ function mob_class:mob_activate(staticdata, dtime)
 		return
 	end
 
-	local tmp = minetest.deserialize(staticdata)
+	if staticdata then
+		local tmp = minetest.deserialize(staticdata)
 
-	if tmp then
-		for _,stat in pairs(tmp) do
-			self[_] = stat
+		if tmp then
+			for _,stat in pairs(tmp) do
+				self[_] = stat
+			end
+			self.state = nil
 		end
-		self.state = nil
 	end
 
 	if peaceful_mode and not self.persist_in_peaceful then
@@ -293,14 +289,12 @@ function mob_class:mob_activate(staticdata, dtime)
 
 	if not self.wears_armor and self.armor_list then
 		self.armor_list = nil
-	end
-
-	if not self._run_armor_init and self.wears_armor then
-		self.armor_list={helmet="",chestplate="",boots="",leggings=""}
+	elseif not self._run_armor_init and self.wears_armor then
+		self.armor_list = { head = "", torso = "", feet = "", legs = "" }
 		self:set_armor_texture()
 		self._run_armor_init = true
 	end
-
+	
 	if not self._vlf_entity_effects then
 		self._vlf_entity_effects = {}
 	end
@@ -359,7 +353,7 @@ function mob_class:do_states(dtime)
 	end
 end
 
-local function update_timers (self, dtime)
+local function update_attack_timers (self, dtime)
 	if self.pause_timer > 0 then
 		self.pause_timer = self.pause_timer - dtime
 		return true
@@ -385,8 +379,14 @@ function mob_class:on_step(dtime)
 		return
 	end
 
+	if self:check_timer("update_lifetimer", 1) then
+		self.lifetimer = math.max(20, self.lifetimer)
+		self.despawn_immediately = false
+	end
+
 	if self:check_despawn(pos, dtime) then return true end
 
+	self:update_tag()
 	self:slow_mob()
 	if self:falling(pos) then return end
 
@@ -394,7 +394,11 @@ function mob_class:on_step(dtime)
 		self:force_step(dtime)
 	end
 
-	if self:check_suspend() then return end
+	self:update_timers(dtime)
+	if self:check_suspend() then
+		self.object:set_velocity(vector.zero()) --stop movement otherwise mobs keep moving continuously
+		return
+	end
 
 	self:check_water_flow()
 
@@ -405,8 +409,6 @@ function mob_class:on_step(dtime)
 		-- vlf_burning.tick may remove object immediately
 		if not self.object:get_pos() then return end
 	end
-
-	if mobs_debug then self:update_tag() end
 
 	if self.state == "die" then return end
 
@@ -439,7 +441,7 @@ function mob_class:on_step(dtime)
 		end
 	end
 
-	if update_timers(self, dtime) then return end
+	if update_attack_timers(self, dtime) then return end
 
 	self:check_particlespawners(dtime)
 	self:check_item_pickup()
@@ -464,23 +466,6 @@ function mob_class:on_step(dtime)
 		return false
 	end
 end
-
-local timer = 0
-minetest.register_globalstep(function(dtime)
-	timer = timer + dtime
-	if timer < 1 then return end
-	for _, player in pairs(minetest.get_connected_players()) do
-		local pos = player:get_pos()
-		for _, obj in pairs(minetest.get_objects_inside_radius(pos, 47)) do
-			local lua = obj:get_luaentity()
-			if lua and lua.is_mob then
-				lua.lifetimer = math.max(20, lua.lifetimer)
-				lua.despawn_immediately = false
-			end
-		end
-	end
-	timer = 0
-end)
 
 minetest.register_chatcommand("clearmobs",{
 	privs = { maphack = true },

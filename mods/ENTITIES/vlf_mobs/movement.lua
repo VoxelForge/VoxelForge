@@ -105,31 +105,19 @@ end
 
 -- check line of sight (BrunoMine)
 function mob_class:line_of_sight(pos1, pos2, stepsize)
-
 	stepsize = stepsize or 1
-
 	local s, _ = minetest.line_of_sight(pos1, pos2, stepsize)
 
 	-- normal walking and flying mobs can see you through air
-	if s == true then
-		return true
-	end
+	if s then return true end
 
 	-- New pos1 to be analyzed
-	local npos1 = {x = pos1.x, y = pos1.y, z = pos1.z}
-
+	local npos1 = vector.copy(pos1)
 	local r, pos = minetest.line_of_sight(npos1, pos2, stepsize)
 
-	-- Checks the return
 	if r == true then return true end
-
-	-- Nodename found
 	local nn = minetest.get_node(pos).name
-
-	-- Target Distance (td) to travel
 	local td = vector.distance(pos1, pos2)
-
-	-- Actual Distance (ad) traveled
 	local ad = 0
 
 	-- It continues to advance in the line of sight in search of a real
@@ -163,10 +151,8 @@ function mob_class:line_of_sight(pos1, pos2, stepsize)
 		r, pos = minetest.line_of_sight(npos1, pos2, stepsize)
 
 		if r == true then return true end
-
 		-- New Nodename found
 		nn = minetest.get_node(pos).name
-
 	end
 
 	return false
@@ -244,9 +230,7 @@ end
 
 -- copy the 'mob facing cliff_or_danger check' from above, and rework to avoid water
 function mob_class:is_at_water_danger()
-	if not self.object:get_luaentity() or self._jumping_cliff then
-		return false
-	end
+	if self._jumping_cliff then	return false end
 
 	local dir_x, dir_z = self:forward_directions()
 	local cbox = self.object:get_properties().collisionbox
@@ -280,26 +264,19 @@ function mob_class:is_at_water_danger()
 end
 
 function mob_class:should_get_out_of_water()
-
 	if self.breathes_in_water or self.object:get_properties().breath_max == -1 then
 		return false
 	end
 
-	if
-		(
-			minetest.registered_nodes[self.standing_in]
-			and minetest.registered_nodes[self.standing_in].drowning
-			and minetest.registered_nodes[self.standing_in].drowning > 0
-		)
-		and (
-			minetest.registered_nodes[self.standing_on]
-			and minetest.registered_nodes[self.standing_on].drowning
-			and minetest.registered_nodes[self.standing_on].drowning > 0
-		)
+	if minetest.registered_nodes[self.standing_in]
+		and minetest.registered_nodes[self.standing_in].drowning
+		and minetest.registered_nodes[self.standing_in].drowning > 0
+		and minetest.registered_nodes[self.standing_on]
+		and minetest.registered_nodes[self.standing_on].drowning
+		and minetest.registered_nodes[self.standing_on].drowning > 0
 	then
 		return true
 	end
-
 	return false
 end
 
@@ -327,7 +304,12 @@ function mob_class:get_out_of_water()
 	end
 end
 
-function mob_class:env_danger_movement_checks(dtime)
+function mob_class:env_danger_movement_checks()
+	if self.move_in_group ~= false then
+		self:check_herd()
+	end
+	--if not self:check_timer("env_danger_movement_checks", 0.1) then return end
+	-- TODO: if this doesn't happen often enough mobs frequently jump into danger
 	local yaw = 0
 	if self:is_at_water_danger() and self.state ~= "attack" then
 		if math.random(1, 10) <= 6 then
@@ -339,10 +321,6 @@ function mob_class:env_danger_movement_checks(dtime)
 		end
 	elseif self:should_get_out_of_water() and self.state ~= "attack" then
 		self:get_out_of_water()
-	else
-		if self.move_in_group ~= false then
-			self:check_herd(dtime)
-		end
 	end
 
 	if self:is_at_cliff_or_danger() then
@@ -438,9 +416,8 @@ function mob_class:do_jump()
 				})
 			end, self, v)
 
-			if self.jump_sound_cooloff <= 0 then
+			if self:check_timer("jump_sound_cooloff", self.jump_sound_cooloff) then
 				self:mob_sound("jump")
-				self.jump_sound_cooloff = 0.5
 			end
 		else
 			self.facing_fence = true
@@ -461,9 +438,10 @@ function mob_class:do_jump()
 				self.jump_count = 0
 			end
 		end
-
 		return true
 	end
+
+	self.jump_count = 0
 
 	return false
 end
@@ -475,13 +453,9 @@ end
 function mob_class:is_object_in_view(object_list, object_range, node_range, turn_around)
 	local s = self.object:get_pos()
 	local min_dist = object_range + 1
-	local objs = minetest.get_objects_inside_radius(s, object_range)
-	local object_pos = nil
-
-	for n = 1, #objs do
+	local object_pos
+	for _, object in pairs(minetest.get_objects_inside_radius(s, object_range)) do
 		local name = ""
-		local object = objs[n]
-
 		if object:is_player() then
 			if not (vlf_mobs.invis[ object:get_player_name() ]
 			or self.owner == object:get_player_name()
@@ -494,11 +468,11 @@ function mob_class:is_object_in_view(object_list, object_range, node_range, turn
 				end
 			end
 		else
-			local obj = object:get_luaentity()
+			local ent = object:get_luaentity()
 
-			if obj then
-				object = obj.object
-				name = obj.name or ""
+			if ent then
+				object = ent.object
+				name = ent.name or ""
 			end
 		end
 
@@ -520,7 +494,6 @@ function mob_class:is_object_in_view(object_list, object_range, node_range, turn
 	end
 
 	if not object_pos then
-
 		-- find specific node to avoid or runaway from
 		local p = minetest.find_node_near(s, node_range, object_list, true)
 		local dist = p and vector.distance(p, s)
@@ -538,39 +511,25 @@ function mob_class:is_object_in_view(object_list, object_range, node_range, turn
 
 		self:set_yaw(yaw, 4)
 	end
-
 	return object_pos ~= nil
 end
 
 -- should mob follow what I'm holding ?
 function mob_class:follow_holding(clicker)
 	if self.nofollow then return false end
-
 	if vlf_mobs.invis[clicker:get_player_name()] then
 		return false
 	end
-
 	local item = clicker:get_wielded_item()
-	local t = type(self.follow)
-
-	-- single item
-	if t == "string"
-	and item:get_name() == self.follow then
-		return true
-
-	-- multiple items
-	elseif t == "table" and in_list(self.follow, item:get_name()) then
+	if in_list(self.follow, item:get_name()) then
 		return true
 	end
-
 	return false
 end
 
 
 -- find and replace what mob is looking for (grass, wheat etc.)
 function mob_class:replace(pos)
-
-
 	if not self.replace_rate
 	or not self.replace_what
 	or self.child == true
@@ -582,7 +541,6 @@ function mob_class:replace(pos)
 	local what, with, y_offset
 
 	if type(self.replace_what[1]) == "table" then
-
 		local num = math.random(#self.replace_what)
 
 		what = self.replace_what[num][1] or ""
@@ -598,7 +556,6 @@ function mob_class:replace(pos)
 
 	local node = minetest.get_node(pos)
 	if node.name == what then
-
 		local oldnode = {name = what, param2 = node.param2}
 		local newnode = {name = with, param2 = node.param2}
 		local on_replace_return = false
@@ -606,9 +563,7 @@ function mob_class:replace(pos)
 			on_replace_return = self.on_replace(self, pos, oldnode, newnode)
 		end
 
-
 		if on_replace_return ~= false then
-
 			if mobs_griefing then
 				minetest.after(self.replace_delay, function()
 					if self and self.object and self.object:get_velocity() and self.health > 0 then
@@ -622,20 +577,21 @@ end
 
 -- find someone to runaway from
 function mob_class:check_runaway_from()
-	if not self.runaway_from and self.state ~= "flop" then
+	if not self:check_timer("check_runaway_from", 1) then return end
+	if (not self.runaway_from and self.state ~= "flop") or self.state == "runaway" then
 		return
 	end
 	if self:is_object_in_view(self.runaway_from, self.view_range, self.view_range / 2, true) then
 		self.state = "runaway"
 		self.runaway_timer = 3
 		self.following = nil
+		self:set_animation("run")
 	end
 end
 
 
 -- follow player if owner or holding item, if fish outta water then flop
 function mob_class:follow_flop()
-
 	-- find player to follow
 	if (self.follow ~= ""
 	or self.order == "follow")
@@ -644,15 +600,10 @@ function mob_class:follow_flop()
 	and self.order ~= "sit"
 	and self.state ~= "runaway" then
 
-		local players = minetest.get_connected_players()
-
-		for n = 1, #players do
-
-			if (self:object_in_range(players[n]))
-			and not vlf_mobs.invis[ players[n]:get_player_name() ] then
-
-				self.following = players[n]
-
+		for _, player in pairs(minetest.get_connected_players()) do
+			if (self:object_in_range(player))
+			and not vlf_mobs.invis[ player:get_player_name() ] then
+				self.following = player
 				break
 			end
 		end
@@ -684,23 +635,10 @@ function mob_class:follow_flop()
 
 	-- follow that thing
 	if self.following then
-
 		local s = self.object:get_pos()
-		local p
-
-		if self.following:is_player() then
-
-			p = self.following:get_pos()
-
-		elseif self.following.get_luaentity then
-
-			p = self.following:get_pos()
-		end
-
+		local p = self.following:get_pos()
 		if p then
-
 			local dist = vector.distance(p, s)
-
 			-- dont follow if out of range
 			if (not self:object_in_follow_range(self.following)) then
 				self.following = nil
@@ -709,19 +647,13 @@ function mob_class:follow_flop()
 					x = p.x - s.x,
 					z = p.z - s.z
 				}
-
 				local yaw = (atan(vec.z / vec.x) +math.pi/ 2) - self.rotate
-
 				if p.x > s.x then yaw = yaw +math.pi end
-
 				self:set_yaw( yaw, 2.35)
-
 				-- anyone but standing npc's can move along
 				if dist > 3
 				and self.order ~= "stand" then
-
 					self:set_velocity(self.follow_velocity)
-
 					if self.walk_chance ~= 0 then
 						self:set_animation( "run")
 					end
@@ -729,7 +661,6 @@ function mob_class:follow_flop()
 					self:set_velocity(0)
 					self:set_animation( "stand")
 				end
-
 				return
 			end
 		end
@@ -792,13 +723,11 @@ function mob_class:go_to_pos(b)
 	self:set_animation("walk")
 end
 
-local check_herd_timer = 0
-function mob_class:check_herd(dtime)
+function mob_class:check_herd()
+	if not self:check_timer("check_herd", 6) then return end
+	if self:should_get_out_of_water() then return end
 	local pos = self.object:get_pos()
 	if not pos then return end
-	check_herd_timer = check_herd_timer + dtime
-	if check_herd_timer < 4 then return end
-	check_herd_timer = 0
 	for _,o in pairs(minetest.get_objects_inside_radius(pos,self.view_range)) do
 		local l = o:get_luaentity()
 		local p,y
@@ -868,10 +797,7 @@ function mob_class:do_states_walk()
 						x = lp.x - s.x,
 						z = lp.z - s.z
 					}
-
 					yaw = (atan(vec.z / vec.x) +math.pi/ 2) - self.rotate
-
-
 					if lp.x > s.x  then yaw = yaw +math.pi end
 
 					-- look towards land and move in that direction
@@ -882,7 +808,6 @@ function mob_class:do_states_walk()
 			end
 		end
 	end
-
 	if not is_in_danger then
 		local distance = self.avoid_distance or self.view_range / 2
 		-- find specific node to avoid
@@ -894,7 +819,6 @@ function mob_class:do_states_walk()
 			self:set_yaw(yaw, 8)
 		end
 	end
-
 	-- stand for great fall or danger or fence in front
 	local cliff_or_danger = false
 	if is_in_danger then
@@ -922,7 +846,6 @@ function mob_class:do_states_walk()
 		local yaw = self.object:get_yaw() or 0
 		self:set_yaw( yaw + 0.78, 8)
 	else
-
 		self:set_velocity(self.walk_velocity)
 
 		if self:flight_check()
@@ -940,7 +863,6 @@ function mob_class:do_states_stand()
 	local yaw = self.object:get_yaw() or 0
 
 	if math.random(1, 4) == 1 then
-
 		local s = self.object:get_pos()
 		local objs = minetest.get_objects_inside_radius(s, 3)
 		local lp
@@ -950,7 +872,6 @@ function mob_class:do_states_stand()
 				break
 			end
 		end
-
 		-- look at any players nearby, otherwise turn randomly
 		if lp and self.look_at_players then
 
@@ -958,22 +879,21 @@ function mob_class:do_states_stand()
 				x = lp.x - s.x,
 				z = lp.z - s.z
 			}
-
 			yaw = (atan(vec.z / vec.x) +math.pi/ 2) - self.rotate
-
 			if lp.x > s.x then yaw = yaw +math.pi end
 		else
 			yaw = yaw + math.random(-0.5, 0.5)
 		end
-
 		self:set_yaw( yaw, 8)
 	end
 	if self.order == "sit" then
 		self:set_animation( "sit")
 		self:set_velocity(0)
+		self:slow_mob()
 	else
 		self:set_animation( "stand")
 		self:set_velocity(0)
+		self:slow_mob()
 	end
 
 	-- npc's ordered to stand stay standing
@@ -1011,37 +931,25 @@ function mob_class:do_states_runaway()
 	end
 end
 
-
-
-
-
-
 function mob_class:check_smooth_rotation(dtime)
 	-- smooth rotation by ThomasMonroe314
 	if self._turn_to then
 		self:set_yaw( self._turn_to, .1)
 	end
-
 	if self.delay and self.delay > 0 then
-
 		local yaw = self.object:get_yaw() or 0
-
 		if self.delay == 1 then
 			yaw = self.target_yaw
 		else
 			local dif = math.abs(yaw - self.target_yaw)
-
 			if yaw > self.target_yaw then
-
 				if dif > math.pi then
 					dif = 2 * math.pi - dif -- need to add
 					yaw = yaw + dif / self.delay
 				else
 					yaw = yaw - dif / self.delay -- need to subtract
 				end
-
 			elseif yaw < self.target_yaw then
-
 				if dif >math.pi then
 					dif = 2 * math.pi - dif
 					yaw = yaw - dif / self.delay -- need to subtract
@@ -1049,17 +957,14 @@ function mob_class:check_smooth_rotation(dtime)
 					yaw = yaw + dif / self.delay -- need to add
 				end
 			end
-
 			if yaw > (math.pi * 2) then yaw = yaw - (math.pi * 2) end
 			if yaw < 0 then yaw = yaw + (math.pi * 2) end
 		end
-
 		self.delay = self.delay - 1
 		if self.shaking then
 			yaw = yaw + (math.random() * 2 - 1) * 5 * dtime
 		end
 		self.object:set_yaw(yaw)
-		self:update_roll()
 	end
 	-- end rotation
 end
