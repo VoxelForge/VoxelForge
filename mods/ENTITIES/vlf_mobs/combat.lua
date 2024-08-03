@@ -361,7 +361,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 		if self.protected and minetest.is_protected(self.object:get_pos(), hitter_playername) then
 			return
 		end
-		
+
 		vlf_entity_effects.update_haste_and_fatigue(hitter)
 		if minetest.is_creative_enabled(hitter_playername) then
 			-- Instantly kill mob after a slight delay.
@@ -404,7 +404,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 		damage = damage + (tool_capabilities.damage_groups[group] or 0)
 			* tmp * ((armor[group] or 0) / 100.0)
 	end
-	
+
 	-- strength and weakness effects
 	local strength = vlf_entity_effects.get_effect(hitter, "strength")
 	local weakness = vlf_entity_effects.get_effect(hitter, "weakness")
