@@ -3,6 +3,12 @@
 [![ContentDB](https://content.minetest.net/packages/VoxelForge/voxelforge/shields/downloads/)](https://content.minetest.net/packages/VoxelForge/voxelforge/)
 [![Luacheck](https://github.com/VoxelForge/VoxelForge/actions/workflows/luacheck.yml/badge.svg)](https://github.com/VoxelForge/VoxelForge/actions/workflows/luacheck.yml)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/VoxelForge/VoxelForge)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/VoxelForge/VoxelForge?include_prereleases)](https://github.com/VoxelForge/VoxelForge/releases/latest)
+[![GitHub All Releases](https://img.shields.io/github/downloads/VoxelForge/VoxelForge/total)](https://github.com/VoxelForge/VoxelForge/releases)
+[![GitHub issues](https://img.shields.io/github/issues/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/issues)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/VoxelForge/VoxelForge)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/pulls)
+[![GitHub](https://img.shields.io/github/license/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/blob/master/LICENSE)
 
 ___________________________________________________________________________________________________________________________________________________________________________________
 
