@@ -2,43 +2,8 @@ local S = minetest.get_translator(minetest.get_current_modname())
 local F = minetest.formspec_escape
 local C = minetest.colorize
 
--- Shulker boxes
-local boxtypes = {
-	white = S("White Shulker Box"),
-	grey = S("Light Grey Shulker Box"),
-	orange = S("Orange Shulker Box"),
-	cyan = S("Cyan Shulker Box"),
-	magenta = S("Magenta Shulker Box"),
-	violet = S("Purple Shulker Box"),
-	lightblue = S("Light Blue Shulker Box"),
-	blue = S("Blue Shulker Box"),
-	yellow = S("Yellow Shulker Box"),
-	brown = S("Brown Shulker Box"),
-	green = S("Lime Shulker Box"),
-	dark_green = S("Green Shulker Box"),
-	pink = S("Pink Shulker Box"),
-	red = S("Red Shulker Box"),
-	dark_grey = S("Grey Shulker Box"),
-	black = S("Black Shulker Box"),
-}
-
-local shulker_mob_textures = {
-	white = "mobs_mc_shulker_white.png",
-	grey = "mobs_mc_shulker_silver.png",
-	orange = "mobs_mc_shulker_orange.png",
-	cyan = "mobs_mc_shulker_cyan.png",
-	magenta = "mobs_mc_shulker_magenta.png",
-	violet = "mobs_mc_shulker_purple.png",
-	lightblue = "mobs_mc_shulker_light_blue.png",
-	blue = "mobs_mc_shulker_blue.png",
-	yellow = "mobs_mc_shulker_yellow.png",
-	brown = "mobs_mc_shulker_brown.png",
-	green = "mobs_mc_shulker_lime.png",
-	dark_green = "mobs_mc_shulker_green.png",
-	pink = "mobs_mc_shulker_pink.png",
-	red = "mobs_mc_shulker_red.png",
-	dark_grey = "mobs_mc_shulker_gray.png",
-	black = "mobs_mc_shulker_black.png",
+local messy_textures = {
+	grey = "mobs_mc_shulker_gray.png",
 }
 
 local canonical_shulker_color = "violet"
@@ -69,6 +34,7 @@ local function formspec_shulker_box(name)
 		"listring[current_player;main]",
 	})
 end
+vlf_chests.formspec_shulker_box = formspec_shulker_box
 
 local function set_shulkerbox_meta(nmeta, imeta)
 	local name = imeta:get_string("name")
@@ -77,8 +43,10 @@ local function set_shulkerbox_meta(nmeta, imeta)
 	nmeta:set_string("formspec", formspec_shulker_box(name))
 end
 
-for color, desc in pairs(boxtypes) do
-	local mob_texture = shulker_mob_textures[color]
+for c, cdef in pairs(vlf_dyes.colors) do
+	local mob_texture = messy_textures[c] or "mobs_mc_shulker_"..c..".png"
+	local color = cdef.vlf2 or c --use the "legacy" colorname if present to preserve all itemstrings
+	local desc = S("@1 Shulker Box", cdef.readable_name)
 	local is_canonical = color == canonical_shulker_color
 	local longdesc, usagehelp, create_entry, entry_name
 	if doc then
@@ -136,12 +104,20 @@ for color, desc in pairs(boxtypes) do
 		end,
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
 			local nmeta = minetest.get_meta(pos)
-			local imetadata = itemstack:get_metadata()
-			local iinv_main = minetest.deserialize(imetadata)
+			local imeta = itemstack:get_meta()
+
+			-- Convert old itemstacks to not use get_metadata()
+			if not imeta:contains("inv") and
+					(itemstack:get_metadata() ~= "") then
+				imeta:set_string("inv", itemstack:get_metadata())
+				itemstack:set_metadata("") -- clear
+			end
+
+			local iinv_main = minetest.deserialize(imeta:get_string("inv"))
 			local ninv = nmeta:get_inventory()
 			ninv:set_list("main", iinv_main)
 			ninv:set_size("main", 9 * 3)
-			set_shulkerbox_meta(nmeta, itemstack:get_meta())
+			set_shulkerbox_meta(nmeta, imeta)
 
 			if minetest.is_creative_enabled(placer:get_player_name()) then
 				if not ninv:is_empty("main") then
@@ -158,11 +134,11 @@ for color, desc in pairs(boxtypes) do
 			if minetest.registered_nodes[dropnode.name].buildable_to then
 				minetest.set_node(droppos, { name = small_name, param2 = minetest.dir_to_facedir(dropdir) })
 				local ninv = minetest.get_inventory({ type = "node", pos = droppos })
-				local imetadata = stack:get_metadata()
-				local iinv_main = minetest.deserialize(imetadata)
+				local imeta = stack:get_meta()
+				local iinv_main = minetest.deserialize(imeta:get_string("inv"))
 				ninv:set_list("main", iinv_main)
 				ninv:set_size("main", 9 * 3)
-				set_shulkerbox_meta(minetest.get_meta(droppos), stack:get_meta())
+				set_shulkerbox_meta(minetest.get_meta(droppos), imeta)
 				stack:take_item()
 			end
 			return stack
@@ -213,12 +189,20 @@ for color, desc in pairs(boxtypes) do
 		end,
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
 			local nmeta = minetest.get_meta(pos)
-			local imetadata = itemstack:get_metadata()
-			local iinv_main = minetest.deserialize(imetadata)
+			local imeta = itemstack:get_meta()
+
+			-- Convert old itemstacks to not use get_metadata()
+			if not imeta:contains("inv") and
+					(itemstack:get_metadata() ~= "") then
+				imeta:set_string("inv", itemstack:get_metadata())
+				itemstack:set_metadata("") -- clear
+			end
+
+			local iinv_main = minetest.deserialize(imeta:get_string("inv"))
 			local ninv = nmeta:get_inventory()
 			ninv:set_list("main", iinv_main)
 			ninv:set_size("main", 9 * 3)
-			set_shulkerbox_meta(nmeta, itemstack:get_meta())
+			set_shulkerbox_meta(nmeta, imeta)
 
 			if minetest.is_creative_enabled(placer:get_player_name()) then
 				if not ninv:is_empty("main") then
@@ -252,7 +236,7 @@ for color, desc in pairs(boxtypes) do
 			local boxitem_meta = boxitem:get_meta()
 			boxitem_meta:set_string("description", meta:get_string("description"))
 			boxitem_meta:set_string("name", meta:get_string("name"))
-			boxitem:set_metadata(data)
+			boxitem_meta:set_string("inv", data)
 
 			if minetest.is_creative_enabled("") then
 				if not inv:is_empty("main") then
@@ -329,14 +313,3 @@ minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv
 		return itemstack
 	end
 end)
-
-minetest.register_lbm({
-	label = "Update shulker box formspecs (0.72.0)",
-	name = "vlf_chests:update_shulker_box_formspecs_0_72_0",
-	nodenames = { "group:shulker_box" },
-	run_at_every_load = false,
-	action = function(pos, node)
-		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec", formspec_shulker_box(meta:get_string("name")))
-	end,
-})
