@@ -85,35 +85,17 @@ end
 
 -- play sound
 function mob_class:mob_sound(soundname, is_opinion, fixed_pitch)
+	local soundinfo = self.child and self.sounds_child or self.sounds
+	local sound = soundinfo and soundinfo[soundname]
 
-	local soundinfo
-	if self.sounds_child and self.child then
-		soundinfo = self.sounds_child
-	elseif self.sounds then
-		soundinfo = self.sounds
-	end
-	if not soundinfo then
-		return
-	end
-	local sound = soundinfo[soundname]
 	if sound then
-		if is_opinion and self.opinion_sound_cooloff > 0 then
+		if is_opinion and not self:check_timer("opinion_sound_cooloff", self.opinion_sound_cooloff) then
 			return
 		end
 		local pitch
 		if not fixed_pitch then
-			local base_pitch = soundinfo.base_pitch
-			if not base_pitch then
-				base_pitch = 1
-			end
-			if self.child and (not self.sounds_child) then
-				-- Children have higher pitch
-				pitch = base_pitch * 1.5
-			else
-				pitch = base_pitch
-			end
-			-- randomize the pitch a bit
-			pitch = pitch + math.random(-10, 10) * 0.005
+			local base_pitch = soundinfo.base_pitch or 1
+			pitch = ( self.child and not self.sounds_child and base_pitch * 1.5 or base_pitch ) + math.random(-10, 10) * 0.005 -- randomize the pitch a bit
 		end
 		-- Should be 0.1 to 0.2 for mobs. Cow and zombie farms loud. At least have cool down.
 		local sound_params = self.sound_params and table.copy(self.sound_params) or {
@@ -122,7 +104,6 @@ function mob_class:mob_sound(soundname, is_opinion, fixed_pitch)
 		}
 		sound_params.object = self.object
 		minetest.sound_play(sound, sound_params, true)
-		self.opinion_sound_cooloff = 1
 	end
 end
 
@@ -241,8 +222,6 @@ function mob_class:set_animation(anim, fixed_frame)
 	if self.state == "die" and anim ~= "die" and anim ~= "stand" then
 		return
 	end
-
-
 
 	if self:flight_check() and self.fly and anim == "walk" then anim = "fly" end
 

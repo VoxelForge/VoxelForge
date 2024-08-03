@@ -1,6 +1,6 @@
 # vlf_mobs
 This mod was originally based of off "mobs_redo" (https://notabug.org/TenPlus1/mobs_redo) by TenPlus1.
-Heavily modified and adapted for mineclonia / vlf by several people.
+Heavily modified and adapted for mineclonia / vlf2 by several people.
 
 ## Registering mobs and mob definition
 
@@ -427,6 +427,8 @@ These functions can be called from the entity as well as overwritten on a per-mo
 	* sets the nametag of the mob
  * mob:set_properties(property_table)
 	* works in the same way as mob.object:set_properties() would except that it will not set fields that are already set to the given value, potentially saving network bandwidth.
+ * mob:check_timer(timer, interval)
+	* This returns true if the timer identified by `timer` has reached 0 and resets it to interval, returns false otherwise. If the timer was never run before it is set to a random value < interval to avoid lots of timers firing simultaneously.
 
 #### Breeding
  * mob:feed_tame(clicker, feed_count, breed, tame, notake)
@@ -584,7 +586,8 @@ These functions can be called from the entity as well as overwritten on a per-mo
 	* Sets armor textures from mob.armor_list
  * mob:check_item_pickup()
 	* Checks and makes the mob pick up nearby item entities
-
+ * mob:is_drop(itemstack)
+	* returns true if the given itemstack is dropped by the mob
 #### Mount
  * mob:on_detach_child(child)
 	* Kicks out "driver" (rider) if mob is a child and runs custom detach_child function.
@@ -698,7 +701,7 @@ position.
  * 'offset' position table containing offset values
 
 
-`vlf_mobs.drive(self, move_animation, stand_animation, can_fly, dtime)`
+`mob:drive(move_animation, stand_animation, can_fly, dtime)`
 
 This function allows an attached player to move the mob around and animate it at
 same time.
@@ -708,20 +711,6 @@ same time.
  * 'stand_animation' string containing standing animation e.g. "stand"
  * 'can_fly'		 if true then jump and sneak controls will allow mob to fly up and down
  * 'dtime'			tick time used inside drive function
-
-
-`vlf_mobs.fly(self, dtime, speed, can_shoot, arrow_entity, move_animation, stand_animation)`
-
-This function allows an attached player to fly the mob around using directional
-controls.
-
- * 'self'			mob information
- * 'dtime'			tick time used inside fly function
- * 'speed'			speed of flight
- * 'can_shoot'		true if mob can fire arrow (sneak and left mouse button fires)
- * 'arrow_entity'	name of arrow entity used for firing
- * 'move_animation'string containing name of pre-defined animation e.g. "walk" or "fly" etc.
- * 'stand_animation' string containing name of pre-defined animation e.g. "stand" or "blink" etc.
 
 Note: animation names above are from the pre-defined animation lists inside mob
 registry without extensions.

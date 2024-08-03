@@ -2,7 +2,7 @@ local mob_class = vlf_mobs.mob_class
 
 local damage_enabled = minetest.settings:get_bool("enable_damage", true)
 local peaceful_mode = minetest.settings:get_bool("only_peaceful_mobs", false)
-local mobs_griefing = minetest.settings:get_bool("mobs_griefing") ~= false
+local mobs_griefing = minetest.settings:get_bool("mobs_griefing", true)
 
 local stuck_timeout = 3 -- how long before mob gets stuck in place and starts searching
 local stuck_path_timeout = 10 -- how long will mob follow path before giving up
@@ -11,42 +11,27 @@ local enable_pathfinding = true
 
 local TIME_TO_FORGET_TARGET = 15
 
-local atann = math.atan
 local function atan(x)
 	if not x or minetest.is_nan(x) then
 		return 0
 	else
-		return atann(x)
+		return math.atan(x)
 	end
 end
 
--- get node but use fallback for nil or unknown
-local function node_ok(pos, fallback)
-	fallback = fallback or vlf_mobs.fallback_node
-	local node = minetest.get_node_or_nil(pos)
-	if node and minetest.registered_nodes[node.name] then
-		return node
-	end
-	return minetest.registered_nodes[fallback]
-end
-
--- check if daytime and also if mob is docile during daylight hours
 function mob_class:day_docile()
-	if self.docile_by_day == false then
-		return false
-	elseif self.docile_by_day == true
-	and self.time_of_day > 0.2
-	and self.time_of_day < 0.8 then
+	if self.docile_by_day and self.time_of_day > 0.2 and self.time_of_day < 0.8 then
 		return true
 	end
+	return false
 end
 
-function mob_class:do_attack(player)
+function mob_class:do_attack(obj)
 	if self.state == "attack" or self.state == "die" then
 		return
 	end
 
-	self.attack = player
+	self.attack = obj
 	self:set_state("attack")
 
 	-- TODO: Implement war_cry sound without being annoying
@@ -56,31 +41,26 @@ function mob_class:do_attack(player)
 end
 
 -- blast damage to entities nearby
-local function entity_physics(pos,radius)
-
+local function blast_damage(pos, radius)
 	radius = radius * 2
 
-	local objs = minetest.get_objects_inside_radius(pos, radius)
-	local obj_pos, dist
+	for _, obj in pairs(minetest.get_objects_inside_radius(pos, radius)) do
 
-	for n = 1, #objs do
-
-		obj_pos = objs[n]:get_pos()
-
-		dist = vector.distance(pos, obj_pos)
+		local obj_pos = obj:get_pos()
+		local dist = vector.distance(pos, obj_pos)
 		if dist < 1 then dist = 1 end
 
 		local damage = math.floor((4 / dist) * radius)
 
 		-- punches work on entities AND players
-		objs[n]:punch(objs[n], 1.0, {
+		obj:punch(obj, 1.0, {
 			full_punch_interval = 1.0,
 			damage_groups = {fleshy = damage},
-		}, pos)
+		}, vector.direction(pos, obj_pos))
 	end
 end
 
-function mob_class:entity_physics(pos,radius) return entity_physics(pos,radius) end
+function mob_class:entity_physics(pos,radius) return blast_damage(pos,radius) end
 
 local los_switcher = false
 local height_switcher = false
@@ -129,8 +109,7 @@ function mob_class:smart_mobs(s, p, dist, dtime)
 		end -- can see target!
 	end
 
-	if (self.path.stuck_timer > stuck_timeout and not self.path.following) then
-
+	if self:check_timer("stuck_timer", stuck_timeout) and not self.path.following  then
 		use_pathfind = true
 		self.path.stuck_timer = 0
 
@@ -142,11 +121,9 @@ function mob_class:smart_mobs(s, p, dist, dtime)
 		end, self)
 	end
 
-	if (self.path.stuck_timer > stuck_path_timeout and self.path.following) then
+	if self:check_timer("stuck_path_timer", stuck_path_timeout) and self.path.following then
 
 		use_pathfind = true
-		self.path.stuck_timer = 0
-
 		minetest.after(1, function(self)
 			if not self.object:get_luaentity() then
 				return
@@ -208,97 +185,7 @@ function mob_class:smart_mobs(s, p, dist, dtime)
 		if not self.path.way then
 
 			self.path.following = false
-
-			 -- lets make way by digging/building if not accessible
-			if self.pathfinding == 2 and mobs_griefing then
-
-				-- is player higher than mob?
-				if s.y < p1.y then
-
-					-- build upwards
-					if not minetest.is_protected(s, "") then
-
-						local ndef1 = minetest.registered_nodes[self.standing_in]
-
-						if ndef1 and (ndef1.buildable_to or ndef1.groups.liquid) then
-
-								minetest.set_node(s, {name = vlf_mobs.fallback_node})
-						end
-					end
-					local props = self.object:get_properties()
-					local sheight = math.ceil(props.collisionbox[5]) + 1
-
-					-- assume mob is 2 blocks high so it digs above its head
-					s.y = s.y + sheight
-
-					-- remove one block above to make room to jump
-					if not minetest.is_protected(s, "") then
-
-						local node1 = node_ok(s, "air").name
-						local ndef1 = minetest.registered_nodes[node1]
-
-						if node1 ~= "air"
-						and node1 ~= "ignore"
-						and ndef1
-						and not ndef1.groups.level
-						and not ndef1.groups.unbreakable
-						and not ndef1.groups.liquid then
-
-							minetest.set_node(s, {name = "air"})
-							minetest.add_item(s, ItemStack(node1))
-
-						end
-					end
-
-					s.y = s.y - sheight
-					self.object:set_pos({x = s.x, y = s.y + 2, z = s.z})
-
-				else -- dig 2 blocks to make door toward player direction
-
-					local yaw1 = self.object:get_yaw() + math.pi / 2
-					local p1 = {
-						x = s.x + math.cos(yaw1),
-						y = s.y,
-						z = s.z + math.sin(yaw1)
-					}
-
-					if not minetest.is_protected(p1, "") then
-
-						local node1 = node_ok(p1, "air").name
-						local ndef1 = minetest.registered_nodes[node1]
-
-						if node1 ~= "air"
-							and node1 ~= "ignore"
-							and ndef1
-							and not ndef1.groups.level
-							and not ndef1.groups.unbreakable
-							and not ndef1.groups.liquid then
-
-							minetest.add_item(p1, ItemStack(node1))
-							minetest.set_node(p1, {name = "air"})
-						end
-
-						p1.y = p1.y + 1
-						node1 = node_ok(p1, "air").name
-						ndef1 = minetest.registered_nodes[node1]
-
-						if node1 ~= "air"
-						and node1 ~= "ignore"
-						and ndef1
-						and not ndef1.groups.level
-						and not ndef1.groups.unbreakable
-						and not ndef1.groups.liquid then
-
-							minetest.add_item(p1, ItemStack(node1))
-							minetest.set_node(p1, {name = "air"})
-						end
-
-					end
-				end
-			end
-
 			-- will try again in 2 seconds
-			self.path.stuck_timer = stuck_timeout - 2
 		elseif s.y < p1.y and (not self.fly) then
 			self:do_jump() --add jump to pathfinding
 			self.path.following = true
@@ -344,6 +231,7 @@ end
 
 function mob_class:attack_specific()
 	if not self.specific_attack or
+	not self.attack_type or
 	self.state == "attack" or
 	(not self.damage or self.damage == 0) or
 	(self.passive and not self.aggro)
@@ -367,7 +255,7 @@ function mob_class:attack_specific()
 end
 
 function mob_class:attack_monsters()
-	if self.type ~= "npc" or self.state == "attack" then return end
+	if not self.attack_type or self.type ~= "npc" or self.state == "attack" then return end
 
 	local pos = self.object:get_pos()
 	local objs = minetest.get_objects_inside_radius(pos, self.view_range)
@@ -375,6 +263,7 @@ function mob_class:attack_monsters()
 		local l = obj:get_luaentity()
 		if l and l.type == "monster" and self:target_visible(pos, obj) then
 			self:do_attack(obj)
+			break
 		end
 	end
 end
@@ -415,7 +304,7 @@ function mob_class:safe_boom(pos, strength, no_remove)
 		max_hear_distance = self.sounds and self.sounds.distance or 32
 	}, true)
 	local radius = strength
-	entity_physics(pos, radius)
+	blast_damage(pos, radius)
 	vlf_mobs.effect(pos, 32, "vlf_particles_smoke.png", radius * 3, radius * 5, radius, 1, 0)
 	if not no_remove then
 		if self.is_mob then
@@ -446,6 +335,13 @@ end
 -- deal damage and effects when mob punched
 function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 
+	local is_player = hitter and hitter:is_player()
+	local hitter_playername = is_player and hitter:get_player_name()
+
+	if hitter_playername and hitter_playername ~= "" then
+		doc.mark_entry_as_revealed(hitter_playername, "mobs", self.name)
+	end
+
 	if self.do_punch then
 		if self.do_punch(self, hitter, tflp, tool_capabilities, dir) == false then
 			return
@@ -458,17 +354,16 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 		return
 	end
 
-	local is_player = hitter:is_player()
-
 	if is_player then
 		self.last_player_hit_time = minetest.get_gametime()
-		self.last_player_hit_name = hitter:get_player_name()
+		self.last_player_hit_name = hitter_playername
 		-- is mob protected?
-		if self.protected and minetest.is_protected(self.object:get_pos(), hitter:get_player_name()) then
+		if self.protected and minetest.is_protected(self.object:get_pos(), hitter_playername) then
 			return
 		end
+
 		vlf_entity_effects.update_haste_and_fatigue(hitter)
-		if minetest.is_creative_enabled(hitter:get_player_name()) then
+		if minetest.is_creative_enabled(hitter_playername) then
 			-- Instantly kill mob after a slight delay.
 			-- Without this delay the node behind would be dug by the punch as well.
 			minetest.after(0.15, function(self)
@@ -489,7 +384,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 
 	-- exhaust attacker
 	if is_player then
-		vlf_hunger.exhaust(hitter:get_player_name(), vlf_hunger.EXHAUST_ATTACK)
+		vlf_hunger.exhaust(hitter_playername, vlf_hunger.EXHAUST_ATTACK)
 	end
 
 	-- calculate mob damage
@@ -534,24 +429,18 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 		punch_interval = tool_capabilities.full_punch_interval or 1.4
 	end
 
-	-- add weapon wear manually
-	-- Required because we have custom health handling ("health" property)
-	if minetest.is_creative_enabled("") ~= true
-	and tool_capabilities then
-		if tool_capabilities.punch_attack_uses then
-			-- Without this delay, the wear does not work. Quite hacky ...
-			minetest.after(0, function(name)
-				local player = minetest.get_player_by_name(name)
-				if not player then return end
-				local weapon = hitter:get_wielded_item(player)
-				local def = weapon:get_definition()
-				if def.tool_capabilities and def.tool_capabilities.punch_attack_uses then
-					local wear = math.floor(65535/tool_capabilities.punch_attack_uses)
-					weapon:add_wear(wear)
-					hitter:set_wielded_item(weapon)
-				end
-			end, hitter:get_player_name())
-		end
+	-- To enable our custom health handling ("health" property) we use the
+	-- "immortal" group to disable engine damage and wear handling, so we
+	-- need to roll our own.
+	if is_player
+	and minetest.is_creative_enabled(hitter_playername) ~= true
+	and tool_capabilities
+	and tool_capabilities.punch_attack_uses
+	and tool_capabilities.punch_attack_uses > 0 then
+		local weapon = hitter:get_wielded_item()
+		local wear = math.floor(65535/tool_capabilities.punch_attack_uses)
+		weapon:add_wear(wear)
+		hitter:set_wielded_item(weapon)
 	end
 
 	local die = false
@@ -624,7 +513,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 			if hitter then
 				luaentity = hitter:get_luaentity()
 			end
-			if hitter and is_player then
+			if is_player then
 				local wielditem = hitter:get_wielded_item()
 				kb = kb + 3 * vlf_enchanting.get_enchantment(wielditem, "knockback")
 			elseif luaentity and luaentity._knockback then
@@ -655,17 +544,16 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 	end -- END if damage
 
 	-- if skittish then run away
-	if hitter and is_player and hitter:get_pos() and not die and self.runaway == true and self.state ~= "flop" then
+	if hitter and hitter:get_pos() and not die and self.runaway == true and self.state ~= "flop" then
 		self:do_runaway(hitter)
 	end
 
-	local name = hitter:get_player_name() or ""
 	-- attack puncher
 	if ( self.passive == false or self.retaliates )
 	and self.state ~= "flop"
 	and (self.child == false or self.type == "monster")
-	and hitter:get_player_name() ~= self.owner
-	and not vlf_mobs.invis[ name ] then
+	and hitter_playername ~= self.owner
+	and not vlf_mobs.invis[ hitter_playername or ""] then
 		if not die then
 			-- attack whoever punched mob
 			self:set_state("")
@@ -675,20 +563,22 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 	end
 
 	-- alert others to the attack
-	self:call_group_attack(hitter)
+	if hitter and hitter:get_pos() then
+		self:call_group_attack(hitter)
+	end
 end
 
 function mob_class:do_runaway(hitter)
 	self:set_yaw( minetest.dir_to_yaw(vector.direction(hitter:get_pos(), self.object:get_pos())))
 	self:set_velocity( self.run_velocity)
 	self:set_state("runaway")
+	self:set_animation("run")
 	self.runaway_timer = 0
 	self.following = nil
 end
 
 function mob_class:call_group_attack(hitter)
-	local name = hitter:get_player_name() or ""
-	if not hitter or not hitter:get_pos() then return end
+	local name = hitter:get_player_name()
 	for _, obj in pairs(minetest.get_objects_inside_radius(hitter:get_pos(), self.view_range)) do
 		local ent = obj:get_luaentity()
 		if ent then
@@ -716,15 +606,10 @@ end
 
 function mob_class:check_aggro(dtime)
 	if not self.aggro or not self.attack then return end
-	if not self._check_aggro_timer or self._check_aggro_timer > 5 then
-		self._check_aggro_timer = 0
-		if not self.attack:get_pos() or vector.distance(self.attack:get_pos(),self.object:get_pos()) > 128 then
-			self.aggro = nil
-			self.attack = nil
-			self:set_state("stand")
-		end
+	if not self:check_timer("check_aggro", 5) then return end
+	if not self.attack:get_pos() or vector.distance(self.attack:get_pos(),self.object:get_pos()) > 128 then
+		self:clear_aggro()
 	end
-	self._check_aggro_timer = self._check_aggro_timer + dtime
 end
 
 
@@ -764,8 +649,7 @@ function mob_class:do_states_attack (dtime)
 
 	if not target_line_of_sight then
 		if self.target_time_lost then
-			local time_since_seen = os.time() - self.target_time_lost
-			if time_since_seen > TIME_TO_FORGET_TARGET then
+			if os.time() - self.target_time_lost > TIME_TO_FORGET_TARGET then
 				self.target_time_lost = nil
 				self:clear_aggro()
 				return
@@ -1018,7 +902,8 @@ function mob_class:do_states_attack (dtime)
 							damage_groups = {fleshy = self.damage}
 						}, nil)
 						if self.dealt_effect then
-							vlf_entity_effects.give_effect_by_level(self.dealt_effect.name, self.attack, self.dealt_effect.level, self.dealt_effect.dur)
+							vlf_entity_effects.give_effect_by_level(self.dealt_effect.name, self.attack,
+								self.dealt_effect.level, self.dealt_effect.dur)
 						end
 						attacked = true
 					end
@@ -1082,10 +967,9 @@ function mob_class:do_states_attack (dtime)
 		p.y = p.y + (props.collisionbox[2] + props.collisionbox[5]) / 2
 
 		if self.shoot_interval
-				and self.timer > self.shoot_interval
-				and not minetest.raycast(vector.add(p, vector.new(0,self.shoot_offset,0)), vector.add(self.attack:get_pos(), vector.new(0,1.5,0)), false, false):next()
-				and math.random(1, 100) <= 60 then
-
+			and self.timer > self.shoot_interval
+			and not minetest.raycast(vector.add(p, vector.new(0,self.shoot_offset,0)), vector.add(self.attack:get_pos(), vector.new(0,1.5,0)), false, false):next()
+			and math.random(1, 100) <= 60 then
 			self.timer = 0
 			self:set_animation( "shoot")
 
@@ -1095,15 +979,15 @@ function mob_class:do_states_attack (dtime)
 			-- Shoot arrow
 			if minetest.registered_entities[self.arrow] then
 
-				local arrow, ent
 				local v = 1
+				local arrow
 				if not self.shoot_arrow then
 					self.firing = true
-					minetest.after(1, function()
+					minetest.after(1, function(self)
 						self.firing = false
-					end)
+					end, self)
 					arrow = minetest.add_entity(p, self.arrow)
-					ent = arrow:get_luaentity()
+					local ent = arrow:get_luaentity()
 					if ent.velocity then
 						v = ent.velocity
 					end
@@ -1124,10 +1008,13 @@ function mob_class:do_states_attack (dtime)
 				vec.x = vec.x * (v / amount)
 				vec.y = vec.y * (v / amount)
 				vec.z = vec.z * (v / amount)
+
 				if self.shoot_arrow then
 					vec = vector.normalize(vec)
-					self:shoot_arrow(p, vec)
-				else
+					arrow = self:shoot_arrow(p, vec)
+				end
+
+				if arrow then
 					arrow:set_velocity(vec)
 				end
 				attacked = true

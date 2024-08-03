@@ -4,27 +4,6 @@ local HORNY_TIME = 30*20
 local HORNY_AGAIN_TIME = 30*20 -- was 300 or 15*20
 local CHILD_GROW_TIME = 24000
 
-local LOGGING_ON = minetest.settings:get_bool("vlf_logging_mobs_villager",false)
-
-local LOG_MODULE = "[vlf_mobs]"
-local function vlf_log (message)
-	if LOGGING_ON and message then
-		minetest.log(LOG_MODULE .. " " .. message)
-	end
-end
-
--- No-op in MCL2 (capturing mobs is not possible).
--- Provided for compability with Mobs Redo
-function vlf_mobs.capture_mob(self, clicker, chance_hand, chance_net, chance_lasso, force_take, replacewith)
-	return false
-end
-
-
--- No-op in MCL2 (protecting mobs is not possible).
-function vlf_mobs.protect(self, clicker)
-	return false
-end
-
 function mob_class:use_shears(new_textures, shears_stack)
 	if minetest.get_item_group(shears_stack:get_name(), "shears") > 0 then
 		self.object:set_properties({ textures = new_textures })
@@ -47,12 +26,9 @@ function mob_class:_on_dispense(dropitem, pos, droppos, dropnode, dropdir)
 end
 
 function mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
-	if not self.follow then
-		return false
-	end
+	if not self.follow then	return false end
 	if clicker == nil or self.nofollow or self:follow_holding(clicker) then
 		local consume_food = false
-
 		if clicker and tame and not self.child then
 			if not self.owner or self.owner == "" then
 				self.tamed = true
@@ -64,7 +40,6 @@ function mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
 		if self.health < self.object:get_properties().hp_max and not consume_food then
 			consume_food = true
 			self.health = math.min(self.health + 4, self.object:get_properties().hp_max)
-
 			if self.htimer < 1 then
 				self.htimer = 5
 			end
@@ -94,11 +69,10 @@ function mob_class:feed_tame(clicker, feed_count, breed, tame, notake)
 				clicker:set_wielded_item(item)
 			end
 			self:mob_sound("eat", nil, true)
-
 		else
 			self:mob_sound("random", true)
 		end
-		if consume_food then return true end
+		return consume_food
 	end
 	return false
 end
@@ -111,9 +85,7 @@ function vlf_mobs.spawn_child(pos, mob_type)
 
 	local ent = child:get_luaentity()
 	vlf_mobs.effect(pos, 15, "vlf_particles_smoke.png", 1, 2, 2, 15, 5)
-
 	ent.child = true
-
 	local textures
 	if ent.child_texture then
 		textures = ent.child_texture[1]
@@ -146,7 +118,6 @@ function vlf_mobs.spawn_child(pos, mob_type)
 	ent.animation = ent._child_animations
 	ent._current_animation = nil
 	ent:set_animation("stand")
-
 	return child
 end
 
@@ -154,12 +125,9 @@ function mob_class:check_breeding()
 	if self.child == true then
 		-- When a child, hornytimer is used to count age until adulthood
 		self.hornytimer = self.hornytimer + 1
-
 		if self.hornytimer >= CHILD_GROW_TIME then
-
 			self.child = false
 			self.hornytimer = 0
-
 			self:set_properties({
 				textures = self.base_texture,
 				mesh = self.base_mesh,
@@ -177,13 +145,11 @@ function mob_class:check_breeding()
 					z = 0
 				})
 			end
-
 			self.animation = nil
 			local anim = self._current_animation
 			self._current_animation = nil
 			self:set_animation(anim)
 		end
-
 		return
 	else
 		if self.horny == true then
@@ -197,46 +163,32 @@ function mob_class:check_breeding()
 	end
 	if self.horny == true
 	and self.hornytimer <= HORNY_TIME then
-
-		vlf_log("In breed function. All good. Do the magic.")
-
 		local pos = self.object:get_pos()
 
-		if (self.hornytimer % 20) == 0.0 then
-			vlf_mobs.effect({x = pos.x, y = pos.y + 1, z = pos.z}, 8, "heart.png", 3, 4, 1, 0.1)
-		end
+        if (self.hornytimer % 20) == 0.0 then
+            vlf_mobs.effect({x = pos.x, y = pos.y + 1, z = pos.z}, 8, "heart.png", 3, 4, 1, 0.1)
+        end
 
-		local objs = minetest.get_objects_inside_radius(pos, 3)
 		local num = 0
-		local ent
-
-		for n = 1, #objs do
-
-			ent = objs[n]:get_luaentity()
-
+		for _, obj in pairs(minetest.get_objects_inside_radius(pos, 3)) do
+			local ent = obj:get_luaentity()
 			-- check for same animal with different colour
 			local canmate = false
-
 			if ent then
-
 				if ent.name == self.name then
 					canmate = true
 				else
 					local entname = string.split(ent.name,":")
 					local selfname = string.split(self.name,":")
-
 					if entname[1] == selfname[1] then
 						entname = string.split(entname[2],"_")
 						selfname = string.split(selfname[2],"_")
-
 						if entname[1] == selfname[1] then
 							canmate = true
 						end
 					end
 				end
 			end
-
-			if canmate then vlf_log("In breed function. Can mate.") end
 
 			if ent
 			and canmate == true
@@ -247,10 +199,8 @@ function mob_class:check_breeding()
 
 			-- found your mate? then have a baby
 			if num > 1 then
-
 				self.hornytimer = HORNY_TIME + 1
 				ent.hornytimer = HORNY_TIME + 1
-
 				minetest.after(5, function(parent1, parent2, pos)
 					if not parent1.object:get_luaentity() then
 						return
@@ -266,11 +216,8 @@ function mob_class:check_breeding()
 							return
 						end
 					end
-
 					local child = vlf_mobs.spawn_child(pos, parent1.name)
-
 					local ent_c = child:get_luaentity()
-
 					-- Use texture of one of the parents
 					local p = math.random(1, 2)
 					if p == 1 then
@@ -281,7 +228,6 @@ function mob_class:check_breeding()
 					ent_c:set_properties({
 						textures = ent_c.base_texture
 					})
-
 					ent_c.tamed = true
 					ent_c.owner = parent1.owner
 				end, self, ent, pos)
@@ -289,6 +235,26 @@ function mob_class:check_breeding()
 			end
 		end
 	end
+end
+
+function mob_class:stay()
+	self.order = "sit"
+	self:set_state("stand")
+	self.walk_chance = 0
+	self.jump = false
+	if self.animation.sit_start then
+		self:set_animation("sit")
+	else
+		self:set_animation("stand")
+	end
+end
+
+function mob_class:roam()
+	self.order = "roam"
+	self:set_state("stand")
+	self.walk_chance = 50
+	self.jump = true
+	self:set_animation("stand")
 end
 
 function mob_class:toggle_sit(clicker,p)
@@ -299,22 +265,10 @@ function mob_class:toggle_sit(clicker,p)
 	local particle
 	if not self.order or self.order == "" or self.order == "sit" then
 		particle = "mobs_mc_wolf_icon_roam.png"
-		self.order = "roam"
-		self:set_state("stand")
-		self.walk_chance = 50
-		self.jump = true
-		self:set_animation("stand")
+		self:roam()
 	else
 		particle = "mobs_mc_wolf_icon_sit.png"
-		self.order = "sit"
-		self:set_state("stand")
-		self.walk_chance = 0
-		self.jump = false
-		if self.animation.sit_start then
-			self:set_animation("sit")
-		else
-			self:set_animation("stand")
-		end
+		self:stay()
 	end
 	local pp = vector.new(0,1.4,0)
 	if p then pp = vector.offset(pp,0,p,0) end
@@ -328,4 +282,32 @@ function mob_class:toggle_sit(clicker,p)
 		playername = self.owner,
 		glow = minetest.LIGHT_MAX,
 	})
+end
+
+function mob_class:break_in(player)
+	self.temper = self.temper or (math.random(100))
+	if not self.tamed then
+		local item = player:get_wielded_item()
+		local temper_increase = 0
+		if self._temper_increase and self._temper_increase[item:get_name()] then
+			temper_increase = self._temper_increase[item:get_name()]
+			item:take_item()
+			player:set_wielded_item(item)
+		elseif not self.driver then
+			self.object:set_properties({stepheight = 1.1})
+			self:attach(player)
+			self.buck_off_time = 40 -- TODO how long does it take in minecraft?
+			if self.temper > 100 then
+				self.tamed = true -- NOTE taming can only be finished by riding the horse
+				if not self.owner or self.owner == "" then
+					self.owner = player:get_player_name()
+				end
+			end
+			temper_increase = 5
+		elseif self.driver and self.driver == player then
+			vlf_mobs.detach(player, vector.new(0, 0, 1))
+		end
+		self.temper = self.temper + temper_increase
+		return true
+	end
 end

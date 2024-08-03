@@ -6,28 +6,33 @@ local function player_near(pos)
 	end
 end
 
-local function get_armor_texture(armor_name)
+local function get_armor_texture(obj, armor_name)
+	local stack = ItemStack(armor_name)
+	local def = stack:get_definition()
 	if armor_name == "" then
 		return ""
 	end
 	if armor_name=="blank.png" then
 		return "blank.png"
 	end
-	local seperator = string.find(armor_name, ":")
-	return "vlf_armor_"..string.sub(armor_name, seperator+1, -1)..".png^"
+	local t = def._vlf_armor_texture or ""
+	if type(def._vlf_armor_texture) == "function" then
+		t = def._vlf_armor_texture(obj, stack)
+	end
+	return t.."^"
 end
 
 function mob_class:set_armor_texture()
 	if self.armor_list then
-		local chestplate=minetest.registered_items[self.armor_list.chestplate] or {name=""}
-		local boots=minetest.registered_items[self.armor_list.boots] or {name=""}
-		local leggings=minetest.registered_items[self.armor_list.leggings] or {name=""}
-		local helmet=minetest.registered_items[self.armor_list.helmet] or {name=""}
+		local chestplate=minetest.registered_items[self.armor_list.torso] or {name=""}
+		local boots=minetest.registered_items[self.armor_list.feet] or {name=""}
+		local leggings=minetest.registered_items[self.armor_list.legs] or {name=""}
+		local helmet=minetest.registered_items[self.armor_list.head] or {name=""}
 
 		if helmet.name=="" and chestplate.name=="" and leggings.name=="" and boots.name=="" then
 			helmet={name="blank.png"}
 		end
-		local texture = get_armor_texture(chestplate.name)..get_armor_texture(helmet.name)..get_armor_texture(boots.name)..get_armor_texture(leggings.name)
+		local texture = get_armor_texture(self.object, chestplate.name)..get_armor_texture(self.object, helmet.name)..get_armor_texture(self.object, boots.name)..get_armor_texture(self.object, leggings.name)
 		if string.sub(texture, -1,-1) == "^" then
 			texture=string.sub(texture,1,-2)
 		end
@@ -54,40 +59,36 @@ function mob_class:set_armor_texture()
 	end
 end
 
+function mob_class:is_drop(itemstack)
+	if self.drops then
+		for _, v in pairs(self.drops) do
+			if v and v.name and v.name == itemstack:get_name() then return true end
+		end
+	end
+end
+
 function mob_class:check_item_pickup()
 	if self.pick_up and #self.pick_up > 0 or self.wears_armor then
 		local p = self.object:get_pos()
 		if not p then return end
 		for _,o in pairs(minetest.get_objects_inside_radius(p,2)) do
 			local l=o:get_luaentity()
-			if l and l.name == "__builtin:item" then
-				if not player_near(p) and l.itemstring:find("vlf_armor") and self.wears_armor then
-					local armor_type
-					if l.itemstring:find("chestplate") then
-						armor_type = "chestplate"
-					elseif l.itemstring:find("boots") then
-						armor_type = "boots"
-					elseif l.itemstring:find("leggings") then
-						armor_type = "leggings"
-					elseif l.itemstring:find("helmet") then
-						armor_type = "helmet"
+			if l and l.name == "__builtin:item" and not player_near(p) and not self:is_drop(ItemStack(l.itemstring)) then
+				local stack = ItemStack(l.itemstring)
+				local def = stack:get_definition()
+				local itemname = stack:get_name()
+
+				if self.wears_armor and minetest.get_item_group(itemname, "armor") > 0 and def._vlf_armor_element then
+					if self.armor_list[def._vlf_armor_element] == "" then
+						self.armor_list[def._vlf_armor_element] = stack:to_string()
+						o:remove()
+						self:set_armor_texture()
 					end
-					if not armor_type then
-						return
-					end
-					if not self.armor_list then
-						self.armor_list={helmet="",chestplate="",boots="",leggings=""}
-					elseif self.armor_list[armor_type] and self.armor_list[armor_type] ~= "" then
-						return
-					end
-					self.armor_list[armor_type]=ItemStack(l.itemstring):get_name()
-					o:remove()
-				end
-				if self.pick_up then
+				elseif self.pick_up then
 					for k,v in pairs(self.pick_up) do
-						if not player_near(p) and self.on_pick_up and ItemStack(l.itemstring):get_name() == v then
-							local r =  self.on_pick_up(self,l)
-							if  r and r.is_empty and not r:is_empty() then
+						if self.on_pick_up and itemname == v then
+							local r = self.on_pick_up(self,l)
+							if r and r.is_empty and not r:is_empty() then
 								l.itemstring = r:to_string()
 							elseif r and r.is_empty and r:is_empty() then
 								o:remove()

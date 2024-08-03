@@ -98,7 +98,7 @@ vlf_mobs.mob_class = {
 	is_mob = true,
 	pushable = true,
 	mob_pushable = true,
-
+	_timers = {},
 	avoid_distance = 9,
 	ignores_nametag = false,
 	rain_damage = 0,
@@ -119,6 +119,7 @@ vlf_mobs.mob_class = {
 	attack_exception = function(p) return false end,
 	player_active_range = tonumber(minetest.settings:get("vlf_mob_active_range")) or 48,
 	persist_in_peaceful = true,
+	wears_armor = false,
 
 	_vlf_fishing_hookable = true,
 	_vlf_fishing_reelable = true,
@@ -129,8 +130,8 @@ vlf_mobs.mob_class = {
 	v_start = false,
 	standing_in = "ignore",
 	standing_on = "ignore",
-	jump_sound_cooloff = 0, -- used to prevent jump sound from being played too often in short time
-	opinion_sound_cooloff = 0, -- used to prevent sound spam of particular sound types
+	jump_sound_cooloff = 0.5, -- used to prevent jump sound from being played too often in short time
+	opinion_sound_cooloff = 1, -- used to prevent sound spam of particular sound types
 	_spawner = nil,
 	_vlf_entity_effects = {},
 }
@@ -162,7 +163,6 @@ dofile(path .. "/api.lua")
 dofile(path .. "/breeding.lua")
 dofile(path .. "/spawning.lua")
 dofile(path .. "/mount.lua")
-dofile(path .. "/compat.lua")
 
 -- get node but use fallback for nil or unknown
 local node_ok = function(pos, fallback)
@@ -186,9 +186,13 @@ function vlf_mobs.mob_class:set_nametag(name)
 end
 
 local on_rightclick_prefix = function(self, clicker)
-	if not clicker:is_player() then return end
+	if not (clicker and clicker:is_player()) then return end
+	local playername = clicker:get_player_name()
+	if playername and playername ~= "" then
+		doc.mark_entry_as_revealed(playername, "mobs", self.name)
+	end
 	local item = clicker:get_wielded_item()
-	if extended_pet_control and self.tamed and self.owner == clicker:get_player_name() then
+	if extended_pet_control and self.tamed and self.owner == playername then
 		self:toggle_sit(clicker)
 	end
 
@@ -196,7 +200,7 @@ local on_rightclick_prefix = function(self, clicker)
 	item_name = minetest.registered_aliases[item_name] or item_name
 
 	if not self.ignores_nametag and item_name == "vlf_mobitems:nametag" then
-		if self:set_nametag(item:get_meta():get_string("name")) and not minetest.is_creative_enabled(clicker:get_player_name()) then
+		if self:set_nametag(item:get_meta():get_string("name")) and not minetest.is_creative_enabled(playername) then
 			item:take_item()
 			clicker:set_wielded_item(item)
 		end
@@ -315,12 +319,15 @@ function vlf_mobs.register_mob(name, def)
 	}),vlf_mobs.mob_class_meta)
 
 	vlf_mobs.registered_mobs[name] = final_def
-	minetest.register_entity(name, final_def)
+	minetest.register_entity(":"..name, final_def)
 
-	if minetest.get_modpath("doc_identifier") ~= nil then
-		doc.sub.identifier.register_object(name, "basics", "mobs")
-	end
-
+	doc.sub.identifier.register_object(name, "mobs", name)
+	doc.add_entry("mobs", name, {
+		name = def.description or name,
+		data = {
+			name = name,
+		},
+	})
 end
 
 function vlf_mobs.get_arrow_damage_func(damage, typ, shooter)
