@@ -2,15 +2,10 @@ local S = minetest.get_translator(minetest.get_current_modname())
 local F = minetest.formspec_escape
 local C = minetest.colorize
 
-local get_double_container_neighbor_pos = vlf_util.get_double_container_neighbor_pos
-
-local sf = string.format
-
 -- Chest Entity
--- ============
--- This is necessary to show the chest as an animated mesh, as Minetest doesn't
--- support assigning animated meshes to nodes directly. We're bypassing this
--- limitation by giving each chest its own entity, and making the chest node
+-- ------------
+-- This is necessary to show the chest as an animated mesh, as Minetest doesn't support assigning animated meshes to
+-- nodes directly. We're bypassing this limitation by giving each chest its own entity, and making the chest node
 -- itself fully transparent.
 local animated_chests = (minetest.settings:get_bool("animated_chests") ~= false)
 local entity_animations = {
@@ -60,9 +55,7 @@ minetest.register_entity("vlf_chests:chest", {
 				return
 			end
 			self:set_animation("close")
-			minetest.sound_play(self.sound_prefix .. "_close",
-				{ pos = self.node_pos, gain = 0.3, max_hear_distance = 16 },
-				true)
+			minetest.sound_play(self.sound_prefix .. "_close", { pos = self.node_pos, gain = 0.3, max_hear_distance = 16 }, true)
 			self.is_open = false
 		end
 	end,
@@ -142,8 +135,7 @@ local function get_entity_info(pos, param2, double, dir, entity_pos)
 	return dir, get_entity_pos(pos, dir, double)
 end
 
-local function create_entity(pos, node_name, textures, param2, double, sound_prefix, mesh_prefix, animation_type, dir,
-							entity_pos)
+local function create_entity(pos, node_name, textures, param2, double, sound_prefix, mesh_prefix, animation_type, dir, entity_pos)
 	dir, entity_pos = get_entity_info(pos, param2, double, dir, entity_pos)
 	local initialization_data = minetest.serialize({pos, node_name, textures, dir, double, sound_prefix,
 		mesh_prefix, animation_type, "###vlf_chests:chest###"})
@@ -156,14 +148,20 @@ local function create_entity(pos, node_name, textures, param2, double, sound_pre
 end
 vlf_chests.create_entity = create_entity
 
-local function find_or_create_entity(pos, node_name, textures, param2, double, sound_prefix, mesh_prefix,
-							animation_type, dir, entity_pos)
+local function find_or_create_entity(pos, node_name, textures, param2, double, sound_prefix, mesh_prefix, animation_type, dir, entity_pos)
 	dir, entity_pos = get_entity_info(pos, param2, double, dir, entity_pos)
-	return find_entity(entity_pos) or
-		create_entity(pos, node_name, textures, param2, double, sound_prefix, mesh_prefix, animation_type, dir,
-			entity_pos)
+	return find_entity(entity_pos) or create_entity(pos, node_name, textures, param2, double, sound_prefix, mesh_prefix, animation_type, dir, entity_pos)
 end
 vlf_chests.find_or_create_entity = find_or_create_entity
+
+local function select_and_spawn_entity(pos, node)
+	local node_name = node.name
+	local node_def = minetest.registered_nodes[node_name]
+	local double_chest = minetest.get_item_group(node_name, "double_chest") > 0
+	return find_or_create_entity(pos, node_name, node_def._chest_entity_textures, node.param2, double_chest,
+		node_def._chest_entity_sound, node_def._chest_entity_mesh, node_def._chest_entity_animation_type)
+end
+vlf_chests.select_and_spawn_entity = select_and_spawn_entity
 
 local no_rotate, simple_rotate
 if screwdriver then
@@ -173,9 +171,10 @@ if screwdriver then
 			local nodename = node.name
 			local nodedef = minetest.registered_nodes[nodename]
 			local dir = minetest.facedir_to_dir(new_param2)
-			find_or_create_entity(pos, nodename, nodedef._chest_entity_textures, new_param2, false,
-				nodedef._chest_entity_sound,
-				nodedef._chest_entity_mesh, nodedef._chest_entity_animation_type, dir):set_yaw(dir)
+			if nodedef then
+				find_or_create_entity(pos, nodename, nodedef._chest_entity_textures, new_param2, false,	nodedef._chest_entity_sound,
+					nodedef._chest_entity_mesh, nodedef._chest_entity_animation_type, dir):set_yaw(dir)
+			end
 		else
 			return false
 		end
@@ -183,11 +182,12 @@ if screwdriver then
 end
 vlf_chests.no_rotate, vlf_chests.simple_rotate = no_rotate, simple_rotate
 
---[[ List of open chests.
-Key: Player name
-Value:
-	If player is using a chest: { pos = <chest node position> }
-	Otherwise: nil ]]
+-- List of open chests
+-- -------------------
+-- Key: Player name
+-- Value:
+-- 	If player is using a chest: { pos = <chest node position> }
+--	Otherwise: nil
 local open_chests = {}
 vlf_chests.open_chests = open_chests
 
@@ -206,9 +206,7 @@ local function player_chest_open(player, pos, node_name, textures, param2, doubl
 	}
 	if animated_chests then
 		local dir = minetest.facedir_to_dir(param2)
-		find_or_create_entity(pos, node_name, textures, param2, double, sound, mesh, shulker and "shulker" or "chest",
-				dir):
-			open(name)
+		find_or_create_entity(pos, node_name, textures, param2, double, sound, mesh, shulker and "shulker" or "chest", dir):open(name)
 	end
 end
 vlf_chests.player_chest_open = player_chest_open
@@ -225,7 +223,7 @@ local function protection_check_move(pos, from_list, from_index, to_list, to_ind
 end
 vlf_chests.protection_check_move = protection_check_move
 
-local function protection_check_put_take(pos, listname, index, stack, player)
+local function protection_check_take(pos, listname, index, stack, player)
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
@@ -234,7 +232,26 @@ local function protection_check_put_take(pos, listname, index, stack, player)
 		return stack:get_count()
 	end
 end
-vlf_chests.protection_check_put_take = protection_check_put_take
+vlf_chests.protection_check_put_take = protection_check_take
+
+-- Logging functions
+local function log_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
+	minetest.log("action", player:get_player_name() .. " moves stuff to chest at " .. minetest.pos_to_string(pos))
+end
+
+local function log_inventory_put(pos, listname, index, stack, player)
+	minetest.log("action", player:get_player_name() .. " moves stuff to chest at " .. minetest.pos_to_string(pos))
+	-- BEGIN OF LISTRING WORKAROUND
+	if listname == "input" then
+		local inv = minetest.get_inventory({ type = "node", pos = pos })
+		inv:add_item("main", stack)
+	end
+	-- END OF LISTRING WORKAROUND
+end
+
+local function log_inventory_take(pos, listname, index, stack, player)
+	minetest.log("action", player:get_player_name() .. " takes stuff from chest at " .. minetest.pos_to_string(pos))
+end
 
 -- To be called when a chest is closed (only relevant for trapped chest atm)
 local function chest_update_after_close(pos)
@@ -243,25 +260,25 @@ local function chest_update_after_close(pos)
 	if node.name == "vlf_chests:trapped_chest_on_small" then
 		minetest.swap_node(pos, { name = "vlf_chests:trapped_chest_small", param2 = node.param2 })
 		find_or_create_entity(pos, "vlf_chests:trapped_chest_small", { "vlf_chests_trapped.png" }, node.param2, false,
-			"vlf_chests", "vlf_chests_chest", "chest"):reinitialize("vlf_chests:trapped_chest_small")
+			"default_chest", "vlf_chests_chest", "chest"):reinitialize("vlf_chests:trapped_chest_small")
 		mesecon.receptor_off(pos, mesecon.rules.pplate)
 	elseif node.name == "vlf_chests:trapped_chest_on_left" then
 		minetest.swap_node(pos, { name = "vlf_chests:trapped_chest_left", param2 = node.param2 })
 		find_or_create_entity(pos, "vlf_chests:trapped_chest_left", vlf_chests.tiles.chest_trapped_double, node.param2, true,
-			"vlf_chests", "vlf_chests_chest", "chest"):reinitialize("vlf_chests:trapped_chest_left")
+			"default_chest", "vlf_chests_chest", "chest"):reinitialize("vlf_chests:trapped_chest_left")
 		mesecon.receptor_off(pos, mesecon.rules.pplate)
 
-		local pos_other = get_double_container_neighbor_pos(pos, node.param2, "left")
+		local pos_other = vlf_util.get_double_container_neighbor_pos(pos, node.param2, "left")
 		minetest.swap_node(pos_other, { name = "vlf_chests:trapped_chest_right", param2 = node.param2 })
 		mesecon.receptor_off(pos_other, mesecon.rules.pplate)
 	elseif node.name == "vlf_chests:trapped_chest_on_right" then
 		minetest.swap_node(pos, { name = "vlf_chests:trapped_chest_right", param2 = node.param2 })
 		mesecon.receptor_off(pos, mesecon.rules.pplate)
 
-		local pos_other = get_double_container_neighbor_pos(pos, node.param2, "right")
+		local pos_other = vlf_util.get_double_container_neighbor_pos(pos, node.param2, "right")
 		minetest.swap_node(pos_other, { name = "vlf_chests:trapped_chest_left", param2 = node.param2 })
 		find_or_create_entity(pos_other, "vlf_chests:trapped_chest_left", vlf_chests.tiles.chest_trapped_double,
-			node.param2, true, "vlf_chests", "vlf_chests_chest", "chest")
+			node.param2, true, "default_chest", "vlf_chests_chest", "chest")
 			:reinitialize("vlf_chests:trapped_chest_left")
 		mesecon.receptor_off(pos_other, mesecon.rules.pplate)
 	end
@@ -277,8 +294,7 @@ local function player_chest_close(player)
 	end
 	if animated_chests then
 		find_or_create_entity(open_chest.pos, open_chest.node_name, open_chest.textures, open_chest.param2,
-			open_chest.double, open_chest.sound, open_chest.mesh, open_chest.shulker and "shulker" or "chest")
-			:close(name)
+			open_chest.double, open_chest.sound, open_chest.mesh, open_chest.shulker and "shulker" or "chest"):close(name)
 	end
 	chest_update_after_close(open_chest.pos)
 
@@ -333,10 +349,10 @@ local function limit_put_list(stack, list)
 	return stack
 end
 
-local function limit_put(stack, inv1, inv2)
+local function limit_put(stack, top_inv, bottom_inv)
 	local leftover = ItemStack(stack)
-	leftover = limit_put_list(leftover, inv1:get_list("main"))
-	leftover = limit_put_list(leftover, inv2:get_list("main"))
+	leftover = limit_put_list(leftover, top_inv:get_list("main"))
+	leftover = limit_put_list(leftover, bottom_inv:get_list("main"))
 	return stack:get_count() - leftover:get_count()
 end
 
@@ -344,10 +360,115 @@ local function close_forms(canonical_basename, pos)
 	local players = minetest.get_connected_players()
 	for p = 1, #players do
 		if vector.distance(players[p]:get_pos(), pos) <= 30 then
-			minetest.close_formspec(players[p]:get_player_name(),
-				"vlf_chests:" .. canonical_basename .. "_" .. pos.x .. "_" .. pos.y .. "_" .. pos.z)
+			minetest.close_formspec(players[p]:get_player_name(), "vlf_chests:" .. canonical_basename .. "_" .. pos.x .. "_" .. pos.y .. "_" .. pos.z)
 		end
 	end
+end
+
+local function get_chest_inventories(pos, side)
+	local inv = minetest.get_inventory({ type = "node", pos = pos })
+	local node = minetest.get_node(pos)
+	local pos_other = vlf_util.get_double_container_neighbor_pos(pos, node.param2, side)
+	local inv_other = minetest.get_inventory({ type = "node", pos = pos_other })
+
+	local top_inv, bottom_inv
+	if side == "left" then
+		top_inv = inv
+		bottom_inv = inv_other
+	else
+		top_inv = inv_other
+		bottom_inv = inv
+	end
+	return top_inv, bottom_inv
+end
+
+local function construct_double_chest(side, names) return function(pos)
+	local n = minetest.get_node(pos)
+	local param2 = n.param2
+	local p = vlf_util.get_double_container_neighbor_pos(pos, param2, side)
+	-- Turn into a small chest if the neighbor is gone
+	if not p or minetest.get_node(p).name ~= names[side].cr then
+		n.name = names.small.a
+		minetest.swap_node(pos, n)
+	end
+end end
+
+local function destruct_double_chest(side, names, canonical_basename, small_textures) return function(pos)
+	local n = minetest.get_node(pos)
+	if n.name == names.small.a then
+		return
+	end
+
+	close_forms(canonical_basename, pos)
+
+	local param2 = n.param2
+	local p = vlf_util.get_double_container_neighbor_pos(pos, param2, side)
+	if not p or minetest.get_node(p).name ~= names[side].r then
+		return
+	end
+	close_forms(canonical_basename, p)
+
+	minetest.swap_node(p, { name = names.small.a, param2 = param2 })
+	create_entity(p, names.small.a, small_textures, param2, false, "default_chest", "vlf_chests_chest", "chest")
+end end
+
+-- Small chests use `protection_check_take` for both put and take actions.
+local function protection_check_put(side) return function(pos, listname, index, stack, player)
+	local name = player:get_player_name()
+	if minetest.is_protected(pos, name) then
+		minetest.record_protection_violation(pos, name)
+		return 0
+	-- BEGIN OF LISTRING WORKAROUND
+	elseif listname == "input" then
+		local top_inv, bottom_inv = get_chest_inventories(pos, side)
+		return limit_put(stack, top_inv, bottom_inv)
+	-- END OF LISTRING WORKAROUND
+	else
+		return stack:get_count()
+	end
+end end
+
+local function log_inventory_put_double(side) return function(pos, listname, index, stack, player)
+	minetest.log("action", player:get_player_name() .. " moves stuff to chest at " .. minetest.pos_to_string(pos))
+	if listname == "input" then
+		local top_inv, bottom_inv = get_chest_inventories(pos, side)
+		top_inv:set_stack("input", 1, nil)
+		bottom_inv:set_stack("input", 1, nil)
+		double_chest_add_item(top_inv, bottom_inv, "main", stack)
+	end
+end end
+
+local function get_double_chest_formspec(pos, pos_other, name, basename, right_half)
+	return table.concat({
+		"formspec_version[4]",
+		"size[11.75,14.15]",
+
+		"label[0.375,0.375;" .. F(C(vlf_formspec.label_color, name)) .. "]",
+		vlf_formspec.get_itemslot_bg_v4(0.375, 0.75, 9, 3),
+		string.format("list[nodemeta:%s,%s,%s;main;0.375,0.75;9,3;]", pos_other.x, pos_other.y, pos_other.z),
+		vlf_formspec.get_itemslot_bg_v4(0.375, 4.5, 9, 3),
+		string.format("list[nodemeta:%s,%s,%s;main;0.375,4.5;9,3;]", pos.x, pos.y, pos.z),
+		"label[0.375,8.45;" .. F(C(vlf_formspec.label_color, S("Inventory"))) .. "]",
+		vlf_formspec.get_itemslot_bg_v4(0.375, 8.825, 9, 3),
+		"list[current_player;main;0.375,8.825;9,3;9]",
+
+		vlf_formspec.get_itemslot_bg_v4(0.375, 12.775, 9, 1),
+		"list[current_player;main;0.375,12.775;9,1;]",
+
+		--BEGIN OF LISTRING WORKAROUND
+		"listring[current_player;main]",
+		string.format("listring[nodemeta:%s,%s,%s;input]", pos.x, pos.y, pos.z),
+		--END OF LISTRING WORKAROUND
+
+		"listring[current_player;main]" ..
+		string.format("listring[nodemeta:%s,%s,%s;main]", pos_other.x, pos_other.y, pos_other.z),
+		"listring[current_player;main]",
+		string.format("listring[nodemeta:%s,%s,%s;main]", pos.x, pos.y, pos.z),
+	})
+end
+
+local function blocks_chest(node)
+	if minetest.get_item_group(node.name, "opaque") > 0 then return true end
 end
 
 -- This is a helper function to register regular chests (both small and double variants).
@@ -361,18 +482,92 @@ function vlf_chests.register_chest(basename, d)
 	else
 		d.drop = "vlf_chests:" .. d.drop
 	end
+
+	local drop_items_chest = vlf_util.drop_items_from_meta_container("main")
+
+	if not d.groups then d.groups = {} end
+
+	if not d.on_rightclick_left then
+		d.on_rightclick_left = d.on_rightclick
+	end
+	if not d.on_rightclick_right then
+		d.on_rightclick_right = d.on_rightclick
+	end
+	--[[local on_rightclick_side = {
+		left = d.on_rightclick_left or d.on_rightclick,
+		right = d.on_rightclick_right or d.on_rightclick,
+	}]]
+
+	if not d.sounds or type(d.sounds) ~= "table" then
+		d.sounds = { nil, "default_chest" }
+	end
+
+	if not d.sounds[2] then
+		d.sounds[2] = "default_chest"
+	end
+
 	-- The basename of the "canonical" version of the node, if set (e.g.: trapped_chest_on → trapped_chest).
 	-- Used to get a shared formspec ID and to swap the node back to the canonical version in on_construct.
 	if not d.canonical_basename then
 		d.canonical_basename = basename
 	end
 
-	local small_name = "vlf_chests:" .. basename .. "_small"
+	-- Names table
+	-- -----------
+	-- Accessed through names["kind"].x (names.kind.x), where x can be:
+	--  a = "actual"
+	--  c = canonical
+	--  r = reverse (only for double chests)
+	-- cr = canonical, reverse (only for double chests)
+	local names = {
+		small = {
+			a = "vlf_chests:" .. basename .. "_small",
+			c = "vlf_chests:" .. d.canonical_basename .. "_small",
+		},
+		left = {
+			a = "vlf_chests:" .. basename .. "_left",
+			c = "vlf_chests:" .. d.canonical_basename .. "_left",
+		},
+		right = {
+			a = "vlf_chests:" .. basename .. "_right",
+			c = "vlf_chests:" .. d.canonical_basename .. "_right",
+		},
+	}
+	names.left.r = names.right.a
+	names.right.r = names.left.a
+	names.left.cr = names.right.c
+	names.right.cr = names.left.c
+
 	local small_textures = d.tiles.small
-	local left_name = "vlf_chests:" .. basename .. "_left"
-	local right_name = "vlf_chests:" .. basename .. "_right"
 	local double_textures = d.tiles.double
 
+	-- Construct groups
+	local groups_inv = table.merge({ deco_block = 1 }, d.groups)
+	local groups_small = table.merge(groups_inv, {
+		handy = 1,
+		axey = 1,
+		container = 2,
+		deco_block = 1,
+		material_wood = 1,
+		flammable = -1,
+		chest_entity = 1,
+		not_in_creative_inventory = 1
+	}, d.groups)
+	local groups_left = table.merge(groups_small, {
+		double_chest = 1,
+		container = 5,
+	}, d.groups)
+	local groups_right = table.merge(groups_small, {
+		-- In a double chest, the entity is assigned to the left side, but not the right one.
+		chest_entity = 0,
+		double_chest = 2,
+		container = 6,
+	}, d.groups)
+
+
+
+	-- Dummy inventory node
+	-- Will turn into names.small.a when placed down
 	minetest.register_node("vlf_chests:" .. basename, {
 		description = d.desc,
 		_tt_help = d.tt_help,
@@ -385,11 +580,11 @@ function vlf_chests.register_chest(basename, d)
 		use_texture_alpha = "opaque",
 		paramtype = "light",
 		paramtype2 = "facedir",
-		sounds = d.sounds,
-		groups = { deco_block = 1 },
+		sounds = d.sounds[1],
+		groups = groups_inv,
 		on_construct = function(pos, node)
 			local node = minetest.get_node(pos)
-			node.name = small_name
+			node.name = names.small.a
 			minetest.set_node(pos, node)
 		end,
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
@@ -397,7 +592,7 @@ function vlf_chests.register_chest(basename, d)
 		end,
 	})
 
-	minetest.register_node(small_name, {
+	minetest.register_node(names.small.a, {
 		description = d.desc,
 		_tt_help = d.tt_help,
 		_doc_items_longdesc = d.longdesc,
@@ -411,24 +606,15 @@ function vlf_chests.register_chest(basename, d)
 		tiles = { "blank.png^[resize:16x16" },
 		use_texture_alpha = "clip",
 		_chest_entity_textures = small_textures,
-		_chest_entity_sound = "vlf_chests",
+		_chest_entity_sound = d.sounds[2],
 		_chest_entity_mesh = "vlf_chests_chest",
 		_chest_entity_animation_type = "chest",
 		paramtype = "light",
 		paramtype2 = "facedir",
 		drop = d.drop,
-		groups = {
-			handy = 1,
-			axey = 1,
-			container = 2,
-			deco_block = 1,
-			material_wood = 1,
-			flammable = -1,
-			chest_entity = 1,
-			not_in_creative_inventory = 1
-		},
+		groups = groups_small,
 		is_ground_content = false,
-		sounds = d.sounds,
+		sounds = d.sounds[1],
 		on_construct = function(pos)
 			local param2 = minetest.get_node(pos).param2
 			local meta = minetest.get_meta(pos)
@@ -459,23 +645,23 @@ function vlf_chests.register_chest(basename, d)
 			-- END OF LISTRING WORKAROUND
 
 			-- Combine into a double chest if neighbouring another small chest
-			if minetest.get_node(get_double_container_neighbor_pos(pos, param2, "right")).name ==
-					small_name then
-				minetest.swap_node(pos, { name = right_name, param2 = param2 })
-				local p = get_double_container_neighbor_pos(pos, param2, "right")
-				minetest.swap_node(p, { name = left_name, param2 = param2 })
-				create_entity(p, left_name, double_textures, param2, true, "vlf_chests",
+			if minetest.get_node(vlf_util.get_double_container_neighbor_pos(pos, param2, "right")).name ==
+					names.small.a then
+				minetest.swap_node(pos, { name = names.right.a, param2 = param2 })
+				local p = vlf_util.get_double_container_neighbor_pos(pos, param2, "right")
+				minetest.swap_node(p, { name = names.left.a, param2 = param2 })
+				create_entity(p, names.left.a, double_textures, param2, true, d.sounds[2],
 					"vlf_chests_chest", "chest")
-			elseif minetest.get_node(get_double_container_neighbor_pos(pos, param2, "left")).name ==
-					small_name then
-				minetest.swap_node(pos, { name = left_name, param2 = param2 })
-				create_entity(pos, left_name, double_textures, param2, true, "vlf_chests",
+			elseif minetest.get_node(vlf_util.get_double_container_neighbor_pos(pos, param2, "left")).name ==
+					names.small.a then
+				minetest.swap_node(pos, { name = names.left.a, param2 = param2 })
+				create_entity(pos, names.left.a, double_textures, param2, true, d.sounds[2],
 					"vlf_chests_chest", "chest")
-				local p = get_double_container_neighbor_pos(pos, param2, "left")
-				minetest.swap_node(p, { name = right_name, param2 = param2 })
+				local p = vlf_util.get_double_container_neighbor_pos(pos, param2, "left")
+				minetest.swap_node(p, { name = names.right.a, param2 = param2 })
 			else
-				minetest.swap_node(pos, { name = small_name, param2 = param2 })
-				create_entity(pos, small_name, small_textures, param2, false, "vlf_chests",
+				minetest.swap_node(pos, { name = names.small.a, param2 = param2 })
+				create_entity(pos, names.small.a, small_textures, param2, false, d.sounds[2],
 					"vlf_chests_chest", "chest")
 			end
 		end,
@@ -485,58 +671,37 @@ function vlf_chests.register_chest(basename, d)
 		after_dig_node = drop_items_chest,
 		on_blast = on_chest_blast,
 		allow_metadata_inventory_move = protection_check_move,
-		allow_metadata_inventory_take = protection_check_put_take,
-		allow_metadata_inventory_put = protection_check_put_take,
-		on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-			minetest.log("action", player:get_player_name() ..
-				" moves stuff in chest at " .. minetest.pos_to_string(pos))
-		end,
-		on_metadata_inventory_put = function(pos, listname, index, stack, player)
-			minetest.log("action", player:get_player_name() ..
-				" moves stuff to chest at " .. minetest.pos_to_string(pos))
-			-- BEGIN OF LISTRING WORKAROUND
-			if listname == "input" then
-				local inv = minetest.get_inventory({ type = "node", pos = pos })
-				inv:add_item("main", stack)
-			end
-			-- END OF LISTRING WORKAROUND
-		end,
-		on_metadata_inventory_take = function(pos, listname, index, stack, player)
-			minetest.log("action", player:get_player_name() ..
-				" takes stuff from chest at " .. minetest.pos_to_string(pos))
-		end,
+		allow_metadata_inventory_take = protection_check_take,
+		allow_metadata_inventory_put = protection_check_take,
+		on_metadata_inventory_move = log_inventory_move,
+		on_metadata_inventory_put = log_inventory_put,
+		on_metadata_inventory_take = log_inventory_take,
 		_vlf_blast_resistance = d.hardness,
 		_vlf_hardness = d.hardness,
 
 		on_rightclick = function(pos, node, clicker)
-			local topnode = minetest.get_node({ x = pos.x, y = pos.y + 1, z = pos.z })
-			if topnode and topnode.name and minetest.registered_nodes[topnode.name] then
-				if minetest.registered_nodes[topnode.name].groups.opaque == 1 then
-					-- won't open if there is no space from the top
-					return false
-				end
-			end
+			if blocks_chest(minetest.get_node(vector.offset(pos,0, 1, 0))) then return false end
 			local name = minetest.get_meta(pos):get_string("name")
 			if name == "" then
 				name = S("Chest")
 			end
 
 			minetest.show_formspec(clicker:get_player_name(),
-				sf("vlf_chests:%s_%s_%s_%s", d.canonical_basename, pos.x, pos.y, pos.z),
+				string.format("vlf_chests:%s_%s_%s_%s", d.canonical_basename, pos.x, pos.y, pos.z),
 				table.concat({
 					"formspec_version[4]",
 					"size[11.75,10.425]",
 
 					"label[0.375,0.375;" .. F(C(vlf_formspec.label_color, name)) .. "]",
 					vlf_formspec.get_itemslot_bg_v4(0.375, 0.75, 9, 3),
-					sf("list[nodemeta:%s,%s,%s;main;0.375,0.75;9,3;]", pos.x, pos.y, pos.z),
+					string.format("list[nodemeta:%s,%s,%s;main;0.375,0.75;9,3;]", pos.x, pos.y, pos.z),
 					"label[0.375,4.7;" .. F(C(vlf_formspec.label_color, S("Inventory"))) .. "]",
 					vlf_formspec.get_itemslot_bg_v4(0.375, 5.1, 9, 3),
 					"list[current_player;main;0.375,5.1;9,3;9]",
 
 					vlf_formspec.get_itemslot_bg_v4(0.375, 9.05, 9, 1),
 					"list[current_player;main;0.375,9.05;9,1;]",
-					sf("listring[nodemeta:%s,%s,%s;main]", pos.x, pos.y, pos.z),
+					string.format("listring[nodemeta:%s,%s,%s;main]", pos.x, pos.y, pos.z),
 					"listring[current_player;main]",
 				})
 			)
@@ -545,8 +710,7 @@ function vlf_chests.register_chest(basename, d)
 				d.on_rightclick(pos, node, clicker)
 			end
 
-			player_chest_open(clicker, pos, small_name, small_textures, node.param2, false, "vlf_chests",
-				"vlf_chests_chest")
+			player_chest_open(clicker, pos, names.small.a, small_textures, node.param2, false, d.sounds[2], "vlf_chests_chest")
 		end,
 
 		on_destruct = function(pos)
@@ -556,7 +720,7 @@ function vlf_chests.register_chest(basename, d)
 		on_rotate = simple_rotate,
 	})
 
-	minetest.register_node(left_name, {
+	minetest.register_node(names.left.a, {
 		drawtype = "nodebox",
 		node_box = {
 			type = "fixed",
@@ -565,115 +729,37 @@ function vlf_chests.register_chest(basename, d)
 		tiles = { "blank.png^[resize:16x16" },
 		use_texture_alpha = "clip",
 		_chest_entity_textures = double_textures,
-		_chest_entity_sound = "vlf_chests",
+		_chest_entity_sound = d.sounds[2],
 		_chest_entity_mesh = "vlf_chests_chest",
 		_chest_entity_animation_type = "chest",
 		paramtype = "light",
 		paramtype2 = "facedir",
-		groups = {
-			handy = 1,
-			axey = 1,
-			container = 2,
-			not_in_creative_inventory = 1,
-			material_wood = 1,
-			flammable = -1,
-			chest_entity = 1,
-			double_chest = 1
-		},
+		groups = groups_left,
 		drop = d.drop,
 		is_ground_content = false,
-		sounds = d.sounds,
-		on_construct = function(pos)
-			local n = minetest.get_node(pos)
-			local param2 = n.param2
-			local p = get_double_container_neighbor_pos(pos, param2, "left")
-			if not p or minetest.get_node(p).name ~= "vlf_chests:" .. d.canonical_basename .. "_right" then
-				n.name = "vlf_chests:" .. d.canonical_basename .. "_small"
-				minetest.swap_node(pos, n)
-			end
-			create_entity(pos, left_name, double_textures, param2, true, "vlf_chests", "vlf_chests_chest", "chest")
-		end,
+		sounds = d.sounds[1],
+		on_construct = construct_double_chest("left", names),
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
 			minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
 		end,
-		on_destruct = function(pos)
-			local n = minetest.get_node(pos)
-			if n.name == small_name then
-				return
-			end
-
-			close_forms(d.canonical_basename, pos)
-
-			local param2 = n.param2
-			local p = get_double_container_neighbor_pos(pos, param2, "left")
-			if not p or minetest.get_node(p).name ~= "vlf_chests:" .. basename .. "_right" then
-				return
-			end
-			close_forms(d.canonical_basename, p)
-
-			minetest.swap_node(p, { name = small_name, param2 = param2 })
-			create_entity(p, small_name, small_textures, param2, false, "vlf_chests", "vlf_chests_chest", "chest")
-		end,
+		on_destruct = destruct_double_chest("left", names, d.canonical_basename, small_textures),
 		after_dig_node = drop_items_chest,
 		on_blast = on_chest_blast,
 		allow_metadata_inventory_move = protection_check_move,
-		allow_metadata_inventory_take = protection_check_put_take,
-		allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-			local name = player:get_player_name()
-			if minetest.is_protected(pos, name) then
-				minetest.record_protection_violation(pos, name)
-				return 0
-			-- BEGIN OF LISTRING WORKAROUND
-			elseif listname == "input" then
-				local inv = minetest.get_inventory({ type = "node", pos = pos })
-				local other_pos = get_double_container_neighbor_pos(pos, minetest.get_node(pos).param2, "left")
-				local other_inv = minetest.get_inventory({ type = "node", pos = other_pos })
-				return limit_put(stack, inv, other_inv)
-			-- END OF LISTRING WORKAROUND
-			else
-				return stack:get_count()
-			end
-		end,
-		on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-			minetest.log("action", player:get_player_name() ..
-				" moves stuff in chest at " .. minetest.pos_to_string(pos))
-		end,
-		on_metadata_inventory_put = function(pos, listname, index, stack, player)
-			minetest.log("action", player:get_player_name() ..
-				" moves stuff to chest at " .. minetest.pos_to_string(pos))
-			-- BEGIN OF LISTRING WORKAROUND
-			if listname == "input" then
-				local inv = minetest.get_inventory({ type = "node", pos = pos })
-				local other_pos = get_double_container_neighbor_pos(pos, minetest.get_node(pos).param2, "left")
-				local other_inv = minetest.get_inventory({ type = "node", pos = other_pos })
-
-				inv:set_stack("input", 1, nil)
-
-				double_chest_add_item(inv, other_inv, "main", stack)
-			end
-			-- END OF LISTRING WORKAROUND
-		end,
-		on_metadata_inventory_take = function(pos, listname, index, stack, player)
-			minetest.log("action", player:get_player_name() ..
-				" takes stuff from chest at " .. minetest.pos_to_string(pos))
-		end,
+		allow_metadata_inventory_take = protection_check_take,
+		allow_metadata_inventory_put = protection_check_put("left"),
+		on_metadata_inventory_move = log_inventory_move,
+		on_metadata_inventory_put = log_inventory_put_double("left"),
+		on_metadata_inventory_take = log_inventory_take,
 		_vlf_blast_resistance = d.hardness,
 		_vlf_hardness = d.hardness,
 
 		on_rightclick = function(pos, node, clicker)
-			local pos_other = get_double_container_neighbor_pos(pos, node.param2, "left")
-			local above_def = minetest.registered_nodes[
-				minetest.get_node({ x = pos.x, y = pos.y + 1, z = pos.z }).name
-			]
-			local above_def_other = minetest.registered_nodes[
-				minetest.get_node({ x = pos_other.x, y = pos_other.y + 1, z = pos_other.z }).name
-			]
+			local pos_other = vlf_util.get_double_container_neighbor_pos(pos, node.param2, "left")
+			local above_node = minetest.get_node(vector.offset(pos, 0, 1, 0))
+			local above_node_other = minetest.get_node(vector.offset(pos_other, 0, 1, 0))
 
-			if (not above_def or above_def.groups.opaque == 1 or not above_def_other
-					or above_def_other.groups.opaque == 1) then
-				-- won't open if there is no space from the top
-				return false
-			end
+			if blocks_chest(above_node) or blocks_chest(above_node_other) then return false end
 
 			local name = minetest.get_meta(pos):get_string("name")
 			if name == "" then -- if empty after that ^
@@ -682,80 +768,20 @@ function vlf_chests.register_chest(basename, d)
 				name = S("Large Chest")
 			end
 
-			minetest.show_formspec(clicker:get_player_name(),
-				sf("vlf_chests:%s_%s_%s_%s", d.canonical_basename, pos.x, pos.y, pos.z),
-				table.concat({
-					"formspec_version[4]",
-					"size[11.75,14.15]",
-
-					"label[0.375,0.375;" .. F(C(vlf_formspec.label_color, name)) .. "]",
-					vlf_formspec.get_itemslot_bg_v4(0.375, 0.75, 9, 3),
-					sf("list[nodemeta:%s,%s,%s;main;0.375,0.75;9,3;]", pos.x, pos.y, pos.z),
-					vlf_formspec.get_itemslot_bg_v4(0.375, 4.5, 9, 3),
-					sf("list[nodemeta:%s,%s,%s;main;0.375,4.5;9,3;]", pos_other.x, pos_other.y, pos_other.z),
-					"label[0.375,8.45;" .. F(C(vlf_formspec.label_color, S("Inventory"))) .. "]",
-					vlf_formspec.get_itemslot_bg_v4(0.375, 8.825, 9, 3),
-					"list[current_player;main;0.375,8.825;9,3;9]",
-
-					vlf_formspec.get_itemslot_bg_v4(0.375, 12.775, 9, 1),
-					"list[current_player;main;0.375,12.775;9,1;]",
-
-					--BEGIN OF LISTRING WORKAROUND
-					"listring[current_player;main]",
-					sf("listring[nodemeta:%s,%s,%s;input]", pos.x, pos.y, pos.z),
-					--END OF LISTRING WORKAROUND
-
-					"listring[current_player;main]" ..
-					sf("listring[nodemeta:%s,%s,%s;main]", pos.x, pos.y, pos.z),
-					"listring[current_player;main]",
-					sf("listring[nodemeta:%s,%s,%s;main]", pos_other.x, pos_other.y, pos_other.z),
-				})
-			)
+			minetest.show_formspec(clicker:get_player_name(), string.format("vlf_chests:%s_%s_%s_%s", basename, pos.x, pos.y, pos.z), get_double_chest_formspec(pos_other, pos, name, d.basename))
 
 			if d.on_rightclick_left then
 				d.on_rightclick_left(pos, node, clicker)
 			end
 
-			player_chest_open(clicker, pos, left_name, double_textures, node.param2, true, "vlf_chests",
+			player_chest_open(clicker, pos, names.left.a, double_textures, node.param2, true, d.sounds[2],
 				"vlf_chests_chest")
 		end,
 		mesecons = d.mesecons,
 		on_rotate = no_rotate,
-		_vlf_hoppers_on_try_pull = function(pos, hop_pos, hop_inv, hop_list)
-			local meta = minetest.get_meta(pos)
-			local inv = meta:get_inventory()
-
-			local stack_id = vlf_util.select_stack(inv, "main", hop_inv, hop_list)
-			if stack_id ~= nil then
-				return inv, "main", stack_id
-			end
-
-			local node = minetest.get_node(pos)
-			local pos_other = get_double_container_neighbor_pos(pos, node.param2, "left")
-			local meta_other = minetest.get_meta(pos_other)
-			local inv_other = meta_other:get_inventory()
-			stack_id = vlf_util.select_stack(inv_other, "main", hop_inv, hop_list)
-			return inv_other, "main", stack_id
-		end,
-		_vlf_hoppers_on_try_push = function(pos, hop_pos, hop_inv, hop_list)
-			local meta = minetest.get_meta(pos)
-			local inv = meta:get_inventory()
-
-			local stack_id = vlf_util.select_stack(hop_inv, hop_list, inv, "main", nil, 1)
-			if stack_id ~= nil then
-				return inv, "main", stack_id
-			end
-
-			local node = minetest.get_node(pos)
-			local pos_other = get_double_container_neighbor_pos(pos, node.param2, "left")
-			local meta_other = minetest.get_meta(pos_other)
-			local inv_other = meta_other:get_inventory()
-			stack_id = vlf_util.select_stack(hop_inv, hop_list, inv_other, "main", nil, 1)
-			return inv_other, "main", stack_id
-		end,
 	})
 
-	minetest.register_node(right_name, {
+	minetest.register_node(names.right.a, {
 		drawtype = "nodebox",
 		paramtype = "light",
 		paramtype2 = "facedir",
@@ -765,96 +791,28 @@ function vlf_chests.register_chest(basename, d)
 		},
 		tiles = { "blank.png^[resize:16x16" },
 		use_texture_alpha = "clip",
-		groups = {
-			handy = 1,
-			axey = 1,
-			container = 2,
-			not_in_creative_inventory = 1,
-			material_wood = 1,
-			flammable = -1,
-			double_chest = 2
-		},
+		groups = groups_right,
 		drop = d.drop,
 		is_ground_content = false,
-		sounds = d.sounds,
-		on_construct = function(pos)
-			local n = minetest.get_node(pos)
-			local param2 = n.param2
-			local p = get_double_container_neighbor_pos(pos, param2, "right")
-			if not p or minetest.get_node(p).name ~= left_name then
-				n.name = small_name
-				minetest.swap_node(pos, n)
-			end
-		end,
+		sounds = d.sounds[1],
+		on_construct = construct_double_chest("right", names),
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
 			minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
 		end,
-		on_destruct = function(pos)
-			local n = minetest.get_node(pos)
-			if n.name == small_name then
-				return
-			end
-
-			close_forms(d.canonical_basename, pos)
-
-			local param2 = n.param2
-			local p = get_double_container_neighbor_pos(pos, param2, "right")
-			if not p or minetest.get_node(p).name ~= left_name then
-				return
-			end
-			close_forms(d.canonical_basename, p)
-
-			minetest.swap_node(p, { name = small_name, param2 = param2 })
-			create_entity(p, small_name, small_textures, param2, false, "vlf_chests", "vlf_chests_chest", "chest")
-		end,
+		on_destruct = destruct_double_chest("right", names, d.canonical_basename, small_textures),
 		after_dig_node = drop_items_chest,
 		on_blast = on_chest_blast,
 		allow_metadata_inventory_move = protection_check_move,
-		allow_metadata_inventory_take = protection_check_put_take,
-		allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-			local name = player:get_player_name()
-			if minetest.is_protected(pos, name) then
-				minetest.record_protection_violation(pos, name)
-				return 0
-			-- BEGIN OF LISTRING WORKAROUND
-			elseif listname == "input" then
-				local other_pos = get_double_container_neighbor_pos(pos, minetest.get_node(pos).param2, "right")
-				local other_inv = minetest.get_inventory({ type = "node", pos = other_pos })
-				local inv = minetest.get_inventory({ type = "node", pos = pos })
-				return limit_put(stack, other_inv, inv)
-			-- END OF LISTRING WORKAROUND
-			else
-				return stack:get_count()
-			end
-		end,
-		on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-			minetest.log("action", player:get_player_name() ..
-				" moves stuff in chest at " .. minetest.pos_to_string(pos))
-		end,
-		on_metadata_inventory_put = function(pos, listname, index, stack, player)
-			minetest.log("action", player:get_player_name() ..
-				" moves stuff to chest at " .. minetest.pos_to_string(pos))
-			-- BEGIN OF LISTRING WORKAROUND
-			if listname == "input" then
-				local other_pos = get_double_container_neighbor_pos(pos, minetest.get_node(pos).param2, "right")
-				local other_inv = minetest.get_inventory({ type = "node", pos = other_pos })
-				local inv = minetest.get_inventory({ type = "node", pos = pos })
-
-				inv:set_stack("input", 1, nil)
-
-				double_chest_add_item(other_inv, inv, "main", stack)
-			end
-			-- END OF LISTRING WORKAROUND
-		end,
-		on_metadata_inventory_take = function(pos, listname, index, stack, player)
-			minetest.log("action", player:get_player_name() ..
-				" takes stuff from chest at " .. minetest.pos_to_string(pos))
-		end,
+		allow_metadata_inventory_take = protection_check_take,
+		allow_metadata_inventory_put = protection_check_put("right"),
+		on_metadata_inventory_move = log_inventory_move,
+		on_metadata_inventory_put = log_inventory_put_double("right"),
+		on_metadata_inventory_take = log_inventory_take,
 		_vlf_blast_resistance = d.hardness,
 		_vlf_hardness = d.hardness,
 
 		on_rightclick = function(pos, node, clicker)
-			local pos_other = get_double_container_neighbor_pos(pos, node.param2, "right")
+			local pos_other = vlf_util.get_double_container_neighbor_pos(pos, node.param2, "right")
 			local above_def = minetest.registered_nodes[
 				minetest.get_node({ x = pos.x, y = pos.y + 1, z = pos.z }).name
 			]
@@ -871,86 +829,26 @@ function vlf_chests.register_chest(basename, d)
 			local name = minetest.get_meta(pos):get_string("name")
 			if name == "" then -- if empty after that ^
 				name = minetest.get_meta(pos_other):get_string("name")
-			end if name == "" then -- if STILL empty after that ^
+			end
+			if name == "" then -- if STILL empty after that ^
 				name = S("Large Chest")
 			end
 
-			minetest.show_formspec(clicker:get_player_name(),
-				sf("vlf_chests:%s_%s_%s_%s", d.canonical_basename, pos.x, pos.y, pos.z),
-				table.concat({
-					"formspec_version[4]",
-					"size[11.75,14.15]",
-
-					"label[0.375,0.375;" .. F(C(vlf_formspec.label_color, name)) .. "]",
-					vlf_formspec.get_itemslot_bg_v4(0.375, 0.75, 9, 3),
-					sf("list[nodemeta:%s,%s,%s;main;0.375,0.75;9,3;]", pos_other.x, pos_other.y, pos_other.z),
-					vlf_formspec.get_itemslot_bg_v4(0.375, 4.5, 9, 3),
-					sf("list[nodemeta:%s,%s,%s;main;0.375,4.5;9,3;]", pos.x, pos.y, pos.z),
-					"label[0.375,8.45;" .. F(C(vlf_formspec.label_color, S("Inventory"))) .. "]",
-					vlf_formspec.get_itemslot_bg_v4(0.375, 8.825, 9, 3),
-					"list[current_player;main;0.375,8.825;9,3;9]",
-
-					vlf_formspec.get_itemslot_bg_v4(0.375, 12.775, 9, 1),
-					"list[current_player;main;0.375,12.775;9,1;]",
-
-					--BEGIN OF LISTRING WORKAROUND
-					"listring[current_player;main]",
-					sf("listring[nodemeta:%s,%s,%s;input]", pos.x, pos.y, pos.z),
-					--END OF LISTRING WORKAROUND
-
-					"listring[current_player;main]" ..
-					sf("listring[nodemeta:%s,%s,%s;main]", pos_other.x, pos_other.y, pos_other.z),
-					"listring[current_player;main]",
-					sf("listring[nodemeta:%s,%s,%s;main]", pos.x, pos.y, pos.z),
-				})
-			)
+			minetest.show_formspec(clicker:get_player_name(), string.format("vlf_chests:%s_%s_%s_%s", basename, pos.x, pos.y, pos.z), get_double_chest_formspec(pos, pos_other, name, d.basename, true))
 
 			if d.on_rightclick_right then
 				d.on_rightclick_right(pos, node, clicker)
 			end
 
-			player_chest_open(clicker, pos_other, left_name, double_textures, node.param2, true, "vlf_chests",
-				"vlf_chests_chest")
+			player_chest_open(clicker, pos_other, names.left.a, double_textures, node.param2, true, d.sounds[2], "vlf_chests_chest")
 		end,
 		mesecons = d.mesecons,
 		on_rotate = no_rotate,
-		_vlf_hoppers_on_try_pull = function(pos, hop_pos, hop_inv, hop_list)
-			local node = minetest.get_node(pos)
-			local pos_other = get_double_container_neighbor_pos(pos, node.param2, "right")
-			local meta_other = minetest.get_meta(pos_other)
-			local inv_other = meta_other:get_inventory()
-
-			local stack_id = vlf_util.select_stack(inv_other, "main", hop_inv, hop_list)
-			if stack_id ~= nil then
-				return inv_other, "main", stack_id
-			end
-
-			local meta = minetest.get_meta(pos)
-			local inv = meta:get_inventory()
-			stack_id = vlf_util.select_stack(inv, "main", hop_inv, hop_list)
-			return inv, "main", stack_id
-		end,
-		_vlf_hoppers_on_try_push = function(pos, hop_pos, hop_inv, hop_list)
-			local node = minetest.get_node(pos)
-			local pos_other = get_double_container_neighbor_pos(pos, node.param2, "right")
-			local meta_other = minetest.get_meta(pos_other)
-			local inv_other = meta_other:get_inventory()
-
-			local stack_id = vlf_util.select_stack(hop_inv, hop_list, inv_other, "main", nil, 1)
-			if stack_id ~= nil then
-				return inv_other, "main", stack_id
-			end
-
-			local meta = minetest.get_meta(pos)
-			local inv = meta:get_inventory()
-			stack_id = vlf_util.select_stack(hop_inv, hop_list, inv, "main", nil, 1)
-			return inv, "main", stack_id
-		end,
 	})
 
 	if doc then
-		doc.add_entry_alias("nodes", small_name, "nodes", left_name)
-		doc.add_entry_alias("nodes", small_name, "nodes", right_name)
+		doc.add_entry_alias("nodes", names.small.a, "nodes", names.left.a)
+		doc.add_entry_alias("nodes", names.small.a, "nodes", names.right.a)
 	end
 end
 

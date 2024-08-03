@@ -3,24 +3,25 @@ msgstr ""
 "Project-Id-Version: Minetest textdomain mcl_chests x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: sv\n"
+"PO-Revision-Date: 2024-07-12 09:24+0000\n"
+"Last-Translator: liulitchi <liulitchi@users.noreply.translate.codeberg.org>\n"
+"Language-Team: Chinese (Simplified) <https://translate.codeberg.org/projects/"
+"mineclonia/mcl_chests/zh_Hans/>\n"
+"Language: zh_Hans\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.6.2\n"
 
 msgid "Chest"
-msgstr ""
+msgstr "箱子"
 
 msgid "Inventory"
-msgstr ""
+msgstr "背包"
 
 msgid "Large Chest"
-msgstr ""
+msgstr "大型箱子"
 
 msgid "To access its inventory, rightclick it. When broken, the items will drop out."
 msgstr ""
@@ -29,13 +30,13 @@ msgid "Chests are containers which provide 27 inventory slots. Chests can be tur
 msgstr ""
 
 msgid "27 inventory slots"
-msgstr ""
+msgstr "27个背包储存格"
 
 msgid "Can be combined to a large chest"
 msgstr ""
 
 msgid "Trapped Chest"
-msgstr ""
+msgstr "陷阱箱"
 
 msgid "A trapped chest is a container which provides 27 inventory slots. When it is opened, it sends a redstone signal to its adjacent blocks as long it stays open. Trapped chests can be turned into large trapped chests with double the capacity by placing two trapped chests next to each other."
 msgstr ""
@@ -59,55 +60,55 @@ msgid "Rightclick the ender chest to access your personal interdimensional inven
 msgstr ""
 
 msgid "White Shulker Box"
-msgstr ""
+msgstr "白色潜影盒"
 
 msgid "Light Grey Shulker Box"
-msgstr ""
+msgstr "浅灰潜影盒"
 
 msgid "Orange Shulker Box"
-msgstr ""
+msgstr "橙色潜影盒"
 
 msgid "Cyan Shulker Box"
-msgstr ""
+msgstr "蓝绿潜影盒"
 
 msgid "Magenta Shulker Box"
-msgstr ""
+msgstr "品红潜影盒"
 
 msgid "Purple Shulker Box"
-msgstr ""
+msgstr "紫色潜影盒"
 
 msgid "Light Blue Shulker Box"
-msgstr ""
+msgstr "淡蓝潜影盒"
 
 msgid "Blue Shulker Box"
-msgstr ""
+msgstr "蓝色潜影盒"
 
 msgid "Yellow Shulker Box"
-msgstr ""
+msgstr "黄色潜影盒"
 
 msgid "Brown Shulker Box"
-msgstr ""
+msgstr "棕色潜影盒"
 
 msgid "Lime Shulker Box"
-msgstr ""
+msgstr "草绿潜影盒"
 
 msgid "Green Shulker Box"
-msgstr ""
+msgstr "绿色潜影盒"
 
 msgid "Pink Shulker Box"
-msgstr ""
+msgstr "粉色潜影盒"
 
 msgid "Red Shulker Box"
-msgstr ""
+msgstr "红色潜影盒"
 
 msgid "Grey Shulker Box"
-msgstr ""
+msgstr "灰色潜影盒"
 
 msgid "Black Shulker Box"
-msgstr ""
+msgstr "黑色潜影盒"
 
 msgid "Shulker Box"
-msgstr ""
+msgstr "潜影盒"
 
 msgid "A shulker box is a portable container which provides 27 inventory slots for any item except shulker boxes. Shulker boxes keep their inventory when broken, so shulker boxes as well as their contents can be taken as a single item. Shulker boxes come in many different colors."
 msgstr ""
@@ -117,4 +118,3 @@ msgstr ""
 
 msgid "Can be carried around with its contents"
 msgstr ""
-
