@@ -35,7 +35,6 @@ vlf_mobs.register_mob("mobs_mc:chicken", {
 
 	makes_footstep_sound = true,
 	walk_velocity = 1,
-	jump_height = 1.5,
 	run_velocity = 1.5,
 	follow_velocity = 1.5,
 	jump_height = 1.5,
