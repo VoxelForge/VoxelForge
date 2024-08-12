@@ -238,7 +238,55 @@ vlf_copper.register_copper_variants("chiseled_copper", {
 	groups = {pickaxey = 2, building_block = 1, chiseled = 1, stonecuttable = 1}
 })
 
-vlf_copper.register_copper_variants("copper_bulb", {
+function vlf_copper.register_copper_bulbs(name, definitions)
+	local names, oxidized_variant, stripped_variant, waxed_variant
+
+		names = {
+			name, "waxed_"..name,
+			"exposed_"..name, "waxed_exposed_"..name,
+			"weathered_"..name, "waxed_weathered_"..name,
+			"oxidized_"..name, "waxed_oxidized_"..name
+		}
+
+	local tiles = {
+		"vlf_copper_"..name..".png",
+		"vlf_copper_exposed_"..name..".png",
+		"vlf_copper_weathered_"..name..".png",
+		"vlf_copper_oxidized_"..name..".png"
+	}
+
+	for i = 1, #names do
+		if names[i]:find("waxed") then
+			stripped_variant = "vlf_copper:"..names[i-1]
+		else
+			if not names[i]:find("oxidized") then
+				oxidized_variant = "vlf_copper:"..names[i+2]
+			end
+			if i ~= 1 then
+				stripped_variant = "vlf_copper:"..names[i-2]
+			end
+			waxed_variant = "vlf_copper:"..names[i+1]
+		end
+
+		minetest.register_node("vlf_copper:"..names[i], {
+			description = set_description(vlf_copper.copper_descs, name, i),
+			drop = set_drop(definitions.drop, names[i], name),
+			groups = set_groups(names[i], definitions.groups),
+			is_ground_content = false,
+			light_source = set_light_level(definitions.light_source, i),
+			mesecons = definitions.mesecons,
+			sounds = vlf_sounds.node_sound_metal_defaults(),
+			tiles = {set_tiles(tiles, i)},
+			_vlf_blast_resistance = 6,
+			_vlf_hardness = 3,
+			_vlf_oxidized_variant = oxidized_variant,
+			_vlf_stripped_variant = stripped_variant,
+			_vlf_waxed_variant = waxed_variant,
+		})
+	end
+end
+
+vlf_copper.register_copper_bulbs("copper_bulb", {
 	groups = {pickaxey = 2, building_block = 1},
 	mesecons = {
 		effector = {
@@ -251,7 +299,7 @@ vlf_copper.register_copper_variants("copper_bulb", {
 	light_propagates = true,
 })
 
-vlf_copper.register_copper_variants("copper_bulb_lit", {
+vlf_copper.register_copper_bulbs("copper_bulb_lit", {
 	drop = "copper_bulb",
 	groups = {pickaxey = 2, building_block = 1, not_in_creative_inventory = 1},
 	light_source = 14,
@@ -267,7 +315,7 @@ vlf_copper.register_copper_variants("copper_bulb_lit", {
 	light_propagates = true,
 })
 
-vlf_copper.register_copper_variants("copper_bulb_powered", {
+vlf_copper.register_copper_bulbs("copper_bulb_powered", {
 	drop = "copper_bulb",
 	groups = {pickaxey = 2, building_block = 1, not_in_creative_inventory = 1},
 	mesecons = {
@@ -281,7 +329,7 @@ vlf_copper.register_copper_variants("copper_bulb_powered", {
 	light_propagates = true,
 })
 
-vlf_copper.register_copper_variants("copper_bulb_lit_powered", {
+vlf_copper.register_copper_bulbs("copper_bulb_lit_powered", {
 	drop = "copper_bulb",
 	groups = {pickaxey = 2, building_block = 1, not_in_creative_inventory = 1},
 	light_source = 14,
