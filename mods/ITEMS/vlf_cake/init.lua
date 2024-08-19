@@ -57,7 +57,6 @@ minetest.register_node("vlf_cake:cake", {
 		cake = 7, food = 2, no_eat_delay = 1, compostability = 100
 	},
 	drop = "",
-	on_rightclick = function(pos, node, clicker, itemstack)
 	on_rightclick = function(pos, node, clicker, _)
 		-- Cake is subject to protection
 		local name = clicker:get_player_name()

@@ -3,6 +3,7 @@
 --###################
 
 local S = minetest.get_translator("mobs_mc")
+local mob_griefing = minetest.settings:get("mob_griefing", true)
 
 local function check_light(pos, environmental_light, artificial_light, sky_light)
 	if artificial_light > 11 then
@@ -69,7 +70,7 @@ vlf_mobs.register_mob("mobs_mc:silverfish", {
 				local pos = self.object:get_pos ();
 				local p0 = vector.offset (pos, -10, -5, -10)
 				local p1 = vector.offset (pos, 10, 5, 10)
-				local silverfish_nodes = minetest.find_nodes_in_area (p0, p1, {"group:spawns_silverfish"})	    
+				local silverfish_nodes = minetest.find_nodes_in_area (p0, p1, {"group:spawns_silverfish"})
 				for _, p in pairs(silverfish_nodes) do
 					minetest.remove_node (p)
 					minetest.add_entity (p, "mobs_mc:silverfish")

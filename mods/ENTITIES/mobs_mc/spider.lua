@@ -89,6 +89,8 @@ local spider = {
 	jump = true,
 	jump_height = 4,
 	view_range = 16,
+	always_climb = true,
+	fear_height = 0,
 	floats = 1,
 	drops = {
 		{name = "vlf_mobitems:string", chance = 1, min = 0, max = 2, looting = "common"},
@@ -97,7 +99,6 @@ local spider = {
 		end},
 	},
 	specific_attack = { "player", "mobs_mc:iron_golem" },
-	fear_height = 4,
 	animation = {
 		stand_speed = 10,
 		walk_speed = 25,

@@ -380,7 +380,7 @@ minetest.register_entity(":__builtin:item", {
 
 		-- Add what we can to the inventory
 		local itemstack = ItemStack(self.itemstring)
-		
+
 		local count = itemstack:get_count()
 		if not inv:is_empty("offhand") then
 		  itemstack = inv:add_item("offhand", itemstack)
