@@ -1,9 +1,12 @@
+local modpath = minetest.get_modpath("vlf_tripwire")
+local S = minetest.get_translator(modpath)
 minetest.register_node("vlf_tripwire:tripwire", {
-	description = "Tripwire",
+	description = S("Tripwire"),
 	tiles = {"tripwire.png"},
 	paramtype2 = "4dir",
 	groups = {dig_immediate = 2, choppy = 3, meta_is_privatizable = 1},
 	drawtype = "nodebox",
+	use_texture_alpha = "clip",
 	sunlight_propagates = true,
 	walkable = false,
 	pointable = true,
@@ -17,8 +20,9 @@ minetest.register_node("vlf_tripwire:tripwire", {
 })
 
 minetest.register_node("vlf_tripwire:tripwire_hook", {
-	description = "Tripwire Hook",
+	description = S("Tripwire Hook"),
 	drawtype = "mesh",
+	use_texture_alpha = "clip",
 	paramtype2 = "4dir",
 	mesh = "tripwire_hook.obj",
 	tiles = {"tripwire_hook.png"},
@@ -84,7 +88,8 @@ end
 
 minetest.register_node("vlf_tripwire:tripwire_hook_on", {
 	drawtype = "mesh",
-	description = "Tripwire Hook On",
+	use_texture_alpha = "clip",
+	description = S("Tripwire Hook On"),
 	paramtype2 = "4dir",
 	visual_scale = "0.5",
 	sunlight_propagates = true,
