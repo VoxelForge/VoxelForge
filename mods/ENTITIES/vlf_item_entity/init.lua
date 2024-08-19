@@ -110,6 +110,7 @@ end
 
 local doTileDrops = minetest.settings:get_bool("vlf_doTileDrops", true)
 
+---@diagnostic disable-next-line: duplicate-set-field
 function minetest.handle_node_drops(pos, drops, digger)
 	-- NOTE: This function override allows digger to be nil.
 	-- This means there is no digger. This is a special case which allows this function to be called
@@ -149,7 +150,7 @@ function minetest.handle_node_drops(pos, drops, digger)
 	* table: Drop every itemstring in this table when dug by shears _vlf_silk_touch_drop
 	]]
 
-	local enchantments = tool and vlf_enchanting.get_enchantments(tool, "silk_touch")
+	local enchantments = tool and vlf_enchanting.get_enchantments(tool)
 
 	local silk_touch_drop = false
 	local nodedef = minetest.registered_nodes[dug_node.name]
@@ -173,6 +174,7 @@ function minetest.handle_node_drops(pos, drops, digger)
 	if tool and nodedef._vlf_fortune_drop and enchantments.fortune then
 		local fortune_level = enchantments.fortune
 		local fortune_drop = nodedef._vlf_fortune_drop
+		local simple_drop = nodedef._vlf_fortune_drop.drop_without_fortune
 		if fortune_drop.discrete_uniform_distribution then
 			local min_count = fortune_drop.min_count
 			local max_count = fortune_drop.max_count + fortune_level * (fortune_drop.factor or 1)
@@ -186,6 +188,12 @@ function minetest.handle_node_drops(pos, drops, digger)
 			-- Fixed Behavior
 			local drop = get_fortune_drops(fortune_drop, fortune_level)
 			drops = get_drops(drop, tool:get_name(), dug_node.param2, nodedef.paramtype2)
+		end
+
+		if simple_drop then
+			for _, item in pairs(simple_drop) do
+				table.insert(drops, item)
+			end
 		end
 	end
 
@@ -205,7 +213,7 @@ function minetest.handle_node_drops(pos, drops, digger)
 		end
 		local drop_item = ItemStack(item)
 		drop_item:set_count(1)
-		for i=1,count do
+		for _=1, count do
 			local dpos = table.copy(pos)
 			-- Apply offset for plantlike_rooted nodes because of their special shape
 			if nodedef and nodedef.drawtype == "plantlike_rooted" and nodedef.walkable then
@@ -259,7 +267,7 @@ end
 local old_mt_node_dig = minetest.node_dig
 function minetest.node_dig(pos, node, digger)
 	local wielded = digger and digger:is_player() and digger:get_wielded_item()
-	local def = core.registered_nodes[node.name]
+	local def = minetest.registered_nodes[node.name]
 	if wielded and def then
 		local wdef = wielded:get_definition()
 		local tp = wielded:get_tool_capabilities()
@@ -372,12 +380,16 @@ minetest.register_entity(":__builtin:item", {
 
 		-- Add what we can to the inventory
 		local itemstack = ItemStack(self.itemstring)
-		tt.reload_itemstack_description(itemstack)
-		local leftovers = inv:add_item("main", itemstack )
+
+		local count = itemstack:get_count()
+		if not inv:is_empty("offhand") then
+		  itemstack = inv:add_item("offhand", itemstack)
+		end
+		local leftovers = inv:add_item("main", itemstack)
 
 		self:check_pickup_achievements(player)
 
-		if leftovers:get_count() < itemstack:get_count() then
+		if leftovers:get_count() < count then
 			-- play sound if something was picked up
 			minetest.sound_play("item_drop_pickup", {
 				pos = player:get_pos(),
@@ -457,41 +469,34 @@ minetest.register_entity(":__builtin:item", {
 			return
 		end
 
-		if minetest.get_item_group(stack:get_name(), "compass") > 0 then
-			self.is_compass = true
-			if string.find(stack:get_name(), "_lodestone") then
-				stack:set_name("vlf_compass:18_lodestone")
-			elseif string.find(stack:get_name(), "_recovery") then
-				stack:set_name("vlf_compass:18_recovery")
-			else
-				stack:set_name("vlf_compass:18")
-			end
-		end
-
-		if minetest.get_item_group(stack:get_name(), "clock") > 0 then
-			self.is_clock = true
-		end
-
 		local count = stack:get_count()
 		local max_count = stack:get_stack_max()
 		if count > max_count then
 			stack:set_count(max_count)
 		end
 
-		self.itemstring = stack:to_string()
-
 		local def = stack:get_definition()
+		local props_overrides = {}
+		if def._on_set_item_entity then
+			local s
+			s, props_overrides = def._on_set_item_entity(stack, self)
+			if s then
+				stack = s
+			end
+		end
+
+		self.itemstring = stack:to_string()
 		local s = 0.2 + 0.1 * (count / max_count)
 		local wield_scale = (def and type(def.wield_scale) == "table" and tonumber(def.wield_scale.x)) or 1
 		local c = s
 		s = s / wield_scale
-		self.object:set_properties({
+		self.object:set_properties(table.merge({
 			wield_item = stack:get_name(),
 			visual_size = {x = s, y = s},
 			collisionbox = {-c, -c, -c, c, c, c},
 			infotext = def.description,
 			glow = def.light_source,
-		})
+		}, props_overrides))
 		if item_drop_settings.random_item_velocity == true and self.age < 1 then
 			minetest.after(0, self.apply_random_vel, self)
 		end
@@ -541,7 +546,7 @@ minetest.register_entity(":__builtin:item", {
 		return data
 	end,
 
-	on_activate = function(self, staticdata, dtime_s)
+	on_activate = function(self, staticdata, _)
 		if string.sub(tostring(staticdata), 1, string.len("return")) == "return" then
 			local data = minetest.deserialize(staticdata)
 			if data and type(data) == "table" then

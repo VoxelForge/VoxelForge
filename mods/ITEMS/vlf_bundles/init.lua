@@ -1,5 +1,4 @@
 if minetest.settings:get_bool('bundles', true) then
-
 local max_storage = 64
 
 local function on_rightclick(itemstack, placer, pointed_thing)
@@ -10,9 +9,8 @@ local function on_rightclick(itemstack, placer, pointed_thing)
 	if stored_items == "" then
 		return itemstack
 	end
-
 	local items = minetest.deserialize(stored_items)
-
+	--minetest.log("error", "" .. minetest.serialize(items) .. "")
 	for _, item in ipairs(items) do
 		local dropped_item = minetest.add_item(placer:get_pos(), item)
 		if dropped_item then
@@ -94,5 +92,4 @@ minetest.register_on_player_inventory_action(function(player, action, inventory,
 		end
 	end
 end)
-
 end

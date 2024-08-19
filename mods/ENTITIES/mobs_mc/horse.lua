@@ -1,5 +1,7 @@
 local S = minetest.get_translator("mobs_mc")
 
+local extended_pet_control = minetest.settings:get_bool("vlf_extended_pet_control",false)
+
 local base_drop = {
 	name = "vlf_mobitems:leather",
 	chance = 1,
@@ -34,6 +36,21 @@ local function horse_extra_texture(horse, cstring)
 		textures[1] = "blank.png"
 	end
 	return textures
+end
+
+local function attach_driver(self, clicker)
+	vlf_title.set(clicker, "actionbar", {text=S("Sneak to dismount"), color="white", stay=60})
+	self.object:set_properties({stepheight = 1.1})
+	self.object:set_properties({selectionbox = {0,0,0,0,0,0}})
+	self:attach(clicker)
+end
+
+local function detach_driver(self)
+	self.object:set_properties({selectionbox = self.object:get_properties().collisionbox})
+	if self.driver then
+		if extended_pet_control and self.order ~= "sit" then self:toggle_sit(self.driver) end
+		vlf_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
+	end
 end
 
 local can_equip_horse_armor = function(entity_id)
@@ -149,10 +166,17 @@ local horse = {
 		end
 
 		if self.driver then
+			local ctrl = self.driver:get_player_control()
+			if ctrl and ctrl.sneak then
+				detach_driver(self)
+			end
 			if self.run_velocity ~= self._horse_speed then
 				self.run_velocity = self._horse_speed
 			end
 		else
+			if self._saddle then
+				detach_driver(self)
+			end
 			self.run_velocity = self._runaway_velocity
 		end
 
@@ -178,7 +202,7 @@ local horse = {
 
 		if self.driver and not self.tamed and self.buck_off_time <= 0 then
 			if math.random() < 0.2 then
-				vlf_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
+				detach_driver(self)
 				-- TODO bucking animation
 			else
 				self.buck_off_time = 20
@@ -202,7 +226,7 @@ local horse = {
 
 	on_die = function(self, pos)
 		if self.driver then
-			vlf_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
+			detach_driver(self)
 		end
 	end,
 
@@ -262,15 +286,14 @@ local horse = {
 		end
 
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
-			if self.driver and clicker == self.driver then
-				vlf_mobs.detach(clicker, {x = 1, y = 0, z = 1})
+			if not self.driver and self._saddle and clicker:get_player_control().sneak then
+				return
 			elseif not self.driver and iname == "vlf_mobitems:saddle" and self:set_saddle(clicker) then
 				return
 			elseif minetest.get_item_group(iname, "horse_armor") > 0 and can_equip_horse_armor(self.name) and not self.driver and self:set_armor(clicker) then
 				return
 			elseif not self.driver then
-				self.object:set_properties({stepheight = 1.1})
-				self:attach(clicker)
+				attach_driver(self, clicker)
 			end
 		end
 	end,

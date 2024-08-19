@@ -1,14 +1,6 @@
 -- Load the JSON library
 local json = dofile(minetest.get_modpath("vlf_json") .. "/json.lua")
 
--- Function to convert item name to user-friendly description
---[[local function generate_description(item_name)
-    local description = item_name:match(":(.+)$")  -- Extracts the part after the colon
-    description = description:gsub("_", " ")      -- Replace underscores with spaces
-    description = description:gsub("(%l)(%w*)", function(a, b) return string.upper(a) .. b end) -- Capitalize the first letter of each word
-    return description
-end]]
-
 local function generate_description(item_name, groups)
     local parts = item_name:split(":")
     local description

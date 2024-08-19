@@ -57,6 +57,11 @@ vlf_mobs.register_mob("mobs_mc:creeper", {
 	allow_fuse_reset = true,
 	stop_to_explode = true,
 
+	_on_lightning_strike = function(self)
+		 vlf_util.replace_mob(self.object, "mobs_mc:creeper_charged")
+		 return true
+	end,
+
 	-- Force-ignite creeper with flint and steel and explode after 1.5 seconds.
 	-- TODO: Make creeper flash after doing this as well.
 	on_rightclick = function(self, clicker)
@@ -217,10 +222,6 @@ vlf_mobs.register_mob("mobs_mc:creeper_charged", {
 				end
 			end
 		end
-	end,
-	on_lightning_strike = function(self, pos, pos2, objects)
-		 vlf_util.replace_mob(self.object, "mobs_mc:creeper_charged")
-		 return true
 	end,
 	maxdrops = 2,
 	drops = {

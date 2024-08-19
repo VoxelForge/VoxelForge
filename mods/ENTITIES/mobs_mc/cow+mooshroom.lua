@@ -145,7 +145,7 @@ vlf_mobs.register_mob("mobs_mc:mooshroom", table.merge(cow_def, {
 		end
 	end,
 
-	on_lightning_strike = function(self, pos, pos2, objects)
+	_on_lightning_strike = function(self)
 		if self.base_texture[1] == "mobs_mc_mooshroom_brown.png" then
 			self.base_texture = { "mobs_mc_mooshroom.png", "mobs_mc_mushroom_red.png" }
 		else

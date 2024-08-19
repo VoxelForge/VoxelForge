@@ -201,18 +201,11 @@ function vlf_raids.find_villager(pos)
 	local obj = minetest.get_objects_inside_radius(pos, 8)
 	for _, objects in ipairs(obj) do
 		local object = objects:get_luaentity()
-		if object then
-			if object.name ~= "mobs_mc:villager" then
-				return
-			elseif object.name == "mobs_mc:villager" then
-				--minetest.log("action", "[vlf_raids] Villager Found.")
-				return true
-			else
-				--minetest.log("action", "[vlf_raids] No Villager Found.")
-				return false
-			end
+		if object and object.name == "mobs_mc:villager" then
+			return true
 		end
 	end
+	return false
 end
 
 function vlf_raids.find_bed(pos)

@@ -13,7 +13,7 @@ minetest.register_craft({
 	output = "vlf_amethyst:tinted_glass 2",
 	recipe = {
 		{"",                            "vlf_amethyst:amethyst_shard", ""},
-		{"vlf_amethyst:amethyst_shard", "vlf_core:glass",              "vlf_amethyst:amethyst_shard",},
+		{"vlf_amethyst:amethyst_shard", "vlf_amethyst:glass",              "vlf_amethyst:amethyst_shard",},
 		{"",                            "vlf_amethyst:amethyst_shard", ""},
 	},
 })

@@ -289,9 +289,9 @@ vlf_mapgen_core.register_generator("structures",nil, function(minp, maxp, blocks
 	local gennotify = minetest.get_mapgen_object("gennotify")
 	local has = false
 	for _,struct in pairs(vlf_structures.registered_structures) do
-		local pr = PseudoRandom(blockseed + 42)
 		if struct.deco_id then
 			for _, pos in pairs(gennotify["decoration#"..struct.deco_id] or {}) do
+				local pr = PcgRandom(minetest.hash_node_position(pos) + blockseed + 42)
 				local realpos = vector.offset(pos,0,1,0)
 				minetest.remove_node(realpos)
 				minetest.fix_light(vector.offset(pos,-1,-1,-1),vector.offset(pos,1,3,1))
@@ -301,9 +301,13 @@ vlf_mapgen_core.register_generator("structures",nil, function(minp, maxp, blocks
 				end
 			end
 		elseif struct.static_pos then
-			for _,p in pairs(struct.static_pos) do
+			--[[for _,p in pairs(struct.static_pos) do
 				if vlf_util.in_cube(p,minp,maxp) then
-					vlf_structures.place_structure(p,struct,pr,blockseed)
+					vlf_structures.place_structure(p,struct,pr,blockseed)]]
+			for _, pos in pairs(struct.static_pos) do
+				local pr = PcgRandom(minetest.hash_node_position(pos) + 42)
+				if vlf_util.in_cube(pos, minp, maxp) then
+					vlf_structures.place_structure(pos, struct, pr, blockseed)
 				end
 			end
 		end

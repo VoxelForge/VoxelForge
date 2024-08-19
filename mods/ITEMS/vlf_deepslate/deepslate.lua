@@ -61,7 +61,7 @@ vlf_deepslate.register_deepslate_ore("redstone_lit", S("Lit Deepslate Redstone O
 	tiles = { "vlf_deepslate_redstone_ore.png" },
 	_vlf_ore_lit = "vlf_deepslate:deepslate_redstone_lit_ore",
 	_vlf_ore_unlit = "vlf_deepslate:deepslate_redstone_ore",
-	_vlf_silk_touch_drop = { "vlf_deepslate:deepslate_redstone_ore" },
+	_vlf_silk_touch_drop = { "vlf_deepslate:redstone_ore" },
 }, "vlf_core:redstone_ore_lit")
 vlf_deepslate.register_deepslate_ore("copper", S("Deepslate Copper Ore"), nil, "vlf_copper:copper_ore")
 

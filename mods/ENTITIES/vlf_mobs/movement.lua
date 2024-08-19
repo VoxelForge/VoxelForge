@@ -968,3 +968,17 @@ function mob_class:check_smooth_rotation(dtime)
 	end
 	-- end rotation
 end
+
+--this is a generic climb function
+function mob_class:climb()
+	local current_velocity = self.object:get_velocity()
+	local goal_velocity = {x=0, y=3, z=0}
+	local new_velocity_addition = vector.subtract(goal_velocity,current_velocity)
+	new_velocity_addition.x = 0
+	new_velocity_addition.z = 0
+
+	--smooths out mobs a bit
+	if vector.length(new_velocity_addition) >= 0.0001 then
+		self.object:add_velocity(new_velocity_addition)
+	end
+end

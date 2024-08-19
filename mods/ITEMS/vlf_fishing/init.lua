@@ -247,8 +247,9 @@ function bobber_ENTITY:on_step(dtime)
 		elseif not self._waittime or self._waittime <= 0 then
 			-- wait for random number of ticks.
 			local lure_enchantment = vlf_enchanting.get_enchantment(player:get_wielded_item(), "lure") or 0
+			local rain_mod = vlf_weather.rain.raining and vlf_weather.has_rain(self.object:get_pos()) and 0.75 or 1
 			local reduced = lure_enchantment * 5
-			self._waittime = math.random(math.max(0, 5 - reduced), 30 - reduced)
+			self._waittime = math.random(math.max(0, 5 - reduced), 30 - reduced) * rain_mod
 		else
 			if self._time < self._waittime then
 				self._time = self._time + dtime
