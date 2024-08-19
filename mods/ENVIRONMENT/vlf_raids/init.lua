@@ -204,7 +204,7 @@ function vlf_raids.find_villager(pos)
 		if object and object.name == "mobs_mc:villager" then
 			return true
 		end
- 	end
+	end
 	return false
 end
 

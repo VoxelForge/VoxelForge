@@ -445,7 +445,7 @@ function mob_class:on_step(dtime)
 
 	self:check_particlespawners(dtime)
 	self:check_item_pickup()
-	
+
 	--mobs that can climb over stuff
 	if self.always_climb and self:node_infront_ok(pos, 0).name ~= "air" then
 		self:climb()
