@@ -58,7 +58,7 @@ vlf_mobs.register_mob("mobs_mc:creeper", {
 	stop_to_explode = true,
 
 	_on_lightning_strike = function(self)
-		 mcl_util.replace_mob(self.object, "mobs_mc:creeper_charged")
+		 vlf_util.replace_mob(self.object, "mobs_mc:creeper_charged")
 		 return true
 	end,
 

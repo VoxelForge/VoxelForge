@@ -1073,13 +1073,13 @@ minetest.register_node("vlf_core:powdered_snow", {
 local active_entities = {}
 
 
--- Function to check if an entity is inside a specific position
+--[[ Function to check if an entity is inside a specific position
 local function is_entity_in_pos(pos, entity)
     local epos = entity:get_pos()
     return epos.x >= pos.x and epos.x < pos.x + 1 and
            epos.y >= pos.y and epos.y < pos.y + 1 and
            epos.z >= pos.z and epos.z < pos.z + 1
-end
+end]]
 
 local function is_player_in_snow(player)
 	local pos = player:get_pos()
@@ -1093,7 +1093,6 @@ end
 -- Globalstep function to check for entities inside the node
 minetest.register_globalstep(function(dtime)
     for _, player in ipairs(minetest.get_connected_players()) do
-        local pos = vector.round(player:get_pos())
 		if is_player_in_snow(player) then
             if not active_entities[player:get_player_name()] then
                 active_entities[player:get_player_name()] = true
@@ -1109,11 +1108,10 @@ minetest.register_globalstep(function(dtime)
 
     for _, obj in ipairs(minetest.get_objects_inside_radius(vector.new(0,0,0), 10000)) do
         if not obj:is_player() then
-            local pos = vector.round(obj:get_pos())
             if is_player_in_snow(obj) then
                 if not active_entities[obj] then
                     active_entities[obj] = true
-                    vlf_entity_effects.give_effect("frost", obj, 1, 1)
+                    vlf_entity_effects.give_effect("frost", obj, 1, 10000)
                     return true
                 end
             else
