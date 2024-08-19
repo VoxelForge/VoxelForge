@@ -193,7 +193,7 @@ function mobs_mc.villager_mob:on_die(pos, cmi_cause)
 	end
 end
 
-function mobs_mc.villager_mob:on_lightning_strike(pos, pos2, objects)
+function mobs_mc.villager_mob:_on_lightning_strike()
 	 vlf_util.replace_mob(self.object, "mobs_mc:witch")
 	 return true
 end

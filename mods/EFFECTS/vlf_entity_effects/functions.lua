@@ -766,7 +766,7 @@ vlf_entity_effects.register_effect({
 	end,
 	on_start = function(object, factor)
 		vlf_burning.extinguish(object)
-		playerphysics.add_physics_factor(object, "speed", "vlf_entity_effects:frost", 1-factor)
+		--playerphysics.add_physics_factor(object, "speed", "vlf_entity_effects:frost", 1-factor)
 		if EF.frost[object].vignette then return end
 		EF.frost[object].vignette = object:hud_add({
 			hud_elem_type = "image",

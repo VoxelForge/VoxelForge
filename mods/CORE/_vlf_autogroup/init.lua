@@ -386,6 +386,11 @@ local function overwrite()
 				groups = newgroups,
 			})
 		end
+		--[[if nname ~= "ignore" and ndef.light_source == nil or ndef.light_source < 4 then
+			minetest.override_item("air", {
+				light_source = 3
+			})
+		end]]
 	end
 
 	for tname, tdef in pairs(minetest.registered_items) do

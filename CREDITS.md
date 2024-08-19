@@ -17,7 +17,7 @@
 * davedevils
 
 ## Active Contributors
-* SamMatzko
+* crispiebacon
 
 ## Previous Contributors
 * Lizzy Fleckenstein
@@ -44,6 +44,7 @@
 * Nils Dagsson Moskopp
 * ChrisPHP
 * 3raven
+* SamMatzko
 
 ## Original Mod Authors
 * Wuzzy
@@ -82,6 +83,8 @@
 * 22i
 * tobyplowy
 * epCode
+* crispiebacon
+* DragonWrangler1
 
 ## Textures and menu images
 * XSSheep
@@ -105,6 +108,7 @@
 * Wbjitscool
 * SmokeyDope
 * DragonWrangler1
+* crispiebacon
 
 ## Translations
 * Wuzzy

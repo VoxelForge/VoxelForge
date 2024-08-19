@@ -52,7 +52,7 @@ for _,mg in pairs({"v7","valleys","carpathian","v5","fractal"}) do
 		minetest.set_mapgen_setting("mg"..mg.."_large_cave_flooded", "0.1", true)
 		minetest.set_mapgen_setting("mg"..mg.."_large_cave_num_min", "0", true)
 		minetest.set_mapgen_setting("mg"..mg.."_large_cave_num_max", "9", true)
-		mg_flags.caverns = true
+		mg_flags.caverns = false
 	end
 end
 
@@ -66,7 +66,7 @@ end
 if string.len(mg_flags_str) > 0 then
 	mg_flags_str = string.sub(mg_flags_str, 1, string.len(mg_flags_str)-1)
 end
-minetest.set_mapgen_setting("mg_flags", mg_flags_str, true)
+minetest.set_mapgen_setting("mg_flags", mg_flags_str, false)
 
 -- Helper function for converting a MC probability to MT, with
 -- regards to MapBlocks.
@@ -289,9 +289,9 @@ vlf_mapgen_core.register_generator("structures",nil, function(minp, maxp, blocks
 	local gennotify = minetest.get_mapgen_object("gennotify")
 	local has = false
 	for _,struct in pairs(vlf_structures.registered_structures) do
-		local pr = PseudoRandom(blockseed + 42)
 		if struct.deco_id then
 			for _, pos in pairs(gennotify["decoration#"..struct.deco_id] or {}) do
+				local pr = PcgRandom(minetest.hash_node_position(pos) + blockseed + 42)
 				local realpos = vector.offset(pos,0,1,0)
 				minetest.remove_node(realpos)
 				minetest.fix_light(vector.offset(pos,-1,-1,-1),vector.offset(pos,1,3,1))
@@ -301,9 +301,13 @@ vlf_mapgen_core.register_generator("structures",nil, function(minp, maxp, blocks
 				end
 			end
 		elseif struct.static_pos then
-			for _,p in pairs(struct.static_pos) do
+			--[[for _,p in pairs(struct.static_pos) do
 				if vlf_util.in_cube(p,minp,maxp) then
-					vlf_structures.place_structure(p,struct,pr,blockseed)
+					vlf_structures.place_structure(p,struct,pr,blockseed)]]
+			for _, pos in pairs(struct.static_pos) do
+				local pr = PcgRandom(minetest.hash_node_position(pos) + 42)
+				if vlf_util.in_cube(pos, minp, maxp) then
+					vlf_structures.place_structure(pos, struct, pr, blockseed)
 				end
 			end
 		end

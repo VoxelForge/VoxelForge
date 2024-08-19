@@ -123,7 +123,7 @@ function vlf_lightning.strike_func(pos, pos2, objects)
 	for _, obj in pairs(objects) do
 		local lua = obj:get_luaentity()
 		if lua then
-			if not lua.on_vlf_lightning_strike or ( lua.on_vlf_lightning_strike and lua.on_vlf_lightning_strike(lua, pos, pos2, objects) ~= true ) then
+			if not lua._on_lightning_strike or ( lua._on_lightning_strike and lua._on_lightning_strike(lua, pos, pos2, objects) ~= true ) then
 				vlf_util.deal_damage(obj, 5, { type = "lightning_bolt" })
 			end
 		else

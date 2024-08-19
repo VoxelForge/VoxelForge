@@ -21,7 +21,6 @@ return {
 		"davedevils",
 	}},
 	{S("Active Contributors"), 0xF84355, {
-		"SamMatzko",
 		"crispiebacon",
 	}},
 	{S("Previous Contributors"), 0x52FF00, {
@@ -49,6 +48,7 @@ return {
 		"Nils Dagsson Moskopp",
 		"ChrisPHP",
 		"3raven",
+		"SamMatzko",
 	}},
 	{S("Original Mod Authors"), 0xA60014, {
 		"Wuzzy",
@@ -87,6 +87,8 @@ return {
 		"22i",
 		"tobyplowy",
 		"epCode",
+		"crispiebacon",
+		"DragonWrangler1",
 	}},
 	{S("Textures and menu images"), 0x0019FF, {
 		"XSSheep",

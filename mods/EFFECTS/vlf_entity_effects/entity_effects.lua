@@ -440,6 +440,18 @@ vlf_entity_effects.register_entity_effect({
 })
 
 vlf_entity_effects.register_entity_effect({
+	name = "regeneration",
+	desc_suffix = S("of Regeneration"),
+	_tt = nil,
+	_longdesc = S("Regenerates health over time."),
+	color = "#CD5CAB",
+	_effect_list = {
+		regeneration = {dur=vlf_entity_effects.DURATION_POISON},
+	},
+	has_arrow = true,
+})
+
+vlf_entity_effects.register_entity_effect({
 	name = "invisibility",
 	desc_suffix = S("of Invisibility"),
 	_tt = nil,

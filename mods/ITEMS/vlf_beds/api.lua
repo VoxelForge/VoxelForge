@@ -221,7 +221,8 @@ function vlf_beds.register_bed(name, def)
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		groups = {handy = 1, flammable = -1, bed = 2, dig_by_piston=1, bouncy=66, fall_damage_add_percent=-50, not_in_creative_inventory = 1},
+		-- FIXME: Should be bouncy=66, but this would be a higher bounciness than slime blocks!
+		groups = {handy = 1, flammable = -1, bed = 2, dig_by_piston=1, bouncy=33, fall_damage_add_percent=-50, not_in_creative_inventory = 1},
 		_vlf_hardness = 0.2,
 		_vlf_blast_resistance = 1,
 		sounds = def.sounds or default_sounds,
