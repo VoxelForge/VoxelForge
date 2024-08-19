@@ -1,4 +1,4 @@
---[[if minetest.settings:get_bool('bundles', true) then
+if minetest.settings:get_bool('bundles', true) then
 local max_storage = 64
 
 local function on_rightclick(itemstack, placer, pointed_thing)
@@ -92,4 +92,4 @@ minetest.register_on_player_inventory_action(function(player, action, inventory,
 		end
 	end
 end)
-end]]
+end

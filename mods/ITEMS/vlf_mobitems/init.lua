@@ -175,13 +175,6 @@ minetest.register_craftitem("vlf_mobitems:ink_sac", {
 	groups = { craftitem = 1 },
 })
 
---[[minetest.register_craftitem("vlf_mobitems:string",{
-	description = S("String"),
-	_doc_items_longdesc = S("Strings are used in crafting."),
-	inventory_image = "vlf_mobitems_string.png",
-	groups = { craftitem = 1 },
-})]]
-
 minetest.register_craftitem("vlf_mobitems:string", {
 	description = S("String"),
 	_doc_items_longdesc = S("Strings are used in crafting."),
@@ -209,7 +202,7 @@ minetest.register_craftitem("vlf_mobitems:string", {
 		if not minetest.is_creative_enabled(player_name) then
 			itemstack:take_item()
 		end
-		
+
 		return itemstack
 	end,
 })

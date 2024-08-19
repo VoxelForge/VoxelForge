@@ -51,7 +51,7 @@ minetest.register_node("vlf_nether:ancient_debris", {
 	description = S("Ancient Debris"),
 	_doc_items_longdesc = S("Ancient debris can be found in the nether and is very very rare."),
 	tiles = {"vlf_nether_ancient_debris_top.png", "vlf_nether_ancient_debris_side.png"},
-	groups = {pickaxey=4, building_block=1, material_stone=1, xp=0, blast_furnace_smeltable = 1},
+	groups = {pickaxey=4, building_block=1, material_stone=1, xp=0, blast_furnace_smeltable = 1, fire_immune = 1},
 	drop = "vlf_nether:ancient_debris",
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	_vlf_blast_resistance = 1200,

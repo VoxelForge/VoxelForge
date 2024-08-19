@@ -294,7 +294,7 @@ function mob_class:mob_activate(staticdata, dtime)
 		self:set_armor_texture()
 		self._run_armor_init = true
 	end
-	
+
 	if not self._vlf_entity_effects then
 		self._vlf_entity_effects = {}
 	end

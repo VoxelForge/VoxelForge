@@ -52,7 +52,7 @@ for _,mg in pairs({"v7","valleys","carpathian","v5","fractal"}) do
 		minetest.set_mapgen_setting("mg"..mg.."_large_cave_flooded", "0.1", true)
 		minetest.set_mapgen_setting("mg"..mg.."_large_cave_num_min", "0", true)
 		minetest.set_mapgen_setting("mg"..mg.."_large_cave_num_max", "9", true)
-		mg_flags.caverns = false
+		mg_flags.caverns = true
 	end
 end
 
@@ -66,7 +66,7 @@ end
 if string.len(mg_flags_str) > 0 then
 	mg_flags_str = string.sub(mg_flags_str, 1, string.len(mg_flags_str)-1)
 end
-minetest.set_mapgen_setting("mg_flags", mg_flags_str, false)
+minetest.set_mapgen_setting("mg_flags", mg_flags_str, true)
 
 -- Helper function for converting a MC probability to MT, with
 -- regards to MapBlocks.
