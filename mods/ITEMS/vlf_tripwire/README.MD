@@ -4,9 +4,9 @@
 The Advanced Tripwire System for Minetest offers a comprehensive solution for adding tripwire-based detection systems to your game. Use this module to create interactive environments, security alarms, or clever traps in your Minetest worlds.
 
 ## Features
-- **Tripwire: Felt**: A subtle thread usable for connecting detectors.
-- **Tripwire: Tripwire**: A detector that activates when entities pass through the connected thread.
-- **Tripwire: Tripwire On**: An activated variant of the tripwire that interacts with the Mesecons system to send signals based on entity presence.
+- **Tripwire**: A subtle thread usable for connecting detectors.
+- **Tripwire: Hook**: A detector that activates when entities pass through the connected thread.
+- **Tripwire: Hook On**: An activated variant of the tripwire that interacts with the Mesecons system to send signals based on entity presence.
 - **Entity Detector**: Effectively captures movement between two tripwires and activates signals accordingly.
 
 ## Installation

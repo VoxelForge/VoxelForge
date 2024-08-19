@@ -6,6 +6,7 @@ minetest.register_node("vlf_tools:heavy_core", {
     _doc_long_desc = heavy_core_longdesc,
     tiles = {"vlf_tools_heavy_core_top.png", "vlf_tools_heavy_core_bottom.png", "vlf_tools_heavy_core_side.png"},
     is_ground_content = false,
+    use_texture_alpha = "clip",
     groups = {pickaxey = 1, building_block = 1},
     sounds = vlf_sounds.node_sound_stone_defaults(),
     paramtype2 = "facedir",

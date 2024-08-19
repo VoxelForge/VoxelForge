@@ -138,6 +138,7 @@ function vlf_flowers.register_simple_flower(name, def)
 		inventory_image = def.image,
 		wield_image = def.image,
 		sunlight_propagates = true,
+		use_texture_alpha = "clip",
 		paramtype = "light",
 		walkable = false,
 		drop = def.drop,
@@ -298,6 +299,7 @@ function vlf_flowers.add_large_plant(name, def)
 		node_placement_prediction = "",
 		inventory_image = inv_img,
 		wield_image = inv_img,
+		use_texture_alpha = "clip",
 		drop = "vlf_flowers:"..name,
 		selection_box = {
 			type = "fixed",
@@ -317,6 +319,7 @@ function vlf_flowers.add_large_plant(name, def)
 		drop = def.bottom.drop or "vlf_flowers:"..name,
 		_vlf_shears_drop = def.bottom._vlf_shears_drop,
 		_vlf_fortune_drop = def.bottom._vlf_fortune_drop,
+		use_texture_alpha = "clip",
 		after_destruct = function(pos, oldnode)
 			-- Remove bottom half of flower (if it exists)
 			local top = pos

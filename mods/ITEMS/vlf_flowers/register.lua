@@ -217,6 +217,7 @@ local def_tallgrass = {
 	palette = "vlf_core_palette_grass.png",
 	sunlight_propagates = true,
 	walkable = false,
+	use_texture_alpha = "clip",
 	buildable_to = true,
 	groups = {
 		handy = 1, shearsy = 1, attached_node = 1, deco_block = 1,
@@ -242,6 +243,7 @@ minetest.register_node("vlf_flowers:fern", table.merge(def_tallgrass, {
 	tiles = { "vlf_flowers_fern.png" },
 	inventory_image = "vlf_flowers_fern_inv.png",
 	wield_image = "vlf_flowers_fern_inv.png",
+	use_texture_alpha = "clip",
 	selection_box = {
 		type = "fixed",
 		fixed = { -6/16, -0.5, -6/16, 6/16, 5/16, 6/16 },
