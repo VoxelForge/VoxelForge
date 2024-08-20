@@ -62,6 +62,17 @@ dofile(modpath .. "/engine.lua")
 dofile(modpath .. "/groupcaps.lua")
 dofile(modpath .. "/enchantments.lua")
 
+function vlf_enchanting.enchant_uniform_randomly(stack, exclude, pr)
+	local enchantment = vlf_enchanting.get_random_enchantment(stack, true, false, exclude, pr)
+
+	if enchantment then
+		vlf_enchanting.enchant(stack, enchantment,
+			vlf_enchanting.random(pr, 1, vlf_enchanting.enchantments[enchantment].max_level))
+	end
+
+	return stack
+end
+
 minetest.register_chatcommand("enchant", {
 	description = S("Enchant an item"),
 	params = S("<player> <enchantment> [<level>]"),
