@@ -1,10 +1,10 @@
 -- Evaluates predicates (conditions) in loot tables
 vl_loot.predicate = {}
 
-local function check_predicate(predicate_table, loot_context)
+--[[local function check_predicate(predicate_table, loot_context)
     -- TODO: Make this work
     return true
-end
+end]]
 
 local function check_predicates(predicate_tables, loot_context)
     if predicate_tables == nil then return true end

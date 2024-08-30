@@ -1,5 +1,4 @@
 vlf_loot = {}
-local modpath = minetest.get_modpath("vlf_loot")
 
 --[[
 Select a number of itemstacks out of a pool of treasure definitions randomly.
