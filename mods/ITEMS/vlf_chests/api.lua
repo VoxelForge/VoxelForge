@@ -588,7 +588,11 @@ function vlf_chests.register_chest(basename, d)
 			minetest.set_node(pos, node)
 		end,
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
-			minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
+			--minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
+			local itemstack_meta = itemstack:get_meta()
+			local node_meta = minetest.get_meta(pos)
+			node_meta:set_string("name", itemstack_meta:get_string("name"))
+			node_meta:set_string("loot_table", itemstack_meta:get_string("loot_table"))
 		end,
 	})
 
@@ -666,7 +670,11 @@ function vlf_chests.register_chest(basename, d)
 			end
 		end,
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
-			minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
+			--minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
+			local itemstack_meta = itemstack:get_meta()
+			local node_meta = minetest.get_meta(pos)
+			node_meta:set_string("name", itemstack_meta:get_string("name"))
+			node_meta:set_string("loot_table", itemstack_meta:get_string("loot_table"))
 		end,
 		after_dig_node = drop_items_chest,
 		on_blast = on_chest_blast,
@@ -681,10 +689,13 @@ function vlf_chests.register_chest(basename, d)
 
 		on_rightclick = function(pos, node, clicker)
 			if blocks_chest(minetest.get_node(vector.offset(pos,0, 1, 0))) then return false end
+			local node_meta = minetest.get_meta(pos)
 			local name = minetest.get_meta(pos):get_string("name")
 			if name == "" then
 				name = S("Chest")
 			end
+			
+			local inventory = node_meta:get_inventory()
 
 			minetest.show_formspec(clicker:get_player_name(),
 				string.format("vlf_chests:%s_%s_%s_%s", d.canonical_basename, pos.x, pos.y, pos.z),
@@ -709,6 +720,10 @@ function vlf_chests.register_chest(basename, d)
 			if d.on_rightclick then
 				d.on_rightclick(pos, node, clicker)
 			end
+			local node_meta = minetest.get_meta(pos)
+			local inventory = node_meta:get_inventory()
+			-- TODO: Loot is generated invidually per half of double chest
+			vl_loot.generate_container_loot_if_exists(pos, clicker, inventory, "main")
 
 			player_chest_open(clicker, pos, names.small.a, small_textures, node.param2, false, d.sounds[2], "vlf_chests_chest")
 		end,
@@ -740,7 +755,11 @@ function vlf_chests.register_chest(basename, d)
 		sounds = d.sounds[1],
 		on_construct = construct_double_chest("left", names),
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
-			minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
+			--minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
+			local itemstack_meta = itemstack:get_meta()
+			local node_meta = minetest.get_meta(pos)
+			node_meta:set_string("name", itemstack_meta:get_string("name"))
+			node_meta:set_string("loot_table", itemstack_meta:get_string("loot_table"))
 		end,
 		on_destruct = destruct_double_chest("left", names, d.canonical_basename, small_textures),
 		after_dig_node = drop_items_chest,
@@ -767,6 +786,14 @@ function vlf_chests.register_chest(basename, d)
 			end if name == "" then -- if STILL empty after that ^
 				name = S("Large Chest")
 			end
+			local node_meta = minetest.get_meta(pos)
+			local other_node_meta = minetest.get_meta(pos_other)
+			-- TODO: loot is generated separately per chest half
+			local inventory = node_meta:get_inventory()
+			vl_loot.generate_container_loot_if_exists(pos, clicker, inventory, "main")
+
+			local inventory_other = other_node_meta:get_inventory()
+			vl_loot.generate_container_loot_if_exists(pos_other, clicker, inventory_other, "main")
 
 			minetest.show_formspec(clicker:get_player_name(), string.format("vlf_chests:%s_%s_%s_%s", basename, pos.x, pos.y, pos.z), get_double_chest_formspec(pos_other, pos, name, d.basename))
 
@@ -797,7 +824,11 @@ function vlf_chests.register_chest(basename, d)
 		sounds = d.sounds[1],
 		on_construct = construct_double_chest("right", names),
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
-			minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
+			--minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
+			local itemstack_meta = itemstack:get_meta()
+			local node_meta = minetest.get_meta(pos)
+			node_meta:set_string("name", itemstack_meta:get_string("name"))
+			node_meta:set_string("loot_table", itemstack_meta:get_string("loot_table"))
 		end,
 		on_destruct = destruct_double_chest("right", names, d.canonical_basename, small_textures),
 		after_dig_node = drop_items_chest,
@@ -833,7 +864,15 @@ function vlf_chests.register_chest(basename, d)
 			if name == "" then -- if STILL empty after that ^
 				name = S("Large Chest")
 			end
+			local node_meta = minetest.get_meta(pos)
+			local other_node_meta = minetest.get_meta(pos_other)
+			-- TODO: loot is generated separately per chest half
+			local inventory = node_meta:get_inventory()
+			vl_loot.generate_container_loot_if_exists(pos, clicker, inventory, "main")
 
+			local inventory_other = other_node_meta:get_inventory()
+			vl_loot.generate_container_loot_if_exists(pos_other, clicker, inventory_other, "main")
+			
 			minetest.show_formspec(clicker:get_player_name(), string.format("vlf_chests:%s_%s_%s_%s", basename, pos.x, pos.y, pos.z), get_double_chest_formspec(pos, pos_other, name, d.basename, true))
 
 			if d.on_rightclick_right then

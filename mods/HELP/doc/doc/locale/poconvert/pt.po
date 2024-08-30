@@ -13,17 +13,8 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: mtt_convert 0.1.0\n"
 
-msgid "<"
-msgstr ""
-
-msgid ">"
-msgstr ""
-
-msgid "Access to the requested entry has been denied; this entry is secret. You may unlock access by progressing in the game. Figure out on your own how to unlock this entry."
-msgstr "O acesso à entrada solicitada foi negado; essa entrada é secreta. Você pode desbloquear o acesso progredindo no jogo. Descobrir por conta própria como desbloquear essa entrada."
-
-msgid "All entries read."
-msgstr "Todas as entradas lidas."
+msgid "This is the help."
+msgstr "Essa é a ajuda."
 
 msgid "All help entries revealed!"
 msgstr "Todas as entradas de ajuda reveladas!"
@@ -31,111 +22,69 @@ msgstr "Todas as entradas de ajuda reveladas!"
 msgid "All help entries are already revealed."
 msgstr "Todas as entradas de ajuda já foram reveladas."
 
-msgid "Allows you to reveal all hidden help entries with /help_reveal"
-msgstr "Permite revelar todas as entradas de ajuda ocultas com /help_reveal"
-
 msgid "Category list"
 msgstr "Lista de Categorias"
-
-msgid "Currently all entries in this category are hidden from you.\\nUnlock new entries by progressing in the game."
-msgstr "Atualmente, todas as entradas nessa categoria estão ocultas a você.\\nDesbloqueie novas entradas progredindo no jogo."
-
-msgid "Help"
-msgstr "Ajuda"
-
-msgid "Entry"
-msgstr "Entrada"
 
 msgid "Entry list"
 msgstr "Lista de Entradas"
 
-msgid "Error: Access denied."
-msgstr "Erro: Acesso negado."
+msgid "Entry"
+msgstr "Entrada"
 
 msgid "Error: No help available."
 msgstr "Erro: Nenhuma ajuda disponível."
 
-msgid "Go to category list"
-msgstr "Ver categorias"
+msgid "No categories have been registered, but they are required to provide help."
+msgstr ""
 
-msgid "Go to entry list"
-msgstr "Ir para a lista de entradas"
-
-msgid "Help > @1"
-msgstr "Ajuda > @1"
-
-msgid "Help > @1 > @2"
-msgstr "Ajuda > @1 > @2"
-
-msgid "Help > @1 > (No Entry)"
-msgstr "Ajuda > @1 > (Nenhuma Entrada)"
-
-msgid "Help > (No Category)"
-msgstr "Ajuda > (Nenhuma Categoria)"
-
-msgid "Hidden entries: @1"
-msgstr "Entradas ocultas: @1"
-
-msgid "Nameless entry (@1)"
-msgstr "Entrada sem nome (@1)"
-
-msgid "New entries: @1"
-msgstr "Novas entradas: (@1)"
-
-msgid "New help entry unlocked: @1 > @2"
-msgstr "Nova entrada de ajuda desbloqueada: @1 > @2"
-
-msgid "No categories have been registered, but they are required to provide help.\nThe Documentation System [doc] does not come with help contents on its own, it needs additional mods to add help content. Please make sure such mods are enabled on for this world, and try again."
-msgstr "Nenhuma categoria foi registrada, mas é necessário fornecer ajuda.\nO Sistema de Documentação [doc] não vem com o conteúdo de ajuda, ele precisa de mods adicionais para adicionar conteúdo de ajuda. Por favor, certifique-se de que os mods estão habilitados para este mundo e tente novamente."
-
-msgid "Number of entries: @1"
-msgstr "Número de entradas: @1"
-
-msgid "OK"
-msgstr "OK"
-
-msgid "Open a window providing help entries about Minetest and more"
-msgstr "Abra uma janela fornecendo entradas de ajuda sobre o Minetest e mais"
-
-msgid "Please select a category you wish to learn more about:"
-msgstr "Por favor, selecione uma categoria sobre a qual você deseja saber mais:"
+msgid "The Documentation System [doc] does not come with help contents on its own, it needs additional mods to add help content. Please make sure such mods are enabled on for this world, and try again."
+msgstr ""
 
 msgid "Recommended mods: doc_basics, doc_items, doc_identifier, doc_encyclopedia."
 msgstr "Mods recomendados: doc_basics, doc_items, doc_identifier, doc_encyclopedia."
 
+msgid "Error: Access denied."
+msgstr "Erro: Acesso negado."
+
+msgid "Access to the requested entry has been denied; this entry is secret. You may unlock access by progressing in the game. Figure out on your own how to unlock this entry."
+msgstr "O acesso à entrada solicitada foi negado; essa entrada é secreta. Você pode desbloquear o acesso progredindo no jogo. Descobrir por conta própria como desbloquear essa entrada."
+
+msgid "Nameless entry (@1)"
+msgstr "Entrada sem nome (@1)"
+
+msgid "Help > @1"
+msgstr "Ajuda > @1"
+
+msgid "Currently all entries in this category are hidden from you."
+msgstr ""
+
+msgid "Unlock new entries by progressing in the game."
+msgstr ""
+
+msgid "Number of entries: @1"
+msgstr "Número de entradas: @1"
+
+msgid "New entries: @1"
+msgstr "Novas entradas: (@1)"
+
+msgid "Hidden entries: @1"
+msgstr "Entradas ocultas: @1"
+
+msgid "Help > @1 > (No Entry)"
+msgstr "Ajuda > @1 > (Nenhuma Entrada)"
+
+msgid "Help > @1 > @2"
+msgstr "Ajuda > @1 > @2"
+
+msgid "Open a window providing help entries about Minetest and more"
+msgstr "Abra uma janela fornecendo entradas de ajuda sobre o Minetest e mais"
+
+msgid "Help"
+msgstr "Ajuda"
+
+msgid "Allows you to reveal all hidden help entries with /help_reveal"
+msgstr "Permite revelar todas as entradas de ajuda ocultas com /help_reveal"
+
 msgid "Reveal all hidden help entries to you"
 msgstr "Revela todas as entradas de ajuda ocultas para você"
-
-msgid "Show entry"
-msgstr "Ver entrada"
-
-msgid "Show category"
-msgstr "Ver categoria"
-
-msgid "Show next entry"
-msgstr "Ver próxima entrada"
-
-msgid "Show previous entry"
-msgstr "Ver entrada anterior"
-
-msgid "This category does not have any entries."
-msgstr "Essa categoria não possui entradas."
-
-msgid "This category has the following entries:"
-msgstr "Essa categoria tem as seguintes entradas:"
-
-msgid "This category is empty."
-msgstr "Essa categoria está vazia."
-
-msgid "This is the help."
-msgstr "Essa é a ajuda."
-
-msgid "You haven't chosen a category yet. Please choose one in the category list first."
-msgstr "Você ainda não escolheu uma categoria. Por favor, escolha uma na lista de categorias primeiro."
-
-msgid "You haven't chosen an entry yet. Please choose one in the entry list first."
-msgstr "Você ainda não escolheu uma entrada. Por favor, escolha uma na lista de entrada primeiro."
-
-msgid "Collection of help texts"
-msgstr "Coleção de textos de ajuda"
 

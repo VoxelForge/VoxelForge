@@ -10,7 +10,7 @@ The state of the hunger mechanic will be determined at game start.
 Hunger is enabled when damage is enabled.
 If the damage setting is changed within the game, this does NOT
 update the hunger mechanic, so the game must be restarted for this
-to take effect. ]]
+to take entity_effect. ]]
 vlf_hunger.active = false
 if minetest.settings:get_bool("enable_damage") == true and minetest.settings:get_bool("vlf_enable_hunger") ~= false then
 	vlf_hunger.active = true
@@ -27,7 +27,7 @@ vlf_hunger.EXHAUST_SWIM = 10 -- player movement in water
 vlf_hunger.EXHAUST_SPRINT = 100 -- sprint (per node)
 vlf_hunger.EXHAUST_DAMAGE = 100 -- taking damage (protected by armor)
 vlf_hunger.EXHAUST_REGEN = 6000 -- Regenerate 1 HP
-vlf_hunger.EXHAUST_HUNGER = 5 -- Hunger status effect at base level.
+vlf_hunger.EXHAUST_HUNGER = 5 -- Hunger status entity_effect at base level.
 vlf_hunger.EXHAUST_LVL = 4000 -- at what exhaustion player saturation gets lowered
 
 vlf_hunger.SATURATION_INIT = 5 -- Initial saturation for new/respawning players
@@ -123,7 +123,7 @@ minetest.register_on_respawnplayer(function(player)
 end)
 
 -- PvP combat exhaustion
-minetest.register_on_punchplayer(function(victim, puncher, time_from_last_punch, tool_capabilities, dir, damage)
+minetest.register_on_punchplayer(function(victim, puncher, time_from_last_punch, tool_capabilities, dir, damage) ---@diagnostic disable-line: unused-local
 	if puncher:is_player() then
 		vlf_hunger.exhaust(puncher:get_player_name(), vlf_hunger.EXHAUST_ATTACK)
 	end
@@ -152,7 +152,7 @@ minetest.register_globalstep(function(dtime)
 
 			-- let hunger work always
 			if player_health > 0 then
-				--vlf_hunger.exhaust(player_name, vlf_hunger.EXHAUST_HUNGER) -- later for hunger status effect
+				--vlf_hunger.exhaust(player_name, vlf_hunger.EXHAUST_HUNGER) -- later for hunger status entity_effect
 				vlf_hunger.update_exhaustion_hud(player)
 			end
 
@@ -251,7 +251,7 @@ vlf_player.register_globalstep(function(player, dtime)
 	end
 end)
 
-vlf_player.register_globalstep_slow(function(player, dtime)
+vlf_player.register_globalstep_slow(function(player)
 	--[[ Swimming: Cause exhaustion.
 	NOTE: As of 0.4.15, it only counts as swimming when you are with the feet inside the liquid!
 	Head alone does not count. We respect that for now. ]]

@@ -137,7 +137,7 @@ local off_override = {
 			state = mesecon.state.off,
 			rules = torch_get_output_rules,
 		},
-		effector = {
+		entity_effector = {
 			state = mesecon.state.on,
 			rules = torch_get_input_rules,
 			action_off = torch_action_off,
@@ -190,7 +190,7 @@ local on_override = {
 			state = mesecon.state.on,
 			rules = torch_get_output_rules
 		},
-		effector = {
+		entity_effector = {
 			state = mesecon.state.off,
 			rules = torch_get_input_rules,
 			action_on = torch_action_on,

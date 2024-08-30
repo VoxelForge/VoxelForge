@@ -7,10 +7,10 @@ License:
 
 * Textures: See MineClone 2 license notes.
 * Sounds:
-    * vlf_bows_bow_shoot.ogg: CC0 by Freesound.org user JoeDinesSound
+    * mcl_bows_bow_shoot.ogg: CC0 by Freesound.org user JoeDinesSound
       https://freesound.org/people/JoeDinesSound/sounds/534942/
-    * vlf_bows_hit_other.ogg: CC0 by Freesound.org user JoeDinesSound
+    * mcl_bows_hit_other.ogg: CC0 by Freesound.org user JoeDinesSound
       https://freesound.org/people/JoeDinesSound/sounds/534952/
-    * vlf_bows_hit_player.ogg: CC BY 3.0 by Freesound.org user tim.kahn.
+    * mcl_bows_hit_player.ogg: CC BY 3.0 by Freesound.org user tim.kahn.
       https://freesound.org/people/tim.kahn/sounds/38495/
       http://creativecommons.org/licenses/by/3.0/

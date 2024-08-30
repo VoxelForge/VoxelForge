@@ -14,145 +14,145 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Advanced usage"
-msgstr ""
+msgstr "Uso avanzado"
 
 msgid "Advanced information which may be nice to know, but is not crucial to gameplay"
-msgstr ""
+msgstr "Información avanzada que puede ser útil conocer, pero no es crucial para la jugabilidad"
 
 msgid "Creative Mode"
-msgstr ""
+msgstr "Modo creativo"
 
 msgid "Enabling Creative Mode in MineClone 2 applies the following changes:"
-msgstr ""
+msgstr "Al habilitar el modo creativo en Mineclonia se aplican los siguientes cambios:"
 
 msgid "• You keep the things you've placed"
-msgstr ""
+msgstr "• Conservas las cosas que colocaste"
 
 msgid "• Creative inventory is available to obtain most items easily"
-msgstr ""
+msgstr "• El inventario creativo está disponible para obtener la mayoría de los ítems fácilmente"
 
 msgid "• Hand breaks all default blocks instantly"
-msgstr ""
+msgstr "• La mano rompe todos los bloques por defecto al instante"
 
 msgid "• Greatly increased hand pointing range"
-msgstr ""
+msgstr "• Rango de alcance de la mano enormemente aumentado"
 
 msgid "• Mined blocks don't drop items"
-msgstr ""
+msgstr "• Los bloques minados no dropean ítems"
 
 msgid "• Items don't get used up"
-msgstr ""
+msgstr "• Los ítems no se agotan"
 
 msgid "• Tools don't wear off"
-msgstr ""
+msgstr "• Las herramientas no se desgastan"
 
 msgid "• You can eat food whenever you want"
-msgstr ""
+msgstr "• Puedes comer comida cuando quieras"
 
 msgid "• You can always use the minimap (including radar mode)"
-msgstr ""
+msgstr "• Siempre puedes usar el minimapa (incluido el modo radar)"
 
 msgid "Damage is not affected by Creative Mode, it needs to be disabled separately."
-msgstr ""
+msgstr "El daño no se ve afectado por el modo creativo; debe desactivarse por separado."
 
 msgid "Console"
-msgstr ""
+msgstr "Consola"
 
 msgid "With [F10] you can open and close the console. The main use of the console is to show the chat log and enter chat messages or server commands."
-msgstr ""
+msgstr "Con [F10] puedes abrir y cerrar la consola. El uso principal de la consola es mostrar el registro de chat e ingresar mensajes de chat o comandos del servidor."
 
 msgid "Using the chat or server command key also opens the console, but it is smaller and will be closed after you sent a message."
-msgstr ""
+msgstr "Usar la tecla de chat o de comandos también abre la consola, pero es más pequeña y se cierra después de enviar un mensaje."
 
 msgid "Use the chat to communicate with other players. This requires you to have the “shout” privilege."
-msgstr ""
+msgstr "Usa el chat para comunicarte con otras personas. Esto requiere que tengas el privilegio de \"shout\"."
 
 msgid "Just type in the message and hit [Enter]. Public chat messages can not begin with “/”."
-msgstr ""
+msgstr "Simplemente escriba el mensaje y presione [Entrar]. Los mensajes de chat públicos no pueden comenzar con “/”."
 
 msgid "You can send private messages: Say “/msg <player> <message>” in chat to send “<message>” which can only be seen by <player>."
-msgstr ""
+msgstr "Puedes enviar mensajes privados: Escribe '/msg <jugador> <mensaje>' en el chat para enviar '<mensaje>', que solo podrá ver <jugador>."
 
 msgid "There are some special controls for the console:"
-msgstr ""
+msgstr "Hay algunos controles especiales para la consola:"
 
 msgid "• [F10] Open/close console"
-msgstr ""
+msgstr "• [F10] Abrir/cerrar consola"
 
 msgid "• [Enter]: Send message or command"
-msgstr ""
+msgstr "• [Enter]: Enviar mensaje o comando"
 
 msgid "• [Tab]: Try to auto-complete a partially-entered player name"
-msgstr ""
+msgstr "• [Tab]: Intentar autocompletar un nombre de jugador parcialmente ingresado"
 
 msgid "• [Ctrl]+[Left]: Move cursor to the beginning of the previous word"
-msgstr ""
+msgstr "• [Ctrl]+[Izquierda]: Mover el cursor al principio de la palabra anterior"
 
 msgid "• [Ctrl]+[Right]: Move cursor to the beginning of the next word"
-msgstr ""
+msgstr "• [Ctrl]+[Derecha]: mueve el cursor al principio de la siguiente palabra"
 
 msgid "• [Ctrl]+[Backspace]: Delete previous word"
-msgstr ""
+msgstr "• [Ctrl]+[Retroceso]: Eliminar la palabra anterior"
 
 msgid "• [Ctrl]+[Delete]: Delete next word"
-msgstr ""
+msgstr "• [Ctrl]+[Eliminar]: elimina la siguiente palabra"
 
 msgid "• [Ctrl]+[U]: Delete all text before the cursor"
-msgstr ""
+msgstr "• [Ctrl]+[U]: Eliminar todo el texto antes del cursor"
 
 msgid "• [Ctrl]+[K]: Delete all text after the cursor"
-msgstr ""
+msgstr "• [Ctrl]+[K]: Eliminar todo el texto después del cursor"
 
 msgid "• [Page up]: Scroll up"
-msgstr ""
+msgstr "• [Re Pág]: Desplazar hacia arriba"
 
 msgid "• [Page down]: Scroll down"
-msgstr ""
+msgstr "• [Av Pág]: Desplazar hacia abajo"
 
 msgid "There is also an input history. Minetest saves your previous console inputs which you can quickly access later:"
-msgstr ""
+msgstr "También hay un historial de entradas. Minetest guarda tus entradas anteriores en la consola, a las que puedes acceder rápidamente después:"
 
 msgid "• [Up]: Go to previous entry in history"
-msgstr ""
+msgstr "• [Arriba]: Ir a la entrada anterior en el historial"
 
 msgid "• [Down]: Go to next entry in history"
-msgstr ""
+msgstr "• [Abajo]: Ir a la entrada siguiente en el historial"
 
 msgid "Server commands"
-msgstr ""
+msgstr "Comandos del servidor"
 
 msgid "Server commands (also called “chat commands”) are little helpers for advanced users. You don't need to use these commands when playing. But they might come in handy to perform some more technical tasks. Server commands work both in multi-player and single-player mode."
-msgstr ""
+msgstr "Los comandos del servidor (también llamados “comandos de chat”) son pequeñas ayudas para los usuarios avanzados. No necesitas usar estos comandos cuando juegas. Pero pueden resultar útiles para realizar algunas tareas más técnicas. Los comandos del servidor funcionan tanto en modo multijugador como en modo para un jugador."
 
 msgid "Server commands can be entered by players using the chat to perform a special server action. There are a few commands which can be issued by everyone, but some commands only work if you have certain privileges granted on the server. There is a small set of basic commands which are always available, other commands can be added by mods."
-msgstr ""
+msgstr "Los comandos del servidor pueden ser ingresados por los jugadores a través del chat para realizar acciones especiales en el servidor. Hay algunos comandos que puede ejecutar cualquier persona, pero otros solo funcionan si tienes ciertos privilegios otorgados en el servidor. Hay un pequeño conjunto de comandos básicos que siempre están disponibles; otros comandos pueden ser añadidos por mods."
 
 msgid "To issue a command, simply type it like a chat message or press Minetest's command key (default: [/]). All commands have to begin with “/”, for example “/mods”. The Minetest command key does the same as the chat key, except that the slash is already entered."
-msgstr ""
+msgstr "Para escribir un comando, simplemente escríbelo como un mensaje de chat o presiona la tecla de comandos de Minetest (por defecto: [/]). Todos los comandos deben comenzar con “/”, por ejemplo “/mods”. La tecla de comandos de Minetest hace lo mismo que la tecla de chat, excepto que el símbolo de barra ya está ingresado."
 
 msgid "Commands may or may not give a response in the chat log, but errors will generally be shown in the chat. Try it for yourselves: Close this window and type in the “/mods” command. This will give you the list of available mods on this server."
-msgstr ""
+msgstr "Los comandos pueden dar o no una respuesta en el registro del chat, pero los errores generalmente se mostrarán en el chat. Pruébelo por su cuenta: cierre esta ventana y escriba el comando \"/mods\". Esto le dará la lista de modificaciones disponibles en este servidor."
 
 msgid "“/help all” is a very important command: You get a list of all available commands on the server, a short explanation and the allowed parameters. This command is also important because the available commands often differ per server."
-msgstr ""
+msgstr "“/help all” es un comando muy importante: obtienes una lista de todos los comandos disponibles en el servidor, una breve explicación y los parámetros permitidos. Este comando también es importante porque los comandos disponibles a menudo varían según el servidor."
 
 msgid "Commands are followed by zero or more parameters."
-msgstr ""
+msgstr "Los comandos van seguidos de cero o más parámetros."
 
 msgid "In the command reference, you see some placeholders which you need to replace with an actual value. Here's an explanation:"
-msgstr ""
+msgstr "En la referencia del comando, verá marcadores de posición que deberá reemplazar con un valor real. Aquí hay una explicación:"
 
 msgid "• Text in greater-than and lower-than signs (e.g. “<param>”): Placeholder for a parameter"
-msgstr ""
+msgstr "• Texto entre signos de mayor que y menor que (por ej., “<param>”): Marcador de posición para un parámetro"
 
 msgid "• Anything in square brackets (e.g. “[text]”) is optional and can be omitted"
-msgstr ""
+msgstr "• Todo lo que esté entre corchetes (por ejemplo, “[texto]”) es opcional y se puede omitir"
 
 msgid "• Pipe or slash (e.g. “text1 | text2 | text3”): Alternation. One of multiple texts must be used (e.g. “text2”)"
-msgstr ""
+msgstr "• Barra vertical o barra (por ej., “text1 | text2 | text3”): Alternancia. Debe usarse uno de los múltiples textos (por ej., “text2”)"
 
 msgid "• Parenthesis: (e.g. “(word1 word2) | word3”): Groups multiple words together, used for alternations"
-msgstr ""
+msgstr "• Paréntesis: (por ejemplo “(palabra1 palabra2) | palabra3”): agrupa varias palabras y se utiliza para alternancias"
 
 msgid "• Everything else is to be read as literal text"
 msgstr ""
@@ -683,7 +683,7 @@ msgid "The selected item is also your wielded item."
 msgstr ""
 
 msgid "Tools"
-msgstr ""
+msgstr "Herramientas"
 
 msgid "Some items may serve as a tool when wielded. Any item which has some special use which can be directly used by its wielder is considered a tool."
 msgstr ""
@@ -728,7 +728,7 @@ msgid "There is a rule which sometimes makes attacks impossible: Players, animat
 msgstr ""
 
 msgid "Blocks"
-msgstr ""
+msgstr "Bloques"
 
 msgid "The world is made entirely out of blocks (voxels, to be precise). Blocks can be added or removed with the correct tools."
 msgstr ""
@@ -797,7 +797,7 @@ msgid "Normally, blocks are built in front of the pointed side of the pointed bl
 msgstr ""
 
 msgid "Crafting"
-msgstr ""
+msgstr "Crafteo"
 
 msgid "Crafting is the task of combining several items to form a new item."
 msgstr ""
@@ -941,7 +941,7 @@ msgid "Other actions, like walking, do not exaust you."
 msgstr ""
 
 msgid "Mobs"
-msgstr ""
+msgstr "Mobs"
 
 msgid "Mobs are the living beings in the world. This includes animals and monsters."
 msgstr ""
@@ -1169,7 +1169,7 @@ msgid "Liquids are often not pointable. But some special items are able to point
 msgstr ""
 
 msgid "Light"
-msgstr ""
+msgstr "Luz"
 
 msgid "As the world is entirely block-based, so is the light in the world. Each block has its own brightness. The brightness of a block is expressed in a “light level” which ranges from 0 (total darkness) to 15 (as bright as the sun)."
 msgstr ""

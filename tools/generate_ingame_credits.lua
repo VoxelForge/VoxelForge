@@ -1,5 +1,5 @@
 #! /usr/bin/env lua
--- Script to automatically generate mods/HUD/mcl_credits/people.lua from CREDITS.md
+-- Script to automatically generate mods/HUD/vlf_credits/people.lua from CREDITS.md
 -- Run from MCLA root folder
 
 local colors = {
@@ -16,7 +16,7 @@ local colors = {
 }
 
 local from = io.open("CREDITS.md", "r")
-local to = io.open("mods/HUD/mcl_credits/people.lua", "w")
+local to = io.open("mods/HUD/vlf_credits/people.lua", "w")
 
 to:write([[
 local modname = minetest.get_current_modname()

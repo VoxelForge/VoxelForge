@@ -22,3 +22,6 @@ msgstr ""
 msgid "Inventory:"
 msgstr ""
 
+msgid "Beacon"
+msgstr ""
+

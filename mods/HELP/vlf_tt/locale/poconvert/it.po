@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Painfully slow"
-msgstr ""
+msgstr "Dolorosamente lento"
 
 msgid "Very slow"
-msgstr ""
+msgstr "Molto lento"
 
 msgid "Slow"
-msgstr ""
+msgstr "Lento"
 
 msgid "Fast"
 msgstr ""

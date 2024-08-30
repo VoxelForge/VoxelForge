@@ -14,10 +14,10 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Food"
-msgstr ""
+msgstr "Cibo"
 
 msgid "Saturation"
-msgstr ""
+msgstr "Sazietà"
 
 msgid "Exhaust."
 msgstr ""

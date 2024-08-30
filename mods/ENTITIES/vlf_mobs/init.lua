@@ -33,11 +33,14 @@ vlf_mobs.mob_class = {
 	horizontal_head_height = 0,
 	fly = false,
 	fly_in = {"air", "__airlike"},
+	fly_limit = 25,
+	fly_chance = 55,
+	swims = false,
+    swims_in = { "vlf_core:water_source", "vlfx_core:river_water_source", 'vlf_core:water_flowing', 'vlfx_core:river_water_flowing' },
 	owner = "",
 	order = "",
 	jump_height = 4, -- was 6
 	rotate = 0, --  0=front, 90=side, 180=back, 270=side2
-	lifetimer = 57.73,
 	xp_min = 0,
 	xp_max = 0,
 	xp_timestamp = 0,
@@ -45,6 +48,8 @@ vlf_mobs.mob_class = {
 	view_range = 16,
 	walk_velocity = 1,
 	run_velocity = 2,
+	swim_velocity = 1,
+	fly_velocity = 4,
 	light_damage = 0,
 	sunlight_damage = 0,
 	water_damage = 0,
@@ -98,7 +103,6 @@ vlf_mobs.mob_class = {
 	is_mob = true,
 	pushable = true,
 	mob_pushable = true,
-	_timers = {},
 	avoid_distance = 9,
 	ignores_nametag = false,
 	rain_damage = 0,
@@ -116,7 +120,7 @@ vlf_mobs.mob_class = {
 	max_light = minetest.LIGHT_MAX + 1,
 	does_not_prevent_sleep = false,
 	prevents_sleep_when_hostile = false,
-	attack_exception = function(p) return false end,
+	attack_exception = function() return false end,
 	player_active_range = tonumber(minetest.settings:get("vlf_mob_active_range")) or 48,
 	persist_in_peaceful = true,
 	wears_armor = false,
@@ -132,8 +136,6 @@ vlf_mobs.mob_class = {
 	standing_on = "ignore",
 	jump_sound_cooloff = 0.5, -- used to prevent jump sound from being played too often in short time
 	opinion_sound_cooloff = 1, -- used to prevent sound spam of particular sound types
-	_spawner = nil,
-	_vlf_entity_effects = {},
 }
 vlf_mobs.mob_class_meta = {__index = vlf_mobs.mob_class}
 vlf_mobs.fallback_node = minetest.registered_aliases["mapgen_dirt"] or "vlf_core:dirt"
@@ -142,9 +144,19 @@ function vlf_mobs.check_vector(v)
 	return v and v.x and v.y and v.z and not minetest.is_nan(v.x) and not minetest.is_nan(v.y) and not minetest.is_nan(v.z) and tonumber(v.x) and tonumber(v.y) and tonumber(v.z)
 end
 
+-- get node but use fallback for nil or unknown
+function vlf_mobs.node_ok(pos, fallback)
+	fallback = fallback or vlf_mobs.fallback_node
+	local node = minetest.get_node_or_nil(pos)
+	if node and minetest.registered_nodes[node.name] then
+		return node
+	end
+	return { name = fallback, param1 = 0, param2 = 0 }
+end
+
 --api and helpers
--- effects: sounds and particles mostly
-dofile(path .. "/effects.lua")
+-- entity_effects: sounds and particles mostly
+dofile(path .. "/entity_effects.lua")
 -- physics: involuntary mob movement - particularly falling and death
 dofile(path .. "/physics.lua")
 -- movement: general voluntary mob movement, walking avoiding cliffs etc.
@@ -163,16 +175,6 @@ dofile(path .. "/api.lua")
 dofile(path .. "/breeding.lua")
 dofile(path .. "/spawning.lua")
 dofile(path .. "/mount.lua")
-
--- get node but use fallback for nil or unknown
-local node_ok = function(pos, fallback)
-	fallback = fallback or vlf_mobs.fallback_node
-	local node = minetest.get_node_or_nil(pos)
-	if node and minetest.registered_nodes[node.name] then
-		return node
-	end
-	return minetest.registered_nodes[fallback]
-end
 
 function vlf_mobs.mob_class:set_nametag(name)
 	if name ~= "" then
@@ -237,6 +239,8 @@ local function within_limits(pos, radius)
 end
 
 vlf_mobs.spawning_mobs = {}
+-- overwritten in COMPAT for compatbilitiy with old vlf_mobs / mobs_redo
+---@diagnostic disable-next-line: duplicate-set-field
 function vlf_mobs.register_mob(name, def)
 	local def = table.copy(def)
 	if not def.description then
@@ -313,9 +317,12 @@ function vlf_mobs.register_mob(name, def)
 			self:set_properties({
 				collide_with_objects = false,
 			})
+			self._physics_factors = {}
 
+			self._timers = {}
 			return self:mob_activate(staticdata, dtime)
 		end,
+		_spawner = def._spawner,
 	}),vlf_mobs.mob_class_meta)
 
 	vlf_mobs.registered_mobs[name] = final_def
@@ -333,7 +340,7 @@ end
 function vlf_mobs.get_arrow_damage_func(damage, typ, shooter)
 	local typ = vlf_damage.types[typ] and typ or "arrow"
 	return function(projectile, object)
-		return vlf_util.deal_damage(object, damage, {type = typ, source = shooter or projectile._shooter})
+		return vlf_util.deal_damage(object, damage, {type = typ, source = shooter or projectile._shooter, direct = object})
 	end
 end
 
@@ -357,7 +364,8 @@ vlf_mobs.arrow_class = {
 
 vlf_mobs.arrow_class_meta = {__index = vlf_mobs.arrow_class}
 
--- register arrow for shoot attack
+-- overwritten in COMPAT for compatbilitiy with old vlf_mobs / mobs_redo
+---@diagnostic disable-next-line: duplicate-set-field
 function vlf_mobs.register_arrow(name, def)
 	if not name or not def then return end -- errorcheck
 
@@ -377,7 +385,7 @@ function vlf_mobs.register_arrow(name, def)
 
 	minetest.register_entity(name,  setmetatable(table.merge({
 		initial_properties = init_props,
-		on_step = function(self, dtime)
+		on_step = function(self)
 
 			self.timer = self.timer + 1
 
@@ -404,7 +412,7 @@ function vlf_mobs.register_arrow(name, def)
 			end
 
 			if self.hit_node then
-				local node = node_ok(pos).name
+				local node =  vlf_mobs.node_ok(pos).name
 				if minetest.registered_nodes[node].walkable then
 					self.hit_node(self, pos, node)
 					if self.drop == true then
@@ -457,8 +465,8 @@ function vlf_mobs.register_arrow(name, def)
 	}, def), vlf_mobs.arrow_class_meta))
 end
 
--- Register spawn eggs
-
+-- Overwritten in COMPAT for compatibility with old vlf_mobs/mobs_redo
+---@diagnostic disable-next-line: duplicate-set-field
 function vlf_mobs.register_egg(mob, desc, background_color, overlay_color, addegg, no_creative)
 	local grp = {spawn_egg = 1}
 	-- do NOT add this egg to creative inventory (e.g. dungeon master)

@@ -105,6 +105,7 @@ minetest.register_craftitem("vlf_farming:potato_item", {
 	inventory_image = "farming_potato.png",
 	groups = {food = 2, eatable = 1, compostability = 65, smoker_cookable = 1, campfire_cookable = 1},
 	_vlf_saturation = 0.6,
+	_vlf_cooking_output = "vlf_farming:potato_item_baked",
 	on_secondary_use = minetest.item_eat(1),
 	on_place = function(itemstack, placer, pointed_thing)
 		local new = vlf_farming:place_seed(itemstack, placer, pointed_thing, "vlf_farming:potato_1")
@@ -137,21 +138,14 @@ minetest.register_craftitem("vlf_farming:potato_item_poison", {
 	_vlf_saturation = 1.2,
 })
 
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_farming:potato_item_baked",
-	recipe = "vlf_farming:potato_item",
-	cooktime = 10,
-})
-
 vlf_farming:add_plant("plant_potato", "vlf_farming:potato", {"vlf_farming:potato_1", "vlf_farming:potato_2", "vlf_farming:potato_3", "vlf_farming:potato_4", "vlf_farming:potato_5", "vlf_farming:potato_6", "vlf_farming:potato_7"}, 19.75, 20)
 
-minetest.register_on_item_eat(function (hp_change, replace_with_item, itemstack, user, pointed_thing)
+minetest.register_on_item_eat(function (_, _, itemstack, user)
 
 	-- 60% chance of poisoning with poisonous potato
 	if itemstack:get_name() == "vlf_farming:potato_item_poison" then
 		if math.random(1,10) >= 6 then
-			vlf_entity_effects.give_effect_by_level("poison", user, 1, 5)
+			vlf_entity_effects.give_entity_effect_by_level("poison", user, 1, 5)
 		end
 	end
 

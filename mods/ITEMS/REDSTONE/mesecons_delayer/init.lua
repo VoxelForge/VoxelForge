@@ -289,7 +289,7 @@ for i = 1, 4 do
 				state = mesecon.state.off,
 				rules = delayer_get_output_rules,
 			},
-			effector = {
+			entity_effector = {
 				rules = delayer_get_input_rules,
 				action_on = delayer_activate,
 			},
@@ -356,7 +356,7 @@ for i = 1, 4 do
 				state = mesecon.state.on,
 				rules = delayer_get_output_rules,
 			},
-			effector = {
+			entity_effector = {
 				rules = delayer_get_input_rules,
 				action_off = delayer_deactivate,
 			},
@@ -413,7 +413,7 @@ minetest.register_node("mesecons_delayer:delayer_off_locked", {
 			state = mesecon.state.off,
 			rules = delayer_get_output_rules
 		},
-		effector =
+		entity_effector =
 		{
 			rules = delayer_get_input_rules,
 		}
@@ -466,7 +466,7 @@ minetest.register_node("mesecons_delayer:delayer_on_locked", {
 			state = mesecon.state.on,
 			rules = delayer_get_output_rules
 		},
-		effector =
+		entity_effector =
 		{
 			rules = delayer_get_input_rules,
 		}

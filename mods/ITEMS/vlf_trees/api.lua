@@ -192,13 +192,6 @@ local tpl_log = {
 	},
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	on_place = vlf_util.rotate_axis,
-	on_construct = function(pos)
-		update_leaves(pos)
-	end,
-	after_destruct = function(pos)
-		update_far_away_leaves(pos)
-		update_leaves(pos, 0)
-	end,
 	on_rotate = screwdriver.rotate_3way,
 	_on_axe_place = vlf_trees.strip_tree,
 	_vlf_blast_resistance = 2,
@@ -282,11 +275,36 @@ local tpl_door = {
 local tpl_trapdoor = {
 	_doc_items_longdesc = S("Wooden trapdoors are horizontal barriers which can be opened and closed by hand or a redstone signal. They occupy the upper or lower part of a block, depending on how they have been placed. When open, they can be climbed like a ladder."),
 	_doc_items_usagehelp = S("To open or close the trapdoor, rightclick it or send a redstone signal to it."),
-	groups = {handy=1,axey=1, mesecon_effector_on=1, material_wood=1, flammable=-1},
+	groups = {handy=1,axey=1, mesecon_entity_effector_on=1, material_wood=1, flammable=-1},
 	_vlf_hardness = 3,
 	_vlf_blast_resistance = 3,
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 }
+
+-- Set log on_construct/after_destruct like this for compatibility with mods.
+minetest.register_on_mods_loaded(function()
+	for name, ndef in pairs(minetest.registered_nodes) do
+		if minetest.get_item_group(name, "tree") ~= 0 then
+			local old_on_cons = ndef.on_construct
+			local old_after_dest = ndef.after_destruct
+			minetest.override_item(name, {
+				on_construct = function(pos)
+					if old_on_cons then
+						old_on_cons(pos)
+					end
+					update_leaves(pos)
+				end,
+				after_destruct = function(pos)
+					if old_after_dest then
+						old_after_dest(pos)
+					end
+					update_far_away_leaves(pos)
+					update_leaves(pos, 0)
+				end,
+			})
+		end
+	end
+end)
 
 function vlf_trees.generate_leaves_def(modname, subname, def, sapling, drop_apples, sapling_chances)
 	local apple_chances = {200, 180, 160, 120, 40}

@@ -22,3 +22,6 @@ msgstr "プライマリーパワー："
 msgid "Inventory:"
 msgstr "インベントリ："
 
+msgid "Beacon"
+msgstr ""
+

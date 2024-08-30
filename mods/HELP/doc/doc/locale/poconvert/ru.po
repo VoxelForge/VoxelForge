@@ -13,17 +13,8 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: mtt_convert 0.1.0\n"
 
-msgid "<"
-msgstr "<"
-
-msgid ">"
-msgstr ">"
-
-msgid "Access to the requested entry has been denied; this entry is secret. You may unlock access by progressing in the game. Figure out on your own how to unlock this entry."
-msgstr "Доступ к запрошенной записи запрещён; эта запись засекречена. Вы можете получить доступ к ней, продвигаясь в игре. Найдите свой способ раскрыть эту запись."
-
-msgid "All entries read."
-msgstr "Все записи прочитаны."
+msgid "This is the help."
+msgstr "Это помощь."
 
 msgid "All help entries revealed!"
 msgstr "Все подсказки открыты!"
@@ -31,62 +22,17 @@ msgstr "Все подсказки открыты!"
 msgid "All help entries are already revealed."
 msgstr "Все подсказки уже открыты."
 
-msgid "Allows you to reveal all hidden help entries with /help_reveal"
-msgstr "Позволяет вам раскрыть все невидимые подсказки через /help_reveal"
-
 msgid "Category list"
 msgstr "Список категорий"
-
-msgid "Currently all entries in this category are hidden from you."
-msgstr "Пока что все записи в этой категории скрыты от вас."
-
-msgid "Unlock new entries by progressing in the game."
-msgstr "Разблокируйте новые записи, продвигаясь в игре."
-
-msgid "Help"
-msgstr "Помощь"
-
-msgid "Entry"
-msgstr "Запись"
 
 msgid "Entry list"
 msgstr "Список записей"
 
-msgid "Error: Access denied."
-msgstr "Ошибка: Доступ запрещён."
+msgid "Entry"
+msgstr "Запись"
 
 msgid "Error: No help available."
 msgstr "Ошибка: Помощь недоступна."
-
-msgid "Go to category list"
-msgstr "К списку категорий"
-
-msgid "Go to entry list"
-msgstr "К списку записей"
-
-msgid "Help > @1"
-msgstr "Помощь > @1"
-
-msgid "Help > @1 > @2"
-msgstr "Help > @1 > @2"
-
-msgid "Help > @1 > (No Entry)"
-msgstr "Помощь > @1 > (Нет записи)"
-
-msgid "Help > (No Category)"
-msgstr "Помощь > (Нет категории)"
-
-msgid "Hidden entries: @1"
-msgstr "Скрытые записи: @1"
-
-msgid "Nameless entry (@1)"
-msgstr "Безымянная запись (@1)"
-
-msgid "New entries: @1"
-msgstr "Новые записи: @1"
-
-msgid "New help entry unlocked: @1 > @2"
-msgstr "Новая подсказка разблокирована: @1 > @2"
 
 msgid "No categories have been registered, but they are required to provide help."
 msgstr "Для предоставления помощи требуются зарегистрированные категории, но они отсутствуют."
@@ -94,72 +40,51 @@ msgstr "Для предоставления помощи требуются за
 msgid "The Documentation System [doc] does not come with help contents on its own, it needs additional mods to add help content. Please make sure such mods are enabled on for this world, and try again."
 msgstr "Система документации [doc] не предоставляет помощи сама по себе, нужны дополнительные моды для добавления справочной информации. Пожалуйста, убедитесь, что моды включены для этого мира, после чего попробуйте снова."
 
+msgid "Recommended mods: doc_basics, doc_items, doc_identifier, doc_encyclopedia."
+msgstr "Рекомендованные моды: doc_basics, doc_items, doc_identifier, doc_encyclopedia."
+
+msgid "Error: Access denied."
+msgstr "Ошибка: Доступ запрещён."
+
+msgid "Access to the requested entry has been denied; this entry is secret. You may unlock access by progressing in the game. Figure out on your own how to unlock this entry."
+msgstr "Доступ к запрошенной записи запрещён; эта запись засекречена. Вы можете получить доступ к ней, продвигаясь в игре. Найдите свой способ раскрыть эту запись."
+
+msgid "Nameless entry (@1)"
+msgstr "Безымянная запись (@1)"
+
+msgid "Help > @1"
+msgstr "Помощь > @1"
+
+msgid "Currently all entries in this category are hidden from you."
+msgstr "Пока что все записи в этой категории скрыты от вас."
+
+msgid "Unlock new entries by progressing in the game."
+msgstr "Разблокируйте новые записи, продвигаясь в игре."
+
 msgid "Number of entries: @1"
 msgstr "Количество записей: @1"
 
-msgid "OK"
-msgstr "ОК"
+msgid "New entries: @1"
+msgstr "Новые записи: @1"
+
+msgid "Hidden entries: @1"
+msgstr "Скрытые записи: @1"
+
+msgid "Help > @1 > (No Entry)"
+msgstr "Помощь > @1 > (Нет записи)"
+
+msgid "Help > @1 > @2"
+msgstr "Help > @1 > @2"
 
 msgid "Open a window providing help entries about Minetest and more"
 msgstr "Открыть окно с подсказками о игре Minetest и т. п."
 
-msgid "Please select a category you wish to learn more about:"
-msgstr "Пожалуйста, выберите категорию, о которой хотите узнать больше:"
+msgid "Help"
+msgstr "Помощь"
 
-msgid "Recommended mods: doc_basics, doc_items, doc_identifier, doc_encyclopedia."
-msgstr "Рекомендованные моды: doc_basics, doc_items, doc_identifier, doc_encyclopedia."
+msgid "Allows you to reveal all hidden help entries with /help_reveal"
+msgstr "Позволяет вам раскрыть все невидимые подсказки через /help_reveal"
 
 msgid "Reveal all hidden help entries to you"
 msgstr "Раскрыть все подсказки для вас"
-
-msgid "Show entry"
-msgstr "Показать запись"
-
-msgid "Show category"
-msgstr "Показать категорию"
-
-msgid "Show next entry"
-msgstr "Следующая запись"
-
-msgid "Show previous entry"
-msgstr "Предыдущая запись"
-
-msgid "This category does not have any entries."
-msgstr "Данная категория не содержит записей."
-
-msgid "This category has the following entries:"
-msgstr "Эта категория содержит такие записи:"
-
-msgid "This category is empty."
-msgstr "Эта категория пуста."
-
-msgid "This is the help."
-msgstr "Это помощь."
-
-msgid "You haven't chosen a category yet. Please choose one in the category list first."
-msgstr "Вы пока не выбрали категорию. Пожалуйста, выберите её из списка, чтобы начать."
-
-msgid "You haven't chosen an entry yet. Please choose one in the entry list first."
-msgstr "Вы пока не выбрали запись. Пожалуйста, выберите её из списка, чтобы начать."
-
-msgid "Collection of help texts"
-msgstr "Собрание справочных текстов"
-
-msgid "Notify me when new help is available"
-msgstr "Уведомить меня, когда новая помощь будет доступна"
-
-msgid "Play notification sound when new help is available"
-msgstr "Воспроизвести предупредительный звук, когда новая помощь будет доступна"
-
-msgid "Show previous image"
-msgstr "Предыдущее изображение"
-
-msgid "Show previous gallery page"
-msgstr "Предыдущая страница галереи"
-
-msgid "Show next image"
-msgstr "Следующее изображение"
-
-msgid "Show next gallery page"
-msgstr "Следующая страница галереи"
 

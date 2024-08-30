@@ -103,8 +103,9 @@ vlf_mobs.register_mob("mobs_mc:villager_zombie", {
 	on_rightclick = function(self, clicker)
 		if not self._curing and clicker and clicker:is_player() then
 			local wielditem = clicker:get_wielded_item()
-			-- ToDo: Only cure if zombie villager has the weakness effect
-			if wielditem:get_name() == "vlf_core:apple_gold" then
+			if wielditem:get_name() == "vlf_core:apple_gold"
+			    and vlf_entity_effects.has_effect (self.object,
+							"weakness") then
 				wielditem:take_item()
 				clicker:set_wielded_item(wielditem)
 				self._curing = math.random(3 * 60, 5 * 60)
@@ -122,6 +123,9 @@ vlf_mobs.register_mob("mobs_mc:villager_zombie", {
 				if villager_obj then
 					local villager = villager_obj:get_luaentity()
 					villager._profession = "unemployed"
+					-- Give this villager 10 seconds of nausea.
+					vlf_entity_effects.give_entity_effect ("nausea", villager_obj, 1,
+								 10, false)
 					return false
 				end
 			end

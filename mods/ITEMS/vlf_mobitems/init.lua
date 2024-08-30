@@ -123,21 +123,21 @@ minetest.register_craftitem("vlf_mobitems:cooked_rabbit", {
 	_vlf_saturation = 6.0,
 })
 
--- Reset food poisoning and status effects
+-- Reset food poisoning and status entity_effects
 local function drink_milk(itemstack, player, pointed_thing)
 	local bucket = minetest.do_item_eat(0, "vlf_buckets:bucket_empty", itemstack, player, pointed_thing)
 	-- Check if we were allowed to drink this (eat delay check)
 	if vlf_hunger.active and (bucket:get_name() ~= "vlf_mobitems:milk_bucket" or minetest.is_creative_enabled(player:get_player_name())) then
 		vlf_hunger.stop_poison(player)
 	end
-	vlf_entity_effects._reset_effects(player)
+	vlf_entity_effects._reset_entity_effects(player)
 	return bucket
 end
 
 minetest.register_craftitem("vlf_mobitems:milk_bucket", {
 	description = S("Milk"),
-	_tt_help = minetest.colorize(vlf_colors.GREEN, S("Removes all status effects")),
-	_doc_items_longdesc = S("Milk is very refreshing and can be obtained by using a bucket on a cow. Drinking it will remove all status effects, but restores no hunger points."),
+	_tt_help = minetest.colorize(vlf_colors.GREEN, S("Removes all status entity_effects")),
+	_doc_items_longdesc = S("Milk is very refreshing and can be obtained by using a bucket on a cow. Drinking it will remove all status entity_effects, but restores no hunger points."),
 	_doc_items_usagehelp = S("Use the placement key to drink the milk."),
 	inventory_image = "vlf_mobitems_bucket_milk.png",
 	wield_image = "vlf_mobitems_bucket_milk.png",
@@ -563,6 +563,6 @@ minetest.register_craft({
 
 minetest.register_on_item_eat(function (hp_change, replace_with_item, itemstack, user, pointed_thing)	-- poisoning with spider eye
 	if itemstack:get_name() == "vlf_mobitems:spider_eye" then
-		vlf_entity_effects.give_effect_by_level("poison", user, 1, 4)
+		vlf_entity_effects.give_entity_effect_by_level("poison", user, 1, 4)
 	end
 end)

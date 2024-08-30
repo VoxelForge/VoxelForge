@@ -17,7 +17,7 @@ msgid "Beetroot Seeds"
 msgstr "Graines de Betterave"
 
 msgid "Grows into a beetroot plant. Chickens like beetroot seeds."
-msgstr "Pousse en bettrave. Les poulets aiment les graines de betterave"
+msgstr "Pousse en bettrave. Les poulets aiment les graines de betterave."
 
 msgid "Place the beetroot seeds on farmland (which can be created with a hoe) to plant a beetroot plant. They grow in sunlight and grow faster on hydrated farmland. Rightclick an animal to feed it beetroot seeds."
 msgstr "Placez les graines de betterave sur les terres agricoles (qui peuvent être créées avec une houe) pour planter un plant de betterave. Elles poussent au soleil et poussent plus vite sur les terres agricoles hydratées. Faites un clic droit sur un animal pour le nourrir de graines de betteraves."
@@ -89,7 +89,7 @@ msgid "Golden Carrot"
 msgstr "Carrot Dorée"
 
 msgid "A golden carrot is a precious food item which can be eaten. It is really, really filling!"
-msgstr "Une carotte dorée est un aliment précieux qui peut être mangé. C'est vraiment, vraiment rassasiant!"
+msgstr "Une carotte dorée est un aliment précieux qui peut être mangé. C'est vraiment, vraiment rassasiant !"
 
 msgid "Turns block into farmland"
 msgstr "Transforme un bloc en terres agricoles"
@@ -104,7 +104,7 @@ msgid "Wood Hoe"
 msgstr "Houe en Bois"
 
 msgid "Uses: @1"
-msgstr "Utilisations: @1"
+msgstr "Utilisations : @1"
 
 msgid "Stone Hoe"
 msgstr "Houe en Pierre"
@@ -119,7 +119,7 @@ msgid "Diamond Hoe"
 msgstr "Houe en Diamant"
 
 msgid "Netherite Hoe"
-msgstr ""
+msgstr "Houe en nétherite"
 
 msgid "Melon Seeds"
 msgstr "Graine de Pastèque"
@@ -266,10 +266,10 @@ msgid "Hydrated farmland is used in farming, this is where you can plant and gro
 msgstr "Les terres agricoles hydratées sont utilisées dans l'agriculture, c'est là que vous pouvez planter et faire pousser certaines plantes. Il est créé lorsque les terres agricoles sont sous la pluie ou près de l'eau. Sans eau, ce bloc finira par se dessécher. Ce bloc redeviendra de la terre lorsqu'un bloc solide apparaît au-dessus ou qu'un bras de piston s'étend au-dessus."
 
 msgid "Sweet Berry Bush (Stage @1)"
-msgstr ""
+msgstr "Buisson à baies sucrées (Étape @1)"
 
 msgid "Sweet Berry"
-msgstr ""
+msgstr "Baie sucrée"
 
 msgid "Wheat Seeds"
 msgstr "Graines de blé"
@@ -311,17 +311,26 @@ msgid "\n"
 "		Place the wheat seeds on farmland (which can be created with a hoe) to plant a wheat plant.\n"
 "		They grow in sunlight and grow faster on hydrated farmland. Rightclick an animal to feed it wheat seeds.\n"
 "	"
-msgstr ""
+msgstr "\n"
+"\t\tPlacez les graines de blé sur des terres agricoles (qui peuvent être créées à l'aide d'une houe) pour planter un plant de blé.\n"
+"\t\tElles poussent à la lumière du soleil et plus rapidement sur les terres agricoles hydratées. Cliquez avec le bouton droit de la souris sur un animal pour lui donner des graines de blé.\n"
+"\t"
 
 msgid "\n"
 "			Premature wheat plants grow on farmland under sunlight in 8 stages.\n"
 "			On hydrated farmland, they grow faster. They can be harvested at any time but will only yield a profit when mature.\n"
 "		"
-msgstr ""
+msgstr "\n"
+"\t\t\tLes plants de blé prématurés poussent sur les terres agricoles sous la lumière du soleil en 8 étapes\n"
+"\t\t\tSur les terres agricoles hydratées, elles poussent plus vite. Elles peuvent être récoltées à tout moment, mais ne seront rentables qu'à maturité.\n"
+"\t\t"
 
 msgid "\n"
 "		Mature wheat plants are ready to be harvested for wheat and wheat seeds.\n"
 "		They won't grow any further.\n"
 "	"
-msgstr ""
+msgstr "\n"
+"\t\tLes plantes de blé matures sont prêtes à être récoltées pour le blé et les semences de blé.\n"
+"\t\tIls ne pousseront plus.\n"
+"\t"
 

@@ -18,6 +18,12 @@ local dbg_spawn_counts = {}
 local aoc_range = 136
 local remove_far = true
 
+local timer_light = 30
+local timer_dark = 10
+local timer_light_level = 3
+local instant_despawn_range = 128
+local random_despawn_range = 32
+
 local mob_cap = {
 	monster = tonumber(minetest.settings:get("vlf_mob_cap_monster")) or 70,
 	animal = tonumber(minetest.settings:get("vlf_mob_cap_animal")) or 10,
@@ -162,6 +168,14 @@ local function has_room(self,pos)
 			table.insert(nodes,self.fly_in)
 		end
 	end
+	if self.swims_in then
+		local t = type(self.swims_in)
+		if t == "table" then
+			nodes = table.copy(self.swims_in)
+		elseif t == "string" then
+			table.insert(nodes,self.swims_in)
+		end
+	end
 	table.insert(nodes,"air")
 	local x = cb[4] - cb[1]
 	local y = cb[5] - cb[2]
@@ -286,7 +300,7 @@ local function spawn_group(p,mob,spawn_on,group_max,group_min)
 		nn = {}
 		table.insert(nn,p)
 	end
-	for i = 1, math.random(group_min,group_max) do
+	for _ = 1, math.random(group_min,group_max) do
 		local sp = vector.offset(nn[math.random(#nn)],0,1,0)
 		if spawn_check(nn[math.random(#nn)],mob,true) then
 			if mob.type_of_spawning == "water" then
@@ -333,7 +347,7 @@ end
 local passive_timer = PASSIVE_INTERVAL
 
 --timer function to check if passive mobs should spawn (only every 20 secs unlike other mob spawn classes)
-local function check_timer(spawn_def, dtime)
+local function check_timer(spawn_def)
 	local mob_def = minetest.registered_entities[spawn_def.name]
 	if mob_def and mob_def.spawn_class == "passive" then
 		if passive_timer > 0 then
@@ -448,21 +462,21 @@ end
 
 
 if mobs_spawn then
-	local cumulative_chance = nil
-	local mob_library_worker_table = nil
+	local cumulative_chance
+	local mob_library_worker_table
 	local function initialize_spawn_data()
 		if not mob_library_worker_table then
 			mob_library_worker_table = table.copy(spawn_dictionary)
 		end
 		if not cumulative_chance then
 			cumulative_chance = 0
-			for k, v in pairs(mob_library_worker_table) do
+			for _, v in pairs(mob_library_worker_table) do
 				cumulative_chance = cumulative_chance + v.chance
 			end
 		end
 	end
 
-	local function spawn_a_mob(pos, dimension, dtime)
+	local function spawn_a_mob(pos, _, _)
 		--create a disconnected clone of the spawn dictionary
 		--prevents memory leak
 
@@ -498,7 +512,7 @@ if mobs_spawn then
 				local mob_type = minetest.registered_entities[spawn_def.name].type
 				if spawn_check(spawning_position,spawn_def) then
 
-					if can_spawn(spawn_def,spawning_position) and check_timer(spawn_def, dtime) then
+					if can_spawn(spawn_def,spawning_position) and check_timer(spawn_def) then
 						--everything is correct, spawn mob
 						if spawn_in_group and ( mob_type ~= "monster" or math.random(5) == 1 ) then
 							if logging then
@@ -548,25 +562,44 @@ if mobs_spawn then
 end
 
 function mob_class:check_despawn(pos, dtime)
-	self.lifetimer = self.lifetimer - dtime
-
-	-- Despawning: when lifetimer expires, remove mob
 	if remove_far and self:despawn_allowed() then
-		if self.despawn_immediately or self.lifetimer <= 0 then
-			if logging then
-				minetest.log("action", "[vlf_mobs] Mob "..self.name.." despawns at "..minetest.pos_to_string(pos, 1) .. " lifetimer ran out")
-			end
-			vlf_burning.extinguish(self.object)
-			self:safe_remove()
+		local min_dist = 10000
+
+		for _, player in pairs(minetest.get_connected_players()) do
+			local dist = vector.distance(player:get_pos(), pos)
+			min_dist = math.min(min_dist, dist)
+		end
+
+		if min_dist > instant_despawn_range then
+			self:kill_me("no players within " .. instant_despawn_range)
 			return true
-		elseif self.lifetimer <= 10 then
-			if math.random(10) < 4 then
-				self.despawn_immediately = true
+		elseif min_dist > random_despawn_range then
+			if self.lifetimer then
+				self.lifetimer = self.lifetimer - dtime
 			else
-				self.lifetimer = 20
+				if minetest.get_node_light(pos) < timer_light_level then
+					self.lifetimer = timer_dark
+				else
+					self.lifetimer = timer_light
+				end
 			end
+
+			if self.lifetimer <= 0 and math.random(1, 100) < 4 then
+				self:kill_me("player distance timeout and random chance")
+				return true
+			end
+		else
+			self.lifetimer = nil
 		end
 	end
+end
+
+function mob_class:kill_me(msg)
+	if logging then
+		minetest.log("action", "[vlf_mobs] Mob " .. self.name .. " despawns because " .. msg)
+	end
+
+	self:safe_remove()
 end
 
 minetest.register_chatcommand("spawn_mob",{
@@ -607,13 +640,13 @@ minetest.register_chatcommand("spawn_mob",{
 
 						local number_tag = string.find(value, "NUM")
 						if number_tag then
-							value = tonumber(string.sub(value, 4, -1))
+							value = tonumber(string.sub(value, 4, -1)) ---@diagnostic disable-line: cast-local-type
 						end
 
 						if value == "true" then
-							value = true
+							value = true ---@diagnostic disable-line: cast-local-type
 						elseif value == "false" then
-							value = false
+							value = false ---@diagnostic disable-line: cast-local-type
 						end
 
 						if not mob_entity[variable] then
@@ -663,7 +696,7 @@ minetest.register_chatcommand("spawncheck",{
 
 minetest.register_chatcommand("mobstats",{
 	privs = { debug = true },
-	func = function(n,param)
+	func = function(n, _)
 		minetest.chat_send_player(n,dump(dbg_spawn_counts))
 		local pos = minetest.get_player_by_name(n):get_pos()
 		minetest.chat_send_player(n,"mobs within 32 radius of player:"..count_mobs(pos,32))

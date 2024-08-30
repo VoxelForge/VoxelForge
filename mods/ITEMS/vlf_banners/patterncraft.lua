@@ -250,6 +250,16 @@ local patterns = {
 		{ d, e, d },
 		{ e, e, e },
 	},
+	["flow"] = {
+		name = NS("@1 Flow"),
+		type = "shapeless",
+		{ e, "vlf_banners:pattern_flow", d },
+	},
+	["guster"] = {
+		name = NS("@1 Guster"),
+		type = "shapeless",
+		{ e, "vlf_banners:pattern_guster", d },
+	},
 }
 vlf_banners.patterns = patterns
 
@@ -287,9 +297,11 @@ function vlf_banners.make_advanced_banner_description(description, layers)
 				break
 			end
 			-- Layer text line.
-			local color = vlf_banners.colors[layers[l].color][6]
-			local pattern_name = patterns[layers[l].pattern].name
-			table.insert(layerstrings, S(pattern_name, color))
+			if vlf_banners.colors[layers[l]] then
+				local color = vlf_banners.colors[layers[l].color][6]
+				local pattern_name = patterns[layers[l].pattern].name
+				table.insert(layerstrings, S(pattern_name, color))
+			end
 		end
 		-- Warn about missing information
 		if #layers == max_layer_lines + 1 then

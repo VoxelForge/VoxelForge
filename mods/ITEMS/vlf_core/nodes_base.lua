@@ -1065,7 +1065,8 @@ minetest.register_node("vlf_core:powdered_snow", {
     description = "Powder Snow",
     tiles = {"vlf_core_powder_snow.png"},
     is_ground_content = false,
-    groups = {cracky = 3},
+    move_resistance = 4,
+    groups = {fake_liquid = 1, disable_jump = 2},
     walkable = false,
 })
 
@@ -1111,7 +1112,7 @@ minetest.register_globalstep(function(dtime)
             if is_player_in_snow(obj) then
                 if not active_entities[obj] then
                     active_entities[obj] = true
-                    vlf_entity_effects.give_effect("frost", obj, 1, 10000)
+                    --vlf_entity_effects.give_effect("frost", obj, 1, 10000)
                     return true
                 end
             else

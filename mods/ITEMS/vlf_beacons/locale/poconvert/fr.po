@@ -22,3 +22,6 @@ msgstr "Pouvoir Primaire :"
 msgid "Inventory:"
 msgstr "Inventaire :"
 
+msgid "Beacon"
+msgstr "Balise"
+

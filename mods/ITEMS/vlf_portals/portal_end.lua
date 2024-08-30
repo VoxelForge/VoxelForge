@@ -79,7 +79,7 @@ minetest.register_node("vlf_portals:portal_end", {
 	drop = "",
 	-- This is 15 in MC.
 	light_source = 14,
-	post_effect_color = {a = 192, r = 0, g = 0, b = 0},
+	post_entity_effect_color = {a = 192, r = 0, g = 0, b = 0},
 	after_destruct = destroy_portal,
 	-- This prevents “falling through”
 	collision_box = {
@@ -249,7 +249,7 @@ local function after_place_node(pos, placer, itemstack, pointed_thing)
 
 		local ok, ppos = check_end_portal_frame(pos)
 		if ok then
-			-- Epic 'portal open' sound effect that can be heard everywhere
+			-- Epic 'portal open' sound entity_effect that can be heard everywhere
 			minetest.sound_play("vlf_portals_open_end_portal", {gain=0.8}, true)
 			end_portal_area(ppos)
 		end
@@ -355,7 +355,7 @@ minetest.override_item("vlf_end:ender_eye", {
 
 			local ok, ppos = check_end_portal_frame(pointed_thing.under)
 			if ok then
-				-- Epic 'portal open' sound effect that can be heard everywhere
+				-- Epic 'portal open' sound entity_effect that can be heard everywhere
 				minetest.sound_play("vlf_portals_open_end_portal", {gain=0.8}, true)
 				end_portal_area(ppos)
 				if has_doc then

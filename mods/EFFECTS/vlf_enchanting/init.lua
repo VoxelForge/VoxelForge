@@ -195,7 +195,7 @@ minetest.register_entity("vlf_enchanting:book", {
 	},
 	_player_near = false,
 	_table_pos = nil,
-	on_activate = function(self, staticdata)
+	on_activate = function(self, _)
 		self.object:set_armor_groups({immortal = 1})
 		vlf_enchanting.set_book_animation(self, "close")
 	end,
@@ -251,7 +251,7 @@ minetest.register_node("vlf_enchanting:table", {
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	groups = {pickaxey = 2, deco_block = 1},
 	on_rotate = rotate,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing) ---@diagnostic disable-line: unused-local
 		local player_meta = clicker:get_meta()
 		--local table_meta = minetest.get_meta(pos)
 		--local num_bookshelves = table_meta:get_int("vlf_enchanting:num_bookshelves")
@@ -269,7 +269,7 @@ minetest.register_node("vlf_enchanting:table", {
 	on_construct = function(pos)
 		spawn_book_entity(pos)
 	end,
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
+	after_dig_node = function(pos, _, _ , digger)
 		local dname = (digger and digger:get_player_name()) or ""
 		if minetest.is_creative_enabled(dname) then
 			return
@@ -281,7 +281,7 @@ minetest.register_node("vlf_enchanting:table", {
 		itemmeta:set_string("description", meta:get_string("description"))
 		minetest.add_item(pos, itemstack)
 	end,
-	after_place_node = function(pos, placer, itemstack, pointed_thing)
+	after_place_node = function(pos, placer, itemstack, pointed_thing) ---@diagnostic disable-line: unused-local
 		local meta = minetest.get_meta(pos)
 		local itemmeta = itemstack:get_meta()
 		meta:set_string("name", itemmeta:get_string("name"))

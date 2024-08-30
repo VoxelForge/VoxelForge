@@ -14,5 +14,5 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Ominous Banner"
-msgstr ""
+msgstr "Bannière de mauvaise augure"
 

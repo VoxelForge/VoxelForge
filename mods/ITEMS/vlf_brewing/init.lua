@@ -99,140 +99,110 @@ local function brewable(inv)
 	return false
 end
 
+local BREW_TIME = 10 -- all brews brew the same
+local BURN_TIME = BREW_TIME * 20
+
+local function take_fuel (pos, meta, inv)
+    -- only allow blaze powder fuel
+    local fuel_name, fuel_count
+    fuel_name = inv:get_stack ("fuel", 1):get_name ()
+    fuel_count = inv:get_stack ("fuel", 1):get_count ()
+
+    if fuel_name == "vlf_mobitems:blaze_powder" then -- Grab another fuel
+	if (fuel_count-1) ~= 0 then
+	    inv:set_stack("fuel", 1, fuel_name.." "..(fuel_count-1))
+	else
+	    inv:set_stack("fuel", 1, "")
+	end
+	return BURN_TIME -- New value of fuel_timer_new
+    else -- no fuel available
+	return 0
+    end
+end
 
 local function brewing_stand_timer(pos, elapsed)
 	-- Inizialize metadata
 	local meta = minetest.get_meta(pos)
 
-	local fuel_timer = meta:get_float("fuel_timer") or 0
-	local BREW_TIME = 20 -- all brews brew the same
-	local BURN_TIME = BREW_TIME * 10
-
-	--local input_item = meta:get_string("input_item") or ""
-	local stand_timer = meta:get_float("stand_timer") or 0
-	local fuel = meta:get_float("fuel") or 0
-	local inv = meta:get_inventory()
-
-	--local input_list, stand_list, fuel_list
+	-- Number of seconds of fuel remaining to be consumed.
+	local fuel_timer = meta:get_float ("fuel_timer_new")
+	local stand_timer = meta:get_float ("stand_timer")
+	local inv = meta:get_inventory ()
 	local brew_output, d
-	local input_count, fuel_name, fuel_count, formspec, fuel_percent, brew_percent
+	local input_count, formspec, fuel_percent, brew_percent
 
-	local update = true
+	brew_output = brewable(inv)
+	if brew_output then
+	    if fuel_timer <= 0 then -- Is more fuel required?
+		fuel_timer = take_fuel (pos, meta, inv)
+	    end
 
-	while update do
+	    -- If enough fuel remains, continue.
+	    if fuel_timer > 0 then
+		fuel_timer = fuel_timer - elapsed
+		stand_timer = stand_timer + elapsed
+		d = 0.5
+		minetest.add_particlespawner({
+			amount = 4,
+			time = 1,
+			minpos = {x=pos.x-d, y=pos.y+0.5, z=pos.z-d},
+			maxpos = {x=pos.x+d, y=pos.y+2, z=pos.z+d},
+			minvel = {x=-0.1, y=0, z=-0.1},
+			maxvel = {x=0.1, y=0.5, z=0.1},
+			minacc = {x=-0.05, y=0, z=-0.05},
+			maxacc = {x=0.05, y=.1, z=0.05},
+			minexptime = 1,
+			maxexptime = 2,
+			minsize = 0.5,
+			maxsize = 2,
+			collisiondetection = true,
+			vertical = false,
+			texture = "vlf_brewing_bubble_sprite.png",
+		})
 
-		update = false
+		-- Replace the stand item with the brew result
+		if stand_timer >= BREW_TIME then
+		    input_count = inv:get_stack("input",1):get_count()
+		    if (input_count-1) ~= 0 then
+			local stack
+			    = inv:get_stack("input",1):get_name().." "..(input_count-1)
+			inv:set_stack("input", 1, stack)
+		    else
+			inv:set_stack("input", 1, "")
+		    end
 
-		--input_list = inv:get_list("input")
-		--stand_list = inv:get_list("stand")
-		--fuel_list = inv:get_list("fuel")
-
-		-- TODO ... fix this.  Goal is to reset the process if the stand changes
-		-- for i=1, inv:get_size("stand", i) do -- reset the process due to change
-		-- 	local _name = inv:get_stack("stand", i):get_name()
-		-- 	if  _name ~= stand_items[i] then
-		-- 		stand_timer = 0
-		-- 		stand_items[i] = _name
-		-- 		update = true -- need to update the stand with new data
-		--    return 1
-		-- 	end
-		-- end
-
-		brew_output = brewable(inv)
-		if fuel ~= 0 and brew_output then
-
-			fuel_timer = fuel_timer + elapsed
-			stand_timer = stand_timer + elapsed
-
-			if fuel_timer >= BURN_TIME then --replace with more fuel
-				fuel = 0 --force a new fuel grab
-				fuel_timer = 0
+		    for i=1, inv:get_size("stand") do
+			if brew_output[i] then
+			    minetest.sound_play("vlf_brewing_complete",
+						{pos=pos, gain=0.4, max_hear_range=6}, true)
+			    inv:set_stack ("stand", i, brew_output[i])
+			    minetest.sound_play("vlf_entity_effects_bottle_pour",
+						{pos=pos, gain=0.6, max_hear_range=6}, true)
 			end
-
-			d = 0.5
-			minetest.add_particlespawner({
-				amount = 4,
-				time = 1,
-				minpos = {x=pos.x-d, y=pos.y+0.5, z=pos.z-d},
-				maxpos = {x=pos.x+d, y=pos.y+2, z=pos.z+d},
-				minvel = {x=-0.1, y=0, z=-0.1},
-				maxvel = {x=0.1, y=0.5, z=0.1},
-				minacc = {x=-0.05, y=0, z=-0.05},
-				maxacc = {x=0.05, y=.1, z=0.05},
-				minexptime = 1,
-				maxexptime = 2,
-				minsize = 0.5,
-				maxsize = 2,
-				collisiondetection = true,
-				vertical = false,
-				texture = "vlf_brewing_bubble_sprite.png",
-			})
-
-			-- Replace the stand item with the brew result
-			if stand_timer >= BREW_TIME then
-
-				input_count = inv:get_stack("input",1):get_count()
-				if (input_count-1) ~= 0 then
-					inv:set_stack("input",1,inv:get_stack("input",1):get_name().." "..(input_count-1))
-				else
-					inv:set_stack("input",1,"")
-				end
-
-				for i=1, inv:get_size("stand") do
-					if brew_output[i] then
-						minetest.sound_play("vlf_brewing_complete", {pos=pos, gain=0.4, max_hear_range=6}, true)
-						inv:set_stack("stand", i, brew_output[i])
-						minetest.sound_play("vlf_entity_effects_bottle_pour", {pos=pos, gain=0.6, max_hear_range=6}, true)
-					end
-				end
-				stand_timer = 0
-				update = false -- stop the update if brew is complete
-			end
-
-		elseif fuel == 0 then  --get more fuel from fuel_list
-
-			-- only allow blaze powder fuel
-			fuel_name = inv:get_stack("fuel",1):get_name()
-			fuel_count = inv:get_stack("fuel",1):get_count()
-
-			if fuel_name == "vlf_mobitems:blaze_powder" then -- Grab another fuel
-
-				if (fuel_count-1) ~= 0 then
-					inv:set_stack("fuel",1,fuel_name.." "..(fuel_count-1))
-				else
-					inv:set_stack("fuel",1,"")
-				end
-				update = true
-				fuel = 1
-			else -- no fuel available
-				update = false
-			end
-
+		    end
+		    stand_timer = 0
 		end
-
-		elapsed = 0
+	    end
 	end
 
-	--update formspec
-	formspec = brewing_formspec
+	-- The formspec must be updated after each change.
+	fuel_percent = 100 - math.floor (math.max (fuel_timer, 0)
+					 / BURN_TIME * 100)
+	brew_percent = math.floor(stand_timer/BREW_TIME*100)
+	formspec = active_brewing_formspec(fuel_percent, brew_percent*1 % 100)
 
-	local result = false
-
-	if fuel_timer ~= 0 then
-		fuel_percent = math.floor(fuel_timer/BURN_TIME*100 % BURN_TIME)
-		brew_percent = math.floor(stand_timer/BREW_TIME*100)
-		formspec = active_brewing_formspec(fuel_percent, brew_percent*1 % 100)
-		result = true
-	else
-		minetest.get_node_timer(pos):stop()
+	local value = true
+	-- If the stand becomes inactive, as when no fuel remains or
+	-- no valid recipe exists, cancel the timer.
+	if fuel_timer <= 0 or not brew_output then
+		minetest.get_node_timer (pos):stop ()
+		value = false
 	end
 
-	meta:set_float("fuel_timer", fuel_timer)
+	meta:set_float("fuel_timer_new", fuel_timer)
 	meta:set_float("stand_timer", stand_timer)
-	meta:set_float("fuel", fuel)
 	meta:set_string("formspec", formspec)
-
-	return result
+	return value
 end
 
 local drop_contents = vlf_util.drop_items_from_meta_container({"fuel", "input", "stand"})
@@ -265,20 +235,21 @@ local function sort_stack(stack)
 	if minetest.get_item_group(stack:get_name(), "brewing_ingredient" ) > 0 then
 		return "input"
 	end
-	for _, g in pairs({"entity_effect", "empty_bottle", "water_bottle"}) do
+	for _, g in pairs({"entity_effect", "splash_entity_effect", "ling_entity_effect",
+			   "empty_bottle", "water_bottle"}) do
 		if minetest.get_item_group(stack:get_name(), g ) > 0 then
 			return "stand"
 		end
 	end
 end
 
-local function allow_put(pos, listname, index, stack, player)
+local function allow_put(pos, listname, _, stack, player)
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
 		return 0
 	end
-	local trg = sort_stack(stack, pos)
+	local trg = sort_stack(stack)
 	if listname == "stand" then
 		if trg ~= "stand" then
 			return 0
@@ -300,18 +271,47 @@ local function allow_put(pos, listname, index, stack, player)
 	return stack:get_count()
 end
 
-local function on_put(pos, listname, index, stack, player)
+local function on_put(pos, listname, index, stack, _)
+	local meta = minetest.get_meta (pos)
+	local inv = meta:get_inventory ()
+
 	if listname == "sorter" then
-		local inv = minetest.get_meta(pos):get_inventory()
-		inv:add_item(sort_stack(stack, pos), stack)
+		listname = sort_stack (stack)
+		inv:add_item(listname, stack)
 		inv:set_stack("sorter", 1, ItemStack(""))
 	end
+
+	if listname == "fuel" then
+	    -- Refuel immediately if no fuel remains.
+	    local fuel_timer = meta:get_float ("fuel_timer_new")
+	    if fuel_timer <= 0 then
+		fuel_timer = take_fuel (pos, meta, inv)
+		meta:set_float ("fuel_timer_new", fuel_timer)
+	    end
+	end
+
+	if listname == "stand" then
+		local str = ""
+		local stack
+		for i=1, inv:get_size("stand") do
+		    stack = inv:get_stack("stand", i)
+		    if not stack:is_empty() then
+			str = str.."1"
+		    else str = str.."0"
+		    end
+		end
+		minetest.swap_node(pos, {name = "vlf_brewing:stand_"..str})
+	end
+	minetest.get_node_timer (pos):start (1.0)
+	--some code here to enforce only entity_effects getting placed on stands
+end
+
+local function on_take (pos, listname, _, _, _)
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 	local str = ""
-	local stack
 	for i=1, inv:get_size("stand") do
-		stack = inv:get_stack("stand", i)
+		local stack = inv:get_stack("stand", i)
 		if not stack:is_empty() then
 			str = str.."1"
 		else str = str.."0"
@@ -319,19 +319,18 @@ local function on_put(pos, listname, index, stack, player)
 	end
 	minetest.swap_node(pos, {name = "vlf_brewing:stand_"..str})
 	minetest.get_node_timer(pos):start(1.0)
-	--some code here to enforce only entity_effects getting placed on stands
 end
 
-local function allow_move(pos, from_list, from_index, to_list, to_index, count, player)
+local function allow_move(pos, from_list, from_index, to_list, _, count, _)
 	if from_list == "sorter" or to_list == "sorter" then return 0 end
 	local inv = minetest.get_meta(pos):get_inventory()
 	local stack = inv:get_stack(from_list, from_index)
-	local trg = sort_stack(stack, pos)
+	local trg = sort_stack(stack)
 	if trg == to_list then return count end
 	return 0
 end
 
-local function allow_take(pos, listname, index, stack, player)
+local function allow_take (pos, listname, _, stack, player)
 	if listname == "sorter" then return 0 end
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
@@ -357,8 +356,7 @@ local function hopper_in(pos, to_pos)
 			minetest.get_node_timer(to_pos):start(1.0)
 		else
 			local slot_id,_ = vlf_util.get_eligible_transfer_item_slot(sinv, "main", dinv, "stand", function(itemstack)
-				local n = itemstack:get_name()
-				return minetest.get_item_group(n, "water_bottle") > 0
+				return sort_stack (itemstack) == "stand"
 			end)
 			if slot_id then
 				vlf_util.move_item(sinv, "main", slot_id, dinv, "stand")
@@ -380,9 +378,7 @@ end
 local function hopper_out(pos, to_pos)
 	local sinv = minetest.get_inventory({type="node", pos = pos})
 	local dinv = minetest.get_inventory({type="node", pos = to_pos})
-	local slot_id,_ = vlf_util.get_eligible_transfer_item_slot(sinv, "stand", dinv, "main", function(itemstack)
-		return true
-	end)
+	local slot_id,_ = vlf_util.get_eligible_transfer_item_slot(sinv, "stand", dinv, "main", nil)
 	if slot_id then
 		vlf_util.move_item(sinv, "stand", slot_id, dinv, "main")
 	end
@@ -410,7 +406,7 @@ local tpl_brewing_stand = {
 	allow_metadata_inventory_put = allow_put,
 	allow_metadata_inventory_move = allow_move,
 	on_metadata_inventory_put = on_put,
-	on_metadata_inventory_take = on_put,
+	on_metadata_inventory_take = on_take,
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
@@ -421,7 +417,7 @@ local tpl_brewing_stand = {
 		local form = brewing_formspec
 		meta:set_string("formspec", form)
 	end,
-	on_receive_fields = function(pos, formname, fields, sender)
+	on_receive_fields = function(pos, _, _, sender)
 		local sender_name = sender:get_player_name()
 		if minetest.is_protected(pos, sender_name) then
 			minetest.record_protection_violation(pos, sender_name)
@@ -736,9 +732,28 @@ minetest.register_lbm({
 	name = "vlf_brewing:update_coolsneak",
 	nodenames = { "group:brewing_stand" },
 	run_at_every_load = false,
-	action = function(pos, node)
+	action = function(pos)
 		local m = minetest.get_meta(pos)
 		m:get_inventory():set_size("sorter", 1)
 		m:set_string("formspec", brewing_formspec)
+	end,
+})
+
+minetest.register_lbm({
+	label = "Update fuel timers to new non-inverted format",
+	name = "vlf_brewing:update_inverted_fueltimer",
+	nodenames = { "group:brewing_stand" },
+	run_at_every_load = false,
+	action = function(pos)
+	    local m = minetest.get_meta (pos)
+	    local old_fuel = m:get_int ("fuel")
+	    local old_burntime = m:get_int ("fuel_timer")
+
+	    if old_fuel ~= 0 then
+		m:set_int ("fuel_timer_new", old_burntime - BURN_TIME)
+	    end
+	    -- Clear obsolete fields.
+	    m:set_int ("fuel", 0)
+	    m:set_int ("fuel_timer", 0)
 	end,
 })

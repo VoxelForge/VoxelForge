@@ -194,7 +194,7 @@ msgid "This blocks drops the following when mined by shears: @1"
 msgstr "При добыче этого блока ножницами выпадает следующее: @1"
 
 msgid ", "
-msgstr " ,"
+msgstr ", "
 
 msgid "Painfully slow"
 msgstr "крайне медленно"

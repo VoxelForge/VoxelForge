@@ -14,11 +14,14 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Beacon:"
-msgstr ""
+msgstr "Faro:"
 
 msgid "Primary Power:"
-msgstr ""
+msgstr "Poder Primario:"
 
 msgid "Inventory:"
-msgstr ""
+msgstr "Inventario:"
+
+msgid "Beacon"
+msgstr "Faro"
 

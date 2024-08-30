@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Water can flow into this block and cause it to drop as an item."
-msgstr ""
+msgstr "L'acqua può scorrere in questo blocco e causarne la caduta come elemento."
 
 msgid "This block can be turned into dirt with a hoe."
-msgstr ""
+msgstr "Questo blocco può venire mutato in terra con una zappa."
 
 msgid "This block can be turned into farmland with a hoe."
-msgstr ""
+msgstr "Questo blocco può venire mutato in terra arata con una zappa."
 
 msgid "This block can be turned into grass path with a shovel."
 msgstr ""
@@ -197,13 +197,13 @@ msgid ", "
 msgstr ""
 
 msgid "Painfully slow"
-msgstr ""
+msgstr "Dolorosamente lento"
 
 msgid "Very slow"
-msgstr ""
+msgstr "Molto lento"
 
 msgid "Slow"
-msgstr ""
+msgstr "Lento"
 
 msgid "Fast"
 msgstr ""

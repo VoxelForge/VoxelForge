@@ -128,6 +128,7 @@ minetest.register_node("vlf_farming:beetroot", {
 	_vlf_fortune_drop = {
 		discrete_uniform_distribution = true,
 		items = {"vlf_farming:beetroot_seeds"},
+		drop_without_fortune = {"vlf_farming:beetroot_item"},
 		min_count = 1,
 		max_count = 3,
 		cap = 5,

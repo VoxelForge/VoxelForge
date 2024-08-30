@@ -1,4 +1,5 @@
-# textdomain: vlf_beacons
+# textdomain: mcl_beacons
 Beacon:=
 Primary Power:=
 Inventory:=
+Beacon=

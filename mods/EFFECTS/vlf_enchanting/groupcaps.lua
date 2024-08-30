@@ -41,7 +41,11 @@ end
 --
 -- To make it more efficient it will first check a hash value to determine if
 -- the tool needs to be updated.
-function vlf_enchanting.update_groupcaps(itemstack)
+--
+-- IGNORE_HASH means to ignore the hash so that values may be
+-- overwritten when they have received alterations from elsewhere,
+-- e.g., haste/fatigue entity_effects.
+function vlf_enchanting.update_groupcaps(itemstack, ignore_hash)
 	local name = itemstack:get_name()
 	if not minetest.registered_tools[name] or not minetest.registered_tools[name].tool_capabilities then
 		return
@@ -56,13 +60,13 @@ function vlf_enchanting.update_groupcaps(itemstack)
 	local groupcaps = get_efficiency_groupcaps(name, efficiency)
 	local hash = itemstack:get_meta():get_string("groupcaps_hash")
 
-	if not hash or hash ~= groupcaps.hash then
+	if ignore_hash or not hash or hash ~= groupcaps.hash then
 		local tool_capabilities = itemstack:get_tool_capabilities()
 		tool_capabilities.groupcaps = table.copy(groupcaps.values)
 
 		-- Increase the number of uses depending on the unbreaking level
 		-- of the tool.
-		for group, capability in pairs(tool_capabilities.groupcaps) do
+		for _, capability in pairs(tool_capabilities.groupcaps) do
 			capability.uses = capability.uses * (1 + unbreaking)
 		end
 

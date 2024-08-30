@@ -5,7 +5,7 @@ doc.sub.items.disable_core_factoid("node_mining")
 doc.sub.items.disable_core_factoid("tool_capabilities")
 
 -- Help button callback
-minetest.register_on_player_receive_fields(function(player, formname, fields)
+minetest.register_on_player_receive_fields(function(player, _, fields)
 	if fields.__vlf_doc then
 		doc.show_doc(player:get_player_name())
 	end
@@ -14,7 +14,7 @@ end)
 -- doc_items factoids
 
 -- dig_by_water
-doc.sub.items.register_factoid("nodes", "drop_destroy", function(itemstring, def)
+doc.sub.items.register_factoid("nodes", "drop_destroy", function(_, def)
 	if def.groups.dig_by_water then
 		return S("Water can flow into this block and cause it to drop as an item.")
 	end
@@ -22,7 +22,7 @@ doc.sub.items.register_factoid("nodes", "drop_destroy", function(itemstring, def
 end)
 
 -- usable by hoes
-doc.sub.items.register_factoid("nodes", "groups", function(itemstring, def)
+doc.sub.items.register_factoid("nodes", "groups", function(_, def)
 	if def.groups.cultivatable == 1 then
 		return S("This block can be turned into dirt with a hoe.")
 	elseif def.groups.cultivatable == 2 then
@@ -32,7 +32,7 @@ doc.sub.items.register_factoid("nodes", "groups", function(itemstring, def)
 end)
 
 -- usable by shovels
-doc.sub.items.register_factoid("nodes", "groups", function(itemstring, def)
+doc.sub.items.register_factoid("nodes", "groups", function(_, def)
 	if def.groups.path_creation_possible then
 		return S("This block can be turned into grass path with a shovel.")
 	end
@@ -40,7 +40,7 @@ doc.sub.items.register_factoid("nodes", "groups", function(itemstring, def)
 end)
 
 -- soil
-doc.sub.items.register_factoid("nodes", "groups", function(itemstring, def)
+doc.sub.items.register_factoid("nodes", "groups", function(_, def)
 	local datastring = ""
 	if def.groups.soil_sapling == 2 then
 		datastring = datastring .. S("This block acts as a soil for all saplings.") .. "\n"
@@ -69,7 +69,7 @@ doc.sub.items.register_factoid("nodes", "groups", function(itemstring, def)
 end)
 
 -- nodes which have flower placement rules
-doc.sub.items.register_factoid("nodes", "groups", function(itemstring, def)
+doc.sub.items.register_factoid("nodes", "groups", function(_, def)
 	if def.groups.place_flowerlike == 1 then
 		return S("This plant can only grow on grass blocks and dirt. To survive, it needs to have an unobstructed view to the sky above or be exposed to a light level of 8 or higher.")
 	elseif def.groups.place_flowerlike == 2 then
@@ -79,7 +79,7 @@ doc.sub.items.register_factoid("nodes", "groups", function(itemstring, def)
 end)
 
 -- flammable
-doc.sub.items.register_factoid("nodes", "groups", function(itemstring, def)
+doc.sub.items.register_factoid("nodes", "groups", function(_, def)
 	if def.groups.flammable then
 		return S("This block is flammable.")
 	end
@@ -87,7 +87,7 @@ doc.sub.items.register_factoid("nodes", "groups", function(itemstring, def)
 end)
 
 -- destroys_items
-doc.sub.items.register_factoid("nodes", "groups", function(itemstring, def)
+doc.sub.items.register_factoid("nodes", "groups", function(_, def)
 	if def.groups.destroys_items then
 		return S("This block destroys any item it touches.")
 	end
@@ -96,7 +96,7 @@ end)
 
 
 -- Comestibles
-doc.sub.items.register_factoid(nil, "use", function(itemstring, def)
+doc.sub.items.register_factoid(nil, "use", function(_, def)
 	local s = ""
 	if def.groups.eatable and not def._doc_items_usagehelp then
 		if def.groups.food == 2 then
@@ -124,7 +124,7 @@ doc.sub.items.register_factoid(nil, "use", function(itemstring, def)
 	return s
 end)
 
-doc.sub.items.register_factoid(nil, "groups", function(itemstring, def)
+doc.sub.items.register_factoid(nil, "groups", function(_, def)
 	local s = ""
 	if def.groups.eatable and def.groups.eatable > 0 then
 		s = s .. S("Hunger points restored: @1", def.groups.eatable)
@@ -136,7 +136,7 @@ doc.sub.items.register_factoid(nil, "groups", function(itemstring, def)
 end)
 
 -- Armor
-doc.sub.items.register_factoid(nil, "use", function(itemstring, def)
+doc.sub.items.register_factoid(nil, "use", function(itemstring, _)
 	--local def = minetest.registered_items[itemstring]
 	local s = ""
 	local head = minetest.get_item_group(itemstring, "armor_head")
@@ -161,7 +161,7 @@ doc.sub.items.register_factoid(nil, "use", function(itemstring, def)
 	end
 	return s
 end)
-doc.sub.items.register_factoid(nil, "groups", function(itemstring, def)
+doc.sub.items.register_factoid(nil, "groups", function(itemstring, _)
 	--local def = minetest.registered_items[itemstring]
 	local s = ""
 	local use = minetest.get_item_group(itemstring, "vlf_armor_uses")
@@ -176,7 +176,7 @@ doc.sub.items.register_factoid(nil, "groups", function(itemstring, def)
 	return s
 end)
 
-doc.sub.items.register_factoid(nil, "groups", function(itemstring, def)
+doc.sub.items.register_factoid(nil, "groups", function(itemstring, _)
 	if minetest.get_item_group(itemstring, "no_rename") == 1 then
 		return S("This item cannot be renamed at an anvil.")
 	else
@@ -184,7 +184,7 @@ doc.sub.items.register_factoid(nil, "groups", function(itemstring, def)
 	end
 end)
 
-doc.sub.items.register_factoid("nodes", "gravity", function(itemstring, def)
+doc.sub.items.register_factoid("nodes", "gravity", function(itemstring, _)
 	local s = ""
 	if minetest.get_item_group(itemstring, "crush_after_fall") == 1 then
 		s = s .. S("This block crushes any block it falls into.")
@@ -192,7 +192,7 @@ doc.sub.items.register_factoid("nodes", "gravity", function(itemstring, def)
 	return s
 end)
 
-doc.sub.items.register_factoid("nodes", "gravity", function(itemstring, def)
+doc.sub.items.register_factoid("nodes", "gravity", function(itemstring, _)
 	local s = ""
 	if minetest.get_item_group(itemstring, "crush_after_fall") == 1 then
 		s = s .. S("When this block falls deeper than 1 block, it causes damage to any player it hits. The damage dealt is B×2−2 hit points with B = number of blocks fallen. The damage can never be more than 40 HP.")
@@ -201,7 +201,7 @@ doc.sub.items.register_factoid("nodes", "gravity", function(itemstring, def)
 end)
 
 -- Mining, hardness and all that
-doc.sub.items.register_factoid("nodes", "mining", function(itemstring, def)
+doc.sub.items.register_factoid("nodes", "mining", function(_, def)
 	local pickaxey = { S("Diamond Pickaxe"), S("Iron Pickaxe"), S("Stone Pickaxe"), S("Golden Pickaxe"), S("Wooden Pickaxe") }
 	local axey = { S("Diamond Axe"), S("Iron Axe"), S("Stone Axe"), S("Golden Axe"), S("Wooden Axe") }
 	local shovely = { S("Diamond Shovel"), S("Iron Shovel"), S("Stone Shovel"), S("Golden Shovel"), S("Wooden Shovel") }
@@ -271,7 +271,7 @@ doc.sub.items.register_factoid("nodes", "mining", function(itemstring, def)
 end)
 
 -- Special drops when mined by shears
-doc.sub.items.register_factoid("nodes", "drops", function(itemstring, def)
+doc.sub.items.register_factoid("nodes", "drops", function(_, def)
 	if def._vlf_shears_drop == true then
 		return S("This block drops itself when mined by shears.")
 	elseif type(def._vlf_shears_drop) == "table" then
@@ -299,7 +299,7 @@ doc.sub.items.register_factoid("nodes", "drops", function(itemstring, def)
 end)
 
 -- Digging capabilities of tool
-doc.sub.items.register_factoid("tools", "misc", function(itemstring, def)
+doc.sub.items.register_factoid("tools", "misc", function(_, def)
 	if not def.tool_capabilities then
 		return ""
 	end
@@ -310,7 +310,7 @@ doc.sub.items.register_factoid("tools", "misc", function(itemstring, def)
 	local formstring = ""
 	local capstr = ""
 	local caplines = 0
-	for k,v in pairs(groupcaps) do
+	for _, v in pairs(groupcaps) do
 		local speedstr = ""
 		local miningusesstr = ""
 		-- Mining capabilities
@@ -382,7 +382,7 @@ doc.sub.items.register_factoid("tools", "misc", function(itemstring, def)
 end)
 
 -- Melee damage
-doc.sub.items.register_factoid("tools", "misc", function(itemstring, def)
+doc.sub.items.register_factoid("tools", "misc", function(_, def)
 	local tool_capabilities = def.tool_capabilities
 	if not tool_capabilities then
 		return ""

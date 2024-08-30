@@ -34,7 +34,7 @@ local function set_groups(name, groups)
 
 		if name:find("door") then
 			groups.building_block = 0
-			groups.mesecon_effector_on = 1
+			groups.mesecon_entity_effector_on = 1
 		end
 	else
 		return nil
@@ -44,9 +44,9 @@ local function set_groups(name, groups)
 end
 
 local function set_light_level(light_source, index)
-	local ceil, floor_5, floor_7 = math.ceil(index / 2), math.floor(index / 5), math.floor(index / 7)
+	local ceil, floor_5, floor_7 = math.ceil(index / 3), math.floor(index / 5), math.floor(index / 7)
 	if light_source then
-		light_source = light_source - 3 * (ceil - 1) - floor_5 - floor_7
+		light_source = light_source - 2 * (ceil - 1) - floor_5 - floor_7
 	end
 
 	return light_source
@@ -289,7 +289,7 @@ end
 vlf_copper.register_copper_bulbs("copper_bulb", {
 	groups = {pickaxey = 2, building_block = 1},
 	mesecons = {
-		effector = {
+		entity_effector = {
 			action_on = function (pos, node)
 				minetest.swap_node(pos, {name = node.name:gsub("copper_bulb", "copper_bulb_lit_powered")})
 			end
@@ -304,7 +304,7 @@ vlf_copper.register_copper_bulbs("copper_bulb_lit", {
 	groups = {pickaxey = 2, building_block = 1, not_in_creative_inventory = 1},
 	light_source = 14,
 	mesecons = {
-		effector = {
+		entity_effector = {
 			action_on = function (pos, node)
 				minetest.swap_node(pos, {name = node.name:gsub("copper_bulb_lit", "copper_bulb_powered")})
 			end
@@ -319,7 +319,7 @@ vlf_copper.register_copper_bulbs("copper_bulb_powered", {
 	drop = "copper_bulb",
 	groups = {pickaxey = 2, building_block = 1, not_in_creative_inventory = 1},
 	mesecons = {
-		effector = {
+		entity_effector = {
 			action_off = function (pos, node)
 				minetest.swap_node(pos, {name = node.name:gsub("copper_bulb_powered", "copper_bulb")})
 			end
@@ -334,7 +334,7 @@ vlf_copper.register_copper_bulbs("copper_bulb_lit_powered", {
 	groups = {pickaxey = 2, building_block = 1, not_in_creative_inventory = 1},
 	light_source = 14,
 	mesecons = {
-		effector = {
+		entity_effector = {
 			action_off = function (pos, node)
 				minetest.swap_node(pos, {name = node.name:gsub("copper_bulb_lit_powered", "copper_bulb_lit")})
 			end

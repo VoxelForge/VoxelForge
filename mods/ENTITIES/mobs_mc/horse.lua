@@ -46,10 +46,11 @@ local function attach_driver(self, clicker)
 end
 
 local function detach_driver(self)
+	self.object:set_properties({stepheight = 0.6})
 	self.object:set_properties({selectionbox = self.object:get_properties().collisionbox})
 	if self.driver then
 		if extended_pet_control and self.order ~= "sit" then self:toggle_sit(self.driver) end
-		vlf_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
+		vlf_mobs.detach(self.driver, {x=0, y=0, z=0})
 	end
 end
 
@@ -174,9 +175,7 @@ local horse = {
 				self.run_velocity = self._horse_speed
 			end
 		else
-			if self._saddle then
-				detach_driver(self)
-			end
+			detach_driver(self)
 			self.run_velocity = self._runaway_velocity
 		end
 
@@ -224,7 +223,7 @@ local horse = {
 		return true
 	end,
 
-	on_die = function(self, pos)
+	on_die = function(self)
 		if self.driver then
 			detach_driver(self)
 		end
@@ -286,7 +285,7 @@ local horse = {
 		end
 
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
-			if not self.driver and self._saddle and clicker:get_player_control().sneak then
+			if not self.driver and clicker:get_player_control().sneak then
 				return
 			elseif not self.driver and iname == "vlf_mobitems:saddle" and self:set_saddle(clicker) then
 				return
@@ -482,9 +481,9 @@ local donkey = table.merge(horse, {
 	spawn_in_group = 3,
 	spawn_in_group_min = 1,
 	animation = {
-		speed_normal = 25,
 		stand_start = 0, stand_end = 0,
 		walk_start = 0, walk_end = 40,
+		run_speed = 50
 	},
 	sounds = {
 		random = "mobs_mc_donkey_random",

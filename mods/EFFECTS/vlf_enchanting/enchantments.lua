@@ -94,7 +94,7 @@ vlf_enchanting.enchantments.depth_strider = {
 	anvil_book_factor = 2,
 }
 
-vlf_player.register_globalstep_slow(function(player, dtime)
+vlf_player.register_globalstep_slow(function(player)
 	if minetest.get_item_group(vlf_player.players[player].nodes.feet, "liquid") ~= 0 and vlf_enchanting.get_enchantment(player:get_inventory():get_stack("armor", 5), "depth_strider") then
 		local boots = player:get_inventory():get_stack("armor", 5)
 		local depth_strider = vlf_enchanting.get_enchantment(boots, "depth_strider")
@@ -152,7 +152,7 @@ vlf_enchanting.enchantments.fire_aspect = {
 	anvil_book_factor = 2,
 }
 
-minetest.register_on_punchplayer(function(player, hitter, time_from_last_punch, tool_capabilities, dir, damage)
+minetest.register_on_punchplayer(function(player, hitter)
 	if hitter and hitter:is_player() then
 		local wielditem = hitter:get_wielded_item()
 		if wielditem then
@@ -786,7 +786,7 @@ vlf_enchanting.enchantments.breach = {
 	disallow = {},
 	incompatible = { density = true, bane_of_arthropods = true, smite = true },
 	weight = 2,
-	description = S("Reduces target's armor effectiveness."),
+	description = S("Reduces target's armor entity_effectiveness."),
 	curse = false,
 	on_enchant = function() end,
 	requires_tool = false,

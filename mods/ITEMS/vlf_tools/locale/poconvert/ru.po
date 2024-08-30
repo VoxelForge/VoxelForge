@@ -13,6 +13,12 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: mtt_convert 0.1.0\n"
 
+msgid "Solid Blocks of Steel. These are only forged if those that are brave enough can defeat the trials that await them."
+msgstr ""
+
+msgid "Heavy Core"
+msgstr ""
+
 msgid "Pickaxes are mining tools to mine hard blocks, such as stone. A pickaxe can also be used as weapon, but it is rather inefficient."
 msgstr "Кирка это инструмент для добычи твёрдых блоков - камней и т. п. Кирка также может использоваться в качестве оружия, но не особо эффективного."
 
@@ -33,6 +39,9 @@ msgstr "Ножницы это инструмент для стрижки ове�
 
 msgid "To shear sheep or carve faceless pumpkins, use the “place” key on them. Faces can only be carved at the side of faceless pumpkins. Mining works as usual, but the drops are different for a few blocks."
 msgstr "Чтобы остричь овцу или вырезать тыкву, нажмите правую кнопку мыши на вашей цели. Лица могут быть вырезаны только по бокам тыквы. Добывание работает как обычно, но полученные предметы будут различаться для нескольких разных блоков."
+
+msgid "The mace is a slow melee weapon that deals incredible damage. “dig” key to use it. This weapon has a cooldown of 1.6 seconds, but if you fall the mace will deal more damage than if you are on the ground. The further you fall the more damage done. If you hit a mob or player then you will receive no fall damage, but beware. If you miss you will die. "
+msgstr ""
 
 msgid "Wooden Pickaxe"
 msgstr "Деревянная кирка"
@@ -108,4 +117,7 @@ msgstr "Незеритовый меч"
 
 msgid "Shears"
 msgstr "Ножницы"
+
+msgid "Mace"
+msgstr ""
 

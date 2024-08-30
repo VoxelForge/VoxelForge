@@ -22,3 +22,6 @@ msgstr "Основной эффект:"
 msgid "Inventory:"
 msgstr "Инвентарь:"
 
+msgid "Beacon"
+msgstr ""
+

@@ -144,7 +144,7 @@ function vlf_doors:register_trapdoor(name, def)
 			fixed = {
 			{-8/16, -8/16, -8/16, 8/16, -5/16, 8/16},},
 		},
-		mesecons = {effector = {
+		mesecons = {entity_effector = {
 			action_on = (function(pos, node)
 				punch(pos)
 			end),
@@ -226,7 +226,7 @@ function vlf_doors:register_trapdoor(name, def)
 			fixed = {-0.5, -0.5, 5/16, 0.5, 0.5, 0.5}
 		},
 		on_rightclick = on_rightclick,
-		mesecons = {effector = {
+		mesecons = {entity_effector = {
 			action_off = (function(pos, node)
 				punch(pos)
 			end),

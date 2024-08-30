@@ -14,10 +14,10 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "<effect> <duration> [<factor>]"
-msgstr ""
+msgstr "<effetto> <durata> [<fattore>]"
 
 msgid "Add a status effect to yourself. Arguments: <effect>: name of status effect, e.g. poison. <duration>: duration in seconds. <factor>: effect strength multiplier (1 = 100%)"
-msgstr ""
+msgstr "Aggiungi un effetto di stato a te stesso. Argomenti: <effetto>: nome dell'effetto di stato, ad es. veleno. <durata>: durata in secondi. <fattore>: moltiplicatore della forza dell'effetto (1 = 100%)"
 
 msgid "Missing effect parameter!"
 msgstr ""

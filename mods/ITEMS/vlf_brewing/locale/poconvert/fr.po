@@ -32,11 +32,11 @@ msgid "When you have found a good combination, the brewing will commence automat
 msgstr "Lorsque vous avez trouvé une bonne combinaison, la distillation commencera automatiquement et de la vapeur commencera à apparaître, consommant le carburant et l'ingrédient à distiller. Les potions seront bientôt prêtes."
 
 msgid "Different combinations of brewing materials and liquids will give different results. Try to experiment!"
-msgstr "Différentes combinaisons d'ingrédients et de liquides donneront des résultats différents. Essayez d'expérimenter!"
+msgstr "Différentes combinaisons d'ingrédients et de liquides donneront des résultats différents. Essayez d'expérimenter !"
 
 msgid "Brew Potions"
 msgstr "Potions"
 
 msgid "The stand allows you to brew potions!"
-msgstr "L'alambic permet de produire des potions!"
+msgstr "L'alambic permet de produire des potions !"
 

@@ -93,9 +93,8 @@ vlf_mobs.register_mob("mobs_mc:guardian", {
 		looting = "rare",
 		looting_factor = 0.0025,},
 	},
-	fly = true,
+	swims = true,
 	makes_footstep_sound = false,
-	fly_in = { "vlf_core:water_source", "vlfx_core:river_water_source" },
 	jump = false,
 })
 

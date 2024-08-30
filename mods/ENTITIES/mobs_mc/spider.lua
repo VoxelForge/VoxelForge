@@ -88,9 +88,9 @@ local spider = {
 	run_velocity = 1.45, -- (was 2.4) a bit slower, they arent much different from running skeletons
 	jump = true,
 	jump_height = 4,
-	view_range = 16,
 	always_climb = true,
 	fear_height = 0,
+	view_range = 16,
 	floats = 1,
 	drops = {
 		{name = "vlf_mobitems:string", chance = 1, min = 0, max = 2, looting = "common"},
@@ -140,9 +140,9 @@ cave_spider.run_velocity = 1.3
 cave_spider.animation.walk_speed = 40
 cave_spider.sounds = table.copy(spider.sounds)
 cave_spider.sounds.base_pitch = 1.25
-cave_spider.dealt_effect = {
+cave_spider.dealt_entity_effect = {
 	name = "poison",
-	level = 2.5,
+	level = 2,
 	dur = 7,
 }
 vlf_mobs.register_mob("mobs_mc:cave_spider", cave_spider)

@@ -1,4 +1,4 @@
-# textdomain: vlf_bows
+# textdomain: mcl_bows
 Arrow=
 Ammunition=
 Damage from bow: 1-10=

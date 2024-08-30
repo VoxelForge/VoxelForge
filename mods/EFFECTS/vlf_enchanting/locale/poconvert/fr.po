@@ -59,7 +59,7 @@ msgid "Fortune"
 msgstr "Fortune"
 
 msgid "Increases certain block drops."
-msgstr "Multiplie les items droppés"
+msgstr "Augmente les ressources obtenues par le minage."
 
 msgid "Frost Walker"
 msgstr "Semelles givrantes"
@@ -185,7 +185,7 @@ msgid "Sweeping Edge"
 msgstr "Affilage"
 
 msgid "Increases sweeping attack damage."
-msgstr "Augmente les dégâts de l'épée"
+msgstr "Augmente les dégâts de balayage."
 
 msgid "Unbreaking"
 msgstr "Solidité"
@@ -193,17 +193,38 @@ msgstr "Solidité"
 msgid "Increases item durability."
 msgstr "Augmente la durabilité des objets."
 
+msgid "Density"
+msgstr ""
+
+msgid "Increases mace damage when falling."
+msgstr ""
+
+msgid "Breach"
+msgstr ""
+
+msgid "Reduces target's armor effectiveness."
+msgstr ""
+
+msgid "Wind Burst"
+msgstr ""
+
+msgid "Emits a burst of wind from a mace smash attack."
+msgstr ""
+
+msgid "Unknown Enchantment"
+msgstr ""
+
 msgid "Inventory"
 msgstr "Inventaire"
 
 msgid "@1 Lapis Lazuli"
-msgstr "@1 Lapis Lazuli"
+msgstr "@1 Lapis-lazuli"
 
 msgid "@1 Enchantment Levels"
 msgstr "@1 Niveaux d'enchantement"
 
 msgid "Level requirement: @1"
-msgstr "Niveau requis: @1"
+msgstr "Niveau requis : @1"
 
 msgid "Enchant an item"
 msgstr "Enchanter un objet"
@@ -212,7 +233,7 @@ msgid "<player> <enchantment> [<level>]"
 msgstr "<joueur> <enchantement> [<niveau>]"
 
 msgid "Usage: /enchant <player> <enchantment> [<level>]"
-msgstr "Usage: /enchant <joueur> <enchantement> [<niveau>]"
+msgstr "Usage : /enchant <joueur> <enchantement> [<niveau>]"
 
 msgid "Player '@1' cannot be found."
 msgstr "Le joueur '@1' est introuvable."
@@ -245,7 +266,7 @@ msgid "Forcefully enchant an item"
 msgstr "Enchantement forcé d'un objet"
 
 msgid "Usage: /forceenchant <player> <enchantment> [<level>]"
-msgstr "Usage: /forceenchant <joueur> <enchantrment> [<niveau>]"
+msgstr "Usage : /forceenchant <joueur> <enchantrment> [<niveau>]"
 
 msgid "The target item is not enchantable."
 msgstr "L'objet cible n'est pas enchantable."

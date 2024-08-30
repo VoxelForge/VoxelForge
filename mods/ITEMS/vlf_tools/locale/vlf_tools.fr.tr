@@ -1,4 +1,6 @@
 # textdomain: vlf_tools
+Solid Blocks of Steel. These are only forged if those that are brave enough can defeat the trials that await them.=Des blocs d'acier solides. Ceux-ci ne sont forgés que si les plus courageux parviennent à surmonter les épreuves qui les attendent.
+Heavy Core=Noyau lourd
 Pickaxes are mining tools to mine hard blocks, such as stone. A pickaxe can also be used as weapon, but it is rather inefficient.=Les pioches sont des outils d'extraction pour extraire des blocs durs, comme la pierre. Une pioche peut également être utilisée comme arme, mais elle est plutôt inefficace.
 An axe is your tool of choice to cut down trees, wood-based blocks and other blocks. Axes deal a lot of damage as well, but they are rather slow.=Une hache est votre outil de choix pour abattre des arbres, des blocs à base de bois et d'autres blocs. Les haches infligent également beaucoup de dégâts, mais elles sont plutôt lentes.
 Swords are great in melee combat, as they are fast, deal high damage and can endure countless battles. Swords can also be used to cut down a few particular blocks, such as cobwebs.=Les épées sont excellentes en combat de mêlée, car elles sont rapides, infligent des dégâts élevés et peuvent supporter d'innombrables batailles. Les épées peuvent également être utilisées pour couper quelques blocs particuliers, tels que les toiles d'araignées.
@@ -6,6 +8,7 @@ Shovels are tools for digging coarse blocks, such as dirt, sand and gravel. They
 To turn a grass block into a grass path, hold the shovel in your hand, then use (rightclick) the top or side of a grass block. This only works when there's air above the grass block.=Pour transformer un bloc d'herbe en chemin de terre, tenez la pelle dans votre main, puis utilisez (clic droit) le haut ou le côté d'un bloc d'herbe. Cela ne fonctionne que lorsqu'il y a de l'air au-dessus du bloc d'herbe.
 Shears are tools to shear sheep and to mine a few block types. Shears are a special mining tool and can be used to obtain the original item from grass, leaves and similar blocks that require cutting.=Les cisailles sont des outils pour tondre les moutons et pour extraire quelques types de blocs. Les cisailles sont un outil d'extraction spécial et peuvent être utilisées pour obtenir l'élément d'origine à partir d'herbe, de feuilles et de blocs similaires qui nécessitent une coupe.
 To shear sheep or carve faceless pumpkins, use the “place” key on them. Faces can only be carved at the side of faceless pumpkins. Mining works as usual, but the drops are different for a few blocks.=Pour tondre des moutons ou tailler des citrouilles sans visage, utilisez la touche "placer" dessus. Les visages ne peuvent être sculptés que sur le côté des citrouilles sans visage. L'exploitation minière fonctionne comme d'habitude, mais les éléments obtenus sont différentes pour quelques blocs.
+The mace is a slow melee weapon that deals incredible damage. “dig” key to use it. This weapon has a cooldown of 1.6 seconds, but if you fall the mace will deal more damage than if you are on the ground. The further you fall the more damage done. If you hit a mob or player then you will receive no fall damage, but beware. If you miss you will die. =La masse est une arme de mêlée lente qui inflige d'incroyables dégâts. Pour l'utiliser, il faut utiliser la touche « creuser ». Cette arme a un temps de recharge de 1,6 seconde, mais si vous tombez, la masse infligera plus de dégâts que si vous êtes au sol. Plus vous tombez, plus les dégâts sont importants. Si vous touchez un mob ou un joueur, vous ne recevrez pas de dégâts de chute, mais attention. Si vous manquez votre cible, vous mourrez. 
 Wooden Pickaxe=Pioche en Bois
 Stone Pickaxe=Pioche en Pierre
 Iron Pickaxe=Pioche en Fer
@@ -31,3 +34,4 @@ Golden Sword=Épée en Or
 Diamond Sword=Épée en Diamant
 Netherite Sword=Épée en Netherite
 Shears=Cisailles
+Mace=Masse

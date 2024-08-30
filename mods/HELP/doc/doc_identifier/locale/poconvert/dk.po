@@ -13,6 +13,12 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: mtt_convert 0.1.0\n"
 
+msgid "No help entry for this item could be found."
+msgstr "Der kunne ikke findes nogen hjælpeindtastning til denne genstand."
+
+msgid "No help entry for this block could be found."
+msgstr "Der kunne ikke findes nogen hjælpeindtastning til denne blok."
+
 msgid "Error: This node, item or object is undefined. This is always an error."
 msgstr "Fejl: Dette knudepunkt, genstand eller objekt er ikke defineret."
 
@@ -34,33 +40,27 @@ msgstr "Det ser ud til at stamme fra moddet \"@1\" som er deaktiveret!"
 msgid "Its identifier is “@1”."
 msgstr "Dets identificering er \"@1\"."
 
-msgid "Lookup Tool"
-msgstr "Opslagsværktøj"
-
-msgid "No help entry for this block could be found."
-msgstr "Der kunne ikke findes nogen hjælpeindtastning til denne blok."
-
-msgid "No help entry for this item could be found."
-msgstr "Der kunne ikke findes nogen hjælpeindtastning til denne genstand."
+msgid "This block cannot be identified because the world has not materialized at this point yet. Try again in a few seconds."
+msgstr "Denne blok kan ikke identificeres fordi verdenen ikke har materialiseret sig endnu. Forsøg igen om et par sekunder."
 
 msgid "No help entry for this object could be found."
 msgstr "Der kunne ikke findes nogen hjælpeindtastning for stte objekt."
 
+msgid "This is a player."
+msgstr "Dette er en spiller."
+
 msgid "OK"
 msgstr "OK"
 
-msgid "Punch any block, item or other thing about you wish to learn more about. This will open up the appropriate help entry. The tool comes in two modes which are changed by using. In liquid mode, this tool points to liquids as well while in solid mode this is not the case."
-msgstr "Slå en hvilkensomhelst blok, genstand eller andre ting som du ønsker at vide mere om. Dette vil åbne den relevante hjælpeindtastning. Værktøjet findes i to tilstande som skiftes ved brug. I flydende tilstand vil værktøjet  også peje på væsker, mens dette ikke er tilfældet i fast tilstand."
+msgid "Lookup Tool"
+msgstr "Opslagsværktøj"
 
-msgid "This block cannot be identified because the world has not materialized at this point yet. Try again in a few seconds."
-msgstr "Denne blok kan ikke identificeres fordi verdenen ikke har materialiseret sig endnu. Forsøg igen om et par sekunder."
-
-msgid "This is a player."
-msgstr "Dette er en spiller."
+msgid "Show help for pointed thing"
+msgstr "Vis hjælp til tingen"
 
 msgid "This useful little helper can be used to quickly learn more about about one's closer environment. It identifies and analyzes blocks, items and other things and it shows extensive information about the thing on which it is used."
 msgstr "Denne smarte lille hjælper kan bruges til hurtigt at lære mere om omgivelserne. Den identificerer og analyserer blokke, genstande og andre ting, og den viser udtømmende informationer om den ting den bliver brugt på."
 
-msgid "Show help for pointed thing"
-msgstr "Vis hjælp til tingen"
+msgid "Punch any block, item or other thing about you wish to learn more about. This will open up the appropriate help entry. The tool comes in two modes which are changed by using. In liquid mode, this tool points to liquids as well while in solid mode this is not the case."
+msgstr "Slå en hvilkensomhelst blok, genstand eller andre ting som du ønsker at vide mere om. Dette vil åbne den relevante hjælpeindtastning. Værktøjet findes i to tilstande som skiftes ved brug. I flydende tilstand vil værktøjet  også peje på væsker, mens dette ikke er tilfældet i fast tilstand."
 

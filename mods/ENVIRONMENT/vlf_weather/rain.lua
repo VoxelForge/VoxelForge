@@ -100,7 +100,7 @@ function vlf_weather.rain.add_player(player)
 	end
 end
 
--- remove player from player list effected by rain.
+-- remove player from player list entity_effected by rain.
 -- be sure to remove sound before removing player otherwise soundhandler reference will be lost.
 function vlf_weather.rain.remove_player(player)
 	local player_meta = vlf_weather.players[player:get_player_name()]

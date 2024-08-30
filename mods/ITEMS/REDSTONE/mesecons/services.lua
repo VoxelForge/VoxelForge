@@ -26,12 +26,12 @@ function mesecon.on_placenode(pos, node)
 	end
 
 	-- Effectors: Send changesignal and activate or deactivate
-	if mesecon.is_effector(node.name) then
+	if mesecon.is_entity_effector(node.name) then
 		local powered_rules = {}
 		local unpowered_rules = {}
 
 		-- for each input rule, check if powered
-		for _, r in ipairs(mesecon.effector_get_rules(node)) do
+		for _, r in ipairs(mesecon.entity_effector_get_rules(node)) do
 			local powered = mesecon.is_powered(pos, r)
 			if powered then table.insert(powered_rules, r)
 			else table.insert(unpowered_rules, r) end
@@ -61,7 +61,7 @@ function mesecon.on_placenode(pos, node)
 				if mesecon.is_conductor_off(nnode) then
 					mesecon.receptor_on(npos, mesecon.conductor_get_rules(nnode))
 				-- Redstone torch is a special case and must be ignored
-				elseif mesecon.is_effector_on(nnode.name) and minetest.get_item_group(nnode.name, "redstone_torch") == 0 then
+				elseif mesecon.is_entity_effector_on(nnode.name) and minetest.get_item_group(nnode.name, "redstone_torch") == 0 then
 					mesecon.changesignal(npos, nnode, neighbors[n].link, mesecon.state.on, 1)
 					mesecon.activate(npos, nnode, neighbors[n].link, 1)
 				end
@@ -85,8 +85,8 @@ function mesecon.on_dignode(pos, node)
 			local nnode = minetest.get_node(npos)
 			if mesecon.is_conductor_on(nnode) then
 				mesecon.receptor_off(npos, mesecon.conductor_get_rules(nnode))
-			-- Disable neighbor effectors unless they are in a special ignore group
-			elseif mesecon.is_effector_on(nnode.name) and mesecon.is_powered(npos) == false and minetest.get_item_group(nnode.name, "mesecon_ignore_opaque_dig") == 0 then
+			-- Disable neighbor entity_effectors unless they are in a special ignore group
+			elseif mesecon.is_entity_effector_on(nnode.name) and mesecon.is_powered(npos) == false and minetest.get_item_group(nnode.name, "mesecon_ignore_opaque_dig") == 0 then
 				mesecon.changesignal(npos, nnode, nlink, mesecon.state.off, 1)
 				mesecon.deactivate(npos, nnode, nlink, 1)
 			end

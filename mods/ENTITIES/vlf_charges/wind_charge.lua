@@ -30,12 +30,12 @@ register_charge("wind_charge", "Wind Charge", {
 				end
 				if node.name == "vlf_end:chorus_flower" then
 					minetest.dig_node(pos)
-					vlf_charges.chorus_flower_effects(pos, radius)
+					vlf_charges.chorus_flower_entity_effects(pos, radius)
 				end
 				if node.name == "vlf_end:chorus_flower_dead" then
 					minetest.swap_node(pos, {name = "air"})
 					minetest.add_item(pos, {name = "vlf_end:chorus_flower"})
-					vlf_charges.chorus_flower_effects(pos, radius)
+					vlf_charges.chorus_flower_entity_effects(pos, radius)
 				end
 				if node.name == "vlf_pottery_sherds:pot" then
 					minetest.swap_node(pos, {name = "air"})
@@ -43,7 +43,7 @@ register_charge("wind_charge", "Wind Charge", {
 					minetest.add_item(pos, {name = "vlf_core:brick"})
 					minetest.add_item(pos, {name = "vlf_core:brick"})
 					minetest.add_item(pos, {name = "vlf_core:brick"})
-					vlf_charges.pot_effects(pos, radius)
+					vlf_charges.pot_entity_effects(pos, radius)
 				end
 	end,
 	hit_player_alt = function(self, pos)

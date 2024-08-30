@@ -1,4 +1,6 @@
 # textdomain: vlf_tools
+Solid Blocks of Steel. These are only forged if those that are brave enough can defeat the trials that await them.=
+Heavy Core=
 Pickaxes are mining tools to mine hard blocks, such as stone. A pickaxe can also be used as weapon, but it is rather inefficient.=Кирка это инструмент для добычи твёрдых блоков - камней и т. п. Кирка также может использоваться в качестве оружия, но не особо эффективного.
 An axe is your tool of choice to cut down trees, wood-based blocks and other blocks. Axes deal a lot of damage as well, but they are rather slow.=Топор это лучший выбор для рубки деревьев, деревянных и подобных блоков. Топор также причиняет высокий урон, но бьёт довольно медленно.
 Swords are great in melee combat, as they are fast, deal high damage and can endure countless battles. Swords can also be used to cut down a few particular blocks, such as cobwebs.=Меч это оружие ближнего боя, он быстр, наносит высокий урон и может выдержать множество сражений. Меч также можно использовать для разрубания специфических блоков, например, паутины.
@@ -6,6 +8,7 @@ Shovels are tools for digging coarse blocks, such as dirt, sand and gravel. They
 To turn a grass block into a grass path, hold the shovel in your hand, then use (rightclick) the top or side of a grass block. This only works when there's air above the grass block.=Чтобы превратить блок дёрна в тропинку, кликните правой кнопкой мыши по его верхней стороне, держа лопату в руке. Это сработает, только если над блоком травы есть воздух.
 Shears are tools to shear sheep and to mine a few block types. Shears are a special mining tool and can be used to obtain the original item from grass, leaves and similar blocks that require cutting.=Ножницы это инструмент для стрижки овец, но ими также можно добыть несколько блоков. Ножницы это специальный инструмент, которым можно добывать траву, листьея и тому подобные.
 To shear sheep or carve faceless pumpkins, use the “place” key on them. Faces can only be carved at the side of faceless pumpkins. Mining works as usual, but the drops are different for a few blocks.=Чтобы остричь овцу или вырезать тыкву, нажмите правую кнопку мыши на вашей цели. Лица могут быть вырезаны только по бокам тыквы. Добывание работает как обычно, но полученные предметы будут различаться для нескольких разных блоков.
+The mace is a slow melee weapon that deals incredible damage. “dig” key to use it. This weapon has a cooldown of 1.6 seconds, but if you fall the mace will deal more damage than if you are on the ground. The further you fall the more damage done. If you hit a mob or player then you will receive no fall damage, but beware. If you miss you will die. =
 Wooden Pickaxe=Деревянная кирка
 Stone Pickaxe=Каменная кирка
 Iron Pickaxe=Железная кирка
@@ -31,3 +34,4 @@ Golden Sword=Золотой меч
 Diamond Sword=Алмазный меч
 Netherite Sword=Незеритовый меч
 Shears=Ножницы
+Mace=

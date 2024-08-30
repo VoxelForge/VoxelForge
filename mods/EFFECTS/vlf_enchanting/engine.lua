@@ -39,7 +39,7 @@ function vlf_enchanting.load_enchantments(itemstack, enchantments)
 				enchantment_def.on_enchant(itemstack, level)
 			end
 		end
-		vlf_enchanting.update_groupcaps(itemstack)
+		vlf_enchanting.update_groupcaps(itemstack, false)
 	end
 	tt.reload_itemstack_description(itemstack)
 end
@@ -104,7 +104,7 @@ function vlf_enchanting.get_enchantability(itemname)
 	return minetest.get_item_group(itemname, "enchantability")
 end
 
-function vlf_enchanting.item_supports_enchantment(itemname, enchantment, early)
+function vlf_enchanting.item_supports_enchantment(itemname, enchantment)
 	if not vlf_enchanting.is_enchantable(itemname) then
 		return false
 	end
@@ -287,19 +287,19 @@ local function get_after_use_callback(itemdef)
 		-- one too.
 		return function(itemstack, user, node, digparams)
 			itemdef.after_use(itemstack, user, node, digparams)
-			vlf_enchanting.update_groupcaps(itemstack)
+			vlf_enchanting.update_groupcaps(itemstack, false)
 		end
 	end
 
 	-- If the tool does not have after_use, add wear to the tool as if no
 	-- after_use was registered.
-	return function(itemstack, user, node, digparams)
+	return function(itemstack, user, _, digparams)
 		if not minetest.is_creative_enabled(user:get_player_name()) then
 			itemstack:add_wear(digparams.wear)
 		end
 
 		--local enchantments = vlf_enchanting.get_enchantments(itemstack)
-		vlf_enchanting.update_groupcaps(itemstack)
+		vlf_enchanting.update_groupcaps(itemstack, false)
 	end
 end
 
@@ -361,7 +361,7 @@ function vlf_enchanting.get_random_enchantment(itemstack, treasure, weighted, ex
 		if can_enchant and (primary or treasure) and (not exclude or table.indexof(exclude, enchantment) == -1) then
 			local weight = weighted and enchantment_def.weight or 1
 
-			for i = 1, weight do
+			for _ = 1, weight do
 				table.insert(possible, enchantment)
 			end
 		end
@@ -462,7 +462,7 @@ end
 function vlf_enchanting.get_random_glyph_row()
 	local glyphs = ""
 	local x = 1.3
-	for i = 1, 9 do
+	for _ = 1, 9 do
 		glyphs = glyphs ..
 			"image[" .. x .. ",0.1;0.5,0.5;vlf_enchanting_glyph_" .. math.random(18) .. ".png^[colorize:#675D49:255]"
 		x = x + 0.6
@@ -482,7 +482,7 @@ function vlf_enchanting.generate_random_table_slots(itemstack, num_bookshelves)
 		local slot = false
 		local enchantments, description = vlf_enchanting.generate_random_enchantments(itemstack, enchantment_level)
 		if enchantments then
-			slot = {
+			slot = { ---@diagnostic disable-line: cast-local-type
 				enchantments = enchantments,
 				description = description,
 				glyphs = vlf_enchanting.get_random_glyph_row(),
@@ -671,7 +671,7 @@ function vlf_enchanting.is_enchanting_inventory_action(action, inventory, invent
 	end
 end
 
-function vlf_enchanting.allow_inventory_action(player, action, inventory, inventory_info)
+function vlf_enchanting.allow_inventory_action(_, action, inventory, inventory_info)
 	local is_enchanting_action, do_limit = vlf_enchanting.is_enchanting_inventory_action(action, inventory,
 		inventory_info)
 	if is_enchanting_action and do_limit then

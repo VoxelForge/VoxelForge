@@ -32,7 +32,7 @@ msgid "Extremely fast"
 msgstr "Extremadamente rápido"
 
 msgid "Instantaneous"
-msgstr ""
+msgstr "Instantáneo"
 
 msgid "Unlimited uses"
 msgstr "Usos ilimitados"
@@ -56,10 +56,10 @@ msgid "Full punch interval: @1s"
 msgstr "Intervalo de golpe completo: @1s"
 
 msgid "Food item"
-msgstr ""
+msgstr "Alimento"
 
 msgid "+@1 food points"
-msgstr ""
+msgstr "+@1 puntos de hambre"
 
 msgid "Contact damage: @1 per second"
 msgstr "Daño por contacto: @1 por segundo"

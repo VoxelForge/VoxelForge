@@ -95,7 +95,7 @@ local dropperdef = {
 	end,
 	_vlf_blast_resistance = 3.5,
 	_vlf_hardness = 3.5,
-	mesecons = { effector = {
+	mesecons = { entity_effector = {
 		-- Drop random item when triggered
 		action_on = function(pos, node)
 			local meta = minetest.get_meta(pos)

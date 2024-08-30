@@ -277,7 +277,7 @@ for _, mode in pairs{"comp", "sub"} do
 					state = state,
 					rules = comparator_get_output_rules,
 				},
-				effector = {
+				entity_effector = {
 					rules = comparator_get_input_rules,
 					action_change = update_self,
 				}

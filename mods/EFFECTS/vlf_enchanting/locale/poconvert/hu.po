@@ -193,8 +193,29 @@ msgstr ""
 msgid "Increases item durability."
 msgstr ""
 
-msgid "Inventory"
+msgid "Density"
 msgstr ""
+
+msgid "Increases mace damage when falling."
+msgstr ""
+
+msgid "Breach"
+msgstr ""
+
+msgid "Reduces target's armor effectiveness."
+msgstr ""
+
+msgid "Wind Burst"
+msgstr ""
+
+msgid "Emits a burst of wind from a mace smash attack."
+msgstr ""
+
+msgid "Unknown Enchantment"
+msgstr ""
+
+msgid "Inventory"
+msgstr "Eszköztár"
 
 msgid "@1 Lapis Lazuli"
 msgstr ""

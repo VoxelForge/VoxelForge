@@ -1,4 +1,4 @@
-# textdomain: vlf_tt
+# textdomain: mcl_tt
 Painfully slow=
 Very slow=
 Slow=

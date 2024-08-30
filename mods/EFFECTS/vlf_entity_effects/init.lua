@@ -5,7 +5,8 @@ local S = minetest.get_translator(modname)
 vlf_entity_effects = {}
 
 -- duration effects of redstone are a factor of 8/3
--- duration effects of glowstone are a time factor of 1/2
+-- duration effects of glowstone are a time factor of 1/2, expect with
+-- slowness
 -- splash entity_effect duration effects are reduced by a factor of 3/4
 
 vlf_entity_effects.POTENT_FACTOR = 2
@@ -198,7 +199,7 @@ local function set_node_empty_bottle(itemstack, placer, pointed_thing, newitemst
 end
 
 -- used for water bottles and river water bottles
-local function dispense_water_bottle(stack, pos, droppos)
+local function dispense_water_bottle(stack, _, droppos)
 	local node = minetest.get_node(droppos)
 	if node.name == "vlf_core:dirt" or node.name == "vlf_core:coarse_dirt" then
 		-- convert dirt/coarse dirt to mud
@@ -275,36 +276,23 @@ minetest.register_craftitem("vlf_entity_effects:river_water", {
 
 })
 
--- Hurt mobs
-local function water_splash(obj, damage)
-	if not obj then
-		return
-	end
-	if not damage or (damage > 0 and damage < 1) then
-		damage = 1
-	end
-	-- Damage mobs that are vulnerable to water
-	local lua = obj:get_luaentity()
-	if lua and lua.is_mob then
-		obj:punch(obj, 1.0, {
-			full_punch_interval = 1.0,
-			damage_groups = {water_vulnerable=damage},
-		}, nil)
-	end
-end
-
 vlf_entity_effects.register_splash("water", S("Splash Water Bottle"), "#0022FF", {
 	tt=S("Extinguishes fire and hurts some mobs"),
 	longdesc=S("A throwable water bottle that will shatter on impact, where it extinguishes nearby fire and hurts mobs that are vulnerable to water."),
 	no_effect=true,
-	entity_effect_fun=water_splash,
+	base_entity_effect = "vlf_entity_effects:water",
+	stack_max = 1,
+	on_splash = function (pos, _)
+	    vlf_entity_effects._water_effect (pos, 4)
+	end,
 	effect=1
 })
 vlf_entity_effects.register_lingering("water", S("Lingering Water Bottle"), "#0022FF", {
 	tt=S("Extinguishes fire and hurts some mobs"),
 	longdesc=S("A throwable water bottle that will shatter on impact, where it creates a cloud of water vapor that lingers on the ground for a while. This cloud extinguishes fire and hurts mobs that are vulnerable to water."),
+	base_entity_effect = "vlf_entity_effects:water",
+	stack_max = 1,
 	no_effect=true,
-	entity_effect_fun=water_splash,
 	effect=1
 })
 
@@ -329,20 +317,57 @@ minetest.register_craft({
 local output_table = { }
 
 -- API
--- registers a entity_effect that can be combined with multiple ingredients for different outcomes
--- out_table contains the recipes for those outcomes
+-- registers a entity_effect that can be combined with multiple ingredients
+-- for different outcomes out_table contains the recipes for those
+-- outcomes
 function vlf_entity_effects.register_ingredient_entity_effect(input, out_table)
-	if output_table[input] then
-		error("Attempt to register the same ingredient twice!")
-	end
-	if type(input) ~= "string" then
-		error("Invalid argument! input must be a string")
-	end
-	if type(out_table) ~= "table" then
-		error("Invalid argument! out_table must be a table")
-	end
-	output_table[input] = out_table
+    assert (not output_table[input],
+	    "Attempt to register the same ingredient twice!")
+    assert (type(input) == "string", "input must be a string")
+    assert (type(out_table) == "table", "out_table must be a table")
+    output_table[input] = out_table
 end
+
+local function entity_effect_has_splash (entity_effect)
+    return entity_effect == "vlf_entity_effects:water"
+	or (entity_effects[entity_effect] and entity_effects[entity_effect].has_splash)
+end
+
+local function entity_effect_has_lingering (entity_effect)
+    return entity_effect == "vlf_entity_effects:water"
+	or (entity_effects[entity_effect] and entity_effects[entity_effect].has_lingering)
+end
+
+local function complete_output_table (input, out_table, copy)
+    -- Generate entries for splash and lingering variants of `input'.
+    local tbl_splash = {}
+    local tbl_lingering = {}
+
+    if not entity_effect_has_splash (input)
+	and not entity_effect_has_lingering (input) then
+	return
+    end
+
+    for k, v in pairs (out_table) do
+	if entity_effect_has_splash (v) then
+	    tbl_splash[k] = v .. "_splash"
+	end
+
+	if entity_effect_has_lingering (v) then
+	    tbl_lingering[k] = v .. "_lingering"
+	end
+    end
+    copy[input .. "_lingering"] = tbl_lingering
+    copy[input .. "_splash"] = tbl_splash
+end
+
+minetest.register_on_mods_loaded (function ()
+	local copy = {}
+	for k, v in pairs (output_table) do
+	    complete_output_table (k, v, copy)
+	end
+	output_table = table.merge (output_table, copy)
+end)
 
 local water_table = {
 	["vlf_nether:nether_wart_item"] = "vlf_entity_effects:awkward",
@@ -355,21 +380,17 @@ local water_table = {
 	["vlf_mobitems:ghast_tear"] = "vlf_entity_effects:mundane",
 	["vlf_mobitems:spider_eye"] = "vlf_entity_effects:mundane",
 	["vlf_mobitems:rabbit_foot"] = "vlf_entity_effects:mundane",
+	["vlf_nether:glowstone_dust"] = "vlf_entity_effects:thick",
 	["vlf_mobitems:gunpowder"] = "vlf_entity_effects:water_splash"
 }
 -- API
 -- register a entity_effect recipe brewed from water
 function vlf_entity_effects.register_water_brew(ingr, entity_effect)
-	if water_table[ingr] then
-		error("Attempt to register the same ingredient twice!")
-	end
-	if type(ingr) ~= "string" then
-		error("Invalid argument! ingr must be a string")
-	end
-	if type(entity_effect) ~= "string" then
-		error("Invalid argument! entity_effect must be a string")
-	end
-	water_table[ingr] = entity_effect
+    assert (not water_table[ingr],
+	    "Attempt to register the same ingredient twice!")
+    assert (type(ingr) == "string", "ingr must be a string")
+    assert (type(entity_effect) == "string", "entity_effect must be a string")
+    water_table[ingr] = entity_effect
 end
 vlf_entity_effects.register_ingredient_entity_effect("vlf_entity_effects:river_water", water_table)
 vlf_entity_effects.register_ingredient_entity_effect("vlf_entity_effects:water", water_table)
@@ -384,33 +405,16 @@ local awkward_table = {
 	["vlf_mobitems:ghast_tear"] = "vlf_entity_effects:regeneration",
 	["vlf_mobitems:spider_eye"] = "vlf_entity_effects:poison",
 	["vlf_mobitems:rabbit_foot"] = "vlf_entity_effects:leaping",
-
-	["vlf_core:stone"] = "vlf_entity_effects:infestation",
-	["vlf_core:slimeblock"] = "vlf_entity_effects:oozing",
-	["vlf_core:cobweb"] = "vlf_entity_effects:weaving",
-
 	["vlf_mobitems:phantom_membrane"] = "vlf_entity_effects:slow_falling", -- TODO add phantom membranes
-	["vlf_core:apple_gold"] = "vlf_entity_effects:resistance",
-
-	-- TODO darkness - sculk?
-	-- TODO absorption - water element?
-	-- TODO turtle master - earth element?
-	-- TODO frost - frost element?
-	-- TODO haste - air element?
 }
 -- API
 -- register a entity_effect recipe brewed from awkward entity_effect
 function vlf_entity_effects.register_awkward_brew(ingr, entity_effect)
-	if awkward_table[ingr] then
-		error("Attempt to register the same ingredient twice!")
-	end
-	if type(ingr) ~= "string" then
-		error("Invalid argument! ingr must be a string")
-	end
-	if type(entity_effect) ~= "string" then
-		error("Invalid argument! entity_effect must be a string")
-	end
-	awkward_table[ingr] = entity_effect
+    assert (not water_table[ingr],
+	    "Attempt to register the same ingredient twice!")
+    assert (type(ingr) == "string", "ingr must be a string")
+    assert (type(entity_effect) == "string", "entity_effect must be a string")
+    awkward_table[ingr] = entity_effect
 end
 vlf_entity_effects.register_ingredient_entity_effect("vlf_entity_effects:awkward", awkward_table)
 
@@ -420,38 +424,25 @@ local mundane_table = {
 -- API
 -- register a entity_effect recipe brewed from mundane entity_effect
 function vlf_entity_effects.register_mundane_brew(ingr, entity_effect)
-	if mundane_table[ingr] then
-		error("Attempt to register the same ingredient twice!")
-	end
-	if type(ingr) ~= "string" then
-		error("Invalid argument! ingr must be a string")
-	end
-	if type(entity_effect) ~= "string" then
-		error("Invalid argument! entity_effect must be a string")
-	end
-	mundane_table[ingr] = entity_effect
+    assert (not mundane_table[ingr],
+	    "Attempt to register the same ingredient twice!")
+    assert (type(ingr) == "string", "ingr must be a string")
+    assert (type(entity_effect) == "string", "entity_effect must be a string")
+    mundane_table[ingr] = entity_effect
 end
 vlf_entity_effects.register_ingredient_entity_effect("vlf_entity_effects:mundane", mundane_table)
 
 local thick_table = {
-	["vlf_crimson:shroomlight"] = "vlf_entity_effects:glowing",
-	["vlf_mobitems:nether_star"] = "vlf_entity_effects:ominous",
-	["vlf_mobitems:ink_sac"] = "vlf_entity_effects:blindness",
-	["vlf_farming:carrot_item_gold"] = "vlf_entity_effects:saturation",
+    -- Nothing here but crickets...
 }
 -- API
 -- register a entity_effect recipe brewed from thick entity_effect
 function vlf_entity_effects.register_thick_brew(ingr, entity_effect)
-	if thick_table[ingr] then
-		error("Attempt to register the same ingredient twice!")
-	end
-	if type(ingr) ~= "string" then
-		error("Invalid argument! ingr must be a string")
-	end
-	if type(entity_effect) ~= "string" then
-		error("Invalid argument! entity_effect must be a string")
-	end
-	thick_table[ingr] = entity_effect
+    assert (not awkward_table[ingr],
+	    "Attempt to register the same ingredient twice!")
+    assert (type(ingr) == "string", "ingr must be a string")
+    assert (type(entity_effect) == "string", "entity_effect must be a string")
+    thick_table[ingr] = entity_effect
 end
 vlf_entity_effects.register_ingredient_entity_effect("vlf_entity_effects:thick", thick_table)
 
@@ -462,16 +453,11 @@ local mod_table = { }
 -- registers a brewing recipe altering the entity_effect using a table
 -- this is supposed to substitute one item with another
 function vlf_entity_effects.register_table_modifier(ingr, modifier)
-	if mod_table[ingr] then
-		error("Attempt to register the same ingredient twice!")
-	end
-	if type(ingr) ~= "string" then
-		error("Invalid argument! ingr must be a string")
-	end
-	if type(modifier) ~= "table" then
-		error("Invalid argument! modifier must be a table")
-	end
-	mod_table[ingr] = modifier
+    assert (not mod_table[ingr],
+	    "Attempt to register the same ingredient twice!")
+    assert (type(ingr) == "string", "ingr must be a string")
+    assert (type(modifier) == "table", "modifier must be a table")
+    mod_table[ingr] = modifier
 end
 
 minetest.register_on_mods_loaded(function()
@@ -486,25 +472,20 @@ minetest.register_on_mods_loaded(function()
 end)
 
 local inversion_table = {
-	-- Effect Bottle Table.
 	["vlf_entity_effects:healing"] = "vlf_entity_effects:harming",
 	["vlf_entity_effects:swiftness"] = "vlf_entity_effects:slowness",
 	["vlf_entity_effects:leaping"] = "vlf_entity_effects:slowness",
 	["vlf_entity_effects:night_vision"] = "vlf_entity_effects:invisibility",
 	["vlf_entity_effects:poison"] = "vlf_entity_effects:harming",
+	["vlf_entity_effects:luck"] = "vlf_entity_effects:bad_luck",
 }
 -- API
 function vlf_entity_effects.register_inversion_recipe(input, output)
-	if inversion_table[input] then
-		error("Attempt to register the same input twice!")
-	end
-	if type(input) ~= "string" then
-		error("Invalid argument! input must be a string")
-	end
-	if type(output) ~= "string" then
-		error("Invalid argument! output must be a string")
-	end
-	inversion_table[input] = output
+    assert (not inversion_table[input],
+	    "Attempt to register the same input twice!")
+    assert (type (input) == string, "input must be a string")
+    assert (type (output) == string, "output must be a string")
+    inversion_table[input] = output
 end
 local function fill_inversion_table() -- autofills with splash and lingering inversion recipes
 	local filling_table = { }
@@ -541,20 +522,17 @@ local meta_mod_table = { }
 -- registers a brewing recipe altering the entity_effect using a function
 -- this is supposed to be a recipe that changes metadata only
 function vlf_entity_effects.register_meta_modifier(ingr, mod_func)
-	if meta_mod_table[ingr] then
-		error("Attempt to register the same ingredient twice!")
-	end
-	if type(ingr) ~= "string" then
-		error("Invalid argument! ingr must be a string")
-	end
-	if type(mod_func) ~= "function" then
-		error("Invalid argument! mod_func must be a function")
-	end
-	meta_mod_table[ingr] = mod_func
+    assert (not meta_mod_table[ingr],
+	    "Attempt to register the same ingredient twice!")
+    assert (type (ingr) == "string", "ingr must be a string")
+    assert (type (mod_func) == "function", "mod_func must be a function")
+    meta_mod_table[ingr] = mod_func
 end
 
 local function extend_dur(entity_effectstack)
-	local def = entity_effects[entity_effectstack:get_name()]
+	local name = entity_effectstack:get_name ()
+	local item_def = minetest.registered_items[name]
+	local def = entity_effects[item_def._base_entity_effect or name]
 	if not def then return false end
 	if not def.has_plus then return false end -- bail out if can't be extended
 	local entity_effectstack = ItemStack(entity_effectstack)
@@ -574,7 +552,9 @@ end
 vlf_entity_effects.register_meta_modifier("mesecons:wire_00000000_off", extend_dur)
 
 local function enhance_pow(entity_effectstack)
-	local def = entity_effects[entity_effectstack:get_name()]
+	local name = entity_effectstack:get_name ()
+	local item_def = minetest.registered_items[name]
+	local def = entity_effects[item_def._base_entity_effect or name]
 	if not def then return false end
 	if not def.has_potent then return false end -- bail out if has no potent variant
 	local entity_effectstack = ItemStack(entity_effectstack)
@@ -593,23 +573,25 @@ local function enhance_pow(entity_effectstack)
 end
 vlf_entity_effects.register_meta_modifier("vlf_nether:glowstone_dust", enhance_pow)
 
-
 -- Find an alchemical recipe for given ingredient and entity_effect
 -- returns outcome
 function vlf_entity_effects.get_alchemy(ingr, pot)
-	local brew_selector = output_table[pot:get_name()]
+	local entity_effect = pot:get_name ()
+	local brew_selector = output_table[entity_effect]
 	if brew_selector and brew_selector[ingr] then
 		local meta = pot:get_meta():to_table()
-		local alchemy = ItemStack(brew_selector[ingr])
+		local name = brew_selector[ingr]
+		local alchemy = ItemStack(name)
 		local metaref = alchemy:get_meta()
 		metaref:from_table(meta)
+
 		tt.reload_itemstack_description(alchemy)
 		return alchemy
 	end
 
 	brew_selector = mod_table[ingr]
 	if brew_selector then
-		local brew = brew_selector[pot:get_name()]
+		local brew = brew_selector[entity_effect]
 		if brew then
 			local meta = pot:get_meta():to_table()
 			local alchemy = ItemStack(brew)
@@ -622,7 +604,10 @@ function vlf_entity_effects.get_alchemy(ingr, pot)
 
 	if meta_mod_table[ingr] then
 		local brew_func = meta_mod_table[ingr]
-		if brew_func then return brew_func(pot) end
+		local alchemy = brew_func (pot)
+		if brew_func then
+		    return alchemy
+		end
 	end
 
 	return false

@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Bane of Arthropods"
-msgstr ""
+msgstr "Flagello degli Artropodi"
 
 msgid "Increases damage and applies Slowness IV to arthropod mobs (spiders, cave spiders, silverfish and endermites)."
-msgstr ""
+msgstr "Aumenta il danno ed infligge Lentezza IV ai mob artropodi (ragni, ragni delle caverne, pesciolini d'argento ed endermiti)."
 
 msgid "Channeling"
-msgstr ""
+msgstr "Canalizzazione"
 
 msgid "Channels a bolt of lightning toward a target. Works only during thunderstorms and if target is unobstructed with opaque blocks."
 msgstr ""
@@ -193,8 +193,29 @@ msgstr ""
 msgid "Increases item durability."
 msgstr ""
 
-msgid "Inventory"
+msgid "Density"
 msgstr ""
+
+msgid "Increases mace damage when falling."
+msgstr ""
+
+msgid "Breach"
+msgstr ""
+
+msgid "Reduces target's armor effectiveness."
+msgstr ""
+
+msgid "Wind Burst"
+msgstr ""
+
+msgid "Emits a burst of wind from a mace smash attack."
+msgstr ""
+
+msgid "Unknown Enchantment"
+msgstr ""
+
+msgid "Inventory"
+msgstr "Inventario"
 
 msgid "@1 Lapis Lazuli"
 msgstr ""

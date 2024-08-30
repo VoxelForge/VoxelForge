@@ -17,19 +17,19 @@ msgid "<effect> <duration> [<factor>]"
 msgstr "<effet> <durée> [<facteur>]"
 
 msgid "Add a status effect to yourself. Arguments: <effect>: name of status effect, e.g. poison. <duration>: duration in seconds. <factor>: effect strength multiplier (1 = 100%)"
-msgstr ""
+msgstr "Ajoute un effet de statut à votre personne.Arguments : <effet> : nom de l'effet d'état, par exemple poison. <durée> : durée en secondes. <factor> : multiplicateur d'intensité de l'effet (1 = 100%)"
 
 msgid "Missing effect parameter!"
-msgstr "Paramètre d'effet manquant! "
+msgstr "Paramètre d'effet manquant !"
 
 msgid "Missing or invalid duration parameter!"
-msgstr "Paramètre durée manquant ou invalide!"
+msgstr "Paramètre durée manquant ou invalide !"
 
 msgid "Invalid factor parameter!"
-msgstr "Paramètre facteur invalide!"
+msgstr "Paramètre facteur invalide !"
 
 msgid "@1 is not an available status effect."
-msgstr "@1 n'est pas un effet disponible. "
+msgstr "@1 n'est pas un effet disponible."
 
 msgid "Fermented Spider Eye"
 msgstr "Oeil d'araignée fermenté"
@@ -77,7 +77,7 @@ msgid "Lingering Water Bottle"
 msgstr "Bouteille d'eau persistante"
 
 msgid "A throwable water bottle that will shatter on impact, where it creates a cloud of water vapor that lingers on the ground for a while. This cloud extinguishes fire and hurts mobs that are vulnerable to water."
-msgstr "Une bouteille d'eau jetable qui se brisera à l'impact, où elle crée un nuage de vapeur d'eau qui s'attarde au sol pendant un moment. Ce nuage éteint le feu et blesse les mobs vulnérables à l'eau. "
+msgstr "Une bouteille d'eau jetable qui se brisera à l'impact, où elle crée un nuage de vapeur d'eau qui s'attarde au sol pendant un moment. Ce nuage éteint le feu et blesse les mobs vulnérables à l'eau."
 
 msgid "Glistering Melon"
 msgstr "Melon étincelant"
@@ -86,22 +86,22 @@ msgid "This shiny melon is full of tiny gold nuggets and would be nice in an ite
 msgstr "Ce melon brillant est plein de minuscules pépites d'or et serait bien dans un cadre d'objet. Il n'est pas comestible et n'est utile à rien d'autre."
 
 msgid "Try different combinations to create potions."
-msgstr "Essayez différentes combinaisons pour créer des potions. "
+msgstr "Essayez différentes combinaisons pour créer des potions."
 
 msgid "No effect"
 msgstr "Aucun effet"
 
 msgid "A throwable potion that will shatter on impact, where it creates a magic cloud that lingers around for a while. Any player or mob inside the cloud will receive the potion's effect, possibly repeatedly."
-msgstr "Une potion jetable qui se brisera à l'impact, où elle crée un nuage magique qui persiste pendant un moment. Tout joueur ou mob à l'intérieur du nuage recevra l'effet de la potion, peut-être à plusieurs reprises. "
+msgstr "Une potion jetable qui se brisera à l'impact, où elle crée un nuage magique qui persiste pendant un moment. Tout joueur ou mob à l'intérieur du nuage recevra l'effet de la potion, peut-être à plusieurs reprises."
 
 msgid "Use the “Punch” key to throw it."
-msgstr "Utilisez la touche \"Frapper\" pour le lancer. "
+msgstr "Utilisez la touche \"Frapper\" pour le lancer."
 
 msgid "Use the “Place” key to drink it."
 msgstr "Utilisez la touche \"Utiliser\" pour le boire."
 
 msgid "Drinking a potion gives you a particular effect."
-msgstr "Boire une potion vous donne un effet particulier. "
+msgstr "Boire une potion vous donne un effet particulier."
 
 msgid "1 HP/@1s | @2"
 msgstr "1 HP/@1s | @2"
@@ -161,7 +161,7 @@ msgid "Awkward Lingering Potion"
 msgstr "Potion étrange persistante"
 
 msgid "Has an awkward taste and is used for brewing potions."
-msgstr "A un goût étrange et est utilisé pour préparer des potions. "
+msgstr "A un goût étrange et est utilisé pour préparer des potions."
 
 msgid "Mundane Potion"
 msgstr "Potion banale"
@@ -173,7 +173,7 @@ msgid "Mundane Lingering Potion"
 msgstr "Potion banale persistante"
 
 msgid "Has a terrible taste and is not useful for brewing potions."
-msgstr "A un goût terrible et n'est pas utile pour préparer des potions. "
+msgstr "A un goût terrible et n'est pas utile pour préparer des potions."
 
 msgid "Thick Potion"
 msgstr "Potion épaisse"
@@ -185,13 +185,13 @@ msgid "Thick Lingering Potion"
 msgstr "Potion épaisse persistante"
 
 msgid "Has a bitter taste and is not useful for brewing potions."
-msgstr "A un goût amer et n'est pas utile pour préparer des potions. "
+msgstr "A un goût amer et n'est pas utile pour préparer des potions."
 
 msgid "Dragon's Breath"
 msgstr "Souffle du dragon"
 
 msgid "This item is used in brewing and can be combined with splash potions to create lingering potions."
-msgstr "Cet objet est utilisé dans le brassage et peut être combiné avec des potions d'éclaboussures pour créer des potions persistantes. "
+msgstr "Cet objet est utilisé dans le brassage et peut être combiné avec des potions d'éclaboussures pour créer des potions persistantes."
 
 msgid "Healing"
 msgstr "Guérison"
@@ -203,7 +203,7 @@ msgid "+8 HP"
 msgstr "+8 HP"
 
 msgid "Instantly heals."
-msgstr "Guérit instantanément. "
+msgstr "Guérit instantanément."
 
 msgid "Harming"
 msgstr "Dégâts"
@@ -215,61 +215,61 @@ msgid "-12 HP"
 msgstr "-12 HP"
 
 msgid "Instantly deals damage."
-msgstr "Instantly deals damage."
+msgstr "Inflige instantanément des dégâts."
 
 msgid "Night Vision"
 msgstr "Vision Nocturne"
 
 msgid "Increases the perceived brightness of light under a dark sky."
-msgstr "Augmente la luminosité perçue de la lumière sous un ciel sombre. "
+msgstr "Augmente la luminosité perçue de la lumière sous un ciel sombre."
 
 msgid "Swiftness"
 msgstr "Rapidité"
 
 msgid "Increases walking speed."
-msgstr "Augmente la vitesse de marche. "
+msgstr "Augmente la vitesse de marche."
 
 msgid "Slowness"
 msgstr "Lenteur"
 
 msgid "Decreases walking speed."
-msgstr "Diminue la vitesse de marche. "
+msgstr "Diminue la vitesse de marche."
 
 msgid "Leaping"
 msgstr "Saut"
 
 msgid "Increases jump strength."
-msgstr "Augmente la force de saut. "
+msgstr "Augmente la force de saut."
 
 msgid "Withering"
-msgstr ""
+msgstr "Dépérissement"
 
 msgid "Applies the withering effect which deals damage at a regular interval and can kill."
-msgstr ""
+msgstr "Applique l'effet de flétrissement qui inflige des dégâts à intervalles réguliers et peut tuer."
 
 msgid "Poison"
 msgstr "Poison"
 
 msgid "Applies the poison effect which deals damage at a regular interval."
-msgstr "Applique l'effet de poison qui inflige des dégâts à intervalle régulier. "
+msgstr "Applique l'effet de poison qui inflige des dégâts à intervalle régulier."
 
 msgid "Regeneration"
 msgstr "Régénération"
 
 msgid "Regenerates health over time."
-msgstr "Régénère la santé au fil du temps. "
+msgstr "Régénère la santé au fil du temps."
 
 msgid "Invisibility"
 msgstr "Invisibilité"
 
 msgid "Grants invisibility."
-msgstr "Accorde l'invisibilité. "
+msgstr "Accorde l'invisibilité."
 
 msgid "Water Breathing"
 msgstr "Respiration Aquatique"
 
 msgid "Grants limitless breath underwater."
-msgstr "Donne une respiration illimitée sous l'eau. "
+msgstr "Donne une respiration illimitée sous l'eau."
 
 msgid "Fire Resistance"
 msgstr "Résistance au Feu"
@@ -293,7 +293,7 @@ msgid "Strength +"
 msgstr "Force +"
 
 msgid "A throwable potion that will shatter on impact, where it gives all nearby players and mobs a status effect."
-msgstr "Une potion jetable qui se brisera à l'impact, où elle donne à tous les joueurs et créatures proches un effet de statut. "
+msgstr "Une potion jetable qui se brisera à l'impact, où elle donne à tous les joueurs et créatures proches un effet de statut."
 
 msgid "This particular arrow is tipped and will give an effect when it hits a player or mob."
 msgstr "Cette flèche particulière est enchantée et donnera un effet lorsqu'elle touche un joueur ou un mob."

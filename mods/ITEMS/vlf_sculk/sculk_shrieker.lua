@@ -157,7 +157,7 @@ local function emit_particles_and_sound(pos, sound)
         glow = 14,
     })
 
-    -- Play the sound effect when particles emit
+    -- Play the sound entity_effect when particles emit
     if sound then
         minetest.sound_play(sound, {pos = pos})
     end

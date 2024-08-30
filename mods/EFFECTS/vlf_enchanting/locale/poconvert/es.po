@@ -41,7 +41,7 @@ msgid "Efficiency"
 msgstr "Eficiencia"
 
 msgid "Increases mining speed."
-msgstr "Incrementa la velocidad de picado."
+msgstr "Incrementa la velocidad de minado."
 
 msgid "Fire Aspect"
 msgstr "Aspecto Ígneo"
@@ -101,7 +101,7 @@ msgid "Luck of the Sea"
 msgstr "Suerte Marina"
 
 msgid "Increases rate of good loot (enchanting books, etc.)"
-msgstr "Incrementa la probabilidad de encontrar tesoros."
+msgstr "Incrementa la probabilidad de encontrar tesoros"
 
 msgid "Lure"
 msgstr "Atracción"
@@ -182,7 +182,7 @@ msgid "Increases walking speed on soul sand."
 msgstr "Incrementa la velocidad al caminar sobre arena de Almas."
 
 msgid "Sweeping Edge"
-msgstr "Filo Arrasador"
+msgstr "Barrido"
 
 msgid "Increases sweeping attack damage."
 msgstr "Incrementa el daño de efecto area."
@@ -192,6 +192,27 @@ msgstr "Irrompibilidad"
 
 msgid "Increases item durability."
 msgstr "Incrementa la durabilidad de una herramienta."
+
+msgid "Density"
+msgstr "Densidad"
+
+msgid "Increases mace damage when falling."
+msgstr "Aumenta el daño del mazo al caer."
+
+msgid "Breach"
+msgstr "Fisura"
+
+msgid "Reduces target's armor effectiveness."
+msgstr "Reduce la efectividad de la armadura del objetivo."
+
+msgid "Wind Burst"
+msgstr "Aeroimpulso"
+
+msgid "Emits a burst of wind from a mace smash attack."
+msgstr "Emite una ráfaga de viento por un ataque aplastante del mazo."
+
+msgid "Unknown Enchantment"
+msgstr "Encantamiento desconocido"
 
 msgid "Inventory"
 msgstr "Inventario"
@@ -260,7 +281,7 @@ msgid "Enchanting Table"
 msgstr "Mesa de Encantamientos"
 
 msgid "Spend experience, and lapis to enchant various items."
-msgstr "Experiencia y Lapis para encantar varios objetos."
+msgstr "Gasta experiencia y Lapis para encantar varios ítems."
 
 msgid "Enchanting Tables will let you enchant armors, tools, weapons, and books with various abilities. But, at the cost of some experience, and lapis lazuli."
 msgstr "La mesa de Encantamientos dara a tus herramientas, armas o armadura algunas habilidades magicas. Pero a coste de algo de experiencia y lapis lázuli."
@@ -272,7 +293,7 @@ msgid "Place a tool, armor, weapon or book into the top left slot, and then plac
 msgstr "Coloca una herramienta, arma, armadura o libro sobre la ranura izquierda, coloca de 1 a 3 Lapis lázulis en la ranura derecha."
 
 msgid "After placing your items in the slots, the enchanting options will be shown. Hover over the options to read what is available to you."
-msgstr "Coloca el objeto en su ranura yse mostraran los encantamientos a elegir."
+msgstr "Coloca el ítem en su ranura y se mostraran los encantamientos a elegir."
 
 msgid "These options are randomized, and dependent on experience level; but the enchantment strength can be increased."
 msgstr "Las opciones seran aleatorias dependiendo del nivel de experiencia, los niveles de encantamiento pueden ser aumentados."

@@ -121,7 +121,7 @@ function vlf_fences.register_fence_gate(id, fence_gate_name, texture, groups, ha
 	cgroups.deco_block = 1
 
 	cgroups.mesecon_ignore_opaque_dig = 1
-	cgroups.mesecon_effector_on = 1
+	cgroups.mesecon_entity_effector_on = 1
 	cgroups.fence_gate = 1
 	minetest.register_node(":"..open_gate_id, {
 		tiles = {texture},
@@ -155,7 +155,7 @@ function vlf_fences.register_fence_gate(id, fence_gate_name, texture, groups, ha
 		on_rightclick = function(pos, node, clicker)
 			punch_gate(pos, node)
 		end,
-		mesecons = {effector = {
+		mesecons = {entity_effector = {
 			action_off = (function(pos, node)
 				punch_gate(pos, node)
 			end),
@@ -172,8 +172,8 @@ function vlf_fences.register_fence_gate(id, fence_gate_name, texture, groups, ha
 	})
 
 	local cgroups_closed = table.copy(cgroups)
-	cgroups_closed.mesecon_effector_on = nil
-	cgroups_closed.mesecon_effector_off = nil
+	cgroups_closed.mesecon_entity_effector_on = nil
+	cgroups_closed.mesecon_entity_effector_off = nil
 	minetest.register_node(":"..gate_id, {
 		description = fence_gate_name,
 		_tt_help = S("Openable by players and redstone power"),
@@ -218,7 +218,7 @@ function vlf_fences.register_fence_gate(id, fence_gate_name, texture, groups, ha
 			meta2:set_int("state", 0)
 			state2 = 0
 		end,
-		mesecons = {effector = {
+		mesecons = {entity_effector = {
 			action_on = (function(pos, node)
 				punch_gate(pos, node)
 			end),

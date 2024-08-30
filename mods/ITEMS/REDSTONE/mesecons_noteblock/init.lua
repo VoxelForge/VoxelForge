@@ -42,7 +42,7 @@ S("The note block will only play a note when it is below air, otherwise, it stay
 		mesecon.noteblock_play(pos, node.param2)
 	end,
 	sounds = vlf_sounds.node_sound_wood_defaults(),
-	mesecons = {effector = { -- play sound when activated
+	mesecons = {entity_effector = { -- play sound when activated
 		action_on = function(pos, node)
 			mesecon.noteblock_play(pos, node.param2)
 		end,

@@ -1,4 +1,4 @@
-# textdomain: vlf_nether
+# textdomain: mcl_nether
 Glowstone=
 Glowstone is a naturally-glowing block which is home to the Nether.=
 Nether Quartz Ore=

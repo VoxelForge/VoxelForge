@@ -144,7 +144,7 @@ local dripleaf_tipped = table.merge(dripleaf, {
 	end,
 })
 
-dripleaf.mesecons = {effector = {
+dripleaf.mesecons = {entity_effector = {
 	action_on = function(pos, node)
 		node.param2 = 1
 		minetest.swap_node(pos, node)

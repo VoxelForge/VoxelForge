@@ -215,7 +215,7 @@ local mapgen_limit_b = math.floor(math.min(vlf_vars.mapgen_limit, vlf_vars.MAX_M
 local mapgen_limit_min = -mapgen_limit_b * vlf_vars.MAP_BLOCKSIZE
 local mapgen_limit_max = (mapgen_limit_b + 1) * vlf_vars.MAP_BLOCKSIZE - 1
 local numcmin = math.max(math.floor((ccfmin - mapgen_limit_min) / vlf_vars.chunk_size_in_nodes), 0) -- Number of complete chunks from central chunk
-local numcmax = math.max(math.floor((mapgen_limit_max - ccfmax) / vlf_vars.chunk_size_in_nodes), 0) -- fullminp/fullmaxp to effective mapgen limits.
+local numcmax = math.max(math.floor((mapgen_limit_max - ccfmax) / vlf_vars.chunk_size_in_nodes), 0) -- fullminp/fullmaxp to entity_effective mapgen limits.
 vlf_vars.mapgen_edge_min = central_chunk_min_pos - numcmin * vlf_vars.chunk_size_in_nodes
 vlf_vars.mapgen_edge_max = central_chunk_max_pos + numcmax * vlf_vars.chunk_size_in_nodes
 
@@ -502,3 +502,63 @@ if vlf_vars.mg_overworld_min_old ~= vlf_vars.mg_overworld_min then
 		end
 	})
 end
+
+
+minetest.register_globalstep(function(dtime)
+	for _, player in ipairs(minetest.get_connected_players()) do
+        pos = player:get_pos()
+        for _, entity in ipairs(minetest.get_objects_inside_radius(pos, 10)) do
+		local controls = player:get_player_control()
+		--local pos = player:get_pos()
+		local node = minetest.get_node(pos)
+		local is_in_climable
+        
+		if minetest.get_item_group(node.name, "climbable") > 0 then
+			if not controls.up and not controls.down and not controls.jump then
+				is_in_climable = true
+			else 
+				is_in_climbable = true
+				minetest.after(0.5, function()
+					is_in_climable = false
+				end)
+			end
+		end
+		if is_in_climable == true then
+			local vel = player:get_velocity()
+			if vel.y > -0.2 then
+				player:add_velocity({x = 0, y = -0.2, z = 0})
+			end
+		end
+		end
+    	end
+end)
+
+
+--[[local positions = {}
+
+minetest.register_globalstep(function(dtime)
+   -- for hash, dir in pairs(positions) do
+	for _, player in ipairs(minetest.get_connected_players()) do
+        --local pos = minetest.get_position_from_hash(hash)
+        pos = player:get_pos()
+        for _, entity in ipairs(minetest.get_objects_inside_radius(pos, 0.9)) do
+            local entity_pos = entity:get_pos()
+            
+            -- Check if the player is within 1 node of a climbable node
+            local nearby_climbable = false
+                local check_pos = entity_pos
+                local check_node = minetest.get_node(check_pos)
+                if minetest.get_item_group(check_node.name, "climbable") > 0 then
+                    nearby_climbable = true
+                    break
+                end
+            --end
+
+            if nearby_climbable then
+                -- Pull down the player slowly
+                entity:add_velocity({x = 0, y = -1.0, z = 0})
+            end
+        end
+    end
+end)]]
+
