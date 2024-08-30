@@ -92,7 +92,7 @@ local function update_wear_bar(player, itemstack)
 	player:hud_change(wear_bar, "offset", {x = -320 - (20 - player:hud_get(wear_bar).scale.x / 2), y = -13})
 end
 
---[[minetest.register_globalstep(function(dtime)
+minetest.register_globalstep(function(dtime)
 	for _, player in pairs(minetest.get_connected_players()) do
 		local itemstack = vlf_offhand.get_offhand(player)
 		local offhand_item = itemstack:get_name()
@@ -188,7 +188,7 @@ end
 			end
 		end
 	end
-end)]]
+end)
 
 minetest.register_allow_player_inventory_action(function(player, action, inventory, inventory_info)
 	if action == "move" and inventory_info.to_list == "offhand" then
