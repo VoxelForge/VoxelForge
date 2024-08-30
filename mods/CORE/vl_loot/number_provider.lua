@@ -13,7 +13,7 @@ local function evaluate(number_provider, loot_context)
     --  score: TODO
     --  storage: TODO
     --  enchantment_level: TODO (not used for what you think it is)
-    
+
     -- implied constant
     if type(number_provider) == "number" then
         return number_provider
@@ -40,7 +40,7 @@ local function evaluate(number_provider, loot_context)
     else
         minetest.log("error", "invalid number provider when calculating loot: ", dump(number_provider))
         return 0
-    end    
+    end
 end
 
 vl_loot.number_provider.evaluate = evaluate
