@@ -61,7 +61,7 @@ local function get_entry_loot(entry_table, loot_context)
         table.insert(loot_stacks, itemstack)
     elseif entry_table.type == "empty" then
         -- Add nothing to loot
-        minetest.log("info", "loot table is: Empty"
+        minetest.log("info", "loot table is: Empty")
     else
         error("Invalid loot entry type: " .. tostring(entry_table.type))
     end
