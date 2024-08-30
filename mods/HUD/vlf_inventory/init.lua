@@ -56,6 +56,7 @@ end
 function vlf_inventory.get_recipe_groups(pinv, craft, optional_width, optional_height)
 	local grid_width = optional_width or pinv:get_width("craft")
 	local grid_height = optional_height or math.ceil(pinv:get_size("craft") / grid_width)
+	local max_index
 	local craft_size = table.max_index(craft.items)
 	if craft.width > grid_width or math.ceil(craft_size / craft.width) > grid_height then
 		return false
