@@ -71,7 +71,7 @@ vlf_damage.register_modifier(function(obj, damage, reason)
 							})
 					end
 				end
-				
+
 				-- Status entity_effects; see
 				-- https://minecraft.wiki/w/Totem_of_Undying
 				--

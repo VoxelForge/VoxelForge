@@ -689,7 +689,6 @@ function vlf_chests.register_chest(basename, d)
 
 		on_rightclick = function(pos, node, clicker)
 			if blocks_chest(minetest.get_node(vector.offset(pos,0, 1, 0))) then return false end
-			local node_meta = minetest.get_meta(pos)
 			local name = minetest.get_meta(pos):get_string("name")
 			if name == "" then
 				name = S("Chest")
