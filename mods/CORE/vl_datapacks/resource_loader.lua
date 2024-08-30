@@ -10,7 +10,7 @@ local function split_fname(filename)
 end
 
 
-    
+
 
 -- Loads a resource into `load_into`
 -- key: filename with last extension stripped
