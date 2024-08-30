@@ -517,7 +517,7 @@ minetest.register_globalstep(function(dtime)
 			if not controls.up and not controls.down and not controls.jump then
 				is_in_climable = true
 			else
-				is_in_climbable = true
+				is_in_climable = true
 				minetest.after(0.5, function()
 					is_in_climable = false
 				end)

@@ -694,8 +694,6 @@ function vlf_chests.register_chest(basename, d)
 			if name == "" then
 				name = S("Chest")
 			end
-			
-			local inventory = node_meta:get_inventory()
 
 			minetest.show_formspec(clicker:get_player_name(),
 				string.format("vlf_chests:%s_%s_%s_%s", d.canonical_basename, pos.x, pos.y, pos.z),
@@ -872,7 +870,7 @@ function vlf_chests.register_chest(basename, d)
 
 			local inventory_other = other_node_meta:get_inventory()
 			vl_loot.generate_container_loot_if_exists(pos_other, clicker, inventory_other, "main")
-			
+
 			minetest.show_formspec(clicker:get_player_name(), string.format("vlf_chests:%s_%s_%s_%s", basename, pos.x, pos.y, pos.z), get_double_chest_formspec(pos, pos_other, name, d.basename, true))
 
 			if d.on_rightclick_right then

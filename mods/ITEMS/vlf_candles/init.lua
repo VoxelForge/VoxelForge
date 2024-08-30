@@ -220,7 +220,7 @@ local function cakes_on_rightclick(pos, node, clicker, itemstack, pointed_thing)
 		local ccakedrop =  minetest.registered_nodes[nname].drop.items.items[2]
 		local cakedefs = minetest.registered_nodes["vlf_cake:cake"]
 		minetest.add_item(pos, {name = ccakedrop})
-        	return cakedefs.on_rightclick(pos, node, clicker, itemstack, pointed_thing)
+		return cakedefs.on_rightclick(pos, node, clicker, itemstack, pointed_thing)
         end
     else
         local ccakedrop =  minetest.registered_nodes[nname].drop.items.items[2]
