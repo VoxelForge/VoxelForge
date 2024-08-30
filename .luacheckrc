@@ -187,6 +187,7 @@ globals = {
 	"vlf_weather",
 	"vlf_wieldview",
 	"vlf_wip",
+	"vlf_lib",
 	"vlf_wither_spawning",
 	"vlf_wool",
 	"vlf_worlds",
@@ -204,9 +205,9 @@ globals = {
 }
 
 exclude_files = {
-	"mods/PLAYER/vlf_music/init.lua",
 	"mods/ITEMS/vlf_bubble_column/init.lua",
 	"mods/ITEMS/vlf_sculk/init.lua",
+	"mods/HUD/vlf_inventory/init.lua",
 	"pattern/*"
 }
 
