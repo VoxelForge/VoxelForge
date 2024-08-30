@@ -30,7 +30,7 @@ local function unpack_entry(entry_provider_table, loot_context)
     -- group *
     -- alternative *
     -- sequence *
-    
+
     if not vl_loot.predicate.check_predicates(entry_provider_table.conditions, loot_context) then return {} end
 
     -- TODO: Support other types
@@ -61,13 +61,14 @@ local function get_entry_loot(entry_table, loot_context)
         table.insert(loot_stacks, itemstack)
     elseif entry_table.type == "empty" then
         -- Add nothing to loot
+        minetest.log("info", "loot table is: Empty"
     else
         error("Invalid loot entry type: " .. tostring(entry_table.type))
     end
 
     -- Apply modifier
     modify_stacks(entry_table.functions, loot_stacks, loot_context)
-    
+
     return loot_stacks
 end
 
@@ -130,7 +131,7 @@ local function get_pool_loot(pool_table, loot_context)
         -- Get loot from the chosen entry
         local current_roll_loot = get_entry_loot(chosen_entry, loot_context)
         append_table(loot_stacks, current_roll_loot)
-        
+
     end
     modify_stacks(pool_table.functions, loot_stacks, loot_context)
     return loot_stacks
