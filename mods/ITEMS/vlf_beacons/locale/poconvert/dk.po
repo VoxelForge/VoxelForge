@@ -22,6 +22,3 @@ msgstr "Primær kraft:"
 msgid "Inventory:"
 msgstr "Indhold:"
 
-msgid "Beacon"
-msgstr ""
-

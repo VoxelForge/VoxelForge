@@ -15,7 +15,7 @@ function mob_class:use_shears(new_textures, shears_stack)
 	return shears_stack
 end
 
-function mob_class:_on_dispense(dropitem)
+function mob_class:_on_dispense(dropitem, pos, droppos, dropnode, dropdir)
 	local item = dropitem.get_name and dropitem:get_name() or dropitem
 	if self.follow and ((type(self.follow) == "table" and table.indexof(self.follow, item) ~= -1) or item == self.follow) then
 		if self:feed_tame(nil, 1, true, false) then
@@ -84,7 +84,7 @@ function vlf_mobs.spawn_child(pos, mob_type)
 	end
 
 	local ent = child:get_luaentity()
-	vlf_mobs.entity_effect(pos, 15, "vlf_particles_smoke.png", 1, 2, 2, 15, 5)
+	vlf_mobs.effect(pos, 15, "vlf_particles_smoke.png", 1, 2, 2, 15, 5)
 	ent.child = true
 	local textures
 	if ent.child_texture then
@@ -166,7 +166,7 @@ function mob_class:check_breeding()
 		local pos = self.object:get_pos()
 
         if (self.hornytimer % 20) == 0.0 then
-            vlf_mobs.entity_effect({x = pos.x, y = pos.y + 1, z = pos.z}, 8, "heart.png", 3, 4, 1, 0.1)
+            vlf_mobs.effect({x = pos.x, y = pos.y + 1, z = pos.z}, 8, "heart.png", 3, 4, 1, 0.1)
         end
 
 		local num = 0
@@ -217,21 +217,19 @@ function mob_class:check_breeding()
 						end
 					end
 					local child = vlf_mobs.spawn_child(pos, parent1.name)
-					if child then
-						local ent_c = child:get_luaentity()
-						-- Use texture of one of the parents
-						local p = math.random(1, 2)
-						if p == 1 then
-							ent_c.base_texture = parent1.base_texture
-						else
-							ent_c.base_texture = parent2.base_texture
-						end
-						ent_c:set_properties({
-							textures = ent_c.base_texture
-						})
-						ent_c.tamed = true
-						ent_c.owner = parent1.owner
+					local ent_c = child:get_luaentity()
+					-- Use texture of one of the parents
+					local p = math.random(1, 2)
+					if p == 1 then
+						ent_c.base_texture = parent1.base_texture
+					else
+						ent_c.base_texture = parent2.base_texture
 					end
+					ent_c:set_properties({
+						textures = ent_c.base_texture
+					})
+					ent_c.tamed = true
+					ent_c.owner = parent1.owner
 				end, self, ent, pos)
 				break
 			end
@@ -304,12 +302,6 @@ function mob_class:break_in(player)
 				if not self.owner or self.owner == "" then
 					self.owner = player:get_player_name()
 				end
-				-- Spawn entity_effect at mount yaw pos so it can be easily noticable in first person view
-				local pos = self.object:get_pos()
-				local yaw = self.object:get_yaw()
-				local x = pos.x + -math.sin(yaw)
-				local z = pos.z +  math.cos(yaw)
-				vlf_mobs.entity_effect({x = x, y = pos.y + 1.5, z = z}, 20, "heart.png", 3, 4, 1.5, 0.1)
 			end
 			temper_increase = 5
 		elseif self.driver and self.driver == player then

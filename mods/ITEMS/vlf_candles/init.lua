@@ -220,7 +220,7 @@ local function cakes_on_rightclick(pos, node, clicker, itemstack, pointed_thing)
 		local ccakedrop =  minetest.registered_nodes[nname].drop.items.items[2]
 		local cakedefs = minetest.registered_nodes["vlf_cake:cake"]
 		minetest.add_item(pos, {name = ccakedrop})
-		return cakedefs.on_rightclick(pos, node, clicker, itemstack, pointed_thing)
+        	return cakedefs.on_rightclick(pos, node, clicker, itemstack, pointed_thing)
         end
     else
         local ccakedrop =  minetest.registered_nodes[nname].drop.items.items[2]
@@ -230,7 +230,7 @@ local function cakes_on_rightclick(pos, node, clicker, itemstack, pointed_thing)
         return cakedefs.on_rightclick(pos, node, clicker, itemstack, pointed_thing)
     end
 
-	return itemstack
+    return itemstack
 end
 
 local function register_cakes(colordefs)
@@ -367,7 +367,7 @@ minetest.register_abm({
 	label = "Candle Particles",
 	nodenames = {
 	"vlf_candles:lit_candle_1", "vlf_candles:lit_candle_2",
-        "vlf_candles:lit_candle_1_black", "vlf_candles:lit_candle_1_blue",
+        "vlf_candles:lit_candle_1_black", "vlf_candles:lit_candle_1_blue", 
         "vlf_candles:lit_candle_1_brown", "vlf_candles:lit_candle_1_cyan",
         "vlf_candles:lit_candle_1_green", "vlf_candles:lit_candle_1_grey",
         "vlf_candles:lit_candle_1_light_blue", "vlf_candles:lit_candle_1_light_grey",
@@ -375,7 +375,7 @@ minetest.register_abm({
         "vlf_candles:lit_candle_1_orange", "vlf_candles:lit_candle_1_pink",
         "vlf_candles:lit_candle_1_purple", "vlf_candles:lit_candle_1_red",
         "vlf_candles:lit_candle_1_white", "vlf_candles:lit_candle_1_yellow",
-        "vlf_candles:lit_candle_2_black", "vlf_candles:lit_candle_2_blue",
+        "vlf_candles:lit_candle_2_black", "vlf_candles:lit_candle_2_blue", 
         "vlf_candles:lit_candle_2_brown", "vlf_candles:lit_candle_2_cyan",
         "vlf_candles:lit_candle_2_green", "vlf_candles:lit_candle_2_grey",
         "vlf_candles:lit_candle_2_light_blue", "vlf_candles:lit_candle_2_light_grey",
@@ -387,6 +387,7 @@ minetest.register_abm({
 	interval = 2,
 	chance = 1,
 	action = function(pos, node)
+		local pr = PseudoRandom(math.ceil(os.time() / 60 / 10)) -- make particles change direction every 10 minutes
 		for _,pl in pairs(minetest.get_connected_players()) do
 			if vector.distance(pos,pl:get_pos()) < PARTICLE_DISTANCE then
 				minetest.add_particlespawner(table.merge(candle_particlespawner, {
@@ -421,7 +422,7 @@ minetest.register_abm({
 	label = "Candle Particles 2",
 	nodenames = {
 	"vlf_candles:lit_candle_3", "vlf_candles:lit_candle_4",
-        "vlf_candles:lit_candle_3_black", "vlf_candles:lit_candle_3_blue",
+        "vlf_candles:lit_candle_3_black", "vlf_candles:lit_candle_3_blue", 
         "vlf_candles:lit_candle_3_brown", "vlf_candles:lit_candle_3_cyan",
         "vlf_candles:lit_candle_3_green", "vlf_candles:lit_candle_3_grey",
         "vlf_candles:lit_candle_3_light_blue", "vlf_candles:lit_candle_3_light_grey",
@@ -429,7 +430,7 @@ minetest.register_abm({
         "vlf_candles:lit_candle_3_orange", "vlf_candles:lit_candle_3_pink",
         "vlf_candles:lit_candle_3_purple", "vlf_candles:lit_candle_3_red",
         "vlf_candles:lit_candle_3_white", "vlf_candles:lit_candle_3_yellow",
-        "vlf_candles:lit_candle_4_black", "vlf_candles:lit_candle_4_blue",
+        "vlf_candles:lit_candle_4_black", "vlf_candles:lit_candle_4_blue", 
         "vlf_candles:lit_candle_4_brown", "vlf_candles:lit_candle_4_cyan",
         "vlf_candles:lit_candle_4_green", "vlf_candles:lit_candle_4_grey",
         "vlf_candles:lit_candle_4_light_blue", "vlf_candles:lit_candle_4_light_grey",
@@ -441,6 +442,7 @@ minetest.register_abm({
 	interval = 2,
 	chance = 1,
 	action = function(pos, node)
+		local pr = PseudoRandom(math.ceil(os.time() / 60 / 10)) -- make particles change direction every 10 minutes
 		for _,pl in pairs(minetest.get_connected_players()) do
 			if vector.distance(pos,pl:get_pos()) < PARTICLE_DISTANCE then
 				minetest.add_particlespawner(table.merge(candle_particlespawner, {
@@ -474,19 +476,20 @@ minetest.register_abm({
 minetest.register_abm({
 	label = "Cake Particles 3",
 	nodenames = {
-	"vlf_candles:cake_lit_candle", "vlf_candles:cake_lit_candle_black",
-	"vlf_candles:cake_lit_candle_blue", "vlf_candles:cake_lit_candle_brown",
-	"vlf_candles:cake_lit_candle_cyan", "vlf_candles:cake_lit_candle_green",
-	"vlf_candles:cake_lit_candle_grey", "vlf_candles:cake_lit_candle_light_blue",
-	"vlf_candles:cake_lit_candle_light_grey", "vlf_candles:cake_lit_candle_lime",
-	"vlf_candles:cake_lit_candle_magenta", "vlf_candles:cake_lit_candle_orange",
-	"vlf_candles:cake_lit_candle_pink", "vlf_candles:cake_lit_candle_purple",
-	"vlf_candles:cake_lit_candle_red", "vlf_candles:cake_lit_candle_white",
+	"vlf_candles:cake_lit_candle", "vlf_candles:cake_lit_candle_black", 
+	"vlf_candles:cake_lit_candle_blue", "vlf_candles:cake_lit_candle_brown", 
+	"vlf_candles:cake_lit_candle_cyan", "vlf_candles:cake_lit_candle_green", 
+	"vlf_candles:cake_lit_candle_grey", "vlf_candles:cake_lit_candle_light_blue", 
+	"vlf_candles:cake_lit_candle_light_grey", "vlf_candles:cake_lit_candle_lime", 
+	"vlf_candles:cake_lit_candle_magenta", "vlf_candles:cake_lit_candle_orange",  
+	"vlf_candles:cake_lit_candle_pink", "vlf_candles:cake_lit_candle_purple", 
+	"vlf_candles:cake_lit_candle_red", "vlf_candles:cake_lit_candle_white", 
 	"vlf_candles:cake_lit_candle_yellow"
 	},
 	interval = 2,
 	chance = 1,
 	action = function(pos, node)
+		local pr = PseudoRandom(math.ceil(os.time() / 60 / 10)) -- make particles change direction every 10 minutes
 		for _,pl in pairs(minetest.get_connected_players()) do
 			if vector.distance(pos,pl:get_pos()) < PARTICLE_DISTANCE then
 				minetest.add_particlespawner(table.merge(candle_particlespawner, {

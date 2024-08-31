@@ -13,12 +13,6 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: mtt_convert 0.1.0\n"
 
-msgid "Solid Blocks of Steel. These are only forged if those that are brave enough can defeat the trials that await them."
-msgstr ""
-
-msgid "Heavy Core"
-msgstr ""
-
 msgid "Pickaxes are mining tools to mine hard blocks, such as stone. A pickaxe can also be used as weapon, but it is rather inefficient."
 msgstr "ツルハシは、石のような硬いブロックを採掘するための道具です。武器としても使えますが、効率は良くありません。"
 
@@ -39,9 +33,6 @@ msgstr "ハサミは、羊毛を刈ったり数種類のブロックを採るた
 
 msgid "To shear sheep or carve faceless pumpkins, use the “place” key on them. Faces can only be carved at the side of faceless pumpkins. Mining works as usual, but the drops are different for a few blocks."
 msgstr "羊毛を刈ったり、顔のないカボチャを彫ったりするには「配置」キーを使ってください。顔のないカボチャの側面にだけ、顔が彫れます。 採掘作用は普通ながらも、いくつかのブロックからは、かわったものをドロップさせます。"
-
-msgid "The mace is a slow melee weapon that deals incredible damage. “dig” key to use it. This weapon has a cooldown of 1.6 seconds, but if you fall the mace will deal more damage than if you are on the ground. The further you fall the more damage done. If you hit a mob or player then you will receive no fall damage, but beware. If you miss you will die. "
-msgstr ""
 
 msgid "Wooden Pickaxe"
 msgstr ""
@@ -117,7 +108,4 @@ msgstr "ネザライトの剣"
 
 msgid "Shears"
 msgstr "ハサミ"
-
-msgid "Mace"
-msgstr ""
 

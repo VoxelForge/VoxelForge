@@ -19,7 +19,6 @@ local function atan(x)
 	end
 end
 
--- check if daytime and also if mob is docile during daylight hours
 function mob_class:day_docile()
 	if self.docile_by_day and self.time_of_day > 0.2 and self.time_of_day < 0.8 then
 		return true
@@ -67,7 +66,7 @@ local los_switcher = false
 local height_switcher = false
 
 -- path finding and smart mob routine by rnd, line_of_sight and other edits by Elkien3
-function mob_class:smart_mobs(s, _, _, dtime)
+function mob_class:smart_mobs(s, p, dist, dtime)
 
 	local stepheight = self.object:get_properties().stepheight
 	local s1 = self.path.lastpos
@@ -202,23 +201,16 @@ function mob_class:smart_mobs(s, _, _, dtime)
 	end
 end
 
-function mob_class:attack_players_allowed ()
-	if not damage_enabled or
-	    peaceful_mode or
-	    self.state == "attack" or
-	    self.passive or
-	    self:day_docile() or
-	    self.type ~= "monster" or
-	    not self.attack_type then
-	    return false
-	end
-	return true
-end
-
 function mob_class:attack_players_and_npcs()
-	if not self:attack_players_allowed () then
-	    return
-	end
+	if not damage_enabled or
+	peaceful_mode or
+	self.state == "attack" or
+	self.passive or
+	self:day_docile() or
+	self.type ~= "monster" or
+	not self.attack_type
+	then return end
+
 	local pos = self.object:get_pos()
 	local objs = minetest.get_objects_inside_radius(pos, self.view_range)
 	for _,obj in pairs(objs) do
@@ -313,7 +305,7 @@ function mob_class:safe_boom(pos, strength, no_remove)
 	}, true)
 	local radius = strength
 	blast_damage(pos, radius)
-	vlf_mobs.entity_effect(pos, 32, "vlf_particles_smoke.png", radius * 3, radius * 5, radius, 1, 0)
+	vlf_mobs.effect(pos, 32, "vlf_particles_smoke.png", radius * 3, radius * 5, radius, 1, 0)
 	if not no_remove then
 		if self.is_mob then
 			self:safe_remove()
@@ -340,13 +332,14 @@ function mob_class:boom(pos, strength, fire, no_remove)
 	end
 end
 
--- deal damage and entity_effects when mob punched
+-- deal damage and effects when mob punched
 function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
+
 	local is_player = hitter and hitter:is_player()
 	local hitter_playername = is_player and hitter:get_player_name()
+
 	if hitter_playername and hitter_playername ~= "" then
 		doc.mark_entry_as_revealed(hitter_playername, "mobs", self.name)
-		vlf_entity_effects.update_haste_and_fatigue(hitter)
 	end
 
 	if self.do_punch then
@@ -369,6 +362,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 			return
 		end
 
+		vlf_entity_effects.update_haste_and_fatigue(hitter)
 		if minetest.is_creative_enabled(hitter_playername) then
 			-- Instantly kill mob after a slight delay.
 			-- Without this delay the node behind would be dug by the punch as well.
@@ -411,7 +405,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 			* tmp * ((armor[group] or 0) / 100.0)
 	end
 
-	-- strength and weakness entity_effects
+	-- strength and weakness effects
 	local strength = vlf_entity_effects.get_effect(hitter, "strength")
 	local weakness = vlf_entity_effects.get_effect(hitter, "weakness")
 	local str_fac = strength and strength.factor or 1
@@ -453,7 +447,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 
 
 	if damage >= 0 then
-		-- only play hit sound and show blood entity_effects if damage is 1 or over; lower to 0.1 to ensure armor works appropriately.
+		-- only play hit sound and show blood effects if damage is 1 or over; lower to 0.1 to ensure armor works appropriately.
 		if damage >= 0.1 then
 			-- weapon sounds
 			if weapon:get_definition().sounds ~= nil then
@@ -471,7 +465,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 				}, true)
 			end
 
-			self:damage_entity_effect(damage)
+			self:damage_effect(damage)
 
 			-- do damage
 			local vlf_reason = {}
@@ -484,7 +478,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 				die = true
 			end
 		end
-		-- knock back entity_effect (only on full punch)
+		-- knock back effect (only on full punch)
 		if self.knock_back
 		and tflp >= punch_interval then
 			-- direction error check
@@ -610,7 +604,7 @@ function mob_class:call_group_attack(hitter)
 	end
 end
 
-function mob_class:check_aggro()
+function mob_class:check_aggro(dtime)
 	if not self.aggro or not self.attack then return end
 	if not self:check_timer("check_aggro", 5) then return end
 	if not self.attack:get_pos() or vector.distance(self.attack:get_pos(),self.object:get_pos()) > 128 then
@@ -638,6 +632,7 @@ function mob_class:do_states_attack (dtime)
 	local yaw
 	local attacked
 	local s = self.object:get_pos()
+	local p = self.attack:get_pos() or s
 
 	-- stop attacking if player invisible or out of range
 	if not self.attack
@@ -649,9 +644,6 @@ function mob_class:do_states_attack (dtime)
 		self:clear_aggro()
 		return
 	end
-
-	-- Needs to be after self.attack check above
-	local p = self.attack:get_pos() or s
 
 	local target_line_of_sight = self:target_visible(s)
 
@@ -741,7 +733,7 @@ function mob_class:do_states_attack (dtime)
 						max_hear_distance = self.sounds.distance or 32
 					}, true)
 					self:entity_physics(pos,entity_damage_radius)
-					vlf_mobs.entity_effect(pos, 32, "vlf_particles_smoke.png", nil, nil, node_break_radius, 1, 0)
+					vlf_mobs.effect(pos, 32, "vlf_particles_smoke.png", nil, nil, node_break_radius, 1, 0)
 				end
 
 				if self.on_attack then
@@ -909,9 +901,9 @@ function mob_class:do_states_attack (dtime)
 							full_punch_interval = 1.0,
 							damage_groups = {fleshy = self.damage}
 						}, nil)
-						if self.dealt_entity_effect then
-							vlf_entity_effects.give_effect_by_level(self.dealt_entity_effect.name, self.attack,
-								self.dealt_entity_effect.level, self.dealt_entity_effect.dur)
+						if self.dealt_effect then
+							vlf_entity_effects.give_effect_by_level(self.dealt_effect.name, self.attack,
+								self.dealt_effect.level, self.dealt_effect.dur)
 						end
 						attacked = true
 					end
@@ -952,14 +944,10 @@ function mob_class:do_states_attack (dtime)
 
 		--strafe back and fourth
 
-		--stay away from players so as to shoot them
+		--stay away from player so as to shoot them
 		if dist < self.avoid_distance and self.shooter_avoid_enemy then
-		    if self._shoot_while_strafing ~= false then
-			self:set_animation ("shoot")
-		    else
-			self:set_animation ("run")
-		    end
-		    stay_away_from_player=vector.multiply(vector.direction(p, s), 0.33)
+			self:set_animation( "shoot")
+			stay_away_from_player=vector.multiply(vector.direction(p, s), 0.33)
 		end
 
 		if self.strafes then
@@ -971,7 +959,7 @@ function mob_class:do_states_attack (dtime)
 			end
 			self.acc = vector.add(vector.multiply(vector.rotate_around_axis(vector.direction(s, p), vector.new(0,1,0), self.strafe_direction), 0.3*self.walk_velocity), stay_away_from_player)
 		else
-		    self:set_velocity (0)
+			self:set_velocity( 0)
 		end
 
 		local p = self.object:get_pos()
@@ -983,13 +971,13 @@ function mob_class:do_states_attack (dtime)
 			and not minetest.raycast(vector.add(p, vector.new(0,self.shoot_offset,0)), vector.add(self.attack:get_pos(), vector.new(0,1.5,0)), false, false):next()
 			and math.random(1, 100) <= 60 then
 			self.timer = 0
-			self:set_animation ("shoot")
+			self:set_animation( "shoot")
 
 			-- play shoot attack sound
 			self:mob_sound("shoot_attack")
 
 			-- Shoot arrow
-			if minetest.registered_entities[self.arrow] or self.shoot_arrow then
+			if minetest.registered_entities[self.arrow] then
 
 				local v = 1
 				local arrow

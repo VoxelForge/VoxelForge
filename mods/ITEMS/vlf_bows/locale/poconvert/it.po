@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Arrow"
-msgstr "Freccia"
+msgstr ""
 
 msgid "Ammunition"
-msgstr "Munizioni"
+msgstr ""
 
 msgid "Damage from bow: 1-10"
-msgstr "Danno dall'arco: 1-10"
+msgstr ""
 
 msgid "Damage from dispenser: 3"
 msgstr ""

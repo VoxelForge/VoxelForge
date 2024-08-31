@@ -75,9 +75,10 @@ local function check_conduit(pos)
 	return math.floor(pn / 7) * 16
 end
 
-function vlf_conduits.player_entity_effect(player)
-    if minetest.get_item_group(vlf_player.players[player].nodes.feet, "water") == 0 then return end
-    vlf_entity_effects.give_entity_effect_by_level ("conduit_power", player, 1, 17)
+function vlf_conduits.player_effect(player)
+	if minetest.get_item_group(vlf_player.players[player].nodes.feet, "water") == 0 then return end
+	vlf_entity_effects.water_breathing_func(player, 2, 13)
+	vlf_entity_effects.swiftness_func(player, 2, 13)
 end
 
 function vlf_conduits.conduit_damage(ent)
@@ -123,7 +124,7 @@ minetest.register_entity("vlf_conduits:conduit", {
 		local dst = lvl * 2
 		for _, pl in pairs(minetest.get_connected_players()) do
 			if vector.distance(self._pos, pl:get_pos()) < dst then
-				vlf_conduits.player_entity_effect(pl)
+				vlf_conduits.player_effect(pl)
 			end
 		end
 		for _, ent in pairs(minetest.luaentities) do
@@ -136,7 +137,7 @@ minetest.register_entity("vlf_conduits:conduit", {
 local conduit_box = { -0.25, -0.25, -0.25, 0.25, 0.25, 0.25, }
 minetest.register_node("vlf_conduits:conduit", {
 	description = S("Conduit"),
-	_doc_longdesc = S("A conduit provides certain status entity_effects to nearby players much like a beacon but under water"),
+	_doc_longdesc = S("A conduit provides certain status effects to nearby players much like a beacon but under water"),
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -144,7 +145,7 @@ minetest.register_node("vlf_conduits:conduit", {
 	},
 	collisionbox = conduit_box,
 	selectionbox = conduit_box,
-	groups = { pickaxey = 1, deco_block = 1},
+	groups = { pickaxey = 1 },
 	light_source = 14,
 	tiles = { "vlf_conduit_conduit_node.png", },
 	_vlf_hardness = 3,
@@ -156,7 +157,7 @@ minetest.register_abm({
 	nodenames = { "vlf_conduits:conduit" },
 	interval = check_interval,
 	chance = 1,
-	action = function(pos, _)
+	action = function(pos, node)
 		for _, v in pairs(minetest.get_objects_inside_radius(vector.subtract(pos, entity_pos_offset), 0.5)) do
 			if v.name == "vlf_conduits:conduit" then return end
 		end

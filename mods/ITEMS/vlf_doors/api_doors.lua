@@ -320,7 +320,7 @@ function vlf_doors:register_door(name, def)
 			return true
 		end,
 
-		mesecons = { entity_effector = {
+		mesecons = { effector = {
 			action_on = on_mesecons_signal_open,
 		}},
 
@@ -398,7 +398,7 @@ function vlf_doors:register_door(name, def)
 			return true
 		end,
 
-		mesecons = { entity_effector = {
+		mesecons = { effector = {
 			action_on = on_mesecons_signal_open_top,
 			rules = mesecon.rules.flat,
 		}},
@@ -478,7 +478,7 @@ function vlf_doors:register_door(name, def)
 			return true
 		end,
 
-		mesecons = { entity_effector = {
+		mesecons = { effector = {
 			action_off = on_mesecons_signal_close,
 		}},
 
@@ -556,7 +556,7 @@ function vlf_doors:register_door(name, def)
 			return true
 		end,
 
-		mesecons = { entity_effector = {
+		mesecons = { effector = {
 			action_off = on_mesecons_signal_close_top,
 			rules = mesecon.rules.flat,
 		}},

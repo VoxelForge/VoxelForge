@@ -22,7 +22,7 @@ end
 local function drop_items(pos)
 	local ph = minetest.hash_node_position(vector.round(pos))
 	if food_entities[ph] then
-		for _, v in pairs(food_entities[ph]) do
+		for k,v in pairs(food_entities[ph]) do
 			if v and v.object and v.object:get_pos() then
 				v.object:remove()
 				minetest.add_item(pos, v._item)
@@ -36,8 +36,7 @@ local function campfire_drops(pos, digger, drops, nodename)
 	local wield_item = digger:get_wielded_item()
 	local inv = digger:get_inventory()
 	if not minetest.is_creative_enabled(digger:get_player_name()) then
-		local is_book = wield_item:get_name() == "vlf_enchanting:book_enchanted"
-		if vlf_enchanting.has_enchantment(wield_item, "silk_touch") and not is_book then
+		if vlf_enchanting.has_enchantment(wield_item, "silk_touch") then
 			minetest.add_item(pos, nodename)
 		else
 			minetest.add_item(pos, drops)
@@ -48,7 +47,8 @@ local function campfire_drops(pos, digger, drops, nodename)
 end
 
 local function on_blast(pos)
-	drop_items(pos)
+	local node = minetest.get_node(pos)
+	drop_items(pos, node)
 	minetest.remove_node(pos)
 end
 
@@ -60,7 +60,7 @@ end
 
 local function delete_entities(ph)
 	if not food_entities[ph] then return end
-	for _, v in pairs(food_entities[ph]) do
+	for k,v in pairs(food_entities[ph]) do
 		if v and v.object then
 			v:remove()
 		end
@@ -83,7 +83,7 @@ local function get_free_spot(ph)
 end
 
 -- on_rightclick function to take items that are cookable in a campfire, and put them in the campfire inventory
-function vlf_campfires.take_item(pos, _, player, itemstack)
+function vlf_campfires.take_item(pos, node, player, itemstack)
 	if minetest.get_item_group(itemstack:get_name(), "campfire_cookable") ~= 0 then
 		local cookable = minetest.get_craft_result({method = "cooking", width = 1, items = {itemstack}})
 		if cookable then
@@ -123,10 +123,10 @@ function vlf_campfires.register_campfire(name, def)
 		mesh = "vlf_campfires_campfire.obj",
 		tiles = {{name="vlf_campfires_log.png"},},
 		use_texture_alpha = "clip",
-		groups = { handy=1, axey=1, material_wood=1, not_in_creative_inventory=1, campfire=1},
+		groups = { handy=1, axey=1, material_wood=1, not_in_creative_inventory=1, campfire=1, },
 		paramtype = "light",
 		paramtype2 = "4dir",
-		_on_ignite = function(_, node)
+		_on_ignite = function(player, node)
 			vlf_campfires.light_campfire(node.under)
 			return true
 		end,
@@ -147,7 +147,7 @@ function vlf_campfires.register_campfire(name, def)
 		},
 		_vlf_blast_resistance = 2,
 		_vlf_hardness = 2,
-		after_dig_node = function(pos, _, _, digger)
+		after_dig_node = function(pos, node, oldmeta, digger)
 			campfire_drops(pos, digger, def.drops, name.."_lit")
 		end,
 	})
@@ -180,7 +180,7 @@ function vlf_campfires.register_campfire(name, def)
 			 }}
 		},
 		use_texture_alpha = "clip",
-		groups = { handy=1, axey=1, material_wood=1, lit_campfire=1, deco_block=1},
+		groups = { handy=1, axey=1, material_wood=1, lit_campfire=1 },
 		paramtype = "light",
 		paramtype2 = "4dir",
 		on_destruct = function(pos)
@@ -228,7 +228,7 @@ function vlf_campfires.register_campfire(name, def)
 		_vlf_blast_resistance = 2,
 		_vlf_hardness = 2,
 		on_blast = on_blast,
-		after_dig_node = function(pos, _, _, digger)
+		after_dig_node = function(pos, node, _, digger)
 			drop_items(pos)
 			campfire_drops(pos, digger, def.drops, name.."_lit")
 		end,
@@ -253,10 +253,8 @@ minetest.register_globalstep(function(dtime)
 	etime = 0
 	for _,pl in pairs(minetest.get_connected_players()) do
 		local armor_feet = pl:get_inventory():get_stack("armor", 5)
-		if pl and pl:get_player_control().sneak
-		    or vlf_enchanting.has_enchantment(armor_feet, "frost_walker")
-		    or vlf_entity_effects.has_effect(pl, "fire_resistance") then
-			return
+		if pl and not pl:get_player_control().sneak and not vlf_enchanting.has_enchantment(armor_feet, "frost_walker") and not vlf_entity_effects.has_effect(pl, "fire_resistance") then
+			burn_in_campfire(pl)
 		end
 	end
 	for _,ent in pairs(minetest.luaentities) do

@@ -1,6 +1,4 @@
 # textdomain: vlf_tools
-Solid Blocks of Steel. These are only forged if those that are brave enough can defeat the trials that await them.=
-Heavy Core=
 Pickaxes are mining tools to mine hard blocks, such as stone. A pickaxe can also be used as weapon, but it is rather inefficient.=Kilofy są narzędziami wykorzystywanymi do kopania twardych bloków, takich jak kamień. Mogą być również wykorzystane jako bronie, ale nie jest to bardzo efektywne.
 An axe is your tool of choice to cut down trees, wood-based blocks and other blocks. Axes deal a lot of damage as well, but they are rather slow.=Siekiera jest narzędziem do ścinania drzew, bloków z desek i innych bloków. Siekiery zadają duże obrażenia, ale są wolne.
 Swords are great in melee combat, as they are fast, deal high damage and can endure countless battles. Swords can also be used to cut down a few particular blocks, such as cobwebs.=Miecze są świetne do walki wręcz, ponieważ są szybkie, zadają duże obrażenia i mogą wytrzymać niezliczone pojedynki. Można je również wykorzystać do ścięcia niektórych bloków takich jak pajęczyny.
@@ -8,7 +6,6 @@ Shovels are tools for digging coarse blocks, such as dirt, sand and gravel. They
 To turn a grass block into a grass path, hold the shovel in your hand, then use (rightclick) the top or side of a grass block. This only works when there's air above the grass block.=Aby zmienić blok trawy w ścieżkę, weź łopatę do ręki, następnie użyj prawego przycisku myszy na wierzchu lub boku bloku trawy. To zadziała tylko pod warunkiem, że nad blokiem ziemi jest blok powietrza.
 Shears are tools to shear sheep and to mine a few block types. Shears are a special mining tool and can be used to obtain the original item from grass, leaves and similar blocks that require cutting.=Nożyce są narzędziem do strzyżenia owiec i kopania kilku typów bloków. Są one specjalnym narzędziem do kopania i można je wykorzystać do uzyskania oryginalnych przedmiotów z trawy, liści i podobnych bloków wymagających ścinania.
 To shear sheep or carve faceless pumpkins, use the “place” key on them. Faces can only be carved at the side of faceless pumpkins. Mining works as usual, but the drops are different for a few blocks.=Aby ostrzyc owcę lub wydrążyć dynię użyj przycisku "umieść" na nich. Twarze mogą zostać wydrążone na bokach dyń bez twarzy. Kopanie działa jak zwykle, ale zrzut jest inny dla niektórych bloków.
-The mace is a slow melee weapon that deals incredible damage. “dig” key to use it. This weapon has a cooldown of 1.6 seconds, but if you fall the mace will deal more damage than if you are on the ground. The further you fall the more damage done. If you hit a mob or player then you will receive no fall damage, but beware. If you miss you will die. =
 Wooden Pickaxe=Drewniany kilof
 Stone Pickaxe=Kamienny kilof
 Iron Pickaxe=Żelazny kilof
@@ -34,4 +31,3 @@ Golden Sword=Złoty miecz
 Diamond Sword=Diamentowy miecz
 Netherite Sword=
 Shears=Nożyce
-Mace=

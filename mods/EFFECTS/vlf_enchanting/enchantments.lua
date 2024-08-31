@@ -786,7 +786,7 @@ vlf_enchanting.enchantments.breach = {
 	disallow = {},
 	incompatible = { density = true, bane_of_arthropods = true, smite = true },
 	weight = 2,
-	description = S("Reduces target's armor entity_effectiveness."),
+	description = S("Reduces target's armor effectiveness."),
 	curse = false,
 	on_enchant = function() end,
 	requires_tool = false,

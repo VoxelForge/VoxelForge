@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Cooks food and keeps bees happy."
-msgstr "Cuoce il cibo e mantiene le api felici."
+msgstr ""
 
 msgid "Campfires have multiple uses, including keeping bees happy, cooking raw meat and fish, and as a trap."
-msgstr "I fuochi da campo hanno usi molteplici, inclusi mantenere le api felici, cuocere la carne ed il pesce crudi e come una trappola."
+msgstr ""
 
 msgid "Campfire"
-msgstr "Fuoco da Campo"
+msgstr ""
 
 msgid "Soul Campfire"
 msgstr ""

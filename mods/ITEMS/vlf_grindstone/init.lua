@@ -64,7 +64,7 @@ local function calculate_xp(stack)
 	local xp = 0
 	local enchants = vlf_enchanting.get_enchantments(stack)
 	for enchant, level in pairs(enchants) do
-		if level > 0 and not vlf_enchanting.is_curse(enchant) then
+		if level > 0 and vlf_enchanting.is_curse(enchant) then
 			-- Add a bit of uniform randomisation
 			xp = xp + math.random(7, 13) * level
 		end
@@ -182,7 +182,6 @@ minetest.register_node("vlf_grindstone:grindstone", {
 	},
 	drawtype = "nodebox",
 	paramtype2 = "facedir",
-	sunlight_propagates = true,
 	node_box = node_box,
 	selection_box = node_box,
 	collision_box = node_box,

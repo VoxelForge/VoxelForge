@@ -13,7 +13,7 @@ for i=0, 3 do
 	local berries_to_drop = drop_berries and {i - 1, i} or nil
 	local orc
 	if i >= 2 then
-		orc = function(pos, _, clicker, itemstack)
+		orc = function(pos, node, clicker, itemstack, pointed_thing)
 			if clicker and clicker:is_player() then
 				local pn = clicker:get_player_name()
 				if minetest.is_protected(pos, pn) then
@@ -24,12 +24,10 @@ for i=0, 3 do
 					return false
 				end
 			end
-			if berries_to_drop then
-				for _ = 1, berries_to_drop[math.random(2)] do
-					minetest.add_item(pos, "vlf_farming:sweet_berry")
-				end
-				minetest.swap_node(pos, {name = "vlf_farming:sweet_berry_bush_1"})
+			for j=1, berries_to_drop[math.random(2)] do
+				minetest.add_item(pos, "vlf_farming:sweet_berry")
 			end
+			minetest.swap_node(pos, {name = "vlf_farming:sweet_berry_bush_1"})
 			return itemstack
 		end
 	end
@@ -45,13 +43,13 @@ for i=0, 3 do
 		move_resistance = 7,
 		walkable = false,
 		-- Dont even create a table if no berries are dropped.
-		drop = (not drop_berries and "") or ( berries_to_drop and {
+		drop = not drop_berries and "" or {
 			max_items = 1,
 			items = {
 				{ items = {"vlf_farming:sweet_berry " .. berries_to_drop[1] }, rarity = 2 },
 				{ items = {"vlf_farming:sweet_berry " .. berries_to_drop[2] } }
 			}
-		}),
+		},
 		selection_box = {
 			type = "fixed",
 			fixed = {-6 / 16, -0.5, -6 / 16, 6 / 16, (-0.30 + (i*0.25)), 6 / 16},

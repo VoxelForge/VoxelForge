@@ -44,7 +44,7 @@ end
 --
 -- IGNORE_HASH means to ignore the hash so that values may be
 -- overwritten when they have received alterations from elsewhere,
--- e.g., haste/fatigue entity_effects.
+-- e.g., haste/fatigue effects.
 function vlf_enchanting.update_groupcaps(itemstack, ignore_hash)
 	local name = itemstack:get_name()
 	if not minetest.registered_tools[name] or not minetest.registered_tools[name].tool_capabilities then

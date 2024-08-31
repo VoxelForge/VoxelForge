@@ -7,7 +7,7 @@
 --
 --
 --
--- This mod adds mesecons[=minecraft redstone] and different receptors/entity_effectors to minetest.
+-- This mod adds mesecons[=minecraft redstone] and different receptors/effectors to minetest.
 -- See the documentation on the forum for additional information, especially about crafting
 --
 --
@@ -23,7 +23,7 @@
 --		state = mesecon.state.on/off
 --		rules = rules/get_rules
 --	},
---	entity_effector =
+--	effector =
 --	{
 --		action_on = function
 --		action_off = function

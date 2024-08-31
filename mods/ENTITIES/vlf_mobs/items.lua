@@ -32,7 +32,6 @@ function mob_class:set_armor_texture()
 		if helmet.name=="" and chestplate.name=="" and leggings.name=="" and boots.name=="" then
 			helmet={name="blank.png"}
 		end
-
 		local texture = get_armor_texture(self.object, chestplate.name)
 		..get_armor_texture(self.object, helmet.name)
 		..get_armor_texture(self.object, boots.name)
@@ -87,10 +86,9 @@ function mob_class:check_item_pickup()
 						self.armor_list[def._vlf_armor_element] = stack:to_string()
 						o:remove()
 						self:set_armor_texture()
-						self.persistent = true
 					end
 				elseif self.pick_up then
-					for _, v in pairs(self.pick_up) do
+					for k,v in pairs(self.pick_up) do
 						if self.on_pick_up and itemname == v then
 							local r = self.on_pick_up(self,l)
 							if r and r.is_empty and not r:is_empty() then

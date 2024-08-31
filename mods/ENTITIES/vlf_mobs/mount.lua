@@ -1,7 +1,16 @@
 local mob_class = vlf_mobs.mob_class
 
+local node_ok = function(pos, fallback)
+	fallback = fallback or vlf_mobs.fallback_node
+	local node = minetest.get_node_or_nil(pos)
+	if node and minetest.registered_nodes[node.name] then
+		return node
+	end
+	return {name = fallback}
+end
+
 local function node_is(pos)
-	local node = vlf_mobs.node_ok(pos)
+	local node = node_ok(pos)
 	if node.name == "air" then
 		return "air"
 	end
@@ -111,11 +120,7 @@ end
 function vlf_mobs.detach(player, offset)
 	force_detach(player)
 	vlf_player.player_set_animation(player, "stand" , 30)
-	if offset then
-		player:set_pos(vector.add(player:get_pos(), offset))
-	else
-		player:add_velocity(vector.new(math.random(-6,6),math.random(5,8),math.random(-6,6))) --throw the rider off
-	end
+	player:add_velocity(vector.new(math.random(-6,6),math.random(5,8),math.random(-6,6))) --throw the rider off
 end
 
 
@@ -242,16 +247,6 @@ function mob_class:drive(moving_anim, stand_anim, can_fly, dtime)
 			new_acce.y = 0
 		end
 	elseif ni == "liquid" or ni == "lava" then
-		-- sink when touching water
-		if velo.y >= 0 then
-			velo.y = velo.y - 1.5
-		end
-		-- when float up then detach driver and let mount roam
-		local cbox = self.object:get_properties().collisionbox
-		if minetest.registered_nodes[vlf_mobs.node_ok(vector.offset(p,0,cbox[5] -0.25,0)).name].groups.water then
-			force_detach(self.driver)
-			self:roam()
-		end
 		if ni == "lava" and self.lava_damage ~= 0 then
 			self.lava_counter = (self.lava_counter or 0) + dtime
 			if self.lava_counter > 1 then
@@ -299,7 +294,6 @@ function mob_class:drive(moving_anim, stand_anim, can_fly, dtime)
 	self.object:set_velocity(new_velo)
 	self.object:set_acceleration(new_acce)
 	self.v2 = v
-	self:set_animation_speed(self.animation.run_speed)
 end
 
 function mob_class:on_detach_child(child)

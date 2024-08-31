@@ -1,6 +1,4 @@
 # textdomain: vlf_tools
-Solid Blocks of Steel. These are only forged if those that are brave enough can defeat the trials that await them.=
-Heavy Core=
 Pickaxes are mining tools to mine hard blocks, such as stone. A pickaxe can also be used as weapon, but it is rather inefficient.=Picaretas são ferramentas de mineração para minerar blocos duros, como rochas. Uma picareta também pode ser usada como arma, mas é bastante ineficiente.
 An axe is your tool of choice to cut down trees, wood-based blocks and other blocks. Axes deal a lot of damage as well, but they are rather slow.=Um machado é sua ferramenta preferida para cortar árvores, blocos de madeira e outros blocos. Machados também dão muito dano, mas são bastante lentos.
 Swords are great in melee combat, as they are fast, deal high damage and can endure countless battles. Swords can also be used to cut down a few particular blocks, such as cobwebs.=Espadas são excelentes no combate corpo a corpo, já que são rápidas, dão muito dano e podem suportar inúmeras batalhas. Espadas também podem ser usadas para cortar alguns blocos específicos, como as teias.
@@ -8,7 +6,6 @@ Shovels are tools for digging coarse blocks, such as dirt, sand and gravel. They
 To turn a grass block into a grass path, hold the shovel in your hand, then use (rightclick) the top or side of a grass block. This only works when there's air above the grass block.=Para transformar um bloco de grama em um caminho de grama, segure a pá na sua mão, então use (clique com o botão direito) no topo ou lados de um bloco de grama. Isso só funcionará quando houver ar sobre o bloco de grama.
 Shears are tools to shear sheep and to mine a few block types. Shears are a special mining tool and can be used to obtain the original item from grass, leaves and similar blocks that require cutting.=Tesouras são ferramentas para tosquear ovelhas e para minerar alguns tipos de blocos específicos. Tesouras são uma ferramenta de mineração especial e podem ser usadas para obter o item original da grama, folhas e blocos semelhantes que requerem corte.
 To shear sheep or carve faceless pumpkins, use the “place” key on them. Faces can only be carved at the side of faceless pumpkins. Mining works as usual, but the drops are different for a few blocks.=Para tosquear ovelhas ou escavar abóboras, use a tecla "posicionar" neles. Rostos podem ser escavados na lateral das abóboras. Minerar funciona como de costume, porém os drops são diferentes para alguns blocos específicos.
-The mace is a slow melee weapon that deals incredible damage. “dig” key to use it. This weapon has a cooldown of 1.6 seconds, but if you fall the mace will deal more damage than if you are on the ground. The further you fall the more damage done. If you hit a mob or player then you will receive no fall damage, but beware. If you miss you will die. =
 Wooden Pickaxe=Picareta de Madeira
 Stone Pickaxe=Picareta de Pedra
 Iron Pickaxe=Picareta de Ferro
@@ -34,7 +31,6 @@ Golden Sword=Espada de Ouro
 Diamond Sword=Espada de Diamante
 Netherite Sword=Espada de Netherite
 Shears=Tesoura
-Mace=
 
 
 ##### not used anymore #####

@@ -23,7 +23,7 @@ msgid "Fishing rods can be used to catch fish."
 msgstr "Les cannes à pêche peuvent être utilisées pour attraper du poisson."
 
 msgid "Rightclick to launch the bobber. When it sinks right-click again to reel in an item. Who knows what you're going to catch?"
-msgstr "Clic droit pour lancer le bouchon. Lorsqu'il s'enfonce, cliquez de nouveau avec le bouton droit pour rembobiner. Qui sait ce que vous allez attraper ?"
+msgstr "Clic droit pour lancer le bouchon. Lorsqu'il s'enfonce, cliquez de nouveau avec le bouton droit pour rembobiner. Qui sait ce que tu vas attraper?"
 
 msgid "Raw Fish"
 msgstr "Poisson Cru"
@@ -35,7 +35,7 @@ msgid "Cooked Fish"
 msgstr "Poisson cuit"
 
 msgid "Mmh, fish! This is a healthy food item."
-msgstr "Mmh, poisson ! Il s'agit d'un aliment sain."
+msgstr "Mmh, poisson! Il s'agit d'un aliment sain."
 
 msgid "Raw Salmon"
 msgstr "Saumon cru"

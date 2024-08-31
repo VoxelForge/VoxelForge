@@ -459,6 +459,17 @@ function vlf_enchanting.enchant_randomly(itemstack, enchantment_level, treasure,
 	return itemstack
 end
 
+function vlf_enchanting.enchant_uniform_randomly(stack, exclude, pr)
+	local enchantment = vlf_enchanting.get_random_enchantment(stack, true, false, exclude, pr)
+
+	if enchantment then
+		vlf_enchanting.enchant(stack, enchantment,
+			vlf_enchanting.random(pr, 1, vlf_enchanting.enchantments[enchantment].max_level))
+	end
+
+	return stack
+end
+
 function vlf_enchanting.get_random_glyph_row()
 	local glyphs = ""
 	local x = 1.3

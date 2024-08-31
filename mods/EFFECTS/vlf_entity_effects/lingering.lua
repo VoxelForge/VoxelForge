@@ -177,19 +177,19 @@ function vlf_entity_effects.register_lingering(name, descr, color, def)
 	local id = "vlf_entity_effects:"..name.."_lingering"
 	local longdesc = def._longdesc
 	if not def.no_effect then
-		longdesc = S("A throwable entity_effect that will shatter on impact, where it creates a magic cloud that lingers around for a while. Any player or mob inside the cloud will receive the entity_effect's effect or set of effects, possibly repeatedly.")
+		longdesc = S("A throwable effect that will shatter on impact, where it creates a magic cloud that lingers around for a while. Any player or mob inside the cloud will receive the effect's effect or set of effects, possibly repeatedly.")
 		if def.longdesc then
 			longdesc = longdesc .. "\n" .. def._longdesc
 		end
 	end
 	local groups = {brewitem=1, not_in_creative_inventory = 0,
-			bottle=1, ling_entity_effect=1, _vlf_entity_effect=1}
+			bottle=1, ling_effect=1, _vlf_effect=1}
 	if def.nocreative then groups.not_in_creative_inventory = 1 end
 	minetest.register_craftitem(id, {
 		description = descr,
 		_tt_help = def._tt,
 		_dynamic_tt = def._dynamic_tt,
-		_vlf_filter_description = vlf_entity_effects.filter_entity_effect_description,
+		_vlf_filter_description = vlf_entity_effects.filter_effect_description,
 		_doc_items_longdesc = longdesc,
 		_doc_items_usagehelp = S("Use the “Punch” key to throw it."),
 		stack_max = def.stack_max,
@@ -197,7 +197,7 @@ function vlf_entity_effects.register_lingering(name, descr, color, def)
 		uses_level = def.uses_level,
 		has_potent = def.has_potent,
 		has_plus = def.has_plus,
-		_base_entity_effect = def.base_entity_effect,
+		_base_effect = def.base_effect,
 		_default_potent_level = def._default_potent_level,
 		_default_extend_level = def._default_extend_level,
 		inventory_image = lingering_image(color),
@@ -212,8 +212,8 @@ function vlf_entity_effects.register_lingering(name, descr, color, def)
 			obj:set_acceleration({x=dir.x*-3, y=-9.8, z=dir.z*-3})
 			local ent = obj:get_luaentity()
 			ent._thrower = placer:get_player_name()
-			ent._potency = item:get_meta():get_int("vlf_entity_effects:entity_effect_potent")
-			ent._plus = item:get_meta():get_int("vlf_entity_effects:entity_effect_plus")
+			ent._potency = item:get_meta():get_int("vlf_entity_effects:effect_potent")
+			ent._plus = item:get_meta():get_int("vlf_entity_effects:effect_plus")
 			ent._effect_list = def._effect_list
 			if not minetest.is_creative_enabled(placer:get_player_name()) then
 				item:take_item()
@@ -230,8 +230,8 @@ function vlf_entity_effects.register_lingering(name, descr, color, def)
 			    obj:set_velocity({x=dropdir.x*velocity,y=dropdir.y*velocity,z=dropdir.z*velocity})
 			    obj:set_acceleration({x=dropdir.x*-3, y=-9.8, z=dropdir.z*-3})
 			    local ent = obj:get_luaentity()
-			    ent._potency = item:get_meta():get_int("vlf_entity_effects:entity_effect_potent")
-			    ent._plus = item:get_meta():get_int("vlf_entity_effects:entity_effect_plus")
+			    ent._potency = item:get_meta():get_int("vlf_entity_effects:effect_potent")
+			    ent._plus = item:get_meta():get_int("vlf_entity_effects:effect_plus")
 			    ent._effect_list = def._effect_list
 			end
 		end

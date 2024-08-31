@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Brewing Stand"
-msgstr "Alambicco"
+msgstr ""
 
 msgid "Inventory"
-msgstr "Inventario"
+msgstr ""
 
 msgid "To use a brewing stand, rightclick it."
-msgstr "Per utilizzare un alambicco, cliccaci col tasto destro."
+msgstr ""
 
 msgid "To brew, you need blaze powder as fuel, a brewing material and at least 1 glass bottle filled with a liquid."
 msgstr ""

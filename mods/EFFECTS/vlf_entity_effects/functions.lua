@@ -91,7 +91,7 @@ end
 -- name - string - effect name in code
 -- description - translated string - actual effect name in game
 -- optional parameters in def:
--- get_tt - function(factor) - returns tooltip description text for use with entity_effects
+-- get_tt - function(factor) - returns tooltip description text for use with effects
 -- icon - string - file name of the effect icon in HUD - defaults to one based on name
 -- res_condition - function(object) - returning true if target is to be resistant to the effect
 -- on_start - function(object, factor) - called when dealing the effect
@@ -1175,7 +1175,7 @@ vlf_entity_effects.register_hp_hudbar_modifier({
 	priority = 10,
 })
 
-local function entity_effects_set_hudbar(player)
+local function effects_set_hudbar(player)
 	for _, mod in pairs(hp_hudbar_modifiers) do
 		if mod.predicate(player) then
 			hb.change_hudbar(player, "health", nil, nil, mod.icon, nil, "hudbars_bar_health.png")
@@ -1189,7 +1189,7 @@ local enable_damage = minetest.settings:get_bool("enable_damage")
 
 local icon_ids = {}
 
-local function entity_effects_init_icons(player)
+local function effects_init_icons(player)
 	local name = player:get_player_name()
 	icon_ids[name] = {}
 	for e=1, EFFECT_TYPES do
@@ -1235,7 +1235,7 @@ local function entity_effects_init_icons(player)
 	end
 end
 
-local function entity_effects_set_icons(player)
+local function effects_set_icons(player)
 	local name = player:get_player_name()
 	if not icon_ids[name] then
 		return
@@ -1283,9 +1283,9 @@ local function entity_effects_set_icons(player)
 	end
 end
 
-local function entity_effects_set_hud(player)
-	entity_effects_set_hudbar(player)
-	entity_effects_set_icons(player)
+local function effects_set_hud(player)
+	effects_set_hudbar(player)
+	effects_set_icons(player)
 end
 
 
@@ -1360,7 +1360,7 @@ minetest.register_globalstep(function(dtime)
 		    if object:is_player() then
 			local meta = object:get_meta()
 			meta:set_string("vlf_entity_effects:_EF_"..name, "")
-			entity_effects_set_hud(object)
+			effects_set_hud(object)
 		    else
 			local ent = object:get_luaentity()
 			if ent then
@@ -1461,7 +1461,7 @@ function vlf_entity_effects._reset_effects(object, set_hud)
 	end
 
 	if set_hud ~= false then
-		entity_effects_set_hud(object)
+		effects_set_hud(object)
 	end
 end
 
@@ -1654,7 +1654,7 @@ function vlf_entity_effects.clear_effect(object, effectname)
 	    item_speed_effects[effectname][object] = nil
 	end
 	if not object:is_player() then return end
-	entity_effects_set_hud(object)
+	effects_set_hud(object)
 end
 
 minetest.register_on_leaveplayer( function(player)
@@ -1665,15 +1665,15 @@ end)
 
 minetest.register_on_dieplayer( function(player)
 	vlf_entity_effects._reset_effects(player)
-	entity_effects_set_hud(player)
+	effects_set_hud(player)
 end)
 
 minetest.register_on_joinplayer( function(player)
 	vlf_entity_effects._reset_effects(player, false) -- make sure there are no weird holdover effects
 	vlf_entity_effects._load_player_effects(player)
 	vlf_entity_effects._reset_haste_fatigue_item_meta(player)
-	entity_effects_init_icons(player)
-	entity_effects_set_hud(player)
+	effects_init_icons(player)
+	effects_set_hud(player)
 end)
 
 minetest.register_on_shutdown(function()
@@ -1735,7 +1735,7 @@ function vlf_entity_effects.detect_hit (obj, pos, moveresult, velocity)
 		if hitpoint.ref:is_player ()
 		    or (hitpoint.ref:get_luaentity ()
 			and hitpoint.ref:get_luaentity ().is_mob) then
-		    -- Don't return the thrower if the entity_effect was
+		    -- Don't return the thrower if the effect was
 		    -- launched from within it and has not yet
 		    -- exited.
 		    if in_thrower_body and hitpoint.ref == thrower then
@@ -1778,7 +1778,7 @@ function vlf_entity_effects.make_invisible(obj_ref, hide)
 end
 
 
-function vlf_entity_effects._use_entity_effect(obj, color)
+function vlf_entity_effects._use_effect(obj, color)
 	local d = 0.1
 	local pos = obj:get_pos()
 	minetest.sound_play("vlf_entity_effects_drinking", {pos = pos, max_hear_distance = 6, gain = 1})
@@ -1915,7 +1915,7 @@ function vlf_entity_effects.give_effect(name, object, factor, duration, no_parti
 		end
 	end
 
-	if object:is_player() then entity_effects_set_hud(object) end
+	if object:is_player() then effects_set_hud(object) end
 	return true
 end
 

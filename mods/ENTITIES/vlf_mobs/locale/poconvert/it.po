@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Remove all, nametagged or tamed mobs within the specified distance or everywhere. When unspecified remove all mobs except tamed and nametagged ones."
-msgstr "Rimuovere ogni mob, i mob con l'etichetta del nome od i mob addomesticati entro la distanza specificata od ovunque. Rimuovere ogni mob eccetto quelli addomesticati e quelli con l'etichetta del nome dove non specificato."
+msgstr ""
 
 msgid "Invalid syntax."
-msgstr "Sintassi non valida."
+msgstr ""
 
 msgid "This allows you to place a single mob."
-msgstr "Ti permette di generare un singolo mob."
+msgstr ""
 
 msgid "Just place it where you want the mob to appear. Animals will spawn tamed, unless you hold down the sneak key while placing. If you place this on a mob spawner, you change the mob it spawns."
 msgstr ""

@@ -23,9 +23,6 @@ vlf_pottery_sherds.defs = {
 	["shelter"] = { description = S("Shelter") },
 	["skull"] = { description = S("Skull") },
 	["snort"] = { description = S("Snort") },
-	["flow"] = { description = S("Flow") },
-	["guster"] = { description = S("Guster") },
-	["scrape"] = { description = S("Scrape") },
 }
 
 local pot_face_positions = {
@@ -174,12 +171,6 @@ minetest.register_node("vlf_pottery_sherds:pot", {
 		local meta = minetest.get_meta(pos)
 		meta:set_string("pot_faces",itemstack:get_meta():get_string("pot_faces"))
 		update_entities(pos)
-	end,
-	on_construct = function(pos)
-		--local meta = minetest.get_meta(pos)
-		minetest.after(0.1, function()
-		update_entities(pos)
-		end)
 	end,
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
 		update_entities(pos,true)

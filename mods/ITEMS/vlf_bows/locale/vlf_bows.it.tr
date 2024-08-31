@@ -1,7 +1,7 @@
 # textdomain: vlf_bows
-Arrow=Freccia
-Ammunition=Munizioni
-Damage from bow: 1-10=Danno dall'arco: 1-10
+Arrow=
+Ammunition=
+Damage from bow: 1-10=
 Damage from dispenser: 3=
 Arrows are ammunition for bows and dispensers.=
 An arrow fired from a bow has a regular damage of 1-9. At full charge, there's a 20% chance of a critical hit dealing 10 damage instead. An arrow fired from a dispenser always deals 3 damage.=

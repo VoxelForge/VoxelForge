@@ -13,13 +13,13 @@ end
 
 function vlf_entity_effects.register_arrow(name, desc, color, def)
 	local tt = def._tt or ""
-	local groups = {ammo=1, ammo_bow=1, brewitem=1, _vlf_entity_effect=1}
+	local groups = {ammo=1, ammo_bow=1, brewitem=1, _vlf_effect=1}
 	if def.nocreative then groups.not_in_creative_inventory = 1 end
 	minetest.register_craftitem("vlf_entity_effects:"..name.."_arrow", table.merge (arrow_def, {
 		description = desc,
 		_tt_help = arrow_tt .. "\n" .. tt,
 		_dynamic_tt = def._dynamic_tt,
-		_vlf_filter_description = vlf_entity_effects.filter_entity_effect_description,
+		_vlf_filter_description = vlf_entity_effects.filter_effect_description,
 		_doc_items_longdesc = arrow_longdesc .. "\n" ..
 			S("This particular arrow is tipped and will give an effect when it hits a player or mob.") .. "\n" ..
 		    (def.longdesc or ""),

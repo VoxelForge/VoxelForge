@@ -7,6 +7,16 @@ local DEATH_DELAY = 0.5
 local PATHFINDING = "gowp"
 local mobs_drop_items = minetest.settings:get_bool("mobs_drop_items") ~= false
 
+-- get node but use fallback for nil or unknown
+local node_ok = function(pos, fallback)
+	fallback = fallback or vlf_mobs.fallback_node
+	local node = minetest.get_node_or_nil(pos)
+	if node and minetest.registered_nodes[node.name] then
+		return node
+	end
+	return minetest.registered_nodes[fallback]
+end
+
 -- check if within physical map limits (-30911 to 30927)
 local function within_limits(pos, radius)
 	local wmin, wmax = -30912, 30928
@@ -120,7 +130,7 @@ function mob_class:item_drop(cooked, looting_level)
 				end
 			end
 
-			for _ = 1, num do
+			for x = 1, num do
 				obj = minetest.add_item(pos, ItemStack(item .. " " .. 1))
 			end
 
@@ -172,19 +182,14 @@ function mob_class:collision()
 end
 
 function mob_class:slow_mob()
-	local d = 0.80
+	local d = 0.85
 	if self:check_dying() then d = 0.92 end
 
 	if self.object then
 		local v = self.object:get_velocity()
 		if v then
 			--diffuse object velocity
-			local y = v.y
-			if y > 0 then
-				y = y * d
-			end
-
-			self.object:set_velocity({ x = v.x * d, y = y, z = v.z * d })
+			self.object:set_velocity({x = v.x*d, y = v.y, z = v.z*d})
 		end
 	end
 end
@@ -217,7 +222,7 @@ function mob_class:get_velocity()
 	return 0
 end
 
-local function shortest_term_of_yaw_rotation(_, rot_origin, rot_target, nums)
+local function shortest_term_of_yaw_rotation(self, rot_origin, rot_target, nums)
 	if not rot_origin or not rot_target then
 		return
 	end
@@ -261,7 +266,6 @@ function mob_class:set_yaw(yaw, delay, dtime)
 	if self.state ~= PATHFINDING then
 		self._turn_to = yaw
 	end
---minetest.log("set_yaw: " .. self.order .. ", " .. self.state .. ", " .. debug.traceback())
 	if math.deg(self.object:get_yaw()) > 360 then
 		self.object:set_yaw(math.rad(0))
 	elseif math.deg(self.object:get_yaw()) < 0 then
@@ -279,7 +283,6 @@ function mob_class:set_yaw(yaw, delay, dtime)
 	local target_shortest_path_nums = shortest_term_of_yaw_rotation(self, self.object:get_yaw(), yaw, true)
 
 	--turn in the shortest path possible toward our target. if we are attacking, don't dance.
-	if not target_shortest_path then return end
 	if (math.abs(target_shortest_path) > 50 and not self._kb_turn) and (self.attack and self.attack:get_pos() or self.following and self.following:get_pos()) then
 		if self.following then
 			target_shortest_path = shortest_term_of_yaw_rotation(self, self.object:get_yaw(), minetest.dir_to_yaw(vector.direction(self.object:get_pos(), self.following:get_pos())), true)
@@ -295,7 +298,6 @@ function mob_class:set_yaw(yaw, delay, dtime)
 		ddtime = dtime
 	end
 
-	if not target_shortest_path_nums then return end
 	if math.abs(target_shortest_path_nums) > 10 then
 		self.object:set_yaw(self.object:get_yaw()+(target_shortest_path*(3.6*ddtime)))
 		if self.acc and vlf_mobs.check_vector(self.acc) then
@@ -325,16 +327,8 @@ function vlf_mobs.yaw(self, yaw, delay, dtime)
 end
 
 -- are we flying in what we are suppose to? (taikedz)
-function mob_class:flight_check(pos)
+function mob_class:flight_check()
 	local nod = self.standing_in
-
-	if pos then
-		local node = minetest.get_node_or_nil(pos)
-		if node then
-			nod = node.name
-		end
-	end
-
 	local def = minetest.registered_nodes[nod]
 	if not def then return false end -- nil check
 
@@ -346,54 +340,11 @@ function mob_class:flight_check(pos)
 	else
 		return false
 	end
-
-	-- flowers and such
-	if minetest.get_item_group(nod, "deco_block") > 0 and not def.walkable then
-		return true
-	end
-
 	for _,checknode in pairs(fly_in) do
 		if nod == checknode or nod == "ignore" then
 			return true
 		end
 	end
-	return false
-end
-
-function mob_class:swim_check(pos)
-	local nod = self.standing_in
-
-	if pos then
-		local node = minetest.get_node_or_nil(pos)
-		if node then
-			nod = node.name
-		end
-	end
-	local def = minetest.registered_nodes[nod]
-	if not def then
-		return false
-	end
-
-	local swims_in
-	if type(self.swims_in) == "string" then
-		swims_in = { self.swims_in }
-	elseif type(self.swims_in) == "table" then
-		swims_in = self.swims_in
-	else
-		return false
-	end
-
-	-- flowers and such
-	if minetest.get_item_group(nod, "deco_block") > 0 and not def.walkable then
-		return true
-	end
-
-	for _, checknode in pairs(swims_in) do
-		if nod == checknode or nod == "ignore" then
-			return true
-		end
-	end
-
 	return false
 end
 
@@ -499,7 +450,9 @@ function mob_class:check_for_death(cause, cmi_cause)
 
 	self:set_velocity(0)
 	if self.object then
-		self.object:set_acceleration(vector.new(0, self.fall_speed, 0))
+		local acc = self.object:get_acceleration()
+		acc.x, acc.y, acc.z = 0, self.fall_speed, 0
+		self.object:set_acceleration(acc)
 	end
 
 	local length
@@ -531,7 +484,7 @@ function mob_class:check_for_death(cause, cmi_cause)
 		local cbox = self.object:get_properties().collisionbox
 		local yaw = self.object:get_rotation().y
 		self:safe_remove()
-		vlf_mobs.death_entity_effect(dpos, yaw, cbox, not self.instant_death)
+		vlf_mobs.death_effect(dpos, yaw, cbox, not self.instant_death)
 	end
 	if length <= 0 then
 		kill(self)
@@ -547,7 +500,7 @@ function mob_class:deal_light_damage(pos, damage)
 	if not ((vlf_weather.rain.raining or vlf_weather.state == "snow") and vlf_weather.is_outdoor(pos)) then
 		self:damage_mob("light", damage)
 
-		vlf_mobs.entity_effect(pos, 5, "vlf_particles_smoke.png")
+		vlf_mobs.effect(pos, 5, "vlf_particles_smoke.png")
 
 		if self:check_for_death("light", {type = "light"}) then
 			return true
@@ -560,13 +513,6 @@ function mob_class:is_in_node(itemstring) --can be group:...
 	local pos = self.object:get_pos()
 	local nn = minetest.find_nodes_in_area(vector.offset(pos, cb[1], cb[2], cb[3]), vector.offset(pos, cb[4], cb[5], cb[6]), {itemstring})
 	if nn and #nn > 0 then return true end
-end
-
-function mob_class:reset_breath ()
-    local max = self.object:get_properties ().breath_max
-    if max ~= -1 then
-	self.breath = max
-    end
 end
 
 -- environmental damage (water, lava, fire, light etc.)
@@ -595,7 +541,7 @@ function mob_class:do_env_damage()
 	end
 	local _, dim = vlf_worlds.y_to_layer(pos.y)
 	if (self.sunlight_damage ~= 0 or self.ignited_by_sunlight) and (sunlight or 0) >= minetest.LIGHT_MAX and dim == "overworld" then
-		if self.armor_list and not self.armor_list.head or not self.armor_list or self.armor_list and self.armor_list.head and self.armor_list.head == "" then
+		if self.armor_list and not self.armor_list.helmet or not self.armor_list or self.armor_list and self.armor_list.helmet and self.armor_list.helmet == "" then
 			if self.ignited_by_sunlight then
 				vlf_burning.set_on_fire(self.object, 10)
 			else
@@ -605,12 +551,28 @@ function mob_class:do_env_damage()
 		end
 	end
 
+	local cbox = self.object:get_properties().collisionbox
+	local y_level = cbox[2]
+
+	if self.child then
+		y_level = cbox[2] * 0.5
+	end
+
+	-- what is mob standing in?
+	pos.y = pos.y + y_level + 0.25 -- foot level
+	local pos2 = {x=pos.x, y=pos.y-1, z=pos.z}
+	self.standing_in = node_ok(pos, "air").name
+	self.standing_on = node_ok(pos2, "air").name
+
+	local pos_head = vector.offset(pos, 0, cbox[5] - 0.5, 0)
+	self.head_in = node_ok(pos_head, "air").name
+
 	-- don't fall when on ignore, just stand still
 	if self.standing_in == "ignore" then
 		self.object:set_velocity({x = 0, y = 0, z = 0})
-	-- wither rose entity_effect
+	-- wither rose effect
 	elseif self.standing_in == "vlf_flowers:wither_rose" then
-		vlf_entity_effects.give_entity_effect_by_level("withering", self.object, 2, 2)
+		vlf_entity_effects.give_effect_by_level("withering", self.object, 2, 2)
 	end
 
 	local nodef = minetest.registered_nodes[self.standing_in]
@@ -629,13 +591,13 @@ function mob_class:do_env_damage()
 		end
 	end
 
-	pos.y = pos.y + 1 -- for particle entity_effect position
+	pos.y = pos.y + 1 -- for particle effect position
 
 	-- water damage
 	if self.water_damage > 0
 	and nodef.groups.water then
 		self:damage_mob("environment", self.water_damage)
-		vlf_mobs.entity_effect(pos, 5, "vlf_particles_smoke.png", nil, nil, 1, nil)
+		vlf_mobs.effect(pos, 5, "vlf_particles_smoke.png", nil, nil, 1, nil)
 		if self:check_for_death("water", {type = "environment",
 				pos = pos, node = self.standing_in}) then
 			return true
@@ -645,7 +607,7 @@ function mob_class:do_env_damage()
 	and (nodef2.groups.fire) then
 
 		if self.fire_damage ~= 0 then
-			self:damage_mob("hot_floor", self.fire_damage)
+			self:damage_mob("environment", self.fire_damage)
 			if self:check_for_death("fire", {type = "environment",
 					pos = pos, node = self.standing_in}) then
 				return true
@@ -656,8 +618,8 @@ function mob_class:do_env_damage()
 	and self:is_in_node("group:lava") then
 
 		if self.lava_damage ~= 0 then
-			self:damage_mob("lava", self.lava_damage)
-			vlf_mobs.entity_effect(pos, 5, "fire_basic_flame.png", nil, nil, 1, nil)
+			self:damage_mob("environment", self.lava_damage)
+			vlf_mobs.effect(pos, 5, "fire_basic_flame.png", nil, nil, 1, nil)
 			vlf_burning.set_on_fire(self.object, 10)
 
 			if self:check_for_death("lava", {type = "environment",
@@ -671,9 +633,9 @@ function mob_class:do_env_damage()
 
 		if self.fire_damage ~= 0 then
 
-			self:damage_mob("in_fire", self.fire_damage)
+			self:damage_mob("environment", self.fire_damage)
 
-			vlf_mobs.entity_effect(pos, 5, "fire_basic_flame.png", nil, nil, 1, nil)
+			vlf_mobs.effect(pos, 5, "fire_basic_flame.png", nil, nil, 1, nil)
 			vlf_burning.set_on_fire(self.object, 5)
 
 			if self:check_for_death("fire", {type = "environment",
@@ -685,7 +647,7 @@ function mob_class:do_env_damage()
 	elseif nodef.damage_per_second ~= 0 and not nodef.groups.lava and not nodef.groups.fire then
 
 		self:damage_mob("environment", nodef.damage_per_second)
-		vlf_mobs.entity_effect(pos, 5, "vlf_particles_smoke.png")
+		vlf_mobs.effect(pos, 5, "vlf_particles_smoke.png")
 
 		if self:check_for_death("dps", {type = "environment",
 				pos = pos, node = self.standing_in}) then
@@ -704,12 +666,7 @@ function mob_class:do_env_damage()
 		end
 		if drowning then
 			self.breath = math.max(0, self.breath - 1)
-			-- Only show bubbles if getting close to drowning
-			-- Mainly because of dolphins
-			if self.breath <= 20 then
-				vlf_mobs.entity_effect(pos, 2, "bubble.png", nil, nil, 1, nil)
-			end
-
+			vlf_mobs.effect(pos, 2, "bubble.png", nil, nil, 1, nil)
 			if self.breath <= 0 then
 				local dmg
 				if head_nodedef.drowning > 0 then
@@ -717,7 +674,7 @@ function mob_class:do_env_damage()
 				else
 					dmg = 4
 				end
-				self:damage_entity_effect(dmg)
+				self:damage_effect(dmg)
 				self:damage_mob("environment", dmg)
 			end
 			if self:check_for_death("drowning", {type = "environment",
@@ -757,7 +714,7 @@ function mob_class:do_env_damage()
 	return self:check_for_death("", {type = "unknown"})
 end
 
-function mob_class:env_damage (_, pos)
+function mob_class:env_damage (dtime, pos)
 	-- environmental damage timer (every 1 second)
 	if not self:check_timer("env_damage", 1) then return end
 	self:check_entity_cramming()
@@ -777,7 +734,7 @@ function mob_class:damage_mob(reason, damage)
 		vlf_damage.finish_reason(vlf_reason)
 		vlf_util.deal_damage(self.object, damage, vlf_reason)
 
-		vlf_mobs.entity_effect(self.object:get_pos(), 5, "vlf_particles_smoke.png", 1, 2, 2, nil)
+		vlf_mobs.effect(self.object:get_pos(), 5, "vlf_particles_smoke.png", 1, 2, 2, nil)
 
 		if self:check_for_death(reason, {type = reason}) then
 			return true
@@ -816,75 +773,49 @@ function mob_class:check_entity_cramming()
 	end
 end
 
-function mob_class:should_swim()
-	local pos = self.object:get_pos()
-	if self:flight_check() and self:flight_check(vector.offset(pos, 0, 1, 0)) then
-		return true
-	end
-
-	return false
-end
-
-function mob_class:should_flap()
-	local pos = self.object:get_pos()
-	if self:flight_check() and self:flight_check(vector.offset(pos, 0, -1, 0)) then
-		return true
-	end
-
-	return false
-end
-
-function mob_class:fly_or_walk_anim()
-	if self.animation and self.animation.fly_start and self.animation.fly_end then
-		return "fly"
-	end
-
-	return "walk"
-end
-
--- Axolotl should have different anims for swimming and walking ...
-function mob_class:swim_or_walk_anim()
-	if self.animation and self.animation.swim_start and self.animation.swim_end then
-		return "swim"
-	end
-
-	return "walk"
-end
-
 -- falling and fall damage
 -- returns true if mob died
 function mob_class:falling(pos)
 	if self.fly and self.state ~= "die" then return	end
-	if self.swims and self.state ~= "die" then
-		return
-	end
 
 	local v = self.object:get_velocity()
-	-- floating in water (or falling)
-	if v.y > 0 and v.y < -self.fall_speed then
-		-- when moving up, always use gravity
-		self.object:set_acceleration(vector.new(0, self.fall_speed, 0))
-	elseif v.y <= 0 and v.y > self.fall_speed then
-		-- fall downwards at set speed
-		self.object:set_acceleration(vector.new(0, self.fall_speed, 0))
-	else
-		-- stop accelerating once max fall speed hit
-		self.object:set_acceleration(vector.zero())
-	end
 	if self._just_portaled then
 		self.reset_fall_damage = 1
 		return false -- mob has teleported through portal - it's 99% not falling
 	end
+	-- floating in water (or falling)
+	if v.y > 0 then
+		-- apply gravity when moving up
+		self.object:set_acceleration({
+			x = 0,
+			y = self.fall_speed,
+			z = 0
+		})
+	elseif v.y <= 0 and v.y > self.fall_speed then
+		-- fall downwards at set speed
+		self.object:set_acceleration({
+			x = 0,
+			y = self.fall_speed,
+			z = 0
+		})
+	else
+		-- stop accelerating once max fall speed hit
+		self.object:set_acceleration({x = 0, y = 0, z = 0})
+	end
 
-	if minetest.registered_nodes[vlf_mobs.node_ok(pos).name].groups.lava then
+	if minetest.registered_nodes[node_ok(pos).name].groups.lava then
 		if self.floats_on_lava == 1 then
-			self.object:set_acceleration(vector.new(0, -self.fall_speed / (math.max(1, v.y) ^ 2), 0))
+			self.object:set_acceleration({
+				x = 0,
+				y = -self.fall_speed / (math.max(1, v.y) ^ 2),
+				z = 0
+			})
 		end
 	end
 	-- in water then float up
-	if minetest.registered_nodes[vlf_mobs.node_ok(pos).name].groups.water then
+	if minetest.registered_nodes[node_ok(pos).name].groups.water then
 		local cbox = self.object:get_properties().collisionbox
-		if self.floats == 1 and minetest.registered_nodes[vlf_mobs.node_ok(vector.offset(pos,0,cbox[5] -0.25,0)).name].groups.water then
+		if self.floats == 1 and minetest.registered_nodes[node_ok(vector.offset(pos,0,cbox[5] -0.25,0)).name].groups.water then
 			self.object:set_acceleration(vector.new(0, -self.fall_speed / (math.max(1, v.y) ^ 2), 0))
 		end
 		-- Reset fall damage when falling into water first.
@@ -893,7 +824,7 @@ function mob_class:falling(pos)
 		-- fall damage onto solid ground
 		if self.fall_damage == 1
 		and self.object:get_velocity().y == 0 then
-			local n = vlf_mobs.node_ok(vector.offset(pos,0,-1,0)).name
+			local n = node_ok(vector.offset(pos,0,-1,0)).name
 			-- init old_y to current height if not set.
 			local d = (self.old_y or self.object:get_pos().y) - self.object:get_pos().y
 
@@ -963,7 +894,7 @@ end
 function mob_class:check_suspend()
 	if not self:player_in_active_range() then
 		local pos = self.object:get_pos()
-		local node_under = vlf_mobs.node_ok(vector.offset(pos,0,-1,0)).name
+		local node_under = node_ok(vector.offset(pos,0,-1,0)).name
 		local acc = self.object:get_acceleration()
 		self:set_animation( "stand", true)
 		if acc.y > 0 or node_under ~= "air" then
@@ -972,30 +903,4 @@ function mob_class:check_suspend()
 		end
 		return true
 	end
-end
-
-local function apply_physics_factors (self, field, id)
-    local base = self._physics_factors[field].base
-    for name, value in pairs (self._physics_factors[field]) do
-	if name ~= "base" then
-	    base = base * value
-	end
-    end
-    self[field] = base
-end
-
-function mob_class:add_physics_factor (field, id, factor)
-    if not self._physics_factors[field] then
-	self._physics_factors[field] = { base = self[field], }
-    end
-    self._physics_factors[field][id] = factor
-    apply_physics_factors (self, field, id)
-end
-
-function mob_class:remove_physics_factor (field, id)
-    if not self._physics_factors[field] then
-	return
-    end
-    self._physics_factors[field][id] = nil
-    apply_physics_factors (self, field, id)
 end

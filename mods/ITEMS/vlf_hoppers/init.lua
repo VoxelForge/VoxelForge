@@ -164,7 +164,7 @@ def_hopper_enabled.on_place = function(itemstack, placer, pointed_thing)
 	return itemstack
 end
 def_hopper_enabled.mesecons = {
-	entity_effector = {
+	effector = {
 		action_on = function(pos, node)
 			minetest.swap_node(pos, {name="vlf_hoppers:hopper_disabled", param2=node.param2})
 		end,
@@ -181,7 +181,7 @@ def_hopper_disabled._doc_items_create_entry = false
 def_hopper_disabled.groups.not_in_creative_inventory = 1
 def_hopper_disabled.drop = "vlf_hoppers:hopper"
 def_hopper_disabled.mesecons = {
-	entity_effector = {
+	effector = {
 		action_off = function(pos, node)
 			minetest.swap_node(pos, {name="vlf_hoppers:hopper", param2=node.param2})
 		end,
@@ -290,7 +290,7 @@ local def_hopper_side = {
 local def_hopper_side_enabled = table.copy(def_hopper_side)
 def_hopper_side_enabled.description = S("Side Hopper")
 def_hopper_side_enabled.mesecons = {
-	entity_effector = {
+	effector = {
 		action_on = function(pos, node)
 			minetest.swap_node(pos, {name="vlf_hoppers:hopper_side_disabled", param2=node.param2})
 		end,
@@ -301,7 +301,7 @@ minetest.register_node("vlf_hoppers:hopper_side", def_hopper_side_enabled)
 local def_hopper_side_disabled = table.copy(def_hopper_side)
 def_hopper_side_disabled.description = S("Disabled Side Hopper")
 def_hopper_side_disabled.mesecons = {
-	entity_effector = {
+	effector = {
 		action_off = function(pos, node)
 			minetest.swap_node(pos, {name="vlf_hoppers:hopper_side", param2=node.param2})
 		end,

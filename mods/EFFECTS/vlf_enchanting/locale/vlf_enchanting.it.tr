@@ -1,7 +1,7 @@
 # textdomain: vlf_enchanting
-Bane of Arthropods=Flagello degli Artropodi
-Increases damage and applies Slowness IV to arthropod mobs (spiders, cave spiders, silverfish and endermites).=Aumenta il danno ed infligge Lentezza IV ai mob artropodi (ragni, ragni delle caverne, pesciolini d'argento ed endermiti).
-Channeling=Canalizzazione
+Bane of Arthropods=
+Increases damage and applies Slowness IV to arthropod mobs (spiders, cave spiders, silverfish and endermites).=
+Channeling=
 Channels a bolt of lightning toward a target. Works only during thunderstorms and if target is unobstructed with opaque blocks.=
 Curse of Vanishing=
 Item destroyed on death.=
@@ -59,14 +59,7 @@ Sweeping Edge=
 Increases sweeping attack damage.=
 Unbreaking=
 Increases item durability.=
-Density=
-Increases mace damage when falling.=
-Breach=
-Reduces target's armor effectiveness.=
-Wind Burst=
-Emits a burst of wind from a mace smash attack.=
-Unknown Enchantment=
-Inventory=Inventario
+Inventory=
 @1 Lapis Lazuli=
 @1 Enchantment Levels=
 Level requirement: @1=

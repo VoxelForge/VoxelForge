@@ -1,105 +1,77 @@
+vlf_sus_stew = {}
+vlf_sus_stew.registered_stews = {}
+local item_effect = {}
 local S = minetest.get_translator(minetest.get_current_modname())
 
---                                          ____________________________
---_________________________________________/    Variables & Functions    \_________
-
-local eat = minetest.item_eat(6, "vlf_core:bowl") --6 hunger points, player receives vlf_core:bowl after eating
-
-local flower_entity_effect = {
-	[ "vlf_flowers:allium" ] = "fire_resistance",
-	[ "vlf_flowers:azure_bluet" ] = "blindness",
-	[ "vlf_flowers:lily_of_the_valley" ] = "poison",
-	[ "vlf_flowers:blue_orchid" ] = "saturation",
-	[ "vlf_flowers:dandelion" ] = "saturation",
-	[ "vlf_flowers:cornflower" ] = "jump",
-	[ "vlf_flowers:oxeye_daisy" ] = "regeneration",
-	[ "vlf_flowers:poppy" ] = "night_vision",
-	[ "vlf_flowers:wither_rose" ] = "withering",
-	[ "vlf_flowers:tulip_orange" ] = "weakness",
-	[ "vlf_flowers:tulip_pink" ] = "weakness",
-	[ "vlf_flowers:tulip_red" ] = "weakness",
-	[ "vlf_flowers:tulip_white" ] = "weakness",
-}
-
-local entity_effects = {
-	[ "fire_resistance" ] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_entity_effect("fire_resistance", placer, 1, 4)
-		return eat(itemstack, placer, pointed_thing)
-	end,
-
-	[ "blindness" ] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_entity_effect("blindness", placer, 1, 8)
-		return eat(itemstack, placer, pointed_thing)
-	end,
-
-	[ "poison" ] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_entity_effect_by_level("poison", placer, 1, 12)
-		return eat(itemstack, placer, pointed_thing)
-	end,
-
-	[ "saturation" ] = function(itemstack, placer, pointed_thing, player)
-		vlf_entity_effects.give_entity_effect_by_level("saturation", placer, 1, 0.5)
-		return eat(itemstack, placer, pointed_thing)
-	end,
-
-	["jump"] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_entity_effect_by_level("leaping", placer, 1, 6)
-		return eat(itemstack, placer, pointed_thing)
-	end,
-
-	["regeneration"] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_entity_effect_by_level("regeneration", placer, 1, 8)
-		return eat(itemstack, placer, pointed_thing)
-	end,
-
-	["withering"] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_entity_effect_by_level("withering", placer, 1, 8)
-		return eat(itemstack, placer, pointed_thing)
-	end,
-
-	["weakness"] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_entity_effect_by_level("weakness", placer, 1, 9)
-		return eat(itemstack, placer, pointed_thing)
-	end,
-
-	["night_vision"] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_entity_effect("night_vision", placer, 1, 5)
-		return eat(itemstack, placer, pointed_thing)
-	end,
-}
-
-local function get_random_entity_effect()
+local function get_random_effect()
 	local keys = {}
-	for k in pairs(entity_effects) do
+	for k in pairs(vlf_sus_stew.registered_stews) do
 		table.insert(keys, k)
 	end
-	return entity_effects[keys[math.random(#keys)]]
+	local e = keys[math.random(#keys)]
+	return vlf_sus_stew.registered_stews[e],e
 end
 
 local function eat_stew(itemstack, placer, pointed_thing)
 	local rc = vlf_util.call_on_rightclick(itemstack, placer, pointed_thing)
 	if rc then return rc end
-	local e = itemstack:get_meta():get_string("entity_effect")
-	local f = entity_effects[e]
+	local e = itemstack:get_meta():get_string("effect")
+	local f = vlf_sus_stew.registered_stews[e]
 	if not f then
-	    f = get_random_entity_effect()
+		f, e = get_random_effect()
 	end
-	if f(itemstack, placer, pointed_thing) then
-	    return "vlf_core:bowl"
+	if f(itemstack,placer,pointed_thing,e) then
+		return "vlf_core:bowl"
 	end
 end
 
-minetest.register_on_craft(function(itemstack, _, old_craft_grid, _)
+minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv)
 	if itemstack:get_name() ~= "vlf_sus_stew:stew" then return end
-	for f,e in pairs(flower_entity_effect) do
+	for f,e in pairs(item_effect) do
 		for _,it in pairs(old_craft_grid) do
 			if it:get_name() == f then
-				itemstack:get_meta():set_string("entity_effect",e)
+				itemstack:get_meta():set_string("effect",e)
 				return itemstack
 			end
 		end
 	end
 end)
+
+function vlf_sus_stew.register_stew(name,recipe_item,effect_func)
+	vlf_sus_stew.registered_stews[name] = effect_func
+	item_effect[recipe_item] = name
+	minetest.register_craft({
+		type = "shapeless",
+		output = "vlf_sus_stew:stew",
+		recipe = {"vlf_mushrooms:mushroom_red", "vlf_mushrooms:mushroom_brown", "vlf_core:bowl", recipe_item },
+	})
+end
+
+local function hunger_effect(itemstack, placer, pointed_thing)
+	vlf_hunger.item_eat(6, "vlf_core:bowl", 3.5, 0, 100)
+	return itemstack
+end
+
+local function entity_effect_effect(itemstack, placer, pointed_thing,effect)
+	if vlf_entity_effects[effect.."_func"] then
+		vlf_entity_effects[effect.."_func"](placer, 1, 6)
+	end
+	return itemstack
+end
+
+vlf_sus_stew.register_stew("fire_resistance","vlf_flowers:allium",entity_effect_effect)
+--vlf_sus_stew.register_stew("blindness","vlf_flowers:azure_bluet",entity_effect_effect) -- effect not implemented
+vlf_sus_stew.register_stew("hunger","vlf_flowers:blue_orchid",hunger_effect)
+vlf_sus_stew.register_stew("leaping","vlf_flowers:cornflower",entity_effect_effect)
+vlf_sus_stew.register_stew("hunger","vlf_flowers:dandelion",hunger_effect)
+vlf_sus_stew.register_stew("poison","vlf_flowers:lily_of_the_valley",entity_effect_effect)
+vlf_sus_stew.register_stew("regeneration","vlf_flowers:oxeye_daisy",entity_effect_effect)
+vlf_sus_stew.register_stew("night_vision","vlf_flowers:poppy",entity_effect_effect)
+--vlf_sus_stew.register_stew("weakness","vlf_flowers:tulip_orange",entity_effect_effect) -- effect not implemented
+--vlf_sus_stew.register_stew("weakness","vlf_flowers:tulip_pink",entity_effect_effect) -- effect not implemented
+--vlf_sus_stew.register_stew("weakness","vlf_flowers:tulip_red",entity_effect_effect) -- effect not implemented
+--vlf_sus_stew.register_stew("weakness","vlf_flowers:tulip_white",entity_effect_effect) -- effect not implemented
+vlf_sus_stew.register_stew("harming","vlf_flowers:wither_rose",entity_effect_effect) -- in place of real wither effect
 
 minetest.register_craftitem("vlf_sus_stew:stew",{
 	description = S("Suspicious Stew"),
@@ -119,48 +91,3 @@ minetest.register_alias("vlf_sus_stew:hunger_stew", "vlf_sus_stew:stew")
 minetest.register_alias("vlf_sus_stew:jump_boost_stew", "vlf_sus_stew:stew")
 minetest.register_alias("vlf_sus_stew:regneration_stew", "vlf_sus_stew:stew")
 minetest.register_alias("vlf_sus_stew:night_vision_stew", "vlf_sus_stew:stew")
-
---										 ______________
---_________________________________________/	Crafts	\________________________________
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "vlf_sus_stew:stew",
-	recipe = {"vlf_mushrooms:mushroom_red", "vlf_mushrooms:mushroom_brown", "vlf_core:bowl", "vlf_flowers:allium"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "vlf_sus_stew:stew",
-	recipe = {"vlf_mushrooms:mushroom_red", "vlf_mushrooms:mushroom_brown", "vlf_core:bowl", "vlf_flowers:lily_of_the_valley"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "vlf_sus_stew:stew",
-	recipe = {"vlf_mushrooms:mushroom_red", "vlf_mushrooms:mushroom_brown", "vlf_core:bowl", "vlf_flowers:blue_orchid"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "vlf_sus_stew:stew",
-	recipe = {"vlf_mushrooms:mushroom_red", "vlf_mushrooms:mushroom_brown", "vlf_core:bowl", "vlf_flowers:dandelion"} ,
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "vlf_sus_stew:stew",
-	recipe = {"vlf_mushrooms:mushroom_red", "vlf_mushrooms:mushroom_brown", "vlf_core:bowl", "vlf_flowers:cornflower"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "vlf_sus_stew:stew",
-	recipe = {"vlf_mushrooms:mushroom_red", "vlf_mushrooms:mushroom_brown", "vlf_core:bowl", "vlf_flowers:oxeye_daisy"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "vlf_sus_stew:stew",
-	recipe = {"vlf_mushrooms:mushroom_red", "vlf_mushrooms:mushroom_brown", "vlf_core:bowl", "vlf_flowers:poppy"},
-})

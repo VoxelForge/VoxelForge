@@ -17,7 +17,7 @@ msgid "Fishing Rod"
 msgstr "Caña de pescar"
 
 msgid "Catches fish in water"
-msgstr "Atrapa peces en el agua"
+msgstr ""
 
 msgid "Fishing rods can be used to catch fish."
 msgstr "Las cañas de pescar se pueden utilizar para pescar."
@@ -59,7 +59,7 @@ msgid "Pufferfish"
 msgstr "Pez globo"
 
 msgid "Very poisonous"
-msgstr "Muy venenoso"
+msgstr ""
 
 msgid "Pufferfish are a common species of fish and can be obtained by fishing. They can technically be eaten, but they are very bad for humans. Eating a pufferfish only restores 1 hunger point and will poison you very badly (which drains your health non-fatally) and causes serious food poisoning (which increases your hunger)."
 msgstr "El pez globo es una especie común de pescado y se puede obtener mediante la pesca. Técnicamente se pueden comer, pero son muy malos para los humanos. Comer un pez globo solo restaura 1 punto de hambre y te envenena mucho (lo que drena tu salud de manera no fatal) y causa una intoxicación alimentaria grave (lo que aumenta tu hambre)."

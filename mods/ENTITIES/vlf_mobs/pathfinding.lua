@@ -1,7 +1,7 @@
 local mob_class = vlf_mobs.mob_class
 
 local PATHFINDING_FAIL_THRESHOLD = 100 -- no. of ticks to fail before giving up. 20p/s. 5s helps them get through door
-local PATHFINDING_FAIL_WAIT = 5 -- how long to wait before trying to path again
+local PATHFINDING_FAIL_WAIT = 10 -- how long to wait before trying to path again
 local PATHING_START_DELAY = 4 -- When doing non-prioritised pathing, how long to wait until last mob pathed
 
 local PATHFINDING_SEARCH_DISTANCE = 64 -- How big the square is that pathfinding will look
@@ -134,9 +134,7 @@ function mob_class:gopath(target, callback_arrived, prioritised)
 	--Check direct route
 	local wp = minetest.find_path(p, t, PATHFINDING_SEARCH_DISTANCE, 1, 4)
 
-	if wp then
-		wp = generate_enriched_path(wp)
-	elseif self.can_open_doors then
+	if not wp then
 		local door_near_target = minetest.find_node_near(target, 16, {"group:door"})
 		wp = calculate_path_through_door(p, door_near_target, t)
 		if not wp then
@@ -160,6 +158,8 @@ function mob_class:gopath(target, callback_arrived, prioritised)
 				end
 			end
 		end
+	else
+		wp = generate_enriched_path(wp)
 	end
 
 	if not wp then
@@ -209,7 +209,7 @@ function mob_class:do_pathfind_action(action)
 	end
 end
 
-function mob_class:check_gowp()
+function mob_class:check_gowp(dtime)
 	local p = self.object:get_pos()
 	-- no destination
 	if not p or not self._target then

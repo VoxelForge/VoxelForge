@@ -9,6 +9,8 @@ local S = minetest.get_translator("vlf_mobs")
 -- Invisibility mod check
 vlf_mobs.invis = {}
 
+local remove_far = true
+local spawn_logging = minetest.settings:get_bool("vlf_logging_mobs_spawn", false)
 local peaceful_mode = minetest.settings:get_bool("only_peaceful_mobs", false)
 
 function mob_class:set_properties(prop)
@@ -62,21 +64,29 @@ function mob_class:jock_to(mob, reletive_pos, rot)
 	return jock
 end
 
---[[
-NOTE: This function is not called when something is about to despawn.
-
-It is called every 18 seconds.
-
-DO NOT change the state of the mob in this function!
-
-Edit the copied state so it's serialized in the state you need to.
-]]
 function mob_class:get_staticdata()
 	local pos = self.object:get_pos()
 	if not vlf_mobs.check_vector(pos) then
 		self.object:remove()
 		return
 	end
+	for _,p in pairs(minetest.get_connected_players()) do
+		self:remove_particlespawners(p:get_player_name())
+	end
+	-- remove mob when out of range unless tamed
+	if remove_far
+	and self:despawn_allowed()
+	and self.lifetimer <= 20 then
+		if spawn_logging then
+			minetest.log("action", "[vlf_mobs] Mob "..tostring(self.name).." despawns at "..minetest.pos_to_string(vector.round(pos)) .. " - out of range")
+		end
+
+		return "remove"-- nil
+	end
+
+	self.attack = nil
+	self.following = nil
+	self:set_state("stand")
 
 	local tmp = {}
 
@@ -86,21 +96,17 @@ function mob_class:get_staticdata()
 
 		if  t ~= "function"
 		and t ~= "nil"
-		and t ~= "userdata"
-		and tag ~= "_cmi_components" then
+		and t ~= "userdata" then
 			tmp[tag] = self[tag]
 		end
 	end
 
-	if self._vlf_entity_effects then
-	    tmp._vlf_entity_effects = self._vlf_entity_effects
-	    for name_raw, data in pairs(tmp._vlf_entity_effects) do
-		data.spawner = nil
-		local def = vlf_entity_effects.registered_entity_effects[name_raw:match("^_EF_(.+)$")]
-		if def and def.on_save_entity_effect then def.on_save_entity_effect(self.object) end
-	    end
-	else
-	    tmp._vlf_entity_effects = {}
+	tmp._vlf_entity_effects = self._vlf_entity_effects
+	if tmp._vlf_entity_effects then
+		for name_raw, data in pairs(tmp._vlf_entity_effects) do
+			local def = vlf_entity_effects.registered_effects[name_raw:match("^_EF_(.+)$")]
+			if def and def.on_save_effect then def.on_save_effect(self.object) end
+		end
 	end
 
 	return minetest.serialize(tmp)
@@ -195,11 +201,8 @@ function mob_class:mob_activate(staticdata, dtime)
 			for _,stat in pairs(tmp) do
 				self[_] = stat
 			end
+			self.state = nil
 		end
-	end
-
-	if not self.state then
-		self:set_state("stand")
 	end
 
 	if peaceful_mode and not self.persist_in_peaceful then
@@ -328,14 +331,13 @@ function mob_class:set_state(state)
 	if self.state == "die" then
 		return
 	end
-	--minetest.log("set_state: " .. state .. ", " .. debug.traceback())
 	self.state = state
 end
 
 -- returns true if mob has died
--- which only happens if a mob explodes itself as part of an attack
 function mob_class:do_states(dtime)
-	--minetest.log("state: " .. self.state .. ", order: " .. self.order .. ", mob: " .. self.name)
+	--if self.can_open_doors then check_doors(self) end
+
 	if self.state == PATHFINDING then
 		self:check_gowp(dtime)
 	elseif self.state == "walk" then
@@ -346,10 +348,6 @@ function mob_class:do_states(dtime)
 		if self:do_states_attack(dtime) then
 			return true
 		end
-	elseif self.state == "fly" then
-		self:do_states_fly()
-	elseif self.state == "swim" or self.state == "flop" then
-		self:do_states_swim()
 	else
 		self:do_states_stand()
 	end
@@ -374,35 +372,22 @@ local function update_attack_timers (self, dtime)
 	end
 end
 
-function mob_class:on_step(dtime, moveresult)
+function mob_class:on_step(dtime)
 	local pos = self.object:get_pos()
 	if not vlf_mobs.check_vector(pos) or self.removed then
 		self:safe_remove()
 		return
 	end
 
+	if self:check_timer("update_lifetimer", 1) then
+		self.lifetimer = math.max(20, self.lifetimer)
+		self.despawn_immediately = false
+	end
+
 	if self:check_despawn(pos, dtime) then return true end
 
 	self:update_tag()
 	self:slow_mob()
-	if not (moveresult and moveresult.touching_ground) and self:falling(pos) then return end
-
-	-- Get nodes early for use in other functions
-	local cbox = self.object:get_properties().collisionbox
-	local y_level = cbox[2]
-
-	if self.child then
-		y_level = cbox[2] * 0.5
-	end
-
-	local p = vector.copy(pos)
-	p.y = p.y + y_level + 0.25 -- foot level
-	local pos2 = vector.offset(pos, 0, -1, 0)
-	self.standing_in =  vlf_mobs.node_ok(p, "air").name
-	self.standing_on =  vlf_mobs.node_ok(pos2, "air").name
-	local pos_head = vector.offset(p, 0, cbox[5] - 0.5, 0)
-	self.head_in =  vlf_mobs.node_ok(pos_head, "air").name
-
 	if self:falling(pos) then return end
 
 	if self.force_step then
@@ -427,9 +412,9 @@ function mob_class:on_step(dtime, moveresult)
 
 	if self.state == "die" then return end
 
-	self:follow_player() -- Mob following code.
+	self:follow_flop() -- Mob following code.
 
-	self:set_animation_speed()
+	self:set_animation_speed() -- set animation speed relitive to velocity
 	self:check_smooth_rotation(dtime)
 	self:check_head_swivel(dtime)
 
@@ -461,6 +446,11 @@ function mob_class:on_step(dtime, moveresult)
 	self:check_particlespawners(dtime)
 	self:check_item_pickup()
 
+	--mobs that can climb over stuff
+	if self.always_climb and self:node_infront_ok(pos, 0).name ~= "air" then
+		self:climb()
+	end
+
 	if self.opinion_sound_cooloff > 0 then
 		self.opinion_sound_cooloff = self.opinion_sound_cooloff - dtime
 	end
@@ -471,11 +461,6 @@ function mob_class:on_step(dtime, moveresult)
 
 	if self:env_damage (dtime, pos) then return end
 	if self:do_states(dtime) then return end
-
-	--mobs that can climb over stuff
-	if self.always_climb and self:node_infront_ok(pos, 0).name ~= "air" then
-		self:climb()
-	end
 
 	if self.jump_sound_cooloff > 0 then
 		self.jump_sound_cooloff = self.jump_sound_cooloff - dtime

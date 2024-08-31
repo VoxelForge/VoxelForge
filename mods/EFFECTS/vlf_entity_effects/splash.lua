@@ -15,19 +15,19 @@ function vlf_entity_effects.register_splash(name, descr, color, def)
 	local id = "vlf_entity_effects:"..name.."_splash"
 	local longdesc = def._longdesc
 	if not def.no_effect then
-		longdesc = S("A throwable entity_effect that will shatter on impact, where it gives all nearby players and mobs a status effect or a set of status effects.")
+		longdesc = S("A throwable effect that will shatter on impact, where it gives all nearby players and mobs a status effect or a set of status effects.")
 		if def._longdesc then
 			longdesc = longdesc .. "\n" .. def._longdesc
 		end
 	end
 	local groups = {brewitem=1, not_in_creative_inventory=0,
-			bottle=1, splash_entity_effect=1, _vlf_entity_effect=1}
+			bottle=1, splash_effect=1, _vlf_effect=1}
 	if def.nocreative then groups.not_in_creative_inventory = 1 end
 	minetest.register_craftitem(id, {
 		description = descr,
 		_tt_help = def._tt,
 		_dynamic_tt = def._dynamic_tt,
-		_vlf_filter_description = vlf_entity_effects.filter_entity_effect_description,
+		_vlf_filter_description = vlf_entity_effects.filter_effect_description,
 		_doc_items_longdesc = longdesc,
 		_doc_items_usagehelp = S("Use the “Punch” key to throw it."),
 		stack_max = def.stack_max,
@@ -37,14 +37,14 @@ function vlf_entity_effects.register_splash(name, descr, color, def)
 		has_plus = def.has_plus,
 		_default_potent_level = def._default_potent_level,
 		_default_extend_level = def._default_extend_level,
-		_base_entity_effect = def.base_entity_effect,
+		_base_effect = def.base_effect,
 		inventory_image = splash_image(color),
 		groups = groups,
 		on_use = function(item, placer, pointed_thing)
 			local dir = placer:get_look_dir ()
 			local pos = placer:get_pos ()
-			local potency = item:get_meta():get_int ("vlf_entity_effects:entity_effect_potent")
-			local plus = item:get_meta():get_int ("vlf_entity_effects:entity_effect_plus")
+			local potency = item:get_meta():get_int ("vlf_entity_effects:effect_potent")
+			local plus = item:get_meta():get_int ("vlf_entity_effects:effect_plus")
 			pos.y = pos.y + placer:get_properties ().eye_height
 			vlf_entity_effects.throw_splash (id, dir, pos, placer:get_player_name (),
 						  potency, plus)
@@ -63,8 +63,8 @@ function vlf_entity_effects.register_splash(name, descr, color, def)
 				obj:set_velocity({x=dropdir.x*velocity,y=dropdir.y*velocity,z=dropdir.z*velocity})
 				obj:set_acceleration({x=dropdir.x*-3, y=-9.8, z=dropdir.z*-3})
 				local ent = obj:get_luaentity()
-				ent._potency = item:get_meta():get_int("vlf_entity_effects:entity_effect_potent")
-				ent._plus = item:get_meta():get_int("vlf_entity_effects:entity_effect_plus")
+				ent._potency = item:get_meta():get_int("vlf_entity_effects:effect_potent")
+				ent._plus = item:get_meta():get_int("vlf_entity_effects:effect_plus")
 				ent._effect_list = def._effect_list
 			end
 		end
@@ -174,15 +174,15 @@ end
 
 -- `thrower' may be an ObjectRef but must be a player name if it is a
 -- player and is to be serialized properly.
-function vlf_entity_effects.throw_splash (entity_effectname, dir, pos, thrower,
+function vlf_entity_effects.throw_splash (effectname, dir, pos, thrower,
 				   potency, plus)
-    if not minetest.registered_items[entity_effectname] then
-	minetest.log ("action", "Throwing nonexistent entity_effect " .. entity_effectname)
+    if not minetest.registered_items[effectname] then
+	minetest.log ("action", "Throwing nonexistent effect " .. effectname)
 	return
     end
     local obj
 	= minetest.add_entity ({x=pos.x+dir.x,y=pos.y+dir.y,z=pos.z+dir.z},
-	                       entity_effectname .. "_flying")
+	                       effectname .. "_flying")
     if not obj then
 	return
     end
@@ -193,6 +193,6 @@ function vlf_entity_effects.throw_splash (entity_effectname, dir, pos, thrower,
     ent._thrower = thrower
     ent._potency = potency
     ent._plus = plus
-    ent._effect_list = minetest.registered_items[entity_effectname]._effect_list
+    ent._effect_list = minetest.registered_items[effectname]._effect_list
     minetest.sound_play("vlf_throwing_throw", {pos = pos, gain = 0.4, max_hear_distance = 16}, true)
 end

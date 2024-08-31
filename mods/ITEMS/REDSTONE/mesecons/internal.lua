@@ -3,10 +3,10 @@
 -- For more practical developer resources see http://mesecons.net/developers.php
 --
 -- Function overview
--- mesecon.get_entity_effector(nodename)	--> Returns the mesecons.entity_effector -specifictation in the nodedef by the nodename
+-- mesecon.get_effector(nodename)	--> Returns the mesecons.effector -specifictation in the nodedef by the nodename
 -- mesecon.get_receptor(nodename)	--> Returns the mesecons.receptor -specifictation in the nodedef by the nodename
 -- mesecon.get_conductor(nodename)	--> Returns the mesecons.conductor-specifictation in the nodedef by the nodename
--- mesecon.get_any_inputrules (node)	--> Returns the rules of a node if it is a conductor or an entity_effector
+-- mesecon.get_any_inputrules (node)	--> Returns the rules of a node if it is a conductor or an effector
 -- mesecon.get_any_outputrules (node)	--> Returns the rules of a node if it is a conductor or a receptor
 
 -- RECEPTORS
@@ -16,15 +16,15 @@
 -- mesecon.receptor_get_rules(node)	--> Returns the rules of the receptor (mesecon.rules.default if none specified)
 
 -- EFFECTORS
--- mesecon.is_entity_effector(nodename)	--> Returns true if nodename is an entity_effector
--- mesecon.is_entity_effector_on(nodename)	--> Returns true if nodename is an entity_effector with nodedef.mesecons.entity_effector.action_off
--- mesecon.is_entity_effector_off(nodename)	--> Returns true if nodename is an entity_effector with nodedef.mesecons.entity_effector.action_on
--- mesecon.entity_effector_get_rules(node)	--> Returns the input rules of the entity_effector (mesecon.rules.default if none specified)
+-- mesecon.is_effector(nodename)	--> Returns true if nodename is an effector
+-- mesecon.is_effector_on(nodename)	--> Returns true if nodename is an effector with nodedef.mesecons.effector.action_off
+-- mesecon.is_effector_off(nodename)	--> Returns true if nodename is an effector with nodedef.mesecons.effector.action_on
+-- mesecon.effector_get_rules(node)	--> Returns the input rules of the effector (mesecon.rules.default if none specified)
 
 -- SIGNALS
--- mesecon.activate(pos, node, depth)				--> Activates   the entity_effector node at the specific pos (calls nodedef.mesecons.entity_effector.action_on), higher depths are executed later
--- mesecon.deactivate(pos, node, depth)				--> Deactivates the entity_effector node at the specific pos (calls nodedef.mesecons.entity_effector.action_off), higher depths are executed later
--- mesecon.changesignal(pos, node, rulename, newstate, depth)	--> Changes     the entity_effector node at the specific pos (calls nodedef.mesecons.entity_effector.action_change), higher depths are executed later
+-- mesecon.activate(pos, node, depth)				--> Activates   the effector node at the specific pos (calls nodedef.mesecons.effector.action_on), higher depths are executed later
+-- mesecon.deactivate(pos, node, depth)				--> Deactivates the effector node at the specific pos (calls nodedef.mesecons.effector.action_off), higher depths are executed later
+-- mesecon.changesignal(pos, node, rulename, newstate, depth)	--> Changes     the effector node at the specific pos (calls nodedef.mesecons.effector.action_change), higher depths are executed later
 
 -- CONDUCTORS
 -- mesecon.is_conductor(nodename)	--> Returns true if nodename is a conductor
@@ -48,11 +48,11 @@
 -- These functions return rules that have been rotated in the specific direction
 
 -- General
-function mesecon.get_entity_effector(nodename)
+function mesecon.get_effector(nodename)
 	if  minetest.registered_nodes[nodename]
 	and minetest.registered_nodes[nodename].mesecons
-	and minetest.registered_nodes[nodename].mesecons.entity_effector then
-		return minetest.registered_nodes[nodename].mesecons.entity_effector
+	and minetest.registered_nodes[nodename].mesecons.effector then
+		return minetest.registered_nodes[nodename].mesecons.effector
 	end
 end
 
@@ -89,8 +89,8 @@ function mesecon.get_any_inputrules(node)
 
 	if mesecon.is_conductor(node.name) then
 		return mesecon.conductor_get_rules(node)
-	elseif mesecon.is_entity_effector(node.name) then
-		return mesecon.entity_effector_get_rules(node)
+	elseif mesecon.is_effector(node.name) then
+		return mesecon.effector_get_rules(node)
 	elseif minetest.get_item_group(node.name, "opaque") == 1 then
 		return mesecon.rules.alldirs
 	end
@@ -145,34 +145,34 @@ mesecon.receptor_get_rules = receptor_get_rules
 
 -- Effectors
 -- Nodes that can be powered by mesecons
-function mesecon.is_entity_effector_on(nodename)
-	local entity_effector = mesecon.get_entity_effector(nodename)
-	if entity_effector and entity_effector.action_off then
+function mesecon.is_effector_on(nodename)
+	local effector = mesecon.get_effector(nodename)
+	if effector and effector.action_off then
 		return true
 	end
 	return false
 end
 
-function mesecon.is_entity_effector_off(nodename)
-	local entity_effector = mesecon.get_entity_effector(nodename)
-	if entity_effector and entity_effector.action_on then
+function mesecon.is_effector_off(nodename)
+	local effector = mesecon.get_effector(nodename)
+	if effector and effector.action_on then
 		return true
 	end
 	return false
 end
 
-function mesecon.is_entity_effector(nodename)
-	local entity_effector = mesecon.get_entity_effector(nodename)
-	if entity_effector then
+function mesecon.is_effector(nodename)
+	local effector = mesecon.get_effector(nodename)
+	if effector then
 		return true
 	end
 	return false
 end
 
-function mesecon.entity_effector_get_rules(node)
-	local entity_effector = mesecon.get_entity_effector(node.name)
-	if entity_effector and entity_effector.rules then
-		local rules = entity_effector.rules
+function mesecon.effector_get_rules(node)
+	local effector = mesecon.get_effector(node.name)
+	if effector and effector.rules then
+		local rules = effector.rules
 		if type(rules) == "function" then
 			return rules(node)
 		elseif rules then
@@ -183,7 +183,7 @@ function mesecon.entity_effector_get_rules(node)
 end
 
 -- #######################
--- # Signals (entity_effectors) #
+-- # Signals (effectors) #
 -- #######################
 
 -- Activation:
@@ -191,16 +191,16 @@ mesecon.queue:add_function("activate", function (pos, rulename)
 	local node = mesecon.get_node_force(pos)
 	if not node then return end
 
-	local entity_effector = mesecon.get_entity_effector(node.name)
+	local effector = mesecon.get_effector(node.name)
 
-	if entity_effector and entity_effector.action_on then
-		entity_effector.action_on(pos, node, rulename)
+	if effector and effector.action_on then
+		effector.action_on(pos, node, rulename)
 	end
 end)
 
 function mesecon.activate(pos, node, rulename, depth)
 	if rulename == nil then
-		for _,rule in pairs(mesecon.entity_effector_get_rules(node)) do
+		for _,rule in pairs(mesecon.effector_get_rules(node)) do
 			mesecon.activate(pos, node, rule, depth + 1)
 		end
 		return
@@ -214,16 +214,16 @@ mesecon.queue:add_function("deactivate", function (pos, rulename)
 	local node = mesecon.get_node_force(pos)
 	if not node then return end
 
-	local entity_effector = mesecon.get_entity_effector(node.name)
+	local effector = mesecon.get_effector(node.name)
 
-	if entity_effector and entity_effector.action_off then
-		entity_effector.action_off(pos, node, rulename)
+	if effector and effector.action_off then
+		effector.action_off(pos, node, rulename)
 	end
 end)
 
 function mesecon.deactivate(pos, node, rulename, depth)
 	if rulename == nil then
-		for _,rule in pairs(mesecon.entity_effector_get_rules(node)) do
+		for _,rule in pairs(mesecon.effector_get_rules(node)) do
 			mesecon.deactivate(pos, node, rule, depth + 1)
 		end
 		return
@@ -237,16 +237,16 @@ mesecon.queue:add_function("change", function (pos, rulename, changetype)
 	local node = mesecon.get_node_force(pos)
 	if not node then return end
 
-	local entity_effector = mesecon.get_entity_effector(node.name)
+	local effector = mesecon.get_effector(node.name)
 
-	if entity_effector and entity_effector.action_change then
-		entity_effector.action_change(pos, node, rulename, changetype)
+	if effector and effector.action_change then
+		effector.action_change(pos, node, rulename, changetype)
 	end
 end)
 
 function mesecon.changesignal(pos, node, rulename, newstate, depth)
 	if rulename == nil then
-		for _,rule in pairs(mesecon.entity_effector_get_rules(node)) do
+		for _,rule in pairs(mesecon.effector_get_rules(node)) do
 			mesecon.changesignal(pos, node, rule, newstate, depth + 1)
 		end
 		return
@@ -376,7 +376,7 @@ end
 -- Turn off an equipotential section starting at `pos`, which outputs in the direction of `link`.
 -- Breadth-first search. Map is abstracted away in a voxelmanip.
 -- Follow all all conductor paths replacing conductors that were already
--- looked at, activating / changing all entity_effectors along the way.
+-- looked at, activating / changing all effectors along the way.
 function mesecon.turnon(pos, link)
 	local frontiers = {{pos = pos, link = link}}
 
@@ -397,9 +397,9 @@ function mesecon.turnon(pos, link)
 			end
 
 			mesecon.swap_node_force(f.pos, mesecon.get_conductor_on(node, f.link))
-		elseif mesecon.is_entity_effector(node.name) then
+		elseif mesecon.is_effector(node.name) then
 			mesecon.changesignal(f.pos, node, f.link, mesecon.state.on, depth)
-			if mesecon.is_entity_effector_off(node.name) then
+			if mesecon.is_effector_off(node.name) then
 				mesecon.activate(f.pos, node, f.link, depth)
 			end
 		end
@@ -423,7 +423,7 @@ end
 -- Turn off an equipotential section starting at `pos`, which outputs in the direction of `link`.
 -- Breadth-first search. Map is abstracted away in a voxelmanip.
 -- Follow all all conductor paths replacing conductors that were already
--- looked at, deactivating / changing all entity_effectors along the way.
+-- looked at, deactivating / changing all effectors along the way.
 -- In case an onstate receptor is discovered, abort the process by returning false, which will
 -- cause `receptor_off` to discard all changes made in the voxelmanip.
 -- Contrary to turnon, turnoff has to cache all change and deactivate signals so that they will only
@@ -431,9 +431,9 @@ end
 --
 -- Signal table entry structure:
 -- {
---	pos = position of entity_effector,
+--	pos = position of effector,
 --	node = node descriptor (name, param1 and param2),
---	link = link the entity_effector is connected to,
+--	link = link the effector is connected to,
 --	depth = indicates order in which signals wire fired, higher is later
 -- }
 function mesecon.turnoff(pos, link)
@@ -466,7 +466,7 @@ function mesecon.turnoff(pos, link)
 			end
 
 			mesecon.swap_node_force(f.pos, mesecon.get_conductor_off(node, f.link))
-		elseif mesecon.is_entity_effector(node.name) then
+		elseif mesecon.is_effector(node.name) then
 			table.insert(signals, {
 				pos = f.pos,
 				node = node,
@@ -503,7 +503,7 @@ function mesecon.turnoff(pos, link)
 
 	for _, sig in pairs(signals) do
 		mesecon.changesignal(sig.pos, sig.node, sig.link, mesecon.state.off, sig.depth)
-		if mesecon.is_entity_effector_on(sig.node.name) and not mesecon.is_powered(sig.pos) then
+		if mesecon.is_effector_on(sig.node.name) and not mesecon.is_powered(sig.pos) then
 			mesecon.deactivate(sig.pos, sig.node, sig.link, sig.depth)
 		end
 	end
@@ -511,7 +511,7 @@ function mesecon.turnoff(pos, link)
 	return true
 end
 
--- Get all linking inputrules of inputnode (entity_effector or conductor) that is connected to
+-- Get all linking inputrules of inputnode (effector or conductor) that is connected to
 -- outputnode (receptor or conductor) at position `output` and has an output in direction `rule`
 function mesecon.rules_link_rule_all(output, rule)
 	local input = vector.add(output, rule)
@@ -535,7 +535,7 @@ function mesecon.rules_link_rule_all(output, rule)
 end
 
 -- Get all linking outputnodes of outputnode (receptor or conductor) that is connected to
--- inputnode (entity_effector or conductor) at position `input` and has an input in direction `rule`
+-- inputnode (effector or conductor) at position `input` and has an input in direction `rule`
 function mesecon.rules_link_rule_all_inverted(input, rule)
 	local output = vector.add(input, rule)
 	local outputnode = mesecon.get_node_force(output)

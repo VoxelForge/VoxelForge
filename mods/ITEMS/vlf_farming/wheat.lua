@@ -104,7 +104,6 @@ minetest.register_node("vlf_farming:wheat", {
 	_vlf_fortune_drop = {
 		discrete_uniform_distribution = true,
 		items = {"vlf_farming:wheat_seeds"},
-		drop_without_fortune = {"vlf_farming:wheat_item"},
 		min_count = 1,
 		max_count = 6,
 		cap = 7

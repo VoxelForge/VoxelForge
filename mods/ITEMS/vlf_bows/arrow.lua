@@ -40,7 +40,7 @@ S("Arrows might get stuck on solid blocks and can be retrieved again. They are a
 	_doc_items_usagehelp = S("To use arrows as ammunition for a bow, just put them anywhere in your inventory, they will be used up automatically. To use arrows as ammunition for a dispenser, place them in the dispenser's inventory. To retrieve an arrow that sticks in a block, simply walk close to it."),
 	inventory_image = "vlf_bows_arrow_inv.png",
 	groups = { ammo=1, ammo_bow=1, ammo_bow_regular=1, ammo_crossbow=1 },
-	_on_dispense = function(itemstack, dispenserpos, _, _, dropdir)
+	_on_dispense = function(itemstack, dispenserpos, droppos, dropnode, dropdir)
 		-- Shoot arrow
 		local shootpos = vector.add(dispenserpos, vector.multiply(dropdir, 0.51))
 		local yaw = math.atan2(dropdir.z, dropdir.x) + YAW_OFFSET
@@ -418,7 +418,7 @@ function ARROW_ENTITY.on_step(self, dtime)
 end
 
 -- Force recheck of stuck arrows when punched.
--- Otherwise, punching has no entity_effect.
+-- Otherwise, punching has no effect.
 function ARROW_ENTITY.on_punch(self)
 	if self._stuck then
 		self._stuckrechecktimer = STUCK_RECHECK_TIME
@@ -447,7 +447,7 @@ function ARROW_ENTITY.get_staticdata(self)
 	return minetest.serialize(out)
 end
 
-function ARROW_ENTITY.on_activate(self, staticdata)
+function ARROW_ENTITY.on_activate(self, staticdata, dtime_s)
 	local data = minetest.deserialize(staticdata)
 	if data then
 		-- First, check if the arrow is already past its life timer. If

@@ -47,7 +47,7 @@ end
 local tnt_mesecons
 if minetest.get_modpath("mesecons") then
 	tnt_mesecons = {
-		entity_effector = {
+		effector = {
 			action_on = tnt.ignite,
 			rules = mesecon.rules.alldirs,
 		},
@@ -185,7 +185,7 @@ function TNT:on_activate(_, _)
 	self.object:set_texture_mod("^vlf_tnt_blink.png")
 end
 
---[[local function add_entity_effects(pos, radius, drops)
+--[[local function add_effects(pos, radius, drops)
 	minetest.add_particlespawner({
 		amount = 64,
 		time = 0.5,

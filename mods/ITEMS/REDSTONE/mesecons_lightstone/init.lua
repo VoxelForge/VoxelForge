@@ -4,13 +4,13 @@ local light = minetest.LIGHT_MAX
 
 minetest.register_node("mesecons_lightstone:lightstone_off", {
 	tiles = {"jeija_lightstone_gray_off.png"},
-	groups = {handy=1, mesecon_entity_effector_off = 1, mesecon = 2},
+	groups = {handy=1, mesecon_effector_off = 1, mesecon = 2},
 	is_ground_content = false,
 	description= S("Redstone Lamp"),
 	_tt_help = S("Glows when powered by redstone power"),
 	_doc_items_longdesc = S("Redstone lamps are simple redstone components which glow brightly (light level @1) when they receive redstone power.", light),
 	sounds = vlf_sounds.node_sound_glass_defaults(),
-	mesecons = {entity_effector = {
+	mesecons = {effector = {
 		action_on = function(pos, node)
 			minetest.swap_node(pos, {name="mesecons_lightstone:lightstone_on", param2 = node.param2})
 		end,
@@ -28,7 +28,7 @@ minetest.register_node("mesecons_lightstone:lightstone_on", {
 	paramtype = "light",
 	light_source = light,
 	sounds = vlf_sounds.node_sound_glass_defaults(),
-	mesecons = {entity_effector = {
+	mesecons = {effector = {
 		action_off = function(pos)
 			local timer = minetest.get_node_timer(pos)
 			timer:start(0.2)

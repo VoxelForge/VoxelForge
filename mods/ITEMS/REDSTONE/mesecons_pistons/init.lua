@@ -212,7 +212,7 @@ minetest.register_node("mesecons_pistons:piston_normal_off", {
 	mesecons_piston = pistonspec_normal,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	mesecons = {
-		entity_effector = {
+		effector = {
 			action_on = piston_on,
 			rules = piston_get_rules
 		},
@@ -249,7 +249,7 @@ minetest.register_node("mesecons_pistons:piston_normal_on", {
 	mesecons_piston = pistonspec_normal,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	mesecons = {
-		entity_effector = {
+		effector = {
 			action_off = piston_off,
 			rules = piston_get_rules
 		},
@@ -320,7 +320,7 @@ minetest.register_node("mesecons_pistons:piston_sticky_off", {
 	mesecons_piston = pistonspec_sticky,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	mesecons = {
-		entity_effector = {
+		effector = {
 			action_on = piston_on,
 			rules = piston_get_rules
 		},
@@ -357,7 +357,7 @@ minetest.register_node("mesecons_pistons:piston_sticky_on", {
 	mesecons_piston = pistonspec_sticky,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	mesecons = {
-		entity_effector = {
+		effector = {
 			action_off = piston_off,
 			rules = piston_get_rules
 		},
@@ -440,7 +440,7 @@ minetest.register_node("mesecons_pistons:piston_up_normal_off", {
 	drop = "mesecons_pistons:piston_normal_off",
 	mesecons_piston = pistonspec_normal_up,
 	mesecons = {
-		entity_effector = {
+		effector = {
 			action_on = piston_on,
 			rules = piston_up_rules,
 		},
@@ -481,7 +481,7 @@ minetest.register_node("mesecons_pistons:piston_up_normal_on", {
 	mesecons_piston = pistonspec_normal_up,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	mesecons = {
-		entity_effector = {
+		effector = {
 			action_off = piston_off,
 			rules = piston_up_rules,
 		},
@@ -550,7 +550,7 @@ minetest.register_node("mesecons_pistons:piston_up_sticky_off", {
 		footstep = vlf_sounds.node_sound_wood_defaults().footstep
 	}),
 	mesecons = {
-		entity_effector = {
+		effector = {
 			action_on = piston_on,
 			rules = piston_up_rules,
 		},
@@ -588,7 +588,7 @@ minetest.register_node("mesecons_pistons:piston_up_sticky_on", {
 	mesecons_piston = pistonspec_sticky_up,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	mesecons = {
-		entity_effector = {
+		effector = {
 			action_off = piston_off,
 			rules = piston_up_rules,
 		},
@@ -674,7 +674,7 @@ minetest.register_node("mesecons_pistons:piston_down_normal_off", {
 	mesecons_piston = pistonspec_normal_down,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	mesecons = {
-		entity_effector = {
+		effector = {
 			action_on = piston_on,
 			rules = piston_down_rules,
 		},
@@ -712,7 +712,7 @@ minetest.register_node("mesecons_pistons:piston_down_normal_on", {
 	mesecons_piston = pistonspec_normal_down,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	mesecons = {
-		entity_effector = {
+		effector = {
 			action_off = piston_off,
 			rules = piston_down_rules,
 		},
@@ -776,7 +776,7 @@ minetest.register_node("mesecons_pistons:piston_down_sticky_off", {
 	mesecons_piston = pistonspec_sticky_down,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	mesecons = {
-		entity_effector = {
+		effector = {
 			action_on = piston_on,
 			rules = piston_down_rules,
 		},
@@ -814,7 +814,7 @@ minetest.register_node("mesecons_pistons:piston_down_sticky_on", {
 	mesecons_piston = pistonspec_sticky_down,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	mesecons = {
-		entity_effector = {
+		effector = {
 			action_off = piston_off,
 			rules = piston_down_rules,
 		},

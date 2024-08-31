@@ -1,11 +1,11 @@
-# mcl_mobs
+# vlf_mobs
 This mod was originally based of off "mobs_redo" (https://notabug.org/TenPlus1/mobs_redo) by TenPlus1.
-Heavily modified and adapted for mineclonia / mcl2 by several people.
+Heavily modified and adapted for mineclonia / vlf2 by several people.
 
 ## Registering mobs and mob definition
 
 A new mob is registered using
-`mcl_mobs.register_mob(name, mob_definition)`
+`vlf_mobs.register_mob(name, mob_definition)`
 
 This takes care of registering the mob entity using fields from the definition below.
 
@@ -30,9 +30,6 @@ Fields not mentioned in this document can also be added as custom fields for the
 
 	persist_in_peaceful = false,
 	-- Default is false for monsters and true for all other mobs. If false mob will immediately be removed in peaceful mode.
-
-	persistent = false,
-	-- if ture this mob will not despawn
 
 	hp_min = 1,
 	-- the minimum health value the mob can spawn with.
@@ -65,7 +62,7 @@ Fields not mentioned in this document can also be added as custom fields for the
 	-- has a 0-100 chance value your mob will walk from standing, set to 0 for jumping mobs only.
 
 	jump = true,
-	-- when true allows your mob to jump upwards.
+	-- when true allows your mob to jump updwards.
 
 	jump_height = 1,
 	-- holds the height your mob can jump, 0 to disable jumping.
@@ -76,20 +73,8 @@ Fields not mentioned in this document can also be added as custom fields for the
 	fly = false,
 	-- when true allows your mob to fly around instead of walking.
 
-	fly_in = { "air" },
-	-- holds the node name or a table of node names in which the mob flies around in. The special name '__airlike' stands for all nodes with 'walkable=false' that are not liquids
-
-	fly_velocity = 4,
-	-- speed the mob flies at
-
-	swims = false,
-	-- when true allows your mob to swim instead of walk
-
-	swim_velocity = 1,
-	-- the speed a mob can swim at
-
-    swims_in = { "mcl_core:water_source", "mclx_core:river_water_source", 'mcl_core:water_flowing', 'mclx_core:river_water_flowing' },
-	-- Liquids the mob can swim in
+	fly_in = { "vlf_core:water_source" },
+	-- holds the node name or a table of node names in which the mob flies (or swims) around in. The special name '__airlike' stands for all nodes with 'walkable=false' that are not liquids
 
 	runaway = false,
 	-- if true causes animals to turn and run away when hit.
@@ -130,7 +115,7 @@ Fields not mentioned in this document can also be added as custom fields for the
 	floats = 1,
 	-- when set to 1 mob will float in water, 0 has them sink.
 
-	follow = { "mcl_core:apple" },
+	follow = { "vlf_core:apple" },
 	-- mobs follow player when holding any of the items which appear on this table, the same items can be fed to a mob to tame or breed e.g. {"farming:wheat", "default:apple"}
 
 	reach = 3,
@@ -179,7 +164,7 @@ Fields not mentioned in this document can also be added as custom fields for the
 	stop_to_explode = true,
 	-- When set to true (default), mob must stop and wait for explosion_timer in order to explode. If false, mob will continue chasing.
 
-	arrow = "mcl_bows:arrow_entity",
+	arrow = "vlf_bows:arrow_entity",
 	-- holds the pre-defined arrow object to shoot when attacking.
 
 	dogshoot_switch = 1,
@@ -257,7 +242,7 @@ Fields not mentioned in this document can also be added as custom fields for the
 	drops =
 		-- table of items that are dropped when mob is killed, fields are:
 	{
-		name = "mcl_core:cobble",
+		name = "vlf_core:cobble",
 		-- name of item to drop.
 
 		chance = 1,
@@ -392,7 +377,7 @@ Fields not mentioned in this document can also be added as custom fields for the
 	nofollow = false,
 	--Do not follow players when they wield the "follow" item. For mobs (like villagers) that are bred in a different way.
 
-	pick_up = { "mcl_core:apple" },
+	pick_up = { "vlf_core:apple" },
 	--table of itemstrings the mob will pick up (e.g. for breeding)
 
 	on_pick_up = function(self, itementity),
@@ -416,7 +401,7 @@ Fields not mentioned in this document can also be added as custom fields for the
 	attack_exception = function(obj) end,
 	-- Exceptions for 'extra_hostile': Function that takes the object as argument. If it returns true that object will not be attacked. Not implemented.
 
-	deal_damage = function(self, damage, mcl_reason)
+	deal_damage = function(self, damage, vlf_reason)
 	-- if present this gets called instead of the normal damage functions
 
 	player_active_range = 48,
@@ -430,7 +415,7 @@ Fields not mentioned in this document can also be added as custom fields for the
 ```
 
 ### Mobs API functions
-Every luaentity registered by mcl_mobs.register_mob has mcl_mobs.mob_class set as a metatable which, besides default values for fields in the luaentity provides a number of functions.
+Every luaentity registered by vlf_mobs.register_mob has vlf_mobs.mob_class set as a metatable which, besides default values for fields in the luaentity provides a number of functions.
 
 These functions can be called from the entity as well as overwritten on a per-mob basis.
 
@@ -502,8 +487,8 @@ These functions can be called from the entity as well as overwritten on a per-mo
 	* Replaces node at position if node replacement is configured for this mob
  * mob:check_runaway_from()
 	* Checks if there are objects the mob should run away from
- * mob:follow_player()
-	* Follow player if owner or holding item
+ * mob:follow_flop()
+	* Follow player if owner or holding item, if fish outta water then flop
  * mob:go_to_pos(b)
 	* Turn in direction of pos and start moving forward.
  * mob:check_herd(dtime)
@@ -571,7 +556,7 @@ These functions can be called from the entity as well as overwritten on a per-mo
 	* Checks and suspends mob if needed.
 
 #### Effects
- * mcl_mobs.effect(pos, amount, texture, min_size, max_size, radius, gravity, glow, go_down)
+ * vlf_mobs.effect(pos, amount, texture, min_size, max_size, radius, gravity, glow, go_down)
 	* Custom particle effect for mobs
  * mob:mob_sound(soundname, is_opinion, fixed_pitch)
 	* Emit a preconfigured mob sound
@@ -699,7 +684,7 @@ Mobs can now be ridden by players and the following shows its functions and
 usage:
 
 
-`mcl_mobs.attach(self, player)`
+`vlf_mobs.attach(self, player)`
 
 This function attaches a player to the mob so it can be ridden.
 
@@ -707,7 +692,7 @@ This function attaches a player to the mob so it can be ridden.
  * 'player' player information
 
 
-`mcl_mobs.detach(player, offset)`
+`vlf_mobs.detach(player, offset)`
 
 This function will detach the player currently riding a mob to an offset
 position.
@@ -744,7 +729,7 @@ Certain variables need to be set before using the above functions:
 ## Spawning mobs
 Mobs can be added to the natural spawn cycle using
 
-`mcl_mobs.spawn_setup(spawn_definition)`
+`vlf_mobs.spawn_setup(spawn_definition)`
 
 ### Spawn Definition table
 ```lua
@@ -796,7 +781,7 @@ Mobs can be added to the natural spawn cycle using
 * /mobstats - gives some statistics about the currently active mobs and spawn attempts on the whole server
 * /clearmobs [<all> | <nametagged> | <tamed>] [<range>] - a safer alternative to /clearobjects that only applies to loaded mobs
 ## Mob Eggs
-	mcl_mobs.register_egg(mob, desc, background_color, overlay_color, addegg, no_creative)
+	vlf_mobs.register_egg(mob, desc, background_color, overlay_color, addegg, no_creative)
 
  * 'name'		this is the name of your new mob to spawn e.g. "mob:sheep"
  * 'description' the name of the new egg you are creating e.g. "Spawn Sheep"
@@ -806,8 +791,8 @@ Mobs can be added to the natural spawn cycle using
 
 ## Mob projectiles
 Custom projectiles for mobs can be registered using
- * mcl_mobs.register_arrow(name, arrow_def)
- * mcl_mobs.get_arrow_damage_func(damage, damage_type, shooter_object)
+ * vlf_mobs.register_arrow(name, arrow_def)
+ * vlf_mobs.get_arrow_damage_func(damage, damage_type, shooter_object)
  * 	Returns a damage function to be used in arrow hit functions.
 
 ### Arrow definition
@@ -872,7 +857,7 @@ Custom projectiles for mobs can be registered using
 
  * 'enable_damage'			if true monsters will attack players (default is true)
  * 'only_peaceful_mobs'	if true only animals will spawn in game (default is false)
- * 'mcl_damage_particles'	if true, damage effects appear when mob is hit (default is true)
+ * 'vlf_damage_particles'	if true, damage effects appear when mob is hit (default is true)
  * 'mobs_spawn_protected'	if set to false then mobs will not spawn in protected areas (default is true)
  * 'mob_difficulty'		sets difficulty level (health and hit damage multiplied by this number), defaults to 1.0.
  * 'mob_spawn_chance'		multiplies chance of all mobs spawning and can be set to 0.5 to have mobs spawn more or 2.0 to spawn less. e.g.1 in 7000 * 0.5 = 1 in 3500 so better odds of spawning.

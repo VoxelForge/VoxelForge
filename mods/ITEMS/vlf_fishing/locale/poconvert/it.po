@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Fishing Rod"
-msgstr "Canna da Pesca"
+msgstr ""
 
 msgid "Catches fish in water"
-msgstr "Cattura i pesci nell'acqua"
+msgstr ""
 
 msgid "Fishing rods can be used to catch fish."
-msgstr "Le canne da pesca possono essere utilizzate per catturare i pesci."
+msgstr ""
 
 msgid "Rightclick to launch the bobber. When it sinks right-click again to reel in an item. Who knows what you're going to catch?"
 msgstr ""

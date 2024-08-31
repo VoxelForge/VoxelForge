@@ -240,7 +240,7 @@ S("Example 1:\n    time 12000\nSets the game clock to 12:00").."\n\n"..
 S("Example 2:\n    give @@n vlf_core:apple 5\nGives the nearest player 5 apples"),
 
 	tiles = {{name="jeija_commandblock_off.png", animation={type="vertical_frames", aspect_w=32, aspect_h=32, length=2}}},
-	groups = {creative_breakable=1, mesecon_entity_effector_off=1},
+	groups = {creative_breakable=1, mesecon_effector_off=1},
 	drop = "",
 	on_blast = function() end,
 	on_construct = construct,
@@ -249,7 +249,7 @@ S("Example 2:\n    give @@n vlf_core:apple 5\nGives the nearest player 5 apples"
 	after_place_node = after_place,
 	on_rightclick = on_rightclick,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
-	mesecons = {entity_effector = {
+	mesecons = {effector = {
 		action_on = commandblock_action_on,
 		rules = mesecon.rules.alldirs,
 	}},
@@ -259,7 +259,7 @@ S("Example 2:\n    give @@n vlf_core:apple 5\nGives the nearest player 5 apples"
 
 minetest.register_node("mesecons_commandblock:commandblock_on", {
 	tiles = {{name="jeija_commandblock_off.png", animation={type="vertical_frames", aspect_w=32, aspect_h=32, length=2}}},
-	groups = {creative_breakable=1, mesecon_entity_effector_on=1, not_in_creative_inventory=1},
+	groups = {creative_breakable=1, mesecon_effector_on=1, not_in_creative_inventory=1},
 	drop = "",
 	on_blast = function() end,
 	on_construct = construct,
@@ -268,7 +268,7 @@ minetest.register_node("mesecons_commandblock:commandblock_on", {
 	after_place_node = after_place,
 	on_rightclick = on_rightclick,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
-	mesecons = {entity_effector = {
+	mesecons = {effector = {
 		action_off = commandblock_action_off,
 		rules = mesecon.rules.alldirs,
 	}},
