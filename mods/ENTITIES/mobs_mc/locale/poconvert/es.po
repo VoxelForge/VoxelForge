@@ -37,6 +37,9 @@ msgstr "Champivaca"
 msgid "Creeper"
 msgstr "Creeper"
 
+msgid "Charged Creeper"
+msgstr "Creeper Cargado"
+
 msgid "Dolphin"
 msgstr "Delfín"
 
@@ -54,9 +57,6 @@ msgstr "Ghast"
 
 msgid "Ghast Fireball"
 msgstr "Bola de fuego de Ghast"
-
-msgid "Glow Squid"
-msgstr "Calamar luminoso"
 
 msgid "Guardian"
 msgstr "Guardián"
@@ -88,6 +88,9 @@ msgstr "Burro"
 msgid "Mule"
 msgstr "Mula"
 
+msgid "Sneak to dismount"
+msgstr "Agáchate para desmontar"
+
 msgid "Iron Golem"
 msgstr "Golem de hierro"
 
@@ -116,7 +119,7 @@ msgid "Piglin Brute"
 msgstr "Piglin Bruto"
 
 msgid "Zombie Piglin"
-msgstr "Hombrecerdo Zombi"
+msgstr "Piglin Zombi"
 
 msgid "Pillager"
 msgstr "Saqueador"
@@ -151,11 +154,29 @@ msgstr "Esqueleto glacial"
 msgid "Wither Skeleton"
 msgstr "Esqueleto del Wither"
 
-msgid "Slime"
-msgstr "Slime"
+msgid "Slime - big"
+msgstr "Slime - grande"
+
+msgid "Slime - small"
+msgstr "Slime - mediano"
+
+msgid "Slime - tiny"
+msgstr "Slime - pequeño"
+
+msgid "Magma Cube - big"
+msgstr "Cubo de Magma - grande"
+
+msgid "Magma Cube - small"
+msgstr "Cubo de Magma - mediano"
+
+msgid "Magma Cube - tiny"
+msgstr "Cubo de Magma - pequeño"
 
 msgid "Magma Cube"
 msgstr "Cubo de Magma"
+
+msgid "Slime"
+msgstr "Slime"
 
 msgid "Snow Golem"
 msgstr "Golem de nieve"
@@ -164,16 +185,19 @@ msgid "Spider"
 msgstr "Araña"
 
 msgid "Cave Spider"
-msgstr "Araña de las cuevas"
+msgstr "Araña de cueva"
 
 msgid "Squid"
 msgstr "Calamar"
 
+msgid "Glow Squid"
+msgstr "Calamar brillante"
+
 msgid "Strider"
-msgstr "Lavagante"
+msgstr "Strider"
 
 msgid "Baby Strider"
-msgstr "Bebé Lavagante"
+msgstr "Bebé Strider"
 
 msgid "Tropical Fish"
 msgstr "Pez Tropical"
@@ -182,7 +206,7 @@ msgid "Tropical fish"
 msgstr "Pez tropical"
 
 msgid "Vex"
-msgstr "Ánima"
+msgstr "Vex"
 
 msgid "Villager"
 msgstr "Aldeano"
@@ -200,13 +224,13 @@ msgid "Zombie Villager"
 msgstr "Aldeano zombi"
 
 msgid "@1 sleeps here"
-msgstr ""
+msgstr "@1 duerme aquí"
 
 msgid "A villager sleeps here"
 msgstr "Un aldeano duerme aquí"
 
 msgid "@1 works here"
-msgstr ""
+msgstr "@1 trabaja aquí"
 
 msgid "A villager works here"
 msgstr "Un aldeano trabaja aquí"
@@ -251,13 +275,13 @@ msgid "Cleric"
 msgstr "Clérigo"
 
 msgid "Mason"
-msgstr "Mason"
+msgstr "Albañil"
 
 msgid "Nitwit"
 msgstr "Holgazán"
 
 msgid "Wandering Trader"
-msgstr ""
+msgstr "Comerciante errante"
 
 msgid "Novice"
 msgstr "Principiante"
@@ -282,6 +306,9 @@ msgstr "Wither"
 
 msgid "Wolf"
 msgstr "Lobo"
+
+msgid "Dog"
+msgstr "Perro"
 
 msgid "Zombie"
 msgstr "Zombi"

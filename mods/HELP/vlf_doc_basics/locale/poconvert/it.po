@@ -17,10 +17,10 @@ msgid "Advanced usage"
 msgstr "Utilizzo avanzato"
 
 msgid "Advanced information which may be nice to know, but is not crucial to gameplay"
-msgstr ""
+msgstr "Informazioni avanzate che possono essere utili da conoscere, ma che non sono cruciali per durante il gioco"
 
 msgid "Creative Mode"
-msgstr ""
+msgstr "Modalità Creativa"
 
 msgid "Enabling Creative Mode in MineClone 2 applies the following changes:"
 msgstr ""
@@ -275,7 +275,7 @@ msgid "• Default key: [H]"
 msgstr "• Tasto predefinito: [H]"
 
 msgid "• Required privilege: noclip"
-msgstr "• Privilegio richiesto: noclip  (“nessun aggancio”)"
+msgstr "• Privilegio richiesto: noclip (“nessun aggancio”)"
 
 msgid "Coordinates"
 msgstr "Coordinate"
@@ -332,7 +332,7 @@ msgid "• Creative Mode (creative_mode): Enables sandbox-style gameplay focusin
 msgstr ""
 
 msgid "• PvP (enable_pvp): Short for “Player vs Player”. If enabled, players can deal damage to each other"
-msgstr "• UcU (enable_pvp): abbreviazione per “Utente contro Utente” (“PvP” in Inglese). Se abilitata, gli/le utenti possono ferirsi a vicenda."
+msgstr "• UcU (enable_pvp): Abbreviazione per “Utente contro Utente” (“PvP” in Inglese). Se abilitata, gli/le utenti possono ferirsi a vicenda"
 
 msgid "For a full list of all available settings, use the “All Settings” dialog in the main menu."
 msgstr ""
@@ -410,7 +410,7 @@ msgid "• Read entries in this help to learn the rest"
 msgstr "• Leggete le voci in questa guida per imparare il resto"
 
 msgid "• Continue playing as you wish. There's no real goal, but you may want to check the advancements available from the inventory screen. Have fun!"
-msgstr ""
+msgstr "• Continua a giocare a tuo piacimento. Non c'è un vero obiettivo, ma potresti voler controllare i progressi disponibili dalla schermata dell'inventario. Divertiti!"
 
 msgid "For the default controls, see the next section [Controls]."
 msgstr ""
@@ -506,7 +506,7 @@ msgid "Inventory interaction:"
 msgstr "Interazione con l'inventario:"
 
 msgid "See the entry “Basics > Inventory”."
-msgstr "Si veda la voce “Nozioni di base > Inventario”"
+msgstr "Si veda la voce “Nozioni di base > Inventario”."
 
 msgid "Camera:"
 msgstr "Telecamera:"
@@ -539,7 +539,7 @@ msgid "• F12: Take a screenshot"
 msgstr "• F12: scatta un'istantanea"
 
 msgid "Server interaction:"
-msgstr "Interazione col server"
+msgstr "Interazione col server:"
 
 msgid "• T: Open chat window (chat requires the “shout” privilege)"
 msgstr "• T: apre la finestra di messaggistica (la messaggistica richiede il privilegio “shout”)"
@@ -602,7 +602,7 @@ msgid "• May be used for crafting or cooking"
 msgstr ""
 
 msgid "Inventory"
-msgstr ""
+msgstr "Inventario"
 
 msgid "Inventories are used to store item stacks. There are other uses, such as crafting. An inventory consists of a rectangular grid of item slots. Each item slot can either be empty or hold one item stack. Item stacks can be moved freely between most slots."
 msgstr "Gli inventari sono usati per immagazzinare pile di oggetti. Esistono altri usi, come l'assemblaggio. Un inventario è composto da una griglia rettangolare di alloggi per oggetti. Ogni alloggio per oggetto può essere vuoto o contenere una pila di oggetti. Le pile di oggetti possono essere spostate liberamente nella maggior parte degli alloggi."
@@ -614,7 +614,7 @@ msgid "Blocks can also have their own inventory, e.g. chests and furnaces."
 msgstr "Anche i blocchi possono avere il proprio inventario, per es. bauli e fornaci."
 
 msgid "Inventory controls:"
-msgstr "Controlli dell'inventario"
+msgstr "Controlli dell'inventario:"
 
 msgid "Taking: You can take items from an occupied slot if the cursor holds nothing."
 msgstr "Prendere: potete prendere oggetti da un alloggio occupato se il cursore non sta tenendo nulla."
@@ -647,7 +647,7 @@ msgid "• Middle click: put 10 items of the item stack"
 msgstr "• Click centrale: mette dieci oggetti della pila di oggetti"
 
 msgid "Exchanging: You can exchange items if the cursor holds 1 or more items and the destination slot is occupied by a different item type."
-msgstr " Scambiare: potete scambiare gli oggetti se il cursore sta tenendo uno o più oggetti e l'alloggio di destinazione è occupato da un tipo di oggetto differente."
+msgstr "Scambiare: potete scambiare gli oggetti se il cursore sta tenendo uno o più oggetti e l'alloggio di destinazione è occupato da un tipo di oggetto differente."
 
 msgid "• Click: exchange item stacks"
 msgstr "• Click: scambiare le pile di oggetti"
@@ -710,7 +710,7 @@ msgid "• Single punch: Left-click once to deal a single punch"
 msgstr "• Colpo singolo: cliccate una volta il pulsante sinistro per sferrare un colpo singolo"
 
 msgid "• Quick punching: Hold down the left mouse button to deal quick repeated punches"
-msgstr "•  Colpo rapido: tenete premuto il pulsante sinistro del mouse per sferrare colpi rapidi ripetuti"
+msgstr "• Colpo rapido: tenete premuto il pulsante sinistro del mouse per sferrare colpi rapidi ripetuti"
 
 msgid "There are two core attributes of melee weapons:"
 msgstr "Esistono due attributi principali delle armi bianche:"
@@ -740,7 +740,7 @@ msgid "• Collidable: Collidable blocks can not be passed through; players can 
 msgstr "• Urtabile: non si può passare attraverso i blocchi urtabili; gli/le utenti possono camminare su di essi. I blocchi non urtabili possono essere attraversati liberamente"
 
 msgid "• Pointable: Pointable blocks show a wireframe or a halo box when pointed. But you will just point through non-pointable blocks. Liquids are usually non-pointable but they can be pointed at by some special tools"
-msgstr "• Puntabile: i blocchi puntabili mostrano una cornice o una scatola luminescente quando vengono puntati. Ma nel caso di blocchi non puntabili potrete solo puntare attraverso di essi. I liquidi normalmente non sono puntabili, ma possono essere puntati da alcuni strumenti speciali."
+msgstr "• Puntabile: I blocchi puntabili mostrano una cornice o una scatola luminescente quando vengono puntati. Ma nel caso di blocchi non puntabili potrete solo puntare attraverso di essi. I liquidi normalmente non sono puntabili, ma possono essere puntati da alcuni strumenti speciali"
 
 msgid "• Mining properties: By which tools it can be mined, how fast and how much it wears off tools"
 msgstr "• Proprietà di scavo: tramite quali strumenti possono essere scavati, quanto velocemente e quanto usurano gli strumenti"
@@ -1163,7 +1163,7 @@ msgid "• There is no fall damage for falling into a liquid as such"
 msgstr "• Non c'è nessun ferimento da caduta alla caduta in un liquido in quanto tale"
 
 msgid "• If you fall into a liquid, you will be slowed down on impact (but don't stop instantly). Your impact depth is determined by your speed and the liquid viscosity. For a safe high drop into a liquid, make sure there is enough liquid above the ground, otherwise you might hit the ground and take fall damage"
-msgstr "• Se cadete in un liquido, verrete rallentat* all'impatto (ma non vi fermerete immediatamente). La profondità del vostro impatto è determinata dalla vostra velocità e dalla viscosità del liquido. Per un tuffo sicuro in un liquido da grande altezza, assicuratevi che ci sia abbastanza liquido sopra il terreno, altrimenti potreste colpire il terreno e subire il ferimento da caduta."
+msgstr "• Se cadete in un liquido, verrete rallentat* all'impatto (ma non vi fermerete immediatamente). La profondità del vostro impatto è determinata dalla vostra velocità e dalla viscosità del liquido. Per un tuffo sicuro in un liquido da grande altezza, assicuratevi che ci sia abbastanza liquido sopra il terreno, altrimenti potreste colpire il terreno e subire il ferimento da caduta"
 
 msgid "Liquids are often not pointable. But some special items are able to point all liquids."
 msgstr "Spesso i liquidi non sono puntabili. Ma alcuni oggetti speciali possono puntare tutti i liquidi."

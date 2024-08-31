@@ -1,6 +1,5 @@
 # textdomain: doc
 This is the help.=Dies ist die Hilfe.
-New help entry unlocked: @1 > @2=Neuen Hilfseintrag freigeschaltet: @1 > @2
 All help entries revealed!=Alle Hilfseinträge aufgedeckt!
 All help entries are already revealed.=Alle Hilfseinträge sind schon aufgedeckt.
 Category list=Kategorienliste
@@ -23,33 +22,11 @@ Help > @1 > (No Entry)=Hilfe > @1 > (Kein Eintrag)
 Help > @1 > @2=Hilfe > @1 > @2
 Open a window providing help entries about Minetest and more=Ein Fenster mit Hilfseinträgen über Minetest und mehr öffnen
 Help=Hilfe
-Collection of help texts=Sammlung von Hilfstexten
 Allows you to reveal all hidden help entries with /help_reveal=Ermöglicht es Ihnen, alle verborgenen Hilfseinträge mit /help_reveal freizuschalten
 Reveal all hidden help entries to you=Alle für Sie verborgenen Hilfseinträge freischalten
 
 
 ##### not used anymore #####
 
-<=<
->=>
-All entries read.=Alle Einträge gelesen.
-Go to category list=Zur Kategorienliste
-Go to entry list=Zur Eintragsliste
-Help > (No Category)=Hilfe > (Keine Kategorie)
-OK=OK
-Please select a category you wish to learn more about:=Bitte wählen Sie eine Kategorie, über die Sie mehr erfahren möchten, aus:
-Show entry=Eintrag zeigen
-Show category=Kategorie zeigen
-Show next entry=Nächsten Eintrag zeigen
-Show previous entry=Vorherigen Eintrag zeigen
-This category does not have any entries.=Diese Kategorie hat keine Einträge.
-This category has the following entries:=Diese Kategorie hat die folgenden Einträge:
-This category is empty.=Diese Kategorie ist leer.
-You haven't chosen a category yet. Please choose one in the category list first.=Sie haben noch keine Kategorie gewählt, Bitte wählen Sie zuerst eine aus.
-You haven't chosen an entry yet. Please choose one in the entry list first.=Sie haben noch keinen Eintrag gewählt. Bitte wählen Sie zuerst einen aus.
-Notify me when new help is available=Benachrichtigen, wenn neue Hilfe verfügbar ist
-Play notification sound when new help is available=Toneffekt abspielen, wenn neue Hilfe verfügbar ist
-Show previous image=Vorheriges Bild zeigen
-Show previous gallery page=Vorherige Galerieseite zeigen
-Show next image=Nächstes Bild zeigen
-Show next gallery page=Nächste Galerieseite zeigen
+New help entry unlocked: @1 > @2=Neuen Hilfseintrag freigeschaltet: @1 > @2
+Collection of help texts=Sammlung von Hilfstexten

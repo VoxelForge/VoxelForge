@@ -26,13 +26,13 @@ msgid "Transportation"
 msgstr "Transporte"
 
 msgid "Miscellaneous"
-msgstr "Variado"
+msgstr "Varios"
 
 msgid "Search Items"
-msgstr "Buscar artículos"
+msgstr "Buscar ítems"
 
 msgid "Foodstuffs"
-msgstr "Productos alimenticios"
+msgstr "Comidas y bebidas"
 
 msgid "Tools"
 msgstr "Herramientas"
@@ -44,7 +44,7 @@ msgid "Mobs"
 msgstr "Mobs"
 
 msgid "Brewing"
-msgstr ""
+msgstr "Alquimia"
 
 msgid "Materials"
 msgstr "Materiales"
@@ -53,16 +53,16 @@ msgid "Survival Inventory"
 msgstr "Inventario de supervivencia"
 
 msgid "Not in Creative Inventory"
-msgstr ""
+msgstr "No está en el Inventario Creativo"
 
 msgid "Advancements"
-msgstr ""
+msgstr "Logros"
 
 msgid "Switch stack size"
-msgstr ""
+msgstr "Cambiar la cantidad de ítems por stack"
 
 msgid "@1 / @2"
-msgstr ""
+msgstr "@1 / @2"
 
 msgid "Recipe book"
 msgstr "Libro de recetas"
@@ -74,10 +74,10 @@ msgid "Select player skin"
 msgstr "Seleccionar skin"
 
 msgid "Crafting"
-msgstr "Elaboración"
+msgstr "Crafteo"
 
 msgid "Fill Craft Grid"
-msgstr ""
+msgstr "Llenar la cuadrícula de crafteo"
 
 msgid "Achievements"
 msgstr "Logros"

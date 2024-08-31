@@ -20,7 +20,6 @@ dofile(minetest.get_modpath(minetest.get_current_modname()).."/snippets.lua")
 -- Apply item description updates
 
 local function apply_snippets(desc, itemstring, toolcaps, itemstack)
-	local first = true
 	-- Apply snippets
 	for s=1, #tt.registered_snippets do
 		local str, snippet_color = tt.registered_snippets[s](itemstring, toolcaps, itemstack)
@@ -28,9 +27,6 @@ local function apply_snippets(desc, itemstring, toolcaps, itemstack)
 			snippet_color = tt.COLOR_DEFAULT
 		end
 		if str then
-			if first then
-				first = false
-			end
 			desc = desc .. "\n"
 			if snippet_color then
 				desc = desc .. minetest.colorize(snippet_color, str)
@@ -72,24 +68,12 @@ function tt.reload_itemstack_description(itemstack)
 			toolcaps = itemstack:get_tool_capabilities()
 		end
 		local orig_desc = def._tt_original_description or def.description
+		if def._vlf_filter_description then
+		    orig_desc = def._vlf_filter_description (itemstack,
+							     orig_desc)
+		end
 		if meta:get_string("name") ~= "" then
 			orig_desc = minetest.colorize(tt.NAME_COLOR, meta:get_string("name"))
-		elseif def.groups._vlf_entity_effects == 1 then
-			local potency = meta:get_int("vlf_entity_effects:entity_effect_potent")
-			local plus = meta:get_int("vlf_entity_effects:entity_effect_plus")
-			if potency > 0 then
-				local sym_potency = vlf_util.to_roman(potency+1)
-				orig_desc = orig_desc.. " ".. sym_potency
-			end
-			if plus > 0 then
-				local sym_plus = " "
-				local i = plus
-				while i>0 do
-					i = i - 1
-					sym_plus = sym_plus.. "+"
-				end
-				orig_desc = orig_desc.. sym_plus
-			end
 		end
 		local desc = apply_snippets(orig_desc, itemstring, toolcaps or def.tool_capabilities, itemstack)
 		meta:set_string("description", desc)

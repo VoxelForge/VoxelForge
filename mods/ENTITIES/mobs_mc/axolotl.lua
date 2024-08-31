@@ -69,8 +69,7 @@ local axolotl = {
 		if self:feed_tame(clicker, 1, true, false) then return end
 	end,
 	makes_footstep_sound = false,
-	fly = true,
-	fly_in = { "vlf_core:water_source", "vlfx_core:river_water_source" },
+	swims = true,
 	breathes_in_water = true,
 	jump = true,
 	damage = 2,

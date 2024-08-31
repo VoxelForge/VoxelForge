@@ -102,7 +102,7 @@ minetest.register_on_mods_loaded(function()
 			end
 			if def.groups.brewitem then
 				local str = name
-				if def.groups._vlf_entity_effects == 1 then
+				if def.groups._vlf_entity_effect == 1 then
 					local stack = ItemStack(name)
 					tt.reload_itemstack_description(stack)
 					str = stack:to_string()
@@ -119,7 +119,7 @@ minetest.register_on_mods_loaded(function()
 				table.insert(inventory_lists["misc"], name)
 			end
 
-			if def.groups._vlf_entity_effects == 1 then
+			if def.groups._vlf_entity_effect == 1 then
 				if def.has_potent then
 					local stack = ItemStack(name)
 					local potency = def._default_potent_level - 1
@@ -175,12 +175,48 @@ local function set_inv_search(filter, player)
 	local creative_list = {}
 	local lang = minetest.get_player_information(playername).lang_code
 	for name, def in pairs(minetest.registered_items) do
-		if (not def.groups.not_in_creative_inventory or def.groups.not_in_creative_inventory == 0) and def.description and
-			def.description ~= "" then
-			if filter_item(string.lower(def.name), def.description, lang, filter) then
-				table.insert(creative_list, name)
-			end
+	    if (not def.groups.not_in_creative_inventory or def.groups.not_in_creative_inventory == 0)
+		and def.description and
+		def.description ~= "" then
+		local name = string.lower(def.name)
+		if filter_item (name, def.description, lang, filter) then
+		    if def.groups._vlf_entity_effect == 1 then
+			local stack = ItemStack (name)
+			tt.reload_itemstack_description (stack)
+			table.insert(creative_list, stack:to_string ())
+		    else
+			table.insert(creative_list, name)
+		    end
 		end
+		if def.groups._vlf_entity_effect == 1 then
+		    if def.has_potent then
+			local stack = ItemStack (name)
+			local potency = def._default_potent_level - 1
+			stack:get_meta ():set_int ("vlf_entity_effects:entity_effect_potent",
+						   potency)
+			tt.reload_itemstack_description (stack)
+			local desc
+			    = minetest.strip_colors (stack:get_description ())
+
+			if filter_item (name, desc, lang, filter) then
+			    table.insert (creative_list, stack:to_string ())
+			end
+		    end
+		    if def.has_plus then
+			local stack = ItemStack (name)
+			local extend = def._default_extend_level
+			stack:get_meta ():set_int ("vlf_entity_effects:entity_effect_plus",
+						   extend)
+			tt.reload_itemstack_description (stack)
+			local desc
+			    = minetest.strip_colors (stack:get_description ())
+
+			if filter_item (name, desc, lang, filter) then
+			    table.insert (creative_list, stack:to_string ())
+			end
+		    end
+		end
+	    end
 	end
 	for ench, def in pairs(vlf_enchanting.enchantments) do
 		for i = 1, def.max_level do
@@ -213,13 +249,13 @@ end
 local function init(player)
 	local playername = player:get_player_name()
 	minetest.create_detached_inventory("creative_" .. playername, {
-		allow_move = function(inv, from_list, from_index, to_list, to_index, count, player)
+		allow_move = function()
 			return 0
 		end,
-		allow_put = function(inv, listname, index, stack, player)
+		allow_put = function()
 			return 0
 		end,
-		allow_take = function(inv, listname, index, stack, player)
+		allow_take = function(_, _, _, _, player)
 			if minetest.is_creative_enabled(player:get_player_name()) then
 				return -1
 			else
@@ -232,14 +268,14 @@ end
 
 -- Create the trash field
 local trash = minetest.create_detached_inventory("trash", {
-	allow_put = function(inv, listname, index, stack, player)
+	allow_put = function(_, _, _, stack, player)
 		if minetest.is_creative_enabled(player:get_player_name()) then
 			return stack:get_count()
 		else
 			return 0
 		end
 	end,
-	on_put = function(inv, listname, index, stack, player)
+	on_put = function(inv, listname, index)
 		inv:set_stack(listname, index, "")
 	end,
 })
@@ -755,7 +791,7 @@ end)
 
 
 
-minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack)
+minetest.register_on_placenode(function(_, _, placer, _, itemstack)
 	if placer and minetest.is_creative_enabled(placer:get_player_name()) then
 		-- Place infinite nodes, except for shulker boxes
 		local group = minetest.get_item_group(itemstack:get_name(), "shulker_box")
@@ -765,6 +801,7 @@ end)
 
 local old_mt_handle_node_drops = minetest.handle_node_drops
 
+---@diagnostic disable-next-line: duplicate-set-field
 function minetest.handle_node_drops(pos, drops, digger)
 	if digger and minetest.is_creative_enabled(digger:get_player_name()) then
 		if not digger or not digger:is_player() then
@@ -801,7 +838,7 @@ minetest.register_on_joinplayer(function(player)
 	vlf_inventory.set_creative_formspec(player)
 end)
 
-minetest.register_on_player_inventory_action(function(player, action, inventory, inventory_info)
+minetest.register_on_player_inventory_action(function(player, action, _, inventory_info)
 	if minetest.is_creative_enabled(player:get_player_name()) and get_stack_size(player) == 64 and action == "put" and
 		inventory_info.listname == "main" then
 		local stack = inventory_info.stack

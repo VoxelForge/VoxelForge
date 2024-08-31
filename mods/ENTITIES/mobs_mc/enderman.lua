@@ -544,7 +544,7 @@ vlf_mobs.register_mob("mobs_mc:enderman", {
 			if nodes ~= nil then
 				if #nodes > 0 then
 					-- Up to 64 attempts to teleport
-					for n=1, math.min(64, #nodes) do
+					for _ = 1, math.min(64, #nodes) do
 						local r = pr:next(1, #nodes)
 						local nodepos = nodes[r]
 						local node_ok = true
@@ -572,7 +572,7 @@ vlf_mobs.register_mob("mobs_mc:enderman", {
 			-- Attempt to randomly teleport enderman
 			local pos = self.object:get_pos()
 			-- Up to 8 top-level attempts to teleport
-			for n=1, 8 do
+			for _ = 1, 8 do
 				local node_ok = false
 				-- We need to add (or subtract) different random numbers to each vector component, so it couldn't be done with a nice single vector.add() or .subtract():
 				local randomCube = vector.new( pos.x + 8*(pr:next(0,16)-8), pos.y + 8*(pr:next(0,16)-8), pos.z + 8*(pr:next(0,16)-8) )
@@ -580,7 +580,7 @@ vlf_mobs.register_mob("mobs_mc:enderman", {
 				if nodes ~= nil then
 					if #nodes > 0 then
 						-- Up to 8 low-level (in total up to 8*8 = 64) attempts to teleport
-						for n=1, math.min(8, #nodes) do
+						for _ = 1, math.min(8, #nodes) do
 							local r = pr:next(1, #nodes)
 							local nodepos = nodes[r]
 							node_ok = true
@@ -614,7 +614,7 @@ vlf_mobs.register_mob("mobs_mc:enderman", {
 			minetest.add_item(pos, self._taken_node)
 		end
 	end,
-	do_punch = function(self, hitter, tflp, tool_caps, dir)
+	do_punch = function(self, hitter, tflp, tool_caps, dir) ---@diagnostic disable-line: unused-local
 		-- damage from rain caused by itself so we don't want it to attack itself.
 		if hitter ~= self.object and hitter ~= nil then
 			--if (minetest.get_timeofday() * 24000) > 5001 and (minetest.get_timeofday() * 24000) < 19000 then

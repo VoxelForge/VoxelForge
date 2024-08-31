@@ -1,10 +1,9 @@
 vlf_trials = {
 	registered_vaults = {}
 }
+
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
---local S = minetest.get_translator(modname)
-
 dofile(modpath.."/api.lua")
 
 vlf_trials.register_vault("vault",{
@@ -27,7 +26,7 @@ vlf_trials.register_vault("vault",{
 			"vlf_trials_vault_side_ejecting.png", "vlf_trials_vault_front_ejecting.png",
 		},
 	},
-	loot ={
+	loot = {
 		{
 			stacks_min = 1,
 			stacks_max = 1,
@@ -40,18 +39,18 @@ vlf_trials.register_vault("vault",{
 				{ itemstring = "vlf_honey:honey_bottle", weight = 69, amount_min = 1, amount_max = 2 },
 				--{ itemstring = "TODO:ominous_bottle", weight = 69, amount_min = 1, amount_max = 2 },
 				{ itemstring = "vlf_shields:shield", weight = 300, amount_min = 1, amount_max = 1 },
-				{ itemstring = "vlf_bows:bow", weight = 300, func = function(stack, pr) vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
+				{ itemstring = "vlf_bows:bow", weight = 300, func = function(stack, pr)vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
 				{ itemstring = "vlf_charges:wind_charge", weight = 23, amount_min = 4, amount_max = 12 },
 				{ itemstring = "vlf_core:diamond", weight = 23, amount_min = 1, amount_max = 2 },
 				{ itemstring = "vlf_farming:carrot_item_gold", weight = 200, amount_min = 1, amount_max = 2 },
 				{ itemstring = "vlf_farming:carrot_item_gold", weight = 200, amount_min = 1, amount_max = 2 },
-				{ itemstring = "vlf_books:book", weight = 1, func = function(stack, pr)	vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
-				{ itemstring = "vlf_books:book", weight = 1, func = function(stack, pr)	vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
-				{ itemstring = "vlf_bows:crossbow", weight = 200, func = function(stack, pr) vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
-				{ itemstring = "vlf_tools:axe_iron", weight = 200, func = function(stack, pr) vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
-				{ itemstring = "vlf_armor:chestplate_iron", weight = 200, func = function(stack, pr) vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
-				{ itemstring = "vlf_tools:axe_diamond", weight = 100, func = function(stack, pr) vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
-				{ itemstring = "vlf_armor:chestplate_diamond", weight = 100, func = function(stack, pr) vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
+				{ itemstring = "vlf_books:book", weight = 1, func = function(stack, pr)vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
+				{ itemstring = "vlf_books:book", weight = 1, func = function(stack, pr)vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
+				{ itemstring = "vlf_bows:crossbow", weight = 200, func = function(stack, pr)vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
+				{ itemstring = "vlf_tools:axe_iron", weight = 200, func = function(stack, pr)vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
+				{ itemstring = "vlf_armor:chestplate_iron", weight = 200, func = function(stack, pr)vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
+				{ itemstring = "vlf_tools:axe_diamond", weight = 100, func = function(stack, pr)vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
+				{ itemstring = "vlf_armor:chestplate_diamond", weight = 100, func = function(stack, pr)vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
 
 			}
 		},

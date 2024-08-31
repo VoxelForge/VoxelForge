@@ -14,7 +14,7 @@ local rabbit = {
 	hp_max = 3,
 	xp_min = 1,
 	xp_max = 3,
-	collisionbox = {-0.2, -0.01, -0.2, 0.2, 0.49, 0.2},
+	collisionbox = {-0.2, -0.1, -0.2, 0.2, 0.49, 0.2},
 	head_swivel = "head.control",
 	bone_eye_height = 2,
 	head_eye_height = 0.5,
@@ -86,6 +86,7 @@ local rabbit = {
 		if self:feed_tame(clicker, 1, true, false) then return end
 	end,
 	do_custom = function(self)
+		-- TODO this is a silly thing to run all the time, if it's wanted it should be done by overriding set_nametag
 		-- Easter egg: Change texture if rabbit is named “Toast”
 		local nametag = self.object:get_properties().nametag
 		if nametag == "Toast" and not self._has_toast_texture then

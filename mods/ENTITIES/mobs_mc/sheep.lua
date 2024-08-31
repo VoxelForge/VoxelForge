@@ -97,7 +97,7 @@ vlf_mobs.register_mob("mobs_mc:sheep", {
 		{ "vlf_core:dirt_with_grass", "vlf_core:dirt", -1 },
 		{ "vlf_flowers:tallgrass", "air", 0 },
 	},
-	on_replace = function(self, pos, oldnode, newnode)
+	on_replace = function(self)
 		self.color = self.color or "unicolor_white"
 		self.base_texture = sheep_texture(self.color)
 		self.drops = get_sheep_drops(self.color)
@@ -121,7 +121,7 @@ vlf_mobs.register_mob("mobs_mc:sheep", {
 
 	end,
 
-	do_custom = function(self, dtime)
+	do_custom = function(self)
 		if not self.initial_color_set then
 			local r = math.random(0,100000)
 			if r <= 81836 then -- 81.836%

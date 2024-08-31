@@ -41,7 +41,7 @@ msgid "Combat"
 msgstr "Combat"
 
 msgid "Mobs"
-msgstr "Mobs"
+msgstr "Créatures"
 
 msgid "Brewing"
 msgstr "Potion"
@@ -53,16 +53,16 @@ msgid "Survival Inventory"
 msgstr "Inventaire de survie"
 
 msgid "Not in Creative Inventory"
-msgstr ""
+msgstr "Pas dans l'inventaire créatif"
 
 msgid "Advancements"
-msgstr ""
+msgstr "Avancées"
 
 msgid "Switch stack size"
-msgstr ""
+msgstr "Taille de la pile de commutateurs"
 
 msgid "@1 / @2"
-msgstr ""
+msgstr "@1 / @2"
 
 msgid "Recipe book"
 msgstr "Livre de recettes"
@@ -77,7 +77,7 @@ msgid "Crafting"
 msgstr "Artisanat"
 
 msgid "Fill Craft Grid"
-msgstr ""
+msgstr "Remplir la grille d'artisanat"
 
 msgid "Achievements"
 msgstr "Accomplissements"

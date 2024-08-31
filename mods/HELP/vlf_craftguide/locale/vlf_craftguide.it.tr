@@ -1,7 +1,7 @@
 # textdomain: vlf_craftguide
-Any shulker box=
-Any wool=
-Any wood planks=
+Any shulker box=Qualsiasi scatola shulker
+Any wool=Qualsiasi lana
+Any wood planks=Qualsiasi asse di legno
 Any wood=
 Any sand=
 Any normal sandstone=
@@ -22,8 +22,9 @@ Any item belonging to the @1 group=
 Any item belonging to the groups: @1=
 Cooking time: @1=
 Burning time: @1=
-Usage @1 of @2=
-Recipe @1 of @2=
+Usages=
+Recipes=
+@1 of @2=
 Recipe is too big to be displayed (@1×@2)=
 Shapeless=
 Cooking=

@@ -90,9 +90,8 @@ else
 	minetest.register_node("vlf_meshhand:hand_crea", node_def)
 end
 
-local hand
-
 function vlf_meshhand.update_player(player)
+	local hand
 	if vlf_skins_enabled then
 		local node_id = vlf_skins.get_node_id_by_player(player)
 		hand = ItemStack("vlf_meshhand:" .. node_id)

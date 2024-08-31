@@ -45,7 +45,7 @@ function minetest.do_item_eat(hp_change, replace_with_item, itemstack, user, poi
 	return itemstack
 end
 
-function vlf_hunger.eat(hp_change, replace_with_item, itemstack, user, pointed_thing)
+function vlf_hunger.eat(hp_change, replace_with_item, itemstack, user, _)
 	local item = itemstack:get_name()
 	local def = vlf_hunger.registered_foods[item]
 	if not def then
@@ -57,9 +57,8 @@ function vlf_hunger.eat(hp_change, replace_with_item, itemstack, user, pointed_t
 		def.saturation = hp_change
 		def.replace = replace_with_item
 	end
-	local func = vlf_hunger.item_eat(def.saturation, def.replace, def.poisontime,
-		def.poison, def.exhaust, def.poisonchance, def.sound)
-	return func(itemstack, user, pointed_thing)
+	local func = vlf_hunger.item_eat(def.saturation, def.replace, def.poisontime, def.poison, def.exhaust, def.poisonchance)
+	return func(itemstack, user)
 end
 
 -- Reset HUD bars after food poisoning
@@ -73,8 +72,8 @@ end
 
 local poisonrandomizer = PseudoRandom(os.time())
 
-function vlf_hunger.item_eat(hunger_change, replace_with_item, poisontime, poison, exhaust, poisonchance, sound)
-	return function(itemstack, user, pointed_thing)
+function vlf_hunger.item_eat(hunger_change, replace_with_item, poisontime, poison, exhaust, poisonchance)
+	return function(itemstack, user)
 		if not user or not user.is_player or not user:is_player() or user.is_fake_player then return itemstack end
 		local itemname = itemstack:get_name()
 		local creative = minetest.is_creative_enabled(user:get_player_name())
@@ -99,7 +98,7 @@ function vlf_hunger.item_eat(hunger_change, replace_with_item, poisontime, poiso
 				}, true)
 			else
 				-- Assume the item is a food
-				-- Add eat particle effect and sound
+				-- Add eat particle entity_effect and sound
 				local def = minetest.registered_items[itemname]
 				local texture = def.inventory_image
 				if not texture or texture == "" then
@@ -165,8 +164,8 @@ function vlf_hunger.item_eat(hunger_change, replace_with_item, poisontime, poiso
 					do_poison = true
 				end
 				if do_poison then
-					local level = vlf_entity_effects.get_effect_level(user, "food_poisoning")
-					vlf_entity_effects.give_effect_by_level("food_poisoning", user, level+exhaust, poisontime)
+					local level = vlf_entity_effects.get_entity_effect_level(user, "hunger")
+					vlf_entity_effects.give_entity_effect_by_level("hunger", user, level+exhaust, poisontime)
 				end
 			end
 
@@ -188,7 +187,7 @@ end
 
 if vlf_hunger.active then
 	-- player-action based hunger changes
-	minetest.register_on_dignode(function(pos, oldnode, player)
+	minetest.register_on_dignode(function(_, _, player)
 		-- is_fake_player comes from the pipeworks, we are not interested in those
 		if not player or not player:is_player() or player.is_fake_player == true then
 			return

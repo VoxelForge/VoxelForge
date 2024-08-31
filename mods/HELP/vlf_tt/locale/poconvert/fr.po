@@ -29,55 +29,55 @@ msgid "Very fast"
 msgstr "Très rapide"
 
 msgid "Extremely fast"
-msgstr "Extremement rapide"
+msgstr "Extrêmement rapide"
 
 msgid "Instantaneous"
-msgstr ""
+msgstr "Instantané"
 
 msgid "Unlimited uses"
 msgstr "Utilisations illimitées"
 
 msgid "Mining speed: @1"
-msgstr "Vitesse de minage: @1"
+msgstr "Vitesse de minage : @1"
 
 msgid "Mining durability: @1"
-msgstr "Durabilité de minage: @1"
+msgstr "Durabilité de minage : @1"
 
 msgid "Block breaking strength: @1"
-msgstr "Résistance à la rupture: @1"
+msgstr "Résistance de rupture de bloc : @1"
 
 msgid "Damage: @1"
-msgstr "Dégâts: @1"
+msgstr "Dégâts : @1"
 
 msgid "Healing: @1"
-msgstr "Guérison: @1"
+msgstr "Guérison : @1"
 
 msgid "Full punch interval: @1s"
-msgstr "Intervalle de coup: @1s"
+msgstr "Intervalle de coup : @1s"
 
 msgid "Food item"
-msgstr ""
+msgstr "aliment"
 
 msgid "+@1 food points"
-msgstr ""
+msgstr "+@1 points de satiété"
 
 msgid "Contact damage: @1 per second"
-msgstr "Dégâts de contact: @1 par seconde"
+msgstr "Dégâts de contact : @1 par seconde"
 
 msgid "Contact healing: @1 per second"
-msgstr "Guérison de contact: @1 par seconde"
+msgstr "Guérison de contact : @1 par seconde"
 
 msgid "Drowning damage: @1"
-msgstr "Dégâts de noyade: @1"
+msgstr "Dégâts de noyade : @1"
 
 msgid "Fall damage: +@1%"
-msgstr "Dégâts de chute: +@1%"
+msgstr "Dégâts de chute : +@1%"
 
 msgid "No fall damage"
 msgstr "Pas de dégâts de chute"
 
 msgid "Fall damage: @1%"
-msgstr "Dégâts de chute: @1%"
+msgstr "Dégâts de chute : @1%"
 
 msgid "No jumping"
 msgstr "Ne pas sauter"
@@ -101,7 +101,7 @@ msgid "Bouncy (@1%)"
 msgstr "Rebondissant (@1%)"
 
 msgid "Luminance: @1"
-msgstr "Luminance: @1"
+msgstr "Luminance : @1"
 
 msgid "@1 uses"
 msgstr "@1 utilisations"
@@ -119,19 +119,19 @@ msgid "Feet armor"
 msgstr "Armure de pieds"
 
 msgid "Armor points: @1"
-msgstr "Points d'armure: @1"
+msgstr "Point d'armure : @1"
 
 msgid "Armor durability: @1"
-msgstr "Durabilité d'armure: @1"
+msgstr "Durabilité de l'armure : @1"
 
 msgid "Protection: @1%"
-msgstr "Protection: @1%"
+msgstr "Protection : @1%"
 
 msgid "Hunger points: +@1"
-msgstr "Points de faim: +@1"
+msgstr "Points de faim : +@1"
 
 msgid "Saturation points: +@1"
-msgstr "Points de saturation: +@1"
+msgstr "Points de saturation : +@1"
 
 msgid "Deals damage when falling"
 msgstr "Inflige des dégâts en tombant"
@@ -146,13 +146,13 @@ msgid "Flammable"
 msgstr "Inflammable"
 
 msgid "Zombie view range: -50%"
-msgstr "Distance de vue de Zombie: -50%"
+msgstr "Distance de vue de Zombie : -50%"
 
 msgid "Skeleton view range: -50%"
-msgstr "Distance de vue de Squelette: -50%"
+msgstr "Distance de vue de Squelette : -50%"
 
 msgid "Creeper view range: -50%"
-msgstr "Distance de vue de Creeper: -50%"
+msgstr "Distance de vue de Creeper : -50%"
 
 msgid "Durability: @1"
 msgstr "Durabilité : @1"

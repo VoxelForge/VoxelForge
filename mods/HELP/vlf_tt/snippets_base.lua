@@ -241,10 +241,6 @@ tt.register_snippet(function(itemstring)
 		desc = desc .. minetest.colorize(tt.COLOR_DEFAULT, S("Luminance: @1", tmp))
 	end
 
-
-	if desc == "" then
-		desc = nil
-	end
-	return desc, false
+	return desc ~= "" and desc or nil, false
 end)
 

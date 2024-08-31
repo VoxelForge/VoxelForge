@@ -33,7 +33,7 @@ function mobs_mc.player_wears_gold(player)
 	end
 end
 
-local function check_light(pos, environmental_light, artificial_light, sky_light)
+local function check_light(_, _, artificial_light, _)
 	if artificial_light > 11 then
 		return false, "To bright"
 	end
@@ -97,8 +97,13 @@ local piglin = {
 		if vlf_worlds.pos_to_dimension(self.object:get_pos()) == "overworld" then
 			self._zombie_timer = (self._zombie_timer or zombiefication_delay) - dtime
 			if self._zombie_timer < 0 then
-				vlf_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
-				return
+			    local object
+				= vlf_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
+			    if object then
+				vlf_entity_effects.give_entity_effect ("nausea", object, 1,
+							 10, false)
+			    end
+			    return
 			end
 		elseif self.trading then
 			self:set_state("stand")

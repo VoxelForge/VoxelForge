@@ -90,7 +90,7 @@ vlf_mobs.register_mob("mobs_mc:pig", {
 		return true
 	end,
 
-	on_die = function(self, pos)
+	on_die = function(self)
 
 		-- drop saddle when horse is killed while riding
 		-- also detach from horse properly
@@ -186,7 +186,7 @@ vlf_mobs.register_mob("mobs_mc:pig", {
 		end
 	end,
 
-	on_breed = function(parent1, parent2)
+	on_breed = function(parent1)
 		local pos = parent1.object:get_pos()
 		local child = vlf_mobs.spawn_child(pos, parent1.name)
 		if child then
@@ -197,7 +197,7 @@ vlf_mobs.register_mob("mobs_mc:pig", {
 		end
 	end,
 
-	after_activate = function(self, staticdata, def, dtime)
+	after_activate = function(self)
 		if self.saddle == "yes" then -- Make saddle load upon rejoin
 			self.base_texture = {
 				"mobs_mc_pig.png", -- base

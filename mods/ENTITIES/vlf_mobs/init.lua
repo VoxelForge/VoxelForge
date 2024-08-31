@@ -98,7 +98,6 @@ vlf_mobs.mob_class = {
 	is_mob = true,
 	pushable = true,
 	mob_pushable = true,
-	_timers = {},
 	avoid_distance = 9,
 	ignores_nametag = false,
 	rain_damage = 0,
@@ -314,6 +313,7 @@ function vlf_mobs.register_mob(name, def)
 				collide_with_objects = false,
 			})
 
+			self._timers = {}
 			return self:mob_activate(staticdata, dtime)
 		end,
 	}),vlf_mobs.mob_class_meta)

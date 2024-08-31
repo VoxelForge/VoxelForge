@@ -12,6 +12,8 @@ tsm_railcorridors.nodes = {
 	torch_wall = "vlf_torches:torch_wall",
 	cobweb = "vlf_core:cobweb",
 	spawner = "vlf_mobspawners:spawner",
+	support = "vlf_trees:wood_oak",
+	stone = "vlf_core:stone",
 }
 
 -- This generates dark oak wood in mesa biomes and oak wood everywhere else.

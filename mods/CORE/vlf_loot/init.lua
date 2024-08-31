@@ -125,8 +125,8 @@ local function get_random_slots(max_slot, pr)
 	return slots_out
 end
 
---[[
-Puts items in an inventory list into random slots.
+
+--[[Puts items in an inventory list into random slots.
 * inv: InvRef
 * listname: Inventory list name
 * items: table of items to add

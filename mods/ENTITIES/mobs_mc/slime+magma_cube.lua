@@ -40,7 +40,7 @@ local spawn_children_on_die = function(child_mob, spawn_distance, eject_speed)
 		local angle = math.random(0, math.pi*2)
 		local children = {}
 		local spawn_count = math.random(2, 4)
-		for i = 1, spawn_count do
+		for _ = 1, spawn_count do
 			dir = vector.new(math.cos(angle), 0, math.sin(angle))
 			posadd = vector.normalize(dir) * spawn_distance
 			newpos = pos + posadd
@@ -76,7 +76,7 @@ end
 
 local swamp_light_max = 7
 
-local function slime_check_light(pos, environmental_light, artificial_light, sky_light)
+local function slime_check_light(pos, _, artificial_light, sky_light)
 	local maxlight = swamp_light_max
 
 	if pos.y <= slime_chunk_spawn_max and in_slime_chunk(pos) then

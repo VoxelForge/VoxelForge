@@ -129,21 +129,14 @@ Durability: @1 uses=
 Durability: @1=
 Miscellaneous items=Itens variados
 Item reference of items which are neither blocks, tools or weapons (esp. crafting items)=Referência de itens que não são blocos, ferramentas ou armas (especialmente itens de criação)
+Mobs=
+Different Mobs=
+Type: @1=
+Spawning light levels (min / max): @1 / @2=
+Can Jump a height of @1 nodes=
+Can Fly=
+Can Swim=
+Drops: =
+Follows player when these items are held:=
 A transparent block, basically empty space. It is usually left behind after digging something.=Um bloco transparente, basicamente um vazio. Isso geralmente fica no lugar de um bloco removido.
 Whenever you are not wielding any item, you use the hand which acts as a tool with its own capabilities. When you are wielding an item which is not a mining tool or a weapon it will behave as if it would be the hand.=Sempre que você não estiver empunhando nenhum item, você usa a mão que atua como uma ferramentacom caracteristicas próprias. Quando você está empunhando um item que não é uma ferramenta de mineração ou uma arma, ele se comportará como se fosse a mão.
-
-
-##### not used anymore #####
-
-Using it as fuel turns it into: @1.= Usar isso como combustivel o transforma em: @1.
-%@1×@2=%@1×@2
-Mining level: @1=Nível de mineração: @1
-Rating @1=Classificação @1
-Rating @1-@2=Classificação @1-@2
-This block will drop the following items when mined: %s.=Esse bloco soltará os seguintes itens quando minerados: %s.
-This block will drop the following when mined: %s.=Esse bloco irá deixar cair o seguinte quando extraído: %s.
-This block will randomly drop one of the following when mined: %s.=Esse bloco irá deixar cair aleatoriamente um dos seguintes quando extraído: %s.
-This block will randomly drop up to %d drops of the following possible drops when mined: %s.=Esse bloco irá cair aleatoriamente %d vezes das seguintes possíveis formas quando extraído: %s.
-any level=qualquer nível
-level 0=nível 0
-level 0-@1=nivel 0-@1

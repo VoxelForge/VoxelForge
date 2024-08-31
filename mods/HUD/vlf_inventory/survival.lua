@@ -19,7 +19,7 @@ function vlf_inventory.register_survival_inventory_tab(def)
 	end
 
 	if not def.access then
-		function def.access(player)
+		function def.access(_)
 			return true
 		end
 	end
@@ -33,15 +33,15 @@ end
 
 local player_current_tab = {}
 
-minetest.register_on_joinplayer(function(player, last_login)
+minetest.register_on_joinplayer(function(player)
 	player_current_tab[player] = "main"
 end)
 
-minetest.register_on_leaveplayer(function(player, timed_out)
+minetest.register_on_leaveplayer(function(player)
 	player_current_tab[player] = nil
 end)
 
-local function build_page(player, content, inventory, tabname)
+local function build_page(_, content, inventory, tabname)
 	local tab_buttons = "style_type[image;noclip=true]"
 
 	if #vlf_inventory.registered_survival_inventory_tabs ~= 1 then
@@ -192,8 +192,11 @@ function vlf_inventory.build_survival_formspec(player)
 			break
 		end
 	end
+	local form
 
-	local form = build_page(player, tab_def.build(player), tab_def.show_inventory, tab)
+	if tab_def then
+		form = build_page(player, tab_def.build(player), tab_def.show_inventory, tab)
+	end
 
 	return form
 end
@@ -221,38 +224,59 @@ end)
 local function sort_stack(stack)
 	if minetest.get_item_group(stack:get_name(), "offhand_item") > 0 then
 		return "offhand"
-	end
-	if minetest.get_item_group(stack:get_name(), "armor") > 0 then
+	elseif minetest.get_item_group(stack:get_name(), "armor") > 0 then
 		return "armor"
 	end
-	return "craft"
+end
+
+local function find_empty_inv_slots(inv)
+	local main, hotbar
+	for i, stack in pairs(inv:get_list("main")) do
+		if i > 9 and not main and stack:is_empty() then
+			main = i
+		elseif i <= 9 and not hotbar and stack:is_empty() then
+			hotbar = i
+		end
+		if hotbar and main then break end
+	end
+	return main, hotbar
 end
 
 minetest.register_on_player_inventory_action(function(player, action, inv, info)
 	if action == "move" and info.to_list == "sorter" then
 		local stack = inv:get_stack(info.to_list, info.to_index)
 		local trg = sort_stack(stack)
-		if trg == "armor" then
-			local newstack = vlf_armor.equip(stack, player, true)
-			if newstack and not newstack:is_empty() then
-				if inv:get_stack(info.from_list, info.from_index):is_empty() then
-					inv:set_stack(info.from_list, info.from_index, newstack)
-				elseif inv:room_for_item(info.from_list, newstack) then
-					inv:add_item(info.from_list, newstack)
+		local empty_main, empty_hotbar = find_empty_inv_slots(inv)
+		if trg then
+			if trg == "armor" then
+				local newstack = vlf_armor.equip(stack, player, true)
+				if newstack and not newstack:is_empty() then
+					if inv:get_stack(info.from_list, info.from_index):is_empty() then
+						inv:set_stack(info.from_list, info.from_index, newstack)
+					elseif inv:room_for_item(info.from_list, newstack) then
+						inv:add_item(info.from_list, newstack)
+					end
 				end
+			else
+				inv:add_item(trg, stack)
 			end
+		elseif info.from_list == "main" and info.from_index <= 9 and empty_main then --hotbar to inv
+			inv:set_stack("main", empty_main, stack)
+		elseif info.from_list == "main" and info.from_index > 9 and empty_hotbar then
+			inv:set_stack("main", empty_hotbar, stack)
 		else
-			inv:add_item(trg, stack)
+			inv:set_stack(info.from_list, info.from_index, stack)
 		end
 		inv:set_stack("sorter", 1, ItemStack(""))
 	end
 end)
 
-minetest.register_allow_player_inventory_action(function(player, action, inv, info)
+minetest.register_allow_player_inventory_action(function(_, action, inv, info)
 	if info.to_list == "sorter" or info.from_list == "sorter" or info.listname == "sorter" then
 		if action == "put" or action == "take" then return 0 end
 		local stack = inv:get_stack(info.from_list, info.from_index)
 		local trg = sort_stack(stack)
+		local empty_main, empty_hotbar = find_empty_inv_slots(inv)
 		if trg then
 			if trg == "armor" then
 				return 1
@@ -267,6 +291,9 @@ minetest.register_allow_player_inventory_action(function(player, action, inv, in
 					end
 				end
 			end
+		elseif ( info.from_list == "main" and info.from_index <= 9 and empty_main ) or
+			( info.from_list == "main" and info.from_index > 9 and empty_hotbar ) then
+			return stack:get_count()
 		end
 		return 0
 	end

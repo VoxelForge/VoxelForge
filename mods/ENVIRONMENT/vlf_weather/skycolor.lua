@@ -46,7 +46,7 @@ function vlf_weather.set_sky_color(player, def)
 end
 
 vlf_weather.skycolor = {
-	-- Should be activated before do any effect.
+	-- Should be activated before do any entity_effect.
 	active = true,
 
 	-- To skip update interval
@@ -96,34 +96,22 @@ vlf_weather.skycolor = {
 		end
 	end,
 
-	-- Wrapper for updating day/night ratio that respects night vision
+		-- Wrapper for updating day/night ratio that respects night vision
 	override_day_night_ratio = function(player, ratio)
 		local meta = player:get_meta()
 		local has_night_vision = meta:get_int("night_vision") == 1
-		local arg
-		-- Apply night vision only for dark sky
-		local is_dark = minetest.get_timeofday() > 0.8 or minetest.get_timeofday() < 0.2 or vlf_weather.state ~= "none"
 		local has_darkness = meta:get_int("darkness") == 1
-		local pos = player:get_pos()
-		local dim = vlf_worlds.pos_to_dimension(pos)
-		if has_night_vision and is_dark and dim ~= "nether" and dim ~= "end" then
-			if ratio == nil then
-				arg = NIGHT_VISION_RATIO
-			else
-				arg = math.max(ratio, NIGHT_VISION_RATIO)
-			end
-		elseif has_darkness then
-			if has_night_vision then
-				arg = 0.1
-			else
-				arg = 0
-			end
+		local is_visited_shepherd = meta:get_int("vlf_shepherd:special") == 1
+		local arg
+		if has_darkness and not is_visited_shepherd then
+			if has_night_vision then arg = 0.1
+			else arg = 0 end
 		else
 			-- Apply night vision only for dark sky
 			local is_dark = minetest.get_timeofday() > 0.8 or minetest.get_timeofday() < 0.2 or vlf_weather.state ~= "none"
 			local pos = player:get_pos()
 			local dim = vlf_worlds.pos_to_dimension(pos)
-			if (has_night_vision) and is_dark and dim ~= "nether" and dim ~= "end" then
+			if (has_night_vision or is_visited_shepherd) and is_dark and dim ~= "nether" and dim ~= "end" then
 				if ratio == nil then
 					arg = NIGHT_VISION_RATIO
 				else

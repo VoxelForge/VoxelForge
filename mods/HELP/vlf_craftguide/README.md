@@ -1,6 +1,6 @@
 # Crafting Guide (MineClone 2 edition)
 
-#### `vlf_craftguide` is based on, `craftguide` the most comprehensive crafting guide on Minetest.
+#### `mcl_craftguide` is based on, `craftguide` the most comprehensive crafting guide on Minetest.
 #### Consult the [Minetest Wiki](http://wiki.minetest.net/Crafting_guide) for more details.
 
 This crafting guide can be accessed from the invenotory menu (book icon).

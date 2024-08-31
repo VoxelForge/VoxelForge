@@ -23,7 +23,7 @@ msgid "This block can be turned into farmland with a hoe."
 msgstr "Ce bloc peut être transformé en terres agricoles avec une houe."
 
 msgid "This block can be turned into grass path with a shovel."
-msgstr ""
+msgstr "Ce bloc peut être transformé en chemin d'herbe à l'aide d'une pelle."
 
 msgid "This block acts as a soil for all saplings."
 msgstr "Ce bloc agit comme un sol pour tous les pousses arbres."
@@ -80,10 +80,10 @@ msgid "You have to wait for about 2 seconds before you can eat or drink again."
 msgstr "Vous devez attendre environ 2 secondes avant de pouvoir à nouveau manger ou boire."
 
 msgid "Hunger points restored: @1"
-msgstr "Points de faim restaurés: @1"
+msgstr "Points de faim restaurés : @1"
 
 msgid "Saturation points restored: @1%"
-msgstr ""
+msgstr "Points de saturation restaurés : @1%"
 
 msgid "It can be worn on the head."
 msgstr "Il peut être porté sur la tête."
@@ -98,10 +98,10 @@ msgid "It can be worn on the feet."
 msgstr "Il peut être porté aux pieds."
 
 msgid "Armor points: @1"
-msgstr "Point d'armure: @1"
+msgstr "Point d'armure : @1"
 
 msgid "Armor durability: @1"
-msgstr "Durabilité de l'armure: @1"
+msgstr "Durabilité de l'armure : @1"
 
 msgid "This item cannot be renamed at an anvil."
 msgstr "Cet objet ne peut pas être renommé sur une enclume."
@@ -155,7 +155,7 @@ msgid "Golden Shovel"
 msgstr "Pelle en Or"
 
 msgid "Wooden Shovel"
-msgstr "Pelle de Bois"
+msgstr "Pelle en Bois"
 
 msgid "This block can be mined by any tool instantly."
 msgstr "Ce bloc peut être miné par n'importe quel outil instantanément."
@@ -170,16 +170,16 @@ msgid "• Hand"
 msgstr "• Mains"
 
 msgid "This block can be mined by:"
-msgstr "Ce bloc peut être miné par:"
+msgstr "Ce bloc peut être miné par :"
 
 msgid "Hardness: ∞"
-msgstr "Dureté: ∞"
+msgstr "Dureté : ∞"
 
 msgid "Hardness: @1"
-msgstr "Dureté: @1"
+msgstr "Dureté : @1"
 
 msgid "Blast Resistance: @1"
-msgstr ""
+msgstr "Résistance au souffle : @1"
 
 msgid "This block will not be destroyed by TNT explosions."
 msgstr "Ce bloc ne sera pas détruit par les explosions de TNT."
@@ -194,7 +194,7 @@ msgid "This blocks drops the following when mined by shears: @1"
 msgstr "Ce bloc laisse tomber les choses suivantes lorsqu'il est exploité par cisaille : @1"
 
 msgid ", "
-msgstr ","
+msgstr ", "
 
 msgid "Painfully slow"
 msgstr "Péniblement lent"
@@ -212,7 +212,7 @@ msgid "Very fast"
 msgstr "Très rapide"
 
 msgid "Extremely fast"
-msgstr "Extrêmenent rapide"
+msgstr "Extrêmement rapide"
 
 msgid "Instantaneous"
 msgstr "Instantané"
@@ -224,23 +224,23 @@ msgid "Unlimited uses"
 msgstr "Utilisations illimitées"
 
 msgid "Mining speed: @1"
-msgstr "Vitesse de minage: @1"
+msgstr "Vitesse de minage : @1"
 
 msgid "Mining durability: @1"
-msgstr "Durabilité de minage: @1"
+msgstr "Durabilité de minage : @1"
 
 msgid "This tool is capable of mining."
 msgstr "Cet outil est capable d'exploiter."
 
 msgid "Block breaking strength: @1"
-msgstr "Résistance de rupture de bloc: @1"
+msgstr "Résistance de rupture de bloc : @1"
 
 msgid "This is a melee weapon which deals damage by punching."
 msgstr "Il s'agit d'une arme de mêlée qui inflige des dégâts en frappant."
 
 msgid "Maximum damage: @1 HP"
-msgstr "Dégâts maximum: @1"
+msgstr "Dégâts maximum : @1"
 
 msgid "Full punch interval: @1 s"
-msgstr "Interval de coup: @1 s"
+msgstr "Interval de coup : @1 s"
 

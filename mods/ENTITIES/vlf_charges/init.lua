@@ -11,7 +11,7 @@ if minetest.global_exists("vlf_charges_cooldown") == false then
 end
 vlf_charges = {}
 local S = minetest.get_translator("vlf_charges")
---Wind Charge Particle effects
+--Wind Charge Particle entity_effects
 wind_burst_spawner = {
 	texture = "vlf_charges_wind_burst_1.png",
 	texpool = {},
@@ -35,8 +35,8 @@ for i=1,2 do
 		animation={type="vertical_frames", aspect_w=8, aspect_h=8, length=1},
 	})
 end
--- Chorus flower destruction effects
-function vlf_charges.chorus_flower_effects(pos, radius)
+-- Chorus flower destruction entity_effects
+function vlf_charges.chorus_flower_entity_effects(pos, radius)
 		minetest.add_particlespawner({
 			amount = 10,
 			time = 0.3,
@@ -53,8 +53,8 @@ function vlf_charges.chorus_flower_effects(pos, radius)
 			collisiondetection = true,
 		})
 end
--- decorated pot destruction effects
-function vlf_charges.pot_effects(pos, radius)
+-- decorated pot destruction entity_effects
+function vlf_charges.pot_entity_effects(pos, radius)
 		minetest.add_particlespawner({
 			amount = 10,
 			time = 0.3,
@@ -104,10 +104,7 @@ function vlf_charges.wind_burst(pos, radius)
 			if luaobj then
 				local is_builtin_item = luaobj.name == "__builtin:item"
 				if luaobj.is_mob or is_builtin_item then
-					local entity_def = minetest.registered_entities[luaobj.name]
-					if not entity_def.on_blast or entity_def.on_blast(luaobj, 0) then
-						obj:set_velocity(vlf_charges.wind_burst_velocity(pos, obj_pos, obj:get_velocity(), radius * 3))
-					end
+					obj:set_velocity(vlf_charges.wind_burst_velocity(pos, obj_pos, obj:get_velocity(), radius * 3))
 				end
 			end
 		end

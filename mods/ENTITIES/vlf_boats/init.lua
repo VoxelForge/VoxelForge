@@ -100,11 +100,11 @@ local function attach_object(self, obj)
 	if obj:is_player() then
 		local name = obj:get_player_name()
 		vlf_player.players[obj].attached = true
+		obj:set_eye_offset({x=0, y=-5.5, z=0},{x=0, y=-4, z=0})
 		minetest.after(0.2, function(name)
 			local player = minetest.get_player_by_name(name)
 			if player then
 				vlf_player.player_set_animation(player, "sit" , 30)
-				player:set_eye_offset({x=0, y=-5.5, z=0},{x=0, y=-4, z=0})
 			end
 		end, name)
 		obj:set_look_horizontal(yaw)

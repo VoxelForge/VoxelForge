@@ -1,7 +1,7 @@
 # textdomain: vlf_inventory
-Building Blocks=
-Decoration Blocks=
-Redstone=
+Building Blocks=Blocchi da Costruzione
+Decoration Blocks=Blocchi Decorativi
+Redstone=Pietrarossa
 Transportation=
 Miscellaneous=
 Search Items=
@@ -13,12 +13,12 @@ Brewing=
 Materials=
 Survival Inventory=
 Not in Creative Inventory=
-Advancements=
+Advancements=Progressi
 Switch stack size=
 @1 / @2=
-Recipe book=
+Recipe book=Libro delle ricette
 Help=
 Select player skin=
-Crafting=
+Crafting=Assemblaggio
 Fill Craft Grid=
-Achievements=
+Achievements=Imprese

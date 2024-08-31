@@ -1,0 +1,57 @@
+{
+    "type": "chest",
+    "functions": [],
+    "pools": [
+        {
+            "conditions": [],
+            "functions": [],
+            "rolls": {
+                "type": "uniform",
+                "min": 4,
+                "max": 6
+            },
+            "bonus_rolls": 1,
+            "entries": [
+                {
+                    "conditions": [],
+                    "type": "item",
+                    "weight": 1,
+                    "quality": 0,
+                    "functions": [
+                        {
+                            "conditions": [],
+                            "function": "set_count",
+                            "count": {
+                                "type": "binomial",
+                                "n": 20,
+                                "p": 0.5
+                            }
+                        }
+                    ],
+                    "name": "mcl_core:diamond"
+                }
+            ]
+        },
+        {
+            "conditions": [],
+            "functions": [],
+            "rolls": 8,
+            "bonus_rolls": 1,
+            "entries": [
+                {
+                    "conditions": [],
+                    "type": "item",
+                    "weight": 1,
+                    "quality": 0,
+                    "functions": [
+                        {
+                            "conditions": [],
+                            "function": "enchant_randomly"
+                        }
+                    ],
+                    "name": "mcl_tools:sword_iron"
+                }
+            ]
+        }
+    ]
+}

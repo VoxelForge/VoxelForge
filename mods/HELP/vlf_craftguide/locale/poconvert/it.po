@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Any shulker box"
-msgstr ""
+msgstr "Qualsiasi scatola shulker"
 
 msgid "Any wool"
-msgstr ""
+msgstr "Qualsiasi lana"
 
 msgid "Any wood planks"
-msgstr ""
+msgstr "Qualsiasi asse di legno"
 
 msgid "Any wood"
 msgstr ""
@@ -82,10 +82,13 @@ msgstr ""
 msgid "Burning time: @1"
 msgstr ""
 
-msgid "Usage @1 of @2"
+msgid "Usages"
 msgstr ""
 
-msgid "Recipe @1 of @2"
+msgid "Recipes"
+msgstr ""
+
+msgid "@1 of @2"
 msgstr ""
 
 msgid "Recipe is too big to be displayed (@1×@2)"
