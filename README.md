@@ -18,13 +18,11 @@ migrating from Voxelibre or Mineclonia to VoxelForge, see [MIGRATING.md](../../.
 Version: Voxelforge Snapshot 24w34c
 
 ### Differences from Mineclonia
-* More copper.
 * More minecraft like font.
-* Menu Music and different Jukebox music.
+* different Jukebox music.
 * better structure platforms.
 * bubble columns.
 * Different Chat hud.
-* Ingame music.
 
 ### Differences from Voxelibre
 * Mace
