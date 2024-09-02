@@ -23,6 +23,10 @@ Version: Voxelforge Snapshot 24w34c
 * better structure platforms.
 * bubble columns.
 * Different Chat hud.
+* Vaults.
+* Bundles api.
+* 1.21 status effects.
+* Tripwire.
 
 ### Differences from Voxelibre
 * Mace
