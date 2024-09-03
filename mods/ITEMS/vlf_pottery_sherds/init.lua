@@ -23,6 +23,9 @@ vlf_pottery_sherds.defs = {
 	["shelter"] = { description = S("Shelter") },
 	["skull"] = { description = S("Skull") },
 	["snort"] = { description = S("Snort") },
+	["flow"] = { description = S("Flow") },
+	["guster"] = { description = S("Guster") },
+	["scrape"] = { description = S("Scrape") },
 }
 
 local pot_face_positions = {
@@ -167,36 +170,27 @@ minetest.register_node("vlf_pottery_sherds:pot", {
 	drop = "",
 	_vlf_hardness = 0,
 	_vlf_blast_resistance = 0,
-	on_construct = function(pos)
-		--minetest.after(0.1, function()
-		update_entities(pos)
-		--end)
-	end,
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("pot_faces",itemstack:get_meta():get_string("pot_faces"))
 		update_entities(pos)
 	end,
+	on_construct = function(pos)
+		--local meta = minetest.get_meta(pos)
+		minetest.after(0.1, function()
+		update_entities(pos)
+		end)
+	end,
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
 		update_entities(pos,true)
 	end,
-	--[[on_destruct = function(pos)
-		local meta = minetest.get_meta(pos)
-		local it = ItemStack("vlf_pottery_sherds:pot")
-		local im = it:get_meta()
-		im:set_string("pot_faces", meta:get_string("pot_faces"))
-		tt.reload_itemstack_description(it)
-		minetest.add_item(pos, it)
-	end,]]
 	on_destruct = function(pos)
-		minetest.after(0.1, function()
 		local meta = minetest.get_meta(pos)
 		local it = ItemStack("vlf_pottery_sherds:pot")
 		local im = it:get_meta()
 		im:set_string("pot_faces", meta:get_string("pot_faces"))
 		tt.reload_itemstack_description(it)
 		minetest.add_item(pos, it)
-		end)
 	end,
 	on_rotate = function(pos, _,  _, mode, new_param2)
 		if mode == screwdriver.ROTATE_AXIS then
