@@ -207,6 +207,7 @@ exclude_files = {
 	"mods/PLAYER/vlf_music/init.lua",
 	"mods/ITEMS/vlf_bubble_column/init.lua",
 	"mods/ITEMS/vlf_sculk/init.lua",
+	"mods/HUD/vlf_inventory/init.lua",
 	"pattern/*"
 }
 

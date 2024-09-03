@@ -20,7 +20,7 @@ minetest.register_node("vlf_dripstone:pointed_dripstone_down_tip", {
 	light_propagates = true,
 	sunlight_propagates = true,
 	_vlf_blast_resistance = 3,
-	_vlf_hardness = 1.5,		
+	_vlf_hardness = 1.5,
 })
 
 minetest.register_node("vlf_dripstone:pointed_dripstone_up_tip", {
@@ -48,7 +48,7 @@ minetest.register_node("vlf_dripstone:pointed_dripstone_down_frustum", {
 	light_propagates = true,
 	sunlight_propagates = true,
 	_vlf_blast_resistance = 3,
-	_vlf_hardness = 1.5,		
+	_vlf_hardness = 1.5,
 })
 
 minetest.register_node("vlf_dripstone:pointed_dripstone_up_frustum", {
@@ -76,7 +76,7 @@ minetest.register_node("vlf_dripstone:pointed_dripstone_down_middle", {
 	light_propagates = true,
 	sunlight_propagates = true,
 	_vlf_blast_resistance = 3,
-	_vlf_hardness = 1.5,		
+	_vlf_hardness = 1.5,
 })
 
 minetest.register_node("vlf_dripstone:pointed_dripstone_up_middle", {
@@ -103,7 +103,7 @@ minetest.register_node("vlf_dripstone:pointed_dripstone_down_base", {
 	light_propagates = true,
 	sunlight_propagates = true,
 	_vlf_blast_resistance = 3,
-	_vlf_hardness = 1.5,		
+	_vlf_hardness = 1.5,
 })
 
 minetest.register_node("vlf_dripstone:pointed_dripstone_up_base", {

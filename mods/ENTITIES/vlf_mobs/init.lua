@@ -412,7 +412,7 @@ function vlf_mobs.register_arrow(name, def)
 					glow = def.glow or 0,
 				})
 			end
-			
+
 			-- Should this be on fire?
 			if self._is_fireball then
 				vlf_burning.set_on_fire (self.object, 5)

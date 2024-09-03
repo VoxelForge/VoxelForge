@@ -245,15 +245,16 @@ function mob_class:drive(moving_anim, stand_anim, can_fly, dtime)
 		self.v = self.v - get_sign(self.v)
 	end
 
+	local gravity = self.fall_speed * 1.5 * (self._horse_speed or 4.86) * 0.15
 	local p = self.object:get_pos()
 	local new_velo
 	local new_acce = {x = 0, y = gravity, z = 0}
 	p.y = p.y - 0.5
 	local ni = node_is(p)
 	local v = self.v
-	
+
 	-- slowed when submerged with water
-	if minetest.registered_nodes[mcl_mobs.node_ok(vector.offset(p,0,1,0)).name].groups.water then
+	if minetest.registered_nodes[vlf_mobs.node_ok(vector.offset(p,0,1,0)).name].groups.water then
 		v = v * 0.75
 	end
 

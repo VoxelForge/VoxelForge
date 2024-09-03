@@ -39,7 +39,7 @@ local loot_table = {
 		},
 }
 
---local modname = minetest.get_current_modname()
+local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 local SHOWITEM_INTERVAL = 2
 

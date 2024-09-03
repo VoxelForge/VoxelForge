@@ -1,5 +1,4 @@
 local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
 
 vlf_credits = {
@@ -127,7 +126,6 @@ function vlf_credits.hide(player)
 end
 
 minetest.register_on_leaveplayer(function(player)
-    
     vlf_credits.players[player:get_player_name()] = nil
 end)
 
