@@ -215,7 +215,7 @@ local mapgen_limit_b = math.floor(math.min(vlf_vars.mapgen_limit, vlf_vars.MAX_M
 local mapgen_limit_min = -mapgen_limit_b * vlf_vars.MAP_BLOCKSIZE
 local mapgen_limit_max = (mapgen_limit_b + 1) * vlf_vars.MAP_BLOCKSIZE - 1
 local numcmin = math.max(math.floor((ccfmin - mapgen_limit_min) / vlf_vars.chunk_size_in_nodes), 0) -- Number of complete chunks from central chunk
-local numcmax = math.max(math.floor((mapgen_limit_max - ccfmax) / vlf_vars.chunk_size_in_nodes), 0) -- fullminp/fullmaxp to entity_effective mapgen limits.
+local numcmax = math.max(math.floor((mapgen_limit_max - ccfmax) / vlf_vars.chunk_size_in_nodes), 0) -- fullminp/fullmaxp to effective mapgen limits.
 vlf_vars.mapgen_edge_min = central_chunk_min_pos - numcmin * vlf_vars.chunk_size_in_nodes
 vlf_vars.mapgen_edge_max = central_chunk_max_pos + numcmax * vlf_vars.chunk_size_in_nodes
 

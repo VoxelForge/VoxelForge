@@ -85,7 +85,7 @@ end
 --
 -- If obj is a player, adds a fire animation to the HUD, if obj is a
 -- lua_entity, adds an animated fire entity to obj.
--- The entity_effective burn duration is modified by obj's armor protection.
+-- The effective burn duration is modified by obj's armor protection.
 -- If obj was already burning, its burn duration is updated if the current
 -- duration is less than burn_time.
 -- If obj is dead, fireproof or enable_damage is disabled, this function does nothing.

@@ -32,7 +32,7 @@ minetest.register_entity("vlf_experience:bottle",{
 				maxsize = 2,
 				collisiondetection = true,
 				vertical = false,
-				texture = "vlf_particles_entity_effect.png^[colorize:blue:127",
+				texture = "vlf_particles_effect.png^[colorize:blue:127",
 			})
 			if mod_target and n == "vlf_target:target_off" then
 				vlf_target.hit(vector.round(pos), 0.4) --4 redstone ticks

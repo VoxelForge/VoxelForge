@@ -111,7 +111,7 @@ register_rail("vlf_minecarts:golden_rail_on",
 				onstate = "vlf_minecarts:golden_rail_on",
 				rules = rail_rules_long,
 			},
-			entity_effector = {
+			effector = {
 				action_on = function(pos, node)
 					local dir = vlf_minecarts:get_start_direction(pos)
 					if not dir then return end
@@ -165,7 +165,7 @@ register_rail("vlf_minecarts:activator_rail_on",
 				onstate = "vlf_minecarts:activator_rail_on",
 				rules = rail_rules_long,
 			},
-			entity_effector = {
+			effector = {
 				-- Activate minecarts
 				action_on = function(pos, node)
 					local pos2 = { x = pos.x, y =pos.y + 1, z = pos.z }

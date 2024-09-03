@@ -386,7 +386,7 @@ awards.register_achievement("vlf:seriousDedication", {
 awards.register_achievement("vlf:localBrewery", {
 	title = S("Local Brewery"),
 	description = S("Brew a Potion.\nHint: Take a entity_effect or glass bottle out of the brewing stand."),
-	icon = "vlf_entity_effects_entity_effect_overlay.png^[colorize:#F82423:"..tostring(127).."^vlf_entity_effects_entity_effect_bottle.png",
+	icon = "vlf_entity_effects_effect_overlay.png^[colorize:#F82423:"..tostring(127).."^vlf_entity_effects_entity_effect_bottle.png",
 	type = "Advancement",
 	group = "Nether",
 })
@@ -593,7 +593,7 @@ awards.register_achievement("vlf:hero_of_the_village", {
 awards.register_achievement("vlf:voluntary_exile", {
 	title = S("Voluntary Exile"),
 	description = S("Kill a raid captain. Maybe consider staying away from the local villages for the time being..."),
-	icon = "vlf_entity_effects_entity_effect_bad_omen.png",
+	icon = "vlf_entity_effects_effect_bad_omen.png",
 	type = "Advancement",
 	group = "Adventure",
 	secret = true,
