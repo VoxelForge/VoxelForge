@@ -1,4 +1,5 @@
 local modname = minetest.get_current_modname()
+local modpath = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
 
 vlf_credits = {
@@ -126,6 +127,7 @@ function vlf_credits.hide(player)
 end
 
 minetest.register_on_leaveplayer(function(player)
+    
     vlf_credits.players[player:get_player_name()] = nil
 end)
 
@@ -168,7 +170,7 @@ minetest.register_globalstep(function(dtime)
 end)
 
 minetest.register_chatcommand("endcredits", {
-    description = S("Show the VoxelCraft end credits"),
+    description = S("Show the VoxelForge end credits"),
     func = function(name, param)
         vlf_credits.show(minetest.get_player_by_name(name))
         return true

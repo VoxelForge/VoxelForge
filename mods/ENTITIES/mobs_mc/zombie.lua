@@ -145,11 +145,6 @@ husk.textures = {
 husk.ignited_by_sunlight = false
 husk.sunlight_damage = 0
 husk.drops = drops_common
-husk.dealt_entity_effect = {
-    name = "hunger",
-    dur = 7, -- TODO: regional difficulty.
-    level = 1,
-}
 -- TODO: Husks avoid water
 
 vlf_mobs.register_mob("mobs_mc:husk", husk)
@@ -165,11 +160,6 @@ baby_husk.textures = {{
 baby_husk.ignited_by_sunlight = false
 baby_husk.sunlight_damage = 0
 baby_husk.drops = drops_common
-baby_husk.dealt_entity_effect = {
-    name = "hunger",
-    dur = 7, -- TODO: regional difficulty.
-    level = 1,
-}
 
 vlf_mobs.register_mob("mobs_mc:baby_husk", baby_husk)
 
@@ -223,3 +213,5 @@ vlf_mobs.spawn_setup({
 -- Spawn eggs
 vlf_mobs.register_egg("mobs_mc:husk", S("Husk"), "#777361", "#ded88f", 0)
 vlf_mobs.register_egg("mobs_mc:zombie", S("Zombie"), "#00afaf", "#799c66", 0)
+vlf_mobs.register_egg("mobs_mc:baby_husk", S("Husk"), "#777361", "#ded88f", 0)
+vlf_mobs.register_egg("mobs_mc:baby_zombie", S("Zombie"), "#00afaf", "#799c66", 0)

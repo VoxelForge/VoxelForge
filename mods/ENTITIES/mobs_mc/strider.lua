@@ -104,12 +104,10 @@ local strider = {
 
 		-- if driver present allow control of horse
 		if self.driver then
-			if self.driver:get_wielded_item():get_name() == "vlf_mobitems:warped_fungus_on_a_stick" then
-				self:drive("walk", "stand", false, dtime)
-			end
 			local pos = self.object:get_pos()
 			local v = self.object:get_velocity()
 			self.object:set_velocity(vector.new(v.x,0,v.z))
+			self:drive("walk", "stand", false, dtime)
 			local l = minetest.find_node_near(pos,2,{"group:lava"})
 			if l then self.object:set_pos(vector.new(pos.x,l.y+0.5,pos.z)) end
 			return false -- skip rest of mob functions
@@ -118,7 +116,7 @@ local strider = {
 		return true
 	end,
 
-	on_die = function(self)
+	on_die = function(self, pos)
 
 		-- drop saddle when horse is killed while riding
 		-- also detach from horse properly
@@ -177,7 +175,7 @@ local strider = {
 			vlf_mobs.detach(clicker, {x=1, y=0, z=0})
 			return
 
-		elseif not self.driver and self.saddle == "yes" then
+		elseif not self.driver and self.saddle == "yes" and wielditem:get_name() == "vlf_mobitems:warped_fungus_on_a_stick" then
 			-- Ride pig if it has a saddle and player uses a carrot on a stick
 			self:attach(clicker)
 			if not minetest.is_creative_enabled(clicker:get_player_name()) then

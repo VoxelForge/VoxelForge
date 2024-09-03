@@ -46,11 +46,10 @@ local function attach_driver(self, clicker)
 end
 
 local function detach_driver(self)
-	self.object:set_properties({stepheight = 0.6})
 	self.object:set_properties({selectionbox = self.object:get_properties().collisionbox})
 	if self.driver then
 		if extended_pet_control and self.order ~= "sit" then self:toggle_sit(self.driver) end
-		vlf_mobs.detach(self.driver, {x=0, y=0, z=0})
+		vlf_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
 	end
 end
 
@@ -155,10 +154,8 @@ local horse = {
 	on_spawn = function(self)
 		local tex = horse_extra_texture(self)
 		self.object:set_properties({textures = tex})
-
-		if not self._runaway_velocity then
-			self._runaway_velocity = self.run_velocity
-		end
+		self._horse_speed = math.random(486, 1457)/100
+		self._horse_jump = math.random(575, 875)/100
 	end,
 	do_custom = function(self, dtime)
 
@@ -174,9 +171,15 @@ local horse = {
 			if self.run_velocity ~= self._horse_speed then
 				self.run_velocity = self._horse_speed
 			end
+			if self.jump_height ~= self._horse_jump then
+				self.jump_height = self._horse_jump
+			end
 		else
-			detach_driver(self)
-			self.run_velocity = self._runaway_velocity
+			if self._saddle then
+				detach_driver(self)
+			end
+			self.run_velocity = self.initial_properties.run_velocity
+			self.jump_height = self.initial_properties.jump_height
 		end
 
 		if not self.v2 then
@@ -223,7 +226,7 @@ local horse = {
 		return true
 	end,
 
-	on_die = function(self)
+	on_die = function(self, pos)
 		if self.driver then
 			detach_driver(self)
 		end
@@ -285,7 +288,7 @@ local horse = {
 		end
 
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
-			if not self.driver and clicker:get_player_control().sneak then
+			if not self.driver and self._saddle and clicker:get_player_control().sneak then
 				return
 			elseif not self.driver and iname == "vlf_mobitems:saddle" and self:set_saddle(clicker) then
 				return
@@ -481,9 +484,9 @@ local donkey = table.merge(horse, {
 	spawn_in_group = 3,
 	spawn_in_group_min = 1,
 	animation = {
+		speed_normal = 25,
 		stand_start = 0, stand_end = 0,
 		walk_start = 0, walk_end = 40,
-		run_speed = 50
 	},
 	sounds = {
 		random = "mobs_mc_donkey_random",

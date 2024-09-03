@@ -756,59 +756,6 @@ vlf_entity_effects.register_effect({
 })
 
 vlf_entity_effects.register_effect({
-	name = "frost",
-	description = S("Frost"),
-	get_tt = function(factor)
-		return S("-1 HP / 1 s, can kill, -@1% running speed", math.floor(factor*100))
-	end,
-	res_condition = function(object)
-		return (not object:is_player()) -- TODO needs mob physics factor API
-	end,
-	on_start = function(object, factor)
-		vlf_burning.extinguish(object)
-		--playerphysics.add_physics_factor(object, "speed", "vlf_entity_effects:frost", 1-factor)
-		if EF.frost[object].vignette then return end
-		EF.frost[object].vignette = object:hud_add({
-			hud_elem_type = "image",
-			position = {x = 0.5, y = 0.5},
-			scale = {x = -101, y = -101},
-			text = "vlf_entity_effects_frost_hud.png",
-			z_index = -400
-		})
-	end,
-	on_load = function(object, factor)
-		EF.frost[object].vignette = object:hud_add({
-			hud_elem_type = "image",
-			position = {x = 0.5, y = 0.5},
-			scale = {x = -101, y = -101},
-			text = "vlf_entity_effects_frost_hud.png",
-			z_index = -400
-		})
-	end,
-	on_hit_timer = function(object, factor, duration)
-		if object:is_player() or object:get_luaentity() then
-			vlf_util.deal_damage(object, 1, {type = "magic"})
-		end
-	end,
-	on_end = function(object)
-		playerphysics.remove_physics_factor(object, "speed", "vlf_entity_effects:frost")
-		if not EF.frost[object] then return end
-		object:hud_remove(EF.frost[object].vignette)
-	end,
-	particle_color = "#5B7DAA",
-	uses_factor = true,
-	lvl1_factor = 0.1,
-	lvl2_factor = 0.2,
-	timer_uses_factor = false,
-	hit_timer_step = 1,
-	damage_modifier = "is_fire",
-	modifier_func = function(damage, effect_vals)
-		effect_vals.timer = effect_vals.dur
-		return 0
-	end,
-})
-
-vlf_entity_effects.register_effect({
 	name = "blindness",
 	description = "Blindness",
 	get_tt = function(factor)
@@ -1307,22 +1254,6 @@ vlf_entity_effects.register_hp_hudbar_modifier({
 	end,
 	icon = "hbhunger_icon_health_poison.png",
 	priority = 0,
-})
-
-vlf_entity_effects.register_hp_hudbar_modifier({
-	predicate = function(player)
-		if EF.frost[player] and EF.regeneration[player] then return true end
-	end,
-	icon = "vlf_entity_effects_icon_regen_frost.png",
-	priority = 10,
-})
-
-vlf_entity_effects.register_hp_hudbar_modifier({
-	predicate = function(player)
-		if EF.frost[player] then return true end
-	end,
-	icon = "vlf_entity_effects_icon_frost.png",
-	priority = 20,
 })
 
 vlf_entity_effects.register_hp_hudbar_modifier({

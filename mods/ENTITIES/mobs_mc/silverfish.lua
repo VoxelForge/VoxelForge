@@ -3,9 +3,9 @@
 --###################
 
 local S = minetest.get_translator("mobs_mc")
-local mob_griefing = minetest.settings:get_bool("mobs_griefing", true)
+local mob_griefing = minetest.settings:get("mob_griefing", true)
 
-local function check_light(_, _, artificial_light, _)
+local function check_light(pos, environmental_light, artificial_light, sky_light)
 	if artificial_light > 11 then
 		return false, "To bright"
 	end
@@ -62,22 +62,22 @@ vlf_mobs.register_mob("mobs_mc:silverfish", {
 	damage = 1,
 	check_light = check_light,
 	deal_damage = function (self, damage, vlf_reason)
-	    self.health = self.health - damage
-	    if self.health > 0 then
-		-- Potentially summon friends from nearby infested
-		-- blocks unless mob griefing is disabled.
+		self.health = self.health - damage
+		if self.health > 0 then
+			-- Potentially summon friends from nearby infested
+			-- blocks unless mob griefing is disabled.
 			if mob_griefing and (vlf_reason.type == "magic" or vlf_reason.direct) then
-				local pos = self.object:get_pos ()
+				local pos = self.object:get_pos ();
 				local p0 = vector.offset (pos, -10, -5, -10)
 				local p1 = vector.offset (pos, 10, 5, 10)
 				local silverfish_nodes = minetest.find_nodes_in_area (p0, p1, {"group:spawns_silverfish"})
 				for _, p in pairs(silverfish_nodes) do
 					minetest.remove_node (p)
 					minetest.add_entity (p, "mobs_mc:silverfish")
-					vlf_mobs.entity_effect(p, 32, "vlf_particles_smoke.png", 0.5, 1.5, 1, 1, 0)
+					vlf_mobs.effect(p, 32, "mcl_particles_smoke.png", 0.5, 1.5, 1, 1, 0)
 				end
 			end
-	    end
+		end
 	end,
 })
 

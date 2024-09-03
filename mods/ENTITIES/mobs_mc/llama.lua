@@ -1,7 +1,5 @@
 local S = minetest.get_translator("mobs_mc")
 
-local extended_pet_control = minetest.settings:get_bool("vlf_extended_pet_control",false)
-
 -- table mapping unified color names to non-conforming color names in carpet texture filenames
 local messytextures = {
 	grey = "gray",
@@ -30,22 +28,6 @@ local function get_drops(self)
 		max = 1,})
 	end
 	return drops
-end
-
-local function attach_driver(self, clicker)
-	vlf_title.set(clicker, "actionbar", {text=S("Sneak to dismount"), color="white", stay=60})
-	self.object:set_properties({stepheight = 1.1})
-	self.object:set_properties({selectionbox = {0,0,0,0,0,0}})
-	self:attach(clicker)
-end
-
-local function detach_driver(self)
-	self.object:set_properties({stepheight = 0.6})
-	self.object:set_properties({selectionbox = self.object:get_properties().collisionbox})
-	if self.driver then
-		if extended_pet_control and self.order ~= "sit" then self:toggle_sit(self.driver) end
-		vlf_mobs.detach(self.driver, {x=0, y=0, z=0})
-	end
 end
 
 vlf_mobs.register_mob("mobs_mc:llama", {
@@ -114,10 +96,6 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 		run_start = 41, run_end = 81, run_speed = 75,
 	},
 	follow = { "vlf_farming:wheat_item", "vlf_farming:hay_block" },
-	_temper_increase = {
-		["vlf_farming:wheat_item"] = 3,
-	  ["vlf_farming:hay_block"] = 6
-	},
 	view_range = 16,
 	do_custom = function(self, dtime)
 		if not self.v3 then
@@ -132,38 +110,17 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 			self.driver_scale = {x = 1/vsize.x, y = 1/vsize.y}
 		end
 
-		if self.driver and not self.tamed and self.buck_off_time <= 0 then
-			if math.random() < 0.2 then
-				detach_driver(self)
-				-- TODO bucking animation
-			else
-				self.buck_off_time = 20
-			end
-		end
-
-		if self.buck_off_time then
-			if self.driver then
-				self.buck_off_time = self.buck_off_time - 1
-			else
-				self.buck_off_time = nil
-			end
-		end
-
 		if self.driver then
-			local ctrl = self.driver:get_player_control()
-			if ctrl and ctrl.sneak then
-				detach_driver(self)
-			end
-		else
-			detach_driver(self)
+			self:drive("walk", "stand", false, dtime)
+			return false
 		end
 
 		return true
 	end,
 
-	on_die = function(self, _)
+	on_die = function(self, pos)
 		if self.driver then
-			detach_driver(self)
+			vlf_mobs.detach(self.driver, {x = 1, y = 0, z = 1})
 		end
 
 	end,
@@ -183,25 +140,15 @@ vlf_mobs.register_mob("mobs_mc:llama", {
 			return
 		end
 
-		local feed_count = 0
-		local breed = false
-		if (item:get_name() == "vlf_farming:wheat_item") then
-			feed_count = 1
-		elseif (item:get_name() == "vlf_farming:hay_block") then
-			feed_count = 1
-			breed = true
-		end
-		if feed_count > 0 then
-			self:feed_tame(clicker, feed_count, breed, false)
-			return
-		end
-
 		if self.tamed and not self.child and self.owner == clicker:get_player_name() then
 			if minetest.get_item_group(item:get_name(), "carpet") == 1 and self:set_carpet(item, clicker) then
 				return
 			end
-			if not self.driver then
-				attach_driver(self, clicker)
+			if self.driver and clicker == self.driver then
+				vlf_mobs.detach(clicker, {x = 1, y = 0, z = 1})
+			elseif not self.driver then
+				self.object:set_properties({stepheight = 1.1})
+				self:attach(clicker)
 			end
 		end
 	end,

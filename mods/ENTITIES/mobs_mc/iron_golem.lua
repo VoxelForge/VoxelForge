@@ -34,16 +34,14 @@ vlf_mobs.register_mob("mobs_mc:iron_golem", {
 	},
 	visual_size = {x=3, y=3},
 	makes_footstep_sound = true,
-	sounds = {
-		damage = "mobs_mc_iron_golem_hurt"
-	},
+	-- TODO: sounds
 	view_range = 16,
 	stepheight = 1.1,
 	owner = "",
 	order = "follow",
 	floats = 0,
-	walk_velocity = 0.3,
-	run_velocity = 1,
+	walk_velocity = 0.6,
+	run_velocity = 1.2,
 	-- Approximation
 	damage = 14,
 	knock_back = false,
@@ -65,7 +63,7 @@ vlf_mobs.register_mob("mobs_mc:iron_golem", {
 	end,
 	replace_what = {"vlf_flowers:poppy"},
 	replace_with = {"air"},
-	on_replace = function(self, _, oldnode, _)
+	on_replace = function(self, pos, oldnode, newnode)
 		if not self.got_poppy and oldnode.name == "vlf_flowers:poppy" then
 			self._got_poppy=true
 			return
@@ -84,14 +82,14 @@ vlf_mobs.register_mob("mobs_mc:iron_golem", {
 	},
 	fall_damage = 0,
 	animation = {
-		stand_start = 0, stand_end = 0, stand_speed = 15,
-		walk_start = 40, walk_end = 80, walk_speed = 25,
-		run_start = 40, run_end = 80, run_speed = 25,
-		punch_start = 80, punch_end = 90, punch_speed = 5,
+		stand_speed = 15, walk_speed = 15, run_speed = 25, punch_speed = 15,
+		stand_start = 0,		stand_end = 0,
+		walk_start = 0,		walk_end = 40,
+		run_start = 40,		run_end = 80,
+		punch_start = 80,  punch_end = 90,
 	},
-	jump = false,
+	jump = true,
 	do_custom = function(self, dtime)
-		self:crack_overlay()
 		self.home_timer = (self.home_timer or 0) + dtime
 
 		if self.home_timer > 10 then
@@ -111,40 +109,11 @@ vlf_mobs.register_mob("mobs_mc:iron_golem", {
 			end
 		end
 	end,
-	on_rightclick = function(self, clicker)
-		if not clicker or not clicker:is_player() then
-			return
-		end
-
-		local item = clicker:get_wielded_item()
-
-		if item:get_name() == "vlf_core:iron_ingot" and self.health < 100 then
-			if not minetest.is_creative_enabled(clicker:get_player_name()) then
-				item:take_item()
-				clicker:set_wielded_item(item)
-			end
-
-			if self.health <= 75 then self.health = self.health + 25
-			else self.health = 100 end
-
-			return
-		end
-	end,
-	crack_overlay = function(self)
-		local base = "mobs_mc_iron_golem.png"
-		local o = "^[opacity:180)"
-		local t
-		if self.health >= 75 then t = base
-		elseif self.health >= 50 then t = base.."^(mobs_mc_iron_golem_crack_low.png"..o
-		elseif self.health >= 25 then t = base.."^(mobs_mc_iron_golem_crack_medium.png"..o
-		else t = base.."^(mobs_mc_iron_golem_crack_high.png"..o end
-		self:set_properties({textures={t}})
-	end,
 })
 
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:iron_golem", S("Iron Golem"), "#b3b3b3", "#4d7e47", 0)
+vlf_mobs.register_egg("mobs_mc:iron_golem", S("Iron Golem"), "#3b3b3b", "#f57223", 0)
 
 --[[ This is to be called when a pumpkin or jack'o lantern has been placed. Recommended: In the on_construct function of the node.
 This summons an iron golen if placing the pumpkin created an iron golem summon pattern:
@@ -234,11 +203,11 @@ function mobs_mc.check_iron_golem_summon(pos, player)
 		if ok then
 			-- Remove the nodes
 			minetest.remove_node(pos)
-			minetest.check_for_falling(pos)
+			core.check_for_falling(pos)
 			for i=1, 4 do
 				local cpos = vector.add(pos, checks[c][i])
 				minetest.remove_node(cpos)
-				minetest.check_for_falling(cpos)
+				core.check_for_falling(cpos)
 			end
 			-- Summon iron golem
 			local place

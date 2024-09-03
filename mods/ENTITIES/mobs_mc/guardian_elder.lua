@@ -98,28 +98,15 @@ vlf_mobs.register_mob("mobs_mc:guardian_elder", {
 		looting = "rare",
 		looting_factor = 0.01 / 4,},
 	},
-	swims = true,
+	fly = true,
 	makes_footstep_sound = false,
+	fly_in = { "vlf_core:water_source", "vlfx_core:river_water_source" },
 	jump = false,
-	do_custom = function (self, dtime)
-	    local self_pos
-	    -- See:
-	    -- https://minecraft.fandom.com/wiki/Elder_Guardian#Inflicting_Mining_Fatigue
-	    self._fatigue_counter = (self._fatigue_counter or 60) + dtime;
-	    self_pos = self.object:get_pos ()
-	    if self._fatigue_counter > 60 then
-		self._fatigue_counter = self._fatigue_counter - 60
-
-		for _, player in pairs (minetest.get_connected_players ()) do
-		    local pos = player:get_pos ()
-		    if vector.distance (pos, self_pos) <= 50 then
-			-- Inflict Mining Fatigue III for 5 minutes.
-			vlf_entity_effects.give_entity_effect_by_level ("fatigue", player, 3, 300)
-			-- TODO: display an apparition and play eerie noises.
-		    end
-		end
-	    end
-	end,
+	dealt_effect = {
+		name = "fatigue",
+		level = 3,
+		dur = 30,
+	},
 })
 
 -- spawn eggs

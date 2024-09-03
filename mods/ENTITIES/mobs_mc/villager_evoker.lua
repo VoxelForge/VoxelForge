@@ -43,7 +43,8 @@ vlf_mobs.register_mob("mobs_mc:evoker", {
 	group_attack = true,
 	attack_type = "dogfight",
 	custom_attack_interval = 15,
-	custom_attack = function(self, _)
+	-- Summon vexes
+	custom_attack = function(self, to_attack)
 		if not spawned_vexes[self] then spawned_vexes[self] = {} end
 		if #spawned_vexes[self] >= 7 then return end
 		for k,v in pairs(spawned_vexes[self]) do
@@ -52,7 +53,7 @@ vlf_mobs.register_mob("mobs_mc:evoker", {
 		local r = pr:next(1,4)
 		local basepos = self.object:get_pos()
 		basepos.y = basepos.y + 1
-		for _ = 1, r do
+		for i=1, r do
 			local spawnpos = vector.add(basepos, minetest.yaw_to_dir(pr:next(0,360)))
 			local vex = minetest.add_entity(spawnpos, "mobs_mc:vex")
 			if vex and vex:get_pos() then

@@ -37,9 +37,6 @@ msgstr "Грибная корова"
 msgid "Creeper"
 msgstr "Крипер"
 
-msgid "Charged Creeper"
-msgstr ""
-
 msgid "Dolphin"
 msgstr "Дельфин"
 
@@ -57,6 +54,9 @@ msgstr "Гаст"
 
 msgid "Ghast Fireball"
 msgstr ""
+
+msgid "Glow Squid"
+msgstr "Светящийся спрут"
 
 msgid "Guardian"
 msgstr "Страж"
@@ -87,9 +87,6 @@ msgstr "Ослик"
 
 msgid "Mule"
 msgstr "Мул"
-
-msgid "Sneak to dismount"
-msgstr ""
 
 msgid "Iron Golem"
 msgstr "Железный голем"
@@ -154,29 +151,11 @@ msgstr "Странник"
 msgid "Wither Skeleton"
 msgstr "Скелет-иссушитель"
 
-msgid "Slime - big"
-msgstr ""
-
-msgid "Slime - small"
-msgstr ""
-
-msgid "Slime - tiny"
-msgstr ""
-
-msgid "Magma Cube - big"
-msgstr ""
-
-msgid "Magma Cube - small"
-msgstr ""
-
-msgid "Magma Cube - tiny"
-msgstr ""
+msgid "Slime"
+msgstr "Слизень"
 
 msgid "Magma Cube"
 msgstr "Лавовый куб"
-
-msgid "Slime"
-msgstr "Слизень"
 
 msgid "Snow Golem"
 msgstr "Снежный голем"
@@ -189,9 +168,6 @@ msgstr "Пещерный паук"
 
 msgid "Squid"
 msgstr "Спрут"
-
-msgid "Glow Squid"
-msgstr "Светящийся спрут"
 
 msgid "Strider"
 msgstr "Страйдер"
@@ -306,9 +282,6 @@ msgstr "Иссушитель"
 
 msgid "Wolf"
 msgstr "Волк"
-
-msgid "Dog"
-msgstr ""
 
 msgid "Zombie"
 msgstr "Зомби"

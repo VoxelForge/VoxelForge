@@ -1,3 +1,8 @@
+--MCmobs v0.4
+--maikerumine
+--made for MC like Survival game
+--License for code WTFPL and otherwise stated in readmes
+
 local S = minetest.get_translator("mobs_mc")
 local mobs_griefing = minetest.settings:get_bool("mobs_griefing") ~= false
 local follow_spawner = minetest.settings:get_bool("wither_follow_spawner") ~= false
@@ -14,6 +19,10 @@ local function atan(x)
 	end
 end
 
+--###################
+--################### WITHER
+--###################
+
 local function wither_unstuck(self)
 	local pos = self.object:get_pos()
 	if mobs_griefing then
@@ -25,11 +34,13 @@ local function wither_unstuck(self)
 			local name = minetest.get_node(npos).name
 			if name ~= "air" then
 				local ndef = minetest.registered_nodes[name]
-				if ndef and ndef._vlf_hardness and ndef._vlf_hardness >= 0 and ( ndef.can_dig == nil or ndef.can_dig(npos) )then
-					minetest.remove_node(npos)
+				if ndef and ndef._vlf_hardness and ndef._vlf_hardness >= 0 then
 					local drops = minetest.get_node_drops(name, "")
-					if drops then
-						for _, item in pairs(drops) do
+					if minetest.dig_node(npos) then
+						for _, item in ipairs(drops) do
+							if type(item) ~= "string" then
+								item = item:get_name() .. item:get_count()
+							end
 							minetest.add_item(npos, item)
 						end
 					end
@@ -113,7 +124,7 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 	attack_exception = function(p)
 		local ent = p:get_luaentity()
 		if p:is_player() then return false end
-		if not ent or not ent.is_mob or ent.harmed_by_heal or ent.name == "mobs_mc:ghast" then return true
+		if not ent or not ent.is_mob or ent.harmed_by_heal or string.find(ent.name, "ghast") then return true
 		else return false end
 	end,
 
@@ -318,10 +329,10 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 					vlf_util.deal_damage(objs[n], 8, {type = "magic"})
 					hit_some = true
 				end
-				vlf_entity_effects.give_entity_effect("withering", objs[n], 2, 10)
+				vlf_entity_effects.give_effect("withering", objs[n], 2, 10)
 			end
 			if hit_some then
-				vlf_mobs.entity_effect(pos, 32, "vlf_particles_soul_fire_flame.png", 5, 10, self.reach, 1, 0)
+				vlf_mobs.effect(pos, 32, "vlf_particles_soul_fire_flame.png", 5, 10, self.reach, 1, 0)
 			end
 		end
 
@@ -381,15 +392,16 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 		end
 	end,
 
-	do_punch = function(self, hitter, tflp, tool_capabilities, dir) ---@diagnostic disable-line: unused-local
+	do_punch = function(self, hitter, tflp, tool_capabilities, dir)
 		if self._spawning or hitter == self.object then return false end
 		local ent = hitter:get_luaentity()
-		if ent and self._arrow_resistant and ent._is_arrow then return false end
+		if ent and self._arrow_resistant and (string.find(ent.name, "arrow") or string.find(ent.name, "rocket")) then return false end
 		wither_unstuck(self)
 		return true
 	end,
 	deal_damage = function(self, damage, vlf_reason)
 		if self._spawning then return end
+		if self._arrow_resistant and vlf_reason.type == "magic" then return end
 		wither_unstuck(self)
 		self.health = self.health - damage
 	end,
@@ -432,12 +444,12 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull", {
 	velocity = 7,
 	rotate = 90,
 	_lifetime = 350,
-	on_punch = function() end,
+	on_punch = function(self) end,
 
 	-- direct hit
 	hit_player = function(self, player)
 		local pos = vector.new(self.object:get_pos())
-		vlf_entity_effects.give_entity_effect("withering", player, 2, 10)
+		vlf_entity_effects.give_effect("withering", player, 2, 10)
 		player:punch(self.object, 1.0, {
 			full_punch_interval = 0.5,
 			damage_groups = {fleshy = 8},
@@ -452,7 +464,7 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull", {
 
 	hit_mob = function(self, mob)
 		local pos = vector.new(self.object:get_pos())
-		vlf_entity_effects.give_entity_effect("withering", mob, 2, 10)
+		vlf_entity_effects.give_effect("withering", mob, 2, 10)
 		mob:punch(self.object, 1.0, {
 			full_punch_interval = 0.5,
 			damage_groups = {fleshy = 8},
@@ -467,7 +479,7 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull", {
 	end,
 
 	-- node hit, explode
-	hit_node = function(self, pos)
+	hit_node = function(self, pos, node)
 		vlf_mobs.mob_class.boom(self,pos, 1, false, true)
 	end
 })
@@ -486,12 +498,12 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 	velocity = 4,
 	rotate = 90,
 	_lifetime = 500,
-	on_punch = function() end,
+	on_punch = function(self) end,
 
 	-- direct hit
 	hit_player = function(self, player)
 		local pos = vector.new(self.object:get_pos())
-		vlf_entity_effects.give_entity_effect("withering", player, 2, 10)
+		vlf_entity_effects.give_effect("withering", player, 2, 10)
 		player:punch(self.object, 1.0, {
 			full_punch_interval = 0.5,
 			damage_groups = {fleshy = 12},
@@ -510,7 +522,7 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 
 	hit_mob = function(self, mob)
 		local pos = vector.new(self.object:get_pos())
-		vlf_entity_effects.give_entity_effect("withering", mob, 2, 10)
+		vlf_entity_effects.give_effect("withering", mob, 2, 10)
 		mob:punch(self.object, 1.0, {
 			full_punch_interval = 0.5,
 			damage_groups = {fleshy = 12},
@@ -529,7 +541,7 @@ vlf_mobs.register_arrow("mobs_mc:wither_skull_strong", {
 	end,
 
 	-- node hit, explode
-	hit_node = function(self, pos)
+	hit_node = function(self, pos, node)
 		if mobs_griefing and not minetest.is_protected(pos, "") then
 			vlf_explosions.explode(pos, 1, { drop_chance = 1.0, max_blast_resistance = 0, }, self.object)
 		else

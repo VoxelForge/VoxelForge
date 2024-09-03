@@ -113,6 +113,7 @@ vlf_mobs.register_arrow("mobs_mc:fireball", {
 	_is_fireball = true,
 	_vlf_fishing_hookable = true,
 	_vlf_fishing_reelable = true,
+	redirectable = true,
 	hit_player = function(self, player)
 		vlf_mobs.get_arrow_damage_func(6, "fireball")(self, player)
 		local p = self.object:get_pos()
@@ -128,7 +129,7 @@ vlf_mobs.register_arrow("mobs_mc:fireball", {
 		vlf_mobs.mob_class.boom(self,self.object:get_pos(), 1, true)
 	end,
 
-	hit_node = function(self, pos, _)
+	hit_node = function(self, pos, node)
 		vlf_mobs.mob_class.boom(self,pos, 1, true)
 	end
 })

@@ -2,7 +2,7 @@
 
 local S = minetest.get_translator("mobs_mc")
 
-local function check_light(_, _, artificial_light, _)
+local function check_light(pos, environmental_light, artificial_light, sky_light)
 	local date = os.date("*t")
 	local maxlight
 	if (date.month == 10 and date.day >= 20) or (date.month == 11 and date.day <= 3) then

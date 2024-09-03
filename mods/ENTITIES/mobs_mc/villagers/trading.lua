@@ -224,6 +224,22 @@ scroll_container[0.1,0.1;3.2,9.5;trade_scroller;vertical]
 
 ]]
 
+-- arg 1 = %s = title
+-- arg 3 = %i = scroller max val
+local fs_header_no_bar_template = [[
+formspec_version[6]
+size[15.2,9.3]
+position[0.5,0.5]
+
+label[7.5,0.3;%s]
+style_type[label;textcolor=white]
+
+scrollbaroptions[min=1;max=%i;thumbsize=1]
+scrollbar[3.3,0.05;0.4,9.1;vertical;trade_scroller;1]
+scroll_container[0.1,0.1;3.2,9.5;trade_scroller;vertical]
+
+]]
+
 -- arg 1 = %f = H
 -- arg 2 = %s = level
 local fs_level_template = [[
@@ -510,7 +526,7 @@ function mobs_mc.villager_mob:show_trade_formspec(playername, tradenum)
 	)
 
 	if self._notiers then
-		header = string.format(fs_header_template, F(minetest.colorize("#313131", profession)), h * 10)
+		header = string.format(fs_header_no_bar_template, F(minetest.colorize("#313131", profession)), h * 10)
 	end
 
 	formspec = header .. formspec .. fs_footer_template

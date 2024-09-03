@@ -330,7 +330,7 @@ end
 local candle_particlespawner = {
 	texture = "voxelforge_flame.png",
 	texpool = {},
-	amount = 8,
+	--amount = 8,
 	time = 2,
 	minvel = vector.zero(),
 	maxvel = vector.zero(),
@@ -348,7 +348,7 @@ local candle_particlespawner = {
 local smoke_particlespawner = {
 	texture = "",
 	texpool = {},
-	amount = 8,
+	--amount = 8,
 	time = 2,
 	minvel = vector.zero(),
 	maxvel = vector.zero(),
@@ -391,6 +391,7 @@ minetest.register_abm({
 		for _,pl in pairs(minetest.get_connected_players()) do
 			if vector.distance(pos,pl:get_pos()) < PARTICLE_DISTANCE then
 				minetest.add_particlespawner(table.merge(candle_particlespawner, {
+					amount = 4,
 					minpos = vector.offset(pos, -0.05, -0.0, -0.05),
 					maxpos = vector.offset(pos, 0.05, 0.1, 0.05),
 					playername = pl:get_player_name(),
@@ -409,6 +410,7 @@ minetest.register_abm({
 					animation={type="vertical_frames", aspect_w=8, aspect_h=8, length=0.78},
 				})
 				minetest.add_particlespawner(table.merge(smoke_particlespawner, {
+					amount = 3,
 					minpos = vector.offset(pos, -0.15, -0.0, -0.15),
 					maxpos = vector.offset(pos, 0.15, 0.1, 0.15),
 					playername = pl:get_player_name(),
@@ -446,6 +448,7 @@ minetest.register_abm({
 		for _,pl in pairs(minetest.get_connected_players()) do
 			if vector.distance(pos,pl:get_pos()) < PARTICLE_DISTANCE then
 				minetest.add_particlespawner(table.merge(candle_particlespawner, {
+					amount = 8,
 					minpos = vector.offset(pos, -0.15, -0.0, -0.15),
 					maxpos = vector.offset(pos, 0.15, 0.1, 0.15),
 					playername = pl:get_player_name(),
@@ -464,6 +467,7 @@ minetest.register_abm({
 					animation={type="vertical_frames", aspect_w=8, aspect_h=8, length=0.78},
 				})
 				minetest.add_particlespawner(table.merge(smoke_particlespawner, {
+					amount = 6,
 					minpos = vector.offset(pos, -0.15, -0.0, -0.15),
 					maxpos = vector.offset(pos, 0.15, 0.1, 0.15),
 					playername = pl:get_player_name(),
@@ -493,6 +497,7 @@ minetest.register_abm({
 		for _,pl in pairs(minetest.get_connected_players()) do
 			if vector.distance(pos,pl:get_pos()) < PARTICLE_DISTANCE then
 				minetest.add_particlespawner(table.merge(candle_particlespawner, {
+					amount = 3,
 					minpos = vector.offset(pos, -0.02, 0.5, -0.02),
 					maxpos = vector.offset(pos, 0.02, 0.6, 0.02),
 					playername = pl:get_player_name(),
@@ -511,6 +516,7 @@ minetest.register_abm({
 					animation={type="vertical_frames", aspect_w=8, aspect_h=8, length=0.78},
 				})
 				minetest.add_particlespawner(table.merge(smoke_particlespawner, {
+					amount = 1,
 					minpos = vector.offset(pos, -0.02, 0.5, -0.02),
 					maxpos = vector.offset(pos, 0.02, 0.6, 0.02),
 					playername = pl:get_player_name(),

@@ -37,9 +37,6 @@ msgstr "Pilzkuh"
 msgid "Creeper"
 msgstr "Creeper"
 
-msgid "Charged Creeper"
-msgstr ""
-
 msgid "Dolphin"
 msgstr ""
 
@@ -56,6 +53,9 @@ msgid "Ghast"
 msgstr "Ghast"
 
 msgid "Ghast Fireball"
+msgstr ""
+
+msgid "Glow Squid"
 msgstr ""
 
 msgid "Guardian"
@@ -87,9 +87,6 @@ msgstr "Esel"
 
 msgid "Mule"
 msgstr "Maultier"
-
-msgid "Sneak to dismount"
-msgstr ""
 
 msgid "Iron Golem"
 msgstr "Eisengolem"
@@ -154,29 +151,11 @@ msgstr "Eiswanderer"
 msgid "Wither Skeleton"
 msgstr "Witherskelett"
 
-msgid "Slime - big"
-msgstr ""
-
-msgid "Slime - small"
-msgstr ""
-
-msgid "Slime - tiny"
-msgstr ""
-
-msgid "Magma Cube - big"
-msgstr ""
-
-msgid "Magma Cube - small"
-msgstr ""
-
-msgid "Magma Cube - tiny"
-msgstr ""
+msgid "Slime"
+msgstr "Schleim"
 
 msgid "Magma Cube"
 msgstr "Magmakubus"
-
-msgid "Slime"
-msgstr "Schleim"
 
 msgid "Snow Golem"
 msgstr "Schneegolem"
@@ -189,9 +168,6 @@ msgstr "Höhlenspinne"
 
 msgid "Squid"
 msgstr "Tintenfisch"
-
-msgid "Glow Squid"
-msgstr ""
 
 msgid "Strider"
 msgstr ""
@@ -306,9 +282,6 @@ msgstr "Wither"
 
 msgid "Wolf"
 msgstr "Wolf"
-
-msgid "Dog"
-msgstr ""
 
 msgid "Zombie"
 msgstr "Zombie"

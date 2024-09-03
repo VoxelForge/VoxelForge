@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Axolotl"
-msgstr "Axolotl"
+msgstr ""
 
 msgid "Bat"
-msgstr "Pipistrello"
+msgstr ""
 
 msgid "Blaze"
-msgstr "Blaze"
+msgstr ""
 
 msgid "Chicken"
 msgstr ""
@@ -35,9 +35,6 @@ msgid "Mooshroom"
 msgstr ""
 
 msgid "Creeper"
-msgstr ""
-
-msgid "Charged Creeper"
 msgstr ""
 
 msgid "Dolphin"
@@ -56,6 +53,9 @@ msgid "Ghast"
 msgstr ""
 
 msgid "Ghast Fireball"
+msgstr ""
+
+msgid "Glow Squid"
 msgstr ""
 
 msgid "Guardian"
@@ -86,9 +86,6 @@ msgid "Donkey"
 msgstr ""
 
 msgid "Mule"
-msgstr ""
-
-msgid "Sneak to dismount"
 msgstr ""
 
 msgid "Iron Golem"
@@ -154,28 +151,10 @@ msgstr ""
 msgid "Wither Skeleton"
 msgstr ""
 
-msgid "Slime - big"
-msgstr ""
-
-msgid "Slime - small"
-msgstr ""
-
-msgid "Slime - tiny"
-msgstr ""
-
-msgid "Magma Cube - big"
-msgstr ""
-
-msgid "Magma Cube - small"
-msgstr ""
-
-msgid "Magma Cube - tiny"
+msgid "Slime"
 msgstr ""
 
 msgid "Magma Cube"
-msgstr ""
-
-msgid "Slime"
 msgstr ""
 
 msgid "Snow Golem"
@@ -188,9 +167,6 @@ msgid "Cave Spider"
 msgstr ""
 
 msgid "Squid"
-msgstr ""
-
-msgid "Glow Squid"
 msgstr ""
 
 msgid "Strider"
@@ -209,7 +185,7 @@ msgid "Vex"
 msgstr ""
 
 msgid "Villager"
-msgstr "Villico"
+msgstr ""
 
 msgid "Evoker"
 msgstr ""
@@ -221,19 +197,19 @@ msgid "Vindicator"
 msgstr ""
 
 msgid "Zombie Villager"
-msgstr "Villico Zombie"
+msgstr ""
 
 msgid "@1 sleeps here"
 msgstr ""
 
 msgid "A villager sleeps here"
-msgstr "Un villico dorme qui"
+msgstr ""
 
 msgid "@1 works here"
 msgstr ""
 
 msgid "A villager works here"
-msgstr "Un villico lavora qui"
+msgstr ""
 
 msgid "Unemployed"
 msgstr ""
@@ -251,7 +227,7 @@ msgid "Shepherd"
 msgstr ""
 
 msgid "Librarian"
-msgstr "Bibliotecario"
+msgstr ""
 
 msgid "Cartographer"
 msgstr ""
@@ -305,9 +281,6 @@ msgid "Wither"
 msgstr ""
 
 msgid "Wolf"
-msgstr ""
-
-msgid "Dog"
 msgstr ""
 
 msgid "Zombie"

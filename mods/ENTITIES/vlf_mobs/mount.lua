@@ -82,6 +82,7 @@ function mob_class:attach(player)
 	self.driver_attach_at = self.driver_attach_at or {x = 0, y = 0, z = 0}
 	self.driver_eye_offset = self.driver_eye_offset or {x = 0, y = 0, z = 0}
 	self.driver_scale = self.driver_scale or {x = 1, y = 1}
+	self._last_jump = 0
 
 	local rot_view = 0
 
@@ -159,17 +160,17 @@ function mob_class:drive(moving_anim, stand_anim, can_fly, dtime)
 				rot_view = rot_view - 70
 			end
 
-			self.v = self.v - self.accel / 10
+			self.v = self.v - self.accel / 10 - (self.max_speed_reverse * 0.5)
 
 		elseif ctrl.left then
 
 			rot_view = rot_view - 80
-			self.v = self.v - self.accel / 10
+			self.v = self.v - self.accel / 10 - (self.max_speed_reverse * 0.5)
 
 		elseif ctrl.right then
 
 			rot_view = rot_view + 80
-			self.v = self.v - self.accel / 10
+			self.v = self.v - self.accel / 10 - (self.max_speed_reverse * 0.5)
 
 		else
 			self.v = 0
@@ -199,8 +200,17 @@ function mob_class:drive(moving_anim, stand_anim, can_fly, dtime)
 		else
 			if ctrl.jump then
 				if velo.y == 0 then
-					velo.y = velo.y + self.jump_height
-					acce_y = acce_y + (acce_y * 3) + 1
+					if self._last_jump == 0 then
+						velo.y = velo.y + self.jump_height * 7
+						acce_y = acce_y + (acce_y * 3) + 1
+						self._last_jump = velo.y
+						-- Throttle jumping
+						minetest.after(0.5, function(self, velo)
+							if self and self._last_jump == velo.y then
+								self._last_jump = 0
+							end
+						end, self, velo)
+					end
 				end
 			end
 		end
@@ -237,10 +247,15 @@ function mob_class:drive(moving_anim, stand_anim, can_fly, dtime)
 
 	local p = self.object:get_pos()
 	local new_velo
-	local new_acce = {x = 0, y = -9.8, z = 0}
+	local new_acce = {x = 0, y = gravity, z = 0}
 	p.y = p.y - 0.5
 	local ni = node_is(p)
 	local v = self.v
+	
+	-- slowed when submerged with water
+	if minetest.registered_nodes[mcl_mobs.node_ok(vector.offset(p,0,1,0)).name].groups.water then
+		v = v * 0.75
+	end
 
 	if ni == "air" then
 		if can_fly == true then

@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.0\n"
 
 msgid "Axolotl"
-msgstr "Axolotl"
+msgstr ""
 
 msgid "Bat"
 msgstr "Chauve-souris"
@@ -37,9 +37,6 @@ msgstr "Champimeuh"
 msgid "Creeper"
 msgstr "Creeper"
 
-msgid "Charged Creeper"
-msgstr ""
-
 msgid "Dolphin"
 msgstr "Dauphin"
 
@@ -56,7 +53,10 @@ msgid "Ghast"
 msgstr "Ghast"
 
 msgid "Ghast Fireball"
-msgstr "Boule de feu de Ghast"
+msgstr ""
+
+msgid "Glow Squid"
+msgstr ""
 
 msgid "Guardian"
 msgstr "Gardien"
@@ -65,13 +65,13 @@ msgid "Elder Guardian"
 msgstr "Gardien de l'Elder"
 
 msgid "Hoglin"
-msgstr "Hoglin"
+msgstr ""
 
 msgid "Zoglin"
-msgstr "Zoglin"
+msgstr ""
 
 msgid "Baby Hoglin"
-msgstr "Bébé Hoglin"
+msgstr ""
 
 msgid "Horse"
 msgstr "Cheval"
@@ -88,9 +88,6 @@ msgstr "Âne"
 msgid "Mule"
 msgstr "Mule"
 
-msgid "Sneak to dismount"
-msgstr ""
-
 msgid "Iron Golem"
 msgstr "Golem de fer"
 
@@ -101,7 +98,7 @@ msgid "Ocelot"
 msgstr "Ocelot"
 
 msgid "Cat"
-msgstr "Chat"
+msgstr ""
 
 msgid "Parrot"
 msgstr "Perroquet"
@@ -110,16 +107,16 @@ msgid "Pig"
 msgstr "Cochon"
 
 msgid "Piglin"
-msgstr "Piglin"
+msgstr ""
 
 msgid "Zombiefied Piglin"
-msgstr "Piglin zombifié"
+msgstr ""
 
 msgid "Piglin Brute"
-msgstr "Piglin barbare"
+msgstr ""
 
 msgid "Zombie Piglin"
-msgstr "Piglin zombie"
+msgstr ""
 
 msgid "Pillager"
 msgstr "Pilleur"
@@ -154,29 +151,11 @@ msgstr "Vagabond"
 msgid "Wither Skeleton"
 msgstr "Wither squelette"
 
-msgid "Slime - big"
-msgstr ""
-
-msgid "Slime - small"
-msgstr ""
-
-msgid "Slime - tiny"
-msgstr ""
-
-msgid "Magma Cube - big"
-msgstr ""
-
-msgid "Magma Cube - small"
-msgstr ""
-
-msgid "Magma Cube - tiny"
-msgstr ""
+msgid "Slime"
+msgstr "Slime"
 
 msgid "Magma Cube"
 msgstr "Cube de magma"
-
-msgid "Slime"
-msgstr "Slime"
 
 msgid "Snow Golem"
 msgstr "Golem de neige"
@@ -190,17 +169,14 @@ msgstr "Araignée venimeuse"
 msgid "Squid"
 msgstr "Poulpe"
 
-msgid "Glow Squid"
-msgstr "Poulpe luisant"
-
 msgid "Strider"
-msgstr "Arpenteur"
+msgstr ""
 
 msgid "Baby Strider"
-msgstr "Bébé arpenteur"
+msgstr ""
 
 msgid "Tropical Fish"
-msgstr "Poisson Tropical"
+msgstr ""
 
 msgid "Tropical fish"
 msgstr "Poisson tropical"
@@ -224,19 +200,19 @@ msgid "Zombie Villager"
 msgstr "Zombie Villageois"
 
 msgid "@1 sleeps here"
-msgstr "@1 dort ici"
+msgstr ""
 
 msgid "A villager sleeps here"
-msgstr "Un villageois dort ici"
+msgstr ""
 
 msgid "@1 works here"
-msgstr "@1 travaille ici"
+msgstr ""
 
 msgid "A villager works here"
-msgstr "Un villageois travaille ici"
+msgstr ""
 
 msgid "Unemployed"
-msgstr "Sans emploi"
+msgstr ""
 
 msgid "Farmer"
 msgstr "Fermier"
@@ -275,28 +251,28 @@ msgid "Cleric"
 msgstr "Clerc"
 
 msgid "Mason"
-msgstr "maçon"
+msgstr ""
 
 msgid "Nitwit"
 msgstr "Crétin"
 
 msgid "Wandering Trader"
-msgstr "Marchand ambulant"
+msgstr ""
 
 msgid "Novice"
-msgstr "Novice"
+msgstr ""
 
 msgid "Apprentice"
-msgstr "Apprenti"
+msgstr ""
 
 msgid "Journeyman"
-msgstr "Compagnon"
+msgstr ""
 
 msgid "Expert"
-msgstr "Expert"
+msgstr ""
 
 msgid "Master"
-msgstr "Maître"
+msgstr ""
 
 msgid "Witch"
 msgstr "Sorcière"
@@ -307,21 +283,18 @@ msgstr "Wither"
 msgid "Wolf"
 msgstr "Loup"
 
-msgid "Dog"
-msgstr ""
-
 msgid "Zombie"
 msgstr "Zombie"
 
 msgid "Baby Zombie"
-msgstr "Bébé zombie"
+msgstr ""
 
 msgid "Husk"
 msgstr "Zombie Momifié"
 
 msgid "Baby Husk"
-msgstr "Bébé zombie momifié"
+msgstr ""
 
 msgid "Zombified Piglin"
-msgstr "Piglin Zombifié"
+msgstr ""
 

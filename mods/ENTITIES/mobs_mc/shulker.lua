@@ -34,15 +34,6 @@ local messy_textures = {
 	grey = "mobs_mc_shulker_gray.png",
 }
 
-local function set_shulker_color(self, color)
-	local tx = "mobs_mc_shulker_"..color..".png"
-	if messy_textures[color] then tx = messy_textures[color] end
-	self.object:set_properties({
-		textures = { tx },
-	})
-	self._color = color
-end
-
 -- animation 45-80 is transition between passive and attack stance
 vlf_mobs.register_mob("mobs_mc:shulker", {
 	description = S("Shulker"),
@@ -63,9 +54,8 @@ vlf_mobs.register_mob("mobs_mc:shulker", {
 	visual = "mesh",
 	mesh = "mobs_mc_shulker.b3d",
 	textures = { "mobs_mc_endergolem.png", },
-	pushable = false,
-	mob_pushable = false,
 	-- TODO: sounds
+	-- TODO: Make shulker dye-able
 	visual_size = {x=3, y=3},
 	walk_chance = 10,
 	knock_back = false,
@@ -92,19 +82,18 @@ vlf_mobs.register_mob("mobs_mc:shulker", {
 	walk_velocity = 0,
 	run_velocity = 0,
 	noyaw = true,
-	_color = "purple",
 	_vlf_fishing_hookable = true,
 	_vlf_fishing_reelable = false,
-	after_activate = function(self)
-		if self._color then
-			set_shulker_color(self, self._color)
-		end
-	end,
 	on_rightclick = function(self,clicker)
 		if clicker:is_player() then
 			local wstack = clicker:get_wielded_item()
 			if minetest.get_item_group(wstack:get_name(),"dye") > 0 then
-				set_shulker_color(self, minetest.registered_items[wstack:get_name()]._color)
+				local color = minetest.registered_items[wstack:get_name()]._color
+				local tx = "mobs_mc_shulker_"..color..".png"
+				if messy_textures[color] then tx = messy_textures[color] end
+				self.object:set_properties({
+					textures = { tx },
+				})
 				if not minetest.is_creative_enabled(clicker:get_player_name()) then
 					wstack:take_item()
 					clicker:set_wielded_item(wstack)
@@ -132,7 +121,7 @@ vlf_mobs.register_mob("mobs_mc:shulker", {
 			self:teleport(nil)
 		end
 	end,
-	do_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir, damage) ---@diagnostic disable-line: unused-local
+	do_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir, damage)
 		self:teleport(puncher)
 	end,
 	do_teleport = function(self, target)
@@ -144,10 +133,10 @@ vlf_mobs.register_mob("mobs_mc:shulker", {
 			if nodes ~= nil then
 				if #nodes > 0 then
 					-- Up to 64 attempts to teleport
-					for _ = 1, math.min(64, #nodes) do
+					for n=1, math.min(64, #nodes) do
 						local r = pr:next(1, #nodes)
 						local nodepos = nodes[r]
-						local tg = vector.offset(nodepos,0,0.5,0)
+						local tg = vector.offset(nodepos,0,1,0)
 						if check_spot(tg) then
 							telepos = tg
 						end
@@ -160,7 +149,7 @@ vlf_mobs.register_mob("mobs_mc:shulker", {
 		else
 			local pos = self.object:get_pos()
 			-- Up to 8 top-level attempts to teleport
-			for _ = 1, 8 do
+			for n=1, 8 do
 				local node_ok = false
 				-- We need to add (or subtract) different random numbers to each vector component, so it couldn't be done with a nice single vector.add() or .subtract():
 				local randomCube = vector.new( pos.x + 8*(pr:next(0,16)-8), pos.y + 8*(pr:next(0,16)-8), pos.z + 8*(pr:next(0,16)-8) )
@@ -168,7 +157,7 @@ vlf_mobs.register_mob("mobs_mc:shulker", {
 				if nodes ~= nil then
 					if #nodes > 0 then
 						-- Up to 8 low-level (in total up to 8*8 = 64) attempts to teleport
-						for _ = 1, math.min(8, #nodes) do
+						for n=1, math.min(8, #nodes) do
 							local r = pr:next(1, #nodes)
 							local nodepos = nodes[r]
 							local tg = vector.offset(nodepos,0,0.5,0)
@@ -186,7 +175,7 @@ vlf_mobs.register_mob("mobs_mc:shulker", {
 			end
 		end
 	end,
-	on_attack = function(self)
+	on_attack = function(self, dtime)
 		self.shoot_interval = 1 + (math.random() * 4.5)
 	end,
 })
@@ -200,14 +189,8 @@ vlf_mobs.register_arrow("mobs_mc:shulkerbullet", {
 	homing = true,
 	_vlf_fishing_hookable = true,
 	_vlf_fishing_reelable = true,
-	hit_player = function (self, player)
-	    vlf_entity_effects.give_entity_effect_by_level ("levitation", player, 1, 10)
-	    vlf_mobs.get_arrow_damage_func (4) (self, player)
-	end,
-	hit_mob = function (self, mob)
-	    vlf_entity_effects.give_entity_effect_by_level ("levitation", mob, 1, 10)
-	    vlf_mobs.get_arrow_damage_func (4) (self, mob)
-	end,
+	hit_player = vlf_mobs.get_arrow_damage_func(4),
+	hit_mob = vlf_mobs.get_arrow_damage_func(4),
 	hit_node = function(self, _)
 		self.object:remove()
 	end

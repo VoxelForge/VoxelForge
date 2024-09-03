@@ -98,7 +98,7 @@ vlf_mobs.register_mob("mobs_mc:witherskeleton", {
 	floats = 0,
 	harmed_by_heal = true,
 	fire_resistant = true,
-	dealt_entity_effect = {
+	dealt_effect = {
 		name = "withering",
 		level = 1,
 		dur = 10,

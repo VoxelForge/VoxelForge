@@ -86,12 +86,7 @@ local hoglin = {
 	end,
 	do_custom = function(self)
 		if vlf_worlds.pos_to_dimension(self.object:get_pos()) == "overworld" then
-		    local object
-			= vlf_util.replace_mob(self.object, "mobs_mc:zoglin")
-		    if object then
-			vlf_entity_effects.give_entity_effect ("nausea", object, 1,
-						 10, false)
-		    end
+			vlf_util.replace_mob(self.object, "mobs_mc:zoglin")
 		end
 	end,
 	on_rightclick = function(self, clicker)

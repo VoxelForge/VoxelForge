@@ -37,9 +37,6 @@ msgstr "Vachairòla"
 msgid "Creeper"
 msgstr "Creeper"
 
-msgid "Charged Creeper"
-msgstr ""
-
 msgid "Dolphin"
 msgstr "Daufin"
 
@@ -57,6 +54,9 @@ msgstr "Òrra"
 
 msgid "Ghast Fireball"
 msgstr ""
+
+msgid "Glow Squid"
+msgstr "Pofre Lusent"
 
 msgid "Guardian"
 msgstr "Gardian"
@@ -87,9 +87,6 @@ msgstr "Asne"
 
 msgid "Mule"
 msgstr "Miule"
-
-msgid "Sneak to dismount"
-msgstr ""
 
 msgid "Iron Golem"
 msgstr "Golem de Fèrre"
@@ -154,29 +151,11 @@ msgstr "Trainabiaça"
 msgid "Wither Skeleton"
 msgstr "Squeleta Sechaire"
 
-msgid "Slime - big"
-msgstr ""
-
-msgid "Slime - small"
-msgstr ""
-
-msgid "Slime - tiny"
-msgstr ""
-
-msgid "Magma Cube - big"
-msgstr ""
-
-msgid "Magma Cube - small"
-msgstr ""
-
-msgid "Magma Cube - tiny"
-msgstr ""
+msgid "Slime"
+msgstr "Slime"
 
 msgid "Magma Cube"
 msgstr "Cube de Magmà"
-
-msgid "Slime"
-msgstr "Slime"
 
 msgid "Snow Golem"
 msgstr "Golem d'Ivèrn"
@@ -189,9 +168,6 @@ msgstr "Aranha Venimósa"
 
 msgid "Squid"
 msgstr "Pofre"
-
-msgid "Glow Squid"
-msgstr "Pofre Lusent"
 
 msgid "Strider"
 msgstr "Trèva"
@@ -306,9 +282,6 @@ msgstr "Le Sechaire"
 
 msgid "Wolf"
 msgstr "Lop"
-
-msgid "Dog"
-msgstr ""
 
 msgid "Zombie"
 msgstr "Zombia"

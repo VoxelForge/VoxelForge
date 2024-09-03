@@ -3,6 +3,15 @@
 --made for MC like Survival game
 --License for code WTFPL and otherwise stated in readmes
 
+local atann = math.atan
+local atan = function(x)
+	if not x or x ~= x then
+		return 0
+	else
+		return atann(x)
+	end
+end
+
 local S = minetest.get_translator(minetest.get_current_modname())
 
 --###################
@@ -52,12 +61,36 @@ local cod = {
 	},
 	visual_size = {x=3, y=3},
 	makes_footstep_sound = false,
-	swims = true,
+    fly = true,
+    fly_in = { "vlf_core:water_source", "vlfx_core:river_water_source" },
 	breathes_in_water = true,
 	jump = false,
 	view_range = 16,
 	runaway = true,
 	fear_height = 4,
+	do_custom = function(self)
+		--[[ this is supposed to make them jump out the water but doesn't appear to work very well
+		self.object:set_bone_position("body", vector.new(0,1,0), vector.new(degrees(dir_to_pitch(self.object:get_velocity())) * -1 + 90,0,0))
+		if minetest.get_item_group(self.standing_in, "water") ~= 0 then
+			if self.object:get_velocity().y < 5 then
+				self.object:add_velocity({ x = 0 , y = math.random(-.007, .007), z = 0 })
+			end
+		end
+--]]
+		for _,object in pairs(minetest.get_objects_inside_radius(self.object:get_pos(), 10)) do
+			local lp = object:get_pos()
+			local s = self.object:get_pos()
+			local vec = {
+				x = lp.x - s.x,
+				y = lp.y - s.y,
+				z = lp.z - s.z
+			}
+			if object and not object:is_player() and object:get_luaentity() and object:get_luaentity().name == "mobs_mc:cod" then
+				self.state = "runaway"
+				self.object:set_rotation({x=0,y=(atan(vec.z / vec.x) + 3 * math.pi / 2) - self.rotate,z=0})
+			end
+		end
+	end,
 	on_rightclick = function(self, clicker)
 		local bn = clicker:get_wielded_item():get_name()
 		if bn == "vlf_buckets:bucket_water" or bn == "vlf_buckets:bucket_river_water" then
