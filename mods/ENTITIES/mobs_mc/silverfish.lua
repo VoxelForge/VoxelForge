@@ -74,6 +74,7 @@ vlf_mobs.register_mob("mobs_mc:silverfish", {
 				for _, p in pairs(silverfish_nodes) do
 					minetest.remove_node (p)
 					minetest.add_entity (p, "mobs_mc:silverfish")
+					vlf_mobs.effect(p, 32, "mcl_particles_smoke.png", 0.5, 1.5, 1, 1, 0)
 				end
 			end
 		end

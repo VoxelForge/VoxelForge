@@ -1,6 +1,7 @@
 # textdomain: vlf_doc_basics
 Advanced usage=Fortgeschrittenes
 Advanced information which may be nice to know, but is not crucial to gameplay=Fortgeschrittene Informationen, die nett zu wissen sind, aber nicht kritisch für das reguläre Spiel
+# MCL2 extensions
 Creative Mode=Kreativmodus
 Enabling Creative Mode in MineClone 2 applies the following changes:=Der Kreativmodus in MineClone 2 nimmt die folgenden Änderungen vor:
 • You keep the things you've placed=• Sie behalten die Dinge, die Sie platzieren

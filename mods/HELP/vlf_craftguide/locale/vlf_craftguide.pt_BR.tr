@@ -22,8 +22,9 @@ Any item belonging to the @1 group=Qualquer item pertencente ao grupo @1
 Any item belonging to the groups: @1=Qualquer item pertencente aos grupos: @1
 Cooking time: @1=Tempo de cozimento: @1
 Burning time: @1=Tempo de queima: @1
-Usage @1 of @2=Uso @1 de @2
-Recipe @1 of @2=Receita @1 de @2
+Usages=
+Recipes=
+@1 of @2=
 Recipe is too big to be displayed (@1×@2)=Receita é muito grande para ser mostrada (@1x@2)
 Shapeless=Sem forma
 Cooking=Cozimento
@@ -38,3 +39,9 @@ Collect items to reveal more recipes=Colete itens para revelar mais receitas
 This item can be repaired at an anvil with: @1.=
 This item can be repaired at an anvil with any wooden planks.=
 This item can be repaired at an anvil with any item in the “@1” group.=
+
+
+##### not used anymore #####
+
+Usage @1 of @2=Uso @1 de @2
+Recipe @1 of @2=Receita @1 de @2

@@ -113,6 +113,7 @@ vlf_mobs.register_arrow("mobs_mc:fireball", {
 	_is_fireball = true,
 	_vlf_fishing_hookable = true,
 	_vlf_fishing_reelable = true,
+	redirectable = true,
 	hit_player = function(self, player)
 		vlf_mobs.get_arrow_damage_func(6, "fireball")(self, player)
 		local p = self.object:get_pos()

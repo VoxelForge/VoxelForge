@@ -168,7 +168,7 @@ minetest.register_globalstep(function(dtime)
 end)
 
 minetest.register_chatcommand("endcredits", {
-    description = S("Show the VoxelCraft end credits"),
+    description = S("Show the VoxelForge end credits"),
     func = function(name, param)
         vlf_credits.show(minetest.get_player_by_name(name))
         return true

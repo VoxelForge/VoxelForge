@@ -1,6 +1,5 @@
 # textdomain: doc
 This is the help.=To jest pomoc.
-New help entry unlocked: @1 > @2=Nowy wpis pomocniczy odblokowany: @1 > @2
 All help entries revealed!=Wszystkie wpisy pomocnicze odkryte!
 All help entries are already revealed.=Wszystkie wpisy pomocnicze są już odkryte.
 Category list=Lista kategorii
@@ -23,33 +22,11 @@ Help > @1 > (No Entry)=Pomoc > @1 > (Brak wpisu)
 Help > @1 > @2=Pomoc > @1 > @2
 Open a window providing help entries about Minetest and more=Otwórz okno aby zobaczyć wpisy pomocnicze na temat Minetest i innych rzeczy
 Help=Pomoc
-Collection of help texts=Kolekcja tekstów pomocniczych.
 Allows you to reveal all hidden help entries with /help_reveal=Pozwala odkryć wszystkie wpisy pomocnicze przy użyciu /help_reveal
 Reveal all hidden help entries to you=Odkryj wszystkie ukryte wpisy pomocnicze
 
 
 ##### not used anymore #####
 
-<=<
->=>
-All entries read.=Wszystkie wpisy przeczytane.
-Go to category list=Idź do listy kategorii
-Go to entry list=Idź do listy wpisów
-Help > (No Category)=Pomoc > (Brak kategorii)
-OK=OK
-Please select a category you wish to learn more about:=Wybierz kategorię o której chciałbyś się więcej dowiedzieć:
-Show entry=Pokaż wpis
-Show category=Pokaż kategorię
-Show next entry=Pokaż następny wpis
-Show previous entry=Pokaż poprzedni wpis
-This category does not have any entries.=W tej kategorii nie ma żadnych wpisów.
-This category has the following entries:=W tej kategorii są następujące wpisy:
-This category is empty.=Ta kategoria jest pusta.
-You haven't chosen a category yet. Please choose one in the category list first.=Nie wybrano żadnej kategorii. Proszę wybrać jedną z listy kategorii.
-You haven't chosen an entry yet. Please choose one in the entry list first.=Nie wybrano wpisu. Proszę wybrać jeden z listy wpisów.
-Notify me when new help is available=Powiadom mnie gdy nowa pomoc jest dostępna.
-Play notification sound when new help is available=Odegraj dźwięk powiadomienia gdy nowa pomoc jest dostępna
-Show previous image=Pokaż poprzedni obrazek
-Show previous gallery page=Pokaż poprzednią stronę galerii
-Show next image=Pokaż następny obrazek
-Show next gallery page=Pokaż następną stronę galerii
+New help entry unlocked: @1 > @2=Nowy wpis pomocniczy odblokowany: @1 > @2
+Collection of help texts=Kolekcja tekstów pomocniczych.

@@ -1,7 +1,7 @@
 # textdomain: vlf_doc
-Water can flow into this block and cause it to drop as an item.=
-This block can be turned into dirt with a hoe.=
-This block can be turned into farmland with a hoe.=
+Water can flow into this block and cause it to drop as an item.=L'acqua può scorrere in questo blocco e causarne la caduta come elemento.
+This block can be turned into dirt with a hoe.=Questo blocco può venire mutato in terra con una zappa.
+This block can be turned into farmland with a hoe.=Questo blocco può venire mutato in terra arata con una zappa.
 This block can be turned into grass path with a shovel.=
 This block acts as a soil for all saplings.=
 This block acts as a soil for some saplings.=
@@ -60,9 +60,9 @@ This block drops itself when mined by shears.=
 @1×@2=
 This blocks drops the following when mined by shears: @1=
 , =
-Painfully slow=
-Very slow=
-Slow=
+Painfully slow=Dolorosamente lento
+Very slow=Molto lento
+Slow=Lento
 Fast=
 Very fast=
 Extremely fast=

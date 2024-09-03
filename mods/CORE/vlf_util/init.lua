@@ -2,8 +2,6 @@ local ground_padding = tonumber(minetest.settings:get("vlf_ground_padding")) or 
 
 vlf_util = {}
 
-dofile(minetest.get_modpath(minetest.get_current_modname()).."/roman_numerals.lua")
-
 -- Updates all values in t using values from to*.
 function table.update(t, ...)
 	for _, to in ipairs {...} do
@@ -458,6 +456,10 @@ function vlf_util.drop_items_from_meta_container(lists)
 		lists = { (lists or "main") }
 	end
 	return function(pos, oldnode, oldmetadata)
+		--[[local inv, meta
+
+		meta = minetest.get_meta(pos)]]
+		-- TODO: Is this check required?
 		if oldmetadata and oldmetadata.inventory then
 			for _,listname in pairs(lists) do
 				-- process in after_dig_node callback
@@ -476,8 +478,22 @@ function vlf_util.drop_items_from_meta_container(lists)
 					drop_item_stack(pos, inv:get_stack(listname, i))
 				end
 			end
-			meta:from_table()
+			meta:from_table(oldmetadata)
 		end
+
+--[[		inv = meta:get_inventory()
+
+		-- Generate loot if not already done so
+		-- FIXME: If a player digs container, they are not recognised in loot context
+		vl_loot.generate_container_loot_if_exists(pos, nil, inv, listname)
+		-- Drop all stacks
+		for i = 1, inv:get_size(listname) do
+			drop_item_stack(pos, inv:get_stack(listname, i))
+		end
+		-- Clear metadata if necessary
+		if meta then
+			meta:from_table()
+		end]]
 	end
 end
 
@@ -1482,4 +1498,35 @@ function minetest.get_natural_light(pos,tod)
 	if st then return res end
 	minetest.log("error","["..tostring(minetest.get_current_modname()).."] minetest.get_natural_light would have crashed: \n https://codeberg.org/mineclonia/mineclonia/issues/17\n".. tostring(res))
 	return 0
+end
+
+local converter = {
+	{1000, "M"},
+	{900, "CM"},
+	{500, "D"},
+	{400, "CD"},
+	{100, "C"},
+	{90, "XC"},
+	{50, "L"},
+	{40, "XL"},
+	{10, "X"},
+	{9, "IX"},
+	{5, "V"},
+	{4, "IV"},
+	{1, "I"}
+}
+
+vlf_util.to_roman = function(number)
+	local r = ""
+	local a = number
+	local i = 1
+	while a > 0 do
+		if a >= converter[i][1] then
+			a = a - converter[i][1]
+			r = r.. converter[i][2]
+		else
+			i = i + 1
+		end
+	end
+	return r
 end

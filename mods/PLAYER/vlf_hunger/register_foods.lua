@@ -1,5 +1,5 @@
--- Apply food poisoning effect as long there are no real status effect.
--- TODO: Sanitize this now that Food Poisoning is now an effect in vlf_entity_effects
+-- Apply food poisoning entity_effect as long there are no real status entity_effect.
+-- TODO: Sanitize this now that Food Poisoning is now an entity_effect in vlf_entity_effects
 -- Normal poison damage is set to 0 because it's handled elsewhere.
 
 vlf_hunger.register_food("vlf_mobitems:rotten_flesh",		4, "", 30, 0, 1, 80)

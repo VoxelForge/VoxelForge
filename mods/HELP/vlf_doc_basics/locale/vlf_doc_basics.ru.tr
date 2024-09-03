@@ -1,6 +1,7 @@
 # textdomain: vlf_doc_basics
 Advanced usage=Продвинутое использование
 Advanced information which may be nice to know, but is not crucial to gameplay=Дополнительная информация, которую хорошо было бы знать, но не критично для хода игры
+# MCL2 extensions
 Creative Mode=Творческий режим
 Enabling Creative Mode in MineClone 2 applies the following changes:=При включении творческого режима в MineClone 2 применяются следующие изменения:
 • You keep the things you've placed=• У вас сохраняются вещи, которые вы размещаете в мире
@@ -338,8 +339,8 @@ There are also two different rotation modes. In “square mode”, the rotation 
 • Toggle minimap rotation mode: [Shift]+[F9]=• [Shift]+[F9] - Переключение вращения миникарты
 Camera=Камера
 There are 3 different views which determine the way you see the world. The modes are:=Есть 3 различных способа видеть мир:
-• 1: First-person view (default)=• 1: вид от первого лица (по умолчанию);
-• 2: Third-person view from behind=• 2: вид от третьего лица сзади;
+• 1: First-person view (default)=• 1: вид от первого лица (по умолчанию)
+• 2: Third-person view from behind=• 2: вид от третьего лица сзади
 • 3: Third-person view from the front=• 3: вид от третьего лица спереди.
 These camera modes can be toggled between by default pressing [F7].=
 To zoom in the camera, you can use the Spyglass item.=

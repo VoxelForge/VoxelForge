@@ -129,17 +129,14 @@ Durability: @1 uses=Holdbarhed: @1 anvendelser
 Durability: @1=Holdbarhed: @1
 Miscellaneous items=Diverse genstande
 Item reference of items which are neither blocks, tools or weapons (esp. crafting items)=Genstandsreference til genstanse som hverken er blokke, værktøj eller våben (især håndværksmateriale)
+Mobs=
+Different Mobs=
+Type: @1=
+Spawning light levels (min / max): @1 / @2=
+Can Jump a height of @1 nodes=
+Can Fly=
+Can Swim=
+Drops: =
+Follows player when these items are held:=
 A transparent block, basically empty space. It is usually left behind after digging something.=En gennemsigtig blok, egentlig bare tom luft. Det efterlades typisk efter at have gravet.
 Whenever you are not wielding any item, you use the hand which acts as a tool with its own capabilities. When you are wielding an item which is not a mining tool or a weapon it will behave as if it would be the hand.=Når du ikke anvender en genstand, bruger du din hånd som fungerer som et værktøj med sine egne egenskaber. Når du anvender en genstand som ikke er et værktøj til udvinding eller våben virker det som om du bruger din hånd.
-
-
-##### not used anymore #####
-
-Using it as fuel turns it into: @1.=At bruge det som brændstof laver det om til: @1.
-Mining level: @1=Udvindingsevneevne: @1
-Rating @1=Vurdering: @1
-Rating @1-@2=Vurdering @1-@2
-any level=hvilketsomhelst level
-level 0=level 0
-level 0-@1=level 0-@1
-• @1: @2, @3=• @1: @2, @3

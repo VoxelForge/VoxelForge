@@ -13,6 +13,12 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: mtt_convert 0.1.0\n"
 
+msgid "No help entry for this item could be found."
+msgstr "No se pudo encontrar ninguna entrada de ayuda para este artículo."
+
+msgid "No help entry for this block could be found."
+msgstr "No se encontró ninguna entrada de ayuda para este bloque."
+
 msgid "Error: This node, item or object is undefined. This is always an error."
 msgstr "Error: este nodo, elemento u objeto no está definido. Esto siempre es un error."
 
@@ -34,30 +40,27 @@ msgstr "¡Parece originarse del mod \"@1\", que no está habilitado!"
 msgid "Its identifier is “@1”."
 msgstr "Su identificador es \"@1“."
 
-msgid "Lookup Tool"
-msgstr "Herramienta lupa"
-
-msgid "No help entry for this block could be found."
-msgstr "No se encontró ninguna entrada de ayuda para este bloque."
-
-msgid "No help entry for this item could be found."
-msgstr "No se pudo encontrar ninguna entrada de ayuda para este artículo."
+msgid "This block cannot be identified because the world has not materialized at this point yet. Try again in a few seconds."
+msgstr "Este bloque no se puede identificar porque el mundo aún no se ha materializado en este momento. Inténtalo de nuevo en unos segundos."
 
 msgid "No help entry for this object could be found."
 msgstr "No se pudo encontrar ninguna entrada de ayuda para este objeto."
 
-msgid "OK"
-msgstr "Aceptar"
-
-msgid "Punch any block, item or other thing about you wish to learn more about. This will open up the appropriate help entry. The tool comes in two modes which are changed by using. In liquid mode, this tool points to liquids as well while in solid mode this is not the case."
-msgstr "Perfore cualquier bloque, elemento u otra cosa sobre la que desee obtener más información. Esto abrirá la entrada de ayuda apropiada. La herramienta viene en dos modos que se cambian mediante el uso. En modo líquido, esta herramienta también apunta a líquidos, mientras que en modo sólido este no es el caso."
-
-msgid "This block cannot be identified because the world has not materialized at this point yet. Try again in a few seconds."
-msgstr "Este bloque no se puede identificar porque el mundo aún no se ha materializado en este momento. Inténtalo de nuevo en unos segundos."
-
 msgid "This is a player."
 msgstr "Este es un jugador."
 
+msgid "OK"
+msgstr "Aceptar"
+
+msgid "Lookup Tool"
+msgstr "Herramienta lupa"
+
+msgid "Show help for pointed thing"
+msgstr "Mostrar ayuda para el objeto que estás apuntando"
+
 msgid "This useful little helper can be used to quickly learn more about about one's closer environment. It identifies and analyzes blocks, items and other things and it shows extensive information about the thing on which it is used."
 msgstr "Este útil pequeño ayudante se puede utilizar para aprender rápidamente sobre el entorno más cercano. Identifica y analiza bloques, elementos y otras cosas y muestra información extensa sobre la cosa en la que se utiliza."
+
+msgid "Punch any block, item or other thing about you wish to learn more about. This will open up the appropriate help entry. The tool comes in two modes which are changed by using. In liquid mode, this tool points to liquids as well while in solid mode this is not the case."
+msgstr "Perfore cualquier bloque, elemento u otra cosa sobre la que desee obtener más información. Esto abrirá la entrada de ayuda apropiada. La herramienta viene en dos modos que se cambian mediante el uso. En modo líquido, esta herramienta también apunta a líquidos, mientras que en modo sólido este no es el caso."
 

@@ -58,7 +58,7 @@ minetest.register_chatcommand("gamemode",{
 		if args[1] and vlf_gamemode.set_gamemode(p, args[1]) == false then
 			return false, S("Failed to set Gamemode @1 for player @2", args[1], p:get_player_name())
 		end
-		--Result message - show effective game mode
+		--Result message - show entity_effective game mode
 		return true, S("Gamemode for player @1: @2", n, vlf_gamemode.get_gamemode(p))
 	end
 })

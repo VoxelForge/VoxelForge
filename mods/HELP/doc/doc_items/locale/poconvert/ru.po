@@ -13,62 +13,14 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: mtt_convert 0.1.0\n"
 
-msgid "Using it as fuel turns it into: @1."
-msgstr "Использование в качестве топлива превращает это в: @1."
+msgid "This is a decorational block."
+msgstr "Это декоративный блок."
 
-msgid "@1 seconds"
-msgstr "@1 секунд(ы)"
+msgid "This block is a building block for creating various buildings."
+msgstr "Это строительный блок для создания разных конструкций."
 
-msgid "@1×@2"
-msgstr "@1×@2"
-
-msgid "@1 (@2%)"
-msgstr "@1 (@2%)"
-
-msgid "@1 (<0.5%)"
-msgstr "@1 (<0.5%)"
-
-msgid "@1 (ca. @2%)"
-msgstr "@1 (прибл. @2%)"
-
-msgid ", "
-msgstr ", "
-
-msgid " and "
-msgstr " и "
-
-msgid "1 second"
-msgstr "1 секунда"
-
-msgid "A transparent block, basically empty space. It is usually left behind after digging something."
-msgstr "Прозрачный блок, проще говоря, пустое пространство. Обычно оно остаётся, если выкопать что-то."
-
-msgid "Air"
-msgstr "Воздух"
-
-msgid "Blocks"
-msgstr "Блоки"
-
-msgid "Building another block at this block will place it inside and replace it."
-msgstr "Возведение другого блока на этом блоке поместит его внутрь и заменит."
-
-msgid "Building this block is completely silent."
-msgstr "Строительство этого блока не издает звука."
-
-msgid "Collidable: @1"
-msgstr "Непроходимый: @1"
-
-msgid "Description: @1"
-msgstr "Описание: @1"
-
-msgid "Falling blocks can go through this block; they destroy it when doing so."
-msgstr "Падающие блоки могут пройти сквозь этот блок; при этом они уничтожат его."
-
-msgid "Full punch interval: @1 s"
-msgstr "Интервал полного удара: @1 с"
-
-msgid "Hand"
-msgstr "Рука"
+msgid "This item is primarily used for crafting other items."
+msgstr "Этот предмет в основном используется для крафта других предметов."
 
 msgid "Hold it in your hand, then leftclick to eat it."
 msgstr "Возьмите это в руку и кликните левой кнопкой мыши, чтобы съесть."
@@ -76,26 +28,38 @@ msgstr "Возьмите это в руку и кликните левой кн�
 msgid "Hold it in your hand, then leftclick to eat it. But why would you want to do this?"
 msgstr "Возьмите это в руку и кликните левой кнопкой мыши, чтобы съесть. Но зачем вы хотите это сделать?"
 
-msgid "Item reference of all wieldable tools and weapons"
-msgstr "Справка по всем носимым инструментам и оружию"
+msgid "This block's rotation is affected by the way you place it: Place it on the floor or ceiling for a vertical orientation; place it at the side for a horizontal orientation. Sneaking while placing it leads to a perpendicular orientation instead."
+msgstr "Поворот этого блока зависит от того как вы его ставите: поставьте его на пол или потолок для вертикальной ориентации; поместите на стену для горизонтальной ориентации. Удерживайте [Красться] при размещении для перпендикулярной ориентации."
 
-msgid "Item reference of blocks and other things which are capable of occupying space"
-msgstr "Справка по всем блокам и другим вещам, способным занимать место"
+msgid "Hand"
+msgstr "Рука"
 
-msgid "Item reference of items which are neither blocks, tools or weapons (esp. crafting items)"
-msgstr "Справка по остальным предметам - не блокам, не инструментам и не оружию (так называемые материалы для крафта)"
+msgid "Air"
+msgstr "Воздух"
 
-msgid "Liquids can flow into this block and destroy it."
-msgstr "Жидкости могут затекать в этот блок, уничтожая его."
+msgid "Yes"
+msgstr "Да"
 
-msgid "Maximum stack size: @1"
-msgstr "Максимальный размер стака: @1"
+msgid "No"
+msgstr "Нет"
 
-msgid "Mining level: @1"
-msgstr "Уровень добывания: @1"
+msgid ", "
+msgstr ", "
 
-msgid "Mining ratings:"
-msgstr "Рейтинг добывания:"
+msgid "Unknown item (@1)"
+msgstr "Неизвестный предмет (@1)"
+
+msgid "unknown"
+msgstr "неизвестно"
+
+msgid "1 second"
+msgstr "1 секунда"
+
+msgid "@1 seconds"
+msgstr "@1 секунд(ы)"
+
+msgid "• @1: @2"
+msgstr "• @1: @2"
 
 msgid "• @1, rating @2: @3 s - @4 s"
 msgstr "• @1, рейтинг @2: @3 с - @4 с"
@@ -103,56 +67,245 @@ msgstr "• @1, рейтинг @2: @3 с - @4 с"
 msgid "• @1, rating @2: @3 s"
 msgstr "• @1, рейтинг @2: @3 с"
 
+msgid "• @1, level @2: @3 uses"
+msgstr "• @1, уровень @2: @3 раз(а)"
+
+msgid "• @1, level @2: Unlimited"
+msgstr "• @1, уровень @2: Неограниченно"
+
+msgid "This tool is capable of mining."
+msgstr "Этот инструмент используется для добычи."
+
+msgid "Maximum toughness levels:"
+msgstr "Максимальный уровень твёрдости:"
+
 msgid "Mining times:"
 msgstr "Добыто раз:"
 
-msgid "Mining this block is completely silent."
-msgstr "Добывание этого блока не издает звука."
+msgid "Mining durability:"
+msgstr "Прочность при добыче:"
 
-msgid "Miscellaneous items"
-msgstr "Дополнительные предметы"
+msgid "This is a melee weapon which deals damage by punching."
+msgstr "Это орудие ближнего боя, наносящее урон при ударе."
 
-msgid "No"
-msgstr "Нет"
+msgid "Maximum damage per hit:"
+msgstr "Максимальный урон за один удар:"
 
-msgid "Pointable: No"
-msgstr "Наводимый: нет"
+msgid "• @1: @2 HP"
+msgstr "• @1: @2 HP"
 
-msgid "Pointable: Only by special items"
-msgstr "Наводимый: только специальными предметами"
+msgid "Full punch interval: @1 s"
+msgstr "Интервал полного удара: @1 с"
 
-msgid "Pointable: Yes"
-msgstr "Наводимый: да"
+msgid "This block can be mined by any mining tool in half a second."
+msgstr "Этот блок можно добыть любым добывающим инструментом за полсекунды."
 
-msgid "Punches with this block don't work as usual; melee combat and mining are either not possible or work differently."
-msgstr "Удар этим блоком работает не так, как обычно; ближний бой и копание либо невозможны, либо работают по-другому."
+msgid "This block can be mined by any mining tool immediately."
+msgstr "Этот блок можно мгновенно добыть любым добывающим инструментом."
 
-msgid "Punches with this item don't work as usual; melee combat and mining are either not possible or work differently."
-msgstr "Удар этим предметом работает не так, как обычно; ближний бой и копание либо невозможны, либо работают по-другому."
+msgid "This block can not be mined by ordinary mining tools."
+msgstr "Этот блок нельзя добыть обычным добывающим инструментом."
 
-msgid "Punches with this tool don't work as usual; melee combat and mining are either not possible or work differently."
-msgstr "Удар этим инструментом работает не так, как обычно; ближний бой и копание либо невозможны, либо работают по-другому."
+msgid "This block can be destroyed by any mining tool in half a second."
+msgstr "Этот блок можно уничтожить любым добывающим инструментом за полсекунды."
+
+msgid "This block can be destroyed by any mining tool immediately."
+msgstr "Этот блок можно мгновенно уничтожить любым добывающим инструментом."
+
+msgid "This block can not be destroyed by ordinary mining tools."
+msgstr "Этот блок нельзя уничтожить добывающим инструментом."
+
+msgid "This block can be mined by mining tools which match any of the following mining ratings and its toughness level."
+msgstr "Этот блок можно добыть любым добывающим инструментом, соответствующим одному из следующих рейтингов и его уровню твёрдости."
+
+msgid "Mining ratings:"
+msgstr "Рейтинг добывания:"
+
+msgid "Toughness level: @1"
+msgstr "Уровень твёрдости: @1"
 
 msgid "Range: @1"
 msgstr "Дальность: @1"
 
-msgid "Range: @1 (@2)"
-msgstr "Дальность: @1 (@2)"
-
 msgid "Range: 4"
 msgstr "Дальность: 4"
 
-msgid "Rating @1"
-msgstr "Скорость добывания @1"
+msgid "Range: @1 (@2)"
+msgstr "Дальность: @1 (@2)"
 
-msgid "Rating @1-@2"
-msgstr "Скорость добывания @1-@2"
+msgid "This tool can serve as a smelting fuel with a burning time of @1."
+msgstr "Этот инструмент можно использовать как топливо со временем горения @1."
+
+msgid "This block can serve as a smelting fuel with a burning time of @1."
+msgstr "Этот блок можно использовать как топливо со временем горения @1."
+
+msgid "This item can serve as a smelting fuel with a burning time of @1."
+msgstr "Этот предмет можно использовать как топливо со временем горения @1."
+
+msgid " Using it as fuel turns it into: @1."
+msgstr ""
+
+msgid "Itemstring: \"@1\""
+msgstr "Техническое название: \"@1\""
+
+msgid "Description: @1"
+msgstr "Описание: @1"
+
+msgid "Usage help: @1"
+msgstr "Помощь по использованию: @1"
+
+msgid "Maximum stack size: @1"
+msgstr "Максимальный размер стака: @1"
+
+msgid "This block points to liquids."
+msgstr "Этот блок указывает на жидкости."
+
+msgid "This tool points to liquids."
+msgstr "Этот инструмент указывает на жидкости."
+
+msgid "This item points to liquids."
+msgstr "Этот предмет указывает на жидкости."
+
+msgid "Punches with this block don't work as usual; melee combat and mining are either not possible or work differently."
+msgstr "Удар этим блоком работает не так, как обычно; ближний бой и копание либо невозможны, либо работают по-другому."
+
+msgid "Punches with this tool don't work as usual; melee combat and mining are either not possible or work differently."
+msgstr "Удар этим инструментом работает не так, как обычно; ближний бой и копание либо невозможны, либо работают по-другому."
+
+msgid "Punches with this item don't work as usual; melee combat and mining are either not possible or work differently."
+msgstr "Удар этим предметом работает не так, как обычно; ближний бой и копание либо невозможны, либо работают по-другому."
+
+msgid "This block belongs to the @1 group."
+msgstr "Этот блок принадлежит группе @1."
+
+msgid "This tool belongs to the @1 group."
+msgstr "Этот инструмент относится к группе @1."
+
+msgid "This item belongs to the @1 group."
+msgstr "Этот предмет относится к группе @1."
+
+msgid "This block belongs to these groups: @1."
+msgstr "Этот блок принадлежит группам: @1."
+
+msgid "This tool belongs to these groups: @1."
+msgstr "Этот инструмент относится к группам: @1."
+
+msgid "This item belongs to these groups: @1."
+msgstr "Этот предмет относится к группам: @1."
+
+msgid "Blocks"
+msgstr "Блоки"
+
+msgid "Item reference of blocks and other things which are capable of occupying space"
+msgstr "Справка по всем блокам и другим вещам, способным занимать место"
+
+msgid "Collidable: @1"
+msgstr "Непроходимый: @1"
+
+msgid "Pointable: Yes"
+msgstr "Наводимый: да"
+
+msgid "Pointable: Only by special items"
+msgstr "Наводимый: только специальными предметами"
+
+msgid "Pointable: No"
+msgstr "Наводимый: нет"
+
+msgid "This block is a liquid with these properties:"
+msgstr "Это жидкий блок со следующими свойствами:"
+
+msgid "• Renewable"
+msgstr "• Возобновляемое"
+
+msgid "• Not renewable"
+msgstr "• Невозобновляемое"
+
+msgid "• No flowing"
+msgstr "• Не текучее"
+
+msgid "• Flowing range: @1"
+msgstr "• Дальность потока: @1"
+
+msgid "• Viscosity: @1"
+msgstr "• Вязкость: @1"
+
+msgid "This block causes a damage of @1 hit points per second."
+msgstr "Этот блок наносит урон в @1 единиц здоровья в секунду."
+
+msgid "This block causes a damage of @1 hit point per second."
+msgstr "Этот блок наносит урон в @1 единицу здоровья в секунду."
+
+msgid "This block decreases your breath and causes a drowning damage of @1 hit points every 2 seconds."
+msgstr "Этот блок уменьшает ваш запас кислорода и наносит урон от утопления в @1 единиц здоровья каждые 2 секунды."
+
+msgid "This block decreases your breath and causes a drowning damage of @1 hit point every 2 seconds."
+msgstr "Этот блок уменьшает ваш запас кислорода и наносит урон от утопления в @1 единицу здоровья каждые 2 секунды."
 
 msgid "The fall damage on this block is increased by @1%."
 msgstr "При падении на этот блок получаемый урон увеличивается на @1%."
 
+msgid "This block negates all fall damage."
+msgstr "Этот блок отменяет весь урон от падения."
+
 msgid "The fall damage on this block is reduced by @1%."
 msgstr "При падении на этот блок получаемый урон уменьшается на @1%."
+
+msgid "You can not jump while standing on this block."
+msgstr "Вы не можете прыгать, пока стоите на этом блоке."
+
+msgid "This block can be climbed."
+msgstr "По этому блоку можно карабкаться."
+
+msgid "This block will make you bounce off with an elasticity of @1%."
+msgstr "Этот блок заставит вас отскакивать с упругостью @1%."
+
+msgid "This block is slippery."
+msgstr "Этот блок скользкий."
+
+msgid "This block is completely silent when walked on, mined or built."
+msgstr "Этот блок не издает звуков когда вы идёте по нему, добываете его или строите из него."
+
+msgid "This block is completely silent when mined or built."
+msgstr "Этот блок не издает звуков когда добывается и устанавливается при строительстве."
+
+msgid "Walking on this block is completely silent."
+msgstr "Хождение по этому блоку не издает звуков."
+
+msgid "Mining this block is completely silent."
+msgstr "Добывание этого блока не издает звука."
+
+msgid "Building this block is completely silent."
+msgstr "Строительство этого блока не издает звука."
+
+msgid "This block is affected by gravity and can fall."
+msgstr "На этот блок действует гравитация, он может падать."
+
+msgid "Building another block at this block will place it inside and replace it."
+msgstr "Возведение другого блока на этом блоке поместит его внутрь и заменит."
+
+msgid "Falling blocks can go through this block; they destroy it when doing so."
+msgstr "Падающие блоки могут пройти сквозь этот блок; при этом они уничтожат его."
+
+msgid "This block will drop as an item when a falling block ends up inside it."
+msgstr "Этот блок выпадет как предмет, когда падающий блок попадёт в него."
+
+msgid "This block is destroyed when a falling block ends up inside it."
+msgstr "Этот блок уничтожается, когда падающий блок попадает в него."
+
+msgid "This block will drop as an item when it is not attached to a surrounding block."
+msgstr "Этот блок выпадет как предмет, если он не прикреплён к окружающим блокам."
+
+msgid "This block will drop as an item when no collidable block is below it."
+msgstr "Этот блок выпадет как предмет, если нет непроходимого блока прямо под ним."
+
+msgid "Liquids can flow into this block and destroy it."
+msgstr "Жидкости могут затекать в этот блок, уничтожая его."
+
+msgid "This block is a light source with a light level of @1."
+msgstr "Этот блок является источником света уровня @1."
+
+msgid "This block glows faintly with a light level of @1."
+msgstr "Этот блок мерцает с уровнем света: @1."
 
 msgid "This block allows light to propagate with a small loss of brightness, and sunlight can even go through losslessly."
 msgstr "Этот блок позволяет свету распространяться с небольшой потерей яркости, а солнечный свет может проходить без потерь."
@@ -163,44 +316,14 @@ msgstr "Этот блок позволяет свету распространя
 msgid "This block allows sunlight to propagate without loss in brightness."
 msgstr "Этот блок позволяет солнечному свету распространяться без потери яркости."
 
-msgid "This block belongs to the @1 group."
-msgstr "Этот блок принадлежит группе @1."
+msgid "Unknown Node"
+msgstr "Неизвестный блок"
 
-msgid "This block belongs to these groups: @1."
-msgstr "Этот блок принадлежит группам: @1."
+msgid "This block connects to this block: @1."
+msgstr "Этот блок соединяется с этим блоком: @1."
 
-msgid "This block can be climbed."
-msgstr "По этому блоку можно карабкаться."
-
-msgid "This block can be destroyed by any mining tool immediately."
-msgstr "Этот блок можно мгновенно уничтожить любым добывающим инструментом."
-
-msgid "This block can be destroyed by any mining tool in half a second."
-msgstr "Этот блок можно уничтожить любым добывающим инструментом за полсекунды."
-
-msgid "This block can be mined by any mining tool immediately."
-msgstr "Этот блок можно мгновенно добыть любым добывающим инструментом."
-
-msgid "This block can be mined by any mining tool in half a second."
-msgstr "Этот блок можно добыть любым добывающим инструментом за полсекунды."
-
-msgid "This block can be mined by mining tools which match any of the following mining ratings and its toughness level."
-msgstr "Этот блок можно добыть любым добывающим инструментом, соответствующим одному из следующих рейтингов и его уровню твёрдости."
-
-msgid "This block can not be destroyed by ordinary mining tools."
-msgstr "Этот блок нельзя уничтожить добывающим инструментом."
-
-msgid "This block can not be mined by ordinary mining tools."
-msgstr "Этот блок нельзя добыть обычным добывающим инструментом."
-
-msgid "This block can serve as a smelting fuel with a burning time of @1."
-msgstr "Этот блок можно использовать как топливо со временем горения @1."
-
-msgid "This block causes a damage of @1 hit point per second."
-msgstr "Этот блок наносит урон в @1 единицу здоровья в секунду."
-
-msgid "This block causes a damage of @1 hit points per second."
-msgstr "Этот блок наносит урон в @1 единиц здоровья в секунду."
+msgid "This block connects to these blocks: @1."
+msgstr "Этот блок соединяется со следующими блоками: @1."
 
 msgid "This block connects to blocks of the @1 group."
 msgstr "Этот блок соединяется с блоками группы @1."
@@ -208,59 +331,8 @@ msgstr "Этот блок соединяется с блоками группы 
 msgid "This block connects to blocks of the following groups: @1."
 msgstr "Этот блок соединяется с блоками групп: @1."
 
-msgid "This block connects to these blocks: @1."
-msgstr "Этот блок соединяется со следующими блоками: @1."
-
-msgid "This block connects to this block: @1."
-msgstr "Этот блок соединяется с этим блоком: @1."
-
-msgid "This block decreases your breath and causes a drowning damage of @1 hit point every 2 seconds."
-msgstr "Этот блок уменьшает ваш запас кислорода и наносит урон от утопления в @1 единицу здоровья каждые 2 секунды."
-
-msgid "This block decreases your breath and causes a drowning damage of @1 hit points every 2 seconds."
-msgstr "Этот блок уменьшает ваш запас кислорода и наносит урон от утопления в @1 единиц здоровья каждые 2 секунды."
-
-msgid "This block is a light source with a light level of @1."
-msgstr "Этот блок является источником света уровня @1."
-
-msgid "This block glows faintly with a light level of @1."
-msgstr "Этот блок мерцает с уровнем света: @1."
-
-msgid "This block is a building block for creating various buildings."
-msgstr "Это строительный блок для создания разных конструкций."
-
-msgid "This block is a liquid with these properties:"
-msgstr "Это жидкий блок со следующими свойствами:"
-
-msgid "This block is affected by gravity and can fall."
-msgstr "На этот блок действует гравитация, он может падать."
-
-msgid "This block is completely silent when mined or built."
-msgstr "Этот блок не издает звуков когда добывается и устанавливается при строительстве."
-
-msgid "This block is completely silent when walked on, mined or built."
-msgstr "Этот блок не издает звуков когда вы идёте по нему, добываете его или строите из него."
-
-msgid "This block is destroyed when a falling block ends up inside it."
-msgstr "Этот блок уничтожается, когда падающий блок попадает в него."
-
-msgid "This block negates all fall damage."
-msgstr "Этот блок отменяет весь урон от падения."
-
-msgid "This block points to liquids."
-msgstr "Этот блок указывает на жидкости."
-
-msgid "This block will drop as an item when a falling block ends up inside it."
-msgstr "Этот блок выпадет как предмет, когда падающий блок попадёт в него."
-
-msgid "This block will drop as an item when it is not attached to a surrounding block."
-msgstr "Этот блок выпадет как предмет, если он не прикреплён к окружающим блокам."
-
-msgid "This block will drop as an item when no collidable block is below it."
-msgstr "Этот блок выпадет как предмет, если нет непроходимого блока прямо под ним."
-
-msgid "This block will drop the following items when mined: @1."
-msgstr "При добыче из этого блока выпадут следующие предметы: @1."
+msgid "This block won't drop anything when mined."
+msgstr "При добыче из этого блока не выпадет ничего."
 
 msgid "This block will drop the following when mined: @1×@2."
 msgstr "При добыче из этого блока выпадет следующее: @1×@2."
@@ -268,11 +340,8 @@ msgstr "При добыче из этого блока выпадет следу
 msgid "This block will drop the following when mined: @1."
 msgstr "При добыче из этого блока выпадет следующее: @1."
 
-msgid "This block will drop the following when mined: @1."
-msgstr "При добыче из этого блока выпадет следующее: @1."
-
-msgid "This block will make you bounce off with an elasticity of @1%."
-msgstr "Этот блок заставит вас отскакивать с упругостью @1%."
+msgid "This block will drop the following items when mined: @1."
+msgstr "При добыче из этого блока выпадут следующие предметы: @1."
 
 msgid "This block will randomly drop one of the following when mined: @1."
 msgstr "При добыче из этого блока случайным образом выпадает что-то одно из списка: @1."
@@ -280,113 +349,26 @@ msgstr "При добыче из этого блока случайным обр
 msgid "This block will randomly drop up to @1 drops of the following possible drops when mined: @2."
 msgstr "При добыче из этого блока случайным образом выпадает до @1 из следующих возможных выдач: @2."
 
-msgid "This block won't drop anything when mined."
-msgstr "При добыче из этого блока не выпадет ничего."
+msgid " and "
+msgstr " и "
 
-msgid "This is a decorational block."
-msgstr "Это декоративный блок."
+msgid "@1×@2"
+msgstr "@1×@2"
 
-msgid "This is a melee weapon which deals damage by punching."
-msgstr "Это орудие ближнего боя, наносящее урон при ударе."
+msgid "@1 (<0.5%)"
+msgstr "@1 (<0.5%)"
 
-msgid "Maximum damage per hit:"
-msgstr "Максимальный урон за один удар:"
+msgid "@1 (ca. @2%)"
+msgstr "@1 (прибл. @2%)"
 
-msgid "This item belongs to the @1 group."
-msgstr "Этот предмет относится к группе @1."
-
-msgid "This item belongs to these groups: @1."
-msgstr "Этот предмет относится к группам: @1."
-
-msgid "This item can serve as a smelting fuel with a burning time of @1."
-msgstr "Этот предмет можно использовать как топливо со временем горения @1."
-
-msgid "This item is primarily used for crafting other items."
-msgstr "Этот предмет в основном используется для крафта других предметов."
-
-msgid "This item points to liquids."
-msgstr "Этот предмет указывает на жидкости."
-
-msgid "This tool belongs to the @1 group."
-msgstr "Этот инструмент относится к группе @1."
-
-msgid "This tool belongs to these groups: @1."
-msgstr "Этот инструмент относится к группам: @1."
-
-msgid "This tool can serve as a smelting fuel with a burning time of @1."
-msgstr "Этот инструмент можно использовать как топливо со временем горения @1."
-
-msgid "This tool is capable of mining."
-msgstr "Этот инструмент используется для добычи."
-
-msgid "Maximum toughness levels:"
-msgstr "Максимальный уровень твёрдости:"
-
-msgid "This tool points to liquids."
-msgstr "Этот инструмент указывает на жидкости."
+msgid "@1 (@2%)"
+msgstr "@1 (@2%)"
 
 msgid "Tools and weapons"
 msgstr "Инструменты и оружие"
 
-msgid "Unknown Node"
-msgstr "Неизвестный блок"
-
-msgid "Usage help: @1"
-msgstr "Помощь по использованию: @1"
-
-msgid "Walking on this block is completely silent."
-msgstr "Хождение по этому блоку не издает звуков."
-
-msgid "Whenever you are not wielding any item, you use the hand which acts as a tool with its own capabilities. When you are wielding an item which is not a mining tool or a weapon it will behave as if it would be the hand."
-msgstr "Даже если вы не держите никакого предмета, ваша рука - сама по себе инструмент, обладающий определёнными свойствами. Когда в вашей руке предмет, не являющийся инструментом добычи или оружием, он будет иметь свойства вашей пустой руки."
-
-msgid "Yes"
-msgstr "Да"
-
-msgid "You can not jump while standing on this block."
-msgstr "Вы не можете прыгать, пока стоите на этом блоке."
-
-msgid "any level"
-msgstr "любой уровень"
-
-msgid "level 0"
-msgstr "уровень 0"
-
-msgid "level 0-@1"
-msgstr "уровень 0-@1"
-
-msgid "unknown"
-msgstr "неизвестно"
-
-msgid "Unknown item (@1)"
-msgstr "Неизвестный предмет (@1)"
-
-msgid "• @1: @2"
-msgstr "• @1: @2"
-
-msgid "• @1: @2 HP"
-msgstr "• @1: @2 HP"
-
-msgid "• @1: @2, @3"
-msgstr "• @1: @2, @3"
-
-msgid "• Flowing range: @1"
-msgstr "• Дальность потока: @1"
-
-msgid "• No flowing"
-msgstr "• Не текучее"
-
-msgid "• Not renewable"
-msgstr "• Невозобновляемое"
-
-msgid "• Renewable"
-msgstr "• Возобновляемое"
-
-msgid "• Viscosity: @1"
-msgstr "• Вязкость: @1"
-
-msgid "Itemstring: \"@1\""
-msgstr "Техническое название: \"@1\""
+msgid "Item reference of all wieldable tools and weapons"
+msgstr "Справка по всем носимым инструментам и оружию"
 
 msgid "Durability: @1 uses"
 msgstr "Прочность: @1 использований"
@@ -394,21 +376,42 @@ msgstr "Прочность: @1 использований"
 msgid "Durability: @1"
 msgstr "Прочность: @1"
 
-msgid "Mining durability:"
-msgstr "Прочность при добыче:"
+msgid "Miscellaneous items"
+msgstr "Дополнительные предметы"
 
-msgid "• @1, level @2: @3 uses"
-msgstr "• @1, уровень @2: @3 раз(а)"
+msgid "Item reference of items which are neither blocks, tools or weapons (esp. crafting items)"
+msgstr "Справка по остальным предметам - не блокам, не инструментам и не оружию (так называемые материалы для крафта)"
 
-msgid "• @1, level @2: Unlimited"
-msgstr "• @1, уровень @2: Неограниченно"
+msgid "Mobs"
+msgstr ""
 
-msgid "This block's rotation is affected by the way you place it: Place it on the floor or ceiling for a vertical orientation; place it at the side for a horizontal orientation. Sneaking while placing it leads to a perpendicular orientation instead."
-msgstr "Поворот этого блока зависит от того как вы его ставите: поставьте его на пол или потолок для вертикальной ориентации; поместите на стену для горизонтальной ориентации. Удерживайте [Красться] при размещении для перпендикулярной ориентации."
+msgid "Different Mobs"
+msgstr ""
 
-msgid "Toughness level: @1"
-msgstr "Уровень твёрдости: @1"
+msgid "Type: @1"
+msgstr ""
 
-msgid "This block is slippery."
-msgstr "Этот блок скользкий."
+msgid "Spawning light levels (min / max): @1 / @2"
+msgstr ""
+
+msgid "Can Jump a height of @1 nodes"
+msgstr ""
+
+msgid "Can Fly"
+msgstr ""
+
+msgid "Can Swim"
+msgstr ""
+
+msgid "Drops: "
+msgstr ""
+
+msgid "Follows player when these items are held:"
+msgstr ""
+
+msgid "A transparent block, basically empty space. It is usually left behind after digging something."
+msgstr "Прозрачный блок, проще говоря, пустое пространство. Обычно оно остаётся, если выкопать что-то."
+
+msgid "Whenever you are not wielding any item, you use the hand which acts as a tool with its own capabilities. When you are wielding an item which is not a mining tool or a weapon it will behave as if it would be the hand."
+msgstr "Даже если вы не держите никакого предмета, ваша рука - сама по себе инструмент, обладающий определёнными свойствами. Когда в вашей руке предмет, не являющийся инструментом добычи или оружием, он будет иметь свойства вашей пустой руки."
 

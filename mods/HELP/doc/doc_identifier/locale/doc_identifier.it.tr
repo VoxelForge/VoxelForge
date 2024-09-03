@@ -1,7 +1,7 @@
 # textdomain: doc_identifier
-No help entry for this item could be found.=
-No help entry for this block could be found.=
-Error: This node, item or object is undefined. This is always an error.=
+No help entry for this item could be found.=Non è stata trovata alcuna pagina di aiuto per questo elemento.
+No help entry for this block could be found.=Non è stato possibile trovare alcuna sezione di aiuto per questo blocco.
+Error: This node, item or object is undefined. This is always an error.=Errore: Questo nodo, elemento od oggetto non è definito. Ciò costituisce sempre un errore.
 This can happen for the following reasons:=
 • The mod which is required for it is not enabled=
 • The author of the game or a mod has made a mistake=

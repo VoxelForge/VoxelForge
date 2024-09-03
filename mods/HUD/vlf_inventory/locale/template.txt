@@ -1,4 +1,4 @@
-# textdomain: vlf_inventory
+# textdomain: mcl_inventory
 Building Blocks=
 Decoration Blocks=
 Redstone=

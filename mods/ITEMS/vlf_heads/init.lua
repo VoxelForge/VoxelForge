@@ -49,12 +49,15 @@ local function normalize_rotation(rot)
 	return math.floor(0.5 + rot / 15) * 15
 end
 
-function vlf_heads.deftemplate.on_rotate(pos, node, user, mode, new_param2)
+function vlf_heads.deftemplate.on_rotate(pos, node, user, mode)
 	if mode == screwdriver.ROTATE_AXIS then
-		node.name = node.name .. "_wall"
-		node.param2 = minetest.dir_to_wallmounted(minetest.facedir_to_dir(node.param2))
-		minetest.set_node(pos, node)
-		return true
+		local dir = minetest.facedir_to_dir(node.param2)
+		if dir then
+			node.name = node.name:gsub("_ceiling", "_wall")
+			node.param2 = minetest.dir_to_wallmounted(dir)
+			minetest.set_node(pos, node)
+			return true
+		end
 	end
 	local ctrl = user:get_player_control()
 	if ctrl and ctrl.sneak then
@@ -104,7 +107,7 @@ function vlf_heads.deftemplate.on_place(itemstack, placer, pointed_thing)
 	return itemstack
 end
 
-local function wall_on_rotate(pos, node, user, mode, new_param2)
+local function wall_on_rotate(pos, node, _, mode, _)
 	if mode == screwdriver.ROTATE_AXIS then
 		node.name = string.sub(node.name, 1, string.len(node.name)-5)
 		node.param2 = minetest.dir_to_facedir(minetest.wallmounted_to_dir(node.param2))
@@ -118,8 +121,8 @@ end
 --- @field texture string armor texture for node
 --- @field description string translated description
 --- @field longdesc string translated doc description
---- @field range_mob string name of mob affected by range reduction
---- @field range_factor number factor of range reduction
+--- @field range_mob? string name of mob affected by range reduction
+--- @field range_factor? number factor of range reduction
 
 --- registers a head
 --- @param head_def HeadDef head node definition
@@ -282,7 +285,7 @@ minetest.register_lbm({
 	name = "vlf_heads:convert_old_angled_heads",
 	nodenames = old_rheads,
 	run_at_every_load = false,
-	action = function(pos, node, dtime_s)
+	action = function(pos, node)
 		local ceiling = node.param2 >= 20
 		local rt, nn
 		for k,v in pairs(old_rots) do
@@ -302,7 +305,7 @@ minetest.register_lbm({
 	name = "vlf_heads:convert_old_ceiling_heads",
 	nodenames = old_bheads,
 	run_at_every_load = false,
-	action = function(pos, node, dtime_s)
+	action = function(pos, node)
 		local ceiling = node.param2 >= 20
 		if ceiling then
 			node.name = node.name.."_ceiling"

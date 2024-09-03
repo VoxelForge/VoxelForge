@@ -75,17 +75,22 @@ function mobs_mc.villager_mob:on_rightclick(clicker)
 		return
 	end
 
-	if self:validate_jobsite() and self.order ~= "work" then
-		minetest.log("warning","[mobs_mc] villager has jobsite but doesn't work")
-	end
-
 	self:init_trader_vars()
 	local name = clicker:get_player_name()
 	self._trading_players[name] = true
 
-	if self._trades == nil or self._trades == false then
-		self:init_trades()
+	-- Make sure old villagers have minimal XP for current level
+	-- Probably should be somewhere else ...
+	if self._trade_xp == nil then
+		if self._max_trade_tier and self._max_trade_tier > 1 then
+			self._trade_xp = mobs_mc.villager_mob.tier_xp[self._max_trade_tier - 1]
+		else
+			self._trade_xp = 0
+		end
 	end
+
+	self:init_trades()
+
 	self:update_max_tradenum()
 	if self._trades == false then
 		return
@@ -105,36 +110,21 @@ function mobs_mc.villager_mob:on_rightclick(clicker)
 	self:stand_still()
 end
 
-function mobs_mc.villager_mob:do_custom(dtime)
-	self:check_summon(dtime)
-
-	if not self._player_scan_timer then
-		self._player_scan_timer = 0
-	end
-	self._player_scan_timer = self._player_scan_timer + dtime
-
+function mobs_mc.villager_mob:stand_near_players()
 	-- Check infrequently to keep CPU load low
-	if self._player_scan_timer > PLAYER_SCAN_INTERVAL then
-
-		self._player_scan_timer = 0
-		local selfpos = self.object:get_pos()
-		local objects = minetest.get_objects_inside_radius(selfpos, PLAYER_SCAN_RADIUS)
-		local has_player = false
-
-		for o, obj in pairs(objects) do
-			if obj:is_player() then
-				has_player = true
-				break
-			end
-		end
-		if has_player then
+	if self.order ~= "sleep" and self:check_timer("player_scan", PLAYER_SCAN_INTERVAL) then
+		if table.count(minetest.get_objects_inside_radius(self.object:get_pos(), PLAYER_SCAN_RADIUS), function(_, pl) return pl:is_player() end) > 0 then
 			self:stand_still()
 		else
 			self.walk_chance = DEFAULT_WALK_CHANCE
 			self.jump = true
 		end
 	end
+end
 
+function mobs_mc.villager_mob:do_custom(dtime)
+	self:check_summon()
+	self:stand_near_players()
 	self:do_activity(dtime)
 end
 
@@ -158,7 +148,7 @@ function mobs_mc.villager_mob:on_spawn()
 	self:set_textures()
 end
 
-function mobs_mc.villager_mob:on_die(pos, cmi_cause)
+function mobs_mc.villager_mob:on_die(_, cmi_cause)
 	-- Close open trade formspecs and give input back to players
 	local trading_players = self._trading_players
 	if trading_players then
@@ -210,7 +200,7 @@ table.update(mobs_mc.villager_mob, {
 	head_eye_height = 2.2,
 	curiosity = 10,
 	runaway = true,
-	collisionbox = {-0.3, -0.01, -0.3, 0.3, 1.94, 0.3},
+	collisionbox = {-0.25, -0.01, -0.25, 0.25, 1.94, 0.25},
 	visual = "mesh",
 	mesh = "mobs_mc_villager.b3d",
 	textures = {
@@ -218,8 +208,8 @@ table.update(mobs_mc.villager_mob, {
 		"mobs_mc_villager.png", --hat
 	},
 	makes_footstep_sound = true,
-	walk_velocity = 1.2,
-	run_velocity = 2.4,
+	walk_velocity = 1,
+	run_velocity = 1.5,
 	drops = {},
 	can_despawn = false,
 	-- TODO: sounds
@@ -230,15 +220,15 @@ table.update(mobs_mc.villager_mob, {
 	},
 	animation = {
 		stand_start = 0, stand_end = 0,
-		walk_start = 0, walk_end = 40, walk_speed = 25,
+		walk_start = 0, walk_end = 40, walk_speed = 35,
 		run_start = 0, run_end = 40, run_speed = 25,
 		head_shake_start = 60, head_shake_end = 70, head_shake_loop = false,
 		head_nod_start = 50, head_nod_end = 60, head_nod_loop = false,
 	},
-	child_animations = {
+	_child_animations = {
 		stand_start = 71, stand_end = 71,
-		walk_start = 71, walk_end = 111, walk_speed = 37,
-		run_start = 71, run_end = 111, run_speed = 37,
+		walk_start = 71, walk_end = 111, walk_speed = 60,
+		run_start = 71, run_end = 111, run_speed = 50,
 		head_shake_start = 131, head_shake_end = 141, head_shake_loop = false,
 		head_nod_start = 121, head_nod_end = 131, head_nod_loop = false,
 	},
@@ -251,10 +241,14 @@ table.update(mobs_mc.villager_mob, {
 	_bed = nil,
 	_id = nil,
 	_profession = "unemployed",
+	_max_trade_tier = 1,
+	_trade_xp = 0,
 	look_at_player = true,
 	pick_up = pick_up,
 	can_open_doors = true,
 	_player_scan_timer = 0,
+	_bed_search_interval = 10,
+	_sleep_over_interval = 10,
 	_trading_players = {},
 	runaway_from = {
 		"mobs_mc:zombie",

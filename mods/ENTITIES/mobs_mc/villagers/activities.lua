@@ -27,6 +27,7 @@ local RUNAWAY = "runaway"
 function mobs_mc.villager_mob:stand_still()
 	self.walk_chance = 0
 	self.jump = false
+	self:set_state("stand")
 end
 
 function mobs_mc.villager_mob:get_badge_textures()
@@ -127,7 +128,7 @@ function mobs_mc.villager_mob:find_closest_bed()
 		{ "group:bed" }
 	)
 	if nn2 then
-		for a,b in pairs(nn2) do
+		for _, b in pairs(nn2) do
 			local bed_node = minetest.get_node(b)
 			local bed_name = bed_node.name
 			local is_bed_bottom = string.find(bed_name,"_bottom")
@@ -156,7 +157,7 @@ function mobs_mc.villager_mob:find_closest_bed()
 	local closest_block
 
 	if unclaimed_beds then
-		for i,b in pairs(unclaimed_beds) do
+		for _, b in pairs(unclaimed_beds) do
 			local distance_to_block = vector.distance(p, b)
 			if not distance_to_closest_block or distance_to_closest_block > distance_to_block then
 				closest_block = b
@@ -178,7 +179,7 @@ function mobs_mc.villager_mob:find_closest_unclaimed_block(p, requested_block_ty
 	local distance_to_closest_block
 	local closest_block
 
-	for i,n in pairs(nn) do
+	for _, n in pairs(nn) do
 		local m = minetest.get_meta(n)
 		if m:get_string("villager") == "" or m:get_string("villager") == self._id then
 			local distance_to_block = vector.distance(p, n)
@@ -253,8 +254,10 @@ function mobs_mc.villager_mob:go_home(sleep)
 	end
 
 	if vector.distance(self.object:get_pos(),b) < 2 then
-		if sleep then
+		if self:should_sleep() then
 			self.order = SLEEP
+			self:look_at(b)
+			-- TODO instead of look_at use set_rotation to lay on bed???
 		end
 	else
 		if sleep and self.order == SLEEP then
@@ -262,7 +265,7 @@ function mobs_mc.villager_mob:go_home(sleep)
 			return
 		end
 
-		self:gopath(b,function(self,b)
+		self:gopath(b,function(self, _)
 			local b = self._bed
 
 			if not b then
@@ -280,44 +283,13 @@ function mobs_mc.villager_mob:go_home(sleep)
 	end
 end
 
-local function get_ground_below_floating_object(float_pos)
-	local pos = float_pos
-	repeat
-		pos = vector.offset(pos, 0, -1, 0)
-		local node = minetest.get_node(pos)
-	until node.name ~= "air"
-
-	-- If pos is 1 below float_pos, then just return float_pos as there is no air below it
-	if pos.y == float_pos.y - 1 then
-		return float_pos
-	end
-
-	return pos
-end
-
 function mobs_mc.villager_mob:get_bell()
 	if not self._bell then
 		local p = self.object:get_pos()
-		local nn = minetest.find_nodes_in_area(
-			vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
-			vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
-			{ "vlf_bells:bell" }
-		)
+		local a_bell = minetest.find_node_near(p, VIL_DIST, { "vlf_bells:bell" }, true)
 
-		local closest_bell
-		local closest_bell_dist = 1000
-
-		for _, n in pairs(nn) do
-			local target_point = get_ground_below_floating_object(n)
-			local dist = vector.distance(self.object:get_pos(), target_point)
-			if dist < closest_bell_dist then
-				closest_bell_dist = dist
-				closest_bell = target_point
-			end
-		end
-
-		if closest_bell then
-			self._bell = vector.offset(closest_bell, 0, 1, 0)
+		if a_bell then
+			self._bell = vector.offset(a_bell, 0, -2, 0)
 		end
 	end
 
@@ -337,7 +309,9 @@ function mobs_mc.villager_mob:take_bed()
 			local m = minetest.get_meta(closest_block)
 			local owner = m:get_string("villager")
 			if owner and owner ~= "" and owner ~= self._id then
-				if self.order == "stand" then self.order = nil end
+				if self.order == "stand" then
+					self.order = nil
+				end
 				return
 			end
 
@@ -364,10 +338,12 @@ function mobs_mc.villager_mob:take_bed()
 			end
 			return true
 		else
-			self:gopath(closest_block,function(self) end)
+			self:gopath(closest_block,function() end)
 		end
 	else
-		if self.order == "stand" then self.order = nil end
+		if self.order == "stand" then
+			self.order = nil
+		end
 	end
 end
 
@@ -401,8 +377,17 @@ function mobs_mc.villager_mob:summon_golem()
 	table.shuffle(nn)
 	for _,n in pairs(nn) do
 		local up = minetest.find_nodes_in_area(vector.offset(n,0,1,0),vector.offset(n,0,3,0),{"air"})
-		if up and #up >= 3 then
-			local obj = minetest.add_entity(vector.offset(n,0,1,0),"mobs_mc:iron_golem")
+		local down = minetest.find_nodes_in_area(n,vector.offset(n,0,-1,0),{"group:water"})
+		local floor_is_water = minetest.get_item_group(minetest.get_node(n).name, "water") ~= 0
+		if floor_is_water and down and #down == 1
+		or not floor_is_water and up and #up >= 3 then
+			local obj
+			if floor_is_water then
+				obj = minetest.add_entity(vector.offset(n,0,-0.5,0),"mobs_mc:iron_golem")
+			else
+				obj = minetest.add_entity(vector.offset(n,0,0.5,0),"mobs_mc:iron_golem")
+			end
+
 			local ent = obj:get_luaentity()
 			if ent then
 				local bell = self:get_bell()
@@ -419,34 +404,19 @@ function mobs_mc.villager_mob:summon_golem()
 	end
 end
 
-function mobs_mc.villager_mob:check_summon(dtime)
+function mobs_mc.villager_mob:check_summon()
 	-- TODO has selpt in last 20?
-	if self._summon_timer and self._summon_timer > 30 then
+	if self:check_timer("summon_golem", 37) then
 		local pos = self.object:get_pos()
-		self._summon_timer = 0
 		if has_golem(pos) then return end
 		if not self:monsters_near() then return end
 		if not self:has_summon_participants() then return end
 		self:summon_golem()
-	elseif self._summon_timer == nil  then
-		self._summon_timer = 0
 	end
-	self._summon_timer = self._summon_timer + dtime
 end
 
 function mobs_mc.villager_mob:has_traded()
-	if not self._trades then
-		return false
-	end
-	local cur_trades_tab = minetest.deserialize(self._trades)
-	if cur_trades_tab and type(cur_trades_tab) == "table" then
-		for trader, trades in pairs(cur_trades_tab) do
-			if trades.traded_once then
-				return true
-			end
-		end
-	end
-	return false
+	return self._trade_xp and self._trade_xp > 0
 end
 
 function mobs_mc.villager_mob:unlock_trades()
@@ -457,7 +427,7 @@ function mobs_mc.villager_mob:unlock_trades()
 
 	local trades = minetest.deserialize(self._trades)
 	if trades and type(trades) == "table" then
-		for trader, trade in pairs(trades) do
+		for _, trade in pairs(trades) do
 			local trade_tier_too_high = trade.tier > self._max_trade_tier
 			if not trade_tier_too_high then
 				if trade["locked"] == true then
@@ -540,7 +510,9 @@ function mobs_mc.villager_mob:look_for_job(requested_jobsites)
 end
 
 function mobs_mc.villager_mob:get_a_job()
-	if self.order == WORK then self.order = nil end
+	if self.order == WORK then
+		self.order = nil
+	end
 
 	local requested_jobsites = mobs_mc.jobsites
 	if self:has_traded() then
@@ -569,7 +541,6 @@ function mobs_mc.villager_mob:retrieve_my_jobsite()
 	if n.name == "ignore" or m:get_string("villager") == self._id then
 		return n
 	end
-	return
 end
 
 function mobs_mc.villager_mob:remove_job()
@@ -641,7 +612,10 @@ function mobs_mc.villager_mob:do_work()
 		return
 	end
 
+	if not self:check_timer("do_work", 15) then return end
+
 	if self:validate_jobsite() then
+		self.jump = false
 
 		local jobsite = self._jobsite
 		local distance_to_jobsite = vector.distance(self.object:get_pos(), jobsite)
@@ -663,7 +637,7 @@ function mobs_mc.villager_mob:do_work()
 			)
 
 			for _, job_pos in pairs(n) do
-				local gp = self:gopath(job_pos, function(self, job_pos)
+				local gp = self:gopath(job_pos, function(self, _)
 					if not self then
 						return false
 					end
@@ -680,7 +654,7 @@ function mobs_mc.villager_mob:do_work()
 				end
 			end
 		end
-	elseif self._profession == "unemployed" or self:has_traded() then
+	else
 		self:get_a_job()
 	end
 end
@@ -715,27 +689,32 @@ function mobs_mc.villager_mob:go_to_town_bell()
 end
 
 function mobs_mc.villager_mob:sleep_over()
-	local p = self.object:get_pos()
-	local distance_to_closest_bed = 1000
-	local closest_bed
-	local nn2 = minetest.find_nodes_in_area(
-		vector.offset(p, -VIL_DIST, -VIL_DIST, -VIL_DIST),
-		vector.offset(p, VIL_DIST, VIL_DIST, VIL_DIST),
-		{ "group:bed" }
-	)
+	if self:check_timer("sleep_over", self._sleep_over_interval) then
+		local p = self.object:get_pos()
+		local distance_to_closest_bed = 1000
+		local closest_bed
+		local nn2 = minetest.find_nodes_in_area(
+			vector.offset(p, -VIL_DIST, -VIL_DIST / 2, -VIL_DIST),
+			vector.offset(p, VIL_DIST, VIL_DIST / 2, VIL_DIST),
+			{ "group:bed" }
+		)
 
-	if nn2 then
-		for a, b in pairs(nn2) do
-			local distance_to_bed = vector.distance(p, b)
-			if distance_to_closest_bed > distance_to_bed then
-				closest_bed = b
-				distance_to_closest_bed = distance_to_bed
+		if nn2 then
+			for _, b in pairs(nn2) do
+				local distance_to_bed = vector.distance(p, b)
+				if distance_to_closest_bed > distance_to_bed then
+					closest_bed = b
+					distance_to_closest_bed = distance_to_bed
+				end
 			end
+		else
+			self._sleep_over_interval = math.min(self._sleep_over_interval + 5, 300)
+			--this function is fairly expensive, increase interval by 5 if nothing is found (cap at 5 minutes)
 		end
-	end
 
-	if closest_bed and distance_to_closest_bed >= 3 then
-		self:gopath(closest_bed)
+		if closest_bed and distance_to_closest_bed >= 3 then
+			self:gopath(closest_bed)
+		end
 	end
 end
 
@@ -779,23 +758,20 @@ function mobs_mc.villager_mob:do_activity(dtime)
 		return
 	end
 
-	self._bed_timer = (self._bed_timer or (math.random() * 5)) - dtime
-	if self._bed_timer < 0 then
-		self._bed_timer_interval = 5
+	if self:check_timer("bed_search", self._bed_search_interval) then
 		if not self:check_bed() then
-			self:take_bed()
-			self._bed_timer_interval = math.min(20,self._bed_timer_interval + 1)
+			if not self:take_bed() then
+				self._bed_search_interval = math.min(self._bed_search_interval + 5, 300)
+				-- since this is pretty expensive: if no bed is found increment search interval by 5 each time with cap at 5 minutes
+			end
 		end
-		self._bed_timer = self._bed_timer_interval + math.random() * 5
 	end
 
 	if (not self:should_sleep()) and self.order == SLEEP then
 		self.order = nil
 	end
 
-	self._activity_timer = (self._activity_timer or math.random() * 5) - dtime
-	if self._activity_timer < 0 then
-		self._activity_timer = 10 + math.random() * 10
+	if self:check_timer("activity_check", 13) then
 		-- Only check in day or during thunderstorm but wandered_too_far code won't work
 		local wandered_too_far = false
 		if self:check_bed() then

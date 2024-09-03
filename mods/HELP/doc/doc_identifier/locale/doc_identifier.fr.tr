@@ -1,13 +1,13 @@
 # textdomain: doc_identifier
 No help entry for this item could be found.=Aucune entrée d'aide pour cet élément n'a pu être trouvée.
 No help entry for this block could be found.=Aucune entrée d'aide pour ce bloc n'a pu être trouvée.
-Error: This node, item or object is undefined. This is always an error.=Erreur: ce nœud, élément ou objet n'est pas défini. C'est toujours une erreur.
-This can happen for the following reasons:=Cela peut se produire pour les raisons suivantes:
+Error: This node, item or object is undefined. This is always an error.=Erreur : ce nœud, élément ou objet n'est pas défini. C'est toujours une erreur.
+This can happen for the following reasons:=Cela peut se produire pour les raisons suivantes :
 • The mod which is required for it is not enabled=• Le mod qui lui est nécessaire n'est pas activé
-• The author of the game or a mod has made a mistake=• L'auteur du jeu ou d'un mod a fait une erreur
+• The author of the game or a mod has made a mistake=• L'auteur du jeu ou d'un mod a commis une erreur
 It appears to originate from the mod “@1”, which is enabled.=Cela semble provenir du mod “@1”, qui est activé.
-It appears to originate from the mod “@1”, which is not enabled!=Cela semble provenir du mod “@1”, qui n'est pas activé!.
-Its identifier is “@1”.=Son identifiant est “@1”
+It appears to originate from the mod “@1”, which is not enabled!=Cela semble provenir du mod “@1”, qui n'est pas activé !
+Its identifier is “@1”.=Son identifiant est “@1”.
 This block cannot be identified because the world has not materialized at this point yet. Try again in a few seconds.=Ce bloc ne peut pas être identifié car le monde ne s'est pas encore matérialisé à ce stade. Réessayez dans quelques secondes.
 No help entry for this object could be found.=Aucune entrée d'aide pour cet objet n'a pu être trouvée.
 This is a player.=Ceci est un joueur.

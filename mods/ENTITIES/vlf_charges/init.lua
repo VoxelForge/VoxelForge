@@ -104,10 +104,7 @@ function vlf_charges.wind_burst(pos, radius)
 			if luaobj then
 				local is_builtin_item = luaobj.name == "__builtin:item"
 				if luaobj.is_mob or is_builtin_item then
-					local entity_def = minetest.registered_entities[luaobj.name]
-					if not entity_def.on_blast or entity_def.on_blast(luaobj, 0) then
-						obj:set_velocity(vlf_charges.wind_burst_velocity(pos, obj_pos, obj:get_velocity(), radius * 3))
-					end
+					obj:set_velocity(vlf_charges.wind_burst_velocity(pos, obj_pos, obj:get_velocity(), radius * 3))
 				end
 			end
 		end

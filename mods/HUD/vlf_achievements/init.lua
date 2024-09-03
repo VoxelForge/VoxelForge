@@ -386,7 +386,7 @@ awards.register_achievement("vlf:seriousDedication", {
 awards.register_achievement("vlf:localBrewery", {
 	title = S("Local Brewery"),
 	description = S("Brew a Potion.\nHint: Take a entity_effect or glass bottle out of the brewing stand."),
-	icon = "vlf_entity_effects_entity_effect_overlay.png^[colorize:#F82423:"..tostring(127).."^vlf_entity_effects_entity_effect_bottle.png",
+	icon = "vlf_entity_effects_effect_overlay.png^[colorize:#F82423:"..tostring(127).."^vlf_entity_effects_entity_effect_bottle.png",
 	type = "Advancement",
 	group = "Nether",
 })

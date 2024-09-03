@@ -190,7 +190,7 @@ local function IsRailSurface(pos)
 end
 
 -- Checks if the node is empty space which requires to be filled by a platform
-local function NeedsPlatform(pos)
+--[[local function NeedsPlatform(pos)
 	local node = minetest.get_node({x=pos.x,y=pos.y-1,z=pos.z})
 	local node2 = minetest.get_node({x=pos.x,y=pos.y-2,z=pos.z})
 	local nodedef = minetest.registered_nodes[node.name]
@@ -200,12 +200,68 @@ local function NeedsPlatform(pos)
 		(node.name ~= "ignore" and node.name ~= "unknown" and nodedef and nodedef.is_ground_content) and
 		-- Node needs platform if node below is not walkable.
 		-- Unless 2 nodes below there is dirt: This is a special case for the starter cube.
-		((nodedef.walkable == false and node2.name ~= tsm_railcorridors.nodes.dirt) or
+		((nodedef.walkable == false and node2.name ~= tsm_railcorridors.nodes.support) or
 		-- Falling nodes always need to be replaced by a platform, we want a solid and safe ground
 		falling),
 		-- second return value
 		falling
+end]]
+
+local function NeedsPlatform(pos)
+    -- Get nodes at different levels below the current position
+    local node_below_1 = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
+    local node_below_2 = minetest.get_node({x = pos.x, y = pos.y - 2, z = pos.z})
+    local nodedef_below_1 = minetest.registered_nodes[node_below_1.name]
+
+    -- Check if the node is a falling node
+    local is_falling = minetest.get_item_group(node_below_1.name, "falling_node") == 1
+
+    -- Check if the node can be replaced (ground content or rail)
+    local can_replace = (node_below_1.name ~= "ignore" and node_below_1.name ~= "unknown" and nodedef_below_1 and nodedef_below_1.is_ground_content)
+
+    -- Check if we need a platform: node below is not walkable or there's a special case for the starter cube
+    local needs_platform = ((nodedef_below_1.walkable == false and node_below_2.name ~= tsm_railcorridors.nodes.support) or is_falling)
+
+    -- Check for lava below and a non-solid node before that
+    local lava_below = false
+    local non_solid_before_lava = true
+    local y = pos.y - 3  -- Start checking 3 nodes below
+
+    while y > 0 do
+        local node_check = minetest.get_node({x = pos.x, y = y, z = pos.z}).name
+        if node_check == "default:lava_source" or node_check == "default:lava_flowing" then
+            lava_below = true
+            break
+        elseif minetest.registered_nodes[node_check] and minetest.registered_nodes[node_check].walkable then
+            non_solid_before_lava = false
+            break
+        end
+        y = y - 1
+    end
+
+    -- If there is lava below and no solid node before it, generate chains; otherwise, generate pillars
+    if needs_platform then
+        if lava_below and non_solid_before_lava then
+            -- Generate chains from the current position to the roof
+            local current_pos = {x = pos.x, y = pos.y + 1, z = pos.z}
+            while current_pos.y > 0 and not minetest.registered_nodes[minetest.get_node(current_pos).name].walkable do
+                minetest.set_node(current_pos, {name = tsm_railcorridors.nodes.chain})
+                current_pos.y = current_pos.y + 1
+            end
+        else
+            -- Generate a pillar of the specified material downwards
+            local current_pos = {x = pos.x, y = pos.y - 1, z = pos.z}
+            while current_pos.y > 0 and not minetest.registered_nodes[minetest.get_node(current_pos).name].walkable do
+                minetest.set_node(current_pos, {name = tsm_railcorridors.nodes.support})
+                current_pos.y = current_pos.y - 1
+            end
+        end
+    end
+
+    -- Return if the platform is needed and if it's a falling node
+    return can_replace and needs_platform, is_falling
 end
+
 
 -- Create a cube filled with the specified nodes
 -- Specialties:
@@ -316,10 +372,10 @@ local function DirtRoom(p, radius, height, dirt_mode, decorations_mode)
 				local built = false
 				if xi == p.x-radius or xi == p.x+radius or zi == p.z-radius or zi == p.z+radius or yi == y_bottom or yi == y_top then
 					if dirt_mode == 1 or yi == y_bottom then
-						built = SetNodeIfCanBuild({x=xi,y=yi,z=zi}, {name=tsm_railcorridors.nodes.dirt})
+						built = SetNodeIfCanBuild({x=xi,y=yi,z=zi}, {name=tsm_railcorridors.nodes.stone})
 					elseif (dirt_mode == 2 or dirt_mode == 3) and yi == y_top then
 						if minetest.get_item_group(thisnode.name, "falling_node") == 1 then
-							built = SetNodeIfCanBuild({x=xi,y=yi,z=zi}, {name=tsm_railcorridors.nodes.dirt})
+							built = SetNodeIfCanBuild({x=xi,y=yi,z=zi}, {name=tsm_railcorridors.nodes.stone})
 						end
 					end
 				else
@@ -348,7 +404,7 @@ end
 local function Platform(p, radius, node, node2)
 	-- node2 is secondary platform material for replacing falling nodes
 	if not node2 then
-		node2 = { name = tsm_railcorridors.nodes.dirt }
+		node2 = { name = tsm_railcorridors.nodes.support }
 	end
 	local n1 = {}
 	local n2 = {}
@@ -383,7 +439,7 @@ end
 
 -- This function checks if a cart has ACTUALLY been spawned.
 -- To be calld by minetest.after.
--- This is a workaround thanks to the fact that minetest.add_entity is unreliable as fuck
+-- This is a workaround thanks to the fact that minetest.add_entity is unreliable
 -- See: https://github.com/minetest/minetest/issues/4759
 -- FIXME: Kill this horrible hack with fire as soon you can.
 local function RecheckCartHack(params)
@@ -528,6 +584,7 @@ local function WoodSupport(p, wood, post, torches, dir, torchdir)
 
 	end
 end
+
 
 -- Dig out a single corridor section and place wooden structures and torches
 
@@ -1088,7 +1145,7 @@ local function create_corridor_system(main_cave_coords)
 end
 
 vlf_structures.register_structure("mineshaft",{
-	place_on = {"group:sand","group:grass_block","vlf_core:water_source","group:dirt","vlf_core:dirt_with_grass","vlf_core:gravel","group:material_stone","vlf_core:snow"},
+	place_on = {"group:sand","group:grass_block","vlf_core:water_source","group:dirt","vlf_core:dirt_with_grass","vlf_core:gravel","group:material_stone","vlf_core:snow", "group:hardened_clay"},
 	fill_ratio = 0.0001,
 	flags = "place_center_x, place_center_z, force_placement, all_floors",
 	sidelen = 32,

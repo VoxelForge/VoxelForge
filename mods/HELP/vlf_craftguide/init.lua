@@ -417,8 +417,7 @@ local function get_tooltip(item, groups, cooktime, burntime)
 				groupstr[c] = C(gcol, groups[i])
 			end
 
-			groupstr = table.concat(groupstr, ", ")
-			tooltip = S("Any item belonging to the groups: @1", groupstr)
+			tooltip = S("Any item belonging to the groups: @1", table.concat(groupstr, ", "))
 		end
 	else
 		tooltip = minetest.registered_items[item].description
@@ -438,7 +437,6 @@ local function get_tooltip(item, groups, cooktime, burntime)
 end
 
 local function get_recipe_fs(data, iY, player)
-	vlf_inventory.reset_craft_grid(player)
 	local fs = {}
 	local recipe = data.recipes[data.rnum]
 	local width = recipe.width
@@ -457,7 +455,8 @@ local function get_recipe_fs(data, iY, player)
 	end
 
 	local rows = math.ceil(table.maxn(recipe.items) / width)
-	local rightest, btn_size, s_btn_size = 0, 1.1
+	local rightest, btn_size = 0, 1.1
+	local s_btn_size
 	local btn_lab = data.show_usages and S("Usages") or S("Recipes")
 	local text_y = iY + 3.3 + (0.8 / 4)
 
@@ -594,14 +593,21 @@ local function get_recipe_fs(data, iY, player)
 				0.6,
 				"vlf_craftguide_fuel.png")
 		end
-		--show the button crafting button if recipe items are in inventory and the recipe fits the available crafting grid
+		-- show the button crafting button if recipe items are in
+		-- inventory and the recipe fits the available crafting grid
+		--
+		-- note that size of craft inv is only set when the
+		-- corresponding formspec is opened, so it can't be used here
+		--
+		-- TODO: unhardcode craft grid sizes
+		local has_table = vlf_crafting_table.has_crafting_table(player)
+		local width = has_table and 3 or 2
+		local height = has_table and 3 or 2
 		local pinv = player:get_inventory()
-		if vlf_inventory.get_recipe_groups(pinv, recipe) and
-			( vlf_crafting_table.has_crafting_table(player) or
-			( recipe.width <= pinv:get_width("craft") and table.count(recipe.items, function(_,v) return not ItemStack(v):is_empty() end) <= pinv:get_size("craft"))) then
+		if vlf_inventory.get_recipe_groups(pinv, recipe, width, height) then
 			fs[#fs + 1] = string.format("image_button[%f,%f;%f,%f;%s;%s_inv;%s]",
-				8.5,
-				7.2,
+				output_X + 2.7,
+				iY + 2.2,
 				1.1,
 				1.1,
 				"vlf_crafting_guide_craft.png",
@@ -614,7 +620,6 @@ local function get_recipe_fs(data, iY, player)
 end
 
 local function make_formspec(name)
-	vlf_inventory.reset_craft_grid(minetest.get_player_by_name(name))
 	local data = player_data[name]
 	local iY = data.iX - 5
 	local ipp = data.iX * iY
@@ -715,23 +720,21 @@ local function make_formspec(name)
 end
 vlf_craftguide.make_formspec = make_formspec
 
-local function show_fs(player, name)
+local function show_fs(_, name)
 	minetest.show_formspec(name, "vlf_craftguide", make_formspec(name))
 end
 
 vlf_craftguide.add_search_filter("groups", function(item, groups)
 	local itemdef = minetest.registered_items[item]
-	local has_groups = true
 
 	for i = 1, #groups do
 		local group = groups[i]
 		if not itemdef.groups[group] then
-			has_groups = nil
-			break
+			return
 		end
 	end
 
-	return has_groups
+	return true
 end)
 
 local function search(data)
@@ -928,10 +931,11 @@ local function on_receive_fields(player, fields)
 		show_fs(player, name)
 	elseif fields.craft_inv and fields.craft_inv == "craft" then
 		local pinv = player:get_inventory()
-		if not vlf_inventory.get_recipe_groups(pinv, data.recipes[data.rnum]) then return end
 		if vlf_crafting_table.has_crafting_table(player) then
+			if not vlf_inventory.get_recipe_groups(pinv, data.recipes[data.rnum], 3, 3) then return end
 			vlf_crafting_table.show_crafting_form(player)
 		elseif data.recipes[data.rnum].width <= pinv:get_width("craft") and table.count(data.recipes[data.rnum].items, function(_,v) return not ItemStack(v):is_empty()  end) <= pinv:get_size("craft") then
+			if not vlf_inventory.get_recipe_groups(pinv, data.recipes[data.rnum], 2, 2) then return end
 			minetest.show_formspec(name, "", player:get_inventory_formspec())
 		else
 			return
@@ -1133,7 +1137,7 @@ function vlf_craftguide.show(name)
 	minetest.show_formspec(name, "vlf_craftguide", make_formspec(name))
 end
 
-doc.sub.items.register_factoid(nil, "groups", function(itemstring, def)
+doc.sub.items.register_factoid(nil, "groups", function(_, def)
 	if def._repair_material then
 		local mdef = minetest.registered_items[def._repair_material]
 		if mdef and mdef.description and mdef.description ~= "" then

@@ -129,17 +129,14 @@ Durability: @1 uses=Прочность: @1 использований
 Durability: @1=Прочность: @1
 Miscellaneous items=Дополнительные предметы
 Item reference of items which are neither blocks, tools or weapons (esp. crafting items)=Справка по остальным предметам - не блокам, не инструментам и не оружию (так называемые материалы для крафта)
+Mobs=
+Different Mobs=
+Type: @1=
+Spawning light levels (min / max): @1 / @2=
+Can Jump a height of @1 nodes=
+Can Fly=
+Can Swim=
+Drops: =
+Follows player when these items are held:=
 A transparent block, basically empty space. It is usually left behind after digging something.=Прозрачный блок, проще говоря, пустое пространство. Обычно оно остаётся, если выкопать что-то.
 Whenever you are not wielding any item, you use the hand which acts as a tool with its own capabilities. When you are wielding an item which is not a mining tool or a weapon it will behave as if it would be the hand.=Даже если вы не держите никакого предмета, ваша рука - сама по себе инструмент, обладающий определёнными свойствами. Когда в вашей руке предмет, не являющийся инструментом добычи или оружием, он будет иметь свойства вашей пустой руки.
-
-
-##### not used anymore #####
-
-Using it as fuel turns it into: @1.=Использование в качестве топлива превращает это в: @1.
-Mining level: @1=Уровень добывания: @1
-Rating @1=Скорость добывания @1
-Rating @1-@2=Скорость добывания @1-@2
-any level=любой уровень
-level 0=уровень 0
-level 0-@1=уровень 0-@1
-• @1: @2, @3=• @1: @2, @3

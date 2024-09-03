@@ -1,0 +1,265 @@
+{
+    "type": "chest",
+    "pools": [
+        {
+            "rolls": {"min": 3, "max": 10},
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "mcl_sus_stew:stew",
+                    "weight": 10,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 1}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_core:paper",
+                    "weight": 8,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 12}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_farming:wheat_item",
+                    "weight": 7,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 8, "max": 21}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_farming:carrot_item",
+                    "weight": 7,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 4, "max": 8}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_farming:potato_item_poison",
+                    "weight": 7,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 2, "max": 6}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_farming:potato_item",
+                    "weight": 7,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 2, "max": 6}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_core:coal_lump",
+                    "weight": 6,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 2, "max": 8}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_mobitems:rotten_flesh",
+                    "weight": 5,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 5, "max": 24}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_farming:potato_item",
+                    "weight": 3,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 5}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_armor:helmet_leather",
+                    "weight": 3,
+                    "functions": [{"function": "enchant_randomly"}]
+                }, {
+                    "type": "item",
+                    "name": "mcl_armor:chestplate_leather",
+                    "weight": 3,
+                    "functions": [{"function": "enchant_randomly"}]
+                }, {
+                    "type": "item",
+                    "name": "mcl_armor:leggings_leather",
+                    "weight": 3,
+                    "functions": [{"function": "enchant_randomly"}]
+                }, {
+                    "type": "item",
+                    "name": "mcl_armor:boots_leather",
+                    "weight": 3,
+                    "functions": [{"function": "enchant_randomly"}]
+                }, {
+                    "type": "item",
+                    "name": "mcl_bamboo:bamboo",
+                    "weight": 2,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 3}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_farming:pumpkin",
+                    "weight": 2,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 3}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_tnt:tnt",
+                    "weight": 1,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 2}
+                    }]
+                }
+            ]
+        }, {
+            "rolls": {"min": 2, "max": 6},
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "mcl_core:iron_ingot",
+                    "weight": 90,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 5}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_core:iron_nugget",
+                    "weight": 50,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 10}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_core:emerald",
+                    "weight": 40,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 5}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_core:lapis",
+                    "weight": 20,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 10}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_core:gold_ingot",
+                    "weight": 10,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 5}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_core:gold_nugget",
+                    "weight": 10,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 10}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_experience:bottle",
+                    "weight": 5,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 1}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_core:diamond",
+                    "weight": 5,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 1}
+                    }]
+                }
+            ]
+        }, {
+            "rolls": {"min": 3, "max": 3},
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "mcl_core:paper",
+                    "weight": 20,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 10}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_mobitems:feather",
+                    "weight": 10,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 5}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_books:book",
+                    "weight": 5,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 5}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_clock:clock",
+                    "weight": 1,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 1}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_compass:compass",
+                    "weight": 1,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 1}
+                    }]
+                }, {
+                    "type": "item",
+                    "name": "mcl_maps:empty_map",
+                    "weight": 1,
+                    "functions": [{
+                        "function": "set_count",
+                        "count": {"min": 1, "max": 1}
+                    }]
+                }
+            ]
+        }, {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "mcl_armor:coast",
+                    "functions": [{
+                        "function": "set_count",
+                        "count": 2
+                    }],
+                    "weight": 1
+                }, {
+                    "type": "empty",
+                    "weight": 5
+                }
+            ]
+        }
+    ]
+}

@@ -133,4 +133,3 @@ minetest.register_globalstep(function(dtime)
         end
     end
 end)
-

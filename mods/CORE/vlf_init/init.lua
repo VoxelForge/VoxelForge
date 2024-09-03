@@ -502,3 +502,33 @@ if vlf_vars.mg_overworld_min_old ~= vlf_vars.mg_overworld_min then
 		end
 	})
 end
+
+
+minetest.register_globalstep(function(dtime)
+	for _, player in ipairs(minetest.get_connected_players()) do
+        local pos = player:get_pos()
+        for _, entity in ipairs(minetest.get_objects_inside_radius(pos, 10)) do
+		local controls = player:get_player_control()
+		--local pos = player:get_pos()
+		local node = minetest.get_node(pos)
+		local is_in_climable
+
+		if minetest.get_item_group(node.name, "climbable") > 0 then
+			if not controls.up and not controls.down and not controls.jump then
+				is_in_climable = true
+			else
+				is_in_climable = true
+				minetest.after(0.5, function()
+					is_in_climable = false
+				end)
+			end
+		end
+		if is_in_climable == true then
+			local vel = player:get_velocity()
+			if vel.y > -0.2 then
+				player:add_velocity({x = 0, y = -0.2, z = 0})
+			end
+		end
+		end
+	end
+end)

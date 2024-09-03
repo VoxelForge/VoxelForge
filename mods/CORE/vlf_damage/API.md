@@ -6,9 +6,9 @@ WARNING: Not using it inside your mods may cause strange bugs (using the native 
 
 ## Functions
 `vlf_damage.run_modifiers(obj, damage, reason)`
-	* Runs all registered damage modifiers for obj, ordered by priority,
-          highest priority first. Feeds modified damage into next modifier,
-          returns final damage.
+	* Runs all registered damage modifiers for obj, ordered by
+          priority, lowest priority first.  Feeds modified damage into
+          next modifier, returns final damage.
         * if modifier returns 0, stop loop and return 0.
         * if modifier returns nil, continue with previous damage value.
         * damage may be positive or negative (i.e. healing).

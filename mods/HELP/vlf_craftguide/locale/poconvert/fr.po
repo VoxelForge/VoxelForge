@@ -74,7 +74,7 @@ msgid "Any item belonging to the @1 group"
 msgstr "Tout élément appartenant au groupe @1"
 
 msgid "Any item belonging to the groups: @1"
-msgstr "Tout élément appartenant aux groupes: @1"
+msgstr "Tout élément appartenant aux groupes : @1"
 
 msgid "Cooking time: @1"
 msgstr "Temps de cuisson : @1"
@@ -82,11 +82,14 @@ msgstr "Temps de cuisson : @1"
 msgid "Burning time: @1"
 msgstr "Temps de combustion : @1"
 
-msgid "Usage @1 of @2"
-msgstr "Usage @1 de @2"
+msgid "Usages"
+msgstr "Utilisations"
 
-msgid "Recipe @1 of @2"
-msgstr "Recette @1 de @2"
+msgid "Recipes"
+msgstr "Recettes"
+
+msgid "@1 of @2"
+msgstr "@1 de @2"
 
 msgid "Recipe is too big to be displayed (@1×@2)"
 msgstr "La recette est trop grande pour être affichée (@1x@2)"
@@ -122,11 +125,11 @@ msgid "Collect items to reveal more recipes"
 msgstr "Collecte des items pour révéler plus de recettes"
 
 msgid "This item can be repaired at an anvil with: @1."
-msgstr ""
+msgstr "Cet article peut être réparé sur une enclume avec : @1."
 
 msgid "This item can be repaired at an anvil with any wooden planks."
-msgstr ""
+msgstr "Cet objet peut être réparé à l'enclume avec n'importe quelle planche de bois."
 
 msgid "This item can be repaired at an anvil with any item in the “@1” group."
-msgstr ""
+msgstr "Cet objet peut être réparé sur une enclume avec n'importe quel objet du groupe « @1 »."
 

@@ -1031,10 +1031,10 @@ msgid "There are 3 different views which determine the way you see the world. Th
 msgstr "Есть 3 различных способа видеть мир:"
 
 msgid "• 1: First-person view (default)"
-msgstr "• 1: вид от первого лица (по умолчанию);"
+msgstr "• 1: вид от первого лица (по умолчанию)"
 
 msgid "• 2: Third-person view from behind"
-msgstr "• 2: вид от третьего лица сзади;"
+msgstr "• 2: вид от третьего лица сзади"
 
 msgid "• 3: Third-person view from the front"
 msgstr "• 3: вид от третьего лица спереди."

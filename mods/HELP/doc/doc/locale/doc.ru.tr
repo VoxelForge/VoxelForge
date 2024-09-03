@@ -1,6 +1,5 @@
 # textdomain: doc
 This is the help.=Это помощь.
-New help entry unlocked: @1 > @2=Новая подсказка разблокирована: @1 > @2
 All help entries revealed!=Все подсказки открыты!
 All help entries are already revealed.=Все подсказки уже открыты.
 Category list=Список категорий
@@ -23,33 +22,11 @@ Help > @1 > (No Entry)=Помощь > @1 > (Нет записи)
 Help > @1 > @2=Help > @1 > @2
 Open a window providing help entries about Minetest and more=Открыть окно с подсказками о игре Minetest и т. п.
 Help=Помощь
-Collection of help texts=Собрание справочных текстов
 Allows you to reveal all hidden help entries with /help_reveal=Позволяет вам раскрыть все невидимые подсказки через /help_reveal
 Reveal all hidden help entries to you=Раскрыть все подсказки для вас
 
 
 ##### not used anymore #####
 
-<=<
->=>
-All entries read.=Все записи прочитаны.
-Go to category list=К списку категорий
-Go to entry list=К списку записей
-Help > (No Category)=Помощь > (Нет категории)
-OK=ОК
-Please select a category you wish to learn more about:=Пожалуйста, выберите категорию, о которой хотите узнать больше:
-Show entry=Показать запись
-Show category=Показать категорию
-Show next entry=Следующая запись
-Show previous entry=Предыдущая запись
-This category does not have any entries.=Данная категория не содержит записей.
-This category has the following entries:=Эта категория содержит такие записи:
-This category is empty.=Эта категория пуста.
-You haven't chosen a category yet. Please choose one in the category list first.=Вы пока не выбрали категорию. Пожалуйста, выберите её из списка, чтобы начать.
-You haven't chosen an entry yet. Please choose one in the entry list first.=Вы пока не выбрали запись. Пожалуйста, выберите её из списка, чтобы начать.
-Notify me when new help is available=Уведомить меня, когда новая помощь будет доступна
-Play notification sound when new help is available=Воспроизвести предупредительный звук, когда новая помощь будет доступна
-Show previous image=Предыдущее изображение
-Show previous gallery page=Предыдущая страница галереи
-Show next image=Следующее изображение
-Show next gallery page=Следующая страница галереи
+New help entry unlocked: @1 > @2=Новая подсказка разблокирована: @1 > @2
+Collection of help texts=Собрание справочных текстов

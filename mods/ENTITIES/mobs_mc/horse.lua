@@ -154,10 +154,8 @@ local horse = {
 	on_spawn = function(self)
 		local tex = horse_extra_texture(self)
 		self.object:set_properties({textures = tex})
-
-		if not self._runaway_velocity then
-			self._runaway_velocity = self.run_velocity
-		end
+		self._horse_speed = math.random(486, 1457)/100
+		self._horse_jump = math.random(575, 875)/100
 	end,
 	do_custom = function(self, dtime)
 
@@ -173,11 +171,15 @@ local horse = {
 			if self.run_velocity ~= self._horse_speed then
 				self.run_velocity = self._horse_speed
 			end
+			if self.jump_height ~= self._horse_jump then
+				self.jump_height = self._horse_jump
+			end
 		else
 			if self._saddle then
 				detach_driver(self)
 			end
-			self.run_velocity = self._runaway_velocity
+			self.run_velocity = self.initial_properties.run_velocity
+			self.jump_height = self.initial_properties.jump_height
 		end
 
 		if not self.v2 then

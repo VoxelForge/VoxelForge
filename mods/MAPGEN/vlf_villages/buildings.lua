@@ -613,7 +613,7 @@ function vlf_villages.post_process_building(minp, maxp, blockseed, has_beds, has
 				local m = minetest.get_meta(bed)
 				m:set_string("bell_pos", minetest.pos_to_string(bell))
 				if m:get_string("villager") == "" then
-					local v = minetest.add_entity(bed, "mobs_mc:villager")
+					local v = minetest.add_entity(vector.offset(bed, 0, 0.06, 0), "mobs_mc:villager")
 					if v then
 						local l = v:get_luaentity()
 						l._bed = bed
@@ -694,7 +694,7 @@ function vlf_villages.post_process_village(blockseed)
 			local m = minetest.get_meta(bed_pos)
 			m:set_string("bell_pos", minetest.pos_to_string(bell_pos))
 			if m:get_string("villager") == "" then
-				local v = minetest.add_entity(bed_pos, "mobs_mc:villager")
+				local v = minetest.add_entity(vector.offset(bed_pos, 0, 0.06, 0), "mobs_mc:villager")
 				if v then
 					local l = v:get_luaentity()
 					l._bed = bed_pos
