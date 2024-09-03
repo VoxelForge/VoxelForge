@@ -486,7 +486,7 @@ minetest.register_abm({
 	"vlf_candles:cake_lit_candle_magenta", "vlf_candles:cake_lit_candle_orange",
 	"vlf_candles:cake_lit_candle_pink", "vlf_candles:cake_lit_candle_purple",
 	"vlf_candles:cake_lit_candle_red", "vlf_candles:cake_lit_candle_white",
-	"vlf_candles:cake_lit_candle_yellow,
+	"vlf_candles:cake_lit_candle_yellow",
 	},
 	interval = 2,
 	chance = 1,
