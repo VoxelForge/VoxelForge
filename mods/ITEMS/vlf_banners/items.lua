@@ -6,7 +6,7 @@ local function readable_name(str)
     return (str:gsub("^%l", string.upper))
 end
 
-for _,pattern in pairs({"thing", "skull", "creeper", "flower", "bricks", "curly_border", "globe", "piglin" }) do
+for _,pattern in pairs({"thing", "skull", "creeper", "flower", "bricks", "curly_border", "globe", "piglin", "guster", "flow" }) do
 	minetest.register_craftitem("vlf_banners:pattern_"..pattern,{
 		description = S(readable_name(pattern).." Banner Pattern"),
 		_tt_help = minetest.colorize(vlf_colors.YELLOW, S("Can be used to craft special banner designs on the loom")),
