@@ -4,6 +4,11 @@ local modpath = minetest.get_modpath(modname)
 
 --
 -- Aliases for map generator outputs
+
+-- Cave API file
+if minetest.settings:get_bool('vlf_enable_experimental_caves', true) then
+dofile(modpath.."/cave_api.lua")
+end
 --
 
 minetest.register_alias("mapgen_air", "air")
