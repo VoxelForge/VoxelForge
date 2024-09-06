@@ -31,6 +31,9 @@ vlf_enable_mt_dungeons (Native Minetest dungeons) bool false
 # If enabled expermental bundles will be able to be tested.
 bundles (experimental bundles for storing items) bool false
 
+#    Required for custom cavegen api
+vlf_enable_experimental_caves (Cavegen api Setting) bool false
+
 # If enabled, the “flat” map generator generates a Classic Superflat world:
 # Completely flat, 1 layer of grass blocks on top of 2 layers of dirt on
 # top of a final layer of bedrock. No caves, trees or plants.

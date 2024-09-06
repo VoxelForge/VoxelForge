@@ -57,15 +57,11 @@ vlf_flowerpots.register_potted_cube("vlf_core:cactus", {
 vlf_player.register_globalstep_slow(function(player, dtime)
 	-- Am I near a cactus?
 	local pos = player:get_pos()
-	local near = minetest.find_node_near(pos, 1, "vlf_core:cactus")
-	if not near then
-		near = minetest.find_node_near({x=pos.x, y=pos.y-1, z=pos.z}, 1, "vlf_core:cactus")
-	end
+	local near = minetest.find_node_near(pos, 1, "vlf_core:cactus", true)
 	if near then
 		-- Am I touching the cactus? If so, it hurts
 		local dist = vector.distance(pos, near)
-		local dist_feet = vector.distance({x=pos.x, y=pos.y-1, z=pos.z}, near)
-		if dist < 1.1 or dist_feet < 1.1 then
+		if dist < 1.1 then
 			if player:get_hp() > 0 then
 				vlf_util.deal_damage(player, 1, {type = "cactus"})
 			end
