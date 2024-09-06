@@ -74,9 +74,9 @@ function cave_api.generate_cheese_caves(minp, maxp, seed)
 	-- Generate noise maps for cheese caves and barriers
 	local noise_cheese = minetest.get_perlin_map(cave_api.config.cheese_cave.noise_params, map_dims):get_3d_map_flat(minp)
 	local c_air = minetest.get_content_id("air")
-	local c_stone = minetest.get_content_id("vlf_core:stone")
+	--local c_stone = minetest.get_content_id("vlf_core:stone")
 	local c_water = minetest.get_content_id("vlf_core:water_source")
-	local layers = {}
+	--local layers = {}
 	-- Generate the cave structure
 	for z = minp.z, maxp.z do
 		for y = min_y, max_y do
@@ -110,7 +110,8 @@ function cave_api.generate_cheese_caves(minp, maxp, seed)
 	for z = minp.z, maxp.z do
 		for x = minp.x, maxp.x do
 			for y = cave_api.config.liquid_fill_end_y, cave_api.config.liquid_fill_end_y + 1 do
-				local vi = area:index(x, y, z)
+				-- Barriers don't yet work properly.
+				--local vi = area:index(x, y, z)
 			end
 		end
 	end
@@ -126,7 +127,7 @@ end
 function cave_api.generate_spaghetti_caves(minp, maxp, seed)
 	-- Adjust the height range for cave generation
 	local min_y = math.max(minp.y, -128)
-	local max_y = math.min(maxp.y, 200) 
+	local max_y = math.min(maxp.y, 200)
 	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 	local area = VoxelArea:new({MinEdge = emin, MaxEdge = emax})
 	local data = vm:get_data()
@@ -138,7 +139,6 @@ function cave_api.generate_spaghetti_caves(minp, maxp, seed)
 	local noise_spaghetti = minetest.get_perlin_map(cave_api.config.spaghetti_cave.noise_params, map_dims):get_3d_map_flat(minp)
 	local noise_noodle = minetest.get_perlin_map(cave_api.config.noodle_cave.noise_params, map_dims):get_3d_map_flat(minp)
 	local c_air = minetest.get_content_id("air")
-	local c_stone = minetest.get_content_id("vlf_core:stone")
 	-- Iterate through all nodes in the area and carve out caves based on the noise values
 	for z = minp.z, maxp.z do
 		for y = min_y, max_y do
