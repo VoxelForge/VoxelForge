@@ -413,7 +413,7 @@ minetest.register_craftitem("vlf_mobitems:diamond_horse_armor", {
 minetest.register_tool("vlf_mobitems:wolf_armor", {
 	description = S("Wolf Armor"),
 	_doc_items_longdesc = S("Wolf armor can be worn by wolves to greatly increase their protection from harm."),
-	inventory_image = "mobs_mc_wolf_armor_inventory.png",
+	inventory_image = "mobs_mc_wolf_armor_inventory.png^[multiply:#ffbdb9",
 	_wolf_overlay_image = "(mobs_mc_wolf_armor.png^[multiply:#ffbdb9)^mobs_mc_wolf_armor_overlay_no_color.png",
 	stack_max = 1,
 	groups = {wolf_armor = 45},
