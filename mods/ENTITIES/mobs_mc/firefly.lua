@@ -5,7 +5,8 @@ vlf_mobs.register_mob("mobs_mc:firefly", {
 	description = S("Firefly"),
 	type = "animal",
 	spawn_class = "ambient",
-	can_despawn = false,
+	can_despawn = true,
+	lifetimer = 660, -- 11 minutes of lifetime. Or just shy of one night full night.
 	passive = true,
 	hp_min = 1,
 	hp_max = 1,

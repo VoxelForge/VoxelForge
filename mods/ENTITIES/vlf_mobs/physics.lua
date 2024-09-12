@@ -484,7 +484,7 @@ function mob_class:check_for_death(cause, cmi_cause)
 		local cbox = self.object:get_properties().collisionbox
 		local yaw = self.object:get_rotation().y
 		self:safe_remove()
-		vlf_mobs.death_effect(dpos, yaw, cbox, not self.instant_death)
+		vlf_mobs.death_effect(dpos, yaw, cbox, not self.instant_death, self)
 	end
 	if length <= 0 then
 		kill(self)
