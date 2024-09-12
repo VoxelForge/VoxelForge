@@ -1,14 +1,14 @@
 ---
-name: Bug report
+name: Performance
 about: Create a report to help us improve
 title: ''
-labels: bug, Unconfirmed
+labels: Performance, Unconfirmed
 assignees: ''
 
 ---
 
 **Description**
-A clear and concise description of what the bug is.
+A clear and concise description of what the performance issue is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
@@ -22,9 +22,7 @@ Merely an Example:
 A clear and concise description of what you expected to happen.
 
 **Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**If Screen Size related please complete the following:**
+Please provide screenshots
 
 **Desktop (please complete the following information):**
  - OS: [e.g. iOS]
@@ -37,9 +35,6 @@ If applicable, add screenshots to help explain your problem.
  - Browser [e.g. stock browser, safari]
  - Version [e.g. 22]
 
-**Screen Size**
-
-- Size
 
 **Additional context**
 Add any other context about the problem here.
