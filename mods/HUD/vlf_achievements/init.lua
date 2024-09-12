@@ -492,7 +492,7 @@ awards.register_achievement("vlf:remove_wolf_armor", {
 awards.register_achievement("vlf:repair_wolf_armor", {
 	title = S("Good as New"),
 	description = S("Repair a damaged Wolf Armor using Armadillo Scutes"),
-	icon = "mobs_mc_wolf_armor_inventory.png",
+	icon = "mobs_mc_wolf_armor_inventory.png^[multiply:#ffbdb9",
 	type = "Advancement",
 	group = "Husbandry",
 })
