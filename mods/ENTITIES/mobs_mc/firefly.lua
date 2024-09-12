@@ -89,6 +89,7 @@ minetest.register_lbm({
 			"JungleEdge",
 			"Jungle",
 		}
+		local light = minetest.get_node_light(pos)
 		local biome_data = minetest.get_biome_data(pos)
 		local biome_name = minetest.get_biome_name(biome_data.biome)
 		local biome_match = false
@@ -98,16 +99,18 @@ minetest.register_lbm({
 				break
 			end
 		end
-		if biome_match then
-			local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
-			if minetest.get_node(pos_below).name == "air" or minetest.get_node(pos_below).name == "mobs_mc:firefly_spawner" then
-				vlf_mobs.spawn(pos, "mobs_mc:firefly")
+		if light <= light <= 4 then
+			if biome_match then
+				local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
+				if minetest.get_node(pos_below).name == "air" or minetest.get_node(pos_below).name == "mobs_mc:firefly_spawner" then
+					vlf_mobs.spawn(pos, "mobs_mc:firefly")
+				else
+					minetest.remove_node(pos)
+					vlf_mobs.spawn(pos, "mobs_mc:firefly")
+				end
 			else
-				minetest.remove_node(pos)
-				vlf_mobs.spawn(pos, "mobs_mc:firefly")
+				minetest.remove_node(pos) --Not in a biome that fireflies can spawn in, so no need to keep. Though technically the blocks should never be placed in any biome that isn't in the above table, however strange things can happen.
 			end
-		else
-			minetest.remove_node(pos) --Not in a biome that fireflies can spawn in, so no need to keep. Though technically the blocks should never be placed in any biome that isn't in the above table, however strange things can happen.
 		end
 	end,
 })
