@@ -379,9 +379,9 @@ function vlf_enchanting.get_random_specific_enchantment(itemstack, treasure, wei
 		-- Check if the enchantment is in the include list if provided
 		local is_included = not include or table.indexof(include, enchantment) ~= -1
 		-- Check if the enchantment is not in the exclude list if provided
-		local is_not_excluded = not exclude or table.indexof(exclude, enchantment) == -1
+		--local is_not_excluded = not exclude or table.indexof(exclude, enchantment) == -1
 
-		if can_enchant and (primary or treasure) and is_included and is_not_excluded then
+		if can_enchant and (primary or treasure) and is_included then
 			local weight = weighted and enchantment_def.weight or 1
 
 			for i = 1, weight do

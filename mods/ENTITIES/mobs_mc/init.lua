@@ -44,6 +44,7 @@ mobs_mc.firefly_animation = function()
 			self.object:set_properties({textures={"blank.png"}})
 			self:set_velocity(0.0)
 		else
+			return
 		end
 	end
 end
