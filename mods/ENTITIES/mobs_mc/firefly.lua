@@ -74,7 +74,7 @@ minetest.register_node("mobs_mc:firefly_spawner", {
 	buildable_to = true,
 	floodable = false,
 	use_texture_alpha = "clip",
-	oost_effect_color = {a=0},
+	post_effect_color = {a=0},
 })
 
 minetest.register_lbm({
@@ -99,9 +99,10 @@ minetest.register_lbm({
 		end
 		if biome_match then
 			local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
-			if minetest.get_node(pos_below).name ~= "mobs_mc:firefly_spawner" or minetest.get_node(pos_below).name ~= "air" then
-				minetest.remove_node(pos)
+			if minetest.get_node(pos_below).name == "air" or minetest.get_node(pos_below).name == "mobs_mc:firefly_spawner" then
+				vlf_mobs.spawn(pos, "mobs_mc:firefly")
 			else
+				minetest.remove_node(pos)
 				vlf_mobs.spawn(pos, "mobs_mc:firefly")
 			end
 		else

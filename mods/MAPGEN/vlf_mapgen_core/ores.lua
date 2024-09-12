@@ -2,7 +2,7 @@ minetest.register_ore({
 	ore_type       = "scatter",
 	ore            = "mobs_mc:firefly_spawner",
 	wherein         = {"air"},
-	clust_scarcity = 20*20*20,
+	clust_scarcity = 18*18*18,
 	clust_num_ores = 1,
 	clust_size     = 2,
 	y_min          = 3,
