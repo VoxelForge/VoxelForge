@@ -5872,7 +5872,7 @@ if vlf_biomes.biome_to_retain ~= "None" then
 		local result = {}
 		for _, def in pairs(defs) do
 			if def.biomes and (type(def.biomes) == "string" and def.biomes == biome or type(def.biomes) == "table" and table_contains(def.biomes, biome)) then
- 				local copy = deep_copy(def)
+				local copy = deep_copy(def)
 				copy.y_max = y_max_override
 				copy.y_min = y_min_override
 				table.insert(result, copy)
