@@ -27,7 +27,7 @@ vlf_biomes = {}
 --
 
 local OCEAN_MIN = -15
---local DEEP_OCEAN_MAX = OCEAN_MIN - 1
+local DEEP_OCEAN_MAX = OCEAN_MIN - 1
 local DEEP_OCEAN_MIN = -31
 
 local stonelike = {"vlf_core:stone", "vlf_core:diorite", "vlf_core:andesite", "vlf_core:granite"}
@@ -139,7 +139,7 @@ local function register_biomes()
 		"MesaPlateauF",
 		"MesaPlateauFM",
 		"MangroveSwamp",
-		"Grove",
+		--"Grove",
 	}
 
 
@@ -1828,7 +1828,7 @@ local function register_biomes()
 		local biome = overworld_biomes[i]
 
 		-- Deep Ocean
-		--[[minetest.register_biome({
+		minetest.register_biome({
 			name = biome .. "_deep_ocean",
 			heat_point = minetest.registered_biomes[biome].heat_point,
 			humidity_point = minetest.registered_biomes[biome].humidity_point,
@@ -1845,7 +1845,7 @@ local function register_biomes()
 			_vlf_palette_index = minetest.registered_biomes[biome]._vlf_palette_index,
 			_vlf_skycolor = ocean_skycolor,
 			_vlf_fogcolor = overworld_fogcolor
-		})]]
+		})
 
 		-- Underground biomes are used to identify the underground and to prevent nodes from the surface
 		-- (sand, dirt) from leaking into the underground.

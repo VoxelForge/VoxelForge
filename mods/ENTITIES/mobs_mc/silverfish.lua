@@ -61,12 +61,12 @@ vlf_mobs.register_mob("mobs_mc:silverfish", {
 	attack_type = "dogfight",
 	damage = 1,
 	check_light = check_light,
-	deal_damage = function (self, damage, mcl_reason)
-	    self.health = self.health - damage
-	    if self.health > 0 then
-		-- Potentially summon friends from nearby infested
-		-- blocks unless mob griefing is disabled.
-			if mob_griefing and (mcl_reason.type == "magic" or mcl_reason.direct) then
+	deal_damage = function (self, damage, vlf_reason)
+		self.health = self.health - damage
+		if self.health > 0 then
+			-- Potentially summon friends from nearby infested
+			-- blocks unless mob griefing is disabled.
+			if mob_griefing and (vlf_reason.type == "magic" or vlf_reason.direct) then
 				local pos = self.object:get_pos ()
 				local p0 = vector.offset (pos, -10, -5, -10)
 				local p1 = vector.offset (pos, 10, 5, 10)

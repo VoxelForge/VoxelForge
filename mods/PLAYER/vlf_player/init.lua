@@ -218,7 +218,6 @@ minetest.register_globalstep(function(dtime)
 				hud_def.hud_id[player_name] = nil
 			end
 			player:set_sun({texture = "vlf_sun_underwater_sun.png", scale=2.5})
-			player:set_sun({scale=2.5})
 			player:set_moon({scale=3.75})
 		end
 	end

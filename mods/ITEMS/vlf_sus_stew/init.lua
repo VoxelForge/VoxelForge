@@ -52,26 +52,26 @@ local function hunger_effect(itemstack, placer, pointed_thing)
 	return itemstack
 end
 
-local function effect_effect(itemstack, placer, pointed_thing,effect)
+local function sus_effect(itemstack, placer, pointed_thing,effect)
 	if vlf_entity_effects[effect.."_func"] then
 		vlf_entity_effects[effect.."_func"](placer, 1, 6)
 	end
 	return itemstack
 end
 
-vlf_sus_stew.register_stew("fire_resistance","vlf_flowers:allium",effect_effect)
---vlf_sus_stew.register_stew("blindness","vlf_flowers:azure_bluet",effect_effect) -- effect not implemented
+vlf_sus_stew.register_stew("fire_resistance","vlf_flowers:allium",sus_effect)
+--vlf_sus_stew.register_stew("blindness","vlf_flowers:azure_bluet",sus_effect) -- effect not implemented
 vlf_sus_stew.register_stew("hunger","vlf_flowers:blue_orchid",hunger_effect)
-vlf_sus_stew.register_stew("leaping","vlf_flowers:cornflower",effect_effect)
+vlf_sus_stew.register_stew("leaping","vlf_flowers:cornflower",sus_effect)
 vlf_sus_stew.register_stew("hunger","vlf_flowers:dandelion",hunger_effect)
-vlf_sus_stew.register_stew("poison","vlf_flowers:lily_of_the_valley",effect_effect)
-vlf_sus_stew.register_stew("regeneration","vlf_flowers:oxeye_daisy",effect_effect)
-vlf_sus_stew.register_stew("night_vision","vlf_flowers:poppy",effect_effect)
---vlf_sus_stew.register_stew("weakness","vlf_flowers:tulip_orange",effect_effect) -- effect not implemented
---vlf_sus_stew.register_stew("weakness","vlf_flowers:tulip_pink",effect_effect) -- effect not implemented
---vlf_sus_stew.register_stew("weakness","vlf_flowers:tulip_red",effect_effect) -- effect not implemented
---vlf_sus_stew.register_stew("weakness","vlf_flowers:tulip_white",effect_effect) -- effect not implemented
-vlf_sus_stew.register_stew("harming","vlf_flowers:wither_rose",effect_effect) -- in place of real wither effect
+vlf_sus_stew.register_stew("poison","vlf_flowers:lily_of_the_valley",sus_effect)
+vlf_sus_stew.register_stew("regeneration","vlf_flowers:oxeye_daisy",sus_effect)
+vlf_sus_stew.register_stew("night_vision","vlf_flowers:poppy",sus_effect)
+--vlf_sus_stew.register_stew("weakness","vlf_flowers:tulip_orange",sus_effect) -- effect not implemented
+--vlf_sus_stew.register_stew("weakness","vlf_flowers:tulip_pink",sus_effect) -- effect not implemented
+--vlf_sus_stew.register_stew("weakness","vlf_flowers:tulip_red",sus_effect) -- effect not implemented
+--vlf_sus_stew.register_stew("weakness","vlf_flowers:tulip_white",sus_effect) -- effect not implemented
+vlf_sus_stew.register_stew("harming","vlf_flowers:wither_rose",sus_effect) -- in place of real wither effect
 
 minetest.register_craftitem("vlf_sus_stew:stew",{
 	description = S("Suspicious Stew"),
