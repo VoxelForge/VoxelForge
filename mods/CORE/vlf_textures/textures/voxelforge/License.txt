@@ -1,0 +1,22 @@
+VoxelForge-Resource-Pack-Public-License 
+
+(c) 2024 crispiebacon
+
+What you are allowed to do: 
+redistribute
+It is prefered you don't sell any of these textures in a standalone pack or put any of these behind a website like adfoc.us, etc. Not a requirement but I'd prefer not.
+You can use these textures if you struggle to make them yourself. Or you just like the theme.
+You can use this in youtube videos and the like.
+
+
+Requirments:
+You must redistribute with this license. File put in one of the files.
+You must give proper credit (Give credit to all people listed on the github contributors section for the repo, and give a link to the github repo. And all of this must be in a well defined place.)
+
+
+Notes:
+This license offers no waranty of any kind.
+This license may be subject to change at any time.
+This license allows for some commercial use. Ex. Videos and games using some assets.
+
+That being said. Enjoy the pack :)
