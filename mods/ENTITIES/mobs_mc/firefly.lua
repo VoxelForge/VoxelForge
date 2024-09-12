@@ -23,7 +23,7 @@ vlf_mobs.register_mob("mobs_mc:firefly", {
 		stand_speed = 0,
 		stand_start = 0,
 		stand_end = 0,
- 		walk_speed = 0,
+		walk_speed = 0,
 		walk_start = 0,
 		walk_end = 0,
 		run_speed = 0,
@@ -88,7 +88,7 @@ minetest.register_lbm({
 			"JungleEdge",
 			"Jungle",
 		}
- 		local biome_data = minetest.get_biome_data(pos)
+		local biome_data = minetest.get_biome_data(pos)
 		local biome_name = minetest.get_biome_name(biome_data.biome)
 		local biome_match = false
 		for _, biome in ipairs(biomes) do
