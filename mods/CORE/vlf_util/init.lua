@@ -62,7 +62,7 @@ function vlf_util.get_luaentity_by_id(id)
 end
 
 local LOGGING_ON = minetest.settings:get_bool("vlf_logging_default", false)
-local LOG_MODULE = "[MCL2]"
+local LOG_MODULE = "[vlf2]"
 function vlf_util.vlf_log(message, module, bypass_default_logger)
 	local selected_module = LOG_MODULE
 	if module then
@@ -670,7 +670,11 @@ function vlf_util.deal_damage(target, damage, vlf_reason)
 	local armorgroups = target:get_armor_groups()
 
 	if hp > 0 and armorgroups and not armorgroups.immortal then
-		target:set_hp(hp - damage, {_vlf_reason = vlf_reason})
+		if target:is_player () then
+			vlf_damage.damage_player (target, damage, vlf_reason)
+		else
+			target:set_hp (hp - damage, {_vlf_reason = vlf_reason})
+		end
 	end
 end
 
@@ -679,6 +683,8 @@ function vlf_util.get_hp(obj)
 
 	if luaentity and luaentity.is_mob then
 		return luaentity.health
+	elseif obj:is_player () then
+		return vlf_damage.get_hp (obj)
 	else
 		return obj:get_hp()
 	end
@@ -729,9 +735,12 @@ function vlf_util.replace_mob(obj, mob)
 	local rot = obj:get_yaw()
 	local pos = obj:get_pos()
 	local n = obj:get_properties().nametag
-	l:safe_remove()
 	obj = minetest.add_entity(pos, mob)
 	if not obj or not obj:get_pos() then return end
+	if l.on_mob_replace then
+		l:on_mob_replace(obj:get_luaentity())
+	end
+	l:safe_remove()
 	l = obj:get_luaentity()
 	if l.is_mob then
 		l:set_nametag(n)

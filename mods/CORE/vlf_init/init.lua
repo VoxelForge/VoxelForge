@@ -532,3 +532,17 @@ minetest.register_globalstep(function(dtime)
 		end
 	end
 end)
+
+minetest.register_chatcommand("get_biome_at_pos", {
+	params = "",
+	description = "Returns the biome name at the users position. Same effect as typing /debug 4 though returns a chat message rather than a hud",
+	func = function(name, param)
+	local player = minetest.get_player_by_name(name)
+	local pos = player:get_pos()
+	local biome_data = minetest.get_biome_data(pos)
+        if biome_data then
+            local biome_name = minetest.get_biome_name(biome_data.biome)
+            return true, "Biome at Your pos is: " .. biome_name .. ""
+        end
+end
+})

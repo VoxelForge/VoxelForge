@@ -154,8 +154,8 @@ local horse = {
 	on_spawn = function(self)
 		local tex = horse_extra_texture(self)
 		self.object:set_properties({textures = tex})
-		self._horse_speed = math.random(486, 1457)/100
-		self._horse_jump = math.random(575, 875)/100
+		self._horse_speed = math.random(486, 1457)/150
+		self._horse_jump = math.random(575, 875)/400
 	end,
 	do_custom = function(self, dtime)
 

@@ -10,7 +10,7 @@ The state of the hunger mechanic will be determined at game start.
 Hunger is enabled when damage is enabled.
 If the damage setting is changed within the game, this does NOT
 update the hunger mechanic, so the game must be restarted for this
-to take entity_effect. ]]
+to take effect. ]]
 vlf_hunger.active = false
 if minetest.settings:get_bool("enable_damage") == true and minetest.settings:get_bool("vlf_enable_hunger") ~= false then
 	vlf_hunger.active = true
@@ -27,7 +27,7 @@ vlf_hunger.EXHAUST_SWIM = 10 -- player movement in water
 vlf_hunger.EXHAUST_SPRINT = 100 -- sprint (per node)
 vlf_hunger.EXHAUST_DAMAGE = 100 -- taking damage (protected by armor)
 vlf_hunger.EXHAUST_REGEN = 6000 -- Regenerate 1 HP
-vlf_hunger.EXHAUST_HUNGER = 5 -- Hunger status entity_effect at base level.
+vlf_hunger.EXHAUST_HUNGER = 5 -- Hunger status effect at base level.
 vlf_hunger.EXHAUST_LVL = 4000 -- at what exhaustion player saturation gets lowered
 
 vlf_hunger.SATURATION_INIT = 5 -- Initial saturation for new/respawning players
@@ -145,20 +145,20 @@ minetest.register_globalstep(function(dtime)
 		local player_name = player:get_player_name()
 		local food_level = vlf_hunger.get_hunger(player)
 		local food_saturation_level = vlf_hunger.get_saturation(player)
-		local player_health = player:get_hp()
+		local player_health = vlf_damage.get_hp (player)
 
 		if food_tick_timer > 4.0 then
 			food_tick_timer = 0
 
 			-- let hunger work always
 			if player_health > 0 then
-				--vlf_hunger.exhaust(player_name, vlf_hunger.EXHAUST_HUNGER) -- later for hunger status entity_effect
+				--vlf_hunger.exhaust(player_name, vlf_hunger.EXHAUST_HUNGER) -- later for hunger status effect
 				vlf_hunger.update_exhaustion_hud(player)
 			end
 
 			if food_level >= 18 then -- slow regeneration
 				if player_health > 0 and player_health < player:get_properties().hp_max then
-					player:set_hp(player_health+1)
+					vlf_damage.heal_player (player, 1)
 					vlf_hunger.exhaust(player_name, vlf_hunger.EXHAUST_REGEN)
 					vlf_hunger.update_exhaustion_hud(player)
 				end
@@ -176,7 +176,7 @@ minetest.register_globalstep(function(dtime)
 		elseif food_tick_timer > 0.5 and food_level == 20 and food_saturation_level > 0 then -- fast regeneration
 			if player_health > 0 and player_health < player:get_properties().hp_max then
 				food_tick_timer = 0
-				player:set_hp(player_health+1)
+				vlf_damage.heal_player (player, 1)
 				vlf_hunger.exhaust(player_name, vlf_hunger.EXHAUST_REGEN)
 				vlf_hunger.update_exhaustion_hud(player)
 			end

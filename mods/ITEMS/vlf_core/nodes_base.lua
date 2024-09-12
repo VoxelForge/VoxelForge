@@ -1061,10 +1061,5 @@ if minetest.get_modpath("doc") then
 	doc.add_entry_alias("nodes", "vlf_core:lava_source", "nodes", "vlf_core:lava_flowing")
 end
 
-minetest.register_node("vlf_core:powdered_snow", {
-    description = "Powder Snow",
-    tiles = {"vlf_core_powder_snow.png"},
-    is_ground_content = false,
-    groups = {cracky = 3},
-    walkable = false,
-})
+-- Alias Due to introducing Powder snow under vlf_core modname prefix.
+minetest.register_alias("vlf_core:powdered_snow", "vlf_powder_snow:powder_snow")

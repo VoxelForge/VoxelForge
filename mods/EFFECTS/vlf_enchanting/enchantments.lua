@@ -576,8 +576,8 @@ vlf_enchanting.enchantments.quick_charge = {
 	anvil_book_factor = 1,
 }
 
--- unimplemented
---[[vlf_enchanting.enchantments.respiration = {
+
+vlf_enchanting.enchantments.respiration = {
 	name = S("Respiration"),
 	max_level = 3,
 	primary = {armor_head = true},
@@ -595,7 +595,7 @@ vlf_enchanting.enchantments.quick_charge = {
 	inv_tool_tab = false,
 	anvil_item_factor = 4,
 	anvil_book_factor = 2,
-}]]--
+}
 
 -- requires missing MineClone2 feature
 --[[vlf_enchanting.enchantments.riptide = {

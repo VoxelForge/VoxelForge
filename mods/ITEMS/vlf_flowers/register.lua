@@ -7,6 +7,14 @@ vlf_flowers.register_simple_flower("poppy", {
 	selection_box = { -5/16, -0.5, -5/16, 5/16, 5/16, 5/16 },
 	potted = true,
 })
+-- Not implimented yet.
+--[[vlf_flowers.register_simple_flower("torchflower", {
+	desc = S("Torch Flower"),
+	image = "vlf_flowers_torchflower.png",
+	paramtype2 = "4dir",
+	selection_box = { -2/16, -0.5, -2/16, 2/16, 4/16, 2/16 },
+	potted = true,
+})]]
 vlf_flowers.register_simple_flower("dandelion", {
 	desc = S("Dandelion"),
 	image = "flowers_dandelion_yellow.png",

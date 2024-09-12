@@ -200,7 +200,7 @@ vlf_damage.register_on_death(function(obj, reason)
 end)
 
 vlf_damage.register_on_damage(function(obj, damage, reason)
-	if obj:get_hp() - damage > 0 then
+	if vlf_util.get_hp (obj) - damage > 0 then
 		if reason.source then
 			vlf_death_messages.assist[obj] = {name = vlf_util.get_object_name(reason.source), timeout = 5}
 		else

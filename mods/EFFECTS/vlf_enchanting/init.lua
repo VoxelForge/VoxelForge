@@ -73,6 +73,17 @@ function vlf_enchanting.enchant_uniform_randomly(stack, exclude, pr)
 	return stack
 end
 
+function vlf_enchanting.enchant_uniform_specific_randomly(stack, include, pr)
+	local enchantment = vlf_enchanting.get_random_specific_enchantment(stack, true, false, include, pr)
+
+	if enchantment then
+		vlf_enchanting.enchant(stack, enchantment,
+			vlf_enchanting.random(pr, 1, vlf_enchanting.enchantments[enchantment].max_level))
+	end
+
+	return stack
+end
+
 minetest.register_chatcommand("enchant", {
 	description = S("Enchant an item"),
 	params = S("<player> <enchantment> [<level>]"),

@@ -60,6 +60,7 @@ local strider = {
 	light_damage = 0,
 	water_damage = 5,
 	fear_height = 4,
+	_freeze_damage = 5,
 	view_range = 16,
 	fire_resistant = true,
 	floats_on_lava = 1,

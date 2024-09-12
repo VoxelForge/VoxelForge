@@ -18,9 +18,14 @@
 	},
 	{
 		"name": "vlf_trials:trial_key",
-		"inventory_image": "vlf_trials_trial_key.png",
+		"inventory_image": "vlf_trials_trial_key.png^(vlf_trials_trial_key_desat.png^[multiply:#FF896E)",
 		"groups": {"ingredients": 1},
-	}		
+	},
+	{
+		"name": "vlf_trials:ominous_trial_key",
+		"inventory_image": "vlf_trials_trial_key_ominous.png^(vlf_trials_trial_key_desat.png^[multiply:#98FFD9)",
+		"groups": {"ingredients": 1},
+	}	
 ]
 
 

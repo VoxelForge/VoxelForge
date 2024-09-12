@@ -3,7 +3,7 @@ vlf_doors = {}
 local S = minetest.get_translator(minetest.get_current_modname())
 
 -- This helper function calls on_place_node callbacks.
-local function on_place_node(place_to, newnode,
+--[[local function on_place_node(place_to, newnode,
 	placer, oldnode, itemstack, pointed_thing)
 	-- Run script hook
 	for _, callback in pairs(minetest.registered_on_placenodes) do
@@ -22,7 +22,7 @@ local function on_place_node(place_to, newnode,
 		callback(place_to_copy, newnode_copy, placer,
 			oldnode_copy, itemstack, pointed_thing_copy)
 	end
-end
+end]]
 
 -- Registers a door
 --  name: The name of the door
@@ -194,8 +194,9 @@ function vlf_doors:register_door(name, def)
 				itemstack:take_item()
 			end
 
-			on_place_node(pt, minetest.get_node(pt), placer, nu, itemstack, pointed_thing)
-			on_place_node(pt2, minetest.get_node(pt2), placer, minetest.get_node({x=ptu.x,y=ptu.y+1,z=ptu.z}), itemstack, pointed_thing)
+			-- These lines seemed to have broken double doors. Thus they were commented out but not removed.
+			--[[on_place_node(pt, minetest.get_node(pt), placer, nu, itemstack, pointed_thing)
+			on_place_node(pt2, minetest.get_node(pt2), placer, minetest.get_node({x=ptu.x,y=ptu.y+1,z=ptu.z}), itemstack, pointed_thing)]]
 
 			return itemstack
 		end,

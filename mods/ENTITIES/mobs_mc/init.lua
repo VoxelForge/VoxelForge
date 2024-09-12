@@ -19,6 +19,35 @@ Larger mobs might have space problems after teleportation.
 
 * dist: Minimum required distance from owner to teleport. Default: 12
 * teleport_check_interval: Optional. Interval in seconds to check the mob teleportation. Default: 4 ]]
+
+-- Assuming you have textures named "frame_0.png", "frame_1.png", ..., "frame_17.png"
+local frames = {}
+for i = 0, 17 do
+    frames[i] = "mobs_mc_firefly_frame_" .. i .. ".png"
+end
+
+mobs_mc.firefly_animation = function()
+	return function(self, dtime)
+		self.timer = (self.timer or 0) + dtime
+		local pos = self.object:get_pos()
+		local light = minetest.get_node_light(pos)
+		if self.timer > 0.1 and light <= 4 then  -- Change frame every 0.1 seconds
+			self.timer = 0
+			local frame = (self.frame or 0) + 1
+			if frame > 17 then  -- Number of frames - 1
+				frame = 0
+			end
+			self.object:set_properties({textures={frames[frame]}})
+			self.frame = frame
+			self:set_velocity(0.3)
+		elseif self.timer > 0.1 and light >= 5 then
+			self.object:set_properties({textures={"blank.png"}})
+			self:set_velocity(0.0)
+		else
+			return
+		end
+	end
+end
 mobs_mc.make_owner_teleport_function = function(dist, teleport_check_interval)
 	return function(self, dtime)
 		-- No teleportation if no owner or if sitting

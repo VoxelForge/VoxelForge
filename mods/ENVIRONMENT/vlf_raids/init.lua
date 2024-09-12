@@ -99,17 +99,17 @@ function vlf_raids.promote_to_raidcaptain(c) -- object
 	l._banner:set_attach(c, "", vector.new(0, 6, -1), vector.new(0, 0, 0), true)
 	l._raidcaptain = true
 	local old_ondie = l.on_die
+	local rand = math.random(1,5)
 	l.on_die = function(self, pos, cmi_cause)
 		if l._banner then
 			l._banner:remove()
 			l._banner = nil
 			vlf_raids.drop_obanner(pos)
+			if not l.raidmob then
+				minetest.add_item(l.object:get_pos(), ItemStack("vlf_trials:ominous_bottle_"..rand))
+			end
 			if cmi_cause and cmi_cause.type == "punch" and cmi_cause.puncher:is_player() then
 				awards.unlock(cmi_cause.puncher:get_player_name(), "vlf:voluntary_exile")
-				local lv = vlf_entity_effects.get_effect_level(cmi_cause.puncher, "bad_omen")
-				if not lv then lv = 0 end
-				lv = math.max(5,lv + 1)
-				vlf_entity_effects.give_effect_by_level("bad_omen", cmi_cause.puncher, lv, 6000)
 			end
 		end
 		if old_ondie then return old_ondie(self,pos,cmi_cause) end
@@ -297,7 +297,7 @@ vlf_events.register_event("raid",{
 
 	    if player then
 		vlf_entity_effects.clear_effect (player, "bad_omen")
-		vlf_entity_effects.give_effect ("hero_of_village", player, 1, false)
+		vlf_entity_effects.give_effect ("hero_of_village", player, 1, 2400)
 	    end
 	end,
 })

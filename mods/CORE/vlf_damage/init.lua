@@ -10,6 +10,7 @@ vlf_damage = {
 		hot_floor = {is_fire = true},
 		in_wall = {bypasses_armor = true},
 		drown = {bypasses_armor = true},
+		freeze = {bypasses_armor = true},
 		starve = {bypasses_armor = true, bypasses_magic = true},
 		cactus = {},
 		sweet_berry = {},
@@ -143,29 +144,180 @@ function vlf_damage.register_type(name, def)
 	vlf_damage.types[name] = def
 end
 
+--- Player damage.
+
+local function emulate_damage_tick (player)
+   minetest.sound_play ("player_damage",
+			{ to_player = player:get_player_name (), gain = 0.5, },
+			true)
+end
+
+--- An independent floating point health statistic is associated with
+--- players which is synchronized with the engine HP whenever damage
+--- is sustained or healing takes place.  If the engine HP changes
+--- independently of this statistic, the change is adjusted by the
+--- statistic.
+
+function vlf_damage.damage_player (player, amount, vlf_reason)
+   if not vlf_reason.flags then
+      vlf_damage.finish_reason (vlf_reason)
+   end
+   if amount < 0 then
+      vlf_damage.heal_player (player, -amount)
+   end
+
+   local meta = player:get_meta ()
+   local vlf_health = meta:get_float ("vlf_health")
+   local engine_hp = player:get_hp ()
+
+   -- It's probably wise to be cautious and verify that the engine and
+   -- internal HPs match.
+
+   if math.ceil (vlf_health) ~= engine_hp then
+      minetest.log ("warning", ("Engine health of player "
+				.. player:get_player_name ()
+				.. " disagrees with vlf health "
+				.. vlf_health ..""))
+      -- Reset internal health to the engine value.
+      vlf_health = engine_hp
+   end
+   amount = vlf_damage.run_modifiers (player, amount, vlf_reason)
+   vlf_health = math.max (0, vlf_health - amount)
+   meta:set_float ("vlf_health", vlf_health)
+
+   vlf_health = math.ceil (vlf_health)
+   if vlf_health < engine_hp then
+      player:set_hp (vlf_health, { type = "set_hp", vlf_damage = true,
+				   _vlf_reason = vlf_reason, })
+   elseif amount > 0 then
+      -- Play a damage sound to the player.  Minetest affords games no
+      -- control over the tilt animation, unfortunately.
+      emulate_damage_tick (player, false)
+   end
+end
+
+function vlf_damage.heal_player (player, amount)
+   if amount < 0 then
+      return
+   end
+
+   local meta = player:get_meta ()
+   local vlf_health = meta:get_float ("vlf_health")
+   local engine_hp = player:get_hp ()
+   if math.ceil (vlf_health) ~= engine_hp then
+      minetest.log ("warning", ("Engine health of player "
+				.. player:get_player_name ()
+				.. " disagrees with vlf health "
+				.. vlf_health ..""))
+      -- Reset internal health to the engine value.
+      vlf_health = engine_hp
+   end
+   vlf_health = math.min (player:get_properties ().hp_max,
+			  vlf_health + amount)
+   meta:set_float ("vlf_health", vlf_health)
+
+   vlf_health = math.ceil (vlf_health)
+   if vlf_health > engine_hp then
+      player:set_hp (vlf_health, { type = "set_hp", vlf_damage = true, })
+   end
+end
+
+function vlf_damage.get_hp (player)
+   local meta = player:get_meta ()
+   local vlf_health = meta:get_float ("vlf_health")
+   local engine_hp = player:get_hp ()
+   if math.ceil (vlf_health) ~= engine_hp then
+      minetest.log ("warning", ("Engine health of player "
+				.. player:get_player_name ()
+				.. " disagrees with vlf health "
+				.. vlf_health ..""))
+      -- Reset internal health to the engine value.
+      vlf_health = engine_hp
+   end
+   return vlf_health
+end
+
 minetest.register_on_player_hpchange(function(player, hp_change, mt_reason)
 	if not damage_enabled then return 0 end
-	if hp_change < 0 then
-		if player:get_hp() <= 0 then
-			return 0
-		end
-		hp_change = -vlf_damage.run_modifiers(player, -hp_change, vlf_damage.from_mt(mt_reason))
+	-- Take engine damage modifications from vlf_damage at face value.
+	if mt_reason.vlf_damage then
+	   return hp_change
 	end
-	return hp_change
+		-- Detect damage from hazardous nodes and deduct the full
+	-- amount of the damage, rather than hp_change, which is
+	-- restricted to the player's remaining health and may be
+	-- attenuated by armor or other protection.
+
+	if mt_reason.type == "node_damage" and mt_reason.node then
+	   local nodedef = minetest.registered_nodes[mt_reason.node]
+
+	   if nodedef.damage_per_second then
+	      hp_change = -nodedef.damage_per_second
+	   end
+	end
+
+	if hp_change < 0 then
+	   if player:get_hp() <= 0 then
+	      return 0
+	   end
+	   hp_change = -vlf_damage.run_modifiers (player, -hp_change,
+						  vlf_damage.from_mt (mt_reason))
+	end
+
+	-- Apply this as internal damage.
+	local meta = player:get_meta ()
+	local vlf_health = meta:get_float ("vlf_health")
+	local engine_hp = player:get_hp ()
+
+	-- It's probably wise to be cautious and verify that the
+	-- engine and internal HPs match.
+
+	if math.ceil (vlf_health) ~= engine_hp then
+	   minetest.log ("warning", ("Engine health of player "
+				     .. player:get_player_name ()
+				     .. " disagrees with vlf health "
+				     .. vlf_health ..""))
+	   -- Reset internal health to the engine value.
+	   vlf_health = engine_hp
+	end
+
+	-- Deduct engine damage.
+	vlf_health = math.max (0, vlf_health + hp_change)
+	meta:set_float ("vlf_health", vlf_health)
+
+	-- Return the difference in engine damage.
+	local difference = math.ceil (vlf_health) - engine_hp
+	if mt_reason.type ~= "fall" and difference == 0 and hp_change < 0 then
+	   emulate_damage_tick (player)
+	end
+	return difference
 end, true)
 
-minetest.register_on_player_hpchange(function(player, hp_change, mt_reason)
-	if not damage_enabled then return 0 end
-	if player:get_hp() > 0 then
-		mt_reason.approved = true
-		if hp_change < 0 then
-			vlf_damage.run_damage_callbacks(player, -hp_change, vlf_damage.from_mt(mt_reason))
-		end
-	end
-end, false)
+minetest.register_on_punchplayer (function (player, hitter, _, _, _, damage)
+      -- Inflict the Minetest-computed damage by means of
+      -- vlf_damage.damage_player.
+      if damage > 0 then
+	 local vlf_reason = { type = "generic", }
+	 vlf_damage.from_punch (vlf_reason, hitter)
+	 vlf_damage.damage_player (player, damage, vlf_reason)
+	 return true
+      end
+end)
+
+minetest.register_on_joinplayer (function (player, _)
+      -- Convert the player's engine HP into a floating point internal
+      -- value if none already exists.
+      local meta = player:get_meta ()
+      if meta:get_float ("vlf_health") == 0 then
+	 meta:set_float ("vlf_health", player:get_hp ())
+      end
+end)
 
 minetest.register_on_dieplayer(function(player, mt_reason)
-	vlf_damage.run_death_callbacks(player, vlf_damage.from_mt(mt_reason))
+	-- Clear the internal HP of players who die.
+      local meta = player:get_meta ()
+      meta:set_float ("vlf_health", 0)
+      vlf_damage.run_death_callbacks(player, vlf_damage.from_mt(mt_reason))
 end)
 
 minetest.register_on_mods_loaded(function()

@@ -120,11 +120,20 @@ vlf_mobs.register_mob("mobs_mc:villager_zombie", {
 			if self._curing <= 0 then
 				local villager_obj = vlf_util.replace_mob(obj, "mobs_mc:villager")
 				if villager_obj then
-					local villager = villager_obj:get_luaentity()
-					villager._profession = "unemployed"
+					self._curing = nil
 					return false
 				end
 			end
+		end
+	end,
+	on_mob_replace = function(self, new_ent)
+		if new_ent.name == "mobs_mc:villager" then
+			new_ent._profession = self._profession
+			new_ent._id = self._id
+			new_ent._jobsite = self._jobsite
+			new_ent._bed = self._bed
+			new_ent._cured_zombie = true
+			new_ent:set_textures()
 		end
 	end,
 	sunlight_damage = 2,

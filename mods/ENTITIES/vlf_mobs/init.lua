@@ -50,6 +50,7 @@ vlf_mobs.mob_class = {
 	water_damage = 0,
 	lava_damage = 8,
 	fire_damage = 1,
+	_freeze_damage = 2,
 	suffocation = true,
 	fall_damage = 1,
 	fall_speed = -9.81 * 1.5,

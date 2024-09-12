@@ -91,7 +91,7 @@ local function brewable(inv)
 		end
 
 	end
-	-- if any stand holds a new entity_effect, return the list of new entity_effects
+	-- if any stand holds a new effect, return the list of new effects
 	for i=1,#was_alchemy do
 		if was_alchemy[i] then return stands end
 	end
@@ -246,7 +246,7 @@ local doc_string =
 	S("To use a brewing stand, rightclick it.").."\n"..
 	S("To brew, you need blaze powder as fuel, a brewing material and at least 1 glass bottle filled with a liquid.").."\n"..
 	S("Place the blaze powder in the left slot, the brewing material in the middle slot and 1-3 bottles in the remaining slots.").."\n"..
-	S("When you have found a good combination, the brewing will commence automatically and steam starts to appear, using up the fuel and brewing material. The entity_effects will soon be ready.").."\n"..
+	S("When you have found a good combination, the brewing will commence automatically and steam starts to appear, using up the fuel and brewing material. The effects will soon be ready.").."\n"..
 	S("Different combinations of brewing materials and liquids will give different results. Try to experiment!")
 
 local tiles = {
@@ -265,7 +265,7 @@ local function sort_stack(stack)
 	if minetest.get_item_group(stack:get_name(), "brewing_ingredient" ) > 0 then
 		return "input"
 	end
-	for _, g in pairs({"entity_effect", "empty_bottle", "water_bottle"}) do
+	for _, g in pairs({"effect", "empty_bottle", "water_bottle"}) do
 		if minetest.get_item_group(stack:get_name(), g ) > 0 then
 			return "stand"
 		end
@@ -319,7 +319,7 @@ local function on_put(pos, listname, index, stack, player)
 	end
 	minetest.swap_node(pos, {name = "vlf_brewing:stand_"..str})
 	minetest.get_node_timer(pos):start(1.0)
-	--some code here to enforce only entity_effects getting placed on stands
+	--some code here to enforce only effects getting placed on stands
 end
 
 local function allow_move(pos, from_list, from_index, to_list, to_index, count, player)
@@ -435,7 +435,7 @@ local tpl_brewing_stand = {
 }
 
 minetest.register_node("vlf_brewing:stand_000", table.merge(tpl_brewing_stand, {
-	_doc_items_longdesc = S("The stand allows you to brew entity_effects!"),
+	_doc_items_longdesc = S("The stand allows you to brew effects!"),
 	_doc_items_create_entry = true,
 	_doc_items_usagehelp = doc_string,
 	groups = {pickaxey = 1, brewitem = 1, container = 1, brewing_stand = 1},

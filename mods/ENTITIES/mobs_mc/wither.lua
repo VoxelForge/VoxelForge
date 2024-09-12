@@ -104,6 +104,7 @@ vlf_mobs.register_mob("mobs_mc:wither", {
 		max = 1},
 	},
 	lava_damage = 0,
+	_freeze_damage = 0,
 	fire_damage = 0,
 	attack_type = "custom",
 	explosion_strength = 8,

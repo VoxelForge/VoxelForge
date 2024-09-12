@@ -79,7 +79,7 @@ vlf_mobs.register_mob("mobs_mc:witch", {
 })
 
 -- potion projectile (EXPERIMENTAL)
-vlf_mobs.register_arrow("mobs_mc:entity_effect_arrow", {
+vlf_mobs.register_arrow("mobs_mc:effect_arrow", {
 	visual = "sprite",
 	visual_size = {x = 0.5, y = 0.5},
 	--textures = {"vessels_glass_bottle.png"},  --TODO fix to else if default

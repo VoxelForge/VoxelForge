@@ -370,3 +370,5 @@ minetest.register_abm({
 		end
 	end
 })
+
+minetest.register_alias("vlf_trees:sapling_mangrove", "vlf_mangrove:propagule")
