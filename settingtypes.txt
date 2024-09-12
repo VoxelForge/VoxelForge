@@ -27,9 +27,9 @@ vlf_game_music (Play Music) bool true
 # Enable minetest mapgen dungeons
 vlf_enable_mt_dungeons (Native Minetest dungeons) bool false
 
-#    Requires enable_experimental_items to be enabled.
-# If enabled expermental bundles will be able to be tested.
-bundles (experimental bundles for storing items) bool false
+# required for the biome_mg
+# Set to None for default map generation
+vlf_single_biome_mg_biomes (Biome Type) enum None None,IcePlainsSpikes,IcePlainsSpikes_ocean,ColdTaiga,ColdTaiga_beach,ColdTaiga_beach_water,ColdTaiga_ocean,MegaTaiga,MegaTaiga_ocean,MegaSpruceTaiga,MegaSpruceTaiga_ocean,ExtremeHills,ExtremeHills_beach,ExtremeHills_ocean,ExtremeHillsM,ExtremeHillsM_ocean,StoneBeach,StoneBeach_ocean,IcePlains,IcePlains_ocean,Plains,Plains_beach,Plains_ocean,CherryGrove,SunflowerPlains,SunflowerPlains_ocean,Taiga,Taiga_beach,Taiga_ocean,Forest,Forest_beach,Forest_ocean,FlowerForest,FlowerForest_beach,FlowerForest_ocean,BirchForest,BirchForest_ocean,BirchForestM,BirchForestM_ocean,Desert,Desert_ocean,RoofedForest,RoofedForest_ocean,Mesa,Mesa_sandlevel,Mesa_ocean,MesaBryce,MesaBryce_sandlevel,MesaBryce_ocean,MesaPlateauF,MesaPlateauF_grasstop,MesaPlateauF_sandlevel,MesaPlateauF_ocean,MesaPlateauFM,MesaPlateauFM_grasstop,MesaPlateauFM_sandlevel,MesaPlateauFM_ocean,Savanna,Savanna_beach,Savanna_ocean,SavannaM,SavannaM_ocean,Jungle,Jungle_shore,Jungle_ocean,JungleM,JungleM_shore,JungleM_ocean,BambooJungle,BambooJungle_ocean,JungleEdge,JungleEdge_ocean,JungleEdgeM,JungleEdgeM_ocean,MangroveSwamp,MangroveSwamp_shore,MangroveSwamp_ocean,Swampland,Swampland_shore,Swampland_ocean,MushroomIsland,MushroomIslandShore,MushroomIsland_ocean,DeepDark,LushCaves,LushCaves_ocean,LushCaves_underground,Nether,SoulsandValley,CrimsonForest,WarpedForest,BasaltDelta
 
 #    Required for custom cavegen api
 vlf_enable_experimental_caves (Cavegen api Setting) bool false
@@ -43,6 +43,11 @@ vlf_enable_experimental_caves (Cavegen api Setting) bool false
 #
 # Note: This setting has no effect on existing worlds.
 vlf_superflat_classic (Classic superflat map generation) bool false
+
+[Experimental]
+
+# If true enabled expermental bundles will be able to be tested.
+bundles (experimental bundles for storing items) bool false
 
 [Players]
 # If enabled, players respawn at the bed they last lay on instead of normal
@@ -188,13 +193,13 @@ vlf_max_bossbars (Maximum boss bars) int 5
 fire_animation_frames (Fire animation frames) int 8
 
 # The font size.
-vlf_font_size (Font Size) int 30
+vlf_font_size (Font Size) int 18
 
 # The font size for in-game chat.
-vlf_chat_font_size (Chat Font Size) int 24
+vlf_chat_font_size (Chat Font Size) int 16
 
 # The font shadow size, in pixels of offset.
-vlf_font_shadow_size (Font Shadow Size) int 3
+vlf_font_shadow_size (Font Shadow Size) int 2
 
 [Villages]
 # Minimum number of job sites which are placed during village generation

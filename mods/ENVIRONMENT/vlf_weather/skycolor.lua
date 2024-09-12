@@ -46,7 +46,7 @@ function vlf_weather.set_sky_color(player, def)
 end
 
 vlf_weather.skycolor = {
-	-- Should be activated before do any entity_effect.
+	-- Should be activated before do any effect.
 	active = true,
 
 	-- To skip update interval

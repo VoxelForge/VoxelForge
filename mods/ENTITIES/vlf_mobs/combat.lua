@@ -332,6 +332,12 @@ function mob_class:boom(pos, strength, fire, no_remove)
 	end
 end
 
+local function angry_eyes(self)
+	local textures = self.object:get_properties().textures[1]
+	self.texture_holder = textures
+	self.object:set_properties({textures = { textures.."^mobs_mc_wolf_angry_eyes.png"}})
+end
+
 -- deal damage and effects when mob punched
 function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 
@@ -421,7 +427,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 
 	-- healing
 	if damage <= -1 then
-		self.health = self.health - math.floor(damage)
+		self.health = self.health - damage
 		return
 	end
 
@@ -555,6 +561,7 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 	and hitter_playername ~= self.owner
 	and not vlf_mobs.invis[ hitter_playername or ""] then
 		if not die then
+			if self.name == "mobs_mc:wolf" then angry_eyes(self) end
 			-- attack whoever punched mob
 			self:set_state("")
 			self:do_attack(hitter)
@@ -580,6 +587,7 @@ end
 function mob_class:call_group_attack(hitter)
 	local name = hitter:get_player_name()
 	for _, obj in pairs(minetest.get_objects_inside_radius(hitter:get_pos(), self.view_range)) do
+		if self.name == "mobs_mc:wolf" then angry_eyes(self) end
 		local ent = obj:get_luaentity()
 		if ent then
 			-- only alert members of same mob or friends
@@ -605,6 +613,7 @@ function mob_class:call_group_attack(hitter)
 end
 
 function mob_class:check_aggro(dtime)
+	if self.name == "mobs_mc:wolf" then self.object:set_properties({ textures = { self.texture_holder }}) end
 	if not self.aggro or not self.attack then return end
 	if not self:check_timer("check_aggro", 5) then return end
 	if not self.attack:get_pos() or vector.distance(self.attack:get_pos(),self.object:get_pos()) > 128 then
@@ -615,6 +624,9 @@ end
 
 
 function mob_class:clear_aggro()
+	if self.name == "mobs_mc:wolf" then
+		self.object:set_properties({ textures = { self._texture_holder }})
+	end
 	self:set_state("stand")
 	self:set_velocity( 0)
 	self:set_animation( "stand")

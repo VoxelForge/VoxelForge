@@ -1,7 +1,7 @@
 local mob_class = vlf_mobs.mob_class
 
 local node_ok = function(pos, fallback)
-	fallback = fallback or vlf_mobs.fallback_node
+	fallback = fallback or fallback_node
 	local node = minetest.get_node_or_nil(pos)
 	if node and minetest.registered_nodes[node.name] then
 		return node
@@ -254,7 +254,7 @@ function mob_class:drive(moving_anim, stand_anim, can_fly, dtime)
 	local v = self.v
 
 	-- slowed when submerged with water
-	if minetest.registered_nodes[vlf_mobs.node_ok(vector.offset(p,0,1,0)).name].groups.water then
+	if minetest.registered_nodes[node_ok(vector.offset(p,0,1,0)).name].groups.water then
 		v = v * 0.75
 	end
 

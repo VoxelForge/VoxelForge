@@ -198,6 +198,7 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 	local is_water = minetest.get_item_group(gotten_node, "water") ~= 0
 	local is_lava  = minetest.get_item_group(gotten_node, "lava") ~= 0
 	local is_leaf  = minetest.get_item_group(gotten_node, "leaves") ~= 0
+	local is_air = gotten_node == "air"
 	local is_bedrock  = gotten_node == "vlf_core:bedrock"
 	local is_grass = minetest.get_item_group(gotten_node,"grass_block") ~= 0
 
@@ -225,6 +226,7 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 	if not (spawn_def.type_of_spawning ~= "water" or is_water) then return false, "water mob only on water" end
 	if not (spawn_def.type_of_spawning ~= "lava" or is_lava) then return false, "lava mobs only on lava" end
 	if not ( not spawn_protected or not minetest.is_protected(pos, "") ) then return false, "spawn protected" end
+	if not ( spawn_def.type_of_spawning ~= "air" or is_air) then return false, "flying mobs only in air" end
 	if is_bedrock then return false, "no spawn on bedrock" end
 
 	local gotten_light = minetest.get_node_light(pos)
@@ -429,7 +431,7 @@ local function get_next_mob_spawn_pos(pos)
 	local spawning_position_list = minetest.find_nodes_in_area_under_air(
 			{x = goal_pos.x, y = y_min, z = goal_pos.z},
 			{x = goal_pos.x, y = y_max, z = goal_pos.z},
-			{"group:solid", "group:water", "group:lava"}
+			{"group:solid", "group:water", "group:lava", "air"}
 	) or {}
 
 	-- Select only the locations at a valid distance

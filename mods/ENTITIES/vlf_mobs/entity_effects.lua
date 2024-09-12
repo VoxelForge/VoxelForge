@@ -7,8 +7,8 @@ local player_transfer_distance = tonumber(minetest.settings:get("player_transfer
 if player_transfer_distance == 0 then player_transfer_distance = math.huge end
 
 
--- custom particle entity_effects
-function vlf_mobs.entity_effect(pos, amount, texture, min_size, max_size, radius, gravity, glow, go_down)
+-- custom particle effects
+function vlf_mobs.effect(pos, amount, texture, min_size, max_size, radius, gravity, glow, go_down)
 
 	radius = radius or 2
 	min_size = min_size or 0.5
@@ -42,7 +42,7 @@ function vlf_mobs.entity_effect(pos, amount, texture, min_size, max_size, radius
 	})
 end
 
-function vlf_mobs.death_entity_effect(pos, yaw, collisionbox, rotate)
+function vlf_mobs.death_effect(pos, yaw, collisionbox, rotate)
 	local min, max
 	if collisionbox then
 		min = {x=collisionbox[1], y=collisionbox[2], z=collisionbox[3]}
@@ -139,7 +139,7 @@ function mob_class:remove_texture_mod(mod)
 	self.object:set_texture_mod(full_mod)
 end
 
-function mob_class:damage_entity_effect(damage)
+function mob_class:damage_effect(damage)
 	-- damage particles
 	if enable_blood and damage > 0 then
 		local amount_large = math.floor(damage / 2)
@@ -153,12 +153,12 @@ function mob_class:damage_entity_effect(damage)
 		local texture = "mobs_blood.png"
 		-- full heart damage (one particle for each 2 HP damage)
 		if amount_large > 0 then
-			vlf_mobs.entity_effect(pos, amount_large, texture, 2, 2, 1.75, 0, nil, true)
+			vlf_mobs.effect(pos, amount_large, texture, 2, 2, 1.75, 0, nil, true)
 		end
 		-- half heart damage (one additional particle if damage is an odd number)
 		if amount_small > 0 then
 			-- TODO: Use "half heart"
-			vlf_mobs.entity_effect(pos, amount_small, texture, 1, 1, 1.75, 0, nil, true)
+			vlf_mobs.effect(pos, amount_small, texture, 1, 1, 1.75, 0, nil, true)
 		end
 	end
 end

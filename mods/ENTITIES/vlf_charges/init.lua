@@ -166,8 +166,6 @@ on_secondary_use = function(itemstack, placer, pointed_thing)
 					local ent = obj:get_luaentity() ; ent.posthrow = playerpos
 					itemstack:take_item()
 				return itemstack
-			--[[	else
-					local remaining_cooldown = math.ceil(cooldown_time - (ig_time - vlf_charges_vlf_charges_cooldown[playername]))]]
 			end
 end,
 _on_dispense = function(stack, pos, droppos, dropnode, dropdir)

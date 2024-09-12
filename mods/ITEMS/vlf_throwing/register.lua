@@ -258,7 +258,7 @@ local function pearl_on_step(self, dtime)
 				local oldpos = player:get_pos()
 				-- Teleport and hurt player
 				player:set_pos(telepos)
-				player:set_hp(player:get_hp() - 5, { type = "fall", from = "mod" })
+				vlf_damage.damage_player (player, 5, { type = "fall", })
 
 				-- 10% chance to spawn endermite at the player's origin
 				local r = math.random(1,10)

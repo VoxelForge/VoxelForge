@@ -90,6 +90,7 @@ vlf_mobs.register_mob("mobs_mc:iron_golem", {
 	},
 	jump = true,
 	do_custom = function(self, dtime)
+		self:crack_overlay()
 		self.home_timer = (self.home_timer or 0) + dtime
 
 		if self.home_timer > 10 then
@@ -108,6 +109,35 @@ vlf_mobs.register_mob("mobs_mc:iron_golem", {
 				end
 			end
 		end
+	end,
+	on_rightclick = function(self, clicker)
+		if not clicker or not clicker:is_player() then
+			return
+		end
+
+		local item = clicker:get_wielded_item()
+
+		if item:get_name() == "vlf_core:iron_ingot" and self.health < 100 then
+			if not minetest.is_creative_enabled(clicker:get_player_name()) then
+				item:take_item()
+				clicker:set_wielded_item(item)
+			end
+
+			if self.health <= 75 then self.health = self.health + 25
+			else self.health = 100 end
+
+			return
+		end
+	end,
+	crack_overlay = function(self)
+		local base = "mobs_mc_iron_golem.png"
+		local o = "^[opacity:180)"
+		local t
+		if self.health >= 75 then t = base
+		elseif self.health >= 50 then t = base.."^(mobs_mc_iron_golem_crack_low.png"..o
+		elseif self.health >= 25 then t = base.."^(mobs_mc_iron_golem_crack_medium.png"..o
+		else t = base.."^(mobs_mc_iron_golem_crack_high.png"..o end
+		self:set_properties({textures={t}})
 	end,
 })
 

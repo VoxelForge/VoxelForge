@@ -49,8 +49,8 @@ local function apply_item_function(function_table, itemstack, loot_context)
 			set_loot_table
 			set_lore
 			set_name
-			set_entity_effect
-			set_stew_entity_effect
+			set_effect
+			set_stew_effect
 			set_writable_book_pages
 			set_written_book_pages
 			toggle_tooltips

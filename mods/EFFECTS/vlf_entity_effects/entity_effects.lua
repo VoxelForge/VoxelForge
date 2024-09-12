@@ -587,23 +587,6 @@ vlf_entity_effects.register_entity_effect({
 })
 
 vlf_entity_effects.register_entity_effect({
-	name = "ominous",
-	desc_prefix = S("Ominous"),
-	_tt = nil,
-	_longdesc = S("Attracts danger."),
-	image = table.concat({
-		"(vlf_entity_effects_entity_effect_overlay.png^[colorize:red:100)",
-		"^vlf_entity_effects_splash_overlay.png^[colorize:black:100",
-		"^vlf_entity_effects_entity_effect_bottle.png",
-	}),
-	_effect_list = {
-		bad_omen = {dur = 6000},
-	},
-	has_splash = false,
-	has_lingering = false,
-})
-
-vlf_entity_effects.register_entity_effect({
 	name = "infestation",
 	desc_suffix = S("of Infestation"),
 	_tt = nil,

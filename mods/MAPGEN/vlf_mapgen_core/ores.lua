@@ -1,3 +1,20 @@
+minetest.register_ore({
+	ore_type       = "scatter",
+	ore            = "mobs_mc:firefly_spawner",
+	wherein         = {"air"},
+	clust_scarcity = 20*20*20,
+	clust_num_ores = 1,
+	clust_size     = 2,
+	y_min          = 3,
+	y_max          = 300,
+	biomes = {
+            "SwampLand",
+            "MangroveSwamp",
+            "JungleEdge",
+            "Jungle",
+        }
+})
+
 
 local deepslate_max = vlf_worlds.layer_to_y(16)
 local deepslate_min = vlf_vars.mg_overworld_min

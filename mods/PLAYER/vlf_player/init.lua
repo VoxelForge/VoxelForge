@@ -159,6 +159,9 @@ vlf_damage.register_modifier(function(obj, damage, reason)
 				if node.name == "vlf_core:cobweb" then
 					return 0
 				end
+				if node.name == "vlf_powder_snow:powder_snow" then
+					return 0
+				end
 				if node.name == "vlf_core:vine" then
 					return 0
 				end
@@ -185,7 +188,7 @@ local hud_def = {
 
 local function is_player_underwater(player)
 	local pos = player:get_pos()
-	local node = minetest.get_node_or_nil({x = pos.x, y = pos.y + 1.5, z = pos.z})
+	local node = minetest.get_node_or_nil({x = pos.x, y = pos.y + 1.7, z = pos.z})
 	if node and minetest.get_item_group(node.name, "water") > 0 then
 		return true
 	end
@@ -207,11 +210,16 @@ minetest.register_globalstep(function(dtime)
 					size = hud_def.size,
 				})
 			end
+			player:set_sun({texture = "vlf_sun_underwater_sun.png", scale=3.25})
+			player:set_moon({scale=4.25})
 		else
 			if hud_def.hud_id[player_name] then
 				player:hud_remove(hud_def.hud_id[player_name])
 				hud_def.hud_id[player_name] = nil
 			end
+			player:set_sun({texture = "vlf_sun_underwater_sun.png", scale=2.5})
+			player:set_sun({scale=2.5})
+			player:set_moon({scale=3.75})
 		end
 	end
 end)

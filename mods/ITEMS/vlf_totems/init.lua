@@ -15,7 +15,7 @@ local particle_colors = {"ACD520", "A39F2C", "C3C62F", "ACBB2D", "C2AD25", "3AAA
 -- Save the player from death when holding totem of undying in hand
 vlf_damage.register_modifier(function(obj, damage, reason)
 	if obj:is_player() and not reason.flags.bypasses_totem then
-		local hp = obj:get_hp()
+		local hp = vlf_damage.get_hp (obj)
 		if hp - damage <= 0 then
 			local wield = obj:get_wielded_item()
 			local in_offhand = false
@@ -91,7 +91,7 @@ vlf_damage.register_modifier(function(obj, damage, reason)
 				end
 
 				-- Set HP to exactly 1
-				return hp - 1
+				return math.max (0, hp - 1)
 			end
 		end
 	end

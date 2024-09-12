@@ -199,6 +199,7 @@ minetest.register_abm({
 
 local lushcaves = { "LushCaves", "LushCaves_underground", "LushCaves_ocean", "LushCaves_deep_ocean"}
 
+if vlf_biomes.biome_to_retain == "LushCaves" or vlf_biomes.biome_to_retain == "LushCaves_underground" or vlf_biomes.biome_to_retain == "LushCaves_ocean" or vlf_biomes.biome_to_retain == "None" then
 vlf_structures.register_structure("clay_pool",{
 	place_on = {"group:material_stone","vlf_core:gravel","vlf_lush_caves:moss","vlf_core:clay"},
 	spawn_by = {"air"},
@@ -235,6 +236,7 @@ vlf_structures.register_structure("azalea_tree",{
 		end
 	end
 })
+end
 --[[
 minetest.set_gen_notify({cave_begin = true})
 minetest.set_gen_notify({large_cave_begin = true})

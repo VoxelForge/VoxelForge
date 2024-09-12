@@ -213,5 +213,5 @@ vlf_mobs.spawn_setup({
 -- Spawn eggs
 vlf_mobs.register_egg("mobs_mc:husk", S("Husk"), "#777361", "#ded88f", 0)
 vlf_mobs.register_egg("mobs_mc:zombie", S("Zombie"), "#00afaf", "#799c66", 0)
-vlf_mobs.register_egg("mobs_mc:baby_husk", S("Husk"), "#777361", "#ded88f", 0)
-vlf_mobs.register_egg("mobs_mc:baby_zombie", S("Zombie"), "#00afaf", "#799c66", 0)
+--[[vlf_mobs.register_egg("mobs_mc:baby_husk", S("Baby Husk"), "#777361", "#ded88f", 0)
+vlf_mobs.register_egg("mobs_mc:baby_zombie", S("Baby Zombie"), "#00afaf", "#799c66", 0)]]

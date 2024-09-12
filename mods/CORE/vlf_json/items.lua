@@ -45,11 +45,13 @@ local function register_craftitems_from_json(filename)
         local item_name = item.name
         local item_groups = item.groups or {}
         local item_description = generate_description(item_name, item_groups)
-        local item_texture = item_name:gsub(":", "_") .. ".png"
+        local item_texture = item.inventory_image or item_name:gsub(":", "_") .. ".png"
+        local wield_texture = item.wield_image or item.inventory_image or item_name:gsub(":", "_") .. ".png"
 
         minetest.register_craftitem(":" .. item_name, {
             description = item_description,
             inventory_image = item_texture,
+            wield_image = wield_texture,
             groups = item_groups
         })
     end

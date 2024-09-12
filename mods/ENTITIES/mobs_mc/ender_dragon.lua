@@ -79,6 +79,7 @@ vlf_mobs.register_mob("mobs_mc:enderdragon", {
 		attack = "mobs_mc_ender_dragon_attack",
 		distance = 60,
 	},
+	_freeze_damage = 0,
 	damage = 10,
 	knock_back = false,
 	jump = true,

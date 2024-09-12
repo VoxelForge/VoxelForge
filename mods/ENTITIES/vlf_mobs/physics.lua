@@ -44,7 +44,7 @@ function mob_class:player_in_active_range()
 end
 
 function mob_class:object_in_follow_range(object)
-	local dist = 6
+	local dist = 12
 	local p1, p2 = self.object:get_pos(), object:get_pos()
 	return p1 and p2 and (vector.distance(p1, p2) <= dist)
 end
@@ -643,6 +643,14 @@ function mob_class:do_env_damage()
 				return true
 			end
 		end
+		
+	elseif self._freeze_damage > 0 and self:is_in_node("vlf_powder_snow:powder_snow") then
+		self:damage_mob("freeze", self._freeze_damage)
+
+		if self:check_for_death("freeze", {type = "freeze",
+				pos = pos, node = self.standing_in}) then
+			return true
+		end
 	-- damage_per_second node check
 	elseif nodef.damage_per_second ~= 0 and not nodef.groups.lava and not nodef.groups.fire then
 
@@ -811,6 +819,9 @@ function mob_class:falling(pos)
 				z = 0
 			})
 		end
+	end
+	if minetest.registered_nodes[node_ok(pos).name].name == "vlf_powder_snow:powder_snow" then
+		self.reset_fall_damage = 1
 	end
 	-- in water then float up
 	if minetest.registered_nodes[node_ok(pos).name].groups.water then

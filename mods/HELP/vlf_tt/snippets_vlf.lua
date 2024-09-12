@@ -109,39 +109,39 @@ end)
 tt.register_snippet(function(itemstring, _, itemstack)
 	if not itemstack then return end
 	local def = itemstack:get_definition()
-	if def.groups._vlf_entity_effect ~= 1 then return end
+	if def.groups._vlf_effect ~= 1 then return end
 
 	local s = ""
 	local meta = itemstack:get_meta()
-	local potency = meta:get_int("vlf_entity_effects:entity_effect_potent")
-	local plus = meta:get_int("vlf_entity_effects:entity_effect_plus")
+	local potency = meta:get_int("vlf_entity_effects:effect_potent")
+	local plus = meta:get_int("vlf_entity_effects:effect_plus")
 	local sl_factor = 1
-	if def.groups.splash_entity_effect == 1 then
+	if def.groups.splash_effect == 1 then
 		sl_factor = vlf_entity_effects.SPLASH_FACTOR
-	elseif def.groups.ling_entity_effect == 1 then
+	elseif def.groups.ling_effect == 1 then
 		sl_factor = vlf_entity_effects.LINGERING_FACTOR
 	end
 	if def._dynamic_tt then s = s.. def._dynamic_tt((potency+1)*sl_factor).. "\n" end
-	local entity_effects = def._entity_effect_list
-	if entity_effects then
-		local entity_effect
+	local effects = def._effect_list
+	if effects then
+		local effect
 		local dur
 		local timestamp
 		local ef_level
 		local roman_lvl
 		local factor
 		local ef_tt
-		for name, details in pairs(entity_effects) do
-			entity_effect = vlf_entity_effects.registered_entity_effects[name]
+		for name, details in pairs(effects) do
+			effect = vlf_entity_effects.registered_effects[name]
 			dur = vlf_entity_effects.duration_from_details (details, potency,
 								 plus, sl_factor)
 			timestamp = math.floor(dur/60)..string.format(":%02d",math.floor(dur % 60))
 			ef_level = vlf_entity_effects.level_from_details (details, potency)
 			if ef_level > 1 then roman_lvl = " ".. vlf_util.to_roman(ef_level)
 			else roman_lvl = "" end
-			s = s.. entity_effect.description.. roman_lvl.. " (".. timestamp.. ")\n"
-			if entity_effect.uses_factor then factor = entity_effect.level_to_factor(ef_level) end
-			if entity_effect.get_tt then ef_tt = minetest.colorize("grey", entity_effect.get_tt(factor)) else ef_tt = "" end
+			s = s.. effect.description.. roman_lvl.. " (".. timestamp.. ")\n"
+			if effect.uses_factor then factor = effect.level_to_factor(ef_level) end
+			if effect.get_tt then ef_tt = minetest.colorize("grey", effect.get_tt(factor)) else ef_tt = "" end
 			if ef_tt ~= "" then s = s.. ef_tt.. "\n" end
 		end
 	end

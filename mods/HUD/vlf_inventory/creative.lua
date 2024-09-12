@@ -102,7 +102,7 @@ minetest.register_on_mods_loaded(function()
 			end
 			if def.groups.brewitem then
 				local str = name
-				if def.groups._vlf_entity_effect == 1 then
+				if def.groups._vlf_effect == 1 then
 					local stack = ItemStack(name)
 					tt.reload_itemstack_description(stack)
 					str = stack:to_string()
@@ -119,18 +119,18 @@ minetest.register_on_mods_loaded(function()
 				table.insert(inventory_lists["misc"], name)
 			end
 
-			if def.groups._vlf_entity_effect == 1 then
+			if def.groups._vlf_effect == 1 then
 				if def.has_potent then
 					local stack = ItemStack(name)
 					local potency = def._default_potent_level - 1
-					stack:get_meta():set_int("vlf_entity_effects:entity_effect_potent", potency)
+					stack:get_meta():set_int("vlf_entity_effects:effect_potent", potency)
 					tt.reload_itemstack_description(stack)
 					table.insert(inventory_lists["brew"], stack:to_string())
 				end
 				if def.has_plus then
 					local stack = ItemStack(name)
 					local extend = def._default_extend_level
-					stack:get_meta():set_int("vlf_entity_effects:entity_effect_plus", extend)
+					stack:get_meta():set_int("vlf_entity_effects:effect_plus", extend)
 					tt.reload_itemstack_description(stack)
 					table.insert(inventory_lists["brew"], stack:to_string())
 				end
@@ -180,7 +180,7 @@ local function set_inv_search(filter, player)
 		def.description ~= "" then
 		local name = string.lower(def.name)
 		if filter_item (name, def.description, lang, filter) then
-		    if def.groups._vlf_entity_effect == 1 then
+		    if def.groups._vlf_effect == 1 then
 			local stack = ItemStack (name)
 			tt.reload_itemstack_description (stack)
 			table.insert(creative_list, stack:to_string ())
@@ -188,11 +188,11 @@ local function set_inv_search(filter, player)
 			table.insert(creative_list, name)
 		    end
 		end
-		if def.groups._vlf_entity_effect == 1 then
+		if def.groups._vlf_effect == 1 then
 		    if def.has_potent then
 			local stack = ItemStack (name)
 			local potency = def._default_potent_level - 1
-			stack:get_meta ():set_int ("vlf_entity_effects:entity_effect_potent",
+			stack:get_meta ():set_int ("vlf_entity_effects:effect_potent",
 						   potency)
 			tt.reload_itemstack_description (stack)
 			local desc
@@ -205,7 +205,7 @@ local function set_inv_search(filter, player)
 		    if def.has_plus then
 			local stack = ItemStack (name)
 			local extend = def._default_extend_level
-			stack:get_meta ():set_int ("vlf_entity_effects:entity_effect_plus",
+			stack:get_meta ():set_int ("vlf_entity_effects:effect_plus",
 						   extend)
 			tt.reload_itemstack_description (stack)
 			local desc

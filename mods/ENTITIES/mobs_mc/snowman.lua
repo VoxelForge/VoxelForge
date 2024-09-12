@@ -31,6 +31,7 @@ vlf_mobs.register_mob("mobs_mc:snowman", {
 	view_range = 10,
 	fall_damage = 0,
 	water_damage = 4,
+	_freeze_damage = 0,
 	rain_damage = 4,
 	armor = { fleshy = 100, water_vulnerable = 100 },
 	attacks_monsters = true,

@@ -74,6 +74,7 @@ vlf_mobs.register_mob("mobs_mc:blaze", {
 	},
 	-- MC Wiki: takes 1 damage every half second while in water
 	water_damage = 2,
+	_freeze_damage = 5,
 	lava_damage = 0,
 	fire_damage = 0,
 	fall_damage = 0,
@@ -93,7 +94,7 @@ vlf_mobs.register_mob("mobs_mc:blaze", {
 	glow = 14,
 	fire_resistant = true,
 	do_custom = function(self)
-		if self.state == "attack" and self.attack:get_pos() and vector.distance(self.object:get_pos(), self.attack:get_pos()) < 1.2 then
+		if self.state == "attack" and self.attack and self.attack:get_pos() and vector.distance(self.object:get_pos(), self.attack:get_pos()) < 1.2 then
 			vlf_burning.set_on_fire(self.attack, 5)
 		end
 		local pos = self.object:get_pos()

@@ -298,7 +298,7 @@ function mob_class:mob_activate(staticdata, dtime)
 	if not self._vlf_entity_effects then
 		self._vlf_entity_effects = {}
 	end
-	vlf_entity_effects._load_entity_effects(self)
+	vlf_entity_effects._load_effects(self)
 
 	if def.after_activate then
 		def.after_activate(self, staticdata, def, dtime)

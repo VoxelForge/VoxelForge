@@ -110,6 +110,7 @@ local slime_big = {
 		attack = "green_slime_attack",
 		distance = 16,
 	},
+	_freeze_damage = 5,
 	damage = 4,
 	reach = 3,
 	armor = 100,

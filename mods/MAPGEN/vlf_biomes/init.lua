@@ -5,14 +5,20 @@ local mod_vlf_schematics = minetest.get_modpath("vlf_schematics")
 
 local deco_id_chorus_plant
 
+local overworld_fogcolor = "#C0D8FF"
 local beach_skycolor = "#78A7FF" -- This is the case for all beach biomes except for the snowy ones! Those beaches will have their own colour instead of this one.
 local ocean_skycolor = "#7BA4FF" -- This is the case for all ocean biomes except for non-deep frozen oceans! Those oceans will have their own colour instead of this one.
-local overworld_fogcolor = "#C0D8FF"
 
---local nether_skycolor = "#6EB1FF"
+local nether_skycolor = "#6EB1FF" -- The Nether biomes seemingly don't use the sky colour, despite having this value according to the wiki. The fog colour is used for both sky and fog.
 
---local end_fogcolor = "#A080A0"
---local end_skycolor = "#000000"
+local end_skycolor = "#000000"
+local end_fogcolor = "#A080A0" -- The End biomes seemingly don't use the fog colour, despite having this value according to the wiki. The sky colour is used for both sky and fog.
+
+local default_waterfogcolor = "#3F76E4"
+local lukewarm_waterfogcolor = "#45ADF2"
+local warm_waterfogcolor = "#43D5EE"
+local cold_waterfogcolor = "#3D57D6"
+local frozen_waterfogcolor = "#3938C9"
 
 vlf_biomes = {}
 
@@ -45,7 +51,9 @@ local function register_classic_superflat_biome()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
 		_vlf_skycolor = "#78A7FF",
-		_vlf_fogcolor = overworld_fogcolor
+		_vlf_fogcolor = overworld_fogcolor,
+		_vlf_water_palette_index = 0,
+		_vlf_waterfogcolor = default_waterfogcolor,
 	})
 end
 
@@ -65,7 +73,7 @@ local function register_biomes()
 	such as a different land cover.
 	In MCL2, the MC Overworld biomes are split in multiple more parts (stacked by height):
 	* The main part, this represents the land. It begins at around sea level and usually goes all the way up
-	* _ocean: For the area covered by ocean water. The y_max may vary for various beach entity_effects.
+	* _ocean: For the area covered by ocean water. The y_max may vary for various beach effects.
 			  Has sand or dirt as floor.
 	* _deep_ocean: Like _ocean, but deeper and has gravel as floor
 	* _underground:
@@ -131,6 +139,7 @@ local function register_biomes()
 		"MesaPlateauF",
 		"MesaPlateauFM",
 		"MangroveSwamp",
+		"Grove",
 	}
 
 
@@ -153,7 +162,9 @@ local function register_biomes()
 		_vlf_biome_type = "snowy",
 		_vlf_palette_index = 2,
 		_vlf_skycolor = "#7FA1FF",
-		_vlf_fogcolor = overworld_fogcolor
+		_vlf_fogcolor = overworld_fogcolor,
+		_vlf_water_palette_index = 9,
+		_vlf_waterfogcolor = frozen_waterfogcolor,
 	})
 	minetest.register_biome({
 		name = "IcePlainsSpikes_ocean",
@@ -174,7 +185,7 @@ local function register_biomes()
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
-	-- Cold Taiga
+	-- Snowy Taiga
 	minetest.register_biome({
 		name = "ColdTaiga",
 		node_dust = "vlf_core:snow",
@@ -189,11 +200,29 @@ local function register_biomes()
 		humidity_point = 58,
 		heat_point = 8,
 		_vlf_biome_type = "snowy",
-		_vlf_palette_index = 3,
+		_vlf_palette_index = 5,
 		_vlf_skycolor = "#839EFF",
 		_vlf_fogcolor = overworld_fogcolor
 	})
-
+	minetest.register_biome({
+		name = "Grove",
+		node_dust = "vlf_core:snow",
+		node_top = "vlf_core:snowblock",
+		depth_top = 1,
+		node_filler = "vlf_core:dirt",
+		depth_filler = 2,
+		node_riverbed = "vlf_core:sand",
+		depth_riverbed = 2,
+		y_min = 3,
+		y_max = vlf_vars.mg_overworld_max,
+		humidity_point = 116,
+		heat_point = 16,
+		_vlf_biome_type = "snowy",
+		_vlf_palette_index = 3,
+		_vlf_water_palette_index = 9,
+		_vlf_skycolor = "#839EFF",
+		_vlf_fogcolor = "#C0D8FF",
+	})
 	-- A cold beach-like biome, implemented as low part of Cold Taiga
 	minetest.register_biome({
 		name = "ColdTaiga_beach",
@@ -1799,7 +1828,7 @@ local function register_biomes()
 		local biome = overworld_biomes[i]
 
 		-- Deep Ocean
-		minetest.register_biome({
+		--[[minetest.register_biome({
 			name = biome .. "_deep_ocean",
 			heat_point = minetest.registered_biomes[biome].heat_point,
 			humidity_point = minetest.registered_biomes[biome].humidity_point,
@@ -1816,7 +1845,7 @@ local function register_biomes()
 			_vlf_palette_index = minetest.registered_biomes[biome]._vlf_palette_index,
 			_vlf_skycolor = ocean_skycolor,
 			_vlf_fogcolor = overworld_fogcolor
-		})
+		})]]
 
 		-- Underground biomes are used to identify the underground and to prevent nodes from the surface
 		-- (sand, dirt) from leaking into the underground.
@@ -4060,7 +4089,7 @@ local function register_decorations()
 		end
 		minetest.register_decoration({
 			deco_type = "schematic",
-			place_on = {"group:grass_block", "vlf_core:dirt", "vlf_core:podzol"},
+			place_on = {"group:grass_block", "vlf_core:dirt", "vlf_core:podzol", "vlf_core:snowblock"},
 			sidelen = 16,
 			noise_params = {
 				offset = offset,
@@ -4090,11 +4119,11 @@ local function register_decorations()
 
 
 	-- Common spruce
-	quick_spruce(11000, 0.00150, "vlf_core_spruce_5.mts", {"Taiga", "ColdTaiga"})
+	quick_spruce(11000, 0.00150, "vlf_core_spruce_5.mts", {"Taiga", "ColdTaiga", "Grove"})
 
-	quick_spruce(2500, 0.00325, "vlf_core_spruce_1.mts", {"MegaSpruceTaiga", "MegaTaiga", "Taiga", "ColdTaiga"})
-	quick_spruce(7000, 0.00425, "vlf_core_spruce_3.mts", {"MegaSpruceTaiga", "MegaTaiga", "Taiga", "ColdTaiga"})
-	quick_spruce(9000, 0.00325, "vlf_core_spruce_4.mts", {"MegaTaiga", "Taiga", "ColdTaiga"})
+	quick_spruce(2500, 0.00325, "vlf_core_spruce_1.mts", {"MegaSpruceTaiga", "MegaTaiga", "Taiga", "ColdTaiga", "Grove"})
+	quick_spruce(7000, 0.00425, "vlf_core_spruce_3.mts", {"MegaSpruceTaiga", "MegaTaiga", "Taiga", "ColdTaiga", "Grove"})
+	quick_spruce(9000, 0.00325, "vlf_core_spruce_4.mts", {"MegaTaiga", "Taiga", "ColdTaiga", "Grove"})
 
 	quick_spruce(9500, 0.00500, "vlf_core_spruce_tall.mts", {"MegaTaiga"})
 
@@ -4124,7 +4153,26 @@ local function register_decorations()
 			octaves = 3,
 			persist = 0.66
 		},
-		biomes = {"Taiga", "ColdTaiga"},
+		biomes = {"Taiga", "ColdTaiga", "Grove"},
+		y_min = 2,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_schematics.."/schems/vlf_core_spruce_lollipop.mts",
+		flags = "place_center_x, place_center_z",
+	})
+	
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:snow", "vlf_core:dirt"},
+		sidelen = 16,
+		noise_params = {
+			offset = 0.004,
+			scale = 0.0022,
+			spread = {x = 250, y = 250, z = 250},
+			seed = 2500,
+			octaves = 3,
+			persist = 0.66
+		},
+		biomes = {"Grove"},
 		y_min = 2,
 		y_max = vlf_vars.mg_overworld_max,
 		schematic = mod_vlf_schematics.."/schems/vlf_core_spruce_lollipop.mts",
@@ -4144,7 +4192,26 @@ local function register_decorations()
 			octaves = 5,
 			persist = 0.60,
 		},
-		biomes = {"Taiga", "ColdTaiga"},
+		biomes = {"Taiga", "ColdTaiga", "Grove"},
+		y_min = 3,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_schematics.."/schems/vlf_core_spruce_matchstick.mts",
+		flags = "place_center_x, place_center_z",
+	})
+	-- Grove Tree.
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:snow", "vlf_core:dirt"},
+		sidelen = 80,
+		noise_params = {
+			offset = -0.025,
+			scale = 0.025,
+			spread = {x = 250, y = 250, z = 250},
+			seed = 2566,
+			octaves = 5,
+			persist = 0.60,
+		},
+		biomes = {"Grove"},
 		y_min = 3,
 		y_max = vlf_vars.mg_overworld_max,
 		schematic = mod_vlf_schematics.."/schems/vlf_core_spruce_matchstick.mts",
@@ -5752,3 +5819,86 @@ if mg_name ~= "singlenode" then
 	end
 
 end
+
+
+-- [[ Single Biome MG ]] --
+
+--if minetest.settings:get_bool('vlf_single_biome_mg', true) then
+local vlf_biomes = {}
+    vlf_biomes.biome_to_retain = minetest.settings:get("vlf_single_biome_mg_biomes")
+    if vlf_biomes.biome_to_retain ~= "None" then
+    local y_max_override = vlf_vars.mg_overworld_max
+    local y_min_override = vlf_vars.mg_overworld_min
+    minetest.log("error", "Biome to Retain: " .. vlf_biomes.biome_to_retain .. " ")
+    
+    if type(vlf_biomes.biome_to_retain) ~= "string" then
+        minetest.log("error", "Invalid or missing vlf_biomes.biome_to_retain setting.")
+        return
+    end
+    
+    local function table_contains(tbl, value)
+    for _, v in ipairs(tbl) do
+        if v == value then
+            return true
+        end
+    end
+    return false
+end
+
+	--if not vlf_biomes.biome_to_retain == "None" then
+    local function deep_copy(orig)
+        if type(orig) == 'table' then
+            local copy = {}
+            for k, v in next, orig do
+                copy[deep_copy(k)] = deep_copy(v)
+            end
+            setmetatable(copy, deep_copy(getmetatable(orig)))
+            return copy
+        else
+            return orig
+        end
+    end
+
+    local retain_biome_def = minetest.registered_biomes[vlf_biomes.biome_to_retain]
+    if not retain_biome_def then
+        minetest.log("error", "Biome '" .. vlf_biomes.biome_to_retain .. "' does not exist!")
+        return
+    end
+
+    retain_biome_def.y_max = y_max_override
+    retain_biome_def.y_min = y_min_override
+
+    for biome_name in pairs(minetest.registered_biomes) do
+        minetest.unregister_biome(biome_name)
+    end
+
+    minetest.register_biome(retain_biome_def)
+
+    local function filter_and_copy(defs, biome)
+        local result = {}
+        for _, def in pairs(defs) do
+            if def.biomes and (type(def.biomes) == "string" and def.biomes == biome or type(def.biomes) == "table" and table_contains(def.biomes, biome)) then
+                local copy = deep_copy(def)
+                copy.y_max = y_max_override
+                copy.y_min = y_min_override
+                table.insert(result, copy)
+            end
+        end
+        return result
+    end
+
+    local retained_decorations = filter_and_copy(minetest.registered_decorations, vlf_biomes.biome_to_retain)
+    local retained_ores = filter_and_copy(minetest.registered_ores, vlf_biomes.biome_to_retain)
+
+    minetest.clear_registered_decorations()
+    minetest.clear_registered_ores()
+
+    for _, decoration in ipairs(retained_decorations) do
+        minetest.register_decoration(decoration)
+    end
+
+    for _, ore in ipairs(retained_ores) do
+        minetest.register_ore(ore)
+    end
+end
+

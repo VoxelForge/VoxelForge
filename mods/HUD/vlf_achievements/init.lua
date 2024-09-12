@@ -385,8 +385,8 @@ awards.register_achievement("vlf:seriousDedication", {
 -- Triggered in vlf_brewing
 awards.register_achievement("vlf:localBrewery", {
 	title = S("Local Brewery"),
-	description = S("Brew a Potion.\nHint: Take a entity_effect or glass bottle out of the brewing stand."),
-	icon = "vlf_entity_effects_effect_overlay.png^[colorize:#F82423:"..tostring(127).."^vlf_entity_effects_entity_effect_bottle.png",
+	description = S("Brew a Potion.\nHint: Take a effect or glass bottle out of the brewing stand."),
+	icon = "vlf_entity_effects_effect_overlay.png^[colorize:#F82423:"..tostring(127).."^vlf_entity_effects_effect_bottle.png",
 	type = "Advancement",
 	group = "Nether",
 })
@@ -480,6 +480,23 @@ awards.register_achievement("vlf:lots_of_trimming", {
 		minetest.get_player_by_name(name):get_meta():set_string("vlf_smithing_table:achievement_trims", "")
 	end,
 })
+-- Triggered in mobs_mc wolf.lua
+awards.register_achievement("vlf:remove_wolf_armor", {
+	title = S("Shear Brilliance"),
+	description = S("Remove Wolf Armor from a Wolf using Shears"),
+	icon = "default_tool_shears.png",
+	type = "Advancement",
+	group = "Husbandry",
+})
+
+awards.register_achievement("vlf:repair_wolf_armor", {
+	title = S("Good as New"),
+	description = S("Repair a damaged Wolf Armor using Armadillo Scutes"),
+	icon = "mobs_mc_wolf_armor_inventory.png",
+	type = "Advancement",
+	group = "Husbandry",
+})
+
 
 -- NON-PC ACHIEVEMENTS (XBox, Pocket Edition, etc.)
 

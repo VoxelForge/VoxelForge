@@ -370,8 +370,30 @@ function vlf_enchanting.get_random_enchantment(itemstack, treasure, weighted, ex
 	return #possible > 0 and possible[vlf_enchanting.random(pr, 1, #possible)]
 end
 
-function vlf_enchanting.generate_random_enchantments(itemstack, enchantment_level, treasure, no_reduced_bonus_chance,
-													 ignore_already_enchanted, pr)
+function vlf_enchanting.get_random_specific_enchantment(itemstack, treasure, weighted, include, pr)
+	local possible = {}
+
+	for enchantment, enchantment_def in pairs(vlf_enchanting.enchantments) do
+		local can_enchant, _, _, primary = vlf_enchanting.can_enchant(itemstack, enchantment, 1)
+
+		-- Check if the enchantment is in the include list if provided
+		local is_included = not include or table.indexof(include, enchantment) ~= -1
+		-- Check if the enchantment is not in the exclude list if provided
+		local is_not_excluded = not exclude or table.indexof(exclude, enchantment) == -1
+
+		if can_enchant and (primary or treasure) and is_included and is_not_excluded then
+			local weight = weighted and enchantment_def.weight or 1
+
+			for i = 1, weight do
+				table.insert(possible, enchantment)
+			end
+		end
+	end
+
+	return #possible > 0 and possible[vlf_enchanting.random(pr, 1, #possible)]
+end
+
+function vlf_enchanting.generate_random_enchantments(itemstack, enchantment_level, treasure, no_reduced_bonus_chance, ignore_already_enchanted, pr)
 	local itemname = itemstack:get_name()
 
 	if (not vlf_enchanting.can_enchant_freshly(itemname) and not ignore_already_enchanted) or
@@ -402,7 +424,7 @@ function vlf_enchanting.generate_random_enchantments(itemstack, enchantment_leve
 			break
 		end
 
-		local selected_enchantment = vlf_enchanting.get_random_enchantment(itemstack, treasure, true, nil, pr)
+		local selected_enchantment = vlf_enchanting.get_random_specific_enchantment(itemstack, treasure, true, nil, pr)
 
 		if not selected_enchantment then
 			break
@@ -458,6 +480,95 @@ function vlf_enchanting.enchant_randomly(itemstack, enchantment_level, treasure,
 
 	return itemstack
 end
+
+function vlf_enchanting.generate_random_specific_enchantments(itemstack, enchantment_level, treasure, no_reduced_bonus_chance, allowed_enchantment, pr)
+	local itemname = itemstack:get_name()
+
+	if (not vlf_enchanting.can_enchant_freshly(itemname) and not allowed_enchantment) or
+		vlf_enchanting.not_enchantable_on_enchanting_table(itemname) then
+		return
+	end
+
+	itemstack = ItemStack(itemstack)
+
+	local enchantability = minetest.get_item_group(itemname, "enchantability")
+	enchantability = 1 + vlf_enchanting.random(pr, 0, math.floor(enchantability / 4)) +
+		vlf_enchanting.random(pr, 0, math.floor(enchantability / 4))
+
+	--enchantment_level = 1 + enchantability
+	enchantment_level = enchantment_level + enchantability
+	enchantment_level = enchantment_level +
+		enchantment_level * (vlf_enchanting.random(pr) + vlf_enchanting.random(pr) - 1) * 0.15
+	enchantment_level = math.max(math.floor(enchantment_level + 0.5), 1)
+
+	local enchantments = {}
+	local description
+
+	enchantment_level = enchantment_level * 2
+
+	repeat
+		enchantment_level = math.floor(enchantment_level / 2)
+
+		if enchantment_level == 0 then
+			break
+		end
+
+		local selected_enchantment = vlf_enchanting.get_random_specific_enchantment(itemstack, treasure, true, nil, pr)
+
+		if not selected_enchantment then
+			break
+		end
+
+		local enchantment_def = vlf_enchanting.enchantments[selected_enchantment]
+		local power_range_table = enchantment_def.power_range_table
+
+		local enchantment_power
+
+		for i = enchantment_def.max_level, 1, -1 do
+			local power_range = power_range_table[i]
+			if enchantment_level >= power_range[1] and enchantment_level <= power_range[2] then
+				enchantment_power = i
+				break
+			end
+		end
+
+		if not description then
+			if not enchantment_power then
+				return
+			end
+
+			description = vlf_enchanting.get_enchantment_description(selected_enchantment, enchantment_power)
+		end
+
+		if enchantment_power then
+			enchantments[selected_enchantment] = enchantment_power
+			vlf_enchanting.enchant(itemstack, selected_enchantment, enchantment_power)
+		end
+	until not no_reduced_bonus_chance and vlf_enchanting.random(pr) >= (enchantment_level + 1) / 50
+
+	return enchantments, description
+end
+
+function vlf_enchanting.generate_random_specific_enchantments_reliable(itemstack, enchantment_level, treasure, no_reduced_bonus_chance, allowed_enchantments, pr)
+	local enchantments
+
+	repeat
+		enchantments = vlf_enchanting.generate_random_specific_enchantments(itemstack, enchantment_level, treasure,
+			no_reduced_bonus_chance, allowed_enchantments, pr)
+	until enchantments
+
+	return enchantments
+end
+
+function vlf_enchanting.enchant_specific_randomly(itemstack, enchantment_level, treasure, no_reduced_bonus_chance, allowed_enchantments, pr)
+	local enchantments = vlf_enchanting.generate_random_specific_enchantments_reliable(itemstack, enchantment_level, treasure, no_reduced_bonus_chance, allowed_enchantments, pr)
+
+	vlf_enchanting.set_enchanted_itemstring(itemstack)
+	vlf_enchanting.set_enchantments(itemstack, enchantments)
+
+	return itemstack
+end
+
 
 function vlf_enchanting.get_random_glyph_row()
 	local glyphs = ""

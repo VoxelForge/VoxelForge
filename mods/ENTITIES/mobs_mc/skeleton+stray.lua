@@ -41,7 +41,7 @@ local skeleton = {
 		}
 	},
 	walk_velocity = 1.1,
-	run_velocity = 1.45, -- skeletons are really anoying in mc, so i made only walkin 0.2 slower
+	run_velocity = 1.65, -- skeletons are really anoying in mc, so i made only walkin 0.2 slower
 	sounds = {
 		random = "mobs_mc_skeleton_random",
 		death = "mobs_mc_skeleton_death",
@@ -124,6 +124,9 @@ local skeleton = {
 			if l and  l._is_arrow and l._shooter and l._shooter:is_player() and vector.distance(pos,l._startpos) > 20 then
 				awards.unlock(l._shooter:get_player_name(), "vlf:snipeSkeleton")
 			end
+		elseif cmi_cause and cmi_cause.type == "freeze" then
+			vlf_util.replace_mob(self.object, "mobs_mc:stray")
+			return true
 		end
 	end,
 }
@@ -137,6 +140,7 @@ vlf_mobs.register_mob("mobs_mc:skeleton", skeleton)
 
 local stray = table.copy(skeleton)
 stray.description = S("Stray")
+stray._freeze_damage = 0
 stray.mesh = "mobs_mc_skeleton.b3d"
 stray.textures = {
 	{

@@ -38,10 +38,6 @@ local colordefs = {
     {"yellow",      S("Yellow Candle"),     S("Cake With Yellow Candle"),       "yellow"    }
 }
 
---local function candles_on_construct(pos) end
-
---local function candles_on_destruct(pos) end
-
 local function candles_on_place(itemstack, placer, pointed_thing)
     if not placer then
         return
@@ -141,7 +137,7 @@ local function register_candles(index, colordefs, box)
         drop = unlitname:gsub(tostring(index), "1").." "..tostring(index),
         groups = {
             axey = 1, dig_by_piston = 1, handy = 1, lit_candles = 1, not_in_creative_inventory = 1,
-            not_solid = 1, pickaxey = 1, shearsy = 1, shovely = 1, swordy = 1
+            not_solid = 1, pickaxey = 1, shearsy = 1, shovely = 1, swordy = 1, lit_candle = 1
         },
         inventory_image = itemimg,
         is_ground_content = false,
@@ -179,6 +175,7 @@ local function register_candles(index, colordefs, box)
         selection_box = {type = "fixed", fixed = box},
         sounds = vlf_sounds.node_sound_defaults(),
         sunlight_propagates = true,
+        _on_wind_charge_hit = windcharge_hit,
         tiles = {texture},
         use_texture_alpha = "clip",
         wield_image = itemimg,
@@ -259,7 +256,7 @@ local function register_cakes(colordefs)
                 rarity = 1
             }
         },
-        groups = {dig_by_piston = 1, handy = 1, not_in_creative_inventory = 1},
+        groups = {dig_by_piston = 1, handy = 1, not_in_creative_inventory = 1, lit_candle = 1},
         is_ground_content = false,
         light_source = 3,
         mesh = "vlf_candles_cake.obj",
@@ -270,6 +267,7 @@ local function register_cakes(colordefs)
         -- TODO: Add sounds
         --sounds = ,
         sunlight_propagates = true,
+        _on_wind_charge_hit = windcharge_hit,
         tiles = {candletexture, "vlf_candles_cake.png"},
         _vlf_blast_resistance = 0.5,
         _vlf_hardness = 0.5
@@ -330,7 +328,6 @@ end
 local candle_particlespawner = {
 	texture = "voxelforge_flame.png",
 	texpool = {},
-	--amount = 8,
 	time = 2,
 	minvel = vector.zero(),
 	maxvel = vector.zero(),
@@ -348,7 +345,6 @@ local candle_particlespawner = {
 local smoke_particlespawner = {
 	texture = "",
 	texpool = {},
-	--amount = 8,
 	time = 2,
 	minvel = vector.zero(),
 	maxvel = vector.zero(),
@@ -365,160 +361,70 @@ local smoke_particlespawner = {
 
 minetest.register_abm({
 	label = "Candle Particles",
-	nodenames = {
-	"vlf_candles:lit_candle_1", "vlf_candles:lit_candle_2",
-        "vlf_candles:lit_candle_1_black", "vlf_candles:lit_candle_1_blue",
-        "vlf_candles:lit_candle_1_brown", "vlf_candles:lit_candle_1_cyan",
-        "vlf_candles:lit_candle_1_green", "vlf_candles:lit_candle_1_grey",
-        "vlf_candles:lit_candle_1_light_blue", "vlf_candles:lit_candle_1_light_grey",
-        "vlf_candles:lit_candle_1_lime", "vlf_candles:lit_candle_1_magenta",
-        "vlf_candles:lit_candle_1_orange", "vlf_candles:lit_candle_1_pink",
-        "vlf_candles:lit_candle_1_purple", "vlf_candles:lit_candle_1_red",
-        "vlf_candles:lit_candle_1_white", "vlf_candles:lit_candle_1_yellow",
-        "vlf_candles:lit_candle_2_black", "vlf_candles:lit_candle_2_blue",
-        "vlf_candles:lit_candle_2_brown", "vlf_candles:lit_candle_2_cyan",
-        "vlf_candles:lit_candle_2_green", "vlf_candles:lit_candle_2_grey",
-        "vlf_candles:lit_candle_2_light_blue", "vlf_candles:lit_candle_2_light_grey",
-        "vlf_candles:lit_candle_2_lime", "vlf_candles:lit_candle_2_magenta",
-        "vlf_candles:lit_candle_2_orange", "vlf_candles:lit_candle_2_pink",
-        "vlf_candles:lit_candle_2_purple", "vlf_candles:lit_candle_2_red",
-        "vlf_candles:lit_candle_2_white", "vlf_candles:lit_candle_2_yellow",
-	},
+	nodenames = {"group:lit_candle"},
 	interval = 2,
 	chance = 1,
 	action = function(pos, node)
-		for _,pl in pairs(minetest.get_connected_players()) do
-			if vector.distance(pos,pl:get_pos()) < PARTICLE_DISTANCE then
-				minetest.add_particlespawner(table.merge(candle_particlespawner, {
-					amount = 4,
-					minpos = vector.offset(pos, -0.05, -0.0, -0.05),
-					maxpos = vector.offset(pos, 0.05, 0.1, 0.05),
-					playername = pl:get_player_name(),
-				}))
-				local rand = math.random(1,3)
-				local name
-				if rand == 1 then
-					name = "vlf_particles_generic.png^[colorize:#2c2c2c:255"
-				elseif rand == 2 then
-					name = "vlf_particles_generic.png^[colorize:#424242:255"
-				elseif rand == 3 then
-					name = "vlf_particles_generic.png^[colorize:#0f0f0f:255"
-				end
-				table.insert(smoke_particlespawner.texpool, {
-					name = name,
-					animation={type="vertical_frames", aspect_w=8, aspect_h=8, length=0.78},
-				})
-				minetest.add_particlespawner(table.merge(smoke_particlespawner, {
-					amount = 3,
-					minpos = vector.offset(pos, -0.15, -0.0, -0.15),
-					maxpos = vector.offset(pos, 0.15, 0.1, 0.15),
-					playername = pl:get_player_name(),
-				}))
-			end
+		local nodename = node.name
+		local variant = nil
+		if nodename:find("_1") then
+			variant = 1
+		elseif nodename:find("_2") then
+			variant = 2
+		elseif nodename:find("_3") then
+			variant = 3
+		elseif nodename:find("_4") then
+			variant = 4
+		elseif nodename:find("cake") then
+			variant = "cake"
 		end
-	end
-})
 
-minetest.register_abm({
-	label = "Candle Particles 2",
-	nodenames = {
-	"vlf_candles:lit_candle_3", "vlf_candles:lit_candle_4",
-        "vlf_candles:lit_candle_3_black", "vlf_candles:lit_candle_3_blue",
-        "vlf_candles:lit_candle_3_brown", "vlf_candles:lit_candle_3_cyan",
-        "vlf_candles:lit_candle_3_green", "vlf_candles:lit_candle_3_grey",
-        "vlf_candles:lit_candle_3_light_blue", "vlf_candles:lit_candle_3_light_grey",
-        "vlf_candles:lit_candle_3_lime", "vlf_candles:lit_candle_3_magenta",
-        "vlf_candles:lit_candle_3_orange", "vlf_candles:lit_candle_3_pink",
-        "vlf_candles:lit_candle_3_purple", "vlf_candles:lit_candle_3_red",
-        "vlf_candles:lit_candle_3_white", "vlf_candles:lit_candle_3_yellow",
-        "vlf_candles:lit_candle_4_black", "vlf_candles:lit_candle_4_blue",
-        "vlf_candles:lit_candle_4_brown", "vlf_candles:lit_candle_4_cyan",
-        "vlf_candles:lit_candle_4_green", "vlf_candles:lit_candle_4_grey",
-        "vlf_candles:lit_candle_4_light_blue", "vlf_candles:lit_candle_4_light_grey",
-        "vlf_candles:lit_candle_4_lime", "vlf_candles:lit_candle_4_magenta",
-        "vlf_candles:lit_candle_4_orange", "vlf_candles:lit_candle_4_pink",
-        "vlf_candles:lit_candle_4_purple", "vlf_candles:lit_candle_4_red",
-        "vlf_candles:lit_candle_4_white", "vlf_candles:lit_candle_4_yellow",
-	},
-	interval = 2,
-	chance = 1,
-	action = function(pos, node)
-		for _,pl in pairs(minetest.get_connected_players()) do
-			if vector.distance(pos,pl:get_pos()) < PARTICLE_DISTANCE then
-				minetest.add_particlespawner(table.merge(candle_particlespawner, {
-					amount = 8,
-					minpos = vector.offset(pos, -0.15, -0.0, -0.15),
-					maxpos = vector.offset(pos, 0.15, 0.1, 0.15),
-					playername = pl:get_player_name(),
-				}))
-				local rand = math.random(1,3)
-				local name
-				if rand == 1 then
-					name = "vlf_particles_generic.png^[colorize:#2c2c2c:255"
-				elseif rand == 2 then
-					name = "vlf_particles_generic.png^[colorize:#424242:255"
-				elseif rand == 3 then
-					name = "vlf_particles_generic.png^[colorize:#0f0f0f:255"
-				end
-				table.insert(smoke_particlespawner.texpool, {
-					name = name,
-					animation={type="vertical_frames", aspect_w=8, aspect_h=8, length=0.78},
-				})
-				minetest.add_particlespawner(table.merge(smoke_particlespawner, {
-					amount = 6,
-					minpos = vector.offset(pos, -0.15, -0.0, -0.15),
-					maxpos = vector.offset(pos, 0.15, 0.1, 0.15),
-					playername = pl:get_player_name(),
-				}))
-			end
+		local amount, minpos, maxpos
+		if variant == 1 or variant == 2 then
+			amount = 4
+			minpos = vector.offset(pos, -0.05, -0.0, -0.05)
+			maxpos = vector.offset(pos, 0.05, 0.1, 0.05)
+		elseif variant == 3 or variant == 4 then
+			amount = 8
+			minpos = vector.offset(pos, -0.15, -0.0, -0.15)
+			maxpos = vector.offset(pos, 0.15, 0.1, 0.15)
+		elseif variant == "cake" then
+			amount = 3
+			minpos = vector.offset(pos, -0.02, 0.5, -0.02)
+			maxpos = vector.offset(pos, 0.02, 0.6, 0.02)
+		else
+			return
 		end
-	end
-})
 
-minetest.register_abm({
-	label = "Cake Particles 3",
-	nodenames = {
-	"vlf_candles:cake_lit_candle", "vlf_candles:cake_lit_candle_black",
-	"vlf_candles:cake_lit_candle_blue", "vlf_candles:cake_lit_candle_brown",
-	"vlf_candles:cake_lit_candle_cyan", "vlf_candles:cake_lit_candle_green",
-	"vlf_candles:cake_lit_candle_grey", "vlf_candles:cake_lit_candle_light_blue",
-	"vlf_candles:cake_lit_candle_light_grey", "vlf_candles:cake_lit_candle_lime",
-	"vlf_candles:cake_lit_candle_magenta", "vlf_candles:cake_lit_candle_orange",
-	"vlf_candles:cake_lit_candle_pink", "vlf_candles:cake_lit_candle_purple",
-	"vlf_candles:cake_lit_candle_red", "vlf_candles:cake_lit_candle_white",
-	"vlf_candles:cake_lit_candle_yellow",
-	},
-	interval = 2,
-	chance = 1,
-	action = function(pos, node)
-		for _,pl in pairs(minetest.get_connected_players()) do
-			if vector.distance(pos,pl:get_pos()) < PARTICLE_DISTANCE then
+		for _, pl in pairs(minetest.get_connected_players()) do
+			if vector.distance(pos, pl:get_pos()) < PARTICLE_DISTANCE then
 				minetest.add_particlespawner(table.merge(candle_particlespawner, {
-					amount = 3,
-					minpos = vector.offset(pos, -0.02, 0.5, -0.02),
-					maxpos = vector.offset(pos, 0.02, 0.6, 0.02),
+					amount = amount,
+					minpos = minpos,
+					maxpos = maxpos,
 					playername = pl:get_player_name(),
 				}))
-				local rand = math.random(1,3)
+
+				local rand = math.random(1, 3)
 				local name
 				if rand == 1 then
 					name = "vlf_particles_generic.png^[colorize:#2c2c2c:255"
 				elseif rand == 2 then
 					name = "vlf_particles_generic.png^[colorize:#424242:255"
-				elseif rand == 3 then
+				else
 					name = "vlf_particles_generic.png^[colorize:#0f0f0f:255"
 				end
 				table.insert(smoke_particlespawner.texpool, {
 					name = name,
-					animation={type="vertical_frames", aspect_w=8, aspect_h=8, length=0.78},
+					animation = {type = "vertical_frames", aspect_w = 8, aspect_h = 8, length = 0.78},
 				})
 				minetest.add_particlespawner(table.merge(smoke_particlespawner, {
-					amount = 1,
-					minpos = vector.offset(pos, -0.02, 0.5, -0.02),
-					maxpos = vector.offset(pos, 0.02, 0.6, 0.02),
+					amount = amount,
+					minpos = minpos,
+					maxpos = maxpos,
 					playername = pl:get_player_name(),
 				}))
 			end
 		end
-	end
+	end,
 })
