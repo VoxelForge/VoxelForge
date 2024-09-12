@@ -414,7 +414,7 @@ minetest.register_tool("vlf_mobitems:wolf_armor", {
 	description = S("Wolf Armor"),
 	_doc_items_longdesc = S("Wolf armor can be worn by wolves to greatly increase their protection from harm."),
 	inventory_image = "mobs_mc_wolf_armor_inventory.png",
-	_wolf_overlay_image = "mobs_mc_wolf_armor.png^mobs_mc_wolf_armor_overlay_no_color.png",
+	_wolf_overlay_image = "(mobs_mc_wolf_armor.png^[multiply:#ffbdb9)^mobs_mc_wolf_armor_overlay_no_color.png",
 	stack_max = 1,
 	groups = {wolf_armor = 45},
 	tool_capabilities = {
@@ -457,10 +457,10 @@ local function register_colored_wolf_armor(color_name, color_display_name, dye_c
 	local description = S(color_display_name .. " Wolf Armor")
 
 	-- Base armor image and overlay image
-	local base_image = "mobs_mc_wolf_armor_inventory.png"
+	local base_image = "(mobs_mc_wolf_armor_inventory.png^[multiply:#ffbdb9)"
 	local overlay_image = "mobs_mc_wolf_armor_inventory_overlay.png"
 
-	local wolf_base_image = "mobs_mc_wolf_armor.png"
+	local wolf_base_image = "(mobs_mc_wolf_armor.png^[multiply:#ffbdb9)"
 	local wolf_overlay_image = "mobs_mc_wolf_armor_overlay_desat.png"
 	local wolf_combined_image
 	local combined_image

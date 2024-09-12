@@ -975,7 +975,7 @@ local function on_receive_fields(player, fields)
 	end
 end
 
-minetest.register_on_mods_loaded(get_init_items)
+minetest.after(0, get_init_items)
 
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)

@@ -42,7 +42,7 @@ function vlf_mobs.effect(pos, amount, texture, min_size, max_size, radius, gravi
 	})
 end
 
-function vlf_mobs.death_effect(pos, yaw, collisionbox, rotate)
+function vlf_mobs.death_effect(pos, yaw, collisionbox, rotate, self)
 	local min, max
 	if collisionbox then
 		min = {x=collisionbox[1], y=collisionbox[2], z=collisionbox[3]}
@@ -58,7 +58,7 @@ function vlf_mobs.death_effect(pos, yaw, collisionbox, rotate)
 		min = vector.multiply(min, 0.5)
 		max = vector.multiply(max, 0.5)
 	end
-
+	if self.name ~= "mobs_mc:firefly" then
 	minetest.add_particlespawner({
 		amount = 50,
 		time = 0.001,
@@ -74,6 +74,7 @@ function vlf_mobs.death_effect(pos, yaw, collisionbox, rotate)
 		vertical = false,
 		texture = "vlf_particles_mob_death.png^[colorize:#000000:255",
 	})
+	end
 
 	minetest.sound_play("vlf_mobs_mob_poof", {
 		pos = pos,
