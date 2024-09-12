@@ -99,7 +99,7 @@ minetest.register_lbm({
 				break
 			end
 		end
-		if light <= light <= 4 then
+		if light <= 4 then
 			if biome_match then
 				local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
 				if minetest.get_node(pos_below).name == "air" or minetest.get_node(pos_below).name == "mobs_mc:firefly_spawner" then
