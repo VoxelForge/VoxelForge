@@ -1,6 +1,6 @@
 if minetest.settings:get_bool('bundles', true) then
     local max_storage = 64
-    
+
     local function update_bundle_item(bundle_stack)
         local meta = bundle_stack:get_meta()
         local stored_items = meta:get_string("stored_items")

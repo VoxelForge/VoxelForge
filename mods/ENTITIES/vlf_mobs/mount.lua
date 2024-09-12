@@ -1,7 +1,7 @@
 local mob_class = vlf_mobs.mob_class
 
 local node_ok = function(pos, fallback)
-	fallback = fallback or fallback_node
+	fallback = fallback or vlf_mobs.fallback_node
 	local node = minetest.get_node_or_nil(pos)
 	if node and minetest.registered_nodes[node.name] then
 		return node

@@ -3,7 +3,7 @@ vlf_doors = {}
 local S = minetest.get_translator(minetest.get_current_modname())
 
 -- This helper function calls on_place_node callbacks.
-local function on_place_node(place_to, newnode,
+--[[local function on_place_node(place_to, newnode,
 	placer, oldnode, itemstack, pointed_thing)
 	-- Run script hook
 	for _, callback in pairs(minetest.registered_on_placenodes) do
@@ -22,7 +22,7 @@ local function on_place_node(place_to, newnode,
 		callback(place_to_copy, newnode_copy, placer,
 			oldnode_copy, itemstack, pointed_thing_copy)
 	end
-end
+end]]
 
 -- Registers a door
 --  name: The name of the door

@@ -4,7 +4,6 @@ vlf_trials = {
 
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
-local S = minetest.get_translator(modname)
 dofile(modpath.."/api.lua")
 dofile(modpath.."/ominous.lua")
 
@@ -129,7 +128,6 @@ vlf_trials.register_vault("vault",{
 				{ itemstring = "vlf_books:book", weight = 200, func = function(stack, pr)vlf_enchanting.enchant_uniform_specific_randomly(stack, {"knockback", "punch", "smite", "looting", "multishot"}, pr) end },
 				{ itemstring = "vlf_books:book", weight = 200, func = function(stack)vlf_enchanting.enchant(stack, "wind_burst", 1) end },
 				{ itemstring = "vlf_core:diamondblock", weight = 600, amount_min = 1, amount_max = 1 },
-				
 			}
 		},
 		{

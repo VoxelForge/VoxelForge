@@ -175,7 +175,7 @@ local function register_candles(index, colordefs, box)
         selection_box = {type = "fixed", fixed = box},
         sounds = vlf_sounds.node_sound_defaults(),
         sunlight_propagates = true,
-        _on_wind_charge_hit = windcharge_hit,
+        --_on_wind_charge_hit = windcharge_hit,
         tiles = {texture},
         use_texture_alpha = "clip",
         wield_image = itemimg,
@@ -267,7 +267,7 @@ local function register_cakes(colordefs)
         -- TODO: Add sounds
         --sounds = ,
         sunlight_propagates = true,
-        _on_wind_charge_hit = windcharge_hit,
+        --_on_wind_charge_hit = windcharge_hit,
         tiles = {candletexture, "vlf_candles_cake.png"},
         _vlf_blast_resistance = 0.5,
         _vlf_hardness = 0.5

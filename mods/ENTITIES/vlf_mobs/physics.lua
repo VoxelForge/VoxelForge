@@ -643,7 +643,7 @@ function mob_class:do_env_damage()
 				return true
 			end
 		end
-		
+
 	elseif self._freeze_damage > 0 and self:is_in_node("vlf_powder_snow:powder_snow") then
 		self:damage_mob("freeze", self._freeze_damage)
 

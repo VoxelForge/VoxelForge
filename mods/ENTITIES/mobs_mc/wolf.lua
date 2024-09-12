@@ -102,7 +102,7 @@ end
 
 local function add_collar(self, color)
     -- Default collar color if none provided
-    if not color then 
+    if not color then
         color = "#FF0000"
     end
 
@@ -248,7 +248,7 @@ local wolf = {
 			self.base_texture = {get_wolf_texture(pos)}
 			self.object:set_properties({textures = self.base_texture})
 			self.texture_holder = self.base_texture[1]
-			
+
 			local spawn_group = get_spawn_group_amount(self.base_texture[1])
 			self.spawn_in_group = pr:next(spawn_group.min, spawn_group.max)
 		else
@@ -379,7 +379,7 @@ end
 
 dog.on_rightclick = function(self, clicker)
 	local item = clicker:get_wielded_item()
-	
+
 	if item:get_name() == "vlf_mobitems:armadillo_scute" and self._wolf_armor and self.armor_durability and self.armor_durability > 0 then
 		-- Repair the armor by 8 points, but not beyond 64 points
 		local repair_points = 8

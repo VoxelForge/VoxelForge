@@ -13,15 +13,15 @@ local function windcharge_hit(pos, node)
             for z = -radius, radius do
                 -- Calculate the current position to check
                 local check_pos = {x = pos.x + x, y = pos.y + y, z = pos.z + z}
-                
+
                 -- Get the node at the current position
                 local check_node = minetest.get_node(check_pos)
-                
+
                 -- Check if the node name contains "lit"
                 if check_node.name:find("lit_candle") then
                     -- Replace "lit" with "unl" in the node name
                     local new_node_name = check_node.name:gsub("lit_candle", "unl_candle")
-                    
+
                     -- Set the new node at the position
                     minetest.set_node(check_pos, {name = new_node_name})
                 end

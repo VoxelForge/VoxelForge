@@ -9,15 +9,15 @@ local overworld_fogcolor = "#C0D8FF"
 local beach_skycolor = "#78A7FF" -- This is the case for all beach biomes except for the snowy ones! Those beaches will have their own colour instead of this one.
 local ocean_skycolor = "#7BA4FF" -- This is the case for all ocean biomes except for non-deep frozen oceans! Those oceans will have their own colour instead of this one.
 
-local nether_skycolor = "#6EB1FF" -- The Nether biomes seemingly don't use the sky colour, despite having this value according to the wiki. The fog colour is used for both sky and fog.
+--local nether_skycolor = "#6EB1FF" -- The Nether biomes seemingly don't use the sky colour, despite having this value according to the wiki. The fog colour is used for both sky and fog.
 
-local end_skycolor = "#000000"
-local end_fogcolor = "#A080A0" -- The End biomes seemingly don't use the fog colour, despite having this value according to the wiki. The sky colour is used for both sky and fog.
+--local end_skycolor = "#000000"
+--local end_fogcolor = "#A080A0" -- The End biomes seemingly don't use the fog colour, despite having this value according to the wiki. The sky colour is used for both sky and fog.
 
 local default_waterfogcolor = "#3F76E4"
-local lukewarm_waterfogcolor = "#45ADF2"
-local warm_waterfogcolor = "#43D5EE"
-local cold_waterfogcolor = "#3D57D6"
+--local lukewarm_waterfogcolor = "#45ADF2"
+--local warm_waterfogcolor = "#43D5EE"
+--local cold_waterfogcolor = "#3D57D6"
 local frozen_waterfogcolor = "#3938C9"
 
 vlf_biomes = {}
@@ -27,7 +27,7 @@ vlf_biomes = {}
 --
 
 local OCEAN_MIN = -15
-local DEEP_OCEAN_MAX = OCEAN_MIN - 1
+--local DEEP_OCEAN_MAX = OCEAN_MIN - 1
 local DEEP_OCEAN_MIN = -31
 
 local stonelike = {"vlf_core:stone", "vlf_core:diorite", "vlf_core:andesite", "vlf_core:granite"}
@@ -4159,7 +4159,7 @@ local function register_decorations()
 		schematic = mod_vlf_schematics.."/schems/vlf_core_spruce_lollipop.mts",
 		flags = "place_center_x, place_center_z",
 	})
-	
+
 	minetest.register_decoration({
 		deco_type = "schematic",
 		place_on = {"group:snow", "vlf_core:dirt"},
@@ -5825,80 +5825,70 @@ end
 
 --if minetest.settings:get_bool('vlf_single_biome_mg', true) then
 local vlf_biomes = {}
-    vlf_biomes.biome_to_retain = minetest.settings:get("vlf_single_biome_mg_biomes")
-    if vlf_biomes.biome_to_retain ~= "None" then
-    local y_max_override = vlf_vars.mg_overworld_max
-    local y_min_override = vlf_vars.mg_overworld_min
-    minetest.log("error", "Biome to Retain: " .. vlf_biomes.biome_to_retain .. " ")
-    
-    if type(vlf_biomes.biome_to_retain) ~= "string" then
-        minetest.log("error", "Invalid or missing vlf_biomes.biome_to_retain setting.")
-        return
-    end
-    
-    local function table_contains(tbl, value)
-    for _, v in ipairs(tbl) do
-        if v == value then
-            return true
-        end
-    end
-    return false
-end
+vlf_biomes.biome_to_retain = minetest.settings:get("vlf_single_biome_mg_biomes")
+if vlf_biomes.biome_to_retain ~= "None" then
+	local y_max_override = vlf_vars.mg_overworld_max
+	local y_min_override = vlf_vars.mg_overworld_min
+	minetest.log("error", "Biome to Retain: " .. vlf_biomes.biome_to_retain .. " ")
 
+	if type(vlf_biomes.biome_to_retain) ~= "string" then
+		minetest.log("error", "Invalid or missing vlf_biomes.biome_to_retain setting.")
+		return
+	end
+
+	local function table_contains(tbl, value)
+		for _, v in ipairs(tbl) do
+			if v == value then
+				return true
+			end
+		end
+		return false
+	end
 	--if not vlf_biomes.biome_to_retain == "None" then
-    local function deep_copy(orig)
-        if type(orig) == 'table' then
-            local copy = {}
-            for k, v in next, orig do
-                copy[deep_copy(k)] = deep_copy(v)
-            end
-            setmetatable(copy, deep_copy(getmetatable(orig)))
-            return copy
-        else
-            return orig
-        end
-    end
-
-    local retain_biome_def = minetest.registered_biomes[vlf_biomes.biome_to_retain]
-    if not retain_biome_def then
-        minetest.log("error", "Biome '" .. vlf_biomes.biome_to_retain .. "' does not exist!")
-        return
-    end
-
-    retain_biome_def.y_max = y_max_override
-    retain_biome_def.y_min = y_min_override
-
-    for biome_name in pairs(minetest.registered_biomes) do
-        minetest.unregister_biome(biome_name)
-    end
-
-    minetest.register_biome(retain_biome_def)
-
-    local function filter_and_copy(defs, biome)
-        local result = {}
-        for _, def in pairs(defs) do
-            if def.biomes and (type(def.biomes) == "string" and def.biomes == biome or type(def.biomes) == "table" and table_contains(def.biomes, biome)) then
-                local copy = deep_copy(def)
-                copy.y_max = y_max_override
-                copy.y_min = y_min_override
-                table.insert(result, copy)
-            end
-        end
-        return result
-    end
-
-    local retained_decorations = filter_and_copy(minetest.registered_decorations, vlf_biomes.biome_to_retain)
-    local retained_ores = filter_and_copy(minetest.registered_ores, vlf_biomes.biome_to_retain)
-
-    minetest.clear_registered_decorations()
-    minetest.clear_registered_ores()
-
-    for _, decoration in ipairs(retained_decorations) do
-        minetest.register_decoration(decoration)
-    end
-
-    for _, ore in ipairs(retained_ores) do
-        minetest.register_ore(ore)
-    end
+	local function deep_copy(orig)
+		if type(orig) == 'table' then
+			local copy = {}
+			for k, v in next, orig do
+				copy[deep_copy(k)] = deep_copy(v)
+			end
+			setmetatable(copy, deep_copy(getmetatable(orig)))
+			return copy
+		else
+			return orig
+		end
+	end
+	local retain_biome_def = minetest.registered_biomes[vlf_biomes.biome_to_retain]
+	if not retain_biome_def then
+		minetest.log("error", "Biome '" .. vlf_biomes.biome_to_retain .. "' does not exist!")
+		return
+	end
+	retain_biome_def.y_max = y_max_override
+	retain_biome_def.y_min = y_min_override
+	for biome_name in pairs(minetest.registered_biomes) do
+		minetest.unregister_biome(biome_name)
+	end
+	minetest.register_biome(retain_biome_def)
+	local function filter_and_copy(defs, biome)
+		local result = {}
+		for _, def in pairs(defs) do
+			if def.biomes and (type(def.biomes) == "string" and def.biomes == biome or type(def.biomes) == "table" and table_contains(def.biomes, biome)) then
+ 				local copy = deep_copy(def)
+				copy.y_max = y_max_override
+				copy.y_min = y_min_override
+				table.insert(result, copy)
+			end
+		end
+		return result
+	end
+	local retained_decorations = filter_and_copy(minetest.registered_decorations, vlf_biomes.biome_to_retain)
+	local retained_ores = filter_and_copy(minetest.registered_ores, vlf_biomes.biome_to_retain)
+	minetest.clear_registered_decorations()
+	minetest.clear_registered_ores()
+	for _, decoration in ipairs(retained_decorations) do
+		minetest.register_decoration(decoration)
+	end
+	for _, ore in ipairs(retained_ores) do
+		minetest.register_ore(ore)
+	end
 end
 

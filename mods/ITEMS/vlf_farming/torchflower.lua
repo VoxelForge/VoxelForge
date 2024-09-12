@@ -1,4 +1,4 @@
-local S = minetest.get_translator(minetest.get_current_modname())
+--[[local S = minetest.get_translator(minetest.get_current_modname())
 
 local planton = {"vlf_core:dirt_with_grass", "vlf_core:dirt", "vlf_core:podzol", "vlf_core:coarse_dirt", "vlf_lush_caves:moss", "vlf_mangrove:mangrove_mud_roots", "vlf_mud:mud", "vlf_lush_caves:rooted_dirt"}
 
@@ -60,4 +60,6 @@ for i=0, 1 do
 end
 
 -- TODO: Find proper interval and chance values for sweet berry bushes. Current interval and chance values are copied from vlf_farming:beetroot which has similar growth stages.
-vlf_farming:add_plant("plant_torchflower", "vlf_flowers:torchflower", {"vlf_farming:torchflower_0", "vlf_farming:torchflower_1"}, 68, 2)
+vlf_farming:add_plant("plant_torchflower", "vlf_flowers:torchflower", {"vlf_farming:torchflower_0", "vlf_farming:torchflower_1"}, 68, 2)]]
+
+-- COMING SOON
