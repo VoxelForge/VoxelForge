@@ -23,7 +23,7 @@ jobs:
 
     - name: Download Minetest source
       run: |
-        git clone --branch main https://github.com/minetest/minetest.git
+        git clone --branch master https://github.com/minetest/minetest.git
         cd minetest
         git submodule update --init --recursive
 
