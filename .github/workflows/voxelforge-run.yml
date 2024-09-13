@@ -1,4 +1,4 @@
-name: Build and Run VoxelForge with minetest
+name: Build and Run Minetest with VoxelForge
 
 on:
   push:
@@ -51,29 +51,32 @@ jobs:
     - name: Compile Minetest
       run: |
         cd minetest
-        mkdir build
+        rm -rf build
+        mkdir -p build
         cd build
         cmake .. -DENABLE_SOUND=0
         make -j$(nproc)
+
+    - name: Upload Build Logs
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-logs
+        path: minetest/build/build_output.log
 
     - name: Verify Build
       run: |
         cd minetest/build
         echo "Listing files in the build directory:"
         ls -l
-        echo "Checking for executable:"
-        if [ -f minetest ]; then
-          echo "Minetest executable found."
-        else
-          echo "Minetest executable not found."
-        fi
+        echo "Searching for Minetest executable:"
+        find . -type f -name 'minetest' -exec ls -l {} \;
 
     - name: Download VoxelForge subgame
       run: |
         cd ..
         git clone https://github.com/voxelforge/voxelforge.git
 
-    - name: Run Voxelforge with Minetest
+    - name: Run Minetest with VoxelForge
       run: |
         cd minetest/build
         if [ -f minetest ]; then
