@@ -36,7 +36,11 @@ jobs:
           liblzma-dev \
           zlib1g-dev \
           libgl1-mesa-dev \
-          libglu1-mesa-dev
+          libglu1-mesa-dev \
+          libsdl2-dev \
+          libsdl2-image-dev \
+          libsdl2-mixer-dev \
+          libsdl2-ttf-dev
 
     - name: Download Minetest source
       run: |
