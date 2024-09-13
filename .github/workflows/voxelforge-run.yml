@@ -1,4 +1,4 @@
-name: Build and Run VoxelForge and Minetest
+name: Build and Run VoxelForge with Minetest
 
 on:
   push:
@@ -16,10 +16,27 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install dependencies
+    - name: Install Minetest dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake g++ libirrlicht-dev libsqlite3-dev libpng-dev libjpeg-dev libsqlite3-dev
+        sudo apt-get install -y \
+          cmake \
+          g++ \
+          libirrlicht-dev \
+          libsqlite3-dev \
+          libpng-dev \
+          libjpeg-dev \
+          libbz2-dev \
+          libcurl4-openssl-dev \
+          libpugixml-dev \
+          libvorbis-dev \
+          libogg-dev \
+          libtinyxml-dev \
+          libgmp-dev \
+          liblzma-dev \
+          zlib1g-dev \
+          libgl1-mesa-dev \
+          libglu1-mesa-dev
 
     - name: Download Minetest source
       run: |
@@ -38,9 +55,9 @@ jobs:
     - name: Download VoxelForge subgame
       run: |
         cd ..
-        git clone https://github.com/VoxelForge/VoxelForge.git
+        git clone https://github.com/voxelforge/voxelforge.git
 
-    - name: Run Minetest with VoxelForge
+    - name: Run VoxelForge with Minetest
       run: |
         cd minetest/build
         ./minetest --gameid voxelforge --world world_test --config /dev/null
