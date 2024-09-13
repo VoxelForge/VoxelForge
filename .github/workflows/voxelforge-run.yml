@@ -1,0 +1,46 @@
+name: Build and Run VoxelForge and Minetest
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_and_run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ libirrlicht-dev libsqlite3-dev libpng-dev libjpeg-dev libsqlite3-dev
+
+    - name: Download Minetest source
+      run: |
+        git clone --branch stable https://github.com/minetest/minetest.git
+        cd minetest
+        git submodule update --init --recursive
+
+    - name: Compile Minetest
+      run: |
+        cd minetest
+        mkdir build
+        cd build
+        cmake ..
+        make -j$(nproc)
+
+    - name: Download VoxelForge subgame
+      run: |
+        cd ..
+        git clone https://github.com/VoxelForge/VoxelForge.git
+
+    - name: Run Minetest with VoxelForge
+      run: |
+        cd minetest/build
+        ./minetest --gameid voxelforge --world world_test --config /dev/null
