@@ -53,7 +53,7 @@ jobs:
         cd minetest
         mkdir build
         cd build
-        cmake ..
+        cmake .. -DENABLE_SOUND=0
         make -j$(nproc)
 
     - name: Download VoxelForge subgame
