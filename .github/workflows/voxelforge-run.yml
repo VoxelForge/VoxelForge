@@ -1,4 +1,4 @@
-name: Build and Run VoxelForge with Minetest
+name: Build and Run VoxelForge with minetest
 
 on:
   push:
@@ -56,6 +56,11 @@ jobs:
         cmake .. -DENABLE_SOUND=0
         make -j$(nproc)
 
+    - name: Verify Minetest executable
+      run: |
+        cd minetest/build
+        ls -l
+
     - name: Download VoxelForge subgame
       run: |
         cd ..
@@ -64,4 +69,4 @@ jobs:
     - name: Run VoxelForge with Minetest
       run: |
         cd minetest/build
-        ./minetest --gameid voxelforge --world world_test --config /dev/null
+        if [ -f minetest ]; then ./minetest --gameid voxelforge --world world_test --config /dev/null; else echo "Minetest executable not found"; exit 1; fi
