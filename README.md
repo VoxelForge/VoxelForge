@@ -15,7 +15,7 @@ An unofficial Minecraft-like game for Minetest. Fork of Mineclonia with focus
 on stability, performance and features. For information about
 migrating from Voxelibre or Mineclonia to VoxelForge, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
 
-Version: Voxelforge Snapshot 24w36b
+Version: Voxelforge Snapshot 24w37e
 
 ### Differences from Mineclonia
 * More minecraft like font.
@@ -24,9 +24,11 @@ Version: Voxelforge Snapshot 24w36b
 * bubble columns.
 * Different Chat hud.
 * Vaults.
-* Bundles api.
+* Bundles.
 * 1.21 status effects.
 * Tripwire.
+* FireFlies.
+* Dyable Wolf Armor.
 
 ### Differences from Voxelibre
 * Mace
@@ -46,6 +48,9 @@ Version: Voxelforge Snapshot 24w36b
 * Lush caves biome.
 * Cherry grove biome.
 * No hamburgers.
+* FireFlies.
+* Dyable Wolf Armor.
+* Vaults.
 
 ### Gameplay
 You start in a randomly-generated world made entirely of cubes. You can explore
@@ -108,7 +113,7 @@ inside the game. You can access the help from your inventory menu.
 The following items are interesting for Creative Mode and for adventure
 map builders. They can not be obtained in-game or in the creative inventory.
 
-* Barrier: `vlc_core:barrier`
+* Barrier: `vlf_core:barrier`
 
 Use the `/giveme` chat command to obtain them. See the in-game help for
 an explanation.
@@ -143,7 +148,7 @@ Minecraft clone. released as free software.
 * VoxelForge will use different graphics and sounds, but with a similar style
 
 ## Completion status
-This game is currently in **Dev** stage.
+This game is currently in **ALPHA** stage.
 It is playable, but not yet feature-complete.
 Backwards-compatibility is not guaranteed, updating your world might cause bugs
 and things to behave differently.
