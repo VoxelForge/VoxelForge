@@ -7,6 +7,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/issues)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/VoxelForge/VoxelForge)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/pulls)
+[![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/pulls-closed)
 [![GitHub](https://img.shields.io/github/license/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/blob/master/LICENSE)
 
 ___________________________________________________________________________________________________________________________________________________________________________________
