@@ -511,7 +511,7 @@ local skeleton_horse_trap = {
 	do_custom = function(self, dtime)
 		local pos = self.object:get_pos()
 		local radius = 10
-        
+
 		local players = minetest.get_connected_players()
 
 		for _, player in ipairs(players) do

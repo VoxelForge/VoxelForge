@@ -7,9 +7,9 @@ local function update_bundle_item(stack)
 	local stored_items = minetest.deserialize(meta:get_string("stored_items")) or {}
 	local item_count = #stored_items
 	local item_def = stack:get_definition().inventory_image
-    
+	local inventory_image
+
 	if item_count > 0 then
-		local last_item = stored_items[item_count]
 		if item_def and item_def ~= "" then
 			inventory_image = item_def .. "^vlf_bundles_" .. item_count .. ".png"
 		end
@@ -84,9 +84,9 @@ local function on_leftclick(itemstack)
 			local node_def = minetest.registered_nodes[selected_item]
 			if node_def.inventory_image and node_def.inventory_image ~= "" then
 				-- Use the node's inventory image if available
-				inventory_image = stack_def:gsub(".png", "") .. "_open_back.png" .. 
+				inventory_image = stack_def:gsub(".png", "") .. "_open_back.png" ..
 							"^" .. node_def.inventory_image ..
-							"^" .. stack_def:gsub(".png", "") .. "_open_front.png" .. 
+							"^" .. stack_def:gsub(".png", "") .. "_open_front.png" ..
 							"^vlf_bundles_" .. item_count .. ".png"
 			else
 				inventory_image = stack_def:gsub(".png", "") .. "_open_back.png" ..
@@ -104,7 +104,7 @@ local function on_leftclick(itemstack)
 			-- Use item's inventory image
 			if item_def.inventory_image and item_def.inventory_image ~= "" then
 				inventory_image = stack_def:gsub(".png", "") .. "_open_back.png" ..
- 							"^" .. item_def.inventory_image ..
+							"^" .. item_def.inventory_image ..
 							"^" .. stack_def:gsub(".png", "") .. "_open_front.png" ..
 							"^vlf_bundles_" .. item_count .. ".png"
 			else
@@ -148,7 +148,7 @@ local function on_rightclick(itemstack, placer, pointed_thing)
 	-- Collect all items of the same type to drop
 	local items_to_drop = {}
 	local remaining_items = {}
-    
+
 	for _, item in ipairs(stored_items) do
 		if item == item_to_drop then
 			table.insert(items_to_drop, item)
@@ -176,7 +176,6 @@ local function on_rightclick(itemstack, placer, pointed_thing)
 	return itemstack
 end
 
-    
 -- Color definitions for the bundles
 local colordefs = {
 	-- {name, dye}

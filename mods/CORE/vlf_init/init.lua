@@ -507,7 +507,7 @@ end
 minetest.register_globalstep(function(dtime)
 	for _, player in ipairs(minetest.get_connected_players()) do
         local pos = player:get_pos()
-        	for _, entity in ipairs(minetest.get_objects_inside_radius(pos, 10)) do
+		for _, entity in ipairs(minetest.get_objects_inside_radius(pos, 10)) do
 			local controls = player:get_player_control()
 			--local pos = player:get_pos()
 			local node = minetest.get_node(pos)
@@ -550,10 +550,10 @@ end
 minetest.register_on_mods_loaded(function()
     local worldpath = minetest.get_worldpath()
     local file_path = worldpath .. "/current_version.lua"
-    
+
     -- Try to open the file for reading
     local file = io.open(file_path, "r")
-    
+
     -- If the file doesn't exist, create it with the default version
     if not file then
         local new_file = io.open(file_path, "w")
@@ -571,7 +571,7 @@ minetest.register_on_mods_loaded(function()
     -- Check if the file contains valid version data
     if version_data and version_data.current_version and version_data.current_version.version then
         local current_version = version_data.current_version.version
-        
+
         -- If the version isn't 24w41a, handle it as a potential issue
         if current_version ~= "24w39a" then
              local wfile = io.open(file_path, "w")

@@ -13,8 +13,6 @@ function vlf_achievements.award_unlocked(playername, awardname)
 	return unlocked
 end
 
-local S = minetest.get_translator(minetest.get_current_modname())
-
 awards.register_on_unlock(function(name, def)
 	if def.reward_xp then
 		local player = minetest.get_player_by_name(name)

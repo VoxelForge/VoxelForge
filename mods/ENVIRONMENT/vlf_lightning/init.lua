@@ -164,7 +164,7 @@ function vlf_lightning.strike_func(pos, pos2, objects)
 	if minetest.get_item_group(minetest.get_node({ x = pos2.x, y = pos2.y - 1, z = pos2.z }).name, "liquid") < 1 then
 		if minetest.get_node(pos2).name == "air" then
 			-- Low chance for a lightning to spawn skeleton horse + skeletons
-			
+
 			local is_trap_nearby = false
 			local objects_nearby = minetest.get_objects_inside_radius(pos2, 2)
 

@@ -1,15 +1,5 @@
--- TURTLE
+-- Bee
 -- cora
-local pi = math.pi
-local atann = math.atan
-local atan = function(x)
-	if not x or x ~= x then
-		return 0
-	else
-		return atann(x)
-	end
-end
-
 local S = minetest.get_translator("mobs_mc")
 
 vlf_mobs.register_mob("mobs_mc:bee", {
@@ -33,7 +23,6 @@ vlf_mobs.register_mob("mobs_mc:bee", {
 	walk_velocity = 1,
 	run_velocity = 2,
 	follow_velocity = 2,
-	follow = followitem,
 	pathfinding = 1,
 	fear_height = 4,
 	view_range = 16,

@@ -3818,8 +3818,8 @@ local function register_decorations()
 		rotation = "random",
 		spawn_by = "group:flower",
 	})
-	
-		minetest.register_decoration({
+
+	minetest.register_decoration({
 		deco_type = "schematic",
 		place_on = {"group:grass_block_no_snow", "vlf_core:dirt"},
 		sidelen = 16,
@@ -4380,7 +4380,7 @@ local function register_decorations()
 		rotation = "random",
 		spawn_by = "group:flower",
 	})
-	
+
 	minetest.register_decoration({
 		deco_type = "schematic",
 		place_on = {"group:grass_block_no_snow", "vlf_core:dirt"},
@@ -5406,7 +5406,7 @@ local function register_decorations()
 
 	register_flower("lily_of_the_valley", nil, 325)
 	register_flower("cornflower", flower_biomes2, 486)
-	
+
 	register_flower("azure_bluet", {"Meadow"}, 400)
 	register_flower("oxeye_daisy", {"Meadow"}, 470)
 	register_flower("dandelion", {"Meadow"}, 16)

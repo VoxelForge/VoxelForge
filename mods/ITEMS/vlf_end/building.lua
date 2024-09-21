@@ -232,7 +232,7 @@ local target_nodes = {
 local function check_near_nodes(player)
 	local pos = player:get_pos()
 	local player_name = player:get_player_name()
-	
+
 	-- Check if the achievement is already unlocked
 	if not vlf_achievements.award_unlocked(player_name, "vlf:follow_ender_eye") then
 		local radius = 5
@@ -262,7 +262,7 @@ local function check_near_nodes(player)
 				end
 			end
 		end
-		
+
 		-- If the player is near all three nodes, unlock the achievement
 		if found_nodes.portal_frame and found_nodes.bedrock and found_nodes.stonebrick_stair then
 			awards.unlock(player_name, "vlf:follow_ender_eye")

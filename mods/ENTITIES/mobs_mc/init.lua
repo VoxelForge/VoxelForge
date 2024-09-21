@@ -62,7 +62,7 @@ mobs_mc.armadillo_scare = function()
 		local objs = minetest.get_objects_inside_radius(pos, self.view_range)
 		local changed_to_tb = false
 		self:set_velocity(0.14)
-		
+
 		-- Function to check if a table contains a value
 		local function table_contains(tbl, value)
 			for _, v in ipairs(tbl) do
@@ -135,8 +135,7 @@ mobs_mc.armadillo_damage = function()
 	return function(self, damage, reason)
 		self.health = self.health - damage
 		local pos = self.object:get_pos()
-		local objs = minetest.get_objects_inside_radius(pos, self.view_range)
-		local changed_to_tb = false
+		local changed_to_tb
 		-- Blacklisted entity detected
 		self.object:set_properties({textures = {"mobs_mc_armadillo-hiding.png"}})
 		self.scared = true
