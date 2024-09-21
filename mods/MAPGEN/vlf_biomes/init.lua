@@ -139,7 +139,7 @@ local function register_biomes()
 		"MesaPlateauF",
 		"MesaPlateauFM",
 		"MangroveSwamp",
-		--"Grove",
+		"Grove",
 	}
 
 
@@ -204,25 +204,6 @@ local function register_biomes()
 		_vlf_skycolor = "#839EFF",
 		_vlf_fogcolor = overworld_fogcolor
 	})
-	minetest.register_biome({
-		name = "Grove",
-		node_dust = "vlf_core:snow",
-		node_top = "vlf_core:snowblock",
-		depth_top = 1,
-		node_filler = "vlf_core:dirt",
-		depth_filler = 2,
-		node_riverbed = "vlf_core:sand",
-		depth_riverbed = 2,
-		y_min = 3,
-		y_max = vlf_vars.mg_overworld_max,
-		humidity_point = 116,
-		heat_point = 16,
-		_vlf_biome_type = "snowy",
-		_vlf_palette_index = 3,
-		_vlf_water_palette_index = 9,
-		_vlf_skycolor = "#839EFF",
-		_vlf_fogcolor = "#C0D8FF",
-	})
 	-- A cold beach-like biome, implemented as low part of Cold Taiga
 	minetest.register_biome({
 		name = "ColdTaiga_beach",
@@ -282,7 +263,61 @@ local function register_biomes()
 		_vlf_skycolor = "#7FA1FF",
 		_vlf_fogcolor = overworld_fogcolor
 	})
-
+	minetest.register_biome({
+		name = "Grove",
+		node_dust = "vlf_core:snow",
+		node_top = "vlf_core:snowblock",
+		depth_top = 1,
+		node_filler = "vlf_core:dirt",
+		depth_filler = 2,
+		node_riverbed = "vlf_core:sand",
+		depth_riverbed = 2,
+		y_min = 3,
+		y_max = vlf_vars.mg_overworld_max,
+		humidity_point = 116,
+		heat_point = 16,
+		_vlf_biome_type = "snowy",
+		_vlf_palette_index = 3,
+		_vlf_water_palette_index = 9,
+		_vlf_skycolor = "#839EFF",
+		_vlf_fogcolor = "#C0D8FF",
+	})
+	minetest.register_biome({
+		name = "Grove_ocean",
+		node_top = "vlf_core:gravel",
+		depth_top = 1,
+		node_filler = "vlf_core:gravel",
+		depth_filler = 2,
+		node_riverbed = "vlf_core:sand",
+		depth_riverbed = 2,
+		y_min = OCEAN_MIN,
+		y_max = -5,
+		humidity_point = 116,
+		heat_point = 16,
+		_vlf_biome_type = "snowy",
+		_vlf_palette_index = 3,
+		_vlf_water_palette_index = 9,
+		_vlf_skycolor = "#839EFF",
+		_vlf_fogcolor = "#C0D8FF",
+	})
+	minetest.register_biome({
+		name = "Meadow",
+		node_top = "vlf_core:dirt_with_grass",
+		depth_top = 1,
+		node_filler = "vlf_core:dirt",
+		depth_filler = 2,
+		node_riverbed = "vlf_core:sand",
+		depth_riverbed = 2,
+		y_min = 10,
+		y_max = vlf_vars.mg_overworld_max,
+		humidity_point = 80,
+		heat_point = 50,
+		_vlf_biome_type = "cold",
+		_vlf_palette_index = 3,
+		_vlf_water_palette_index = 9,
+		_vlf_skycolor = "#839EFF",
+		_vlf_fogcolor = "#C0D8FF",
+	})
 	-- Mega Pine Taiga
 	minetest.register_biome({
 		name = "MegaTaiga",
@@ -3784,6 +3819,20 @@ local function register_decorations()
 		spawn_by = "group:flower",
 	})
 
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:grass_block_no_snow", "vlf_core:dirt"},
+		sidelen = 16,
+		fill_ratio = 0.0002,
+		biomes = {"Meadow"},
+		y_min = 1,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_classic_bee_nest.mts",
+		flags = "place_center_x, place_center_z",
+		rotation = "random",
+		spawn_by = "group:flower",
+	})
+
 	-- Rare balloon oak
 	minetest.register_decoration({
 		deco_type = "schematic",
@@ -4325,6 +4374,20 @@ local function register_decorations()
 		fill_ratio = 0.00002,
 		biomes = {"Forest", "BirchForest", "BirchForestM"},
 		y_min = 1,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_schematics.."/schems/vlf_core_birch_bee_nest.mts",
+		flags = "place_center_x, place_center_z",
+		rotation = "random",
+		spawn_by = "group:flower",
+	})
+
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:grass_block_no_snow", "vlf_core:dirt"},
+		sidelen = 16,
+		fill_ratio = 0.00002,
+		biomes = {"Meadow"},
+		y_min = 15,
 		y_max = vlf_vars.mg_overworld_max,
 		schematic = mod_vlf_schematics.."/schems/vlf_core_birch_bee_nest.mts",
 		flags = "place_center_x, place_center_z",
@@ -5093,8 +5156,29 @@ local function register_decorations()
 			},
 		},
 	})
-
-
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:grass_block"},
+		sidelen = 16,
+		noise_params = {
+			offset = 0.0,
+			scale = 0.09,
+			spread = {x = 15, y = 15, z = 15},
+			seed = 420,
+			octaves = 3,
+			persist = 0.6,
+		},
+		biomes = {"Meadow"},
+		y_min = 20,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = {
+			size = { x=1, y=2, z=1 },
+			data = {
+				{ name = "vlf_core:dirt_with_grass", force_place=true, },
+				{ name = "vlf_flowers:tallgrass", param2 = minetest.registered_biomes["Meadow"]._vlf_palette_index },
+			},
+		},
+	})
 	-- Dead bushes
 	minetest.register_decoration({
 		deco_type = "simple",
@@ -5262,6 +5346,25 @@ local function register_decorations()
 				decoration = "vlf_flowers:"..name,
 			})
 		end
+		if biomes == "Meadow" then
+			minetest.register_decoration({
+				deco_type = "simple",
+				place_on = {"group:grass_block_no_snow", "vlf_core:dirt"},
+				sidelen = 16,
+				noise_params = {
+					offset = 0.00008*8,
+					scale = 0.003,
+					spread = {x = 100, y = 100, z = 100},
+					seed = seed,
+					octaves = 3,
+					persist = 0.6
+				},
+				y_min = 1,
+				y_max = vlf_vars.mg_overworld_max,
+				biomes = biomes,
+				decoration = "vlf_flowers:"..name,
+			})
+		end
 		if is_in_flower_forest then
 			minetest.register_decoration({
 				deco_type = "simple",
@@ -5303,6 +5406,13 @@ local function register_decorations()
 
 	register_flower("lily_of_the_valley", nil, 325)
 	register_flower("cornflower", flower_biomes2, 486)
+
+	register_flower("azure_bluet", {"Meadow"}, 400)
+	register_flower("oxeye_daisy", {"Meadow"}, 470)
+	register_flower("dandelion", {"Meadow"}, 16)
+	register_flower("poppy", {"Meadow"}, 474)
+	register_flower("cornflower", {"Meadow"}, 243)
+	register_flower("allium", {"Meadow"} , 150) -- flower Forest only
 end
 
 -- Decorations in non-Overworld dimensions

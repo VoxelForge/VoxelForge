@@ -16,15 +16,15 @@ vlf_trials.register_vault("vault",{
 		},
 	},
 	node_on = {
-		tiles = { "vlf_trials_vault_top_on.png", "vlf_trials_vault_bottom.png",
+		tiles = { "vlf_trials_vault_top_off.png", "vlf_trials_vault_bottom.png",
 			"vlf_trials_vault_side_on.png", "vlf_trials_vault_side_on.png",
 			"vlf_trials_vault_side_on.png", "vlf_trials_vault_front_on.png",
 		},
 	},
 	node_ejecting = {
 		tiles = { "vlf_trials_vault_top_ejecting.png", "vlf_trials_vault_bottom.png",
-			"vlf_trials_vault_side_ejecting.png", "vlf_trials_vault_side_ejecting.png",
-			"vlf_trials_vault_side_ejecting.png", "vlf_trials_vault_front_ejecting.png",
+			"vlf_trials_vault_side_on.png", "vlf_trials_vault_side_on.png",
+			"vlf_trials_vault_side_on.png", "vlf_trials_vault_front_ejecting.png",
 		},
 	},
 	loot = {
@@ -86,7 +86,7 @@ vlf_trials.register_vault("vault",{
 }
 })
 
---[[vlf_trials.register_vault("ominous_vault",{
+vlf_trials.register_vault("ominous_vault",{
 	key = "vlf_trials:ominous_trial_key",
 	node_off = {
 		tiles = { "vlf_trials_ominous_vault_top_off.png", "vlf_trials_ominous_vault_bottom.png",
@@ -95,15 +95,15 @@ vlf_trials.register_vault("vault",{
 		},
 	},
 	node_on = {
-		tiles = { "vlf_trials_ominous_vault_top_on.png", "vlf_trials_ominous_vault_bottom.png",
+		tiles = { "vlf_trials_ominous_vault_top_off.png", "vlf_trials_ominous_vault_bottom.png",
 			"vlf_trials_ominous_vault_side_on.png", "vlf_trials_ominous_vault_side_on.png",
 			"vlf_trials_ominous_vault_side_on.png", "vlf_trials_ominous_vault_front_on.png",
 		},
 	},
 	node_ejecting = {
 		tiles = { "vlf_trials_ominous_vault_top_ejecting.png", "vlf_trials_ominous_vault_bottom.png",
-			"vlf_trials_ominous_vault_side_ejecting.png", "vlf_trials_ominous_vault_side_ejecting.png",
-			"vlf_trials_ominous_vault_side_ejecting.png", "vlf_trials_ominous_vault_front_ejecting.png",
+			"vlf_trials_ominous_vault_side_on.png", "vlf_trials_ominous_vault_side_on.png",
+			"vlf_trials_ominous_vault_side_on.png", "vlf_trials_ominous_vault_front_ejecting.png",
 		},
 	},
 	loot = {
@@ -151,4 +151,4 @@ vlf_trials.register_vault("vault",{
 			}
 		}
 }
-})]]
+})

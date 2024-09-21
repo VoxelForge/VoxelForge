@@ -367,6 +367,10 @@ function ARROW_ENTITY.on_step(self, dtime)
 					-- Reset deflection cooloff timer to prevent many deflections happening in quick succession
 					self._deflection_cooloff = 1.0
 				end
+				-- Set fire to arrows which pass through lava or fire.
+				if minetest.get_item_group(node.name, "set_on_fire") > 0 then
+					vlf_burning.set_on_fire (self.object, ARROW_TIMEOUT)
+				end
 			else
 
 				-- Node was walkable, make arrow stuck
@@ -385,23 +389,31 @@ function ARROW_ENTITY.on_step(self, dtime)
 				elseif (sdef and sdef._on_arrow_hit) then
 					sdef._on_arrow_hit(self._stuckin, self)
 				end
+				-- Extinguish this stuck arrow.
+				--vlf_burning.extinguish (self.object)
 			end
-		elseif (def and def.liquidtype ~= "none") then
-			-- Slow down arrow in liquids
-			local v = def.liquid_viscosity
-			if not v then
-				v = 0
+		else
+		    if (def and def.liquidtype ~= "none") then
+				-- Slow down arrow in liquids
+				local v = def.liquid_viscosity
+				if not v then
+					v = 0
+				end
+				--local old_v = self._viscosity
+				self._viscosity = v
+				local vpenalty = math.max(0.1, 0.98 - 0.1 * v)
+				if math.abs(vel.x) > 0.001 then
+					vel.x = vel.x * vpenalty
+				end
+				if math.abs(vel.z) > 0.001 then
+					vel.z = vel.z * vpenalty
+				end
+				self.object:set_velocity(vel)
 			end
-			--local old_v = self._viscosity
-			self._viscosity = v
-			local vpenalty = math.max(0.1, 0.98 - 0.1 * v)
-			if math.abs(vel.x) > 0.001 then
-				vel.x = vel.x * vpenalty
+			-- Set fire to arrows which pass through lava or fire.
+			if minetest.get_item_group(node.name, "set_on_fire") > 0 then
+				vlf_burning.set_on_fire (self.object, ARROW_TIMEOUT)
 			end
-			if math.abs(vel.z) > 0.001 then
-				vel.z = vel.z * vpenalty
-			end
-			self.object:set_velocity(vel)
 		end
 	end
 

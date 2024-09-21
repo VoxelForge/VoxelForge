@@ -452,8 +452,98 @@ local skeleton_horse = table.merge(horse, {
 		distance = 16,
 	},
 	harmed_by_heal = true,
+	on_spawn = function(self)
+		 self:jock_to_other("mobs_mc:skeleton", self, vector.new(0,0,0), vector.new(0,0,0))
+		 return true
+	end,
 })
 vlf_mobs.register_mob("mobs_mc:skeleton_horse", skeleton_horse)
+
+local skeleton_horse_trap = {
+	description = S("Skeleton Trap Horse"),
+	type = "animal",
+	spawn_class = "passive",
+	spawn_in_group_min = 2,
+	spawn_in_group = 6,
+	visual = "mesh",
+	mesh = "mobs_mc_horse.b3d",
+	visual_size = {x=3.0, y=3.0},
+	collisionbox = {-0.69825, -0.01, -0.69825, 0.69825, 1.59, 0.69825},
+	runaway = true,
+	run_velocity = 2,
+	follow_velocity = 1.5,
+	animation = {
+		stand_start = 0, stand_end = 0, stand_speed = 25,
+		walk_start = 0, walk_end = 40, walk_speed = 25,
+		run_start = 0, run_end = 40, run_speed = 50,
+	},
+	breath_max = -1,
+	armor = {undead = 100, fleshy = 100},
+	textures = {{"blank.png", "mobs_mc_horse_skeleton.png", "blank.png"}},
+	drops = {
+		{name = "vlf_mobitems:bone",
+		chance = 1,
+		min = 0,
+		max = 2,},
+	},
+	sounds = {
+		random = "mobs_mc_skeleton_random",
+		death = "mobs_mc_skeleton_death",
+		damage = "mobs_mc_skeleton_hurt",
+		eat = "mobs_mc_animal_eat_generic",
+		base_pitch = 0.95,
+		distance = 16,
+	},
+	fear_height = 4,
+	fly = false,
+	walk_chance = 60,
+	view_range = 16,
+	passive = true,
+	hp_min = 15,
+	hp_max = 30,
+	xp_min = 1,
+	xp_max = 3,
+	floats = 1,
+	makes_footstep_sound = true,
+	jump = true,
+	jump_height = 5.75,
+	harmed_by_heal = true,
+	do_custom = function(self, dtime)
+		local pos = self.object:get_pos()
+		local radius = 10
+
+		local players = minetest.get_connected_players()
+
+		for _, player in ipairs(players) do
+			local player_pos = player:get_pos()
+
+			-- Check if the player is within 10 nodes radius
+			if vector.distance(pos, player_pos) <= radius then
+				vlf_lightning.strike(pos)
+				return
+			end
+		end
+	end,
+	_on_lightning_strike = function(self)
+		local function get_random_position(center, radius)
+			local random_offset_x = math.random(-radius, radius)
+			local random_offset_z = math.random(-radius, radius)
+			local position = vector.new(center.x + random_offset_x, center.y, center.z + random_offset_z)
+			return position
+		end
+		local radius = 10
+		local center_position = self.object:get_pos()
+		for i = 1, 4 do
+			local spawn_pos = get_random_position(center_position, radius)
+			minetest.add_entity(spawn_pos, "mobs_mc:skeleton_horse")
+		end
+		vlf_util.replace_mob(self.object, "mobs_mc:skeleton_horse")
+		--self:jock_other("mobs_mc:skeleton", self, vector.new(0,0,0), vector.new(0,0,0))
+		return true
+	end,
+}
+
+vlf_mobs.register_mob("mobs_mc:skeleton_horse_trap", skeleton_horse_trap)
 
 vlf_mobs.register_mob("mobs_mc:zombie_horse", table.merge(skeleton_horse, {
 	description = S("Zombie Horse"),

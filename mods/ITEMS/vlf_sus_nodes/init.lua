@@ -201,6 +201,7 @@ minetest.register_tool("vlf_sus_nodes:brush", {
 	_doc_items_hidden = false,
 	inventory_image = "vlf_sus_nodes_brush.png",
 	groups = { tool=1, brush = 1, dig_speed_class=0, enchantability=0 },
+	uses = 100,
 	on_use = brush_node,
 	sound = { breaks = "default_tool_breaks" },
 	_vlf_toollike_wield = true,

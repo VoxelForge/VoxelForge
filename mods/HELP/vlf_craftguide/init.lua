@@ -977,7 +977,6 @@ end
 
 minetest.after(0, get_init_items)
 
-
 minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if formname == "vlf_craftguide" then
 		on_receive_fields(player, fields)

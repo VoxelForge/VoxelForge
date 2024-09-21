@@ -550,7 +550,9 @@ local function register_entity(entity_id, mesh, textures, drop, on_rightclick, o
 
 		-- Give achievement when player reached a distance of 1000 nodes from the start position
 		if self._driver and (vector.distance(self._start_pos, pos) >= 1000) then
-			awards.unlock(self._driver, "vlf:onARail")
+			if minetest.settings:get_bool('legacy_achievements', true) then
+				awards.unlock(self._driver, "vlf:onARail")
+			end
 		end
 
 

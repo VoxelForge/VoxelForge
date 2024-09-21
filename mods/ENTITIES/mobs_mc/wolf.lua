@@ -180,6 +180,7 @@ local wolf = {
 	reach = 2,
 	attack_type = "dogfight",
 	fear_height = 4,
+	follow = { "vlf_mobitems:bone" },
 	texture_holder = "",
 	on_rightclick = function(self, clicker)
 		-- Try to tame wolf (intentionally does NOT use vlf_mobs.feed_tame)
@@ -528,32 +529,3 @@ vlf_mobs.spawn_setup({
 })
 
 vlf_mobs.register_egg("mobs_mc:wolf", S("Wolf"), "#d7d3d3", "#ceaf96", 0)
-
-minetest.register_abm({
-	label = "Armadillo Scute Generation in Biomes Containing 'Savanna', 'Badlands', or 'Mesa'",
-	nodenames = {"group:soil", "group:sand"},  -- Nodes to check that are not air (like soil or sand)
-	neighbors = {"air"},  -- Checks nodes adjacent to air
-	interval = 40,  -- Time interval in seconds
-	chance = 800,  -- Chance for the action to occur
-	catch_up = false,  -- Prevents the ABM from catching up if it was inactive for a while
-	action = function(pos, node)
-		local biome_data = minetest.get_biome_data(pos)
-		if biome_data then
-			local biome_name = minetest.get_biome_name(biome_data.biome):lower()
-			-- Check if 'savanna', 'badlands', or 'mesa' is in the biome name (case insensitive)
-			if string.find(biome_name, "savanna") or string.find(biome_name, "badlands") or string.find(biome_name, "mesa") then
-				-- Check for nodes besides air in allowed biomes
-				local positions = minetest.find_nodes_in_area(
-				vector.add(pos, {x = -1, y = -1, z = -1}),
-				vector.add(pos, {x = 1, y = 1, z = 1}),
-				{"group:soil", "group:sand"}  -- Ensure it's not air; soil and sand groups are used here
-				)
-				if #positions > 0 then
-				-- Place the armadillo scute item
-				minetest.add_item(pos, "vlf_mobitems:armadillo_scute")
-				end
-			end
-		end
-	end,
-})
-

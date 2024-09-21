@@ -4,6 +4,13 @@
 --License for code WTFPL and otherwise stated in readmes
 mobs_mc = {}
 
+local blacklisted_entities = {"mobs_mc:zombie", "mobs_mc:baby_zombie", --[["mobs_mc:drowned", "mobs_mc:phantom"]] "mobs_mc:husk", "mobs_mc:baby_husk", "mobs_mc:skeleton_horse",
+				"mobs_mc:skeleton_horse_trap", "mobs_mc:stray", "mobs_mc:wither", "mobs_mc:witherskeleton", "mobs_mc:zombie_horse", "mobs_mc:villager_zombie",
+				"mobs_mc:zombified_piglin", "mobs_mc:zoglin"}
+local speed_threshold = 5.0
+local revert_delay = 5
+local check_delay = 2
+
 local pr = PseudoRandom(os.time()*5)
 
 local offsets = {}
@@ -48,6 +55,111 @@ mobs_mc.firefly_animation = function()
 		end
 	end
 end
+
+mobs_mc.armadillo_scare = function()
+	return function(self, dtime)
+		local pos = self.object:get_pos()
+		local objs = minetest.get_objects_inside_radius(pos, self.view_range)
+		local changed_to_tb = false
+		self:set_velocity(0.14)
+
+		-- Function to check if a table contains a value
+		local function table_contains(tbl, value)
+			for _, v in ipairs(tbl) do
+				if v == value then
+					return true
+				end
+			end
+			return false
+		end
+
+
+		for _, obj in ipairs(objs) do
+			local lua_entity = obj:get_luaentity()
+
+			-- Check if the object is a player or blacklisted mob
+			if (obj:is_player() or (lua_entity and table_contains(blacklisted_entities, lua_entity.name))) then
+				local velocity = obj:get_velocity()
+				local speed = vector.length(velocity)
+
+				-- If player or blacklisted mob is running toward the armadillo
+				if obj:is_player() and speed > speed_threshold then
+					local dir_to_armadillo = vector.direction(obj:get_pos(), pos)
+					local dot_product = vector.dot(velocity, dir_to_armadillo)
+
+					if dot_product > 0 then
+						self.object:set_properties({textures = {"mobs_mc_armadillo-hiding.png"}})
+						self.scared = true
+						changed_to_tb = true
+						self:set_velocity(0.0)
+						break
+					end
+				elseif lua_entity then
+					-- Blacklisted entity detected
+					self.object:set_properties({textures = {"mobs_mc_armadillo-hiding.png"}})
+					self.scared = true
+					changed_to_tb = true
+					self:set_velocity(0.0)
+					break
+				end
+			end
+		end
+
+		-- If no threats are detected, change back to t-c.png, then to t.png
+		if not changed_to_tb and self.scared then
+			minetest.after(check_delay, function()
+				self.scared = false
+				self.object:set_properties({textures = {"mobs_mc_armadillo-peaking.png"}})
+				self:set_velocity(0.0)
+			end)
+			minetest.after(revert_delay, function()
+				-- Check if the armadillo is still not scared
+				self.scared = false
+				if not self.scared then
+					self.object:set_properties({textures = {"mobs_mc_armadillo.png"}})
+					self:set_velocity(0.14)
+				end
+			end)
+		end
+		self.egg_timer = (self.egg_timer or math.random(300, 600)) - dtime
+		if self.egg_timer > 0 then
+			return
+		end
+		self.egg_timer = nil
+		local pos = self.object:get_pos()
+		minetest.add_item(pos, "vlf_mobitems:armadillo_scute")
+	end
+end
+
+mobs_mc.armadillo_damage = function()
+	return function(self, damage, reason)
+		self.health = self.health - damage
+		local changed_to_tb
+		-- Blacklisted entity detected
+		self.object:set_properties({textures = {"mobs_mc_armadillo-hiding.png"}})
+		self.scared = true
+		changed_to_tb = true
+		self:set_velocity(0.0)
+
+		-- If no threats are detected, change back to t-c.png, then to t.png
+		if not changed_to_tb and self.scared then
+			minetest.after(check_delay, function()
+				self.scared = false
+				self.object:set_properties({textures = {"mobs_mc_armadillo-peaking.png"}})
+				self:set_velocity(0.0)
+			end)
+			minetest.after(revert_delay, function()
+				-- Check if the armadillo is still not scared
+				self.scared = false
+				if not self.scared then
+					self.object:set_properties({textures = {"mobs_mc_armadillo.png"}})
+					self:set_velocity(0.14)
+				end
+			end)
+		end
+	end
+end
+
 mobs_mc.make_owner_teleport_function = function(dist, teleport_check_interval)
 	return function(self, dtime)
 		-- No teleportation if no owner or if sitting

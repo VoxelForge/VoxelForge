@@ -96,7 +96,7 @@ minetest.register_globalstep(function(dtime)
                 if below.name == "vlf_nether:soul_sand" or below.name == "vlf_nether:magma" then
                     if node.name == "vlf_core:water_source" then
                         local dir = below.name == "vlf_nether:soul_sand" and 1 or -1
-                        local speed = below.name == "vlf_nether:soul_sand" and 2 or 0.5
+                        local speed = below.name == "vlf_nether:soul_sand" and 1 or 0.5
 
                         -- Check if the top of the entity's head is in water
                         local entity_height = entity:get_properties().collisionbox[5]
