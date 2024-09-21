@@ -134,7 +134,6 @@ end
 mobs_mc.armadillo_damage = function()
 	return function(self, damage, reason)
 		self.health = self.health - damage
-		local pos = self.object:get_pos()
 		local changed_to_tb
 		-- Blacklisted entity detected
 		self.object:set_properties({textures = {"mobs_mc_armadillo-hiding.png"}})

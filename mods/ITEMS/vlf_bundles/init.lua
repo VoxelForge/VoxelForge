@@ -27,7 +27,7 @@ local function on_leftclick(itemstack)
 	local meta = itemstack:get_meta()
 	local stored_items = minetest.deserialize(meta:get_string("stored_items")) or {}
 	local item_count = #stored_items
-    
+
 	-- Create a table to group items by name
 	local item_groups = {}
 	for _, item in ipairs(stored_items) do
