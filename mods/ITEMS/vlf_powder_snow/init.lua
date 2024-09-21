@@ -127,7 +127,9 @@ vlf_player.register_globalstep_slow(function(player, dtime)
 	local name = player:get_player_name()
 	local player_pos = player:get_pos()
 	local freezing_data = freezing_players[name]
-
+	if minetest.get_node(player_pos).name == "vlf_powder_snow:powder_snow" and player_has_leather_armor(player) then
+		awards.unlock(player:get_player_name(), "vlf:walk_on_powder_snow_with_leather_boots")
+	end
 	if minetest.get_node(player_pos).name == "vlf_powder_snow:powder_snow" and not player_has_leather_armor(player) then
 		if not freezing_data then
 			freezing_players[name] = {time_in_snow = 0, hud_ids = {}}
@@ -163,4 +165,8 @@ vlf_player.register_globalstep_slow(function(player, dtime)
 			end
 		end
 	end
+end)
+
+minetest.register_on_leaveplayer(function(player)
+	freezing_players[player] = nil
 end)

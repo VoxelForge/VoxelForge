@@ -26,7 +26,6 @@ vlf_itemframes.tpl_node = {
 	node_box = fbox,
 	selection_box = fbox,
 	collision_box = fbox,
-	use_texture_alpha = "opaque",
 	paramtype = "light",
 	paramtype2 = "wallmounted",
 	sunlight_propagates = true,
@@ -84,6 +83,25 @@ local function get_map_id(itemstack)
 	return map_id
 end
 
+--Node functions
+function vlf_itemframes.tpl_node.on_rightclick(pos, node, clicker, ostack, pointed_thing)
+	local name = clicker:get_player_name()
+	if minetest.is_protected(pos, name) then
+		minetest.record_protection_violation(pos, name)
+		return ostack
+	end
+	local pstack = ItemStack(ostack)
+	local itemstack = pstack:take_item()
+	local inv = minetest.get_meta(pos):get_inventory()
+	drop_item(pos)
+	inv:set_stack("main", 1, itemstack)
+	update_entity(pos)
+	if not minetest.is_creative_enabled(clicker:get_player_name()) then
+		return pstack
+	end
+	return ostack
+end
+
 local function update_entity(pos)
 	if not pos then return end
 	local inv = minetest.get_meta(pos):get_inventory()
@@ -103,24 +121,6 @@ local function update_entity(pos)
 end
 vlf_itemframes.update_entity = update_entity
 
---Node functions
-function vlf_itemframes.tpl_node.on_rightclick(pos, node, clicker, ostack, pointed_thing)
-	local name = clicker:get_player_name()
-	if minetest.is_protected(pos, name) then
-		minetest.record_protection_violation(pos, name)
-		return ostack
-	end
-	local pstack = ItemStack(ostack)
-	local itemstack = pstack:take_item()
-	local inv = minetest.get_meta(pos):get_inventory()
-	drop_item(pos)
-	inv:set_stack("main", 1, itemstack)
-	update_entity(pos)
-	if not minetest.is_creative_enabled(clicker:get_player_name()) then
-		return pstack
-	end
-	return ostack
-end
 
 vlf_itemframes.tpl_node.on_destruct = remove_entity
 
@@ -232,6 +232,7 @@ vlf_itemframes.register_itemframe("frame", {
 		_doc_items_longdesc = S("Item frames are decorative blocks in which items can be placed."),
 		_doc_items_usagehelp = S("Just place any item on the item frame. Use the item frame again to retrieve the item."),
 		tiles = { "vlf_itemframes_item_frame.png" },
+		use_texture_alpha = "opaque",
 		inventory_image = "vlf_itemframes_item_frame.png",
 		wield_image = "vlf_itemframes_item_frame.png",
 	},
@@ -244,24 +245,26 @@ vlf_itemframes.register_itemframe("glow_frame", {
 		_doc_items_longdesc = S("Item frames are decorative blocks in which items can be placed."),
 		_doc_items_usagehelp = S("Just place any item on the item frame. Use the item frame again to retrieve the item."),
 		tiles = { "vlf_itemframes_glow_item_frame.png" },
+		use_texture_alpha = "opaque",
 		inventory_image = "vlf_itemframes_glow_item_frame.png",
 		wield_image = "vlf_itemframes_glow_item_frame.png",
 	},
 	object_properties = { glow = 15 },
 })
 
-awards.register_achievement("vlf_itemframes:glowframe", {
-	title = S("Glow and Behold!"),
-	description = S("Craft a glow item frame."),
-	icon = "vlf_itemframes_glow_item_frame.png",
-	trigger = {
-		type = "craft",
-		item = "vlf_itemframes:glow_item_frame",
-		target = 1
+vlf_itemframes.register_itemframe("invis_frame", {
+	node = {
+		description = S("Invis Frame"),
+		_tt_help = S("Can hold an item and is Invis"),
+		_doc_items_longdesc = S("Item frames are decorative blocks in which items can be placed."),
+		_doc_items_usagehelp = S("Just place any item on the item frame. Use the item frame again to retrieve the item."),
+		tiles = { "blank.png" },
+		use_texture_alpha = "clip",
+		inventory_image = "blank.png",
+		wield_image = "vlf_itemframes_item_frame.png",
 	},
-	type = "Advancement",
-	group = "Overworld",
 })
+
 
 minetest.register_lbm({
 	label = "Respawn item frame item entities",

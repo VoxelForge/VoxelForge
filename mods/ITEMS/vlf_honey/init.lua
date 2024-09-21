@@ -119,7 +119,7 @@ minetest.register_node("vlf_honey:honey_block", {
 	tiles = {"vlf_honey_block_side.png"},
 	is_ground_content = false,
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "blend" or true,
-	groups = { handy = 1, deco_block = 1, fall_damage_add_percent = -80 },
+	groups = { handy = 1, deco_block = 1, fall_damage_add_percent = -80, climbable = 1, disable_jump = 1, },
 	paramtype = "light",
 	drawtype = "nodebox",
 	node_box = {
@@ -130,9 +130,20 @@ minetest.register_node("vlf_honey:honey_block", {
 		}
 	},
 	selection_box = {
-		type = "regular",
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
+		}
+	},
+	collision_box = {
+		type = "fixed",
+		fixed = {
+			{-0.35, -0.5, -0.35, 0.35, 0.5, 0.35},
+		}
 	},
 	_vlf_blast_resistance = 0,
+	climbable = true,
+	walkable = true,
 	_vlf_hardness = 0,
 	mvps_sticky = function(pos, node, piston_pos)
 		local connected = {}

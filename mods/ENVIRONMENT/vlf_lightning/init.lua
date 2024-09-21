@@ -158,30 +158,35 @@ function vlf_lightning.strike_func(pos, pos2, objects)
 	-- trigger revert of skybox
 	ttl = 0.1
 
-	-- Events caused by the lightning strike: Fire, damage, mob transformations, rare skeleton spawn
+	-- Events caused by the lightning strike: Fire, damage, mob transformations, rare skeleton horse trap spawn
 
 	pos2.y = pos2.y + 1/2
 	if minetest.get_item_group(minetest.get_node({ x = pos2.x, y = pos2.y - 1, z = pos2.z }).name, "liquid") < 1 then
 		if minetest.get_node(pos2).name == "air" then
 			-- Low chance for a lightning to spawn skeleton horse + skeletons
-			if rng:next(1,100) <= 3 then
-				minetest.add_entity(pos2, "mobs_mc:skeleton_horse")
+			
+			local is_trap_nearby = false
+			local objects_nearby = minetest.get_objects_inside_radius(pos2, 2)
 
-				local angle, posadd
-				angle = math.random(0, math.pi*2)
-				for i=1,3 do
-					posadd = { x=math.cos(angle),y=0,z=math.sin(angle) }
-					posadd = vector.normalize(posadd)
-					local mob = minetest.add_entity(vector.add(pos2, posadd), "mobs_mc:skeleton")
-					if mob then
-						mob:set_yaw(angle-math.pi/2)
+			for _, obj in ipairs(objects_nearby) do
+				local luaentity = obj:get_luaentity()
+				if luaentity and not obj:is_player() and luaentity.is_mob then
+					-- Check if it's a skeleton horse trap
+					if luaentity.name == "mobs_mc:skeleton_horse_trap" then
+						is_trap_nearby = true
+						break -- Exit loop if a trap is found
 					end
-					angle = angle + (math.pi*2) / 3
 				end
+			end
 
-			-- Cause a fire
-			else
-				minetest.set_node(pos2, { name = "vlf_fire:fire" })
+			-- Set fire only if no skeleton horse trap is nearby
+			if not is_trap_nearby then
+				if rng:next(1, 100) >= 4 then
+					minetest.set_node(pos2, { name = "vlf_fire:fire" })
+				end
+			end
+			if rng:next(1,100) <= 3 then -- 3% chance
+				minetest.add_entity(pos2, "mobs_mc:skeleton_horse_trap")
 			end
 		end
 	end

@@ -64,6 +64,15 @@ function mob_class:jock_to(mob, reletive_pos, rot)
 	return jock
 end
 
+function mob_class:jock_to_other(jockey, mob, relative_pos, rot)
+    mob.jockey = jockey
+    local jock = minetest.add_entity(mob.object:get_pos(), jockey)
+    if not jock then return end
+    jock:get_luaentity().docile_by_day = false
+    jock:get_luaentity().ridden_by_jock = true
+    mob.object:set_attach(jock, "", relative_pos, rot)
+end
+
 function mob_class:get_staticdata()
 	local pos = self.object:get_pos()
 	if not vlf_mobs.check_vector(pos) then
@@ -262,7 +271,7 @@ function mob_class:mob_activate(staticdata, dtime)
 		self.nametag = def.nametag
 	end
 
-	self.base_size = self.object:get_properties().visual_size
+	self.base_size = self.base_size or {x = 1, y = 1, z = 1}
 
 	if self.base_texture then
 		self:set_properties({textures = self.base_texture})

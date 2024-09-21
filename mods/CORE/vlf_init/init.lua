@@ -507,28 +507,28 @@ end
 minetest.register_globalstep(function(dtime)
 	for _, player in ipairs(minetest.get_connected_players()) do
         local pos = player:get_pos()
-        for _, entity in ipairs(minetest.get_objects_inside_radius(pos, 10)) do
-		local controls = player:get_player_control()
-		--local pos = player:get_pos()
-		local node = minetest.get_node(pos)
-		local is_in_climable
+        	for _, entity in ipairs(minetest.get_objects_inside_radius(pos, 10)) do
+			local controls = player:get_player_control()
+			--local pos = player:get_pos()
+			local node = minetest.get_node(pos)
+			local is_in_climable
 
-		if minetest.get_item_group(node.name, "climbable") > 0 then
-			if not controls.up and not controls.down and not controls.jump then
-				is_in_climable = true
-			else
-				is_in_climable = true
-				minetest.after(0.5, function()
-					is_in_climable = false
-				end)
+			if minetest.get_item_group(node.name, "climbable") > 0 then
+				if not controls.up and not controls.down and not controls.jump then
+					is_in_climable = true
+				else
+					is_in_climable = true
+					minetest.after(1, function()
+						is_in_climable = false
+					end)
+				end
 			end
-		end
-		if is_in_climable == true then
-			local vel = player:get_velocity()
-			if vel.y > -0.2 then
-				player:add_velocity({x = 0, y = -0.2, z = 0})
+			if is_in_climable == true then
+				local vel = player:get_velocity()
+				if vel.y > -0.2 then
+					player:add_velocity({x = 0, y = -0.2, z = 0})
+				end
 			end
-		end
 		end
 	end
 end)
@@ -546,3 +546,122 @@ minetest.register_chatcommand("get_biome_at_pos", {
         end
 end
 })
+
+--[[minetest.register_on_mods_loaded(function()
+	local previous_version = minetest.settings:get("voxelforge_prev_version")
+	if previous_version ~= "24w39a" then
+		minetest.settings:set("voxelforge_prev_version", "24w39a")
+		error("                                                                                                                                                                                                                                                       This World was last playing in version "..tostring(previous_version).."; you are on version 24w39a. Please make a backup in case you experience world corruptions. If you would like to procede anyway, you can click out of this error and reload                                                                                                                                                                                                                            ")
+	end
+end)]]
+    
+--[[minetest.register_on_mods_loaded(function()
+	local worldpath = minetest.get_worldpath()
+	local file_path = worldpath .. "/current_version.lua"
+	local file = io.open(file_path, "w")
+	local file_read = io.open(file_path, "r")
+	if not file then
+		minetest.chat_send_player(player:get_player_name(), "Failed to export schematic.")
+		return
+	end
+	if not io.open(file_path, "r") then
+		file:write("")
+	end
+	local version = dofile(worldpath.."/current_version.lua")
+	if version then
+		error("Version File found")
+	end
+	local file_name = file_read:read("*a")
+	if file_name.current_version.version then
+		error("Version:" .. tostring(version) .. "")
+	end
+	if file_name and file_name.current_version.version ~= "24w41a" and file_name.current_version.version ~= nil then
+		minetest.settings:set("voxelforge_prev_version", "24w39a")
+-error("                                                                                                                                                                                                                                                       This World was last playing in version "..tostring(previous_version).."; you are on version 24w39a. Please make a backup in case you experience world corruptions. If you would like to procede anyway, you can click out of this error and reload                                                                                                                                                                                                                            ")
+	end
+	file:write("return {\n")
+	file:write("current_version = { version='24w39a' }\n")
+	file:write("}")
+	file:close()
+end)]]
+
+--[[minetest.register_on_mods_loaded(function()
+	local worldpath = minetest.get_worldpath()
+	local file_path = worldpath .. "/current_version.lua"
+	local file = io.open(file_path, "r")
+	local wfile = io.open(file_path, "w")
+
+	-- If the file doesn't exist, create it with the default version
+	if not file then
+		local new_file = io.open(file_path, "w")
+		new_file:write("return {\n")
+		new_file:write("current_version = { version = '24w39a' }\n")
+		new_file:write("}\n")
+		new_file:close()
+		file = io.open(file_path, "r")
+	end
+
+	-- Load the table from the Lua file
+	local version_data = dofile(file_path)
+	file:close()
+
+	-- Check if the file contains valid version data
+	if version_data and version_data.current_version and version_data.current_version.version then
+		local current_version = version_data.current_version.version
+		-- If the version isn't 24w41a, handle it as a potential issue
+		if current_version ~= "24w41a" then
+			minetest.settings:set("voxelforge_prev_version", current_version)
+			error("                                                                                                                                                                                                                                                       This World was last playing in version "..tostring(previous_version).."; you are on version 24w39a. Please make a backup in case you experience world corruptions. If you would like to procede anyway, you can click out of this error and reload                                                                                                                                                                                                                            ")
+			--wfile:write("return {\n")
+			--wfile:write("current_version = { version = '24w39a' }\n")
+			--wfile:write("}\n")
+			--wfile:close()
+		end
+	else
+		error("Version information is missing or incorrect in current_version.lua")
+	end
+end)
+]]
+
+minetest.register_on_mods_loaded(function()
+    local worldpath = minetest.get_worldpath()
+    local file_path = worldpath .. "/current_version.lua"
+    
+    -- Try to open the file for reading
+    local file = io.open(file_path, "r")
+    
+    -- If the file doesn't exist, create it with the default version
+    if not file then
+        local new_file = io.open(file_path, "w")
+        new_file:write("return {\n")
+        new_file:write("current_version = { version = '24w41a' }\n")
+        new_file:write("}\n")
+        new_file:close()
+        file = io.open(file_path, "r") -- Reopen the file for reading after creation
+    end
+
+    -- Load the table from the Lua file
+    local version_data = dofile(file_path)
+    file:close() -- Close the file after reading
+
+    -- Check if the file contains valid version data
+    if version_data and version_data.current_version and version_data.current_version.version then
+        local current_version = version_data.current_version.version
+        
+        -- If the version isn't 24w41a, handle it as a potential issue
+        if current_version ~= "24w41a" then
+             local wfile = io.open(file_path, "w")
+             wfile:write("return {\n")
+             wfile:write("current_version = { version = '24w41a' }\n")
+             wfile:write("}\n")
+             wfile:close()
+            error("This World was last played in version "..tostring(current_version).."; you are on version 24w39a. Please make a backup in case you experience world corruptions. If you would like to proceed anyway, you can click out of this error and reload.")
+        --else
+            -- If the version is correct, no action needed, but you can update the version if required
+            -- Uncomment the lines below to update the version to "24w41a"
+        end
+    else
+        error("Version information is missing or incorrect in current_version.lua")
+    end
+end)
+

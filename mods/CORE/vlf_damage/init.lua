@@ -1,3 +1,4 @@
+local modpath = minetest.get_modpath("vlf_damage")
 vlf_damage = {
 	modifiers = {},
 	damage_callbacks = {},
@@ -323,3 +324,5 @@ end)
 minetest.register_on_mods_loaded(function()
 	table.sort(vlf_damage.modifiers, function(a, b) return a.priority < b.priority end)
 end)
+
+dofile(modpath.."/falling.lua")

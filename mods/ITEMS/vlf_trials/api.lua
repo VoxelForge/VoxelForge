@@ -69,7 +69,7 @@ local function eject_items(pos, name, list)
 end
 
 local tpl = {
-	drawtype = "allfaces_optional",
+	--drawtype = "allfaces_optional",
 	paramtype2 = "facedir",
 	paramtype = "light",
 	description = S("Vault"),
@@ -78,6 +78,7 @@ local tpl = {
 	_doc_items_usagehelp = S("A vault ejects loot when opened with the right key. It can only be opened once by each player."),
 	groups = {pickaxey=1, material_stone=1, deco_block=1, vault = 1},
 	is_ground_content = false,
+	use_texture_alpha = "clip",
 	drop = "",
 	_vlf_hardness = 50,
 	_vlf_blast_resistance = 50,
@@ -199,6 +200,11 @@ function vlf_trials.register_vault(name, def)
 				minetest.swap_node(pos, node)
 				if not minetest.is_creative_enabled(clicker:get_player_name()) then
 					itemstack:take_item()
+				end
+				if def.key == "vlf_trials:trial_key" then
+					awards.unlock(clicker:get_player_name(), "vlf:under_lock_and_key")
+				elseif def.key == "vlf_trials:ominous_trial_key" then
+					awards.unlock(clicker:get_player_name(), "vlf:revaulting")
 				end
 				return itemstack
 			end

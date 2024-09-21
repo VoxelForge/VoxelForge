@@ -271,3 +271,140 @@ vlf_tools.register_set("netherite", {
         }
     }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--Wood set
+vlf_tools.register_axe("wood", {
+    craftable = true,
+    material = "group:wood",
+    uses = 60,
+    level = 1,
+    speed = 2,
+    max_drop_level = 1,
+    groups = { dig_class_speed = 2, enchantability = 15 }
+},{
+    ["axe"] = {
+        description = S("Wooden Axe"),
+        inventory_image = "default_tool_woodaxe.png",
+        tool_capabilities = {
+            full_punch_interval = 1.25,
+            damage_groups = { fleshy = 2 }
+        }
+    }
+}, { _doc_items_hidden = false, _vlf_burntime = 10 })
+
+--Stone set
+vlf_tools.register_axe("stone", {
+    craftable = true,
+    material = "group:cobble",
+    uses = 132,
+    level = 3,
+    speed = 4,
+    max_drop_level = 3,
+    groups = { dig_class_speed = 3, enchantability = 5 }
+}, {
+    ["axe"] = {
+        description = S("Stone Axe"),
+        inventory_image = "default_tool_stoneaxe.png",
+        tool_capabilities = {
+            full_punch_interval = 1.25,
+            damage_groups = { fleshy = 9 }
+        }
+    }
+})
+
+--Iron set
+vlf_tools.register_axe("iron", {
+    craftable = true,
+    material = "vlf_core:iron_ingot",
+    uses = 251,
+    level = 4,
+    speed = 6,
+    max_drop_level = 4,
+    groups = { dig_class_speed = 4, enchantability = 14 }
+}, {
+    ["axe"] = {
+        description = S("Iron Axe"),
+        inventory_image = "default_tool_steelaxe.png",
+        tool_capabilities = {
+            full_punch_interval = 1.11111111,
+            damage_groups = { fleshy = 9 }
+        }
+    }
+}, { _vlf_cooking_output = "vlf_core:iron_nugget" })
+
+--Gold set
+vlf_tools.register_axe("gold", {
+    craftable = true,
+    material = "vlf_core:gold_ingot",
+    uses = 33,
+    level = 2,
+    speed = 12,
+    max_drop_level = 2,
+    groups = { dig_class_speed = 6, enchantability = 22 }
+}, {
+    ["axe"] = {
+        description = S("Golden Axe"),
+        inventory_image = "default_tool_goldaxe.png",
+        tool_capabilities = {
+            full_punch_interval = 1,
+            damage_groups = { fleshy = 7 }
+        }
+    }
+}, { _vlf_cooking_output = "vlf_core:gold_nugget" })
+
+--Diamond set
+vlf_tools.register_axe("diamond", {
+    craftable = true,
+    material = "vlf_core:diamond",
+    uses = 1562,
+    level = 5,
+    speed = 8,
+    max_drop_level = 5,
+    groups = { dig_class_speed = 5, enchantability = 10 }
+}, {
+    ["axe"] = {
+        description = S("Diamond Axe"),
+        inventory_image = "default_tool_diamondaxe.png",
+        tool_capabilities = {
+            full_punch_interval = 1,
+            damage_groups = { fleshy = 9 }
+        },
+        _vlf_upgradable = true,
+        _vlf_upgrade_item = "vlf_tools:axe_netherite"
+    }
+})
+
+--Netherite set
+vlf_tools.register_axe("netherite", {
+    craftable = false,
+    material = "vlf_nether:netherite_ingot",
+    uses = 2031,
+    level = 6,
+    speed = 9.5,
+    max_drop_level = 5,
+    groups = { dig_class_speed = 6, enchantability = 10, fire_immune = 1 }
+}, {
+    ["axe"] = {
+        description = S("Netherite Axe"),
+        inventory_image = "default_tool_netheriteaxe.png",
+        tool_capabilities = {
+            full_punch_interval = 1,
+            damage_groups = { fleshy = 10 }
+        }
+    }
+})

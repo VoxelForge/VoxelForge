@@ -247,3 +247,11 @@ vlf_structure_block_export_lua (.lua file schematic export) bool true
 # * edges: Show borders at the edges
 # * checkers: Checker pattern at the sides
 vlf_structure_block_border_style (Border style) enum edges edges,checkers
+
+[Legacy]
+# If enabled, old MineCraft achievments will exist.
+legacy_achievements (Legacy MineCraft Advancements) bool false
+
+[Version]
+# Controls the version number.
+voxelforge_prev_version (version logger) enum 24w38a 24w38a,24w39a

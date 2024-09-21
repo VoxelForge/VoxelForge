@@ -129,7 +129,7 @@ end
 
 vlf_tools.tool_place_funcs = {}
 
-for _,tool in pairs({"shovel","shears","axe","sword","pick"}) do
+for _,tool in pairs({"shovel","shears","sword","pick"}) do
 	vlf_tools.tool_place_funcs[tool] = function(itemstack,placer,pointed_thing)
 		return on_tool_place(itemstack,placer,pointed_thing,tool)
 	end
@@ -191,6 +191,90 @@ local function register_tool(setname, materialdefs, toolname, tooldefs, override
 	end
 end
 
+local function make_stripped_trunk(itemstack, placer, pointed_thing)
+    if pointed_thing.type ~= "node" then return end
+
+    local node = minetest.get_node(pointed_thing.under)
+    local node_name = minetest.get_node(pointed_thing.under).name
+
+    local noddef = minetest.registered_nodes[node_name]
+
+    if not noddef then
+        minetest.log("warning", "Trying to right click with an axe the unregistered node: " .. tostring(node_name))
+        return
+    end
+
+    if not placer:get_player_control().sneak and noddef.on_rightclick then
+        return minetest.item_place(itemstack, placer, pointed_thing)
+    end
+    if minetest.is_protected(pointed_thing.under, placer:get_player_name()) then
+        minetest.record_protection_violation(pointed_thing.under, placer:get_player_name())
+        return itemstack
+    end
+
+    if noddef._vlf_stripped_variant == nil then
+		return itemstack
+	else
+	if noddef.groups.door == 1 then
+			local pt_under = pointed_thing.under
+			if node_name:find("_b_") then
+				local top_pos = {x = pt_under.x, y = pt_under.y + 1, z = pt_under.z}
+				minetest.swap_node(top_pos, {name=noddef._vlf_stripped_variant:gsub("_b_", "_t_"), param2=node.param2})
+			elseif node_name:find("_t_") then
+				local bot_pos = {x = pt_under.x, y = pt_under.y - 1, z = pt_under.z}
+				minetest.swap_node(bot_pos, {name=noddef._vlf_stripped_variant:gsub("_t_", "_b_"), param2=node.param2})
+			end
+		end
+		minetest.swap_node(pointed_thing.under, {name=noddef._vlf_stripped_variant, param2=node.param2})
+		if minetest.get_item_group(node_name, "waxed") ~= 0 then
+			awards.unlock(placer:get_player_name(), "vlf:wax_off")
+		end
+		if node_name:find("vlf_copper") and node_name:find("bulb") then
+			awards.unlock(placer:get_player_name(), "vlf:lighten_up")
+		end
+		if not minetest.is_creative_enabled(placer:get_player_name()) then
+			-- Add wear (as if digging a axey node)
+			local toolname = itemstack:get_name()
+			local wear = vlf_autogroup.get_wear(toolname, "axey")
+			if wear then
+				itemstack:add_wear(wear)
+				tt.reload_itemstack_description(itemstack) -- update tooltip
+			end
+		end
+	end
+    return itemstack
+end
+
+local function register_axes(setname, materialdefs, toolname, tooldefs, overrides)
+	local mod = minetest.get_current_modname()
+	local itemstring = mod..":"..toolname.."_"..setname
+	local commondefs = vlf_tools.commondefs[toolname]
+	local tooldefs = table.merge({
+		_doc_items_longdesc = commondefs.longdesc,
+		_doc_items_usagehelp = commondefs.usagehelp,
+		_vlf_diggroups = get_tool_diggroups(materialdefs, toolname),
+		_vlf_toollike_wield = true,
+		_repair_material = materialdefs.material,
+		groups = table.merge(commondefs.groups, materialdefs.groups),
+		on_place = make_stripped_trunk,
+		sound = { breaks = "default_tool_breaks" },
+		wield_scale = wield_scale
+	}, tooldefs, overrides or {})
+
+	minetest.register_tool(itemstring, tooldefs)
+
+	if materialdefs.craftable then
+		for _, shapes in ipairs(vlf_tools.commondefs[toolname].craft_shapes) do
+			local recipe = replace_material_tag(shapes, materialdefs.material)
+
+			minetest.register_craft({
+				output = itemstring,
+				recipe = recipe
+			})
+		end
+	end
+end
+
 ---Used to add a new tool to all existing material sets. See [API.md](API.md) for more information.
 ---@param toolname string
 ---@param commondefs table
@@ -221,6 +305,16 @@ function vlf_tools.register_set(setname, materialdefs, tools, overrides)
 
 	for tool, defs in pairs(tools) do
 		register_tool(setname, materialdefs, tool, defs, overrides)
+	end
+end
+
+function vlf_tools.register_axe(setname, materialdefs, tools, overrides)
+	if not vlf_tools.sets[setname] then
+		vlf_tools.sets[setname] = materialdefs
+	end
+
+	for tool, defs in pairs(tools) do
+		register_axes(setname, materialdefs, tool, defs, overrides)
 	end
 end
 

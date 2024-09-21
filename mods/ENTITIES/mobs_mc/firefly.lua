@@ -4,68 +4,35 @@ local S = minetest.get_translator(minetest.get_current_modname())
 vlf_mobs.register_mob("mobs_mc:firefly", {
 	description = S("Firefly"),
 	type = "animal",
-	spawn_class = "ambient",
+	--spawn_class = "ambient",
 	can_despawn = true,
-	lifetimer = 660, -- 11 minutes of lifetime. Or just shy of one night full night.
+	lifetimer = 660, -- 11 minutes of lifetime. Or just shy of one full night.
 	passive = true,
 	hp_min = 1,
 	hp_max = 1,
 	collisionbox = {-0.01, -0.01, -0.01, 0.01, 0.01, 0.01},
 	visual = "sprite",
-	textures = {"mobs_mc_firefly_frame_0.png"},
+	textures = {"mobs_mc_firefly_frame_1.png"},
 	glow = 10,
 	visual_size = {x = 0.125, y = 0.0625},
-	sounds = {
-		-- No sounds for the firefly by default
-	},
 	walk_velocity = 0.3,
 	run_velocity = 0.3,
-	animation = {
-		stand_speed = 0,
-		stand_start = 0,
-		stand_end = 0,
-		walk_speed = 0,
-		walk_start = 0,
-		walk_end = 0,
-		run_speed = 0,
-		run_start = 0,
-		run_end = 0,
-		die_speed = 0,
-		die_start = 0,
-		die_end = 0,
-		die_loop = false,
-	},
 	walk_chance = 100,
 	fall_damage = 0,
 	sunlight_damage = 2,
 	view_range = 8,
-	fear_height = 0,
-	jump = false,
+	fear_height = 10,
+	jump = true,
 	fly = true,
-	makes_footstep_sound = false,
 	do_custom = mobs_mc.firefly_animation()
 })
 
--- Spawning Due to issues this can't be used. See code after this for spawning function.
---[[vlf_mobs.spawn_setup({
-	name = "mobs_mc:firefly",
-	dimension = "overworld",
-	type_of_spawning = "ground",
-	min_height = 3,
-	min_light = 1,
-	max_light = 5,
-	aoc = 80,
-	chance = 2400,
-	biomes = {
-		"SwampLand",
-		"MangroveSwamp",
-		"JungleEdge",
-		"Jungle",
-	},
-})]]
+-- spawn eggs
+vlf_mobs.register_egg("mobs_mc:firefly", S("Firefly"), "#113151", "#ddbfa2", 0)
 
 minetest.register_node("mobs_mc:firefly_spawner", {
 	description = "Firefly Spawner",
+	drawtype = "airlike",
 	tiles = {"blank.png"},
 	groups = {not_in_creative_inventory=1},
 	is_ground_content = true,
@@ -75,6 +42,8 @@ minetest.register_node("mobs_mc:firefly_spawner", {
 	buildable_to = true,
 	floodable = false,
 	use_texture_alpha = "clip",
+	light_propagates = true,
+	sunlight_propagates = true,
 	post_effect_color = {a=0},
 })
 
@@ -99,7 +68,7 @@ minetest.register_lbm({
 				break
 			end
 		end
-		if light <= light <= 4 then
+		if light <= 4 then
 			if biome_match then
 				local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
 				if minetest.get_node(pos_below).name == "air" or minetest.get_node(pos_below).name == "mobs_mc:firefly_spawner" then
@@ -114,6 +83,3 @@ minetest.register_lbm({
 		end
 	end,
 })
-
--- spawn eggs
-vlf_mobs.register_egg("mobs_mc:firefly", S("Firefly"), "#113151", "#ddbfa2", 0)

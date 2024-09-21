@@ -237,3 +237,116 @@ minetest.register_tool("vlf_armor:elytra", {
 	_vlf_armor_element = "torso",
 	_vlf_armor_texture = "vlf_armor_elytra.png"
 })
+
+--[[ Function to check the player's inventory for a specific item
+local function check_inventory_for_item(player)
+	local inventory = player:get_inventory()
+	local player_name = player:get_player_name()
+	-- Loop through all the lists in the player's inventory
+	for list_name, list in pairs(inventory:get_lists()) do
+		for i = 1, inventory:get_size(list_name) do
+			local stack = inventory:get_stack(list_name, i)
+			-- Check if the specific item is in the inventory
+			if not vlf_achievements.award_unlocked(player_name, "vlf:obtain_armor") then
+				if stack:get_name() == "vlf_armor:chestplate_iron" or stack:get_name() == "vlf_armor:boots_iron"
+				or stack:get_name() == "vlf_armor:helmet_iron" or stack:get_name() == "vlf_armor:leggings_iron" then
+					awards.unlock(player:get_player_name(), "vlf:obtain_armor")
+					return true
+				end
+			end
+			if not vlf_achievements.award_unlocked(player_name, "vlf:shiny_gear") then
+				if stack:get_name() == "vlf_armor:chestplate_diamond" or stack:get_name() == "vlf_armor:boots_diamond"
+				or stack:get_name() == "vlf_armor:helmet_diamond" or stack:get_name() == "vlf_armor:leggings_diamond" then
+					awards.unlock(player:get_player_name(), "vlf:shiny_gear")
+					return true
+				end
+			end
+			if not vlf_achievements.award_unlocked(player_name, "vlf:netherite_armor") then
+				if stack:get_name() == "vlf_armor:chestplate_netherite" and stack:get_name() == "vlf_armor:boots_netherite"
+				and stack:get_name() == "vlf_armor:helmet_netherite" and stack:get_name() == "vlf_armor:leggings_netherite" then
+					awards.unlock(player:get_player_name(), "vlf:netherite_armor")
+					return true
+				end
+			end
+		end
+	end
+	return false
+end
+
+-- This function will handle inventory actions like putting, moving, or taking
+minetest.register_on_player_inventory_action(function(player, action, inventory, info)
+	if action == "put" or action == "move" then
+		check_inventory_for_item(player)
+	end
+end)]]
+
+-- Function to check the player's entire inventory for the required items
+local function check_inventory_for_required_items(player)
+	local inventory = player:get_inventory()
+	local player_name = player:get_player_name()
+
+	local armor_found = {
+		iron = false,
+		diamond = false,
+		netherite = { chest = false, boots = false, helmet = false, leggings = false }
+	}
+
+	-- Loop through all the lists in the player's inventory
+	for list_name, list in pairs(inventory:get_lists()) do
+		for i = 1, inventory:get_size(list_name) do
+			local stack = inventory:get_stack(list_name, i)
+			local item_name = stack:get_name()
+
+			-- Check for iron armor
+			if not vlf_achievements.award_unlocked(player_name, "vlf:obtain_armor") then
+				if item_name == "vlf_armor:chestplate_iron" or item_name == "vlf_armor:boots_iron"
+				or item_name == "vlf_armor:helmet_iron" or item_name == "vlf_armor:leggings_iron" then
+					armor_found.iron = true
+				end
+			end
+
+			-- Check for diamond armor
+			if not vlf_achievements.award_unlocked(player_name, "vlf:shiny_gear") then
+				if item_name == "vlf_armor:chestplate_diamond" or item_name == "vlf_armor:boots_diamond"
+				or item_name == "vlf_armor:helmet_diamond" or item_name == "vlf_armor:leggings_diamond" then
+					armor_found.diamond = true
+				end
+			end
+
+			-- Check for netherite armor
+			if not vlf_achievements.award_unlocked(player_name, "vlf:netherite_armor") then
+				if item_name == "vlf_armor:chestplate_netherite" then
+					armor_found.netherite.chest = true
+				elseif item_name == "vlf_armor:boots_netherite" then
+					armor_found.netherite.boots = true
+				elseif item_name == "vlf_armor:helmet_netherite" then
+					armor_found.netherite.helmet = true
+				elseif item_name == "vlf_armor:leggings_netherite" then
+					armor_found.netherite.leggings = true
+				end
+			end
+		end
+	end
+
+	-- Unlock achievements if conditions are met
+	if armor_found.iron and not vlf_achievements.award_unlocked(player_name, "vlf:obtain_armor") then
+		awards.unlock(player_name, "vlf:obtain_armor")
+	end
+
+	if armor_found.diamond and not vlf_achievements.award_unlocked(player_name, "vlf:shiny_gear") then
+		awards.unlock(player_name, "vlf:shiny_gear")
+	end
+
+	if armor_found.netherite.chest and armor_found.netherite.boots and armor_found.netherite.helmet and armor_found.netherite.leggings
+	and not vlf_achievements.award_unlocked(player_name, "vlf:netherite_armor") then
+		awards.unlock(player_name, "vlf:netherite_armor")
+	end
+end
+
+-- This function will handle inventory actions like putting, moving, or taking
+minetest.register_on_player_inventory_action(function(player, action, inventory, info)
+	if action == "put" or action == "move" or action == "take" then
+		check_inventory_for_required_items(player)
+	end
+end)
+

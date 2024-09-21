@@ -39,7 +39,9 @@ end
 
 vlf_item_entity.register_pickup_achievement("tree", "vlf:mineWood")
 vlf_item_entity.register_pickup_achievement("vlf_mobitems:blaze_rod", "vlf:blazeRod")
-vlf_item_entity.register_pickup_achievement("vlf_mobitems:leather", "vlf:killCow")
+if minetest.settings:get_bool('legacy_achievements', true) then
+	vlf_item_entity.register_pickup_achievement("vlf_mobitems:leather", "vlf:killCow")
+end
 vlf_item_entity.register_pickup_achievement("vlf_core:diamond", "vlf:diamonds")
 vlf_item_entity.register_pickup_achievement("vlf_core:crying_obsidian", "vlf:whosCuttingOnions")
 vlf_item_entity.register_pickup_achievement("vlf_nether:ancient_debris", "vlf:hiddenInTheDepths")
