@@ -272,21 +272,6 @@ vlf_tools.register_set("netherite", {
     }
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 --Wood set
 vlf_tools.register_axe("wood", {
     craftable = true,

@@ -6,10 +6,6 @@ local modpath = minetest.get_modpath(modname)
 -- Aliases for map generator outputs
 
 -- Cave API file
---[[if minetest.settings:get_bool('vlf_enable_experimental_caves', true) then
-dofile(modpath.."/cave_api.lua")
-minetest.register_mapgen_script(modpath.."/cave_api.lua")
-end]]
 -- Function to check if Minetest version is 5.9.0 or higher
 local function is_version_590_or_higher()
     local version_info = minetest.get_version()
@@ -38,14 +34,12 @@ if minetest.settings:get_bool('vlf_enable_experimental_caves', true) then
     if is_version_590_or_higher() then
         -- If the server is running Minetest 5.9.0 or higher, add the mapgen script function
         dofile(modpath.."/cave_api.lua")
-        minetest.register_mapgen_script(modpath.."/cave_api.lua")
+        --minetest.register_mapgen_script(modpath.."/cave_api.lua")
     else
         -- Otherwise, only do the dofile
         dofile(modpath.."/cave_api.lua")
     end
 end
-
---
 
 minetest.register_alias("mapgen_air", "air")
 minetest.register_alias("mapgen_stone", "vlf_core:stone")

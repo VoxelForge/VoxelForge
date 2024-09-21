@@ -130,10 +130,7 @@ minetest.register_node("vlf_honey:honey_block", {
 		}
 	},
 	selection_box = {
-		type = "fixed",
-		fixed = {
-			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
-		}
+		type = "regular",
 	},
 	collision_box = {
 		type = "fixed",

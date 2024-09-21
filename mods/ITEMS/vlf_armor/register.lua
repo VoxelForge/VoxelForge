@@ -238,48 +238,6 @@ minetest.register_tool("vlf_armor:elytra", {
 	_vlf_armor_texture = "vlf_armor_elytra.png"
 })
 
---[[ Function to check the player's inventory for a specific item
-local function check_inventory_for_item(player)
-	local inventory = player:get_inventory()
-	local player_name = player:get_player_name()
-	-- Loop through all the lists in the player's inventory
-	for list_name, list in pairs(inventory:get_lists()) do
-		for i = 1, inventory:get_size(list_name) do
-			local stack = inventory:get_stack(list_name, i)
-			-- Check if the specific item is in the inventory
-			if not vlf_achievements.award_unlocked(player_name, "vlf:obtain_armor") then
-				if stack:get_name() == "vlf_armor:chestplate_iron" or stack:get_name() == "vlf_armor:boots_iron"
-				or stack:get_name() == "vlf_armor:helmet_iron" or stack:get_name() == "vlf_armor:leggings_iron" then
-					awards.unlock(player:get_player_name(), "vlf:obtain_armor")
-					return true
-				end
-			end
-			if not vlf_achievements.award_unlocked(player_name, "vlf:shiny_gear") then
-				if stack:get_name() == "vlf_armor:chestplate_diamond" or stack:get_name() == "vlf_armor:boots_diamond"
-				or stack:get_name() == "vlf_armor:helmet_diamond" or stack:get_name() == "vlf_armor:leggings_diamond" then
-					awards.unlock(player:get_player_name(), "vlf:shiny_gear")
-					return true
-				end
-			end
-			if not vlf_achievements.award_unlocked(player_name, "vlf:netherite_armor") then
-				if stack:get_name() == "vlf_armor:chestplate_netherite" and stack:get_name() == "vlf_armor:boots_netherite"
-				and stack:get_name() == "vlf_armor:helmet_netherite" and stack:get_name() == "vlf_armor:leggings_netherite" then
-					awards.unlock(player:get_player_name(), "vlf:netherite_armor")
-					return true
-				end
-			end
-		end
-	end
-	return false
-end
-
--- This function will handle inventory actions like putting, moving, or taking
-minetest.register_on_player_inventory_action(function(player, action, inventory, info)
-	if action == "put" or action == "move" then
-		check_inventory_for_item(player)
-	end
-end)]]
-
 -- Function to check the player's entire inventory for the required items
 local function check_inventory_for_required_items(player)
 	local inventory = player:get_inventory()

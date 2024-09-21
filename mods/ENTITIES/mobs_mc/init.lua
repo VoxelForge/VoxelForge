@@ -4,7 +4,9 @@
 --License for code WTFPL and otherwise stated in readmes
 mobs_mc = {}
 
-local blacklisted_entities = {"mobs_mc:zombie", "blacklisted_entity2"}
+local blacklisted_entities = {"mobs_mc:zombie", "mobs_mc:baby_zombie", --[["mobs_mc:drowned", "mobs_mc:phantom"]] "mobs_mc:husk", "mobs_mc:baby_husk", "mobs_mc:skeleton_horse",
+				"mobs_mc:skeleton_horse_trap", "mobs_mc:stray", "mobs_mc:wither", "mobs_mc:witherskeleton", "mobs_mc:zombie_horse", "mobs_mc:villager_zombie",
+				"mobs_mc:zombified_piglin", "mobs_mc:zoglin"}
 local speed_threshold = 5.0
 local revert_delay = 5
 local check_delay = 2

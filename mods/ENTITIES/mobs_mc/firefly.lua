@@ -21,8 +21,8 @@ vlf_mobs.register_mob("mobs_mc:firefly", {
 	fall_damage = 0,
 	sunlight_damage = 2,
 	view_range = 8,
-	fear_height = 10,
-	jump = true,
+	fear_height = 0,
+	jump = false,
 	fly = true,
 	do_custom = mobs_mc.firefly_animation()
 })

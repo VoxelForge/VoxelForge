@@ -547,82 +547,6 @@ minetest.register_chatcommand("get_biome_at_pos", {
 end
 })
 
---[[minetest.register_on_mods_loaded(function()
-	local previous_version = minetest.settings:get("voxelforge_prev_version")
-	if previous_version ~= "24w39a" then
-		minetest.settings:set("voxelforge_prev_version", "24w39a")
-		error("                                                                                                                                                                                                                                                       This World was last playing in version "..tostring(previous_version).."; you are on version 24w39a. Please make a backup in case you experience world corruptions. If you would like to procede anyway, you can click out of this error and reload                                                                                                                                                                                                                            ")
-	end
-end)]]
-    
---[[minetest.register_on_mods_loaded(function()
-	local worldpath = minetest.get_worldpath()
-	local file_path = worldpath .. "/current_version.lua"
-	local file = io.open(file_path, "w")
-	local file_read = io.open(file_path, "r")
-	if not file then
-		minetest.chat_send_player(player:get_player_name(), "Failed to export schematic.")
-		return
-	end
-	if not io.open(file_path, "r") then
-		file:write("")
-	end
-	local version = dofile(worldpath.."/current_version.lua")
-	if version then
-		error("Version File found")
-	end
-	local file_name = file_read:read("*a")
-	if file_name.current_version.version then
-		error("Version:" .. tostring(version) .. "")
-	end
-	if file_name and file_name.current_version.version ~= "24w41a" and file_name.current_version.version ~= nil then
-		minetest.settings:set("voxelforge_prev_version", "24w39a")
--error("                                                                                                                                                                                                                                                       This World was last playing in version "..tostring(previous_version).."; you are on version 24w39a. Please make a backup in case you experience world corruptions. If you would like to procede anyway, you can click out of this error and reload                                                                                                                                                                                                                            ")
-	end
-	file:write("return {\n")
-	file:write("current_version = { version='24w39a' }\n")
-	file:write("}")
-	file:close()
-end)]]
-
---[[minetest.register_on_mods_loaded(function()
-	local worldpath = minetest.get_worldpath()
-	local file_path = worldpath .. "/current_version.lua"
-	local file = io.open(file_path, "r")
-	local wfile = io.open(file_path, "w")
-
-	-- If the file doesn't exist, create it with the default version
-	if not file then
-		local new_file = io.open(file_path, "w")
-		new_file:write("return {\n")
-		new_file:write("current_version = { version = '24w39a' }\n")
-		new_file:write("}\n")
-		new_file:close()
-		file = io.open(file_path, "r")
-	end
-
-	-- Load the table from the Lua file
-	local version_data = dofile(file_path)
-	file:close()
-
-	-- Check if the file contains valid version data
-	if version_data and version_data.current_version and version_data.current_version.version then
-		local current_version = version_data.current_version.version
-		-- If the version isn't 24w41a, handle it as a potential issue
-		if current_version ~= "24w41a" then
-			minetest.settings:set("voxelforge_prev_version", current_version)
-			error("                                                                                                                                                                                                                                                       This World was last playing in version "..tostring(previous_version).."; you are on version 24w39a. Please make a backup in case you experience world corruptions. If you would like to procede anyway, you can click out of this error and reload                                                                                                                                                                                                                            ")
-			--wfile:write("return {\n")
-			--wfile:write("current_version = { version = '24w39a' }\n")
-			--wfile:write("}\n")
-			--wfile:close()
-		end
-	else
-		error("Version information is missing or incorrect in current_version.lua")
-	end
-end)
-]]
-
 minetest.register_on_mods_loaded(function()
     local worldpath = minetest.get_worldpath()
     local file_path = worldpath .. "/current_version.lua"
@@ -634,7 +558,7 @@ minetest.register_on_mods_loaded(function()
     if not file then
         local new_file = io.open(file_path, "w")
         new_file:write("return {\n")
-        new_file:write("current_version = { version = '24w41a' }\n")
+        new_file:write("current_version = { version = '24w39a' }\n")
         new_file:write("}\n")
         new_file:close()
         file = io.open(file_path, "r") -- Reopen the file for reading after creation
@@ -649,10 +573,10 @@ minetest.register_on_mods_loaded(function()
         local current_version = version_data.current_version.version
         
         -- If the version isn't 24w41a, handle it as a potential issue
-        if current_version ~= "24w41a" then
+        if current_version ~= "24w39a" then
              local wfile = io.open(file_path, "w")
              wfile:write("return {\n")
-             wfile:write("current_version = { version = '24w41a' }\n")
+             wfile:write("current_version = { version = '24w39a' }\n")
              wfile:write("}\n")
              wfile:close()
             error("This World was last played in version "..tostring(current_version).."; you are on version 24w39a. Please make a backup in case you experience world corruptions. If you would like to proceed anyway, you can click out of this error and reload.")

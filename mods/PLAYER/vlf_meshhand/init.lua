@@ -41,14 +41,6 @@ local node_def = {
 		shearsy_wool = { speed = 1, level = 0, uses = 0 },
 		shearsy_cobweb = { speed = 1, level = 0, uses = 0 },
 	},
-	on_place = function(itemstack, placer, pointed_thing)
-		if minetest.get_modpath("i_have_hands") then
-		itemstack = on_place(itemstack, placer, pointed_thing)
-		i_have_hands.hands(itemstack, placer, pointed_thing)
-		return itemstack
-		else
-		end
-	end,
 	range = tonumber(minetest.settings:get("vlf_hand_range")) or 4.5
 }
 
@@ -121,20 +113,6 @@ vlf_gamemode.register_on_gamemode_change(vlf_meshhand.update_player)
 
 -- This is needed to deal damage when punching mobs
 -- with random items in hand in survival mode
-if minetest.get_modpath("i_have_hands") then
-minetest.override_item("", {
-	tool_capabilities = vlf_meshhand.survival_hand_tool_caps,
-	on_place = function(itemstack, placer, pointed_thing)
-		itemstack = on_place(itemstack, placer, pointed_thing)
-		i_have_hands.hands(itemstack, placer, pointed_thing)
-		return itemstack
-	end,
-	-- on_secondary_use = function(itemstack, placer, pointed_thing)
-		--   i_have_hands.hands(itemstack, placer, pointed_thing)
-	-- end
-})
-else
 minetest.override_item("", {
 	tool_capabilities = vlf_meshhand.survival_hand_tool_caps
 })
-end

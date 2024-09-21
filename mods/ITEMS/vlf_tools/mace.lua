@@ -38,7 +38,7 @@ minetest.register_node("vlf_tools:heavy_core", {
 		groupcaps = {
 			snappy = {times = {1.5, 0.9, 0.4}, uses = 50, maxlevel = 3},
 		},
-		damage_groups = {fleshy = 0},
+		damage_groups = {fleshy = 5},
 	},
 	_repair_material = "vlf_mobitems:breeze_rod",
 	_vlf_toollike_wield = true,
