@@ -454,10 +454,13 @@ local skeleton_horse = table.merge(horse, {
 	harmed_by_heal = true,
 	on_spawn = function(self)
 		 self:jock_to_other("mobs_mc:skeleton", self, vector.new(0,0.4,0), vector.new(0,0,0), {x = 0.4, y = 0.4})
-		 return true
 	end,
 	on_die = function(self)
-		self:jock_detach_and_resize(self.jock, {x = 1, y = 1})
+		--self:jock_detach_and_resize(self.jock_id, {x = 10, y = 10})
+		if self.jock then
+			-- Call the detach and resize function directly on the jockey
+			self:jock_detach_and_resize({x = 1, y = 1})
+		end
 	end,
 })
 vlf_mobs.register_mob("mobs_mc:skeleton_horse", skeleton_horse)
