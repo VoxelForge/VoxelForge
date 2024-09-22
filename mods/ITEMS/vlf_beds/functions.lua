@@ -45,10 +45,10 @@ local function check_phantom_spawn(player_name, dtime)
 	local spawn_timer = phantom_spawn_timer[player_name] or 0
 
 	if last_sleep_time then
- 		local days_passed = (current_time - last_sleep_time) / 800 -- Each day is 800 ticks
+		local days_passed = (current_time - last_sleep_time) / 800 -- Each day is 800 ticks
 
 		if days_passed >= 3 then
- 			spawn_timer = spawn_timer + dtime
+			spawn_timer = spawn_timer + dtime
 
 			if spawn_timer >= spawn_interval_min + math.random(0, spawn_interval_max - spawn_interval_min) then
 				-- Spawn phantoms above the player
