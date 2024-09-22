@@ -54,24 +54,48 @@ function mob_class:check_timer(timer, interval)
 	return false
 end
 
-function mob_class:jock_to(mob, reletive_pos, rot)
+function mob_class:jock_to(mob, relative_pos, rot)
 	self.jockey = mob
 	local jock = minetest.add_entity(self.object:get_pos(), mob)
 	if not jock then return end
 	jock:get_luaentity().docile_by_day = false
 	jock:get_luaentity().riden_by_jock = true
-	self.object:set_attach(jock, "", reletive_pos, rot)
+	self.object:set_attach(jock, "", relative_pos, rot)
 	return jock
 end
 
-function mob_class:jock_to_other(jockey, mob, relative_pos, rot)
-    mob.jockey = jockey
-    local jock = minetest.add_entity(mob.object:get_pos(), jockey)
-    if not jock then return end
-    jock:get_luaentity().docile_by_day = false
-    jock:get_luaentity().ridden_by_jock = true
-    mob.object:set_attach(jock, "", relative_pos, rot)
+function mob_class:jock_to_other(jockey, mob, relative_pos, rot, initial_size)
+	local jock = minetest.add_entity(mob.object:get_pos(), jockey)
+	if not jock then return end
+	local jock_luaentity = jock:get_luaentity()
+	jock_luaentity.jockey = mob
+	mob.jock = jock
+	mob.docile_by_day = false
+	mob.riden_by_jock = true
+	jock:set_attach(mob.object, "", relative_pos, rot)
+
+	-- Set the initial size of the jockey
+	if initial_size then
+		jock:set_properties({
+			visual_size = initial_size
+		})
+	end
+	return jock
 end
+
+function mob_class:jock_detach_and_resize(jockey, new_size)
+    -- Detach the jockey from the mob
+    jockey:set_detach()
+    -- Set the new visual size of the jockey
+    if new_size then
+        jockey:set_properties({
+            visual_size = new_size
+        })
+    end
+    return jockey
+end
+
+
 
 function mob_class:get_staticdata()
 	local pos = self.object:get_pos()

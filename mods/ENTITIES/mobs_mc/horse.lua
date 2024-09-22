@@ -453,8 +453,11 @@ local skeleton_horse = table.merge(horse, {
 	},
 	harmed_by_heal = true,
 	on_spawn = function(self)
-		 self:jock_to_other("mobs_mc:skeleton", self, vector.new(0,0,0), vector.new(0,0,0))
+		 self:jock_to_other("mobs_mc:skeleton", self, vector.new(0,0.4,0), vector.new(0,0,0), {x = 0.4, y = 0.4})
 		 return true
+	end,
+	on_die = function(self)
+		self:jock_detach_and_resize(self.jock, {x = 1, y = 1})
 	end,
 })
 vlf_mobs.register_mob("mobs_mc:skeleton_horse", skeleton_horse)
@@ -538,7 +541,6 @@ local skeleton_horse_trap = {
 			minetest.add_entity(spawn_pos, "mobs_mc:skeleton_horse")
 		end
 		vlf_util.replace_mob(self.object, "mobs_mc:skeleton_horse")
-		--self:jock_other("mobs_mc:skeleton", self, vector.new(0,0,0), vector.new(0,0,0))
 		return true
 	end,
 }
