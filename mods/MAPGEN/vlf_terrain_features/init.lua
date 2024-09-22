@@ -401,7 +401,7 @@ vlf_structures.register_structure("powder_snow_trap", {
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]--
 
 
--- direction is a multiplier to each block's y offset from the starting position, should be either -1 or 1
+--[[ direction is a multiplier to each block's y offset from the starting position, should be either -1 or 1
 local function generate_dripstone(pos, direction)
 		-- generating relative to some random sub position of the node, so the dripstone column is more asymetrical (aka natural)
 		local x_offset = math.random(-0.2, 0.2)
@@ -565,4 +565,4 @@ vlf_structures.register_structure("large_dripstone_column", {
 			return false
 		end
 	end
-})
+})]]

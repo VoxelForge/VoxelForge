@@ -1,7 +1,6 @@
 --Phantom for mcl2
 --cora
 --License for code WTFPL, cc0
-
 local S = minetest.get_translator("mobs_mc")
 
 vlf_mobs.register_mob("mobs_mc:phantom", {

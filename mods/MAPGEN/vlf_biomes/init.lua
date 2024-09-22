@@ -5933,7 +5933,7 @@ end
 
 -- [[ Single Biome MG ]] --
 
---if minetest.settings:get_bool('vlf_single_biome_mg', true) then
+--[[if minetest.settings:get_bool('vlf_single_biome_mg', true) then
 local vlf_biomes = {}
 vlf_biomes.biome_to_retain = minetest.settings:get("vlf_single_biome_mg_biomes")
 if vlf_biomes.biome_to_retain ~= "None" then
@@ -6001,4 +6001,4 @@ if vlf_biomes.biome_to_retain ~= "None" then
 		minetest.register_ore(ore)
 	end
 end
-
+]]
