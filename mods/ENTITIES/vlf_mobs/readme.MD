@@ -72,3 +72,7 @@ Changelog from original Mobs Redo mod:
 - 0.3 - Added LOTT's Spider mob, made Cobwebs, added KPavel's Bee with Honey and Beehives (made texture), Warthogs now have sound and can be tamed, taming of shaved sheep or milked cow with 8 wheat so it will not despawn, many bug fixes :)
 - 0.2 - Cooking bucket of milk into cheese now returns empty bucket
 - 0.1 - Initial Release
+
+
+Changelog from VoxelForge Mobs Mod:
+ - 1.42 add **jock_to_other** and **jock_detach_and_resize**

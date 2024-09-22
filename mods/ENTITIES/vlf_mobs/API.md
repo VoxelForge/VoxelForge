@@ -864,3 +864,26 @@ Custom projectiles for mobs can be registered using
  * 'mobs_spawn'			 if false then mobs no longer spawn without spawner or spawn egg.
  * 'mobs_drop_items'		when false mobs no longer drop items when they die.
  * 'mobs_griefing'			when false mobs cannot break blocks when using either pathfinding level 2, replace functions or mobs:boom
+ 
+### Jock
+ * **jock_to(mob, relative_pos, rot)**: Usually defined in on_spawn, this attaches the mount to the initial mob (ex. Spiders on_spawn function attaches them to spiders if the 1% chance is met.)
+```
+  mob: is the mob that the initial mob will attach to.
+  relatie_pos: is the approximate position, that the mob will attach to.
+  rot: is the rotation of the new mob, compared to the initial mob.
+```
+ * **jock_to_other(jockey, mob, relative_pos, rot, initial_size)**: Usually defined in on_spawn, this attaches the rider, to the initial mob.
+ (ex. Skeleton Horses on_spawn function attaches skeletons to them.) 
+ Usually also uses **jock_detach_and_resize** to properly detach and resize the rider if the mount dies.
+```
+  jockey: is the mob that will attach to mob.
+  mob: is the initial mob (usually defined by self)
+  relative_pos: is the approximate position, that the mob will attach to.
+  rot: is the rotation of the new mob, compared to the initial mob.
+  initial_size: is the visual_size of the mounted mob.
+```
+ * **mob_class:jock_detach_and_resize(jockey, new_size)**: Usually used in the on_die function of a mob. This is used to properly detach and resize the rider if the mount dies.
+```
+  jockey: is the rider of the mount (the mount is usually self)
+  new_size: is the new size of the rider after the mount is killed.)
+```
