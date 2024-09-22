@@ -3,6 +3,15 @@
 --made for MC like Survival game
 --License for code WTFPL and otherwise stated in readmes
 local S = minetest.get_translator("mobs_mc")
+local pi = math.pi
+local atann = math.atan
+local atan = function(x)
+	if not x or x ~= x then
+		return 0
+	else
+		return atann(x)
+	end
+end
 
 --###################
 --################### fox
@@ -103,7 +112,7 @@ local fox = {
 			and object:get_luaentity()
 			and object:get_luaentity().name == "mobs_mc:wolf") then
 				-- don't keep setting it once it's set
-				if not self.state == "runaway" then
+				if self.state ~= "runaway" then
 					self.state = "runaway"
 					self.object:set_rotation({x=0,y=(atan(vec.z / vec.x) + 3 * pi / 2) - self.rotate,z=0})
 				end
