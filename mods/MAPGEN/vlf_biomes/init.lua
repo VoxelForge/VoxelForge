@@ -5933,13 +5933,12 @@ end
 
 -- [[ Single Biome MG ]] --
 
---[[if minetest.settings:get_bool('vlf_single_biome_mg', true) then
-local vlf_biomes = {}
-vlf_biomes.biome_to_retain = minetest.settings:get("vlf_single_biome_mg_biomes")
+--[[vlf_biomes.single_biome = minetest.settings:get("vlf_single_biome_mg_biomes")
+vlf_biomes.biome_to_retain = tostring(vlf_biomes.single_biome)
 if vlf_biomes.biome_to_retain ~= "None" then
 	local y_max_override = vlf_vars.mg_overworld_max
 	local y_min_override = vlf_vars.mg_overworld_min
-	minetest.log("error", "Biome to Retain: " .. vlf_biomes.biome_to_retain .. " ")
+	--minetest.log("info", "Biome to Retain: " .. vlf_biomes.biome_to_retain .. " ")
 
 	if type(vlf_biomes.biome_to_retain) ~= "string" then
 		minetest.log("error", "Invalid or missing vlf_biomes.biome_to_retain setting.")
@@ -5954,7 +5953,6 @@ if vlf_biomes.biome_to_retain ~= "None" then
 		end
 		return false
 	end
-	--if not vlf_biomes.biome_to_retain == "None" then
 	local function deep_copy(orig)
 		if type(orig) == 'table' then
 			local copy = {}
@@ -5969,7 +5967,6 @@ if vlf_biomes.biome_to_retain ~= "None" then
 	end
 	local retain_biome_def = minetest.registered_biomes[vlf_biomes.biome_to_retain]
 	if not retain_biome_def then
-		minetest.log("error", "Biome '" .. vlf_biomes.biome_to_retain .. "' does not exist!")
 		return
 	end
 	retain_biome_def.y_max = y_max_override
