@@ -5938,7 +5938,7 @@ vlf_biomes.biome_to_retain = tostring(vlf_biomes.single_biome)
 if vlf_biomes.biome_to_retain ~= "None" then
 	local y_max_override = vlf_vars.mg_overworld_max
 	local y_min_override = vlf_vars.mg_overworld_min
-	minetest.log("info", "Biome to Retain: " .. vlf_biomes.biome_to_retain .. " ")
+	--minetest.log("info", "Biome to Retain: " .. vlf_biomes.biome_to_retain .. " ")
 
 	if type(vlf_biomes.biome_to_retain) ~= "string" then
 		minetest.log("error", "Invalid or missing vlf_biomes.biome_to_retain setting.")
