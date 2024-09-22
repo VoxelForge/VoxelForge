@@ -64,38 +64,34 @@ function mob_class:jock_to(mob, relative_pos, rot)
 	return jock
 end
 
-function mob_class:jock_to_other(jockey, mob, relative_pos, rot, initial_size)
-	local jock = minetest.add_entity(mob.object:get_pos(), jockey)
-	if not jock then return end
-	local jock_luaentity = jock:get_luaentity()
-	jock_luaentity.jockey = mob
-	mob.jock = jock
+function mob_class:jock_to_other(jockey_name, mob, relative_pos, rot, initial_size)
+	local jock = minetest.add_entity(mob.object:get_pos(), jockey_name)
+	if not jock then
+		minetest.log("Warning", "Failed to add jockey entity: " .. jockey_name)
+		return
+	end
+	jock:set_attach(mob.object, "", relative_pos, rot)
 	mob.docile_by_day = false
 	mob.riden_by_jock = true
-	jock:set_attach(mob.object, "", relative_pos, rot)
-
-	-- Set the initial size of the jockey
 	if initial_size then
 		jock:set_properties({
 			visual_size = initial_size
 		})
 	end
-	return jock
+	mob.jock = jock
 end
 
-function mob_class:jock_detach_and_resize(jockey, new_size)
-    -- Detach the jockey from the mob
-    jockey:set_detach()
-    -- Set the new visual size of the jockey
-    if new_size then
-        jockey:set_properties({
-            visual_size = new_size
-        })
-    end
-    return jockey
+function mob_class:jock_detach_and_resize(new_size)
+	if self.jock and self.jock:get_luaentity() then
+		if new_size then
+			self.jock:set_properties({
+				visual_size = new_size
+			})
+		end
+	else
+		minetest.log("info", "Jockey entity is no longer valid or does not exist!")
+	end
 end
-
-
 
 function mob_class:get_staticdata()
 	local pos = self.object:get_pos()

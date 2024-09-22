@@ -1,6 +1,114 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 local F = minetest.formspec_escape
 
+local players_sleep_time = {}  -- Stores player sleep times persistently
+local phantom_spawn_timer = {} -- Tracks time for phantom spawn
+local spawn_interval_min = 30 -- Minimum interval in seconds
+local spawn_interval_max = 60 -- Maximum interval in seconds
+
+-- Function to load persistent data for player sleep times
+local function load_player_data(player_name)
+	local filepath = minetest.get_worldpath() .. "/players_sleep_time.txt"
+	local file = io.open(filepath, "r")
+	if file then
+		local data = minetest.deserialize(file:read("*all"))
+		file:close()
+		if data and data[player_name] then
+			return data[player_name]
+		end
+	end
+	return nil
+end
+
+-- Function to save persistent data for player sleep times
+local function save_player_data()
+	local filepath = minetest.get_worldpath() .. "/players_sleep_time.txt"
+	local file = io.open(filepath, "w")
+	if file then
+		file:write(minetest.serialize(players_sleep_time))
+		file:close()
+	end
+end
+
+-- Function to update the sleep time
+local function update_sleep_time(player_name)
+	players_sleep_time[player_name] = players_sleep_time[player_name] or {}
+	players_sleep_time[player_name].last_sleep = minetest.get_gametime() -- Record the current game time
+	phantom_spawn_timer[player_name] = 0 -- Initialize spawn timer
+	save_player_data() -- Save updated sleep time data
+end
+
+-- Function to check and spawn phantoms
+local function check_phantom_spawn(player_name, dtime)
+	local current_time = minetest.get_gametime()
+	local last_sleep_time = players_sleep_time[player_name] and players_sleep_time[player_name].last_sleep
+	local spawn_timer = phantom_spawn_timer[player_name] or 0
+
+	if last_sleep_time then
+		local days_passed = (current_time - last_sleep_time) / 800 -- Each day is 800 ticks
+
+		if days_passed >= 3 then
+			spawn_timer = spawn_timer + dtime
+
+			if spawn_timer >= spawn_interval_min + math.random(0, spawn_interval_max - spawn_interval_min) then
+				-- Spawn phantoms above the player
+				local player = minetest.get_player_by_name(player_name)
+				if player then
+					local pos = player:get_pos()
+					for i = 1, 3 do
+						local spawn_pos = {
+							x = pos.x + math.random(-10, 10),
+							y = pos.y + 34,
+							z = pos.z + math.random(-10, 10)
+						}
+						minetest.add_entity(spawn_pos, "mobs_mc:phantom")
+					end
+				end
+				spawn_timer = 0 -- Reset the timer after spawning
+			end
+		end
+	end
+	phantom_spawn_timer[player_name] = spawn_timer -- Update the timer for the player
+end
+
+--[[minetest.register_chatcommand("sleep_time", {
+	params = "",
+	description = "Returns the sleep time and days since last sleep for the user.",
+	func = function(name, param)
+		local player = minetest.get_player_by_name(name)
+		local last_sleep_time = players_sleep_time[name] and players_sleep_time[name].last_sleep or "Never"
+		local current_time = minetest.get_gametime()
+		local days_passed = last_sleep_time ~= "Never" and (current_time - last_sleep_time) / 800 or "N/A"
+		return true, "Last sleep time: " .. tostring(last_sleep_time) .. ", Days since last sleep: " .. tostring(days_passed)
+	end
+})]]
+
+-- Register an event to call this function every globalstep
+minetest.register_globalstep(function(dtime)
+    for _, player in ipairs(minetest.get_connected_players()) do
+        check_phantom_spawn(player:get_player_name(), dtime)
+    end
+end)
+
+minetest.register_on_newplayer(function(player)
+	local player_name = player:get_player_name()
+	if not players_sleep_time[player_name] then
+		update_sleep_time(player_name)
+	end
+end)
+
+minetest.register_on_joinplayer(function(player)
+	local player_name = player:get_player_name()
+	players_sleep_time[player_name] = load_player_data(player_name) or players_sleep_time[player_name]
+	if not players_sleep_time[player_name] then
+		update_sleep_time(player_name)
+	end
+end)
+
+minetest.register_on_dieplayer(function(player)
+	update_sleep_time(player:get_player_name())
+end)
+
 local allow_nav_hacks = minetest.settings:get_bool("vlf_mob_allow_nav_hacks", false)
 
 local player_in_bed = 0
@@ -189,6 +297,8 @@ local function lay_down(player, pos, bed_pos, state, skip)
 		-- player:set_look_vertical(-(math.pi/2))
 
 		player:get_meta():set_string("vlf_beds:sleeping", "true")
+		local player_name = player:get_player_name()
+		update_sleep_time(player_name)
 		playerphysics.add_physics_factor(player, "speed", "vlf_beds:sleeping", 0)
 		playerphysics.add_physics_factor(player, "jump", "vlf_beds:sleeping", 0)
 		player:set_pos(bed_center)

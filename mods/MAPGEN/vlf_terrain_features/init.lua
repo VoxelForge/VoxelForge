@@ -394,3 +394,175 @@ vlf_structures.register_structure("powder_snow_trap", {
 		return true
 	end
 })
+
+
+--[[-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+=========================================================================================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]--
+
+
+--[[ direction is a multiplier to each block's y offset from the starting position, should be either -1 or 1
+local function generate_dripstone(pos, direction)
+		-- generating relative to some random sub position of the node, so the dripstone column is more asymetrical (aka natural)
+		local x_offset = math.random(-0.2, 0.2)
+		local z_offset = math.random(-0.2, 0.2)
+		local r = math.random(2, 4)
+		local max_length = r * 5 + math.random(0, 4)
+		local c_to = minetest.get_content_id("vlf_dripstone:dripstone_block")
+		local vm = minetest.get_voxel_manip()
+		local start_pos, end_pos
+		local foundation_start_y, foundation_end_y
+		if direction == 1 then
+			start_pos = vector.offset(pos, -r, -2, -r)
+			end_pos = vector.offset(pos, r, max_length, r)
+			foundation_start_y = pos.y + (-2 * direction)
+			foundation_end_y = pos.y + (-1 * direction)
+		else
+			start_pos = vector.offset(pos, -r, -max_length, -r)
+			end_pos = vector.offset(pos, r, 2, r)
+			foundation_start_y = pos.y + (-1 * direction)
+			foundation_end_y = pos.y + (-2 * direction)
+		end
+		local emin, emax = vm:read_from_map(start_pos, end_pos)
+		local a = VoxelArea:new(
+		{
+			MinEdge = emin,
+			MaxEdge = emax,
+		})
+		local data = vm:get_data()
+
+		-- generating foundation
+		for x = start_pos.x, end_pos.x do
+			for z = start_pos.z, end_pos.z do
+				minetest.debug(foundation_start_y, foundation_end_y)
+				for y = foundation_start_y, foundation_end_y do
+					minetest.debug(x, y, z)
+					local vi = a:index(x, y, z)
+					data[vi] = c_to
+				end
+			end
+		end
+
+		local length
+		local offset_r
+		for x = start_pos.x, end_pos.x do
+			for z = start_pos.z, end_pos.z do
+				offset_r = math.sqrt((pos.x - (x + x_offset))^2 + (pos.z - (z + z_offset))^2)
+				length = max_length - r * offset_r - offset_r * offset_r -- this is the formula that decides the shape!!
+				for offset_y = 0, length do
+					local vi = a:index(x, pos.y + (offset_y * direction), z)
+					data[vi] = c_to
+				end
+			end
+		end
+
+		vm:set_data(data)
+		vm:write_to_map(true)
+end
+
+vlf_structures.register_structure("large_dripstone_stalagtite", {
+	place_on = {"group:stone"},
+	spawn_by = "air",
+	check_offset = 1,
+	num_spawn_by = 5,
+	noise_params = {
+		offset = 0.00040,
+		scale = 0.001,
+		spread = {x = 500, y = 500, z = 500},
+		seed = 00010001,
+		octaves = 4,
+		persist = 0.67,
+	},
+	y_min = vlf_vars.mg_overworld_min,
+	y_max = 0,
+	place_func = function(pos)
+		minetest.debug("tite", dump(pos))
+		local empty_air_length = 0
+		while true do
+			if minetest.get_node(vector.offset(pos, 0, -empty_air_length, 0)).name ~= "air" then
+				break
+			end
+			empty_air_length = empty_air_length + 1
+		end
+
+		-- dont generate stalagmites if there isnt enough space
+		if empty_air_length < 3 then
+			return false
+		else
+			generate_dripstone(pos, -1)
+			return true
+		end
+	end
+})
+
+vlf_structures.register_structure("large_dripstone_stalagmite", {
+	place_on = {"group:stone"},
+	spawn_by = "air",
+	check_offset = -1,
+	num_spawn_by = 5,
+	noise_params = {
+		offset = 0.00040,
+		scale = 0.001,
+		spread = {x = 500, y = 500, z = 500},
+		seed = 00100010,
+		octaves = 4,
+		persist = 0.67,
+	},
+	y_min = vlf_vars.mg_overworld_min,
+	y_max = 0,
+	place_func = function(pos)
+		minetest.debug("mite", dump(pos))
+		local empty_air_length = 0
+		while true do
+			if minetest.get_node(vector.offset(pos, 0, empty_air_length, 0)).name ~= "air" then
+				break
+			end
+			empty_air_length = empty_air_length + 1
+		end
+
+		-- dont generate stalagmites if there isnt enough space
+		if empty_air_length < 3 then
+			return false
+		else
+			generate_dripstone(pos, 1)
+			return true
+		end
+	end
+})
+
+vlf_structures.register_structure("large_dripstone_column", {
+	place_on = {"group:stone"},
+	spawn_by = "air",
+	check_offset = 1,
+	num_spawn_by = 5,
+	noise_params = {
+		offset = 0.00040,
+		scale = 0.001,
+		spread = {x = 500, y = 500, z = 500},
+		seed = 01000100,
+		octaves = 4,
+		persist = 0.67,
+	},
+	y_min = vlf_vars.mg_overworld_min,
+	y_max = 0,
+	place_func = function(pos)
+		minetest.debug("COLUMN", dump(pos))
+		local empty_air_length = 0
+		while true do
+			if minetest.get_item_group(minetest.get_node(vector.offset(pos, 0, empty_air_length, 0)).name, "solid") ~= 0 then
+				break
+			elseif empty_air_length > 20 then
+				return false
+			end
+			empty_air_length = empty_air_length + 1
+		end
+
+		if empty_air_length < 6 then
+			generate_dripstone(pos, 1)
+			generate_dripstone(vector.offset(pos, 0, empty_air_length, 0), -1)
+			return true
+		else
+			return false
+		end
+	end
+})]]

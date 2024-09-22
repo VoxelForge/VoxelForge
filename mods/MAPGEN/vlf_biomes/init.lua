@@ -5933,7 +5933,7 @@ end
 
 -- [[ Single Biome MG ]] --
 
-vlf_biomes.single_biome = minetest.settings:get("vlf_single_biome_mg_biomes")
+--[[vlf_biomes.single_biome = minetest.settings:get("vlf_single_biome_mg_biomes")
 vlf_biomes.biome_to_retain = tostring(vlf_biomes.single_biome)
 if vlf_biomes.biome_to_retain ~= "None" then
 	local y_max_override = vlf_vars.mg_overworld_max
@@ -5998,3 +5998,4 @@ if vlf_biomes.biome_to_retain ~= "None" then
 		minetest.register_ore(ore)
 	end
 end
+]]
