@@ -16,7 +16,7 @@ An unofficial Minecraft-like game for Minetest. Fork of Mineclonia with focus
 on stability, performance and features. For information about
 migrating from Voxelibre or Mineclonia to VoxelForge, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
 
-Version: Voxelforge Snapshot 24w37e
+Version: Voxelforge Beta 0.5.0 - Release Candidate - 1
 
 ### Differences from Mineclonia
 * More minecraft like font.
@@ -149,7 +149,7 @@ Minecraft clone. released as free software.
 * VoxelForge will use different graphics and sounds, but with a similar style
 
 ## Completion status
-This game is currently in **ALPHA** stage.
+This game is currently in **Beta** stage.
 It is playable, but not yet feature-complete.
 Backwards-compatibility is not guaranteed, updating your world might cause bugs
 and things to behave differently.
