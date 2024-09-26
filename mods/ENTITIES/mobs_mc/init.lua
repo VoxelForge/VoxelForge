@@ -90,7 +90,6 @@ mobs_mc.armadillo_scare = function()
 						self.walk_velocity = 0.0
 						self.run_velocity = 0.0
 						self.object:set_animation({x = 60, y = 72}, 10, 0, false)
-						self.scare_time = curr_time
 						minetest.after(0.25, function()
 							self.object:set_properties({textures = {"mobs_mc_armadillo-hiding.png"}})
 						end)

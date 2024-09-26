@@ -709,7 +709,6 @@ function mob_class:look_at(b)
 	local yaw = (atann(v.z / v.x) +math.pi/ 2) - self.rotate
 	if b.x > s.x then yaw = yaw +math.pi end
 	self.object:set_yaw(yaw)
-	
 end
 
 function mob_class:go_to_pos(b)
@@ -865,79 +864,6 @@ function mob_class:do_states_walk()
 		end
 	end
 end
-
-function mob_class:do_states_walk_to_pos(target_pos)
-	local yaw = self.object:get_yaw() or 0
-	local s = self.object:get_pos()
-	local lp = nil
-
-	-- Check for hazards to avoid
-	if (self.water_damage > 0 and self.lava_damage > 0)
-			or self.object:get_properties().breath_max ~= -1 then
-		lp = minetest.find_node_near(s, 1, {"group:water", "group:lava"})
-	elseif self.water_damage > 0 then
-		lp = minetest.find_node_near(s, 1, {"group:water"})
-	elseif self.lava_damage > 0 then
-		lp = minetest.find_node_near(s, 1, {"group:lava"})
-	elseif self.fire_damage > 0 then
-		lp = minetest.find_node_near(s, 1, {"group:fire"})
-	end
-
-	local is_in_danger = false
-	if lp then
-		if (self:is_node_dangerous(self.standing_in) or self:is_node_dangerous(self.standing_on))
-				or (self:is_node_waterhazard(self.standing_in) or self:is_node_waterhazard(self.standing_on))
-				and (not self.fly) then
-			is_in_danger = true
-
-			-- Find land to escape danger
-			lp = minetest.find_nodes_in_area_under_air(
-				{x = s.x - 5, y = s.y - 0.5, z = s.z - 5},
-				{x = s.x + 5, y = s.y + 1, z = s.z + 5},
-				{"group:solid"})
-
-			lp = #lp > 0 and lp[math.random(#lp)]
-
-			if lp then
-				local vec = {
-					x = lp.x - s.x,
-					z = lp.z - s.z
-				}
-				yaw = math.atan2(vec.z, vec.x) - math.pi / 2
-				if lp.x > s.x then yaw = yaw + math.pi end
-				yaw = self:set_yaw(yaw, 6)
-				self:set_velocity(self.walk_velocity)
-			end
-		end
-	end
-
-	-- Walk towards the target position if there's no danger
-	if not is_in_danger and target_pos then
-		local vec = {
-			x = target_pos.x - s.x,
-			z = target_pos.z - s.z
-		}
-		yaw = math.atan2(vec.z, vec.x) - math.pi / 2
-		if target_pos.x > s.x then yaw = yaw + math.pi end
-
-		self:set_yaw(yaw, 6)
-		self:set_velocity(self.walk_velocity)
-		self:set_animation("walk")
-
-		-- Check if mob has reached the target
-		local distance = vector.distance(s, target_pos)
-		if distance < 1 then
-			self:set_velocity(0)
-			self:set_state("stand")
-			self:set_animation("stand")
-		end
-	else
-		self:set_state("stand")
-		self:set_velocity(0)
-		self:set_animation("stand")
-	end
-end
-
 
 function mob_class:do_states_stand()
 	local yaw = self.object:get_yaw() or 0
