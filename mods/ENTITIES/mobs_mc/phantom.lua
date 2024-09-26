@@ -21,21 +21,16 @@ vlf_mobs.register_mob("mobs_mc:phantom", {
 	walk_velocity = 3,
 	run_velocity = 5,
 	desired_altitude = 19,
-	keep_flying = true,
-	sounds = {
+	drops = {
+		{name = "vlf_mobitems:phantom_membrane", chance = 2, min = 0, max = 1, looting = "common"},
+	},
+	--[[sounds = {
 		random = "mobs_mc_phantom_random",
 		damage = {name="mobs_mc_phantom_hurt", gain=0.3},
 		death = {name="mobs_mc_phantom_death", gain=0.6},
 		eat = "mobs_mc_animal_eat_generic",
 		distance = 16,
-	},
-	drops = {
-		{name = "mcl_mobitems:leather", --TODO: phantom membrane
-		chance = 1,
-		min = 1,
-		max = 2,
-		looting = "common",},
-	},
+	},]]
 	animation = {
 		stand_speed = 50,
 		walk_speed = 50,
@@ -53,7 +48,12 @@ vlf_mobs.register_mob("mobs_mc:phantom", {
 	floats = 1,
 	physical = true,
 	fly = true,
+	fly_in = { "air" },
+	fly_velocity = 4,
+	harmed_by_heal = true,
 	makes_footstep_sound = false,
+	ignited_by_sunlight = true,
+	sunlight_damage = 2,
 	fear_height = 0,
 	view_range = 40,
 })

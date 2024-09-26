@@ -44,11 +44,6 @@ vlf_enable_experimental_caves (Cavegen api Setting) bool false
 # Note: This setting has no effect on existing worlds.
 vlf_superflat_classic (Classic superflat map generation) bool false
 
-[Experimental]
-
-# If true enabled expermental bundles will be able to be tested.
-bundles (experimental bundles for storing items) bool false
-
 [Players]
 # If enabled, players respawn at the bed they last lay on instead of normal
 # spawn.
@@ -251,3 +246,8 @@ vlf_structure_block_border_style (Border style) enum edges edges,checkers
 [Legacy]
 # If enabled, old MineCraft achievments will exist.
 legacy_achievements (Legacy MineCraft Advancements) bool false
+
+[MineCraft]
+
+# If disabled phantoms won't spawn
+doInsomnia (Defaults to true which allows phantoms to spawn) bool true

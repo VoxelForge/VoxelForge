@@ -29,7 +29,7 @@ local function is_version_590_or_higher()
     return major > 5 or (major == 5 and minor >= 9)
 end
 
--- Execute based on the Minetest version
+--[[ Execute based on the Minetest version
 if minetest.settings:get_bool('vlf_enable_experimental_caves', true) then
     if is_version_590_or_higher() then
         -- If the server is running Minetest 5.9.0 or higher, add the mapgen script function
@@ -39,7 +39,7 @@ if minetest.settings:get_bool('vlf_enable_experimental_caves', true) then
         -- Otherwise, only do the dofile
         dofile(modpath.."/cave_api.lua")
     end
-end
+end]]
 
 minetest.register_alias("mapgen_air", "air")
 minetest.register_alias("mapgen_stone", "vlf_core:stone")

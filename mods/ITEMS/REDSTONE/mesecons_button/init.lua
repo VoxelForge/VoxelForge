@@ -27,7 +27,7 @@ function mesecon.push_button(pos, node)
 		return
 	end
 	local def = minetest.registered_nodes[node.name]
-	minetest.set_node(pos, {name="mesecons_button:button_"..def._vlf_button_basename.."_on", param2=node.param2})
+	minetest.set_node(pos, {name="mesecons_button:"..def._vlf_button_basename.."_button_on", param2=node.param2})
 	mesecon.receptor_on(pos, button_get_output_rules(node))
 	local sfx = button_sounds[node.name]
 	if sfx then
@@ -110,7 +110,6 @@ function mesecon.register_button(basename, description, texture, recipeitem, sou
 	local groups_on = table.copy(groups_off)
 	groups_on.not_in_creative_inventory=1
 	groups_on.button=2 -- button (on)
-
 	if not button_sound then
 		button_sound = "mesecons_button_push"
 	end
@@ -125,7 +124,7 @@ function mesecon.register_button(basename, description, texture, recipeitem, sou
 	if push_by_arrow then
 		tt = tt .. "\n" .. S("Pushable by arrow")
 	end
-	minetest.register_node(":mesecons_button:button_"..basename.."_off", {
+	minetest.register_node(":mesecons_button:"..basename.."_button_off", {
 		drawtype = "nodebox",
 		tiles = {texture},
 		wield_image = "mesecons_button_wield_mask.png^"..texture.."^mesecons_button_wield_mask.png^[makealpha:255,126,126",
@@ -166,14 +165,24 @@ function mesecon.register_button(basename, description, texture, recipeitem, sou
 				mesecon.push_button(pos, node)
 			return true
 		end,
+		_on_copper_golem_hit = function(pos)
+			local node = minetest.get_node(pos)
+			if node.name == "mesecons_button:copper_button_off" then
+				mesecon.push_button(pos, node)
+				return true
+			else
+				return
+			end
+		end,
 		_vlf_button_basename = basename,
 		_vlf_button_timer = button_timer,
 
 		_vlf_blast_resistance = 0.5,
 		_vlf_hardness = 0.5,
 	})
-
-	minetest.register_node(":mesecons_button:button_"..basename.."_on", {
+	minetest.register_alias("mesecons_button:button_"..basename.."_off", "mesecons_button:"..basename.."_button_off")
+	minetest.register_alias("mesecons_button:button_"..basename.."_on", "mesecons_button:"..basename.."_button_on")
+	minetest.register_node(":mesecons_button:"..basename.."_button_on", {
 		drawtype = "nodebox",
 		tiles = {texture},
 		wield_image = "mesecons_button_wield_mask.png^"..texture.."^mesecons_button_wield_mask.png^[makealpha:255,126,126",
@@ -185,7 +194,7 @@ function mesecon.register_button(basename, description, texture, recipeitem, sou
 		sunlight_propagates = true,
 		node_box = boxes_on,
 		groups = groups_on,
-		drop = "mesecons_button:button_"..basename.."_off",
+		drop = "mesecons_button:"..basename.."_button_off",
 		_doc_items_create_entry = false,
 		node_placement_prediction = "",
 		sounds = sounds,
@@ -197,7 +206,7 @@ function mesecon.register_button(basename, description, texture, recipeitem, sou
 		_vlf_button_timer = button_timer,
 		on_timer = function(pos, elapsed)
 			local node = minetest.get_node(pos)
-			if node.name=="mesecons_button:button_"..basename.."_on" then --has not been dug
+			if node.name == "mesecons_button:"..basename.."_button_on" then --has not been dug
 				-- Is button pushable by arrow?
 				if push_by_arrow then
 					-- If there's an arrow stuck in the button, keep it pressed and check
@@ -214,7 +223,7 @@ function mesecon.register_button(basename, description, texture, recipeitem, sou
 				end
 
 				-- Normal operation: Un-press the button
-				minetest.set_node(pos, {name="mesecons_button:button_"..basename.."_off",param2=node.param2})
+				minetest.set_node(pos, {name="mesecons_button:"..basename.."_button_off",param2=node.param2})
 				minetest.sound_play(button_sound, {pos=pos, pitch=0.9}, true)
 				mesecon.receptor_off(pos, button_get_output_rules(node))
 			end
@@ -225,13 +234,13 @@ function mesecon.register_button(basename, description, texture, recipeitem, sou
 	})
 
 	minetest.register_craft({
-		output = "mesecons_button:button_"..basename.."_off",
+		output = "mesecons_button:"..basename.."_button_off",
 		recipe = {{ recipeitem }},
 	})
 
 	if minetest.get_modpath("mesecons_mvps") then
-		mesecon.register_mvps_unsticky("mesecons_button:button_"..basename.."_off")
-		mesecon.register_mvps_unsticky("mesecons_button:button_"..basename.."_on")
+		mesecon.register_mvps_unsticky("mesecons_button:"..basename.."_button_off")
+		mesecon.register_mvps_unsticky("mesecons_button:"..basename.."_button_on")
 	end
 end
 
@@ -257,6 +266,18 @@ mesecon.register_button(
 	1,
 	false,
 	S("A polished blackstone button is a redstone component made out of polished blackstone which can be pushed to provide redstone power. When pushed, it powers adjacent redstone components for 1 second."),
+	"mesecons_button_push")
+	
+mesecon.register_button(
+	"copper",
+	S("Copper Button"),
+	"vlf_copper_copper.png",
+	"vlf_copper:copper_block",
+	vlf_sounds.node_sound_stone_defaults(),
+	{material_stone=1,handy=1,pickaxey=1},
+	1,
+	false,
+	S("A Copper button is a redstone component made out of copper which can be pushed to provide redstone power. When pushed, it powers adjacent redstone components for 1 second."),
 	"mesecons_button_push")
 
 -- Add entry aliases for the Help

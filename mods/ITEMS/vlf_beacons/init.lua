@@ -1,16 +1,4 @@
 local S = minetest.get_translator(minetest.get_current_modname())
---[[
-there are strings in meta, which are being used to see which effect will be given to the player(s)
-Valid strings:
-	swiftness
-	leaping
-	strength
-	regeneration
-	haste
-	resistance
-	slow_falling
-	absorption
-]]--
 
 vlf_beacons = {
 	blocks ={"vlf_core:diamondblock","vlf_core:ironblock","vlf_core:goldblock","vlf_core:emeraldblock","vlf_nether:netheriteblock"},
@@ -120,42 +108,6 @@ minetest.register_node("vlf_beacons:beacon_beam", {
 
 mesecon.register_mvps_stopper("vlf_beacons:beacon_beam")
 
-local formspec_string=
-	"size[11,14]"..
-
-	"label[4.5,0.5;"..minetest.formspec_escape(S("Beacon:")).."]"..
-	"label[0.5,1;"..minetest.formspec_escape(S("Primary Power:")).."]"..
-	"label[0.5,8.25;"..minetest.formspec_escape( S("Inventory:")).."]"..
-
-	"image[1,1.5;1,1;custom_beacom_symbol_4.png]"..
-	"image[1,3;1,1;custom_beacom_symbol_3.png]"..
-	"image[1,4.5;1,1;custom_beacom_symbol_2.png]"..
-	"image[1,6;1,1;custom_beacom_symbol_1.png]"..
-
-	"image_button[5.2,1.5;1,1;vlf_entity_effects_effect_swiftness.png;swiftness;]"..
-	"image_button[8.5,1.5;1,1;vlf_entity_effects_effect_haste.png;haste;]"..
-	"image_button[5.2,3;1,1;vlf_entity_effects_effect_leaping.png;leaping;]"..
-	"image_button[8.5,3;1,1;vlf_entity_effects_effect_resistance.png;resistance;]"..
-
-	"image_button[5.2,4.5;1,1;vlf_entity_effects_effect_strength.png;strength;]"..
-	"image_button[8.5,4.5;1,1;vlf_entity_effects_effect_absorption.png;absorption;]"..
-
-	"image_button[5.2,6;1,1;vlf_entity_effects_effect_regeneration.png;regeneration;]"..
-	"image_button[8.5,6;1,1;vlf_entity_effects_effect_slow_falling.png;slow_falling;]"..
-
-	"item_image[1,7;1,1;vlf_core:diamond]"..
-	"item_image[2.2,7;1,1;vlf_core:emerald]"..
-	"item_image[3.4,7;1,1;vlf_core:iron_ingot]"..
-	"item_image[4.6,7;1,1;vlf_core:gold_ingot]"..
-	"item_image[5.8,7;1,1;vlf_nether:netherite_ingot]"..
-
-	vlf_formspec.get_itemslot_bg(7.2,7,1,1)..
-	"list[context;input;7.2,7;1,1;]"..
-	vlf_formspec.get_itemslot_bg(1,9,9,3)..
-	"list[current_player;main;1,9;9,3;9]"..
-	vlf_formspec.get_itemslot_bg(1,12.5,9,1)..
-	"list[current_player;main;1,12.5;9,1;]"
-
 local function remove_beacon_beam(pos)
 	for y=pos.y, pos.y+301 do
 		local node = minetest.get_node({x=pos.x,y=y,z=pos.z})
@@ -210,35 +162,37 @@ local function clear_obstructed_beam(pos)
 	return false
 end
 
-local function effect_player(effect,pos,power_level, effect_level,player)
+local function effect_player(effect, pos, power_level, effect_level,player)
 	local distance =  vector.distance(player:get_pos(), pos)
 	if distance > (power_level+1)*10 then return end
-	vlf_entity_effects.give_effect_by_level(effect, player, effect_level, 16)
+	vlf_entity_effects.give_effect_by_level (effect, player, effect_level, 16)
 end
 
 local function apply_effects_to_all_players(pos)
-    local meta = minetest.get_meta(pos)
+	local meta = minetest.get_meta(pos)
 	local effect_string = meta:get_string("effect")
-    local effect_level = meta:get_int("effect_level")
+	local effect_level = meta:get_int("effect_level")
+	local secondary = meta:get_string ("secondary_effect")
 
-    local power_level = beacon_blockcheck(pos)
+	local power_level = beacon_blockcheck(pos)
 
 	if effect_level == 2 and power_level < 4 then --no need to run loops when beacon is in an invalid setup :P
 		return
 	end
 
-    local beacon_distance = (power_level + 1) * 10
+	local beacon_distance = (power_level + 1) * 10
 
-	for _, player in pairs(minetest.get_connected_players()) do
-        if vector.distance(pos, player:get_pos()) <= beacon_distance then
-            if not clear_obstructed_beam(pos) then
-                effect_player(effect_string, pos, power_level, effect_level, player)
-            end
-        end
+	for player in vlf_util.connected_players(pos, beacon_distance) do
+		if not clear_obstructed_beam (pos) then
+			effect_player (effect_string, pos, power_level, effect_level, player)
+			if secondary and secondary ~= "" and power_level == 4 then
+				effect_player (secondary, pos, power_level, 1, player)
+			end
+		end
 	end
 end
 
-local function allow_metadata_inventory_take(pos, listname, index, stack, player)
+local function allow_metadata_inventory_take(pos, _, _, stack, player)
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
@@ -251,12 +205,58 @@ local function allow_metadata_inventory_put(pos, listname, index, stack, player)
 	return allow_metadata_inventory_take(pos, listname, index, stack, player)
 end
 
-local function allow_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
+local function allow_metadata_inventory_move()
 	return 0
 end
 
+local open_beacons = {}
+
+local function upgrade_effect_level_button (oldmeta)
+	local effect = oldmeta:get_string ("effect")
+	if effect and effect ~= "" then
+	local pdef = vlf_entity_effects.registered_effects[effect] or { }
+	local tooltip = (pdef.description or "???") .. " II"
+	return ("image_button[8.5,3.5;1,1;"
+		.. (pdef.icon or "unknown.png")
+		.. ";upgrade_ii;]"
+		.. "tooltip[8.5,3.5;1,1;" .. tooltip .. "]")
+	else
+	return ""
+	end
+end
+
+local function generate_beacon_formspec (pos, meta)
+	return ("size[11,14]"
+		.. "label[0.5,1;"..minetest.formspec_escape(S("Primary Power:")).."]"
+		.. "label[5.5,1;"..minetest.formspec_escape(S("Secondary Power:")).."]"
+		.. "label[0.5,8.25;"..minetest.formspec_escape( S("Inventory:")).."]"
+		.. "image[1,1.5;1,1;custom_beacon_symbol_4.png]"
+		.. "image[1,3;1,1;custom_beacon_symbol_3.png]"
+		.. "image[1,4.5;1,1;custom_beacon_symbol_2.png]"
+		.. "image[6,3.5;1,1;custom_beacon_symbol_1.png]"
+		.. "image_button[2.5,1.5;1,1;vlf_entity_effects_effect_swift.png;swiftness;]"
+		.. "image_button[3.5,1.5;1,1;vlf_entity_effects_effect_haste.png;haste;]"
+		.. "image_button[2.5,3;1,1;vlf_entity_effects_effect_resistance.png;resistance;]"
+		.. "image_button[3.5,3;1,1;vlf_entity_effects_effect_leaping.png;leaping;]"
+		.. "image_button[3.0,4.5;1,1;vlf_entity_effects_effect_strong.png;strength;]"
+		.. "image_button[7.5,3.5;1,1;vlf_entity_effects_effect_regenerating.png;regeneration;]"
+		.. upgrade_effect_level_button (meta)
+		.. "item_image[1,7;1,1;vlf_core:diamond]"
+		.. "item_image[2.2,7;1,1;vlf_core:emerald]"
+		.. "item_image[3.4,7;1,1;vlf_core:iron_ingot]"
+		.. "item_image[4.6,7;1,1;vlf_core:gold_ingot]"
+		.. "item_image[5.8,7;1,1;vlf_nether:netherite_ingot]"
+		.. vlf_formspec.get_itemslot_bg(7.2,7,1,1)
+		.. string.format ("list[nodemeta:%s,%s,%s;input;7.2,7;1,1;]",
+				  pos.x, pos.y, pos.z)
+		.. vlf_formspec.get_itemslot_bg(1,9,9,3)
+		.. "list[current_player;main;1,9;9,3;9]"
+		.. vlf_formspec.get_itemslot_bg(1,12.5,9,1)
+		.. "list[current_player;main;1,12.5;9,1;]")
+end
+
 minetest.register_node("vlf_beacons:beacon", {
-	description = S"Beacon",
+	description = S("Beacon"),
 	drawtype = "mesh",
 	collisionbox = {-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
 	mesh = "vlf_beacon.b3d",
@@ -267,8 +267,6 @@ minetest.register_node("vlf_beacons:beacon", {
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		inv:set_size("input", 1)
-		local form = formspec_string
-		meta:set_string("formspec", form)
 	end,
 	on_destruct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -279,137 +277,29 @@ minetest.register_node("vlf_beacons:beacon", {
 		end
 		remove_beacon_beam(pos)
 	end,
+	on_rightclick = function (pos, node, clicker)
+		local name = clicker:get_player_name ()
+		if minetest.is_protected (pos, name) then
+		minetest.record_protection_violation (pos, name)
+		return 0
+		end
+		minetest.show_formspec (clicker:get_player_name (),
+					"vlf_beacons:beacon_formspec",
+					generate_beacon_formspec (pos,
+								  minetest.get_meta (pos)))
+		open_beacons[name] = pos
+	end,
 	allow_metadata_inventory_put = allow_metadata_inventory_put,
 	allow_metadata_inventory_move = allow_metadata_inventory_move,
 	allow_metadata_inventory_take = allow_metadata_inventory_take,
-	on_receive_fields = function(pos, formname, fields, sender)
-		if fields.swiftness or fields.regeneration or fields.leaping or fields.strenght or fields.haste or fields.resistance or fields.absorption or fields.slow_falling then
-			local sender_name = sender:get_player_name()
-			local power_level = beacon_blockcheck(pos)
-			if minetest.is_protected(pos, sender_name) then
-				minetest.record_protection_violation(pos, sender_name)
-				return
-			elseif power_level == 0 then
-				return
-			end
-
-			local meta = minetest.get_meta(pos)
-			local inv = meta:get_inventory()
-			local input = inv:get_stack("input",1)
-
-			if input:is_empty() then
-				return
-			end
-
-			local valid_item = false
-
-			for _, item in ipairs(vlf_beacons.fuel) do
-				if input:get_name() == item then
-					valid_item = true
-				end
-			end
-
-			if not valid_item then
-				return
-			end
-
-			local successful = false
-			if fields.swiftness then
-				if power_level == 4 then
-					minetest.get_meta(pos):set_int("effect_level",2)
-				else
-					minetest.get_meta(pos):set_int("effect_level",1)
-				end
-				minetest.get_meta(pos):set_string("effect","swiftness")
-				successful = true
-			elseif fields.haste then
-				if power_level == 4 then
-					minetest.get_meta(pos):set_int("effect_level",2)
-				else
-					minetest.get_meta(pos):set_int("effect_level",1)
-				end
-				minetest.get_meta(pos):set_string("effect","haste")
-				successful = true
-			elseif fields.leaping and power_level >= 2 then
-				if power_level == 4 then
-					minetest.get_meta(pos):set_int("effect_level",2)
-				else
-					minetest.get_meta(pos):set_int("effect_level",1)
-				end
-				minetest.get_meta(pos):set_string("effect","leaping")
-				successful = true
-			elseif fields.resistance and power_level >= 2 then
-				if power_level == 4 then
-					minetest.get_meta(pos):set_int("effect_level",2)
-				else
-					minetest.get_meta(pos):set_int("effect_level",1)
-				end
-				minetest.get_meta(pos):set_string("effect","resistance")
-				successful = true
-			elseif fields.strenght and power_level >= 3 then
-				if power_level == 4 then
-					minetest.get_meta(pos):set_int("effect_level",2)
-				else
-					minetest.get_meta(pos):set_int("effect_level",1)
-				end
-				minetest.get_meta(pos):set_string("effect","strength")
-				successful = true
-			elseif fields.absorption and power_level >= 3 then
-				if power_level == 4 then
-					minetest.get_meta(pos):set_int("effect_level",2)
-				else
-					minetest.get_meta(pos):set_int("effect_level",1)
-				end
-				minetest.get_meta(pos):set_string("effect","absorption")
-				successful = true
-			elseif fields.regeneration and power_level == 4 then
-				minetest.get_meta(pos):set_int("effect_level",2)
-				minetest.get_meta(pos):set_string("effect","regeneration")
-				successful = true
-			elseif fields.slow_falling and power_level == 4 then
-				minetest.get_meta(pos):set_int("effect_level",2)
-				minetest.get_meta(pos):set_string("effect","slow_falling")
-				successful = true
-			end
-			if successful then
-				if power_level == 4 then
-					awards.unlock(sender:get_player_name(),"vlf:maxed_beacon")
-				end
-				awards.unlock(sender:get_player_name(),"vlf:beacon")
-				input:take_item()
-				inv:set_stack("input",1,input)
-
-				local beam_palette_index = 0
-				remove_beacon_beam(pos)
-				for y = pos.y +1, pos.y + 201 do
-					local node = minetest.get_node({x=pos.x,y=y,z=pos.z})
-					if node.name == "ignore" then
-						minetest.get_voxel_manip():read_from_map({x=pos.x,y=y,z=pos.z}, {x=pos.x,y=y,z=pos.z})
-						node = minetest.get_node({x=pos.x,y=y,z=pos.z})
-					end
-
-
-					if  minetest.get_item_group(node.name, "glass") ~= 0 or minetest.get_item_group(node.name,"material_glass") ~= 0 then
-						beam_palette_index = get_beacon_beam(node.name)
-					end
-
-					if node.name == "air" then
-						minetest.set_node({x=pos.x,y=y,z=pos.z},{name="vlf_beacons:beacon_beam",param2=beam_palette_index})
-					end
-				end
-                apply_effects_to_all_players(pos) --call it once outside the globalstep so the player gets the effect right after selecting it
-			end
-		end
-	end,
 	light_source = 14,
-	groups = {handy=1},
+	groups = {handy=1, deco_block=1},
 	drop = "vlf_beacons:beacon",
 	sounds = vlf_sounds.node_sound_glass_defaults(),
 	_vlf_hardness = 3,
 })
 
 mesecon.register_mvps_stopper("vlf_beacons:beacon")
-vlf_wip.register_wip_item("vlf_beacons:beacon")
 
 function vlf_beacons.register_beaconblock (itemstring)--API function for other mods
 	table.insert(vlf_beacons.blocks, itemstring)
@@ -448,7 +338,7 @@ minetest.register_abm{
 	interval = 3,
 	chance = 1,
 	action = function(pos)
-        apply_effects_to_all_players(pos)
+		apply_effects_to_all_players(pos)
 	end,
 }
 
@@ -460,3 +350,164 @@ minetest.register_craft({
 		{"vlf_core:obsidian", "vlf_core:obsidian", "vlf_core:obsidian"}
 	}
 })
+
+local function upgrade_old_data (pos, node, dtime_s)
+	-- Clear the primary effect if it is Regeneration, or substitute
+	-- `strength' for the old value `strenght'.
+	local meta = minetest.get_meta (pos)
+	if meta:get_string ("effect") == "regeneration" then
+	meta:set_string ("effect", "")
+	meta:set_string ("secondary_effect", "regeneration")
+	meta:set_string ("effect_level", 1)
+	elseif meta:get_string ("effect") == "strenght" then
+	meta:set_string ("effect", "strength")
+	end
+	-- Clear previously installed formspec properties, now that they
+	-- are now computed and displayed from within on_rightclick.
+	meta:set_string ("formspec", "")
+end
+
+minetest.register_lbm ({
+	label = "Upgrade legacy beacon data",
+	name = "vlf_beacons:upgrade_data",
+	nodenames = {"vlf_beacons:beacon"},
+	run_at_every_load = false,
+	action = upgrade_old_data,
+})
+
+-- Remove players who depart from `open_beacons'
+
+minetest.register_on_leaveplayer (function (player, timed_out)
+	open_beacons[player] = nil
+end)
+
+local function apply_beacon_formspec (sender, formname, fields)
+	if formname ~= "vlf_beacons:beacon_formspec" then
+	return
+	end
+	local sender_name = sender:get_player_name ()
+	local pos = open_beacons[sender_name]
+	if fields.quit then
+	open_beacons[sender_name] = nil
+	return
+	end
+	-- Return if the node is no longer a beacon.
+	if not pos or minetest.get_node (pos).name ~= "vlf_beacons:beacon" then
+	return
+	end
+	if (fields.swiftness or fields.regeneration or fields.leaping
+	or fields.strength or fields.upgrade_ii or fields.resistance
+	or fields.haste) then
+	local power_level = beacon_blockcheck (pos)
+
+	if minetest.is_protected (pos, sender_name) then
+		minetest.record_protection_violation(pos, sender_name)
+		return
+	elseif power_level == 0 then
+		return
+	end
+
+	local meta = minetest.get_meta (pos)
+	local inv = meta:get_inventory ()
+	local input = inv:get_stack ("input", 1)
+
+	if input:is_empty() then
+		return
+	end
+
+	local valid_item = false
+
+	for _, item in ipairs (vlf_beacons.fuel) do
+		if input:get_name () == item then
+		valid_item = true
+		end
+	end
+
+	if not valid_item then
+		return
+	end
+
+	local successful = false
+
+	if fields.swiftness then
+		meta:set_string ("effect", "swiftness")
+		if minetest.get_meta (pos):get_int ("effect_level") < 1 then
+		meta:set_int ("effect_level", 1)
+		end
+		successful = true
+	elseif fields.haste then
+		meta:set_string ("effect", "haste")
+		if minetest.get_meta (pos):get_int ("effect_level") < 1 then
+		meta:set_int ("effect_level", 1)
+		end
+		successful = true
+	elseif fields.leaping and power_level >= 2 then
+		meta:set_string ("effect", "leaping")
+		if minetest.get_meta (pos):get_int ("effect_level") < 1 then
+		meta:set_int ("effect_level", 1)
+		end
+		successful = true
+	elseif fields.resistance and power_level >= 2 then
+		meta:set_string ("effect", "resistance")
+		if minetest.get_meta (pos):get_int ("effect_level") < 1 then
+		meta:set_int ("effect_level", 1)
+		end
+		successful = true
+	elseif fields.strength and power_level >= 3 then
+		meta:set_string ("effect","strength")
+		if minetest.get_meta (pos):get_int ("effect_level") < 1 then
+		meta:set_int ("effect_level", 1)
+		end
+		successful = true
+	elseif fields.regeneration and power_level == 4 then
+		-- If a secondary effect is enabled, the effect level must
+		-- be reset to 1.
+		meta:set_int ("effect_level", 1)
+		meta:set_string ("secondary_effect", "regeneration")
+		successful = true
+	elseif fields.upgrade_ii and power_level == 4 then
+		-- Upgrade the primary effect to II but cancel the
+		-- secondary one.  Also verify that there is an effect to
+		-- upgrade.
+		if minetest.get_meta (pos):get_string ("effect")
+		and minetest.get_meta (pos):get_int ("effect_level") < 2 then
+		minetest.get_meta (pos):set_int ("effect_level", 2)
+		minetest.get_meta (pos):set_string ("secondary_effect", "")
+		successful = true
+		end
+	end
+	if successful then
+		if power_level == 4 then
+		awards.unlock(sender_name, "vlf:maxed_beacon")
+		end
+		awards.unlock(sender_name, "vlf:beacon")
+		input:take_item ()
+		inv:set_stack("input",1,input)
+
+		local beam_palette_index = 0
+		remove_beacon_beam(pos)
+		for y = pos.y +1, pos.y + 201 do
+		local node = minetest.get_node({x=pos.x,y=y,z=pos.z})
+		if node.name == "ignore" then
+			minetest.get_voxel_manip():read_from_map({x=pos.x,y=y,z=pos.z}, {x=pos.x,y=y,z=pos.z})
+			node = minetest.get_node({x=pos.x,y=y,z=pos.z})
+		end
+
+		if minetest.get_item_group(node.name, "glass") ~= 0 or minetest.get_item_group(node.name,"material_glass") ~= 0 then
+			beam_palette_index = get_beacon_beam(node.name)
+		end
+
+		if node.name == "air" then
+			minetest.set_node({x=pos.x,y=y,z=pos.z},{name="vlf_beacons:beacon_beam",param2=beam_palette_index})
+		end
+		end
+		apply_effects_to_all_players(pos) --call it once outside the globalstep so the player gets the effect right after selecting it
+		-- Redisplay the formspec.
+		minetest.show_formspec (sender_name,
+					"vlf_beacons:beacon_formspec",
+					generate_beacon_formspec (pos, meta))
+	end
+	end
+end
+
+minetest.register_on_player_receive_fields (apply_beacon_formspec)

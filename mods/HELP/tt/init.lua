@@ -69,8 +69,7 @@ function tt.reload_itemstack_description(itemstack)
 		end
 		local orig_desc = def._tt_original_description or def.description
 		if def._vlf_filter_description then
-		    orig_desc = def._vlf_filter_description (itemstack,
-							     orig_desc)
+		    orig_desc = def._vlf_filter_description (itemstack, orig_desc)
 		end
 		if meta:get_string("name") ~= "" then
 			orig_desc = minetest.colorize(tt.NAME_COLOR, meta:get_string("name"))

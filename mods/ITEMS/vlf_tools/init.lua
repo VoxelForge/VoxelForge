@@ -228,6 +228,7 @@ local function make_stripped_trunk(itemstack, placer, pointed_thing)
 		minetest.swap_node(pointed_thing.under, {name=noddef._vlf_stripped_variant, param2=node.param2})
 		if minetest.get_item_group(node_name, "waxed") ~= 0 then
 			awards.unlock(placer:get_player_name(), "vlf:wax_off")
+			vlf_honey.particles(pos)
 		end
 		if node_name:find("vlf_copper") and node_name:find("bulb") then
 			awards.unlock(placer:get_player_name(), "vlf:lighten_up")

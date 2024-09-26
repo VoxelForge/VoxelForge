@@ -177,7 +177,7 @@ function vlf_weather.rain.make_weather()
 
 	for _, player in pairs(minetest.get_connected_players()) do
 		local pos=player:get_pos()
-		if vlf_weather.is_underwater(player) or not vlf_weather.has_rain(pos) then
+		if vlf_weather.is_underwater(player) or not vlf_weather.has_rain(pos) or pos.y <= 0 then
 			vlf_weather.rain.remove_sound(player)
 			vlf_weather.remove_spawners_player(player)
 			if vlf_worlds.has_weather(pos) then

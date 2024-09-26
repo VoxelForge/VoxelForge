@@ -76,9 +76,8 @@ local function check_conduit(pos)
 end
 
 function vlf_conduits.player_effect(player)
-	if minetest.get_item_group(vlf_player.players[player].nodes.feet, "water") == 0 then return end
-	vlf_entity_effects.water_breathing_func(player, 2, 13)
-	vlf_entity_effects.swiftness_func(player, 2, 13)
+    if minetest.get_item_group(vlf_player.players[player].nodes.feet, "water") == 0 then return end
+    vlf_entity_effects.give_effect_by_level ("conduit_power", player, 1, 17)
 end
 
 function vlf_conduits.conduit_damage(ent)
@@ -121,12 +120,11 @@ minetest.register_entity("vlf_conduits:conduit", {
 			self.object:remove()
 			return
 		end
-		local dst = lvl * 2
-		for _, pl in pairs(minetest.get_connected_players()) do
-			if vector.distance(self._pos, pl:get_pos()) < dst then
-				vlf_conduits.player_effect(pl)
-			end
+
+		for pl in vlf_util.connected_players(self._pos, lvl * 2) do
+			vlf_conduits.player_effect(pl)
 		end
+
 		for _, ent in pairs(minetest.luaentities) do
 			if ent.is_mob and ent.type == "monster" and ent.object and ent.object:get_pos() and vector.distance(self._pos, ent.object:get_pos()) < 9 then
 				vlf_conduits.conduit_damage(ent)
@@ -145,7 +143,7 @@ minetest.register_node("vlf_conduits:conduit", {
 	},
 	collisionbox = conduit_box,
 	selectionbox = conduit_box,
-	groups = { pickaxey = 1 },
+	groups = { pickaxey = 1, deco_block = 1},
 	light_source = 14,
 	tiles = { "vlf_conduit_conduit_node.png", },
 	_vlf_hardness = 3,
@@ -157,8 +155,8 @@ minetest.register_abm({
 	nodenames = { "vlf_conduits:conduit" },
 	interval = check_interval,
 	chance = 1,
-	action = function(pos, node)
-		for _, v in pairs(minetest.get_objects_inside_radius(vector.subtract(pos, entity_pos_offset), 0.5)) do
+	action = function(pos, _)
+		for v in minetest.objects_inside_radius(vector.subtract(pos, entity_pos_offset), 0.5) do
 			if v.name == "vlf_conduits:conduit" then return end
 		end
 		if check_conduit(pos) then

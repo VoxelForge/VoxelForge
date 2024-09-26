@@ -7,7 +7,6 @@ local S = minetest.get_translator(minetest.get_current_modname())
 -- ╚█████╔╝██║░░██║██║░░██║░░░██║░░░  ╚█████╔╝╚█████╔╝██║░╚═╝░██║██║░╚═╝░██║██║░░██║██║░╚███║██████╔╝██████╔╝
 -- ░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░  ░╚════╝░░╚════╝░╚═╝░░░░░╚═╝╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═════╝░╚═════╝░
 
-
 minetest.register_chatcommand("effect",{
 	params = S("<effect>|heal|list|clear|remove <duration|heal-amount|effect>|INF [<level>] [<factor>] [NOPART]"),
 	description = S("Add a status effect to yourself. Arguments: <effect>: name of status effect. Passing \"list\" as effect name lists available effects. Passing \"heal\" as effect name heals (or harms) by amount designed by the next parameter. Passing \"clear\" as effect name removes all effects. Passing \"remove\" as effect name removes the effect named by the next parameter. <duration>: duration in seconds. Passing \"INF\" as duration makes the effect infinite. (<heal-amount>: amount of healing when the effect is \"heal\", passing a negative value subtracts health. <effect>: name of a status effect to be removed when using \"remove\" as the previous parameter.) <level>: effect power determinant, bigger level results in more powerful effect for effects that depend on the level (no changes for other effects), defaults to 1, pass F to use low-level factor instead. <factor>: effect strength modifier, can mean different things depending on the effect, no changes for effects that do not depend on level/factor. NOPART at the end means no particles will be shown for this effect."),
@@ -63,8 +62,7 @@ minetest.register_chatcommand("effect",{
 		elseif P[3] and P[3] == "F" and not P[4] then
 			return false, S("Missing or invalid factor parameter when level is F!")
 		end
-
-		-- Default level = 1
+		-- Default factor = 1
 		if not P[3] then
 			P[3] = 1
 		elseif P[3] == "NOPART" then
@@ -112,4 +110,3 @@ minetest.register_chatcommand("effect",{
 
 	 end,
 })
-

@@ -506,10 +506,11 @@ function mob_class:is_object_in_view(object_list, object_range, node_range, turn
 	if object_pos and turn_around then
 
 		local vec = vector.subtract(object_pos, s)
-		local yaw = (atan(vec.z / vec.x) + 3 *math.pi/ 2) - self.rotate
-		if object_pos.x > s.x then yaw = yaw + math.pi end
-
-		self:set_yaw(yaw, 4)
+		if self.randomly_turn then
+			local yaw = (atan(vec.z / vec.x) + 3 *math.pi/ 2) - self.rotate
+			if object_pos.x > s.x then yaw = yaw + math.pi end
+			self:set_yaw(yaw, 4)
+		end
 	end
 	return object_pos ~= nil
 end
@@ -647,9 +648,11 @@ function mob_class:follow_flop()
 					x = p.x - s.x,
 					z = p.z - s.z
 				}
-				local yaw = (atan(vec.z / vec.x) +math.pi/ 2) - self.rotate
-				if p.x > s.x then yaw = yaw +math.pi end
-				self:set_yaw( yaw, 2.35)
+				if self.randomly_turn then
+					local yaw = (atan(vec.z / vec.x) +math.pi/ 2) - self.rotate
+					if p.x > s.x then yaw = yaw +math.pi end
+					self:set_yaw( yaw, 2.35)
+				end
 				-- anyone but standing npc's can move along
 				if dist > 3
 				and self.order ~= "stand" then
@@ -706,6 +709,7 @@ function mob_class:look_at(b)
 	local yaw = (atann(v.z / v.x) +math.pi/ 2) - self.rotate
 	if b.x > s.x then yaw = yaw +math.pi end
 	self.object:set_yaw(yaw)
+	
 end
 
 function mob_class:go_to_pos(b)
@@ -721,6 +725,7 @@ function mob_class:go_to_pos(b)
 	self:look_at(b)
 	self:set_velocity(self.walk_velocity)
 	self:set_animation("walk")
+	self.randomly_turn = false
 end
 
 function mob_class:check_herd()
@@ -797,11 +802,13 @@ function mob_class:do_states_walk()
 						x = lp.x - s.x,
 						z = lp.z - s.z
 					}
-					yaw = (atan(vec.z / vec.x) +math.pi/ 2) - self.rotate
-					if lp.x > s.x  then yaw = yaw +math.pi end
+					if self.randomly_turn then
+						yaw = (atan(vec.z / vec.x) +math.pi/ 2) - self.rotate
+						if lp.x > s.x  then yaw = yaw +math.pi end
+						-- look towards land and move in that direction
+						yaw = self:set_yaw( yaw, 6)
+					end
 
-					-- look towards land and move in that direction
-					yaw = self:set_yaw( yaw, 6)
 					self:set_velocity(self.walk_velocity)
 
 				end
@@ -859,6 +866,79 @@ function mob_class:do_states_walk()
 	end
 end
 
+function mob_class:do_states_walk_to_pos(target_pos)
+	local yaw = self.object:get_yaw() or 0
+	local s = self.object:get_pos()
+	local lp = nil
+
+	-- Check for hazards to avoid
+	if (self.water_damage > 0 and self.lava_damage > 0)
+			or self.object:get_properties().breath_max ~= -1 then
+		lp = minetest.find_node_near(s, 1, {"group:water", "group:lava"})
+	elseif self.water_damage > 0 then
+		lp = minetest.find_node_near(s, 1, {"group:water"})
+	elseif self.lava_damage > 0 then
+		lp = minetest.find_node_near(s, 1, {"group:lava"})
+	elseif self.fire_damage > 0 then
+		lp = minetest.find_node_near(s, 1, {"group:fire"})
+	end
+
+	local is_in_danger = false
+	if lp then
+		if (self:is_node_dangerous(self.standing_in) or self:is_node_dangerous(self.standing_on))
+				or (self:is_node_waterhazard(self.standing_in) or self:is_node_waterhazard(self.standing_on))
+				and (not self.fly) then
+			is_in_danger = true
+
+			-- Find land to escape danger
+			lp = minetest.find_nodes_in_area_under_air(
+				{x = s.x - 5, y = s.y - 0.5, z = s.z - 5},
+				{x = s.x + 5, y = s.y + 1, z = s.z + 5},
+				{"group:solid"})
+
+			lp = #lp > 0 and lp[math.random(#lp)]
+
+			if lp then
+				local vec = {
+					x = lp.x - s.x,
+					z = lp.z - s.z
+				}
+				yaw = math.atan2(vec.z, vec.x) - math.pi / 2
+				if lp.x > s.x then yaw = yaw + math.pi end
+				yaw = self:set_yaw(yaw, 6)
+				self:set_velocity(self.walk_velocity)
+			end
+		end
+	end
+
+	-- Walk towards the target position if there's no danger
+	if not is_in_danger and target_pos then
+		local vec = {
+			x = target_pos.x - s.x,
+			z = target_pos.z - s.z
+		}
+		yaw = math.atan2(vec.z, vec.x) - math.pi / 2
+		if target_pos.x > s.x then yaw = yaw + math.pi end
+
+		self:set_yaw(yaw, 6)
+		self:set_velocity(self.walk_velocity)
+		self:set_animation("walk")
+
+		-- Check if mob has reached the target
+		local distance = vector.distance(s, target_pos)
+		if distance < 1 then
+			self:set_velocity(0)
+			self:set_state("stand")
+			self:set_animation("stand")
+		end
+	else
+		self:set_state("stand")
+		self:set_velocity(0)
+		self:set_animation("stand")
+	end
+end
+
+
 function mob_class:do_states_stand()
 	local yaw = self.object:get_yaw() or 0
 
@@ -879,12 +959,18 @@ function mob_class:do_states_stand()
 				x = lp.x - s.x,
 				z = lp.z - s.z
 			}
-			yaw = (atan(vec.z / vec.x) +math.pi/ 2) - self.rotate
-			if lp.x > s.x then yaw = yaw +math.pi end
+			if self.randomly_turn then
+				yaw = (atan(vec.z / vec.x) +math.pi/ 2) - self.rotate
+				if lp.x > s.x then yaw = yaw +math.pi end
+			end
 		else
-			yaw = yaw + math.random(-0.5, 0.5)
+			if self.randomly_turn then
+				yaw = yaw + math.random(-0.5, 0.5)
+			end
 		end
-		self:set_yaw( yaw, 8)
+		if self.randomly_turn then
+			self:set_yaw( yaw, 8)
+		end
 	end
 	if self.order == "sit" then
 		self:set_animation( "sit")
@@ -932,41 +1018,47 @@ function mob_class:do_states_runaway()
 end
 
 function mob_class:check_smooth_rotation(dtime)
-	-- smooth rotation by ThomasMonroe314
-	if self._turn_to then
-		self:set_yaw( self._turn_to, .1)
-	end
-	if self.delay and self.delay > 0 then
-		local yaw = self.object:get_yaw() or 0
-		if self.delay == 1 then
-			yaw = self.target_yaw
-		else
-			local dif = math.abs(yaw - self.target_yaw)
-			if yaw > self.target_yaw then
-				if dif > math.pi then
-					dif = 2 * math.pi - dif -- need to add
-					yaw = yaw + dif / self.delay
-				else
-					yaw = yaw - dif / self.delay -- need to subtract
-				end
-			elseif yaw < self.target_yaw then
-				if dif >math.pi then
-					dif = 2 * math.pi - dif
-					yaw = yaw - dif / self.delay -- need to subtract
-				else
-					yaw = yaw + dif / self.delay -- need to add
-				end
-			end
-			if yaw > (math.pi * 2) then yaw = yaw - (math.pi * 2) end
-			if yaw < 0 then yaw = yaw + (math.pi * 2) end
-		end
-		self.delay = self.delay - 1
-		if self.shaking then
-			yaw = yaw + (math.random() * 2 - 1) * 5 * dtime
-		end
-		self.object:set_yaw(yaw)
-	end
-	-- end rotation
+    -- smooth rotation by ThomasMonroe314
+    if self._turn_to then
+        self:set_yaw(self._turn_to, .1)
+    end
+
+    if self.delay and self.delay > 0 then
+        local yaw = self.object:get_yaw() or 0
+
+        if self.delay == 1 then
+            yaw = self.target_yaw
+        else
+            local dif = math.abs(yaw - self.target_yaw)
+
+            if yaw > self.target_yaw then
+                if dif > math.pi then
+                    dif = 2 * math.pi - dif -- need to add
+                    yaw = yaw + dif / self.delay
+                else
+                    yaw = yaw - dif / self.delay -- need to subtract
+                end
+            elseif yaw < self.target_yaw then
+                if dif > math.pi then
+                    dif = 2 * math.pi - dif
+                    yaw = yaw - dif / self.delay -- need to subtract
+                else
+                    yaw = yaw + dif / self.delay -- need to add
+                end
+            end
+
+            if yaw > (math.pi * 2) then yaw = yaw - (math.pi * 2) end
+            if yaw < 0 then yaw = yaw + (math.pi * 2) end
+        end
+
+        self.delay = self.delay - 1
+
+        if self.shaking then
+            yaw = yaw + (math.random() * 2 - 1) * 5 * dtime
+        end
+
+        self.object:set_yaw(yaw)
+    end
 end
 
 --this is a generic climb function

@@ -47,7 +47,7 @@ local function check_phantom_spawn(player_name, dtime)
 	if last_sleep_time then
 		local days_passed = (current_time - last_sleep_time) / 800 -- Each day is 800 ticks
 
-		if days_passed >= 3 then
+		if days_passed >= 3 and current_time <= 0.24 and current_time >= 0.75 then
 			spawn_timer = spawn_timer + dtime
 
 			if spawn_timer >= spawn_interval_min + math.random(0, spawn_interval_max - spawn_interval_min) then
@@ -61,7 +61,9 @@ local function check_phantom_spawn(player_name, dtime)
 							y = pos.y + 34,
 							z = pos.z + math.random(-10, 10)
 						}
-						minetest.add_entity(spawn_pos, "mobs_mc:phantom")
+						if minetest.settings:get_bool('doInsomnia', true) then
+							minetest.add_entity(spawn_pos, "mobs_mc:phantom")
+						end
 					end
 				end
 				spawn_timer = 0 -- Reset the timer after spawning
@@ -71,7 +73,7 @@ local function check_phantom_spawn(player_name, dtime)
 	phantom_spawn_timer[player_name] = spawn_timer -- Update the timer for the player
 end
 
---[[minetest.register_chatcommand("sleep_time", {
+minetest.register_chatcommand("sleep_time", {
 	params = "",
 	description = "Returns the sleep time and days since last sleep for the user.",
 	func = function(name, param)
@@ -81,7 +83,7 @@ end
 		local days_passed = last_sleep_time ~= "Never" and (current_time - last_sleep_time) / 800 or "N/A"
 		return true, "Last sleep time: " .. tostring(last_sleep_time) .. ", Days since last sleep: " .. tostring(days_passed)
 	end
-})]]
+})
 
 -- Register an event to call this function every globalstep
 minetest.register_globalstep(function(dtime)
