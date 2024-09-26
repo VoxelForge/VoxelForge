@@ -41,7 +41,7 @@ local skeleton = {
 		}
 	},
 	walk_velocity = 1.1,
-	run_velocity = 1.65, -- skeletons are really anoying in mc, so i made only walkin 0.2 slower
+	run_velocity = 1.45, -- skeletons are really anoying in mc, so i made only walkin 0.2 slower
 	sounds = {
 		random = "mobs_mc_skeleton_random",
 		death = "mobs_mc_skeleton_death",
@@ -68,12 +68,11 @@ local skeleton = {
 		max = 2,
 		looting = "common",},
 
-		-- Head
-		-- TODO: Only drop if killed by charged creeper
 		{name = "vlf_heads:skeleton",
-		chance = 200, -- 0.5% chance
-		min = 1,
-		max = 1,},
+		 chance = 200, -- 0.5% chance
+		 min = 1,
+		 max = 1,
+		 mob_head = true,},
 	},
 	animation = {
 		stand_speed = 15,
@@ -109,7 +108,7 @@ local skeleton = {
 			if self.attack then
 				self.object:set_yaw(minetest.dir_to_yaw(vector.direction(self.object:get_pos(), self.attack:get_pos())))
 			end
-			local dmg = math.random(2, 4)
+			local dmg = math.random(3, 4)
 			vlf_bows.shoot_arrow("vlf_bows:arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
 		end
 	end,
@@ -138,39 +137,45 @@ vlf_mobs.register_mob("mobs_mc:skeleton", skeleton)
 --################### STRAY
 --###################
 
-local stray = table.copy(skeleton)
-stray.description = S("Stray")
-stray._freeze_damage = 0
-stray.mesh = "mobs_mc_skeleton.b3d"
-stray.textures = {
-	{
-		"mobs_mc_stray_overlay.png",
-		"mobs_mc_stray.png",
-		"vlf_bows_bow_0.png",
-	},
-}
 -- TODO: different sound (w/ echo)
--- TODO: stray's arrow inflicts slowness status
-stray.arrow = "vlf_entity_effects:slowness_arrow_entity"
-table.insert(stray.drops, {
-	name = "vlf_entity_effects:slowness_arrow",
-	chance = 2,
-	min = 1,
-	max = 1,
-	looting = "rare",
-	looting_chance_function = function(lvl)
-		local chance = 0.5
-		for i = 1, lvl do
-			if chance > 1 then
-				return 1
+vlf_mobs.register_mob("mobs_mc:stray", table.merge(skeleton, {
+	description = S("Stray"),
+	mesh = "mobs_mc_skeleton.b3d",
+	_vlf_freeze_damage = 0,
+	textures = {
+		{
+			"mobs_mc_stray_overlay.png",
+			"mobs_mc_stray.png",
+			"vlf_bows_bow_0.png",
+		},
+	},
+	shoot_arrow = function(self, pos, dir)
+		if mod_bows then
+			if self.attack then
+				self.object:set_yaw(minetest.dir_to_yaw(vector.direction(self.object:get_pos(), self.attack:get_pos())))
 			end
-			chance = chance + (1 - chance) / 2
+			local dmg = math.random(3, 4)
+			vlf_bows.shoot_arrow("vlf_entity_effects:slowness_arrow", pos, dir, self.object:get_yaw(), self.object, nil, dmg)
 		end
-		return chance
 	end,
-})
-
-vlf_mobs.register_mob("mobs_mc:stray", stray)
+	drops = table.insert(skeleton.drops, {
+		name = "vlf_entity_effects:slowness_arrow",
+		chance = 2,
+		min = 1,
+		max = 1,
+		looting = "rare",
+		looting_chance_function = function(lvl)
+			local chance = 0.5
+			for _ = 1, lvl do
+				if chance > 1 then
+					return 1
+				end
+				chance = chance + (1 - chance) / 2
+			end
+			return chance
+		end,
+	})
+}))
 
 vlf_mobs.spawn_setup({
 	name = "mobs_mc:skeleton",

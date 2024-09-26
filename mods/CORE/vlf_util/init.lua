@@ -1539,3 +1539,52 @@ vlf_util.to_roman = function(number)
 	end
 	return r
 end
+
+local function valid_object_iterator(objects)
+	local i = 0
+	local function next_valid_object()
+		i = i + 1
+		local obj = objects[i]
+		if obj == nil then
+			return
+		end
+		if obj:get_pos() then
+			return obj
+		end
+		return next_valid_object()
+	end
+	return next_valid_object
+end
+
+local function valid_object_iterator_in_radius(objects, center, radius)
+	local i = 0
+	local function next_valid_object()
+		i = i + 1
+		local obj = objects[i]
+		if obj == nil then
+			return
+		end
+		local p = obj:get_pos()
+		if p and vector.distance(p, center) <= radius then
+			return obj
+		end
+		return next_valid_object()
+	end
+	return next_valid_object
+end
+
+function vlf_util.connected_players(center, radius)
+	local pls = minetest.get_connected_players()
+	if not center then return valid_object_iterator(pls) end
+	return valid_object_iterator_in_radius(pls, center, radius or 1)
+end
+
+if not minetest.objects_inside_radius then --polyfill for pre minetest 5.9
+	function core.objects_inside_radius(center, radius)
+		return valid_object_iterator(core.get_objects_inside_radius(center, radius))
+	end
+
+	function core.objects_in_area(min_pos, max_pos)
+		return valid_object_iterator(core.get_objects_in_area(min_pos, max_pos))
+	end
+end

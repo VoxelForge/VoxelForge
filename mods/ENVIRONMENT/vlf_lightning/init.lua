@@ -54,7 +54,6 @@ function vlf_lightning.register_on_strike(func)
 	table.insert(vlf_lightning.on_strike_functions, func)
 end
 
--- select a random strike point, midpoint
 local function choose_pos(pos)
 	if not pos then
 		local playerlist = minetest.get_connected_players()
@@ -79,6 +78,16 @@ local function choose_pos(pos)
 		pos.z = math.floor(pos.z - (vlf_lightning.range_h / 2) + rng:next(1, vlf_lightning.range_h))
 	end
 
+	-- Check for nearby copper golems within 8-block radius
+	local copper_golems = minetest.get_objects_inside_radius(pos, 8)
+	for _, obj in ipairs(copper_golems) do
+		local luaentity = obj:get_luaentity()
+		if luaentity and luaentity.name == "mobs_mc:copper_golem" then
+			pos = obj:get_pos()
+			break -- Switch to copper golem's position and break out of the loop
+		end
+	end
+
 	local b, pos2 = minetest.line_of_sight(pos, { x = pos.x, y = pos.y - vlf_lightning.range_v, z = pos.z }, 1)
 
 	-- nothing but air found
@@ -93,6 +102,7 @@ local function choose_pos(pos)
 
 	return pos, pos2
 end
+
 
 function vlf_lightning.strike_func(pos, pos2, objects)
 	local particle_pos = vector.offset(pos2, 0, (vlf_lightning.size / 2) + 0.5, 0)
@@ -123,7 +133,7 @@ function vlf_lightning.strike_func(pos, pos2, objects)
 	for _, obj in pairs(objects) do
 		local lua = obj:get_luaentity()
 		if lua then
-			if not lua._on_lightning_strike or ( lua._on_lightning_strike and lua._on_lightning_strike(lua, pos, pos2, objects) ~= true ) then
+			if not lua._on_lightning_strike or ( lua._on_lightning_strike and lua._on_lightning_strike(lua, pos, pos2, objects) ~= true ) and lua ~= "mobs_mc:copper_golem" then
 				vlf_util.deal_damage(obj, 5, { type = "lightning_bolt" })
 			end
 		else
@@ -166,6 +176,7 @@ function vlf_lightning.strike_func(pos, pos2, objects)
 			-- Low chance for a lightning to spawn skeleton horse + skeletons
 
 			local is_trap_nearby = false
+			local is_copper_golem_near = false
 			local objects_nearby = minetest.get_objects_inside_radius(pos2, 2)
 
 			for _, obj in ipairs(objects_nearby) do
@@ -174,13 +185,17 @@ function vlf_lightning.strike_func(pos, pos2, objects)
 					-- Check if it's a skeleton horse trap
 					if luaentity.name == "mobs_mc:skeleton_horse_trap" then
 						is_trap_nearby = true
-						break -- Exit loop if a trap is found
+						break
+					end
+					if luaentity.name == "mobs_mc:copper_golem" then
+						is_copper_golem_near = true
+						break
 					end
 				end
 			end
 
 			-- Set fire only if no skeleton horse trap is nearby
-			if not is_trap_nearby then
+			if not is_trap_nearby and not is_copper_golem_near then
 				if rng:next(1, 100) >= 4 then
 					minetest.set_node(pos2, { name = "vlf_fire:fire" })
 				end

@@ -47,7 +47,7 @@ local function check_phantom_spawn(player_name, dtime)
 	if last_sleep_time then
 		local days_passed = (current_time - last_sleep_time) / 800 -- Each day is 800 ticks
 
-		if days_passed >= 3 then
+		if days_passed >= 3 and current_time <= 0.24 and current_time >= 0.75 then
 			spawn_timer = spawn_timer + dtime
 
 			if spawn_timer >= spawn_interval_min + math.random(0, spawn_interval_max - spawn_interval_min) then
@@ -61,7 +61,9 @@ local function check_phantom_spawn(player_name, dtime)
 							y = pos.y + 34,
 							z = pos.z + math.random(-10, 10)
 						}
-						minetest.add_entity(spawn_pos, "mobs_mc:phantom")
+						if minetest.settings:get_bool('doInsomnia', true) then
+							minetest.add_entity(spawn_pos, "mobs_mc:phantom")
+						end
 					end
 				end
 				spawn_timer = 0 -- Reset the timer after spawning
@@ -75,7 +77,6 @@ end
 	params = "",
 	description = "Returns the sleep time and days since last sleep for the user.",
 	func = function(name, param)
-		local player = minetest.get_player_by_name(name)
 		local last_sleep_time = players_sleep_time[name] and players_sleep_time[name].last_sleep or "Never"
 		local current_time = minetest.get_gametime()
 		local days_passed = last_sleep_time ~= "Never" and (current_time - last_sleep_time) / 800 or "N/A"

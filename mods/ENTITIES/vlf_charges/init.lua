@@ -143,12 +143,12 @@ function register_charge(name, descr, def)
 				return itemstack
 		end
 	end,
-on_secondary_use = function(itemstack, placer, pointed_thing)
+	on_secondary_use = function(itemstack, placer, pointed_thing)
 		local playername = placer:get_player_name()
 		if vlf_charges_cooldown[playername] == nil then
 			vlf_charges_cooldown[playername] = 0
 		end
-	local current_time = minetest.get_gametime()
+		local current_time = minetest.get_gametime()
 		if current_time - vlf_charges_cooldown[playername] >= cooldown_time then
 			vlf_charges_cooldown[playername] = current_time
 				local velocity = 30
@@ -167,19 +167,19 @@ on_secondary_use = function(itemstack, placer, pointed_thing)
 					itemstack:take_item()
 				return itemstack
 			end
-end,
-_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
-	local shootpos = vector.add(pos, vector.multiply(dropdir, 0.51))
-	local charge = minetest.add_entity(shootpos, "vlf_charges:" .. name .. "_flying")
-		if charge and charge:get_pos() then
-			local ent_charge = charge:get_luaentity()
+		end,
+		_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
+			local shootpos = vector.add(pos, vector.multiply(dropdir, 0.51))
+			local charge = minetest.add_entity(shootpos, "vlf_charges:" .. name .. "_flying")
+			if charge and charge:get_pos() then
+				local ent_charge = charge:get_luaentity()
 				ent_charge._shot_from_dispenser = true
-			local v = ent_charge.velocity or 20
+				local v = ent_charge.velocity or 20
 				charge:set_velocity(vector.multiply(dropdir, v))
 				ent_charge.switch = 1
 			end
-				stack:take_item()
-	end,
+			stack:take_item()
+		end,
 })
 -- Entity registry
 minetest.register_entity("vlf_charges:" .. name .. "_flying", {

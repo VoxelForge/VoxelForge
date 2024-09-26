@@ -4,12 +4,12 @@
 --License for code WTFPL and otherwise stated in readmes
 mobs_mc = {}
 
-local blacklisted_entities = {"mobs_mc:zombie", "mobs_mc:baby_zombie", --[["mobs_mc:drowned", "mobs_mc:phantom"]] "mobs_mc:husk", "mobs_mc:baby_husk", "mobs_mc:skeleton_horse",
+local blacklisted_entities = {"mobs_mc:zombie", "mobs_mc:baby_zombie", --[["mobs_mc:drowned", ]]"mobs_mc:phantom", "mobs_mc:husk", "mobs_mc:baby_husk", "mobs_mc:skeleton_horse",
 				"mobs_mc:skeleton_horse_trap", "mobs_mc:stray", "mobs_mc:wither", "mobs_mc:witherskeleton", "mobs_mc:zombie_horse", "mobs_mc:villager_zombie",
 				"mobs_mc:zombified_piglin", "mobs_mc:zoglin"}
 local speed_threshold = 5.0
-local revert_delay = 5
-local check_delay = 2
+local revert_delay = 6
+local check_delay = 3
 
 local pr = PseudoRandom(os.time()*5)
 
@@ -61,7 +61,6 @@ mobs_mc.armadillo_scare = function()
 		local pos = self.object:get_pos()
 		local objs = minetest.get_objects_inside_radius(pos, self.view_range)
 		local changed_to_tb = false
-		self:set_velocity(0.14)
 
 		-- Function to check if a table contains a value
 		local function table_contains(tbl, value)
@@ -77,47 +76,61 @@ mobs_mc.armadillo_scare = function()
 		for _, obj in ipairs(objs) do
 			local lua_entity = obj:get_luaentity()
 
-			-- Check if the object is a player or blacklisted mob
 			if (obj:is_player() or (lua_entity and table_contains(blacklisted_entities, lua_entity.name))) then
 				local velocity = obj:get_velocity()
 				local speed = vector.length(velocity)
 
-				-- If player or blacklisted mob is running toward the armadillo
 				if obj:is_player() and speed > speed_threshold then
 					local dir_to_armadillo = vector.direction(obj:get_pos(), pos)
 					local dot_product = vector.dot(velocity, dir_to_armadillo)
 
 					if dot_product > 0 then
-						self.object:set_properties({textures = {"mobs_mc_armadillo-hiding.png"}})
 						self.scared = true
 						changed_to_tb = true
-						self:set_velocity(0.0)
+						self.walk_velocity = 0.0
+						self.run_velocity = 0.0
+						self.object:set_animation({x = 60, y = 72}, 10, 0, false)
+						minetest.after(0.25, function()
+							self.object:set_properties({textures = {"mobs_mc_armadillo-hiding.png"}})
+						end)
 						break
 					end
 				elseif lua_entity then
-					-- Blacklisted entity detected
-					self.object:set_properties({textures = {"mobs_mc_armadillo-hiding.png"}})
 					self.scared = true
 					changed_to_tb = true
-					self:set_velocity(0.0)
+					self.walk_velocity = 0.0
+					self.run_velocity = 0.0
 					break
 				end
 			end
 		end
 
-		-- If no threats are detected, change back to t-c.png, then to t.png
 		if not changed_to_tb and self.scared then
+			--self.object:set_animation({x = 76, y = 78}, 10, 0, false)
 			minetest.after(check_delay, function()
 				self.scared = false
-				self.object:set_properties({textures = {"mobs_mc_armadillo-peaking.png"}})
-				self:set_velocity(0.0)
+				self.walk_velocity = 0.0
+				self.run_velocity = 0.0
+				self.object:set_animation({x = 96, y = 156}, 10, 0, false)
 			end)
 			minetest.after(revert_delay, function()
-				-- Check if the armadillo is still not scared
-				self.scared = false
 				if not self.scared then
-					self.object:set_properties({textures = {"mobs_mc_armadillo.png"}})
-					self:set_velocity(0.14)
+					self.animation = {
+						stand_start = 180, stand_end = 216, stand_speed = 10,
+						walk_start = 180, walk_end = 216, speed_normal = 10
+					}
+					self.object:set_animation({x = 180, y = 216}, 10, 0, false)
+					--self.state = "walk"
+					minetest.after(1, function()
+						self.object:set_properties({textures = {"mobs_mc_armadillo.png"}})
+						self.walk_velocity = 0.14
+						self.run_velocity = 0.14
+						self.state = "walk"
+						self.animation = {
+							stand_start = 220, stand_end = 221, stand_speed = 0,
+							walk_start = 0, walk_end = 35, speed_normal = 50
+						}
+					end)
 				end
 			end)
 		end
@@ -136,7 +149,7 @@ mobs_mc.armadillo_damage = function()
 		self.health = self.health - damage
 		local changed_to_tb
 		-- Blacklisted entity detected
-		self.object:set_properties({textures = {"mobs_mc_armadillo-hiding.png"}})
+		--self.object:set_properties({textures = {"mobs_mc_armadillo-hiding.png"}})
 		self.scared = true
 		changed_to_tb = true
 		self:set_velocity(0.0)
@@ -145,14 +158,14 @@ mobs_mc.armadillo_damage = function()
 		if not changed_to_tb and self.scared then
 			minetest.after(check_delay, function()
 				self.scared = false
-				self.object:set_properties({textures = {"mobs_mc_armadillo-peaking.png"}})
+				--self.object:set_properties({textures = {"mobs_mc_armadillo-peaking.png"}})
 				self:set_velocity(0.0)
 			end)
 			minetest.after(revert_delay, function()
 				-- Check if the armadillo is still not scared
 				self.scared = false
 				if not self.scared then
-					self.object:set_properties({textures = {"mobs_mc_armadillo.png"}})
+					--self.object:set_properties({textures = {"mobs_mc_armadillo.png"}})
 					self:set_velocity(0.14)
 				end
 			end)

@@ -9,10 +9,15 @@ vlf_mobs.register_mob("mobs_mc:armadillo", {
 	hp_max = 6,
 	collisionbox = {-0.5, -0.0, -0.5, 0.5, 0.7, 0.5},
 	visual = "mesh",
-	mesh = "mobs_mc_armadillo.obj",
-	rotate = 180,
+	mesh = "armadillo.b3d",
 	textures = {"mobs_mc_armadillo.png"},
 	visual_size = {x = 6.5, y = 7},
+	animation = {
+		stand_start = 220, stand_end = 221, stand_speed = 2,
+		walk_start = 0, walk_end = 35, speed_normal = 50,
+		--run_start = 0, run_end = 39, speed_run = 50,
+		--punch_start = 50, punch_end = 59, punch_speed = 20,
+	},
 	sounds = {},
 	walk_velocity = 0.14,
 	run_velocity = 0.14,
@@ -28,17 +33,13 @@ vlf_mobs.register_mob("mobs_mc:armadillo", {
 	on_rightclick = function(self, clicker)
 		local item = clicker:get_wielded_item()
 		local item_name = item:get_name()
-
-		-- Check if the player is holding the correct brush item
 		if item_name == "vlf_sus_nodes:brush" then
-			-- Drop an armadillo scute
 			minetest.add_item(self.object:get_pos(), "vlf_mobitems:armadillo_scute")
 			if awards and awards.unlock and clicker then
 				awards.unlock(clicker:get_player_name(), "vlf:brush_armadillo")
 			end
 
-			-- Remove 13 durability points from the brush
-			item:add_wear(65535 / 100 * 13) -- Assuming 100 uses for the brush
+			item:add_wear(65535 / 100 * 13)
 			clicker:set_wielded_item(item)
 		end
 	end,

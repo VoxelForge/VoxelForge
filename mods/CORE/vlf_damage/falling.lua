@@ -23,7 +23,7 @@ minetest.register_globalstep(function(dtime)
 					player_fall_data[player_name].fell_from = pos.y
 				else
 					local fall_distance = player_fall_data[player_name].fell_from - pos.y
-					if fall_distance >= 379 and player:get_pos().y >= -60 then
+					if fall_distance >= 379 and player:get_pos().y >= -120 then
 						awards.unlock(player:get_player_name(), "vlf:fall_from_world_height")
 						player_fall_data[player_name].fell_from = nil
 					elseif pos.y > player_fall_data[player_name].fell_from then

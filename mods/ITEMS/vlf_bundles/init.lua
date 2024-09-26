@@ -1,5 +1,3 @@
-if minetest.settings:get_bool('bundles', true) then
-
 local max_storage = 64 -- Define the maximum number of items the bundle can hold
 
 local function update_bundle_item(stack)
@@ -323,7 +321,6 @@ minetest.register_on_player_inventory_action(function(player, action, inventory,
         end
     end
 end)
-end
 
 for i = 1, 64 do
 	minetest.register_alias("vlf_bundles:bundle_"..i.."", "vlf_bundles:bundle")

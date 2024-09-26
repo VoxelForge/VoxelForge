@@ -29,7 +29,6 @@ local function reduce_armor_durability(self, damage)
 			ogroups.fleshy = 100
 			self.object:set_armor_groups(ogroups)
 			self.object:set_properties({textures = {self._naked_texture}})  -- Revert to default texture
-			minetest.chat_send_all("The wolf's armor has broken!")  -- Optional: notify players
 		elseif self.armor_durability >= 61440 then  -- Cracked level 3 (60 durability)
 			overlay_cracked_texture("mobs_mc_wolf_armor_crackiness_high.png")
 		elseif self.armor_durability >= 43008 then  -- Cracked level 2 (40 durability)

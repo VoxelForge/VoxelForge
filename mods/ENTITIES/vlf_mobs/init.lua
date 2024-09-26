@@ -134,6 +134,7 @@ vlf_mobs.mob_class = {
 	opinion_sound_cooloff = 1, -- used to prevent sound spam of particular sound types
 	_spawner = nil,
 	_vlf_entity_effects = {},
+	randomly_turn = true,
 }
 vlf_mobs.mob_class_meta = {__index = vlf_mobs.mob_class}
 vlf_mobs.fallback_node = minetest.registered_aliases["mapgen_dirt"] or "vlf_core:dirt"
@@ -313,6 +314,7 @@ function vlf_mobs.register_mob(name, def)
 			self:set_properties({
 				collide_with_objects = false,
 			})
+			self._physics_factors = {}
 
 			self._timers = {}
 			return self:mob_activate(staticdata, dtime)

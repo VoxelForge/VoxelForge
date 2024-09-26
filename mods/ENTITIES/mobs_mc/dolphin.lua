@@ -44,8 +44,44 @@ vlf_mobs.register_mob("mobs_mc:dolphin", {
 	},
 	visual_size = {x=3, y=3},
 	makes_footstep_sound = false,
-    fly = true,
-    fly_in = { "vlf_core:water_source", "vlfx_core:river_water_source" },
+	swims = true,
+	fly = true,
+	fly_in = { "vlf_core:water_source", "vlfx_core:river_water_source" },
+	_player_check_time = 0,
+	follow_holding = function (_) return true end,
+	follow_velocity = 4.8,
+	do_custom = function (self, dtime)
+	local pos = self.object:get_pos ()
+	local closest_player, cur_dist
+
+	if not self:check_timer ("player_check", 0.3) then
+		return
+	end
+
+	-- Cling to the current player if still swimming.
+	if self.following and self:object_in_follow_range (self.following)
+		and vlf_player.players[self.following].is_swimming then
+		closest_player = self.following
+	else
+		for _, object in pairs (minetest.get_objects_inside_radius (pos, 15)) do
+		if object:is_player ()
+			and vlf_player.players[object].is_swimming then
+			local distance = vector.distance (pos, object:get_pos ())
+			if not closest_player or cur_dist > distance then
+			closest_player = object
+			cur_dist = distance
+			end
+		end
+		end
+	end
+
+	if closest_player then
+		self.following = closest_player
+		vlf_entity_effects.give_effect ("dolphin_grace", closest_player, 1, 5)
+	else
+		self.following = nil
+	end
+	end,
 	breathes_in_water = true,
 	jump = false,
 	view_range = 16,

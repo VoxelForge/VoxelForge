@@ -143,6 +143,7 @@ vlf_mobs.register_mob("mobs_mc:fox", fox)
 vlf_mobs.spawn_setup({
 	name      = "mobs_mc:fox",
 	dimension = "overworld",
+	type_of_spawning = "ground",
 	biomes    = {
 		"FlowerForest",
 		"Swampland",

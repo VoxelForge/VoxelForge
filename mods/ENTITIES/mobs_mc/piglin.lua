@@ -97,8 +97,11 @@ local piglin = {
 		if vlf_worlds.pos_to_dimension(self.object:get_pos()) == "overworld" then
 			self._zombie_timer = (self._zombie_timer or zombiefication_delay) - dtime
 			if self._zombie_timer < 0 then
-				vlf_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
-				return
+				local object = vlf_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
+				if object then
+					vlf_entity_effects.give_effect ("nausea", object, 1, 10, false)
+				end
+			    return
 			end
 		elseif self.trading then
 			self:set_state("stand")

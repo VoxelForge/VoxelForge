@@ -262,6 +262,7 @@ end
 
 -- set and return valid yaw
 function mob_class:set_yaw(yaw, delay, dtime)
+	if not self.randomly_turn then return end
 	if self.noyaw then return end
 	if self.state ~= PATHFINDING then
 		self._turn_to = yaw
@@ -914,4 +915,30 @@ function mob_class:check_suspend()
 		end
 		return true
 	end
+end
+
+local function apply_physics_factors (self, field, id)
+    local base = self._physics_factors[field].base
+    for name, value in pairs (self._physics_factors[field]) do
+	if name ~= "base" then
+	    base = base * value
+	end
+    end
+    self[field] = base
+end
+
+function mob_class:add_physics_factor (field, id, factor)
+    if not self._physics_factors[field] then
+	self._physics_factors[field] = { base = self[field], }
+    end
+    self._physics_factors[field][id] = factor
+    apply_physics_factors (self, field, id)
+end
+
+function mob_class:remove_physics_factor (field, id)
+    if not self._physics_factors[field] then
+	return
+    end
+    self._physics_factors[field][id] = nil
+    apply_physics_factors (self, field, id)
 end

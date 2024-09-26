@@ -7,7 +7,7 @@ local modpath = minetest.get_modpath(modname)
 
 -- Cave API file
 -- Function to check if Minetest version is 5.9.0 or higher
-local function is_version_590_or_higher()
+--[[local function is_version_590_or_higher()
     local version_info = minetest.get_version()
     if not version_info or not version_info.string then
         -- If version information is not available, default to false
@@ -17,19 +17,19 @@ local function is_version_590_or_higher()
     -- Extract the major and minor version numbers from the version string
     local major, minor = version_info.string:match("^(%d+)%.(%d+)")
 
-    --[[if not major or not minor then
+    if not major or not minor then
         -- If we can't parse the version numbers, default to false
         return false
-    end]]
+    end
 
     major = tonumber(major)
     minor = tonumber(minor)
 
     -- Check if the server version is 5.9.0 or higher
     return major > 5 or (major == 5 and minor >= 9)
-end
+end]]
 
--- Execute based on the Minetest version
+--[[ Execute based on the Minetest version
 if minetest.settings:get_bool('vlf_enable_experimental_caves', true) then
     if is_version_590_or_higher() then
         -- If the server is running Minetest 5.9.0 or higher, add the mapgen script function
@@ -39,7 +39,7 @@ if minetest.settings:get_bool('vlf_enable_experimental_caves', true) then
         -- Otherwise, only do the dofile
         dofile(modpath.."/cave_api.lua")
     end
-end
+end]]
 
 minetest.register_alias("mapgen_air", "air")
 minetest.register_alias("mapgen_stone", "vlf_core:stone")

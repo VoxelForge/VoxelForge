@@ -8,7 +8,7 @@ local function register_rocket(n, duration, force)
 		description = description,
 		_tt_help = tt_help .. " " .. duration,
 		inventory_image = "vlf_fireworks_rocket.png",
-		on_use = function(itemstack, user, pointed_thing)
+		on_secondary_use = function(itemstack, user, pointed_thing)
 			local elytra = vlf_player.players[user].elytra
 			if elytra.active and elytra.rocketing <= 0 then
 				elytra.rocketing = duration

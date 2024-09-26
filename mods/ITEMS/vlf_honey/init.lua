@@ -4,8 +4,8 @@
 
 vlf_honey = {}
 
-local function particles(pointed_thing, texture)
-	local pos = pointed_thing.under
+function vlf_honey.particles(pos, texture)
+	--local pos = pointed_thing.under
 	minetest.add_particlespawner({
 		amount = 8,
 		time = 1,
@@ -60,7 +60,7 @@ function vlf_honey.wax_block(pos, node, player, itemstack, pointed_thing)
 	if def._vlf_waxed_variant then
 		node.name = def._vlf_waxed_variant
 		minetest.swap_node(pos, node)
-		particles(pointed_thing, "vlf_copper_anti_oxidation_particle.png^[colorize:#d1d553:125")
+		vlf_honey.particles(pos, "vlf_copper_anti_oxidation_particle.png^[colorize:#E58A14:125")
 		awards.unlock(player:get_player_name(), "vlf:wax_on")
 		if not minetest.is_creative_enabled(player:get_player_name()) then
 			itemstack:take_item()
