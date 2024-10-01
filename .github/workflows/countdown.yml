@@ -20,7 +20,7 @@ jobs:
     - name: Update issue #233
       env:
         ISSUE_NUMBER: 233
-        TARGET_DATE: "2024-10-03T21:00:00Z"  # Make sure the date is correct and properly formatted
+        TARGET_DATE: "2024-10-03T20:00:00Z"  # Make sure the date is correct and properly formatted
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         # Calculate the remaining time until the target date
