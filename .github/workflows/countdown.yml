@@ -1,12 +1,17 @@
 name: Update Issue #233
 
 on:
+  # Run on push to any branch
   push:
     branches:
       - '**'  # This will trigger on push to any branch
+
+  # Run every hour
   schedule:
-    # Runs every hour
     - cron: '0 * * * *'
+
+permissions:
+  issues: write  # Grant write access to issues
 
 jobs:
   update-issue:
@@ -15,7 +20,7 @@ jobs:
     - name: Update issue #233
       env:
         ISSUE_NUMBER: 233
-        TARGET_DATE: "2024-10-3T21:00:00Z" 
+        TARGET_DATE: "2024-10-03T21:00:00Z"  # Make sure the date is correct and properly formatted
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         # Calculate the remaining time until the target date
