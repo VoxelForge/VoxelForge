@@ -1,17 +1,16 @@
 name: Update Issue #233
 
 on:
-  # Run on push to any branch
   push:
     branches:
-      - '**'  # This will trigger on push to any branch
+      - '**'
 
   # Run every hour
   schedule:
     - cron: '0 * * * *'
 
 permissions:
-  issues: write  # Grant write access to issues
+  issues: write
 
 jobs:
   update-issue:
@@ -20,7 +19,7 @@ jobs:
     - name: Update issue #233
       env:
         ISSUE_NUMBER: 233
-        TARGET_DATE: "2024-10-03T20:00:00Z"  # Make sure the date is correct and properly formatted
+        TARGET_DATE: "2024-10-03T20:00:00Z"
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         # Calculate the remaining time until the target date
@@ -35,7 +34,7 @@ jobs:
         SECONDS_LEFT=$((REMAINING_SECONDS % 60))
 
         # Generate the message
-        MESSAGE="⏳ Time remaining until target date: $DAYS_LEFT days, $HOURS_LEFT hours, $MINUTES_LEFT minutes, $SECONDS_LEFT seconds."
+        MESSAGE="⏳ Time remaining until release date: $DAYS_LEFT days, $HOURS_LEFT hours, $MINUTES_LEFT minutes."
 
         # Use GitHub API to update the issue
         curl -X PATCH \
