@@ -1,6 +1,9 @@
 name: Update Issue #233
 
 on:
+  push:
+    branches:
+      - '**'  # This will trigger on push to any branch
   schedule:
     # Runs every hour
     - cron: '0 * * * *'
