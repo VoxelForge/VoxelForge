@@ -45,7 +45,8 @@ local SHOWITEM_INTERVAL = 2
 
 local function can_open(pos, player)
 	local m = minetest.get_meta(pos)
-	if m:get(player:get_player_name()) == "looted" then
+	local rb = vlf_util.ringbuffer.new(128, minetest.deserialize(m:get("vlf_vaults:visited_players")))
+		if rb:indexof(player:get_player_name()) then
 		return false
 	end
 	return true
@@ -53,8 +54,10 @@ end
 
 local function set_visited(pos, player)
 	local m = minetest.get_meta(pos)
-	m:set_string(player:get_player_name(), "looted")
-	m:mark_as_private(player:get_player_name())
+	local rb = vlf_util.ringbuffer.new(180, minetest.deserialize(m:get("vlf_vaults:visited_players")))
+	rb:insert_if_not_exists(player:get_player_name())
+	m:set_string("vlf_vaults:visited_players", rb:serialize())
+	m:mark_as_private("vlf_vaults:visited_players")
 end
 
 local function eject_items(pos, name, list)
@@ -76,7 +79,7 @@ local tpl = {
 	_tt_help = S("Ejects loot when opened with the key"),
 	_doc_items_longdesc = S("A vault ejects loot when opened with the right key. It can only be opened once by each player."),
 	_doc_items_usagehelp = S("A vault ejects loot when opened with the right key. It can only be opened once by each player."),
-	groups = {pickaxey=1, material_stone=1, deco_block=1, vault = 1},
+	groups = {pickaxey=1, material_stone=1, deco_block=1, vault = 1, not_in_creative_inventory = 1},
 	is_ground_content = false,
 	use_texture_alpha = "clip",
 	drop = "",
@@ -92,6 +95,7 @@ minetest.register_entity("vlf_trials:item_entity", {
 		collisionbox = {0,0,0,0,0,0},
 		pointable = true,
 		static_save = false,
+		automatic_rotate = math.pi * 1.5,
 	},
 	_next_item = function(self)
 		local itemstack = vlf_loot.get_multi_loot(self._loot, PseudoRandom(os.time()))[1]
@@ -117,13 +121,6 @@ minetest.register_entity("vlf_trials:item_entity", {
 	end,
 	on_step = function(self, dtime)
 		self._timer = (self._timer or SHOWITEM_INTERVAL) - dtime
-		self._rotate_timer = (self._rotate_timer or 0) + dtime
-
-		if self._rotate_timer > 0.1 then  -- Adjust the rotation speed here
-			self._rotate_timer = 0
-			local yaw = self.object:get_yaw() or 0
-			self.object:set_yaw(yaw + math.rad(30))  -- Rotate by 10 degrees each step
-		end
 
 		if self._timer < 0 then
 			if minetest.get_item_group(minetest.get_node(self.object:get_pos()).name, "vault") <= 1 then
@@ -178,11 +175,14 @@ function vlf_trials.register_vault(name, def)
 	minetest.register_node("vlf_trials:"..name, table.merge(tpl, {
 		paramtype = "light",
 		light_source = 6,
+		drop = "",
 		_vlf_vault_name = name,
+		groups = table.merge(tpl.groups, { not_in_creative_inventory = 0 }),
 	}, def.node_off))
 	minetest.register_node("vlf_trials:"..name.."_ejecting", table.merge(tpl, {
 		paramtype = "light",
 		light_source = 12,
+		drop = "",
 		_vlf_vault_name = name,
 		groups = table.merge(tpl.groups, { vault = 3 }),
 	}, def.node_ejecting))
@@ -190,6 +190,7 @@ function vlf_trials.register_vault(name, def)
 	minetest.register_node("vlf_trials:"..name.."_on", table.merge(tpl, {
 		paramtype = "light",
 		light_source = 12,
+		drop = "",
 		_vlf_vault_name = name,
 		groups = table.merge(tpl.groups, { vault = 2 }),
 		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)

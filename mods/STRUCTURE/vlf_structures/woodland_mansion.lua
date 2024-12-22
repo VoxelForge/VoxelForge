@@ -9,7 +9,7 @@ vlf_structures.register_structure("woodland_cabin",{
 	chunk_probability = 800,
 	y_max = vlf_vars.mg_overworld_max,
 	y_min = 1,
-	biomes = { "RoofedForest" },
+	biomes = { "Dark_Forest" },
 	sidelen = 32,
 	filenames = {
 		vlf_structures.schempath.."/schems/vlf_structures_woodland_cabin.mts",

@@ -195,7 +195,7 @@ vlf_mobs.spawn_setup({
 		"FlowerForest_beach",
 		"BirchForest",
 		"BirchForestM",
-		"RoofedForest",
+		"Dark_Forest",
 		"Savanna",
 		"Savanna_beach",
 		"SavannaM",

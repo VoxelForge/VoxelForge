@@ -22,6 +22,7 @@ return {
 	}},
 	{S("Active Contributors"), 0xF84355, {
 		"crispiebacon",
+		"lua-rocks",
 	}},
 	{S("Previous Contributors"), 0x52FF00, {
 		"Lizzy Fleckenstein",

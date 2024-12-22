@@ -25,6 +25,7 @@ vlf_mobs.register_mob("mobs_mc:armadillo", {
 	fall_damage = 10,
 	view_range = 8,
 	fear_height = 4,
+	pathfinding = 1,
 	jump = false,
 	fly = false,
 	makes_footstep_sound = false,

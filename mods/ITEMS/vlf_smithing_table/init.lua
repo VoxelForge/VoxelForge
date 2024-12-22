@@ -182,7 +182,12 @@ minetest.register_node("vlf_smithing_table:table", {
 
 	after_dig_node = vlf_util.drop_items_from_meta_container({"upgrade_item", "mineral", "template"}),
 
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_put = function(pos, listname, _, stack, player)
+		local name = player:get_player_name()
+		if minetest.is_protected(pos, name) then
+			minetest.record_protection_violation(pos, name)
+			return 0
+		end
 		local r = 0
 		if listname == "upgrade_item" then
 			if (minetest.get_item_group(stack:get_name(),"armor") > 0

@@ -211,6 +211,46 @@ function vlf_itemframes.tpl_entity:on_step(dtime)
 	end
 end
 
+--[[local function show_description_on_hud(player, description)
+    local player_name = player:get_player_name()
+    minetest.chat_send_player(player_name, description) -- Displaying as chat message (you can change this to use a HUD element)
+end
+
+function vlf_itemframes.tpl_entity:on_step(dtime)
+    self._timer = (self._timer and self._timer - dtime) or 1
+    if self._timer > 0 then return end
+    self._timer = 1
+
+    local pos = self.object:get_pos()
+    local players = minetest.get_objects_inside_radius(pos, 1) -- Adjust the radius as needed
+
+    for _, player in ipairs(players) do
+        if player:is_player() then
+            local player_pos = player:get_pos()
+            local player_look_dir = player:get_look_dir()
+            local frame_direction = vector.subtract(pos, player_pos)
+
+            -- Check if the player is looking at the item frame
+            if vector.dot(player_look_dir, vector.normalize(frame_direction)) > 0.9 then -- Change threshold as necessary
+                local idef = minetest.registered_items[self._item]
+                local required_description = idef.description -- Adjust this to match your item descriptions
+
+                if self._stack:get_description() ~= required_description then
+                    show_description_on_hud(player, required_description)
+                end
+            end
+        end
+    end
+
+    if minetest.get_item_group(minetest.get_node(self._itemframe_pos).name, "itemframe") <= 0 then
+        self.object:remove()
+        return
+    end
+    if minetest.get_item_group(self._item, "clock") > 0 then
+        self:set_item(ItemStack("vlf_clock:clock_"..vlf_clock.get_clock_frame()))
+    end
+end]]
+
 function vlf_itemframes.register_itemframe(name, def)
 	if not def.node then return end
 	local nodename = "vlf_itemframes:"..name

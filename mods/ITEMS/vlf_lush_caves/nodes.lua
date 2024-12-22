@@ -1,5 +1,6 @@
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
+local schempath = minetest.get_modpath("vlf_schematics")
 local S = minetest.get_translator(modname)
 
 -- Return a vegetation type with the following chances
@@ -7,7 +8,7 @@ local S = minetest.get_translator(modname)
 --   Moss Carpet: 26.04%
 --   Double Grass: 10.42%
 --   Azalea: 7.29%
---   Flowering Azalea: 4.17%
+--   Flowering Azalea: 4.17%local function random_moss_vegetation()
 local function random_moss_vegetation()
 	local x = math.random()
 	if x < 0.5208 then
@@ -374,7 +375,7 @@ local tpl_azalea = {
 		minetest.remove_node(pos)
 		minetest.place_schematic(
 			vector.offset(pos, -3, 0, -3),
-			modpath.."/schematics/azalea1.mts",
+			schempath.."/schems/azalea1.mts",
 			"random",
 			nil,
 			false,

@@ -276,4 +276,41 @@ function vlf_entity_effects.register_lingering(name, descr, color, def)
 			end
 		end,
 	})
+	
+	minetest.register_entity(id.."_ominous_item_flying",{
+		initial_properties = {
+			textures = {id},
+			hp_max = 1,
+			visual = "wielditem",
+			visual_size = {x=w/2,y=w/2},
+			collisionbox = {-0.1,-0.1,-0.1,0.1,0.1,0.1},
+			pointable = false,
+			physical = true,
+			collide_with_objects = false,
+			automatic_rotate = math.pi * 2.5,
+		},
+		on_step = function(self, dtime, moveresult)
+			local pos = self.object:get_pos()
+			local velocity = self.object:get_velocity ()
+			local d, val = 4, vlf_entity_effects.detect_hit (self.object, pos, moveresult, velocity)
+			if val then
+				if val.target and mod_target then
+				vlf_target.hit (val.target, 0.4) --4 redstone ticks
+				end
+				minetest.sound_play("vlf_entity_effects_breaking_glass",
+						{pos = pos, max_hear_distance = 16, gain = 1})
+				local potency = self._potency or 0
+				local plus = self._plus or 0
+				local effects = def_to_effect_list (def, potency, plus)
+				local texture = particle_texture (name, def)
+
+				add_lingering_effects (pos, color, effects, name == "water",
+							   texture, 30, def.custom_effect, potency,
+							   plus, d)
+				linger_particles (pos, d, texture, color)
+				if def.on_splash then def.on_splash (pos, potency+1) end
+				self.object:remove()
+			end
+		end,
+	})
 end

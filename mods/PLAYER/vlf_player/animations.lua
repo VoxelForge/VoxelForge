@@ -238,6 +238,27 @@ local function set_swimming(player, anim, anim_speed)
 	vlf_util.set_properties(player, player_props_swimming)
 end
 
+--[[local function set_crawling(player, anim, anim_speed)
+	local pitch = - math.deg(player:get_look_vertical())
+	local yaw = math.deg(player:get_look_horizontal())
+	local vel = player:get_velocity()
+	vlf_player.players[player].is_crawling = true
+	anim = anim or "swim_stand"
+	vlf_player.player_set_animation(player, anim, anim_speed)
+	vlf_util.set_bone_position(player, "Head_Control", nil, vector.new(pitch - math.deg(dir_to_pitch(vel)) + 20, vlf_player.players[player].vel_yaw - yaw, 0))
+	vlf_util.set_bone_position(player,"Body_Control", nil, vector.new((75 + math.deg(dir_to_pitch(vel))), vlf_player.players[player].vel_yaw - yaw, 180))
+	vlf_util.set_properties(player, player_props_swimming)
+end]]
+
+-- Define a function to check if the player's head is in a solid block
+local function is_head_in_solid_block(player)
+    local pos = player:get_pos()
+    pos.y = pos.y + 1.6 -- Assuming the head is at 1.6 blocks above the feet
+    local node = minetest.get_node(pos)
+    return minetest.registered_nodes[node.name].walkable
+end
+
+
 vlf_player.register_globalstep(function(player, dtime)
 	local name = player:get_player_name()
 	local model_name = vlf_player.players[player].model
@@ -323,6 +344,13 @@ vlf_player.register_globalstep(function(player, dtime)
 				else
 					set_swimming(player, "swim_walk", animation_speed_mod)
 				end
+			--[[elseif is_head_in_solid_block(player) then
+				vlf_player.players[player].is_crawling = true
+				if get_mouse_button(player) then
+					set_crawling(player, "swim_mine")
+				else
+					set_crawling(player, "swim_stand")
+				end]]
 			elseif vlf_player.players[player].is_swimming
 			and minetest.get_item_group(vlf_player.players[player].nodes.head, "solid") == 0
 			and minetest.get_item_group(vlf_player.players[player].nodes.head_top, "solid") == 0 then --not swimming anymore
@@ -331,11 +359,23 @@ vlf_player.register_globalstep(function(player, dtime)
 				vlf_util.set_properties(player, player_props_normal)
 				vlf_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
 				vlf_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
+			--[[elseif vlf_player.players[player].is_crawling
+			--and minetest.get_item_group(vlf_player.players[player].nodes.head, "solid") == 0
+			and minetest.get_node(vlf_player.players[player].nodes.head).name == "air"
+			--and minetest.get_item_group(vlf_player.players[player].nodes.head_top, "solid") == 0 then --not crawling anymore
+			and minetest.get_node(vlf_player.players[player].nodes.head_top).name == "air" then
+				vlf_player.players[player].is_crawling = false
+				vlf_player.player_set_animation(player, "stand")
+				vlf_util.set_properties(player, player_props_normal)
+				vlf_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
+				vlf_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))]]
 			elseif no_arm_moving and control.RMB and control.sneak or minetest.get_item_group(wielded_itemname, "crossbow") > 0 and control.sneak then
 				vlf_player.player_set_animation(player, "bow_sneak", animation_speed_mod)
 			elseif no_arm_moving and control.RMB or minetest.get_item_group(wielded_itemname, "crossbow") > 0 then
 				vlf_player.player_set_animation(player, "bow_walk", animation_speed_mod)
 			elseif is_sprinting and get_mouse_button(player) and not control.sneak and not head_in_water then
+				vlf_player.player_set_animation(player, "run_walk_mine", animation_speed_mod)
+			elseif is_sprinting and get_mouse_button(player) and not control.sneak then
 				vlf_player.player_set_animation(player, "run_walk_mine", animation_speed_mod)
 			elseif get_mouse_button(player) and not control.sneak then
 				vlf_player.player_set_animation(player, "walk_mine", animation_speed_mod)
@@ -354,6 +394,12 @@ vlf_player.register_globalstep(function(player, dtime)
 			else
 				set_swimming(player, "swim_stand")
 			end
+		--[[elseif is_head_in_solid_block(player) then
+			if get_mouse_button(player) then
+				set_crawling(player, "swim_mine")
+			else
+				set_crawling(player, "swim_stand")
+			end]]
 		elseif vlf_player.players[player].is_swimming
 		and minetest.get_item_group(vlf_player.players[player].nodes.head, "solid") == 0
 		and minetest.get_item_group(vlf_player.players[player].nodes.head_top, "solid") == 0 then --not swimming anymore
@@ -362,6 +408,16 @@ vlf_player.register_globalstep(function(player, dtime)
 			vlf_util.set_properties(player, player_props_normal)
 			vlf_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
 			vlf_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
+		--[[elseif vlf_player.players[player].is_crawling
+		--and minetest.get_item_group(vlf_player.players[player].nodes.head, "solid") == 0
+		and minetest.get_node(vlf_player.players[player].nodes.head).name == "air"
+		--and minetest.get_item_group(vlf_player.players[player].nodes.head_top, "solid") == 0 then --not crawling anymore
+		and minetest.get_node(vlf_player.players[player].nodes.head_top).name == "air" then
+			vlf_player.players[player].is_crawling = false
+			vlf_player.player_set_animation(player, "stand")
+			vlf_util.set_properties(player, player_props_normal)
+			vlf_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
+			vlf_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))]]
 		elseif get_mouse_button(player) and not control.sneak then
 			vlf_player.player_set_animation(player, "mine")
 		elseif get_mouse_button(player) and control.sneak then
@@ -428,6 +484,7 @@ vlf_player.register_globalstep(function(player, dtime)
 		vlf_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.zero())
 	end
 end)
+
 
 vlf_player.register_globalstep_slow(function(player, dtime)
 	-- Underwater: Spawn bubble particles

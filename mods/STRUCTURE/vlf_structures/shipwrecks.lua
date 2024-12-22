@@ -11,7 +11,7 @@ local schems = {
 }
 
 local ocean_biomes = {
-	"RoofedForest_ocean",
+	"Dark_Forest_ocean",
 	"JungleEdgeM_ocean",
 	"BirchForestM_ocean",
 	"BirchForest_ocean",
@@ -61,7 +61,7 @@ local ocean_biomes = {
 	"MegaSpruceTaiga_ocean",
 	"ExtremeHills+_ocean",
 	"Jungle_ocean",
-	"RoofedForest_deep_ocean",
+	"Dark_Forest_deep_ocean",
 	"IcePlains_ocean",
 	"FlowerForest_ocean",
 	"ExtremeHills_deep_ocean",

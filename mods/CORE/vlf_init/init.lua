@@ -28,25 +28,6 @@ vlf_vars.inventory_header = ""
 -- Tool wield size
 vlf_vars.tool_wield_scale = { x = 1.8, y = 1.8, z = 1 }
 
-minetest.register_on_mods_loaded(function()
-	local font_size = minetest.settings:get("vlf_font_size") or 30
-	local font_shadow_size = minetest.settings:get("vlf_font_shadow_size") or 3
-	local chat_font_size = minetest.settings:get("vlf_chat_font_size") or 24
-	minetest.settings:set("font_path", modpath.."/fonts/voxelforge.ttf")
-	minetest.settings:set("font_shadow", font_shadow_size)
-	minetest.settings:set("font_size", font_size)
-	minetest.settings:set("chat_font_size", chat_font_size)
-	minetest.settings:set("font_shadow_alpha", "225")
-end)
-
-minetest.register_on_shutdown(function()
-	minetest.settings:set("font_path", "") -- One day hopefully this will be replaced by a setting that players can set so it's  their default font.
-	minetest.settings:set("font_shadow", "1")
-	minetest.settings:set("font_size", "16")
-	minetest.settings:set("chat_font_size", "")
-	minetest.settings:set("font_shadow_alpha", "172")
-end)
-
 -- Table to store player chat HUD IDs and chat history
 local player_chat_huds = {}
 local chat_history = {}
@@ -78,7 +59,7 @@ local function create_chat_hud(player)
 		offset = {x = 0, y = 10}, -- Adjust y offset as needed
 		text = "",
 		alignment = {x = 0.1, y = -0.2},  -- Right and bottom alignment
-		scale = {x = 100, y = 100},
+		scale = {x = 200, y = 200},
 		number = 0xFFFFFF, -- White color
 	})
 end
@@ -558,7 +539,7 @@ minetest.register_on_mods_loaded(function()
     if not file then
         local new_file = io.open(file_path, "w")
         new_file:write("return {\n")
-        new_file:write("current_version = { version = '0.5.0' }\n")
+        new_file:write("current_version = { version = '24w39a' }\n")
         new_file:write("}\n")
         new_file:close()
         file = io.open(file_path, "r") -- Reopen the file for reading after creation
@@ -573,16 +554,50 @@ minetest.register_on_mods_loaded(function()
         local current_version = version_data.current_version.version
 
         -- If the version isn't 24w41a, handle it as a potential issue
-        if current_version ~= "0.5.0" then
+        if current_version ~= "24w39a" then
              local wfile = io.open(file_path, "w")
              wfile:write("return {\n")
-             wfile:write("current_version = { version = '0.5.0' }\n")
+             wfile:write("current_version = { version = '24w39a' }\n")
              wfile:write("}\n")
              wfile:close()
-            error("This World was last played in version "..tostring(current_version).."; you are on version Beta 0.5.0. Please make a backup in case you experience world corruptions. If you would like to proceed anyway, you can click out of this error and reload.")
+            error("This World was last played in version "..tostring(current_version).."; you are on version 24w39a. Please make a backup in case you experience world corruptions. If you would like to proceed anyway, you can click out of this error and reload.")
         end
     else
         error("Version information is missing or incorrect in current_version.lua")
     end
 end)
 
+
+
+--===================--
+--=== By LuaRocks ===--
+--===================--
+
+-- If you struggle with ending up in solid blocks when you join worlds, download their mod: https://content.minetest.net/packages/luarocks/lift_on_joinplayer/
+
+-- LICENSE: MIT
+
+local function is_solid_node(pos)
+	local node = minetest.get_node(pos)
+	local node_def = minetest.registered_nodes[node.name]
+	return node_def and node_def.walkable
+end
+local function check_and_lift_player(player)
+	local pos = player:get_pos()
+	if not pos then
+		return
+	end
+	local node_below_pos = { x = pos.x, y = pos.y, z = pos.z }
+	local node_above_pos = { x = pos.x, y = pos.y + 1, z = pos.z }
+	if is_solid_node(node_below_pos) or is_solid_node(node_above_pos) then
+		player:set_pos { x = pos.x, y = pos.y + 1, z = pos.z }
+		minetest.after(0.01, check_and_lift_player, player)
+	else
+		player:set_pos { x = pos.x, y = pos.y + 1, z = pos.z }
+	end
+end
+local function start_lifting(player)
+	minetest.after(0.1, check_and_lift_player, player)
+end
+minetest.register_on_joinplayer(start_lifting)
+minetest.register_on_respawnplayer(start_lifting)

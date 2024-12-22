@@ -197,7 +197,7 @@ local cave_biomes = {
 	"StoneBeach_underground",
 	"MesaBryce_underground",
 	"Mesa_underground",
-	"RoofedForest_underground",
+	"Dark_Forest_underground",
 	"Jungle_underground",
 	"Swampland_underground",
 	"MushroomIsland_underground",

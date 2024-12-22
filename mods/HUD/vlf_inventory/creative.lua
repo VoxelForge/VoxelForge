@@ -539,35 +539,32 @@ function vlf_inventory.set_creative_formspec(player)
 			"listring[current_player;main]"
 	else
 
-		--local nb_lines = math.ceil(inv_size / 9)
-		-- Creative inventory slots
-		main_list = table.concat({
-			vlf_formspec.get_itemslot_bg_v4(0.375, 0.875, 9, 5),
+		local nb_lines = math.ceil(inv_size / 9)
+		--if minetest.get_modpath("vlf_MC_19") then
+			-- MC 1.19.3 inv
+			-- Creative inventory slots
+			main_list = table.concat({
+				vlf_formspec.get_itemslot_bg_v4(0.375, 0.875, 9, 5),
 
-			-- TODO: Enable this code when min supported version is minetest 5.8
-			--This next part implements a scroll_container for the creative inventory
-			--In theory supported since minetest 5.2 this appears to stop working well
-			--When the list becomes very long.
-			--This minetest Patch fixed it: https://github.com/minetest/minetest/pull/13669 (minetest 5.8)
-			--Relevant issue: https://github.com/minetest/minetest/issues/13667
-
-			-- To enable this code uncomment the next part and remove the rest of the formspec
-			-- (The list and the paging buttons)
-			-- Also uncomment the "local nb_lines = .." line above.
-
-			--"scroll_container[0.375,0.875;11.575,6;scroll;vertical;1.25]",
-			--"list[detached:creative_" .. playername .. ";main;0,0;9," .. nb_lines .. ";]",
-			--"scroll_container_end[]",
-			--"scrollbaroptions[min=0;max=" .. math.max(nb_lines - 5, 0) .. ";smallstep=1;largesteps=1;arrows=hide]",
-			--"scrollbar[11.75,0.825;0.75,6.1;vertical;scroll;0]",
-
-			"list[detached:creative_" .. playername .. ";main;0.375,0.875;9,5;" .. tostring(start_i) .. "]",
-
-			-- Page buttons
-			"label[11.65,4.33;" .. F(S("@1 / @2", pagenum, pagemax)) .. "]",
-			"image_button[11.575,4.58;1.1,1.1;crafting_creative_prev.png^[transformR270;creative_prev;]",
-			"image_button[11.575,5.83;1.1,1.1;crafting_creative_next.png^[transformR270;creative_next;]",
-		})
+				"scroll_container[0.375,0.875;11.575,6;scroll;vertical;1.25]",
+				"list[detached:creative_" .. playername .. ";main;0,0;9," .. nb_lines .. ";]",
+				"scroll_container_end[]",
+			
+    				"scrollbaroptions[min=0;max=" .. math.max(nb_lines - 5, 0) .. ";smallstep=1;largesteps=1;arrows=hide]",
+    				"background[11.60,0.76;1.05,6.25;custom_texture.png]",
+  				"scrollbar[11.75,0.88;0.75,6;vertical;scroll;0]",
+			})
+		--[[else
+			-- VoxelForge inv
+			-- Creative inventory slots
+			main_list = table.concat({
+				vlf_formspec.get_itemslot_bg_v4(0.375, 0.875, 9, 5),
+				"list[detached:creative_" .. playername .. ";main;0.375,0.875;9,5;" .. tostring(start_i) .. "]",
+				"label[11.65,4.33;" .. F(S("@1 / @2", pagenum, pagemax)) .. "]",
+				"image_button[11.575,4.58;1.1,1.1;crafting_creative_prev.png^[transformR270;creative_prev;]",
+				"image_button[11.575,5.83;1.1,1.1;crafting_creative_next.png^[transformR270;creative_next;]",
+			})
+		end]]
 	end
 
 	local function tab(current_tab, this_tab)

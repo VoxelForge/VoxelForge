@@ -6,6 +6,7 @@ local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 dofile(modpath.."/api.lua")
 dofile(modpath.."/ominous.lua")
+dofile(modpath.."/ominous_item_spawner.lua")
 
 vlf_trials.register_vault("vault",{
 	key = "vlf_trials:trial_key",

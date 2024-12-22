@@ -41,7 +41,7 @@ local node_def = {
 		shearsy_wool = { speed = 1, level = 0, uses = 0 },
 		shearsy_cobweb = { speed = 1, level = 0, uses = 0 },
 	},
-	range = tonumber(minetest.settings:get("vlf_hand_range")) or 4.5
+	range = tonumber(minetest.settings:get("vlf_hand_range")) or 4.5,
 }
 
 -- This is for _vlf_autogroup to know about the survival hand tool capabilites
@@ -113,6 +113,7 @@ vlf_gamemode.register_on_gamemode_change(vlf_meshhand.update_player)
 
 -- This is needed to deal damage when punching mobs
 -- with random items in hand in survival mode
+
 minetest.override_item("", {
 	tool_capabilities = vlf_meshhand.survival_hand_tool_caps
 })

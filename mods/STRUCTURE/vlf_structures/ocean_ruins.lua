@@ -1,5 +1,5 @@
 local cold_oceans = {
-	"RoofedForest_ocean",
+	"Dark_Forest_ocean",
 	"BirchForestM_ocean",
 	"BirchForest_ocean",
 	"IcePlains_deep_ocean",
@@ -24,7 +24,7 @@ local cold_oceans = {
 	"MegaTaiga_deep_ocean",
 	"MegaSpruceTaiga_ocean",
 	"ExtremeHills+_ocean",
-	"RoofedForest_deep_ocean",
+	"Dark_Forest_deep_ocean",
 	"IcePlains_ocean",
 	"FlowerForest_ocean",
 	"ExtremeHills_deep_ocean",

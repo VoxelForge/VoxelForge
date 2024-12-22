@@ -18,6 +18,7 @@
 
 ## Active Contributors
 * crispiebacon
+* lua-rocks
 
 ## Previous Contributors
 * Lizzy Fleckenstein

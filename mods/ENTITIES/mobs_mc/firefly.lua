@@ -18,6 +18,7 @@ vlf_mobs.register_mob("mobs_mc:firefly", {
 	walk_velocity = 0.3,
 	run_velocity = 0.3,
 	walk_chance = 100,
+	pathfinding = 1,
 	fall_damage = 0,
 	sunlight_damage = 2,
 	view_range = 8,

@@ -268,7 +268,7 @@ mesecon.register_button(
 	S("A polished blackstone button is a redstone component made out of polished blackstone which can be pushed to provide redstone power. When pushed, it powers adjacent redstone components for 1 second."),
 	"mesecons_button_push")
 
---[[mesecon.register_button(
+mesecon.register_button(
 	"copper",
 	S("Copper Button"),
 	"vlf_copper_copper.png",
@@ -279,7 +279,7 @@ mesecon.register_button(
 	false,
 	S("A Copper button is a redstone component made out of copper which can be pushed to provide redstone power. When pushed, it powers adjacent redstone components for 1 second."),
 	"mesecons_button_push")
-]]
+
 -- Add entry aliases for the Help
 if minetest.get_modpath("doc") then
 	doc.add_entry_alias("nodes", "mesecons_button:button_wood_off", "nodes", "mesecons_button:button_wood_on")

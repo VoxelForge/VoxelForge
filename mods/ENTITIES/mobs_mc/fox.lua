@@ -157,7 +157,7 @@ vlf_mobs.spawn_setup({
 		"Plains",
 		"ColdTaiga",
 		"SunflowerPlains",
-		"RoofedForest",
+		"Dark_Forest",
 		"MesaPlateauFM_grasstop",
 		"ExtremeHillsM",
 		"BirchForestM",

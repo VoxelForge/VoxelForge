@@ -349,3 +349,97 @@ vlf_mapgen_core.register_generator("structures",nil, function(minp, maxp, blocks
 	end
 	return false, false, false
 end, 100, false)
+
+minetest.register_on_generated(function(minp, maxp, seed)
+    local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
+    if not vm then
+        return
+    end
+
+    local data = vm:get_data()
+    local light_data = vm:get_light_data()
+    local area = VoxelArea:new{MinEdge = emin, MaxEdge = emax}
+
+    local light_threshold = 4
+    local light_value = 4
+
+    -- Iterate over all positions in the chunk
+    for z = minp.z, maxp.z do
+        for y = minp.y, maxp.y do
+            for x = minp.x, maxp.x do
+                local vi = area:index(x, y, z) -- Get the voxel index
+                local current_light = light_data[vi]
+                if current_light < light_threshold then
+                    -- Set the new light value
+                    light_data[vi] = light_value
+                end
+            end
+        end
+    end
+
+    -- Write the updated light data back
+    vm:set_light_data(light_data)
+    vm:write_to_map()
+    vm:update_liquids()
+end)
+
+minetest.register_lbm({
+	label = "Fix water palette indexes",  -- Set correct palette indexes of water in old mapblocks.
+	name = "vlf_mapgen_core:fix_water_palette_indexes",
+	nodenames = {"group:water_palette"},
+	run_at_every_load = false,
+	action = function(pos, node)
+		local water_palette_index = vlf_util.get_palette_indexes_from_pos(pos).water_palette_index
+		if node.param2 ~= water_palette_index then
+			node.param2 = water_palette_index
+			minetest.swap_node(pos, node)
+		end
+	end
+})
+
+-- Return appropriate water block node for pos
+function vlf_mapgen_core.get_water_block_type(pos)
+	local vm = VoxelManip()
+	local minp, maxp = vm:read_from_map(pos, pos)
+	local area = VoxelArea:new{MinEdge = minp, MaxEdge = maxp}
+	local data = vm:get_data()
+	local param2_data = vm:get_param2_data()
+
+	local vi = area:indexp(pos)
+	local node_id = data[vi]
+	local node_name = minetest.get_name_from_content_id(node_id)
+
+	local water_palette_index = vlf_util.get_palette_indexes_from_pos(pos).water_palette_index
+	return {name = node_name, param2 = water_palette_index}
+end
+
+--[[minetest.register_on_generated(function(minp, maxp, blockseed) -- Set correct palette indexes of water in new mapblocks.
+	local vm = VoxelManip()
+	local emin, emax = vm:read_from_map(minp, maxp)
+	local area = VoxelArea:new({MinEdge = emin, MaxEdge = emax})
+	local data = vm:get_data()
+	local param2_data = vm:get_param2_data()
+
+	local water_group = minetest.get_content_id("vlf_core:water_source")
+
+	for z = minp.z, maxp.z do
+		for y = minp.y, maxp.y do
+			for x = minp.x, maxp.x do
+				local pos = {x = x, y = y, z = z}
+				local vi = area:index(x, y, z)
+				if data[vi] == water_group then
+					local water_palette_index = vlf_util.get_palette_indexes_from_pos(pos).water_palette_index
+					if param2_data[vi] ~= water_palette_index then
+						param2_data[vi] = water_palette_index
+					end
+				end
+			end
+		end
+	end
+
+	-- Write the modified data back to the map
+	vm:set_param2_data(param2_data)
+	vm:write_to_map()
+	vm:update_map()
+end)
+]]

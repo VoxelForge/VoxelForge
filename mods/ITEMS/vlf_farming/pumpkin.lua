@@ -152,6 +152,7 @@ pumpkin_face_base_def.after_place_node = function(pos, placer, itemstack, pointe
 	-- Attempt to spawn iron golem or snow golem
 	mobs_mc.check_iron_golem_summon(pos, placer)
 	mobs_mc.check_snow_golem_summon(pos, placer)
+	--mobs_mc.check_copper_golem_summon(pos, placer)
 end
 
 -- TODO: when < minetest 5.9 isn't supported anymore, remove this variable check and replace all occurences of [hud_elem_type_field] with type
@@ -160,54 +161,56 @@ if not minetest.features.hud_def_type_field then
 	hud_elem_type_field = "hud_elem_type"
 end
 
-if minetest.get_modpath("vlf_armor") then
-	local pumpkin_hud = {}
-	local function add_pumpkin_hud(player)
-		pumpkin_hud[player] = {
-			pumpkin_blur = player:hud_add({
-				[hud_elem_type_field] = "image",
-				position = {x = 0.5, y = 0.5},
-				scale = {x = -101, y = -101},
-				text = "vlf_farming_pumpkin_hud.png",
-				z_index = -200
-			}),
-			--this is a fake crosshair, because hotbar and crosshair doesn't support z_index
-			--TODO: remove this and add correct z_index values
-			fake_crosshair = player:hud_add({
-				[hud_elem_type_field] = "image",
-				position = {x = 0.5, y = 0.5},
-				scale = {x = 1, y = 1},
-				text = "crosshair.png",
-				z_index = -100
-			})
-		}
-	end
-	local function remove_pumpkin_hud(player)
-		if pumpkin_hud[player] then
-			player:hud_remove(pumpkin_hud[player].pumpkin_blur)
-			player:hud_remove(pumpkin_hud[player].fake_crosshair)
-			pumpkin_hud[player] = nil
-		end
-	end
-
-	pumpkin_face_base_def.on_secondary_use = vlf_armor.equip_on_use
-	pumpkin_face_base_def._on_equip = add_pumpkin_hud
-	pumpkin_face_base_def._on_unequip = remove_pumpkin_hud
-
-	minetest.register_on_joinplayer(function(player)
-		if player:get_inventory():get_stack("armor", 2):get_name() == "vlf_farming:pumpkin_face" then
-			add_pumpkin_hud(player)
-		end
-	end)
-	minetest.register_on_dieplayer(function(player)
-		if not minetest.settings:get_bool("vlf_keepInventory") then
-			remove_pumpkin_hud(player)
-		end
-	end)
-	minetest.register_on_leaveplayer(function(player)
-		pumpkin_hud[player] = nil
-	end)
+local pumpkin_hud = {}
+local function add_pumpkin_hud(player)
+	local meta = player:get_meta()
+	pumpkin_hud[player] = {
+		pumpkin_blur = player:hud_add({
+			[hud_elem_type_field] = "image",
+			position = {x = 0.5, y = 0.5},
+			scale = {x = -101, y = -101},
+			text = "vlf_farming_pumpkin_hud.png",
+			z_index = -200
+		}),
+		--this is a fake crosshair, because hotbar and crosshair doesn't support z_index
+		--TODO: remove this and add correct z_index values
+		fake_crosshair = player:hud_add({
+			[hud_elem_type_field] = "image",
+			position = {x = 0.5, y = 0.5},
+			scale = {x = 1, y = 1},
+			text = "crosshair.png",
+			z_index = -100
+		})
+	}
+	meta:set_string("pumpkin_hud", "active")
 end
+local function remove_pumpkin_hud(player)
+	local meta = player:get_meta()
+	if pumpkin_hud[player] then
+		player:hud_remove(pumpkin_hud[player].pumpkin_blur)
+		player:hud_remove(pumpkin_hud[player].fake_crosshair)
+		pumpkin_hud[player] = nil
+		meta:set_string("pumpkin_hud", "inactive")
+	end
+end
+
+pumpkin_face_base_def.on_secondary_use = vlf_armor.equip_on_use
+pumpkin_face_base_def._on_equip = add_pumpkin_hud
+pumpkin_face_base_def._on_unequip = remove_pumpkin_hud
+
+minetest.register_on_joinplayer(function(player)
+	if player:get_inventory():get_stack("armor", 2):get_name() == "vlf_farming:pumpkin_face" then
+		add_pumpkin_hud(player)
+	end
+end)
+minetest.register_on_dieplayer(function(player)
+	if not minetest.settings:get_bool("vlf_keepInventory") then
+		remove_pumpkin_hud(player)
+	end
+end)
+minetest.register_on_leaveplayer(function(player)
+	pumpkin_hud[player] = nil
+end)
 
 -- Register stem growth
 vlf_farming:add_plant("plant_pumpkin_stem", "vlf_farming:pumpkintige_unconnect", {"vlf_farming:pumpkin_1", "vlf_farming:pumpkin_2", "vlf_farming:pumpkin_3", "vlf_farming:pumpkin_4", "vlf_farming:pumpkin_5", "vlf_farming:pumpkin_6", "vlf_farming:pumpkin_7"}, 30, 5)

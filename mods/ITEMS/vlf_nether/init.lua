@@ -272,8 +272,8 @@ minetest.register_node("vlf_nether:quartz_smooth", {
 	tiles = {"vlf_nether_quartz_block_bottom.png"},
 	groups = {pickaxey=1, quartz_block=1,building_block=1, material_stone=1, stonecuttable = 1},
 	sounds = vlf_sounds.node_sound_stone_defaults(),
-	_vlf_blast_resistance = 0.8,
-	_vlf_hardness = 0.8,
+	_vlf_blast_resistance = 6,
+	_vlf_hardness = 2,
 	_vlf_stonecutter_recipes = { "vlf_nether:quartz_block" },
 })
 

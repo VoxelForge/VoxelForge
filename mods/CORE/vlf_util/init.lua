@@ -1,4 +1,6 @@
 local ground_padding = tonumber(minetest.settings:get("vlf_ground_padding")) or 1
+local modname = minetest.get_current_modname()
+local modpath = minetest.get_modpath(modname)
 
 vlf_util = {}
 
@@ -1586,5 +1588,55 @@ if not minetest.objects_inside_radius then --polyfill for pre minetest 5.9
 
 	function core.objects_in_area(min_pos, max_pos)
 		return valid_object_iterator(core.get_objects_in_area(min_pos, max_pos))
+	end
+end
+
+vlf_util.ringbuffer = dofile(modpath.."/ringbuffer.lua")
+--dofile(modpath.."/compat.lua")
+
+local palette_indexes = {grass_palette_index = 0, foliage_palette_index = 0, water_palette_index = 0}
+function vlf_util.get_palette_indexes_from_pos(pos)
+	local biome_data = minetest.get_biome_data(pos)
+	local biome = biome_data.biome
+	local biome_name = minetest.get_biome_name(biome)
+	local reg_biome = minetest.registered_biomes[biome_name]
+	if reg_biome and reg_biome._vlf_grass_palette_index and reg_biome._vlf_foliage_palette_index and reg_biome._vlf_water_palette_index then
+		local gpi = reg_biome._vlf_grass_palette_index
+		local fpi = reg_biome._vlf_foliage_palette_index
+		local wpi = reg_biome._vlf_water_palette_index
+		local palette_indexes = {grass_palette_index = gpi, foliage_palette_index = fpi, water_palette_index = wpi}
+		return palette_indexes
+	elseif reg_biome and reg_biome._vlf_water_palette_index then
+			local wpi = reg_biome._vlf_water_palette_index
+		local palette_indexes = {water_palette_index = wpi}
+		return palette_indexes
+	else
+		return palette_indexes
+	end
+end
+
+local function get_visual_size(obj)
+	return obj:is_player() and {x = 1, y = 1, z = 1} or obj:get_luaentity()._old_visual_size or obj:get_properties().visual_size
+end
+
+function vlf_util.detach_object(obj, change_pos, callback)
+	if not obj or not obj:get_pos() then return end
+	obj:set_detach()
+	obj:set_properties({visual_size = get_visual_size(obj)})
+	if obj:is_player() then
+		vlf_player.players[obj].attached = nil
+		obj:set_eye_offset({x=0, y=0, z=0},{x=0, y=0, z=0})
+		vlf_player.player_set_animation(obj, "stand" , 30)
+	else
+		obj:get_luaentity()._old_visual_size = nil
+	end
+	if change_pos then
+		 obj:set_pos(vector.add(obj:get_pos(), change_pos))
+	end
+	if callback then
+		minetest.after(0.1, function(obj)
+			if not obj or not obj:get_pos() then return end
+			callback(obj)
+		end, obj)
 	end
 end

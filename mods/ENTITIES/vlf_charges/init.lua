@@ -1,14 +1,9 @@
-local modname = minetest.get_current_modname()
+--[[local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 
 -- Cooldown time and global storing of cooldown
 local cooldown_time = 1
 vlf_charges_cooldown = {}
-if minetest.global_exists("vlf_charges_cooldown") == false then
-	minetest.register_globalstep(function(dtime)
-		minetest.set_global_exists("vlf_charges_cooldown", {})
-	end)
-end
 vlf_charges = {}
 local S = minetest.get_translator("vlf_charges")
 --Wind Charge Particle effects
@@ -71,48 +66,89 @@ function vlf_charges.pot_effects(pos, radius)
 			collisiondetection = true,
 		})
 end
--- knockback function
+
 function vlf_charges.wind_burst_velocity(pos1, pos2, old_vel, power)
 	if vector.equals(pos1, pos2) then
 		return old_vel
 	end
 
-	local vel = vector.multiply(vector.normalize(vector.direction(pos1, pos2)), power)
-	vel = vector.add(vel, old_vel)
-	vel = vector.add(vel, {x = math.random() - 0.5, y = math.random() - 0.5, z = math.random() - 0.5})
+	local direction = vector.direction(pos1, pos2)
+	local normalized_dir = vector.normalize(direction)
+	local offset_vel = vector.multiply(normalized_dir, power)
 
-	if vector.length(vel) > 250 then
+	local vel = vector.add(offset_vel, old_vel)
+
+	vel = vector.add(vel, {
+		x = (math.random() - 0.5) * 0.1,
+		y = (math.random() - 0.5) * 0.1,
+		z = (math.random() - 0.5) * 0.1
+	})
+	local max_speed = 250
+	if vector.length(vel) > max_speed then
 		vel = vector.normalize(vel)
-		vel = vector.multiply(vel, 250)
+		vel = vector.multiply(vel, max_speed)
 	end
 
 	return vel
 end
 
-local RADIUS = 4
+local RADIUS = 6
 
--- Wind Burst registry
 function vlf_charges.wind_burst(pos, radius)
 	for _, obj in ipairs(minetest.get_objects_inside_radius(pos, radius)) do
 		local obj_pos = obj:get_pos()
 		local dist = math.max(1, vector.distance(pos, obj_pos))
 
 		if obj:is_player() then
-			obj:add_velocity(vector.multiply(vector.normalize(vector.subtract(obj_pos, pos)), math.random(1.8, 2.0) / dist * RADIUS))
+			-- Track initial Y position
+			local initial_y = obj_pos.y
+
+			-- Apply knockback
+			local player_vel = vector.multiply(vector.normalize(vector.subtract(obj_pos, pos)), (2.0 / dist) * RADIUS)
+			obj:add_velocity(player_vel)
+
+			-- Mark player as using wind burst (set meta)
+			obj:get_meta():set_string("wind_burst_active", "true")
+
+			-- Constantly check player velocity and ground status
+			minetest.register_globalstep(function(dtime)
+				if obj:get_meta():get_string("wind_burst_active") == "true" then
+					local new_vel = obj:get_velocity()
+					local new_pos = obj:get_pos()
+
+					-- Check if the player is grounded
+					local is_grounded = minetest.get_node(vector.subtract(new_pos, {x=0, y=1, z=0})).walkable
+
+					if is_grounded then
+						-- Remove meta when grounded and stop checking
+						obj:get_meta():set_string("wind_burst_active", "")
+
+					elseif new_pos.y - initial_y > 8 then
+						-- Send chat message if player rises more than 8 blocks
+						minetest.chat_send_player(obj:get_player_name(), "Who needs rockets?")
+					end
+
+					vlf_damage.register_modifier(function(obj, damage, reason)
+						if reason.type == "fall" and obj:get_meta():get_string("wind_burst_active") == true then
+							return 0
+						end
+					end)
+				end
+			end)
 		else
 			local luaobj = obj:get_luaentity()
 			if luaobj then
 				local is_builtin_item = luaobj.name == "__builtin:item"
 				if luaobj.is_mob or is_builtin_item then
-					obj:set_velocity(vlf_charges.wind_burst_velocity(pos, obj_pos, obj:get_velocity(), radius * 3))
+					local current_vel = obj:get_velocity()
+					obj:set_velocity(vlf_charges.wind_burst_velocity(pos, obj_pos, current_vel, radius * 3))
 				end
 			end
 		end
 	end
 end
 
-
---throwable charge registry
+throwable charge registry
 function register_charge(name, descr, def)
 	minetest.register_craftitem("vlf_charges:" .. name .. "", {
 		description = S(descr),
@@ -123,7 +159,7 @@ function register_charge(name, descr, def)
 			if vlf_charges_cooldown[playername] == nil then
 				vlf_charges_cooldown[playername] = 0
 			end
-		local current_time = minetest.get_gametime()
+			local current_time = minetest.get_gametime()
 			if current_time - vlf_charges_cooldown[playername] >= cooldown_time then
 				vlf_charges_cooldown[playername] = current_time
 					local velocity = 30
@@ -131,33 +167,8 @@ function register_charge(name, descr, def)
 					local playerpos = placer:get_pos()
 					local obj = minetest.add_entity({
 						x = playerpos.x + dir.x,
-						y = playerpos.y + 1.3 + dir.y,
-						z = playerpos.z + dir.z
-					}, "vlf_charges:" .. name .. "_flying")
-					local vec = {x = dir.x * velocity, y = dir.y * velocity, z = dir.z * velocity}
-					local acc = {x = 0, y = 0, z = 0}
-					obj:set_velocity(vec)
-					obj:set_acceleration(acc)
-					local ent = obj:get_luaentity() ; ent.posthrow = playerpos
-					itemstack:take_item()
-				return itemstack
-		end
-	end,
-	on_secondary_use = function(itemstack, placer, pointed_thing)
-		local playername = placer:get_player_name()
-		if vlf_charges_cooldown[playername] == nil then
-			vlf_charges_cooldown[playername] = 0
-		end
-		local current_time = minetest.get_gametime()
-		if current_time - vlf_charges_cooldown[playername] >= cooldown_time then
-			vlf_charges_cooldown[playername] = current_time
-				local velocity = 30
-					local dir = placer:get_look_dir()
-					local playerpos = placer:get_pos()
-					local obj = minetest.add_entity({
-						x = playerpos.x + dir.x,
 						y = playerpos.y + 2 + dir.y,
-						z = playerpos.z + dir.z
+						z = playerpos.z + 0.8 + dir.z
 					}, "vlf_charges:" .. name .. "_flying")
 					local vec = {x = dir.x * velocity, y = dir.y * velocity, z = dir.z * velocity}
 					local acc = {x = 0, y = 0, z = 0}
@@ -180,13 +191,50 @@ function register_charge(name, descr, def)
 			end
 			stack:take_item()
 		end,
+		on_secondary_use = function(itemstack, placer, pointed_thing)
+			local playername = placer:get_player_name()
+			if vlf_charges_cooldown[playername] == nil then
+				vlf_charges_cooldown[playername] = 0
+			end
+			local current_time = minetest.get_gametime()
+			if current_time - vlf_charges_cooldown[playername] >= cooldown_time then
+				vlf_charges_cooldown[playername] = current_time
+				local velocity = 30
+				local dir = placer:get_look_dir()
+				local playerpos = placer:get_pos()
+				local obj = minetest.add_entity({
+					x = playerpos.x + dir.x,
+					y = playerpos.y + 2 + dir.y,
+					z = playerpos.z + 0.8 + dir.z
+				}, "vlf_charges:" .. name .. "_flying")
+				local vec = {x = dir.x * velocity, y = dir.y * velocity, z = dir.z * velocity}
+				local acc = {x = 0, y = 0, z = 0}
+				obj:set_velocity(vec)
+				obj:set_acceleration(acc)
+				local ent = obj:get_luaentity() ; ent.posthrow = playerpos
+				itemstack:take_item()
+				return itemstack
+			end
+		end,
+		_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
+			local shootpos = vector.add(pos, vector.multiply(dropdir, 0.51))
+			local charge = minetest.add_entity(shootpos, "vlf_charges:" .. name .. "_flying")
+			if charge and charge:get_pos() then
+				local ent_charge = charge:get_luaentity()
+				ent_charge._shot_from_dispenser = true
+				local v = ent_charge.velocity or 20
+				charge:set_velocity(vector.multiply(dropdir, v))
+				ent_charge.switch = 1
+			end
+			stack:take_item()
+		end,
 })
 -- Entity registry
 minetest.register_entity("vlf_charges:" .. name .. "_flying", {
 	initial_properties = {
 		visual = "mesh",
 		mesh = name..".obj",
-		visual_size = {x=2, y=1.5},
+		visual_size = {x=1, y=1},
 		textures = {"vlf_charges_" .. name .. "_entity.png"},
 		hp_max = 20,
 		collisionbox = {-0.1,-0.1,-0.1, 0.1,0.0,0.1},
@@ -240,6 +288,240 @@ minetest.register_entity("vlf_charges:" .. name .. "_flying", {
 		self.lastpos = pos
 	end,
 	})
+end
+
+dofile(modpath.."/wind_charge.lua")]]
+
+local modname = minetest.get_current_modname()
+local modpath = minetest.get_modpath(modname)
+
+-- Cooldown time and global storing of cooldown
+local cooldown_time = 1
+vlf_charges_cooldown = {}
+vlf_charges = {}
+local S = minetest.get_translator("vlf_charges")
+
+-- Wind Charge Particle effects
+wind_burst_spawner = {
+	texture = "vlf_charges_wind_burst_1.png",
+	texpool = {},
+	amount = 6,
+	time = 0.2,
+	minvel = vector.zero(),
+	maxvel = vector.zero(),
+	minacc = vector.new(-0.2, 0.0, -0.2),
+	maxacc = vector.new(0.2, 0.1, 0.2),
+	minexptime = 0.95,
+	maxexptime = 0.95,
+	minsize = 12.0,
+	maxsize= 18.0,
+	glow = 100,
+	collisiondetection = true,
+	collision_removal = true,
+}
+
+for i = 1, 2 do
+	table.insert(wind_burst_spawner.texpool, {
+		name = "vlf_charges_wind_burst_" .. i .. ".png",
+		animation = {type = "vertical_frames", aspect_w = 8, aspect_h = 8, length = 1},
+	})
+end
+
+-- Function to prevent self-hit
+local function is_same_entity(obj1, obj2)
+	return obj1 == obj2
+end
+
+-- Chorus flower destruction effects
+function vlf_charges.chorus_flower_effects(pos, radius)
+	minetest.add_particlespawner({
+		amount = 10,
+		time = 0.3,
+		minpos = vector.subtract(pos, radius / 2),
+		maxpos = vector.add(pos, radius / 2),
+		minvel = vector.new(-5, 0, -5),
+		maxvel = vector.new(5, 3, 5),
+		minacc = vector.new(0, -10, 0),
+		minexptime = 0.8,
+		maxexptime = 2.0,
+		minsize = radius * 0.66,
+		maxsize = radius * 1.00,
+		texpool = {"vlf_end_chorus_flower_1.png", "vlf_end_chorus_flower_2.png", "vlf_end_chorus_flower_3.png", "vlf_end_chorus_flower_4.png", "vlf_end_chorus_flower_5.png", "vlf_end_chorus_flower_6.png", "vlf_end_chorus_flower_7.png", "vlf_end_chorus_flower_8.png", "vlf_end_chorus_flower_9.png", "vlf_end_chorus_flower_10.png"},
+		collisiondetection = true,
+	})
+end
+
+-- Decorated pot destruction effects
+function vlf_charges.pot_effects(pos, radius)
+	minetest.add_particlespawner({
+		amount = 10,
+		time = 0.3,
+		minpos = vector.subtract(pos, radius / 2),
+		maxpos = vector.add(pos, radius / 2),
+		minvel = vector.new(-5, 0, -5),
+		maxvel = vector.new(5, 3, 5),
+		minacc = vector.new(0, -10, 0),
+		minexptime = 0.8,
+		maxexptime = 2.0,
+		minsize = radius * 0.66,
+		maxsize = radius * 1.00,
+		texpool = {"vlf_pottery_sherds_pot_1.png", "vlf_pottery_sherds_pot_2.png", "vlf_pottery_sherds_pot_3.png", "vlf_pottery_sherds_pot_4.png", "vlf_pottery_sherds_pot_5.png", "vlf_pottery_sherds_pot_6.png", "vlf_pottery_sherds_pot_7.png", "vlf_pottery_sherds_pot_8.png", "vlf_pottery_sherds_pot_9.png", "vlf_pottery_sherds_pot_10.png"},
+		collisiondetection = true,
+	})
+end
+
+-- Projectile velocity adjustment function
+function vlf_charges.wind_burst_velocity(pos1, pos2, old_vel, power)
+	if vector.equals(pos1, pos2) then
+		return old_vel
+	end
+
+	local direction = vector.normalize(vector.direction(pos1, pos2))
+	local offset_vel = vector.multiply(direction, power)
+	local vel = vector.add(offset_vel, old_vel)
+
+	vel = vector.add(vel, {
+		x = (math.random() - 0.5) * 0.1,
+		y = (math.random() - 0.5) * 0.1,
+		z = (math.random() - 0.5) * 0.1,
+	})
+
+	local max_speed = 250
+	if vector.length(vel) > max_speed then
+		vel = vector.multiply(vector.normalize(vel), max_speed)
+	end
+
+	return vel
+end
+
+local RADIUS = 6
+
+function vlf_charges.wind_burst(pos, radius, shooter)
+	for _, obj in ipairs(minetest.get_objects_inside_radius(pos, radius)) do
+		local obj_pos = obj:get_pos()
+		local dist = math.max(1, vector.distance(pos, obj_pos))
+
+		-- Avoid hitting the shooter entity
+		if not is_same_entity(obj, shooter) then
+			if obj:is_player() then
+				local initial_y = obj_pos.y
+				local player_vel = vector.multiply(vector.normalize(vector.subtract(obj_pos, pos)), (2.0 / dist) * RADIUS)
+				obj:add_velocity(player_vel)
+
+				-- Mark player as using wind burst
+				obj:get_meta():set_string("wind_burst_active", "true")
+
+				minetest.register_globalstep(function(dtime)
+					if obj:get_meta():get_string("wind_burst_active") == "true" then
+						local new_pos = obj:get_pos()
+						local is_grounded = minetest.get_node(vector.subtract(new_pos, {x = 0, y = 1, z = 0})).walkable
+
+						if is_grounded then
+							obj:get_meta():set_string("wind_burst_active", "")
+						elseif new_pos.y - initial_y > 8 then
+							minetest.chat_send_player(obj:get_player_name(), "Who needs rockets?")
+						end
+
+						vlf_damage.register_modifier(function(_, damage, reason)
+							if reason.type == "fall" and obj:get_meta():get_string("wind_burst_active") == "true" then
+								return 0
+							end
+						end)
+					end
+				end)
+			else
+				local luaobj = obj:get_luaentity()
+				if luaobj then
+					if luaobj.is_mob or luaobj.name == "__builtin:item" then
+						local current_vel = obj:get_velocity()
+						obj:set_velocity(vlf_charges.wind_burst_velocity(pos, obj_pos, current_vel, radius * 3))
+					end
+				end
+			end
+		end
+	end
+end
+
+-- Throwable charge registry
+function register_charge(name, descr, def)
+	minetest.register_craftitem("vlf_charges:" .. name, {
+		description = S(descr),
+		inventory_image = "vlf_charges_" .. name .. ".png",
+
+		on_place = function(itemstack, placer, pointed_thing)
+			local playername = placer:get_player_name()
+			if not vlf_charges_cooldown[playername] then
+				vlf_charges_cooldown[playername] = 0
+			end
+
+			local current_time = minetest.get_gametime()
+			if current_time - vlf_charges_cooldown[playername] >= cooldown_time then
+				vlf_charges_cooldown[playername] = current_time
+
+				local velocity = 30
+				local dir = placer:get_look_dir()
+				local playerpos = placer:get_pos()
+				local obj = minetest.add_entity({
+					x = playerpos.x + dir.x,
+					y = playerpos.y + 2 + dir.y,
+					z = playerpos.z + 0.8 + dir.z
+				}, "vlf_charges:" .. name .. "_flying")
+
+				local vec = {x = dir.x * velocity, y = dir.y * velocity, z = dir.z * velocity}
+				obj:set_velocity(vec)
+				obj:set_acceleration({x = 0, y = 0, z = 0})
+
+				local ent = obj:get_luaentity()
+				ent.posthrow = playerpos
+				ent.shooter = placer -- Set the shooter
+
+				itemstack:take_item()
+				return itemstack
+			end
+		end,
+	})
+	
+-- Entity registry
+minetest.register_entity("vlf_charges:" .. name .. "_flying", {
+	initial_properties = {
+		visual = "mesh",
+		mesh = name .. ".obj",
+		visual_size = {x = 1, y = 1},
+		textures = {"vlf_charges_" .. name .. "_entity.png"},
+		hp_max = 20,
+		collisionbox = {-0.2, -0.2, -0.2, 0.2, 0.2, 0.2},
+		physical = true,
+		pointable = false,
+		static_save = false
+	},
+
+	shooter = nil,
+	posthrow = nil,
+	on_step = function(self, dtime)
+		local pos = self.object:get_pos()
+
+		if self.shooter then
+			-- Avoid self-hit
+			for _, obj in ipairs(minetest.get_objects_inside_radius(pos, 1)) do
+				if not is_same_entity(obj, self.shooter) then
+					if obj:is_player() then
+						local player_pos = obj:get_pos()
+						vlf_charges.wind_burst(player_pos, RADIUS, self.shooter)
+						self.object:remove()
+					else
+						local luaobj = obj:get_luaentity()
+						if luaobj and (luaobj.is_mob or luaobj.name == "__builtin:item") then
+							vlf_charges.wind_burst(obj:get_pos(), RADIUS, self.shooter)
+							self.object:remove()
+						end
+					end
+				end
+			end
+		end
+
+		minetest.add_particlespawner(wind_burst_spawner)
+	end,
+})
 end
 
 dofile(modpath.."/wind_charge.lua")

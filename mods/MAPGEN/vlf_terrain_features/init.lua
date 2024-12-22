@@ -395,19 +395,14 @@ vlf_structures.register_structure("powder_snow_trap", {
 	end
 })
 
-
---[[-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-=========================================================================================================================================================================================
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]--
-
-
---[[ direction is a multiplier to each block's y offset from the starting position, should be either -1 or 1
-local function generate_dripstone(pos, direction)
+-- direction is a multiplier to each block's y offset from the starting position, should be either -1 or 1
+local function generate_dripstone(pos, max_length, direction)
 		-- generating relative to some random sub position of the node, so the dripstone column is more asymetrical (aka natural)
 		local x_offset = math.random(-0.2, 0.2)
 		local z_offset = math.random(-0.2, 0.2)
-		local r = math.random(2, 4)
-		local max_length = r * 5 + math.random(0, 4)
+		local r = math.ceil((max_length / 8))
+		-- local r = math.random(2, 4)
+		-- local max_length = r * 5 + math.random(0, 4)
 		local c_to = minetest.get_content_id("vlf_dripstone:dripstone_block")
 		local vm = minetest.get_voxel_manip()
 		local start_pos, end_pos
@@ -434,9 +429,7 @@ local function generate_dripstone(pos, direction)
 		-- generating foundation
 		for x = start_pos.x, end_pos.x do
 			for z = start_pos.z, end_pos.z do
-				minetest.debug(foundation_start_y, foundation_end_y)
 				for y = foundation_start_y, foundation_end_y do
-					minetest.debug(x, y, z)
 					local vi = a:index(x, y, z)
 					data[vi] = c_to
 				end
@@ -448,7 +441,8 @@ local function generate_dripstone(pos, direction)
 		for x = start_pos.x, end_pos.x do
 			for z = start_pos.z, end_pos.z do
 				offset_r = math.sqrt((pos.x - (x + x_offset))^2 + (pos.z - (z + z_offset))^2)
-				length = max_length - r * offset_r - offset_r * offset_r -- this is the formula that decides the shape!!
+				-- length = max_length - r * offset_r - offset_r * offset_r -- this is the formula that decides the shape!!
+				length = (max_length * (r^2 - offset_r^2)) / r^2
 				for offset_y = 0, length do
 					local vi = a:index(x, pos.y + (offset_y * direction), z)
 					data[vi] = c_to
@@ -465,18 +459,13 @@ vlf_structures.register_structure("large_dripstone_stalagtite", {
 	spawn_by = "air",
 	check_offset = 1,
 	num_spawn_by = 5,
-	noise_params = {
-		offset = 0.00040,
-		scale = 0.001,
-		spread = {x = 500, y = 500, z = 500},
-		seed = 00010001,
-		octaves = 4,
-		persist = 0.67,
-	},
-	y_min = vlf_vars.mg_overworld_min,
+	biomes = {"DripstoneCaves"},
+	fill_ratio = 0.005,
+	y_min = vlf_vars.mg_overworld_min + 1, -- plus one so it cant generate on bedrock
 	y_max = 0,
+	flags = "all_ceilings",
+	place_offset_y = 1,
 	place_func = function(pos)
-		minetest.debug("tite", dump(pos))
 		local empty_air_length = 0
 		while true do
 			if minetest.get_node(vector.offset(pos, 0, -empty_air_length, 0)).name ~= "air" then
@@ -485,13 +474,8 @@ vlf_structures.register_structure("large_dripstone_stalagtite", {
 			empty_air_length = empty_air_length + 1
 		end
 
-		-- dont generate stalagmites if there isnt enough space
-		if empty_air_length < 3 then
-			return false
-		else
-			generate_dripstone(pos, -1)
-			return true
-		end
+		generate_dripstone(pos, math.min(20, empty_air_length * math.random(0.2, 0.6)), -1)
+		return true
 	end
 })
 
@@ -500,18 +484,12 @@ vlf_structures.register_structure("large_dripstone_stalagmite", {
 	spawn_by = "air",
 	check_offset = -1,
 	num_spawn_by = 5,
-	noise_params = {
-		offset = 0.00040,
-		scale = 0.001,
-		spread = {x = 500, y = 500, z = 500},
-		seed = 00100010,
-		octaves = 4,
-		persist = 0.67,
-	},
-	y_min = vlf_vars.mg_overworld_min,
+	biomes = {"DripstoneCaves"},
+	fill_ratio = 0.005,
+	y_min = vlf_vars.mg_overworld_min + 1,
 	y_max = 0,
+	flags = "all_floors",
 	place_func = function(pos)
-		minetest.debug("mite", dump(pos))
 		local empty_air_length = 0
 		while true do
 			if minetest.get_node(vector.offset(pos, 0, empty_air_length, 0)).name ~= "air" then
@@ -520,13 +498,8 @@ vlf_structures.register_structure("large_dripstone_stalagmite", {
 			empty_air_length = empty_air_length + 1
 		end
 
-		-- dont generate stalagmites if there isnt enough space
-		if empty_air_length < 3 then
-			return false
-		else
-			generate_dripstone(pos, 1)
-			return true
-		end
+		generate_dripstone(pos, math.min(20, empty_air_length * math.random(0.4, 0.8)), 1)
+		return true
 	end
 })
 
@@ -535,18 +508,12 @@ vlf_structures.register_structure("large_dripstone_column", {
 	spawn_by = "air",
 	check_offset = 1,
 	num_spawn_by = 5,
-	noise_params = {
-		offset = 0.00040,
-		scale = 0.001,
-		spread = {x = 500, y = 500, z = 500},
-		seed = 01000100,
-		octaves = 4,
-		persist = 0.67,
-	},
+	biomes = {"DripstoneCaves"},
+	fill_ratio = 0.005,
 	y_min = vlf_vars.mg_overworld_min,
 	y_max = 0,
+	flags = "all_floors",
 	place_func = function(pos)
-		minetest.debug("COLUMN", dump(pos))
 		local empty_air_length = 0
 		while true do
 			if minetest.get_item_group(minetest.get_node(vector.offset(pos, 0, empty_air_length, 0)).name, "solid") ~= 0 then
@@ -557,12 +524,80 @@ vlf_structures.register_structure("large_dripstone_column", {
 			empty_air_length = empty_air_length + 1
 		end
 
-		if empty_air_length < 6 then
-			generate_dripstone(pos, 1)
-			generate_dripstone(vector.offset(pos, 0, empty_air_length, 0), -1)
-			return true
-		else
-			return false
-		end
+		local height_multi = math.random(0.4, 6)
+		generate_dripstone(pos, math.min(20, empty_air_length * height_multi), 1)
+		generate_dripstone(vector.offset(pos, 0, empty_air_length, 0), math.min(20, empty_air_length * height_multi), -1)
+		return true
 	end
-})]]
+})
+
+vlf_structures.register_structure("pale_moss", {
+	place_on = {"vlf_core:dirt_with_grass"},
+	sidelen = 80,
+	noise_params = {
+		offset = 0.016,
+		scale = 0.00004,
+		spread = {x = 500, y = 500, z = 500},
+		seed = 2137,
+		octaves = 4,
+		persist = 0.67,
+	},
+	biomes = {"PaleGarden"},
+	y_min = 1,
+	y_max = vlf_vars.mg_overworld_max,
+	place_func = function(pos)
+		local width  = math.random(6) - 3
+		local length = math.random(6) - 3
+		local depth  = math.random(4)
+
+		local solid_nodes = {}
+		local node_name
+		local pale_oak_found = false
+		local moss_positions = {}
+
+		-- Search for pale oak trees and valid dirt_with_grass positions around them
+		for i = -4, 4 do
+			for j = -4, 4 do
+				local check_pos = vector.offset(pos, i, 0, j)
+				local check_node = minetest.get_node(check_pos).name
+				-- Check for pale oak tree
+				if check_node == "vlf_trees:tree_pale_oak" then
+					pale_oak_found = true
+					-- Search for dirt_with_grass nodes within the 4-block radius
+					for x = -4, 4 do
+						for z = -4, 4 do
+							local grass_pos = vector.offset(check_pos, x, 0, z)
+							local ground_node = minetest.get_node(grass_pos).name
+							-- Place moss only where dirt_with_grass exists
+							if ground_node == "vlf_core:dirt_with_grass" then
+								table.insert(moss_positions, grass_pos)
+								minetest.set_node(grass_pos, {name = "vlf_pale_garden:pale_moss"})
+							end
+						end
+					end
+				end
+			end
+		end
+
+		-- If pale oak found, place tallgrass, carpet, or leave air on top of moss blocks
+		if pale_oak_found then
+			for _, moss_pos in ipairs(moss_positions) do
+				local top_choice = math.random(3)
+				local top_pos = vector.offset(moss_pos, 0, 1, 0)
+				if top_choice == 1 and minetest.get_node(top_pos).name == "air" then
+					minetest.set_node(top_pos, {name = "vlf_pale_garden:pale_moss_carpet"})  -- Place carpet
+				elseif top_choice == 2 and minetest.get_node(top_pos).name == "air" then
+					local param2 = minetest.registered_biomes["PaleGarden"]._vlf_palette_index
+					minetest.set_node(top_pos, {name = "vlf_flowers:tallgrass", param2=param2})  -- Place tallgrass
+				--[[elseif
+					-- Leave air on top
+					minetest.set_node(top_pos, {name = "air"})]]
+				end
+			end
+		end
+
+		return true
+	end
+})
+
+

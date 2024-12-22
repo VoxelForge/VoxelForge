@@ -123,7 +123,7 @@ local function register_biomes()
 		"FlowerForest",
 		"BirchForest",
 		"BirchForestM",
-		"RoofedForest",
+		"Dark_Forest",
 		"Swampland",
 		"Jungle",
 		"JungleM",
@@ -140,6 +140,7 @@ local function register_biomes()
 		"MesaPlateauFM",
 		"MangroveSwamp",
 		"Grove",
+		"PaleGarden",
 	}
 
 
@@ -163,7 +164,7 @@ local function register_biomes()
 		_vlf_palette_index = 2,
 		_vlf_skycolor = "#7FA1FF",
 		_vlf_fogcolor = overworld_fogcolor,
-		_vlf_water_palette_index = 9,
+		_vlf_water_palette_index = 8,
 		_vlf_waterfogcolor = frozen_waterfogcolor,
 	})
 	minetest.register_biome({
@@ -182,6 +183,7 @@ local function register_biomes()
 		_vlf_biome_type = "snowy",
 		_vlf_palette_index = 2,
 		_vlf_skycolor = "#7FA1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -202,6 +204,7 @@ local function register_biomes()
 		_vlf_biome_type = "snowy",
 		_vlf_palette_index = 5,
 		_vlf_skycolor = "#839EFF",
+		_vlf_water_palette_index = 4,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	-- A cold beach-like biome, implemented as low part of Cold Taiga
@@ -223,6 +226,7 @@ local function register_biomes()
 		_vlf_biome_type = "snowy",
 		_vlf_palette_index = 3,
 		_vlf_skycolor = "#7FA1FF",
+		_vlf_water_palette_index = 4,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	-- Water part of the beach. Added to prevent snow being on the ice.
@@ -243,6 +247,7 @@ local function register_biomes()
 		_vlf_biome_type = "snowy",
 		_vlf_palette_index = 3,
 		_vlf_skycolor = "#7FA1FF",
+		_vlf_water_palette_index = 4,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -261,6 +266,7 @@ local function register_biomes()
 		_vlf_biome_type = "snowy",
 		_vlf_palette_index = 3,
 		_vlf_skycolor = "#7FA1FF",
+		_vlf_water_palette_index = 4,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -278,7 +284,7 @@ local function register_biomes()
 		heat_point = 16,
 		_vlf_biome_type = "snowy",
 		_vlf_palette_index = 3,
-		_vlf_water_palette_index = 9,
+		_vlf_water_palette_index = 8,
 		_vlf_skycolor = "#839EFF",
 		_vlf_fogcolor = "#C0D8FF",
 	})
@@ -296,7 +302,7 @@ local function register_biomes()
 		heat_point = 16,
 		_vlf_biome_type = "snowy",
 		_vlf_palette_index = 3,
-		_vlf_water_palette_index = 9,
+		_vlf_water_palette_index = 8,
 		_vlf_skycolor = "#839EFF",
 		_vlf_fogcolor = "#C0D8FF",
 	})
@@ -314,7 +320,7 @@ local function register_biomes()
 		heat_point = 50,
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 3,
-		_vlf_water_palette_index = 9,
+		_vlf_water_palette_index = 6,
 		_vlf_skycolor = "#839EFF",
 		_vlf_fogcolor = "#C0D8FF",
 	})
@@ -333,6 +339,7 @@ local function register_biomes()
 		heat_point = 10,
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 4,
+		_vlf_water_palette_index = 8,
 		_vlf_skycolor = "#7CA3FF",
 		_vlf_fogcolor = overworld_fogcolor
 	})
@@ -350,6 +357,7 @@ local function register_biomes()
 		heat_point = 10,
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 4,
+		_vlf_water_palette_index = 8,
 		_vlf_skycolor = ocean_skycolor,
 		_vlf_fogcolor = overworld_fogcolor
 	})
@@ -369,6 +377,7 @@ local function register_biomes()
 		heat_point = 8,
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 5,
+		_vlf_water_palette_index = 8,
 		_vlf_skycolor = "#7DA3FF",
 		_vlf_fogcolor = overworld_fogcolor
 	})
@@ -386,6 +395,7 @@ local function register_biomes()
 		heat_point = 8,
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 5,
+		_vlf_water_palette_index = 8,
 		_vlf_skycolor = ocean_skycolor,
 		_vlf_fogcolor = overworld_fogcolor
 	})
@@ -407,6 +417,7 @@ local function register_biomes()
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 6,
 		_vlf_skycolor = "#7DA2FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -425,6 +436,7 @@ local function register_biomes()
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 6,
 		_vlf_skycolor = beach_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -443,6 +455,7 @@ local function register_biomes()
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 6,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -463,6 +476,7 @@ local function register_biomes()
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 7,
 		_vlf_skycolor = "#7DA2FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -480,6 +494,7 @@ local function register_biomes()
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 7,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -502,6 +517,7 @@ local function register_biomes()
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 8,
 		_vlf_skycolor = "#7DA2FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	---- Sub-biome for Extreme Hills+ for those snow forests
@@ -522,6 +538,7 @@ local function register_biomes()
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 8,
 		_vlf_skycolor = "#7DA2FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -539,6 +556,7 @@ local function register_biomes()
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 8,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -556,6 +574,7 @@ local function register_biomes()
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 9,
 		_vlf_skycolor = "#7DA2FF",
+		_vlf_water_palette_index = 4,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -573,6 +592,7 @@ local function register_biomes()
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 9,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 4,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -596,6 +616,7 @@ local function register_biomes()
 		_vlf_biome_type = "snowy",
 		_vlf_palette_index = 10,
 		_vlf_skycolor = "#7FA1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -613,6 +634,7 @@ local function register_biomes()
 		_vlf_biome_type = "snowy",
 		_vlf_palette_index = 10,
 		_vlf_skycolor = "#7FA1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -632,6 +654,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
 		_vlf_skycolor = "#78A7FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -648,6 +671,7 @@ local function register_biomes()
 		heat_point = 58,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
+		_vlf_water_palette_index = 8,
 		_vlf_skycolor = beach_skycolor,
 		_vlf_fogcolor = overworld_fogcolor
 	})
@@ -665,6 +689,7 @@ local function register_biomes()
 		heat_point = 58,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
+		_vlf_water_palette_index = 8,
 		_vlf_skycolor = ocean_skycolor,
 		_vlf_fogcolor = overworld_fogcolor
 	})
@@ -684,6 +709,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 11,
 		_vlf_skycolor = "#78A7FF",
+		_vlf_water_palette_index = 7,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -703,6 +729,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 11,
 		_vlf_skycolor = "#78A7FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -720,6 +747,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 11,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -739,6 +767,7 @@ local function register_biomes()
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 12,
 		_vlf_skycolor = "#7DA3FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -756,6 +785,7 @@ local function register_biomes()
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 12,
 		_vlf_skycolor = beach_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -773,6 +803,7 @@ local function register_biomes()
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 12,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -792,6 +823,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 13,
 		_vlf_skycolor = "#79A6FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -809,6 +841,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 13,
 		_vlf_skycolor = beach_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -826,6 +859,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 13,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -845,6 +879,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 14,
 		_vlf_skycolor = "#79A6FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -862,6 +897,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 14,
 		_vlf_skycolor = beach_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -879,6 +915,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 14,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -897,6 +934,7 @@ local function register_biomes()
 		heat_point = 31,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 15,
+		_vlf_water_palette_index = 8,
 		_vlf_skycolor = "#7AA5FF",
 		_vlf_fogcolor = overworld_fogcolor
 	})
@@ -914,6 +952,7 @@ local function register_biomes()
 		heat_point = 31,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 15,
+		_vlf_water_palette_index = 8,
 		_vlf_skycolor = ocean_skycolor,
 		_vlf_fogcolor = overworld_fogcolor
 	})
@@ -933,6 +972,7 @@ local function register_biomes()
 		heat_point = 27,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 16,
+		_vlf_water_palette_index = 8,
 		_vlf_skycolor = "#7AA5FF",
 		_vlf_fogcolor = overworld_fogcolor
 	})
@@ -950,9 +990,49 @@ local function register_biomes()
 		heat_point = 27,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 16,
+		_vlf_water_palette_index = 8,
 		_vlf_skycolor = ocean_skycolor,
 		_vlf_fogcolor = overworld_fogcolor
 	})
+	
+	minetest.register_biome({
+		name = "PaleGarden",
+		node_top = "vlf_core:dirt_with_grass",
+		depth_top = 1,
+		node_filler = "vlf_core:dirt",
+		depth_filler = 3,
+		node_riverbed = "vlf_core:sand",
+		depth_riverbed = 2,
+		y_min = 0,
+		y_max = vlf_vars.mg_overworld_max,
+		humidity_point = 70,
+		heat_point = 60,
+		_vlf_biome_type = "medium",
+		_vlf_palette_index = 30,
+		_vlf_skycolor = "#B9B9B9",
+		_vlf_water_palette_index = 9,
+		_vlf_fogcolor = "#817770"
+	})
+	
+	--[[minetest.register_biome({
+		name = "PaleGarden_ocean",
+		node_top = "vlf_core:sand",
+		depth_top = 1,
+		node_filler = "vlf_core:dirt",
+		node_sand = "vlf_core:sand",
+		depth_filler = 3,
+		node_riverbed = "vlf_core:sand",
+		depth_riverbed = 2,
+		y_min = OCEAN_MIN,
+		y_max = 0,
+		humidity_point = 70,
+		heat_point = 60,
+		_vlf_biome_type = "medium",
+		_vlf_palette_index = 30,
+		_vlf_skycolor = "#B9B9B9",
+		_vlf_water_palette_index = 9,
+		_vlf_fogcolor = "#817770"
+	})]]
 
 	-- Desert
 	minetest.register_biome({
@@ -971,6 +1051,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 17,
 		_vlf_skycolor = "#6EB1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -988,12 +1069,13 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 17,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
 	-- Roofed Forest
 	minetest.register_biome({
-		name = "RoofedForest",
+		name = "Dark_Forest",
 		node_top = "vlf_core:dirt_with_grass",
 		depth_top = 1,
 		node_filler = "vlf_core:dirt",
@@ -1007,10 +1089,11 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 18,
 		_vlf_skycolor = "#79A6FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
-		name = "RoofedForest_ocean",
+		name = "Dark_Forest_ocean",
 		node_top = "vlf_core:gravel",
 		depth_top = 1,
 		node_filler = "vlf_core:gravel",
@@ -1024,6 +1107,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 18,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1044,6 +1128,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 19,
 		_vlf_skycolor = "#6EB1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	-- Helper biome for the red sand at the bottom of Mesas.
@@ -1063,6 +1148,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 19,
 		_vlf_skycolor = "#6EB1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1081,6 +1167,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 19,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1100,6 +1187,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 20,
 		_vlf_skycolor = "#6EB1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1118,6 +1206,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 20,
 		_vlf_skycolor = "#6EB1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1136,6 +1225,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 20,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1159,6 +1249,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 21,
 		_vlf_skycolor = "#6EB1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	-- The oak forest plateau of this biome.
@@ -1180,6 +1271,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 21,
 		_vlf_skycolor = "#6EB1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1198,6 +1290,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 21,
 		_vlf_skycolor = "#6EB1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1216,6 +1309,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 21,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1239,6 +1333,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 22,
 		_vlf_skycolor = "#6EB1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	-- Grass plateau
@@ -1258,6 +1353,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 22,
 		_vlf_skycolor = "#6EB1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1278,6 +1374,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 22,
 		_vlf_skycolor = "#6EB1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1296,6 +1393,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 22,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1315,6 +1413,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 1,
 		_vlf_skycolor = "#6EB1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1332,6 +1431,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 1,
 		_vlf_skycolor = beach_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1349,6 +1449,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 1,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1370,6 +1471,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 23,
 		_vlf_skycolor = "#6EB1FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1387,6 +1489,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 23,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1406,6 +1509,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 24,
 		_vlf_skycolor = "#77A8FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1423,6 +1527,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 24,
 		_vlf_skycolor = "#77A8FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1441,6 +1546,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 24,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1461,6 +1567,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 25,
 		_vlf_skycolor = "#77A8FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1478,6 +1585,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 25,
 		_vlf_skycolor = "#77A8FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1496,6 +1604,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 25,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1515,6 +1624,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 26,
 		_vlf_skycolor = "#77A8FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1533,6 +1643,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 26,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1552,6 +1663,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 26,
 		_vlf_skycolor = "#77A8FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1569,6 +1681,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 26,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1591,6 +1704,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 26,
 		_vlf_skycolor = "#77A8FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1608,6 +1722,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 26,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1628,6 +1743,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 27,
 		_vlf_skycolor = "#78A7FF",
+		_vlf_water_palette_index = 1,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1645,6 +1761,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 27,
 		_vlf_skycolor = "#78A7FF",
+		_vlf_water_palette_index = 1,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1663,6 +1780,7 @@ local function register_biomes()
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 27,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 1,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	-- Swampland
@@ -1682,6 +1800,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 28,
 		_vlf_skycolor = "#78A7FF",
+		_vlf_water_palette_index = 0,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1699,6 +1818,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 28,
 		_vlf_skycolor = "#78A7FF",
+		_vlf_water_palette_index = 0,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1717,6 +1837,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 28,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 0,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1739,6 +1860,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 29,
 		_vlf_skycolor = "#77A8FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1757,6 +1879,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 29,
 		_vlf_skycolor = "#77A8FF",
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
@@ -1774,6 +1897,7 @@ local function register_biomes()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 29,
 		_vlf_skycolor = ocean_skycolor,
+		_vlf_water_palette_index = 8,
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
@@ -1791,6 +1915,7 @@ local function register_biomes()
 		heat_point = 60,
 		vertical_blend = 8,
 		_vlf_biome_type = "hot",
+		_vlf_water_palette_index = 8,
 		_vlf_palette_index = 21,
 	})
 	minetest.register_decoration({
@@ -1804,6 +1929,21 @@ local function register_biomes()
 		decoration = "vlf_sculk:sculk",
 		flags = "all_floors",
 		param2 = 0,
+	})
+	
+	minetest.register_biome({
+		name = "DripstoneCaves",
+		depth_top = 1,
+		node_cave_liquid = "vlf_core:water_source",
+		depth_riverbed = 2,
+		y_min = vlf_worlds.mg_overworld_min,
+		y_max = 0,
+		vertical_blend = 1,
+		humidity_point = 75,
+		heat_point = 57,
+		_vlf_biome_type = "medium",
+		_vlf_water_palette_index = 8,
+		_vlf_palette_index = 0,
 	})
 
 	minetest.register_biome({
@@ -1820,6 +1960,7 @@ local function register_biomes()
 		vertical_blend = 1,
 		humidity_point = 83,
 		heat_point = 57,
+		_vlf_water_palette_index = 8,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
 	})
@@ -1838,6 +1979,7 @@ local function register_biomes()
 		vertical_blend = 1,
 		humidity_point = 83,
 		heat_point = 57,
+		_vlf_water_palette_index = 8,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
 	})
@@ -1855,12 +1997,14 @@ local function register_biomes()
 		vertical_blend = 1,
 		humidity_point = 83,
 		heat_point = 57,
+		_vlf_water_palette_index = 8,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
 	})
 	-- Add deep ocean and underground biomes automatically.
 	for i=1, #overworld_biomes do
 		local biome = overworld_biomes[i]
+		if minetest.registered_biomes[biome.."_ocean"] then
 
 		-- Deep Ocean
 		minetest.register_biome({
@@ -1878,9 +2022,11 @@ local function register_biomes()
 			vertical_blend = 5,
 			_vlf_biome_type = minetest.registered_biomes[biome]._vlf_biome_type,
 			_vlf_palette_index = minetest.registered_biomes[biome]._vlf_palette_index,
+			_vlf_water_palette_index = minetest.registered_biomes[biome]._vlf_water_palette_index,
 			_vlf_skycolor = ocean_skycolor,
 			_vlf_fogcolor = overworld_fogcolor
 		})
+		end
 
 		-- Underground biomes are used to identify the underground and to prevent nodes from the surface
 		-- (sand, dirt) from leaking into the underground.
@@ -1893,6 +2039,7 @@ local function register_biomes()
 			_vlf_biome_type = minetest.registered_biomes[biome]._vlf_biome_type,
 			_vlf_palette_index = minetest.registered_biomes[biome]._vlf_palette_index,
 			_vlf_skycolor = minetest.registered_biomes[biome]._vlf_skycolor,
+			_vlf_water_palette_index = minetest.registered_biomes[biome]._vlf_water_palette_index,
 			_vlf_fogcolor = minetest.registered_biomes[biome]._vlf_fogcolor,
 		})
 		minetest.register_biome({
@@ -1904,6 +2051,7 @@ local function register_biomes()
 			y_max = vlf_vars.mg_overworld_min_old,
 			_vlf_biome_type = minetest.registered_biomes[biome]._vlf_biome_type,
 			_vlf_palette_index = minetest.registered_biomes[biome]._vlf_palette_index,
+			_vlf_water_palette_index = minetest.registered_biomes[biome]._vlf_water_palette_index,
 		})
 
 	end
@@ -1989,6 +2137,7 @@ local function register_dimension_biomes()
 		humidity_point = 33,
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 17,
+		_vlf_water_palette_index = 8,
 --		_vlf_skycolor = nether_skycolor,
 --		_vlf_fogcolor = "#1B4745"
 	})
@@ -2040,6 +2189,7 @@ local function register_dimension_biomes()
 		humidity_point = 47,
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 17,
+		_vlf_water_palette_index = 8,
 --		_vlf_skycolor = nether_skycolor,
 --		_vlf_fogcolor = "#330303"
 	})
@@ -2069,6 +2219,7 @@ local function register_dimension_biomes()
 		humidity_point = 70,
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 17,
+		_vlf_water_palette_index = 8,
 --		_vlf_skycolor = nether_skycolor,
 --		_vlf_fogcolor = "#1A051A"
 	})
@@ -2098,6 +2249,7 @@ local function register_dimension_biomes()
 		humidity_point = 80,
 		_vlf_biome_type = "hot",
 		_vlf_palette_index = 17,
+		_vlf_water_palette_index = 8,
 --		_vlf_skycolor = nether_skycolor,
 --		_vlf_fogcolor = "#685F70"
 	})
@@ -2152,6 +2304,7 @@ local function register_dimension_biomes()
 		vertical_blend = 16,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
+		_vlf_water_palette_index = 8,
 --		_vlf_skycolor = end_skycolor,
 --		_vlf_fogcolor = end_fogcolor
 	})
@@ -2169,6 +2322,7 @@ local function register_dimension_biomes()
 		vertical_blend = 16,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
+		_vlf_water_palette_index = 8,
 --		_vlf_skycolor = end_skycolor,
 --		_vlf_fogcolor = end_fogcolor
 	})
@@ -2186,6 +2340,7 @@ local function register_dimension_biomes()
 		vertical_blend = 16,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
+		_vlf_water_palette_index = 8,
 --		_vlf_skycolor = end_skycolor,
 --		_vlf_fogcolor = end_fogcolor
 	})
@@ -2203,6 +2358,7 @@ local function register_dimension_biomes()
 		vertical_blend = 16,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
+		_vlf_water_palette_index = 8,
 --		_vlf_skycolor = end_skycolor,
 --		_vlf_fogcolor = end_fogcolor
 	})
@@ -2220,6 +2376,7 @@ local function register_dimension_biomes()
 		vertical_blend = 16,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
+		_vlf_water_palette_index = 8,
 --		_vlf_skycolor = end_skycolor,
 --		_vlf_fogcolor = end_fogcolor
 	})
@@ -2240,6 +2397,7 @@ local function register_dimension_biomes()
 		min_pos = {x = -1250, y = vlf_vars.mg_end_min, z = -1250},
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
+		_vlf_water_palette_index = 8,
 --		_vlf_skycolor = end_skycolor,
 --		_vlf_fogcolor = end_fogcolor
 	})
@@ -2258,6 +2416,7 @@ local function register_dimension_biomes()
 		vertical_blend = 16,
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
+		_vlf_water_palette_index = 8,
 --		_vlf_skycolor = end_skycolor,
 --		_vlf_fogcolor = end_fogcolor
 	})
@@ -3043,6 +3202,10 @@ function vlf_biomes.register_grass_decoration(grasstype, offset, scale, biomes)
 		node = "vlf_flowers:tallgrass"
 		place_on = {"group:grass_block_no_snow","vlf_mud:mud"}
 		seed = 420
+	elseif grasstype == "double_tallgrass" then
+		node = "vlf_flowers:double_tallgrass"
+		place_on = {"group:grass_block_no_snow"}
+		seed = 507
 	end
 	local noise = {
 		offset = offset,
@@ -3224,6 +3387,38 @@ local function register_decorations()
 	for k,_ in pairs(corals) do
 		register_coral_decos(k)
 	end
+	
+	minetest.register_decoration({
+		deco_type = "simple",
+		place_on = {"group:stone"},
+		sidelen = 1,
+		height = 1,
+		max_height = 1,
+		place_offset_y = -1,
+		noise_params =
+		{
+			offset = 0,
+			scale = 1,
+			spread = {x = 20, y = 20, z = 20},
+			seed = 101,
+			octaves = 3,
+			persistance = 1,
+			lacunarity = 2,
+		},
+		decoration = "vlf_dripstone:dripstone_block",
+		biomes = {"DripstoneCaves"},
+		flags = "all_floors, all_ceilings, force_placement",
+	})
+
+	minetest.register_decoration({
+		deco_type = "simple",
+		place_on = {"vlf_dripstone:dripstone_block"},
+		sidelen = 1,
+		fill_ratio = 0.2,
+		decoration = "vlf_dripstone:dripstone_up_tip",
+		biomes = {"DripstoneCaves"},
+		flags = "all_floors",
+	})
 
 
 	local lushcaves = { "LushCaves", "LushCaves_underground", "LushCaves_ocean", "LushCaves_deep_ocean"}
@@ -4401,21 +4596,119 @@ local function register_decorations()
 		place_on = {"group:grass_block_no_snow"},
 		sidelen = 16,
 		noise_params = {
-			offset = 0.05,
+			offset = 0.01,
 			scale = 0.0015,
 			spread = {x = 125, y = 125, z = 125},
 			seed = 223,
 			octaves = 3,
-			persist = 0.66
+			persist = 0.77
 		},
-		biomes = {"RoofedForest"},
+		biomes = {"Dark_Forest"},
 		y_min = 4,
 		y_max = vlf_vars.mg_overworld_max,
 		schematic = mod_vlf_schematics.."/schems/vlf_core_dark_oak.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
-
+	--====================--
+	--=== Pale Garden. ===--
+	--====================--
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:grass_block_no_snow"},
+		sidelen = 16,
+		noise_params = {
+			offset = 0.01,
+			scale = 0.0015,
+			spread = {x = 100, y = 100, z = 100},
+			seed = 223,
+			octaves = 3,
+			persist = 0.55
+		},
+		biomes = {"PaleGarden", "PaleGarden_ocean"},
+		y_min = 1,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_schematics.."/schems/pale_oak/pale_oak_tree_1.mts",
+		flags = "place_center_x, place_center_z",
+		rotation = "random",
+	})
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:grass_block_no_snow"},
+		sidelen = 16,
+		noise_params = {
+			offset = 0.007,
+			scale = 0.0015,
+			spread = {x = 100, y = 100, z = 100},
+			seed = 483,
+			octaves = 3,
+			persist = 0.55
+		},
+		biomes = {"PaleGarden", "PaleGarden_ocean"},
+		y_min = 1,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_schematics.."/schems/pale_oak/pale_oak_tree_2.mts",
+		flags = "place_center_x, place_center_z",
+		rotation = "random",
+	})
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:grass_block_no_snow"},
+		sidelen = 16,
+		noise_params = {
+			offset = 0.006,
+			scale = 0.0015,
+			spread = {x = 100, y = 100, z = 100},
+			seed = 5836,
+			octaves = 3,
+			persist = 0.55
+		},
+		biomes = {"PaleGarden", "PaleGarden_ocean"},
+		y_min = 1,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_schematics.."/schems/pale_oak/pale_oak_tree_3.mts",
+		flags = "place_center_x, place_center_z",
+		rotation = "random",
+	})
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:grass_block_no_snow"},
+		sidelen = 16,
+		noise_params = {
+			offset = 0.004,
+			scale = 0.0015,
+			spread = {x = 100, y = 100, z = 100},
+			seed = 4830,
+			octaves = 3,
+			persist = 0.55
+		},
+		biomes = {"PaleGarden", "PaleGarden_ocean"},
+		y_min = 1,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_schematics.."/schems/pale_oak/pale_oak_tree_4.mts",
+		flags = "place_center_x, place_center_z",
+		rotation = "random",
+	})
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:grass_block_no_snow"},
+		sidelen = 16,
+		noise_params = {
+			offset = 0.005,
+			scale = 0.0015,
+			spread = {x = 100, y = 100, z = 100},
+			seed = 67483,
+			octaves = 3,
+			persist = 0.55
+		},
+		biomes = {"PaleGarden", "PaleGarden_ocean"},
+		y_min = 1,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_schematics.."/schems/pale_oak/pale_oak_tree_5.mts",
+		flags = "place_center_x, place_center_z",
+		rotation = "random",
+	})
+	
 	-- Cherry
 	for i=1,3 do
 		minetest.register_decoration({
@@ -4472,7 +4765,15 @@ local function register_decorations()
 		place_on = { "group:grass_block_no_snow", "vlf_core:dirt" },
 		sidelen = 80,
 		fill_ratio = ratio_mushroom_huge,
-		biomes = { "RoofedForest" },
+		biomes = { "Dark_Forest" },
+		noise_params = {
+			offset = 0.000283,
+			scale = 0.0022,
+			spread = {x = 120, y = 120, z = 120},
+			seed = 3,
+			octaves = 3,
+			persist = 0.1,
+		},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
 		schematic = mod_vlf_schematics.."/schems/vlf_mushrooms_huge_brown.mts",
@@ -4484,7 +4785,15 @@ local function register_decorations()
 		place_on = { "group:grass_block_no_snow", "vlf_core:dirt" },
 		sidelen = 80,
 		fill_ratio = ratio_mushroom_giant,
-		biomes = { "RoofedForest" },
+		biomes = { "Dark_Forest" },
+		noise_params = {
+			offset = 0.000283,
+			scale = 0.002,
+			spread = {x = 120, y = 120, z = 120},
+			seed = 3,
+			octaves = 3,
+			persist = 0.1,
+		},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
 		schematic = mod_vlf_schematics.."/schems/vlf_mushrooms_giant_brown.mts",
@@ -4523,7 +4832,15 @@ local function register_decorations()
 		place_on = { "group:grass_block_no_snow", "vlf_core:dirt" },
 		sidelen = 80,
 		fill_ratio = ratio_mushroom_huge,
-		biomes = { "RoofedForest" },
+		biomes = { "Dark_Forest" },
+		noise_params = {
+			offset = 0.000283,
+			scale = 0.0022,
+			spread = {x = 120, y = 120, z = 120},
+			seed = 3,
+			octaves = 3,
+			persist = 0.1,
+		},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
 		schematic = mod_vlf_schematics.."/schems/vlf_mushrooms_huge_red.mts",
@@ -4535,7 +4852,15 @@ local function register_decorations()
 		place_on = { "group:grass_block_no_snow", "vlf_core:dirt" },
 		sidelen = 80,
 		fill_ratio = ratio_mushroom_giant,
-		biomes = { "RoofedForest" },
+		biomes = { "Dark_Forest" },
+		noise_params = {
+			offset = 0.000283,
+			scale = 0.0022,
+			spread = {x = 120, y = 120, z = 120},
+			seed = 3,
+			octaves = 3,
+			persist = 0.1,
+		},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
 		schematic = mod_vlf_schematics.."/schems/vlf_mushrooms_giant_red.mts",
@@ -4746,7 +5071,7 @@ local function register_decorations()
 
 	local register_doubletall_grass = vlf_biomes.register_doubletall_grass
 
-	register_doubletall_grass(-0.01, 0.03, {"Taiga", "Forest", "FlowerForest", "BirchForest", "BirchForestM", "RoofedForest"})
+	register_doubletall_grass(-0.01, 0.03, {"Taiga", "Forest", "FlowerForest", "BirchForest", "BirchForestM", "Dark_Forest"})
 	register_doubletall_grass(-0.002, 0.03, {"Plains", "SunflowerPlains", "CherryGrove"})
 	register_doubletall_grass(-0.0005, -0.03, {"Savanna", "SavannaM"})
 
@@ -5057,12 +5382,13 @@ local function register_decorations()
 	})
 
 	-- Grasses and ferns
-	local grass_forest = {"Plains", "Taiga", "Forest", "FlowerForest", "BirchForest", "BirchForestM", "RoofedForest", "Swampland" }
+	local grass_forest = {"Plains", "Taiga", "Forest", "FlowerForest", "BirchForest", "BirchForestM", "Dark_Forest", "Swampland" }
 	local grass_mpf = {"MesaPlateauF_grasstop"}
 	local grass_plains = {"Plains", "SunflowerPlains", "BambooJungle", "JungleEdge", "JungleEdgeM", "MangroveSwamp", "CherryGrove" }
 	local grass_savanna = {"Savanna", "SavannaM"}
 	local grass_sparse = {"ExtremeHills", "ExtremeHills+", "ExtremeHills+_snowtop", "ExtremeHillsM", "Jungle" }
 	local grass_mpfm = {"MesaPlateauFM_grasstop" }
+	local grass_pg = {"PaleGarden"}
 
 	register_grass_decoration("tallgrass", -0.03,  0.09, grass_forest)
 	register_grass_decoration("tallgrass", -0.015, 0.075, grass_forest)
@@ -5081,6 +5407,8 @@ local function register_decorations()
 	register_grass_decoration("tallgrass", 0.18, -0.03, grass_savanna)
 	register_grass_decoration("tallgrass", 0.05, -0.03, grass_sparse)
 	register_grass_decoration("tallgrass", 0.05, 0.05, grass_mpfm)
+	register_grass_decoration("tallgrass", 0.05, 0.05, grass_pg)
+	register_grass_decoration("double_tallgrass", -0.05, -0.05, grass_pg)
 
 	local fern_minimal = { "Jungle", "JungleM", "BambooJungle", "JungleEdge", "JungleEdgeM", "Taiga", "MegaTaiga", "MegaSpruceTaiga", "ColdTaiga", "MangroveSwamp" }
 	local fern_low = { "Jungle", "JungleM", "BambooJungle", "JungleEdge", "JungleEdgeM", "Taiga", "MegaTaiga", "MegaSpruceTaiga" }
@@ -5099,11 +5427,11 @@ local function register_decorations()
 	register_grass_decoration("fern", 0.09, -0.03, fern_Jungle)
 	register_grass_decoration("fern", 0.12, -0.03, {"JungleM"})
 
-	local b_seagrass = {"ColdTaiga_ocean","ExtremeHills_ocean","ExtremeHillsM_ocean","ExtremeHills+_ocean","Taiga_ocean","MegaTaiga_ocean","MegaSpruceTaiga_ocean","StoneBeach_ocean","Plains_ocean","SunflowerPlains_ocean","Forest_ocean","FlowerForest_ocean","BirchForest_ocean","BirchForestM_ocean","RoofedForest_ocean","Swampland_ocean","Jungle_ocean","JungleM_ocean","BambooJungle_ocean", "JungleEdge_ocean","JungleEdgeM_ocean","MushroomIsland_ocean","Desert_ocean","Savanna_ocean","SavannaM_ocean","Mesa_ocean","MesaBryce_ocean","MesaPlateauF_ocean","MesaPlateauFM_ocean",
-"ColdTaiga_deep_ocean","ExtremeHills_deep_ocean","ExtremeHillsM_deep_ocean","ExtremeHills+_deep_ocean","Taiga_deep_ocean","MegaTaiga_deep_ocean","MegaSpruceTaiga_deep_ocean","StoneBeach_deep_ocean","Plains_deep_ocean","SunflowerPlains_deep_ocean","Forest_deep_ocean","FlowerForest_deep_ocean","BirchForest_deep_ocean","BirchForestM_deep_ocean","RoofedForest_deep_ocean","Swampland_deep_ocean","Jungle_deep_ocean","JungleM_deep_ocean","JungleEdge_deep_ocean","JungleEdgeM_deep_ocean","MushroomIsland_deep_ocean","Desert_deep_ocean","Savanna_deep_ocean","SavannaM_deep_ocean","Mesa_deep_ocean","MesaBryce_deep_ocean","MesaPlateauF_deep_ocean","MesaPlateauFM_deep_ocean",
+	local b_seagrass = {"ColdTaiga_ocean","ExtremeHills_ocean","ExtremeHillsM_ocean","ExtremeHills+_ocean","Taiga_ocean","MegaTaiga_ocean","MegaSpruceTaiga_ocean","StoneBeach_ocean","Plains_ocean","SunflowerPlains_ocean","Forest_ocean","FlowerForest_ocean","BirchForest_ocean","BirchForestM_ocean","Dark_Forest_ocean","Swampland_ocean","Jungle_ocean","JungleM_ocean","BambooJungle_ocean", "JungleEdge_ocean","JungleEdgeM_ocean","MushroomIsland_ocean","Desert_ocean","Savanna_ocean","SavannaM_ocean","Mesa_ocean","MesaBryce_ocean","MesaPlateauF_ocean","MesaPlateauFM_ocean",
+"ColdTaiga_deep_ocean","ExtremeHills_deep_ocean","ExtremeHillsM_deep_ocean","ExtremeHills+_deep_ocean","Taiga_deep_ocean","MegaTaiga_deep_ocean","MegaSpruceTaiga_deep_ocean","StoneBeach_deep_ocean","Plains_deep_ocean","SunflowerPlains_deep_ocean","Forest_deep_ocean","FlowerForest_deep_ocean","BirchForest_deep_ocean","BirchForestM_deep_ocean","Dark_Forest_deep_ocean","Swampland_deep_ocean","Jungle_deep_ocean","JungleM_deep_ocean","JungleEdge_deep_ocean","JungleEdgeM_deep_ocean","MushroomIsland_deep_ocean","Desert_deep_ocean","Savanna_deep_ocean","SavannaM_deep_ocean","Mesa_deep_ocean","MesaBryce_deep_ocean","MesaPlateauF_deep_ocean","MesaPlateauFM_deep_ocean",
 "Mesa_sandlevel","MesaBryce_sandlevel","MesaPlateauF_sandlevel","MesaPlateauFM_sandlevel","Swampland_shore","Jungle_shore","JungleM_shore","Savanna_beach","FlowerForest_beach","ColdTaiga_beach_water","ExtremeHills_beach"}
-	local b_kelp = {"ExtremeHillsM_ocean","ExtremeHills+_ocean","MegaTaiga_ocean","MegaSpruceTaiga_ocean","Plains_ocean","SunflowerPlains_ocean","Forest_ocean","FlowerForest_ocean","BirchForest_ocean","BirchForestM_ocean","RoofedForest_ocean","Swampland_ocean","Jungle_ocean","JungleM_ocean","JungleEdge_ocean","JungleEdgeM_ocean","MushroomIsland_ocean","BambooJungle_ocean",
-"ExtremeHillsM_deep_ocean","ExtremeHills+_deep_ocean","MegaTaiga_deep_ocean","MegaSpruceTaiga_deep_ocean","Plains_deep_ocean","SunflowerPlains_deep_ocean","Forest_deep_ocean","FlowerForest_deep_ocean","BirchForest_deep_ocean","BirchForestM_deep_ocean","RoofedForest_deep_ocean","Swampland_deep_ocean","Jungle_deep_ocean","JungleM_deep_ocean","JungleEdge_deep_ocean","JungleEdgeM_deep_ocean","MushroomIsland_deep_ocean"
+	local b_kelp = {"ExtremeHillsM_ocean","ExtremeHills+_ocean","MegaTaiga_ocean","MegaSpruceTaiga_ocean","Plains_ocean","SunflowerPlains_ocean","Forest_ocean","FlowerForest_ocean","BirchForest_ocean","BirchForestM_ocean","Dark_Forest_ocean","Swampland_ocean","Jungle_ocean","JungleM_ocean","JungleEdge_ocean","JungleEdgeM_ocean","MushroomIsland_ocean","BambooJungle_ocean",
+"ExtremeHillsM_deep_ocean","ExtremeHills+_deep_ocean","MegaTaiga_deep_ocean","MegaSpruceTaiga_deep_ocean","Plains_deep_ocean","SunflowerPlains_deep_ocean","Forest_deep_ocean","FlowerForest_deep_ocean","BirchForest_deep_ocean","BirchForestM_deep_ocean","Dark_Forest_deep_ocean","Swampland_deep_ocean","Jungle_deep_ocean","JungleM_deep_ocean","JungleEdge_deep_ocean","JungleEdgeM_deep_ocean","MushroomIsland_deep_ocean"
 }
 
 	register_seagrass_decoration("seagrass", 0, 0.5, b_seagrass)
@@ -5351,13 +5679,13 @@ local function register_decorations()
 				deco_type = "simple",
 				place_on = {"group:grass_block_no_snow", "vlf_core:dirt"},
 				sidelen = 16,
-				noise_params = {
-					offset = 0.00008*8,
-					scale = 0.003,
+				noise_params= {
+					offset = 0.01,
+					scale = 0.0003,
 					spread = {x = 100, y = 100, z = 100},
 					seed = seed,
 					octaves = 3,
-					persist = 0.6
+					persist = 0.6,
 				},
 				y_min = 1,
 				y_max = vlf_vars.mg_overworld_max,
@@ -5388,7 +5716,7 @@ local function register_decorations()
 
 	local register_flower = vlf_biomes.register_flower
 
-	local flower_biomes1 = {"Plains", "SunflowerPlains", "RoofedForest", "Forest", "BirchForest", "BirchForestM", "Taiga", "ColdTaiga", "Jungle", "JungleM", "BambooJungle", "JungleEdge", "JungleEdgeM", "Savanna", "SavannaM", "ExtremeHills", "ExtremeHillsM", "ExtremeHills+", "ExtremeHills+_snowtop", "CherryGrove" }
+	local flower_biomes1 = {"Plains", "SunflowerPlains", "Dark_Forest", "Forest", "BirchForest", "BirchForestM", "Taiga", "ColdTaiga", "Jungle", "JungleM", "BambooJungle", "JungleEdge", "JungleEdgeM", "Savanna", "SavannaM", "ExtremeHills", "ExtremeHillsM", "ExtremeHills+", "ExtremeHills+_snowtop", "CherryGrove" }
 
 	register_flower("dandelion", flower_biomes1, 8)
 	register_flower("poppy", flower_biomes1, 9439)
@@ -5407,12 +5735,12 @@ local function register_decorations()
 	register_flower("lily_of_the_valley", nil, 325)
 	register_flower("cornflower", flower_biomes2, 486)
 
-	register_flower("azure_bluet", {"Meadow"}, 400)
-	register_flower("oxeye_daisy", {"Meadow"}, 470)
+	register_flower("azure_bluet", {"Meadow"}, 40)
+	register_flower("oxeye_daisy", {"Meadow"}, 47)
 	register_flower("dandelion", {"Meadow"}, 16)
-	register_flower("poppy", {"Meadow"}, 474)
-	register_flower("cornflower", {"Meadow"}, 243)
-	register_flower("allium", {"Meadow"} , 150) -- flower Forest only
+	register_flower("poppy", {"Meadow"}, 47)
+	register_flower("cornflower", {"Meadow"}, 24)
+	register_flower("allium", {"Meadow"} , 15)
 end
 
 -- Decorations in non-Overworld dimensions

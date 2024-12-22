@@ -71,6 +71,7 @@ local biome_textures = {
 	["Taiga"] = "mobs_mc_wolf_pale.png",
 	["Taiga_beach"] = "mobs_mc_wolf_pale.png",
 	["Grove"] = "mobs_mc_wolf_snowy.png",
+	-- Missing Rusty
 	["SavannaM"] = "mobs_mc_wolf_spotted.png",
 	["MesaPlateauF_grasstop"] = "mobs_mc_wolf_striped.png",
 	["Forest"] = "mobs_mc_wolf_woods.png",

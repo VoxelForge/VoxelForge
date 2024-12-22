@@ -87,9 +87,9 @@ local function on_leftclick(itemstack)
 							"^" .. stack_def:gsub(".png", "") .. "_open_front.png" ..
 							"^vlf_bundles_" .. item_count .. ".png"
 			else
-				inventory_image = stack_def:gsub(".png", "") .. "_open_back.png" ..
+				--[[inventory_image = stack_def:gsub(".png", "") .. "_open_back.png" ..
 							"^" .. stack_def:gsub(".png", "") .. "_open_front.png" ..
-							"^vlf_bundles_" .. item_count .. ".png"
+							"^vlf_bundles_" .. item_count .. ".png"]]
 				--[[ We would need to have volumetric images of every block that didn't have an inventory image.
 				--Due to the fact that we'll be changing textures, it makes little sense to do it yet.
 				local texture_name = selected_item:gsub(":", "_") .. "_volumetric.png"
@@ -97,6 +97,32 @@ local function on_leftclick(itemstack)
 							"^" .. texture_name ..
 							"^" .. stack_def:gsub(".png", "") .. "_open_front.png" ..
 							"^vlf_bundles_" .. item_count .. ".png"]]
+							
+				-- Get the definition of the selected node
+				local node_def = minetest.registered_nodes[selected_item]
+				if not node_def then
+					return -- Handle invalid or unregistered node case
+				end
+
+				-- Extract the textures
+				local top_texture = node_def.tiles and node_def.tiles[1] or "unknown.png"
+				local left_texture = node_def.tiles and node_def.tiles[3] or top_texture
+				local right_texture = node_def.tiles and node_def.tiles[5] or left_texture
+
+				-- Construct the inventorycube texture
+				--inventory_image = stack_def:gsub(".png", "") .. "_open_back.png" .. "^" .. "[inventorycube{" .. top_texture .. "{" .. left_texture .. "{" .. right_texture .. "^" .. stack_def:gsub(".png", "") .. "_open_front.png" ..
+							--"^vlf_bundles_" .. item_count .. ".png"
+							-- Apply overlays to individual textures
+local top_texture_with_overlay = top_texture .. "^" .. stack_def:gsub(".png", "") .. "_open_back.png"
+local left_texture_with_overlay = left_texture .. "^" .. stack_def:gsub(".png", "") .. "_open_back.png"
+local right_texture_with_overlay = right_texture .. "^" .. stack_def:gsub(".png", "") .. "_open_back.png"
+
+-- Construct the inventorycube
+local inventorycube_texture = "[inventorycube{" .. top_texture_with_overlay .. "{" .. left_texture_with_overlay .. "{" .. right_texture_with_overlay
+
+-- Add final overlays
+inventory_image = inventorycube_texture .. "^" .. stack_def:gsub(".png", "") .. "_open_front.png" ..
+                  "^vlf_bundles_" .. item_count .. ".png"
 			end
 		else
 			-- Use item's inventory image
