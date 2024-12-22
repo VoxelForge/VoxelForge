@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_armor_stand x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_armor_stand x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,13 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Armor Stand"
 msgstr "Soporte para armadura"
 
 msgid "Displays pieces of armor"
-msgstr ""
+msgstr "Muestra piezas de armadura"
 
 msgid "An armor stand is a decorative object which can display different pieces of armor. Anything which players can wear as armor can also be put on an armor stand."
 msgstr "Un soporte para armadura es un objeto decorativo que puede mostrar diferentes piezas de armadura. Cualquier cosa que los jugadores puedan usar como armadura también se puede poner en un soporte para armadura."

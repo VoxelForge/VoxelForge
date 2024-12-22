@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_commands x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_commands x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "List bans"
 msgstr "Lista de prohibiciones"
@@ -50,7 +50,7 @@ msgid "Send a message to every player"
 msgstr "Envía un mensaje a todos los jugadores"
 
 msgid "Invalid usage, see /help say."
-msgstr ""
+msgstr "Uso inválido, consulta /help say."
 
 msgid "Displays the world seed"
 msgstr "Muestra la semilla del mundo"
@@ -71,16 +71,16 @@ msgid "Invalid parameters (see /help setblock)"
 msgstr "Parámetros no válidos (Revisa el comando \"/help setblock\")"
 
 msgid "<sound> <target>"
-msgstr ""
+msgstr "<sound> <target>"
 
 msgid "Play a sound. Arguments: <sound>: name of the sound. <target>: Target."
-msgstr ""
+msgstr "Reproduce un sonido. Argumentos: <sound>: nombre del sonido. <target>: objetivo."
 
 msgid "Sound name is invalid!"
-msgstr ""
+msgstr "¡El nombre del sonido no es válido!"
 
 msgid "Target is invalid!!"
-msgstr ""
+msgstr "¡¡El objetivo no es válido!!"
 
 msgid "Only peaceful mobs allowed!"
 msgstr "¡Solo se permiten animales pacíficos!"

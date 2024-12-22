@@ -19,7 +19,7 @@ if tonumber(tick_config) then
 end
 
 
-local function must_hide(playername, arm)
+local function must_hide(_, arm)
 	return arm == 0
 end
 
@@ -110,7 +110,7 @@ minetest.register_globalstep(function(dtime)
 	if main_timer > vlf_hbarmor.tick or timer > 4 then
 		if minetest.settings:get_bool("enable_damage") then
 			if main_timer > vlf_hbarmor.tick then main_timer = 0 end
-			for _,player in pairs(minetest.get_connected_players()) do
+			for player in vlf_util.connected_players() do
 				local name = player:get_player_name()
 				if vlf_hbarmor.player_active[name] == true then
 					local ret = vlf_hbarmor.get_armor(player)

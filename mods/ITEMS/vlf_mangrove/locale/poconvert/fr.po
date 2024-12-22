@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_mangrove x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_mangrove x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,10 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
-
-msgid "Mangrove"
-msgstr ""
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Mangrove Roots"
 msgstr "Racines de Palétuvier"
@@ -41,7 +38,7 @@ msgid "water logged mangrove roots"
 msgstr "racines de palétuvier immergées"
 
 msgid "Mangrove roots, despite being a full block, can be waterlogged and do not flow water out"
-msgstr "Les racines de palétuvier sont un bloc plein mais qui peut être immergé et ne remplace pas l'eau."
+msgstr "Les racines de palétuvier sont un bloc plein mais qui peut être immergé et ne remplace pas l'eau"
 
 msgid "These cannot be crafted yet only occure when get in contact of water."
 msgstr "Elles ne peuvent être fabriquées mais se forment au contact de l'eau."
@@ -54,4 +51,73 @@ msgstr "fabriqué avec de la Boue et des racines de Palétuvier"
 
 msgid "Muddy Mangrove Roots is a block from mangrove swamp.It drowns player a bit inside it."
 msgstr "Les Racines de Palétuvier Boueuses sont un bloc du marécage de la mangrove. Il noie un joueur à l'intérieur."
+
+msgid "Mangrove Bark"
+msgstr ""
+
+msgid "Mangrove Bark Slab"
+msgstr ""
+
+msgid "Mangrove Bark Stairs"
+msgstr ""
+
+msgid "Mangrove Boat"
+msgstr ""
+
+msgid "Mangrove Button"
+msgstr ""
+
+msgid "Mangrove Chest Boat"
+msgstr ""
+
+msgid "Mangrove Door"
+msgstr ""
+
+msgid "Mangrove Fence"
+msgstr ""
+
+msgid "Mangrove Fence Gate"
+msgstr ""
+
+msgid "Mangrove Leaves"
+msgstr ""
+
+msgid "Mangrove Log"
+msgstr ""
+
+msgid "Mangrove Planks"
+msgstr ""
+
+msgid "Mangrove Pressure Plate"
+msgstr ""
+
+msgid "Mangrove Sign"
+msgstr ""
+
+msgid "Mangrove Slab"
+msgstr ""
+
+msgid "Mangrove Stairs"
+msgstr ""
+
+msgid "Mangrove Trapdoor"
+msgstr ""
+
+msgid "Mangrove leaves are grown from Mangrove trees."
+msgstr ""
+
+msgid "Stripped Mangrove Log"
+msgstr ""
+
+msgid "Stripped Mangrove Wood"
+msgstr ""
+
+msgid "The stripped trunk of an Mangrove tree."
+msgstr ""
+
+msgid "The stripped wood of an Mangrove tree."
+msgstr ""
+
+msgid "The trunk of a Mangrove tree."
+msgstr ""
 

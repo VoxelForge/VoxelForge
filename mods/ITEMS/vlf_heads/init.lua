@@ -31,6 +31,8 @@ vlf_heads.deftemplate = {
 		head = 1,
 		deco_block = 1,
 		dig_by_piston = 1,
+		unsticky = 1,
+		_vlf_partial = 2,
 	},
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
 
@@ -53,10 +55,12 @@ function vlf_heads.deftemplate.on_rotate(pos, node, user, mode)
 	if mode == screwdriver.ROTATE_AXIS then
 		local dir = minetest.facedir_to_dir(node.param2)
 		if dir then
-			node.name = node.name:gsub("_ceiling", "_wall")
-			node.param2 = minetest.dir_to_wallmounted(dir)
-			minetest.set_node(pos, node)
-			return true
+			node.name = node.name .. "_wall"
+			if minetest.registered_nodes[node.name] then
+				node.param2 = minetest.dir_to_wallmounted(dir)
+				minetest.set_node(pos, node)
+				return true
+			end
 		end
 	end
 	local ctrl = user:get_player_control()
@@ -148,6 +152,7 @@ function vlf_heads.register_head(head_def)
 			deco_block = 1,
 			dig_by_piston = 1,
 			not_in_creative_inventory = 1,
+			_vlf_partial = 2,
 		},
 		_doc_items_create_entry = false,
 		selection_box = {
@@ -184,6 +189,7 @@ function vlf_heads.register_head(head_def)
 			deco_block = 1,
 			dig_by_piston = 1,
 			not_in_creative_inventory = 1,
+			_vlf_partial = 2,
 		},
 		_doc_items_create_entry = false,
 		-- Note: -x coords go right per-pixel, -y coords go down per-pixel

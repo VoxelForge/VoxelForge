@@ -3,7 +3,7 @@ vlf_entity_invs = {}
 local open_invs = {}
 
 local function check_distance(inv,player,count)
-	for _,o in pairs(minetest.get_objects_inside_radius(player:get_pos(),5)) do
+	for o in minetest.objects_inside_radius(player:get_pos(), 5) do
 		local l = o:get_luaentity()
 		if l and l._inv_id and inv:get_location().name == l._inv_id then return count end
 	end
@@ -11,13 +11,13 @@ local function check_distance(inv,player,count)
 end
 
 local inv_callbacks = {
-	allow_take = function(inv, listname, index, stack, player)
+	allow_take = function(inv, _, _, stack, player)
 		return check_distance(inv,player,stack:get_count())
 	end,
-	allow_move = function(inv, from_list, from_index, to_list, to_index, count, player)
+	allow_move = function(inv, _, _, _, _, count, player)
 		return check_distance(inv,player,count)
 	end,
-	allow_put = function(inv, listname, index, stack, player)
+	allow_put = function(inv, _, _, stack, player)
 		return check_distance(inv,player,stack:get_count())
 	end,
 }
@@ -89,7 +89,10 @@ function vlf_entity_invs.show_inv_form(ent,player,text)
 	end
 	ent._inv = vlf_entity_invs.load_inv(ent,ent._inv_size)
 	open_invs[ent] = open_invs[ent] + 1
-
+	ent._inv_open = true
+	if ent.is_mob then
+		ent:stay()
+	end
 	local playername = player:get_player_name()
 
 	minetest.show_formspec(playername, ent._inv_id, load_default_formspec (ent, text))
@@ -98,7 +101,7 @@ end
 local function drop_inv(ent)
 	if not ent._items then return end
 	local pos = ent.object:get_pos()
-	for i,it in pairs(ent._items) do
+	for _, it in pairs(ent._items) do
 		local p = vector.add(pos,vector.new(math.random() - 0.5, math.random()-0.5, math.random()-0.5))
 		minetest.add_item(p,it)
 	end
@@ -111,13 +114,14 @@ local function on_remove(self,killer,oldf)
 	if oldf then return oldf(self,killer) end
 end
 
-minetest.register_on_player_receive_fields(function(player, formname, fields)
-	for k,v in pairs(open_invs) do
+minetest.register_on_player_receive_fields(function(_, formname, _)
+	for k, _ in pairs(open_invs) do
 		if formname == k._inv_id then
 			open_invs[k] = open_invs[k] - 1
 			if open_invs[k] < 1 then
 				vlf_entity_invs.save_inv(k)
 				open_invs[k] = nil
+				k._inv_open = nil
 			end
 		end
 	end
@@ -137,6 +141,7 @@ function vlf_entity_invs.register_inv(entity_name,show_name,size,no_on_righclick
 			self._inv_id = d._inv_id
 			self._items = d._items
 			self._inv_size = d._inv_size
+			self._inv_open = nil
 		else
 			self._inv_id="entity_inv_"..minetest.sha1(minetest.get_gametime()..minetest.pos_to_string(self.object:get_pos())..tostring(math.random()))
 			--gametime and position for collision safety and math.random salt to protect against position brute-force
@@ -147,6 +152,9 @@ function vlf_entity_invs.register_inv(entity_name,show_name,size,no_on_righclick
 		local old_rc = minetest.registered_entities[entity_name].on_rightclick
 		minetest.registered_entities[entity_name].on_rightclick = function(self,clicker)
 			if no_sneak or clicker:get_player_control().sneak  then
+				if self._on_show_entity_inv then
+					self:_on_show_entity_inv (clicker)
+				end
 				vlf_entity_invs.show_inv_form(self,clicker,"")
 				if not no_sneak then return end
 			end

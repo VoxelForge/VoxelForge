@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_banners x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_banners x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,130 +11,127 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "White Banner"
 msgstr "Estandarte blanco"
 
 msgid "White"
-msgstr "Blanco"
+msgstr "blanco"
 
 msgid "Grey Banner"
 msgstr "Estandarte gris"
 
 msgid "Grey"
-msgstr "Gris"
+msgstr "gris"
 
 msgid "Light Grey Banner"
 msgstr "Estandarte gris claro"
 
 msgid "Light Grey"
-msgstr "Gris claro"
+msgstr "gris claro"
 
 msgid "Black Banner"
 msgstr "Estandarte negro"
 
 msgid "Black"
-msgstr "Negro"
+msgstr "negro"
 
 msgid "Red Banner"
 msgstr "Estandarte roja"
 
 msgid "Red"
-msgstr "Rojo"
+msgstr "rojo"
 
 msgid "Yellow Banner"
-msgstr "Estandarte amarilla"
+msgstr "Estandarte amarillo"
 
 msgid "Yellow"
-msgstr "Amarillo"
+msgstr "amarillo"
 
 msgid "Green Banner"
 msgstr "Estandarte verde"
 
 msgid "Green"
-msgstr "Verde"
+msgstr "verde"
 
 msgid "Cyan Banner"
 msgstr "Estandarte cian"
 
 msgid "Cyan"
-msgstr "Cian"
+msgstr "cian"
 
 msgid "Blue Banner"
 msgstr "Estandarte azul"
 
 msgid "Blue"
-msgstr "Azul"
+msgstr "azul"
 
 msgid "Magenta Banner"
 msgstr "Estandarte magenta"
 
 msgid "Magenta"
-msgstr "Magenta"
+msgstr "magenta"
 
 msgid "Orange Banner"
 msgstr "Estandarte naranja"
 
 msgid "Orange"
-msgstr "Naranja"
+msgstr "naranja"
 
 msgid "Purple Banner"
-msgstr "Estandarte morada"
+msgstr "Estandarte morado"
 
 msgid "Violet"
-msgstr ""
+msgstr "Violeta"
 
 msgid "Brown Banner"
 msgstr "Estandarte marrón"
 
 msgid "Brown"
-msgstr "Marrón"
+msgstr "marrón"
 
 msgid "Pink Banner"
 msgstr "Estandarte rosa"
 
 msgid "Pink"
-msgstr "Rosa"
+msgstr "rosa"
 
 msgid "Lime Banner"
 msgstr "Estandarte verde lima"
 
 msgid "Lime"
-msgstr "Verde lima"
+msgstr "verde lima"
 
 msgid "Light Blue Banner"
 msgstr "Estandarte azul claro"
 
 msgid "Light Blue"
-msgstr "Azul claro"
+msgstr "azul claro"
 
 msgid "Banner"
-msgstr ""
+msgstr "Estandarte"
 
 msgid "Banners are tall colorful decorative blocks. They can be placed on the floor and at walls. Banners can be emblazoned with a variety of patterns using a lot of dye in crafting."
-msgstr "Los estandartes son bloques decorativos altos y coloridos. Se pueden colocar en el suelo y en las paredes. Los estandartes se pueden estampar con una variedad de patrones usando mucho tinte en la elaboración."
+msgstr "Los estandartes son bloques decorativos altos y coloridos. Se pueden colocar en el suelo y en las paredes. Los estandartes se pueden estampar con una variedad de patrones usando mucho tinte en la creacion."
 
 msgid "Use crafting to draw a pattern on top of the banner. Emblazoned banners can be emblazoned again to combine various patterns. You can draw up to 12 layers on a banner that way. If the banner includes a gradient, only 3 layers are possible."
-msgstr "Usa la elaboración para dibujar un patrón en la parte superior del estandarte. Los estandartes estampados pueden volver a estamparse para combinar varios patrones. Puede dibujar hasta 12 capas en un estandarte de esa manera. Si la pancarta incluye un degradado, solo son posibles 3 capas."
+msgstr "Utiliza una mesa para dibujar un patrón en la parte superior del estandarte. Los estandartes estampados pueden volver a estamparse para combinar varios patrones. Puede dibujar hasta 12 capas en un estandarte de esa manera. Si el estandarte incluye un degradado, solo son posibles 3 capas."
 
 msgid "You can copy the pattern of a banner by placing two banners of the same color in the crafting grid—one needs to be emblazoned, the other one must be clean. Finally, you can use a banner on a cauldron with water to wash off its top-most layer."
 msgstr "Puede copiar el patrón de un estandarte colocando dos estandartes del mismo color en la cuadrícula de fabricación: una debe ser estampada, la otra debe estar limpia. Finalmente, puede usar un estandarte en un caldero con agua para lavar su capa superior."
 
-msgid "@1 Banner"
-msgstr ""
-
 msgid "Preview Banner"
-msgstr ""
+msgstr "Vista previa del Estandarte"
 
 msgid "Paintable decoration"
-msgstr ""
+msgstr "Decoracion para pintar"
 
 msgid "Can be used to craft special banner designs on the loom"
-msgstr ""
+msgstr "Se puede usar para crear diseños especiales de estandarte en el telar"
 
 msgid "Special Banner Pattern"
-msgstr ""
+msgstr "Patrón Especial de Estandarte"
 
 msgid "@1 Bordure"
 msgstr "Borde (@1)"
@@ -146,7 +143,7 @@ msgid "@1 Roundel"
 msgstr "Medallón (@1)"
 
 msgid "@1 Creeper Charge"
-msgstr "Carga de enredadera (@1)"
+msgstr "Creeper cargado (@1)"
 
 msgid "@1 Saltire"
 msgstr "Saltire (@1)"
@@ -191,10 +188,10 @@ msgid "@1 Thing Charge"
 msgstr "Carga de objeto (@1)"
 
 msgid "@1 Globe Charge"
-msgstr ""
+msgstr "@1 Estampado de planeta"
 
 msgid "@1 Piglin Charge"
-msgstr ""
+msgstr "@1 Estampado de hocico"
 
 msgid "@1 Lozenge"
 msgstr "Rombo (@1)"
@@ -255,6 +252,12 @@ msgstr "Zócalo sangrada (@1)"
 
 msgid "@1 Chief Indented"
 msgstr "Sangrado del encabezado (@1)"
+
+msgid "@1 Flow"
+msgstr "@1 Flujo"
+
+msgid "@1 Guster"
+msgstr "@1 Torbellino"
 
 msgid "And one additional layer"
 msgstr "Y una capa adicional"

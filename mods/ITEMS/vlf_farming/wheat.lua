@@ -15,6 +15,7 @@ minetest.register_craftitem("vlf_farming:wheat_seeds", {
 	]]),
 	groups = {craftitem = 1, compostability = 30},
 	inventory_image = "vlf_farming_wheat_seeds.png",
+	_vlf_places_plant = "vlf_farming:wheat_1",
 	on_place = function(itemstack, placer, pointed_thing)
 		return vlf_farming:place_seed(itemstack, placer, pointed_thing, "vlf_farming:wheat_1")
 	end
@@ -66,10 +67,11 @@ for i=1,7 do
 			},
 		},
 		groups = {dig_immediate=3, not_in_creative_inventory=1, plant=1,attached_node=1,
-			dig_by_water=1,destroy_by_lava_flow=1, dig_by_piston=1},
+			dig_by_water=1,destroy_by_lava_flow=1, dig_by_piston=1, unsticky = 1},
 		sounds = vlf_sounds.node_sound_leaves_defaults(),
 		_vlf_blast_resistance = 0,
 		_on_bone_meal = on_bone_meal,
+		_vlf_baseitem = "vlf_farming:wheat_seeds",
 	})
 end
 
@@ -98,16 +100,18 @@ minetest.register_node("vlf_farming:wheat", {
 		}
 	},
 	groups = {dig_immediate=3, not_in_creative_inventory=1, plant=1, attached_node=1,
-		dig_by_water=1,destroy_by_lava_flow=1, dig_by_piston=1},
+		dig_by_water=1,destroy_by_lava_flow=1, dig_by_piston=1, unsticky = 1},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	_vlf_blast_resistance = 0,
 	_vlf_fortune_drop = {
 		discrete_uniform_distribution = true,
 		items = {"vlf_farming:wheat_seeds"},
+		drop_without_fortune = {"vlf_farming:wheat_item"},
 		min_count = 1,
 		max_count = 6,
 		cap = 7
-	}
+	},
+	_vlf_baseitem = "vlf_farming:wheat_seeds",
 })
 
 vlf_farming:add_plant("plant_wheat", "vlf_farming:wheat", {"vlf_farming:wheat_1", "vlf_farming:wheat_2", "vlf_farming:wheat_3", "vlf_farming:wheat_4", "vlf_farming:wheat_5", "vlf_farming:wheat_6", "vlf_farming:wheat_7"}, 25, 20)

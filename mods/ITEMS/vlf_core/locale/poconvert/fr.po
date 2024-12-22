@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain vlc_core x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_core x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Stick"
 msgstr "Bâton"
@@ -80,7 +80,7 @@ msgid "Emeralds are used in villager trades as currency."
 msgstr "Les émeraudes sont utilisées pour faire des échanges avec les villageois."
 
 msgid "Lapis Lazuli"
-msgstr "Lapis Lazuli"
+msgstr "Lapis-lazuli"
 
 msgid "Lapis Lazuli are required for enchanting items on an enchanting table."
 msgstr "Les lapis-lazuli sont nécessaires pour enchanter des objets sur une table d'enchantement."
@@ -123,6 +123,486 @@ msgstr "Les pommes dorrées sont des aliments précieux qui peuvent être consom
 
 msgid "Enchanted Golden Apple"
 msgstr "Pomme dorée enchantée"
+
+msgid "Acacia Bark"
+msgstr ""
+
+msgid "Acacia Bark Slab"
+msgstr ""
+
+msgid "Acacia Bark Stairs"
+msgstr ""
+
+msgid "Acacia Boat"
+msgstr ""
+
+msgid "Acacia Button"
+msgstr ""
+
+msgid "Acacia Chest Boat"
+msgstr ""
+
+msgid "Acacia Door"
+msgstr ""
+
+msgid "Acacia Fence"
+msgstr ""
+
+msgid "Acacia Fence Gate"
+msgstr ""
+
+msgid "Acacia Leaves"
+msgstr ""
+
+msgid "Acacia Log"
+msgstr ""
+
+msgid "Acacia Planks"
+msgstr ""
+
+msgid "Acacia Pressure Plate"
+msgstr ""
+
+msgid "Acacia Sapling"
+msgstr ""
+
+msgid "Acacia Sign"
+msgstr ""
+
+msgid "Acacia Slab"
+msgstr ""
+
+msgid "Acacia Stairs"
+msgstr ""
+
+msgid "Acacia Trapdoor"
+msgstr ""
+
+msgid "Acacia leaves are grown from Acacia trees."
+msgstr ""
+
+msgid "Birch Bark"
+msgstr ""
+
+msgid "Birch Bark Slab"
+msgstr ""
+
+msgid "Birch Bark Stairs"
+msgstr ""
+
+msgid "Birch Boat"
+msgstr ""
+
+msgid "Birch Button"
+msgstr ""
+
+msgid "Birch Chest Boat"
+msgstr ""
+
+msgid "Birch Door"
+msgstr ""
+
+msgid "Birch Fence"
+msgstr ""
+
+msgid "Birch Fence Gate"
+msgstr ""
+
+msgid "Birch Leaves"
+msgstr ""
+
+msgid "Birch Log"
+msgstr ""
+
+msgid "Birch Planks"
+msgstr ""
+
+msgid "Birch Pressure Plate"
+msgstr ""
+
+msgid "Birch Sapling"
+msgstr ""
+
+msgid "Birch Sign"
+msgstr ""
+
+msgid "Birch Slab"
+msgstr ""
+
+msgid "Birch Stairs"
+msgstr ""
+
+msgid "Birch Trapdoor"
+msgstr ""
+
+msgid "Birch leaves are grown from Birch trees."
+msgstr ""
+
+msgid "Black Stained Glass"
+msgstr ""
+
+msgid "Blue Stained Glass"
+msgstr ""
+
+msgid "Brown Stained Glass"
+msgstr ""
+
+msgid "Cyan Stained Glass"
+msgstr ""
+
+msgid "Dark Oak Bark"
+msgstr ""
+
+msgid "Dark Oak Bark Slab"
+msgstr ""
+
+msgid "Dark Oak Bark Stairs"
+msgstr ""
+
+msgid "Dark Oak Boat"
+msgstr ""
+
+msgid "Dark Oak Button"
+msgstr ""
+
+msgid "Dark Oak Chest Boat"
+msgstr ""
+
+msgid "Dark Oak Door"
+msgstr ""
+
+msgid "Dark Oak Fence"
+msgstr ""
+
+msgid "Dark Oak Fence Gate"
+msgstr ""
+
+msgid "Dark Oak Leaves"
+msgstr ""
+
+msgid "Dark Oak Log"
+msgstr ""
+
+msgid "Dark Oak Planks"
+msgstr ""
+
+msgid "Dark Oak Pressure Plate"
+msgstr ""
+
+msgid "Dark Oak Sapling"
+msgstr ""
+
+msgid "Dark Oak Sign"
+msgstr ""
+
+msgid "Dark Oak Slab"
+msgstr ""
+
+msgid "Dark Oak Stairs"
+msgstr ""
+
+msgid "Dark Oak Trapdoor"
+msgstr ""
+
+msgid "Dark Oak leaves are grown from Dark Oak trees."
+msgstr ""
+
+msgid "Green Stained Glass"
+msgstr ""
+
+msgid "Grey Stained Glass"
+msgstr ""
+
+msgid "Jungle Bark"
+msgstr ""
+
+msgid "Jungle Bark Slab"
+msgstr ""
+
+msgid "Jungle Bark Stairs"
+msgstr ""
+
+msgid "Jungle Boat"
+msgstr ""
+
+msgid "Jungle Button"
+msgstr ""
+
+msgid "Jungle Chest Boat"
+msgstr ""
+
+msgid "Jungle Door"
+msgstr ""
+
+msgid "Jungle Fence"
+msgstr ""
+
+msgid "Jungle Fence Gate"
+msgstr ""
+
+msgid "Jungle Leaves"
+msgstr ""
+
+msgid "Jungle Log"
+msgstr ""
+
+msgid "Jungle Planks"
+msgstr ""
+
+msgid "Jungle Pressure Plate"
+msgstr ""
+
+msgid "Jungle Sapling"
+msgstr ""
+
+msgid "Jungle Sign"
+msgstr ""
+
+msgid "Jungle Slab"
+msgstr ""
+
+msgid "Jungle Stairs"
+msgstr ""
+
+msgid "Jungle Trapdoor"
+msgstr ""
+
+msgid "Jungle leaves are grown from Jungle trees."
+msgstr ""
+
+msgid "Light Blue Stained Glass"
+msgstr ""
+
+msgid "Light Grey Stained Glass"
+msgstr ""
+
+msgid "Lime Stained Glass"
+msgstr ""
+
+msgid "Magenta Stained Glass"
+msgstr ""
+
+msgid "Oak Bark"
+msgstr ""
+
+msgid "Oak Bark Slab"
+msgstr ""
+
+msgid "Oak Bark Stairs"
+msgstr ""
+
+msgid "Oak Boat"
+msgstr ""
+
+msgid "Oak Button"
+msgstr ""
+
+msgid "Oak Chest Boat"
+msgstr ""
+
+msgid "Oak Door"
+msgstr ""
+
+msgid "Oak Fence"
+msgstr ""
+
+msgid "Oak Fence Gate"
+msgstr ""
+
+msgid "Oak Leaves"
+msgstr ""
+
+msgid "Oak Log"
+msgstr ""
+
+msgid "Oak Planks"
+msgstr ""
+
+msgid "Oak Pressure Plate"
+msgstr ""
+
+msgid "Oak Sapling"
+msgstr ""
+
+msgid "Oak Sign"
+msgstr ""
+
+msgid "Oak Slab"
+msgstr ""
+
+msgid "Oak Stairs"
+msgstr ""
+
+msgid "Oak Trapdoor"
+msgstr ""
+
+msgid "Oak leaves are grown from Oak trees."
+msgstr ""
+
+msgid "Orange Stained Glass"
+msgstr ""
+
+msgid "Pink Stained Glass"
+msgstr ""
+
+msgid "Purple Stained Glass"
+msgstr ""
+
+msgid "Red Stained Glass"
+msgstr ""
+
+msgid "Spruce Bark"
+msgstr ""
+
+msgid "Spruce Bark Slab"
+msgstr ""
+
+msgid "Spruce Bark Stairs"
+msgstr ""
+
+msgid "Spruce Boat"
+msgstr ""
+
+msgid "Spruce Button"
+msgstr ""
+
+msgid "Spruce Chest Boat"
+msgstr ""
+
+msgid "Spruce Door"
+msgstr ""
+
+msgid "Spruce Fence"
+msgstr ""
+
+msgid "Spruce Fence Gate"
+msgstr ""
+
+msgid "Spruce Leaves"
+msgstr ""
+
+msgid "Spruce Log"
+msgstr ""
+
+msgid "Spruce Planks"
+msgstr ""
+
+msgid "Spruce Pressure Plate"
+msgstr ""
+
+msgid "Spruce Sapling"
+msgstr ""
+
+msgid "Spruce Sign"
+msgstr ""
+
+msgid "Spruce Slab"
+msgstr ""
+
+msgid "Spruce Stairs"
+msgstr ""
+
+msgid "Spruce Trapdoor"
+msgstr ""
+
+msgid "Spruce leaves are grown from Spruce trees."
+msgstr ""
+
+msgid "Stripped Acacia Log"
+msgstr ""
+
+msgid "Stripped Acacia Wood"
+msgstr ""
+
+msgid "Stripped Birch Log"
+msgstr ""
+
+msgid "Stripped Birch Wood"
+msgstr ""
+
+msgid "Stripped Dark Oak Log"
+msgstr ""
+
+msgid "Stripped Dark Oak Wood"
+msgstr ""
+
+msgid "Stripped Jungle Log"
+msgstr ""
+
+msgid "Stripped Jungle Wood"
+msgstr ""
+
+msgid "Stripped Oak Log"
+msgstr ""
+
+msgid "Stripped Oak Wood"
+msgstr ""
+
+msgid "Stripped Spruce Log"
+msgstr ""
+
+msgid "Stripped Spruce Wood"
+msgstr ""
+
+msgid "The stripped trunk of an Acacia tree."
+msgstr ""
+
+msgid "The stripped trunk of an Birch tree."
+msgstr ""
+
+msgid "The stripped trunk of an Dark Oak tree."
+msgstr ""
+
+msgid "The stripped trunk of an Jungle tree."
+msgstr ""
+
+msgid "The stripped trunk of an Oak tree."
+msgstr ""
+
+msgid "The stripped trunk of an Spruce tree."
+msgstr ""
+
+msgid "The stripped wood of an Acacia tree."
+msgstr ""
+
+msgid "The stripped wood of an Birch tree."
+msgstr ""
+
+msgid "The stripped wood of an Dark Oak tree."
+msgstr ""
+
+msgid "The stripped wood of an Jungle tree."
+msgstr ""
+
+msgid "The stripped wood of an Oak tree."
+msgstr ""
+
+msgid "The stripped wood of an Spruce tree."
+msgstr ""
+
+msgid "The trunk of a Acacia tree."
+msgstr ""
+
+msgid "The trunk of a Birch tree."
+msgstr ""
+
+msgid "The trunk of a Dark Oak tree."
+msgstr ""
+
+msgid "The trunk of a Jungle tree."
+msgstr ""
+
+msgid "The trunk of a Oak tree."
+msgstr ""
+
+msgid "The trunk of a Spruce tree."
+msgstr ""
+
+msgid "White Stained Glass"
+msgstr ""
+
+msgid "Yellow Stained Glass"
+msgstr ""
 
 msgid "Stone"
 msgstr "Roche"
@@ -188,7 +668,7 @@ msgid "Mossy Stone Bricks"
 msgstr "Pierre Taillée Moussue"
 
 msgid "Smooth Stone"
-msgstr ""
+msgstr "Pierre lisse"
 
 msgid "Granite"
 msgstr "Granite"
@@ -233,7 +713,7 @@ msgid "A grass block is dirt with a grass cover. Grass blocks are resourceful bl
 msgstr "Un bloc d'herbe est de la terre avec une couverture d'herbe. Les blocs d'herbe sont des blocs ingénieux qui permettent la croissance de toutes sortes de plantes. Ils peuvent être transformés en terres agricoles avec une houe et transformés en chemins d'herbe avec une pelle. À la lumière, l'herbe se propage lentement sur la terre à proximité. Sous un bloc opaque ou un liquide, un bloc d'herbe peut redevenir terre."
 
 msgid "Dirt with Snow"
-msgstr ""
+msgstr "Terre enneigée"
 
 msgid "Grass Path"
 msgstr "Chemin d'Herbe"
@@ -248,7 +728,7 @@ msgid "Mycelium is a type of dirt and the ideal soil for mushrooms. Unlike other
 msgstr "Le mycélium est un type de terre et le sol idéal pour les champignons. Contrairement à d'autres blocs de terre, il ne peut pas être transformé en terres agricoles avec une houe. À la lumière, le mycélium se répand lentement sur la terre voisine. Sous un bloc opaque ou un liquide, il finit par redevenir de la terre."
 
 msgid "Mycelium with Snow"
-msgstr ""
+msgstr "Mycélium enneigé"
 
 msgid "Podzol"
 msgstr "Podzol"
@@ -257,7 +737,7 @@ msgid "Podzol is a type of dirt found in taiga forests. Only a few plants are ab
 msgstr "Le podzol est un type de terre trouvé dans les forêts de la taïga. Seules quelques plantes peuvent y survivre."
 
 msgid "Podzol with Snow"
-msgstr ""
+msgstr "Podzol enneigé"
 
 msgid "Dirt"
 msgstr "Terre"
@@ -388,8 +868,8 @@ msgstr "Bloc de Diamant"
 msgid "A block of diamond is mostly a shiny decorative block but also useful as a compact storage of diamonds."
 msgstr "Un bloc de diamant est principalement un bloc décoratif brillant mais également utile comme stockage compact de diamants."
 
-msgid "Lapis Lazuli Block"
-msgstr "Bloc de Lapis-Lazuli"
+msgid "Block of Lapis Lazuli"
+msgstr ""
 
 msgid "A lapis lazuli block is mostly a decorative block but also useful as a compact storage of lapis lazuli."
 msgstr "Un bloc de lapis-lazuli est principalement un bloc décoratif mais également utile comme stockage compact de lapis-lazuli."
@@ -502,9 +982,6 @@ msgstr "Le verre est un bloc décoratif et principalement transparent qui se dé
 msgid "Stained Glass"
 msgstr "Verre teinté"
 
-msgid "@1 Stained Glass"
-msgstr ""
-
 msgid "Flowing Water"
 msgstr "Eau qui coule"
 
@@ -518,7 +995,7 @@ msgid "Water is abundant in oceans and also appears in a few springs in the grou
 msgstr "L'eau est abondante dans les océans et apparaît également dans quelques sources dans le sol. Vous pouvez nager facilement dans l'eau, mais vous devez de temps en temps reprendre votre souffle."
 
 msgid "Water interacts with lava in various ways:"
-msgstr "L'eau interagit avec la lave de différentes manières:"
+msgstr "L'eau interagit avec la lave de différentes manières :"
 
 msgid "• When water is directly above or horizontally next to a lava source, the lava turns into obsidian."
 msgstr "• Lorsque l'eau est directement au-dessus ou horizontalement à côté d'une source de lave, la lave se transforme en obsidienne."
@@ -542,7 +1019,7 @@ msgid "Lava is hot and rather dangerous. Don't touch it, it will hurt you a lot 
 msgstr "La lave est chaude et plutôt dangereuse. Ne le touchez pas, cela vous fera beaucoup de mal et il est difficile d'en sortir."
 
 msgid "Lava interacts with water various ways:"
-msgstr "La lave interagit avec l'eau de différentes manières:"
+msgstr "La lave interagit avec l'eau de différentes manières :"
 
 msgid "• When a lava source is directly below or horizontally next to water, the lava turns into obsidian."
 msgstr "• Lorsqu'une source de lave se trouve directement sous ou horizontalement à côté de l'eau, la lave se transforme en obsidienne."
@@ -602,131 +1079,113 @@ msgid "Void"
 msgstr "Néant"
 
 msgid "Stone Stairs"
-msgstr ""
+msgstr "Escalier en roche"
 
 msgid "Stone Slab"
-msgstr ""
+msgstr "Dalle en roche"
 
 msgid "Smooth Stone Slab"
-msgstr ""
+msgstr "Dalle en roche lisse"
 
 msgid "Andesite Stairs"
-msgstr ""
+msgstr "Escaliers en andésite"
 
 msgid "Andesite Slab"
-msgstr ""
+msgstr "Dalle en andésite"
 
 msgid "Granite Stairs"
-msgstr ""
+msgstr "Escaliers en granite"
 
 msgid "Granite Slab"
-msgstr ""
+msgstr "Dalle en granite"
 
 msgid "Diorite Stairs"
-msgstr ""
+msgstr "Escaliers en diorite"
 
 msgid "Diorite Slab"
-msgstr ""
+msgstr "Dalle en diorite"
 
 msgid "Cobblestone Stairs"
-msgstr ""
+msgstr "Escaliers en pierre"
 
 msgid "Cobblestone Slab"
-msgstr ""
+msgstr "Dalle en pierre"
 
 msgid "Mossy Cobblestone Stairs"
-msgstr ""
+msgstr "Escalier en pierre moussue"
 
 msgid "Mossy Cobblestone Slab"
-msgstr ""
+msgstr "Dalle en pierre moussue"
 
 msgid "Brick Stairs"
-msgstr ""
+msgstr "Escalier en brique"
 
 msgid "Brick Slab"
-msgstr ""
+msgstr "Dalle en brique"
 
 msgid "Sandstone Stairs"
-msgstr ""
+msgstr "Escalier en grès"
 
 msgid "Sandstone Slab"
-msgstr ""
+msgstr "Dalle en grès"
 
 msgid "Smooth Sandstone Stairs"
-msgstr ""
+msgstr "Escalier en grès lisse"
 
 msgid "Smooth Sandstone Slab"
-msgstr ""
+msgstr "Dalle en grès lisse"
 
 msgid "Cut Sandstone Stairs"
-msgstr ""
+msgstr "Escalier en grès taillée"
 
 msgid "Cut Sandstone Slab"
-msgstr ""
+msgstr "Dalle en grès taillée"
 
 msgid "Red Sandstone Stairs"
-msgstr ""
+msgstr "Escaliers en grès rouge"
 
 msgid "Red Sandstone Slab"
-msgstr ""
+msgstr "Dalle en grès rouge"
 
 msgid "Smooth Red Sandstone Stairs"
-msgstr ""
+msgstr "Escaliers en grès rouge lisse"
 
 msgid "Smooth Red Sandstone Slab"
-msgstr ""
+msgstr "Dalle en grès rouge lisse"
 
 msgid "Cut Red Sandstone Stairs"
-msgstr ""
+msgstr "Escaliers en grès rouge taillée"
 
 msgid "Cut Red Sandstone Slab"
-msgstr ""
+msgstr "Dalle en grès rouge taillée"
 
 msgid "Stone Brick Stairs"
-msgstr ""
+msgstr "Escalier en pierre taillée"
 
 msgid "Stone Brick Slab"
-msgstr ""
+msgstr "Dalle en pierre taillée"
 
 msgid "Polished Andesite Stairs"
-msgstr ""
+msgstr "Escalier en andésite polie"
 
 msgid "Polished Andesite Slab"
-msgstr ""
+msgstr "Dalle en andésite polie"
 
 msgid "Polished Granite Stairs"
-msgstr ""
+msgstr "Escalier en granite polie"
 
 msgid "Polished Granite Slab"
-msgstr ""
+msgstr "Dalle en granite polie"
 
 msgid "Polished Diorite Stairs"
-msgstr ""
+msgstr "Escalier en diorite polie"
 
 msgid "Polished Diorite Slab"
-msgstr ""
+msgstr "Dalle en diorite polie"
 
 msgid "Mossy Stone Brick Stairs"
-msgstr ""
+msgstr "Escalier en pierre taillée moussue"
 
 msgid "Mossy Stone Brick Slab"
-msgstr ""
-
-msgid "Oak"
-msgstr ""
-
-msgid "Dark Oak"
-msgstr ""
-
-msgid "Jungle"
-msgstr ""
-
-msgid "Spruce"
-msgstr ""
-
-msgid "Acacia"
-msgstr ""
-
-msgid "Birch"
-msgstr ""
+msgstr "Dalle en pierre taillée moussue"
 

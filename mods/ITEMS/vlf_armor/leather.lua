@@ -42,13 +42,13 @@ end
 
 function vlf_armor.colorize_leather_armor(itemstack, colorstring)
 	if not itemstack or minetest.get_item_group(itemstack:get_name(), "armor_leather") == 0 then
-		return
+		return itemstack
 	end
 	local color = color_string_to_table(colorstring)
 	colorstring = minetest.colorspec_to_colorstring(color)
 	local meta = itemstack:get_meta()
 	local old_color = meta:get_string("vlf_armor:color")
-	if old_color == colorstring then return
+	if old_color == colorstring then return itemstack
 	elseif old_color ~= "" then
 		color = calculate_color(
 			color_string_to_table(minetest.colorspec_to_colorstring(old_color)),
@@ -100,6 +100,17 @@ vlf_armor.register_set({
 		feet = get_texture_function("vlf_armor_boots_leather.png"),
 	},
 	craft_material = "vlf_mobitems:leather",
+	on_place = function(itemstack, placer, pointed_thing)
+		if vlf_util.check_position_protection(pointed_thing.under, placer) then return itemstack end
+		if minetest.get_item_group(minetest.get_node(pointed_thing.under).name, "cauldron_water") <= 0 then return end
+		if vlf_cauldrons.add_level(pointed_thing.under, -1) then
+			local outcome = vlf_armor.wash_leather_armor(itemstack)
+			if outcome then
+				minetest.sound_play("vlf_potions_bottle_pour", {pos=pointed_thing.under, gain=0.5, max_hear_range=16}, true)
+				return outcome
+			end
+		end
+	end,
 })
 
 tt.register_priority_snippet(function(_, _, itemstack)
@@ -113,7 +124,7 @@ tt.register_priority_snippet(function(_, _, itemstack)
 	end
 end)
 
-for name, element in pairs(vlf_armor.elements) do
+for _, element in pairs(vlf_armor.elements) do
 	local modname = minetest.get_current_modname()
 	local itemname = modname .. ":" .. element.name .. "_leather"
 	minetest.register_craft({
@@ -135,7 +146,7 @@ for name, element in pairs(vlf_armor.elements) do
 	})
 end
 
-local function colorizing_crafting(itemstack, player, old_craft_grid, craft_inv)
+local function colorizing_crafting(itemstack, _, old_craft_grid, _)
 	if minetest.get_item_group(itemstack:get_name(), "armor_leather") == 0 then
 		return
 	end
@@ -168,7 +179,7 @@ minetest.register_chatcommand("color_leather", {
 		local player = minetest.get_player_by_name(name)
 		if player then
 			local item = player:get_wielded_item()
-			if not item or item:get_definition().groups.armor_leather ~= 1 then
+			if not item or  minetest.get_item_group(item:get_name(), "armor_leather") == 0 then
 				return false, S("Not leather armor.")
 			end
 			if param == "wash" then

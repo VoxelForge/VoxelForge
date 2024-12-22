@@ -13,6 +13,7 @@ minetest.register_craftitem("vlf_core:stick", {
 	inventory_image = "default_stick.png",
 	groups = { craftitem=1, stick=1 },
 	_vlf_toollike_wield = true,
+	_vlf_burntime = 5
 })
 
 minetest.register_craftitem("vlf_core:paper", {
@@ -28,6 +29,7 @@ minetest.register_craftitem("vlf_core:coal_lump", {
 	_doc_items_hidden = false,
 	inventory_image = "default_coal_lump.png",
 	groups = { craftitem=1, coal=1 },
+	_vlf_burntime = 80
 })
 
 minetest.register_craftitem("vlf_core:charcoal_lump", {
@@ -36,6 +38,7 @@ minetest.register_craftitem("vlf_core:charcoal_lump", {
 	_doc_items_hidden = false,
 	inventory_image = "vlf_core_charcoal.png",
 	groups = { craftitem=1, coal=1 },
+	_vlf_burntime = 80
 })
 
 minetest.register_craftitem("vlf_core:iron_nugget", {
@@ -65,6 +68,7 @@ minetest.register_craftitem("vlf_core:clay_lump", {
 	_doc_items_hidden = false,
 	inventory_image = "default_clay_lump.png",
 	groups = { craftitem=1 },
+	_vlf_cooking_output = "vlf_core:brick"
 })
 
 minetest.register_craftitem("vlf_core:iron_ingot", {
@@ -121,6 +125,7 @@ minetest.register_craftitem("vlf_core:bowl",{
 	_doc_items_longdesc = S("Bowls are mainly used to hold tasty soups."),
 	inventory_image = "vlf_core_bowl.png",
 	groups = { craftitem = 1 },
+	_vlf_burntime = 10
 })
 
 minetest.register_craftitem("vlf_core:apple", {
@@ -147,12 +152,11 @@ local function eat_gapple(itemstack, placer, pointed_thing)
 	local regen_duration, absorption = 5, 1
 	if itemstack:get_name() == "vlf_core:apple_gold_enchanted" then
 		regen_duration, absorption = 20, 4
-		vlf_entity_effects.give_effect("fire_resistance", placer, 1, 300)
-		vlf_entity_effects.give_effect_by_level("leaping", placer, 1, 300)
-		vlf_entity_effects.swiftness_func(placer, 1.2, 300)
+		vlf_potions.give_effect("fire_resistance", placer, 1, 300)
+		vlf_potions.give_effect_by_level("resistance", placer, 1, 300)
 	end
-		vlf_entity_effects.give_effect_by_level("absorption", placer, absorption, 120)
-		vlf_entity_effects.give_effect_by_level("regeneration", placer, 2, regen_duration)
+	vlf_potions.give_effect_by_level("absorption", placer, absorption, 120)
+	vlf_potions.give_effect_by_level("regeneration", placer, 2, regen_duration)
 	return gapple_hunger_restore(itemstack, placer, pointed_thing)
 end
 

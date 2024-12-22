@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_mobitems x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_mobitems x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Rotten Flesh"
 msgstr "Гнилая плоть"
@@ -50,7 +50,7 @@ msgid "Raw Chicken"
 msgstr "Сырая курятина"
 
 msgid "30% chance of food poisoning"
-msgstr ""
+msgstr "30% вероятность пищевого отравления"
 
 msgid "Raw chicken is a food item which is not safe to consume. You can eat it to restore a few hunger points, but there's a 30% chance to suffer from food poisoning, which increases your hunger rate for a while. Cooking raw chicken will make it safe to eat and increases its nutritional value."
 msgstr "Сырая курица это съедобный предмет, небезопасный для употребления. Вы можете его съесть для восстановления нескольких очков голода, но с вероятностью 30% вы пострадаете от пищевого отравление, которое усилит ваш голод на некоторое время. Приготовление сырой курицы сделает её безопасной для еды, значительно увеличив питательную ценность."
@@ -119,19 +119,25 @@ msgid "Squid Ink Sac"
 msgstr "Чернильный мешок"
 
 msgid "This item is dropped by dead squids. Squid ink can be used to as an ingredient to craft book and quill or black dye."
-msgstr ""
+msgstr "Этот предмет выпадает из мертвых кальмаров. Чернила кальмара можно использовать как ингредиент для изготовления книги и пера, а также как черную краску."
 
 msgid "String"
 msgstr "Нить"
 
 msgid "Strings are used in crafting."
-msgstr "Нить используются для крафта"
+msgstr "Нить используются для крафта."
 
 msgid "Blaze Rod"
 msgstr "Огненный стержень"
 
 msgid "This is a crafting component dropped from dead blazes."
 msgstr "Это материал для крафта, выпадающий из ифрита."
+
+msgid "Breeze Rod"
+msgstr "Стержень вихря"
+
+msgid "This is a crafting item dropped from breezes."
+msgstr "Это предмет для крафта, выпадающий из ветров."
 
 msgid "Blaze Powder"
 msgstr "Огненный порошок"
@@ -155,7 +161,7 @@ msgid "Nether Star"
 msgstr "Звезда Ада"
 
 msgid "A nether star is dropped when the Wither dies. Place it in an item frame to show the world how hardcore you are! Or just as decoration."
-msgstr "Звезда Ада выбрасывается при смерти иссушителя. Поместите её в рамку, чтобы показать миру ваше величие!"
+msgstr "Звезда Нижнего мира выпадает, при смерти Иссушителя. Поместите ее в рамку для предметов, чтобы показать миру, насколько вы величественны! Или просто как украшение."
 
 msgid "Leather"
 msgstr "Кожа"
@@ -221,13 +227,13 @@ msgid "Lets you ride a saddled pig"
 msgstr "Позволяет вам ездить на осёдланной свинье"
 
 msgid "A carrot on a stick can be used on saddled pigs to ride them."
-msgstr ""
+msgstr "Морковку на палке можно использовать на оседланных свиньях, чтобы ездить на них."
 
 msgid "Place it on a saddled pig to mount it. You can now ride the pig like a horse. Pigs will also walk towards you when you just wield the carrot on a stick."
 msgstr "Поместите это на осёдланную свинью, чтобы сесть на неё. Теперь вы можете ехать на ней, как на лошади. Свиньи приманиваются к вам, когда вы просто держите удочку с морковью."
 
 msgid "Warped Fungus on a Stick"
-msgstr ""
+msgstr "Искривленный гриб на палочке"
 
 msgid "Lets you ride a strider"
 msgstr "Позволяет вам ездить на страйдере"
@@ -255,6 +261,12 @@ msgstr "Сердце моря используется при создании �
 
 msgid "Place it on a horse to put on the horse armor. Donkeys and mules can't wear horse armor."
 msgstr "Используйте конскую броню на лошади чтобы надеть её. Ослы и мулы не могут носить конскую броню."
+
+msgid "Leather Horse Armor"
+msgstr "Кожаные конские доспехи"
+
+msgid "Leather horse armor can be worn by horses to increase their protection from harm a little."
+msgstr "Кожаные доспехи можно надевать на лошадей, чтобы немного усилить их защиту от урона."
 
 msgid "Iron Horse Armor"
 msgstr "Железная конская броня"
@@ -284,17 +296,17 @@ msgid "Use the Glow Ink Sac and the normal Item Frame to craft the Glow Item Fra
 msgstr "Используйте светящийся чернильный мешок на обычной рамке чтобы создать светящуюся рамку."
 
 msgid "Name Tag"
-msgstr ""
+msgstr "Именная бирка"
 
 msgid "Give names to mobs"
-msgstr ""
+msgstr "Дайте имена мобам"
 
 msgid "Set name at anvil"
-msgstr ""
+msgstr "Установите имя на наковальне"
 
 msgid "A name tag is an item to name a mob."
-msgstr ""
+msgstr "Именная бирка - это предмет, позволяющий дать имя мобу."
 
 msgid "Before you use the name tag, you need to set a name at an anvil. Then you can use the name tag to name a mob. This uses up the name tag."
-msgstr ""
+msgstr "Прежде чем использовать бирку с именем, нужно установить имя на наковальне. Затем вы можете использовать бирку, чтобы назвать моба. При этом бирка уничтожается."
 

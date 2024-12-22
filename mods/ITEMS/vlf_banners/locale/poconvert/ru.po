@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_banners x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_banners x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "White Banner"
 msgstr "Белый флаг"
@@ -35,7 +35,7 @@ msgid "Black Banner"
 msgstr "Чёрный флаг"
 
 msgid "Black"
-msgstr "Чёрный"
+msgstr "Черный"
 
 msgid "Red Banner"
 msgstr "Красный флаг"
@@ -47,19 +47,19 @@ msgid "Yellow Banner"
 msgstr "Жёлтый флаг"
 
 msgid "Yellow"
-msgstr "Жёлтый"
+msgstr "Желтый"
 
 msgid "Green Banner"
 msgstr "Зелёный флаг"
 
 msgid "Green"
-msgstr "Зелёный"
+msgstr "Зеленый"
 
 msgid "Cyan Banner"
 msgstr "Бирюзовый флаг"
 
 msgid "Cyan"
-msgstr "Голубой"
+msgstr "Циановый"
 
 msgid "Blue Banner"
 msgstr "Синий флаг"
@@ -101,7 +101,7 @@ msgid "Lime Banner"
 msgstr "Лаймовый флаг"
 
 msgid "Lime"
-msgstr "Зелёный лаймовый"
+msgstr "Лаймовый"
 
 msgid "Light Blue Banner"
 msgstr "Голубой флаг"
@@ -121,9 +121,6 @@ msgstr "Используйте сетку крафта, чтобы нарисо�
 msgid "You can copy the pattern of a banner by placing two banners of the same color in the crafting grid—one needs to be emblazoned, the other one must be clean. Finally, you can use a banner on a cauldron with water to wash off its top-most layer."
 msgstr "Вы можете скопировать рисунок флага, поместив два флага одного цвета в сетку крафта - один должен быть украшенный, другой - чистый. Вы можете использовать флаг на котле с водой, чтобы смыть верхний слой."
 
-msgid "@1 Banner"
-msgstr ""
-
 msgid "Preview Banner"
 msgstr "Предпросмотр баннера"
 
@@ -131,10 +128,10 @@ msgid "Paintable decoration"
 msgstr "Раскрашиваемая декорация"
 
 msgid "Can be used to craft special banner designs on the loom"
-msgstr ""
+msgstr "Можно использовать для изготовления специальных флагов на ткацком станке"
 
 msgid "Special Banner Pattern"
-msgstr ""
+msgstr "Специальный флаговый узор"
 
 msgid "@1 Bordure"
 msgstr "@1 простая кайма"
@@ -191,10 +188,10 @@ msgid "@1 Thing Charge"
 msgstr "@1 нечто"
 
 msgid "@1 Globe Charge"
-msgstr ""
+msgstr "@1 Заряженный глобус"
 
 msgid "@1 Piglin Charge"
-msgstr ""
+msgstr "@1 Заряженный Пиглин"
 
 msgid "@1 Lozenge"
 msgstr "@1 Ромб в центре"
@@ -255,6 +252,12 @@ msgstr "@1 гребешки снизу"
 
 msgid "@1 Chief Indented"
 msgstr "@1 гребешки сверху"
+
+msgid "@1 Flow"
+msgstr "@1 Поток"
+
+msgid "@1 Guster"
+msgstr "@1 Гаст"
 
 msgid "And one additional layer"
 msgstr "И один дополнительный слой"

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_beds x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_beds x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Beds allow you to sleep at night and make the time pass faster."
 msgstr "Les lits vous permettent de dormir la nuit et de faire passer le temps plus rapidement."
@@ -37,32 +37,26 @@ msgstr "Vous permet de dormir"
 msgid "Bed"
 msgstr "Lit"
 
-msgid "@1 Bed"
-msgstr ""
-
-msgid "New respawn position set!"
-msgstr "Nouvelle position de réapparition définie!"
-
 msgid "You can only sleep at night or during a thunderstorm."
 msgstr "Vous ne pouvez dormir que la nuit ou pendant un orage."
 
 msgid "You can't sleep, the bed's too far away!"
-msgstr "Vous ne pouvez pas dormir, le lit est trop loin!"
+msgstr "Vous ne pouvez pas dormir, le lit est trop loin !"
 
 msgid "This bed is already occupied!"
-msgstr "Ce lit est déjà occupé!"
+msgstr "Ce lit est déjà occupé !"
 
 msgid "You have to stop moving before going to bed!"
-msgstr "Vous devez arrêter de bouger avant de vous coucher!"
+msgstr "Vous devez arrêter de bouger avant de vous coucher !"
 
 msgid "You can't sleep now, monsters are nearby!"
-msgstr "Vous ne pouvez pas dormir maintenant, les monstres sont à proximité!"
+msgstr "Vous ne pouvez pas dormir maintenant, les monstres sont à proximité !"
 
 msgid "You can't sleep, the bed is obstructed!"
-msgstr "Vous ne pouvez pas dormir, le lit est obstrué!"
+msgstr "Vous ne pouvez pas dormir, le lit est obstrué !"
 
 msgid "It's too dangerous to sleep here!"
-msgstr "C'est trop dangereux de dormir ici!"
+msgstr "C'est trop dangereux de dormir ici !"
 
 msgid "Leave bed"
 msgstr "Quitter le lit"
@@ -71,19 +65,19 @@ msgid "Abort sleep"
 msgstr "Abandonner le sommeil"
 
 msgid "Chat:"
-msgstr ""
+msgstr "Chat :"
 
 msgid "send!"
-msgstr ""
+msgstr "Envoyer !"
 
 msgid "Players in bed: @1/@2"
-msgstr "Joueurs au lit: @1/@2"
+msgstr "Joueurs au lit : @1/@2"
 
 msgid "Note: Night skip is disabled."
-msgstr "Remarque: Le saut de nuit est désactivé."
+msgstr "Remarque : Le saut de nuit est désactivé."
 
 msgid "You're sleeping."
-msgstr "Tu dors."
+msgstr "Vous dormez."
 
 msgid "You will fall asleep when all players are in bed."
 msgstr "Vous vous endormirez lorsque tous les joueurs seront au lit."
@@ -92,21 +86,72 @@ msgid "You will fall asleep when @1% of all players are in bed."
 msgstr "Vous vous endormirez lorsque @1% de tous les joueurs seront au lit."
 
 msgid "You're in bed."
-msgstr "Tu es au lit."
+msgstr "Vous êtes au lit."
 
 msgid "@1/@2 players currently in bed."
-msgstr ""
+msgstr "@1/@2 joueurs actuellement couchés."
 
 msgid "You exceeded the maximum number of messages per 10 seconds!"
-msgstr ""
+msgstr "Vous avez dépassé le nombre maximum de messages par 10 secondes !"
 
 msgid "You are missing the 'shout' privilege! It's required in order to talk in chat..."
-msgstr ""
+msgstr "Il vous manque le privilège « shout » ! Il est nécessaire pour parler dans le chat..."
 
 msgid "Sorry, but you have to wait @1 seconds until you may use this button again!"
-msgstr ""
+msgstr "Désolé, mais vous devez attendre @1 secondes avant de pouvoir utiliser à nouveau ce bouton !"
 
 msgid "Hey! Would you guys mind sleeping?"
+msgstr "Hé ! Ça vous dérangerait de dormir ?"
+
+msgid "New respawn position set!"
+msgstr "Nouvelle position de réapparition définie !"
+
+msgid "Black Bed"
+msgstr ""
+
+msgid "Blue Bed"
+msgstr ""
+
+msgid "Brown Bed"
+msgstr ""
+
+msgid "Cyan Bed"
+msgstr ""
+
+msgid "Green Bed"
+msgstr ""
+
+msgid "Grey Bed"
+msgstr ""
+
+msgid "Light Blue Bed"
+msgstr ""
+
+msgid "Light Grey Bed"
+msgstr ""
+
+msgid "Lime Bed"
+msgstr ""
+
+msgid "Magenta Bed"
+msgstr ""
+
+msgid "Orange Bed"
+msgstr ""
+
+msgid "Pink Bed"
+msgstr ""
+
+msgid "Purple Bed"
+msgstr ""
+
+msgid "Red Bed"
+msgstr ""
+
+msgid "White Bed"
+msgstr ""
+
+msgid "Yellow Bed"
 msgstr ""
 
 msgid "Respawn Anchor"

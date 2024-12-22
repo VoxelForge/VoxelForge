@@ -1,6 +1,6 @@
 # textdomain: findbiome
-Find and teleport to biome=
-<biome>=
+Find and teleport to biome=Trova e teletrasportati al bioma
+<biome>=<bioma>
 No player.=
 Biome found at @1.=
 No biome found!=

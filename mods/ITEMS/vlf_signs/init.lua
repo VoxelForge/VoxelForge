@@ -34,7 +34,7 @@ local sign_tpl = {
 	wield_image = "default_sign_greyscale.png",
 	selection_box = { type = "fixed", fixed = { -0.2, -0.5, -0.2, 0.2, 0.5, 0.2 } },
 	tiles = { "vlf_signs_sign_greyscale.png" },
-	groups = { axey = 1, handy = 2, sign = 1, not_in_creative_inventory = 1 },
+	groups = { axey = 1, handy = 2, sign = 1, not_in_creative_inventory = 1, unmovable_by_piston = 1},
 	drop = "vlf_signs:sign",
 	stack_max = 16,
 	sounds = vlf_sounds.node_sound_wood_defaults(),
@@ -112,7 +112,7 @@ while true do
 		break
 	end
 	local img = chars_file:read("*l")
-	chars_file:read("*l")
+	local _ = chars_file:read("*l")
 	charmap[char] = img
 end
 
@@ -252,16 +252,18 @@ function sign_tpl.on_place(itemstack, placer, pointed_thing)
 	return itemstack
 end
 
-function sign_tpl.on_rightclick(pos, node, clicker, itemstack, pointed_thing)
+function sign_tpl.on_rightclick(pos, _, clicker, itemstack, _)
 	if itemstack:get_name() == "vlf_mobitems:glow_ink_sac" then
 		local data = get_signdata(pos)
-		if data.color == "#000000" then
-			data.color = "#7e7e7e" --black doesn't glow in the dark
-		end
-		set_signmeta(pos,{glow="true",color=data.color})
-		vlf_signs.update_sign(pos)
-		if not minetest.is_creative_enabled(clicker:get_player_name()) then
-			itemstack:take_item()
+		if data then
+			if data.color == "#000000" then
+				data.color = "#7e7e7e" --black doesn't glow in the dark
+			end
+			set_signmeta(pos,{glow="true",color=data.color})
+			vlf_signs.update_sign(pos)
+			if not minetest.is_creative_enabled(clicker:get_player_name()) then
+				itemstack:take_item()
+			end
 		end
 	elseif signs_editable then
 		if not vlf_util.check_position_protection(pos, clicker) then
@@ -286,7 +288,7 @@ local sign_wall = table.merge(sign_tpl,{
 	mesh = "vlf_signs_signonwallmount.obj",
 	paramtype2 = "wallmounted",
 	selection_box = { type = "wallmounted", wall_side = { -0.5, -7 / 28, -0.5, -23 / 56, 7 / 28, 0.5 }},
-	groups = { axey = 1, handy = 2, sign = 1 },
+	groups = { axey = 1, handy = 2, sign = 1, deco_block = 1, unmovable_by_piston = 1},
 	_vlf_sign_type = "wall",
 })
 
@@ -308,12 +310,12 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if formname:find("vlf_signs:set_text_") == 1 then
 		local x, y, z = formname:match("vlf_signs:set_text_(.-)_(.-)_(.*)")
 		local pos = { x = tonumber(x), y = tonumber(y), z = tonumber(z) }
-		if not pos or not pos.x or not pos.y or not pos.z then
+		if not pos or not pos.x or not pos.y or not pos.z or not fields or not fields.text then
 			return
 		end
 		if not vlf_util.check_position_protection(pos, player) and (signs_editable or minetest.get_meta(pos):get_string("text") == "") then
 			set_signmeta(pos,{
-				text = fields.text,
+				text = tostring(fields.text):sub(1, 256), --limit saved text to 256 characters (4 lines x 15 chars = 60 so this should be more than is ever needed).
 			})
 			vlf_signs.update_sign(pos)
 		end
@@ -322,16 +324,16 @@ end)
 
 --Text entity handling
 function vlf_signs.get_text_entity (pos, force_remove)
-	local objects = minetest.get_objects_inside_radius(pos, 0.5)
 	local text_entity
-	for _, v in pairs(objects) do
+	local i = 0
+	for v in minetest.objects_inside_radius(pos, 0.5) do
 		local ent = v:get_luaentity()
 		if ent and ent.name == "vlf_signs:text" then
-			if force_remove ~= nil and force_remove == true then
+			i = i + 1
+			if i > 1 or force_remove == true then
 				v:remove()
 			else
 				text_entity = v
-				break
 			end
 		end
 	end
@@ -370,7 +372,7 @@ minetest.register_lbm({
 	name = "vlf_signs:restore_entities",
 	label = "Restore sign text",
 	run_at_every_load = true,
-	action = function(pos, node)
+	action = function(pos)
 		vlf_signs.update_sign(pos)
 	end
 })
@@ -379,14 +381,17 @@ minetest.register_entity("vlf_signs:text", {
 	initial_properties = {
 		pointable = false,
 		visual = "upright_sprite",
-		textures = {},
 		physical = false,
 		collide_with_objects = false,
 	},
-	on_activate = function(self, staticdata)
+	on_activate = function(self)
 		local pos = self.object:get_pos()
 		vlf_signs.update_sign(pos)
+		local props = self.object:get_properties()
+		local t = props and props.textures
+		if type(t) ~= "table" or #t == 0 then self.object:remove() end
 	end,
+	_vlf_pistons_unmovable = true
 })
 
 local function colored_texture(texture,color)

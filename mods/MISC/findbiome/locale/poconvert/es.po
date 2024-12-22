@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain findbiome x.x.x\n"
+"Project-Id-Version: Luanti textdomain findbiome x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,29 +11,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Find and teleport to biome"
-msgstr ""
+msgstr "Encuentra y teletranspórtate al bioma"
 
 msgid "<biome>"
-msgstr ""
+msgstr "<bioma>"
 
 msgid "No player."
-msgstr ""
+msgstr "Sin jugador."
 
 msgid "Biome found at @1."
-msgstr ""
+msgstr "Bioma encontrado en @1."
 
 msgid "No biome found!"
-msgstr ""
+msgstr "¡No se encontraron biomas!"
 
 msgid "Biome does not exist!"
-msgstr ""
+msgstr "¡El bioma no existe!"
 
 msgid "List all biomes"
-msgstr ""
+msgstr "Listar todos los biomas"
 
 msgid "No biomes."
-msgstr ""
+msgstr "Sin biomas."
 

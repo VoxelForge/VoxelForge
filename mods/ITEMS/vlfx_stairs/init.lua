@@ -1,5 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
-local doc_mod = minetest.get_modpath("doc")
+local D = vlf_util.get_dynamic_translator()
 local extra_nodes = minetest.settings:get_bool("vlf_extra_nodes", true)
 
 vlf_stairs.register_stair("lapisblock", {
@@ -51,7 +51,7 @@ vlf_stairs.register_stair_and_slab("stonebrickcracked", {
 	recipeitem=extra_nodes and "vlf_core:stonebrickcracked" or "",
 	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 })
---[[vlf_stairs.register_stair_and_slab("deepslate_bricks_cracked", {
+vlf_stairs.register_stair_and_slab("deepslate_bricks_cracked", {
 	baseitem="vlf_deepslate:deepslate_bricks_cracked",
 	description_stair=S("Cracked Deepslate Brick Stairs"),
 	description_slab=S("Cracked Deepslate Brick Slab"),
@@ -64,7 +64,7 @@ vlf_stairs.register_stair_and_slab("deepslate_tiles_cracked", {
 	description_slab=S("Cracked Deepslate Tile Slab"),
 	recipeitem=extra_nodes and "vlf_deepslate:deepslate_tiles_cracked" or "",
 	groups={not_in_creative_inventory=extra_nodes and 0 or 1},
-})]]
+})
 
 vlf_stairs.register_stair_and_slab("end_stone", {
 	baseitem = "vlf_end:end_stone",
@@ -95,49 +95,46 @@ local canonical_color = "yellow"
 for name,cdef in pairs(vlf_dyes.colors) do
 	local is_canonical = name == canonical_color
 	vlf_stairs.register_stair_and_slab("concrete_"..name, {
-		description_stair = S("@1 Concrete Stairs", cdef.readable_name),
-		description_slab = S("@1 Concrete Slab", cdef.readable_name),
+		description_stair = D(cdef.readable_name .. " Concrete Stairs"),
+		description_slab = D(cdef.readable_name .. " Concrete Slab"),
 		groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 		baseitem="vlf_colorblocks:concrete_"..name,
 		recipeitem=extra_nodes and "vlf_colorblocks:concrete_"..name or "",
 	})
 
 	vlf_stairs.register_stair_and_slab("hardened_clay_"..name, {
-		description_stair = S("@1 Terracotta Stairs", cdef.readable_name),
-		description_slab = S("@1 Terracotta Slab", cdef.readable_name),
+		description_stair = D(cdef.readable_name .. " Terracotta Stairs"),
+		description_slab = D(cdef.readable_name .. " Terracotta Slab"),
 		groups={not_in_creative_inventory=extra_nodes and 0 or 1},
 		baseitem="vlf_colorblocks:hardened_clay_"..name,
 		recipeitem=extra_nodes and "vlf_colorblocks:hardened_clay_"..name or "",
 	})
 
-	if doc_mod then
-		if not is_canonical then
-			doc.add_entry_alias("nodes", "vlf_stairs:slab_concrete_"..canonical_color, "nodes", "vlf_stairs:slab_concrete_"..name)
-			doc.add_entry_alias("nodes", "vlf_stairs:slab_concrete_"..canonical_color.."_double", "nodes", "vlf_stairs:slab_concrete_"..name.."_double")
-			doc.add_entry_alias("nodes", "vlf_stairs:stair_concrete_"..canonical_color, "nodes", "vlf_stairs:stair_concrete_"..name)
-			minetest.override_item("vlf_stairs:slab_concrete_"..name, { _doc_items_create_entry = false })
-			minetest.override_item("vlf_stairs:slab_concrete_"..name.."_double", { _doc_items_create_entry = false })
-			minetest.override_item("vlf_stairs:stair_concrete_"..name, { _doc_items_create_entry = false })
-		else
-			minetest.override_item("vlf_stairs:slab_concrete_"..name, { _doc_items_entry_name = S("Concrete Slab") })
-			minetest.override_item("vlf_stairs:slab_concrete_"..name.."_double", { _doc_items_entry_name = S("Double Concrete Slab") })
-			minetest.override_item("vlf_stairs:stair_concrete_"..name, { _doc_items_entry_name = S("Concrete Stairs") })
-		end
+
+	if not is_canonical then
+		doc.add_entry_alias("nodes", "vlf_stairs:slab_concrete_"..canonical_color, "nodes", "vlf_stairs:slab_concrete_"..name)
+		doc.add_entry_alias("nodes", "vlf_stairs:slab_concrete_"..canonical_color.."_double", "nodes", "vlf_stairs:slab_concrete_"..name.."_double")
+		doc.add_entry_alias("nodes", "vlf_stairs:stair_concrete_"..canonical_color, "nodes", "vlf_stairs:stair_concrete_"..name)
+		minetest.override_item("vlf_stairs:slab_concrete_"..name, { _doc_items_create_entry = false })
+		minetest.override_item("vlf_stairs:slab_concrete_"..name.."_double", { _doc_items_create_entry = false })
+		minetest.override_item("vlf_stairs:stair_concrete_"..name, { _doc_items_create_entry = false })
+	else
+		minetest.override_item("vlf_stairs:slab_concrete_"..name, { _doc_items_entry_name = S("Concrete Slab") })
+		minetest.override_item("vlf_stairs:slab_concrete_"..name.."_double", { _doc_items_entry_name = S("Double Concrete Slab") })
+		minetest.override_item("vlf_stairs:stair_concrete_"..name, { _doc_items_entry_name = S("Concrete Stairs") })
 	end
 
-	if doc_mod then
-		if not is_canonical then
-			doc.add_entry_alias("nodes", "vlf_stairs:slab_hardened_clay_"..canonical_color, "nodes", "vlf_stairs:slab_hardened_clay_"..name)
-			doc.add_entry_alias("nodes", "vlf_stairs:slab_hardened_clay_"..canonical_color.."_double", "nodes", "vlf_stairs:slab_hardened_clay_"..name.."_double")
-			doc.add_entry_alias("nodes", "vlf_stairs:stair_hardened_clay_"..canonical_color, "nodes", "vlf_stairs:stair_hardened_clay_"..name)
-			minetest.override_item("vlf_stairs:slab_hardened_clay_"..name, { _doc_items_create_entry = false })
-			minetest.override_item("vlf_stairs:slab_hardened_clay_"..name.."_double", { _doc_items_create_entry = false })
-			minetest.override_item("vlf_stairs:stair_hardened_clay_"..name, { _doc_items_create_entry = false })
-		else
-			minetest.override_item("vlf_stairs:slab_hardened_clay_"..name, { _doc_items_entry_name = S("Terracotta Slab") })
-			minetest.override_item("vlf_stairs:slab_hardened_clay_"..name.."_double", { _doc_items_entry_name = S("Double Terracotta Slab") })
-			minetest.override_item("vlf_stairs:stair_hardened_clay_"..name, { _doc_items_entry_name = S("Terracotta Stairs") })
-		end
+	if not is_canonical then
+		doc.add_entry_alias("nodes", "vlf_stairs:slab_hardened_clay_"..canonical_color, "nodes", "vlf_stairs:slab_hardened_clay_"..name)
+		doc.add_entry_alias("nodes", "vlf_stairs:slab_hardened_clay_"..canonical_color.."_double", "nodes", "vlf_stairs:slab_hardened_clay_"..name.."_double")
+		doc.add_entry_alias("nodes", "vlf_stairs:stair_hardened_clay_"..canonical_color, "nodes", "vlf_stairs:stair_hardened_clay_"..name)
+		minetest.override_item("vlf_stairs:slab_hardened_clay_"..name, { _doc_items_create_entry = false })
+		minetest.override_item("vlf_stairs:slab_hardened_clay_"..name.."_double", { _doc_items_create_entry = false })
+		minetest.override_item("vlf_stairs:stair_hardened_clay_"..name, { _doc_items_create_entry = false })
+	else
+		minetest.override_item("vlf_stairs:slab_hardened_clay_"..name, { _doc_items_entry_name = S("Terracotta Slab") })
+		minetest.override_item("vlf_stairs:slab_hardened_clay_"..name.."_double", { _doc_items_entry_name = S("Double Terracotta Slab") })
+		minetest.override_item("vlf_stairs:stair_hardened_clay_"..name, { _doc_items_entry_name = S("Terracotta Stairs") })
 	end
 
 end

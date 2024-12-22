@@ -104,21 +104,22 @@ tt.register_snippet(function(itemstring, _, itemstack)
 	end
 end)
 
--- Effect info
+
+-- Potions info
 tt.register_snippet(function(itemstring, _, itemstack)
 	if not itemstack then return end
 	local def = itemstack:get_definition()
-	if def.groups._vlf_entity_effect ~= 1 then return end
+	if def.groups._vlf_potion ~= 1 then return end
 
 	local s = ""
 	local meta = itemstack:get_meta()
-	local potency = meta:get_int("vlf_entity_effects:effect_potent")
-	local plus = meta:get_int("vlf_entity_effects:effect_plus")
+	local potency = meta:get_int("vlf_potions:potion_potent")
+	local plus = meta:get_int("vlf_potions:potion_plus")
 	local sl_factor = 1
-	if def.groups.splash_effect == 1 then
-		sl_factor = vlf_entity_effects.SPLASH_FACTOR
-	elseif def.groups.ling_effect == 1 then
-		sl_factor = vlf_entity_effects.LINGERING_FACTOR
+	if def.groups.splash_potion == 1 then
+		sl_factor = vlf_potions.SPLASH_FACTOR
+	elseif def.groups.ling_potion == 1 then
+		sl_factor = vlf_potions.LINGERING_FACTOR
 	end
 	if def._dynamic_tt then s = s.. def._dynamic_tt((potency+1)*sl_factor).. "\n" end
 	local effects = def._effect_list
@@ -131,11 +132,11 @@ tt.register_snippet(function(itemstring, _, itemstack)
 		local factor
 		local ef_tt
 		for name, details in pairs(effects) do
-			effect = vlf_entity_effects.registered_effects[name]
-			dur = vlf_entity_effects.duration_from_details (details, potency,
+			effect = vlf_potions.registered_effects[name]
+			dur = vlf_potions.duration_from_details (details, potency,
 								 plus, sl_factor)
 			timestamp = math.floor(dur/60)..string.format(":%02d",math.floor(dur % 60))
-			ef_level = vlf_entity_effects.level_from_details (details, potency)
+			ef_level = vlf_potions.level_from_details (details, potency)
 			if ef_level > 1 then roman_lvl = " ".. vlf_util.to_roman(ef_level)
 			else roman_lvl = "" end
 			s = s.. effect.description.. roman_lvl.. " (".. timestamp.. ")\n"

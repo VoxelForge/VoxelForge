@@ -6,7 +6,7 @@ local function get_falling_depth(self)
 	return self._startpos.y - vector.round(self.object:get_pos()).y
 end
 
-local function deal_falling_damage(self, dtime)
+local function deal_falling_damage(self, _)
 	if minetest.get_item_group(self.node.name, "falling_node_damage") == 0 then
 		return
 	end
@@ -18,7 +18,7 @@ local function deal_falling_damage(self, dtime)
 		self._startpos = pos
 	end
 	self._hit = self._hit or {}
-	for _, obj in ipairs(minetest.get_objects_inside_radius(pos, 1)) do
+	for obj in minetest.objects_inside_radius(pos, 1) do
 		local entity = obj:get_luaentity()
 		if entity and entity.name == "__builtin:item" then
 			obj:remove()

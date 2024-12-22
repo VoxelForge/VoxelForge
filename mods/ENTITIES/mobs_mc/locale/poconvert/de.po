@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mobs_mc x.x.x\n"
+"Project-Id-Version: Luanti textdomain mobs_mc x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Axolotl"
 msgstr "Axolotl"
@@ -37,6 +37,9 @@ msgstr "Pilzkuh"
 msgid "Creeper"
 msgstr "Creeper"
 
+msgid "Charged Creeper"
+msgstr ""
+
 msgid "Dolphin"
 msgstr ""
 
@@ -53,9 +56,6 @@ msgid "Ghast"
 msgstr "Ghast"
 
 msgid "Ghast Fireball"
-msgstr ""
-
-msgid "Glow Squid"
 msgstr ""
 
 msgid "Guardian"
@@ -87,6 +87,9 @@ msgstr "Esel"
 
 msgid "Mule"
 msgstr "Maultier"
+
+msgid "Sneak to dismount"
+msgstr ""
 
 msgid "Iron Golem"
 msgstr "Eisengolem"
@@ -151,11 +154,29 @@ msgstr "Eiswanderer"
 msgid "Wither Skeleton"
 msgstr "Witherskelett"
 
-msgid "Slime"
-msgstr "Schleim"
+msgid "Slime - big"
+msgstr ""
+
+msgid "Slime - small"
+msgstr ""
+
+msgid "Slime - tiny"
+msgstr ""
+
+msgid "Magma Cube - big"
+msgstr ""
+
+msgid "Magma Cube - small"
+msgstr ""
+
+msgid "Magma Cube - tiny"
+msgstr ""
 
 msgid "Magma Cube"
 msgstr "Magmakubus"
+
+msgid "Slime"
+msgstr "Schleim"
 
 msgid "Snow Golem"
 msgstr "Schneegolem"
@@ -168,6 +189,9 @@ msgstr "Höhlenspinne"
 
 msgid "Squid"
 msgstr "Tintenfisch"
+
+msgid "Glow Squid"
+msgstr ""
 
 msgid "Strider"
 msgstr ""
@@ -282,6 +306,9 @@ msgstr "Wither"
 
 msgid "Wolf"
 msgstr "Wolf"
+
+msgid "Dog"
+msgstr ""
 
 msgid "Zombie"
 msgstr "Zombie"

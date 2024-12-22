@@ -24,7 +24,7 @@ local gateway_positions = {
 	{x = 91, y = -26925, z = -29},
 }
 
-local path_gateway_portal = minetest.get_modpath("vlf_schematics").."/schems/vlf_structures_end_gateway_portal.mts"
+local path_gateway_portal = minetest.get_modpath("vlf_structures").."/schematics/vlf_structures_end_gateway_portal.mts"
 
 local function spawn_gateway_portal(pos, dest_str)
 	return vlf_structures.place_schematic(vector.add(pos, vector.new(-1, -2, -1)), path_gateway_portal, "0", nil, true, nil, dest_str and function()
@@ -87,7 +87,7 @@ local function teleport(pos, obj)
 	local minp = vector.subtract(dest_portal, vector.new(5, 40, 5))
 	local maxp = vector.add(dest_portal, vector.new(5, 10, 5))
 	preparing[pos_str] = true
-	minetest.emerge_area(minp, maxp, function(blockpos, action, calls_remaining, param)
+	minetest.emerge_area(minp, maxp, function(_, _, calls_remaining)
 		if calls_remaining < 1 then
 			if obj and obj:is_player() or obj:get_luaentity() then
 				obj:set_pos(find_destination_pos(minp, maxp) or vector.add(dest_portal, vector.new(0, 3.5, 0)))
@@ -104,7 +104,7 @@ minetest.register_abm({
 	chance = 1,
 	action = function(pos)
 		if preparing[minetest.pos_to_string(pos)] then return end
-		for _, obj in pairs(minetest.get_objects_inside_radius(pos, 1)) do
+		for obj in minetest.objects_inside_radius(pos, 1) do
 			if obj:get_hp() > 0 then
 				local luaentity = obj:get_luaentity()
 				if luaentity and luaentity.name == "vlf_throwing:ender_pearl" then
@@ -117,3 +117,5 @@ minetest.register_abm({
 		end
 	end,
 })
+
+vlf_portals.gateway_teleport = teleport

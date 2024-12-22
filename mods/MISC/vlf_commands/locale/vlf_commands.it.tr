@@ -1,6 +1,6 @@
 # textdomain: vlf_commands
-List bans=
-Ban list: @1=
+List bans=Mostra i divieti ai giocatori
+Ban list: @1=Lista dei divieti: @1
 Players can't be killed right now, damage has been disabled.=
 Player @1 does not exist.=
 You are already dead=

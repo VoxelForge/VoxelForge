@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_blackstone x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_blackstone x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Blackstone"
 msgstr "Чернокамень"
@@ -40,6 +40,9 @@ msgstr "Резной полированный чернокамень"
 msgid "Polished Blackstone Bricks"
 msgstr "Полированные чернокаменные кирпичи"
 
+msgid "Cracked Polished Blackstone Bricks"
+msgstr "Полированные кирпичи из черного камня с трещинами"
+
 msgid "Quartz Bricks"
 msgstr "Кварцевые кирпичи"
 
@@ -50,29 +53,29 @@ msgid "Eternal Soul Fire"
 msgstr "Вечный огонь душ"
 
 msgid "Blackstone Stairs"
-msgstr ""
+msgstr "Лестница из черного камня"
 
 msgid "Blackstone Slab"
 msgstr "Чернокаменная плита"
 
 msgid "Polished Blackstone Stairs"
-msgstr ""
+msgstr "Полированная лестница из черного камня"
 
 msgid "Polished Blackstone Slab"
 msgstr "Полированная чернокаменная плита"
 
 msgid "Blackstone Brick Stairs"
-msgstr ""
+msgstr "Лестница из кирпича черного камня"
 
 msgid "Blackstone Brick Slab"
-msgstr ""
-
-msgid "Blackstone Wall"
-msgstr "Стена из чернокамня"
+msgstr "Плита из кирпича черного камня"
 
 msgid "Soul Torch"
 msgstr "Факел душ"
 
 msgid "Torches are light sources which can be placed at the side or on the top of most blocks."
 msgstr "Факелы это источники света, которые могут быть размещены сбоку или сверху большинства блоков."
+
+msgid "Blackstone Wall"
+msgstr "Стена из чернокамня"
 

@@ -143,6 +143,7 @@ for s=1, #surfaces do
 		_vlf_shears_drop = { "vlf_ocean:seagrass" },
 		_vlf_hardness = 0,
 		_vlf_blast_resistance = 0,
+		_vlf_baseitem = "vlf_ocean:seagrass",
 	})
 	if mod_doc and surfaces[s][1] ~= "dirt" then
 		doc.add_entry_alias("nodes", "vlf_ocean:seagrass_dirt", "nodes", "vlf_ocean:seagrass_"..surfaces[s][1])

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_ocean x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_ocean x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Tube Coral Block"
 msgstr "Bloque de coral de tubo"
@@ -113,10 +113,10 @@ msgid "Corals fans grow on top of coral blocks and need to be inside a water sou
 msgstr "Los fanáticos de los corales crecen encima de los bloques de coral y necesitan estar dentro de una fuente de agua para sobrevivir. Sin agua, morirá, al igual que el bloque de coral que se encuentra debajo."
 
 msgid "Needs water to live"
-msgstr ""
+msgstr "Necesita agua para vivir"
 
 msgid "Grows on coral block of same species"
-msgstr ""
+msgstr "Crece en bloques de coral de la misma especie"
 
 msgid "Kelp"
 msgstr "Alga"
@@ -137,7 +137,7 @@ msgid "A decorative block that serves as a great furnace fuel."
 msgstr "Un bloque decorativo que sirve como un gran combustible de horno."
 
 msgid "Grows in water on dirt, sand, gravel"
-msgstr ""
+msgstr "Crece en agua sobre tierra, arena, grava"
 
 msgid "Sea Lantern"
 msgstr "Linterna de mar"
@@ -158,22 +158,22 @@ msgid "Dark Prismarine"
 msgstr "Prismarina oscura"
 
 msgid "Prismarine Stairs"
-msgstr ""
+msgstr "Escaleras de prismarina"
 
 msgid "Prismarine Slab"
-msgstr ""
+msgstr "Losa de prismarina"
 
 msgid "Prismarine Brick Stairs"
-msgstr ""
+msgstr "Escaleras de ladrillos de prismarina"
 
 msgid "Prismarine Brick Slab"
-msgstr ""
+msgstr "Losa de ladrillos de prismarina"
 
 msgid "Dark Prismarine Stairs"
-msgstr ""
+msgstr "Escaleras de prismarina oscura"
 
 msgid "Dark Prismarine Slab"
-msgstr ""
+msgstr "Losa de prismarina oscura"
 
 msgid "Prismarine Crystals"
 msgstr "Cristales de prismatina"
@@ -182,22 +182,22 @@ msgid "Prismarine Shard"
 msgstr "Fragmento de prismatina"
 
 msgid "Sea Pickle"
-msgstr ""
+msgstr "Pepino de mar"
 
 msgid "Sea pickles grow on dead brain coral blocks and provide light when underwater. They come in 4 sizes that vary in brightness."
-msgstr ""
+msgstr "Los pepinillos de mar crecen en bloques de coral y proporcionan luz cuando están bajo el agua. Vienen en colonias de hasta 4 tamaños que varían en brillo."
 
 msgid "It can only be placed on top of dead brain coral blocks. Placing a sea pickle on another sea pickle will make it grow and brighter."
-msgstr ""
+msgstr "Solo se puede colocar encima de bloques de coral. Colocar un pepinillo de mar sobre otro pepinillo de mar hará que crezca y brille más."
 
 msgid "Glows in the water"
-msgstr ""
+msgstr "Brilla en el agua"
 
 msgid "4 possible sizes"
-msgstr ""
+msgstr "4 tamaños posibles"
 
 msgid "Grows on dead brain coral block"
-msgstr ""
+msgstr "Crece en un bloque de coral muerto"
 
 msgid "Seagrass"
 msgstr "Hierba marina"

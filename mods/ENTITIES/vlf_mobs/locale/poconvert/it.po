@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_mobs x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_mobs x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Remove all, nametagged or tamed mobs within the specified distance or everywhere. When unspecified remove all mobs except tamed and nametagged ones."
-msgstr ""
+msgstr "Rimuovere ogni mob, i mob con l'etichetta del nome od i mob addomesticati entro la distanza specificata od ovunque. Rimuovere ogni mob eccetto quelli addomesticati e quelli con l'etichetta del nome dove non specificato."
 
 msgid "Invalid syntax."
-msgstr ""
+msgstr "Sintassi non valida."
 
 msgid "This allows you to place a single mob."
-msgstr ""
+msgstr "Ti permette di generare un singolo mob."
 
 msgid "Just place it where you want the mob to appear. Animals will spawn tamed, unless you hold down the sneak key while placing. If you place this on a mob spawner, you change the mob it spawns."
 msgstr ""

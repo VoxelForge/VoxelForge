@@ -1,10 +1,29 @@
 # textdomain: vlf_bamboo
-Bamboo Raft=
-Chest Bamboo Raft=
+### bamboo_base.lua ###
+A Block made of Bamboo stalks. Can be crafted into Bamboo Planks.=
+Block of Bamboo=
+Block of Stripped Bamboo=
+Bamboo Raft=Radeau en bambou
+Chest Bamboo Raft=Radeau de stockage en bambou
+Bamboo Bark=
+Bamboo Bark Slab=
+Bamboo Bark Stairs=
+Bamboo Button=
+Bamboo Door=
+Bamboo Fence=
+Bamboo Fence Gate=
+Bamboo Planks=
+Bamboo Pressure Plate=
+Bamboo Sign=
+Bamboo Slab=
+Bamboo Stairs=
+Bamboo Trapdoor=
+Stripped Bamboo Wood=
+The stripped wood of an Bamboo tree.=
 Bamboo=Bambou
-Bamboo Plant=
+Bamboo Plant=Plante de bambou
 Bamboo Mosaic Plank=Planche mosaïque de bambou
 Scaffolding=Échafaudage
-Scaffolding is a temporary structure to easily climb up while building that is easily removed=
-Scaffolding horizontal=
-Scaffolding block...=
+Scaffolding is a temporary structure to easily climb up while building that is easily removed=L'échafaudage est une structure temporaire qui permet de grimper facilement pendant la construction d'un bâtiment et qui peut être facilement enlevée
+Scaffolding horizontal=Échafaudage horizontal
+Scaffolding block...=Bloc d'échafaudage...

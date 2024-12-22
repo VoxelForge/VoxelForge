@@ -11,6 +11,7 @@ minetest.register_craftitem("vlf_farming:melon_seeds", {
 	_doc_items_usagehelp = S("Place the melon seeds on farmland (which can be created with a hoe) to plant a melon stem. Melon stems grow in sunlight and grow faster on hydrated farmland. When mature, the stem will attempt to grow a melon at the side. Rightclick an animal to feed it melon seeds."),
 	groups = {craftitem = 1, compostability = 30},
 	inventory_image = "vlf_farming_melon_seeds.png",
+	_vlf_places_plant = "vlf_farming:melontige_1",
 	on_place = function(itemstack, placer, pointed_thing)
 		return vlf_farming:place_seed(itemstack, placer, pointed_thing, "vlf_farming:melontige_1")
 	end,
@@ -24,7 +25,7 @@ local melon_base_def = {
 	tiles = {"farming_melon_top.png", "farming_melon_top.png", "farming_melon_side.png", "farming_melon_side.png", "farming_melon_side.png", "farming_melon_side.png"},
 	groups = {
 		handy = 1, axey = 1, plant = 1, building_block = 1, dig_by_piston = 1,
-		enderman_takable = 1, compostability = 65
+		enderman_takable = 1, compostability = 65, unsticky = 1
 	},
 	drop = {
 		max_items = 1,
@@ -111,6 +112,7 @@ for s=1,7 do
 		sounds = vlf_sounds.node_sound_leaves_defaults(),
 		_vlf_blast_resistance = 0,
 		_on_bone_meal = on_bone_meal,
+		_vlf_baseitem = "vlf_farming:melon_seeds",
 	})
 end
 
@@ -122,6 +124,7 @@ local stem_def = {
 	tiles = {"vlf_farming_melon_stem_disconnected.png^[colorize:#FFA800:127"},
 	wield_image = "vlf_farming_melon_stem_disconnected.png^[colorize:#FFA800:127",
 	inventory_image = "vlf_farming_melon_stem_disconnected.png^[colorize:#FFA800:127",
+	_vlf_baseitem = "vlf_farming:melon_seeds",
 }
 
 -- Register stem growth

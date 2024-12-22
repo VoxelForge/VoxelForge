@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_death_messages x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_death_messages x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "@1 went up in flames"
 msgstr "@1 сгорел(а) в языках пламени"
@@ -176,8 +176,8 @@ msgid "@1 went off with a bang due to a firework fired by @2 from @3"
 msgstr "@1 ушел с ударом из -за фейерверка, выпущенного @2 с @3"
 
 msgid "@1 was poked to death by a sweet berry bush"
-msgstr ""
+msgstr "@1 был до смерти заколот кустом сладких ягод"
 
 msgid "@1 was poked to death by a sweet berry bush whilst trying to escape @2"
-msgstr ""
+msgstr "@1 был до смерти заколот кустом сладких ягод, когда пытался сбежать от @2"
 

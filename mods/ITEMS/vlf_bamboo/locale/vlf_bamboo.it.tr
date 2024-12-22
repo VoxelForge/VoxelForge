@@ -1,7 +1,26 @@
 # textdomain: vlf_bamboo
-Bamboo Raft=
-Chest Bamboo Raft=
-Bamboo=
+### bamboo_base.lua ###
+A Block made of Bamboo stalks. Can be crafted into Bamboo Planks.=
+Block of Bamboo=
+Block of Stripped Bamboo=
+Bamboo Raft=Zattera di Bamboo
+Chest Bamboo Raft=Zattera in Bamboo con Baule
+Bamboo Bark=
+Bamboo Bark Slab=
+Bamboo Bark Stairs=
+Bamboo Button=
+Bamboo Door=
+Bamboo Fence=
+Bamboo Fence Gate=
+Bamboo Planks=
+Bamboo Pressure Plate=
+Bamboo Sign=
+Bamboo Slab=
+Bamboo Stairs=
+Bamboo Trapdoor=
+Stripped Bamboo Wood=
+The stripped wood of an Bamboo tree.=
+Bamboo=Bamboo
 Bamboo Plant=
 Bamboo Mosaic Plank=
 Scaffolding=

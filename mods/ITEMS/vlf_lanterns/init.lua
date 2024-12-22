@@ -22,7 +22,7 @@ local allowed_non_solid_nodes_floor = {
 	"vlf_lanterns:chain"
 }
 
-local allowed_non_solid_groups_floor = {"anvil", "wall", "glass", "fence", "fence_gate", "pane"}
+local allowed_non_solid_groups_floor = {"anvil", "wall", "glass", "fence", "fence_gate", "pane", "slab_top"}
 
 local allowed_non_solid_nodes_ceiling = {
 	"vlf_core:ice",

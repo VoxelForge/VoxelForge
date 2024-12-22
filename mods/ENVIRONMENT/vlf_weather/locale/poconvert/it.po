@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_weather x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_weather x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Gives ability to control weather"
-msgstr ""
+msgstr "Abilita il controllo meteorologico"
 
 msgid "Changes the weather to the specified parameter."
-msgstr ""
+msgstr "Cambia le condizioni meteorologiche al parametro specificato."
 
 msgid "Error: No weather specified."
-msgstr ""
+msgstr "Errore: Nessuna condizione meteorologica specificata."
 
 msgid "Error: Invalid parameters."
 msgstr ""

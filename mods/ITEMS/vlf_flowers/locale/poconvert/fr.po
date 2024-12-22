@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_flowers x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_flowers x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This is a small flower. Small flowers are mainly used for dye production and can also be potted."
 msgstr "Ceci est une petite fleur. Les petites fleurs sont principalement utilisées pour la production de teintures et peuvent également être mises en pot."
@@ -20,7 +20,7 @@ msgid "It can only be placed on a block on which it would also survive."
 msgstr "Elles ne peuvent être placées que sur un bloc sur lequel elles survivraient également."
 
 msgid "@1 (Top Part)"
-msgstr ""
+msgstr "@1 (Partie supérieure)"
 
 msgid "Poppy"
 msgstr "Coquelicot"
@@ -53,25 +53,25 @@ msgid "Blue Orchid"
 msgstr "Orchidée bleue"
 
 msgid "Wither Rose"
-msgstr ""
+msgstr "Rose de Wither"
 
 msgid "Lily of the Valley"
-msgstr ""
+msgstr "Muguet"
 
 msgid "Cornflower"
-msgstr ""
+msgstr "Bleuet"
 
 msgid "Peony"
 msgstr "Pivoine"
 
 msgid "A peony is a large plant which occupies two blocks. It is mainly used in dye production."
-msgstr "Une pivoine est une grande plante qui occupe deux blocs. Principalement utilisée dans la production de colorants. "
+msgstr "Une pivoine est une grande plante qui occupe deux blocs. Principalement utilisée dans la production de colorants."
 
 msgid "Rose Bush"
 msgstr "Rosier"
 
 msgid "A rose bush is a large plant which occupies two blocks. It is safe to touch it. Rose bushes are mainly used in dye production."
-msgstr "Un rosier est une grande plante qui occupe deux blocs. Il n'y a rien a craindre à le toucher. Les rosiers sont principalement utilisés dans la production de teinture. "
+msgstr "Un rosier est une grande plante qui occupe deux blocs. Il n'y a rien a craindre à le toucher. Les rosiers sont principalement utilisés dans la production de teinture."
 
 msgid "Lilac"
 msgstr "Lilas"

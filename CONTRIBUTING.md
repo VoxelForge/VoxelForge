@@ -1,39 +1,37 @@
-# Contributing to VoxelForge
-So you want to contribute to VoxelForge?
+# Contributing to Mineclonia
+So you want to contribute to Mineclonia?
 
 Wow, thank you! :-)
 
-VoxelForge is maintained by DragonWrangler1. By requesting that we to include your
-changes in this game, you agree that they fall under one of the following two licenses:
-GPLv3
-GPLv2
-which means they will become part of a free/libre software.
+Mineclonia is maintained by ryvnf and cora. By asking us to include your
+changes in this game, you agree that they fall under the terms of the GPLv3
+license, which means they will become part of a free/libre software.
 
 ## Inclusion criteria
 The project goals are listed under the project description in the
 [README](./src/branch/main/README.md). Contributions that do not align with the project goals
-will not be accepted. The main goal of VoxelForge is to be a stable and
+will not be accepted. The main goal of Mineclonia is to be a stable and
 performant clone of Minecraft. We suggest using the
-[Minecraft wiki](https://minecraft.fandom.com/wiki/Minecraft_Wiki) as a
+[Minecraft wiki](https://minecraft.wiki/w/Minecraft_Wiki) as a
 reference when implementing new features.
 
-While the primary goal of VoxelForge is to clone Minecraft gameplay, sometimes
+While the primary goal of Mineclonia is to clone Minecraft gameplay, sometimes
 contributions containing minor deviations from Minecraft will be included. These
-deviations should be motivated either by Minetest engine limitations or other
+deviations should be motivated either by Luanti engine limitations or other
 technical difficulties replicating Minecraft behaviour. The addition of bonus
 features not found in Minecraft will generally not be accepted. Most of the time
-we will suggest putting such features in a separate mod since VoxelForge has
+we will suggest putting such features in a separate mod since Mineclonia has
 modding support.
 
 Contributions which fix bugs or incomplete features are always welcome.
-Contributions of Minecraft features not yet implemented in VoxelForge are also
+Contributions of Minecraft features not yet implemented in Mineclonia are also
 welcome but should be complete before their inclusion. Assets like sounds and
 textures must come from sources which allow their use.
 
 ## Code Guidelines
 * Each mod must provide `mod.conf`.
 * Mod names are snake case, and newly added mods start with `vlf_`, e.g.
-  `vlf_core`, `vlf_farming`, `vlf_monster_eggs`. Keep in mind Minetest does not
+  `vlf_core`, `vlf_farming`, `vlf_monster_eggs`. Keep in mind Luanti does not
   support capital letters in mod names.
 * To export functions, store them inside a global table named like the mod,
   e.g.
@@ -59,7 +57,7 @@ function vlf_example.do_something()
 end
 ```
 
-* Use modern Minetest API, e.g. no usage of `minetest.env`
+* Use modern Luanti API, e.g. no usage of `minetest.env`
 * Tabs should be used for indent, spaces for alignment, e.g.
 
 ```lua

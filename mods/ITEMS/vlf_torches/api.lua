@@ -40,7 +40,7 @@ function vlf_torches.register_torch(def)
 	local itemstring = minetest.get_current_modname() .. ":" .. def.name
 	local itemstring_wall = itemstring .. "_wall"
 
-	def.light = def.light or minetest.LIGHT_MAX
+	def.light = def.light or 14
 	def.mesh_floor = def.mesh_floor or "vlf_torches_torch_floor.obj"
 	def.mesh_wall = def.mesh_wall or "vlf_torches_torch_wall.obj"
 	def.flame_type = def.flame_type or 1
@@ -53,6 +53,7 @@ function vlf_torches.register_torch(def)
 	groups.dig_by_water = 1
 	groups.destroy_by_lava_flow = 1
 	groups.dig_by_piston = 1
+	groups.unsticky = 1
 	groups.flame_type = def.flame_type or 1
 	groups.attaches_to_top = 1
 	groups.attaches_to_side = 1
@@ -148,6 +149,7 @@ function vlf_torches.register_torch(def)
 
 	local groups_wall = table.copy(groups)
 	groups_wall.torch = 2
+	groups_wall.not_in_creative_inventory = 1
 
 	local walldef = {
 		drawtype = "mesh",
@@ -162,6 +164,7 @@ function vlf_torches.register_torch(def)
 		groups = groups_wall,
 		drop = def.drop or itemstring,
 		use_texture_alpha = "clip",
+		_vlf_baseitem = itemstring,
 		selection_box = {
 			type = "wallmounted",
 			wall_side = {-0.5, -0.3, -0.1, -0.2, 0.325, 0.1},

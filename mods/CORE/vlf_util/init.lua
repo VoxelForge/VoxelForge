@@ -32,10 +32,19 @@ function table.merge(t, ...)
 end
 
 function table.reverse(t)
-	local len = #t
-	for i = len - 1, 1, -1 do
-		t[len] = table.remove(t, i)
+	local a, b = 1, #t
+	while a < b do
+		t[a], t[b] = t[b], t[a]
+		a, b = a + 1, b - 1
 	end
+end
+
+function table.max_index(t)
+	local max = 0
+	for k, _ in pairs(t) do
+		if type(k) == "number" and k > max then max = k end
+	end
+	return max
 end
 
 function table.count(t, does_it_count)
@@ -60,18 +69,6 @@ end
 function vlf_util.get_luaentity_by_id(id)
 	for _, e in pairs(minetest.luaentities) do
 		if e._id == id then return e end
-	end
-end
-
-local LOGGING_ON = minetest.settings:get_bool("vlf_logging_default", false)
-local LOG_MODULE = "[vlf2]"
-function vlf_util.vlf_log(message, module, bypass_default_logger)
-	local selected_module = LOG_MODULE
-	if module then
-		selected_module = module
-	end
-	if (bypass_default_logger or LOGGING_ON) and message then
-		minetest.log(selected_module .. " " .. message)
 	end
 end
 
@@ -101,9 +98,10 @@ This function is a simplified version of minetest.rotate_and_place.
 The Minetest function is seen as inappropriate because this includes mirror
 images of possible orientations, causing problems with pillar shadings.
 ]]
-function vlf_util.rotate_axis_and_place(itemstack, placer, pointed_thing, infinitestacks, invert_wall)
+function vlf_util.rotate_axis_and_place(itemstack, placer, pointed_thing, infinitestacks, _)
 	local rc = vlf_util.call_on_rightclick(itemstack, placer, pointed_thing)
 	if rc then return rc end
+
 	local wield_name = itemstack:get_name()
 
 	local above = pointed_thing.above
@@ -168,44 +166,6 @@ function vlf_util.rotate_axis(itemstack, placer, pointed_thing)
 	return itemstack
 end
 
--- Determine if pointer (player) is pointing above the middle of a pointed thing
--- Used when placing slabs and stairs.
-function vlf_util.is_pointing_above_middle(pointer, pointed_thing)
-	if
-		not pointer
-		or not pointer:is_player()
-		or not pointed_thing
-		or not pointed_thing.under
-		or not pointed_thing.above
-	then
-		return false
-	end
-
-	local p1 = pointed_thing.above
-
-	-- this uses placer:get_look_dir() which is not quite right on touch
-	-- with disabled crosshair, but the shootline used on the client isn't
-	-- available to the server; therefore just check the general look
-	-- direction to make it somewhat controllable by touch users (even if
-	-- standing on the pointed node) without changing anything for crosshair
-	-- users
-	--
-	-- if looking at a side face we check whether player is looking more
-	-- than a little bit above the center (keeping default positioning if
-	-- looking more or less at the center of the node) of the pointed node
-	--
-	-- if looking at the top/bottom face never/always return true (this is
-	-- achieved by using y of pointed_thing.above for comparison; note that
-	-- under.y == above.y if looking at a side face)
-	--
-	-- also note that it is actually beneficial that the exact position of
-	-- the touch event is not used, allowing touch users to touch any part
-	-- of the node face
-	local fpos = minetest.pointed_thing_to_face_pos(pointer, pointed_thing).y - p1.y
-
-	return (fpos > 0.05)
-end
-
 -- Returns position of the neighbor of a double chest node
 -- or nil if node is invalid.
 -- This function assumes that the large chest is actually intact
@@ -215,37 +175,37 @@ end
 function vlf_util.get_double_container_neighbor_pos(pos, param2, side)
 	if side == "right" then
 		if param2 == 0 then
-			return {x = pos.x - 1, y = pos.y, z = pos.z}
+			return vector.offset(pos, -1, 0, 0)
 		elseif param2 == 1 then
-			return {x = pos.x, y = pos.y, z = pos.z + 1}
+			return vector.offset(pos, 0, 0, 1)
 		elseif param2 == 2 then
-			return {x = pos.x + 1, y = pos.y, z = pos.z}
+			return vector.offset(pos, 1, 0, 0)
 		elseif param2 == 3 then
-			return {x = pos.x, y = pos.y, z = pos.z - 1}
+			return vector.offset(pos, 0, 0, -1)
 		end
 	else
 		if param2 == 0 then
-			return {x = pos.x + 1, y = pos.y, z = pos.z}
+			return vector.offset(pos, 1, 0, 0)
 		elseif param2 == 1 then
-			return {x = pos.x, y = pos.y, z = pos.z - 1}
+			return vector.offset(pos, 0, 0, -1)
 		elseif param2 == 2 then
-			return {x = pos.x - 1, y = pos.y, z = pos.z}
+			return vector.offset(pos, -1, 0, 0)
 		elseif param2 == 3 then
-			return {x = pos.x, y = pos.y, z = pos.z + 1}
+			return vector.offset(pos, 0, 0, 1)
 		end
 	end
 end
 
---- Iterates through all items in the given inventory and
---- returns the slot of the first item which matches a condition.
---- Returns nil if no item was found.
+-- Iterates through all items in the given inventory and
+-- returns the slot of the first item which matches a condition.
+-- Returns nil if no item was found.
 --- source_inventory: Inventory to take the item from
 --- source_list: List name of the source inventory from which to take the item
 --- destination_inventory: Put item into this inventory
 --- destination_list: List name of the destination inventory to which to put the item into
 --- condition: Function which takes an itemstack and returns true if it matches the desired item condition.
---- If set to nil, the slot of the first item stack will be taken unconditionally.
---- dst_inventory and dst_list can also be nil if condition is nil.
+---            If set to nil, the slot of the first item stack will be taken unconditionally.
+-- dst_inventory and dst_list can also be nil if condition is nil.
 function vlf_util.get_eligible_transfer_item_slot(src_inventory, src_list, dst_inventory, dst_list, condition)
 	local size = src_inventory:get_size(src_list)
 	local stack
@@ -275,7 +235,7 @@ end
 -- Possible failures: No item in source slot, destination inventory full
 function vlf_util.move_item(source_inventory, source_list, source_stack_id, destination_inventory, destination_list)
 	if source_stack_id == -1 then
-		source_stack_id = vlf_util.get_first_occupied_inventory_slot(source_inventory, source_list)
+		source_stack_id =  vlf_util.get_eligible_transfer_item_slot(source_inventory, source_list)
 		if source_stack_id == nil then
 			return false
 		end
@@ -292,6 +252,14 @@ function vlf_util.move_item(source_inventory, source_list, source_stack_id, dest
 			stack:take_item()
 			source_inventory:set_stack(source_list, source_stack_id, stack)
 			destination_inventory:add_item(destination_list, new_stack)
+			local source_location = source_inventory:get_location()
+			if source_location and source_location.type == "node" then
+				vlf_redstone.update_comparators(source_location.pos)
+			end
+			local destination_location = destination_inventory:get_location()
+			if destination_location.type == "node" then
+				vlf_redstone.update_comparators(destination_location.pos)
+			end
 			return true
 		end
 	end
@@ -374,7 +342,7 @@ function vlf_util.move_item_container(source_pos, destination_pos, source_list, 
 		source_stack_id = vlf_util.get_eligible_transfer_item_slot(sinv, source_list, dinv, dpos, cond)
 		if not source_stack_id then
 			-- Try again if source is a double container
-			if sctype == 5 then
+			if snode and sctype == 5 then
 				spos = vlf_util.get_double_container_neighbor_pos(spos, snode.param2, "left")
 				smeta = minetest.get_meta(spos)
 				sinv = smeta:get_inventory()
@@ -418,7 +386,7 @@ function vlf_util.move_item_container(source_pos, destination_pos, source_list, 
 			local ok = vlf_util.move_item(sinv, source_list, source_stack_id, dinv, destination_list)
 
 			-- Try transfer to neighbor node if transfer failed and double container
-			if not ok and dctype == 5 then
+			if dnode and not ok and dctype == 5 then
 				dpos = vlf_util.get_double_container_neighbor_pos(dpos, dnode.param2, "left")
 				dmeta = minetest.get_meta(dpos)
 				dinv = dmeta:get_inventory()
@@ -438,12 +406,6 @@ function vlf_util.move_item_container(source_pos, destination_pos, source_list, 
 	return false
 end
 
--- Returns the ID of the first non-empty slot in the given inventory list
--- or nil, if inventory is empty.
-function vlf_util.get_first_occupied_inventory_slot(inventory, listname)
-	return vlf_util.get_eligible_transfer_item_slot(inventory, listname)
-end
-
 local function drop_item_stack(pos, stack)
 	if not stack or stack:is_empty() then return end
 	local drop_offset = vector.new(math.random() - 0.5, 0, math.random() - 0.5)
@@ -457,11 +419,7 @@ function vlf_util.drop_items_from_meta_container(lists)
 	--this check is provided as compatibility to the old (pre 0.90) behavior which would essentially always assume "main" as the list to drop
 		lists = { (lists or "main") }
 	end
-	return function(pos, oldnode, oldmetadata)
-		--[[local inv, meta
-
-		meta = minetest.get_meta(pos)]]
-		-- TODO: Is this check required?
+	return function(pos, _, oldmetadata)
 		if oldmetadata and oldmetadata.inventory then
 			for _,listname in pairs(lists) do
 				-- process in after_dig_node callback
@@ -475,34 +433,33 @@ function vlf_util.drop_items_from_meta_container(lists)
 		else
 			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
-			for listname in pairs(lists) do
+			for _, listname in pairs(lists) do
 				for i = 1, inv:get_size(listname) do
 					drop_item_stack(pos, inv:get_stack(listname, i))
 				end
 			end
-			meta:from_table(oldmetadata)
-		end
-
---[[		inv = meta:get_inventory()
-
-		-- Generate loot if not already done so
-		-- FIXME: If a player digs container, they are not recognised in loot context
-		vl_loot.generate_container_loot_if_exists(pos, nil, inv, listname)
-		-- Drop all stacks
-		for i = 1, inv:get_size(listname) do
-			drop_item_stack(pos, inv:get_stack(listname, i))
-		end
-		-- Clear metadata if necessary
-		if meta then
 			meta:from_table()
-		end]]
+		end
 	end
+end
+
+local fuel_cache = {}
+
+-- Returns the burntime of an item
+-- Returns false otherwise
+function vlf_util.get_burntime(item)
+	assert(minetest.get_current_modname() == nil, "vlf_util.is_fuel and vlf_util.get_burntime cannot be called when loading mods")
+	if fuel_cache[item] == nil then
+		fuel_cache[item] = minetest.get_craft_result({method = "fuel", width = 1, items = {item}}).time
+	end
+
+	return fuel_cache[item]
 end
 
 -- Returns true if item (itemstring or ItemStack) can be used as a furnace fuel.
 -- Returns false otherwise
 function vlf_util.is_fuel(item)
-	return minetest.get_craft_result({method = "fuel", width = 1, items = {item}}).time ~= 0
+	return vlf_util.get_burntime(item) ~= 0
 end
 
 -- Returns a on_place function for plants
@@ -643,41 +600,40 @@ function vlf_util.deal_damage(target, damage, vlf_reason)
 			if luaentity:deal_damage(damage, vlf_reason or {type = "generic"}) ~= true then
 				vlf_damage.run_damage_callbacks(target, damage, vlf_reason or {type = "generic"})
 			end
-			return
+			return damage
 		elseif luaentity.is_mob then
-			if vlf_reason.source and vlf_reason.source.is_player and vlf_reason.source:is_player() then
-				luaentity.last_player_hit_time = minetest.get_gametime()
-				luaentity.last_player_hit_name = vlf_reason.source:get_player_name()
+			if not luaentity:receive_damage (vlf_reason, damage) then
+				damage = 0
+				return damage
 			end
-			if luaentity.health - damage > 0 then
-				luaentity.health = luaentity.health - damage
+			if luaentity.health > 0 then
 				vlf_damage.run_damage_callbacks(target, damage, vlf_reason or {type = "generic"})
 			else
-				luaentity.health = luaentity.health - damage
 				vlf_damage.run_death_callbacks(target, vlf_reason or {type = "generic"})
 			end
-			return
+			return damage
 		else
 			local armorgroups = target:get_armor_groups()
 			if armorgroups and not armorgroups.immortal then
 				local puncher = vlf_reason and vlf_reason.direct or target
-				if puncher and puncher.get_pos and puncher:get_pos() then
+				if puncher and puncher.get_pos and puncher:get_pos() and target and target.get_pos and target:get_pos() and target.punch then
 					target:punch(puncher, 1.0, {full_punch_interval = 1.0, damage_groups = {fleshy = damage}}, vector.direction(puncher:get_pos(), target:get_pos()), damage)
 				end
 			end
 		end
-	end
+	else
+		local hp = target:get_hp()
+		local armorgroups = target:get_armor_groups()
 
-	local hp = target:get_hp()
-	local armorgroups = target:get_armor_groups()
-
-	if hp > 0 and armorgroups and not armorgroups.immortal then
-		if target:is_player () then
-			vlf_damage.damage_player (target, damage, vlf_reason)
-		else
-			target:set_hp (hp - damage, {_vlf_reason = vlf_reason})
+		if hp > 0 and armorgroups and not armorgroups.immortal then
+			if target:is_player () then
+				vlf_damage.damage_player (target, damage, vlf_reason)
+			else
+				target:set_hp (hp - damage, {_vlf_reason = vlf_reason})
+			end
 		end
 	end
+	return damage
 end
 
 function vlf_util.get_hp(obj)
@@ -686,7 +642,7 @@ function vlf_util.get_hp(obj)
 	if luaentity and luaentity.is_mob then
 		return luaentity.health
 	elseif obj:is_player () then
-		return vlf_damage.get_hp (obj)
+	   return vlf_damage.get_hp (obj)
 	else
 		return obj:get_hp()
 	end
@@ -707,15 +663,6 @@ function vlf_util.get_inventory(object, create)
 	end
 end
 
-function vlf_util.get_wielded_item(object)
-	if object:is_player() then
-		return object:get_wielded_item()
-	else
-		-- ToDo: implement getting wielditems from mobs as soon as mobs have wielditems
-		return ItemStack()
-	end
-end
-
 function vlf_util.get_object_name(object)
 	if object:is_player() then
 		return object:get_player_name()
@@ -730,34 +677,30 @@ function vlf_util.get_object_name(object)
 	end
 end
 
-function vlf_util.replace_mob(obj, mob)
-	if not obj or not obj:get_pos() then return end
-	local l = obj:get_luaentity()
-	if not l.is_mob then return end
-	local rot = obj:get_yaw()
-	local pos = obj:get_pos()
-	local n = obj:get_properties().nametag
-	obj = minetest.add_entity(pos, mob)
-	if not obj or not obj:get_pos() then return end
-	if l.on_mob_replace then
-		l:on_mob_replace(obj:get_luaentity())
-	end
-	l:safe_remove()
-	l = obj:get_luaentity()
-	if l.is_mob then
-		l:set_nametag(n)
-	else
-		obj:set_properties({nametag = n})
-	end
-	obj:set_yaw(rot)
-	return obj
+function vlf_util.replace_mob (obj, mob_type, propagate_equipment)
+	local sacrifice = obj:get_luaentity ()
+	sacrifice:replace_with (mob_type, propagate_equipment)
 end
 
-function vlf_util.get_pointed_thing(player, liquid)
+-- This function is essentially a wrapper around minetest.raycast to get the currently pointed at "pointed_thing"
+-- The last "ignore" argument is either a table of nodename to ignore in the raycast or a func(pointed_thing) that
+-- returns true if that position in the ray shall be discounted.
+function vlf_util.get_pointed_thing(player, objects, liquid, ignore)
 	local pos = vector.offset(player:get_pos(), 0, player:get_properties().eye_height, 0)
-	local look_dir = vector.multiply(player:get_look_dir(), 5)
+	local def = player:get_wielded_item():get_definition()
+	local range = math.ceil(def and def.range or ItemStack():get_definition().range or tonumber(minetest.settings:get("vlf_hand_range")) or 4.5)
+	local look_dir = vector.multiply(player:get_look_dir(), range)
 	local pos2 = vector.add(pos, look_dir)
-	local ray = minetest.raycast(pos, pos2, false, liquid)
+	local ray = minetest.raycast(pos, pos2, objects, liquid)
+
+	if ignore then
+		for pointed_thing in ray do
+			if (type(ignore) == "table" and table.indexof(ignore, minetest.get_node(pointed_thing.under).name) == -1 ) or
+			(type(ignore) == "function" and not ignore(pointed_thing)) then
+				return pointed_thing
+			end
+		end
+	end
 	return ray:next()
 end
 
@@ -849,13 +792,22 @@ function vlf_util.set_properties(obj, props)
 end
 
 function vlf_util.set_bone_position(obj, bone, pos, rot)
-	--TODO: starting with minetest 5.9 this makes deprecation warnings since "set/get_bone_overrides" using radians is now preferred.
-	-- Initial attempts of fixing this (978c97586ef66453162d652265b92bce20e1cd3b) did not work - figure out why.
-	local current_pos, current_rot = obj:get_bone_position(bone)
+	local current_pos, current_rot
+	if obj.get_bone_override then --when < minetest 5.9 isn't supported anymore remove these checks and only use the "override" variant and radians
+		local ov = obj:get_bone_override(bone)
+		current_pos = ov.position.vec
+		current_rot = vector.apply(ov.rotation.vec, math.deg)
+	else
+		current_pos, current_rot = obj:get_bone_position(bone)
+	end
 	local pos_equal = not pos or vector.equals(vector.round(current_pos), vector.round(pos))
 	local rot_equal = not rot or vector.equals(vector.round(current_rot), vector.round(rot))
 	if not pos_equal or not rot_equal then
-		obj:set_bone_position(bone, pos or current_pos, rot or current_rot)
+		if obj.set_bone_override then --when < minetest 5.9 isn't supported anymore remove these checks and only use the "override" variant and radians
+			obj:set_bone_override(bone, {position = {vec = pos or current_pos, absolute = true}, rotation = {vec = vector.apply(rot or current_rot, math.rad), absolute = true}})
+		else
+			obj:set_bone_position(bone, pos or current_pos, rot or current_rot)
+		end
 	end
 end
 
@@ -884,13 +836,12 @@ function vlf_util.bypass_buildable_to(func)
 		return user and user:get_player_name() or ""
 	end
 
-	-- Returns a logging function. For empty names, does not log.
-	local function make_log(name)
-		return name ~= "" and minetest.log or function() end
+	local function log(name, ...)
+		return name ~= "" and minetest.log(...)
 	end
 
 	local function check_attached_node(p, n, group_rating)
-		local def = core.registered_nodes[n.name]
+		local def = minetest.registered_nodes[n.name]
 		local d = vector.zero()
 		if group_rating == 3 then
 			-- always attach to floor
@@ -909,11 +860,11 @@ function vlf_util.bypass_buildable_to(func)
 				-- to voxelmanip placing a wallmounted node without resetting a
 				-- pre-existing param2 value that is out-of-range for facedir.
 				-- The fallback vector corresponds to param2 = 0.
-				d = core.facedir_to_dir(n.param2) or vector.new(0, 0, 1)
+				d = minetest.facedir_to_dir(n.param2) or vector.new(0, 0, 1)
 			elseif (def.paramtype2 == "4dir" or
 				def.paramtype2 == "color4dir") then
 				-- Similar to facedir handling
-				d = core.fourdir_to_dir(n.param2) or vector.new(0, 0, 1)
+				d = minetest.fourdir_to_dir(n.param2) or vector.new(0, 0, 1)
 			end
 		elseif def.paramtype2 == "wallmounted" or
 			def.paramtype2 == "colorwallmounted" then
@@ -922,13 +873,13 @@ function vlf_util.bypass_buildable_to(func)
 
 			-- The fallback vector here is used for the same reason as
 			-- for facedir nodes.
-			d = core.wallmounted_to_dir(n.param2) or vector.new(0, 1, 0)
+			d = minetest.wallmounted_to_dir(n.param2) or vector.new(0, 1, 0)
 		else
 			d.y = -1
 		end
 		local p2 = vector.add(p, d)
-		local nn = core.get_node(p2).name
-		local def2 = core.registered_nodes[nn]
+		local nn = minetest.get_node(p2).name
+		local def2 = minetest.registered_nodes[nn]
 		if def2 and not def2.walkable then
 			return false
 		end
@@ -949,7 +900,6 @@ function vlf_util.bypass_buildable_to(func)
 		local above = pointed_thing.above
 		local oldnode_above = minetest.get_node_or_nil(above)
 		local playername = user_name(placer)
-		local log = make_log(playername)
 
 		if not oldnode_under or not oldnode_above then
 			log("info", playername .. " tried to place"
@@ -1096,21 +1046,6 @@ function vlf_util.bypass_buildable_to(func)
 	end
 end
 
---Check for a protection violation in a given area.
--- Applies is_protected() to a 3D lattice of points in the defined volume. The points are spaced
--- evenly throughout the volume and have a spacing similar to, but no larger than, "interval".
-function vlf_util.check_area_protection(pos1, pos2, player, interval)
-	local name = player and player:get_player_name() or ""
-
-	local protected_pos = minetest.is_area_protected(pos1, pos2, name, interval)
-	if protected_pos then
-		minetest.record_protection_violation(protected_pos, name)
-		return true
-	end
-
-	return false
-end
-
 --Check for a protection violation on a single position.
 function vlf_util.check_position_protection(position, player)
 	local name = player and player:get_player_name() or ""
@@ -1141,37 +1076,6 @@ end
 function vlf_util.get_pos_p2(pos)
 	local biomedef = minetest.registered_biomes[minetest.get_biome_name(minetest.get_biome_data(pos).biome)]
 	return biomedef and biomedef._vlf_palette_index or 0
-end
-
-local function between(x, y, z) -- x is between y and z (inclusive)
-	return y <= x and x <= z
-end
-
-function vlf_util.in_cube(tpos, wpos1, wpos2)
-	local xmax=wpos2.x
-	local xmin=wpos1.x
-
-	local ymax=wpos2.y
-	local ymin=wpos1.y
-
-	local zmax=wpos2.z
-	local zmin=wpos1.z
-	if wpos1.x > wpos2.x then
-		xmax=wpos1.x
-		xmin=wpos2.x
-	end
-	if wpos1.y > wpos2.y then
-		ymax=wpos1.y
-		ymin=wpos2.y
-	end
-	if wpos1.z > wpos2.z then
-		zmax=wpos1.z
-		zmin=wpos2.z
-	end
-	if between(tpos.x, xmin, xmax) and between(tpos.y, ymin, ymax) and between(tpos.z, zmin, zmax) then
-		return true
-	end
-	return false
 end
 
 function vlf_util.traverse_tower(pos, dir, callback)
@@ -1232,46 +1136,12 @@ function vlf_util.replace_node_vm(pos1, pos2, mat_from, mat_to, is_group)
 	vm:write_to_map(true)
 end
 
--- Voxel manip function to replace a node type with another in a circle
--- Will also set param2 on changed nodes if provided.
-function vlf_util.circle_replace_node_vm(radius, pos, y, mat_from, mat_to, param2)
-	local c_from = minetest.get_content_id(mat_from)
-	local c_to = minetest.get_content_id(mat_to)
-
-	-- Using new as y is not relative
-	local pos1 = vector.new(pos.x - radius, y, pos.z - radius)
-	local pos2 = vector.new(pos.x + radius, y, pos.z + radius)
-
-	local vm = minetest.get_voxel_manip()
-	local emin, emax = vm:read_from_map(pos1, pos2)
-	local a = VoxelArea:new({
-		MinEdge = emin,
-		MaxEdge = emax,
-	})
-	local data = vm:get_data()
-
-	local param2data = vm:get_param2_data()
-
-	for z = -radius, radius do
-		for x = -radius, radius do
-			if x * x + z * z <= radius * radius + radius * 0.8 then
-				local vi = a:index(pos.x + x, y, pos.z + z)
-				if data[vi] == c_from then
-					data[vi] = c_to
-					if param2 then
-						param2data[vi] = param2
-					end
-				end
-			end
-		end
+-- TODO: Remove and use minetest.bulk_swap_node directly after abandoning
+-- compatibility with Minetest versions were it is not present.
+vlf_util.bulk_swap_node = minetest.bulk_swap_node or function(positions, node)
+	for _, pos in pairs(positions) do
+		minetest.swap_node(pos, node)
 	end
-
-	-- Write data
-	vm:set_data(data)
-	if param2 then
-		vm:set_param2_data(param2data)
-	end
-	vm:write_to_map(true)
 end
 
 -- Voxel manip function to change nodes if they don't match in an area.
@@ -1349,86 +1219,11 @@ function vlf_util.circle_bulk_set_node_vm(radius, pos, y, mat_to, param2)
 	vm:write_to_map(true)
 end
 
-function vlf_util.create_ground_slope(pos, fwidth, fdepth)
-
-	local biome_data = minetest.get_biome_data(pos)
-	local biome_name = minetest.get_biome_name(biome_data.biome)
-	local reg_biome = minetest.registered_biomes[biome_name]
-
-	local mat = "vlf_core:dirt_with_grass"
-	--local filler = "vlf_core:dirt"
-	local stone = "vlf_core:stone"
-	local grass_idx = 0
-
-	-- Use biome info if we have it
-	if reg_biome and reg_biome.node_top then
-		mat = reg_biome.node_top
-		grass_idx = reg_biome._vlf_palette_index or 0
-		--[[if reg_biome.node_filler then
-			filler = reg_biome.node_filler
-			if minetest.get_item_group(filler, "material_sand") > 0 then
-				--if reg_biome.node_stone then
-					--filler = reg_biome.node_stone
-				--end
-			end
-		elseif reg_biome.node_stone then
-			--filler = reg_biome.node_stone
-		end]]
-	end
-
-	local y = pos.y
-
-	local radius = math.floor(((math.max(fwidth, fdepth)) / 4)) + ground_padding
-	if radius <= 0 then
-		return
-	end
-
-	local needs_support = minetest.get_item_group(mat, "material_sand") > 0
-
-	if needs_support then
-		radius = radius + 1
-	end
-
-	for count2 = 1, 1 do
-		if not needs_support then
-			radius = radius + 2
-		else
-			radius = radius + 1
-		end
-
-		vlf_util.circle_bulk_set_node_vm(radius, pos, y, mat, grass_idx)
-		y = y - 1
-	end
-
-	if needs_support then
-		radius = radius + 2
-	end
---	local node = minetest.get_node(pos).name == "air"
-		for count3 = 1, 10 do
-			radius = radius + 1
-
-			if radius <= 2 then
-				break
-			end
-			vlf_util.circle_bulk_set_node_vm(radius, pos, y, mat, grass_idx)
-			y = y - 1
-		end
-		-- this function gives 20 nodes that can be modified for structures.
-		for count4 = 11, 20 do
-			radius = radius - 2
-			if radius <= 4 then
-				break
-			end
-			vlf_util.circle_bulk_set_node_vm(radius, pos, y, stone)
-			y = y - 1
-		end
-	end
-
--- This function creates a slope shape under the selected positon.
+-- This function creates a turnip shape under the selected positon.
 -- The biome for the position will be used to select the top and filler layers.
 -- The shape is slightly altered for sandy top layers.
 -- The radius of the top layer is max(fwidth, fdepth) / 2 + ground_padding
-function vlf_util.create_ground_slope_village(pos, fwidth, fdepth)
+function vlf_util.create_ground_turnip(pos, fwidth, fdepth)
 
 	local biome_data = minetest.get_biome_data(pos)
 	local biome_name = minetest.get_biome_name(biome_data.biome)
@@ -1456,18 +1251,21 @@ function vlf_util.create_ground_slope_village(pos, fwidth, fdepth)
 
 	local y = pos.y
 
-	local radius = math.floor(((math.max(fwidth, fdepth)) / 4)) + ground_padding
+	local radius = math.floor(((math.max(fwidth, fdepth)) / 2)) + ground_padding
 	if radius <= 0 then
 		return
 	end
 
+	-- usually we add 2 layers, each 2 blocks wider, then fill smaller layers below
+	-- but for sand we add 2 layers 1 wider and then make the first fill layer wider
+	-- otherwsie the sand can collapse and as funny as it is, it is annoying
 	local needs_support = minetest.get_item_group(mat, "material_sand") > 0
 
 	if needs_support then
 		radius = radius + 1
 	end
 
-	for count2 = 1, 3 do
+	for _ = 1, 2 do
 		if not needs_support then
 			radius = radius + 2
 		else
@@ -1481,21 +1279,15 @@ function vlf_util.create_ground_slope_village(pos, fwidth, fdepth)
 	if needs_support then
 		radius = radius + 2
 	end
---This allows for 20 nodes to get modified.
-	for count3 = 1, 10 do
-		radius = radius + 1
+
+	for _ = 1, 5 do
+		radius = radius - 1
+
 		if radius <= 2 then
 			break
 		end
-		vlf_util.circle_bulk_set_node_vm(radius, pos, y, mat, grass_idx)
-		y = y - 1
-	end
-	for count4 = 11, 20 do
-		radius = radius - math.random(0, 1)
-		if radius <= 2 then
-			break
-		end
-		vlf_util.circle_bulk_set_node_vm(radius, pos, y, mat, filler)
+
+		vlf_util.circle_bulk_set_node_vm(radius, pos, y, filler)
 		y = y - 1
 	end
 end
@@ -1509,110 +1301,6 @@ function minetest.get_natural_light(pos,tod)
 	if st then return res end
 	minetest.log("error","["..tostring(minetest.get_current_modname()).."] minetest.get_natural_light would have crashed: \n https://codeberg.org/mineclonia/mineclonia/issues/17\n".. tostring(res))
 	return 0
-end
-
-local converter = {
-	{1000, "M"},
-	{900, "CM"},
-	{500, "D"},
-	{400, "CD"},
-	{100, "C"},
-	{90, "XC"},
-	{50, "L"},
-	{40, "XL"},
-	{10, "X"},
-	{9, "IX"},
-	{5, "V"},
-	{4, "IV"},
-	{1, "I"}
-}
-
-vlf_util.to_roman = function(number)
-	local r = ""
-	local a = number
-	local i = 1
-	while a > 0 do
-		if a >= converter[i][1] then
-			a = a - converter[i][1]
-			r = r.. converter[i][2]
-		else
-			i = i + 1
-		end
-	end
-	return r
-end
-
-local function valid_object_iterator(objects)
-	local i = 0
-	local function next_valid_object()
-		i = i + 1
-		local obj = objects[i]
-		if obj == nil then
-			return
-		end
-		if obj:get_pos() then
-			return obj
-		end
-		return next_valid_object()
-	end
-	return next_valid_object
-end
-
-local function valid_object_iterator_in_radius(objects, center, radius)
-	local i = 0
-	local function next_valid_object()
-		i = i + 1
-		local obj = objects[i]
-		if obj == nil then
-			return
-		end
-		local p = obj:get_pos()
-		if p and vector.distance(p, center) <= radius then
-			return obj
-		end
-		return next_valid_object()
-	end
-	return next_valid_object
-end
-
-function vlf_util.connected_players(center, radius)
-	local pls = minetest.get_connected_players()
-	if not center then return valid_object_iterator(pls) end
-	return valid_object_iterator_in_radius(pls, center, radius or 1)
-end
-
-if not minetest.objects_inside_radius then --polyfill for pre minetest 5.9
-	function core.objects_inside_radius(center, radius)
-		return valid_object_iterator(core.get_objects_inside_radius(center, radius))
-	end
-
-	function core.objects_in_area(min_pos, max_pos)
-		return valid_object_iterator(core.get_objects_in_area(min_pos, max_pos))
-	end
-end
-
-vlf_util.ringbuffer = dofile(modpath.."/ringbuffer.lua")
---dofile(modpath.."/compat.lua")
-
-local palette_indexes = {grass_palette_index = 0, foliage_palette_index = 0, water_palette_index = 0}
-function vlf_util.get_palette_indexes_from_pos(pos)
-	local biome_data = minetest.get_biome_data(pos)
-	local biome = biome_data.biome
-	local biome_name = minetest.get_biome_name(biome)
-	local reg_biome = minetest.registered_biomes[biome_name]
-	if reg_biome and reg_biome._vlf_grass_palette_index and reg_biome._vlf_foliage_palette_index and reg_biome._vlf_water_palette_index then
-		local gpi = reg_biome._vlf_grass_palette_index
-		local fpi = reg_biome._vlf_foliage_palette_index
-		local wpi = reg_biome._vlf_water_palette_index
-		local palette_indexes = {grass_palette_index = gpi, foliage_palette_index = fpi, water_palette_index = wpi}
-		return palette_indexes
-	elseif reg_biome and reg_biome._vlf_water_palette_index then
-			local wpi = reg_biome._vlf_water_palette_index
-		local palette_indexes = {water_palette_index = wpi}
-		return palette_indexes
-	else
-		return palette_indexes
-	end
 end
 
 local function get_visual_size(obj)
@@ -1640,3 +1328,195 @@ function vlf_util.detach_object(obj, change_pos, callback)
 		end, obj)
 	end
 end
+
+-- Create a translator that supports dynamic generation of translatable strings.
+--
+-- The function returned by `get_dynamic_translator` can be used just like the
+-- standard translator created by `minetest.get_translator`. The recommended
+-- name is `D`, but - in contrast to the standard translator - the name used in
+-- the source files is not important.
+--
+-- While the standard translation tools extract string constants from the source
+-- files themselves, the extended translation workflow records all values passed
+-- to the dynamic translator *during mod load time*.
+--
+-- The extended workflow includes the standard tooling and both can be used
+-- together in the same mod. If a textdomain is not specified when creating the
+-- dynamic translator, `minetest.get_current_modname()` is used as the
+-- textdomain for that particular invocation. So API mods using this mechanism
+-- can create translatable strings in the textdomain of their calling mods.
+if minetest.get_modpath("vlfa_generate_translation_strings") then
+	vlfa_generated_translations = {}
+	function vlf_util.get_dynamic_translator(textdomain)
+		return function(s, ...)
+			local mod = textdomain or minetest.get_current_modname()
+			vlfa_generated_translations[mod] = vlfa_generated_translations[mod] or {}
+			table.insert(vlfa_generated_translations[mod], s)
+			return minetest.translate(mod, s, ...)
+		end
+	end
+else
+	function vlf_util.get_dynamic_translator(textdomain)
+		return function(s, ...)
+			local mod = textdomain or minetest.get_current_modname()
+			return minetest.translate(mod, s, ...)
+		end
+	end
+end
+
+function vlf_util.float_random(from, to)
+	to = to or 1
+	return from + ( math.random() * ( to - from ))
+end
+
+local roman_conversion = {
+	{1000, "M"},
+	{900, "CM"},
+	{500, "D"},
+	{400, "CD"},
+	{100, "C"},
+	{90, "XC"},
+	{50, "L"},
+	{40, "XL"},
+	{10, "X"},
+	{9, "IX"},
+	{5, "V"},
+	{4, "IV"},
+	{1, "I"}
+}
+function vlf_util.to_roman(number)
+	local r = ""
+	local a = number
+	local i = 1
+	while a > 0 do
+		if a >= roman_conversion[i][1] then
+			a = a - roman_conversion[i][1]
+			r = r.. roman_conversion[i][2]
+		else
+			i = i + 1
+		end
+	end
+	return r
+end
+
+function vlf_util.queue()
+	return {
+		front = 1,
+		back = 1,
+		queue = {},
+		enqueue = function(self, value)
+			self.queue[self.back] = value
+			self.back = self.back + 1
+		end,
+		dequeue = function(self) local value = self.queue[self.front]
+			if not value then
+				return
+			end
+			self.queue[self.front] = nil
+			self.front = self.front + 1
+			return value
+		end,
+		size = function(self)
+			return self.back - self.front
+		end,
+	}
+end
+
+function vlf_util.calculate_knockback (velocity, factor, resistance, standing, x, z)
+	local factor = factor * (1.0 - math.min (1.0, resistance))
+	if factor <= 1.0e-5 then
+		return vector.zero ()
+	end
+	local v = vector.normalize (vector.new (x, 0, z)) * factor
+
+	-- Counterbalance it with a reduced version of the current
+	-- velocity.
+	v.x = (velocity.x / 2 + (v.x * 20)) * 0.546
+	v.z = (velocity.z / 2 + (v.z * 20)) * 0.546
+	-- Apply vertical force if standing
+	v.y = standing and (math.min (0.4 * 20, velocity.y / 2.0 + factor * 10)) or velocity.y
+	return v
+end
+
+function vlf_util.get_wielditem (object)
+	local entity = object:get_luaentity ()
+	if object:is_player () then
+		return object:get_wielded_item ()
+	elseif entity and entity.is_mob then
+		return entity:get_wielditem ()
+	end
+	return ItemStack ()
+end
+
+local rng = PcgRandom (os.time ())
+
+function vlf_util.dist_triangular (base, magnitude)
+	local r = 1 / 2147483647
+	local dist = (rng:next (0, 2147483647) * r
+			- rng:next (0, 2147483647) * r)
+	return base + magnitude * dist
+end
+
+function vlf_util.target_eye_height (attack)
+	local luaentity = attack:get_luaentity ()
+
+	if luaentity and luaentity.head_eye_height then
+		return luaentity.head_eye_height
+	elseif attack:is_player () then
+		return attack:get_properties ().eye_height
+	end
+	return 0
+end
+
+function vlf_util.target_eye_pos (attack)
+	local luaentity = attack:get_luaentity ()
+	local pos = attack:get_pos ()
+
+	if luaentity and luaentity.head_eye_height then
+		pos.y = pos.y + luaentity.head_eye_height
+	elseif attack:is_player () then
+		pos.y = pos.y + attack:get_properties ().eye_height
+	end
+	return pos
+end
+
+function vlf_util.norm_radians (x)
+	local x = x % (math.pi * 2)
+	if x >= math.pi then
+		x = x - math.pi * 2
+	end
+	if x < -math.pi then
+		x = x + math.pi * 2
+	end
+	return x
+end
+
+function vlf_util.get_2d_block_direction (yaw)
+	local d = math.floor (yaw / (math.pi / 2) + 0.5) % 4
+	if d == 0 then
+		return 0, 1
+	elseif d == 1 then
+		return -1, 0
+	elseif d == 2 then
+		return 0, -1
+	else -- if d == 3 then
+		return 1, 0
+	end
+end
+
+function vlf_util.is_daytime ()
+	local time = minetest.get_timeofday ()
+	return time <= 0.76 and time >= 0.24
+end
+
+local function round_trunc (x)
+	return math.floor (x + 0.5)
+end
+
+function vlf_util.get_nodepos (pos)
+	return vector.apply (pos, round_trunc)
+end
+
+dofile(minetest.get_modpath(minetest.get_current_modname()).."/compat.lua")
+vlf_util.ringbuffer = dofile(modpath.."/ringbuffer.lua")
+dofile(modpath.."/compat.lua")

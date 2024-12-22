@@ -1,4 +1,4 @@
 # textdomain: vlf_target
-Target=
-A target is a block that provides a temporary redstone charge when hit by a projectile.=
-Throw a projectile on the target to activate it.=
+Target=Bersaglio
+A target is a block that provides a temporary redstone charge when hit by a projectile.=Un bersaglio è un blocco che fornisce una carica di pietrarossa temporanea quando viene colpito da un proiettile.
+Throw a projectile on the target to activate it.=Lancia un proiettile sul bersaglio per attivarlo.

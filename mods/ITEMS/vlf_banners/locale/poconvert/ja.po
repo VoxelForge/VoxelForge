@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_banners x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_banners x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "White Banner"
 msgstr "白色の旗"
@@ -120,9 +120,6 @@ msgstr "クラフトによって、旗の面に模様を描きます。エンブ
 
 msgid "You can copy the pattern of a banner by placing two banners of the same color in the crafting grid—one needs to be emblazoned, the other one must be clean. Finally, you can use a banner on a cauldron with water to wash off its top-most layer."
 msgstr "同じ色の旗を2枚並べて、旗の模様を写せます。1枚はエンブレム入りで、もう1枚はまっさらな状態であることが必要です。最後に、旗を大釜の上に置いて使うことで、その一番上のレイヤーを水で洗い流す事もできます。"
-
-msgid "@1 Banner"
-msgstr ""
 
 msgid "Preview Banner"
 msgstr ""
@@ -255,6 +252,12 @@ msgstr "@1 下に波形 "
 
 msgid "@1 Chief Indented"
 msgstr "@1 上に波形"
+
+msgid "@1 Flow"
+msgstr ""
+
+msgid "@1 Guster"
+msgstr ""
 
 msgid "And one additional layer"
 msgstr "さらにレイヤーを1枚追加"

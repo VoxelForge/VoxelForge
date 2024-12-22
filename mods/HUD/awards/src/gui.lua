@@ -2,7 +2,7 @@
 
 local S = awards.translator
 
-function awards.get_formspec(name, to, sid)
+function awards.get_formspec(name, _, sid)
 	local formspec = ""
 	local awards_list = awards.get_award_states(name)
 

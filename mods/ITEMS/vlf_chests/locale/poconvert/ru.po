@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_chests x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_chests x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Chest"
 msgstr "Сундук"
@@ -109,12 +109,15 @@ msgstr "Чёрный ящик шалкера"
 msgid "Shulker Box"
 msgstr "Ящик шалкера"
 
+msgid "Can be carried around with its contents"
+msgstr "Можно переносить вместе с содержимым"
+
+msgid "and @1 more"
+msgstr "и ещё @1"
+
 msgid "A shulker box is a portable container which provides 27 inventory slots for any item except shulker boxes. Shulker boxes keep their inventory when broken, so shulker boxes as well as their contents can be taken as a single item. Shulker boxes come in many different colors."
 msgstr "Ящик шалкера это переносное хранилище, предоставляющее 27 слотов инвентаря для любых предметов, за исключением ящиков шалкера. Ящики шалкера сохраняют в себе инвентарь если их сломать, так что их вместе со всем инвентарём можно переносить как один предмет. Ящики шалкера могут быть разных цветов."
 
 msgid "To access the inventory of a shulker box, place and right-click it. To take a shulker box and its contents with you, just break and collect it, the items will not fall out. Place the shulker box again to be able to retrieve its contents."
 msgstr "Чтобы получить доступ к инвентарю ящика шалкера поставьте его и кликните по нему правой кнопкой мыши. Чтобы взять с собой ящик шалкера со всем его содержимым просто сломайте его, а потом подберите, ни один предмет из него не выпадет. Чтобы вновь получить доступ к содержимому, его нужно снова поставить."
-
-msgid "Can be carried around with its contents"
-msgstr "Можно переносить вместе с содержимым"
 

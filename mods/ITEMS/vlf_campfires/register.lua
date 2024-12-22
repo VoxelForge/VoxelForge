@@ -7,7 +7,7 @@ vlf_campfires.register_campfire("vlf_campfires:campfire", {
 	fire_texture = "vlf_campfires_campfire_fire.png",
 	lit_logs_texture = "vlf_campfires_campfire_log_lit.png",
 	drops = "vlf_core:charcoal_lump 2",
-	lightlevel = 14,
+	lightlevel = minetest.LIGHT_MAX,
 	damage = 1,
 })
 
@@ -20,6 +20,9 @@ vlf_campfires.register_campfire("vlf_campfires:soul_campfire", {
 	drops = "vlf_blackstone:soul_soil",
 	lightlevel = 10,
 	damage = 2,
+	groups = {
+		soul_firelike = 1,
+	},
 })
 
 -- Register Campfire Crafting

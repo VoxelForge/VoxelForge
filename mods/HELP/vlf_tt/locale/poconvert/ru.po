@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_tt x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_tt x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Painfully slow"
-msgstr "Крайне низкая"
+msgstr "Крайне медленно"
 
 msgid "Very slow"
 msgstr "Очень низкая"
 
 msgid "Slow"
-msgstr "Низкая"
+msgstr "Медленно"
 
 msgid "Fast"
 msgstr "Высокая"
@@ -29,10 +29,10 @@ msgid "Very fast"
 msgstr "Очень высокая"
 
 msgid "Extremely fast"
-msgstr "Экстремально высокая"
+msgstr "Экстремально бвстро"
 
 msgid "Instantaneous"
-msgstr ""
+msgstr "мгновенно"
 
 msgid "Unlimited uses"
 msgstr "не ограничено"
@@ -56,10 +56,10 @@ msgid "Full punch interval: @1s"
 msgstr "Интервал удара: @1 с"
 
 msgid "Food item"
-msgstr ""
+msgstr "Пищевой продукт"
 
 msgid "+@1 food points"
-msgstr ""
+msgstr "+@1 ед. питания"
 
 msgid "Contact damage: @1 per second"
 msgstr "Урон при контакте: @1 HP/с"

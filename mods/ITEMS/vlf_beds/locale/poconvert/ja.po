@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_beds x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_beds x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Beds allow you to sleep at night and make the time pass faster."
 msgstr "ベッドがあると夜もぐっすり眠れますし、その時間もスキップできます。"
@@ -37,12 +37,6 @@ msgstr "睡眠を許可する"
 msgid "Bed"
 msgstr "ベッド"
 
-msgid "@1 Bed"
-msgstr ""
-
-msgid "New respawn position set!"
-msgstr "新たなリスポーン地点を設定しました！"
-
 msgid "You can only sleep at night or during a thunderstorm."
 msgstr "眠れるのは夜間か雷雨のときだけです。"
 
@@ -65,16 +59,16 @@ msgid "It's too dangerous to sleep here!"
 msgstr "ここで寝るのは危険すぎます！"
 
 msgid "Leave bed"
-msgstr ""
+msgstr "ベッドから出る"
 
 msgid "Abort sleep"
 msgstr "睡眠を中断する"
 
 msgid "Chat:"
-msgstr ""
+msgstr "チャット："
 
 msgid "send!"
-msgstr ""
+msgstr "送信！"
 
 msgid "Players in bed: @1/@2"
 msgstr "就寝中のプレイヤー：@1/@2"
@@ -98,7 +92,7 @@ msgid "@1/@2 players currently in bed."
 msgstr ""
 
 msgid "You exceeded the maximum number of messages per 10 seconds!"
-msgstr ""
+msgstr "10秒あたりの最大メッセージ数を超えました！"
 
 msgid "You are missing the 'shout' privilege! It's required in order to talk in chat..."
 msgstr ""
@@ -107,6 +101,57 @@ msgid "Sorry, but you have to wait @1 seconds until you may use this button agai
 msgstr ""
 
 msgid "Hey! Would you guys mind sleeping?"
+msgstr ""
+
+msgid "New respawn position set!"
+msgstr "新たなリスポーン地点を設定しました！"
+
+msgid "Black Bed"
+msgstr ""
+
+msgid "Blue Bed"
+msgstr ""
+
+msgid "Brown Bed"
+msgstr ""
+
+msgid "Cyan Bed"
+msgstr ""
+
+msgid "Green Bed"
+msgstr ""
+
+msgid "Grey Bed"
+msgstr ""
+
+msgid "Light Blue Bed"
+msgstr ""
+
+msgid "Light Grey Bed"
+msgstr ""
+
+msgid "Lime Bed"
+msgstr ""
+
+msgid "Magenta Bed"
+msgstr ""
+
+msgid "Orange Bed"
+msgstr ""
+
+msgid "Pink Bed"
+msgstr ""
+
+msgid "Purple Bed"
+msgstr ""
+
+msgid "Red Bed"
+msgstr ""
+
+msgid "White Bed"
+msgstr ""
+
+msgid "Yellow Bed"
 msgstr ""
 
 msgid "Respawn Anchor"

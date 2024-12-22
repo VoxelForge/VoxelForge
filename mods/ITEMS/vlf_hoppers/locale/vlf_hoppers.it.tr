@@ -1,7 +1,7 @@
 # textdomain: vlf_hoppers
-Hopper=
-Inventory=
-5 inventory slots=
+Hopper=Tramoggia
+Inventory=Inventario
+5 inventory slots=5 scompartimenti dell'inventario
 Collects items from above, moves items to container below=
 Can be disabled with redstone power=
 Hoppers are containers with 5 inventory slots. They collect dropped items from above, take items from a container above and attempt to put its items it into an adjacent container. Hoppers can go either downwards or sideways. Hoppers interact with chests, droppers, dispensers, shulker boxes, furnaces and hoppers.=

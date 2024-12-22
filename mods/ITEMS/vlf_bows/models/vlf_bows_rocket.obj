@@ -1,6 +1,6 @@
 # Blender v3.0.0 Alpha OBJ File: ''
 # www.blender.org
-mtllib mcl_bows_rocket.mtl
+mtllib vlf_bows_rocket.mtl
 o Plane
 v -1.414214 -0.063116 0.000000
 v 0.000000 -0.063116 1.414214

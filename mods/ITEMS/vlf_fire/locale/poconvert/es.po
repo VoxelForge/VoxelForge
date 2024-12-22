@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_fire x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_fire x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,13 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Fire Charge"
 msgstr "Carga de fuego"
 
 msgid "Dispenser projectile"
-msgstr ""
+msgstr "Dispensador de projectiles"
 
 msgid "Fire charges are primarily projectiles which can be launched from dispensers, they will fly in a straight line and burst into a fire on impact. Alternatively, they can be used to ignite fires directly."
 msgstr "Las cargas de fuego son principalmente proyectiles que se pueden lanzar desde dispensadores, volarán en línea recta y estallarán en un incendio al impactar. Alternativamente, se pueden usar para encender incendios directamente."
@@ -26,7 +26,7 @@ msgid "Put the fire charge into a dispenser and supply it with redstone power to
 msgstr "Ponga la carga de fuego en un dispensador y suminístrele poder de redstone para lanzarlo. Para encender un fuego directamente, simplemente coloque la carga de fuego en el suelo, que la usa."
 
 msgid "Starts fires and ignites blocks"
-msgstr ""
+msgstr "Inicia incendios y enciende bloques"
 
 msgid "Flint and Steel"
 msgstr "Mechero"

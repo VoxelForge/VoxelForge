@@ -24,9 +24,3 @@ Open a window providing help entries about Minetest and more=Otwórz okno aby zo
 Help=Pomoc
 Allows you to reveal all hidden help entries with /help_reveal=Pozwala odkryć wszystkie wpisy pomocnicze przy użyciu /help_reveal
 Reveal all hidden help entries to you=Odkryj wszystkie ukryte wpisy pomocnicze
-
-
-##### not used anymore #####
-
-New help entry unlocked: @1 > @2=Nowy wpis pomocniczy odblokowany: @1 > @2
-Collection of help texts=Kolekcja tekstów pomocniczych.

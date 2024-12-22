@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_minecarts x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_minecarts x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,10 +11,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Sneak-click to remove"
-msgstr ""
+msgstr "Cliquer furtivement pour supprimer"
 
 msgid "Minecart"
 msgstr "Wagonnet"
@@ -35,10 +35,10 @@ msgid "To obtain the minecart, punch it while holding down the sneak key."
 msgstr "Pour obtenir la wagonnet, frappez-le tout en maintenant la touche furtive enfoncée."
 
 msgid "If it moves over a powered activator rail, you'll get ejected."
-msgstr ""
+msgstr "S'il passe au-dessus d'un rail d'activation motorisé, vous serez éjecté."
 
 msgid "Sneak to dismount"
-msgstr "Se baisser pour descendre"
+msgstr "S'accroupir pour descendre"
 
 msgid "Minecart with Chest"
 msgstr "Wagonnet avec Coffre"

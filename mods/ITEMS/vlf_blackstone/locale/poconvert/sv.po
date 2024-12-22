@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_blackstone x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_blackstone x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: mtt_convert 0.1.0\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Blackstone"
 msgstr ""
@@ -38,6 +38,9 @@ msgid "Chiseled Polished Blackstone"
 msgstr ""
 
 msgid "Polished Blackstone Bricks"
+msgstr ""
+
+msgid "Cracked Polished Blackstone Bricks"
 msgstr ""
 
 msgid "Quartz Bricks"
@@ -67,11 +70,12 @@ msgstr ""
 msgid "Blackstone Brick Slab"
 msgstr ""
 
-msgid "Blackstone Wall"
-msgstr ""
-
 msgid "Soul Torch"
 msgstr ""
 
 msgid "Torches are light sources which can be placed at the side or on the top of most blocks."
 msgstr ""
+
+msgid "Blackstone Wall"
+msgstr ""
+

@@ -14,7 +14,8 @@ minetest.register_node("vlf_fletching_table:fletching_table", {
 	groups = { axey = 2, handy = 1, deco_block = 1, material_wood = 1, flammable = 1 },
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	_vlf_blast_resistance = 2.5,
-	_vlf_hardness = 2.5
+	_vlf_hardness = 2.5,
+	_vlf_burntime = 15
 })
 
 minetest.register_craft({
@@ -24,10 +25,4 @@ minetest.register_craft({
 		{ "group:wood", "group:wood", "" },
 		{ "group:wood", "group:wood", "" },
 	}
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_fletching_table:fletching_table",
-	burntime = 15,
 })

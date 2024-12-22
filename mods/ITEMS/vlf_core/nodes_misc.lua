@@ -8,15 +8,6 @@ if mod_screwdriver then
 	on_rotate = screwdriver.rotate_3way
 end
 
-local alldirs = {
-	vector.new(0, 0, 1),
-	vector.new(1, 0, 0),
-	vector.new(0, 0, -1),
-	vector.new(-1, 0, 0),
-	vector.new(0, -1, 0),
-	vector.new(0, 1, 0),
-}
-
 minetest.register_node("vlf_core:bone_block", {
 	description = S("Bone Block"),
 	_doc_items_longdesc = S("Bone blocks are decorative blocks and a compact storage of bone meal."),
@@ -52,7 +43,7 @@ minetest.register_node("vlf_core:slimeblock", {
 	-- According to Minecraft Wiki, bouncing off a slime block from a height off 255 blocks should result in a bounce height of 50 blocks
 	-- bouncy=44 makes the player bounce up to 49.6. This value was chosen by experiment.
 	-- bouncy=80 was chosen because it is higher than 66 (bounciness of bed)
-	groups = {dig_immediate = 3, bouncy = 80, fall_damage_add_percent = -100, deco_block = 1},
+	groups = {dig_immediate = 3, bouncy = 80, fall_damage_add_percent = -100, deco_block = 1, _vlf_partial = 2,},
 	sounds = {
 		dug = {name = "slimenodes_dug", gain = 0.6},
 		place = {name = "slimenodes_place", gain = 0.6},
@@ -60,42 +51,9 @@ minetest.register_node("vlf_core:slimeblock", {
 	},
 	_vlf_blast_resistance = 0,
 	_vlf_hardness = 0,
-	mvps_sticky = function(pos, node, piston_pos)
-		local connected = {}
-		for n, v in ipairs(alldirs) do
-			local neighbor_pos = vector.add(pos, v)
-			local neighbor_node = minetest.get_node(neighbor_pos)
-			if neighbor_node then
-				if neighbor_node.name == "ignore" then
-					minetest.get_voxel_manip():read_from_map(neighbor_pos, neighbor_pos)
-					neighbor_node = minetest.get_node(neighbor_pos)
-				end
-				local name = neighbor_node.name
-				if name ~= "air" and name ~= "ignore" and name ~= "vlf_honey:honey_block" and not mesecon.mvps_unsticky[name] then
-					local piston, piston_side, piston_up, piston_down = false, false, false, false
-					if name == "mesecons_pistons:piston_sticky_off" or name == "mesecons_pistons:piston_normal_off" then
-						piston, piston_side = true, true
-					elseif name == "mesecons_pistons:piston_up_sticky_off" or name == "mesecons_pistons:piston_up_normal_off" then
-						piston, piston_up = true, true
-					elseif name == "mesecons_pistons:piston_down_sticky_off" or name == "mesecons_pistons:piston_down_normal_off" then
-						piston, piston_down = true, true
-					end
-					if not
-						((piston_side and (n - 1 == neighbor_node.param2)) or (piston_up and (n == 5)) or (piston_down and (n == 6))) then
-						if piston and piston_pos then
-							if piston_pos.x == neighbor_pos.x and piston_pos.y == neighbor_pos.y and piston_pos.z == neighbor_pos.z then
-								-- Loopback to the same piston! Preventing unwanted behavior:
-								return {}, true
-							end
-						end
-						table.insert(connected, neighbor_pos)
-					end
-				end
-			end
-		end
-		return connected, false
+	_vlf_pistons_sticky = function(node, node_to, direction)
+		return node_to.name ~= "vlf_honey:honey_block"
 	end,
-
 })
 
 minetest.register_node("vlf_core:cobweb", {
@@ -111,7 +69,7 @@ minetest.register_node("vlf_core:cobweb", {
 	move_resistance = 14,
 	walkable = false,
 	groups = {swordy_cobweb = 1, shearsy_cobweb = 1, fake_liquid = 1, disable_jump = 1, deco_block = 1, dig_by_piston = 1,
-		dig_by_water = 1, destroy_by_lava_flow = 1,},
+		dig_by_water = 1, destroy_by_lava_flow = 1, unsticky = 1},
 	drop = "vlf_mobitems:string",
 	_vlf_shears_drop = true,
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
@@ -134,7 +92,7 @@ minetest.register_node("vlf_core:deadbush", {
 	walkable = false,
 	buildable_to = true,
 	groups = {handy = 1, shearsy = 1, flammable = 3, attached_node = 1, plant = 1, non_mycelium_plant = 1, dig_by_piston = 1,
-	    dig_by_water = 1, destroy_by_lava_flow = 1, deco_block = 1, fire_encouragement = 60, fire_flammability = 100},
+	    dig_by_water = 1, destroy_by_lava_flow = 1, deco_block = 1, fire_encouragement = 60, fire_flammability = 100, unsticky = 1},
 	drop = {
 		max_items = 1,
 		items = {
@@ -156,18 +114,13 @@ minetest.register_node("vlf_core:deadbush", {
 	},
 	_vlf_blast_resistance = 0,
 	_vlf_hardness = 0,
+	_vlf_burntime = 5
 })
 
 vlf_flowerpots.register_potted_flower("vlf_core:deadbush", {
 	name = "deadbush",
 	desc = S("Dead Bush"),
 	image = "default_dry_shrub.png",
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_core:deadbush",
-	burntime = 5,
 })
 
 minetest.register_node("vlf_core:barrier", {
@@ -181,12 +134,12 @@ minetest.register_node("vlf_core:barrier", {
 	tiles = {"blank.png"},
 	sunlight_propagates = true,
 	is_ground_content = false,
-	groups = {creative_breakable = 1, not_in_creative_inventory = 1, not_solid = 1},
-	on_blast = function(pos, intensity) end,
+	groups = {creative_breakable = 1, not_in_creative_inventory = 1, not_solid = 1, unmovable_by_piston = 1},
+	on_blast = function() end,
 	drop = "",
 	_vlf_blast_resistance = 36000008,
 	_vlf_hardness = -1,
-	after_place_node = function(pos, placer, itemstack, pointed_thing)
+	after_place_node = function(pos, placer)
 		if placer == nil then
 			return
 		end
@@ -238,19 +191,18 @@ minetest.register_node("vlf_core:realm_barrier", {
 	sunlight_propagates = true,
 	is_ground_content = false,
 	pointable = false,
-	groups = {not_in_creative_inventory = 1, not_solid = 1},
-	on_blast = function(pos, intensity) end,
+	groups = {not_in_creative_inventory = 1, not_solid = 1, unmovable_by_piston = 1},
+	on_blast = function() end,
 	drop = "",
 	_vlf_blast_resistance = 36000008,
 	_vlf_hardness = -1,
 	-- Prevent placement to protect player from screwing up the world, because the node is not pointable and hard to get rid of.
 	node_placement_prediction = "",
-	on_place = function(itemstack, placer, pointed_thing)
+	on_place = function(_, placer, _)
 		if placer then
 			minetest.chat_send_player(placer:get_player_name(),
 				minetest.colorize(vlf_colors.RED, "You can't just place a realm barrier by hand!"))
 		end
-		return
 	end,
 })
 
@@ -278,7 +230,7 @@ for i = 0, 14 do --minetest.LIGHT_MAX
 		sunlight_propagates = true,
 		is_ground_content = false,
 		groups = {creative_breakable = 1, not_solid = 1, light_block = i + 1},
-		on_blast = function(pos, intensity) end,
+		on_blast = function() end,
 		on_use = function(itemstack, user, pointed_thing)
 			-- user:get_player_control() returns {} for non players, so we don't need user:is_player()
 			if pointed_thing.type == "node" and string.match(minetest.get_node(pointed_thing.under).name, light_block_pattern) and not user:get_player_control().sneak then
@@ -291,7 +243,7 @@ for i = 0, 14 do --minetest.LIGHT_MAX
 		on_place = vlf_util.bypass_buildable_to(function(node_name)
 			return string.match(node_name, light_block_pattern)
 		end),
-		after_place_node = function(pos, placer, itemstack, pointed_thing)
+		after_place_node = function(pos, placer)
 			if not placer then
 				return
 			end
@@ -326,11 +278,11 @@ minetest.register_node("vlf_core:void", {
 	wield_image = "vlf_core_void.png",
 	sunlight_propagates = true,
 	is_ground_content = false,
-	groups = {not_in_creative_inventory = 1},
-	on_blast = function(pos, intensity) end,
+	groups = {not_in_creative_inventory = 1, unmovable_by_piston = 1},
+	on_blast = function() end,
 	-- Prevent placement to protect player from screwing up the world, because the node is not pointable and hard to get rid of.
 	node_placement_prediction = "",
-	on_place = function(itemstack, placer, pointed_thing)
+	on_place = function(_, placer, _)
 		if placer then
 			minetest.chat_send_player(placer:get_player_name(),
 				minetest.colorize(vlf_colors.RED, "You can't just place the void by hand!"))

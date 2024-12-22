@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_beds x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_beds x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Beds allow you to sleep at night and make the time pass faster."
 msgstr "На кровати можно спать по ночам и заставлять ночь проходить быстрее."
@@ -36,12 +36,6 @@ msgstr "Можно спать"
 
 msgid "Bed"
 msgstr "Кровать"
-
-msgid "@1 Bed"
-msgstr ""
-
-msgid "New respawn position set!"
-msgstr "Задана новая точка возрождения!"
 
 msgid "You can only sleep at night or during a thunderstorm."
 msgstr "Вы можете спать только ночью или во время грозы."
@@ -74,7 +68,7 @@ msgid "Chat:"
 msgstr "Чат:"
 
 msgid "send!"
-msgstr "Отправить"
+msgstr "Отправить!"
 
 msgid "Players in bed: @1/@2"
 msgstr "Игроков в кроватях: @1/@2"
@@ -95,7 +89,7 @@ msgid "You're in bed."
 msgstr "Вы в кровати."
 
 msgid "@1/@2 players currently in bed."
-msgstr ""
+msgstr "@1/@2 игроков сейчас в постели."
 
 msgid "You exceeded the maximum number of messages per 10 seconds!"
 msgstr "Вы превысили максимальный лимит сообщений в 10 секунд!"
@@ -108,6 +102,57 @@ msgstr "Вам нужно подождать еще @1 с. прежде чем �
 
 msgid "Hey! Would you guys mind sleeping?"
 msgstr "Эй, ребята, не хотите поспать?"
+
+msgid "New respawn position set!"
+msgstr "Задана новая точка возрождения!"
+
+msgid "Black Bed"
+msgstr ""
+
+msgid "Blue Bed"
+msgstr ""
+
+msgid "Brown Bed"
+msgstr ""
+
+msgid "Cyan Bed"
+msgstr ""
+
+msgid "Green Bed"
+msgstr ""
+
+msgid "Grey Bed"
+msgstr ""
+
+msgid "Light Blue Bed"
+msgstr ""
+
+msgid "Light Grey Bed"
+msgstr ""
+
+msgid "Lime Bed"
+msgstr ""
+
+msgid "Magenta Bed"
+msgstr ""
+
+msgid "Orange Bed"
+msgstr ""
+
+msgid "Pink Bed"
+msgstr ""
+
+msgid "Purple Bed"
+msgstr ""
+
+msgid "Red Bed"
+msgstr ""
+
+msgid "White Bed"
+msgstr ""
+
+msgid "Yellow Bed"
+msgstr ""
 
 msgid "Respawn Anchor"
 msgstr "Якорь возрождения"

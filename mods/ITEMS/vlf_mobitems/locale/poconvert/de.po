@@ -1,18 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_mobitems x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_mobitems x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-05-22 06:30+0000\n"
-"Last-Translator: j-r <j-r@users.noreply.translate.codeberg.org>\n"
-"Language-Team: German <https://translate.codeberg.org/projects/mineclonia/"
-"mcl_mobitems/de/>\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.5\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Rotten Flesh"
 msgstr "Gammelfleisch"
@@ -134,6 +133,12 @@ msgstr "Lohenrute"
 msgid "This is a crafting component dropped from dead blazes."
 msgstr "Dies ist eine Fertigungskomponente, die von toten Lohen abgeworfen wird."
 
+msgid "Breeze Rod"
+msgstr ""
+
+msgid "This is a crafting item dropped from breezes."
+msgstr ""
+
 msgid "Blaze Powder"
 msgstr "Lohenstaub"
 
@@ -156,10 +161,7 @@ msgid "Nether Star"
 msgstr "Nether-Stern"
 
 msgid "A nether star is dropped when the Wither dies. Place it in an item frame to show the world how hardcore you are! Or just as decoration."
-msgstr ""
-"Ein Netherstern wird abgeworfen, wenn der Wither stirbt. Platziere ihn in "
-"einem Rahmen, um der Welt zu zeigen, wie hart Du bist! Oder nur als "
-"Dekoration."
+msgstr "Ein Netherstern wird abgeworfen, wenn der Wither stirbt. Platziere ihn in einem Rahmen, um der Welt zu zeigen, wie hart Du bist! Oder nur als Dekoration."
 
 msgid "Leather"
 msgstr "Leder"
@@ -260,6 +262,12 @@ msgstr ""
 msgid "Place it on a horse to put on the horse armor. Donkeys and mules can't wear horse armor."
 msgstr "Platzieren Sie es auf einem Pferd, um die Pferderüstung aufzusetzen. Esel und Maultiere können keine Pferderüstung tragen."
 
+msgid "Leather Horse Armor"
+msgstr ""
+
+msgid "Leather horse armor can be worn by horses to increase their protection from harm a little."
+msgstr ""
+
 msgid "Iron Horse Armor"
 msgstr "Eisenpferderüstung"
 
@@ -300,7 +308,5 @@ msgid "A name tag is an item to name a mob."
 msgstr "Ein Namensschild ist ein Gegenstand, um einen Mob zu benennen."
 
 msgid "Before you use the name tag, you need to set a name at an anvil. Then you can use the name tag to name a mob. This uses up the name tag."
-msgstr ""
-"Um ein Namensschild benutzen zu können, musst Du zuerst an einem Amboss "
-"einen Namen festlegen. Dann kannst Du das Namensschild benutzen, um eine "
-"Kreatur zu benennen. Dadurch wird das Namensschild verbraucht."
+msgstr "Um ein Namensschild benutzen zu können, musst Du zuerst an einem Amboss einen Namen festlegen. Dann kannst Du das Namensschild benutzen, um eine Kreatur zu benennen. Dadurch wird das Namensschild verbraucht."
+

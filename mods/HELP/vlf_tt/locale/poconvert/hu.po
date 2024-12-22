@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_tt x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_tt x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,149 +11,149 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Painfully slow"
-msgstr ""
+msgstr "Irtó lassú"
 
 msgid "Very slow"
-msgstr ""
+msgstr "Nagyon lassú"
 
 msgid "Slow"
-msgstr ""
+msgstr "Lassú"
 
 msgid "Fast"
-msgstr ""
+msgstr "Gyors"
 
 msgid "Very fast"
-msgstr ""
+msgstr "Nagyon gyors"
 
 msgid "Extremely fast"
-msgstr ""
+msgstr "Irtó gyors"
 
 msgid "Instantaneous"
-msgstr ""
+msgstr "Villámgyors"
 
 msgid "Unlimited uses"
-msgstr ""
+msgstr "Korlátlan használat"
 
 msgid "Mining speed: @1"
-msgstr ""
+msgstr "Bányász sebesség: @1"
 
 msgid "Mining durability: @1"
-msgstr ""
+msgstr "Bányász tartósság: @1"
 
 msgid "Block breaking strength: @1"
-msgstr ""
+msgstr "Blokktörő erő: @1"
 
 msgid "Damage: @1"
-msgstr ""
+msgstr "Sérülés: @1"
 
 msgid "Healing: @1"
-msgstr ""
+msgstr "Gyógyítás: @1"
 
 msgid "Full punch interval: @1s"
-msgstr ""
+msgstr "Lendítési idő: @1s"
 
 msgid "Food item"
-msgstr ""
+msgstr "Élelmiszer"
 
 msgid "+@1 food points"
-msgstr ""
+msgstr "+@1 tápérték"
 
 msgid "Contact damage: @1 per second"
-msgstr ""
+msgstr "Érintkezési sérülés: @1 / másodperc"
 
 msgid "Contact healing: @1 per second"
-msgstr ""
+msgstr "Érintkezési gyógyulás: @1 / másodperc"
 
 msgid "Drowning damage: @1"
-msgstr ""
+msgstr "Fulladási sérülés: @1"
 
 msgid "Fall damage: +@1%"
-msgstr ""
+msgstr "Esési sérülés: +@1%"
 
 msgid "No fall damage"
-msgstr ""
+msgstr "Nincs esési sérülés"
 
 msgid "Fall damage: @1%"
-msgstr ""
+msgstr "Esési sérülés: @1%"
 
 msgid "No jumping"
-msgstr ""
+msgstr "Nincs ugrás"
 
 msgid "No swimming upwards"
-msgstr ""
+msgstr "Nincs felúszás"
 
 msgid "No rising"
-msgstr ""
+msgstr "Nincs felállás"
 
 msgid "Climbable (only downwards)"
-msgstr ""
+msgstr "Mászható (csak lefele)"
 
 msgid "Climbable"
-msgstr ""
+msgstr "Mászható"
 
 msgid "Slippery"
-msgstr ""
+msgstr "Csúszós"
 
 msgid "Bouncy (@1%)"
-msgstr ""
+msgstr "Ruganyos (@1%)"
 
 msgid "Luminance: @1"
-msgstr ""
+msgstr "Fényesség: @1"
 
 msgid "@1 uses"
-msgstr ""
+msgstr "@1 használat"
 
 msgid "Head armor"
-msgstr ""
+msgstr "Sisak"
 
 msgid "Torso armor"
-msgstr ""
+msgstr "Mellvért"
 
 msgid "Legs armor"
-msgstr ""
+msgstr "Lábvért"
 
 msgid "Feet armor"
-msgstr ""
+msgstr "Csizma"
 
 msgid "Armor points: @1"
-msgstr ""
+msgstr "Pajzs pontok: @1"
 
 msgid "Armor durability: @1"
-msgstr ""
+msgstr "Pajzs tartósság: @1"
 
 msgid "Protection: @1%"
-msgstr ""
+msgstr "Védelem: @1%"
 
 msgid "Hunger points: +@1"
-msgstr ""
+msgstr "Éhség pont: +@1"
 
 msgid "Saturation points: +@1"
-msgstr ""
+msgstr "Jóllakottság pont: +@1"
 
 msgid "Deals damage when falling"
-msgstr ""
+msgstr "Leeséskor sebez"
 
 msgid "Grows on grass blocks or dirt"
-msgstr ""
+msgstr "Fűblokkon vagy talajon nő"
 
 msgid "Grows on grass blocks, podzol, dirt or coarse dirt"
-msgstr ""
+msgstr "Fűblokkon, talajon, erdőtalajon vagy durva talajon nő"
 
 msgid "Flammable"
-msgstr ""
+msgstr "Éghető"
 
 msgid "Zombie view range: -50%"
-msgstr ""
+msgstr "Zombi látótávolság: -50%"
 
 msgid "Skeleton view range: -50%"
-msgstr ""
+msgstr "Csontváz látótávolság: -50%"
 
 msgid "Creeper view range: -50%"
-msgstr ""
+msgstr "Creeper látótávolság: -50%"
 
 msgid "Durability: @1"
-msgstr ""
+msgstr "Tartósság: @1"
 

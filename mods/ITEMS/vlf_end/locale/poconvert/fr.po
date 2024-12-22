@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_end x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_end x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "End Stone"
 msgstr "Pierre de L'End"
@@ -38,16 +38,16 @@ msgid "A dragon egg is a decorative item which can be placed."
 msgstr "Un oeuf de dragon est un objet décoratif qui peut être placé."
 
 msgid "End Stone Brick Stairs"
-msgstr ""
+msgstr "Escalier en pierre taillée de l'End"
 
 msgid "End Stone Brick Slab"
-msgstr ""
+msgstr "Dalle en pierre taillée de l'End"
 
 msgid "Purpur Stairs"
-msgstr ""
+msgstr "Escalier en purpur"
 
 msgid "Purpur Slab"
-msgstr ""
+msgstr "Dalle en purpur"
 
 msgid "Chorus Flower"
 msgstr "Plante de Chorus"
@@ -95,7 +95,7 @@ msgid "Ignited by a punch or a hit with an arrow"
 msgstr "Enflammé par un coup de poing ou un coup avec une flèche"
 
 msgid "Explosion radius: @1"
-msgstr "Rayon d'explosion: @1"
+msgstr "Rayon d'explosion : @1"
 
 msgid "End Crystals are explosive devices. They can be placed on Obsidian or Bedrock. Ignite them by a punch or a hit with an arrow. End Crystals can also be used the spawn the Ender Dragon by placing one at each side of the End Exit Portal."
 msgstr "Les cristaux de l'End sont des dispositifs explosifs. Ils peuvent être placés sur de l'Obsidienne ou de la Bedrock. Allumez-les par un coup de poing ou avec une flèche. Les cristaux de l'End peuvent également être utilisés pour engendrer l'Ender dragon en en plaçant un de chaque côté du portail de sortie de l'End."
@@ -113,7 +113,7 @@ msgid "This item is used to locate End portal shrines in the Overworld and to ac
 msgstr "Cet objet est utilisé pour localiser les sanctuaires du portail End dans l'Overworld et pour activer les portails End."
 
 msgid "NOTE: The End dimension is currently incomplete and might change in future versions."
-msgstr "REMARQUE: la dimension de l'End est actuellement incomplète et pourrait changer dans les futures versions."
+msgstr "REMARQUE : la dimension de l'End est actuellement incomplète et pourrait changer dans les futures versions."
 
 msgid "Use the attack key to release the eye of ender. It will rise and fly in the horizontal direction of the closest end portal shrine. If you're very close, the eye of ender will take the direct path to the End portal shrine instead. After a few seconds, it stops. It may drop as an item, but there's a 20% chance it shatters."
 msgstr "Utilisez la touche d'attaque pour libérer l'oeil d'ender. Il s'élèvera et volera dans la direction horizontale du sanctuaire portail d'Ender le plus proche. Si vous êtes très proche, l'oeil d'ender empruntera le chemin direct vers le sanctuaire du portail de l'End. Après quelques secondes, il s'arrête. Il peut tomber en tant qu'objet, mais il y a 20% de chances qu'il se brise."

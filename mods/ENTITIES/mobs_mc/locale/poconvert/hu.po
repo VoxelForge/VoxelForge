@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mobs_mc x.x.x\n"
+"Project-Id-Version: Luanti textdomain mobs_mc x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,290 +11,317 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Axolotl"
-msgstr ""
+msgstr "Axolotl"
 
 msgid "Bat"
-msgstr ""
+msgstr "Denevér"
 
 msgid "Blaze"
-msgstr ""
+msgstr "Őrláng"
 
 msgid "Chicken"
-msgstr ""
+msgstr "Csirke"
 
 msgid "Cod"
-msgstr ""
+msgstr "Tőkehal"
 
 msgid "Cow"
-msgstr ""
+msgstr "Tehén"
 
 msgid "Mooshroom"
-msgstr ""
+msgstr "Múúmba"
 
 msgid "Creeper"
-msgstr ""
+msgstr "Lopódzó"
+
+msgid "Charged Creeper"
+msgstr "Feltöltött Lopódzó"
 
 msgid "Dolphin"
-msgstr ""
+msgstr "Delfin"
 
 msgid "Ender Dragon"
-msgstr ""
+msgstr "Végzetsárkány"
 
 msgid "Enderman"
-msgstr ""
+msgstr "Bevégző"
 
 msgid "Endermite"
-msgstr ""
+msgstr "Végbogár"
 
 msgid "Ghast"
-msgstr ""
+msgstr "Szellem"
 
 msgid "Ghast Fireball"
-msgstr ""
-
-msgid "Glow Squid"
-msgstr ""
+msgstr "Tűzgolyó"
 
 msgid "Guardian"
-msgstr ""
+msgstr "Őrszem"
 
 msgid "Elder Guardian"
-msgstr ""
+msgstr "Vén Őrszem"
 
 msgid "Hoglin"
-msgstr ""
+msgstr "Varacskos"
 
 msgid "Zoglin"
-msgstr ""
+msgstr "Zord Varacskos"
 
 msgid "Baby Hoglin"
-msgstr ""
+msgstr "Varacskos Malac"
 
 msgid "Horse"
-msgstr ""
+msgstr "Ló"
 
 msgid "Skeleton Horse"
-msgstr ""
+msgstr "Csontváz Ló"
 
 msgid "Zombie Horse"
-msgstr ""
+msgstr "Zombi Ló"
 
 msgid "Donkey"
-msgstr ""
+msgstr "Szamár"
 
 msgid "Mule"
-msgstr ""
+msgstr "Öszvér"
+
+msgid "Sneak to dismount"
+msgstr "Guggolj, hogy leszereld"
 
 msgid "Iron Golem"
-msgstr ""
+msgstr "Vas Gólem"
 
 msgid "Llama"
-msgstr ""
+msgstr "Láma"
 
 msgid "Ocelot"
-msgstr ""
+msgstr "Párducmacska"
 
 msgid "Cat"
-msgstr ""
+msgstr "Macska"
 
 msgid "Parrot"
-msgstr ""
+msgstr "Papagáj"
 
 msgid "Pig"
-msgstr ""
+msgstr "Malac"
 
 msgid "Piglin"
-msgstr ""
+msgstr "Malacfej"
 
 msgid "Zombiefied Piglin"
-msgstr ""
+msgstr "Zombi Malacfej"
 
 msgid "Piglin Brute"
-msgstr ""
+msgstr "Durva Malacfej"
 
 msgid "Zombie Piglin"
-msgstr ""
+msgstr "Élőhalott Piglin"
 
 msgid "Pillager"
-msgstr ""
+msgstr "Rabló"
 
 msgid "Polar Bear"
-msgstr ""
+msgstr "Jegesmedve"
 
 msgid "Rabbit"
-msgstr ""
+msgstr "Nyúl"
 
 msgid "Killer Bunny"
-msgstr ""
+msgstr "Vérnyúl"
 
 msgid "Salmon"
-msgstr ""
+msgstr "Lazac"
 
 msgid "Sheep"
-msgstr ""
+msgstr "Bárány"
 
 msgid "Shulker"
-msgstr ""
+msgstr "Kagylapuló"
 
 msgid "Silverfish"
-msgstr ""
+msgstr "Ezüsthal"
 
 msgid "Skeleton"
-msgstr ""
+msgstr "Csontváz"
 
 msgid "Stray"
-msgstr ""
+msgstr "Jégjáró"
 
 msgid "Wither Skeleton"
-msgstr ""
+msgstr "Sorvasztó Csontváz"
 
-msgid "Slime"
-msgstr ""
+msgid "Slime - big"
+msgstr "Zöld Zsumó"
+
+msgid "Slime - small"
+msgstr "Kis Zöld Zsumó"
+
+msgid "Slime - tiny"
+msgstr "Parányi Zöld Zsumó"
+
+msgid "Magma Cube - big"
+msgstr "Magma Kocka - nagy"
+
+msgid "Magma Cube - small"
+msgstr "Magma Kocka - kicsi"
+
+msgid "Magma Cube - tiny"
+msgstr "Magma Kocka - apró"
 
 msgid "Magma Cube"
-msgstr ""
+msgstr "Magma Kocka"
+
+msgid "Slime"
+msgstr "Zselé"
 
 msgid "Snow Golem"
-msgstr ""
+msgstr "Hógólem"
 
 msgid "Spider"
-msgstr ""
+msgstr "Pók"
 
 msgid "Cave Spider"
-msgstr ""
+msgstr "Barlangi Pók"
 
 msgid "Squid"
-msgstr ""
+msgstr "Tintahal"
+
+msgid "Glow Squid"
+msgstr "Fénylő Tintahal"
 
 msgid "Strider"
-msgstr ""
+msgstr "Álomfutó"
 
 msgid "Baby Strider"
-msgstr ""
+msgstr "Álomfutócska"
 
 msgid "Tropical Fish"
-msgstr ""
+msgstr "Trópusi Hal"
 
 msgid "Tropical fish"
-msgstr ""
+msgstr "Trópusi hal"
 
 msgid "Vex"
-msgstr ""
+msgstr "Bosszancs"
 
 msgid "Villager"
-msgstr ""
+msgstr "Falusi"
 
 msgid "Evoker"
-msgstr ""
+msgstr "Idéző"
 
 msgid "Illusioner"
-msgstr ""
+msgstr "Szemfényvesztő"
 
 msgid "Vindicator"
-msgstr ""
+msgstr "Védelmező"
 
 msgid "Zombie Villager"
-msgstr ""
+msgstr "Zombi Falulakó"
 
 msgid "@1 sleeps here"
-msgstr ""
+msgstr "@1 itt alszik"
 
 msgid "A villager sleeps here"
-msgstr ""
+msgstr "Itt alszik egy falusi"
 
 msgid "@1 works here"
-msgstr ""
+msgstr "@1 itt dolgozik"
 
 msgid "A villager works here"
-msgstr ""
+msgstr "Itt dolgozik egy falubeli"
 
 msgid "Unemployed"
-msgstr ""
+msgstr "Munkanélküli"
 
 msgid "Farmer"
-msgstr ""
+msgstr "Földműves"
 
 msgid "Fisherman"
-msgstr ""
+msgstr "Halász"
 
 msgid "Fletcher"
-msgstr ""
+msgstr "Nyílkészitő"
 
 msgid "Shepherd"
-msgstr ""
+msgstr "Juhász"
 
 msgid "Librarian"
 msgstr "Könyvtáros"
 
 msgid "Cartographer"
-msgstr ""
+msgstr "Térképész"
 
 msgid "Armorer"
-msgstr ""
+msgstr "Pajzs Kovács"
 
 msgid "Leatherworker"
-msgstr ""
+msgstr "Tímár"
 
 msgid "Butcher"
-msgstr ""
+msgstr "Mészáros"
 
 msgid "Weapon Smith"
-msgstr ""
+msgstr "Fegyver Kovács"
 
 msgid "Tool Smith"
-msgstr ""
+msgstr "Eszköz Kovács"
 
 msgid "Cleric"
-msgstr ""
+msgstr "Pap"
 
 msgid "Mason"
-msgstr ""
+msgstr "Kőműves"
 
 msgid "Nitwit"
-msgstr ""
+msgstr "Falu Bolondja"
 
 msgid "Wandering Trader"
-msgstr ""
+msgstr "Vándor Kereskedő"
 
 msgid "Novice"
-msgstr ""
+msgstr "Kezdő"
 
 msgid "Apprentice"
-msgstr ""
+msgstr "Tanuló"
 
 msgid "Journeyman"
-msgstr ""
+msgstr "Kereskedő"
 
 msgid "Expert"
-msgstr ""
+msgstr "Szakértő"
 
 msgid "Master"
-msgstr ""
+msgstr "Mester"
 
 msgid "Witch"
-msgstr ""
+msgstr "Boszi"
 
 msgid "Wither"
-msgstr ""
+msgstr "Sorvasztó"
 
 msgid "Wolf"
-msgstr ""
+msgstr "Farkas"
+
+msgid "Dog"
+msgstr "Kutya"
 
 msgid "Zombie"
-msgstr ""
+msgstr "Zombi"
 
 msgid "Baby Zombie"
-msgstr ""
+msgstr "Bébi Zombi"
 
 msgid "Husk"
-msgstr ""
+msgstr "Sivatagi Zombi"
 
 msgid "Baby Husk"
-msgstr ""
+msgstr "Sivatagi Zombika"
 
 msgid "Zombified Piglin"
-msgstr ""
+msgstr "Malacfej Zombi"
 

@@ -1,13 +1,14 @@
 # textdomain: vlf_armor
+#Translations of enchantements
 This is a piece of equippable armor which reduces the amount of damage you receive.=Dies ist ein Teil einer tragbaren Rüstung, die die Menge an Schaden reduziert, den Du erleidest.
 To equip it, put it on the corresponding armor slot in your inventory menu.=Um es zu tragen, legen Sie es in den passenden Rüstungsplatz in ihrem Inventarmenü.
-Leather Cap=
+Leather Cap=Lederkappe
 Leather Tunic=
-Leather Pants=
-Leather Boots=
-Colorize a piece of leather armor, or wash it=
-Not leather armor.=
-Washed.=
+Leather Pants=Lederhose
+Leather Boots=Lederstiefel
+Colorize a piece of leather armor, or wash it=ein Lederrüstungsteil färben oder waschen
+Not leather armor.=Keine Lederrüstung.
+Washed.=Gewaschen.
 Done: @1=
 Player isn't online=
 Golden Helmet=Goldhelm
@@ -50,6 +51,6 @@ Elytra=Elytren
 Smithing Template=Schmiedevorlage
 @1 Armor Trim=
 Applies to:=
-Armor=
-Ingredients:=
+Armor=Rüstung
+Ingredients:=Zutaten:
 Ingot & Crystals=

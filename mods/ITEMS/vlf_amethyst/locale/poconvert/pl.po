@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_amethyst x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_amethyst x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,22 +11,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Block of Amethyst"
-msgstr ""
+msgstr "Blok ametystu"
 
 msgid "The Block of Amethyst is a decoration block crafted from amethyst shards."
-msgstr ""
+msgstr "Blok ametystu jest dekoracyjnym blokiem tworzonym z odłamków ametystu."
 
 msgid "Budding Amethyst"
-msgstr ""
+msgstr "Kiełkujący ametyst"
 
 msgid "The Budding Amethyst can grow amethyst"
 msgstr ""
 
 msgid "Amethyst Shard"
-msgstr ""
+msgstr "Odłamek ametystu"
 
 msgid "An amethyst shard is a crystalline mineral."
 msgstr ""

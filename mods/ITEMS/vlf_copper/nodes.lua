@@ -286,15 +286,26 @@ function vlf_copper.register_copper_bulbs(name, definitions)
 	end
 end
 
+local function bulb_connects_to(node, dir)
+		return true
+end
+local function bulb_update(pos, node)
+	local oldpowered = node.param2 ~= 0
+	local powered  = vlf_redstone.get_power(pos) ~= 0
+	local newname = node.name
+	if powered and not oldpowered then
+		newname = minetest.registered_nodes[node.name]._vlf_copper_bulb_switch_to
+	end
+	return {
+		name = newname,
+		param2 = powered and 1 or 0,
+	}
+end
+
 vlf_copper.register_copper_bulbs("copper_bulb", {
 	groups = {pickaxey = 2, building_block = 1},
-	mesecons = {
-		effector = {
-			action_on = function (pos, node)
-				minetest.swap_node(pos, {name = node.name:gsub("copper_bulb", "copper_bulb_lit_powered")})
-			end
-		},
-	},
+	_vlf_copper_bulb_switch_to = "vlf_copper:".."copper_bulb_off",
+	_vlf_redstone = {connects_to = bulb_connects_to, update = bulb_update},
 	sunlight_propagates = true,
 	light_propagates = true,
 })

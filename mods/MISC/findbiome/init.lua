@@ -80,7 +80,7 @@ end
 local function find_default_biome()
 	local all_biomes = minetest.registered_biomes
 	local biome_count = 0
-	for b, biome in pairs(all_biomes) do
+	for _, _ in pairs(all_biomes) do
 		biome_count = biome_count + 1
 	end
 	-- Trivial case: No biomes registered, default biome is everywhere.
@@ -94,7 +94,7 @@ local function find_default_biome()
 	local pos = {}
 	-- Just check a lot of random positions
 	-- It's a crappy algorithm but better than nothing.
-	for i=1, 100 do
+	for _ = 1, 100 do
 		pos.x = math.random(-playable_limit, playable_limit)
 		pos.y = math.random(-playable_limit, playable_limit)
 		pos.z = math.random(-playable_limit, playable_limit)
@@ -145,7 +145,7 @@ local function find_biome(pos, biomes)
 	local function search()
 		local attempt = 1
 		while attempt < 3 do
-			for iter = 1, checks do
+			for _ = 1, checks do
 				local biome_data = minetest.get_biome_data(pos)
 				-- Sometimes biome_data is nil
 				local biome = biome_data and biome_data.biome
@@ -245,14 +245,14 @@ do
 		description = S("List all biomes"),
 		params = "",
 		privs = { debug = true },
-		func = function(name, param)
+		func = function(name, _)
 			if not mods_loaded then
 				return false
 			end
 			local biomes
 			local b = 0
 			biomes = {}
-			for k,v in pairs(minetest.registered_biomes) do
+			for k, _ in pairs(minetest.registered_biomes) do
 				table.insert(biomes, k)
 				b = b + 1
 			end
@@ -268,173 +268,3 @@ do
 		end,
 	})
 end
-
---[[ Table for storing all locate subcommands
-local locate_commands = {
-    "biome"
-}
-
--- Helper function for autocomplete suggestions
-minetest.register_chatcommand("locate", {
-    params = "<subcommand> [args]",
-    description = "Locate various elements (e.g. biome)",
-    privs = {shout=true},
-    func = function(name, param)
-        local player = minetest.get_player_by_name(name)
-        if not player then
-            return false, "Player not found!"
-        end
-
-        local args = param:split(" ")
-        local subcommand = args[1]
-
-        if subcommand == "biome" then
-            local biome_name = args[2]
-            if not biome_name then
-                return false, "Please provide a biome name."
-            end
-            -- Call the function to locate the nearest biome
-            return locate_biome(player, biome_name)
-        else
-            return false, "Unknown subcommand. Use '/locate biome'."
-        end
-        if #args == 1 then
-            -- Suggest the subcommands if no subcommand yet
-            return locate_commands
-        elseif #args == 2 and args[1] == "biome" then
-            -- Suggest biome names if the subcommand is biome
-            return get_biome_names()
-        end
-    end
-})
-
--- Helper function to get available biome names
-function get_biome_names()
-    local biome_list = {}
-    for id, biome in pairs(minetest.registered_biomes) do
-        table.insert(biome_list, biome.name)
-    end
-    return biome_list
-end
-
--- Function to locate the nearest biome of the given name
-function locate_biome(player, biome_name)
-    local pos = player:get_pos()
-    local closest_biome = nil
-    local min_distance = math.huge
-
-    for _, biome in pairs(minetest.registered_biomes) do
-        if biome.name == biome_name then
-            -- Search for the biome nearby
-            for x = -1000, 1000, 16 do
-                for z = -1000, 1000, 16 do
-                    local test_pos = {x = pos.x + x, y = pos.y, z = pos.z + z}
-                    local found_biome = minetest.get_biome_name(minetest.get_biome_data(test_pos).biome)
-                    if found_biome == biome_name then
-                        local distance = vector.distance(pos, test_pos)
-                        if distance < min_distance then
-                            closest_biome = test_pos
-                            min_distance = distance
-                        end
-                    end
-                end
-            end
-            break
-        end
-    end
-
-    if closest_biome then
-        return true, "Nearest " .. biome_name .. " biome is at " .. minetest.pos_to_string(closest_biome)
-    else
-        return false, biome_name .. " biome not found nearby."
-    end
-end
-]]
-
--- Table for storing all locate subcommands
-local locate_commands = {
-    "biome"
-}
-
--- Helper function to get available biome names
-function get_biome_names()
-    local biome_list = {}
-    for id, biome in pairs(minetest.registered_biomes) do
-        table.insert(biome_list, biome.name)
-    end
-    return biome_list
-end
-
--- Function to locate the nearest biome of the given name
-function locate_biome(player, biome_name)
-    local pos = player:get_pos()
-    local closest_biome = nil
-    local min_distance = math.huge
-
-    for _, biome in pairs(minetest.registered_biomes) do
-        if biome.name == biome_name then
-            -- Search for the biome nearby
-            for x = -1000, 1000, 16 do
-                for z = -1000, 1000, 16 do
-                    local test_pos = {x = pos.x + x, y = pos.y, z = pos.z + z}
-                    local found_biome = minetest.get_biome_name(minetest.get_biome_data(test_pos).biome)
-                    if found_biome == biome_name then
-                        local distance = vector.distance(pos, test_pos)
-                        if distance < min_distance then
-                            closest_biome = test_pos
-                            min_distance = distance
-                        end
-                    end
-                end
-            end
-            break
-        end
-    end
-
-    if closest_biome then
-        return true, "Nearest " .. biome_name .. " biome is at " .. minetest.pos_to_string(closest_biome)
-    else
-        return false, biome_name .. " biome not found nearby."
-    end
-end
-
--- Register chatcommand with built-in autocomplete
-minetest.register_chatcommand("locate", {
-    params = "<subcommand> [args]",
-    description = "Locate various elements (e.g. biome)",
-    privs = {shout = true},
-    func = function(name, param)
-        local player = minetest.get_player_by_name(name)
-        if not player then
-            return false, "Player not found!"
-        end
-
-        local args = param:split(" ")
-        local subcommand = args[1]
-
-        if subcommand == "biome" then
-            local biome_name = args[2]
-            if not biome_name then
-                return false, "Please provide a biome name."
-            end
-            -- Call the function to locate the nearest biome
-            return locate_biome(player, biome_name)
-        else
-            return false, "Unknown subcommand. Use '/locate biome'."
-        end
-    end,
-    
-    -- Tab autocompletion logic
-    func_tab_autocomplete = function(name, param)
-        local args = param:split(" ")
-
-        if #args == 1 then
-            -- Suggest subcommands if none provided yet
-            return locate_commands
-        elseif #args == 2 and args[1] == "biome" then
-            -- Suggest biome names if subcommand is 'biome'
-            return get_biome_names()
-        end
-    end
-})
-

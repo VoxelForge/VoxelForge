@@ -11,7 +11,7 @@ end
 
 -- Find a stand entity or spawn one
 local function get_stand_entity(pos, node)
-	for _, obj in ipairs(minetest.get_objects_inside_radius(pos, 0)) do
+	for obj in minetest.objects_inside_radius(pos, 0) do
 		local luaentity = obj:get_luaentity()
 		if luaentity and luaentity.name == "vlf_armor_stand:armor_entity" then
 			return luaentity
@@ -75,7 +75,7 @@ minetest.register_node("vlf_armor_stand:armor_stand", {
 	on_destruct = function(pos)
 		drop_inventory(pos)
 	end,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+	on_rightclick = function(pos, node, clicker, itemstack, _)
 		local protname = clicker:get_player_name()
 
 		if minetest.is_protected(pos, protname) then
@@ -85,7 +85,7 @@ minetest.register_node("vlf_armor_stand:armor_stand", {
 
 		return vlf_armor.equip(itemstack, get_stand_entity(pos, node).object, true)
 	end,
-	on_rotate = function(pos, node, user, mode)
+	on_rotate = function(pos, node, _, mode)
 		if mode == screwdriver.ROTATE_FACE then
 			node.param2 = (node.param2 + 1) % 4
 			minetest.swap_node(pos, node)
@@ -107,6 +107,7 @@ minetest.register_entity("vlf_armor_stand:armor_entity", {
 		textures = {"blank.png"},
 		timer = 0,
 		static_save = false,
+		_vlf_pistons_unmovable = true,
 	},
 	_vlf_fishing_hookable = true,
 	_vlf_fishing_reelable = true,
@@ -117,7 +118,7 @@ minetest.register_entity("vlf_armor_stand:armor_entity", {
 		migrate_inventory(self.inventory)
 		vlf_armor.update(self.object)
 	end,
-	on_step = function(self, dtime)
+	on_step = function(self)
 		if minetest.get_node(self.node_pos).name ~= "vlf_armor_stand:armor_stand" then
 			self.object:remove()
 		end

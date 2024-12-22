@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_dyes x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_dyes x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,62 +11,59 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
-
-msgid "White"
-msgstr ""
-
-msgid "Light Grey"
-msgstr ""
-
-msgid "Grey"
-msgstr ""
-
-msgid "Black"
-msgstr ""
-
-msgid "Purple"
-msgstr ""
-
-msgid "Blue"
-msgstr ""
-
-msgid "Light Blue"
-msgstr ""
-
-msgid "Cyan"
-msgstr ""
-
-msgid "Green"
-msgstr ""
-
-msgid "Lime"
-msgstr ""
-
-msgid "Yellow"
-msgstr ""
-
-msgid "Brown"
-msgstr ""
-
-msgid "Orange"
-msgstr ""
-
-msgid "Red"
-msgstr ""
-
-msgid "Magenta"
-msgstr ""
-
-msgid "Pink"
-msgstr ""
-
-msgid "@1 Dye"
-msgstr ""
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This item is a dye which is used for dyeing and crafting."
 msgstr "Ten przedmiot to farba wykorzystywana to farbowania i wytwarzania."
 
 msgid "Rightclick on a sheep to dye its wool. Other things are dyed by crafting."
 msgstr "Kliknij prawym na owcę aby zafarbować jej wełnę. Inne rzeczy mogą być zafarbowane przy wytwarzaniu."
+
+msgid "Black Dye"
+msgstr "Czarny farba"
+
+msgid "Blue Dye"
+msgstr "Niebieska farba"
+
+msgid "Brown Dye"
+msgstr "Brązowy farba"
+
+msgid "Cyan Dye"
+msgstr "Błękitna farba"
+
+msgid "Green Dye"
+msgstr ""
+
+msgid "Grey Dye"
+msgstr "Szara farba"
+
+msgid "Light Blue Dye"
+msgstr "Jasnoniebieska farba"
+
+msgid "Light Grey Dye"
+msgstr "Jasnoszara farba"
+
+msgid "Lime Dye"
+msgstr "Jasnozielona farba"
+
+msgid "Magenta Dye"
+msgstr "Karmazynowa farba"
+
+msgid "Orange Dye"
+msgstr "Pomarańczowa farba"
+
+msgid "Pink Dye"
+msgstr "Różowa farba"
+
+msgid "Purple Dye"
+msgstr "Fioletowa farba"
+
+msgid "Red Dye"
+msgstr ""
+
+msgid "White Dye"
+msgstr "Biały farba"
+
+msgid "Yellow Dye"
+msgstr ""
 

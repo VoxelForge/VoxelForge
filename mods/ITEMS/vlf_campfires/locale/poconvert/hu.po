@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_campfires x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_campfires x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,17 +11,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Cooks food and keeps bees happy."
-msgstr ""
+msgstr "Ételt főz és megnyugtatja a méheket."
 
 msgid "Campfires have multiple uses, including keeping bees happy, cooking raw meat and fish, and as a trap."
-msgstr ""
+msgstr "A tábortüzet számos módon használhatjuk, beleértve a méhek nyugtatását, a nyers hús és hal főzését, valamint csapdaként is szolgálhat."
 
 msgid "Campfire"
-msgstr ""
+msgstr "Tábortűz"
 
 msgid "Soul Campfire"
-msgstr ""
+msgstr "Lélek Tábortűz"
 

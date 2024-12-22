@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_itemframes x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_itemframes x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,13 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Item Frame"
 msgstr "Рамка"
 
 msgid "Can hold an item"
-msgstr ""
+msgstr "Может удерживать предмет"
 
 msgid "Item frames are decorative blocks in which items can be placed."
 msgstr "Рамки это декоративные блоки, в которые можно помещать предметы."
@@ -26,14 +26,14 @@ msgid "Just place any item on the item frame. Use the item frame again to retrie
 msgstr "Просто поместите в рамку любой предмет. Используйте рамку вновь, чтобы забрать из неё предмет обратно."
 
 msgid "Glow Item Frame"
-msgstr ""
+msgstr "Светящаяся рамка"
 
 msgid "Can hold an item and glows"
-msgstr ""
+msgstr "Может удерживать предмет и светится"
 
 msgid "Glow and Behold!"
-msgstr ""
+msgstr "Сияй и созерцай!"
 
 msgid "Craft a glow item frame."
-msgstr ""
+msgstr "Сделайте светящуюся рамку для предметов."
 

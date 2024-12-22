@@ -4,7 +4,7 @@ vlf_gamemode = {
 	gamemodes = {
 		"survival",
 		"creative",
-		"spectator",
+		"hardcore",
 	},
 	registered_on_gamemode_change = {}
 }
@@ -18,7 +18,7 @@ local old_is_creative_enabled = minetest.is_creative_enabled
 function minetest.is_creative_enabled(name)
 	if old_is_creative_enabled(name) then return true end
 	if not name then return false end
-	assert(type(name) == "string", "minetest.is_creative_enabled requires a string (the playername) argument. This is likely an error in a non-voxelforge mod.")
+	assert(type(name) == "string", "minetest.is_creative_enabled requires a string (the playername) argument. This is likely an error in a non-mineclonia mod.")
 	local p = minetest.get_player_by_name(name)
 	if p then
 		return p:get_meta():get_string("gamemode") == "creative"
@@ -26,19 +26,8 @@ function minetest.is_creative_enabled(name)
 	return false
 end
 
-function vlf_gamemode.is_spectating(name)
-	--if old_is_creative_enabled(name) then return true end
-	if not name then return false end
-	assert(type(name) == "string", "vlf_gamemode.is_spectating requires a string (the playername) argument. This is likely an error in a non-voxelforge mod.")
-	local p = minetest.get_player_by_name(name)
-	if p then
-		return p:get_meta():get_string("gamemode") == "spectator"
-	end
-	return false
-end
-
 function vlf_gamemode.get_gamemode(p)
-	return minetest.is_creative_enabled(p:get_player_name()) and "creative" or "survival" or "spectator"
+	return minetest.is_creative_enabled(p:get_player_name()) and "creative" or "survival" or "hardcore"
 end
 
 function vlf_gamemode.set_gamemode(p, gm)

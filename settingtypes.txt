@@ -21,18 +21,8 @@ vlf_explosions_griefing (Explosion griefing) bool true
 # If disabled, no ores will be generated.
 vlf_generate_ores (Generate ores) bool true
 
-# If disabled, then no music will be heard in the game, except from the menu and jukeboxes.
-vlf_game_music (Play Music) bool true
-
 # Enable minetest mapgen dungeons
 vlf_enable_mt_dungeons (Native Minetest dungeons) bool false
-
-# required for the biome_mg
-# Set to None for default map generation
-vlf_single_biome_mg_biomes (Biome Type) enum None None,IcePlainsSpikes,IcePlainsSpikes_ocean,ColdTaiga,ColdTaiga_beach,ColdTaiga_beach_water,ColdTaiga_ocean,MegaTaiga,MegaTaiga_ocean,MegaSpruceTaiga,MegaSpruceTaiga_ocean,ExtremeHills,ExtremeHills_beach,ExtremeHills_ocean,ExtremeHillsM,ExtremeHillsM_ocean,StoneBeach,StoneBeach_ocean,IcePlains,IcePlains_ocean,Plains,Plains_beach,Plains_ocean,CherryGrove,SunflowerPlains,SunflowerPlains_ocean,Taiga,Taiga_beach,Taiga_ocean,Forest,Forest_beach,Forest_ocean,FlowerForest,FlowerForest_beach,FlowerForest_ocean,BirchForest,BirchForest_ocean,BirchForestM,BirchForestM_ocean,Desert,Desert_ocean,RoofedForest,RoofedForest_ocean,Mesa,Mesa_sandlevel,Mesa_ocean,MesaBryce,MesaBryce_sandlevel,MesaBryce_ocean,MesaPlateauF,MesaPlateauF_grasstop,MesaPlateauF_sandlevel,MesaPlateauF_ocean,MesaPlateauFM,MesaPlateauFM_grasstop,MesaPlateauFM_sandlevel,MesaPlateauFM_ocean,Savanna,Savanna_beach,Savanna_ocean,SavannaM,SavannaM_ocean,Jungle,Jungle_shore,Jungle_ocean,JungleM,JungleM_shore,JungleM_ocean,BambooJungle,BambooJungle_ocean,JungleEdge,JungleEdge_ocean,JungleEdgeM,JungleEdgeM_ocean,MangroveSwamp,MangroveSwamp_shore,MangroveSwamp_ocean,Swampland,Swampland_shore,Swampland_ocean,MushroomIsland,MushroomIslandShore,MushroomIsland_ocean,DeepDark,LushCaves,LushCaves_ocean,LushCaves_underground,Nether,SoulsandValley,CrimsonForest,WarpedForest,BasaltDelta
-
-#    Required for custom cavegen api
-vlf_enable_experimental_caves (Cavegen api Setting) bool false
 
 # If enabled, the “flat” map generator generates a Classic Superflat world:
 # Completely flat, 1 layer of grass blocks on top of 2 layers of dirt on
@@ -44,25 +34,55 @@ vlf_enable_experimental_caves (Cavegen api Setting) bool false
 # Note: This setting has no effect on existing worlds.
 vlf_superflat_classic (Classic superflat map generation) bool false
 
+# One of four levels defining the difficulty of gameplay.
+
+# Peaceful: no hostile mobs, excepting shulkers, hoglins, piglins, and
+# the dragon spawn, and nor do spiders or endermen, while players
+# rapidly regenerate health and do not experience hunger.  Mobs will
+# not attack players, even in retaliation.  TNT ceases to inflict
+# damage, and raids cannot be induced.
+#
+# Easy: mobs deal 0.5x their standard values plus one additional
+# health point in damage.  Players experience hunger as usual, but
+# starvation can only damage players to 10 hearts.  Cave spiders
+# cannot inflict poison, nor can Withers the Wither effect.  Villagers
+# are never converted into zombie villagers, and zombies and skeletons
+# never spawn equipped with armor.
+#
+# Normal: mobs deal their standard amounts of damage, and villagers
+# killed by zombies are liable, with a 50% chance, to transform into
+# zombie villagers.  Vindicators are capable of breaking doors.
+#
+# Hard: mobs deal approximately 150% as much damage as on Normal.
+# Starvation can kill, rather than merely reduce the player to half a
+# heart.  Villagers killed by zombies are unconditionally resurrected
+# as zombie villagers.  Chunks that have been inhabited for longer
+# than a certain period may host randomly generated pillager patrols.
+# In addition, there is an increased chance of a mob's spawning with
+# armor or weapons.
+
+vlf_difficulty (Difficulty) enum normal peaceful,easy,normal,hard
+
 [Players]
-# If enabled, players respawn at the bed they last lay on instead of normal
-# spawn.
+# If enabled, players respawn at the bed they clicked instead of normal spawn.
 # This setting is only read at startup.
 enable_bed_respawn (Respawn at bed) bool true
 
 # How many players have to sleep to skip the night, in percent.
-# Setting to 0 will mean 1 player is always enough to skip the night. Setting above 100 will prevent skipping the night.
-# 100 by default.
+# Setting to 0 will mean 1 player is always enough to skip the night.
+# Setting above 100 will prevent skipping the night.
+# Default: 100
 vlf_playersSleepingPercentage (Player sleeping percentage) int 100
 
-# Normally, players drop all their items when they die. Enable this
-# setting, so players always keep their inventory on death.
+# Normally, players drop all their items when they die.
+# If enabled, players always keep their inventory on death.
 vlf_keepInventory (Keep inventory on death) bool false
 
 # If enabled, chat messages are shown to everyone when a player dies.
 vlf_showDeathMessages (Show death messages) bool true
 
-# If enabled, the recipe book will progressively be filled with new recipes that can be crafted from all items you ever have had in your inventory.
+# If enabled, the recipe book will progressively be filled with new recipes
+# that can be crafted from all items you ever have had in your inventory.
 # Recommended for new players and for a spoiler-free gameplay experience.
 # If disabled, all recipes will be shown.
 vlf_craftguide_progressive_mode	(Learn crafting recipes progressively) bool true
@@ -71,11 +91,11 @@ vlf_craftguide_progressive_mode	(Learn crafting recipes progressively) bool true
 vlf_enable_skin_customization (Player skin customization) bool true
 
 # How far the player hand can reach
-# Default:4.5
+# Default: 4.5
 vlf_hand_range (Hand range) float 4.5 1 128
 
 # How far the player hand can reach in creative mode
-# Default:10
+# Default: 10
 vlf_hand_range_creative (Creative mode hand range) float 10 1 128
 
 # If enabled the hunger mechanic will be active
@@ -83,49 +103,41 @@ vlf_hand_range_creative (Creative mode hand range) float 10 1 128
 vlf_enable_hunger (Hunger) bool true
 
 [Mobs]
-# If enabled, mobs will spawn naturally. This does not affect
-# affect mob spawners.
+# If enabled, mobs will spawn naturally.
+# This does not affect mob spawners.
 # This setting is only read at startup.
 mobs_spawn (Spawn mobs naturally) bool true
 
-# If enabled, only peaceful mobs will appear naturally. This does not
-# affect mob spawners.
+# If enabled, only peaceful mobs will appear naturally.
+# This does not affect mob spawners.
 # This setting is only read at startup.
 only_peaceful_mobs (Spawn only peaceful mobs) bool false
 
-# Allow mobs to spawn in protected areas. This does not affect
-# mob spawners.
+# Allow mobs to spawn in protected areas.
+# This does not affect mob spawners.
 mobs_spawn_protected (Spawn mobs in protected areas) bool false
 
-# Use light levels from Minecraft 1.18+ for monster spawning. Disable to use older mob specific light levels.
+# Use light levels from Minecraft 1.18+ for monster spawning.
+# Disable to use older mob specific light levels.
 vlf_mobs_modern_lighting (Modern light rules for spawning) bool true
-
-# Mobs difficulty. This is a number that will affect the initial and maximum
-# health and the amount of damage that mobs deal. Health and damage will
-# be multiplied with this number.
-mob_difficulty (Mob difficulty factor) float 1.0 0.0
 
 # If enabled, mobs might drop items when they die.
 mobs_drop_items (Mob drops) bool true
 
-# If enabled, mobs can take, place, change and destroy blocks around them.
+# If enabled, mobs can take, place, change and
+# destroy blocks around them.
 mobs_griefing (Mob griefing) bool true
-
-# Should wither follow the player who spawned him around
-wither_follow_spawner (Wither follows his spawner) bool true
-
-# Should wither strafe while in combat
-wither_strafes (Wither strafes) bool true
 
 # How far from players should mobs stop moving
 # Larger values will have a larger performance impact
 vlf_mob_active_range (Active mob range) int 48 0 256
 
 [Mob caps]
-# Maximum amount mobs
+# Global maximum amount of mobs
+# This controls how many mobs can exist in the map
 vlf_mob_cap_total (Global mob cap) int 500 0 2048
 
-# Maximum amount of mobs per player
+# Maximum amount of mobs (animals+monsters) per player
 vlf_mob_cap_player (Mob cap per player) int 75 0 2048
 
 # Maximum amount of monsters that will spawn near a player
@@ -137,27 +149,32 @@ vlf_mob_cap_animal (Mob cap for animals) int 10 0 1024
 # Maximum amount of ambient mobs that will spawn near a player
 vlf_mob_cap_ambient (Mob cap for ambient mobs) int 15 0 1024
 
-# Maximum amount of water mobs (squids, dolphins) that will spawn near a player
+# Maximum amount of water mobs (squids, dolphins)
+# that will spawn near a player
 vlf_mob_cap_water (Mob cap for water mobs) int 5 0 1024
 
 # Maximum amount of ambient water mobs (fish) that will spawn near a player
 vlf_mob_cap_water_ambient (Mob cap for ambient water mobs) int 20 0 1024
 
 [Features]
-# Enable Bookshelf inventories
+# Enabling this setting adds an inventory to bookshelves
 vlf_bookshelf_inventories (Bookshelf inventories) bool true
 
 # All tameable mobs listen to the "sit" right-click like dogs
+# For some mobs the Sneak button must be pressed:
+# Eg. horses or other mobs with a right-click function
 vlf_extended_pet_control (Extended pet control) bool false
 
-# Enable nodes not in Minecraft. Includes extra stairs and slabs, Red Nether Brick Fence and nether brick fence gates.
+# Enable nodes not in Minecraft.
+# Includes extra stairs and slabs, Red Nether Brick Fence and
+# nether brick fence gates.
 vlf_extra_nodes (Additional nodes) bool true
 
 # Enable piston movement of inventory nodes.
 vlf_inv_nodes_movable (Movable inventory nodes) bool true
 
-# Make iron golems teleport home when they are far away and villagers teleport
-# home when the night is skipped.
+# Make iron golems teleport home when they are far away and
+# villagers teleport home when the night is skipped.
 vlf_mob_allow_nav_hacks (Mob navigation hacks) bool false
 
 # Allow players to create Minecraft-like maps.
@@ -166,8 +183,12 @@ enable_real_maps (Real maps) bool true
 # Place bonus chest near players' initial spawn point
 vlf_bonus_chest (Bonus chest) bool false
 
-# Allow editing signs
+# Allow re-editing signs after they are placed
 vlf_signs_editable (Editable signs) bool false
+
+# Change size of vault memory. By default a vault remembers the last 128 players
+# that looted that vault and prevents them from looting the same vault again.
+vlf_vaults_looter_list_length (Vault memory size) int 128 1 1024
 
 [Graphics]
 # Whether to animate chests when open / close
@@ -176,22 +197,23 @@ animated_chests (Animated chests) bool true
 # Enable dust particles in the nether
 vlf_nether_dust (Nether dust particles) bool true
 
-# If enabled, mobs will emit damage particles when they get hurt.
+# If enabled, mobs will emit damage particles when they get hurt
 vlf_damage_particles (Damage particles) bool true
 
 # The maximum number of boss bars to simultaneously display on the screen
 vlf_max_bossbars (Maximum boss bars) int 5
 
-# How many vertical animation frames the fire texture (fire_basic_flame_animated.png) has.
+# How many vertical animation frames the fire
+# texture (fire_basic_flame_animated.png) has.
 # This may vary depending on the texture pack you use.
 # Form: Image height / Image width
 fire_animation_frames (Fire animation frames) int 8
 
 # The font size.
-vlf_font_size (Font Size) int 18
+vlf_font_size (Font Size) int 35
 
 # The font size for in-game chat.
-vlf_chat_font_size (Chat Font Size) int 16
+vlf_chat_font_size (Chat Font Size) int 25
 
 # The font shadow size, in pixels of offset.
 vlf_font_shadow_size (Font Shadow Size) int 2
@@ -203,7 +225,8 @@ vlf_villages_min_jobs (Minimum number of jobs in village) int 1
 # Maximum number of job sites which are placed during village generation
 vlf_villages_max_jobs (Maximum number of jobs in village) int 12
 
-# 1 in X chance a village will spawn in a valid chunk. Set to 0 for no villages
+# 1 in X chance a village will spawn in a valid chunk.
+# Set to 0 to disable village generation.
 vlf_villages_village_chance (Village chance) int 100
 
 # This controls how job sites and houses are placed during village generation
@@ -211,6 +234,21 @@ vlf_villages_village_chance (Village chance) int 100
 # jobs: places the job sites first so they tend to be closer to the bell
 # houses: places the houses first so the tend to be closer to the bell
 vlf_villages_placement_priority (Buildings closest to the bell) enum random random,jobs,houses
+
+[Redstone]
+
+# Redstone update interval in seconds.
+vlf_redstone_update_tick (Redstone update tick) float 0.1
+
+# The time budget allowed for redstone updates each tick (as a fraction of update tick time)
+vlf_redstone_time_budget (Redstone time budget) float 0.2
+
+# How far from players redstone updates will take place, stated in mapblocks
+# (16 nodes). Only has effect on multiplayer servers.
+vlf_redstone_update_range (Redstone update range) int 8
+
+# The maximum number of queued redstone events. If exceeded redstone circuits will stop working.
+vlf_redstone_event_max (Maximum queued redstone events) int 65535
 
 [Experimental]
 # If disabled, command blocks will be unusable (but still present).
@@ -233,21 +271,3 @@ vlf_logging_structures (Log structure generation) bool true
 # Debug logging for vlf_events.
 vlf_logging_event_api (Debug logging for vlf_events) bool false
 
-[Nodes]
-# If enabled, exporting a schematic will also create a .lua file
-# in addition to the .mts file.
-vlf_structure_block_export_lua (.lua file schematic export) bool true
-
-# Specify the style of the visual border markers.
-# * edges: Show borders at the edges
-# * checkers: Checker pattern at the sides
-vlf_structure_block_border_style (Border style) enum edges edges,checkers
-
-[Legacy]
-# If enabled, old MineCraft achievments will exist.
-legacy_achievements (Legacy MineCraft Advancements) bool false
-
-[MineCraft]
-
-# If disabled phantoms won't spawn
-doInsomnia (Defaults to true which allows phantoms to spawn) bool true

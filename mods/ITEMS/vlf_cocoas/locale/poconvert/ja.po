@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_cocoas x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_cocoas x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,22 +11,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
-
-msgid "Premature Cocoa Pod"
-msgstr "未成熟なカカオの実"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Cocoa pods grow on the side of jungle trees in 3 stages."
 msgstr "カカオの実は、ジャングルの木の側面に3段階で成長します。"
+
+msgid "Premature Cocoa Pod"
+msgstr "未成熟なカカオの実"
 
 msgid "Medium Cocoa Pod"
 msgstr "成熟しつつあるカカオの実"
 
 msgid "Mature Cocoa Pod"
 msgstr "成熟したカカオの実"
-
-msgid "A mature cocoa pod grew on a jungle tree to its full size and it is ready to be harvested for cocoa beans. It won't grow any further."
-msgstr "成熟したカカオの実は、ジャングルの木で最大まで成長し、カカオ豆を収穫できるようになった状態です。これ以上は成長しません。"
 
 msgid "Cocoa Beans"
 msgstr ""

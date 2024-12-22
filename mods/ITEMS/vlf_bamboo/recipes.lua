@@ -33,32 +33,3 @@ minetest.register_craft({
 			 {"group:bamboo_tree", "", "group:bamboo_tree"},
 			 {"group:bamboo_tree", "", "group:bamboo_tree"}}
 })
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_bamboo:scaffolding",
-	burntime = 20
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_bamboo:bamboo",
-	burntime = 2.5,
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_bamboo:bamboo_mosaic",
-	burntime = 7.5,
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_stairs:slab_bamboo_mosaic",
-	burntime = 7.5,
-})
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_stairs:stair_bamboo_mosaic",
-	burntime = 15,
-})

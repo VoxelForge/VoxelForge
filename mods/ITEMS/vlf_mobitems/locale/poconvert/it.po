@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_mobitems x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_mobitems x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Rotten Flesh"
-msgstr ""
+msgstr "Carne Marcia"
 
 msgid "80% chance of food poisoning"
-msgstr ""
+msgstr "80% di probabilità di intossicazione alimentare"
 
 msgid "Yuck! This piece of flesh clearly has seen better days. If you're really desperate, you can eat it to restore a few hunger points, but there's a 80% chance it causes food poisoning, which increases your hunger for a while."
-msgstr ""
+msgstr "Bleah! Questo pezzo di carne ha chiaramente visto tempi migliori. Se sei davvero disperata(o), puoi mangiarlo per ripristinare qualche punto di fame, ma c'è un 80% di probabilità che causi l'intossicazione alimentare, che aumenta la tua fame per un pò di tempo."
 
 msgid "Raw Mutton"
 msgstr ""
@@ -131,6 +131,12 @@ msgid "Blaze Rod"
 msgstr ""
 
 msgid "This is a crafting component dropped from dead blazes."
+msgstr ""
+
+msgid "Breeze Rod"
+msgstr ""
+
+msgid "This is a crafting item dropped from breezes."
 msgstr ""
 
 msgid "Blaze Powder"
@@ -254,6 +260,12 @@ msgid "The Heart of the Sea is used to craft a conduit. They can be obtained by 
 msgstr ""
 
 msgid "Place it on a horse to put on the horse armor. Donkeys and mules can't wear horse armor."
+msgstr ""
+
+msgid "Leather Horse Armor"
+msgstr ""
+
+msgid "Leather horse armor can be worn by horses to increase their protection from harm a little."
 msgstr ""
 
 msgid "Iron Horse Armor"

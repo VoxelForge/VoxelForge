@@ -2,8 +2,8 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 local dripstone_directions =
 {
-	[-1] = "up",
-	[1] = "down",
+	[-1] = "bottom",
+	[1] = "top",
 }
 
 local dripstone_stages =
@@ -62,22 +62,20 @@ end
 
 -- extracts the direction from dripstone's name
 local function extract_direction(name)
-	return string.sub(name, 26, 31) == "up" and -1 or 1
+	return string.sub(name, 26, 31) == "bottom" and -1 or 1
 end
 
 -- it is assumed pos is at the tip of the dripstone
 local function get_dripstone_length(pos, direction)
 	local offset_pos = vector.copy(pos)
 	local stage
-	local length = 1
-	while true do
+	local length = 0
+	repeat
+		length = length + 1
 		offset_pos = vector.offset(offset_pos, 0, direction, 0)
 		stage = minetest.get_item_group(minetest.get_node(offset_pos).name, "dripstone_stage")
-		if stage == 0 then
-			return length
-		end
-		length = length + 1
-	end
+	until(stage == 0)
+	return length
 end
 
 function place_dripstone(pos, length, direction)
@@ -112,7 +110,7 @@ end
 local function break_dripstone(pos, direction)
 	local offset_pos = vector.copy(pos)
 	while true do
-		local offset_pos = vector.offset(offset_pos, 0, -direction, 0)
+		offset_pos = vector.offset(offset_pos, 0, -direction, 0)
 		local stage = minetest.get_item_group(minetest.get_node(offset_pos).name, "dripstone_stage")
 		if stage == 1 and extract_direction(minetest.get_node(offset_pos).name) == -direction then
 			minetest.swap_node(offset_pos, {name = get_dripstone_node(2, -direction)})
@@ -216,14 +214,14 @@ minetest.register_craftitem("vlf_dripstone:pointed_dripstone", {
 
 for i = 1, #dripstone_stages do
 	local stage = dripstone_stages[i]
-	minetest.register_node("vlf_dripstone:dripstone_down_" .. stage, {
+	minetest.register_node("vlf_dripstone:dripstone_top_" .. stage, {
 		description = S("Pointed dripstone (@1/@2)", i, #dripstone_stages),
 		_doc_items_longdesc = S("Pointed dripstone is what stalagmites and stalagtites are made of"),
 		_doc_items_hidden = true,
 		drawtype = "plantlike",
 		tiles = {"pointed_dripstone_" .. stage .. ".png"},
 		drop = "vlf_dripstone:pointed_dripstone",
-		groups = {pickaxey=1, not_in_creative_inventory=1, dripstone_stage = i},
+		groups = {pickaxey=1, not_in_creative_inventory=1, dripstone_stage = i, _vlf_partial = 2,},
 		sunlight_propagates = true,
 		paramtype = "light",
 		is_ground_content = false,
@@ -233,14 +231,14 @@ for i = 1, #dripstone_stages do
 		_vlf_hardness = 1.5,
 	})
 
-	minetest.register_node("vlf_dripstone:dripstone_up_" .. stage, {
+	minetest.register_node("vlf_dripstone:dripstone_bottom_" .. stage, {
 		description = S("Pointed dripstone (@1/@2)", i, #dripstone_stages),
 		_doc_items_longdesc = S("Pointed dripstone is what stalagmites and stalagtites are made of"),
 		_doc_items_hidden = true,
 		drawtype = "plantlike",
 		tiles = {"pointed_dripstone_" .. stage .. ".png^[transform6"},
 		drop = "vlf_dripstone:pointed_dripstone",
-		groups = {pickaxey=1, not_in_creative_inventory=1, fall_damage_add_percent = 100, dripstone_stage = i},
+		groups = {pickaxey=1, not_in_creative_inventory=1, fall_damage_add_percent = 100, dripstone_stage = i, _vlf_partial = 2},
 		sunlight_propagates = true,
 		paramtype = "light",
 		is_ground_content = false,
@@ -265,14 +263,14 @@ end)
 
 minetest.register_abm({
 	label = "Dripstone growth",
-	nodenames = {"vlf_dripstone:dripstone_down_tip"},
+	nodenames = {"vlf_dripstone:dripstone_top_tip"},
 	interval = 69,
-	chance = 1,
+	chance = 88,
 	action = function(pos)
 		-- checking if can grow
-		local stalagtite_lenth = get_dripstone_length(pos, 1)
-		if minetest.get_node(vector.offset(pos, 0, stalagtite_lenth, 0)).name ~= "vlf_dripstone:dripstone_block"
-		or minetest.get_item_group(minetest.get_node(vector.offset(pos, 0, stalagtite_lenth + 1, 0)).name, "water") == 0 then
+		local stalagtite_length = get_dripstone_length(pos, 1)
+		if minetest.get_node(vector.offset(pos, 0, stalagtite_length, 0)).name ~= "vlf_dripstone:dripstone_block"
+		or minetest.get_item_group(minetest.get_node(vector.offset(pos, 0, stalagtite_length + 1, 0)).name, "water") == 0 then
 			return
 		end
 
@@ -299,7 +297,7 @@ minetest.register_abm({
 			end
 		else
 			-- stalagtite growth
-			if stalagtite_lenth > 7 then return end
+			if stalagtite_length > 7 then return end
 
 			if minetest.get_node(vector.offset(pos, 0, -1, 0)).name == "air" then
 				minetest.set_node(vector.offset(pos, 0, -1, 0), {name = get_dripstone_node(2, 1)})
@@ -309,48 +307,35 @@ minetest.register_abm({
 	end,
 })
 
--- Cauldron fill up rules:
--- Adding any water increases the water level by 1, preserving the current water type
-local cauldron_levels = {
-	["vlf_core:water_source"] = {"", "_1", "_2", "_3"},
-	["vlfx_core:river_water_source"] = {"", "_1r", "_2r", "_3r"},
-}
-local fill_cauldron = function(cauldron, water_type)
-	local base = "vlf_cauldrons:cauldron"
-	for index = 1, #cauldron_levels[water_type] do
-		if cauldron == (base .. cauldron_levels[water_type][index]) and index ~= #cauldron_levels[water_type] then
-			return base .. cauldron_levels[water_type][index + 1]
-		end
-	end
-end
-
 minetest.register_abm({
 	label = "Dripstone filling water cauldrons, conversion from mud to clay",
-	nodenames = {"vlf_dripstone:dripstone_down_tip"},
+	nodenames = {"vlf_dripstone:dripstone_top_tip"},
 	interval = 69,
 	chance = 5.5,
 	action = function(pos)
 		local stalagtite_length = get_dripstone_length(pos, 1)
+		local wpos = vector.offset(pos, 0, stalagtite_length + 1, 0)
+		local wnode = core.get_node(wpos)
 
-		if minetest.get_item_group(minetest.get_node(vector.offset(pos, 0, stalagtite_length + 1, 0)).name, "water") == 0
+		if minetest.get_item_group(minetest.get_node(wpos).name, "water") == 0
 		or stalagtite_length > 10 then
 			-- reusing the ABM for converting mud to clay, since the chances are the same
-			if minetest.get_node(vector.offset(pos, 0, stalagtite_length + 1, 0)).name == "vlf_mud:mud"
-			and vlf_worlds.pos_to_dimension(vector.offset(pos, 0, stalagtite_length + 1, 0)) ~= "nether" then
-				minetest.set_node(vector.offset(pos, 0, stalagtite_length + 1, 0), {name = "vlf_core:clay"})
+			if wnode.name == "vlf_mud:mud"
+			and vlf_worlds.pos_to_dimension(wpos) ~= "nether" then
+				minetest.set_node(wpos, {name = "vlf_core:clay"})
 			end
 			return
 		end
 
-		local node
-		local new_cauldron
+		local water_type = "water"
+		if minetest.get_item_group(wnode.name, "river_water") > 0 then
+			water_type = "river_water"
+		end
 		for i = 1, 10 do
-			node = minetest.get_node(vector.offset(pos, 0, -i, 0))
-			if minetest.get_item_group(node.name, "cauldron") ~= 0 and not string.find(node.name, "lava$") then
-				new_cauldron = fill_cauldron(node.name, "vlf_core:water_source")
-				if new_cauldron then
-					minetest.set_node(vector.offset(pos, 0, -i, 0), {name = new_cauldron})
-				end
+			local cpos = vector.offset(pos, 0, -i, 0)
+			local node = minetest.get_node(cpos)
+			if minetest.get_item_group(node.name, "cauldron") == 1 or minetest.get_item_group(node.name, "cauldron_water") > 0 then
+				vlf_cauldrons.add_level(cpos, 1, water_type)
 				return
 			elseif node.name ~= "air" then
 				return
@@ -361,7 +346,7 @@ minetest.register_abm({
 
 minetest.register_abm({
 	label = "Dripstone filling lava cauldrons",
-	nodenames = {"vlf_dripstone:dripstone_down_tip"},
+	nodenames = {"vlf_dripstone:dripstone_top_tip"},
 	interval = 69,
 	chance = 17,
 	action = function(pos)
@@ -372,11 +357,11 @@ minetest.register_abm({
 			return
 		end
 
-		local node
 		for i = 1, 10 do
-			node = minetest.get_node(vector.offset(pos, 0, -i, 0))
+			local cpos = vector.offset(pos, 0, -i, 0)
+			local node = minetest.get_node(cpos)
 			if node.name == "vlf_cauldrons:cauldron" then
-				minetest.set_node(vector.offset(pos, 0, -i, 0), {name = "vlf_cauldrons:cauldron_3_lava"})
+				vlf_cauldrons.add_level(cpos, 3, "lava")
 			elseif node.name ~= "air" then
 				return
 			end
@@ -394,6 +379,7 @@ vlf_structures.register_structure("dripstone_stalagmite", {
 	y_min = vlf_vars.mg_overworld_min,
 	y_max = 0,
 	place_offset_y = 1,
+	terrain_feature = true,
 	place_func = function(pos)
 		local max_length = 0
 		local offset_pos = vector.copy(pos)
@@ -419,6 +405,7 @@ vlf_structures.register_structure("dripstone_stalagtite", {
 	y_min = vlf_vars.mg_overworld_min + 1,
 	y_max = 0,
 	flags = "all_ceilings",
+	terrain_feature = true,
 	place_func = function(pos)
 		pos = vector.offset(pos, 0, -2, 0)
 		local max_length = 0

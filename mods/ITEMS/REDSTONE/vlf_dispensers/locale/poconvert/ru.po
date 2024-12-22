@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_dispensers x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_dispensers x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Dispenser"
 msgstr "Раздатчик"
@@ -79,9 +79,15 @@ msgstr "• Яйца спауна: будут призывать мобов, с�
 msgid "• Other items: Are simply dropped"
 msgstr "• Другие предметы: просто выбрасываются"
 
-msgid "Downwards-Facing Dispenser"
-msgstr "• Раздатчик, направленный вниз"
+msgid "Dropper"
+msgstr "Выбрасыватель"
 
-msgid "Upwards-Facing Dispenser"
-msgstr "• Раздатчик, направленный вверх"
+msgid "Drops item when powered by redstone power"
+msgstr "Выбрасывает предмет при подаче сигнала редстоуна"
+
+msgid "A dropper is a redstone component and a container with 9 inventory slots which, when supplied with redstone power, drops an item or puts it into a container in front of it."
+msgstr "Выбрасыватель это компонент редстоуна и контейнер с 9 слотами инвентаря, срабатывающий по сигналу редстоуна и выбрасывающий предмет, либо выталкивающий его в контейнер, стоящий перед ним."
+
+msgid "Droppers can be placed in 6 possible directions, items will be dropped out of the hole. Use the dropper to access its inventory. Supply it with redstone energy once to make the dropper drop or transfer a random item."
+msgstr "Выбрасыватель может быть установлен в 6 возможных направлениях, предметы будут выбрасываться в соответствующем направлении из отверстия. Используйте выбрасыватель для доступа к его инвентарю. Подайте на него сигнал редстоуна однократно, чтобы заставить его выбросить либо передать один случайный предмет."
 

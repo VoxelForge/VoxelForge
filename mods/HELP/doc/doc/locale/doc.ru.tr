@@ -20,13 +20,7 @@ New entries: @1=Новые записи: @1
 Hidden entries: @1=Скрытые записи: @1
 Help > @1 > (No Entry)=Помощь > @1 > (Нет записи)
 Help > @1 > @2=Help > @1 > @2
-Open a window providing help entries about Minetest and more=Открыть окно с подсказками о игре Minetest и т. п.
+Open a window providing help entries about Minetest and more=Откройте окно, содержащее справочные материалы о Minetest и многом другом
 Help=Помощь
 Allows you to reveal all hidden help entries with /help_reveal=Позволяет вам раскрыть все невидимые подсказки через /help_reveal
 Reveal all hidden help entries to you=Раскрыть все подсказки для вас
-
-
-##### not used anymore #####
-
-New help entry unlocked: @1 > @2=Новая подсказка разблокирована: @1 > @2
-Collection of help texts=Собрание справочных текстов

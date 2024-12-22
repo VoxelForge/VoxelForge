@@ -60,7 +60,7 @@ minetest.override_item("vlf_core:brick", { groups = brick_groups })
 
 local function update_entities(pos,rm)
 	pos = vector.round(pos)
-	for _,v in pairs(minetest.get_objects_inside_radius(pos, 0.5, true)) do
+	for v in minetest.objects_inside_radius(pos, 0.5) do
 		local ent = v:get_luaentity()
 		if ent and ent.name == "vlf_pottery_sherds:pot_face" then
 			v:remove()
@@ -120,21 +120,7 @@ local potbox = {
 	type = "fixed",
 	fixed = {
 		{ -4/16,  9/16, -4/16,  4/16,  12/16,  4/16 },
-		{ -3.2/16,  8/16, -3.2/16,  3.2/16,  9/16,  3.2/16 },
-		{ -7/16,  -8/16, -7/16,  7/16,  8/16,  7/16 },
-	}
-}
-local potselbox = {
-	type = "fixed",
-	fixed = {
-		{ -7/16,  -8/16, -7/16,  7/16,  8/16,  7/16 },
-	}
-}
-local potcolbox = {
-	type = "fixed",
-	fixed = {
-		--[[{ -4/16,  1/16, -4/16,  4/16,  8/16,  4/16 },
-		{ -3/16,  8/16, -3/16,  3/16,  9/16,  3/16 },]]
+		{ -3/16,  8/16, -3/16,  3/16,  9/16,  3/16 },
 		{ -7/16,  -8/16, -7/16,  7/16,  8/16,  7/16 },
 	}
 }
@@ -146,7 +132,7 @@ local function get_sherd_desc(face)
 	return S("@1 Pottery Sherd", vlf_pottery_sherds.defs[face].description)
 end
 
-tt.register_snippet(function(itemstring, toolcaps, stack)
+tt.register_snippet(function(_, _, stack)
 	if not stack then return nil end
 	local meta = stack:get_meta()
 	local faces = minetest.deserialize(meta:get_string("pot_faces"))
@@ -161,14 +147,23 @@ tt.register_snippet(function(itemstring, toolcaps, stack)
 	return table.concat(facedescs, "\n")
 end)
 
+local function get_itemstack_from_node(pos)
+	local meta = minetest.get_meta(pos)
+	local it = ItemStack("vlf_pottery_sherds:pot")
+	local im = it:get_meta()
+	im:set_string("pot_faces", meta:get_string("pot_faces"))
+	tt.reload_itemstack_description(it)
+	return it
+end
+
 minetest.register_node("vlf_pottery_sherds:pot", {
 	description = S("Decorated Pot"),
 	_doc_items_longdesc = S("Pots are decorative blocks."),
-	_doc_items_usagehelp = S("Specially decorated pots can be crafted using pottery sherds."),
+	_doc_items_usagehelp = S("Specially decorated pots can be crafted using pottery sherds"),
 	drawtype = "nodebox",
 	node_box = potbox,
-	selection_box = potselbox,
-	collision_box = potcolbox,
+	selection_box = potbox,
+	collision_box = potbox,
 	tiles = {
 		{ name = "vlf_pottery_sherds_pot_top.png", align_style = "world" },
 		{ name = "vlf_pottery_sherds_pot_bottom.png", align_style = "world" },
@@ -179,91 +174,33 @@ minetest.register_node("vlf_pottery_sherds:pot", {
 	paramtype2 = "facedir",
 	sunlight_propagates = true,
 	is_ground_content = false,
-	groups = { handy = 1, pickaxey = 1, dig_immediate = 3, deco_block = 1, attached_node = 1, dig_by_piston = 1, flower_pot = 1 },
+	groups = { handy = 1, pickaxey = 1, dig_immediate = 3, deco_block = 1, attached_node = 1, dig_by_piston = 1, flower_pot = 1, not_in_creative_inventory = 1 },
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	drop = "",
 	_vlf_hardness = 0,
 	_vlf_blast_resistance = 0,
-
-	-- Initialize metadata when the pot is placed
-	after_place_node = function(pos, placer, itemstack, pointed_thing)
+	_vlf_baseitem = get_itemstack_from_node,
+	after_place_node = function(pos, _, itemstack, _)
 		local meta = minetest.get_meta(pos)
-		meta:set_string("pot_faces", itemstack:get_meta():get_string("pot_faces"))
-		meta:set_string("stored_item", "") -- Initializes storage item as empty
-		meta:set_int("stored_count", 0) -- Initializes stored item count to zero
+		meta:set_string("pot_faces",itemstack:get_meta():get_string("pot_faces"))
 		update_entities(pos)
 	end,
-
-	on_construct = function(pos)
-		minetest.after(0.1, function()
-			update_entities(pos)
-		end)
+	after_dig_node = function(pos)
+		update_entities(pos,true)
 	end,
-
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		update_entities(pos, true)
-	end,
-
 	on_destruct = function(pos)
-		local meta = minetest.get_meta(pos)
-		local stored_item = meta:get_string("stored_item")
-		local stored_count = meta:get_int("stored_count")
-
-		-- Drop stored items when the pot is broken
-		if stored_item ~= "" and stored_count > 0 then
-			local stack = ItemStack(stored_item .. " " .. stored_count)
-			minetest.add_item(pos, stack)
-		end
-
-		-- Drop the pot itself
-		local it = ItemStack("vlf_pottery_sherds:pot")
-		local im = it:get_meta()
-		im:set_string("pot_faces", meta:get_string("pot_faces"))
-		tt.reload_itemstack_description(it)
+		local it = get_itemstack_from_node(pos)
 		minetest.add_item(pos, it)
 	end,
-
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		local meta = minetest.get_meta(pos)
-		local stored_item = meta:get_string("stored_item")
-		local stored_count = meta:get_int("stored_count")
-		local wielded_item = clicker:get_wielded_item()
-		local item_name = wielded_item:get_name()
-
-		-- Handle storing items in the pot
-		if not wielded_item:is_empty()then
-			-- If the pot is empty or holds the same item, store it
-			if stored_item == "" or stored_item == item_name then
-				local stack_size = wielded_item:get_count()
-				local space_left = 64 - stored_count
-				local to_store = math.min(stack_size, space_left)
-
-				-- Update pot's storage
-				meta:set_string("stored_item", item_name)
-				meta:set_int("stored_count", stored_count + to_store)
-
-				-- Remove items from player's hand
-				wielded_item:take_item(to_store)
-				clicker:set_wielded_item(wielded_item)
-				return wielded_item
-			end
-		end
-
-		-- Return the updated itemstack
-		return itemstack
-	end,
-
-	on_rotate = function(pos, _, _, mode, new_param2)
+	on_rotate = function(_, _,  _, mode, _)
 		if mode == screwdriver.ROTATE_AXIS then
 			return false
 		end
 	end,
-
 	after_rotate = function(pos)
 		update_entities(pos)
 	end,
 })
-
 
 local function get_sherd_name(itemstack)
 	local def = minetest.registered_items[itemstack:get_name()]
@@ -274,7 +211,7 @@ local function get_sherd_name(itemstack)
 	return r
 end
 
-local function get_craft(itemstack, player, old_craft_grid, craft_inv)
+local function get_craft(itemstack, _, old_craft_grid, _)
 	if itemstack:get_name() ~= "vlf_pottery_sherds:pot" then return end
 	if old_craft_grid[1][2] == "vlf_core:brick" then return end
 	local meta = itemstack:get_meta()

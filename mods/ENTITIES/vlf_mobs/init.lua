@@ -1,4 +1,38 @@
 vlf_mobs = {}
+
+------------------------------------------------------------------------
+-- Temporary performance hacks.
+------------------------------------------------------------------------
+
+-- If vlf_mobs is a trusted mod, it may be possible to extract the
+-- definition of `get_node_raw' from minetest.get_node and avoid
+-- garbage collection incurred by table allocation in the loop below.
+
+vlf_mobs.get_node_raw = minetest.get_node_raw
+local env = minetest.request_insecure_environment ()
+
+if env and not vlf_mobs.get_node_raw then
+	local get_node = minetest.get_node
+	local i = 1
+	while true do
+		local name, upvalue = debug.getupvalue (get_node, i)
+		if not name then
+			break
+		end
+
+		if name == "get_node_raw" then
+			vlf_mobs.get_node_raw = upvalue
+			break
+		end
+
+		i = i + 1
+	end
+end
+
+------------------------------------------------------------------------
+-- Mob initialization.
+------------------------------------------------------------------------
+
 vlf_mobs.registered_mobs = {}
 local modname = minetest.get_current_modname()
 local path = minetest.get_modpath(modname)
@@ -6,7 +40,6 @@ local S = minetest.get_translator(modname)
 
 local old_spawn_icons = minetest.settings:get_bool("vlf_old_spawn_icons",false)
 local extended_pet_control = minetest.settings:get_bool("vlf_extended_pet_control",false)
-local difficulty = tonumber(minetest.settings:get("mob_difficulty")) or 1.0
 
 local object_properties = { "hp_max", "breath_max", "zoom_fov", "eye_height", "physical", "collide_with_objects", "collisionbox", "selectionbox", "pointable", "visual", "visual_size", "mesh", "textures", "colors", "use_texture_alpha", "spritediv", "initial_sprite_basepos", "is_visible", "makes_footstep_sound", "automatic_rotate", "stepheight", "automatic_face_movement_dir", "automatic_face_movement_max_rotation_per_sec", "backface_culling", "glow", "nametag", "nametag_color", "nametag_bgcolor", "infotext", "static_save", "damage_texture_modifier", "shaded", "show_on_minimap", }
 
@@ -22,10 +55,13 @@ vlf_mobs.mob_class = {
 		makes_footstep_sound = false,
 		automatic_face_movement_max_rotation_per_sec = 300,
 		hp_max = 20,
+		collide_with_objects = false,
 	},
 	max_name_length = 30,
 	head_yaw_offset = 0,
 	head_pitch_multiplier = 1,
+	_head_pitch_offset = 0,
+	_head_rot_limit = math.pi / 3, -- 60 degrees.
 	bone_eye_height = 1.4,
 	head_eye_height = 0,
 	curiosity = 1,
@@ -33,42 +69,40 @@ vlf_mobs.mob_class = {
 	horizontal_head_height = 0,
 	fly = false,
 	fly_in = {"air", "__airlike"},
+	swims = false,
+	swims_in = { "vlf_core:water_source", "vlfx_core:river_water_source", 'vlf_core:water_flowing', 'vlfx_core:river_water_flowing' },
+	ranged_attack_radius = 20,
 	owner = "",
 	order = "",
-	jump_height = 4, -- was 6
+	jump_height = 8.4,
 	rotate = 0, --  0=front, 90=side, 180=back, 270=side2
-	lifetimer = 57.73,
 	xp_min = 0,
 	xp_max = 0,
-	xp_timestamp = 0,
 	breathes_in_water = false,
-	view_range = 16,
-	walk_velocity = 1,
-	run_velocity = 2,
-	light_damage = 0,
-	sunlight_damage = 0,
 	water_damage = 0,
 	lava_damage = 8,
 	fire_damage = 1,
-	_freeze_damage = 2,
+	_vlf_freeze_damage = 2,
 	suffocation = true,
 	fall_damage = 1,
-	fall_speed = -9.81 * 1.5,
+	fall_speed = -1.6, -- Accelerate by 1.6 m/s per Minecraft tick.
+	gravity_drag = nil,
+	_apply_gravity_drag_on_ground = false,
 	drops = {},
 	armor = 100,
 	sounds = {},
 	animation = {},
-	jump = true,
-	walk_chance = 50,
 	attacks_monsters = false,
 	group_attack = false,
 	passive = false,
 	knock_back = true,
 	shoot_offset = 0,
+	_projectile_gravity = true,
 	floats = 1,
-	floats_on_lava = 0,
-	replace_offset = 0,
-	replace_delay = 0,
+	floats_on_lava = false,
+	water_friction = 0.6,
+	-- This is multiplied by water_friction as in Minecraft.
+	water_velocity = 0.4,
 	timer = 0,
 	env_damage_timer = 0,
 	tamed = false,
@@ -81,66 +115,130 @@ vlf_mobs.mob_class = {
 	reach = 3,
 	htimer = 0,
 	texture_list = {},
-	docile_by_day = false,
 	time_of_day = 0.5,
-	fear_height = 0,
 	runaway_timer = 0,
-	explosion_timer = 3,
-	allow_fuse_reset = true,
-	stop_to_explode = true,
-	dogfight_interval = 1,
+	runaway_from = nil,
+	avoid_range = 6.0,
+	melee_interval = 1,
+	_melee_esp = false,
 	custom_attack_interval = 1,
-	dogshoot_count = 0,
-	dogshoot_count_max = 5,
-	dogshoot_count2_max = 5,
+	ranged_interval_min = 1.0,
+	ranged_interval_max = 1.0,
+	_crossbow_backoff_threshold = nil,
 	attack_animals = false,
 	attack_npcs = false,
-	facing_fence = false,
+	_neutral_to_players = false,
+	esp = false,
 	is_mob = true,
 	pushable = true,
-	mob_pushable = true,
-	avoid_distance = 9,
 	ignores_nametag = false,
 	rain_damage = 0,
 	child = false,
-	texture_mods = {},
+	-- A list unique to each entity is created in on_activate.
+	texture_mods = nil,
 	suffocation_timer = 0,
-	follow_velocity = 2.4,
+	movement_speed = 14, -- https://minecraft.wiki/w/Attribute#movementSpeed
+	pace_bonus = 1.0,
+	run_bonus = 1.25,
+	follow_bonus = 1.2,
+	follow_herd_bonus = nil, -- Default value is that of follow_bonus.
+	drive_bonus = 1.0,
+	pursuit_bonus = 1.0,
+	breed_bonus = 1.0,
+	runaway_bonus_near = 1.25,
+	runaway_bonus_far = 1.0,
+	restriction_bonus = 1.0,
+	runaway_view_range = 16,
+	_runaway_player_view_range = nil,
+	_runaway_monster_view_range = nil,
+	follow_distance = 6.0,
+	-- Distance at which targets will be acquired and relinquished
+	-- respectively.
+	view_range = 16.0,
+	tracking_distance = 16.0,
+	stop_distance = 2,
 	instant_death = false,
 	fire_resistant = false,
 	fire_damage_resistant = false,
 	ignited_by_sunlight = false,
-	noyaw = false,
+	avoids_sunlight = false,
 	tnt_knockback = true,
 	min_light = 7,
 	max_light = minetest.LIGHT_MAX + 1,
 	does_not_prevent_sleep = false,
 	prevents_sleep_when_hostile = false,
-	attack_exception = function(p) return false end,
-	player_active_range = tonumber(minetest.settings:get("vlf_mob_active_range")) or 48,
 	persist_in_peaceful = true,
 	wears_armor = false,
+	_armor_texture_slots = 1,
+	_armor_transforms = {},
+	steer_class = "controls",
+	steer_item = nil,
+	swim_max_pitch = 85 * math.pi / 180,
+	max_yaw_movement = 10 * math.pi / 180,
+	swim_speed_factor = 0.02,
+	idle_gravity_in_liquids = false,
+	grounded_speed_factor = 0.10,
+	fixed_grounded_speed = nil,
+	pace_chance = 120,
+	pace_interval = 5,
+	pace_height = 7,
+	pace_width = 10,
+	flops = false,
+	initialize_group = nil,
+	_hovers = false,
+	airborne_speed = 8.0,
+	_airborne_agile = false,
+	chase_owner_distance = 10.0,
+	stop_chasing_distance = 2.0,
+	_is_idle_activity = {
+		pacing = true,
+		herd_following = true,
+		traveling_to_owner = true,
+	},
+	can_open_doors = false,
+	knockback_resistance = 0.0,
+	can_wield_items = false,
+	wielditem_type = nil,
+	wielditem_drop_probability = 0.0,
+	ignite_targets_while_burning = false,
+	climb_powder_snow = false,
+	breeding_possible = nil,
+	acceptable_pacing_target = nil,
+	fall_damage_multiplier = 1.0,
+	_sprinting = false,
+	_crouching = false,
+	_dominant_in_jockeys = true,
+	_inventory_size = nil,
+	_persistent_physics_factors = {},
+	_old_head_swivel_vector = vector.zero (),
+	_old_head_swivel_pos = vector.zero (),
 
 	_vlf_fishing_hookable = true,
 	_vlf_fishing_reelable = true,
 
 	--internal variables
-	blinktimer = 0,
-	blinkstatus = false,
-	v_start = false,
 	standing_in = "ignore",
 	standing_on = "ignore",
 	jump_sound_cooloff = 0.5, -- used to prevent jump sound from being played too often in short time
 	opinion_sound_cooloff = 1, -- used to prevent sound spam of particular sound types
-	_spawner = nil,
-	_vlf_entity_effects = {},
-	randomly_turn = true,
+	_frozen_for = 0,
+	_restriction_center = nil,
+	_restriction_size = 0,
+	_direct_sunlight = 0,
+	_physics_factors = nil,
+	_immersion_depth = 0,
 }
 vlf_mobs.mob_class_meta = {__index = vlf_mobs.mob_class}
 vlf_mobs.fallback_node = minetest.registered_aliases["mapgen_dirt"] or "vlf_core:dirt"
 
-function vlf_mobs.check_vector(v)
-	return v and v.x and v.y and v.z and not minetest.is_nan(v.x) and not minetest.is_nan(v.y) and not minetest.is_nan(v.z) and tonumber(v.x) and tonumber(v.y) and tonumber(v.z)
+-- get node but use fallback for nil or unknown
+function vlf_mobs.node_ok(pos, fallback)
+	fallback = fallback or vlf_mobs.fallback_node
+	local node = minetest.get_node_or_nil(pos)
+	if node and minetest.registered_nodes[node.name] then
+		return node
+	end
+	return { name = fallback, param1 = 0, param2 = 0 }
 end
 
 --api and helpers
@@ -159,21 +257,35 @@ dofile(path .. "/combat.lua")
 -- the enity functions themselves
 dofile(path .. "/api.lua")
 
-
 --utility functions
 dofile(path .. "/breeding.lua")
 dofile(path .. "/spawning.lua")
 dofile(path .. "/mount.lua")
 
--- get node but use fallback for nil or unknown
-local node_ok = function(pos, fallback)
-	fallback = fallback or vlf_mobs.fallback_node
-	local node = minetest.get_node_or_nil(pos)
-	if node and minetest.registered_nodes[node.name] then
-		return node
-	end
-	return minetest.registered_nodes[fallback]
-end
+-- AI functions.  This list must be created after the defaults are
+-- initialized above.
+
+-- Default AI functions.  Each function should accept a minimum of
+-- three arguments, POS, DTIME.  If such a function returns non-nil,
+-- subsequent functions are skipped and its value, if otherwise than
+-- `true', is saved into a list of outstanding activities; this value
+-- is expected to be a field to be cleared when an activity of a
+-- higher priority is activated.  Functions earlier in the list take
+-- priority over those which appear later.
+local mob_class = vlf_mobs.mob_class
+mob_class.ai_functions = {
+	mob_class.return_to_restriction,
+	mob_class.sit_if_ordered,
+	mob_class.check_travel_to_owner,
+	mob_class.check_avoid_sunlight,
+	mob_class.check_avoid,
+	mob_class.check_frightened,
+	mob_class.check_attack,
+	mob_class.check_breeding,
+	mob_class.check_following,
+	mob_class.follow_herd,
+	mob_class.check_pace,
+}
 
 function vlf_mobs.mob_class:set_nametag(name)
 	if name ~= "" then
@@ -188,6 +300,9 @@ end
 
 local on_rightclick_prefix = function(self, clicker)
 	if not (clicker and clicker:is_player()) then return end
+	if vlf_mobs.maybe_test_pathfinding (self, clicker) then
+		return
+	end
 	local playername = clicker:get_player_name()
 	if playername and playername ~= "" then
 		doc.mark_entry_as_revealed(playername, "mobs", self.name)
@@ -238,6 +353,8 @@ local function within_limits(pos, radius)
 end
 
 vlf_mobs.spawning_mobs = {}
+-- overwritten in COMPAT for compatbilitiy with old vlf_mobs / mobs_redo
+---@diagnostic disable-next-line: duplicate-set-field
 function vlf_mobs.register_mob(name, def)
 	local def = table.copy(def)
 	if not def.description then
@@ -254,14 +371,6 @@ function vlf_mobs.register_mob(name, def)
 		can_despawn = false
 	else
 		can_despawn = true
-	end
-
-	local function scale_difficulty(value, default, min, special)
-		if (not value) or (value == default) or (value == special) then
-			return default
-		else
-			return math.max(min, value * difficulty)
-		end
 	end
 
 	if def.textures then
@@ -285,17 +394,27 @@ function vlf_mobs.register_mob(name, def)
 		def.persist_in_peaceful = false
 	end
 
-	init_props.hp_max = scale_difficulty(init_props.hp_max, 10, 1)
 	init_props.collisionbox = init_props.collisionbox or vlf_mobs.mob_class.initial_properties.collisionbox
 	init_props.selectionbox = init_props.selectionbox or init_props.collisionbox or vlf_mobs.mob_class.initial_properties.selectionbox
+	local eye_height = def.head_eye_height
+	if not eye_height then
+		eye_height = init_props.collisionbox[5] - init_props.collisionbox[2]
+		eye_height = eye_height * 0.75 + init_props.collisionbox[2]
+	end
 
+	local gwp_penalties = def.gwp_penalties
+		or vlf_mobs.mob_class.gwp_penalties
 	local final_def = setmetatable(table.merge(def,{
-		initial_properties = table.merge(vlf_mobs.mob_class.initial_properties,init_props),
+		initial_properties = table.merge(mob_class.initial_properties,init_props),
 		can_despawn = can_despawn,
 		rotate = math.rad(def.rotate or 0), --  0=front, 90=side, 180=back, 270=side2
-		hp_min = scale_difficulty(def.hp_min, 5, 1),
+		head_eye_height = eye_height,
+		hp_min = def.hp_min,
 		on_rightclick = create_mob_on_rightclick(def.on_rightclick),
-		dogshoot_count2_max = def.dogshoot_count2_max or (def.dogshoot_count_max or 5),
+		gwp_penalties = def.can_open_doors
+			and table.merge (gwp_penalties, {
+						 DOOR_WOOD_CLOSED = 0.0,
+					}) or gwp_penalties,
 
 		min_light = def.min_light or (def.spawn_class == "hostile" and 0) or 7,
 		max_light = def.max_light or (def.spawn_class == "hostile" and 7) or minetest.LIGHT_MAX + 1,
@@ -307,18 +426,12 @@ function vlf_mobs.register_mob(name, def)
 			return false, true, {}
 		end,
 		on_activate = function(self, staticdata, dtime)
-			--this is a temporary hack so mobs stop
-			--glitching and acting really weird with the
-			--default built in engine collision detection
-			self.is_mob = true
-			self:set_properties({
-				collide_with_objects = false,
-			})
-			self._physics_factors = {}
-
-			self._timers = {}
-			return self:mob_activate(staticdata, dtime)
+			return self:mob_activate (staticdata, dtime)
 		end,
+		_spawner = def._spawner,
+		_persistent_physics_factors
+			= table.merge (mob_class._persistent_physics_factors,
+					def._persistent_physics_factors),
 	}),vlf_mobs.mob_class_meta)
 
 	vlf_mobs.registered_mobs[name] = final_def
@@ -336,7 +449,7 @@ end
 function vlf_mobs.get_arrow_damage_func(damage, typ, shooter)
 	local typ = vlf_damage.types[typ] and typ or "arrow"
 	return function(projectile, object)
-		return vlf_util.deal_damage(object, damage, {type = typ, source = shooter or projectile._shooter})
+		return vlf_util.deal_damage(object, damage, {type = typ, source = shooter or projectile._shooter, direct = projectile.object})
 	end
 end
 
@@ -370,7 +483,8 @@ vlf_mobs.arrow_class = {
 
 vlf_mobs.arrow_class_meta = {__index = vlf_mobs.arrow_class}
 
--- register arrow for shoot attack
+-- overwritten in COMPAT for compatbilitiy with old vlf_mobs / mobs_redo
+---@diagnostic disable-next-line: duplicate-set-field
 function vlf_mobs.register_arrow(name, def)
 	if not name or not def then return end -- errorcheck
 
@@ -390,7 +504,7 @@ function vlf_mobs.register_arrow(name, def)
 
 	minetest.register_entity(name, setmetatable(table.merge({
 		initial_properties = init_props,
-		on_step = function(self, dtime)
+		on_step = function(self)
 
 			self.timer = self.timer + 1
 
@@ -422,7 +536,7 @@ function vlf_mobs.register_arrow(name, def)
 			end
 
 			if self.hit_node then
-				local node = node_ok(pos).name
+				local node =  vlf_mobs.node_ok(pos).name
 				if minetest.registered_nodes[node].walkable then
 					self.hit_node(self, pos, node)
 					if self.drop == true then
@@ -447,7 +561,8 @@ function vlf_mobs.register_arrow(name, def)
 			end
 
 			if self.hit_player or self.hit_mob or self.hit_object then
-				local raycast = minetest.raycast (pos, pos + self.object:get_velocity () * 0.1)
+				local raycast
+				= minetest.raycast (pos, pos + self.object:get_velocity () * 0.04)
 				local ok = false
 				local closest_object
 				local closest_distance
@@ -466,7 +581,11 @@ function vlf_mobs.register_arrow(name, def)
 							ok = true
 						end
 
-						if (entity and self.hit_object and (not entity.is_mob) and tostring(player) ~= self.owner_id and entity.name ~= self.object:get_luaentity().name) then
+							if (entity
+								and self.hit_object
+								and (not entity.is_mob)
+								and tostring(player) ~= self.owner_id
+								and entity.name ~= self.object:get_luaentity().name) then
 								ok = true
 							end
 						end
@@ -480,16 +599,17 @@ function vlf_mobs.register_arrow(name, def)
 						end
 					end
 				end
-				-- If an object has been struck, call the appropriate function.
+				-- If an object has been struck, call the
+				-- appropriate function.
 				if closest_object then
 					local entity = closest_object:get_luaentity ()
 					if closest_object:is_player () then
 						self:hit_player (closest_object)
 					elseif entity then
-						if entity.is_mob then
-						self:hit_mob (closest_object)
-						else
-						self:hit_object (closest_object)
+						if entity.is_mob and self.hit_mob then
+							self:hit_mob (closest_object)
+						elseif self.hit_object then
+							self:hit_object (closest_object)
 						end
 					end
 					self.object:remove ()
@@ -500,8 +620,8 @@ function vlf_mobs.register_arrow(name, def)
 	}, def), vlf_mobs.arrow_class_meta))
 end
 
--- Register spawn eggs
-
+-- Overwritten in COMPAT for compatibility with old vlf_mobs/mobs_redo
+---@diagnostic disable-next-line: duplicate-set-field
 function vlf_mobs.register_egg(mob, desc, background_color, overlay_color, addegg, no_creative)
 	local grp = {spawn_egg = 1}
 	-- do NOT add this egg to creative inventory (e.g. dungeon master)
@@ -555,13 +675,6 @@ function vlf_mobs.register_egg(mob, desc, background_color, overlay_color, addeg
 				local entityname = itemstack:get_name()
 				minetest.log("action", "Player " ..name.." spawned "..entityname.." at "..minetest.pos_to_string(pos))
 				local ent = mob:get_luaentity()
-
-				-- don't set owner if monster or sneak pressed
-				if ent.type ~= "monster"
-				and not placer:get_player_control().sneak then
-					ent.owner = placer:get_player_name()
-					ent.tamed = true
-				end
 
 				-- set nametag
 				ent:set_nametag(itemstack:get_meta():get_string("name"))

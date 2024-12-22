@@ -12,14 +12,14 @@ local BOW_DURABILITY = 385
 -- Charging time in microseconds
 local BOW_CHARGE_TIME_HALF = 200000 -- bow level 1
 local BOW_CHARGE_TIME_FULL = 500000 -- bow level 2 (full charge)
+vlf_bows.BOW_CHARGE_TIME_HALF = 200000 / 1.0e6
+vlf_bows.BOW_CHARGE_TIME_FULL = 500000 / 1.0e6
 
 -- Factor to multiply with player speed while player uses bow
 -- This emulates the sneak speed.
 local PLAYER_USE_BOW_SPEED = tonumber(minetest.settings:get("movement_speed_crouch")) / tonumber(minetest.settings:get("movement_speed_walk"))
 
--- TODO: Use Minecraft speed (ca. 53 m/s)
--- Currently nerfed because at full speed the arrow would easily get out of the range of the loaded map.
-local BOW_MAX_SPEED = 40
+local BOW_MAX_SPEED = 3.0 * 20
 
 --[[ Store the charging state of each player.
 keys: player name
@@ -37,25 +37,45 @@ function vlf_bows.shoot_arrow(arrow_item, pos, dir, yaw, shooter, power, damage,
 	local obj = minetest.add_entity({x=pos.x,y=pos.y,z=pos.z}, arrow_item.."_entity")
 	if not obj or not obj:get_pos() then return end
 	if power == nil then
-		power = BOW_MAX_SPEED --19
+		power = 1.0
 	end
+	local speed = power * BOW_MAX_SPEED
+	local mob_shooter = shooter and not shooter:is_player ()
+
 	if damage == nil then
-		damage = 3
+		if mob_shooter then
+			-- Randomize arrow damage by difficulty.
+			damage = 2.0
+			local bonus
+				= vlf_util.dist_triangular (vlf_vars.difficulty * 0.11,
+								0.57425)
+			damage = damage + bonus
+		else
+			damage = 2.0
+		end
 	end
-	local knockback
+	local knockback = 0
 	if bow_stack then
 		local enchantments = vlf_enchanting.get_enchantments(bow_stack)
 		if enchantments.power then
-			damage = damage + (enchantments.power + 1) / 4
+			damage = damage + (enchantments.power / 2) + 0.5
 		end
 		if enchantments.punch then
-			knockback = enchantments.punch * 3
+			knockback = knockback + enchantments.punch
 		end
 		if enchantments.flame then
 			vlf_burning.set_on_fire(obj, math.huge)
 		end
 	end
-	obj:set_velocity({x=dir.x*power, y=dir.y*power, z=dir.z*power})
+	-- Randomize accuracy by difficulty.
+	if mob_shooter then
+		local f = 14 - vlf_vars.difficulty * 4
+		dir = vector.copy (dir)
+		dir.x = dir.x + vlf_util.dist_triangular (0, 0.0172275 * f)
+		dir.y = dir.y + vlf_util.dist_triangular (0, 0.0172275 * f)
+		dir.z = dir.z + vlf_util.dist_triangular (0, 0.0172275 * f)
+	end
+	obj:set_velocity({x=dir.x*speed, y=dir.y*speed, z=dir.z*speed})
 	obj:set_acceleration({x=0, y=-GRAVITY, z=0})
 	obj:set_yaw(yaw-math.pi/2)
 	local le = obj:get_luaentity()
@@ -90,11 +110,10 @@ local function get_arrow(player)
 	return arrow_stack, arrow_stack_id
 end
 
-local function player_shoot_arrow(itemstack, player, power, damage, is_critical)
+local function player_shoot_arrow (player, power, is_critical)
 	local arrow_stack, arrow_stack_id = get_arrow(player)
 	local arrow_itemstring
 	local has_infinity_enchantment = vlf_enchanting.has_enchantment(player:get_wielded_item(), "infinity")
-	local infinity_used = false
 
 	if minetest.is_creative_enabled(player:get_player_name()) then
 		if arrow_stack then
@@ -107,9 +126,7 @@ local function player_shoot_arrow(itemstack, player, power, damage, is_critical)
 			return false
 		end
 		arrow_itemstring = arrow_stack:get_name()
-		if has_infinity_enchantment and minetest.get_item_group(arrow_itemstring, "ammo_bow_regular") > 0 then
-			infinity_used = true
-		else
+		if not (has_infinity_enchantment and minetest.get_item_group(arrow_itemstring, "ammo_bow_regular") > 0) then
 			arrow_stack:take_item()
 		end
 		local inv = player:get_inventory()
@@ -122,7 +139,14 @@ local function player_shoot_arrow(itemstack, player, power, damage, is_critical)
 	local dir = player:get_look_dir()
 	local yaw = player:get_look_horizontal()
 
-	vlf_bows.shoot_arrow(arrow_itemstring, {x=playerpos.x,y=playerpos.y+1.5,z=playerpos.z}, dir, yaw, player, power, damage, is_critical, player:get_wielded_item(), not infinity_used)
+	local pos = {
+		x = playerpos.x,
+		y = playerpos.y + 1.5,
+		z = playerpos.z,
+	}
+	vlf_bows.shoot_arrow (arrow_itemstring, pos, dir, yaw, player,
+			      power, nil, is_critical, player:get_wielded_item (),
+			      not has_infinity_enchantment)
 	return true
 end
 
@@ -139,7 +163,7 @@ S("The speed and damage of the arrow increases the longer you charge. The regula
 	stack_max = 1,
 	range = 4,
 	-- Trick to disable digging as well
-	on_use = function() return end,
+	on_use = function() end,
 	on_place = function(itemstack, player, pointed_thing)
 		local rc = vlf_util.call_on_rightclick(itemstack, player, pointed_thing)
 		if rc then return rc end
@@ -151,8 +175,10 @@ S("The speed and damage of the arrow increases the longer you charge. The regula
 		itemstack:get_meta():set_string("active", "true")
 		return itemstack
 	end,
+	touch_interaction = "short_dig_long_place",
 	groups = {weapon=1,weapon_ranged=1,bow=1,enchantability=1},
 	_vlf_uses = 385,
+	_vlf_burntime = 15
 })
 
 -- Iterates through player inventory and resets all the bows in "charging" state back to their original stage
@@ -198,7 +224,7 @@ for level=0, 2 do
 		range = 0, -- Pointing range to 0 to prevent punching with bow :D
 		groups = {not_in_creative_inventory=1, not_in_craft_guide=1, bow=1, enchantability=1},
 		-- Trick to disable digging as well
-		on_use = function() return end,
+		on_use = function() end,
 		on_drop = function(itemstack, dropper, pos)
 			reset_bow_state(dropper)
 			itemstack:get_meta():set_string("active", "")
@@ -215,12 +241,13 @@ for level=0, 2 do
 		on_place = function(itemstack)
 			return itemstack
 		end,
+		touch_interaction = "short_dig_long_place",
 		_vlf_uses = 385,
 	})
 end
 
 
-controls.register_on_release(function(player, key, time)
+controls.register_on_release(function(player, key)
 	if key~="RMB" and key~="zoom" then return end
 	--local inv = minetest.get_inventory({type="player", name=player:get_player_name()})
 	local wielditem = player:get_wielded_item()
@@ -228,7 +255,6 @@ controls.register_on_release(function(player, key, time)
 		wielditem:get_name()=="vlf_bows:bow_0_enchanted" or wielditem:get_name()=="vlf_bows:bow_1_enchanted" or wielditem:get_name()=="vlf_bows:bow_2_enchanted") then
 
 		local enchanted = vlf_enchanting.is_enchanted(wielditem:get_name())
-		local speed, damage
 		local p_load = bow_load[player:get_player_name()]
 		local charge
 		-- Type sanity check
@@ -245,27 +271,13 @@ controls.register_on_release(function(player, key, time)
 		local charge_ratio = charge / BOW_CHARGE_TIME_FULL
 		charge_ratio = math.max(math.min(charge_ratio, 1), 0)
 
-		-- Calculate damage and speed
-		-- Fully charged
+		-- Calculate damage and power.
 		local is_critical = false
 		if charge >= BOW_CHARGE_TIME_FULL then
-			speed = BOW_MAX_SPEED
-			local r = math.random(1,5)
-			if r == 1 then
-				-- 20% chance for critical hit
-				damage = 10
-				is_critical = true
-			else
-				damage = 9
-			end
-		-- Partially charged
-		else
-			-- Linear speed and damage increase
-			speed = math.max(4, BOW_MAX_SPEED * charge_ratio)
-			damage = math.max(1, math.floor(9 * charge_ratio))
+			is_critical = true
 		end
 
-		local has_shot = player_shoot_arrow(wielditem, player, speed, damage, is_critical)
+		local has_shot = player_shoot_arrow (player, charge_ratio, is_critical)
 
 		if enchanted then
 			wielditem:set_name("vlf_bows:bow_enchanted")
@@ -286,7 +298,7 @@ controls.register_on_release(function(player, key, time)
 	end
 end)
 
-controls.register_on_hold(function(player, key, time)
+controls.register_on_hold(function(player, key)
 	local name = player:get_player_name()
 	local creative = minetest.is_creative_enabled(name)
 	if (key ~= "RMB" and key ~= "zoom") or not (creative or get_arrow(player)) then
@@ -336,8 +348,8 @@ controls.register_on_hold(function(player, key, time)
 	end
 end)
 
-minetest.register_globalstep(function(dtime)
-	for _, player in pairs(minetest.get_connected_players()) do
+minetest.register_globalstep(function()
+	for player in vlf_util.connected_players() do
 		local name = player:get_player_name()
 		local wielditem = player:get_wielded_item()
 		local wieldindex = player:get_wield_index()
@@ -374,12 +386,6 @@ if minetest.get_modpath("vlf_core") and minetest.get_modpath("vlf_mobitems") the
 		}
 	})
 end
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:bow",
-	burntime = 15,
-})
 
 -- Add entry aliases for the Help
 if minetest.get_modpath("doc") then

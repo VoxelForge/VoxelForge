@@ -23,54 +23,54 @@ local flower_effect = {
 
 local effects = {
 	[ "fire_resistance" ] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_effect("fire_resistance", placer, 1, 4)
+		vlf_potions.give_effect("fire_resistance", placer, 1, 4)
 		return eat(itemstack, placer, pointed_thing)
 	end,
 
 	[ "blindness" ] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_effect("blindness", placer, 1, 8)
+		vlf_potions.give_effect("blindness", placer, 1, 8)
 		return eat(itemstack, placer, pointed_thing)
 	end,
 
 	[ "poison" ] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_effect_by_level("poison", placer, 1, 12)
+		vlf_potions.give_effect_by_level("poison", placer, 1, 12)
 		return eat(itemstack, placer, pointed_thing)
 	end,
 
 	[ "saturation" ] = function(itemstack, placer, pointed_thing, player)
-		vlf_entity_effects.give_effect_by_level("saturation", placer, 1, 0.5)
+		vlf_potions.give_effect_by_level("saturation", placer, 1, 0.5)
 		return eat(itemstack, placer, pointed_thing)
 	end,
 
 	["jump"] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_effect_by_level("leaping", placer, 1, 6)
+		vlf_potions.give_effect_by_level("leaping", placer, 1, 6)
 		return eat(itemstack, placer, pointed_thing)
 	end,
 
 	["regeneration"] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_effect_by_level("regeneration", placer, 1, 8)
+		vlf_potions.give_effect_by_level("regeneration", placer, 1, 8)
 		return eat(itemstack, placer, pointed_thing)
 	end,
 
 	["withering"] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_effect_by_level("withering", placer, 1, 8)
+		vlf_potions.give_effect_by_level("withering", placer, 1, 8)
 		return eat(itemstack, placer, pointed_thing)
 	end,
 
 	["weakness"] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_effect_by_level("weakness", placer, 1, 9)
+		vlf_potions.give_effect_by_level("weakness", placer, 1, 9)
 		return eat(itemstack, placer, pointed_thing)
 	end,
 
 	["night_vision"] = function(itemstack, placer, pointed_thing)
-		vlf_entity_effects.give_effect("night_vision", placer, 1, 5)
+		vlf_potions.give_effect("night_vision", placer, 1, 5)
 		return eat(itemstack, placer, pointed_thing)
 	end,
 }
 
 local function get_random_effect()
 	local keys = {}
-	for k in pairs(effects) do
+	for k, _ in pairs(effects) do
 		table.insert(keys, k)
 	end
 	return effects[keys[math.random(#keys)]]

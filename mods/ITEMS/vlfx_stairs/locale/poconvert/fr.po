@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mclx_stairs x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlfx_stairs x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Lapis Lazuli Stairs"
 msgstr "Escalier de Lapis Lazuli"
@@ -20,16 +20,16 @@ msgid "Lapis Lazuli Slab"
 msgstr "Dalle de Lapis Lazuli"
 
 msgid "Gold Stairs"
-msgstr ""
+msgstr "Escalier en or"
 
 msgid "Gold Slab"
-msgstr ""
+msgstr "Dalle en or"
 
 msgid "Iron Stairs"
-msgstr ""
+msgstr "Escalier en fer"
 
 msgid "Iron Slab"
-msgstr ""
+msgstr "Dalle en fer"
 
 msgid "Cracked Stone Brick Stairs"
 msgstr "Escalier en Brique de Pierre Fissurée"
@@ -38,37 +38,31 @@ msgid "Cracked Stone Brick Slab"
 msgstr "Dalle de Brique de Pierre Fissurée"
 
 msgid "Cracked Deepslate Brick Stairs"
-msgstr ""
+msgstr "Escalier en Ardoise des abimes taillée craquelée"
 
 msgid "Cracked Deepslate Brick Slab"
-msgstr ""
+msgstr "Dalle en Ardoise des abîmes taillée craquelée"
 
 msgid "Cracked Deepslate Tile Stairs"
-msgstr ""
+msgstr "Escalier en Ardoise des abîmes carrelée craquelée"
 
 msgid "Cracked Deepslate Tile Slab"
-msgstr ""
+msgstr "Dalle en ardoise des abîmes carrelée craquelée"
 
 msgid "End Stone Stairs"
-msgstr ""
+msgstr "Escalier en pierre de l'End"
 
 msgid "End Stone Slab"
-msgstr ""
+msgstr "Dalle en pierre de l'End"
 
 msgid "Smooth Stone Stairs"
-msgstr ""
+msgstr "Escalier en roche lisse"
 
-msgid "@1 Concrete Stairs"
-msgstr ""
+msgid "Terracotta Stairs"
+msgstr "Escalier en terracotta"
 
-msgid "@1 Concrete Slab"
-msgstr ""
-
-msgid "@1 Terracotta Stairs"
-msgstr ""
-
-msgid "@1 Terracotta Slab"
-msgstr ""
+msgid "Terracotta Slab"
+msgstr "Dalle en terracotta"
 
 msgid "Concrete Slab"
 msgstr "Dalle en Béton"
@@ -79,12 +73,198 @@ msgstr "Double Dalle en Béton"
 msgid "Concrete Stairs"
 msgstr "Escalier en Béton"
 
-msgid "Terracotta Slab"
-msgstr ""
-
 msgid "Double Terracotta Slab"
+msgstr "Double dalle en Terracotta"
+
+msgid "Black Concrete Slab"
 msgstr ""
 
-msgid "Terracotta Stairs"
+msgid "Black Concrete Stairs"
+msgstr ""
+
+msgid "Black Terracotta Slab"
+msgstr ""
+
+msgid "Black Terracotta Stairs"
+msgstr ""
+
+msgid "Blue Concrete Slab"
+msgstr ""
+
+msgid "Blue Concrete Stairs"
+msgstr ""
+
+msgid "Blue Terracotta Slab"
+msgstr ""
+
+msgid "Blue Terracotta Stairs"
+msgstr ""
+
+msgid "Brown Concrete Slab"
+msgstr ""
+
+msgid "Brown Concrete Stairs"
+msgstr ""
+
+msgid "Brown Terracotta Slab"
+msgstr ""
+
+msgid "Brown Terracotta Stairs"
+msgstr ""
+
+msgid "Cyan Concrete Slab"
+msgstr ""
+
+msgid "Cyan Concrete Stairs"
+msgstr ""
+
+msgid "Cyan Terracotta Slab"
+msgstr ""
+
+msgid "Cyan Terracotta Stairs"
+msgstr ""
+
+msgid "Green Concrete Slab"
+msgstr ""
+
+msgid "Green Concrete Stairs"
+msgstr ""
+
+msgid "Green Terracotta Slab"
+msgstr ""
+
+msgid "Green Terracotta Stairs"
+msgstr ""
+
+msgid "Grey Concrete Slab"
+msgstr ""
+
+msgid "Grey Concrete Stairs"
+msgstr ""
+
+msgid "Grey Terracotta Slab"
+msgstr ""
+
+msgid "Grey Terracotta Stairs"
+msgstr ""
+
+msgid "Light Blue Concrete Slab"
+msgstr ""
+
+msgid "Light Blue Concrete Stairs"
+msgstr ""
+
+msgid "Light Blue Terracotta Slab"
+msgstr ""
+
+msgid "Light Blue Terracotta Stairs"
+msgstr ""
+
+msgid "Light Grey Concrete Slab"
+msgstr ""
+
+msgid "Light Grey Concrete Stairs"
+msgstr ""
+
+msgid "Light Grey Terracotta Slab"
+msgstr ""
+
+msgid "Light Grey Terracotta Stairs"
+msgstr ""
+
+msgid "Lime Concrete Slab"
+msgstr ""
+
+msgid "Lime Concrete Stairs"
+msgstr ""
+
+msgid "Lime Terracotta Slab"
+msgstr ""
+
+msgid "Lime Terracotta Stairs"
+msgstr ""
+
+msgid "Magenta Concrete Slab"
+msgstr ""
+
+msgid "Magenta Concrete Stairs"
+msgstr ""
+
+msgid "Magenta Terracotta Slab"
+msgstr ""
+
+msgid "Magenta Terracotta Stairs"
+msgstr ""
+
+msgid "Orange Concrete Slab"
+msgstr ""
+
+msgid "Orange Concrete Stairs"
+msgstr ""
+
+msgid "Orange Terracotta Slab"
+msgstr ""
+
+msgid "Orange Terracotta Stairs"
+msgstr ""
+
+msgid "Pink Concrete Slab"
+msgstr ""
+
+msgid "Pink Concrete Stairs"
+msgstr ""
+
+msgid "Pink Terracotta Slab"
+msgstr ""
+
+msgid "Pink Terracotta Stairs"
+msgstr ""
+
+msgid "Purple Concrete Slab"
+msgstr ""
+
+msgid "Purple Concrete Stairs"
+msgstr ""
+
+msgid "Purple Terracotta Slab"
+msgstr ""
+
+msgid "Purple Terracotta Stairs"
+msgstr ""
+
+msgid "Red Concrete Slab"
+msgstr ""
+
+msgid "Red Concrete Stairs"
+msgstr ""
+
+msgid "Red Terracotta Slab"
+msgstr ""
+
+msgid "Red Terracotta Stairs"
+msgstr ""
+
+msgid "White Concrete Slab"
+msgstr ""
+
+msgid "White Concrete Stairs"
+msgstr ""
+
+msgid "White Terracotta Slab"
+msgstr ""
+
+msgid "White Terracotta Stairs"
+msgstr ""
+
+msgid "Yellow Concrete Slab"
+msgstr ""
+
+msgid "Yellow Concrete Stairs"
+msgstr ""
+
+msgid "Yellow Terracotta Slab"
+msgstr ""
+
+msgid "Yellow Terracotta Stairs"
 msgstr ""
 

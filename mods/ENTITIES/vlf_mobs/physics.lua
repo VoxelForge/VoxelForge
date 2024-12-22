@@ -4,18 +4,7 @@ local ENTITY_CRAMMING_MAX = 24
 local CRAMMING_DAMAGE = 3
 local DEATH_DELAY = 0.5
 
-local PATHFINDING = "gowp"
 local mobs_drop_items = minetest.settings:get_bool("mobs_drop_items") ~= false
-
--- get node but use fallback for nil or unknown
-local node_ok = function(pos, fallback)
-	fallback = fallback or vlf_mobs.fallback_node
-	local node = minetest.get_node_or_nil(pos)
-	if node and minetest.registered_nodes[node.name] then
-		return node
-	end
-	return minetest.registered_nodes[fallback]
-end
 
 -- check if within physical map limits (-30911 to 30927)
 local function within_limits(pos, radius)
@@ -36,55 +25,7 @@ local function within_limits(pos, radius)
 	return true
 end
 
-function mob_class:player_in_active_range()
-	for _,p in pairs(minetest.get_connected_players()) do
-		if vector.distance(self.object:get_pos(),p:get_pos()) <= self.player_active_range then return true end
-		-- slightly larger than the mc 32 since mobs spawn on that circle and easily stand still immediately right after spawning.
-	end
-end
-
-function mob_class:object_in_follow_range(object)
-	local dist = 12
-	local p1, p2 = self.object:get_pos(), object:get_pos()
-	return p1 and p2 and (vector.distance(p1, p2) <= dist)
-end
-
--- Return true if object is in view_range
-function mob_class:object_in_range(object)
-	if not object then
-		return false
-	end
-	local factor
-	-- Apply view range reduction for special player armor
-	if object:is_player() then
-		local factors = vlf_armor.player_view_range_factors[object]
-		factor = factors and factors[self.name]
-	end
-	-- Distance check
-	local dist
-	if factor and factor == 0 then
-		return false
-	elseif factor then
-		dist = self.view_range * factor
-	else
-		dist = self.view_range
-	end
-
-	local p1, p2 = self.object:get_pos(), object:get_pos()
-	return p1 and p2 and (vector.distance(p1, p2) <= dist)
-end
-
-function mob_class:drop_armor()
-	if not self.armor_list then return end
-	for k, v in pairs(self.armor_list) do
-		if v ~= "" then
-			vlf_util.drop_item_stack(self.object:get_pos(), ItemStack(v))
-			self.armor_list[k] = ""
-		end
-	end
-end
-
-function mob_class:item_drop(cooked, looting_level)
+function mob_class:item_drop(cooked, looting_level, vlf_reason)
 	if not mobs_drop_items then return end
 	looting_level = looting_level or 0
 	if (self.child and self.type ~= "monster") then
@@ -99,6 +40,13 @@ function mob_class:item_drop(cooked, looting_level)
 	for _, dropdef in pairs(self.drops) do
 		local chance = 1 / dropdef.chance
 		local looting_type = dropdef.looting
+
+		-- Always drop mob heads when killed by a charged creeper explosion.
+		if (dropdef.mob_head and vlf_reason
+		    and vlf_reason.type == "explosion"
+		    and vlf_reason.mob_name == "mobs_mc:creeper_charged") then
+		    chance = 1
+		end
 
 		if looting_level > 0 then
 			local chance_function = dropdef.looting_chance_function
@@ -130,7 +78,7 @@ function mob_class:item_drop(cooked, looting_level)
 				end
 			end
 
-			for x = 1, num do
+			for _ = 1, num do
 				obj = minetest.add_item(pos, ItemStack(item .. " " .. 1))
 			end
 
@@ -145,72 +93,71 @@ function mob_class:item_drop(cooked, looting_level)
 			end
 		end
 	end
-	self:drop_armor()
+	local bonus_chance = looting_level * 0.01
+	self:drop_armor (bonus_chance)
+	self:drop_wielditem (bonus_chance)
+	self:drop_offhand_item (bonus_chance)
+	if self.drop_custom then
+		self:drop_custom (looting_level)
+	end
 	self.drops = {}
 end
 
 -- collision function borrowed amended from jordan4ibanez open_ai mod
-function mob_class:collision()
-	local pos = self.object:get_pos()
-	if not pos then return {0,0} end
+function mob_class:collision (pos)
+	local attach = self.object:get_attach ()
+
+	if not self.pushable or attach then
+		return 0, 0
+	end
+
 	local x = 0
 	local z = 0
-	local cbox = self.object:get_properties().collisionbox
+	local cbox = self.collisionbox
 	local width = -cbox[1] + cbox[4]
-	for _,object in pairs(minetest.get_objects_inside_radius(pos, width)) do
-
+	for object in minetest.objects_inside_radius (pos, width) do
 		local ent = object:get_luaentity()
-		if (self.pushable and object:is_player()) or
-		   (self.mob_pushable and ent and ent.is_mob and object ~= self.object) then
+		local is_player = object:is_player ()
+		-- Sleeping players shouldn't ever be pushed around.
+		if (is_player and object:get_attach () ~= self.object
+			and not vlf_beds.player[object:get_player_name ()])
+			or (ent and ent.is_mob
+			    and object ~= self.object
+			    and object ~= self._jockey_rider) then
+			local pos2 = object:get_pos()
+			local r1 = (math.random (300) - 150) / 2400
+			local r2 = (math.random (300) - 150) / 2400
+			local x_diff = pos2.x - pos.x + r1
+			local z_diff = pos2.z - pos.z + r2
+			local max_diff = math.max (math.abs (x_diff), math.abs (z_diff))
+			local d_scale
 
-			if object:is_player() and vlf_burning.is_burning(self.object) then
-				vlf_burning.set_on_fire(object, 4)
+			if max_diff > 0.01 then
+				max_diff = math.sqrt (max_diff)
+				d_scale = math.min (1.0, 1.0 / max_diff)
+				z_diff = z_diff / max_diff * d_scale
+				x_diff = x_diff / max_diff * d_scale
+
+				x = x - x_diff
+				z = z - z_diff
 			end
 
-			local pos2 = object:get_pos()
-			local vec  = {x = pos.x - pos2.x, z = pos.z - pos2.z}
-			local force = width - vector.distance(
-				{x = pos.x, y = 0, z = pos.z},
-				{x = pos2.x, y = 0, z = pos2.z})
-
-			x = x + (vec.x * force)
-			z = z + (vec.z * force)
+			if is_player then
+				vlf_player.player_collision (object, self.object)
+			end
 		end
 	end
-
-	return({x,z})
-end
-
-function mob_class:slow_mob()
-	local d = 0.85
-	if self:check_dying() then d = 0.92 end
-
-	if self.object then
-		local v = self.object:get_velocity()
-		if v then
-			--diffuse object velocity
-			self.object:set_velocity({x = v.x*d, y = v.y, z = v.z*d})
-		end
-	end
+	return x, z
 end
 
 -- move mob in facing direction
 function mob_class:set_velocity(v)
-	local c_x, c_y = 0, 0
-	-- can mob be pushed, if so calculate direction
-	if self.pushable or self.mob_pushable then
-		c_x, c_y = unpack(self:collision())
-	end
-	-- halt mob if it has been ordered to stay
-	if self.order == "stand" or self.order == "sit" then
-	  self.acc=vector.new(0,0,0)
-	  return
-	end
-	local yaw = (self.object:get_yaw() or 0) + self.rotate
-	local vv = self.object:get_velocity()
-	if vv and yaw then
-		self.acc = vector.new(((math.sin(yaw) * -v) + c_x) * .4, 0, ((math.cos(yaw) * v) + c_y) * .4)
-	end
+	self.acc_speed = v
+	-- Minecraft scales forward acceleration by desired
+	-- velocity in blocks/tick.
+	self.acc_dir.z = v / 20
+	self.acc_dir.x = 0
+	self.acc_dir.y = 0
 end
 
 -- calculate mob velocity
@@ -222,271 +169,129 @@ function mob_class:get_velocity()
 	return 0
 end
 
-local function shortest_term_of_yaw_rotation(self, rot_origin, rot_target, nums)
-	if not rot_origin or not rot_target then
-		return
-	end
-
-	rot_origin = math.deg(rot_origin)
-	rot_target = math.deg(rot_target)
-
-	if rot_origin < rot_target then
-		if math.abs(rot_origin-rot_target)<180 then
-			if nums then
-				return rot_target-rot_origin
-			end
-		else
-			if nums then
-				return -(rot_origin-(rot_target-360))
-			else
-				return -1
-			end
-		end
-	else
-		if math.abs(rot_origin-rot_target)<180 then
-			if nums then
-				return rot_target-rot_origin
-			else
-				return -1
-			end
-		else
-			if nums then
-				return (rot_target-(rot_origin-360))
-			end
-		end
-	end
-	return 1
-end
-
-
-
--- set and return valid yaw
-function mob_class:set_yaw(yaw, delay, dtime)
-	if not self.randomly_turn then return end
-	if self.noyaw then return end
-	if self.state ~= PATHFINDING then
-		self._turn_to = yaw
-	end
-	if math.deg(self.object:get_yaw()) > 360 then
-		self.object:set_yaw(math.rad(0))
-	elseif math.deg(self.object:get_yaw()) < 0 then
-		self.object:set_yaw(math.rad(360))
-	end
-
-	if math.deg(yaw) > 360 then
-		yaw=math.rad(math.deg(yaw)%360)
-	elseif math.deg(yaw) < 0 then
-		yaw=math.rad(((360*5)-math.deg(yaw))%360)
-	end
-
-	--calculate the shortest way to turn to find our target
-	local target_shortest_path = shortest_term_of_yaw_rotation(self, self.object:get_yaw(), yaw, false)
-	local target_shortest_path_nums = shortest_term_of_yaw_rotation(self, self.object:get_yaw(), yaw, true)
-
-	--turn in the shortest path possible toward our target. if we are attacking, don't dance.
-	if (math.abs(target_shortest_path) > 50 and not self._kb_turn) and (self.attack and self.attack:get_pos() or self.following and self.following:get_pos()) then
-		if self.following then
-			target_shortest_path = shortest_term_of_yaw_rotation(self, self.object:get_yaw(), minetest.dir_to_yaw(vector.direction(self.object:get_pos(), self.following:get_pos())), true)
-			target_shortest_path_nums = shortest_term_of_yaw_rotation(self, self.object:get_yaw(), minetest.dir_to_yaw(vector.direction(self.object:get_pos(), self.following:get_pos())), false)
-		else
-			target_shortest_path = shortest_term_of_yaw_rotation(self, self.object:get_yaw(), minetest.dir_to_yaw(vector.direction(self.object:get_pos(), self.attack:get_pos())), true)
-			target_shortest_path_nums = shortest_term_of_yaw_rotation(self, self.object:get_yaw(), minetest.dir_to_yaw(vector.direction(self.object:get_pos(), self.attack:get_pos())), false)
-		end
-	end
-
-	local ddtime = 0.05 --set_tick_rate
-	if dtime then
-		ddtime = dtime
-	end
-
-	if math.abs(target_shortest_path_nums) > 10 then
-		self.object:set_yaw(self.object:get_yaw()+(target_shortest_path*(3.6*ddtime)))
-		if self.acc and vlf_mobs.check_vector(self.acc) then
-			self.acc=vector.rotate_around_axis(self.acc,vector.new(0,1,0), target_shortest_path*(3.6*ddtime))
-		end
-	end
-
-	delay = delay or 0
-	yaw = self.object:get_yaw()
-
-	if delay == 0 then
-		if self.shaking and dtime then
-			yaw = yaw + (math.random() * 2 - 1) * 5 * dtime
-		end
-		return yaw
-	end
-
-	self.target_yaw = yaw
-	self.delay = delay
-
-	return self.target_yaw
-end
-
--- global function to set mob yaw
-function vlf_mobs.yaw(self, yaw, delay, dtime)
-	return mob_class.set_yaw(self, yaw, delay, dtime)
-end
-
--- are we flying in what we are suppose to? (taikedz)
-function mob_class:flight_check()
-	local nod = self.standing_in
-	local def = minetest.registered_nodes[nod]
-	if not def then return false end -- nil check
-
-	local fly_in
-	if type(self.fly_in) == "string" then
-		fly_in = { self.fly_in }
-	elseif type(self.fly_in) == "table" then
-		fly_in = self.fly_in
-	else
+-- check if mob is dead or only hurt
+function mob_class:check_for_death (vlf_reason, damage)
+	-- Don't display death animations when no damage was dealt,
+	-- e.g. when it was all neutralized by fire resistance or
+	-- water breathing.
+	if damage <= 0 then
 		return false
 	end
-	for _,checknode in pairs(fly_in) do
-		if nod == checknode or nod == "ignore" then
-			return true
-		end
-	end
-	return false
-end
 
--- check if mob is dead or only hurt
-function mob_class:check_for_death(cause, cmi_cause)
-	if self.state == "die" then
+	if self.dead then
+		self:jockey_death ()
 		return true
 	end
 
-	-- has health actually changed?
-	if self.health == self.old_health and self.health > 0 then
-		return false
-	end
+	-- Make mob flash red.
+	self:add_texture_mod ("^[colorize:#d42222:175")
 
-	local damaged = self.health < ( self.old_health or 0 )
-	self.old_health = self.health
-
-	-- still got some health?
+	-- Still got some health?
 	if self.health > 0 then
-		-- make sure health isn't higher than max
-		self.health = math.min(self.health, self.object:get_properties().hp_max)
+		self:mob_sound ("damage")
+		-- Limit health to defined maximum value.
+		local hp_max = self.object:get_properties ().hp_max
+		self.health = math.min (self.health, hp_max)
 
-		-- play damage sound if health was reduced and make mob flash red.
-		if damaged then
-			self:add_texture_mod("^[colorize:#d42222:175")
-			minetest.after(0.5, function(self)
-				if self and self.object and self.object:get_pos() then
-					self:remove_texture_mod("^[colorize:#d42222:175")
-				end
-			end, self)
-			self:mob_sound("damage")
-		end
+		-- Remove damage overlay.
+		minetest.after (0.5, function (self)
+			if self and not self.dead and self.object
+				and self.object:get_pos () then
+				self:remove_texture_mod ("^[colorize:#d42222:175")
+			end
+		end, self)
 		return false
 	end
 
-	self:mob_sound("death")
+	self:mob_sound ("death")
+	vlf_potions.check_infested_on_damage(self.object)
+	vlf_potions.check_oozing_on_death(self.object)
+	vlf_potions.check_weaving_on_death(self.object)
+	self:jockey_death ()
 
-	local function death_handle(self)
-		local killed_by_player = false
-		if self.last_player_hit_time and minetest.get_gametime() - self.last_player_hit_time <= 5 then
-			killed_by_player  = true
-		end
-
-		if cause == "lava" or cause == "fire" then
-			self:item_drop(true, 0)
-		else
-			local wielditem = ItemStack()
-			if cause == "hit" then
-				local puncher = cmi_cause.puncher
-				if puncher then
-					wielditem = puncher:get_wielded_item()
-				end
-			end
-			local cooked = vlf_burning.is_burning(self.object) or vlf_enchanting.has_enchantment(wielditem, "fire_aspect")
-			local looting = vlf_enchanting.get_enchantment(wielditem, "looting")
-			self:item_drop(cooked, looting)
-			if killed_by_player then
-				if self.type == "monster" or self.name == "mobs_mc:zombified_piglin" and self.last_player_hit_name then
-					awards.unlock(self.last_player_hit_name, "vlf:monsterHunter")
-				end
-				if ((not self.child) or self.type ~= "animal") and (minetest.get_us_time() - self.xp_timestamp <= math.huge) then
-					local pos = self.object:get_pos()
-					local xp_amount = math.random(self.xp_min, self.xp_max)
-					if not minetest.is_creative_enabled(self.last_player_hit_name) and not vlf_sculk.handle_death(pos, xp_amount) then
-						vlf_experience.throw_xp(pos, xp_amount)
-					end
-				end
-			end
-		end
-	end
-
-	-- execute custom death function
+	-- Execute custom death function
 	if self.on_die then
 		local pos = self.object:get_pos()
-		local on_die_exit = self.on_die(self, pos, cmi_cause)
-		if on_die_exit ~= true then
-			death_handle(self)
-		end
+		local on_die_exit = self:on_die (pos, vlf_reason)
 		if on_die_exit == true then
-			self:set_state("die")
+			self.dead = true
 			self:safe_remove()
 			return true
 		end
 	end
 
-	if self.jockey or self.riden_by_jock then
-		self.riden_by_jock = nil
-		self.jockey = nil
-	end
-	self:set_state("die")
+	self.dead = true
 	self.attack = nil
-	self.v_start = false
-	self.timer = 0
-	self.blinktimer = 0
-	self:remove_texture_mod("^[colorize:#FF000040")
-	self:remove_texture_mod("^[brighten")
-	self.passive = true
+	self:remove_texture_mod ("^[colorize:#FF000040")
+	self:remove_texture_mod ("^[brighten")
 
-	self.object:set_properties({
+	self.object:set_properties ({
 		pointable = false,
 		collide_with_objects = false,
 	})
-
-	self:set_velocity(0)
-	if self.object then
-		local acc = self.object:get_acceleration()
-		acc.x, acc.y, acc.z = 0, self.fall_speed, 0
-		self.object:set_acceleration(acc)
-	end
 
 	local length
 	-- default death function and die animation (if defined)
 	if self.instant_death then
 		length = 0
 	elseif self.animation
-	and self.animation.die_start
-	and self.animation.die_end then
-
+		and self.animation.die_start
+		and self.animation.die_end then
 		local frames = self.animation.die_end - self.animation.die_start
 		local speed = self.animation.die_speed or 15
 		length = math.max(frames / speed, 0) + DEATH_DELAY
-		self:set_animation( "die")
+		self:set_animation ("die")
 	else
 		length = 1 + DEATH_DELAY
-		self:set_animation( "stand", true)
+		self:set_animation ("stand", true)
 	end
 
+	local killed_by_player = false
+	if self.last_player_hit_time
+		and minetest.get_gametime() - self.last_player_hit_time <= 5 then
+		killed_by_player  = true
+	end
 
-	-- Remove body after a few seconds and drop stuff
+	-- Drop items and xp
+	if vlf_reason and (vlf_reason.type == "lava" or vlf_reason.type == "fire") then
+		self:item_drop (true, 0, vlf_reason)
+	elseif vlf_reason then
+		local wielditem = vlf_reason.direct and vlf_util.get_wielditem (vlf_reason.direct)
+		local cooked = vlf_burning.is_burning(self.object)
+			or vlf_enchanting.has_enchantment(wielditem, "fire_aspect")
+		local looting = vlf_enchanting.get_enchantment(wielditem, "looting")
+		self:item_drop (cooked, looting, vlf_reason)
+		if killed_by_player then
+			if self.type == "monster"
+				or self.name == "mobs_mc:zombified_piglin"
+				and self.last_player_hit_name then
+				awards.unlock(self.last_player_hit_name, "vlf:monsterHunter")
+			end
+
+			if ((not self.child) or self.type ~= "animal") then
+				local pos = self.object:get_pos()
+				local xp_amount = math.random(self.xp_min, self.xp_max)
+				if not minetest.is_creative_enabled(self.last_player_hit_name)
+					and not vlf_sculk.handle_death(pos, xp_amount) then
+					vlf_experience.throw_xp(pos, xp_amount)
+				end
+			end
+		end
+	end
+
+	-- Remove body after a few seconds
 	local kill = function(self)
 		if not self.object:get_luaentity() then
 			return
 		end
 
-		death_handle(self)
 		local dpos = self.object:get_pos()
 		local cbox = self.object:get_properties().collisionbox
-		local yaw = self.object:get_rotation().y
+		local yaw = self:get_yaw ()
 		self:safe_remove()
-		vlf_mobs.death_effect(dpos, yaw, cbox, not self.instant_death, self)
+		vlf_mobs.death_effect(dpos, yaw, cbox, not self.instant_death)
 	end
+
 	if length <= 0 then
 		kill(self)
 	else
@@ -496,24 +301,70 @@ function mob_class:check_for_death(cause, cmi_cause)
 	return true
 end
 
--- Deal light damage to mob, returns true if mob died
-function mob_class:deal_light_damage(pos, damage)
-	if not ((vlf_weather.rain.raining or vlf_weather.state == "snow") and vlf_weather.is_outdoor(pos)) then
-		self:damage_mob("light", damage)
-
-		vlf_mobs.effect(pos, 5, "vlf_particles_smoke.png")
-
-		if self:check_for_death("light", {type = "light"}) then
-			return true
-		end
-	end
+function mob_class:is_in_node (self_pos, itemstring) --can be group:...
+	local cb = self.collisionbox
+	local pos = self_pos
+	local v1 = vector.offset (pos, cb[1], cb[2], cb[3])
+	local v2 = vector.offset (pos, cb[4], cb[5], cb[6])
+	local nn = minetest.find_nodes_in_area (v1, v2, {itemstring})
+	if nn and #nn > 0 then return true end
 end
 
-function mob_class:is_in_node(itemstring) --can be group:...
-	local cb = self.object:get_properties().collisionbox
-	local pos = self.object:get_pos()
-	local nn = minetest.find_nodes_in_area(vector.offset(pos, cb[1], cb[2], cb[3]), vector.offset(pos, cb[4], cb[5], cb[6]), {itemstring})
-	if nn and #nn > 0 then return true end
+function mob_class:reset_breath ()
+    local max = self.initial_properties.breath_max
+    if max ~= -1 then
+	self.breath = max
+    end
+end
+
+function mob_class:respire ()
+	-- This ties mobs to the `breath_max' in their initial mob
+	-- definitions, which is acceptable, as no code in the game or
+	-- in mods expects mobs to respect this player-specific
+	-- property at all, and calling `get_properties' is simply too
+	-- expensive.
+	local breath_max = self.initial_properties.breath_max
+	self.breath = math.min (breath_max, self.breath + 1)
+end
+
+local function get_internal_light_level ()
+	local tod = minetest.get_timeofday ()
+	local ratio = minetest.time_to_day_night_ratio (tod)
+	local light = math.floor (ratio * 15)
+
+	-- See: https://minecraft.wiki/w/Light#Internal_light_level
+	local weather = vlf_weather.get_weather ()
+	if weather == "thunder" then
+		light = math.max (0, 10 - (15 - light))
+	elseif weather == "rain" or weather == "snow" then
+		light = math.max (0, 12 - (15 - light))
+	end
+	return light
+end
+
+function mob_class:endangered_by_sunlight ()
+	local self_pos = self.object:get_pos ()
+	local dimension = vlf_worlds.pos_to_dimension (self_pos)
+	if dimension == "overworld"
+		and not vlf_weather.is_exposed_to_rain (self_pos)
+		and get_internal_light_level () >= 12 then
+		return true
+	end
+	return false
+end
+
+local function get_weather_with_light (self_pos, time_of_day)
+	local light = minetest.get_natural_light (self_pos, time_of_day) or 0
+	local has_rain = vlf_weather.is_exposed_to_rain (self_pos)
+
+	-- See: https://minecraft.wiki/w/Light#Internal_light_level
+	local weather = vlf_weather.get_weather ()
+	if weather == "thunder" then
+		light = math.max (0, 10 - (15 - light))
+	elseif weather == "rain" or weather == "snow" then
+		light = math.max (0, 12 - (15 - light))
+	end
+	return light, has_rain
 end
 
 -- environmental damage (water, lava, fire, light etc.)
@@ -532,48 +383,45 @@ function mob_class:do_env_damage()
 		self:safe_remove()
 		return true
 	end
-
-	local sunlight = minetest.get_natural_light(pos, self.time_of_day)
-	-- bright light harms mob
-	if self.light_damage ~= 0 and (sunlight or 0) > 12 then
-		if self:deal_light_damage(pos, self.light_damage) then
-			return true
-		end
-	end
 	local _, dim = vlf_worlds.y_to_layer(pos.y)
-	if (self.sunlight_damage ~= 0 or self.ignited_by_sunlight) and (sunlight or 0) >= minetest.LIGHT_MAX and dim == "overworld" then
-		if self.armor_list and not self.armor_list.helmet or not self.armor_list or self.armor_list and self.armor_list.helmet and self.armor_list.helmet == "" then
-			if self.ignited_by_sunlight then
-				vlf_burning.set_on_fire(self.object, 10)
-			else
-				self:deal_light_damage(pos, self.sunlight_damage)
-				return true
+
+	-- Only ignite when this mob is directly beneath sunlight, as
+	-- measured by the light level at noon.
+	if self.ignited_by_sunlight then
+		local head
+			= vector.offset (pos, 0, self.head_eye_height, 0)
+		local sunlight, has_rain
+			= get_weather_with_light (head, self.time_of_day)
+		local direct_sunlight
+			= minetest.get_natural_light (head, 0.5) or 0
+		self._direct_sunlight = direct_sunlight
+
+		if direct_sunlight >= 15 and sunlight >= 12
+			and not has_rain and dim == "overworld" then
+			if self.armor_list then
+				local stack = ItemStack (self.armor_list.head)
+				if stack:is_empty () then
+					vlf_burning.set_on_fire (self.object, 10)
+				else
+					-- Damage armor while on fire.
+					vlf_util.use_item_durability (stack, 5 * math.random ())
+					-- Apply wear to head armor.
+					self.armor_list.head = stack:to_string ()
+					if stack:is_empty () then
+						self:set_armor_texture ()
+					end
+				end
 			end
 		end
 	end
 
-	local cbox = self.object:get_properties().collisionbox
-	local y_level = cbox[2]
-
-	if self.child then
-		y_level = cbox[2] * 0.5
-	end
-
-	-- what is mob standing in?
-	pos.y = pos.y + y_level + 0.25 -- foot level
-	local pos2 = {x=pos.x, y=pos.y-1, z=pos.z}
-	self.standing_in = node_ok(pos, "air").name
-	self.standing_on = node_ok(pos2, "air").name
-
-	local pos_head = vector.offset(pos, 0, cbox[5] - 0.5, 0)
-	self.head_in = node_ok(pos_head, "air").name
-
 	-- don't fall when on ignore, just stand still
 	if self.standing_in == "ignore" then
 		self.object:set_velocity({x = 0, y = 0, z = 0})
+		self.acc_dir = vector.zero ()
 	-- wither rose effect
 	elseif self.standing_in == "vlf_flowers:wither_rose" then
-		vlf_entity_effects.give_effect_by_level("withering", self.object, 2, 2)
+		vlf_potions.give_effect_by_level("withering", self.object, 2, 2)
 	end
 
 	local nodef = minetest.registered_nodes[self.standing_in]
@@ -582,100 +430,99 @@ function mob_class:do_env_damage()
 
 	-- rain
 	if self.rain_damage > 0 then
-		if vlf_weather.rain.raining and vlf_weather.is_outdoor(pos) then
-			self:damage_mob("environment", self.rain_damage)
-
-			if self:check_for_death("rain", {type = "environment",
-					pos = pos, node = self.standing_in}) then
+		if vlf_weather.is_exposed_to_rain (pos) then
+			if self:damage_mob ("environment", self.rain_damage) then
 				return true
 			end
 		end
 	end
 
-	pos.y = pos.y + 1 -- for particle effect position
-
+	local frozen = false
 	-- water damage
-	if self.water_damage > 0
-	and nodef.groups.water then
-		self:damage_mob("environment", self.water_damage)
+	if self.water_damage > 0 and nodef.groups.water then
+		local fatal = self:damage_mob ("environment", self.water_damage)
+		pos.y = pos.y + 1
 		vlf_mobs.effect(pos, 5, "vlf_particles_smoke.png", nil, nil, 1, nil)
-		if self:check_for_death("water", {type = "environment",
-				pos = pos, node = self.standing_in}) then
+		pos.y = pos.y - 1
+		if fatal then
 			return true
 		end
 	-- magma damage
-	elseif self.fire_damage > 0
-	and (nodef2.groups.fire) then
-
+	elseif self.fire_damage > 0 and (nodef2.groups.fire) then
 		if self.fire_damage ~= 0 then
-			self:damage_mob("environment", self.fire_damage)
-			if self:check_for_death("fire", {type = "environment",
-					pos = pos, node = self.standing_in}) then
+			if self:damage_mob ("hot_floor", self.fire_damage) then
 				return true
 			end
 		end
 	-- lava damage
-	elseif self.lava_damage > 0
-	and self:is_in_node("group:lava") then
-
+	elseif self.lava_damage > 0 and self:is_in_node (pos, "group:lava") then
 		if self.lava_damage ~= 0 then
-			self:damage_mob("environment", self.lava_damage)
+			local fatal = self:damage_mob ("lava", self.lava_damage)
+			pos.y = pos.y + 1
 			vlf_mobs.effect(pos, 5, "fire_basic_flame.png", nil, nil, 1, nil)
 			vlf_burning.set_on_fire(self.object, 10)
+			pos.y = pos.y - 1
 
-			if self:check_for_death("lava", {type = "environment",
-					pos = pos, node = self.standing_in}) then
+			if fatal then
 				return true
 			end
 		end
 	-- fire damage
-	elseif self.fire_damage > 0
-	and self:is_in_node("group:fire") then
-
+	elseif self.fire_damage > 0 and self:is_in_node (pos, "group:fire") then
 		if self.fire_damage ~= 0 then
+			local fatal = self:damage_mob ("in_fire", self.fire_damage)
 
-			self:damage_mob("environment", self.fire_damage)
-
+			pos.y = pos.y + 1
 			vlf_mobs.effect(pos, 5, "fire_basic_flame.png", nil, nil, 1, nil)
+			pos.y = pos.y - 1
 			vlf_burning.set_on_fire(self.object, 5)
 
-			if self:check_for_death("fire", {type = "environment",
-					pos = pos, node = self.standing_in}) then
+			if fatal then
 				return true
 			end
 		end
+	elseif self._vlf_freeze_damage > 0 and self:is_in_node (pos, "vlf_powder_snow:powder_snow") then
+		frozen = true
+		self._frozen_for = self._frozen_for + 1
+		if self._frozen_for >= 8 and self._frozen_for % 2 == 0 then
+			local fatal = self:damage_mob("freeze", self._vlf_freeze_damage)
 
-	elseif self._freeze_damage > 0 and self:is_in_node("vlf_powder_snow:powder_snow") then
-		self:damage_mob("freeze", self._freeze_damage)
-
-		if self:check_for_death("freeze", {type = "freeze",
-				pos = pos, node = self.standing_in}) then
-			return true
+			if fatal then
+				return true
+			end
 		end
 	-- damage_per_second node check
 	elseif nodef.damage_per_second ~= 0 and not nodef.groups.lava and not nodef.groups.fire then
-
-		self:damage_mob("environment", nodef.damage_per_second)
+		local fatal = self:damage_mob ("environment", nodef.damage_per_second)
+		pos.y = pos.y + 1
 		vlf_mobs.effect(pos, 5, "vlf_particles_smoke.png")
-
-		if self:check_for_death("dps", {type = "environment",
-				pos = pos, node = self.standing_in}) then
+		pos.y = pos.y - 1
+		if fatal then
 			return true
 		end
 	end
 	-- Drowning damage
-	if self.object:get_properties().breath_max ~= -1 then
+	if self.initial_properties.breath_max ~= -1 then
 		local drowning = false
 		if self.breathes_in_water then
 			if minetest.get_item_group(self.standing_in, "water") == 0 then
 				drowning = true
 			end
 		elseif head_nodedef.drowning > 0 then
-			drowning = true
+			if self._immersion_depth > self.head_eye_height then
+				drowning = true
+			end
 		end
 		if drowning then
 			self.breath = math.max(0, self.breath - 1)
-			vlf_mobs.effect(pos, 2, "bubble.png", nil, nil, 1, nil)
+			-- Only show bubbles if getting close to drowning
+			-- Mainly because of dolphins
+			if self.breath <= 20 then
+				pos.y = pos.y + 1
+				vlf_mobs.effect(pos, 2, "bubble.png", nil, nil, 1, nil)
+				pos.y = pos.y - 1
+			end
+
 			if self.breath <= 0 then
 				local dmg
 				if head_nodedef.drowning > 0 then
@@ -684,15 +531,18 @@ function mob_class:do_env_damage()
 					dmg = 4
 				end
 				self:damage_effect(dmg)
-				self:damage_mob("environment", dmg)
-			end
-			if self:check_for_death("drowning", {type = "environment",
-					pos = pos, node = self.head_in}) then
-				return true
+				if self:damage_mob ("drown", dmg) then
+					return true
+				end
 			end
 		else
-			self.breath = math.min(self.object:get_properties().breath_max, self.breath + 1)
+			self:respire ()
 		end
+	end
+	if not frozen and self._frozen_for > 0 then
+		-- Mobs thaw twice as quickly as they freeze.
+		self._frozen_for
+			= math.max (0, math.min (self._frozen_for, 7) - 2)
 	end
 	--- suffocation inside solid node
 	if (self.suffocation == true)
@@ -710,20 +560,29 @@ function mob_class:do_env_damage()
 		if self:check_timer("suffocation", 1) then
 			-- 2 damage per second
 			-- TODO: Deal this damage once every 1/2 second
-			self:damage_mob("environment", 2)
 
-			if self:check_for_death("suffocation", {type = "environment",
-					pos = pos, node = self.head_in}) then
+			if self:damage_mob ("in_wall", 2) then
 				return true
 			end
 		end
 	else
 		self._timers["suffocation"] = 1
 	end
-	return self:check_for_death("", {type = "unknown"})
+	return false
 end
 
-function mob_class:env_damage (dtime, pos)
+function mob_class:env_damage (pos)
+	-- Calculate depth of immersion.  This value is also utilized
+	-- by run_ai.
+	self._immersion_depth = 0
+	if ((self.floats or self.swims or self.amphibious)
+		and minetest.get_item_group (self.standing_in, "water") > 0)
+		or minetest.get_item_group (self.head_in, "water") > 0 then
+		local ymin = self.collisionbox[2]
+		local height = self.collisionbox[5] - ymin
+		self._immersion_depth = self:immersion_depth ("water", pos, height)
+	end
+
 	-- environmental damage timer (every 1 second)
 	if not self:check_timer("env_damage", 1) then return end
 	self:check_entity_cramming()
@@ -731,8 +590,6 @@ function mob_class:env_damage (dtime, pos)
 	if self:do_env_damage() then
 		return true
 	end
-	-- node replace check (cow eats grass etc.)
-	self:replace(pos)
 end
 
 function mob_class:damage_mob(reason, damage)
@@ -742,21 +599,16 @@ function mob_class:damage_mob(reason, damage)
 		local vlf_reason = { type = reason }
 		vlf_damage.finish_reason(vlf_reason)
 		vlf_util.deal_damage(self.object, damage, vlf_reason)
-
 		vlf_mobs.effect(self.object:get_pos(), 5, "vlf_particles_smoke.png", 1, 2, 2, nil)
-
-		if self:check_for_death(reason, {type = reason}) then
-			return true
-		end
 	end
+	return self.dead
 end
 
 function mob_class:check_entity_cramming()
 	local p = self.object:get_pos()
 	if not p then return end
-	local oo = minetest.get_objects_inside_radius(p, 0.5)
 	local mobs = {}
-	for _,o in pairs(oo) do
+	for o in minetest.objects_inside_radius(p, 0.5) do
 		local l = o:get_luaentity()
 		if l and l.is_mob and l.health > 0 then table.insert(mobs,l) end
 	end
@@ -785,60 +637,29 @@ end
 -- falling and fall damage
 -- returns true if mob died
 function mob_class:falling(pos)
-	if self.fly and self.state ~= "die" then return	end
+	if (self.fly or self.swims) and self.dead then
+		return
+	end
 
-	local v = self.object:get_velocity()
 	if self._just_portaled then
 		self.reset_fall_damage = 1
 		return false -- mob has teleported through portal - it's 99% not falling
 	end
-	-- floating in water (or falling)
-	if v.y > 0 then
-		-- apply gravity when moving up
-		self.object:set_acceleration({
-			x = 0,
-			y = self.fall_speed,
-			z = 0
-		})
-	elseif v.y <= 0 and v.y > self.fall_speed then
-		-- fall downwards at set speed
-		self.object:set_acceleration({
-			x = 0,
-			y = self.fall_speed,
-			z = 0
-		})
-	else
-		-- stop accelerating once max fall speed hit
-		self.object:set_acceleration({x = 0, y = 0, z = 0})
-	end
 
-	if minetest.registered_nodes[node_ok(pos).name].groups.lava then
-		if self.floats_on_lava == 1 then
-			self.object:set_acceleration({
-				x = 0,
-				y = -self.fall_speed / (math.max(1, v.y) ^ 2),
-				z = 0
-			})
-		end
-	end
-	if minetest.registered_nodes[node_ok(pos).name].name == "vlf_powder_snow:powder_snow" then
+	local node = vlf_mobs.node_ok (pos, "air")
+	if node.name == "vlf_powder_snow:powder_snow" then
 		self.reset_fall_damage = 1
-	end
-	-- in water then float up
-	if minetest.registered_nodes[node_ok(pos).name].groups.water then
-		local cbox = self.object:get_properties().collisionbox
-		if self.floats == 1 and minetest.registered_nodes[node_ok(vector.offset(pos,0,cbox[5] -0.25,0)).name].groups.water then
-			self.object:set_acceleration(vector.new(0, -self.fall_speed / (math.max(1, v.y) ^ 2), 0))
-		end
+	elseif minetest.registered_nodes[node.name].groups.water then
 		-- Reset fall damage when falling into water first.
 		self.reset_fall_damage = 1
 	else
 		-- fall damage onto solid ground
 		if self.fall_damage == 1
-		and self.object:get_velocity().y == 0 then
-			local n = node_ok(vector.offset(pos,0,-1,0)).name
+			and self.object:get_velocity().y == 0 then
+			local n = vlf_mobs.node_ok(vector.offset(pos,0,-1,0)).name
 			-- init old_y to current height if not set.
-			local d = (self.old_y or self.object:get_pos().y) - self.object:get_pos().y
+			local self_pos = self.object:get_pos ()
+			local d = (self.old_y or self_pos.y) - self_pos.y
 
 			if d > 5 and n ~= "air" and n ~= "ignore" and self.reset_fall_damage ~= 1 then
 				local add = minetest.get_item_group(self.standing_on, "fall_damage_add_percent")
@@ -846,54 +667,38 @@ function mob_class:falling(pos)
 				if add ~= 0 then
 					damage = damage + damage * (add/100)
 				end
-				self:damage_mob("fall",damage)
+				self:damage_mob ("fall", damage * self.fall_damage_multiplier)
 				self.reset_fall_damage = 0
 			end
-			self.old_y = self.object:get_pos().y
+			self.old_y = self_pos.y
 		end
 		self.reset_fall_damage = 0
 	end
 end
 
-function mob_class:check_water_flow()
-	-- Add water flowing for mobs from vlf_item_entity
-	local p, node, nn, def
-	p = self.object:get_pos()
-	node = minetest.get_node_or_nil(p)
+function mob_class:check_water_flow (self_pos)
+	local node, nn, def
+	node = minetest.get_node_or_nil (self_pos)
 	if node then
 		nn = node.name
 		def = minetest.registered_nodes[nn]
 	end
 	-- Move item around on flowing liquids
 	if def and def.liquidtype == "flowing" then
-		--[[ Get flowing direction (function call from flowlib), if there's a liquid.
-		NOTE: According to Qwertymine, flowlib.quickflow is only reliable for liquids with a flowing distance of 7.
-		Luckily, this is exactly what we need if we only care about water, which has this flowing distance. ]]
-		local vec = flowlib.quick_flow(p, node)
-		-- Just to make sure we don't manipulate the speed for no reason
-		if vec.x ~= 0 or vec.y ~= 0 or vec.z ~= 0 then
-			-- Minecraft Wiki: Flowing speed is "about 1.39 meters per second"
-			local f = 1.39
-			-- Set new item moving speed into the direciton of the liquid
-			local newv = vector.multiply(vec, f)
-			self.object:set_acceleration({x = 0, y = 0, z = 0})
-			self.object:set_velocity({x = newv.x, y = -0.22, z = newv.z})
-			self.physical_state = true
-			self._flowing = true
-			self.object:set_properties({
-				physical = true
-			})
-			return
-		end
-	elseif self._flowing == true then
-		-- Disable flowing physics if not on/in flowing liquid
-		self._flowing = false
-		return
+		-- Get flowing direction (function call from flowlib),
+		-- if there's a liquid.  NOTE: According to
+		-- Qwertymine, flowlib.quickflow is only reliable for
+		-- liquids with a flowing distance of 7.  Luckily,
+		-- this is exactly what we need if we only care about
+		-- water, which has this flowing distance.
+		local vec = flowlib.quick_flow (self_pos, node)
+		return vec
 	end
+	return nil
 end
 
-function mob_class:check_dying()
-	if ((self.state and self.state == "die") or self:check_for_death()) and not self.animation.die_end then
+function mob_class:check_dying (dtime)
+	if self.dead and not self.animation.die_end then
 		if self.object then
 			local rot = self.object:get_rotation()
 			rot.z = ((math.pi/2-rot.z)*.2)+rot.z
@@ -903,42 +708,923 @@ function mob_class:check_dying()
 	end
 end
 
-function mob_class:check_suspend()
-	if not self:player_in_active_range() then
-		local pos = self.object:get_pos()
-		local node_under = node_ok(vector.offset(pos,0,-1,0)).name
-		local acc = self.object:get_acceleration()
-		self:set_animation( "stand", true)
-		if acc.y > 0 or node_under ~= "air" then
-			self.object:set_acceleration(vector.new(0,0,0))
-			self.object:set_velocity(vector.new(0,0,0))
+------------------------------------------------------------------------
+-- Attribute modifiers.
+-- Ref: https://minecraft.wiki/w/Attribute#Modifiers.
+------------------------------------------------------------------------
+
+vlf_mobs.persistent_physics_factors = {}
+
+function mob_class:validate_attribute (field, value)
+	if value == "knockback_resistance" then
+		return math.max (0.0, math.min (1.0, value))
+	end
+	return value
+end
+
+function mob_class:post_apply_physics_factor (field, oldvalue, value)
+	if field == "movement_speed" then
+		-- Rescale gowp velocity (or stupid_velocity) to match
+		-- the new movement_speed.
+		--
+		-- A velocity of nil is a placeholder for
+		-- movement_speed anyway, and as such no adjustment is
+		-- necessary in these cases.
+		if self.waypoints or self.pathfinding_context then
+			if self.gowp_velocity then
+				local factor = self.gowp_velocity / oldvalue
+				self.gowp_velocity = factor * value
+			end
+		elseif self.stupid_target then
+			if self.stupid_velocity then
+				local factor = self.stupid_velocity / oldvalue
+				self.stupid_velocity = factor * value
+			end
 		end
-		return true
 	end
 end
 
-local function apply_physics_factors (self, field, id)
-    local base = self._physics_factors[field].base
-    for name, value in pairs (self._physics_factors[field]) do
-	if name ~= "base" then
-	    base = base * value
+local function apply_physics_factors (self, field)
+	local base = self._physics_factors[field].base or self[field]
+	local total = base
+	local to_add = {}
+	local to_add_multiply_base = {}
+	local to_multiply_total = {}
+	for name, value in pairs (self._physics_factors[field]) do
+		if name ~= "base" then
+			if value.op == "scale_by" then
+				table.insert (to_multiply_total, value.amount)
+			elseif value.op == "add_multiplied_base" then
+				table.insert (to_add_multiply_base, value.amount)
+			elseif value.op == "add_multiplied_total" then
+				table.insert (to_multiply_total, 1.0 + value.amount)
+			elseif value.op == "add" then
+				table.insert (to_add, value.amount)
+			end
+		end
 	end
-    end
-    self[field] = base
+	for _, value in ipairs (to_add) do
+		total = total + value
+	end
+	base = total
+	for _, value in ipairs (to_add_multiply_base) do
+		total = total + base * value
+	end
+	for _, value in ipairs (to_multiply_total) do
+		total = total * value
+	end
+	local oldvalue = self[field]
+	self[field] = self:validate_attribute (field, total)
+	self:post_apply_physics_factor (field, oldvalue, total)
 end
 
-function mob_class:add_physics_factor (field, id, factor)
-    if not self._physics_factors[field] then
-	self._physics_factors[field] = { base = self[field], }
-    end
-    self._physics_factors[field][id] = factor
-    apply_physics_factors (self, field, id)
+function mob_class:set_physics_factor_base (field, base)
+	if not self._physics_factors[field] then
+		self._physics_factors[field] = { base = base, }
+	else
+		self._physics_factors[field].base = base
+	end
+	apply_physics_factors (self, field)
+end
+
+function mob_class:add_physics_factor (field, id, factor, op, add_to_existing)
+	if not self._physics_factors[field] then
+		self._physics_factors[field] = { base = self[field], }
+	else
+		-- Do not apply physics factors redundantly.
+		local old = self._physics_factors[field][id]
+		if old then
+			if add_to_existing then
+				old.amount = old.amount + factor
+				old.op = op
+				apply_physics_factors (self, field)
+				return
+			elseif old.amount == factor and old.op == op then
+				return
+			end
+		end
+	end
+	self._physics_factors[field][id] = {
+		amount = factor,
+		op = op or "scale_by",
+	}
+	apply_physics_factors (self, field)
 end
 
 function mob_class:remove_physics_factor (field, id)
-    if not self._physics_factors[field] then
-	return
-    end
-    self._physics_factors[field][id] = nil
-    apply_physics_factors (self, field, id)
+	if not self._physics_factors[field]
+		or not self._physics_factors[field][id] then
+		return
+	end
+	self._physics_factors[field][id] = nil
+	apply_physics_factors (self, field)
+end
+
+function mob_class:stock_value (field)
+	if not self._physics_factors[field] then
+		return self[field]
+	end
+	return self._physics_factors[field].base
+end
+
+function mob_class:restore_physics_factors ()
+	for field, factors in pairs (self._physics_factors) do
+		-- Upgrade obsolete numerical factors.
+		for id, data in pairs (factors) do
+			if id ~= "base" and type (data) == "number" then
+				factors[id] = {
+					amount = data,
+					op = "scale_by",
+				}
+			end
+		end
+		apply_physics_factors (self, field)
+	end
+end
+
+function vlf_mobs.make_physics_factor_persistent (id)
+	vlf_mobs.persistent_physics_factors[id] = true
+end
+
+------------------------------------------------------------------------
+-- Mob motion routines.  Do not tamper with the mechanics or constants
+-- in this section without reference to
+-- https://minecraft.wiki/w/Physics and a number of documents
+-- available online, and a copy of Minecraft for visual comparison.
+------------------------------------------------------------------------
+
+--- Constants.  These remain constant for the duration of the game but
+--- are adjusted so as to reflect the global step time.
+
+local function pow_by_step (value, dtime)
+	return math.pow (value, dtime / 0.05)
+end
+vlf_mobs.pow_by_step = pow_by_step
+
+local AIR_DRAG			= 0.98
+local AIR_FRICTION		= 0.91
+local WATER_DRAG		= 0.8
+local AQUATIC_WATER_DRAG	= 0.9
+local AQUATIC_GRAVITY		= -0.1
+local SPRINTING_WATER_DRAG	= 0.9
+local JUMPING_LAVA_DRAG		= 0.8
+local LAVA_FRICTION		= 0.5
+local LAVA_SPEED		= 0.4
+local FLYING_LIQUID_SPEED	= 0.4
+local FLYING_GROUND_SPEED	= 2.0
+local FLYING_AIR_SPEED		= 0.4
+local BASE_SLIPPERY		= 0.98
+local BASE_FRICTION		= 0.6
+local LIQUID_FORCE		= 0.28
+local BASE_FRICTION3		= math.pow (0.6, 3)
+local FLYING_BASE_FRICTION3	= math.pow (BASE_FRICTION * AIR_FRICTION, 3)
+local LIQUID_JUMP_THRESHOLD	= 0.4
+local LIQUID_JUMP_FORCE		= 0.8
+local LIQUID_JUMP_FORCE_ONESHOT	= 6.0
+local LAVA_JUMP_THRESHOLD	= 0.1
+
+vlf_mobs.AIR_FRICTION = AIR_FRICTION
+vlf_mobs.LIQUID_JUMP_FORCE = 0.1
+
+local function scale_speed (speed, friction)
+	local f = BASE_FRICTION3 / (friction * friction * friction)
+	return speed * f
+end
+
+local function scale_speed_flying (speed, friction)
+	local f = FLYING_BASE_FRICTION3 / (friction * friction * friction)
+	return speed * f
+end
+
+function mob_class:accelerate_relative (acc, speed_x, speed_y)
+	local yaw = self:get_yaw ()
+	local acc_x, acc_y, acc_z
+	local magnitude = vector.length (acc)
+	if magnitude > 1.0 then
+		acc_x = acc.x / magnitude * speed_x
+		acc_y = acc.y / magnitude * speed_y
+		acc_z = acc.z / magnitude * speed_x
+	else
+		acc_x = acc.x * speed_x
+		acc_y = acc.y * speed_y
+		acc_z = acc.z * speed_x
+	end
+	local s = -math.sin (yaw)
+	local c = math.cos (yaw)
+	local x = acc_x * c + acc_z * s
+	local z = acc_z * c - acc_x * s
+	return x, acc_y, z
+end
+
+function mob_class:get_jump_force (moveresult)
+	return self.jump_height
+end
+
+function mob_class:jump_actual (v, jump_force)
+	if self.animation.jump_start then
+		self._current_animation = nil
+		self:set_animation ("jump")
+	end
+	self:mob_sound ("jump")
+	v = vector.new (v.x, jump_force, v.z)
+
+	-- Apply acceleration if sprinting.
+	if self._sprinting then
+		local yaw = self:get_yaw ()
+		v.x = v.x + math.sin (yaw) * -4.0
+		v.z = v.z + math.cos (yaw) * 4.0
+	end
+	return v
+end
+
+local function horiz_collision (moveresult)
+	for _, item in ipairs (moveresult.collisions) do
+		if item.type == "node"
+			and (item.axis == "x" or item.axis == "z") then
+			return true
+		end
+	end
+	return false
+end
+
+vlf_mobs.horiz_collision = horiz_collision
+
+local function clamp (num, min, max)
+	return math.min (max, math.max (num, min))
+end
+
+function mob_class:immersion_depth (liquidgroup, pos, max)
+	local start = pos.y
+	local ymax
+	local i = start
+	local limit = i + max + 1
+
+	while i < limit do
+		local pos = { x = pos.x, y = i, z = pos.z, }
+		local node = minetest.get_node (pos)
+		local def = minetest.registered_nodes[node.name]
+		if def and def.groups[liquidgroup] then
+			local height = 1
+			if def.liquidtype == "flowing" then
+				height = 0.1 + node.param2 * 0.1
+			end
+			ymax = math.floor (i + 0.5) + height - 0.5
+		end
+		i = i + 1
+	end
+
+	return ymax and ymax - start or 0
+end
+
+function mob_class:check_collision (self_pos)
+	-- can mob be pushed, if so calculate direction
+	if self.pushable then
+		local c_x, c_z = self:collision (self_pos)
+		if c_x > 0 or c_z > 0 then
+			self.object:add_velocity ({
+				x = c_x,
+				y = 0,
+				z = c_z,
+			})
+		end
+	end
+end
+
+local function box_intersection (box, other_box)
+	for index = 1, 3 do
+		if box[index] > other_box[index + 3]
+			or other_box[index] > box[index + 3] then
+			return false
+		end
+	end
+	return true
+end
+
+local function will_breach_water_1 (node, cbox)
+	local node_data = minetest.get_node (node)
+	local def = minetest.registered_nodes[node_data.name]
+
+	if def and not def.walkable and def.liquidtype == "none" then
+		return false
+	end
+
+	local boxes
+		= minetest.get_node_boxes ("collision_box", node, node_data)
+	for _, box in pairs (boxes) do
+		box[1] = box[1] + node.x
+		box[2] = box[2] + node.y
+		box[3] = box[3] + node.z
+		box[4] = box[4] + node.x
+		box[5] = box[5] + node.y
+		box[6] = box[6] + node.z
+
+		if box_intersection (box, cbox) then
+			return true
+		end
+	end
+	return false
+end
+
+local will_breach_water_scratch = vector.zero ()
+
+function mob_class:will_breach_water (self_pos, dx, dy, dz)
+	local cbox = table.copy (self.collisionbox)
+	cbox[1] = cbox[1] + self_pos.x + dx
+	cbox[2] = cbox[2] + self_pos.y + dy
+	cbox[3] = cbox[3] + self_pos.z + dz
+	cbox[4] = cbox[4] + self_pos.x + dx
+	cbox[5] = cbox[5] + self_pos.y + dy
+	cbox[6] = cbox[6] + self_pos.z + dz
+
+	-- Crude collision detection that does not take movement into
+	-- account.
+	local xmin = math.floor (cbox[1] + 0.5)
+	local ymin = math.floor (cbox[2] + 0.5) - 1
+	local zmin = math.floor (cbox[3] + 0.5)
+	local xmax = math.floor (cbox[4] + 0.5)
+	local ymax = math.floor (cbox[5] + 0.5) + 1
+	local zmax = math.floor (cbox[6] + 0.5)
+	local v = will_breach_water_scratch
+
+	for z = zmin, zmax do
+		for x = xmin, xmax do
+			for y = ymin, ymax do
+				v.x = x
+				v.y = y
+				v.z = z
+				if will_breach_water_1 (v, cbox) then
+					return false
+				end
+			end
+		end
+	end
+	return true
+end
+
+function mob_class:motion_step (dtime, moveresult, self_pos)
+	if not moveresult then
+		return
+	end
+	local standin = minetest.registered_nodes[self.standing_in]
+	local standon = minetest.registered_nodes[self.standing_on]
+	local acc_dir = self.acc_dir
+	local acc_speed = self.acc_speed
+	local fall_speed = self._acc_no_gravity and 0 or self.fall_speed
+	local touching_ground = moveresult.touching_ground or moveresult.standing_on_object
+	local jumping = self._jump
+	local p
+	local h_scale, v_scale
+	local climbing = false
+	local always_enable_step_height = false
+
+	-- Note that mobs being controlled by a player should sink.
+	if self.floats == 1 and not self.driver and math.random (10) < 8 then
+		local depth = self._immersion_depth or 0
+		if depth > LIQUID_JUMP_THRESHOLD or standin.groups.lava then
+			jumping = true
+		end
+	end
+
+	-- Note: this does not exist in Minecraft and is only meant to
+	-- approximate floating in liquids for striders.
+	if self.floats_on_lava and math.random (10) < 8 then
+		local ymin = self.collisionbox[2]
+		local height = self.collisionbox[5] - ymin
+		local depth = self:immersion_depth ("lava", self_pos, height)
+		if depth > LAVA_JUMP_THRESHOLD then
+			jumping = true
+		elseif depth > 0 then
+			-- Enable this mob to step out of this liquid
+			-- pseudo-surface.
+			always_enable_step_height = true
+		end
+	end
+
+	if self.jump_timer and self.jump_timer > 0 then
+		self.jump_timer = math.max (0, self.jump_timer - dtime)
+	end
+
+	p = pow_by_step (AIR_DRAG, dtime)
+	acc_dir.x = acc_dir.x * p
+	acc_dir.z = acc_dir.z * p
+
+	local v = self.object:get_velocity ()
+	local climbable = standin.climbable or standon.climbable
+
+	if self.climb_powder_snow then
+		if self.standing_in == "vlf_powder_snow:powder_snow"
+			or self.standing_on == "vlf_powder_snow:powder_snow" then
+			climbable = true
+		end
+	end
+
+	-- If standing on a climable block and jumping or impeded
+	-- horizontally, begin climbing, and prevent fall speed from
+	-- exceeding 3.0 blocks/s.
+	if (self.always_climb and horiz_collision (moveresult)) or climbable then
+		if v.y < -3.0 then
+			v.y = -3.0
+		end
+		v.x = clamp (v.x, -3.0, 3.0)
+		v.z = clamp (v.z, -3.0, 3.0)
+		if jumping or horiz_collision (moveresult) then
+			v.y = 4.0
+			jumping = false
+			self._jump = false
+		end
+		climbing = true
+		self.reset_fall_damage = 1
+	end
+
+	-- In Minecraft, gravity is applied after being attenuated by
+	-- gravity_drag, but acceleration is unaffected.
+	-- Consequently, fv.y must be applied after fall_speed, with
+	-- gravity_drag in between.
+	local gravity_drag = 1
+	if self.gravity_drag and ((not touching_ground and v.y < 0)
+					or self._apply_gravity_drag_on_ground) then
+		gravity_drag = self.gravity_drag
+	end
+
+	local water_vec = not self.swims and self:check_water_flow (self_pos) or nil
+	local velocity_factor = standon._vlf_velocity_factor or 1
+
+	if standin.groups.water then
+		local saved_vy = v.y
+		local water_friction = self.water_friction
+		if self._sprinting then
+			water_friction = SPRINTING_WATER_DRAG
+		end
+		local friction = water_friction * velocity_factor
+		local speed = self.water_velocity
+
+		-- Apply depth strider.
+		local level = math.min (3, vlf_enchanting.depth_strider_level (self))
+		level = touching_ground and level or level / 2
+		if level > 0 then
+			local delta = BASE_FRICTION * AIR_FRICTION - friction
+			friction = friction + delta * level / 3
+			delta = acc_speed - speed
+			speed = speed + delta * level / 3
+		end
+
+		-- Adjust speed by friction.  Minecraft applies
+		-- friction to acceleration (speed), not just the
+		-- previous velocity.
+		local r, z = pow_by_step (friction, dtime), friction
+		local base_water_drag = WATER_DRAG * gravity_drag
+		local p = pow_by_step (base_water_drag, dtime)
+		h_scale = (1 - r) / (1 - z)
+		v_scale = (1 - p) / (1 - base_water_drag)
+
+		local speed_x, speed_y = speed * h_scale, speed * v_scale
+		local fv_x, fv_y, fv_z = self:accelerate_relative (acc_dir, speed_x, speed_y)
+
+		-- Apply friction and acceleration.
+		v.x = v.x * r + fv_x
+		v.y = v.y * p
+		v.z = v.z * r + fv_z
+
+		-- Apply vertical acceleration.
+		v.y = v.y + fv_y
+
+		-- Apply gravity unless this mob is sprinting.
+		if not self._sprinting then
+			v.y = v.y + fall_speed / 16 * v_scale
+			if v.y > -0.06 and v.y < 0 then
+				v.y = -0.06
+			end
+		end
+
+		-- If colliding horizontally within water, detect
+		-- whether the result of this movement is vertically
+		-- within 0.6 nodes of a position clear of water and
+		-- collisions, and apply a force to this mob so as to
+		-- breach the water if so.
+		if horiz_collision (moveresult) then
+			local traveled = saved_vy * dtime
+			local diff_tick = v.y * 0.05
+			local dx = v.x * 0.05
+			local dy = diff_tick + 0.6 - traveled
+			local dz = v.z * 0.5
+			local will_breach_water
+				= self:will_breach_water (self_pos, dx, dy, dz)
+			if will_breach_water then
+				v.y = 6.0
+			end
+		end
+	elseif standin.groups.lava then
+		if not self.floats_on_lava then
+			local saved_vy = v.y
+			local speed = LAVA_SPEED
+			local r, z = pow_by_step (LAVA_FRICTION, dtime), LAVA_FRICTION
+			h_scale = (1 - r) / (1 - z)
+			speed = speed * h_scale
+			v_scale, p = h_scale, r
+
+			-- If this mob is not submerged in lava to a
+			-- depth of LIQUID_JUMP_THRESHOLD, apply a
+			-- reduced drag.
+			local ymin
+				= self.collisionbox[2]
+			local height
+				= self.collisionbox[5] - ymin
+			local depth
+				= self:immersion_depth ("lava", self_pos, height)
+			if depth <= LIQUID_JUMP_THRESHOLD then
+				p = pow_by_step (JUMPING_LAVA_DRAG, dtime)
+				v_scale = (1 - p) / (1 - JUMPING_LAVA_DRAG)
+			end
+
+			local speed_x, speed_y = speed * h_scale, speed * v_scale
+			local fv_x, fv_y, fv_z = self:accelerate_relative (acc_dir, speed_x, speed_y)
+			v.x = v.x * r + fv_x
+			v.y = v.y * p
+			v.z = v.z * r + fv_z
+			v.y = v.y + (fall_speed / 4.0) * v_scale
+			v.y = v.y + fv_y
+
+			-- If colliding horizontally within lava,
+			-- detect whether the result of this movement
+			-- is vertically within 0.6 nodes of a
+			-- position clear of lava and collisions, and
+			-- apply a force to this mob so as to breach
+			-- the water if so.
+			if horiz_collision (moveresult) then
+				local traveled = saved_vy * dtime
+				local diff_tick = v.y * 0.05
+				local dx = v.x * 0.05
+				local dy = diff_tick + 0.6 - traveled
+				local dz = v.z * 0.5
+				local will_breach_lava
+					= self:will_breach_water (self_pos, dx, dy, dz)
+				if will_breach_lava then
+					v.y = 6.0
+				end
+			end
+		else
+			local speed = acc_speed
+			local r, z = pow_by_step (BASE_FRICTION, dtime), BASE_FRICTION
+			h_scale = (1 - r) / (1 - z)
+			speed = speed * h_scale
+
+			local fv_x, _, fv_z = self:accelerate_relative (acc_dir, speed, speed)
+			v.x = v.x * r + fv_x
+			v.z = v.z * r + fv_z
+
+			p = pow_by_step (WATER_DRAG, dtime)
+			v_scale = (1 - p) / (1 - WATER_DRAG)
+			v.y = v.y * p
+		end
+	else
+		-- If not standing on air, apply slippery to a base value of
+		-- 0.6.
+		local slippery = standon.groups.slippery
+		local friction
+		-- The order in which Minecraft applies velocity is
+		-- such that it is scaled by ground friction after
+		-- application even if vertical acceleration would
+		-- render the mob airborne.  Emulate this behavior, in
+		-- order to avoid a marked disparity in the speed of
+		-- mobs that jump while in motion or walk off ledges.
+		if self._was_touching_ground
+			and slippery and slippery > 0 then
+			friction = BASE_SLIPPERY
+		elseif self._was_touching_ground then
+			friction = BASE_FRICTION
+		else
+			friction = 1
+		end
+
+		-- Apply friction, relative movement, and speed.
+		local speed
+
+		if touching_ground or climbing
+			or self._airborne_agile then
+			speed = scale_speed (acc_speed, friction)
+		else
+			speed = 0.4 -- 0.4 blocks/s
+		end
+		-- Apply friction (velocity_factor) from Soul Sand and
+		-- the like.  NOTE: this friction is supposed to be
+		-- applied after movement, just as with standard
+		-- friction.
+		friction = friction * AIR_FRICTION * velocity_factor
+
+		-- Adjust speed by friction.  Minecraft applies
+		-- friction to acceleration (speed), not just the
+		-- previous velocity.  The manner in which friction is
+		-- applied to acceleration is very peculiar, in that
+		-- mobs are moved by the original speed each tick,
+		-- before the modified speed is integrated into the
+		-- velocity.
+		--
+		-- In Minetest, this is emulated by integrating the
+		-- full speed into the velocity after applying
+		-- friction to the same, which is more logical anyway.
+		local base_air_drag = AIR_DRAG * gravity_drag
+		local r, z = pow_by_step (friction, dtime), friction
+		local p = pow_by_step (base_air_drag, dtime)
+		
+		h_scale = (1 - r) / (1 - z)
+		v_scale = (1 - p) / (1 - base_air_drag)
+		local speed_x, speed_y = speed * h_scale, speed * v_scale
+		local fv_x, fv_y, fv_z = self:accelerate_relative (acc_dir, speed_x, speed_y)
+		v.x = v.x * r + fv_x
+		v.y = v.y * p + fall_speed * v_scale * base_air_drag
+		v.z = v.z * r + fv_z
+		v.y = v.y + fv_y
+	end
+
+	if water_vec ~= nil and vector.length (water_vec) ~= 0 then
+		v.x = v.x + water_vec.x * LIQUID_FORCE * h_scale
+		v.y = v.y + water_vec.y * LIQUID_FORCE * h_scale
+		v.z = v.z + water_vec.z * LIQUID_FORCE * h_scale
+	end
+
+	if jumping then
+		if standin.groups.water or standin.groups.lava then
+			if self.floats == 1 or self.floats_on_lava then
+				v.y = v.y + LIQUID_JUMP_FORCE * v_scale
+			else
+				v.y = v.y + LIQUID_JUMP_FORCE_ONESHOT
+			end
+		else
+			if touching_ground
+				and (not self.jump_timer or self.jump_timer <= 0) then
+				local force = self:get_jump_force (moveresult)
+				v = self:jump_actual (v, force)
+				self.jump_timer = 0.2
+			end
+		end
+	end
+
+	-- Step height should always be configured to zero while not
+	-- standing.  This might be slightly counter-intuitive, but it
+	-- enables jumping to function correctly when the mob is
+	-- accelerating forward.
+	local enable_step_height = touching_ground or always_enable_step_height
+	if enable_step_height and self._previously_floating then
+		self._previously_floating = false
+		self.object:set_properties ({stepheight = self._initial_step_height})
+	elseif not enable_step_height and not self._previously_floating then
+		self._previously_floating = true
+		self.object:set_properties ({stepheight = 0.0})
+	end
+
+	-- Clear the jump flag even when jumping is not yet possible.
+	self._jump = false
+	self._was_touching_ground = touching_ground
+	self.object:set_velocity (v)
+	self:check_collision (self_pos)
+	return h_scale, v_scale
+end
+
+-- Simplified `motion_step' for true (i.e., not birds or blazes)
+-- flying mobs unaffected by gravity (i.e., not ghasts).
+
+function mob_class:flying_step (dtime, moveresult, self_pos)
+	if not moveresult then
+		return
+	end
+	local standin = minetest.registered_nodes[self.standing_in]
+	local standon = minetest.registered_nodes[self.standing_on]
+	local touching_ground = moveresult.touching_ground
+		or moveresult.standing_on_object
+	local v = self.object:get_velocity ()
+	local p = pow_by_step (AIR_DRAG, dtime)
+	local acc_dir = self.acc_dir
+	local speed, scale
+
+	acc_dir.x = acc_dir.x * p
+	acc_dir.z = acc_dir.z * p
+
+	if standin.groups.water then
+		speed = FLYING_LIQUID_SPEED
+		p = pow_by_step (WATER_DRAG, dtime)
+		scale = (1 - p) / (1 - WATER_DRAG)
+	elseif standin.groups.lava then
+		speed = FLYING_LIQUID_SPEED
+		p = pow_by_step (LAVA_FRICTION, dtime)
+		scale = (1 - p) / (1 - LAVA_FRICTION)
+	else
+		local slippery = standon.groups.slippery
+		local friction
+
+		if touching_ground and slippery and slippery > 0 then
+			friction = BASE_SLIPPERY * AIR_FRICTION
+			speed = scale_speed_flying (FLYING_GROUND_SPEED, friction)
+		elseif touching_ground then
+			friction = BASE_FRICTION * AIR_FRICTION
+			speed = scale_speed_flying (FLYING_GROUND_SPEED, friction)
+		else
+			friction = AIR_FRICTION
+			speed = FLYING_AIR_SPEED
+		end
+		p = pow_by_step (friction, dtime)
+		scale = (1 - p) / (1 - friction)
+	end
+
+	local speed = speed * scale
+	local fv_x, fv_y, fv_z = self:accelerate_relative (acc_dir, speed, speed)
+	v.x = v.x * p + fv_x
+	v.y = v.y * p + fv_y
+	v.z = v.z * p + fv_z
+	self._previously_floating = true
+	self.object:set_properties ({stepheight = 0.0})
+	self.object:set_velocity (v)
+	self:check_collision (self_pos)
+end
+
+-- Simplified `motion_step' for true (i.e., not birds or blazes)
+-- swimming mobs.
+
+local default_motion_step = mob_class.motion_step
+
+function mob_class:aquatic_step (dtime, moveresult, self_pos)
+	if not moveresult then
+		return
+	end
+
+	local standin = minetest.registered_nodes[self.standing_in]
+	if standin.groups.water then
+		local acc_speed = self.acc_speed
+		local acc_dir = self.acc_dir
+		local acc_fixed = self._acc_y_fixed or 0
+		local p = pow_by_step (AIR_DRAG, dtime)
+		local v = self.object:get_velocity ()
+
+		acc_dir.x = acc_dir.x * p
+		acc_dir.z = acc_dir.z * p
+		p = pow_by_step (AQUATIC_WATER_DRAG, dtime)
+		local scale = (1 - p) / (1 - AQUATIC_WATER_DRAG)
+		
+		local speed = acc_speed * scale
+		local fv_x, fv_y, fv_z = self:accelerate_relative (acc_dir, speed, speed)
+		v.x = v.x * p + fv_x
+		v.y = v.y * p + fv_y + acc_fixed * scale
+		v.z = v.z * p + fv_z
+
+		-- Apply gravity unless attacking mob.
+		if not self.attacking and not self._acc_no_gravity then
+			v.y = v.y + AQUATIC_GRAVITY * scale
+		end
+
+		self.object:set_velocity (v)
+		self:check_collision (self_pos)
+		self._previously_floating = true
+		self.object:set_properties ({stepheight = 0.0})
+	else
+		default_motion_step (self, dtime, moveresult, self_pos)
+	end
+end
+
+local floor = math.floor
+
+vlf_mobs.mob_class.slowdown_nodes = {
+	["vlf_farming:sweet_berry_bush_1"] = {
+		x = 0.8,
+		y = 0.75,
+		z = 0.8,
+	},
+	["vlf_farming:sweet_berry_bush_2"] = {
+		x = 0.8,
+		y = 0.75,
+		z = 0.8,
+	},
+	["vlf_farming:sweet_berry_bush_3"] = {
+		x = 0.8,
+		y = 0.75,
+		z = 0.8,
+	},
+	["vlf_core:cobweb"] = {
+		x = 0.25,
+		y = 0.05,
+		z = 0.25,
+	},
+	["vlf_powder_snow:powder_snow"] = {
+		x = 0.9,
+		y = 1.5,
+		z = 0.9,
+	},
+}
+
+local function standing_in_liquid_or_walkable (self)
+	if self.standing_in == "air" then
+		return false
+	end
+	local def = minetest.registered_nodes[self.standing_in]
+	return not def and def.liquidtype ~= "flowing" and not def.walkable
+end
+
+function mob_class:display_sprinting_particles ()
+	-- Don't display such particles if standing in a liquid or
+	-- similar block.
+	return self._sprinting and not self._crouching
+		and not standing_in_liquid_or_walkable (self)
+end
+
+local get_node_raw = vlf_mobs.get_node_raw
+
+local function get_node_name (nodepos)
+	if get_node_raw then
+		local x, y, z = nodepos.x, nodepos.y, nodepos.z
+		local id, _, _ = get_node_raw (x, y, z)
+		return minetest.get_name_from_content_id (id)
+	else
+		local node = minetest.get_node (nodepos)
+		return node.name
+	end
+end
+
+local post_motion_step_scratch = vector.zero ()
+
+function mob_class:post_motion_step (self_pos, dtime, moveresult)
+	-- Apply slowdowns from blocks that should impede movement.
+	local xmin, zmin, xmax, zmax, ymin, ymax
+	local slowdowns = self.slowdown_nodes
+	local v = post_motion_step_scratch
+
+	xmin = floor (self_pos.x + self.collisionbox[1] + 0.5)
+	zmin = floor (self_pos.z + self.collisionbox[3] + 0.5)
+	xmax = floor (self_pos.x + self.collisionbox[4] + 0.5)
+	zmax = floor (self_pos.z + self.collisionbox[6] + 0.5)
+	ymin = floor (self_pos.y + self.collisionbox[2] + 0.5)
+	ymax = floor (self_pos.y + self.collisionbox[5] + 0.5)
+	for z = zmin, zmax do
+		v.z = z
+		for x = xmin, xmax do
+			v.x = x
+			for y = ymin, ymax do
+				v.y = y
+				local node = get_node_name (v)
+				if slowdowns[node] then
+					local slowdown = slowdowns[node]
+					local v = self.object:get_velocity ()
+					v.x = v.x * pow_by_step (slowdown.x, dtime)
+					v.y = v.y * pow_by_step (slowdown.y, dtime)
+					v.z = v.z * pow_by_step (slowdown.z, dtime)
+					self.object:set_velocity (v)
+
+					-- Indicate that the velocity must be reset
+					-- upon the next globalstep
+					self._was_stuck = true
+					break
+				end
+			end
+		end
+	end
+
+	-- Generate sprinting particles if and standing on a surface
+	-- appropriate.
+	if self:display_sprinting_particles () then
+		local def = minetest.registered_nodes[self.standing_on]
+		if def and def.walkable then
+			local p2 = self.standing_on_param2
+			local p2_type = def.paramtype2
+			local tile = vlf_sprint.get_top_node_tile (p2, p2_type)
+			local v = self.object:get_velocity ()
+			local xwidth = (self.collisionbox[4] - self.collisionbox[1]) / 2
+			local zwidth = (self.collisionbox[6] - self.collisionbox[3]) / 2
+			v.x = v.x * -0.2
+			v.z = v.z * -0.2
+			v.y = 2.15
+			minetest.add_particlespawner ({
+					amount = math.random (1, 2),
+					time = 1,
+					minpos = {
+						x = -xwidth,
+						y = 0.1,
+						z = -zwidth,
+					},
+					maxpos = {
+						x = xwidth,
+						y = 0.1,
+						z = zwidth,
+					},
+					minvel = v,
+					maxvel = v,
+					minexptime = 0.1,
+					maxexptime = 1.5,
+					minacc = {
+						x = 0,
+						y = -13,
+						z = 0,
+					},
+					maxacc = {
+						x = 0,
+						y = -13,
+						z = 0,
+					},
+					collisiondetection = true,
+					attached = self.object,
+					vertical = false,
+					node = {
+						name = self.standing_on,
+						param2 = p2,
+					},
+					node_tile = tile,
+			})
+		end
+	end
 end

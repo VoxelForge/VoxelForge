@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_compass x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_compass x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Compass"
-msgstr ""
+msgstr "Bussola"
 
 msgid "Points to the world origin"
-msgstr ""
+msgstr "Punta verso l'origine del mondo"
 
 msgid "Compasses are tools which point to the world origin (X=0, Z=0) or the spawn point in the Overworld."
-msgstr ""
+msgstr "Le bussole sono utensili che puntano verso l'origine del mondo (X=0, Z=0) oppure verso il punto di generazione nell'Overworld."
 
 msgid "A Compass always points to the world spawn point when the player is in the overworld.  In other dimensions, it spins randomly."
 msgstr ""

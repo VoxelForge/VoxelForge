@@ -1,140 +1,14 @@
--- License for code WTFPL and otherwise stated in readmes
+--License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
+local pr = PseudoRandom (os.time () *10)
+local mob_class = vlf_mobs.mob_class
+local is_valid = vlf_util.is_valid_objectref
 
-local default_walk_chance = 50
+------------------------------------------------------------------------
+-- Wolf.
+------------------------------------------------------------------------
 
-local function reduce_armor_durability(self, damage)
-	if self.armor_name and self.armor_durability then
-		-- Reduce durability based on the damage value
-		local wear_reduction = 1024 * damage
-		self.armor_durability = self.armor_durability + wear_reduction
-
-		-- Function to overlay crack textures
-		local function overlay_cracked_texture(crack_texture)
-			if self._wolf_armor then
-				-- Combine the base armor texture with the cracked overlay
-				local new_texture = self.base_texture[1] .. "^" .. crack_texture
-				self.object:set_properties({textures = {new_texture}})
-			end
-		end
-		-- Check if armor reaches different crack levels and update texture
-		if self.armor_durability >= 65535 then  -- 65535 is the max wear value for a tool
-			-- Armor is broken
-			self.armor_name = nil
-			self.armor_durability = nil
-			self._wearing_armor = false
-			self._wolf_armor = nil
-			local ogroups = self.object:get_armor_groups()
-			ogroups.fleshy = 100
-			self.object:set_armor_groups(ogroups)
-			self.object:set_properties({textures = {self._naked_texture}})  -- Revert to default texture
-		elseif self.armor_durability >= 61440 then  -- Cracked level 3 (60 durability)
-			overlay_cracked_texture("mobs_mc_wolf_armor_crackiness_high.png")
-		elseif self.armor_durability >= 43008 then  -- Cracked level 2 (40 durability)
-			overlay_cracked_texture("mobs_mc_wolf_armor_crackiness_medium.png")
-		elseif self.armor_durability >= 28672 then  -- Cracked level 1 (22 durability)
-			overlay_cracked_texture("mobs_mc_wolf_armor_crackiness_low.png")
-		end
-	end
-end
-
-local pr = PseudoRandom(os.time()*10)
-
-local food = {} -- [item_name] = heal
-food["vlf_fishing:pufferfish_raw"] = 1
-food["vlf_fishing:clownfish_raw"] = 1
-food["vlf_mobitems:chicken"] = 2
-food["vlf_mobitems:mutton"] = 2
-food["vlf_fishing:fish_raw"] = 2
-food["vlf_fishing:salmon_raw"] = 2
-food["vlf_mobitems:porkchop"] = 3
-food["vlf_mobitems:beef"] = 3
-food["vlf_mobitems:rabbit"] = 3
-food["vlf_mobitems:rotten_flesh"] = 4
-food["vlf_mobitems:cooked_rabbit"] = 5
-food["vlf_fishing:fish_cooked"] = 5
-food["vlf_mobitems:cooked_mutton"] = 6
-food["vlf_mobitems:cooked_chicken"] = 6
-food["vlf_fishing:salmon_cooked"] = 6
-food["vlf_mobitems:cooked_porkchop"] = 8
-food["vlf_mobitems:cooked_beef"] = 8
-food["vlf_mobitems:rabbit_stew"] = 10
-
-local biome_textures = {
-	["flat"] = "mobs_mc_wolf.png",
-	["ColdTaiga"] = "mobs_mc_wolf_ashen.png",
-	["ColdTaiga_beach"] = "mobs_mc_wolf_ashen.png",
-	["ColdTaiga_beach_water"] = "mobs_mc_wolf_ashen.png",
-	["MegaTaiga"] = "mobs_mc_wolf_black.png",
-	["MegaSpruceTaiga"] = "mobs_mc_wolf_chestnut.png",
-	["Taiga"] = "mobs_mc_wolf_pale.png",
-	["Taiga_beach"] = "mobs_mc_wolf_pale.png",
-	["Grove"] = "mobs_mc_wolf_snowy.png",
-	-- Missing Rusty
-	["SavannaM"] = "mobs_mc_wolf_spotted.png",
-	["MesaPlateauF_grasstop"] = "mobs_mc_wolf_striped.png",
-	["Forest"] = "mobs_mc_wolf_woods.png",
-}
-
-local wolf_spawn_groups = {
-	["mobs_mc_wolf.png"] = {min = 1, max = 3},
-	["mobs_mc_wolf_ashen.png"] = {min = 4, max = 4},
-	["mobs_mc_wolf_black.png"] = {min = 2, max = 4},
-	["mobs_mc_wolf_chestnut.png"] = {min = 2, max = 4},
-	["mobs_mc_wolf_pale.png"] = {min = 4, max = 4},
-	["mobs_mc_wolf_snowy.png"] = {min = 1, max = 1},
-	["mobs_mc_wolf_spotted.png"] = {min = 4, max = 8},
-	["mobs_mc_wolf_striped.png"] = {min = 4, max = 8},
-	["mobs_mc_wolf_woods.png"] = {min = 4, max = 4},
-}
-
-local function get_wolf_texture(pos)
-	local biome_data = minetest.get_biome_data(pos)
-	if biome_data then
-		local biome_name = minetest.get_biome_name(biome_data.biome)
-		return biome_textures[biome_name] or "mobs_mc_wolf.png"
-	else
-		minetest.log("error", "Failed to get biome data for position: " .. minetest.pos_to_string(pos))
-		return "mobs_mc_wolf.png"
-	end
-end
-
-local function add_collar(self, color)
-    -- Default collar color if none provided
-    if not color then
-        color = "#FF0000"
-    end
-
-    -- Attempt to retrieve the current texture from the entity's properties
-    local properties = self.object:get_properties()
-    local texture
-
-    if properties and properties.textures and #properties.textures > 0 then
-        texture = properties.textures[1]
-    else
-        -- Fallback to base_texture if it exists
-        texture = (self.base_texture and type(self.base_texture) == "table" and #self.base_texture > 0) and self.base_texture[1]
-    end
-
-    -- Ensure texture is never nil
-    if not texture then
-        minetest.log("error", "Texture is nil, using fallback texture.")
-        texture = "mobs_mc_wolf.png"  -- Fallback texture if all else fails
-    end
-
-    -- Return the modified texture with collar color overlay
-    return texture .. "^(mobs_mc_wolf_collar.png^[colorize:" .. color .. ":192)"
-end
-
-
-local default_spawn_group = {min = 1, max = 3}
-
-local function get_spawn_group_amount(texture)
-    return wolf_spawn_groups[texture] or default_spawn_group
-end
-
--- Wolf
 local wolf = {
 	description = S("Wolf"),
 	type = "animal",
@@ -145,122 +19,83 @@ local wolf = {
 	xp_min = 1,
 	xp_max = 3,
 	passive = false,
-	group_attack = true,
-	spawn_in_group = 1,
+	spawn_in_group = 8,
 	collisionbox = {-0.3, -0.01, -0.3, 0.3, 0.84, 0.3},
 	visual = "mesh",
 	mesh = "mobs_mc_wolf.b3d",
-	textures = {
-		{"mobs_mc_wolf.png"}, {"mobs_mc_wolf_ashen.png"}, {"mobs_mc_wolf_black.png"},
-		{"mobs_mc_wolf_chestnut.png"}, {"mobs_mc_wolf_rusty.png"}, {"mobs_mc_wolf_snowy.png"},
-		{"mobs_mc_wolf_spotted.png"}, {"mobs_mc_wolf_striped.png"}, {"mobs_mc_wolf_woods.png"}
-	},
+	_child_mesh = "mobs_mc_baby_wolf.b3d",
+	-- Textures are actually set by update_textures.
+	textures = {},
 	makes_footstep_sound = true,
 	head_swivel = "head.control",
 	bone_eye_height = 3.5,
-	head_eye_height = 1.1,
-	horizontal_head_height=0,
+	head_eye_height = 0.68,
+	horizontal_head_height = 0,
 	curiosity = 3,
-	head_yaw="z",
+	head_yaw = "z",
 	sounds = {
 		attack = "mobs_mc_wolf_bark",
 		war_cry = "mobs_mc_wolf_growl",
-		damage = {name = "mobs_mc_wolf_hurt", gain=0.6},
-		death = {name = "mobs_mc_wolf_death", gain=0.6},
+		damage = {
+			name = "mobs_mc_wolf_hurt",
+			gain = 0.6,
+		},
+		death = {
+			name = "mobs_mc_wolf_death",
+			gain = 0.6,
+		},
 		eat = "mobs_mc_animal_eat_generic",
 		distance = 16,
 	},
-	pathfinding = 1,
 	floats = 1,
-	view_range = 16,
-	walk_chance = default_walk_chance,
-	walk_velocity = 2,
-	run_velocity = 2.5,
-	damage = 3,
+	movement_speed = 6.0,
+	damage = 4,
 	reach = 2,
-	attack_type = "dogfight",
-	fear_height = 4,
-	follow = { "vlf_mobitems:bone" },
-	texture_holder = "",
-	on_rightclick = function(self, clicker)
-		-- Try to tame wolf (intentionally does NOT use vlf_mobs.feed_tame)
-		local tool = clicker:get_wielded_item()
-
-		local dog, ent
-		if tool:get_name() == "vlf_mobitems:bone" then
-
-			minetest.sound_play("mobs_mc_wolf_take_bone", {object=self.object, max_hear_distance=16}, true)
-			if not minetest.is_creative_enabled(clicker:get_player_name()) then
-				tool:take_item()
-				clicker:set_wielded_item(tool)
-			end
-			-- 1/3 chance of getting tamed
-			if pr:next(1, 3) == 1 then
-				local yaw = self.object:get_yaw()
-				self.texture_holder = self.object:get_properties().textures[1]
-				dog = vlf_util.replace_mob(self.object, "mobs_mc:dog")
-				if dog and dog:get_pos() then
-					dog:set_yaw(yaw)
-					self._color = "unicolor_red"
-					dog:set_properties({textures = {add_collar(self)}})
-					ent = dog:get_luaentity()
-					ent.owner = clicker:get_player_name()
-					ent.tamed = true
-					ent:set_animation("sit")
-					ent.walk_chance = 0
-					ent.jump = false
-					ent.health = self.health
-					-- cornfirm taming
-					minetest.sound_play("mobs_mc_wolf_bark", {object=dog, max_hear_distance=16}, true)
-					-- Replace wolf
-				end
-			end
-		end
-	end,
-
-
+	attack_type = "melee",
+	_melee_esp = true,
 	animation = {
-		stand_start = 0, stand_end = 0,
-		walk_start = 0, walk_end = 40, walk_speed = 60,
-		run_start = 0, run_end = 40, run_speed = 100,
-		sit_start = 45, sit_end = 45,
+		stand_start = 0,
+		stand_end = 0,
+		walk_start = 0,
+		walk_end = 40,
+		walk_speed = 30,
+		sit_start = 41,
+		sit_end = 41,
+		interest_begin_start = 41,
+		interest_begin_end = 44,
+		interest_begin_loop = false,
+		interest_end_start = 44,
+		interest_end_end = 47,
+		interest_end_loop = false,
+		shake_start = 48,
+		shake_end = 71,
+		shake_speed = 23,
+		shake_loop = false,
 	},
-	_child_animations = {
-		stand_start = 46, stand_end = 46,
-		walk_start = 46, walk_end = 86, walk_speed = 75,
-		run_start = 46, run_end = 86, run_speed = 150,
-		sit_start = 91, sit_end = 91,
-	},
-	jump = true,
-	attacks_monsters = true,
-	attack_animals = true,
 	specific_attack = {
-		"player",
 		"mobs_mc:sheep",
 		"mobs_mc:rabbit",
 		"mobs_mc:skeleton",
 		"mobs_mc:stray",
 		"mobs_mc:witherskeleton",
 	},
-	avoid_from = { "mobs_mc:llama" },
-	on_spawn = function(self, pos)
-		local pos = self.object:get_pos()
-		if pos then
-			self.base_texture = {get_wolf_texture(pos)}
-			self.object:set_properties({textures = self.base_texture})
-			self.texture_holder = self.base_texture[1]
-
-			local spawn_group = get_spawn_group_amount(self.base_texture[1])
-			self.spawn_in_group = pr:next(spawn_group.min, spawn_group.max)
-		else
-			minetest.log("error", "Position is nil in on_spawn function.")
-		end
-	end,
+	runaway_from = {
+		"mobs_mc:llama",
+		"mobs_mc:trader_llama",
+	},
+	group_attack = {
+		"mobs_mc:wolf",
+	},
+	_collar_color = "#FF0000",
+	run_bonus = 1.5,
+	_is_wet = false,
+	_owner_attacked_serial = 0,
+	_owner_target_serial = 0,
 }
 
-vlf_mobs.register_mob("mobs_mc:wolf", wolf)
-
--- Tamed wolf
+------------------------------------------------------------------------
+-- Wolf visuals & mechanics.
+------------------------------------------------------------------------
 
 -- Collar colors
 local colors = {
@@ -282,250 +117,865 @@ local colors = {
 	["unicolor_light_blue"] = "#B0B0FF",
 }
 
-local get_dog_textures = function(self, color)
-	if colors[color] then
-		return {add_collar(self, colors[color])}
-	else
-		return nil
-	end
+local function wolf_variant (prefix, biomes)
+	return {
+		wild_texture = "mobs_mc_" .. prefix .. ".png",
+		tame_texture = "mobs_mc_" .. prefix .. "_tame.png",
+		angry_texture = "mobs_mc_" .. prefix .. "_angry.png",
+		biomes = biomes,
+	}
 end
 
-local function wolf_extra_texture(self, cstring)
-	local base = self._naked_texture
-	local armor = self._wolf_armor
-	local textures = {}
+local wolf_variants = {
+	pale = wolf_variant ("wolf", nil),
+	spotted = wolf_variant ("wolf_spotted", {
+		"Savanna",
+		"SavannaM",
+	}),
+	snowy = wolf_variant ("wolf_snowy", {
+		"IcePlains",
+		"IcePlainsSpikes",
+	}),
+	black = wolf_variant ("wolf_black", {
+		"MegaTaiga",
+	}),
+	ashen = wolf_variant ("wolf_ashen", {
+		"ColdTaiga",
+		"ColdTaiga_beach",
+		"ColdTaiga_beach_water",
+	}),
+	rusty = wolf_variant ("wolf_rusty", {
+		"Jungle",
+		"JungleEdge",
+		"BambooJungle",
+	}),
+	woods = wolf_variant ("wolf_woods", {
+		"Forest",
+		"Forest_Beach",
+	}),
+	chestnut = wolf_variant ("wolf_chestnut", {
+		"MegaSpruceTaiga",
+	}),
+	striped = wolf_variant ("wolf_striped", {
+		"Mesa",
+		"MesaPlateauF",
+		"MesaPlateauFM",
+	}),
+}
 
-	-- Apply armor overlay if equipped
-	if armor and minetest.get_item_group(armor, "wolf_armor") > 0 then
-		if cstring then
-			textures[1] = base .. "^(" .. minetest.registered_items[armor]._wolf_overlay_image:gsub(".png$", ".png") .. "^[multiply:" .. cstring .. ")"
-		else
-			textures[1] = base .. "^" .. minetest.registered_items[armor]._wolf_overlay_image
-		end
-	else
-		textures[1] = base
-	end
-	return textures
-end
+local variant_by_biome = {}
 
--- Tamed wolf (aka “dog”)
-local dog = table.copy(wolf)
-dog.description = S("Dog")
-dog.type = "npc"
-dog.can_despawn = false
-dog.passive = true
-dog.hp_min = 20
-dog.hp_max = 20
-dog.owner = ""
-dog.order = "sit"
-dog.state = "stand"
-dog.owner_loyal = true
-dog.follow_velocity = 3.2
-dog.do_custom = mobs_mc.make_owner_teleport_function(12)
-dog.attack_animals = nil
-dog.specific_attack = nil
-dog._wearing_armor = "No"
-
-dog.set_armor = function(self, clicker)
-	local w = clicker:get_wielded_item()
-	local iname = w:get_name()
-
-	-- Check if the armor is different from the current one
-	if iname ~= self._wolf_armor then
-		local cstring
-		if minetest.get_item_group(iname, "armor_leather") > 0 then
-			local m = w:get_meta()
-			local cs = m:get_string("vlf_armor:color")
-			cstring = cs ~= "" and cs or nil
-		end
-
-		-- Handle inventory adjustments
-		if not minetest.is_creative_enabled(clicker:get_player_name()) then
-			w:take_item()
-			clicker:set_wielded_item(w)
-			if self._wolf_armor then
-				minetest.add_item(self.object:get_pos(), self._wolf_armor)
+minetest.register_on_mods_loaded (function ()
+	for name, variant in pairs (wolf_variants) do
+		if variant.biomes then
+			for _, biome in pairs (variant.biomes) do
+				local id = minetest.get_biome_id (biome)
+				if not id then
+					minetest.log ("warning", "[mobs_mc] Invalid biome " .. biome)
+				else
+					variant_by_biome[id] = name
+				end
 			end
 		end
+	end
+end)
 
-		-- Update armor properties
-		local armor = minetest.get_item_group(iname, "wolf_armor")
-		self._wearing_armor = true
-		self._wolf_armor = iname
-		self.armor = armor
-
-		-- Update wolf armor groups
-		local agroups = self.object:get_armor_groups()
-		agroups.fleshy = self.armor or 100 -- Default to 100 if no armor
-		self.object:set_armor_groups(agroups)
-		self.base_texture = self.object:get_properties().textures[1]
-
-		-- Set textures
-		if not self._naked_texture then
-			self._naked_texture = self.base_texture
+function wolf:on_breed (parent1, parent2)
+	local self_pos = self.object:get_pos ()
+	local child = vlf_mobs.spawn_child (self_pos, self.name)
+	if child then
+		local ent_c = child:get_luaentity ()
+		-- Use texture of one of the parents
+		local p = math.random (1, 2)
+		if p == 1 then
+			ent_c._wolf_variant = parent1._wolf_variant
+			ent_c._collar_color = parent1._collar_color
+		else
+			ent_c._wolf_variant = parent2._wolf_variant
+			ent_c._collar_color = parent2._collar_color
 		end
-		local tex = wolf_extra_texture(self, cstring)
-		self.base_texture = tex
-		self.object:set_properties({textures = self.base_texture})
+		ent_c.tamed = true
+		ent_c.owner = self.owner
+		ent_c.base_texture = ent_c:compute_textures ()
+		ent_c:set_textures (ent_c.base_texture)
+		ent_c:after_tame ()
+		return false
+	end
+end
 
-		-- Play equip sound if defined
-		local def = w:get_definition()
-		if def.sounds and def.sounds._vlf_armor_equip then
-			minetest.sound_play({name = def.sounds._vlf_armor_equip}, {gain = 0.5, max_hear_distance = 12, pos = self.object:get_pos()}, true)
+function wolf:mob_activate (staticdata, dtime)
+	if not mob_class.mob_activate (self, staticdata, dtime) then
+		return false
+	end
+	if self.tamed then
+		self.object:set_properties ({
+			hp_max = 40.0,
+		})
+		self.specific_attack = {
+			"mobs_mc:skeleton",
+			"mobs_mc:stray",
+			"mobs_mc:witherskeleton",
+		}
+	end
+	return true
+end
+
+function wolf:after_tame ()
+	self.object:set_properties ({
+		hp_max = 40.0,
+	})
+	self.health = 40
+	self.specific_attack = {
+		"mobs_mc:skeleton",
+		"mobs_mc:stray",
+		"mobs_mc:witherskeleton",
+	}
+end
+
+function wolf:wetness_modifier ()
+	if not self._is_wet then
+		return nil
+	else
+		return "^[colorize:#000000:65"
+	end
+end
+
+function wolf:compute_textures ()
+	local variant = wolf_variants[self._wolf_variant]
+	assert (variant)
+	if self.tamed then
+		return {
+			table.concat ({
+				variant.tame_texture,
+				"^",
+				"(mobs_mc_wolf_collar.png",
+				"^[colorize:",
+				self._collar_color,
+				":192)",
+				self:wetness_modifier (),
+			}),
+			"blank.png", -- Wolf armor.
+			"blank.png", -- Wolf armor overlay.
+		}
+	elseif self.attack then
+		return {
+			table.concat ({
+				variant.angry_texture,
+				self:wetness_modifier (),
+			}),
+			"blank.png",
+			"blank.png",
+		}
+	else
+		return {
+			table.concat ({
+				variant.wild_texture,
+				self:wetness_modifier (),
+			}),
+			"blank.png",
+			"blank.png",
+		}
+	end
+end
+
+function wolf:update_textures ()
+	if not self._wolf_variant then
+		-- Establish which variant to spawn.
+		local self_pos = self.object:get_pos ()
+		local biome = minetest.get_biome_data (self_pos)
+		local variant
+			= (biome and variant_by_biome[biome.biome]) or "pale"
+		self._wolf_variant = variant
+	end
+
+	self.base_texture = self:compute_textures ()
+	self.base_mesh = self.initial_properties.mesh
+	self.base_size = self.initial_properties.visual_size
+	self.base_colbox = self.initial_properties.collisionbox
+	self.base_selbox = self.initial_properties.selectionbox
+end
+
+local SIXTY_FIVE_DEG = math.rad (65)
+
+function wolf:set_animation (anim, custom_frame)
+	if self._shaking and anim == "stand" then
+		anim = "shake"
+	end
+
+	if (anim == "stand" or anim == "walk" or anim == "shake")
+		and self._current_animation ~= anim
+		and self.tamed
+		and self.object.set_bone_override then
+		self.object:set_bone_override ("tail", {
+		       rotation = {
+			       vec = vector.new (-SIXTY_FIVE_DEG, 0, 0),
+			       absolute = false,
+		       },
+		})
+	elseif anim ~= self._current_animation
+		and self.object.set_bone_override then
+		self.object:set_bone_override ("tail", nil)
+	end
+
+	mob_class.set_animation (self, anim, custom_frame)
+end
+
+function wolf:add_shake_particles ()
+	local start = self.child and 0.15 or 0.3
+	minetest.add_particlespawner ({
+		time = 1.0,
+		amount = 180,
+		exptime = 100,
+		vel = {
+			min = vector.new (-1.0, 4.0, -1.0),
+			max = vector.new (1.0, 4.0, 1.0),
+		},
+		acc = {
+			min = vector.new (0, -9.81, 0),
+			max = vector.new (0, -9.81, 0),
+		},
+		pos = {
+			min = vector.new (-0.3, start, -0.3),
+			max = vector.new (0.3, start, 0.3),
+		},
+		size = {
+			min = 1.5,
+			max = 2.1,
+		},
+		collisiondetection = true,
+		collision_removal = true,
+		texpool = {
+			"mobs_mc_wolf_splash_0.png",
+			"mobs_mc_wolf_splash_1.png",
+			"mobs_mc_wolf_splash_2.png",
+			"mobs_mc_wolf_splash_3.png",
+		},
+		attached = self.object,
+	})
+end
+
+function wolf:check_head_swivel (self_pos, dtime, clear)
+	if not self._interested_in then
+		mob_class.check_head_swivel (self, self_pos, dtime, clear)
+	end
+end
+
+local TWENTY_SEVEN_DEG = math.rad (27)
+local SIXTY_DEG = math.rad (60)
+
+local function visually_display_interest_1 (self, yaw, dx, dy, dz)
+	local yaw = math.atan2 (dz, dx) - math.pi / 2 - yaw
+	local pitch = math.atan2 (dy, math.sqrt (dz * dz + dx * dx))
+	local head_pitch = math.min (math.max (-SIXTY_DEG, pitch), SIXTY_DEG)
+	local norm_yaw = vlf_util.norm_radians (yaw)
+	local head_yaw = math.min (math.max (-SIXTY_DEG, norm_yaw), SIXTY_DEG)
+	self.object:set_bone_override ("body.head", {
+		rotation = {
+			vec = vector.new (0, TWENTY_SEVEN_DEG, 0),
+			absolute = false,
+			interpolate = 0.15,
+		},
+	})
+	self.object:set_bone_override ("head.control", {
+		rotation = {
+			vec = vector.new (-head_pitch, 0, head_yaw),
+			absolute = false,
+			interpolate = 0.15,
+		},
+	})
+	self._old_head_swivel_vector = nil
+end
+
+function wolf:visually_display_interest (dtime, self_pos, target_pos)
+	if self.object.set_bone_override then
+		local dz = target_pos.z - self_pos.z
+		local dx = target_pos.x - self_pos.x
+		local dy = target_pos.y - (self_pos.y + self.head_eye_height)
+		local yaw = self.object:get_yaw ()
+
+		if not self._beg_vector
+			or self._beg_yaw ~= yaw
+			or self._beg_vector.x ~= dx
+			or self._beg_vector.y ~= dy
+			or self._beg_vector.z ~= dz then
+			self._beg_vector = vector.new (dx, dy, dz)
+			self._beg_yaw = yaw
+			visually_display_interest_1 (self, yaw, dx, dy, dz)
+			self._beg_rotate_time = nil
+		elseif not self._active_activity
+			or self._active_activity == "sit_if_ordered" then
+			if not self._beg_rotate_time then
+				self._beg_rotate_time = 0.0
+			elseif self._beg_rotate_time then
+				local t = self._beg_rotate_time + dtime
+
+				if t > 0.5 then
+					self:look_at (target_pos)
+					t = 0
+				end
+				self._beg_rotate_time = t
+			end
+		else
+			self._beg_rotate_time = nil
 		end
+	end
+end
+
+function wolf:visually_cancel_interest ()
+	if self.object.set_bone_override then
+		self.object:set_bone_override ("body.head", nil)
+		self.object:set_bone_override ("head.control", nil)
+		self._old_head_swivel_vector = nil
+	end
+	self._beg_rotate_time = nil
+	self._beg_vector = nil
+end
+
+function wolf:is_interested_in (player)
+	local wielditem = player:get_wielded_item ()
+	local name = wielditem:get_name ()
+	if name == "vlf_mobitems:bone" then
+		return true
+	elseif self.tamed and self:is_food (name) then
 		return true
 	end
+	return false
 end
 
+------------------------------------------------------------------------
+-- Wolf interaction.
+------------------------------------------------------------------------
 
-dog.on_rightclick = function(self, clicker)
-	local item = clicker:get_wielded_item()
+local wolf_food = {
+	["vlf_fishing:pufferfish_raw"] = 1,
+	["vlf_fishing:clownfish_raw"] = 1,
+	["vlf_mobitems:chicken"] = 2,
+	["vlf_mobitems:mutton"] = 2,
+	["vlf_fishing:fish_raw"] = 2,
+	["vlf_fishing:salmon_raw"] = 2,
+	["vlf_mobitems:porkchop"] = 3,
+	["vlf_mobitems:beef"] = 3,
+	["vlf_mobitems:rabbit"] = 3,
+	["vlf_mobitems:rotten_flesh"] = 4,
+	["vlf_mobitems:cooked_rabbit"] = 5,
+	["vlf_fishing:fish_cooked"] = 5,
+	["vlf_mobitems:cooked_mutton"] = 6,
+	["vlf_mobitems:cooked_chicken"] = 6,
+	["vlf_fishing:salmon_cooked"] = 6,
+	["vlf_mobitems:cooked_porkchop"] = 8,
+	["vlf_mobitems:cooked_beef"] = 8,
+	["vlf_mobitems:rabbit_stew"] = 10,
+}
 
-	if item:get_name() == "vlf_mobitems:armadillo_scute" and self._wolf_armor and self.armor_durability and self.armor_durability > 0 then
-		-- Repair the armor by 8 points, but not beyond 64 points
-		local repair_points = 8
-		local cap_max = 56
-		local max_durability = 64 * 1024  -- Max 64 points, scaled for wear values
+function wolf:is_food (name)
+	return wolf_food[name] ~= nil
+end
 
-		if self.armor_durability >= max_durability then
-			minetest.chat_send_player(clicker:get_player_name(), S("The wolf's armor is already fully repaired."))
-		else
-			-- Apply repair
-			--self.armor_durability = math.min(self.armor_durability - repair_points * 1024, max_durability)
-			if max_durability - self.armor_durability > cap_max * 1024 then
-				self.armor_durability = 0
-				if awards and awards.unlock and clicker then
-					awards.unlock(clicker:get_player_name(), "vlf:repair_wolf_armor")
-				end
-			else
-				self.armor_durability = math.min(self.armor_durability - repair_points * 1024, max_durability)
-			end
-
-			-- Remove one scute from the itemstack
-			if not minetest.is_creative_enabled(clicker:get_player_name()) then
-				item:take_item(1)
-				clicker:set_wielded_item(item)
-			end
-
-			minetest.chat_send_player(clicker:get_player_name(), S("The wolf's armor has been repaired by 8 points."))
-		end
-
+function wolf:on_rightclick (clicker)
+	if not clicker:is_player () then
 		return
 	end
 
-	-- Remove armor with shears
-	if item:get_name() == "vlf_tools:shears" and self.armor_name and clicker:is_player() then
-		-- Create an ItemStack with the remaining durability
-		local armor = ItemStack(self.armor_name)
-		armor:set_wear(self.armor_durability)
-		if awards and awards.unlock and clicker then
-			awards.unlock(clicker:get_player_name(), "vlf:remove_wolf_armor")
-		end
+	local playername = clicker:get_player_name ()
+	local creative = minetest.is_creative_enabled (playername)
+	local stack = clicker:get_wielded_item ()
+	local name = stack:get_name ()
+	local self_pos = self.object:get_pos ()
 
-		-- Add armor back to the player's inventory
-		if not clicker:get_inventory():add_item("main", armor):is_empty() then
-			minetest.add_item(clicker:get_pos(), armor)  -- Drop if inventory full
-		end
+	if self.tamed then
+		local heal = wolf_food[name]
+		local props = self.object:get_properties ()
+		if heal and self.health < props.hp_max then
+			local hp_max = props.hp_max
+			self.health = math.min (hp_max, self.health + heal)
 
-		self.armor_name = nil
-		self.armor_durability = nil
-		self._wearing_armor = false
-		self._wolf_armor = nil
-		local ogroups = self.object:get_armor_groups()
-		ogroups.fleshy = 100
-		self.object:set_armor_groups(ogroups)
-		self.base_texture = self._naked_texture
-		self.object:set_properties({textures = {self._naked_texture}})  -- Revert to default texture
-		self._wearing_armor = "False"
-
-		return
-	end
-	-- Equip armor if not already wearing any
-	--if item:get_name() == "vlf_mobitems:wolf_armor" and not self.armor_name then
-	if string.find(item:get_name(), "wolf_armor") and not self.armor_name then
-		self.armor_name = item:get_name()  -- Set the armor name property
-		self.armor_durability = item:get_wear()  -- Set initial durability
-		self:set_armor(clicker)
-
-		-- Remove armor from player's inventory
-		if not minetest.is_creative_enabled(clicker:get_player_name()) then
-			item:take_item()
-			clicker:set_wielded_item(item)
-		end
-	else
-
-	if food[item:get_name()] ~= nil and self:feed_tame(clicker, food[item:get_name()], true, false) then return end
-
-	if minetest.get_item_group(item:get_name(), "dye") == 1 then
-		-- Dye (if possible)
-		local dyed = false  -- Flag to check if a dye was applied
-		for group, _ in pairs(colors) do
-			-- Check if color is supported
-			if minetest.get_item_group(item:get_name(), group) == 1 then
-				if self._color == group then
-					-- If the resulting color is the same as the current one, go to the else block
-					break
-				end
-				self._color = group
-				-- Dye collar
-				local tex = get_dog_textures(self, self._color)
-				if tex then
-					self.base_texture = tex
-					self.object:set_properties({textures = self.base_texture})
-					if not minetest.is_creative_enabled(clicker:get_player_name()) then
-						item:take_item()
-						clicker:set_wielded_item(item)
-					end
-					dyed = true  -- Mark dye as applied
-					break
-				end
+			if not creative then
+				stack:take_item ()
+				clicker:set_wielded_item (stack)
 			end
-		end
-		-- If no dye was applied and the colors match, proceed with else
-		if not dyed then
 			return
 		end
+
+		if playername == self.owner
+			and minetest.get_item_group (name, "dye") == 1 then
+			local consumed = false
+			-- Dye if possible.
+			for group, color in pairs (colors) do
+				-- Check if color is supported
+				if minetest.get_item_group (name, group) == 1 then
+					if color ~= self._collar_color then
+						self._collar_color = color
+						consumed = true
+						break
+					end
+				end
+			end
+
+			if consumed then
+				if not creative then
+					stack:take_item ()
+					clicker:set_wielded_item (stack)
+				end
+				self.base_texture = self:compute_textures ()
+				self:set_textures (self.base_texture)
+			end
+			return
+		end
+
+		--------------------------------------------------------
+		-- TODO: wolf armor.
+		--------------------------------------------------------
+
+		if heal and self:feed_tame (clicker, nil, true, false, false, false) then
+			return
+		end
+
+		if self.order == "sit" then
+			self.order = ""
+		else
+			self.order = "sit"
+		end
+	elseif name == "vlf_mobitems:bone" and not self.attack then
+		local r = pr:next (1, 3)
+		if r == 1 then
+			self:just_tame (self_pos, clicker)
+			self.base_texture = self:compute_textures ()
+			self:set_textures (self.base_texture)
+			self.order = "sit"
+			self:after_tame ()
+		else
+			vlf_mobs.effect (vector.offset (self_pos, 0, 0.7, 0),
+					5, "vlf_particles_mob_death.png^[colorize:#000000:255",
+					2, 4, 2.0, 0.1)
+		end
+		if not creative then
+			stack:take_item ()
+			clicker:set_wielded_item (stack)
+		end
+	end
+end
+
+------------------------------------------------------------------------
+-- Wolf player damage accounting.
+------------------------------------------------------------------------
+
+local player_damage_sources = {}
+local mobs_damaged_by_player = {}
+local serials = {}
+
+vlf_damage.register_modifier (function (obj, damage, reason)
+	if obj:is_player () then
+		if reason.source then
+			local name = obj:get_player_name ()
+			local serial = (serials[name] or 0) + 1
+			player_damage_sources[name] = {
+				reason.source, serial, 5.0,
+			}
+			serials[name] = serial
+		end
 	else
-		if not self.owner or self.owner == "" then
-		-- Huh? This dog has no owner? Let's fix this! This should never happen.
-			self.owner = clicker:get_player_name()
-		end
-		if not minetest.settings:get_bool("vlf_extended_pet_control",false) then
-			self:toggle_sit(clicker,-0.4)
+		local entity = obj:get_luaentity ()
+		if entity.is_mob then
+			local source = reason.source
+			if source and source:is_player () then
+				local name = source:get_player_name ()
+				local serial = (serials[name] or 0) + 1
+				mobs_damaged_by_player[name] = {
+					obj, serial, 5.0,
+				}
+				serials[name] = serial
+			end
 		end
 	end
+	return damage
+end)
+
+minetest.register_globalstep (function (dtime)
+	for key, value in pairs (player_damage_sources) do
+		local ttl = value[3]
+		ttl = ttl - dtime
+		if ttl > 0 then
+			value[3] = ttl
+		else
+			player_damage_sources[key] = nil
+		end
 	end
+
+	for key, value in pairs (mobs_damaged_by_player) do
+		local ttl = value[3]
+		ttl = ttl - dtime
+		if ttl > 0 then
+			value[3] = ttl
+		else
+			mobs_damaged_by_player[key] = nil
+		end
+	end
+end)
+
+------------------------------------------------------------------------
+-- Wolf AI.
+------------------------------------------------------------------------
+
+function wolf:ai_step (dtime)
+	local moveresult = self._moveresult
+	mob_class.ai_step (self, dtime)
+
+	if self._immersion_depth and self._immersion_depth > 0 then
+		if not self._is_wet then
+			self._is_wet = true
+			self.base_texture = self:compute_textures ()
+			self:set_textures (self.base_texture)
+		end
+		if self._shaking then
+			self._shaking = nil
+			if self._current_animation == "shake" then
+				self:set_animation ("stand")
+			end
+		end
+	elseif self._is_wet and not self._active_activity
+		and not self._shaking
+		and (moveresult.touching_ground
+			or moveresult.standing_on_object) then
+		self._shaking = 1.0
+		self:set_animation ("shake")
+		self:add_shake_particles ()
+	end
+
+	if self._shaking then
+		local t = self._shaking - dtime
+		if t <= 0 then
+			self._shaking = nil
+			if self._current_animation == "shake" then
+				if self:navigation_finished () then
+					self:set_animation ("stand")
+				else
+					self:set_animation ("walk")
+				end
+			end
+			self._is_wet = false
+			self.base_texture = self:compute_textures ()
+			self:set_textures (self.base_texture)
+		else
+			self._shaking = t
+		end
+	end
+
+	if (not self.attack and self._was_attacking)
+		or (not self._was_attacking and self.attack) then
+		self._was_attacking = self.attack
+		self.base_texture = self:compute_textures ()
+		self:set_textures (self.base_texture)
+	end
+
 end
 
-dog.deal_damage = function (self, damage, mcl_reason)
-	reduce_armor_durability(self, damage)
+function wolf:is_frightened ()
+	return self._frozen_for > 0
+		or vlf_burning.is_burning (self.object)
 end
 
-vlf_mobs.register_mob("mobs_mc:dog", dog)
+function wolf:should_attack_owner_assailant_or_target (object)
+	local entity = object:get_luaentity ()
+	if entity then
+		return entity.is_mob
+			and entity.name ~= "mobs_mc:creeper"
+			and entity.name ~= "mobs_mc:creeper_charged"
+			and entity.name ~= "mobs_mc:ghast"
+			and (entity.name ~= "mobs_mc:wolf"
+				or not self.owner or entity.owner ~= self.owner)
+			and not entity.tamed
+			and entity:valid_enemy ()
+	elseif object:is_player () then
+		return object:get_player_name () ~= self.owner
+			and self:attack_player_allowed (object)
+	end
+	return false
+end
 
-vlf_mobs.spawn_setup({
+function wolf:breeding_possible ()
+	return self.tamed and self._active_activity ~= "sit_if_ordered"
+end
+
+function wolf:get_staticdata_table ()
+	local supertable = mob_class.get_staticdata_table (self)
+	if supertable then
+		supertable._owner_attacked_serial = nil
+		supertable._owner_target_serial = nil
+		supertable._was_attacking = nil
+	end
+	return supertable
+end
+
+function wolf:check_owner_attacked ()
+	if self.owner then
+		local data = player_damage_sources[self.owner]
+		local source, serial, _ = unpack (data or {})
+
+		if serial and serial > self._owner_attacked_serial
+			and is_valid (source)
+			and self:should_attack_owner_assailant_or_target (source) then
+			self._owner_attacked_serial = serial
+			self:do_attack (source, 15)
+			return true
+		end
+	end
+
+	return false
+end
+
+function wolf:check_owner_attacking ()
+	if self.owner then
+		local data = mobs_damaged_by_player[self.owner]
+		local target, serial, _ = unpack (data or {})
+
+		if serial and serial > self._owner_target_serial
+			and is_valid (target)
+			and self:should_attack_owner_assailant_or_target (target) then
+			self._owner_target_serial = serial
+			self:do_attack (target, 15)
+			return true
+		end
+	end
+
+	return false
+end
+
+function wolf:attack_animals_and_skeletons (self_pos, dtime)
+	local attack = self:attack_default (self_pos, dtime, self.esp)
+	if attack then
+		self:do_attack (attack)
+		return true
+	end
+	return false
+end
+
+function wolf:attack_custom (self_pos, dtime)
+	if not self:check_owner_attacked ()
+		and not self:check_owner_attacking ()
+		and not self:attack_animals_and_skeletons (self_pos, dtime) then
+		return false
+	end
+	return true
+end
+
+function wolf:do_attack (object, persistence)
+	-- Never attack one's own owner.
+	if self.tamed and self.owner
+		and object:is_player ()
+		and object:get_player_name () == self.owner then
+		return
+	end
+	mob_class.do_attack (self, object, persistence)
+end
+
+function wolf:attack_melee (self_pos, dtime, target_pos, line_of_sight)
+	if not self.attacking then
+		self._leaping = false
+	end
+
+	local moveresult = self._moveresult
+	if self._leaping then
+		if moveresult.touching_ground
+			or moveresult.standing_on_object then
+			self._leaping = false
+		end
+		-- Trigger a repath after leaping.
+		self._target_pos = nil
+		self._attack_delay = 0
+		return
+	end
+
+	-- Possibly leap at the target.
+	local dist = vector.distance (self_pos, target_pos)
+	local chance = math.round (5 * dtime / 0.05)
+	local r = math.random (chance)
+
+	if self.attacking
+		and dist > 2 and dist < 4 and r == 1
+		and moveresult.touching_ground
+			or moveresult.standing_on_object then
+		self._leaping = true
+		self:cancel_navigation ()
+		self:halt_in_tracks ()
+		local leap = vector.direction (self_pos, target_pos)
+		local v = self.object:get_velocity ()
+		leap.x = leap.x * 8.0 + v.x * 0.2
+		leap.y = 8.0
+		leap.z = leap.z * 8.0 + v.z * 0.2
+		self:set_yaw (math.atan2 (leap.z, leap.x) - math.pi / 2)
+		self.object:set_velocity (leap)
+		return
+	end
+
+	mob_class.attack_melee (self, self_pos, dtime, target_pos, line_of_sight)
+end
+
+local function wolf_check_beg (self, self_pos, dtime)
+	if self._interested_in then
+		local target = self._interested_in
+		if not is_valid (target)
+			or self.attack or self._avoiding_llama
+			or not self:is_interested_in (target) then
+			self:visually_cancel_interest ()
+			self._interested_in = nil
+			return false
+		end
+		local pos = vlf_util.target_eye_pos (target)
+		self:visually_display_interest (dtime, self_pos, pos)
+		return false
+	elseif not self.attack and not self._avoiding_llama
+		and self:check_timer ("interest", 0.25) then
+		local nearest, dist
+		for player in vlf_util.connected_players (self_pos, 8.0) do
+			if self:is_interested_in (player) then
+				local player_pos = player:get_pos ()
+				local distance = vector.distance (self_pos, player_pos)
+				if not nearest or dist > distance then
+					nearest = player
+					dist = distance
+				end
+			end
+		end
+		self._interested_in = nearest
+	end
+	return false
+end
+
+function wolf:should_runaway_from_mob (entity)
+	return (entity.name == "mobs_mc:llama"
+			or entity.name == "mobs_mc:trader_llama")
+		and entity._llama_strength
+		and entity._llama_strength >= pr:next (0, 4)
+end
+
+wolf.ai_functions = {
+	wolf_check_beg,
+	mob_class.check_frightened,
+	mob_class.sit_if_ordered,
+	mob_class.check_avoid,
+	mob_class.check_attack,
+	mob_class.check_travel_to_owner,
+	mob_class.check_breeding,
+	mob_class.check_pace,
+}
+
+vlf_mobs.register_mob ("mobs_mc:wolf", wolf)
+
+------------------------------------------------------------------------
+-- Wolf spawning.
+------------------------------------------------------------------------
+
+local biome_spawn_configurations = {
+	["Forest"] = {
+		group_size = 4,
+	},
+	["Forest_beach"] = {
+		group_size = 4,
+	},
+	["MegaSpruceTaiga"] = {
+		group_size_min = 2,
+		group_size = 4,
+	},
+	["MegaTaiga"] = {
+		group_size_min = 2,
+		group_size = 4,
+	},
+	["Savanna"] = {
+		group_size_min = 4,
+		group_size = 8,
+	},
+	["SavannaM"] = {
+		group_size_min = 4,
+		group_size = 8,
+	},
+	["Mesa"] = {
+		group_size_min = 4,
+		group_size = 8,
+	},
+	["MesaPlateauF"] = {
+		group_size_min = 4,
+		group_size = 8,
+	},
+	["MesaPlateauFM"] = {
+		group_size_min = 4,
+		group_size = 8,
+	},
+	["ColdTaiga"] = {
+		group_size = 4,
+	},
+	["ColdTaiga_beach"] = {
+		group_size = 4,
+	},
+	["ColdTaiga_beach_water"] = {
+		group_size = 4,
+	},
+	["Jungle"] = {
+		group_size_min = 2,
+		group_size = 4,
+	},
+	["JungleEdge"] = {
+		group_size_min = 2,
+		group_size = 4,
+	},
+	["BambooJungle"] = {
+		group_size_min = 2,
+		group_size = 4,
+	},
+	["IcePlains"] = {
+		group_size = 1,
+	},
+	["IcePlainsSpikes"] = {
+		group_size = 1,
+	},
+}
+
+local spawn_def_template = {
 	name = "mobs_mc:wolf",
 	type_of_spawning = "ground",
 	dimension = "overworld",
 	aoc = 7,
 	min_height = mobs_mc.water_level + 3,
+	chance = 80,
+}
+
+vlf_mobs.spawn_setup (table.merge (spawn_def_template, {
 	biomes = {
 		"flat",
-		"Forest",
-		"Forest_beach",
-		"Taiga",
-		"Taiga_beach",
-		"MegaSpruceTaiga",
-		"MegaTaiga",
-		"SavannaM",
-		"MesaPlateauF",
-		"ColdTaiga",
-		"ColdTaiga_beach",
-		"ColdTaiga_beach_water",
-		"Jungle",
-		"Grove"
 	},
-	chance = 800,
-})
+}))
 
-vlf_mobs.register_egg("mobs_mc:wolf", S("Wolf"), "#d7d3d3", "#ceaf96", 0)
+for biome, spawndef in pairs (biome_spawn_configurations) do
+	local spawndef = table.merge (spawn_def_template, {
+		biomes = {
+			biome,
+		},
+		group_size_min = spawndef.group_size_min,
+		group_size = spawndef.group_size,
+	})
+	vlf_mobs.spawn_setup (spawndef)
+end
+
+vlf_mobs.register_egg ("mobs_mc:wolf", S("Wolf"), "#d7d3d3", "#ceaf96", 0)
+
+------------------------------------------------------------------------
+-- Legacy tamed Wolf (``dog'').
+------------------------------------------------------------------------
+
+local dog = table.copy (wolf)
+
+function dog:mob_activate (self_pos)
+	local staticdata = {
+		owner = self.owner,
+		_collar_color = self._collar_color,
+		tamed = true,
+		order = self.order,
+	}
+	local wolf = self:replace_with ("mobs_mc:wolf", false, staticdata)
+	if wolf then
+		local entity = wolf:get_luaentity ()
+		entity:after_tame ()
+	end
+	self.object:remove ()
+end
+
+vlf_mobs.register_mob ("mobs_mc:dog", dog)

@@ -144,7 +144,7 @@ function vlf_walls.register_wall(nodename, description, source, tiles, inventory
 			need[4] = nil
 			table.insert(take, full_blocks[2])
 		end
-		for k in pairs(need) do
+		for k, _ in pairs(need) do
 			table.insert(take, half_blocks[k])
 			need_pillar = true
 		end
@@ -172,6 +172,8 @@ function vlf_walls.register_wall(nodename, description, source, tiles, inventory
 			_vlf_blast_resistance = 6,
 			_vlf_hardness = 2,
 			_vlf_stonecutter_recipes = {source},
+			_vlf_baseitem = nodename,
+			_pathfinding_class = "FENCE",
 		}, overrides or {}))
 
 		-- Add entry alias for the Help
@@ -201,6 +203,8 @@ function vlf_walls.register_wall(nodename, description, source, tiles, inventory
 		_vlf_blast_resistance = 6,
 		_vlf_hardness = 2,
 		_vlf_stonecutter_recipes = {source},
+		_vlf_baseitem = nodename,
+		_pathfinding_class = "FENCE",
 	}, overrides or {}))
 	-- Add entry alias for the Help
 	if minetest.get_modpath("doc") then
@@ -227,7 +231,8 @@ function vlf_walls.register_wall(nodename, description, source, tiles, inventory
 		sounds = sounds,
 		_vlf_blast_resistance = 6,
 		_vlf_hardness = 2,
-		--_vlf_base_node = source,
+		_vlf_baseitem = nodename,
+		_pathfinding_class = "FENCE"
 	}, overrides or {}))
 	-- Add entry alias for the Help
 	if minetest.get_modpath("doc") then

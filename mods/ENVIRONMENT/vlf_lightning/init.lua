@@ -54,10 +54,11 @@ function vlf_lightning.register_on_strike(func)
 	table.insert(vlf_lightning.on_strike_functions, func)
 end
 
+-- select a random strike point, midpoint
 local function choose_pos(pos)
 	if not pos then
 		local playerlist = minetest.get_connected_players()
-		local playercount = table.getn(playerlist)
+		local playercount = #playerlist
 
 		-- nobody on
 		if playercount == 0 then
@@ -77,12 +78,12 @@ local function choose_pos(pos)
 		pos.y = pos.y + (vlf_lightning.range_v / 2)
 		pos.z = math.floor(pos.z - (vlf_lightning.range_h / 2) + rng:next(1, vlf_lightning.range_h))
 	end
-
+	
 	-- Check for nearby copper golems within 8-block radius
 	local copper_golems = minetest.get_objects_inside_radius(pos, 8)
 	for _, obj in ipairs(copper_golems) do
 		local luaentity = obj:get_luaentity()
-		if luaentity and luaentity.name == "mobs_mc:copper_golem" then
+		if luaentity and luaentity.name == "vlf_mob_rejects:copper_golem" then
 			pos = obj:get_pos()
 			break -- Switch to copper golem's position and break out of the loop
 		end
@@ -103,8 +104,7 @@ local function choose_pos(pos)
 	return pos, pos2
 end
 
-
-function vlf_lightning.strike_func(pos, pos2, objects)
+function vlf_lightning.strike_func(pos, pos2, objects, for_trap)
 	local particle_pos = vector.offset(pos2, 0, (vlf_lightning.size / 2) + 0.5, 0)
 	local particle_size = vlf_lightning.size * 10
 	local time = 0.2
@@ -123,7 +123,7 @@ function vlf_lightning.strike_func(pos, pos2, objects)
 		-- to make it appear hitting the node that will get set on fire, make sure
 		-- to make the texture vlf_lightning bolt hit exactly in the middle of the
 		-- texture (e.g. 127/128 on a 256x wide texture)
-		texture = "lightning_lightning_" .. rng:next(1,4) .. ".png",
+		texture = "lightning_lightning_" .. rng:next(1,3) .. ".png",
 		glow = minetest.LIGHT_MAX,
 	})
 
@@ -149,9 +149,7 @@ function vlf_lightning.strike_func(pos, pos2, objects)
 		end
 	end
 
-	local playerlist = minetest.get_connected_players()
-	for i = 1, #playerlist do
-		local player = playerlist[i]
+	for player in vlf_util.connected_players() do
 		local sky = {}
 		local sky_table = player:get_sky(true)
 
@@ -168,40 +166,31 @@ function vlf_lightning.strike_func(pos, pos2, objects)
 	-- trigger revert of skybox
 	ttl = 0.1
 
-	-- Events caused by the lightning strike: Fire, damage, mob transformations, rare skeleton horse trap spawn
-
+	-- Events caused by the lightning strike: Fire, damage, and skeleton trap spawning
 	pos2.y = pos2.y + 1/2
 	if minetest.get_item_group(minetest.get_node({ x = pos2.x, y = pos2.y - 1, z = pos2.z }).name, "liquid") < 1 then
 		if minetest.get_node(pos2).name == "air" then
-			-- Low chance for a lightning to spawn skeleton horse + skeletons
-
-			local is_trap_nearby = false
-			local is_copper_golem_near = false
-			local objects_nearby = minetest.get_objects_inside_radius(pos2, 2)
-
-			for _, obj in ipairs(objects_nearby) do
-				local luaentity = obj:get_luaentity()
-				if luaentity and not obj:is_player() and luaentity.is_mob then
-					-- Check if it's a skeleton horse trap
-					if luaentity.name == "mobs_mc:skeleton_horse_trap" then
-						is_trap_nearby = true
-						break
-					end
-					if luaentity.name == "mobs_mc:copper_golem" then
-						is_copper_golem_near = true
-						break
-					end
+			-- Low chance for a lightning to spawn skeleton trap horse.
+			local difficulty = vlf_worlds.get_regional_difficulty (pos2)
+			local random = rng:next (0, 26000) / 26000
+			if random <= difficulty * 0.01 then
+				if for_trap then
+					return
 				end
-			end
 
-			-- Set fire only if no skeleton horse trap is nearby
-			if not is_trap_nearby and not is_copper_golem_near then
-				if rng:next(1, 100) >= 4 then
-					minetest.set_node(pos2, { name = "vlf_fire:fire" })
+				local entity
+					= minetest.add_entity(pos2, "mobs_mc:skeleton_horse")
+				if entity then
+					local luaentity = entity:get_luaentity ()
+					luaentity._is_trap = true
+					-- Mark this object as
+					-- persistent; it will despawn
+					-- of itself in 900 seconds.
+					luaentity.persistent = true
 				end
-			end
-			if rng:next(1,100) <= 3 then -- 3% chance
-				minetest.add_entity(pos2, "mobs_mc:skeleton_horse_trap")
+			-- Cause a fire
+			else
+				minetest.set_node(pos2, { name = "vlf_fire:fire" })
 			end
 		end
 	end
@@ -209,7 +198,7 @@ end
 
 -- * pos: optional, if not given a random pos will be chosen
 -- * returns: bool - success if a strike happened
-function vlf_lightning.strike(pos)
+function vlf_lightning.strike(pos, for_trap)
 	local pos2
 	pos, pos2 = choose_pos(pos)
 
@@ -221,7 +210,7 @@ function vlf_lightning.strike(pos)
 		for _, func in pairs(vlf_lightning.on_strike_functions) do
 			-- allow on_strike callbacks to destroy entities by re-obtaining objects for each callback
 			local objects = minetest.get_objects_inside_radius(pos2, 3.5)
-			local p,stop = func(pos, pos2, objects)
+			local p,stop = func(pos, pos2, objects, for_trap)
 			if p then
 				pos = p
 				pos2 = choose_pos(p)
@@ -230,7 +219,7 @@ function vlf_lightning.strike(pos)
 		end
 	end
 	if do_strike and pos and pos2 then
-		vlf_lightning.strike_func(pos,pos2,minetest.get_objects_inside_radius(pos2, 3.5))
+		vlf_lightning.strike_func(pos, pos2, minetest.get_objects_inside_radius (pos2, 3.5), for_trap)
 	end
 end
 

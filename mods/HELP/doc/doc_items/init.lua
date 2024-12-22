@@ -1478,11 +1478,9 @@ local timer = 0
 minetest.register_globalstep(function(dtime)
 	timer = timer + dtime
 	if timer > checktime then
-		local players = minetest.get_connected_players()
-		for p=1, #players do
-			reveal_items_in_inventory(players[p])
+		for pl in vlf_util.connected_players() do
+			reveal_items_in_inventory(pl)
 		end
-
 		timer = math.fmod(timer, checktime)
 	end
 end)

@@ -4,13 +4,136 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
+local mob_class = vlf_mobs.mob_class
 
 --###################
 --################### PARROT
 --###################
+
+local parrot = {
+	description = S("Parrot"),
+	type = "animal",
+	spawn_class = "passive",
+	passive = true,
+	pathfinding = 1,
+	hp_min = 6,
+	hp_max = 6,
+	xp_min = 1,
+	xp_max = 3,
+	head_swivel = "head.control",
+	bone_eye_height = 1.1,
+	horizontal_head_height=0,
+	head_eye_height = 0.54,
+	curiosity = 10,
+	collisionbox = {-0.25, -0.01, -0.25, 0.25, 0.89, 0.25},
+	visual = "mesh",
+	mesh = "mobs_mc_parrot.b3d",
+	textures = {
+		{"mobs_mc_parrot_blue.png"},
+		{"mobs_mc_parrot_green.png"},
+		{"mobs_mc_parrot_grey.png"},
+		{"mobs_mc_parrot_red_blue.png"},
+		{"mobs_mc_parrot_yellow_blue.png"},
+	},
+	visual_size = {x=3, y=3},
+	sounds = {
+		random = "mobs_mc_parrot_random",
+		damage = {name="mobs_mc_parrot_hurt", gain=0.3},
+		death = {name="mobs_mc_parrot_death", gain=0.6},
+		eat = "mobs_mc_animal_eat_generic",
+		distance = 16,
+	},
+	drops = {
+		{
+			name = "vlf_mobitems:feather",
+			chance = 1,
+			min = 1,
+			max = 2,
+			looting = "common",
+		},
+	},
+	animation = {
+		stand_start = 0, stand_end = 0, stand_speed = 50,
+		fly_start = 130, fly_end = 150, fly_speed = 50,
+		walk_start = 20, walk_end = 40, walk_speed = 50,
+		sit_start = 160, sit_end = 160,
+		dance_start = 161, dance_end = 201, dance_speed = 80,
+	},
+	fall_damage = 0,
+	attack_type = "melee",
+	gravity_drag = 0.6,
+	floats = 1,
+	physical = true,
+	movement_speed = 4.0,
+	airborne = true,
+	makes_footstep_sound = false,
+	chase_owner_distance = 5.0,
+	stop_chasing_distance = 1.0,
+	pace_height = 7,
+	pace_width = 8,
+	_is_party_parrot = false,
+}
+
+------------------------------------------------------------------------
+-- Parrot interaction.
+------------------------------------------------------------------------
+
+function parrot:on_rightclick (clicker)
+	local item = clicker:get_wielded_item ()
+	if not item then
+		return
+	end
+	local name = item:get_name()
+	-- Kill parrot if fed with cookie
+	if item and name == "vlf_farming:cookie" then
+		minetest.sound_play ("mobs_mc_animal_eat_generic", {
+			object = self.object,
+			max_hear_distance = 16,
+		}, true)
+
+		local vlf_reason = {
+			type = "player",
+			source = clicker,
+		}
+		vlf_damage.finish_reason (vlf_reason)
+		self:receive_damage (vlf_reason, 65535.0)
+		vlf_potions.give_effect_by_level ("poison", self.object, 900, 10)
+		if not minetest.is_creative_enabled (clicker:get_player_name()) then
+			item:take_item ()
+			clicker:set_wielded_item (item)
+		end
+		return
+	end
+
+	-- Feed to tame, but not breed
+	local food = {
+		"vlf_farming:wheat_seeds",
+		"vlf_farming:melon_seeds",
+		"vlf_farming:pumpkin_seeds",
+		"vlf_farming:beetroot_seeds",
+	}
+	if table.indexof (food, name) ~= -1 then
+		self:feed_tame (clicker, 4, false, true, false, 0.1)
+		return
+	end
+
+	if self.tamed then
+		-- Otherwise, toggle sitting.
+		if self.order == "sit" then
+			self.order = ""
+		else
+			self:stay ()
+		end
+	end
+end
+
+------------------------------------------------------------------------
+-- Parrot AI.
+------------------------------------------------------------------------
+
 local shoulders = {
 	left = vector.new(-3.75,10.5,0),
-	right = vector.new(3.75,10.5,0)
+	right = vector.new(3.75,10.5,0),
 }
 
 local function table_get_rand(tbl)
@@ -46,17 +169,15 @@ local function imitate_mob_sound(self,mob)
 end
 
 local function check_mobimitate(self,dtime)
-	if not self._mobimitate_timer or self._mobimitate_timer > 30 then
-		self._mobimitate_timer = 0
-		for _,o in pairs(minetest.get_objects_inside_radius(self.object:get_pos(),20)) do
-			local l = o:get_luaentity()
-			if l and l.is_mob and l.name ~= "mobs_mc:parrot" then
-				imitate_mob_sound(self,l)
-				return
-			end
+	if not self:check_timer("mobimitate", 30) then return end
+
+	for o in minetest.objects_inside_radius(self.object:get_pos(), 20) do
+		local l = o:get_luaentity()
+		if l and l.is_mob and l.name ~= "mobs_mc:parrot" then
+			imitate_mob_sound(self,l)
+			return
 		end
 	end
-	self._mobimitate_timer = self._mobimitate_timer + dtime
 
 end
 
@@ -87,132 +208,143 @@ local function perch(self,player)
 		local shoulder = get_shoulder(player)
 		if not shoulder then return true end
 		self.object:set_attach(player,"",shoulder,vector.new(0,0,0),true)
-		self:set_animation("stand")
+		self:set_animation ("stand")
 	end
 end
 
-local function check_perch(self,dtime)
-	if self.object:get_attach() then
-		for _,p in pairs(minetest.get_connected_players()) do
-			for _,o in pairs(p:get_children()) do
-				local l = o:get_luaentity()
-				if l and l.name == "mobs_mc:parrot" then
-					local n1 = minetest.get_node(vector.offset(p:get_pos(),0,-0.6,0)).name
-					local n2 = minetest.get_node(vector.offset(p:get_pos(),0,0,0)).name
-					if ( n1 == "air" or minetest.get_item_group(n2,"water") > 0 or minetest.get_item_group(n2,"lava") > 0) and
-					not minetest.is_creative_enabled(p:get_player_name()) then
-						o:set_detach()
-						self.detach_timer = 0
-						return
-					end
-				end
-			end
+function parrot:check_perch (self_pos, dtime)
+	local attach = self.object:get_attach ()
+	if self.perch_cooldown then
+		self.perch_cooldown
+			= math.max (0, self.perch_cooldown - dtime)
+	else
+		self.perch_cooldown = 0
+	end
+	if attach then
+		if not self.perching then
+			-- Perching was interrupted, and therefore
+			-- this object must be detached.
+			self.object:set_detach ()
+			return false
 		end
-	elseif not self.detach_timer then
-		for _,p in pairs(minetest.get_connected_players()) do
-			if vector.distance(self.object:get_pos(),p:get_pos()) < 0.5 then
-				perch(self,p)
-				return
-			end
+		local n1 = minetest.get_node (vector.offset (self_pos, 0, -0.6, 0)).name
+		local n2 = minetest.get_node (vector.offset (self_pos, 0, 0, 0)).name
+		if n1 == "air" or minetest.get_item_group (n2,"water") > 0
+			or minetest.get_item_group (n2,"lava") > 0 then
+			self.object:set_detach()
+			self.perching = false
+			self.perch_cooldown = 1.0
+			return false
 		end
-	elseif self.detach_timer then
-		if self.detach_timer > 1 then
-			self.detach_timer = nil
-		else
-			self.detach_timer = self.detach_timer + dtime
+		return true
+	elseif self.owner and self.perch_cooldown == 0 then
+		local owner = minetest.get_player_by_name (self.owner)
+		if not owner then
+			return false
 		end
+		if vector.distance (self_pos, owner:get_pos ()) < 0.5 then
+			perch (self, owner)
+			self.perching = true
+			return "perching"
+		end
+	end
+	return false
+end
+
+function parrot:airborne_pacing_target (pos, width, height, groups)
+	if math.random (100) <= 99 then
+		local aa = vector.offset (pos, -3, -6, -3)
+		local bb = vector.offset (pos, 3, 6, 3)
+		local nodes
+			= minetest.find_nodes_in_area_under_air (aa, bb, {"group:leaves"})
+		if #nodes > 0 then
+			return vector.offset (nodes[math.random (#nodes)], 0, 1, 0)
+		end
+	end
+	return mob_class.airborne_pacing_target (self, pos, width, height, groups)
+end
+
+function parrot:ai_step (dtime)
+	mob_class.ai_step (self, dtime)
+	check_mobimitate (self, dtime)
+	-- Lest sit_if_ordered should interrupt perching.
+	if self.object:get_attach () and not self.perching then
+		self.object:set_detach ()
 	end
 end
 
-vlf_mobs.register_mob("mobs_mc:parrot", {
-	description = S("Parrot"),
-	type = "animal",
-	spawn_class = "passive",
-	passive = true,
-	pathfinding = 1,
-	hp_min = 6,
-	hp_max = 6,
-	xp_min = 1,
-	xp_max = 3,
-	head_swivel = "head.control",
-	bone_eye_height = 1.1,
-	horizontal_head_height=0,
-	curiosity = 10,
-	collisionbox = {-0.25, -0.01, -0.25, 0.25, 0.89, 0.25},
-	visual = "mesh",
-	mesh = "mobs_mc_parrot.b3d",
-	textures = {{"mobs_mc_parrot_blue.png"},{"mobs_mc_parrot_green.png"},{"mobs_mc_parrot_grey.png"},{"mobs_mc_parrot_red_blue.png"},{"mobs_mc_parrot_yellow_blue.png"}},
-	visual_size = {x=3, y=3},
-	walk_velocity = 2,
-	run_velocity = 3,
-	sounds = {
-		random = "mobs_mc_parrot_random",
-		damage = {name="mobs_mc_parrot_hurt", gain=0.3},
-		death = {name="mobs_mc_parrot_death", gain=0.6},
-		eat = "mobs_mc_animal_eat_generic",
-		distance = 16,
-	},
-	drops = {
-		{name = "vlf_mobitems:feather",
-		chance = 1,
-		min = 1,
-		max = 2,
-		looting = "common",},
-	},
-	animation = {
-		stand_start = 0, stand_end = 0, stand_speed = 50,
-		fly_start = 130, fly_end = 150, fly_speed = 50,
-		walk_start = 20, walk_end = 40, walk_speed = 50,
-		-- TODO: actual walk animation
-		--walk_start = 0,
-		--walk_end = 20,
+function parrot:set_animation (anim, custom_frame)
+	if self._is_party_parrot then
+		mob_class.set_animation (self, "dance")
+	else
+		mob_class.set_animation (self, anim, custom_frame)
+	end
+end
 
-		-- TODO: more unused animations between 45 and 130
-	},
-	fall_damage = 0,
-	fall_speed = -2.25,
-	attack_type = "dogfight",
-	floats = 1,
-	physical = true,
-	fly = true,
-	makes_footstep_sound = false,
-	fear_height = 0,
-	view_range = 16,
-	follow = {
-		"vlf_farming:wheat_seeds",
-		"vlf_farming:melon_seeds",
-		"vlf_farming:pumpkin_seeds",
-		"vlf_farming:beetroot_seeds",
-	},
-	on_rightclick = function(self, clicker)
-		if self._doomed then return end
-		local item = clicker:get_wielded_item()
-		-- Kill parrot if fed with cookie
-		if item:get_name() == "vlf_farming:cookie" then
-			minetest.sound_play("mobs_mc_animal_eat_generic", {object = self.object, max_hear_distance=16}, true)
-			self.health = 0
-			-- Doomed to die
-			self._doomed = true
-			if not minetest.is_creative_enabled(clicker:get_player_name()) then
-				item:take_item()
-				clicker:set_wielded_item(item)
+function parrot:set_party_parrot (is_party_parrot, moveresult)
+	local touching_ground = moveresult.touching_ground
+		or moveresult.standing_on_object
+
+	self._is_party_parrot = is_party_parrot
+
+	if is_party_parrot then
+		self:set_animation ("dance")
+	elseif self._active_activity == "sit_if_ordered" then
+		self:set_animation ("sit")
+	elseif self.movement_goal and touching_ground then
+		self:set_animation ("walk")
+	elseif self.movement_goal then
+		self:set_animation ("fly")
+	else
+		self:set_animation ("stand")
+	end
+end
+
+local function parrot_check_dance (self, self_pos, dtime, moveresult)
+	local is_party_parrot = false
+	-- Search for playing jukeboxes nearby.
+	for hash, track in pairs (vlf_jukebox.active_tracks) do
+		if track then
+			local node = minetest.get_position_from_hash (hash)
+			if vector.distance (self_pos, node) <= 3.0 then
+				is_party_parrot = true
 			end
-			return
 		end
-		-- Feed to tame, but not breed
-		if self:feed_tame(clicker, 1, false, true) then return end
-		perch(self,clicker)
-	end,
-	do_custom = function(self,dtime)
-		check_perch(self,dtime)
-		check_mobimitate(self,dtime)
-	end,
-	do_punch = function(self,puncher) --do_punch is the vlf_mobs_redo variant - it gets called by on_punch later....
-		if self.object:get_attach() == puncher then
-			return false --return false explicitly here. vlf_mobs checks for that
-		end
-	end,
-})
+	end
+
+	if is_party_parrot and not self._party_parrot then
+		self:set_party_parrot (true, moveresult)
+	elseif self._is_party_parrot then
+		self:set_party_parrot (false, moveresult)
+	end
+end
+
+function parrot:get_staticdata_table ()
+	local supertable = mob_class.get_staticdata_table (self)
+	if supertable then
+		supertable._is_party_parrot = nil
+	end
+	return supertable
+end
+
+parrot.ai_functions = {
+	parrot_check_dance,
+	mob_class.sit_if_ordered,
+	mob_class.check_travel_to_owner,
+	parrot.check_perch,
+	mob_class.check_frightened,
+	mob_class.check_pace,
+}
+
+parrot.gwp_penalties = table.copy (mob_class.gwp_penalties)
+parrot.gwp_penalties.DANGER_FIRE = -1.0
+parrot.gwp_penalties.DAMAGE_FIRE = -1.0
+
+vlf_mobs.register_mob ("mobs_mc:parrot", parrot)
+
+------------------------------------------------------------------------
+-- Parrot spawning.
+------------------------------------------------------------------------
 
 vlf_mobs.spawn_setup({
 	name = "mobs_mc:parrot",

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_mushrooms x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_mushrooms x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This decorative block is like a huge mushroom stem, but with the stem texture on all sides."
 msgstr "Este bloque decorativo es como un gran tallo de hongo, pero con la textura del tallo en todos los lados."
@@ -62,10 +62,10 @@ msgid "Mushrooms will eventually uproot at a light level of 12 or higher. On myc
 msgstr "Los hongos eventualmente se desarraigarán a un nivel de luz de 12 o más. En micelio o podzol, sobreviven y se propagan a cualquier nivel de luz."
 
 msgid "Grows on podzol, mycelium and other blocks"
-msgstr ""
+msgstr "Crece en podzol, micelio y otros bloques"
 
 msgid "Spreads in darkness"
-msgstr ""
+msgstr "Se propaga en la oscuridad"
 
 msgid "This mushroom can be placed on mycelium and podzol at any light level. It can also be placed on blocks which are both solid and opaque, as long as the light level at daytime is not higher than 12."
 msgstr "Este hongo se puede colocar sobre micelio y podzol a cualquier nivel de luz. También se puede colocar en bloques que sean sólidos y opacos, siempre que el nivel de luz durante el día no sea superior a 12."

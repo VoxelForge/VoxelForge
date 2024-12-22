@@ -37,7 +37,7 @@ function vlf_sus_nodes.get_random_item(pos)
 	end
 end
 
-local function brush_node(itemstack, user, pointed_thing)
+local function brush_node(_, _, pointed_thing)
 	if pointed_thing and pointed_thing.type == "node" then
 		local pos = minetest.get_pointed_thing_position(pointed_thing)
 		local node = minetest.get_node(pos)
@@ -201,7 +201,6 @@ minetest.register_tool("vlf_sus_nodes:brush", {
 	_doc_items_hidden = false,
 	inventory_image = "vlf_sus_nodes_brush.png",
 	groups = { tool=1, brush = 1, dig_speed_class=0, enchantability=0 },
-	uses = 100,
 	on_use = brush_node,
 	sound = { breaks = "default_tool_breaks" },
 	_vlf_toollike_wield = true,

@@ -13,21 +13,23 @@ for i=0, 3 do
 	local berries_to_drop = drop_berries and {i - 1, i} or nil
 	local orc
 	if i >= 2 then
-		orc = function(pos, node, clicker, itemstack, pointed_thing)
+		orc = function(pos, _, clicker, itemstack)
 			if clicker and clicker:is_player() then
 				local pn = clicker:get_player_name()
 				if minetest.is_protected(pos, pn) then
 					minetest.record_protection_violation(pos, pn)
-					return false
+					return itemstack
 				end
-				if clicker:get_wielded_item():get_name() == "vlf_bone_meal:bone_meal" then
-					return false
+				if itemstack:get_name() == "vlf_bone_meal:bone_meal" then
+					return itemstack
 				end
 			end
-			for j=1, berries_to_drop[math.random(2)] do
-				minetest.add_item(pos, "vlf_farming:sweet_berry")
+			if berries_to_drop then
+				for _ = 1, berries_to_drop[math.random(2)] do
+					minetest.add_item(pos, "vlf_farming:sweet_berry")
+				end
+				minetest.swap_node(pos, {name = "vlf_farming:sweet_berry_bush_1"})
 			end
-			minetest.swap_node(pos, {name = "vlf_farming:sweet_berry_bush_1"})
 			return itemstack
 		end
 	end
@@ -43,13 +45,13 @@ for i=0, 3 do
 		move_resistance = 7,
 		walkable = false,
 		-- Dont even create a table if no berries are dropped.
-		drop = not drop_berries and "" or {
+		drop = (not drop_berries and "") or ( berries_to_drop and {
 			max_items = 1,
 			items = {
 				{ items = {"vlf_farming:sweet_berry " .. berries_to_drop[1] }, rarity = 2 },
 				{ items = {"vlf_farming:sweet_berry " .. berries_to_drop[2] } }
 			}
-		},
+		}),
 		selection_box = {
 			type = "fixed",
 			fixed = {-6 / 16, -0.5, -6 / 16, 6 / 16, (-0.30 + (i*0.25)), 6 / 16},
@@ -60,6 +62,7 @@ for i=0, 3 do
 		sounds = vlf_sounds.node_sound_leaves_defaults(),
 		_vlf_blast_resistance = 0,
 		_vlf_hardness = 0,
+		_pathfinding_class = "DAMAGE_OTHER",
 		on_rightclick = orc,
 		_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
 			vlf_farming.on_bone_meal(itemstack,placer,pointed_thing,pos,node,"plant_sweet_berry_bush",1)
@@ -113,7 +116,7 @@ minetest.register_globalstep(function(dtime)
 	etime = dtime + etime
 	if etime < 0.5 then return end
 	etime = 0
-	for _,pl in pairs(minetest.get_connected_players()) do
+	for pl in vlf_util.connected_players() do
 		berry_damage_check(pl)
 	end
 	for _,ent in pairs(minetest.luaentities) do

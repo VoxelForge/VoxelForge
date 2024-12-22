@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_chests x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_chests x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Chest"
 msgstr "Truhe"
@@ -109,12 +109,15 @@ msgstr "Schwarze Schulkerkiste"
 msgid "Shulker Box"
 msgstr "Schulkerkiste"
 
+msgid "Can be carried around with its contents"
+msgstr "Kann mitsamt Inhalt transportiert werden"
+
+msgid "and @1 more"
+msgstr "und @1 weitere"
+
 msgid "A shulker box is a portable container which provides 27 inventory slots for any item except shulker boxes. Shulker boxes keep their inventory when broken, so shulker boxes as well as their contents can be taken as a single item. Shulker boxes come in many different colors."
 msgstr "Eine Schulkerkiste ist ein tragbarer Behälter, der 27 Inventarplätze für alle Gegenstände außer Schulkerkisten bietet. Schulkerkisten behalten ihr Inventar, wenn sie abgebaut werden, also können Schulkerkisten so wie ihr Inhalt als einzelne Gegenstände mitgenommen werden. Schulkerkisten gibt es in vielen verschiedenen Farben."
 
 msgid "To access the inventory of a shulker box, place and right-click it. To take a shulker box and its contents with you, just break and collect it, the items will not fall out. Place the shulker box again to be able to retrieve its contents."
 msgstr "Um auf das Inventar einer Shulker-Kiste zuzugreifen, platziere sie und klicke mit der rechten Maustaste darauf. Um eine Shulker-Kiste und ihren Inhalt mitzunehmen, baue sie einfach ab und sammle sie ein; die Gegenstände werden nicht herausfallen. Stelle die Kiste wieder auf, um auf ihren Inhalt zuzugreifen."
-
-msgid "Can be carried around with its contents"
-msgstr "Kann mitsamt Inhalt transportiert werden"
 

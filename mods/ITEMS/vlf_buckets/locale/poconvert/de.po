@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_buckets x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_buckets x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,19 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
-
-msgid "Bucket of @1"
-msgstr "Eimer von @1"
-
-msgid "This bucket is filled with water and @1."
-msgstr "Dieser Eimer ist gefüllt mit Wasser und @1."
-
-msgid "Place it to empty the bucket and place a @1. Obtain by right clicking on a @2 with a bucket of water."
-msgstr "Platzieren um den Eimer zu leeren und ein @1 zu platzieren. Erhalten beim Rechtsklick auf ein @2 mit einem Wassereimer."
-
-msgid "Places a water source and a @1."
-msgstr "Platziert eine Wasserquelle und ein @1."
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Empty Bucket"
 msgstr "Leerer Eimer"
@@ -36,6 +24,54 @@ msgstr "Hauen Sie auf eine Flüssigkeitsquelle, um sie aufzusammeln. Sie können
 
 msgid "Collects liquids"
 msgstr "Sammelt Flüssigkeiten auf"
+
+msgid "Bucket of Axolotl"
+msgstr ""
+
+msgid "Bucket of Cod"
+msgstr ""
+
+msgid "Bucket of Salmon"
+msgstr ""
+
+msgid "Bucket of Tropical Fish"
+msgstr ""
+
+msgid "Place it to empty the bucket and place a Cod. Obtain by right clicking on a Cod with a bucket of water."
+msgstr ""
+
+msgid "Place it to empty the bucket and place a Salmon. Obtain by right clicking on a Salmon with a bucket of water."
+msgstr ""
+
+msgid "Place it to empty the bucket and place a Tropical Fish. Obtain by right clicking on a Tropical Fish with a bucket of water."
+msgstr ""
+
+msgid "Place it to empty the bucket and place an Axolotl. Obtain by right clicking on an Axolotl with a bucket of water."
+msgstr ""
+
+msgid "Places a water source and a Cod."
+msgstr ""
+
+msgid "Places a water source and a Salmon."
+msgstr ""
+
+msgid "Places a water source and a Tropical Fish."
+msgstr ""
+
+msgid "Places a water source and an Axolotl."
+msgstr ""
+
+msgid "This bucket is filled with water and a Cod."
+msgstr ""
+
+msgid "This bucket is filled with water and a Salmon."
+msgstr ""
+
+msgid "This bucket is filled with water and a Tropical Fish."
+msgstr ""
+
+msgid "This bucket is filled with water and an Axolotl."
+msgstr ""
 
 msgid "Lava Bucket"
 msgstr "Lavaeimer"

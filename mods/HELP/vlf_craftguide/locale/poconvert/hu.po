@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_craftguide x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_craftguide x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,88 +11,88 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Any shulker box"
-msgstr ""
+msgstr "Bármely kagylapuló doboz"
 
 msgid "Any wool"
-msgstr ""
+msgstr "Bármely gyapjú"
 
 msgid "Any wood planks"
-msgstr ""
+msgstr "Bármilyen deszka"
 
 msgid "Any wood"
-msgstr ""
+msgstr "Bármilyen fa"
 
 msgid "Any sand"
-msgstr ""
+msgstr "Tetszőleges homok"
 
 msgid "Any normal sandstone"
-msgstr ""
+msgstr "Bármely egyszerű homokkő"
 
 msgid "Any red sandstone"
-msgstr ""
+msgstr "Bármilyen vörös homokkő"
 
 msgid "Any carpet"
-msgstr ""
+msgstr "Tetszőleges szőnyeg"
 
 msgid "Any dye"
-msgstr ""
+msgstr "Bármilyen festék"
 
 msgid "Any water bucket"
-msgstr ""
+msgstr "Bármilyen vizes vödör"
 
 msgid "Any flower"
-msgstr ""
+msgstr "Tetszőleges virág"
 
 msgid "Any mushroom"
-msgstr ""
+msgstr "Bármely gomba"
 
 msgid "Any wooden slab"
-msgstr ""
+msgstr "Tetszőleges falap"
 
 msgid "Any wooden stairs"
-msgstr ""
+msgstr "Bármely falépcső"
 
 msgid "Any coal"
-msgstr ""
+msgstr "Bármilyen szén"
 
 msgid "Any kind of quartz block"
-msgstr ""
+msgstr "Bármilyen kvarcblokk"
 
 msgid "Any kind of purpur block"
-msgstr ""
+msgstr "Bármely bíborblokk"
 
 msgid "Any stone bricks"
-msgstr ""
+msgstr "Tetszőleges kőtégla"
 
 msgid "Any stick"
-msgstr ""
+msgstr "Bármilyen bot"
 
 msgid "Any item belonging to the @1 group"
-msgstr ""
+msgstr "Bármilyen tárgy ebből a csoportból: @1"
 
 msgid "Any item belonging to the groups: @1"
-msgstr ""
+msgstr "Bármilyen tárgy ezekből a csoportokból: @1"
 
 msgid "Cooking time: @1"
-msgstr ""
+msgstr "Főzési idő: @1"
 
 msgid "Burning time: @1"
-msgstr ""
+msgstr "Égési idő: @1"
 
 msgid "Usages"
-msgstr ""
+msgstr "Használata"
 
 msgid "Recipes"
-msgstr ""
+msgstr "Receptek"
 
 msgid "@1 of @2"
-msgstr ""
+msgstr "@1 / @2"
 
 msgid "Recipe is too big to be displayed (@1×@2)"
-msgstr ""
+msgstr "Túl nagy a recept a megjelenítéshez (@1x@2)"
 
 msgid "Shapeless"
 msgstr ""
@@ -101,35 +101,38 @@ msgid "Cooking"
 msgstr ""
 
 msgid "Increase window size"
-msgstr ""
+msgstr "Ablakméret növelése"
 
 msgid "Decrease window size"
-msgstr ""
+msgstr "Ablakméret csökkentése"
 
 msgid "Search"
-msgstr ""
+msgstr "Keresés"
 
 msgid "Reset"
-msgstr ""
+msgstr "Visszaállítás"
 
 msgid "Previous page"
-msgstr ""
+msgstr "Előző oldal"
 
 msgid "Next page"
-msgstr ""
+msgstr "Következő oldal"
 
 msgid "No item to show"
-msgstr ""
+msgstr "Nincs megjeleníthető tárgy"
 
 msgid "Collect items to reveal more recipes"
-msgstr ""
+msgstr "Gyűjts tárgyakat további receptek felfedéséhez"
+
+msgid "Invalid crafting ingredient: \"@1\" (dosent exist)"
+msgstr "Nem létező hozzávaló: \"@1\""
 
 msgid "This item can be repaired at an anvil with: @1."
-msgstr ""
+msgstr "Ez a tárgy egy üllőnél ezzel javítható: @1."
 
 msgid "This item can be repaired at an anvil with any wooden planks."
-msgstr ""
+msgstr "Ez az elem egy üllőnél bármilyen fadeszkával javítható."
 
 msgid "This item can be repaired at an anvil with any item in the “@1” group."
-msgstr ""
+msgstr "Ez az elem egy üllőnél bármely ebbe a csoportba tartozó tárggyal javítható: \"@1\"."
 

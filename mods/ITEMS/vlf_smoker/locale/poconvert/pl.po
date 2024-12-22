@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_smoker x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_smoker x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Smoker"
-msgstr ""
+msgstr "Wędzarka"
 
 msgid "Cooks food faster than furnace"
-msgstr ""
+msgstr "Gotuj jedzenie szybciej niż w piecu"
 
 msgid "Smokers cook several items, mainly raw foods, into cooked foods, but twice as fast as a normal furnace."
-msgstr ""
+msgstr "W wędzarce możesz przygotować wybrane rzeczy, głównie przetwarzanie surowych składników w gotowane potrawy, ale dwukrotnie szybciej niż w standardowym piecu."
 
 msgid "Use the smoker to open the furnace menu."
 msgstr ""

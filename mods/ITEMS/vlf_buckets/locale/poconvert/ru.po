@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_buckets x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_buckets x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,19 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
-
-msgid "Bucket of @1"
-msgstr "Ведро с @1"
-
-msgid "This bucket is filled with water and @1."
-msgstr "Это ведро с водой и @1."
-
-msgid "Place it to empty the bucket and place a @1. Obtain by right clicking on a @2 with a bucket of water."
-msgstr "Используйте, чтобы опустошить ведро с @1. Можно получить использовав ведро с водой на @2."
-
-msgid "Places a water source and a @1."
-msgstr "Переносит воду с @1"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Empty Bucket"
 msgstr "Пустое ведро"
@@ -37,6 +25,54 @@ msgstr "Ударьте ведром источник жидкости, чтоб�
 msgid "Collects liquids"
 msgstr "Набирает жидкости"
 
+msgid "Bucket of Axolotl"
+msgstr ""
+
+msgid "Bucket of Cod"
+msgstr ""
+
+msgid "Bucket of Salmon"
+msgstr ""
+
+msgid "Bucket of Tropical Fish"
+msgstr ""
+
+msgid "Place it to empty the bucket and place a Cod. Obtain by right clicking on a Cod with a bucket of water."
+msgstr ""
+
+msgid "Place it to empty the bucket and place a Salmon. Obtain by right clicking on a Salmon with a bucket of water."
+msgstr ""
+
+msgid "Place it to empty the bucket and place a Tropical Fish. Obtain by right clicking on a Tropical Fish with a bucket of water."
+msgstr ""
+
+msgid "Place it to empty the bucket and place an Axolotl. Obtain by right clicking on an Axolotl with a bucket of water."
+msgstr ""
+
+msgid "Places a water source and a Cod."
+msgstr ""
+
+msgid "Places a water source and a Salmon."
+msgstr ""
+
+msgid "Places a water source and a Tropical Fish."
+msgstr ""
+
+msgid "Places a water source and an Axolotl."
+msgstr ""
+
+msgid "This bucket is filled with water and a Cod."
+msgstr ""
+
+msgid "This bucket is filled with water and a Salmon."
+msgstr ""
+
+msgid "This bucket is filled with water and a Tropical Fish."
+msgstr ""
+
+msgid "This bucket is filled with water and an Axolotl."
+msgstr ""
+
 msgid "Lava Bucket"
 msgstr "Ведро лавы"
 
@@ -44,7 +80,7 @@ msgid "A bucket can be used to collect and release liquids. This one is filled w
 msgstr "Ведро может быть использовано для набора и выливания жидкостей. Это ведро наполнено лавой, которая безопасно хранится внутри. Используйте с осторожностью."
 
 msgid "Get in a safe distance and place the bucket to empty it and create a lava source at this spot. Don't burn yourself!"
-msgstr "Стоя на безопасном расстоянии, используйте ведро на пустом месте, чтобы создать источник лавы на этом участке."
+msgstr "Отойдите на безопасное расстояние и разместите ведро, чтобы опустошить его и создать в этом месте источник лавы. Не обожгитесь!"
 
 msgid "Places a lava source"
 msgstr "Переносит источник лавы"

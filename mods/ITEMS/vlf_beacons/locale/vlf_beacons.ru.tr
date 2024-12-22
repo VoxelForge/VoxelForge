@@ -1,4 +1,5 @@
 # textdomain: vlf_beacons
-Beacon:=Маяк:
 Primary Power:=Основной эффект:
+Secondary Power:=Вторичная энергия:
 Inventory:=Инвентарь:
+Beacon=Маяк

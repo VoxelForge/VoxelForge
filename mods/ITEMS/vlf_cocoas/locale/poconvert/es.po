@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_cocoas x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_cocoas x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,22 +11,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
-
-msgid "Premature Cocoa Pod"
-msgstr "Vaina de cacao prematura"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Cocoa pods grow on the side of jungle trees in 3 stages."
 msgstr "Las vainas de cacao crecen al lado de los árboles de jungla en 3 etapas."
+
+msgid "Premature Cocoa Pod"
+msgstr "Vaina de cacao prematura"
 
 msgid "Medium Cocoa Pod"
 msgstr "Vaina de cacao mediana"
 
 msgid "Mature Cocoa Pod"
 msgstr "Vaina de cacao madura"
-
-msgid "A mature cocoa pod grew on a jungle tree to its full size and it is ready to be harvested for cocoa beans. It won't grow any further."
-msgstr "Una vaina de cacao madura creció en un árbol de jungla a su tamaño completo y está lista para ser cosechada para los granos de cacao. No crecerá más."
 
 msgid "Cocoa Beans"
 msgstr "Granos de cacao"

@@ -1,8 +1,7 @@
 vlf_weather.snow = {}
 
-local PARTICLES_COUNT_SNOW = 200
+local PARTICLES_COUNT_SNOW = 100
 vlf_weather.snow.init_done = false
-local mgname = minetest.get_mapgen_setting("mg_name")
 
 local psdef= {
 	amount = PARTICLES_COUNT_SNOW,
@@ -26,7 +25,6 @@ local psdef= {
 
 function vlf_weather.has_snow(pos)
 	if not vlf_worlds.has_weather(pos) then return false end
-	if  mgname == "singlenode" then return false end
 	local bn = minetest.get_biome_name(minetest.get_biome_data(pos).biome)
 	local bd = minetest.registered_biomes[bn]
 	if not vlf_weather.can_see_outdoors(pos) then
@@ -49,7 +47,7 @@ function vlf_weather.snow.set_sky_box()
 		{r=85, g=86, b=86},
 		{r=0, g=0, b=0}})
 	vlf_weather.skycolor.active = true
-	for _, player in pairs(minetest.get_connected_players()) do
+	for player in vlf_util.connected_players() do
 		player:set_clouds({color="#ADADADE8"})
 	end
 	vlf_weather.skycolor.active = true
@@ -86,7 +84,7 @@ minetest.register_globalstep(function(dtime)
 		vlf_weather.snow.init_done = true
 	end
 
-	for _, player in pairs(minetest.get_connected_players()) do
+	for player in vlf_util.connected_players() do
 		if vlf_weather.is_underwater(player) or not vlf_weather.has_snow(player:get_pos()) then
 			vlf_weather.remove_spawners_player(player)
 			vlf_weather.set_sky_box_clear(player)
@@ -101,7 +99,7 @@ end)
 if vlf_weather.reg_weathers.snow == nil then
 	vlf_weather.reg_weathers.snow = {
 		clear = vlf_weather.snow.clear,
-		light_factor = 0.8,
+		light_factor = 0.6,
 		-- 10min - 20min
 		min_duration = 600,
 		max_duration = 1200,
@@ -120,7 +118,7 @@ minetest.register_abm({
 	interval = 27,
 	chance = 33,
 	min_y = vlf_vars.mg_overworld_min,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos, node)
 		if (vlf_weather.state ~= "rain" and vlf_weather.state ~= "thunder" and vlf_weather.state ~= "snow")
 		or not vlf_weather.has_snow(pos)
 		or node.name == "vlf_core:snowblock" then

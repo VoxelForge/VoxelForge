@@ -17,7 +17,7 @@ minetest.register_on_generated(function(minp, maxp, blockseed)
 	local t1 = os.clock()
 	local p1, p2 = {x=minp.x, y=minp.y, z=minp.z}, {x=maxp.x, y=maxp.y, z=maxp.z}
 	if lvm > 0 then
-		local lvm_used, shadow, deco_used, deco_table, ore_used, ore_table = false, false, false, false, false, false
+		local lvm_used, shadow, deco_used, deco_table, ore_used, ore_table = false, false, false, {}, false, {}
 		local lb2 = {} -- param2
 		local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 		local e1, e2 = {x=emin.x, y=emin.y, z=emin.z}, {x=emax.x, y=emax.y, z=emax.z}
@@ -56,12 +56,12 @@ minetest.register_on_generated(function(minp, maxp, blockseed)
 			if param2 > 0 then
 				vm:set_param2_data(data2)
 			end
-			if deco_table then
+			if #deco_table > 0 then
 				minetest.generate_decorations(vm,vector.new(minp.x,deco_table.min,minp.z),vector.new(maxp.x,deco_table.max,maxp.z))
 			elseif deco_used then
 				minetest.generate_decorations(vm)
 			end
-			if ore_table then
+			if #ore_table > 0 then
 				minetest.generate_ores(vm,vector.new(minp.x,ore_table.min,minp.z),vector.new(maxp.x,ore_table.max,maxp.z))
 			elseif ore_used then
 				minetest.generate_ores(vm)

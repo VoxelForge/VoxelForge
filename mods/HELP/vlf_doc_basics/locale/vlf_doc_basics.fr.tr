@@ -1,14 +1,14 @@
 # textdomain: vlf_doc_basics
 Advanced usage=Utilisation avancée
-Advanced information which may be nice to know, but is not crucial to gameplay=Informations avancées qui peuvent être agréables à connaître, mais qui ne sont pas cruciales pour le gameplay
+Advanced information which may be nice to know, but is not crucial to gameplay=Informations avancées qui peuvent être utiles à connaître, mais qui ne sont pas cruciales pour le gameplay
 # MCL2 extensions
-Creative Mode=Mode Creatif
+Creative Mode=Mode Créatif
 Enabling Creative Mode in MineClone 2 applies the following changes:=L'activation du mode créatif dans MineClone 2 applique les modifications suivantes :
 • You keep the things you've placed=• Vous gardez les choses que vous avez placées
 • Creative inventory is available to obtain most items easily=• Un inventaire créatif est disponible pour obtenir facilement la plupart des objets
 • Hand breaks all default blocks instantly=• La main brise instantanément tous les blocs par défaut
 • Greatly increased hand pointing range=• Plage de pointage de la main considérablement augmentée
-• Mined blocks don't drop items=• Les blocs extraits ne déposent pas d'objets
+• Mined blocks don't drop items=• Les blocs extraits ne donnent pas d'objets
 • Items don't get used up=• Les articles ne s'épuisent pas
 • Tools don't wear off=• Les outils ne s'usent pas
 • You can eat food whenever you want=• Vous pouvez manger de la nourriture quand vous le souhaitez

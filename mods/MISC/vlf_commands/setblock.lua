@@ -4,7 +4,7 @@ minetest.register_chatcommand("setblock", {
 	params = S("<X>,<Y>,<Z> <NodeString>"),
 	description = S("Set node at given position"),
 	privs = {give=true, interact=true},
-	func = function(name, param)
+	func = function(_, param)
 		local p = {}
 		local nodestring
 		p.x, p.y, p.z, nodestring = param:match("^([%d.-]+)[, ] *([%d.-]+)[, ] *([%d.-]+) +(.+)$")

@@ -167,7 +167,7 @@ function boat.on_rightclick(self, clicker)
 	attach_object(self, clicker)
 end
 
-function boat.on_activate(self, staticdata)
+function boat:on_activate(staticdata)
 	self.object:set_armor_groups({fleshy = 125})
 	local data = minetest.deserialize(staticdata)
 	if type(data) == "table" then
@@ -192,15 +192,16 @@ function boat.on_activate(self, staticdata)
 	end
 end
 
-function boat.get_staticdata(self)
+function boat:get_staticdata()
+	local props = self.object:get_properties()
 	return minetest.serialize({
 		v = self._v,
 		itemstring = self._itemstring,
-		textures = self.object:get_properties().textures
+		textures = props and props.textures or nil
 	})
 end
 
-function boat.on_death(self, killer)
+function boat:on_death(killer)
 	vlf_burning.extinguish(self.object)
 
 	if killer and killer:is_player() and minetest.is_creative_enabled(killer:get_player_name()) then
@@ -222,13 +223,13 @@ function boat.on_death(self, killer)
 end
 
 ---@diagnostic disable-next-line: unused-local
-function boat.on_punch(self, puncher, time_from_last_punch, tool_capabilities, dir, damage)
+function boat:on_punch(puncher, time_from_last_punch, tool_capabilities, dir, damage)
 	if damage > 0 then
 		self._regen_timer = 0
 	end
 end
 
-function boat.on_step(self, dtime, moveresult)
+function boat:on_step(dtime, moveresult)
 	vlf_burning.tick(self.object, dtime, self)
 	-- vlf_burning.tick may remove object immediately
 	if not self.object:get_pos() then return end
@@ -355,7 +356,7 @@ function boat.on_step(self, dtime, moveresult)
 			self._animation = 0
 		end
 
-		for _, obj in pairs(minetest.get_objects_inside_radius(self.object:get_pos(), 1.3)) do
+		for obj in minetest.objects_inside_radius(self.object:get_pos(), 1.3) do
 			local entity = obj:get_luaentity()
 			if entity and entity.is_mob then
 				attach_object(self, obj)
@@ -441,6 +442,18 @@ cboat._itemstring = "vlf_boats:chest_boat"
 cboat.initial_properties.textures = { "vlf_boats_texture_oak_chest_boat.png", "vlf_chests_normal.png" }
 cboat.initial_properties.collisionbox = {-0.5, -0.15, -0.5, 0.5, 0.75, 0.5}
 cboat.initial_properties.selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.75, 0.7}
+
+function cboat:_on_show_entity_inv (player)
+	mobs_mc.enrage_piglins (player, true)
+end
+
+function cboat:on_death (killer)
+	boat.on_death (self, killer)
+
+	if killer and killer:is_player () then
+		mobs_mc.enrage_piglins (killer, true)
+	end
+end
 
 minetest.register_entity("vlf_boats:chest_boat", cboat)
 vlf_entity_invs.register_inv("vlf_boats:chest_boat","Boat",27)

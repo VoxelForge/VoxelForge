@@ -1,14 +1,8 @@
 # Credits
 
-## Creator of VoxelForge
-* DragonWrangler
-
 ## Creators of Mineclonia
 * ryvnf
 * cora
-
-## Creator of MineClone 5
-* kay27
 
 ## Creator of MineClone 2
 * Wuzzy
@@ -17,11 +11,22 @@
 * davedevils
 
 ## Active Contributors
-* crispiebacon
-* lua-rocks
+* codiac
+* DragonWrangler1
+* JoseDouglas26
+* Brama Udi
+* amino
+* Jürgen Rühle
+* kno10
+* Po Lu
+* goblin_mode
+* Lars Müller
+* the-real-herowl
+* nooneatall
 
 ## Previous Contributors
 * Lizzy Fleckenstein
+* AFCMS
 * NO11
 * Brandon
 * kay27
@@ -45,7 +50,7 @@
 * Nils Dagsson Moskopp
 * ChrisPHP
 * 3raven
-* SamMatzko
+* ShadowRoi
 
 ## Original Mod Authors
 * Wuzzy
@@ -78,14 +83,12 @@
 * jordan4ibanez
 * paramat
 * cora
-* DragonWrangler1
 
 ## 3D Models
 * 22i
 * tobyplowy
 * epCode
-* crispiebacon
-* DragonWrangler1
+* pixelzone
 
 ## Textures and menu images
 * XSSheep
@@ -108,8 +111,7 @@
 * Aeonix_Aeon
 * Wbjitscool
 * SmokeyDope
-* DragonWrangler1
-* crispiebacon
+* pixelzone
 
 ## Translations
 * Wuzzy
@@ -124,10 +126,31 @@
 * snowyu
 * 3raven
 * Riu Sakura
+* 3raven
+* Ame-chan-angel
+* Application-Maker
+* Benny
+* collectanos
+* Cwpute
+* Dirk
+* Enlive
+* fnetX
+* Gaemy
+* hugoalh
+* j-r
+* Kyoushi
+* liulitchi
+* mugcake
+* phileas
+* Pietro Cappuccino
+* RadonPrunus
+* Sencyy
+* Sotis
+* Zozosticot
 
 ## Special thanks
-* celeron55 for creating Minetest
-* Sn0wShepherd for making the very nice MineCraft themed music from the Sn0wSong resource pack.
+* celeron55 for creating Luanti (Minetest)
+* Jordach for the jukebox music compilation from Big Freaking Dig
 * The workaholics who spent way too much time writing for the Minecraft Wiki.
   It's an invaluable resource for creating this game
 * Notch and Jeb for being the major forces behind Minecraft

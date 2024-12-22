@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain doc_items x.x.x\n"
+"Project-Id-Version: Luanti textdomain doc_items x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,61 +11,61 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This is a decorational block."
-msgstr ""
+msgstr "Ez egy dekorációs blokk."
 
 msgid "This block is a building block for creating various buildings."
-msgstr ""
+msgstr "Ez egy építő blokk, mellyel különböző épületeket készíthetsz."
 
 msgid "This item is primarily used for crafting other items."
-msgstr ""
+msgstr "Ez az eszköz elsősorban más eszközök előállításához használható."
 
 msgid "Hold it in your hand, then leftclick to eat it."
-msgstr ""
+msgstr "Fogd a kezedbe és a bal gombbal kattintva edd meg."
 
 msgid "Hold it in your hand, then leftclick to eat it. But why would you want to do this?"
-msgstr ""
+msgstr "A kezedben fogva, bal gombbal kattintva eheted meg. De miért is akarnád megenni?"
 
 msgid "This block's rotation is affected by the way you place it: Place it on the floor or ceiling for a vertical orientation; place it at the side for a horizontal orientation. Sneaking while placing it leads to a perpendicular orientation instead."
-msgstr ""
+msgstr "A blokk forgását befolyásolja az elhelyezés módja: Helyezd a padlóra vagy a mennyezetre függőleges tájolás érdekében; helyezd oldalra a vízszintes tájolás érdekében. Az elhelyezés közbeni guggolás merőleges tájoláshoz vezet."
 
 msgid "Hand"
-msgstr ""
+msgstr "Kéz"
 
 msgid "Air"
-msgstr ""
+msgstr "Levegő"
 
 msgid "Yes"
-msgstr ""
+msgstr "Igen"
 
 msgid "No"
-msgstr ""
+msgstr "Nem"
 
 msgid ", "
-msgstr ""
+msgstr ", "
 
 msgid "Unknown item (@1)"
-msgstr ""
+msgstr "Ismeretlen tárgy (@1)"
 
 msgid "unknown"
-msgstr ""
+msgstr "ismeretlen"
 
 msgid "1 second"
-msgstr ""
+msgstr "1 másodperc"
 
 msgid "@1 seconds"
-msgstr ""
+msgstr "@1 másodperc"
 
 msgid "• @1: @2"
-msgstr ""
+msgstr "• @1: @2"
 
 msgid "• @1, rating @2: @3 s - @4 s"
-msgstr ""
+msgstr "• @1, értékelés @2: @3 s - @4 s"
 
 msgid "• @1, rating @2: @3 s"
-msgstr ""
+msgstr "• @1, értékelés @2: @3 s"
 
 msgid "• @1, level @2: @3 uses"
 msgstr ""
@@ -74,34 +74,34 @@ msgid "• @1, level @2: Unlimited"
 msgstr ""
 
 msgid "This tool is capable of mining."
-msgstr ""
+msgstr "Ezzel az eszközzel bányászhatsz."
 
 msgid "Maximum toughness levels:"
-msgstr ""
+msgstr "Legnagyobb keménységi fok:"
 
 msgid "Mining times:"
-msgstr ""
+msgstr "Fejtési idők:"
 
 msgid "Mining durability:"
-msgstr ""
+msgstr "Tartósság:"
 
 msgid "This is a melee weapon which deals damage by punching."
-msgstr ""
+msgstr "Ez egy közelharcban használható fegyver, mellyel szúrni lehet."
 
 msgid "Maximum damage per hit:"
-msgstr ""
+msgstr "Legnagyobb sebzés ütésenként:"
 
 msgid "• @1: @2 HP"
 msgstr ""
 
 msgid "Full punch interval: @1 s"
-msgstr ""
+msgstr "Lendítési idő: @1 s"
 
 msgid "This block can be mined by any mining tool in half a second."
-msgstr ""
+msgstr "Ezt a blokkot bármely szerszámmal fél másodperc alatt lehet kitermelni."
 
 msgid "This block can be mined by any mining tool immediately."
-msgstr ""
+msgstr "Ezt a blokkot bármely szerszámmal azonnal ki lehet termelni."
 
 msgid "This block can not be mined by ordinary mining tools."
 msgstr ""
@@ -149,7 +149,7 @@ msgid "Itemstring: \"@1\""
 msgstr ""
 
 msgid "Description: @1"
-msgstr ""
+msgstr "Leírás: @1"
 
 msgid "Usage help: @1"
 msgstr ""
@@ -194,10 +194,10 @@ msgid "This item belongs to these groups: @1."
 msgstr ""
 
 msgid "Blocks"
-msgstr ""
+msgstr "Blokkok"
 
 msgid "Item reference of blocks and other things which are capable of occupying space"
-msgstr ""
+msgstr "Azon blokkok gyűjteménye melyek kitöltik a teret"
 
 msgid "Collidable: @1"
 msgstr ""
@@ -254,13 +254,13 @@ msgid "You can not jump while standing on this block."
 msgstr ""
 
 msgid "This block can be climbed."
-msgstr ""
+msgstr "Erre a blokkra felmászhatsz."
 
 msgid "This block will make you bounce off with an elasticity of @1%."
 msgstr ""
 
 msgid "This block is slippery."
-msgstr ""
+msgstr "Ez egy csúszós blokk."
 
 msgid "This block is completely silent when walked on, mined or built."
 msgstr ""
@@ -317,7 +317,7 @@ msgid "This block allows sunlight to propagate without loss in brightness."
 msgstr ""
 
 msgid "Unknown Node"
-msgstr ""
+msgstr "Ismeretlen elem"
 
 msgid "This block connects to this block: @1."
 msgstr ""
@@ -350,7 +350,7 @@ msgid "This block will randomly drop up to @1 drops of the following possible dr
 msgstr ""
 
 msgid " and "
-msgstr ""
+msgstr " és "
 
 msgid "@1×@2"
 msgstr ""
@@ -359,55 +359,55 @@ msgid "@1 (<0.5%)"
 msgstr ""
 
 msgid "@1 (ca. @2%)"
-msgstr ""
+msgstr "@1 (kb. @2%)"
 
 msgid "@1 (@2%)"
 msgstr ""
 
 msgid "Tools and weapons"
-msgstr ""
+msgstr "Szerszámok és fegyverek"
 
 msgid "Item reference of all wieldable tools and weapons"
-msgstr ""
+msgstr "Hordozható szerszámok és fegyverek gyűjteménye"
 
 msgid "Durability: @1 uses"
-msgstr ""
+msgstr "Tartósság: @1 használat"
 
 msgid "Durability: @1"
-msgstr ""
+msgstr "Tartósság: @1"
 
 msgid "Miscellaneous items"
-msgstr ""
+msgstr "Egyéb tárgyak"
 
 msgid "Item reference of items which are neither blocks, tools or weapons (esp. crafting items)"
-msgstr ""
+msgstr "Azon tárgyak gyűjteménye, amelyek se nem blokkok, se szerszámok, se fegyverek (pl. kézműves tárgyak)"
 
 msgid "Mobs"
-msgstr ""
+msgstr "Mobok"
 
 msgid "Different Mobs"
-msgstr ""
+msgstr "Különböző mobok"
 
 msgid "Type: @1"
-msgstr ""
+msgstr "Típus: @1"
 
 msgid "Spawning light levels (min / max): @1 / @2"
 msgstr ""
 
 msgid "Can Jump a height of @1 nodes"
-msgstr ""
+msgstr "@1 blokk magasra tud ugrani"
 
 msgid "Can Fly"
-msgstr ""
+msgstr "Tud repülni"
 
 msgid "Can Swim"
-msgstr ""
+msgstr "Úszni tud"
 
 msgid "Drops: "
-msgstr ""
+msgstr "Ezt dobja: "
 
 msgid "Follows player when these items are held:"
-msgstr ""
+msgstr "Követi a játékost, ha ez van a kezében:"
 
 msgid "A transparent block, basically empty space. It is usually left behind after digging something."
 msgstr ""

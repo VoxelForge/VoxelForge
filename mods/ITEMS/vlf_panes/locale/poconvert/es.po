@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_panes x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_panes x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Glass panes are thin layers of glass which neatly connect to their neighbors as you build them."
 msgstr "Los paneles de cristal son capas delgadas de vidrio que se conectan perfectamente a otros cristales a medida que los construye."
@@ -31,6 +31,51 @@ msgstr "Los barrotes de hierro se conectan perfectamente a sus vecinos a medida 
 msgid "Glass Pane"
 msgstr "Panel de cristal"
 
-msgid "@1 Glass Pane"
-msgstr ""
+msgid "Black Stained Glass Pane"
+msgstr "Panel de cristal tintado de negro"
+
+msgid "Blue Stained Glass Pane"
+msgstr "Panel de cristal tintado de azul"
+
+msgid "Brown Stained Glass Pane"
+msgstr "Panel de cristal tintado de marrón"
+
+msgid "Cyan Stained Glass Pane"
+msgstr "Panel de cristal tintado de cian"
+
+msgid "Green Stained Glass Pane"
+msgstr "Panel de cristal tintado de verde"
+
+msgid "Grey Stained Glass Pane"
+msgstr "Panel de cristal tintado de gris"
+
+msgid "Light Blue Stained Glass Pane"
+msgstr "Panel de cristal tintado de azul claro"
+
+msgid "Light Grey Stained Glass Pane"
+msgstr "Panel de cristal tintado de gris claro"
+
+msgid "Lime Stained Glass Pane"
+msgstr "Panel de cristal tintado de verde lima"
+
+msgid "Magenta Stained Glass Pane"
+msgstr "Panel de cristal tintado de magenta"
+
+msgid "Orange Stained Glass Pane"
+msgstr "Panel de cristal tintado de naranja"
+
+msgid "Pink Stained Glass Pane"
+msgstr "Panel de cristal tintado de rosa"
+
+msgid "Purple Stained Glass Pane"
+msgstr "Panel de cristal tintado de morado"
+
+msgid "Red Stained Glass Pane"
+msgstr "Panel de cristal tintado de rojo"
+
+msgid "White Stained Glass Pane"
+msgstr "Panel de cristal tintado de blanco"
+
+msgid "Yellow Stained Glass Pane"
+msgstr "Panel de cristal tintado de amarillo"
 

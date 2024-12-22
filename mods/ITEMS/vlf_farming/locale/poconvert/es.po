@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_farming x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_farming x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Beetroot Seeds"
 msgstr "Semillas de remolacha"
@@ -59,7 +59,7 @@ msgid "Beetroot soup is a food item."
 msgstr "El estofado de remolacha es un alimento."
 
 msgid "Grows on farmland"
-msgstr ""
+msgstr "Crece en tierras de cultivo"
 
 msgid "Premature Carrot Plant"
 msgstr "Planta de zanahoria prematura"
@@ -92,7 +92,7 @@ msgid "A golden carrot is a precious food item which can be eaten. It is really,
 msgstr "Una zanahoria dorada es un alimento precioso que se puede comer. ¡Es realmente, realmente abundante!"
 
 msgid "Turns block into farmland"
-msgstr ""
+msgstr "Convierte bloques en tierra de cultivo"
 
 msgid "Hoes are essential tools for growing crops. They are used to create farmland in order to plant seeds on it. Hoes can also be used as very weak weapons in a pinch."
 msgstr "Las azadas son herramientas esenciales para el cultivo. Se utilizan para crear tierras de cultivo para plantar semillas en él. Las azadas también se pueden usar como armas muy débiles en caso de apuro."
@@ -104,7 +104,7 @@ msgid "Wood Hoe"
 msgstr "Azada de madera"
 
 msgid "Uses: @1"
-msgstr ""
+msgstr "Usos: @1"
 
 msgid "Stone Hoe"
 msgstr "Azada de piedra"
@@ -119,7 +119,7 @@ msgid "Diamond Hoe"
 msgstr "Azada de diamante"
 
 msgid "Netherite Hoe"
-msgstr ""
+msgstr "Azada de netherita"
 
 msgid "Melon Seeds"
 msgstr "Semillas de sandía"
@@ -191,7 +191,7 @@ msgid "Poisonous Potato"
 msgstr "Patata venenosa"
 
 msgid "60% chance of poisoning"
-msgstr ""
+msgstr "60% de posibilidades de envenenamiento"
 
 msgid "This potato doesn't look too healthy. You can eat it to restore hunger points, but there's a 60% chance it will poison you briefly."
 msgstr "Esta patata no se ve muy saludable. Puedes comerla para restablecer los puntos de hambre, pero hay un 60% de posibilidades de que te envenene brevemente."
@@ -233,7 +233,7 @@ msgid "Pumpkin"
 msgstr "Calabaza"
 
 msgid "A pumpkin can be worn as a helmet. Pumpkins grow from pumpkin stems, which in turn grow from pumpkin seeds."
-msgstr ""
+msgstr "Se puede usar una calabaza como casco. Las calabazas crecen a partir de tallos de calabaza, que a su vez crecen a partir de semillas de calabaza."
 
 msgid "Jack o'Lantern"
 msgstr "Calabaza de Halloween"
@@ -251,10 +251,10 @@ msgid "Farmland"
 msgstr "Tierra de cultivo"
 
 msgid "Surface for crops"
-msgstr ""
+msgstr "Superficie para cultivos"
 
 msgid "Can become wet"
-msgstr ""
+msgstr "Puede mojarse"
 
 msgid "Farmland is used for farming, a necessary surface to plant crops. It is created when a hoe is used on dirt or a similar block. Plants are able to grow on farmland, but slowly. Farmland will become hydrated farmland (on which plants grow faster) when it rains or a water source is nearby. This block will turn back to dirt when a solid block appears above it or a piston arm extends above it."
 msgstr "Las tierras de cultivo se utilizan para la agricultura, una superficie necesaria para plantar cultivos. Se crea cuando se usa una azada sobre tierra o un bloque similar. Las plantas pueden crecer en tierras de cultivo, pero lentamente. Las tierras de cultivo se convertirán en tierras de cultivo hidratadas (en las cuales las plantas crecen más rápido) cuando llueve o hay una fuente de agua cerca. Este bloque volverá a convertirse en tierra cuando aparezca un bloque sólido sobre él o un brazo de pistón se extienda sobre él."
@@ -266,10 +266,10 @@ msgid "Hydrated farmland is used in farming, this is where you can plant and gro
 msgstr "Las tierras de cultivo hidratadas se usan en la agricultura, aquí es donde puedes plantar y cultivar algunas plantas. Se crea cuando las tierras de cultivo están bajo la lluvia o cerca del agua. Sin agua, este bloque se secará eventualmente. Este bloque volverá a convertirse en tierra cuando aparezca un bloque sólido sobre él o un brazo de pistón se extienda sobre él."
 
 msgid "Sweet Berry Bush (Stage @1)"
-msgstr ""
+msgstr "Arbusto de bayas (Etapa @1)"
 
 msgid "Sweet Berry"
-msgstr ""
+msgstr "Bayas dulces"
 
 msgid "Wheat Seeds"
 msgstr "Semillas de trigo"
@@ -311,17 +311,26 @@ msgid "\n"
 "		Place the wheat seeds on farmland (which can be created with a hoe) to plant a wheat plant.\n"
 "		They grow in sunlight and grow faster on hydrated farmland. Rightclick an animal to feed it wheat seeds.\n"
 "	"
-msgstr ""
+msgstr "\n"
+"\t\tColoque las semillas de trigo en tierras de cultivo (que se pueden crear con una azada) para plantar una planta de trigo.\n"
+"\t\tCrecen bajo la luz del sol y crecen más rápido en tierras de cultivo mojada. Haz clic derecho en un animal para alimentarlo con semillas de trigo.\n"
+"\t"
 
 msgid "\n"
 "			Premature wheat plants grow on farmland under sunlight in 8 stages.\n"
 "			On hydrated farmland, they grow faster. They can be harvested at any time but will only yield a profit when mature.\n"
 "		"
-msgstr ""
+msgstr "\n"
+"\t\t\tLas plantas prematuras de trigo crecen en tierras de cultivo bajo la luz del sol en 8 etapas.\n"
+"\t\t\tEn tierras de cultivo mojada, crecen más rápido. Se pueden cosechar en cualquier momento, pero solo darán beneficios cuando estén maduros.\n"
+"\t\t"
 
 msgid "\n"
 "		Mature wheat plants are ready to be harvested for wheat and wheat seeds.\n"
 "		They won't grow any further.\n"
 "	"
-msgstr ""
+msgstr "\n"
+"\t\tLas plantas de trigo maduras están listas para ser cosechadas para obtener trigo y semillas de trigo.\n"
+"\t\tNo crecerán más\n"
+"\t"
 

@@ -12,17 +12,13 @@ return {
 	{S("Creator of MineClone 5"), 0xA6A6A6, {
 		"kay27"
 	}},
-	{S("Creators of Voxelibre (Formerly Mineclone 2)"), 0x7C7A59, {
+	{S("Creator of Voxelibre (Formerly Mineclone 2)"), 0x7C7A59, {
 		"Wuzzy",
-		"the-real-herowl",
-		"ancientmarinerdev",
 	}},
 	{S("Creator of MineClone"), 0xFF51D5, {
 		"davedevils",
 	}},
 	{S("Active Contributors"), 0xF84355, {
-		"crispiebacon",
-		"lua-rocks",
 	}},
 	{S("Previous Contributors"), 0x52FF00, {
 		"Lizzy Fleckenstein",
@@ -50,6 +46,8 @@ return {
 		"ChrisPHP",
 		"3raven",
 		"SamMatzko",
+		"crispiebacon",
+		"lua-rocks",
 	}},
 	{S("Original Mod Authors"), 0xA60014, {
 		"Wuzzy",
@@ -90,6 +88,7 @@ return {
 		"epCode",
 		"crispiebacon",
 		"DragonWrangler1",
+		"PixelZone",
 	}},
 	{S("Textures and menu images"), 0x0019FF, {
 		"XSSheep",
@@ -114,6 +113,7 @@ return {
 		"SmokeyDope",
 		"DragonWrangler1",
 		"crispiebacon",
+		"pixelzone",
 	}},
 	{S("Translations"), 0xFF9705, {
 		"Wuzzy",

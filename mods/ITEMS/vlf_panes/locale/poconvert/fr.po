@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_panes x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_panes x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Glass panes are thin layers of glass which neatly connect to their neighbors as you build them."
 msgstr "Les vitres sont de fines couches de verre qui se connectent parfaitement à leurs voisins lorsque vous les construisez."
@@ -31,6 +31,51 @@ msgstr "Les barres de fer se connectent parfaitement à leurs voisins lorsque vo
 msgid "Glass Pane"
 msgstr "Vitre"
 
-msgid "@1 Glass Pane"
-msgstr ""
+msgid "Black Stained Glass Pane"
+msgstr "Vitre Teintée Noire"
+
+msgid "Blue Stained Glass Pane"
+msgstr "Vitre Teintée Bleue"
+
+msgid "Brown Stained Glass Pane"
+msgstr "Vitre Teintée Marron"
+
+msgid "Cyan Stained Glass Pane"
+msgstr "Vitre Teintée Cyan"
+
+msgid "Green Stained Glass Pane"
+msgstr "Vitre Teintée Verte"
+
+msgid "Grey Stained Glass Pane"
+msgstr "Vitre Teintée Grise"
+
+msgid "Light Blue Stained Glass Pane"
+msgstr "Vitre Teintée Bleu Clair"
+
+msgid "Light Grey Stained Glass Pane"
+msgstr "Vitre Teintée Gris Clair"
+
+msgid "Lime Stained Glass Pane"
+msgstr "Vitre Teintée Vert Clair"
+
+msgid "Magenta Stained Glass Pane"
+msgstr "Vitre Teintée Magenta"
+
+msgid "Orange Stained Glass Pane"
+msgstr "Vitre Teintée Orange"
+
+msgid "Pink Stained Glass Pane"
+msgstr "Vitre Teintée Rose"
+
+msgid "Purple Stained Glass Pane"
+msgstr "Vitre Teintée Violette"
+
+msgid "Red Stained Glass Pane"
+msgstr "Vitre Teintée Rouge"
+
+msgid "White Stained Glass Pane"
+msgstr "Vitre Teintée Blanche"
+
+msgid "Yellow Stained Glass Pane"
+msgstr "Vitre Teintée Jaune"
 

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_armor x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_armor x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This is a piece of equippable armor which reduces the amount of damage you receive."
 msgstr "被ダメージを軽減する、装備可能な防具です。"
@@ -20,19 +20,19 @@ msgid "To equip it, put it on the corresponding armor slot in your inventory men
 msgstr "装備するには、インベントリメニュー中の対応する防具スロットに置いてください。"
 
 msgid "Leather Cap"
-msgstr ""
+msgstr "革の帽子"
 
 msgid "Leather Tunic"
-msgstr ""
+msgstr "革の上着"
 
 msgid "Leather Pants"
-msgstr ""
+msgstr "革のズボン"
 
 msgid "Leather Boots"
-msgstr ""
+msgstr "革のブーツ"
 
 msgid "Colorize a piece of leather armor, or wash it"
-msgstr ""
+msgstr "革製防具に着色、または脱色したりする。"
 
 msgid "Not leather armor."
 msgstr ""
@@ -59,16 +59,16 @@ msgid "Golden Boots"
 msgstr "金のブーツ"
 
 msgid "Chainmail Helmet"
-msgstr ""
+msgstr "チェーンのヘルメット"
 
 msgid "Chainmail Chestplate"
-msgstr ""
+msgstr "チェーンのチェストプレート"
 
 msgid "Chainmail Leggings"
-msgstr ""
+msgstr "チェーンのレギンス"
 
 msgid "Chainmail Boots"
-msgstr ""
+msgstr "チェーンのブーツ"
 
 msgid "Iron Helmet"
 msgstr "鉄のヘルメット"
@@ -107,25 +107,25 @@ msgid "Netherite Boots"
 msgstr "ネザライトのブーツ"
 
 msgid "Projectile Protection"
-msgstr "飛来物耐性"
+msgstr "飛び道具耐性"
 
 msgid "Reduces projectile damage."
-msgstr "飛来物ダメージを軽減します。"
+msgstr "飛び道具ダメージを軽減します。"
 
 msgid "Blast Protection"
-msgstr "爆風耐性"
+msgstr "爆発耐性"
 
 msgid "Reduces explosion damage and knockback."
 msgstr "爆発ダメージとノックバックを軽減します。"
 
 msgid "Fire Protection"
-msgstr "炎上耐性"
+msgstr "火炎耐性"
 
 msgid "Reduces fire damage."
 msgstr "火炎ダメージを軽減します（溶岩は対象外）。"
 
 msgid "Protection"
-msgstr "外傷耐性"
+msgstr "ダメージ軽減"
 
 msgid "Reduces most types of damage by 4% for each level."
 msgstr "体の外からのダメージ全般を軽減します（レベル毎に+4%）。"
@@ -149,7 +149,7 @@ msgid "Item cannot be removed from armor slots except due to death, breaking or 
 msgstr "次の場合を除き、防具スロットからアイテムを外せません；アイテムが破損／自身が死亡／クリエイティブモード中"
 
 msgid "Thorns"
-msgstr "イバラ"
+msgstr "棘の鎧"
 
 msgid "Reflects some of the damage taken when hit, at the cost of reducing durability with each proc."
 msgstr "受けたダメージの一部を与え返せますが、その代わり耐久度が余計に削られます。"
@@ -158,7 +158,7 @@ msgid "Elytra"
 msgstr "エリトラ"
 
 msgid "Smithing Template"
-msgstr ""
+msgstr "鍛冶型"
 
 msgid "@1 Armor Trim"
 msgstr ""

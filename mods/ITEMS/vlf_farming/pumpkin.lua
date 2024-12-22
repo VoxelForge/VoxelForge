@@ -38,6 +38,7 @@ minetest.register_craftitem("vlf_farming:pumpkin_seeds", {
 	_doc_items_usagehelp = S("Place the pumpkin seeds on farmland (which can be created with a hoe) to plant a pumpkin stem. Pumpkin stems grow in sunlight and grow faster on hydrated farmland. When mature, the stem attempts to grow a pumpkin next to it. Rightclick an animal to feed it pumpkin seeds."),
 	inventory_image = "vlf_farming_pumpkin_seeds.png",
 	groups = {craftitem=1, compostability = 30},
+	_vlf_places_plant = "vlf_farming:pumpkin_1",
 	on_place = function(itemstack, placer, pointed_thing)
 		return vlf_farming:place_seed(itemstack, placer, pointed_thing, "vlf_farming:pumpkin_1")
 	end
@@ -102,6 +103,7 @@ for s=1,7 do
 		sounds = vlf_sounds.node_sound_leaves_defaults(),
 		_vlf_blast_resistance = 0,
 		_on_bone_meal = on_bone_meal,
+		_vlf_baseitem = "vlf_farming:pumpkin_seeds",
 	})
 end
 
@@ -112,6 +114,7 @@ local stem_def = {
 	tiles = {"vlf_farming_pumpkin_stem_disconnected.png^[colorize:#FFA800:127"},
 	wield_image = "vlf_farming_pumpkin_stem_disconnected.png^[colorize:#FFA800:127",
 	inventory_image = "vlf_farming_pumpkin_stem_disconnected.png^[colorize:#FFA800:127",
+	_vlf_baseitem = "vlf_farming:pumpkin_seeds",
 }
 
 -- Template for pumpkin
@@ -123,7 +126,7 @@ local pumpkin_base_def = {
 	tiles = {"farming_pumpkin_top.png", "farming_pumpkin_top.png", "farming_pumpkin_side.png"},
 	groups = {
 		handy = 1, axey = 1, plant = 1, building_block = 1, dig_by_piston = 1,
-		pumpkin = 1, enderman_takable = 1, compostability = 65
+		pumpkin = 1, enderman_takable = 1, compostability = 65, unsticky = 1
 	},
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	on_rotate = on_rotate,
@@ -148,11 +151,10 @@ pumpkin_face_base_def._vlf_armor_element = "head"
 pumpkin_face_base_def._vlf_armor_texture = "vlf_farming_pumpkin_face.png"
 pumpkin_face_base_def._on_shears_place = nil
 
-pumpkin_face_base_def.after_place_node = function(pos, placer, itemstack, pointed_thing)
+pumpkin_face_base_def.after_place_node = function(pos, placer)
 	-- Attempt to spawn iron golem or snow golem
 	mobs_mc.check_iron_golem_summon(pos, placer)
 	mobs_mc.check_snow_golem_summon(pos, placer)
-	--mobs_mc.check_copper_golem_summon(pos, placer)
 end
 
 -- TODO: when < minetest 5.9 isn't supported anymore, remove this variable check and replace all occurences of [hud_elem_type_field] with type
@@ -161,56 +163,54 @@ if not minetest.features.hud_def_type_field then
 	hud_elem_type_field = "hud_elem_type"
 end
 
-local pumpkin_hud = {}
-local function add_pumpkin_hud(player)
-	local meta = player:get_meta()
-	pumpkin_hud[player] = {
-		pumpkin_blur = player:hud_add({
-			[hud_elem_type_field] = "image",
-			position = {x = 0.5, y = 0.5},
-			scale = {x = -101, y = -101},
-			text = "vlf_farming_pumpkin_hud.png",
-			z_index = -200
-		}),
-		--this is a fake crosshair, because hotbar and crosshair doesn't support z_index
-		--TODO: remove this and add correct z_index values
-		fake_crosshair = player:hud_add({
-			[hud_elem_type_field] = "image",
-			position = {x = 0.5, y = 0.5},
-			scale = {x = 1, y = 1},
-			text = "crosshair.png",
-			z_index = -100
-		})
-	}
-	meta:set_string("pumpkin_hud", "active")
-end
-local function remove_pumpkin_hud(player)
-	local meta = player:get_meta()
-	if pumpkin_hud[player] then
-		player:hud_remove(pumpkin_hud[player].pumpkin_blur)
-		player:hud_remove(pumpkin_hud[player].fake_crosshair)
+if minetest.get_modpath("vlf_armor") then
+	local pumpkin_hud = {}
+	local function add_pumpkin_hud(player)
+		pumpkin_hud[player] = {
+			pumpkin_blur = player:hud_add({
+				[hud_elem_type_field] = "image",
+				position = {x = 0.5, y = 0.5},
+				scale = {x = -101, y = -101},
+				text = "vlf_farming_pumpkin_hud.png",
+				z_index = -200
+			}),
+			--this is a fake crosshair, because hotbar and crosshair doesn't support z_index
+			--TODO: remove this and add correct z_index values
+			fake_crosshair = player:hud_add({
+				[hud_elem_type_field] = "image",
+				position = {x = 0.5, y = 0.5},
+				scale = {x = 1, y = 1},
+				text = "crosshair.png",
+				z_index = -100
+			})
+		}
+	end
+	local function remove_pumpkin_hud(player)
+		if pumpkin_hud[player] then
+			player:hud_remove(pumpkin_hud[player].pumpkin_blur)
+			player:hud_remove(pumpkin_hud[player].fake_crosshair)
+			pumpkin_hud[player] = nil
+		end
+	end
+
+	pumpkin_face_base_def.on_secondary_use = vlf_armor.equip_on_use
+	pumpkin_face_base_def._on_equip = add_pumpkin_hud
+	pumpkin_face_base_def._on_unequip = remove_pumpkin_hud
+
+	minetest.register_on_joinplayer(function(player)
+		if player:get_inventory():get_stack("armor", 2):get_name() == "vlf_farming:pumpkin_face" then
+			add_pumpkin_hud(player)
+		end
+	end)
+	minetest.register_on_dieplayer(function(player)
+		if not minetest.settings:get_bool("vlf_keepInventory") then
+			remove_pumpkin_hud(player)
+		end
+	end)
+	minetest.register_on_leaveplayer(function(player)
 		pumpkin_hud[player] = nil
-		meta:set_string("pumpkin_hud", "inactive")
-	end
+	end)
 end
-
-pumpkin_face_base_def.on_secondary_use = vlf_armor.equip_on_use
-pumpkin_face_base_def._on_equip = add_pumpkin_hud
-pumpkin_face_base_def._on_unequip = remove_pumpkin_hud
-
-minetest.register_on_joinplayer(function(player)
-	if player:get_inventory():get_stack("armor", 2):get_name() == "vlf_farming:pumpkin_face" then
-		add_pumpkin_hud(player)
-	end
-end)
-minetest.register_on_dieplayer(function(player)
-	if not minetest.settings:get_bool("vlf_keepInventory") then
-		remove_pumpkin_hud(player)
-	end
-end)
-minetest.register_on_leaveplayer(function(player)
-	pumpkin_hud[player] = nil
-end)
 
 -- Register stem growth
 vlf_farming:add_plant("plant_pumpkin_stem", "vlf_farming:pumpkintige_unconnect", {"vlf_farming:pumpkin_1", "vlf_farming:pumpkin_2", "vlf_farming:pumpkin_3", "vlf_farming:pumpkin_4", "vlf_farming:pumpkin_5", "vlf_farming:pumpkin_6", "vlf_farming:pumpkin_7"}, 30, 5)
@@ -231,9 +231,9 @@ minetest.register_node("vlf_farming:pumpkin_face_light", {
 	paramtype2 = "facedir",
 	light_source = minetest.LIGHT_MAX,
 	tiles = {"farming_pumpkin_top.png", "farming_pumpkin_top.png", "farming_pumpkin_side.png", "farming_pumpkin_side.png", "farming_pumpkin_side.png", "farming_pumpkin_face_light.png"},
-	groups = {handy=1, axey=1, pumpkin=1, building_block=1, dig_by_piston=1 },
+	groups = {handy=1, axey=1, pumpkin=1, building_block=1, dig_by_piston=1, unsticky = 1},
 	sounds = vlf_sounds.node_sound_wood_defaults(),
-	after_place_node = function(pos, placer, itemstack, pointed_thing)
+	after_place_node = function(pos, placer)
 		-- Attempt to spawn iron golem or snow golem
 		mobs_mc.check_iron_golem_summon(pos, placer)
 		mobs_mc.check_snow_golem_summon(pos, placer)

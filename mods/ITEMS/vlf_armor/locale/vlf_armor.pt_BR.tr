@@ -42,7 +42,6 @@ Reduces most types of damage by 4% for each level.=Reduz a maioria dos tipos de 
 Feather Falling=Pena Caindo
 Reduces fall damage.=Reduz o dano de quedas.
 Aqua Affinity=Afinidade Aqua
-#Translations of enchantements
 Increases underwater mining speed.=Aumenta a velocidade de mineração subaquática.
 Curse of Binding=Maldição do Vínculo
 Item cannot be removed from armor slots except due to death, breaking or in Creative Mode.=Item não pode ser removido do espaço de armadura, exceto devido à morte, quebra ou no Modo Criativo.
@@ -55,15 +54,3 @@ Applies to:=
 Armor=
 Ingredients:=
 Ingot & Crystals=
-
-
-##### not used anymore #####
-
-Chain Helmet=Capacete de Cota de Malha
-Chain Chestplate=Peitoral de Cota de Malha
-Chain Leggings=Perneiras de Cota de Malha
-Chain Boots=Botas de Cota de Malha
-Shooting consumes no regular arrows.=Disparar não consome flechas normais.
-Shoot 3 arrows at the cost of one.=Dispare 3 flechas ao custo de uma.
-#Translations for armor trims
-Smithing Template '@1'=Molde de Ferraria '@1'

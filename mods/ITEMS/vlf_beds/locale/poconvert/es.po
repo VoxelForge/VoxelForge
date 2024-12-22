@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_beds x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_beds x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Beds allow you to sleep at night and make the time pass faster."
 msgstr "Las camas le permiten dormir por la noche y hacer que el tiempo pase más rápido."
@@ -32,16 +32,10 @@ msgid "Sleeping allows you to skip the night. The night is skipped when all play
 msgstr "Dormir te permite saltarte la noche. Se omite la noche cuando todos los jugadores en este mundo se fueron a dormir. La noche se salta después de dormir durante unos segundos. Las tormentas eléctricas se pueden omitir de la misma manera."
 
 msgid "Allows you to sleep"
-msgstr ""
+msgstr "Puedes dormir"
 
 msgid "Bed"
 msgstr "Cama"
-
-msgid "@1 Bed"
-msgstr ""
-
-msgid "New respawn position set!"
-msgstr "¡Nueva posición de reaparición establecida!"
 
 msgid "You can only sleep at night or during a thunderstorm."
 msgstr "Solo puedes dormir por la noche o durante tormentas eléctricas."
@@ -71,10 +65,10 @@ msgid "Abort sleep"
 msgstr "Levantarse"
 
 msgid "Chat:"
-msgstr ""
+msgstr "Chat:"
 
 msgid "send!"
-msgstr ""
+msgstr "¡enviar!"
 
 msgid "Players in bed: @1/@2"
 msgstr "Jugadores en la cama: @1/@2"
@@ -89,26 +83,77 @@ msgid "You will fall asleep when all players are in bed."
 msgstr "Te quedarás dormido cuando todos los jugadores estén en la cama."
 
 msgid "You will fall asleep when @1% of all players are in bed."
-msgstr ""
+msgstr "Podrás dormir cuando el @1% de los jugadores estén en la cama."
 
 msgid "You're in bed."
 msgstr "Estas en la cama."
 
 msgid "@1/@2 players currently in bed."
-msgstr ""
+msgstr "@1/@2 jugadores actualmente en la cama."
 
 msgid "You exceeded the maximum number of messages per 10 seconds!"
-msgstr ""
+msgstr "¡Excediste el número máximo de mensajes por cada 10 segundos!"
 
 msgid "You are missing the 'shout' privilege! It's required in order to talk in chat..."
-msgstr ""
+msgstr "¡Te falta el privilegio de 'shout'! Es necesario para poder hablar en el chat..."
 
 msgid "Sorry, but you have to wait @1 seconds until you may use this button again!"
-msgstr ""
+msgstr "Lo sentimos, pero tienes que esperar @1 segundo/s hasta que puedas usar este botón nuevamente"
 
 msgid "Hey! Would you guys mind sleeping?"
+msgstr "¡Hola! ¿Les importaría dormir?"
+
+msgid "New respawn position set!"
+msgstr "¡Nueva posición de reaparición establecida!"
+
+msgid "Black Bed"
+msgstr ""
+
+msgid "Blue Bed"
+msgstr ""
+
+msgid "Brown Bed"
+msgstr ""
+
+msgid "Cyan Bed"
+msgstr ""
+
+msgid "Green Bed"
+msgstr ""
+
+msgid "Grey Bed"
+msgstr ""
+
+msgid "Light Blue Bed"
+msgstr ""
+
+msgid "Light Grey Bed"
+msgstr ""
+
+msgid "Lime Bed"
+msgstr ""
+
+msgid "Magenta Bed"
+msgstr ""
+
+msgid "Orange Bed"
+msgstr ""
+
+msgid "Pink Bed"
+msgstr ""
+
+msgid "Purple Bed"
+msgstr ""
+
+msgid "Red Bed"
+msgstr ""
+
+msgid "White Bed"
+msgstr ""
+
+msgid "Yellow Bed"
 msgstr ""
 
 msgid "Respawn Anchor"
-msgstr ""
+msgstr "Nexo de reaparición"
 

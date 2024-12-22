@@ -1,50 +1,30 @@
 local mob_class = vlf_mobs.mob_class
+local is_valid = vlf_util.is_valid_objectref
 
-local damage_enabled = minetest.settings:get_bool("enable_damage", true)
-local peaceful_mode = minetest.settings:get_bool("only_peaceful_mobs", false)
-local mobs_griefing = minetest.settings:get_bool("mobs_griefing", true)
+local SIGHT_PERSISTENCE = 3.0
 
-local stuck_timeout = 3 -- how long before mob gets stuck in place and starts searching
-local stuck_path_timeout = 10 -- how long will mob follow path before giving up
-
-local enable_pathfinding = true
-
-local TIME_TO_FORGET_TARGET = 15
-
-local function atan(x)
-	if not x or minetest.is_nan(x) then
-		return 0
-	else
-		return math.atan(x)
-	end
-end
-
-function mob_class:day_docile()
-	if self.docile_by_day and self.time_of_day > 0.2 and self.time_of_day < 0.8 then
-		return true
-	end
-	return false
-end
-
-function mob_class:do_attack(obj)
-	if self.state == "attack" or self.state == "die" then
+function mob_class:do_attack(obj, persistence)
+	if self.dead or obj == self.obj or obj == self.attack then
 		return
 	end
 
+	-- Attack!!!
+	local mover = self:mob_controlling_movement ()
 	self.attack = obj
-	self:set_state("attack")
+	self.attacking = false
+	mover:set_animation ("run")
+	self:replace_activity ("attack")
 
-	-- TODO: Implement war_cry sound without being annoying
-	--if random(0, 100) < 90 then
-		--self:mob_sound("war_cry", true)
-	--end
+	-- Abandon after obj disappears for longer than three seconds.
+	self.target_invisible_time = persistence or SIGHT_PERSISTENCE
+	self._sight_persistence = persistence or SIGHT_PERSISTENCE
 end
 
 -- blast damage to entities nearby
-local function blast_damage(pos, radius)
+local function blast_damage(pos, radius, source)
 	radius = radius * 2
 
-	for _, obj in pairs(minetest.get_objects_inside_radius(pos, radius)) do
+	for obj in minetest.objects_inside_radius(pos, radius) do
 
 		local obj_pos = obj:get_pos()
 		local dist = vector.distance(pos, obj_pos)
@@ -53,299 +33,136 @@ local function blast_damage(pos, radius)
 		local damage = math.floor((4 / dist) * radius)
 
 		-- punches work on entities AND players
-		obj:punch(obj, 1.0, {
+		obj:punch(source, 1.0, {
 			full_punch_interval = 1.0,
 			damage_groups = {fleshy = damage},
 		}, vector.direction(pos, obj_pos))
 	end
 end
 
-function mob_class:entity_physics(pos,radius) return blast_damage(pos,radius) end
+function mob_class:entity_physics(pos,radius)
+	return blast_damage (pos,radius, self.object)
+end
 
-local los_switcher = false
-local height_switcher = false
+function mob_class:attack_player_allowed (player)
+	return vlf_vars.difficulty ~= 0
+		and vlf_gamemode.get_gamemode (player) ~= "creative"
+		and player:get_hp () > 0
+end
 
--- path finding and smart mob routine by rnd, line_of_sight and other edits by Elkien3
-function mob_class:smart_mobs(s, p, dist, dtime)
+function mob_class:standing_on_walkable ()
+	local def = minetest.registered_nodes [self.standing_on]
+	return def and def.walkable
+end
 
-	local stepheight = self.object:get_properties().stepheight
-	local s1 = self.path.lastpos
+-- Apply projectile knockback.
+function mob_class:projectile_knockback (factor, dir)
+	local velocity = self.object:get_velocity ()
+	local standing = self:standing_on_walkable ()
+	local resistance = self.knockback_resistance
+	local knockback
+		= vlf_util.calculate_knockback (velocity, factor * 0.5,
+						resistance,
+						standing, dir.x, dir.z)
 
-	local target_pos = self.attack:get_pos()
+	if self.animation.run_end then
+		self:set_animation ("run")
+	elseif self.animation.walk_end then
+		self:set_animation ("walk")
+	end
+	self.frame_speed_multiplier=2.3
+	self.object:set_velocity (knockback)
+	minetest.after(0.2, function()
+			       if self and self.object then
+				       self.frame_speed_multiplier=1
+			       end
+	end)
+end
 
-	-- is it becoming stuck?
-	if math.abs(s1.x - s.x) + math.abs(s1.z - s.z) < .5 then
-		self.path.stuck_timer = self.path.stuck_timer + dtime
+function mob_class:retaliate_against (source)
+	if self.attack ~= source then
+		self:do_attack (source, 15)
 	else
-		self.path.stuck_timer = 0
+		self.sight_persistence = 15
 	end
+end
 
-	self.path.lastpos = {x = s.x, y = s.y, z = s.z}
-
-	local use_pathfind = false
-	local has_lineofsight = minetest.line_of_sight(
-		{x = s.x, y = (s.y) + .5, z = s.z},
-		{x = target_pos.x, y = (target_pos.y) + 1.5, z = target_pos.z}, .2)
-
-	-- im stuck, search for path
-	if not has_lineofsight then
-
-		if los_switcher == true then
-			use_pathfind = true
-			los_switcher = false
-		end -- cannot see target!
+local function source_is_player_or_tamed_wolf (vlf_reason)
+	local source = vlf_reason.source
+	if source:is_player () then
+		return source:get_player_name ()
 	else
-		if los_switcher == false then
-
-			los_switcher = true
-			use_pathfind = false
-
-			minetest.after(1, function(self)
-				if not self.object:get_luaentity() then
-					return
-				end
-				if has_lineofsight then self.path.following = false end
-			end, self)
-		end -- can see target!
-	end
-
-	if self:check_timer("stuck_timer", stuck_timeout) and not self.path.following  then
-		use_pathfind = true
-		self.path.stuck_timer = 0
-
-		minetest.after(1, function(self)
-			if not self.object:get_luaentity() then
-				return
-			end
-			if has_lineofsight then self.path.following = false end
-		end, self)
-	end
-
-	if self:check_timer("stuck_path_timer", stuck_path_timeout) and self.path.following then
-
-		use_pathfind = true
-		minetest.after(1, function(self)
-			if not self.object:get_luaentity() then
-				return
-			end
-			if has_lineofsight then self.path.following = false end
-		end, self)
-	end
-
-	if math.abs(vector.subtract(s,target_pos).y) > stepheight then
-
-		if height_switcher then
-			use_pathfind = true
-			height_switcher = false
-		end
-	else
-		if not height_switcher then
-			use_pathfind = false
-			height_switcher = true
+		local entity = source:get_luaentity ()
+		if entity and entity.name == "mobs_mc:wolf"
+			and entity.tamed then
+			return entity.owner
 		end
 	end
-
-	if use_pathfind then
-		-- lets try find a path, first take care of positions
-		-- since pathfinder is very sensitive
-		-- round position to center of node to avoid stuck in walls
-		-- also adjust height for player models!
-
-		s.x = math.floor(s.x + 0.5)
-		s.z = math.floor(s.z + 0.5)
-
-		local ssight, sground = minetest.line_of_sight(s, {
-			x = s.x, y = s.y - 4, z = s.z}, 1)
-
-		-- determine node above ground
-		if not ssight then
-			s.y = sground.y + 1
-		end
-
-		local p1 = self.attack:get_pos()
-
-		p1.x = math.floor(p1.x + 0.5)
-		p1.y = math.floor(p1.y + 0.5)
-		p1.z = math.floor(p1.z + 0.5)
-
-		local dropheight = 12
-		if self.fear_height ~= 0 then dropheight = self.fear_height end
-		local jumpheight = 0
-		if self.jump and self.jump_height >= 4 then
-			jumpheight = math.min(math.ceil(self.jump_height / 4), 4)
-		elseif stepheight > 0.5 then
-			jumpheight = 1
-		end
-		self.path.way = minetest.find_path(s, p1, 16, jumpheight, dropheight, "A*_noprefetch")
-
-		self:set_state("")
-		self:do_attack(self.attack)
-
-		-- no path found, try something else
-		if not self.path.way then
-
-			self.path.following = false
-			-- will try again in 2 seconds
-		elseif s.y < p1.y and (not self.fly) then
-			self:do_jump() --add jump to pathfinding
-			self.path.following = true
-			-- Yay, I found path!
-			-- TODO: Implement war_cry sound without being annoying
-			--self:mob_sound("war_cry", true)
-		else
-			self:set_velocity(self.walk_velocity)
-
-			-- follow path now that it has it
-			self.path.following = true
-		end
-	end
+	return nil
 end
 
-function mob_class:attack_players_and_npcs()
-	if not damage_enabled or
-	peaceful_mode or
-	self.state == "attack" or
-	self.passive or
-	self:day_docile() or
-	self.type ~= "monster" or
-	not self.attack_type
-	then return end
+-- Register damage delivered by punches or other means, retaliate, and
+-- summon reinforcements.
+function mob_class:receive_damage (vlf_reason, damage)
+	local source = vlf_reason.source
+	self.health = self.health - damage
 
-	local pos = self.object:get_pos()
-	local objs = minetest.get_objects_inside_radius(pos, self.view_range)
-	for _,obj in pairs(objs) do
-		if self:line_of_sight(pos, obj:get_pos(), 2) then
-			local l = obj:get_luaentity()
-			if obj:is_player() then
-				self:do_attack(obj)
-				break
-			elseif self.attack_npcs and (l and l.type == "npc") then
-				self:do_attack(obj)
-				break
-			end
+	if not source then
+		self:check_for_death (vlf_reason, damage)
+		return true
+	end
+
+	local name = source_is_player_or_tamed_wolf (vlf_reason)
+	if name then
+		self.last_player_hit_time = minetest.get_gametime ()
+		self.last_player_hit_name = name
+	end
+
+	if source:is_player () and source:get_player_name () == self.owner then
+		self:check_for_death (vlf_reason, damage)
+		return true
+	end
+
+	if damage < 0 then
+		-- Healing.
+		return true
+	end
+
+	-- Attack puncher if necessary.
+	if (self.passive == false or self.retaliates)
+		and (self.child == false or self.type == "monster")
+		and source ~= self.object then
+		if not self.passive_towards_players
+			or not source:is_player () then
+			self:retaliate_against (source)
 		end
 	end
 
-	return false
-end
+	if source then
+		self._recent_attacker = source
+		self._recent_attacker_age = 0
+	end
+	self._last_attacker = source
 
-function mob_class:attack_specific()
-	if not self.specific_attack or
-	not self.attack_type or
-	self.state == "attack" or
-	(not self.damage or self.damage == 0) or
-	(self.passive and not self.aggro)
-	then return end
+	-- Alert others to the attack.
+	if source and source:get_pos () and self.health > 0 then
+		self:call_group_attack (source)
 
-	local pos = self.object:get_pos()
-	local objs = minetest.get_objects_inside_radius(pos, self.view_range)
-	for _,obj in pairs(objs) do
-		if obj:is_player() and table.indexof(self.specific_attack,"player") and self.aggro then
-			self:do_attack(obj)
-			break
-		end
-		local l = obj:get_luaentity()
-		if l and l.is_mob then
-			if table.indexof(self.specific_attack,l.name) ~= -1 and self:line_of_sight(pos, obj:get_pos(), 2) then
-				self:do_attack(obj)
-				break
-			end
+		if self.runaway then
+			self:do_runaway (source)
 		end
 	end
-end
-
-function mob_class:attack_monsters()
-	if not self.attack_type or self.type ~= "npc" or self.state == "attack" then return end
-
-	local pos = self.object:get_pos()
-	local objs = minetest.get_objects_inside_radius(pos, self.view_range)
-	for _,obj in pairs(objs) do
-		local l = obj:get_luaentity()
-		if l and l.type == "monster" and self:target_visible(pos, obj) then
-			self:do_attack(obj)
-			break
-		end
-	end
-end
-
--- dogshoot attack switch and counter function
-function mob_class:dogswitch(dtime)
-
-	-- switch mode not activated
-	if not self.dogshoot_switch
-	or not dtime then
-		return 0
-	end
-
-	self.dogshoot_count = self.dogshoot_count + dtime
-
-	if (self.dogshoot_switch == 1
-	and self.dogshoot_count > self.dogshoot_count_max)
-	or (self.dogshoot_switch == 2
-	and self.dogshoot_count > self.dogshoot_count2_max) then
-
-		self.dogshoot_count = 0
-
-		if self.dogshoot_switch == 1 then
-			self.dogshoot_switch = 2
-		else
-			self.dogshoot_switch = 1
-		end
-	end
-
-	return self.dogshoot_switch
-end
-
--- no damage to nodes explosion
-function mob_class:safe_boom(pos, strength, no_remove)
-	minetest.sound_play(self.sounds and self.sounds.explode or "tnt_explode", {
-		pos = pos,
-		gain = 1.0,
-		max_hear_distance = self.sounds and self.sounds.distance or 32
-	}, true)
-	local radius = strength
-	blast_damage(pos, radius)
-	vlf_mobs.effect(pos, 32, "vlf_particles_smoke.png", radius * 3, radius * 5, radius, 1, 0)
-	if not no_remove then
-		if self.is_mob then
-			self:safe_remove()
-		else
-			self.object:remove()
-		end
-	end
-end
-
-
--- make explosion with protection and tnt mod check
-function mob_class:boom(pos, strength, fire, no_remove)
-	if mobs_griefing and not minetest.is_protected(pos, "") then
-		vlf_explosions.explode(pos, strength, { fire = fire }, self.object)
-	else
-		vlf_mobs.mob_class.safe_boom(self, pos, strength, no_remove) --need to call it this way bc self can be the "arrow" object here
-	end
-	if not no_remove then
-		if self.is_mob then
-			self:safe_remove()
-		else
-			self.object:remove()
-		end
-	end
-end
-
-local function angry_eyes(self)
-	local textures = self.object:get_properties().textures[1]
-	self.texture_holder = textures
-	self.object:set_properties({textures = { textures.."^mobs_mc_wolf_angry_eyes.png"}})
+	self:check_for_death (vlf_reason, damage)
+	return true
 end
 
 -- deal damage and effects when mob punched
 function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
-
 	local is_player = hitter and hitter:is_player()
 	local hitter_playername = is_player and hitter:get_player_name()
-
 	if hitter_playername and hitter_playername ~= "" then
 		doc.mark_entry_as_revealed(hitter_playername, "mobs", self.name)
+		vlf_potions.update_haste_and_fatigue(hitter)
 	end
 
 	if self.do_punch then
@@ -361,31 +178,15 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 	end
 
 	if is_player then
-		self.last_player_hit_time = minetest.get_gametime()
-		self.last_player_hit_name = hitter_playername
 		-- is mob protected?
 		if self.protected and minetest.is_protected(self.object:get_pos(), hitter_playername) then
 			return
 		end
-
-		vlf_entity_effects.update_haste_and_fatigue(hitter)
-		if minetest.is_creative_enabled(hitter_playername) then
-			-- Instantly kill mob after a slight delay.
-			-- Without this delay the node behind would be dug by the punch as well.
-			minetest.after(0.15, function(self)
-				if self and self.object and self.object:get_pos() then
-					self.health = 0
-				end
-			end, self)
-		end
-
-		-- set/update 'drop xp' timestamp if hitted by player
-		self.xp_timestamp = minetest.get_us_time()
 	end
 
 
 	-- punch interval
-	local weapon = hitter:get_wielded_item()
+	local weapon = hitter and vlf_util.get_wielditem (hitter)
 	local punch_interval = 1.4
 
 	-- exhaust attacker
@@ -412,8 +213,8 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 	end
 
 	-- strength and weakness effects
-	local strength = vlf_entity_effects.get_effect(hitter, "strength")
-	local weakness = vlf_entity_effects.get_effect(hitter, "weakness")
+	local strength = vlf_potions.get_effect(hitter, "strength")
+	local weakness = vlf_potions.get_effect(hitter, "weakness")
 	local str_fac = strength and strength.factor or 1
 	local weak_fac = weakness and weakness.factor or 1
 	damage = damage * str_fac * weak_fac
@@ -442,601 +243,1207 @@ function mob_class:on_punch(hitter, tflp, tool_capabilities, dir)
 	and minetest.is_creative_enabled(hitter_playername) ~= true
 	and tool_capabilities
 	and tool_capabilities.punch_attack_uses
-	and tool_capabilities.punch_attack_uses > 0 then
-		local weapon = hitter:get_wielded_item()
+	and tool_capabilities.punch_attack_uses > 0
+	and weapon then
 		local wear = math.floor(65535/tool_capabilities.punch_attack_uses)
 		weapon:add_wear(wear)
 		hitter:set_wielded_item(weapon)
 	end
 
-	local die = false
-
-
 	if damage >= 0 then
-		-- only play hit sound and show blood effects if damage is 1 or over; lower to 0.1 to ensure armor works appropriately.
-		if damage >= 0.1 then
+		if damage > 0 then
 			-- weapon sounds
 			if weapon:get_definition().sounds ~= nil then
 
 				local s = math.random(0, #weapon:get_definition().sounds)
 
 				minetest.sound_play(weapon:get_definition().sounds[s], {
-					object = self.object, --hitter,
-					max_hear_distance = 8
-				}, true)
+							    object = self.object, --hitter,
+							    max_hear_distance = 8
+										       }, true)
 			else
 				minetest.sound_play("default_punch", {
-					object = self.object,
-					max_hear_distance = 5
-				}, true)
-			end
-
-			self:damage_effect(damage)
-
-			-- do damage
-			local vlf_reason = {}
-			vlf_damage.from_punch(vlf_reason, hitter)
-			vlf_damage.finish_reason(vlf_reason)
-			vlf_util.deal_damage(self.object, damage, vlf_reason)
-
-			-- skip future functions if dead, except alerting others
-			if self:check_for_death( "hit", {type = "punch", puncher = hitter}) then
-				die = true
+							    object = self.object,
+							    max_hear_distance = 5
+								     }, true)
 			end
 		end
-		-- knock back effect (only on full punch)
-		if self.knock_back
-		and tflp >= punch_interval then
-			-- direction error check
-			dir = dir or {x = 0, y = 0, z = 0}
 
-			local v = self.object:get_velocity()
-			if not v then return end
-			local r = 1.4 - math.min(punch_interval, 1.4)
-			local kb = r * (math.abs(v.x)+math.abs(v.z))
-			local up = 2
-
-			if die==true then
-				kb=kb*2
-			end
-
-			-- if already in air then dont go up anymore when hit
-			if math.abs(v.y) > 0.1
-			or self.fly then
-				up = 0
-			end
-
-
-			-- check if tool already has specific knockback value
-			if tool_capabilities.damage_groups["knockback"] then
-				kb = tool_capabilities.damage_groups["knockback"]
-			else
-				kb = kb * 1.5
-			end
-
-
-			local luaentity
-			if hitter then
-				luaentity = hitter:get_luaentity()
-			end
-			if is_player then
-				local wielditem = hitter:get_wielded_item()
-				kb = kb + 3 * vlf_enchanting.get_enchantment(wielditem, "knockback")
-			elseif luaentity and luaentity._knockback then
-				kb = kb + luaentity._knockback
-			end
-			self._kb_turn = true
-			self._turn_to=self.object:get_yaw()-1.57
-			self.frame_speed_multiplier=2.3
-			if self.animation.run_end then
-				self:set_animation( "run")
-			elseif self.animation.walk_end then
-				self:set_animation( "walk")
-			end
-			minetest.after(0.2, function()
-				if self and self.object then
-					self.frame_speed_multiplier=1
-					self._kb_turn = false
-				end
-			end)
-			self.object:add_velocity({
-				x = dir.x * kb,
-				y = up*2,
-				z = dir.z * kb
-			})
-
-			self.pause_timer = 0.25
+		-- Deal damage and run callbacks, e.g. to retaliate.
+		local vlf_reason = {}
+		vlf_damage.from_punch(vlf_reason, hitter)
+		vlf_damage.finish_reason(vlf_reason)
+		local damage = vlf_util.deal_damage(self.object, damage, vlf_reason)
+		if damage > 0 then
+			self:damage_effect (damage)
 		end
 	end -- END if damage
 
-	-- if skittish then run away
-	if hitter and hitter:get_pos() and not die and self.runaway == true and self.state ~= "flop" then
-		self:do_runaway(hitter)
-	end
+	-- knock back effect (only on full punch)
+	if (damage >= 0 or tool_capabilities.damage_groups.snowball_vulnerable
+		or tool_capabilities.damage_groups.egg_vulnerable)
+		and (self.knock_back and tflp >= punch_interval) then
+		-- direction error check
+		dir = dir or {x = 0, y = 0, z = 0}
 
-	-- attack puncher
-	if ( self.passive == false or self.retaliates )
-	and self.state ~= "flop"
-	and (self.child == false or self.type == "monster")
-	and hitter_playername ~= self.owner
-	and not vlf_mobs.invis[ hitter_playername or ""] then
-		if not die then
-			if self.name == "mobs_mc:wolf" then angry_eyes(self) end
-			-- attack whoever punched mob
-			self:set_state("")
-			self:do_attack(hitter)
-			self.aggro = true
+		local v = self.object:get_velocity()
+		if not v then return end
+		local r = 1.4 - math.min(punch_interval, 1.4)
+		local kb = r
+
+		-- check if tool already has specific knockback value
+		if tool_capabilities.damage_groups["knockback"] then
+			kb = tool_capabilities.damage_groups["knockback"]
+		else
+			kb = kb * 1.5
 		end
-	end
 
-	-- alert others to the attack
-	if hitter and hitter:get_pos() then
-		self:call_group_attack(hitter)
+
+		local wielditem = vlf_util.get_wielditem (hitter)
+		kb = kb + vlf_enchanting.get_enchantment (wielditem, "knockback")
+		self.frame_speed_multiplier=2.3
+		if self.animation.run_end then
+			self:set_animation ("run")
+		elseif self.animation.walk_end then
+			self:set_animation ("walk")
+		end
+		minetest.after(0.2, function()
+				       if self and self.object then
+					       self.frame_speed_multiplier=1
+				       end
+		end)
+
+		local standing = self:standing_on_walkable ()
+		v = vlf_util.calculate_knockback (v, kb * 0.5, self.knockback_resistance,
+						standing, dir.x, dir.z)
+		self.object:set_velocity (v)
 	end
 end
 
-function mob_class:do_runaway(hitter)
-	self:set_yaw( minetest.dir_to_yaw(vector.direction(hitter:get_pos(), self.object:get_pos())))
-	self:set_velocity( self.run_velocity)
-	self:set_state("runaway")
-	self:set_animation("run")
-	self.runaway_timer = 0
-	self.following = nil
+function mob_class:do_runaway ()
+	self.runaway_timer = 5
 end
 
 function mob_class:call_group_attack(hitter)
-	local name = hitter:get_player_name()
-	for _, obj in pairs(minetest.get_objects_inside_radius(hitter:get_pos(), self.view_range)) do
-		if self.name == "mobs_mc:wolf" then angry_eyes(self) end
+	for obj in minetest.objects_inside_radius(hitter:get_pos(), self.view_range) do
 		local ent = obj:get_luaentity()
 		if ent then
 			-- only alert members of same mob or friends
-			if ent.group_attack
-			and ent.state ~= "attack"
-			and ent.owner ~= name then
+			if ent.group_attack then
 				if ent.name == self.name then
 					ent:do_attack(hitter)
 				elseif type(ent.group_attack) == "table" then
 					if table.indexof(ent.group_attack, self.name) ~= -1 then
-						ent.aggro = true
 						ent:do_attack(hitter)
 					end
 				end
 			end
+		end
+	end
+end
 
-			-- have owned mobs attack player threat
-			if ent.owner == name and ent.owner_loyal then
-				ent:do_attack(self.object)
+function mob_class:should_attack (object)
+	local entity = object:get_luaentity ()
+	local specific = self.specific_attack or {}
+	if object == self.object then
+		return false
+	elseif self._restriction_center
+		and not self:node_in_restriction (object:get_pos ()) then
+		return false
+	elseif entity and entity.is_mob then
+		if entity.health <= 0 then
+			return false
+		end
+		if not entity:valid_enemy () then
+			return false
+		end
+		if self.attack_animals and entity.passive then
+			return true
+		end
+
+		if self.attack_npcs and entity.type == "npc" then
+			return true
+		end
+
+		if self.attacks_monsters and entity.type == "monster" then
+			return true
+		end
+
+		if table.indexof (specific, entity.name) ~= -1 then
+			return true
+		end
+	elseif object:is_player () and self:attack_player_allowed (object) then
+		return (self.type == "monster" and not self._neutral_to_players)
+			or table.indexof (specific, "player") ~= -1
+	end
+
+	return false
+end
+
+function mob_class:should_continue_to_attack (object)
+	if object:is_player () and not self:attack_player_allowed (object) then
+		return false
+	elseif self._restriction_center
+		and not self:node_in_restriction (object:get_pos ()) then
+		return false
+	end
+	local entity = object:get_luaentity ()
+	if entity and entity.is_mob
+		and (entity.dead or not entity:valid_enemy ()) then
+		return false
+	end
+	return object:get_hp () > 0
+end
+
+------------------------------------------------------------------------
+-- Combat mechanics.
+------------------------------------------------------------------------
+
+function mob_class:attack_bowshoot (self_pos, dtime, target_pos, line_of_sight)
+	if not self.attacking then
+		-- Initialize parameters consulted during the attack.
+		self._target_visible_time = 0
+		self._strafe_time = -1 -- Don't strafe.
+		self._z_strafe = 1
+		self._x_strafe = 1
+		self._shoot_timer = 0
+		self.attacking = true
+	end
+	local vistime = self._target_visible_time
+	local dist = vector.distance (self_pos, target_pos)
+	local shoot_pos = {
+		x = self_pos.x,
+		y = self_pos.y + self.shoot_offset,
+		z = self_pos.z,
+	}
+	local target_bb = self.attack:get_properties ()
+	local collisionbox = target_bb.collisionbox
+	local target = {
+		x = target_pos.x,
+		y = target_pos.y + (collisionbox[5] - collisionbox[2]) * 0.33,
+		z = target_pos.z,
+	}
+
+	if line_of_sight then
+		if vistime < 0 then
+			vistime = 0
+		end
+		vistime = vistime + dtime
+	else
+		if vistime > 0 then
+			vistime = 0
+		end
+		vistime = vistime - dtime
+	end
+
+	-- Stop if the target is in range and has been for a second.
+	if dist < 15 and vistime >= 1 then
+		if not self:navigation_finished () then
+			self:cancel_navigation ()
+			self:halt_in_tracks ()
+		end
+		self._strafe_time = self._strafe_time + dtime
+		self._timers.bowshoot_pathfind = 0
+	else
+		if self.movement_goal == "strafe" then
+			self:halt_in_tracks ()
+		end
+		if self:check_timer ("bowshoot_pathfind", 0.5) then
+			self:gopath (target_pos, self.pursuit_bonus)
+		end
+		self._strafe_time = -1
+	end
+
+	-- Potentially switch directions after having strafed
+	-- for 1 second.
+	if self._strafe_time >= 1 then
+		if math.random (10) <= 3 then
+			self._z_strafe = -self._z_strafe
+		end
+		if math.random (10) <= 3 then
+			self._x_strafe = -self._x_strafe
+		end
+		self._strafe_time = 0
+	end
+	local mover = self:mob_controlling_movement ()
+	-- Target in range?
+	if self._strafe_time > -1 then
+		-- Don't allow target to approach too close or move
+		-- too far.
+		if dist > 15 * 0.75 then
+			self._z_strafe = 1
+		elseif dist < 15 * 0.55 then
+			self._z_strafe = -1
+		end
+
+		mover.movement_goal = "strafe"
+		mover.movement_velocity = mover.movement_speed * 0.25
+		mover.strafe_direction = {
+			x = self._x_strafe * 0.5,
+			z = self._z_strafe * 0.5,
+		}
+		self:look_at (target_pos)
+		mover:set_animation ("walk")
+	end
+
+	if self._using_wielditem then
+		if not line_of_sight and vistime < -3 then
+			self:release_wielditem ()
+		elseif line_of_sight then
+			if self._using_wielditem > 1.0 then
+				self:release_wielditem ()
+				local vec = {
+					x = target.x - shoot_pos.x,
+					y = target.y - shoot_pos.y,
+					z = target.z - shoot_pos.z,
+				}
+
+				-- Offset by distance.
+				vec.y = vec.y + 0.12 * vector.length (vec)
+
+				if self.shoot_arrow then
+					local offset = self.shoot_offset
+					local origin = vector.offset (self_pos, 0, offset, 0)
+					vec = vector.normalize (vec)
+					self:shoot_arrow (origin, vec)
+				end
+				self._shoot_timer = self.shoot_interval
+			end
+		end
+	else
+		self._shoot_timer = math.max (0, self._shoot_timer - dtime)
+		if self._shoot_timer <= 0 then
+			self:use_wielditem ()
+		end
+	end
+
+	self._target_visible_time = vistime
+end
+
+function mob_class:custom_attack ()
+	-- Punch player (or what player is attached to)
+	local attached = self.attack:get_attach ()
+	local attack = self.attack
+	if attached then
+		attack = attached
+	end
+	local wielditem = self:get_wielditem ()
+	local damage = {
+		full_punch_interval = 1.0,
+		damage_groups = {fleshy = self.damage},
+	}
+	if not wielditem:is_empty () then
+		damage = table.copy (wielditem:get_tool_capabilities ())
+		damage.damage_groups = damage.damage_groups
+			and table.copy (damage.damage_groups) or {}
+		-- Wielditems used by mobs don't sustain wear in
+		-- Minecraft, and their attack damage is combined with
+		-- the mob's base attack damage.
+		local tool_damage = damage.damage_groups.fleshy
+		if not tool_damage then
+			damage.damage_groups.fleshy = self.damage
+		else
+			-- 1 must be subtracted from the total,
+			-- because damage values in minetest tool
+			-- definitions include that inflicted by the
+			-- player's hand.
+			tool_damage = math.max (tool_damage - 1, 0)
+			damage.damage_groups.fleshy = tool_damage + self.damage
+		end
+	end
+	if self.animation.punch_start then
+		local frames
+			= self.animation.punch_end - self.animation.punch_start
+		local speed = self.animation.punch_speed
+			or self.animation.speed_normal or 25
+		local min_duration = (frames / speed - 0.09)
+		self:set_animation ("punch")
+		-- FIXME: this is hideous but necessary to prevent punch
+		-- animations from being overwritten as this mob continues
+		-- pursuing its target, having inflicted knockback.
+		self._punch_animation_timeout = min_duration
+	end
+	self:mob_sound ("attack")
+	attack:punch (self.object, 1.0, damage, nil)
+
+	if self.ignite_targets_while_burning
+		and vlf_burning.is_burning (self.object) then
+		if self:get_wielditem ():is_empty () then
+			local self_pos = self.object:get_pos ()
+			local difficulty
+				= vlf_worlds.get_regional_difficulty (self_pos)
+			if math.random () < difficulty * 0.3 then
+				vlf_burning.set_on_fire (attack, difficulty * 2)
+			end
+		end
+	end
+
+	if self.dealt_effect then
+		local duration = self.dealt_effect.dur
+		if vlf_vars.difficulty <= 1 and self.dealt_effect.dur_easy then
+			duration = self.dealt_effect.dur_easy
+		elseif vlf_vars.difficulty > 2 and self.dealt_effect.dur_hard then
+			duration = self.dealt_effect.dur_hard
+		end
+
+		if self.dealt_effect.respect_local_difficulty then
+			local self_pos = self.object:get_pos ()
+			local factor = vlf_worlds.get_regional_difficulty (self_pos)
+			duration = duration * factor
+		end
+		if duration > 0 then
+			vlf_potions.give_effect_by_level (self.dealt_effect.name, attack,
+							  self.dealt_effect.level, duration)
+		end
+	end
+end
+
+function mob_class:pre_melee_attack (distance, delay, line_of_sight)
+	return distance <= self.reach and delay == 0 and line_of_sight
+end
+
+function mob_class:attack_melee (self_pos, dtime, target_pos, line_of_sight)
+	if not self.attacking then
+		-- Initialize attack parameters.
+		self._target_pos = nil
+		self._gopath_delay = 0
+		self._attack_delay = 0
+		self.attacking = true
+		self._punch_animation_timeout = 0
+	end
+
+	if self._punch_animation_timeout then
+		self._punch_animation_timeout
+			= math.max (self._punch_animation_timeout - dtime, 0)
+		if self._punch_animation_timeout == 0 then
+			if self:navigation_finished () then
+				self:set_animation ("stand")
+			else
+				self:set_animation ("walk")
+			end
+			self._punch_animation_timeout = nil
+		end
+	end
+
+	local delay = math.max (self._gopath_delay - dtime, 0)
+	local distance = vector.distance (self_pos, target_pos)
+
+	-- If the target is detectable...
+	if (self._melee_esp or line_of_sight)
+		-- ...and the navigation timeout has elapsed...
+		and delay == 0
+		-- ..and this mob has yet to arrive at its target, or
+		-- the path should be recomputed...
+		and (not self._target_pos
+			or vector.distance (target_pos, self._target_pos) >= 1
+			or math.random (100) <= 5) then
+		self._target_pos = target_pos
+
+		delay = (4 + math.random (8) - 1) / 20.0
+
+		-- How distant is the target?
+		if distance > 32 then
+			delay = delay + 0.5
+		elseif distance > 16 then
+			delay = delay + 0.25
+		end
+
+		-- Try to pathfind.
+		if not self:gopath (target_pos, self.pursuit_bonus) then
+			delay = delay + 0.75
+		end
+	end
+	self._gopath_delay = delay
+
+	-- Can the target be attacked?
+	local delay = math.max (self._attack_delay - dtime, 0)
+	if self:pre_melee_attack (distance, delay, line_of_sight) then
+		self:look_at (target_pos)
+		self:custom_attack ()
+		delay = self.melee_interval
+	end
+	self._attack_delay = delay
+end
+
+function mob_class:discharge_ranged (self_pos, target_pos)
+	local p = target_pos
+	local shoot_offset
+		= (self.collisionbox[2] + self.collisionbox[5]) / 2
+			+ self.shoot_offset
+	local s = vector.offset (self_pos, 0, shoot_offset, 0)
+	local vec = vector.subtract (p, s)
+
+	self:mob_sound ("shoot_attack")
+	-- Shoot arrow
+	if minetest.registered_entities[self.arrow] or self.shoot_arrow then
+		if self._projectile_gravity then
+			-- Offset by distance.
+			vec.y = vec.y + 0.12 * vector.length (vec)
+		end
+
+		vec = vector.normalize (vec)
+
+		if self.shoot_arrow then
+			self:shoot_arrow (s, vec)
+		else
+			local arrow = minetest.add_entity (s, self.arrow)
+			if not arrow then
+				return
+			end
+			self.firing = true
+			minetest.after(1, function(self)
+					       self.firing = false
+			end, self)
+			local ent = arrow:get_luaentity()
+			ent.switch = 1
+			ent.owner_id = tostring(self.object) -- add unique owner id to arrow
+
+			-- important for vlf_shields
+			arrow:set_velocity (vector.multiply (vec, ent.velocity))
+			ent._shooter = self.object
+			ent._saved_shooter_pos = self.object:get_pos()
+			if ent.homing then
+				ent._target = self.attack
 			end
 		end
 	end
 end
 
-function mob_class:check_aggro(dtime)
-	if self.name == "mobs_mc:wolf" then self.object:set_properties({ textures = { self.texture_holder }}) end
-	if not self.aggro or not self.attack then return end
-	if not self:check_timer("check_aggro", 5) then return end
-	if not self.attack:get_pos() or vector.distance(self.attack:get_pos(),self.object:get_pos()) > 128 then
-		self:clear_aggro()
+function mob_class:attack_ranged (self_pos, dtime, target_pos, line_of_sight)
+	local vistime, min_distance
+	if not self.attacking then
+		self._target_visible_time = 0
+		self._shoot_timer = self.ranged_interval_min
+		self.attacking = true
+	end
+	vistime = self._target_visible_time
+
+	if line_of_sight then
+		vistime = vistime + dtime
+	else
+		vistime = 0
+	end
+	self._target_visible_time = vistime
+	min_distance = self.ranged_attack_radius
+
+	local distance = vector.distance (self_pos, target_pos)
+	if distance < min_distance and vistime > 0.25 then
+		self:cancel_navigation ()
+		self:halt_in_tracks ()
+	else
+		if self:check_timer ("ranged_pathfind", 0.5) then
+			self:gopath (target_pos, self.pursuit_bonus)
+		end
+	end
+	local shoot_time = self._shoot_timer
+	shoot_time = math.max (0, shoot_time - dtime)
+	if line_of_sight and self:navigation_finished () then
+		self:look_at (target_pos)
+	end
+	if shoot_time == 0 then
+		if line_of_sight then
+			-- Attack target.
+			self:discharge_ranged (self_pos, target_pos)
+
+			-- Derive the delay from the distance to the
+			-- target.
+			local rem = distance / min_distance
+			local rem = math.max (0.1, math.min (1.0, rem))
+			self._shoot_timer = rem * (self.ranged_interval_max
+							- self.ranged_interval_min)
+				+ self.ranged_interval_min
+			return
+		end
+
+		-- Likewise, but don't confine it to a fixed
+		-- range.
+		local rem = distance / min_distance
+		self._shoot_timer = rem * (self.ranged_interval_max
+					   - self.ranged_interval_min)
+			+ self.ranged_interval_min
+	else
+		self._shoot_timer = shoot_time
 	end
 end
 
-
-
-function mob_class:clear_aggro()
-	if self.name == "mobs_mc:wolf" then
-		self.object:set_properties({ textures = { self._texture_holder }})
+function mob_class:load_crossbow ()
+	local loaded = ItemStack (self._wielditem)
+	local name = "vlf_bows:crossbow_loaded"
+	if loaded:get_name () == "vlf_bows:crossbow_enchanted" then
+		name = "vlf_bows:crossbow_loaded_enchanted"
 	end
-	self:set_state("stand")
-	self:set_velocity( 0)
-	self:set_animation( "stand")
-
-	self.attack = nil
-	self.aggro = nil
-
-	self.v_start = false
-	self.timer = 0
-	self.blinktimer = 0
-	self.path.way = nil
+	loaded:set_name (name)
+	self:set_wielditem (loaded)
 end
 
-function mob_class:do_states_attack (dtime)
-	local yaw
-	local attacked
-	local s = self.object:get_pos()
-	local p = self.attack:get_pos() or s
+function mob_class:unload_crossbow ()
+	local loaded = ItemStack (self._wielditem)
+	local name = "vlf_bows:crossbow"
+	if loaded:get_name () == "vlf_bows:crossbow_loaded_enchanted" then
+		name = "vlf_bows:crossbow_enchanted"
+	end
+	loaded:set_name (name)
+	self:set_wielditem (loaded)
+end
 
-	-- stop attacking if player invisible or out of range
-	if not self.attack
-			or not self.attack:get_pos()
-			or not self:object_in_range(self.attack)
-			or self.attack:get_hp() <= 0
-			or (self.attack:is_player() and vlf_mobs.invis[ self.attack:get_player_name() ]) then
+function mob_class:is_crossbow_loaded ()
+	local loaded = ItemStack (self._wielditem)
+	local name = loaded:get_name ()
+	return name == "vlf_bows:crossbow_loaded"
+		or name == "vlf_bows:crossbow_loaded_enchanted"
+end
 
-		self:clear_aggro()
+function mob_class:attack_crossbow (self_pos, dtime, target_pos, line_of_sight)
+	if not self.attacking then
+		self._vistime = 0
+		self._time_to_next_repath = 0
+		self._shoot_delay = 0
+		-- 0: uncharged, 1: charging, 2: charged, 3: ready to attack.
+		self._crossbow_state = 0
+		self.attacking = true
+
+		if self:is_crossbow_loaded () then
+			self._crossbow_state = 2
+			self._shoot_delay = 1 + math.random (0, 20) * 0.05
+		end
+	end
+
+	local vistime = self._vistime
+
+	if line_of_sight then
+		vistime = math.max (vistime, 0) + dtime
+	else
+		vistime = math.min (vistime, 0) - dtime
+	end
+
+	local dist = vector.distance (self_pos, target_pos)
+	local should_pathfind = vistime < 0.25 or dist > self.ranged_attack_radius
+
+	if self._crossbow_backoff_threshold
+		and dist < self._crossbow_backoff_threshold
+		and line_of_sight then
+		self:cancel_navigation ()
+		local mover = self:mob_controlling_movement ()
+		mover.movement_goal = "strafe"
+		mover.movement_velocity = mover.movement_speed * 0.25
+		mover.strafe_direction = {
+			x = 0,
+			z = -1.0,
+		}
+		self:look_at (target_pos)
+		self:set_animation ("walk")
+	elseif should_pathfind then
+		self._time_to_next_repath
+			= self._time_to_next_repath - dtime
+		if self._time_to_next_repath <= 0 then
+			local speed = self.pursuit_bonus
+			if self._crossbow_state > 0 then
+				speed = speed * 0.5
+			end
+			self:gopath (target_pos, speed)
+			self._time_to_next_repath = math.random (2)
+		end
+	else
+		self._time_to_next_repath = 0
+		self:cancel_navigation ()
+		self:halt_in_tracks ()
+		self:look_at (target_pos)
+	end
+
+	if self._crossbow_state == 0 then
+		if not should_pathfind then
+			self._crossbow_state = 1
+			self:use_wielditem ()
+		end
+	elseif self._crossbow_state == 1 then
+		if not self._using_wielditem then
+			self._crossbow_state = 0
+		else
+			if self._using_wielditem
+				>= vlf_bows.CROSSBOW_CHARGE_TIME_FULL then
+				self:load_crossbow ()
+				self._crossbow_state = 2
+				self._shoot_delay = 1 + math.random (0, 20) * 0.05
+			end
+		end
+	elseif self._crossbow_state == 2 then
+		self._shoot_delay = self._shoot_delay - dtime
+		if self._shoot_delay <= 0 then
+			self._crossbow_state = 3
+		end
+	elseif self._crossbow_state == 3 and line_of_sight then
+		self._crossbow_state = 0
+		self:unload_crossbow ()
+		self:discharge_ranged (self_pos, target_pos)
+	end
+
+	self._vistime = vistime
+end
+
+function mob_class:reset_attack_type (newtype)
+	if newtype == self.attack_type then
 		return
 	end
 
-	local target_line_of_sight = self:target_visible(s)
+	self.attack_type = newtype
+	if self.attack then
+		self.attacking = false
+		self:attack_end ()
+		self:cancel_navigation ()
+		self:halt_in_tracks ()
+	end
+end
 
-	if not target_line_of_sight then
-		if self.target_time_lost then
-			if os.time() - self.target_time_lost > TIME_TO_FORGET_TARGET then
-				self.target_time_lost = nil
-				self:clear_aggro()
-				return
+------------------------------------------------------------------------
+-- Target acquisition.
+------------------------------------------------------------------------
+
+-- Ref: https://minecraft.wiki/w/Invisibility
+function mob_class:detection_multiplier_for_object (object)
+	local factor = 1.0
+
+	if vlf_potions.get_effect (object, "invisibility") then
+		factor = vlf_armor.get_armor_coverage (object)
+		if factor < 0.1 then
+			factor = 0.1
+		end
+		factor = factor * 0.7
+	end
+
+	factor = factor * vlf_armor.get_headpiece_factor (object, self.name)
+	return factor
+end
+
+function mob_class:valid_enemy ()
+	return true
+end
+
+function mob_class:default_rangecheck (self_pos, object)
+	local pos = object:get_pos ()
+	local factor = self:detection_multiplier_for_object (object)
+	local distance = vector.distance (self_pos, pos)
+	return distance <= self.view_range * factor
+end
+
+function mob_class:targets_for_attack_default (self_pos, esp)
+	return minetest.objects_inside_radius (self_pos, self.view_range)
+end
+
+function mob_class:attack_default (self_pos, dtime, esp)
+	local target, max_distance
+	for object in self:targets_for_attack_default (self_pos, esp) do
+		if self:should_attack (object) then
+			local pos = object:get_pos ()
+			local factor = self:detection_multiplier_for_object (object)
+			local distance = vector.distance (self_pos, pos)
+			if distance <= self.view_range * factor
+				and (not max_distance or distance < max_distance)
+				and (esp or self:target_visible (self_pos, object)) then
+				target = object
+				max_distance = distance
+			end
+		end
+	end
+	return target
+end
+
+function mob_class:target_detected (self_pos, target)
+	-- A value of true indicates that movement should be halted
+	-- while target_detected decides whether to initiate the
+	-- attack, while false, or nil, indicates to proceeed with it.
+	return false
+end
+
+function mob_class:attack_end ()
+	self:release_wielditem ()
+end
+
+function mob_class:check_attack (self_pos, dtime)
+	if not self.attack_type then
+		return false
+	end
+	if not self.attack then
+		if not self:check_timer ("seek_target", 0.5)
+			and not self._attack_target_detected then
+			return false
+		end
+
+		if self.attack_custom then
+			if self:attack_custom (self_pos, dtime) then
+				return "attack"
 			end
 		else
-			self.target_time_lost = os.time()
+			local target = self:attack_default (self_pos, dtime, self.esp)
+			if target then
+				if self:target_detected (self_pos, target) then
+					-- Let self.attack remain nil
+					-- to revaluate whether to
+					-- begin attacking on the next
+					-- step.
+					if not self._attack_target_detected then
+						self._attack_target_detected = true
+						return "_attack_target_detected"
+					end
+					return true
+				end
+				self._attack_target_detected = false
+				self:do_attack (target)
+				return "attack"
+			end
 		end
 	else
-		self.target_time_lost = nil
-	end
-
-	-- calculate distance from mob and enemy
-	local dist = vector.distance(p, s)
-
-	if self.attack_type == "explode" then
-
-		if target_line_of_sight then
-			local vec = { x = p.x - s.x, z = p.z - s.z }
-			local yaw = (atan(vec.z / vec.x) +math.pi/ 2) - self.rotate
-			if p.x > s.x then yaw = yaw +math.pi end
-			self:set_yaw( yaw, 0, dtime)
+		local target_pos
+		if not is_valid (self.attack) then
+			self.attack = nil
+			self:attack_end ()
+			return true
 		end
-
-		local node_break_radius = self.explosion_radius or 1
-		local entity_damage_radius = self.explosion_damage_radius
-				or (node_break_radius * 2)
-
-		-- start timer when in reach and line of sight
-		if not self.v_start and dist <= self.reach and target_line_of_sight then
-			self.v_start = true
-			self.timer = 0
-			self.blinktimer = 0
-			self:mob_sound("fuse", nil, false)
-
-			-- stop timer if out of reach or direct line of sight
-		elseif self.allow_fuse_reset and self.v_start
-				and (dist >= self.explosiontimer_reset_radius or not target_line_of_sight) then
-			self.v_start = false
-			self.timer = 0
-			self.blinktimer = 0
-			self.blinkstatus = false
-			self:remove_texture_mod("^[brighten")
+		-- If it's no longer possible to attack the
+		-- target, abandon it immediately.
+		if not self:should_continue_to_attack (self.attack) then
+			self.attack = nil
+			self:attack_end ()
+			return true
 		end
-
-		-- walk right up to player unless the timer is active
-		if self.v_start and (self.stop_to_explode or dist < self.reach) or not target_line_of_sight then
-			self:set_velocity(0)
-		else
-			self:set_velocity(self.run_velocity)
+		target_pos = self.attack:get_pos ()
+		local distance = vector.distance (self_pos, target_pos)
+		if distance > self.tracking_distance then
+			self.attack = nil
+			self:attack_end ()
+			return true
 		end
+		local line_of_sight = self:target_visible (self_pos, self.attack)
+		if not self.esp and not line_of_sight then
+			local t = self.target_invisible_time
+			self.target_invisible_time = t - dtime
 
-		if self.animation and self.animation.run_start then
-			self:set_animation( "run")
-		else
-			self:set_animation( "walk")
-		end
-
-		if self.v_start then
-			self.timer = self.timer + dtime
-			self.blinktimer = (self.blinktimer or 0) + dtime
-
-			if self.blinktimer > 0.2 then
-				self.blinktimer = 0
-				if self.blinkstatus then
-					self:remove_texture_mod("^[brighten")
-				else
-					self:add_texture_mod("^[brighten")
-				end
-				self.blinkstatus = not self.blinkstatus
-			end
-
-			if self.timer > self.explosion_timer then
-				local pos = self.object:get_pos()
-
-				if mobs_griefing and not minetest.is_protected(pos, "") then
-					vlf_explosions.explode(vlf_util.get_object_center(self.object), self.explosion_strength, {}, self.object)
-				else
-					minetest.sound_play(self.sounds.explode, {
-						pos = pos,
-						gain = 1.0,
-						max_hear_distance = self.sounds.distance or 32
-					}, true)
-					self:entity_physics(pos,entity_damage_radius)
-					vlf_mobs.effect(pos, 32, "vlf_particles_smoke.png", nil, nil, node_break_radius, 1, 0)
-				end
-
-				if self.on_attack then
-					self:on_attack(dtime)
-				end
-				self:safe_remove()
-
+			if t < 0 then
+				self.attack = nil
+				self:attack_end ()
 				return true
 			end
-		end
-
-	elseif self.attack_type == "dogfight"
-			or (self.attack_type == "dogshoot" and self:dogswitch(dtime) == 2) and (dist >= self.avoid_distance or not self.shooter_avoid_enemy)
-			or (self.attack_type == "dogshoot" and dist <= self.reach and self:dogswitch() == 0) then
-
-		if self.fly
-				and dist > self.reach then
-
-			local p1 = s
-			local me_y = math.floor(p1.y)
-			local p2 = p
-			local p_y = math.floor(p2.y + 1)
-			local v = self.object:get_velocity()
-
-			if self:flight_check( s) then
-
-				if me_y < p_y then
-
-					self.object:set_velocity({
-						x = v.x,
-						y = 1 * self.walk_velocity,
-						z = v.z
-					})
-
-				elseif me_y > p_y then
-
-					self.object:set_velocity({
-						x = v.x,
-						y = -1 * self.walk_velocity,
-						z = v.z
-					})
-				end
-			else
-				if me_y < p_y then
-
-					self.object:set_velocity({
-						x = v.x,
-						y = 0.01,
-						z = v.z
-					})
-
-				elseif me_y > p_y then
-
-					self.object:set_velocity({
-						x = v.x,
-						y = -0.01,
-						z = v.z
-					})
-				end
-			end
-
-		end
-
-		-- rnd: new movement direction
-		if self.path.following
-				and self.path.way
-				and self.attack_type ~= "dogshoot" then
-
-			-- no paths longer than 50
-			if #self.path.way > 50
-					or dist < self.reach then
-				self.path.following = false
-				return
-			end
-
-			local p1 = self.path.way[1]
-
-			if not p1 then
-				self.path.following = false
-				return
-			end
-
-			if math.abs(p1.x-s.x) + math.abs(p1.z - s.z) < 0.6 then
-				-- reached waypoint, remove it from queue
-				table.remove(self.path.way, 1)
-			end
-
-			-- set new temporary target
-			p = {x = p1.x, y = p1.y, z = p1.z}
-		end
-
-		local vec = {
-			x = p.x - s.x,
-			z = p.z - s.z
-		}
-
-		yaw = (atan(vec.z / vec.x) + math.pi / 2) - self.rotate
-
-		if p.x > s.x then yaw = yaw + math.pi end
-
-		self:set_yaw( yaw, 0, dtime)
-
-		-- move towards enemy if beyond mob reach
-		if dist > self.reach then
-
-			-- path finding by rnd
-			if self.pathfinding -- only if mob has pathfinding enabled
-					and enable_pathfinding then
-
-				self:smart_mobs(s, p, dist, dtime)
-			end
-
-			if self:is_at_cliff_or_danger() then
-
-				self:set_velocity( 0)
-				self:set_animation( "stand")
-				local yaw = self.object:get_yaw() or 0
-				self:set_yaw( yaw + 0.78, 8)
-			else
-
-				if self.path.stuck then
-					self:set_velocity( self.walk_velocity)
-				else
-					self:set_velocity( self.run_velocity)
-				end
-
-				if self.animation and self.animation.run_start then
-					self:set_animation( "run")
-				else
-					self:set_animation( "walk")
-				end
-			end
-
-		else -- rnd: if inside reach range
-
-			self.path.stuck = false
-			self.path.stuck_timer = 0
-			self.path.following = false -- not stuck anymore
-
-			self:set_velocity( 0)
-
-			if not self.custom_attack then
-
-				if self.timer > self.dogfight_interval then
-
-					self.timer = 0
-
-					if self.double_melee_attack
-							and math.random(1, 2) == 1 then
-						self:set_animation( "punch2")
-					else
-						self:set_animation( "punch")
-					end
-
-					if self:target_visible(self.object:get_pos()) then
-						-- play attack sound
-						self:mob_sound("attack")
-
-						-- punch player (or what player is attached to)
-						local attached = self.attack:get_attach()
-						if attached then
-							self.attack = attached
-						end
-						self.attack:punch(self.object, 1.0, {
-							full_punch_interval = 1.0,
-							damage_groups = {fleshy = self.damage}
-						}, nil)
-						if self.dealt_effect then
-							vlf_entity_effects.give_effect_by_level(self.dealt_effect.name, self.attack,
-								self.dealt_effect.level, self.dealt_effect.dur)
-						end
-						attacked = true
-					end
-				end
-			else	-- call custom attack every second
-				if self.custom_attack
-						and self.timer > self.custom_attack_interval then
-
-					self.timer = 0
-
-					self:custom_attack(p)
-					attacked = true
-				end
-			end
-		end
-
-	elseif self.attack_type == "shoot"
-			or (self.attack_type == "dogshoot" and self:dogswitch(dtime) == 1)
-			or (self.attack_type == "dogshoot" and (dist > self.reach or dist < self.avoid_distance and self.shooter_avoid_enemy) and self:dogswitch() == 0) then
-
-		p.y = p.y - .5
-		s.y = s.y + .5
-
-		local dist = vector.distance(p, s)
-		local vec = {
-			x = p.x - s.x,
-			y = p.y - s.y,
-			z = p.z - s.z
-		}
-
-		yaw = (atan(vec.z / vec.x) +math.pi/ 2) - self.rotate
-
-		if p.x > s.x then yaw = yaw +math.pi end
-
-		self:set_yaw( yaw, 0, dtime)
-
-		local stay_away_from_player = vector.new(0,0,0)
-
-		--strafe back and fourth
-
-		--stay away from player so as to shoot them
-		if dist < self.avoid_distance and self.shooter_avoid_enemy then
-			self:set_animation( "shoot")
-			stay_away_from_player=vector.multiply(vector.direction(p, s), 0.33)
-		end
-
-		if self.strafes then
-			if not self.strafe_direction then
-				self.strafe_direction = 1.57
-			end
-			if math.random(40) == 1 then
-				self.strafe_direction = self.strafe_direction*-1
-			end
-			self.acc = vector.add(vector.multiply(vector.rotate_around_axis(vector.direction(s, p), vector.new(0,1,0), self.strafe_direction), 0.3*self.walk_velocity), stay_away_from_player)
 		else
-			self:set_velocity( 0)
+			self.target_invisible_time = self._sight_persistence
 		end
 
-		local p = self.object:get_pos()
-		local props = self.object:get_properties()
-		p.y = p.y + (props.collisionbox[2] + props.collisionbox[5]) / 2
+		local attack_type = self.attack_type
+		if attack_type == "null" then
+			if self.attack_null then
+				self:attack_null (self_pos, dtime, target_pos, line_of_sight)
+			end
+		elseif attack_type == "bowshoot" then
+			self:attack_bowshoot (self_pos, dtime, target_pos,
+					      line_of_sight)
+		elseif attack_type == "crossbow" then
+			self:attack_crossbow (self_pos, dtime, target_pos,
+					      line_of_sight)
+		elseif attack_type == "ranged" then
+			self:attack_ranged (self_pos, dtime, target_pos, line_of_sight)
+		elseif attack_type == "melee" then
+			self:attack_melee (self_pos, dtime, target_pos, line_of_sight)
+		else
+			minetest.log ("warning", "unknown attack type " .. self.attack_type)
+		end
 
-		if self.shoot_interval
-			and self.timer > self.shoot_interval
-			and not minetest.raycast(vector.add(p, vector.new(0,self.shoot_offset,0)), vector.add(self.attack:get_pos(), vector.new(0,1.5,0)), false, false):next()
-			and math.random(1, 100) <= 60 then
-			self.timer = 0
-			self:set_animation( "shoot")
+		return true
+	end
+	return false
+end
 
-			-- play shoot attack sound
-			self:mob_sound("shoot_attack")
+------------------------------------------------------------------------
+-- Item wielding.
+------------------------------------------------------------------------
 
-			-- Shoot arrow
-			if minetest.registered_entities[self.arrow] then
+local wielditem_props = {
+	visual = "wielditem",
+	visual_size = {
+		x = 0.21, y = 0.21,
+	},
+	physical = false,
+	pointable = false,
+	static_save = false,
+	wield_item = "vlf_core:barrier",
+}
 
-				local v = 1
-				local arrow
-				if not self.shoot_arrow then
-					self.firing = true
-					minetest.after(1, function(self)
-						self.firing = false
-					end, self)
-					arrow = minetest.add_entity(p, self.arrow)
-					local ent = arrow:get_luaentity()
-					if ent.velocity then
-						v = ent.velocity
-					end
-					ent.switch = 1
-					ent.owner_id = tostring(self.object) -- add unique owner id to arrow
+local wielditem_entity = {
+	initial_properties = wielditem_props,
+	on_step = function (self)
+		local parent = self.object:get_attach ()
+		if not parent then
+			self.object:remove ()
+			return
+		end
+	end,
+}
 
-					-- important for vlf_shields
-					ent._shooter = self.object
-					ent._saved_shooter_pos = self.object:get_pos()
-					if ent.homing then
-						ent._target = self.attack
-					end
-				end
+minetest.register_entity ("vlf_mobs:wielditem", wielditem_entity)
 
-				local amount = (vec.x * vec.x + vec.y * vec.y + vec.z * vec.z) ^ 0.5
-				-- offset makes shoot aim accurate
-				vec.y = vec.y + self.shoot_offset
-				vec.x = vec.x * (v / amount)
-				vec.y = vec.y * (v / amount)
-				vec.z = vec.z * (v / amount)
+function mob_class:wielditem_transform (info, stack)
+	local rot = info.rotation
+	local pos = info.position
+	local name = stack:get_name ()
+	local def = stack:get_definition ()
 
-				if self.shoot_arrow then
-					vec = vector.normalize(vec)
-					arrow = self:shoot_arrow(p, vec)
-				end
+	if info.toollike_position
+		and def and def._vlf_toollike_wield then
+		rot = info.toollike_rotation
+		pos = info.toollike_position
+	elseif info.bow_position
+		and minetest.get_item_group (name, "bow") > 0 then
+		rot = info.bow_rotation
+		pos = info.bow_position
+	elseif info.crossbow_position
+		and minetest.get_item_group (name, "crossbow") > 0 then
+		rot = info.crossbow_rotation
+		pos = info.crossbow_position
+	elseif info.blocklike_position
+		and def and def.inventory_image == "" then
+		rot = info.blocklike_rotation
+		pos = info.blocklike_position
+	end
+	return rot, pos, table.copy (wielditem_props.visual_size)
+end
 
-				if arrow then
-					arrow:set_velocity(vec)
-				end
-				attacked = true
+function mob_class:display_wielditem (offhand)
+	local info = offhand and self._offhand_wielditem_info
+		or self.wielditem_info
+	if not info then
+		return
+	end
+	local objectname = "_wielditem_object"
+	if offhand then
+		objectname = "_offhand_object"
+	end
+	local itemname = "_wielditem"
+	if offhand then
+		itemname = "_offhand_item"
+	end
+	assert (info.bone)
+	if not self[itemname]
+		or ItemStack (self[itemname]):is_empty () then
+		if self[objectname] ~= nil then
+			self[objectname]:remove ()
+			self[objectname] = nil
+		end
+		return
+	end
+
+	if not self[objectname]
+		or not is_valid (self[objectname]) then
+		local self_pos = self.object:get_pos ()
+		self[objectname]
+			= minetest.add_entity (self_pos, "vlf_mobs:wielditem")
+	end
+
+	-- Apply rotation and position according to item type.
+	local stack = ItemStack (self[itemname])
+	local rot, pos, size = self:wielditem_transform (info, stack)
+	if not info.rotate_bone then
+		self[objectname]:set_attach (self.object, info.bone, pos, rot)
+	else
+		self[objectname]:set_attach (self.object, info.bone)
+		vlf_util.set_bone_position (self.object, info.bone, pos, rot)
+	end
+	local name = self:get_visual_wielditem (stack)
+	self[objectname]:set_properties ({
+		wield_item = name,
+		visual_size = size,
+	})
+end
+
+function mob_class:set_wielditem (stack, drop_probability)
+	if not self.can_wield_items then
+		return
+	end
+
+	local stack_string
+	if not stack or stack:is_empty () then
+		stack_string = nil
+	else
+		stack_string = stack:to_string ()
+	end
+
+	self._using_wielditem = nil
+	self._wielditem = stack_string
+	self._effective_wielditem_drop_probability
+		= drop_probability or self.wielditem_drop_probability
+	self:display_wielditem (false)
+end
+
+function mob_class:drop_wielditem (bonus, min_probability)
+	local self_pos = self.object:get_pos ()
+	if self._effective_wielditem_drop_probability
+		and self._wielditem then
+		local probability = self._effective_wielditem_drop_probability
+		local item = self._wielditem
+		if probability > 0 and item and item ~= ""
+			and (probability + bonus) >= (min_probability or 0)
+			and math.random () <= probability + bonus then
+			local stack = ItemStack (self._wielditem)
+
+			if not vlf_enchanting.has_enchantment (stack, "curse_of_vanishing") then
+				self:scale_durability_for_drop (stack, probability)
+				vlf_util.drop_item_stack (self_pos, stack)
 			end
 		end
-	elseif self.attack_type == "custom" and self.attack_state then
-		self:attack_state(dtime)
-		attacked = true
+		self:set_wielditem (ItemStack ())
 	end
-	if attacked and self.on_attack then
-		self:on_attack(dtime)
+end
+
+function mob_class:get_wielditem ()
+	return ItemStack (self._wielditem)
+end
+
+function mob_class:use_wielditem ()
+	if self._wielditem ~= "" then
+		self._using_wielditem = 0.0
 	end
+end
+
+function mob_class:release_wielditem ()
+	if self._using_wielditem then
+		self._using_wielditem = nil
+
+		local object = self._wielditem_object
+		if object and is_valid (object) then
+			local stack = ItemStack (self._wielditem)
+			local name = self:get_visual_wielditem (stack)
+
+			object:set_properties ({
+				wield_item = name,
+			})
+		end
+	end
+end
+
+local wielditem_variants_by_duration = {}
+
+minetest.register_on_mods_loaded (function ()
+	wielditem_variants_by_duration = {
+		["vlf_bows:bow"] = {
+			half_time = vlf_bows.BOW_CHARGE_TIME_HALF,
+			full_time = vlf_bows.BOW_CHARGE_TIME_FULL,
+			start = "vlf_bows:bow_0",
+			half = "vlf_bows:bow_1",
+			full = "vlf_bows:bow_2",
+		},
+		["vlf_bows:bow_enchanted"] = {
+			half_time = vlf_bows.BOW_CHARGE_TIME_HALF,
+			full_time = vlf_bows.BOW_CHARGE_TIME_FULL,
+			start = "vlf_bows:bow_0_enchanted",
+			half = "vlf_bows:bow_1_enchanted",
+			full = "vlf_bows:bow_2_enchanted",
+		},
+		-- TODO: Quick Charge?
+		["vlf_bows:crossbow"] = {
+			half_time = vlf_bows.CROSSBOW_CHARGE_TIME_HALF,
+			full_time = vlf_bows.CROSSBOW_CHARGE_TIME_FULL,
+			start = "vlf_bows:crossbow_0",
+			half = "vlf_bows:crossbow_1",
+			full = "vlf_bows:crossbow_2",
+		},
+		["vlf_bows:crossbow_enchanted"] = {
+			half_time = vlf_bows.CROSSBOW_CHARGE_TIME_HALF,
+			full_time = vlf_bows.CROSSBOW_CHARGE_TIME_FULL,
+			start = "vlf_bows:crossbow_0_enchanted",
+			half = "vlf_bows:crossbow_1_enchanted",
+			full = "vlf_bows:crossbow_2_enchanted",
+		},
+	}
+end)
+
+function mob_class:get_visual_wielditem (stack)
+	local name = stack:get_name ()
+	if not self._using_wielditem then
+		return name
+	else
+		local variants = wielditem_variants_by_duration[name]
+		if not variants then
+			return name
+		else
+			if self._using_wielditem >= variants.full_time then
+				return variants.full
+			elseif self._using_wielditem >= variants.half_time then
+				return variants.half
+			else
+				return variants.start
+			end
+		end
+	end
+end
+
+function mob_class:wielditem_step (dtime)
+	if self._using_wielditem then
+		self._using_wielditem
+			= self._using_wielditem + dtime
+
+		local object = self._wielditem_object
+		if object and is_valid (object) then
+			local stack = ItemStack (self._wielditem)
+			local name = self:get_visual_wielditem (stack)
+
+			object:set_properties ({
+				wield_item = name,
+			})
+		end
+	end
+end
+
+local armor_types = { "head", "torso", "legs", "feet", }
+local armor_table = {
+	head = {
+		"vlf_armor:helmet_leather",
+		"vlf_armor:helmet_gold",
+		"vlf_armor:helmet_chain",
+		"vlf_armor:helmet_iron",
+		"vlf_armor:helmet_diamond",
+	},
+	torso = {
+		"vlf_armor:chestplate_leather",
+		"vlf_armor:chestplate_gold",
+		"vlf_armor:chestplate_chain",
+		"vlf_armor:chestplate_iron",
+		"vlf_armor:chestplate_diamond",
+	},
+	legs = {
+		"vlf_armor:leggings_leather",
+		"vlf_armor:leggings_gold",
+		"vlf_armor:leggings_chain",
+		"vlf_armor:leggings_iron",
+		"vlf_armor:leggings_diamond",
+	},
+	feet = {
+		"vlf_armor:boots_leather",
+		"vlf_armor:boots_gold",
+		"vlf_armor:boots_chain",
+		"vlf_armor:boots_iron",
+		"vlf_armor:boots_diamond",
+	},
+}
+
+function mob_class:enchant_default_armor (mob_factor, pr)
+	for slot, item in pairs (self.armor_list) do
+		local stack = ItemStack (item)
+		if not stack:is_empty () then
+			if math.random () < 0.5 * mob_factor then
+				local level = 5.0 + mob_factor * pr:next (1, 18)
+				level = math.floor (level)
+				vlf_enchanting.enchant_randomly (stack, level, false, false, true)
+			end
+			self.armor_list[slot] = stack:to_string ()
+		end
+	end
+end
+
+function mob_class:enchant_default_weapon (mob_factor, pr)
+	local stack = self:get_wielditem ()
+	if stack:is_empty () then
+		return
+	end
+	if math.random () < 0.25 * mob_factor then
+		local level = 5.0 + mob_factor * pr:next (1, 18)
+		level = math.floor (level)
+		vlf_enchanting.enchant_randomly (stack, level, false, false, true)
+	end
+	self:set_wielditem (stack)
+end
+
+function mob_class:generate_default_equipment (mob_factor, do_armor, do_wielditems)
+	if math.random () < mob_factor * 0.15 then
+		if do_armor then
+			-- Decide what armor material this mob will
+			-- wear.
+			local base_level = math.random (2)
+			if math.random () < 0.095 then
+				base_level = base_level + 1
+			end
+			if math.random () < 0.095 then
+				base_level = base_level + 1
+			end
+			if math.random () < 0.095 then
+				base_level = base_level + 1
+			end
+			local armor_generated = false
+			local stop_chance = 4
+			if vlf_vars.difficulty == 3 then
+				stop_chance = 10
+			end
+			for _, slot in ipairs (armor_types) do
+				if not armor_generated and math.random (stop_chance) == 1 then
+					break
+				end
+				local stack = ItemStack (armor_table[slot][base_level])
+				if math.random () < 0.5 * mob_factor then
+					local level = 5.0 + mob_factor * math.random (18)
+					level = math.floor (level)
+					vlf_enchanting.enchant_randomly (stack, level, false, false, true)
+				end
+				self.armor_list[slot] = stack:to_string ()
+				local probability = self.armor_drop_probability[slot]
+				self:set_armor_drop_probability (slot, probability)
+			end
+			self:set_armor_texture ()
+		end
+	end
+	if do_wielditems then
+		local chance = (vlf_vars.difficulty == 3) and 20 or 100
+		if math.random (chance) == 1 then
+			local stack
+			if math.random (3) == 1 then
+				stack = ItemStack ("vlf_tools:sword_iron")
+			else
+				stack = ItemStack ("vlf_tools:shovel_iron")
+			end
+			if math.random () < 0.25 * mob_factor then
+				local level = 5.0 + mob_factor * math.random (18)
+				level = math.floor (level)
+				vlf_enchanting.enchant_randomly (stack, level, false, false, true)
+			end
+			self:set_wielditem (stack)
+		end
+	end
+end
+
+------------------------------------------------------------------------
+-- Offhand item wielding.
+------------------------------------------------------------------------
+
+function mob_class:drop_offhand_item (bonus, min_probability)
+	local self_pos = self.object:get_pos ()
+	if self._effective_offhand_drop_probability
+		and self._offhand_item then
+		local probability = self._effective_offhand_drop_probability
+		local item = self._offhand_item
+		if probability > 0 and item and item ~= ""
+			and (probability + bonus) >= (min_probability or 0)
+			and math.random () <= probability + bonus then
+			local stack = ItemStack (self._offhand_item)
+
+			if not vlf_enchanting.has_enchantment (stack, "curse_of_vanishing") then
+				self:scale_durability_for_drop (stack, probability)
+				vlf_util.drop_item_stack (self_pos, stack)
+			end
+		end
+		self:set_offhand_item (ItemStack (""))
+	end
+end
+
+function mob_class:set_offhand_item (stack, drop_probability)
+	if not self._offhand_wielditem_info then
+		return
+	end
+
+	if not stack then
+		self._offhand_item = ""
+	else
+		self._offhand_item = stack:to_string ()
+	end
+
+	self._effective_offhand_drop_probability
+		= drop_probability or self.wielditem_drop_probability
+	self:display_wielditem (true)
+end
+
+function mob_class:get_offhand_item ()
+	return ItemStack (self._offhand_item)
 end

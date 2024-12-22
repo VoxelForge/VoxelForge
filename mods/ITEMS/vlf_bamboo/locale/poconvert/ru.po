@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_bamboo x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_bamboo x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,19 +11,73 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
-msgid "Bamboo Raft"
+msgid "A Block made of Bamboo stalks. Can be crafted into Bamboo Planks."
 msgstr ""
 
+msgid "Block of Bamboo"
+msgstr ""
+
+msgid "Block of Stripped Bamboo"
+msgstr ""
+
+msgid "Bamboo Raft"
+msgstr "Бамбуковый плот"
+
 msgid "Chest Bamboo Raft"
+msgstr "Бамбуковый плот с сундуком"
+
+msgid "Bamboo Bark"
+msgstr ""
+
+msgid "Bamboo Bark Slab"
+msgstr ""
+
+msgid "Bamboo Bark Stairs"
+msgstr ""
+
+msgid "Bamboo Button"
+msgstr ""
+
+msgid "Bamboo Door"
+msgstr ""
+
+msgid "Bamboo Fence"
+msgstr ""
+
+msgid "Bamboo Fence Gate"
+msgstr ""
+
+msgid "Bamboo Planks"
+msgstr ""
+
+msgid "Bamboo Pressure Plate"
+msgstr ""
+
+msgid "Bamboo Sign"
+msgstr ""
+
+msgid "Bamboo Slab"
+msgstr ""
+
+msgid "Bamboo Stairs"
+msgstr ""
+
+msgid "Bamboo Trapdoor"
+msgstr ""
+
+msgid "Stripped Bamboo Wood"
+msgstr ""
+
+msgid "The stripped wood of an Bamboo tree."
 msgstr ""
 
 msgid "Bamboo"
 msgstr "Бамбук"
 
 msgid "Bamboo Plant"
-msgstr ""
+msgstr "Бамбуковое растение"
 
 msgid "Bamboo Mosaic Plank"
 msgstr "Бамбуковая мозаика"
@@ -32,11 +86,11 @@ msgid "Scaffolding"
 msgstr "Строительные леса"
 
 msgid "Scaffolding is a temporary structure to easily climb up while building that is easily removed"
-msgstr ""
+msgstr "Строительные леса - это временная конструкция, на которую можно легко подняться во время строительства и которая легко демонтируется"
 
 msgid "Scaffolding horizontal"
-msgstr ""
+msgstr "Горизонтальные строительные леса"
 
 msgid "Scaffolding block..."
-msgstr ""
+msgstr "Строительные леса..."
 

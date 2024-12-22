@@ -308,6 +308,11 @@ Origin of those models:
 * [epCode]
     * `extra_mobs_hoglin*.ogg` (LGPL 3.0)
         * Source: <https://git.minetest.land/epCode/extra_mobs/src/branch/master/sounds>
+* [F.M.Audio](https://freesound.org/people/F.M.Audio)
+    * `mobs_mc_zombie_door_break.1.ogg` (CC BY 4.0)
+	* Source: <https://freesound.org/people/F.M.Audio/sounds/547580>
+    * `mobs_mc_zombie_door_break.2.ogg` (CC BY 4.0)
+        * Source: <https://freesound.org/people/F.M.Audio/sounds/547579>
 
 Note: Many of these sounds have been more or less modified to fit the game.
 

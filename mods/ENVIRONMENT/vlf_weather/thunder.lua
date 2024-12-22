@@ -5,11 +5,7 @@ vlf_weather.thunder = {
 	init_done = false,
 }
 
-vlf_lightning.register_on_strike(function(pos, pos2, objects)
-	if not vlf_weather.has_rain(pos) then return nil, true end
-end)
-
-minetest.register_globalstep(function(dtime)
+minetest.register_globalstep(function()
 	if vlf_weather.get_weather() ~= "thunder" then
 		return false
 	end
@@ -26,7 +22,7 @@ minetest.register_globalstep(function(dtime)
 			{r=0, g=0, b=0},
 		})
 		vlf_weather.skycolor.active = true
-		for _, player in pairs(minetest.get_connected_players()) do
+		for player in vlf_util.connected_players() do
 			player:set_clouds({color="#3D3D3FE8"})
 		end
 		vlf_weather.thunder.init_done = true
@@ -49,7 +45,7 @@ end
 if vlf_weather.reg_weathers.thunder == nil then
 	vlf_weather.reg_weathers.thunder = {
 		clear = vlf_weather.thunder.clear,
-		light_factor = 0.7,
+		light_factor = 0.33333,
 		-- 10min - 20min
 		min_duration = 600,
 		max_duration = 1200,

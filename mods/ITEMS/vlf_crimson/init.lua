@@ -1,8 +1,9 @@
-local S = minetest.get_translator("vlf_crimson")
-local schempath = minetest.get_modpath("vlf_schematics")
+local modname = minetest.get_current_modname()
+local S = minetest.get_translator(modname)
+local modpath = minetest.get_modpath(modname)
 -- Warped and Crimson fungus
 -- by debiankaios
--- adapted for vlf by cora
+-- adapted for vlf2 by cora
 
 local nether_plants = {
 	["vlf_crimson:crimson_nylium"] = {
@@ -18,7 +19,7 @@ local nether_plants = {
 	},
 }
 
-local place_fungus = vlf_util.generate_on_place_plant_function(function(pos, node)
+local place_fungus = vlf_util.generate_on_place_plant_function(function(pos)
 	return minetest.get_item_group(minetest.get_node(vector.offset(pos,0,-1,0)).name, "soil_fungus") > 0
 end)
 
@@ -35,7 +36,7 @@ local function spread_nether_plants(pos,node)
 	end
 end
 
-local function on_bone_meal(itemstack,user,pt,pos,node)
+local function on_bone_meal(_, _, pt, _, node)
 	if pt.type ~= "node" then return end
 	if node.name == "vlf_crimson:warped_nylium" or node.name == "vlf_crimson:crimson_nylium" then
 		spread_nether_plants(pt.under,node)
@@ -48,7 +49,7 @@ local function check_for_bedrock(pos)
 end
 
 local function generate_fungus_tree(pos, typ)
-	return minetest.place_schematic(pos,schempath.."/schems/"..typ.."_fungus_"..tostring(math.random(1,3))..".mts","random",nil,false,"place_center_x,place_center_z")
+	return minetest.place_schematic(pos,modpath.."/schematics/"..typ.."_fungus_"..tostring(math.random(1,3))..".mts","random",nil,false,"place_center_x,place_center_z")
 end
 
 local max_vines_age = 25
@@ -85,10 +86,11 @@ function grow_vines(pos, amount, vine, dir, max_age)
 	return amount
 end
 
-local nether_wood_groups = { handy = 1, axey = 1, material_wood = 1, }
+local nether_wood_groups = { handy = 1, axey = 1, material_wood = 1, building_block = 1}
 
 vlf_trees.register_wood("crimson",{
-	readable_name=S("Crimson"),
+	readable_name="Crimson",
+	sign = {_vlf_burntime = 0 },
 	sign_color="#810000",
 	boat=false,
 	chest_boat=false,
@@ -97,43 +99,61 @@ vlf_trees.register_wood("crimson",{
 	tree = {
 		tiles = {"crimson_hyphae.png", "crimson_hyphae.png","crimson_hyphae_side.png" },
 		groups = table.merge(nether_wood_groups,{tree = 1}),
+		_vlf_burntime = 0,
+		_vlf_cooking_output = ""
 	},
 	bark = {
 		tiles = {"crimson_hyphae_side.png"},
 		groups = table.merge(nether_wood_groups,{tree = 1, bark = 1}),
+		_vlf_burntime = 0,
+		_vlf_cooking_output = ""
 	},
 	wood = {
 		tiles = {"crimson_hyphae_wood.png"},
 		groups = table.merge(nether_wood_groups,{wood = 1}),
+		_vlf_burntime = 0
 	},
 	stripped = {
 		tiles = {"stripped_crimson_stem_top.png", "stripped_crimson_stem_top.png","stripped_crimson_stem_side.png"},
 		groups = table.merge(nether_wood_groups,{tree = 1}),
+		_vlf_burntime = 0,
+		_vlf_cooking_output = ""
 	},
 	stripped_bark = {
 		tiles = {"stripped_crimson_stem_side.png"},
 		groups = table.merge(nether_wood_groups,{tree = 1, bark = 1}),
+		_vlf_burntime = 0,
+		_vlf_cooking_output = ""
 	},
 	fence = {
 		tiles = { "vlf_crimson_crimson_fence.png" },
+		_vlf_burntime = 0
 	},
 	fence_gate = {
 		tiles = { "vlf_crimson_crimson_fence.png" },
+		_vlf_burntime = 0
 	},
 	door = {
 		inventory_image = "vlf_crimson_crimson_door.png",
 		tiles_bottom = {"vlf_crimson_crimson_door_bottom.png","vlf_doors_door_crimson_side_upper.png"},
 		tiles_top = {"vlf_crimson_crimson_door_top.png","vlf_doors_door_crimson_side_upper.png"},
+		_vlf_burntime = 0
 	},
 	trapdoor = {
 		tile_front = "vlf_crimson_crimson_trapdoor.png",
 		tile_side = "vlf_crimson_crimson_trapdoor_side.png",
 		wield_image = "vlf_crimson_crimson_trapdoor.png",
+		_vlf_burntime = 0
 	},
+	button = { _vlf_burntime = 0 },
+	pressure_plate = { _vlf_burntime = 0 },
+	stairs = { overrides = { _vlf_burntime = 0 }},
+	slab = { overrides = { _vlf_burntime = 0 }},
 })
 
 vlf_trees.register_wood("warped",{
-	readable_name=S("Warped"),
+	readable_name="Warped",
+	sign = {_vlf_burntime = 0 },
 	sign_color="#0E4C4C",
 	boat=false,
 	chest_boat=false,
@@ -142,39 +162,56 @@ vlf_trees.register_wood("warped",{
 	tree = {
 		tiles = {"warped_hyphae.png", "warped_hyphae.png","warped_hyphae_side.png" },
 		groups = table.merge(nether_wood_groups,{tree = 1}),
+		_vlf_burntime = 0,
+		_vlf_cooking_output = ""
 	},
 	bark = {
 		tiles = {"warped_hyphae_side.png"},
 		groups = table.merge(nether_wood_groups,{tree = 1, bark = 1}),
+		_vlf_burntime = 0,
+		_vlf_cooking_output = ""
 	},
 	wood = {
 		tiles = {"warped_hyphae_wood.png"},
 		groups = table.merge(nether_wood_groups,{wood = 1}),
+		_vlf_burntime = 0
 	},
 	stripped = {
 		tiles = {"stripped_warped_stem_top.png", "stripped_warped_stem_top.png","stripped_warped_stem_side.png"},
 		groups = table.merge(nether_wood_groups,{tree = 1}),
+		_vlf_burntime = 0,
+		_vlf_cooking_output = ""
 	},
 	stripped_bark = {
 		tiles = {"stripped_warped_stem_side.png"},
 		groups = table.merge(nether_wood_groups,{tree = 1, bark = 1}),
+		_vlf_burntime = 0,
+		_vlf_cooking_output = ""
 	},
 	fence = {
 		tiles = { "vlf_crimson_warped_fence.png" },
+		_vlf_burntime = 0
 	},
 	fence_gate = {
 		tiles = { "vlf_crimson_warped_fence.png" },
+		_vlf_burntime = 0
 	},
 	door = {
 		inventory_image = "vlf_crimson_warped_door.png",
 		tiles_bottom = {"vlf_crimson_warped_door_bottom.png","vlf_doors_door_warped_side_upper.png"},
 		tiles_top = {"vlf_crimson_warped_door_top.png","vlf_doors_door_warped_side_upper.png"},
+		_vlf_burntime = 0
 	},
 	trapdoor = {
 		tile_front = "vlf_crimson_warped_trapdoor.png",
 		tile_side = "vlf_crimson_warped_trapdoor_side.png",
 		wield_image = "vlf_crimson_warped_trapdoor.png",
+		_vlf_burntime = 0
 	},
+	button = { _vlf_burntime = 0 },
+	pressure_plate = { _vlf_burntime = 0 },
+	stairs = { overrides = { _vlf_burntime = 0 }},
+	slab = { overrides = { _vlf_burntime = 0 }},
 })
 
 minetest.register_node("vlf_crimson:warped_fungus", {
@@ -197,7 +234,7 @@ minetest.register_node("vlf_crimson:warped_fungus", {
 	},
 	node_placement_prediction = "",
 	on_place = place_fungus,
-	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
+	_on_bone_meal = function(_, _, _, pos)
 		if minetest.get_node_or_nil(vector.offset(pos,0,-1,0)).name == "vlf_crimson:warped_nylium" then
 			if math.random() > 0.40 then return end --fungus has a 40% chance to grow when bone mealing
 			if check_for_bedrock(pos) then return false end
@@ -276,7 +313,7 @@ local function register_vines(name, def, extra_groups)
 		},
 		_vlf_blast_resistance = 0.2,
 		_vlf_hardness = 0.2,
-		_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
+		_on_bone_meal = function(_, _, _, pos)
 			grow_vines(pos, math.random(1, 3), name, nil, max_vines_age)
 		end
 	}, def or {}))
@@ -312,7 +349,10 @@ minetest.register_node("vlf_crimson:nether_sprouts", {
 	paramtype = "light",
 	walkable = false,
 	buildable_to = true,
-	groups = {dig_immediate=3, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, deco_block=1, shearsy=1, compostability=50},
+	groups = {
+		shearsy=1, deco_block=1, attached_node=1,
+		dig_immediate=3, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, compostability=50
+	},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -334,7 +374,10 @@ minetest.register_node("vlf_crimson:warped_roots", {
 	paramtype = "light",
 	walkable = false,
 	buildable_to = true,
-	groups = {dig_immediate=3, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, deco_block=1, shearsy = 1, compostability=65},
+	groups = {
+		shearsy=1, deco_block=1, attached_node=1,
+		dig_immediate=3, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, compostability=65
+	},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -414,7 +457,7 @@ minetest.register_node("vlf_crimson:crimson_fungus", {
 	},
 	node_placement_prediction = "",
 	on_place = place_fungus,
-	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
+	_on_bone_meal = function(_, _, _, pos)
 		if minetest.get_node(vector.offset(pos,0,-1,0)).name == "vlf_crimson:crimson_nylium" then
 			if math.random() > 0.40 then return end --fungus has a 40% chance to grow when bone mealing
 			if check_for_bedrock(pos) then return false end
@@ -440,7 +483,10 @@ minetest.register_node("vlf_crimson:crimson_roots", {
 	paramtype = "light",
 	walkable = false,
 	buildable_to = true,
-	groups = {dig_immediate=3 ,dig_by_water=1 ,destroy_by_lava_flow=1 ,dig_by_piston=1, deco_block=1, shearsy=1, compostability=65},
+	groups = {
+		shearsy=1, deco_block=1, attached_node=1,
+		dig_immediate=3 ,dig_by_water=1 ,destroy_by_lava_flow=1 ,dig_by_piston=1, compostability=65
+	},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -485,7 +531,7 @@ minetest.register_abm({
 	action = function(pos, node)
 		if minetest.get_item_group(minetest.get_node(vector.offset(pos, 0, 1, 0)).name, "solid") > 0 then
 			node.name = "vlf_nether:netherrack"
-			minetest.set_node(pos, node)
+			minetest.swap_node(pos, node)
 		end
 	end
 })

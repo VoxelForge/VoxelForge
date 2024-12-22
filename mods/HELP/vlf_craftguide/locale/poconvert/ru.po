@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_craftguide x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_craftguide x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Any shulker box"
 msgstr "Любой ящик шалкера"
@@ -83,22 +83,22 @@ msgid "Burning time: @1"
 msgstr "Время горения: @1"
 
 msgid "Usages"
-msgstr ""
+msgstr "Использование"
 
 msgid "Recipes"
-msgstr ""
+msgstr "Рецепты"
 
 msgid "@1 of @2"
-msgstr ""
+msgstr "@1 из @2"
 
 msgid "Recipe is too big to be displayed (@1×@2)"
 msgstr "Рецепт слишком большой для отображения (@1×@2)"
 
 msgid "Shapeless"
-msgstr "Бесформенный"
+msgstr ""
 
 msgid "Cooking"
-msgstr "Приготовление"
+msgstr ""
 
 msgid "Increase window size"
 msgstr "Увеличить окно"
@@ -124,12 +124,15 @@ msgstr "Нет предмета для показа"
 msgid "Collect items to reveal more recipes"
 msgstr "Собирайте предметы, чтобы открыть больше рецептов"
 
+msgid "Invalid crafting ingredient: \"@1\" (dosent exist)"
+msgstr "Недопустимый ингредиент для крафтинга: «@1» (не существует)"
+
 msgid "This item can be repaired at an anvil with: @1."
-msgstr ""
+msgstr "Этот предмет можно починить на наковальне с помощью: @1."
 
 msgid "This item can be repaired at an anvil with any wooden planks."
-msgstr ""
+msgstr "Этот предмет можно починить на наковальне с помощью любых деревянных досок."
 
 msgid "This item can be repaired at an anvil with any item in the “@1” group."
-msgstr ""
+msgstr "Этот предмет можно починить на наковальне с помощью любого предмета из группы \"@1\"."
 

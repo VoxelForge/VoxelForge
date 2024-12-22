@@ -296,7 +296,7 @@ end
 -- Kelp callback functions
 --------------------------------------------------------------------------------
 
-function kelp.surface_on_dig(pos, node, digger)
+function kelp.surface_on_dig(pos, node, digger) ---@diagnostic disable-line: unused-local
 	kelp.detach_dig(pos, pos, true, node)
 end
 
@@ -345,9 +345,9 @@ end
 
 
 
-function kelp.surface_on_mvps_move(pos, node, oldpos, nodemeta)
+function kelp.surface_on_piston_move(movednode) ---@diagnostic disable-line: unused-local
 	-- Pistons moving falling nodes will have already activated on_falling callback.
-	kelp.detach_dig(pos, pos, minetest.get_item_group(node.name, "falling_node") ~= 1, node)
+	kelp.detach_dig(movednode.pos, movednode.pos, minetest.get_item_group(movednode.node.name, "falling_node") ~= 1, movednode.node)
 end
 
 
@@ -412,7 +412,6 @@ function kelp.kelp_on_place(itemstack, placer, pointed_thing)
 	end
 
 	-- Next kelp must also be submerged in water.
-	local downward_flowing = kelp.is_downward_flowing(pos_tip, node_tip)
 	local submerged = kelp.is_submerged(node_tip)
 	if not submerged then
 		return itemstack
@@ -425,7 +424,7 @@ function kelp.kelp_on_place(itemstack, placer, pointed_thing)
 	end
 	-- TODO: get rid of rooted plantlike hack
 	if height < 16 then
-		kelp.next_height(pos_under, node_under, pos_tip, node_tip, def_tip, submerged, downward_flowing)
+		kelp.next_height(pos_under, node_under, pos_tip, node_tip, def_tip, submerged)
 	else
 		minetest.add_item(pos_tip, "vlf_ocean:kelp")
 	end
@@ -480,18 +479,19 @@ kelp.surface_deftemplate = {
 		},
 	},
 	-- groups.falling_node = is_falling,
-	groups = { dig_immediate = 3, deco_block = 1, plant = 1, kelp = 1, },
+	groups = { dig_immediate = 3, deco_block = 1, plant = 1, kelp = 1, not_in_creative_inventory = 1 },
 	--sounds = sounds,
 	--node_dig_prediction = nodename,
 	on_construct = kelp.surface_on_construct,
 	on_destruct = kelp.surface_on_destruct,
 	on_dig = kelp.surface_on_dig,
 	after_dig_node = kelp.surface_after_dig_node,
-	mesecon = { on_mvps_move = kelp.surface_on_mvps_move, },
+	_vlf_pistons_on_move = kelp.surface_on_piston_move,
 	drop = "", -- drops are handled in on_dig
 	--_vlf_falling_node_alternative = is_falling and nodename or nil,
 	_vlf_hardness = 0,
 	_vlf_blast_resistance = 0,
+	_vlf_baseitem = "vlf_ocean:kelp"
 }
 
 -- Commented properties are the ones obtained using register_kelp_surface.
@@ -536,7 +536,7 @@ function kelp.register_kelp_surface(surface, surface_deftemplate, surface_docs)
 	sounds.place = kelp.leaf_sounds.place
 
 	surface_deftemplate.tiles = surface_deftemplate.tiles or def_tiles
-	surface_deftemplate.inventory_image = surface_deftemplate.inventory_image or "("..def_tiles[1]..")^vlf_ocean_kelp_item.png"
+	surface_deftemplate.inventory_image = surface_deftemplate.inventory_image or ("("..def_tiles[1]..")^vlf_ocean_kelp_item.png")
 	surface_deftemplate.sounds = surface_deftemplate.sound or sounds
 	local falling_node = minetest.get_item_group(nodename, "falling_node")
 	surface_deftemplate.node_dig_prediction = surface_deftemplate.node_dig_prediction or nodename
@@ -564,6 +564,7 @@ minetest.register_craftitem("vlf_ocean:kelp", {
 	wield_image = "vlf_ocean_kelp_item.png",
 	on_place = kelp.kelp_on_place,
 	groups = {deco_block = 1, compostability = 30, smoker_cookable = 1, campfire_cookable = 1},
+	_vlf_cooking_output = "vlf_ocean:dried_kelp"
 })
 
 if mod_doc then
@@ -606,14 +607,9 @@ minetest.register_node("vlf_ocean:dried_kelp_block", {
 	on_rotate = on_rotate,
 	_vlf_hardness = 0.5,
 	_vlf_blast_resistance = 2.5,
+	_vlf_burntime = 200
 })
 
-minetest.register_craft({
-	type = "cooking",
-	recipe = "vlf_ocean:kelp",
-	output = "vlf_ocean:dried_kelp",
-	cooktime = 10,
-})
 minetest.register_craft({
 	recipe = {
 		{ "vlf_ocean:dried_kelp","vlf_ocean:dried_kelp","vlf_ocean:dried_kelp" },
@@ -627,11 +623,6 @@ minetest.register_craft({
 		{ "vlf_ocean:dried_kelp_block" },
 	},
 	output = "vlf_ocean:dried_kelp 9",
-})
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_ocean:dried_kelp_block",
-	burntime = 200,
 })
 
 --------------------------------------------------------------------------------
@@ -657,13 +648,13 @@ minetest.register_abm({
 })
 
 
--- 50% growth over a minute https://minecraft.fandom.com/wiki/Tutorials/Kelp_farming
+-- 50% growth over a minute https://minecraft.wiki/w/Tutorials/Kelp_farming
 -- 14% chance every random tick
 -- On average, blocks are updated every 68.27 seconds (1365.33 game ticks)
 -- 1 in 7 every 68
 -- 1 in 28 every 17
 -- 1 in 21 every 22
--- https://minecraft.fandom.com/wiki/Tick#Random_tick
+-- https://minecraft.wiki/w/Tick#Random_tick
 minetest.register_abm({
 	label = "Kelp growth",
 	nodenames = { "group:kelp" },

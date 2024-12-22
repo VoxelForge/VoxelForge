@@ -1,26 +1,26 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_nether x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_nether x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: zh_Hans\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: mtt_convert 0.1.0\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Glowstone"
-msgstr ""
+msgstr "荧石"
 
 msgid "Glowstone is a naturally-glowing block which is home to the Nether."
 msgstr ""
 
 msgid "Nether Quartz Ore"
-msgstr ""
+msgstr "下界石英矿石"
 
 msgid "Nether quartz ore is an ore containing nether quartz. It is commonly found around netherrack in the Nether."
 msgstr ""
@@ -31,7 +31,7 @@ msgstr ""
 msgid "Ancient debris can be found in the nether and is very very rare."
 msgstr ""
 
-msgid "Netherite Block"
+msgid "Block of Netherite"
 msgstr ""
 
 msgid "Netherite block is very hard and can be made of 9 netherite ingots."
@@ -198,3 +198,4 @@ msgstr ""
 
 msgid "Place this item on soul sand to plant it and watch it grow."
 msgstr ""
+

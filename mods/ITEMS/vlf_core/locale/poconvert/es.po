@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain vlc_core x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_core x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Stick"
 msgstr "Palo"
@@ -124,6 +124,486 @@ msgstr "Las manzanas doradas son alimentos preciosos que se pueden comer."
 msgid "Enchanted Golden Apple"
 msgstr "Manzana Dorada Encantada"
 
+msgid "Acacia Bark"
+msgstr ""
+
+msgid "Acacia Bark Slab"
+msgstr ""
+
+msgid "Acacia Bark Stairs"
+msgstr ""
+
+msgid "Acacia Boat"
+msgstr ""
+
+msgid "Acacia Button"
+msgstr ""
+
+msgid "Acacia Chest Boat"
+msgstr ""
+
+msgid "Acacia Door"
+msgstr ""
+
+msgid "Acacia Fence"
+msgstr ""
+
+msgid "Acacia Fence Gate"
+msgstr ""
+
+msgid "Acacia Leaves"
+msgstr ""
+
+msgid "Acacia Log"
+msgstr ""
+
+msgid "Acacia Planks"
+msgstr ""
+
+msgid "Acacia Pressure Plate"
+msgstr ""
+
+msgid "Acacia Sapling"
+msgstr ""
+
+msgid "Acacia Sign"
+msgstr ""
+
+msgid "Acacia Slab"
+msgstr ""
+
+msgid "Acacia Stairs"
+msgstr ""
+
+msgid "Acacia Trapdoor"
+msgstr ""
+
+msgid "Acacia leaves are grown from Acacia trees."
+msgstr ""
+
+msgid "Birch Bark"
+msgstr ""
+
+msgid "Birch Bark Slab"
+msgstr ""
+
+msgid "Birch Bark Stairs"
+msgstr ""
+
+msgid "Birch Boat"
+msgstr ""
+
+msgid "Birch Button"
+msgstr ""
+
+msgid "Birch Chest Boat"
+msgstr ""
+
+msgid "Birch Door"
+msgstr ""
+
+msgid "Birch Fence"
+msgstr ""
+
+msgid "Birch Fence Gate"
+msgstr ""
+
+msgid "Birch Leaves"
+msgstr ""
+
+msgid "Birch Log"
+msgstr ""
+
+msgid "Birch Planks"
+msgstr ""
+
+msgid "Birch Pressure Plate"
+msgstr ""
+
+msgid "Birch Sapling"
+msgstr ""
+
+msgid "Birch Sign"
+msgstr ""
+
+msgid "Birch Slab"
+msgstr ""
+
+msgid "Birch Stairs"
+msgstr ""
+
+msgid "Birch Trapdoor"
+msgstr ""
+
+msgid "Birch leaves are grown from Birch trees."
+msgstr ""
+
+msgid "Black Stained Glass"
+msgstr ""
+
+msgid "Blue Stained Glass"
+msgstr ""
+
+msgid "Brown Stained Glass"
+msgstr ""
+
+msgid "Cyan Stained Glass"
+msgstr ""
+
+msgid "Dark Oak Bark"
+msgstr ""
+
+msgid "Dark Oak Bark Slab"
+msgstr ""
+
+msgid "Dark Oak Bark Stairs"
+msgstr ""
+
+msgid "Dark Oak Boat"
+msgstr ""
+
+msgid "Dark Oak Button"
+msgstr ""
+
+msgid "Dark Oak Chest Boat"
+msgstr ""
+
+msgid "Dark Oak Door"
+msgstr ""
+
+msgid "Dark Oak Fence"
+msgstr ""
+
+msgid "Dark Oak Fence Gate"
+msgstr ""
+
+msgid "Dark Oak Leaves"
+msgstr ""
+
+msgid "Dark Oak Log"
+msgstr ""
+
+msgid "Dark Oak Planks"
+msgstr ""
+
+msgid "Dark Oak Pressure Plate"
+msgstr ""
+
+msgid "Dark Oak Sapling"
+msgstr ""
+
+msgid "Dark Oak Sign"
+msgstr ""
+
+msgid "Dark Oak Slab"
+msgstr ""
+
+msgid "Dark Oak Stairs"
+msgstr ""
+
+msgid "Dark Oak Trapdoor"
+msgstr ""
+
+msgid "Dark Oak leaves are grown from Dark Oak trees."
+msgstr ""
+
+msgid "Green Stained Glass"
+msgstr ""
+
+msgid "Grey Stained Glass"
+msgstr ""
+
+msgid "Jungle Bark"
+msgstr ""
+
+msgid "Jungle Bark Slab"
+msgstr ""
+
+msgid "Jungle Bark Stairs"
+msgstr ""
+
+msgid "Jungle Boat"
+msgstr ""
+
+msgid "Jungle Button"
+msgstr ""
+
+msgid "Jungle Chest Boat"
+msgstr ""
+
+msgid "Jungle Door"
+msgstr ""
+
+msgid "Jungle Fence"
+msgstr ""
+
+msgid "Jungle Fence Gate"
+msgstr ""
+
+msgid "Jungle Leaves"
+msgstr ""
+
+msgid "Jungle Log"
+msgstr ""
+
+msgid "Jungle Planks"
+msgstr ""
+
+msgid "Jungle Pressure Plate"
+msgstr ""
+
+msgid "Jungle Sapling"
+msgstr ""
+
+msgid "Jungle Sign"
+msgstr ""
+
+msgid "Jungle Slab"
+msgstr ""
+
+msgid "Jungle Stairs"
+msgstr ""
+
+msgid "Jungle Trapdoor"
+msgstr ""
+
+msgid "Jungle leaves are grown from Jungle trees."
+msgstr ""
+
+msgid "Light Blue Stained Glass"
+msgstr ""
+
+msgid "Light Grey Stained Glass"
+msgstr ""
+
+msgid "Lime Stained Glass"
+msgstr ""
+
+msgid "Magenta Stained Glass"
+msgstr ""
+
+msgid "Oak Bark"
+msgstr ""
+
+msgid "Oak Bark Slab"
+msgstr ""
+
+msgid "Oak Bark Stairs"
+msgstr ""
+
+msgid "Oak Boat"
+msgstr ""
+
+msgid "Oak Button"
+msgstr ""
+
+msgid "Oak Chest Boat"
+msgstr ""
+
+msgid "Oak Door"
+msgstr ""
+
+msgid "Oak Fence"
+msgstr ""
+
+msgid "Oak Fence Gate"
+msgstr ""
+
+msgid "Oak Leaves"
+msgstr ""
+
+msgid "Oak Log"
+msgstr ""
+
+msgid "Oak Planks"
+msgstr ""
+
+msgid "Oak Pressure Plate"
+msgstr ""
+
+msgid "Oak Sapling"
+msgstr ""
+
+msgid "Oak Sign"
+msgstr ""
+
+msgid "Oak Slab"
+msgstr ""
+
+msgid "Oak Stairs"
+msgstr ""
+
+msgid "Oak Trapdoor"
+msgstr ""
+
+msgid "Oak leaves are grown from Oak trees."
+msgstr ""
+
+msgid "Orange Stained Glass"
+msgstr ""
+
+msgid "Pink Stained Glass"
+msgstr ""
+
+msgid "Purple Stained Glass"
+msgstr ""
+
+msgid "Red Stained Glass"
+msgstr ""
+
+msgid "Spruce Bark"
+msgstr ""
+
+msgid "Spruce Bark Slab"
+msgstr ""
+
+msgid "Spruce Bark Stairs"
+msgstr ""
+
+msgid "Spruce Boat"
+msgstr ""
+
+msgid "Spruce Button"
+msgstr ""
+
+msgid "Spruce Chest Boat"
+msgstr ""
+
+msgid "Spruce Door"
+msgstr ""
+
+msgid "Spruce Fence"
+msgstr ""
+
+msgid "Spruce Fence Gate"
+msgstr ""
+
+msgid "Spruce Leaves"
+msgstr ""
+
+msgid "Spruce Log"
+msgstr ""
+
+msgid "Spruce Planks"
+msgstr ""
+
+msgid "Spruce Pressure Plate"
+msgstr ""
+
+msgid "Spruce Sapling"
+msgstr ""
+
+msgid "Spruce Sign"
+msgstr ""
+
+msgid "Spruce Slab"
+msgstr ""
+
+msgid "Spruce Stairs"
+msgstr ""
+
+msgid "Spruce Trapdoor"
+msgstr ""
+
+msgid "Spruce leaves are grown from Spruce trees."
+msgstr ""
+
+msgid "Stripped Acacia Log"
+msgstr ""
+
+msgid "Stripped Acacia Wood"
+msgstr ""
+
+msgid "Stripped Birch Log"
+msgstr ""
+
+msgid "Stripped Birch Wood"
+msgstr ""
+
+msgid "Stripped Dark Oak Log"
+msgstr ""
+
+msgid "Stripped Dark Oak Wood"
+msgstr ""
+
+msgid "Stripped Jungle Log"
+msgstr ""
+
+msgid "Stripped Jungle Wood"
+msgstr ""
+
+msgid "Stripped Oak Log"
+msgstr ""
+
+msgid "Stripped Oak Wood"
+msgstr ""
+
+msgid "Stripped Spruce Log"
+msgstr ""
+
+msgid "Stripped Spruce Wood"
+msgstr ""
+
+msgid "The stripped trunk of an Acacia tree."
+msgstr ""
+
+msgid "The stripped trunk of an Birch tree."
+msgstr ""
+
+msgid "The stripped trunk of an Dark Oak tree."
+msgstr ""
+
+msgid "The stripped trunk of an Jungle tree."
+msgstr ""
+
+msgid "The stripped trunk of an Oak tree."
+msgstr ""
+
+msgid "The stripped trunk of an Spruce tree."
+msgstr ""
+
+msgid "The stripped wood of an Acacia tree."
+msgstr ""
+
+msgid "The stripped wood of an Birch tree."
+msgstr ""
+
+msgid "The stripped wood of an Dark Oak tree."
+msgstr ""
+
+msgid "The stripped wood of an Jungle tree."
+msgstr ""
+
+msgid "The stripped wood of an Oak tree."
+msgstr ""
+
+msgid "The stripped wood of an Spruce tree."
+msgstr ""
+
+msgid "The trunk of a Acacia tree."
+msgstr ""
+
+msgid "The trunk of a Birch tree."
+msgstr ""
+
+msgid "The trunk of a Dark Oak tree."
+msgstr ""
+
+msgid "The trunk of a Jungle tree."
+msgstr ""
+
+msgid "The trunk of a Oak tree."
+msgstr ""
+
+msgid "The trunk of a Spruce tree."
+msgstr ""
+
+msgid "White Stained Glass"
+msgstr ""
+
+msgid "Yellow Stained Glass"
+msgstr ""
+
 msgid "Stone"
 msgstr "Piedra"
 
@@ -149,28 +629,28 @@ msgid "This stone contains pure gold, a rare metal."
 msgstr "Esta piedra contiene oro puro, un metal raro."
 
 msgid "Redstone Ore"
-msgstr "Mena de redstone"
+msgstr "Mineral de redstone"
 
 msgid "Redstone ore is commonly found near the bottom of the world. It glows when it is punched or walked upon."
 msgstr "El mineral redstone se encuentra comúnmente cerca del fondo del mundo. Brilla cuando es golpeado o pisado."
 
 msgid "Lit Redstone Ore"
-msgstr "Mena de redstone encendida"
+msgstr "Mineral de redstone encendida"
 
 msgid "Lapis Lazuli Ore"
-msgstr "Mena de lapislázuli"
+msgstr "Mineral de lapislázuli"
 
 msgid "Lapis lazuli ore is the ore of lapis lazuli. It can be rarely found in clusters near the bottom of the world."
-msgstr "El mineral de lapislázuli es el mineral de lapislázuli. Rara vez se puede encontrar en grupos, se encuentra cerca del fondo del mundo."
+msgstr "El mineral de lapislázuli produce lapislázuli. Rara vez se puede encontrar en vetas cercanas al fondo del mundo."
 
 msgid "Emerald Ore"
-msgstr "Mena de esmeralda"
+msgstr "Mineral de esmeralda"
 
 msgid "Emerald ore is the ore of emeralds. It is very rare and can be found alone, not in clusters."
-msgstr "El mineral esmeralda es el mineral de las esmeraldas. Es muy raro y se puede encontrar solo, no en grupos."
+msgstr "El mineral de esmeralda da esmeraldas. Es muy raro y solo se puede encontrar uno, no más."
 
 msgid "Diamond Ore"
-msgstr "Mena de diamante"
+msgstr "Mineral de diamante"
 
 msgid "Diamond ore is rare and can be found in clusters near the bottom of the world."
 msgstr "El mineral de diamante es raro y se puede encontrar en grupos cerca del fondo del mundo."
@@ -230,16 +710,16 @@ msgid "Grass Block"
 msgstr "Bloque de césped"
 
 msgid "A grass block is dirt with a grass cover. Grass blocks are resourceful blocks which allow the growth of all sorts of plants. They can be turned into farmland with a hoe and turned into grass paths with a shovel. In light, the grass slowly spreads onto dirt nearby. Under an opaque block or a liquid, a grass block may turn back to dirt."
-msgstr "Un bloque de hierba es tierra con una cubierta de hierba. Los bloques de hierba son bloques ingeniosos que permiten el crecimiento de todo tipo de plantas. Pueden convertirse en tierras de cultivo con una azada y convertirse en caminos de hierba con una pala. A la luz, la hierba se extiende lentamente sobre la tierra cercana. Debajo de un bloque opaco o un líquido, un bloque de hierba puede ensuciarse."
+msgstr "Un bloque de césped es tierra con una cubierta de césped. Los bloques de césped son bloques ingeniosos que permiten el crecimiento de todo tipo de plantas. Pueden convertirse en tierras de cultivo con una azada y convertirse en caminos de césped con una pala. A la luz, el césped se extiende lentamente sobre la tierra cercana. Debajo de un bloque opaco o un líquido, un bloque de césped puede volverse tierra."
 
 msgid "Dirt with Snow"
 msgstr "Tierra con Nieve"
 
 msgid "Grass Path"
-msgstr "Camino de hierba"
+msgstr "Camino de césped"
 
 msgid "Grass paths are a decorative variant of grass blocks. Their top has a different color and they are a bit lower than grass blocks, making them useful to build footpaths. Grass paths can be created with a shovel. A grass path turns into dirt when it is below a solid block."
-msgstr "Los caminos de hierba son una variante decorativa de bloques de hierba. Su parte superior tiene un color diferente y son un poco más bajos que los bloques de hierba, lo que los hace útiles para construir senderos. Los caminos de hierba se pueden crear con una pala. Un camino de hierba se convierte en tierra cuando está debajo de un bloque sólido."
+msgstr "Los caminos de césped son una variante decorativa del bloques de césped. Su parte superior tiene un color diferente y son un poco más bajos que los bloques de césped, lo que los hace útiles para construir senderos. Los caminos de césped se pueden crear con una pala. Un camino de césped se convierte en tierra cuando está debajo de un bloque sólido."
 
 msgid "Mycelium"
 msgstr "Micelio"
@@ -257,19 +737,19 @@ msgid "Podzol is a type of dirt found in taiga forests. Only a few plants are ab
 msgstr "El podzol es un tipo de tierra que se encuentra en los bosques de taiga. Solo unas pocas plantas pueden sobrevivir en él."
 
 msgid "Podzol with Snow"
-msgstr "Podsol con Nieve"
+msgstr "Podzol con Nieve"
 
 msgid "Dirt"
 msgstr "Tierra"
 
 msgid "Dirt acts as a soil for a few plants. When in light, this block may grow a grass or mycelium cover if such blocks are nearby."
-msgstr "La tierra actúa como un suelo para algunas plantas. Cuando está a la luz, este bloque puede crecer una cubierta de hierba o micelio si tales bloques están cerca."
+msgstr "La tierra actúa como un suelo para algunas plantas. Cuando está a la luz, este bloque puede crecer una cubierta de césped o micelio si tales bloques están cerca."
 
 msgid "Coarse Dirt"
-msgstr "Tierra estéril"
+msgstr "Tierra infértil"
 
 msgid "Coarse dirt acts as a soil for some plants and is similar to dirt, but it will never grow a cover."
-msgstr "La tierra gruesa actúa como un suelo para algunas plantas y es similar a la tierra, pero nunca crecerá una cubierta."
+msgstr "La tierra infértil actúa como un suelo para algunas plantas y es similar a la tierra, pero nunca crecerá una cubierta."
 
 msgid "Gravel"
 msgstr "Grava"
@@ -347,7 +827,7 @@ msgid "Brick Block"
 msgstr "Bloque de ladrillo"
 
 msgid "Brick blocks are a good building material for building solid houses and can take quite a punch."
-msgstr "Los bloques de ladrillo son un buen material de construcción para construir casas sólidas y pueden recibir un gran golpe."
+msgstr "Los bloques de ladrillo son un buen material de construcción para edificar casas sólidas y pueden aguantar bastantes golpes."
 
 msgid "Bedrock"
 msgstr "Lecho de roca"
@@ -356,7 +836,7 @@ msgid "Bedrock is a very hard type of rock. It can not be broken, destroyed, col
 msgstr "El lecho de roca es un tipo de roca muy duro. No se puede romper, destruir, recoger o mover por medios normales, a menos que esté en modo creativo."
 
 msgid "In the End dimension, starting a fire on this block will create an eternal fire."
-msgstr "En la dimensión final, iniciar un incendio en este bloque creará un fuego eterno."
+msgstr "En la dimensión del end, encender un fuego en este bloque creará un fuego que nunca se apagará."
 
 msgid "Cobblestone"
 msgstr "Roca"
@@ -368,7 +848,7 @@ msgid "Block of Coal"
 msgstr "Bloque de carbón"
 
 msgid "Blocks of coal are useful as a compact storage of coal and very useful as a furnace fuel. A block of coal is as efficient as 10 coal."
-msgstr "Los bloques de carbón son útiles como almacenamiento compacto de carbón y son muy útiles como combustible de horno. Un bloque de carbón es tan eficiente como 10 de carbón."
+msgstr "Los bloques de carbón son útiles como almacenamiento compacto de carbón y muy útiles como combustible para hornos. Un bloque de carbón es tan eficiente como 10 de carbón."
 
 msgid "Block of Iron"
 msgstr "Bloque de hierro"
@@ -386,10 +866,10 @@ msgid "Block of Diamond"
 msgstr "Bloque de diamante"
 
 msgid "A block of diamond is mostly a shiny decorative block but also useful as a compact storage of diamonds."
-msgstr "Un bloque de diamantes es principalmente un bloque decorativo brillante, pero también es útil como un almacenamiento compacto de diamantes."
+msgstr "Un bloque de diamante es sobre todo un bloque decorativo reluciente, pero también es útil como almacén compacto de diamantes."
 
-msgid "Lapis Lazuli Block"
-msgstr "Bloque de lapislázuli"
+msgid "Block of Lapis Lazuli"
+msgstr ""
 
 msgid "A lapis lazuli block is mostly a decorative block but also useful as a compact storage of lapis lazuli."
 msgstr "Un bloque de lapislázuli es principalmente un bloque decorativo, pero también es útil como un almacenamiento compacto de lapislázuli."
@@ -398,7 +878,7 @@ msgid "Block of Emerald"
 msgstr "Bloque de esmeralda"
 
 msgid "A block of emerald is mostly a shiny decorative block but also useful as a compact storage of emeralds."
-msgstr "Un bloque de esmeraldas es principalmente un bloque decorativo brillante pero también es útil como un almacenamiento compacto de esmeraldas."
+msgstr "Un bloque de esmeraldas es principalmente un bloque decorativo reluciente pero también es útil como un almacenamiento compacto de esmeraldas."
 
 msgid "Obsidian"
 msgstr "Obsidiana"
@@ -416,19 +896,19 @@ msgid "Ice"
 msgstr "Hielo"
 
 msgid "Ice is a solid block usually found in cold areas. It melts near block light sources at a light level of 12 or higher. When it melts or is broken while resting on top of another block, it will turn into a water source."
-msgstr "El hielo es un bloque sólido que generalmente se encuentra en áreas frías. Se funde cerca de bloques de luz, a un nivel de luz de 12 o más. Cuando se derrite o se rompe mientras posa sobre otro bloque, se convertirá en una fuente de agua."
+msgstr "El hielo es un bloque sólido que suele encontrarse en zonas frías. Se derrite cerca de fuentes de luz con un nivel de luz de 12 o superior. Cuando se derrite o se rompe mientras está encima otro bloque, se convertirá en una fuente de agua."
 
 msgid "Packed Ice"
-msgstr "Hielo envasado"
+msgstr "Hielo compacto"
 
 msgid "Packed ice is a compressed form of ice. It is opaque and solid."
-msgstr "El hielo empaquetado es una forma comprimida de hielo. Es opaco y sólido."
+msgstr "El hielo compacto es una forma comprimida de hielo. Es opaco y sólido."
 
 msgid "Frosted ice is a short-lived solid block. It melts into a water source within a few seconds."
-msgstr "El hielo helado es un bloque sólido de corta duración. Se derrite en una fuente de agua en unos pocos segundos."
+msgstr "El hielo escarchado es un bloque sólido de corta duración. Se funde en una fuente de agua en pocos segundos."
 
 msgid "Frosted Ice"
-msgstr "Hielo helado"
+msgstr "Hielo escarchado"
 
 msgid "Top Snow"
 msgstr "Nieve"
@@ -440,7 +920,7 @@ msgid "Top snow is a layer of snow. It melts near light sources other than the s
 msgstr "La nieve es una capa de nieve. Se derrite cerca de fuentes de luz distintas al sol con un nivel 12 de luz o más."
 
 msgid "Top snow can be stacked and has one of 8 different height levels. At levels 2-8, top snow is collidable. Top snow drops 2-9 snowballs, depending on its height."
-msgstr "La nieve se puede apilar y tiene unos 8 niveles de altura diferentes. En los niveles 2-8, la nieve es colisionable. La nieve cae de 2 a 9 bolas de nieve, dependiendo de su altura."
+msgstr "La nieve puede apilarse y tiene de 1 a 8 niveles de altura. En los niveles 2-8, la nieve es colisionable. La nieve deja dropea entre 2 a 9 bolas de nieve, dependiendo de su altura."
 
 msgid "This block can only be placed on full solid blocks and on another top snow (which increases its height)."
 msgstr "Este bloque solo se puede colocar en bloques sólidos completos y en otra nieve (lo que aumenta su altura)."
@@ -461,7 +941,7 @@ msgid "Contact damage: @1 per half second"
 msgstr "Daño por contacto: @1 por medio segundo"
 
 msgid "This is a piece of cactus commonly found in dry areas, especially deserts. Over time, cacti will grow up to 3 blocks high on sand or red sand. A cactus hurts living beings touching it with a damage of 1 HP every half second. When a cactus block is broken, all cactus blocks connected above it will break as well."
-msgstr "Este es un pedazo de cactus que se encuentra comúnmente en áreas secas, especialmente en los desiertos. Con el tiempo, los cactus crecerán hasta 3 bloques de altura en arena o arena roja. Un cactus lastima a los seres vivos al tocarlo con un daño de 1 HP cada medio segundo. Cuando un bloque de cactus se rompe, todos los bloques de cactus conectados encima también se romperán."
+msgstr "Se trata de un cactus que suele encontrarse en zonas secas, especialmente desérticas. Con el tiempo, los cactus crecerán hasta 3 bloques de altura sobre arena o arena roja. Un cactus daña a los seres vivos que lo tocan con un daño de 1 PS cada medio segundo. Cuando un bloque de cactus se rompe, todos los bloques de cactus conectados por encima se romperán también."
 
 msgid "A cactus can only be placed on top of another cactus or any sand."
 msgstr "Un cactus solo se puede colocar encima de otro cactus o arena."
@@ -473,7 +953,7 @@ msgid "Grows on sand or dirt next to water"
 msgstr "Crece en la arena o en la tierra junto al agua"
 
 msgid "Sugar canes are a plant which has some uses in crafting. Sugar canes will slowly grow up to 3 blocks when they are next to water and are placed on a grass block, dirt, sand, red sand, podzol or coarse dirt. When a sugar cane is broken, all sugar canes connected above will break as well."
-msgstr "Las cañas de azúcar son una planta que tiene algunos usos en la elaboración. Las cañas de azúcar crecerán lentamente hasta 3 bloques cuando estén cerca del agua y se colocan en un bloque de césped, tierra, arena, arena roja, podzol o tierra gruesa. Cuando se rompe una caña de azúcar, todas las cañas de azúcar conectadas arriba también se romperán."
+msgstr "Las cañas de azúcar son una planta que tiene algunos usos en la elaboración. Las cañas de azúcar crecerán lentamente hasta 3 bloques cuando estén cerca del agua y se colocan en un bloque de césped, tierra, arena, arena roja, podzol o tierra infértil. Cuando se rompe una caña de azúcar, todas las cañas de azúcar conectadas arriba también se romperán."
 
 msgid "Sugar canes can only be placed top of other sugar canes and on top of blocks on which they would grow."
 msgstr "Las cañas de azúcar solo se pueden colocar encima de otras cañas de azúcar y encima de los bloques en los que crecerían."
@@ -482,28 +962,25 @@ msgid "Ladder"
 msgstr "Escalera"
 
 msgid "A piece of ladder which allows you to climb vertically. Ladders can only be placed on the side of solid blocks and not on glass, leaves, ice, slabs, glowstone, nor sea lanterns."
-msgstr "Un pedazo de escalera que te permite subir verticalmente. Las escaleras solo se pueden colocar al lado de bloques sólidos y no en vidrio, hojas, hielo, losas, piedra luminosa ni linternas marinas."
+msgstr "Una escalera de mano te permite subir verticalmente. Las escaleras solo se pueden colocar al lado de bloques sólidos y no en vidrio, hojas, hielo, losas, piedra luminosa ni linternas marinas."
 
 msgid "Vines"
 msgstr "Enredadera"
 
 msgid "Vines are climbable blocks which can be placed on the sides of solid full-cube blocks. Vines slowly grow and spread."
-msgstr "Las enredaderas son bloques escalables que se pueden colocar a los lados de bloques sólidos de cubo completo. Las enredaderas crecen y se extienden lentamente"
+msgstr "Las enredaderas son bloques escalables que se pueden colocar a los laterales de bloques sólidos completos. Las enredaderas crecen y se extienden lentamente."
 
 msgid "Glass"
-msgstr "Cristal"
+msgstr "Vidrio"
 
 msgid "A decorative and mostly transparent block."
 msgstr "Un bloque decorativo y mayormente transparente."
 
 msgid "Stained glass is a decorative and mostly transparent block which comes in various different colors."
-msgstr "El vitral es un bloque decorativo y en su mayoría transparente que viene en varios colores diferentes."
+msgstr "Los vidrios teñidos son bloques decorativos, en su mayoría transparentes, que se presentan en varios colores diferentes."
 
 msgid "Stained Glass"
-msgstr "Vitral"
-
-msgid "@1 Stained Glass"
-msgstr ""
+msgstr "Vidrio teñido"
 
 msgid "Flowing Water"
 msgstr "Agua que fluye"
@@ -554,19 +1031,19 @@ msgid "Bone Block"
 msgstr "Bloque de hueso"
 
 msgid "Bone blocks are decorative blocks and a compact storage of bone meal."
-msgstr "Los bloques óseos son bloques decorativos y un almacenamiento compacto de harina de huesos."
+msgstr "Los bloques de hueso son bloques decorativos y un almacenamiento compacto de hueso molido."
 
 msgid "Slime Block"
 msgstr "Bloque de Slime"
 
 msgid "Slime blocks are very bouncy and prevent fall damage."
-msgstr "Los bloques de limo son muy hinchables y evitan el daño por caída."
+msgstr "Los bloques de slime rebotan mucho y evitan los daños por caída."
 
 msgid "Cobweb"
 msgstr "Telaraña"
 
 msgid "Slows down movement"
-msgstr ""
+msgstr "Ralentiza el movimiento"
 
 msgid "Cobwebs can be walked through, but significantly slow you down."
 msgstr "Las telarañas se pueden atravesar, pero disminuyen significativamente la velocidad."
@@ -581,152 +1058,134 @@ msgid "Barrier"
 msgstr "Barrera"
 
 msgid "Barriers are invisible walkable blocks. They are used to create boundaries of adventure maps and the like. Monsters and animals won't appear on barriers, and fences do not connect to barriers. Other blocks can be built on barriers like on any other block."
-msgstr "Las barreras son bloques transitables invisibles. Se utilizan para crear límites de mapas de aventura y similares. Los monstruos y los animales no aparecerán en las barreras, y las cercas no se conectan a las barreras. Otros bloques pueden construirse sobre barreras como en cualquier otro bloque."
+msgstr "Las barreras son bloques invisibles transitables. Se utilizan para crear límites de mapas de aventura. Los monstruos y animales no aparecerán en las barreras, y las vallas no se conectan a las barreras. Se pueden construir otros bloques sobre las barreras como sobre cualquier otro bloque."
 
 msgid "When you hold a barrier in hand, you reveal all placed barriers in a short distance around you."
-msgstr "Cuando sostienes una barrera en la mano, revelas todas las barreras colocadas a corta distancia a tu alrededor."
+msgstr "Cuando sostienes una barrera en la mano, puedes ver todas las barreras colocadas a corta distancia de tu alrededor."
 
 msgid "Realm Barrier"
 msgstr "Barrera del reino"
 
 msgid "Light"
-msgstr ""
+msgstr "Luz"
 
 msgid "Lights are invisible blocks. They are used to light up adventure maps and the like."
-msgstr ""
+msgstr "Las luces son bloques invisibles. Se utilizan para iluminar mapas de aventuras."
 
 msgid "When you hold a light in hand, you reveal all placed lights in a short distance around you."
-msgstr ""
+msgstr "Cuando sostienes una luz en la mano, puedes ver todas las luces colocadas a una corta distancia de tu alrededor."
 
 msgid "Void"
 msgstr "Vacío"
 
 msgid "Stone Stairs"
-msgstr ""
+msgstr "Escaleras de piedra"
 
 msgid "Stone Slab"
-msgstr ""
+msgstr "Losa de piedra"
 
 msgid "Smooth Stone Slab"
-msgstr ""
+msgstr "Losa de piedra lisa"
 
 msgid "Andesite Stairs"
-msgstr ""
+msgstr "Escaleras de andesita"
 
 msgid "Andesite Slab"
-msgstr ""
+msgstr "Losa de andesita"
 
 msgid "Granite Stairs"
-msgstr ""
+msgstr "Escaleras de granito"
 
 msgid "Granite Slab"
-msgstr ""
+msgstr "Losa de granito"
 
 msgid "Diorite Stairs"
-msgstr ""
+msgstr "Escaleras de diorita"
 
 msgid "Diorite Slab"
-msgstr ""
+msgstr "Losa de diorita"
 
 msgid "Cobblestone Stairs"
-msgstr ""
+msgstr "Escaleras de roca"
 
 msgid "Cobblestone Slab"
-msgstr ""
+msgstr "Losa de adoquines"
 
 msgid "Mossy Cobblestone Stairs"
-msgstr ""
+msgstr "Escaleras de roca musgosa"
 
 msgid "Mossy Cobblestone Slab"
-msgstr ""
+msgstr "Losa de roca musgosa"
 
 msgid "Brick Stairs"
-msgstr ""
+msgstr "Escaleras de ladrillo"
 
 msgid "Brick Slab"
-msgstr ""
+msgstr "Losa de ladrillo"
 
 msgid "Sandstone Stairs"
-msgstr ""
+msgstr "Escaleras de arenisca"
 
 msgid "Sandstone Slab"
-msgstr ""
+msgstr "Losa de arenisca"
 
 msgid "Smooth Sandstone Stairs"
-msgstr ""
+msgstr "Escaleras de arenisca lisa"
 
 msgid "Smooth Sandstone Slab"
-msgstr ""
+msgstr "Losa de arenisca lisa"
 
 msgid "Cut Sandstone Stairs"
-msgstr ""
+msgstr "Escalera de arenisca cortada"
 
 msgid "Cut Sandstone Slab"
-msgstr ""
+msgstr "Losa de arenisca cortada"
 
 msgid "Red Sandstone Stairs"
-msgstr ""
+msgstr "Escaleras de arenisca roja"
 
 msgid "Red Sandstone Slab"
-msgstr ""
+msgstr "Losa de arenisca roja"
 
 msgid "Smooth Red Sandstone Stairs"
-msgstr ""
+msgstr "Escaleras de arenisca roja lisa"
 
 msgid "Smooth Red Sandstone Slab"
-msgstr ""
+msgstr "Losa de arenisca roja lisa"
 
 msgid "Cut Red Sandstone Stairs"
-msgstr ""
+msgstr "Escalera de arenisca roja cortada"
 
 msgid "Cut Red Sandstone Slab"
-msgstr ""
+msgstr "Losa de arenisca roja cortada"
 
 msgid "Stone Brick Stairs"
-msgstr ""
+msgstr "Escaleras de ladrillo de piedra"
 
 msgid "Stone Brick Slab"
-msgstr ""
+msgstr "Losa de ladrillo de piedra"
 
 msgid "Polished Andesite Stairs"
-msgstr ""
+msgstr "Escaleras de andesita pulida"
 
 msgid "Polished Andesite Slab"
-msgstr ""
+msgstr "Losa de andesita pulida"
 
 msgid "Polished Granite Stairs"
-msgstr ""
+msgstr "Escaleras de granito pulido"
 
 msgid "Polished Granite Slab"
-msgstr ""
+msgstr "Losa de granito pulido"
 
 msgid "Polished Diorite Stairs"
-msgstr ""
+msgstr "Escaleras de diorita pulida"
 
 msgid "Polished Diorite Slab"
-msgstr ""
+msgstr "Losa de diorita pulida"
 
 msgid "Mossy Stone Brick Stairs"
-msgstr ""
+msgstr "Escaleras de ladrillo de piedra musgosa"
 
 msgid "Mossy Stone Brick Slab"
-msgstr ""
-
-msgid "Oak"
-msgstr ""
-
-msgid "Dark Oak"
-msgstr ""
-
-msgid "Jungle"
-msgstr ""
-
-msgid "Spruce"
-msgstr ""
-
-msgid "Acacia"
-msgstr ""
-
-msgid "Birch"
-msgstr ""
+msgstr "Losa de ladrillo de piedra musgosa"
 

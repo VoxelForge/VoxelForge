@@ -50,9 +50,7 @@ minetest.register_globalstep(function(dtime)
 	if voidtimer > VOID_DAMAGE_FREQ then
 		voidtimer = 0
 		local enable_damage = minetest.settings:get_bool("enable_damage")
-		local players = minetest.get_connected_players()
-		for p=1, #players do
-			local player = players[p]
+		for player in vlf_util.connected_players() do
 			local pos = player:get_pos()
 			local _, void_deadly = vlf_worlds.is_in_void(pos)
 			if void_deadly then

@@ -63,7 +63,7 @@ end
 function vlf_weather.remove_spawners_player(pl)
 	local name=pl:get_player_name()
 	if not particlespawners[name] then return end
-	for k,v in pairs(particlespawners[name]) do
+	for _, v in pairs(particlespawners[name]) do
 		minetest.delete_particlespawner(v)
 	end
 	particlespawners[name] = nil
@@ -71,8 +71,8 @@ function vlf_weather.remove_spawners_player(pl)
 end
 
 function vlf_weather.remove_all_spawners()
-	for k,v in pairs(minetest.get_connected_players()) do
-		vlf_weather.remove_spawners_player(v)
+	for pl in vlf_util.connected_players() do
+		vlf_weather.remove_spawners_player(pl)
 	end
 end
 
@@ -154,7 +154,7 @@ minetest.register_globalstep(function(dtime)
 end)
 
 -- Sets random weather (which could be 'none' (no weather)).
-function vlf_weather.set_random_weather(weather_name, weather_meta)
+function vlf_weather.set_random_weather(_, weather_meta)
 	if weather_meta == nil then return end
 	local transitions = weather_meta.transitions
 	local random_roll = math.random(0,100)
@@ -259,7 +259,7 @@ minetest.register_chatcommand("toggledownfall", {
 	params = "",
 	description = S("Toggles between clear weather and weather with downfall (randomly rain, thunderstorm or snow)"),
 	privs = {weather_manager = true},
-	func = function(name, param)
+	func = function(name, _)
 		-- Currently rain/thunder/snow: Set weather to clear
 		if vlf_weather.state ~= "none" then
 			return vlf_weather.change_weather("none", nil, name)

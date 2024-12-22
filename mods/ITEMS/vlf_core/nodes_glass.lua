@@ -1,5 +1,6 @@
 -- Glass nodes
 local S = minetest.get_translator(minetest.get_current_modname())
+local D = vlf_util.get_dynamic_translator()
 local mod_doc = minetest.get_modpath("doc")
 
 minetest.register_node("vlf_core:glass", {
@@ -43,7 +44,7 @@ for color,colordef in pairs(vlf_dyes.colors) do
 		texcol = messy_textures[color]
 	end
 	minetest.register_node("vlf_core:glass_"..color, {
-		description = S("@1 Stained Glass", colordef.readable_name),
+		description = D(colordef.readable_name .. " Stained Glass"),
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = entry_name,
 		_doc_items_longdesc = longdesc,

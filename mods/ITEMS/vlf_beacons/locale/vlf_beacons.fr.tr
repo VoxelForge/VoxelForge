@@ -1,4 +1,5 @@
 # textdomain: vlf_beacons
-Beacon:=Balise :
 Primary Power:=Pouvoir Primaire :
+Secondary Power:=Pouvoir secondaire :
 Inventory:=Inventaire :
+Beacon=Balise

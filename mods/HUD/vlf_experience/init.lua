@@ -254,7 +254,7 @@ minetest.register_on_mods_loaded(function()
 	table.sort(vlf_experience.on_add_xp, function(a, b) return a.priority < b.priority end)
 end)
 
-vlf_gamemode.register_on_gamemode_change(function(p, old_gm, gm)
+vlf_gamemode.register_on_gamemode_change(function(p, _, gm)
 	if gm == "survival" then
 		 vlf_experience.setup_hud(p)
 		 vlf_experience.update(p)

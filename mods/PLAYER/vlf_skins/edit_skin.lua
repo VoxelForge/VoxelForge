@@ -96,7 +96,7 @@ end
 minetest.register_chatcommand("skin", {
 	description = S("Open skin configuration screen."),
 	privs = {},
-	func = function(name, param) vlf_skins.show_formspec(minetest.get_player_by_name(name)) end
+	func = function(name, _) vlf_skins.show_formspec(minetest.get_player_by_name(name)) end
 })
 
 function vlf_skins.compile_skin(skin)
@@ -125,7 +125,7 @@ function vlf_skins.compile_skin(skin)
 	end
 	table.sort(ranks)
 	local output = ""
-	for i, rank in ipairs(ranks) do
+	for _, rank in ipairs(ranks) do
 		if #output > 0 then output = output .. "^" end
 		output = output .. layers[rank]
 	end
@@ -460,7 +460,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		return true
 	end
 
-	for i, tab in pairs(vlf_skins.tab_names) do
+	for _, tab in pairs(vlf_skins.tab_names) do
 		if fields[tab] then
 			formspec_data.active_tab = tab
 			formspec_data.page_num = 1

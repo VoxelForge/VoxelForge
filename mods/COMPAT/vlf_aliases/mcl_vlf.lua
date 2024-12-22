@@ -1,8 +1,0 @@
-minetest.register_alias("mcl_core:stonebrick", "vlf_core:stonebrick")
-minetest.register_alias("mcl_core:lava_source", "vlf_core:lava_source")
-minetest.register_alias("mcl_core:lava_source", "vlf_core:lava_source")
-minetest.register_alias("mcl_stairs:stair_stonebrick", "vlf_stairs:stair_stonebrick")
-minetest.register_alias("mcl_stairs:stair_stonebrick_outer", "vlf_stairs:stair_stonebrick_outer")
-minetest.register_alias("mcl_portals:end_portal_frame", "vlf_portals:end_portal_frame")
-minetest.register_alias("mcl_core:bedrock", "vlf_core:bedrock")
-minetest.register_alias("mcl_mobspawners:spawner", "vlf_mobspawners:spawner")

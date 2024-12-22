@@ -25,7 +25,7 @@ The basic digging time groups determine by which tools a node can be dug.
 * `handy=1`: Breakable by hand and this node gives it useful drop when dug by hand. All nodes which are breakable by pickaxe, axe, shovel, sword or shears are also automatically breakable by hand, but not neccess
 * `creative_breakable=1`: Block is breakable by hand in creative mode. This group is implied if the node belongs to any other digging group
 
-Please read <http://minecraft.gamepedia.com/Breaking> to learn how digging times work in Minecraft, as VoxelForge is based on the same system.
+Please read <http://minecraft.gamepedia.com/Breaking> to learn how digging times work in Minecraft, as Mineclonia is based on the same system.
 
 ### Groups for interactions
 
@@ -159,6 +159,7 @@ These groups are used mostly for informational purposes
 * `pane=1`: Node is a “pane”-like node glass pane or iron bars
 * `bed=1`: Bed
 * `door=1`: Door
+* `crafting_table`: Crafting tables. The group rating is equal to the amount of allowed crafting slots.
 * `trapdoor=1`: Closed trapdoor
 * `trapdoor=2`: Open trapdoor
 * `glass=1`: Glass (full cubes only)
@@ -222,7 +223,9 @@ These groups are used mostly for informational purposes
 * `attaches_to_side=1`: This node can attach to the sides of other nodes.
 * `attaches_to_top=1`: This node can attach to the top of other nodes.
 
-* `supports_mushrooms=1`: Mushrooms stay on this node regardless of light level.
+* `supports_mushrooms=1`: Mushrooms can be placend and stay on this node regardless of light level.
+* `supports_mushrooms=2`: Mushrooms stay on this node regardless of light level but can't be placed directly.
+
 ## Fake item groups
 These groups put similar items together which should all be treated by the gameplay or the GUI as a single item.
 You should not add custom items to these groups for no good reason, this is likely to cause a ton of conflicts.

@@ -1,20 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_mangrove x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_mangrove x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: mtt_convert 0.1.0\n"
-
-msgid "Mangrove"
-msgstr ""
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Mangrove Roots"
 msgstr ""
@@ -54,3 +51,73 @@ msgstr ""
 
 msgid "Muddy Mangrove Roots is a block from mangrove swamp.It drowns player a bit inside it."
 msgstr ""
+
+msgid "Mangrove Bark"
+msgstr ""
+
+msgid "Mangrove Bark Slab"
+msgstr ""
+
+msgid "Mangrove Bark Stairs"
+msgstr ""
+
+msgid "Mangrove Boat"
+msgstr ""
+
+msgid "Mangrove Button"
+msgstr ""
+
+msgid "Mangrove Chest Boat"
+msgstr ""
+
+msgid "Mangrove Door"
+msgstr ""
+
+msgid "Mangrove Fence"
+msgstr ""
+
+msgid "Mangrove Fence Gate"
+msgstr ""
+
+msgid "Mangrove Leaves"
+msgstr ""
+
+msgid "Mangrove Log"
+msgstr ""
+
+msgid "Mangrove Planks"
+msgstr ""
+
+msgid "Mangrove Pressure Plate"
+msgstr ""
+
+msgid "Mangrove Sign"
+msgstr ""
+
+msgid "Mangrove Slab"
+msgstr ""
+
+msgid "Mangrove Stairs"
+msgstr ""
+
+msgid "Mangrove Trapdoor"
+msgstr ""
+
+msgid "Mangrove leaves are grown from Mangrove trees."
+msgstr ""
+
+msgid "Stripped Mangrove Log"
+msgstr ""
+
+msgid "Stripped Mangrove Wood"
+msgstr ""
+
+msgid "The stripped trunk of an Mangrove tree."
+msgstr ""
+
+msgid "The stripped wood of an Mangrove tree."
+msgstr ""
+
+msgid "The trunk of a Mangrove tree."
+msgstr ""
+

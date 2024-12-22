@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_inventory x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_inventory x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,67 +11,67 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Building Blocks"
-msgstr ""
+msgstr "Építőblokkok"
 
 msgid "Decoration Blocks"
-msgstr ""
+msgstr "Díszblokkok"
 
 msgid "Redstone"
-msgstr ""
+msgstr "Vöröskő"
 
 msgid "Transportation"
-msgstr ""
+msgstr "Szállítás"
 
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Egyéb"
 
 msgid "Search Items"
-msgstr ""
+msgstr "Keresés"
 
 msgid "Foodstuffs"
-msgstr ""
+msgstr "Élelmiszerek"
 
 msgid "Tools"
-msgstr ""
+msgstr "Eszközök"
 
 msgid "Combat"
-msgstr ""
+msgstr "Harc"
 
 msgid "Mobs"
-msgstr ""
+msgstr "Mobok"
 
 msgid "Brewing"
-msgstr ""
+msgstr "Lepárlás"
 
 msgid "Materials"
-msgstr ""
+msgstr "Anyagok"
 
 msgid "Survival Inventory"
-msgstr ""
+msgstr "Túlélőkészlet"
 
 msgid "Not in Creative Inventory"
-msgstr ""
+msgstr "Nem található a Kreatív készletben"
 
 msgid "Advancements"
-msgstr ""
+msgstr "Kihívások"
 
 msgid "Switch stack size"
-msgstr ""
+msgstr "Köteg méretének állítása"
 
 msgid "@1 / @2"
-msgstr ""
+msgstr "@1/@2"
 
 msgid "Recipe book"
 msgstr "Receptkönyv"
 
 msgid "Help"
-msgstr ""
+msgstr "Segítség"
 
 msgid "Select player skin"
-msgstr ""
+msgstr "Játékos kinézetének beállítása"
 
 msgid "Crafting"
 msgstr "Barkácsolás"
@@ -80,5 +80,5 @@ msgid "Fill Craft Grid"
 msgstr "Barkácsrács kitöltése"
 
 msgid "Achievements"
-msgstr ""
+msgstr "Elért eredmények"
 

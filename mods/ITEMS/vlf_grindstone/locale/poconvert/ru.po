@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_grindstone x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_grindstone x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Repair & Disenchant"
 msgstr "Починить и снять зачарования"
@@ -38,7 +38,7 @@ msgid "To repair a tool you need a tool of the same type and material, put both 
 msgstr "Чтобы починить инструмент вам нужен еще один инструмент того же типа и из того же материала, положите оба инструмента во входные слоты и в выходном слоте их запас прочности соединится с 5% бонусом."
 
 msgid "If both items have enchantments the player will get xp from both items from the disenchant."
-msgstr "Если оба предмета имеют зачарования игрок получит XP от снятия зачарований с каждого предмета7"
+msgstr "Если оба предмета имеют зачарования игрок получит XP от снятия зачарований с каждого предмета."
 
 msgid "Curses cannot be removed and will be transfered to the new repaired item, if both items have a different curse the curses will be combined."
 msgstr "Проклятия нельзя снять и они будут переданы на новый предмет, если оба предмета имеют разные проклятия, то они будут совмещены."

@@ -1,6 +1,6 @@
 # textdomain: vlf_commands
 List bans=Liste des interdictions
-Ban list: @1=Liste d'interdiction: @1
+Ban list: @1=Liste d'interdiction : @1
 Players can't be killed right now, damage has been disabled.=Les joueurs ne peuvent pas être tués pour le moment, les dégâts ont été désactivés.
 Player @1 does not exist.=Le joueur @1 n'existe pas.
 You are already dead=Tu es déjà mort
@@ -18,8 +18,8 @@ Set node at given position=Placer le noeud à une position donnée
 Invalid node=Noeud non valide
 @1 spawned.=@1 est apparu.
 Invalid parameters (see /help setblock)=Paramètres invalides (voir /help setblock)
-<sound> <target>=
-Play a sound. Arguments: <sound>: name of the sound. <target>: Target.=
-Sound name is invalid!=
-Target is invalid!!=
-Only peaceful mobs allowed!=Seuls les mobs pacifiques sont autorisées!
+<sound> <target>=<sound> <target>
+Play a sound. Arguments: <sound>: name of the sound. <target>: Target.=Jouer un son. Arguments : <sound> : nom du son. <target> : cible.
+Sound name is invalid!=Le nom du son n'est pas valide !
+Target is invalid!!=La cible n'est pas valide !
+Only peaceful mobs allowed!=Seuls les mobs pacifiques sont autorisées !

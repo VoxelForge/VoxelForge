@@ -3,31 +3,26 @@
 --made for MC like Survival game
 --License for code WTFPL and otherwise stated in readmes
 
-local S = minetest.get_translator("mobs_mc")
+local S = minetest.get_translator ("mobs_mc")
+local zombie = mobs_mc.zombie
+local mob_class = vlf_mobs.mob_class
+local pr = PcgRandom (os.time () * 1203)
 
---###################
---################### ZOMBIE VILLAGER
---###################
+------------------------------------------------------------------------
+-- Zombie Villager.
+------------------------------------------------------------------------
 
---[[
-local professions = {
-	farmer = "mobs_mc_villager_farmer.png",
-	fisherman = "mobs_mc_villager_farmer.png",
-	fletcher = "mobs_mc_villager_farmer.png",
-	shepherd = "mobs_mc_villager_farmer.png",
-	librarian = "mobs_mc_villager_librarian.png",
-	cartographer = "mobs_mc_villager_librarian.png",
-	armorer = "mobs_mc_villager_smith.png",
-	leatherworker = "mobs_mc_villager_butcher.png",
-	butcher = "mobs_mc_villager_butcher.png",
-	weapon_smith = "mobs_mc_villager_smith.png",
-	tool_smith = "mobs_mc_villager_smith.png",
-	cleric = "mobs_mc_villager_priest.png",
-	nitwit = "mobs_mc_villager.png",
+local formspec_escapes = {
+	["\\"] = "\\\\",
+	["^"] = "\\^",
+	[":"] = "\\:",
 }
---]]
 
-vlf_mobs.register_mob("mobs_mc:villager_zombie", {
+local function modifier_escape (text)
+	return string.gsub (text, "[\\^:]", formspec_escapes)
+end
+
+local zombie_villager = table.merge (zombie, {
 	description = S("Zombie Villager"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -36,116 +31,494 @@ vlf_mobs.register_mob("mobs_mc:villager_zombie", {
 	hp_max = 20,
 	xp_min = 5,
 	xp_max = 5,
-	breath_max = -1,
-	armor = {undead = 90, fleshy = 90},
 	collisionbox = {-0.3, -0.01, -0.3, 0.3, 1.94, 0.3},
 	visual = "mesh",
 	mesh = "mobs_mc_villager_zombie.b3d",
-	head_swivel = "Head_Control",
-	bone_eye_height = 2.35,
+	head_swivel = "head.control",
+	bone_eye_height = 0.0,
+	head_eye_height = 1.74,
 	curiosity = 2,
+	head_pitch_multiplier = 1,
 	textures = {
-		{"mobs_mc_zombie_butcher.png"},
-		{"mobs_mc_zombie_farmer.png"},
-		{"mobs_mc_zombie_librarian.png"},
-		{"mobs_mc_zombie_priest.png"},
-		{"mobs_mc_zombie_smith.png"},
-		{"mobs_mc_zombie_villager.png"},
+		"mobs_mc_zombie_villager.png",
+		"blank.png", -- Armor layer 1
+		"blank.png", -- Armor layer 2
 	},
-	visual_size = {x=2.75, y=2.75},
-	makes_footstep_sound = true,
-	damage = 3,
-	reach = 2,
-	walk_velocity = 0.8,
-	run_velocity = 1.2, -- same as zombie
-	attack_type = "dogfight",
-	group_attack = true,
-	drops = {
-		{name = "vlf_mobitems:rotten_flesh",
-		chance = 1,
-		min = 0,
-		max = 2,
-		looting = "common",},
-		{name = "vlf_core:iron_ingot",
-		chance = 120, -- 2.5% / 3
-		min = 1,
-		max = 1,
-		looting = "rare",
-		looting_factor = 0.01 / 3,},
-		{name = "vlf_farming:carrot_item",
-		chance = 120, -- 2.5% / 3
-		min = 1,
-		max = 1,
-		looting = "rare",
-		looting_factor = 0.01 / 3,},
-		{name = "vlf_farming:potato_item",
-		chance = 120, -- 2.5% / 3
-		min = 1,
-		max = 1,
-		looting = "rare",
-		looting_factor = 0.01 / 3,},
-	},
-	sounds = {
-		random = "mobs_mc_zombie_growl",
-		war_cry = "mobs_mc_zombie_growl",
-		death = "mobs_mc_zombie_death",
-		damage = "mobs_mc_zombie_hurt",
-	},
-	sound_params = {
-		max_hear_distance = 16,
-		gain = 0.3
+	visual_size = {
+		x = 2.75,
+		y = 2.75,
 	},
 	animation = {
 		stand_start = 20, stand_end = 40,
 		walk_start = 0, walk_end = 20, walk_speed = 20,
 		run_start = 0, run_end = 20, run_speed = 20,
 	},
-	on_rightclick = function(self, clicker)
-		if not self._curing and clicker and clicker:is_player() then
-			local wielditem = clicker:get_wielded_item()
-			-- ToDo: Only cure if zombie villager has the weakness effect
-			if wielditem:get_name() == "vlf_core:apple_gold" then
-				wielditem:take_item()
-				clicker:set_wielded_item(wielditem)
-				self._curing = math.random(3 * 60, 5 * 60)
-				self.shaking = true
-				self.persistent = true
+	drops = {
+		{
+			name = "vlf_mobitems:rotten_flesh",
+			chance = 1,
+			min = 0,
+			max = 2,
+			looting = "common",
+		},
+		{
+			name = "vlf_core:iron_ingot",
+			chance = 120, -- 2.5% / 3
+			min = 1,
+			max = 1,
+			looting = "rare",
+			looting_factor = 0.01 / 3,
+		},
+		{
+			name = "vlf_farming:carrot_item",
+			chance = 120, -- 2.5% / 3
+			min = 1,
+			max = 1,
+			looting = "rare",
+			looting_factor = 0.01 / 3,
+		},
+		{
+			name = "vlf_farming:potato_item",
+			chance = 120, -- 2.5% / 3
+			min = 1,
+			max = 1,
+			looting = "rare",
+			looting_factor = 0.01 / 3,
+		},
+	},
+	_armor_texture_slots = {
+		[3] = {
+			"head",
+			"torso",
+			"feet",
+		},
+		[2] = {
+			"legs",
+		},
+	},
+	_armor_transforms = {
+		head = function (texture)
+			return table.concat ({
+				"[combine:64x32:-32,0=",
+				"(",
+				modifier_escape (texture),
+				")",
+			})
+		end,
+	},
+	wielditem_info = {
+		bone = "arm.right",
+		position = {
+			x = 0.7 / 2.75,
+			y = 6.0 / 2.75,
+			z = 0.0,
+		},
+		rotation = {
+			x = 0,
+			y = 0,
+			z = 0,
+		},
+		toollike_position = {
+			x = 0.0,
+			y = 5.0 / 2.75,
+			z = 4.0 / 2.75,
+		},
+		toollike_rotation = {
+			x = 90,
+			y = -45,
+			z = -90,
+		},
+		blocklike_position = {
+			x = 0,
+			y = 6.0 / 2.75,
+			z = 0,
+		},
+		blocklike_rotation = {
+			x = 0,
+			y = 180,
+			z = 45,
+		},
+		crossbow_position = {
+			x = 0,
+			y = 6.0 / 2.75,
+			z = 0,
+		},
+		crossbow_rotation = {
+			x = 0,
+			y = 180,
+			z = 45,
+		},
+		bow_position = {
+			x = 0,
+			y = 6.0 / 2.75,
+			z = 0,
+		},
+		bow_rotation = {
+			x = 90,
+			y = 130,
+			z = 115,
+		},
+	},
+	_reinforcement_type = "mobs_mc:villager_zombie",
+})
+
+------------------------------------------------------------------------
+-- Zombie Villager mechanics.
+------------------------------------------------------------------------
+
+function zombie_villager:post_load_staticdata ()
+	mob_class.post_load_staticdata (self)
+
+	if pr:next (1, 100) <= 5
+		and not self._zombie_villager_initialized then
+		self.child = true
+	end
+	self._zombie_villager_initialized = true
+end
+
+------------------------------------------------------------------------
+-- Zombie Villager interaction.
+------------------------------------------------------------------------
+
+function zombie_villager:on_rightclick (clicker)
+	if not self._curing and clicker and clicker:is_player() then
+		local wielditem = clicker:get_wielded_item()
+		if wielditem:get_name () == "vlf_core:apple_gold"
+			and vlf_potions.has_effect (self.object, "weakness") then
+			vlf_potions.clear_effect (self.object, "weakness")
+			vlf_potions.clear_effect (self.object, "strength")
+
+			-- Grant Strength.  Contrary to the MC Wiki,
+			-- the potency of this effect _does_ vary by
+			-- difficulty.
+			local effect_level = math.max (vlf_vars.difficulty - 1, 0)
+			if effect_level > 0 then
+				vlf_potions.give_effect_by_level ("strength", self.object,
+								effect_level, math.huge)
 			end
+
+			local playername = clicker:get_player_name ()
+			if not minetest.is_creative_enabled (playername) then
+				wielditem:take_item ()
+				clicker:set_wielded_item (wielditem)
+			end
+
+			self._curing = math.random (3 * 60, 5 * 60)
+			self._curer = playername
+			self.shaking = true
+			self.persistent = true
 		end
-	end,
-	do_custom = function(self, dtime)
-		if self._curing then
-			self._curing = self._curing - dtime
-			local obj = self.object
-			if self._curing <= 0 then
-				local villager_obj = vlf_util.replace_mob(obj, "mobs_mc:villager")
-				if villager_obj then
-					self._curing = nil
-					return false
+	end
+end
+
+function zombie_villager:previous_staticdata ()
+	if not self._previous_incarnation then
+		return {
+			persistent = true,
+		}
+	end
+	return {
+		_xp = self._previous_incarnation.xp,
+		_tier = self._previous_incarnation.tier,
+		_profession = self._previous_incarnation.profession,
+		_villager_type = self._previous_incarnation.villager_type,
+		_gossips = self._previous_incarnation.gossips,
+		_reputation = self._previous_incarnation.reputation,
+		_trades = self._previous_incarnation.trades,
+		persistent = true,
+	}
+end
+
+local CURE_ACCELERANTS = {
+	"group:bed",
+	"group:iron_bars",
+}
+
+function zombie_villager:do_custom (dtime)
+	zombie.do_custom (self, dtime)
+	if self._curing then
+		if pr:next (1, vlf_mobs.scale_chance (100, dtime)) == 1 then
+			-- Search for conversion ``accelerant''
+			-- blocks.
+			local self_pos = self.object:get_pos ()
+			local aa = vector.offset (self_pos, -4, -4, -4)
+			local bb = vector.offset (self_pos, 4, 4, 4)
+			local nodes = minetest.find_nodes_in_area (aa, bb, CURE_ACCELERANTS)
+			if #nodes > 0 then
+				for i = 1, math.min (#nodes, 12) do
+					if pr:next (1, 10) < 3 then
+						dtime = dtime + 0.05
+					end
 				end
 			end
 		end
-	end,
-	on_mob_replace = function(self, new_ent)
-		if new_ent.name == "mobs_mc:villager" then
-			new_ent._profession = self._profession
-			new_ent._id = self._id
-			new_ent._jobsite = self._jobsite
-			new_ent._bed = self._bed
-			new_ent._cured_zombie = true
-			new_ent:set_textures()
+		self._curing = self._curing - dtime
+		if self._curing <= 0 then
+			self:drop_player_equipment ()
+
+			local data = self:previous_staticdata ()
+			local villager_obj = self:replace_with ("mobs_mc:villager", false, data)
+			if villager_obj then
+				-- Drop any equipment collected from
+				-- players that is not enchanted.
+				self._curing = nil
+				-- Give this villager 10 seconds of nausea.
+				vlf_potions.give_effect ("nausea", villager_obj, 1, 10, false)
+
+				if self._curer then
+					local villager = villager_obj:get_luaentity ()
+					villager:record_gossip (self._curer, "major_positive", 20)
+					villager:record_gossip (self._curer, "minor_positive", 25)
+				end
+				return false
+			end
 		end
-	end,
-	sunlight_damage = 2,
-	ignited_by_sunlight = true,
-	floats = 0,
-	view_range = 16,
-	fear_height = 4,
-	harmed_by_heal = true,
-	attack_npcs = true,
+	end
+end
+
+------------------------------------------------------------------------
+-- Zombie Villager visuals.
+------------------------------------------------------------------------
+
+local zombie_villager_professions = {
+	armorer = {
+		texture = "mobs_mc_zombie_villager_armorer.png",
+	},
+	butcher = {
+		texture = "mobs_mc_zombie_villager_butcher.png",
+	},
+	cartographer = {
+		texture = "mobs_mc_zombie_villager_cartographer.png",
+	},
+	cleric = {
+		texture = "mobs_mc_zombie_villager_cleric.png",
+	},
+	farmer = {
+		texture = "mobs_mc_zombie_villager_farmer.png",
+	},
+	fisherman = {
+		texture = "mobs_mc_zombie_villager_fisherman.png",
+	},
+	fletcher = {
+		texture = "mobs_mc_zombie_villager_fletcher.png",
+	},
+	leatherworker = {
+		texture = "mobs_mc_zombie_villager_leatherworker.png",
+	},
+	librarian = {
+		texture = "mobs_mc_zombie_villager_librarian.png",
+	},
+	mason = {
+		texture = "mobs_mc_zombie_villager_mason.png",
+	},
+	shepherd = {
+		texture = "mobs_mc_zombie_villager_shepherd.png",
+	},
+	toolsmith = {
+		texture = "mobs_mc_zombie_villager_toolsmith.png",
+	},
+	weaponsmith = {
+		texture = "mobs_mc_zombie_villager_weaponsmith.png",
+	},
+	nitwit = {
+		texture = "mobs_mc_zombie_villager_nitwit.png",
+	},
+}
+
+local profession_names = {}
+
+for key, _ in pairs (zombie_villager_professions) do
+	table.insert (profession_names, key)
+end
+
+local zombie_villager_type_overlays = {
+	taiga = "mobs_mc_zombie_villager_taiga.png",
+	swamp = "mobs_mc_zombie_villager_swamp.png",
+	snowy = "mobs_mc_zombie_villager_snow.png",
+	savanna = "mobs_mc_zombie_villager_savanna.png",
+	plains = "mobs_mc_zombie_villager_plains.png",
+	jungle = "mobs_mc_zombie_villager_jungle.png",
+	desert = "mobs_mc_zombie_villager_desert.png",
+}
+
+local function zombie_villager_type_from_biome (biomedata)
+	if not biomedata then
+		return "plains"
+	end
+
+	local name = minetest.get_biome_name (biomedata.biome)
+
+	if name:find ("Mesa")
+		or name:find ("Desert") then
+		return "desert"
+	elseif name:find ("Jungle") then
+		return "jungle"
+	elseif name:find ("Savanna") then
+		return "savanna"
+	elseif name:find ("IcePlains")
+		or name:find ("ColdTaiga") then
+		return "snowy"
+	elseif name:find ("Taiga") then
+		return "taiga"
+	elseif name:find ("Swamp") then
+		return "swamp"
+	else
+		return "plains"
+	end
+end
+
+local badge_textures = {
+	"mobs_mc_stone.png",
+	"mobs_mc_iron.png",
+	"mobs_mc_gold.png",
+	"mobs_mc_emerald.png",
+	"mobs_mc_diamond.png",
+}
+
+function zombie_villager:get_overlaid_texture ()
+	local data = self._previous_incarnation
+	if not data then
+		return "mobs_mc_zombie_villager.png"
+	end
+
+	local overlay = zombie_villager_type_overlays[data.villager_type]
+	local profession = data.profession
+		and zombie_villager_professions[data.profession]
+	local textures = {}
+
+	table.insert (textures, "mobs_mc_zombie_villager.png")
+	if overlay ~= "" then
+		table.insert (textures, overlay)
+	end
+	if profession and profession.texture then
+		table.insert (textures, profession.texture)
+
+		local badge = badge_textures[data.tier or 0]
+		if badge then
+			table.insert (textures, badge)
+		end
+	end
+	return table.concat (textures, "^")
+end
+
+function zombie_villager:mob_activate (staticdata, dtime)
+	if not zombie.mob_activate (self, staticdata, dtime) then
+		return false
+	end
+	if not self._previous_incarnation then
+		local self_pos = self.object:get_pos ()
+		local biomedata = minetest.get_biome_data (self_pos)
+		local villager_type = zombie_villager_type_from_biome (biomedata)
+		local profession = profession_names[pr:next (1, #profession_names)]
+		self._previous_incarnation = {
+			villager_type = villager_type,
+			xp = 0,
+			tier = 1,
+			profession = profession,
+			gossips = {},
+			reputation = {},
+			trades = {},
+		}
+	end
+	self.base_texture[1] = self:get_overlaid_texture ()
+	self:set_textures (self.base_texture)
+	self:set_armor_texture ()
+	return true
+end
+
+function zombie_villager:update_textures ()
+	self.base_texture = {
+		self:get_overlaid_texture (),
+		"blank.png",
+		"blank.png",
+	}
+	self:set_textures (self.base_texture)
+	self.base_mesh = self.initial_properties.mesh
+	self.base_size = self.initial_properties.visual_size
+	self.base_colbox = self.initial_properties.collisionbox
+	self.base_selbox = self.initial_properties.selectionbox
+end
+
+local zombie_villager_poses = {
+	default = {
+		["arm.left.001"] = {},
+		["arm.right.001"] = {},
+	},
+	aggressive = {
+		["arm.left.001"] = {
+			nil,
+			vector.new (-155, 0, 180),
+			nil,
+		},
+		["arm.right.001"] = {
+			nil,
+			vector.new (-155, 0, 180),
+			nil,
+		},
+	},
+}
+
+vlf_mobs.define_composite_pose (zombie_villager_poses, "jockey", {
+	["leg.right"] = {
+		nil,
+		vector.new (-90, 35, 0),
+	},
+	["leg.left"] = {
+		nil,
+		vector.new (-90, -35, 0),
+	},
 })
 
-vlf_mobs.spawn_setup({
+vlf_mobs.define_composite_pose (zombie_villager_poses, "child", {
+	["head.scale"] = {
+		nil,
+		nil,
+		vector.new (1.5, 1.5, 1.5),
+	},
+})
+
+zombie_villager._arm_poses = zombie_villager_poses
+
+function zombie_villager:wielditem_transform (info, stack)
+	local rot, pos, size
+		= mob_class.wielditem_transform (self, info, stack)
+	size.x = size.x / 2.75
+	size.y = size.y / 2.75
+	return rot, pos, size
+end
+
+function zombie_villager:select_arm_pose ()
+	local pose = zombie.select_arm_pose (self)
+	if self.child then
+		return "child_" .. pose
+	else
+		return pose
+	end
+end
+
+------------------------------------------------------------------------
+-- Zombie Villager AI.
+------------------------------------------------------------------------
+
+function zombie_villager:tick_breeding ()
+	-- Zombie Villagers may be children, but do not breed or
+	-- mature.
+	return
+end
+
+function zombie_villager:drop_player_equipment ()
+	self:drop_armor (0.0, 2.0)
+	self:drop_wielditem (0.0, 2.0)
+	self:drop_offhand_item (0.0, 2.0)
+end
+
+vlf_mobs.register_mob ("mobs_mc:villager_zombie", zombie_villager)
+
+------------------------------------------------------------------------
+-- Zombie Villager spawning.
+------------------------------------------------------------------------
+
+vlf_mobs.spawn_setup ({
 	name = "mobs_mc:villager_zombie",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -158,4 +531,4 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:villager_zombie", S("Zombie Villager"), "#563d33", "#799c66", 0)
+vlf_mobs.register_egg ("mobs_mc:villager_zombie", S("Zombie Villager"), "#563d33", "#799c66", 0)

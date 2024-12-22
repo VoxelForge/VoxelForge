@@ -2,10 +2,10 @@ local mob_class = vlf_mobs.mob_class
 local active_particlespawners = {}
 local enable_blood = minetest.settings:get_bool("vlf_damage_particles", true)
 local DEFAULT_FALL_SPEED = -9.81*1.5
+local is_valid = vlf_util.is_valid_objectref
 
 local player_transfer_distance = tonumber(minetest.settings:get("player_transfer_distance")) or 128
 if player_transfer_distance == 0 then player_transfer_distance = math.huge end
-
 
 -- custom particle effects
 function vlf_mobs.effect(pos, amount, texture, min_size, max_size, radius, gravity, glow, go_down)
@@ -42,7 +42,7 @@ function vlf_mobs.effect(pos, amount, texture, min_size, max_size, radius, gravi
 	})
 end
 
-function vlf_mobs.death_effect(pos, yaw, collisionbox, rotate, self)
+function vlf_mobs.death_effect(pos, yaw, collisionbox, rotate)
 	local min, max
 	if collisionbox then
 		min = {x=collisionbox[1], y=collisionbox[2], z=collisionbox[3]}
@@ -58,7 +58,7 @@ function vlf_mobs.death_effect(pos, yaw, collisionbox, rotate, self)
 		min = vector.multiply(min, 0.5)
 		max = vector.multiply(max, 0.5)
 	end
-	if self.name ~= "mobs_mc:firefly" then
+
 	minetest.add_particlespawner({
 		amount = 50,
 		time = 0.001,
@@ -74,7 +74,6 @@ function vlf_mobs.death_effect(pos, yaw, collisionbox, rotate, self)
 		vertical = false,
 		texture = "vlf_particles_mob_death.png^[colorize:#000000:255",
 	})
-	end
 
 	minetest.sound_play("vlf_mobs_mob_poof", {
 		pos = pos,
@@ -167,7 +166,7 @@ end
 function mob_class:remove_particlespawners(pn)
 	if not active_particlespawners[pn] then return end
 	if not active_particlespawners[pn][self.object] then return end
-	for k,v in pairs(active_particlespawners[pn][self.object]) do
+	for _, v in pairs(active_particlespawners[pn][self.object]) do
 		minetest.delete_particlespawner(v)
 	end
 end
@@ -188,7 +187,7 @@ function mob_class:check_particlespawners(dtime)
 	if self._particle_timer and self._particle_timer >= 1 then
 		self._particle_timer = 0
 		local players = {}
-		for _,player in pairs(minetest.get_connected_players()) do
+		for player in vlf_util.connected_players() do
 			local pn = player:get_player_name()
 			table.insert(players,pn)
 			if not active_particlespawners[pn] then
@@ -214,23 +213,25 @@ function mob_class:set_animation(anim, fixed_frame)
 		return
 	end
 
-	if self.jockey and self.object:get_attach() then
+	if self.jockey_vehicle and self.object:get_attach () then
 		anim = "jockey"
-	elseif not self.object:get_attach() then
-		self.jockey = nil
 	end
 
-	if self.state == "die" and anim ~= "die" and anim ~= "stand" then
+	if self.dead and anim ~= "die" and anim ~= "stand" then
 		return
 	end
 
-	if self:flight_check() and self.fly and anim == "walk" then anim = "fly" end
+	if self.attack
+		and self._punch_animation_timeout
+		and self._punch_animation_timeout > 0 then
+		anim = "punch"
+	end
 
 	self._current_animation = self._current_animation or ""
 
 	if (anim == self._current_animation
 	or not self.animation[anim .. "_start"]
-	or not self.animation[anim .. "_end"]) and self.state ~= "die" then
+	or not self.animation[anim .. "_end"]) and not self.dead then
 		return
 	end
 
@@ -244,12 +245,12 @@ function mob_class:set_animation(anim, fixed_frame)
 		a_end = self.animation[anim .. "_end"]
 	end
 	if a_start and a_end then
-		self.object:set_animation({
-			x = a_start,
-			y = a_end},
+		local loop = self.animation[anim .. "_loop"] ~= false
+		self.object:set_animation({x = a_start,
+					   y = a_end},
 			self.animation[anim .. "_speed"] or self.animation.speed_normal or 15,
-			0, self.animation[anim .. "_loop"] ~= false)
-		end
+			0, loop)
+	end
 end
 
 -- above function exported for mount.lua
@@ -257,14 +258,13 @@ function vlf_mobs.set_animation(self, anim)
 	self:set_animation(anim)
 end
 
-local function dir_to_pitch(dir)
-	--local dir2 = vector.normalize(dir)
-	local xz = math.abs(dir.x) + math.abs(dir.z)
-	return -math.atan2(-dir.y, xz)
-end
-
 function mob_class:who_are_you_looking_at()
 	local pos = self.object:get_pos()
+
+	if self.order == "sleep" then
+		self._locked_object = nil
+		return
+	end
 
 	local stop_look_at_player_chance = math.random(833/self.curiosity)
 	-- was 10000 - div by 12 for avg entities as outside loop
@@ -272,16 +272,14 @@ function mob_class:who_are_you_looking_at()
 	local stop_look_at_player = stop_look_at_player_chance == 1
 
 	if self.attack then
-		if not self.target_time_lost then
-			self._locked_object = self.attack
-		else
-			self._locked_object = nil
-		end
+		self._locked_object = self.attack
 	elseif self.following then
 		self._locked_object = self.following
+	elseif self.mate then
+		self._locked_object = self.mate
 	elseif self._locked_object then
-		if stop_look_at_player then
-			--minetest.log("Stop look: ".. self.name)
+		if stop_look_at_player
+			or self._locked_object == self.driver then
 			self._locked_object = nil
 		end
 	elseif not self._locked_object then
@@ -295,12 +293,16 @@ function mob_class:who_are_you_looking_at()
 
 			local look_at_player = look_at_player_chance == 1
 
-			for _, obj in pairs(minetest.get_objects_inside_radius(pos, 8)) do
-				if obj:is_player() and vector.distance(pos,obj:get_pos()) < 4 then
+			for obj in minetest.objects_inside_radius(pos, 8) do
+				if obj:is_player() and vector.distance(pos,obj:get_pos()) < 4
+					and obj ~= self.driver then
 					self._locked_object = obj
 					break
-				elseif obj:is_player() or (obj:get_luaentity() and obj:get_luaentity().name == self.name and self ~= obj:get_luaentity()) then
-					if look_at_player then
+				elseif obj:is_player()
+					or (obj:get_luaentity()
+						and obj:get_luaentity().name == self.name
+						and self ~= obj:get_luaentity()) then
+					if look_at_player and obj ~= self.driver then
 						self._locked_object = obj
 						break
 					end
@@ -311,86 +313,443 @@ function mob_class:who_are_you_looking_at()
 	end
 end
 
-function mob_class:check_head_swivel(dtime)
-	if not self.head_swivel or type(self.head_swivel) ~= "string" then return end
+local HALF_DEG = math.rad (0.5)
 
-	self:who_are_you_looking_at()
-
-	local final_rotation = vector.zero()
-	local _,oldr = self.object:get_bone_position(self.head_swivel)
-
-	if self._locked_object and (self._locked_object:is_player() or self._locked_object:get_luaentity()) and self._locked_object:get_hp() > 0 then
-		local _locked_object_eye_height = 1.5
-		if self._locked_object:get_luaentity() then
-			_locked_object_eye_height = self._locked_object:get_luaentity().head_eye_height
-		end
-		if self._locked_object:is_player() then
-			_locked_object_eye_height = self._locked_object:get_properties().eye_height
-		end
-		if _locked_object_eye_height then
-
-			local self_rot = self.object:get_rotation()
-			if self.object:get_attach() and self.object:get_attach():get_rotation() then
-				self_rot = self.object:get_attach():get_rotation()
-			end
-
-			local player_pos = self._locked_object:get_pos()
-			local direction_player = vector.direction(vector.add(self.object:get_pos(), vector.new(0, self.head_eye_height*.7, 0)), vector.add(player_pos, vector.new(0, _locked_object_eye_height, 0)))
-			local mob_yaw = math.deg(-(-(self_rot.y)-(-minetest.dir_to_yaw(direction_player))))+self.head_yaw_offset
-			local mob_pitch = math.deg(-dir_to_pitch(direction_player))*self.head_pitch_multiplier
-
-			if (mob_yaw < -60 or mob_yaw > 60) and not (self.attack and self.state == "attack" and not self.runaway) then
-				final_rotation = vector.multiply(oldr, 0.9)
-			elseif self.attack and self.state == "attack" and not self.runaway then
-				if self.head_yaw == "y" then
-					final_rotation = vector.new(mob_pitch, mob_yaw, 0)
-				elseif self.head_yaw == "z" then
-					final_rotation = vector.new(mob_pitch, 0, -mob_yaw)
-				end
-
-			else
-
-				if self.head_yaw == "y" then
-					final_rotation = vector.new(((mob_pitch-oldr.x)*.3)+oldr.x, ((mob_yaw-oldr.y)*.3)+oldr.y, 0)
-				elseif self.head_yaw == "z" then
-					final_rotation = vector.new(((mob_pitch-oldr.x)*.3)+oldr.x, 0, -(((mob_yaw-oldr.y)*.3)+oldr.y)*3)
-				end
-			end
-		end
-	elseif not self._locked_object and math.abs(oldr.y) > 3 and math.abs(oldr.x) < 3 then
-		final_rotation = vector.multiply(oldr, 0.9)
-	end
-
-	vlf_util.set_bone_position(self.object,self.head_swivel, vector.new(0,self.bone_eye_height,self.horizontal_head_height), final_rotation)
+local function is_zero_vector (v)
+	return v.x == 0 and v.y == 0 and v.z == 0
 end
 
-function mob_class:set_animation_speed()
-	local v = self.object:get_velocity()
-	if v then
-		if self.frame_speed_multiplier then
-			local v2 = math.abs(v.x)+math.abs(v.z)*.833
-			if not self.animation.walk_speed then
-				self.animation.walk_speed = 25
-			end
-			if math.abs(v.x)+math.abs(v.z) > 0.5 then
-				self.object:set_animation_frame_speed((v2/math.max(1,self.run_velocity))*self.animation.walk_speed*self.frame_speed_multiplier)
-			else
-				self.object:set_animation_frame_speed(25)
-			end
-		end
-		if self.acc and vlf_mobs.check_vector(self.acc) then
-			self.object:add_velocity(self.acc)
-		end
+local ZERO_VECTOR = vector.zero ()
+
+function mob_class:check_head_swivel (self_pos, dtime, clear)
+	if not self.head_swivel
+		or type (self.head_swivel) ~= "string" then
+		return
 	end
+
+	if clear then
+		self._locked_object = nil
+	else
+		self:who_are_you_looking_at ()
+	end
+
+	local oldr = self._old_head_swivel_vector
+	local oldp = self._old_head_swivel_pos
+	local newr = ZERO_VECTOR
+
+	local locked_object = self._locked_object
+	if locked_object
+		and is_valid (locked_object)
+		and locked_object:get_hp () > 0 then
+		local _locked_object_eye_height
+			= vlf_util.target_eye_height (locked_object)
+
+		if _locked_object_eye_height then
+			local self_yaw
+			-- It so transpires that
+			-- ObjectRef:get_rotation does not return the
+			-- rotation of the parent if there is an
+			-- attachment.
+			local attach = self.object:get_attach ()
+			if attach then
+				self_yaw = attach:get_yaw () or 0
+			else
+				self_yaw = self.object:get_yaw ()
+			end
+			local ps = self_pos
+			local old_y = ps.y
+			ps.y = ps.y + self.head_eye_height
+			local pt = locked_object:get_pos ()
+			pt.y = pt.y + _locked_object_eye_height
+			local dir = vector.direction (ps, pt)
+			ps.y = old_y
+			local mob_yaw_raw = self_yaw
+				+ math.atan2 (dir.x, dir.z)
+				+ self.head_yaw_offset
+			local mob_yaw = vlf_util.norm_radians (mob_yaw_raw)
+			local mob_pitch = math.asin(-dir.y) * self.head_pitch_multiplier
+				+ self._head_pitch_offset
+			local out_of_view
+				= (mob_yaw < -self._head_rot_limit
+				   or mob_yaw > self._head_rot_limit)
+					and not (self.attack and not self.runaway)
+			if self.adjust_head_swivel then
+				mob_yaw, mob_pitch, out_of_view
+					= self:adjust_head_swivel (mob_yaw, mob_pitch, out_of_view)
+			end
+
+			if out_of_view then
+				newr = vector.multiply(oldr, 0.9)
+			elseif self.attack and not self.runaway then
+				if self.head_yaw == "y" then
+					newr = vector.new (mob_pitch, mob_yaw, 0)
+				else -- if self.head_yaw == "z" then
+					newr = vector.new (mob_pitch, 0, -mob_yaw)
+				end
+			else
+				if self.head_yaw == "y" then
+					newr = vector.new ((mob_pitch-oldr.x)*.3+oldr.x, (mob_yaw-oldr.y)*.3+oldr.y, 0)
+				else -- if self.head_yaw == "z" then
+					newr = vector.new ((mob_pitch-oldr.x)*.3+oldr.x, 0, ((mob_yaw-oldr.y)*.3+oldr.y)*-3)
+				end
+			end
+		end
+	elseif not locked_object
+		and (math.abs (oldr.x + oldr.y + oldr.z) > 0) then
+		newr = vector.multiply (oldr, 0.9)
+		if self.adjust_head_swivel then
+			self:adjust_head_swivel (nil, nil, nil)
+		end
+	else
+		newr = ZERO_VECTOR
+	end
+
+	local newp = self._head_swivel_pos
+
+	if math.abs (oldr.x - newr.x) < HALF_DEG
+		and math.abs (oldr.y - newr.y) < HALF_DEG
+		and math.abs (oldr.z - newr.z) < HALF_DEG
+		and (is_zero_vector (oldr) or not is_zero_vector (newr))
+		and vector.equals (oldp, newp) then
+		return
+	end
+
+	if self.object.get_bone_override then -- minetest >= 5.9
+		self.object:set_bone_override (self.head_swivel, {
+			position = { vec = newp, absolute = true },
+			rotation = { vec = newr, absolute = true },
+		})
+	else -- minetest < 5.9
+		local deg = vector.apply (newr, math.deg)
+		self.object:set_bone_position (self.head_swivel, newp, deg)
+	end
+	self._old_head_swivel_pos = newp
+	self._old_head_swivel_vector = newr
+end
+
+-- set animation speed relative to velocity
+function mob_class:set_animation_speed(custom_speed)
+	local anim = self._current_animation
+	if not anim then
+		return
+	end
+	local name = anim .. "_speed"
+	local normal_speed = self.animation[name]
+		or self.animation.speed_normal
+		or 25
+	if anim ~= "walk" and self.anim ~= "run" then
+		self.object:set_animation_frame_speed (normal_speed)
+		return
+	end
+	local speed = custom_speed or normal_speed
+	local v = self:get_velocity ()
+	local scaled_speed = speed * self.frame_speed_multiplier
+	self.object:set_animation_frame_speed (scaled_speed * v)
 end
 
 minetest.register_on_leaveplayer(function(player)
 	local pn = player:get_player_name()
 	if not active_particlespawners[pn] then return end
 	for _,m in pairs(active_particlespawners[pn]) do
-		for k,v in pairs(m) do
+		for _, v in pairs(m) do
 			minetest.delete_particlespawner(v)
 		end
 	end
 	active_particlespawners[pn] = nil
 end)
+
+----------------------------------------------------------------------------------
+-- Smooth rotation.  In the long run, most mob models should receive a root bone,
+-- enabling client-side interpolation.
+----------------------------------------------------------------------------------
+
+local norm_radians = nil
+
+minetest.register_on_mods_loaded (function ()
+		norm_radians = vlf_util.norm_radians
+end)
+
+function mob_class:rotation_info ()
+	if not self._rotation_info then
+		local oldyaw
+			= self.object:get_yaw () + self.rotate
+		self._rotation_info = {
+			yaw = {
+				current	= norm_radians (oldyaw),
+				remaining_turn = 0,
+				amt_per_second = 0,
+			},
+			pitch = {
+				current = self.object:get_rotation ().x,
+				remaining_turn = 0,
+				amt_per_second = 0,
+			},
+		}
+	end
+	return self._rotation_info
+end
+
+local ROTATE_TIME = 1/0.15 -- 3 minecraft ticks.
+
+function mob_class:rotate_axis (axis, target)
+	local rotation_info = self:rotation_info ()[axis]
+	local current_rot
+
+	if axis == "yaw" then
+		current_rot = self.object:get_yaw ()
+		if self.rotate ~= 0 then
+			current_rot
+				= norm_radians (current_rot + self.rotate)
+		end
+	elseif axis == "pitch" then
+		current_rot = self.object:get_rotation ().x
+	else
+		current_rot = self.object:get_rotation ().z
+	end
+
+	rotation_info.current = current_rot
+	rotation_info.remaining_turn
+		= norm_radians (target - current_rot)
+	rotation_info.amt_per_second
+		= rotation_info.remaining_turn * ROTATE_TIME
+end
+
+function mob_class:rotate_gradually (info, axis, dtime)
+	local info = info[axis]
+	local rem = info.remaining_turn
+
+	if math.abs (info.remaining_turn) > 1.0e-5 then
+		local increment = info.amt_per_second * dtime
+
+		if (increment < 0 and increment < info.remaining_turn)
+			or (increment > 0 and increment > info.remaining_turn) then
+			increment = info.remaining_turn
+		end
+
+		local target = info.current + increment
+		info.remaining_turn = rem - increment
+		info.current = norm_radians (target)
+		return info.current
+	else
+		if axis == "yaw" and self._target_yaw then
+			info.current = self._target_yaw
+		elseif axis == "pitch" and self._target_pitch then
+			info.current = self._target_pitch
+		end
+		return info.current
+	end
+end
+
+local rotate_step_scratch = vector.zero ()
+
+function mob_class:rotate_step (dtime)
+	local yaw, pitch
+	local info = self:rotation_info ()
+	yaw = self:rotate_gradually (info, "yaw", dtime)
+	pitch = self:rotate_gradually (info, "pitch", dtime)
+	if self.shaking then
+		yaw = yaw + (math.random () * 1 - 0.5) * dtime
+	end
+	local v = rotate_step_scratch
+	v.x = pitch
+	v.y = yaw - self.rotate
+	v.z = self:get_roll ()
+	self.object:set_rotation (v)
+end
+
+function mob_class:set_yaw (yaw)
+	self:rotate_axis ("yaw", yaw)
+	self._target_yaw = yaw
+	return yaw
+end
+
+function mob_class:get_yaw (yaw)
+	return self._target_yaw or (self.object:get_yaw () + self.rotate)
+end
+
+function mob_class:set_pitch (pitch)
+	self:rotate_axis ("pitch", pitch)
+	self._target_pitch = pitch
+end
+
+function mob_class:get_pitch ()
+	return self._target_pitch or self.object:get_rotation ().x
+end
+
+function mob_class:get_roll ()
+	if self.dead and not self.animation.die_end then
+		return self.object:get_rotation ().z
+	else
+		-- Avoid the needless call to get_rotation and
+		-- subsequent consing.
+		return 0
+	end
+end
+
+----------------------------------------------------------------------------------
+-- Invisibility.  This invisibility exempts attached objects and armor
+-- by altering textures rather than visual size.
+----------------------------------------------------------------------------------
+
+function mob_class:set_invisible (hide)
+	if hide then
+		self._mob_invisible = true
+		self:set_textures (self._active_texture_list)
+	else
+		self._mob_invisible = false
+		self:set_textures (self._active_texture_list)
+	end
+end
+
+function mob_class:is_armor_texture_slot (i)
+	if self.wears_armor then
+		for k, _ in pairs (self._armor_texture_slots) do
+			if k == i then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+function mob_class:set_textures (textures)
+	self._active_texture_list = textures
+	if self._mob_invisible then
+		textures = table.copy (textures)
+		for i = 1, #textures do
+			if not self:is_armor_texture_slot (i) then
+				textures[i] = "blank.png"
+			end
+		end
+	end
+	self.object:set_properties ({
+		textures = textures,
+	})
+end
+
+----------------------------------------------------------------------------------
+-- Humanoids.  This provides support for managing humanoid poses in
+-- Lua.
+----------------------------------------------------------------------------------
+
+local posing_humanoid = {
+	_arm_poses = {
+		default = {},
+	},
+	_arm_pose_continuous = {
+		default = false,
+	}
+}
+
+function posing_humanoid:apply_arm_pose (pose)
+	local pose = self._arm_poses[pose]
+	if pose then
+		for k, v in pairs (pose) do
+			if v[1] or v[2] or v[3] then
+				local pos = v[1] and (type (v[1]) ~= "function"
+						      and v[1] or v[1] (self))
+				local rot = v[2] and (type (v[2]) ~= "function"
+						      and vector.apply (v[2], math.rad)
+						      or v[2] (self))
+				local scale = v[3]
+				local pos = pos
+				local rot = rot
+				if self.object.set_bone_override then
+					self.object:set_bone_override (k, {
+						position = pos and {
+							vec = pos,
+							absolute = true,
+						},
+						rotation = rot and {
+							vec = rot,
+							absolute = true,
+						},
+						scale = scale and {
+							vec = scale,
+							absolute = true,
+						},
+					})
+				else
+					local pos = pos or ZERO_VECTOR
+					-- If scale is 0.0, set its
+					-- position to an enormously
+					-- distant location.
+					if scale and vector.equals (scale, ZERO_VECTOR) then
+						pos = vector.new (-3000, -3000, -3000)
+					end
+
+					local rot = vector.apply (rot or ZERO_VECTOR, math.deg)
+					self.object:set_bone_position (k, pos, rot)
+				end
+				if k == self.head_swivel then
+					self._old_head_swivel_vector = rot
+				end
+			else
+				if self.object.set_bone_override then
+					self.object:set_bone_override (k)
+				else
+					self.object:set_bone_position (k, ZERO_VECTOR, ZERO_VECTOR)
+				end
+			end
+		end
+	end
+end
+
+function posing_humanoid:do_custom (dtime)
+	local class = self._humanoid_superclass
+
+	if class.do_custom then
+		class.do_custom (self, dtime)
+	end
+
+	local last_arm_pose = self._arm_pose
+	self._arm_pose = self:select_arm_pose ()
+	if last_arm_pose ~= self._arm_pose
+		or self._arm_pose_continuous[self._arm_pose] then
+		self:apply_arm_pose (self._arm_pose)
+	end
+end
+
+function posing_humanoid:select_arm_pose ()
+	return "default"
+end
+
+function posing_humanoid:mob_activate (staticdata, dtime)
+	local class = self._humanoid_superclass
+
+	if class.mob_activate then
+		if not class.mob_activate (self, staticdata, dtime) then
+			return false
+		end
+	else
+		if not mob_class.mob_activate (self, staticdata, dtime) then
+			return false
+		end
+	end
+	self._arm_pose = self:select_arm_pose ()
+	self:apply_arm_pose (self._arm_pose)
+	return true
+end
+
+function vlf_mobs.define_composite_pose (poses, prefix, overrides)
+	local new_poses = {}
+
+	for k, v in pairs (poses) do
+		new_poses[prefix .. "_" .. k]
+			= table.merge (v, overrides)
+
+		-- Have the original poses reset modified bones to
+		-- their default values.
+		for bone, _ in pairs (overrides) do
+			if not v[bone] then
+				v[bone] = {}
+			end
+		end
+	end
+	for k, v in pairs (new_poses) do
+		poses[k] = v
+	end
+end
+
+vlf_mobs.posing_humanoid = posing_humanoid

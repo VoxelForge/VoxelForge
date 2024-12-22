@@ -151,8 +151,8 @@ function vlf_hunger.item_eat(hunger_change, replace_with_item, poisontime, poiso
 				hb.change_hudbar(user, "hunger", h)
 				vlf_hunger.update_saturation_hud(user, vlf_hunger.get_saturation(user), h)
 			elseif not vlf_hunger.active and hunger_change then
-				-- Is this code still reachable?
-				vlf_damage.heal_player (user, hunger_change)
+			   -- Is this code still reachable?
+			   vlf_damage.heal_player (user, hunger_change)
 			end
 			-- Poison
 			if vlf_hunger.active and poisontime then
@@ -165,8 +165,8 @@ function vlf_hunger.item_eat(hunger_change, replace_with_item, poisontime, poiso
 					do_poison = true
 				end
 				if do_poison then
-					local level = vlf_entity_effects.get_effect_level(user, "hunger")
-					vlf_entity_effects.give_effect_by_level("hunger", user, level+exhaust, poisontime)
+					local level = vlf_potions.get_effect_level(user, "hunger")
+					vlf_potions.give_effect_by_level("hunger", user, level+exhaust, poisontime)
 				end
 			end
 

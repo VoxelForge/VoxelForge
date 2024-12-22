@@ -4,6 +4,44 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 -- Core vlf_stairs API
 
+-- Determine if pointer (player) is pointing above the middle of a pointed thing
+-- Used when placing slabs and stairs.
+local function is_pointing_above_middle(pointer, pointed_thing)
+	if
+		not pointer
+		or not pointer:is_player()
+		or not pointed_thing
+		or not pointed_thing.under
+		or not pointed_thing.above
+	then
+		return false
+	end
+
+	local p1 = pointed_thing.above
+
+	-- this uses placer:get_look_dir() which is not quite right on touch
+	-- with disabled crosshair, but the shootline used on the client isn't
+	-- available to the server; therefore just check the general look
+	-- direction to make it somewhat controllable by touch users (even if
+	-- standing on the pointed node) without changing anything for crosshair
+	-- users
+	--
+	-- if looking at a side face we check whether player is looking more
+	-- than a little bit above the center (keeping default positioning if
+	-- looking more or less at the center of the node) of the pointed node
+	--
+	-- if looking at the top/bottom face never/always return true (this is
+	-- achieved by using y of pointed_thing.above for comparison; note that
+	-- under.y == above.y if looking at a side face)
+	--
+	-- also note that it is actually beneficial that the exact position of
+	-- the touch event is not used, allowing touch users to touch any part
+	-- of the node face
+	local fpos = minetest.pointed_thing_to_face_pos(pointer, pointed_thing).y - p1.y
+
+	return (fpos > 0.05)
+end
+
 local function place_slab_normal(itemstack, placer, pointed_thing)
 	local rc = vlf_util.call_on_rightclick(itemstack, placer, pointed_thing)
 	if rc then return rc end
@@ -13,8 +51,9 @@ local function place_slab_normal(itemstack, placer, pointed_thing)
 	local origdef = minetest.registered_nodes[origname]
 
 	--local placer_pos = placer:get_pos()
-	if placer
-		and vlf_util.is_pointing_above_middle(placer, pointed_thing)
+	if
+		placer
+		and is_pointing_above_middle(placer, pointed_thing)
 		and origdef and origdef._vlf_other_slab_half
 	then
 		place:set_name(origdef._vlf_other_slab_half)
@@ -38,7 +77,7 @@ local function place_stair(itemstack, placer, pointed_thing)
 			param2 = minetest.dir_to_facedir(vector.subtract(p1, placer_pos))
 		end
 
-		if vlf_util.is_pointing_above_middle(placer, pointed_thing) then
+		if is_pointing_above_middle(placer, pointed_thing) then
 			param2 = param2 + 20
 			if param2 == 21 then
 				param2 = 23
@@ -133,6 +172,7 @@ local function register_stair(subname, stairdef)
 
 	stairdef.groups.stair = 1
 	stairdef.groups.building_block = 1
+	stairdef.groups._vlf_partial = 2
 
 	local image_table = {}
 	for i, image in pairs(stairdef.tiles) do
@@ -178,7 +218,7 @@ local function register_stair(subname, stairdef)
 
 			return place_stair(itemstack, placer, pointed_thing)
 		end,
-		on_rotate = function(pos, node, user, mode, param2)
+		on_rotate = function(pos, node, _, mode)
 			-- Flip stairs vertically
 			if mode == screwdriver.ROTATE_AXIS then
 				local minor = node.param2
@@ -277,7 +317,11 @@ local function register_slab(subname, stairdef)
 		paramtype = "light",
 		-- Facedir intentionally left out (see below)
 		is_ground_content = false,
-		groups = table.merge(stairdef.groups, { slab = 1, building_block = 1 }),
+		groups = table.merge(stairdef.groups, {
+					     slab = 1,
+					     building_block = 1,
+					     _vlf_partial=2,
+		}),
 		sounds = stairdef.sounds,
 		node_box = {
 			type = "fixed",
@@ -331,7 +375,7 @@ local function register_slab(subname, stairdef)
 		_vlf_hardness = stairdef.hardness,
 		_vlf_blast_resistance = stairdef.blast_resistance,
 		_vlf_other_slab_half = upper_slab,
-		on_rotate = function(pos, node, user, mode, param2)
+		on_rotate = function(pos, node, _, mode)
 			-- Flip slab
 			if mode == screwdriver.ROTATE_AXIS then
 				node.name = upper_slab
@@ -343,7 +387,7 @@ local function register_slab(subname, stairdef)
 	}, stairdef.overrides or {})
 
 	minetest.register_node(":"..lower_slab, table.merge(nodedef,{
-		groups = table.merge(stairdef.groups,{slab = 1}),
+		groups = table.merge(stairdef.groups,{slab = 1, _vlf_partial=3}),
 	}))
 
 	-- Register the upper slab.
@@ -351,6 +395,7 @@ local function register_slab(subname, stairdef)
 	-- e.g. upper sandstone slabs look completely wrong.
 	local topdef = table.copy(nodedef)
 	topdef.groups.slab = 1
+	topdef.groups._vlf_partial = 2
 	topdef.groups.slab_top = 1
 	topdef.groups.not_in_creative_inventory = 1
 	topdef.groups.not_in_craft_guide = 1
@@ -360,7 +405,8 @@ local function register_slab(subname, stairdef)
 	topdef._doc_items_usagehelp = nil
 	topdef.drop = lower_slab
 	topdef._vlf_other_slab_half = lower_slab
-	function topdef.on_rotate(pos, node, user, mode, param2)
+	topdef._vlf_baseitem = lower_slab
+	function topdef.on_rotate(pos, node, _, mode)
 		-- Flip slab
 		if mode == screwdriver.ROTATE_AXIS then
 			node.name = lower_slab
@@ -385,6 +431,7 @@ local function register_slab(subname, stairdef)
 	dgroups.not_in_creative_inventory = 1
 	dgroups.not_in_craft_guide = 1
 	dgroups.slab = nil
+	dgroups._vlf_partial = 2
 	dgroups.double_slab = 1
 	minetest.register_node(":"..double_slab, {
 		description = stairdef.double_description,
@@ -396,6 +443,7 @@ local function register_slab(subname, stairdef)
 		drop = lower_slab .. " 2",
 		_vlf_hardness = stairdef.hardness,
 		_vlf_blast_resistance = stairdef.blast_resistance,
+		_vlf_baseitem = lower_slab,
 	})
 
 	if stairdef.recipeitem and stairdef.recipeitem ~= "" then

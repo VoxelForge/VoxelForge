@@ -2,7 +2,6 @@ vlf_lush_caves = {}
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 local S = minetest.get_translator(modname)
-local schempath = minetest.get_modpath("vlf_schematics")
 
 local PARTICLE_DISTANCE = 25
 
@@ -22,42 +21,41 @@ local function vector_distance_xz(a, b)
 end
 
 dofile(modpath.."/nodes.lua")
-dofile(modpath.."/dripleaf.lua")
+dofile(modpath.."/crafting.lua")
 
 minetest.register_abm({
 	label = "Spore Blossom Particles",
 	nodenames = {"vlf_lush_caves:spore_blossom"},
 	interval = 25,
 	chance = 10,
-	action = function(pos, node)
+	action = function(pos)
 		if minetest.get_node(vector.offset(pos, 0, -1, 0)).name ~= "air" then return end
-		for _,pl in pairs(minetest.get_connected_players()) do
-			if vector.distance(pos,pl:get_pos()) < PARTICLE_DISTANCE then
-				minetest.add_particlespawner({
-					texture = "vlf_lush_caves_spore_blossom_particle.png",
-					amount = 32,
-					time = 25,
-					minvel = vector.zero(),
-					maxvel = vector.zero(),
-					minacc = vector.new(-0.2, -0.1, -0.2),
-					maxacc = vector.new(0.2, -0.3, 0.2),
-					minexptime = 1.5,
-					maxexptime = 8.5,
-					minsize = 0.1,
-					maxsize= 0.4,
-					glow = 4,
-					collisiondetection = true,
-					collision_removal = true,
-					minpos = vector.offset(pos, -0.25, -0.5, -0.25),
-					maxpos = vector.offset(pos, 0.25, -0.5, 0.25),
-					playername = pl:get_player_name(),
-				})
-			end
+
+		for pl in vlf_util.connected_players(pos, PARTICLE_DISTANCE) do
+			minetest.add_particlespawner({
+				texture = "vlf_lush_caves_spore_blossom_particle.png",
+				amount = 32,
+				time = 25,
+				minvel = vector.zero(),
+				maxvel = vector.zero(),
+				minacc = vector.new(-0.2, -0.1, -0.2),
+				maxacc = vector.new(0.2, -0.3, 0.2),
+				minexptime = 1.5,
+				maxexptime = 8.5,
+				minsize = 0.1,
+				maxsize= 0.4,
+				glow = 4,
+				collisiondetection = true,
+				collision_removal = true,
+				minpos = vector.offset(pos, -0.25, -0.5, -0.25),
+				maxpos = vector.offset(pos, 0.25, -0.5, 0.25),
+				playername = pl:get_player_name(),
+			})
 		end
 	end
 })
 
-function vlf_lush_caves.makelake(pos,def,pr)
+function vlf_lush_caves.makelake(pos, _, pr)
 	local p1 = vector.offset(pos,-8,-4,-8)
 	local p2 = vector.offset(pos,8,4,8)
 	local nn = minetest.find_nodes_in_area_under_air(p1,p2,{"group:solid"})
@@ -67,7 +65,7 @@ function vlf_lush_caves.makelake(pos,def,pr)
 	if not nn[1] then return end
 	--local dripleaves = {}
 	for i=1,pr:next(1,#nn) do
-		minetest.set_node(nn[i],{name="vlf_core:water_source"})
+		minetest.swap_node(nn[i],{name="vlf_core:water_source"})
 		--[[
 		if pr:next(1,20) == 1 then
 			table.insert(dripleaves,nn[i])
@@ -75,14 +73,14 @@ function vlf_lush_caves.makelake(pos,def,pr)
 		--]]
 	end
 	local nnn = minetest.find_nodes_in_area(p1,p2,{"vlf_core:water_source"})
-	for k,v in pairs(nnn) do
-		for kk,vv in pairs(adjacents) do
+	for _, v in pairs(nnn) do
+		for _, vv in pairs(adjacents) do
 			local pp = vector.add(v,vv)
 			local an = minetest.get_node(pp)
 			if an.name ~= "vlf_core:water_source" then
-				minetest.set_node(pp,{name="vlf_core:clay"})
+				minetest.swap_node(pp,{name="vlf_core:clay"})
 				if pr:next(1,20) == 1 then
-					minetest.set_node(vector.offset(pp,0,1,0),{name="vlf_lush_caves:moss_carpet"})
+					minetest.swap_node(vector.offset(pp,0,1,0),{name="vlf_lush_caves:moss_carpet"})
 				end
 			end
 		end
@@ -125,7 +123,7 @@ end
 -- Azalea tree voxel manipulator buffer
 local data = {}
 
-function vlf_lush_caves.makeazalea(pos, def, pr)
+function vlf_lush_caves.makeazalea(pos, _, pr)
 	local distance = {x = 4, y = 40, z = 4}
 	local airup = minetest.find_nodes_in_area_under_air(vector.offset(pos, 0, distance.y, 0), pos, {"vlf_core:dirt_with_grass"})
 	if #airup == 0 then return end
@@ -167,7 +165,7 @@ function vlf_lush_caves.makeazalea(pos, def, pr)
 	vm:set_data(data)
 	minetest.place_schematic_on_vmanip(vm,
 		vector.offset(surface_pos, -3, 1, -3),
-		schempath.."/schems/azalea1.mts",
+		modpath.."/schematics/azalea1.mts",
 		"random",nil,nil,
 		"place_center_x place_center_z"
 	)
@@ -182,7 +180,7 @@ minetest.register_abm({
 	nodenames = {"vlf_lush_caves:cave_vines_lit","vlf_lush_caves:cave_vines"},
 	interval = 180,
 	chance = 5,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos, node)
 		local pd1 = vector.offset(pos,0,-1,0)
 		local pd2 = vector.offset(pos,0,-2,0)
 		node.name = "vlf_lush_caves:cave_vines"
@@ -199,7 +197,6 @@ minetest.register_abm({
 
 local lushcaves = { "LushCaves", "LushCaves_underground", "LushCaves_ocean", "LushCaves_deep_ocean"}
 
-if vlf_biomes.biome_to_retain == "LushCaves" or vlf_biomes.biome_to_retain == "LushCaves_underground" or vlf_biomes.biome_to_retain == "LushCaves_ocean" or vlf_biomes.biome_to_retain == "None" then
 vlf_structures.register_structure("clay_pool",{
 	place_on = {"group:material_stone","vlf_core:gravel","vlf_lush_caves:moss","vlf_core:clay"},
 	spawn_by = {"air"},
@@ -236,7 +233,6 @@ vlf_structures.register_structure("azalea_tree",{
 		end
 	end
 })
-end
 --[[
 minetest.set_gen_notify({cave_begin = true})
 minetest.set_gen_notify({large_cave_begin = true})
@@ -251,18 +247,6 @@ vlf_mapgen_core.register_generator("lush_caves",nil, function(minp, maxp, blocks
 	end
 end, 99999, true)
 --]]
-
-minetest.register_craft({
-		type = "fuel",
-		recipe = "vlf_lush_caves:azalea",
-		burntime = 5,
-})
-
-minetest.register_craft({
-		type = "fuel",
-		recipe = "vlf_lush_caves:azalea_flowering",
-		burntime = 5,
-})
 
 vlf_flowerpots.register_potted_flower("vlf_lush_caves:azalea", {
 	name = "azalea",

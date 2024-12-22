@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_beehives x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_beehives x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,17 +11,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Beehive"
-msgstr ""
+msgstr "Apiario"
 
 msgid "Artificial bee nest."
-msgstr ""
+msgstr "Colmena de abejas artificial."
 
 msgid "Bee Nest"
-msgstr ""
+msgstr "Colmena"
 
 msgid "A naturally generating block that houses bees and a tasty treat...if you can get it."
-msgstr ""
+msgstr "Un bloque que se genera naturalmente y que alberga abejas y una delicia sabrosa... si puedes conseguirla."
 

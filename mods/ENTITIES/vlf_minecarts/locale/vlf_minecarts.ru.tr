@@ -1,12 +1,12 @@
 # textdomain: vlf_minecarts
-Sneak-click to remove=
+Sneak-click to remove=Щелкните (крадучись), чтобы удалить
 Minecart=Вагонетка
 Vehicle for fast travel on rails=Железнодорожный транспорт
 Minecarts can be used for a quick transportion on rails.=Вагонетка может быть использована для быстрого перемещения по рельсам.
 Minecarts only ride on rails and always follow the tracks. At a T-junction with no straight way ahead, they turn left. The speed is affected by the rail type.=Вагонетки едут только по проложенным рельсам. На Т-образной развилке они поворачивают налево. Скорость зависит от типа рельсов.
 You can place the minecart on rails. Right-click it to enter it. Punch it to get it moving.=Вы можете поставить вагонетку на рельсы. Правым кликом сядьте в неё. Ударьте по ней, чтобы она поехала.
 To obtain the minecart, punch it while holding down the sneak key.=Чтобы забрать вагонетку, ударьте по ней, удерживая клавишу [Красться].
-If it moves over a powered activator rail, you'll get ejected.=
+If it moves over a powered activator rail, you'll get ejected.=Если он проедет по активированному рельсу, то вас выбросит.
 Sneak to dismount=Нажмите [Красться] для высадки
 Minecart with Chest=Вагонетка с сундуком
 Minecart with Furnace=Вагонетка с печью

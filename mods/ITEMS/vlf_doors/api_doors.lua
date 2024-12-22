@@ -3,7 +3,7 @@ vlf_doors = {}
 local S = minetest.get_translator(minetest.get_current_modname())
 
 -- This helper function calls on_place_node callbacks.
---[[local function on_place_node(place_to, newnode,
+local function on_place_node(place_to, newnode,
 	placer, oldnode, itemstack, pointed_thing)
 	-- Run script hook
 	for _, callback in pairs(minetest.registered_on_placenodes) do
@@ -22,7 +22,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 		callback(place_to_copy, newnode_copy, placer,
 			oldnode_copy, itemstack, pointed_thing_copy)
 	end
-end]]
+end
 
 -- Registers a door
 --  name: The name of the door
@@ -45,14 +45,14 @@ end]]
 function vlf_doors:register_door(name, def)
 	def.groups.not_in_creative_inventory = 1
 	def.groups.dig_by_piston = 1
+	def.groups.unsticky = 1
 	def.groups.door = 1
-	def.groups.mesecon_ignore_opaque_dig = 1
 
 	if not def.sound_open then
-		def.sound_open = "vlf_doors_door_open"
+		def.sound_open = "doors_door_open"
 	end
 	if not def.sound_close then
-		def.sound_close = "vlf_doors_door_close"
+		def.sound_close = "doors_door_close"
 	end
 
 	local box = {{-8/16, -8/16, -8/16, 8/16, 8/16, -5/16}}
@@ -96,7 +96,7 @@ function vlf_doors:register_door(name, def)
 		end
 	end
 
-	local craftitem_groups = { mesecon_conductor_craftable = 1, deco_block = 1 }
+	local craftitem_groups = {deco_block = 1}
 	if def.groups and def.groups.flammable then
 		craftitem_groups.flammable = def.groups.flammable
 	end
@@ -106,6 +106,7 @@ function vlf_doors:register_door(name, def)
 		_tt_help = tt_help,
 		_doc_items_longdesc = longdesc,
 		_doc_items_usagehelp = usagehelp,
+		_vlf_burntime = def._vlf_burntime,
 		inventory_image = def.inventory_image,
 		groups = craftitem_groups,
 		on_place = function(itemstack, placer, pointed_thing)
@@ -194,9 +195,8 @@ function vlf_doors:register_door(name, def)
 				itemstack:take_item()
 			end
 
-			-- These lines seemed to have broken double doors. Thus they were commented out but not removed.
-			--[[on_place_node(pt, minetest.get_node(pt), placer, nu, itemstack, pointed_thing)
-			on_place_node(pt2, minetest.get_node(pt2), placer, minetest.get_node({x=ptu.x,y=ptu.y+1,z=ptu.z}), itemstack, pointed_thing)]]
+			on_place_node(pt, minetest.get_node(pt), placer, nu, itemstack, pointed_thing)
+			on_place_node(pt2, minetest.get_node(pt2), placer, minetest.get_node({x=ptu.x,y=ptu.y+1,z=ptu.z}), itemstack, pointed_thing)
 
 			return itemstack
 		end,
@@ -241,20 +241,32 @@ function vlf_doors:register_door(name, def)
 		minetest.sound_play(door_switching_sound, {pos = pos, gain = 0.5, max_hear_distance = 16}, true)
 	end
 
-	local function on_mesecons_signal_open(pos, node)
+	local function open(pos)
 		on_open_close(pos, 1, name.."_t_1", name.."_b_2", name.."_t_2")
 	end
-	local function on_mesecons_signal_close(pos, node)
-		if not mesecon.is_powered({x=pos.x,y=pos.y+1,z=pos.z}) then
-			on_open_close(pos, 1, name.."_t_2", name.."_b_1", name.."_t_1")
+	local function close(pos)
+		on_open_close(pos, 1, name.."_t_2", name.."_b_1", name.."_t_1")
+	end
+
+	local function redstone_connects_to(node, dir)
+		return true
+	end
+
+	local function redstone_update_bottom(pos)
+		local pos2 = pos:offset(0, 1, 0)
+		if vlf_redstone.get_power(pos) ~= 0 or vlf_redstone.get_power(pos2) ~= 0 then
+			open(pos)
+		else
+			close(pos)
 		end
 	end
-	local function on_mesecons_signal_open_top(pos, node)
-		on_mesecons_signal_open({x=pos.x, y=pos.y-1, z=pos.z}, node)
-	end
-	local function on_mesecons_signal_close_top(pos, node)
-		if not mesecon.is_powered({x=pos.x,y=pos.y-1,z=pos.z}) then
-			on_mesecons_signal_close({x=pos.x, y=pos.y-1, z=pos.z}, node)
+
+	local function redstone_update_top(pos)
+		local pos2 = pos:offset(0, -1, 0)
+		if vlf_redstone.get_power(pos) ~= 0 or vlf_redstone.get_power(pos2) ~= 0 then
+			open(pos2)
+		else
+			close(pos2)
 		end
 	end
 
@@ -270,7 +282,7 @@ function vlf_doors:register_door(name, def)
 	local on_rightclick
 	-- Disable on_rightclick if this is a redstone-only door
 	if not def.only_redstone_can_open then
-		on_rightclick = function(pos, node, clicker)
+		on_rightclick = function(pos, _, clicker)
 			if check_player_priv(pos, clicker) then
 				on_open_close(pos, 1, name.."_t_1", name.."_b_2", name.."_t_2")
 			end
@@ -297,9 +309,10 @@ function vlf_doors:register_door(name, def)
 		groups = def.groups,
 		_vlf_hardness = def._vlf_hardness,
 		_vlf_blast_resistance = def._vlf_blast_resistance,
+		_vlf_baseitem = name,
 		sounds = def.sounds,
 
-		after_destruct = function(bottom, oldnode)
+		after_destruct = function(bottom, _)
 			local meta_bottom = minetest.get_meta(bottom)
 			if meta_bottom:get_int("rotation") == 1 then
 				meta_bottom:set_int("rotation", 0)
@@ -315,17 +328,19 @@ function vlf_doors:register_door(name, def)
 		on_rightclick = on_rightclick,
 		_on_wind_charge_hit = function(pos)
 			local node = minetest.get_node(pos)
-			if node.name ~= "vlf_doors:iron_door_b_1" then
-				on_mesecons_signal_open(pos, node)
+			if node.name ~= "vlf_doors:iron_door_b_1" or node.name ~= "vlf_doors:iron_door_t_1" or node.name ~= "vlf_doors:iron_door_b_2" or node.name ~= "vlf_doors:iron_door_t_2" then
+				open(pos)
 			end
 			return true
 		end,
 
-		mesecons = { effector = {
-			action_on = on_mesecons_signal_open,
-		}},
+		_vlf_redstone = {
+			connects_to = redstone_connects_to,
+			update = redstone_update_bottom,
+			init = function() end,
+		},
 
-		on_rotate = function(bottom, node, user, mode, param2)
+		on_rotate = function(bottom, node, _, mode, _)
 			if mode == screwdriver.ROTATE_FACE then
 				local meta_bottom = minetest.get_meta(bottom)
 				meta_bottom:set_int("rotation", 1)
@@ -349,7 +364,7 @@ function vlf_doors:register_door(name, def)
 	if def.only_redstone_can_open then
 		on_rightclick = nil
 	else
-		on_rightclick = function(pos, node, clicker)
+		on_rightclick = function(pos, _, clicker)
 			if check_player_priv(pos, clicker) then
 				on_open_close(pos, -1, name.."_b_1", name.."_t_2", name.."_b_2")
 			end
@@ -376,6 +391,7 @@ function vlf_doors:register_door(name, def)
 		groups = def.groups,
 		_vlf_hardness = def._vlf_hardness,
 		_vlf_blast_resistance = def._vlf_blast_resistance,
+		_vlf_baseitem = name,
 		sounds = def.sounds,
 
 		after_destruct = function(top, oldnode)
@@ -394,17 +410,18 @@ function vlf_doors:register_door(name, def)
 		_on_wind_charge_hit = function(pos)
 			local node = minetest.get_node(pos)
 			if node.name ~= "vlf_doors:iron_door_t_1" then
-				on_mesecons_signal_open_top(pos, node)
+				open(pos)
 			end
 			return true
 		end,
 
-		mesecons = { effector = {
-			action_on = on_mesecons_signal_open_top,
-			rules = mesecon.rules.flat,
-		}},
+		_vlf_redstone = {
+			connects_to = redstone_connects_to,
+			update = redstone_update_top,
+			init = function() end,
+		},
 
-		on_rotate = function(top, node, user, mode, param2)
+		on_rotate = function(top, node, _, mode, _)
 			if mode == screwdriver.ROTATE_FACE then
 				local meta_top = minetest.get_meta(top)
 				meta_top:set_int("rotation", 1)
@@ -428,7 +445,7 @@ function vlf_doors:register_door(name, def)
 	if def.only_redstone_can_open then
 		on_rightclick = nil
 	else
-		on_rightclick = function(pos, node, clicker)
+		on_rightclick = function(pos, _, clicker)
 			if check_player_priv(pos, clicker) then
 				on_open_close(pos, 1, name.."_t_2", name.."_b_1", name.."_t_1")
 			end
@@ -455,9 +472,10 @@ function vlf_doors:register_door(name, def)
 		groups = def.groups,
 		_vlf_hardness = def._vlf_hardness,
 		_vlf_blast_resistance = def._vlf_blast_resistance,
+		_vlf_baseitem = name,
 		sounds = def.sounds,
 
-		after_destruct = function(bottom, oldnode)
+		after_destruct = function(bottom, _)
 			local meta_bottom = minetest.get_meta(bottom)
 			if meta_bottom:get_int("rotation") == 1 then
 				meta_bottom:set_int("rotation", 0)
@@ -474,16 +492,18 @@ function vlf_doors:register_door(name, def)
 		_on_wind_charge_hit = function(pos)
 			local node = minetest.get_node(pos)
 			if node.name ~= "vlf_doors:iron_door_b_2" then
-				on_mesecons_signal_close(pos, node)
+				close(pos)
 			end
 			return true
 		end,
 
-		mesecons = { effector = {
-			action_off = on_mesecons_signal_close,
-		}},
+		_vlf_redstone = {
+			connects_to = redstone_connects_to,
+			update = redstone_update_bottom,
+			init = function() end,
+		},
 
-		on_rotate = function(bottom, node, user, mode, param2)
+		on_rotate = function(bottom, node, _, mode, _)
 			if mode == screwdriver.ROTATE_FACE then
 				local meta_bottom = minetest.get_meta(bottom)
 				meta_bottom:set_int("rotation", 1)
@@ -507,7 +527,7 @@ function vlf_doors:register_door(name, def)
 	if def.only_redstone_can_open then
 		on_rightclick = nil
 	else
-		on_rightclick = function(pos, node, clicker)
+		on_rightclick = function(pos, _, clicker)
 			if check_player_priv(pos, clicker) then
 				on_open_close(pos, -1, name.."_b_2", name.."_t_1", name.."_b_1")
 			end
@@ -534,6 +554,7 @@ function vlf_doors:register_door(name, def)
 		groups = def.groups,
 		_vlf_hardness = def._vlf_hardness,
 		_vlf_blast_resistance = def._vlf_blast_resistance,
+		_vlf_baseitem = name,
 		sounds = def.sounds,
 
 		after_destruct = function(top, oldnode)
@@ -552,17 +573,18 @@ function vlf_doors:register_door(name, def)
 		_on_wind_charge_hit = function(pos)
 			local node = minetest.get_node(pos)
 			if node.name ~= "vlf_doors:iron_door_t_2" then
-				on_mesecons_signal_close_top(pos, node)
+				close(pos)
 			end
 			return true
 		end,
 
-		mesecons = { effector = {
-			action_off = on_mesecons_signal_close_top,
-			rules = mesecon.rules.flat,
-		}},
+		_vlf_redstone = {
+			connects_to = redstone_connects_to,
+			update = redstone_update_top,
+			init = function() end,
+		},
 
-		on_rotate = function(top, node, user, mode, param2)
+		on_rotate = function(top, node, _, mode, _)
 			if mode == screwdriver.ROTATE_FACE then
 				local meta_top = minetest.get_meta(top)
 				meta_top:set_int("rotation", 1)
@@ -591,4 +613,9 @@ function vlf_doors:register_door(name, def)
 		doc.add_entry_alias("craftitems", name, "nodes", name.."_t_2")
 	end
 
+end
+
+function vlf_doors.is_open (pos)
+	local meta = minetest.get_meta (pos)
+	return meta:get_int ("is_open") == 1
 end

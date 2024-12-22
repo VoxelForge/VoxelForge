@@ -51,7 +51,7 @@ end
 
 local activate_normal_minecart = detach_driver
 
-local function hopper_take_item(self, dtime)
+local function hopper_take_item(self)
 	local pos = self.object:get_pos()
 	if not pos then return end
 
@@ -59,7 +59,7 @@ local function hopper_take_item(self, dtime)
 
 	local above_pos = vector.offset(pos, 0, 0.9, 0)
 
-	for k, v in pairs(minetest.get_objects_inside_radius(above_pos, 1.25)) do
+	for v in minetest.objects_inside_radius(above_pos, 1.25) do
 		local ent = v:get_luaentity()
 		local taken_items = false
 
@@ -151,7 +151,7 @@ local function register_entity(entity_id, mesh, textures, drop, on_rightclick, o
 		_vlf_fishing_reelable = true,
 	}
 
-	function cart:on_activate(staticdata, dtime_s)
+	function cart:on_activate(staticdata, _)
 		-- Initialize
 		local data = minetest.deserialize(staticdata)
 		if type(data) == "table" then
@@ -170,7 +170,7 @@ local function register_entity(entity_id, mesh, textures, drop, on_rightclick, o
 		end
 	end
 
-	function cart:on_punch(puncher, time_from_last_punch, tool_capabilities, direction)
+	function cart:on_punch(puncher, time_from_last_punch, tool_capabilities, _)
 		local pos = self.object:get_pos()
 		if not self._railtype then
 			local node = minetest.get_node(vector.floor(pos)).name
@@ -200,14 +200,16 @@ local function register_entity(entity_id, mesh, textures, drop, on_rightclick, o
 			local node = minetest.get_node(rou_pos)
 			if node.name == "vlf_minecarts:detector_rail_on" then
 				local newnode = {name="vlf_minecarts:detector_rail", param2 = node.param2}
-				minetest.swap_node(rou_pos, newnode)
-				mesecon.receptor_off(rou_pos)
+				vlf_redstone.swap_node(rou_pos, newnode)
 			end
 
 			-- Drop items and remove cart entity
 			if not minetest.is_creative_enabled(puncher:get_player_name()) then
 				for d=1, #drop do
 					minetest.add_item(self.object:get_pos(), drop[d])
+				end
+				if self._on_destroy_minecart then
+					self:_on_destroy_minecart (puncher)
 				end
 			elseif puncher and puncher:is_player() then
 				local inv = puncher:get_inventory()
@@ -247,7 +249,7 @@ local function register_entity(entity_id, mesh, textures, drop, on_rightclick, o
 	local passenger_attach_position = vector.new(0, -1.75, 0)
 
 	function cart:on_step(dtime)
-		hopper_take_item(self, dtime)
+		hopper_take_item(self)
 
 		local ctrl, player = nil, nil
 		if self._driver then
@@ -286,16 +288,12 @@ local function register_entity(entity_id, mesh, textures, drop, on_rightclick, o
 		-- Grab mob
 		if math.random(1,20) > 15 and not self._passenger then
 			if self.name == "vlf_minecarts:minecart" then
-				local mobsnear = minetest.get_objects_inside_radius(self.object:get_pos(), 1.3)
-				for n=1, #mobsnear do
-					local mob = mobsnear[n]
-					if mob then
-						local entity = mob:get_luaentity()
-						if entity and entity.is_mob then
-							self._passenger = entity
-							mob:set_attach(self.object, "", passenger_attach_position, vector.zero())
-							break
-						end
+				for mob in minetest.objects_inside_radius(self.object:get_pos(), 1.3) do
+					local entity = mob:get_luaentity()
+					if entity and entity.is_mob then
+						self._passenger = entity
+						mob:set_attach(self.object, "", passenger_attach_position, vector.zero())
+						break
 					end
 				end
 			end
@@ -431,16 +429,14 @@ local function register_entity(entity_id, mesh, textures, drop, on_rightclick, o
 			-- Update detector rails
 			if node.name == "vlf_minecarts:detector_rail" then
 				local newnode = {name="vlf_minecarts:detector_rail_on", param2 = node.param2}
-				minetest.swap_node(rou_pos, newnode)
-				mesecon.receptor_on(rou_pos)
+				vlf_redstone.swap_node(rou_pos, newnode)
 			end
 			if node.name == "vlf_minecarts:golden_rail_on" then
 				restart_pos = rou_pos
 			end
 			if node_old.name == "vlf_minecarts:detector_rail_on" then
 				local newnode = {name="vlf_minecarts:detector_rail", param2 = node_old.param2}
-				minetest.swap_node(rou_old, newnode)
-				mesecon.receptor_off(rou_old)
+				vlf_redstone.swap_node(rou_old, newnode)
 			end
 			-- Activate minecart if on activator rail
 			if node_old.name == "vlf_minecarts:activator_rail_on" and self.on_activate_by_rail then
@@ -550,9 +546,7 @@ local function register_entity(entity_id, mesh, textures, drop, on_rightclick, o
 
 		-- Give achievement when player reached a distance of 1000 nodes from the start position
 		if self._driver and (vector.distance(self._start_pos, pos) >= 1000) then
-			if minetest.settings:get_bool('legacy_achievements', true) then
-				awards.unlock(self._driver, "vlf:onARail")
-			end
+			awards.unlock(self._driver, "vlf:onARail")
 		end
 
 
@@ -604,6 +598,7 @@ local function register_entity(entity_id, mesh, textures, drop, on_rightclick, o
 	end
 
 	minetest.register_entity(entity_id, cart)
+	return minetest.registered_entities[entity_id]
 end
 
 -- Place a minecart at pointed_thing
@@ -626,8 +621,7 @@ function vlf_minecarts.place_minecart(itemstack, pointed_thing, placer)
 	-- Activate detector rail
 	if node.name == "vlf_minecarts:detector_rail" then
 		local newnode = {name="vlf_minecarts:detector_rail_on", param2 = node.param2}
-		minetest.swap_node(railpos, newnode)
-		mesecon.receptor_on(railpos)
+		vlf_redstone.swap_node(railpos, newnode)
 	end
 
 	local entity_id = entity_mapping[itemstack:get_name()]
@@ -680,7 +674,7 @@ local function register_craftitem(itemstring, entity_id, description, tt_help, l
 
 			return vlf_minecarts.place_minecart(itemstack, pointed_thing, placer)
 		end,
-		_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
+		_on_dispense = function(stack, _, droppos, dropnode, _)
 			-- Place minecart as entity on rail. If there's no rail, just drop it.
 			local placed
 			if minetest.get_item_group(dropnode.name, "rail") ~= 0 then
@@ -720,12 +714,13 @@ Register a minecart
 * creative: If false, don't show in Creative Inventory
 ]]
 local function register_minecart(itemstring, entity_id, description, tt_help, longdesc, usagehelp, mesh, textures, icon, drop, on_rightclick, on_activate_by_rail, creative)
-	register_entity(entity_id, mesh, textures, drop, on_rightclick, on_activate_by_rail)
+	local entity = register_entity(entity_id, mesh, textures, drop, on_rightclick, on_activate_by_rail)
 	tt_help = (tt_help and tt_help .. "\n" or "") .. S("Sneak-click to remove")
 	register_craftitem(itemstring, entity_id, description, tt_help, longdesc, usagehelp, icon, creative)
 	if minetest.get_modpath("doc_identifier") then
 		doc.sub.identifier.register_object(entity_id, "craftitems", itemstring)
 	end
+	return entity
 end
 
 -- Minecart
@@ -768,7 +763,7 @@ register_minecart(
 )
 
 -- Minecart with Chest
-register_minecart(
+local minecart_with_chest = register_minecart(
 	"vlf_minecarts:chest_minecart",
 	"vlf_minecarts:chest_minecart",
 	S("Minecart with Chest"),
@@ -779,6 +774,14 @@ register_minecart(
 	{"vlf_minecarts:minecart", "vlf_chests:chest"},
 	nil, nil, true)
 vlf_entity_invs.register_inv("vlf_minecarts:chest_minecart","Minecart",27,false,true)
+
+function minecart_with_chest:_on_show_entity_inv (player)
+	mobs_mc.enrage_piglins (player, true)
+end
+
+function minecart_with_chest:_on_destroy_minecart (player)
+	mobs_mc.enrage_piglins (player, true)
+end
 
 -- Minecart with Furnace
 register_minecart(

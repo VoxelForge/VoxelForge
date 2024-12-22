@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_chests x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_chests x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Chest"
 msgstr "Coffre"
@@ -68,53 +68,56 @@ msgid "Orange Shulker Box"
 msgstr "Boîte de Shulter Orange"
 
 msgid "Cyan Shulker Box"
-msgstr "Boîte de Shulter Cyan"
+msgstr "Boîte de Shulker Cyan"
 
 msgid "Magenta Shulker Box"
-msgstr "Boîte de Shulter Magenta"
+msgstr "Boîte de Shulker Magenta"
 
 msgid "Purple Shulker Box"
-msgstr "Boîte de Shulter Violette"
+msgstr "Boîte de Shulker Violette"
 
 msgid "Light Blue Shulker Box"
-msgstr "Boîte de Shulter Bleu Clair"
+msgstr "Boîte de Shulker Bleue Clair"
 
 msgid "Blue Shulker Box"
-msgstr "Boîte de Shulter Bleue"
+msgstr "Boîte de Shulker Bleue"
 
 msgid "Yellow Shulker Box"
-msgstr "Boîte de Shulter Jaune"
+msgstr "Boîte de Shulker Jaune"
 
 msgid "Brown Shulker Box"
-msgstr "Boîte de Shulter Marron"
+msgstr "Boîte de Shulker Marron"
 
 msgid "Lime Shulker Box"
-msgstr "Boîte de Shulter Vert Clair"
+msgstr "Boîte de Shulker Vert Clair"
 
 msgid "Green Shulker Box"
-msgstr "Boîte de Shulter Verte"
+msgstr "Boîte de Shulker Verte"
 
 msgid "Pink Shulker Box"
-msgstr "Boîte de Shulter Rose"
+msgstr "Boîte de Shulker Rose"
 
 msgid "Red Shulker Box"
-msgstr "Boîte de Shulter Rouge"
+msgstr "Boîte de Shulker Rouge"
 
 msgid "Grey Shulker Box"
-msgstr "Boîte de Shulter Grise"
+msgstr "Boîte de Shulker Grise"
 
 msgid "Black Shulker Box"
-msgstr "Boîte de Shulter Noire"
+msgstr "Boîte de Shulker Noire"
 
 msgid "Shulker Box"
-msgstr "Boîte de Shulter"
-
-msgid "A shulker box is a portable container which provides 27 inventory slots for any item except shulker boxes. Shulker boxes keep their inventory when broken, so shulker boxes as well as their contents can be taken as a single item. Shulker boxes come in many different colors."
-msgstr "Une boîte shulker est un conteneur portable qui fournit 27 emplacements d'inventaire pour tout article, à l'exception des boîtes shulker. Les boîtes Shulker conservent leur inventaire lorsqu'elles sont brisées, de sorte que les boîtes Shulker ainsi que leur contenu peuvent être considérés comme un seul élément. Les boîtes Shulker sont disponibles dans de nombreuses couleurs différentes."
-
-msgid "To access the inventory of a shulker box, place and right-click it. To take a shulker box and its contents with you, just break and collect it, the items will not fall out. Place the shulker box again to be able to retrieve its contents."
-msgstr "Pour accéder à l'inventaire d'une boîte shulker, placez-la et cliquez dessus avec le bouton droit. Pour emporter une boîte shulker et son contenu, il suffit de la casser et de la récupérer, les objets ne tomberont pas. Replacez la boîte shulker pour pouvoir récupérer son contenu."
+msgstr "Boîte de Shulker"
 
 msgid "Can be carried around with its contents"
-msgstr "Peut être transporté avec son contenu"
+msgstr "Peut être transportée avec son contenu"
+
+msgid "and @1 more"
+msgstr "et @1 de plus"
+
+msgid "A shulker box is a portable container which provides 27 inventory slots for any item except shulker boxes. Shulker boxes keep their inventory when broken, so shulker boxes as well as their contents can be taken as a single item. Shulker boxes come in many different colors."
+msgstr "Une boîte Shulker est un conteneur portable qui fournit 27 emplacements d'inventaire pour tout article, à l'exception des boîtes shulker. Les boîtes Shulker conservent leur inventaire lorsqu'elles sont brisées, de sorte que les boîtes Shulker ainsi que leur contenu peuvent être considérés comme un seul élément. Les boîtes Shulker sont disponibles dans de nombreuses couleurs différentes."
+
+msgid "To access the inventory of a shulker box, place and right-click it. To take a shulker box and its contents with you, just break and collect it, the items will not fall out. Place the shulker box again to be able to retrieve its contents."
+msgstr "Pour accéder à l'inventaire d'une boîte Shulker, placez-la et cliquez dessus avec le bouton droit. Pour emporter une boîte Shulker et son contenu, il suffit de la casser et de la récupérer, les objets ne tomberont pas. Replacez la boîte Shulker pour pouvoir récupérer son contenu."
 

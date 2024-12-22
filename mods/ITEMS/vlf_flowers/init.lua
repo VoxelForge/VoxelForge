@@ -8,7 +8,7 @@ vlf_flowers.registered_simple_flowers = {}
 local smallflowerlongdesc = S("This is a small flower. Small flowers are mainly used for dye production and can also be potted.")
 vlf_flowers.plant_usage_help = S("It can only be placed on a block on which it would also survive.")
 
-function vlf_flowers.on_bone_meal(itemstack,placer,pointed_thing,pos,n)
+function vlf_flowers.on_bone_meal(_, _, _ , pos, n)
 	if n.name == "vlf_flowers:rose_bush" or n.name == "vlf_flowers:rose_bush_top" then
 		minetest.add_item(pos, "vlf_flowers:rose_bush")
 		return true
@@ -46,7 +46,7 @@ end
 local scan_area = 9
 local spawn_on = { "vlf_core:dirt", "group:grass_block" }
 
-function vlf_flowers.on_bone_meal_simple(itemstack, placer, pointed_thing, pos, n)
+function vlf_flowers.on_bone_meal_simple(_, _, _, pos, n)
 	if n.name ~= "vlf_flowers:wither_rose" then
 		local nn = minetest.find_nodes_in_area_under_air(
 			vector.offset(pos, -scan_area, -3, -scan_area),
@@ -84,7 +84,7 @@ function vlf_flowers.get_palette_color_from_pos(pos)
 end
 
 -- on_place function for flowers
-vlf_flowers.on_place_flower = vlf_util.generate_on_place_plant_function(function(pos, node, itemstack)
+vlf_flowers.on_place_flower = vlf_util.generate_on_place_plant_function(function(pos, _, itemstack)
 	local below = {x=pos.x, y=pos.y-1, z=pos.z}
 	local soil_node = minetest.get_node_or_nil(below)
 	if not soil_node then return false end
@@ -131,14 +131,12 @@ function vlf_flowers.register_simple_flower(name, def)
 		description = def.desc,
 		_doc_items_longdesc = smallflowerlongdesc,
 		_doc_items_usagehelp = vlf_flowers.plant_usage_help,
-		drawtype = "mesh",
-		mesh = "mc_plant.obj",
+		drawtype = "plantlike",
 		waving = 1,
 		tiles = { def.image },
 		inventory_image = def.image,
 		wield_image = def.image,
 		sunlight_propagates = true,
-		use_texture_alpha = "clip",
 		paramtype = "light",
 		walkable = false,
 		drop = def.drop,
@@ -147,7 +145,7 @@ function vlf_flowers.register_simple_flower(name, def)
 			dig_by_water = 1, destroy_by_lava_flow = 1, enderman_takable = 1,
 			plant = 1, flower = 1, place_flowerlike = 1, non_mycelium_plant = 1,
 			flammable = 2, fire_encouragement = 60, fire_flammability = 100,
-			compostability = 65
+			compostability = 65, unsticky = 1
 		},
 		sounds = vlf_sounds.node_sound_leaves_defaults(),
 		node_placement_prediction = "",
@@ -169,8 +167,7 @@ function vlf_flowers.register_simple_flower(name, def)
 end
 
 local tpl_large_plant_top = {
-	drawtype = "mesh",
-	mesh = "mc_plant.obj",
+	drawtype = "plantlike",
 	_doc_items_create_entry = true,
 	_doc_items_usagehelp = vlf_flowers.plant_usage_help,
 	sunlight_propagates = true,
@@ -185,7 +182,8 @@ local tpl_large_plant_bottom = table.merge(tpl_large_plant_top, {
 		attached_node = 1, deco_block = 1,
 		dig_by_water = 1, destroy_by_lava_flow = 1, dig_by_piston = 1,
 		flammable = 2, fire_encouragement = 60, fire_flammability = 100,
-		plant = 1, double_plant = 1, non_mycelium_plant = 1, compostability = 65
+		plant = 1, double_plant = 1, non_mycelium_plant = 1, flower = 1,
+		compostability = 65, unsticky = 1
 	},
 	on_place = function(itemstack, placer, pointed_thing)
 		-- We can only place on nodes
@@ -239,7 +237,7 @@ local tpl_large_plant_bottom = table.merge(tpl_large_plant_top, {
 		if (floor.name == "vlf_core:dirt" or minetest.get_item_group(floor.name, "grass_block") == 1 or floor.name == "vlf_lush_caves:moss" or (not is_flower and (floor.name == "vlf_core:coarse_dirt" or floor.name == "vlf_core:podzol" or floor.name == "vlf_core:podzol_snow"))) and bottom_buildable and top_buildable and light_ok then
 			local param2
 			local def = minetest.registered_nodes[floor.name]
-			if def and def.paramtype2 == "color4dir" then
+			if def and def.paramtype2 == "color" then
 				param2 = vlf_flowers.get_palette_color_from_pos(bottom)
 			end
 			-- Success! We can now place the flower
@@ -277,8 +275,8 @@ function vlf_flowers.add_large_plant(name, def)
 	table.update(def.top.groups, { not_in_creative_inventory=1, handy = 1, shearsy = 1, double_plant=2, attached_node=nil })
 
 	if def.grass_color then
-		def.bottom.paramtype2 = "color4dir"
-		def.top.paramtype2 = "color4dir"
+		def.bottom.paramtype2 = "color"
+		def.top.paramtype2 = "color"
 		def.bottom.palette = "vlf_core_palette_grass.png"
 		def.top.palette = "vlf_core_palette_grass.png"
 	end
@@ -299,7 +297,6 @@ function vlf_flowers.add_large_plant(name, def)
 		node_placement_prediction = "",
 		inventory_image = inv_img,
 		wield_image = inv_img,
-		use_texture_alpha = "clip",
 		drop = "vlf_flowers:"..name,
 		selection_box = {
 			type = "fixed",
@@ -316,11 +313,11 @@ function vlf_flowers.add_large_plant(name, def)
 			fixed = { -selbox_radius, -0.5, -selbox_radius, selbox_radius, selbox_top_height, selbox_radius },
 		},
 		tiles = def.tiles_top,
-		drop = def.bottom.drop or "vlf_flowers:"..name,
+		drop = def.bottom.drop or ( "vlf_flowers:"..name ),
 		_vlf_shears_drop = def.bottom._vlf_shears_drop,
 		_vlf_fortune_drop = def.bottom._vlf_fortune_drop,
-		use_texture_alpha = "clip",
-		after_destruct = function(pos, oldnode)
+		_vlf_baseitem = "vlf_flowers:"..name,
+		after_destruct = function(pos, _)
 			-- Remove bottom half of flower (if it exists)
 			local top = pos
 			local bottom = { x = top.x, y = top.y - 1, z = top.z }

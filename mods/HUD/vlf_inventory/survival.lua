@@ -221,8 +221,8 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	end
 end)
 
-local function sort_stack(stack)
-	if minetest.get_item_group(stack:get_name(), "offhand_item") > 0 then
+local function sort_stack(stack, inv)
+	if minetest.get_item_group(stack:get_name(), "offhand_item") > 0 and inv:get_stack("offhand", 1):is_empty() then
 		return "offhand"
 	elseif minetest.get_item_group(stack:get_name(), "armor") > 0 then
 		return "armor"
@@ -245,7 +245,7 @@ end
 minetest.register_on_player_inventory_action(function(player, action, inv, info)
 	if action == "move" and info.to_list == "sorter" then
 		local stack = inv:get_stack(info.to_list, info.to_index)
-		local trg = sort_stack(stack)
+		local trg = sort_stack(stack, inv)
 		local empty_main, empty_hotbar = find_empty_inv_slots(inv)
 		if trg then
 			if trg == "armor" then
@@ -275,7 +275,7 @@ minetest.register_allow_player_inventory_action(function(_, action, inv, info)
 	if info.to_list == "sorter" or info.from_list == "sorter" or info.listname == "sorter" then
 		if action == "put" or action == "take" then return 0 end
 		local stack = inv:get_stack(info.from_list, info.from_index)
-		local trg = sort_stack(stack)
+		local trg = sort_stack(stack, inv)
 		local empty_main, empty_hotbar = find_empty_inv_slots(inv)
 		if trg then
 			if trg == "armor" then

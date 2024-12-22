@@ -5,8 +5,9 @@
 --###################
 
 local S = minetest.get_translator("mobs_mc")
+local mob_class = vlf_mobs.mob_class
 
-vlf_mobs.register_mob("mobs_mc:guardian_elder", {
+local guardian_elder = table.merge (mobs_mc.guardian, {
 	description = S("Elder Guardian"),
 	type = "monster",
 	spawn_class = "hostile",
@@ -16,14 +17,11 @@ vlf_mobs.register_mob("mobs_mc:guardian_elder", {
 	xp_max = 10,
 	breath_max = -1,
 	passive = false,
-	attack_type = "dogfight",
-	pathfinding = 1,
-	view_range = 16,
-	walk_velocity = 2,
-	run_velocity = 4,
 	damage = 8,
-	reach = 3,
-	collisionbox = {-0.99875, 0.5, -0.99875, 0.99875, 2.4975, 0.99875},
+	movement_speed = 6.0,
+	_default_laser_delay = 3.0,
+	head_eye_height = 0.99875,
+	collisionbox = {-0.99875, 0, -0.99875, 0.99875, 1.9975, 0.99875},
 	doll_size_override = { x = 0.72, y = 0.72 },
 	visual = "mesh",
 	mesh = "mobs_mc_guardian.b3d",
@@ -31,21 +29,6 @@ vlf_mobs.register_mob("mobs_mc:guardian_elder", {
 		{"mobs_mc_guardian_elder.png"},
 	},
 	visual_size = {x=7, y=7},
-	sounds = {
-		random = "mobs_mc_guardian_random",
-		war_cry = "mobs_mc_guardian_random",
-		damage = {name="mobs_mc_guardian_hurt", gain=0.3},
-		death = "mobs_mc_guardian_death",
-		flop = "mobs_mc_squid_flop",
-		base_pitch = 0.6,
-		distance = 16,
-	},
-	animation = {
-		stand_speed = 25, walk_speed = 25, run_speed = 50,
-		stand_start = 0,		stand_end = 20,
-		walk_start = 0,		walk_end = 20,
-		run_start = 0,		run_end = 20,
-	},
 	drops = {
 		{name = "vlf_ocean:prismarine_shard",
 		chance = 1,
@@ -98,30 +81,45 @@ vlf_mobs.register_mob("mobs_mc:guardian_elder", {
 		looting = "rare",
 		looting_factor = 0.01 / 4,},
 	},
-	fly = true,
-	makes_footstep_sound = false,
-	fly_in = { "vlf_core:water_source", "vlfx_core:river_water_source" },
-	jump = false,
-	do_custom = function (self, dtime)
-	    local self_pos
-	    -- See:
-	    -- https://minecraft.fandom.com/wiki/Elder_Guardian#Inflicting_Mining_Fatigue
-	    self._fatigue_counter = (self._fatigue_counter or 60) + dtime;
-	    self_pos = self.object:get_pos ()
-	    if self._fatigue_counter > 60 then
+})
+
+------------------------------------------------------------------------
+-- Elder Guardian AI.
+------------------------------------------------------------------------
+
+function guardian_elder:on_spawn ()
+	-- Restrict to a 16 node radius around spawn point.
+	self:restrict_to (self.object:get_pos (), 16)
+end
+
+function guardian_elder:ai_step (dtime)
+	mob_class.ai_step (self, dtime)
+	local self_pos
+	-- See:
+	-- https://minecraft.wiki/w/Elder_Guardian#Inflicting_Mining_Fatigue
+	self._fatigue_counter = (self._fatigue_counter or 60) + dtime
+	self_pos = self.object:get_pos ()
+	if self._fatigue_counter > 60 then
 		self._fatigue_counter = self._fatigue_counter - 60
 
-		for _, player in pairs (minetest.get_connected_players ()) do
-		    local pos = player:get_pos ()
-		    if vector.distance (pos, self_pos) <= 50 then
-			-- Inflict Mining Fatigue III for 5 minutes.
-			vlf_entity_effects.give_effect_by_level ("fatigue", player, 3, 300)
-			-- TODO: display an apparition and play eerie noises.
-		    end
+		for player in vlf_util.connected_players() do
+			local pos = player:get_pos ()
+			if vector.distance (pos, self_pos) <= 50 then
+				-- Inflict Mining Fatigue III for 5 minutes.
+				vlf_potions.give_effect_by_level ("fatigue", player, 3, 300)
+				-- TODO: display an apparition and play eerie noises.
+			end
 		end
-	    end
-	end,
-})
+	end
+end
+
+guardian_elder.ai_functions = {
+	mob_class.return_to_restriction,
+	mob_class.check_attack,
+	mob_class.check_pace,
+}
+
+vlf_mobs.register_mob ("mobs_mc:guardian_elder", guardian_elder)
 
 -- spawn eggs
 vlf_mobs.register_egg("mobs_mc:guardian_elder", S("Elder Guardian"), "#ceccba", "#747693", 0)

@@ -4,6 +4,7 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator(minetest.get_current_modname())
+local mob_class = vlf_mobs.mob_class
 
 --###################
 --################### salmon
@@ -22,7 +23,8 @@ local salmon = {
 	armor = 100,
 	spawn_in_group = 5,
 	tilt_swim = true,
-	collisionbox = {-0.4, 0.0, -0.4, 0.4, 0.79, 0.4},
+	head_eye_height = 0.26,
+	collisionbox = {-0.35, 0.0, -0.35, 0.35, 0.4, 0.35},
 	visual = "mesh",
 	mesh = "extra_mobs_salmon.b3d",
 	textures = {
@@ -45,27 +47,53 @@ local salmon = {
 		min = 1,
 		max = 1,},
 	},
+	runaway_from = {"players"},
+	runaway_bonus_near = 1.6,
+	runaway_bonus_far = 1.4,
+	runaway_view_range = 8,
 	visual_size = {x=3, y=3},
 	makes_footstep_sound = false,
-	swim = true,
-	fly = true,
-	fly_in = "vlf_core:water_source",
+	swims = true,
+	pace_height = 1.0,
+	do_go_pos = mob_class.fish_do_go_pos,
+	initialize_group = mob_class.school_init_group,
+	_school_size = 5,
 	breathes_in_water = true,
-	jump = false,
-	view_range = 16,
+	flops = true,
 	runaway = true,
-	fear_height = 4,
-	on_rightclick = function(self, clicker)
-		local bn = clicker:get_wielded_item():get_name()
-		if bn == "vlf_buckets:bucket_water" or bn == "vlf_buckets:bucket_river_water" then
-			self:safe_remove()
-			clicker:set_wielded_item("vlf_buckets:bucket_salmon")
-			awards.unlock(clicker:get_player_name(), "vlf:tacticalFishing")
-		end
-	end
+	movement_speed = 14,
+	pace_chance = 40,
 }
 
-vlf_mobs.register_mob("mobs_mc:salmon", salmon)
+------------------------------------------------------------------------
+-- Salmon interaction.
+------------------------------------------------------------------------
+
+function salmon:on_rightclick (clicker)
+	local bn = clicker:get_wielded_item():get_name()
+	if bn == "vlf_buckets:bucket_water" or bn == "vlf_buckets:bucket_river_water" then
+		self:safe_remove()
+		clicker:set_wielded_item("vlf_buckets:bucket_salmon")
+		awards.unlock(clicker:get_player_name(), "vlf:tacticalFishing")
+	end
+end
+
+------------------------------------------------------------------------
+-- Salmon AI.
+------------------------------------------------------------------------
+
+salmon.ai_functions = {
+	mob_class.check_frightened,
+	mob_class.check_avoid,
+	mob_class.check_schooling,
+	mob_class.check_pace,
+}
+
+vlf_mobs.register_mob ("mobs_mc:salmon", salmon)
+
+------------------------------------------------------------------------
+-- Salmon spawning.
+------------------------------------------------------------------------
 
 vlf_mobs.spawn_setup({
 	name = "mobs_mc:salmon",

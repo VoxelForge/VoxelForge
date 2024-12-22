@@ -1,7 +1,5 @@
-local PARTICLES_COUNT_RAIN = 800
-local PARTICLES_COUNT_THUNDER = 1700
-
-local mgname = minetest.get_mapgen_setting("mg_name")
+local PARTICLES_COUNT_RAIN = 500
+local PARTICLES_COUNT_THUNDER = 900
 
 vlf_weather.rain = {
 	-- max rain particles created at time
@@ -41,9 +39,24 @@ local psdef= {
 
 local textures = {"weather_pack_rain_raindrop_1.png", "weather_pack_rain_raindrop_2.png"}
 
+function vlf_weather.is_exposed_to_rain (pos)
+	if not vlf_weather.rain.raining
+		or not vlf_worlds.has_weather (pos) then
+		return false
+	end
+	local data = minetest.get_biome_data (pos)
+	if not data then
+		return false
+	end
+	local name = minetest.get_biome_name (data.biome)
+	local def = minetest.registered_biomes[name]
+	return def._vlf_biome_type ~= "hot"
+		and vlf_weather.is_outdoor (pos)
+		and not vlf_weather.has_snow (pos)
+end
+
 function vlf_weather.has_rain(pos)
 	if not vlf_worlds.has_weather(pos) then return false end
-	if  mgname == "singlenode" then return true end
 	local bd = minetest.registered_biomes[minetest.get_biome_name(minetest.get_biome_data(pos).biome)]
 	if bd and bd._vlf_biome_type == "hot" then return false end
 	if not vlf_weather.can_see_outdoors(pos) then
@@ -70,7 +83,7 @@ function vlf_weather.rain.set_sky_box()
 			{r=85, g=86, b=98},
 			{r=0, g=0, b=0}})
 		vlf_weather.skycolor.active = true
-		for _, player in pairs(minetest.get_connected_players()) do
+		for player in vlf_util.connected_players() do
 			player:set_clouds({color="#5D5D5FE8"})
 		end
 	end
@@ -153,14 +166,14 @@ function vlf_weather.rain.clear()
 	vlf_weather.rain.init_done = false
 	vlf_weather.rain.set_particles_mode("rain")
 	vlf_weather.skycolor.remove_layer("weather-pack-rain-sky")
-	for _, player in pairs(minetest.get_connected_players()) do
+	for player in vlf_util.connected_players() do
 		vlf_weather.rain.remove_sound(player)
 		vlf_weather.rain.remove_player(player)
 		vlf_weather.remove_spawners_player(player)
 	end
 end
 
-minetest.register_globalstep(function(dtime)
+minetest.register_globalstep(function()
 	if vlf_weather.state ~= "rain" then
 		return false
 	end
@@ -175,9 +188,9 @@ function vlf_weather.rain.make_weather()
 		vlf_weather.rain.init_done = true
 	end
 
-	for _, player in pairs(minetest.get_connected_players()) do
+	for player in vlf_util.connected_players() do
 		local pos=player:get_pos()
-		if vlf_weather.is_underwater(player) or not vlf_weather.has_rain(pos) or pos.y <= 0 then
+		if vlf_weather.is_underwater(player) or not vlf_weather.has_rain(pos) then
 			vlf_weather.rain.remove_sound(player)
 			vlf_weather.remove_spawners_player(player)
 			if vlf_worlds.has_weather(pos) then
@@ -216,7 +229,7 @@ if vlf_weather.allow_abm then
 		nodenames = {"vlf_fire:fire"},
 		interval = 2.0,
 		chance = 2,
-		action = function(pos, node, active_object_count, active_object_count_wider)
+		action = function(pos)
 			-- Fire is extinguished if in rain or one of 4 neighbors is in rain
 			if vlf_weather.rain.raining and vlf_weather.rain.extinguish_fire then
 				local around = {
@@ -244,20 +257,9 @@ if vlf_weather.allow_abm then
 		nodenames = {"vlf_cauldrons:cauldron", "vlf_cauldrons:cauldron_1", "vlf_cauldrons:cauldron_2"},
 		interval = 56.0,
 		chance = 1,
-		action = function(pos, node, active_object_count, active_object_count_wider)
-			-- Rain is equivalent to a water bottle
+		action = function(pos)
 			if vlf_weather.rain.raining and vlf_weather.is_outdoor(pos) and vlf_weather.has_rain(pos) then
-				if node.name == "vlf_cauldrons:cauldron" then
-					minetest.swap_node(pos, {name="vlf_cauldrons:cauldron_1"})
-				elseif node.name == "vlf_cauldrons:cauldron_1" then
-					minetest.swap_node(pos, {name="vlf_cauldrons:cauldron_2"})
-				elseif node.name == "vlf_cauldrons:cauldron_2" then
-					minetest.swap_node(pos, {name="vlf_cauldrons:cauldron_3"})
-				elseif node.name == "vlf_cauldrons:cauldron_1r" then
-					minetest.swap_node(pos, {name="vlf_cauldrons:cauldron_2r"})
-				elseif node.name == "vlf_cauldrons:cauldron_2r" then
-					minetest.swap_node(pos, {name="vlf_cauldrons:cauldron_3r"})
-				end
+				vlf_cauldrons.add_level(pos, 1, "water")
 			end
 		end
 	})
@@ -268,7 +270,7 @@ if vlf_weather.allow_abm then
 		nodenames = {"vlf_farming:soil"},
 		interval = 22.0,
 		chance = 3,
-		action = function(pos, node, active_object_count, active_object_count_wider)
+		action = function(pos, node)
 			if vlf_weather.rain.raining and vlf_weather.is_outdoor(pos) and vlf_weather.has_rain(pos) then
 				if node.name == "vlf_farming:soil" then
 					minetest.set_node(pos, {name="vlf_farming:soil_wet"})
@@ -281,14 +283,14 @@ end
 if vlf_weather.reg_weathers.rain == nil then
 	vlf_weather.reg_weathers.rain = {
 		clear = vlf_weather.rain.clear,
-		light_factor = 0.9,
+		light_factor = 0.6,
 		-- 10min - 20min
 		min_duration = 600,
 		max_duration = 1200,
 		transitions = {
-			[30] = "none",
-			[40] = "snow",
-			[60] = "thunder",
+			[65] = "none",
+			[70] = "snow",
+			[100] = "thunder",
 		}
 	}
 end

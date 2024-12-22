@@ -1,8 +1,8 @@
 --lua locals
 local mob_class = vlf_mobs.mob_class
+local is_valid = vlf_util.is_valid_objectref
 
 local modern_lighting = minetest.settings:get_bool("vlf_mobs_modern_lighting", true)
-local peaceful_mode = minetest.settings:get_bool("only_peaceful_mobs", false)
 
 local nether_threshold = 11
 local end_threshold = 15
@@ -11,12 +11,19 @@ local overworld_sky_threshold = 7
 local overworld_passive_threshold = 7
 
 local PASSIVE_INTERVAL = 20
+local HOSTILE_INTERVAL = 10
 local dbg_spawn_attempts = 0
 local dbg_spawn_succ = 0
 local dbg_spawn_counts = {}
 -- range for mob count
 local aoc_range = 136
 local remove_far = true
+
+local timer_light = 30
+local timer_dark = 10
+local timer_light_level = 3
+local instant_despawn_range = 128
+local random_despawn_range = 32
 
 local mob_cap = {
 	monster = tonumber(minetest.settings:get("vlf_mob_cap_monster")) or 70,
@@ -113,7 +120,7 @@ function vlf_mobs.spawn_setup(def)
 
 	local mob_def = minetest.registered_entities[def.name]
 	assert(mob_def, "spawn definition with invalid entity: "..tostring(def.name))
-	if peaceful_mode and not mob_def.persist_in_peaceful then return end
+	if vlf_vars.difficulty <= 0 and not mob_def.persist_in_peaceful then return end
 	assert(def.chance > 0, "Chance shouldn't be less than 1 (mob name: " .. def.name ..")")
 
 	setmetatable(def, spawn_defaults_meta)
@@ -162,6 +169,14 @@ local function has_room(self,pos)
 			table.insert(nodes,self.fly_in)
 		end
 	end
+	if self.swims_in then
+		local t = type(self.swims_in)
+		if t == "table" then
+			nodes = table.copy(self.swims_in)
+		elseif t == "string" then
+			table.insert(nodes,self.swims_in)
+		end
+	end
 	table.insert(nodes,"air")
 	local x = cb[4] - cb[1]
 	local y = cb[5] - cb[2]
@@ -183,41 +198,28 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 	local dimension = vlf_worlds.pos_to_dimension(pos)
 	local mob_def = minetest.registered_entities[spawn_def.name]
 	local mob_type = mob_def.type
-	local gotten_node = minetest.get_node(pos).name
-	local gotten_biome = minetest.get_biome_data(pos)
-	if not gotten_node or not gotten_biome then return end
-	gotten_biome = minetest.get_biome_name(gotten_biome.biome) --makes it easier to work with
-
-	local is_ground = minetest.get_item_group(gotten_node,"solid") ~= 0
+	local gotten_node = minetest.get_node_or_nil(pos)
+	if not gotten_node then return end
+	gotten_node = gotten_node.name
+	local is_ground = minetest.get_item_group(gotten_node,"opaque") ~= 0
 	if not is_ground then
 		pos.y = pos.y - 1
 		gotten_node = minetest.get_node(pos).name
-		is_ground = minetest.get_item_group(gotten_node,"solid") ~= 0
+		is_ground = minetest.get_item_group(gotten_node,"opaque") ~= 0
 	end
 	pos.y = pos.y + 1
 	local is_water = minetest.get_item_group(gotten_node, "water") ~= 0
 	local is_lava  = minetest.get_item_group(gotten_node, "lava") ~= 0
 	local is_leaf  = minetest.get_item_group(gotten_node, "leaves") ~= 0
-	local is_air = gotten_node == "air"
 	local is_bedrock  = gotten_node == "vlf_core:bedrock"
 	local is_grass = minetest.get_item_group(gotten_node,"grass_block") ~= 0
 
-	local mob_count_wide = 0
-	local mob_count = 0
-	if not ignore_caps then
-		mob_count = count_mobs(pos,32,mob_type)
-		mob_count_wide = count_mobs(pos,aoc_range,mob_type)
-	end
 
 	if not pos then return false,"no pos" end
 	if not spawn_def then return false,"no spawn_def" end
-	if ( mob_count_wide >= (mob_cap[mob_type] or 15) ) then return false,"mob cap wide full" end
-	if ( mob_count >= 5 ) then return false, "local mob cap full" end
 	if not ( spawn_def.min_height and pos.y >= spawn_def.min_height ) then return false, "too low" end
 	if not ( spawn_def.max_height and pos.y <= spawn_def.max_height ) then return false, "too high" end
 	if spawn_def.dimension ~= dimension then return false, "wrong dimension" end
-	if not ( not spawn_def.biomes_except or (spawn_def.biomes_except and not biome_check(spawn_def.biomes_except, gotten_biome))) then return false, "biomes_except failed" end
-	if not ( not spawn_def.biomes or (spawn_def.biomes and biome_check(spawn_def.biomes, gotten_biome))) then return false, "biome check failed" end
 	if not (is_ground or spawn_def.type_of_spawning ~= "ground") then return false, "not on ground" end
 	if not (spawn_def.type_of_spawning ~= "ground" or not is_leaf) then return false, "leaf" end
 	if not has_room(mob_def,pos) then return false, "no room" end
@@ -226,8 +228,14 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 	if not (spawn_def.type_of_spawning ~= "water" or is_water) then return false, "water mob only on water" end
 	if not (spawn_def.type_of_spawning ~= "lava" or is_lava) then return false, "lava mobs only on lava" end
 	if not ( not spawn_protected or not minetest.is_protected(pos, "") ) then return false, "spawn protected" end
-	if not ( spawn_def.type_of_spawning ~= "air" or is_air) then return false, "flying mobs only in air" end
 	if is_bedrock then return false, "no spawn on bedrock" end
+
+	-- More expensive checks last
+	local biome = minetest.get_biome_data(pos)
+	if not biome then return false, "no biome found" end
+	biome = minetest.get_biome_name(biome.biome) --makes it easier to work with
+	if not ( not spawn_def.biomes_except or (spawn_def.biomes_except and not biome_check(spawn_def.biomes_except, biome))) then return false, "biomes_except failed" end
+	if not ( not spawn_def.biomes or (spawn_def.biomes and biome_check(spawn_def.biomes, biome))) then return false, "biome check failed" end
 
 	local gotten_light = minetest.get_node_light(pos)
 	local my_node = minetest.get_node(pos)
@@ -262,6 +270,16 @@ local function spawn_check(pos,spawn_def,ignore_caps)
 		if gotten_light > spawn_def.max_light then return false,"too bright" end
 	end
 
+	local mob_count_wide = 0
+	local mob_count = 0
+	if not ignore_caps then
+		mob_count = count_mobs(pos,32,mob_type)
+		mob_count_wide = count_mobs(pos,aoc_range,mob_type)
+	end
+
+	if ( mob_count_wide >= (mob_cap[mob_type] or 15) ) then return false,"mob cap wide full" end
+	if ( mob_count >= 5 ) then return false, "local mob cap full" end
+
 	return true, ""
 end
 
@@ -278,10 +296,15 @@ function vlf_mobs.spawn(pos,id, staticdata)
 	return minetest.add_entity(pos, def.name, staticdata)
 end
 
+function mob_class.spawn_group_member_data (idx)
+	return nil
+end
 
 local function spawn_group(p,mob,spawn_on,group_max,group_min)
 	if not group_min then group_min = 1 end
+	local mob_def = minetest.registered_entities[mob.name]
 	local nn= minetest.find_nodes_in_area_under_air(vector.offset(p,-5,-3,-5),vector.offset(p,5,3,5),spawn_on)
+	local group_members = {}
 	local o
 	table.shuffle(nn)
 	if not nn or #nn < 1 then
@@ -290,22 +313,31 @@ local function spawn_group(p,mob,spawn_on,group_max,group_min)
 	end
 	for i = 1, math.random(group_min,group_max) do
 		local sp = vector.offset(nn[math.random(#nn)],0,1,0)
-		if spawn_check(nn[math.random(#nn)],mob,true) then
+		if spawn_check(nn[math.random(#nn)],mob) then
 			if mob.type_of_spawning == "water" then
 				sp = get_water_spawn(sp)
 			end
-			o =  vlf_mobs.spawn(sp,mob.name)
-			if o then dbg_spawn_succ = dbg_spawn_succ + 1 end
+			local data
+				= mob_def.spawn_group_member_data (i)
+			o = vlf_mobs.spawn (sp, mob.name, data)
+			if o then
+				dbg_spawn_succ = dbg_spawn_succ + 1
+				table.insert (group_members, o)
+			end
 		end
+	end
+	local init_func = mob_def.initialize_group
+	if init_func and #group_members > 0 then
+		init_func (group_members)
 	end
 	return o
 end
 
-function mob_class:despawn_allowed()
+function mob_class:despawn_allowed ()
 	local nametag = self.nametag and self.nametag ~= ""
-	local not_busy = self.state ~= "attack" and self.following == nil
 	if self.can_despawn == true then
-		if not nametag and not_busy and not self.tamed and not self.persistent then
+		if not nametag and not self.tamed
+			and not self.persistent then
 			return true
 		end
 	end
@@ -332,10 +364,13 @@ local function can_spawn(spawn_def,spawning_position)
 	return true
 end
 
+vlf_mobs.can_spawn = can_spawn
+vlf_mobs.spawn_dictionary = spawn_dictionary
+
 local passive_timer = PASSIVE_INTERVAL
 
 --timer function to check if passive mobs should spawn (only every 20 secs unlike other mob spawn classes)
-local function check_timer(spawn_def, dtime)
+local function check_timer(spawn_def)
 	local mob_def = minetest.registered_entities[spawn_def.name]
 	if mob_def and mob_def.spawn_class == "passive" then
 		if passive_timer > 0 then
@@ -352,56 +387,23 @@ local MOB_SPAWN_ZONE_OUTER = 128
 
 
 local SPAWN_MAPGEN_LIMIT  = 30911
-local SPAWN_DISTANCE_CDF_PWL = {
-	{0.000,0.00},
-	{0.083,0.40},
-	{0.416,0.75},
-	{1.000,1.00},
-}
--- Calculate the inverse of a piecewise linear function f(x). Line segments are represented as two
--- adjacent points specified as { x, f(x) }. At least 2 points are required. If there are most solutions,
--- the one with a lower x value will be chosen.
-local function inverse_pwl(fx, f)
-	if fx < f[1][2] then
-		return f[1][1]
-	end
-	for i=2,#f do
-		local x0,fx0 = unpack(f[i-1])
-		local x1,fx1 = unpack(f[i  ])
-		if fx < fx1 then
-			return (fx - fx0) * (x1 - x0) / (fx1 - fx0) + x0
-		end
-	end
-	return f[#f][1]
-end
 
-
-local two_pi = 2 * math.pi
 local function math_round(x) return (x > 0) and math.floor(x + 0.5) or math.ceil(x - 0.5) end
 
 local function get_next_mob_spawn_pos(pos)
 	-- Select a distance such that distances closer to the player are selected much more often than
-	-- those further away from the player.
-	local fx = (math.random(1,10000)-1) / 10000
-	local x = inverse_pwl(fx, SPAWN_DISTANCE_CDF_PWL)
-	local distance = x * (MOB_SPAWN_ZONE_OUTER - MOB_SPAWN_ZONE_INNER) + MOB_SPAWN_ZONE_INNER
-	--print("Using spawn distance of "..tostring(distance).."  fx="..tostring(fx)..",x="..tostring(x))
+	-- those further away from the player. This does produce a concentration at INNER (24 blocks)
+	local distance = math.random()^2 * (MOB_SPAWN_ZONE_OUTER - MOB_SPAWN_ZONE_INNER) + MOB_SPAWN_ZONE_INNER
+	local dir = vector.random_direction()
+	-- minetest.log("action", "Using spawn distance of "..tostring(distance).." in direction "..minetest.pos_to_string(dir))
+	local goal_pos = vector.offset(pos, dir.x * distance, dir.y * distance, dir.z * distance)
 
-	-- TODO Floor xoff and zoff and add 0.5 so it tries to spawn in the middle of the square. Less failed attempts.
-	-- Use spherical coordinates https://en.wikipedia.org/wiki/Spherical_coordinate_system#Cartesian_coordinates
-	local theta = math.random() * two_pi
-	local phi = math.random() * two_pi
-	local xoff = math_round(distance * math.sin(theta) * math.cos(phi))
-	local yoff = math_round(distance * math.cos(theta))
-	local zoff = math_round(distance * math.sin(theta) * math.sin(phi))
-	local goal_pos = vector.offset(pos, xoff, yoff, zoff)
-
-	if not ( math.abs(goal_pos.x) <= SPAWN_MAPGEN_LIMIT and math.abs(pos.y) <= SPAWN_MAPGEN_LIMIT and math.abs(goal_pos.z) <= SPAWN_MAPGEN_LIMIT ) then
+	if not ( math.abs(goal_pos.x) <= SPAWN_MAPGEN_LIMIT and math.abs(goal_pos.y) <= SPAWN_MAPGEN_LIMIT and math.abs(goal_pos.z) <= SPAWN_MAPGEN_LIMIT ) then
 		return nil
 	end
 
 	-- Calculate upper/lower y limits
-	local R1 = MOB_SPAWN_ZONE_OUTER
+	local R1 = distance + 3
 	local d = vector.distance( pos, vector.new( goal_pos.x, pos.y, goal_pos.z ) ) -- distance from player to projected point on horizontal plane
 	local y1 = math.sqrt( R1*R1 - d*d ) -- absolue value of distance to outer sphere
 
@@ -431,7 +433,7 @@ local function get_next_mob_spawn_pos(pos)
 	local spawning_position_list = minetest.find_nodes_in_area_under_air(
 			{x = goal_pos.x, y = y_min, z = goal_pos.z},
 			{x = goal_pos.x, y = y_max, z = goal_pos.z},
-			{"group:solid", "group:water", "group:lava", "air"}
+			{"group:opaque", "group:water", "group:lava"}
 	) or {}
 
 	-- Select only the locations at a valid distance
@@ -450,21 +452,21 @@ end
 
 
 if mobs_spawn then
-	local cumulative_chance = nil
-	local mob_library_worker_table = nil
+	local cumulative_chance
+	local mob_library_worker_table
 	local function initialize_spawn_data()
 		if not mob_library_worker_table then
 			mob_library_worker_table = table.copy(spawn_dictionary)
 		end
 		if not cumulative_chance then
 			cumulative_chance = 0
-			for k, v in pairs(mob_library_worker_table) do
+			for _, v in pairs(mob_library_worker_table) do
 				cumulative_chance = cumulative_chance + v.chance
 			end
 		end
 	end
 
-	local function spawn_a_mob(pos, dimension, dtime)
+	local function spawn_a_mob(pos, _, _)
 		--create a disconnected clone of the spawn dictionary
 		--prevents memory leak
 
@@ -495,12 +497,14 @@ if mobs_spawn then
 			local spawn_def = mob_library_worker_table[mob_index]
 			--minetest.log(spawn_def.name.." "..step_chance.. " "..mob_chance)
 			if spawn_def and spawn_def.name and minetest.registered_entities[spawn_def.name] then
-				local spawn_in_group = minetest.registered_entities[spawn_def.name].spawn_in_group or 4
-				local spawn_in_group_min = minetest.registered_entities[spawn_def.name].spawn_in_group_min or 1
+				local spawn_in_group = spawn_def.spawn_in_group
+					or minetest.registered_entities[spawn_def.name].spawn_in_group or 4
+				local spawn_in_group_min = spawn_def.spawn_in_group_min
+					or minetest.registered_entities[spawn_def.name].spawn_in_group_min or 1
 				local mob_type = minetest.registered_entities[spawn_def.name].type
 				if spawn_check(spawning_position,spawn_def) then
 
-					if can_spawn(spawn_def,spawning_position) and check_timer(spawn_def, dtime) then
+					if can_spawn(spawn_def,spawning_position) and check_timer(spawn_def) then
 						--everything is correct, spawn mob
 						if spawn_in_group and ( mob_type ~= "monster" or math.random(5) == 1 ) then
 							if logging then
@@ -524,12 +528,13 @@ if mobs_spawn then
 
 	--MAIN LOOP
 
-	local timer = 0
+	local timer = HOSTILE_INTERVAL
 	minetest.register_globalstep(function(dtime)
 		passive_timer = passive_timer - dtime
-		timer = timer + dtime
-		if timer < 10 then return end
-		timer = 0
+		timer = timer - dtime
+		if timer > 0 then return end
+		timer = HOSTILE_INTERVAL
+
 		local players = minetest.get_connected_players()
 		local total_mobs = count_mobs_total_cap()
 		if total_mobs > mob_cap.total or total_mobs > #players * mob_cap.player then
@@ -549,26 +554,72 @@ if mobs_spawn then
 	end)
 end
 
-function mob_class:check_despawn(pos, dtime)
-	self.lifetimer = self.lifetimer - dtime
+function mob_class:despawn_ok (d_to_closest_player)
+	return true
+end
 
-	-- Despawning: when lifetimer expires, remove mob
+function mob_class:check_despawn(pos, dtime)
 	if remove_far and self:despawn_allowed() then
-		if self.despawn_immediately or self.lifetimer <= 0 then
-			if logging then
-				minetest.log("action", "[vlf_mobs] Mob "..self.name.." despawns at "..minetest.pos_to_string(pos, 1) .. " lifetimer ran out")
-			end
-			vlf_burning.extinguish(self.object)
-			self:safe_remove()
+		local min_dist = math.huge
+		for player in vlf_util.connected_players() do
+			min_dist = math.min(min_dist, vector.distance(player:get_pos(), pos))
+		end
+
+		if not self:despawn_ok (min_dist) then
+			return false
+		elseif min_dist > instant_despawn_range then
+			self:kill_me("no players within distance " .. instant_despawn_range)
 			return true
-		elseif self.lifetimer <= 10 then
-			if math.random(10) < 4 then
-				self.despawn_immediately = true
-			else
-				self.lifetimer = 20
+		elseif min_dist > random_despawn_range then
+			if self.lifetimer then
+				self.lifetimer = self.lifetimer - dtime
+
+				if self.lifetimer <= 0 then
+					-- timer expired -> check random despawn chance
+
+					if math.random(1, 100) < (min_dist * min_dist) / 512 then
+						self:kill_me("random chance at distance " .. math.round(min_dist))
+						return true
+					end
+
+					-- survived despawn check -> fall through to refresh timer
+				else
+					-- timer not yet expired
+					return false
+				end
+
 			end
+
+			-- (re)set timer depending on light level
+			if (minetest.get_node_light(pos) or minetest.LIGHT_MAX )< timer_light_level then
+				self.lifetimer = timer_dark
+			else
+				self.lifetimer = timer_light
+			end
+
+			return false
+		else
+			-- too close -> disable timer
+			self.lifetimer = nil
+			return false
 		end
 	end
+end
+
+function mob_class:kill_me(msg)
+	if logging then
+		minetest.log("action", "[vlf_mobs] Mob " .. self.name .. " despawns at " .. minetest.pos_to_string(self.object:get_pos(), 1) .. ": " .. msg)
+	end
+	if self._jockey_rider then
+		if is_valid (self._jockey_rider) then
+			-- Detach this rider.
+			local entity = self._jockey_rider:get_luaentity ()
+			entity:unjock ()
+			entity.jockey_vehicle = nil
+		end
+		self._jockey_rider = nil
+	end
+	self:safe_remove()
 end
 
 minetest.register_chatcommand("spawn_mob",{
@@ -609,13 +660,13 @@ minetest.register_chatcommand("spawn_mob",{
 
 						local number_tag = string.find(value, "NUM")
 						if number_tag then
-							value = tonumber(string.sub(value, 4, -1))
+							value = tonumber(string.sub(value, 4, -1)) ---@diagnostic disable-line: cast-local-type
 						end
 
 						if value == "true" then
-							value = true
+							value = true ---@diagnostic disable-line: cast-local-type
 						elseif value == "false" then
-							value = false
+							value = false ---@diagnostic disable-line: cast-local-type
 						end
 
 						if not mob_entity[variable] then
@@ -665,7 +716,7 @@ minetest.register_chatcommand("spawncheck",{
 
 minetest.register_chatcommand("mobstats",{
 	privs = { debug = true },
-	func = function(n,param)
+	func = function(n, _)
 		minetest.chat_send_player(n,dump(dbg_spawn_counts))
 		local pos = minetest.get_player_by_name(n):get_pos()
 		minetest.chat_send_player(n,"mobs within 32 radius of player:"..count_mobs(pos,32))

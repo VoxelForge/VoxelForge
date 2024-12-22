@@ -161,7 +161,7 @@ end)
 
 minetest.register_chatcommand("bonus_chest", {
 	privs = { server = true, },
-	func = function(pn,pr)
+	func = function(pn, _)
 		local pl = minetest.get_player_by_name(pn)
 		vlf_bonus_chest.place_chest(pl:get_pos())
 	end,

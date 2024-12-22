@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_armor x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_armor x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This is a piece of equippable armor which reduces the amount of damage you receive."
 msgstr "Это часть надеваемой брони, уменьшающая получаемый вами урон."
@@ -20,31 +20,31 @@ msgid "To equip it, put it on the corresponding armor slot in your inventory men
 msgstr "Чтобы надеть, поместите в соответствующий слот брони в вашем инвентаря."
 
 msgid "Leather Cap"
-msgstr ""
+msgstr "Кожаная кепка"
 
 msgid "Leather Tunic"
-msgstr ""
+msgstr "Кожаная туника"
 
 msgid "Leather Pants"
-msgstr ""
+msgstr "Кожаные брюки"
 
 msgid "Leather Boots"
-msgstr ""
+msgstr "Кожаные сапоги"
 
 msgid "Colorize a piece of leather armor, or wash it"
-msgstr ""
+msgstr "Раскрасьте кожаную броню или почистите ее"
 
 msgid "Not leather armor."
-msgstr ""
+msgstr "Не кожаные доспехи."
 
 msgid "Washed."
-msgstr ""
+msgstr "Вымытый."
 
 msgid "Done: @1"
-msgstr ""
+msgstr "Выполнено: @1"
 
 msgid "Player isn't online"
-msgstr ""
+msgstr "Игрок не в сети"
 
 msgid "Golden Helmet"
 msgstr "Золотой шлем"
@@ -59,16 +59,16 @@ msgid "Golden Boots"
 msgstr "Золотые ботинки"
 
 msgid "Chainmail Helmet"
-msgstr ""
+msgstr "Кольчужный шлем"
 
 msgid "Chainmail Chestplate"
-msgstr ""
+msgstr "Кольчужный нагрудник"
 
 msgid "Chainmail Leggings"
-msgstr ""
+msgstr "Кольчужные леггинсы"
 
 msgid "Chainmail Boots"
-msgstr ""
+msgstr "Кольчужные сапоги"
 
 msgid "Iron Helmet"
 msgstr "Железный шлем"
@@ -158,20 +158,20 @@ msgid "Elytra"
 msgstr "Элитра"
 
 msgid "Smithing Template"
-msgstr ""
+msgstr "Кузнечный шаблон"
 
 msgid "@1 Armor Trim"
-msgstr ""
+msgstr "@1 Окантовка брони"
 
 msgid "Applies to:"
-msgstr ""
+msgstr "Применяется для:"
 
 msgid "Armor"
-msgstr ""
+msgstr "Броня"
 
 msgid "Ingredients:"
-msgstr ""
+msgstr "Ингредиенты:"
 
 msgid "Ingot & Crystals"
-msgstr ""
+msgstr "Слитки и кристаллы"
 

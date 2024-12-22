@@ -1,4 +1,4 @@
-# textdomain: mcl_raids
+# textdomain: vlf_raids
 
 ### init.lua ###
 Ominous Banner=

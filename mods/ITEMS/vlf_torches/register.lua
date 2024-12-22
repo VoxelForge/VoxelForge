@@ -10,8 +10,7 @@ vlf_torches.register_torch({
 		name = "default_torch_on_floor_animated.png",
 		animation = {type = "vertical_frames", aspect_w = 16, aspect_h = 16, length = 3.3}
 	}},
-	-- this is 15 in minecraft
-	light = 14,
+	light =  14,
 	groups = {dig_immediate = 3, deco_block = 1},
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	particles = true,

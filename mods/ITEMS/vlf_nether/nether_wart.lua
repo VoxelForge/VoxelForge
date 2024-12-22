@@ -18,7 +18,7 @@ minetest.register_node("vlf_nether:nether_wart_0", {
 			{-0.5, -0.5, -0.5, 0.5, -0.125, 0.5}
 		},
 	},
-	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1},
+	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1, unsticky = 1},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 })
 
@@ -40,7 +40,7 @@ minetest.register_node("vlf_nether:nether_wart_1", {
 			{-0.5, -0.5, -0.5, 0.5, 0.15, 0.5}
 		},
 	},
-	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1},
+	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1, unsticky = 1},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 })
 
@@ -62,7 +62,7 @@ minetest.register_node("vlf_nether:nether_wart_2", {
 			{-0.5, -0.5, -0.5, 0.5, 0.15, 0.5}
 		},
 	},
-	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1},
+	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1, unsticky = 1},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 })
 
@@ -91,7 +91,7 @@ minetest.register_node("vlf_nether:nether_wart", {
 			{-0.5, -0.5, -0.5, 0.5, 0.45, 0.5}
 		},
 	},
-	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1},
+	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1, unsticky = 1},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	_vlf_fortune_drop = {
 		discrete_uniform_distribution = true,

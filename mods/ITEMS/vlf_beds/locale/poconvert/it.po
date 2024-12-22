@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_beds x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_beds x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Beds allow you to sleep at night and make the time pass faster."
-msgstr ""
+msgstr "I letti ti permettono di dormire di notte e velocizzano il passaggio del tempo."
 
 msgid "To use a bed, stand close to it and right-click the bed to sleep in it. Sleeping only works when the sun sets, at night or during a thunderstorm. The bed must also be clear of any danger."
-msgstr ""
+msgstr "Per utilizzare un letto, stagli vicino e cliccaci col tasto destro per dormirci. Puoi dormire solo quando il sole cala, di notte o durante una tempesta. Occorre anche eliminare qualsiasi pericolo vicino al letto."
 
 msgid "You have heard of other worlds in which a bed would set the start point for your next life. But this world is not one of them."
-msgstr ""
+msgstr "Sei venuto a conoscenza di altri mondi dove un letto definirebbe il punto di partenza per la tua prossima vita. Ma questo mondo non è uno di quelli."
 
 msgid "By using a bed, you set the starting point for your next life. If you die, you will start your next life at this bed, unless it is obstructed or destroyed."
 msgstr ""
@@ -35,12 +35,6 @@ msgid "Allows you to sleep"
 msgstr ""
 
 msgid "Bed"
-msgstr ""
-
-msgid "@1 Bed"
-msgstr ""
-
-msgid "New respawn position set!"
 msgstr ""
 
 msgid "You can only sleep at night or during a thunderstorm."
@@ -107,6 +101,57 @@ msgid "Sorry, but you have to wait @1 seconds until you may use this button agai
 msgstr ""
 
 msgid "Hey! Would you guys mind sleeping?"
+msgstr ""
+
+msgid "New respawn position set!"
+msgstr "E' stata definita la nuova posizione di generazione!"
+
+msgid "Black Bed"
+msgstr ""
+
+msgid "Blue Bed"
+msgstr ""
+
+msgid "Brown Bed"
+msgstr ""
+
+msgid "Cyan Bed"
+msgstr ""
+
+msgid "Green Bed"
+msgstr ""
+
+msgid "Grey Bed"
+msgstr ""
+
+msgid "Light Blue Bed"
+msgstr ""
+
+msgid "Light Grey Bed"
+msgstr ""
+
+msgid "Lime Bed"
+msgstr ""
+
+msgid "Magenta Bed"
+msgstr ""
+
+msgid "Orange Bed"
+msgstr ""
+
+msgid "Pink Bed"
+msgstr ""
+
+msgid "Purple Bed"
+msgstr ""
+
+msgid "Red Bed"
+msgstr ""
+
+msgid "White Bed"
+msgstr ""
+
+msgid "Yellow Bed"
 msgstr ""
 
 msgid "Respawn Anchor"

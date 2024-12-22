@@ -23,12 +23,6 @@ local rod_def = {
 	selection_box = cbox,
 	collision_box = cbox,
 	node_placement_prediction = "",
-	mesecons = {
-		receptor = {
-			state = mesecon.state.off,
-			rules = mesecon.rules.alldirs,
-		},
-	},
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 			return itemstack
@@ -69,20 +63,18 @@ rod_def_a.tiles = { "vlf_lightning_rods_rod.png^[brighten" }
 
 rod_def_a.groups.not_in_creative_inventory = 1
 
-rod_def_a.mesecons = {
-	receptor = {
-		state = mesecon.state.on,
-		rules = mesecon.rules.alldirs,
-	},
+rod_def_a._vlf_redstone = {
+	get_power = function(node, dir)
+		return 15
+	end,
 }
 
-rod_def_a.on_timer = function(pos, elapsed)
+rod_def_a.on_timer = function(pos)
 	local node = minetest.get_node(pos)
 
 	if node.name == "vlf_lightning_rods:rod_powered" then --has not been dug
 		node.name = "vlf_lightning_rods:rod"
 		minetest.set_node(pos, node)
-		mesecon.receptor_off(pos, mesecon.rules.alldirs)
 	end
 
 	return false
@@ -90,7 +82,10 @@ end
 
 minetest.register_node("vlf_lightning_rods:rod_powered", rod_def_a)
 
-vlf_lightning.register_on_strike(function(pos, pos2, objects)
+vlf_lightning.register_on_strike(function(pos, pos2, objects, for_trap)
+	if for_trap then
+		return false
+	end
 	local lr = minetest.find_nodes_in_area_under_air(vector.offset(pos, -64, -32, -64), vector.offset(pos, 64, 64, 64), { "group:attracts_lightning" }, true)
 	lr = (lr and #lr > 0 and lr[1]) or false
 	if lr then
@@ -99,7 +94,6 @@ vlf_lightning.register_on_strike(function(pos, pos2, objects)
 		if node.name == "vlf_lightning_rods:rod" then
 			node.name = "vlf_lightning_rods:rod_powered"
 			minetest.set_node(lr, node)
-			mesecon.receptor_on(lr, mesecon.rules.alldirs)
 			minetest.get_node_timer(lr):start(0.4)
 		end
 	end

@@ -1,20 +1,21 @@
-local schempath = minetest.get_modpath("vlf_schematics")
+local modname = minetest.get_current_modname()
+local modpath = minetest.get_modpath(modname)
 
-local S = minetest.get_translator(minetest.get_current_modname())
+-- All required translation strings are currently generated in vlf_trees
+-- local S = minetest.get_translator(minetest.get_current_modname())
 
 vlf_trees.register_wood("oak",{
-	readable_name = S("Oak"),
+	readable_name = "Oak",
 	sign_color="#917056",
 	tree_schems= {
-		{ file = schempath.."/schems/vlf_core_oak_balloon.mts"},
-		{ file = schempath.."/schems/vlf_core_oak_large_1.mts"},
-		{ file = schempath.."/schems/vlf_core_oak_large_2.mts"},
-		{ file = schempath.."/schems/vlf_core_oak_large_3.mts"},
-		{ file = schempath.."/schems/vlf_core_oak_large_4.mts"},
-		{ file = schempath.."/schems/vlf_core_oak_swamp.mts"},
-		{ file = schempath.."/schems/vlf_core_oak_v6.mts"},
-		{ file = schempath.."/schems/vlf_core_oak_classic_bee_nest.mts"},
-		{ file = schempath.."/schems/vlf_core_oak_classic.mts"},
+		{ file = modpath.."/schematics/vlf_core_oak_balloon.mts"},
+		{ file = modpath.."/schematics/vlf_core_oak_large_1.mts"},
+		{ file = modpath.."/schematics/vlf_core_oak_large_2.mts"},
+		{ file = modpath.."/schematics/vlf_core_oak_large_3.mts"},
+		{ file = modpath.."/schematics/vlf_core_oak_large_4.mts"},
+		{ file = modpath.."/schematics/vlf_core_oak_swamp.mts"},
+		{ file = modpath.."/schematics/vlf_core_oak_v6.mts"},
+		{ file = modpath.."/schematics/vlf_core_oak_classic.mts"},
 	},
 	tree = { tiles = {"default_tree_top.png", "default_tree_top.png","default_tree.png"} },
 	leaves = {
@@ -27,6 +28,7 @@ vlf_trees.register_wood("oak",{
 		tiles = {"default_sapling.png"},
 		inventory_image = "default_sapling.png",
 		wield_image = "default_sapling.png",
+		_after_grow=vlf_trees.sapling_add_bee_nest,
 	},
 	door = {
 		inventory_image = "doors_item_wood.png",
@@ -44,10 +46,10 @@ vlf_trees.register_wood("oak",{
 })
 
 vlf_trees.register_wood("dark_oak",{
-	readable_name = S("Dark Oak"),
+	readable_name = "Dark Oak",
 	sign_color="#625048",
 	tree_schems_2x2 = {
-		{ file = schempath.."/schems/vlf_core_dark_oak.mts"},
+		{ file = modpath.."/schematics/vlf_core_dark_oak.mts"},
 	},
 	tree = { tiles = {"vlf_core_log_big_oak_top.png", "vlf_core_log_big_oak_top.png","vlf_core_log_big_oak.png"} },
 	leaves = {
@@ -73,26 +75,26 @@ vlf_trees.register_wood("dark_oak",{
 })
 
 vlf_trees.register_wood("jungle",{
-	readable_name = S("Jungle"),
+	readable_name = "Jungle",
 	sign_color="#845A43",
 	tree_schems = {
-		{ file = schempath.."/schems/vlf_core_jungle_tree.mts"},
-		{ file = schempath.."/schems/vlf_core_jungle_tree_2.mts"},
-		{ file = schempath.."/schems/vlf_core_jungle_tree_3.mts"},
-		{ file = schempath.."/schems/vlf_core_jungle_tree_4.mts"},
+		{ file = modpath.."/schematics/vlf_core_jungle_tree.mts"},
+		{ file = modpath.."/schematics/vlf_core_jungle_tree_2.mts"},
+		{ file = modpath.."/schematics/vlf_core_jungle_tree_3.mts"},
+		{ file = modpath.."/schematics/vlf_core_jungle_tree_4.mts"},
 	},
 	tree_schems_2x2 = {
-		{ file = schempath.."/schems/vlf_core_jungle_tree_huge_1.mts"},
-		{ file = schempath.."/schems/vlf_core_jungle_tree_huge_2.mts"},
-		{ file = schempath.."/schems/vlf_core_jungle_tree_huge_3.mts"},
-		{ file = schempath.."/schems/vlf_core_jungle_tree_huge_4.mts"},
+		{ file = modpath.."/schematics/vlf_core_jungle_tree_huge_1.mts"},
+		{ file = modpath.."/schematics/vlf_core_jungle_tree_huge_2.mts"},
+		{ file = modpath.."/schematics/vlf_core_jungle_tree_huge_3.mts"},
+		{ file = modpath.."/schematics/vlf_core_jungle_tree_huge_4.mts"},
 	},
 	tree = { tiles = {"default_jungletree_top.png", "default_jungletree_top.png","default_jungletree.png"} },
 	leaves = {
 		tiles = { "default_jungleleaves.png" },
 		color = "#30bb0b",
 	},
-	sapling_chances = {40, 26, 32, 24, 10},
+	sapling_chances = {40, 36, 32, 24, 10},
 	wood = { tiles = {"default_junglewood.png"}},
 	sapling = {
 		tiles = {"default_junglesapling.png"},
@@ -105,44 +107,55 @@ vlf_trees.register_wood("jungle",{
 })
 
 vlf_trees.register_wood("spruce",{
-	readable_name = S("Spruce"),
+	readable_name = "Spruce",
 	sign_color="#604335",
 	tree_schems = {
-		{ file = schempath.."/schems/vlf_core_spruce_1.mts"},
-		{ file = schempath.."/schems/vlf_core_spruce_2.mts"},
-		{ file = schempath.."/schems/vlf_core_spruce_3.mts"},
-		{ file = schempath.."/schems/vlf_core_spruce_4.mts"},
-		{ file = schempath.."/schems/vlf_core_spruce_5.mts"},
-		{ file = schempath.."/schems/vlf_core_spruce_lollipop.mts"},
-		{ file = schempath.."/schems/vlf_core_spruce_matchstick.mts"},
-		{ file = schempath.."/schems/vlf_core_spruce_tall.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_1.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_2.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_3.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_4.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_5.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_lollipop.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_matchstick.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_tall.mts"},
 	},
 	tree_schems_2x2 = {
-		{ file = schempath.."/schems/vlf_core_spruce_huge_1.mts"},
-		{ file = schempath.."/schems/vlf_core_spruce_huge_2.mts"},
-		{ file = schempath.."/schems/vlf_core_spruce_huge_3.mts"},
-		{ file = schempath.."/schems/vlf_core_spruce_huge_4.mts"},
-		{ file = schempath.."/schems/vlf_core_spruce_huge_up_1.mts"},
-		{ file = schempath.."/schems/vlf_core_spruce_huge_up_2.mts"},
-		{ file = schempath.."/schems/vlf_core_spruce_huge_up_3.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_huge_1.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_huge_2.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_huge_3.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_huge_4.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_huge_up_1.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_huge_up_2.mts"},
+		{ file = modpath.."/schematics/vlf_core_spruce_huge_up_3.mts"},
 	},
 	leaves = {
 		color = "#2bbb0f",
 	},
+	sapling = {
+		_after_grow = function(pos, _, is_2by2)
+			if is_2by2 then
+				local nn = minetest.find_nodes_in_area_under_air(vector.offset(pos,-6,-6,-6), vector.offset(pos, 6, 6, 6), {"group:dirt"})
+				table.sort(nn, function(a, b) return vector.distance(pos, a) < vector.distance(pos, b) end)
+				for i = 1, math.random(math.min(#nn, 2), #nn) do
+					minetest.set_node(nn[i], {name="vlf_core:podzol"})
+				end
+			end
+		end
+	},
 })
 
 vlf_trees.register_wood("acacia",{
-	readable_name = S("Acacia"),
+	readable_name = "Acacia",
 	sign_color="#965638",
 	tree_schems ={
-		{ file = schempath.."/schems/vlf_core_acacia_1.mts"},
-		{ file = schempath.."/schems/vlf_core_acacia_2.mts"},
-		{ file = schempath.."/schems/vlf_core_acacia_3.mts"},
-		{ file = schempath.."/schems/vlf_core_acacia_4.mts"},
-		{ file = schempath.."/schems/vlf_core_acacia_5.mts"},
-		{ file = schempath.."/schems/vlf_core_acacia_6.mts"},
-		{ file = schempath.."/schems/vlf_core_acacia_7.mts"},
-		{ file = schempath.."/schems/vlf_core_acacia_weirdo.mts"},
+		{ file = modpath.."/schematics/vlf_core_acacia_1.mts"},
+		{ file = modpath.."/schematics/vlf_core_acacia_2.mts"},
+		{ file = modpath.."/schematics/vlf_core_acacia_3.mts"},
+		{ file = modpath.."/schematics/vlf_core_acacia_4.mts"},
+		{ file = modpath.."/schematics/vlf_core_acacia_5.mts"},
+		{ file = modpath.."/schematics/vlf_core_acacia_6.mts"},
+		{ file = modpath.."/schematics/vlf_core_acacia_7.mts"},
+		{ file = modpath.."/schematics/vlf_core_acacia_weirdo.mts"},
 	},
 	tree = { tiles = {"default_acacia_tree_top.png", "default_acacia_tree_top.png","default_acacia_tree.png"} },
 	leaves = {
@@ -161,14 +174,15 @@ vlf_trees.register_wood("acacia",{
 })
 
 vlf_trees.register_wood("birch",{
-	readable_name = S("Birch"),
+	readable_name = "Birch",
 	sign_color="#AA907A",
 	tree_schems = {
-		{ file = schempath.."/schems/vlf_core_birch_bee_nest.mts"},
-		{ file = schempath.."/schems/vlf_core_birch.mts"},
-		{ file = schempath.."/schems/vlf_core_birch_tall.mts"},
+		{ file = modpath.."/schematics/vlf_core_birch.mts"},
 	},
 	leaves = {
 		color = "#68a55f",
+	},
+	sapling = {
+		_after_grow=vlf_trees.sapling_add_bee_nest,
 	},
 })

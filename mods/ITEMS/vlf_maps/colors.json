@@ -1,30 +1,30 @@
 {
-	"vlc_paintings_paintings.png": [
+	"vlf_paintings_paintings.png": [
 		104,
 		99,
 		89
 	],
-	"vlc_paintings_painting.png": [
+	"vlf_paintings_painting.png": [
 		139,
 		133,
 		119
 	],
-	"vlc_minecarts_rail_golden_curved.png": [
+	"vlf_minecarts_rail_golden_curved.png": [
 		85,
 		73,
 		58
 	],
-	"vlc_minecarts_minecart_furnace.png": [
+	"vlf_minecarts_minecart_furnace.png": [
 		66,
 		65,
 		64
 	],
-	"vlc_minecarts_rail_golden_t_junction_powered.png": [
+	"vlf_minecarts_rail_golden_t_junction_powered.png": [
 		82,
 		69,
 		59
 	],
-	"vlc_minecarts_rail_activator_crossing.png": [
+	"vlf_minecarts_rail_activator_crossing.png": [
 		65,
 		56,
 		52
@@ -34,87 +34,87 @@
 		70,
 		61
 	],
-	"vlc_minecarts_rail_golden_crossing_powered.png": [
+	"vlf_minecarts_rail_golden_crossing_powered.png": [
 		86,
 		70,
 		54
 	],
-	"vlc_minecarts_rail_detector_t_junction.png": [
+	"vlf_minecarts_rail_detector_t_junction.png": [
 		74,
 		66,
 		61
 	],
-	"vlc_minecarts_rail_golden_t_junction.png": [
+	"vlf_minecarts_rail_golden_t_junction.png": [
 		80,
 		70,
 		59
 	],
-	"vlc_minecarts_rail_activator_t_junction_powered.png": [
+	"vlf_minecarts_rail_activator_t_junction_powered.png": [
 		76,
 		61,
 		55
 	],
-	"vlc_minecarts_rail_activator_powered.png": [
+	"vlf_minecarts_rail_activator_powered.png": [
 		86,
 		62,
 		54
 	],
-	"vlc_minecarts_rail_activator_curved_powered.png": [
+	"vlf_minecarts_rail_activator_curved_powered.png": [
 		75,
 		55,
 		52
 	],
-	"vlc_minecarts_rail_golden.png": [
+	"vlf_minecarts_rail_golden.png": [
 		92,
 		77,
 		60
 	],
-	"vlc_minecarts_rail_detector_curved_powered.png": [
+	"vlf_minecarts_rail_detector_curved_powered.png": [
 		81,
 		68,
 		64
 	],
-	"vlc_minecarts_minecart_hopper.png": [
+	"vlf_minecarts_minecart_hopper.png": [
 		45,
 		45,
 		45
 	],
-	"vlc_minecarts_rail_golden_curved_powered.png": [
+	"vlf_minecarts_rail_golden_curved_powered.png": [
 		89,
 		71,
 		57
 	],
-	"vlc_minecarts_minecart_tnt.png": [
+	"vlf_minecarts_minecart_tnt.png": [
 		75,
 		52,
 		52
 	],
-	"vlc_minecarts_minecart_chest.png": [
+	"vlf_minecarts_minecart_chest.png": [
 		51,
 		48,
 		46
 	],
-	"vlc_minecarts_rail_golden_powered.png": [
+	"vlf_minecarts_rail_golden_powered.png": [
 		94,
 		77,
 		60
 	],
-	"vlc_minecarts_rail_golden_crossing.png": [
+	"vlf_minecarts_rail_golden_crossing.png": [
 		83,
 		70,
 		55
 	],
-	"vlc_minecarts_rail_detector_crossing_powered.png": [
+	"vlf_minecarts_rail_detector_crossing_powered.png": [
 		78,
 		68,
 		64
 	],
-	"vlc_minecarts_rail_detector_t_junction_powered.png": [
+	"vlf_minecarts_rail_detector_t_junction_powered.png": [
 		76,
 		66,
 		61
 	],
-	"vlc_minecarts_rail_activator.png": [
+	"vlf_minecarts_rail_activator.png": [
 		78,
 		64,
 		56
@@ -124,27 +124,27 @@
 		68,
 		61
 	],
-	"vlc_minecarts_rail_activator_t_junction.png": [
+	"vlf_minecarts_rail_activator_t_junction.png": [
 		72,
 		62,
 		56
 	],
-	"vlc_minecarts_minecart_normal.png": [
+	"vlf_minecarts_minecart_normal.png": [
 		47,
 		45,
 		43
 	],
-	"vlc_minecarts_minecart_command_block.png": [
+	"vlf_minecarts_minecart_command_block.png": [
 		64,
 		62,
 		61
 	],
-	"vlc_minecarts_rail_activator_crossing_powered.png": [
+	"vlf_minecarts_rail_activator_crossing_powered.png": [
 		72,
 		55,
 		51
 	],
-	"vlc_minecarts_rail_detector_curved.png": [
+	"vlf_minecarts_rail_detector_curved.png": [
 		77,
 		70,
 		66
@@ -154,12 +154,12 @@
 		67,
 		60
 	],
-	"vlc_minecarts_rail_activator_curved.png": [
+	"vlf_minecarts_rail_activator_curved.png": [
 		66,
 		56,
 		53
 	],
-	"vlc_minecarts_minecart.png": [
+	"vlf_minecarts_minecart.png": [
 		72,
 		60,
 		51
@@ -169,162 +169,162 @@
 		68,
 		59
 	],
-	"vlc_minecarts_rail_detector_powered.png": [
+	"vlf_minecarts_rail_detector_powered.png": [
 		87,
 		74,
 		67
 	],
-	"vlc_minecarts_rail_detector.png": [
+	"vlf_minecarts_rail_detector.png": [
 		85,
 		74,
 		67
 	],
-	"vlc_minecarts_rail_detector_crossing.png": [
+	"vlf_minecarts_rail_detector_crossing.png": [
 		77,
 		69,
 		65
 	],
-	"vlc_boats_spruce_boat.png": [
+	"vlf_boats_spruce_boat.png": [
 		72,
 		61,
 		51
 	],
-	"vlc_boats_oak_chest_boat.png": [
+	"vlf_boats_oak_chest_boat.png": [
 		90,
 		73,
 		60
 	],
-	"vlc_boats_dark_oak_chest_boat.png": [
+	"vlf_boats_dark_oak_chest_boat.png": [
 		85,
 		73,
 		62
 	],
-	"vlc_boats_texture_mangrove_boat.png": [
+	"vlf_boats_texture_mangrove_boat.png": [
 		100,
 		55,
 		53
 	],
-	"vlc_boats_texture_obsidian_boat.png": [
+	"vlf_boats_texture_obsidian_boat.png": [
 		13,
 		10,
 		26
 	],
-	"vlc_boats_texture_birch_boat.png": [
+	"vlf_boats_texture_birch_boat.png": [
 		131,
 		105,
 		83
 	],
-	"vlc_boats_acacia_boat.png": [
+	"vlf_boats_acacia_boat.png": [
 		124,
 		82,
 		59
 	],
-	"vlc_boats_bamboo_boat.png": [
+	"vlf_boats_bamboo_boat.png": [
 		96,
 		101,
 		57
 	],
-	"vlc_boats_cherry_blossom_chest_boat.png": [
+	"vlf_boats_cherry_blossom_chest_boat.png": [
 		149,
 		103,
 		97
 	],
-	"vlc_boats_birch_chest_boat.png": [
+	"vlf_boats_birch_chest_boat.png": [
 		112,
 		90,
 		74
 	],
-	"vlc_boats_spruce_chest_boat.png": [
+	"vlf_boats_spruce_chest_boat.png": [
 		73,
 		61,
 		52
 	],
-	"vlc_boats_acacia_chest_boat.png": [
+	"vlf_boats_acacia_chest_boat.png": [
 		114,
 		79,
 		58
 	],
-	"vlc_boats_mangrove_chest_boat.png": [
+	"vlf_boats_mangrove_chest_boat.png": [
 		96,
 		59,
 		55
 	],
-	"vlc_boats_mangrove_boat.png": [
+	"vlf_boats_mangrove_boat.png": [
 		102,
 		59,
 		56
 	],
-	"vlc_boats_jungle_chest_boat.png": [
+	"vlf_boats_jungle_chest_boat.png": [
 		94,
 		70,
 		56
 	],
-	"vlc_boats_texture_dark_oak_boat.png": [
+	"vlf_boats_texture_dark_oak_boat.png": [
 		89,
 		76,
 		64
 	],
-	"vlc_boats_bamboo_chest_boat.png": [
+	"vlf_boats_bamboo_chest_boat.png": [
 		89,
 		91,
 		56
 	],
-	"vlc_boats_birch_boat.png": [
+	"vlf_boats_birch_boat.png": [
 		120,
 		95,
 		78
 	],
-	"vlc_boats_texture_spruce_boat.png": [
+	"vlf_boats_texture_spruce_boat.png": [
 		74,
 		61,
 		50
 	],
-	"vlc_boats_texture_oak_boat.png": [
+	"vlf_boats_texture_oak_boat.png": [
 		103,
 		82,
 		65
 	],
-	"vlc_boats_texture_jungle_boat.png": [
+	"vlf_boats_texture_jungle_boat.png": [
 		109,
 		78,
 		60
 	],
-	"vlc_boats_texture_cherry_blossom_boat.png": [
+	"vlf_boats_texture_cherry_blossom_boat.png": [
 		188,
 		123,
 		115
 	],
-	"vlc_boats_oak_boat.png": [
+	"vlf_boats_oak_boat.png": [
 		93,
 		76,
 		62
 	],
-	"vlc_boats_texture_bamboo_boat.png": [
+	"vlf_boats_texture_bamboo_boat.png": [
 		111,
 		115,
 		72
 	],
-	"vlc_boats_dark_oak_boat.png": [
+	"vlf_boats_dark_oak_boat.png": [
 		89,
 		76,
 		64
 	],
-	"vlc_boats_texture_acacia_boat.png": [
+	"vlf_boats_texture_acacia_boat.png": [
 		136,
 		90,
 		64
 	],
-	"vlc_boats_jungle_boat.png": [
+	"vlf_boats_jungle_boat.png": [
 		102,
 		73,
 		58
 	],
-	"vlc_boats_obsidian_boat.png": [
+	"vlf_boats_obsidian_boat.png": [
 		17,
 		15,
 		27
 	],
-	"vlc_boats_cherry_blossom_boat.png": [
+	"vlf_boats_cherry_blossom_boat.png": [
 		167,
 		113,
 		107
@@ -1634,7 +1634,7 @@
 		254,
 		254
 	],
-	"vlc_craftguide_fuel.png": [
+	"vlf_craftguide_fuel.png": [
 		187,
 		121,
 		75
@@ -1784,122 +1784,122 @@
 		115,
 		110
 	],
-	"vlc_portals_endframe_top.png": [
+	"vlf_portals_endframe_top.png": [
 		95,
 		85,
 		74
 	],
-	"vlc_portals_endframe_side.png": [
+	"vlf_portals_endframe_side.png": [
 		110,
 		99,
 		86
 	],
-	"vlc_portals_particle3.png": [
+	"vlf_portals_particle3.png": [
 		146,
 		0,
 		201
 	],
-	"vlc_portals_particle1.png": [
+	"vlf_portals_particle1.png": [
 		173,
 		28,
 		229
 	],
-	"vlc_particles_nether_portal.png": [
+	"vlf_particles_nether_portal.png": [
 		206,
 		0,
 		206
 	],
-	"vlc_particles_nether_portal_t.png": [
+	"vlf_particles_nether_portal_t.png": [
 		159,
 		0,
 		223
 	],
-	"vlc_portals_particle5.png": [
+	"vlf_portals_particle5.png": [
 		189,
 		11,
 		213
 	],
-	"vlc_portals_endframe_eye.png": [
+	"vlf_portals_endframe_eye.png": [
 		135,
 		36,
 		18
 	],
-	"vlc_portals_portal.png": [
+	"vlf_portals_portal.png": [
 		74,
 		24,
 		172
 	],
-	"vlc_portals_particle2.png": [
+	"vlf_portals_particle2.png": [
 		146,
 		0,
 		201
 	],
-	"vlc_portals_particle4.png": [
+	"vlf_portals_particle4.png": [
 		146,
 		0,
 		201
 	],
-	"vlc_portals_endframe_bottom.png": [
+	"vlf_portals_endframe_bottom.png": [
 		109,
 		99,
 		87
 	],
-	"vlc_portals_end_portal.png": [
+	"vlf_portals_end_portal.png": [
 		14,
 		14,
 		14
 	],
-	"vlc_composter_top.png": [
+	"vlf_composter_top.png": [
 		157,
 		129,
 		103
 	],
-	"vlc_composter_bottom.png": [
+	"vlf_composter_bottom.png": [
 		141,
 		111,
 		87
 	],
-	"vlc_composter_compost.png": [
+	"vlf_composter_compost.png": [
 		75,
 		76,
 		41
 	],
-	"vlc_composter_side.png": [
+	"vlf_composter_side.png": [
 		117,
 		92,
 		74
 	],
-	"vlc_composter_ready.png": [
+	"vlf_composter_ready.png": [
 		109,
 		107,
 		74
 	],
-	"vlc_maps_map_empty.png": [
+	"vlf_maps_map_empty.png": [
 		217,
 		187,
 		157
 	],
-	"vlc_maps_map_filled.png": [
+	"vlf_maps_map_filled.png": [
 		213,
 		176,
 		148
 	],
-	"vlc_maps_player_dot.png": [
+	"vlf_maps_player_dot.png": [
 		105,
 		105,
 		105
 	],
-	"vlc_maps_player_arrow.png": [
+	"vlf_maps_player_arrow.png": [
 		95,
 		95,
 		95
 	],
-	"vlc_maps_map_filled_markings.png": [
+	"vlf_maps_map_filled_markings.png": [
 		183,
 		183,
 		183
 	],
-	"vlc_maps_map_background.png": [
+	"vlf_maps_map_background.png": [
 		224,
 		196,
 		166
@@ -1909,147 +1909,147 @@
 		119,
 		108
 	],
-	"vlc_amethyst_amethyst_bud_medium.png": [
+	"vlf_amethyst_amethyst_bud_medium.png": [
 		184,
 		140,
 		209
 	],
-	"vlc_amethyst_budding_amethyst.png": [
+	"vlf_amethyst_budding_amethyst.png": [
 		134,
 		77,
 		167
 	],
-	"vlc_amethyst_amethyst_cluster.png": [
+	"vlf_amethyst_amethyst_cluster.png": [
 		161,
 		111,
 		190
 	],
-	"vlc_amethyst_amethyst_shard.png": [
+	"vlf_amethyst_amethyst_shard.png": [
 		163,
 		113,
 		192
 	],
-	"vlc_amethyst_amethyst_bud_small.png": [
+	"vlf_amethyst_amethyst_bud_small.png": [
 		176,
 		131,
 		203
 	],
-	"vlc_amethyst_amethyst_block.png": [
+	"vlf_amethyst_amethyst_block.png": [
 		139,
 		84,
 		172
 	],
-	"vlc_amethyst_amethyst_bud_large.png": [
+	"vlf_amethyst_amethyst_bud_large.png": [
 		173,
 		127,
 		201
 	],
-	"vlc_amethyst_calcite_block.png": [
+	"vlf_amethyst_calcite_block.png": [
 		189,
 		193,
 		207
 	],
-	"vlc_amethyst_tinted_glass.png": [
+	"vlf_amethyst_tinted_glass.png": [
 		125,
 		67,
 		160
 	],
-	"vlc_jukebox_record_stal.png": [
+	"vlf_jukebox_record_stal.png": [
 		39,
 		38,
 		49
 	],
-	"vlc_jukebox_record_chirp.png": [
+	"vlf_jukebox_record_chirp.png": [
 		49,
 		40,
 		50
 	],
-	"vlc_jukebox_record_blocks.png": [
+	"vlf_jukebox_record_blocks.png": [
 		47,
 		37,
 		49
 	],
-	"vlc_jukebox_record_strad.png": [
+	"vlf_jukebox_record_strad.png": [
 		45,
 		45,
 		57
 	],
-	"vlc_jukebox_top.png": [
+	"vlf_jukebox_top.png": [
 		72,
 		56,
 		44
 	],
-	"vlc_jukebox_record_cat.png": [
+	"vlf_jukebox_record_cat.png": [
 		40,
 		45,
 		51
 	],
-	"vlc_jukebox_record_mellohi.png": [
+	"vlf_jukebox_record_mellohi.png": [
 		46,
 		44,
 		59
 	],
-	"vlc_jukebox_record_11.png": [
+	"vlf_jukebox_record_11.png": [
 		41,
 		40,
 		52
 	],
-	"vlc_jukebox_record_mall.png": [
+	"vlf_jukebox_record_mall.png": [
 		42,
 		41,
 		62
 	],
-	"vlc_jukebox_record_wait.png": [
+	"vlf_jukebox_record_wait.png": [
 		39,
 		42,
 		55
 	],
-	"vlc_jukebox_record_far.png": [
+	"vlf_jukebox_record_far.png": [
 		47,
 		48,
 		52
 	],
-	"vlc_jukebox_record_13.png": [
+	"vlf_jukebox_record_13.png": [
 		51,
 		47,
 		51
 	],
-	"vlc_jukebox_side.png": [
+	"vlf_jukebox_side.png": [
 		94,
 		74,
 		57
 	],
-	"vlc_jukebox_record_ward.png": [
+	"vlf_jukebox_record_ward.png": [
 		39,
 		43,
 		51
 	],
-	"vlc_honey_honeycomb.png": [
+	"vlf_honey_honeycomb.png": [
 		233,
 		148,
 		22
 	],
-	"vlc_honey_honeycomb_block.png": [
+	"vlf_honey_honeycomb_block.png": [
 		224,
 		137,
 		17
 	],
-	"vlc_honey_block_bottom.png": [
+	"vlf_honey_block_bottom.png": [
 		220,
 		138,
 		15
 	],
-	"vlc_honey_honey_bottle.png": [
+	"vlf_honey_honey_bottle.png": [
 		192,
 		165,
 		126
 	],
-	"vlc_honey_block_top.png": [
+	"vlf_honey_block_top.png": [
 		220,
 		138,
 		15
 	],
-	"vlc_honey_block_side.png": [
+	"vlf_honey_block_side.png": [
 		220,
 		138,
 		15
@@ -2059,17 +2059,17 @@
 		98,
 		34
 	],
-	"vlc_burning_entity_flame_animated.png": [
+	"vlf_burning_entity_flame_animated.png": [
 		206,
 		98,
 		34
 	],
-	"vlc_fire_fire_charge.png": [
+	"vlf_fire_fire_charge.png": [
 		95,
 		58,
 		41
 	],
-	"vlc_fire_flint_and_steel.png": [
+	"vlf_fire_flint_and_steel.png": [
 		96,
 		95,
 		93
@@ -2079,22 +2079,22 @@
 		100,
 		36
 	],
-	"vlc_burning_hud_flame_animated.png": [
+	"vlf_burning_hud_flame_animated.png": [
 		206,
 		98,
 		34
 	],
-	"vlc_mud_packed_mud.png": [
+	"vlf_mud_packed_mud.png": [
 		102,
 		90,
 		83
 	],
-	"vlc_mud_bricks.png": [
+	"vlf_mud_bricks.png": [
 		108,
 		95,
 		86
 	],
-	"vlc_mud.png": [
+	"vlf_mud.png": [
 		66,
 		61,
 		58
@@ -2129,7 +2129,7 @@
 		140,
 		140
 	],
-	"vlc_doors_door_wood_side_upper.png": [
+	"vlf_doors_door_wood_side_upper.png": [
 		84,
 		65,
 		51
@@ -2139,12 +2139,12 @@
 		86,
 		67
 	],
-	"vlc_doors_door_spruce_upper.png": [
+	"vlf_doors_door_spruce_upper.png": [
 		71,
 		58,
 		47
 	],
-	"vlc_doors_door_iron_lower.png": [
+	"vlf_doors_door_iron_lower.png": [
 		157,
 		152,
 		151
@@ -2154,32 +2154,32 @@
 		75,
 		59
 	],
-	"vlc_doors_trapdoor_jungle_side.png": [
+	"vlf_doors_trapdoor_jungle_side.png": [
 		121,
 		87,
 		62
 	],
-	"vlc_doors_trapdoor_acacia.png": [
+	"vlf_doors_trapdoor_acacia.png": [
 		148,
 		96,
 		66
 	],
-	"vlc_doors_door_jungle.png": [
+	"vlf_doors_door_jungle.png": [
 		116,
 		83,
 		62
 	],
-	"vlc_doors_door_acacia_lower.png": [
+	"vlf_doors_door_acacia_lower.png": [
 		153,
 		101,
 		70
 	],
-	"vlc_doors_trapdoor_birch.png": [
+	"vlf_doors_trapdoor_birch.png": [
 		173,
 		151,
 		132
 	],
-	"vlc_doors_door_dark_oak.png": [
+	"vlf_doors_door_dark_oak.png": [
 		82,
 		69,
 		57
@@ -2189,52 +2189,52 @@
 		140,
 		140
 	],
-	"vlc_doors_door_iron_side_lower.png": [
+	"vlf_doors_door_iron_side_lower.png": [
 		157,
 		152,
 		151
 	],
-	"vlc_doors_door_wood_lower.png": [
+	"vlf_doors_door_wood_lower.png": [
 		89,
 		70,
 		55
 	],
-	"vlc_doors_door_wood_upper.png": [
+	"vlf_doors_door_wood_upper.png": [
 		92,
 		72,
 		57
 	],
-	"vlc_doors_door_dark_oak_lower.png": [
+	"vlf_doors_door_dark_oak_lower.png": [
 		84,
 		71,
 		59
 	],
-	"vlc_doors_trapdoor_jungle.png": [
+	"vlf_doors_trapdoor_jungle.png": [
 		103,
 		70,
 		52
 	],
-	"vlc_doors_door_birch_lower.png": [
+	"vlf_doors_door_birch_lower.png": [
 		165,
 		140,
 		119
 	],
-	"vlc_doors_door_iron_side_upper.png": [
+	"vlf_doors_door_iron_side_upper.png": [
 		155,
 		149,
 		148
 	],
-	"vlc_doors_door_jungle_side_upper.png": [
+	"vlf_doors_door_jungle_side_upper.png": [
 		109,
 		75,
 		57
 	],
-	"vlc_doors_trapdoor_dark_oak.png": [
+	"vlf_doors_trapdoor_dark_oak.png": [
 		81,
 		68,
 		56
 	],
-	"vlc_doors_trapdoor_spruce_side.png": [
+	"vlf_doors_trapdoor_spruce_side.png": [
 		73,
 		59,
 		47
@@ -2244,47 +2244,47 @@
 		67,
 		53
 	],
-	"vlc_doors_door_birch_side_upper.png": [
+	"vlf_doors_door_birch_side_upper.png": [
 		153,
 		121,
 		94
 	],
-	"vlc_doors_door_dark_oak_side_upper.png": [
+	"vlf_doors_door_dark_oak_side_upper.png": [
 		102,
 		89,
 		75
 	],
-	"vlc_doors_door_jungle_upper.png": [
+	"vlf_doors_door_jungle_upper.png": [
 		113,
 		79,
 		59
 	],
-	"vlc_doors_door_spruce_lower.png": [
+	"vlf_doors_door_spruce_lower.png": [
 		71,
 		58,
 		48
 	],
-	"vlc_doors_door_jungle_side_lower.png": [
+	"vlf_doors_door_jungle_side_lower.png": [
 		107,
 		72,
 		55
 	],
-	"vlc_doors_door_spruce.png": [
+	"vlf_doors_door_spruce.png": [
 		67,
 		56,
 		47
 	],
-	"vlc_doors_door_wood_side_lower.png": [
+	"vlf_doors_door_wood_side_lower.png": [
 		132,
 		102,
 		81
 	],
-	"vlc_doors_door_spruce_side_lower.png": [
+	"vlf_doors_door_spruce_side_lower.png": [
 		92,
 		79,
 		68
 	],
-	"vlc_doors_door_iron_upper.png": [
+	"vlf_doors_door_iron_upper.png": [
 		155,
 		149,
 		148
@@ -2294,182 +2294,182 @@
 		144,
 		143
 	],
-	"vlc_doors_door_acacia.png": [
+	"vlf_doors_door_acacia.png": [
 		148,
 		98,
 		67
 	],
-	"vlc_doors_door_jungle_lower.png": [
+	"vlf_doors_door_jungle_lower.png": [
 		116,
 		82,
 		61
 	],
-	"vlc_doors_trapdoor_spruce.png": [
+	"vlf_doors_trapdoor_spruce.png": [
 		71,
 		57,
 		46
 	],
-	"vlc_doors_trapdoor_birch_side.png": [
+	"vlf_doors_trapdoor_birch_side.png": [
 		147,
 		116,
 		89
 	],
-	"vlc_doors_trapdoor_dark_oak_side.png": [
+	"vlf_doors_trapdoor_dark_oak_side.png": [
 		85,
 		72,
 		60
 	],
-	"vlc_doors_door_dark_oak_upper.png": [
+	"vlf_doors_door_dark_oak_upper.png": [
 		83,
 		71,
 		59
 	],
-	"vlc_doors_door_acacia_upper.png": [
+	"vlf_doors_door_acacia_upper.png": [
 		152,
 		100,
 		69
 	],
-	"vlc_doors_door_spruce_side_upper.png": [
+	"vlf_doors_door_spruce_side_upper.png": [
 		92,
 		79,
 		68
 	],
-	"vlc_doors_trapdoor_acacia_side.png": [
+	"vlf_doors_trapdoor_acacia_side.png": [
 		154,
 		102,
 		71
 	],
-	"vlc_doors_door_dark_oak_side_lower.png": [
+	"vlf_doors_door_dark_oak_side_lower.png": [
 		103,
 		90,
 		75
 	],
-	"vlc_doors_door_birch_upper.png": [
+	"vlf_doors_door_birch_upper.png": [
 		179,
 		158,
 		139
 	],
-	"vlc_doors_door_acacia_side_upper.png": [
+	"vlf_doors_door_acacia_side_upper.png": [
 		133,
 		80,
 		53
 	],
-	"vlc_doors_door_birch_side_lower.png": [
+	"vlf_doors_door_birch_side_lower.png": [
 		152,
 		119,
 		92
 	],
-	"vlc_doors_door_birch.png": [
+	"vlf_doors_door_birch.png": [
 		172,
 		147,
 		124
 	],
-	"vlc_doors_door_acacia_side_lower.png": [
+	"vlf_doors_door_acacia_side_lower.png": [
 		131,
 		78,
 		51
 	],
-	"vlc_deepslate_emerald_ore.png": [
+	"vlf_deepslate_emerald_ore.png": [
 		63,
 		81,
 		71
 	],
-	"vlc_deepslate_polished.png": [
+	"vlf_deepslate_polished.png": [
 		68,
 		66,
 		66
 	],
-	"vlc_deepslate_tuff.png": [
+	"vlf_deepslate_tuff.png": [
 		98,
 		81,
 		69
 	],
-	"vlc_deepslate_lapis_ore.png": [
+	"vlf_deepslate_lapis_ore.png": [
 		63,
 		74,
 		90
 	],
-	"vlc_deepslate_bricks_cracked.png": [
+	"vlf_deepslate_bricks_cracked.png": [
 		60,
 		58,
 		58
 	],
-	"vlc_deepslate_coal_ore.png": [
+	"vlf_deepslate_coal_ore.png": [
 		63,
 		60,
 		59
 	],
-	"vlc_deepslate_reinforced_top.png": [
+	"vlf_deepslate_reinforced_top.png": [
 		67,
 		64,
 		61
 	],
-	"vlc_deepslate_bricks.png": [
+	"vlf_deepslate_bricks.png": [
 		62,
 		61,
 		60
 	],
-	"vlc_deepslate_top.png": [
+	"vlf_deepslate_top.png": [
 		75,
 		73,
 		72
 	],
-	"vlc_deepslate_redstone_ore.png": [
+	"vlf_deepslate_redstone_ore.png": [
 		89,
 		61,
 		60
 	],
-	"vlc_deepslate_reinforced_bottom.png": [
+	"vlf_deepslate_reinforced_bottom.png": [
 		71,
 		68,
 		64
 	],
-	"vlc_deepslate_chiseled.png": [
+	"vlf_deepslate_chiseled.png": [
 		44,
 		43,
 		43
 	],
-	"vlc_deepslate_gold_ore.png": [
+	"vlf_deepslate_gold_ore.png": [
 		87,
 		78,
 		64
 	],
-	"vlc_deepslate_diamond_ore.png": [
+	"vlf_deepslate_diamond_ore.png": [
 		74,
 		92,
 		100
 	],
-	"vlc_deepslate_copper_ore.png": [
+	"vlf_deepslate_copper_ore.png": [
 		82,
 		70,
 		67
 	],
-	"vlc_deepslate_tiles.png": [
+	"vlf_deepslate_tiles.png": [
 		49,
 		47,
 		47
 	],
-	"vlc_deepslate_cobbled.png": [
+	"vlf_deepslate_cobbled.png": [
 		78,
 		76,
 		75
 	],
-	"vlc_deepslate_iron_ore.png": [
+	"vlf_deepslate_iron_ore.png": [
 		88,
 		82,
 		79
 	],
-	"vlc_deepslate_tiles_cracked.png": [
+	"vlf_deepslate_tiles_cracked.png": [
 		47,
 		46,
 		46
 	],
-	"vlc_deepslate_reinforced.png": [
+	"vlf_deepslate_reinforced.png": [
 		84,
 		79,
 		71
 	],
-	"vlc_deepslate.png": [
+	"vlf_deepslate.png": [
 		70,
 		68,
 		67
@@ -2484,77 +2484,77 @@
 		65,
 		55
 	],
-	"vlc_fences_fence_oak.png": [
+	"vlf_fences_fence_oak.png": [
 		108,
 		83,
 		64
 	],
-	"vlc_fences_fence_gate_mask.png": [
+	"vlf_fences_fence_gate_mask.png": [
 		255,
 		126,
 		126
 	],
-	"vlc_fences_fence_gate_spruce.png": [
+	"vlf_fences_fence_gate_spruce.png": [
 		85,
 		69,
 		56
 	],
-	"vlc_fences_fence_gate_big_oak.png": [
+	"vlf_fences_fence_gate_big_oak.png": [
 		85,
 		73,
 		61
 	],
-	"vlc_fences_fence_acacia.png": [
+	"vlf_fences_fence_acacia.png": [
 		152,
 		99,
 		68
 	],
-	"vlc_fences_fence_gate_birch.png": [
+	"vlf_fences_fence_gate_birch.png": [
 		153,
 		121,
 		94
 	],
-	"vlc_fences_fence_gate_oak.png": [
+	"vlf_fences_fence_gate_oak.png": [
 		111,
 		85,
 		66
 	],
-	"vlc_fences_fence_jungle.png": [
+	"vlf_fences_fence_jungle.png": [
 		115,
 		80,
 		60
 	],
-	"vlc_fences_fence_gate_jungle.png": [
+	"vlf_fences_fence_gate_jungle.png": [
 		117,
 		82,
 		61
 	],
-	"vlc_fences_fence_birch.png": [
+	"vlf_fences_fence_birch.png": [
 		151,
 		119,
 		93
 	],
-	"vlc_fences_fence_nether_brick.png": [
+	"vlf_fences_fence_nether_brick.png": [
 		49,
 		24,
 		24
 	],
-	"vlc_fences_fence_big_oak.png": [
+	"vlf_fences_fence_big_oak.png": [
 		83,
 		71,
 		59
 	],
-	"vlc_fences_fence_spruce.png": [
+	"vlf_fences_fence_spruce.png": [
 		84,
 		67,
 		54
 	],
-	"vlc_fences_fence_mask.png": [
+	"vlf_fences_fence_mask.png": [
 		255,
 		126,
 		126
 	],
-	"vlc_fences_fence_gate_acacia.png": [
+	"vlf_fences_fence_gate_acacia.png": [
 		155,
 		102,
 		70
@@ -2569,7 +2569,7 @@
 		158,
 		135
 	],
-	"vlc_fishing_fishing_rod.png": [
+	"vlf_fishing_fishing_rod.png": [
 		134,
 		116,
 		103
@@ -2579,27 +2579,27 @@
 		147,
 		148
 	],
-	"vlc_fishing_bobber.png": [
+	"vlf_fishing_bobber.png": [
 		171,
 		117,
 		119
 	],
-	"vlc_fishing_fish_cooked.png": [
+	"vlf_fishing_fish_cooked.png": [
 		93,
 		84,
 		94
 	],
-	"vlc_fishing_salmon_cooked.png": [
+	"vlf_fishing_salmon_cooked.png": [
 		97,
 		91,
 		89
 	],
-	"vlc_fishing_pufferfish_raw.png": [
+	"vlf_fishing_pufferfish_raw.png": [
 		219,
 		165,
 		77
 	],
-	"vlc_fishing_salmon_raw.png": [
+	"vlf_fishing_salmon_raw.png": [
 		112,
 		105,
 		102
@@ -2609,157 +2609,157 @@
 		148,
 		137
 	],
-	"vlc_fishing_clownfish_raw.png": [
+	"vlf_fishing_clownfish_raw.png": [
 		205,
 		127,
 		81
 	],
-	"vlc_fishing_fish_raw.png": [
+	"vlf_fishing_fish_raw.png": [
 		70,
 		112,
 		154
 	],
-	"vlc_bamboo_fence_bamboo.png": [
+	"vlf_bamboo_fence_bamboo.png": [
 		192,
 		167,
 		105
 	],
-	"vlc_bamboo_bamboo_plank_mosaic.png": [
+	"vlf_bamboo_bamboo_plank_mosaic.png": [
 		243,
 		220,
 		171
 	],
-	"vlc_bamboo_endcap.png": [
+	"vlf_bamboo_endcap.png": [
 		54,
 		125,
 		0
 	],
-	"vlc_bamboo_bamboo_plank.png": [
+	"vlf_bamboo_bamboo_plank.png": [
 		242,
 		219,
 		170
 	],
-	"vlc_bamboo_bamboo_shoot.png": [
+	"vlf_bamboo_bamboo_shoot.png": [
 		97,
 		130,
 		46
 	],
-	"vlc_bamboo_bamboo_sign_wield.png": [
+	"vlf_bamboo_bamboo_sign_wield.png": [
 		214,
 		195,
 		145
 	],
-	"vlc_bamboo_bamboo_bottom_stripped.png": [
+	"vlf_bamboo_bamboo_bottom_stripped.png": [
 		204,
 		179,
 		102
 	],
-	"vlc_bamboo_door_top.png": [
+	"vlf_bamboo_door_top.png": [
 		205,
 		178,
 		113
 	],
-	"vlc_bamboo_door_wield.png": [
+	"vlf_bamboo_door_wield.png": [
 		204,
 		177,
 		114
 	],
-	"vlc_bamboo_flower_pot.png": [
+	"vlf_bamboo_flower_pot.png": [
 		101,
 		153,
 		47
 	],
-	"vlc_bamboo_trapdoor_side.png": [
+	"vlf_bamboo_trapdoor_side.png": [
 		228,
 		206,
 		159
 	],
-	"vlc_bamboo_bamboo_sign.png": [
+	"vlf_bamboo_bamboo_sign.png": [
 		217,
 		199,
 		150
 	],
-	"vlc_bamboo_bamboo_block_stripped.png": [
+	"vlf_bamboo_bamboo_block_stripped.png": [
 		195,
 		173,
 		112
 	],
-	"vlc_bamboo_scaffolding_side.png": [
+	"vlf_bamboo_scaffolding_side.png": [
 		143,
 		113,
 		89
 	],
-	"vlc_bamboo_fence_gate_bamboo.png": [
+	"vlf_bamboo_fence_gate_bamboo.png": [
 		192,
 		167,
 		105
 	],
-	"vlc_bamboo_door_top_alt.png": [
+	"vlf_bamboo_door_top_alt.png": [
 		205,
 		178,
 		113
 	],
-	"vlc_bamboo_scaffolding_bottom.png": [
+	"vlf_bamboo_scaffolding_bottom.png": [
 		142,
 		113,
 		89
 	],
-	"vlc_bamboo_door_bottom.png": [
+	"vlf_bamboo_door_bottom.png": [
 		201,
 		173,
 		110
 	],
-	"vlc_bamboo_bamboo_fpm.png": [
+	"vlf_bamboo_bamboo_fpm.png": [
 		97,
 		77,
 		43
 	],
-	"vlc_bamboo_bamboo_bottom.png": [
+	"vlf_bamboo_bamboo_bottom.png": [
 		106,
 		110,
 		80
 	],
-	"vlc_bamboo_bamboo.png": [
+	"vlf_bamboo_bamboo.png": [
 		73,
 		107,
 		20
 	],
-	"vlc_bamboo_bamboo_block.png": [
+	"vlf_bamboo_bamboo_block.png": [
 		111,
 		120,
 		71
 	],
-	"vlc_bamboo_door_bottom_alt.png": [
+	"vlf_bamboo_door_bottom_alt.png": [
 		201,
 		173,
 		110
 	],
-	"vlc_bamboo_scaffolding_top.png": [
+	"vlf_bamboo_scaffolding_top.png": [
 		198,
 		173,
 		115
 	],
-	"vlc_lightning_rods_rod.png": [
+	"vlf_lightning_rods_rod.png": [
 		127,
 		67,
 		49
 	],
-	"vlc_bells_bell_side.png": [
+	"vlf_bells_bell_side.png": [
 		214,
 		204,
 		84
 	],
-	"vlc_bells_bell_bottom.png": [
+	"vlf_bells_bell_bottom.png": [
 		117,
 		114,
 		39
 	],
-	"vlc_bells_bell.png": [
+	"vlf_bells_bell.png": [
 		188,
 		143,
 		54
 	],
-	"vlc_bells_bell_top.png": [
+	"vlf_bells_bell_top.png": [
 		207,
 		203,
 		82
@@ -2789,152 +2789,152 @@
 		93,
 		72
 	],
-	"vlc_nether_quartz_pillar_top.png": [
+	"vlf_nether_quartz_pillar_top.png": [
 		195,
 		188,
 		185
 	],
-	"vlc_nether_quartz_block_top.png": [
+	"vlf_nether_quartz_block_top.png": [
 		198,
 		190,
 		187
 	],
-	"vlc_nether_quartz_chiseled_top.png": [
+	"vlf_nether_quartz_chiseled_top.png": [
 		197,
 		189,
 		186
 	],
-	"vlc_nether_glowstone_dust.png": [
+	"vlf_nether_glowstone_dust.png": [
 		209,
 		137,
 		67
 	],
-	"vlc_nether_ancient_debris_top.png": [
+	"vlf_nether_ancient_debris_top.png": [
 		57,
 		52,
 		47
 	],
-	"vlc_nether_quartz_pillar_side.png": [
+	"vlf_nether_quartz_pillar_side.png": [
 		195,
 		188,
 		184
 	],
-	"vlc_nether_glowstone.png": [
+	"vlf_nether_glowstone.png": [
 		202,
 		154,
 		96
 	],
-	"vlc_nether_netherbrick.png": [
+	"vlf_nether_netherbrick.png": [
 		58,
 		24,
 		20
 	],
-	"vlc_nether_gold_ore.png": [
+	"vlf_nether_gold_ore.png": [
 		141,
 		70,
 		41
 	],
-	"vlc_nether_red_nether_brick.png": [
+	"vlf_nether_red_nether_brick.png": [
 		69,
 		17,
 		5
 	],
-	"vlc_nether_soul_sand.png": [
+	"vlf_nether_soul_sand.png": [
 		90,
 		70,
 		51
 	],
-	"vlc_nether_nether_wart_stage_0.png": [
+	"vlf_nether_nether_wart_stage_0.png": [
 		53,
 		41,
 		38
 	],
-	"vlc_nether_nether_brick.png": [
+	"vlf_nether_nether_brick.png": [
 		49,
 		23,
 		24
 	],
-	"vlc_nether_netherrack.png": [
+	"vlf_nether_netherrack.png": [
 		130,
 		50,
 		39
 	],
-	"vlc_nether_quartz_block_side.png": [
+	"vlf_nether_quartz_block_side.png": [
 		198,
 		190,
 		187
 	],
-	"vlc_nether_quartz_ore.png": [
+	"vlf_nether_quartz_ore.png": [
 		133,
 		64,
 		53
 	],
-	"vlc_nether_quartz_chiseled_side.png": [
+	"vlf_nether_quartz_chiseled_side.png": [
 		194,
 		186,
 		183
 	],
-	"vlc_nether_nether_wart_stage_2.png": [
+	"vlf_nether_nether_wart_stage_2.png": [
 		106,
 		57,
 		53
 	],
-	"vlc_nether_nether_wart_block.png": [
+	"vlf_nether_nether_wart_block.png": [
 		175,
 		76,
 		73
 	],
-	"vlc_nether_nether_wart_stage_1.png": [
+	"vlf_nether_nether_wart_stage_1.png": [
 		86,
 		54,
 		51
 	],
-	"vlc_nether_quartz.png": [
+	"vlf_nether_quartz.png": [
 		152,
 		149,
 		147
 	],
-	"vlc_nether_nether_wart.png": [
+	"vlf_nether_nether_wart.png": [
 		190,
 		79,
 		75
 	],
-	"vlc_nether_cracked_nether_bricks.png": [
+	"vlf_nether_cracked_nether_bricks.png": [
 		56,
 		30,
 		27
 	],
-	"vlc_nether_chiseled_nether_bricks.png": [
+	"vlf_nether_chiseled_nether_bricks.png": [
 		55,
 		30,
 		26
 	],
-	"vlc_nether_netherite_ingot.png": [
+	"vlf_nether_netherite_ingot.png": [
 		39,
 		36,
 		35
 	],
-	"vlc_nether_ancient_debris_side.png": [
+	"vlf_nether_ancient_debris_side.png": [
 		57,
 		52,
 		47
 	],
-	"vlc_nether_magma.png": [
+	"vlf_nether_magma.png": [
 		85,
 		33,
 		27
 	],
-	"vlc_nether_netherite_scrap.png": [
+	"vlf_nether_netherite_scrap.png": [
 		38,
 		36,
 		35
 	],
-	"vlc_nether_quartz_block_bottom.png": [
+	"vlf_nether_quartz_block_bottom.png": [
 		198,
 		191,
 		187
 	],
-	"vlc_nether_netheriteblock.png": [
+	"vlf_nether_netheriteblock.png": [
 		35,
 		33,
 		31
@@ -3069,32 +3069,32 @@
 		114,
 		98
 	],
-	"vlc_lanterns_soul_lantern_inv.png": [
+	"vlf_lanterns_soul_lantern_inv.png": [
 		59,
 		90,
 		91
 	],
-	"vlc_lanterns_chain_inv.png": [
+	"vlf_lanterns_chain_inv.png": [
 		40,
 		40,
 		40
 	],
-	"vlc_lanterns_lantern.png": [
+	"vlf_lanterns_lantern.png": [
 		72,
 		59,
 		48
 	],
-	"vlc_lanterns_soul_lantern.png": [
+	"vlf_lanterns_soul_lantern.png": [
 		50,
 		67,
 		68
 	],
-	"vlc_lanterns_chain.png": [
+	"vlf_lanterns_chain.png": [
 		40,
 		40,
 		40
 	],
-	"vlc_lanterns_lantern_inv.png": [
+	"vlf_lanterns_lantern_inv.png": [
 		98,
 		75,
 		53
@@ -3114,12 +3114,12 @@
 		95,
 		37
 	],
-	"vlc_farming_beetroot_2.png": [
+	"vlf_farming_beetroot_2.png": [
 		54,
 		119,
 		73
 	],
-	"vlc_farming_beetroot_seeds.png": [
+	"vlf_farming_beetroot_seeds.png": [
 		107,
 		104,
 		88
@@ -3139,17 +3139,17 @@
 		84,
 		45
 	],
-	"vlc_farming_pumpkin_hud.png": [
+	"vlf_farming_pumpkin_hud.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_farming_wheat_stage_2.png": [
+	"vlf_farming_wheat_stage_2.png": [
 		49,
 		97,
 		45
 	],
-	"vlc_farming_sweet_berry_bush_0.png": [
+	"vlf_farming_sweet_berry_bush_0.png": [
 		42,
 		83,
 		38
@@ -3159,7 +3159,7 @@
 		79,
 		37
 	],
-	"vlc_farming_potatoes_stage_1.png": [
+	"vlf_farming_potatoes_stage_1.png": [
 		69,
 		113,
 		61
@@ -3169,12 +3169,12 @@
 		122,
 		48
 	],
-	"vlc_farming_potatoes_stage_0.png": [
+	"vlf_farming_potatoes_stage_0.png": [
 		73,
 		119,
 		65
 	],
-	"vlc_farming_sweet_berry.png": [
+	"vlf_farming_sweet_berry.png": [
 		86,
 		74,
 		52
@@ -3189,7 +3189,7 @@
 		108,
 		58
 	],
-	"vlc_farming_sweet_berry_bush_2.png": [
+	"vlf_farming_sweet_berry_bush_2.png": [
 		72,
 		80,
 		41
@@ -3204,52 +3204,52 @@
 		112,
 		61
 	],
-	"vlc_farming_melon_stem_connected.png": [
+	"vlf_farming_melon_stem_connected.png": [
 		94,
 		94,
 		94
 	],
-	"vlc_farming_potatoes_stage_3.png": [
+	"vlf_farming_potatoes_stage_3.png": [
 		82,
 		106,
 		57
 	],
-	"vlc_farming_wheat_stage_3.png": [
+	"vlf_farming_wheat_stage_3.png": [
 		64,
 		113,
 		52
 	],
-	"vlc_farming_beetroot_soup.png": [
+	"vlf_farming_beetroot_soup.png": [
 		120,
 		70,
 		63
 	],
-	"vlc_farming_hayblock_side.png": [
+	"vlf_farming_hayblock_side.png": [
 		135,
 		99,
 		71
 	],
-	"vlc_farming_pumpkin_face.png": [
+	"vlf_farming_pumpkin_face.png": [
 		181,
 		94,
 		40
 	],
-	"vlc_farming_melon_seeds.png": [
+	"vlf_farming_melon_seeds.png": [
 		100,
 		72,
 		61
 	],
-	"vlc_farming_wheat_stage_6.png": [
+	"vlf_farming_wheat_stage_6.png": [
 		145,
 		145,
 		69
 	],
-	"vlc_farming_wheat_stage_7.png": [
+	"vlf_farming_wheat_stage_7.png": [
 		165,
 		116,
 		75
 	],
-	"vlc_farming_hayblock_top.png": [
+	"vlf_farming_hayblock_top.png": [
 		154,
 		116,
 		81
@@ -3259,12 +3259,12 @@
 		106,
 		63
 	],
-	"vlc_farming_wheat_stage_0.png": [
+	"vlf_farming_wheat_stage_0.png": [
 		53,
 		101,
 		46
 	],
-	"vlc_farming_beetroot_3.png": [
+	"vlf_farming_beetroot_3.png": [
 		73,
 		105,
 		71
@@ -3274,12 +3274,12 @@
 		100,
 		61
 	],
-	"vlc_farming_beetroot.png": [
+	"vlf_farming_beetroot.png": [
 		113,
 		69,
 		66
 	],
-	"vlc_farming_wheat_stage_4.png": [
+	"vlf_farming_wheat_stage_4.png": [
 		86,
 		129,
 		65
@@ -3289,7 +3289,7 @@
 		122,
 		111
 	],
-	"vlc_farming_pumpkin_seeds.png": [
+	"vlf_farming_pumpkin_seeds.png": [
 		132,
 		120,
 		87
@@ -3309,12 +3309,12 @@
 		100,
 		45
 	],
-	"vlc_farming_pumpkin_stem_disconnected.png": [
+	"vlf_farming_pumpkin_stem_disconnected.png": [
 		96,
 		96,
 		96
 	],
-	"vlc_farming_pumpkin_pie.png": [
+	"vlf_farming_pumpkin_pie.png": [
 		172,
 		98,
 		45
@@ -3324,17 +3324,17 @@
 		93,
 		55
 	],
-	"vlc_farming_wheat_stage_5.png": [
+	"vlf_farming_wheat_stage_5.png": [
 		101,
 		142,
 		66
 	],
-	"vlc_farming_sweet_berry_bush_3.png": [
+	"vlf_farming_sweet_berry_bush_3.png": [
 		87,
 		75,
 		40
 	],
-	"vlc_farming_beetroot_0.png": [
+	"vlf_farming_beetroot_0.png": [
 		56,
 		122,
 		75
@@ -3349,7 +3349,7 @@
 		131,
 		70
 	],
-	"vlc_farming_pumpkin_stem_connected.png": [
+	"vlf_farming_pumpkin_stem_connected.png": [
 		94,
 		94,
 		94
@@ -3359,22 +3359,22 @@
 		133,
 		94
 	],
-	"vlc_farming_wheat_seeds.png": [
+	"vlf_farming_wheat_seeds.png": [
 		102,
 		87,
 		55
 	],
-	"vlc_farming_wheat_stage_1.png": [
+	"vlf_farming_wheat_stage_1.png": [
 		49,
 		97,
 		45
 	],
-	"vlc_farming_melon_stem_disconnected.png": [
+	"vlf_farming_melon_stem_disconnected.png": [
 		96,
 		96,
 		96
 	],
-	"vlc_farming_beetroot_1.png": [
+	"vlf_farming_beetroot_1.png": [
 		54,
 		118,
 		72
@@ -3384,12 +3384,12 @@
 		101,
 		86
 	],
-	"vlc_farming_farmland_dry.png": [
+	"vlf_farming_farmland_dry.png": [
 		101,
 		80,
 		68
 	],
-	"vlc_farming_potatoes_stage_2.png": [
+	"vlf_farming_potatoes_stage_2.png": [
 		72,
 		116,
 		62
@@ -3404,12 +3404,12 @@
 		107,
 		57
 	],
-	"vlc_farming_sweet_berry_bush_1.png": [
+	"vlf_farming_sweet_berry_bush_1.png": [
 		42,
 		85,
 		38
 	],
-	"vlc_farming_farmland_wet.png": [
+	"vlf_farming_farmland_wet.png": [
 		69,
 		55,
 		46
@@ -3419,37 +3419,37 @@
 		40,
 		40
 	],
-	"vlc_itemframes_item_frame.png": [
+	"vlf_itemframes_item_frame.png": [
 		123,
 		90,
 		63
 	],
-	"vlc_itemframes_itemframe_background.png": [
+	"vlf_itemframes_itemframe_background.png": [
 		136,
 		104,
 		75
 	],
-	"vlc_itemframes_glow_item_frame.png": [
+	"vlf_itemframes_glow_item_frame.png": [
 		176,
 		125,
 		76
 	],
-	"vlc_itemframes_glow_item_frame_item.png": [
+	"vlf_itemframes_glow_item_frame_item.png": [
 		176,
 		125,
 		76
 	],
-	"vlc_itemframes_glow_item_frame_border.png": [
+	"vlf_itemframes_glow_item_frame_border.png": [
 		176,
 		125,
 		76
 	],
-	"vlc_lectern_lectern.png": [
+	"vlf_lectern_lectern.png": [
 		124,
 		86,
 		60
 	],
-	"vlc_blackstone_polished.png": [
+	"vlf_blackstone_polished.png": [
 		43,
 		41,
 		46
@@ -3464,52 +3464,52 @@
 		138,
 		137
 	],
-	"vlc_blackstone_basalt_smooth.png": [
+	"vlf_blackstone_basalt_smooth.png": [
 		87,
 		86,
 		86
 	],
-	"vlc_blackstone_basalt_top.png": [
+	"vlf_blackstone_basalt_top.png": [
 		68,
 		68,
 		68
 	],
-	"vlc_nether_nether_wart_block_blue.png": [
+	"vlf_nether_nether_wart_block_blue.png": [
 		72,
 		95,
 		175
 	],
-	"vlc_blackstone_basalt_side_polished.png": [
+	"vlf_blackstone_basalt_side_polished.png": [
 		64,
 		63,
 		63
 	],
-	"vlc_blackstone_side.png": [
+	"vlf_blackstone_side.png": [
 		30,
 		29,
 		31
 	],
-	"soul_vlc_burning_entity_flame_animated.png": [
+	"soul_vlf_burning_entity_flame_animated.png": [
 		75,
 		161,
 		161
 	],
-	"vlc_blackstone_chain.png": [
+	"vlf_blackstone_chain.png": [
 		33,
 		33,
 		33
 	],
-	"vlc_blackstone_top.png": [
+	"vlf_blackstone_top.png": [
 		30,
 		29,
 		31
 	],
-	"vlc_backstone_quartz_bricks.png": [
+	"vlf_backstone_quartz_bricks.png": [
 		189,
 		184,
 		181
 	],
-	"vlc_blackstone_chiseled_polished.png": [
+	"vlf_blackstone_chiseled_polished.png": [
 		40,
 		38,
 		43
@@ -3519,7 +3519,7 @@
 		164,
 		164
 	],
-	"vlc_blackstone_basalt_side.png": [
+	"vlf_blackstone_basalt_side.png": [
 		60,
 		59,
 		59
@@ -3529,12 +3529,12 @@
 		121,
 		121
 	],
-	"vlc_blackstone_basalt_top_polished.png": [
+	"vlf_blackstone_basalt_top_polished.png": [
 		77,
 		76,
 		76
 	],
-	"vlc_blackstone_gilded.png": [
+	"vlf_blackstone_gilded.png": [
 		62,
 		51,
 		33
@@ -3544,7 +3544,7 @@
 		66,
 		70
 	],
-	"vlc_blackstone_soul_soil.png": [
+	"vlf_blackstone_soul_soil.png": [
 		91,
 		71,
 		52
@@ -3559,772 +3559,772 @@
 		72,
 		69
 	],
-	"soul_vlc_burning_hud_flame_animated.png": [
+	"soul_vlf_burning_hud_flame_animated.png": [
 		75,
 		161,
 		161
 	],
-	"vlc_blackstone_polished_bricks.png": [
+	"vlf_blackstone_polished_bricks.png": [
 		41,
 		38,
 		43
 	],
-	"vlc_blackstone_gilded_side.png": [
+	"vlf_blackstone_gilded_side.png": [
 		184,
 		140,
 		50
 	],
-	"vlc_cauldrons_cauldron_inner.png": [
+	"vlf_cauldrons_cauldron_inner.png": [
 		24,
 		24,
 		24
 	],
-	"vlc_cauldrons_cauldron.png": [
+	"vlf_cauldrons_cauldron.png": [
 		47,
 		47,
 		47
 	],
-	"vlc_cauldrons_cauldron_bottom.png": [
+	"vlf_cauldrons_cauldron_bottom.png": [
 		50,
 		37,
 		38
 	],
-	"vlc_cauldrons_cauldron_side.png": [
+	"vlf_cauldrons_cauldron_side.png": [
 		43,
 		43,
 		43
 	],
-	"vlc_cauldrons_cauldron_top.png": [
+	"vlf_cauldrons_cauldron_top.png": [
 		54,
 		54,
 		54
 	],
-	"vlc_dye_white.png": [
+	"vlf_dye_white.png": [
 		121,
 		93,
 		63
 	],
-	"vlc_dye_mask.png": [
+	"vlf_dye_mask.png": [
 		247,
 		243,
 		233
 	],
-	"vlc_bone_meal_bone_meal.png": [
+	"vlf_bone_meal_bone_meal.png": [
 		121,
 		93,
 		63
 	],
-	"vlc_campfires_soul_campfire_inv.png": [
+	"vlf_campfires_soul_campfire_inv.png": [
 		63,
 		120,
 		117
 	],
-	"vlc_campfires_fire1.png": [
+	"vlf_campfires_fire1.png": [
 		219,
 		158,
 		58
 	],
-	"vlc_campfires_campfire_log_lit.png": [
+	"vlf_campfires_campfire_log_lit.png": [
 		99,
 		62,
 		46
 	],
-	"vlc_campfires_log.png": [
+	"vlf_campfires_log.png": [
 		77,
 		67,
 		65
 	],
-	"vlc_campfires_soul_campfire_log_lit.png": [
+	"vlf_campfires_soul_campfire_log_lit.png": [
 		52,
 		97,
 		97
 	],
-	"vlc_campfires_soul_campfire_fire.png": [
+	"vlf_campfires_soul_campfire_fire.png": [
 		19,
 		186,
 		191
 	],
-	"vlc_campfires_campfire_fire.png": [
+	"vlf_campfires_campfire_fire.png": [
 		207,
 		100,
 		34
 	],
-	"vlc_campfires_campfire_inv.png": [
+	"vlf_campfires_campfire_inv.png": [
 		136,
 		91,
 		54
 	],
-	"vlc_fences_fence_gate_red_nether_brick.png": [
+	"vlf_fences_fence_gate_red_nether_brick.png": [
 		64,
 		15,
 		0
 	],
-	"vlc_fences_fence_gate_nether_brick.png": [
+	"vlf_fences_fence_gate_nether_brick.png": [
 		50,
 		25,
 		26
 	],
-	"vlc_fences_fence_red_nether_brick.png": [
+	"vlf_fences_fence_red_nether_brick.png": [
 		68,
 		17,
 		0
 	],
-	"vlc_clock_clock_07.png": [
+	"vlf_clock_clock_07.png": [
 		162,
 		128,
 		83
 	],
-	"vlc_clock_clock_46.png": [
+	"vlf_clock_clock_46.png": [
 		152,
 		122,
 		81
 	],
-	"vlc_clock_clock_51.png": [
+	"vlf_clock_clock_51.png": [
 		156,
 		123,
 		80
 	],
-	"vlc_clock_clock_62.png": [
+	"vlf_clock_clock_62.png": [
 		159,
 		129,
 		89
 	],
-	"vlc_clock_clock_26.png": [
+	"vlf_clock_clock_26.png": [
 		142,
 		117,
 		79
 	],
-	"vlc_clock_clock_08.png": [
+	"vlf_clock_clock_08.png": [
 		160,
 		127,
 		81
 	],
-	"vlc_clock_clock_41.png": [
+	"vlf_clock_clock_41.png": [
 		147,
 		120,
 		79
 	],
-	"vlc_clock_clock_17.png": [
+	"vlf_clock_clock_17.png": [
 		156,
 		125,
 		81
 	],
-	"vlc_clock_clock_59.png": [
+	"vlf_clock_clock_59.png": [
 		160,
 		128,
 		86
 	],
-	"vlc_clock_clock_03.png": [
+	"vlf_clock_clock_03.png": [
 		160,
 		129,
 		88
 	],
-	"vlc_clock_clock_58.png": [
+	"vlf_clock_clock_58.png": [
 		157,
 		127,
 		86
 	],
-	"vlc_clock_clock_25.png": [
+	"vlf_clock_clock_25.png": [
 		145,
 		119,
 		78
 	],
-	"vlc_clock_clock_33.png": [
+	"vlf_clock_clock_33.png": [
 		141,
 		116,
 		76
 	],
-	"vlc_clock_clock_29.png": [
+	"vlf_clock_clock_29.png": [
 		142,
 		117,
 		78
 	],
-	"vlc_clock_clock_16.png": [
+	"vlf_clock_clock_16.png": [
 		157,
 		125,
 		80
 	],
-	"vlc_clock_clock_50.png": [
+	"vlf_clock_clock_50.png": [
 		155,
 		123,
 		80
 	],
-	"vlc_clock_clock_09.png": [
+	"vlf_clock_clock_09.png": [
 		161,
 		127,
 		81
 	],
-	"vlc_clock_clock_34.png": [
+	"vlf_clock_clock_34.png": [
 		140,
 		115,
 		76
 	],
-	"vlc_clock_clock_14.png": [
+	"vlf_clock_clock_14.png": [
 		157,
 		125,
 		81
 	],
-	"vlc_clock_clock_53.png": [
+	"vlf_clock_clock_53.png": [
 		158,
 		124,
 		80
 	],
-	"vlc_clock_clock_04.png": [
+	"vlf_clock_clock_04.png": [
 		159,
 		128,
 		87
 	],
-	"vlc_clock_clock_31.png": [
+	"vlf_clock_clock_31.png": [
 		141,
 		116,
 		76
 	],
-	"vlc_clock_clock_15.png": [
+	"vlf_clock_clock_15.png": [
 		157,
 		125,
 		81
 	],
-	"vlc_clock_clock_43.png": [
+	"vlf_clock_clock_43.png": [
 		149,
 		121,
 		80
 	],
-	"vlc_clock_clock_06.png": [
+	"vlf_clock_clock_06.png": [
 		157,
 		127,
 		86
 	],
-	"vlc_clock_clock_11.png": [
+	"vlf_clock_clock_11.png": [
 		160,
 		127,
 		82
 	],
-	"vlc_clock_clock_47.png": [
+	"vlf_clock_clock_47.png": [
 		154,
 		122,
 		80
 	],
-	"vlc_clock_clock_52.png": [
+	"vlf_clock_clock_52.png": [
 		156,
 		123,
 		80
 	],
-	"vlc_clock_clock_12.png": [
+	"vlf_clock_clock_12.png": [
 		159,
 		127,
 		83
 	],
-	"vlc_clock_clock_42.png": [
+	"vlf_clock_clock_42.png": [
 		147,
 		119,
 		79
 	],
-	"vlc_clock_clock_28.png": [
+	"vlf_clock_clock_28.png": [
 		141,
 		116,
 		77
 	],
-	"vlc_clock_clock_54.png": [
+	"vlf_clock_clock_54.png": [
 		156,
 		125,
 		84
 	],
-	"vlc_clock_clock_44.png": [
+	"vlf_clock_clock_44.png": [
 		150,
 		120,
 		79
 	],
-	"vlc_clock_clock_32.png": [
+	"vlf_clock_clock_32.png": [
 		141,
 		116,
 		77
 	],
-	"vlc_clock_clock_36.png": [
+	"vlf_clock_clock_36.png": [
 		141,
 		116,
 		77
 	],
-	"vlc_clock_clock_60.png": [
+	"vlf_clock_clock_60.png": [
 		159,
 		128,
 		87
 	],
-	"vlc_clock_clock_45.png": [
+	"vlf_clock_clock_45.png": [
 		153,
 		123,
 		81
 	],
-	"vlc_clock_clock_02.png": [
+	"vlf_clock_clock_02.png": [
 		159,
 		129,
 		89
 	],
-	"vlc_clock_clock_05.png": [
+	"vlf_clock_clock_05.png": [
 		160,
 		128,
 		85
 	],
-	"vlc_clock_clock_61.png": [
+	"vlf_clock_clock_61.png": [
 		160,
 		129,
 		88
 	],
-	"vlc_clock_clock_19.png": [
+	"vlf_clock_clock_19.png": [
 		152,
 		122,
 		80
 	],
-	"vlc_clock_clock_37.png": [
+	"vlf_clock_clock_37.png": [
 		143,
 		118,
 		79
 	],
-	"vlc_clock_clock_48.png": [
+	"vlf_clock_clock_48.png": [
 		155,
 		123,
 		79
 	],
-	"vlc_clock_clock_18.png": [
+	"vlf_clock_clock_18.png": [
 		152,
 		123,
 		81
 	],
-	"vlc_clock_clock_55.png": [
+	"vlf_clock_clock_55.png": [
 		160,
 		126,
 		81
 	],
-	"vlc_clock_clock_21.png": [
+	"vlf_clock_clock_21.png": [
 		150,
 		122,
 		81
 	],
-	"vlc_clock_clock_22.png": [
+	"vlf_clock_clock_22.png": [
 		146,
 		119,
 		79
 	],
-	"vlc_clock_clock_49.png": [
+	"vlf_clock_clock_49.png": [
 		155,
 		122,
 		79
 	],
-	"vlc_clock_clock_24.png": [
+	"vlf_clock_clock_24.png": [
 		147,
 		120,
 		80
 	],
-	"vlc_clock_clock_38.png": [
+	"vlf_clock_clock_38.png": [
 		141,
 		117,
 		78
 	],
-	"vlc_clock_clock_13.png": [
+	"vlf_clock_clock_13.png": [
 		159,
 		126,
 		82
 	],
-	"vlc_clock_clock_20.png": [
+	"vlf_clock_clock_20.png": [
 		150,
 		121,
 		79
 	],
-	"vlc_clock_clock_35.png": [
+	"vlf_clock_clock_35.png": [
 		140,
 		115,
 		76
 	],
-	"vlc_clock_clock_56.png": [
+	"vlf_clock_clock_56.png": [
 		160,
 		126,
 		81
 	],
-	"vlc_clock_clock_30.png": [
+	"vlf_clock_clock_30.png": [
 		140,
 		115,
 		76
 	],
-	"vlc_clock_clock_39.png": [
+	"vlf_clock_clock_39.png": [
 		146,
 		119,
 		79
 	],
-	"vlc_clock_clock_23.png": [
+	"vlf_clock_clock_23.png": [
 		148,
 		121,
 		80
 	],
-	"vlc_clock_clock_00.png": [
+	"vlf_clock_clock_00.png": [
 		162,
 		129,
 		87
 	],
-	"vlc_clock_clock_57.png": [
+	"vlf_clock_clock_57.png": [
 		161,
 		127,
 		83
 	],
-	"vlc_clock_clock_27.png": [
+	"vlf_clock_clock_27.png": [
 		142,
 		117,
 		78
 	],
-	"vlc_clock_clock_63.png": [
+	"vlf_clock_clock_63.png": [
 		161,
 		129,
 		88
 	],
-	"vlc_clock_clock_10.png": [
+	"vlf_clock_clock_10.png": [
 		158,
 		127,
 		85
 	],
-	"vlc_clock_clock_01.png": [
+	"vlf_clock_clock_01.png": [
 		161,
 		129,
 		88
 	],
-	"vlc_clock_clock_40.png": [
+	"vlf_clock_clock_40.png": [
 		147,
 		120,
 		79
 	],
-	"vlc_copper_weathered_cut.png": [
+	"vlf_copper_weathered_cut.png": [
 		107,
 		103,
 		100
 	],
-	"vlc_copper_anti_oxidation_particle.png": [
+	"vlf_copper_anti_oxidation_particle.png": [
 		251,
 		250,
 		247
 	],
-	"vlc_copper_raw.png": [
+	"vlf_copper_raw.png": [
 		133,
 		68,
 		50
 	],
-	"vlc_copper_block.png": [
+	"vlf_copper_block.png": [
 		147,
 		77,
 		56
 	],
-	"vlc_copper_block_cut.png": [
+	"vlf_copper_block_cut.png": [
 		148,
 		77,
 		57
 	],
-	"vlc_copper_ore.png": [
+	"vlf_copper_ore.png": [
 		127,
 		66,
 		48
 	],
-	"vlc_copper_oxidized_cut.png": [
+	"vlf_copper_oxidized_cut.png": [
 		91,
 		110,
 		110
 	],
-	"vlc_copper_oxidized.png": [
+	"vlf_copper_oxidized.png": [
 		90,
 		108,
 		110
 	],
-	"vlc_copper_block_raw.png": [
+	"vlf_copper_block_raw.png": [
 		168,
 		90,
 		68
 	],
-	"vlc_copper_weathered.png": [
+	"vlf_copper_weathered.png": [
 		103,
 		102,
 		100
 	],
-	"vlc_copper_exposed_cut.png": [
+	"vlf_copper_exposed_cut.png": [
 		129,
 		92,
 		82
 	],
-	"vlc_copper_ingot.png": [
+	"vlf_copper_ingot.png": [
 		157,
 		82,
 		61
 	],
-	"vlc_copper_exposed.png": [
+	"vlf_copper_exposed.png": [
 		128,
 		92,
 		83
 	],
-	"vlc_ocean_bubble_coral_fan.png": [
+	"vlf_ocean_bubble_coral_fan.png": [
 		141,
 		75,
 		192
 	],
-	"vlc_ocean_fire_coral_fan.png": [
+	"vlf_ocean_fire_coral_fan.png": [
 		205,
 		77,
 		64
 	],
-	"vlc_ocean_dried_kelp_side.png": [
+	"vlf_ocean_dried_kelp_side.png": [
 		71,
 		80,
 		67
 	],
-	"vlc_ocean_horn_coral_fan.png": [
+	"vlf_ocean_horn_coral_fan.png": [
 		230,
 		189,
 		68
 	],
-	"vlc_ocean_sea_pickle_3_anim.png": [
+	"vlf_ocean_sea_pickle_3_anim.png": [
 		89,
 		116,
 		48
 	],
-	"vlc_ocean_sea_pickle_1_off.png": [
+	"vlf_ocean_sea_pickle_1_off.png": [
 		72,
 		103,
 		37
 	],
-	"vlc_ocean_dead_bubble_coral_block.png": [
+	"vlf_ocean_dead_bubble_coral_block.png": [
 		114,
 		105,
 		122
 	],
-	"vlc_ocean_dead_horn_coral_block.png": [
+	"vlf_ocean_dead_horn_coral_block.png": [
 		152,
 		146,
 		125
 	],
-	"vlc_ocean_dried_kelp.png": [
+	"vlf_ocean_dried_kelp.png": [
 		36,
 		57,
 		40
 	],
-	"vlc_ocean_dried_kelp_top.png": [
+	"vlf_ocean_dried_kelp_top.png": [
 		56,
 		71,
 		57
 	],
-	"vlc_ocean_sea_pickle_1_anim.png": [
+	"vlf_ocean_sea_pickle_1_anim.png": [
 		106,
 		132,
 		57
 	],
-	"vlc_ocean_horn_coral.png": [
+	"vlf_ocean_horn_coral.png": [
 		233,
 		195,
 		69
 	],
-	"vlc_ocean_dead_horn_coral_fan.png": [
+	"vlf_ocean_dead_horn_coral_fan.png": [
 		150,
 		143,
 		123
 	],
-	"vlc_ocean_dead_brain_coral_fan.png": [
+	"vlf_ocean_dead_brain_coral_fan.png": [
 		134,
 		117,
 		127
 	],
-	"vlc_ocean_dead_fire_coral_fan.png": [
+	"vlf_ocean_dead_fire_coral_fan.png": [
 		140,
 		113,
 		110
 	],
-	"vlc_ocean_horn_coral_block.png": [
+	"vlf_ocean_horn_coral_block.png": [
 		232,
 		193,
 		69
 	],
-	"vlc_ocean_dead_tube_coral_block.png": [
+	"vlf_ocean_dead_tube_coral_block.png": [
 		99,
 		104,
 		127
 	],
-	"vlc_ocean_dead_brain_coral_block.png": [
+	"vlf_ocean_dead_brain_coral_block.png": [
 		130,
 		114,
 		123
 	],
-	"vlc_ocean_kelp_item.png": [
+	"vlf_ocean_kelp_item.png": [
 		42,
 		105,
 		55
 	],
-	"vlc_ocean_prismarine_shard.png": [
+	"vlf_ocean_prismarine_shard.png": [
 		122,
 		144,
 		135
 	],
-	"vlc_ocean_kelp_plant.png": [
+	"vlf_ocean_kelp_plant.png": [
 		42,
 		105,
 		55
 	],
-	"vlc_ocean_sea_pickle_4_off.png": [
+	"vlf_ocean_sea_pickle_4_off.png": [
 		68,
 		98,
 		36
 	],
-	"vlc_ocean_sea_pickle_2_anim.png": [
+	"vlf_ocean_sea_pickle_2_anim.png": [
 		95,
 		122,
 		51
 	],
-	"vlc_ocean_sea_pickle_4_anim.png": [
+	"vlf_ocean_sea_pickle_4_anim.png": [
 		85,
 		113,
 		46
 	],
-	"vlc_ocean_dead_fire_coral_block.png": [
+	"vlf_ocean_dead_fire_coral_block.png": [
 		127,
 		102,
 		100
 	],
-	"vlc_ocean_brain_coral.png": [
+	"vlf_ocean_brain_coral.png": [
 		206,
 		87,
 		153
 	],
-	"vlc_ocean_tube_coral_fan.png": [
+	"vlf_ocean_tube_coral_fan.png": [
 		59,
 		85,
 		203
 	],
-	"vlc_ocean_dead_bubble_coral_fan.png": [
+	"vlf_ocean_dead_bubble_coral_fan.png": [
 		113,
 		104,
 		120
 	],
-	"vlc_ocean_bubble_coral_block.png": [
+	"vlf_ocean_bubble_coral_block.png": [
 		143,
 		76,
 		195
 	],
-	"vlc_ocean_dead_bubble_coral.png": [
+	"vlf_ocean_dead_bubble_coral.png": [
 		118,
 		108,
 		126
 	],
-	"vlc_ocean_prismarine_bricks.png": [
+	"vlf_ocean_prismarine_bricks.png": [
 		104,
 		112,
 		115
 	],
-	"vlc_ocean_dead_tube_coral_fan.png": [
+	"vlf_ocean_dead_tube_coral_fan.png": [
 		98,
 		103,
 		125
 	],
-	"vlc_ocean_seagrass.png": [
+	"vlf_ocean_seagrass.png": [
 		48,
 		125,
 		60
 	],
-	"vlc_ocean_dead_tube_coral.png": [
+	"vlf_ocean_dead_tube_coral.png": [
 		99,
 		105,
 		128
 	],
-	"vlc_ocean_sea_lantern.png": [
+	"vlf_ocean_sea_lantern.png": [
 		133,
 		144,
 		145
 	],
-	"vlc_ocean_prismarine_dark.png": [
+	"vlf_ocean_prismarine_dark.png": [
 		77,
 		89,
 		97
 	],
-	"vlc_ocean_brain_coral_block.png": [
+	"vlf_ocean_brain_coral_block.png": [
 		200,
 		85,
 		148
 	],
-	"vlc_ocean_prismarine_crystals.png": [
+	"vlf_ocean_prismarine_crystals.png": [
 		182,
 		193,
 		190
 	],
-	"vlc_ocean_dead_fire_coral.png": [
+	"vlf_ocean_dead_fire_coral.png": [
 		133,
 		107,
 		105
 	],
-	"vlc_ocean_sea_pickle_item.png": [
+	"vlf_ocean_sea_pickle_item.png": [
 		93,
 		120,
 		50
 	],
-	"vlc_ocean_dead_horn_coral.png": [
+	"vlf_ocean_dead_horn_coral.png": [
 		154,
 		148,
 		127
 	],
-	"vlc_ocean_sea_pickle_3_off.png": [
+	"vlf_ocean_sea_pickle_3_off.png": [
 		68,
 		99,
 		36
 	],
-	"vlc_ocean_seagrass_item.png": [
+	"vlf_ocean_seagrass_item.png": [
 		48,
 		124,
 		60
 	],
-	"vlc_ocean_fire_coral.png": [
+	"vlf_ocean_fire_coral.png": [
 		208,
 		78,
 		65
 	],
-	"vlc_ocean_tube_coral_block.png": [
+	"vlf_ocean_tube_coral_block.png": [
 		58,
 		88,
 		207
 	],
-	"vlc_ocean_brain_coral_fan.png": [
+	"vlf_ocean_brain_coral_fan.png": [
 		206,
 		87,
 		154
 	],
-	"vlc_ocean_fire_coral_block.png": [
+	"vlf_ocean_fire_coral_block.png": [
 		198,
 		74,
 		62
 	],
-	"vlc_ocean_tube_coral.png": [
+	"vlf_ocean_tube_coral.png": [
 		57,
 		88,
 		209
 	],
-	"vlc_ocean_bubble_coral.png": [
+	"vlf_ocean_bubble_coral.png": [
 		149,
 		77,
 		200
 	],
-	"vlc_ocean_dead_brain_coral.png": [
+	"vlf_ocean_dead_brain_coral.png": [
 		134,
 		117,
 		127
 	],
-	"vlc_ocean_dried_kelp_bottom.png": [
+	"vlf_ocean_dried_kelp_bottom.png": [
 		56,
 		71,
 		57
 	],
-	"vlc_ocean_prismarine_anim.png": [
+	"vlf_ocean_prismarine_anim.png": [
 		104,
 		123,
 		122
 	],
-	"vlc_ocean_sea_pickle_2_off.png": [
+	"vlf_ocean_sea_pickle_2_off.png": [
 		70,
 		100,
 		36
 	],
-	"vlc_potions_spider_eye_fermented.png": [
+	"vlf_potions_spider_eye_fermented.png": [
 		143,
 		97,
 		62
 	],
-	"vlc_potions_melon_speckled.png": [
+	"vlf_potions_melon_speckled.png": [
 		170,
 		97,
 		62
@@ -4334,72 +4334,72 @@
 		77,
 		114
 	],
-	"vlc_potions_lingering_bottle.png": [
+	"vlf_potions_lingering_bottle.png": [
 		181,
 		159,
 		192
 	],
-	"vlc_potions_splash_bottle.png": [
+	"vlf_potions_splash_bottle.png": [
 		168,
 		156,
 		183
 	],
-	"vlc_potions_effect_leaping.png": [
+	"vlf_potions_effect_leaping.png": [
 		100,
 		91,
 		86
 	],
-	"vlc_potions_effect_strong.png": [
+	"vlf_potions_effect_strong.png": [
 		100,
 		82,
 		97
 	],
-	"vlc_potions_effect_fire_proof.png": [
+	"vlf_potions_effect_fire_proof.png": [
 		112,
 		68,
 		68
 	],
-	"vlc_potions_effect_weak.png": [
+	"vlf_potions_effect_weak.png": [
 		127,
 		126,
 		126
 	],
-	"vlc_potions_splash_overlay.png": [
+	"vlf_potions_splash_overlay.png": [
 		202,
 		202,
 		202
 	],
-	"vlc_potions_effect_poisoned.png": [
+	"vlf_potions_effect_poisoned.png": [
 		78,
 		110,
 		80
 	],
-	"vlc_potions_effect_bad_omen.png": [
+	"vlf_potions_effect_bad_omen.png": [
 		100,
 		87,
 		74
 	],
-	"vlc_potions_effect_invisible.png": [
+	"vlf_potions_effect_invisible.png": [
 		96,
 		103,
 		95
 	],
-	"vlc_potions_effect_water_breathing.png": [
+	"vlf_potions_effect_water_breathing.png": [
 		59,
 		69,
 		100
 	],
-	"vlc_potions_effect_night_vision.png": [
+	"vlf_potions_effect_night_vision.png": [
 		86,
 		99,
 		74
 	],
-	"vlc_potions_dragon_breath.png": [
+	"vlf_potions_dragon_breath.png": [
 		171,
 		137,
 		163
 	],
-	"vlc_potions_effect_slow.png": [
+	"vlf_potions_effect_slow.png": [
 		78,
 		81,
 		85
@@ -4409,97 +4409,97 @@
 		111,
 		115
 	],
-	"vlc_potions_effect_regenerating.png": [
+	"vlf_potions_effect_regenerating.png": [
 		133,
 		90,
 		83
 	],
-	"vlc_potions_potion_bottle.png": [
+	"vlf_potions_potion_bottle.png": [
 		156,
 		172,
 		203
 	],
-	"vlc_potions_potion_overlay.png": [
+	"vlf_potions_potion_overlay.png": [
 		201,
 		201,
 		201
 	],
-	"vlc_potions_effect_swift.png": [
+	"vlf_potions_effect_swift.png": [
 		106,
 		96,
 		85
 	],
-	"vlc_potions_arrow_inv.png": [
+	"vlf_potions_arrow_inv.png": [
 		171,
 		165,
 		160
 	],
-	"vlc_potions_effect_food_poisoning.png": [
+	"vlf_potions_effect_food_poisoning.png": [
 		112,
 		123,
 		89
 	],
-	"vlc_spyglass.png": [
+	"vlf_spyglass.png": [
 		155,
 		95,
 		78
 	],
-	"vlc_spyglass_scope.png": [
+	"vlf_spyglass_scope.png": [
 		32,
 		23,
 		20
 	],
-	"vlc_sculk_sensor_bottom.png": [
+	"vlf_sculk_sensor_bottom.png": [
 		4,
 		15,
 		20
 	],
-	"vlc_sculk_shrieker_bottom.png": [
+	"vlf_sculk_shrieker_bottom.png": [
 		4,
 		15,
 		20
 	],
-	"vlc_sculk_shrieker_side.png": [
+	"vlf_sculk_shrieker_side.png": [
 		57,
 		60,
 		56
 	],
-	"vlc_sculk_sensor_top.png": [
+	"vlf_sculk_sensor_top.png": [
 		8,
 		30,
 		38
 	],
-	"vlc_sculk_sensor_side.png": [
+	"vlf_sculk_sensor_side.png": [
 		6,
 		21,
 		27
 	],
-	"vlc_sculk_shrieker_top.png": [
+	"vlf_sculk_shrieker_top.png": [
 		129,
 		115,
 		92
 	],
-	"vlc_sculk_vein.png": [
+	"vlf_sculk_vein.png": [
 		6,
 		17,
 		24
 	],
-	"vlc_sculk_sculk.png": [
+	"vlf_sculk_sculk.png": [
 		4,
 		15,
 		20
 	],
-	"vlc_sculk_catalyst_bottom.png": [
+	"vlf_sculk_catalyst_bottom.png": [
 		62,
 		63,
 		57
 	],
-	"vlc_sculk_catalyst_side.png": [
+	"vlf_sculk_catalyst_side.png": [
 		57,
 		61,
 		57
 	],
-	"vlc_sculk_catalyst_top.png": [
+	"vlf_sculk_catalyst_top.png": [
 		4,
 		15,
 		20
@@ -4529,107 +4529,107 @@
 		81,
 		68
 	],
-	"vlc_end_end_rod_top.png": [
+	"vlf_end_end_rod_top.png": [
 		123,
 		75,
 		97
 	],
-	"vlc_end_end_rod_bottom.png": [
+	"vlf_end_end_rod_bottom.png": [
 		122,
 		74,
 		96
 	],
-	"vlc_end_endframe_side.png": [
+	"vlf_end_endframe_side.png": [
 		110,
 		99,
 		86
 	],
-	"vlc_end_dragon_egg.png": [
+	"vlf_end_dragon_egg.png": [
 		55,
 		34,
 		32
 	],
-	"vlc_end_purpur_block.png": [
+	"vlf_end_purpur_block.png": [
 		161,
 		111,
 		175
 	],
-	"vlc_end_purpur_pillar_top.png": [
+	"vlf_end_purpur_pillar_top.png": [
 		159,
 		110,
 		173
 	],
-	"vlc_end_end_stone.png": [
+	"vlf_end_end_stone.png": [
 		221,
 		214,
 		130
 	],
-	"vlc_end_chorus_flower_dead.png": [
+	"vlf_end_chorus_flower_dead.png": [
 		82,
 		79,
 		118
 	],
-	"vlc_end_end_rod_side.png": [
+	"vlf_end_end_rod_side.png": [
 		242,
 		202,
 		177
 	],
-	"vlc_end_chorus_fruit_popped.png": [
+	"vlf_end_chorus_fruit_popped.png": [
 		70,
 		67,
 		110
 	],
-	"vlc_end_end_bricks.png": [
+	"vlf_end_end_bricks.png": [
 		194,
 		187,
 		123
 	],
-	"vlc_end_endframe_eye.png": [
+	"vlf_end_endframe_eye.png": [
 		135,
 		36,
 		18
 	],
-	"vlc_end_crystal_beam.png": [
+	"vlf_end_crystal_beam.png": [
 		195,
 		81,
 		183
 	],
-	"vlc_end_purpur_pillar.png": [
+	"vlf_end_purpur_pillar.png": [
 		157,
 		108,
 		171
 	],
-	"vlc_end_endframe_top.png": [
+	"vlf_end_endframe_top.png": [
 		95,
 		85,
 		74
 	],
-	"vlc_end_ender_eye.png": [
+	"vlf_end_ender_eye.png": [
 		130,
 		33,
 		17
 	],
-	"vlc_end_chorus_fruit.png": [
+	"vlf_end_chorus_fruit.png": [
 		87,
 		89,
 		121
 	],
-	"vlc_end_chorus_flower.png": [
+	"vlf_end_chorus_flower.png": [
 		92,
 		92,
 		125
 	],
-	"vlc_end_crystal_item.png": [
+	"vlf_end_crystal_item.png": [
 		170,
 		140,
 		162
 	],
-	"vlc_end_chorus_plant.png": [
+	"vlf_end_chorus_plant.png": [
 		78,
 		73,
 		115
 	],
-	"vlc_flowers_double_plant_fern_top.png": [
+	"vlf_flowers_double_plant_fern_top.png": [
 		148,
 		138,
 		119
@@ -4639,132 +4639,132 @@
 		81,
 		29
 	],
-	"vlc_flowers_double_plant_fern_bottom.png": [
+	"vlf_flowers_double_plant_fern_bottom.png": [
 		140,
 		130,
 		113
 	],
-	"vlc_flowers_fern_inv.png": [
+	"vlf_flowers_fern_inv.png": [
 		43,
 		86,
 		39
 	],
-	"vlc_flowers_tallgrass.png": [
+	"vlf_flowers_tallgrass.png": [
 		151,
 		141,
 		122
 	],
-	"vlc_flowers_poppy.png": [
+	"vlf_flowers_poppy.png": [
 		96,
 		59,
 		43
 	],
-	"vlc_flowers_allium.png": [
+	"vlf_flowers_allium.png": [
 		120,
 		116,
 		144
 	],
-	"vlc_flowers_double_plant_syringa_bottom.png": [
+	"vlf_flowers_double_plant_syringa_bottom.png": [
 		63,
 		77,
 		60
 	],
-	"vlc_flowers_double_plant_sunflower_top.png": [
+	"vlf_flowers_double_plant_sunflower_top.png": [
 		48,
 		81,
 		44
 	],
-	"vlc_flowers_double_plant_sunflower_front.png": [
+	"vlf_flowers_double_plant_sunflower_front.png": [
 		203,
 		157,
 		61
 	],
-	"vlc_flowers_wither_rose.png": [
+	"vlf_flowers_wither_rose.png": [
 		40,
 		57,
 		38
 	],
-	"vlc_flowers_double_plant_paeonia_bottom.png": [
+	"vlf_flowers_double_plant_paeonia_bottom.png": [
 		82,
 		83,
 		73
 	],
-	"vlc_flowers_tulip_white.png": [
+	"vlf_flowers_tulip_white.png": [
 		106,
 		122,
 		95
 	],
-	"vlc_flowers_double_plant_rose_top.png": [
+	"vlf_flowers_double_plant_rose_top.png": [
 		81,
 		69,
 		45
 	],
-	"vlc_flowers_oxeye_daisy.png": [
+	"vlf_flowers_oxeye_daisy.png": [
 		130,
 		139,
 		110
 	],
-	"vlc_flowers_double_plant_grass_bottom.png": [
+	"vlf_flowers_double_plant_grass_bottom.png": [
 		151,
 		140,
 		121
 	],
-	"vlc_flowers_cornflower.png": [
+	"vlf_flowers_cornflower.png": [
 		46,
 		87,
 		109
 	],
-	"vlc_flowers_tallgrass_inv.png": [
+	"vlf_flowers_tallgrass_inv.png": [
 		47,
 		92,
 		41
 	],
-	"vlc_flowers_lily_of_the_valley.png": [
+	"vlf_flowers_lily_of_the_valley.png": [
 		116,
 		134,
 		115
 	],
-	"vlc_flowers_double_plant_sunflower_back.png": [
+	"vlf_flowers_double_plant_sunflower_back.png": [
 		174,
 		146,
 		57
 	],
-	"vlc_flowers_blue_orchid.png": [
+	"vlf_flowers_blue_orchid.png": [
 		46,
 		91,
 		86
 	],
-	"vlc_flowers_double_plant_sunflower_bottom.png": [
+	"vlf_flowers_double_plant_sunflower_bottom.png": [
 		45,
 		76,
 		40
 	],
-	"vlc_flowers_double_plant_rose_bottom.png": [
+	"vlf_flowers_double_plant_rose_bottom.png": [
 		78,
 		63,
 		41
 	],
-	"vlc_flowers_double_plant_grass_top.png": [
+	"vlf_flowers_double_plant_grass_top.png": [
 		156,
 		145,
 		125
 	],
-	"vlc_flowers_double_plant_grass_inv.png": [
+	"vlf_flowers_double_plant_grass_inv.png": [
 		48,
 		95,
 		43
 	],
-	"vlc_flowers_double_plant_paeonia_top.png": [
+	"vlf_flowers_double_plant_paeonia_top.png": [
 		90,
 		84,
 		81
 	],
-	"vlc_flowers_tulip_pink.png": [
+	"vlf_flowers_tulip_pink.png": [
 		100,
 		99,
 		90
 	],
-	"vlc_flowers_double_plant_syringa_top.png": [
+	"vlf_flowers_double_plant_syringa_top.png": [
 		95,
 		90,
 		98
@@ -4774,7 +4774,7 @@
 		111,
 		55
 	],
-	"vlc_flowers_fern.png": [
+	"vlf_flowers_fern.png": [
 		143,
 		132,
 		115
@@ -4784,282 +4784,282 @@
 		84,
 		51
 	],
-	"vlc_flowers_tulip_red.png": [
+	"vlf_flowers_tulip_red.png": [
 		82,
 		57,
 		43
 	],
-	"vlc_flowers_double_plant_fern_inv.png": [
+	"vlf_flowers_double_plant_fern_inv.png": [
 		45,
 		89,
 		40
 	],
-	"vlc_flowers_azure_bluet.png": [
+	"vlf_flowers_azure_bluet.png": [
 		97,
 		114,
 		98
 	],
-	"vlc_beehives_bee_nest_front.png": [
+	"vlf_beehives_bee_nest_front.png": [
 		181,
 		148,
 		87
 	],
-	"vlc_beehives_beehive_side.png": [
+	"vlf_beehives_beehive_side.png": [
 		116,
 		87,
 		70
 	],
-	"vlc_beehives_beehive_front_honey.png": [
+	"vlf_beehives_beehive_front_honey.png": [
 		130,
 		97,
 		68
 	],
-	"vlc_beehives_bee_nest_side.png": [
+	"vlf_beehives_bee_nest_side.png": [
 		189,
 		154,
 		90
 	],
-	"vlc_beehives_bee_nest_top.png": [
+	"vlf_beehives_bee_nest_top.png": [
 		212,
 		175,
 		98
 	],
-	"vlc_beehives_beehive_front.png": [
+	"vlf_beehives_beehive_front.png": [
 		114,
 		86,
 		69
 	],
-	"vlc_beehives_bee_nest_front_honey.png": [
+	"vlf_beehives_bee_nest_front_honey.png": [
 		195,
 		155,
 		83
 	],
-	"vlc_beehives_bee_nest_bottom.png": [
+	"vlf_beehives_bee_nest_bottom.png": [
 		142,
 		109,
 		70
 	],
-	"vlc_beehives_beehive_end.png": [
+	"vlf_beehives_beehive_end.png": [
 		133,
 		99,
 		75
 	],
-	"vlc_raw_ores_raw_iron.png": [
+	"vlf_raw_ores_raw_iron.png": [
 		182,
 		160,
 		145
 	],
-	"vlc_raw_ores_raw_gold.png": [
+	"vlf_raw_ores_raw_gold.png": [
 		195,
 		152,
 		64
 	],
-	"vlc_raw_ores_raw_iron_block.png": [
+	"vlf_raw_ores_raw_iron_block.png": [
 		194,
 		172,
 		156
 	],
-	"vlc_raw_ores_raw_gold_block.png": [
+	"vlf_raw_ores_raw_gold_block.png": [
 		208,
 		166,
 		77
 	],
-	"vlc_bows_crossbow_2.png": [
+	"vlf_bows_crossbow_2.png": [
 		100,
 		82,
 		66
 	],
-	"vlc_bows_crossbow.png": [
+	"vlf_bows_crossbow.png": [
 		94,
 		76,
 		60
 	],
-	"vlc_bows_crossbow_1.png": [
+	"vlf_bows_crossbow_1.png": [
 		97,
 		79,
 		62
 	],
-	"vlc_bows_crossbow_0.png": [
+	"vlf_bows_crossbow_0.png": [
 		95,
 		77,
 		61
 	],
-	"vlc_bows_firework_white.png": [
+	"vlf_bows_firework_white.png": [
 		222,
 		222,
 		222
 	],
-	"vlc_bows_arrow_inv.png": [
+	"vlf_bows_arrow_inv.png": [
 		144,
 		129,
 		121
 	],
-	"vlc_bows_crossbow_3.png": [
+	"vlf_bows_crossbow_3.png": [
 		103,
 		87,
 		73
 	],
-	"vlc_bows_arrow.png": [
+	"vlf_bows_arrow.png": [
 		133,
 		116,
 		108
 	],
-	"vlc_bows_firework_blue.png": [
+	"vlf_bows_firework_blue.png": [
 		141,
 		174,
 		238
 	],
-	"vlc_bows_bow.png": [
+	"vlf_bows_bow.png": [
 		114,
 		95,
 		78
 	],
-	"vlc_bows_arrow_back.png": [
+	"vlf_bows_arrow_back.png": [
 		218,
 		216,
 		213
 	],
-	"vlc_bows_rocket_particle.png": [
+	"vlf_bows_rocket_particle.png": [
 		215,
 		215,
 		215
 	],
-	"vlc_bows_bow_2.png": [
+	"vlf_bows_bow_2.png": [
 		115,
 		98,
 		82
 	],
-	"vlc_bows_bow_0.png": [
+	"vlf_bows_bow_0.png": [
 		111,
 		94,
 		79
 	],
-	"vlc_bows_bow_1.png": [
+	"vlf_bows_bow_1.png": [
 		112,
 		95,
 		79
 	],
-	"vlc_bows_arrow_overlay.png": [
+	"vlf_bows_arrow_overlay.png": [
 		184,
 		181,
 		175
 	],
-	"vlc_bows_firework_yellow.png": [
+	"vlf_bows_firework_yellow.png": [
 		238,
 		218,
 		141
 	],
-	"vlc_bows_rocket.png": [
+	"vlf_bows_rocket.png": [
 		188,
 		86,
 		83
 	],
-	"vlc_bows_firework_red.png": [
+	"vlf_bows_firework_red.png": [
 		238,
 		141,
 		141
 	],
-	"vlc_bows_arrow_front.png": [
+	"vlf_bows_arrow_front.png": [
 		178,
 		175,
 		168
 	],
-	"vlc_bows_firework_green.png": [
+	"vlf_bows_firework_green.png": [
 		156,
 		238,
 		141
 	],
-	"vlc_cherry_blossom_door_bottom.png": [
+	"vlf_cherry_blossom_door_bottom.png": [
 		208,
 		132,
 		123
 	],
-	"vlc_cherry_blossom_log_top.png": [
+	"vlf_cherry_blossom_log_top.png": [
 		191,
 		124,
 		115
 	],
-	"vlc_cherry_blossom_door_top.png": [
+	"vlf_cherry_blossom_door_top.png": [
 		213,
 		134,
 		124
 	],
-	"vlc_cherry_blossom_pink_petals.png": [
+	"vlf_cherry_blossom_pink_petals.png": [
 		245,
 		180,
 		199
 	],
-	"vlc_cherry_blossom_planks.png": [
+	"vlf_cherry_blossom_planks.png": [
 		222,
 		140,
 		129
 	],
-	"vlc_cherry_blossom_door_bottom_side.png": [
+	"vlf_cherry_blossom_door_bottom_side.png": [
 		218,
 		127,
 		116
 	],
-	"vlc_cherry_blossom_door_top_side.png": [
+	"vlf_cherry_blossom_door_top_side.png": [
 		218,
 		127,
 		116
 	],
-	"vlc_cherry_blossom_particle.png": [
+	"vlf_cherry_blossom_particle.png": [
 		235,
 		83,
 		150
 	],
-	"vlc_cherry_blossom_door_inv.png": [
+	"vlf_cherry_blossom_door_inv.png": [
 		207,
 		131,
 		121
 	],
-	"vlc_cherry_blossom_log_top_stripped.png": [
+	"vlf_cherry_blossom_log_top_stripped.png": [
 		215,
 		139,
 		129
 	],
-	"vlc_cherry_blossom_door_bottom_bottompart.png": [
+	"vlf_cherry_blossom_door_bottom_bottompart.png": [
 		208,
 		132,
 		123
 	],
-	"vlc_cherry_blossom_trapdoor_side.png": [
+	"vlf_cherry_blossom_trapdoor_side.png": [
 		223,
 		137,
 		127
 	],
-	"vlc_cherry_blossom_door_top_toppart.png": [
+	"vlf_cherry_blossom_door_top_toppart.png": [
 		215,
 		140,
 		131
 	],
-	"vlc_cherry_blossom_leaves.png": [
+	"vlf_cherry_blossom_leaves.png": [
 		243,
 		174,
 		194
 	],
-	"vlc_cherry_blossom_log.png": [
+	"vlf_cherry_blossom_log.png": [
 		69,
 		46,
 		47
 	],
-	"vlc_cherry_blossom_trapdoor.png": [
+	"vlf_cherry_blossom_trapdoor.png": [
 		212,
 		133,
 		124
 	],
-	"vlc_cherry_blossom_pink_petals_inv.png": [
+	"vlf_cherry_blossom_pink_petals_inv.png": [
 		246,
 		182,
 		200
 	],
-	"vlc_cherry_blossom_log_stripped.png": [
+	"vlf_cherry_blossom_log_stripped.png": [
 		233,
 		147,
 		133
 	],
-	"vlc_cherry_blossom_sapling.png": [
+	"vlf_cherry_blossom_sapling.png": [
 		196,
 		136,
 		152
@@ -5079,7 +5079,7 @@
 		67,
 		44
 	],
-	"vlc_books_button9.png": [
+	"vlf_books_button9.png": [
 		145,
 		112,
 		86
@@ -5089,157 +5089,157 @@
 		67,
 		54
 	],
-	"vlc_books_bookshelf_top.png": [
+	"vlf_books_bookshelf_top.png": [
 		109,
 		84,
 		65
 	],
-	"vlc_books_button9_pressed.png": [
+	"vlf_books_button9_pressed.png": [
 		145,
 		112,
 		86
 	],
-	"vlc_books_book_bg.png": [
+	"vlf_books_book_bg.png": [
 		203,
 		180,
 		151
 	],
-	"vlc_book_book_empty_slot.png": [
+	"vlf_book_book_empty_slot.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_books_book_written.png": [
+	"vlf_books_book_written.png": [
 		110,
 		74,
 		44
 	],
-	"vlc_books_book_writable.png": [
+	"vlf_books_book_writable.png": [
 		151,
 		122,
 		108
 	],
-	"vlc_fireworks_rocket.png": [
+	"vlf_fireworks_rocket.png": [
 		155,
 		84,
 		71
 	],
-	"vlc_stairs_granite_smooth_slab.png": [
+	"vlf_stairs_granite_smooth_slab.png": [
 		150,
 		121,
 		109
 	],
-	"vlc_stairs_lapis_block_slab.png": [
+	"vlf_stairs_lapis_block_slab.png": [
 		49,
 		89,
 		158
 	],
-	"vlc_stairs_andesite_smooth_slab.png": [
+	"vlf_stairs_andesite_smooth_slab.png": [
 		106,
 		113,
 		108
 	],
-	"vlc_stairs_gold_block_slab.png": [
+	"vlf_stairs_gold_block_slab.png": [
 		191,
 		146,
 		56
 	],
-	"vlc_stairs_diorite_smooth_slab.png": [
+	"vlf_stairs_diorite_smooth_slab.png": [
 		156,
 		153,
 		151
 	],
-	"vlc_stairs_iron_block_slab.png": [
+	"vlf_stairs_iron_block_slab.png": [
 		166,
 		159,
 		159
 	],
-	"vlc_heads_steve.png": [
+	"vlf_heads_steve.png": [
 		108,
 		76,
 		59
 	],
-	"vlc_heads_zombie.png": [
+	"vlf_heads_zombie.png": [
 		66,
 		104,
 		69
 	],
-	"vlc_heads_wither_skeleton.png": [
+	"vlf_heads_wither_skeleton.png": [
 		50,
 		50,
 		50
 	],
-	"vlc_heads_creeper.png": [
+	"vlf_heads_creeper.png": [
 		92,
 		110,
 		68
 	],
-	"vlc_heads_skeleton.png": [
+	"vlf_heads_skeleton.png": [
 		125,
 		125,
 		125
 	],
-	"vlc_totems_totem.png": [
+	"vlf_totems_totem.png": [
 		185,
 		139,
 		52
 	],
-	"vlc_brewing_burner_active.png": [
+	"vlf_brewing_burner_active.png": [
 		212,
 		161,
 		132
 	],
-	"vlc_brewing_burner.png": [
+	"vlf_brewing_burner.png": [
 		183,
 		183,
 		183
 	],
-	"vlc_brewing_potion_bg.png": [
+	"vlf_brewing_potion_bg.png": [
 		204,
 		204,
 		204
 	],
-	"vlc_brewing_fuel_bg.png": [
+	"vlf_brewing_fuel_bg.png": [
 		200,
 		200,
 		200
 	],
-	"vlc_brewing_bubbles_active.png": [
+	"vlf_brewing_bubbles_active.png": [
 		186,
 		186,
 		186
 	],
-	"vlc_brewing_bottle_bg.png": [
+	"vlf_brewing_bottle_bg.png": [
 		204,
 		204,
 		204
 	],
-	"vlc_brewing_top.png": [
+	"vlf_brewing_top.png": [
 		139,
 		130,
 		126
 	],
-	"vlc_brewing_base.png": [
+	"vlf_brewing_base.png": [
 		130,
 		122,
 		118
 	],
-	"vlc_brewing_side.png": [
+	"vlf_brewing_side.png": [
 		175,
 		156,
 		160
 	],
-	"vlc_brewing_inventory.png": [
+	"vlf_brewing_inventory.png": [
 		168,
 		168,
 		168
 	],
-	"vlc_brewing_bubbles.png": [
+	"vlf_brewing_bubbles.png": [
 		154,
 		154,
 		154
 	],
-	"vlc_brewing_bubble_sprite.png": [
+	"vlf_brewing_bubble_sprite.png": [
 		167,
 		167,
 		167
@@ -5264,107 +5264,107 @@
 		208,
 		207
 	],
-	"vlc_mangrove_roots_side.png": [
+	"vlf_mangrove_roots_side.png": [
 		94,
 		72,
 		48
 	],
-	"vlc_mangrove_log_top.png": [
+	"vlf_mangrove_log_top.png": [
 		122,
 		66,
 		54
 	],
-	"vlc_mangrove_door_bottom.png": [
+	"vlf_mangrove_door_bottom.png": [
 		124,
 		61,
 		55
 	],
-	"vlc_mangrove_roots_top.png": [
+	"vlf_mangrove_roots_top.png": [
 		96,
 		74,
 		49
 	],
-	"vlc_mangrove_leaves.png": [
+	"vlf_mangrove_leaves.png": [
 		143,
 		130,
 		109
 	],
-	"vlc_mangrove_propagule_item.png": [
+	"vlf_mangrove_propagule_item.png": [
 		70,
 		113,
 		46
 	],
-	"vlc_mangrove_propagule.png": [
+	"vlf_mangrove_propagule.png": [
 		70,
 		114,
 		46
 	],
-	"vlc_mangrove_door_top.png": [
+	"vlf_mangrove_door_top.png": [
 		125,
 		61,
 		55
 	],
-	"vlc_mangrove_log.png": [
+	"vlf_mangrove_log.png": [
 		87,
 		67,
 		46
 	],
-	"vlc_stripped_mangrove_log_side.png": [
+	"vlf_stripped_mangrove_log_side.png": [
 		140,
 		68,
 		57
 	],
-	"vlc_mangrove_fence_gate.png": [
+	"vlf_mangrove_fence_gate.png": [
 		123,
 		60,
 		54
 	],
-	"vlc_mangrove_doors.png": [
+	"vlf_mangrove_doors.png": [
 		120,
 		59,
 		54
 	],
-	"vlc_mangrove_fence.png": [
+	"vlf_mangrove_fence.png": [
 		123,
 		60,
 		54
 	],
-	"vlc_mangrove_planks.png": [
+	"vlf_mangrove_planks.png": [
 		123,
 		60,
 		54
 	],
-	"vlc_mangrove_trapdoor.png": [
+	"vlf_mangrove_trapdoor.png": [
 		121,
 		60,
 		55
 	],
-	"vlc_stripped_mangrove_log_top.png": [
+	"vlf_stripped_mangrove_log_top.png": [
 		126,
 		62,
 		56
 	],
-	"vlc_mangrove_trapdoor_side.png": [
+	"vlf_mangrove_trapdoor_side.png": [
 		122,
 		60,
 		54
 	],
-	"vlc_mangrove_propagule_hanging.png": [
+	"vlf_mangrove_propagule_hanging.png": [
 		77,
 		97,
 		47
 	],
-	"vlc_stairs_turntexture.png": [
+	"vlf_stairs_turntexture.png": [
 		255,
 		0,
 		255
 	],
-	"vlc_stairs_stone_slab_top.png": [
+	"vlf_stairs_stone_slab_top.png": [
 		127,
 		118,
 		114
 	],
-	"vlc_stairs_stone_slab_side.png": [
+	"vlf_stairs_stone_slab_side.png": [
 		127,
 		117,
 		113
@@ -5804,7 +5804,7 @@
 		255,
 		255
 	],
-	"vlc_signs_sign_greyscale.png": [
+	"vlf_signs_sign_greyscale.png": [
 		216,
 		216,
 		216
@@ -6079,7 +6079,7 @@
 		61,
 		35
 	],
-	"vlc_signs_sign_dark.png": [
+	"vlf_signs_sign_dark.png": [
 		82,
 		59,
 		34
@@ -6164,7 +6164,7 @@
 		255,
 		255
 	],
-	"vlc_signs_sign.png": [
+	"vlf_signs_sign.png": [
 		114,
 		89,
 		69
@@ -6344,222 +6344,222 @@
 		255,
 		255
 	],
-	"vlc_banners_item_overlay.png": [
+	"vlf_banners_item_overlay.png": [
 		240,
 		240,
 		240
 	],
-	"vlc_banners_item_base.png": [
+	"vlf_banners_item_base.png": [
 		103,
 		89,
 		75
 	],
-	"vlc_banners_stripe_bottom.png": [
+	"vlf_banners_stripe_bottom.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_base_inverted.png": [
+	"vlf_banners_base_inverted.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_diagonal_up_left.png": [
+	"vlf_banners_diagonal_up_left.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_banner_base.png": [
+	"vlf_banners_banner_base.png": [
 		215,
 		206,
 		193
 	],
-	"vlc_banners_gradient_up.png": [
+	"vlf_banners_gradient_up.png": [
 		254,
 		254,
 		254
 	],
-	"vlc_banners_diagonal_up_right.png": [
+	"vlf_banners_diagonal_up_right.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_bricks.png": [
+	"vlf_banners_bricks.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_half_horizontal_bottom.png": [
+	"vlf_banners_half_horizontal_bottom.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_half_horizontal.png": [
+	"vlf_banners_half_horizontal.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_base.png": [
+	"vlf_banners_base.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_rhombus.png": [
+	"vlf_banners_rhombus.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_triangles_top.png": [
+	"vlf_banners_triangles_top.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_square_top_left.png": [
+	"vlf_banners_square_top_left.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_thing.png": [
+	"vlf_banners_thing.png": [
 		253,
 		253,
 		253
 	],
-	"vlc_banners_small_stripes.png": [
+	"vlf_banners_small_stripes.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_triangle_bottom.png": [
+	"vlf_banners_triangle_bottom.png": [
 		254,
 		254,
 		254
 	],
-	"vlc_banners_cross.png": [
+	"vlf_banners_cross.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_square_bottom_right.png": [
+	"vlf_banners_square_bottom_right.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_stripe_right.png": [
+	"vlf_banners_stripe_right.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_circle.png": [
+	"vlf_banners_circle.png": [
 		254,
 		254,
 		254
 	],
-	"vlc_banners_fallback_wood.png": [
+	"vlf_banners_fallback_wood.png": [
 		102,
 		88,
 		74
 	],
-	"vlc_banners_flower.png": [
+	"vlf_banners_flower.png": [
 		254,
 		254,
 		254
 	],
-	"vlc_banners_stripe_top.png": [
+	"vlf_banners_stripe_top.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_straight_cross.png": [
+	"vlf_banners_straight_cross.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_triangle_top.png": [
+	"vlf_banners_triangle_top.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_half_vertical_right.png": [
+	"vlf_banners_half_vertical_right.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_gradient.png": [
+	"vlf_banners_gradient.png": [
 		254,
 		254,
 		254
 	],
-	"vlc_banners_diagonal_right.png": [
+	"vlf_banners_diagonal_right.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_border.png": [
+	"vlf_banners_border.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_skull.png": [
+	"vlf_banners_skull.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_diagonal_left.png": [
+	"vlf_banners_diagonal_left.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_half_vertical.png": [
+	"vlf_banners_half_vertical.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_stripe_left.png": [
+	"vlf_banners_stripe_left.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_stripe_downright.png": [
+	"vlf_banners_stripe_downright.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_stripe_downleft.png": [
+	"vlf_banners_stripe_downleft.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_triangles_bottom.png": [
+	"vlf_banners_triangles_bottom.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_curly_border.png": [
+	"vlf_banners_curly_border.png": [
 		254,
 		254,
 		254
 	],
-	"vlc_banners_stripe_center.png": [
+	"vlf_banners_stripe_center.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_square_bottom_left.png": [
+	"vlf_banners_square_bottom_left.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_creeper.png": [
+	"vlf_banners_creeper.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_square_top_right.png": [
+	"vlf_banners_square_top_right.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_banners_stripe_middle.png": [
+	"vlf_banners_stripe_middle.png": [
 		255,
 		255,
 		255
@@ -6589,7 +6589,7 @@
 		74,
 		66
 	],
-	"vlc_crimson_warped_trapdoor.png": [
+	"vlf_crimson_warped_trapdoor.png": [
 		37,
 		58,
 		53
@@ -6599,7 +6599,7 @@
 		36,
 		38
 	],
-	"vlc_doors_door_warped_side_lower.png": [
+	"vlf_doors_door_warped_side_lower.png": [
 		86,
 		82,
 		71
@@ -6619,27 +6619,27 @@
 		54,
 		45
 	],
-	"vlc_doors_door_crimson_side_upper.png": [
+	"vlf_doors_door_crimson_side_upper.png": [
 		100,
 		76,
 		69
 	],
-	"vlc_crimson_weeping_vines.png": [
+	"vlf_crimson_weeping_vines.png": [
 		142,
 		40,
 		36
 	],
-	"vlc_crimson_crimson_door_top.png": [
+	"vlf_crimson_crimson_door_top.png": [
 		89,
 		40,
 		47
 	],
-	"vlc_crimson_warped_fence_top.png": [
+	"vlf_crimson_warped_fence_top.png": [
 		30,
 		38,
 		36
 	],
-	"vlc_doors_door_crimson_side_lower.png": [
+	"vlf_doors_door_crimson_side_lower.png": [
 		100,
 		76,
 		69
@@ -6649,7 +6649,7 @@
 		106,
 		82
 	],
-	"vlc_crimson_crimson_fence_top.png": [
+	"vlf_crimson_crimson_fence_top.png": [
 		51,
 		30,
 		32
@@ -6669,7 +6669,7 @@
 		0,
 		0
 	],
-	"vlc_crimson_crimson_trapdoor.png": [
+	"vlf_crimson_crimson_trapdoor.png": [
 		86,
 		40,
 		47
@@ -6704,27 +6704,27 @@
 		92,
 		80
 	],
-	"vlc_crimson_warped_door_bottom.png": [
+	"vlf_crimson_warped_door_bottom.png": [
 		40,
 		67,
 		61
 	],
-	"vlc_crimson_crimson_trapdoor_side.png": [
+	"vlf_crimson_crimson_trapdoor_side.png": [
 		84,
 		40,
 		47
 	],
-	"vlc_crimson_crimson_fence_side.png": [
+	"vlf_crimson_crimson_fence_side.png": [
 		77,
 		33,
 		38
 	],
-	"vlc_crimson_warped_door.png": [
+	"vlf_crimson_warped_door.png": [
 		40,
 		68,
 		62
 	],
-	"vlc_crimson_crimson_door_bottom.png": [
+	"vlf_crimson_crimson_door_bottom.png": [
 		88,
 		40,
 		46
@@ -6734,7 +6734,7 @@
 		84,
 		78
 	],
-	"vlc_crimson_warped_trapdoor_side.png": [
+	"vlf_crimson_warped_trapdoor_side.png": [
 		36,
 		62,
 		55
@@ -6749,27 +6749,27 @@
 		40,
 		48
 	],
-	"vlc_doors_door_warped_side_upper.png": [
+	"vlf_doors_door_warped_side_upper.png": [
 		86,
 		82,
 		71
 	],
-	"vlc_crimson_warped_fence_side.png": [
+	"vlf_crimson_warped_fence_side.png": [
 		31,
 		51,
 		46
 	],
-	"vlc_crimson_warped_door_top.png": [
+	"vlf_crimson_warped_door_top.png": [
 		41,
 		69,
 		63
 	],
-	"vlc_crimson_crimson_door.png": [
+	"vlf_crimson_crimson_door.png": [
 		79,
 		40,
 		46
 	],
-	"vlc_crimson_warped_fence.png": [
+	"vlf_crimson_warped_fence.png": [
 		33,
 		69,
 		60
@@ -6814,432 +6814,432 @@
 		40,
 		48
 	],
-	"vlc_crimson_crimson_fence.png": [
+	"vlf_crimson_crimson_fence.png": [
 		105,
 		40,
 		48
 	],
-	"vlc_armor_chestplate_iron.png": [
+	"vlf_armor_chestplate_iron.png": [
 		130,
 		120,
 		112
 	],
-	"vlc_armor_inv_chestplate_leather.png": [
+	"vlf_armor_inv_chestplate_leather.png": [
 		143,
 		136,
 		118
 	],
-	"vlc_armor_boots_diamond.png": [
+	"vlf_armor_boots_diamond.png": [
 		87,
 		132,
 		157
 	],
-	"vlc_armor_helmet_leather.png": [
+	"vlf_armor_helmet_leather.png": [
 		130,
 		121,
 		102
 	],
-	"vlc_armor_boots_gold.png": [
+	"vlf_armor_boots_gold.png": [
 		160,
 		118,
 		42
 	],
-	"vlc_armor_inv_helmet_diamond.png": [
+	"vlf_armor_inv_helmet_diamond.png": [
 		109,
 		130,
 		142
 	],
-	"vlc_armor_inv_chestplate_gold.png": [
+	"vlf_armor_inv_chestplate_gold.png": [
 		171,
 		128,
 		55
 	],
-	"vlc_armor_helmet_gold.png": [
+	"vlf_armor_helmet_gold.png": [
 		178,
 		136,
 		56
 	],
-	"vlc_armor_inv_chestplate_chain.png": [
+	"vlf_armor_inv_chestplate_chain.png": [
 		128,
 		105,
 		96
 	],
-	"vlc_armor_inv_leggings_gold.png": [
+	"vlf_armor_inv_leggings_gold.png": [
 		175,
 		145,
 		97
 	],
-	"vlc_armor_chestplate_chain.png": [
+	"vlf_armor_chestplate_chain.png": [
 		119,
 		98,
 		93
 	],
-	"vlc_armor_inv_helmet_iron.png": [
+	"vlf_armor_inv_helmet_iron.png": [
 		143,
 		138,
 		133
 	],
-	"vlc_armor_inv_helmet_netherite.png": [
+	"vlf_armor_inv_helmet_netherite.png": [
 		49,
 		43,
 		38
 	],
-	"vlc_armor_chestplate_diamond.png": [
+	"vlf_armor_chestplate_diamond.png": [
 		110,
 		157,
 		183
 	],
-	"vlc_armor_elytra.png": [
+	"vlf_armor_elytra.png": [
 		75,
 		121,
 		147
 	],
-	"vlc_armor_inv_boots_gold.png": [
+	"vlf_armor_inv_boots_gold.png": [
 		152,
 		113,
 		44
 	],
-	"vlc_armor_inv_leggings_diamond.png": [
+	"vlf_armor_inv_leggings_diamond.png": [
 		75,
 		93,
 		103
 	],
-	"vlc_armor_boots_leather.png": [
+	"vlf_armor_boots_leather.png": [
 		122,
 		111,
 		93
 	],
-	"vlc_armor_inv_chestplate_iron.png": [
+	"vlf_armor_inv_chestplate_iron.png": [
 		135,
 		125,
 		115
 	],
-	"vlc_armor_chestplate_gold.png": [
+	"vlf_armor_chestplate_gold.png": [
 		157,
 		117,
 		55
 	],
-	"vlc_armor_leggings_diamond.png": [
+	"vlf_armor_leggings_diamond.png": [
 		78,
 		102,
 		115
 	],
-	"vlc_armor_inv_boots_leather.png": [
+	"vlf_armor_inv_boots_leather.png": [
 		130,
 		121,
 		103
 	],
-	"vlc_armor_leggings_chain.png": [
+	"vlf_armor_leggings_chain.png": [
 		64,
 		66,
 		69
 	],
-	"vlc_armor_leggings_iron.png": [
+	"vlf_armor_leggings_iron.png": [
 		132,
 		128,
 		123
 	],
-	"vlc_armor_inv_helmet_chain.png": [
+	"vlf_armor_inv_helmet_chain.png": [
 		140,
 		137,
 		132
 	],
-	"vlc_armor_boots_netherite.png": [
+	"vlf_armor_boots_netherite.png": [
 		77,
 		67,
 		57
 	],
-	"vlc_armor_boots_iron.png": [
+	"vlf_armor_boots_iron.png": [
 		118,
 		113,
 		109
 	],
-	"vlc_armor_inv_chestplate_diamond.png": [
+	"vlf_armor_inv_chestplate_diamond.png": [
 		106,
 		146,
 		168
 	],
-	"vlc_armor_helmet_iron.png": [
+	"vlf_armor_helmet_iron.png": [
 		153,
 		149,
 		144
 	],
-	"vlc_armor_inv_chestplate_netherite.png": [
+	"vlf_armor_inv_chestplate_netherite.png": [
 		58,
 		50,
 		44
 	],
-	"vlc_armor_chestplate_leather.png": [
+	"vlf_armor_chestplate_leather.png": [
 		139,
 		132,
 		112
 	],
-	"vlc_armor_inv_leggings_netherite.png": [
+	"vlf_armor_inv_leggings_netherite.png": [
 		60,
 		52,
 		45
 	],
-	"vlc_armor_boots_chain.png": [
+	"vlf_armor_boots_chain.png": [
 		88,
 		88,
 		88
 	],
-	"vlc_armor_inv_helmet_leather.png": [
+	"vlf_armor_inv_helmet_leather.png": [
 		140,
 		132,
 		114
 	],
-	"vlc_armor_chestplate_netherite.png": [
+	"vlf_armor_chestplate_netherite.png": [
 		58,
 		50,
 		44
 	],
-	"vlc_armor_inv_boots_iron.png": [
+	"vlf_armor_inv_boots_iron.png": [
 		134,
 		129,
 		124
 	],
-	"vlc_armor_inv_leggings_chain.png": [
+	"vlf_armor_inv_leggings_chain.png": [
 		81,
 		81,
 		82
 	],
-	"vlc_armor_helmet_diamond.png": [
+	"vlf_armor_helmet_diamond.png": [
 		70,
 		85,
 		93
 	],
-	"vlc_armor_leggings_gold.png": [
+	"vlf_armor_leggings_gold.png": [
 		182,
 		158,
 		126
 	],
-	"vlc_armor_inv_leggings_iron.png": [
+	"vlf_armor_inv_leggings_iron.png": [
 		130,
 		125,
 		120
 	],
-	"vlc_armor_helmet_chain.png": [
+	"vlf_armor_helmet_chain.png": [
 		127,
 		124,
 		121
 	],
-	"vlc_armor_inv_leggings_leather.png": [
+	"vlf_armor_inv_leggings_leather.png": [
 		126,
 		116,
 		98
 	],
-	"vlc_armor_inv_boots_chain.png": [
+	"vlf_armor_inv_boots_chain.png": [
 		69,
 		69,
 		72
 	],
-	"vlc_armor_leggings_netherite.png": [
+	"vlf_armor_leggings_netherite.png": [
 		66,
 		57,
 		49
 	],
-	"vlc_armor_inv_elytra.png": [
+	"vlf_armor_inv_elytra.png": [
 		76,
 		122,
 		148
 	],
-	"vlc_armor_leggings_leather.png": [
+	"vlf_armor_leggings_leather.png": [
 		119,
 		108,
 		91
 	],
-	"vlc_armor_inv_boots_netherite.png": [
+	"vlf_armor_inv_boots_netherite.png": [
 		71,
 		62,
 		53
 	],
-	"vlc_armor_helmet_netherite.png": [
+	"vlf_armor_helmet_netherite.png": [
 		49,
 		44,
 		39
 	],
-	"vlc_armor_inv_helmet_gold.png": [
+	"vlf_armor_inv_helmet_gold.png": [
 		178,
 		134,
 		51
 	],
-	"vlc_armor_inv_boots_diamond.png": [
+	"vlf_armor_inv_boots_diamond.png": [
 		75,
 		121,
 		147
 	],
-	"vlc_enchanting_glyph_10.png": [
+	"vlf_enchanting_glyph_10.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_glyph_18.png": [
+	"vlf_enchanting_glyph_18.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_glyph_12.png": [
+	"vlf_enchanting_glyph_12.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_button.png": [
+	"vlf_enchanting_button.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_enchanting_lapis_background.png": [
+	"vlf_enchanting_lapis_background.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_enchanting_number_3_off.png": [
+	"vlf_enchanting_number_3_off.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_enchanting_book_open.png": [
+	"vlf_enchanting_book_open.png": [
 		153,
 		123,
 		99
 	],
-	"vlc_enchanting_table_side.png": [
+	"vlf_enchanting_table_side.png": [
 		66,
 		58,
 		55
 	],
-	"vlc_enchanting_book_enchanted.png": [
+	"vlf_enchanting_book_enchanted.png": [
 		122,
 		69,
 		46
 	],
-	"vlc_enchanting_number_1_off.png": [
+	"vlf_enchanting_number_1_off.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_enchanting_number_2.png": [
+	"vlf_enchanting_number_2.png": [
 		149,
 		46,
 		39
 	],
-	"vlc_enchanting_book_closed.png": [
+	"vlf_enchanting_book_closed.png": [
 		112,
 		78,
 		55
 	],
-	"vlc_enchanting_table_top.png": [
+	"vlf_enchanting_table_top.png": [
 		88,
 		86,
 		84
 	],
-	"vlc_enchanting_glyph_3.png": [
+	"vlf_enchanting_glyph_3.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_glyph_1.png": [
+	"vlf_enchanting_glyph_1.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_glyph_16.png": [
+	"vlf_enchanting_glyph_16.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_number_1.png": [
+	"vlf_enchanting_number_1.png": [
 		149,
 		45,
 		39
 	],
-	"vlc_enchanting_button_background.png": [
+	"vlf_enchanting_button_background.png": [
 		229,
 		202,
 		171
 	],
-	"vlc_enchanting_glyph_17.png": [
+	"vlf_enchanting_glyph_17.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_glyph_8.png": [
+	"vlf_enchanting_glyph_8.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_glyph_5.png": [
+	"vlf_enchanting_glyph_5.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_glyph_2.png": [
+	"vlf_enchanting_glyph_2.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_button_off.png": [
+	"vlf_enchanting_button_off.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_enchanting_glyph_7.png": [
+	"vlf_enchanting_glyph_7.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_glyph_13.png": [
+	"vlf_enchanting_glyph_13.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_glyph_14.png": [
+	"vlf_enchanting_glyph_14.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_table_bottom.png": [
+	"vlf_enchanting_table_bottom.png": [
 		58,
 		51,
 		52
 	],
-	"vlc_enchanting_glyph_11.png": [
+	"vlf_enchanting_glyph_11.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_number_2_off.png": [
+	"vlf_enchanting_number_2_off.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_enchanting_glyph_6.png": [
+	"vlf_enchanting_glyph_6.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_button_hovered.png": [
+	"vlf_enchanting_button_hovered.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_enchanting_glyph_4.png": [
+	"vlf_enchanting_glyph_4.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_glyph_9.png": [
+	"vlf_enchanting_glyph_9.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_glyph_15.png": [
+	"vlf_enchanting_glyph_15.png": [
 		209,
 		209,
 		231
 	],
-	"vlc_enchanting_number_3.png": [
+	"vlf_enchanting_number_3.png": [
 		151,
 		47,
 		40
@@ -7254,7 +7254,7 @@
 		54,
 		57
 	],
-	"vlc_tnt_blink.png": [
+	"vlf_tnt_blink.png": [
 		255,
 		255,
 		255
@@ -7309,82 +7309,82 @@
 		239,
 		239
 	],
-	"vlc_chests_normal_present.png": [
+	"vlf_chests_normal_present.png": [
 		181,
 		46,
 		19
 	],
-	"vlc_chests_ender.png": [
+	"vlf_chests_ender.png": [
 		70,
 		62,
 		58
 	],
-	"vlc_chests_trapped_present.png": [
+	"vlf_chests_trapped_present.png": [
 		73,
 		100,
 		151
 	],
-	"vlc_chests_noise.png": [
+	"vlf_chests_noise.png": [
 		192,
 		186,
 		189
 	],
-	"vlc_chests_trapped_double.png": [
+	"vlf_chests_trapped_double.png": [
 		98,
 		78,
 		62
 	],
-	"vlc_chests_trapped_double_present.png": [
+	"vlf_chests_trapped_double_present.png": [
 		143,
 		77,
 		22
 	],
-	"vlc_chests_normal_double_present.png": [
+	"vlf_chests_normal_double_present.png": [
 		72,
 		90,
 		12
 	],
-	"vlc_chests_normal.png": [
+	"vlf_chests_normal.png": [
 		95,
 		76,
 		61
 	],
-	"vlc_chests_trapped.png": [
+	"vlf_chests_trapped.png": [
 		95,
 		76,
 		61
 	],
-	"vlc_chests_noise_double.png": [
+	"vlf_chests_noise_double.png": [
 		191,
 		189,
 		189
 	],
-	"vlc_chests_normal_double.png": [
+	"vlf_chests_normal_double.png": [
 		98,
 		78,
 		62
 	],
-	"vlc_chests_ender_present.png": [
+	"vlf_chests_ender_present.png": [
 		123,
 		76,
 		93
 	],
-	"vlc_walls_cobble_mossy_wall_side.png": [
+	"vlf_walls_cobble_mossy_wall_side.png": [
 		86,
 		98,
 		83
 	],
-	"vlc_walls_cobble_wall_side.png": [
+	"vlf_walls_cobble_wall_side.png": [
 		109,
 		103,
 		101
 	],
-	"vlc_walls_cobble_wall_top.png": [
+	"vlf_walls_cobble_wall_top.png": [
 		120,
 		114,
 		112
 	],
-	"vlc_walls_cobble_mossy_wall_top.png": [
+	"vlf_walls_cobble_mossy_wall_top.png": [
 		53,
 		97,
 		61
@@ -7394,17 +7394,17 @@
 		59,
 		58
 	],
-	"vlc_mushrooms_mushroom_block_skin_brown.png": [
+	"vlf_mushrooms_mushroom_block_skin_brown.png": [
 		131,
 		86,
 		68
 	],
-	"vlc_mushrooms_mushroom_block_skin_red.png": [
+	"vlf_mushrooms_mushroom_block_skin_red.png": [
 		137,
 		39,
 		25
 	],
-	"vlc_mushrooms_mushroom_block_skin_stem.png": [
+	"vlf_mushrooms_mushroom_block_skin_stem.png": [
 		204,
 		183,
 		149
@@ -7414,7 +7414,7 @@
 		81,
 		59
 	],
-	"vlc_mushrooms_mushroom_block_inside.png": [
+	"vlf_mushrooms_mushroom_block_inside.png": [
 		218,
 		175,
 		136
@@ -7454,12 +7454,12 @@
 		236,
 		63
 	],
-	"vlc_droppers_dropper_front_vertical.png": [
+	"vlf_droppers_dropper_front_vertical.png": [
 		118,
 		108,
 		103
 	],
-	"vlc_droppers_dropper_front_horizontal.png": [
+	"vlf_droppers_dropper_front_horizontal.png": [
 		110,
 		101,
 		96
@@ -7554,22 +7554,22 @@
 		126,
 		126
 	],
-	"vlc_target_target_top.png": [
+	"vlf_target_target_top.png": [
 		177,
 		117,
 		94
 	],
-	"vlc_target_target_side.png": [
+	"vlf_target_target_side.png": [
 		177,
 		117,
 		94
 	],
-	"vlc_dispensers_dispenser_front_horizontal.png": [
+	"vlf_dispensers_dispenser_front_horizontal.png": [
 		105,
 		96,
 		92
 	],
-	"vlc_dispensers_dispenser_front_vertical.png": [
+	"vlf_dispensers_dispenser_front_vertical.png": [
 		115,
 		104,
 		99
@@ -7639,92 +7639,92 @@
 		83,
 		65
 	],
-	"vlc_observers_observer_side.png": [
+	"vlf_observers_observer_side.png": [
 		111,
 		103,
 		99
 	],
-	"vlc_observers_observer_back.png": [
+	"vlf_observers_observer_back.png": [
 		72,
 		67,
 		64
 	],
-	"vlc_observers_observer_top.png": [
+	"vlf_observers_observer_top.png": [
 		139,
 		128,
 		123
 	],
-	"vlc_observers_observer_front.png": [
+	"vlf_observers_observer_front.png": [
 		95,
 		80,
 		84
 	],
-	"vlc_observers_observer_back_lit.png": [
+	"vlf_observers_observer_back_lit.png": [
 		75,
 		67,
 		65
 	],
-	"vlc_comparators_ends_sub.png": [
+	"vlf_comparators_ends_sub.png": [
 		105,
 		88,
 		83
 	],
-	"vlc_comparators_sides_on.png": [
+	"vlf_comparators_sides_on.png": [
 		105,
 		87,
 		81
 	],
-	"vlc_comparators_ends_comp.png": [
+	"vlf_comparators_ends_comp.png": [
 		99,
 		88,
 		83
 	],
-	"vlc_comparators_ends_on.png": [
+	"vlf_comparators_ends_on.png": [
 		105,
 		81,
 		75
 	],
-	"vlc_comparators_sub.png": [
+	"vlf_comparators_sub.png": [
 		112,
 		25,
 		25
 	],
-	"vlc_comparators_sides_sub.png": [
+	"vlf_comparators_sides_sub.png": [
 		105,
 		88,
 		83
 	],
-	"vlc_comparators_item.png": [
+	"vlf_comparators_item.png": [
 		98,
 		83,
 		79
 	],
-	"vlc_comparators_on.png": [
+	"vlf_comparators_on.png": [
 		116,
 		102,
 		98
 	],
-	"vlc_comparators_sides_off.png": [
+	"vlf_comparators_sides_off.png": [
 		99,
 		86,
 		80
 	],
-	"vlc_comparators_sides_comp.png": [
+	"vlf_comparators_sides_comp.png": [
 		99,
 		88,
 		83
 	],
-	"vlc_comparators_comp.png": [
+	"vlf_comparators_comp.png": [
 		61,
 		20,
 		20
 	],
-	"vlc_comparators_ends_off.png": [
+	"vlf_comparators_ends_off.png": [
 		96,
 		80,
 		74
 	],
-	"vlc_comparators_off.png": [
+	"vlf_comparators_off.png": [
 		113,
 		102,
 		98
@@ -7784,22 +7784,22 @@
 		60,
 		54
 	],
-	"vlc_cocoas_cocoa_stage_1.png": [
+	"vlf_cocoas_cocoa_stage_1.png": [
 		172,
 		121,
 		69
 	],
-	"vlc_cocoas_cocoa_beans.png": [
+	"vlf_cocoas_cocoa_beans.png": [
 		104,
 		75,
 		56
 	],
-	"vlc_cocoas_cocoa_stage_2.png": [
+	"vlf_cocoas_cocoa_stage_2.png": [
 		134,
 		67,
 		51
 	],
-	"vlc_cocoas_cocoa_stage_0.png": [
+	"vlf_cocoas_cocoa_stage_0.png": [
 		65,
 		76,
 		39
@@ -7824,277 +7824,277 @@
 		76,
 		62
 	],
-	"vlc_shield_pattern_half_horizontal.png": [
+	"vlf_shield_pattern_half_horizontal.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_base.png": [
+	"vlf_shield_pattern_base.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_triangles_bottom.png": [
+	"vlf_shield_pattern_triangles_bottom.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_item_overlay.png": [
+	"vlf_shield_item_overlay.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield.png": [
+	"vlf_shield.png": [
 		76,
 		61,
 		49
 	],
-	"vlc_shield_pattern_stripe_bottom.png": [
+	"vlf_shield_pattern_stripe_bottom.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_triangle_bottom.png": [
+	"vlf_shield_pattern_triangle_bottom.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_bricks.png": [
+	"vlf_shield_pattern_bricks.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_thing.png": [
+	"vlf_shield_pattern_thing.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_square_top_right.png": [
+	"vlf_shield_pattern_square_top_right.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_stripe_downright.png": [
+	"vlf_shield_pattern_stripe_downright.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_half_horizontal_bottom.png": [
+	"vlf_shield_pattern_half_horizontal_bottom.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_half_vertical_right.png": [
+	"vlf_shield_pattern_half_vertical_right.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_diagonal_right.png": [
+	"vlf_shield_pattern_diagonal_right.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_rhombus.png": [
+	"vlf_shield_pattern_rhombus.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_stripe_middle.png": [
+	"vlf_shield_pattern_stripe_middle.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_stripe_left.png": [
+	"vlf_shield_pattern_stripe_left.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_creeper.png": [
+	"vlf_shield_pattern_creeper.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_diagonal_up_left.png": [
+	"vlf_shield_pattern_diagonal_up_left.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_stripe_center.png": [
+	"vlf_shield_pattern_stripe_center.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_square_top_left.png": [
+	"vlf_shield_pattern_square_top_left.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_straight_cross.png": [
+	"vlf_shield_pattern_straight_cross.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_square_bottom_right.png": [
+	"vlf_shield_pattern_square_bottom_right.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_square_bottom_left.png": [
+	"vlf_shield_pattern_square_bottom_left.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_border.png": [
+	"vlf_shield_pattern_border.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_stripe_downleft.png": [
+	"vlf_shield_pattern_stripe_downleft.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_triangle_top.png": [
+	"vlf_shield_pattern_triangle_top.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_diagonal_left.png": [
+	"vlf_shield_pattern_diagonal_left.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_hud.png": [
+	"vlf_shield_hud.png": [
 		74,
 		58,
 		44
 	],
-	"vlc_shield_pattern_flower.png": [
+	"vlf_shield_pattern_flower.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_gradient.png": [
+	"vlf_shield_pattern_gradient.png": [
 		254,
 		254,
 		254
 	],
-	"vlc_shield_pattern_gradient_up.png": [
+	"vlf_shield_pattern_gradient_up.png": [
 		254,
 		254,
 		254
 	],
-	"vlc_shield_pattern_stripe_top.png": [
+	"vlf_shield_pattern_stripe_top.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_triangles_top.png": [
+	"vlf_shield_pattern_triangles_top.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_diagonal_up_right.png": [
+	"vlf_shield_pattern_diagonal_up_right.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_curly_border.png": [
+	"vlf_shield_pattern_curly_border.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_cross.png": [
+	"vlf_shield_pattern_cross.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_half_vertical.png": [
+	"vlf_shield_pattern_half_vertical.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_small_stripes.png": [
+	"vlf_shield_pattern_small_stripes.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_stripe_right.png": [
+	"vlf_shield_pattern_stripe_right.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_shield_pattern_skull.png": [
+	"vlf_shield_pattern_skull.png": [
 		247,
 		247,
 		247
 	],
-	"vlc_shield_pattern_circle.png": [
+	"vlf_shield_pattern_circle.png": [
 		239,
 		239,
 		239
 	],
-	"vlc_shield_base_nopattern.png": [
+	"vlf_shield_base_nopattern.png": [
 		72,
 		59,
 		49
 	],
-	"vlc_flowerpots_flowerpot.png": [
+	"vlf_flowerpots_flowerpot.png": [
 		120,
 		55,
 		47
 	],
-	"vlc_flowerpots_flowerpot_inventory.png": [
+	"vlf_flowerpots_flowerpot_inventory.png": [
 		121,
 		54,
 		45
 	],
-	"vlc_flowerpots_cactus.png": [
+	"vlf_flowerpots_cactus.png": [
 		109,
 		83,
 		52
 	],
-	"vlc_anvils_anvil_top_damaged_1.png": [
+	"vlf_anvils_anvil_top_damaged_1.png": [
 		50,
 		50,
 		50
 	],
-	"vlc_anvils_inventory_cross.png": [
+	"vlf_anvils_inventory_cross.png": [
 		157,
 		157,
 		157
 	],
-	"vlc_anvils_inventory_hammer.png": [
+	"vlf_anvils_inventory_hammer.png": [
 		146,
 		138,
 		133
 	],
-	"vlc_anvils_anvil_top_damaged_0.png": [
+	"vlf_anvils_anvil_top_damaged_0.png": [
 		52,
 		52,
 		52
 	],
-	"vlc_anvils_anvil_top_damaged_2.png": [
+	"vlf_anvils_anvil_top_damaged_2.png": [
 		48,
 		48,
 		48
 	],
-	"vlc_anvils_anvil_side.png": [
+	"vlf_anvils_anvil_side.png": [
 		45,
 		45,
 		45
 	],
-	"vlc_anvils_inventory_arrow.png": [
+	"vlf_anvils_inventory_arrow.png": [
 		157,
 		157,
 		157
 	],
-	"vlc_anvils_anvil_base.png": [
+	"vlf_anvils_anvil_base.png": [
 		40,
 		40,
 		40
 	],
-	"vlc_anvils_inventory.png": [
+	"vlf_anvils_inventory.png": [
 		157,
 		157,
 		157
@@ -8119,32 +8119,32 @@
 		93,
 		76
 	],
-	"vlc_smithing_table_inventory.png": [
+	"vlf_smithing_table_inventory.png": [
 		157,
 		157,
 		157
 	],
-	"vlc_smithing_table_top.png": [
+	"vlf_smithing_table_top.png": [
 		48,
 		46,
 		44
 	],
-	"vlc_smithing_table_front.png": [
+	"vlf_smithing_table_front.png": [
 		89,
 		73,
 		61
 	],
-	"vlc_smithing_table_bottom.png": [
+	"vlf_smithing_table_bottom.png": [
 		82,
 		65,
 		50
 	],
-	"vlc_smithing_table_side.png": [
+	"vlf_smithing_table_side.png": [
 		85,
 		70,
 		59
 	],
-	"vlc_smithing_table_inventory_hammer.png": [
+	"vlf_smithing_table_inventory_hammer.png": [
 		58,
 		50,
 		44
@@ -8169,47 +8169,47 @@
 		93,
 		52
 	],
-	"vlc_barrels_barrel_bottom.png": [
+	"vlf_barrels_barrel_bottom.png": [
 		78,
 		61,
 		47
 	],
-	"vlc_barrels_barrel_side.png": [
+	"vlf_barrels_barrel_side.png": [
 		70,
 		57,
 		47
 	],
-	"vlc_barrels_barrel_top_open.png": [
+	"vlf_barrels_barrel_top_open.png": [
 		58,
 		43,
 		35
 	],
-	"vlc_barrels_barrel_top.png": [
+	"vlf_barrels_barrel_top.png": [
 		79,
 		61,
 		48
 	],
-	"vlc_hoppers_item.png": [
+	"vlf_hoppers_item.png": [
 		44,
 		44,
 		44
 	],
-	"vlc_hoppers_hopper_outside.png": [
+	"vlf_hoppers_hopper_outside.png": [
 		44,
 		43,
 		43
 	],
-	"vlc_hoppers_hopper_top.png": [
+	"vlf_hoppers_hopper_top.png": [
 		43,
 		43,
 		43
 	],
-	"vlc_hoppers_hopper_inside.png": [
+	"vlf_hoppers_hopper_inside.png": [
 		50,
 		50,
 		50
 	],
-	"vlc_colorblocks_concrete_powder_cyan.png": [
+	"vlf_colorblocks_concrete_powder_cyan.png": [
 		38,
 		150,
 		159
@@ -8219,17 +8219,17 @@
 		71,
 		123
 	],
-	"vlc_colorblocks_glazed_terracotta_grey.png": [
+	"vlf_colorblocks_glazed_terracotta_grey.png": [
 		90,
 		90,
 		90
 	],
-	"vlc_colorblocks_concrete_powder_light_blue.png": [
+	"vlf_colorblocks_concrete_powder_light_blue.png": [
 		75,
 		181,
 		212
 	],
-	"vlc_colorblocks_concrete_white.png": [
+	"vlf_colorblocks_concrete_white.png": [
 		208,
 		214,
 		215
@@ -8249,7 +8249,7 @@
 		129,
 		117
 	],
-	"vlc_colorblocks_concrete_green.png": [
+	"vlf_colorblocks_concrete_green.png": [
 		75,
 		94,
 		37
@@ -8259,42 +8259,42 @@
 		197,
 		184
 	],
-	"vlc_colorblocks_concrete_blue.png": [
+	"vlf_colorblocks_concrete_blue.png": [
 		46,
 		48,
 		147
 	],
-	"vlc_colorblocks_concrete_powder_black.png": [
+	"vlf_colorblocks_concrete_powder_black.png": [
 		22,
 		26,
 		30
 	],
-	"vlc_colorblocks_concrete_lime.png": [
+	"vlf_colorblocks_concrete_lime.png": [
 		96,
 		171,
 		25
 	],
-	"vlc_colorblocks_concrete_cyan.png": [
+	"vlf_colorblocks_concrete_cyan.png": [
 		21,
 		123,
 		140
 	],
-	"vlc_colorblocks_concrete_silver.png": [
+	"vlf_colorblocks_concrete_silver.png": [
 		128,
 		129,
 		118
 	],
-	"vlc_colorblocks_concrete_powder_red.png": [
+	"vlf_colorblocks_concrete_powder_red.png": [
 		172,
 		57,
 		52
 	],
-	"vlc_colorblocks_concrete_powder_brown.png": [
+	"vlf_colorblocks_concrete_powder_brown.png": [
 		128,
 		86,
 		54
 	],
-	"vlc_colorblocks_concrete_powder_white.png": [
+	"vlf_colorblocks_concrete_powder_white.png": [
 		224,
 		225,
 		225
@@ -8304,27 +8304,27 @@
 		52,
 		46
 	],
-	"vlc_colorblocks_glazed_terracotta_red.png": [
+	"vlf_colorblocks_glazed_terracotta_red.png": [
 		184,
 		67,
 		53
 	],
-	"vlc_colorblocks_concrete_powder_green.png": [
+	"vlf_colorblocks_concrete_powder_green.png": [
 		104,
 		127,
 		45
 	],
-	"vlc_colorblocks_concrete_orange.png": [
+	"vlf_colorblocks_concrete_orange.png": [
 		226,
 		101,
 		1
 	],
-	"vlc_colorblocks_glazed_terracotta_orange.png": [
+	"vlf_colorblocks_glazed_terracotta_orange.png": [
 		170,
 		146,
 		81
 	],
-	"vlc_colorblocks_glazed_terracotta_yellow.png": [
+	"vlf_colorblocks_glazed_terracotta_yellow.png": [
 		232,
 		199,
 		99
@@ -8349,57 +8349,57 @@
 		69,
 		61
 	],
-	"vlc_colorblocks_concrete_powder_blue.png": [
+	"vlf_colorblocks_concrete_powder_blue.png": [
 		72,
 		75,
 		169
 	],
-	"vlc_colorblocks_concrete_brown.png": [
+	"vlf_colorblocks_concrete_brown.png": [
 		98,
 		60,
 		32
 	],
-	"vlc_colorblocks_glazed_terracotta_white.png": [
+	"vlf_colorblocks_glazed_terracotta_white.png": [
 		188,
 		211,
 		202
 	],
-	"vlc_colorblocks_concrete_purple.png": [
+	"vlf_colorblocks_concrete_purple.png": [
 		103,
 		32,
 		159
 	],
-	"vlc_colorblocks_glazed_terracotta_black.png": [
+	"vlf_colorblocks_glazed_terracotta_black.png": [
 		38,
 		22,
 		22
 	],
-	"vlc_colorblocks_concrete_powder_lime.png": [
+	"vlf_colorblocks_concrete_powder_lime.png": [
 		125,
 		186,
 		42
 	],
-	"vlc_colorblocks_glazed_terracotta_brown.png": [
+	"vlf_colorblocks_glazed_terracotta_brown.png": [
 		108,
 		88,
 		64
 	],
-	"vlc_colorblocks_concrete_powder_pink.png": [
+	"vlf_colorblocks_concrete_powder_pink.png": [
 		224,
 		148,
 		176
 	],
-	"vlc_colorblocks_concrete_grey.png": [
+	"vlf_colorblocks_concrete_grey.png": [
 		56,
 		59,
 		64
 	],
-	"vlc_colorblocks_glazed_terracotta_purple.png": [
+	"vlf_colorblocks_glazed_terracotta_purple.png": [
 		112,
 		49,
 		152
 	],
-	"vlc_colorblocks_concrete_powder_grey.png": [
+	"vlf_colorblocks_concrete_powder_grey.png": [
 		91,
 		98,
 		103
@@ -8414,22 +8414,22 @@
 		104,
 		87
 	],
-	"vlc_colorblocks_concrete_black.png": [
+	"vlf_colorblocks_concrete_black.png": [
 		8,
 		10,
 		15
 	],
-	"vlc_colorblocks_glazed_terracotta_magenta.png": [
+	"vlf_colorblocks_glazed_terracotta_magenta.png": [
 		210,
 		108,
 		215
 	],
-	"vlc_colorblocks_glazed_terracotta_cyan.png": [
+	"vlf_colorblocks_glazed_terracotta_cyan.png": [
 		90,
 		131,
 		136
 	],
-	"vlc_colorblocks_concrete_powder_yellow.png": [
+	"vlf_colorblocks_concrete_powder_yellow.png": [
 		230,
 		198,
 		54
@@ -8444,17 +8444,17 @@
 		92,
 		85
 	],
-	"vlc_colorblocks_concrete_light_blue.png": [
+	"vlf_colorblocks_concrete_light_blue.png": [
 		37,
 		140,
 		200
 	],
-	"vlc_colorblocks_concrete_powder_silver.png": [
+	"vlf_colorblocks_concrete_powder_silver.png": [
 		160,
 		160,
 		155
 	],
-	"vlc_colorblocks_glazed_terracotta_lime.png": [
+	"vlf_colorblocks_glazed_terracotta_lime.png": [
 		152,
 		211,
 		72
@@ -8464,52 +8464,52 @@
 		91,
 		143
 	],
-	"vlc_colorblocks_concrete_pink.png": [
+	"vlf_colorblocks_concrete_pink.png": [
 		213,
 		103,
 		144
 	],
-	"vlc_colorblocks_glazed_terracotta_green.png": [
+	"vlf_colorblocks_glazed_terracotta_green.png": [
 		111,
 		135,
 		50
 	],
-	"vlc_colorblocks_concrete_yellow.png": [
+	"vlf_colorblocks_concrete_yellow.png": [
 		241,
 		177,
 		21
 	],
-	"vlc_colorblocks_glazed_terracotta_light_blue.png": [
+	"vlf_colorblocks_glazed_terracotta_light_blue.png": [
 		99,
 		162,
 		204
 	],
-	"vlc_colorblocks_concrete_powder_orange.png": [
+	"vlf_colorblocks_concrete_powder_orange.png": [
 		227,
 		141,
 		38
 	],
-	"vlc_colorblocks_glazed_terracotta_pink.png": [
+	"vlf_colorblocks_glazed_terracotta_pink.png": [
 		251,
 		138,
 		170
 	],
-	"vlc_colorblocks_concrete_powder_magenta.png": [
+	"vlf_colorblocks_concrete_powder_magenta.png": [
 		196,
 		94,
 		189
 	],
-	"vlc_colorblocks_glazed_terracotta_blue.png": [
+	"vlf_colorblocks_glazed_terracotta_blue.png": [
 		34,
 		65,
 		117
 	],
-	"vlc_colorblocks_concrete_powder_purple.png": [
+	"vlf_colorblocks_concrete_powder_purple.png": [
 		138,
 		58,
 		180
 	],
-	"vlc_colorblocks_concrete_red.png": [
+	"vlf_colorblocks_concrete_red.png": [
 		146,
 		34,
 		34
@@ -8519,7 +8519,7 @@
 		134,
 		73
 	],
-	"vlc_colorblocks_concrete_magenta.png": [
+	"vlf_colorblocks_concrete_magenta.png": [
 		171,
 		49,
 		162
@@ -8529,7 +8529,7 @@
 		95,
 		69
 	],
-	"vlc_colorblocks_glazed_terracotta_silver.png": [
+	"vlf_colorblocks_glazed_terracotta_silver.png": [
 		134,
 		151,
 		151
@@ -8629,7 +8629,7 @@
 		25,
 		25
 	],
-	"vlc_core_reeds.png": [
+	"vlf_core_reeds.png": [
 		57,
 		100,
 		52
@@ -8644,12 +8644,12 @@
 		223,
 		235
 	],
-	"vlc_core_light_11.png": [
+	"vlf_core_light_11.png": [
 		199,
 		156,
 		92
 	],
-	"vlc_core_grass_path_top.png": [
+	"vlf_core_grass_path_top.png": [
 		125,
 		101,
 		50
@@ -8659,22 +8659,22 @@
 		90,
 		45
 	],
-	"vlc_core_mycelium_particle.png": [
+	"vlf_core_mycelium_particle.png": [
 		91,
 		82,
 		103
 	],
-	"vlc_core_leaves_spruce.png": [
+	"vlf_core_leaves_spruce.png": [
 		120,
 		126,
 		122
 	],
-	"vlc_core_stripped_birch_top.png": [
+	"vlf_core_stripped_birch_top.png": [
 		170,
 		135,
 		108
 	],
-	"vlc_core_stripped_acacia_side.png": [
+	"vlf_core_stripped_acacia_side.png": [
 		151,
 		90,
 		57
@@ -8684,27 +8684,27 @@
 		58,
 		45
 	],
-	"vlc_core_lapis_block.png": [
+	"vlf_core_lapis_block.png": [
 		50,
 		92,
 		162
 	],
-	"vlc_core_frosted_ice_0.png": [
+	"vlf_core_frosted_ice_0.png": [
 		140,
 		193,
 		224
 	],
-	"vlc_core_glass_orange_detail.png": [
+	"vlf_core_glass_orange_detail.png": [
 		215,
 		126,
 		50
 	],
-	"vlc_core_glass_yellow_detail.png": [
+	"vlf_core_glass_yellow_detail.png": [
 		228,
 		228,
 		50
 	],
-	"vlc_core_glass_cyan_detail.png": [
+	"vlf_core_glass_cyan_detail.png": [
 		75,
 		126,
 		153
@@ -8719,22 +8719,22 @@
 		39,
 		41
 	],
-	"vlc_core_glass_blue_detail.png": [
+	"vlf_core_glass_blue_detail.png": [
 		50,
 		75,
 		178
 	],
-	"vlc_core_emerald.png": [
+	"vlf_core_emerald.png": [
 		59,
 		160,
 		52
 	],
-	"vlc_core_leaves_birch.png": [
+	"vlf_core_leaves_birch.png": [
 		178,
 		161,
 		150
 	],
-	"vlc_core_papyrus.png": [
+	"vlf_core_papyrus.png": [
 		105,
 		105,
 		105
@@ -8749,12 +8749,12 @@
 		112,
 		74
 	],
-	"vlc_core_frosted_ice_2.png": [
+	"vlf_core_frosted_ice_2.png": [
 		153,
 		202,
 		229
 	],
-	"vlc_core_diorite_smooth.png": [
+	"vlf_core_diorite_smooth.png": [
 		157,
 		154,
 		152
@@ -8764,37 +8764,37 @@
 		45,
 		17
 	],
-	"vlc_core_cactus_top.png": [
+	"vlf_core_cactus_top.png": [
 		77,
 		99,
 		49
 	],
-	"vlc_core_stonebrick_carved.png": [
+	"vlf_core_stonebrick_carved.png": [
 		97,
 		90,
 		85
 	],
-	"vlc_core_light_3.png": [
+	"vlf_core_light_3.png": [
 		173,
 		132,
 		71
 	],
-	"vlc_core_lapis.png": [
+	"vlf_core_lapis.png": [
 		58,
 		101,
 		173
 	],
-	"vlc_core_web.png": [
+	"vlf_core_web.png": [
 		202,
 		189,
 		167
 	],
-	"vlc_core_stripped_oak_top.png": [
+	"vlf_core_stripped_oak_top.png": [
 		153,
 		115,
 		80
 	],
-	"vlc_core_light_2.png": [
+	"vlf_core_light_2.png": [
 		160,
 		131,
 		94
@@ -8804,42 +8804,42 @@
 		160,
 		200
 	],
-	"vlc_core_dirt_podzol_top.png": [
+	"vlf_core_dirt_podzol_top.png": [
 		85,
 		63,
 		42
 	],
-	"vlc_core_grass_block_side_overlay.png": [
+	"vlf_core_grass_block_side_overlay.png": [
 		153,
 		142,
 		123
 	],
-	"vlc_core_glass_gray.png": [
+	"vlf_core_glass_gray.png": [
 		75,
 		75,
 		75
 	],
-	"vlc_dirt_grass_shadow.png": [
+	"vlf_dirt_grass_shadow.png": [
 		85,
 		66,
 		56
 	],
-	"vlc_core_crying_obsidian_tear2.png": [
+	"vlf_core_crying_obsidian_tear2.png": [
 		113,
 		6,
 		199
 	],
-	"vlc_core_crying_obsidian_tear.png": [
+	"vlf_core_crying_obsidian_tear.png": [
 		152,
 		0,
 		152
 	],
-	"vlc_core_light_1.png": [
+	"vlf_core_light_1.png": [
 		148,
 		129,
 		102
 	],
-	"vlc_core_glass_red_detail.png": [
+	"vlf_core_glass_red_detail.png": [
 		153,
 		50,
 		50
@@ -8849,17 +8849,17 @@
 		197,
 		226
 	],
-	"vlc_core_andesite.png": [
+	"vlf_core_andesite.png": [
 		104,
 		110,
 		107
 	],
-	"vlc_core_bowl.png": [
+	"vlf_core_bowl.png": [
 		78,
 		61,
 		47
 	],
-	"vlc_core_diorite.png": [
+	"vlf_core_diorite.png": [
 		153,
 		149,
 		146
@@ -8869,7 +8869,7 @@
 		92,
 		59
 	],
-	"vlc_core_apple_golden.png": [
+	"vlf_core_apple_golden.png": [
 		176,
 		138,
 		51
@@ -8884,42 +8884,42 @@
 		88,
 		69
 	],
-	"vlc_core_glass_black_detail.png": [
+	"vlf_core_glass_black_detail.png": [
 		24,
 		24,
 		24
 	],
-	"vlc_core_void.png": [
+	"vlf_core_void.png": [
 		59,
 		59,
 		59
 	],
-	"vlc_core_light_8.png": [
+	"vlf_core_light_8.png": [
 		203,
 		152,
 		77
 	],
-	"vlc_core_emerald_ore.png": [
+	"vlf_core_emerald_ore.png": [
 		115,
 		122,
 		103
 	],
-	"vlc_core_glass_purple.png": [
+	"vlf_core_glass_purple.png": [
 		126,
 		62,
 		178
 	],
-	"vlc_core_glass_pink.png": [
+	"vlf_core_glass_pink.png": [
 		241,
 		126,
 		164
 	],
-	"vlc_core_log_big_oak_top.png": [
+	"vlf_core_log_big_oak_top.png": [
 		83,
 		70,
 		62
 	],
-	"vlc_core_dirt_podzol_side.png": [
+	"vlf_core_dirt_podzol_side.png": [
 		99,
 		77,
 		62
@@ -8929,22 +8929,22 @@
 		84,
 		55
 	],
-	"vlc_core_glass_lime_detail.png": [
+	"vlf_core_glass_lime_detail.png": [
 		126,
 		203,
 		24
 	],
-	"vlc_core_sandstone_normal.png": [
+	"vlf_core_sandstone_normal.png": [
 		195,
 		149,
 		117
 	],
-	"vlc_core_light_9.png": [
+	"vlf_core_light_9.png": [
 		205,
 		155,
 		80
 	],
-	"vlc_core_sapling_spruce.png": [
+	"vlf_core_sapling_spruce.png": [
 		55,
 		72,
 		53
@@ -8954,27 +8954,27 @@
 		42,
 		16
 	],
-	"vlc_core_slime.png": [
+	"vlf_core_slime.png": [
 		93,
 		157,
 		86
 	],
-	"vlc_core_emerald_block.png": [
+	"vlf_core_emerald_block.png": [
 		44,
 		138,
 		39
 	],
-	"vlc_core_sugar.png": [
+	"vlf_core_sugar.png": [
 		215,
 		215,
 		215
 	],
-	"vlc_core_glass_red.png": [
+	"vlf_core_glass_red.png": [
 		153,
 		50,
 		50
 	],
-	"vlc_core_light_5.png": [
+	"vlf_core_light_5.png": [
 		190,
 		153,
 		99
@@ -8984,67 +8984,67 @@
 		57,
 		44
 	],
-	"vlc_core_grass_path_side.png": [
+	"vlf_core_grass_path_side.png": [
 		113,
 		89,
 		62
 	],
-	"vlc_core_light_14.png": [
+	"vlf_core_light_14.png": [
 		197,
 		166,
 		121
 	],
-	"vlc_core_stripped_birch_side.png": [
+	"vlf_core_stripped_birch_side.png": [
 		179,
 		143,
 		115
 	],
-	"vlc_core_glass_brown.png": [
+	"vlf_core_glass_brown.png": [
 		101,
 		75,
 		50
 	],
-	"vlc_core_glass_green.png": [
+	"vlf_core_glass_green.png": [
 		101,
 		126,
 		50
 	],
-	"vlc_core_glass_lime.png": [
+	"vlf_core_glass_lime.png": [
 		126,
 		203,
 		24
 	],
-	"vlc_core_stripped_jungle_side.png": [
+	"vlf_core_stripped_jungle_side.png": [
 		175,
 		117,
 		86
 	],
-	"vlc_core_red_sandstone_carved.png": [
+	"vlf_core_red_sandstone_carved.png": [
 		202,
 		122,
 		104
 	],
-	"vlc_core_light_10.png": [
+	"vlf_core_light_10.png": [
 		199,
 		152,
 		80
 	],
-	"vlc_core_red_sandstone_bottom.png": [
+	"vlf_core_red_sandstone_bottom.png": [
 		207,
 		124,
 		106
 	],
-	"vlc_core_glass_pink_detail.png": [
+	"vlf_core_glass_pink_detail.png": [
 		241,
 		126,
 		164
 	],
-	"vlc_core_crying_obsidian.png": [
+	"vlf_core_crying_obsidian.png": [
 		115,
 		7,
 		203
 	],
-	"vlc_core_mycelium_side.png": [
+	"vlf_core_mycelium_side.png": [
 		107,
 		84,
 		87
@@ -9054,17 +9054,17 @@
 		105,
 		94
 	],
-	"vlc_core_granite_smooth.png": [
+	"vlf_core_granite_smooth.png": [
 		150,
 		121,
 		110
 	],
-	"vlc_core_barrier.png": [
+	"vlf_core_barrier.png": [
 		138,
 		46,
 		38
 	],
-	"vlc_core_glass_gray_detail.png": [
+	"vlf_core_glass_gray_detail.png": [
 		75,
 		75,
 		75
@@ -9074,22 +9074,22 @@
 		136,
 		117
 	],
-	"vlc_core_glass_light_blue_detail.png": [
+	"vlf_core_glass_light_blue_detail.png": [
 		101,
 		153,
 		215
 	],
-	"vlc_core_cactus_side.png": [
+	"vlf_core_cactus_side.png": [
 		88,
 		110,
 		56
 	],
-	"vlc_core_stripped_jungle_top.png": [
+	"vlf_core_stripped_jungle_top.png": [
 		170,
 		113,
 		83
 	],
-	"vlc_core_glass_brown_detail.png": [
+	"vlf_core_glass_brown_detail.png": [
 		101,
 		75,
 		50
@@ -9099,7 +9099,7 @@
 		78,
 		59
 	],
-	"vlc_core_glass_magenta_detail.png": [
+	"vlf_core_glass_magenta_detail.png": [
 		178,
 		75,
 		215
@@ -9119,17 +9119,17 @@
 		129,
 		112
 	],
-	"vlc_core_andesite_smooth.png": [
+	"vlf_core_andesite_smooth.png": [
 		107,
 		113,
 		109
 	],
-	"vlc_core_stripped_spruce_top.png": [
+	"vlf_core_stripped_spruce_top.png": [
 		107,
 		79,
 		64
 	],
-	"vlc_core_log_spruce_top.png": [
+	"vlf_core_log_spruce_top.png": [
 		97,
 		71,
 		57
@@ -9139,12 +9139,12 @@
 		100,
 		69
 	],
-	"vlc_core_iron_ore.png": [
+	"vlf_core_iron_ore.png": [
 		134,
 		123,
 		117
 	],
-	"vlc_core_glass_light_blue.png": [
+	"vlf_core_glass_light_blue.png": [
 		101,
 		153,
 		215
@@ -9154,12 +9154,12 @@
 		64,
 		50
 	],
-	"vlc_core_glass_purple_detail.png": [
+	"vlf_core_glass_purple_detail.png": [
 		126,
 		62,
 		178
 	],
-	"vlc_core_log_spruce.png": [
+	"vlf_core_log_spruce.png": [
 		66,
 		51,
 		44
@@ -9169,17 +9169,17 @@
 		91,
 		74
 	],
-	"vlc_core_granite.png": [
+	"vlf_core_granite.png": [
 		153,
 		121,
 		110
 	],
-	"vlc_core_gold_nugget.png": [
+	"vlf_core_gold_nugget.png": [
 		213,
 		169,
 		74
 	],
-	"vlc_core_sandstone_top.png": [
+	"vlf_core_sandstone_top.png": [
 		201,
 		154,
 		121
@@ -9194,62 +9194,62 @@
 		49,
 		51
 	],
-	"vlc_core_light_12.png": [
+	"vlf_core_light_12.png": [
 		199,
 		158,
 		95
 	],
-	"vlc_core_lapis_ore.png": [
+	"vlf_core_lapis_ore.png": [
 		111,
 		113,
 		125
 	],
-	"vlc_core_coarse_dirt.png": [
+	"vlf_core_coarse_dirt.png": [
 		117,
 		92,
 		76
 	],
-	"vlc_core_light_13.png": [
+	"vlf_core_light_13.png": [
 		199,
 		160,
 		102
 	],
-	"vlc_core_glass_white.png": [
+	"vlf_core_glass_white.png": [
 		254,
 		254,
 		254
 	],
-	"vlc_core_planks_birch.png": [
+	"vlf_core_planks_birch.png": [
 		145,
 		113,
 		89
 	],
-	"vlc_core_vine.png": [
+	"vlf_core_vine.png": [
 		21,
 		61,
 		21
 	],
-	"vlc_core_stripped_spruce_side.png": [
+	"vlf_core_stripped_spruce_side.png": [
 		109,
 		81,
 		67
 	],
-	"vlc_core_ice_packed.png": [
+	"vlf_core_ice_packed.png": [
 		165,
 		211,
 		231
 	],
-	"vlc_core_stripped_acacia_top.png": [
+	"vlf_core_stripped_acacia_top.png": [
 		157,
 		98,
 		62
 	],
-	"vlc_core_sandstone_carved.png": [
+	"vlf_core_sandstone_carved.png": [
 		199,
 		152,
 		119
 	],
-	"vlc_core_light_7.png": [
+	"vlf_core_light_7.png": [
 		202,
 		155,
 		87
@@ -9259,37 +9259,37 @@
 		147,
 		59
 	],
-	"vlc_core_bone_block_top.png": [
+	"vlf_core_bone_block_top.png": [
 		220,
 		201,
 		170
 	],
-	"vlc_core_mycelium_top.png": [
+	"vlf_core_mycelium_top.png": [
 		108,
 		89,
 		117
 	],
-	"vlc_core_glass_orange.png": [
+	"vlf_core_glass_orange.png": [
 		215,
 		126,
 		50
 	],
-	"vlc_core_log_birch_top.png": [
+	"vlf_core_log_birch_top.png": [
 		155,
 		130,
 		112
 	],
-	"vlc_core_light_4.png": [
+	"vlf_core_light_4.png": [
 		182,
 		137,
 		69
 	],
-	"vlc_core_sapling_big_oak.png": [
+	"vlf_core_sapling_big_oak.png": [
 		69,
 		92,
 		80
 	],
-	"vlc_core_redstone_ore.png": [
+	"vlf_core_redstone_ore.png": [
 		128,
 		91,
 		88
@@ -9304,17 +9304,17 @@
 		122,
 		118
 	],
-	"vlc_core_light_6.png": [
+	"vlf_core_light_6.png": [
 		195,
 		159,
 		104
 	],
-	"vlc_core_leaves_big_oak.png": [
+	"vlf_core_leaves_big_oak.png": [
 		110,
 		110,
 		110
 	],
-	"vlc_core_log_big_oak.png": [
+	"vlf_core_log_big_oak.png": [
 		74,
 		62,
 		55
@@ -9329,12 +9329,12 @@
 		57,
 		48
 	],
-	"vlc_core_sandstone_smooth.png": [
+	"vlf_core_sandstone_smooth.png": [
 		202,
 		155,
 		121
 	],
-	"vlc_core_sandstone_bottom.png": [
+	"vlf_core_sandstone_bottom.png": [
 		202,
 		155,
 		121
@@ -9344,22 +9344,22 @@
 		133,
 		47
 	],
-	"vlc_core_planks_spruce.png": [
+	"vlf_core_planks_spruce.png": [
 		81,
 		65,
 		54
 	],
-	"vlc_core_planks_big_oak.png": [
+	"vlf_core_planks_big_oak.png": [
 		87,
 		74,
 		62
 	],
-	"vlc_core_red_sand.png": [
+	"vlf_core_red_sand.png": [
 		224,
 		137,
 		111
 	],
-	"vlc_core_cactus_bottom.png": [
+	"vlf_core_cactus_bottom.png": [
 		169,
 		168,
 		116
@@ -9369,12 +9369,12 @@
 		9,
 		25
 	],
-	"vlc_core_stripped_dark_oak_top.png": [
+	"vlf_core_stripped_dark_oak_top.png": [
 		90,
 		78,
 		68
 	],
-	"vlc_core_red_sandstone_top.png": [
+	"vlf_core_red_sandstone_top.png": [
 		212,
 		126,
 		108
@@ -9389,12 +9389,12 @@
 		111,
 		111
 	],
-	"vlc_core_glass_white_detail.png": [
+	"vlf_core_glass_white_detail.png": [
 		254,
 		254,
 		254
 	],
-	"vlc_core_red_sandstone_smooth.png": [
+	"vlf_core_red_sandstone_smooth.png": [
 		207,
 		124,
 		106
@@ -9414,32 +9414,32 @@
 		70,
 		57
 	],
-	"vlc_core_glass_black.png": [
+	"vlf_core_glass_black.png": [
 		24,
 		24,
 		24
 	],
-	"vlc_core_glass_magenta.png": [
+	"vlf_core_glass_magenta.png": [
 		178,
 		75,
 		215
 	],
-	"vlc_core_light_0.png": [
+	"vlf_core_light_0.png": [
 		124,
 		128,
 		121
 	],
-	"vlc_core_stripped_dark_oak_side.png": [
+	"vlf_core_stripped_dark_oak_side.png": [
 		91,
 		78,
 		70
 	],
-	"vlc_core_bedrock.png": [
+	"vlf_core_bedrock.png": [
 		91,
 		77,
 		66
 	],
-	"vlc_core_stonebrick_cracked.png": [
+	"vlf_core_stonebrick_cracked.png": [
 		94,
 		87,
 		83
@@ -9449,12 +9449,12 @@
 		229,
 		234
 	],
-	"vlc_core_frosted_ice_3.png": [
+	"vlf_core_frosted_ice_3.png": [
 		165,
 		209,
 		233
 	],
-	"vlc_core_glass_cyan.png": [
+	"vlf_core_glass_cyan.png": [
 		75,
 		126,
 		153
@@ -9474,12 +9474,12 @@
 		88,
 		39
 	],
-	"vlc_core_glass_silver.png": [
+	"vlf_core_glass_silver.png": [
 		153,
 		153,
 		153
 	],
-	"vlc_core_iron_nugget.png": [
+	"vlf_core_iron_nugget.png": [
 		156,
 		151,
 		145
@@ -9489,7 +9489,7 @@
 		106,
 		104
 	],
-	"vlc_core_bone_block_side.png": [
+	"vlf_core_bone_block_side.png": [
 		226,
 		207,
 		174
@@ -9499,17 +9499,17 @@
 		179,
 		217
 	],
-	"vlc_core_coal_ore.png": [
+	"vlf_core_coal_ore.png": [
 		109,
 		101,
 		99
 	],
-	"vlc_core_gold_ore.png": [
+	"vlf_core_gold_ore.png": [
 		132,
 		119,
 		103
 	],
-	"vlc_core_grass_side_snowed.png": [
+	"vlf_core_grass_side_snowed.png": [
 		161,
 		153,
 		150
@@ -9519,22 +9519,22 @@
 		244,
 		250
 	],
-	"vlc_core_glass_green_detail.png": [
+	"vlf_core_glass_green_detail.png": [
 		101,
 		126,
 		50
 	],
-	"vlc_core_stonebrick_mossy.png": [
+	"vlf_core_stonebrick_mossy.png": [
 		81,
 		101,
 		76
 	],
-	"vlc_core_glass_silver_detail.png": [
+	"vlf_core_glass_silver_detail.png": [
 		153,
 		153,
 		153
 	],
-	"vlc_core_red_sandstone_normal.png": [
+	"vlf_core_red_sandstone_normal.png": [
 		198,
 		120,
 		104
@@ -9544,12 +9544,12 @@
 		87,
 		75
 	],
-	"vlc_core_frosted_ice_1.png": [
+	"vlf_core_frosted_ice_1.png": [
 		147,
 		198,
 		227
 	],
-	"vlc_core_log_birch.png": [
+	"vlf_core_log_birch.png": [
 		194,
 		184,
 		174
@@ -9559,47 +9559,47 @@
 		101,
 		129
 	],
-	"vlc_core_glass_blue.png": [
+	"vlf_core_glass_blue.png": [
 		50,
 		75,
 		178
 	],
-	"vlc_core_charcoal.png": [
+	"vlf_core_charcoal.png": [
 		40,
 		35,
 		32
 	],
-	"vlc_core_stripped_oak_side.png": [
+	"vlf_core_stripped_oak_side.png": [
 		162,
 		122,
 		84
 	],
-	"vlc_core_crying_obsidian_tear3.png": [
+	"vlf_core_crying_obsidian_tear3.png": [
 		107,
 		6,
 		190
 	],
-	"vlc_core_sapling_birch.png": [
+	"vlf_core_sapling_birch.png": [
 		78,
 		110,
 		74
 	],
-	"vlc_core_diamond_ore.png": [
+	"vlf_core_diamond_ore.png": [
 		122,
 		124,
 		126
 	],
-	"vlc_core_grass_block_top.png": [
+	"vlf_core_grass_block_top.png": [
 		141,
 		130,
 		113
 	],
-	"vlc_core_glass_yellow.png": [
+	"vlf_core_glass_yellow.png": [
 		228,
 		228,
 		50
 	],
-	"vlc_beds_bed_brown.png": [
+	"vlf_beds_bed_brown.png": [
 		116,
 		87,
 		71
@@ -9609,7 +9609,7 @@
 		76,
 		77
 	],
-	"vlc_beds_bed_yellow_inv.png": [
+	"vlf_beds_bed_yellow_inv.png": [
 		154,
 		138,
 		41
@@ -9619,12 +9619,12 @@
 		80,
 		79
 	],
-	"vlc_beds_bed_blue_inv.png": [
+	"vlf_beds_bed_blue_inv.png": [
 		73,
 		78,
 		105
 	],
-	"vlc_beds_bed_silver.png": [
+	"vlf_beds_bed_silver.png": [
 		133,
 		113,
 		102
@@ -9634,67 +9634,67 @@
 		87,
 		85
 	],
-	"vlc_beds_bed_magenta.png": [
+	"vlf_beds_bed_magenta.png": [
 		133,
 		96,
 		105
 	],
-	"vlc_beds_bed_green.png": [
+	"vlf_beds_bed_green.png": [
 		97,
 		98,
 		71
 	],
-	"vlc_beds_bed_lime_inv.png": [
+	"vlf_beds_bed_lime_inv.png": [
 		96,
 		135,
 		66
 	],
-	"vlc_beds_bed_grey_inv.png": [
+	"vlf_beds_bed_grey_inv.png": [
 		96,
 		88,
 		81
 	],
-	"vlc_beds_bed_black_inv.png": [
+	"vlf_beds_bed_black_inv.png": [
 		76,
 		68,
 		61
 	],
-	"vlc_beds_bed_silver_inv.png": [
+	"vlf_beds_bed_silver_inv.png": [
 		109,
 		100,
 		93
 	],
-	"vlc_beds_bed_purple.png": [
+	"vlf_beds_bed_purple.png": [
 		114,
 		87,
 		96
 	],
-	"vlc_beds_bed_black.png": [
+	"vlf_beds_bed_black.png": [
 		97,
 		79,
 		68
 	],
-	"vlc_beds_bed_red.png": [
+	"vlf_beds_bed_red.png": [
 		132,
 		80,
 		70
 	],
-	"vlc_beds_bed_cyan.png": [
+	"vlf_beds_bed_cyan.png": [
 		96,
 		101,
 		96
 	],
-	"vlc_beds_bed_green_inv.png": [
+	"vlf_beds_bed_green_inv.png": [
 		85,
 		107,
 		56
 	],
-	"vlc_beds_bed_white_inv.png": [
+	"vlf_beds_bed_white_inv.png": [
 		173,
 		165,
 		158
 	],
-	"vlc_beds_bed_light_blue_inv.png": [
+	"vlf_beds_bed_light_blue_inv.png": [
 		100,
 		107,
 		142
@@ -9704,17 +9704,17 @@
 		64,
 		73
 	],
-	"vlc_beds_bed_blue.png": [
+	"vlf_beds_bed_blue.png": [
 		95,
 		91,
 		101
 	],
-	"vlc_beds_bed_orange_inv.png": [
+	"vlf_beds_bed_orange_inv.png": [
 		154,
 		96,
 		41
 	],
-	"vlc_beds_bed_orange.png": [
+	"vlf_beds_bed_orange.png": [
 		147,
 		102,
 		74
@@ -9724,27 +9724,27 @@
 		62,
 		136
 	],
-	"vlc_beds_bed_pink_inv.png": [
+	"vlf_beds_bed_pink_inv.png": [
 		184,
 		105,
 		115
 	],
-	"vlc_beds_bed_white.png": [
+	"vlf_beds_bed_white.png": [
 		161,
 		140,
 		122
 	],
-	"vlc_beds_bed_lime.png": [
+	"vlf_beds_bed_lime.png": [
 		117,
 		117,
 		81
 	],
-	"vlc_beds_bed_pink.png": [
+	"vlf_beds_bed_pink.png": [
 		147,
 		106,
 		100
 	],
-	"vlc_beds_bed_magenta_inv.png": [
+	"vlf_beds_bed_magenta_inv.png": [
 		138,
 		60,
 		104
@@ -9754,27 +9754,27 @@
 		61,
 		74
 	],
-	"vlc_beds_bed_red_inv.png": [
+	"vlf_beds_bed_red_inv.png": [
 		139,
 		58,
 		51
 	],
-	"vlc_beds_bed_cyan_inv.png": [
+	"vlf_beds_bed_cyan_inv.png": [
 		73,
 		111,
 		103
 	],
-	"vlc_beds_bed_brown_inv.png": [
+	"vlf_beds_bed_brown_inv.png": [
 		110,
 		85,
 		61
 	],
-	"vlc_beds_bed_purple_inv.png": [
+	"vlf_beds_bed_purple_inv.png": [
 		115,
 		47,
 		128
 	],
-	"vlc_beds_bed_light_blue.png": [
+	"vlf_beds_bed_light_blue.png": [
 		113,
 		113,
 		121
@@ -9789,142 +9789,142 @@
 		71,
 		76
 	],
-	"vlc_beds_bed_grey.png": [
+	"vlf_beds_bed_grey.png": [
 		113,
 		94,
 		84
 	],
-	"vlc_beds_bed_yellow.png": [
+	"vlf_beds_bed_yellow.png": [
 		154,
 		126,
 		81
 	],
-	"vlc_compass_recovery_compass_02.png": [
+	"vlf_compass_recovery_compass_02.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_compass_02.png": [
+	"vlf_compass_compass_02.png": [
 		116,
 		107,
 		104
 	],
-	"vlc_compass_compass_20.png": [
+	"vlf_compass_compass_20.png": [
 		116,
 		106,
 		104
 	],
-	"vlc_compass_recovery_compass_23.png": [
+	"vlf_compass_recovery_compass_23.png": [
 		56,
 		69,
 		66
 	],
-	"vlc_compass_recovery_compass_21.png": [
+	"vlf_compass_recovery_compass_21.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_compass_07.png": [
+	"vlf_compass_compass_07.png": [
 		117,
 		107,
 		104
 	],
-	"vlc_compass_compass_25.png": [
+	"vlf_compass_compass_25.png": [
 		117,
 		107,
 		105
 	],
-	"vlc_compass_recovery_compass_04.png": [
+	"vlf_compass_recovery_compass_04.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_compass_06.png": [
+	"vlf_compass_compass_06.png": [
 		117,
 		107,
 		104
 	],
-	"vlc_compass_compass_29.png": [
+	"vlf_compass_compass_29.png": [
 		115,
 		106,
 		104
 	],
-	"vlc_compass_recovery_compass_24.png": [
+	"vlf_compass_recovery_compass_24.png": [
 		56,
 		69,
 		66
 	],
-	"vlc_compass_compass_23.png": [
+	"vlf_compass_compass_23.png": [
 		117,
 		107,
 		105
 	],
-	"vlc_compass_compass_26.png": [
+	"vlf_compass_compass_26.png": [
 		117,
 		107,
 		104
 	],
-	"vlc_compass_recovery_compass_05.png": [
+	"vlf_compass_recovery_compass_05.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_compass_00.png": [
+	"vlf_compass_compass_00.png": [
 		114,
 		107,
 		104
 	],
-	"vlc_compass_recovery_compass_06.png": [
+	"vlf_compass_recovery_compass_06.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_recovery_compass_13.png": [
+	"vlf_compass_recovery_compass_13.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_compass_16.png": [
+	"vlf_compass_compass_16.png": [
 		114,
 		106,
 		104
 	],
-	"vlc_compass_recovery_compass_10.png": [
+	"vlf_compass_recovery_compass_10.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_compass_24.png": [
+	"vlf_compass_compass_24.png": [
 		117,
 		107,
 		105
 	],
-	"vlc_compass_compass_28.png": [
+	"vlf_compass_compass_28.png": [
 		116,
 		107,
 		104
 	],
-	"vlc_compass_recovery_compass_27.png": [
+	"vlf_compass_recovery_compass_27.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_recovery_compass_20.png": [
+	"vlf_compass_recovery_compass_20.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_compass_17.png": [
+	"vlf_compass_compass_17.png": [
 		115,
 		106,
 		104
 	],
-	"vlc_compass_compass_27.png": [
+	"vlf_compass_compass_27.png": [
 		117,
 		106,
 		104
 	],
-	"vlc_compass_recovery_compass_15.png": [
+	"vlf_compass_recovery_compass_15.png": [
 		56,
 		68,
 		65
@@ -9934,32 +9934,32 @@
 		69,
 		66
 	],
-	"vlc_compass_compass_13.png": [
+	"vlf_compass_compass_13.png": [
 		117,
 		106,
 		104
 	],
-	"vlc_compass_recovery_compass_30.png": [
+	"vlf_compass_recovery_compass_30.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_compass_14.png": [
+	"vlf_compass_compass_14.png": [
 		116,
 		107,
 		105
 	],
-	"vlc_compass_recovery_compass_00.png": [
+	"vlf_compass_recovery_compass_00.png": [
 		56,
 		67,
 		64
 	],
-	"vlc_compass_recovery_compass_26.png": [
+	"vlf_compass_recovery_compass_26.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_compass_19.png": [
+	"vlf_compass_compass_19.png": [
 		116,
 		106,
 		103
@@ -9969,7 +9969,7 @@
 		73,
 		69
 	],
-	"vlc_compass_compass_03.png": [
+	"vlf_compass_compass_03.png": [
 		116,
 		106,
 		104
@@ -9979,7 +9979,7 @@
 		72,
 		68
 	],
-	"vlc_compass_compass_31.png": [
+	"vlf_compass_compass_31.png": [
 		115,
 		107,
 		104
@@ -9989,57 +9989,57 @@
 		75,
 		70
 	],
-	"vlc_compass_compass_15.png": [
+	"vlf_compass_compass_15.png": [
 		115,
 		106,
 		104
 	],
-	"vlc_compass_recovery_compass_28.png": [
+	"vlf_compass_recovery_compass_28.png": [
 		56,
 		68,
 		65
 	],
-	"vlc_compass_compass_01.png": [
+	"vlf_compass_compass_01.png": [
 		115,
 		107,
 		104
 	],
-	"vlc_compass_compass_08.png": [
+	"vlf_compass_compass_08.png": [
 		117,
 		107,
 		104
 	],
-	"vlc_compass_compass_21.png": [
+	"vlf_compass_compass_21.png": [
 		117,
 		107,
 		104
 	],
-	"vlc_compass_compass_30.png": [
+	"vlf_compass_compass_30.png": [
 		116,
 		107,
 		104
 	],
-	"vlc_compass_recovery_compass_14.png": [
+	"vlf_compass_recovery_compass_14.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_compass_18.png": [
+	"vlf_compass_compass_18.png": [
 		117,
 		107,
 		104
 	],
-	"vlc_compass_recovery_compass_01.png": [
+	"vlf_compass_recovery_compass_01.png": [
 		56,
 		67,
 		65
 	],
-	"vlc_compass_recovery_compass_18.png": [
+	"vlf_compass_recovery_compass_18.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_recovery_compass_11.png": [
+	"vlf_compass_recovery_compass_11.png": [
 		56,
 		68,
 		66
@@ -10049,92 +10049,92 @@
 		72,
 		69
 	],
-	"vlc_compass_recovery_compass_17.png": [
+	"vlf_compass_recovery_compass_17.png": [
 		56,
 		68,
 		65
 	],
-	"vlc_compass_compass_04.png": [
+	"vlf_compass_compass_04.png": [
 		117,
 		106,
 		104
 	],
-	"vlc_compass_recovery_compass_22.png": [
+	"vlf_compass_recovery_compass_22.png": [
 		56,
 		69,
 		66
 	],
-	"vlc_compass_recovery_compass_07.png": [
+	"vlf_compass_recovery_compass_07.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_compass_11.png": [
+	"vlf_compass_compass_11.png": [
 		117,
 		106,
 		104
 	],
-	"vlc_compass_recovery_compass_25.png": [
+	"vlf_compass_recovery_compass_25.png": [
 		56,
 		69,
 		66
 	],
-	"vlc_compass_recovery_compass_08.png": [
+	"vlf_compass_recovery_compass_08.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_compass_10.png": [
+	"vlf_compass_compass_10.png": [
 		117,
 		107,
 		105
 	],
-	"vlc_compass_compass_09.png": [
+	"vlf_compass_compass_09.png": [
 		117,
 		107,
 		104
 	],
-	"vlc_compass_recovery_compass_09.png": [
+	"vlf_compass_recovery_compass_09.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_recovery_compass_12.png": [
+	"vlf_compass_recovery_compass_12.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_recovery_compass_19.png": [
+	"vlf_compass_recovery_compass_19.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_compass_05.png": [
+	"vlf_compass_compass_05.png": [
 		117,
 		106,
 		104
 	],
-	"vlc_compass_recovery_compass_31.png": [
+	"vlf_compass_recovery_compass_31.png": [
 		56,
 		67,
 		65
 	],
-	"vlc_compass_recovery_compass_16.png": [
+	"vlf_compass_recovery_compass_16.png": [
 		55,
 		67,
 		65
 	],
-	"vlc_compass_compass_22.png": [
+	"vlf_compass_compass_22.png": [
 		117,
 		107,
 		105
 	],
-	"vlc_compass_recovery_compass_03.png": [
+	"vlf_compass_recovery_compass_03.png": [
 		56,
 		68,
 		66
 	],
-	"vlc_compass_recovery_compass_29.png": [
+	"vlf_compass_recovery_compass_29.png": [
 		56,
 		68,
 		65
@@ -10144,22 +10144,22 @@
 		73,
 		69
 	],
-	"vlc_compass_compass_12.png": [
+	"vlf_compass_compass_12.png": [
 		117,
 		106,
 		104
 	],
-	"vlc_throwing_snowball.png": [
+	"vlf_throwing_snowball.png": [
 		191,
 		200,
 		203
 	],
-	"vlc_throwing_ender_pearl.png": [
+	"vlf_throwing_ender_pearl.png": [
 		78,
 		19,
 		26
 	],
-	"vlc_throwing_egg.png": [
+	"vlf_throwing_egg.png": [
 		199,
 		157,
 		106
@@ -10184,7 +10184,7 @@
 		91,
 		108
 	],
-	"vlc_wool_light_blue.png": [
+	"vlf_wool_light_blue.png": [
 		91,
 		130,
 		180
@@ -10239,152 +10239,152 @@
 		163,
 		69
 	],
-	"vlc_wool_lime.png": [
+	"vlf_wool_lime.png": [
 		107,
 		151,
 		76
 	],
-	"vlc_sponges_sponge_wet.png": [
+	"vlf_sponges_sponge_wet.png": [
 		156,
 		134,
 		92
 	],
-	"vlc_sponges_sponge.png": [
+	"vlf_sponges_sponge.png": [
 		210,
 		177,
 		118
 	],
-	"vlc_sponges_sponge_wet_river_water.png": [
+	"vlf_sponges_sponge_wet_river_water.png": [
 		157,
 		141,
 		104
 	],
-	"vlc_stonecutter_side.png": [
+	"vlf_stonecutter_side.png": [
 		86,
 		78,
 		74
 	],
-	"vlc_stonecutter_saw.png": [
+	"vlf_stonecutter_saw.png": [
 		125,
 		119,
 		117
 	],
-	"vlc_stonecutter_top.png": [
+	"vlf_stonecutter_top.png": [
 		85,
 		79,
 		76
 	],
-	"vlc_stonecutter_bottom.png": [
+	"vlf_stonecutter_bottom.png": [
 		74,
 		65,
 		61
 	],
-	"vlc_mobitems_heart_of_the_sea_split.png": [
+	"vlf_mobitems_heart_of_the_sea_split.png": [
 		67,
 		105,
 		111
 	],
-	"vlc_mobitems_saddle.png": [
+	"vlf_mobitems_saddle.png": [
 		93,
 		72,
 		50
 	],
-	"vlc_mobitems_chicken_cooked.png": [
+	"vlf_mobitems_chicken_cooked.png": [
 		187,
 		145,
 		106
 	],
-	"vlc_mobitems_nautilus_shell.png": [
+	"vlf_mobitems_nautilus_shell.png": [
 		171,
 		135,
 		130
 	],
-	"vlc_mobitems_beef_raw.png": [
+	"vlf_mobitems_beef_raw.png": [
 		147,
 		63,
 		54
 	],
-	"vlc_mobitems_rabbit_foot.png": [
+	"vlf_mobitems_rabbit_foot.png": [
 		124,
 		107,
 		97
 	],
-	"vlc_mobitems_blaze_powder.png": [
+	"vlf_mobitems_blaze_powder.png": [
 		86,
 		50,
 		34
 	],
-	"vlc_mobitems_mutton_raw.png": [
+	"vlf_mobitems_mutton_raw.png": [
 		175,
 		77,
 		77
 	],
-	"vlc_mobitems_gold_horse_armor.png": [
+	"vlf_mobitems_gold_horse_armor.png": [
 		140,
 		106,
 		67
 	],
-	"vlc_mobitems_horse_armor_diamond.png": [
+	"vlf_mobitems_horse_armor_diamond.png": [
 		78,
 		110,
 		129
 	],
-	"vlc_mobitems_shulker_shell.png": [
+	"vlf_mobitems_shulker_shell.png": [
 		118,
 		68,
 		83
 	],
-	"vlc_mobitems_rabbit_stew.png": [
+	"vlf_mobitems_rabbit_stew.png": [
 		127,
 		98,
 		79
 	],
-	"vlc_mobitems_chicken_raw.png": [
+	"vlf_mobitems_chicken_raw.png": [
 		217,
 		178,
 		149
 	],
-	"vlc_mobitems_slimeball.png": [
+	"vlf_mobitems_slimeball.png": [
 		75,
 		134,
 		82
 	],
-	"vlc_mobitems_leather.png": [
+	"vlf_mobitems_leather.png": [
 		105,
 		75,
 		45
 	],
-	"vlc_mobitems_nametag.png": [
+	"vlf_mobitems_nametag.png": [
 		138,
 		114,
 		89
 	],
-	"vlc_mobitems_bucket_milk.png": [
+	"vlf_mobitems_bucket_milk.png": [
 		180,
 		175,
 		166
 	],
-	"vlc_mobitems_warped_fungus_on_a_stick.png": [
+	"vlf_mobitems_warped_fungus_on_a_stick.png": [
 		114,
 		109,
 		95
 	],
-	"vlc_mobitems_rabbit_raw.png": [
+	"vlf_mobitems_rabbit_raw.png": [
 		217,
 		177,
 		157
 	],
-	"vlc_mobitems_rabbit_cooked.png": [
+	"vlf_mobitems_rabbit_cooked.png": [
 		188,
 		155,
 		131
 	],
-	"vlc_mobitems_iron_horse_armor.png": [
+	"vlf_mobitems_iron_horse_armor.png": [
 		133,
 		119,
 		114
 	],
-	"vlc_mobitems_beef_cooked.png": [
+	"vlf_mobitems_beef_cooked.png": [
 		112,
 		70,
 		49
@@ -10394,12 +10394,12 @@
 		120,
 		128
 	],
-	"vlc_mobitems_porkchop_cooked.png": [
+	"vlf_mobitems_porkchop_cooked.png": [
 		116,
 		72,
 		48
 	],
-	"vlc_mobitems_rotten_flesh.png": [
+	"vlf_mobitems_rotten_flesh.png": [
 		110,
 		68,
 		45
@@ -10409,87 +10409,87 @@
 		41,
 		36
 	],
-	"vlc_mobitems_horse_armor_gold.png": [
+	"vlf_mobitems_horse_armor_gold.png": [
 		143,
 		110,
 		59
 	],
-	"vlc_mobitems_heart_of_the_sea.png": [
+	"vlf_mobitems_heart_of_the_sea.png": [
 		54,
 		98,
 		114
 	],
-	"vlc_mobitems_carrot_on_a_stick.png": [
+	"vlf_mobitems_carrot_on_a_stick.png": [
 		133,
 		113,
 		93
 	],
-	"vlc_mobitems_diamond_horse_armor.png": [
+	"vlf_mobitems_diamond_horse_armor.png": [
 		67,
 		95,
 		112
 	],
-	"vlc_mobitems_blaze_rod.png": [
+	"vlf_mobitems_blaze_rod.png": [
 		143,
 		64,
 		28
 	],
-	"vlc_mobitems_bone.png": [
+	"vlf_mobitems_bone.png": [
 		182,
 		162,
 		139
 	],
-	"vlc_mobitems_spider_eye.png": [
+	"vlf_mobitems_spider_eye.png": [
 		154,
 		69,
 		60
 	],
-	"vlc_mobitems_nether_star.png": [
+	"vlf_mobitems_nether_star.png": [
 		234,
 		189,
 		123
 	],
-	"vlc_mobitems_mutton_cooked.png": [
+	"vlf_mobitems_mutton_cooked.png": [
 		144,
 		104,
 		77
 	],
-	"vlc_mobitems_string.png": [
+	"vlf_mobitems_string.png": [
 		202,
 		186,
 		166
 	],
-	"vlc_mobitems_ink_sac.png": [
+	"vlf_mobitems_ink_sac.png": [
 		56,
 		56,
 		64
 	],
-	"vlc_mobitems_rabbit_hide.png": [
+	"vlf_mobitems_rabbit_hide.png": [
 		108,
 		85,
 		73
 	],
-	"vlc_mobitems_porkchop_raw.png": [
+	"vlf_mobitems_porkchop_raw.png": [
 		160,
 		72,
 		69
 	],
-	"vlc_mobitems_horse_armor_iron.png": [
+	"vlf_mobitems_horse_armor_iron.png": [
 		134,
 		123,
 		118
 	],
-	"vlc_mobitems_ghast_tear.png": [
+	"vlf_mobitems_ghast_tear.png": [
 		148,
 		160,
 		166
 	],
-	"vlc_mobitems_magma_cream.png": [
+	"vlf_mobitems_magma_cream.png": [
 		102,
 		54,
 		34
 	],
-	"vlc_mobitems_feather.png": [
+	"vlf_mobitems_feather.png": [
 		206,
 		185,
 		183
@@ -10534,12 +10534,12 @@
 		217,
 		217
 	],
-	"vlc_moon_moon_phases.png": [
+	"vlf_moon_moon_phases.png": [
 		80,
 		106,
 		141
 	],
-	"vlc_raids_hero_of_the_village_icon.png": [
+	"vlf_raids_hero_of_the_village_icon.png": [
 		75,
 		109,
 		93
@@ -10564,17 +10564,17 @@
 		79,
 		142
 	],
-	"vlc_particles_nether_dust2.png": [
+	"vlf_particles_nether_dust2.png": [
 		143,
 		105,
 		102
 	],
-	"vlc_particles_nether_dust3.png": [
+	"vlf_particles_nether_dust3.png": [
 		143,
 		105,
 		102
 	],
-	"vlc_particles_nether_dust1.png": [
+	"vlf_particles_nether_dust1.png": [
 		143,
 		105,
 		102
@@ -10584,127 +10584,127 @@
 		137,
 		179
 	],
-	"vlc_particles_effect.png": [
+	"vlf_particles_effect.png": [
 		184,
 		184,
 		184
 	],
-	"vlc_particles_totem2.png": [
+	"vlf_particles_totem2.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_particles_sponge1.png": [
+	"vlf_particles_sponge1.png": [
 		241,
 		238,
 		226
 	],
-	"vlc_particles_mob_death.png": [
+	"vlf_particles_mob_death.png": [
 		198,
 		198,
 		198
 	],
-	"vlc_particles_sponge4.png": [
+	"vlf_particles_sponge4.png": [
 		241,
 		238,
 		226
 	],
-	"vlc_particles_soul_fire_flame.png": [
+	"vlf_particles_soul_fire_flame.png": [
 		92,
 		205,
 		209
 	],
-	"vlc_particles_sponge3.png": [
+	"vlf_particles_sponge3.png": [
 		241,
 		238,
 		226
 	],
-	"vlc_particles_totem3.png": [
+	"vlf_particles_totem3.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_particles_crit.png": [
+	"vlf_particles_crit.png": [
 		165,
 		165,
 		165
 	],
-	"vlc_particles_teleport.png": [
+	"vlf_particles_teleport.png": [
 		86,
 		22,
 		128
 	],
-	"vlc_particles_bubble.png": [
+	"vlf_particles_bubble.png": [
 		147,
 		174,
 		195
 	],
-	"vlc_particles_sponge2.png": [
+	"vlf_particles_sponge2.png": [
 		241,
 		238,
 		226
 	],
-	"vlc_particles_droplet_bottle.png": [
+	"vlf_particles_droplet_bottle.png": [
 		203,
 		203,
 		203
 	],
-	"vlc_particles_totem1.png": [
+	"vlf_particles_totem1.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_particles_sponge5.png": [
+	"vlf_particles_sponge5.png": [
 		241,
 		238,
 		226
 	],
-	"vlc_particles_instant_effect.png": [
+	"vlf_particles_instant_effect.png": [
 		160,
 		160,
 		160
 	],
-	"vlc_particles_totem4.png": [
+	"vlf_particles_totem4.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_particles_note.png": [
+	"vlf_particles_note.png": [
 		41,
 		40,
 		39
 	],
-	"vlc_particles_smoke.png": [
+	"vlf_particles_smoke.png": [
 		174,
 		174,
 		174
 	],
-	"vlc_particles_lava.png": [
+	"vlf_particles_lava.png": [
 		250,
 		150,
 		64
 	],
-	"vlc_particles_bonemeal.png": [
+	"vlf_particles_bonemeal.png": [
 		185,
 		185,
 		185
 	],
-	"vlc_particles_flame.png": [
+	"vlf_particles_flame.png": [
 		244,
 		149,
 		63
 	],
-	"vlc_particles_smoke_anim.png": [
+	"vlf_particles_smoke_anim.png": [
 		172,
 		172,
 		172
 	],
-	"vlc_formspec_itemslot.png": [
+	"vlf_formspec_itemslot.png": [
 		157,
 		157,
 		157
 	],
-	"vlc_achievements_button.png": [
+	"vlf_achievements_button.png": [
 		158,
 		152,
 		67
@@ -10734,12 +10734,12 @@
 		138,
 		194
 	],
-	"vlc_base_textures_button9_pressed.png": [
+	"vlf_base_textures_button9_pressed.png": [
 		162,
 		162,
 		162
 	],
-	"vlc_base_textures_background.png": [
+	"vlf_base_textures_background.png": [
 		179,
 		179,
 		179
@@ -10749,7 +10749,7 @@
 		255,
 		255
 	],
-	"vlc_base_textures_background9.png": [
+	"vlf_base_textures_background9.png": [
 		179,
 		179,
 		179
@@ -10769,7 +10769,7 @@
 		47,
 		40
 	],
-	"vlc_base_textures_button9.png": [
+	"vlf_base_textures_button9.png": [
 		162,
 		162,
 		162
@@ -10789,7 +10789,7 @@
 		113,
 		113
 	],
-	"vlc_inventory_empty_armor_slot_leggings.png": [
+	"vlf_inventory_empty_armor_slot_leggings.png": [
 		25,
 		32,
 		34
@@ -10799,12 +10799,12 @@
 		254,
 		254
 	],
-	"vlc_inventory_empty_armor_slot_boots.png": [
+	"vlf_inventory_empty_armor_slot_boots.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_inventory_background9.png": [
+	"vlf_inventory_background9.png": [
 		29,
 		29,
 		29
@@ -10819,7 +10819,7 @@
 		157,
 		157
 	],
-	"vlc_inventory_empty_armor_slot_shield.png": [
+	"vlf_inventory_empty_armor_slot_shield.png": [
 		25,
 		32,
 		34
@@ -10829,7 +10829,7 @@
 		151,
 		151
 	],
-	"vlc_inventory_hotbar.png": [
+	"vlf_inventory_hotbar.png": [
 		81,
 		81,
 		85
@@ -10844,27 +10844,27 @@
 		157,
 		157
 	],
-	"vlc_inventory_hotbar_selected.png": [
+	"vlf_inventory_hotbar_selected.png": [
 		113,
 		85,
 		40
 	],
-	"vlc_inventory_button9_pressed.png": [
+	"vlf_inventory_button9_pressed.png": [
 		162,
 		162,
 		162
 	],
-	"vlc_inventory_empty_armor_slot_helmet.png": [
+	"vlf_inventory_empty_armor_slot_helmet.png": [
 		25,
 		32,
 		34
 	],
-	"vlc_inventory_empty_armor_slot_chestplate.png": [
+	"vlf_inventory_empty_armor_slot_chestplate.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_inventory_button9.png": [
+	"vlf_inventory_button9.png": [
 		162,
 		162,
 		162
@@ -10884,12 +10884,12 @@
 		157,
 		157
 	],
-	"vlc_wear_bar.png": [
+	"vlf_wear_bar.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_offhand_slot.png": [
+	"vlf_offhand_slot.png": [
 		92,
 		92,
 		94
@@ -10929,12 +10929,12 @@
 		155,
 		74
 	],
-	"vlc_bossbars_empty.png": [
+	"vlf_bossbars_empty.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_bossbars.png": [
+	"vlf_bossbars.png": [
 		76,
 		68,
 		75
@@ -10974,22 +10974,22 @@
 		27,
 		29
 	],
-	"vlc_experience_bottle.png": [
+	"vlf_experience_bottle.png": [
 		136,
 		174,
 		169
 	],
-	"vlc_experience_orb.png": [
+	"vlf_experience_orb.png": [
 		93,
 		174,
 		0
 	],
-	"vlc_experience_bar_background.png": [
+	"vlf_experience_bar_background.png": [
 		49,
 		46,
 		45
 	],
-	"vlc_experience_bar.png": [
+	"vlf_experience_bar.png": [
 		74,
 		102,
 		70
@@ -11009,432 +11009,432 @@
 		76,
 		44
 	],
-	"vlc_skins_icons.png": [
+	"vlf_skins_icons.png": [
 		106,
 		106,
 		106
 	],
-	"vlc_skins_button.png": [
+	"vlf_skins_button.png": [
 		90,
 		90,
 		90
 	],
-	"vlc_skins_hair_10.png": [
+	"vlf_skins_hair_10.png": [
 		46,
 		46,
 		46
 	],
-	"vlc_skins_hair_4_mask.png": [
+	"vlf_skins_hair_4_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_hair_7_mask.png": [
+	"vlf_skins_hair_7_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_top_9.png": [
+	"vlf_skins_top_9.png": [
 		97,
 		79,
 		65
 	],
-	"vlc_skins_headwear_7.png": [
+	"vlf_skins_headwear_7.png": [
 		187,
 		3,
 		3
 	],
-	"vlc_skins_hair_11.png": [
+	"vlf_skins_hair_11.png": [
 		90,
 		90,
 		90
 	],
-	"vlc_skins_hair_8_mask.png": [
+	"vlf_skins_hair_8_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_base_1.png": [
+	"vlf_skins_base_1.png": [
 		11,
 		11,
 		11
 	],
-	"vlc_skins_thick_arms.png": [
+	"vlf_skins_thick_arms.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_hair_7.png": [
+	"vlf_skins_hair_7.png": [
 		57,
 		57,
 		57
 	],
-	"vlc_skins_bottom_3.png": [
+	"vlf_skins_bottom_3.png": [
 		46,
 		30,
 		19
 	],
-	"vlc_skins_eye_7.png": [
+	"vlf_skins_eye_7.png": [
 		127,
 		127,
 		127
 	],
-	"vlc_skins_top_8_mask.png": [
+	"vlf_skins_top_8_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_hair_1_mask.png": [
+	"vlf_skins_hair_1_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_hair_4.png": [
+	"vlf_skins_hair_4.png": [
 		76,
 		76,
 		76
 	],
-	"vlc_skins_arrow.png": [
+	"vlf_skins_arrow.png": [
 		155,
 		155,
 		155
 	],
-	"vlc_skins_mouth_6.png": [
+	"vlf_skins_mouth_6.png": [
 		163,
 		103,
 		86
 	],
-	"vlc_skins_mouth_7.png": [
+	"vlf_skins_mouth_7.png": [
 		222,
 		112,
 		112
 	],
-	"vlc_skins_headwear_3.png": [
+	"vlf_skins_headwear_3.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_hair_11_mask.png": [
+	"vlf_skins_hair_11_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_hair_10_mask.png": [
+	"vlf_skins_hair_10_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_mouth_5.png": [
+	"vlf_skins_mouth_5.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_skins_top_5_mask.png": [
+	"vlf_skins_top_5_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_footwear_3.png": [
+	"vlf_skins_footwear_3.png": [
 		108,
 		93,
 		85
 	],
-	"vlc_skins_base_1_mask.png": [
+	"vlf_skins_base_1_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_top_9_mask.png": [
+	"vlf_skins_top_9_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_top_1_mask.png": [
+	"vlf_skins_top_1_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_headwear_6.png": [
+	"vlf_skins_headwear_6.png": [
 		236,
 		85,
 		210
 	],
-	"vlc_skins_eye_4.png": [
+	"vlf_skins_eye_4.png": [
 		45,
 		99,
 		141
 	],
-	"vlc_skins_hair_6_mask.png": [
+	"vlf_skins_hair_6_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_character_1.png": [
+	"vlf_skins_character_1.png": [
 		93,
 		90,
 		77
 	],
-	"vlc_skins_top_7.png": [
+	"vlf_skins_top_7.png": [
 		199,
 		191,
 		177
 	],
-	"vlc_skins_bottom_1_mask.png": [
+	"vlf_skins_bottom_1_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_mouth_1.png": [
+	"vlf_skins_mouth_1.png": [
 		163,
 		103,
 		86
 	],
-	"vlc_skins_top_10.png": [
+	"vlf_skins_top_10.png": [
 		89,
 		89,
 		89
 	],
-	"vlc_skins_top_2.png": [
+	"vlf_skins_top_2.png": [
 		74,
 		74,
 		74
 	],
-	"vlc_skins_slim_arms.png": [
+	"vlf_skins_slim_arms.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_bottom_4.png": [
+	"vlf_skins_bottom_4.png": [
 		18,
 		18,
 		18
 	],
-	"vlc_skins_top_6_mask.png": [
+	"vlf_skins_top_6_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_hair_5.png": [
+	"vlf_skins_hair_5.png": [
 		67,
 		67,
 		67
 	],
-	"vlc_skins_headwear_1.png": [
+	"vlf_skins_headwear_1.png": [
 		83,
 		54,
 		67
 	],
-	"vlc_skins_headwear_5.png": [
+	"vlf_skins_headwear_5.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_hair_9.png": [
+	"vlf_skins_hair_9.png": [
 		133,
 		120,
 		62
 	],
-	"vlc_skins_top_6.png": [
+	"vlf_skins_top_6.png": [
 		67,
 		96,
 		86
 	],
-	"vlc_skins_top_3.png": [
+	"vlf_skins_top_3.png": [
 		49,
 		43,
 		42
 	],
-	"vlc_skins_top_5.png": [
+	"vlf_skins_top_5.png": [
 		149,
 		51,
 		51
 	],
-	"vlc_skins_eye_6.png": [
+	"vlf_skins_eye_6.png": [
 		56,
 		56,
 		56
 	],
-	"vlc_skins_bottom_5.png": [
+	"vlf_skins_bottom_5.png": [
 		4,
 		4,
 		4
 	],
-	"vlc_skins_bottom_4_mask.png": [
+	"vlf_skins_bottom_4_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_hair_2.png": [
+	"vlf_skins_hair_2.png": [
 		4,
 		4,
 		4
 	],
-	"vlc_skins_hair_3_mask.png": [
+	"vlf_skins_hair_3_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_top_4.png": [
+	"vlf_skins_top_4.png": [
 		103,
 		103,
 		103
 	],
-	"vlc_skins_top_1.png": [
+	"vlf_skins_top_1.png": [
 		76,
 		57,
 		45
 	],
-	"vlc_skins_bottom_5_mask.png": [
+	"vlf_skins_bottom_5_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_top_4_mask.png": [
+	"vlf_skins_top_4_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_eye_1.png": [
+	"vlf_skins_eye_1.png": [
 		131,
 		121,
 		135
 	],
-	"vlc_skins_top_2_mask.png": [
+	"vlf_skins_top_2_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_hair_3.png": [
+	"vlf_skins_hair_3.png": [
 		8,
 		8,
 		8
 	],
-	"vlc_skins_footwear_2.png": [
+	"vlf_skins_footwear_2.png": [
 		156,
 		80,
 		76
 	],
-	"vlc_skins_headwear_4.png": [
+	"vlf_skins_headwear_4.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_select_overlay.png": [
+	"vlf_skins_select_overlay.png": [
 		69,
 		69,
 		69
 	],
-	"vlc_skins_mouth_3.png": [
+	"vlf_skins_mouth_3.png": [
 		161,
 		76,
 		71
 	],
-	"vlc_skins_eye_2.png": [
+	"vlf_skins_eye_2.png": [
 		111,
 		98,
 		88
 	],
-	"vlc_skins_bottom_1.png": [
+	"vlf_skins_bottom_1.png": [
 		58,
 		50,
 		41
 	],
-	"vlc_skins_hair_9_mask.png": [
+	"vlf_skins_hair_9_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_bottom_2_mask.png": [
+	"vlf_skins_bottom_2_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_top_10_mask.png": [
+	"vlf_skins_top_10_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_hair_5_mask.png": [
+	"vlf_skins_hair_5_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_top_8.png": [
+	"vlf_skins_top_8.png": [
 		50,
 		50,
 		50
 	],
-	"vlc_skins_bottom_2.png": [
+	"vlf_skins_bottom_2.png": [
 		41,
 		30,
 		21
 	],
-	"vlc_skins_eye_5.png": [
+	"vlf_skins_eye_5.png": [
 		148,
 		134,
 		221
 	],
-	"vlc_skins_mouth_2.png": [
+	"vlf_skins_mouth_2.png": [
 		165,
 		88,
 		78
 	],
-	"vlc_skins_eye_3.png": [
+	"vlf_skins_eye_3.png": [
 		159,
 		137,
 		132
 	],
-	"vlc_skins_hair_1.png": [
+	"vlf_skins_hair_1.png": [
 		86,
 		86,
 		88
 	],
-	"vlc_skins_bottom_3_mask.png": [
+	"vlf_skins_bottom_3_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_hair_8.png": [
+	"vlf_skins_hair_8.png": [
 		28,
 		28,
 		28
 	],
-	"vlc_skins_hair_2_mask.png": [
+	"vlf_skins_hair_2_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_footwear_1.png": [
+	"vlf_skins_footwear_1.png": [
 		101,
 		74,
 		58
 	],
-	"vlc_skins_hair_6.png": [
+	"vlf_skins_hair_6.png": [
 		28,
 		28,
 		28
 	],
-	"vlc_skins_top_7_mask.png": [
+	"vlf_skins_top_7_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_skins_mouth_4.png": [
+	"vlf_skins_mouth_4.png": [
 		225,
 		224,
 		224
 	],
-	"vlc_skins_headwear_2.png": [
+	"vlf_skins_headwear_2.png": [
 		216,
 		226,
 		229
 	],
-	"vlc_skins_top_3_mask.png": [
+	"vlf_skins_top_3_mask.png": [
 		0,
 		0,
 		0
 	],
-	"vlc_playerplus_end_sky.png": [
+	"vlf_playerplus_end_sky.png": [
 		14,
 		14,
 		14
@@ -11449,7 +11449,7 @@
 		103,
 		0
 	],
-	"vlc_hunger_icon_foodpoison.png": [
+	"vlf_hunger_icon_foodpoison.png": [
 		109,
 		106,
 		40
@@ -11464,12 +11464,12 @@
 		132,
 		97
 	],
-	"vlc_hunger_bgicon_exhaustion.png": [
+	"vlf_hunger_bgicon_exhaustion.png": [
 		25,
 		25,
 		26
 	],
-	"vlc_hunger_icon_exhaustion.png": [
+	"vlf_hunger_icon_exhaustion.png": [
 		213,
 		213,
 		213
@@ -11479,27 +11479,27 @@
 		24,
 		26
 	],
-	"vlc_hunger_bar_exhaustion.png": [
+	"vlf_hunger_bar_exhaustion.png": [
 		255,
 		255,
 		255
 	],
-	"vlc_hunger_bar_foodpoison.png": [
+	"vlf_hunger_bar_foodpoison.png": [
 		116,
 		132,
 		88
 	],
-	"vlc_hunger_bgicon_saturation.png": [
+	"vlf_hunger_bgicon_saturation.png": [
 		24,
 		24,
 		26
 	],
-	"vlc_hunger_bar_saturation.png": [
+	"vlf_hunger_bar_saturation.png": [
 		255,
 		255,
 		0
 	],
-	"vlc_hunger_icon_saturation.png": [
+	"vlf_hunger_icon_saturation.png": [
 		157,
 		140,
 		64

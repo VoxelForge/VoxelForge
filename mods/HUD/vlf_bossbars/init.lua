@@ -102,7 +102,7 @@ function vlf_bossbars.update_boss(object, name, color)
 	end
 
 	local pos = object:get_pos()
-	for _, player in pairs(minetest.get_connected_players()) do
+	for player in vlf_util.connected_players() do
 		local d = vector.distance(pos, player:get_pos())
 		if d <= 80 then
 			vlf_bossbars.add_bar(player, bardef, true, d)
@@ -127,81 +127,79 @@ minetest.register_on_leaveplayer(function(player)
 	vlf_bossbars.bars[name] = nil
 end)
 
-minetest.register_globalstep(function(dtime)
-	for _, player in pairs(minetest.get_connected_players()) do
-		local name = player:get_player_name()
-		local bars = vlf_bossbars.bars[name]
-		local huds = vlf_bossbars.huds[name]
-		table.sort(bars, function(a, b) return a.priority < b.priority end)
-		local huds_new = {}
-		local bars_new = {}
-		local i = 0
+vlf_player.register_globalstep(function(player, dtime)
+	local name = player:get_player_name()
+	local bars = vlf_bossbars.bars[name]
+	local huds = vlf_bossbars.huds[name]
+	table.sort(bars, function(a, b) return a.priority < b.priority end)
+	local huds_new = {}
+	local bars_new = {}
+	local i = 0
 
-		while #huds > 0 or #bars > 0 do
-			local bar = table.remove(bars, 1)
-			local hud = table.remove(huds, 1)
+	while #huds > 0 or #bars > 0 do
+		local bar = table.remove(bars, 1)
+		local hud = table.remove(huds, 1)
 
-			if bar and bar.id then
-				if bar.timeout then
-					bar.timeout = bar.timeout - dtime
-				end
-				if not bar.timeout or bar.timeout > 0 then
-					table.insert(bars_new, bar)
-				end
+		if bar and bar.id then
+			if bar.timeout then
+				bar.timeout = bar.timeout - dtime
 			end
-
-			if bar and not hud then
-				if i < vlf_bossbars.max_bars then
-					hud = {
-						color = bar.color,
-						image = bar.image,
-						text = bar.text,
-						text_id = player:hud_add({
-							[hud_elem_type_field] = "text",
-							text = bar.text,
-							number = bar.color,
-							position = {x = 0.5, y = 0},
-							alignment = {x = 0, y = 1},
-							offset = {x = 0, y = i * 40},
-						}),
-						image_id = player:hud_add({
-							[hud_elem_type_field] = "image",
-							text = bar.image,
-							position = {x = 0.5, y = 0},
-							alignment = {x = 0, y = 1},
-							offset = {x = 0, y = i * 40 + 25},
-							scale = {x = 0.375, y = 0.375},
-						}),
-					}
-				end
-			elseif hud and not bar then
-				player:hud_remove(hud.text_id)
-				player:hud_remove(hud.image_id)
-				hud = nil
-			else
-				if bar.text ~= hud.text then
-					player:hud_change(hud.text_id, "text", bar.text)
-					hud.text = bar.text
-				end
-
-				if bar.color ~= hud.color then
-					player:hud_change(hud.text_id, "number", bar.color)
-					hud.color = bar.color
-				end
-
-				if bar.image ~= hud.image then
-					player:hud_change(hud.image_id, "text", bar.image)
-					hud.image = bar.image
-				end
+			if not bar.timeout or bar.timeout > 0 then
+				table.insert(bars_new, bar)
 			end
-
-			table.insert(huds_new, hud)
-			i = i + 1
 		end
 
-		vlf_bossbars.huds[name] = huds_new
-		vlf_bossbars.bars[name] = bars_new
+		if bar and not hud then
+			if i < vlf_bossbars.max_bars then
+				hud = {
+					color = bar.color,
+					image = bar.image,
+					text = bar.text,
+					text_id = player:hud_add({
+						[hud_elem_type_field] = "text",
+						text = bar.text,
+						number = bar.color,
+						position = {x = 0.5, y = 0},
+						alignment = {x = 0, y = 1},
+						offset = {x = 0, y = i * 40},
+					}),
+					image_id = player:hud_add({
+						[hud_elem_type_field] = "image",
+						text = bar.image,
+						position = {x = 0.5, y = 0},
+						alignment = {x = 0, y = 1},
+						offset = {x = 0, y = i * 40 + 25},
+						scale = {x = 0.375, y = 0.375},
+					}),
+				}
+			end
+		elseif hud and not bar then
+			player:hud_remove(hud.text_id)
+			player:hud_remove(hud.image_id)
+			hud = nil
+		else
+			if bar.text ~= hud.text then
+				player:hud_change(hud.text_id, "text", bar.text)
+				hud.text = bar.text
+			end
+
+			if bar.color ~= hud.color then
+				player:hud_change(hud.text_id, "number", bar.color)
+				hud.color = bar.color
+			end
+
+			if bar.image ~= hud.image then
+				player:hud_change(hud.image_id, "text", bar.image)
+				hud.image = bar.image
+			end
+		end
+
+		table.insert(huds_new, hud)
+		i = i + 1
 	end
+
+	vlf_bossbars.huds[name] = huds_new
+	vlf_bossbars.bars[name] = bars_new
 end)
 
 vlf_bossbars.recalculate_colors()

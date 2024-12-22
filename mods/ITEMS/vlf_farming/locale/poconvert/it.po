@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_farming x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_farming x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Beetroot Seeds"
-msgstr ""
+msgstr "Semi di Barbabietola"
 
 msgid "Grows into a beetroot plant. Chickens like beetroot seeds."
-msgstr ""
+msgstr "Cresce in una pianta di barbabietola. Ai polli piacciono i semi di barbabietola."
 
 msgid "Place the beetroot seeds on farmland (which can be created with a hoe) to plant a beetroot plant. They grow in sunlight and grow faster on hydrated farmland. Rightclick an animal to feed it beetroot seeds."
-msgstr ""
+msgstr "Piazza i semi di barbabietola sulla terra arata (che può essere formata con una zappa) per seminare una pianta di barbabietola. Crescono alla luce del sole e più velocemente se si trovano su della terra arata idratata. Clicca col tasto destro su di un animale per sfamarlo con i semi di barbabietola."
 
 msgid "Premature Beetroot Plant (Stage 1)"
 msgstr ""

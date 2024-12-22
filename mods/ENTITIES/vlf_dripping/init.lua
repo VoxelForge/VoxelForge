@@ -6,7 +6,7 @@
 
 vlf_dripping = {}
 
-local function make_drop(pos, liquid, sound, interval, texture)
+local function make_drop(pos, _, sound, interval, texture)
 	local pt = {
 		velocity = vector.zero(),
 		collision_removal = false,

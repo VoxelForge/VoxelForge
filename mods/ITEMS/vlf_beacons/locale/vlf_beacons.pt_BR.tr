@@ -1,9 +1,5 @@
 # textdomain: vlf_beacons
-Beacon:=Sinalizador:
 Primary Power:=Poder Primário:
+Secondary Power:=
 Inventory:=Inventário:
-
-
-##### not used anymore #####
-
 Beacon=Sinalizador

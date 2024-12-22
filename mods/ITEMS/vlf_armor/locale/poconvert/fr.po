@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_armor x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_armor x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This is a piece of equippable armor which reduces the amount of damage you receive."
 msgstr "Il s'agit d'un morceau d'armure équipable qui réduit la quantité de dégâts que vous recevez."
@@ -20,31 +20,31 @@ msgid "To equip it, put it on the corresponding armor slot in your inventory men
 msgstr "Pour l'équiper, placez-le sur l'emplacement d'armure correspondant dans votre menu d'inventaire."
 
 msgid "Leather Cap"
-msgstr ""
+msgstr "Capuchon en cuir"
 
 msgid "Leather Tunic"
-msgstr ""
+msgstr "Tunique en cuir"
 
 msgid "Leather Pants"
-msgstr ""
+msgstr "Pantalon en cuir"
 
 msgid "Leather Boots"
-msgstr ""
+msgstr "Bottes en cuir"
 
 msgid "Colorize a piece of leather armor, or wash it"
-msgstr ""
+msgstr "Colorer une pièce d'armure en cuir ou la laver"
 
 msgid "Not leather armor."
-msgstr ""
+msgstr "N'est pas une armure en cuir."
 
 msgid "Washed."
-msgstr ""
+msgstr "Lavée."
 
 msgid "Done: @1"
-msgstr ""
+msgstr "Résultat : @1"
 
 msgid "Player isn't online"
-msgstr ""
+msgstr "Le joueur n'est pas en ligne"
 
 msgid "Golden Helmet"
 msgstr "Casque d'Or"
@@ -59,16 +59,16 @@ msgid "Golden Boots"
 msgstr "Bottes d'Or"
 
 msgid "Chainmail Helmet"
-msgstr ""
+msgstr "Casque en cotte de mailles"
 
 msgid "Chainmail Chestplate"
-msgstr ""
+msgstr "Plastron en cotte de mailles"
 
 msgid "Chainmail Leggings"
-msgstr ""
+msgstr "Jambières en cotte de mailles"
 
 msgid "Chainmail Boots"
-msgstr ""
+msgstr "Bottes en cotte de mailles"
 
 msgid "Iron Helmet"
 msgstr "Casque de Fer"
@@ -158,20 +158,20 @@ msgid "Elytra"
 msgstr "Élytres"
 
 msgid "Smithing Template"
-msgstr ""
+msgstr "Modèle de forge"
 
 msgid "@1 Armor Trim"
-msgstr ""
+msgstr "@1 garniture d'armure"
 
 msgid "Applies to:"
-msgstr ""
+msgstr "S'applique à :"
 
 msgid "Armor"
-msgstr ""
+msgstr "Armure"
 
 msgid "Ingredients:"
-msgstr ""
+msgstr "Ingrédients :"
 
 msgid "Ingot & Crystals"
-msgstr ""
+msgstr "Lingots & Cristaux"
 

@@ -1,11 +1,13 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
+local mob_class = vlf_mobs.mob_class
 
 local cow_def = {
 	description = S("Cow"),
 	type = "animal",
 	spawn_class = "passive",
+	runaway = true,
 	passive = true,
 	hp_min = 10,
 	hp_max = 10,
@@ -16,34 +18,36 @@ local cow_def = {
 	spawn_in_group_min = 3,
 	visual = "mesh",
 	mesh = "mobs_mc_cow.b3d",
-	textures = { {
-		"mobs_mc_cow.png",
-		"blank.png",
-	}, },
+	textures = {
+		{
+			"mobs_mc_cow.png",
+			"blank.png",
+		},
+	},
 	head_swivel = "head.control",
 	bone_eye_height = 10,
-	head_eye_height = 1.1,
+	head_eye_height = 1.3,
 	horizontal_head_height=-1.8,
 	curiosity = 2,
-	head_yaw="z",
+	head_yaw = "z",
 	makes_footstep_sound = true,
-	walk_velocity = 0.7,
-	run_velocity = 1.5,
-	follow_velocity = 1.5,
-	walk_chance = 15,
+	movement_speed = 4.0,
 	drops = {
-		{name = "vlf_mobitems:beef",
-		chance = 1,
-		min = 1,
-		max = 3,
-		looting = "common",},
-		{name = "vlf_mobitems:leather",
-		chance = 1,
-		min = 0,
-		max = 2,
-		looting = "common",},
+		{
+			name = "vlf_mobitems:beef",
+			chance = 1,
+			min = 1,
+			max = 3,
+			looting = "common",
+		},
+		{
+			name = "vlf_mobitems:leather",
+			chance = 1,
+			min = 0,
+			max = 2,
+			looting = "common",
+		},
 	},
-	runaway = true,
 	sounds = {
 		random = "mobs_mc_cow",
 		damage = "mobs_mc_cow_hurt",
@@ -61,113 +65,143 @@ local cow_def = {
 		walk_start = 41, walk_end = 81, walk_speed = 80,
 		run_start = 41, run_end = 81, run_speed = 80,
 	},
-	on_rightclick = function(self, clicker)
-		if self:feed_tame(clicker, 1, true, false) then return end
-		if self.child then return end
-
-		local item = clicker:get_wielded_item()
-		if item:get_name() == "vlf_buckets:bucket_empty" and clicker:get_inventory() then
-			local inv = clicker:get_inventory()
-			inv:remove_item("main", "vlf_buckets:bucket_empty")
-			minetest.sound_play("mobs_mc_cow_milk", {pos=self.object:get_pos(), gain=0.6})
-			-- if room add bucket of milk to inventory, otherwise drop as item
-			if inv:room_for_item("main", {name = "vlf_mobitems:milk_bucket"}) then
-				clicker:get_inventory():add_item("main", "vlf_mobitems:milk_bucket")
-			else
-				local pos = self.object:get_pos()
-				pos.y = pos.y + 0.5
-				minetest.add_item(pos, {name = "vlf_mobitems:milk_bucket"})
-			end
-			return
-		end
-	end,
-	follow = { "vlf_farming:wheat_item" },
-	view_range = 10,
-	fear_height = 4,
+	follow = {
+		"vlf_farming:wheat_item",
+	},
+	run_bonus = 2.0,
 }
 
-vlf_mobs.register_mob("mobs_mc:cow", cow_def)
+------------------------------------------------------------------------
+-- Cow interaction.
+------------------------------------------------------------------------
 
--- Mooshroom
+function cow_def:on_rightclick (clicker)
+	if self:follow_holding(clicker) and self:feed_tame(clicker, 4, true, false) then return end
+	if self.child then return end
 
-vlf_mobs.register_mob("mobs_mc:mooshroom", table.merge(cow_def, {
+	local item = clicker:get_wielded_item()
+	if item:get_name() == "vlf_buckets:bucket_empty" and clicker:get_inventory() then
+		local inv = clicker:get_inventory()
+		inv:remove_item("main", "vlf_buckets:bucket_empty")
+		minetest.sound_play("mobs_mc_cow_milk", {pos=self.object:get_pos(), gain=0.6})
+		-- if room add bucket of milk to inventory, otherwise drop as item
+		if inv:room_for_item("main", {name = "vlf_mobitems:milk_bucket"}) then
+			clicker:get_inventory():add_item("main", "vlf_mobitems:milk_bucket")
+		else
+			local pos = self.object:get_pos()
+			pos.y = pos.y + 0.5
+			minetest.add_item(pos, {name = "vlf_mobitems:milk_bucket"})
+		end
+	end
+end
+
+------------------------------------------------------------------------
+-- Cow AI.
+------------------------------------------------------------------------
+
+cow_def.ai_functions = {
+	mob_class.check_frightened,
+	mob_class.check_breeding,
+	mob_class.check_following,
+	mob_class.follow_herd,
+	mob_class.check_pace,
+}
+
+vlf_mobs.register_mob ("mobs_mc:cow", cow_def)
+
+------------------------------------------------------------------------
+-- Mooshroom.
+------------------------------------------------------------------------
+
+local mooshroom = table.merge(cow_def, {
 	description = S("Mooshroom"),
 	spawn_in_group_min = 4,
 	spawn_in_group = 8,
-	textures = { {"mobs_mc_mooshroom.png", "mobs_mc_mushroom_red.png"}, {"mobs_mc_mooshroom_brown.png", "mobs_mc_mushroom_brown.png" } },
-	on_rightclick = function(self, clicker)
-		if self:feed_tame(clicker, 1, true, false) then return end
-		if self.child then return end
+	textures = {
+		{"mobs_mc_mooshroom.png", "mobs_mc_mushroom_red.png"},
+		{"mobs_mc_mooshroom_brown.png", "mobs_mc_mushroom_brown.png" },
+	},
+})
 
-		local item = clicker:get_wielded_item()
-		-- Use shears to get mushrooms and turn mooshroom into cow
-		if minetest.get_item_group(item:get_name(), "shears") > 0 then
-			local pos = self.object:get_pos()
-			minetest.sound_play("vlf_tools_shears_cut", {pos = pos}, true)
+function mooshroom:on_rightclick (clicker)
+	if self:follow_holding(clicker) and self:feed_tame(clicker, 4, true, false) then return end
+	if self.child then return end
 
-			if self.base_texture[1] == "mobs_mc_mooshroom_brown.png" then
-				minetest.add_item({x=pos.x, y=pos.y+1.4, z=pos.z}, "vlf_mushrooms:mushroom_brown 5")
-			else
-				minetest.add_item({x=pos.x, y=pos.y+1.4, z=pos.z}, "vlf_mushrooms:mushroom_red 5")
-			end
-			vlf_util.replace_mob(self.object, "mobs_mc:cow")
+	local item = clicker:get_wielded_item()
+	-- Use shears to get mushrooms and turn mooshroom into cow
+	if minetest.get_item_group(item:get_name(), "shears") > 0 then
+		local pos = self.object:get_pos()
+		minetest.sound_play("vlf_tools_shears_cut", {pos = pos}, true)
 
-			if not minetest.is_creative_enabled(clicker:get_player_name()) then
-				item:add_wear(mobs_mc.shears_wear)
-				clicker:get_inventory():set_stack("main", clicker:get_wield_index(), item)
-			end
-		-- Use bucket to milk
-		elseif item:get_name() == "vlf_buckets:bucket_empty" and clicker:get_inventory() then
-			local inv = clicker:get_inventory()
-			inv:remove_item("main", "vlf_buckets:bucket_empty")
-			minetest.sound_play("mobs_mc_cow_milk", {pos=self.object:get_pos(), gain=0.6})
-			-- If room, add milk to inventory, otherwise drop as item
-			if inv:room_for_item("main", {name="vlf_mobitems:milk_bucket"}) then
-				clicker:get_inventory():add_item("main", "vlf_mobitems:milk_bucket")
-			else
-				local pos = self.object:get_pos()
-				pos.y = pos.y + 0.5
-				minetest.add_item(pos, {name = "vlf_mobitems:milk_bucket"})
-			end
-		-- Use bowl to get mushroom stew
-		elseif item:get_name() == "vlf_core:bowl" and clicker:get_inventory() then
-			local inv = clicker:get_inventory()
-			inv:remove_item("main", "vlf_core:bowl")
-			minetest.sound_play("mobs_mc_cow_mushroom_stew", {pos=self.object:get_pos(), gain=0.6})
-			-- If room, add mushroom stew to inventory, otherwise drop as item
-			if inv:room_for_item("main", {name="vlf_mushrooms:mushroom_stew"}) then
-				clicker:get_inventory():add_item("main", "vlf_mushrooms:mushroom_stew")
-			else
-				local pos = self.object:get_pos()
-				pos.y = pos.y + 0.5
-				minetest.add_item(pos, {name = "vlf_mushrooms:mushroom_stew"})
-			end
-		end
-	end,
-
-	_on_lightning_strike = function(self)
 		if self.base_texture[1] == "mobs_mc_mooshroom_brown.png" then
-			self.base_texture = { "mobs_mc_mooshroom.png", "mobs_mc_mushroom_red.png" }
+			minetest.add_item({x=pos.x, y=pos.y+1.4, z=pos.z}, "vlf_mushrooms:mushroom_brown 5")
 		else
-			self.base_texture = { "mobs_mc_mooshroom_brown.png", "mobs_mc_mushroom_brown.png" }
+			minetest.add_item({x=pos.x, y=pos.y+1.4, z=pos.z}, "vlf_mushrooms:mushroom_red 5")
 		end
-		self.object:set_properties({ textures = self.base_texture })
-		return true
-	end,
-	_on_dispense = function(self, dropitem, pos, droppos, dropnode, dropdir)
-		if minetest.get_item_group(dropitem:get_name(), "shears") > 0 then
-			local droppos = vector.offset(pos, 0, 1.4, 0)
-			if self.base_texture[1] == "mobs_mc_mooshroom_brown.png" then
-				minetest.add_item(droppos, "vlf_mushrooms:mushroom_brown 5")
-			else
-				minetest.add_item(droppos, "vlf_mushrooms:mushroom_red 5")
-			end
-			vlf_util.replace_mob(self.object, "mobs_mc:cow")
-			return dropitem
+		vlf_util.replace_mob(self.object, "mobs_mc:cow")
+
+		if not minetest.is_creative_enabled(clicker:get_player_name()) then
+			item:add_wear(mobs_mc.shears_wear)
+			clicker:get_inventory():set_stack("main", clicker:get_wield_index(), item)
 		end
-		return vlf_mobs.mob_class._on_dispense(self, dropitem, pos, droppos, dropnode, dropdir)
-	end,
-}))
+		-- Use bucket to milk
+	elseif item:get_name() == "vlf_buckets:bucket_empty" and clicker:get_inventory() then
+		local inv = clicker:get_inventory()
+		inv:remove_item("main", "vlf_buckets:bucket_empty")
+		minetest.sound_play("mobs_mc_cow_milk", {pos=self.object:get_pos(), gain=0.6})
+		-- If room, add milk to inventory, otherwise drop as item
+		if inv:room_for_item("main", {name="vlf_mobitems:milk_bucket"}) then
+			clicker:get_inventory():add_item("main", "vlf_mobitems:milk_bucket")
+		else
+			local pos = self.object:get_pos()
+			pos.y = pos.y + 0.5
+			minetest.add_item(pos, {name = "vlf_mobitems:milk_bucket"})
+		end
+		-- Use bowl to get mushroom stew
+	elseif item:get_name() == "vlf_core:bowl" and clicker:get_inventory() then
+		local inv = clicker:get_inventory()
+		inv:remove_item("main", "vlf_core:bowl")
+		minetest.sound_play("mobs_mc_cow_mushroom_stew", {pos=self.object:get_pos(), gain=0.6})
+		-- If room, add mushroom stew to inventory, otherwise drop as item
+		if inv:room_for_item("main", {name="vlf_mushrooms:mushroom_stew"}) then
+			clicker:get_inventory():add_item("main", "vlf_mushrooms:mushroom_stew")
+		else
+			local pos = self.object:get_pos()
+			pos.y = pos.y + 0.5
+			minetest.add_item(pos, {name = "vlf_mushrooms:mushroom_stew"})
+		end
+	end
+end
+
+function mooshroom:_on_lightning_strike ()
+	if self.base_texture[1] == "mobs_mc_mooshroom_brown.png" then
+		self.base_texture = { "mobs_mc_mooshroom.png", "mobs_mc_mushroom_red.png" }
+	else
+		self.base_texture = { "mobs_mc_mooshroom_brown.png", "mobs_mc_mushroom_brown.png" }
+	end
+	self:set_textures (self.base_texture)
+	return true
+end
+
+function mooshroom:_on_dispense (dropitem, pos, droppos, dropnode, dropdir)
+	if minetest.get_item_group(dropitem:get_name(), "shears") > 0 then
+		local droppos = vector.offset(pos, 0, 1.4, 0)
+		if self.base_texture[1] == "mobs_mc_mooshroom_brown.png" then
+			minetest.add_item(droppos, "vlf_mushrooms:mushroom_brown 5")
+		else
+			minetest.add_item(droppos, "vlf_mushrooms:mushroom_red 5")
+		end
+		vlf_util.replace_mob(self.object, "mobs_mc:cow")
+		return dropitem
+	end
+	return vlf_mobs.mob_class._on_dispense(self, dropitem, pos, droppos, dropnode, dropdir)
+end
+
+vlf_mobs.register_mob ("mobs_mc:mooshroom", mooshroom)
+
+------------------------------------------------------------------------
+-- Cow & Mooshroom spawning.
+------------------------------------------------------------------------
 
 vlf_mobs.spawn_setup({
 	name = "mobs_mc:cow",
@@ -195,7 +229,7 @@ vlf_mobs.spawn_setup({
 		"FlowerForest_beach",
 		"BirchForest",
 		"BirchForestM",
-		"Dark_Forest",
+		"RoofedForest",
 		"Savanna",
 		"Savanna_beach",
 		"SavannaM",

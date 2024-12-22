@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain doc_items x.x.x\n"
+"Project-Id-Version: Luanti textdomain doc_items x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This is a decorational block."
 msgstr "Este es un bloque decorativo."
@@ -20,7 +20,7 @@ msgid "This block is a building block for creating various buildings."
 msgstr "Este bloque es un bloque de construcción para crear diversas construcciones."
 
 msgid "This item is primarily used for crafting other items."
-msgstr "Este objeto se utiliza principalmente para craftear otros objetos."
+msgstr "Este objeto se utiliza principalmente para crear otros ítems."
 
 msgid "Hold it in your hand, then leftclick to eat it."
 msgstr "Sujétalo en tu mano y luego haz clic izquierdo para comerlo."
@@ -29,7 +29,7 @@ msgid "Hold it in your hand, then leftclick to eat it. But why would you want to
 msgstr "Sostenlo en tu mano y luego haz clic izquierdo para comértelo. ¿Pero por qué harías esto?"
 
 msgid "This block's rotation is affected by the way you place it: Place it on the floor or ceiling for a vertical orientation; place it at the side for a horizontal orientation. Sneaking while placing it leads to a perpendicular orientation instead."
-msgstr "La rotación de este bloque se ve afectada por cómo lo colocas: colócalo en el suelo o en el techo para una orientación vertical; colócalo en el lateral para una orientación horizontal. Agacharte mientras lo colocas resulta en una orientación perpendicular."
+msgstr "La rotación de este bloque se ve afectada por cómo lo colocas: Colócalo en el suelo o en el techo para una orientación vertical; colócalo en el lateral para una orientación horizontal. Agacharte mientras lo colocas resulta en una orientación perpendicular."
 
 msgid "Hand"
 msgstr "Mano"
@@ -47,7 +47,7 @@ msgid ", "
 msgstr ", "
 
 msgid "Unknown item (@1)"
-msgstr "Objeto desconocido (@1)"
+msgstr "Ítem desconocido (@1)"
 
 msgid "unknown"
 msgstr "desconocido"

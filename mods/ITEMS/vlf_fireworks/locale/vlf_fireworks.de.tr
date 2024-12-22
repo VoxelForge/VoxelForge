@@ -1,3 +1,6 @@
 # textdomain: vlf_fireworks
-Flight Duration:=Flugdauer:
 Firework Rocket=Feuerwerksrakete
+@1s power left. Not using rocket.=
+Elytra not deployed. Jump while falling down to deploy.=
+Elytra not equipped.=
+Flight Duration: @1s=

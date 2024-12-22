@@ -19,7 +19,7 @@ vlf_burning = {
 dofile(modpath .. "/api.lua")
 
 minetest.register_globalstep(function(dtime)
-	for _, player in pairs(minetest.get_connected_players()) do
+	for player in vlf_util.connected_players() do
 		local storage = vlf_burning.storage[player]
 		if not vlf_burning.tick(player, dtime, storage) and not vlf_burning.is_affected_by_rain(player) then
 			local nodes = vlf_burning.get_touching_nodes(player, {"group:puts_out_fire", "group:set_on_fire"}, storage)
@@ -80,7 +80,7 @@ minetest.register_on_leaveplayer(function(player)
 end)
 
 minetest.register_on_shutdown(function()
-	for _,player in ipairs(minetest.get_connected_players()) do
+	for player in vlf_util.connected_players() do
 		on_leaveplayer(player)
 	end
 end)
@@ -98,7 +98,7 @@ minetest.register_entity("vlf_burning:fire", {
 		},
 		spritediv = {x = 1, y = animation_frames},
 		pointable = false,
-		glow = -1,
+		glow = 14,
 		backface_culling = false,
 	},
 	_vlf_animation_timer = 0,

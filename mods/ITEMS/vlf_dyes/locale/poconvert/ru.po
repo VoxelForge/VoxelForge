@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_dyes x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_dyes x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,62 +11,59 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
-
-msgid "White"
-msgstr ""
-
-msgid "Light Grey"
-msgstr ""
-
-msgid "Grey"
-msgstr ""
-
-msgid "Black"
-msgstr ""
-
-msgid "Purple"
-msgstr ""
-
-msgid "Blue"
-msgstr ""
-
-msgid "Light Blue"
-msgstr ""
-
-msgid "Cyan"
-msgstr ""
-
-msgid "Green"
-msgstr ""
-
-msgid "Lime"
-msgstr ""
-
-msgid "Yellow"
-msgstr ""
-
-msgid "Brown"
-msgstr ""
-
-msgid "Orange"
-msgstr ""
-
-msgid "Red"
-msgstr ""
-
-msgid "Magenta"
-msgstr ""
-
-msgid "Pink"
-msgstr ""
-
-msgid "@1 Dye"
-msgstr ""
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This item is a dye which is used for dyeing and crafting."
 msgstr "Это краситель, который используется для окрашивания и крафта."
 
 msgid "Rightclick on a sheep to dye its wool. Other things are dyed by crafting."
 msgstr "Кликните правой по овце, чтобы окрасить её шерсть. Остальные вещи окрашиваются путём крафта."
+
+msgid "Black Dye"
+msgstr "Чёрный краситель"
+
+msgid "Blue Dye"
+msgstr "Синий краситель"
+
+msgid "Brown Dye"
+msgstr "Коричневый краситель"
+
+msgid "Cyan Dye"
+msgstr "Бирюзовый краситель"
+
+msgid "Green Dye"
+msgstr "Зеленый краситель"
+
+msgid "Grey Dye"
+msgstr "Серый краситель"
+
+msgid "Light Blue Dye"
+msgstr "Голубой краситель"
+
+msgid "Light Grey Dye"
+msgstr "Светло-серый краситель"
+
+msgid "Lime Dye"
+msgstr "Лаймовый краситель"
+
+msgid "Magenta Dye"
+msgstr "Сиреневый краситель"
+
+msgid "Orange Dye"
+msgstr "Оранжевый краситель"
+
+msgid "Pink Dye"
+msgstr "Розовый краситель"
+
+msgid "Purple Dye"
+msgstr "Фиолетовый краситель"
+
+msgid "Red Dye"
+msgstr "Красный краситель"
+
+msgid "White Dye"
+msgstr "Белый краситель"
+
+msgid "Yellow Dye"
+msgstr "Желтый краситель"
 

@@ -7,11 +7,8 @@ local max_title_length = 64
 
 local bookshelf_inv = minetest.settings:get_bool("vlf_bookshelf_inventories", true)
 
-local header = ""
-if minetest.get_modpath("vlf_init") then
-	header = "no_prepend[]" .. vlf_vars.gui_nonbg .. vlf_vars.gui_bg_color ..
+local header = "no_prepend[]" .. vlf_vars.gui_nonbg .. vlf_vars.gui_bg_color ..
 		"style_type[button;border=false;bgimg=vlf_books_button9.png;bgimg_pressed=vlf_books_button9_pressed.png;bgimg_middle=2,2]"
-end
 
 -- Book
 minetest.register_craftitem("vlf_books:book", {
@@ -179,7 +176,7 @@ minetest.register_craftitem("vlf_books:written_book", {
 for i = 1, 8 do
 	local rc = {}
 	table.insert(rc, "vlf_books:written_book")
-	for j = 1, i do	table.insert(rc, "vlf_books:writable_book") end
+	for _ = 1, i do	table.insert(rc, "vlf_books:writable_book") end
 
 	minetest.register_craft({
 		type = "shapeless",
@@ -188,7 +185,7 @@ for i = 1, 8 do
 	})
 end
 
-local function craft_copy_book(itemstack, player, old_craft_grid, craft_inv)
+local function craft_copy_book(itemstack, player, old_craft_grid, _)
 	if itemstack:get_name() ~= "vlf_books:written_book" then
 		return
 	end
@@ -246,7 +243,7 @@ local function on_blast(pos)
 end
 
 -- Simple protection checking functions
-local function protection_check_move(pos, from_list, from_index, to_list, to_index, count, player)
+local function protection_check_move(pos, _, _, _, _, count, player)
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
@@ -256,7 +253,7 @@ local function protection_check_move(pos, from_list, from_index, to_list, to_ind
 	end
 end
 
-local function protection_check_put_take(pos, listname, index, stack, player)
+local function protection_check_put_take(pos, _, _, stack, player)
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
@@ -268,7 +265,7 @@ local function protection_check_put_take(pos, listname, index, stack, player)
 	end
 end
 
-local function bookshelf_gui(pos, node, clicker)
+local function bookshelf_gui(pos, _, clicker)
 	if not bookshelf_inv then return end
 	local name = minetest.get_meta(pos):get_string("name")
 
@@ -301,12 +298,9 @@ local function bookshelf_gui(pos, node, clicker)
 end
 
 local function close_forms(pos)
-	local players = minetest.get_connected_players()
 	local formname = "vlf_books:bookshelf_" .. pos.x .. "_" .. pos.y .. "_" .. pos.z
-	for p = 1, #players do
-		if vector.distance(players[p]:get_pos(), pos) <= 30 then
-			minetest.close_formspec(players[p]:get_player_name(), formname)
-		end
+	for pl in vlf_util.connected_players(pos, 30) do
+			minetest.close_formspec(pl:get_player_name(), formname)
 	end
 end
 
@@ -331,26 +325,27 @@ minetest.register_node("vlf_books:bookshelf", {
 	_vlf_blast_resistance = 1.5,
 	_vlf_hardness = 1.5,
 	_vlf_silk_touch_drop = true,
+	_vlf_burntime = 15,
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		inv:set_size("main", 9 * 3)
 	end,
-	after_place_node = function(pos, placer, itemstack, pointed_thing)
+	after_place_node = function(pos, _, itemstack, _)
 		minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
 	end,
 	allow_metadata_inventory_move = protection_check_move,
 	allow_metadata_inventory_take = protection_check_put_take,
 	allow_metadata_inventory_put = protection_check_put_take,
-	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	on_metadata_inventory_move = function(pos, _, _, _, _, _, player)
 		minetest.log("action", player:get_player_name() ..
 			" moves stuff in bookshelf at " .. minetest.pos_to_string(pos))
 	end,
-	on_metadata_inventory_put = function(pos, listname, index, stack, player)
+	on_metadata_inventory_put = function(pos, _, _, _, player)
 		minetest.log("action", player:get_player_name() ..
 			" moves stuff to bookshelf at " .. minetest.pos_to_string(pos))
 	end,
-	on_metadata_inventory_take = function(pos, listname, index, stack, player)
+	on_metadata_inventory_take = function(pos, _, _, _, player)
 		minetest.log("action", player:get_player_name() ..
 			" takes stuff from bookshelf at " .. minetest.pos_to_string(pos))
 	end,
@@ -367,10 +362,4 @@ minetest.register_craft({
 		{ "vlf_books:book", "vlf_books:book", "vlf_books:book" },
 		{ "group:wood",     "group:wood",     "group:wood" },
 	}
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_books:bookshelf",
-	burntime = 15,
 })

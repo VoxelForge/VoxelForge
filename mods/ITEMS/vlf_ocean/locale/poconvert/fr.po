@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_ocean x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_ocean x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Tube Coral Block"
 msgstr "Bloc de Corail Tubulaire"
@@ -158,22 +158,22 @@ msgid "Dark Prismarine"
 msgstr "Prismarine Sombre"
 
 msgid "Prismarine Stairs"
-msgstr ""
+msgstr "Escalier en prismarine"
 
 msgid "Prismarine Slab"
-msgstr ""
+msgstr "Dalle en prismarine"
 
 msgid "Prismarine Brick Stairs"
-msgstr ""
+msgstr "Escalier en prismarine taillée"
 
 msgid "Prismarine Brick Slab"
-msgstr ""
+msgstr "Dalle en prismarine taillée"
 
 msgid "Dark Prismarine Stairs"
-msgstr ""
+msgstr "Prismarine sombre"
 
 msgid "Dark Prismarine Slab"
-msgstr ""
+msgstr "Dalle en prismarine sombre"
 
 msgid "Prismarine Crystals"
 msgstr "Cristaux de Prismarine"

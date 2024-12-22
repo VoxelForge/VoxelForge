@@ -50,7 +50,7 @@ minetest.register_tool("vlf_fire:flint_and_steel", {
 		return itemstack
 	end,
 	_dispense_into_walkable = true,
-	_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
+	_on_dispense = function(stack, _, droppos, dropnode, _)
 		-- Ignite air
 		if dropnode.name == "air" then
 			minetest.set_node(droppos, {name="vlf_fire:fire"})

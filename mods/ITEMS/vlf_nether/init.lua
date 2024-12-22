@@ -44,23 +44,26 @@ minetest.register_node("vlf_nether:quartz_ore", {
 	_vlf_blast_resistance = 3,
 	_vlf_hardness = 3,
 	_vlf_silk_touch_drop = true,
-	_vlf_fortune_drop = vlf_core.fortune_drop_ore
+	_vlf_fortune_drop = vlf_core.fortune_drop_ore,
+	_vlf_cooking_output = "vlf_nether:quartz"
 })
 
 minetest.register_node("vlf_nether:ancient_debris", {
 	description = S("Ancient Debris"),
 	_doc_items_longdesc = S("Ancient debris can be found in the nether and is very very rare."),
 	tiles = {"vlf_nether_ancient_debris_top.png", "vlf_nether_ancient_debris_side.png"},
-	groups = {pickaxey=4, building_block=1, material_stone=1, xp=0, blast_furnace_smeltable = 1, fire_immune = 1},
+	groups = {pickaxey=4, building_block=1, material_stone=1, xp=0, blast_furnace_smeltable = 1,
+		fire_immune = 1},
 	drop = "vlf_nether:ancient_debris",
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	_vlf_blast_resistance = 1200,
 	_vlf_hardness = 30,
-	_vlf_silk_touch_drop = true
+	_vlf_silk_touch_drop = true,
+	_vlf_cooking_output = "vlf_nether:netherite_scrap"
 })
 
 minetest.register_node("vlf_nether:netheriteblock", {
-	description = S("Netherite Block"),
+	description = S("Block of Netherite"),
 	_doc_items_longdesc = S("Netherite block is very hard and can be made of 9 netherite ingots."),
 	tiles = {"vlf_nether_netheriteblock.png"},
 	is_ground_content = false,
@@ -74,7 +77,7 @@ minetest.register_node("vlf_nether:netheriteblock", {
 
 -- For eternal fire on top of netherrack and magma blocks
 -- (this code does not require a dependency on vlf_fire)
-local function eternal_after_destruct(pos, oldnode)
+local function eternal_after_destruct(pos)
 	pos.y = pos.y + 1
 	if minetest.get_node(pos).name == "vlf_fire:eternal_fire" then
 		minetest.remove_node(pos)
@@ -106,11 +109,12 @@ minetest.register_node("vlf_nether:netherrack", {
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	_vlf_blast_resistance = 0.4,
 	_vlf_hardness = 0.4,
+	_vlf_cooking_output = "vlf_nether:netherbrick",
 
 	-- Eternal fire on top
 	after_destruct = eternal_after_destruct,
 	_on_ignite = eternal_on_ignite,
-	_on_bone_meal = function(itemstack,placer,pt,pos,node)
+	_on_bone_meal = function(_, _, _, pos , _)
 		local n = minetest.find_node_near(pos,1,{"vlf_crimson:warped_nylium","vlf_crimson:crimson_nylium"})
 		if n then
 			minetest.set_node(pos,minetest.get_node(n))
@@ -126,17 +130,6 @@ minetest.register_node("vlf_nether:magma", {
 	light_source = 3,
 	groups = {pickaxey=1, building_block=1, material_stone=1, fire=1},
 	sounds = vlf_sounds.node_sound_stone_defaults(),
-	-- From walkover mod
-	on_walk_over = function(loc, nodeiamon, player)
-		local armor_feet = player:get_inventory():get_stack("armor", 5)
-		if player and player:get_player_control().sneak or (minetest.global_exists("vlf_enchanting") and vlf_enchanting.has_enchantment(armor_feet, "frost_walker")) or (minetest.global_exists("vlf_entity_effects") and vlf_entity_effects.has_effect(player, "fire_resistance")) then
-			return
-		end
-		-- Hurt players standing on top of this block
-		if player:get_hp() > 0 then
-			vlf_util.deal_damage(player, 1, {type = "hot_floor"})
-		end
-	end,
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
 
@@ -145,12 +138,24 @@ minetest.register_node("vlf_nether:magma", {
 	_on_ignite = eternal_on_ignite,
 })
 
+vlf_player.register_globalstep_slow(function(player)
+	if vlf_player.players[player].nodes.stand ~= "vlf_nether:magma" then return end
+	local armor_feet = player:get_inventory():get_stack("armor", 5)
+	if player and player:get_player_control().sneak or (minetest.global_exists("vlf_enchanting") and vlf_enchanting.has_enchantment(armor_feet, "frost_walker")) or (minetest.global_exists("vlf_potions") and vlf_potions.has_effect(player, "fire_resistance")) then
+		return
+	end
+	-- Hurt players standing on top of this block
+	if player:get_hp() > 0 then
+		vlf_util.deal_damage(player, 1, {type = "hot_floor"})
+	end
+end)
+
 minetest.register_node("vlf_nether:soul_sand", {
 	description = S("Soul Sand"),
 	_tt_help = S("Reduces walking speed"),
 	_doc_items_longdesc = S("Soul sand is a block from the Nether. One can only slowly walk on soul sand. The slowing effect is amplified when the soul sand is on top of ice, packed ice or a slime block."),
 	tiles = {"vlf_nether_soul_sand.png"},
-	groups = {handy = 1, shovely = 1, building_block = 1, soil_nether_wart = 1, material_sand = 1, soul_block = 1 },
+	groups = {handy = 1, shovely = 1, building_block = 1, soil_nether_wart = 1, material_sand = 1, soul_block = 1, _vlf_partial = 2 },
 	collision_box = {
 		type = "fixed",
 		fixed = { -0.5, -0.5, -0.5, 0.5, 0.5 - 2/16, 0.5 },
@@ -158,13 +163,14 @@ minetest.register_node("vlf_nether:soul_sand", {
 	sounds = vlf_sounds.node_sound_sand_defaults(),
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
+	-- Mobs only.
+	_vlf_velocity_factor = 0.4,
 })
 
-vlf_player.register_globalstep_slow(function(player, dtime)
+vlf_player.register_globalstep_slow(function(player)
 	-- Standing on soul sand or soul soil?
 	if minetest.get_item_group(vlf_player.players[player].nodes.stand, "soul_block") > 0 then
 		-- TODO: Tweak walk speed
-		-- TODO: Also slow down mobs
 		local boots = player:get_inventory():get_stack("armor", 5)
 		local soul_speed = vlf_enchanting.get_enchantment(boots, "soul_speed")
 		-- If player wears Soul Speed boots, increase speed
@@ -194,6 +200,7 @@ local nether_brick = {
 
 minetest.register_node("vlf_nether:nether_brick", table.merge(nether_brick,{
 	groups = {pickaxey=1, building_block=1, material_stone=1, stonecuttable = 1},
+	_vlf_cooking_output = "vlf_nether:cracked_nether_brick"
 }))
 
 minetest.register_node("vlf_nether:red_nether_brick", table.merge(nether_brick,{
@@ -237,6 +244,7 @@ minetest.register_node("vlf_nether:quartz_block", {
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	_vlf_blast_resistance = 0.8,
 	_vlf_hardness = 0.8,
+	_vlf_cooking_output = "vlf_nether:quartz_smooth"
 })
 
 minetest.register_node("vlf_nether:quartz_chiseled", {
@@ -308,7 +316,18 @@ vlf_stairs.register_stair_and_slab("red_nether_brick", {
 })
 
 -- Nether Brick Fence (without fence gate!)
-vlf_fences.register_fence("nether_brick_fence", S("Nether Brick Fence"), "vlf_fences_fence_nether_brick.png", {pickaxey=1, deco_block=1, fence_nether_brick=1}, 2, 30, {"group:fence_nether_brick"}, vlf_sounds.node_sound_stone_defaults())
+vlf_fences.register_fence_def("nether_brick_fence", {
+	description = S("Nether Brick Fence"),
+	tiles = { "vlf_fences_fence_nether_brick.png" },
+	groups = { pickaxey = 1, fence_nether_brick = 1 },
+	connects_to = { "group:fence_nether_brick", "group:solid" },
+	sounds = vlf_sounds.node_sound_stone_defaults(),
+	_vlf_blast_resistance = 6,
+	_vlf_hardness = 2,
+	_vlf_fences_baseitem = "vlf_nether:nether_brick",
+	_vlf_fences_stickreplacer = "vlf_nether:netherbrick",
+	_vlf_fences_output_amount = 6
+})
 
 
 minetest.register_craftitem("vlf_nether:glowstone_dust", {
@@ -366,34 +385,6 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "vlf_fences:nether_brick_fence 6",
-	recipe = {
-		{"vlf_nether:nether_brick", "vlf_nether:netherbrick", "vlf_nether:nether_brick"},
-		{"vlf_nether:nether_brick", "vlf_nether:netherbrick", "vlf_nether:nether_brick"},
-	}
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:fence_wood",
-	burntime = 15,
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_nether:quartz",
-	recipe = "vlf_nether:quartz_ore",
-	cooktime = 10,
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_nether:netherite_scrap",
-	recipe = "vlf_nether:ancient_debris",
-	cooktime = 10,
-})
-
-minetest.register_craft({
 	output = "vlf_nether:quartz_block",
 	recipe = {
 		{"vlf_nether:quartz", "vlf_nether:quartz"},
@@ -426,13 +417,6 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	type = "cooking",
-	output = "vlf_nether:netherbrick",
-	recipe = "vlf_nether:netherrack",
-	cooktime = 10,
-})
-
-minetest.register_craft({
 	output = "vlf_nether:nether_brick",
 	recipe = {
 		{"vlf_nether:netherbrick", "vlf_nether:netherbrick"},
@@ -458,23 +442,9 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "vlf_nether:chiseled_nether_brick",
 	recipe = {
-		{"vlf_stairs:netherbrick_slab"},
-		{"vlf_stairs:netherbrick_slab"},
+		{"vlf_stairs:slab_nether_brick"},
+		{"vlf_stairs:slab_nether_brick"},
 	}
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_core:cracked_nether_brick",
-	recipe = "vlf_core:netherbrick",
-	cooktime = 10,
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_nether:quartz_smooth",
-	recipe = "vlf_nether:quartz_block",
-	cooktime = 10,
 })
 
 minetest.register_craft({

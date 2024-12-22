@@ -69,7 +69,7 @@ minetest.register_craftitem("vlf_bone_meal:bone_meal", {
 
 		return bone_meal(itemstack, user, pointed_thing)
 	end,
-	_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
+	_on_dispense = function(stack, pos, droppos, dropnode)
 		-- Apply bone meal, if possible
 		local pointed_thing
 		if dropnode.name == "air" then

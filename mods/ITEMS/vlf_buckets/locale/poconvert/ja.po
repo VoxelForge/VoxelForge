@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_buckets x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_buckets x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,19 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
-
-msgid "Bucket of @1"
-msgstr "@1入りバケツ"
-
-msgid "This bucket is filled with water and @1."
-msgstr "このバケツには、水と@1が入っています。"
-
-msgid "Place it to empty the bucket and place a @1. Obtain by right clicking on a @2 with a bucket of water."
-msgstr ""
-
-msgid "Places a water source and a @1."
-msgstr ""
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Empty Bucket"
 msgstr "空のバケツ"
@@ -36,6 +24,54 @@ msgstr "液体の源に使うと、それを回収します。何処かに満ち
 
 msgid "Collects liquids"
 msgstr "液体を回収"
+
+msgid "Bucket of Axolotl"
+msgstr ""
+
+msgid "Bucket of Cod"
+msgstr ""
+
+msgid "Bucket of Salmon"
+msgstr ""
+
+msgid "Bucket of Tropical Fish"
+msgstr ""
+
+msgid "Place it to empty the bucket and place a Cod. Obtain by right clicking on a Cod with a bucket of water."
+msgstr ""
+
+msgid "Place it to empty the bucket and place a Salmon. Obtain by right clicking on a Salmon with a bucket of water."
+msgstr ""
+
+msgid "Place it to empty the bucket and place a Tropical Fish. Obtain by right clicking on a Tropical Fish with a bucket of water."
+msgstr ""
+
+msgid "Place it to empty the bucket and place an Axolotl. Obtain by right clicking on an Axolotl with a bucket of water."
+msgstr ""
+
+msgid "Places a water source and a Cod."
+msgstr ""
+
+msgid "Places a water source and a Salmon."
+msgstr ""
+
+msgid "Places a water source and a Tropical Fish."
+msgstr ""
+
+msgid "Places a water source and an Axolotl."
+msgstr ""
+
+msgid "This bucket is filled with water and a Cod."
+msgstr ""
+
+msgid "This bucket is filled with water and a Salmon."
+msgstr ""
+
+msgid "This bucket is filled with water and a Tropical Fish."
+msgstr ""
+
+msgid "This bucket is filled with water and an Axolotl."
+msgstr ""
 
 msgid "Lava Bucket"
 msgstr "溶岩入りバケツ"

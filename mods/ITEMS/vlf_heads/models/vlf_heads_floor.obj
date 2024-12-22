@@ -1,6 +1,6 @@
 # Blender v3.4.1 OBJ File: ''
 # www.blender.org
-mtllib mcl_heads_floor.mtl
+mtllib vlf_heads_floor.mtl
 o Cube.002
 v -0.250000 -0.500000 0.250000
 v -0.250000 -0.000000 0.250000

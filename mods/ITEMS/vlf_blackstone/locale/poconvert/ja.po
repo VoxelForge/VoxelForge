@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_blackstone x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_blackstone x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Blackstone"
 msgstr "ブラックストーン"
@@ -40,6 +40,9 @@ msgstr "模様入りの磨かれたブラックストーン"
 msgid "Polished Blackstone Bricks"
 msgstr "磨かれたブラックストーンレンガ"
 
+msgid "Cracked Polished Blackstone Bricks"
+msgstr "ひび割れた磨かれたブラックストーンレンガ"
+
 msgid "Quartz Bricks"
 msgstr "クォーツレンガ"
 
@@ -53,13 +56,13 @@ msgid "Blackstone Stairs"
 msgstr ""
 
 msgid "Blackstone Slab"
-msgstr "ブラックストーンのスラブ"
+msgstr "ブラックストーンのハーフブロック"
 
 msgid "Polished Blackstone Stairs"
-msgstr ""
+msgstr "磨かれたブラックストーンの階段"
 
 msgid "Polished Blackstone Slab"
-msgstr "磨かれたブラックストーンのスラブ"
+msgstr "磨かれたブラックストーンのハーフブロック"
 
 msgid "Blackstone Brick Stairs"
 msgstr ""
@@ -67,12 +70,12 @@ msgstr ""
 msgid "Blackstone Brick Slab"
 msgstr ""
 
-msgid "Blackstone Wall"
-msgstr "ブラックストーンの塀"
-
 msgid "Soul Torch"
-msgstr "ソウルトーチ"
+msgstr "魂の松明"
 
 msgid "Torches are light sources which can be placed at the side or on the top of most blocks."
 msgstr ""
+
+msgid "Blackstone Wall"
+msgstr "ブラックストーンの塀"
 

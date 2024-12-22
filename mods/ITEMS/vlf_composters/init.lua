@@ -1,4 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
+vlf_composters = {}
 
 --
 -- Composter mod, adds composters.
@@ -32,11 +33,37 @@ minetest.register_craft({
 	}
 })
 
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_composters:composter",
-	burntime = 15,
-})
+function vlf_composters.add_item (pos, node, itemstack)
+	local itemname = itemstack:get_name ()
+	local chance = minetest.get_item_group (itemname, "compostability")
+
+	-- calculate leveling up chance
+	local rand = math.random(0,100)
+	if chance >= rand then
+		-- get current compost level
+		local level = minetest.registered_nodes[node.name]["_vlf_compost_level"]
+		-- spawn green particles above new layer
+		vlf_bone_meal.add_bone_meal_particle(vector.offset(pos, 0, level/8, 0))
+		-- update composter block
+		if level < 7 then
+			level = level + 1
+		else
+			level = "ready"
+		end
+		minetest.swap_node(pos, {name = "vlf_composters:composter_" .. level})
+		minetest.sound_play({name="default_grass_footstep", gain=0.4}, {
+			pos = pos,
+			gain= 0.4,
+			max_hear_distance = 16,
+		}, true)
+		-- a full composter becomes ready for harvest after one second
+		-- the block will get updated by the node timer callback set in node reg def
+		if level == 7 then
+			local timer = minetest.get_node_timer(pos)
+			timer:start(1)
+		end
+	end
+end
 
 --- Fill the composter when rightclicked.
 --
@@ -49,7 +76,7 @@ minetest.register_craft({
 -- parameters are the standard parameters passed to `on_rightclick`.
 -- returns the remaining itemstack.
 --
-local function composter_add_item(pos, node, player, itemstack, pointed_thing)
+local function composter_add_item(pos, node, player, itemstack, _)
 	if not player or (player:get_player_control() and player:get_player_control().sneak) then
 		return itemstack
 	end
@@ -71,32 +98,7 @@ local function composter_add_item(pos, node, player, itemstack, pointed_thing)
 				max_hear_distance = 16,
 			}, true)
 		end
-		-- calculate leveling up chance
-		local rand = math.random(0,100)
-		if chance >= rand then
-			-- get current compost level
-			local level = minetest.registered_nodes[node.name]["_vlf_compost_level"]
-			-- spawn green particles above new layer
-			vlf_bone_meal.add_bone_meal_particle(vector.offset(pos, 0, level/8, 0))
-			-- update composter block
-			if level < 7 then
-				level = level + 1
-			else
-				level = "ready"
-			end
-			minetest.swap_node(pos, {name = "vlf_composters:composter_" .. level})
-			minetest.sound_play({name="default_grass_footstep", gain=0.4}, {
-				pos = pos,
-				gain= 0.4,
-				max_hear_distance = 16,
-			}, true)
-			-- a full composter becomes ready for harvest after one second
-			-- the block will get updated by the node timer callback set in node reg def
-			if level == 7 then
-				local timer = minetest.get_node_timer(pos)
-				timer:start(1)
-			end
-		end
+		vlf_composters.add_item (pos, node, itemstack)
 	end
 	return itemstack
 end
@@ -128,7 +130,7 @@ end
 -- parameterss are the standard parameters passed to `on_rightclick`.
 -- returns itemstack (unchanged in this function).
 --
-local function composter_harvest(pos, node, player, itemstack, pointed_thing)
+local function composter_harvest(pos, _, player, itemstack, _)
 	if not player or (player:get_player_control() and player:get_player_control().sneak) then
 		return itemstack
 	end
@@ -163,8 +165,7 @@ local function composter_get_nodeboxes(level)
 	}
 end
 
-local function composter_level(node)
-	local nn = node.name
+function vlf_composters.test_composter (nn)
 	if nn == "vlf_composters:composter" then
 		return 0
 	elseif nn == "vlf_composters:composter_1" then
@@ -181,9 +182,16 @@ local function composter_level(node)
 		return 6
 	elseif nn == "vlf_composters:composter_7" then
 		return 7
+	elseif nn == "vlf_composters:composter_ready" then
+		return 8
 	else
 		return nil
 	end
+end
+
+local function composter_level(node)
+	local nn = node.name
+	return vlf_composters.test_composter (nn)
 end
 
 for i = 1, 7 do
@@ -211,7 +219,7 @@ local function on_hopper_in(pos, downpos)
 	local level = composter_level(downnode)
 
 	--Consume compostable items and update composter below
-	if level then
+	if level and level ~= 8 then
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 
@@ -228,7 +236,7 @@ local function on_hopper_in(pos, downpos)
 					if level < 7 then
 						level = level + 1
 					else
-						level = "ready"
+						level = "ready" ---@diagnostic disable-line: cast-local-type
 					end
 					minetest.swap_node(downpos, {name = "vlf_composters:composter_" .. level})
 				end
@@ -261,12 +269,13 @@ minetest.register_node("vlf_composters:composter", {
 	groups = {
 		handy=1, material_wood=1, deco_block=1, dirtifier=1,
 		flammable=2, fire_encouragement=3, fire_flammability=4,
-		container = 1,
+		container = 1, composter = 1, _vlf_partial = 2,
 	},
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	_vlf_hardness = 0.6,
 	_vlf_blast_resistance = 0.6,
 	_vlf_compost_level = 0,
+	_vlf_burntime = 15,
 	on_rightclick = composter_add_item,
 	_on_hopper_in = on_hopper_in,
 })
@@ -294,7 +303,8 @@ local function register_filled_composter(level)
 			handy=1, material_wood=1, deco_block=1, dirtifier=1,
 			not_in_creative_inventory=1, not_in_craft_guide=1,
 			flammable=2, fire_encouragement=3, fire_flammability=4,
-			comparator_signal=level, container = 1,
+			comparator_signal=level, container = 1, composter = 1,
+			_vlf_partial = 2,
 		},
 		sounds = vlf_sounds.node_sound_wood_defaults(),
 		drop = "vlf_composters:composter",
@@ -304,6 +314,7 @@ local function register_filled_composter(level)
 		on_rightclick = composter_add_item,
 		on_timer = composter_ready,
 		_on_hopper_in = on_hopper_in,
+		_vlf_baseitem = "vlf_composters:composter",
 	})
 
 	-- Add entry aliases for the Help
@@ -337,7 +348,8 @@ minetest.register_node("vlf_composters:composter_ready", {
 		handy=1, material_wood=1, deco_block=1, dirtifier=1,
 		not_in_creative_inventory=1, not_in_craft_guide=1,
 		flammable=2, fire_encouragement=3, fire_flammability=4,
-		comparator_signal=8, container = 1,
+		comparator_signal=8, container = 1, composter = 1,
+		_vlf_partial = 2,
 	},
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	drop = "vlf_composters:composter",
@@ -346,6 +358,7 @@ minetest.register_node("vlf_composters:composter_ready", {
 	_vlf_compost_level = 7,
 	on_rightclick = composter_harvest,
 	_on_hopper_out = on_hopper_out,
+	_vlf_baseitem = "vlf_composters:composter",
 })
 
 -- Add entry aliases for the Help

@@ -1,5 +1,6 @@
 local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
+local D = vlf_util.get_dynamic_translator()
 local mod_doc = minetest.get_modpath("doc")
 
 --maps normalized base color name to non-standard texture color names
@@ -105,6 +106,7 @@ function vlf_panes.register_pane(name, def)
 	end
 	flatgroups.pane = 1
 	flatgroups.deco_block = 1
+	flatgroups._vlf_partial = 2
 	minetest.register_node(":vlf_panes:" .. name .. "_flat", {
 		description = def.description,
 		_doc_items_create_entry = def._doc_items_create_entry,
@@ -140,6 +142,7 @@ function vlf_panes.register_pane(name, def)
 	local groups = table.copy(def.groups)
 	groups.pane = 1
 	groups.not_in_creative_inventory = 1
+	groups._vlf_partial = 2
 	minetest.register_node(":vlf_panes:" .. name, {
 		drawtype = "nodebox",
 		paramtype = "light",
@@ -209,7 +212,7 @@ local function pane(description, node, append)
 		inventory_image = texture1,
 		wield_image = texture1,
 		sounds = vlf_sounds.node_sound_glass_defaults(),
-		groups = {handy=1, material_glass=1},
+		groups = {handy=1, material_glass=1, _vlf_partial=2},
 		recipe = {
 			{node, node, node},
 			{node, node, node},
@@ -233,7 +236,7 @@ vlf_panes.register_pane("bar", {
 	textures = {"xpanes_pane_iron.png","xpanes_pane_iron.png","xpanes_top_iron.png"},
 	inventory_image = "xpanes_pane_iron.png",
 	wield_image = "xpanes_pane_iron.png",
-	groups = {pickaxey=1},
+	groups = {pickaxey=1, iron_bars=1},
 	sounds = vlf_sounds.node_sound_metal_defaults(),
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
 	recipe = {
@@ -249,5 +252,5 @@ pane(S("Glass Pane"), "vlf_core:glass", "_natural") -- triggers special case
 
 -- Stained Glass Panes
 for k,v in pairs(vlf_dyes.colors) do
-	pane(S("@1 Glass Pane", v.readable_name), "vlf_core:glass_"..k, "_"..k)
+	pane(D(v.readable_name .. " Stained Glass Pane"), "vlf_core:glass_"..k, "_"..k)
 end

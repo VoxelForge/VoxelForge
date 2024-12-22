@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_nether x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_nether x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Glowstone"
 msgstr "Светокамень"
@@ -29,10 +29,10 @@ msgid "Ancient Debris"
 msgstr "Древние обломки"
 
 msgid "Ancient debris can be found in the nether and is very very rare."
-msgstr "Древние обломки можно очень редко найти в Незере"
+msgstr "Древние обломки можно найти в нижнем мире, и это очень большая редкость."
 
-msgid "Netherite Block"
-msgstr "Незеритовый блок"
+msgid "Block of Netherite"
+msgstr ""
 
 msgid "Netherite block is very hard and can be made of 9 netherite ingots."
 msgstr "Незеритовый блок очень крепкий. Может быть создан из 9 незеритовых слитков."
@@ -68,10 +68,10 @@ msgid "Red Nether Brick Block"
 msgstr "Блок красного адского кирпича"
 
 msgid "Chiseled Nether Brick Block"
-msgstr ""
+msgstr "Чеканный кирпичный блок нижнего мира"
 
 msgid "Cracked Nether Bricks"
-msgstr ""
+msgstr "Треснувшие кирпичи нижнего мира"
 
 msgid "Nether Wart Block"
 msgstr "Блок адского нароста"
@@ -92,31 +92,31 @@ msgid "Smooth Quartz"
 msgstr "Гладкий кварц"
 
 msgid "Quartz Stairs"
-msgstr ""
+msgstr "Кварцевая лестница"
 
 msgid "Quartz Slab"
-msgstr ""
+msgstr "Кварцевая плита"
 
 msgid "Smooth Quartz Stairs"
-msgstr ""
+msgstr "Лестница из гладкого кварца"
 
 msgid "Smooth Quartz Slab"
-msgstr ""
+msgstr "Плита из гладкого кварца"
 
 msgid "Nether Brick Stairs"
-msgstr ""
+msgstr "Лестница из кирпича нижнего мира"
 
 msgid "Nether Brick Slab"
-msgstr ""
+msgstr "Плита из кирпича нижнего мира"
 
 msgid "Red Nether Brick Stairs"
-msgstr ""
+msgstr "Лестница из красного кирпича нижнего мира"
 
 msgid "Red Nether Brick Slab"
-msgstr ""
+msgstr "Плита из красного кирпича нижнего мира"
 
 msgid "Nether Brick Fence"
-msgstr ""
+msgstr "Кирпичный забор нижнего мира"
 
 msgid "Glowstone Dust"
 msgstr "Светопыль"
@@ -134,13 +134,13 @@ msgid "Netherite Scrap"
 msgstr "Незеритовый скрап"
 
 msgid "Netherite scrap is a crafting ingredient for netherite ingots."
-msgstr ""
+msgstr "Нетеритовый лом - это ингредиент для изготовления нетеритовых слитков."
 
 msgid "Netherite Ingot"
 msgstr "Незеритовый слиток"
 
 msgid "Netherite ingots can be used with a smithing table to upgrade items to netherite."
-msgstr ""
+msgstr "Слитки нетерита можно использовать с кузнечным столом для улучшения предметов с помощью нетерита."
 
 msgid "Nether Brick"
 msgstr "Адский кирпич"
@@ -149,19 +149,19 @@ msgid "Nether bricks are the main crafting ingredient for crafting nether brick 
 msgstr "Адские кирпичи это главный материал для создания блоков адских кирпичей."
 
 msgid "Netherite Upgrade Template"
-msgstr ""
+msgstr "Шаблон обновления нетерита"
 
 msgid "Applies to:"
-msgstr ""
+msgstr "Применяется для:"
 
 msgid "Diamond Armor"
-msgstr ""
+msgstr "Алмазная броня"
 
 msgid "Diamond Tools"
-msgstr ""
+msgstr "Алмазные инструменты"
 
 msgid "Ingredients:"
-msgstr ""
+msgstr "Ингредиенты:"
 
 msgid "Nether Lava Source"
 msgstr "Адский источник лавы"

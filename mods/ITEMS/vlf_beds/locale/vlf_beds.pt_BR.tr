@@ -7,8 +7,6 @@ In this world, going to bed won't skip the night, but it will skip thunderstorms
 Sleeping allows you to skip the night. The night is skipped when all players in this world went to sleep. The night is skipped after sleeping for a few seconds. Thunderstorms can be skipped in the same manner.=Dormir permite que você pule a noite. A noite é pulada quando todos os jogadores deste mundo forem dormir. A noite é pulada depois de dormir por alguns segundos. Tempestades podem ser puladas da mesma maneira.
 Allows you to sleep=Permite que você durma
 Bed=Cama
-@1 Bed=
-New respawn position set!=Nova posição de respawn marcada!
 You can only sleep at night or during a thunderstorm.=Você só pode dormir a noite ou durante uma tempestade.
 You can't sleep, the bed's too far away!=Você não pode dormir, a cama está muito longe!
 This bed is already occupied!=Esta cama já está ocupada!
@@ -31,25 +29,21 @@ You exceeded the maximum number of messages per 10 seconds!=
 You are missing the 'shout' privilege! It's required in order to talk in chat...=
 Sorry, but you have to wait @1 seconds until you may use this button again!=
 Hey! Would you guys mind sleeping?=
+New respawn position set!=Nova posição de respawn marcada!
+Black Bed=
+Blue Bed=
+Brown Bed=
+Cyan Bed=
+Green Bed=
+Grey Bed=
+Light Blue Bed=
+Light Grey Bed=
+Lime Bed=
+Magenta Bed=
+Orange Bed=
+Pink Bed=
+Purple Bed=
+Red Bed=
+White Bed=
+Yellow Bed=
 Respawn Anchor=Âncora de Respawn
-
-
-##### not used anymore #####
-
-Red Bed=Cama Vermelha
-Blue Bed=Cama Azul
-Cyan Bed=Cama Ciana
-Grey Bed=Cama Cinza
-Light Grey Bed=Cama Cinza Clara
-Black Bed=Cama Preta
-Yellow Bed=Cama Amarela
-Green Bed=Cama Verde
-Magenta Bed=Cama Magenta
-Orange Bed=Cama Laranja
-Purple Bed=Cama Roxa
-Brown Bed=Cama Marrom
-Pink Bed=Cama Rosa
-Lime Bed=Cama Lima
-Light Blue Bed=Cama Azul Clara
-White Bed=Cama Brabca
-New respawn position set! But you can only sleep at night or during a thunderstorm.=Nova posição de respawn marcada! Mas você só pode dormir a noite ou durante uma tempestade.

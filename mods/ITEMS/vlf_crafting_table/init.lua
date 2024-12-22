@@ -37,9 +37,10 @@ vlf_crafting_table.formspec = table.concat({
 })
 
 function vlf_crafting_table.has_crafting_table(player)
+	if not player or not player:get_pos() then return end
 	local wdef = player:get_wielded_item():get_definition()
 	local range = wdef and wdef.range or ItemStack():get_definition().range or tonumber(minetest.settings:get("vlf_hand_range")) or 4.5
-	return minetest.is_creative_enabled(player:get_player_name()) or minetest.find_node_near(player:get_pos(), range, { "vlf_crafting_table:crafting_table" })
+	return minetest.is_creative_enabled(player:get_player_name()) or (minetest.find_node_near(player:get_pos(), range, { "group:crafting_table" }) ~= nil)
 end
 
 function vlf_crafting_table.show_crafting_form(player)
@@ -65,8 +66,8 @@ minetest.register_node("vlf_crafting_table:crafting_table", {
 	tiles = { "crafting_workbench_top.png", "default_wood.png", "crafting_workbench_side.png",
 		"crafting_workbench_side.png", "crafting_workbench_front.png", "crafting_workbench_front.png" },
 	paramtype2 = "facedir",
-	groups = { handy = 1, axey = 1, deco_block = 1, material_wood = 1, flammable = -1 },
-	on_rightclick = function(pos, node, player, itemstack)
+	groups = { handy = 1, axey = 1, deco_block = 1, material_wood = 1, flammable = -1, crafting_table = 9 },
+	on_rightclick = function(_, _, player)
 		if not player:get_player_control().sneak then
 			vlf_crafting_table.show_crafting_form(player)
 		end
@@ -74,6 +75,7 @@ minetest.register_node("vlf_crafting_table:crafting_table", {
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	_vlf_blast_resistance = 2.5,
 	_vlf_hardness = 2.5,
+	_vlf_burntime = 15
 })
 
 minetest.register_craft({
@@ -82,12 +84,6 @@ minetest.register_craft({
 		{ "group:wood", "group:wood" },
 		{ "group:wood", "group:wood" }
 	},
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_crafting_table:crafting_table",
-	burntime = 15,
 })
 
 minetest.register_alias("crafting:workbench", "vlf_crafting_table:crafting_table")

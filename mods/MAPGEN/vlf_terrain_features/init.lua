@@ -17,35 +17,28 @@ local function airtower(pos,tbl,h)
 end
 
 local function makelake(pos,size,liquid,placein,border,pr,noair)
-	local p1 = vector.offset(pos,-size,-1,-size)
-	local p2 = vector.offset(pos,size,-1,size)
-	minetest.emerge_area(p1, p2, function(blockpos, action, calls_remaining, param)
+	local p1, p2 = vector.offset(pos,-size,-1,-size), vector.offset(pos,size,-1,size)
+	minetest.emerge_area(p1, p2, function(_, _, calls_remaining)
 		if calls_remaining ~= 0 then return end
 		local nn = minetest.find_nodes_in_area(p1,p2,placein)
-		table.sort(nn,function(a, b)
-		   return vector.distance(vector.new(pos.x,0,pos.z), a) < vector.distance(vector.new(pos.x,0,pos.z), b)
-		end)
 		if not nn[1] then return end
-		local y = pos.y - pr:next(1,2)
-		local lq = {}
-		local air = {}
-		local r = pr:next(1,#nn)
-		if r > #nn then return end
+		table.sort(nn,function(a, b)
+		   return vector.distance(pos, a) < vector.distance(pos, b)
+		end)
+		local lq, air = {}, {}
+		local r = pr:next(math.ceil(#nn/4),#nn)
 		for i=1,r do
-			if nn[i].y == y then
-				airtower(nn[i],air,55)
-				table.insert(lq,nn[i])
-			end
+			airtower(nn[i],air,10)
+			table.insert(lq,nn[i])
 		end
-		minetest.bulk_set_node(lq,{name=liquid})
-		minetest.bulk_set_node(air,{name="air"})
+		vlf_util.bulk_swap_node(lq,{name=liquid})
+		vlf_util.bulk_swap_node(air,{name="air"})
 		air = {}
 		local br = {}
-		for k,v in pairs(lq) do
-			for kk,vv in pairs(adjacents) do
+		for _, v in pairs(lq) do
+			for _, vv in pairs(adjacents) do
 				local pp = vector.add(v,vv)
 				local an = minetest.get_node(pp)
-				local un = minetest.get_node(vector.offset(pp,0,1,0))
 				if not border then
 					if minetest.get_item_group(an.name,"solid") > 0 then
 						border = an.name
@@ -58,14 +51,15 @@ local function makelake(pos,size,liquid,placein,border,pr,noair)
 				end
 				if not noair and an.name ~= liquid then
 					table.insert(br,pp)
+					local un = minetest.get_node(vector.offset(pp,0,1,0))
 					if un.name ~= liquid then
-						airtower(pp,air,55)
+						airtower(pp,air,10)
 					end
 				end
 			end
 		end
-		minetest.bulk_set_node(br,{name=border})
-		minetest.bulk_set_node(air,{name="air"})
+		vlf_util.bulk_swap_node(br,{name=border})
+		vlf_util.bulk_swap_node(air,{name="air"})
 		return true
 	end)
 	return true
@@ -89,34 +83,34 @@ local function get_fallen_tree_schematic(pos,pr)
 			{name = "air", prob=0},
 		}
 	}
-	for i = 1,len do
+	for _ = 1,len do
 		table.insert(schem.data,{name = "vlf_core:vine",param2=4, prob=vprob})
 	end
 	table.insert(schem.data,{name = "air", prob=0})
 	table.insert(schem.data,{name = "air", prob=0})
-	for i = 1,len do
+	for _ = 1,len do
 		table.insert(schem.data,{name = "air", prob=0})
 	end
 
 	table.insert(schem.data,{name = tree, param2 = 0})
 	table.insert(schem.data,{name = "air", prob=0})
-	for i = 1,len do
+	for _ = 1,len do
 		table.insert(schem.data,{name = tree, param2 = 12})
 	end
 	table.insert(schem.data,{name = "air", prob=0})
 	table.insert(schem.data,{name = "air", prob=0})
-	for i = 1,len do
+	for _ = 1,len do
 		table.insert(schem.data,{name =  mushrooms[pr:next(1,#mushrooms)], param2 = 12, prob=mprob})
 	end
 
 	table.insert(schem.data,{name = "air", prob=0})
 	table.insert(schem.data,{name = "air", prob=0})
-	for i = 1,len do
+	for _ = 1,len do
 		table.insert(schem.data,{name = "vlf_core:vine",param2=5, prob=vprob})
 	end
 	table.insert(schem.data,{name = "air", prob=0})
 	table.insert(schem.data,{name = "air", prob=0})
-	for i = 1,len do
+	for _ = 1,len do
 		table.insert(schem.data,{name = "air", prob=0})
 	end
 
@@ -139,7 +133,7 @@ vlf_structures.register_structure("fallen_tree",{
 	solid_ground = true,
 	y_max = vlf_vars.mg_overworld_max,
 	y_min = minetest.get_mapgen_setting("water_level"),
-	on_place = function(pos,def,pr)
+	on_place = function(pos, def)
 		local air_p1 = vector.offset(pos,-def.sidelen/2,1,-def.sidelen/2)
 		local air_p2 = vector.offset(pos,def.sidelen/2,1,def.sidelen/2)
 		local air = minetest.find_nodes_in_area(air_p1,air_p2,{"air"})
@@ -148,7 +142,7 @@ vlf_structures.register_structure("fallen_tree",{
 		end
 		return true
 	end,
-	place_func = function(pos,def,pr)
+	place_func = function(pos, _, pr)
 		local schem=get_fallen_tree_schematic(pos,pr)
 		if not schem then return end
 		return minetest.place_schematic(pos,schem,"random")
@@ -167,10 +161,13 @@ vlf_structures.register_structure("lavapool",{
 		persist = 0.001,
 		flags = "absvalue",
 	},
+	spawn_by = "air", -- this should not be necessary, but we had pools spawn underground
+	check_offset = 1,
+	num_spawn_by = 5,
 	flags = "place_center_x, place_center_z, force_placement",
 	y_max = vlf_vars.mg_overworld_max,
 	y_min = minetest.get_mapgen_setting("water_level"),
-	place_func = function(pos,def,pr)
+	place_func = function(pos, _, pr)
 		return makelake(pos,5,"vlf_core:lava_source",{"group:material_stone", "group:sand", "group:dirt"},"vlf_core:stone",pr)
 	end
 })
@@ -187,10 +184,13 @@ vlf_structures.register_structure("water_lake",{
 		persist = 0.001,
 		flags = "absvalue",
 	},
+	spawn_by = "air", -- this should not be necessary, but we had pools spawn underground
+	check_offset = 1,
+	num_spawn_by = 5,
 	flags = "place_center_x, place_center_z, force_placement",
 	y_max = vlf_vars.mg_overworld_max,
 	y_min = minetest.get_mapgen_setting("water_level"),
-	place_func = function(pos,def,pr)
+	place_func = function(pos, _, pr)
 		return makelake(pos,5,"vlf_core:water_source",{"group:material_stone", "group:sand", "group:dirt","group:grass_block"},"vlf_core:dirt_with_grass",pr)
 	end
 })
@@ -208,10 +208,13 @@ vlf_structures.register_structure("water_lake_mangrove_swamp",{
 		persist = 0.001,
 		flags = "absvalue",
 	},
+	spawn_by = "air", -- this should not be necessary, but we had pools spawn underground
+	check_offset = 1,
+	num_spawn_by = 5,
 	flags = "place_center_x, place_center_z, force_placement",
 	y_max = vlf_vars.mg_overworld_max,
 	y_min = minetest.get_mapgen_setting("water_level"),
-	place_func = function(pos,def,pr)
+	place_func = function(pos, _, pr)
 		return makelake(pos,3,"vlf_core:water_source",{"group:material_stone", "group:sand", "group:dirt","group:grass_block","vlf_mud:mud"},"vlf_mud:mud",pr,true)
 	end
 })
@@ -234,7 +237,7 @@ vlf_structures.register_structure("basalt_column",{
 	y_max = vlf_vars.mg_nether_max - 20,
 	y_min = vlf_vars.mg_lava_nether_max + 1,
 	biomes = { "BasaltDelta" },
-	place_func = function(pos,def,pr)
+	place_func = function(pos, _, pr)
 		local nn = minetest.find_nodes_in_area(vector.offset(pos,-5,-1,-5),vector.offset(pos,5,-1,5),{"air","vlf_blackstone:basalt","vlf_blackstone:blackstone"})
 		table.sort(nn,function(a, b)
 		   return vector.distance(vector.new(pos.x,0,pos.z), a) < vector.distance(vector.new(pos.x,0,pos.z), b)
@@ -255,8 +258,8 @@ vlf_structures.register_structure("basalt_column",{
 				end
 			end
 		end
-		minetest.bulk_set_node(magma,{name="vlf_nether:magma"})
-		minetest.bulk_set_node(basalt,{name="vlf_blackstone:basalt"})
+		vlf_util.bulk_swap_node(magma,{name="vlf_nether:magma"})
+		vlf_util.bulk_swap_node(basalt,{name="vlf_blackstone:basalt"})
 		return true
 	end
 })
@@ -276,7 +279,7 @@ vlf_structures.register_structure("basalt_pillar",{
 	y_max = vlf_vars.mg_nether_max-40,
 	y_min = vlf_vars.mg_lava_nether_max + 1,
 	biomes = { "BasaltDelta" },
-	place_func = function(pos,def,pr)
+	place_func = function(pos, _, pr)
 		local nn = minetest.find_nodes_in_area(vector.offset(pos,-2,-1,-2),vector.offset(pos,2,-1,2),{"air","vlf_blackstone:basalt","vlf_blackstone:blackstone"})
 		table.sort(nn,function(a, b)
 		   return vector.distance(vector.new(pos.x,0,pos.z), a) < vector.distance(vector.new(pos.x,0,pos.z), b)
@@ -296,8 +299,8 @@ vlf_structures.register_structure("basalt_pillar",{
 				end
 			end
 		end
-		minetest.bulk_set_node(basalt,{name="vlf_blackstone:basalt"})
-		minetest.bulk_set_node(magma,{name="vlf_nether:magma"})
+		vlf_util.bulk_swap_node(basalt,{name="vlf_blackstone:basalt"})
+		vlf_util.bulk_swap_node(magma,{name="vlf_nether:magma"})
 		return true
 	end
 })
@@ -320,7 +323,7 @@ vlf_structures.register_structure("lavadelta",{
 	y_max = vlf_vars.mg_nether_max,
 	y_min = vlf_vars.mg_lava_nether_max + 1,
 	biomes = { "BasaltDelta" },
-	place_func = function(pos,def,pr)
+	place_func = function(pos, _, pr)
 		local nn = minetest.find_nodes_in_area_under_air(vector.offset(pos,-10,-1,-10),vector.offset(pos,10,-2,10),{"vlf_blackstone:basalt","vlf_blackstone:blackstone","vlf_nether:netherrack"})
 		table.sort(nn,function(a, b)
 		   return vector.distance(vector.new(pos.x,0,pos.z), a) < vector.distance(vector.new(pos.x,0,pos.z), b)
@@ -330,7 +333,7 @@ vlf_structures.register_structure("lavadelta",{
 		for i=1,pr:next(1,#nn) do
 			table.insert(lava,nn[i])
 		end
-		minetest.bulk_set_node(lava,{name="vlf_nether:nether_lava_source"})
+		vlf_util.bulk_swap_node(lava,{name="vlf_nether:nether_lava_source"})
 		local basalt = {}
 		local magma = {}
 		for _,v in pairs(lava) do
@@ -345,8 +348,8 @@ vlf_structures.register_structure("lavadelta",{
 				table.insert(magma,v)
 			end
 		end
-		minetest.bulk_set_node(basalt,{name="vlf_blackstone:basalt"})
-		minetest.bulk_set_node(magma,{name="vlf_nether:magma"})
+		vlf_util.bulk_swap_node(basalt,{name="vlf_blackstone:basalt"})
+		vlf_util.bulk_swap_node(magma,{name="vlf_nether:magma"})
 		return true
 	end
 })
@@ -363,9 +366,10 @@ vlf_structures.register_structure("powder_snow_trap", {
 		octaves = 4,
 		persist = 0.67,
 	},
-	biomes = {"IcePlainsSpikes, ColdTaiga, ColdTaiga_beach, IcePlains", "Grove"},
+	biomes = {"IcePlainsSpikes, ColdTaiga, ColdTaiga_beach, IcePlains"},
 	y_min = 1,
 	y_max = vlf_vars.mg_overworld_max,
+	terrain_feature = true,
 	place_func = function(pos)
 		local width  = math.random(6) - 3
 		local length = math.random(6) - 3
@@ -459,12 +463,13 @@ vlf_structures.register_structure("large_dripstone_stalagtite", {
 	spawn_by = "air",
 	check_offset = 1,
 	num_spawn_by = 5,
-	biomes = {"DripstoneCaves"},
+	biomes = {"DripstoneCave"},
 	fill_ratio = 0.005,
 	y_min = vlf_vars.mg_overworld_min + 1, -- plus one so it cant generate on bedrock
 	y_max = 0,
 	flags = "all_ceilings",
 	place_offset_y = 1,
+	terrain_feature = true,
 	place_func = function(pos)
 		local empty_air_length = 0
 		while true do
@@ -484,11 +489,12 @@ vlf_structures.register_structure("large_dripstone_stalagmite", {
 	spawn_by = "air",
 	check_offset = -1,
 	num_spawn_by = 5,
-	biomes = {"DripstoneCaves"},
+	biomes = {"DripstoneCave"},
 	fill_ratio = 0.005,
 	y_min = vlf_vars.mg_overworld_min + 1,
 	y_max = 0,
 	flags = "all_floors",
+	terrain_feature = true,
 	place_func = function(pos)
 		local empty_air_length = 0
 		while true do
@@ -508,11 +514,12 @@ vlf_structures.register_structure("large_dripstone_column", {
 	spawn_by = "air",
 	check_offset = 1,
 	num_spawn_by = 5,
-	biomes = {"DripstoneCaves"},
+	biomes = {"DripstoneCave"},
 	fill_ratio = 0.005,
 	y_min = vlf_vars.mg_overworld_min,
 	y_max = 0,
 	flags = "all_floors",
+	terrain_feature = true,
 	place_func = function(pos)
 		local empty_air_length = 0
 		while true do
@@ -530,74 +537,3 @@ vlf_structures.register_structure("large_dripstone_column", {
 		return true
 	end
 })
-
-vlf_structures.register_structure("pale_moss", {
-	place_on = {"vlf_core:dirt_with_grass"},
-	sidelen = 80,
-	noise_params = {
-		offset = 0.016,
-		scale = 0.00004,
-		spread = {x = 500, y = 500, z = 500},
-		seed = 2137,
-		octaves = 4,
-		persist = 0.67,
-	},
-	biomes = {"PaleGarden"},
-	y_min = 1,
-	y_max = vlf_vars.mg_overworld_max,
-	place_func = function(pos)
-		local width  = math.random(6) - 3
-		local length = math.random(6) - 3
-		local depth  = math.random(4)
-
-		local solid_nodes = {}
-		local node_name
-		local pale_oak_found = false
-		local moss_positions = {}
-
-		-- Search for pale oak trees and valid dirt_with_grass positions around them
-		for i = -4, 4 do
-			for j = -4, 4 do
-				local check_pos = vector.offset(pos, i, 0, j)
-				local check_node = minetest.get_node(check_pos).name
-				-- Check for pale oak tree
-				if check_node == "vlf_trees:tree_pale_oak" then
-					pale_oak_found = true
-					-- Search for dirt_with_grass nodes within the 4-block radius
-					for x = -4, 4 do
-						for z = -4, 4 do
-							local grass_pos = vector.offset(check_pos, x, 0, z)
-							local ground_node = minetest.get_node(grass_pos).name
-							-- Place moss only where dirt_with_grass exists
-							if ground_node == "vlf_core:dirt_with_grass" then
-								table.insert(moss_positions, grass_pos)
-								minetest.set_node(grass_pos, {name = "vlf_pale_garden:pale_moss"})
-							end
-						end
-					end
-				end
-			end
-		end
-
-		-- If pale oak found, place tallgrass, carpet, or leave air on top of moss blocks
-		if pale_oak_found then
-			for _, moss_pos in ipairs(moss_positions) do
-				local top_choice = math.random(3)
-				local top_pos = vector.offset(moss_pos, 0, 1, 0)
-				if top_choice == 1 and minetest.get_node(top_pos).name == "air" then
-					minetest.set_node(top_pos, {name = "vlf_pale_garden:pale_moss_carpet"})  -- Place carpet
-				elseif top_choice == 2 and minetest.get_node(top_pos).name == "air" then
-					local param2 = minetest.registered_biomes["PaleGarden"]._vlf_palette_index
-					minetest.set_node(top_pos, {name = "vlf_flowers:tallgrass", param2=param2})  -- Place tallgrass
-				--[[elseif
-					-- Leave air on top
-					minetest.set_node(top_pos, {name = "air"})]]
-				end
-			end
-		end
-
-		return true
-	end
-})
-
-

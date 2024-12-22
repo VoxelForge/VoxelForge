@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_death_messages x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_death_messages x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "@1 went up in flames"
 msgstr "@1 est parti(e) en fumée"
@@ -86,7 +86,7 @@ msgid "@1 didn't want to live in the same world as @2"
 msgstr "@1 ne voulait pas vivre dans le même monde que @2"
 
 msgid "@1 died"
-msgstr "@1 est mort."
+msgstr "@1 est mort"
 
 msgid "@1 died because of @2"
 msgstr "@1 est mort à cause de @2"
@@ -176,8 +176,8 @@ msgid "@1 went off with a bang due to a firework fired by @2 from @3"
 msgstr "@1 a explosé à cause d'un feu d'artifice tiré par @2 depuis @3"
 
 msgid "@1 was poked to death by a sweet berry bush"
-msgstr ""
+msgstr "@1 est mort malmené(e) par un buisson de baie sucrée"
 
 msgid "@1 was poked to death by a sweet berry bush whilst trying to escape @2"
-msgstr ""
+msgstr "@1 a été tué par un buisson de baies sucrées alors qu'il tentait d'échapper à @2"
 

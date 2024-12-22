@@ -126,6 +126,7 @@ local function add_particles(pos, radius)
 		texture = "vlf_particles_smoke.png",
 	})
 end
+vlf_explosions.add_particles = add_particles
 
 -- Traces the rays of an explosion, and updates the environment.
 --
@@ -186,7 +187,7 @@ local function trace_explode(pos, strength, raydirs, radius, info, direct, sourc
 			local rdir_z = raydirs[i].z
 			local rstr = (0.7 + math.random() * 0.6) * strength
 
-			for r = 0, math.ceil(radius * (1.0 / STEP_LENGTH)) do
+			for _ = 0, math.ceil(radius * (1.0 / STEP_LENGTH)) do
 				local npos_x = math.floor(rpos_x + 0.5)
 				local npos_y = math.floor(rpos_y + 0.5)
 				local npos_z = math.floor(rpos_z + 0.5)
@@ -223,14 +224,15 @@ local function trace_explode(pos, strength, raydirs, radius, info, direct, sourc
 
 	-- Entities in radius of explosion
 	local punch_radius = 2 * strength
-	local objs = minetest.get_objects_inside_radius(pos, punch_radius)
 
 	-- Trace rays for entity damage
-	for _, obj in pairs(objs) do
+	for obj in minetest.objects_inside_radius(pos, punch_radius) do
 		local ent = obj:get_luaentity()
 
 		-- Ignore items to lower lag
-		if (obj:is_player() or (ent and ent.name ~= "__builtin.item")) and obj:get_hp() > 0 then
+		if (obj:is_player() or (ent and ent.name ~= "__builtin.item")) and obj:get_hp() > 0
+		-- It doesn't make sense to damage the direct source.
+			and obj ~= direct then
 			local opos = obj:get_pos()
 			local collisionbox = obj:get_properties().collisionbox
 
@@ -254,7 +256,7 @@ local function trace_explode(pos, strength, raydirs, radius, info, direct, sourc
 				-- Count number of rays from collision box which are unobstructed
 				local count = N_EXPOSURE_RAYS
 
-				for i = 1, N_EXPOSURE_RAYS do
+				for _ = 1, N_EXPOSURE_RAYS do
 					local rpos_x = opos.x + math.random() * x_len - x_len / 2
 					local rpos_y = opos.y + math.random() * y_len - y_len / 2
 					local rpos_z = opos.z + math.random() * z_len - z_len / 2
@@ -266,7 +268,7 @@ local function trace_explode(pos, strength, raydirs, radius, info, direct, sourc
 					rdir_y = rdir_y / rdir_len
 					rdir_z = rdir_z / rdir_len
 
-					for i = 0, rdir_len / STEP_LENGTH do
+					for _ = 0, rdir_len / STEP_LENGTH do
 						rpos_x = rpos_x + rdir_x * STEP_LENGTH
 						rpos_y = rpos_y + rdir_y * STEP_LENGTH
 						rpos_z = rpos_z + rdir_z * STEP_LENGTH
@@ -308,19 +310,11 @@ local function trace_explode(pos, strength, raydirs, radius, info, direct, sourc
 
 		-- Punch End Crystals to make them explode
 		if ent and ent.name == "vlf_end:crystal" then
-			if direct then
-				local puncher = direct:get_luaentity()
-				if puncher and puncher.name == "vlf_end:crystal" then
-					ent.object:punch(direct, 1.0, { -- End Crystal nearby, trigger it.
-						full_punch_interval = 1.0,
-							damage_groups = {fleshy = 1},
-						}, nil, nil)
-				else
-					ent.object:remove() -- Direct Exists, but it is not an end crystal, remove crystal.
-				end
-			else
-				ent.object:remove() -- Node exploded the end crystal, remove it.
-			end
+			-- Trigger end crystals.
+			ent.object:punch (direct, 1.0, {
+				full_punch_interval = 1.0,
+				damage_groups = {fleshy = 1},
+			}, nil, nil)
 		end
 	end
 

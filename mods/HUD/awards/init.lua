@@ -1,7 +1,7 @@
 -- Copyright (c) 2013-18 rubenwardy. MIT.
 
 -- Internationalization support.
-local S = minetest.get_translator("awards")
+local S = minetest.get_translator(minetest.get_current_modname())
 
 -- The global award namespace
 awards = {
@@ -13,7 +13,7 @@ awards = {
 }
 
 -- Load files
-local modpath = minetest.get_modpath("awards").."/src"
+local modpath = minetest.get_modpath(minetest.get_current_modname()).."/src"
 dofile(modpath.."/data.lua")
 dofile(modpath.."/api_awards.lua")
 dofile(modpath.."/api_triggers.lua")

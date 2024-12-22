@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_craftguide x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_craftguide x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Any shulker box"
 msgstr "Hvilkensomhelst shulkerboks"
@@ -95,10 +95,10 @@ msgid "Recipe is too big to be displayed (@1×@2)"
 msgstr "Formen er for stor til at blive vist (@1x@2)"
 
 msgid "Shapeless"
-msgstr "Uformelig"
+msgstr ""
 
 msgid "Cooking"
-msgstr "Madlavning"
+msgstr ""
 
 msgid "Increase window size"
 msgstr "Øg vinduesstørrelsen"
@@ -123,6 +123,9 @@ msgstr "Ingen genstande at vise"
 
 msgid "Collect items to reveal more recipes"
 msgstr "Saml genstande for at afsløre flere opskrifter"
+
+msgid "Invalid crafting ingredient: \"@1\" (dosent exist)"
+msgstr ""
 
 msgid "This item can be repaired at an anvil with: @1."
 msgstr ""

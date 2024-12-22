@@ -1,7 +1,7 @@
 # textdomain: vlf_flowers
 This is a small flower. Small flowers are mainly used for dye production and can also be potted.=Esta es una pequeña flor. Las flores pequeñas se utilizan principalmente para la producción de tinte y también se pueden macetas.
 It can only be placed on a block on which it would also survive.=Solo se puede colocar en un bloque en el que también sobreviviría.
-@1 (Top Part)=
+@1 (Top Part)=@1 (Parte superior)
 Poppy=Amapola
 Dandelion=Diente de león
 Oxeye Daisy=Margarita
@@ -12,13 +12,13 @@ White Tulip=Tulipán blanco
 Allium=Allium
 Azure Bluet=Azul celeste
 Blue Orchid=Orquídea azul
-Wither Rose=
-Lily of the Valley=
-Cornflower=
+Wither Rose=Rosa wither
+Lily of the Valley=Iirio del valle
+Cornflower=Aciano
 Peony=Peonía
 A peony is a large plant which occupies two blocks. It is mainly used in dye production.=Una peonía es una planta grande que ocupa dos bloques. Se utiliza principalmente en la protección del tinte.
 Rose Bush=Rosal
-A rose bush is a large plant which occupies two blocks. It is safe to touch it. Rose bushes are mainly used in dye production.=
+A rose bush is a large plant which occupies two blocks. It is safe to touch it. Rose bushes are mainly used in dye production.=Un rosal es una planta de gran tamaño que ocupa dos bloques de altura. Es seguro tocarlo. Los rosales se utilizan principalmente en la producción de tintes.
 Lilac=Lila
 A lilac is a large plant which occupies two blocks. It is mainly used in dye production.=Una lila es una planta grande que ocupa dos bloques. Se utiliza principalmente en la producción de tintes.
 Sunflower=Girasol

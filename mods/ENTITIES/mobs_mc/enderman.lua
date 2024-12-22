@@ -3,11 +3,7 @@
 --made for MC like Survival game
 --License for code WTFPL and otherwise stated in readmes
 
--- ENDERMAN BEHAVIOUR (OLD):
--- In this game, endermen attack the player on sight, like other monsters do.
--- However, they have a reduced viewing range to make them less dangerous.
--- This differs from MC, in which endermen only become hostile when provoked,
--- and they are provoked by looking directly at them.
+local is_valid = vlf_util.is_valid_objectref
 
 -- Rootyjr
 -----------------------------
@@ -24,13 +20,7 @@
 -- added rain damage.
 -- fixed the grass_with_dirt issue.
 
--- How freqeuntly to take and place blocks, in seconds
-local take_frequency_min = 235
-local take_frequency_max = 245
-local place_frequency_min = 235
-local place_frequency_max = 245
-
-minetest.register_entity("mobs_mc:ender_eyes", {
+minetest.register_entity ("mobs_mc:ender_eyes", {
 	initial_properties = {
 		visual = "mesh",
 		mesh = "mobs_mc_spider.b3d",
@@ -38,6 +28,9 @@ minetest.register_entity("mobs_mc:ender_eyes", {
 		glow = 50,
 		textures = {
 			"mobs_mc_enderman_eyes.png",
+		},
+		selectionbox = {
+			0, 0, 0, 0, 0, 0,
 		},
 	},
 	on_step = function(self)
@@ -50,7 +43,6 @@ minetest.register_entity("mobs_mc:ender_eyes", {
 })
 
 local S = minetest.get_translator("mobs_mc")
-local enable_damage = minetest.settings:get_bool("enable_damage")
 
 local telesound = function(pos, is_source)
 	local snd
@@ -66,7 +58,8 @@ end
 --################### ENDERMAN
 --###################
 
-local pr = PseudoRandom(os.time()*(-334))
+local mob_class = vlf_mobs.mob_class
+local pr = PcgRandom (os.time () * (-334))
 
 -- Texuture overrides for enderman block. Required for cactus because it's original is a nodebox
 -- and the textures have tranparent pixels.
@@ -208,17 +201,15 @@ local select_enderman_animation = function(animation_type)
 	if animation_type == "block" then
 		return {
 			stand_start = 200, stand_end = 200,
-			walk_start = 161, walk_end = 200, walk_speed = 65,
-			run_start = 161, run_end = 200, run_speed = 50,
-			punch_start = 121, punch_end = 160,
+			walk_start = 161, walk_end = 200, walk_speed = 25,
+			attack_start = 81, attack_end = 120, attack_speed = 50,
 		}
 	-- Enderman doesn't hold a block
 	elseif animation_type == "normal" or animation_type == nil then
 		return {
 			stand_start = 40, stand_end = 80, stand_speed = 25,
-			walk_start = 0, walk_end = 40, walk_speed = 65,
-			run_start = 0, run_end = 40, run_speed = 50,
-			punch_start = 81, punch_end = 120,
+			walk_start = 0, walk_end = 40, walk_speed = 25,
+			attack_start = 81, attack_end = 120, attack_speed = 50,
 		}
 	end
 end
@@ -242,12 +233,11 @@ local psdefs = {{
 	texture = "vlf_portals_particle"..math.random(1, 5)..".png",
 }}
 
-vlf_mobs.register_mob("mobs_mc:enderman", {
+local enderman = {
 	description = S("Enderman"),
 	type = "monster",
 	spawn_class = "passive",
-	passive = true,
-	pathfinding = 1,
+	retaliates = true,
 	hp_min = 40,
 	hp_max = 40,
 	xp_min = 5,
@@ -261,294 +251,144 @@ vlf_mobs.register_mob("mobs_mc:enderman", {
 	makes_footstep_sound = true,
 	can_despawn = true,
 	spawn_in_group = 2,
-	on_spawn = function(self)
-		local spider_eyes=false
-		for n = 1, #self.object:get_children() do
-			local obj = self.object:get_children()[n]
-			if obj:get_luaentity() and self.object:get_luaentity().name == "mobs_mc:ender_eyes" then
-				spider_eyes = true
-			end
-		end
-		if not spider_eyes then
-			minetest.add_entity(self.object:get_pos(), "mobs_mc:ender_eyes"):set_attach(self.object, "head.top", vector.new(0,2.54,-1.99), vector.new(90,0,180))
-			minetest.add_entity(self.object:get_pos(), "mobs_mc:ender_eyes"):set_attach(self.object, "head.top", vector.new(1,2.54,-1.99), vector.new(90,0,180))
-		end
-	end,
+	head_eye_height = 2.55,
+	esp = true,
 	sounds = {
-		-- TODO: Custom war cry sound
-		war_cry = "mobs_sandmonster",
 		death = {name="mobs_mc_enderman_death", gain=0.7},
 		damage = {name="mobs_mc_enderman_hurt", gain=0.5},
 		random = {name="mobs_mc_enderman_random", gain=0.5},
 		distance = 16,
 	},
-	walk_velocity = 0.5, -- ( was 0.2 ) he isnt that slow in mc?
-	run_velocity = 2.75, -- runs fast!
+	movement_speed = 6.0,
 	damage = 7,
+	stepheight = 1.01,
 	reach = 2,
 	particlespawners = psdefs,
 	drops = {
-		{name = "vlf_throwing:ender_pearl",
-		chance = 1,
-		min = 0,
-		max = 1,
-		looting = "common"},
+		{
+			name = "vlf_throwing:ender_pearl",
+			chance = 1,
+			min = 0,
+			max = 1,
+			looting = "common",
+		},
 	},
 	animation = select_enderman_animation("normal"),
 	_taken_node = "",
 	can_spawn = function(pos)
 		return #minetest.find_nodes_in_area(vector.offset(pos,0,1,0),vector.offset(pos,0,3,0),{"air"}) > 2
 	end,
-	do_custom = function(self, dtime)
-		-- RAIN DAMAGE / EVASIVE WARP BEHAVIOUR HERE.
-		local enderpos = self.object:get_pos()
-		local dim = vlf_worlds.pos_to_dimension(enderpos)
-		if dim == "overworld" then
-			if vlf_weather.rain.raining then
-				local damage = true
-				local enderpos = self.object:get_pos()
-				enderpos.y = enderpos.y+2.89
-				local height = {x=enderpos.x, y=enderpos.y+512,z=enderpos.z}
-				local ray = minetest.raycast(enderpos, height, true)
-				-- Check for blocks above enderman.
-				for pointed_thing in ray do
-					if pointed_thing.type == "node" then
-						local nn = minetest.get_node(minetest.get_pointed_thing_position(pointed_thing)).name
-						local def = minetest.registered_nodes[nn]
-						if (not def) or def.walkable then
-							-- There's a node in the way. Delete arrow without damage
-							damage = false
-							break
-						end
-					end
-				end
+	armor = {
+		fleshy = 100,
+		water_vulnerable = 100,
+	},
+	water_damage = 8,
+	rain_damage = 1.0,
+	view_range = 64,
+	tracking_distance = 64,
+	attack_type = "melee",
+	pursuit_bonus = 1.15,
+}
 
-				if damage == true then
-					self.state = ""
-					--rain hurts enderman
-					self.object:punch(self.object, 1.0, {
-						full_punch_interval=1.0,
-						damage_groups={fleshy=self._damage},
-					}, nil)
-					--randomly teleport hopefully under something.
+------------------------------------------------------------------------
+-- Enderman visuals and mechanics.
+------------------------------------------------------------------------
+
+function enderman:set_animation (anim, custom_speed)
+	if self.attack then
+		anim = "attack"
+	end
+	mob_class.set_animation (self, anim, custom_speed)
+end
+
+function enderman:mob_activate (staticdata, dtime)
+	if not mob_class.mob_activate (self, staticdata, dtime) then
+		return false
+	end
+	minetest.add_entity (self.object:get_pos(), "mobs_mc:ender_eyes")
+		:set_attach(self.object, "head.top", vector.new(0,2.54,-1.99), vector.new(90,0,180))
+	minetest.add_entity (self.object:get_pos(), "mobs_mc:ender_eyes")
+		:set_attach(self.object, "head.top", vector.new(1,2.54,-1.99), vector.new(90,0,180))
+	return true
+end
+
+function enderman:on_die (self_pos)
+	-- Drop carried node on death
+	if self._taken_node ~= nil and self._taken_node ~= "" then
+		minetest.add_item (self_pos, self._taken_node)
+	end
+end
+
+function enderman:do_custom (dtime)
+	-- ARROW / DAYTIME PEOPLE AVOIDANCE BEHAVIOUR HERE.
+	-- Check for arrows and people nearby.
+
+	local enderpos = self.object:get_pos()
+	enderpos.y = enderpos.y + 1.5
+	for obj in minetest.objects_inside_radius(enderpos, 2) do
+		if not minetest.is_player(obj) then
+			local lua = obj:get_luaentity()
+			if lua then
+				if lua.name == "vlf_bows:arrow_entity" or lua.name == "vlf_throwing:snowball_entity" then
 					self:teleport(nil)
 				end
 			end
 		end
+	end
+end
 
-		-- AGRESSIVELY WARP/CHASE PLAYER BEHAVIOUR HERE.
-		if self.state == "attack" then
-			if self.attack then
-				local target = self.attack
-				local pos = target:get_pos()
-				if pos ~= nil then
-					if vector.distance(self.object:get_pos(), target:get_pos()) > 10 then
-						self:teleport(target)
-					end
-				end
-			end
-		else --if not attacking try to tp to the dark
-			if dim == 'overworld' then
-				local light = minetest.get_node_light(enderpos)
-				if light and light > minetest.LIGHT_MAX then
-					self:teleport(nil)
-				end
-			end
-		end
-		-- ARROW / DAYTIME PEOPLE AVOIDANCE BEHAVIOUR HERE.
-		-- Check for arrows and people nearby.
-
-		enderpos = self.object:get_pos()
-		enderpos.y = enderpos.y + 1.5
-		local objs = minetest.get_objects_inside_radius(enderpos, 2)
-		for n = 1, #objs do
-			local obj = objs[n]
-			if obj then
-				if not minetest.is_player(obj) then
-					local lua = obj:get_luaentity()
-					if lua then
-						if lua.name == "vlf_bows:arrow_entity" or lua.name == "vlf_throwing:snowball_entity" then
-							self:teleport(nil)
-						end
-					end
-				end
-			end
-		end
-
-		-- PROVOKED BEHAVIOUR HERE.
-		local enderpos = self.object:get_pos()
-		if self.provoked == "broke_contact" then
-			self.provoked = "false"
-			--if (minetest.get_timeofday() * 24000) > 5001 and (minetest.get_timeofday() * 24000) < 19000 then
-			--	self:teleport(nil)
-			--	self.state = ""
-			--else
-				if self.attack ~= nil and enable_damage then
-					self.state = 'attack'
-				end
-			--end
-		end
-		-- Check to see if people are near by enough to look at us.
-		for _,obj in pairs(minetest.get_connected_players()) do
-
-			--check if they are within radius
-			local player_pos = obj:get_pos()
-			if player_pos then -- prevent crashing in 1 in a million scenario
-
-				local ender_distance = vector.distance(enderpos, player_pos)
-				if ender_distance <= 64 then
-
-					-- Check if they are looking at us.
-					local look_dir_not_normalized = obj:get_look_dir()
-					local look_dir = vector.normalize(look_dir_not_normalized)
-					local player_eye_height = obj:get_properties().eye_height
-
-					--skip player if they have no data - log it
-					if not player_eye_height then
-						minetest.log("error", "Enderman at location: ".. dump(enderpos).." has indexed a null player!")
-					else
-
-						--calculate very quickly the exact location the player is looking
-						--within the distance between the two "heads" (player and enderman)
-						local look_pos = vector.new(player_pos.x, player_pos.y + player_eye_height, player_pos.z)
-						local look_pos_base = look_pos
-						local ender_eye_pos = vector.new(enderpos.x, enderpos.y + 2.75, enderpos.z)
-						local eye_distance_from_player = vector.distance(ender_eye_pos, look_pos)
-						look_pos = vector.add(look_pos, vector.multiply(look_dir, eye_distance_from_player))
-
-						--if looking in general head position, turn hostile
-						if minetest.line_of_sight(ender_eye_pos, look_pos_base) and vector.distance(look_pos, ender_eye_pos) <= 0.4 then
-							self.provoked = "staring"
-							self.attack = minetest.get_player_by_name(obj:get_player_name())
+function enderman:do_teleport (target)
+	if target ~= nil then
+		local target_pos = target:get_pos()
+		-- Find all solid nodes below air in a 10×10×10 cuboid centered on the target
+		local nodes = minetest.find_nodes_in_area_under_air(vector.subtract(target_pos, 5), vector.add(target_pos, 5), {"group:solid", "group:cracky", "group:crumbly"})
+		local telepos
+		if nodes ~= nil then
+			if #nodes > 0 then
+				-- Up to 64 attempts to teleport
+				for _ = 1, math.min(64, #nodes) do
+					local r = pr:next(1, #nodes)
+					local nodepos = nodes[r]
+					local node_ok = true
+					-- Selected node needs to have 3 nodes of free space above
+					for u=1, 3 do
+						local node = minetest.get_node({x=nodepos.x, y=nodepos.y+u, z=nodepos.z})
+						local ndef = minetest.registered_nodes[node.name]
+						if ndef and ndef.walkable then
+							node_ok = false
 							break
-						else -- I'm not sure what this part does, but I don't want to break anything - jordan4ibanez
-							if self.provoked == "staring" then
-								self.provoked = "broke_contact"
-							end
-						end
-
-					end
-				end
-			end
-		end
-		-- ATTACK ENDERMITE
-		local enderpos = self.object:get_pos()
-		if math.random(1,140) == 1 then
-			local mobsnear = minetest.get_objects_inside_radius(enderpos, 64)
-			for n=1, #mobsnear do
-				local mob = mobsnear[n]
-				if mob then
-					local entity = mob:get_luaentity()
-					if entity and entity.name == "mobs_mc:endermite" then
-						self.attack = mob
-						self.state = 'attack'
-					end
-				end
-			end
-		end
-		-- TAKE AND PLACE STUFF BEHAVIOUR BELOW.
-		if not mobs_griefing then
-			return
-		end
-		-- Take and put nodes
-		if not self._take_place_timer or not self._next_take_place_time then
-			self._take_place_timer = 0
-			self._next_take_place_time = math.random(take_frequency_min, take_frequency_max)
-			return
-		end
-		self._take_place_timer = self._take_place_timer + dtime
-		if (self._taken_node == nil or self._taken_node == "") and self._take_place_timer >= self._next_take_place_time then
-			-- Take random node
-			self._take_place_timer = 0
-			self._next_take_place_time = math.random(place_frequency_min, place_frequency_max)
-			local pos = self.object:get_pos()
-			local takable_nodes = minetest.find_nodes_in_area_under_air({x=pos.x-2, y=pos.y-1, z=pos.z-2}, {x=pos.x+2, y=pos.y+1, z=pos.z+2}, "group:enderman_takable")
-			if #takable_nodes >= 1 then
-				local r = pr:next(1, #takable_nodes)
-				local take_pos = takable_nodes[r]
-				local node = minetest.get_node(take_pos)
-				-- Don't destroy protected stuff.
-				if not minetest.is_protected(take_pos, "") then
-					minetest.remove_node(take_pos)
-					local dug = minetest.get_node_or_nil(take_pos)
-					if dug and dug.name == "air" then
-						self._taken_node = node.name
-						self.persistent = true
-						local def = minetest.registered_nodes[self._taken_node]
-						-- Update animation and texture accordingly (adds visibly carried block)
-						local block_type
-						-- Cube-shaped
-						if def.drawtype == "normal" or
-								def.drawtype == "nodebox" or
-								def.drawtype == "liquid" or
-								def.drawtype == "flowingliquid" or
-								def.drawtype == "glasslike" or
-								def.drawtype == "glasslike_framed" or
-								def.drawtype == "glasslike_framed_optional" or
-								def.drawtype == "allfaces" or
-								def.drawtype == "allfaces_optional" or
-								def.drawtype == nil then
-							block_type = "cube"
-						elseif def.drawtype == "plantlike" then
-							-- Flowers and stuff
-							block_type = "plantlike45"
-						elseif def.drawtype == "airlike" then
-							-- Just air
-							block_type = nil
-						else
-							-- Fallback for complex drawtypes
-							block_type = "unknown"
-						end
-						self.base_texture = create_enderman_textures(block_type, self._taken_node)
-						self.object:set_properties({ textures = self.base_texture })
-						self.animation = select_enderman_animation("block")
-						self:set_animation(self.animation.current)
-						if def.sounds and def.sounds.dug then
-							minetest.sound_play(def.sounds.dug, {pos = take_pos, max_hear_distance = 16}, true)
 						end
 					end
-				end
-			end
-		elseif self._taken_node ~= nil and self._taken_node ~= "" and self._take_place_timer >= self._next_take_place_time then
-			-- Place taken node
-			self._take_place_timer = 0
-			self._next_take_place_time = math.random(take_frequency_min, take_frequency_max)
-			local pos = self.object:get_pos()
-			local yaw = self.object:get_yaw()
-			-- Place node at looking direction
-			local place_pos = vector.subtract(pos, minetest.facedir_to_dir(minetest.dir_to_facedir(minetest.yaw_to_dir(yaw))))
-			-- Also check to see if protected.
-			if minetest.get_node(place_pos).name == "air" and not minetest.is_protected(place_pos, "") then
-				-- ... but only if there's a free space
-				local success = minetest.place_node(place_pos, {name = self._taken_node})
-				if success then
-					local def = minetest.registered_nodes[self._taken_node]
-					-- Update animation accordingly (removes visible block)
-					self.persistent = false
-					self.animation = select_enderman_animation("normal")
-					self:set_animation(self.animation.current)
-					if def.sounds and def.sounds.place then
-						minetest.sound_play(def.sounds.place, {pos = place_pos, max_hear_distance = 16}, true)
+					if node_ok then
+						telepos = {x=nodepos.x, y=nodepos.y+1, z=nodepos.z}
 					end
-					self._taken_node = ""
+				end
+				if telepos then
+					telesound(self.object:get_pos(), false)
+					self:halt_in_tracks (true)
+					self:cancel_navigation ()
+					self.object:set_pos(telepos)
+					self.reset_fall_damage = 1
+					telesound(telepos, true)
 				end
 			end
 		end
-	end,
-	do_teleport = function(self, target)
-		if target ~= nil then
-			local target_pos = target:get_pos()
-			-- Find all solid nodes below air in a 10×10×10 cuboid centered on the target
-			local nodes = minetest.find_nodes_in_area_under_air(vector.subtract(target_pos, 5), vector.add(target_pos, 5), {"group:solid", "group:cracky", "group:crumbly"})
-			local telepos
+	else
+		-- Attempt to randomly teleport enderman
+		local pos = self.object:get_pos()
+		-- Up to 8 top-level attempts to teleport
+		for _ = 1, 8 do
+			local node_ok = false
+			-- We need to add (or subtract) different random numbers to each vector component, so it couldn't be done with a nice single vector.add() or .subtract():
+			local randomCube = vector.new( pos.x + 8*(pr:next(0,8)-4), pos.y + 8*(pr:next(0,8)-4), pos.z + 8*(pr:next(0,8)-4) )
+			local nodes = minetest.find_nodes_in_area_under_air(vector.subtract(randomCube, 4), vector.add(randomCube, 4), {"group:solid", "group:cracky", "group:crumbly"})
 			if nodes ~= nil then
 				if #nodes > 0 then
-					-- Up to 64 attempts to teleport
-					for n=1, math.min(64, #nodes) do
+					-- Up to 8 low-level (in total up to 8*8 = 64) attempts to teleport
+					for _ = 1, math.min(8, #nodes) do
 						local r = pr:next(1, #nodes)
 						local nodepos = nodes[r]
-						local node_ok = true
-						-- Selected node needs to have 3 nodes of free space above
+						node_ok = true
 						for u=1, 3 do
 							local node = minetest.get_node({x=nodepos.x, y=nodepos.y+u, z=nodepos.z})
 							local ndef = minetest.registered_nodes[node.name]
@@ -558,82 +398,350 @@ vlf_mobs.register_mob("mobs_mc:enderman", {
 							end
 						end
 						if node_ok then
-							telepos = {x=nodepos.x, y=nodepos.y+1, z=nodepos.z}
-						end
-					end
-					if telepos then
-						telesound(self.object:get_pos(), false)
-						self.object:set_pos(telepos)
-						telesound(telepos, true)
-					end
-				end
-			end
-		else
-			-- Attempt to randomly teleport enderman
-			local pos = self.object:get_pos()
-			-- Up to 8 top-level attempts to teleport
-			for n=1, 8 do
-				local node_ok = false
-				-- We need to add (or subtract) different random numbers to each vector component, so it couldn't be done with a nice single vector.add() or .subtract():
-				local randomCube = vector.new( pos.x + 8*(pr:next(0,16)-8), pos.y + 8*(pr:next(0,16)-8), pos.z + 8*(pr:next(0,16)-8) )
-				local nodes = minetest.find_nodes_in_area_under_air(vector.subtract(randomCube, 4), vector.add(randomCube, 4), {"group:solid", "group:cracky", "group:crumbly"})
-				if nodes ~= nil then
-					if #nodes > 0 then
-						-- Up to 8 low-level (in total up to 8*8 = 64) attempts to teleport
-						for n=1, math.min(8, #nodes) do
-							local r = pr:next(1, #nodes)
-							local nodepos = nodes[r]
-							node_ok = true
-							for u=1, 3 do
-								local node = minetest.get_node({x=nodepos.x, y=nodepos.y+u, z=nodepos.z})
-								local ndef = minetest.registered_nodes[node.name]
-								if ndef and ndef.walkable then
-									node_ok = false
-									break
-								end
-							end
-							if node_ok then
-								telesound(self.object:get_pos(), false)
-								local telepos = {x=nodepos.x, y=nodepos.y+1, z=nodepos.z}
-								self.object:set_pos(telepos)
-								telesound(telepos, true)
-								break
-							end
+							telesound(self.object:get_pos(), false)
+							local telepos = {x=nodepos.x, y=nodepos.y+1, z=nodepos.z}
+							self.object:set_pos (telepos)
+							self:halt_in_tracks (true)
+							self:cancel_navigation ()
+							self.reset_fall_damage = 1
+							telesound(telepos, true)
+							break
 						end
 					end
 				end
-				if node_ok then
-					 break
+			end
+			if node_ok then
+				break
+			end
+		end
+	end
+end
+
+------------------------------------------------------------------------
+-- Enderman AI
+------------------------------------------------------------------------
+
+local function is_living_damage_source (source)
+	if source and source:is_player () then
+		return true
+	elseif source then
+		local entity = source:get_luaentity ()
+		return entity and entity.is_mob
+	end
+	return nil
+end
+
+function enderman:receive_damage (vlf_reason, damage)
+	local result = mob_class.receive_damage (self, vlf_reason, damage)
+	if result and not is_living_damage_source (vlf_reason.source) then
+		self:teleport ()
+	end
+	return result
+end
+
+local function enderman_grief (self, self_pos, dtime)
+	if not mobs_griefing or (self._taken_node and self._taken_node ~= "") then
+		return false
+	end
+
+	local chance = math.round (20 * (dtime / 0.05))
+	if pr:next (1, math.max (1, chance)) == 1 then
+		local self_node_pos = {
+			x = math.floor (self_pos.x + 0.5),
+			y = math.floor (self_pos.y + 0.5),
+			z = math.floor (self_pos.z + 0.5),
+		}
+		local take_pos = {
+			x = math.floor (self_pos.x + 0.5 + pr:next (-2, 2)),
+			y = math.floor (self_pos.y + 0.5 + pr:next (0, 3)),
+			z = math.floor (self_pos.z + 0.5 + pr:next (-2, 2)),
+		}
+		local node = minetest.get_node (take_pos)
+		-- Now verify that this is takable and that there is
+		-- line of sight.
+		if minetest.get_item_group (node.name, "enderman_takable") == 0 then
+			return false
+		end
+		local los, hit_pos = self:line_of_sight (self_node_pos, take_pos)
+		if los or not vector.equals (hit_pos, take_pos) then
+			return false
+		end
+		-- Don't destroy protected stuff.
+		if not minetest.is_protected(take_pos, "") then
+			minetest.remove_node(take_pos)
+			local dug = minetest.get_node_or_nil(take_pos)
+			if dug and dug.name == "air" then
+				self._taken_node = node.name
+				self.persistent = true
+				local def = minetest.registered_nodes[self._taken_node]
+				-- Update animation and texture accordingly (adds visibly carried block)
+				local block_type
+				-- Cube-shaped
+				if def.drawtype == "normal" or
+					def.drawtype == "nodebox" or
+					def.drawtype == "liquid" or
+					def.drawtype == "flowingliquid" or
+					def.drawtype == "glasslike" or
+					def.drawtype == "glasslike_framed" or
+					def.drawtype == "glasslike_framed_optional" or
+					def.drawtype == "allfaces" or
+					def.drawtype == "allfaces_optional" or
+					def.drawtype == nil then
+					block_type = "cube"
+				elseif def.drawtype == "plantlike" then
+					-- Flowers and stuff
+					block_type = "plantlike45"
+				elseif def.drawtype == "airlike" then
+					-- Just air
+					block_type = nil
+				else
+					-- Fallback for complex drawtypes
+					block_type = "unknown"
+				end
+				self.base_texture = create_enderman_textures(block_type, self._taken_node)
+				self:set_textures (self.base_texture)
+				self.animation = select_enderman_animation("block")
+				self._current_animation = nil
+				self:set_animation ("stand")
+				if def.sounds and def.sounds.dug then
+					minetest.sound_play(def.sounds.dug, {pos = take_pos, max_hear_distance = 16}, true)
 				end
 			end
 		end
-	end,
-	on_die = function(self, pos)
-		-- Drop carried node on death
-		if self._taken_node ~= nil and self._taken_node ~= "" then
-			minetest.add_item(pos, self._taken_node)
-		end
-	end,
-	do_punch = function(self, hitter, tflp, tool_caps, dir)
-		-- damage from rain caused by itself so we don't want it to attack itself.
-		if hitter ~= self.object and hitter ~= nil then
-			--if (minetest.get_timeofday() * 24000) > 5001 and (minetest.get_timeofday() * 24000) < 19000 then
-			--	self:teleport(nil)
-			--else
-			if pr:next(1, 8) == 8 then --FIXME: real mc rate
-				self:teleport(hitter)
+	end
+	return false
+end
+
+local function enderman_ungrief (self, self_pos, dtime)
+	if not mobs_griefing or not self._taken_node
+		or self._taken_node == "" then
+		return false
+	end
+
+	local chance = math.round (2000 * (dtime / 0.05))
+	if pr:next (1, math.max (1, chance)) == 1 then
+		-- Select a random position around self_pos in which
+		-- to attempt to place the carried block.
+		local self_x = math.floor (self_pos.x + 0.05)
+		local self_z = math.floor (self_pos.z + 0.05)
+		local place_pos
+		repeat
+			place_pos = {
+				x = math.floor (self_pos.x + 0.5 + pr:next (-2, 2)),
+				y = math.floor (self_pos.y + 0.5 + pr:next (0, 2)),
+				z = math.floor (self_pos.z + 0.5 + pr:next (-2, 2)),
+			}
+		until place_pos.x ~= self_x or place_pos.z ~= self_z
+
+		-- Also check to see if protected.
+		if minetest.get_node (place_pos).name == "air"
+			and not minetest.is_protected (place_pos, "") then
+			-- ... but only if there's a free space
+			local success = minetest.place_node(place_pos, {name = self._taken_node})
+			if success then
+				local def = minetest.registered_nodes[self._taken_node]
+				-- Update animation accordingly (removes visible block)
+				self.persistent = false
+				self.animation = select_enderman_animation("normal")
+				self._current_animation = nil
+				self:set_animation ("stand")
+				if def.sounds and def.sounds.place then
+					minetest.sound_play(def.sounds.place, {pos = place_pos, max_hear_distance = 16}, true)
+				end
+				self._taken_node = ""
 			end
-			self.attack=hitter
-			self.state="attack"
-			--end
 		end
-	end,
-	armor = { fleshy = 100, water_vulnerable = 100 },
-	water_damage = 8,
-	view_range = 64,
-	fear_height = 4,
-	attack_type = "dogfight",
-})
+	end
+
+	return false
+end
+
+function enderman:attack_melee (self_pos, dtime, target_pos, line_of_sight)
+	local self_eye_pos = {
+		x = self_pos.x,
+		y = self_pos.y + self.head_eye_height,
+		z = self_pos.z,
+	}
+	-- Freeze if the target is looking directly at this enderman.
+	if self.attack:is_player ()
+		and self:eye_contact (self_eye_pos, self.attack, line_of_sight) then
+		self:cancel_navigation ()
+		self:halt_in_tracks ()
+	else
+		mob_class.attack_melee (self, self_pos, dtime, target_pos, line_of_sight)
+	end
+end
+
+function enderman:check_attack (self_pos, dtime, moveresult)
+	local attack = mob_class.check_attack (self, self_pos, dtime, moveresult)
+	if attack then
+		self:set_animation ("attack")
+	end
+	if attack and self.attack and self.attack:is_player () then
+		local target_pos = self.attack:get_pos ()
+		local distance = vector.distance (self_pos, target_pos)
+		local self_eye_pos = {
+			x = self_pos.x,
+			y = self_pos.y + self.head_eye_height,
+			z = self_pos.z,
+		}
+		-- Attempt to break eye contact.
+		if distance < 4 then
+			local eye_contact = self:eye_contact (self_eye_pos, self.attack)
+			if eye_contact then
+				self._time_since_teleport = self._time_since_teleport + dtime
+				if self._time_since_teleport > 0.25 then
+					self:do_teleport ()
+					self._time_since_teleport = 0
+				end
+			end
+		elseif distance > 16 then
+			self._time_since_teleport = self._time_since_teleport + dtime
+			if self._time_since_teleport >= 1.5 then
+				self:do_teleport (self.attack)
+				self._time_since_teleport = 0
+			end
+		end
+	end
+	return attack
+end
+
+enderman.ai_functions = {
+	enderman.check_attack,
+	mob_class.check_pace,
+	enderman_ungrief,
+	enderman_grief,
+}
+
+------------------------------------------------------------------------
+-- Enderman target selection
+------------------------------------------------------------------------
+
+function enderman:eye_contact (eye_pos, object, line_of_sight)
+	local inventory = object:get_inventory ()
+	local stack = inventory:get_stack ("armor", 2)
+	if stack:get_name () == "vlf_farming:pumpkin_face" then
+		return false
+	end
+
+	local player_look_dir = object:get_look_dir ()
+	local player_pos = vlf_util.target_eye_pos (object)
+	local direction = vector.direction (player_pos, eye_pos)
+	local distance = vector.distance (eye_pos, player_pos)
+
+	if not line_of_sight then
+		line_of_sight = self:line_of_sight (eye_pos, player_pos)
+	end
+
+	local dot = vector.dot (player_look_dir, direction)
+	return dot > 1.0 - 0.025 / distance and line_of_sight
+end
+
+function enderman:should_attack (object)
+	local entity = object:get_luaentity ()
+	return entity and entity.name == "mobs_mc:endermite"
+		and entity:valid_enemy ()
+end
+
+function enderman:attack_custom (self_pos, dtime)
+	-- Search for players looking at this mob.
+	-- Check to see if people are near by enough to look at us.
+	local self_eye_pos = {
+		x = self_pos.x,
+		y = self_pos.y + self.head_eye_height,
+		z = self_pos.z,
+	}
+	if not self._pending_target then
+		local player, best_distance
+		for obj in vlf_util.connected_players (self_pos, self.tracking_distance) do
+			local dist_factor = self:detection_multiplier_for_object (obj)
+			local modified = self.tracking_distance * dist_factor
+			local distance = vector.distance (obj:get_pos (), self_pos)
+			if self:attack_player_allowed (obj)
+				and distance < modified
+				and self:eye_contact (self_eye_pos, obj) then
+				if not player or distance < best_distance then
+					player = obj
+					best_distance = distance
+				end
+			end
+		end
+		if player then
+			self._pending_target = player
+			self._targeting_delay = 0.25
+		end
+	elseif not self:eye_contact (self_eye_pos, self._pending_target) then
+		self._pending_target = nil
+	elseif self._targeting_delay == 0 then
+		self:do_attack (self._pending_target)
+		return true
+	end
+	-- Now search for endermites within viewing distance.
+	if not self._pending_target then
+		local target = self:attack_default (self_pos, dtime, false)
+		if target then
+			self:do_attack (target)
+			return true
+		end
+	end
+	return false
+end
+
+function enderman:do_attack (object, persistence)
+	mob_class.do_attack (self, object, persistence)
+	self._time_since_teleport = 0
+end
+
+------------------------------------------------------------------------
+-- Enderman sundries
+------------------------------------------------------------------------
+
+local function mc_light_value (self, self_pos)
+	local brightness, value
+	local pos = self_pos
+	brightness = (minetest.get_node_light (pos) or 0) / 15.0
+	value = brightness / (4 - 3 * brightness)
+	return value
+end
+
+function enderman:init_ai ()
+	mob_class.init_ai (self)
+	self._targeting_delay = 0
+end
+
+function enderman:ai_step (dtime)
+	mob_class.ai_step (self, dtime)
+	if self._pending_target then
+		if not is_valid (self._pending_target) then
+			self._pending_target = nil
+		end
+	end
+	self._targeting_delay
+		= math.max (0, self._targeting_delay - dtime)
+	local self_pos = self.object:get_pos ()
+	if vlf_worlds.pos_to_dimension (self_pos) == "overworld"
+		and minetest.get_timeofday () > 0.25 then
+		local light = mc_light_value (self, self_pos)
+		if light > 0.5 and vlf_weather.is_outdoor (self_pos)
+			and math.random () * 30 < (light - 0.4) * 2.0 then
+			if self.attack then
+				self.attack = nil
+				self:replace_activity (nil)
+			end
+			self:teleport ()
+		end
+	end
+end
+
+-- Prevent endermen from crossing water.
+enderman.gwp_penalties = table.copy (mob_class.gwp_penalties)
+enderman.gwp_penalties.WATER = -1.0
+
+vlf_mobs.register_mob ("mobs_mc:enderman", enderman)
+
+------------------------------------------------------------------------
+-- Enderman spawning.
+------------------------------------------------------------------------
 
 -- End spawn
 vlf_mobs.spawn_setup({

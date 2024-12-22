@@ -1,39 +1,6 @@
-# textdomain: vlf_candles
-
-Lit=
-
-Candle=
-Black Candle=
-Blue Candle=
-Brown Candle=
-Cyan Candle=
-Green Candle=
-Grey Candle=
-Light Blue Candle=
-Light Grey Candle=
-Lime Candle=
-Magenta Candle=
-Orange Candle=
-Pink Candle=
-Purple Candle=
-Red Candle=
-White Candle=
-Yellow Candle=
-
-Cake With Candle=
-Cake With Black Candle=
-Cake With Blue Candle=
-Cake With Brown Candle=
-Cake With Cyan Candle=
-Cake With Green Candle=
-Cake With Grey Candle=
-Cake With Light Blue Candle=
-Cake With Light Grey Candle=
-Cake With Lime Candle=
-Cake With Magenta Candle=
-Cake With Orange=
-Cake With Pink Candle=
-Cake With Purple Candle=
-Cake With Red Candle=
-Cake With White Candle=
-Cake With Yellow Candle=
+# textdomain: vlf_dripstone
+Dripstone block=
+Dripstone is type of stone that allows stalagmites and stalagtites to grow on it=
+Pointed dripstone=
+Pointed dripstone is what stalagmites and stalagtites are made of=
+Pointed dripstone (@1/@2)=

@@ -31,13 +31,13 @@ minetest.register_node("vlf_flowerpots:flower_pot", {
 	collision_box = pot_box,
 	is_ground_content = false,
 	inventory_image = "vlf_flowerpots_flowerpot_inventory.png",
-	groups = { dig_immediate = 3, deco_block = 1, attached_node = 1, dig_by_piston = 1, flower_pot = 1 },
+	groups = { dig_immediate = 3, deco_block = 1, attached_node = 1, dig_by_piston = 1, flower_pot = 1, unsticky = 1},
 	sounds = vlf_sounds.node_sound_stone_defaults(),
-	on_rightclick = function(pos, node, clicker, itemstack)
+	on_rightclick = function(pos, _, clicker, itemstack)
 		local name = clicker:get_player_name()
 		if minetest.is_protected(pos, name) then
 			minetest.record_protection_violation(pos, name)
-			return
+			return itemstack
 		end
 		local item = clicker:get_wielded_item():get_name()
 		if vlf_flowerpots.registered_pots[item] then
@@ -46,6 +46,8 @@ minetest.register_node("vlf_flowerpots:flower_pot", {
 				itemstack:take_item()
 			end
 		end
+
+		return itemstack
 	end,
 })
 
@@ -75,9 +77,9 @@ function vlf_flowerpots.register_potted_flower(name, def)
 		selection_box = pot_box,
 		collision_box = pot_box,
 		is_ground_content = false,
-		groups = { dig_immediate = 3, attached_node = 1, dig_by_piston = 1, not_in_creative_inventory = 1, flower_pot = 2 },
+		groups = { dig_immediate = 3, attached_node = 1, dig_by_piston = 1, not_in_creative_inventory = 1, flower_pot = 2, unsticky = 1},
 		sounds = vlf_sounds.node_sound_stone_defaults(),
-		on_rightclick = function(pos, item, clicker)
+		on_rightclick = function(pos, _, clicker)
 			local player_name = clicker:get_player_name()
 			if minetest.is_protected(pos, player_name) then
 				minetest.record_protection_violation(pos, player_name)
@@ -115,9 +117,9 @@ function vlf_flowerpots.register_potted_cube(name, def)
 		selection_box = pot_box,
 		collision_box = pot_box,
 		is_ground_content = false,
-		groups = { dig_immediate = 3, attached_node = 1, dig_by_piston = 1, not_in_creative_inventory = 1, flower_pot = 2 },
+		groups = { dig_immediate = 3, attached_node = 1, dig_by_piston = 1, not_in_creative_inventory = 1, flower_pot = 2, unsticky = 1},
 		sounds = vlf_sounds.node_sound_stone_defaults(),
-		on_rightclick = function(pos, item, clicker)
+		on_rightclick = function(pos, _, clicker)
 			local player_name = ""
 			if clicker:is_player() then
 				player_name = clicker:get_player_name()
