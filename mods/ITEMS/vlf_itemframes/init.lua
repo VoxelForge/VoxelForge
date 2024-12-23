@@ -290,3 +290,156 @@ minetest.register_craft({
 	output = 'vlf_itemframes:glow_frame',
 	recipe = { 'vlf_mobitems:glow_ink_sac', 'vlf_itemframes:item_frame' },
 })
+
+local function spawn_nametag(pos, nametag, duration)
+    local p_obj = minetest.add_entity(pos, "vlf_itemframes:spawned_entity")
+    local ent = p_obj:get_luaentity()
+    if ent then ent._duration = duration end
+    if p_obj then
+        local attributes = {text = nametag, color = "#FFFFFF"}
+        p_obj:set_nametag_attributes(attributes)
+    end
+    return p_obj
+end
+
+--[[minetest.register_globalstep(function(dtime)
+    for _, player in ipairs(minetest.get_connected_players()) do
+        if player and player:is_player() then
+            local pos = player:get_pos()
+            local look_dir = player:get_look_dir()
+            if pos and look_dir then
+                -- Perform a raycast to find a pointed thing
+                local ray = minetest.raycast(
+                    pos, 
+                    vector.add(pos, vector.multiply(look_dir, 10)), -- Adjust distance as needed
+                    false, -- nodes
+                    true -- objects
+                )
+
+                -- Iterate over raycast results
+                for pointed_thing in ray do
+			if pointed_thing.type == "node" then
+                       local node_pos = pointed_thing.under
+                       local final_pos = {x=node_pos.x, y=node_pos.y+1, z=node_pos.z}
+            local node = minetest.get_node(final_pos)
+            if minetest.get_item_group(node.name, "itemframe") > 0 then
+                local meta = minetest.get_meta(final_pos)
+                local inv = meta:get_inventory()
+                local itemstack = inv:get_stack("main", 1)
+                if not itemstack:is_empty() then
+                    local description = itemstack:get_meta():get_string("description")
+                    if description and description ~= "" then
+                        local spawn_pos = vector.add(final_pos, {x = 0, y = 1, z = 0})
+                        for o in minetest.objects_inside_radius(pos, 0.45) do
+				local l = o:get_luaentity()
+				if l and l.name == "vlf_itemframes:spawned_entity" then
+					return false
+				else
+					spawn_nametag(spawn_pos, description, 1)
+				end
+			end
+                    end
+                end
+            end
+                    end
+                end
+            end
+        end
+    end
+end)]]
+
+minetest.register_globalstep(function(dtime)
+    for _, player in ipairs(minetest.get_connected_players()) do
+        -- Ensure the player object is valid
+        if player and player:is_player() then
+            local pos = player:get_pos()
+            local look_dir = player:get_look_dir()
+
+            if pos and look_dir then
+                -- Perform a raycast to find pointed things
+                local ray = minetest.raycast(
+                    pos,
+                    vector.add(pos, vector.multiply(look_dir, 10)), -- Adjust distance as needed
+                    false, -- nodes
+                    true -- objects
+                )
+
+                for pointed_thing in ray do
+                    -- Only process nodes in the raycast
+                    if pointed_thing.type == "node" then
+                        local node_pos = pointed_thing.above
+                        local final_pos = {x = node_pos.x, y = node_pos.y + 1, z = node_pos.z}
+                        local node = minetest.get_node(final_pos)
+
+                        -- Check if the node is an item frame
+                        if minetest.get_item_group(node.name, "itemframe") > 0 then
+                            local meta = minetest.get_meta(final_pos)
+                            local inv = meta:get_inventory()
+                            local itemstack = inv:get_stack("main", 1)
+
+                            -- Ensure the item frame contains an item with a description
+                            if not itemstack:is_empty() then
+                                local description = itemstack:get_meta():get_string("description")
+                                if description and description ~= "" then
+                                    local spawn_pos = vector.add(final_pos, {x = 0, y = 1, z = 0})
+                                    local entity_found = false
+
+                                    -- Check for existing spawned entities at the spawn position
+                                    --[[for _, obj in ipairs(minetest.get_objects_inside_radius(spawn_pos, 0.45)) do
+                                        local luaentity = obj:get_luaentity()
+                                        if luaentity and luaentity.name == "vlf_itemframes:spawned_entity" then
+                                            entity_found = true
+                                            break
+                                        end
+                                    end
+
+                                    -- Spawn the nametag if no entity exists
+                                    if not entity_found then
+                                        spawn_nametag(spawn_pos, description, 2)
+                                    end]]
+                                    
+                                    local entity_count = 0
+					-- Count entities with the specified name within the radius
+					for _, obj in ipairs(minetest.get_objects_inside_radius(spawn_pos, 0.45)) do
+    					local luaentity = obj:get_luaentity()
+    					if luaentity and luaentity.name == "vlf_itemframes:spawned_entity" then
+        					entity_count = entity_count + 1
+        					if entity_count > 2 then
+            						break -- No need to continue if more than 2 are found
+        					end
+    					end
+				end
+
+				-- Only proceed if there are 2 or fewer entities
+				if entity_count <= 2 then
+    					spawn_nametag(spawn_pos, description, 2)
+				end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+
+
+minetest.register_entity("vlf_itemframes:spawned_entity", {
+    initial_properties = {
+        visual = "upright_sprite",
+        visual_size = {x = 0.5, y = 0.5, z = 0.5},
+        textures = {"blank.png"},
+        physical = false,
+        pointable = false,
+	},
+        _timer = 0,
+    _duration = 60,
+    on_step = function(self, dtime)
+        self._timer = self._timer + dtime
+        if self._timer > self._duration then
+            self.object:remove()
+        end
+    end,
+})
