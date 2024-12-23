@@ -36,6 +36,16 @@ minetest.register_craftitem("vlf_honey:honeycomb", {
 	_doc_items_usagehelp = S("Use on copper blocks to prevent further oxidation."),
 	inventory_image = "vlf_honey_honeycomb.png",
 	groups = { craftitem = 1, preserves_copper = 1 },
+	on_place = function(itemstack, placer, pointed_thing)
+		if pointed_thing.type ~= "node" then
+			return itemstack
+		end
+		local node = minetest.get_node(pointed_thing.under)
+		local pos = pointed_thing.under
+
+		-- wax the block. This is the only viable usage of honeycomb's on_place. If it "fails" to wax, then nothing is changed.
+		return vlf_honey.wax_block(pos, node, placer, itemstack, pointed_thing)
+	end,
 })
 
 minetest.register_node("vlf_honey:honeycomb_block", {
