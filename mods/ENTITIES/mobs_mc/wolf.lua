@@ -170,8 +170,7 @@ local wolf_variants = {
 		"SavannaM",
 	}),
 	snowy = wolf_variant ("wolf_snowy", {
-		"IcePlains",
-		"IcePlainsSpikes",
+		"Grove",
 	}),
 	black = wolf_variant ("wolf_black", {
 		"MegaTaiga",

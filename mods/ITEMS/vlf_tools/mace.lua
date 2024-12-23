@@ -28,7 +28,7 @@ minetest.register_node("vlf_tools:heavy_core", {
 
 --Mace
  minetest.register_tool("vlf_tools:mace", {
-	description = "" ..minetest.colorize(vlf_colors.DARK_PURPLE, S("Mace")),
+	description = "" ..minetest.colorize(vlf_colors.DARK_PURPLE, S("Mace")),--S("Mace"),
 	_doc_items_longdesc = mace_longdesc,
 	inventory_image = "vlf_tools_mace.png",
 	groups = { weapon=1, mace=1, dig_speed_class=1, enchantability=10, sword=1 },

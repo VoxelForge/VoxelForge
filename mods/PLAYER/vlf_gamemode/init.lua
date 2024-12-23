@@ -5,6 +5,7 @@ vlf_gamemode = {
 		"survival",
 		"creative",
 		"hardcore",
+		"spectator",
 	},
 	registered_on_gamemode_change = {}
 }
@@ -26,8 +27,19 @@ function minetest.is_creative_enabled(name)
 	return false
 end
 
+function vlf_gamemode.is_spectating(name)
+	--if old_is_creative_enabled(name) then return true end
+	if not name then return false end
+	assert(type(name) == "string", "vlf_gamemode.is_spectating requires a string (the playername) argument. This is likely an error in a non-voxelforge mod.")
+	local p = minetest.get_player_by_name(name)
+	if p then
+		return p:get_meta():get_string("gamemode") == "spectator"
+	end
+	return false
+end
+
 function vlf_gamemode.get_gamemode(p)
-	return minetest.is_creative_enabled(p:get_player_name()) and "creative" or "survival" or "hardcore"
+	return minetest.is_creative_enabled(p:get_player_name()) and "creative" or "survival" or "hardcore" or "spectator"
 end
 
 function vlf_gamemode.set_gamemode(p, gm)
@@ -42,7 +54,7 @@ end
 
 minetest.register_chatcommand("gamemode",{
 	params = S("[<gamemode>] [<player>]"),
-	description = S("Change gamemode (survival/creative) for yourself or player"),
+	description = S("Change gamemode (survival/creative/hardcore/spectator) for yourself or player"),
 	privs = { server = true },
 	func = function(n,param)
 		local p

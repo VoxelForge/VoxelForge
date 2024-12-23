@@ -221,3 +221,60 @@ minetest.register_craft({
 	},
 })
 
+-- Define the node names for portal frame, bedrock, and stonebrick stair
+local target_nodes = {
+	portal_frame = "vlf_portals:end_portal_frame",
+	bedrock = "vlf_core:bedrock",
+	stonebrick_stair = "vlf_stairs:stair_stonebrick",
+}
+
+-- Function to check distance and send message
+local function check_near_nodes(player)
+	local pos = player:get_pos()
+	local player_name = player:get_player_name()
+
+	-- Check if the achievement is already unlocked
+	if not vlf_achievements.award_unlocked(player_name, "vlf:follow_ender_eye") then
+		local radius = 5
+		local found_nodes = {
+			portal_frame = false,
+			bedrock = false,
+			stonebrick_stair = false
+		}
+
+		-- Loop through a cube around the player to find target nodes
+		for x = -radius, radius do
+			for y = -radius, radius do
+				for z = -radius, radius do
+					-- Calculate the position to check
+					local check_pos = vector.add(pos, {x = x, y = y, z = z})
+					-- Get the node at the calculated position
+					local node = minetest.get_node(check_pos)
+
+					-- Check and mark the node if it's one of the target nodes
+					if node.name == target_nodes.portal_frame then
+						found_nodes.portal_frame = true
+					elseif node.name == target_nodes.bedrock then
+						found_nodes.bedrock = true
+					elseif node.name == target_nodes.stonebrick_stair then
+						found_nodes.stonebrick_stair = true
+					end
+				end
+			end
+		end
+
+		-- If the player is near all three nodes, unlock the achievement
+		if found_nodes.portal_frame and found_nodes.bedrock and found_nodes.stonebrick_stair then
+			awards.unlock(player_name, "vlf:follow_ender_eye")
+		end
+	end
+end
+
+-- Register a globalstep callback to check players' positions regularly
+minetest.register_globalstep(function(dtime)
+	-- Iterate over all connected players
+	for _, player in ipairs(minetest.get_connected_players()) do
+		check_near_nodes(player)
+	end
+end)
+

@@ -49,6 +49,26 @@ local function remove_scope(player)
 	end
 end
 
+local function check_looking_at(player)
+	local eye_pos = player:get_pos()
+	eye_pos.y = eye_pos.y + player:get_properties().eye_height -- Adjust for the player's eye height
+	local look_dir = player:get_look_dir()
+	local look_ray = minetest.raycast(eye_pos, vector.add(eye_pos, vector.multiply(look_dir, 25)), true, false)
+
+	for pointed_thing in look_ray do
+		if pointed_thing.type == "object" then
+			local obj = pointed_thing.ref
+			if obj and obj:get_luaentity() and obj:get_luaentity().name == "mobs_mc:parrot" then
+				awards.unlock(player:get_player_name(), "vlf:spyglass_at_parrot")
+			elseif obj and obj:get_luaentity() and obj:get_luaentity().name == "mobs_mc:ghast" then
+				awards.unlock(player:get_player_name(), "vlf:spyglass_at_ghast")
+			elseif obj and obj:get_luaentity() and obj:get_luaentity().name == "mobs_mc:enderdragon" then
+				awards.unlock(player:get_player_name(), "vlf:spyglass_at_dragon")
+			end
+		end
+	end
+end
+
 controls.register_on_press(function(player, key)
 	if key ~= "RMB" and key ~= "zoom" then return end
 	if spyglass_scope[player] == nil then
@@ -71,6 +91,7 @@ controls.register_on_hold(function(player, key)
 		if spyglass_scope[player] == nil then
 			add_scope(player)
 		end
+		check_looking_at(player)
 	else
 		remove_scope(player)
 	end

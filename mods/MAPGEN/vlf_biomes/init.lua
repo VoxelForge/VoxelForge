@@ -258,6 +258,26 @@ local function register_biomes()
 		_vlf_skycolor = "#7FA1FF",
 		_vlf_fogcolor = overworld_fogcolor
 	})
+	
+	minetest.register_biome({
+		name = "Grove",
+		node_dust = "vlf_core:snow",
+		node_top = "vlf_core:snowblock",
+		depth_top = 1,
+		node_filler = "vlf_core:dirt",
+		depth_filler = 2,
+		node_riverbed = "vlf_core:sand",
+		depth_riverbed = 2,
+		y_min = 3,
+		y_max = vlf_vars.mg_overworld_max,
+		humidity_point = 116,
+		heat_point = 16,
+		_vlf_biome_type = "snowy",
+		_vlf_palette_index = 3,
+		_vlf_water_palette_index = 8,
+		_vlf_skycolor = "#839EFF",
+		_vlf_fogcolor = "#C0D8FF",
+	})
 
 	-- Mega Pine Taiga
 	minetest.register_biome({
@@ -4080,7 +4100,7 @@ local function register_decorations()
 		end
 		minetest.register_decoration({
 			deco_type = "schematic",
-			place_on = {"group:grass_block", "vlf_core:dirt", "vlf_core:podzol"},
+			place_on = {"group:grass_block", "vlf_core:dirt", "vlf_core:podzol", "group:snow"},
 			sidelen = 16,
 			noise_params = {
 				offset = offset,
@@ -4110,11 +4130,11 @@ local function register_decorations()
 
 
 	-- Common spruce
-	quick_spruce(11000, 0.00150, "vlf_core_spruce_5.mts", {"Taiga", "ColdTaiga"})
+	quick_spruce(11000, 0.00150, "vlf_core_spruce_5.mts", {"Taiga", "ColdTaiga", "Grove"})
 
-	quick_spruce(2500, 0.00325, "vlf_core_spruce_1.mts", {"MegaSpruceTaiga", "MegaTaiga", "Taiga", "ColdTaiga"})
-	quick_spruce(7000, 0.00425, "vlf_core_spruce_3.mts", {"MegaSpruceTaiga", "MegaTaiga", "Taiga", "ColdTaiga"})
-	quick_spruce(9000, 0.00325, "vlf_core_spruce_4.mts", {"MegaTaiga", "Taiga", "ColdTaiga"})
+	quick_spruce(2500, 0.00325, "vlf_core_spruce_1.mts", {"MegaSpruceTaiga", "MegaTaiga", "Taiga", "ColdTaiga", "Grove"})
+	quick_spruce(7000, 0.00425, "vlf_core_spruce_3.mts", {"MegaSpruceTaiga", "MegaTaiga", "Taiga", "ColdTaiga", "Grove"})
+	quick_spruce(9000, 0.00325, "vlf_core_spruce_4.mts", {"MegaTaiga", "Taiga", "ColdTaiga", "Grove"})
 
 	quick_spruce(9500, 0.00500, "vlf_core_spruce_tall.mts", {"MegaTaiga"})
 
@@ -4165,6 +4185,83 @@ local function register_decorations()
 			persist = 0.60,
 		},
 		biomes = {"Taiga", "ColdTaiga"},
+		y_min = 3,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_core.."/schematics/vlf_core_spruce_matchstick.mts",
+		flags = "place_center_x, place_center_z",
+	})
+	
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:grass_block", "vlf_core:podzol"},
+		sidelen = 16,
+		noise_params = {
+			offset = 0.004,
+			scale = 0.0022,
+			spread = {x = 250, y = 250, z = 250},
+			seed = 2500,
+			octaves = 3,
+			persist = 0.66
+		},
+		biomes = {"Taiga", "ColdTaiga", "Grove"},
+		y_min = 2,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_core.."/schematics/vlf_core_spruce_lollipop.mts",
+		flags = "place_center_x, place_center_z",
+	})
+
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:snow", "vlf_core:dirt"},
+		sidelen = 16,
+		noise_params = {
+			offset = 0.004,
+			scale = 0.0022,
+			spread = {x = 250, y = 250, z = 250},
+			seed = 2500,
+			octaves = 3,
+			persist = 0.66
+		},
+		biomes = {"Grove"},
+		y_min = 2,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_core.."/schematics/vlf_core_spruce_lollipop.mts",
+		flags = "place_center_x, place_center_z",
+	})
+
+	-- Matchstick spruce: Very few leaves, tall trunk
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:grass_block", "vlf_core:podzol"},
+		sidelen = 80,
+		noise_params = {
+			offset = -0.025,
+			scale = 0.025,
+			spread = {x = 250, y = 250, z = 250},
+			seed = 2566,
+			octaves = 5,
+			persist = 0.60,
+		},
+		biomes = {"Taiga", "ColdTaiga", "Grove"},
+		y_min = 3,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_core.."/schematics/vlf_core_spruce_matchstick.mts",
+		flags = "place_center_x, place_center_z",
+	})
+	-- Grove Tree.
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:snow", "vlf_core:dirt"},
+		sidelen = 80,
+		noise_params = {
+			offset = -0.025,
+			scale = 0.025,
+			spread = {x = 250, y = 250, z = 250},
+			seed = 2566,
+			octaves = 5,
+			persist = 0.60,
+		},
+		biomes = {"Grove"},
 		y_min = 3,
 		y_max = vlf_vars.mg_overworld_max,
 		schematic = mod_vlf_core.."/schematics/vlf_core_spruce_matchstick.mts",

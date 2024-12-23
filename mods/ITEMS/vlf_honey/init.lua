@@ -2,6 +2,30 @@
 ---- Honey ----
 ---------------
 
+vlf_honey = {}
+
+function vlf_honey.particles(pos, texture)
+	--local pos = pointed_thing.under
+	minetest.add_particlespawner({
+		amount = 8,
+		time = 1,
+		minpos = vector.subtract(pos, 1),
+		maxpos = vector.add(pos,1),
+		minvel = vector.zero(),
+		maxvel = vector.zero(),
+		minacc = vector.zero(),
+		maxacc = vector.zero(),
+		minexptime = 0.5,
+		maxexptime = 1,
+		minsize = 1,
+		maxsize = 2.5,
+		collisiondetection = false,
+		vertical = false,
+		texture = texture or "vlf_copper_anti_oxidation_particle.png",
+		glow = 5,
+	})
+end
+
 -- Variables
 local S = minetest.get_translator(minetest.get_current_modname())
 
@@ -104,3 +128,41 @@ minetest.register_craft({
 		{ "vlf_honey:honey_bottle", "vlf_potions:glass_bottle" },
 	},
 })
+
+function vlf_honey.wax_block(pos, node, player, itemstack, pointed_thing)
+	-- prevent modification of protected nodes.
+	if vlf_util.check_position_protection(pos, player) then
+		return
+	end
+	local def = minetest.registered_nodes[node.name]
+
+	if player:get_player_control().sneak then
+		if def and def._vlf_waxed_variant then
+			if def.groups.door == 1 then
+				if node.name:find("_b_") then
+					local top_pos = { x = pos.x, y = pos.y + 1, z = pos.z }
+					minetest.swap_node(top_pos, { name = def._vlf_waxed_variant:gsub("_b_", "_t_"), param2 = node.param2 })
+				elseif node.name:find("_t_") then
+					local bot_pos = { x = pos.x,  y = pos.y - 1, z = pos.z }
+					minetest.swap_node(bot_pos, { name = def._vlf_waxed_variant:gsub("_t_", "_b_"), param2 = node.param2 })
+				end
+			end
+		else
+			return
+		end
+	else
+		if def and def.on_rightclick then
+			return def.on_rightclick(pos, node, player, itemstack, pointed_thing)
+		end
+	end
+	if def._vlf_waxed_variant then
+		node.name = def._vlf_waxed_variant
+		minetest.swap_node(pos, node)
+		vlf_honey.particles(pos, "vlf_copper_anti_oxidation_particle.png^[colorize:#E58A14:125")
+		awards.unlock(player:get_player_name(), "vlf:wax_on")
+		if not minetest.is_creative_enabled(player:get_player_name()) then
+			itemstack:take_item()
+		end
+		return itemstack
+	end
+end

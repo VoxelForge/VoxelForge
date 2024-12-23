@@ -1042,7 +1042,7 @@ for i=1,8 do
 			vlf_core.clear_snow_dirt(npos, node)
 		end,
 		node_box = node_box,
-		groups = {shovely=2, attached_node=1, deco_block=1, dig_by_water=1, dig_by_piston=1, snow_cover=1, top_snow=i, unsticky = 1, _vlf_partial = i < 5 and 1 or 2},
+		groups = {shovely=2, attached_node=1, deco_block=1, dig_by_water=1, dig_by_piston=1, snow_cover=1, top_snow=i, unsticky = 1, _vlf_partial = i < 5 and 1 or 2, snow=1},
 		sounds = vlf_sounds.node_sound_snow_defaults(),
 		on_construct = vlf_core.on_snow_construct,
 		on_place = on_place,
@@ -1059,7 +1059,7 @@ minetest.register_node("vlf_core:snowblock", {
 	_doc_items_longdesc = S("This is a full block of snow. Snow of this thickness is usually found in areas of extreme cold."),
 	_doc_items_hidden = false,
 	tiles = {"default_snow.png"},
-	groups = {shovely=2, building_block=1, snow_cover=1},
+	groups = {shovely=2, building_block=1, snow_cover=1, snow=1},
 	sounds = vlf_sounds.node_sound_snow_defaults(),
 	on_construct = vlf_core.on_snow_construct,
 	after_destruct = vlf_core.after_snow_destruct,

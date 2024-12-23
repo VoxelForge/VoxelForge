@@ -89,6 +89,7 @@ minetest.register_entity("vlf_vaults:item_entity", {
 		collisionbox = {0,0,0,0,0,0},
 		pointable = true,
 		static_save = false,
+		automatic_rotate = math.pi * 1.5,
 	},
 	_deactivate = function(self, node)
 		node.name = self._vault_name
@@ -249,6 +250,11 @@ function vlf_vaults.register_vault(name, def)
 				activate_item_entity(pos)
 				return itemstack
 			end
+			if def.key == "vlf_trials:trial_key" then
+					awards.unlock(clicker:get_player_name(), "vlf:under_lock_and_key")
+				elseif def.key == "vlf_trials:ominous_trial_key" then
+					awards.unlock(clicker:get_player_name(), "vlf:revaulting")
+				end
 		end
 	}, def.node_on))
 

@@ -389,6 +389,9 @@ function villager_base:validate_transaction (inv, player, trade_id, input1, inpu
 	local desired = trade:get_offered ()
 	if stacktype == desired and desired:get_count () > 0 then
 		awards.unlock (player:get_player_name (), "vlf:whatAdeal")
+		if player:get_pos().y >= 218 then -- 218 due to the limit of Minetest's default mapgen limit
+			awards.unlock(player:get_player_name(), "vlf:trade_at_world_height")
+		end
 		return desired:get_count ()
 	else
 		return 0

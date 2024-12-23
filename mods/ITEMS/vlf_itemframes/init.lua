@@ -252,6 +252,19 @@ vlf_itemframes.register_itemframe("glow_frame", {
 	object_properties = { glow = 15 },
 })
 
+vlf_itemframes.register_itemframe("invis_frame", {
+	node = {
+		description = S("Invis Frame"),
+		_tt_help = S("Can hold an item and is Invis"),
+		_doc_items_longdesc = S("Item frames are decorative blocks in which items can be placed."),
+		_doc_items_usagehelp = S("Just place any item on the item frame. Use the item frame again to retrieve the item."),
+		tiles = { "blank.png" },
+		use_texture_alpha = "clip",
+		inventory_image = "blank.png",
+		wield_image = "vlf_itemframes_item_frame.png",
+	},
+})
+
 awards.register_achievement("vlf_itemframes:glowframe", {
 	title = S("Glow and Behold!"),
 	description = S("Craft a glow item frame."),
@@ -302,52 +315,6 @@ local function spawn_nametag(pos, nametag, duration)
     return p_obj
 end
 
---[[minetest.register_globalstep(function(dtime)
-    for _, player in ipairs(minetest.get_connected_players()) do
-        if player and player:is_player() then
-            local pos = player:get_pos()
-            local look_dir = player:get_look_dir()
-            if pos and look_dir then
-                -- Perform a raycast to find a pointed thing
-                local ray = minetest.raycast(
-                    pos, 
-                    vector.add(pos, vector.multiply(look_dir, 10)), -- Adjust distance as needed
-                    false, -- nodes
-                    true -- objects
-                )
-
-                -- Iterate over raycast results
-                for pointed_thing in ray do
-			if pointed_thing.type == "node" then
-                       local node_pos = pointed_thing.under
-                       local final_pos = {x=node_pos.x, y=node_pos.y+1, z=node_pos.z}
-            local node = minetest.get_node(final_pos)
-            if minetest.get_item_group(node.name, "itemframe") > 0 then
-                local meta = minetest.get_meta(final_pos)
-                local inv = meta:get_inventory()
-                local itemstack = inv:get_stack("main", 1)
-                if not itemstack:is_empty() then
-                    local description = itemstack:get_meta():get_string("description")
-                    if description and description ~= "" then
-                        local spawn_pos = vector.add(final_pos, {x = 0, y = 1, z = 0})
-                        for o in minetest.objects_inside_radius(pos, 0.45) do
-				local l = o:get_luaentity()
-				if l and l.name == "vlf_itemframes:spawned_entity" then
-					return false
-				else
-					spawn_nametag(spawn_pos, description, 1)
-				end
-			end
-                    end
-                end
-            end
-                    end
-                end
-            end
-        end
-    end
-end)]]
-
 minetest.register_globalstep(function(dtime)
     for _, player in ipairs(minetest.get_connected_players()) do
         -- Ensure the player object is valid
@@ -383,20 +350,6 @@ minetest.register_globalstep(function(dtime)
                                 if description and description ~= "" then
                                     local spawn_pos = vector.add(final_pos, {x = 0, y = 1, z = 0})
                                     local entity_found = false
-
-                                    -- Check for existing spawned entities at the spawn position
-                                    --[[for _, obj in ipairs(minetest.get_objects_inside_radius(spawn_pos, 0.45)) do
-                                        local luaentity = obj:get_luaentity()
-                                        if luaentity and luaentity.name == "vlf_itemframes:spawned_entity" then
-                                            entity_found = true
-                                            break
-                                        end
-                                    end
-
-                                    -- Spawn the nametag if no entity exists
-                                    if not entity_found then
-                                        spawn_nametag(spawn_pos, description, 2)
-                                    end]]
                                     
                                     local entity_count = 0
 					-- Count entities with the specified name within the radius
@@ -409,8 +362,6 @@ minetest.register_globalstep(function(dtime)
         					end
     					end
 				end
-
-				-- Only proceed if there are 2 or fewer entities
 				if entity_count <= 2 then
     					spawn_nametag(spawn_pos, description, 2)
 				end
