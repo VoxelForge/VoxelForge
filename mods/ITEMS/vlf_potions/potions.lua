@@ -665,6 +665,17 @@ vlf_potions.register_potion({
 	},
 	has_arrow = true,
 })
+vlf_potions.register_potion({
+	name = "wind_charged",
+	desc_suffix = S("of Wind Charging"),
+	_tt = nil,
+	_longdesc = S("Causes A wind burst on death"),
+	color = "#CEE1FE",
+	_effect_list = {
+		wind_charged = {},
+	},
+	has_arrow = true,
+})
 
 
 -- COMPAT CODE

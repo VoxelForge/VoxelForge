@@ -234,7 +234,8 @@ minetest.register_tool("vlf_armor:elytra", {
 	on_place = vlf_armor.equip_on_use,
 	on_secondary_use = vlf_armor.equip_on_use,
 	_vlf_armor_element = "torso",
-	_vlf_armor_texture = "vlf_armor_elytra.png"
+	_vlf_armor_texture = "vlf_armor_elytra.png",
+	_repair_material = "vlf_mobitems:phantom_membrane",
 })
 
 -- Function to check the player's entire inventory for the required items

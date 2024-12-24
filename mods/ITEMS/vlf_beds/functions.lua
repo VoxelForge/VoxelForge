@@ -313,6 +313,13 @@ function vlf_beds.skip_night()
 	if allow_nav_hacks then
 		last_skip = minetest.get_day_count()
 	end
+	
+	for name, _ in pairs(vlf_beds.player) do
+		local p = minetest.get_player_by_name(name)
+		if p then
+			p:get_meta():set_int("vlf_beds:last_sleep", minetest.get_gametime())
+		end
+	end
 
 	minetest.set_timeofday(0.25) -- tod = 6000
 end

@@ -22,6 +22,7 @@ end
 
 dofile(modpath.."/nodes.lua")
 dofile(modpath.."/crafting.lua")
+dofile(modpath.."/dripleaf.lua")
 
 minetest.register_abm({
 	label = "Spore Blossom Particles",
@@ -63,14 +64,14 @@ function vlf_lush_caves.makelake(pos, _, pr)
 		   return vector_distance_xz(pos, a) < vector_distance_xz(pos, b)
 	end)
 	if not nn[1] then return end
-	--local dripleaves = {}
+	local dripleaves = {}
 	for i=1,pr:next(1,#nn) do
 		minetest.swap_node(nn[i],{name="vlf_core:water_source"})
-		--[[
+		
 		if pr:next(1,20) == 1 then
 			table.insert(dripleaves,nn[i])
 		end
-		--]]
+		
 	end
 	local nnn = minetest.find_nodes_in_area(p1,p2,{"vlf_core:water_source"})
 	for _, v in pairs(nnn) do
@@ -85,7 +86,7 @@ function vlf_lush_caves.makelake(pos, _, pr)
 			end
 		end
 	end
-	--[[
+	
 	for _,d in pairs(dripleaves) do
 		if minetest.get_item_group(minetest.get_node(d).name,"water") > 0 then
 			minetest.set_node(vector.offset(d,0,-1,0),{name="vlf_lush_caves:dripleaf_big_waterroot"})
@@ -95,7 +96,7 @@ function vlf_lush_caves.makelake(pos, _, pr)
 			end
 		end
 	end
-	--]]
+	
 	return true
 end
 

@@ -3,7 +3,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 awards.register_achievement("vlf:husbandry", {
 	title = S("Husbandry"),
 	description = S("The world is full of friends and foodt"),
-	icon = "vlf_entity_effects_effect_bad_omen.png",
+	icon = "vlf_potions_effect_bad_omen.png",
 	type = "Advancement",
 	group = "Adventure",
 })

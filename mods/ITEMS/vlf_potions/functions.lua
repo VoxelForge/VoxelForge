@@ -1221,6 +1221,39 @@ vlf_damage.register_on_death(function (obj, damage, reason)
 	vlf_potions.check_weaving_on_death(obj)
 end)
 
+vlf_potions.register_effect({
+	name = "wind_charged",
+	description = S("Wind Charged"),
+	res_condition = function(obj)
+		-- apply to players and mobs
+		if obj:is_player() then return false end
+		local entity = obj:get_luaentity()
+		if entity and entity.is_mob then return false end
+		return true
+	end,
+	get_tt = function(factor)
+		return S("Causes A wind burst on death")
+	end,
+	particle_color = "#CEE1FE",
+	uses_factor = false,
+})
+
+-- Called for mobs in their physics.lua
+function vlf_potions.check_wind_charged_on_death(obj)
+	-- check for weaving status effect
+	if vlf_potions.get_effect(obj, "wind_charged") then
+		local pos = vector.round(obj:get_pos())
+		local posy = {x=pos.x, y=pos.y-1, z=pos.z}
+		local RADIUS = 8
+		local damage_radius = (RADIUS / math.max(1, RADIUS)) * RADIUS
+		vlf_charges.wind_burst(posy, damage_radius)
+	end
+end
+
+vlf_damage.register_on_death(function (obj, damage, reason)
+	vlf_potions.check_wind_charged_on_death(obj)
+end)
+
 -- implementation of haste and fatigue effects
 function vlf_potions.update_haste_and_fatigue(player)
 	local h_fac = vlf_potions.get_total_haste(player)

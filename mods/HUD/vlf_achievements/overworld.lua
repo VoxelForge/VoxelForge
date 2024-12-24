@@ -75,7 +75,7 @@ awards.register_achievement("vlf:obsidian", {
 awards.register_achievement("vlf:diamonds", {
 	title = S("DIAMONDS!"),
 	description = S("Pick up a diamond from the floor."),
-	icon = "vlf_core_diamond.png",
+	icon = "default_diamond.png",
 	type = "Advancement",
 })
 awards.register_achievement("vlf:buildNetherPortal", {

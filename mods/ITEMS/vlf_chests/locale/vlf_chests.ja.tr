@@ -1,4 +1,4 @@
-# textdomain: vlf_chests
+# textdomain: mcl_chests
 Chest=チェスト
 Inventory=インベントリ
 Large Chest=ラージチェスト
@@ -31,7 +31,6 @@ Red Shulker Box=赤色のシュルカーボックス
 Grey Shulker Box=灰色のシュルカーボックス
 Black Shulker Box=黒色のシュルカーボックス
 Shulker Box=シュルカーボックス
-Can be carried around with its contents=中身を入れたまま持ち運び可能
-and @1 more=
 A shulker box is a portable container which provides 27 inventory slots for any item except shulker boxes. Shulker boxes keep their inventory when broken, so shulker boxes as well as their contents can be taken as a single item. Shulker boxes come in many different colors.=シュルカーボックスは、27個のインベントリスロットを備える「持ち運び可能な収納箱」で、シュルカーボックス以外のアイテムを保管できます。シュルカーボックスは壊れても、中身をドロップアウトせず保持したそのままで、１つのアイテムとしてドロップされます。それを回収し再設置できます。シュルカーボックスにはさまざまな色があります。
 To access the inventory of a shulker box, place and right-click it. To take a shulker box and its contents with you, just break and collect it, the items will not fall out. Place the shulker box again to be able to retrieve its contents.=シュルカーボックスのインベントリにアクセスするには、設置して右クリックします。シュルカーボックスとその中身を持ち運ぶには、壊して回収するだけです。中身はこぼれ落ちません。再びシュルカーボックスを置くと、中身を取り出せます。
+Can be carried around with its contents=中身を入れたまま持ち運び可能

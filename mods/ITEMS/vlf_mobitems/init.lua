@@ -436,6 +436,23 @@ minetest.register_craftitem("vlf_mobitems:nametag", {
 minetest.register_alias("mobs:nametag", "vlf_mobitems:nametag")
 minetest.register_alias("vlf_mobs:nametag", "vlf_mobitems:nametag")
 
+minetest.register_craftitem("vlf_mobitems:phantom_membrane", {
+	description = S("Phantom Membrane"),
+	_tt_help = S("Use to repair the elytra"),
+	_doc_items_longdesc = S("Dropped by the phantom."),
+	_doc_items_usagehelp = S("The phantom membrane is dropped by phantoms and can be used to repair the elytra."),
+	inventory_image = "vlf_mobitems_phantom_membrane.png",
+	wield_image = "vlf_mobitems_phantom_membrane.png",
+	groups = { craftitem = 1 },
+})
+
+minetest.register_craftitem("vlf_mobitems:armadillo_scute", {
+	description = S("Armadillo Scute"),
+	_doc_items_longdesc = S("Use it to repair and craft wolf armor"),
+	inventory_image = "vlf_mobitems_armadillo_scute.png",
+	groups = { craftitem = 1 },
+})
+
 -----------
 -- Crafting
 -----------

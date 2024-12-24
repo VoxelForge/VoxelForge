@@ -207,6 +207,7 @@ function mob_class:check_for_death (vlf_reason, damage)
 	vlf_potions.check_infested_on_damage(self.object)
 	vlf_potions.check_oozing_on_death(self.object)
 	vlf_potions.check_weaving_on_death(self.object)
+	vlf_potions.check_wind_charged_on_death(self.object)
 	self:jockey_death ()
 
 	-- Execute custom death function

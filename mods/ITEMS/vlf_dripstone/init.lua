@@ -2,8 +2,8 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 local dripstone_directions =
 {
-	[-1] = "bottom",
-	[1] = "top",
+	[-1] = "up",
+	[1] = "down",
 }
 
 local dripstone_stages =
@@ -62,7 +62,7 @@ end
 
 -- extracts the direction from dripstone's name
 local function extract_direction(name)
-	return string.sub(name, 26, 31) == "bottom" and -1 or 1
+	return string.sub(name, 26, 31) == "up" and -1 or 1
 end
 
 -- it is assumed pos is at the tip of the dripstone
@@ -214,7 +214,7 @@ minetest.register_craftitem("vlf_dripstone:pointed_dripstone", {
 
 for i = 1, #dripstone_stages do
 	local stage = dripstone_stages[i]
-	minetest.register_node("vlf_dripstone:dripstone_top_" .. stage, {
+	minetest.register_node("vlf_dripstone:dripstone_down_" .. stage, {
 		description = S("Pointed dripstone (@1/@2)", i, #dripstone_stages),
 		_doc_items_longdesc = S("Pointed dripstone is what stalagmites and stalagtites are made of"),
 		_doc_items_hidden = true,
@@ -231,7 +231,7 @@ for i = 1, #dripstone_stages do
 		_vlf_hardness = 1.5,
 	})
 
-	minetest.register_node("vlf_dripstone:dripstone_bottom_" .. stage, {
+	minetest.register_node("vlf_dripstone:dripstone_up_" .. stage, {
 		description = S("Pointed dripstone (@1/@2)", i, #dripstone_stages),
 		_doc_items_longdesc = S("Pointed dripstone is what stalagmites and stalagtites are made of"),
 		_doc_items_hidden = true,
@@ -263,7 +263,7 @@ end)
 
 minetest.register_abm({
 	label = "Dripstone growth",
-	nodenames = {"vlf_dripstone:dripstone_top_tip"},
+	nodenames = {"vlf_dripstone:dripstone_down_tip"},
 	interval = 69,
 	chance = 88,
 	action = function(pos)
@@ -309,7 +309,7 @@ minetest.register_abm({
 
 minetest.register_abm({
 	label = "Dripstone filling water cauldrons, conversion from mud to clay",
-	nodenames = {"vlf_dripstone:dripstone_top_tip"},
+	nodenames = {"vlf_dripstone:dripstone_down_tip"},
 	interval = 69,
 	chance = 5.5,
 	action = function(pos)
@@ -346,7 +346,7 @@ minetest.register_abm({
 
 minetest.register_abm({
 	label = "Dripstone filling lava cauldrons",
-	nodenames = {"vlf_dripstone:dripstone_top_tip"},
+	nodenames = {"vlf_dripstone:dripstone_down_tip"},
 	interval = 69,
 	chance = 17,
 	action = function(pos)

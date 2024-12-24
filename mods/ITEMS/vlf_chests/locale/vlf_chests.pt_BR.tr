@@ -1,4 +1,4 @@
-# textdomain: vlf_chests
+# textdomain: mcl_chests
 Chest=Baú
 Inventory=Inventário
 Large Chest=Baú Largo
@@ -31,7 +31,6 @@ Red Shulker Box=Caixa de Shulker Vermelha
 Grey Shulker Box=Caixa de Shulker Cinza
 Black Shulker Box=Caixa de Shulker Preta
 Shulker Box=Caixa de Shulker
-Can be carried around with its contents=Pode ser carregada com seu conteúdo
-and @1 more=
 A shulker box is a portable container which provides 27 inventory slots for any item except shulker boxes. Shulker boxes keep their inventory when broken, so shulker boxes as well as their contents can be taken as a single item. Shulker boxes come in many different colors.=Uma caixa de shulker é um recipiente portátil que fornece um inventário com 27 espaços para qualquer item exceto outras caixas de shulker. Caixas de shulker retêm seus inventários quando quebradas, portanto caixas de shulker, assim como seu conteúdo, podem ser carregadas como um único item. Caixas de shulker vêm em diferentes cores.
 To access the inventory of a shulker box, place and right-click it. To take a shulker box and its contents with you, just break and collect it, the items will not fall out. Place the shulker box again to be able to retrieve its contents.=Para acessar o inventário de uma caixa de shulker, coloque-a e aperte-a com o botão direito. Para levar uma caixa de shulker com seu conteúdo com você, apenas quebre-a e a colete, os itens não cairão no chão. Coloque a caixa de shulker novamente para conseguir retirar seu conteúdo.
+Can be carried around with its contents=Pode ser carregada com seu conteúdo

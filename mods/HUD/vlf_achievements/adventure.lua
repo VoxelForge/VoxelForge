@@ -10,7 +10,7 @@ awards.register_achievement("vlf:adventure", {
 awards.register_achievement("vlf:voluntary_exile", {
 	title = S("Voluntary Exile"),
 	description = S("Kill a raid captain. Maybe consider staying away from the local villages for the time being..."),
-	icon = "vlf_entity_effects_effect_bad_omen.png",
+	icon = "vlf_potions_effect_bad_omen.png",
 	type = "Advancement",
 	group = "Adventure",
 	secret = true,
@@ -123,7 +123,7 @@ awards.register_achievement("vlf:lots_of_trimming", {
 awards.register_achievement("vlf:play_jukebox_in_meadows", {
 	title = S("Sound of Music"),
 	description = S("Make the Meadows come alive with the sound of music from a Jukebox"),
-	icon = "vlf_jukebox_jukebox_volumetric.png",
+	icon = "[inventorycube{vlf_jukebox_top.png{vlf_jukebox_side.png{vlf_jukebox_side.png",
 	type = "Advancement",
 	group = "Adventure",
 })
