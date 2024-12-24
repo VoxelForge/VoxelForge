@@ -26,8 +26,9 @@ local armadillo = {
 		--punch_start = 50, punch_end = 59, punch_speed = 20,
 	},
 	sounds = {},
-	walk_velocity = 0.14,
-	run_velocity = 0.14,
+	--walk_velocity = 0.14,
+	--run_velocity = 0.14,
+	movement_speed = 1.4,
 	walk_chance = 80,
 	fall_damage = 10,
 	view_range = 8,
@@ -53,7 +54,7 @@ local armadillo = {
 	end,
 }
 
-local function scare(self, dtime)
+function armadillo:do_custom(dtime)
 		local pos = self.object:get_pos()
 		local objs = minetest.get_objects_inside_radius(pos, self.view_range)
 		local changed_to_tb = false
@@ -83,8 +84,9 @@ local function scare(self, dtime)
 					if dot_product > 0 then
 						self.scared = true
 						changed_to_tb = true
-						self.walk_velocity = 0.0
-						self.run_velocity = 0.0
+						--self.walk_velocity = 0.0
+						--self.run_velocity = 0.0
+						self.movement_speed = 0.0
 						self.object:set_animation({x = 60, y = 72}, 10, 0, false)
 						minetest.after(0.25, function()
 							self.object:set_properties({textures = {"mobs_mc_armadillo-hiding.png"}})
@@ -94,8 +96,9 @@ local function scare(self, dtime)
 				elseif lua_entity then
 					self.scared = true
 					changed_to_tb = true
-					self.walk_velocity = 0.0
-					self.run_velocity = 0.0
+					--self.walk_velocity = 0.0
+					--self.run_velocity = 0.0
+					self.movement_speed = 0.0
 					break
 				end
 			end
@@ -105,8 +108,9 @@ local function scare(self, dtime)
 			--self.object:set_animation({x = 76, y = 78}, 10, 0, false)
 			minetest.after(check_delay, function()
 				self.scared = false
-				self.walk_velocity = 0.0
-				self.run_velocity = 0.0
+				--self.walk_velocity = 0.0
+				--self.run_velocity = 0.0
+				self.movement_speed = 0.0
 				self.object:set_animation({x = 96, y = 156}, 10, 0, false)
 			end)
 			minetest.after(revert_delay, function()
@@ -119,8 +123,9 @@ local function scare(self, dtime)
 					--self.state = "walk"
 					minetest.after(1, function()
 						self.object:set_properties({textures = {"mobs_mc_armadillo.png"}})
-						self.walk_velocity = 0.14
-						self.run_velocity = 0.14
+						--self.walk_velocity = 0.14
+						--self.run_velocity = 0.14
+						self.movement_speed = 1.4
 						self.state = "walk"
 						self.animation = {
 							stand_start = 220, stand_end = 221, stand_speed = 0,
@@ -130,10 +135,10 @@ local function scare(self, dtime)
 				end
 			end)
 		end
-		--[[self.egg_timer = (self.egg_timer or math.random(300, 600)) - dtime
+		self.egg_timer = (self.egg_timer or math.random(300, 600)) - dtime
 		if self.egg_timer > 0 then
 			return
-		end]]
+		end
 		self.egg_timer = nil
 		local pos = self.object:get_pos()
 		minetest.add_item(pos, "vlf_mobitems:armadillo_scute")

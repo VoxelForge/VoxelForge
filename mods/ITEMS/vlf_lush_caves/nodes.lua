@@ -310,10 +310,13 @@ minetest.register_node("vlf_lush_caves:spore_blossom", {
 	description = S("Spore blossom"),
 	_doc_items_longdesc = S("Spore blossom"),
 	_doc_items_hidden = false,
-	tiles = {"vlf_lush_caves_spore_blossom.png"},
-	drawtype = "plantlike",
-	param2type = "meshoptions",
-	place_param2 = 4,
+	--tiles = {"vlf_lush_caves_spore_blossom.png"},
+	--drawtype = "plantlike",
+	drawtype = "mesh",
+	mesh = "spore_blossom.obj",
+	--param2type = "meshoptions",
+	tiles = {"spore_blossom_base.png", "blank.png", "spore_blossom.png"},
+	--place_param2 = 4,
 	groups = {handy = 1, plant = 1, deco_block = 1},
 	sounds = vlf_sounds.node_sound_dirt_defaults(),
 	selection_box = {
@@ -323,6 +326,7 @@ minetest.register_node("vlf_lush_caves:spore_blossom", {
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
 	node_placement_prediction = "",
+	use_texture_alpha = "clip",
 	on_place = vlf_util.generate_on_place_plant_function(function(place_pos)
 		local above = vector.offset(place_pos,0,1,0)
 		local snn = minetest.get_node_or_nil(above).name
