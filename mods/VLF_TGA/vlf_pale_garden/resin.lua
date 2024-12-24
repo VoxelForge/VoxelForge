@@ -25,9 +25,9 @@ minetest.register_node("vlf_pale_garden:chiseled_resin_bricks", {
 	_vlf_hardness = 1.5,
 })
 
-vlf_walls.register_wall_def("vlf_pale_garden:resin_brick_wall",{
+vlf_walls.register_wall_def("vlf_pale_garden:resinbrickwall",{
 	source = "vlf_pale_garden:resin_bricks",
-	description = S("Cobblestone Wall"),
+	description = S("Resin Brick Wall"),
 	tiles = {"resin_bricks.png"},
 	_vlf_stonecutter_recipes = { "vlf_pale_garden:resin_bricks" },
 })

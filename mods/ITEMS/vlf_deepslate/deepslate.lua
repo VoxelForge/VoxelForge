@@ -65,7 +65,7 @@ vlf_deepslate.register_deepslate_ore("redstone_lit", S("Lit Deepslate Redstone O
 	_vlf_silk_touch_drop = { "vlf_deepslate:deepslate_with_redstone" },
 	_vlf_cooking_output = nil,
 })
---vlf_deepslate.register_deepslate_ore("copper", S("Deepslate Copper Ore"), {_vlf_cooking_output = "vlf_copper:copper_ingot"}, "vlf_copper:stone_with_copper")
+vlf_deepslate.register_deepslate_ore("copper", S("Deepslate Copper Ore"), {_vlf_cooking_output = "vlf_copper:copper_ingot"}, "vlf_copper:copper_ore")
 
 register_deepslate_variant("cobbled", {
 	node = {
