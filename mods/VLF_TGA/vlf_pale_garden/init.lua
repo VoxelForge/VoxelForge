@@ -88,12 +88,12 @@ local spawn_particlespawner = {
 vlf_trees.register_wood("pale_oak",{
 	readable_name=S("Pale"),
 	sign_color="#E3D6CF",
-	sapling=true,
+	--sapling=true,
 	tree_schems_2x2 = {
 		{file = schempath.."/schems/pale_oak_tree_1.mts", offset = vector.new(1,0,1)},
 		{file = schempath.."/schems/pale_oak_tree_2.mts",},
 	},
-	tree = { 
+	tree = {
 		sunlight_propagates = true,
 		tiles = {"pale_oak_log_top.png", "pale_oak_log_top.png","pale_oak_log.png" }
 	},
@@ -392,7 +392,7 @@ minetest.register_node("vlf_pale_garden:pale_hanging_moss_tip", {
 		fixed = {-0.5, -0.5, -0.5, 0.5, 0.5, 0.5}
 	},
 	groups = {handy = 1, plant = 1, vinelike_node = 2, dig_by_water = 1, destroy_by_lava_flow = 1, dig_by_piston = 1},
- 	sounds = vlf_sounds.node_sound_leaves_defaults(),
+	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	_vlf_blast_resistance = 0,
 	_vlf_blast_hardness = 0,
 	drop = "",
@@ -420,7 +420,7 @@ minetest.register_node("vlf_pale_garden:pale_hanging_moss_tip", {
 	end,
 	_on_bone_meal = function(itemstack, placer, pointed_thing, pos)
 		minetest.swap_node(pos,{name="vlf_pale_garden:pale_hanging_moss"})
-		pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
+		local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
 		minetest.set_node(pos_below,{name="vlf_pale_garden:pale_hanging_moss_tip"})
 		return true
 	end,
@@ -436,10 +436,10 @@ minetest.register_abm({
         local below_pos = {x = pos.x, y = pos.y - 1, z = pos.z}
         local below_node = minetest.get_node(below_pos)
 
-        if below_node.name == "air" or 
-           (below_node.name ~= "vlf_pale_garden:pale_hanging_moss" and 
+	if below_node.name == "air" or
+           (below_node.name ~= "vlf_pale_garden:pale_hanging_moss" and
             below_node.name ~= "vlf_pale_garden:pale_hanging_moss_tip") then
-            	minetest.set_node(pos, {name = "vlf_pale_garden:pale_hanging_moss_tip"})
+		minetest.set_node(pos, {name = "vlf_pale_garden:pale_hanging_moss_tip"})
         end
     end
 })
@@ -455,7 +455,7 @@ minetest.register_abm({
         local below_node = minetest.get_node(below_pos)
 
         if below_node.name == "vlf_pale_garden:pale_hanging_moss" or below_node.name == "vlf_pale_garden:pale_hanging_moss_tip" then
-            	minetest.set_node(pos, {name = "vlf_pale_garden:pale_hanging_moss"})
+		minetest.set_node(pos, {name = "vlf_pale_garden:pale_hanging_moss"})
         end
     end
 })
@@ -517,14 +517,14 @@ local function check_creaking_heart_activation(pos)
             return true
         end
     end
-    
+
     -- Check above and below nodes
     if valid_blocks[front_node.name] and valid_blocks[back_node.name] then
         if front_node.param2 == facedir and back_node.param2 == facedir then
             return true
         end
     end
-    
+
     return false
 end
 
@@ -600,7 +600,7 @@ minetest.register_abm({
 		-- Only attempt to spawn if it's night and a mob hasn't already spawned
 		if (time_of_day >= 0.8 or time_of_day <= 0.2) and not has_spawned then
 			local spawn_pos = nil
-			
+
 			for dy = 0, -10, -1 do
 				for dx = -5, 5 do
 					for dz = -5, 5 do
@@ -783,10 +783,10 @@ minetest.register_abm({
     initial_properties = {
 		pointable = false,
 		visual = "mesh",
-        	mesh = "plantlike.obj",
+		mesh = "plantlike.obj",
 		visual_size = {x = 10, y = 10},
-        	textures = {"open_eyeblossom_emissive.png"},
-        	glow = 15,
+		textures = {"open_eyeblossom_emissive.png"},
+		glow = 15,
 	},
         on_step = function(self, dtime)
             local pos = self.object:get_pos()
@@ -801,10 +801,10 @@ minetest.register_entity("vlf_pale_garden:eyeblossom_pot_emissive", {
 	initial_properties = {
 		pointable = false,
 		visual = "mesh",
-        	mesh = "plantlike.obj",
-       		visual_size = {x = 10, y = 10},
-        	textures = { "open_eyeblossom_emissive.png" },
-        	glow = 15,
+		mesh = "plantlike.obj",
+		visual_size = {x = 10, y = 10},
+		textures = { "open_eyeblossom_emissive.png" },
+		glow = 15,
 	},
         on_step = function(self, dtime)
             local pos = self.object:get_pos()
@@ -814,8 +814,8 @@ minetest.register_entity("vlf_pale_garden:eyeblossom_pot_emissive", {
                 return
             end
         end,
-    })
-    
+})
+
 minetest.register_abm({
     label = "Bloom closed eyeblossoms",
     nodenames = {"vlf_pale_garden:closed_eyeblossom"},
@@ -902,36 +902,3 @@ minetest.register_abm({
         end
     end,
 })
-
-minetest.register_on_generated(function(minp, maxp, seed)
-    local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
-    if not vm then
-        return
-    end
-
-    local data = vm:get_data()
-    local light_data = vm:get_light_data()
-    local area = VoxelArea:new{MinEdge = emin, MaxEdge = emax}
-
-    local light_threshold = 4
-    local light_value = 4
-
-    -- Iterate over all positions in the chunk
-    for z = minp.z, maxp.z do
-        for y = minp.y, maxp.y do
-            for x = minp.x, maxp.x do
-                local vi = area:index(x, y, z) -- Get the voxel index
-                local current_light = light_data[vi]
-                if current_light < light_threshold then
-                    -- Set the new light value
-                    light_data[vi] = light_value
-                end
-            end
-        end
-    end
-
-    -- Write the updated light data back
-    vm:set_light_data(light_data)
-    vm:write_to_map()
-    vm:update_liquids()
-end)

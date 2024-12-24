@@ -244,7 +244,7 @@ end
 --[[function creaking_transient:ai_step (dtime)
 	mob_class.ai_step (self, dtime)
 	local t = self.particle
-	
+
 	if t == true then
 		local pos = self.object:get_pos()
 		particles.trail(pos, self._heart_pos, "#606060", "in", 1)

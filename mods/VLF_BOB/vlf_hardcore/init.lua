@@ -38,9 +38,6 @@ end)
 
 minetest.register_on_joinplayer(function(player)
     local meta = player:get_meta()
-    local player_name = player:get_player_name()
-
-    -- Assign hardcore meta if not already set
     if not meta:get_string("gamemode") or meta:get_string("gamemode") == "" then
         meta:set_string("gamemode", "creative")
     end

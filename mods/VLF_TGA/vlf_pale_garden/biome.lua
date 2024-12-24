@@ -117,8 +117,8 @@ minetest.register_biome({
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
-	
-	vlf_structures.register_structure("pale_moss", {
+
+vlf_structures.register_structure("pale_moss", {
 	place_on = {"vlf_core:dirt_with_grass"},
 	sidelen = 80,
 	noise_params = {
@@ -133,12 +133,7 @@ minetest.register_biome({
 	y_min = 1,
 	y_max = vlf_vars.mg_overworld_max,
 	place_func = function(pos)
-		local width  = math.random(6) - 3
-		local length = math.random(6) - 3
-		local depth  = math.random(4)
 
-		local solid_nodes = {}
-		local node_name
 		local pale_oak_found = false
 		local moss_positions = {}
 
@@ -188,19 +183,19 @@ minetest.register_biome({
 })
 
 minetest.register_decoration({
-				deco_type = "simple",
-				place_on = {"group:grass_block_no_snow", "vlf_core:dirt"},
-				sidelen = 80,
-				noise_params= {
-					offset = 0.0008*40,
-					scale = 0.003,
-					spread = {x = 100, y = 100, z = 100},
-					seed = seed,
-					octaves = 3,
-					persist = 0.6,
-				},
-				y_min = 1,
-				y_max = vlf_vars.mg_overworld_max,
-				biomes = {"PaleGarden"},
-				decoration = "vlf_pale_garden:closed_eyeblossom",
-			})
+	deco_type = "simple",
+	place_on = {"group:grass_block_no_snow", "vlf_core:dirt"},
+	sidelen = 80,
+	noise_params= {
+		offset = 0.0008*40,
+		scale = 0.003,
+		spread = {x = 100, y = 100, z = 100},
+		seed = 575663,
+		octaves = 3,
+		persist = 0.6,
+	},
+	y_min = 1,
+	y_max = vlf_vars.mg_overworld_max,
+	biomes = {"PaleGarden"},
+	decoration = "vlf_pale_garden:closed_eyeblossom",
+})

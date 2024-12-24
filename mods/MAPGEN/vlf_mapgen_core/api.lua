@@ -133,3 +133,35 @@ end
 function vlf_mapgen_core.get_block_seed(pos)
 	return ((seed + minetest.hash_node_position(pos)) * 0x9e3779b1) % 0x100000000
 end
+
+minetest.register_on_generated(function(minp, maxp, seed)
+    local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
+    if not vm then
+        return
+    end
+
+    local light_data = vm:get_light_data()
+    local area = VoxelArea:new{MinEdge = emin, MaxEdge = emax}
+
+    local light_threshold = 4
+    local light_value = 4
+
+    -- Iterate over all positions in the chunk
+    for z = minp.z, maxp.z do
+        for y = minp.y, maxp.y do
+            for x = minp.x, maxp.x do
+                local vi = area:index(x, y, z) -- Get the voxel index
+                local current_light = light_data[vi]
+                if current_light < light_threshold then
+                    -- Set the new light value
+                    light_data[vi] = light_value
+                end
+            end
+        end
+    end
+
+    -- Write the updated light data back
+    vm:set_light_data(light_data)
+    vm:write_to_map()
+    vm:update_liquids()
+end)
