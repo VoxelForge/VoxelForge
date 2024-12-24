@@ -21,7 +21,6 @@
 -- Much of the mesh generation code in this file is derived from Minetest's
 -- MapblockMeshGenerator class. See minetest/src/client/content_mapblock.cpp.
 
-local S = meshport.S
 local vec = vector.new -- Makes defining tables of vertices a little less painful.
 
 --[[
@@ -575,8 +574,10 @@ local function create_mesh_node(nodeDef, param2)
 		if not meshport.obj_paths[meshName] then
 			if string.lower(string.sub(meshName, -4)) ~= ".obj" then
 				--meshport.log(playerName, "warning", S("Mesh \"@1\" is not supported.", meshName))
+				minetest.log("warning", "Mesh \"@1\" is not supported.")
 			else
 				--meshport.log(playerName, "warning", S("Mesh \"@1\" could not be found.", meshName))
+				minetest.log("warning", "Mesh \"@1\" could not be found.")
 			end
 
 			-- Cache a blank faces object so the player isn't warned again.

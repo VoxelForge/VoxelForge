@@ -32,7 +32,7 @@ minetest.register_globalstep(function(dtime)
             local controls = player:get_player_control()
             local attached_entity = player:get_attach()
             set_spectating_mode(player)
-            
+
             if controls.RMB and attached_entity then
                 player:set_detach()
                 pending_attach[player:get_player_name()] = nil
@@ -41,7 +41,7 @@ minetest.register_globalstep(function(dtime)
                 local look_dir = player:get_look_dir()
                 local end_pos = vector.add(pos, vector.multiply(look_dir, 10))
                 local ray = minetest.raycast(pos, end_pos, true, false)
-                
+
                 for pointed_thing in ray do
                     if pointed_thing.type == "object" then
                         local entity = pointed_thing.ref:get_luaentity()
@@ -54,7 +54,7 @@ minetest.register_globalstep(function(dtime)
                 end
             end
         end
-        
+
         if pending_attach[player:get_player_name()] then
             local target_entity = pending_attach[player:get_player_name()]
             if target_entity and target_entity:get_luaentity() then
@@ -111,7 +111,6 @@ minetest.register_globalstep(function(dtime)
         if spectator and target then
             local t_pos = target:get_pos()
             local f_pos = {x=t_pos.x, y=t_pos.y+0.5, z=t_pos.z}
-            local target_look_dir = target:get_look_dir()
 
             spectator:set_pos(f_pos)
 
