@@ -1,31 +1,57 @@
-# Mineclonia
+# VoxelForge
 
-[![ContentDB](https://content.minetest.net/packages/ryvnf/mineclonia/shields/downloads/)](https://content.minetest.net/packages/ryvnf/mineclonia/)
-[![Translation status](https://translate.codeberg.org/widget/mineclonia/svg-badge.svg)](https://translate.codeberg.org/engage/mineclonia/)
+[![ContentDB](https://content.minetest.net/packages/VoxelForge/voxelforge/shields/downloads/)](https://content.minetest.net/packages/VoxelForge/voxelforge/)
+[![Luacheck](https://github.com/VoxelForge/VoxelForge/actions/workflows/luacheck.yml/badge.svg)](https://github.com/VoxelForge/VoxelForge/actions/workflows/luacheck.yml)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/VoxelForge/VoxelForge)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/VoxelForge/VoxelForge?include_prereleases)](https://github.com/VoxelForge/VoxelForge/releases/latest)
+[![GitHub issues](https://img.shields.io/github/issues/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/issues)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/VoxelForge/VoxelForge)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/pulls)
+[![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/pulls-closed)
+[![GitHub](https://img.shields.io/github/license/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/blob/master/LICENSE)
 
-An unofficial Minecraft-like game for Luanti (formerly Minetest). Fork of MineClone 2 with focus
-on stability, multiplayer performance and features. For information about
-migrating from MineClone 2 to Mineclonia, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
+___________________________________________________________________________________________________________________________________________________________________________________
 
-Version: 0.109.0
+An unofficial Minecraft-like game for Minetest. Fork of Mineclonia with focus
+on stability, performance and features. For information about
+migrating from Voxelibre or Mineclonia to VoxelForge, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
 
-### Differences from MineClone 2 (now VoxeLibre)
-* Overworld depth increased from 64 to 128 nodes
-* Improved nether portals
-* Improved leaf decay
-* Improved villages
-* Wandering traders and trader llamas
-* Suspicious nodes, pottery sherds and decorated pots
-* Conduits
-* Deep dark biome and ancient hermitage (structure corresponding to ancient city)
-* Functional loom to apply banner patterns
-* Lush caves biome
-* Cherry grove biome
-* No in-game music, twice as small compared to MineClone 2
-* No hamburgers (but villagers follow dropped food as in Minecraft)
-* No renamed mobs (e.g. Creepers remain Creepers, not Stalkers)
-* Overhauled mob pathfinding, physics, and AI
-* More features but almost 10k lines of code less
+Version: Voxelforge Beta 0.5.0
+
+### Differences from Mineclonia
+* More minecraft like font.
+* different Jukebox music.
+* better structure platforms.
+* bubble columns.
+* Different Chat hud.
+* Vaults.
+* Bundles.
+* 1.21 status effects.
+* Tripwire.
+* FireFlies.
+* Dyable Wolf Armor.
+
+### Differences from Voxelibre
+* Mace
+* More minecraft like font.
+* Different Jukebox music.
+* Better structure platforms.
+* bubble columns.
+* Overworld depth increased from 64 to 128 nodes.
+* Improved nether portals.
+* Improved leaf decay.
+* Improved villages.
+* Wandering traders and trader llamas.
+* Suspicious nodes, pottery shreds and decorated pots.
+* Conduits.
+* Deep dark biome and ancient hermitage (structure corresponding to ancient city).
+* Functional loom to apply banner patterns.
+* Lush caves biome.
+* Cherry grove biome.
+* No hamburgers.
+* FireFlies.
+* Dyable Wolf Armor.
+* Vaults.
 
 ### Gameplay
 You start in a randomly-generated world made entirely of cubes. You can explore
@@ -94,36 +120,36 @@ Use the `/giveme` chat command to obtain them. See the in-game help for
 an explanation.
 
 ## Installation
-This game requires [Luanti](http://minetest.net) to run (version 5.6 or
-later). So you need to install Luanti first. Only stable versions of Luanti
-are officially supported. There is no support for running Mineclonia in
-development versions of Luanti.
+This game requires [Minetest](http://minetest.net) to run (version 5.5.1 or
+later). So you need to install Minetest first. Only stable versions of Minetest
+are officially supported. There is no support for running VoxelForge in
+development versions of Minetest. If you have issues in dev versions, 
+then we will attempt to reproduce them in stable versions, 
+and if we can't then the issue will be closed, 
+and it will be looked into at the next release.
 
-To install Mineclonia (if you haven't already), move this directory into the
-“games” directory of your Luanti data directory. Consult the help of
-Luanti to learn more.
+To install VoxelForge (if you haven't already), move this directory into the
+“games” directory of your Minetest data directory. Consult the help of
+Minetest to learn more.
 
 ## Useful links
-The Mineclonia repository is hosted at [Codeberg](https://codeberg.org).
+The VoxelForge repository is hosted at [Github](https://github.com).
 To contribute or report issues, head there.
 
-* Codeberg: <https://codeberg.org/mineclonia/mineclonia>
-* ContentDB: <https://content.minetest.net/packages/ryvnf/mineclonia/>
-* Discord:  https://discord.gg/WAwpPWHTXZ
-* Matrix: #mineclonia:matrix.org
+* Github: <https://github/VoxelForge/VoxelForge>
+* ContentDB: <https://content.minetest.net/packages/VoxelForge/voxelforge>
 
 ## Project description
-The main goal of **Mineclonia** is to be a stable and performant clone of
-Minecraft released as free software.
+The main goal of **VoxelForge** is to be a very close but stable and performant 
+Minecraft clone. released as free software.
 
-* Minecraft is aimed to be cloned as well as Luanti currently permits without
+* We try to clone Minecraft as well as Minetest currently permits without
   resorting to hacks which are too heavyweight or complicated to maintain
-* Cloning the gameplay has highest priority
-* Cloning the interface has low priority. It will only be roughly imitated
-* Mineclonia will use different graphics and sounds, but with a similar style
+* Cloning the gameplay has highest priority. And overall looks
+* VoxelForge will use different graphics and sounds, but with a similar style
 
 ## Completion status
-This game is currently in **beta** stage.
+This game is currently in **Beta** stage.
 It is playable, but not yet feature-complete.
 Backwards-compatibility is not guaranteed, updating your world might cause bugs
 and things to behave differently.
@@ -186,7 +212,7 @@ Bonus features (not found in Minecraft):
 * Built-in crafting guide which shows you crafting and smelting recipes
 * In-game help system containing extensive help about gameplay basics, blocks,
   items and more
-* Fully moddable (thanks to Luanti's powerful Lua API)
+* Fully moddable (thanks to Minetest's powerful Lua API)
 * Bookshelves can be used to store books
 * Nether portals can be created with custom shapes
 * New blocks and items:
@@ -215,14 +241,15 @@ Technical differences from Minecraft:
 * Different music for jukebox
 * Different textures (Pixel Perfection)
 * Different sounds (various sources)
-* Different engine (Luanti)
+* Different engine (Minetest)
 * Different easter eggs
 
-… and finally, Mineclonia is free software (“free” as in “freedom”)!
+… and finally, VoxelForge is free software
 
 ## Other readme files
 * [LICENSE.txt](../../../src/branch/main/LICENSE.txt): The GPLv3 license text
 * [CONTRIBUTING.md](../../../src/branch/main/CONTRIBUTING.md): Information for those who want to contribute
-* [API.md](../../../src/branch/main/API.md): For Luanti modders who want to mod this game
+* [API.md](../../../src/branch/main/API.md): For Minetest modders who want to mod this game
 * [LEGAL.md](../../../src/branch/main/LEGAL.md): Legal information
 * [CREDITS.md](../../../src/branch/main/CREDITS.md): List of everyone who contributed
+# VLF
