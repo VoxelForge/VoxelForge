@@ -135,7 +135,7 @@ function vlf_buttons.register_button(basename, def)
 		_on_copper_golem_hit = function(pos)
 			local node = minetest.get_node(pos)
 			if node.name == "vlf_buttons:button_copper_off" then
-				mesecon.push_button(pos, node)
+				vlf_buttons.push_button(pos, node)
 				return true
 			else
 				return
