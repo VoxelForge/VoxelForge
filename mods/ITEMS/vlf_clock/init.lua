@@ -1,15 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
-
---[[
-  vlf_clock, renew of the renew of the vlf_clock mod
-
-  Original from Echo, here: http://forum.minetest.net/viewtopic.php?id=3795
-]]--
-
 vlf_clock = {}
-
--- This is the itemstring of the default clock item. It is used for the default inventory image, help entries, and the like
-vlf_clock.stereotype = "vlf_clock:clock"
 
 vlf_clock.old_time = -1
 
@@ -20,7 +10,6 @@ local random_timer = 0.0
 local random_timer_trigger = 1.0 -- random clock spinning tick in seconds. Increase if there are performance problems
 local random_frame = math.random(0, clock_frames-1)
 
--- Image of all possible faces
 vlf_clock.images = {}
 for frame=0, clock_frames-1 do
 	local sframe = tostring(frame)
@@ -38,42 +27,31 @@ function vlf_clock.get_clock_frame()
 	local t = clock_frames * minetest.get_timeofday()
 	t = round(t)
 	if t == clock_frames then t = 0 end
-	return tostring(t)
+	return tostring((t + (clock_frames / 2)) % clock_frames)
 end
 
-local doc_mod = minetest.get_modpath("doc")
-
--- Register items
-function vlf_clock.register_item(name, image, creative, frame)
-	local g = 1
-	if creative then
-		g = 0
+minetest.register_craftitem("vlf_clock:clock", {
+	description = S("Clock"),
+	_tt_help = S("Displays the time of day in the Overworld"),
+	_doc_items_longdesc = S("Clocks are tools which shows the current time of day in the Overworld."),
+	_doc_items_usagehelp = S("The clock contains a rotating disc with a sun symbol (yellow disc) and moon symbol and a little “pointer” which shows the current time of day by estimating the real position of the sun and the moon in the sky. Noon is represented by the sun symbol and midnight is represented by the moon symbol."),
+	inventory_image = vlf_clock.images[1],
+	groups = { tool=1, clock = 1, disable_repair=1 },
+	wield_image = "",
+	_on_entity_step = function(self, dtime)
+		self._clock_timer = (self._clock_timer or 0) - dtime
+		if self._clock_timer > 0 then return end
+		self._clock_timer = 5
+		self.object:set_properties({
+			visual = "upright_sprite",
+			visual_size = { x = 0.55, y = 0.55 },
+			textures = {
+				vlf_clock.images[vlf_clock.get_clock_frame() + 1],
+				vlf_clock.images[vlf_clock.get_clock_frame() + 1]
+			},
+		})
 	end
-	local use_doc = name == vlf_clock.stereotype
-	if doc_mod and not use_doc then
-		doc.add_entry_alias("craftitems", vlf_clock.stereotype, "craftitems", name)
-	end
-	local longdesc, usagehelp, tt
-	if use_doc then
-		longdesc = S("Clocks are tools which shows the current time of day in the Overworld.")
-		usagehelp = S("The clock contains a rotating disc with a sun symbol (yellow disc) and moon symbol and a little “pointer” which shows the current time of day by estimating the real position of the sun and the moon in the sky. Noon is represented by the sun symbol and midnight is represented by the moon symbol.")
-		tt = S("Displays the time of day in the Overworld")
-	end
-	minetest.register_craftitem(name, {
-		description = S("Clock"),
-		_tt_help = tt,
-		_doc_items_create_entry = use_doc,
-		_doc_items_longdesc = longdesc,
-		_doc_items_usagehelp = usagehelp,
-		inventory_image = image,
-		groups = {not_in_creative_inventory=g, tool=1, clock=frame, disable_repair=1},
-		wield_image = "",
-		_on_set_item_entity = function(itemstack, entity)
-			entity.is_clock = true
-			return itemstack
-		end,
-	})
-end
+})
 
 -- This timer makes sure the clocks get updated from time to time regardless of time_speed,
 -- just in case some clocks in the world go wrong
@@ -83,13 +61,14 @@ minetest.register_globalstep(function(dtime)
 	local now = vlf_clock.get_clock_frame()
 	force_clock_update_timer = force_clock_update_timer + dtime
 	random_timer = random_timer + dtime
+
 	-- This causes the random spinning of the clock
 	if random_timer >= random_timer_trigger then
 		random_frame = (random_frame + math.random(-4, 4)) % clock_frames
 		random_timer = 0
 	end
 
-	if vlf_clock.old_time == now and force_clock_update_timer < 60 then
+	if vlf_clock.old_time == now and force_clock_update_timer < 1 then
 		return
 	end
 	force_clock_update_timer = 0
@@ -98,35 +77,35 @@ minetest.register_globalstep(function(dtime)
 	vlf_clock.random_frame = random_frame
 
 	for player in vlf_util.connected_players() do
-		for s, stack in pairs(player:get_inventory():get_list("main")) do
-			local frame
-			-- Clocks do not work in certain zones
-			if not vlf_worlds.clock_works(player:get_pos()) then
-				frame = random_frame
-			else
-				frame = now
-			end
+		local inv = player:get_inventory()
+		for s, stack in pairs(inv:get_list("main")) do
+			if minetest.get_item_group(stack:get_name(), "clock") > 0 then
+				stack:set_name("vlf_clock:clock") -- compat to effectively rename clocks - aliases do not do this.
+				local frame
+				-- Clocks do not work in certain zones
+				if not vlf_worlds.clock_works(player:get_pos()) then
+					frame = random_frame
+				else
+					frame = now
+				end
 
-			local count = stack:get_count()
-			if stack:get_name() == vlf_clock.stereotype then
-				player:get_inventory():set_stack("main", s, "vlf_clock:clock_"..frame.." "..count)
-			elseif minetest.get_item_group(stack:get_name(), "clock") ~= 0 then
-				player:get_inventory():set_stack("main", s, "vlf_clock:clock_"..frame.." "..count)
+				local m = stack:get_meta()
+				m:set_string("wield_image", vlf_clock.images[frame + 1])
+				m:set_string("inventory_image", vlf_clock.images[frame + 1])
+				inv:set_stack("main", s, stack)
 			end
 		end
 	end
 end)
 
--- Immediately set correct clock time after crafting
 minetest.register_on_craft(function(itemstack)
-	if itemstack:get_name() == vlf_clock.stereotype then
-		itemstack:set_name("vlf_clock:clock_"..vlf_clock.get_clock_frame())
+	if itemstack:get_name() == "vlf_clock:clock" then
+		itemstack:get_meta():set_string("inventory_image", vlf_clock.images[vlf_clock.get_clock_frame()])
 	end
 end)
 
--- Clock recipe
 minetest.register_craft({
-	output = vlf_clock.stereotype,
+	output = "vlf_clock:clock",
 	recipe = {
 		{"", "vlf_core:gold_ingot", ""},
 		{"vlf_core:gold_ingot", "vlf_redstone:redstone", "vlf_core:gold_ingot"},
@@ -134,17 +113,7 @@ minetest.register_craft({
 	}
 })
 
--- Clock tool
-vlf_clock.register_item(vlf_clock.stereotype, vlf_clock.images[1], true, 1)
-
--- Faces
 for a=0,clock_frames-1,1 do
-	local b = a
-	if b > 31 then
-		b = b - 32
-	else
-		b = b + 32
-	end
-	vlf_clock.register_item("vlf_clock:clock_"..tostring(a), vlf_clock.images[b+1], false, a+1)
+	core.register_alias("vlf_clock:clock_"..tostring(a), "vlf_clock:clock")
 end
 

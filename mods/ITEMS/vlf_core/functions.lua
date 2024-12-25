@@ -294,7 +294,7 @@ minetest.register_abm({
 			if minetest.get_item_group(n2.name, "grass_block") ~= 0 then
 				n2 = vlf_core.get_grass_block_type(pos)
 			end
-			minetest.swap_node(pos, {name=n2.name})
+			minetest.swap_node(pos, n2)
 
 			-- If this was mycelium, uproot plant above
 			if n2.name == "vlf_core:mycelium" then
@@ -676,6 +676,7 @@ minetest.register_abm({
 	interval = 5,
 	chance = 10,
 	action = function(pos)
+		if core.get_node(vector.offset(pos, 0, -1, 0)).name ~= "air" then return end
 		minetest.after(0.1 + math.random() * 1.4, function()
 			local pt = table.copy(crobby_particle)
 			pt.size = 1.3 + math.random() * 1.2

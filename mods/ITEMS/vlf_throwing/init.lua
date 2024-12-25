@@ -38,7 +38,9 @@ end
 
 -- Throw item
 function vlf_throwing.get_player_throw_function(_, velocity)
-	local function func(item, player, _)
+local function func(item, player, pointed_thing)
+		local rc = vlf_util.call_on_rightclick(item, player, pointed_thing)
+		if rc then return rc end
 		local playerpos = player:get_pos()
 		local dir = player:get_look_dir()
 		vlf_throwing.throw(item, {x=playerpos.x, y=playerpos.y+1.5, z=playerpos.z}, dir, velocity, player:get_player_name())

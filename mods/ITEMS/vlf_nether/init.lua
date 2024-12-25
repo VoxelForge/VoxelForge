@@ -384,6 +384,25 @@ minetest.register_craft({
     }
 })
 
+minetest.register_craftitem("vlf_nether:netherite_upgrade_template", {
+	description	  = S("Netherite Upgrade Template"),
+	--_tt_help = S("Netherite Upgrade Template").."\n\n"..
+	minetest.colorize(vlf_colors.GRAY, S("Applies to:")).."\n"..minetest.colorize(vlf_colors.BLUE, " "..S("Diamond Armor")).."\n"..
+	minetest.colorize(vlf_colors.BLUE, " "..S("Diamond Tools")).."\n"..
+	minetest.colorize(vlf_colors.GRAY, S("Ingredients:")).."\n"..minetest.colorize(vlf_colors.BLUE, " "..S("Netherite Ingot")),
+	inventory_image  = "vlf_nether_netherite_ugrade_template.png",
+	groups = { upgrade_template  = 1 },
+})
+
+minetest.register_craft({
+    output = "vlf_nether:netherite_upgrade_template 2",
+    recipe = {
+        {"vlf_core:diamond", "vlf_nether:netherite_upgrade_template","vlf_core:diamond"},
+        {"vlf_core:diamond", "vlf_nether:netherrack","vlf_core:diamond"},
+        {"vlf_core:diamond","vlf_core:diamond","vlf_core:diamond"},
+    }
+})
+
 minetest.register_craft({
 	output = "vlf_nether:quartz_block",
 	recipe = {

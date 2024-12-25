@@ -93,6 +93,7 @@ function kelp.is_falling(pos, node, is_falling, pos_bottom, node_bottom, def_bot
 	local pos_bottom = pos_bottom or {x = pos.x, y = pos.y - 1, z = pos.z}
 	-- get_node_or_nil: Only fall if node below is loaded
 	local node_bottom = node_bottom or minetest.get_node_or_nil(pos_bottom)
+	if not node_bottom then return end
 	local nodename_bottom = node_bottom.name
 	local def_bottom = def_bottom or node_bottom and minetest.registered_nodes[nodename_bottom]
 	if not def_bottom then

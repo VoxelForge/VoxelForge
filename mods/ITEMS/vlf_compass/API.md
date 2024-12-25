@@ -17,4 +17,13 @@ current compass position.
 -- Returns partial itemname of a compass with needle direction matching compass position.
 -- Legacy compatibility function for mods using older api.
 
-
+##vlf_compass.register_compass(name, definition)
+### Compass definition:
+{
+    name = "mycompass",
+    name_fmt = "",
+    overrides = { --item definition overrides e.g. description etc.
+        _vlf_compass_img_fmt = "", --format string to build the item image from a compass frame number
+        _vlf_compass_update = function(stack, player) end, --function to update the compass item, will be run regularily in player inventories, should return the updated itemstack
+    }
+}
