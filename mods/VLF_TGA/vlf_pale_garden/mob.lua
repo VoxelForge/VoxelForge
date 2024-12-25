@@ -221,7 +221,7 @@ function creaking_transient:ai_step(dtime)
     mob_class.ai_step(self, dtime)
 
     local t = self.particle
-    if t == true then
+    if t == true and self._heart_pos ~= nil then
         local current_time = minetest.get_us_time()
 
         -- Check if the 5-second timer has elapsed
@@ -237,6 +237,9 @@ function creaking_transient:ai_step(dtime)
         particles.trail(pos, self._heart_pos, "#606060", "in", 1)
         particles.trail(self._heart_pos, pos, "#EC7214", "out", 1)
         self.particle = false
+        if self._heart_pos == nil then
+        	self.object:remove()
+        end
     end
 end
 
