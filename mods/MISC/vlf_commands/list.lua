@@ -6,7 +6,7 @@ minetest.register_chatcommand("list", {
 	privs = {},
 	func = function(name)
 		local players = ""
-		for _, player in ipairs(minetest.get_connected_players()) do
+		for player in vlf_util.connected_players() do
 			players = players..player:get_player_name().."\n"
 		end
 		minetest.chat_send_player(name, players)

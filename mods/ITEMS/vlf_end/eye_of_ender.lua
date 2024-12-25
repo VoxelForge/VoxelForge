@@ -14,7 +14,7 @@ minetest.register_entity("vlf_end:ender_eye", {
 	get_staticdata = function(self)
 		return tostring(self._age)
 	end,
-	on_activate = function(self, staticdata, dtime_s)
+	on_activate = function(self, staticdata)
 		local age = tonumber(staticdata)
 		if type(age) == "number" then
 			self._age = age
@@ -75,7 +75,7 @@ minetest.register_entity("vlf_end:ender_eye", {
 })
 
 -- Throw eye of ender to make it fly to the closest stronghold
-local function throw_eye(itemstack, user, pointed_thing)
+local function throw_eye(itemstack, user)
 	if user == nil then return end
 	local origin = user:get_pos()
 	origin.y = origin.y + 1.5

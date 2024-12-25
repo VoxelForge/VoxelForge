@@ -55,12 +55,12 @@ vlf_chests.register_chest("trapped_chest", {
 	sounds = { vlf_sounds.node_sound_wood_defaults() },
 	hardness = 2.5,
 	hidden = false,
-	mesecons = {
+	--[[mesecons = {
 		receptor = {
 			state = mesecon.state.off,
 			rules = mesecon.rules.pplate,
 		},
-	},
+	},]]
 	on_rightclick = function(pos, node, clicker)
 		minetest.swap_node(pos, { name = "vlf_chests:trapped_chest_on_small", param2 = node.param2 })
 		vlf_chests.find_or_create_entity(pos, "vlf_chests:trapped_chest_on_small", { "vlf_chests_trapped.png" },
@@ -108,12 +108,12 @@ vlf_chests.register_chest("trapped_chest_on", {
 	sounds = { vlf_sounds.node_sound_wood_defaults() },
 	hardness = 2.5,
 	hidden = true,
-	mesecons = {
+	--[[mesecons = {
 		receptor = {
 			state = mesecon.state.on,
 			rules = mesecon.rules.pplate,
 		},
-	},
+	},]]
 	drop = "trapped_chest",
 	canonical_basename = "trapped_chest"
 })

@@ -1,10 +1,10 @@
 # textdomain: awards
-Secret Award Unlocked: @1=
-Award Unlocked: @1=
-Secret Advancement Made!=
+Secret Award Unlocked: @1=Riconosimento Segreto Sbloccato: @1
+Award Unlocked: @1=Riconoscimento Sbloccato: @1
+Secret Advancement Made!=Progresso Segreto Realizzato!
 Goal Completed!=
 Challenge Completed!=
-Advancement Made!=
+Advancement Made!=Progresso Realizzato!
 [c|clear|disable|enable]=
 Show, clear, disable or enable your awards=
 All your awards and statistics have been cleared. You can now start again.=

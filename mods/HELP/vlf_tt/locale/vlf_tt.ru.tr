@@ -1,11 +1,11 @@
 # textdomain: vlf_tt
-Painfully slow=Крайне низкая
+Painfully slow=Крайне медленно
 Very slow=Очень низкая
-Slow=Низкая
+Slow=Медленно
 Fast=Высокая
 Very fast=Очень высокая
-Extremely fast=Экстремально высокая
-Instantaneous=
+Extremely fast=Экстремально бвстро
+Instantaneous=мгновенно
 Unlimited uses=не ограничено
 Mining speed: @1=Скорость добычи: @1
 Mining durability: @1=Прочность при добыче: @1
@@ -13,8 +13,8 @@ Block breaking strength: @1=Сила добычи: @1
 Damage: @1=Урон: @1
 Healing: @1=Исцеление: @1
 Full punch interval: @1s=Интервал удара: @1 с
-Food item=
-+@1 food points=
+Food item=Пищевой продукт
++@1 food points=+@1 ед. питания
 Contact damage: @1 per second=Урон при контакте: @1 HP/с
 Contact healing: @1 per second=Исцеление при контакте: @1 HP/с
 Drowning damage: @1=Урон при утоплении: @1

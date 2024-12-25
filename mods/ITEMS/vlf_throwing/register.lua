@@ -55,22 +55,21 @@ local pearl_ENTITY={
 }
 
 local function check_object_hit(self, pos, dmg)
-	for _,object in pairs(minetest.get_objects_inside_radius(pos, 1.5)) do
-
+	for object in minetest.objects_inside_radius(pos, 1.5) do
 		local entity = object:get_luaentity()
-
-		if entity
-		and entity.name ~= self.object:get_luaentity().name then
-
-			if object:is_player() and self._thrower ~= object:get_player_name() then
-				self.object:remove()
-				return true
-			elseif (entity.is_mob == true or entity._hittable_by_projectile) and (self._thrower ~= object) then
-				object:punch(self.object, 1.0, {
-					full_punch_interval = 1.0,
-					damage_groups = dmg,
-				}, nil)
-				return true
+		if not entity or entity.name ~= self.object:get_luaentity().name then
+			local is_player = object:is_player ()
+			local is_valid_entity
+				= entity and (entity.is_mob == true or entity._hittable_by_projectile)
+			if is_player or is_valid_entity and (self._thrower ~= object) then
+				local pl = self._thrower and self._thrower.is_player and self._thrower or type(self._thrower) == "string" and minetest.get_player_by_name(self._thrower)
+				if pl then
+					object:punch(pl, 1.0, {
+							     full_punch_interval = 1.0,
+							     damage_groups = dmg,
+							      }, nil)
+					return true
+				end
 			end
 		end
 	end
@@ -169,13 +168,37 @@ local function egg_on_step(self, dtime)
 	end
 
 	-- Destroy when hitting a mob or player (no chick spawning)
-	if check_object_hit(self, pos, 0) then
+	if check_object_hit(self, pos, {egg_vulnerable = 0}) then
 		minetest.sound_play("vlf_throwing_egg_impact", { pos = self.object:get_pos(), max_hear_distance=10, gain=0.5 }, true)
 		self.object:remove()
 		return
 	end
 
 	self._lastpos={x=pos.x, y=pos.y, z=pos.z} -- Set lastpos-->Node will be added at last pos outside the node
+end
+
+local function pearl_tp(player, pos)
+	player:set_pos(pos)
+	vlf_damage.damage_player (player, 5, { type = "fall", })
+end
+
+local function check_gateway_teleportation (self, pos, lastpos)
+	local raycast = minetest.raycast (lastpos, pos, false, false)
+	for hitpoint in raycast do
+		if hitpoint.type == "node" then
+			local node = minetest.get_node (hitpoint.under)
+			local player = self._thrower
+				and minetest.get_player_by_name (self._thrower)
+			if node.name == "vlf_portals:portal_gateway" then
+				if player then
+					vlf_portals.gateway_teleport (hitpoint.under, player)
+				end
+				self.object:remove ()
+				return true
+			end
+		end
+	end
+	return false
 end
 
 -- Movement function of ender pearl
@@ -189,6 +212,9 @@ local function pearl_on_step(self, dtime)
 
 	-- Destroy when hitting a solid node
 	if self._lastpos.x~=nil then
+		if check_gateway_teleportation (self, pos, self._lastpos) then
+			return
+		end
 		local walkable = (def and def.walkable)
 
 		-- No teleport for hitting ignore for now. Otherwise the player could get stuck.
@@ -256,13 +282,17 @@ local function pearl_on_step(self, dtime)
 				end
 
 				local oldpos = player:get_pos()
-				-- Teleport and hurt player
-				player:set_pos(telepos)
-				vlf_damage.damage_player (player, 5, { type = "fall", })
+				-- Teleport and hurt player, detach if attached
+				if player:get_attach() then
+					vlf_util.detach_object(player, false, function(player)
+						pearl_tp(player, telepos)
+					end)
+				else
+					pearl_tp(player, telepos)
+				end
 
 				-- 10% chance to spawn endermite at the player's origin
-				local r = math.random(1,10)
-				if r == 1 then
+				if math.random(10) == 1 then
 					minetest.add_entity(oldpos, "mobs_mc:endermite")
 				end
 

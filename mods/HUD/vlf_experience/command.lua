@@ -15,7 +15,7 @@ minetest.register_chatcommand("xp", {
 			return false, S("Error: Too many parameters!")
 		end
 		if i > 0 then
-			xp = tonumber(P[i])
+			xp = tonumber(P[i]) ---@diagnostic disable-line: cast-local-type
 		end
 		if i < 2 then
 			player = minetest.get_player_by_name(name)

@@ -1,4 +1,5 @@
 # textdomain: vlf_beacons
-Beacon:=Magisk fyrtårn:
 Primary Power:=Primær kraft:
+Secondary Power:=
 Inventory:=Indhold:
+Beacon=

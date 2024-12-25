@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_dispensers x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_dispensers x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Dispenser"
 msgstr "ディスペンサー"
@@ -79,9 +79,15 @@ msgstr "スポーンエッグ：各種mobを召喚"
 msgid "• Other items: Are simply dropped"
 msgstr "その他のアイテム：単純にドロップ"
 
-msgid "Downwards-Facing Dispenser"
-msgstr "下向きディスペンサー"
+msgid "Dropper"
+msgstr "ドロッパー"
 
-msgid "Upwards-Facing Dispenser"
-msgstr "上向きディスペンサー"
+msgid "Drops item when powered by redstone power"
+msgstr "レッドストーン動力が来るとアイテムをドロップ"
+
+msgid "A dropper is a redstone component and a container with 9 inventory slots which, when supplied with redstone power, drops an item or puts it into a container in front of it."
+msgstr "ドロッパーは、９つのインベントリスロットを持つコンテナのレッドストーン部品で、レッドストーン動力を供給されると、アイテムをドロップしたり手前のコンテナに入れたりします。"
+
+msgid "Droppers can be placed in 6 possible directions, items will be dropped out of the hole. Use the dropper to access its inventory. Supply it with redstone energy once to make the dropper drop or transfer a random item."
+msgstr "ドロッパーは任意の６方向に設置することができ、穴からアイテムをドロップしようとします。ドロッパーを使用し、そのインベントリにアクセスします。ドロッパーにレッドストーンエネルギーを供給すると、ランダムなアイテムがドロップまたは転送されます。"
 

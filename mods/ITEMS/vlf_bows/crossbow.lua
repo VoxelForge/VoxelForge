@@ -13,14 +13,14 @@ local _BOW_CHARGE_TIME_FULL = 900000 -- bow level 2 (full charge)
 
 local BOW_CHARGE_TIME_HALF = 350000 -- bow level 1
 local BOW_CHARGE_TIME_FULL = 900000 -- bow level 2 (full charge)
+vlf_bows.CROSSBOW_CHARGE_TIME_HALF = BOW_CHARGE_TIME_HALF / 1e+6
+vlf_bows.CROSSBOW_CHARGE_TIME_FULL = BOW_CHARGE_TIME_FULL / 1e+6
 
 -- Factor to multiply with player speed while player uses bow
 -- This emulates the sneak speed.
 local PLAYER_USE_CROSSBOW_SPEED = tonumber(minetest.settings:get("movement_speed_crouch")) / tonumber(minetest.settings:get("movement_speed_walk"))
 
--- TODO: Use Minecraft speed (ca. 53 m/s)
--- Currently nerfed because at full speed the arrow would easily get out of the range of the loaded map.
-local BOW_MAX_SPEED = 68
+local BOW_MAX_SPEED = 3.15 * 20
 
 local function play_load_sound(id, pos)
 	minetest.sound_play("vlf_bows_crossbow_drawback_"..id, {pos=pos, max_hear_distance=12}, true)
@@ -38,14 +38,11 @@ local bow_load = {}
 -- Another player table, this one stores the wield index of the bow being charged
 local bow_index = {}
 
-function vlf_bows.shoot_arrow_crossbow(arrow_item, pos, dir, yaw, shooter, power, damage, is_critical, crossbow_stack, collectable)
+function shoot_arrow_crossbow_1 (arrow_item, pos, dir, yaw, shooter, speed, damage, is_critical, crossbow_stack, collectable)
 	local obj = minetest.add_entity({x=pos.x,y=pos.y,z=pos.z}, arrow_item.."_entity")
 	if not obj or not obj:get_pos() then return end
-	if power == nil then
-		power = BOW_MAX_SPEED --19
-	end
 	if damage == nil then
-		damage = 3
+		damage = 2
 	end
 	if crossbow_stack then
 		local enchantments = vlf_enchanting.get_enchantments(crossbow_stack)
@@ -55,7 +52,7 @@ function vlf_bows.shoot_arrow_crossbow(arrow_item, pos, dir, yaw, shooter, power
 			obj:get_luaentity()._piercing = 0
 		end
 	end
-	obj:set_velocity({x=dir.x*power, y=dir.y*power, z=dir.z*power})
+	obj:set_velocity({x=dir.x*speed, y=dir.y*speed, z=dir.z*speed})
 	obj:set_acceleration({x=0, y=-GRAVITY, z=0})
 	obj:set_yaw(yaw-math.pi/2)
 	local le = obj:get_luaentity()
@@ -76,6 +73,34 @@ function vlf_bows.shoot_arrow_crossbow(arrow_item, pos, dir, yaw, shooter, power
 	return obj
 end
 
+local function get_pitch (dir)
+	return math.atan2 (-dir.y, math.sqrt (dir.x * dir.x + dir.z * dir.z))
+end
+
+function vlf_bows.shoot_arrow_crossbow (arrow_item, pos, dir, yaw, shooter, speed, damage, is_critical, crossbow_stack, collectable)
+	local has_multishot_enchantment
+		= crossbow_stack and vlf_enchanting.has_enchantment (crossbow_stack, "multishot")
+	if has_multishot_enchantment then
+		-- calculate rotation by 10 degrees 'left' and 'right' of facing direction
+		local pitch = get_pitch (dir)
+		local pitch_c = math.cos(pitch)
+		local pitch_s = math.sin(pitch)
+		local yaw_c = math.cos(yaw + math.pi / 2)
+		local yaw_s = math.sin(yaw + math.pi / 2)
+
+		local rot_left =  {x =   yaw_c * pitch_s * math.pi / 18, y =   pitch_c * math.pi / 18, z =   yaw_s * pitch_s * math.pi / 18}
+		local rot_right = {x = - yaw_c * pitch_s * math.pi / 18, y = - pitch_c * math.pi / 18, z = - yaw_s * pitch_s * math.pi / 18}
+		local dir_left = vector.rotate(dir, rot_left)
+		local dir_right = vector.rotate(dir, rot_right)
+
+		shoot_arrow_crossbow_1 (arrow_item, pos, {x=dir_left.x, y=dir_left.y, z=dir_left.z}, yaw, shooter, speed, damage, is_critical, crossbow_stack, collectable)
+		shoot_arrow_crossbow_1 (arrow_item, pos, {x=dir_right.x, y=dir_right.y, z=dir_right.z}, yaw, shooter, speed, damage, is_critical, crossbow_stack, collectable)
+		shoot_arrow_crossbow_1 (arrow_item, pos, dir, yaw, shooter, speed, damage, is_critical, crossbow_stack, collectable)
+	else
+		shoot_arrow_crossbow_1 (arrow_item, pos, dir, yaw, shooter, speed, damage, is_critical, crossbow_stack, collectable)
+	end
+end
+
 local function get_arrow(player)
 	local inv = player:get_inventory()
 	local arrow_stack, arrow_stack_id
@@ -90,8 +115,7 @@ local function get_arrow(player)
 	return arrow_stack, arrow_stack_id
 end
 
-local function player_shoot_arrow(wielditem, player, power, damage, is_critical)
-	local has_multishot_enchantment = vlf_enchanting.has_enchantment(player:get_wielded_item(), "multishot")
+local function player_shoot_arrow(wielditem, player, is_critical)
 	local arrow_itemstring = wielditem:get_meta():get("arrow")
 
 	if not arrow_itemstring or minetest.get_item_group(arrow_itemstring, "ammo_crossbow") == 0 then
@@ -102,25 +126,7 @@ local function player_shoot_arrow(wielditem, player, power, damage, is_critical)
 	local dir = player:get_look_dir()
 	local yaw = player:get_look_horizontal()
 
-	if has_multishot_enchantment then
-		-- calculate rotation by 10 degrees 'left' and 'right' of facing direction
-		local pitch = player:get_look_vertical()
-		local pitch_c = math.cos(pitch)
-		local pitch_s = math.sin(pitch)
-		local yaw_c = math.cos(yaw + math.pi / 2)
-		local yaw_s = math.sin(yaw + math.pi / 2)
-
-		local rot_left =  {x =   yaw_c * pitch_s * math.pi / 18, y =   pitch_c * math.pi / 18, z =   yaw_s * pitch_s * math.pi / 18}
-		local rot_right = {x = - yaw_c * pitch_s * math.pi / 18, y = - pitch_c * math.pi / 18, z = - yaw_s * pitch_s * math.pi / 18}
-		local dir_left = vector.rotate(dir, rot_left)
-		local dir_right = vector.rotate(dir, rot_right)
-
-		vlf_bows.shoot_arrow_crossbow(arrow_itemstring, {x=playerpos.x,y=playerpos.y+1.5,z=playerpos.z}, {x=dir_left.x, y=dir_left.y, z=dir_left.z}, yaw, player, power, damage, is_critical, player:get_wielded_item(), false)
-		vlf_bows.shoot_arrow_crossbow(arrow_itemstring, {x=playerpos.x,y=playerpos.y+1.5,z=playerpos.z}, {x=dir_right.x, y=dir_right.y, z=dir_right.z}, yaw, player, power, damage, is_critical, player:get_wielded_item(), false)
-		vlf_bows.shoot_arrow_crossbow(arrow_itemstring, {x=playerpos.x,y=playerpos.y+1.5,z=playerpos.z}, dir, yaw, player, power, damage, is_critical, player:get_wielded_item(), true)
-	else
-		vlf_bows.shoot_arrow_crossbow(arrow_itemstring, {x=playerpos.x,y=playerpos.y+1.5,z=playerpos.z}, dir, yaw, player, power, damage, is_critical, player:get_wielded_item(), true)
-	end
+	vlf_bows.shoot_arrow_crossbow (arrow_itemstring, {x=playerpos.x,y=playerpos.y+1.5,z=playerpos.z}, dir, yaw, player, BOW_MAX_SPEED, nil, is_critical, player:get_wielded_item(), true)
 	return true
 end
 
@@ -137,7 +143,7 @@ S("The speed and damage of the arrow increases the longer you charge. The regula
 	stack_max = 1,
 	range = 4,
 	-- Trick to disable digging as well
-	on_use = function() return end,
+	on_use = function() end,
 	on_place = function(itemstack, player, pointed_thing)
 		local rc = vlf_util.call_on_rightclick(itemstack, player, pointed_thing)
 		if rc then return rc end
@@ -149,8 +155,10 @@ S("The speed and damage of the arrow increases the longer you charge. The regula
 		itemstack:get_meta():set_string("active", "true")
 		return itemstack
 	end,
+	touch_interaction = "short_dig_long_place",
 	groups = {weapon=1,weapon_ranged=1,crossbow=1,enchantability=1},
 	_vlf_uses = 326,
+	_vlf_burntime = 15
 })
 
 minetest.register_tool("vlf_bows:crossbow_loaded", {
@@ -165,7 +173,7 @@ S("The speed and damage of the arrow increases the longer you charge. The regula
 	stack_max = 1,
 	range = 4,
 	-- Trick to disable digging as well
-	on_use = function() return end,
+	on_use = function() end,
 	on_place = function(itemstack, player, pointed_thing)
 		local rc = vlf_util.call_on_rightclick(itemstack, player, pointed_thing)
 		if rc then return rc end
@@ -177,8 +185,10 @@ S("The speed and damage of the arrow increases the longer you charge. The regula
 		itemstack:get_meta():set_string("active", "true")
 		return itemstack
 	end,
+	touch_interaction = "short_dig_long_place",
 	groups = {weapon=1,weapon_ranged=1,crossbow=5,enchantability=1,not_in_creative_inventory=1},
 	_vlf_uses = 326,
+	_vlf_burntime = 15
 })
 
 -- Iterates through player inventory and resets all the bows in "charging" state back to their original stage
@@ -224,7 +234,7 @@ for level=0, 2 do
 		range = 0, -- Pointing range to 0 to prevent punching with bow :D
 		groups = {not_in_creative_inventory=1, not_in_craft_guide=1, enchantability=1, crossbow=2+level},
 		-- Trick to disable digging as well
-		on_use = function() return end,
+		on_use = function() end,
 		on_drop = function(itemstack, dropper, pos)
 			reset_bow_state(dropper)
 			itemstack:get_meta():set_string("active", "")
@@ -241,12 +251,13 @@ for level=0, 2 do
 		on_place = function(itemstack)
 			return itemstack
 		end,
+		touch_interaction = "short_dig_long_place",
 		_vlf_uses = 385,
 	})
 end
 
 
-controls.register_on_release(function(player, key, time)
+controls.register_on_release(function(player, key)
 	if key~="RMB" and key~="zoom" then return end
 	--local inv = minetest.get_inventory({type="player", name=player:get_player_name()})
 	local wielditem = player:get_wielded_item()
@@ -280,34 +291,12 @@ controls.register_on_release(function(player, key, time)
 	end
 end)
 
-controls.register_on_press(function(player, key, time)
+controls.register_on_press(function(player, key)
 	if key~="LMB" then return end
 		local wielditem = player:get_wielded_item()
 		if wielditem:get_name()=="vlf_bows:crossbow_loaded" or wielditem:get_name()=="vlf_bows:crossbow_loaded_enchanted" then
 		local enchanted = vlf_enchanting.is_enchanted(wielditem:get_name())
-		local speed, damage
-		local p_load = bow_load[player:get_player_name()]
-		-- Type sanity check
-		if type(p_load) ~= "number" then
-			-- In case something goes wrong ...
-			-- Just assume minimum charge.
-			minetest.log("warning", "[vlf_bows] Player "..player:get_player_name().." fires arrow with non-numeric bow_load!")
-		end
-
-		-- Calculate damage and speed
-		-- Fully charged
-		local is_critical = false
-		speed = BOW_MAX_SPEED
-		local r = math.random(1,5)
-		if r == 1 then
-			-- 20% chance for critical hit
-			damage = 10
-			is_critical = true
-		else
-			damage = 9
-		end
-
-		local has_shot = player_shoot_arrow(wielditem, player, speed, damage, is_critical)
+		local has_shot = player_shoot_arrow (wielditem, player, true)
 
 		if enchanted then
 			wielditem:set_name("vlf_bows:crossbow_enchanted")
@@ -332,7 +321,7 @@ controls.register_on_press(function(player, key, time)
 	end
 end)
 
-controls.register_on_hold(function(player, key, time)
+controls.register_on_hold(function(player, key)
 	local name = player:get_player_name()
 	local creative = minetest.is_creative_enabled(name)
 	if key ~= "RMB" and key ~= "zoom" then
@@ -399,8 +388,8 @@ controls.register_on_hold(function(player, key, time)
 	end
 end)
 
-minetest.register_globalstep(function(dtime)
-	for _, player in pairs(minetest.get_connected_players()) do
+minetest.register_globalstep(function()
+	for player in vlf_util.connected_players() do
 		local name = player:get_player_name()
 		local wielditem = player:get_wielded_item()
 		local wieldindex = player:get_wield_index()
@@ -429,12 +418,6 @@ if minetest.get_modpath("vlf_core") and minetest.get_modpath("vlf_mobitems") the
 		}
 	})
 end
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:crossbow",
-	burntime = 15,
-})
 
 -- Add entry aliases for the Help
 if minetest.get_modpath("doc") then

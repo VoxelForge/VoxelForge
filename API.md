@@ -1,12 +1,12 @@
 # API
 ## Groups
-VoxelForge makes very extensive use of groups. Making sure your items and
+Mineclonia makes very extensive use of groups. Making sure your items and
 objects have the correct group memberships is very important. Groups are
 explained in `GROUPS.md`.
 
 ## Mod naming convention
-Mods mods in VoxelForge follow a simple naming convention: Mods with the prefix
-“`vlf_`” are specific to VoxelForge, although they may be based on an existing
+Mods mods in Mineclonia follow a simple naming convention: Mods with the prefix
+“`vlf_`” are specific to Mineclonia, although they may be based on an existing
 standalone. Mods which lack this prefix are *usually* verbatim copies of a
 standalone mod. Some modifications may still have been applied, but the APIs are
 held compatible.
@@ -56,7 +56,7 @@ Use the `vlf_sounds` mod for the sounds.
 ## APIs
 A lot of things are possible by using one of the APIs in the mods. Note that not
 all APIs are documented yet, but it is planned. The following APIs should be
-more or less stable but keep in mind that VoxelForge is still unfinished. All
+more or less stable but keep in mind that Mineclonia is still unfinished. All
 directory names are relative to `mods/`
 
 ### Items
@@ -73,7 +73,7 @@ directory names are relative to `mods/`
 ### Mobs
 * Mobs: `ENTITIES/vlf_mobs`
 
-VoxelForge uses its own mobs framework, called “vlf_mobs”.
+Mineclonia uses its own mobs framework, called “vlf_mobs”.
 This is a fork of [mobs redo](https://codeberg.org/tenplus1/mobs_redo) by TenPlus1.
 
 You can add your own mobs, spawn eggs and spawning rules with this mod. API
@@ -83,7 +83,7 @@ This mod includes modificiations from the original Mobs Redo. Some items have
 been removed or moved to other mods. The API is mostly identical, but a few
 features have been added. Compability is not really a goal, but function and
 attribute names of Mobs Redo 1.41 are kept. If you have code for a mod which
-works fine under Mobs Redo, it should be easy to make it work in VoxelForge,
+works fine under Mobs Redo, it should be easy to make it work in Mineclonia,
 chances are good that it works out of the box.
 
 ### Help
@@ -98,12 +98,22 @@ chances are good that it works out of the box.
 * Change player physics: `PLAYER/playerphysics`
 * Select random treasures: `CORE/vlf_loot`
 * Get flowing direction of liquids: `CORE/flowlib`
+#### Item Definitions
+These can be applied to all item registrations:
+* `_on_set_item_entity` callback that is called when an item is set converted to an item entity: function(itemstack, luaentity).
+	Shall return the changed itemstack and optionally as second return value a table of object properties to be applied to the object when the new item is set.
+
+#### Node Definitions
+These can be applied to all node registrations.
 * `on_walk_over` callback for nodes: `CORE/walkover`
 * `_on_arrow_hit` callback when node is hit by an arrow: function(pos, arrow_luaentity)
 * `_on_dye_place` callback when node is rickclicked with a dye: function(pos, color_name)
 * `_on_hopper_in` callback when an item is about to be pushed to the node from a hopper: function(hopper_pos, node_pos)
 * `_on_hopper_out` callback when an item is about to be sucked into a hopper under the node: function(node_pos, hopper_pos)
+* `_after_hopper_in` callback when an item is pushed into the node from a hopper: function(node_pos)
+* `_after_hopper_out` callback when an item is sucked from the node by a hopper: function(node_pos)
 * `_on_lightning_strike` callback when a node is hit by lightning: function(node_pos, lightning_pos1, lightning_pos2)
+* `_vlf_baseitem` this used to determine the item corresponding to the placed node. Can either be an itemstring or a function(pos) returning an itemstack.
 * Get node names close to player (to reduce constant querying):
   `PLAYER/vlf_playerinfo`
 * Colors and dyes API: `ITEMS/vlf_dyes`
@@ -138,4 +148,3 @@ is not as fleshed out as it should be. Use at your own risk!
 * Custom dimensions
 * Custom portals
 * Proper sky and weather APIs
-# VLC

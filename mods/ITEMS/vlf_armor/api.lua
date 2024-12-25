@@ -60,6 +60,7 @@ function vlf_armor.equip(itemstack, obj, swap)
 			if swap then
 				new_stack = itemstack
 				itemstack = old_stack
+				vlf_armor.on_unequip(old_stack, obj)
 			else
 				new_stack = itemstack:take_item()
 			end
@@ -89,7 +90,7 @@ local function get_armor_texture(textures, name, modname, itemname, itemstring)
 	local core_texture = textures[name] or modname .. "_" .. itemname .. ".png"
 	if type(core_texture) == "function" then return core_texture end
 	vlf_armor.trims.core_textures[itemstring] = core_texture
-	local func = function(obj, itemstack)
+	local func = function(_, itemstack)
 		local overlay = itemstack:get_meta():get_string("vlf_armor:trim_overlay")
 		local stack_name = vlf_grindstone.remove_enchant_name(itemstack) -- gets original itemstring if enchanted, no need to store (nearly) identical values
 		local core_armor_texture = vlf_armor.trims.core_textures[stack_name]
@@ -152,6 +153,17 @@ function vlf_armor.register_set(def)
 			upgrade_item = itemstring:gsub("_[%l%d]*$",def._vlf_upgrade_item_material)
 		end
 
+		local on_place = vlf_armor.equip_on_use
+		if def.on_place then
+			on_place = function(itemstack, placer, pointed_thing)
+				if def.on_place then
+					local op = def.on_place(itemstack, placer, pointed_thing)
+					if op then return op end
+				end
+				return vlf_armor.equip_on_use(itemstack, placer, pointed_thing)
+			end
+		end
+
 		minetest.register_tool(itemstring, {
 			description = descriptions[name],
 			_doc_items_longdesc = vlf_armor.longdesc,
@@ -163,7 +175,7 @@ function vlf_armor.register_set(def)
 				_vlf_armor_equip = def.sound_equip or modname .. "_equip_" .. def.name,
 				_vlf_armor_unequip = def.sound_unequip or modname .. "_unequip_" .. def.name,
 			},
-			on_place = vlf_armor.equip_on_use,
+			on_place =  on_place,
 			on_secondary_use = vlf_armor.equip_on_use,
 			_on_equip = on_equip_callbacks[name] or def.on_equip,
 			_on_unequip = on_unequip_callbacks[name] or def.on_unequip,
@@ -171,22 +183,14 @@ function vlf_armor.register_set(def)
 			_vlf_armor_element = name,
 			_vlf_armor_texture = get_armor_texture(textures, name, modname, itemname, itemstring),
 			_vlf_upgradable = def._vlf_upgradable,
-			_vlf_upgrade_item = upgrade_item
+			_vlf_upgrade_item = upgrade_item,
+			_vlf_cooking_output = def.cook_material
 		})
 
 		if def.craft_material then
 			minetest.register_craft({
 				output = itemstring,
 				recipe = element.craft(def.craft_material),
-			})
-		end
-
-		if def.cook_material then
-			minetest.register_craft({
-				type = "cooking",
-				output = def.cook_material,
-				recipe = itemstring,
-				cooktime = 10,
 			})
 		end
 	end
@@ -266,8 +270,8 @@ function vlf_armor.update(obj)
 			end
 
 			if not itemstack:is_empty() then
-				local def = itemstack:get_definition()
 				resp = math.max(vlf_enchanting.get_enchantments(itemstack).respiration or 0, resp or 0)
+				local def = itemstack:get_definition()
 
 				local texture = def._vlf_armor_texture
 
@@ -358,7 +362,7 @@ function vlf_armor.reload_trim_inv_image(itemstack)
 	meta:set_string("inventory_image", def.inventory_image .. inv_overlay)
 end
 
-tt.register_snippet(function(itemstring, toolcaps, stack)
+tt.register_snippet(function(_, _, stack)
 	if not stack then return nil end
 	local meta = stack:get_meta()
 	if not vlf_armor.is_trimmed(stack) then return nil end
@@ -372,4 +376,59 @@ end)
 
 function vlf_armor.is_trimmed(itemstack)
 	return itemstack:get_meta():get_string("vlf_armor:trim_overlay") ~= ""
+end
+
+function vlf_armor.get_armor_coverage (object)
+	local entity = object:get_luaentity ()
+	local factor
+	if entity and entity.is_mob then
+		if not entity.armor_list then
+			return 0
+		end
+		local npieces = 0
+		for _, item in pairs (entity.armor_list) do
+			if item ~= "" then
+				npieces = npieces + 1
+			end
+		end
+		factor = npieces / 4
+	else
+		local npieces = 0
+		local inv = vlf_util.get_inventory (object, true)
+
+		if not inv then
+			return 0
+		end
+
+		for _, desc in pairs (vlf_armor.elements) do
+			if inv and not inv:get_stack ("armor", desc.index):is_empty () then
+				npieces = npieces + 1
+			end
+		end
+		factor = npieces / 4
+	end
+	return factor
+end
+
+function vlf_armor.get_headpiece_factor (object, mob_name)
+	if object:is_player () then
+		local factors = vlf_armor.player_view_range_factors[object]
+		return (factors and factors[mob_name]) or 1.0
+	end
+
+	local luaentity = object:get_luaentity ()
+
+	if luaentity
+		and luaentity.is_mob
+		and luaentity.armor_list
+		and luaentity.armor_list.head
+		and luaentity.armor_list.head ~= "" then
+		local stack = ItemStack (luaentity.armor_list.head)
+		local def = stack:get_definition ()
+		if def and mob_name == def._vlf_armor_mob_range_factor
+			and def._vlf_armor_mob_range_factor then
+			return def._vlf_armor_mob_range_factor
+		end
+	end
+	return 1.0
 end

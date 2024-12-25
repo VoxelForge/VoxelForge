@@ -16,7 +16,7 @@ register_chatcommand_alias("clear", "clearinv")
 minetest.register_chatcommand("banlist", {
 	description = S("List bans"),
 	privs = minetest.chatcommands["ban"].privs,
-	func = function(name)
+	func = function()
 		return true, S("Ban list: @1", minetest.get_ban_list())
 	end,
 })

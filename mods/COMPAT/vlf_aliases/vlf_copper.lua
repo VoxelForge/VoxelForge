@@ -10,11 +10,11 @@ for _,v in pairs({"","_exposed","_weathered"}) do
 end
 
 --waxed oxidized makes no sense - it doesn't exist anymore
-minetest.register_alias("vlf_copper:waxed_block_oxidized","vlf_copper:waxed_block_oxidized")
-minetest.register_alias("vlf_copper:waxed_block_oxidized_cut","vlf_copper:waxed_block_oxidized_cut")
-minetest.register_alias("vlf_stairs:stair_waxed_copper_oxidized_cut","vlf_stairs:stair_waxed_copper_oxidized_cut")
-minetest.register_alias("vlf_stairs:stair_waxed_copper_oxidized_cut_inner","vlf_stairs:stair_waxed_copper_oxidized_cut_inner")
-minetest.register_alias("vlf_stairs:stair_waxed_copper_oxidized_cut_outer","vlf_stairs:stair_waxed_copper_oxidized_cut_outer")
-minetest.register_alias("vlf_stairs:slab_waxed_copper_oxidized_cut","vlf_stairs:slab_waxed_copper_oxidized_cut")
-minetest.register_alias("vlf_stairs:slab_waxed_copper_oxidized_cut_top","vlf_stairs:slab_waxed_copper_oxidized_cut_top")
-minetest.register_alias("vlf_stairs:slab_waxed_copper_oxidized_cut_double","vlf_stairs:slab_waxed_copper_oxidized_cut_double")
+minetest.register_alias("vlf_copper:waxed_block_oxidized","vlf_copper:block_oxidized")
+minetest.register_alias("vlf_copper:waxed_block_oxidized_cut","vlf_copper:block_oxidized_cut")
+minetest.register_alias("vlf_stairs:stair_waxed_copper_oxidized_cut","vlf_stairs:stair_copper_oxidized_cut")
+minetest.register_alias("vlf_stairs:stair_waxed_copper_oxidized_cut_inner","vlf_stairs:stair_copper_oxidized_cut_inner")
+minetest.register_alias("vlf_stairs:stair_waxed_copper_oxidized_cut_outer","vlf_stairs:stair_copper_oxidized_cut_outer")
+minetest.register_alias("vlf_stairs:slab_waxed_copper_oxidized_cut","vlf_stairs:slab_copper_oxidized_cut")
+minetest.register_alias("vlf_stairs:slab_waxed_copper_oxidized_cut_top","vlf_stairs:slab_copper_oxidized_cut_top")
+minetest.register_alias("vlf_stairs:slab_waxed_copper_oxidized_cut_double","vlf_stairs:slab_copper_oxidized_cut_double")

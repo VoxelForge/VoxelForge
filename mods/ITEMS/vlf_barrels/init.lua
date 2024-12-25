@@ -15,7 +15,7 @@ local function on_blast(pos)
 end
 
 -- Simple protection checking functions
-local function protection_check_move(pos, from_list, from_index, to_list, to_index, count, player)
+local function protection_check_move(pos, _, _, _, _, count, player)
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
@@ -25,7 +25,7 @@ local function protection_check_move(pos, from_list, from_index, to_list, to_ind
 	end
 end
 
-local function protection_check_put_take(pos, listname, index, stack, player)
+local function protection_check_put_take(pos, _, _, stack, player)
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
@@ -67,15 +67,13 @@ local function barrel_open(pos, node, clicker)
 	minetest.swap_node(pos, { name = "vlf_barrels:barrel_open", param2 = node.param2 })
 	open_barrels[playername] = pos
 	minetest.sound_play({ name = "vlf_barrels_default_barrel_open" }, { pos = pos, gain = 0.5, max_hear_distance = 16 }, true)
+	mobs_mc.enrage_piglins (clicker, true)
 end
 
 local function close_forms(pos)
-	local players = minetest.get_connected_players()
 	local formname = "vlf_barrels:barrel_" .. pos.x .. "_" .. pos.y .. "_" .. pos.z
-	for p = 1, #players do
-		if vector.distance(players[p]:get_pos(), pos) <= 30 then
-			minetest.close_formspec(players[p]:get_player_name(), formname)
-		end
+	for pl in vlf_util.connected_players(pos, 30) do
+		minetest.close_formspec(pl:get_player_name(), formname)
 	end
 end
 
@@ -119,29 +117,40 @@ minetest.register_node("vlf_barrels:barrel_closed", {
 		return itemstack
 	end,
 	sounds = vlf_sounds.node_sound_wood_defaults(),
-	groups = { handy = 1, axey = 1, container = 2, material_wood = 1, flammable = -1, deco_block = 1 },
+	groups = {
+		handy = 1,
+		axey = 1,
+		container = 2,
+		material_wood = 1,
+		flammable = -1,
+		deco_block = 1,
+		piglin_protected = 1,
+		barrel = 1,
+	},
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		inv:set_size("main", 9 * 3)
 	end,
-	after_place_node = function(pos, placer, itemstack, pointed_thing)
+	after_place_node = function(pos, _, itemstack)
 		minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
 	end,
 	allow_metadata_inventory_move = protection_check_move,
 	allow_metadata_inventory_take = protection_check_put_take,
 	allow_metadata_inventory_put = protection_check_put_take,
-	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	on_metadata_inventory_move = function(pos, _, _, _, _, _, player)
 		minetest.log("action", player:get_player_name() ..
 			" moves stuff in barrel at " .. minetest.pos_to_string(pos))
 	end,
-	on_metadata_inventory_put = function(pos, listname, index, stack, player)
+	on_metadata_inventory_put = function(pos, _, _, _, player)
 		minetest.log("action", player:get_player_name() ..
 			" moves stuff to barrel at " .. minetest.pos_to_string(pos))
+		vlf_redstone.update_comparators(pos)
 	end,
-	on_metadata_inventory_take = function(pos, listname, index, stack, player)
+	on_metadata_inventory_take = function(pos, _, _, _, player)
 		minetest.log("action", player:get_player_name() ..
 			" takes stuff from barrel at " .. minetest.pos_to_string(pos))
+		vlf_redstone.update_comparators(pos)
 	end,
 	after_dig_node = drop_content,
 	on_blast = on_blast,
@@ -149,6 +158,7 @@ minetest.register_node("vlf_barrels:barrel_closed", {
 	on_destruct = close_forms,
 	_vlf_blast_resistance = 2.5,
 	_vlf_hardness = 2.5,
+	_vlf_burntime = 15
 })
 
 minetest.register_node("vlf_barrels:barrel_open", {
@@ -170,22 +180,26 @@ minetest.register_node("vlf_barrels:barrel_open", {
 		material_wood = 1,
 		flammable = -1,
 		deco_block = 1,
-		not_in_creative_inventory = 1
+		not_in_creative_inventory = 1,
+		piglin_protected = 1,
+		barrel = 1,
 	},
 	allow_metadata_inventory_move = protection_check_move,
 	allow_metadata_inventory_take = protection_check_put_take,
 	allow_metadata_inventory_put = protection_check_put_take,
-	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	on_metadata_inventory_move = function(pos, _, _, _, _, _, player)
 		minetest.log("action", player:get_player_name() ..
 			" moves stuff in barrel at " .. minetest.pos_to_string(pos))
 	end,
-	on_metadata_inventory_put = function(pos, listname, index, stack, player)
+	on_metadata_inventory_put = function(pos, _, _, _, player)
 		minetest.log("action", player:get_player_name() ..
 			" moves stuff to barrel at " .. minetest.pos_to_string(pos))
+		vlf_redstone.update_comparators(pos)
 	end,
-	on_metadata_inventory_take = function(pos, listname, index, stack, player)
+	on_metadata_inventory_take = function(pos, _, _, _, player)
 		minetest.log("action", player:get_player_name() ..
 			" takes stuff from barrel at " .. minetest.pos_to_string(pos))
+		vlf_redstone.update_comparators(pos)
 	end,
 	after_dig_node = drop_content,
 	on_blast = on_blast,
@@ -193,6 +207,7 @@ minetest.register_node("vlf_barrels:barrel_open", {
 	on_destruct = close_forms,
 	_vlf_blast_resistance = 2.5,
 	_vlf_hardness = 2.5,
+	_vlf_baseitem = "vlf_barrels:barrel_closed",
 })
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
@@ -213,10 +228,4 @@ minetest.register_craft({
 		{ "group:wood", "",                "group:wood" },
 		{ "group:wood", "group:wood_slab", "group:wood" },
 	},
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_barrels:barrel_closed",
-	burntime = 15,
 })

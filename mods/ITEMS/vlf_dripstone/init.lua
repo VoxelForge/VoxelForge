@@ -1,216 +1,9 @@
---[[local S = minetest.get_translator("vlf_dripstone")
-
-minetest.register_node("vlf_dripstone:dripstone_block", {
-	description = S("Dripstone Block"),
-	tiles = {"vlf_dripstone_dripstone_block.png"},
-	groups = {pickaxey=1, stone=1, building_block=1, material_stone=1},
-	sounds = vlf_sounds.node_sound_stone_defaults(),
-	_vlf_blast_resistance = 1,
-	_vlf_hardness = 1.5,
-})
-
-minetest.register_node("vlf_dripstone:pointed_dripstone_down_tip", {
-	description = S("Pointed Dripstone"),
-	drawtype = "plantlike",
-	inventory_image = "vlf_dripstone_pointed_dripstone.png",
-	tiles = {"vlf_dripstone_pointed_dripstone_down_tip.png"},
-	groups = {pickaxey=1, stone=1, building_block=1, material_stone=1},
-	sounds = vlf_sounds.node_sound_stone_defaults(),
-	paramtype = "light",
-	light_propagates = true,
-	sunlight_propagates = true,
-	_vlf_blast_resistance = 3,
-	_vlf_hardness = 1.5,
-})
-
-minetest.register_node("vlf_dripstone:pointed_dripstone_up_tip", {
-	description = S("Pointed Dripstone"),
-	drawtype = "plantlike",
-	inventory_image = "vlf_dripstone_pointed_dripstone.png",
-	tiles = {"vlf_dripstone_pointed_dripstone_up_tip.png"},
-	groups = {pickaxey=1, stone=1, building_block=1, material_stone=1, not_in_creative_inventory=1, fall_damage_add_percent=50},
-	sounds = vlf_sounds.node_sound_stone_defaults(),
-	paramtype = "light",
-	light_propagates = true,
-	sunlight_propagates = true,
-	_vlf_blast_resistance = 3,
-	_vlf_hardness = 1.5,
-})
-
-minetest.register_node("vlf_dripstone:pointed_dripstone_down_frustum", {
-	description = S("Pointed Dripstone"),
-	drawtype = "plantlike",
-	inventory_image = "vlf_dripstone_pointed_dripstone.png",
-	tiles = {"vlf_dripstone_pointed_dripstone_down_frustum.png"},
-	groups = {pickaxey=1, stone=1, building_block=1, material_stone=1},
-	sounds = vlf_sounds.node_sound_stone_defaults(),
-	paramtype = "light",
-	light_propagates = true,
-	sunlight_propagates = true,
-	_vlf_blast_resistance = 3,
-	_vlf_hardness = 1.5,
-})
-
-minetest.register_node("vlf_dripstone:pointed_dripstone_up_frustum", {
-	description = S("Pointed Dripstone"),
-	drawtype = "plantlike",
-	inventory_image = "vlf_dripstone_pointed_dripstone.png",
-	tiles = {"vlf_dripstone_pointed_dripstone_up_frustum.png"},
-	groups = {pickaxey=1, stone=1, building_block=1, material_stone=1, not_in_creative_inventory=1, fall_damage_add_percent=50},
-	sounds = vlf_sounds.node_sound_stone_defaults(),
-	paramtype = "light",
-	light_propagates = true,
-	sunlight_propagates = true,
-	_vlf_blast_resistance = 3,
-	_vlf_hardness = 1.5,
-})
-
-minetest.register_node("vlf_dripstone:pointed_dripstone_down_middle", {
-	description = S("Pointed Dripstone"),
-	drawtype = "plantlike",
-	inventory_image = "vlf_dripstone_pointed_dripstone.png",
-	tiles = {"vlf_dripstone_pointed_dripstone_down_middle.png"},
-	groups = {pickaxey=1, stone=1, building_block=1, material_stone=1},
-	sounds = vlf_sounds.node_sound_stone_defaults(),
-	paramtype = "light",
-	light_propagates = true,
-	sunlight_propagates = true,
-	_vlf_blast_resistance = 3,
-	_vlf_hardness = 1.5,
-})
-
-minetest.register_node("vlf_dripstone:pointed_dripstone_up_middle", {
-	description = S("Pointed Dripstone"),
-	drawtype = "plantlike",
-	inventory_image = "vlf_dripstone_pointed_dripstone.png",
-	tiles = {"vlf_dripstone_pointed_dripstone_up_middle.png"},
-	groups = {pickaxey=1, stone=1, building_block=1, material_stone=1, not_in_creative_inventory=1, fall_damage_add_percent=50},
-	sounds = vlf_sounds.node_sound_stone_defaults(),
-	paramtype = "light",
-	light_propagates = true,
-	sunlight_propagates = true,
-	_vlf_blast_resistance = 3,
-	_vlf_hardness = 1.5,
-})
-minetest.register_node("vlf_dripstone:pointed_dripstone_down_base", {
-	description = S("Pointed Dripstone"),
-	drawtype = "plantlike",
-	inventory_image = "vlf_dripstone_pointed_dripstone.png",
-	tiles = {"vlf_dripstone_pointed_dripstone_down_base.png"},
-	groups = {pickaxey=1, stone=1, building_block=1, material_stone=1},
-	sounds = vlf_sounds.node_sound_stone_defaults(),
-	paramtype = "light",
-	light_propagates = true,
-	sunlight_propagates = true,
-	_vlf_blast_resistance = 3,
-	_vlf_hardness = 1.5,
-})
-
-minetest.register_node("vlf_dripstone:pointed_dripstone_up_base", {
-	description = S("Pointed Dripstone"),
-	drawtype = "plantlike",
-	inventory_image = "vlf_dripstone_pointed_dripstone.png",
-	tiles = {"vlf_dripstone_pointed_dripstone_up_base.png"},
-	groups = {pickaxey=1, stone=1, building_block=1, material_stone=1, not_in_creative_inventory=1, fall_damage_add_percent=50},
-	sounds = vlf_sounds.node_sound_stone_defaults(),
-	paramtype = "light",
-	light_propagates = true,
-	sunlight_propagates = true,
-	_vlf_blast_resistance = 3,
-	_vlf_hardness = 1.5,
-})
-
---[[local vlf_dripstone = {}
-
--- Constants
-local speed_factor = 60
-local seconds_per_growth = 10 * speed_factor
-local seconds_per_water_trickle = 1 * speed_factor
-local seconds_per_lava_trickle = 6 * speed_factor
-
--- Dripstone Types
-local dripstone_types = {
-    dry = "dry",
-    hardened = "hardened",
-    molten = "molten",
-    watered = "watered"
-}
-
--- Nodes
-local dripstone_nodes = {
-    block = "block",
-    huge = "huge",
-    large = "large",
-    great = "great",
-    medium = "medium",
-    small = "small",
-    tiny = "tiny",
-    spike = "spike"
-}
-
--- Source Nodes
-local internal = {
-    water_nodes = {"default:river_water_source", "default:water_source", "vlf_core:water_source", "vlfx_core:river_water_source"},
-    lava_nodes = {"default:lava_source", "vlf_core:lava_source"},
-    lava_cauldrons = {dry_dripstone_spike = "molten_dripstone_spike"},
-    water_cauldrons = {dry_dripstone_spike = "watered_dripstone_spike"}
-}
-
--- Functions to add sources and catchers
-function vlf_dripstone.add_source(source_type, nodename)
-    if source_type == "water" then
-        table.insert(internal.water_nodes, nodename)
-    elseif source_type == "lava" then
-        table.insert(internal.lava_nodes, nodename)
-    end
-end
-
-function vlf_dripstone.add_catcher(catcher_type, nodename, newnodename)
-    if catcher_type == "water" then
-        internal.water_cauldrons[nodename] = newnodename
-    elseif catcher_type == "lava" then
-        internal.lava_cauldrons[nodename] = newnodename
-    end
-end
-
--- Function to generate nodeboxes
-local function get_nodebox(size)
-    if size >= 8 then return nil end
-    return {type = "fixed", fixed = {{-size / 16, -0.5, -size / 16, size / 16, 0.5, size / 16}}}
-end
-
--- Dripstone Registration
-for type, type_name in pairs(dripstone_types) do
-    for node, node_name in pairs(dripstone_nodes) do
-        local size = (node == "block") and 8 or (node == "huge" and 7 or (node == "large" and 6 or (node == "great" and 5 or (node == "medium" and 4 or (node == "small" and 3 or (node == "tiny" and 2 or 1))))))
-
-        minetest.register_node("vlf_dripstone:" .. type_name .. "_" .. node_name, {
-            description = type_name:gsub("^%l", string.upper) .. " " .. node_name:gsub("^%l", string.upper) .. " Dripstone",
-            tiles = {type_name .. "_dripstone_top.png", type_name .. "_dripstone_top.png", type_name .. "_dripstone_side.png"},
-            groups = {pickaxey = 2, material_stone = 1, fall_damage_add_percent = math.max(4 - size, 0) / 4 * 100},
-            is_ground_content = true,
-            drawtype = (size < 8 and "nodebox" or "normal"),
-            paramtype = "light",
-            sunlight_propagates = (size < 8),
-            node_box = get_nodebox(size),
-            sounds = dripstone_sounds,
-            _vlf_hardness = 1.0 + size / 8,
-            _vlf_blast_resistance = 1 + size / 2,
-            _vlf_silk_touch_drop = true,
-            drop = {
-                max_items = math.floor((size + 1) / 2),
-                items = {{rarity = 1, items = {"vlf_dripstone:dry_dripstone_spike"}}}
-            }
-        })
-    end
-end]]
-
 local S = minetest.get_translator(minetest.get_current_modname())
 
 local dripstone_directions =
 {
-	[-1] = "bottom",
-	[1] = "top",
+	[-1] = "up",
+	[1] = "down",
 }
 
 local dripstone_stages =
@@ -222,27 +15,32 @@ local dripstone_stages =
 	"base",
 }
 
-local function get_dripstone_node(stage, direction)
-	return "vlf_dripstone:dripstone_" .. dripstone_directions[direction] .. "_" .. dripstone_stages[stage]
+local function dripstone_hit_func(self, object)
+	-- the number 1.125 comes from: (nodes fallen / timer increase) * damage per node fallen
+	-- which comes out to be: (1.5 / 8) * 6 = 1.125
+	vlf_util.deal_damage(object, math.min(40, self.timer * 1.125), {type = "falling_node"})
 end
 
-local function extract_direction(name)
-	return string.sub(name, 26, 31) == "bottom" and -1 or 1
-end
+vlf_mobs.register_arrow("vlf_dripstone:vengeful_dripstone",
+{
+	visual = "upright_sprite",
+	textures = {"pointed_dripstone_tip.png"},
+	visual_size = {x = 1, y = 1},
+	velocity = 20,
+	hit_player = dripstone_hit_func,
+	hit_mob = dripstone_hit_func,
+	hit_object = dripstone_hit_func,
+	hit_node = function(self, pos)
+		minetest.add_item(pos, ItemStack("vlf_dripstone:pointed_dripstone"))
+	end,
+	drop = "vlf_dripstone:pointed_dripstone",
+})
 
--- it is assumed pos is at the tip of the dripstone
-local function get_dripstone_length(pos, direction)
-	local offset_pos = vector.copy(pos)
-	local stage
-	local length = 1
-	while true do
-		offset_pos = vector.offset(offset_pos, 0, direction, 0)
-		stage = minetest.get_item_group(minetest.get_node(offset_pos).name, "dripstone_stage")
-		if stage == 0 then
-			return length
-		end
-		length = length + 1
-	end
+local function spawn_dripstone_entity(pos)
+	local vengeful_dripstone = minetest.add_entity(pos, "vlf_dripstone:vengeful_dripstone")
+	vengeful_dripstone:add_velocity(vector.new(0, -12, 0))
+	local ent = vengeful_dripstone:get_luaentity()
+	ent.switch = 1
 end
 
 minetest.register_node("vlf_dripstone:dripstone_block", {
@@ -256,38 +54,79 @@ minetest.register_node("vlf_dripstone:dripstone_block", {
 	_vlf_hardness = 1.5,
 })
 
-local function dripstone_hit_func(self, object)
-	vlf_util.deal_damage(object, math.ceil(self.timer / 0.2 - 2), {type = "falling_node"})
+
+-- returns the name of pointed dripstone node with that stage and direction
+local function get_dripstone_node(stage, direction)
+	return "vlf_dripstone:dripstone_" .. dripstone_directions[direction] .. "_" .. dripstone_stages[stage]
 end
 
---[[vlf_mobs.register_arrow("vlf_dripstone:vengeful_dripstone", {
-	visual = "upright_sprite",
-	textures = {"pointed_dripstone_tip.png"},
-	visual_size = {x = 1, y = 1},
-	velocity = 20,
-	hit_player = dripstone_hit_func,
-	hit_mob = dripstone_hit_func,
-	hit_object = dripstone_hit_func,
-	hit_node = function(_, pos)
-		minetest.add_item(pos, ItemStack("vlf_dripstone:pointed_dripstone"))
-	end,
-	drop = "vlf_dripstone:pointed_dripstone",
-})]]
+-- extracts the direction from dripstone's name
+local function extract_direction(name)
+	return string.sub(name, 26, 31) == "up" and -1 or 1
+end
 
-vlf_mobs.register_arrow("vlf_dripstone:vengeful_dripstone",
-{
-	visual = "upright_sprite",
-	textures = {"pointed_dripstone_tip.png"},
-	visual_size = {x = 1, y = 1},
-	velocity = 20,
-	hit_player = dripstone_hit_func,
-	hit_mob = dripstone_hit_func,
-	hit_object = dripstone_hit_func,
-	hit_node = function(_, pos)
-		minetest.add_item(pos, ItemStack("vlf_dripstone:pointed_dripstone"))
-	end,
-	drop = "vlf_dripstone:pointed_dripstone",
-})
+-- it is assumed pos is at the tip of the dripstone
+local function get_dripstone_length(pos, direction)
+	local offset_pos = vector.copy(pos)
+	local stage
+	local length = 0
+	repeat
+		length = length + 1
+		offset_pos = vector.offset(offset_pos, 0, direction, 0)
+		stage = minetest.get_item_group(minetest.get_node(offset_pos).name, "dripstone_stage")
+	until(stage == 0)
+	return length
+end
+
+function place_dripstone(pos, length, direction)
+	if length == 0 then return end
+	-- create the base
+	if length >= 3 then
+		minetest.swap_node(vector.offset(pos, 0, 0, 0), {name = get_dripstone_node(5, direction)})
+	end
+
+	-- create the middle
+	if length >= 4 then
+		for i = 0, length - 4 do
+			minetest.swap_node(vector.offset(pos, 0, (i + 1) * -direction, 0), {name = get_dripstone_node(4, direction)})
+		end
+	end
+
+	-- create the frustum
+	if length >= 2 then
+		minetest.swap_node(vector.offset(pos, 0, (length - 2)  * -direction, 0), {name = get_dripstone_node(3, direction)})
+	end
+
+	-- if a dripstone column should be created
+	-- ".[^l]" is in the pattern to prevent dripstone blocks from being matched
+	if string.find(minetest.get_node(vector.offset(pos, 0, length * -direction, 0)).name, "^vlf_dripstone:dripstone_.[^l]") then
+		minetest.swap_node(vector.offset(pos, 0, (length - 1) * -direction, 0), {name = "vlf_dripstone:dripstone_" .. dripstone_directions[direction] .. "_tip_merge"})
+		minetest.swap_node(vector.offset(pos, 0, length * -direction, 0), {name = "vlf_dripstone:dripstone_" .. dripstone_directions[-direction] .. "_tip_merge"})
+	else
+		minetest.swap_node(vector.offset(pos, 0, (length - 1) * -direction, 0), {name = get_dripstone_node(2, direction)})
+	end
+end
+
+local function break_dripstone(pos, direction)
+	local offset_pos = vector.copy(pos)
+	while true do
+		offset_pos = vector.offset(offset_pos, 0, -direction, 0)
+		local stage = minetest.get_item_group(minetest.get_node(offset_pos).name, "dripstone_stage")
+		if stage == 1 and extract_direction(minetest.get_node(offset_pos).name) == -direction then
+			minetest.swap_node(offset_pos, {name = get_dripstone_node(2, -direction)})
+			break
+		elseif stage == 0 then
+			break
+		else
+			if direction == -1 then
+				minetest.add_item(offset_pos, ItemStack("vlf_dripstone:pointed_dripstone"))
+			else
+				spawn_dripstone_entity(offset_pos)
+			end
+			minetest.swap_node(offset_pos, {name = "air"})
+		end
+	end
+end
 
 local function update_dripstone(pos, direction)
 	-- if a dripstone column should be created
@@ -317,52 +156,33 @@ end
 
 local function on_dripstone_place(itemstack, player, pointed_thing)
 	if pointed_thing.type ~= "node" then return itemstack end
+	if minetest.get_item_group(minetest.get_node(pointed_thing.under).name, "solid") == 0 then return itemstack end
 	if pointed_thing.above.x ~= pointed_thing.under.x or pointed_thing.above.z ~= pointed_thing.under.z then return itemstack end
 
 	local direction = pointed_thing.under.y - pointed_thing.above.y
-	local direction_string = dripstone_directions[direction]
-	if not direction_string then return end
+	if direction == 0 then
+		return
+	end
 
 	if not minetest.is_creative_enabled(player:get_player_name()) then
 		itemstack:take_item()
 	end
-	minetest.set_node(pointed_thing.above, {name = "vlf_dripstone:dripstone_" .. direction_string .. "_tip"})
+	minetest.set_node(pointed_thing.above, {name = get_dripstone_node(2, direction)})
 	update_dripstone(pointed_thing.above, direction)
 	return itemstack
 end
 
 local on_dripstone_destruct = function(pos)
 	local direction = extract_direction(minetest.get_node(pos).name)
-	local offset_pos = vector.copy(pos)
-	local stage
-	while true do
-		offset_pos = vector.offset(offset_pos, 0, -direction, 0)
-		stage = minetest.get_item_group(minetest.get_node(offset_pos).name, "dripstone_stage")
-		if stage == 1 and extract_direction(minetest.get_node(offset_pos).name) == -direction then
-			minetest.swap_node(offset_pos, {name = get_dripstone_node(2, -direction)})
-			break
-		elseif stage == 0 then
-			break
-		else
-			if direction == -1 then
-				minetest.add_item(offset_pos, ItemStack("vlf_dripstone:pointed_dripstone"))
-			else
-				local vengeful_dripstone = minetest.add_entity(offset_pos, "vlf_dripstone:vengeful_dripstone")
-				vengeful_dripstone:add_velocity(vector.new(0, -12, 0))
-				local ent = vengeful_dripstone:get_luaentity()
-				ent.switch = 1
-			end
-			minetest.swap_node(offset_pos, {name = "air"})
-		end
-	end
+	break_dripstone(pos, direction)
 
-	offset_pos = vector.copy(vector.offset(pos, 0, direction, 0))
+	local offset_pos = vector.copy(vector.offset(pos, 0, direction, 0))
 	if minetest.get_item_group(minetest.get_node(offset_pos).name, "dripstone_stage") ~= 0 then
 		minetest.swap_node(offset_pos, {name = get_dripstone_node(2, direction)})
 
 		while true do
 			offset_pos = vector.offset(offset_pos, 0, direction, 0)
-			stage = minetest.get_item_group(minetest.get_node(offset_pos).name, "dripstone_stage")
+			local stage = minetest.get_item_group(minetest.get_node(offset_pos).name, "dripstone_stage")
 			if stage == 3 then
 				minetest.swap_node(offset_pos, {name = get_dripstone_node(2, direction)})
 			elseif stage == 4 or stage == 5 then
@@ -375,6 +195,14 @@ local on_dripstone_destruct = function(pos)
 	end
 end
 
+minetest.register_craft({
+	output = "vlf_dripstone:dripstone_block",
+	recipe = {
+		{ "vlf_dripstone:pointed_dripstone", "vlf_dripstone:pointed_dripstone"},
+		{ "vlf_dripstone:pointed_dripstone", "vlf_dripstone:pointed_dripstone"},
+	}
+})
+
 minetest.register_craftitem("vlf_dripstone:pointed_dripstone", {
 	description = S("Pointed dripstone"),
 	_doc_items_longdesc = S("Pointed dripstone is what stalagmites and stalagtites are made of"),
@@ -386,30 +214,34 @@ minetest.register_craftitem("vlf_dripstone:pointed_dripstone", {
 
 for i = 1, #dripstone_stages do
 	local stage = dripstone_stages[i]
-	minetest.register_node("vlf_dripstone:dripstone_top_" .. stage, {
+	minetest.register_node("vlf_dripstone:dripstone_down_" .. stage, {
 		description = S("Pointed dripstone (@1/@2)", i, #dripstone_stages),
 		_doc_items_longdesc = S("Pointed dripstone is what stalagmites and stalagtites are made of"),
 		_doc_items_hidden = true,
 		drawtype = "plantlike",
 		tiles = {"pointed_dripstone_" .. stage .. ".png"},
 		drop = "vlf_dripstone:pointed_dripstone",
-		groups = {pickaxey=1, not_in_creative_inventory=1, dripstone_stage = i},
+		groups = {pickaxey=1, not_in_creative_inventory=1, dripstone_stage = i, _vlf_partial = 2,},
 		sunlight_propagates = true,
+		paramtype = "light",
+		is_ground_content = false,
 		sounds = vlf_sounds.node_sound_stone_defaults(),
 		on_destruct = on_dripstone_destruct,
 		_vlf_blast_resistance = 3,
 		_vlf_hardness = 1.5,
 	})
 
-	minetest.register_node("vlf_dripstone:dripstone_bottom_" .. stage, {
+	minetest.register_node("vlf_dripstone:dripstone_up_" .. stage, {
 		description = S("Pointed dripstone (@1/@2)", i, #dripstone_stages),
 		_doc_items_longdesc = S("Pointed dripstone is what stalagmites and stalagtites are made of"),
 		_doc_items_hidden = true,
 		drawtype = "plantlike",
 		tiles = {"pointed_dripstone_" .. stage .. ".png^[transform6"},
 		drop = "vlf_dripstone:pointed_dripstone",
-		groups = {pickaxey=1, not_in_creative_inventory=1, fall_damage_add_percent = 100, dripstone_stage = i},
+		groups = {pickaxey=1, not_in_creative_inventory=1, fall_damage_add_percent = 100, dripstone_stage = i, _vlf_partial = 2},
 		sunlight_propagates = true,
+		paramtype = "light",
+		is_ground_content = false,
 		sounds = vlf_sounds.node_sound_stone_defaults(),
 		on_destruct = on_dripstone_destruct,
 		_vlf_blast_resistance = 3,
@@ -417,16 +249,28 @@ for i = 1, #dripstone_stages do
 	})
 end
 
+minetest.register_on_dignode(function(pos)
+	local offset_pos = vector.copy(vector.offset(pos, 0, -1, 0))
+	local nn = minetest.get_node(offset_pos).name
+	if minetest.get_item_group(nn, "dripstone_stage") ~= 0 and extract_direction(nn) == 1 then
+		if minetest.get_item_group(minetest.get_node(offset_pos).name, "dripstone_stage") ~= 0 then
+			break_dripstone(offset_pos, 1)
+			spawn_dripstone_entity(offset_pos)
+			minetest.swap_node(offset_pos, {name = "air"})
+		end
+	end
+end)
+
 minetest.register_abm({
 	label = "Dripstone growth",
-	nodenames = {"vlf_dripstone:dripstone_top_tip"},
-	interval = 1,
-	chance = 1,
+	nodenames = {"vlf_dripstone:dripstone_down_tip"},
+	interval = 69,
+	chance = 88,
 	action = function(pos)
 		-- checking if can grow
-		local stalagtite_lenth = get_dripstone_length(pos, 1)
-		if minetest.get_node(vector.offset(pos, 0, stalagtite_lenth, 0)).name ~= "vlf_dripstone:dripstone_block"
-		or minetest.get_item_group(minetest.get_node(vector.offset(pos, 0, stalagtite_lenth + 1, 0)).name, "water") == 0 then
+		local stalagtite_length = get_dripstone_length(pos, 1)
+		if minetest.get_node(vector.offset(pos, 0, stalagtite_length, 0)).name ~= "vlf_dripstone:dripstone_block"
+		or minetest.get_item_group(minetest.get_node(vector.offset(pos, 0, stalagtite_length + 1, 0)).name, "water") == 0 then
 			return
 		end
 
@@ -453,7 +297,7 @@ minetest.register_abm({
 			end
 		else
 			-- stalagtite growth
-			if stalagtite_lenth > 7 then return end
+			if stalagtite_length > 7 then return end
 
 			if minetest.get_node(vector.offset(pos, 0, -1, 0)).name == "air" then
 				minetest.set_node(vector.offset(pos, 0, -1, 0), {name = get_dripstone_node(2, 1)})
@@ -463,48 +307,35 @@ minetest.register_abm({
 	end,
 })
 
--- Cauldron fill up rules:
--- Adding any water increases the water level by 1, preserving the current water type
-local cauldron_levels = {
-	["vlf_core:water_source"] = {"", "_1", "_2", "_3"},
-	["vlfx_core:river_water_source"] = {"", "_1r", "_2r", "_3r"},
-}
-local fill_cauldron = function(cauldron, water_type)
-	local base = "vlf_cauldrons:cauldron"
-	for index = 1, #cauldron_levels[water_type] do
-		if cauldron == (base .. cauldron_levels[water_type][index]) and index ~= #cauldron_levels[water_type] then
-			return base .. cauldron_levels[water_type][index + 1]
-		end
-	end
-end
-
 minetest.register_abm({
 	label = "Dripstone filling water cauldrons, conversion from mud to clay",
-	nodenames = {"vlf_dripstone:dripstone_top_tip"},
-	interval = 1,
+	nodenames = {"vlf_dripstone:dripstone_down_tip"},
+	interval = 69,
 	chance = 5.5,
 	action = function(pos)
 		local stalagtite_length = get_dripstone_length(pos, 1)
+		local wpos = vector.offset(pos, 0, stalagtite_length + 1, 0)
+		local wnode = core.get_node(wpos)
 
-		if minetest.get_item_group(minetest.get_node(vector.offset(pos, 0, stalagtite_length + 1, 0)).name, "water") == 0
+		if minetest.get_item_group(minetest.get_node(wpos).name, "water") == 0
 		or stalagtite_length > 10 then
 			-- reusing the ABM for converting mud to clay, since the chances are the same
-			if minetest.get_node(vector.offset(pos, 0, stalagtite_length + 1, 0)).name == "vlf_mud:mud"
-			and vlf_worlds.pos_to_dimension(vector.offset(pos, 0, stalagtite_length + 1, 0)) ~= "nether" then
-				minetest.set_node(vector.offset(pos, 0, stalagtite_length + 1, 0), {name = "vlf_core:clay"})
+			if wnode.name == "vlf_mud:mud"
+			and vlf_worlds.pos_to_dimension(wpos) ~= "nether" then
+				minetest.set_node(wpos, {name = "vlf_core:clay"})
 			end
 			return
 		end
 
-		local node
-		local new_cauldron
+		local water_type = "water"
+		if minetest.get_item_group(wnode.name, "river_water") > 0 then
+			water_type = "river_water"
+		end
 		for i = 1, 10 do
-			node = minetest.get_node(vector.offset(pos, 0, -i, 0))
-			if minetest.get_item_group(node.name, "cauldron") ~= 0 and not string.find(node.name, "lava$") then
-				new_cauldron = fill_cauldron(node.name, "vlf_core:water_source")
-				if new_cauldron then
-					minetest.set_node(vector.offset(pos, 0, -i, 0), {name = new_cauldron})
-				end
+			local cpos = vector.offset(pos, 0, -i, 0)
+			local node = minetest.get_node(cpos)
+			if minetest.get_item_group(node.name, "cauldron") == 1 or minetest.get_item_group(node.name, "cauldron_water") > 0 then
+				vlf_cauldrons.add_level(cpos, 1, water_type)
 				return
 			elseif node.name ~= "air" then
 				return
@@ -515,8 +346,8 @@ minetest.register_abm({
 
 minetest.register_abm({
 	label = "Dripstone filling lava cauldrons",
-	nodenames = {"vlf_dripstone:dripstone_top_tip"},
-	interval = 1,
+	nodenames = {"vlf_dripstone:dripstone_down_tip"},
+	interval = 69,
 	chance = 17,
 	action = function(pos)
 		local stalagtite_length = get_dripstone_length(pos, 1)
@@ -526,14 +357,68 @@ minetest.register_abm({
 			return
 		end
 
-		local node
 		for i = 1, 10 do
-			node = minetest.get_node(vector.offset(pos, 0, -i, 0))
+			local cpos = vector.offset(pos, 0, -i, 0)
+			local node = minetest.get_node(cpos)
 			if node.name == "vlf_cauldrons:cauldron" then
-				minetest.set_node(vector.offset(pos, 0, -i, 0), {name = "vlf_cauldrons:cauldron_3_lava"})
+				vlf_cauldrons.add_level(cpos, 3, "lava")
 			elseif node.name ~= "air" then
 				return
 			end
 		end
+	end,
+})
+
+vlf_structures.register_structure("dripstone_stalagmite", {
+	place_on = {"vlf_dripstone:dripstone_block"},
+	spawn_by = "air",
+	check_offset = 1,
+	num_spawn_by = 5,
+	biomes = {"DripstoneCave"},
+	fill_ratio = 0.8,
+	y_min = vlf_vars.mg_overworld_min,
+	y_max = 0,
+	place_offset_y = 1,
+	terrain_feature = true,
+	place_func = function(pos)
+		local max_length = 0
+		local offset_pos = vector.copy(pos)
+		while true do
+			offset_pos = vector.offset(offset_pos, 0, 1, 0)
+			if minetest.get_node(offset_pos).name ~= "air" then
+				break
+			end
+			max_length = max_length + 1
+		end
+		place_dripstone(pos, math.min(math.random(2, 5), max_length), -1)
+		return true
+	end,
+})
+
+vlf_structures.register_structure("dripstone_stalagtite", {
+	place_on = {"vlf_dripstone:dripstone_block"},
+	spawn_by = "air",
+	check_offset = 1,
+	num_spawn_by = 5,
+	biomes = {"DripstoneCave"},
+	fill_ratio = 0.8,
+	y_min = vlf_vars.mg_overworld_min + 1,
+	y_max = 0,
+	flags = "all_ceilings",
+	terrain_feature = true,
+	place_func = function(pos)
+		pos = vector.offset(pos, 0, -2, 0)
+		local max_length = 0
+		local offset_pos = vector.copy(pos)
+		while true do
+			offset_pos = vector.offset(offset_pos, 0, -1, 0)
+			if minetest.get_node(offset_pos).name ~= "air" then
+				break
+			end
+			max_length = max_length + 1
+		end
+
+		place_dripstone(pos, math.min(math.random(2, 5), max_length), 1)
+		return true
 	end,
 })

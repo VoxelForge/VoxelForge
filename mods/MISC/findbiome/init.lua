@@ -80,7 +80,7 @@ end
 local function find_default_biome()
 	local all_biomes = minetest.registered_biomes
 	local biome_count = 0
-	for b, biome in pairs(all_biomes) do
+	for _, _ in pairs(all_biomes) do
 		biome_count = biome_count + 1
 	end
 	-- Trivial case: No biomes registered, default biome is everywhere.
@@ -94,7 +94,7 @@ local function find_default_biome()
 	local pos = {}
 	-- Just check a lot of random positions
 	-- It's a crappy algorithm but better than nothing.
-	for i=1, 100 do
+	for _ = 1, 100 do
 		pos.x = math.random(-playable_limit, playable_limit)
 		pos.y = math.random(-playable_limit, playable_limit)
 		pos.z = math.random(-playable_limit, playable_limit)
@@ -145,7 +145,7 @@ local function find_biome(pos, biomes)
 	local function search()
 		local attempt = 1
 		while attempt < 3 do
-			for iter = 1, checks do
+			for _ = 1, checks do
 				local biome_data = minetest.get_biome_data(pos)
 				-- Sometimes biome_data is nil
 				local biome = biome_data and biome_data.biome
@@ -245,14 +245,14 @@ do
 		description = S("List all biomes"),
 		params = "",
 		privs = { debug = true },
-		func = function(name, param)
+		func = function(name, _)
 			if not mods_loaded then
 				return false
 			end
 			local biomes
 			local b = 0
 			biomes = {}
-			for k,v in pairs(minetest.registered_biomes) do
+			for k, _ in pairs(minetest.registered_biomes) do
 				table.insert(biomes, k)
 				b = b + 1
 			end

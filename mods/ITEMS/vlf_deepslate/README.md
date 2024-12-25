@@ -9,7 +9,7 @@ All other dependencies are automatically in the mineclone2 game.
 Optionally use "Mineclone2 Copper" to get the deepslate copper ore as well.
 
 
-You can find all craft recipes for deepslate blocks here: https://minecraft.fandom.com/wiki/Deepslate_(disambiguation)
+You can find all craft recipes for deepslate blocks here: https://minecraft.wiki/w/Deepslate_(disambiguation)
 (just click on the respective block)
 
 Textures are from Pixel Perfection!

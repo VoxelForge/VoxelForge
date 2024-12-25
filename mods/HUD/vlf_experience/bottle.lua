@@ -10,12 +10,12 @@ minetest.register_entity("vlf_experience:bottle",{
 		collisionbox = {-0.1, -0.1, -0.1, 0.1, 0.1, 0.1},
 		pointable = false,
 	},
-	on_step = function(self, dtime)
+	on_step = function(self, _)
 		local pos = self.object:get_pos()
 		local node = minetest.get_node(pos)
 		local n = node.name
 		if n ~= "air" and n ~= "vlf_portals:portal" and n ~= "vlf_portals:portal_end" and minetest.get_item_group(n, "liquid") == 0 then
-			minetest.sound_play("vlf_entity_effects_breaking_glass", {pos = pos, max_hear_distance = 16, gain = 1})
+			minetest.sound_play("vlf_potions_breaking_glass", {pos = pos, max_hear_distance = 16, gain = 1})
 			vlf_experience.throw_xp(pos, math.random(3, 11))
 			minetest.add_particlespawner({
 				amount = 50,
@@ -56,7 +56,7 @@ minetest.register_craftitem("vlf_experience:bottle", {
 	description = S("Bottle o' Enchanting"),
 	inventory_image = "vlf_experience_bottle.png",
 	wield_image = "vlf_experience_bottle.png",
-	on_use = function(itemstack, placer, pointed_thing)
+	on_use = function(itemstack, placer, _)
 		throw_xp_bottle(vector.add(placer:get_pos(), vector.new(0, 1.5, 0)), placer:get_look_dir(), 10)
 		if not minetest.is_creative_enabled(placer:get_player_name()) then
 			itemstack:take_item()

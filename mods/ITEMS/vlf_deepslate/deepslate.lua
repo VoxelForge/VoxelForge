@@ -47,29 +47,32 @@ minetest.register_node("vlf_deepslate:deepslate_reinforced", {
 	_vlf_hardness = 55,
 })
 
-vlf_deepslate.register_deepslate_ore("coal", S("Deepslate Coal Ore"), nil, "vlf_core:coal_ore")
-vlf_deepslate.register_deepslate_ore("iron", S("Deepslate Iron Ore"), nil, "vlf_core:iron_ore")
-vlf_deepslate.register_deepslate_ore("gold", S("Deepslate Gold Ore"), nil, "vlf_core:gold_ore")
-vlf_deepslate.register_deepslate_ore("emerald", S("Deepslate Emerald Ore"), nil, "vlf_core:emerald_ore")
-vlf_deepslate.register_deepslate_ore("diamond", S("Deepslate Diamond Ore"), nil, "vlf_core:diamond_ore")
-vlf_deepslate.register_deepslate_ore("lapis", S("Deepslate Lapis Lazuli Ore"), nil, "vlf_core:lapis_ore")
+vlf_deepslate.register_deepslate_ore("coal", S("Deepslate Coal Ore"), {_vlf_cooking_output = "vlf_core:coal_lump"})
+vlf_deepslate.register_deepslate_ore("iron", S("Deepslate Iron Ore"), {_vlf_cooking_output = "vlf_core:iron_ingot"})
+vlf_deepslate.register_deepslate_ore("gold", S("Deepslate Gold Ore"), {_vlf_cooking_output = "vlf_core:gold_ingot"})
+vlf_deepslate.register_deepslate_ore("emerald", S("Deepslate Emerald Ore"), {_vlf_cooking_output = "vlf_core:emerald"})
+vlf_deepslate.register_deepslate_ore("diamond", S("Deepslate Diamond Ore"), {_vlf_cooking_output = "vlf_core:diamond"})
+vlf_deepslate.register_deepslate_ore("lapis", S("Deepslate Lapis Lazuli Ore"), {_vlf_cooking_output = "vlf_core:lapis"})
 vlf_deepslate.register_deepslate_ore("redstone", S("Deepslate Redstone Ore"), {
-	_vlf_ore_lit = "vlf_deepslate:deepslate_redstone_lit_ore",
-	_vlf_ore_unlit = "vlf_deepslate:deepslate_redstone_ore",
-}, "vlf_core:redstone_ore")
+	_vlf_ore_lit = "vlf_deepslate:deepslate_with_redstone_lit",
+	_vlf_ore_unlit = "vlf_deepslate:deepslate_with_redstone",
+	_vlf_cooking_output = "vlf_redstone:redstone"
+})
 vlf_deepslate.register_deepslate_ore("redstone_lit", S("Lit Deepslate Redstone Ore"), {
 	tiles = { "vlf_deepslate_redstone_ore.png" },
-	_vlf_ore_lit = "vlf_deepslate:deepslate_redstone_lit_ore",
-	_vlf_ore_unlit = "vlf_deepslate:deepslate_redstone_ore",
-	_vlf_silk_touch_drop = { "vlf_deepslate:redstone_ore" },
-}, "vlf_core:redstone_ore_lit")
-vlf_deepslate.register_deepslate_ore("copper", S("Deepslate Copper Ore"), nil, "vlf_copper:copper_ore")
+	_vlf_ore_lit = "vlf_deepslate:deepslate_with_redstone_lit",
+	_vlf_ore_unlit = "vlf_deepslate:deepslate_with_redstone",
+	_vlf_silk_touch_drop = { "vlf_deepslate:deepslate_with_redstone" },
+	_vlf_cooking_output = nil,
+})
+vlf_deepslate.register_deepslate_ore("copper", S("Deepslate Copper Ore"), {_vlf_cooking_output = "vlf_copper:copper_ingot"}, "vlf_copper:copper_ore")
 
 register_deepslate_variant("cobbled", {
 	node = {
 		description = S("Cobbled Deepslate"),
 		_doc_items_longdesc = S("Cobbled deepslate is a stone variant that functions similar to cobblestone or blackstone."),
 		groups = { cobble = 1, stonecuttable = 1 },
+		_vlf_cooking_output = "vlf_deepslate:deepslate"
 	},
 	stair = {
 		description = S("Cobbled Deepslate Stairs"),
@@ -112,6 +115,7 @@ register_deepslate_variant("bricks", {
 		_doc_items_longdesc = S("Deepslate bricks are the brick version of deepslate."),
 		groups = { stonecuttable = 1 },
 		_vlf_stonecutter_recipes = { "vlf_deepslate:deepslate_cobbled", "vlf_deepslate:deepslate_polished", "vlf_deepslate:deepslate_bricks", },
+		_vlf_cooking_output = "vlf_deepslate:deepslate_bricks_cracked"
 	},
 	stair = {
 		description = S("Deepslate Brick Stairs"),
@@ -136,6 +140,7 @@ register_deepslate_variant("tiles", {
 		_doc_items_longdesc = S("Deepslate tiles are a decorative variant of deepslate."),
 		groups = { stonecuttable = 1 },
 		_vlf_stonecutter_recipes = { "vlf_deepslate:deepslate_cobbled", "vlf_deepslate:deepslate_polished", "vlf_deepslate:deepslate_bricks", },
+		_vlf_cooking_output = "vlf_deepslate:deepslate_tiles_cracked"
 	},
 	stair = {
 		description = S("Deepslate Tile Stairs"),
@@ -170,22 +175,6 @@ for i = 1, 3 do
 		recipe = { { s, s }, { s, s } }
 	})
 end
-
-for _, p in pairs({ "bricks", "tiles" }) do
-	minetest.register_craft({
-		type = "cooking",
-		output = "vlf_deepslate:deepslate_"..p.."_cracked",
-		recipe = "vlf_deepslate:deepslate_"..p,
-		cooktime = 10,
-	})
-end
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_deepslate:deepslate",
-	recipe = cobble,
-	cooktime = 10,
-})
 
 minetest.register_craft({
 	output = "vlf_deepslate:deepslate_chiseled",

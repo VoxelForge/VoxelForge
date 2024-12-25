@@ -63,20 +63,23 @@ end
 local sounds_coral_plant = vlf_sounds.node_sound_leaves_defaults({footstep = vlf_sounds.node_sound_dirt_defaults().footstep})
 local ontop = "dead_brain_coral_block"
 local canonical = "vlf_ocean:sea_pickle_1_"..ontop
+local light_strength = { 6, 9, 12, minetest.LIGHT_MAX }
 
 for s=1,4 do
-	local desc, doc_desc, doc_use, doc_create, tt_help, nici, img, img_off, on_place
+	local desc, doc_desc, doc_use, doc_create, tt_help, nici, img, img_off, on_place, cookoutput
 	if s == 1 then
 		desc = S("Sea Pickle")
 		doc_desc = S("Sea pickles grow on dead brain coral blocks and provide light when underwater. They come in 4 sizes that vary in brightness.")
 		doc_use = S("It can only be placed on top of dead brain coral blocks. Placing a sea pickle on another sea pickle will make it grow and brighter.")
 		tt_help = S("Glows in the water").."\n"..S("4 possible sizes").."\n"..S("Grows on dead brain coral block")
 		img = "vlf_ocean_sea_pickle_item.png"
+		cookoutput = "vlf_dyes:lime"
 		on_place = sea_pickle_on_place
 	else
 		doc_create = false
 		nici = 1
 		img = "vlf_ocean_"..ontop..".png^(vlf_ocean_sea_pickle_"..s.."_anim.png^[verticalframe:2:1)"
+		cookoutput = nil
 	end
 	img_off = "vlf_ocean_"..ontop..".png^vlf_ocean_sea_pickle_"..s.."_off.png"
 	local next_on, next_off
@@ -105,7 +108,7 @@ for s=1,4 do
 			{ x = -1, y =  0, z = -1 },
 		}
 
-		for k, v in pairs(possible_position) do
+		for _, v in pairs(possible_position) do
 			sea_pickle_on_place(
 				ItemStack("vlf_ocean:sea_pickle"),
 				placer,
@@ -114,7 +117,7 @@ for s=1,4 do
 		end
 	end
 
-	local function on_bone_meal(itemstack, placer, pointed_thing, pos, node)
+	local function on_bone_meal(_, placer, pointed_thing, pos, node)
 		if pointed_thing.type ~= "node" then return end
 		if 4 ~= s then
 			node.name = "vlf_ocean:sea_pickle_" .. (s + 1) .. "_" .. ontop
@@ -143,10 +146,9 @@ for s=1,4 do
 		wield_image = img,
 		groups = {
 			dig_immediate = 3, deco_block = 1, sea_pickle = 1,
-			not_in_creative_inventory=nici, compostability = 65
+			not_in_creative_inventory=nici, compostability = 65, dig_by_piston = 1, unsticky = 1
 		},
-		-- Light level: 6 at size 1, +3 for each additional stage
-		light_source = math.min(6 + (s-1)*3, minetest.LIGHT_MAX),
+		light_source = light_strength[s],
 		selection_box = {
 			type = "fixed",
 			fixed = {
@@ -167,8 +169,10 @@ for s=1,4 do
 		on_place = on_place,
 		_vlf_sea_pickle_off = "vlf_ocean:sea_pickle_"..s.."_off_"..ontop,
 		_vlf_sea_pickle_next = next_on,
+		_vlf_baseitem = "vlf_ocean:sea_pickle_1_dead_brain_coral_block",
 		_vlf_hardness = 0,
 		_vlf_blast_resistance = 0,
+		_vlf_cooking_output = cookoutput,
 		_on_bone_meal = on_bone_meal,
 	})
 
@@ -200,6 +204,7 @@ for s=1,4 do
 		end,
 		_vlf_sea_pickle_on = "vlf_ocean:sea_pickle_"..s.."_"..ontop,
 		_vlf_sea_pickle_next = next_off,
+		_vlf_baseitem = "vlf_ocean:sea_pickle_1_dead_brain_coral_block",
 		_vlf_hardness = 0,
 		_vlf_blast_resistance = 0,
 	})
@@ -220,7 +225,7 @@ minetest.register_abm({
 	interval = 17,
 	chance = 5,
 	catch_up = false,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos, node)
 		-- Check if it's lit
 		local state = minetest.get_item_group(node.name, "sea_pickle")
 		-- Check for water

@@ -110,7 +110,6 @@ vlf_armor.register_set({
 	},
 	groups = { fire_immune=1 },
 	toughness = 2,
-	craft_material = "vlf_nether:netherite_ingot",
 	sound_equip = "vlf_armor_equip_diamond",
 	sound_unequip = "vlf_armor_unequip_diamond",
 })
@@ -308,4 +307,3 @@ minetest.register_on_player_inventory_action(function(player, action, inventory,
 		check_inventory_for_required_items(player)
 	end
 end)
-

@@ -29,7 +29,7 @@ local vlf_hoppers_formspec = table.concat({
 local def_hopper = {
 	inventory_image = "vlf_hoppers_item.png",
 	wield_image = "vlf_hoppers_item.png",
-	groups = { pickaxey = 1, container = 2, deco_block = 1, hopper = 1 },
+	groups = { pickaxey = 1, container = 2, deco_block = 1, hopper = 1, _vlf_partial = 2, },
 	drawtype = "nodebox",
 	paramtype = "light",
 	-- FIXME: vlf_hoppers_hopper_inside.png is unused by hoppers.
@@ -69,7 +69,7 @@ local def_hopper = {
 	end,
 	after_dig_node = vlf_util.drop_items_from_meta_container({"main"}),
 
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	allow_metadata_inventory_move = function(pos, _, _, _, _, count, player)
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then
 			minetest.record_protection_violation(pos, name)
@@ -78,7 +78,7 @@ local def_hopper = {
 			return count
 		end
 	end,
-	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_take = function(pos, _, _, stack, player)
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then
 			minetest.record_protection_violation(pos, name)
@@ -87,7 +87,7 @@ local def_hopper = {
 			return stack:get_count()
 		end
 	end,
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_put = function(pos, _, _, stack, player)
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then
 			minetest.record_protection_violation(pos, name)
@@ -96,17 +96,19 @@ local def_hopper = {
 			return stack:get_count()
 		end
 	end,
-	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	on_metadata_inventory_move = function(pos, _, _, _, _, _, player)
 		minetest.log("action", player:get_player_name()..
 				" moves stuff in vlf_hoppers at "..minetest.pos_to_string(pos))
 	end,
-	on_metadata_inventory_put = function(pos, listname, index, stack, player)
+	on_metadata_inventory_put = function(pos, _, _, _, player)
 		minetest.log("action", player:get_player_name()..
 				" moves stuff to vlf_hoppers at "..minetest.pos_to_string(pos))
+		vlf_redstone.update_comparators(pos)
 	end,
-	on_metadata_inventory_take = function(pos, listname, index, stack, player)
+	on_metadata_inventory_take = function(pos, _, _, _, player)
 		minetest.log("action", player:get_player_name()..
 				" takes stuff from vlf_hoppers at "..minetest.pos_to_string(pos))
+		vlf_redstone.update_comparators(pos)
 	end,
 	sounds = vlf_sounds.node_sound_metal_defaults(),
 
@@ -163,12 +165,16 @@ def_hopper_enabled.on_place = function(itemstack, placer, pointed_thing)
 	itemstack:set_name("vlf_hoppers:hopper")
 	return itemstack
 end
-def_hopper_enabled.mesecons = {
-	effector = {
-		action_on = function(pos, node)
+def_hopper_enabled._vlf_redstone = {
+	connects_to = function(node, dir)
+		return true
+	end,
+	update = function(pos)
+		if vlf_redstone.get_power(pos) ~= 0 then
+			local node = minetest.get_node(pos)
 			minetest.swap_node(pos, {name="vlf_hoppers:hopper_disabled", param2=node.param2})
-		end,
-	},
+		end
+	end,
 }
 
 minetest.register_node("vlf_hoppers:hopper", def_hopper_enabled)
@@ -180,12 +186,16 @@ def_hopper_disabled.inventory_image = nil
 def_hopper_disabled._doc_items_create_entry = false
 def_hopper_disabled.groups.not_in_creative_inventory = 1
 def_hopper_disabled.drop = "vlf_hoppers:hopper"
-def_hopper_disabled.mesecons = {
-	effector = {
-		action_off = function(pos, node)
+def_hopper_disabled._vlf_redstone = {
+	connects_to = function(node, dir)
+		return true
+	end,
+	update = function(pos)
+		if vlf_redstone.get_power(pos) == 0 then
+			local node = minetest.get_node(pos)
 			minetest.swap_node(pos, {name="vlf_hoppers:hopper", param2=node.param2})
-		end,
-	},
+		end
+	end,
 }
 
 minetest.register_node("vlf_hoppers:hopper_disabled", def_hopper_disabled)
@@ -201,7 +211,7 @@ end
 local def_hopper_side = {
 	_doc_items_create_entry = false,
 	drop = "vlf_hoppers:hopper",
-	groups = {pickaxey=1, container=2,not_in_creative_inventory=1,hopper=2},
+	groups = {pickaxey=1, container=2,not_in_creative_inventory=1,hopper=2, _vlf_partial = 2},
 	drawtype = "nodebox",
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -241,7 +251,7 @@ local def_hopper_side = {
 	end,
 	after_dig_node = vlf_util.drop_items_from_meta_container({"main"}),
 
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	allow_metadata_inventory_move = function(pos, _, _, _, _, count, player)
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then
 			minetest.record_protection_violation(pos, name)
@@ -250,7 +260,7 @@ local def_hopper_side = {
 			return count
 		end
 	end,
-	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_take = function(pos, _, _, stack, player)
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then
 			minetest.record_protection_violation(pos, name)
@@ -259,7 +269,7 @@ local def_hopper_side = {
 			return stack:get_count()
 		end
 	end,
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_put = function(pos, _, _, stack, player)
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then
 			minetest.record_protection_violation(pos, name)
@@ -268,17 +278,19 @@ local def_hopper_side = {
 			return stack:get_count()
 		end
 	end,
-	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	on_metadata_inventory_move = function(pos, _, _, _, _, _, player)
 		minetest.log("action", player:get_player_name()..
 				" moves stuff in vlf_hoppers at "..minetest.pos_to_string(pos))
 	end,
-	on_metadata_inventory_put = function(pos, listname, index, stack, player)
+	on_metadata_inventory_put = function(pos, _, _, _, player)
 		minetest.log("action", player:get_player_name()..
 				" moves stuff to vlf_hoppers at "..minetest.pos_to_string(pos))
+		vlf_redstone.update_comparators(pos)
 	end,
-	on_metadata_inventory_take = function(pos, listname, index, stack, player)
+	on_metadata_inventory_take = function(pos, _, _, _, player)
 		minetest.log("action", player:get_player_name()..
 				" takes stuff from vlf_hoppers at "..minetest.pos_to_string(pos))
+		vlf_redstone.update_comparators(pos)
 	end,
 	on_rotate = on_rotate,
 	sounds = vlf_sounds.node_sound_metal_defaults(),
@@ -289,23 +301,31 @@ local def_hopper_side = {
 
 local def_hopper_side_enabled = table.copy(def_hopper_side)
 def_hopper_side_enabled.description = S("Side Hopper")
-def_hopper_side_enabled.mesecons = {
-	effector = {
-		action_on = function(pos, node)
+def_hopper_side_enabled._vlf_redstone = {
+	connects_to = function(node, dir)
+		return true
+	end,
+	update = function(pos)
+		if vlf_redstone.get_power(pos) ~= 0 then
+			local node = minetest.get_node(pos)
 			minetest.swap_node(pos, {name="vlf_hoppers:hopper_side_disabled", param2=node.param2})
-		end,
-	},
+		end
+	end,
 }
 minetest.register_node("vlf_hoppers:hopper_side", def_hopper_side_enabled)
 
 local def_hopper_side_disabled = table.copy(def_hopper_side)
 def_hopper_side_disabled.description = S("Disabled Side Hopper")
-def_hopper_side_disabled.mesecons = {
-	effector = {
-		action_off = function(pos, node)
+def_hopper_side_disabled._vlf_redstone = {
+	connects_to = function(node, dir)
+		return true
+	end,
+	update = function(pos)
+		if vlf_redstone.get_power(pos) == 0 then
+			local node = minetest.get_node(pos)
 			minetest.swap_node(pos, {name="vlf_hoppers:hopper_side", param2=node.param2})
-		end,
-	},
+		end
+	end,
 }
 minetest.register_node("vlf_hoppers:hopper_side_disabled", def_hopper_side_disabled)
 
@@ -367,32 +387,28 @@ minetest.register_abm({
 	nodenames = {"vlf_hoppers:hopper","vlf_hoppers:hopper_side"},
 	interval = 0.5,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
-		local objs = minetest.get_objects_inside_radius(pos, 3)
-
-		if objs and #objs > 0 then
-			for k,v in pairs(objs) do
-				local entity = v:get_luaentity()
-				if entity and entity.name then
-					if entity.name == "vlf_minecarts:hopper_minecart" or entity.name == "vlf_minecarts:chest_minecart"then
-						local hm_pos = entity.object:get_pos()
-						local DIST_FROM_MC = 1.5
-						if (hm_pos.y == pos.y + 1)
-								and (hm_pos.x >= pos.x - DIST_FROM_MC and hm_pos.x <= pos.x + DIST_FROM_MC)
-								and (hm_pos.z >= pos.z - DIST_FROM_MC and hm_pos.z <= pos.z + DIST_FROM_MC) then
-							if entity.name == "vlf_minecarts:hopper_minecart" then
-								hopper_pull_from_mc(entity, pos, 5)
-							elseif entity.name == "vlf_minecarts:chest_minecart" then
-								hopper_pull_from_mc(entity, pos, 27)
-							end
-						elseif (hm_pos.y == pos.y - 1)
+	action = function(pos)
+		for v in minetest.objects_inside_radius(pos, 3) do
+			local entity = v:get_luaentity()
+			if entity and entity.name then
+				if entity.name == "vlf_minecarts:hopper_minecart" or entity.name == "vlf_minecarts:chest_minecart"then
+					local hm_pos = entity.object:get_pos()
+					local DIST_FROM_MC = 1.5
+					if (hm_pos.y == pos.y + 1)
 							and (hm_pos.x >= pos.x - DIST_FROM_MC and hm_pos.x <= pos.x + DIST_FROM_MC)
 							and (hm_pos.z >= pos.z - DIST_FROM_MC and hm_pos.z <= pos.z + DIST_FROM_MC) then
-							if entity.name == "vlf_minecarts:hopper_minecart" then
-								hopper_push_to_mc(entity, pos, 5)
-							elseif entity.name == "vlf_minecarts:chest_minecart" then
-								hopper_push_to_mc(entity, pos, 27)
-							end
+						if entity.name == "vlf_minecarts:hopper_minecart" then
+							hopper_pull_from_mc(entity, pos, 5)
+						elseif entity.name == "vlf_minecarts:chest_minecart" then
+							hopper_pull_from_mc(entity, pos, 27)
+						end
+					elseif (hm_pos.y == pos.y - 1)
+						and (hm_pos.x >= pos.x - DIST_FROM_MC and hm_pos.x <= pos.x + DIST_FROM_MC)
+						and (hm_pos.z >= pos.z - DIST_FROM_MC and hm_pos.z <= pos.z + DIST_FROM_MC) then
+						if entity.name == "vlf_minecarts:hopper_minecart" then
+							hopper_push_to_mc(entity, pos, 5)
+						elseif entity.name == "vlf_minecarts:chest_minecart" then
+							hopper_push_to_mc(entity, pos, 27)
 						end
 					end
 				end
@@ -407,7 +423,7 @@ minetest.register_abm({
 	nodenames = {"vlf_hoppers:hopper","vlf_hoppers:hopper_side"},
 	interval = 1.0,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos)
 		local abovenode = minetest.get_node({x=pos.x, y=pos.y+1, z=pos.z})
 		if not minetest.registered_items[abovenode.name] then return end
 		-- Don't bother checking item enties if node above is a container (should save some CPU)
@@ -417,15 +433,18 @@ minetest.register_abm({
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 
-		for _,object in pairs(minetest.get_objects_inside_radius(pos, 2)) do
+		for object in minetest.objects_inside_radius(pos, 2) do
 			if not object:is_player() and object:get_luaentity() and object:get_luaentity().name == "__builtin:item" and not object:get_luaentity()._removed then
 				if inv and inv:room_for_item("main", ItemStack(object:get_luaentity().itemstring)) then
-					-- Item must get sucked in when the item just TOUCHES the block above the hopper
-					-- This is the reason for the Y calculation.
-					-- Test: Items on farmland and slabs get sucked, but items on full blocks don't
+					-- Item must get sucked in when the item is above the hopper
+					-- and just inside the block above the hopper
+					local cbox = object:get_properties().collisionbox
+					local radius = cbox[4]
 					local posob = object:get_pos()
-					local posob_miny = posob.y + object:get_properties().collisionbox[2]
-					if math.abs(posob.x-pos.x) <= 0.5 and (posob_miny-pos.y < 1.5 and posob.y-pos.y >= 0.3) then
+					local posob_miny = posob.y + cbox[2]
+					if math.abs(posob.x-pos.x) <= (0.5 + radius) and
+							math.abs(posob.z-pos.z) <= (0.5 + radius) and
+							posob_miny-pos.y < 1.5 and posob.y-pos.y >= 0.3 then
 						inv:add_item("main", ItemStack(object:get_luaentity().itemstring))
 						object:get_luaentity().itemstring = ""
 						object:remove()
@@ -451,6 +470,9 @@ local function hopper_suck(pos)
 		if not success then
 			success = vlf_util.move_item_container(uppos, pos)
 		end
+		if success and updef._after_hopper_out then
+			updef._after_hopper_out(uppos)
+		end
 	end
 	return success
 end
@@ -470,6 +492,9 @@ local function hopper_push(pos, to_pos)
 		if not success and cgroup >= 2 and cgroup <= 6 then
 			success = vlf_util.move_item_container(pos, to_pos)
 		end
+		if success and to_def._after_hopper_in then
+			to_def._after_hopper_in(to_pos)
+		end
 	end
 	return success
 end
@@ -481,7 +506,7 @@ minetest.register_abm({
 	neighbors = { "group:container" },
 	interval = 1.0,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos)
 		hopper_suck(pos)
 		local to_pos = vector.offset(pos, 0, -1, 0)
 		hopper_push(pos, to_pos)
@@ -494,7 +519,7 @@ minetest.register_abm({
 	neighbors = { "group:container" },
 	interval = 1.0,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos)
 		hopper_suck(pos)
 		-- Determine to which side the hopper is facing, get nodes
 		local face = minetest.get_node(pos).param2
@@ -538,7 +563,7 @@ minetest.register_lbm({
 	name = "vlf_hoppers:update_formspec_0_60_0",
 	nodenames = { "group:hopper" },
 	run_at_every_load = false,
-	action = function(pos, node)
+	action = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", vlf_hoppers_formspec)
 	end,

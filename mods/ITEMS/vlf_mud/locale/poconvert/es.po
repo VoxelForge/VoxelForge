@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_mud x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_mud x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,29 +11,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Mud"
-msgstr ""
+msgstr "Barro"
 
 msgid "Mud is a decorative block that generates in mangrove swamps. Mud can also be obtained by using water bottles on dirt or coarse dirt."
-msgstr ""
+msgstr "El barro es un bloque decorativo que se genera en los manglares. El barro también se puede obtener utilizando botellas de agua sobre tierra o tierra infértil."
 
 msgid "Packed Mud"
-msgstr ""
+msgstr "Adobe"
 
 msgid "Packed mud is a decorative block used to craft mud bricks."
-msgstr ""
+msgstr "El adobe es un bloque decorativo que se utiliza para fabricar ladrillos de adobe."
 
 msgid "Mud Bricks"
-msgstr ""
+msgstr "Ladrillos de adobe"
 
 msgid "Decorative block crafted from packed mud."
-msgstr ""
+msgstr "Bloque decorativo elaborado con adobe."
 
 msgid "Mud Brick Stair"
-msgstr ""
+msgstr "Escalera de ladrillos de adobe"
 
 msgid "Mud Brick Slab"
-msgstr ""
+msgstr "Losa de ladrillos de adobe"
 

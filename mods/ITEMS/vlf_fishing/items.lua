@@ -8,6 +8,7 @@ minetest.register_craftitem("vlf_fishing:fish_raw", {
 	on_secondary_use = minetest.item_eat(2),
 	groups = { food=2, eatable = 2, smoker_cookable = 1, campfire_cookable = 1 },
 	_vlf_saturation = 0.4,
+	_vlf_cooking_output = "vlf_fishing:fish_cooked"
 })
 
 minetest.register_craftitem("vlf_fishing:fish_cooked", {
@@ -28,6 +29,7 @@ minetest.register_craftitem("vlf_fishing:salmon_raw", {
 	on_secondary_use = minetest.item_eat(2),
 	groups = { food=2, eatable = 2, smoker_cookable = 1, campfire_cookable = 1 },
 	_vlf_saturation = 0.4,
+	_vlf_cooking_output = "vlf_fishing:salmon_cooked"
 })
 
 minetest.register_craftitem("vlf_fishing:salmon_cooked", {
@@ -51,9 +53,9 @@ minetest.register_craftitem("vlf_fishing:clownfish_raw", {
 })
 
 local function eat_pufferfish(itemstack, placer, pointed_thing)
-	vlf_entity_effects.give_effect_by_level("poison", placer, 3, 60)
-	vlf_entity_effects.give_effect_by_level("nausea", placer, 2, 60)
-	return minetest.item_eat(1)(itemstack, placer, pointed_thing)
+    vlf_potions.give_effect_by_level("poison", placer, 3, 60)
+    vlf_potions.give_effect_by_level("nausea", placer, 2, 60)
+    return minetest.item_eat(1)(itemstack, placer, pointed_thing)
 end
 minetest.register_craftitem("vlf_fishing:pufferfish_raw", {
 	description = S("Pufferfish"),
@@ -64,20 +66,6 @@ minetest.register_craftitem("vlf_fishing:pufferfish_raw", {
 	on_secondary_use = eat_pufferfish,
 	groups = { food=2, eatable=1, brewitem = 1 },
 	_vlf_saturation = 0.2,
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_fishing:salmon_cooked",
-	recipe = "vlf_fishing:salmon_raw",
-	cooktime = 10,
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_fishing:fish_cooked",
-	recipe = "vlf_fishing:fish_raw",
-	cooktime = 10,
 })
 
 minetest.register_craft({
@@ -96,8 +84,4 @@ minetest.register_craft({
 		{"vlf_mobitems:string","","vlf_core:stick"},
 	}
 })
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:fishing_rod",
-	burntime = 15,
-})
+

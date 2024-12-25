@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain awards x.x.x\n"
+"Project-Id-Version: Luanti textdomain awards x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,22 +11,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Secret Award Unlocked: @1"
-msgstr ""
+msgstr "Odblokowana sekretna nagroda: @1"
 
 msgid "Award Unlocked: @1"
-msgstr ""
+msgstr "Odblokowana nagroda: @1"
 
 msgid "Secret Advancement Made!"
 msgstr ""
 
 msgid "Goal Completed!"
-msgstr ""
+msgstr "Cel zrealizowany!"
 
 msgid "Challenge Completed!"
-msgstr ""
+msgstr "Zadanie ukończone!"
 
 msgid "Advancement Made!"
 msgstr ""
@@ -35,34 +35,34 @@ msgid "[c|clear|disable|enable]"
 msgstr "[c|clear|disable|enable]"
 
 msgid "Show, clear, disable or enable your awards"
-msgstr ""
+msgstr "Pokaż, wyczyść, wyłącz lub włącz swoje nagrody"
 
 msgid "All your awards and statistics have been cleared. You can now start again."
 msgstr "Wszystkie twoje nagrody i statystyki zostały usunięte. Możesz zacząć ponownie."
 
 msgid "You have disabled awards."
-msgstr ""
+msgstr "Wyłączyłeś nagrody."
 
 msgid "You have enabled awards."
-msgstr ""
+msgstr "Włączyłeś nagrody."
 
 msgid "<award ID>"
 msgstr ""
 
 msgid "Show details of an award"
-msgstr ""
+msgstr "Pokaż szczegóły nagrody"
 
 msgid "Award not found."
-msgstr ""
+msgstr "Nie znaleziono nagrody."
 
 msgid "<name>"
 msgstr "<nazwa>"
 
 msgid "Get the awards statistics for the given player or yourself"
-msgstr ""
+msgstr "Pobierz statystyki nagród dla siebie lub innego gracza"
 
 msgid "Error: No achivements available."
-msgstr ""
+msgstr "Błąd: Brak dostępnych osiągnięć."
 
 msgid "OK"
 msgstr "OK"
@@ -71,7 +71,7 @@ msgid "(Secret Award)"
 msgstr ""
 
 msgid "Unlock this award to find out what it is."
-msgstr ""
+msgstr "Odblokuj tą nagrodę by poznać szczegóły."
 
 msgid "@1 (unlocked)"
 msgstr ""
@@ -80,7 +80,7 @@ msgid "You've disabled awards. Type /awards enable to reenable."
 msgstr "Wyłączono osiągnięcia. Napisz /awards by je włączyć."
 
 msgid "Error: No award available."
-msgstr ""
+msgstr "Błąd: Brak dostępnych nagród."
 
 msgid "You have not unlocked any awards."
 msgstr ""

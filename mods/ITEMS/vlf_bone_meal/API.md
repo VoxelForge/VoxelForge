@@ -6,4 +6,4 @@
 This function is called when the field is defined in a node definition
 and the node is righclicked (on_place) with bone meal.
 
-It will check for protection and creative mode and show the bone meal particles.
+It will check for protection and creative mode and show the bone meal particles and takes a bone meal item unless the callback returns false.

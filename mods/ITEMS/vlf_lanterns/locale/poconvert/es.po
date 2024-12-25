@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_lanterns x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_lanterns x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,20 +11,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Chain"
-msgstr ""
+msgstr "Cadena"
 
 msgid "Chains are metallic decoration blocks."
-msgstr ""
+msgstr "Las cadenas son bloques decorativos de hierro."
 
 msgid "Lantern"
-msgstr ""
+msgstr "Farol"
 
 msgid "Lanterns are light sources which can be placed on the top or the bottom of most blocks."
-msgstr ""
+msgstr "Los faroles son fuentes de luz que se pueden colocar en la parte de arriba o abajo de la mayoría de los bloques."
 
 msgid "Soul Lantern"
-msgstr ""
+msgstr "Farol del almas"
 

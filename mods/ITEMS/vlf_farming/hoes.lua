@@ -1,6 +1,6 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local function create_soil(pos, inv)
+local function create_soil(pos)
 	if pos == nil then
 		return false
 	end
@@ -45,6 +45,7 @@ local hoe_on_place_function = function(wear_divisor)
 		end
 
 		no_wear = no_wear or create_soil(pointed_thing.under, user:get_inventory())
+
 		if not no_wear and not minetest.is_creative_enabled(user:get_player_name()) then
 			itemstack:add_wear(65535/wear_divisor)
 		end
@@ -85,6 +86,7 @@ minetest.register_tool("vlf_farming:hoe_wood", {
 	_vlf_diggroups = {
 		hoey = { speed = 2, level = 1, uses = 60 }
 	},
+	_vlf_burntime = 10
 })
 
 minetest.register_craft({
@@ -102,11 +104,6 @@ minetest.register_craft({
 		{"vlf_core:stick", ""},
 		{"vlf_core:stick", ""}
 	}
-})
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_farming:hoe_wood",
-	burntime = 10,
 })
 
 minetest.register_tool("vlf_farming:hoe_stone", {
@@ -167,6 +164,7 @@ minetest.register_tool("vlf_farming:hoe_iron", {
 	_vlf_diggroups = {
 		hoey = { speed = 6, level = 4, uses = 251 }
 	},
+	_vlf_cooking_output = "vlf_core:iron_nugget"
 })
 
 minetest.register_craft({
@@ -184,13 +182,6 @@ minetest.register_craft({
 		{"vlf_core:stick", ""},
 		{"vlf_core:stick", ""}
 	}
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_core:iron_nugget",
-	recipe = "vlf_farming:hoe_iron",
-	cooktime = 10,
 })
 
 minetest.register_tool("vlf_farming:hoe_gold", {
@@ -212,6 +203,7 @@ minetest.register_tool("vlf_farming:hoe_gold", {
 	_vlf_diggroups = {
 		hoey = { speed = 12, level = 2, uses = 33 }
 	},
+	_vlf_cooking_output = "vlf_core:gold_nugget"
 })
 
 minetest.register_craft({
@@ -229,15 +221,6 @@ minetest.register_craft({
 		{"vlf_core:stick", ""},
 		{"vlf_core:stick", ""}
 	}
-})
-
-
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_core:gold_nugget",
-	recipe = "vlf_farming:hoe_gold",
-	cooktime = 10,
 })
 
 minetest.register_tool("vlf_farming:hoe_diamond", {

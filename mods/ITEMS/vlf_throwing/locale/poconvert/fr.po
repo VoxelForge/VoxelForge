@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_throwing x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_throwing x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Use the punch key to throw."
 msgstr "Utilisez la touche frapper pour lancer."
@@ -44,5 +44,5 @@ msgid "An ender pearl is an item which can be used for teleportation at the cost
 msgstr "Une Perle d'Ender est un objet qui peut être utilisé pour la téléportation au détriment de la santé. Il peut être lancé et téléporter le lanceur vers son emplacement d'impact lorsqu'il frappe un bloc solide ou une plante. Chaque téléportation blesse l'utilisateur de 5 points de vie."
 
 msgid "Use the place/use key to throw."
-msgstr ""
+msgstr "Utilisez la touche de placement/utilisation pour lancer."
 

@@ -24,11 +24,11 @@ vlf_banners.colors = {
 	-- [ID] = { banner description, wool, unified dyes color group, overlay color, dye, color name for emblazonings }
 	["unicolor_white"] =      {"white",      S("White Banner"),      "vlf_wool:white", vlf_dyes.colors.white.rgb, "vlf_dyes:white", S("White") },
 	["unicolor_darkgrey"] =   {"grey",       S("Grey Banner"),       "vlf_wool:grey", vlf_dyes.colors.grey.rgb, "vlf_dyes:dark_grey", S("Grey") },
-	["unicolor_grey"] =       {"silver",     S("Light Grey Banner"), "vlf_wool:silver", vlf_dyes.colors.silver.rgb, "vlf_dyes:grey", S("Light Grey") },
+	["unicolor_grey"] =       {"silver",     S("Light Grey Banner"), "vlf_wool:silver", vlf_dyes.colors.silver.rgb, "vlf_dyes:silver", S("Light Grey") },
 	["unicolor_black"] =      {"black",      S("Black Banner"),      "vlf_wool:black", vlf_dyes.colors.black.rgb, "vlf_dyes:black", S("Black") },
 	["unicolor_red"] =        {"red",        S("Red Banner"),        "vlf_wool:red", vlf_dyes.colors.red.rgb, "vlf_dyes:red", S("Red") },
 	["unicolor_yellow"] =     {"yellow",     S("Yellow Banner"),     "vlf_wool:yellow", vlf_dyes.colors.yellow.rgb, "vlf_dyes:yellow", S("Yellow") },
-	["unicolor_dark_green"] = {"green",      S("Green Banner"),      "vlf_wool:green", vlf_dyes.colors.green.rgb, "vlf_dyes:dark_green", S("Green") },
+	["unicolor_dark_green"] = {"green",      S("Green Banner"),      "vlf_wool:green", vlf_dyes.colors.green.rgb, "vlf_dyes:green", S("Green") },
 	["unicolor_cyan"] =       {"cyan",       S("Cyan Banner"),       "vlf_wool:cyan", vlf_dyes.colors.cyan.rgb, "vlf_dyes:cyan", S("Cyan") },
 	["unicolor_blue"] =       {"blue",       S("Blue Banner"),       "vlf_wool:blue", vlf_dyes.colors.blue.rgb, "vlf_dyes:blue", S("Blue") },
 	["unicolor_red_violet"] = {"magenta",    S("Magenta Banner"),    "vlf_wool:magenta", vlf_dyes.colors.magenta.rgb, "vlf_dyes:magenta", S("Magenta")},
@@ -38,57 +38,57 @@ vlf_banners.colors = {
 	["unicolor_dark_orange"] ={"brown",      S("Brown Banner"),      "vlf_wool:brown", vlf_dyes.colors.brown.rgb, "vlf_dyes:brown", S("Brown") },
 	["unicolor_pink"] =       {"pink",       S("Pink Banner"),       "vlf_wool:pink", vlf_dyes.colors.pink.rgb, "vlf_dyes:pink", S("Pink") },
 	["unicolor_light_red"] =  {"pink",       S("Pink Banner"),       "vlf_wool:pink", vlf_dyes.colors.pink.rgb, "vlf_dyes:pink", S("Pink") },
-	["unicolor_lime"] =       {"lime",       S("Lime Banner"),       "vlf_wool:lime", vlf_dyes.colors.lime.rgb, "vlf_dyes:green", S("Lime") },
-	["unicolor_green"] =      {"lime",       S("Lime Banner"),       "vlf_wool:lime", vlf_dyes.colors.lime.rgb, "vlf_dyes:green", S("Lime") },
+	["unicolor_lime"] =       {"lime",       S("Lime Banner"),       "vlf_wool:lime", vlf_dyes.colors.lime.rgb, "vlf_dyes:lime", S("Lime") },
+	["unicolor_green"] =      {"lime",       S("Lime Banner"),       "vlf_wool:lime", vlf_dyes.colors.lime.rgb, "vlf_dyes:lime", S("Lime") },
 	--the duplicate lines for brown/dark_orange, lime/green and pink/light_red are needed because vlf_banners previously used the wrong unicolor color names
-	["unicolor_light_blue"] = {"light_blue", S("Light Blue Banner"), "vlf_wool:light_blue", vlf_dyes.colors.light_blue.rgb, "vlf_dyes:lightblue", S("Light Blue") },
+	["unicolor_light_blue"] = {"light_blue", S("Light Blue Banner"), "vlf_wool:light_blue", vlf_dyes.colors.light_blue.rgb, "vlf_dyes:light_blue", S("Light Blue") },
 }
 
 
 local pattern_names = {
-	"",
-	"border",
-	"bricks",
-	"circle",
-	"creeper",
-	"cross",
-	"curly_border",
-	"diagonal_up_left",
-	"diagonal_up_right",
-	"diagonal_right",
-	"diagonal_left",
-	"flower",
-	"gradient",
-	"gradient_up",
-	"half_horizontal_bottom",
-	"half_horizontal",
-	"half_vertical",
-	"half_vertical_right",
-	"thing",
-	"rhombus",
-	"skull",
-	"small_stripes",
-	"square_bottom_left",
-	"square_bottom_right",
-	"square_top_left",
-	"square_top_right",
-	"straight_cross",
-	"stripe_bottom",
-	"stripe_center",
-	"stripe_downleft",
-	"stripe_downright",
-	"stripe_left",
-	"stripe_middle",
-	"stripe_right",
-	"stripe_top",
-	"triangle_bottom",
-	"triangle_top",
-	"triangles_bottom",
-	"triangles_top",
-	"globe",
-	"piglin",
-	"guster",
-	"flow",
+      "",
+      "border",
+      "bricks",
+      "circle",
+      "creeper",
+      "cross",
+      "curly_border",
+      "diagonal_up_left",
+      "diagonal_up_right",
+      "diagonal_right",
+      "diagonal_left",
+      "flower",
+      "gradient",
+      "gradient_up",
+      "half_horizontal_bottom",
+      "half_horizontal",
+      "half_vertical",
+      "half_vertical_right",
+      "thing",
+      "rhombus",
+      "skull",
+      "small_stripes",
+      "square_bottom_left",
+      "square_bottom_right",
+      "square_top_left",
+      "square_top_right",
+      "straight_cross",
+      "stripe_bottom",
+      "stripe_center",
+      "stripe_downleft",
+      "stripe_downright",
+      "stripe_left",
+      "stripe_middle",
+      "stripe_right",
+      "stripe_top",
+      "triangle_bottom",
+      "triangle_top",
+      "triangles_bottom",
+      "triangles_top",
+      "globe",
+      "piglin",
+      "guster",
+      "flow",
 }
 
 local colors_reverse = {}
@@ -114,7 +114,7 @@ local function rotation_level_to_yaw(rotation_level)
 	return (rotation_level * (math.pi/8)) + math.pi
 end
 
-local function on_dig_banner(pos, node, digger)
+local function on_dig_banner(pos, _, digger)
 	-- Check protection
 	local name = digger:get_player_name()
 	if minetest.is_protected(pos, name) then
@@ -147,8 +147,7 @@ local function on_destruct_banner(pos, hanging)
 	end
 	-- Find this node's banner entity and remove it
 	local checkpos = vector.add(pos, offset)
-	local objects = minetest.get_objects_inside_radius(checkpos, 0.5)
-	for _, v in ipairs(objects) do
+	for v in minetest.objects_inside_radius(checkpos, 0.5) do
 		local ent = v:get_luaentity()
 		if ent and ent.name == nodename then
 			v:remove()
@@ -237,8 +236,7 @@ local function respawn_banner_entity(pos, node, force)
 	end
 	-- Check if a banner entity already exists
 	local bpos = vector.add(pos, offset)
-	local objects = minetest.get_objects_inside_radius(bpos, 0.5)
-	for _, v in ipairs(objects) do
+	for v in minetest.objects_inside_radius(bpos, 0.5) do
 		local ent = v:get_luaentity()
 		if ent and (ent.name == "vlf_banners:standing_banner" or ent.name == "vlf_banners:hanging_banner") then
 			if force then
@@ -256,9 +254,15 @@ local function respawn_banner_entity(pos, node, force)
 	-- Set rotation
 	local rotation_level = meta:get_int("rotation_level")
 	local final_yaw = rotation_level_to_yaw(rotation_level)
-	banner_entity:set_yaw(final_yaw)
+	if banner_entity then
+		banner_entity:set_yaw(final_yaw)
+	end
 end
 
+local function get_banner_stack(pos)
+	local inv = minetest.get_meta(pos):get_inventory()
+	return inv:get_stack("banner", 1)
+end
 -- Banner nodes.
 -- These are an invisible nodes which are only used to destroy the banner entity.
 -- All the important banner information (such as color) is stored in the entity.
@@ -291,7 +295,7 @@ S("You can copy the pattern of a banner by placing two banners of the same color
 	wield_image = "vlf_banners_item_base.png",
 
 	selection_box = {type = "fixed", fixed= {-0.3, -0.5, -0.3, 0.3, 0.5, 0.3} },
-	groups = {axey=1,handy=1, attached_node = 1, not_in_creative_inventory = 1, banner = 1, not_in_craft_guide = 1, material_wood=1, dig_by_piston=1, flammable=-1 },
+	groups = {axey=1,handy=1, attached_node = 1, not_in_creative_inventory = 1, banner = 1, not_in_craft_guide = 1, material_wood=1, dig_by_piston=1, flammable=-1, unmovable_by_piston = 1},
 	stack_max = 16,
 	sounds = node_sounds,
 	drop = "", -- Item drops are handled in entity code
@@ -303,7 +307,8 @@ S("You can copy the pattern of a banner by placing two banners of the same color
 	end,
 	_vlf_hardness = 1,
 	_vlf_blast_resistance = 1,
-	on_rotate = function(pos, node, user, mode, param2)
+	_vlf_baseitem = get_banner_stack,
+	on_rotate = function(pos, node, _, mode)
 		if mode == screwdriver.ROTATE_FACE then
 			local meta = minetest.get_meta(pos)
 			local rot = meta:get_int("rotation_level")
@@ -335,7 +340,7 @@ minetest.register_node("vlf_banners:hanging_banner", {
 		wall_bottom = { -0.49, -0.49, -0.49, -0.41, -0.41, 0.49 },
 	},
 	selection_box = {type = "wallmounted", wall_side = {-0.5, -0.5, -0.5, -4/16, 0.5, 0.5} },
-	groups = {axey=1,handy=1, attached_node = 1, not_in_creative_inventory = 1, banner = 1, not_in_craft_guide = 1, material_wood=1, flammable=-1 },
+	groups = {axey=1,handy=1, attached_node = 1, not_in_creative_inventory = 1, banner = 1, not_in_craft_guide = 1, material_wood=1, flammable=-1, unmovable_by_piston = 1},
 	stack_max = 16,
 	sounds = node_sounds,
 	drop = "", -- Item drops are handled in entity code
@@ -347,7 +352,8 @@ minetest.register_node("vlf_banners:hanging_banner", {
 	end,
 	_vlf_hardness = 1,
 	_vlf_blast_resistance = 1,
-	on_rotate = function(pos, node, user, mode, param2)
+	_vlf_baseitem = get_banner_stack,
+	on_rotate = function(pos, node, _, mode)
 		if mode == screwdriver.ROTATE_FACE then
 			local r = screwdriver.rotate.wallmounted(pos, node, mode)
 			node.param2 = r
@@ -373,10 +379,10 @@ minetest.register_node("vlf_banners:hanging_banner", {
 })
 
 -- for pattern_name, pattern in pairs(patterns) do
-for colorid, colortab in pairs(vlf_banners.colors) do
-    for i, pattern_name in ipairs(pattern_names) do
+for _, colortab in pairs(vlf_banners.colors) do
+    for _, pattern_name in ipairs(pattern_names) do
 	local itemid = colortab[1]
-	local desc = S("@1 Banner", vlf_dyes.colors[itemid].readable_name)
+	local desc = colortab[2]
 	local wool = colortab[3]
 	local colorize = colortab[4]
 
@@ -448,7 +454,7 @@ for colorid, colortab in pairs(vlf_banners.colors) do
 		-- Used for crafting.
 		groups = groups,
 		stack_max = 16,
-
+		_vlf_burntime = 15,
 		on_place = function(itemstack, placer, pointed_thing)
 			local above = pointed_thing.above
 			local under = pointed_thing.under
@@ -457,24 +463,10 @@ for colorid, colortab in pairs(vlf_banners.colors) do
 			if placer and not placer:get_player_control().sneak then
 				local rc = vlf_util.call_on_rightclick(itemstack, placer, pointed_thing)
 				if rc then return rc end
+				if vlf_util.check_position_protection(under, placer) then return itemstack end
 
-				if minetest.get_modpath("vlf_cauldrons") then
-					-- Use banner on cauldron to remove the top-most layer. This reduces the water level by 1.
-					local new_node
-					if node_under.name == "vlf_cauldrons:cauldron_3" then
-						new_node = "vlf_cauldrons:cauldron_2"
-					elseif node_under.name == "vlf_cauldrons:cauldron_2" then
-						new_node = "vlf_cauldrons:cauldron_1"
-					elseif node_under.name == "vlf_cauldrons:cauldron_1" then
-						new_node = "vlf_cauldrons:cauldron"
-					elseif node_under.name == "vlf_cauldrons:cauldron_3r" then
-						new_node = "vlf_cauldrons:cauldron_2r"
-					elseif node_under.name == "vlf_cauldrons:cauldron_2r" then
-						new_node = "vlf_cauldrons:cauldron_1r"
-					elseif node_under.name == "vlf_cauldrons:cauldron_1r" then
-						new_node = "vlf_cauldrons:cauldron"
-					end
-					if new_node then
+				if minetest.get_item_group(node_under.name, "cauldron_water") > 0 then
+					if vlf_cauldrons.add_level(pointed_thing.under, -1) then
 						local imeta = itemstack:get_meta()
 						local layers_raw = imeta:get_string("layers")
 						local layers = minetest.deserialize(layers_raw)
@@ -488,13 +480,6 @@ for colorid, colortab in pairs(vlf_banners.colors) do
 								imeta:set_string("description", newdesc)
 							end
 						end
-
-						-- Washing off reduces the water level by 1.
-						-- (It is possible to waste water if the banner had 0 layers.)
-						minetest.swap_node(pointed_thing.under, {name=new_node})
-
-						-- Play sound (from vlf_entity_effects mod)
-						minetest.sound_play("vlf_entity_effects_bottle_pour", {pos=pointed_thing.under, gain=0.5, max_hear_range=16}, true)
 
 						return itemstack
 					end
@@ -680,11 +665,12 @@ local entity_standing = {
 		end
 		self.object:set_properties({textures = {vlf_banners.make_banner_texture(self._base_color, self._layers)}})
 	end,
+	_vlf_pistons_unmovable = true
 }
 minetest.register_entity("vlf_banners:standing_banner", entity_standing)
 
 local entity_hanging = table.copy(entity_standing)
-entity_hanging.mesh = "amc_banner_hanging.b3d"
+entity_hanging.initial_properties.mesh = "amc_banner_hanging.b3d"
 minetest.register_entity("vlf_banners:hanging_banner", entity_hanging)
 
 -- FIXME: Prevent entity destruction by /clearobjects
@@ -697,10 +683,3 @@ minetest.register_lbm({
 		respawn_banner_entity(pos, node)
 	end,
 })
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:banner",
-	burntime = 15,
-})
-

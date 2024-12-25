@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_armor x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_armor x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,40 +11,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This is a piece of equippable armor which reduces the amount of damage you receive."
-msgstr "Esta es una pieza de armadura que se puede equipar, la cual reduce la cantidad de daño que recives."
+msgstr "Esta es una pieza de armadura equipable que reduce la cantidad de daño que recibes."
 
 msgid "To equip it, put it on the corresponding armor slot in your inventory menu."
 msgstr "Para equiparla, colocala en la ranura de armadura en el menú de tu inventario."
 
 msgid "Leather Cap"
-msgstr ""
+msgstr "Gorra de Cuero"
 
 msgid "Leather Tunic"
-msgstr ""
+msgstr "Túnica de Cuero"
 
 msgid "Leather Pants"
-msgstr ""
+msgstr "Pantalones de Cuero"
 
 msgid "Leather Boots"
-msgstr ""
+msgstr "Botas de Cuero"
 
 msgid "Colorize a piece of leather armor, or wash it"
-msgstr ""
+msgstr "Colorea una pieza de armadura de cuero o lávala"
 
 msgid "Not leather armor."
-msgstr ""
+msgstr "No es una armadura de cuero."
 
 msgid "Washed."
-msgstr ""
+msgstr "Lavada."
 
 msgid "Done: @1"
-msgstr ""
+msgstr "Resultado: @1"
 
 msgid "Player isn't online"
-msgstr ""
+msgstr "La persona no está en línea"
 
 msgid "Golden Helmet"
 msgstr "Casco de oro"
@@ -59,16 +59,16 @@ msgid "Golden Boots"
 msgstr "Botas de oro"
 
 msgid "Chainmail Helmet"
-msgstr ""
+msgstr "Casco de cota de malla"
 
 msgid "Chainmail Chestplate"
-msgstr ""
+msgstr "Peto de cota de malla"
 
 msgid "Chainmail Leggings"
-msgstr ""
+msgstr "Grebas de cota de malla"
 
 msgid "Chainmail Boots"
-msgstr ""
+msgstr "Botas de cota de malla"
 
 msgid "Iron Helmet"
 msgstr "Casco de hierro"
@@ -128,10 +128,10 @@ msgid "Protection"
 msgstr "Protección"
 
 msgid "Reduces most types of damage by 4% for each level."
-msgstr "Reduce la mayoría de tipos de daño por 4% por cada nivel."
+msgstr "Reduce la mayoría de los tipos de daño en un 4% por cada nivel."
 
 msgid "Feather Falling"
-msgstr "Caída de plumas"
+msgstr "Caída de pluma"
 
 msgid "Reduces fall damage."
 msgstr "Reduce el daño por caída."
@@ -146,32 +146,32 @@ msgid "Curse of Binding"
 msgstr "Maldicón de ligamiento"
 
 msgid "Item cannot be removed from armor slots except due to death, breaking or in Creative Mode."
-msgstr "El objeto no puede ser removido de las ranuras de inventario excepto al morir, al romperse, o en Modo Creativo."
+msgstr "El ítem no puede ser removido de las ranuras de inventario excepto al morir, al romperse, o en Modo Creativo."
 
 msgid "Thorns"
 msgstr "Espinas"
 
 msgid "Reflects some of the damage taken when hit, at the cost of reducing durability with each proc."
-msgstr "Refleja una parte del daño infligido, a costa de reducir la durabilidad con cada activación."
+msgstr "Refleja una parte del daño recibido al golpear, a costa de reducir la durabilidad con cada golpe recibido."
 
 msgid "Elytra"
 msgstr "Élitros"
 
 msgid "Smithing Template"
-msgstr ""
+msgstr "Plantilla de herrería"
 
 msgid "@1 Armor Trim"
-msgstr ""
+msgstr "Adorno de armadura @1"
 
 msgid "Applies to:"
-msgstr ""
+msgstr "Se aplica a:"
 
 msgid "Armor"
-msgstr ""
+msgstr "Armadura"
 
 msgid "Ingredients:"
-msgstr ""
+msgstr "Ingredientes:"
 
 msgid "Ingot & Crystals"
-msgstr ""
+msgstr "Lingotes y Cristales"
 

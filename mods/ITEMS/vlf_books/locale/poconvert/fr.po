@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_books x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_books x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Book"
 msgstr "Livre"
@@ -56,13 +56,13 @@ msgid "A book can hold up to 4500 characters. The title length is limited to 64 
 msgstr "Un livre peut contenir jusqu'à 4500 caractères. La longueur du titre est limitée à 64 caractères."
 
 msgid "Enter book title:"
-msgstr "Entrez le titre du livre:"
+msgstr "Entrez le titre du livre :"
 
 msgid "Sign and Close"
 msgstr "Signez et fermez"
 
 msgid "Note: The book will no longer be editable after signing"
-msgstr "Remarque: le livre ne sera plus modifiable après la signature"
+msgstr "Remarque : le livre ne sera plus modifiable après la signature"
 
 msgid "Cancel"
 msgstr "Annuler"
@@ -86,7 +86,7 @@ msgid "Bookshelf"
 msgstr "Bibliothèque"
 
 msgid "Inventory"
-msgstr ""
+msgstr "Inventaire"
 
 msgid "Bookshelves are used for decoration."
 msgstr "Les bibliothèques sont utilisées pour la décoration."

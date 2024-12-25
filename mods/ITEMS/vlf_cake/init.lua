@@ -54,10 +54,10 @@ minetest.register_node("vlf_cake:cake", {
 	stack_max = 1,
 	groups = {
 		handy = 1, attached_node = 1, dig_by_piston = 1, comparator_signal = 14,
-		cake = 7, food = 2, no_eat_delay = 1, compostability = 100
+		cake = 7, food = 2, no_eat_delay = 1, compostability = 100, unsticky = 1
 	},
 	drop = "",
-	on_rightclick = function(pos, node, clicker, _)
+	on_rightclick = function(pos, node, clicker)
 		-- Cake is subject to protection
 		local name = clicker:get_player_name()
 		if minetest.is_protected(pos, name) then
@@ -67,6 +67,7 @@ minetest.register_node("vlf_cake:cake", {
 		-- Check if we were allowed to eat
 		if node.name == "vlf_cake:cake" or minetest.is_creative_enabled(clicker:get_player_name()) then
 			minetest.add_node(pos,{type="node",name="vlf_cake:cake_6",param2=0})
+			minetest.do_item_eat(2, ItemStack(), ItemStack("vlf_cake:cake"), clicker, {type="nothing"})
 		end
 	end,
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
@@ -82,7 +83,7 @@ local register_slice = function(level, nodebox, desc)
 	local after_eat = "vlf_cake:cake_"..(level-1)
 	local on_rightclick
 	if level > 1 then
-		on_rightclick = function(pos, node, clicker, _)
+		on_rightclick = function(pos, node, clicker)
 			local name = clicker:get_player_name()
 			if minetest.is_protected(pos, name) then
 				minetest.record_protection_violation(pos, name)
@@ -96,7 +97,7 @@ local register_slice = function(level, nodebox, desc)
 		end
 	else
 		-- Last slice
-		on_rightclick = function(pos, node, clicker, _)
+		on_rightclick = function(pos, node, clicker)
 			local name = clicker:get_player_name()
 			if minetest.is_protected(pos, name) then
 				minetest.record_protection_violation(pos, name)
@@ -130,7 +131,7 @@ local register_slice = function(level, nodebox, desc)
 		groups = {
 			handy = 1, attached_node = 1, not_in_creative_inventory = 1,
 			dig_by_piston = 1, cake = level, comparator_signal = level * 2,
-			food = 2, no_eat_delay = 1
+			food = 2, no_eat_delay = 1, unsticky = 1
 		},
 		drop = "",
 		on_rightclick = on_rightclick,
@@ -142,9 +143,7 @@ local register_slice = function(level, nodebox, desc)
 		_vlf_hardness = 0.5,
 	})
 
-	if minetest.get_modpath("doc") then
-		doc.add_entry_alias("nodes", "vlf_cake:cake", "nodes", "vlf_cake:cake_"..level)
-	end
+	doc.add_entry_alias("nodes", "vlf_cake:cake", "nodes", "vlf_cake:cake_"..level)
 end
 
 register_slice(6, slice_6, S("Cake (6 Slices Left)"))

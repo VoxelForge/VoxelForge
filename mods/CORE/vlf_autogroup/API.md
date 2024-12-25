@@ -10,7 +10,7 @@ Return true if <nodename> can be dig with <toolname> by <player>.
 ## vlf_autogroup.get_groupcaps(toolname, efficiency)
 This function is used to calculate diggroups for tools.
 WARNING: This function can only be called after mod initialization.
-* toolname: string, name of the tool being enchanted (like "vlf_tools:diamond_pickaxe")
+* toolname: string, name of the tool being enchanted (like "vlf_tools:pick_diamond")
 * efficiency: (optional) integer, the efficiency level the tool is enchanted with (default 0)
 
 ## vlf_autogroup.get_wear(toolname, diggroup)

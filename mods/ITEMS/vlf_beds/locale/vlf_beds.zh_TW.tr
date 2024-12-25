@@ -7,8 +7,6 @@ In this world, going to bed won't skip the night, but it will skip thunderstorms
 Sleeping allows you to skip the night. The night is skipped when all players in this world went to sleep. The night is skipped after sleeping for a few seconds. Thunderstorms can be skipped in the same manner.=睡覺可以跳過夜晚。當這個世界的所有玩家都進入睡眠狀態幾秒後，夜晚就會被跳過。雷雨也可以用同樣的方式跳過。
 Allows you to sleep=允許你睡覺
 Bed=床
-@1 Bed=
-New respawn position set!=你設定了重生點！
 You can only sleep at night or during a thunderstorm.=你只能在晚上或雷雨時才能睡覺。
 You can't sleep, the bed's too far away!=你無法休息，床離你太遠了！
 This bed is already occupied!=這張床已被佔用！
@@ -31,25 +29,21 @@ You exceeded the maximum number of messages per 10 seconds!=
 You are missing the 'shout' privilege! It's required in order to talk in chat...=
 Sorry, but you have to wait @1 seconds until you may use this button again!=
 Hey! Would you guys mind sleeping?=
+New respawn position set!=你設定了重生點！
+Black Bed=
+Blue Bed=
+Brown Bed=
+Cyan Bed=
+Green Bed=
+Grey Bed=
+Light Blue Bed=
+Light Grey Bed=
+Lime Bed=
+Magenta Bed=
+Orange Bed=
+Pink Bed=
+Purple Bed=
+Red Bed=
+White Bed=
+Yellow Bed=
 Respawn Anchor=
-
-
-##### not used anymore #####
-
-Red Bed=紅色床
-Blue Bed=藍色床
-Cyan Bed=青色床
-Grey Bed=灰色床
-Light Grey Bed=淺灰色床
-Black Bed=黑色床
-Yellow Bed=黃色床
-Green Bed=綠色床
-Magenta Bed=洋紅色床
-Orange Bed=橙色床
-Purple Bed=紫色床
-Brown Bed=棕色床
-Pink Bed=粉紅色床
-Lime Bed=淺綠色床
-Light Blue Bed=淺藍色床
-White Bed=白色床
-New respawn position set! But you can only sleep at night or during a thunderstorm.=你設定了重生點，但你只能在晚上或雷雨時才能睡覺。

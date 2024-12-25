@@ -1,4 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
+local D = vlf_util.get_dynamic_translator()
 local doc_mod = minetest.get_modpath("doc")
 
 local hc_desc = S("Terracotta is a basic building material. It comes in many different colors.")
@@ -17,13 +18,6 @@ minetest.register_node("vlf_colorblocks:hardened_clay", {
 	_vlf_hardness = 1.25,
 })
 
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_colorblocks:hardened_clay",
-	recipe = "vlf_core:clay",
-	cooktime = 10,
-})
-
 local on_rotate
 if minetest.get_modpath("screwdriver") then
 	on_rotate = screwdriver.rotate_simple
@@ -33,10 +27,10 @@ local canonical_color = "yellow"
 
 for color,colordef in pairs(vlf_dyes.colors) do
 	local is_canonical = color == canonical_color
-	local sdesc_hc = S("@1 Terracotta", colordef.readable_name)
-	local sdesc_gt = S("@1 Glazed Terracotta", colordef.readable_name)
-	local sdesc_cp = S("@1 Concrete Powder", colordef.readable_name)
-	local sdesc_c = S("@1 Concrete", colordef.readable_name)
+	local sdesc_hc = D(colordef.readable_name .. " Terracotta")
+	local sdesc_gt = D(colordef.readable_name .. " Glazed Terracotta")
+	local sdesc_cp = D(colordef.readable_name .. " Concrete Powder")
+	local sdesc_c = D(colordef.readable_name .. " Concrete")
 	local ldesc_hc, ldesc_gt, ldesc_cp, ldesc_c
 	local create_entry
 	local ename_hc, ename_gt, ename_cp, ename_c
@@ -64,6 +58,7 @@ for color,colordef in pairs(vlf_dyes.colors) do
 		sounds = vlf_sounds.node_sound_stone_defaults(),
 		_vlf_blast_resistance = 4.2,
 		_vlf_hardness = 1.25,
+		_vlf_cooking_output = "vlf_colorblocks:glazed_terracotta_"..color
 	})
 
 	minetest.register_node("vlf_colorblocks:concrete_powder_"..color, {
@@ -114,11 +109,11 @@ for color,colordef in pairs(vlf_dyes.colors) do
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = ename_gt,
 		tiles = texes,
-		groups = {handy=1,pickaxey=1, glazed_terracotta=1,building_block=1, material_stone=1},
+		groups = {handy=1,pickaxey=1, glazed_terracotta=1,building_block=1, material_stone=1, unsticky = 1},
 		paramtype2 = "facedir",
 		is_ground_content = false,
 		sounds = vlf_sounds.node_sound_stone_defaults(),
-		_vlf_blast_resistance = 4.2,
+		_vlf_blast_resistance = 1.4,
 		_vlf_hardness = 1.4,
 		on_rotate = on_rotate,
 	})
@@ -147,13 +142,6 @@ for color,colordef in pairs(vlf_dyes.colors) do
 			"vlf_core:gravel", "vlf_dyes:"..color, "vlf_core:gravel",
 			"vlf_core:sand", "vlf_core:gravel", "vlf_core:sand",
 		}
-	})
-
-	minetest.register_craft({
-		type = "cooking",
-		output = "vlf_colorblocks:glazed_terracotta_"..color,
-		recipe = "vlf_colorblocks:hardened_clay_"..color,
-		cooktime = 10,
 	})
 end
 

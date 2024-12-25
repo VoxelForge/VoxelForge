@@ -179,7 +179,7 @@ minetest.register_entity("vlf_experience:orb", {
 	radius = 4,
 
 
-	on_activate = function(self, staticdata, dtime_s)
+	on_activate = function(self, staticdata)
 		self.object:set_velocity(vector.new(
 			math.random(-2,2)*math.random(),
 			math.random(2,5),

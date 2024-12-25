@@ -274,7 +274,7 @@ function vlf_copper.register_copper_bulbs(name, definitions)
 			groups = set_groups(names[i], definitions.groups),
 			is_ground_content = false,
 			light_source = set_light_level(definitions.light_source, i),
-			mesecons = definitions.mesecons,
+			_vlf_redstone = definitions._vlf_redstone,
 			sounds = vlf_sounds.node_sound_metal_defaults(),
 			tiles = {set_tiles(tiles, i)},
 			_vlf_blast_resistance = 6,
@@ -288,12 +288,15 @@ end
 
 vlf_copper.register_copper_bulbs("copper_bulb", {
 	groups = {pickaxey = 2, building_block = 1},
-	mesecons = {
-		effector = {
-			action_on = function (pos, node)
-				minetest.swap_node(pos, {name = node.name:gsub("copper_bulb", "copper_bulb_lit_powered")})
+	_vlf_redstone = {
+		connects_to = function(node, dir)
+			return true
+		end,
+		update = function(pos, node)
+			if vlf_redstone.get_power(pos) ~= 0 then
+				return {priority = 1, name = node.name:gsub("copper_bulb", "copper_bulb_lit_powered")}
 			end
-		},
+		end,
 	},
 	sunlight_propagates = true,
 	light_propagates = true,
@@ -303,12 +306,15 @@ vlf_copper.register_copper_bulbs("copper_bulb_lit", {
 	drop = "copper_bulb",
 	groups = {pickaxey = 2, building_block = 1, not_in_creative_inventory = 1},
 	light_source = 14,
-	mesecons = {
-		effector = {
-			action_on = function (pos, node)
-				minetest.swap_node(pos, {name = node.name:gsub("copper_bulb_lit", "copper_bulb_powered")})
+	_vlf_redstone = {
+		connects_to = function(node, dir)
+			return true
+		end,
+		update = function(pos, node)
+			if vlf_redstone.get_power(pos) ~= 0 then
+				return {priority = 1, name = node.name:gsub("copper_bulb_lit", "copper_bulb_powered")}
 			end
-		},
+		end,
 	},
 	paramtype = "light",
 	sunlight_propagates = true,
@@ -318,12 +324,15 @@ vlf_copper.register_copper_bulbs("copper_bulb_lit", {
 vlf_copper.register_copper_bulbs("copper_bulb_powered", {
 	drop = "copper_bulb",
 	groups = {pickaxey = 2, building_block = 1, not_in_creative_inventory = 1},
-	mesecons = {
-		effector = {
-			action_off = function (pos, node)
-				minetest.swap_node(pos, {name = node.name:gsub("copper_bulb_powered", "copper_bulb")})
+	_vlf_redstone = {
+		connects_to = function(node, dir)
+			return true
+		end,
+		update = function(pos, node)
+			if vlf_redstone.get_power(pos) == 0 then
+				return {priority = 1, name = node.name:gsub("copper_bulb_powered", "copper_bulb")}
 			end
-		}
+		end,
 	},
 	sunlight_propagates = true,
 	light_propagates = true,
@@ -333,12 +342,15 @@ vlf_copper.register_copper_bulbs("copper_bulb_lit_powered", {
 	drop = "copper_bulb",
 	groups = {pickaxey = 2, building_block = 1, not_in_creative_inventory = 1},
 	light_source = 14,
-	mesecons = {
-		effector = {
-			action_off = function (pos, node)
-				minetest.swap_node(pos, {name = node.name:gsub("copper_bulb_lit_powered", "copper_bulb_lit")})
+	_vlf_redstone = {
+		connects_to = function(node, dir)
+			return true
+		end,
+		update = function(pos, node)
+			if vlf_redstone.get_power(pos) == 0 then
+				return {priority = 1, name = node.name:gsub("copper_bulb_lit_powered", "copper_bulb_lit")}
 			end
-		}
+		end,
 	},
 	paramtype = "light",
 	sunlight_propagates = true,

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_torches x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_torches x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,11 +11,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Torch"
 msgstr "Факел"
 
 msgid "Torches are light sources which can be placed at the side or on the top of most blocks."
-msgstr "Факел это источник света, который можно поставить на большинство блоков сверху или сбоку."
+msgstr "Факелы это источники света, которые могут быть размещены сбоку или сверху большинства блоков."
 

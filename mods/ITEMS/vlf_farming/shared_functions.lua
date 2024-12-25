@@ -228,7 +228,7 @@ function vlf_farming:add_gourd(full_unconnected_stem, connected_stem_basename, s
 
 	-- Register gourd
 	if not gourd_def.after_destruct then
-		gourd_def.after_destruct = function(blockpos, oldnode)
+		gourd_def.after_destruct = function(blockpos)
 			-- Disconnect any connected stems, turning them back to normal stems
 			for n = 1, #neighbors do
 				local offset = neighbors[n]
@@ -476,7 +476,7 @@ function vlf_farming:get_seed_or_eat_callback(plantname, hp_change)
 	end
 end
 
-function vlf_farming.on_bone_meal(itemstack,placer,pointed_thing,pos,n,plant,stages)
+function vlf_farming.on_bone_meal(_, _, _, pos, n, plant,stages)
 	local stages = stages or math.random(2, 5)
 	return vlf_farming:grow_plant(plant, pos, n, stages, true)
 end

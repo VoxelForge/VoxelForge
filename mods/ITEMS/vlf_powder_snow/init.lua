@@ -4,8 +4,8 @@ minetest.register_node("vlf_powder_snow:powder_snow", {
 	description = S("Powder Snow"),
 	_doc_items_longdesc = S("This is a block of snow thats extra fluffy, this means players can sink in it"),
 	_doc_items_hidden = false,
-	tiles = {"vlf_core_powder_snow.png"},
-	groups = {shovely=2, snow_cover=1, not_in_creative_inventory = 1},
+	tiles = {"powder_snow.png"},
+	groups = {shovely=2, snow_cover=1, not_in_creative_inventory = 1, disable_suffocation = 1},
 	sounds = vlf_sounds.node_sound_snow_defaults(),
 	post_effect_color = "#CFD7DBFF",
 	walkable = false,
@@ -59,20 +59,29 @@ local freezing_stages =
 }
 
 -- key value pair
--- key: name of player
--- value: number of seconds the player spent in powder snow
+-- key: ObjectRef of the player
+-- value: list of hud ids
 local freezing_players = {}
 
-local function show_freezing_hud(player, level)
-	local player_name = player:get_player_name()
-	local freezing_data = freezing_players[player_name]
-	if freezing_data and #freezing_data.hud_ids > 0 then
-		for _, hud_id in pairs(freezing_data.hud_ids) do
+local function remove_freezing_hud(player)
+	local freezing_data = freezing_players[player]
+	if freezing_data and #freezing_data > 0 then
+		for _, hud_id in pairs(freezing_data) do
 			player:hud_remove(hud_id)
 		end
 	end
 
-	freezing_data.hud_ids[1] = player:hud_add({
+	freezing_players[player] = nil
+end
+
+local function show_freezing_hud(player, level)
+	remove_freezing_hud(player)
+	if not freezing_players[player] then
+		freezing_players[player] = {}
+	end
+	local freezing_data = freezing_players[player]
+
+	freezing_data[1] = player:hud_add({
 		hud_elem_type = "image",
 		position = {x = 0, y = 0},
 		scale = {x = 2, y = 2},
@@ -82,7 +91,7 @@ local function show_freezing_hud(player, level)
 		z_index = 4,
 	})
 
-	freezing_data.hud_ids[2] = player:hud_add({
+	freezing_data[2] = player:hud_add({
 		hud_elem_type = "image",
 		position = {x = 1, y = 0},
 		scale = {x = 2, y = 2},
@@ -92,7 +101,7 @@ local function show_freezing_hud(player, level)
 		z_index = 4,
 	})
 
-	freezing_data.hud_ids[3] = player:hud_add({
+	freezing_data[3] = player:hud_add({
 		hud_elem_type = "image",
 		position = {x = 0, y = 1},
 		scale = {x = 2, y = 2},
@@ -102,7 +111,7 @@ local function show_freezing_hud(player, level)
 		z_index = 4,
 	})
 
-	freezing_data.hud_ids[4] = player:hud_add({
+	freezing_data[4] = player:hud_add({
 		hud_elem_type = "image",
 		position = {x = 1, y = 1},
 		scale = {x = 2, y = 2},
@@ -124,49 +133,72 @@ local function player_has_leather_armor(player)
 end
 
 vlf_player.register_globalstep_slow(function(player, dtime)
-	local name = player:get_player_name()
 	local player_pos = player:get_pos()
-	local freezing_data = freezing_players[name]
+	local player_meta = player:get_meta()
+	local time_in_snow = tonumber(player_meta:get("time_in_snow"))
+	
 	if minetest.get_node(player_pos).name == "vlf_powder_snow:powder_snow" and player_has_leather_armor(player) then
 		awards.unlock(player:get_player_name(), "vlf:walk_on_powder_snow_with_leather_boots")
 	end
+
 	if minetest.get_node(player_pos).name == "vlf_powder_snow:powder_snow" and not player_has_leather_armor(player) then
-		if not freezing_data then
-			freezing_players[name] = {time_in_snow = 0, hud_ids = {}}
+		if not time_in_snow then
+			time_in_snow = 0
 		end
 
-		freezing_players[name].time_in_snow = math.min(freezing_players[name].time_in_snow + 0.5, 7)
+		time_in_snow = math.min(time_in_snow + 0.5, 7)
 
-		if freezing_players[name].time_in_snow > 5 then
+		if time_in_snow > 5 then
 			show_freezing_hud(player, 3)
 			vlf_damage.damage_player(player, 0.5, {type = "freeze"})
 			hb.change_hudbar(player, "health", nil, nil, "frozen_heart.png")
-		elseif freezing_players[name].time_in_snow == 3 then
+		elseif time_in_snow == 3 then
 			show_freezing_hud(player, 2)
-		elseif freezing_players[name].time_in_snow == 1 then
+		elseif time_in_snow == 1 then
 			show_freezing_hud(player, 1)
 		end
-	elseif freezing_players[name] then
-		freezing_players[name].time_in_snow = freezing_players[name].time_in_snow - 0.5
 
-		if freezing_players[name].time_in_snow <= 0 then
-			if #freezing_players[name].hud_ids > 0 then
-				for _, hud_id in pairs(freezing_players[name].hud_ids) do
-					player:hud_remove(hud_id)
-				end
-			end
-			freezing_players[name] = nil
+		player_meta:set_string("time_in_snow", tostring(time_in_snow))
+	elseif time_in_snow then
+		time_in_snow = time_in_snow - 0.5
+
+		if time_in_snow <= 0 then
+			remove_freezing_hud(player)
+			player_meta:set_string("time_in_snow", "")
+			return
 		else
-			if freezing_players[name].time_in_snow == 1 then
+			if time_in_snow == 1 then
 				show_freezing_hud(player, 1)
-			elseif freezing_players[name].time_in_snow == 3 then
+			elseif time_in_snow == 3 then
 				hb.change_hudbar(player, "health", nil, nil, "hudbars_icon_health.png")
 				show_freezing_hud(player, 2)
 			end
 		end
+
+		player_meta:set_string("time_in_snow", tostring(time_in_snow))
+	end
+end)
+
+minetest.register_on_joinplayer(function(player)
+	local time_in_snow = tonumber(player:get_meta():get("time_in_snow"))
+
+	if not time_in_snow then return end
+
+	if time_in_snow > 5 then
+		show_freezing_hud(player, 3)
+		minetest.after(0, function() hb.change_hudbar(player, "health", nil, nil, "frozen_heart.png") end)
+	elseif time_in_snow > 3 then
+		show_freezing_hud(player, 2)
+	elseif time_in_snow > 1 then
+		show_freezing_hud(player, 1)
 	end
 end)
 
 minetest.register_on_leaveplayer(function(player)
 	freezing_players[player] = nil
+end)
+
+minetest.register_on_respawnplayer(function(player)
+	remove_freezing_hud(player)
+	hb.change_hudbar(player, "health", nil, nil, "hudbars_icon_health.png")
 end)

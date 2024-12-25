@@ -1,5 +1,6 @@
 -- Generate strongholds.
 
+local generate_in_singlenode = false
 -- A total of 128 strongholds are generated in rings around the world origin.
 -- This is the list of rings, starting with the innermost ring first.
 local stronghold_rings = {
@@ -21,7 +22,7 @@ local seed = tonumber(minetest.get_mapgen_setting("seed"))
 local function init_strongholds()
 	local stronghold_positions = {}
 	-- Don't generate strongholds in singlenode
-	if mg_name == "singlenode" then
+	if (mg_name == "singlenode" and not generate_in_singlenode) then
 		return {}
 	end
 	local pr = PseudoRandom(seed)
@@ -32,7 +33,7 @@ local function init_strongholds()
 		local angle = pr:next()
 		-- Scale angle to 0 .. 2*math.pi
 		angle = (angle / 32767) * (math.pi*2)
-		for a=1, ring.amount do
+		for _ = 1, ring.amount do
 			local dist = pr:next(ring.min, ring.max)
 			local y
 			if vlf_vars.superflat then
@@ -99,9 +100,9 @@ vlf_structures.register_structure("end_shrine",{
 			}
 		}}
 	},
-	after_place = function(pos,def,pr,blockseed,p1,p2,size,rotation)
-		local p1 = vector.subtract(pos,size)
-		local p2 = vector.add(pos,size)
+	after_place = function(pos, def, pr)
+		local p1 = vector.subtract(pos, (def.sidelen or 12) /2 )
+		local p2 = vector.add(pos, (def.sidelen or 12) / 2)
 		local spawners = minetest.find_nodes_in_area(p1, p2, "vlf_mobspawners:spawner")
 		for s=1, #spawners do
 			--local meta = minetest.get_meta(spawners[s])
@@ -131,7 +132,7 @@ vlf_structures.register_structure("end_shrine",{
 				-- 50% stonebrick (no change necessary)
 			end
 			if bricktype then
-				minetest.set_node(bricks[b], { name = bricktype })
+				minetest.swap_node(bricks[b], { name = bricktype })
 			end
 		end
 
@@ -148,7 +149,7 @@ vlf_structures.register_structure("end_shrine",{
 				elseif stair.name == "vlf_stairs:stair_stonebrick_inner" then
 					stair.name = "vlf_stairs:stair_stonebrickmossy_inner"
 				end
-				minetest.set_node(stairs[s], stair)
+				minetest.swap_node(stairs[s], stair)
 			elseif r_type <= 50 then -- 20% cracky
 				if stair.name == "vlf_stairs:stair_stonebrick" then
 					stair.name = "vlf_stairs:stair_stonebrickcracked"
@@ -157,7 +158,7 @@ vlf_structures.register_structure("end_shrine",{
 				elseif stair.name == "vlf_stairs:stair_stonebrick_inner" then
 					stair.name = "vlf_stairs:stair_stonebrickcracked_inner"
 				end
-				minetest.set_node(stairs[s], stair)
+				minetest.swap_node(stairs[s], stair)
 			end
 			-- 50% no change
 		end
@@ -172,7 +173,7 @@ vlf_structures.register_structure("end_shrine",{
 				if eyes < #frames then
 					local frame_node = minetest.get_node(frames[f])
 					frame_node.name = "vlf_portals:end_portal_frame_eye"
-					minetest.set_node(frames[f], frame_node)
+					minetest.swap_node(frames[f], frame_node)
 				end
 			end
 		end

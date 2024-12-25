@@ -20,11 +20,11 @@ end
 function vlf_sounds.node_sound_stone_defaults(table)
 	table = table or {}
 	table.footstep = table.footstep or
-			{name="vlf_sounds_stone_footsteps", gain=0.25}
+			{name="default_hard_footstep", gain=0.2}
 	table.dug = table.dug or
-			{name="vlf_sounds_stone_footsteps", gain=1.0}
+			{name="default_hard_footstep", gain=1.0}
 	table.dig = table.dig or
-			{name="vlf_sounds_dig_stone", gain=0.5}
+			{name="default_dig_cracky", gain=0.5}
 	vlf_sounds.node_sound_defaults(table)
 	return table
 end
@@ -60,11 +60,11 @@ end
 function vlf_sounds.node_sound_sand_defaults(table)
 	table = table or {}
 	table.footstep = table.footstep or
-			{name="vlf_sounds_sand_footsteps", gain=0.15}
+			{name="default_sand_footstep", gain=0.045}
 	table.dug = table.dug or
-			{name="vlf_sounds_sand_dig", gain=0.35}
+			{name="default_sand_footstep", gain=0.15}
 	table.dig = table.dig or
-			{name="vlf_sounds_sand_dig", gain=0.4}
+			{name="default_dig_crumbly", gain=0.4}
 	table.place = table.place or
 			{name="default_place_node", gain=1.0}
 	vlf_sounds.node_sound_defaults(table)
@@ -74,11 +74,11 @@ end
 function vlf_sounds.node_sound_gravel_defaults(table)
 	table = table or {}
 	table.footstep = table.footstep or
-			{name="vlf_sounds_gravel_footsteps", gain=0.25}
+			{name="default_gravel_footstep", gain=0.1}
 	table.dug = table.dug or
-			{name="vlf_sounds_gravel_dig", gain=1.0}
+			{name="default_gravel_dug", gain=0.75}
 	table.dig = table.dig or
-			{name="vlf_sounds_gravel_dig", gain=0.35}
+			{name="default_gravel_dig", gain=0.35}
 	table.place = table.place or
 			{name="default_place_node", gain=1.0}
 	vlf_sounds.node_sound_defaults(table)
@@ -88,11 +88,11 @@ end
 function vlf_sounds.node_sound_snow_defaults(table)
 	table = table or {}
 	table.footstep = table.footstep or
-			{name="vlf_sounds_snow_footsteps", gain=0.5}
+			{name="pedology_snow_soft_footstep", gain=0.4}
 	table.dug = table.dug or
-			{name="vlf_sounds_snow_dig", gain=1.0}
+			{name="pedology_snow_soft_footstep", gain=1.0}
 	table.dig = table.dig or
-			{name="vlf_sounds_snow_dig", gain=1.0}
+			{name="pedology_snow_soft_footstep", gain=1.0}
 	table.place = table.place or
 			{name="default_place_node", gain=1.0}
 	vlf_sounds.node_sound_defaults(table)
@@ -102,11 +102,11 @@ end
 function vlf_sounds.node_sound_ice_defaults(table)
 	table = table or {}
 	table.footstep = table.footstep or
-			{name="default_ice_footstep", gain=0.15}
+			{name="default_ice_footstep", gain=0.075}
 	table.dug = table.dug or
-			{name="default_ice_dug", gain=0.5}
+			{name="default_ice_dug", gain=0.35}
 	table.dig = table.dig or
-			{name="default_ice_dig", gain=0.5}
+			{name="default_ice_dig", gain=0.35}
 	vlf_sounds.node_sound_defaults(table)
 	return table
 end
@@ -114,9 +114,9 @@ end
 function vlf_sounds.node_sound_wood_defaults(table)
 	table = table or {}
 	table.footstep = table.footstep or
-			{name="vlf_sounds_wood_footsteps", gain=0.25}
+			{name="default_wood_footstep", gain=0.15}
 	table.dug = table.dug or
-			{name="vlf_sounds_wood_footsteps", gain=1.0}
+			{name="default_wood_footstep", gain=1.0}
 	table.dig = table.dig or
 			{name="default_dig_choppy", gain=0.4}
 	vlf_sounds.node_sound_defaults(table)
@@ -126,13 +126,13 @@ end
 function vlf_sounds.node_sound_wool_defaults(table)
 	table = table or {}
 	table.footstep = table.footstep or
-			{name="vlf_sounds_cloth_footsteps", gain=0.5}
+			{name="vlf_sounds_cloth", gain=0.2}
 	table.dug = table.dug or
-			{name="vlf_sounds_cloth_dig", gain=1.0}
+			{name="vlf_sounds_cloth", gain=0.8}
 	table.dig = table.dig or
-			{name="vlf_sounds_cloth_dig", gain=0.9}
+			{name="vlf_sounds_cloth", gain=0.8}
 	table.place = table.dig or
-			{name="vlf_sounds_cloth_dig", gain=1.0}
+			{name="vlf_sounds_cloth", gain=0.8}
 	vlf_sounds.node_sound_defaults(table)
 	return table
 end
@@ -140,9 +140,9 @@ end
 function vlf_sounds.node_sound_leaves_defaults(table)
 	table = table or {}
 	table.footstep = table.footstep or
-			{name="vlf_sounds_grass_footsteps", gain=0.1825}
+			{name="default_grass_footstep", gain=0.1325}
 	table.dug = table.dug or
-			{name="vlf_sounds_grass_dig", gain=0.425}
+			{name="default_grass_footstep", gain=0.425}
 	table.dig = table.dig or
 			{name="default_dig_snappy", gain=0.4}
 	table.place = table.place or
@@ -154,9 +154,9 @@ end
 function vlf_sounds.node_sound_glass_defaults(table)
 	table = table or {}
 	table.footstep = table.footstep or
-			{name="default_glass_footstep", gain=0.3}
+			{name="default_glass_footstep", gain=0.25}
 	table.dug = table.dug or
-			{name="default_break_glass", gain=0.7}
+			{name="default_break_glass", gain=0.5}
 	table.dig = table.dig or
 			{name="default_dig_cracky", gain=0.5}
 	vlf_sounds.node_sound_defaults(table)
@@ -166,11 +166,11 @@ end
 function vlf_sounds.node_sound_water_defaults(table)
 	table = table or {}
 	table.footstep = table.footstep or
-			{name = "default_water_footstep", gain = 0.2}
+			{name = "default_water_footstep", gain = 0.125}
 	table.place = table.place or
-			{name = "vlf_sounds_place_node_water", gain = 1.0}
+			{name = "vlf_sounds_place_node_water", gain = 0.4}
 	table.dug = table.dug or
-			{name = "vlf_sounds_dug_water", gain = 1.0}
+			{name = "vlf_sounds_dug_water", gain = 0.4}
 	vlf_sounds.node_sound_defaults(table)
 	return table
 end

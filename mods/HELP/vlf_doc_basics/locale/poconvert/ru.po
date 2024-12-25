@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_doc_basics x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_doc_basics x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Advanced usage"
 msgstr "Продвинутое использование"
@@ -167,19 +167,19 @@ msgid "• /me <action>: 1 parameter. You have to enter “/me ” followed by a
 msgstr "• /me <действие>: 1 параметр. Вы должны ввести “/me“, а затем любой текст, например “/me orders pizza”"
 
 msgid "• /give <name> <ItemString>: Two parameters. Example: “/give Player default:apple”"
-msgstr "• /give <имя> <ТехническоеНазвание>: два параметра. Пример: “/give Player mcl_core:apple”"
+msgstr "• /give <имя> <ТехническоеНазвание>: два параметра. Пример: “/give Player vlf_core:apple”"
 
 msgid "• /help [all|privs|<cmd>]: Valid inputs are “/help”, “/help all”, “/help privs”, or “/help ” followed by a command name, like “/help time”"
 msgstr "• /help [all|privs|<команда>]: допустимыми командами будут являться: “/help”, “/help all”, “/help privs” или “/help ” и имя команды, например: “/help time”"
 
 msgid "• /spawnentity <EntityName> [<X>,<Y>,<Z>]: Valid inputs include “/spawnentity boats:boat” and “/spawnentity boats:boat 0,0,0”"
-msgstr "• /spawnentity <ИмяСущности> [<Х>,<У>,<Z>]: допустимыми командами будут являться: “/spawnentity mcl_boats:boat” и “/spawnentity mcl_boats:boat 0,0,0”"
+msgstr "• /spawnentity <ИмяСущности> [<Х>,<У>,<Z>]: допустимыми командами будут являться: “/spawnentity vlf_boats:boat” и “/spawnentity vlf_boats:boat 0,0,0”"
 
 msgid "Some final remarks:"
 msgstr "Некоторые заключительные замечания:"
 
 msgid "• For /give and /giveme, you need an itemstring. This is an internally used unique item identifier which you may find in the item help if you have the “give” or “debug” privilege"
-msgstr "• Для /give и /giveme вам понадобится “техническое название” (ItemString). Это уникальный идентификатор предмета для внутреннего использования, его можно найти в справке по предмету, если у вас есть привилегия “give” или  “debug”"
+msgstr "• Для /give и /giveme вам понадобится “техническое название” (ItemString). Это уникальный идентификатор предмета для внутреннего использования, его можно найти в справке по предмету, если у вас есть привилегия “give” или “debug”"
 
 msgid "• For /spawnentity you need an entity name, which is another identifier"
 msgstr "• Для /spawnentity вам нужно имя сущности, которое также является идентификатором"
@@ -230,7 +230,7 @@ msgid "You can enable some special movement modes that change how you move."
 msgstr "Вы можете включать специальные режимы вашего перемещения."
 
 msgid "Pitch movement mode:"
-msgstr "Режим движения по направлению взгляда"
+msgstr "Режим движения по направлению взгляда:"
 
 msgid "• Description: If this mode is activated, the movement keys will move you relative to your current view pitch (vertical look angle) when you're in a liquid or in fly mode."
 msgstr "• Описание: при активации этого режима клавиши будут перемещать вас относительно направления взгляда игрока когда вы находитесь в жидкости или в режиме полёта."
@@ -242,7 +242,7 @@ msgid "• No privilege required"
 msgstr "• Никаких привилегий не требуется"
 
 msgid "Fast mode:"
-msgstr "Быстрый режим"
+msgstr "Быстрый режим:"
 
 msgid "• Description: Allows you to move much faster. Hold down the the “Use” key [E] to move faster. In the client configuration, you can further customize fast mode."
 msgstr "• Описание: позволяет двигаться гораздо быстрее. Удерживайте нажатой клавишу [E], чтобы двигаться быстрее. В конфигурации клиента вы можете дополнительно настроить быстрый режим."
@@ -284,7 +284,7 @@ msgid "The world is a large cube. And because of this, a position in the world c
 msgstr "Мир это большой куб. Благодаря этому, положение в мире может быть легко выражено с помощью декартовой системы координат. Для каждой позиции в мире существует 3 значения: X, Y и Z."
 
 msgid "Like this: (5, 45, -12)"
-msgstr "Например, такие: (5, 45, -12)."
+msgstr "Например, такие: (5, 45, -12)"
 
 msgid "This refers to the position where X=5, Y=45 and Z=-12. The 3 letters are called “axes”: Y is for the height. X and Z are for the horizontal position."
 msgstr "Это отсылка на место, имеющее координаты X=5, Y=45 и Z=-12. Буквы обозначают оси координат: Y - высота, X и Z - горизонтальное расположение."
@@ -329,7 +329,7 @@ msgid "• Damage enabled (enable_damage): Enables the health and breath attribu
 msgstr "• Урон (enable_damage): включает здоровье и дыхание для всех игроков. Если он выключен, то все игроки бессмертны"
 
 msgid "• Creative Mode (creative_mode): Enables sandbox-style gameplay focusing on creativity rather than a challenging gameplay. The meaning depends on the game; usual changes are: Reduced dig times, easy access to almost all items, tools never wear off, etc."
-msgstr ""
+msgstr "- Творческий режим (creative_mode): Включает игровой процесс в стиле песочницы, ориентированный на творчество, а не на сложный геймплей. Смысл зависит от игры; обычные изменения таковы: Сокращение времени на раскопки, легкий доступ почти ко всем предметам, инструменты никогда не изнашиваются и т.д."
 
 msgid "• PvP (enable_pvp): Short for “Player vs Player”. If enabled, players can deal damage to each other"
 msgstr "• PvP (enable_pvp): “игрок против игрока”. Если этот режим включён, игроки могут наносить урон друг другу"
@@ -356,7 +356,7 @@ msgid "A community-based documentation website for Minetest. Anyone with an acco
 msgstr "Веб-сайт документации сообщества. Любой, у кого есть учетная запись, может её редактировать! Там много документации по Minetest Game."
 
 msgid "Web forums: <https://forums.minetest.net/>"
-msgstr ""
+msgstr "Веб-форумы: <https://forums.minetest.net/>"
 
 msgid "A web-based discussion platform where you can discuss everything related to Minetest. This is also a place where player-made mods and games are published and discussed. The discussions are mainly in English, but there is also space for discussion in other languages."
 msgstr "Интернет-форумы, где вы можете обсудить все, что связано с Minetest. Это также место, где публикуются и обсуждаются игры и моды, сделанные игроками. Дискуссии ведутся в основном на английском языке, но есть также раздел для дискуссий и на других языках."
@@ -377,7 +377,7 @@ msgid "Quick start"
 msgstr "Быстрый старт"
 
 msgid "This is a very brief introduction to the basic gameplay."
-msgstr ""
+msgstr "Это очень краткое введение в основной игровой процесс."
 
 msgid "How to play:"
 msgstr "Как играть:"
@@ -410,16 +410,16 @@ msgid "• Read entries in this help to learn the rest"
 msgstr "Читайте записи в этой справке, чтобы узнать всё остальное"
 
 msgid "• Continue playing as you wish. There's no real goal, but you may want to check the advancements available from the inventory screen. Have fun!"
-msgstr ""
+msgstr "- Продолжайте играть по своему усмотрению. Настоящей цели нет, но вы можете проверить достижения, доступные на экране инвентаря. Веселитесь!"
 
 msgid "For the default controls, see the next section [Controls]."
-msgstr ""
+msgstr "Элементы управления по умолчанию см. в следующем разделе [Элементы управления]."
 
 msgid "Controls"
 msgstr "Управление"
 
 msgid "These are the default controls (which can be remapped in the 'Change keys' dialog):"
-msgstr ""
+msgstr "Это элементы управления по умолчанию (их можно изменить в диалоге «Изменить клавиши»):"
 
 msgid "Basic movement:"
 msgstr "Основное движение:"
@@ -440,7 +440,7 @@ msgid "• S: Move backwards"
 msgstr "• [S] - двигаться назад"
 
 msgid "• E: Sprint (aux1)"
-msgstr ""
+msgstr "- E: Спринт (aux1)"
 
 msgid "While standing on solid ground:"
 msgstr "Если стоите на твердой земле:"
@@ -452,7 +452,7 @@ msgid "• Shift: Sneak"
 msgstr "• [Shift] - красться"
 
 msgid "While on a ladder, swimming in a liquid or fly mode is active"
-msgstr "Стоя на лестнице, плывя в жидкости или находясь в режиме полёта:"
+msgstr "Стоя на лестнице, плывя в жидкости или находясь в режиме полёта"
 
 msgid "• Space: Move up"
 msgstr "• [Пробел] - двигаться вверх"
@@ -608,7 +608,7 @@ msgid "Inventories are used to store item stacks. There are other uses, such as 
 msgstr "Инвентари используются для хранения стаков предметов. Есть и другое их применение, например, крафт. Инвентарь состоит из прямоугольной решётки слотов для предметов. Каждый слот может быть либо пустым, либо содержать один стак предметов. Стаки предметов можно свободно перемещать между большей частью слотов."
 
 msgid "You have your own inventory which is called your “player inventory”, you can open it with the inventory key (default: [I])."
-msgstr ""
+msgstr "У вас есть собственный инвентарь, который называется «инвентарь игрока», открыть его можно с помощью клавиши инвентаря (по умолчанию: [I])."
 
 msgid "Blocks can also have their own inventory, e.g. chests and furnaces."
 msgstr "Блоки также могут иметь свой собственный инвентарь, например сундуки и печи."
@@ -632,7 +632,7 @@ msgid "• Mouse wheel down: take 1 item from the item stack"
 msgstr "• [Колёсико вниз] - взять 1 предмет из стака предметов"
 
 msgid "• Mouse wheel up: put 1 item in the item stack (if you're holding an item stack of the same type)"
-msgstr ""
+msgstr "- Колесико мыши вверх: положить 1 предмет в стек предметов (если вы держите стек предметов того же типа)"
 
 msgid "Putting: You can put items onto a slot if the cursor holds 1 or more items and the slot is either empty or contains an item stack of the same item type."
 msgstr "Выкладывание: вы можете помещать предметы в слот, если ваш курсор удерживает 1 или более предмет, а слот пуст, либо содержит стак таких же предметов."
@@ -653,22 +653,22 @@ msgid "• Click: exchange item stacks"
 msgstr "• [Левая кнопка мыши] - обменять стаки предметов"
 
 msgid "Throwing away: If you hold an item stack and click with it somewhere outside the GUI, the item stack gets thrown away into the world."
-msgstr ""
+msgstr "Выбрасывание: Если вы держите стек предметов и щелкаете им где-нибудь за пределами графического интерфейса, стек предметов выбрасывается в мир."
 
 msgid "Quick transfer: You can quickly transfer an item stack between a player's inventory and a block's inventory like a furnace, chest, or any other item with an inventory slot when that block's inventory is accessed. The target inventory is generally the most relevant inventory in this context."
-msgstr ""
+msgstr "Быстрый перенос: Вы можете быстро перенести стек предметов между инвентарем игрока и инвентарем блока, например печью, сундуком или любым другим предметом, имеющим слот в инвентаре, при доступе к инвентарю этого блока. Целевой инвентарь обычно является наиболее релевантным в данном контексте."
 
 msgid "• Sneak+Left click: Automatically transfer item stack (Sneak is by default [Shift])"
-msgstr ""
+msgstr "- Красться + левый клик: Автоматическое перемещение стека предметов (по умолчанию Красться это [Shift])"
 
 msgid "Hotbar"
 msgstr "Хотбар"
 
 msgid "At the bottom of the screen you see some squares. This is called the “hotbar”, and contains the items you have put in the last row of your inventory."
-msgstr ""
+msgstr "В нижней части экрана вы видите несколько квадратиков. Они называются «хотбар» и содержат предметы, которые вы положили в последний ряд своего инвентаря."
 
 msgid "You can change the selected item with the mouse wheel or the keyboard:"
-msgstr ""
+msgstr "Выбранный элемент можно изменить с помощью колесика мыши или клавиатуры:"
 
 msgid "• Select previous item in hotbar: [Mouse wheel up] or [B]"
 msgstr "• [Колёсико вверх] или [B] - выбор предыдущего предмета хотбара"
@@ -689,13 +689,13 @@ msgid "Some items may serve as a tool when wielded. Any item which has some spec
 msgstr "Некоторые предметы могут служить вам в качестве инструментов. Любой предмет, который имеет своё специальное назначение и используется напрямую владельцем, считается инструментом."
 
 msgid "A common subset of tools are mining tools. These are important to quickly break different types of blocks. Weapons are a kind of tool. There are of course many other possible tools. Special actions of tools are usually done by left-click or right-click."
-msgstr ""
+msgstr "Общим подмножеством инструментов являются инструменты для добычи. Они необходимы для быстрого разрушения различных типов блоков. Оружие - один из видов инструментов. Конечно, существует множество других возможных инструментов. Специальные действия инструментов обычно выполняются левой или правой кнопкой мыши."
 
 msgid "When nothing is wielded, players use their hand which also acts as a (limited) mining tool and weapon with no durability."
-msgstr ""
+msgstr "Когда игрок ничего не держит в руках, он использует свою руку, которая также выступает в качестве (ограниченного) инструмента для добычи и оружия, не обладающего большой силой."
 
 msgid "Usually tools have a durability which limits the amount of uses of it. The damage is displayed in a colored bar below the item icon. If no damage bar is shown, the tool is in mint condition. Tools can be repaired to increased or restore its durability."
-msgstr ""
+msgstr "Обычно у инструментов есть прочность, которая ограничивает количество их использования. Урон отображается в виде цветной полоски под иконкой предмета. Если полоса повреждений не отображается, значит, инструмент находится в идеальном состоянии. Инструменты можно ремонтировать, чтобы увеличить или восстановить их долговечность."
 
 msgid "Weapons"
 msgstr "Оружие"
@@ -803,16 +803,16 @@ msgid "Crafting is the task of combining several items to form a new item."
 msgstr "Крафт это комбинирование нескольких предметов для создания нового предмета."
 
 msgid "To craft something, you need one or more items, a crafting grid (C) and a crafting recipe. A crafting grid is like a normal inventory which can also be used for crafting. Items need to be put in a certain pattern into the crafting grid. Next to the crafting grid is an output slot (O). Here the result will appear when you placed items correctly. This is just a preview, not the actual item."
-msgstr ""
+msgstr "Чтобы что-то создать, вам нужны один или несколько предметов, сетка для крафта (C) и рецепт крафта. Сетка для крафта - это как обычный инвентарь, который также можно использовать для крафта. Предметы нужно выложить в определенном порядке в сетке крафта. Рядом с сеткой находится слот выхода (O). Здесь появится результат, если вы правильно разместили предметы. Это всего лишь предварительный просмотр, а не реальный предмет."
 
 msgid "The crafting grid you have inside your inventory is 2x2, limiting the amount of potential recipes you can craft. To craft recipes that require a 3x3 grid you will need a crafting table."
-msgstr ""
+msgstr "Сетка крафта в вашем инвентаре имеет размер 2x2, что ограничивает количество возможных рецептов, которые вы можете создать. Для создания рецептов, требующих сетки крафта 3x3, вам понадобится стол для крафта."
 
 msgid "To complete the craft, take the result item from the output slot, which will consume items from the crafting grid and creates a new item. It is not possible to place items into the output slot."
 msgstr "Чтобы завершить крафт, возьмите получившийся предмет из выходного слота. Предмет будет при этом создан, а предметы из сетки будут использованы для его производства. Выходной слот предназначен только для извлечения предметов, складывать предметы в него нельзя."
 
 msgid "A description on how to craft an item is called a “crafting recipe”. You need this knowledge to craft. You can use the recipe book to get a list of crafting recipes available from items you have obtained."
-msgstr ""
+msgstr "Описание того, как изготовить предмет, называется «рецептом крафта». Для того чтобы создавать предметы, вам нужны эти знания. Вы можете использовать книгу рецептов, чтобы получить список рецептов крафта, доступных из полученных вами предметов."
 
 msgid "Crafting recipes consist of at least one input item and exactly one stack of output items. When performing a single craft, it will consume exactly one item from each stack of the crafting grid, unless the crafting recipe defines replacements."
 msgstr "Рецепты состоят, как минимум, из одного входного элемента и стака выходных элементов. При выполнении единичного крафта будет употреблён ровно один предмет из каждого стака в слотах сетки крафта, если только рецепт не предполагает замены."
@@ -821,19 +821,19 @@ msgid "There are multiple types of crafting recipes:"
 msgstr "Существует несколько типов рецептов:"
 
 msgid "• Shaped: Items need to be placed in a particular shape"
-msgstr ""
+msgstr "- Форма: Предметы должны быть размещены в определенной форме"
 
 msgid "• Shapeless: Items need to be placed somewhere in input, but shape and order is independent"
-msgstr ""
+msgstr "- Бесформенные: Элементы должны быть размещены в каком-то месте ввода, но форма и порядок не имеют значения"
 
 msgid "• Cooking: Explained in “Basics > Cooking”"
 msgstr "• Приготовление пищи: описано в разделе “Основы > Приготовление пищи”"
 
 msgid "• Repairing: Place two damaged tools into the crafting grid anywhere to get a tool which is repaired by 5%"
-msgstr ""
+msgstr "- Ремонт: Поместите два поврежденных инструмента в сетку крафта в любом месте, чтобы получить инструмент, который ремонтируется на 5%"
 
 msgid "In some crafting recipes, some input items do not need to be a concrete item, instead they need to be a member of a group (see “Basics > Groups”). These recipes offer a bit more freedom in the input items. For instance, crafting a furnace can be used with a number of different full cobble-like stone blocks."
-msgstr ""
+msgstr "В некоторых рецептах крафта некоторые исходные предметы не обязательно должны быть конкретным предметом, вместо этого они должны входить в группу (см. «Основы > Группы»). Такие рецепты дают больше свободы в выборе исходных предметов. Например, для создания печи можно использовать несколько различных каменных блоков, похожих на булыжник."
 
 msgid "Rarely, crafting recipes have replacements. This means, whenever you perform a craft, some items in the crafting grid will not be consumed, but instead will be replaced by another item."
 msgstr "В редких случаях в рецептах содержатся замены. Это означает, что при каждом крафтинге некоторые предметы из сетки крафта не будут расходоваться, а будут заменяться другими предметами."
@@ -881,7 +881,7 @@ msgid "• At 0 hunger points, you lose 1 HP every 4 seconds (down to 1 HP)"
 msgstr "• При 0 очках голода вы теряете 1 очко здоровья 4 секунды (до тех пор пока здоровье не понизится до 1 HP)"
 
 msgid "• Poisonous food decreases your health"
-msgstr "• Ядовитая пища умешьшает ваше здоровье."
+msgstr "• Ядовитая пища уменьшает ваше здоровье"
 
 msgid "Details:"
 msgstr "Подробности:"
@@ -992,7 +992,7 @@ msgid "Two animals of the same species will start to breed if they are in Love M
 msgstr "Два животных одного вида начнут размножаться, если они находятся в режиме любви и близко друг к другу. Скоро появится детёныш животного."
 
 msgid "Baby animals:"
-msgstr "Детёныш животного"
+msgstr "Детёныш животного:"
 
 msgid "Baby animals are just like their adult couterparts, but they can't be tamed or bred and don't drop anything when they die. They grow to adults after a short time. When fed, they grow to adults faster."
 msgstr "Детёнышы животных точно такие же, как и взрослые, но их нельзя приручить или разводить, и они ничего не дают вам, когда умирают. Они вырастают до взрослых через короткое время. Если кормить их, то они вырастут быстрее."
@@ -1001,7 +1001,7 @@ msgid "Minimap"
 msgstr "Миникарта"
 
 msgid "The minimap allows you to get an overhead view of your surroundings, as a HUD that appears in the top right corner."
-msgstr ""
+msgstr "Мини-карта позволяет вам видеть окружающую обстановку сверху, в элемента HUD, который появляется в правом верхнем углу."
 
 msgid "Press [F9] to make a minimap appear on the top right. The minimap helps you to find your way around the world. Press it again to select different minimap modes and zoom levels. The minimap also shows the positions of other players."
 msgstr "Нажмите [F9], чтобы в правом верхнем углу появилась миникарта. Она поможет вам найти свой путь по всему миру. Нажмите его еще раз, чтобы выбирать различные режимы мини-карты и уровни масштабирования. Миникарта также показывает позиции других игроков."
@@ -1037,13 +1037,13 @@ msgid "• 2: Third-person view from behind"
 msgstr "• 2: вид от третьего лица сзади"
 
 msgid "• 3: Third-person view from the front"
-msgstr "• 3: вид от третьего лица спереди."
+msgstr "• 3: вид от третьего лица спереди"
 
 msgid "These camera modes can be toggled between by default pressing [F7]."
-msgstr ""
+msgstr "Между этими режимами камеры можно переключаться по умолчанию, нажимая [F7]."
 
 msgid "To zoom in the camera, you can use the Spyglass item."
-msgstr ""
+msgstr "Чтобы лучше рассмотреть далекий объект, вы можете использовать предмет «Подзорная труба»."
 
 msgid "• Switch camera mode: [F7]"
 msgstr "• [F7] - переключение камеры"
@@ -1064,7 +1064,7 @@ msgid "Players"
 msgstr "Игроки"
 
 msgid "Players are the characters which users control."
-msgstr ""
+msgstr "Игроки - это персонажи, которыми управляют пользователи."
 
 msgid "Players are living beings. They start with a number of health points (HP) and a number of breath points (BP)."
 msgstr "Игроки это живые существа. Они начинают с определённым количеством очков здоровья (HP) и дыхания (BP)."
@@ -1073,7 +1073,7 @@ msgid "Players are capable of walking, sneaking, jumping, climbing, swimming, di
 msgstr "Игроки могут ходить, красться, прыгать, карабкаться, плавать, нырять, добывать, строить, сражаться и использовать инструменты и блоки."
 
 msgid "Players can take damage for a variety of reasons:"
-msgstr ""
+msgstr "Игроки могут получать урон по разным причинам:"
 
 msgid "• Taking fall damage"
 msgstr "• Получение урона от падения"
@@ -1090,8 +1090,8 @@ msgstr "• Нападение другого игрока"
 msgid "• Being attacked by a computer enemy"
 msgstr "• Нападение компьютерного врага"
 
-msgid "At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless mcl_keepInventory is enabled)"
-msgstr ""
+msgid "At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless vlf_keepInventory is enabled)"
+msgstr "При здоровье, равном 0, игрок умирает. Игрок может просто переродиться в мире, но его предметы будут сброшены в месте смерти и их нужно будет возвращать. (если не включена функция vlf_keepInventory)"
 
 msgid "Some blocks reduce breath. While being with the head in a block which causes drowning, the breath points are reduced by 1 for every 2 seconds. When all breath is gone, the player starts to suffer drowning damage. Breath is quickly restored in any other block."
 msgstr "Некоторые блоки уменьшают дыхание. При нахождении с головой в блоке, который вызывает утопление, очки дыхания уменьшаются на 1 каждые 2 секунды. Когда все очки дыхания пропадают, игрок начинает получать урон от утопления. Очки дыхания быстро восстанавливаются в любом другом блоке."
@@ -1100,7 +1100,7 @@ msgid "Damage can be disabled on any world. Without damage, players are immortal
 msgstr "Урон можно отключить в любом мире. Без включенного урона игроки бессмертны, и здоровье и дыхание для них неважны."
 
 msgid "In multiplayer, the name of other players is written above their head."
-msgstr ""
+msgstr "В многопользовательской игре имя других игроков написано над их головой."
 
 msgid "Liquids"
 msgstr "Жидкости"
@@ -1397,11 +1397,11 @@ msgid "Minetest is a free software game engine for games based on voxel gameplay
 msgstr "Minetest - свободный игровой движок для воксельных игр, вдохновлённый играми InfiniMiner, Minecraft и подобным. Minetest изначально создан Пертту Ахолой (под псевдонимом “celeron55”)."
 
 msgid "A core feature of Minetest is the built-in modding capability, which all games consist of too. They can be as simple as adding a few decorational blocks or be very complex by e.g. introducing completely new gameplay concepts, generating a completely different kind of world, and many other things."
-msgstr ""
+msgstr "Основной особенностью Minetest является встроенная возможность моддинга, которой обладают все игры. Они могут быть как простыми, добавляющими несколько декоративных блоков, так и очень сложными, например, вводящими совершенно новые концепции геймплея, создающими совершенно другой мир и многое другое."
 
 msgid "Minetest can be played alone or online together with multiple players. Online play will work out of the box with any mods, with no need for additional software as they are entirely provided by the server."
 msgstr "В Minetest можно играть в одиночку или онлайн вместе с другими игроками. Онлайн-игра будет работать “из коробки” с любыми модами без необходимости установки дополнительного программного обеспечения, так как всё необходимое предоставляется сервером."
 
 msgid "MineClonia is a game that is built on top of the Minetest engine that intends to create a game that is as close to Minecraft as possible. There are many other games for Minetest however, that can be installed from the main menu content browser."
-msgstr ""
+msgstr "MineClonia - это игра, построенная на движке Minetest, цель которой - создать игру, максимально приближенную к Minecraft. Однако для Minetest существует множество других игр, которые можно установить из браузера содержимого главного меню."
 

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_blast_furnace x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_blast_furnace x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Blast Furnace"
 msgstr "Alto horno"
@@ -26,17 +26,17 @@ msgid "Use the blast furnace to open the furnace menu."
 msgstr "Use el alto horno para abrir el menú del horno."
 
 msgid "Place a furnace fuel in the lower slot and the source material in the upper slot."
-msgstr "Coloque un combustible de horno en la ranura inferior y el material de origen en la ranura superior."
+msgstr "Coloque el combustible del horno en la ranura de arriba y el material a procesar en la ranura de abajo."
 
 msgid "The blast furnace will slowly use its fuel to smelt the item."
 msgstr "El alto horno usará lentamente su combustible para fundir el artículo."
 
 msgid "The result will be placed into the output slot at the right side."
-msgstr "El resultado se colocará en la ranura de salida en el lado derecho."
+msgstr "El resultado se colocará en la ranura de salida del lado derecho."
 
 msgid "Use the recipe book to see what ores you can smelt, what you can use as fuel and how long it will burn."
 msgstr "Use el libro de recetas para ver que menas puede fundir, qué puede usar como combustible y durante cuánto tiempo arderá."
 
 msgid "Burning Blast Furnace"
-msgstr ""
+msgstr "Alto horno de combustión"
 

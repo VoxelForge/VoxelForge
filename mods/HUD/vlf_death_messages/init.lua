@@ -101,6 +101,10 @@ vlf_death_messages = {
 			killer = NS("@1 was shot by @2"),
 			item = NS("@1 was shot by @2 using @3"),
 		},
+		spit = {
+			killer = NS ("@1 was spitballed by @2"),
+			item = NS("@1 was spitballed by @2 using @3"),
+		},
 		fireball = {
 			killer = NS("@1 was fireballed by @2"),
 			item = NS("@1 was fireballed by @2 using @3"),
@@ -131,9 +135,18 @@ vlf_death_messages = {
 	},
 }
 
+local function get_wielded_item(object)
+	if object:is_player() then
+		return object:get_wielded_item()
+	else
+		-- ToDo: implement getting wielditems from mobs as soon as mobs have wielditems
+		return ItemStack()
+	end
+end
+
 local function get_item_killer_message(obj, messages, reason)
 	if messages.item then
-		local wielded = vlf_util.get_wielded_item(reason.source)
+		local wielded = get_wielded_item(reason.source)
 		local itemname = wielded:get_meta():get_string("name")
 		if itemname ~= "" then
 			itemname = "[" .. itemname .. "]"
@@ -153,19 +166,19 @@ local function get_killer_message(obj, messages, reason)
 	return reason.source and (get_item_killer_message(obj, messages, reason) or get_plain_killer_message(obj, messages, reason))
 end
 
-local function get_assist_message(obj, messages, reason)
+local function get_assist_message(obj, messages, _)
 	if messages.assist and vlf_death_messages.assist[obj] then
 		return S(messages.assist, vlf_util.get_object_name(obj), vlf_death_messages.assist[obj].name)
 	end
 end
 
-local function get_plain_message(obj, messages, reason)
+local function get_plain_message(obj, messages, _)
 	if messages.plain then
 		return S(messages.plain, vlf_util.get_object_name(obj))
 	end
 end
 
-local function get_fallback_message(obj, messages, reason)
+local function get_fallback_message(obj, _, reason)
 	return "vlf_death_messages.messages." .. reason.type .. " " .. vlf_util.get_object_name(obj)
 end
 
@@ -200,7 +213,7 @@ vlf_damage.register_on_death(function(obj, reason)
 end)
 
 vlf_damage.register_on_damage(function(obj, damage, reason)
-	if vlf_util.get_hp (obj) - damage > 0 then
+      if vlf_util.get_hp (obj) - damage > 0 then
 		if reason.source then
 			vlf_death_messages.assist[obj] = {name = vlf_util.get_object_name(reason.source), timeout = 5}
 		else

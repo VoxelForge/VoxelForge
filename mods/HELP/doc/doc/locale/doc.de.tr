@@ -24,9 +24,3 @@ Open a window providing help entries about Minetest and more=Ein Fenster mit Hil
 Help=Hilfe
 Allows you to reveal all hidden help entries with /help_reveal=Ermöglicht es Ihnen, alle verborgenen Hilfseinträge mit /help_reveal freizuschalten
 Reveal all hidden help entries to you=Alle für Sie verborgenen Hilfseinträge freischalten
-
-
-##### not used anymore #####
-
-New help entry unlocked: @1 > @2=Neuen Hilfseintrag freigeschaltet: @1 > @2
-Collection of help texts=Sammlung von Hilfstexten

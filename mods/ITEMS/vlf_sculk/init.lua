@@ -304,11 +304,11 @@ minetest.register_abm({
 })
 
 --Add this in mesecons_mvps.lua----------------------
-mesecon.register_mvps_stopper("vlf_sculk:shrieker")
+--[[mesecon.register_mvps_stopper("vlf_sculk:shrieker")
 mesecon.register_mvps_stopper("vlf_sculk:sculk_sensor_inactive")
 mesecon.register_mvps_stopper("vlf_sculk:sculk_sensor_active")
 mesecon.register_mvps_stopper("vlf_sculk:sculk_sensor_inactive_w_logged")
 mesecon.register_mvps_stopper("vlf_sculk:sculk_sensor_active_w_logged")
-mesecon.register_mvps_stopper("vlf_deepslate:reinforced_deepslate")
+mesecon.register_mvps_stopper("vlf_deepslate:reinforced_deepslate")]]
 
 --------------------------------------------------------------------

@@ -1,12 +1,12 @@
-local S = minetest.get_translator(minetest.get_current_modname())
+local D = vlf_util.get_dynamic_translator()
 
 -- Fish Buckets
 local fish_names = {
-	["cod"] = "Cod",
-	["salmon"] = "Salmon",
-	["tropical_fish"] = "Tropical Fish",
-	["axolotl"] = "Axolotl",
-	--["pufferfish"] = "Pufferfish", --FIXME add pufferfish
+	["cod"] = {"Cod", "a Cod"},
+	["salmon"] = {"Salmon", "a Salmon"},
+	["tropical_fish"] = {"Tropical Fish", "a Tropical Fish"},
+	["axolotl"] = {"Axolotl", "an Axolotl"},
+	--["pufferfish"] = {"Pufferfish", "a Pufferfish"}, --FIXME add pufferfish
 }
 
 local fishbucket_prefix = "vlf_buckets:bucket_"
@@ -31,7 +31,7 @@ local function on_place_fish(itemstack, placer, pointed_thing)
 
 	local fish = itemstack:get_definition()._vlf_buckets_fish
 	if fish_names[fish] then
-		local o = minetest.add_entity(pos, "mobs_mc:" .. fish)
+		local o = minetest.add_entity(pos, "mobs_mc:" .. fish, minetest.serialize({ persistent = true }))
 		if o and o:get_pos() then
 			local props = itemstack:get_meta():get_string("properties")
 			if props ~= "" then
@@ -41,10 +41,10 @@ local function on_place_fish(itemstack, placer, pointed_thing)
 			if n.name == "vlfx_core:river_water_source" then
 				water = n.name
 			elseif n.name == "vlfx_core:river_water_flowing" then
-				water = nil
+				water = nil ---@diagnostic disable-line: cast-local-type
 			end
 			if vlf_worlds.pos_to_dimension(pos) == "nether" then
-				water = nil
+				water = nil ---@diagnostic disable-line: cast-local-type
 				minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
 			end
 			if water then
@@ -59,11 +59,12 @@ local function on_place_fish(itemstack, placer, pointed_thing)
 end
 
 for techname, fishname in pairs(fish_names) do
+	local fish, a_fish, a_fish_dot = fishname[1], fishname[2], fishname[2] .. "."
 	minetest.register_craftitem(fishbucket_prefix .. techname, {
-		description = S("Bucket of @1", S(fishname)),
-		_doc_items_longdesc = S("This bucket is filled with water and @1.", S(fishname)),
-		_doc_items_usagehelp = S("Place it to empty the bucket and place a @1. Obtain by right clicking on a @2 with a bucket of water.", S(fishname), S(fishname)),
-		_tt_help = S("Places a water source and a @1.", S(fishname)),
+		description = D("Bucket of " .. fish),
+		_doc_items_longdesc = D("This bucket is filled with water and " .. a_fish_dot),
+		_doc_items_usagehelp = D("Place it to empty the bucket and place " .. a_fish_dot .. " Obtain by right clicking on " .. a_fish .. " with a bucket of water."),
+		_tt_help = D("Places a water source and " .. a_fish_dot),
 		inventory_image = techname .. "_bucket.png",
 		stack_max = 1,
 		groups = {bucket = 1, fish_bucket = 1},
@@ -71,7 +72,7 @@ for techname, fishname in pairs(fish_names) do
 		_vlf_buckets_fish = techname,
 		on_place = on_place_fish,
 		on_secondary_use = on_place_fish,
-		_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
+		_on_dispense = function(stack, _, droppos)
 			return on_place_fish(stack, nil, {above=droppos})
 		end,
 	})

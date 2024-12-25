@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_mud x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_mud x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Mud"
-msgstr ""
+msgstr "Fango"
 
 msgid "Mud is a decorative block that generates in mangrove swamps. Mud can also be obtained by using water bottles on dirt or coarse dirt."
-msgstr ""
+msgstr "Il fango è un blocco decorativo generato nelle paludi di mangrovie. Può essere ottenuto anche utilizzando le ampolle d'acqua sulla terra o sulla terra brulla."
 
 msgid "Packed Mud"
-msgstr ""
+msgstr "Fango Compatto"
 
 msgid "Packed mud is a decorative block used to craft mud bricks."
 msgstr ""

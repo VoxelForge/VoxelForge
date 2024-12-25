@@ -24,9 +24,3 @@ Open a window providing help entries about Minetest and more=Åbn et vindue med 
 Help=Hjælp
 Allows you to reveal all hidden help entries with /help_reveal=Gør dig i stand til at afsløre alle skjulte hjælpeindtaster med /help_reveal
 Reveal all hidden help entries to you=Afslør alle gemte hjælpeindtastninger for dig.
-
-
-##### not used anymore #####
-
-New help entry unlocked: @1 > @2=Ny hjælpeindtastning låst op: @1 > @2
-Collection of help texts=Samling at hjælpetekster.

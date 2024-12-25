@@ -115,19 +115,8 @@ local function attach_object(self, obj)
 end
 
 local function detach_object(obj, change_pos)
-	if not obj or not obj:get_pos() then return end
-	obj:set_detach()
-	obj:set_properties({visual_size = get_visual_size(obj)})
-	if obj:is_player() then
-		vlf_player.players[obj].attached = nil
-		obj:set_eye_offset({x=0, y=0, z=0},{x=0, y=0, z=0})
-		vlf_player.player_set_animation(obj, "stand" , 30)
-	else
-		obj:get_luaentity()._old_visual_size = nil
-	end
-	if change_pos then
-		 obj:set_pos(vector.add(obj:get_pos(), vector.new(0, 0.2, 0)))
-	end
+	if change_pos then change_pos = vector.new(0, 0.2, 0) end
+	return vlf_util.detach_object(obj, change_pos)
 end
 
 --
@@ -143,8 +132,8 @@ local boat = {
 		collisionbox = {-0.5, -0.15, -0.5, 0.5, 0.55, 0.5},
 		selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.55, 0.7},
 		visual = "mesh",
-		mesh = "boat.b3d",
-		textures = { "vlf_boats_oak_boat.png", "blank.png" },
+		mesh = "vlf_boats_boat.b3d",
+		textures = { "vlf_boats_texture_oak_boat.png", "blank.png" },
 		visual_size = boat_visual_size,
 		hp_max = boat_max_hp,
 		damage_texture_modifier = "^[colorize:white:0",
@@ -178,8 +167,7 @@ function boat.on_rightclick(self, clicker)
 	attach_object(self, clicker)
 end
 
-
-function boat.on_activate(self, staticdata, dtime_s)
+function boat:on_activate(staticdata)
 	self.object:set_armor_groups({fleshy = 125})
 	local data = minetest.deserialize(staticdata)
 	if type(data) == "table" then
@@ -189,8 +177,8 @@ function boat.on_activate(self, staticdata, dtime_s)
 
 		-- Update the texutes for existing old boat entity instances.
 		-- Maybe remove this in the future.
-		if #data.textures >= 1 and data.textures[1] == "vlf_boats_cherry_blossom_boat.png" then
-			data.textures[1] = "vlf_boats_cherry_blossom_boat.png"
+		if #data.textures >= 1 and data.textures[1] == "vlf_boats_texture_cherry_boat.png" then
+			data.textures[1] = "vlf_boats_texture_cherry_blossom_boat.png"
 		end
 		if #data.textures ~= 2 then
 			local has_chest = self._itemstring:find("chest")
@@ -204,15 +192,16 @@ function boat.on_activate(self, staticdata, dtime_s)
 	end
 end
 
-function boat.get_staticdata(self)
+function boat:get_staticdata()
+	local props = self.object:get_properties()
 	return minetest.serialize({
 		v = self._v,
 		itemstring = self._itemstring,
-		textures = self.object:get_properties().textures
+		textures = props and props.textures or nil
 	})
 end
 
-function boat.on_death(self, killer)
+function boat:on_death(killer)
 	vlf_burning.extinguish(self.object)
 
 	if killer and killer:is_player() and minetest.is_creative_enabled(killer:get_player_name()) then
@@ -233,13 +222,14 @@ function boat.on_death(self, killer)
 	self._passenger = nil
 end
 
-function boat.on_punch(self, puncher, time_from_last_punch, tool_capabilities, dir, damage)
+---@diagnostic disable-next-line: unused-local
+function boat:on_punch(puncher, time_from_last_punch, tool_capabilities, dir, damage)
 	if damage > 0 then
 		self._regen_timer = 0
 	end
 end
 
-function boat.on_step(self, dtime, moveresult)
+function boat:on_step(dtime, moveresult)
 	vlf_burning.tick(self.object, dtime, self)
 	-- vlf_burning.tick may remove object immediately
 	if not self.object:get_pos() then return end
@@ -366,7 +356,7 @@ function boat.on_step(self, dtime, moveresult)
 			self._animation = 0
 		end
 
-		for _, obj in pairs(minetest.get_objects_inside_radius(self.object:get_pos(), 1.3)) do
+		for obj in minetest.objects_inside_radius(self.object:get_pos(), 1.3) do
 			local entity = obj:get_luaentity()
 			if entity and entity.is_mob then
 				attach_object(self, obj)
@@ -449,9 +439,21 @@ minetest.register_entity("vlf_boats:boat", boat)
 
 local cboat = table.copy(boat)
 cboat._itemstring = "vlf_boats:chest_boat"
-cboat.initial_properties.textures = { "vlf_boats_oak_chest_boat.png", "vlf_chests_normal.png" }
+cboat.initial_properties.textures = { "vlf_boats_texture_oak_chest_boat.png", "vlf_chests_normal.png" }
 cboat.initial_properties.collisionbox = {-0.5, -0.15, -0.5, 0.5, 0.75, 0.5}
 cboat.initial_properties.selectionbox = {-0.7, -0.15, -0.7, 0.7, 0.75, 0.7}
+
+function cboat:_on_show_entity_inv (player)
+	mobs_mc.enrage_piglins (player, true)
+end
+
+function cboat:on_death (killer)
+	boat.on_death (self, killer)
+
+	if killer and killer:is_player () then
+		mobs_mc.enrage_piglins (killer, true)
+	end
+end
 
 minetest.register_entity("vlf_boats:chest_boat", cboat)
 vlf_entity_invs.register_inv("vlf_boats:chest_boat","Boat",27)
@@ -482,7 +484,7 @@ function vlf_boats.register_boat(name,item_def,object_properties,entity_override
 	local texture
 	if id:find("chest") then
 		inventory_image = "vlf_boats_" .. id .. ".png"
-		texture = "vlf_boats_" .. id:gsub("chest_", "") .. ".png"
+		texture = "vlf_boats_texture_" .. id:gsub("chest_", "") .. ".png"
 		if not doc_itemstring_chest_boat then
 			help = true
 			longdesc = S("Chest Boats are used to travel on the surface of water. And transport goods")
@@ -495,7 +497,7 @@ function vlf_boats.register_boat(name,item_def,object_properties,entity_override
 		end
 	else
 		inventory_image = "vlf_boats_" .. name .. "_boat.png"
-		texture = "vlf_boats_" .. name .. "_boat.png"
+		texture = "vlf_boats_texture_" .. name .. "_boat.png"
 	end
 
 	minetest.register_craftitem(":"..itemstring, table.merge({
@@ -505,6 +507,7 @@ function vlf_boats.register_boat(name,item_def,object_properties,entity_override
 		_doc_items_entry_name = helpname,
 		_doc_items_longdesc = longdesc,
 		_doc_items_usagehelp = usagehelp,
+		_vlf_burntime = 60,
 		inventory_image = inventory_image,
 		liquids_pointable = true,
 		groups = { boat = 1, transport = 1},
@@ -548,6 +551,7 @@ function vlf_boats.register_boat(name,item_def,object_properties,entity_override
 			end
 			return itemstack
 		end,
+		---@diagnostic disable-next-line: unused-local
 		_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
 			local below = {x=droppos.x, y=droppos.y-1, z=droppos.z}
 			local belownode = minetest.get_node(below)
@@ -579,9 +583,3 @@ function vlf_boats.register_boat(name,item_def,object_properties,entity_override
 		})
 	end
 end
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:boat",
-	burntime = 20,
-})

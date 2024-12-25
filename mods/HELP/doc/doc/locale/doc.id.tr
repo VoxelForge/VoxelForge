@@ -24,9 +24,3 @@ Open a window providing help entries about Minetest and more=Buka jendela yang m
 Help=Bantuan
 Allows you to reveal all hidden help entries with /help_reveal=Memperbolehkan Anda untuk mengungkapkan semua entri bantuan tersembunyi dengan '/help_reveal'
 Reveal all hidden help entries to you=Mengungkapkan semua entri bantuan tersembunyi kepada Anda
-
-
-##### not used anymore #####
-
-New help entry unlocked: @1 > @2=Entri bantuan baru dibuka: @1 > @2
-Collection of help texts=Koleksi teks bantuan

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_mobitems x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_mobitems x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Rotten Flesh"
 msgstr "Chair Putréfiée"
@@ -20,7 +20,7 @@ msgid "80% chance of food poisoning"
 msgstr "80% de chances d'intoxication alimentaire"
 
 msgid "Yuck! This piece of flesh clearly has seen better days. If you're really desperate, you can eat it to restore a few hunger points, but there's a 80% chance it causes food poisoning, which increases your hunger for a while."
-msgstr "Beurk! Ce morceau de chair a clairement connu des jours meilleurs. Si vous êtes vraiment désespéré, vous pouvez le manger pour restaurer quelques points de faim, mais il y a 80% de chances qu'il provoque une intoxication alimentaire, ce qui augmente votre faim pendant un certain temps."
+msgstr "Beurk ! Ce morceau de chair a clairement connu des jours meilleurs. Si vous êtes vraiment désespéré, vous pouvez le manger pour restaurer quelques points de faim, mais il y a 80% de chances qu'il provoque une intoxication alimentaire, ce qui augmente votre faim pendant un certain temps."
 
 msgid "Raw Mutton"
 msgstr "Mouton Cru"
@@ -89,13 +89,13 @@ msgid "Milk"
 msgstr "Lait"
 
 msgid "Removes all status effects"
-msgstr "Supprime tous les effets de statut!"
+msgstr "Supprime tous les effets de statut"
 
 msgid "Milk is very refreshing and can be obtained by using a bucket on a cow. Drinking it will remove all status effects, but restores no hunger points."
 msgstr "Le lait est très rafraîchissant et peut être obtenu en utilisant un seau sur une vache. Le boire supprimera tous les effets de statut, mais ne restaure aucun point de faim."
 
 msgid "Use the placement key to drink the milk."
-msgstr "Utilisez la touche de placement pour boire le lait. "
+msgstr "Utilisez la touche de placement pour boire le lait."
 
 msgid "Spider Eye"
 msgstr "Oeil d'Araignée"
@@ -119,7 +119,7 @@ msgid "Squid Ink Sac"
 msgstr "Poche d'encre"
 
 msgid "This item is dropped by dead squids. Squid ink can be used to as an ingredient to craft book and quill or black dye."
-msgstr ""
+msgstr "Cet objet est lâché par les calmars morts. L'encre de calmar peut être utilisée comme ingrédient pour fabriquer des livres et des plumes d'oie ou de la teinture noire."
 
 msgid "String"
 msgstr "Ficelle"
@@ -132,6 +132,12 @@ msgstr "Bâton de Blaze"
 
 msgid "This is a crafting component dropped from dead blazes."
 msgstr "Il s'agit d'un composant d'artisanat tombé des Blazes morts."
+
+msgid "Breeze Rod"
+msgstr "Bâton de Breeze"
+
+msgid "This is a crafting item dropped from breezes."
+msgstr "Il s'agit d'un objet d'artisanat lâché par les breezes."
 
 msgid "Blaze Powder"
 msgstr "Poudre de Blaze"
@@ -152,10 +158,10 @@ msgid "Place this item in an item frame as decoration."
 msgstr "Placez cet article dans un cadre d'article comme décoration."
 
 msgid "Nether Star"
-msgstr "Étoile du Nether "
+msgstr "Étoile du Nether"
 
 msgid "A nether star is dropped when the Wither dies. Place it in an item frame to show the world how hardcore you are! Or just as decoration."
-msgstr "Une étoile du Nether est lâchée lorsque le Wither meurt. Placez-le dans un cadre d'objet pour montrer au monde à quel point vous êtes génial! Ou tout simplement comme décoration."
+msgstr "Une étoile du Nether est lâchée lorsque le Wither meurt. Placez-le dans un cadre d'objet pour montrer au monde à quel point vous êtes génial ! Ou tout simplement comme décoration."
 
 msgid "Leather"
 msgstr "Cuir"
@@ -179,7 +185,7 @@ msgid "Rabbit's Foot"
 msgstr "Patte de Lapin"
 
 msgid "Must be your lucky day! Place this item in an item frame for decoration."
-msgstr "Ce doit être votre jour de chance! Placez cet article dans un cadre d'article pour la décoration."
+msgstr "Ce doit être votre jour de chance ! Placez cet article dans un cadre d'article pour la décoration."
 
 msgid "Saddle"
 msgstr "Selle"
@@ -227,22 +233,22 @@ msgid "Place it on a saddled pig to mount it. You can now ride the pig like a ho
 msgstr "Placez-le sur un cochon sellé pour le monter. Vous pouvez maintenant monter le cochon comme un cheval. Les porcs marcheront également vers vous lorsque vous brandirez la carotte sur un bâton."
 
 msgid "Warped Fungus on a Stick"
-msgstr ""
+msgstr "Champignon biscornu sur un bâton"
 
 msgid "Lets you ride a strider"
-msgstr ""
+msgstr "Permet de monter un arpenteur"
 
 msgid "A warped fungus on a stick can be used on saddled striders to ride them."
-msgstr ""
+msgstr "Un champignon biscornu sur un bâton peut être utilisé sur les arpenteurs sellés pour les monter."
 
 msgid "Place it on a saddled strider to mount it. You can now ride the strider like a horse. Striders will also walk towards you when you just wield the fungus on a stick."
-msgstr ""
+msgstr "Placez-le sur un arpenteur sellé pour le monter. Vous pouvez maintenant monter l'arpenteur comme un cheval. Les arpenteurs s'approcheront également de vous lorsque vous maniez simplement le champignon sur un bâton."
 
 msgid "Nautilus Shell"
 msgstr "Coquille de nautile"
 
 msgid "Used to craft a conduit"
-msgstr "Utilisé pour fabriquer un conduit."
+msgstr "Utilisé pour fabriquer un conduit"
 
 msgid "The Nautilus Shell is used to craft a conduit. They can be obtained by fishing or killing a drowned that is wielding a shell."
 msgstr "La Coquille de nautile est utilisée pour fabriquer un conduit. Elles peuvent être obtenues en pêchant ou en tuant un noyé qui tient une coquille."
@@ -255,6 +261,12 @@ msgstr "Le Coeur de la Mer est utilisé pour fabriquer un conduit. Il peut être
 
 msgid "Place it on a horse to put on the horse armor. Donkeys and mules can't wear horse armor."
 msgstr "Placez-la sur un cheval pour mettre l'armure de cheval. Les ânes et les mules ne peuvent pas porter d'armure de cheval."
+
+msgid "Leather Horse Armor"
+msgstr "Armure de cheval en cuivre"
+
+msgid "Leather horse armor can be worn by horses to increase their protection from harm a little."
+msgstr "L'armure de cheval en cuir peut être portée par les chevaux pour améliorer un peu leur protection contre les dégats."
 
 msgid "Iron Horse Armor"
 msgstr "Armure de cheval en fer"
@@ -275,13 +287,13 @@ msgid "Diamond horse armor can be worn by horses to greatly increase their prote
 msgstr "Une armure de cheval en diament peut être portée par les chevaux pour augmenter fortement leur protection contre les dommages."
 
 msgid "Glow Ink Sac"
-msgstr ""
+msgstr "Poche d'encre luisante"
 
 msgid "Use it to craft the Glow Item Frame."
-msgstr ""
+msgstr "Utilisez-la pour fabriquer le cadre luisant."
 
 msgid "Use the Glow Ink Sac and the normal Item Frame to craft the Glow Item Frame."
-msgstr ""
+msgstr "Utilisez la poche d'encre luisante et le cadre pour fabriquer le cadre luisant."
 
 msgid "Name Tag"
 msgstr "Étiquette de nom"

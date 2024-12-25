@@ -79,3 +79,7 @@ Notify this mod of a dimension change of <player> to <dimension>
 
 * player: player, player who changed the dimension
 * dimension: string, new dimension ("overworld", "nether", "end", "void")
+
+## vlf_worlds.chunk_inhabited_time(pos)
+Return the number of seconds (changed in increments of five) that
+players have passed in the Minecraft chunk at POS.

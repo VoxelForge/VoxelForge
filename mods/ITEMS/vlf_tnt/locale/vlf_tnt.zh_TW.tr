@@ -5,8 +5,3 @@ TNT=
 Ignited by tools, explosions, fire, lava, redstone power=被工具、爆炸、火、熔岩和紅石信號點燃。
 Explosion radius: @1=爆炸半徑：@1
 Place the TNT and ignite it with one of the methods above. Quickly get in safe distance. The TNT will start to be affected by gravity and explodes in 4 seconds.=放置TNT，並用上述方法之一點燃它。迅速和TNT保持安全距離。TNT將開始受到重力的影響，並在4秒內爆炸。
-
-
-##### not used anymore #####
-
-@1 was caught in an explosion.=@1被炸飛了。

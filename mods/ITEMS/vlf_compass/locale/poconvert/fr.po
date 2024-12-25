@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_compass x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_compass x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Compass"
 msgstr "Boussole"
@@ -38,16 +38,16 @@ msgid "A Lodestone compass can be made from an ordinary compass by using it on a
 msgstr "Une boussole magnétisée peut être crée à partir d'une boussole normale en l'utilisant sur une magnétite. Après être devenue une boussole magnétisée, elle pointera toujours vers sa magnétite liée, pourvu qu'elle soit dans la même dimension. Si ce n'est pas le cas, la boussole magnétisée tourne au hasard, comme une boussole normale hors de l'overworld. Une boussole magnétisée peut être liée à une autre magnétite."
 
 msgid "Recovery Compass"
-msgstr ""
+msgstr "Boussole de récupération"
 
 msgid "Points to your last death location"
-msgstr ""
+msgstr "Indique le lieu de votre dernier décès"
 
 msgid "Recovery Compasses are compasses that point to your last death location"
-msgstr ""
+msgstr "Les boussoles de récupération sont des boussoles qui indiquent le lieu de votre dernière mort"
 
 msgid "Recovery Compasses always point to the location of your last death, in case you haven't died yet, it will just randomly spin around"
-msgstr ""
+msgstr "Les boussoles de récupération pointent toujours vers l'endroit de votre dernière mort. Si vous n'êtes pas encore mort, la boussole tournera de façon aléatoire"
 
 msgid "Lodestone"
 msgstr "Magnétite"

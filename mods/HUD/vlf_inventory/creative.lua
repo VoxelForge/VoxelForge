@@ -31,27 +31,15 @@ for _, f in pairs(builtin_filter_ids) do
 	inventory_lists[f] = {}
 end
 
-local function replace_enchanted_books(tbl)
-	for k, item in ipairs(tbl) do
-		if item:find("vlf_enchanting:book_enchanted") == 1 then
-			local _, enchantment, level = item:match("(%a+) ([_%w]+) (%d+)")
-			level = level and tonumber(level)
-			if enchantment and level then
-				tbl[k] = vlf_enchanting.enchant(ItemStack("vlf_enchanting:book_enchanted"), enchantment, level)
-			end
-		end
-	end
-end
-
 -- Populate all the item tables. We only do this once.
 -- Note this code must be executed after loading all the other mods in order to work.
 minetest.register_on_mods_loaded(function()
+
 	for name, def in pairs(minetest.registered_items) do
 		if (not def.groups.not_in_creative_inventory or def.groups.not_in_creative_inventory == 0) and def.description and
 			def.description ~= "" then
 			local function is_redstone(def)
-				return def.mesecons or def.groups.mesecon or def.groups.mesecon_conductor_craftable or
-					def.groups.mesecon_effecor_off
+				return def._vlf_redstone or def.groups.redstone_wire
 			end
 
 			local function is_tool(def)
@@ -102,7 +90,7 @@ minetest.register_on_mods_loaded(function()
 			end
 			if def.groups.brewitem then
 				local str = name
-				if def.groups._vlf_effect == 1 then
+				if def.groups._vlf_potion == 1 then
 					local stack = ItemStack(name)
 					tt.reload_itemstack_description(stack)
 					str = stack:to_string()
@@ -119,43 +107,23 @@ minetest.register_on_mods_loaded(function()
 				table.insert(inventory_lists["misc"], name)
 			end
 
-			if def.groups._vlf_effect == 1 then
-				if def.has_potent then
-					local stack = ItemStack(name)
-					local potency = def._default_potent_level - 1
-					stack:get_meta():set_int("vlf_entity_effects:effect_potent", potency)
-					tt.reload_itemstack_description(stack)
-					table.insert(inventory_lists["brew"], stack:to_string())
-				end
-				if def.has_plus then
-					local stack = ItemStack(name)
-					local extend = def._default_extend_level
-					stack:get_meta():set_int("vlf_entity_effects:effect_plus", extend)
-					tt.reload_itemstack_description(stack)
-					table.insert(inventory_lists["brew"], stack:to_string())
-				end
-			end
-
 			table.insert(inventory_lists["all"], name)
 		elseif minetest.get_item_group(name, "not_in_creative_inventory") > 0 then
 			table.insert(inventory_lists["nici"], name)
 		end
-	end
 
-	for ench, def in pairs(vlf_enchanting.enchantments) do
-		local str = "vlf_enchanting:book_enchanted " .. ench .. " " .. def.max_level
-		if def.inv_tool_tab then
-			table.insert(inventory_lists["tools"], str)
+		if def._get_all_virtual_items then
+			for category, list in pairs(def._get_all_virtual_items()) do
+				for _, virtual_item in pairs(list) do
+					table.insert(inventory_lists[category], virtual_item)
+					table.insert(inventory_lists["all"], virtual_item)
+				end
+			end
 		end
-		if def.inv_combat_tab then
-			table.insert(inventory_lists["combat"], str)
-		end
-		table.insert(inventory_lists["all"], str)
 	end
 
 	for _, to_sort in pairs(inventory_lists) do
 		table.sort(to_sort)
-		replace_enchanted_books(to_sort)
 	end
 end)
 
@@ -175,59 +143,33 @@ local function set_inv_search(filter, player)
 	local creative_list = {}
 	local lang = minetest.get_player_information(playername).lang_code
 	for name, def in pairs(minetest.registered_items) do
-	    if (not def.groups.not_in_creative_inventory or def.groups.not_in_creative_inventory == 0)
+		if (not def.groups.not_in_creative_inventory or def.groups.not_in_creative_inventory == 0)
 		and def.description and
-		def.description ~= "" then
-		local name = string.lower(def.name)
-		if filter_item (name, def.description, lang, filter) then
-		    if def.groups._vlf_effect == 1 then
-			local stack = ItemStack (name)
-			tt.reload_itemstack_description (stack)
-			table.insert(creative_list, stack:to_string ())
-		    else
-			table.insert(creative_list, name)
-		    end
-		end
-		if def.groups._vlf_effect == 1 then
-		    if def.has_potent then
-			local stack = ItemStack (name)
-			local potency = def._default_potent_level - 1
-			stack:get_meta ():set_int ("vlf_entity_effects:effect_potent",
-						   potency)
-			tt.reload_itemstack_description (stack)
-			local desc
-			    = minetest.strip_colors (stack:get_description ())
-
-			if filter_item (name, desc, lang, filter) then
-			    table.insert (creative_list, stack:to_string ())
+			def.description ~= "" then
+			local name = string.lower(def.name)
+			if filter_item (name, def.description, lang, filter) then
+				if def.groups._vlf_potion == 1 then
+					local stack = ItemStack (name)
+					tt.reload_itemstack_description (stack)
+					table.insert(creative_list, stack:to_string ())
+				else
+					table.insert(creative_list, name)
+				end
 			end
-		    end
-		    if def.has_plus then
-			local stack = ItemStack (name)
-			local extend = def._default_extend_level
-			stack:get_meta ():set_int ("vlf_entity_effects:effect_plus",
-						   extend)
-			tt.reload_itemstack_description (stack)
-			local desc
-			    = minetest.strip_colors (stack:get_description ())
-
-			if filter_item (name, desc, lang, filter) then
-			    table.insert (creative_list, stack:to_string ())
-			end
-		    end
 		end
-	    end
-	end
-	for ench, def in pairs(vlf_enchanting.enchantments) do
-		for i = 1, def.max_level do
-			local stack = vlf_enchanting.enchant(ItemStack("vlf_enchanting:book_enchanted"), ench, i)
-			if filter_item("vlf_enchanting:book_enchanted", minetest.strip_colors(stack:get_description()), lang, filter) then
-				table.insert(creative_list, "vlf_enchanting:book_enchanted " .. ench .. " " .. i)
+
+		if def._get_all_virtual_items then
+			for category, list in pairs(def._get_all_virtual_items()) do
+				for _, virtual_item in pairs(list) do
+					if filter_item (virtual_item, minetest.strip_colors(ItemStack(virtual_item):get_description()), lang, filter) then
+						table.insert(creative_list, virtual_item)
+					end
+				end
 			end
 		end
 	end
+
 	table.sort(creative_list)
-	replace_enchanted_books(creative_list)
 
 	inv:set_size("main", #creative_list)
 	inv:set_list("main", creative_list)
@@ -394,7 +336,7 @@ end]]
 local tab_icon = {
 	blocks = "vlf_core:brick_block",
 	deco = "vlf_flowers:peony",
-	redstone = "mesecons:redstone",
+	redstone = "vlf_redstone:redstone",
 	rail = "vlf_minecarts:golden_rail",
 	misc = "vlf_buckets:bucket_lava",
 	nix = "vlf_compass:compass",
@@ -402,7 +344,7 @@ local tab_icon = {
 	tools = "vlf_core:axe_iron",
 	combat = "vlf_core:sword_gold",
 	mobs = "mobs_mc:cow",
-	brew = "vlf_entity_effects:dragon_breath",
+	brew = "vlf_potions:dragon_breath",
 	matr = "vlf_core:stick",
 	inv = "vlf_chests:chest",
 	nici = "vlf_core:barrier",
@@ -423,6 +365,17 @@ minetest.register_on_joinplayer(function(player)
 		set_stack_size(player, 64)
 	end
 end)
+
+local function is_touch_enabled(playername)
+	-- Minetest < 5.7.0 support
+	if not minetest.get_player_window_information then
+		return false
+	end
+	local window = minetest.get_player_window_information(playername)
+	-- Always return a boolean (not nil) to avoid false-negatives when
+	-- comparing to a boolean later.
+	return window and window.touch_controls or false
+end
 
 function vlf_inventory.set_creative_formspec(player)
 	local playername = player:get_player_name()
@@ -539,7 +492,7 @@ function vlf_inventory.set_creative_formspec(player)
 			"listring[current_player;main]"
 	else
 
-		--local nb_lines = math.ceil(inv_size / 9)
+		--[[local nb_lines = math.ceil(inv_size / 9)
 		-- Creative inventory slots
 		main_list = table.concat({
 			vlf_formspec.get_itemslot_bg_v4(0.375, 0.875, 9, 5),
@@ -567,7 +520,34 @@ function vlf_inventory.set_creative_formspec(player)
 			"label[11.65,4.33;" .. F(S("@1 / @2", pagenum, pagemax)) .. "]",
 			"image_button[11.575,4.58;1.1,1.1;crafting_creative_prev.png^[transformR270;creative_prev;]",
 			"image_button[11.575,5.83;1.1,1.1;crafting_creative_next.png^[transformR270;creative_next;]",
-		})
+		})]]
+		
+		local nb_lines = math.ceil(inv_size / 9)
+		--if minetest.get_modpath("vlf_MC_19") then
+			-- MC 1.19.3 inv
+			-- Creative inventory slots
+			main_list = table.concat({
+				vlf_formspec.get_itemslot_bg_v4(0.375, 0.875, 9, 5),
+
+				"scroll_container[0.375,0.875;11.575,6;scroll;vertical;1.25]",
+				"list[detached:creative_" .. playername .. ";main;0,0;9," .. nb_lines .. ";]",
+				"scroll_container_end[]",
+			
+    				"scrollbaroptions[min=0;max=" .. math.max(nb_lines - 5, 0) .. ";smallstep=1;largesteps=1;arrows=hide]",
+    				"background[11.60,0.76;1.05,6.25;custom_texture.png]",
+  				"scrollbar[11.75,0.88;0.75,6;vertical;scroll;0]",
+			})
+		--[[else
+			-- VoxelForge inv
+			-- Creative inventory slots
+			main_list = table.concat({
+				vlf_formspec.get_itemslot_bg_v4(0.375, 0.875, 9, 5),
+				"list[detached:creative_" .. playername .. ";main;0.375,0.875;9,5;" .. tostring(start_i) .. "]",
+				"label[11.65,4.33;" .. F(S("@1 / @2", pagenum, pagemax)) .. "]",
+				"image_button[11.575,4.58;1.1,1.1;crafting_creative_prev.png^[transformR270;creative_prev;]",
+				"image_button[11.575,5.83;1.1,1.1;crafting_creative_next.png^[transformR270;creative_next;]",
+			})
+		end]]
 	end
 
 	local function tab(current_tab, this_tab)
@@ -578,8 +558,10 @@ function vlf_inventory.set_creative_formspec(player)
 			bg_img = "crafting_creative_inactive" .. button_bg_postfix[this_tab] .. ".png"
 		end
 		return table.concat({
-			"style[" .. this_tab .. ";border=false;bgimg=;bgimg_pressed=;noclip=true]",
-			"image[" .. offset[this_tab] .. ";1.5,1.44;" .. bg_img .. "]",
+			"style[" .. this_tab ..       ";border=false;bgimg=;bgimg_pressed=]",
+			"style[" .. this_tab .. "_outer;border=false;bgimg=" .. bg_img ..
+				";bgimg_pressed=" .. bg_img .. "]",
+			"button[" .. offset[this_tab] .. ";1.5,1.44;" .. this_tab .. "_outer;]",
 			"item_image_button[" .. boffset[this_tab] .. ";1,1;" .. tab_icon[this_tab] .. ";" .. this_tab .. ";]",
 		})
 	end
@@ -595,11 +577,21 @@ function vlf_inventory.set_creative_formspec(player)
 		"tooltip[nici;"..F(filtername["nici"]).."]"
 	end
 
+	local touch_enabled = is_touch_enabled(playername)
+	players[playername].last_touch_enabled = touch_enabled
+
 	local formspec = table.concat({
 		"formspec_version[6]",
-		"size[13,8.75]",
+		-- Original formspec height was 8.75, increased to include tab buttons.
+		-- This avoids tab buttons going off-screen with high scaling values.
+		"size[13,11.43]",
+		-- Use as much space as possible on mobile - the tab buttons are a lot
+		-- of padding already.
+		touch_enabled and "padding[-0.015,-0.015]" or "",
 
-		"style_type[image;noclip=true]",
+		"no_prepend[]", vlf_vars.gui_nonbg, vlf_vars.gui_bg_color,
+		"background9[0,1.34;13,8.75;vlf_base_textures_background9.png;;7]",
+		"container[0,1.34]",
 
 		-- Hotbar
 		vlf_formspec.get_itemslot_bg_v4(0.375, 7.375, 9, 1),
@@ -657,8 +649,9 @@ function vlf_inventory.set_creative_formspec(player)
 			"set_focus[search;true]",
 		})
 	end
+	formspec = formspec .. "container_end[]"
 	if pagenum then formspec = formspec .. "p" .. tostring(pagenum) end
-	player:set_inventory_formspec(formspec)
+	vlf_player.set_inventory_formspec (player, formspec, 0)
 end
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
@@ -674,58 +667,58 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
 	local name = player:get_player_name()
 
-	if fields.blocks then
+	if fields.blocks or fields.blocks_outer then
 		if players[name].page == "blocks" then return end
 		set_inv_page("blocks", player)
 		page = "blocks"
-	elseif fields.deco then
+	elseif fields.deco or fields.deco_outer then
 		if players[name].page == "deco" then return end
 		set_inv_page("deco", player)
 		page = "deco"
-	elseif fields.redstone then
+	elseif fields.redstone or fields.redstone_outer then
 		if players[name].page == "redstone" then return end
 		set_inv_page("redstone", player)
 		page = "redstone"
-	elseif fields.rail then
+	elseif fields.rail or fields.rail_outer then
 		if players[name].page == "rail" then return end
 		set_inv_page("rail", player)
 		page = "rail"
-	elseif fields.misc then
+	elseif fields.misc or fields.misc_outer then
 		if players[name].page == "misc" then return end
 		set_inv_page("misc", player)
 		page = "misc"
-	elseif fields.nix then
+	elseif fields.nix or fields.nix_outer then
 		set_inv_page("all", player)
 		page = "nix"
-	elseif fields.food then
+	elseif fields.food or fields.food_outer then
 		if players[name].page == "food" then return end
 		set_inv_page("food", player)
 		page = "food"
-	elseif fields.tools then
+	elseif fields.tools or fields.tools_outer then
 		if players[name].page == "tools" then return end
 		set_inv_page("tools", player)
 		page = "tools"
-	elseif fields.combat then
+	elseif fields.combat or fields.combat_outer then
 		if players[name].page == "combat" then return end
 		set_inv_page("combat", player)
 		page = "combat"
-	elseif fields.mobs then
+	elseif fields.mobs or fields.mobs_outer then
 		if players[name].page == "mobs" then return end
 		set_inv_page("mobs", player)
 		page = "mobs"
-	elseif fields.brew then
+	elseif fields.brew or fields.brew_outer then
 		if players[name].page == "brew" then return end
 		set_inv_page("brew", player)
 		page = "brew"
-	elseif fields.matr then
+	elseif fields.matr or fields.matr_outer  then
 		if players[name].page == "matr" then return end
 		set_inv_page("matr", player)
 		page = "matr"
-	elseif fields.nici then
+	elseif fields.nici or fields.nici_outer then
 		if players[name].page == "nici" then return end
 		set_inv_page("nici", player)
 		page = "nici"
-	elseif fields.inv then
+	elseif fields.inv or fields.inv_outer then
 		if players[name].page == "inv" then return end
 		page = "inv"
 	elseif fields.search == "" and not fields.creative_next and not fields.creative_prev then
@@ -844,5 +837,19 @@ minetest.register_on_player_inventory_action(function(player, action, _, invento
 		local stack = inventory_info.stack
 		stack:set_count(stack:get_stack_max())
 		player:get_inventory():set_stack("main", inventory_info.index, stack)
+	end
+end)
+
+-- This is necessary because get_player_window_information may return nil in
+-- on_joinplayer.
+-- (Also, Minetest plans to add support for toggling touchscreen mode in-game.)
+vlf_player.register_globalstep_slow(function(player)
+	local name = player:get_player_name()
+
+	if minetest.is_creative_enabled(name) then
+		local touch_enabled = is_touch_enabled(name)
+		if touch_enabled ~= players[name].last_touch_enabled then
+			vlf_inventory.set_creative_formspec(player)
+		end
 	end
 end)

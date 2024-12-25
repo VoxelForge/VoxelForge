@@ -12,7 +12,7 @@ minetest.register_node("vlf_core:cactus", {
 	tiles = {"vlf_core_cactus_top.png", "vlf_core_cactus_bottom.png", "vlf_core_cactus_side.png"},
 	groups = {
 		handy = 1, attached_node = 1, deco_block = 1, dig_by_piston = 1,
-		plant = 1, enderman_takable = 1, compostability = 50
+		plant = 1, enderman_takable = 1, compostability = 50, unsticky = 1
 	},
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	paramtype = "light",
@@ -39,13 +39,15 @@ minetest.register_node("vlf_core:cactus", {
 		},
 	},
 	-- Only allow to place cactus on sand or cactus
-	on_place = vlf_util.generate_on_place_plant_function(function(pos, node)
+	on_place = vlf_util.generate_on_place_plant_function(function(pos)
 		local node_below = minetest.get_node_or_nil({x=pos.x,y=pos.y-1,z=pos.z})
 		if not node_below then return false end
 		return (node_below.name == "vlf_core:cactus" or minetest.get_item_group(node_below.name, "sand") == 1)
 	end),
 	_vlf_blast_resistance = 0.4,
 	_vlf_hardness = 0.4,
+	_vlf_cooking_output = "vlf_dyes:green",
+	_pathfinding_class = "DAMAGE_OTHER",
 })
 
 vlf_flowerpots.register_potted_cube("vlf_core:cactus", {
@@ -54,7 +56,7 @@ vlf_flowerpots.register_potted_cube("vlf_core:cactus", {
 	image = "vlf_flowerpots_cactus.png",
 })
 
-vlf_player.register_globalstep_slow(function(player, dtime)
+vlf_player.register_globalstep_slow(function(player)
 	-- Am I near a cactus?
 	local pos = player:get_pos()
 	local near = minetest.find_node_near(pos, 1, "vlf_core:cactus", true)
@@ -102,12 +104,12 @@ minetest.register_node("vlf_core:reeds", {
 	groups = {
 		dig_immediate = 3, craftitem = 1, deco_block = 1, dig_by_piston = 1,
 		plant = 1, non_mycelium_plant = 1, compostability = 50, biomecolor = 1,
-		vinelike_node = 1,
+		vinelike_node = 1, unsticky = 1
 	},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	node_placement_prediction = "",
 	drop = "vlf_core:reeds", -- to prevent color inheritation
-	on_place = vlf_util.generate_on_place_plant_function(function(place_pos, place_node)
+	on_place = vlf_util.generate_on_place_plant_function(function(place_pos, _)
 		local soil_pos = {x=place_pos.x, y=place_pos.y-1, z=place_pos.z}
 		local soil_node = minetest.get_node_or_nil(soil_pos)
 		if not soil_node then return false end

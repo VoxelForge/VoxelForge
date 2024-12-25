@@ -39,3 +39,34 @@ vlf_inventory.register_survival_inventory_tab({
 	access = function(player)
 	end,
 ```
+
+## Virtual items
+
+Virtual items are variants of already existing items that should be treated as completely different by the game.
+Currently this only means that they show up in creative inventory as seperate items. A great exampe of this is 
+`vlf_enchanting_book_enchanted` item, Which has different enchantments stored in metadata, and is listed in the creative
+inventory as seperate items.
+
+To add virtual items to an item. You have to define `_get_all_virtual_items` function in the item's definition.
+The function takes no argument and should return a table with following format:
+
+```lua
+{
+    "brew" =
+    {
+        -- virtual items which will show up in the "brew" category of creative inventory
+        itemstring,
+        itemstring,
+        itemstring,
+        itemstring,
+    }
+    "deco" =
+    {
+        -- virtual items which will show up in the "deco" category of creative inventory
+        itemstring,
+        itemstring,
+        itemstring,
+        itemstring,
+    }
+}
+```

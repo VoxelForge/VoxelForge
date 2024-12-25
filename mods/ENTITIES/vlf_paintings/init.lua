@@ -112,6 +112,7 @@ minetest.register_entity("vlf_paintings:painting", {
 		collide_with_objects = false,
 		textures = { wood, wood, wood, wood, wood, wood },
 		hp_max = 1,
+		_vlf_pistons_unmovable = true
 	},
 
 	_motive = 0,
@@ -143,7 +144,7 @@ minetest.register_entity("vlf_paintings:painting", {
 		}
 		return minetest.serialize(data)
 	end,
-	on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir, damage)
+	on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir, damage) ---@diagnostic disable-line: unused-local
 		-- Drop as item on punch
 		if puncher and puncher:is_player() then
 			local kname = puncher:get_player_name()
@@ -169,6 +170,7 @@ minetest.register_entity("vlf_paintings:painting", {
 minetest.register_craftitem("vlf_paintings:painting", {
 	description = S("Painting"),
 	inventory_image = "vlf_paintings_painting.png",
+	groups = {deco_block = 1},
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.type ~= "node" then
 			return itemstack
@@ -224,7 +226,7 @@ minetest.register_craftitem("vlf_paintings:painting", {
 			xmax = math.max(unpack(xmaxes))
 
 			local xsize, ysize = xmax, ymax
-			xsize, ysize = shrink_painting(xsize, ysize)
+			xsize, ysize = shrink_painting(xsize, ysize) ---@diagnostic disable-line: cast-local-type
 			if not xsize then
 				return itemstack
 			end

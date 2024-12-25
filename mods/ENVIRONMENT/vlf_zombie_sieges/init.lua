@@ -9,7 +9,10 @@ local function spawn_zombies(self)
 	for i=1,20 do
 		local p = vector.offset(nn[i%#nn],0,1,0)
 		if check_spawn_pos(p) then
-			local m = vlf_mobs.spawn(p,"mobs_mc:zombie")
+			local zombie = math.random (5, 100) <= 5
+				and "mobs_mc:baby_zombie"
+				or "mobs_mc:zombie"
+			local m = vlf_mobs.spawn (p, zombie)
 			if m then
 				local l = m:get_luaentity()
 				m:get_luaentity():gopath(self.pos)
@@ -27,7 +30,7 @@ vlf_events.register_event("zombie_siege",{
 	health_max = 1,
 	exclusive_to_area = 128,
 	enable_bossbar = false,
-	cond_start  = function(self)
+	cond_start  = function()
 		local r = {}
 
 		local t = minetest.get_timeofday()
@@ -35,7 +38,7 @@ vlf_events.register_event("zombie_siege",{
 		local rnd = pr:next(1,10)
 
 		if t < 0.04 and rnd == 1 then
-			for _,p in pairs(minetest.get_connected_players()) do
+			for p in vlf_util.connected_players() do
 				local village = vlf_raids.find_village(p:get_pos())
 				if village then
 					table.insert(r,{ player = p:get_player_name(), pos = village})
@@ -52,7 +55,7 @@ vlf_events.register_event("zombie_siege",{
 	cond_progress = function(self)
 		local m = {}
 		local h = 0
-		for k,o in pairs(self.mobs) do
+		for _, o in pairs(self.mobs) do
 			if o and o:get_pos() then
 				local l = o:get_luaentity()
 				h = h + l.health
@@ -68,7 +71,7 @@ vlf_events.register_event("zombie_siege",{
 	on_stage_begin = spawn_zombies,
 	cond_complete = function(self)
 		local m = {}
-		for k,o in pairs(self.mobs) do
+		for _, o in pairs(self.mobs) do
 			if o and o:get_pos() then
 				table.insert(m,o)
 			end

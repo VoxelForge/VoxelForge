@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_itemframes x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_itemframes x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,29 +11,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Item Frame"
-msgstr "Cadre de l'article"
+msgstr "Cadre"
 
 msgid "Can hold an item"
-msgstr ""
+msgstr "Peut contenir un objet"
 
 msgid "Item frames are decorative blocks in which items can be placed."
-msgstr "Les cadres d'objets sont des blocs décoratifs dans lesquels des objets peuvent être placés."
+msgstr "Les cadres sont des blocs décoratifs dans lesquels des objets peuvent être placés."
 
 msgid "Just place any item on the item frame. Use the item frame again to retrieve the item."
-msgstr "Placez simplement n'importe quel élément sur le cadre de l'élément. Utilisez à nouveau le cadre de l'objet pour récupérer l'objet."
+msgstr "Placez simplement n'importe quel élément sur le cadre . Utilisez à nouveau le cadre pour récupérer l'objet."
 
 msgid "Glow Item Frame"
-msgstr ""
+msgstr "Cadre luisant"
 
 msgid "Can hold an item and glows"
-msgstr ""
+msgstr "Peut contenir un objet et briller"
 
 msgid "Glow and Behold!"
-msgstr ""
+msgstr "Brillez de mille feux !"
 
 msgid "Craft a glow item frame."
-msgstr ""
+msgstr "Fabriquez un cadre luisant."
 

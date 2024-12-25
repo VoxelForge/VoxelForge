@@ -37,30 +37,58 @@ function vlf_player.register_on_visual_change(func)
 	table.insert(vlf_player.registered_on_visual_change, func)
 end
 
-local function player_collision(player)
-
+function vlf_player.player_collision(player, object)
 	local pos = player:get_pos()
-	--local vel = player:get_velocity()
+	local pos2 = object:get_pos()
+	local r1 = (math.random (300) - 150) / 2400
+	local r2 = (math.random (300) - 150) / 2400
+	local x_diff = pos2.x - pos.x + r1
+	local z_diff = pos2.z - pos.z + r2
+	local max_diff = math.max (math.abs (x_diff), math.abs (z_diff))
+	local d_scale
+
+	if max_diff > 0.01 then
+		max_diff = math.sqrt (max_diff)
+		d_scale = math.min (1.0, 1.0 / max_diff)
+		z_diff = z_diff / max_diff * d_scale * 0.91
+		x_diff = x_diff / max_diff * d_scale * 0.91
+
+		player:add_velocity (vector.new (-x_diff, 0, -z_diff))
+	end
+end
+
+local function player_collision (player)
+	local pos = player:get_pos()
 	local x = 0
 	local z = 0
 	local width = .75
 
-	for _,object in pairs(minetest.get_objects_inside_radius(pos, width)) do
-
-		local ent = object:get_luaentity()
-		if (object:is_player() or (ent and ent.is_mob and object ~= player)) then
-
+	-- This function is only concerned with players; mobs
+	-- colliding with players call vlf_player.player_collision
+	-- instead.
+	for object in minetest.objects_inside_radius(pos, width) do
+		if object ~= player and object:is_player () then
 			local pos2 = object:get_pos()
-			local vec  = {x = pos.x - pos2.x, z = pos.z - pos2.z}
-			local force = (width + 0.5) - vector.distance(
-				{x = pos.x, y = 0, z = pos.z},
-				{x = pos2.x, y = 0, z = pos2.z})
+			local r1 = (math.random (300) - 150) / 2400
+			local r2 = (math.random (300) - 150) / 2400
+			local x_diff = pos2.x - pos.x + r1
+			local z_diff = pos2.z - pos.z + r2
+			local max_diff
+				= math.max (math.abs (x_diff), math.abs (z_diff))
+			local d_scale
 
-			x = x + (vec.x * force)
-			z = z + (vec.z * force)
+			if max_diff > 0.01 then
+				max_diff = math.sqrt (max_diff)
+				d_scale = math.min (1.0, 1.0 / max_diff)
+				z_diff = z_diff / max_diff * d_scale
+				x_diff = x_diff / max_diff * d_scale
+
+				x = x - x_diff
+				z = z - z_diff
+			end
 		end
 	end
-	return {x,z}
+	return x * 0.91, z * 0.91
 end
 
 local function dir_to_pitch(dir)
@@ -157,7 +185,7 @@ local function update_player_textures(player)
 	-- before callbacks run
 	minetest.after(0.1, function()
 		if player:is_player() then
-			for i, func in ipairs(vlf_player.registered_on_visual_change) do
+			for _, func in ipairs(vlf_player.registered_on_visual_change) do
 				func(player)
 			end
 		end
@@ -201,7 +229,7 @@ end
 
 function vlf_player.get_player_formspec_model(player, x, y, w, h, fsname)
 	local model = vlf_player.players[player].model
-	local anim = vlf_player.registered_player_models[model].animations[vlf_player.players[player].animation]
+	local anim = vlf_player.registered_player_models[model].animations["stand"]
 	local textures = table.copy(vlf_player.players[player].textures)
 	if not vlf_player.players[player].visible then
 		textures[1] = "blank.png"
@@ -238,7 +266,7 @@ local function set_swimming(player, anim, anim_speed)
 	vlf_util.set_properties(player, player_props_swimming)
 end
 
-vlf_player.register_globalstep(function(player, dtime)
+vlf_player.register_globalstep(function(player)
 	local name = player:get_player_name()
 	local model_name = vlf_player.players[player].model
 	local model = model_name and vlf_player.registered_player_models[model_name]
@@ -250,7 +278,7 @@ vlf_player.register_globalstep(function(player, dtime)
 	local player_velocity = player:get_velocity()
 	local elytra = vlf_player.players[player].elytra and vlf_player.players[player].elytra.active
 
-	local c_x, c_y = unpack(player_collision(player))
+	local c_x, c_y = player_collision (player)
 
 	if player_velocity.x + player_velocity.y < .5 and c_x + c_y > 0 then
 		player:add_velocity({x = c_x, y = 0, z = c_y})
@@ -274,9 +302,6 @@ vlf_player.register_globalstep(function(player, dtime)
 			local parent_yaw = math.deg(parent:get_yaw())
 			vlf_util.set_bone_position(player, "Head_Control", nil, vector.new(pitch, -limit_vel_yaw(yaw, parent_yaw) + parent_yaw, 0))
 			vlf_util.set_bone_position(player,"Body_Control", nil, vector.zero())
-		else
-			vlf_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
-			vlf_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 		end
 	else
 		local walking = control.up or control.down or control.left or control.right
@@ -292,7 +317,7 @@ vlf_player.register_globalstep(function(player, dtime)
 		end
 
 		-- ask if player is swiming
-		local head_in_water = minetest.get_item_group(vlf_player.players[player].nodes.feet, "water") ~= 0
+		local head_in_water = minetest.get_item_group(vlf_player.players[player].nodes.head, "water") ~= 0
 		-- ask if player is sprinting
 		local is_sprinting = vlf_sprint.is_sprinting(name)
 
@@ -308,6 +333,8 @@ vlf_player.register_globalstep(function(player, dtime)
 			vlf_util.set_properties(player, player_props_elytra)
 		elseif walking and (math.abs(velocity.x) > 0.35 or math.abs(velocity.z) > 0.35) then --walking
 			vlf_util.set_properties(player, player_props_normal)
+			vlf_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
+			vlf_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 			local no_arm_moving = minetest.get_item_group(wielded_itemname, "bow") > 0 or
 				minetest.get_item_group(wielded_itemname, "crossbow") > 0 or
 				vlf_shields.wielding_shield(player, 1) or
@@ -429,7 +456,7 @@ vlf_player.register_globalstep(function(player, dtime)
 	end
 end)
 
-vlf_player.register_globalstep_slow(function(player, dtime)
+vlf_player.register_globalstep_slow(function(player)
 	-- Underwater: Spawn bubble particles
 	if not vlf_player.players[player].pspawner_underwater and minetest.get_item_group(vlf_player.players[player].nodes.head, "water") > 0 then
 		vlf_player.players[player].pspawner_underwater = minetest.add_particlespawner({

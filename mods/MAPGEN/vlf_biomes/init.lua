@@ -1,24 +1,23 @@
-local mg_name = minetest.get_mapgen_setting("mg_name")
 local mg_seed = minetest.get_mapgen_setting("seed")
 
-local mod_vlf_schematics = minetest.get_modpath("vlf_schematics")
+local mod_vlf_structures = minetest.get_modpath("vlf_structures")
+local mod_vlf_core = minetest.get_modpath("vlf_core")
+local mod_vlf_mushrooms = minetest.get_modpath("vlf_mushrooms")
+local mod_vlf_crimson = minetest.get_modpath("vlf_crimson")
+local mod_vlf_blackstone = minetest.get_modpath("vlf_blackstone")
+local mod_vlf_mangrove = minetest.get_modpath("vlf_mangrove")
+local mod_cherry_blossom = minetest.get_modpath("vlf_cherry_blossom")
 
 local deco_id_chorus_plant
 
-local overworld_fogcolor = "#C0D8FF"
 local beach_skycolor = "#78A7FF" -- This is the case for all beach biomes except for the snowy ones! Those beaches will have their own colour instead of this one.
 local ocean_skycolor = "#7BA4FF" -- This is the case for all ocean biomes except for non-deep frozen oceans! Those oceans will have their own colour instead of this one.
+local overworld_fogcolor = "#C0D8FF"
 
---local nether_skycolor = "#6EB1FF" -- The Nether biomes seemingly don't use the sky colour, despite having this value according to the wiki. The fog colour is used for both sky and fog.
+--local nether_skycolor = "#6EB1FF"
 
+--local end_fogcolor = "#A080A0"
 --local end_skycolor = "#000000"
---local end_fogcolor = "#A080A0" -- The End biomes seemingly don't use the fog colour, despite having this value according to the wiki. The sky colour is used for both sky and fog.
-
-local default_waterfogcolor = "#3F76E4"
---local lukewarm_waterfogcolor = "#45ADF2"
---local warm_waterfogcolor = "#43D5EE"
---local cold_waterfogcolor = "#3D57D6"
-local frozen_waterfogcolor = "#3938C9"
 
 vlf_biomes = {}
 
@@ -51,9 +50,7 @@ local function register_classic_superflat_biome()
 		_vlf_biome_type = "medium",
 		_vlf_palette_index = 0,
 		_vlf_skycolor = "#78A7FF",
-		_vlf_fogcolor = overworld_fogcolor,
-		_vlf_water_palette_index = 0,
-		_vlf_waterfogcolor = default_waterfogcolor,
+		_vlf_fogcolor = overworld_fogcolor
 	})
 end
 
@@ -139,7 +136,6 @@ local function register_biomes()
 		"MesaPlateauF",
 		"MesaPlateauFM",
 		"MangroveSwamp",
-		"Grove",
 	}
 
 
@@ -162,9 +158,7 @@ local function register_biomes()
 		_vlf_biome_type = "snowy",
 		_vlf_palette_index = 2,
 		_vlf_skycolor = "#7FA1FF",
-		_vlf_fogcolor = overworld_fogcolor,
-		_vlf_water_palette_index = 9,
-		_vlf_waterfogcolor = frozen_waterfogcolor,
+		_vlf_fogcolor = overworld_fogcolor
 	})
 	minetest.register_biome({
 		name = "IcePlainsSpikes_ocean",
@@ -185,7 +179,7 @@ local function register_biomes()
 		_vlf_fogcolor = overworld_fogcolor
 	})
 
-	-- Snowy Taiga
+	-- Cold Taiga
 	minetest.register_biome({
 		name = "ColdTaiga",
 		node_dust = "vlf_core:snow",
@@ -200,10 +194,11 @@ local function register_biomes()
 		humidity_point = 58,
 		heat_point = 8,
 		_vlf_biome_type = "snowy",
-		_vlf_palette_index = 5,
+		_vlf_palette_index = 3,
 		_vlf_skycolor = "#839EFF",
 		_vlf_fogcolor = overworld_fogcolor
 	})
+
 	-- A cold beach-like biome, implemented as low part of Cold Taiga
 	minetest.register_biome({
 		name = "ColdTaiga_beach",
@@ -263,6 +258,7 @@ local function register_biomes()
 		_vlf_skycolor = "#7FA1FF",
 		_vlf_fogcolor = overworld_fogcolor
 	})
+	
 	minetest.register_biome({
 		name = "Grove",
 		node_dust = "vlf_core:snow",
@@ -278,10 +274,11 @@ local function register_biomes()
 		heat_point = 16,
 		_vlf_biome_type = "snowy",
 		_vlf_palette_index = 3,
-		_vlf_water_palette_index = 9,
+		_vlf_water_palette_index = 8,
 		_vlf_skycolor = "#839EFF",
 		_vlf_fogcolor = "#C0D8FF",
 	})
+	
 	minetest.register_biome({
 		name = "Grove_ocean",
 		node_top = "vlf_core:gravel",
@@ -296,7 +293,7 @@ local function register_biomes()
 		heat_point = 16,
 		_vlf_biome_type = "snowy",
 		_vlf_palette_index = 3,
-		_vlf_water_palette_index = 9,
+		_vlf_water_palette_index = 8,
 		_vlf_skycolor = "#839EFF",
 		_vlf_fogcolor = "#C0D8FF",
 	})
@@ -314,10 +311,11 @@ local function register_biomes()
 		heat_point = 50,
 		_vlf_biome_type = "cold",
 		_vlf_palette_index = 3,
-		_vlf_water_palette_index = 9,
+		_vlf_water_palette_index = 6,
 		_vlf_skycolor = "#839EFF",
 		_vlf_fogcolor = "#C0D8FF",
 	})
+
 	-- Mega Pine Taiga
 	minetest.register_biome({
 		name = "MegaTaiga",
@@ -1825,6 +1823,20 @@ local function register_biomes()
 	})
 
 	minetest.register_biome({
+		name = "DripstoneCave",
+		depth_top = 1,
+		node_cave_liquid = "vlf_core:water_source",
+		depth_riverbed = 2,
+		y_min = vlf_vars.mg_overworld_min,
+		y_max = 0,
+		vertical_blend = 1,
+		humidity_point = 50,
+		heat_point = 50,
+		_vlf_biome_type = "medium",
+		_vlf_palette_index = 0,
+	})
+
+	minetest.register_biome({
 		name = "LushCaves_ocean",
 		node_top = "vlf_core:sand",
 		depth_top = 1,
@@ -2266,22 +2278,6 @@ end
 
 -- Register ores which are limited by biomes. For all mapgens except flat and singlenode.
 local function register_biome_ores()
-	-- Emeralds
-	minetest.register_ore({
-		ore_type       = "scatter",
-		ore            = "vlf_core:emerald_ore",
-		wherein        = stonelike,
-		clust_scarcity = 16384,
-		clust_num_ores = 1,
-		clust_size     = 1,
-		y_min          = vlf_worlds.layer_to_y(4),
-		y_max          = vlf_worlds.layer_to_y(32),
-		biomes         = {
-			"ExtremeHills", "ExtremeHills_beach", "ExtremeHills_ocean", "ExtremeHills_deep_ocean", "ExtremeHills_underground",
-			"ExtremeHills+", "ExtremeHills+_ocean", "ExtremeHills+_deep_ocean", "ExtremeHills+_underground",
-			"ExtremeHillsM", "ExtremeHillsM_ocean", "ExtremeHillsM_deep_ocean", "ExtremeHillsM_underground",
-		},
-	})
 
 	-- Rarely replace stone with stone monster eggs.
 	minetest.register_ore({
@@ -2298,22 +2294,6 @@ local function register_biome_ores()
 			"ExtremeHills+", "ExtremeHills+_ocean", "ExtremeHills+_deep_ocean", "ExtremeHills+_underground",
 			"ExtremeHillsM", "ExtremeHillsM_ocean", "ExtremeHillsM_deep_ocean", "ExtremeHillsM_underground",
 		},
-	})
-
-	-- Bonus gold spawn in Mesa
-	minetest.register_ore({
-		ore_type       = "scatter",
-		ore            = "vlf_core:gold_ore",
-		wherein        = stonelike,
-		clust_scarcity = 3333,
-		clust_num_ores = 5,
-		clust_size     = 3,
-		y_min          = vlf_worlds.layer_to_y(32),
-		y_max          = vlf_worlds.layer_to_y(79),
-		biomes         = { "Mesa", "Mesa_sandlevel", "Mesa_ocean",
-				"MesaBryce", "MesaBryce_sandlevel", "MesaBryce_ocean",
-				"MesaPlateauF", "MesaPlateauF_sandlevel", "MesaPlateauF_ocean",
-				"MesaPlateauFM", "MesaPlateauFM_sandlevel", "MesaPlateauFM_ocean", },
 	})
 
 	--nether gold
@@ -3164,7 +3144,7 @@ local function register_coral_decos(ck)
 		biomes = warm_oceans,
 		y_min = coral_min,
 		y_max = coral_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_structures_coral_"..c.."_1.mts",
+		schematic = mod_vlf_structures.."/schematics/vlf_structures_coral_"..c.."_1.mts",
 		rotation = "random",
 		flags = "all_floors,force_placement",
 	})
@@ -3176,7 +3156,7 @@ local function register_coral_decos(ck)
 		biomes = warm_oceans,
 		y_min = coral_min,
 		y_max = coral_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_structures_coral_"..c.."_2.mts",
+		schematic = mod_vlf_structures.."/schematics/vlf_structures_coral_"..c.."_2.mts",
 		rotation = "random",
 		flags = "all_floors,force_placement",
 	})
@@ -3225,6 +3205,39 @@ local function register_decorations()
 		register_coral_decos(k)
 	end
 
+	minetest.register_decoration({
+		deco_type = "simple",
+		place_on = {"group:stone"},
+		sidelen = 1,
+		height = 1,
+		max_height = 1,
+		place_offset_y = -1,
+		noise_params =
+		{
+			offset = 0,
+			scale = 1,
+			spread = {x = 20, y = 20, z = 20},
+			seed = 101,
+			octaves = 3,
+			persistance = 1,
+			lacunarity = 2,
+		},
+		decoration = "vlf_dripstone:dripstone_block",
+		biomes = {"DripstoneCave"},
+		flags = "all_floors, all_ceilings, force_placement",
+		y_min = vlf_vars.mg_overworld_min,
+	})
+
+	minetest.register_decoration({
+		deco_type = "simple",
+		place_on = {"vlf_dripstone:dripstone_block"},
+		sidelen = 1,
+		fill_ratio = 0.2,
+		decoration = "vlf_dripstone:dripstone_bottom_tip",
+		biomes = {"DripstoneCave"},
+		flags = "all_floors",
+		y_min = vlf_vars.mg_overworld_min,
+	})
 
 	local lushcaves = { "LushCaves", "LushCaves_underground", "LushCaves_ocean", "LushCaves_deep_ocean"}
 	local lushcaves_underground = { "LushCaves_underground", "LushCaves_ocean", "LushCaves_deep_ocean"}
@@ -3447,7 +3460,7 @@ local function register_decorations()
 		biomes = warm_oceans,
 		y_min = coral_min,
 		y_max = coral_max,
-		schematic = mod_vlf_schematics.."/schems/coral_cora.mts",
+		schematic = mod_vlf_structures.."/schematics/coral_cora.mts",
 		rotation = "random",
 		flags = "place_center_x,place_center_z, force_placement",
 	})
@@ -3488,7 +3501,7 @@ local function register_decorations()
 		biomes = {"IcePlainsSpikes"},
 		y_min = 4,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_structures_ice_spike_large.mts",
+		schematic = mod_vlf_structures.."/schematics/vlf_structures_ice_spike_large.mts",
 		rotation = "random",
 		flags = "place_center_x, place_center_z",
 	})
@@ -3509,7 +3522,7 @@ local function register_decorations()
 		biomes = {"IcePlainsSpikes"},
 		y_min = 4,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_structures_ice_spike_small.mts",
+		schematic = mod_vlf_structures.."/schematics/vlf_structures_ice_spike_small.mts",
 		rotation = "random",
 		flags = "place_center_x, place_center_z",
 	})
@@ -3532,7 +3545,7 @@ local function register_decorations()
 			biomes = {"Forest"},
 			y_min = 1,
 			y_max = vlf_vars.mg_overworld_max,
-			schematic = mod_vlf_schematics.."/schems/vlf_core_oak_large_"..i..".mts",
+			schematic = mod_vlf_core.."/schematics/vlf_core_oak_large_"..i..".mts",
 			flags = "place_center_x, place_center_z",
 			rotation = "random",
 		})
@@ -3552,7 +3565,7 @@ local function register_decorations()
 			biomes = {"ExtremeHills", "ExtremeHillsM", "ExtremeHills+", "ExtremeHills+_snowtop"},
 			y_min = 1,
 			y_max = vlf_vars.mg_overworld_max,
-			schematic = mod_vlf_schematics.."/schems/vlf_core_oak_large_"..i..".mts",
+			schematic = mod_vlf_core.."/schematics/vlf_core_oak_large_"..i..".mts",
 			flags = "place_center_x, place_center_z",
 			rotation = "random",
 		})
@@ -3573,7 +3586,7 @@ local function register_decorations()
 		biomes = {"Forest"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_classic.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_oak_classic.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -3592,7 +3605,7 @@ local function register_decorations()
 		biomes = {"FlowerForest"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_classic.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_oak_classic.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -3611,7 +3624,7 @@ local function register_decorations()
 		biomes = {"ExtremeHills", "ExtremeHillsM", "ExtremeHills+", "ExtremeHills+_snowtop"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_classic.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_oak_classic.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -3631,7 +3644,7 @@ local function register_decorations()
 		biomes = {"ExtremeHills+", "ExtremeHills+_snowtop"},
 		y_min = 50,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_classic.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_oak_classic.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -3650,7 +3663,7 @@ local function register_decorations()
 		biomes = {"MesaPlateauF_grasstop"},
 		y_min = 30,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_classic.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_oak_classic.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -3669,7 +3682,7 @@ local function register_decorations()
 		biomes = {"MesaPlateauFM_grasstop"},
 		y_min = 30,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_classic.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_oak_classic.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -3689,7 +3702,7 @@ local function register_decorations()
 		biomes = {"IcePlains"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_classic.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_oak_classic.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -3701,7 +3714,7 @@ local function register_decorations()
 		biomes = {"Jungle", "JungleM"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_classic.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_oak_classic.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -3713,7 +3726,7 @@ local function register_decorations()
 		biomes = {"BambooJungle", "JungleEdge", "JungleEdgeM", "Savanna"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_classic.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_oak_classic.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -3792,7 +3805,20 @@ local function register_decorations()
 		biomes = {"FlowerForest"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_classic_bee_nest.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_oak_classic_bee_nest.mts",
+		flags = "place_center_x, place_center_z",
+		rotation = "random",
+		spawn_by = "group:flower",
+	})
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:grass_block_no_snow", "vlf_core:dirt"},
+		sidelen = 16,
+		fill_ratio = 0.0002,
+		biomes = {"Meadow"},
+		y_min = 1,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_core.."/schematics/vlf_core_oak_classic_bee_nest.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 		spawn_by = "group:flower",
@@ -3813,21 +3839,7 @@ local function register_decorations()
 		biomes = {"Forest"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_classic_bee_nest.mts",
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-		spawn_by = "group:flower",
-	})
-
-	minetest.register_decoration({
-		deco_type = "schematic",
-		place_on = {"group:grass_block_no_snow", "vlf_core:dirt"},
-		sidelen = 16,
-		fill_ratio = 0.0002,
-		biomes = {"Meadow"},
-		y_min = 1,
-		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_classic_bee_nest.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_oak_classic_bee_nest.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 		spawn_by = "group:flower",
@@ -3849,7 +3861,7 @@ local function register_decorations()
 		biomes = {"Forest"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_balloon.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_oak_balloon.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -3870,7 +3882,7 @@ local function register_decorations()
 		biomes = {"Swampland", "Swampland_shore"},
 		y_min = 0,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_oak_swamp.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_oak_swamp.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -3884,7 +3896,7 @@ local function register_decorations()
 		biomes = {"MangroveSwamp","MangroveSwamp_shore"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_mangrove_tree_1.mts",
+		schematic = mod_vlf_mangrove.."/schematics/vlf_mangrove_tree_1.mts",
 		flags = "place_center_x, place_center_z, force_placement",
 		rotation = "random",
 	})
@@ -3897,7 +3909,7 @@ local function register_decorations()
 		biomes = {"MangroveSwamp","MangroveSwamp_shore"},
 		y_min = -1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_mangrove_tree_2.mts",
+		schematic = mod_vlf_mangrove.."/schematics/vlf_mangrove_tree_2.mts",
 		flags = "place_center_x, place_center_z, force_placement",
 		rotation = "random",
 	})
@@ -3910,7 +3922,7 @@ local function register_decorations()
 		biomes = {"MangroveSwamp","MangroveSwamp_shore"},
 		y_min = -1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_mangrove_tree_3.mts",
+		schematic = mod_vlf_mangrove.."/schematics/vlf_mangrove_tree_3.mts",
 		flags = "place_center_x, place_center_z, force_placement",
 		rotation = "random",
 	})
@@ -3923,12 +3935,12 @@ local function register_decorations()
 		biomes = {"MangroveSwamp","MangroveSwamp_shore"},
 		y_min = -1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_mangrove_tree_4.mts",
+		schematic = mod_vlf_mangrove.."/schematics/vlf_mangrove_tree_4.mts",
 		flags = "place_center_x, place_center_z, force_placement",
 		rotation = "random",
 	})
 	minetest.register_decoration({
-		name = "vlf_biomes:mangrove_tree_4",
+		name = "vlf_biomes:mangrove_tree_5",
 		deco_type = "schematic",
 		place_on = {"vlf_mud:mud"},
 		sidelen = 80,
@@ -3936,7 +3948,7 @@ local function register_decorations()
 		biomes = {"MangroveSwamp","MangroveSwamp_shore"},
 		y_min = -1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_mangrove_tree_5.mts",
+		schematic = mod_vlf_mangrove.."/schematics/vlf_mangrove_tree_5.mts",
 		flags = "place_center_x, place_center_z, force_placement",
 		rotation = "random",
 	})
@@ -3956,7 +3968,7 @@ local function register_decorations()
 		biomes = {"MangroveSwamp"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_mangrove_bee_nest.mts",
+		schematic = mod_vlf_mangrove.."/schematics/vlf_mangrove_bee_nest.mts",
 		flags = "place_center_x, place_center_z, force_placement",
 		rotation = "random",
 		spawn_by = "group:flower",
@@ -4027,7 +4039,7 @@ local function register_decorations()
 			biomes = {"Jungle"},
 			y_min = 4,
 			y_max = vlf_vars.mg_overworld_max,
-			schematic = mod_vlf_schematics.."/schems/vlf_core_jungle_tree_huge_"..i..".mts",
+			schematic = mod_vlf_core.."/schematics/vlf_core_jungle_tree_huge_"..i..".mts",
 			flags = "place_center_x, place_center_z",
 			rotation = "random",
 		})
@@ -4039,7 +4051,7 @@ local function register_decorations()
 			biomes = {"JungleM"},
 			y_min = 4,
 			y_max = vlf_vars.mg_overworld_max,
-			schematic = mod_vlf_schematics.."/schems/vlf_core_jungle_tree_huge_"..i..".mts",
+			schematic = mod_vlf_core.."/schematics/vlf_core_jungle_tree_huge_"..i..".mts",
 			flags = "place_center_x, place_center_z",
 			rotation = "random",
 		})
@@ -4054,7 +4066,7 @@ local function register_decorations()
 		biomes = {"Jungle"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_jungle_tree.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_jungle_tree.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -4066,7 +4078,7 @@ local function register_decorations()
 		biomes = {"Jungle"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_jungle_tree_2.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_jungle_tree_2.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -4078,7 +4090,7 @@ local function register_decorations()
 		biomes = {"Jungle"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_jungle_tree_3.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_jungle_tree_3.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -4090,7 +4102,7 @@ local function register_decorations()
 		biomes = {"Jungle"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_jungle_tree_4.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_jungle_tree_4.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -4102,7 +4114,7 @@ local function register_decorations()
 		biomes = {"Jungle"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_jungle_tree.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_jungle_tree.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -4114,7 +4126,7 @@ local function register_decorations()
 		biomes = {"BambooJungle", "JungleEdge", "JungleEdgeM"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_jungle_tree.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_jungle_tree.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -4127,7 +4139,7 @@ local function register_decorations()
 		biomes = {"JungleM"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_jungle_tree_2.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_jungle_tree_2.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -4138,7 +4150,7 @@ local function register_decorations()
 		end
 		minetest.register_decoration({
 			deco_type = "schematic",
-			place_on = {"group:grass_block", "vlf_core:dirt", "vlf_core:podzol", "vlf_core:snowblock"},
+			place_on = {"group:grass_block", "vlf_core:dirt", "vlf_core:podzol", "group:snow"},
 			sidelen = 16,
 			noise_params = {
 				offset = offset,
@@ -4151,7 +4163,7 @@ local function register_decorations()
 			biomes = biomes,
 			y_min = y,
 			y_max = vlf_vars.mg_overworld_max,
-			schematic = mod_vlf_schematics.."/schems/"..sprucename,
+			schematic = mod_vlf_core.."/schematics/"..sprucename,
 			flags = "place_center_x, place_center_z",
 		})
 	end
@@ -4202,10 +4214,49 @@ local function register_decorations()
 			octaves = 3,
 			persist = 0.66
 		},
+		biomes = {"Taiga", "ColdTaiga"},
+		y_min = 2,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_core.."/schematics/vlf_core_spruce_lollipop.mts",
+		flags = "place_center_x, place_center_z",
+	})
+
+	-- Matchstick spruce: Very few leaves, tall trunk
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:grass_block", "vlf_core:podzol"},
+		sidelen = 80,
+		noise_params = {
+			offset = -0.025,
+			scale = 0.025,
+			spread = {x = 250, y = 250, z = 250},
+			seed = 2566,
+			octaves = 5,
+			persist = 0.60,
+		},
+		biomes = {"Taiga", "ColdTaiga"},
+		y_min = 3,
+		y_max = vlf_vars.mg_overworld_max,
+		schematic = mod_vlf_core.."/schematics/vlf_core_spruce_matchstick.mts",
+		flags = "place_center_x, place_center_z",
+	})
+	
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"group:grass_block", "vlf_core:podzol"},
+		sidelen = 16,
+		noise_params = {
+			offset = 0.004,
+			scale = 0.0022,
+			spread = {x = 250, y = 250, z = 250},
+			seed = 2500,
+			octaves = 3,
+			persist = 0.66
+		},
 		biomes = {"Taiga", "ColdTaiga", "Grove"},
 		y_min = 2,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_spruce_lollipop.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_spruce_lollipop.mts",
 		flags = "place_center_x, place_center_z",
 	})
 
@@ -4224,7 +4275,7 @@ local function register_decorations()
 		biomes = {"Grove"},
 		y_min = 2,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_spruce_lollipop.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_spruce_lollipop.mts",
 		flags = "place_center_x, place_center_z",
 	})
 
@@ -4244,7 +4295,7 @@ local function register_decorations()
 		biomes = {"Taiga", "ColdTaiga", "Grove"},
 		y_min = 3,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_spruce_matchstick.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_spruce_matchstick.mts",
 		flags = "place_center_x, place_center_z",
 	})
 	-- Grove Tree.
@@ -4263,7 +4314,7 @@ local function register_decorations()
 		biomes = {"Grove"},
 		y_min = 3,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_spruce_matchstick.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_spruce_matchstick.mts",
 		flags = "place_center_x, place_center_z",
 	})
 
@@ -4283,7 +4334,7 @@ local function register_decorations()
 		biomes = {"IcePlains"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_spruce_5.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_spruce_5.mts",
 		flags = "place_center_x, place_center_z",
 	})
 
@@ -4297,7 +4348,7 @@ local function register_decorations()
 			biomes = {"Savanna", "SavannaM"},
 			y_min = 1,
 			y_max = vlf_vars.mg_overworld_max,
-			schematic = mod_vlf_schematics.."/schems/vlf_core_acacia_"..a..".mts",
+			schematic = mod_vlf_core.."/schematics/vlf_core_acacia_"..a..".mts",
 			flags = "place_center_x, place_center_z",
 			rotation = "random",
 		})
@@ -4319,7 +4370,7 @@ local function register_decorations()
 		biomes = {"BirchForest"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_birch.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_birch.mts",
 		flags = "place_center_x, place_center_z",
 	})
 	minetest.register_decoration({
@@ -4337,7 +4388,7 @@ local function register_decorations()
 		biomes = {"BirchForestM"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_birch_tall.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_birch_tall.mts",
 		flags = "place_center_x, place_center_z",
 	})
 
@@ -4356,7 +4407,7 @@ local function register_decorations()
 		biomes = {"Forest", "FlowerForest"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_birch.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_birch.mts",
 		flags = "place_center_x, place_center_z",
 	})
 	minetest.register_decoration({
@@ -4375,21 +4426,7 @@ local function register_decorations()
 		biomes = {"Forest", "BirchForest", "BirchForestM"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_birch_bee_nest.mts",
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-		spawn_by = "group:flower",
-	})
-
-	minetest.register_decoration({
-		deco_type = "schematic",
-		place_on = {"group:grass_block_no_snow", "vlf_core:dirt"},
-		sidelen = 16,
-		fill_ratio = 0.00002,
-		biomes = {"Meadow"},
-		y_min = 15,
-		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_birch_bee_nest.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_birch_bee_nest.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 		spawn_by = "group:flower",
@@ -4411,7 +4448,7 @@ local function register_decorations()
 		biomes = {"RoofedForest"},
 		y_min = 4,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_dark_oak.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_dark_oak.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -4433,7 +4470,7 @@ local function register_decorations()
 			biomes = {"CherryGrove"},
 			y_min = 1,
 			y_max = vlf_vars.mg_overworld_max,
-			schematic = mod_vlf_schematics.."/schems/vlf_cherry_blossom_tree_"..i..".mts",
+			schematic = mod_cherry_blossom.."/schematics/vlf_cherry_blossom_tree_"..i..".mts",
 			flags = "place_center_x, place_center_z",
 			rotation = "random",
 		})
@@ -4452,7 +4489,7 @@ local function register_decorations()
 			biomes = {"CherryGrove"},
 			y_min = 1,
 			y_max = vlf_vars.mg_overworld_max,
-			schematic = mod_vlf_schematics.."/schems/vlf_cherry_blossom_tree_beehive_"..i..".mts",
+			schematic = mod_cherry_blossom.."/schematics/vlf_cherry_blossom_tree_beehive_"..i..".mts",
 			flags = "place_center_x, place_center_z",
 			rotation = "random",
 		})
@@ -4475,7 +4512,7 @@ local function register_decorations()
 		biomes = { "RoofedForest" },
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_mushrooms_huge_brown.mts",
+		schematic = mod_vlf_mushrooms.."/schematics/vlf_mushrooms_huge_brown.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "0",
 	})
@@ -4487,7 +4524,7 @@ local function register_decorations()
 		biomes = { "RoofedForest" },
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_mushrooms_giant_brown.mts",
+		schematic = mod_vlf_mushrooms.."/schematics/vlf_mushrooms_giant_brown.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "0",
 	})
@@ -4500,7 +4537,7 @@ local function register_decorations()
 		biomes = { "MushroomIsland", "MushroomIslandShore" },
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_mushrooms_huge_brown.mts",
+		schematic = mod_vlf_mushrooms.."/schematics/vlf_mushrooms_huge_brown.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "0",
 	})
@@ -4512,7 +4549,7 @@ local function register_decorations()
 		biomes = { "MushroomIsland", "MushroomIslandShore" },
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_mushrooms_giant_brown.mts",
+		schematic = mod_vlf_mushrooms.."/schematics/vlf_mushrooms_giant_brown.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "0",
 	})
@@ -4526,7 +4563,7 @@ local function register_decorations()
 		biomes = { "RoofedForest" },
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_mushrooms_huge_red.mts",
+		schematic = mod_vlf_mushrooms.."/schematics/vlf_mushrooms_huge_red.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "0",
 	})
@@ -4538,7 +4575,7 @@ local function register_decorations()
 		biomes = { "RoofedForest" },
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_mushrooms_giant_red.mts",
+		schematic = mod_vlf_mushrooms.."/schematics/vlf_mushrooms_giant_red.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "0",
 	})
@@ -4551,7 +4588,7 @@ local function register_decorations()
 		biomes = { "MushroomIsland", "MushroomIslandShore" },
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_mushrooms_huge_red.mts",
+		schematic = mod_vlf_mushrooms.."/schematics/vlf_mushrooms_huge_red.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "0",
 	})
@@ -4563,7 +4600,7 @@ local function register_decorations()
 		biomes = { "MushroomIsland", "MushroomIslandShore" },
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_mushrooms_giant_red.mts",
+		schematic = mod_vlf_mushrooms.."/schematics/vlf_mushrooms_giant_red.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "0",
 	})
@@ -4619,7 +4656,7 @@ local function register_decorations()
 		biomes = {"MegaTaiga", "MegaSpruceTaiga"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_structures_boulder.mts",
+		schematic = mod_vlf_structures.."/schematics/vlf_structures_boulder.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -4640,7 +4677,7 @@ local function register_decorations()
 		biomes = {"MegaTaiga", "MegaSpruceTaiga"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_structures_boulder_small.mts",
+		schematic = mod_vlf_structures.."/schematics/vlf_structures_boulder_small.mts",
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
 	})
@@ -4857,7 +4894,7 @@ local function register_decorations()
 		biomes = {"Jungle"},
 		y_min = 3,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_jungle_bush_oak_leaves.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_jungle_bush_oak_leaves.mts",
 		flags = "place_center_x, place_center_z",
 	})
 	minetest.register_decoration({
@@ -4875,7 +4912,7 @@ local function register_decorations()
 		biomes = {"Jungle"},
 		y_min = 3,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_jungle_bush_oak_leaves_2.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_jungle_bush_oak_leaves_2.mts",
 		flags = "place_center_x, place_center_z",
 	})
 	minetest.register_decoration({
@@ -4893,7 +4930,7 @@ local function register_decorations()
 		biomes = {"JungleM"},
 		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_jungle_bush_oak_leaves.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_jungle_bush_oak_leaves.mts",
 		flags = "place_center_x, place_center_z",
 	})
 	minetest.register_decoration({
@@ -4911,7 +4948,7 @@ local function register_decorations()
 		biomes = { "BambooJungle", "JungleEdge", "JungleEdgeM"},
 		y_min = 3,
 		y_max = vlf_vars.mg_overworld_max,
-		schematic = mod_vlf_schematics.."/schems/vlf_core_jungle_bush_oak_leaves.mts",
+		schematic = mod_vlf_core.."/schematics/vlf_core_jungle_bush_oak_leaves.mts",
 		flags = "place_center_x, place_center_z",
 	})
 
@@ -5145,14 +5182,14 @@ local function register_decorations()
 			octaves = 3,
 			persist = 0.6,
 		},
-		biomes = {"ExtremeHills+_snowtop"},
-		y_min = 1,
+		biomes = {"Meadow"},
+		y_min = 20,
 		y_max = vlf_vars.mg_overworld_max,
 		schematic = {
 			size = { x=1, y=2, z=1 },
 			data = {
 				{ name = "vlf_core:dirt_with_grass", force_place=true, },
-				{ name = "vlf_flowers:tallgrass", param2 = minetest.registered_biomes["ExtremeHills+_snowtop"]._vlf_palette_index },
+				{ name = "vlf_flowers:tallgrass", param2 = minetest.registered_biomes["Meadow"]._vlf_palette_index },
 			},
 		},
 	})
@@ -5168,17 +5205,19 @@ local function register_decorations()
 			octaves = 3,
 			persist = 0.6,
 		},
-		biomes = {"Meadow"},
-		y_min = 20,
+		biomes = {"ExtremeHills+_snowtop"},
+		y_min = 1,
 		y_max = vlf_vars.mg_overworld_max,
 		schematic = {
 			size = { x=1, y=2, z=1 },
 			data = {
 				{ name = "vlf_core:dirt_with_grass", force_place=true, },
-				{ name = "vlf_flowers:tallgrass", param2 = minetest.registered_biomes["Meadow"]._vlf_palette_index },
+				{ name = "vlf_flowers:tallgrass", param2 = minetest.registered_biomes["ExtremeHills+_snowtop"]._vlf_palette_index },
 			},
 		},
 	})
+
+
 	-- Dead bushes
 	minetest.register_decoration({
 		deco_type = "simple",
@@ -5317,7 +5356,7 @@ local function register_decorations()
 			y_min = 1,
 			y_max = vlf_vars.mg_overworld_max,
 			decoration = mushrooms[m],
-			biomes = { "Swampland"},
+			biomes = { "Swampland" },
 			spawn_by = { "vlf_trees:tree_oak", "vlf_trees:tree_spruce", "vlf_trees:tree_dark_oak", "vlf_trees:tree_birch" },
 			num_spawn_by = 1,
 		})
@@ -5351,13 +5390,13 @@ local function register_decorations()
 				deco_type = "simple",
 				place_on = {"group:grass_block_no_snow", "vlf_core:dirt"},
 				sidelen = 16,
-				noise_params = {
-					offset = 0.00008*8,
-					scale = 0.003,
+				noise_params= {
+					offset = 0.01,
+					scale = 0.0003,
 					spread = {x = 100, y = 100, z = 100},
 					seed = seed,
 					octaves = 3,
-					persist = 0.6
+					persist = 0.6,
 				},
 				y_min = 1,
 				y_max = vlf_vars.mg_overworld_max,
@@ -5406,13 +5445,13 @@ local function register_decorations()
 
 	register_flower("lily_of_the_valley", nil, 325)
 	register_flower("cornflower", flower_biomes2, 486)
-
-	register_flower("azure_bluet", {"Meadow"}, 400)
-	register_flower("oxeye_daisy", {"Meadow"}, 470)
+	
+	register_flower("azure_bluet", {"Meadow"}, 40)
+	register_flower("oxeye_daisy", {"Meadow"}, 47)
 	register_flower("dandelion", {"Meadow"}, 16)
-	register_flower("poppy", {"Meadow"}, 474)
-	register_flower("cornflower", {"Meadow"}, 243)
-	register_flower("allium", {"Meadow"} , 150) -- flower Forest only
+	register_flower("poppy", {"Meadow"}, 47)
+	register_flower("cornflower", {"Meadow"}, 24)
+	register_flower("allium", {"Meadow"} , 15)
 end
 
 -- Decorations in non-Overworld dimensions
@@ -5475,7 +5514,7 @@ local function register_dimension_decorations()
 		y_min = vlf_vars.mg_lava_nether_max + 1,
 		y_max = vlf_vars.mg_nether_max - 15,
 		flags = "all_floors, place_center_x, place_center_z",
-		schematic = mod_vlf_schematics.."/schems/warped_fungus_1.mts",
+		schematic = mod_vlf_crimson.."/schematics/warped_fungus_1.mts",
 		size = {x = 5, y = 11, z = 5},
 		rotation = "random",
 	})
@@ -5489,7 +5528,7 @@ local function register_dimension_decorations()
 		y_min = vlf_vars.mg_lava_nether_max + 1,
 		y_max = vlf_vars.mg_nether_max - 10,
 		flags = "all_floors, place_center_x, place_center_z",
-		schematic = mod_vlf_schematics.."/schems/warped_fungus_2.mts",
+		schematic = mod_vlf_crimson.."/schematics/warped_fungus_2.mts",
 		size = {x = 5, y = 6, z = 5},
 		rotation = "random",
 	})
@@ -5503,7 +5542,7 @@ local function register_dimension_decorations()
 		y_min = vlf_vars.mg_lava_nether_max + 1,
 		y_max = vlf_vars.mg_nether_max - 14,
 		flags = "all_floors, place_center_x, place_center_z",
-		schematic = mod_vlf_schematics.."/schems/warped_fungus_3.mts",
+		schematic = mod_vlf_crimson.."/schematics/warped_fungus_3.mts",
 		size = {x = 5, y = 12, z = 5},
 		rotation = "random",
 	})
@@ -5562,7 +5601,7 @@ local function register_dimension_decorations()
 		y_min = vlf_vars.mg_lava_nether_max + 1,
 		y_max = vlf_vars.mg_nether_max - 10,
 		flags = "all_floors, place_center_x, place_center_z",
-		schematic = mod_vlf_schematics.."/schems/crimson_fungus_1.mts",
+		schematic = mod_vlf_crimson.."/schematics/crimson_fungus_1.mts",
 		size = {x = 5, y = 8, z = 5},
 		rotation = "random",
 	})
@@ -5576,7 +5615,7 @@ local function register_dimension_decorations()
 		y_min = vlf_vars.mg_lava_nether_max + 1,
 		y_max = vlf_vars.mg_nether_max - 15,
 		flags = "all_floors, place_center_x, place_center_z",
-		schematic = mod_vlf_schematics.."/schems/crimson_fungus_2.mts",
+		schematic = mod_vlf_crimson.."/schematics/crimson_fungus_2.mts",
 		size = {x = 5, y = 12, z = 5},
 		rotation = "random",
 	})
@@ -5590,7 +5629,7 @@ local function register_dimension_decorations()
 		y_min = vlf_vars.mg_lava_nether_max + 1,
 		y_max = vlf_vars.mg_nether_max - 20,
 		flags = "all_floors, place_center_x, place_center_z",
-		schematic = mod_vlf_schematics.."/schems/crimson_fungus_3.mts",
+		schematic = mod_vlf_crimson.."/schematics/crimson_fungus_3.mts",
 		size = {x = 7, y = 13, z = 7},
 		rotation = "random",
 	})
@@ -5639,7 +5678,7 @@ local function register_dimension_decorations()
 		biomes = {"SoulsandValley"},
 		y_min = vlf_vars.mg_lava_nether_max + 1,
 		flags = "all_floors, place_center_x, place_center_z",
-		schematic = mod_vlf_schematics.."/schems/vlf_blackstone_nether_fossil_1.mts",
+		schematic = mod_vlf_blackstone.."/schematics/vlf_blackstone_nether_fossil_1.mts",
 		size = {x = 5, y = 8, z = 5},
 		rotation = "random",
 	})
@@ -5651,7 +5690,7 @@ local function register_dimension_decorations()
 		biomes = {"SoulsandValley"},
 		y_min = vlf_vars.mg_lava_nether_max + 1,
 		flags = "all_floors, place_center_x, place_center_z",
-		schematic = mod_vlf_schematics.."/schems/vlf_blackstone_nether_fossil_2.mts",
+		schematic = mod_vlf_blackstone.."/schematics/vlf_blackstone_nether_fossil_2.mts",
 		size = {x = 5, y = 8, z = 5},
 		rotation = "random",
 	})
@@ -5663,7 +5702,7 @@ local function register_dimension_decorations()
 		biomes = {"SoulsandValley"},
 		y_min = vlf_vars.mg_lava_nether_max + 1,
 		flags = "all_floors, place_center_x, place_center_z",
-		schematic = mod_vlf_schematics.."/schems/vlf_blackstone_nether_fossil_3.mts",
+		schematic = mod_vlf_blackstone.."/schematics/vlf_blackstone_nether_fossil_3.mts",
 		size = {x = 5, y = 8, z = 5},
 		rotation = "random",
 	})
@@ -5675,7 +5714,7 @@ local function register_dimension_decorations()
 		biomes = {"SoulsandValley"},
 		y_min = vlf_vars.mg_lava_nether_max + 1,
 		flags = "all_floors, place_center_x, place_center_z",
-		schematic = mod_vlf_schematics.."/schems/vlf_blackstone_nether_fossil_4.mts",
+		schematic = mod_vlf_blackstone.."/schematics/vlf_blackstone_nether_fossil_4.mts",
 		size = {x = 5, y = 8, z = 5},
 		rotation = "random",
 	})
@@ -5817,97 +5856,98 @@ end
 --
 -- Detect mapgen to select functions
 --
-if mg_name ~= "singlenode" then
-	if not vlf_vars.superflat then
-		register_biomes()
-		register_biomelike_ores()
-		register_biome_ores()
-		register_decorations()
-	else
-		-- Implementation of Minecraft's Superflat mapgen, classic style:
-		-- * Perfectly flat land, 1 grass biome, no decorations, no caves
-		-- * 4 layers, from top to bottom: grass block, dirt, dirt, bedrock
-		minetest.clear_registered_biomes()
-		minetest.clear_registered_decorations()
-		minetest.clear_registered_schematics()
-		register_classic_superflat_biome()
-	end
+if not vlf_vars.superflat then
+	register_biomes()
+	register_biomelike_ores()
+	register_biome_ores()
+	register_decorations()
+else
+	-- Implementation of Minecraft's Superflat mapgen, classic style:
+	-- * Perfectly flat land, 1 grass biome, no decorations, no caves
+	-- * 4 layers, from top to bottom: grass block, dirt, dirt, bedrock
+	minetest.clear_registered_biomes()
+	minetest.clear_registered_decorations()
+	minetest.clear_registered_schematics()
+	register_classic_superflat_biome()
+end
 
-	-- Non-overworld stuff is registered independently
-	register_dimension_biomes()
-	register_dimension_ores()
-	register_dimension_decorations()
+-- Non-overworld stuff is registered independently
+register_dimension_biomes()
+register_dimension_ores()
+register_dimension_decorations()
 
-	local deco_ids_fungus ={
-		minetest.get_decoration_id("vlf_biomes:crimson_tree1"),
-		minetest.get_decoration_id("vlf_biomes:crimson_tree2"),
-		minetest.get_decoration_id("vlf_biomes:crimson_tree3"),
-		minetest.get_decoration_id("vlf_biomes:warped_tree1"),
-		minetest.get_decoration_id("vlf_biomes:warped_tree2"),
-		minetest.get_decoration_id("vlf_biomes:warped_tree3")
-	}
-	local deco_ids_trees = {
-		minetest.get_decoration_id("vlf_biomes:mangrove_tree_1"),
-		minetest.get_decoration_id("vlf_biomes:mangrove_tree_2"),
-		minetest.get_decoration_id("vlf_biomes:mangrove_tree_3"),
-	}
-	for _,f in pairs(deco_ids_fungus) do
-		minetest.set_gen_notify({decoration=true}, { f })
-	end
-	for _,f in pairs(deco_ids_trees) do
-		minetest.set_gen_notify({decoration=true}, { f })
-	end
+local deco_ids_fungus ={
+	minetest.get_decoration_id("vlf_biomes:crimson_tree1"),
+	minetest.get_decoration_id("vlf_biomes:crimson_tree2"),
+	minetest.get_decoration_id("vlf_biomes:crimson_tree3"),
+	minetest.get_decoration_id("vlf_biomes:warped_tree1"),
+	minetest.get_decoration_id("vlf_biomes:warped_tree2"),
+	minetest.get_decoration_id("vlf_biomes:warped_tree3")
+}
+local deco_ids_trees = {
+	minetest.get_decoration_id("vlf_biomes:mangrove_tree_1"),
+	minetest.get_decoration_id("vlf_biomes:mangrove_tree_2"),
+	minetest.get_decoration_id("vlf_biomes:mangrove_tree_3"),
+}
+for _,f in pairs(deco_ids_fungus) do
+	minetest.set_gen_notify({decoration=true}, { f })
+end
+for _,f in pairs(deco_ids_trees) do
+	minetest.set_gen_notify({decoration=true}, { f })
+end
 
-	local function mangrove_roots_gen(gennotify, pr)
-		for _, f in pairs(deco_ids_trees) do
-			for _, pos in ipairs(gennotify["decoration#" .. f] or {}) do
-				local nn = minetest.find_nodes_in_area(vector.offset(pos, -8, -1, -8), vector.offset(pos, 8, 0, 8), {"vlf_mangrove:mangrove_roots"})
-				for _, v in pairs(nn) do
-					local l = pr:next(2, 16)
-					local n = minetest.get_node(vector.offset(v, 0, -1, 0)).name
-					if minetest.get_item_group(n, "water") > 0 then
-						local wl = "vlf_mangrove:water_logged_roots"
-						if n:find("river") then
-							wl = "vlf_mangrove:river_water_logged_roots"
-						end
-						minetest.bulk_set_node(minetest.find_nodes_in_area(vector.offset(v, 0, 0, 0), vector.offset(v, 0, -l, 0), {"group:water"}), {name = wl})
-					elseif n == "vlf_mud:mud" then
-						minetest.bulk_set_node(minetest.find_nodes_in_area(vector.offset(v, 0, 0, 0), vector.offset(v, 0, -l, 0), {"vlf_mud:mud"}), {name = "vlf_mangrove:mangrove_mud_roots"})
-					elseif n == "air" then
-						minetest.bulk_set_node(minetest.find_nodes_in_area(vector.offset(v, 0, 0, 0), vector.offset(v, 0, -l, 0), {"air"}), {name = "vlf_mangrove:mangrove_roots"})
+local function mangrove_roots_gen(gennotify, pr)
+	for _, f in pairs(deco_ids_trees) do
+		for _, pos in ipairs(gennotify["decoration#" .. f] or {}) do
+			local nn = minetest.find_nodes_in_area(vector.offset(pos, -8, -1, -8), vector.offset(pos, 8, 0, 8), {"vlf_mangrove:mangrove_roots"})
+			for _, v in pairs(nn) do
+				local l = pr:next(2, 16)
+				local n = minetest.get_node(vector.offset(v, 0, -1, 0)).name
+				if minetest.get_item_group(n, "water") > 0 then
+					local wl = "vlf_mangrove:water_logged_roots"
+					if n:find("river") then
+						wl = "vlf_mangrove:river_water_logged_roots"
 					end
+					vlf_util.bulk_swap_node(minetest.find_nodes_in_area(vector.offset(v, 0, 0, 0), vector.offset(v, 0, -l, 0), {"group:water"}), {name = wl})
+				elseif n == "vlf_mud:mud" then
+					vlf_util.bulk_swap_node(minetest.find_nodes_in_area(vector.offset(v, 0, 0, 0), vector.offset(v, 0, -l, 0), {"vlf_mud:mud"}), {name = "vlf_mangrove:mangrove_mud_roots"})
+				elseif n == "air" then
+					vlf_util.bulk_swap_node(minetest.find_nodes_in_area(vector.offset(v, 0, 0, 0), vector.offset(v, 0, -l, 0), {"air"}), {name = "vlf_mangrove:mangrove_roots"})
 				end
 			end
 		end
 	end
+end
 
-	local function chorus_gen (gennotify, pr)
-		for _, pos in ipairs(gennotify["decoration#" .. deco_id_chorus_plant] or {}) do
-			local x, y, z = pos.x, pos.y, pos.z
-			if x < -10 or x > 10 or z < -10 or z > 10 then
-				local realpos = {x = x, y = y + 1, z = z}
-				local node = minetest.get_node(realpos)
-				if node and node.name == "vlf_end:chorus_flower" then
-					vlf_end.grow_chorus_plant(realpos, node, pr)
-				end
+local function chorus_gen (gennotify, pr)
+	for _, pos in ipairs(gennotify["decoration#" .. deco_id_chorus_plant] or {}) do
+		local x, y, z = pos.x, pos.y, pos.z
+		if x < -10 or x > 10 or z < -10 or z > 10 then
+			local realpos = {x = x, y = y + 1, z = z}
+			local node = minetest.get_node(realpos)
+			if node and node.name == "vlf_end:chorus_flower" then
+				vlf_end.grow_chorus_plant(realpos, node, pr)
 			end
 		end
 	end
+end
 
-	local function crimson_warped_gen(gennotify)
-		for _, f in pairs(deco_ids_fungus) do
-			for _, pos in ipairs(gennotify["decoration#" .. f] or {}) do
-				minetest.fix_light(vector.offset(pos, -8, -8, -8), vector.offset(pos, 8, 8, 8))
-			end
+local function crimson_warped_gen(gennotify)
+	for _, f in pairs(deco_ids_fungus) do
+		for _, pos in ipairs(gennotify["decoration#" .. f] or {}) do
+			minetest.fix_light(vector.offset(pos, -8, -8, -8), vector.offset(pos, 8, 8, 8))
 		end
 	end
+end
 
-	if deco_id_chorus_plant or deco_ids_fungus or deco_ids_trees then
-		vlf_mapgen_core.register_generator("chorus_grow", nil, function(minp, maxp, blockseed)
-			local gennotify = minetest.get_mapgen_object("gennotify")
-			local pr = PseudoRandom(blockseed + 14)
-			if not (maxp.y < vlf_vars.mg_overworld_min or minp.y > vlf_vars.mg_overworld_max) then
-				local biomemap = minetest.get_mapgen_object("biomemap")
+if deco_id_chorus_plant or deco_ids_fungus or deco_ids_trees then
+	vlf_mapgen_core.register_generator("chorus_grow", nil, function(minp, maxp, blockseed)
+		local gennotify = minetest.get_mapgen_object("gennotify")
+		local pr = PseudoRandom(blockseed + 14)
+		if not (maxp.y < vlf_vars.mg_overworld_min or minp.y > vlf_vars.mg_overworld_max) then
+			local biomemap = minetest.get_mapgen_object("biomemap")
+			-- get_mapgen_object returns nil with lua mapgens
+			if biomemap then
 				local swamp_biome_id = minetest.get_biome_id("MangroveSwamp")
 				local swamp_shore_id = minetest.get_biome_id("MangroveSwamp_shore")
 				local is_swamp = table.indexof(biomemap, swamp_biome_id) ~= -1
@@ -5917,85 +5957,14 @@ if mg_name ~= "singlenode" then
 					mangrove_roots_gen(gennotify, pr)
 				end
 			end
+		end
 
-			if not (maxp.y < vlf_vars.mg_end_min or minp.y > vlf_vars.mg_end_max) then
-				chorus_gen(gennotify, pr)
-			end
+		if not (maxp.y < vlf_vars.mg_end_min or minp.y > vlf_vars.mg_end_max) then
+			chorus_gen(gennotify, pr)
+		end
 
-			if not (maxp.y < vlf_vars.mg_nether_min or minp.y > vlf_vars.mg_nether_max) then
-				crimson_warped_gen(gennotify)
-			end
-		end)
-	end
-
+		if not (maxp.y < vlf_vars.mg_nether_min or minp.y > vlf_vars.mg_nether_max) then
+			crimson_warped_gen(gennotify)
+		end
+	end)
 end
-
-
--- [[ Single Biome MG ]] --
-
---[[vlf_biomes.single_biome = minetest.settings:get("vlf_single_biome_mg_biomes")
-vlf_biomes.biome_to_retain = tostring(vlf_biomes.single_biome)
-if vlf_biomes.biome_to_retain ~= "None" then
-	local y_max_override = vlf_vars.mg_overworld_max
-	local y_min_override = vlf_vars.mg_overworld_min
-	--minetest.log("info", "Biome to Retain: " .. vlf_biomes.biome_to_retain .. " ")
-
-	if type(vlf_biomes.biome_to_retain) ~= "string" then
-		minetest.log("error", "Invalid or missing vlf_biomes.biome_to_retain setting.")
-		return
-	end
-
-	local function table_contains(tbl, value)
-		for _, v in ipairs(tbl) do
-			if v == value then
-				return true
-			end
-		end
-		return false
-	end
-	local function deep_copy(orig)
-		if type(orig) == 'table' then
-			local copy = {}
-			for k, v in next, orig do
-				copy[deep_copy(k)] = deep_copy(v)
-			end
-			setmetatable(copy, deep_copy(getmetatable(orig)))
-			return copy
-		else
-			return orig
-		end
-	end
-	local retain_biome_def = minetest.registered_biomes[vlf_biomes.biome_to_retain]
-	if not retain_biome_def then
-		return
-	end
-	retain_biome_def.y_max = y_max_override
-	retain_biome_def.y_min = y_min_override
-	for biome_name in pairs(minetest.registered_biomes) do
-		minetest.unregister_biome(biome_name)
-	end
-	minetest.register_biome(retain_biome_def)
-	local function filter_and_copy(defs, biome)
-		local result = {}
-		for _, def in pairs(defs) do
-			if def.biomes and (type(def.biomes) == "string" and def.biomes == biome or type(def.biomes) == "table" and table_contains(def.biomes, biome)) then
-				local copy = deep_copy(def)
-				copy.y_max = y_max_override
-				copy.y_min = y_min_override
-				table.insert(result, copy)
-			end
-		end
-		return result
-	end
-	local retained_decorations = filter_and_copy(minetest.registered_decorations, vlf_biomes.biome_to_retain)
-	local retained_ores = filter_and_copy(minetest.registered_ores, vlf_biomes.biome_to_retain)
-	minetest.clear_registered_decorations()
-	minetest.clear_registered_ores()
-	for _, decoration in ipairs(retained_decorations) do
-		minetest.register_decoration(decoration)
-	end
-	for _, ore in ipairs(retained_ores) do
-		minetest.register_ore(ore)
-	end
-end
-]]

@@ -46,10 +46,11 @@ for i=1, 7 do
 				{-7/16, -0.5 ,-7/16, 7/16, sel_height ,7/16}
 			},
 		},
-		groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1},
+		groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1,carrot=i},
 		sounds = vlf_sounds.node_sound_leaves_defaults(),
 		_vlf_blast_resistance = 0,
 		_on_bone_meal = on_bone_meal,
+		_vlf_baseitem = "vlf_farming:carrot_item",
 	})
 end
 
@@ -80,7 +81,7 @@ minetest.register_node("vlf_farming:carrot", {
 			{-7/16, -0.5 ,-7/16, 7/16, -0.5+(8/16) ,7/16}
 		},
 	},
-	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1},
+	groups = {dig_immediate=3, not_in_creative_inventory=1,plant=1,attached_node=1,dig_by_water=1,destroy_by_lava_flow=1,dig_by_piston=1,carrot=8},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	_vlf_blast_resistance = 0,
 	_on_bone_meal = on_bone_meal,
@@ -90,7 +91,8 @@ minetest.register_node("vlf_farming:carrot", {
 		min_count = 2,
 		max_count = 4,
 		cap = 5,
-	}
+	},
+	_vlf_baseitem = "vlf_farming:carrot_item",
 })
 
 minetest.register_craftitem("vlf_farming:carrot_item", {
@@ -101,6 +103,7 @@ minetest.register_craftitem("vlf_farming:carrot_item", {
 	inventory_image = "farming_carrot.png",
 	groups = {food = 2, eatable = 3, compostability = 65},
 	_vlf_saturation = 3.6,
+	_vlf_places_plant = "vlf_farming:carrot_1",
 	on_secondary_use = minetest.item_eat(3),
 	on_place = function(itemstack, placer, pointed_thing)
 		local new = vlf_farming:place_seed(itemstack, placer, pointed_thing, "vlf_farming:carrot_1")

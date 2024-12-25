@@ -37,8 +37,8 @@ function vlf_throwing.throw(throw_item, pos, dir, velocity, thrower)
 end
 
 -- Throw item
-function vlf_throwing.get_player_throw_function(entity_name, velocity)
-	local function func(item, player, pointed_thing)
+function vlf_throwing.get_player_throw_function(_, velocity)
+	local function func(item, player, _)
 		local playerpos = player:get_pos()
 		local dir = player:get_look_dir()
 		vlf_throwing.throw(item, {x=playerpos.x, y=playerpos.y+1.5, z=playerpos.z}, dir, velocity, player:get_player_name())
@@ -50,7 +50,7 @@ function vlf_throwing.get_player_throw_function(entity_name, velocity)
 	return func
 end
 
-function vlf_throwing.dispense_function(stack, dispenserpos, droppos, dropnode, dropdir)
+function vlf_throwing.dispense_function(stack, dispenserpos, _, _, dropdir)
 	-- Launch throwable item
 	local shootpos = vector.add(dispenserpos, vector.multiply(dropdir, 0.51))
 	vlf_throwing.throw(stack:get_name(), shootpos, dropdir)
@@ -70,7 +70,7 @@ function vlf_throwing.get_staticdata(self)
 	return minetest.serialize(data)
 end
 
-function vlf_throwing.on_activate(self, staticdata, dtime_s)
+function vlf_throwing.on_activate(self, staticdata)
 	local data = minetest.deserialize(staticdata)
 	if data then
 		self._lastpos = data._lastpos

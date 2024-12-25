@@ -69,6 +69,7 @@ local oban_layers = {
 	}
 }
 
+vlf_raids.ominous_banner_layers = oban_layers
 
 local oban_def = table.copy(minetest.registered_entities["vlf_banners:standing_banner"])
 oban_def.initial_properties.visual_size = { x=1, y=1 }
@@ -89,118 +90,201 @@ function vlf_raids.drop_obanner(pos)
 	minetest.add_item(pos,it)
 end
 
-function vlf_raids.promote_to_raidcaptain(c) -- object
-	if not c or not c:get_pos() then return end
-	local pos = c:get_pos()
-	local l = c:get_luaentity()
-	l._banner = minetest.add_entity(pos,"vlf_raids:ominous_banner")
-	if not l._banner or not l._banner:get_pos() then return end
-	l._banner:set_properties({textures = {vlf_banners.make_banner_texture("unicolor_white", oban_layers)}})
-	l._banner:set_attach(c, "", vector.new(0, 6, -1), vector.new(0, 0, 0), true)
-	l._raidcaptain = true
-	local old_ondie = l.on_die
-	local rand = math.random(1,5)
-	l.on_die = function(self, pos, cmi_cause)
-		if l._banner then
-			l._banner:remove()
-			l._banner = nil
-			vlf_raids.drop_obanner(pos)
-			if not l.raidmob then
-				minetest.add_item(l.object:get_pos(), ItemStack("vlf_trials:ominous_bottle_"..rand))
-			end
-			if cmi_cause and cmi_cause.type == "punch" and cmi_cause.puncher:is_player() then
-				awards.unlock(cmi_cause.puncher:get_player_name(), "vlf:voluntary_exile")
+function vlf_raids.is_banner_item (stack)
+	local name = stack:get_name ()
+	if name == "vlf_banners:banner_item_white" then
+		local metadata = stack:get_meta ()
+		local layers = metadata:get_string ("layers")
+		if layers == "" then
+			return false
+		end
+		layers = minetest.deserialize (layers)
+		if #layers ~= #oban_layers then
+			return false
+		end
+		for i = 1, #layers do
+			if oban_layers[i].color ~= layers[i].color
+				or oban_layers[i].pattern ~= layers[i].pattern then
+				return false
 			end
 		end
-		if old_ondie then return old_ondie(self,pos,cmi_cause) end
+		return true
 	end
+	return false
 end
 
-function vlf_raids.is_raidcaptain_near(pos)
-	for _, v in pairs(minetest.get_objects_inside_radius(pos,32)) do
-		local l = v:get_luaentity()
-		if l and l._raidcaptain then return true end
+function vlf_raids.enroll_in_raid (raid, entity)
+	entity._get_active_raid = function (raidmob)
+		return not raid.completed
+			and raid or nil
 	end
+	if table.indexof (raid.mobs, entity.object) == -1 then
+		table.insert (raid.mobs, entity.object)
+	end
+	entity.raidmob = true
 end
 
-function vlf_raids.register_possible_raidcaptain(mob)
-	local old_on_spawn = minetest.registered_entities[mob].on_spawn
-	local old_on_pick_up = minetest.registered_entities[mob].on_pick_up
-	if not minetest.registered_entities[mob].pick_up then  minetest.registered_entities[mob].pick_up = {} end
-	table.insert(minetest.registered_entities[mob].pick_up,"vlf_banners:banner_item_white")
-	minetest.registered_entities[mob].on_pick_up = function(self,e)
-		local stack = ItemStack(e.itemstring)
-		if not self._raidcaptain and stack:get_meta():get_string("description"):find("Ominous Banner") then
-			stack:take_item(1)
-			vlf_raids.promote_to_raidcaptain(self.object)
-			return stack
+function vlf_raids.find_surface_position (node_pos)
+	if node_pos.y < vlf_vars.mg_overworld_min then
+		return node_pos
+	else
+		-- Raycast from a position 256 blocks above the
+		-- overworld to the bottom of the world, and locate
+		-- the first opaque or liquid non-leaf block.
+
+		local v = vector.copy (node_pos)
+		v.y = math.max (node_pos.y, 256)
+		local lim
+			= math.max (vlf_vars.mg_overworld_min, node_pos.y - 512)
+		while v.y >= lim do
+			local node = minetest.get_node (v)
+			local def = minetest.registered_nodes[node.name]
+			if node.name ~= "ignore"
+				and (def.groups.liquid or def.walkable) then
+				break
+			end
+			v.y = v.y - 1
 		end
-		if old_on_pick_up then return old_on_pick_up(self,e) end
-	end
-	minetest.registered_entities[mob].on_spawn = function(self)
-		if not vlf_raids.is_raidcaptain_near(self.object:get_pos()) then
-			vlf_raids.promote_to_raidcaptain(self.object)
-		end
-		if old_on_spawn then return old_on_spawn(self) end
+		v.y = v.y + 1
+		return v
 	end
 end
 
-vlf_raids.register_possible_raidcaptain("mobs_mc:pillager")
-vlf_raids.register_possible_raidcaptain("mobs_mc:vindicator")
-vlf_raids.register_possible_raidcaptain("mobs_mc:evoker")
+function vlf_raids.find_active_raid (pos)
+	for _, event in ipairs (vlf_events.active_events) do
+		if event.exclusive_to_area
+			and vector.distance (pos, event.pos)
+				<= event.exclusive_to_area
+			and event.health_max then
+			return event
+		end
+	end
+	return nil
+end
+
+local pr = PcgRandom (os.time () + 970)
+local r = 1 / 2147483647
+
+local function is_opaque (node)
+	return minetest.get_item_group (node.name, "opaque") > 0
+end
+
+local function is_clear (node)
+	return minetest.get_item_group (node.name, "liquid") == 0
+		and not minetest.registered_nodes[node.name].walkable
+end
+
+local function is_opaque_or_snow (node)
+	if is_opaque (node) then
+		return true
+	end
+	local snow = minetest.get_item_group (node.name, "top_snow")
+	return snow > 0 and snow <= 4
+end
+
+function vlf_raids.do_spawn_pos_phase (phaseno, center, attempts)
+	local spread = phaseno == 0 and 2 or 2 - phaseno
+
+	-- Perform twenty attempts to select a valid spawn position
+	-- per phase.
+	for i = 1, attempts or 20 do
+		local random = pr:next (0, 2147483647) * r * math.pi * 2
+		local xoff = math.floor (math.cos (random) * 32 * spread)
+			+ pr:next (0, 4)
+		local zoff = math.floor (math.sin (random) * 32 * spread)
+			+ pr:next (0, 4)
+		local new_pos = vector.offset (center, xoff, 0, zoff)
+		local surface = vlf_raids.find_surface_position (new_pos)
+		local below = vector.offset (surface, 0, -1, 0)
+		local above = vector.offset (surface, 0, 1, 0)
+
+		-- Is this surface outside of any village or is this
+		-- the final attempt?
+		if attempts == 2
+			or vlf_villages.get_poi_heat (surface) < 4 then
+			-- Is this surface walkable and loaded...
+			local node = minetest.get_node (surface)
+			local node_above = minetest.get_node (above)
+			local node_below = minetest.get_node (below)
+			if node.name ~= "ignore"
+				and node_above.name ~= "ignore"
+				and node_below.name ~= "ignore"
+				and is_clear (node_above)
+				and is_clear (node)
+				and is_opaque_or_snow (node_below) then
+				return surface
+			end
+		end
+	end
+end
+
+function vlf_raids.select_spawn_position (center)
+	local pos = vlf_raids.do_spawn_pos_phase (0, center, 20)
+	if pos then
+		return pos
+	end
+	local pos = vlf_raids.do_spawn_pos_phase (1, center, 20)
+	if pos then
+		return pos
+	end
+	local pos = vlf_raids.do_spawn_pos_phase (2, center, 20)
+	return pos
+end
 
 function vlf_raids.spawn_raid(event)
 	local pos = event.pos
-	local r = 32
-	local n = 12
-	local i = math.random(1, n)
-	local raid_pos = vector.offset(pos,r * math.cos(((i-1)/n) * (2*math.pi)),0,  r * math.sin(((i-1)/n) * (2*math.pi)))
-	local sn = minetest.find_nodes_in_area_under_air(vector.offset(raid_pos,-5,-50,-5), vector.offset(raid_pos,5,50,5), {"group:grass_block", "group:grass_block_snow", "group:snow_cover", "group:sand", "vlf_core:ice"})
-	vlf_bells.ring_once(pos)
-	if sn and #sn > 0 then
-		local spawn_pos = sn[math.random(#sn)]
-		if spawn_pos then
-			minetest.log("action", "[vlf_raids] Raid Spawn Position chosen at " .. minetest.pos_to_string(spawn_pos) .. ".")
-			event.health_max = 0
-			local w
-			if event.stage <= #waves then
-				w= waves[event.stage]
-			else
-				w = extra_wave
-			end
-			for m,c in pairs(w) do
-				for _ = 1, c do
-					local p = vector.offset(spawn_pos,0,1,0)
-					local mob = vlf_mobs.spawn(p,m)
-					if mob then
-						local l = mob:get_luaentity()
-						if l then
-							l.raidmob = true
-							event.health_max = event.health_max + l.health
-							table.insert(event.mobs,mob)
-							l:gopath(pos)
+	vlf_bells.ring_once (pos)
+	local spawn_pos = vlf_raids.select_spawn_position (event.pos)
+	if spawn_pos then
+		minetest.log("action", "[vlf_raids] Raid Spawn Position selected at "
+			     .. minetest.pos_to_string (spawn_pos) .. ".")
+		event.health_max = 0
+		local w
+		if event.stage <= #waves then
+			w= waves[event.stage]
+		else
+			w = extra_wave
+		end
+		local captain = nil
+		for m,c in pairs(w) do
+			for _ = 1, c do
+				local p = vector.offset(spawn_pos,0,1,0)
+				local datatable = {
+					_raid_spawn = 1,
+				}
+				local staticdata = minetest.serialize (datatable)
+				local mob = vlf_mobs.spawn (p, m, staticdata)
+				if mob then
+					local l = mob:get_luaentity()
+					if l then
+						l.raidmob = true
+						event.health_max = event.health_max + l.health
+						table.insert(event.mobs,mob)
+						l._get_active_raid = function (raidmob)
+							return not event.completed
+								and event or nil
 						end
+					end
+
+					if l._can_serve_as_captain and not captain then
+						l:promote_to_raidcaptain ()
+						captain = mob
 					end
 				end
 			end
-			if event.stage == 1 then
-				table.shuffle(event.mobs)
-				vlf_raids.promote_to_raidcaptain(event.mobs[1])
-			end
-			minetest.log("action", "[vlf_raids] Raid Spawned. Illager Count: " .. #event.mobs .. ".")
-			return #event.mobs == 0
-		else
-			minetest.log("action", "[vlf_raids] Raid Spawn Postion not chosen.")
 		end
-	elseif not sn then
-		minetest.log("action", "[vlf_raids] Raid Spawn Position error, no appropriate site found.")
+		event._raidcaptain = captain
+		minetest.log("action", "[vlf_raids] Raid Spawned. "
+			     .. "Illager Count: " .. #event.mobs .. ".")
+		return #event.mobs == 0
+	else
+		minetest.log("action", "[vlf_raids] Raid Spawn Postion not chosen.")
 	end
 	return true
 end
 
 function vlf_raids.find_villager(pos)
-	local obj = minetest.get_objects_inside_radius(pos, 8)
-	for _, objects in pairs(obj) do
+	for objects in minetest.objects_inside_radius(pos, 8) do
 		local object = objects:get_luaentity()
 		if object and object.name == "mobs_mc:villager" then
 			return true
@@ -220,26 +304,36 @@ function vlf_raids.find_village(pos)
 end
 
 local function is_player_near(self)
-	for _,pl in pairs(minetest.get_connected_players()) do
-		if self.pos and vector.distance(pl:get_pos(),self.pos) < 64 then return true end
-	end
+	for _ in vlf_util.connected_players(self.pos, 63) do return true end
 end
 
 local function check_mobs(self)
 	local m = {}
 	local h = 0
+	local accessor = function (raidmob)
+		return not self.completed and self or nil
+	end
+	self._raidcaptain = nil
 	for _, o in pairs(self.mobs) do
 		if o and o:get_pos() then
 			local l = o:get_luaentity()
 			h = h + l.health
+			if l._raidcaptain then
+				self._raidcaptain = o
+			end
+			l._get_active_raid = accessor
 			table.insert(m,o)
 		end
 	end
 	if #m == 0 then --if no valid mobs in table search if there are any (reloaded ones) in the area
-		for _, o in pairs(minetest.get_objects_inside_radius(self.pos,64)) do
+		for o in minetest.objects_inside_radius(self.pos, 128) do
 			local l = o:get_luaentity()
 			if l and l.raidmob then
 				local l = o:get_luaentity()
+				if l._raidcaptain then
+					self._raidcaptain = o
+				end
+				l._get_active_raid = accessor
 				h = h + l.health
 				table.insert(m,o)
 			end
@@ -258,8 +352,8 @@ vlf_events.register_event("raid",{
 	enable_bossbar = true,
 	cond_start  = function()
 		local r = {}
-		for _,p in pairs(minetest.get_connected_players()) do
-			if vlf_entity_effects.has_effect(p,"bad_omen") then
+		for p in vlf_util.connected_players() do
+			if vlf_potions.has_effect(p,"bad_omen") then
 				local raid_pos = vlf_raids.find_village(p:get_pos())
 				if raid_pos then
 					table.insert(r,{ player = p:get_player_name(), pos = raid_pos })
@@ -272,7 +366,7 @@ vlf_events.register_event("raid",{
 		self.mobs = {}
 		self.health_max = 1
 		self.health = 0
-		local lv = vlf_entity_effects.get_effect_level(minetest.get_player_by_name(self.player), "bad_omen")
+		local lv = vlf_potions.get_effect_level(minetest.get_player_by_name(self.player), "bad_omen")
 		if lv and lv > 1 then self.max_stage = 6 end
 	end,
 	cond_progress = function(self)
@@ -296,17 +390,9 @@ vlf_events.register_event("raid",{
 	    awards.unlock (self.player,"vlf:hero_of_the_village")
 
 	    if player then
-		vlf_entity_effects.clear_effect (player, "bad_omen")
-		vlf_entity_effects.give_effect ("hero_of_village", player, 1, 2400)
+		vlf_potions.clear_effect (player, "bad_omen")
+		vlf_potions.give_effect ("hero_of_village", player, 0, 2400)
 	    end
-	end,
-})
-
-minetest.register_chatcommand("raidcap",{
-	privs = {debug = true},
-	func = function(pname)
-		local c = minetest.add_entity(minetest.get_player_by_name(pname):get_pos(),"mobs_mc:pillager")
-		vlf_raids.promote_to_raidcaptain(c)
 	end,
 })
 
@@ -315,7 +401,7 @@ minetest.register_chatcommand("dump_banner_layers",{
 	func = function(pname)
 		local p = minetest.get_player_by_name(pname)
 		vlf_raids.drop_obanner(vector.offset(p:get_pos(),1,1,1))
-		for _, v in pairs(minetest.get_objects_inside_radius(p:get_pos(),5)) do
+		for v in minetest.objects_inside_radius(p:get_pos(), 5) do
 			local l = v:get_luaentity()
 			if l and l.name == "vlf_banners:standing_banner" then
 				minetest.log(dump(l._base_color))

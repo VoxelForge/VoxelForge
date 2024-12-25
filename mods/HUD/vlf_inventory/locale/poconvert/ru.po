@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_inventory x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_inventory x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Building Blocks"
 msgstr "Строительные блоки"
@@ -20,7 +20,7 @@ msgid "Decoration Blocks"
 msgstr "Декоративные блоки"
 
 msgid "Redstone"
-msgstr "Механизмы"
+msgstr "Редстоун"
 
 msgid "Transportation"
 msgstr "Транспорт"
@@ -41,7 +41,7 @@ msgid "Combat"
 msgstr "Оружие и броня"
 
 msgid "Mobs"
-msgstr "Сущности"
+msgstr "Мобы"
 
 msgid "Brewing"
 msgstr "Зельеварение"
@@ -53,16 +53,16 @@ msgid "Survival Inventory"
 msgstr "Инвентарь выживания"
 
 msgid "Not in Creative Inventory"
-msgstr ""
+msgstr "Нет в творческом инвентаре"
 
 msgid "Advancements"
-msgstr "Достижения"
+msgstr "Продвижение"
 
 msgid "Switch stack size"
 msgstr "Изменить размер стака"
 
 msgid "@1 / @2"
-msgstr ""
+msgstr "@1 / @2"
 
 msgid "Recipe book"
 msgstr "Книга рецептов"
@@ -74,11 +74,11 @@ msgid "Select player skin"
 msgstr "Выбор скина"
 
 msgid "Crafting"
-msgstr "Создание"
+msgstr "Крафт"
 
 msgid "Fill Craft Grid"
-msgstr ""
+msgstr "Заполните сетку крафта"
 
 msgid "Achievements"
-msgstr ""
+msgstr "Достижения"
 

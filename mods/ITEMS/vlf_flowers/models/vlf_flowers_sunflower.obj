@@ -1,6 +1,6 @@
 # Blender 3.6.4
 # www.blender.org
-mtllib mcl_flowers_sunflower.mtl
+mtllib vlf_flowers_sunflower.mtl
 o Stem_1
 v 0.381859 1.050000 0.309359
 v -0.236859 1.050000 -0.309359

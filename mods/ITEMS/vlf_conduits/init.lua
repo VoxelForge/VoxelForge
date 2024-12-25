@@ -77,7 +77,7 @@ end
 
 function vlf_conduits.player_effect(player)
     if minetest.get_item_group(vlf_player.players[player].nodes.feet, "water") == 0 then return end
-    vlf_entity_effects.give_effect_by_level ("conduit_power", player, 1, 17)
+    vlf_potions.give_effect_by_level ("conduit_power", player, 1, 17)
 end
 
 function vlf_conduits.conduit_damage(ent)
@@ -144,7 +144,7 @@ minetest.register_node("vlf_conduits:conduit", {
 	collisionbox = conduit_box,
 	selectionbox = conduit_box,
 	groups = { pickaxey = 1, deco_block = 1},
-	light_source = 14,
+	light_source = minetest.LIGHT_MAX,
 	tiles = { "vlf_conduit_conduit_node.png", },
 	_vlf_hardness = 3,
 	_vlf_blast_resistance = 3,

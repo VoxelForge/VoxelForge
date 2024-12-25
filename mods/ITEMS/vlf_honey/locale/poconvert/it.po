@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_honey x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_honey x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Honeycomb"
-msgstr ""
+msgstr "Favo"
 
 msgid "Used to craft beehives and protect copper blocks from further oxidation."
-msgstr ""
+msgstr "Utilizzata per assemblare alveari e per proteggere i blocchi di rame da ossidazione ulteriore."
 
 msgid "Use on copper blocks to prevent further oxidation."
-msgstr ""
+msgstr "Utilizzala sui blocchi di rame per prevenirne l'ulteriore ossidazione."
 
 msgid "Honeycomb Block"
 msgstr ""

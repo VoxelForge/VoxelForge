@@ -1,37 +1,22 @@
-local mod_storage = minetest.get_mod_storage()
 local modpath = minetest.get_modpath("vlf_init")
 
--- Some global variables (don't overwrite them!)
-vlf_vars = {}
+minetest.register_on_mods_loaded(function()
+    for node_name, node_def in pairs(minetest.registered_nodes) do
+        -- Check if the node name starts with "vlf"
+        if node_name:sub(1, 3) == "vlf" then
+            -- Replace "vlf:" with "mcl:"
+            local new_name = node_name:gsub("^vlf", "mcl")
 
-vlf_vars.redstone_tick = 0.1
-vlf_vars.mg_overworld_min_old = -62
-
---- GUI / inventory menu settings
-vlf_vars.gui_slots = "listcolors[#9990;#FFF7;#FFF0;#000;#FFF]"
--- nonbg is added as formspec prepend in vlf_formspec_prepend
-vlf_vars.gui_nonbg = vlf_vars.gui_slots ..
-	"style_type[image_button;border=false;bgimg=vlf_inventory_button9.png;bgimg_pressed=vlf_inventory_button9_pressed.png;bgimg_middle=2,2]"..
-	"style_type[button;border=false;bgimg=vlf_inventory_button9.png;bgimg_pressed=vlf_inventory_button9_pressed.png;bgimg_middle=2,2]"..
-	"style_type[field;textcolor=#323232]"..
-	"style_type[label;textcolor=#323232]"..
-	"style_type[textarea;textcolor=#323232]"..
-	"style_type[checkbox;textcolor=#323232]"
-
--- Background stuff must be manually added by mods (no formspec prepend)
-vlf_vars.gui_bg_color = "bgcolor[#00000000]"
-vlf_vars.gui_bg_img = "background9[1,1;1,1;vlf_base_textures_background9.png;true;7]"
-
--- Legacy
-vlf_vars.inventory_header = ""
-
--- Tool wield size
-vlf_vars.tool_wield_scale = { x = 1.8, y = 1.8, z = 1 }
+            -- Register an alias from the new name to the old name
+            minetest.register_alias(new_name, node_name)
+        end
+    end
+end)
 
 minetest.register_on_mods_loaded(function()
-	local font_size = minetest.settings:get("vlf_font_size") or 30
-	local font_shadow_size = minetest.settings:get("vlf_font_shadow_size") or 3
-	local chat_font_size = minetest.settings:get("vlf_chat_font_size") or 24
+	local font_size = minetest.settings:get("vlf_font_size") or 35
+	local font_shadow_size = minetest.settings:get("vlf_font_shadow_size") or 2
+	local chat_font_size = minetest.settings:get("vlf_chat_font_size") or 25
 	minetest.settings:set("font_path", modpath.."/fonts/voxelforge.ttf")
 	minetest.settings:set("font_shadow", font_shadow_size)
 	minetest.settings:set("font_size", font_size)
@@ -47,7 +32,10 @@ minetest.register_on_shutdown(function()
 	minetest.settings:set("font_shadow_alpha", "172")
 end)
 
--- Table to store player chat HUD IDs and chat history
+
+
+
+--[[ Table to store player chat HUD IDs and chat history
 local player_chat_huds = {}
 local chat_history = {}
 
@@ -78,7 +66,7 @@ local function create_chat_hud(player)
 		offset = {x = 0, y = 10}, -- Adjust y offset as needed
 		text = "",
 		alignment = {x = 0.1, y = -0.2},  -- Right and bottom alignment
-		scale = {x = 100, y = 100},
+		scale = {x = 200, y = 200},
 		number = 0xFFFFFF, -- White color
 	})
 end
@@ -183,7 +171,43 @@ minetest.register_globalstep(function(dtime)
 				update_chat_hud(player)
 			end
 		end
-end)
+end)]]
+
+
+
+
+
+
+
+local mod_storage = minetest.get_mod_storage()
+local normal_vars_in_singlenode = false
+
+-- Some global variables (don't overwrite them!)
+vlf_vars = {}
+
+vlf_vars.mg_overworld_min_old = -62
+
+--- GUI / inventory menu settings
+vlf_vars.gui_slots = "listcolors[#9990;#FFF7;#FFF0;#000;#FFF]"
+-- nonbg is added as formspec prepend in vlf_formspec_prepend
+vlf_vars.gui_nonbg = vlf_vars.gui_slots ..
+	"style_type[image_button;border=false;bgimg=vlf_inventory_button9.png;bgimg_pressed=vlf_inventory_button9_pressed.png;bgimg_middle=2,2]"..
+	"style_type[button;border=false;bgimg=vlf_inventory_button9.png;bgimg_pressed=vlf_inventory_button9_pressed.png;bgimg_middle=2,2]"..
+	"style_type[field;textcolor=#323232]"..
+	"style_type[label;textcolor=#323232]"..
+	"style_type[textarea;textcolor=#323232]"..
+	"style_type[checkbox;textcolor=#323232]"
+
+-- Background stuff must be manually added by mods (no formspec prepend)
+vlf_vars.gui_bg_color = "bgcolor[#00000000]"
+vlf_vars.gui_bg_img = "background9[1,1;1,1;vlf_base_textures_background9.png;true;7]"
+--vlf_vars.gui_bg_img = "background9[1,1;1,1;blank.png;true;7]"
+
+-- Legacy
+vlf_vars.inventory_header = ""
+
+-- Tool wield size
+vlf_vars.tool_wield_scale = { x = 1.8, y = 1.8, z = 1 }
 
 -- Mapgen variables
 local mg_name = minetest.get_mapgen_setting("mg_name")
@@ -255,7 +279,7 @@ function vlf_vars.get_chunk_number(pos) -- unsigned int
 		 c.x + k_positive
 end
 
-if not vlf_vars.superflat and not singlenode then
+if not vlf_vars.superflat and (not singlenode or normal_vars_in_singlenode) then
 	-- Normal mode
 	--[[ Realm stacking (h is for height)
 	- Overworld (h>=256)
@@ -387,7 +411,7 @@ function vlf_vars.add_chunk(pos)
 end
 function vlf_vars.is_generated(pos)
 	local n = vlf_vars.get_chunk_number(pos) -- unsigned int
-	for i, d in pairs(chunks) do
+	for _, d in pairs(chunks) do
 		if n <= d[2] then
 			return (n >= d[1])
 		end
@@ -431,7 +455,7 @@ if vlf_vars.mg_overworld_min_old ~= vlf_vars.mg_overworld_min then
 		interval = 10,
 		min_y = void_regen_min_y,
 		max_y = void_regen_max_y,
-		action = function(pos, node)
+		action = function(pos)
 			local pos1, pos2 = get_mapchunk_area(pos)
 			local h = minetest.hash_node_position(pos1)
 			if void_replaced[h] then
@@ -503,86 +527,19 @@ if vlf_vars.mg_overworld_min_old ~= vlf_vars.mg_overworld_min then
 	})
 end
 
-
-minetest.register_globalstep(function(dtime)
-	for _, player in ipairs(minetest.get_connected_players()) do
-        local pos = player:get_pos()
-		for _, entity in ipairs(minetest.get_objects_inside_radius(pos, 10)) do
-			local controls = player:get_player_control()
-			--local pos = player:get_pos()
-			local node = minetest.get_node(pos)
-			local is_in_climable
-
-			if minetest.get_item_group(node.name, "climbable") > 0 then
-				if not controls.up and not controls.down and not controls.jump then
-					is_in_climable = true
-				else
-					is_in_climable = true
-					minetest.after(1, function()
-						is_in_climable = false
-					end)
-				end
-			end
-			if is_in_climable == true then
-				local vel = player:get_velocity()
-				if vel.y > -0.2 then
-					player:add_velocity({x = 0, y = -0.2, z = 0})
-				end
-			end
-		end
-	end
-end)
-
-minetest.register_chatcommand("get_biome_at_pos", {
-	params = "",
-	description = "Returns the biome name at the users position. Same effect as typing /debug 4 though returns a chat message rather than a hud",
-	func = function(name, param)
-	local player = minetest.get_player_by_name(name)
-	local pos = player:get_pos()
-	local biome_data = minetest.get_biome_data(pos)
-        if biome_data then
-            local biome_name = minetest.get_biome_name(biome_data.biome)
-            return true, "Biome at Your pos is: " .. biome_name .. ""
-        end
+-- Difficulty.  Peaceful is 0, normal is 1,
+local difficulty = minetest.settings:get ("vlf_difficulty")
+if difficulty == "peaceful" then
+	vlf_vars.difficulty = 0
+elseif difficulty == "easy" then
+	vlf_vars.difficulty = 1
+elseif difficulty == "normal"
+	or not difficulty
+	or difficulty == "" then
+	vlf_vars.difficulty = 2
+elseif difficulty == "hard" then
+	vlf_vars.difficulty = 3
+else
+	vlf_vars.difficulty = 2
+	minetest.log ("warning", "vlf_difficulty is configured to an unknown value " .. difficulty)
 end
-})
-
-minetest.register_on_mods_loaded(function()
-    local worldpath = minetest.get_worldpath()
-    local file_path = worldpath .. "/current_version.lua"
-
-    -- Try to open the file for reading
-    local file = io.open(file_path, "r")
-
-    -- If the file doesn't exist, create it with the default version
-    if not file then
-        local new_file = io.open(file_path, "w")
-        new_file:write("return {\n")
-        new_file:write("current_version = { version = '0.5.0' }\n")
-        new_file:write("}\n")
-        new_file:close()
-        file = io.open(file_path, "r") -- Reopen the file for reading after creation
-    end
-
-    -- Load the table from the Lua file
-    local version_data = dofile(file_path)
-    file:close() -- Close the file after reading
-
-    -- Check if the file contains valid version data
-    if version_data and version_data.current_version and version_data.current_version.version then
-        local current_version = version_data.current_version.version
-
-        -- If the version isn't 24w41a, handle it as a potential issue
-        if current_version ~= "0.5.0" then
-             local wfile = io.open(file_path, "w")
-             wfile:write("return {\n")
-             wfile:write("current_version = { version = '0.5.0' }\n")
-             wfile:write("}\n")
-             wfile:close()
-            error("This World was last played in version "..tostring(current_version).."; you are on version Beta 0.5.0. Please make a backup in case you experience world corruptions. If you would like to proceed anyway, you can click out of this error and reload.")
-        end
-    else
-        error("Version information is missing or incorrect in current_version.lua")
-    end
-end)
-

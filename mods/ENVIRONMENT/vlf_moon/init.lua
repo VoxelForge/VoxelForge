@@ -35,6 +35,11 @@ local function get_moon_texture()
 	return "vlf_moon_moon_phases.png^[sheet:"..SHEET_W.."x"..SHEET_H..":"..x..","..y
 end
 
+function vlf_moon.get_moon_brightness ()
+	local phase = vlf_moon.get_moon_phase ()
+	return math.abs (phase - 4) / 4
+end
+
 local timer = 0
 local last_reported_phase = nil
 minetest.register_globalstep(function(dtime)
@@ -51,9 +56,8 @@ minetest.register_globalstep(function(dtime)
 	minetest.log("info", "[vlf_moon] New moon phase: "..phase)
 	last_reported_phase = phase
 	local moon_arg = {texture = get_moon_texture()}
-	local players = minetest.get_connected_players()
-	for p=1, #players do
-		players[p]:set_moon(moon_arg)
+	for pl in vlf_util.connected_players() do
+		pl:set_moon(moon_arg)
 	end
 end)
 

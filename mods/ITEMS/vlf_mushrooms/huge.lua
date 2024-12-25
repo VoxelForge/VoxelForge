@@ -89,7 +89,7 @@ local function register_mushroom(color, species_id, template, d_cap, d_stem, d_s
 
 				-- Replace the side of a mushroom node. Returns the new node.
 				-- Or nil, if unchanged.
-				local function replace_side(pos, node, side)
+				local function replace_side(_, node, side)
 					local bin = string.sub(node.name, -6)
 					if string.sub(bin, side, side) == "1" then
 						local new_bin
@@ -153,6 +153,8 @@ local function register_mushroom(color, species_id, template, d_cap, d_stem, d_s
 		block.groups.huge_mushroom = species_id
 		block.groups.huge_mushroom_cap = s
 
+		block._vlf_burntime = 15
+
 		-- bin is a binary string with 6 digits. Each digit stands for the
 		-- texture of one of the sides, in the same order as the tiles parameter.
 		-- 0 = pores; 1 = cap.
@@ -170,12 +172,6 @@ register_mushroom("red", 1, red, S("Huge Red Mushroom Block"), S("Huge Red Mushr
 local longdesc_brown = S("Huge brown mushroom blocks are the cap parts of huge brown mushrooms. It consists of a brown skin and can have pores on each of its sides.")
 local longdesc_brown_stem = S("The stem part of a huge brown mushroom.")
 register_mushroom("brown", 2, brown, S("Huge Brown Mushroom Block"), S("Huge Brown Mushroom Stem"), S("Huge Brown Mushroom All-Faces Stem"), longdesc_brown, longdesc_brown_stem)
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:huge_mushroom",
-	burntime = 15,
-})
 
 -- Legacy support
 local colors = { "red", "brown" }

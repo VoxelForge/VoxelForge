@@ -9,6 +9,7 @@ dofile(vlf_villages.modpath.."/utils.lua")
 dofile(vlf_villages.modpath.."/foundation.lua")
 dofile(vlf_villages.modpath.."/buildings.lua")
 dofile(vlf_villages.modpath.."/paths.lua")
+dofile(vlf_villages.modpath.."/pois.lua")
 
 dofile(vlf_villages.modpath .. "/api.lua")
 

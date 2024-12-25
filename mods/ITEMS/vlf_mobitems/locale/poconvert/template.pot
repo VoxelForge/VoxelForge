@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_mobitems x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_mobitems x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Rotten Flesh"
 msgstr ""
@@ -131,6 +131,12 @@ msgid "Blaze Rod"
 msgstr ""
 
 msgid "This is a crafting component dropped from dead blazes."
+msgstr ""
+
+msgid "Breeze Rod"
+msgstr ""
+
+msgid "This is a crafting item dropped from breezes."
 msgstr ""
 
 msgid "Blaze Powder"
@@ -254,6 +260,12 @@ msgid "The Heart of the Sea is used to craft a conduit. They can be obtained by 
 msgstr ""
 
 msgid "Place it on a horse to put on the horse armor. Donkeys and mules can't wear horse armor."
+msgstr ""
+
+msgid "Leather Horse Armor"
+msgstr ""
+
+msgid "Leather horse armor can be worn by horses to increase their protection from harm a little."
 msgstr ""
 
 msgid "Iron Horse Armor"

@@ -75,7 +75,7 @@ local function is_armor_action(inventory_info)
 	return inventory_info.from_list == "armor" or inventory_info.to_list == "armor" or inventory_info.listname == "armor"
 end
 
-local function limit_put(player, inventory, index, stack, count)
+local function limit_put(_, inventory, index, stack, count)
 	local def = stack:get_definition()
 
 	if not def then
@@ -103,7 +103,7 @@ local function limit_put(player, inventory, index, stack, count)
 	end
 end
 
-local function limit_take(player, inventory, index, stack, count)
+local function limit_take(player, _, _, stack, count)
 	if vlf_enchanting.has_enchantment(stack, "curse_of_binding") and not minetest.is_creative_enabled(player:get_player_name()) then
 		return 0
 	end

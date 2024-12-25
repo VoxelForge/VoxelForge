@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_cocoas x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_cocoas x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,25 +11,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
-
-msgid "Premature Cocoa Pod"
-msgstr ""
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Cocoa pods grow on the side of jungle trees in 3 stages."
-msgstr ""
+msgstr "Le fave di cacao crescono sul lato degli alberi della giungla in 3 stadi."
+
+msgid "Premature Cocoa Pod"
+msgstr "Fave di Cacao Premature"
 
 msgid "Medium Cocoa Pod"
-msgstr ""
+msgstr "Fave di Cacao Medie"
 
 msgid "Mature Cocoa Pod"
-msgstr ""
-
-msgid "A mature cocoa pod grew on a jungle tree to its full size and it is ready to be harvested for cocoa beans. It won't grow any further."
-msgstr ""
+msgstr "Fave di Cacao Mature"
 
 msgid "Cocoa Beans"
-msgstr ""
+msgstr "Fave di Cacao"
 
 msgid "Grows at the side of jungle trees"
 msgstr ""

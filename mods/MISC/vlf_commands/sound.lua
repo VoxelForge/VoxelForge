@@ -4,7 +4,7 @@ minetest.register_chatcommand("playsound",{
 	params = S("<sound> <target>"), --TODO:add source
 	description = S("Play a sound. Arguments: <sound>: name of the sound. <target>: Target."),
 	privs = {server = true},
-	func = function(name, rawparams)
+	func = function(_, rawparams)
 		local P = {}
 		local i = 0
 		for str in string.gmatch(rawparams, "([^ ]+)") do

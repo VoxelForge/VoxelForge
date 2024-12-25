@@ -17,14 +17,13 @@ local function get_mob_textures(mob)
 end
 
 local function find_doll(pos)
-	for  _,obj in pairs(minetest.get_objects_inside_radius(pos, 0.5)) do
+	for obj in minetest.objects_inside_radius(pos, 0.5) do
 		if not obj:is_player() then
 			if obj and obj:get_luaentity().name == "vlf_mobspawners:doll" then
 				return obj
 			end
 		end
 	end
-	return nil
 end
 
 local function spawn_doll(pos)
@@ -125,7 +124,7 @@ end
 
 -- Spawn mobs around pos
 -- NOTE: The node is timer-based, rather than ABM-based.
-local function spawn_mobs(pos, elapsed)
+local function spawn_mobs(pos)
 
 	-- get meta
 	local meta = minetest.get_meta(pos)
@@ -150,7 +149,6 @@ local function spawn_mobs(pos, elapsed)
 	end
 
 	-- check objects inside 8×8 area around spawner
-	local objs = minetest.get_objects_inside_radius(pos, 8)
 	local count = 0
 	local ent
 
@@ -161,9 +159,8 @@ local function spawn_mobs(pos, elapsed)
 	if pla > 0 then
 
 		local in_range = 0
-		local objs = minetest.get_objects_inside_radius(pos, pla)
 
-		for _,oir in pairs(objs) do
+		for oir in minetest.objects_inside_radius(pos, pla) do
 
 			if oir:is_player() then
 
@@ -196,8 +193,7 @@ local function spawn_mobs(pos, elapsed)
 	end
 
 	-- count mob objects of same type in area
-	for k, obj in ipairs(objs) do
-
+	for obj in minetest.objects_inside_radius(pos, 8) do
 		ent = obj:get_luaentity()
 
 		if ent and ent.name and ent.name == mob then
@@ -223,7 +219,7 @@ local function spawn_mobs(pos, elapsed)
 		if spawn_count_overrides[mob] then
 			max = spawn_count_overrides[mob]
 		end
-		for a=1, max do
+		for _ = 1, max do
 			if #air <= 0 then
 				-- We're out of space! Stop spawning
 				break
@@ -243,7 +239,7 @@ local function spawn_mobs(pos, elapsed)
 	end
 
 	-- Spawn attempt done. Next spawn attempt much later
-	timer:start(math.random(10, 39.95))
+	timer:start(vlf_util.float_random(10, 39.95))
 
 end
 
@@ -261,7 +257,7 @@ minetest.register_node("vlf_mobspawners:spawner", {
 	_tt_help = S("Makes mobs appear"),
 	_doc_items_longdesc = S("A mob spawner regularily causes mobs to appear around it while a player is nearby. Some mob spawners are disabled while in light."),
 	_doc_items_usagehelp = S("If you have a spawn egg, you can use it to change the mob to spawn. Just place the item on the mob spawner. Player-set mob spawners always spawn mobs regardless of the light level."),
-	groups = {pickaxey=1, material_stone=1, deco_block=1},
+	groups = {pickaxey=1, material_stone=1, deco_block=1, unmovable_by_piston = 1},
 	is_ground_content = false,
 	drop = "",
 
@@ -295,9 +291,9 @@ minetest.register_node("vlf_mobspawners:spawner", {
 		return new_itemstack
 	end,
 
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		if not clicker:is_player() then return end
-		if minetest.get_item_group(itemstack:get_name(),"spawn_egg") == 0 then return end
+	on_rightclick = function(pos, _, clicker, itemstack, _)
+		if not clicker:is_player() then return itemstack end
+		if minetest.get_item_group(itemstack:get_name(),"spawn_egg") == 0 then return itemstack end
 		local name = clicker:get_player_name()
 		local privs = minetest.get_player_privs(name)
 		if minetest.is_protected(pos, name) then
@@ -351,13 +347,14 @@ local doll_def = {
 	},
 	timer = 0,
 	_mob = default_mob, -- name of the mob this doll represents
+	_vlf_pistons_unmovable = true
 }
 
 doll_def.get_staticdata = function(self)
 	return self._mob
 end
 
-doll_def.on_activate = function(self, staticdata, dtime_s)
+doll_def.on_activate = function(self, staticdata)
 	local mob = staticdata
 	if mob == "" or mob == nil then
 		mob = default_mob
@@ -380,7 +377,7 @@ doll_def.on_step = function(self, dtime)
 	end
 end
 
-doll_def.on_punch = function(self, hitter) end
+doll_def.on_punch = function() end
 
 minetest.register_entity("vlf_mobspawners:doll", doll_def)
 
@@ -390,7 +387,7 @@ minetest.register_lbm({
 	name = "vlf_mobspawners:respawn_entities",
 	nodenames = { "vlf_mobspawners:spawner" },
 	run_at_every_load = true,
-	action = function(pos, node)
+	action = function(pos)
 		respawn_doll(pos)
 	end,
 })

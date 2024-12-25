@@ -1,4 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
+local D = vlf_util.get_dynamic_translator()
 
 local messy_textures = { --translator table for the bed texture filenames names not adhering to the common color names of vlf_dyes
 	["lightblue"] = "light_blue",
@@ -27,7 +28,7 @@ for color, colordef in pairs(vlf_dyes.colors) do
 	end
 	-- Register bed
 	vlf_beds.register_bed("vlf_beds:bed_"..color, {
-		description = S("@1 Bed", colordef.readable_name),
+		description = D(colordef.readable_name .. " Bed"),
 		_doc_items_entry_name = entry_name,
 		_doc_items_create_entry = create_entry,
 		inventory_image = "vlf_beds_bed_"..texcol.."_inv.png",

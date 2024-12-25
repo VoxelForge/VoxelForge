@@ -3,9 +3,10 @@
 vlf_dungeons = {}
 
 local mg_name = minetest.get_mapgen_setting("mg_name")
+local generate_in_singlenode = false
 
 -- Are dungeons disabled?
-if vlf_vars.mg_dungeons == false or mg_name == "singlenode" then
+if vlf_vars.mg_dungeons == false or (mg_name == "singlenode" and not generate_in_singlenode) then
 	return
 end
 
@@ -65,7 +66,7 @@ local loottable =
 			{ itemstring = "vlf_farming:wheat_item", weight = 20, amount_min = 1, amount_max = 4 },
 			{ itemstring = "vlf_farming:bread", weight = 20 },
 			{ itemstring = "vlf_core:coal_lump", weight = 15, amount_min = 1, amount_max = 4 },
-			{ itemstring = "mesecons:redstone", weight = 15, amount_min = 1, amount_max = 4 },
+			{ itemstring = "vlf_redstone:redstone", weight = 15, amount_min = 1, amount_max = 4 },
 			{ itemstring = "vlf_farming:beetroot_seeds", weight = 10, amount_min = 2, amount_max = 4 },
 			{ itemstring = "vlf_farming:melon_seeds", weight = 10, amount_min = 2, amount_max = 4 },
 			{ itemstring = "vlf_farming:pumpkin_seeds", weight = 10, amount_min = 2, amount_max = 4 },
@@ -86,7 +87,7 @@ local loottable =
 	}
 }
 
-local function ecb_spawn_dungeon(blockpos, action, calls_remaining, param)
+local function ecb_spawn_dungeon(_, _, calls_remaining, param)
 	if calls_remaining >= 1 then return end
 
 	local p1, _, dim, pr = param.p1, param.p2, param.dim, param.pr
@@ -223,7 +224,7 @@ local function ecb_spawn_dungeon(blockpos, action, calls_remaining, param)
 	-- If it failed again, tough luck! We stick with only 1 chest spawned.
 	local lastRandom
 	local secondChance = true -- second chance is still available
-	for i=1, totalChests do
+	for _ = 1, totalChests do
 		local r = pr:next(1, totalChestSlots)
 		if r == lastRandom and secondChance then
 			-- Oops! Same slot selected. Try again.
@@ -337,7 +338,8 @@ local function ecb_spawn_dungeon(blockpos, action, calls_remaining, param)
 			facedir = minetest.dir_to_facedir(vector.subtract(pos, face_to))
 		end
 
-		minetest.set_node(pos, {name="vlf_chests:chest", param2=facedir})
+		minetest.swap_node(pos, {name="vlf_chests:chest", param2=facedir})
+		vlf_structures.construct_nodes(pos, pos, {"vlf_chests:chest"})
 		local meta = minetest.get_meta(pos)
 		minetest.log("info", "[vlf_dungeons] Filling chest " .. tostring(c) .. " at " .. minetest.pos_to_string(pos))
 		vlf_loot.fill_inventory(meta:get_inventory(), "main", vlf_loot.get_multi_loot(loottable, pr), pr)
@@ -348,7 +350,7 @@ local function ecb_spawn_dungeon(blockpos, action, calls_remaining, param)
 	for s=#spawner_posses, 1, -1 do
 		local sp = spawner_posses[s]
 		-- ... and place it and select a random mob
-		minetest.set_node(sp, {name = "vlf_mobspawners:spawner"})
+		minetest.swap_node(sp, {name = "vlf_mobspawners:spawner"})
 		local mobs = {
 			"mobs_mc:zombie",
 			"mobs_mc:zombie",
@@ -365,7 +367,7 @@ local function dungeons_nodes(minp, maxp, blockseed)
 	local ymin, ymax = math.max(min_y, minp.y),  math.min(max_y, maxp.y)
 	if ymax < ymin then return false end
 	local pr = PseudoRandom(blockseed)
-	for a=1, attempts do
+	for _ = 1, attempts do
 		local dim = dungeonsizes[pr:next(1, #dungeonsizes)]
 		if ymin <= ymax - dim.y - 1 then
 			local x = pr:next(minp.x, maxp.x-dim.x-1)

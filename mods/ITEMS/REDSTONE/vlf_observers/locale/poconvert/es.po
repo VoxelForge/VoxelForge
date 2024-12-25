@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_observers x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_observers x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,13 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Observer"
 msgstr "Observador"
 
 msgid "Emits redstone pulse when block in front changes"
-msgstr ""
+msgstr "Emite un pulso de redstone cuando cambia el bloque del frente"
 
 msgid "An observer is a redstone component which observes the block in front of it and sends a very short redstone pulse whenever this block changes."
 msgstr "Un observador es un componente de redstone que observa el bloque frente a él y envía un pulso muy corto de redstone cada vez que este bloque cambia."

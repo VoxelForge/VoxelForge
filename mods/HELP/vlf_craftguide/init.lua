@@ -5,9 +5,7 @@ local player_data = {}
 -- Caches
 local init_items    = {}
 local searches      = {}
-local recipes_cache = {}
 local usages_cache  = {}
-local fuel_cache    = {}
 
 local progressive_mode = minetest.settings:get_bool("vlf_craftguide_progressive_mode", true)
 
@@ -79,6 +77,11 @@ local group_names = {
 	stick = S("Any stick"),
 }
 
+-- caches every item belonging to a certain group
+-- key: group name
+-- value: a listt of items
+local group_cache = {}
+
 
 
 local item_lists = {
@@ -97,14 +100,6 @@ local function table_merge(t, t2)
 	end
 
 	return t
-end
-
-local function table_replace(t, val, new)
-	for k, v in pairs(t) do
-		if v == val then
-			t[k] = new
-		end
-	end
 end
 
 local function table_diff(t, t2)
@@ -151,7 +146,13 @@ function vlf_craftguide.register_craft(def)
 	assert(def.output, func .. "'output' field missing")
 	assert(def.items, func .. "'items' field missing")
 
-	custom_crafts[#custom_crafts + 1] = def
+	local _, _, item_name = string.find(def.output, "^([^%s]+)")
+
+	if custom_crafts[item_name] then
+		table.insert(custom_crafts[item_name], def)
+	else
+		custom_crafts[item_name] = {def}
+	end
 end
 
 local recipe_filters = {}
@@ -244,60 +245,12 @@ local function extract_groups(str)
 	return string.split(string.sub(str, 7), ",")
 end
 
-local function item_in_recipe(item, recipe)
-	for _, recipe_item in pairs(recipe.items) do
-		if recipe_item == item then
-			return true
-		end
-	end
-end
-
-local function groups_item_in_recipe(item, recipe)
-	local item_groups = minetest.registered_items[item].groups
-	for _, recipe_item in pairs(recipe.items) do
-		if string.sub(recipe_item, 1, 6) == "group:" then
-			local groups = extract_groups(recipe_item)
-			if item_has_groups(item_groups, groups) then
-				local usage = table.copy(recipe)
-				table_replace(usage.items, recipe_item, item)
-				return usage
-			end
-		end
-	end
-end
-
-local function get_item_usages(item)
-	local usages, c = {}, 0
-
-	for _, recipes in pairs(recipes_cache) do
-	for i = 1, #recipes do
-		local recipe = recipes[i]
-		if item_in_recipe(item, recipe) then
-			c = c + 1
-			usages[c] = recipe
-		else
-			recipe = groups_item_in_recipe(item, recipe)
-			if recipe then
-				c = c + 1
-				usages[c] = recipe
-			end
-		end
-	end
-	end
-
-	if fuel_cache[item] then
-		usages[#usages + 1] = {type = "fuel", width = 1, items = {item}}
-	end
-
-	return usages
-end
-
 local function get_filtered_items(player)
 	local items, c = {}, 0
 
 	for i = 1, #init_items do
 		local item = init_items[i]
-		local recipes = recipes_cache[item]
+		local recipes = minetest.get_all_craft_recipes(item)
 		local usages = usages_cache[item]
 
 		if recipes and #apply_recipe_filters(recipes, player) > 0 or
@@ -310,26 +263,9 @@ local function get_filtered_items(player)
 	return items
 end
 
-local function cache_recipes(output)
-	local recipes = minetest.get_all_craft_recipes(output) or {}
-	local c = 0
-
-	for i = 1, #custom_crafts do
-		local custom_craft = custom_crafts[i]
-		if string.match(custom_craft.output, "%S*") == output then
-			c = c + 1
-			recipes[c] = custom_craft
-		end
-	end
-
-	if #recipes > 0 then
-		recipes_cache[output] = recipes
-		return true
-	end
-end
-
 local function get_recipes(item, data, player)
-	local recipes = recipes_cache[item]
+	item = minetest.registered_aliases[item] or item
+	local recipes = minetest.get_all_craft_recipes(item)
 	local usages = usages_cache[item]
 
 	if recipes then
@@ -344,25 +280,37 @@ local function get_recipes(item, data, player)
 	end
 
 	if data.show_usages then
-		recipes = apply_recipe_filters(usages_cache[item], player)
-		if #recipes == 0 then
+		recipes = usages_cache[item] and table.copy(usages_cache[item]) or {}
+
+		local item_groups = minetest.registered_items[item].groups
+		local required_groups
+		local item_belongs_in_groups
+		for cache_group_name, group_cache in pairs(group_cache) do
+			required_groups = extract_groups(cache_group_name)
+			item_belongs_in_groups = true
+			for _, required_group in pairs(required_groups) do
+				if not item_groups[required_group] then
+					item_belongs_in_groups = false
+					break
+				end
+			end
+			if item_belongs_in_groups then
+				recipes = table_merge(recipes, group_cache)
+			end
+		end
+
+		if vlf_util.is_fuel(item) then
+			table.insert(recipes, {type = "fuel", width = 1, items = {item}})
+		end
+
+		if recipes == nil or #recipes == 0 then
 			return
 		end
+
+		recipes = apply_recipe_filters(recipes, player)
 	end
 
 	return recipes
-end
-
-local function get_burntime(item)
-	return minetest.get_craft_result({method = "fuel", width = 1, items = {item}}).time
-end
-
-local function cache_fuel(item)
-	local burntime = get_burntime(item)
-	if burntime > 0 then
-		fuel_cache[item] = burntime
-		return true
-	end
 end
 
 local function groups_to_item(groups)
@@ -509,9 +457,9 @@ local function get_recipe_fs(data, iY, player)
 			string.match(item, "%S*"),
 			F(label))
 
-		local burntime = fuel_cache[item]
+		local burntime = vlf_util.get_burntime(item)
 
-		if groups or cooktime or burntime then
+		if groups or cooktime or burntime ~= 0 then
 			fs[#fs + 1] = get_tooltip(item, groups, cooktime, burntime)
 		end
 	end
@@ -565,7 +513,7 @@ local function get_recipe_fs(data, iY, player)
 			"vlf_craftguide_fuel.png")
 	else
 		local output_name = string.match(recipe.output, "%S+")
-		local burntime = fuel_cache[output_name]
+		local burntime = vlf_util.get_burntime(output_name)
 
 		fs[#fs + 1] = string.format(FMT.item_image_button,
 			output_X,
@@ -576,7 +524,7 @@ local function get_recipe_fs(data, iY, player)
 			F(output_name),
 			"")
 
-		if burntime then
+		if burntime ~= 0 then
 			fs[#fs + 1] = get_tooltip(output_name, nil, nil, burntime)
 
 			fs[#fs + 1] = string.format(FMT.image,
@@ -842,27 +790,58 @@ local function reset_data(data)
 	data.items       = data.items_raw
 end
 
-local function cache_usages()
-	for i = 1, #init_items do
-		local item = init_items[i]
-		usages_cache[item] = get_item_usages(item)
+local function get_item_recipes(item_name)
+	local recipes = minetest.get_all_craft_recipes(item_name) or {}
+	if custom_crafts[item_name] then
+		for _, v in pairs(custom_crafts[item_name]) do
+			recipes[#recipes + 1] = v
+		end
 	end
+
+	return recipes
 end
 
 local function get_init_items()
-	local c = 0
-	for name, def in pairs(minetest.registered_items) do
-		local is_fuel = cache_fuel(name)
-		if def.groups.not_in_craft_guide ~= 1 and
-				def.description and def.description ~= "" and
-				(cache_recipes(name) or is_fuel) then
-			c = c + 1
-			init_items[c] = name
+	local recipes
+	local used_items
+	for item_name, item in pairs(minetest.registered_items) do
+		recipes = get_item_recipes(item_name)
+
+		if #recipes > 0 and item_name ~= "" then
+			table.insert(init_items, item_name)
+			for _, recipe in pairs(recipes) do
+				if recipe then
+					used_items = {}
+					for _, ingredient in pairs(recipe.items) do
+						_, _, ingredient = string.find(ingredient, "^([^%s]+)") -- handles edge case where the igredient is an item string
+						ingredient = minetest.registered_aliases[ingredient] or ingredient
+						if not used_items[ingredient] then
+							used_items[ingredient] = true
+
+							if string.sub(ingredient, 1, 6) == "group:" then
+								group_cache[ingredient] = group_cache[ingredient] or {}
+								table.insert(group_cache[ingredient], recipe)
+							elseif minetest.registered_items[ingredient] then
+								usages_cache[ingredient] = usages_cache[ingredient] or {}
+								table.insert(usages_cache[ingredient], recipe)
+							else
+								minetest.log("warning", S("Invalid crafting ingredient: \"@1\" (dosent exist)", ingredient))
+							end
+						end
+					end
+				end
+			end
 		end
 	end
 
 	table.sort(init_items)
-	cache_usages()
+
+	for _, cache in pairs(usages_cache) do
+		table.sort(cache,
+		function(a, b)
+			return a.output > b.output
+		end)
+	end
 end
 
 local function on_receive_fields(player, fields)
@@ -885,7 +864,7 @@ local function on_receive_fields(player, fields)
 		end
 
 		local num_next = data.rnum - 1
-		data.rnum = data.recipes[num_next] and num_next or 1
+		data.rnum = data.recipes[num_next] and num_next or #data.recipes
 		show_fs(player, name)
 
 	elseif fields.next_alternate then
@@ -943,7 +922,7 @@ local function on_receive_fields(player, fields)
 		vlf_inventory.to_craft_grid(player, data.recipes[data.rnum])
 	else
 		local item
-		for field in pairs(fields) do
+		for field, _ in pairs(fields) do
 			if string.find(field, ":") then
 				item = field
 				break
@@ -976,6 +955,7 @@ local function on_receive_fields(player, fields)
 end
 
 minetest.after(0, get_init_items)
+
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if formname == "vlf_craftguide" then
@@ -1054,9 +1034,7 @@ if progressive_mode then
 	-- Workaround. Need an engine call to detect when the contents
 	-- of the player inventory changed, instead.
 	local function poll_new_items()
-		local players = minetest.get_connected_players()
-		for i = 1, #players do
-			local player = players[i]
+		for player in vlf_util.connected_players() do
 			local name   = player:get_player_name()
 			local data   = player_data[name]
 			local inv_items = get_inv_items(player)
@@ -1108,9 +1086,7 @@ if progressive_mode then
 	end)
 
 	minetest.register_on_shutdown(function()
-		local players = minetest.get_connected_players()
-		for i = 1, #players do
-			local player = players[i]
+		for player in vlf_util.connected_players() do
 			save_meta(player)
 		end
 	end)
@@ -1150,26 +1126,3 @@ doc.sub.items.register_factoid(nil, "groups", function(_, def)
 	end
 	return ""
 end)
-
---[[ Custom recipes (>3x3) test code
-
-minetest.register_craftitem(":secretstuff:custom_recipe_test", {
-	description = "Custom Recipe Test",
-})
-
-local cr = {}
-for x = 1, 6 do
-	cr[x] = {}
-	for i = 1, 10 - x do
-		cr[x][i] = {}
-		for j = 1, 10 - x do
-			cr[x][i][j] = "group:wood"
-		end
-	end
-
-	minetest.register_craft({
-		output = "secretstuff:custom_recipe_test",
-		recipe = cr[x]
-	})
-end
-]]

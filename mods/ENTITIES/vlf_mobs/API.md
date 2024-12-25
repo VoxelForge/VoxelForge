@@ -1,3 +1,11 @@
+IMPORTANT DISCLAIMER
+
+The following documentation is dreadfully out of date as of the late
+mob rewrite.  New documentation is being prepared, but till it is
+available, please consider everything described below except that
+which relates to mob spawning incorrect, and consult the source code
+and mob implementations in `mobs_mc' in its place.
+
 # vlf_mobs
 This mod was originally based of off "mobs_redo" (https://notabug.org/TenPlus1/mobs_redo) by TenPlus1.
 Heavily modified and adapted for mineclonia / vlf2 by several people.
@@ -31,6 +39,9 @@ Fields not mentioned in this document can also be added as custom fields for the
 	persist_in_peaceful = false,
 	-- Default is false for monsters and true for all other mobs. If false mob will immediately be removed in peaceful mode.
 
+	persistent = false,
+	-- if ture this mob will not despawn
+
 	hp_min = 1,
 	-- the minimum health value the mob can spawn with.
 
@@ -62,7 +73,7 @@ Fields not mentioned in this document can also be added as custom fields for the
 	-- has a 0-100 chance value your mob will walk from standing, set to 0 for jumping mobs only.
 
 	jump = true,
-	-- when true allows your mob to jump updwards.
+	-- when true allows your mob to jump upwards.
 
 	jump_height = 1,
 	-- holds the height your mob can jump, 0 to disable jumping.
@@ -73,8 +84,20 @@ Fields not mentioned in this document can also be added as custom fields for the
 	fly = false,
 	-- when true allows your mob to fly around instead of walking.
 
-	fly_in = { "vlf_core:water_source" },
-	-- holds the node name or a table of node names in which the mob flies (or swims) around in. The special name '__airlike' stands for all nodes with 'walkable=false' that are not liquids
+	fly_in = { "air" },
+	-- holds the node name or a table of node names in which the mob flies around in. The special name '__airlike' stands for all nodes with 'walkable=false' that are not liquids
+
+	fly_velocity = 4,
+	-- speed the mob flies at
+
+	swims = false,
+	-- when true allows your mob to swim instead of walk
+
+	swim_velocity = 1,
+	-- the speed a mob can swim at
+
+    swims_in = { "vlf_core:water_source", "vlfx_core:river_water_source", 'vlf_core:water_flowing', 'vlfx_core:river_water_flowing' },
+	-- Liquids the mob can swim in
 
 	runaway = false,
 	-- if true causes animals to turn and run away when hit.
@@ -374,9 +397,6 @@ Fields not mentioned in this document can also be added as custom fields for the
 	ignited_by_sunlight = false,
 	-- If true the mod will burn at daytime. (Takes sunlight_damage per second)
 
-	nofollow = false,
-	--Do not follow players when they wield the "follow" item. For mobs (like villagers) that are bred in a different way.
-
 	pick_up = { "vlf_core:apple" },
 	--table of itemstrings the mob will pick up (e.g. for breeding)
 
@@ -431,7 +451,7 @@ These functions can be called from the entity as well as overwritten on a per-mo
 	* This returns true if the timer identified by `timer` has reached 0 and resets it to interval, returns false otherwise. If the timer was never run before it is set to a random value < interval to avoid lots of timers firing simultaneously.
 
 #### Breeding
- * mob:feed_tame(clicker, feed_count, breed, tame, notake)
+ * mob:feed_tame(clicker, heal, breed, tame, notake)
  * mob:toggle_sit(clicker,p)
 
 #### Combat
@@ -487,8 +507,8 @@ These functions can be called from the entity as well as overwritten on a per-mo
 	* Replaces node at position if node replacement is configured for this mob
  * mob:check_runaway_from()
 	* Checks if there are objects the mob should run away from
- * mob:follow_flop()
-	* Follow player if owner or holding item, if fish outta water then flop
+ * mob:follow_player()
+	* Follow player if owner or holding item
  * mob:go_to_pos(b)
 	* Turn in direction of pos and start moving forward.
  * mob:check_herd(dtime)
@@ -554,6 +574,8 @@ These functions can be called from the entity as well as overwritten on a per-mo
 	* Checks if mob is currently dying and applies "falling to the side" rotation
  * mob:check_suspend()
 	* Checks and suspends mob if needed.
+ * mob:on_mob_replace(new_entity)
+	* called when this mob is replaced with another one (implemented in vlf_util)
 
 #### Effects
  * vlf_mobs.effect(pos, amount, texture, min_size, max_size, radius, gravity, glow, go_down)
@@ -864,26 +886,3 @@ Custom projectiles for mobs can be registered using
  * 'mobs_spawn'			 if false then mobs no longer spawn without spawner or spawn egg.
  * 'mobs_drop_items'		when false mobs no longer drop items when they die.
  * 'mobs_griefing'			when false mobs cannot break blocks when using either pathfinding level 2, replace functions or mobs:boom
- 
-### Jock
- * **jock_to(mob, relative_pos, rot)**: Usually defined in on_spawn, this attaches the mount to the initial mob (ex. Spiders on_spawn function attaches them to spiders if the 1% chance is met.)
-```
-  mob: is the mob that the initial mob will attach to.
-  relatie_pos: is the approximate position, that the mob will attach to.
-  rot: is the rotation of the new mob, compared to the initial mob.
-```
- * **jock_to_other(jockey, mob, relative_pos, rot, initial_size)**: Usually defined in on_spawn, this attaches the rider, to the initial mob.
- (ex. Skeleton Horses on_spawn function attaches skeletons to them.) 
- Usually also uses **jock_detach_and_resize** to properly detach and resize the rider if the mount dies.
-```
-  jockey: is the mob that will attach to mob.
-  mob: is the initial mob (usually defined by self)
-  relative_pos: is the approximate position, that the mob will attach to.
-  rot: is the rotation of the new mob, compared to the initial mob.
-  initial_size: is the visual_size of the mounted mob.
-```
- * **mob_class:jock_detach_and_resize(jockey, new_size)**: Usually used in the on_die function of a mob. This is used to properly detach and resize the rider if the mount dies.
-```
-  jockey: is the rider of the mount (the mount is usually self)
-  new_size: is the new size of the rider after the mount is killed.)
-```

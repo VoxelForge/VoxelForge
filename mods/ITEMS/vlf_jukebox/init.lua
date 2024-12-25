@@ -14,6 +14,7 @@ local HEAR_DISTANCE = 65
 
 -- Player name-indexed table containing the currently heard track
 local active_tracks = {}
+vlf_jukebox.active_tracks = active_tracks
 
 -- Player name-indexed table containing the current used HUD ID for the “Now playing” message.
 local active_huds = {}
@@ -111,10 +112,9 @@ local function check_active_tracks()
 	for k,v in pairs(active_tracks) do
 		local pos = minetest.get_position_from_hash(k)
 		local player_near = false
-		for _,pl in pairs(minetest.get_connected_players()) do
-			if vector.distance(pl:get_pos(), pos) <= HEAR_DISTANCE then
-				player_near = true
-			end
+		for _ in vlf_util.connected_players(pos, HEAR_DISTANCE) do
+			player_near = true
+			break
 		end
 		if not player_near then
 			minetest.sound_stop(v)
@@ -169,20 +169,20 @@ minetest.register_node("vlf_jukebox:jukebox", {
 	_doc_items_usagehelp = S("Place a music disc into an empty jukebox to insert the music disc and play music. If the jukebox already has a music disc, you will retrieve this music disc first. The music can only be heard by you, not by other players."),
 	tiles = {"vlf_jukebox_top.png", "vlf_jukebox_side.png", "vlf_jukebox_side.png"},
 	sounds = vlf_sounds.node_sound_wood_defaults(),
-	groups = {handy=1,axey=1, container=7, deco_block=1, material_wood=1, flammable=-1},
+	groups = {handy=1,axey=1, container=7, deco_block=1, material_wood=1, flammable=-1, unmovable_by_piston = 1},
 	is_ground_content = false,
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		inv:set_size("main", 1)
 	end,
-	on_rightclick= function(pos, node, clicker, itemstack, pointed_thing)
-		if not clicker then return end
+	on_rightclick= function(pos, _, clicker, itemstack, _)
+		if not clicker then return itemstack end
 		local cname = clicker:get_player_name()
 		local ph = minetest.hash_node_position(pos)
 		if minetest.is_protected(pos, cname) then
 			minetest.record_protection_violation(pos, cname)
-			return
+			return itemstack
 		end
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
@@ -208,6 +208,7 @@ minetest.register_node("vlf_jukebox:jukebox", {
 				active_huds[cname] = nil
 			end
 		else
+			inv:set_size("main", 1) -- if the inventory isn't initialized it registers as empty - initialize it to be sure so discs are not "swallowed" by the jukebox
 			-- Jukebox is empty: Play track if player holds music record
 			local playing = play_record(pos, itemstack, clicker)
 			if playing then
@@ -226,7 +227,7 @@ minetest.register_node("vlf_jukebox:jukebox", {
 		end
 		return itemstack
 	end,
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	allow_metadata_inventory_move = function(pos, _, _, _, _, count, player)
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then
 			minetest.record_protection_violation(pos, name)
@@ -235,7 +236,7 @@ minetest.register_node("vlf_jukebox:jukebox", {
 			return count
 		end
 	end,
-	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_take = function(pos, _, _, stack, player)
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then
 			minetest.record_protection_violation(pos, name)
@@ -244,7 +245,7 @@ minetest.register_node("vlf_jukebox:jukebox", {
 			return stack:get_count()
 		end
 	end,
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_put = function(pos, _, _, stack, player)
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then
 			minetest.record_protection_violation(pos, name)
@@ -253,7 +254,7 @@ minetest.register_node("vlf_jukebox:jukebox", {
 			return stack:get_count()
 		end
 	end,
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
+	after_dig_node = function(pos, _, oldmetadata, digger)
 		local name = digger:get_player_name()
 		local meta = minetest.get_meta(pos)
 		local meta2 = meta
@@ -279,104 +280,67 @@ minetest.register_node("vlf_jukebox:jukebox", {
 	end,
 	_vlf_blast_resistance = 6,
 	_vlf_hardness = 2,
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_jukebox:jukebox",
-	burntime = 15,
+	_vlf_burntime = 15
 })
 
 vlf_jukebox.register_record({
-	title = "11",
-	author = "Sn0wShepherd",
-	id = "11",
-	texture = "vlf_jukebox_record_11.png",
-	sound = "vlf_jukebox_11",
+	title = "The Evil Sister (Jordach's Mix)",
+	author = "SoundHelix",
+	id = "13",
+	texture = "vlf_jukebox_record_13.png",
+	sound = "vlf_jukebox_track_1",
 	exclude_from_creeperdrop = false,
 })
 vlf_jukebox.register_record({
-	title = "13",
-	author = "Sn0wShepherd",
-	id = "13",
+	title = "The Energetic Rat (Jordach's Mix)",
+	author = "SoundHelix",
+	id = "wait",
 	texture = "vlf_jukebox_record_wait.png",
-	sound = "vlf_jukebox_13"
+	sound = "vlf_jukebox_track_2"
 })
 vlf_jukebox.register_record({
-	title = "Blocks",
-	author = "Sn0wShepherd",
+	title = "Eastern Feeling",
+	author = "Jordach",
 	id = "blocks",
 	texture = "vlf_jukebox_record_blocks.png",
-	sound = "vlf_jukebox_blocks"
+	sound = "vlf_jukebox_track_3"
 })
 vlf_jukebox.register_record({
-	title = "Cat",
-	author = "Sn0wShepherd",
-	id = "cat",
-	texture = "vlf_jukebox_record_cat.png",
-	sound = "vlf_jukebox_cat",
+	title = "Minetest",
+	author = "Jordach",
+	id = "far",
+	texture = "vlf_jukebox_record_far.png",
+	sound = "vlf_jukebox_track_4",
 })
 vlf_jukebox.register_record({
-	title =  "Chirp",
-	author =  "Sn0wShepherd",
-	id = "Chirp",
+	title =  "Soaring over the sea",
+	author =  "mactonite",
+	id = "chirp",
 	texture = "vlf_jukebox_record_chirp.png",
-	sound = "vlf_jukebox_chirp",
+	sound = "vlf_jukebox_track_5",
 	exclude_from_creeperdrop = true,
 })
 vlf_jukebox.register_record({
-	title = "Far",
-	author = "Sn0wShepherd",
-	id = "far",
-	texture = "vlf_jukebox_record_far.png",
-	sound = "vlf_jukebox_far",
+	title = "Winter Feeling",
+	author = "Tom Peter",
+	id = "strad",
+	texture = "vlf_jukebox_record_strad.png",
+	sound = "vlf_jukebox_track_6",
 
 })
 vlf_jukebox.register_record({
-	title = "Mall",
-	author = "Sn0wShepherd",
-	id = "mall",
-	texture = "vlf_jukebox_record_mall.png",
-	sound = "vlf_jukebox_mall"
-})
-vlf_jukebox.register_record({
-	title = "Mellohi",
-	author = "Sn0wShepherd",
+	title = "Synthgroove (Jordach's Mix)",
+	author = "HeroOfTheWinds",
 	id = "mellohi",
 	texture = "vlf_jukebox_record_mellohi.png",
-	sound = "vlf_jukebox_mellohi",
-	exclude_from_creeperdrop = true,
+	sound = "vlf_jukebox_track_7"
 })
 vlf_jukebox.register_record({
-	title = "Stal",
-	author = "Sn0wShepherd",
-	id = "stal",
-	texture = "vlf_jukebox_record_stal.png",
-	sound = "vlf_jukebox_stall",
-	exclude_from_creeperdrop = true,
-})
-vlf_jukebox.register_record({
-	title = "Strad",
-	author = "Sn0wShepherd",
-	id = "strad",
-	texture = "vlf_jukebox_record_strad.png",
-	sound = "vlf_jukebox_track_strad",
-	exclude_from_creeperdrop = true,
-})
-vlf_jukebox.register_record({
-	title = "Wait",
-	author = "Sn0wShepherd",
-	id = "wait",
-	texture = "vlf_jukebox_record_wait.png",
-	sound = "vlf_jukebox_track_wait",
-	exclude_from_creeperdrop = true,
-})
-vlf_jukebox.register_record({
-	title = "Ward",
-	author = "Sn0wShepherd",
-	id = "ward",
-	texture = "vlf_jukebox_record_ward.png",
-	sound = "vlf_jukebox_track_ward",
+	title = "The Clueless Frog (Jordach's Mix)",
+	author = "SoundHelix",
+	id = "mall",
+	texture = "vlf_jukebox_record_mall.png",
+	sound = "vlf_jukebox_track_8",
 	exclude_from_creeperdrop = true,
 })
 

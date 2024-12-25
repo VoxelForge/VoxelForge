@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_nether x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_nether x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Glowstone"
 msgstr "Pierre Lumineuse"
@@ -29,10 +29,10 @@ msgid "Ancient Debris"
 msgstr "Débris antiques"
 
 msgid "Ancient debris can be found in the nether and is very very rare."
-msgstr ""
+msgstr "Les débris antiques se trouvent dans le Nether et sont très rares."
 
-msgid "Netherite Block"
-msgstr "Bloc de Netherite"
+msgid "Block of Netherite"
+msgstr ""
 
 msgid "Netherite block is very hard and can be made of 9 netherite ingots."
 msgstr "Les blocs de netherite sont très durs et peuvent être fabriqués à partir de 9 lingots de netherite."
@@ -68,10 +68,10 @@ msgid "Red Nether Brick Block"
 msgstr "Bloc de Briques Rouges du Nether"
 
 msgid "Chiseled Nether Brick Block"
-msgstr ""
+msgstr "Bloc de briques du Nether sculptées"
 
 msgid "Cracked Nether Bricks"
-msgstr ""
+msgstr "Briques du Nether craquelée"
 
 msgid "Nether Wart Block"
 msgstr "Bloc de Verrues du Nether"
@@ -92,31 +92,31 @@ msgid "Smooth Quartz"
 msgstr "Quartz Lisse"
 
 msgid "Quartz Stairs"
-msgstr ""
+msgstr "Escalier en quartz"
 
 msgid "Quartz Slab"
-msgstr ""
+msgstr "Dalle en quartz"
 
 msgid "Smooth Quartz Stairs"
-msgstr ""
+msgstr "Escalier en quartz lisse"
 
 msgid "Smooth Quartz Slab"
-msgstr ""
+msgstr "Dalle en quartz lisse"
 
 msgid "Nether Brick Stairs"
-msgstr ""
+msgstr "Escalier en brique du Nether"
 
 msgid "Nether Brick Slab"
-msgstr ""
+msgstr "Dalle en briques du Nether"
 
 msgid "Red Nether Brick Stairs"
-msgstr ""
+msgstr "Escalier en briques rouges du Nether"
 
 msgid "Red Nether Brick Slab"
-msgstr ""
+msgstr "Dalle en briques rouges du Nether"
 
 msgid "Nether Brick Fence"
-msgstr ""
+msgstr "Barrière en brique du Nether"
 
 msgid "Glowstone Dust"
 msgstr "Poudre Lumineuse"
@@ -134,13 +134,13 @@ msgid "Netherite Scrap"
 msgstr "Fragments de Netherite"
 
 msgid "Netherite scrap is a crafting ingredient for netherite ingots."
-msgstr ""
+msgstr "Le fragment de Nétherite est un ingrédient d'artisanat pour les lingots de Nétherite."
 
 msgid "Netherite Ingot"
 msgstr "Lingot de Netherite"
 
 msgid "Netherite ingots can be used with a smithing table to upgrade items to netherite."
-msgstr ""
+msgstr "Les lingots de Nétherite peuvent être utilisés avec une table de forge pour améliorer les objets en Nétherite."
 
 msgid "Nether Brick"
 msgstr "Brique du Nether"
@@ -149,25 +149,25 @@ msgid "Nether bricks are the main crafting ingredient for crafting nether brick 
 msgstr "Les briques du Nether sont le principal ingrédient pour la fabrication de blocs de briques et de clôtures du Nether."
 
 msgid "Netherite Upgrade Template"
-msgstr ""
+msgstr "Modèle de mise à niveau en Netherite"
 
 msgid "Applies to:"
-msgstr ""
+msgstr "S'applique à :"
 
 msgid "Diamond Armor"
-msgstr ""
+msgstr "Armure en diamant"
 
 msgid "Diamond Tools"
-msgstr ""
+msgstr "Outils en diamant"
 
 msgid "Ingredients:"
-msgstr ""
+msgstr "Ingrédients :"
 
 msgid "Nether Lava Source"
 msgstr "Source de Lave du Nether"
 
 msgid "Flowing Nether Lava"
-msgstr "Lave du Nether en mouvement "
+msgstr "Lave du Nether en mouvement"
 
 msgid "Premature Nether Wart (Stage 1)"
 msgstr "Verrue du Néant prématurée (étape 1)"

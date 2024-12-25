@@ -144,7 +144,7 @@ local dripleaf_tipped = table.merge(dripleaf, {
 	end,
 })
 
-dripleaf.mesecons = {effector = {
+--[[dripleaf.mesecons = {effector = {
 	action_on = function(pos, node)
 		node.param2 = 1
 		minetest.swap_node(pos, node)
@@ -154,7 +154,22 @@ dripleaf.mesecons = {effector = {
 		minetest.swap_node(pos, node)
 	end,
 	rules = mesecon.rules.alldirs,
-}}
+}}]]
+
+dripleaf._vlf_redstone = {
+		connects_to = function(node, dir)
+			return true
+		end,
+		update = function(pos, node)
+			if vlf_redstone.get_power(pos) ~= 0 then
+				node.param2 = 1
+				minetest.swap_node(pos, node)
+			else
+				node.param2 = 0
+				minetest.swap_node(pos, node)
+			end
+		end,
+	},
 
 minetest.register_node("vlf_lush_caves:dripleaf_big",dripleaf)
 minetest.register_node("vlf_lush_caves:dripleaf_big_tipped",dripleaf_tipped)

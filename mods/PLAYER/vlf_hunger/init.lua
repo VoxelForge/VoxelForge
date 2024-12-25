@@ -138,116 +138,144 @@ minetest.register_on_player_hpchange(function(player, hp_change)
 end)
 
 local food_tick_timers = {} -- one food_tick_timer per player, keys are the player-objects
-minetest.register_globalstep(function(dtime)
-	for _,player in pairs(minetest.get_connected_players()) do
+local peaceful_heal_timer = {}
+local peaceful_nourish_timer = {}
 
-		local food_tick_timer = food_tick_timers[player] and food_tick_timers[player] + dtime or 0
-		local player_name = player:get_player_name()
-		local food_level = vlf_hunger.get_hunger(player)
-		local food_saturation_level = vlf_hunger.get_saturation(player)
-		local player_health = vlf_damage.get_hp (player)
+vlf_player.register_globalstep(function(player, dtime)
+	local food_tick_timer = food_tick_timers[player] and food_tick_timers[player] + dtime or 0
+	local player_name = player:get_player_name()
+	local food_level = vlf_hunger.get_hunger(player)
+	local food_saturation_level = vlf_hunger.get_saturation(player)
+	local player_health = vlf_damage.get_hp (player)
+	local props = player:get_properties ()
 
-		if food_tick_timer > 4.0 then
-			food_tick_timer = 0
-
-			-- let hunger work always
-			if player_health > 0 then
-				--vlf_hunger.exhaust(player_name, vlf_hunger.EXHAUST_HUNGER) -- later for hunger status effect
-				vlf_hunger.update_exhaustion_hud(player)
+	if vlf_vars.difficulty == 0 then
+		-- Heal player by 1 heart every two seconds and grant
+		-- more food points every half a second.
+		if (peaceful_heal_timer[player] or 1.0) >= 1.0 then
+			if player_health > 0 and player_health < props.hp_max then
+				vlf_damage.heal_player (player, 1)
 			end
-
-			if food_level >= 18 then -- slow regeneration
-				if player_health > 0 and player_health < player:get_properties().hp_max then
-					vlf_damage.heal_player (player, 1)
-					vlf_hunger.exhaust(player_name, vlf_hunger.EXHAUST_REGEN)
-					vlf_hunger.update_exhaustion_hud(player)
-				end
-
-			elseif food_level == 0 then -- starvation
-				-- the amount of health at which a player will stop to get
-				-- harmed by starvation (10 for Easy, 1 for Normal, 0 for Hard)
-				local maximum_starvation = 1
-				-- TODO: implement Minecraft-like difficulty modes and the update maximumStarvation here
-				if player_health > maximum_starvation then
-					vlf_util.deal_damage(player, 1, {type = "starve"})
-				end
+			peaceful_heal_timer[player] = 0
+		else
+			peaceful_heal_timer[player]
+				= peaceful_heal_timer[player] + dtime
+		end
+		if (peaceful_nourish_timer[player] or 0.5) >= 0.5 then
+			local hunger = vlf_hunger.get_hunger (player)
+			if hunger < 20 then
+				vlf_hunger.set_hunger (player, hunger + 1)
 			end
+			peaceful_nourish_timer[player] = 0
+		else
+			peaceful_nourish_timer[player]
+				= peaceful_nourish_timer[player] + dtime
+		end
+	elseif food_tick_timer > 4.0 then
+		food_tick_timer = 0
 
-		elseif food_tick_timer > 0.5 and food_level == 20 and food_saturation_level > 0 then -- fast regeneration
-			if player_health > 0 and player_health < player:get_properties().hp_max then
-				food_tick_timer = 0
+		-- let hunger work always
+		if player_health > 0 then
+			--vlf_hunger.exhaust(player_name, vlf_hunger.EXHAUST_HUNGER) -- later for hunger status effect
+			vlf_hunger.update_exhaustion_hud(player)
+		end
+
+		if food_level >= 18 then -- slow regeneration
+			if player_health > 0 and player_health < props.hp_max then
 				vlf_damage.heal_player (player, 1)
 				vlf_hunger.exhaust(player_name, vlf_hunger.EXHAUST_REGEN)
 				vlf_hunger.update_exhaustion_hud(player)
 			end
+		elseif food_level == 0 then -- starvation
+			-- the amount of health at which a player will stop to get
+			-- harmed by starvation (10 for Easy, 1 for Normal, 0 for Hard)
+			local maximum_starvation
+			if vlf_vars.difficulty <= 1 then
+				maximum_starvation = 10
+			elseif vlf_vars.difficulty < 3 then
+				maximum_starvation = 1
+			else
+				maximum_starvation = 0
+			end
+			if player_health > maximum_starvation then
+				vlf_util.deal_damage (player, 1, {type = "starve"})
+			end
 		end
 
-		food_tick_timers[player] = food_tick_timer -- update food_tick_timer table
+	elseif food_tick_timer > 0.5 and food_level == 20 and food_saturation_level > 0 then -- fast regeneration
+		if player_health > 0 and player_health < props.hp_max then
+			food_tick_timer = 0
+			vlf_damage.heal_player (player, 1)
+			vlf_hunger.exhaust(player_name, vlf_hunger.EXHAUST_REGEN)
+			vlf_hunger.update_exhaustion_hud(player)
+		end
 	end
+
+	food_tick_timers[player] = food_tick_timer -- update food_tick_timer table
 end)
 
 -- JUMP EXHAUSTION
 vlf_player.register_globalstep(function(player, dtime)
-	local name = player:get_player_name()
-	local node_stand, node_stand_below, node_head, node_feet, node_head_top
+local name = player:get_player_name()
+local node_stand, node_stand_below, node_head, node_feet, node_head_top
 
-	-- Update jump status immediately since we need this info in real time.
-	-- WARNING: This section is HACKY as hell since it is all just based on heuristics.
+-- Update jump status immediately since we need this info in real time.
+-- WARNING: This section is HACKY as hell since it is all just based on heuristics.
 
-	if vlf_player.players[player].jump_cooldown > 0 then
-		vlf_player.players[player].jump_cooldown = vlf_player.players[player].jump_cooldown - dtime
+if vlf_player.players[player].jump_cooldown > 0 then
+	vlf_player.players[player].jump_cooldown = vlf_player.players[player].jump_cooldown - dtime
+end
+
+if player:get_player_control().jump and vlf_player.players[player].jump_cooldown <= 0 then
+
+	--pos = player:get_pos()
+
+	node_stand = vlf_player.players[player].nodes.stand
+	node_stand_below = vlf_player.players[player].nodes.stand_below
+	node_head = vlf_player.players[player].nodes.head
+	node_feet = vlf_player.players[player].nodes.feet
+	node_head_top = vlf_player.players[player].nodes.head_top
+	if not node_stand or not node_stand_below or not node_head or not node_feet then
+		return
+	end
+	if (not minetest.registered_nodes[node_stand]
+	or not minetest.registered_nodes[node_stand_below]
+	or not minetest.registered_nodes[node_head]
+	or not minetest.registered_nodes[node_feet]
+	or not minetest.registered_nodes[node_head_top]) then
+		return
 	end
 
-	if player:get_player_control().jump and vlf_player.players[player].jump_cooldown <= 0 then
+	-- Cause buggy exhaustion for jumping
 
-		--pos = player:get_pos()
+	--[[ Checklist we check to know the player *actually* jumped:
+		* Not on or in liquid
+		* Not on or at climbable
+		* On walkable
+		* Not on disable_jump
+	FIXME: This code is pretty hacky and it is possible to miss some jumps or detect false
+	jumps because of delays, rounding errors, etc.
+	What this code *really* needs is some kind of jumping “callback” which this engine lacks
+	as of 0.4.15.
+	]]
 
-		node_stand = vlf_player.players[player].nodes.stand
-		node_stand_below = vlf_player.players[player].nodes.stand_below
-		node_head = vlf_player.players[player].nodes.head
-		node_feet = vlf_player.players[player].nodes.feet
-		node_head_top = vlf_player.players[player].nodes.head_top
-		if not node_stand or not node_stand_below or not node_head or not node_feet then
-			return
-		end
-		if (not minetest.registered_nodes[node_stand]
-		or not minetest.registered_nodes[node_stand_below]
-		or not minetest.registered_nodes[node_head]
-		or not minetest.registered_nodes[node_feet]
-		or not minetest.registered_nodes[node_head_top]) then
-			return
-		end
+	if minetest.get_item_group(node_feet, "liquid") == 0 and
+			minetest.get_item_group(node_stand, "liquid") == 0 and
+			not minetest.registered_nodes[node_feet].climbable and
+			not minetest.registered_nodes[node_stand].climbable and
+			(minetest.registered_nodes[node_stand].walkable or minetest.registered_nodes[node_stand_below].walkable)
+			and minetest.get_item_group(node_stand, "disable_jump") == 0
+			and minetest.get_item_group(node_stand_below, "disable_jump") == 0 then
+	-- Cause exhaustion for jumping
+	if vlf_sprint.is_sprinting(name) then
+		vlf_hunger.exhaust(name, vlf_hunger.EXHAUST_SPRINT_JUMP)
+	else
+		vlf_hunger.exhaust(name, vlf_hunger.EXHAUST_JUMP)
+	end
 
-		-- Cause buggy exhaustion for jumping
-
-		--[[ Checklist we check to know the player *actually* jumped:
-			* Not on or in liquid
-			* Not on or at climbable
-			* On walkable
-			* Not on disable_jump
-		FIXME: This code is pretty hacky and it is possible to miss some jumps or detect false
-		jumps because of delays, rounding errors, etc.
-		What this code *really* needs is some kind of jumping “callback” which this engine lacks
-		as of 0.4.15.
-		]]
-
-		if minetest.get_item_group(node_feet, "liquid") == 0 and
-				minetest.get_item_group(node_stand, "liquid") == 0 and
-				not minetest.registered_nodes[node_feet].climbable and
-				not minetest.registered_nodes[node_stand].climbable and
-				(minetest.registered_nodes[node_stand].walkable or minetest.registered_nodes[node_stand_below].walkable)
-				and minetest.get_item_group(node_stand, "disable_jump") == 0
-				and minetest.get_item_group(node_stand_below, "disable_jump") == 0 then
-		-- Cause exhaustion for jumping
-		if vlf_sprint.is_sprinting(name) then
-			vlf_hunger.exhaust(name, vlf_hunger.EXHAUST_SPRINT_JUMP)
-		else
-			vlf_hunger.exhaust(name, vlf_hunger.EXHAUST_JUMP)
-		end
-
-		-- Reset cooldown timer
-			vlf_player.players[player].jump_cooldown = 0.45
-		end
+	-- Reset cooldown timer
+		vlf_player.players[player].jump_cooldown = 0.45
+	end
 	end
 end)
 

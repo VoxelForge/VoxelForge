@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_doc_basics x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_doc_basics x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,13 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Advanced usage"
-msgstr ""
+msgstr "Haladó használat"
 
 msgid "Advanced information which may be nice to know, but is not crucial to gameplay"
-msgstr ""
+msgstr "További információk, melyeket jó tudni, de nem életbevágó a játékmenethez"
 
 msgid "Creative Mode"
 msgstr "Kreatív Mód"
@@ -683,7 +683,7 @@ msgid "The selected item is also your wielded item."
 msgstr ""
 
 msgid "Tools"
-msgstr ""
+msgstr "Eszközök"
 
 msgid "Some items may serve as a tool when wielded. Any item which has some special use which can be directly used by its wielder is considered a tool."
 msgstr ""
@@ -728,7 +728,7 @@ msgid "There is a rule which sometimes makes attacks impossible: Players, animat
 msgstr ""
 
 msgid "Blocks"
-msgstr ""
+msgstr "Blokkok"
 
 msgid "The world is made entirely out of blocks (voxels, to be precise). Blocks can be added or removed with the correct tools."
 msgstr ""
@@ -941,7 +941,7 @@ msgid "Other actions, like walking, do not exaust you."
 msgstr ""
 
 msgid "Mobs"
-msgstr ""
+msgstr "Mobok"
 
 msgid "Mobs are the living beings in the world. This includes animals and monsters."
 msgstr ""
@@ -1090,7 +1090,7 @@ msgstr ""
 msgid "• Being attacked by a computer enemy"
 msgstr ""
 
-msgid "At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless mcl_keepInventory is enabled)"
+msgid "At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless vlf_keepInventory is enabled)"
 msgstr ""
 
 msgid "Some blocks reduce breath. While being with the head in a block which causes drowning, the breath points are reduced by 1 for every 2 seconds. When all breath is gone, the player starts to suffer drowning damage. Breath is quickly restored in any other block."

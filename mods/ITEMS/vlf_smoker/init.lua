@@ -46,7 +46,4 @@ minetest.register_craft({
 	}
 })
 
--- Add entry alias for the Help
-if minetest.get_modpath("doc") then
-	doc.add_entry_alias("nodes", "vlf_smoker:smoker", "nodes", "vlf_smoker:smoker_active")
-end
+doc.add_entry_alias("nodes", "vlf_smoker:smoker", "nodes", "vlf_smoker:smoker_active")

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_doc x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_doc x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Water can flow into this block and cause it to drop as an item."
 msgstr ""
@@ -98,10 +98,10 @@ msgid "It can be worn on the feet."
 msgstr ""
 
 msgid "Armor points: @1"
-msgstr ""
+msgstr "Pajzs pontok: @1"
 
 msgid "Armor durability: @1"
-msgstr ""
+msgstr "Pajzs tartósság: @1"
 
 msgid "This item cannot be renamed at an anvil."
 msgstr ""
@@ -194,53 +194,53 @@ msgid "This blocks drops the following when mined by shears: @1"
 msgstr ""
 
 msgid ", "
-msgstr ""
+msgstr ", "
 
 msgid "Painfully slow"
-msgstr ""
+msgstr "Irtó lassú"
 
 msgid "Very slow"
-msgstr ""
+msgstr "Nagyon lassú"
 
 msgid "Slow"
-msgstr ""
+msgstr "Lassú"
 
 msgid "Fast"
-msgstr ""
+msgstr "Gyors"
 
 msgid "Very fast"
-msgstr ""
+msgstr "Nagyon gyors"
 
 msgid "Extremely fast"
-msgstr ""
+msgstr "Irtó gyors"
 
 msgid "Instantaneous"
-msgstr ""
+msgstr "Villámgyors"
 
 msgid "@1 uses"
-msgstr ""
+msgstr "@1 használat"
 
 msgid "Unlimited uses"
-msgstr ""
+msgstr "Korlátlan használat"
 
 msgid "Mining speed: @1"
-msgstr ""
+msgstr "Bányász sebesség: @1"
 
 msgid "Mining durability: @1"
-msgstr ""
+msgstr "Bányász tartósság: @1"
 
 msgid "This tool is capable of mining."
-msgstr ""
+msgstr "Ezzel az eszközzel bányászhatsz."
 
 msgid "Block breaking strength: @1"
-msgstr ""
+msgstr "Blokktörő erő: @1"
 
 msgid "This is a melee weapon which deals damage by punching."
-msgstr ""
+msgstr "Ez egy közelharcban használható fegyver, mellyel szúrni lehet."
 
 msgid "Maximum damage: @1 HP"
 msgstr ""
 
 msgid "Full punch interval: @1 s"
-msgstr ""
+msgstr "Lendítési idő: @1 s"
 

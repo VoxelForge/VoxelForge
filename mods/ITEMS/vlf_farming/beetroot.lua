@@ -14,6 +14,7 @@ minetest.register_craftitem("vlf_farming:beetroot_seeds", {
 	groups = {craftitem = 1, compostability = 30},
 	inventory_image = "vlf_farming_beetroot_seeds.png",
 	wield_image = "vlf_farming_beetroot_seeds.png",
+	_vlf_places_plant = "vlf_farming:beetroot_1",
 	on_place = function(itemstack, placer, pointed_thing)
 		return vlf_farming:place_seed(itemstack, placer, pointed_thing, "vlf_farming:beetroot_0")
 	end
@@ -43,6 +44,7 @@ minetest.register_node("vlf_farming:beetroot_0", {
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	_vlf_blast_resistance = 0,
 	_on_bone_meal = on_bone_meal,
+	_vlf_baseitem = "vlf_farming:beetroot_seeds",
 })
 
 minetest.register_node("vlf_farming:beetroot_1", {
@@ -68,6 +70,7 @@ minetest.register_node("vlf_farming:beetroot_1", {
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	_vlf_blast_resistance = 0,
 	_on_bone_meal = on_bone_meal,
+	_vlf_baseitem = "vlf_farming:beetroot_seeds",
 })
 
 minetest.register_node("vlf_farming:beetroot_2", {
@@ -93,6 +96,7 @@ minetest.register_node("vlf_farming:beetroot_2", {
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	_vlf_blast_resistance = 0,
 	_on_bone_meal = on_bone_meal,
+	_vlf_baseitem = "vlf_farming:beetroot_seeds",
 })
 
 minetest.register_node("vlf_farming:beetroot", {
@@ -128,6 +132,7 @@ minetest.register_node("vlf_farming:beetroot", {
 	_vlf_fortune_drop = {
 		discrete_uniform_distribution = true,
 		items = {"vlf_farming:beetroot_seeds"},
+		drop_without_fortune = {"vlf_farming:beetroot_item"},
 		min_count = 1,
 		max_count = 3,
 		cap = 5,
@@ -145,6 +150,7 @@ minetest.register_node("vlf_farming:beetroot", {
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	_vlf_blast_resistance = 0,
 	_on_bone_meal = on_bone_meal,
+	_vlf_baseitem = "vlf_farming:beetroot_seeds",
 })
 
 minetest.register_craftitem("vlf_farming:beetroot_item", {

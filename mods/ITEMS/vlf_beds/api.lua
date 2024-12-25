@@ -140,7 +140,7 @@ function vlf_beds.register_bed(name, def)
 		paramtype2 = "facedir",
 		is_ground_content = false,
 		stack_max = 1,
-		groups = {handy=1, bed = 1, dig_by_piston=1, bouncy=66, fall_damage_add_percent=-50, deco_block = 1, flammable=-1},
+		groups = {handy=1, bed = 1, bed_bottom = 1, dig_by_piston=1, bouncy=66, fall_damage_add_percent=-50, deco_block = 1, unsticky = 1, flammable=-1, _vlf_partial=3},
 		_vlf_hardness = 0.2,
 		_vlf_blast_resistance = 1,
 		sounds = def.sounds or default_sounds,
@@ -203,9 +203,8 @@ function vlf_beds.register_bed(name, def)
 
 		on_destruct = kick_player_after_destruct,
 
-		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+		on_rightclick = function(pos, _, clicker)
 			vlf_beds.on_rightclick(pos, clicker, false)
-			return itemstack
 		end,
 
 		on_rotate = rotate,
@@ -221,7 +220,7 @@ function vlf_beds.register_bed(name, def)
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		groups = {handy = 1, flammable = -1, bed = 2, dig_by_piston=1, bouncy=66, fall_damage_add_percent=-50, not_in_creative_inventory = 1},
+		groups = {handy = 1, flammable = -1, bed = 2, bed_top = 1, dig_by_piston=1, bouncy=66, fall_damage_add_percent=-50, not_in_creative_inventory = 1, unsticky = 1, _vlf_partial = 3},
 		_vlf_hardness = 0.2,
 		_vlf_blast_resistance = 1,
 		sounds = def.sounds or default_sounds,
@@ -229,13 +228,13 @@ function vlf_beds.register_bed(name, def)
 		selection_box = common_box,
 		collision_box = common_box,
 
-		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+		on_rightclick = function(pos, _, clicker)
 			vlf_beds.on_rightclick(pos, clicker, true)
-			return itemstack
 		end,
 
 		on_rotate = rotate,
 		after_destruct = destruct_bed,
+		_vlf_baseitem = name .. "_bottom",
 	})
 
 	minetest.register_alias(name, name .. "_bottom")

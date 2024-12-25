@@ -254,7 +254,7 @@ minetest.register_abm({
 	interval = 17,
 	chance = 5,
 	catch_up = false,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos, node)
 		-- Check if coral's alive
 		local coral_state = minetest.get_item_group(node.name, "coral")
 		if coral_state == 1 then
@@ -281,7 +281,7 @@ minetest.register_abm({
 	interval = 17,
 	chance = 5,
 	catch_up = false,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos, node)
 		-- Check if coral's alive
 		local coral_state = minetest.get_item_group(node.name, "coral")
 		if coral_state == 1 then

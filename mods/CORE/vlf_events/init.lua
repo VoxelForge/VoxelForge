@@ -3,8 +3,8 @@ vlf_events.registered_events = {}
 local disabled_events = minetest.settings:get("vlf_disabled_events")
 if disabled_events then	disabled_events = disabled_events:split(",")
 else disabled_events = {} end
-local DBG = minetest.settings:get_bool("vlf_logging_event_api",false)
 local active_events = {}
+vlf_events.active_events = active_events
 
 local event_tpl = {
 	stage = 0,
@@ -12,20 +12,13 @@ local event_tpl = {
 	percent = 100,
 	bars = {},
 	completed = false,
-	cond_start = function(event) end, --return table of positions
-	on_step = function(event) end,
-	on_start = function(event) end,
-	on_stage_begin = function(event) end,
-	cond_progress = function(event) end, --return next stage
-	cond_complete = function(event) end, --return success
+	cond_start = function() end, --return table of positions
+	on_step = function() end,
+	on_start = function() end,
+	on_stage_begin = function() end,
+	cond_progress = function() end, --return next stage
+	cond_complete = function() end, --return success
 }
-
-local function vlf_log(m,l)
-	if DBG then
-		if not l then l = "action" end
-		minetest.log(l,"[vlf_events] "..m)
-	end
-end
 
 function vlf_events.register_event(name,def)
 	if table.indexof(disabled_events,name) ~= -1 then return end
@@ -35,16 +28,13 @@ end
 
 local function addbars(self)
 	if not self.enable_bossbar then return end
-	for _,player in pairs(minetest.get_connected_players()) do
-		if vector.distance(self.pos,player:get_pos()) < 64 then
-			local bar = vlf_bossbars.add_bar(player, {color = "red", text = self.readable_name .. ": Wave "..self.stage.." / "..self.max_stage, percentage = self.percent }, true,1)
-			table.insert(self.bars,bar)
-		end
+	for player in vlf_util.connected_players(self.pos, 63) do
+		local bar = vlf_bossbars.add_bar(player, {color = "red", text = self.readable_name .. ": Wave "..self.stage.." / "..self.max_stage, percentage = self.percent }, true,1)
+		table.insert(self.bars,bar)
 	end
 end
 
 local function start_event(p,e)
-	vlf_log("[vlf_events] Event started: "..e.readable_name.." at "..minetest.pos_to_string(vector.round(p.pos)))
 	local idx = #active_events + 1
 	active_events[idx] = table.copy(e)
 	setmetatable(active_events[idx],{__index = event_tpl})
@@ -60,7 +50,6 @@ local function start_event(p,e)
 end
 
 local function finish_event(self,idx)
-	vlf_log("[vlf_events] Finished: "..self.readable_name.." at "..minetest.pos_to_string(vector.round(self.pos)))
 	if self.on_complete then self:on_complete() end
 	for _,b in pairs(self.bars) do
 		vlf_bossbars.remove_bar(b)
@@ -83,7 +72,6 @@ function check_events(dtime)
 			if p == true then
 				ae.stage = ae.stage + 1
 				if ae:on_stage_begin() == true then
-					vlf_log("[vlf_events] Event "..ae.readable_name.." at "..minetest.pos_to_string(vector.round(ae.pos)).." failed at stage_begin of stage "..ae.stage )
 					active_events[idx] = nil
 				end
 			elseif tonumber(p) then
@@ -111,20 +99,20 @@ function check_events(dtime)
 				end
 				if start then
 					start_event(p,e)
-				elseif DBG then
-					vlf_log("[vlf_events] Event "..e.readable_name.." already active at "..minetest.pos_to_string(vector.round(p.pos)))
 				end
 			end
 		end
 	end
 	for idx,ae in pairs(active_events) do
 		local player_near = false
-		for _,pl in pairs(minetest.get_connected_players()) do
-			if ae.pos and vector.distance(pl:get_pos(),ae.pos) < 64 then player_near = true end
-		end
-		if ae.pos and not player_near then
-			vlf_log("[vlf_events] Event "..ae.readable_name.." at "..minetest.pos_to_string(vector.round(ae.pos)).." aborted - no players near." )
-			active_events[idx] = nil
+		if ae.pos then
+			for _ in vlf_util.connected_players(ae.pos, 63) do
+				player_near = true
+				break
+			end
+			if not player_near then
+				active_events[idx] = nil
+			end
 		end
 	end
 end
@@ -133,7 +121,7 @@ minetest.register_globalstep(check_events)
 
 vlf_info.register_debug_field("Active Events",{
 	level = 4,
-	func = function(pl,pos)
+	func = function()
 		return tostring(#active_events)
 	end
 })

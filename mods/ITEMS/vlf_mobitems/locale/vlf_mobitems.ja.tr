@@ -39,6 +39,8 @@ String=糸
 Strings are used in crafting.=糸はクラフトに使えます。
 Blaze Rod=ブレイズロッド
 This is a crafting component dropped from dead blazes.=これは死んだブレイズから落ちた、クラフトの構成材です。
+Breeze Rod=
+This is a crafting item dropped from breezes.=
 Blaze Powder=ブレイズパウダー
 This item is mainly used for crafting.=このアイテムは主にクラフトに使われます。
 Magma Cream=マグマクリーム
@@ -80,6 +82,8 @@ The Nautilus Shell is used to craft a conduit. They can be obtained by fishing o
 Heart of the Sea=海洋の心
 The Heart of the Sea is used to craft a conduit. They can be obtained by finding them in a buried treasure chest.=海洋の心は、コンジットをクラフトするのに使えます。 それは埋められた宝箱の中から見つけることで入手できます。
 Place it on a horse to put on the horse armor. Donkeys and mules can't wear horse armor.=ウマに被せると、馬鎧を着せることができます。ロバとラバには、馬鎧を着せられません。
+Leather Horse Armor=
+Leather horse armor can be worn by horses to increase their protection from harm a little.=
 Iron Horse Armor=鉄の馬鎧
 Iron horse armor can be worn by horses to increase their protection from harm a bit.=鉄の馬鎧は、ウマに装着することで、危害から守る力を少し高めることができます。
 Golden Horse Armor=金の馬鎧

@@ -6,8 +6,8 @@ vlf_deepslate.translator = minetest.get_translator(modname)
 local S = vlf_deepslate.translator
 
 function vlf_deepslate.register_deepslate_ore(item, desc, extra, basename)
-	local nodename = "vlf_deepslate:deepslate_".. item .. "_ore"
-	local basename = basename or "vlf_core:".. item .. "_ore"
+	local nodename = "vlf_deepslate:deepslate_with_"..item
+	local basename = basename or ("vlf_core:stone_with_" .. item)
 
 	local def = table.copy(minetest.registered_nodes[basename])
 	def._doc_items_longdesc = S("@1 is a variant of @2 that can generate in deepslate and tuff blobs.", desc, def.description)
@@ -17,21 +17,6 @@ function vlf_deepslate.register_deepslate_ore(item, desc, extra, basename)
 	table.update(def,extra or {})
 
 	minetest.register_node(nodename, def)
-
-	local result = minetest.get_craft_result({
-		method = "cooking",
-		width = 1,
-		items = {basename},
-	})
-
-	if not result.item:is_empty() then
-		minetest.register_craft({
-			type = "cooking",
-			output = result.item:to_string(),
-			recipe = nodename,
-			cooktime = result.time,
-		})
-	end
 end
 
 function vlf_deepslate.register_variants(name, defs)

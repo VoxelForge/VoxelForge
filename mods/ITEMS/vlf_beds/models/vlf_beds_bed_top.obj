@@ -1,5 +1,5 @@
 # Made in Blockbench 3.6.6
-mtllib mcl_beds_bed_top.mtl
+mtllib vlf_beds_bed_top.mtl
 o cube
 v -0.5000000000000001 0.0625 -0.49999999999999994
 v -0.49999999999999994 0.0625 0.5000000000000001

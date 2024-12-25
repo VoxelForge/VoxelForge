@@ -81,7 +81,7 @@ local function brewable(inv)
 	for i=1,stand_size do
 
 		bottle = inv:get_stack("stand", i)
-		alchemy = vlf_entity_effects.get_alchemy(ingredient, bottle)
+		alchemy = vlf_potions.get_alchemy(ingredient, bottle)
 
 		if alchemy then
 			stands[i] = alchemy
@@ -91,7 +91,7 @@ local function brewable(inv)
 		end
 
 	end
-	-- if any stand holds a new effect, return the list of new effects
+	-- if any stand holds a new potion, return the list of new potions
 	for i=1,#was_alchemy do
 		if was_alchemy[i] then return stands end
 	end
@@ -114,6 +114,7 @@ local function take_fuel (pos, meta, inv)
 	else
 		inv:set_stack("fuel", 1, "")
 	end
+	vlf_redstone.update_comparators(pos)
 	return BURN_TIME -- New value of fuel_timer_new
 	else -- no fuel available
 	return 0
@@ -176,11 +177,12 @@ local function brewing_stand_timer(pos, elapsed)
 				minetest.sound_play("vlf_brewing_complete",
 						{pos=pos, gain=0.4, max_hear_range=6}, true)
 				inv:set_stack ("stand", i, brew_output[i])
-				minetest.sound_play("vlf_entity_effects_bottle_pour",
+				minetest.sound_play("vlf_potions_bottle_pour",
 						{pos=pos, gain=0.6, max_hear_range=6}, true)
 			end
 			end
 			stand_timer = 0
+			vlf_redstone.update_comparators(pos)
 		end
 		end
 	end
@@ -216,7 +218,7 @@ local doc_string =
 	S("To use a brewing stand, rightclick it.").."\n"..
 	S("To brew, you need blaze powder as fuel, a brewing material and at least 1 glass bottle filled with a liquid.").."\n"..
 	S("Place the blaze powder in the left slot, the brewing material in the middle slot and 1-3 bottles in the remaining slots.").."\n"..
-	S("When you have found a good combination, the brewing will commence automatically and steam starts to appear, using up the fuel and brewing material. The effects will soon be ready.").."\n"..
+	S("When you have found a good combination, the brewing will commence automatically and steam starts to appear, using up the fuel and brewing material. The potions will soon be ready.").."\n"..
 	S("Different combinations of brewing materials and liquids will give different results. Try to experiment!")
 
 local tiles = {
@@ -235,7 +237,7 @@ local function sort_stack(stack)
 	if minetest.get_item_group(stack:get_name(), "brewing_ingredient" ) > 0 then
 		return "input"
 	end
-	for _, g in pairs({"effect", "splash_effect", "ling_effect",
+	for _, g in pairs({"potion", "splash_potion", "ling_potion",
 			   "empty_bottle", "water_bottle"}) do
 		if minetest.get_item_group(stack:get_name(), g ) > 0 then
 			return "stand"
@@ -284,6 +286,7 @@ local function start_stand_if_not_empty(pos)
 	end
 	minetest.swap_node(pos, {name = "vlf_brewing:stand_"..str})
 	minetest.get_node_timer(pos):start(1.0)
+	vlf_redstone.update_comparators(pos)
 end
 
 local function on_put(pos, listname, _, stack, _)
@@ -310,6 +313,7 @@ local function on_put(pos, listname, _, stack, _)
 		return
 	end
 	minetest.get_node_timer (pos):start (1.0)
+	vlf_redstone.update_comparators(pos)
 end
 
 local function allow_move(pos, from_list, from_index, to_list, _, count, _)
@@ -379,12 +383,14 @@ end
 local tpl_brewing_stand = {
 	description = S("Brewing Stand"),
 	_doc_items_create_entry = false,
-	_tt_help = S("Brew Effects"),
-	groups = {pickaxey = 1, container = 1, not_in_creative_inventory = 1, not_in_craft_guide = 1, brewing_stand = 1},
+	_tt_help = S("Brew Potions"),
+	groups = {pickaxey = 1, container = 1, not_in_creative_inventory = 1, not_in_craft_guide = 1,
+			brewing_stand = 1, _vlf_partial = 2},
 	tiles = tiles,
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "clip" or true,
 	drop = "vlf_brewing:stand",
 	paramtype = "light",
+	light_source = 1,
 	sunlight_propagates = true,
 	is_ground_content = false,
 	paramtype2 = "facedir",
@@ -423,10 +429,11 @@ local tpl_brewing_stand = {
 }
 
 minetest.register_node("vlf_brewing:stand_000", table.merge(tpl_brewing_stand, {
-	_doc_items_longdesc = S("The stand allows you to brew effects!"),
+	_doc_items_longdesc = S("The stand allows you to brew potions!"),
 	_doc_items_create_entry = true,
 	_doc_items_usagehelp = doc_string,
-	groups = {pickaxey = 1, brewitem = 1, container = 1, brewing_stand = 1},
+	groups = {pickaxey = 1, brewitem = 1, container = 1, brewing_stand = 1,
+			_vlf_partial = 2,},
 	node_box = {
 		type = "fixed",
 		fixed = {

@@ -53,7 +53,7 @@ awards.register_trigger("death", {
 	progress = S("@1/@2 deaths"),
 	auto_description = { S("Die once of @1"), S("Die @1 times of @2") },
 	auto_description_total = { S("Die @1 times."), S("Mine @1 times") },
-	get_key = function(self, def)
+	get_key = function(_, def)
 		return def.trigger.reason
 	end,
 })
@@ -72,7 +72,7 @@ awards.register_trigger("dig", {
 	progress = S("@1/@2 dug"),
 	auto_description = { S("Mine: @1"), S("Mine: @1×@2") },
 	auto_description_total = { S("Mine @1 block."), S("Mine @1 blocks.") },
-	get_key = function(self, def)
+	get_key = function(_, def)
 		return minetest.registered_aliases[def.trigger.node] or def.trigger.node
 	end,
 	key_is_item = true,
@@ -93,7 +93,7 @@ awards.register_trigger("place", {
 	progress = S("@1/@2 placed"),
 	auto_description = { S("Place: @1"), S("Place: @1×@2") },
 	auto_description_total = { S("Place @1 block."), S("Place @1 blocks.") },
-	get_key = function(self, def)
+	get_key = function(_, def)
 		return minetest.registered_aliases[def.trigger.node] or def.trigger.node
 	end,
 	key_is_item = true,
@@ -114,12 +114,12 @@ awards.register_trigger("craft", {
 	progress = S("@1/@2 crafted"),
 	auto_description = { S("Craft: @1"), S("Craft: @1×@2") },
 	auto_description_total = { S("Craft @1 item"), S("Craft @1 items.") },
-	get_key = function(self, def)
+	get_key = function(_, def)
 		return minetest.registered_aliases[def.trigger.item] or def.trigger.item
 	end,
 	key_is_item = true,
 })
-minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv)
+minetest.register_on_craft(function(itemstack, player)
 	if not player_ok(player) or itemstack:is_empty() then
 		return
 	end
@@ -135,7 +135,7 @@ awards.register_trigger("eat", {
 	progress = S("@1/@2 eaten"),
 	auto_description = { S("Eat @1"), S("Eat @1×@2") },
 	auto_description_total = { S("Eat @1 item"), S("Eat @1 items.") },
-	get_key = function(self, def)
+	get_key = function(_, def)
 		return minetest.registered_aliases[def.trigger.item] or def.trigger.item
 	end,
 	key_is_item = true,

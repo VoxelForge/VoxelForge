@@ -243,7 +243,7 @@ minetest.register_chatcommand("actionbar", {
 
 minetest.register_chatcommand("title_timeout", {
 	privs = { debug = true },
-	func = function(name, param)
+	func = function(name)
 		local player = minetest.get_player_by_name(name)
 		if player then
 			vlf_title.params_set(player, { stay = 600 })

@@ -21,7 +21,7 @@ end
 
 local on_rotate
 if minetest.get_modpath("screwdriver") then
-	on_rotate = function(pos, node, user, mode, param2)
+	on_rotate = function(pos, node, _, mode, _)
 		-- Flip trapdoor vertically
 		if mode == screwdriver.ROTATE_AXIS then
 			local minor = node.param2
@@ -53,13 +53,12 @@ function vlf_doors:register_trapdoor(name, def)
 	if groups == nil then
 		groups = {}
 	end
-	groups.mesecon_ignore_opaque_dig = 1
 
 	if not def.sound_open then
-		def.sound_open = "vlf_doors_trapdoor_open"
+		def.sound_open = "doors_door_open"
 	end
 	if not def.sound_close then
-		def.sound_close = "vlf_doors_trapdoor_close"
+		def.sound_close = "doors_door_close"
 	end
 
 	local function punch(pos)
@@ -79,7 +78,7 @@ function vlf_doors:register_trapdoor(name, def)
 
 	local on_rightclick
 	if not def.only_redstone_can_open then
-		on_rightclick = function(pos, node, clicker)
+		on_rightclick = function(pos, _, _)
 			punch(pos)
 		end
 	end
@@ -138,17 +137,21 @@ function vlf_doors:register_trapdoor(name, def)
 		groups = groups_closed,
 		_vlf_hardness = def._vlf_hardness,
 		_vlf_blast_resistance = def._vlf_blast_resistance,
+		_vlf_burntime = def._vlf_burntime,
 		sounds = def.sounds,
 		node_box = {
 			type = "fixed",
 			fixed = {
 			{-8/16, -8/16, -8/16, 8/16, -5/16, 8/16},},
 		},
-		mesecons = {effector = {
-			action_on = (function(pos, node)
-				punch(pos)
-			end),
-		}},
+		_vlf_redstone = {
+			update = function(pos, node)
+				if vlf_redstone.get_power(pos) ~= 0 then
+					punch(pos)
+				end
+			end,
+			init = function() end,
+		},
 		on_place = function(itemstack, placer, pointed_thing)
 
 			if not placer or not placer:is_player() then
@@ -187,6 +190,7 @@ function vlf_doors:register_trapdoor(name, def)
 			end
 			return true
 		end,
+		_pathfinding_class = "TRAPDOOR",
 	})
 
 	-- Open trapdoor
@@ -219,6 +223,7 @@ function vlf_doors:register_trapdoor(name, def)
 		groups = groups_open,
 		_vlf_hardness = def._vlf_hardness,
 		_vlf_blast_resistance = def._vlf_blast_resistance,
+		_vlf_baseitem = name,
 		sounds = def.sounds,
 		drop = name,
 		node_box = {
@@ -226,11 +231,14 @@ function vlf_doors:register_trapdoor(name, def)
 			fixed = {-0.5, -0.5, 5/16, 0.5, 0.5, 0.5}
 		},
 		on_rightclick = on_rightclick,
-		mesecons = {effector = {
-			action_off = (function(pos, node)
-				punch(pos)
-			end),
-		}},
+		_vlf_redstone = {
+			update = function(pos, node)
+				if vlf_redstone.get_power(pos) == 0 then
+					punch(pos)
+				end
+			end,
+			init = function() end,
+		},
 		on_rotate = on_rotate,
 		_on_wind_charge_hit = function(pos)
 			local node = minetest.get_node(pos)
@@ -239,6 +247,7 @@ function vlf_doors:register_trapdoor(name, def)
 			end
 			return true
 		end,
+		_pathfinding_class = "TRAPDOOR",
 	})
 
 	if minetest.get_modpath("doc") then

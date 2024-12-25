@@ -24,9 +24,3 @@ Open a window providing help entries about Minetest and more=Ouvrir une fenêtre
 Help=Aide
 Allows you to reveal all hidden help entries with /help_reveal=Vous permet de découvrir toutes les pages d'aide cachées avec /help_reveal
 Reveal all hidden help entries to you=Vous révèle toutes les pages d'aide cachées
-
-
-##### not used anymore #####
-
-New help entry unlocked: @1 > @2=Nouvelles pages d'aide débloquées : @1 > @2
-Collection of help texts=Collection des textes d'aide

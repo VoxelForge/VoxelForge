@@ -20,6 +20,11 @@ Parameters:
 		amount_max = 10,	-- Maximum size of item stack. Must not be larger than item definition's stack_max or 6553. Optional (default: 1)
 		wear_min = 1,		-- Minimum wear value. Must be at least 1. Optional (default: no wear)
 		wear_max = 1,		-- Maxiumum wear value. Must be at least 1. Optional (default: no wear)
+		-- OR
+		nothing = true,		-- simulate a failure roll with the given weight
+
+		-- optional
+		func = function(stack, pr) end	-- modify stack, e.g. enchant item
 		},
 		{ -- more tables like above, one table per item stack }
 	}
@@ -30,7 +35,7 @@ How weight works: The probability of a single item stack being selected is weigh
 total_weight being the sum of all weight values in the items table. If you leave out the weight for
 all items, the likelihood of each item being selected is equal.
 
-Returns: Table of itemstrings
+Returns: Table of ItemStacks
 ]]
 function vlf_loot.get_loot(loot_definitions, pr)
 	local items = {}
@@ -44,7 +49,7 @@ function vlf_loot.get_loot(loot_definitions, pr)
 	--local stacks_max = loot_definitions.stacks_max or 1
 
 	local stacks = pr:next(loot_definitions.stacks_min, loot_definitions.stacks_max)
-	for s=1, stacks do
+	for _ = 1, stacks do
 		local r = pr:next(1, total_weight)
 
 		local accumulated_weight = 0
@@ -79,7 +84,7 @@ function vlf_loot.get_loot(loot_definitions, pr)
 				end
 
 				table.insert(items, stack)
-			else
+			elseif not item.nothing then
 				minetest.log("error", "[vlf_loot] INTERNAL ERROR! Failed to select random loot item!")
 			end
 		end
@@ -95,7 +100,7 @@ Useful for filling chests.
 * multi_loot_definitions: Table of loot_definitions (see vlf_loot.get_loot)
 * pr: PseudoRandom object used for the randomness
 
-Returns: Table of itemstrings ]]
+Returns: Table of ItemStacks ]]
 function vlf_loot.get_multi_loot(multi_loot_definitions, pr)
 	local items = {}
 	for m=1, #multi_loot_definitions do
@@ -125,8 +130,8 @@ local function get_random_slots(max_slot, pr)
 	return slots_out
 end
 
-
---[[Puts items in an inventory list into random slots.
+--[[
+Puts items in an inventory list into random slots.
 * inv: InvRef
 * listname: Inventory list name
 * items: table of items to add

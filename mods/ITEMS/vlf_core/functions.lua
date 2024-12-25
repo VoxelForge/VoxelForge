@@ -8,7 +8,7 @@ minetest.register_abm({
 	interval = 1,
 	chance = 1,
 	min_y = vlf_vars.mg_end_min,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos, node)
 		local water = minetest.find_nodes_in_area({x=pos.x-1, y=pos.y-1, z=pos.z-1}, {x=pos.x+1, y=pos.y+1, z=pos.z+1}, "group:water")
 
 		local lavatype = minetest.registered_nodes[node.name].liquidtype
@@ -19,21 +19,21 @@ minetest.register_abm({
 			-- Lava on top of water: Water turns into stone
 			if water[w].y < pos.y and water[w].x == pos.x and water[w].z == pos.z then
 				minetest.set_node(water[w], {name="vlf_core:stone"})
-				minetest.sound_play("fire_extinguish_flame", {pos = water[w], gain = 0.25, max_hear_distance = 16}, true)
+				minetest.sound_play("fire_extinguish_flame", {pos = water[w], gain = 0.2, max_hear_distance = 16}, true)
 			-- Flowing lava vs water on same level: Lava turns into cobblestone
 			elseif lavatype == "flowing" and water[w].y == pos.y and (water[w].x == pos.x or water[w].z == pos.z) then
 				minetest.set_node(pos, {name="vlf_core:cobble"})
-				minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
+				minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.2, max_hear_distance = 16}, true)
 			-- Lava source vs flowing water above or horizontally neighbored: Lava turns into obsidian
 			elseif lavatype == "source" and
 					((water[w].y > pos.y and water[w].x == pos.x and water[w].z == pos.z) or
 					(water[w].y == pos.y and (water[w].x == pos.x or water[w].z == pos.z))) then
 				minetest.set_node(pos, {name="vlf_core:obsidian"})
-				minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
+				minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.2, max_hear_distance = 16}, true)
 			-- water above flowing lava: Lava turns into cobblestone
 			elseif lavatype == "flowing" and water[w].y > pos.y and water[w].x == pos.x and water[w].z == pos.z then
 				minetest.set_node(pos, {name="vlf_core:cobble"})
-				minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
+				minetest.sound_play("fire_extinguish_flame", {pos = pos, gain = 0.2, max_hear_distance = 16}, true)
 			end
 		end
 	end,
@@ -44,7 +44,7 @@ minetest.register_abm({
 --
 
 -- Functions
-function vlf_core.grow_cactus(pos, node)
+function vlf_core.grow_cactus(pos, _)
 	pos.y = pos.y-1
 	local name = minetest.get_node(pos).name
 	if minetest.get_item_group(name, "sand") ~= 0 then
@@ -62,11 +62,14 @@ function vlf_core.grow_cactus(pos, node)
 	end
 end
 
-function vlf_core.grow_reeds(pos, node)
+function vlf_core.grow_reeds(pos, _)
 	pos.y = pos.y-1
 	local name = minetest.get_node(pos).name
 	if minetest.get_item_group(name, "soil_sugarcane") ~= 0 then
 		if minetest.find_node_near(pos, 1, {"group:water"}) == nil and minetest.find_node_near(pos, 1, {"group:frosted_ice"}) == nil then
+			minetest.remove_node(vector.offset(pos,0,1,0))
+			minetest.add_item(vector.offset(pos,0,1,0), "vlf_core:reeds")
+			minetest.check_for_falling(vector.offset(pos,0,2,0))
 			return
 		end
 		pos.y = pos.y+1
@@ -146,7 +149,7 @@ minetest.register_abm({
 	neighbors = {"group:water"},
 	interval = 1,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos)
 		liquid_flow_action(pos, "water", function(pos)
 			drop_attached_node(pos)
 			minetest.dig_node(pos)
@@ -161,7 +164,7 @@ minetest.register_abm({
 	neighbors = {"group:lava"},
 	interval = 1,
 	chance = 5,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos)
 		liquid_flow_action(pos, "lava", function(pos)
 			minetest.remove_node(pos)
 			minetest.sound_play("builtin_item_lava", {pos = pos, gain = 0.25, max_hear_distance = 16}, true)
@@ -187,8 +190,8 @@ minetest.register_abm({
 	nodenames = {"vlf_core:cactus"},
 	interval = 1,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
-		for _, object in pairs(minetest.get_objects_inside_radius(pos, 1.1)) do
+	action = function(pos)
+		for object in minetest.objects_inside_radius(pos, 1.1) do
 			local entity = object:get_luaentity()
 			local dst = vector.distance(object:get_pos(), pos)
 			if entity and entity.name == "__builtin:item" and dst <= 0.9 then
@@ -205,7 +208,7 @@ minetest.register_abm({
 				while minetest.get_node(vector.new(pos.x, posy, pos.z)).name == "vlf_core:cactus" do
 					local pos = vector.new(pos.x, posy, pos.z)
 					minetest.remove_node(pos)
-					minetest.add_item(vector.offset(pos, math.random(-0.5, 0.5), 0, math.random(-0.5, 0.5)), "vlf_core:cactus")
+					minetest.add_item(vector.offset(pos, vlf_util.float_random(-0.5, 0.5), 0, vlf_util.float_random(-0.5, 0.5)), "vlf_core:cactus")
 					posy = posy + 1
 				end
 				break
@@ -245,25 +248,6 @@ end
 -- Return appropriate grass block node for pos
 function vlf_core.get_grass_block_type(pos)
 	return {name = "vlf_core:dirt_with_grass", param2 = vlf_core.get_grass_palette_index(pos)}
-end
-
-function vlf_core.get_water_palette_index(pos)
-	local biome_data = minetest.get_biome_data(pos)
-	local index = 0
-	if biome_data then
-		local biome = biome_data.biome
-		local biome_name = minetest.get_biome_name(biome)
-		local reg_biome = minetest.registered_biomes[biome_name]
-		if reg_biome then
-			index = reg_biome._vlf_palette_index
-		end
-	end
-	return index
-end
-
--- Return appropriate water block node for pos
-function vlf_core.get_water_block_type(pos)
-	return {name = minetest.get_node(pos).name, param2 = vlf_core.get_grass_palette_index(pos)}
 end
 
 ------------------------------
@@ -310,7 +294,7 @@ minetest.register_abm({
 			if minetest.get_item_group(n2.name, "grass_block") ~= 0 then
 				n2 = vlf_core.get_grass_block_type(pos)
 			end
-			minetest.set_node(pos, {name=n2.name})
+			minetest.swap_node(pos, {name=n2.name})
 
 			-- If this was mycelium, uproot plant above
 			if n2.name == "vlf_core:mycelium" then
@@ -330,18 +314,18 @@ minetest.register_abm({
 	interval = 8,
 	chance = 50,
 	catch_up = false,
-	action = function(pos, node)
+	action = function(pos, _)
 		local above = {x = pos.x, y = pos.y + 1, z = pos.z}
 		local name = minetest.get_node(above).name
 		-- Kill grass/mycelium when below opaque block or liquid
 		if name ~= "ignore" and (minetest.get_item_group(name, "opaque") == 1 or minetest.get_item_group(name, "liquid") ~= 0) then
-			minetest.set_node(pos, {name = "vlf_core:dirt"})
+			minetest.swap_node(pos, {name = "vlf_core:dirt"})
 		end
 	end
 })
 
 -- Turn Grass Path and similar nodes to Dirt if a solid node is placed above it
-minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack, pointed_thing)
+minetest.register_on_placenode(function(pos, newnode)
 	if minetest.get_item_group(newnode.name, "solid") ~= 0 or
 			minetest.get_item_group(newnode.name, "dirtifier") ~= 0 then
 		local below = {x=pos.x, y=pos.y-1, z=pos.z}
@@ -358,12 +342,12 @@ minetest.register_abm({
 	neighbors = {"group:solid"},
 	interval = 8,
 	chance = 50,
-	action = function(pos, node)
+	action = function(pos)
 		local above = {x = pos.x, y = pos.y + 1, z = pos.z}
 		local name = minetest.get_node(above).name
 		local nodedef = minetest.registered_nodes[name]
 		if name ~= "ignore" and nodedef and (nodedef.groups and nodedef.groups.solid) then
-			minetest.set_node(pos, {name = "vlf_core:dirt"})
+			minetest.swap_node(pos, {name = "vlf_core:dirt"})
 		end
 	end,
 })
@@ -395,8 +379,7 @@ minetest.register_lbm({
 			end
 		end
 		node.param2 = SAVANNA_INDEX
-		minetest.set_node(pos, node)
-		return
+		minetest.swap_node(pos, node)
 	end,
 })
 
@@ -408,10 +391,10 @@ minetest.register_abm({
 	nodenames = {"vlf_core:vine"},
 	interval = 47,
 	chance = 4,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos, node)
 
 		-- Add vines below pos (if empty)
-		local function spread_down(origin, target, dir, node)
+		local function spread_down(_, target, _, node)
 			if math.random(1, 2) == 1 then
 				if minetest.get_node(target).name == "air" then
 					minetest.add_node(target, {name = "vlf_core:vine", param2 = node.param2})
@@ -420,7 +403,7 @@ minetest.register_abm({
 		end
 
 		-- Add vines above pos if it is backed up
-		local function spread_up(origin, target, dir, node)
+		local function spread_up(origin, target, _, node)
 			local vines_in_area = minetest.find_nodes_in_area({x=origin.x-4, y=origin.y-1, z=origin.z-4}, {x=origin.x+4, y=origin.y+1, z=origin.z+4}, "vlf_core:vine")
 			-- Less then 4 vines blocks around the ticked vines block (remember the ticked block is counted by above function as well)
 			if #vines_in_area < 5 then
@@ -650,7 +633,7 @@ end
 
 -- A snow cover node is a node which turns a snowed dirtlike --
 -- node into its snowed form while it is placed above.
--- vlf's snow cover nodes are Top Snow (vlf_core:snow) and Snow (vlf_core:snowblock).
+-- MCL2's snow cover nodes are Top Snow (vlf_core:snow) and Snow (vlf_core:snowblock).
 
 -- Always add the following functions to snow cover nodes:
 
@@ -679,32 +662,30 @@ end
 
 
 -- Obsidian crying
-
 local crobby_particle = {
-	velocity = vector.new(0,0,0),
-	size = math.random(1.3,2.5),
+	velocity = vector.zero(),
+	acceleration = vector.zero(),
 	texture = "vlf_core_crying_obsidian_tear.png",
+	collisiondetection = false,
 	collision_removal = false,
 }
-
 
 minetest.register_abm({
 	label = "Obsidian cries",
 	nodenames = {"vlf_core:crying_obsidian"},
 	interval = 5,
 	chance = 10,
-	action = function(pos, node)
-		minetest.after(math.random(0.1,1.5),function()
+	action = function(pos)
+		minetest.after(0.1 + math.random() * 1.4, function()
 			local pt = table.copy(crobby_particle)
-			pt.acceleration = vector.new(0,0,0)
-			pt.collisiondetection = false
-			pt.expirationtime = math.random(0.5,1.5)
-			pt.pos = vector.offset(pos,math.random(-0.5,0.5),-0.51,math.random(-0.5,0.5))
+			pt.size = 1.3 + math.random() * 1.2
+			pt.expirationtime = 0.5 + math.random()
+			pt.pos = vector.offset(pos, math.random() - 0.5, -0.51, math.random() - 0.5)
 			minetest.add_particle(pt)
-			minetest.after(pt.expirationtime,function()
-				pt.acceleration = vector.new(0,-9,0)
+			minetest.after(pt.expirationtime, function()
+				pt.acceleration = vector.new(0, -9, 0)
 				pt.collisiondetection = true
-				pt.expirationtime = math.random(1.2,4.5)
+				pt.expirationtime = 1.2 + math.random() * 3.3
 				minetest.add_particle(pt)
 			end)
 		end)
@@ -750,7 +731,7 @@ function vlf_core.strip_tree(itemstack, placer, pointed_thing)
 	return itemstack,true
 end
 
-function vlf_core.bone_meal_grass(itemstack,placer,pointed_thing)
+function vlf_core.bone_meal_grass(_, _, pointed_thing)
 	local flowers_table_plains = {
 		"vlf_flowers:dandelion",
 		"vlf_flowers:dandelion",
@@ -819,7 +800,7 @@ function vlf_core.bone_meal_grass(itemstack,placer,pointed_thing)
 end
 
 -- Show positions of barriers when player is wielding a barrier
-vlf_player.register_globalstep_slow(function(player, dtime)
+vlf_player.register_globalstep_slow(function(player)
 	local wi = player:get_wielded_item():get_name()
 	if wi == "vlf_core:barrier" or wi == "vlf_core:realm_barrier" or minetest.get_item_group(wi, "light_block") ~= 0 then
 		local pos = vector.round(player:get_pos())

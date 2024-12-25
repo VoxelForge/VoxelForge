@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_bows x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_bows x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Arrow"
 msgstr "Flèche"
@@ -20,10 +20,10 @@ msgid "Ammunition"
 msgstr "Munition"
 
 msgid "Damage from bow: 1-10"
-msgstr "Dégâts de l'arc: 1-10"
+msgstr "Dégâts de l'arc : 1-10"
 
 msgid "Damage from dispenser: 3"
-msgstr "Dégâts du distributeur: 3"
+msgstr "Dégâts du distributeur : 3"
 
 msgid "Arrows are ammunition for bows and dispensers."
 msgstr "Les flèches sont des munitions pour les arcs et les distributeurs."
@@ -44,7 +44,7 @@ msgid "Bows are ranged weapons to shoot arrows at your foes."
 msgstr "Les arcs sont des armes à distance pour tirer des flèches sur vos ennemis."
 
 msgid "To use the bow, you first need to have at least one arrow anywhere in your inventory (unless in Creative Mode). Hold down the right mouse button (or the zoom key) to charge, release to shoot."
-msgstr ""
+msgstr "Pour utiliser l'arc, vous devez d'abord avoir au moins une flèche dans votre inventaire (sauf en mode créatif). Maintenez le bouton droit de la souris (ou la touche zoom) enfoncé pour charger, puis relâchez pour tirer."
 
 msgid "Launches arrows"
 msgstr "Lance des flèches"
@@ -59,8 +59,8 @@ msgid "Crossbows are ranged weapons to shoot arrows at your foes."
 msgstr "Les arbalètes sont des armes à distance pour tirer des flèches sur vos ennemis."
 
 msgid "To use the crossbow, you first need to have at least one arrow anywhere in your inventory (unless in Creative Mode). Hold down the right mouse button (or zoom key) to charge, release to load an arrow into the chamber, then to shoot press left mouse."
-msgstr ""
+msgstr "Pour utiliser l'arbalète, vous devez d'abord avoir au moins une flèche dans votre inventaire (sauf en mode créatif). Maintenez le bouton droit de la souris (ou la touche zoom) enfoncé pour charger, relâchez pour charger une flèche dans la chambre, puis pour tirer, appuyez sur le bouton gauche de la souris."
 
 msgid "To use the crossbow, you first need to have at least one arrow anywhere in your inventory (unless in Creative Mode). Hold down the right mouse button to charge, release to load an arrow into the chamber, then to shoot press left mouse."
-msgstr ""
+msgstr "Pour utiliser l'arbalète, vous devez d'abord avoir au moins une flèche dans votre inventaire (sauf en mode créatif). Maintenez le bouton droit de la souris enfoncé pour charger, relâchez pour charger une flèche dans la chambre, puis appuyez sur le bouton gauche de la souris pour tirer."
 

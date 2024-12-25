@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_boats x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_boats x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Sneak to dismount"
 msgstr "Нажмите [Красться] для высадки"
@@ -29,11 +29,11 @@ msgid "Water vehicle"
 msgstr "Водный транспорт"
 
 msgid "Chest Boats are used to travel on the surface of water. And transport goods"
-msgstr ""
+msgstr "Лодки с сундуками используются для путешествий по воде и перевозки грузов"
 
 msgid "Rightclick on a water source to place the boat. Rightclick the boat to enter it. Use [Left] and [Right] to steer, [Forwards] to speed up and [Backwards] to slow down or move backwards. Use [Sneak] to leave the boat, punch the boat to make it drop as an item. Use [Sneak] + [Rightclick] to open the boat's chest"
-msgstr ""
+msgstr "Щелкните правой кнопкой мыши на источнике воды, чтобы поставить лодку. Щелкните правой кнопкой мыши на лодке, чтобы сесть в нее. Используйте [Влево] и [Вправо] для управления, [Вперед] для ускорения и [Назад] для замедления или движения назад. Используйте [Красться], чтобы покинуть лодку, ударьте лодку, чтобы она упала как предмет. Используйте [Красться] + [Правый клик], чтобы открыть сундук в лодке"
 
 msgid "Chest Boat"
-msgstr ""
+msgstr "Лодка с сундуком"
 

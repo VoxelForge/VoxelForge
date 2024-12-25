@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_mobspawners x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_mobspawners x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Mob Spawner"
-msgstr ""
+msgstr "Generatore di Mob"
 
 msgid "Makes mobs appear"
-msgstr ""
+msgstr "Genera i mob"
 
 msgid "A mob spawner regularily causes mobs to appear around it while a player is nearby. Some mob spawners are disabled while in light."
-msgstr ""
+msgstr "Un generatore di mostri causa la regolare apparizione dei mob intorno ad esso mentre un giocatore è nelle vicinanze. Alcuni generatori di mob vengono disattivati mentre illuminati."
 
 msgid "If you have a spawn egg, you can use it to change the mob to spawn. Just place the item on the mob spawner. Player-set mob spawners always spawn mobs regardless of the light level."
 msgstr ""

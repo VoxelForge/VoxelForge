@@ -3,8 +3,6 @@ local NIGHT_VISION_RATIO = 0.45
 
 local water_color = "#3F76E4"
 
-local mg_name = minetest.get_mapgen_setting("mg_name")
-
 function vlf_weather.set_sky_box_clear(player, sky, fog)
 	local pos = player:get_pos()
 	if minetest.get_item_group(minetest.get_node(vector.new(pos.x,pos.y+1.5,pos.z)).name, "water") ~= 0 then return end
@@ -69,7 +67,7 @@ vlf_weather.skycolor = {
 	layer_names = {},
 
 	-- To layer to colors table
-	add_layer = function(layer_name, layer_color, instant_update)
+	add_layer = function(layer_name, layer_color, _)
 		vlf_weather.skycolor.colors[layer_name] = layer_color
 		table.insert(vlf_weather.skycolor.layer_names, layer_name)
 		vlf_weather.skycolor.force_update = true
@@ -96,7 +94,7 @@ vlf_weather.skycolor = {
 		end
 	end,
 
-		-- Wrapper for updating day/night ratio that respects night vision
+	-- Wrapper for updating day/night ratio that respects night vision
 	override_day_night_ratio = function(player, ratio)
 		local meta = player:get_meta()
 		local has_night_vision = meta:get_int("night_vision") == 1
@@ -159,15 +157,13 @@ vlf_weather.skycolor = {
 			if dim == "overworld" then
 				local biomesky
 				local biomefog
-				if mg_name ~= "v6" and mg_name ~= "singlenode" then
-					local biome_index = minetest.get_biome_data(player:get_pos()).biome
-					local biome_name = minetest.get_biome_name(biome_index)
-					local biome = minetest.registered_biomes[biome_name]
-					if biome then
-						--minetest.log("action", string.format("Biome found for number: %s in biome: %s", tostring(biome_index), biome_name))
-						biomesky = biome._vlf_skycolor
-						biomefog = biome._vlf_fogcolor
-					end
+				local biome_index = minetest.get_biome_data(player:get_pos()).biome
+				local biome_name = minetest.get_biome_name(biome_index)
+				local biome = minetest.registered_biomes[biome_name]
+				if biome then
+					--minetest.log("action", string.format("Biome found for number: %s in biome: %s", tostring(biome_index), biome_name))
+					biomesky = biome._vlf_skycolor
+					biomefog = biome._vlf_fogcolor
 				end
 				if (vlf_weather.state == "none") then
 					-- Clear weather
@@ -235,15 +231,13 @@ vlf_weather.skycolor = {
 			elseif dim == "end" then
 				local biomesky = "#000000"
 				--local biomefog = "#A080A0"
-				if mg_name ~= "v6" and mg_name ~= "singlenode" then
-					local biome_index = minetest.get_biome_data(player:get_pos()).biome
-					local biome_name = minetest.get_biome_name(biome_index)
-					local biome = minetest.registered_biomes[biome_name]
-					if biome then
-						--minetest.log("action", string.format("Biome found for number: %s in biome: %s", tostring(biome_index), biome_name))
-						biomesky = biome._vlf_skycolor
-						--biomefog = biome._vlf_fogcolor -- The End biomes seemingly don't use the fog colour, despite having this value according to the wiki. The sky colour is seemingly used for both sky and fog?
-					end
+				local biome_index = minetest.get_biome_data(player:get_pos()).biome
+				local biome_name = minetest.get_biome_name(biome_index)
+				local biome = minetest.registered_biomes[biome_name]
+				if biome then
+					--minetest.log("action", string.format("Biome found for number: %s in biome: %s", tostring(biome_index), biome_name))
+					biomesky = biome._vlf_skycolor
+					--biomefog = biome._vlf_fogcolor -- The End biomes seemingly don't use the fog colour, despite having this value according to the wiki. The sky colour is seemingly used for both sky and fog?
 				end
 				local t = "vlf_playerplus_end_sky.png"
 				player:set_sky({ type = "skybox",
@@ -258,15 +252,13 @@ vlf_weather.skycolor = {
 			elseif dim == "nether" then
 				--local biomesky = "#6EB1FF"
 				local biomefog = "#330808"
-				if mg_name ~= "v6" and mg_name ~= "singlenode" then
-					local biome_index = minetest.get_biome_data(player:get_pos()).biome
-					local biome_name = minetest.get_biome_name(biome_index)
-					local biome = minetest.registered_biomes[biome_name]
-					if biome then
-						--minetest.log("action", string.format("Biome found for number: %s in biome: %s", tostring(biome_index), biome_name))
-						--biomesky = biome._vlf_skycolor -- The Nether biomes seemingly don't use the sky colour, despite having this value according to the wiki. The fog colour is used for both sky and fog.
-						biomefog = biome._vlf_fogcolor
-					end
+				local biome_index = minetest.get_biome_data(player:get_pos()).biome
+				local biome_name = minetest.get_biome_name(biome_index)
+				local biome = minetest.registered_biomes[biome_name]
+				if biome then
+					--minetest.log("action", string.format("Biome found for number: %s in biome: %s", tostring(biome_index), biome_name))
+					--biomesky = biome._vlf_skycolor -- The Nether biomes seemingly don't use the sky colour, despite having this value according to the wiki. The fog colour is used for both sky and fog.
+					biomefog = biome._vlf_fogcolor
 				end
 				vlf_weather.set_sky_color(player, {
 					type = "regular",

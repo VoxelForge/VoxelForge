@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_stonecutter x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_stonecutter x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,13 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Stonecutter"
-msgstr ""
+msgstr "Tagliapietre"
 
 msgid "Inventory"
-msgstr ""
+msgstr "Inventario"
 
 msgid "Stone Cutter"
 msgstr ""
@@ -26,5 +26,5 @@ msgid "Used to cut stone like materials."
 msgstr ""
 
 msgid "Stonecutters are used to create stairs and slabs from stone like materials. It is also the jobsite for the Stone Mason Villager."
-msgstr ""
+msgstr "I tagliapietre vengono utilizzati per fabbricare scale e lastre da dei materiali pietrosi. È anche la stazione di lavoro del villico muratore."
 

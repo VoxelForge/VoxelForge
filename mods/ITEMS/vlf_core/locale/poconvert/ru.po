@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain vlc_core x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_core x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Stick"
 msgstr "Палка"
@@ -123,6 +123,486 @@ msgstr "Золотые яблоки это ценный съедобный пр�
 
 msgid "Enchanted Golden Apple"
 msgstr "Зачарованное золотое яблоко"
+
+msgid "Acacia Bark"
+msgstr ""
+
+msgid "Acacia Bark Slab"
+msgstr ""
+
+msgid "Acacia Bark Stairs"
+msgstr ""
+
+msgid "Acacia Boat"
+msgstr ""
+
+msgid "Acacia Button"
+msgstr ""
+
+msgid "Acacia Chest Boat"
+msgstr ""
+
+msgid "Acacia Door"
+msgstr ""
+
+msgid "Acacia Fence"
+msgstr ""
+
+msgid "Acacia Fence Gate"
+msgstr ""
+
+msgid "Acacia Leaves"
+msgstr ""
+
+msgid "Acacia Log"
+msgstr ""
+
+msgid "Acacia Planks"
+msgstr ""
+
+msgid "Acacia Pressure Plate"
+msgstr ""
+
+msgid "Acacia Sapling"
+msgstr ""
+
+msgid "Acacia Sign"
+msgstr ""
+
+msgid "Acacia Slab"
+msgstr ""
+
+msgid "Acacia Stairs"
+msgstr ""
+
+msgid "Acacia Trapdoor"
+msgstr ""
+
+msgid "Acacia leaves are grown from Acacia trees."
+msgstr ""
+
+msgid "Birch Bark"
+msgstr ""
+
+msgid "Birch Bark Slab"
+msgstr ""
+
+msgid "Birch Bark Stairs"
+msgstr ""
+
+msgid "Birch Boat"
+msgstr ""
+
+msgid "Birch Button"
+msgstr ""
+
+msgid "Birch Chest Boat"
+msgstr ""
+
+msgid "Birch Door"
+msgstr ""
+
+msgid "Birch Fence"
+msgstr ""
+
+msgid "Birch Fence Gate"
+msgstr ""
+
+msgid "Birch Leaves"
+msgstr ""
+
+msgid "Birch Log"
+msgstr ""
+
+msgid "Birch Planks"
+msgstr ""
+
+msgid "Birch Pressure Plate"
+msgstr ""
+
+msgid "Birch Sapling"
+msgstr ""
+
+msgid "Birch Sign"
+msgstr ""
+
+msgid "Birch Slab"
+msgstr ""
+
+msgid "Birch Stairs"
+msgstr ""
+
+msgid "Birch Trapdoor"
+msgstr ""
+
+msgid "Birch leaves are grown from Birch trees."
+msgstr ""
+
+msgid "Black Stained Glass"
+msgstr ""
+
+msgid "Blue Stained Glass"
+msgstr ""
+
+msgid "Brown Stained Glass"
+msgstr ""
+
+msgid "Cyan Stained Glass"
+msgstr ""
+
+msgid "Dark Oak Bark"
+msgstr ""
+
+msgid "Dark Oak Bark Slab"
+msgstr ""
+
+msgid "Dark Oak Bark Stairs"
+msgstr ""
+
+msgid "Dark Oak Boat"
+msgstr ""
+
+msgid "Dark Oak Button"
+msgstr ""
+
+msgid "Dark Oak Chest Boat"
+msgstr ""
+
+msgid "Dark Oak Door"
+msgstr ""
+
+msgid "Dark Oak Fence"
+msgstr ""
+
+msgid "Dark Oak Fence Gate"
+msgstr ""
+
+msgid "Dark Oak Leaves"
+msgstr ""
+
+msgid "Dark Oak Log"
+msgstr ""
+
+msgid "Dark Oak Planks"
+msgstr ""
+
+msgid "Dark Oak Pressure Plate"
+msgstr ""
+
+msgid "Dark Oak Sapling"
+msgstr ""
+
+msgid "Dark Oak Sign"
+msgstr ""
+
+msgid "Dark Oak Slab"
+msgstr ""
+
+msgid "Dark Oak Stairs"
+msgstr ""
+
+msgid "Dark Oak Trapdoor"
+msgstr ""
+
+msgid "Dark Oak leaves are grown from Dark Oak trees."
+msgstr ""
+
+msgid "Green Stained Glass"
+msgstr ""
+
+msgid "Grey Stained Glass"
+msgstr ""
+
+msgid "Jungle Bark"
+msgstr ""
+
+msgid "Jungle Bark Slab"
+msgstr ""
+
+msgid "Jungle Bark Stairs"
+msgstr ""
+
+msgid "Jungle Boat"
+msgstr ""
+
+msgid "Jungle Button"
+msgstr ""
+
+msgid "Jungle Chest Boat"
+msgstr ""
+
+msgid "Jungle Door"
+msgstr ""
+
+msgid "Jungle Fence"
+msgstr ""
+
+msgid "Jungle Fence Gate"
+msgstr ""
+
+msgid "Jungle Leaves"
+msgstr ""
+
+msgid "Jungle Log"
+msgstr ""
+
+msgid "Jungle Planks"
+msgstr ""
+
+msgid "Jungle Pressure Plate"
+msgstr ""
+
+msgid "Jungle Sapling"
+msgstr ""
+
+msgid "Jungle Sign"
+msgstr ""
+
+msgid "Jungle Slab"
+msgstr ""
+
+msgid "Jungle Stairs"
+msgstr ""
+
+msgid "Jungle Trapdoor"
+msgstr ""
+
+msgid "Jungle leaves are grown from Jungle trees."
+msgstr ""
+
+msgid "Light Blue Stained Glass"
+msgstr ""
+
+msgid "Light Grey Stained Glass"
+msgstr ""
+
+msgid "Lime Stained Glass"
+msgstr ""
+
+msgid "Magenta Stained Glass"
+msgstr ""
+
+msgid "Oak Bark"
+msgstr ""
+
+msgid "Oak Bark Slab"
+msgstr ""
+
+msgid "Oak Bark Stairs"
+msgstr ""
+
+msgid "Oak Boat"
+msgstr ""
+
+msgid "Oak Button"
+msgstr ""
+
+msgid "Oak Chest Boat"
+msgstr ""
+
+msgid "Oak Door"
+msgstr ""
+
+msgid "Oak Fence"
+msgstr ""
+
+msgid "Oak Fence Gate"
+msgstr ""
+
+msgid "Oak Leaves"
+msgstr ""
+
+msgid "Oak Log"
+msgstr ""
+
+msgid "Oak Planks"
+msgstr ""
+
+msgid "Oak Pressure Plate"
+msgstr ""
+
+msgid "Oak Sapling"
+msgstr ""
+
+msgid "Oak Sign"
+msgstr ""
+
+msgid "Oak Slab"
+msgstr ""
+
+msgid "Oak Stairs"
+msgstr ""
+
+msgid "Oak Trapdoor"
+msgstr ""
+
+msgid "Oak leaves are grown from Oak trees."
+msgstr ""
+
+msgid "Orange Stained Glass"
+msgstr ""
+
+msgid "Pink Stained Glass"
+msgstr ""
+
+msgid "Purple Stained Glass"
+msgstr ""
+
+msgid "Red Stained Glass"
+msgstr ""
+
+msgid "Spruce Bark"
+msgstr ""
+
+msgid "Spruce Bark Slab"
+msgstr ""
+
+msgid "Spruce Bark Stairs"
+msgstr ""
+
+msgid "Spruce Boat"
+msgstr ""
+
+msgid "Spruce Button"
+msgstr ""
+
+msgid "Spruce Chest Boat"
+msgstr ""
+
+msgid "Spruce Door"
+msgstr ""
+
+msgid "Spruce Fence"
+msgstr ""
+
+msgid "Spruce Fence Gate"
+msgstr ""
+
+msgid "Spruce Leaves"
+msgstr ""
+
+msgid "Spruce Log"
+msgstr ""
+
+msgid "Spruce Planks"
+msgstr ""
+
+msgid "Spruce Pressure Plate"
+msgstr ""
+
+msgid "Spruce Sapling"
+msgstr ""
+
+msgid "Spruce Sign"
+msgstr ""
+
+msgid "Spruce Slab"
+msgstr ""
+
+msgid "Spruce Stairs"
+msgstr ""
+
+msgid "Spruce Trapdoor"
+msgstr ""
+
+msgid "Spruce leaves are grown from Spruce trees."
+msgstr ""
+
+msgid "Stripped Acacia Log"
+msgstr ""
+
+msgid "Stripped Acacia Wood"
+msgstr ""
+
+msgid "Stripped Birch Log"
+msgstr ""
+
+msgid "Stripped Birch Wood"
+msgstr ""
+
+msgid "Stripped Dark Oak Log"
+msgstr ""
+
+msgid "Stripped Dark Oak Wood"
+msgstr ""
+
+msgid "Stripped Jungle Log"
+msgstr ""
+
+msgid "Stripped Jungle Wood"
+msgstr ""
+
+msgid "Stripped Oak Log"
+msgstr ""
+
+msgid "Stripped Oak Wood"
+msgstr ""
+
+msgid "Stripped Spruce Log"
+msgstr ""
+
+msgid "Stripped Spruce Wood"
+msgstr ""
+
+msgid "The stripped trunk of an Acacia tree."
+msgstr ""
+
+msgid "The stripped trunk of an Birch tree."
+msgstr ""
+
+msgid "The stripped trunk of an Dark Oak tree."
+msgstr ""
+
+msgid "The stripped trunk of an Jungle tree."
+msgstr ""
+
+msgid "The stripped trunk of an Oak tree."
+msgstr ""
+
+msgid "The stripped trunk of an Spruce tree."
+msgstr ""
+
+msgid "The stripped wood of an Acacia tree."
+msgstr ""
+
+msgid "The stripped wood of an Birch tree."
+msgstr ""
+
+msgid "The stripped wood of an Dark Oak tree."
+msgstr ""
+
+msgid "The stripped wood of an Jungle tree."
+msgstr ""
+
+msgid "The stripped wood of an Oak tree."
+msgstr ""
+
+msgid "The stripped wood of an Spruce tree."
+msgstr ""
+
+msgid "The trunk of a Acacia tree."
+msgstr ""
+
+msgid "The trunk of a Birch tree."
+msgstr ""
+
+msgid "The trunk of a Dark Oak tree."
+msgstr ""
+
+msgid "The trunk of a Jungle tree."
+msgstr ""
+
+msgid "The trunk of a Oak tree."
+msgstr ""
+
+msgid "The trunk of a Spruce tree."
+msgstr ""
+
+msgid "White Stained Glass"
+msgstr ""
+
+msgid "Yellow Stained Glass"
+msgstr ""
 
 msgid "Stone"
 msgstr "Камень"
@@ -388,8 +868,8 @@ msgstr "Алмазный блок"
 msgid "A block of diamond is mostly a shiny decorative block but also useful as a compact storage of diamonds."
 msgstr "Алмазный блок это, прежде всего, декоративный блок, но он также удобен для компактного хранения алмазов."
 
-msgid "Lapis Lazuli Block"
-msgstr "Блок лазурита"
+msgid "Block of Lapis Lazuli"
+msgstr ""
 
 msgid "A lapis lazuli block is mostly a decorative block but also useful as a compact storage of lapis lazuli."
 msgstr "Блок лазурита это, прежде всего, декоративный блок, но он также удобен для компактного хранения лазурита."
@@ -501,9 +981,6 @@ msgstr "Окрашенное стекло это декоративный про
 
 msgid "Stained Glass"
 msgstr "Окрашенное стекло"
-
-msgid "@1 Stained Glass"
-msgstr ""
 
 msgid "Flowing Water"
 msgstr "Текущая вода"
@@ -620,113 +1097,95 @@ msgid "Granite Stairs"
 msgstr "Гранитные ступени"
 
 msgid "Granite Slab"
-msgstr ""
+msgstr "Гранитная плита"
 
 msgid "Diorite Stairs"
-msgstr ""
+msgstr "Диоритовая лестница"
 
 msgid "Diorite Slab"
-msgstr ""
+msgstr "Диоритовая плита"
 
 msgid "Cobblestone Stairs"
-msgstr ""
+msgstr "Лестница из булыжника"
 
 msgid "Cobblestone Slab"
-msgstr ""
+msgstr "Плита из булыжника"
 
 msgid "Mossy Cobblestone Stairs"
-msgstr ""
+msgstr "Лестница из мшистого булыжника"
 
 msgid "Mossy Cobblestone Slab"
-msgstr ""
+msgstr "Плита из мшистого булыжника"
 
 msgid "Brick Stairs"
-msgstr ""
+msgstr "Кирпичная лестница"
 
 msgid "Brick Slab"
-msgstr ""
+msgstr "Кирпичная плита"
 
 msgid "Sandstone Stairs"
-msgstr ""
+msgstr "Лестница из песчаника"
 
 msgid "Sandstone Slab"
-msgstr ""
+msgstr "Плита из песчаника"
 
 msgid "Smooth Sandstone Stairs"
-msgstr ""
+msgstr "Гладкая лестница из песчаника"
 
 msgid "Smooth Sandstone Slab"
-msgstr ""
+msgstr "Гладкая плита из песчаника"
 
 msgid "Cut Sandstone Stairs"
-msgstr ""
+msgstr "Лестница из резного песчаника"
 
 msgid "Cut Sandstone Slab"
-msgstr ""
+msgstr "Плита из резного песчаника"
 
 msgid "Red Sandstone Stairs"
-msgstr ""
+msgstr "Лестница из красного песчаника"
 
 msgid "Red Sandstone Slab"
-msgstr ""
+msgstr "Плита из красного песчаника"
 
 msgid "Smooth Red Sandstone Stairs"
-msgstr ""
+msgstr "Лестница из гладкого красного песчаника"
 
 msgid "Smooth Red Sandstone Slab"
-msgstr ""
+msgstr "Плита из гладкого красного песчаника"
 
 msgid "Cut Red Sandstone Stairs"
-msgstr ""
+msgstr "Лестница из резаного красного песчаника"
 
 msgid "Cut Red Sandstone Slab"
-msgstr ""
+msgstr "Плита из резаного красного песчаника"
 
 msgid "Stone Brick Stairs"
-msgstr ""
+msgstr "Лестница из каменного кирпича"
 
 msgid "Stone Brick Slab"
-msgstr ""
+msgstr "Плита из каменного кирпича"
 
 msgid "Polished Andesite Stairs"
-msgstr ""
+msgstr "Лестница из полированного андезита"
 
 msgid "Polished Andesite Slab"
-msgstr ""
+msgstr "Плита из полированного андезита"
 
 msgid "Polished Granite Stairs"
-msgstr ""
+msgstr "Лестница из полированного гранита"
 
 msgid "Polished Granite Slab"
-msgstr ""
+msgstr "Плита из полированного гранита"
 
 msgid "Polished Diorite Stairs"
-msgstr ""
+msgstr "Лестница из полированного диорита"
 
 msgid "Polished Diorite Slab"
-msgstr ""
+msgstr "Плита из полированного диорита"
 
 msgid "Mossy Stone Brick Stairs"
-msgstr ""
+msgstr "Лестница из кирпича мшистого камня"
 
 msgid "Mossy Stone Brick Slab"
-msgstr ""
-
-msgid "Oak"
-msgstr ""
-
-msgid "Dark Oak"
-msgstr ""
-
-msgid "Jungle"
-msgstr ""
-
-msgid "Spruce"
-msgstr ""
-
-msgid "Acacia"
-msgstr ""
-
-msgid "Birch"
-msgstr ""
+msgstr "Плита из кирпича мшистого камня"
 

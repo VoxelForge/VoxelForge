@@ -17,7 +17,7 @@ vlf_fishing.loot_junk = {
 	{ itemstring = "vlf_mobitems:rotten_flesh", weight = 10 },
 	{ itemstring = "vlf_core:stick", weight = 5 },
 	{ itemstring = "vlf_mobitems:string", weight = 5 },
-	{ itemstring = "vlf_entity_effects:water", weight = 10 },
+	{ itemstring = "vlf_potions:water", weight = 10 },
 	{ itemstring = "vlf_mobitems:bone", weight = 10 },
 	{ itemstring = "vlf_mobitems:ink_sac", weight = 1, amount_min = 10, amount_max = 10 },
 	{ itemstring = "vlf_mobitems:string", weight = 10 }, -- TODO: Tripwire Hook
@@ -224,7 +224,7 @@ function bobber_ENTITY:on_step(dtime)
 			self.object:set_acceleration({x=0,y=0,z=0})
 		end
 		if self._dive then
-			for i=1,2 do
+			for _ = 1, 2 do
 					-- Spray bubbles when there's a fish.
 					minetest.add_particle({
 						pos = {x=epos["x"]+math.random(-1,1)*math.random()/2,y=epos["y"]+0.1,z=epos["z"]+math.random(-1,1)*math.random()/2},
@@ -275,11 +275,9 @@ local flying_bobber_ENTITY={
 		visual_size = {x=0.5, y=0.5},
 		collisionbox = {0,0,0,0,0,0},
 		pointable = false,
+		static_save = false,
 	},
 	timer=0,
-
-	get_staticdata = vlf_throwing.get_staticdata,
-	on_activate = vlf_throwing.on_activate,
 
 	_lastpos={},
 	_thrower = nil,
@@ -288,6 +286,10 @@ local flying_bobber_ENTITY={
 
 -- Movement function of flying bobber
 local function flying_bobber_on_step(self, dtime)
+	if not self._thrower then
+		self.object:remove()
+		return
+	end
 	self.timer=self.timer+dtime
 	local pos = self.object:get_pos()
 	local node = minetest.get_node(pos)
@@ -299,7 +301,7 @@ local function flying_bobber_on_step(self, dtime)
 		return
 	end
 
-	for _, obj in pairs(minetest.get_objects_inside_radius(pos, 0.4)) do
+	for obj in minetest.objects_inside_radius(pos, 0.4) do
 		local ent = obj:get_luaentity()
 		if ent and ent._vlf_fishing_hookable then
 			bobbers[player] = minetest.add_entity(ent.object:get_pos(), "vlf_fishing:bobber_entity")
@@ -357,6 +359,7 @@ minetest.register_tool("vlf_fishing:fishing_rod", {
 	sound = { breaks = "default_tool_breaks" },
 	_vlf_uses = 65,
 	_vlf_toollike_wield = true,
+	_vlf_burntime = 15
 })
 
 dofile(minetest.get_modpath(minetest.get_current_modname()).."/items.lua")

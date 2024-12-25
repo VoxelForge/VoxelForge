@@ -20,7 +20,8 @@ function vlf_burning.is_burning(obj)
 end
 
 function vlf_burning.is_affected_by_rain(obj)
-	return vlf_weather.get_weather() == "rain" and vlf_weather.is_outdoor(obj:get_pos())
+	local pos = obj:get_pos ()
+	return vlf_weather.is_exposed_to_rain (pos)
 end
 
 function vlf_burning.get_collisionbox(obj, smaller, storage)
@@ -41,6 +42,12 @@ end
 
 function vlf_burning.get_touching_nodes(obj, nodenames, storage)
 	local pos = obj:get_pos()
+	if mobs_mc.is_riding_strider (obj) then
+		-- Prevent riders of striders from catching fire as a
+		-- result of the minetest server's unawareness of
+		-- attachment positions.
+		pos.y = pos.y + 1.5
+	end
 	local minp, maxp = vlf_burning.get_collisionbox(obj, true, storage)
 	local nodes = minetest.find_nodes_in_area(vector.add(pos, minp), vector.add(pos, maxp), nodenames)
 	return nodes
@@ -106,6 +113,13 @@ function vlf_burning.set_on_fire(obj, burn_time)
 		local max_fire_prot_lvl = 0
 		local inv = vlf_util.get_inventory(obj)
 		local armor_list = inv and inv:get_list("armor")
+
+		if luaentity and luaentity.is_mob and luaentity.armor_list then
+			armor_list = { }
+			for _, itemstring in pairs (luaentity.armor_list) do
+				table.insert (armor_list, ItemStack (itemstring))
+			end
+		end
 
 		if armor_list then
 			for _, stack in pairs(armor_list) do

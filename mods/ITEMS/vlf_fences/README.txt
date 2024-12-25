@@ -3,6 +3,7 @@ This mod adds fences and fence gates.
 License of source code and textures:
 ------------------------------------
 Written 2013 by BlockMen
+Rewritten by JoseDouglas26
 
 This program is free software. It comes without any warranty, to
 the extent permitted by applicable law. You can redistribute it

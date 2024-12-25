@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_brewing x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_brewing x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Brewing Stand"
-msgstr ""
+msgstr "Alambicco"
 
 msgid "Inventory"
-msgstr ""
+msgstr "Inventario"
 
 msgid "To use a brewing stand, rightclick it."
-msgstr ""
+msgstr "Per utilizzare un alambicco, cliccaci col tasto destro."
 
 msgid "To brew, you need blaze powder as fuel, a brewing material and at least 1 glass bottle filled with a liquid."
 msgstr ""

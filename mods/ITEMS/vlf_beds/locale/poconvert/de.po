@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_beds x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_beds x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Beds allow you to sleep at night and make the time pass faster."
 msgstr "Mit Betten können Sie in der Nacht schlafen und die Zeit schneller verstreichen lassen."
@@ -36,12 +36,6 @@ msgstr "Zum Einschafen"
 
 msgid "Bed"
 msgstr "Bett"
-
-msgid "@1 Bed"
-msgstr "@1 Bett"
-
-msgid "New respawn position set!"
-msgstr "Neue Wiedereinstiegsposition gesetzt!"
 
 msgid "You can only sleep at night or during a thunderstorm."
 msgstr "Sie können nur nachts oder während eines Gewittersturms schlafen."
@@ -108,6 +102,57 @@ msgstr "Sie müssen leider noch @1 Sekunden warten, bevor sie diesen Knopf erneu
 
 msgid "Hey! Would you guys mind sleeping?"
 msgstr "Hey, würdet Ihr bitte zu Bett gehen?"
+
+msgid "New respawn position set!"
+msgstr "Neue Wiedereinstiegsposition gesetzt!"
+
+msgid "Black Bed"
+msgstr ""
+
+msgid "Blue Bed"
+msgstr ""
+
+msgid "Brown Bed"
+msgstr ""
+
+msgid "Cyan Bed"
+msgstr ""
+
+msgid "Green Bed"
+msgstr ""
+
+msgid "Grey Bed"
+msgstr ""
+
+msgid "Light Blue Bed"
+msgstr ""
+
+msgid "Light Grey Bed"
+msgstr ""
+
+msgid "Lime Bed"
+msgstr ""
+
+msgid "Magenta Bed"
+msgstr ""
+
+msgid "Orange Bed"
+msgstr ""
+
+msgid "Pink Bed"
+msgstr ""
+
+msgid "Purple Bed"
+msgstr ""
+
+msgid "Red Bed"
+msgstr ""
+
+msgid "White Bed"
+msgstr ""
+
+msgid "Yellow Bed"
+msgstr ""
 
 msgid "Respawn Anchor"
 msgstr "Seelenanker"

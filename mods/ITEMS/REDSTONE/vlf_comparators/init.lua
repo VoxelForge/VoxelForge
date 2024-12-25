@@ -1,140 +1,173 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
--- Functions that get the input/output rules of the comparator
+local fourdirs = {
+	[0] = vector.new(0, 0, 1),
+	[1] = vector.new(1, 0, 0),
+	[2] = vector.new(0, 0, -1),
+	[3] = vector.new(-1, 0, 0),
+}
 
-local function comparator_get_output_rules(node)
-	local rules = {{x = -1, y = 0, z = 0, spread=true}}
-	for i = 0, node.param2 do
-		rules = mesecon.rotate_rules_left(rules)
+function vlf_redstone.update_comparators(pos)
+	for _, dir in pairs(fourdirs) do
+		local pos2 = pos:add(dir)
+		local node2 = minetest.get_node(pos2)
+
+		if dir == minetest.fourdir_to_dir(node2.param2) and node2.name:find("vlf_comparators:comparator_") then
+			vlf_redstone.update_node(pos2)
+		elseif vlf_redstone._solid_opaque_tab[node2.name] then
+			local pos3 = pos2:add(dir)
+			local node3 = minetest.get_node(pos3)
+			if dir == minetest.fourdir_to_dir(node3.param2) and node3.name:find("vlf_comparators:comparator_") then
+				vlf_redstone.update_node(pos3)
+			end
+		end
 	end
-	return rules
 end
 
-
-local function comparator_get_input_rules(node)
-	local rules = {
-		-- we rely on this order in update_self below
-		{x = 1, y = 0, z =  0},  -- back
-		{x = 0, y = 0, z = -1},  -- side
-		{x = 0, y = 0, z =  1},  -- side
-	}
-	for i = 0, node.param2 do
-		rules = mesecon.rotate_rules_left(rules)
+local function get_inventory_data(pos, lists)
+	if not lists or #lists == 0 then
+		lists = { "main" }
 	end
-	return rules
-end
-
-
--- Functions that are called after the delay time
-
-local function comparator_turnon(params)
-	local rules = comparator_get_output_rules(params.node)
-	mesecon.receptor_on(params.pos, rules)
-end
-
-
-local function comparator_turnoff(params)
-	local rules = comparator_get_output_rules(params.node)
-	mesecon.receptor_off(params.pos, rules)
-end
-
-
--- Functions that set the correct node type an schedule a turnon/off
-
-local function comparator_activate(pos, node)
-	local def = minetest.registered_nodes[node.name]
-	local onstate = def.comparator_onstate
-	if onstate then
-		minetest.swap_node(pos, { name = onstate, param2 = node.param2 })
-	end
-	minetest.after(0.1, comparator_turnon , {pos = pos, node = node})
-end
-
-
-local function comparator_deactivate(pos, node)
-	local def = minetest.registered_nodes[node.name]
-	local offstate = def.comparator_offstate
-	if offstate then
-		minetest.swap_node(pos, { name = offstate, param2 = node.param2 })
-	end
-	minetest.after(0.1, comparator_turnoff, {pos = pos, node = node})
-end
-
-
--- weather pos has an inventory that contains at least one item
-local function container_inventory_nonempty(pos)
-	local invnode = minetest.get_node(pos)
-	local invnodedef = minetest.registered_nodes[invnode.name]
-	-- Ignore stale nodes
-	if not invnodedef then return false end
-
-	-- Only accept containers. When a container is dug, it's inventory
-	-- seems to stay. and we don't want to accept the inventory of an air
-	-- block
-	if not invnodedef.groups.container then return false end
 
 	local inv = minetest.get_inventory({type="node", pos=pos})
-	if not inv then return false end
 
-	for listname, _ in pairs(inv:get_lists()) do
-		if not inv:is_empty(listname) then return true end
-	end
+	if not inv then return 0 end
 
-	return false
-end
+	local empty, fullness, slots = true, 0, 0
 
--- weather pos has an constant signal output for the comparator
-local function static_signal_output(pos)
-	local node = minetest.get_node(pos)
-	local g = minetest.get_item_group(node.name, "comparator_signal")
-	return g > 0
-end
-
--- whether the comparator should be on according to its inputs
-local function comparator_desired_on(pos, node)
-	local my_input_rules = comparator_get_input_rules(node);
-	local back_rule = my_input_rules[1]
-	local state
-	if back_rule then
-		local back_pos = vector.add(pos, back_rule)
-		state = mesecon.is_power_on(back_pos) or container_inventory_nonempty(back_pos) or static_signal_output(back_pos)
-	end
-
-	-- if back input if off, we don't need to check side inputs
-	if not state then return false end
-
-	-- without power levels, side inputs have no influence on output in compare
-	-- mode
-	local mode = minetest.registered_nodes[node.name].comparator_mode
-	if mode == "comp" then return state end
-
-	-- subtract mode, subtract max(side_inputs) from back input
-	local side_state = false
-	for ri = 2,3 do
-		if my_input_rules[ri] then
-			side_state = mesecon.is_power_on(vector.add(pos, my_input_rules[ri]))
-		end
-		if side_state then break end
-	end
-	-- state is known to be true
-	return not side_state
-end
-
-
--- update comparator state, if needed
-local function update_self(pos, node)
-	node = node or minetest.get_node(pos)
-	local old_state = mesecon.is_receptor_on(node.name)
-	local new_state = comparator_desired_on(pos, node)
-	if new_state ~= old_state then
-		if new_state then
-			comparator_activate(pos, node)
-		else
-			comparator_deactivate(pos, node)
+	for _, listname in pairs(lists) do
+		slots = slots + inv:get_size(listname)
+		if not inv:is_empty(listname) then
+			empty = false
+			for _, stack in pairs(inv:get_list(listname)) do
+				if stack then
+					fullness = fullness + stack:get_count() / stack:get_stack_max()
+				end
+			end
 		end
 	end
+
+	return empty, fullness, slots
 end
 
+local function measure_inventory(pos, _, _, lists)
+	local empty, fullness, slots = get_inventory_data(pos, lists)
+
+	-- formula copied from wiki
+	return empty and 0 or math.floor(1 + (fullness / slots) * 14)
+end
+
+--- wrap measure_inventory to measure non main invs
+local function measure_complex_inventory(lists)
+	return function(pos)
+		return measure_inventory(pos, nil, nil, lists)
+	end
+end
+
+local function measure_double_chest(side)
+	return function(pos, node)
+		local other_pos = vlf_util.get_double_container_neighbor_pos(pos, node.param2, side)
+		local empty1, fullness1, slots1 = get_inventory_data(pos)
+		local empty2, fullness2, slots2 = get_inventory_data(other_pos)
+		local empty, fullness, slots = empty1 and empty2, fullness1 + fullness2, slots1 + slots2
+
+		-- apply formula to cumulated data
+		return empty and 0 or math.floor(1 + (fullness / slots) * 14), fullness, slots
+	end
+end
+
+local function measure_constant(power_level)
+	return function()
+		return power_level
+	end
+end
+
+local function measure_lectern(pos)
+	local meta = minetest.get_meta(pos)
+	local pages = tonumber(meta:get_string("pages")) or 1
+	local page = tonumber(meta:get_string("page")) or 1
+	local power = 15
+	if pages > 1 then
+		-- formula copied from wiki
+		power = math.floor((14 * (page - 1)) / (pages - 1) + 1)
+	end
+	return power
+end
+
+local measure_double_chest_left = measure_double_chest("left")
+local measure_double_chest_right = measure_double_chest("right")
+local measure_furnace = measure_complex_inventory({"fuel", "src", "dst"})
+local measure_brewing_stand = measure_complex_inventory({"fuel", "input", "stand"})
+
+-- measurable nodes mapped to their measuring function
+local measure_tab = {
+	["vlf_barrels:barrel_closed"] = measure_inventory,
+	["vlf_barrels:barrel_open"] = measure_inventory,
+	["vlf_chests:chest_small"] = measure_inventory,
+	["vlf_chests:chest_left"] = measure_double_chest_left,
+	["vlf_chests:chest_right"] = measure_double_chest_right,
+	["vlf_chests:trapped_chest_small"] = measure_inventory,
+	["vlf_chests:trapped_chest_left"] = measure_double_chest_left,
+	["vlf_chests:trapped_chest_right"] = measure_double_chest_right,
+	["vlf_chests:trapped_chest_on_small"] = measure_inventory,
+	["vlf_chests:trapped_chest_on_left"] = measure_double_chest_left,
+	["vlf_chests:trapped_chest_on_right"] = measure_double_chest_right,
+	["vlf_dispensers:dispenser"] = measure_inventory,
+	["vlf_dispensers:dispenser_down"] = measure_inventory,
+	["vlf_dispensers:dispenser_up"] = measure_inventory,
+	["vlf_dispensers:dropper"] = measure_inventory,
+	["vlf_dispensers:dropper_down"] = measure_inventory,
+	["vlf_dispensers:dropper_up"] = measure_inventory,
+	["vlf_hoppers:hopper"] = measure_inventory,
+	["vlf_hoppers:hopper_disabled"] = measure_inventory,
+	["vlf_hoppers:hopper_side"] = measure_inventory,
+	["vlf_hoppers:hopper_side_disabled"] = measure_inventory,
+	["vlf_furnaces:furnace"] = measure_furnace,
+	["vlf_blast_furnace:blast_furnace"] = measure_furnace,
+	["vlf_smoker:smoker"] = measure_furnace,
+	["vlf_lectern:lectern_with_book"] = measure_lectern,
+	--[[ initalized using after_mods_loaded
+	["vlf_brewing:stand_xxx"] = measure_brewing_stand,
+	["vlf_chests:xxx_shulker_box"] = measure_inventory,
+	["vlf_cauldron:cauldron_xxx"] = measure_constant(comparator_signal),
+	["vlf_cake:cake_x"] = measure_constant(comparator_signal),
+	["vlf_copper:bulb_xxx"] = measure_constant(comparator_signal),
+	["vlf_composters:composter_xxx"] = measure_constant(comparator_signal),
+	["vlf_portals:end_portal_frame_xxx"] = measure_constant(comparator_signal),
+	]]
+	-- TODO:
+	--["decorated_pot"] = measure_inventory,
+	--["minecart_with_chest"] = measure_inventory,
+	--["minecart_with_hopper"] = measure_inventory,
+	--["beehive"] = measure_beehive,
+	--["bees_nest"] = measure_beehive,
+	--["chiseled_bookshelf"] = measure_bookshelf,
+	--["command_block"] = measure_command_block,
+	--["crafter"] = measure_crafter,
+	--["item_frame"] = measure_item_frame,
+	--["jukebox"] = measure_jukebox,
+	--["respawn_anchor"] = measure_respawn_anchor,
+	--["sculc_sensor"] = measure_sculc_sensor,
+}
+
+-- check if node at pos is 'interesting'
+-- first result is true, iff node has an entry in measure_tab, 2nd result is
+-- 1. node is measurable -> measuring function from measure_tab
+-- 2. node is opaque -> true, iff node has opaque group set to non zero
+-- 3rd and 4th results are node and nodedef
+local function is_measurable_or_opaque(pos)
+	local node = minetest.get_node_or_nil(pos)
+	local def = node and minetest.registered_nodes[node.name]
+
+	if not def then return false, false, nil, nil end
+
+	local measuring_function = measure_tab[node.name]
+	if measuring_function then
+		return true, measuring_function, node, def
+	end
+
+	return false, def.groups and def.groups.opaque and (def.groups.opaque ~= 0), node, def
+end
 
 -- compute tile depending on state and mode
 local function get_tiles(state, mode)
@@ -150,31 +183,6 @@ local function get_tiles(state, mode)
 		ends, ends,
 	}
 end
-
--- Given one mode, get the other mode
-local function flipmode(mode)
-	if mode == "comp" then    return "sub"
-	elseif mode == "sub" then return "comp"
-	end
-end
-
-local function make_rightclick_handler(state, mode)
-	local newnodename =
-		"vlf_comparators:comparator_"..state.."_"..flipmode(mode)
-	return function (pos, node, clicker)
-		local protname = clicker:get_player_name()
-		if minetest.is_protected(pos, protname) then
-			minetest.record_protection_violation(pos, protname)
-			return
-		end
-		minetest.swap_node(pos, {name = newnodename, param2 = node.param2 })
-	end
-end
-
-
--- Register the 2 (states) x 2 (modes) comparators
-
-local icon = "vlf_comparators_item.png"
 
 local node_boxes = {
 	comp = {
@@ -204,33 +212,21 @@ local collision_box = {
 	fixed = { -8/16, -8/16, -8/16, 8/16, -6/16, 8/16 },
 }
 
-local state_strs = {
-	[ mesecon.state.on  ] = "on",
-	[ mesecon.state.off ] = "off",
-}
-
 local groups = {
 	dig_immediate = 3,
 	dig_by_water  = 1,
 	destroy_by_lava_flow = 1,
 	dig_by_piston = 1,
+	unsticky = 1,
 	attached_node = 1,
 }
 
-local on_rotate
-if minetest.get_modpath("screwdriver") then
-	on_rotate = screwdriver.disallow
-end
-
 for _, mode in pairs{"comp", "sub"} do
-	for _, state in pairs{mesecon.state.on, mesecon.state.off} do
-		local state_str = state_strs[state]
-		local nodename =
-			"vlf_comparators:comparator_"..state_str.."_"..mode
+	for _, state in pairs{"on", "off"} do
+		local nodename = "vlf_comparators:comparator_"..state.."_"..mode
 
-		-- Help
 		local longdesc, usagehelp, use_help
-		if state_str == "off" and mode == "comp" then
+		if state == "off" and mode == "comp" then
 			longdesc = S("Redstone comparators are multi-purpose redstone components.").."\n"..
 			S("They can transmit a redstone signal, detect whether a block contains any items and compare multiple signals.")
 
@@ -245,15 +241,13 @@ for _, mode in pairs{"comp", "sub"} do
 
 		local nodedef = {
 			description = S("Redstone Comparator"),
-			inventory_image = icon,
-			wield_image = icon,
 			_doc_items_create_entry = use_help,
 			_doc_items_longdesc = longdesc,
 			_doc_items_usagehelp = usagehelp,
 			drawtype = "nodebox",
-			tiles = get_tiles(state_str, mode),
+			tiles = get_tiles(state, mode),
 			use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
-			--wield_image = "vlf_comparators_off.png",
+			walkable = true,
 			selection_box = collision_box,
 			collision_box = collision_box,
 			node_box = {
@@ -262,102 +256,155 @@ for _, mode in pairs{"comp", "sub"} do
 			},
 			groups = groups,
 			paramtype = "light",
-			paramtype2 = "facedir",
+			paramtype2 = "4dir",
+			sunlight_propagates = false,
 			is_ground_content = false,
 			drop = "vlf_comparators:comparator_off_comp",
-			on_construct = update_self,
-			on_rightclick =
-				make_rightclick_handler(state_str, mode),
-			comparator_mode = mode,
-			comparator_onstate = "vlf_comparators:comparator_on_"..mode,
-			comparator_offstate = "vlf_comparators:comparator_off_"..mode,
+			on_rightclick = function (pos, node, clicker)
+				local protname = clicker:get_player_name()
+				if minetest.is_protected(pos, protname) then
+					minetest.record_protection_violation(pos, protname)
+					return
+				end
+				local newmode = mode == "comp" and "sub" or "comp"
+				minetest.set_node(pos, {
+					name = "vlf_comparators:comparator_"..state.."_"..newmode,
+					param2 = node.param2,
+				})
+			end,
 			sounds = vlf_sounds.node_sound_stone_defaults(),
-			mesecons = {
-				receptor = {
-					state = state,
-					rules = comparator_get_output_rules,
-				},
-				effector = {
-					rules = comparator_get_input_rules,
-					action_change = update_self,
-				}
+			on_rotate = screwdriver.disallow,
+			_vlf_redstone = {
+				connects_to = function(node, dir)
+					return true
+				end,
+				get_power = function(node, dir)
+					local fourdir = minetest.dir_to_fourdir(dir)
+					if not fourdir or dir.y ~= 0 then
+						return 0
+					end
+					return node.param2 % 4 == fourdir and math.floor(node.param2 / 4) or 0, true
+				end,
+				update = function(pos, node)
+					-- TODO: should not accept side power from opaque blocks
+					local back = -minetest.fourdir_to_dir(node.param2)
+					local left = minetest.fourdir_to_dir((node.param2 - 1) % 4)
+					local right = minetest.fourdir_to_dir((node.param2 + 1) % 4)
+					local side_power = math.max(
+						vlf_redstone.get_power(pos, left),
+						vlf_redstone.get_power(pos, right)
+					)
+					local pos2 = vector.add(pos, back)
+					local rear_power
+					local is_measurable, o, node2, def2 = is_measurable_or_opaque(pos2)
+					if is_measurable then
+						-- o is measuring function
+						rear_power = math.max(0, math.min (15, o(pos2, node2, def2)))
+					elseif o then
+						-- opaque
+						local pos3 = vector.add(pos2, back)
+						local is_measurable, o, node3, def3 = is_measurable_or_opaque(pos3)
+						if is_measurable then
+							rear_power = math.max(0, math.min (15, o(pos3, node3, def3)))
+						else
+							-- no measurable node in back direction
+							-- try to get power normally
+							rear_power = vlf_redstone.get_power(pos, back)
+						end
+					else
+						rear_power = vlf_redstone.get_power(pos, back)
+					end
+					local output
+					if mode == "comp" then
+						output = rear_power >= side_power and rear_power or 0
+					else
+						output = math.max(rear_power - side_power, 0)
+					end
+
+					local newstate = output > 0 and "on" or "off"
+					return {
+						name = "vlf_comparators:comparator_"..newstate.."_"..mode,
+						param2 = 4 * output + node.param2 % 4,
+					}
+				end,
 			},
-			on_rotate = on_rotate,
 		}
 
-		if mode == "comp" and state == mesecon.state.off then
-			-- This is the prototype
+		if mode == "comp" and state == "off" then
 			nodedef._doc_items_create_entry = true
+			nodedef.inventory_image = "vlf_comparators_item.png"
+			nodedef.wield_image = "vlf_comparators_item.png"
 		else
 			nodedef.groups = table.copy(nodedef.groups)
 			nodedef.groups.not_in_creative_inventory = 1
-			--local extra_desc = {}
-			if mode == "sub" or state == mesecon.state.on then
+			if mode == "sub" or state == "on" then
 				nodedef.inventory_image = nil
 			end
 			local desc = nodedef.description
-			if mode ~= "sub" and state == mesecon.state.on then
+			if mode ~= "sub" and state == "on" then
 				desc = S("Redstone Comparator (Powered)")
-			elseif mode == "sub" and state ~= mesecon.state.on then
+			elseif mode == "sub" and state ~= "on" then
 				desc = S("Redstone Comparator (Subtract)")
-			elseif mode == "sub" and state == mesecon.state.on then
+			elseif mode == "sub" and state == "on" then
 				desc = S("Redstone Comparator (Subtract, Powered)")
 			end
 			nodedef.description = desc
+
+			doc.add_entry_alias("nodes", "vlf_comparators:comparator_"..state.."_"..mode, "nodes", nodename)
 		end
 
 		minetest.register_node(nodename, nodedef)
-		vlf_wip.register_wip_item(nodename)
 	end
 end
-
--- Register recipies
-local rstorch = "mesecons_torch:mesecon_torch_on"
-local quartz  = "vlf_nether:quartz"
-local stone   = "vlf_core:stone"
 
 minetest.register_craft({
 	output = "vlf_comparators:comparator_off_comp",
 	recipe = {
-		{ "",      rstorch, ""      },
-		{ rstorch, quartz,  rstorch },
-		{ stone,   stone,   stone   },
+		{ "",      "vlf_redstone_torch:redstone_torch_on", ""      },
+		{ "vlf_redstone_torch:redstone_torch_on", "vlf_nether:quartz",  "vlf_redstone_torch:redstone_torch_on" },
+		{ "vlf_core:stone",   "vlf_core:stone",   "vlf_core:stone"   },
 	}
 })
 
--- Register active block handlers
-minetest.register_abm({
-	label = "Comparator signal input check (comparator is off)",
-	nodenames = {
-		"vlf_comparators:comparator_off_comp",
-		"vlf_comparators:comparator_off_sub",
-	},
-	neighbors = {"group:container", "group:comparator_signal"},
-	interval = 1,
-	chance = 1,
-	action = update_self,
-})
+minetest.register_on_dignode(function (pos, node)
+	if node and measure_tab[node.name] then
+		vlf_redstone.update_comparators(pos)
+	end
+	-- double chest support
+	local other_pos
+	local container_type = minetest.get_item_group(node.name, "container")
+	if container_type == 5 then
+		other_pos = vlf_util.get_double_container_neighbor_pos(pos, node.param2, "left")
+	elseif container_type == 6 then
+		other_pos = vlf_util.get_double_container_neighbor_pos(pos, node.param2, "right")
+	end
+	if other_pos then
+		--minetest.after(0.5, function ()
+			vlf_redstone.update_comparators(other_pos)
+		--end)
+	end
+end)
 
-minetest.register_abm({
-	label = "Comparator signal input check (comparator is on)",
-	nodenames = {
-		"vlf_comparators:comparator_on_comp",
-		"vlf_comparators:comparator_on_sub",
-	},
-	-- needs to run regardless of neighbors to make sure we detect when a
-	-- container is dug
-	interval = 1,
-	chance = 1,
-	action = update_self,
-})
+minetest.register_on_placenode(function (pos, newnode, _, oldnode)
+	if (newnode and measure_tab[newnode.name]) or (oldnode and measure_tab[oldnode.name]) then
+		vlf_redstone.update_comparators(pos)
+	end
+end)
 
+minetest.register_on_mods_loaded(function()
+	for name, def in pairs(minetest.registered_nodes) do
+		if minetest.get_item_group(name, "shulker_box") ~= 0 then
+			measure_tab[name] = measure_inventory
+		elseif minetest.get_item_group(name, "brewing_stand") ~= 0 then
+			measure_tab[name] = measure_brewing_stand
+		elseif def.groups and def.groups.comparator_signal then
+			measure_tab[name] = measure_constant(def.groups.comparator_signal)
+		end
+	end
 
--- Add entry aliases for the Help
-if minetest.get_modpath("doc") then
-	doc.add_entry_alias("nodes", "vlf_comparators:comparator_off_comp",
-				"nodes", "vlf_comparators:comparator_off_sub")
-	doc.add_entry_alias("nodes", "vlf_comparators:comparator_off_comp",
-				"nodes", "vlf_comparators:comparator_on_comp")
-	doc.add_entry_alias("nodes", "vlf_comparators:comparator_off_comp",
-				"nodes", "vlf_comparators:comparator_on_sub")
-end
+	local measureable_nodes = {}
+	for name, _ in pairs(measure_tab) do
+		table.insert(measureable_nodes, name)
+	end
+	vlf_redstone.register_action(vlf_redstone.update_comparators, measureable_nodes)
+end)

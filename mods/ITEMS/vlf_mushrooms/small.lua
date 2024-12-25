@@ -1,6 +1,6 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local on_place = vlf_util.generate_on_place_plant_function(function(place_pos, place_node)
+local on_place = vlf_util.generate_on_place_plant_function(function(place_pos, _)
 	local soil_node = minetest.get_node_or_nil({x=place_pos.x, y=place_pos.y-1, z=place_pos.z})
 	if not soil_node then return false end
 	local snn = soil_node.name -- soil node name
@@ -13,7 +13,7 @@ local on_place = vlf_util.generate_on_place_plant_function(function(place_pos, p
 	if light and light <= 12 then
 		light_ok = true
 	end
-	return ((snn == "vlf_core:podzol" or snn == "vlf_core:podzol_snow" or snn == "vlf_core:mycelium" or snn == "vlf_core:mycelium_snow") or (light_ok and minetest.get_item_group(snn, "solid") == 1 and minetest.get_item_group(snn, "opaque") == 1))
+	return (minetest.get_item_group(snn, "supports_mushrooms") == 1 or (light_ok and minetest.get_item_group(snn, "solid") == 1 and minetest.get_item_group(snn, "opaque") == 1))
 end)
 
 local longdesc_intro_brown = S("Brown mushrooms are fungi which grow and spread in darkness, but are sensitive to light. They are inedible as such, but they can be used to craft food items.")
@@ -26,41 +26,40 @@ local tt_help = S("Grows on podzol, mycelium and other blocks").."\n"..S("Spread
 
 local usagehelp = S("This mushroom can be placed on mycelium and podzol at any light level. It can also be placed on blocks which are both solid and opaque, as long as the light level at daytime is not higher than 12.")
 
-local function on_bone_meal(itemstack,placer,pointed_thing,pos,n)
-	if math.random(1, 100) > 40 then return false end --40% chance
+local function on_bone_meal(_, _, _, pos, n)
+	if math.random(1, 100) > 40 then return end --40% chance
 
 	local bn = minetest.get_node(vector.offset(pos,0,-1,0)).name
 	if bn ~= "vlf_core:mycelium" and bn ~= "vlf_core:dirt" and minetest.get_item_group(bn, "grass_block") ~= 1 and bn ~= "vlf_core:coarse_dirt" and bn ~= "vlf_core:podzol" then
-		return false
+		return
 	end
 
 	-- Select schematic
 	local schematic, offset, height
-	height = 8
+	height = 5
 	if n.name == "vlf_mushrooms:mushroom_brown" then
-		schematic = minetest.get_modpath("vlf_schematics").."/schems/vlf_mushrooms_huge_brown.mts"
-		offset = vector.new(-3,-1,-3)
+		schematic = minetest.get_modpath("vlf_mushrooms").."/schematics/vlf_mushrooms_huge_brown.mts"
+		offset = vector.new(-3,0,-3)
 	elseif n.name == "vlf_mushrooms:mushroom_red" then
-		schematic = minetest.get_modpath("vlf_schematics").."/schems/vlf_mushrooms_huge_red.mts"
+		schematic = minetest.get_modpath("vlf_mushrooms").."/schematics/vlf_mushrooms_huge_red.mts"
 		offset = vector.new(-2,-1,-2)
 	else
-		return false
+		return
 	end
 	-- Check space requirements
 	for i=1,3 do
 		local cpos = vector.add(pos, {x=0, y=i, z=0})
 		if minetest.get_node(cpos).name ~= "air" then
-			return false
+			return
 		end
 	end
-	local yoff = 3
-	local minp, maxp = vector.offset(pos,-3,yoff,-3), vector.offset(pos,3,yoff+(height-3),3)
+	local minp, maxp = vector.offset(pos,-3,1,-3), vector.offset(pos,3,height,3)
 	local diff = vector.subtract(maxp, minp)
 	diff = vector.add(diff, vector.new(1,1,1))
 	local totalnodes = diff.x * diff.y * diff.z
 	local goodnodes = minetest.find_nodes_in_area(minp, maxp, {"air", "group:leaves"})
 	if #goodnodes < totalnodes then
-		return false
+		return
 	end
 
 	-- Place the huge mushroom
@@ -84,7 +83,7 @@ minetest.register_node("vlf_mushrooms:mushroom_brown", {
 	walkable = false,
 	groups = {
 		attached_node = 1, deco_block = 1, destroy_by_lava_flow = 1,
-		dig_immediate = 3, dig_by_water = 1, dig_by_piston = 1,
+		dig_immediate = 3, dig_by_water = 1, dig_by_piston = 1, unsticky = 1,
 		mushroom = 1, enderman_takable = 1, compostability = 65
 	},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
@@ -113,7 +112,7 @@ minetest.register_node("vlf_mushrooms:mushroom_red", {
 	walkable = false,
 	groups = {
 		attached_node = 1, deco_block = 1, destroy_by_lava_flow = 1,
-		dig_immediate = 3, dig_by_water = 1, dig_by_piston = 1,
+		dig_immediate = 3, dig_by_water = 1, dig_by_piston = 1, unsticky = 1,
 		mushroom = 1, enderman_takable = 1, compostability = 65
 	},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),

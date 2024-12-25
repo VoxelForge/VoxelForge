@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_flowers x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_flowers x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This is a small flower. Small flowers are mainly used for dye production and can also be potted."
 msgstr "Esta es una pequeña flor. Las flores pequeñas se utilizan principalmente para la producción de tinte y también se pueden macetas."
@@ -20,7 +20,7 @@ msgid "It can only be placed on a block on which it would also survive."
 msgstr "Solo se puede colocar en un bloque en el que también sobreviviría."
 
 msgid "@1 (Top Part)"
-msgstr ""
+msgstr "@1 (Parte superior)"
 
 msgid "Poppy"
 msgstr "Amapola"
@@ -53,13 +53,13 @@ msgid "Blue Orchid"
 msgstr "Orquídea azul"
 
 msgid "Wither Rose"
-msgstr ""
+msgstr "Rosa wither"
 
 msgid "Lily of the Valley"
-msgstr ""
+msgstr "Iirio del valle"
 
 msgid "Cornflower"
-msgstr ""
+msgstr "Aciano"
 
 msgid "Peony"
 msgstr "Peonía"
@@ -71,7 +71,7 @@ msgid "Rose Bush"
 msgstr "Rosal"
 
 msgid "A rose bush is a large plant which occupies two blocks. It is safe to touch it. Rose bushes are mainly used in dye production."
-msgstr ""
+msgstr "Un rosal es una planta de gran tamaño que ocupa dos bloques de altura. Es seguro tocarlo. Los rosales se utilizan principalmente en la producción de tintes."
 
 msgid "Lilac"
 msgstr "Lila"

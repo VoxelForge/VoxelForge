@@ -99,8 +99,7 @@ function vlf_meshhand.update_player(player)
 		local creative = minetest.is_creative_enabled(player:get_player_name())
 		hand = ItemStack("vlf_meshhand:hand" .. (creative and "_crea" or "_surv"))
 	end
-	if not vlf_entity_effects then player:get_inventory():set_stack("hand", 1, hand) end
-	player:get_inventory():set_stack("hand", 1, vlf_entity_effects.hf_update_internal(hand, player))
+	player:get_inventory():set_stack("hand", 1, vlf_potions.hf_update_internal(hand, player))
 end
 
 if vlf_skins_enabled then
@@ -114,5 +113,26 @@ vlf_gamemode.register_on_gamemode_change(vlf_meshhand.update_player)
 -- This is needed to deal damage when punching mobs
 -- with random items in hand in survival mode
 minetest.override_item("", {
-	tool_capabilities = vlf_meshhand.survival_hand_tool_caps
+	tool_capabilities = vlf_meshhand.survival_hand_tool_caps,
+	on_place = function(_, placer, pointed_thing)
+		if minetest.is_creative_enabled(placer:get_player_name()) then
+			local name = minetest.get_node(pointed_thing.under).name
+			local stack = ItemStack(name)
+			local def = stack:get_definition()
+			if type(def._vlf_baseitem) == "function" then
+				stack = def._vlf_baseitem(pointed_thing.under)
+			elseif minetest.get_item_group(name, "not_in_creative_inventory") > 0 then
+				if not def.drop and not def._vlf_baseitem then return end
+				name = def._vlf_baseitem or def.drop
+				stack = ItemStack(name)
+			end
+			local inv = placer:get_inventory()
+			stack:set_count(stack:get_stack_max())
+			local istack = inv:remove_item("main", stack)
+			if istack:get_count() <= 0 then
+				return stack
+			end
+			return istack
+		end
+	end,
 })

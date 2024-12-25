@@ -24,8 +24,3 @@ Open a window providing help entries about Minetest and more=
 Help=
 Allows you to reveal all hidden help entries with /help_reveal=
 Reveal all hidden help entries to you=
-
-
-##### not used anymore #####
-
-New help entry unlocked: @1 > @2=Nuova sezione di aiuto sbloccata: @1 > @2

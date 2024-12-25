@@ -24,9 +24,3 @@ Open a window providing help entries about Minetest and more=Minetestに関す�
 Help=ヘルプ
 Allows you to reveal all hidden help entries with /help_reveal=/help_reveal で隠れているヘルプエントリーをすべて表示できるようにする
 Reveal all hidden help entries to you=隠れているヘルプをすべて表示する
-
-
-##### not used anymore #####
-
-New help entry unlocked: @1 > @2=新しいヘルプエントリーがアンロックされた：@1 > @2
-Collection of help texts=ヘルプテキスト集

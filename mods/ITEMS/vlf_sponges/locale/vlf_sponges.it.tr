@@ -1,6 +1,6 @@
 # textdomain: vlf_sponges
-Sponge=
-Removes water on contact=
+Sponge=Spugna
+Removes water on contact=Rimuove l'acqua al contatto
 Sponges are blocks which remove water around them when they are placed or come in contact with water, turning it into a wet sponge.=
 Waterlogged Sponge=
 Can be dried in furnace=

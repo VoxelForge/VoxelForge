@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_hoppers x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_hoppers x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Hopper"
 msgstr "Entonnoir"
@@ -32,16 +32,16 @@ msgid "Hoppers are containers with 5 inventory slots. They collect dropped items
 msgstr "Les entonoirs sont des conteneurs avec 5 emplacements d'inventaire. Ils récupèrent les objets déposés par le haut, prennent les objets d'un conteneur au-dessus et tentent de les placer dans un conteneur adjacent. Les entonnoirs peuvent aller vers le bas ou sur le côté. Les entonnoirs interagissent avec les coffres, les compte-gouttes, les distributeurs, les boites de shulker, les fours et les entonnoirs."
 
 msgid "Hoppers interact with containers the following way:"
-msgstr "Les entonnoirs interagissent avec les conteneurs de la manière suivante:"
+msgstr "Les entonnoirs interagissent avec les conteneurs de la manière suivante :"
 
 msgid "• Furnaces: Hoppers from above will put items into the source slot. Hoppers from below take items from the output slot. They also take items from the fuel slot when they can't be used as a fuel. Sideway hoppers that point to the furnace put items into the fuel slot"
-msgstr "• Fours: les entonoires d'en haut placent les objets dans l'emplacement source. Les entonoires d'en bas prennent les éléments de la fente de sortie. Ils prennent également des objets de la fente de carburant lorsqu'ils ne peuvent pas être utilisés comme carburant. Des entonaires latérales qui pointent vers le four mettent des objets dans la fente de combustible"
+msgstr "• Fours : les entonnoirs d'en haut placent les objets dans l'emplacement source. Les entonnoirs d'en bas prennent les éléments de la fente de sortie. Ils prennent également des objets de la fente de carburant lorsqu'ils ne peuvent pas être utilisés comme carburant. Des entonnoirs latérales qui pointent vers le four mettent des objets dans la fente de combustible"
 
 msgid "• Ender chests: No interaction."
-msgstr "• Coffres Ender: Aucune interaction."
+msgstr "• Coffres de l'Ender : Aucune interaction."
 
 msgid "• Other containers: Normal interaction."
-msgstr "• Autres conteneurs: interaction normale."
+msgstr "• Autres conteneurs : interaction normale."
 
 msgid "Hoppers can be disabled when supplied with redstone power. Disabled hoppers don't move items."
 msgstr "Les entonoires peuvent être désactivées lorsqu'elles sont alimentées en redstone. Les trémies désactivées ne déplacent pas les objets."

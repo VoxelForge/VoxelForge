@@ -1,4 +1,4 @@
--- compatibility layer with the new vlf hopper API
+-- compatibility layer with the new vlf2 hopper API
 function vlf_util.select_stack(src_inventory, src_list, dst_inventory, dst_list, condition)
 	local src_size = src_inventory:get_size(src_list)
 	local stack
@@ -18,7 +18,7 @@ minetest.register_on_mods_loaded(function()
 				_on_hopper_out = function(node_pos, hopper_pos)
 					local hinv = minetest.get_meta(hopper_pos):get_inventory()
 					local inv, list, stack = def._vlf_hoppers_on_try_pull(node_pos, hopper_pos, hinv, "main")
-					if stack and vlf_util.move_item(inv, list, stack, hinv, "main") and ( def._vlf_hoppers_after_pull == nil or def._vlf_hoppers_after_pull(node_pos)) then
+					if stack and vlf_util.move_item(inv, list, stack, hinv, "main") then
 						return true
 					end
 					return true
@@ -30,11 +30,21 @@ minetest.register_on_mods_loaded(function()
 				_on_hopper_in = function(hopper_pos, node_pos)
 					local hinv = minetest.get_meta(hopper_pos):get_inventory()
 					local inv, list, stack = def._vlf_hoppers_on_try_push(node_pos, hopper_pos, hinv, "main")
-					if stack and vlf_util.move_item(hinv, "main", stack, inv, list) and ( def._vlf_hoppers_after_push == nil or def._vlf_hoppers_after_push(node_pos)) then
+					if stack and vlf_util.move_item(hinv, "main", stack, inv, list) then
 						return true
 					end
 					return true
 				end,
+			})
+		end
+		if not def._after_hopper_out and def._vlf_hoppers_on_after_pull then
+			minetest.override_item(nname, {
+				_after_hopper_out = def._vlf_hoppers_on_after_pull,
+			})
+		end
+		if not def._after_hopper_in and def._vlf_hoppers_on_after_push then
+			minetest.override_item(nname, {
+				_after_hopper_in = def._vlf_hoppers_on_after_push,
 			})
 		end
 	end

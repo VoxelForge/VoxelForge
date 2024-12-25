@@ -38,7 +38,7 @@ Return direction where the water is flowing (to be use to push mobs, items...).
 
 ## flowlib.move_centre(pos, realpos, node, radius)
 Return the pos of the nearest not water block near from <pos> in a sphere of <radius> at <realpos>.
-WARNING: This function is never used in vlf, use at your own risk. The informations described here may be wrong.
+WARNING: This function is never used in vlf2, use at your own risk. The informations described here may be wrong.
 * pos: position
 * realpos: position, position of the entity
 * node: node

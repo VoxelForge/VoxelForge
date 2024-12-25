@@ -1,13 +1,13 @@
 # textdomain: vlf_minecarts
-Sneak-click to remove=
-Minecart=
-Vehicle for fast travel on rails=
+Sneak-click to remove=Cliccare da accovacciati per rimuovere
+Minecart=Vagone Minerario
+Vehicle for fast travel on rails=Veicolo per viaggiare rapidamente sui binari
 Minecarts can be used for a quick transportion on rails.=
 Minecarts only ride on rails and always follow the tracks. At a T-junction with no straight way ahead, they turn left. The speed is affected by the rail type.=
 You can place the minecart on rails. Right-click it to enter it. Punch it to get it moving.=
 To obtain the minecart, punch it while holding down the sneak key.=
 If it moves over a powered activator rail, you'll get ejected.=
-Sneak to dismount=
+Sneak to dismount=Accovacciarsi per scendere
 Minecart with Chest=
 Minecart with Furnace=
 A minecart with furnace is a vehicle that travels on rails. It can propel itself with fuel.=

@@ -2,44 +2,11 @@ vlf_mapgen_core = {}
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 
+local bedrock_in_singlenode = false
+local end_fixes_in_singlenode = true
 --
 -- Aliases for map generator outputs
-
--- Cave API file
--- Function to check if Minetest version is 5.9.0 or higher
---[[local function is_version_590_or_higher()
-    local version_info = minetest.get_version()
-    if not version_info or not version_info.string then
-        -- If version information is not available, default to false
-        return false
-    end
-
-    -- Extract the major and minor version numbers from the version string
-    local major, minor = version_info.string:match("^(%d+)%.(%d+)")
-
-    if not major or not minor then
-        -- If we can't parse the version numbers, default to false
-        return false
-    end
-
-    major = tonumber(major)
-    minor = tonumber(minor)
-
-    -- Check if the server version is 5.9.0 or higher
-    return major > 5 or (major == 5 and minor >= 9)
-end]]
-
---[[ Execute based on the Minetest version
-if minetest.settings:get_bool('vlf_enable_experimental_caves', true) then
-    if is_version_590_or_higher() then
-        -- If the server is running Minetest 5.9.0 or higher, add the mapgen script function
-        dofile(modpath.."/cave_api.lua")
-        --minetest.register_mapgen_script(modpath.."/cave_api.lua")
-    else
-        -- Otherwise, only do the dofile
-        dofile(modpath.."/cave_api.lua")
-    end
-end]]
+--
 
 minetest.register_alias("mapgen_air", "air")
 minetest.register_alias("mapgen_stone", "vlf_core:stone")
@@ -87,7 +54,7 @@ for _,mg in pairs({"v7","valleys","carpathian","v5","fractal"}) do
 		minetest.set_mapgen_setting("mg"..mg.."_large_cave_flooded", "0.1", true)
 		minetest.set_mapgen_setting("mg"..mg.."_large_cave_num_min", "0", true)
 		minetest.set_mapgen_setting("mg"..mg.."_large_cave_num_max", "9", true)
-		mg_flags.caverns = false
+		mg_flags.caverns = true
 	end
 end
 
@@ -101,7 +68,7 @@ end
 if string.len(mg_flags_str) > 0 then
 	mg_flags_str = string.sub(mg_flags_str, 1, string.len(mg_flags_str)-1)
 end
-minetest.set_mapgen_setting("mg_flags", mg_flags_str, false)
+minetest.set_mapgen_setting("mg_flags", mg_flags_str, true)
 
 -- Helper function for converting a MC probability to MT, with
 -- regards to MapBlocks.
@@ -206,7 +173,7 @@ local function set_layers(data, area, content_id, check, min, max, minp, maxp, l
 end
 
 -- Below the bedrock, generate air/void
-local function world_structure(vm, data, data2, emin, emax, area, minp, maxp, blockseed)
+local function world_structure(vm, data, data2, emin, emax, area, minp, maxp, blockseed) ---@diagnostic disable-line: unused-local
 	local lvm_used = false
 	local pr = PseudoRandom(blockseed)
 
@@ -230,7 +197,7 @@ local function world_structure(vm, data, data2, emin, emax, area, minp, maxp, bl
 	lvm_used = set_layers(data, area, c_void         , nil, vlf_vars.mg_realm_barrier_overworld_end_max+1, vlf_vars.mg_overworld_min                  -1, minp, maxp, lvm_used, pr)
 
 
-	if mg_name ~= "singlenode" then
+	if (mg_name ~= "singlenode" or bedrock_in_singlenode) then
 		-- Bedrock
 		lvm_used = set_layers(data, area, c_bedrock, bedrock_check, vlf_vars.mg_bedrock_overworld_min, vlf_vars.mg_bedrock_overworld_max, minp, maxp, lvm_used, pr)
 		lvm_used = set_layers(data, area, c_bedrock, bedrock_check, vlf_vars.mg_bedrock_nether_bottom_min, vlf_vars.mg_bedrock_nether_bottom_max, minp, maxp, lvm_used, pr)
@@ -250,11 +217,11 @@ local function world_structure(vm, data, data2, emin, emax, area, minp, maxp, bl
 	local deco = false
 	local ores = false
 	if minp.y >  vlf_vars.mg_nether_deco_max - 64 and maxp.y <  vlf_vars.mg_nether_max + 128 then
-		deco = {min=vlf_vars.mg_nether_deco_max,max=vlf_vars.mg_nether_max}
+		deco = {min=vlf_vars.mg_nether_deco_max,max=vlf_vars.mg_nether_max} ---@diagnostic disable-line: cast-local-type
 	end
 	if minp.y <  vlf_vars.mg_nether_min + 10 or maxp.y <  vlf_vars.mg_nether_min + 60 then
-		deco = {min=vlf_vars.mg_nether_min - 10,max=vlf_vars.mg_nether_min + 20}
-		ores = {min=vlf_vars.mg_nether_min - 10,max=vlf_vars.mg_nether_min + 20}
+		deco = {min=vlf_vars.mg_nether_min - 10,max=vlf_vars.mg_nether_min + 20} ---@diagnostic disable-line: cast-local-type
+		ores = {min=vlf_vars.mg_nether_min - 10,max=vlf_vars.mg_nether_min + 20} ---@diagnostic disable-line: cast-local-type
 	end
 	return lvm_used, lvm_used, deco, ores
 end
@@ -264,7 +231,7 @@ local biome_id_p2 = {}
 local biomecolor_nodes = {}
 
 minetest.register_on_mods_loaded(function()
-	for n, d in pairs(minetest.registered_nodes) do
+	for n, _ in pairs(minetest.registered_nodes) do
 		if minetest.get_item_group(n, "biomecolor") > 0 then
 			table.insert(biomecolor_nodes, n)
 		end
@@ -274,7 +241,7 @@ minetest.register_on_mods_loaded(function()
 	end
 end)
 
-local function set_param2_nodes(vm, data, data2, emin, emax, area, minp, maxp, blockseed)
+local function set_param2_nodes(vm, data, data2, emin, emax, area, minp, maxp, blockseed) ---@diagnostic disable-line: unused-local
 	if emin.y > vlf_vars.mg_overworld_max or emax.y < vlf_vars.mg_overworld_min then return end
 	local biomemap = minetest.get_mapgen_object("biomemap")
 	if not biomemap then return end
@@ -294,12 +261,12 @@ end
 
 
 -- End block fixes:
-local function end_basic(vm, data, data2, emin, emax, area, minp, maxp, blockseed)
+local function end_basic(vm, data, data2, emin, emax, area, minp, maxp, blockseed) ---@diagnostic disable-line: unused-local
 	if maxp.y < vlf_vars.mg_end_min or minp.y > vlf_vars.mg_end_max then return end
 	for z = minp.z, maxp.z do
 	for y = minp.y, maxp.y do
 		local vi = area:index(minp.x, y, z)
-		for x = minp.x, maxp.x do
+		for _ = minp.x, maxp.x do
 			if data[vi] == c_water then
 				data[vi] = c_air
 			end
@@ -307,41 +274,39 @@ local function end_basic(vm, data, data2, emin, emax, area, minp, maxp, blocksee
 		end
 	end
 	end
-	vm:set_lighting({day=15, night=15}, emin, emax)
-	return true
+	return true, false -- necessary so lighting is correctly initialized
 end
 
 
 vlf_mapgen_core.register_generator("world_structure", world_structure, nil, 1, false)
 
-if mg_name ~= "singlenode" then
+if mg_name ~= "singlenode" or end_fixes_in_singlenode then
 	vlf_mapgen_core.register_generator("end_fixes", end_basic,nil, 9999, false)
 	vlf_mapgen_core.register_generator("set_param2_nodes", set_param2_nodes, nil, 9999, true)
 end
 
 -- This should be moved to vlf_structures eventually if the dependencies can be sorted out.
+local function in_cube(tpos, wpos1, wpos2)
+	local minp, maxp = vector.sort(wpos1, wpos2)
+	return vector.in_area(tpos, minp, maxp)
+end
+
 vlf_mapgen_core.register_generator("structures",nil, function(minp, maxp, blockseed)
 	local gennotify = minetest.get_mapgen_object("gennotify")
-	local has = false
 	for _,struct in pairs(vlf_structures.registered_structures) do
 		if struct.deco_id then
+			local has = false
 			for _, pos in pairs(gennotify["decoration#"..struct.deco_id] or {}) do
-				local pr = PcgRandom(minetest.hash_node_position(pos) + blockseed + 42)
-				local realpos = vector.offset(pos,0,1,0)
-				minetest.remove_node(realpos)
-				minetest.fix_light(vector.offset(pos,-1,-1,-1),vector.offset(pos,1,3,1))
+				local pr = PcgRandom(minetest.hash_node_position(pos) + 42)
 				if struct.chunk_probability == nil or (not has and pr:next(1,struct.chunk_probability) == 1 ) then
-					vlf_structures.place_structure(realpos,struct,pr,blockseed)
+					vlf_structures.place_structure(vector.offset(pos,0,1,0), struct, pr, blockseed)
 					has=true
 				end
 			end
 		elseif struct.static_pos then
-			--[[for _,p in pairs(struct.static_pos) do
-				if vlf_util.in_cube(p,minp,maxp) then
-					vlf_structures.place_structure(p,struct,pr,blockseed)]]
 			for _, pos in pairs(struct.static_pos) do
 				local pr = PcgRandom(minetest.hash_node_position(pos) + 42)
-				if vlf_util.in_cube(pos, minp, maxp) then
+				if in_cube(pos, minp, maxp) then
 					vlf_structures.place_structure(pos, struct, pr, blockseed)
 				end
 			end

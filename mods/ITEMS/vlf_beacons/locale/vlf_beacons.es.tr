@@ -1,4 +1,5 @@
 # textdomain: vlf_beacons
-Beacon:=
-Primary Power:=
-Inventory:=
+Primary Power:=Poder Primario:
+Secondary Power:=Poder Secundario:
+Inventory:=Inventario:
+Beacon=Faro

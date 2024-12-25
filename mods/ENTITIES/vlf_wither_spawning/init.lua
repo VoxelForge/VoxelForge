@@ -6,9 +6,11 @@ local peaceful = minetest.settings:get_bool("only_peaceful_mobs", false)
 
 local function load_schem(filename)
 	local file = io.open(modpath .. "/schems/" .. filename, "r")
-	local data = minetest.deserialize(file:read())
-	file:close()
-	return data
+	if file then
+		local data = minetest.deserialize(file:read())
+		file:close()
+		return data
+	end
 end
 
 local wither_spawn_schems = {}
@@ -44,8 +46,7 @@ local function wither_spawn(pos, player)
 				if not wither then return end
 				local wither_ent = wither:get_luaentity()
 				wither_ent._spawner = player:get_player_name()
-				local objects = minetest.get_objects_inside_radius(pos, 20)
-				for _, players in ipairs(objects) do
+				for players in minetest.objects_inside_radius(pos, 20) do
 					if players:is_player() then
 						awards.unlock(players:get_player_name(), "vlf:witheringHeights")
 					end

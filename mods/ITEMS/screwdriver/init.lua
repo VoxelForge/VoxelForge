@@ -5,17 +5,15 @@ screwdriver = {}
 screwdriver.ROTATE_FACE = 1
 screwdriver.ROTATE_AXIS = 2
 
-function screwdriver.disallow(pos, node, user, mode, new_param2)
-	return false
-end
+function screwdriver.disallow() return false end
 
-function screwdriver.rotate_simple(pos, node, user, mode, new_param2)
+function screwdriver.rotate_simple(_, _, _, mode, _)
 	if mode ~= screwdriver.ROTATE_FACE then
 		return false
 	end
 end
 
-function screwdriver.rotate_3way(pos, node, user, mode, new_param2)
+function screwdriver.rotate_3way(pos, node, _, mode, _)
 	if mode == screwdriver.ROTATE_AXIS then
 		if node.param2 == 0 then
 			node.param2 = 6
@@ -74,7 +72,7 @@ local facedir_tbl = {
 	},
 }
 
-function screwdriver.rotate.facedir(pos, node, mode)
+function screwdriver.rotate.facedir(_, node, mode)
 	local rotation = node.param2 % 32 -- get first 5 bits
 	local other = node.param2 - rotation
 	rotation = facedir_tbl[mode][rotation] or 0
@@ -94,7 +92,7 @@ function screwdriver.rotate.wallmounted(pos, node, mode)
 	rotation = wallmounted_tbl[mode][rotation] or 0
 	if minetest.get_item_group(node.name, "attached_node") ~= 0 then
 		-- find an acceptable orientation
-		for i = 1, 5 do
+		for _ = 1, 5 do
 			if not check_attached_node(pos, rotation) then
 				rotation = wallmounted_tbl[mode][rotation] or 0
 			else

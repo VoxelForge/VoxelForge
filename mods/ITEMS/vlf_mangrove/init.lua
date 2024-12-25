@@ -1,24 +1,26 @@
 local S = minetest.get_translator("vlf_mangrove")
-local schempath = minetest.get_modpath("vlf_schematics")
+local modname = minetest.get_current_modname()
+local modpath = minetest.get_modpath(modname)
 
 vlf_trees.register_wood("mangrove",{
-	readable_name=S("Mangrove"),
+	readable_name="Mangrove",
 	sign_color="#8E3731",
 	sapling=false,
+	saplingdrop="vlf_mangrove:propagule",
 	tree_schems = {
-		{file = schempath.."/schems/vlf_mangrove_tree_1.mts", offset = vector.new(1,0,1)},
-		{file = schempath.."/schems/vlf_mangrove_tree_2.mts",},
-		{file = schempath.."/schems/vlf_mangrove_tree_3.mts",},
-		{file = schempath.."/schems/vlf_mangrove_tree_4.mts",},
-		{file = schempath.."/schems/vlf_mangrove_tree_5.mts", offset = vector.new(1,0,1)},
-		{file = schempath.."/schems/vlf_mangrove_bee_nest.mts", offset = vector.new(0,0,1)},
+		{file = modpath.."/schematics/vlf_mangrove_tree_1.mts", offset = vector.new(1,0,1)},
+		{file = modpath.."/schematics/vlf_mangrove_tree_2.mts",},
+		{file = modpath.."/schematics/vlf_mangrove_tree_3.mts",},
+		{file = modpath.."/schematics/vlf_mangrove_tree_4.mts",},
+		{file = modpath.."/schematics/vlf_mangrove_tree_5.mts", offset = vector.new(1,0,1)},
+		{file = modpath.."/schematics/vlf_mangrove_bee_nest.mts", offset = vector.new(0,0,1)},
 	},
 	tree = { tiles = {"vlf_mangrove_log_top.png", "vlf_mangrove_log_top.png","vlf_mangrove_log.png" }},
 	bark = { tiles = {"vlf_mangrove_log.png"}},
 	leaves = {
 		tiles = { "vlf_mangrove_leaves.png" },
 		color = "#6a7039",
-		_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
+		_on_bone_meal = function(_, _, _, pos)
 			local upos = vector.offset(pos, 0,-1,0)
 			return minetest.get_node(upos).name == "air" and minetest.set_node(upos, {name="vlf_mangrove:hanging_propagule_1"})
 		end,
@@ -101,6 +103,7 @@ for _,root in pairs(propagule_water_nodes) do
 		_vlf_hardness = 0,
 		_vlf_blast_resistance = 0,
 		_vlf_silk_touch_drop = true,
+		_vlf_baseitem = "vlf_mangrove:propagule",
 	})
 
 end
@@ -128,6 +131,7 @@ minetest.register_node("vlf_mangrove:mangrove_roots", {
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	_vlf_blast_resistance = 0.7,
 	_vlf_hardness = 0.7,
+	_vlf_burntime = 15,
 	_vlf_silk_touch_drop = true,
 	_vlf_fortune_drop = { "vlf_mangrove:mangrove_roots 1", "vlf_mangrove:mangrove_roots 2", "vlf_mangrove:mangrove_roots 3", "vlf_mangrove:mangrove_roots 4" },
 	_on_bucket_place = function(itemstack,placer,pointed_thing)
@@ -165,7 +169,7 @@ minetest.register_node("vlf_mangrove:propagule", {
 		fixed = {-5/16, -0.5, -5/16, 5/16, 0.5, 5/16}
 	},
 	groups = {
-		plant = 1, sapling = 1, non_mycelium_plant = 1, attached_node = 1,
+		plant = 1, sapling = 1, flower = 1, non_mycelium_plant = 1, attached_node = 1,
 		deco_block = 1, dig_immediate = 3, dig_by_water = 0, dig_by_piston = 1,
 		destroy_by_lava_flow = 1, compostability = 30
 	},
@@ -177,10 +181,10 @@ minetest.register_node("vlf_mangrove:propagule", {
 	node_placement_prediction = "",
 	_vlf_blast_resistance = 0,
 	_vlf_hardness = 0,
-	_on_bone_meal = function(itemstack,placer,pointed_thing,pos,node)
+	_on_bone_meal = function(_, _, _, pos, node)
 		return vlf_trees.grow_tree(pos, node)
 	end,
-	on_place = vlf_util.generate_on_place_plant_function(function(place_pos, place_node,stack)
+	on_place = vlf_util.generate_on_place_plant_function(function(place_pos, _,stack)
 		local under = vector.offset(place_pos,0,-1,0)
 		local snn = minetest.get_node_or_nil(under).name
 		if not snn then return false end
@@ -223,6 +227,7 @@ minetest.register_node("vlf_mangrove:hanging_propagule_1", {
 	tiles = {"vlf_mangrove_propagule_hanging.png"},
 	inventory_image = "vlf_mangrove_propagule.png",
 	wield_image = "vlf_mangrove_propagule.png",
+	_vlf_baseitem = "vlf_mangrove:propagule",
 })
 
 
@@ -268,6 +273,7 @@ local wlroots = {
 		handy = 1, hoey = 1, water=4, liquid=3, puts_out_fire=1, dig_by_piston = 1, deco_block = 1,  not_in_creative_inventory=1 },
 	_vlf_blast_resistance = 100,
 	_vlf_hardness = -1, -- Hardness intentionally set to infinite instead of 100 (Minecraft value) to avoid problems in creative mode
+	_vlf_baseitem = "vlf_mangrove:mangrove_roots",
 	on_construct = function(pos)
 		local dim = vlf_worlds.pos_to_dimension(pos)
 		if dim == "nether" then
@@ -336,12 +342,6 @@ minetest.register_craft({
 	}
 })
 
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_mangrove:mangrove_roots",
-	burntime = 15,
-})
-
 local adjacents = {
 	vector.new(1,0,0),
 	vector.new(-1,0,0),
@@ -355,7 +355,7 @@ minetest.register_abm({
 	neighbors = {"group:water"},
 	interval = 5,
 	chance = 5,
-	action = function(pos,value)
+	action = function(pos)
 		for _,v in pairs(adjacents) do
 			local n = minetest.get_node(vector.add(pos,v)).name
 			if minetest.get_item_group(n,"water") > 0 then
@@ -370,5 +370,3 @@ minetest.register_abm({
 		end
 	end
 })
-
-minetest.register_alias("vlf_trees:sapling_mangrove", "vlf_mangrove:propagule")

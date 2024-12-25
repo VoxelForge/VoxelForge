@@ -39,9 +39,7 @@ end
 
 vlf_item_entity.register_pickup_achievement("tree", "vlf:mineWood")
 vlf_item_entity.register_pickup_achievement("vlf_mobitems:blaze_rod", "vlf:blazeRod")
-if minetest.settings:get_bool('legacy_achievements', true) then
-	vlf_item_entity.register_pickup_achievement("vlf_mobitems:leather", "vlf:killCow")
-end
+vlf_item_entity.register_pickup_achievement("vlf_mobitems:leather", "vlf:killCow")
 vlf_item_entity.register_pickup_achievement("vlf_core:diamond", "vlf:diamonds")
 vlf_item_entity.register_pickup_achievement("vlf_core:crying_obsidian", "vlf:whosCuttingOnions")
 vlf_item_entity.register_pickup_achievement("vlf_nether:ancient_debris", "vlf:hiddenInTheDepths")
@@ -54,7 +52,7 @@ vlf_player.register_globalstep(function(player)
 
 		local checkpos = vector.offset(pos, 0, item_drop_settings.player_collect_height, 0)
 		--magnet and collection
-		for _,object in pairs(minetest.get_objects_inside_radius(checkpos, item_drop_settings.xp_radius_magnet)) do
+		for object in minetest.objects_inside_radius(checkpos, item_drop_settings.xp_radius_magnet) do
 			if not object:is_player() then
 				local le = object:get_luaentity()
 				if le and le.name == "__builtin:item" and not le._removed and
@@ -133,8 +131,10 @@ function minetest.handle_node_drops(pos, drops, digger)
 	local dug_node = minetest.get_node(pos)
 	local tooldef
 	local tool
+	local is_book
 	if digger and digger:is_player() then
 		tool = digger:get_wielded_item()
+		is_book = tool:get_name() == "vlf_enchanting:book_enchanted"
 		tooldef = minetest.registered_items[tool:get_name()]
 
 		if not vlf_autogroup.can_harvest(dug_node.name, tool:get_name(), digger) then
@@ -164,7 +164,7 @@ function minetest.handle_node_drops(pos, drops, digger)
 		else
 			drops = nodedef._vlf_shears_drop
 		end
-	elseif tool and enchantments.silk_touch and nodedef._vlf_silk_touch_drop then
+	elseif tool and not is_book and enchantments.silk_touch and nodedef._vlf_silk_touch_drop then
 		silk_touch_drop = true
 		if nodedef._vlf_silk_touch_drop == true then
 			drops = { dug_node.name }
@@ -173,7 +173,7 @@ function minetest.handle_node_drops(pos, drops, digger)
 		end
 	end
 
-	if tool and nodedef._vlf_fortune_drop and enchantments.fortune then
+	if tool and not is_book and nodedef._vlf_fortune_drop and enchantments.fortune then
 		local fortune_level = enchantments.fortune
 		local fortune_drop = nodedef._vlf_fortune_drop
 		local simple_drop = nodedef._vlf_fortune_drop.drop_without_fortune
@@ -304,7 +304,6 @@ minetest.register_entity(":__builtin:item", {
 	initial_properties = {
 		hp_max = 1,
 		physical = true,
-		collide_with_objects = false,
 		collisionbox = {-0.3, -0.3, -0.3, 0.3, 0.3, 0.3},
 		pointable = false,
 		visual = "wielditem",
@@ -313,6 +312,10 @@ minetest.register_entity(":__builtin:item", {
 		spritediv = {x = 1, y = 1},
 		initial_sprite_basepos = {x = 0, y = 0},
 		automatic_rotate = math.pi * 0.5,
+		-- This prevents items from colliding with shulkers,
+		-- but this is a better compromise than permitting
+		-- them to colide with players.
+		collide_with_objects = false,
 	},
 
 	-- Itemstring of dropped item. The empty string is used when the item is not yet initialized yet.
@@ -879,7 +882,7 @@ minetest.register_entity(":__builtin:item", {
 
 		if not minetest.registered_nodes[nn] or is_floating or is_on_floor then
 			-- Merge with close entities of the same item
-			for _, object in pairs(minetest.get_objects_inside_radius(p, 0.8)) do
+			for object in minetest.objects_inside_radius(p, 0.8) do
 				local l = object:get_luaentity()
 
 				if l and l.name == "__builtin:item" and l.physical_state == false then

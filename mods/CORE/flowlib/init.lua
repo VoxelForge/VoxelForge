@@ -106,13 +106,25 @@ local function quick_flow_logic(node, pos_testing, direction)
 	return 0
 end
 
+local function quick_flow_vertical (node)
+	local name = node.name
+	if not minetest.registered_nodes[name] then
+		return 0
+	end
+	if minetest.registered_nodes[name].liquidtype == "source" then
+		return 0
+	end
+	return node.param2 >= 8 and 1 or 0
+end
+
 local function quick_flow(pos, node)
 	if not node_is_liquid(node)  then
 		return {x = 0, y = 0, z = 0}
 	end
 	local x = quick_flow_logic(node,{x = pos.x-1, y = pos.y, z = pos.z},-1) + quick_flow_logic(node,{x = pos.x+1, y = pos.y, z = pos.z}, 1)
+	local y = quick_flow_vertical (node)
 	local z = quick_flow_logic(node,{x = pos.x, y = pos.y, z = pos.z-1},-1) + quick_flow_logic(node,{x = pos.x, y = pos.y, z = pos.z+1}, 1)
-	return to_unit_vector({x = x, y = 0, z = z})
+	return to_unit_vector({x = x, y = -y, z = z})
 end
 
 flowlib.quick_flow = quick_flow

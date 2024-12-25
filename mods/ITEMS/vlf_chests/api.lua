@@ -261,26 +261,26 @@ local function chest_update_after_close(pos)
 		minetest.swap_node(pos, { name = "vlf_chests:trapped_chest_small", param2 = node.param2 })
 		find_or_create_entity(pos, "vlf_chests:trapped_chest_small", { "vlf_chests_trapped.png" }, node.param2, false,
 			"default_chest", "vlf_chests_chest", "chest"):reinitialize("vlf_chests:trapped_chest_small")
-		mesecon.receptor_off(pos, mesecon.rules.pplate)
+		--mesecon.receptor_off(pos, mesecon.rules.pplate)
 	elseif node.name == "vlf_chests:trapped_chest_on_left" then
 		minetest.swap_node(pos, { name = "vlf_chests:trapped_chest_left", param2 = node.param2 })
 		find_or_create_entity(pos, "vlf_chests:trapped_chest_left", vlf_chests.tiles.chest_trapped_double, node.param2, true,
 			"default_chest", "vlf_chests_chest", "chest"):reinitialize("vlf_chests:trapped_chest_left")
-		mesecon.receptor_off(pos, mesecon.rules.pplate)
+		--mesecon.receptor_off(pos, mesecon.rules.pplate)
 
 		local pos_other = vlf_util.get_double_container_neighbor_pos(pos, node.param2, "left")
 		minetest.swap_node(pos_other, { name = "vlf_chests:trapped_chest_right", param2 = node.param2 })
-		mesecon.receptor_off(pos_other, mesecon.rules.pplate)
+		--mesecon.receptor_off(pos_other, mesecon.rules.pplate)
 	elseif node.name == "vlf_chests:trapped_chest_on_right" then
 		minetest.swap_node(pos, { name = "vlf_chests:trapped_chest_right", param2 = node.param2 })
-		mesecon.receptor_off(pos, mesecon.rules.pplate)
+		--mesecon.receptor_off(pos, mesecon.rules.pplate)
 
 		local pos_other = vlf_util.get_double_container_neighbor_pos(pos, node.param2, "right")
 		minetest.swap_node(pos_other, { name = "vlf_chests:trapped_chest_left", param2 = node.param2 })
 		find_or_create_entity(pos_other, "vlf_chests:trapped_chest_left", vlf_chests.tiles.chest_trapped_double,
 			node.param2, true, "default_chest", "vlf_chests_chest", "chest")
 			:reinitialize("vlf_chests:trapped_chest_left")
-		mesecon.receptor_off(pos_other, mesecon.rules.pplate)
+		--mesecon.receptor_off(pos_other, mesecon.rules.pplate)
 	end
 end
 vlf_chests.chest_update_after_close = chest_update_after_close
@@ -716,7 +716,7 @@ function vlf_chests.register_chest(basename, d)
 		on_destruct = function(pos)
 			close_forms(d.canonical_basename, pos)
 		end,
-		mesecons = d.mesecons,
+		--mesecons = d.mesecons,
 		on_rotate = simple_rotate,
 	})
 
@@ -777,7 +777,7 @@ function vlf_chests.register_chest(basename, d)
 			player_chest_open(clicker, pos, names.left.a, double_textures, node.param2, true, d.sounds[2],
 				"vlf_chests_chest")
 		end,
-		mesecons = d.mesecons,
+		--mesecons = d.mesecons,
 		on_rotate = no_rotate,
 	})
 
@@ -842,7 +842,7 @@ function vlf_chests.register_chest(basename, d)
 
 			player_chest_open(clicker, pos_other, names.left.a, double_textures, node.param2, true, d.sounds[2], "vlf_chests_chest")
 		end,
-		mesecons = d.mesecons,
+		--mesecons = d.mesecons,
 		on_rotate = no_rotate,
 	})
 

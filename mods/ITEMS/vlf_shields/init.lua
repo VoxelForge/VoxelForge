@@ -73,7 +73,7 @@ minetest.register_entity("vlf_shields:shield_entity", {
 	_blocking = false,
 	_shield_number = 2,
 	_texture_copy = "",
-	on_step = function(self, dtime, moveresult)
+	on_step = function(self, _, _)
 		local player = self.object:get_attach()
 		if not player then
 			self.object:remove()
@@ -163,7 +163,7 @@ vlf_damage.register_modifier(function(obj, damage, reason)
 	end
 
 	if not minetest.is_creative_enabled(obj:get_player_name()) and damage >= 3 then
-		shieldstack:add_wear(65535 / durability)
+		shieldstack:add_wear(65535 / durability) ---@diagnostic disable-line: need-check-nil
 		if blocking == 2 then
 			obj:set_wielded_item(shieldstack)
 		else
@@ -247,7 +247,6 @@ local function remove_shield_hud(player)
 	set_interact(player, true)
 	playerphysics.remove_physics_factor(player, "speed", "shield_speed")
 
-	if not shield_hud[player] then return end --this function takes a long time. only run it when necessary
 	player:hud_remove(shield_hud[player])
 	shield_hud[player] = nil
 	set_shield(player, false, 1)
@@ -282,7 +281,7 @@ end
 
 local function is_rmb_conflicting_node(nodename)
 	local nodedef = minetest.registered_nodes[nodename]
-	return nodedef.on_rightclick
+	return nodedef and nodedef.on_rightclick
 end
 
 local function handle_blocking(player)
@@ -426,8 +425,8 @@ local function update_shield_hud(player, blocking, shieldstack)
 	end
 end
 
-minetest.register_globalstep(function(dtime)
-	for _, player in pairs(minetest.get_connected_players()) do
+minetest.register_globalstep(function()
+	for player in vlf_util.connected_players() do
 
 		handle_blocking(player)
 
@@ -435,7 +434,7 @@ minetest.register_globalstep(function(dtime)
 
 		if blocking then
 			update_shield_hud(player, blocking, shieldstack)
-		else
+		elseif shield_hud[player] then --this function takes a long time. only run it when necessary
 			remove_shield_hud(player)
 		end
 
@@ -446,7 +445,8 @@ minetest.register_globalstep(function(dtime)
 end)
 
 minetest.register_on_dieplayer(function(player)
-	remove_shield_hud(player)
+	set_interact(player, true)
+	playerphysics.remove_physics_factor(player, "speed", "shield_speed")
 	if not minetest.settings:get_bool("vlf_keepInventory") then
 		remove_shield_entity(player, 1)
 		remove_shield_entity(player, 2)
@@ -528,7 +528,7 @@ local function to_shield_texture(banner_texture)
 	:gsub("vlf_banners", "vlf_shield_pattern")
 end
 
-local function craft_banner_on_shield(itemstack, player, old_craft_grid, craft_inv)
+local function craft_banner_on_shield(itemstack, player, old_craft_grid, _)
 	if not string.find(itemstack:get_name(), "vlf_shields:shield_") then
 		return itemstack
 	end
@@ -576,5 +576,6 @@ minetest.register_on_joinplayer(function(player)
 		shields = {},
 		blocking = 0,
 	}
-	remove_shield_hud(player)
+	set_interact(player, true)
+	playerphysics.remove_physics_factor(player, "speed", "shield_speed")
 end)

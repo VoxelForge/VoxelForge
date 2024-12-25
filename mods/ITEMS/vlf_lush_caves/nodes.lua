@@ -44,7 +44,7 @@ local function set_moss_with_chance_vegetation(pos)
 	end
 end
 
-function vlf_lush_caves.bone_meal_moss(itemstack, placer, pointed_thing, pos)
+function vlf_lush_caves.bone_meal_moss(_, _, _, pos)
 	if minetest.get_node(vector.offset(pos, 0, 1, 0)).name ~= "air" then
 		return false
 	end
@@ -123,9 +123,7 @@ minetest.register_node("vlf_lush_caves:hanging_roots", {
 	paramtype = "light",
 	on_place = function(itemstack, placer, pointed_thing)
 		local rc = vlf_util.call_on_rightclick(itemstack, placer, pointed_thing)
-		if rc then
-			return rc
-		end
+		if rc then return rc end
 		if pointed_thing.type ~= "node" then
 			return itemstack
 		end
@@ -146,7 +144,7 @@ minetest.register_node("vlf_lush_caves:hanging_roots", {
 			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5}
 		},
 	},
-	groups = {handy=1, plant=1, flammable=2, fire_encouragement=30, fire_flammability=60, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, compostability=30, attached_node=4},
+	groups = {handy=1, plant=1, flammable=2, fire_encouragement=30, fire_flammability=60, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, compostability=30, attached_node=4, deco_block=1},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	_vlf_blast_resistance = 0,
 	_vlf_blast_hardness = 0,
@@ -175,12 +173,12 @@ minetest.register_node("vlf_lush_caves:cave_vines", {
 			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5}
 		},
 	},
-	groups = {handy=1, plant=1, vinelike_node=2, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1},
+	groups = {handy=1, plant=1, vinelike_node=2, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, deco_block=1},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	_vlf_blast_resistance = 0,
 	_vlf_blast_hardness = 0,
 	drop = "",
-	_on_bone_meal = function(itemstack, placer, pointed_thing, pos)
+	_on_bone_meal = function(_, _, _, pos)
 		minetest.set_node(pos,{name="vlf_lush_caves:cave_vines_lit"})
 		return true
 	end,
@@ -198,7 +196,7 @@ minetest.register_node("vlf_lush_caves:cave_vines_lit", {
 	walkable = false,
 	climbable = true,
 	drawtype = "plantlike",
-	light_source = 9,
+	light_source = 14,
 	tiles = {"vlf_lush_caves_cave_vines_lit.png"},
 	inventory_image = "vlf_lush_caves_cave_vines_lit.png",
 	wield_image = "vlf_lush_caves_cave_vines_lit.png",
@@ -208,7 +206,7 @@ minetest.register_node("vlf_lush_caves:cave_vines_lit", {
 			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5}
 		},
 	},
-	groups = {handy=1, plant=1, vinelike_node=2, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1},
+	groups = {handy=1, plant=1, vinelike_node=2, dig_by_water=1, destroy_by_lava_flow=1, dig_by_piston=1, deco_block=1},
 	sounds = vlf_sounds.node_sound_leaves_defaults(),
 	_vlf_blast_resistance = 0,
 	_vlf_blast_hardness = 1,
@@ -229,7 +227,7 @@ minetest.register_node("vlf_lush_caves:rooted_dirt", {
 	sounds = vlf_sounds.node_sound_dirt_defaults(),
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
-	_on_hoe_place = function(itemstack, placer, pointed_thing)
+	_on_hoe_place = function(_, placer, pointed_thing)
 		local below = vector.offset(pointed_thing.under, 0, -1, 0)
 		if minetest.get_node(below).name == "vlf_lush_caves:hanging_roots" then
 			minetest.remove_node(below)
@@ -312,11 +310,14 @@ minetest.register_node("vlf_lush_caves:spore_blossom", {
 	description = S("Spore blossom"),
 	_doc_items_longdesc = S("Spore blossom"),
 	_doc_items_hidden = false,
-	tiles = {"vlf_lush_caves_spore_blossom.png"},
-	drawtype = "plantlike",
-	param2type = "meshoptions",
-	place_param2 = 4,
-	groups = {handy = 1, plant = 1},
+	--tiles = {"vlf_lush_caves_spore_blossom.png"},
+	--drawtype = "plantlike",
+	drawtype = "mesh",
+	mesh = "spore_blossom.obj",
+	--param2type = "meshoptions",
+	tiles = {"spore_blossom_base.png", "blank.png", "spore_blossom.png"},
+	--place_param2 = 4,
+	groups = {handy = 1, plant = 1, deco_block = 1},
 	sounds = vlf_sounds.node_sound_dirt_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -325,7 +326,8 @@ minetest.register_node("vlf_lush_caves:spore_blossom", {
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
 	node_placement_prediction = "",
-	on_place = vlf_util.generate_on_place_plant_function(function(place_pos, place_node,stack)
+	use_texture_alpha = "clip",
+	on_place = vlf_util.generate_on_place_plant_function(function(place_pos)
 		local above = vector.offset(place_pos,0,1,0)
 		local snn = minetest.get_node_or_nil(above).name
 		if not snn then return false end
@@ -352,23 +354,24 @@ local tpl_azalea = {
 		plant = 1, non_mycelium_plant = 1,
 		dig_by_piston = 1, dig_by_water = 1,
 		flammable = 2, fire_encouragement = 30, fire_flammability = 60,
-		deco_block = 1,
+		deco_block = 1, _vlf_partial = 2,
 	},
 	sounds = vlf_sounds.node_sound_dirt_defaults(),
 	paramtype = "light",
 	sunlight_propagates = true,
 	_vlf_blast_resistance = 0,
 	_vlf_hardness = 0,
+	_vlf_burntime = 5,
 	use_texture_alpha = "clip",
 	node_placement_prediction = "",
-	on_place = vlf_util.generate_on_place_plant_function(function(pos, node, itemstack)
+	on_place = vlf_util.generate_on_place_plant_function(function(pos)
 			local floor_name = minetest.get_node_or_nil(vector.offset(pos, 0, -1, 0)).name
 			if not floor_name then return false end
 			if minetest.get_item_group(floor_name, "soil_sapling") > 0 or floor_name == "vlf_lush_caves:rooted_dirt" or floor_name == "vlf_mangrove:mangrove_mud_roots" or floor_name == "vlf_mud:mud" or floor_name == "vlf_core:clay" then
 				return true
 			end
 	end),
-	_on_bone_meal = function(itemstack, placer, pointed_thing, pos)
+	_on_bone_meal = function(_, _, _, pos)
 		if math.random() > 0.45 or not vlf_trees.check_growth_simple(pos, 6) then return end
 		minetest.set_node(vector.offset(pos, 0, -1, 0), { name = "vlf_lush_caves:rooted_dirt" })
 		minetest.remove_node(pos)
@@ -414,18 +417,7 @@ local azalea_flowering = table.merge(
 			"vlf_lush_caves_azalea_flowering_side.png",
 			"vlf_lush_caves_azalea_flowering_side.png",
 		},
+		groups = table.merge(tpl_azalea.groups, {flower = 1}),
 })
 azalea_flowering.groups.compostability = 85
 minetest.register_node("vlf_lush_caves:azalea_flowering", azalea_flowering)
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_lush_caves:azalea",
-	burntime = 32,
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_lush_caves:azalea_flowering",
-	burntime = 32,
-})

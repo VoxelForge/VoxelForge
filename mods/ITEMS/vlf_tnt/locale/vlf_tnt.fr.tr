@@ -3,5 +3,5 @@ An explosive device. When it explodes, it will hurt living beings and destroy bl
 An explosive device. When it explodes, it will hurt living beings. TNT has an explosion radius of @1. TNT can be ignited by tools, explosions, fire, lava and redstone signals.=Un engin explosif. Quand elle explose, elle blessera les êtres vivants. La TNT a un rayon d'explosion de @1. La TNT peut être enflammée par des outils, des explosions, des feux d'incendie, de la lave et de la redstone.
 TNT=TNT
 Ignited by tools, explosions, fire, lava, redstone power=Enflammé par les outils, les explosions, le feu, la lave, la redstone
-Explosion radius: @1=Rayon d'explosion: @1
+Explosion radius: @1=Rayon d'explosion : @1
 Place the TNT and ignite it with one of the methods above. Quickly get in safe distance. The TNT will start to be affected by gravity and explodes in 4 seconds.=Placez la TNT et allumez-la avec l'une des méthodes ci-dessus. Déplacez-vous rapidement à une distance de sécurité. La TNT commencera à être affecté par la gravité et explose en 4 secondes.

@@ -123,7 +123,14 @@ function vlf_campfires.register_campfire(name, def)
 		mesh = "vlf_campfires_campfire.obj",
 		tiles = {{name="vlf_campfires_log.png"},},
 		use_texture_alpha = "clip",
-		groups = { handy=1, axey=1, material_wood=1, not_in_creative_inventory=1, campfire=1},
+		groups = table.merge (def.groups or {}, {
+			handy = 1,
+			axey = 1,
+			material_wood = 1,
+			not_in_creative_inventory = 1,
+			campfire = 1,
+			unmovable_by_piston = 1,
+		}),
 		paramtype = "light",
 		paramtype2 = "4dir",
 		_on_ignite = function(_, node)
@@ -180,7 +187,14 @@ function vlf_campfires.register_campfire(name, def)
 			 }}
 		},
 		use_texture_alpha = "clip",
-		groups = { handy=1, axey=1, material_wood=1, lit_campfire=1, deco_block=1},
+		groups = table.merge (def.groups or {}, {
+			handy = 1,
+			axey = 1,
+			material_wood = 1,
+			lit_campfire = 1,
+			deco_block = 1,
+			unmovable_by_piston = 1,
+		}),
 		paramtype = "light",
 		paramtype2 = "4dir",
 		on_destruct = function(pos)
@@ -235,6 +249,7 @@ function vlf_campfires.register_campfire(name, def)
 			campfire_drops(pos, digger, def.drops, name.."_lit")
 		end,
 		_vlf_campfires_smothered_form = name,
+		_pathfinding_class = "DAMAGE_FIRE",
 	})
 end
 
@@ -257,7 +272,7 @@ minetest.register_globalstep(function(dtime)
 		local armor_feet = pl:get_inventory():get_stack("armor", 5)
 		if pl and pl:get_player_control().sneak
 		    or vlf_enchanting.has_enchantment(armor_feet, "frost_walker")
-		    or vlf_entity_effects.has_effect(pl, "fire_resistance") then
+		    or vlf_potions.has_effect(pl, "fire_resistance") then
 			return
 		end
 	end

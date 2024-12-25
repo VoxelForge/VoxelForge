@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_deepslate x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_deepslate x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Deepslate"
 msgstr ""
@@ -26,15 +26,6 @@ msgid "Reinforced Deepslate"
 msgstr ""
 
 msgid "Reinforced deepslate is a very hard block undestructable by even wither explosions. It is unobtainable in survival mode."
-msgstr ""
-
-msgid "Tuff"
-msgstr ""
-
-msgid "Tuff is an ornamental rock formed from volcanic ash, occurring in underground blobs below Y=16."
-msgstr ""
-
-msgid "@1 is a variant of @2 that can generate in deepslate and tuff blobs."
 msgstr ""
 
 msgid "Deepslate Coal Ore"
@@ -62,9 +53,6 @@ msgid "Lit Deepslate Redstone Ore"
 msgstr ""
 
 msgid "Deepslate Copper Ore"
-msgstr ""
-
-msgid "@1 are a cracked variant."
 msgstr ""
 
 msgid "Cobbled Deepslate"
@@ -134,5 +122,68 @@ msgid "Cracked Deepslate Tiles"
 msgstr ""
 
 msgid "Chiseled Deepslate"
+msgstr ""
+
+msgid "@1 is a variant of @2 that can generate in deepslate and tuff blobs."
+msgstr ""
+
+msgid "@1 are a cracked variant."
+msgstr ""
+
+msgid "Tuff"
+msgstr ""
+
+msgid "Tuff is an ornamental rock formed from volcanic ash, occurring in underground blobs below Y=16."
+msgstr ""
+
+msgid "Chiseled Tuff"
+msgstr ""
+
+msgid "Chiseled tuff is a chiseled variant of tuff."
+msgstr ""
+
+msgid "Chiseled Tuff Bricks"
+msgstr ""
+
+msgid "Chiseled tuff bricks are a variant of tuff bricks, featuring a large brick in the center of the block, with geometric design above and below."
+msgstr ""
+
+msgid "Tuff Stairs"
+msgstr ""
+
+msgid "Tuff Slab"
+msgstr ""
+
+msgid "Tuff Wall"
+msgstr ""
+
+msgid "Polished Tuff"
+msgstr ""
+
+msgid "Polished tuff is a polished variant of the tuff block."
+msgstr ""
+
+msgid "Polished Tuff Stairs"
+msgstr ""
+
+msgid "Polished Tuff Slab"
+msgstr ""
+
+msgid "Polished Tuff Wall"
+msgstr ""
+
+msgid "Tuff Bricks"
+msgstr ""
+
+msgid "Tuff bricks are a brick variant of tuff."
+msgstr ""
+
+msgid "Tuff Bricks Stairs"
+msgstr ""
+
+msgid "Tuff Bricks Slab"
+msgstr ""
+
+msgid "Tuff Bricks Wall"
 msgstr ""
 

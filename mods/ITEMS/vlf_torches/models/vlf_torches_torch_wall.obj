@@ -1,6 +1,6 @@
 # Blender 3.3.1
 # www.blender.org
-mtllib mcl_torches_torch_wall.mtl
+mtllib vlf_torches_torch_wall.mtl
 o cube
 v -0.062500 -0.198340 0.273825
 v -0.062500 -0.313825 0.321660

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_cartography_table x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_cartography_table x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,14 +11,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Cartography Table"
-msgstr ""
+msgstr "Tavolo da Cartografia"
 
 msgid "Used to create or copy maps"
-msgstr ""
+msgstr "Utilizzato per disegnare o copiare le mappe"
 
 msgid "Is used to create or copy maps for use.."
-msgstr ""
+msgstr "Viene utilizzato per disegnare o copiare delle mappe pronte all'uso."
 

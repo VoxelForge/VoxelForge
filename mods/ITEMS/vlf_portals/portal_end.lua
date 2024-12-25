@@ -77,8 +77,7 @@ minetest.register_node("vlf_portals:portal_end", {
 	buildable_to = false,
 	is_ground_content = false,
 	drop = "",
-	-- This is 15 in MC.
-	light_source = 14,
+	light_source = minetest.LIGHT_MAX,
 	post_effect_color = {a = 192, r = 0, g = 0, b = 0},
 	after_destruct = destroy_portal,
 	-- This prevents “falling through”
@@ -94,7 +93,7 @@ minetest.register_node("vlf_portals:portal_end", {
 			{-0.5, -0.5, -0.5, 0.5, 4/16, 0.5},
 		},
 	},
-	groups = {portal=1, not_in_creative_inventory = 1, disable_jump = 1},
+	groups = {portal=1, not_in_creative_inventory = 1, disable_jump = 1, unmovable_by_piston = 1},
 
 	_vlf_hardness = -1,
 	_vlf_blast_resistance = 3600000,
@@ -166,7 +165,7 @@ function vlf_portals.end_teleport(obj, pos)
 			target = vlf_spawn.get_player_spawn_pos(obj)
 		end
 
-		target = target or vlf_spawn.get_world_spawn_pos(obj)
+		target = target or vlf_spawn.get_world_spawn_pos()
 	else
 		-- End portal in any other dimension:
 		-- Teleport to the End at a fixed position.
@@ -204,9 +203,9 @@ function vlf_portals.end_teleport(obj, pos)
 	end
 end
 
-function vlf_portals.end_portal_teleport(pos, node)
-	for _,obj in pairs(minetest.get_objects_inside_radius(pos, 1)) do
-		local lua_entity = obj:get_luaentity() --maikerumine added for objects to travel
+function vlf_portals.end_portal_teleport(pos)
+	for obj in minetest.objects_inside_radius(pos, 1) do
+		local lua_entity = obj:get_luaentity()
 		if obj:is_player() or lua_entity then
 			local objpos = obj:get_pos()
 			if objpos == nil then
@@ -241,7 +240,7 @@ if minetest.get_modpath("screwdriver") then
 	rotate_frame_eye = false
 end
 
-local function after_place_node(pos, placer, itemstack, pointed_thing)
+local function after_place_node(pos, placer, itemstack, pointed_thing) ---@diagnostic disable-line: unused-local
 	local node = minetest.get_node(pos)
 	if node then
 		node.param2 = (node.param2+2) % 4
@@ -261,7 +260,7 @@ minetest.register_node("vlf_portals:end_portal_frame", {
 	_tt_help = S("Used to construct end portals"),
 	_doc_items_longdesc = S("End portal frames are used in the construction of End portals. Each block has a socket for an eye of ender.") .. "\n" .. S("NOTE: The End dimension is currently incomplete and might change in future versions."),
 	_doc_items_usagehelp = S("To create an End portal, you need 12 end portal frames and 12 eyes of ender. The end portal frames have to be arranged around a horizontal 3×3 area with each block facing inward. Any other arrangement will fail.") .. "\n" .. S("Place an eye of ender into each block. The end portal appears in the middle after placing the final eye.") .. "\n" .. S("Once placed, an eye of ender can not be taken back."),
-	groups = { creative_breakable = 1, deco_block = 1, end_portal_frame = 1 },
+	groups = { creative_breakable = 1, deco_block = 1, end_portal_frame = 1, unmovable_by_piston = 1},
 	tiles = { "vlf_portals_endframe_top.png", "vlf_portals_endframe_bottom.png", "vlf_portals_endframe_side.png" },
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
 	paramtype2 = "facedir",
@@ -287,11 +286,12 @@ minetest.register_node("vlf_portals:end_portal_frame_eye", {
 	description = S("End Portal Frame with Eye of Ender"),
 	_tt_help = S("Used to construct end portals"),
 	_doc_items_create_entry = false,
-	groups = { creative_breakable = 1, deco_block = 1, comparator_signal = 15, end_portal_frame = 2, not_in_creative_inventory = 1 },
+	groups = { creative_breakable = 1, deco_block = 1, comparator_signal = 15, end_portal_frame = 2, not_in_creative_inventory = 1, unmovable_by_piston = 1},
 	tiles = { "vlf_portals_endframe_top.png^[lowpart:75:vlf_portals_endframe_eye.png", "vlf_portals_endframe_bottom.png", "vlf_portals_endframe_eye.png^vlf_portals_endframe_side.png" },
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
 	paramtype2 = "facedir",
 	drawtype = "nodebox",
+	_vlf_baseitem = "vlf_portals:end_portal_frame",
 	node_box = {
 		type = "fixed",
 		fixed = {

@@ -106,7 +106,7 @@ function vlf_end.detach_chorus_plant(start_pos, digger)
 	no_detach = {}
 end
 
-function vlf_end.check_detach_chorus_plant(pos, oldnode, oldmetadata, digger)
+function vlf_end.check_detach_chorus_plant(pos, _, _, digger)
 	vlf_end.detach_chorus_plant(pos, digger)
 end
 
@@ -134,7 +134,7 @@ minetest.register_node("vlf_end:chorus_flower", {
 	node_box = chorus_flower_box,
 	selection_box = { type = "regular" },
 	sounds = vlf_sounds.node_sound_wood_defaults(),
-	groups = {handy=1,axey=1, deco_block = 1, dig_by_piston = 1, destroy_by_lava_flow = 1,chorus_plant = 1},
+	groups = {handy=1,axey=1, deco_block = 1, dig_by_piston = 1, destroy_by_lava_flow = 1,chorus_plant = 1, unsticky = 1},
 
 	node_placement_prediction = "",
 	on_place = function(itemstack, placer, pointed_thing)
@@ -220,7 +220,7 @@ minetest.register_node("vlf_end:chorus_flower_dead", {
 	selection_box = { type = "regular" },
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	drop = "vlf_end:chorus_flower",
-	groups = {handy=1,axey=1, deco_block = 1, dig_by_piston = 1, destroy_by_lava_flow = 1,chorus_plant = 1, not_in_creative_inventory=1},
+	groups = {handy=1,axey=1, deco_block = 1, dig_by_piston = 1, destroy_by_lava_flow = 1,chorus_plant = 1, not_in_creative_inventory=1, unsticky = 1},
 	after_dig_node = vlf_end.check_detach_chorus_plant,
 	on_blast = vlf_end.check_blast_chorus_plant,
 	_vlf_blast_resistance = 2,
@@ -260,7 +260,7 @@ minetest.register_node("vlf_end:chorus_plant", {
 			{ items = { "vlf_end:chorus_fruit"}, rarity = 2 },
 		}
 	},
-	groups = {handy=1,axey=1, deco_block = 1, dig_by_piston = 1, destroy_by_lava_flow = 1, chorus_plant = 1 },
+	groups = {handy=1,axey=1, deco_block = 1, dig_by_piston = 1, destroy_by_lava_flow = 1, chorus_plant = 1, unsticky = 1},
 
 	node_placement_prediction = "",
 	on_place = function(itemstack, placer, pointed_thing)
@@ -403,7 +403,7 @@ function vlf_end.grow_chorus_plant_step(pos, node, pr)
 				elseif branching == true then
 					branches = pr:next(0, 3)
 				end
-				for b=1, branches do
+				for _ = 1, branches do
 					local next_branch = pr:next(1, #around)
 					local branch = vector.add(pos, around[next_branch])
 					local below_branch = vector.add(branch, {x=0,y=-1,z=0})
@@ -452,7 +452,7 @@ minetest.register_abm({
 	nodenames = { "vlf_end:chorus_flower" },
 	interval = 35.0,
 	chance = 4.0,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos, node)
 		vlf_end.grow_chorus_plant_step(pos, node, pr)
 	end,
 })
@@ -469,7 +469,7 @@ minetest.register_abm({
 local function random_teleport(player)
 	local pos = player:get_pos()
 	-- 16 attempts to find a suitable position
-	for a=1, 16 do
+	for _ = 1, 16 do
 		-- Teleportation box
 		local x,y,z
 		x = math.random(round(pos.x)-8, round(pos.x)+8)
@@ -545,6 +545,7 @@ minetest.register_craftitem("vlf_end:chorus_fruit", {
 	on_secondary_use = eat_chorus_fruit,
 	groups = { food = 2, transport = 1, eatable = 4, can_eat_when_full = 1 },
 	_vlf_saturation = 2.4,
+	_vlf_cooking_output = "vlf_end:chorus_fruit_popped"
 })
 
 minetest.register_craftitem("vlf_end:chorus_fruit_popped", {
@@ -554,12 +555,3 @@ minetest.register_craftitem("vlf_end:chorus_fruit_popped", {
 	inventory_image = "vlf_end_chorus_fruit_popped.png",
 	groups = { craftitem = 1 },
 })
-
---- Crafting ---
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_end:chorus_fruit_popped",
-	recipe = "vlf_end:chorus_fruit",
-	cooktime = 10,
-})
-

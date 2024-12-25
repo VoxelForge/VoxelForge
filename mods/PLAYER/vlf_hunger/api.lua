@@ -59,7 +59,7 @@ if vlf_hunger.active then
 
 	function vlf_hunger.exhaust(playername, increase)
 		local player = minetest.get_player_by_name(playername)
-		if not player then return false end
+		if not player or vlf_vars.difficulty == 0 then return false end
 		vlf_hunger.set_exhaustion(player, vlf_hunger.get_exhaustion(player) + increase)
 		if vlf_hunger.get_exhaustion(player) >= vlf_hunger.EXHAUST_LVL then
 			vlf_hunger.set_exhaustion(player, 0.0)

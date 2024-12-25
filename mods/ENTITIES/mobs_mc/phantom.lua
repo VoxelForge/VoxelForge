@@ -1,35 +1,55 @@
---Phantom for mcl2
---cora
---License for code WTFPL, cc0
-local S = minetest.get_translator("mobs_mc")
+local MAX_SLEEP_INTERVAL = 3600
+local S = minetest.get_translator(minetest.get_current_modname())
+local mob_class = vlf_mobs.mob_class
 
-vlf_mobs.register_mob("mobs_mc:phantom", {
+local phantom = {
 	description = S("Phantom"),
 	type = "monster",
-	spawn_class = "passive",
-	pathfinding = 1,
-	hp_min = 6,
-	hp_max = 6,
-	xp_min = 1,
-	damage = 2,
-	xp_max = 3,
-	collisionbox = {-0.25, -0.01, -0.25, 0.25, 0.89, 0.25},
+	spawn_class = "hostile",
+	passive = false,
+	damage = 1,
+	hp_min = 20,
+	hp_max = 20,
+	xp_min = 5,
+	xp_max = 5,
+	attack_players = true,
+	fly = true,
+	fly_in = { "air" },
+	fly_velocity = 7,
+	reach = 3,
+	armor = 10,
+	collisionbox = { -0.4, -0.5, -0.4, 0.4, 0.5, 0.4 },
 	visual = "mesh",
 	mesh = "mobs_mc_phantom.b3d",
-	textures = {{"mobs_mc_phantom.png","mobs_mc_phantom_e.png","mobs_mc_phantom_e_s.png"}},
 	visual_size = {x=3, y=3},
-	walk_velocity = 3,
-	run_velocity = 5,
-	desired_altitude = 19,
+	textures = {
+		{"mobs_mc_phantom.png"},
+	},
+	attack_type = "melee",
+	gravity_drag = 0.0,
+	floats = 1,
+	physical = true,
+	movement_speed = 14,
+	ignited_by_sunlight = true,
+	harmed_by_heal = true,
+	airborne = true,
+	sounds = {
+	   -- random = "",
+	},
 	drops = {
 		{name = "vlf_mobitems:phantom_membrane", chance = 2, min = 0, max = 1, looting = "common"},
 	},
-	--[[sounds = {
-		random = "mobs_mc_phantom_random",
-		damage = {name="mobs_mc_phantom_hurt", gain=0.3},
-		death = {name="mobs_mc_phantom_death", gain=0.6},
-		eat = "mobs_mc_animal_eat_generic",
-		distance = 16,
+	view_range = 16,
+	stepheight = 1.1,
+	motion_step = mob_class.flying_step,
+	fall_damage = false,
+   --[[animation = {
+				-- Dacing = 110,185
+				-- Holding Item = 200,220
+		stand_start = 0, stand_end = 0, stand_speed = 50,
+		walk_start = 0, walk_end = 30, speed_normal = 50,
+		run_start = 0, run_end = 30, speed_run = 50,
+		punch_start = 0, punch_end = 30, punch_speed = 50,
 	},]]
 	animation = {
 		stand_speed = 50,
@@ -42,21 +62,36 @@ vlf_mobs.register_mob("mobs_mc:phantom", {
 		walk_start = 0,
 		walk_end = 30,
 	},
-	fall_damage = 0,
-	fall_speed = -2.25,
-	attack_type = "dogfight",
-	floats = 1,
-	physical = true,
-	fly = true,
-	fly_in = { "air" },
-	fly_velocity = 4,
-	harmed_by_heal = true,
-	makes_footstep_sound = false,
-	ignited_by_sunlight = true,
-	sunlight_damage = 2,
-	fear_height = 0,
-	view_range = 40,
-})
+}
 
--- spawn eggs
-vlf_mobs.register_egg("mobs_mc:phantom", S("Phantom"), "#FBDDCC", "#FBaa99", 0)
+phantom.ai_functions = {
+	mob_class.check_attack,
+	mob_class.check_pace,
+}
+
+vlf_mobs.register_mob("mobs_mc:phantom", phantom)
+
+vlf_mobs.register_egg("mobs_mc:phantom", "Phantom", "#162328", "#a078db", 0)
+
+if minetest.settings:get_bool("vlf_phantoms_spawn", true) then
+	local next_spawn_attempt = {}
+	vlf_player.register_globalstep_slow(function (player)
+		local tod = minetest.get_timeofday()
+		if tod > 0.25 and tod < 0.75 then return end
+		local gt = minetest.get_gametime()
+		if next_spawn_attempt[player] and next_spawn_attempt[player] - gt > 0 then return end
+
+		local pos = player:get_pos()
+
+		local light = minetest.get_natural_light(pos, 0.5)
+		if light and light < minetest.LIGHT_MAX then return end
+
+		if vlf_worlds.pos_to_dimension(pos) ~= "overworld" then return end
+
+		local m = player:get_meta()
+		if gt - m:get_int("vlf_beds:last_sleep") < MAX_SLEEP_INTERVAL then return end
+
+		vlf_mobs.spawn(vector.offset(pos, 0, math.random(13,25), 0), "mobs_mc:phantom")
+		next_spawn_attempt[player] = gt + math.random(60,120)
+	end)
+end

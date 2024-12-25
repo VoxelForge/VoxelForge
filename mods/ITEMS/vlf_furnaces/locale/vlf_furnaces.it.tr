@@ -1,7 +1,7 @@
 # textdomain: vlf_furnaces
-Inventory=
-Recipe book=
-Furnace=
+Inventory=Inventario
+Recipe book=Libro delle ricette
+Furnace=Fornace
 Uses fuel to smelt or cook items=
 Furnaces cook or smelt several items, using a furnace fuel, into something else.=
 Use the furnace to open the furnace menu.=

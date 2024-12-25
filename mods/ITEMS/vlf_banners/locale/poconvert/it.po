@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_banners x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_banners x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,73 +11,73 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "White Banner"
-msgstr ""
+msgstr "Stendardo Bianco"
 
 msgid "White"
-msgstr ""
+msgstr "Bianco"
 
 msgid "Grey Banner"
-msgstr ""
+msgstr "Stendardo Grigio"
 
 msgid "Grey"
-msgstr ""
+msgstr "Grigio"
 
 msgid "Light Grey Banner"
 msgstr ""
 
 msgid "Light Grey"
-msgstr ""
+msgstr "Grigio Chiaro"
 
 msgid "Black Banner"
 msgstr ""
 
 msgid "Black"
-msgstr ""
+msgstr "Nero"
 
 msgid "Red Banner"
 msgstr ""
 
 msgid "Red"
-msgstr ""
+msgstr "Rosso"
 
 msgid "Yellow Banner"
 msgstr ""
 
 msgid "Yellow"
-msgstr ""
+msgstr "Giallo"
 
 msgid "Green Banner"
 msgstr ""
 
 msgid "Green"
-msgstr ""
+msgstr "Verde"
 
 msgid "Cyan Banner"
 msgstr ""
 
 msgid "Cyan"
-msgstr ""
+msgstr "Ciano"
 
 msgid "Blue Banner"
 msgstr ""
 
 msgid "Blue"
-msgstr ""
+msgstr "Blu"
 
 msgid "Magenta Banner"
 msgstr ""
 
 msgid "Magenta"
-msgstr ""
+msgstr "Magenta"
 
 msgid "Orange Banner"
 msgstr ""
 
 msgid "Orange"
-msgstr ""
+msgstr "Arancione"
 
 msgid "Purple Banner"
 msgstr ""
@@ -89,25 +89,25 @@ msgid "Brown Banner"
 msgstr ""
 
 msgid "Brown"
-msgstr ""
+msgstr "Marrone"
 
 msgid "Pink Banner"
 msgstr ""
 
 msgid "Pink"
-msgstr ""
+msgstr "Rosa"
 
 msgid "Lime Banner"
 msgstr ""
 
 msgid "Lime"
-msgstr ""
+msgstr "Lime"
 
 msgid "Light Blue Banner"
-msgstr ""
+msgstr "Stendardo Azzurro"
 
 msgid "Light Blue"
-msgstr ""
+msgstr "Azzurro"
 
 msgid "Banner"
 msgstr ""
@@ -119,9 +119,6 @@ msgid "Use crafting to draw a pattern on top of the banner. Emblazoned banners c
 msgstr ""
 
 msgid "You can copy the pattern of a banner by placing two banners of the same color in the crafting grid—one needs to be emblazoned, the other one must be clean. Finally, you can use a banner on a cauldron with water to wash off its top-most layer."
-msgstr ""
-
-msgid "@1 Banner"
 msgstr ""
 
 msgid "Preview Banner"
@@ -254,6 +251,12 @@ msgid "@1 Base Indented"
 msgstr ""
 
 msgid "@1 Chief Indented"
+msgstr ""
+
+msgid "@1 Flow"
+msgstr ""
+
+msgid "@1 Guster"
 msgstr ""
 
 msgid "And one additional layer"

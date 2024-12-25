@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_throwing x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_throwing x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Use the punch key to throw."
 msgstr "Используйте клавишу удара для броска."
@@ -44,5 +44,5 @@ msgid "An ender pearl is an item which can be used for teleportation at the cost
 msgstr "Жемчуг Края это предмет, который можно использовать для телепортации за счёт единиц вашего здоровья. Его можно бросить, и это телепортирует бросившего в то место, куда упадает жемчуг. Каждая телепортация ранит игрока на 5 очков здоровья."
 
 msgid "Use the place/use key to throw."
-msgstr ""
+msgstr "Используйте клавишу \"место/использование\" для броска."
 

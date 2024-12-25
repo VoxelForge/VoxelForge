@@ -133,12 +133,11 @@ minetest.register_globalstep(function(dtime)
 	-- regular updates based on iterval
 	dimtimer = dimtimer + dtime;
 	if dimtimer >= DIM_UPDATE then
-		local players = minetest.get_connected_players()
-		for p = 1, #players do
-			local dim = vlf_worlds.pos_to_dimension(players[p]:get_pos())
-			local name = players[p]:get_player_name()
+		for player in vlf_util.connected_players() do
+			local dim = vlf_worlds.pos_to_dimension(player:get_pos())
+			local name = player:get_player_name()
 			if dim ~= last_dimension[name] then
-				vlf_worlds.dimension_change(players[p], dim)
+				vlf_worlds.dimension_change(player, dim)
 			end
 		end
 		dimtimer = 0
@@ -165,3 +164,115 @@ function vlf_worlds.get_cloud_parameters()
 		}
 	end
 end
+
+------------------------------------------------------------------------
+-- Chunk inhabited time.
+-- Very counterintuitively it is mod storage that performs the best
+-- for storing chunk metadata, despite being said to be inefficient in
+-- the Minetest wiki.
+------------------------------------------------------------------------
+
+local mod_storage = minetest.get_mod_storage ()
+
+local function round_trunc (pos)
+	return math.floor (pos + 0.5)
+end
+
+local function id_dimension (y)
+	if y >= vlf_vars.mg_overworld_min then
+		return "overworld_"
+	elseif y >= vlf_vars.mg_nether_min and y <= vlf_vars.mg_nether_max then
+		return "nether_"
+	elseif y >= vlf_vars.mg_end_min and y <= vlf_vars.mg_end_max then
+		return "theEnd_"
+	else
+		-- Void.
+		return "theVoid_"
+	end
+end
+
+function vlf_worlds.chunk_inhabited_time (pos)
+	local chunk_x = math.floor (round_trunc (pos.x) / 16)
+	local chunk_z = math.floor (round_trunc (pos.z) / 16)
+	local chunkstring = id_dimension (pos.y) .. chunk_x .. "," .. chunk_z
+
+	return mod_storage:get_float (chunkstring)
+end
+
+function vlf_worlds.tick_chunk_inhabited_time (pos, dtime)
+	local chunk_x = math.floor (round_trunc (pos.x) / 16)
+	local chunk_z = math.floor (round_trunc (pos.z) / 16)
+	local chunkstring = id_dimension (pos.y) .. chunk_x .. "," .. chunk_z
+	local time = mod_storage:get_float (chunkstring) + dtime
+	mod_storage:set_float (chunkstring, time)
+end
+
+------------------------------------------------------------------------
+-- Local difficulty computation.
+-- Ref: https://minecraft.wiki/w/Regional_difficulty
+------------------------------------------------------------------------
+
+function vlf_worlds.get_regional_difficulty (pos)
+	if vlf_vars.difficulty == 0 then
+		return 0
+	end
+	local inhabited_time = vlf_worlds.chunk_inhabited_time (pos)
+	local total_daytime = minetest.get_day_count () * 24000
+	local daytime_factor, chunk_factor
+	if total_daytime > 1512000 then -- 63 days
+		daytime_factor = 0.25
+	elseif total_daytime < 72000 then -- 3 days
+		daytime_factor = 0
+	else
+		total_daytime
+			= total_daytime + minetest.get_timeofday () * 24000
+		daytime_factor = (total_daytime - 72000) / 5760000
+	end
+	chunk_factor = math.min (inhabited_time / 360000, 1.0)
+	if vlf_vars.difficulty < 3 then
+		chunk_factor = chunk_factor * 0.75
+	end
+	local phase = vlf_moon.get_moon_brightness ()
+	if phase / 4 > daytime_factor then
+		chunk_factor = chunk_factor + daytime_factor
+	else
+		chunk_factor = chunk_factor + phase / 4
+	end
+	if vlf_vars.difficulty == 1 then
+		chunk_factor = chunk_factor * 0.5
+	end
+	local difficulty = 0.75 + daytime_factor + chunk_factor
+	if vlf_vars.difficulty == 1 then
+		return difficulty
+	elseif vlf_vars.difficulty == 2 then
+		return difficulty * 2
+	else
+		return difficulty * 3
+	end
+end
+
+-- This is a multiplier for mob buffs.
+function vlf_worlds.get_special_difficulty (pos)
+	local regional = vlf_worlds.get_regional_difficulty (pos)
+	if regional < 2.0 then
+		return 0.0
+	end
+	return regional > 4.0 and 1.0 or (regional - 2.0) / 2
+end
+
+-- local function fill_area_db ()
+-- 	for x = 0, 4095 do
+-- 		local clock = os.clock ()
+-- 		for z = 0, 4095 do
+-- 			vlf_worlds.tick_chunk_inhabited_time ({
+-- 					x = (x - 2048) * 16,
+-- 					y = 0,
+-- 					z = (z - 2048) * 16,
+-- 			}, 1)
+-- 		end
+-- 		local time = os.clock () - clock
+-- 		print ("Next X " .. x)
+-- 		print (string.format ("Previous iteration took %.4f s (%.2f ms per chunk)\n",
+-- 				      time, time * 1000 / 4096))
+-- 	end
+-- end

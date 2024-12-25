@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_panes x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_panes x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Glass panes are thin layers of glass which neatly connect to their neighbors as you build them."
 msgstr "Стеклянные панели это тонкие стёкла, которые аккуратно присоединяются к соседним блокам, когда вы устанавливаете их."
@@ -31,6 +31,51 @@ msgstr "Железная решётка аккуратно присоединя�
 msgid "Glass Pane"
 msgstr "Стеклянная панель"
 
-msgid "@1 Glass Pane"
-msgstr ""
+msgid "Black Stained Glass Pane"
+msgstr "Чёрная стеклянная панель"
+
+msgid "Blue Stained Glass Pane"
+msgstr "Синяя стеклянная панель"
+
+msgid "Brown Stained Glass Pane"
+msgstr "Коричневая стеклянная панель"
+
+msgid "Cyan Stained Glass Pane"
+msgstr "Бирюзовая стеклянная панель"
+
+msgid "Green Stained Glass Pane"
+msgstr "Зелёная стеклянная панель"
+
+msgid "Grey Stained Glass Pane"
+msgstr "Серая стеклянная панель"
+
+msgid "Light Blue Stained Glass Pane"
+msgstr "Голубая стеклянная панель"
+
+msgid "Light Grey Stained Glass Pane"
+msgstr "Светло-серая стеклянная панель"
+
+msgid "Lime Stained Glass Pane"
+msgstr "Лаймовая стеклянная панель"
+
+msgid "Magenta Stained Glass Pane"
+msgstr "Сиреневая стеклянная панель"
+
+msgid "Orange Stained Glass Pane"
+msgstr "Оранжевая стеклянная панель"
+
+msgid "Pink Stained Glass Pane"
+msgstr "Розовая стеклянная панель"
+
+msgid "Purple Stained Glass Pane"
+msgstr "Фиолетовая стеклянная панель"
+
+msgid "Red Stained Glass Pane"
+msgstr "Красная стеклянная панель"
+
+msgid "White Stained Glass Pane"
+msgstr "Белая стеклянная панель"
+
+msgid "Yellow Stained Glass Pane"
+msgstr "Жёлтая стеклянная панель"
 

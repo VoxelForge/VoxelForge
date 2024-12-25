@@ -13,9 +13,3 @@ Armor counts as a tool. It is possible to repair and rename a tool in a single s
 The anvil has limited durability and 3 damage levels: undamaged, slightly damaged and very damaged. Each time you repair or rename something, there is a 12% chance the anvil gets damaged. Anvils also have a chance of being damaged when they fall by more than 1 block. If a very damaged anvil is damaged again, it is destroyed.=鐵砧的耐用性有限，有3個損壞等級：未損壞、微損的和耗損的。每次你修復或重命名某物時，有12%的機會使鐵砧受損。當鐵砧跌落超過1塊時，也有機會被損壞。如果一個耗損的鐵砧再次受損，它就會被摧毀。
 Slightly Damaged Anvil=微損的鐵砧
 Very Damaged Anvil=耗損的鐵砧
-
-
-##### not used anymore #####
-
-Set Name=命名
-Inventory=物品欄

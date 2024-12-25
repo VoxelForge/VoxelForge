@@ -228,7 +228,7 @@ end
 local function emit_mesecon_signal(pos)
 	-- Emit mesecon signal when the node becomes a active sculk sensor node
 	-- You may adjust the time (in seconds) the signal persists
-	mesecon.receptor_on(pos, mesecon.rules.alldirs)
+	--mesecon.receptor_on(pos, mesecon.rules.alldirs)
 
 	local timer = minetest.get_node_timer(pos)
 	timer:start(2.5) -- Adjust the duration of the mesecon signal as needed
@@ -236,7 +236,7 @@ end
 
 local function stop_mesecon_signal(pos)
 	-- Stop emitting mesecon signal when the node becomes a inactive sculk sensor
-	mesecon.receptor_off(pos, mesecon.rules.alldirs)
+	--mesecon.receptor_off(pos, mesecon.rules.alldirs)
 end
 
 --------------------------------------------------------
@@ -743,7 +743,7 @@ description = S("Sculk Sensor Active"),
 	_vlf_hardness = 1.5,
 	on_construct = function(pos)
 		-- Emit mesecon signal when the active sculk sensor node is created
-		mesecon.receptor_on(pos, mesecon.rules.alldirs)
+		--mesecon.receptor_on(pos, mesecon.rules.alldirs)
 		emit_mesecon_signal(pos)
 		minetest.sound_play("vlf_sculk_sensor_active", {
 		pos = pos,
@@ -1039,9 +1039,25 @@ minetest.register_node("vlf_sculk:sculk_sensor_active_w_logged", {
 	light_source  = 3,
 	_vlf_hardness = 3,
 	_vlf_silk_touch_drop = true and {"vlf_sculk:sculk_sensor"},
+	_vlf_redstone = {
+        connects_to = function(node, dir)
+            return true
+        end,
+        get_power = function(node, dir)
+            return node.param2
+        end,
+        update = function(pos, node)
+            --[[if vlf_redstone.get_power(pos, minetest.wallmounted_to_dir(node.param2))) ~= 0 then
+                return {
+                    name = "vlf_redstone_torch:redstone_torch_off",
+                    param2 = node.param2,
+                }
+            end]]
+        end,
+    },
 	on_construct = function(pos)
 		-- Emit mesecon signal when the active sculk sensor node is created
-		mesecon.receptor_on(pos, mesecon.rules.alldirs)
+		--mesecon.recepter.on(pos)
 		emit_mesecon_signal(pos)
 		minetest.sound_play("vlf_sculk_sensor_active", {
 		pos = pos,

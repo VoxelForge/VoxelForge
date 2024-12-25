@@ -1,5 +1,7 @@
 local S = minetest.get_translator("vlf_portals")
-local schempath = minetest.get_modpath("vlf_schematics")
+
+local modname = minetest.get_current_modname()
+local modpath = minetest.get_modpath(modname)
 local portal_search_groups = { "group:building_block", "group:dig_by_water", "group:liquid" }
 
 local TELEPORT_DELAY = 3
@@ -102,35 +104,35 @@ local function unregister_portal(pos)
 	end
 end
 
+-- There is 3/2000 (0.15%) chance of spawning zombified_piglin on each portal
+-- node at random tick. In Minecraft random tick happens on average every 68.27
+-- seconds.
+local function spawn_zombified_piglin(pos)
+	if math.random() < 0.0015 / 68.27 then
+		-- Find Y of lowest portal frame
+		local floor = minetest.find_nodes_in_area(pos, vector.offset(pos, 0,-MAX_PORTAL_NODES,0), {"vlf_core:obsidian"})
+		if #floor > 0 then
+			local spawn = floor[#floor]
+			if minetest.get_node(pos).param2 == 3 then
+				spawn = vector.offset(spawn, 1,0.5,0) -- East
+			else
+				spawn = vector.offset(spawn, 0,0.5,-1) -- South
+			end
+			local up = minetest.find_nodes_in_area(spawn, vector.offset(spawn, 0,1.5,0), {"air"})
+			if #up >= 2 then
+				minetest.add_entity(spawn, "mobs_mc:zombified_piglin", minetest.serialize({ _just_portaled = 60 }))
+			end
+		end
+	end
+	return true
+end
+
 -- Rotate vector 90 degrees if 'param2 % 2 == 1'.
 local function orient(pos, param2)
 	if (param2 % 2) == 1 then
 		return vector.new(pos.z, pos.y, pos.x)
 	end
 	return pos
-end
-
-local function queue()
-	return {
-		front = 1,
-		back = 1,
-		queue = {},
-		enqueue = function(self, value)
-			self.queue[self.back] = value
-			self.back = self.back + 1
-		end,
-		dequeue = function(self) local value = self.queue[self.front]
-			if not value then
-				return
-			end
-			self.queue[self.front] = nil
-			self.front = self.front + 1
-			return value
-		end,
-		size = function(self)
-			return self.back - self.front
-		end,
-	}
 end
 
 -- Check if node is replacable with a portal node.
@@ -174,7 +176,7 @@ local function light_nether_portal(pos, param2)
 	end
 
 	local nodes = {}
-	local queue = queue()
+	local queue = vlf_util.queue()
 	local checked = {}
 
 	queue:enqueue(pos)
@@ -310,7 +312,7 @@ end
 -- The flag 'destroying_portal' is used to avoid this function being called
 -- recursively through callbacks in 'bulk_set_node'.
 local destroying_portal = false
-local function destroy_portal(pos, node)
+local function destroy_portal(pos, _)
 	if destroying_portal then
 		return
 	end
@@ -388,7 +390,9 @@ local function finalize_teleport(obj, pos, old_param2, new_param2)
 		obj:set_look_horizontal(obj:get_look_horizontal() + new_look)
 	end
 
-	obj:set_pos(pos)
+	-- Teleport
+	obj:set_pos(vector.offset(pos,0,-0.5,0))
+
 	if obj:is_player() then
 		minetest.sound_play("vlf_portals_teleport", {pos = pos, gain = 0.5, max_hear_distance = 1}, true)
 		vlf_worlds.dimension_change(obj)
@@ -396,7 +400,7 @@ local function finalize_teleport(obj, pos, old_param2, new_param2)
 	else
 		local l = obj:get_luaentity()
 		if l and l.is_mob then
-			l._just_portaled = 5
+			l._just_portaled = 10 -- wait 10 second before able to teleport again
 		end
 	end
 
@@ -448,7 +452,7 @@ end
 
 -- Scan emerged area and build a portal at a suitable spot. If no suitable spot
 -- is found, then it will build the portal at a random location.
-local function portal_emerge_area(blockpos, action, calls_remaining, param)
+local function portal_emerge_area(_, _, calls_remaining, param)
 	if param.done_flag or calls_remaining ~= 0 then
 		return
 	end
@@ -496,7 +500,7 @@ local function portal_emerge_area(blockpos, action, calls_remaining, param)
 	end
 
 	-- 5 attempts to find a random spot which is not protected.
-	for i = 1, 5 do
+	for _ = 1, 5 do
 		local pos = vector.new(target.x, math.random(minpos.y, maxpos.y), target.z)
 		if can_place_portal(pos, player_name) then
 			finalize(obj, pos, param2, true)
@@ -560,9 +564,9 @@ local function teleport(obj)
 	local linked_portal = get_linked_portal(dim, target)
 	if linked_portal then
 		local linked_node = minetest.get_node(linked_portal)
-		finalize_teleport(obj, linked_portal, node.param2, linked_node.param2)
+		finalize_teleport(obj, linked_portal, node.param2, linked_node.param2) ---@diagnostic disable-line: need-check-nil
 	elseif obj:is_player() then -- Generate portal and teleport.
-		local param2 = node.param2
+		local param2 = node.param2 ---@diagnostic disable-line: need-check-nil
 		local y_min = search_y_min[dim]
 		local y_max = search_y_max[dim]
 		local minpos = vector.new(target.x - 16, y_min, target.z - 16)
@@ -582,13 +586,18 @@ end
 
 local function initiate_teleport(obj)
 	local creative = minetest.is_creative_enabled(obj:is_player() and obj:get_player_name() or nil)
-	minetest.after(creative and 0 or TELEPORT_DELAY, function()
-		teleport(obj)
-	end)
+	local l = obj:get_luaentity()
+	if l and l.is_mob and not l._just_portaled then
+		teleport(obj) -- mobs always teleported instantly
+	elseif obj:is_player() then
+		minetest.after(creative and 0 or TELEPORT_DELAY, function()
+			teleport(obj)
+		end)
+	end
 end
 
 local function teleport_objs_in_portal(pos)
-	for _, obj in pairs(minetest.get_objects_inside_radius(pos, 1)) do
+	for obj in minetest.objects_inside_radius(pos, 1) do
 		local lua_entity = obj:get_luaentity()
 		if obj:is_player() or lua_entity then
 			initiate_teleport(obj)
@@ -620,7 +629,7 @@ local function emit_portal_particles(pos, node)
 		end
 	end
 	distance = vector.subtract(pos, distance)
-	for _, obj in pairs(minetest.get_objects_inside_radius(pos, 15)) do
+	for obj in minetest.objects_inside_radius(pos, 15) do
 		if obj:is_player() then
 			minetest.add_particle({
 				amount = 1,
@@ -652,7 +661,7 @@ end
 minetest.override_item("vlf_core:obsidian", {
 	_doc_items_longdesc = longdesc,
 	_doc_items_usagehelp = usagehelp,
-	on_destruct = function(pos, node)
+	on_destruct = function(pos, _)
 		local function check_remove(pos, param2)
 			local node = minetest.get_node(pos)
 			if node.name == "vlf_portals:portal" and (not param2 or node.param2 % 2 == param2) then
@@ -755,13 +764,13 @@ minetest.register_node("vlf_portals:portal", {
 			{-0.5, -0.5, -0.1,  0.5, 0.5, 0.1},
 		},
 	},
-	groups = { creative_breakable = 1, portal = 1, not_in_creative_inventory = 1 },
+	groups = { creative_breakable = 1, portal = 1, not_in_creative_inventory = 1, unmovable_by_piston = 1},
 	sounds = vlf_sounds.node_sound_glass_defaults(),
 	on_destruct = destroy_portal,
 	on_rotate = on_rotate,
 	_vlf_hardness = -1,
 	_vlf_blast_resistance = 0,
-	_on_walk_through = function(pos, node, player)
+	_on_walk_through = function(pos, node, _)
 		emit_portal_particles(pos, node)
 		teleport_objs_in_portal(pos)
 	end,
@@ -771,7 +780,7 @@ minetest.register_chatcommand("dumpportals", {
 	description = S("Dump coordinates of registered portals"),
 	privs = { debug = true },
 	params = "[nether | overworld]",
-	func = function(name, param)
+	func = function(_, param)
 		if param ~= "nether" and param ~= "overworld" then
 			return false, S("Invalid dimension argument.")
 		end
@@ -794,19 +803,20 @@ minetest.register_abm({
 	action = function(pos, node)
 		emit_portal_particles(pos, node)
 		teleport_objs_in_portal(pos)
+		spawn_zombified_piglin(pos)
 	end,
 })
 
 vlf_structures.register_structure("nether_portal",{
 	nospawn = true,
 	filenames = {
-		schempath.."/schems/vlf_portals_nether_portal.mts"
+		modpath.."/schematics/vlf_portals_nether_portal.mts"
 	},
 })
 
 vlf_structures.register_structure("nether_portal_open",{
 	nospawn = true,
 	filenames = {
-		schempath.."/schems/vlf_portals_nether_portal_open.mts"
+		modpath.."/schematics/vlf_portals_nether_portal_open.mts"
 	},
 })

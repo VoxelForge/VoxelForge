@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_doc x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_doc x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Water can flow into this block and cause it to drop as an item."
 msgstr "Вода может затечь в этот блок и вызвать его выпадение в качестве предмета."
@@ -23,7 +23,7 @@ msgid "This block can be turned into farmland with a hoe."
 msgstr "Этот блок можно превратить в грядку с помощью мотыги."
 
 msgid "This block can be turned into grass path with a shovel."
-msgstr ""
+msgstr "Этот блок можно превратить в тропинку с травой с помощью лопаты."
 
 msgid "This block acts as a soil for all saplings."
 msgstr "Этот блок служит почвой для всех саженцев."
@@ -83,7 +83,7 @@ msgid "Hunger points restored: @1"
 msgstr "Восстанавливает очков голода: @1"
 
 msgid "Saturation points restored: @1%"
-msgstr ""
+msgstr "Восстановлено насыщение: @1%"
 
 msgid "It can be worn on the head."
 msgstr "Это можно носить на голове."
@@ -179,7 +179,7 @@ msgid "Hardness: @1"
 msgstr "Твёрдость: @1"
 
 msgid "Blast Resistance: @1"
-msgstr ""
+msgstr "Сопротивление взрыву: @1"
 
 msgid "This block will not be destroyed by TNT explosions."
 msgstr "Этот блок не будет уничтожен при взрыве ТНТ."
@@ -197,13 +197,13 @@ msgid ", "
 msgstr ", "
 
 msgid "Painfully slow"
-msgstr "крайне медленно"
+msgstr "Крайне медленно"
 
 msgid "Very slow"
 msgstr "очень медленно"
 
 msgid "Slow"
-msgstr "медленно"
+msgstr "Медленно"
 
 msgid "Fast"
 msgstr "быстро"
@@ -212,7 +212,7 @@ msgid "Very fast"
 msgstr "очень быстро"
 
 msgid "Extremely fast"
-msgstr "экстремально быстро"
+msgstr "Экстремально бвстро"
 
 msgid "Instantaneous"
 msgstr "мгновенно"
@@ -230,7 +230,7 @@ msgid "Mining durability: @1"
 msgstr "Прочность при добыче: @1"
 
 msgid "This tool is capable of mining."
-msgstr "Этим инструментом можно добывать"
+msgstr "Этот инструмент используется для добычи."
 
 msgid "Block breaking strength: @1"
 msgstr "Сила добычи: @1"

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_nether x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_nether x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Glowstone"
 msgstr ""
@@ -31,7 +31,7 @@ msgstr ""
 msgid "Ancient debris can be found in the nether and is very very rare."
 msgstr ""
 
-msgid "Netherite Block"
+msgid "Block of Netherite"
 msgstr ""
 
 msgid "Netherite block is very hard and can be made of 9 netherite ingots."
@@ -152,7 +152,7 @@ msgid "Netherite Upgrade Template"
 msgstr ""
 
 msgid "Applies to:"
-msgstr ""
+msgstr "Berlaku untuk:"
 
 msgid "Diamond Armor"
 msgstr ""
@@ -161,7 +161,7 @@ msgid "Diamond Tools"
 msgstr ""
 
 msgid "Ingredients:"
-msgstr ""
+msgstr "Bahan-bahan:"
 
 msgid "Nether Lava Source"
 msgstr ""

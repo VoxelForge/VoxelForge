@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_doors x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_doors x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This door is a 2-block high barrier which can be opened or closed by hand or by redstone power."
 msgstr "Эта дверь - преграда высотой в 2 блока, которую можно открывать и закрывать вручную и по сигналу редстоуна."
@@ -20,10 +20,10 @@ msgid "This door is a 2-block high barrier which can only be opened by redstone 
 msgstr "Эта дверь - преграда высотой в 2 блока, которую можно открывать и закрывать по сигналу редстоуна, но не вручную."
 
 msgid "To open or close this door, send a redstone signal to its bottom half."
-msgstr ""
+msgstr "Чтобы открыть или закрыть эту дверь, отправьте сигнал редстоуна на ее нижнюю половину."
 
 msgid "To open or close this door, rightclick it or send a redstone signal to its bottom half."
-msgstr ""
+msgstr "Чтобы открыть или закрыть эту дверь, щелкните по ней правой кнопкой мыши или отправьте сигнал редстоуна на ее нижнюю половину."
 
 msgid "Openable by redstone power"
 msgstr "Открывается сигналом редстоуна"
@@ -32,13 +32,13 @@ msgid "Openable by players and redstone power"
 msgstr "Открывается игроками и сигналом редстоуна"
 
 msgid "Trapdoors are horizontal barriers which can be opened or closed and climbed like a ladder when open. They occupy the upper or lower part of a block, depending on how they have been placed. This trapdoor can only be opened or closed by redstone power."
-msgstr ""
+msgstr "Люки - это горизонтальные барьеры, которые можно открывать или закрывать, а в открытом состоянии подниматься по ним, как по лестнице. Они занимают верхнюю или нижнюю часть блока, в зависимости от того, как они были расположены. Этот люк можно открыть или закрыть только с помощью энергии редстоуна."
 
 msgid "Trapdoors are horizontal barriers which can be opened or closed and climbed like a ladder when open. They occupy the upper or lower part of a block, depending on how they have been placed. This trapdoor can be opened or closed by hand or redstone power."
-msgstr ""
+msgstr "Люки - это горизонтальные барьеры, которые можно открывать или закрывать, а в открытом состоянии подниматься по ним, как по лестнице. Они занимают верхнюю или нижнюю часть блока, в зависимости от того, как они были расположены. Этот люк можно открыть или закрыть вручную или с помощью энергии редстоуна."
 
 msgid "To open or close this trapdoor, rightclick it or send a redstone signal to it."
-msgstr ""
+msgstr "Чтобы открыть или закрыть этот люк, щелкните по нему правой кнопкой мыши или отправьте на него сигнал редстоуна."
 
 msgid "Iron Door"
 msgstr "Железная дверь"

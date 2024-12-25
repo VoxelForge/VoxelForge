@@ -70,7 +70,7 @@ vlf_armor.register_set({
 	},
 
 	--this attribute reduce strong damage even more
-	--See https://minecraft.fandom.com/wiki/Armor#Armor_toughness for more explanations
+	--See https://minecraft.wiki/w/Armor#Armor_toughness for more explanations
 	--default: 0
 	toughness = 2,
 
@@ -106,6 +106,8 @@ vlf_armor.register_set({
 	--torso: "<modname>_inv_chestplate_<material>.png
 	--legs: "<modname>_inv_leggings_<material>.png
 	--feet: "<modname>_inv_boots_<material>.png
+
+    on_place = function(itemstack, placer, pointed_thing) end, -- optional custom on_place function for armor pieces, if it returns truthy the equip functions will not be called.
 
 	--this callback table allow you to define functions that will be called each time an entity equip an armor piece or the vlf_armor.on_equip() function is called
 	--the functions accept two arguments: obj and itemstack

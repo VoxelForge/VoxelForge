@@ -6,11 +6,6 @@ local S = minetest.get_translator(minetest.get_current_modname())
 local WATER_VISC = 1
 local LAVA_VISC = 7
 local LIGHT_LAVA = minetest.LIGHT_MAX
-local USE_TEXTURE_ALPHA = true
-
-if minetest.features.use_texture_alpha_string_modes then
-	USE_TEXTURE_ALPHA = "blend"
-end
 
 minetest.register_node("vlf_core:water_flowing", {
 	description = S("Flowing Water"),
@@ -30,10 +25,9 @@ minetest.register_node("vlf_core:water_flowing", {
 			animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=4.0}
 		},
 	},
-	color = "#3F76E4",
 	sounds = vlf_sounds.node_sound_water_defaults(),
 	is_ground_content = false,
-	use_texture_alpha = USE_TEXTURE_ALPHA,
+	use_texture_alpha = "blend",
 	paramtype = "light",
 	paramtype2 = "flowingliquid",
 	walkable = false,
@@ -49,19 +43,11 @@ minetest.register_node("vlf_core:water_flowing", {
 	liquid_range = 7,
 	waving = 3,
 	post_effect_color = {a=60, r=0x03, g=0x3C, b=0x5C},
-	groups = { water=3, liquid=3, puts_out_fire=1, not_in_creative_inventory=1, freezes=1, melt_around=1, dig_by_piston=1},
+	groups = { water=3, liquid=3, puts_out_fire=1, not_in_creative_inventory=1, freezes=1, melt_around=1, dig_by_piston=1, unsticky = 1},
+	_pathfinding_class = "WATER",
 	_vlf_blast_resistance = 100,
 	-- Hardness intentionally set to infinite instead of 100 (Minecraft value) to avoid problems in creative mode
 	_vlf_hardness = -1,
-	on_construct = function(pos)
-		local node = minetest.get_node(pos)
-		if node.param2 == 0 then
-			local new_node = vlf_core.get_water_block_type(pos)
-			if new_node.param2 ~= 0 or new_node.name ~= "vlf_core:water_flowing" then
-				minetest.set_node(pos, new_node)
-			end
-		end
-	end,
 })
 
 minetest.register_node("vlf_core:water_source", {
@@ -87,39 +73,27 @@ S("• When water is directly below lava, the water turns into stone."),
 			backface_culling = false,
 		}
 	},
-	--color = "#3F76E4",
 	sounds = vlf_sounds.node_sound_water_defaults(),
 	is_ground_content = false,
-	use_texture_alpha = USE_TEXTURE_ALPHA,
+	use_texture_alpha = "blend",
 	paramtype = "light",
-	--paramtype2 = "color",
-	palette = "vlf_core_palette_water.png",
 	walkable = false,
 	pointable = false,
 	diggable = false,
 	buildable_to = true,
 	drop = "",
 	drowning = 4,
-	--color = "#3F76E4", Unused Currently
 	liquidtype = "source",
 	liquid_alternative_flowing = "vlf_core:water_flowing",
 	liquid_alternative_source = "vlf_core:water_source",
 	liquid_viscosity = WATER_VISC,
 	liquid_range = 7,
 	post_effect_color = {a=60, r=0x03, g=0x3C, b=0x5C},
-	groups = { water=3, liquid=3, puts_out_fire=1, freezes=1, not_in_creative_inventory=1, dig_by_piston=1},
+	groups = { water=3, liquid=3, puts_out_fire=1, freezes=1, not_in_creative_inventory=1, dig_by_piston=1, unsticky = 1},
+	_pathfinding_class = "WATER",
 	_vlf_blast_resistance = 100,
 	-- Hardness intentionally set to infinite instead of 100 (Minecraft value) to avoid problems in creative mode
 	_vlf_hardness = -1,
-	--[[on_construct = function(pos)
-		local node = minetest.get_node(pos)
-		if node.param2 == 0 then
-			local new_node = vlf_core.get_water_block_type(pos)
-			if new_node.param2 ~= 0 or new_node.name ~= "vlf_core:water_source" then
-				minetest.set_node(pos, new_node)
-			end
-		end
-	end,]]
 })
 
 minetest.register_node("vlf_core:lava_flowing", {
@@ -162,7 +136,8 @@ minetest.register_node("vlf_core:lava_flowing", {
 	liquid_range = 3,
 	damage_per_second = 4*2,
 	post_effect_color = {a=245, r=208, g=73, b=10},
-	groups = { lava=3, liquid=2, destroys_items=1, not_in_creative_inventory=1, dig_by_piston=1, set_on_fire=15},
+	groups = { lava=3, liquid=2, destroys_items=1, not_in_creative_inventory=1, dig_by_piston=1, set_on_fire=15, unsticky = 1},
+	_pathfinding_class = "LAVA",
 	_vlf_blast_resistance = 100,
 	-- Hardness intentionally set to infinite instead of 100 (Minecraft value) to avoid problems in creative mode
 	_vlf_hardness = -1,
@@ -216,7 +191,8 @@ S("• When lava is directly above water, the water turns into stone."),
 	liquid_range = 3,
 	damage_per_second = 4*2,
 	post_effect_color = {a=245, r=208, g=73, b=10},
-	groups = { lava=3, lava_source=1, liquid=2, destroys_items=1, not_in_creative_inventory=1, dig_by_piston=1, set_on_fire=15, fire_damage=1},
+	groups = { lava=3, lava_source=1, liquid=2, destroys_items=1, not_in_creative_inventory=1, dig_by_piston=1, set_on_fire=15, fire_damage=1, unsticky = 1},
+	_pathfinding_class = "LAVA",
 	_vlf_blast_resistance = 100,
 	-- Hardness intentionally set to infinite instead of 100 (Minecraft value) to avoid problems in creative mode
 	_vlf_hardness = -1,
@@ -251,7 +227,7 @@ if minetest.settings:get("vlf_node_particles") == "full" then
 		nodenames = {"group:lava_source"},
 		interval = 8.0,
 		chance = 20,
-		action = function(pos, node)
+		action = function(pos)
 			local apos = {x=pos.x, y=pos.y+1, z=pos.z}
 			local anode = minetest.get_node(apos)
 			-- Only emit partiles when directly below lava

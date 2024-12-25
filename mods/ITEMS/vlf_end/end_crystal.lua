@@ -17,8 +17,7 @@ for _, dir in pairs(directions) do
 end
 
 local function find_crystal(pos)
-	local objects = minetest.get_objects_inside_radius(pos, 0)
-	for _, obj in pairs(objects) do
+	for obj in minetest.objects_inside_radius(pos, 0) do
 		local luaentity = obj:get_luaentity()
 		if luaentity and luaentity.name == "vlf_end:crystal" then
 			return luaentity
@@ -27,8 +26,11 @@ local function find_crystal(pos)
 end
 
 local function crystal_explode(self, puncher)
-	if self._exploded then return end
+	if self._exploded then
+		return true
+	end
 	self._exploded = true
+	self._puncher = puncher
 	local strength = 1
 	local source
 	if puncher then
@@ -38,8 +40,11 @@ local function crystal_explode(self, puncher)
 		vlf_damage.finish_reason(reason)
 		source = reason.source
 	end
-	minetest.after(0, self.object.remove, self.object)
+	-- Enable dragons to detect explosions by slightly deferring
+	-- object deletion.
+	minetest.after (0.1, self.object.remove, self.object)
 	vlf_explosions.explode(vector.add(self.object:get_pos(), {x = 0, y = 1.5, z = 0}), strength, {}, self.object, source)
+	return true
 end
 
 local function set_crystal_animation(self)
@@ -65,7 +70,7 @@ local function spawn_crystal(pos)
 		crystals[i] = find_crystal(crystal_pos)
 		if not crystals[i] then return end
 	end
-	for _,o in pairs(minetest.get_objects_inside_radius(pos,64)) do
+	for o in minetest.objects_inside_radius(pos, 64) do
 		local l = o:get_luaentity()
 		if l and l.name == "mobs_mc:enderdragon" then return end
 		if not peaceful then
@@ -94,7 +99,8 @@ minetest.register_entity("vlf_end:crystal", {
 	on_punch = crystal_explode,
 	on_activate = set_crystal_animation,
 	_exploded = false,
-	_hittable_by_projectile = true
+	_hittable_by_projectile = true,
+	_vlf_pistons_unmovable = true
 })
 
 minetest.register_entity("vlf_end:crystal_beam", {
@@ -116,17 +122,8 @@ minetest.register_entity("vlf_end:crystal_beam", {
 	_vlf_fishing_reelable = false,
 	spin = 0,
 	init = function(self, dragon, crystal)
-		self.dragon, self.crystal = dragon, crystal
-		crystal:get_luaentity().beam = self.object
-		dragon:get_luaentity().beam = self.object
-	end,
-	on_deactivate = function(self)
-		if self.crystal and self.crystal:get_luaentity() then
-			self.crystal:get_luaentity().beam = nil
-		end
-		if self.dragon and self.dragon:get_luaentity() then
-			self.dragon:get_luaentity().beam = nil
-		end
+		self.dragon = dragon
+		self.crystal = crystal
 	end,
 	on_step = function(self, dtime)
 		if self.dragon and self.dragon:get_luaentity() and self.crystal and self.crystal:get_luaentity() then
@@ -140,7 +137,13 @@ minetest.register_entity("vlf_end:crystal_beam", {
 			local rot = vector.dir_to_rotation(vector.direction(dragon_pos, crystal_pos))
 			rot.z = self.spin
 			self.object:set_rotation(rot)
-			self.object:set_properties({visual_size = {x = 0.5, y = 0.5, z = vector.distance(dragon_pos, crystal_pos)}})
+			local dist = vector.distance (dragon_pos, crystal_pos)
+			self.object:set_properties({
+				visual_size = {
+					x = 0.5,
+					y = 0.5,
+					z = math.min (256, dist),
+			}})
 		else
 			self.object:remove()
 		end

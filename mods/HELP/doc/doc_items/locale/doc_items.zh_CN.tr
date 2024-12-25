@@ -14,7 +14,7 @@ No=
 Unknown item (@1)=
 unknown=
 1 second=
-@1 seconds=
+@1 seconds=@1秒
 • @1: @2=
 • @1, rating @2: @3 s - @4 s=
 • @1, rating @2: @3 s=
@@ -126,7 +126,7 @@ This block will randomly drop up to @1 drops of the following possible drops whe
 Tools and weapons=
 Item reference of all wieldable tools and weapons=
 Durability: @1 uses=
-Durability: @1=
+Durability: @1=耐久度：@1
 Miscellaneous items=
 Item reference of items which are neither blocks, tools or weapons (esp. crafting items)=
 Mobs=

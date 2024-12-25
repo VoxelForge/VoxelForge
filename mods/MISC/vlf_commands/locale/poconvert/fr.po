@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_commands x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_commands x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,13 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "List bans"
 msgstr "Liste des interdictions"
 
 msgid "Ban list: @1"
-msgstr "Liste d'interdiction: @1"
+msgstr "Liste d'interdiction : @1"
 
 msgid "Players can't be killed right now, damage has been disabled."
 msgstr "Les joueurs ne peuvent pas être tués pour le moment, les dégâts ont été désactivés."
@@ -71,17 +71,17 @@ msgid "Invalid parameters (see /help setblock)"
 msgstr "Paramètres invalides (voir /help setblock)"
 
 msgid "<sound> <target>"
-msgstr ""
+msgstr "<sound> <target>"
 
 msgid "Play a sound. Arguments: <sound>: name of the sound. <target>: Target."
-msgstr ""
+msgstr "Jouer un son. Arguments : <sound> : nom du son. <target> : cible."
 
 msgid "Sound name is invalid!"
-msgstr ""
+msgstr "Le nom du son n'est pas valide !"
 
 msgid "Target is invalid!!"
-msgstr ""
+msgstr "La cible n'est pas valide !"
 
 msgid "Only peaceful mobs allowed!"
-msgstr "Seuls les mobs pacifiques sont autorisées!"
+msgstr "Seuls les mobs pacifiques sont autorisées !"
 

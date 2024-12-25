@@ -68,6 +68,10 @@ function vlf_clock.register_item(name, image, creative, frame)
 		inventory_image = image,
 		groups = {not_in_creative_inventory=g, tool=1, clock=frame, disable_repair=1},
 		wield_image = "",
+		_on_set_item_entity = function(itemstack, entity)
+			entity.is_clock = true
+			return itemstack
+		end,
 	})
 end
 
@@ -93,7 +97,7 @@ minetest.register_globalstep(function(dtime)
 	vlf_clock.old_time = now
 	vlf_clock.random_frame = random_frame
 
-	for p, player in pairs(minetest.get_connected_players()) do
+	for player in vlf_util.connected_players() do
 		for s, stack in pairs(player:get_inventory():get_list("main")) do
 			local frame
 			-- Clocks do not work in certain zones
@@ -125,7 +129,7 @@ minetest.register_craft({
 	output = vlf_clock.stereotype,
 	recipe = {
 		{"", "vlf_core:gold_ingot", ""},
-		{"vlf_core:gold_ingot", "mesecons:redstone", "vlf_core:gold_ingot"},
+		{"vlf_core:gold_ingot", "vlf_redstone:redstone", "vlf_core:gold_ingot"},
 		{"", "vlf_core:gold_ingot", ""}
 	}
 })

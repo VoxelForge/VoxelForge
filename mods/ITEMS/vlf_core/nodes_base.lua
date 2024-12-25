@@ -24,14 +24,15 @@ minetest.register_node("vlf_core:stone", {
 	_vlf_blast_resistance = 6,
 	_vlf_hardness = 1.5,
 	_vlf_silk_touch_drop = true,
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
+	_vlf_cooking_output = "vlf_core:stone_smooth",
+	after_dig_node = function(_, _, _, digger)
 		if awards and awards.unlock and digger and digger:is_player() then
 			awards.unlock(digger:get_player_name(), "vlf:stoneAge")
 		end
 	end,
 })
 
-minetest.register_node("vlf_core:coal_ore", {
+minetest.register_node("vlf_core:stone_with_coal", {
 	description = S("Coal Ore"),
 	_doc_items_longdesc = S("Some coal contained in stone, it is very common and can be found inside stone in medium to large clusters at nearly every height."),
 	_doc_items_hidden = false,
@@ -43,9 +44,10 @@ minetest.register_node("vlf_core:coal_ore", {
 	_vlf_hardness = 3,
 	_vlf_silk_touch_drop = true,
 	_vlf_fortune_drop = vlf_core.fortune_drop_ore,
+	_vlf_cooking_output = "vlf_core:coal_lump"
 })
 
-minetest.register_node("vlf_core:iron_ore", {
+minetest.register_node("vlf_core:stone_with_iron", {
 	description = S("Iron Ore"),
 	_doc_items_longdesc = S("Some iron contained in stone, it is prety common and can be found below sea level."),
 	tiles = {"vlf_core_iron_ore.png"},
@@ -56,20 +58,22 @@ minetest.register_node("vlf_core:iron_ore", {
 	_vlf_hardness = 3,
 	_vlf_silk_touch_drop = true,
 	_vlf_fortune_drop = vlf_core.fortune_drop_ore,
+	_vlf_cooking_output = "vlf_core:iron_ingot"
 })
 
 
-minetest.register_node("vlf_core:gold_ore", {
+minetest.register_node("vlf_core:stone_with_gold", {
 	description = S("Gold Ore"),
 	_doc_items_longdesc = S("This stone contains pure gold, a rare metal."),
 	tiles = {"vlf_core_gold_ore.png"},
-	groups = {pickaxey=4, building_block=1, material_stone=1, blast_furnace_smeltable=1},
+	groups = {pickaxey=4, building_block=1, material_stone=1, blast_furnace_smeltable=1, piglin_protected=1},
 	drop = "vlf_raw_ores:raw_gold",
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	_vlf_blast_resistance = 3,
 	_vlf_hardness = 3,
 	_vlf_silk_touch_drop = true,
 	_vlf_fortune_drop = vlf_core.fortune_drop_ore,
+	_vlf_cooking_output = "vlf_core:gold_ingot"
 })
 
 local redstone_timer = 68.28
@@ -83,7 +87,7 @@ local function redstone_ore_activate(pos, node, puncher, pointed_thing)
 	end
 end
 
-minetest.register_node("vlf_core:redstone_ore", {
+minetest.register_node("vlf_core:stone_with_redstone", {
 	description = S("Redstone Ore"),
 	_doc_items_longdesc = S("Redstone ore is commonly found near the bottom of the world. It glows when it is punched or walked upon."),
 	tiles = {"vlf_core_redstone_ore.png"},
@@ -92,11 +96,11 @@ minetest.register_node("vlf_core:redstone_ore", {
 		items = {
 			max_items = 1,
 			{
-				items = {"mesecons:redstone 4"},
+				items = {"vlf_redstone:redstone 4"},
 				rarity = 2,
 			},
 			{
-				items = {"mesecons:redstone 5"},
+				items = {"vlf_redstone:redstone 5"},
 			},
 		}
 	},
@@ -108,11 +112,12 @@ minetest.register_node("vlf_core:redstone_ore", {
 	_vlf_silk_touch_drop = true,
 	_vlf_fortune_drop = {
 		discrete_uniform_distribution = true,
-		items = {"mesecons:redstone"},
+		items = {"vlf_redstone:redstone"},
 		min_count = 4,
 		max_count = 5,
 	},
-	_vlf_ore_lit = "vlf_core:redstone_ore_lit",
+	_vlf_ore_lit = "vlf_core:stone_with_redstone_lit",
+	_vlf_cooking_output = "vlf_redstone:redstone"
 })
 
 local function redstone_ore_reactivate(pos, node, puncher, pointed_thing)
@@ -123,7 +128,7 @@ local function redstone_ore_reactivate(pos, node, puncher, pointed_thing)
 	end
 end
 -- Light the redstone ore up when it has been touched
-minetest.register_node("vlf_core:redstone_ore_lit", {
+minetest.register_node("vlf_core:stone_with_redstone_lit", {
 	description = S("Lit Redstone Ore"),
 	_doc_items_create_entry = false,
 	tiles = {"vlf_core_redstone_ore.png"},
@@ -134,11 +139,11 @@ minetest.register_node("vlf_core:redstone_ore_lit", {
 		items = {
 			max_items = 1,
 			{
-				items = {"mesecons:redstone 4"},
+				items = {"vlf_redstone:redstone 4"},
 				rarity = 2,
 			},
 			{
-				items = {"mesecons:redstone 5"},
+				items = {"vlf_redstone:redstone 5"},
 			},
 		}
 	},
@@ -147,23 +152,23 @@ minetest.register_node("vlf_core:redstone_ore_lit", {
 	on_punch = redstone_ore_reactivate,
 	on_walk_over = redstone_ore_reactivate, -- Uses walkover mod
 	-- Turn back to normal node after some time has passed
-	on_timer = function(pos, elapsed)
+	on_timer = function(pos)
 		local nodedef = minetest.registered_nodes[minetest.get_node(pos).name]
 		minetest.swap_node(pos, {name=nodedef._vlf_ore_unlit})
 	end,
 	_vlf_blast_resistance = 3,
 	_vlf_hardness = 3,
-	_vlf_silk_touch_drop = {"vlf_core:redstone_ore"},
+	_vlf_silk_touch_drop = {"vlf_core:stone_with_redstone"},
 	_vlf_fortune_drop = {
 		discrete_uniform_distribution = true,
-		items = {"mesecons:redstone"},
+		items = {"vlf_redstone:redstone"},
 		min_count = 4,
 		max_count = 5,
 	},
-	_vlf_ore_unlit = "vlf_core:redstone_ore",
+	_vlf_ore_unlit = "vlf_core:stone_with_redstone",
 })
 
-minetest.register_node("vlf_core:lapis_ore", {
+minetest.register_node("vlf_core:stone_with_lapis", {
 	description = S("Lapis Lazuli Ore"),
 	_doc_items_longdesc = S("Lapis lazuli ore is the ore of lapis lazuli. It can be rarely found in clusters near the bottom of the world."),
 	tiles = {"vlf_core_lapis_ore.png"},
@@ -171,10 +176,11 @@ minetest.register_node("vlf_core:lapis_ore", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"vlf_core:lapis 8"},rarity = 5},
-			{items = {"vlf_core:lapis 7"},rarity = 5},
-			{items = {"vlf_core:lapis 6"},rarity = 5},
-			{items = {"vlf_core:lapis 5"},rarity = 5},
+			{items = {"vlf_core:lapis 9"},rarity = 6},
+			{items = {"vlf_core:lapis 8"},rarity = 6},
+			{items = {"vlf_core:lapis 7"},rarity = 6},
+			{items = {"vlf_core:lapis 6"},rarity = 6},
+			{items = {"vlf_core:lapis 5"},rarity = 6},
 			{items = {"vlf_core:lapis 4"}},
 		}
 	},
@@ -183,9 +189,10 @@ minetest.register_node("vlf_core:lapis_ore", {
 	_vlf_hardness = 3,
 	_vlf_silk_touch_drop = true,
 	_vlf_fortune_drop = vlf_core.fortune_drop_ore,
+	_vlf_cooking_output = "vlf_core:lapis"
 })
 
-minetest.register_node("vlf_core:emerald_ore", {
+minetest.register_node("vlf_core:stone_with_emerald", {
 	description = S("Emerald Ore"),
 	_doc_items_longdesc = S("Emerald ore is the ore of emeralds. It is very rare and can be found alone, not in clusters."),
 	tiles = {"vlf_core_emerald_ore.png"},
@@ -196,9 +203,10 @@ minetest.register_node("vlf_core:emerald_ore", {
 	_vlf_hardness = 3,
 	_vlf_silk_touch_drop = true,
 	_vlf_fortune_drop = vlf_core.fortune_drop_ore,
+	_vlf_cooking_output = "vlf_core:emerald"
 })
 
-minetest.register_node("vlf_core:diamond_ore", {
+minetest.register_node("vlf_core:stone_with_diamond", {
 	description = S("Diamond Ore"),
 	_doc_items_longdesc = S("Diamond ore is rare and can be found in clusters near the bottom of the world."),
 	tiles = {"vlf_core_diamond_ore.png"},
@@ -209,6 +217,7 @@ minetest.register_node("vlf_core:diamond_ore", {
 	_vlf_hardness = 3,
 	_vlf_silk_touch_drop = true,
 	_vlf_fortune_drop = vlf_core.fortune_drop_ore,
+	_vlf_cooking_output = "vlf_core:diamond"
 })
 
 minetest.register_node("vlf_core:stonebrick", {
@@ -221,6 +230,7 @@ minetest.register_node("vlf_core:stonebrick", {
 	_vlf_blast_resistance = 6,
 	_vlf_hardness = 1.5,
 	_vlf_stonecutter_recipes = { "vlf_core:stone" },
+	_vlf_cooking_output = "vlf_core:stonebrickcracked"
 })
 
 minetest.register_node("vlf_core:stonebrickcarved", {
@@ -389,7 +399,7 @@ minetest.register_node("vlf_core:grass_path", {
 			{-0.5, -0.5, -0.5, 0.5, 0.4375, 0.5},
 		}
 	},
-	groups = {handy=1,shovely=1, cultivatable=2, dirtifies_below_solid=1, dirtifier=1, deco_block=1 },
+	groups = {handy=1,shovely=1, cultivatable=2, dirtifies_below_solid=1, dirtifier=1, deco_block=1, _vlf_partial=2, },
 	sounds = vlf_sounds.node_sound_dirt_defaults({
 		footstep = {name="default_grass_footstep", gain=0.1},
 	}),
@@ -424,25 +434,23 @@ minetest.register_abm({
 	nodenames = {"group:mycelium"},
 	interval = 2,
 	chance = 30,
-	action = function(pos, node)
-		for _,player in pairs(minetest.get_connected_players()) do
-			if vector.distance(player:get_pos(), pos) < PARTICLE_ABM_DISTANCE then
-				minetest.add_particlespawner({
-					time = 2,
-					amount = 5,
-					minpos = vector.offset(pos,-2,0.51,-2),
-					maxpos = vector.offset(pos,2,0.51,2),
-					minvel = vector.new(-3/10, 0, -3/10),
-					maxvel = vector.new(3/10, 10/60, 3/10),
-					minacc = vector.zero(),
-					expirationtime = 4,
-					collisiondetection = true,
-					collision_removal = true,
-					playername = player:get_player_name(),
-					size = 1,
-					texture = "vlf_core_mycelium_particle.png",
-				})
-			end
+	action = function(pos)
+		for player in vlf_util.connected_players(pos, PARTICLE_ABM_DISTANCE) do
+			minetest.add_particlespawner({
+				time = 2,
+				amount = 5,
+				minpos = vector.offset(pos,-2,0.51,-2),
+				maxpos = vector.offset(pos,2,0.51,2),
+				minvel = vector.new(-3/10, 0, -3/10),
+				maxvel = vector.new(3/10, 10/60, 3/10),
+				minacc = vector.zero(),
+				expirationtime = 4,
+				collisiondetection = true,
+				collision_removal = true,
+				playername = player:get_player_name(),
+				size = 1,
+				texture = "vlf_core_mycelium_particle.png",
+			})
 		end
 	end,
 })
@@ -532,6 +540,7 @@ minetest.register_node("vlf_core:sand", {
 	sounds = vlf_sounds.node_sound_sand_defaults(),
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
+	_vlf_cooking_output = "vlf_core:glass"
 })
 
 minetest.register_node("vlf_core:sandstone", {
@@ -543,6 +552,7 @@ minetest.register_node("vlf_core:sandstone", {
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	_vlf_blast_resistance = 0.8,
 	_vlf_hardness = 0.8,
+	_vlf_cooking_output = "vlf_core:sandstonesmooth2"
 })
 
 minetest.register_node("vlf_core:sandstonesmooth", {
@@ -592,6 +602,7 @@ minetest.register_node("vlf_core:redsand", {
 	sounds = vlf_sounds.node_sound_sand_defaults(),
 	_vlf_blast_resistance = 0.5,
 	_vlf_hardness = 0.5,
+	_vlf_cooking_output = "vlf_core:glass"
 })
 
 minetest.register_node("vlf_core:redsandstone", {
@@ -602,6 +613,7 @@ minetest.register_node("vlf_core:redsandstone", {
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	_vlf_blast_resistance = 0.8,
 	_vlf_hardness = 0.8,
+	_vlf_cooking_output = "vlf_core:redsandstonesmooth2"
 })
 
 minetest.register_node("vlf_core:redsandstonesmooth", {
@@ -653,6 +665,7 @@ minetest.register_node("vlf_core:clay", {
 	_vlf_blast_resistance = 0.6,
 	_vlf_hardness = 0.6,
 	_vlf_silk_touch_drop = true,
+	_vlf_cooking_output = "vlf_colorblocks:hardened_clay"
 })
 
 minetest.register_node("vlf_core:brick_block", {
@@ -673,7 +686,7 @@ minetest.register_node("vlf_core:bedrock", {
 	_doc_items_longdesc = S("Bedrock is a very hard type of rock. It can not be broken, destroyed, collected or moved by normal means, unless in Creative Mode.").."\n"..
 		S("In the End dimension, starting a fire on this block will create an eternal fire."),
 	tiles = {"vlf_core_bedrock.png"},
-	groups = {creative_breakable=1, building_block=1, material_stone=1},
+	groups = {creative_breakable=1, building_block=1, material_stone=1, unmovable_by_piston = 1},
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	is_ground_content = false,
 	on_blast = function() end,
@@ -716,6 +729,7 @@ minetest.register_node("vlf_core:cobble", {
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	_vlf_blast_resistance = 6,
 	_vlf_hardness = 2,
+	_vlf_cooking_output = "vlf_core:stone"
 })
 
 minetest.register_node("vlf_core:mossycobble", {
@@ -738,6 +752,7 @@ minetest.register_node("vlf_core:coalblock", {
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	_vlf_blast_resistance = 6,
 	_vlf_hardness = 5,
+	_vlf_burntime = 800
 })
 
 minetest.register_node("vlf_core:ironblock", {
@@ -756,7 +771,7 @@ minetest.register_node("vlf_core:goldblock", {
 	_doc_items_longdesc = S("A block of gold is mostly a shiny decorative block but also useful as a compact storage of gold ingots."),
 	tiles = {"default_gold_block.png"},
 	is_ground_content = false,
-	groups = {pickaxey=4, building_block=1},
+	groups = {pickaxey=4, building_block=1, piglin_protected=1},
 	sounds = vlf_sounds.node_sound_metal_defaults(),
 	_vlf_blast_resistance = 6,
 	_vlf_hardness = 3,
@@ -774,7 +789,7 @@ minetest.register_node("vlf_core:diamondblock", {
 })
 
 minetest.register_node("vlf_core:lapisblock", {
-	description = S("Lapis Lazuli Block"),
+	description = S("Block of Lapis Lazuli"),
 	_doc_items_longdesc = S("A lapis lazuli block is mostly a decorative block but also useful as a compact storage of lapis lazuli."),
 	tiles = {"vlf_core_lapis_block.png"},
 	is_ground_content = false,
@@ -801,10 +816,10 @@ minetest.register_node("vlf_core:obsidian", {
 	tiles = {"default_obsidian.png"},
 	is_ground_content = false,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
-	groups = {pickaxey=5, building_block=1, material_stone=1},
+	groups = {pickaxey=5, building_block=1, material_stone=1, unmovable_by_piston = 1},
 	_vlf_blast_resistance = 1200,
 	_vlf_hardness = 50,
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
+	after_dig_node = function(_, _, _, digger)
 		if awards and awards.unlock and digger and digger:is_player() then
 			awards.unlock(digger:get_player_name(), "vlf:obsidian")
 		end
@@ -818,7 +833,7 @@ minetest.register_node("vlf_core:crying_obsidian", {
 	is_ground_content = false,
 	light_source = 10,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
-	groups = {pickaxey=5, building_block=1, material_stone=1},
+	groups = {pickaxey=5, building_block=1, material_stone=1, unmovable_by_piston = 1},
 	_vlf_blast_resistance = 1200,
 	_vlf_hardness = 50,
 })
@@ -834,7 +849,7 @@ minetest.register_node("vlf_core:ice", {
 	drop = "",
 	sounds = vlf_sounds.node_sound_ice_defaults(),
 	node_dig_prediction = "vlf_core:water_source",
-	after_dig_node = function(pos, oldnode)
+	after_dig_node = function(pos)
 		vlf_core.melt_ice(pos)
 	end,
 	_vlf_blast_resistance = 0.5,
@@ -900,7 +915,7 @@ for i=0,3 do
 			local timer = minetest.get_node_timer(pos)
 			timer:start(1.5)
 		end,
-		on_timer = function(pos, elapsed)
+		on_timer = function(pos)
 			local ice_near = minetest.find_nodes_in_area(
 				{ x = pos.x - 1, y = pos.y - 1, z = pos.z - 1 },
 				{ x = pos.x + 1, y = pos.y + 1, z = pos.z + 1 },
@@ -1021,13 +1036,13 @@ for i=1,8 do
 		drawtype = drawtype,
 		walkable = walkable,
 		floodable = true,
-		on_flood = function(pos, oldnode, newnode)
+		on_flood = function(pos)
 			local npos = {x=pos.x, y=pos.y-1, z=pos.z}
 			local node = minetest.get_node(npos)
 			vlf_core.clear_snow_dirt(npos, node)
 		end,
 		node_box = node_box,
-		groups = {shovely=2, attached_node=1, deco_block=1, dig_by_water=1, dig_by_piston=1, snow_cover=1, top_snow=i},
+		groups = {shovely=2, attached_node=1, deco_block=1, dig_by_water=1, dig_by_piston=1, snow_cover=1, top_snow=i, unsticky = 1, _vlf_partial = i < 5 and 1 or 2, snow=1},
 		sounds = vlf_sounds.node_sound_snow_defaults(),
 		on_construct = vlf_core.on_snow_construct,
 		on_place = on_place,
@@ -1044,7 +1059,7 @@ minetest.register_node("vlf_core:snowblock", {
 	_doc_items_longdesc = S("This is a full block of snow. Snow of this thickness is usually found in areas of extreme cold."),
 	_doc_items_hidden = false,
 	tiles = {"default_snow.png"},
-	groups = {shovely=2, building_block=1, snow_cover=1},
+	groups = {shovely=2, building_block=1, snow_cover=1, snow=1},
 	sounds = vlf_sounds.node_sound_snow_defaults(),
 	on_construct = vlf_core.on_snow_construct,
 	after_destruct = vlf_core.after_snow_destruct,
@@ -1056,10 +1071,7 @@ minetest.register_node("vlf_core:snowblock", {
 
 -- Add entry aliases for the Help
 if minetest.get_modpath("doc") then
-	doc.add_entry_alias("nodes", "vlf_core:redstone_ore", "nodes", "vlf_core:redstone_ore_lit")
+	doc.add_entry_alias("nodes", "vlf_core:stone_with_redstone", "nodes", "vlf_core:stone_with_redstone_lit")
 	doc.add_entry_alias("nodes", "vlf_core:water_source", "nodes", "vlf_core:water_flowing")
 	doc.add_entry_alias("nodes", "vlf_core:lava_source", "nodes", "vlf_core:lava_flowing")
 end
-
--- Alias Due to introducing Powder snow under vlf_core modname prefix.
-minetest.register_alias("vlf_core:powdered_snow", "vlf_powder_snow:powder_snow")

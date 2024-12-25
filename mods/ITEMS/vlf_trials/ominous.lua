@@ -11,12 +11,12 @@ local function register_ominous_bottles()
 			stack_max = 64,
 			groups = { rare = 1 },
 			on_place = function(itemstack, user)
-				vlf_entity_effects.give_effect("bad_omen", user, 1*i, 6000)
+				vlf_potions.give_effect("bad_omen", user, 1*i, 6000)
 				itemstack:take_item()
 				return itemstack
 			end,
 			on_secondary_use = function(itemstack, user)
-				vlf_entity_effects.give_effect("bad_omen", user, 1*i, 6000)
+				vlf_potions.give_effect("bad_omen", user, 1*i, 6000)
 				itemstack:take_item()
 				return itemstack
 			end,

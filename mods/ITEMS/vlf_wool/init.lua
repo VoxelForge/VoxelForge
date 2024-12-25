@@ -1,4 +1,5 @@
 local S = minetest.get_translator(minetest.get_current_modname())
+local D = vlf_util.get_dynamic_translator()
 local mod_doc = minetest.get_modpath("doc")
 
 -- Backwards compatibility with jordach's 16-color wool mod
@@ -34,7 +35,7 @@ for color,colordef in pairs(vlf_dyes.colors) do
 	end
 
 	minetest.register_node("vlf_wool:"..color, {
-		description = S("@1 Wool", colordef.readable_name),
+		description = D(colordef.readable_name .. " Wool"),
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = name_wool,
 		_doc_items_longdesc = longdesc_wool,
@@ -45,9 +46,10 @@ for color,colordef in pairs(vlf_dyes.colors) do
 		_color = color,
 		_vlf_hardness = 0.8,
 		_vlf_blast_resistance = 0.8,
+		_vlf_burntime = 5
 	})
 	minetest.register_node("vlf_wool:"..color.."_carpet", {
-		description = S("@1 Carpet", colordef.readable_name),
+		description = D(colordef.readable_name .. " Carpet"),
 		_doc_items_create_entry = create_entry,
 		_doc_items_entry_name = name_carpet,
 		_doc_items_longdesc = longdesc_carpet,
@@ -69,6 +71,7 @@ for color,colordef in pairs(vlf_dyes.colors) do
 		_color = color,
 		_vlf_hardness = 0.1,
 		_vlf_blast_resistance = 0.1,
+		_vlf_burntime = 3.35
 	})
 
 	if mod_doc and not is_canonical then
@@ -94,16 +97,4 @@ minetest.register_craft({
 		{ "vlf_mobitems:string", "vlf_mobitems:string" },
 		{ "vlf_mobitems:string", "vlf_mobitems:string" },
 	},
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:wool",
-	burntime = 5,
-})
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:carpet",
-	-- Original value: 3.35
-	burntime = 3,
 })

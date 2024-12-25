@@ -44,16 +44,6 @@ if minetest.get_modpath("vlf_sounds") then
 	sounds = vlf_sounds.node_sound_wood_defaults()
 end
 
-local tnt_mesecons
-if minetest.get_modpath("mesecons") then
-	tnt_mesecons = {
-		effector = {
-			action_on = tnt.ignite,
-			rules = mesecon.rules.alldirs,
-		},
-	}
-end
-
 local longdesc
 if explosions_griefing then
 	longdesc = S("An explosive device. When it explodes, it will hurt living beings and destroy blocks around it. TNT has an explosion radius of @1. With a small chance, blocks may drop as an item (as if being mined) rather than being destroyed. TNT can be ignited by tools, explosions, fire, lava and redstone signals."
@@ -81,14 +71,13 @@ minetest.register_node("vlf_tnt:tnt", {
 	_doc_items_longdesc = longdesc,
 	_doc_items_usagehelp = S("Place the TNT and ignite it with one of the methods above. Quickly get in safe distance. The TNT will start to be affected by gravity and explodes in 4 seconds."),
 	groups = { dig_immediate = 3, tnt = 1, enderman_takable = 1, flammable = -1 },
-	mesecons = tnt_mesecons,
 	on_blast = function(pos, _)
 		local e = tnt.ignite(pos)
 		if e then
 			e:get_luaentity().timer = tnt.BOOMTIMER - (0.5 + math.random())
 		end
 	end,
-	_on_ignite = function(player, pointed_thing)
+	_on_ignite = function(_, pointed_thing)
 		tnt.ignite(pointed_thing.under)
 		return true
 	end,
@@ -96,18 +85,28 @@ minetest.register_node("vlf_tnt:tnt", {
 		tnt.ignite(pos)
 		return true
 	end,
-	_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
+	_on_dispense = function(stack, _, droppos, dropnode)
 		-- Place and ignite TNT
 		if minetest.registered_nodes[dropnode.name].buildable_to then
 			minetest.set_node(droppos, { name = stack:get_name() })
 			tnt.ignite(droppos)
 		end
 	end,
-	_on_arrow_hit = function(pos, arrowent)
+	_on_arrow_hit = function(_, arrowent)
 		if vlf_burning.is_burning(arrowent.object) then
 			tnt.ignite(arrowent._stuckin)
 		end
 	end,
+	_vlf_redstone = {
+		connects_to = function(node, dir)
+			return true
+		end,
+		update = function(pos)
+			if vlf_redstone.get_power(pos) ~= 0 then
+				tnt.ignite(pos)
+			end
+		end,
+	},
 	sounds = sounds,
 })
 

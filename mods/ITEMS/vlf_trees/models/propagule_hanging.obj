@@ -354,7 +354,7 @@ vt 0.186322 0.406348
 vt 0.186322 0.376797
 vn 0.6947 0.0000 -0.7193
 vn -0.7193 0.0000 -0.6947
-usemtl mcl_flowers_tallgrass.png
+usemtl vlf_flowers_tallgrass.png
 s 1
 f 170/1/1 59/2/1 3/3/1 79/4/1
 f 169/5/1 60/6/1 5/7/1 83/8/1
@@ -539,7 +539,7 @@ vn 0.0067 -0.9235 -0.3836
 vn 0.3836 -0.9235 0.0067
 vn -0.0067 -0.9235 0.3836
 vn -0.3836 -0.9235 -0.0067
-usemtl mcl_ocean_bubble_coral_fan.png
+usemtl vlf_ocean_bubble_coral_fan.png
 s 1
 f 187/181/3 176/182/3 186/183/3 189/184/3
 f 184/185/4 175/186/4 183/187/4 190/188/4

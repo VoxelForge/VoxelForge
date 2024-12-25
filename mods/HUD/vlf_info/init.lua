@@ -63,7 +63,6 @@ local function get_text(player, bits)
 		if def then
 			if def.level == nil or def.level <= bits then
 				r = r ..key..": "..tostring(def.func(player,pos)).."\n"
-				--r = r ..key..": "..tostring(def.func(player,pointed_thing)).."\n"
 			end
 		else
 			r = r ..key..": <Unknown Field>\n"
@@ -73,7 +72,7 @@ local function get_text(player, bits)
 end
 
 local function info()
-	for _, player in pairs(minetest.get_connected_players()) do
+	for player in vlf_util.connected_players() do
 		local name = player:get_player_name()
 		local s = player_setting(player)
 		local text = get_text(player, s)
@@ -81,7 +80,7 @@ local function info()
 		if s and not hud then
 			local def = {
 				[hud_elem_type_field] = "text",
-				alignment     = {x = 1, y = -6.5},
+				alignment     = {x = 1, y = -1},
 				scale         = {x = 100, y = 100},
 				position      = {x = 0.0073, y = 0.889},
 				text          = text,
@@ -149,21 +148,50 @@ minetest.register_chatcommand("whereami", {
 	end
 })
 
+vlf_info.register_debug_field ("Village proximity", {
+       level = 4,
+       func = function (_, pos)
+	       return string.format (vlf_villages.get_poi_heat (pos))
+       end,
+})
+
+vlf_info.register_debug_field ("Local Difficulty", {
+       level = 4,
+       func = function (_, pos)
+	       return string.format ("%.2f // %.2f (Day %d)",
+					vlf_worlds.get_regional_difficulty (pos),
+					vlf_worlds.get_special_difficulty (pos),
+					minetest.get_day_count ())
+       end,
+})
+
+vlf_info.register_debug_field ("Inhabited time", {
+       level = 4,
+       func = function (_, pos)
+	       local time = vlf_worlds.chunk_inhabited_time (pos)
+	       local days = math.floor (time / 24000)
+	       local fractional = time / 24000 - days
+	       local seconds = math.floor (fractional * 1440) % 60
+	       local hours = math.floor (fractional * 24)
+	       return string.format ("%d day(s) + %02d:%02d", days, hours, seconds)
+       end,
+})
+
 vlf_info.register_debug_field("Node feet",{
 	level = 4,
-	func = function(pl,pos)
+	func = function(_, pos)
 		return nodeinfo(pos)
 	end
 })
 vlf_info.register_debug_field("Node below",{
 	level = 4,
-	func = function(pl,pos)
+	func = function(_, pos)
 		return nodeinfo(vector.offset(pos,0,-1,0))
 	end
 })
 vlf_info.register_debug_field("Biome",{
 	level = 3,
-	func = function(pl,pos)
+	func = function(_, pos)
 		local biome_data = minetest.get_biome_data(pos)
 		local biome = biome_data and minetest.get_biome_name(biome_data.biome) or "No biome"
 		if biome_data then
@@ -175,14 +203,14 @@ vlf_info.register_debug_field("Biome",{
 
 vlf_info.register_debug_field("Coords", {
 	level = 2,
-	func = function(pl, pos)
+	func = function(_, pos)
 		return string.format("x:%.1f y:%.1f z:%.1f", pos.x, pos.y, pos.z)
 	end
 })
 
 vlf_info.register_debug_field("Location", {
 	level = 1,
-	func = function(pl, pos)
+	func = function(_, pos)
 		-- overworld
 		if (pos.y >= vlf_vars.mg_overworld_min) and (pos.y <= vlf_vars.mg_overworld_max) then
 			return string.format("Overworld: x:%.1f y:%.1f z:%.1f", pos.x, pos.y, pos.z)

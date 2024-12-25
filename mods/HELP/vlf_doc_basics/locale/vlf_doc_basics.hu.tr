@@ -1,6 +1,6 @@
 # textdomain: vlf_doc_basics
-Advanced usage=
-Advanced information which may be nice to know, but is not crucial to gameplay=
+Advanced usage=Haladó használat
+Advanced information which may be nice to know, but is not crucial to gameplay=További információk, melyeket jó tudni, de nem életbevágó a játékmenethez
 # MCL2 extensions
 Creative Mode=Kreatív Mód
 Enabling Creative Mode in MineClone 2 applies the following changes:=
@@ -223,7 +223,7 @@ You can change the selected item with the mouse wheel or the keyboard:=
 • Select next item in hotbar: [Mouse wheel down] or [N]=
 • Select item in hotbar directly: [1]-[9]=
 The selected item is also your wielded item.=
-Tools=
+Tools=Eszközök
 Some items may serve as a tool when wielded. Any item which has some special use which can be directly used by its wielder is considered a tool.=
 A common subset of tools are mining tools. These are important to quickly break different types of blocks. Weapons are a kind of tool. There are of course many other possible tools. Special actions of tools are usually done by left-click or right-click.=
 When nothing is wielded, players use their hand which also acts as a (limited) mining tool and weapon with no durability.=
@@ -238,7 +238,7 @@ There are two core attributes of melee weapons:=
 • Full punch interval: Time it takes for fully recovering from a punch=
 A weapon only deals full damage when it has fully recovered from a previous punch. Otherwise, the weapon will deal only reduced damage. This means, quick punching is very fast, but also deals rather low damage. Note the full punch interval does not limit how fast you can attack.=
 There is a rule which sometimes makes attacks impossible: Players, animate objects and weapons belong to damage groups. A weapon only deals damage to those who share at least one damage group with it. So if you're using the wrong weapon, you might not deal any damage at all.=
-Blocks=
+Blocks=Blokkok
 The world is made entirely out of blocks (voxels, to be precise). Blocks can be added or removed with the correct tools.=
 Blocks can have a wide range of different properties which determine mining times, behavior, looks, shape, and much more. Their properties include:=
 • Collidable: Collidable blocks can not be passed through; players can walk on them. Non-collidable blocks can be passed through freely=
@@ -309,7 +309,7 @@ Saturation decreases by doing things which exhaust you (highest exhaustion first
 • Jumping=
 • Mining a block=
 Other actions, like walking, do not exaust you.=
-Mobs=
+Mobs=Mobok
 Mobs are the living beings in the world. This includes animals and monsters.=
 Mobs appear randomly throughout the world. This is called “spawning”. Each mob kind appears on particular block types at a given light level. The height also plays a role. Peaceful mobs tend to spawn at daylight while hostile ones prefer darkness. Most mobs can spawn on any solid block but some mobs only spawn on particular blocks (like grass blocks).=
 Like players, mobs have hit points and sometimes armor points, too (which means you need better weapons to deal any damage at all). Also like players, hostile mobs can attack directly or at a distance. Mobs may drop random items after they die.=

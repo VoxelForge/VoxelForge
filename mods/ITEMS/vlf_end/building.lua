@@ -71,7 +71,7 @@ minetest.register_node("vlf_end:end_rod", {
 	is_ground_content = false,
 	paramtype = "light",
 	paramtype2 = "facedir",
-	light_source = minetest.LIGHT_MAX,
+	light_source = 14,
 	sunlight_propagates = true,
 	groups = { dig_immediate=3, deco_block=1, destroy_by_lava_flow=1, },
 	node_box = {
@@ -163,7 +163,7 @@ minetest.register_node("vlf_end:dragon_egg", {
 	selection_box = {
 		type = "regular",
 	},
-	groups = {handy = 1, falling_node = 1, deco_block = 1, dig_by_piston = 1 },
+	groups = {handy = 1, falling_node = 1, deco_block = 1, dig_by_piston = 1, unsticky =1},
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	_vlf_blast_resistance = 9,
 	_vlf_hardness = 3,

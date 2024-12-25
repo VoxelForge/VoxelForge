@@ -90,7 +90,7 @@ local function get_inactive_formspec(name)
 end
 
 
-function vlf_furnaces.receive_fields(pos, formname, fields, sender)
+function vlf_furnaces.receive_fields(_, _, fields, sender)
 	if fields.craftguide then
 		vlf_craftguide.show(sender:get_player_name())
 	end
@@ -190,7 +190,7 @@ function vlf_furnaces.allow_metadata_inventory_put(pos, listname, index, stack, 
 	end
 end
 
-function vlf_furnaces.allow_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
+function vlf_furnaces.allow_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, _, player)
 	if from_list == "sorter" or to_list == "sorter" then return 0 end
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
@@ -198,7 +198,7 @@ function vlf_furnaces.allow_metadata_inventory_move(pos, from_list, from_index, 
 	return vlf_furnaces.allow_metadata_inventory_put(pos, to_list, to_index, stack, player)
 end
 
-function vlf_furnaces.allow_metadata_inventory_take(pos, listname, index, stack, player)
+function vlf_furnaces.allow_metadata_inventory_take(pos, listname, _, stack, player)
 	if listname == "sorter" then return 0 end
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
@@ -208,7 +208,7 @@ function vlf_furnaces.allow_metadata_inventory_take(pos, listname, index, stack,
 	return stack:get_count()
 end
 
-function vlf_furnaces.on_metadata_inventory_take(pos, listname, index, stack, player)
+function vlf_furnaces.on_metadata_inventory_take(pos, listname, _, stack, player)
 	-- Award smelting achievements
 	if listname == "dst" then
 		if stack:get_name() == "vlf_core:iron_ingot" then
@@ -218,20 +218,22 @@ function vlf_furnaces.on_metadata_inventory_take(pos, listname, index, stack, pl
 		end
 		vlf_furnaces.give_xp(pos, player)
 	end
+	vlf_redstone.update_comparators(pos)
 end
 
-function vlf_furnaces.on_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
+function vlf_furnaces.on_metadata_inventory_move(pos, from_list, _, _, _, _, player)
 	if from_list == "dst" then
 		vlf_furnaces.give_xp(pos, player)
 	end
 end
 
-function vlf_furnaces.on_metadata_inventory_put(pos, listname, index, stack, player)
+function vlf_furnaces.on_metadata_inventory_put(pos, listname, _, stack, _)
 	if listname == "sorter" then
 		local inv = minetest.get_meta(pos):get_inventory()
 		inv:add_item(sort_stack(stack, pos), stack)
 		inv:set_stack("sorter", 1, ItemStack(""))
 	end
+	vlf_redstone.update_comparators(pos)
 end
 
 function vlf_furnaces.swap_node(pos, name)
@@ -245,7 +247,7 @@ end
 
 function vlf_furnaces.furnace_reset_delta_time(pos)
 	local meta = minetest.get_meta(pos)
-	local time_speed = tonumber(minetest.settings:get("time_speed") or 72)
+	local time_speed = tonumber(minetest.settings:get("time_speed")) or 72
 	if (time_speed < 0.1) then
 		return
 	end
@@ -320,6 +322,7 @@ function vlf_furnaces.get_timer_function(node_normal, node_active, factor, group
 		end
 
 		local update = true
+		local inv_changed = false
 		while elapsed_game_time > 0.00001 and update do
 			--
 			-- Cooking
@@ -365,6 +368,7 @@ function vlf_furnaces.get_timer_function(node_normal, node_active, factor, group
 					el = math.min(el, fuel_totaltime)
 					active = true
 					fuellist = inv:get_list("fuel")
+					inv_changed = true
 				end
 			elseif active then
 				el = math.min(el, fuel_totaltime - fuel_time)
@@ -396,10 +400,15 @@ function vlf_furnaces.get_timer_function(node_normal, node_active, factor, group
 					src_time = 0
 
 					meta:set_int("xp", meta:get_int("xp") + 1) -- ToDo give each recipe an idividial XP count
+					inv_changed = true
 				end
 			end
 
 			elapsed_game_time = elapsed_game_time - el
+		end
+
+		if inv_changed then
+			vlf_redstone.update_comparators(pos)
 		end
 
 		if fuel and fuel_totaltime > fuel.time then
@@ -469,7 +478,7 @@ vlf_furnaces.furnace_node_timer = vlf_furnaces.get_timer_function()
 vlf_furnaces.on_rotate = screwdriver.rotate_simple
 
 -- Returns true if itemstack is fuel, but not for lava bucket if destination already has one
-function vlf_furnaces.is_transferrable_fuel(itemstack, src_inventory, src_list, dst_inventory, dst_list)
+function vlf_furnaces.is_transferrable_fuel(itemstack, _, _, dst_inventory, dst_list)
 	if vlf_util.is_fuel(itemstack) then
 		if itemstack:get_name() == "vlf_buckets:bucket_lava" then
 			return dst_inventory:is_empty(dst_list)
@@ -510,7 +519,7 @@ end
 vlf_furnaces.tpl_furnace_node = {
 	paramtype2 = "facedir",
 	paramtype = "light",
-	groups = { pickaxey = 1, container = 4, deco_block = 1, material_stone = 1, furnace = 1 },
+	groups = { pickaxey = 1, container = 4, deco_block = 1, material_stone = 1, furnace = 1, unmovable_by_piston = 1},
 	is_ground_content = false,
 	sounds = vlf_sounds.node_sound_stone_defaults(),
 	_vlf_blast_resistance = 3.5,
@@ -562,7 +571,7 @@ vlf_furnaces.tpl_furnace_node_normal = table.merge(vlf_furnaces.tpl_furnace_node
 })
 
 vlf_furnaces.tpl_furnace_node_active = table.merge(vlf_furnaces.tpl_furnace_node,{
-	groups = { pickaxey = 1, container = 4, deco_block = 1, material_stone = 1, furnace = 1, furnace_active = 1, not_in_creative_inventory = 1 },
+	groups = { pickaxey = 1, container = 4, deco_block = 1, material_stone = 1, furnace = 1, furnace_active = 1, not_in_creative_inventory = 1, unmovable_by_piston = 1 },
 	_doc_items_create_entry = false,
 	light_source = LIGHT_ACTIVE_FURNACE,
 })
@@ -596,6 +605,7 @@ function vlf_furnaces.register_furnace(nodename, def)
 	minetest.register_node(nodename.."_active", table.merge(vlf_furnaces.tpl_furnace_node_active,{
 		on_timer = timer_func,
 		drop = nodename,
+		_vlf_baseitem = nodename,
 	},def.node_active))
 end
 
@@ -636,10 +646,7 @@ minetest.register_craft({
 	}
 })
 
--- Add entry alias for the Help
-if minetest.get_modpath("doc") then
-	doc.add_entry_alias("nodes", "vlf_furnaces:furnace", "nodes", "vlf_furnaces:furnace_active")
-end
+doc.add_entry_alias("nodes", "vlf_furnaces:furnace", "nodes", "vlf_furnaces:furnace_active")
 
 minetest.register_lbm({
 	label = "Update Furnace formspecs and invs to allow new sneak+click behavior",

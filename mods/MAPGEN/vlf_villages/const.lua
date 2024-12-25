@@ -75,7 +75,7 @@ vlf_villages.biome_map = {
 
 	MangroveSwamp = "mangrove",
 
-	RoofedForest = "dark_oak",
+	Dark_Forest = "dark_oak",
 
 	BirchForest = "birch",
 	BirchForestM = "birch",

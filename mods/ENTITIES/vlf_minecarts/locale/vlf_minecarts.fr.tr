@@ -1,13 +1,13 @@
 # textdomain: vlf_minecarts
-Sneak-click to remove=
+Sneak-click to remove=Cliquer furtivement pour supprimer
 Minecart=Wagonnet
 Vehicle for fast travel on rails=Véhicule pour voyager rapidement sur rails
 Minecarts can be used for a quick transportion on rails.=Les wagonnets peuvent être utilisés pour un transport rapide sur rails.
 Minecarts only ride on rails and always follow the tracks. At a T-junction with no straight way ahead, they turn left. The speed is affected by the rail type.=Les wagonnets roulent uniquement sur des rails et suivent toujours les pistes. À un carrefour en T sans voie directe, ils tournent à gauche. La vitesse dépend du type de rail.
 You can place the minecart on rails. Right-click it to enter it. Punch it to get it moving.=Vous pouvez placer le wagonnet sur des rails. Faites un clic droit dessus pour entrer dedans. Frappez-le pour le faire bouger.
 To obtain the minecart, punch it while holding down the sneak key.=Pour obtenir la wagonnet, frappez-le tout en maintenant la touche furtive enfoncée.
-If it moves over a powered activator rail, you'll get ejected.=
-Sneak to dismount=Se baisser pour descendre
+If it moves over a powered activator rail, you'll get ejected.=S'il passe au-dessus d'un rail d'activation motorisé, vous serez éjecté.
+Sneak to dismount=S'accroupir pour descendre
 Minecart with Chest=Wagonnet avec Coffre
 Minecart with Furnace=Wagonnet avec Four
 A minecart with furnace is a vehicle that travels on rails. It can propel itself with fuel.=Une wagonnet avec un four est un véhicule qui se déplace sur rails. Il peut se propulser avec du carburant.

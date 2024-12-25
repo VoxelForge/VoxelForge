@@ -1,4 +1,5 @@
 # textdomain: vlf_beacons
-Beacon:=Leuchtfeuer:
 Primary Power:=Primäre Kraft:
+Secondary Power:=
 Inventory:=Inventar:
+Beacon=

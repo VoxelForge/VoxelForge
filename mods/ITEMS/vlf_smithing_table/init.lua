@@ -11,7 +11,7 @@ local smithing_materials = {
 	["vlf_core:diamond"] = "diamond",
 	["vlf_core:lapis"] = "lapis",
 	["vlf_amethyst:amethyst_shard"]	= "amethyst",
-	["mesecons:wire_00000000_off"]= "redstone",
+	["vlf_redstone:redstone"]= "redstone",
 	["vlf_core:iron_ingot"] = "iron",
 	["vlf_core:gold_ingot"] = "gold",
 	["vlf_copper:copper_ingot"] = "copper",
@@ -137,7 +137,7 @@ local function reset_upgraded_item(pos)
 	inv:set_stack("upgraded_item", 1, upgraded_item)
 end
 
-local function sort_stack(stack, pos)
+local function sort_stack(stack, _)
 	if minetest.get_item_group(stack:get_name(), "smithing_template") > 0 or minetest.get_item_group(stack:get_name(), "upgrade_template") > 0 then
 		return "template"
 	elseif vlf_smithing_table.is_smithing_mineral(stack:get_name()) then
@@ -152,8 +152,10 @@ end
 
 minetest.register_node("vlf_smithing_table:table", {
 	description = S("Smithing Table"),
-	-- ToDo: Add _doc_items_longdesc and _doc_items_usagehelp
-
+	_doc_items_longdesc = S("A smithing table is a utility block used to alter tools and armor at the cost of a smithing template and the appropriate material. This is the only way to obtain trimmed armor or upgrade diamond equipment with netherite. It also serves as a toolsmith's job site block."),
+	_doc_items_usagehelp = S("Rightclick on a smithing table to access its interface. Put armor or tools in the upper left slot. The top right slot is reserved for mineral items. The bottom slot is for smithing templates. To upgrade your diamond armor and tools to netherite, the netherite upgrade template is required.").."\n"..
+	S("To trim your armor, you need a mineral item and a smithing template. Each piece of armor can be given an trimming pattern. The items are consumed after trimming and the armor piece receives the pattern defined by the template.").."\n\n"..
+	S("List of mineral items:\n• Amethyst Shard\n• Copper Ingot\n• Diamond\n• Emerald\n• Gold Ingot\n• Iron Ingot\n• Lapis Lazuli\n• Netherite Ingot\n• Quartz\n• Redstone"),
 	groups = { pickaxey = 2, deco_block = 1 },
 
 	tiles = {
@@ -182,7 +184,12 @@ minetest.register_node("vlf_smithing_table:table", {
 
 	after_dig_node = vlf_util.drop_items_from_meta_container({"upgrade_item", "mineral", "template"}),
 
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_put = function(pos, listname, _, stack, player)
+		local name = player:get_player_name()
+		if minetest.is_protected(pos, name) then
+			minetest.record_protection_violation(pos, name)
+			return 0
+		end
 		local r = 0
 		if listname == "upgrade_item" then
 			if (minetest.get_item_group(stack:get_name(),"armor") > 0
@@ -216,11 +223,11 @@ minetest.register_node("vlf_smithing_table:table", {
 		return r
 	end,
 
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	allow_metadata_inventory_move = function()
 		return 0
 	end,
 
-	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_take = function(pos, listname, _, stack, player)
 		if listname == "sorter" then return 0 end
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then
@@ -231,7 +238,7 @@ minetest.register_node("vlf_smithing_table:table", {
 		end
 	end,
 
-	on_metadata_inventory_put =  function(pos, listname, index, stack, player)
+	on_metadata_inventory_put =  function(pos, listname, _, stack)
 		if listname == "sorter" then
 			local inv = minetest.get_meta(pos):get_inventory()
 			inv:add_item(sort_stack(stack, pos), stack)
@@ -239,7 +246,7 @@ minetest.register_node("vlf_smithing_table:table", {
 		end
 		reset_upgraded_item(pos)
 	end,
-	on_metadata_inventory_take = function(pos, listname, index, stack, player)
+	on_metadata_inventory_take = function(pos, listname, _, stack, player)
 		local inv = minetest.get_meta(pos):get_inventory()
 
 		local function take_item(listname)
@@ -290,7 +297,8 @@ minetest.register_node("vlf_smithing_table:table", {
 	end,
 
 	_vlf_blast_resistance = 2.5,
-	_vlf_hardness = 2.5
+	_vlf_hardness = 2.5,
+	_vlf_burntime = 15
 })
 
 
@@ -303,12 +311,6 @@ minetest.register_craft({
 	},
 })
 
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_smithing_table:table",
-	burntime = 15,
-})
-
 -- this is the exact same as vlf_smithing_table.upgrade_item_netherite , in case something relies on the old function
 function vlf_smithing_table.upgrade_item_netherite(itemstack)
 	return vlf_smithing_table.upgrade_item(itemstack)
@@ -319,7 +321,7 @@ minetest.register_lbm({
 	name = "vlf_smithing_table:update_coolsneak",
 	nodenames = { "vlf_smithing_table:table" },
 	run_at_every_load = false,
-	action = function(pos, node)
+	action = function(pos)
 		local m = minetest.get_meta(pos)
 		m:get_inventory():set_size("sorter", 1)
 		m:set_string("formspec", formspec)

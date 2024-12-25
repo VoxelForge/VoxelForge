@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_doc_basics x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_doc_basics x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Advanced usage"
 msgstr "Utilisation avancée"
 
 msgid "Advanced information which may be nice to know, but is not crucial to gameplay"
-msgstr "Informations avancées qui peuvent être agréables à connaître, mais qui ne sont pas cruciales pour le gameplay"
+msgstr "Informations avancées qui peuvent être utiles à connaître, mais qui ne sont pas cruciales pour le gameplay"
 
 msgid "Creative Mode"
-msgstr "Mode Creatif"
+msgstr "Mode Créatif"
 
 msgid "Enabling Creative Mode in MineClone 2 applies the following changes:"
 msgstr "L'activation du mode créatif dans MineClone 2 applique les modifications suivantes :"
@@ -38,7 +38,7 @@ msgid "• Greatly increased hand pointing range"
 msgstr "• Plage de pointage de la main considérablement augmentée"
 
 msgid "• Mined blocks don't drop items"
-msgstr "• Les blocs extraits ne déposent pas d'objets"
+msgstr "• Les blocs extraits ne donnent pas d'objets"
 
 msgid "• Items don't get used up"
 msgstr "• Les articles ne s'épuisent pas"
@@ -1090,8 +1090,8 @@ msgstr "• Être attaqué par un autre joueur"
 msgid "• Being attacked by a computer enemy"
 msgstr "• Être attaqué par un ennemi informatique"
 
-msgid "At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless mcl_keepInventory is enabled)"
-msgstr "Avec une santé de 0, le joueur meurt. Le joueur peut simplement réapparaître dans le monde, mais ses objets seront perdus à l'endroit où il est mort et devront être récupérés. (sauf si mcl_keepInventory est activé)"
+msgid "At a health of 0, the player dies. The player can just respawn in the world, but their items will be lost at the place of death and will need to be retrieved. (unless vlf_keepInventory is enabled)"
+msgstr "Avec une santé de 0, le joueur meurt. Le joueur peut simplement réapparaître dans le monde, mais ses objets seront perdus à l'endroit où il est mort et devront être récupérés. (sauf si vlf_keepInventory est activé)"
 
 msgid "Some blocks reduce breath. While being with the head in a block which causes drowning, the breath points are reduced by 1 for every 2 seconds. When all breath is gone, the player starts to suffer drowning damage. Breath is quickly restored in any other block."
 msgstr "Certains blocs réduisent la respiration. Tout en étant avec la tête dans un bloc qui provoque la noyade, les points de respiration sont réduits de 1 toutes les 2 secondes. Quand tout le souffle est parti, le joueur commence à subir des dégâts de noyade. Le souffle est rapidement rétabli dans tout autre bloc."

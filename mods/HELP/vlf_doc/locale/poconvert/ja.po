@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_doc x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_doc x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Water can flow into this block and cause it to drop as an item."
 msgstr "このブロックに水が流れ込むと、アイテムとしてドロップすることがあります。"
@@ -125,7 +125,7 @@ msgid "Golden Pickaxe"
 msgstr "金のツルハシ"
 
 msgid "Wooden Pickaxe"
-msgstr "木製のツルハシ"
+msgstr "木のツルハシ"
 
 msgid "Diamond Axe"
 msgstr "ダイヤモンドの斧"
@@ -140,7 +140,7 @@ msgid "Golden Axe"
 msgstr "金の斧"
 
 msgid "Wooden Axe"
-msgstr "木製の斧"
+msgstr "木の斧"
 
 msgid "Diamond Shovel"
 msgstr "ダイヤモンドのシャベル"
@@ -155,7 +155,7 @@ msgid "Golden Shovel"
 msgstr "金のシャベル"
 
 msgid "Wooden Shovel"
-msgstr "木製のシャベル"
+msgstr "木のシャベル"
 
 msgid "This block can be mined by any tool instantly."
 msgstr "このブロックは、どんな道具を使ってもすぐに掘れます。"

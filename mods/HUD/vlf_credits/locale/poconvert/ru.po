@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_credits x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_credits x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "A faithful Open Source clone of Minecraft"
 msgstr "Верный открытый клон Minecraft"
@@ -23,22 +23,22 @@ msgid "Jump to speed up (additionally sprint)"
 msgstr "[Прыжок] или [Спринт] для промотки вперед"
 
 msgid "Show the Mineclonia end credits"
-msgstr ""
+msgstr "Показать финальные титры Mineclonia"
 
 msgid "Creators of Mineclonia"
-msgstr ""
+msgstr "Создатели Mineclonia"
 
 msgid "Creator of MineClone 2"
-msgstr ""
+msgstr "Создатели MineClone 2"
 
 msgid "Creator of MineClone"
 msgstr "Создатель MineClone"
 
 msgid "Active Contributors"
-msgstr ""
+msgstr "Активные участники"
 
 msgid "Previous Contributors"
-msgstr ""
+msgstr "Предыдущие участники"
 
 msgid "Original Mod Authors"
 msgstr "Авторы оригинальных модов"
@@ -47,7 +47,7 @@ msgid "3D Models"
 msgstr "3D модели"
 
 msgid "Textures and menu images"
-msgstr ""
+msgstr "Текстуры и изображения меню"
 
 msgid "Translations"
 msgstr "Перевод"

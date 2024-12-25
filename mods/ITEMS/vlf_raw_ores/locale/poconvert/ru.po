@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_raw_ores x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_raw_ores x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Raw Iron"
 msgstr "Необработанное железо"
@@ -20,10 +20,10 @@ msgid "Block of Raw Iron"
 msgstr "Блок необработанного железа"
 
 msgid "Raw Iron. Mine an Iron ore to get it."
-msgstr ""
+msgstr "Необработанное железо. Добывайте железную руду, чтобы получить его."
 
 msgid "A block of raw Iron is mostly a decorative block but also useful as a compact storage of raw Iron."
-msgstr ""
+msgstr "Блок необработанного железа - в основном декоративный блок, но также полезен как компактное хранилище необработанного железа."
 
 msgid "Raw Gold"
 msgstr "Необработанное золото"
@@ -32,8 +32,8 @@ msgid "Block of Raw Gold"
 msgstr "Блок необработанного золота"
 
 msgid "Raw Gold. Mine a Gold ore to get it."
-msgstr ""
+msgstr "Необработанное золото. Чтобы получить золото, добывайте золотую руду."
 
 msgid "A block of raw Gold is mostly a decorative block but also useful as a compact storage of raw Gold."
-msgstr ""
+msgstr "Блок необработанного золота - это в основном декоративный блок, но также полезен в качестве компактного хранилища необработанного золота."
 

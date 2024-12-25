@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_colorblocks x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_colorblocks x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,19 +11,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Terracotta is a basic building material. It comes in many different colors."
-msgstr "La terre cuite est un matériau de construction de base. Il est disponible dans de nombreuses couleurs différentes."
+msgstr "La terre cuite est un matériau de construction de base. Elle est disponible dans de nombreuses couleurs différentes."
 
 msgid "Glazed terracotta is a decorative block with a complex pattern. It can be rotated by placing it in different directions."
 msgstr "La terre cuite émaillée est un bloc décoratif au motif complexe. Il peut être tourné en le plaçant dans différentes directions."
 
 msgid "Concrete powder is used for creating concrete, but it can also be used as decoration itself. It comes in different colors. Concrete powder turns into concrete of the same color when it comes in contact with water."
-msgstr "La poudre de béton est utilisée pour créer du béton, mais elle peut également être utilisée comme décoration elle-même. Il est disponible en différentes couleurs. La poudre de béton se transforme en béton de la même couleur au contact de l'eau."
+msgstr "Le béton en poudre est utilisée pour créer du béton, mais il peut également être utilisé comme décoration. Il est disponible en différentes couleurs. Le béton en poudre se transforme en béton de la même couleur au contact de l'eau."
 
 msgid "Concrete is a decorative block which comes in many different colors. It is notable for having a very strong and clean color."
-msgstr "Le béton est un bloc décoratif qui se décline en de nombreuses couleurs différentes. Il est remarquable pour avoir une couleur très forte et propre."
+msgstr "Le béton est un bloc décoratif qui se décline en de nombreuses couleurs différentes. Il est remarquable pour avoir une couleur très forte et nette."
 
 msgid "Turns into concrete on water contact"
 msgstr "Se transforme en béton au contact de l'eau"
@@ -34,27 +34,207 @@ msgstr "Terre Cuite"
 msgid "Terracotta is a basic building material which comes in many different colors. This particular block is uncolored."
 msgstr "La terre cuite est un matériau de construction de base qui se décline en de nombreuses couleurs différentes. Ce bloc particulier n'est pas coloré."
 
-msgid "@1 Terracotta"
-msgstr ""
-
-msgid "@1 Glazed Terracotta"
-msgstr ""
-
-msgid "@1 Concrete Powder"
-msgstr ""
-
-msgid "@1 Concrete"
-msgstr ""
-
 msgid "Colored Terracotta"
-msgstr "Terre Cuite Coloré"
+msgstr "Terre Cuite Colorée"
 
 msgid "Glazed Terracotta"
-msgstr "Terre Cuite Emaillée"
+msgstr "Terre Cuite Émaillée"
 
 msgid "Concrete Powder"
-msgstr "Béton en Poudre"
+msgstr "Béton en poudre"
 
 msgid "Concrete"
 msgstr "Béton"
+
+msgid "Black Concrete"
+msgstr ""
+
+msgid "Black Concrete Powder"
+msgstr ""
+
+msgid "Black Glazed Terracotta"
+msgstr ""
+
+msgid "Black Terracotta"
+msgstr ""
+
+msgid "Blue Concrete"
+msgstr ""
+
+msgid "Blue Concrete Powder"
+msgstr ""
+
+msgid "Blue Glazed Terracotta"
+msgstr ""
+
+msgid "Blue Terracotta"
+msgstr ""
+
+msgid "Brown Concrete"
+msgstr ""
+
+msgid "Brown Concrete Powder"
+msgstr ""
+
+msgid "Brown Glazed Terracotta"
+msgstr ""
+
+msgid "Brown Terracotta"
+msgstr ""
+
+msgid "Cyan Concrete"
+msgstr ""
+
+msgid "Cyan Concrete Powder"
+msgstr ""
+
+msgid "Cyan Glazed Terracotta"
+msgstr ""
+
+msgid "Cyan Terracotta"
+msgstr ""
+
+msgid "Green Concrete"
+msgstr ""
+
+msgid "Green Concrete Powder"
+msgstr ""
+
+msgid "Green Glazed Terracotta"
+msgstr ""
+
+msgid "Green Terracotta"
+msgstr ""
+
+msgid "Grey Concrete"
+msgstr ""
+
+msgid "Grey Concrete Powder"
+msgstr ""
+
+msgid "Grey Glazed Terracotta"
+msgstr ""
+
+msgid "Grey Terracotta"
+msgstr ""
+
+msgid "Light Blue Concrete"
+msgstr ""
+
+msgid "Light Blue Concrete Powder"
+msgstr ""
+
+msgid "Light Blue Glazed Terracotta"
+msgstr ""
+
+msgid "Light Blue Terracotta"
+msgstr ""
+
+msgid "Light Grey Concrete"
+msgstr ""
+
+msgid "Light Grey Concrete Powder"
+msgstr ""
+
+msgid "Light Grey Glazed Terracotta"
+msgstr ""
+
+msgid "Light Grey Terracotta"
+msgstr ""
+
+msgid "Lime Concrete"
+msgstr ""
+
+msgid "Lime Concrete Powder"
+msgstr ""
+
+msgid "Lime Glazed Terracotta"
+msgstr ""
+
+msgid "Lime Terracotta"
+msgstr ""
+
+msgid "Magenta Concrete"
+msgstr ""
+
+msgid "Magenta Concrete Powder"
+msgstr ""
+
+msgid "Magenta Glazed Terracotta"
+msgstr ""
+
+msgid "Magenta Terracotta"
+msgstr ""
+
+msgid "Orange Concrete"
+msgstr ""
+
+msgid "Orange Concrete Powder"
+msgstr ""
+
+msgid "Orange Glazed Terracotta"
+msgstr ""
+
+msgid "Orange Terracotta"
+msgstr ""
+
+msgid "Pink Concrete"
+msgstr ""
+
+msgid "Pink Concrete Powder"
+msgstr ""
+
+msgid "Pink Glazed Terracotta"
+msgstr ""
+
+msgid "Pink Terracotta"
+msgstr ""
+
+msgid "Purple Concrete"
+msgstr ""
+
+msgid "Purple Concrete Powder"
+msgstr ""
+
+msgid "Purple Glazed Terracotta"
+msgstr ""
+
+msgid "Purple Terracotta"
+msgstr ""
+
+msgid "Red Concrete"
+msgstr ""
+
+msgid "Red Concrete Powder"
+msgstr ""
+
+msgid "Red Glazed Terracotta"
+msgstr ""
+
+msgid "Red Terracotta"
+msgstr ""
+
+msgid "White Concrete"
+msgstr ""
+
+msgid "White Concrete Powder"
+msgstr ""
+
+msgid "White Glazed Terracotta"
+msgstr ""
+
+msgid "White Terracotta"
+msgstr ""
+
+msgid "Yellow Concrete"
+msgstr ""
+
+msgid "Yellow Concrete Powder"
+msgstr ""
+
+msgid "Yellow Glazed Terracotta"
+msgstr ""
+
+msgid "Yellow Terracotta"
+msgstr ""
 

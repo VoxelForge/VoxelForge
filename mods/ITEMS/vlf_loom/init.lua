@@ -33,7 +33,7 @@ local function get_formspec(pos)
 				local name = preview_item_prefix .. pdef._pattern .. "-" .. color
 				table.insert(patterns,string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",0.1,0.1,1,1, it, "item_button_"..name, ""))
 			elseif dyerecipes and color then
-				for k,v in pairs(dyerecipes) do
+				for _, v in pairs(dyerecipes) do
 					if x_len > 5 then
 						y_len = y_len + 1
 						x_len = 0.1
@@ -119,7 +119,7 @@ local function sort_stack(stack)
 	end
 end
 
-local function allow_put(pos, listname, index, stack, player)
+local function allow_put(pos, listname, index, stack, player) ---@diagnostic disable-line: unused-local
 	local name = player:get_player_name()
 	if minetest.is_protected(pos, name) then
 		minetest.record_protection_violation(pos, name)
@@ -130,7 +130,7 @@ local function allow_put(pos, listname, index, stack, player)
 	elseif listname == "pattern" and minetest.get_item_group(stack:get_name(),"banner_pattern") == 0 then return 0
 	elseif listname == "sorter" then
 		local inv = minetest.get_meta(pos):get_inventory()
-		local trg = sort_stack(stack, pos)
+		local trg = sort_stack(stack)
 		if trg then
 			local stack1 = ItemStack(stack):take_item()
 			if inv:room_for_item(trg, stack) then
@@ -160,6 +160,7 @@ minetest.register_node("vlf_loom:loom", {
 	sounds = vlf_sounds.node_sound_wood_defaults(),
 	_vlf_blast_resistance = 2.5,
 	_vlf_hardness = 2.5,
+	_vlf_burntime = 15,
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
@@ -172,7 +173,7 @@ minetest.register_node("vlf_loom:loom", {
 	end,
 	after_dig_node = vlf_util.drop_items_from_meta_container({"banner", "dye", "pattern", "output"}),
 	on_rightclick = update_formspec,
-	on_receive_fields = function(pos, formname, fields, sender)
+	on_receive_fields = function(pos, formname, fields, sender) ---@diagnostic disable-line: unused-local
 		local sender_name = sender:get_player_name()
 		if minetest.is_protected(pos, sender_name) then
 			minetest.record_protection_violation(pos, sender_name)
@@ -182,7 +183,7 @@ minetest.register_node("vlf_loom:loom", {
 		if fields then
 			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
-			for k,v in pairs(fields) do
+			for k, _ in pairs(fields) do
 				if tostring(k) and k:find("^item_button_"..preview_item_prefix) and
 				not inv:is_empty("banner") and not inv:is_empty("dye") and inv:is_empty("output") then
 					local str = k:gsub("^item_button_","")
@@ -214,7 +215,7 @@ minetest.register_node("vlf_loom:loom", {
 		update_formspec(pos)
 	end,
 
-	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_take = function(pos, listname, index, stack, player) ---@diagnostic disable-line: unused-local
 		if listname == "sorter" then return 0 end
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then
@@ -224,7 +225,7 @@ minetest.register_node("vlf_loom:loom", {
 			return stack:get_count()
 		end
 	end,
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player) ---@diagnostic disable-line: unused-local
 		if from_list == "sorter" or to_list == "sorter" then return 0 end
 		local inv = minetest.get_meta(pos):get_inventory()
 		local stack = inv:get_stack(from_list,from_index)
@@ -232,10 +233,10 @@ minetest.register_node("vlf_loom:loom", {
 	end,
 	allow_metadata_inventory_put = allow_put,
 	on_metadata_inventory_move = update_formspec,
-	on_metadata_inventory_put = function(pos, listname, index, stack, player)
+	on_metadata_inventory_put = function(pos, listname, index, stack, player) ---@diagnostic disable-line: unused-local
 		if listname == "sorter" then
 			local inv = minetest.get_meta(pos):get_inventory()
-			inv:add_item(sort_stack(stack, pos), stack)
+			inv:add_item(sort_stack(stack), stack)
 			inv:set_stack("sorter", 1, ItemStack(""))
 		end
 		update_formspec(pos)
@@ -252,18 +253,12 @@ minetest.register_craft({
 	}
 })
 
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_loom:loom",
-	burntime = 15,
-})
-
 minetest.register_lbm({
 	label = "Update Loom formspecs and invs to allow new sneak+click behavior",
 	name = "vlf_loom:update_coolsneak",
 	nodenames = { "vlf_loom:loom" },
 	run_at_every_load = false,
-	action = function(pos, node)
+	action = function(pos)
 		minetest.get_meta(pos):get_inventory():set_size("sorter", 1)
 		update_formspec(pos)
 	end,

@@ -704,7 +704,7 @@ function vlf_villages.post_process_village(blockseed)
 
 					local job_pos = table.remove(jobs, 1)
 					if job_pos then
-						l:employ(job_pos)
+						l:claim_poi(job_pos)
 					end
 
 					for _, callback in pairs(vlf_villages.on_villager_placed) do

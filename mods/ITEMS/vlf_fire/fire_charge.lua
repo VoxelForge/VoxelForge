@@ -39,7 +39,7 @@ minetest.register_craftitem("vlf_fire:fire_charge", {
 		end
 		return itemstack
 	end,
-	_on_dispense = function(stack, pos, droppos, dropnode, dropdir)
+	_on_dispense = function(stack, pos, _, _, dropdir)
 		-- Throw fire charge
 		local shootpos = vector.add(pos, vector.multiply(dropdir, 0.51))
 		local fireball = minetest.add_entity(shootpos, "mobs_mc:blaze_fireball")

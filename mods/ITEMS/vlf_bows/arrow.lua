@@ -40,11 +40,12 @@ S("Arrows might get stuck on solid blocks and can be retrieved again. They are a
 	_doc_items_usagehelp = S("To use arrows as ammunition for a bow, just put them anywhere in your inventory, they will be used up automatically. To use arrows as ammunition for a dispenser, place them in the dispenser's inventory. To retrieve an arrow that sticks in a block, simply walk close to it."),
 	inventory_image = "vlf_bows_arrow_inv.png",
 	groups = { ammo=1, ammo_bow=1, ammo_bow_regular=1, ammo_crossbow=1 },
-	_on_dispense = function(itemstack, dispenserpos, droppos, dropnode, dropdir)
+	_on_dispense = function(itemstack, dispenserpos, _, _, dropdir)
 		-- Shoot arrow
 		local shootpos = vector.add(dispenserpos, vector.multiply(dropdir, 0.51))
 		local yaw = math.atan2(dropdir.z, dropdir.x) + YAW_OFFSET
-		vlf_bows.shoot_arrow(itemstack:get_name(), shootpos, dropdir, yaw, nil, 19, 3)
+		vlf_bows.shoot_arrow (itemstack:get_name(), shootpos, dropdir,
+				      yaw, nil, 0.366666)
 	end,
 })
 
@@ -77,7 +78,7 @@ local ARROW_ENTITY={
 	_deflection_cooloff=0, -- Cooloff timer after an arrow deflection, to prevent many deflections in quick succession
 }
 
--- Destroy arrow entity self at pos and drops it as an item
+-- Drop arrow as item at pos
 local function spawn_item(self, pos)
 	if not minetest.is_creative_enabled("") then
 		local itemstring = "vlf_bows:arrow"
@@ -88,8 +89,6 @@ local function spawn_item(self, pos)
 		item:set_velocity(vector.new(0, 0, 0))
 		item:set_yaw(self.object:get_yaw())
 	end
-	vlf_burning.extinguish(self.object)
-	self.object:remove()
 end
 
 local function damage_particles(pos, is_critical)
@@ -112,14 +111,62 @@ local function damage_particles(pos, is_critical)
 	end
 end
 
+function ARROW_ENTITY:arrow_knockback (object, damage)
+	local entity = object:get_luaentity ()
+	local v = self.object:get_velocity ()
+	v.y = 0
+	local dir = vector.normalize (v)
+
+	-- Utilize different methods of applying knockback for
+	-- consistency's sake.
+	if entity and entity.is_mob then
+		entity:projectile_knockback (1, dir)
+	elseif object:is_player () then
+		vlf_player.player_knockback (object, self.object, dir, nil, damage)
+	end
+
+	if self._knockback and self._knockback > 0 then
+		local resistance
+			= entity and entity.knockback_resistance or 0
+		-- Apply an additional horizontal force of
+		-- self._knockback * 0.6 * 20 * 0.546 to the object.
+		local total_kb = self._knockback * (1.0 - resistance) * 12 * 0.546
+		local v = vector.multiply (dir, total_kb)
+
+		-- And a vertical force of 2.0 * 0.91.
+		v.y = v.y + 2.0 * 0.91 * (1.0 - resistance)
+
+		if object:is_player () then
+			v.x = v.x * 0.25
+			v.z = v.z * 0.25
+		end
+		object:add_velocity (v)
+	end
+end
+
+function ARROW_ENTITY:calculate_damage (v)
+	local crit_bonus = 0
+	local multiplier = vector.length (v) / 20
+	local damage = (self._damage or 2) * multiplier
+
+	if self._is_critical then
+		crit_bonus = math.random (damage / 2 + 2)
+	end
+	return math.floor (damage + crit_bonus)
+end
+
 function ARROW_ENTITY.on_step(self, dtime)
 	vlf_burning.tick(self.object, dtime, self)
 	-- vlf_burning.tick may remove object immediately
 	if not self.object:get_pos() then return end
 
 
-	local pos = self.object:get_pos()
-	local dpos = vector.round(vector.new(pos)) -- digital pos
+	local self_pos = self.object:get_pos ()
+	local pos = self._lastpos.x and self._lastpos or self._startpos
+	if not pos or vector.distance (pos, self_pos) > 2.5 then
+		pos = self_pos
+	end
+	local dpos = vector.round(vector.copy(self_pos)) -- digital pos
 	local node = minetest.get_node(dpos)
 
 	self._lifetime = self._lifetime + dtime
@@ -140,20 +187,23 @@ function ARROW_ENTITY.on_step(self, dtime)
 			end
 			-- TODO: In MC, arrow just falls down without turning into an item
 			if stuckin_def and stuckin_def.walkable == false then
-				spawn_item(self, pos)
+				if self._collectable then
+					spawn_item(self, pos)
+				end
+				vlf_burning.extinguish(self.object)
+				self.object:remove()
 				return
 			end
 			self._stuckrechecktimer = 0
 		end
 		-- Pickup arrow if player is nearby (not in Creative Mode)
-		local objects = minetest.get_objects_inside_radius(pos, 1)
-		for _,obj in ipairs(objects) do
+		for obj in minetest.objects_inside_radius(self_pos, 1) do
 			if obj:is_player() then
 				if self._collectable and not minetest.is_creative_enabled(obj:get_player_name()) then
 					if obj:get_inventory():room_for_item("main", "vlf_bows:arrow") then
 						obj:get_inventory():add_item("main", "vlf_bows:arrow")
 						minetest.sound_play("item_drop_pickup", {
-							pos = pos,
+							pos = self_pos,
 							max_hear_distance = 16,
 							gain = 1.0,
 						}, true)
@@ -168,7 +218,7 @@ function ARROW_ENTITY.on_step(self, dtime)
 	-- Check for object "collision". Done every tick (hopefully this is not too stressing)
 	else
 
-		if self._damage >= 9 and self._in_player == false then
+		if self._is_critical and self._in_player == false then
 			minetest.add_particlespawner({
 				amount = 20,
 				time = .2,
@@ -195,9 +245,9 @@ function ARROW_ENTITY.on_step(self, dtime)
 			self._deflection_cooloff = self._deflection_cooloff - dtime
 		end
 
-		local arrow_dir = self.object:get_velocity()
+		local v = self.object:get_velocity()
 		--create a raycast from the arrow based on the velocity of the arrow to deal with lag
-		local raycast = minetest.raycast(pos, vector.add(pos, vector.multiply(arrow_dir, 0.1)), true, false)
+		local raycast = minetest.raycast(pos, vector.add(self_pos, vector.multiply(v, 0.04)), true, false)
 		for hitpoint in raycast do
 			if hitpoint.type == "object" then
 				-- find the closest object that is in the way of the arrow
@@ -210,7 +260,7 @@ function ARROW_ENTITY.on_step(self, dtime)
 					end
 				end
 				if ok then
-					local dist = vector.distance(hitpoint.ref:get_pos(), pos)
+					local dist = vector.distance(hitpoint.ref:get_pos(), self_pos)
 					if not closest_object or not closest_distance then
 						closest_object = hitpoint.ref
 						closest_distance = dist
@@ -226,7 +276,8 @@ function ARROW_ENTITY.on_step(self, dtime)
 			local obj = closest_object
 			local is_player = obj:is_player()
 			local lua = obj:get_luaentity()
-			if obj == self._shooter and self._lifetime > 0.5 or obj ~= self._shooter and (is_player or (lua and (lua.is_mob or lua._hittable_by_projectile))) then
+			if (obj == self._shooter and self._lifetime > 0.5 or obj ~= self._shooter)
+				and (is_player or (lua and (lua.is_mob or lua._hittable_by_projectile))) then
 				if obj:get_hp() > 0 then
 					-- Check if there is no solid node between arrow and object
 					local ray = minetest.raycast(self.object:get_pos(), obj:get_pos(), true)
@@ -249,15 +300,22 @@ function ARROW_ENTITY.on_step(self, dtime)
 					-- Punch target object but avoid hurting enderman.
 					if not lua or lua.name ~= "mobs_mc:enderman" then
 						if not self._in_player then
-							damage_particles(vector.add(pos, vector.multiply(self.object:get_velocity(), 0.1)), self._is_critical)
+							damage_particles(vector.add(self_pos, vector.multiply(v, 0.1)), self._is_critical)
 						end
 						if vlf_burning.is_burning(self.object) then
 							vlf_burning.set_on_fire(obj, 5)
 						end
 						if not self._in_player and not self._blocked then
-							vlf_util.deal_damage(obj, self._damage, {type = "arrow", source = self._shooter, direct = self.object})
+							local reason = {
+								type = "arrow",
+								source = self._shooter,
+								direct = self.object,
+							}
+							local dmg = self:calculate_damage (v)
+							local damage = vlf_util.deal_damage (obj, dmg, reason)
+							self:arrow_knockback (obj, damage)
 							if self._extra_hit_func then
-								self._extra_hit_func(obj)
+								self:_extra_hit_func(obj)
 							end
 							if obj:is_player() then
 								if not vlf_shields.is_blocking(obj) then
@@ -343,7 +401,7 @@ function ARROW_ENTITY.on_step(self, dtime)
 			-- Check for the node to which the arrow is pointing
 			local dir
 			if math.abs(vel.y) < 0.00001 then
-				if self._lastpos.y < pos.y then
+				if self._lastpos.y < self_pos.y then
 					dir = vector.new(0, 1, 0)
 				else
 					dir = vector.new(0, -1, 0)
@@ -390,7 +448,7 @@ function ARROW_ENTITY.on_step(self, dtime)
 					sdef._on_arrow_hit(self._stuckin, self)
 				end
 				-- Extinguish this stuck arrow.
-				--vlf_burning.extinguish (self.object)
+				vlf_burning.extinguish (self.object)
 			end
 		else
 		    if (def and def.liquidtype ~= "none") then
@@ -426,7 +484,7 @@ function ARROW_ENTITY.on_step(self, dtime)
 	end
 
 	-- Update internal variable
-	self._lastpos = pos
+	self._lastpos = self_pos
 end
 
 -- Force recheck of stuck arrows when punched.
@@ -459,7 +517,7 @@ function ARROW_ENTITY.get_staticdata(self)
 	return minetest.serialize(out)
 end
 
-function ARROW_ENTITY.on_activate(self, staticdata, dtime_s)
+function ARROW_ENTITY.on_activate(self, staticdata)
 	local data = minetest.deserialize(staticdata)
 	if data then
 		-- First, check if the arrow is already past its life timer. If

@@ -240,7 +240,7 @@ function hb.register_hudbar(identifier, text_color, label, textures, default_sta
 		elseif hb.settings.bar_type == "statbar_classic" or hb.settings.bar_type == "statbar_modern" then
 			bar_image = textures.icon
 			bgicon = textures.bgicon
-			bar_size = {x=25, y=25}
+			bar_size = {x=24, y=24}
 		end
 		ids.bar = player:hud_add({
 			[hud_elem_type_field] = "statbar",

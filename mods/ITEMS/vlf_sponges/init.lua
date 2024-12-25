@@ -1,38 +1,23 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local absorb = function(pos)
+local function absorb(pos)
 	local change = false
-	-- Count number of absorbed river water vs other nodes
-	-- to determine the wet sponge type.
 	local river_water = 0
 	local non_river_water = 0
-	local p, n
-	for i=-3,3 do
-		for j=-3,3 do
-			for k=-3,3 do
-				p = {x=pos.x+i, y=pos.y+j, z=pos.z+k}
-				n = minetest.get_node(p)
-				if minetest.get_item_group(n.name, "water") ~= 0 then
-					minetest.add_node(p, {name="air"})
-					change = true
-					if n.name == "vlfx_core:river_water_source" or n.name == "vlfx_core:river_water_flowing" then
-						river_water = river_water + 1
-					else
-						non_river_water = non_river_water + 1
-					end
-				end
+	for nodename, nn in pairs(minetest.find_nodes_in_area(vector.offset(pos, -3, -3, -3), vector.offset(pos, 3, 3, 3), {"group:water"}, true)) do
+		for _, p in pairs(nn) do
+			if minetest.get_item_group(nodename, "river_water") > 0 then
+				river_water = river_water + #nn
+			else
+				non_river_water = non_river_water + #nn
 			end
+			change = true
+			minetest.remove_node(p)
 		end
 	end
 	-- The dominant water type wins. In case of a tie, normal water wins.
 	-- This slight bias is intentional.
-	local sponge_type
-	if river_water > non_river_water then
-		sponge_type = "vlf_sponges:sponge_wet_river_water"
-	else
-		sponge_type = "vlf_sponges:sponge_wet"
-	end
-	return change, sponge_type
+	return change, river_water > non_river_water and "vlf_sponges:sponge_wet_river_water" or "vlf_sponges:sponge_wet"
 end
 
 minetest.register_node("vlf_sponges:sponge", {
@@ -69,7 +54,6 @@ minetest.register_node("vlf_sponges:sponge", {
 			on_water = true
 		end
 		if on_water then
-			-- Absorb water
 			-- FIXME: pos is not always the right placement position because of pointed_thing
 			local absorbed, wet_sponge = absorb(pos)
 			if absorbed then
@@ -142,36 +126,24 @@ minetest.register_node("vlf_sponges:sponge_wet", {
 	on_place = place_wet_sponge,
 	_vlf_blast_resistance = 0.6,
 	_vlf_hardness = 0.6,
+	_vlf_cooking_output = "vlf_sponges:sponge",
+	_vlf_cooking_replacements = {{"vlf_buckets:bucket_empty", "vlf_buckets:bucket_water"}}
 })
 
-if minetest.get_modpath("vlfx_core") then
-	minetest.register_node("vlf_sponges:sponge_wet_river_water", {
-		description = S("Riverwaterlogged Sponge"),
-		_tt_help = S("Can be dried in furnace"),
-		_doc_items_longdesc = S("This is a sponge soaking wet with river water. It can be dried in the furnace to turn it into (dry) sponge. When there's an empty bucket in the fuel slot of the furnace, the river water will pour into the bucket.") .. "\n" .. S("A sponge becomes riverwaterlogged (instead of waterlogged) if it sucks up more river water than (normal) water."),
-		drawtype = "normal",
-		is_ground_content = false,
-		tiles = {"vlf_sponges_sponge_wet_river_water.png"},
-		sounds = vlf_sounds.node_sound_dirt_defaults(),
-		groups = {handy=1, building_block=1},
-		on_place = place_wet_sponge,
-		_vlf_blast_resistance = 0.6,
-		_vlf_hardness = 0.6,
-	})
-
-	minetest.register_craft({
-		type = "cooking",
-		output = "vlf_sponges:sponge",
-		recipe = "vlf_sponges:sponge_wet_river_water",
-		cooktime = 10,
-	})
-end
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_sponges:sponge",
-	recipe = "vlf_sponges:sponge_wet",
-	cooktime = 10,
+minetest.register_node("vlf_sponges:sponge_wet_river_water", {
+	description = S("Riverwaterlogged Sponge"),
+	_tt_help = S("Can be dried in furnace"),
+	_doc_items_longdesc = S("This is a sponge soaking wet with river water. It can be dried in the furnace to turn it into (dry) sponge. When there's an empty bucket in the fuel slot of the furnace, the river water will pour into the bucket.") .. "\n" .. S("A sponge becomes riverwaterlogged (instead of waterlogged) if it sucks up more river water than (normal) water."),
+	drawtype = "normal",
+	is_ground_content = false,
+	tiles = {"vlf_sponges_sponge_wet_river_water.png"},
+	sounds = vlf_sounds.node_sound_dirt_defaults(),
+	groups = {handy=1, building_block=1},
+	on_place = place_wet_sponge,
+	_vlf_blast_resistance = 0.6,
+	_vlf_hardness = 0.6,
+	_vlf_cooking_output = "vlf_sponges:sponge",
+	_vlf_cooking_replacements = {{"vlf_buckets:bucket_empty", "vlf_buckets:bucket_river_water"}}
 })
 
 minetest.register_abm({

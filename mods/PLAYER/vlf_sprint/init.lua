@@ -1,5 +1,5 @@
 --[[
-Sprint mod for Minetest by GunshipPenguin
+Sprint mod for Minetest by GunshipPenguin Updated by DragonWrangler1.
 
 To the extent possible under law, the author(s)
 have dedicated all copyright and related and neighboring rights
@@ -7,7 +7,7 @@ to this software to the public domain worldwide. This software is
 distributed without any warranty.
 ]]
 
---Configuration variables, these are all explained in README.md
+-- Configuration variables, these are all explained in README.md
 vlf_sprint = {}
 
 vlf_sprint.SPEED = 1.3
@@ -38,6 +38,7 @@ minetest.register_on_joinplayer(function(player)
 		channel = minetest.mod_channel_join("vlf_sprint:" .. playerName),
 	}
 end)
+
 minetest.register_on_leaveplayer(function(player)
 	local playerName = player:get_player_name()
 	players[playerName] = nil
@@ -48,37 +49,23 @@ local function cancelClientSprinting(name)
 	players[name].clientSprint = false
 end
 
-local function setSprinting(playerName, sprinting) --Sets the state of a player (0=stopped/moving, 1=sprinting)
+local function setSprinting(playerName, sprinting) -- Sets the state of a player (0=stopped/moving, 1=sprinting)
 	if not sprinting and not vlf_sprint.is_sprinting(playerName) then return end
 	local player = minetest.get_player_by_name(playerName)
-	local controls = player:get_player_control()
+
 	if players[playerName] then
 		players[playerName].sprinting = sprinting
 		local fov_old = players[playerName].fov
-		local fov_new = fov_old
+		local fov_new = players[playerName].fov
 		local fade_time = .15
-		if sprinting == true
-		or controls.RMB
-		and string.find(player:get_wielded_item():get_name(), "vlf_bows:bow")
-		and player:get_wielded_item():get_name() ~= "vlf_bows:bow" then
-			if sprinting == true then
-				fov_new = math.min(players[playerName].fov + 0.05, 1.2)
-			else
-				fov_new = .7
-				players[playerName].fade_time = .3
-			end
-			if sprinting == true then
-				playerphysics.add_physics_factor(player, "speed", "vlf_sprint:sprint", vlf_sprint.SPEED)
-			end
-		elseif sprinting == false
-		and player:get_wielded_item():get_name() ~= "vlf_bows:bow_0"
-		and player:get_wielded_item():get_name() ~= "vlf_bows:bow_1"
-		and player:get_wielded_item():get_name() ~= "vlf_bows:bow_2" then
+		if sprinting == true then
+			fov_new = math.min(players[playerName].fov + 0.05, 1.2)
+			playerphysics.add_physics_factor(player, "speed", "vlf_sprint:sprint", vlf_sprint.SPEED)
+		else
 			fov_new = math.max(players[playerName].fov - 0.05, 1.0)
-			if sprinting == false then
-				playerphysics.remove_physics_factor(player, "speed", "vlf_sprint:sprint")
-			end
+			playerphysics.remove_physics_factor(player, "speed", "vlf_sprint:sprint")
 		end
+
 		if fov_new ~= fov_old then
 			players[playerName].fov = fov_new
 			player:set_fov(fov_new, true, fade_time)
@@ -126,6 +113,8 @@ local function get_top_node_tile(param2, paramtype2)
 	end
 end
 
+vlf_sprint.get_top_node_tile = get_top_node_tile
+
 minetest.register_on_modchannel_message(function(channel_name, sender, message)
 	if channel_name == "vlf_sprint:" .. sender then
 		players[sender].clientSprint = minetest.is_yes(message)
@@ -136,25 +125,33 @@ minetest.register_on_respawnplayer(function(player)
 	cancelClientSprinting(player:get_player_name())
 end)
 
+-- This function is called when a player presses a key
 minetest.register_globalstep(function(dtime)
-	--Get the gametime
+	-- Get the gametime
 	local gameTime = minetest.get_gametime()
 
-	--Loop through all connected players
+	-- Loop through all connected players
 	for playerName, playerInfo in pairs(players) do
 		local player = minetest.get_player_by_name(playerName)
 		if player then
 			local ctrl = player:get_player_control()
-			--Check if the player should be sprinting
-			if players[playerName]["clientSprint"] or ctrl.aux1 and ctrl.up and not ctrl.sneak then
-				players[playerName]["shouldSprint"] = true
-			else
-				players[playerName]["shouldSprint"] = false
+
+			-- Start sprinting when the player presses 'E'
+			if ctrl.aux1 and not playerInfo.sprinting then
+				-- Check if the player is walking
+				if ctrl.up then
+					setSprinting(playerName, true)
+				end
+			end
+
+			-- Stop sprinting if the player is not walking
+			if playerInfo.sprinting and not ctrl.up then
+				setSprinting(playerName, false)
 			end
 
 			local playerPos = player:get_pos()
-			--If the player is sprinting, create particles behind and cause exhaustion
-			if playerInfo["sprinting"] == true and not player:get_attach() and gameTime % 0.1 == 0 then
+			-- If the player is sprinting, create particles behind and cause exhaustion
+			if playerInfo.sprinting == true and not player:get_attach() and gameTime % 0.1 == 0 then
 				-- Exhaust player for sprinting
 				local lastPos = players[playerName].lastPos
 				local dist = vector.distance({x=lastPos.x, y=0, z=lastPos.z}, {x=playerPos.x, y=0, z=playerPos.z})
@@ -191,23 +188,8 @@ minetest.register_globalstep(function(dtime)
 				end
 			end
 
-			--Adjust player states
+			-- Adjust player states
 			players[playerName].lastPos = playerPos
-			if players[playerName]["shouldSprint"] == true then --Stopped
-				local sprinting
-				-- Prevent sprinting if hungry or sleeping
-				if (vlf_hunger.active and vlf_hunger.get_hunger(player) <= 6)
-				or (player:get_meta():get_string("vlf_beds:sleeping") == "true") then
-					sprinting = false
-					cancelClientSprinting(playerName)
-				else
-					sprinting = true
-				end
-				setSprinting(playerName, sprinting)
-			elseif players[playerName]["shouldSprint"] == false then
-				setSprinting(playerName, false)
-			end
-
 		end
 	end
 end)

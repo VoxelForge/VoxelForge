@@ -21,6 +21,7 @@ minetest.register_craftitem("vlf_mobitems:mutton", {
 	on_secondary_use = minetest.item_eat(2),
 	groups = { food = 2, eatable = 2, smoker_cookable = 1, campfire_cookable = 1 },
 	_vlf_saturation = 1.2,
+	_vlf_cooking_output = "vlf_mobitems:cooked_mutton"
 })
 
 minetest.register_craftitem("vlf_mobitems:cooked_mutton", {
@@ -43,6 +44,7 @@ minetest.register_craftitem("vlf_mobitems:beef", {
 	on_secondary_use = minetest.item_eat(3),
 	groups = { food = 2, eatable = 3, smoker_cookable = 1, campfire_cookable = 1 },
 	_vlf_saturation = 1.8,
+	_vlf_cooking_output = "vlf_mobitems:cooked_beef"
 })
 
 minetest.register_craftitem("vlf_mobitems:cooked_beef", {
@@ -66,6 +68,7 @@ minetest.register_craftitem("vlf_mobitems:chicken", {
 	on_secondary_use = minetest.item_eat(2),
 	groups = { food = 2, eatable = 2, smoker_cookable = 1, campfire_cookable = 1 },
 	_vlf_saturation = 1.2,
+	_vlf_cooking_output = "vlf_mobitems:cooked_chicken"
 })
 
 minetest.register_craftitem("vlf_mobitems:cooked_chicken", {
@@ -88,6 +91,7 @@ minetest.register_craftitem("vlf_mobitems:porkchop", {
 	on_secondary_use = minetest.item_eat(3),
 	groups = { food = 2, eatable = 3, smoker_cookable = 1, campfire_cookable = 1 },
 	_vlf_saturation = 1.8,
+	_vlf_cooking_output = "vlf_mobitems:cooked_porkchop"
 })
 
 minetest.register_craftitem("vlf_mobitems:cooked_porkchop", {
@@ -110,6 +114,7 @@ minetest.register_craftitem("vlf_mobitems:rabbit", {
 	on_secondary_use = minetest.item_eat(3),
 	groups = { food = 2, eatable = 3, smoker_cookable = 1, campfire_cookable = 1 },
 	_vlf_saturation = 1.8,
+	_vlf_cooking_output = "vlf_mobitems:cooked_rabbit"
 })
 
 minetest.register_craftitem("vlf_mobitems:cooked_rabbit", {
@@ -130,7 +135,7 @@ local function drink_milk(itemstack, player, pointed_thing)
 	if vlf_hunger.active and (bucket:get_name() ~= "vlf_mobitems:milk_bucket" or minetest.is_creative_enabled(player:get_player_name())) then
 		vlf_hunger.stop_poison(player)
 	end
-	vlf_entity_effects._reset_effects(player)
+	vlf_potions._reset_effects(player)
 	return bucket
 end
 
@@ -175,43 +180,20 @@ minetest.register_craftitem("vlf_mobitems:ink_sac", {
 	groups = { craftitem = 1 },
 })
 
-minetest.register_craftitem("vlf_mobitems:string", {
+minetest.register_craftitem("vlf_mobitems:string",{
 	description = S("String"),
 	_doc_items_longdesc = S("Strings are used in crafting."),
 	inventory_image = "vlf_mobitems_string.png",
 	groups = { craftitem = 1 },
-	on_place = function(itemstack, placer, pointed_thing)
-		-- Check if the pointed thing is a node
-		if pointed_thing.type ~= "node" then
-			return itemstack
-		end
-
-		local pos = pointed_thing.above
-		local player_name = placer:get_player_name()
-
-		-- Check if the position is protected
-		if minetest.is_protected(pos, player_name) then
-			minetest.record_protection_violation(pos, player_name)
-			return itemstack
-		end
-
-		-- Place the tripwire block at the pointed position
-		minetest.set_node(pos, {name = "vlf_tripwire:tripwire"})
-
-		-- Reduce the item stack by one unless the player is in creative mode
-		if not minetest.is_creative_enabled(player_name) then
-			itemstack:take_item()
-		end
-
-		return itemstack
-	end,
 })
+
 minetest.register_craftitem("vlf_mobitems:blaze_rod", {
 	description = S("Blaze Rod"),
 	_doc_items_longdesc = S("This is a crafting component dropped from dead blazes."),
 	wield_image = "vlf_mobitems_blaze_rod.png",
 	inventory_image = "vlf_mobitems_blaze_rod.png",
 	groups = { craftitem = 1 },
+	_vlf_burntime = 120
 })
 
 minetest.register_craftitem("vlf_mobitems:breeze_rod", {
@@ -371,6 +353,22 @@ minetest.register_craftitem("vlf_mobitems:heart_of_the_sea", {
 
 local horse_armor_use = S("Place it on a horse to put on the horse armor. Donkeys and mules can't wear horse armor.")
 
+-- https://minecraft.wiki/w/Armor#Damage_reduction
+
+minetest.register_craftitem("vlf_mobitems:leather_horse_armor", {
+	description = S("Leather Horse Armor"),
+	_doc_items_longdesc = S("Leather horse armor can be worn by horses to increase their protection from harm a little."),
+	_doc_items_usagehelp = horse_armor_use,
+	inventory_image = "vlf_mobitems_leather_horse_armor.png",
+	_horse_overlay_image = "vlf_mobitems_horse_armor_leather.png",
+	sounds = {
+		_vlf_armor_equip = "vlf_armor_equip_leather",
+	},
+	stack_max = 1,
+	groups = { horse_armor = 88, armor_leather = 2 },
+})
+
+
 minetest.register_craftitem("vlf_mobitems:iron_horse_armor", {
 	description = S("Iron Horse Armor"),
 	_doc_items_longdesc = S("Iron horse armor can be worn by horses to increase their protection from harm a bit."),
@@ -382,7 +380,9 @@ minetest.register_craftitem("vlf_mobitems:iron_horse_armor", {
 	},
 	stack_max = 1,
 	groups = { horse_armor = 85 },
+	_vlf_cooking_output = "vlf_core:iron_nugget"
 })
+
 
 minetest.register_craftitem("vlf_mobitems:gold_horse_armor", {
 	description = S("Golden Horse Armor"),
@@ -395,6 +395,7 @@ minetest.register_craftitem("vlf_mobitems:gold_horse_armor", {
 	},
 	stack_max = 1,
 	groups = { horse_armor = 60 },
+	_vlf_cooking_output = "vlf_core:gold_nugget"
 })
 
 minetest.register_craftitem("vlf_mobitems:diamond_horse_armor", {
@@ -407,8 +408,154 @@ minetest.register_craftitem("vlf_mobitems:diamond_horse_armor", {
 		_vlf_armor_equip = "vlf_armor_equip_diamond",
 	},
 	stack_max = 1,
-	groups = { horse_armor = 45 },
+	groups = { horse_armor = 56 },
 })
+
+minetest.register_alias("mobs_mc:iron_horse_armor", "vlf_mobitems:iron_horse_armor")
+minetest.register_alias("mobs_mc:gold_horse_armor", "vlf_mobitems:gold_horse_armor")
+minetest.register_alias("mobs_mc:diamond_horse_armor", "vlf_mobitems:diamond_horse_armor")
+
+minetest.register_craftitem("vlf_mobitems:glow_ink_sac", {
+	description = S("Glow Ink Sac"),
+	_doc_items_longdesc = S("Use it to craft the Glow Item Frame."),
+	_doc_items_usagehelp = S("Use the Glow Ink Sac and the normal Item Frame to craft the Glow Item Frame."),
+	inventory_image = "extra_mobs_glow_ink_sac.png",
+	groups = { craftitem = 1 },
+})
+
+minetest.register_craftitem("vlf_mobitems:nametag", {
+	description = S("Name Tag"),
+	_tt_help = S("Give names to mobs").."\n"..S("Set name at anvil"),
+	_doc_items_longdesc = S("A name tag is an item to name a mob."),
+	_doc_items_usagehelp = S("Before you use the name tag, you need to set a name at an anvil. Then you can use the name tag to name a mob. This uses up the name tag."),
+	inventory_image = "vlf_mobitems_nametag.png",
+	wield_image = "vlf_mobitems_nametag.png",
+	groups = { tool=1 },
+})
+
+minetest.register_alias("mobs:nametag", "vlf_mobitems:nametag")
+minetest.register_alias("vlf_mobs:nametag", "vlf_mobitems:nametag")
+
+minetest.register_craftitem("vlf_mobitems:phantom_membrane", {
+	description = S("Phantom Membrane"),
+	_tt_help = S("Use to repair the elytra"),
+	_doc_items_longdesc = S("Dropped by the phantom."),
+	_doc_items_usagehelp = S("The phantom membrane is dropped by phantoms and can be used to repair the elytra."),
+	inventory_image = "vlf_mobitems_phantom_membrane.png",
+	wield_image = "vlf_mobitems_phantom_membrane.png",
+	groups = { craftitem = 1 },
+})
+
+minetest.register_craftitem("vlf_mobitems:armadillo_scute", {
+	description = S("Armadillo Scute"),
+	_doc_items_longdesc = S("Use it to repair and craft wolf armor"),
+	inventory_image = "vlf_mobitems_armadillo_scute.png",
+	groups = { craftitem = 1 },
+})
+
+-----------
+-- Crafting
+-----------
+
+minetest.register_craft({
+	output = "vlf_mobitems:leather",
+	recipe = {
+		{ "vlf_mobitems:rabbit_hide", "vlf_mobitems:rabbit_hide" },
+		{ "vlf_mobitems:rabbit_hide", "vlf_mobitems:rabbit_hide" },
+	}
+})
+
+minetest.register_craft({
+	output = "vlf_mobitems:blaze_powder 2",
+	recipe = {{"vlf_mobitems:blaze_rod"}},
+})
+
+minetest.register_craft({
+	output = "vlf_mobitems:rabbit_stew",
+	recipe = {
+		{ "", "vlf_mobitems:cooked_rabbit", "", },
+		{ "group:mushroom", "vlf_farming:potato_item_baked", "vlf_farming:carrot_item", },
+		{ "", "vlf_core:bowl", "", },
+	},
+})
+
+minetest.register_craft({
+	output = "vlf_mobitems:rabbit_stew",
+	recipe = {
+		{ "", "vlf_mobitems:cooked_rabbit", "", },
+		{ "vlf_farming:carrot_item", "vlf_farming:potato_item_baked", "group:mushroom", },
+		{ "", "vlf_core:bowl", "", },
+	},
+})
+
+minetest.register_craft({
+	output = "vlf_mobitems:carrot_on_a_stick",
+	recipe = {
+		{ "vlf_fishing:fishing_rod", "", },
+		{ "", "vlf_farming:carrot_item" },
+	},
+})
+
+minetest.register_craft({
+	output = "vlf_mobitems:carrot_on_a_stick",
+	recipe = {
+		{ "", "vlf_fishing:fishing_rod", },
+		{ "vlf_farming:carrot_item", "" },
+	},
+})
+
+minetest.register_craft({
+	output = "vlf_mobitems:warped_fungus_on_a_stick",
+	recipe = {
+		{ "vlf_fishing:fishing_rod", "", },
+		{ "", "vlf_crimson:warped_fungus" },
+	},
+})
+
+minetest.register_craft({
+	output = "vlf_mobitems:warped_fungus_on_a_stick",
+	recipe = {
+		{ "","vlf_fishing:fishing_rod", },
+		{ "vlf_crimson:warped_fungus", "" },
+	},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "vlf_mobitems:magma_cream",
+	recipe = {"vlf_mobitems:blaze_powder", "vlf_mobitems:slimeball"},
+})
+
+minetest.register_craft({
+	output = "vlf_mobitems:slimeball 9",
+	recipe = {{"vlf_core:slimeblock"}},
+})
+
+minetest.register_craft({
+	output = "vlf_core:slimeblock",
+	recipe = {{"vlf_mobitems:slimeball","vlf_mobitems:slimeball","vlf_mobitems:slimeball",},
+		{"vlf_mobitems:slimeball","vlf_mobitems:slimeball","vlf_mobitems:slimeball",},
+		{"vlf_mobitems:slimeball","vlf_mobitems:slimeball","vlf_mobitems:slimeball",}},
+})
+
+minetest.register_craft({
+	output = "vlf_mobitems:leather_horse_armor",
+	recipe = {{"vlf_mobitems:leather","","vlf_mobitems:leather",},
+		{"vlf_mobitems:leather","vlf_mobitems:leather","vlf_mobitems:leather",},
+		{"vlf_mobitems:leather","","vlf_mobitems:leather",}},
+})
+
+minetest.register_craft({
+	output = "vlf_mobitems:leather_horse_armor",
+	type = "shapeless",
+	recipe = {"vlf_mobitems:leather_horse_armor", "group:dye" },
+})
+
+minetest.register_on_item_eat(function (_, _, itemstack, user, _)	-- poisoning with spider eye
+	if itemstack:get_name() == "vlf_mobitems:spider_eye" then
+		vlf_potions.give_effect_by_level("poison", user, 1, 4)
+	end
+end)
 
 minetest.register_tool("vlf_mobitems:wolf_armor", {
 	description = S("Wolf Armor"),
@@ -520,187 +667,3 @@ for _, color_def in ipairs(colordefs) do
 		register_wolf_armor_craft(color_name, dye_item)
 	end
 end
-
-
-minetest.register_alias("mobs_mc:iron_horse_armor", "vlf_mobitems:iron_horse_armor")
-minetest.register_alias("mobs_mc:gold_horse_armor", "vlf_mobitems:gold_horse_armor")
-minetest.register_alias("mobs_mc:diamond_horse_armor", "vlf_mobitems:diamond_horse_armor")
-
-minetest.register_craftitem("vlf_mobitems:phantom_membrane", {
-	description = S("Phantom Membrane"),
-	_tt_help = S("Use to repair the elytra"),
-	_doc_items_longdesc = S("Dropped by the phantom."),
-	_doc_items_usagehelp = S("The phantom membrane is dropped by phantoms and can be used to repair the elytra."),
-	inventory_image = "vlf_mobitems_phantom_membrane.png",
-	wield_image = "vlf_mobitems_phantom_membrane.png",
-	groups = { craftitem = 1 },
-})
-
-minetest.register_craftitem("vlf_mobitems:glow_ink_sac", {
-	description = S("Glow Ink Sac"),
-	_doc_items_longdesc = S("Use it to craft the Glow Item Frame."),
-	_doc_items_usagehelp = S("Use the Glow Ink Sac and the normal Item Frame to craft the Glow Item Frame."),
-	inventory_image = "extra_mobs_glow_ink_sac.png",
-	groups = { craftitem = 1 },
-})
-
-minetest.register_craftitem("vlf_mobitems:armadillo_scute", {
-	description = S("Armadillo Scute"),
-	_doc_items_longdesc = S("Use it to repair and craft wolf armor"),
-	inventory_image = "vlf_mobitems_armadillo_scute.png",
-	groups = { craftitem = 1 },
-})
-
-minetest.register_craftitem("vlf_mobitems:nametag", {
-	description = S("Name Tag"),
-	_tt_help = S("Give names to mobs").."\n"..S("Set name at anvil"),
-	_doc_items_longdesc = S("A name tag is an item to name a mob."),
-	_doc_items_usagehelp = S("Before you use the name tag, you need to set a name at an anvil. Then you can use the name tag to name a mob. This uses up the name tag."),
-	inventory_image = "vlf_mobitems_nametag.png",
-	wield_image = "vlf_mobitems_nametag.png",
-	groups = { tool=1 },
-})
-
-minetest.register_alias("mobs:nametag", "vlf_mobitems:nametag")
-minetest.register_alias("vlf_mobs:nametag", "vlf_mobitems:nametag")
-
------------
--- Crafting
------------
-
-minetest.register_craft({
-	output = "vlf_mobitems:leather",
-	recipe = {
-		{ "vlf_mobitems:rabbit_hide", "vlf_mobitems:rabbit_hide" },
-		{ "vlf_mobitems:rabbit_hide", "vlf_mobitems:rabbit_hide" },
-	}
-})
-
-minetest.register_craft({
-	output = "vlf_mobitems:blaze_powder 2",
-	recipe = {{"vlf_mobitems:blaze_rod"}},
-})
-
-minetest.register_craft({
-	output = "vlf_mobitems:rabbit_stew",
-	recipe = {
-		{ "", "vlf_mobitems:cooked_rabbit", "", },
-		{ "group:mushroom", "vlf_farming:potato_item_baked", "vlf_farming:carrot_item", },
-		{ "", "vlf_core:bowl", "", },
-	},
-})
-
-minetest.register_craft({
-	output = "vlf_mobitems:rabbit_stew",
-	recipe = {
-		{ "", "vlf_mobitems:cooked_rabbit", "", },
-		{ "vlf_farming:carrot_item", "vlf_farming:potato_item_baked", "group:mushroom", },
-		{ "", "vlf_core:bowl", "", },
-	},
-})
-
-minetest.register_craft({
-	output = "vlf_mobitems:carrot_on_a_stick",
-	recipe = {
-		{ "vlf_fishing:fishing_rod", "", },
-		{ "", "vlf_farming:carrot_item" },
-	},
-})
-
-minetest.register_craft({
-	output = "vlf_mobitems:carrot_on_a_stick",
-	recipe = {
-		{ "", "vlf_fishing:fishing_rod", },
-		{ "vlf_farming:carrot_item", "" },
-	},
-})
-
-minetest.register_craft({
-	output = "vlf_mobitems:warped_fungus_on_a_stick",
-	recipe = {
-		{ "vlf_fishing:fishing_rod", "", },
-		{ "", "vlf_crimson:warped_fungus" },
-	},
-})
-
-minetest.register_craft({
-	output = "vlf_mobitems:warped_fungus_on_a_stick",
-	recipe = {
-		{ "","vlf_fishing:fishing_rod", },
-		{ "vlf_crimson:warped_fungus", "" },
-	},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "vlf_mobitems:magma_cream",
-	recipe = {"vlf_mobitems:blaze_powder", "vlf_mobitems:slimeball"},
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_mobitems:cooked_mutton",
-	recipe = "vlf_mobitems:mutton",
-	cooktime = 10,
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_mobitems:cooked_rabbit",
-	recipe = "vlf_mobitems:rabbit",
-	cooktime = 10,
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_mobitems:cooked_chicken",
-	recipe = "vlf_mobitems:chicken",
-	cooktime = 10,
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_mobitems:cooked_beef",
-	recipe = "vlf_mobitems:beef",
-	cooktime = 10,
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "vlf_mobitems:cooked_porkchop",
-	recipe = "vlf_mobitems:porkchop",
-	cooktime = 10,
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "vlf_mobitems:blaze_rod",
-	burntime = 120,
-})
-
-minetest.register_craft({
-	output = "vlf_mobitems:slimeball 9",
-	recipe = {{"vlf_core:slimeblock"}},
-})
-
-minetest.register_craft({
-	output = "vlf_mobitems:wolf_armor",
-	recipe = {
-			{"vlf_mobitems:armadillo_scute", "", ""},
-			{"vlf_mobitems:armadillo_scute", "vlf_mobitems:armadillo_scute", "vlf_mobitems:armadillo_scute"},
-			{"vlf_mobitems:armadillo_scute", "", "vlf_mobitems:armadillo_scute"},
-		},
-})
-
-minetest.register_craft({
-	output = "vlf_core:slimeblock",
-	recipe = {{"vlf_mobitems:slimeball","vlf_mobitems:slimeball","vlf_mobitems:slimeball",},
-		{"vlf_mobitems:slimeball","vlf_mobitems:slimeball","vlf_mobitems:slimeball",},
-		{"vlf_mobitems:slimeball","vlf_mobitems:slimeball","vlf_mobitems:slimeball",}},
-})
-
-minetest.register_on_item_eat(function (hp_change, replace_with_item, itemstack, user, pointed_thing)	-- poisoning with spider eye
-	if itemstack:get_name() == "vlf_mobitems:spider_eye" then
-		vlf_entity_effects.give_effect_by_level("poison", user, 1, 4)
-	end
-end)

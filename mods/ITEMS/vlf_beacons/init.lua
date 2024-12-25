@@ -96,7 +96,7 @@ minetest.register_node("vlf_beacons:beacon_beam", {
 		}
 	},
 	pointable= false,
-	light_source = 14,
+	light_source = minetest.LIGHT_MAX,
 	walkable = false,
 	groups = {not_in_creative_inventory=1},
 	_vlf_blast_resistance = 1200,
@@ -105,8 +105,6 @@ minetest.register_node("vlf_beacons:beacon_beam", {
 	palette_index = 0,
 	buildable_to = true,
 })
-
-mesecon.register_mvps_stopper("vlf_beacons:beacon_beam")
 
 local function remove_beacon_beam(pos)
 	for y=pos.y, pos.y+301 do
@@ -165,7 +163,7 @@ end
 local function effect_player(effect, pos, power_level, effect_level,player)
 	local distance =  vector.distance(player:get_pos(), pos)
 	if distance > (power_level+1)*10 then return end
-	vlf_entity_effects.give_effect_by_level (effect, player, effect_level, 16)
+	vlf_potions.give_effect_by_level (effect, player, effect_level, 16)
 end
 
 local function apply_effects_to_all_players(pos)
@@ -214,7 +212,7 @@ local open_beacons = {}
 local function upgrade_effect_level_button (oldmeta)
 	local effect = oldmeta:get_string ("effect")
 	if effect and effect ~= "" then
-	local pdef = vlf_entity_effects.registered_effects[effect] or { }
+	local pdef = vlf_potions.registered_effects[effect] or { }
 	local tooltip = (pdef.description or "???") .. " II"
 	return ("image_button[8.5,3.5;1,1;"
 		.. (pdef.icon or "unknown.png")
@@ -234,12 +232,12 @@ local function generate_beacon_formspec (pos, meta)
 		.. "image[1,3;1,1;custom_beacon_symbol_3.png]"
 		.. "image[1,4.5;1,1;custom_beacon_symbol_2.png]"
 		.. "image[6,3.5;1,1;custom_beacon_symbol_1.png]"
-		.. "image_button[2.5,1.5;1,1;vlf_entity_effects_effect_swift.png;swiftness;]"
-		.. "image_button[3.5,1.5;1,1;vlf_entity_effects_effect_haste.png;haste;]"
-		.. "image_button[2.5,3;1,1;vlf_entity_effects_effect_resistance.png;resistance;]"
-		.. "image_button[3.5,3;1,1;vlf_entity_effects_effect_leaping.png;leaping;]"
-		.. "image_button[3.0,4.5;1,1;vlf_entity_effects_effect_strong.png;strength;]"
-		.. "image_button[7.5,3.5;1,1;vlf_entity_effects_effect_regenerating.png;regeneration;]"
+		.. "image_button[2.5,1.5;1,1;vlf_potions_effect_swift.png;swiftness;]"
+		.. "image_button[3.5,1.5;1,1;vlf_potions_effect_haste.png;haste;]"
+		.. "image_button[2.5,3;1,1;vlf_potions_effect_resistance.png;resistance;]"
+		.. "image_button[3.5,3;1,1;vlf_potions_effect_leaping.png;leaping;]"
+		.. "image_button[3.0,4.5;1,1;vlf_potions_effect_strong.png;strength;]"
+		.. "image_button[7.5,3.5;1,1;vlf_potions_effect_regenerating.png;regeneration;]"
 		.. upgrade_effect_level_button (meta)
 		.. "item_image[1,7;1,1;vlf_core:diamond]"
 		.. "item_image[2.2,7;1,1;vlf_core:emerald]"
@@ -292,14 +290,12 @@ minetest.register_node("vlf_beacons:beacon", {
 	allow_metadata_inventory_put = allow_metadata_inventory_put,
 	allow_metadata_inventory_move = allow_metadata_inventory_move,
 	allow_metadata_inventory_take = allow_metadata_inventory_take,
-	light_source = 14,
+	light_source = minetest.LIGHT_MAX,
 	groups = {handy=1, deco_block=1},
 	drop = "vlf_beacons:beacon",
 	sounds = vlf_sounds.node_sound_glass_defaults(),
 	_vlf_hardness = 3,
 })
-
-mesecon.register_mvps_stopper("vlf_beacons:beacon")
 
 function vlf_beacons.register_beaconblock (itemstring)--API function for other mods
 	table.insert(vlf_beacons.blocks, itemstring)

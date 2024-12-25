@@ -13,10 +13,11 @@ end
 -- If the light level is equal to or less than a random integer (from 0 to 7)
 -- If the fraction of the moon that is bright is greater than a random number (from 0 to 1)
 -- If these conditions are met and the altitude is acceptable, there is a 50% chance of spawning a slime.
--- https://minecraft.fandom.com/wiki/Slime#Swamps
+-- https://minecraft.wiki/w/Slime#Swamps
 
 local function swamp_spawn(pos)
-	if minetest.get_node_light(pos) > math.random(0,7) then return false end
+	local light = (minetest.get_node_light (pos) or minetest.LIGHT_MAX)
+	if light > math.random(0,7) then return false end
 	if math.abs(4 - vlf_moon.get_moon_phase()) / 4 < math.random() then return false end --moon phase 4 is new moon in vlf_moon
 	if math.random(2) == 2 then return false end
 	return true
@@ -38,9 +39,8 @@ local spawn_children_on_die = function(child_mob, spawn_distance, eject_speed)
 		local mndef = minetest.registered_nodes[minetest.get_node(pos).name]
 		local mother_stuck = mndef and mndef.walkable
 		local angle = math.random(0, math.pi*2)
-		local children = {}
 		local spawn_count = math.random(2, 4)
-		for i = 1, spawn_count do
+		for _ = 1, spawn_count do
 			dir = vector.new(math.cos(angle), 0, math.sin(angle))
 			posadd = vector.normalize(dir) * spawn_distance
 			newpos = pos + posadd
@@ -58,25 +58,12 @@ local spawn_children_on_die = function(child_mob, spawn_distance, eject_speed)
 				mob:set_velocity(dir * eject_speed)
 			end
 		end
-		-- If mother was murdered, children attack the killer after 1 second
-		if self.state == "attack" then
-			minetest.after(1.0, function(children, enemy)
-				local le
-				for c = 1, #children do
-					le = children[c]:get_luaentity()
-					if le then
-						le.state = "attack"
-						le.attack = enemy
-					end
-				end
-			end, children, self.attack)
-		end
 	end
 end
 
 local swamp_light_max = 7
 
-local function slime_check_light(pos, environmental_light, artificial_light, sky_light)
+local function slime_check_light(pos, _, artificial_light, sky_light)
 	local maxlight = swamp_light_max
 
 	if pos.y <= slime_chunk_spawn_max and in_slime_chunk(pos) then
@@ -86,12 +73,155 @@ local function slime_check_light(pos, environmental_light, artificial_light, sky
 	return math.max(artificial_light, sky_light) <= maxlight
 end
 
+-- Slime movement.
+
+local function slime_do_go_pos (self, dtime, moveresult)
+	-- The target position is ignored.
+	local speed = self.movement_velocity
+
+	if not self._next_jump then
+		self._next_jump = 0
+	end
+
+	local delay = math.max (0, self._next_jump - dtime)
+	if delay == 0 or self._in_water
+		or not (moveresult.touching_ground
+			or moveresult.standing_on_object) then
+		if delay == 0 then
+			self._jump = true
+			delay = (math.random (60) + 40) / 20 * self.jump_delay_multiplier
+			if self.attack then
+				delay = delay / 3
+			end
+		end
+		self.acc_dir.z = speed / 20
+		self.acc_speed = speed
+	else
+		self.acc_dir.z = 0
+		self.acc_speed = 0
+	end
+	self._next_jump = delay
+end
+
+local function slime_turn (self, dtime, self_pos)
+	if not self.attack then
+		local standing_on = minetest.registered_nodes[self.standing_on]
+		local remaining = self._next_turn
+		if not remaining or remaining == 0 then
+			remaining = (math.random (60) + 40) / 20
+		end
+
+		if standing_on and (standing_on.walkable
+				    or standing_on.liquidtype ~= "none") then
+			remaining = math.max (0, remaining - dtime)
+			if remaining == 0 then
+				local angle = math.random () * 2 * math.pi
+				self:set_yaw (angle)
+			end
+		end
+		self._next_turn = remaining
+	else
+		local target_pos = self.attack:get_pos ()
+		local dz, dx = target_pos.z - self_pos.z, target_pos.x - self_pos.x
+		local yaw = math.atan2 (dz, dx) - math.pi / 2
+
+		self:set_yaw (yaw)
+	end
+end
+
+local function slime_jump_continuously (self)
+	local factor = 1
+	self._in_water = false
+	if minetest.get_item_group (self.standing_in, "water") ~= 0
+		or minetest.get_item_group (self.standing_in, "lava") ~= 0 then
+		factor = 1.2
+		self._in_water = true
+	end
+	self.movement_goal = "go_pos"
+	self.movement_velocity = self.movement_speed * factor
+	-- movement_target is disregarded by slimes.
+end
+
+local function slime_check_attack (self, self_pos, dtime)
+	if not self.attack then
+		return
+	end
+	self._attack_cooldown = math.max (self._attack_cooldown - dtime, 0)
+	local target_pos = self.attack:get_pos ()
+	local girth = self.collisionbox[6] - self.collisionbox[3]
+	if vector.distance (target_pos, self_pos) <= girth + 0.25
+	   and self._attack_cooldown == 0 then
+		self:custom_attack ()
+		self._attack_cooldown = 0.5
+	end
+end
+
+local function slime_run_ai (self, dtime)
+	local self_pos = self.object:get_pos ()
+
+	if self.dead then
+		return
+	end
+
+	self:check_attack (self_pos, dtime)
+	slime_turn (self, dtime, self_pos)
+	slime_jump_continuously (self)
+	slime_check_attack (self, self_pos, dtime)
+end
+
+local function slime_check_particle (self, dtime, moveresult)
+	if not self._slime_was_touching_ground
+		and moveresult.touching_ground
+		and self._get_slime_particle then
+		local cbox = self.collisionbox
+		local radius = (cbox[6] - cbox[3])
+		local self_pos = self.object:get_pos ()
+		for i = 1, math.round (radius * 32) do
+			local scale = math.random () * 0.5 + 0.5
+			local angle = math.random () * math.pi * 2
+			local x, z
+			x = math.sin (angle) * scale * radius
+			z = math.cos (angle) * scale * radius
+			minetest.add_particle ({
+					pos = vector.offset (self_pos, x, 0, z),
+					collisiondetection = true,
+					texture = self._get_slime_particle (),
+					time = 0.20,
+					velocity = {
+						x = math.random (-1, 1),
+						y = math.random (1, 2),
+						z = math.random (-1, 1),
+					},
+					acceleration = {
+						x = 0,
+						y = math.random(-9, -5),
+						z = 0,
+					},
+					collision_removal = true,
+					size = math.random (0.5, 1.5),
+					glow = self._slime_particle_glow,
+			})
+		end
+
+	end
+	self._slime_was_touching_ground = moveresult.touching_ground
+end
+
+local function slime_do_attack (self, target)
+	self.attack = target
+	self.target_invisible_time = 3.0
+	self._sight_persistence = 3.0
+	if self._next_jump then
+		self._next_jump = self._next_jump / 3
+	end
+	self._attack_cooldown = 0.5 -- Minecraft damage immunity.
+end
+
 -- Slime
 local slime_big = {
 	description = S("Slime - big"),
 	type = "monster",
 	spawn_class = "hostile",
-	group_attack = { "mobs_mc:slime_big", "mobs_mc:slime_small", "mobs_mc:slime_tiny" },
 	hp_min = 16,
 	hp_max = 16,
 	xp_min = 4,
@@ -110,37 +240,47 @@ local slime_big = {
 		attack = "green_slime_attack",
 		distance = 16,
 	},
-	_freeze_damage = 5,
+	sound_params = {
+		gain = 1,
+	},
 	damage = 4,
 	reach = 3,
 	armor = 100,
 	drops = {},
-	-- TODO: Fix animations
 	animation = {
-		jump_speed = 14,
-		stand_speed = 14,
-		walk_speed = 7,
 		jump_start = 1,
 		jump_end = 20,
+		jump_speed = 24,
+		jump_loop = false,
+		stand_speed = 0,
+		walk_speed = 0,
 		stand_start = 1,
-		stand_end = 20,
+		stand_end = 1,
 		walk_start = 1,
-		walk_end = 20,
+		walk_end = 1,
 	},
+	do_go_pos = slime_do_go_pos,
+	run_ai = slime_run_ai,
+	do_attack = slime_do_attack,
+	do_custom = slime_check_particle,
+	jump_delay_multiplier = 1,
 	fall_damage = 0,
-	view_range = 16,
-	attack_type = "dogfight",
 	passive = false,
-	jump = true,
-	walk_velocity = 1.45, -- with no jump delay 1.9<-(was) is way too fast compare to origianl deltax speed of slime
-	run_velocity = 1.45,
-	walk_chance = 0,
-	jump_height = 8, -- (was 5.8) JUMP!
-	fear_height = 0,
+	movement_speed = 10, -- (0.2 + 0.1 * size) * 20
 	spawn_small_alternative = "mobs_mc:slime_small",
 	on_die = spawn_children_on_die("mobs_mc:slime_small", 1.0, 1.5),
 	use_texture_alpha = true,
 	check_light = slime_check_light,
+	specific_attack = {
+		"mobs_mc:iron_golem",
+	},
+	attack_type = "null",
+	_get_slime_particle = function ()
+		return "[combine:" .. math.random (3)
+			.. "x" .. math.random (3) .. ":-"
+			.. math.random (4) .. ",-"
+			.. math.random (4) .. "=vlf_core_slime.png"
+	end
 }
 vlf_mobs.register_mob("mobs_mc:slime_big", slime_big)
 
@@ -155,11 +295,10 @@ slime_small.collisionbox = {-0.51, -0.01, -0.51, 0.51, 1.00, 0.51}
 slime_small.visual_size = {x=6.25, y=6.25}
 slime_small.damage = 3
 slime_small.reach = 2.75
-slime_small.walk_velocity = 1.45
-slime_small.run_velocity = 1.45
-slime_small.jump_height = 4.3
+slime_small.movement_speed = 6.0
 slime_small.spawn_small_alternative = "mobs_mc:slime_tiny"
 slime_small.on_die = spawn_children_on_die("mobs_mc:slime_tiny", 0.6, 1.0)
+slime_small.sound_params.gain = slime_big.sound_params.gain / 3
 vlf_mobs.register_mob("mobs_mc:slime_small", slime_small)
 
 local slime_tiny = table.copy(slime_big)
@@ -180,11 +319,10 @@ slime_tiny.drops = {
 	min = 0,
 	max = 2,},
 }
-slime_tiny.walk_velocity = 1.45
-slime_tiny.run_velocity = 1.45
-slime_tiny.jump_height = 3
+slime_small.movement_speed = 4.0
 slime_tiny.spawn_small_alternative = nil
 slime_tiny.on_die = nil
+slime_tiny.sound_params.gain = slime_small.sound_params.gain / 3
 
 vlf_mobs.register_mob("mobs_mc:slime_tiny", slime_tiny)
 
@@ -286,8 +424,11 @@ local magma_cube_big = {
 		attack = "mobs_mc_magma_cube_attack",
 		distance = 16,
 	},
-	walk_velocity = 1.45,
-	run_velocity = 1.45, -- (was 2.5) they are slow and huge
+	sound_params = {
+		gain = 1,
+		max_hear_distance = 16,
+	},
+	movement_speed = 10.0,
 	damage = 6,
 	reach = 3,
 	armor = 53,
@@ -297,33 +438,41 @@ local magma_cube_big = {
 		min = 1,
 		max = 1,},
 	},
-	-- TODO: Fix animations
 	animation = {
-		jump_speed = 20,
-		stand_speed = 20,
-		walk_speed = 20,
-		jump_start = 1,
-		jump_end = 20,
-		stand_start = 1,
-		stand_end = 1,
-		walk_start = 1,
-		walk_end = 20,
+		jump_speed = 40,
+		jump_loop = false,
+		stand_speed = 0,
+		walk_speed = 0,
+		jump_start = 0,
+		jump_end = 50,
+		stand_start = 0,
+		stand_end = 0,
+		walk_start = 0,
+		walk_end = 0,
 	},
+	do_go_pos = slime_do_go_pos,
+	run_ai = slime_run_ai,
+	do_attack = slime_do_attack,
+	do_custom = slime_check_particle,
+	jump_delay_multiplier = 4,
 	water_damage = 0,
+	_vlf_freeze_damage = 5,
 	lava_damage = 0,
         fire_damage = 0,
-	light_damage = 0,
 	fall_damage = 0,
-	view_range = 16,
-	attack_type = "dogfight",
+	jump_height = 14.4,
 	passive = false,
-	jump = true,
-	jump_height = 8,
-	walk_chance = 0,
-	fear_height = 0,
 	spawn_small_alternative = "mobs_mc:magma_cube_small",
 	on_die = spawn_children_on_die("mobs_mc:magma_cube_small", 0.8, 1.5),
 	fire_resistant = true,
+	specific_attack = {
+		"mobs_mc:iron_golem",
+	},
+	_get_slime_particle = function ()
+		return "vlf_particles_fire_flame.png"
+	end,
+	attack_type = "null",
+	_slime_particle_glow = 14,
 }
 vlf_mobs.register_mob("mobs_mc:magma_cube_big", magma_cube_big)
 
@@ -339,14 +488,14 @@ magma_cube_small.collisionbox = {-0.51, -0.01, -0.51, 0.51, 1.00, 0.51}
 magma_cube_small.visual_size = {x=6.25, y=6.25}
 magma_cube_small.damage = 3
 magma_cube_small.reach = 2.75
-magma_cube_small.walk_velocity = .8
-magma_cube_small.run_velocity = 1.75 -- (was 2.0)
-magma_cube_small.jump_height = 6
+magma_cube_small.movement_speed = 6.0
+magma_cube_small.jump_height = 12.4
 magma_cube_small.damage = 4
 magma_cube_small.reach = 2.75
 magma_cube_small.armor = 66
 magma_cube_small.spawn_small_alternative = "mobs_mc:magma_cube_tiny"
 magma_cube_small.on_die = spawn_children_on_die("mobs_mc:magma_cube_tiny", 0.6, 1.0)
+magma_cube_small.sound_params.gain = 0.7 -- has different sound file from big
 vlf_mobs.register_mob("mobs_mc:magma_cube_small", magma_cube_small)
 
 local magma_cube_tiny = table.copy(magma_cube_big)
@@ -360,15 +509,15 @@ magma_cube_tiny.xp_min = 1
 magma_cube_tiny.xp_max = 1
 magma_cube_tiny.collisionbox = {-0.2505, -0.01, -0.2505, 0.2505, 0.50, 0.2505}
 magma_cube_tiny.visual_size = {x=3.125, y=3.125}
-magma_cube_tiny.walk_velocity = 1.02
-magma_cube_tiny.run_velocity = 1.02
-magma_cube_tiny.jump_height = 4
+magma_cube_tiny.movement_speed = 4.0
+magma_cube_tiny.jump_height = 8.4
 magma_cube_tiny.damage = 3
 magma_cube_tiny.reach = 2.5
 magma_cube_tiny.armor = 50
 magma_cube_tiny.drops = {}
 magma_cube_tiny.spawn_small_alternative = nil
 magma_cube_tiny.on_die = nil
+magma_cube_tiny.sound_params.gain = magma_cube_small.sound_params.gain / 3
 
 vlf_mobs.register_mob("mobs_mc:magma_cube_tiny", magma_cube_tiny)
 

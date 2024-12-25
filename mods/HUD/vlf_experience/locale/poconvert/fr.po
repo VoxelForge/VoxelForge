@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_experience x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_experience x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,10 +11,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Bottle o' Enchanting"
-msgstr ""
+msgstr "Fiole d'Expérience"
 
 msgid "[[<player>] <xp>]"
 msgstr "[[<joueur>] <xp>]"
@@ -23,14 +23,14 @@ msgid "Gives a player some XP"
 msgstr "Donne de l'XP à un joueur"
 
 msgid "Error: Too many parameters!"
-msgstr "Erreur: Trop de paramètres!"
+msgstr "Erreur : Trop de paramètres !"
 
 msgid "Error: Incorrect value of XP"
-msgstr "Erreur: Valeur incorrecte de XP"
+msgstr "Erreur : Valeur d'XP incorrecte"
 
 msgid "Error: Player not found"
-msgstr "Erreur: Joueur introuvable"
+msgstr "Erreur : Joueur introuvable"
 
 msgid "Added @1 XP to @2, total: @3, experience level: @4"
-msgstr "Ajout de @1 XP à @2, total: @3, niveau d'expérience: @4"
+msgstr "@1 XP ajouté à @2, total : @3, niveau d'expérience : @4"
 

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Minetest textdomain mcl_furnaces x.x.x\n"
+"Project-Id-Version: Luanti textdomain vlf_furnaces x.x.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: mtt_convert 0.1.0\n"
+"X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Inventory"
 msgstr "Inventaire"
@@ -29,16 +29,16 @@ msgid "Furnaces cook or smelt several items, using a furnace fuel, into somethin
 msgstr "Les fours cuisent ou fondent plusieurs articles, en utilisant un combustible de four, dans quelque chose d'autre."
 
 msgid "Use the furnace to open the furnace menu."
-msgstr ""
+msgstr "Utilisez le four pour ouvrir le menu du four."
 
 msgid "Place a furnace fuel in the lower slot and the source material in the upper slot."
-msgstr ""
+msgstr "Placez un combustible de four dans la fente inférieure et le matériau source dans la fente supérieure."
 
 msgid "The furnace will slowly use its fuel to smelt the item."
-msgstr ""
+msgstr "Le four utilise lentement son combustible pour fondre l'objet."
 
 msgid "The result will be placed into the output slot at the right side."
-msgstr ""
+msgstr "Le résultat sera placé dans l'emplacement de sortie situé à droite."
 
 msgid "Use the recipe book to see what you can smelt, what you can use as fuel and how long it will burn."
 msgstr "Utilisez le livre de recettes pour voir ce que vous pouvez cuire, ce que vous pouvez utiliser comme carburant et combien de temps il brûlera."
