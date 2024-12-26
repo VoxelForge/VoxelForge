@@ -5,10 +5,14 @@ local nodebox_wire = {
 	{-8/16, -.5, -1/16, -1/16, -.5+1/64, 1/16}, -- x negative
 	{-1/16, -.5, 1/16, 1/16, -.5+1/64, 8/16}, -- z positive
 	{1/16, -.5, -1/16, 8/16, -.5+1/64, 1/16}, -- x positive
-	{-1/16, -.5+1/16, -.5, 1/16, .4999+1/64, -.5+1/16}, -- z negative up
-	{-.5, -.5+1/16, -1/16, -.5+1/16, .4999+1/64, 1/16}, -- x negative up
-	{-1/16, -.5+1/16, .5-1/16, 1/16, .4999+1/64, .5}, -- z positive up
-	{.5-1/16, -.5+1/16, -1/16, .5, .4999+1/64, 1/16}, -- x positive up
+}
+
+local connected_nodebox_wire =
+{
+	{name = "connect_front", nodebox = {-1/16, -.5+1/16, -.5, 1/16, .4999+1/64, -.5+1/16}}, -- z negative up
+	{name = "connect_left", nodebox = {-.5, -.5+1/16, -1/16, -.5+1/16, .4999+1/64, 1/16}}, -- x negative up
+	{name = "connect_back", nodebox = {-1/16, -.5+1/16, .5-1/16, 1/16, .4999+1/64, .5}}, -- z positive up
+	{name = "connect_right", nodebox = {.5-1/16, -.5+1/16, -1/16, .5, .4999+1/64, 1/16}}, -- x positive up
 }
 local box_center = {-1/16, -.5, -1/16, 1/16, -.5+1/64, 1/16}
 local box_bump =  { -2/16, -8/16,  -2/16, 2/16, -.5+1/64, 2/16 }
@@ -91,18 +95,12 @@ local function update_wire(pos)
 		local obstruct = (wire.y < 0 and wire:multiply(vector.new(1, 0, 1))) or
 			(wire.y > 0 and wire:multiply(vector.new(0, 1, 0))) or
 			nil
-		local over = (wire.y < 0 and wire:multiply(vector.new(0, 1, 0))) or
-			(wire.y > 0 and wire:multiply(vector.new(1, 0, 1))) or
-			nil
-
 		if not obstruct or not opaque_tab[minetest.get_node(pos:add(obstruct)).name] then
 			local pos2 = pos:add(wire)
 			local node2 = minetest.get_node(pos2)
 
 			if wireflag_tab[node2.name] then
-				local over_opaque = over and opaque_tab[minetest.get_node(pos:add(over)).name] or false
-				local mask = bit.band(entry.mask, over_opaque and 0xff or 0x0f)
-				wireflags = bit.bor(wireflags, mask)
+				wireflags = bit.bor(wireflags, entry.mask)
 			end
 		end
 	end
@@ -198,12 +196,19 @@ do
 			nodebox = {type = "fixed", fixed={-8/16, -.5, -8/16, 8/16, -.5+1/64, 8/16}}
 		else
 			tiles = { cross_tile, cross_tile, line_tile, line_tile, line_tile, line_tile }
-			nodebox = {type = "fixed", fixed={box_center}}
+			nodebox = {type = "connected", fixed={box_center}}
 
 			-- Calculate nodebox
-			for i = 0, 7 do
+			for i = 0, 3 do
 				if bit.band(wire, bit.lshift(1, i)) ~= 0 then
 					table.insert(nodebox.fixed, nodebox_wire[i + 1])
+				end
+			end
+
+			-- Calculate the nodeboxe's connections
+			for i = 4, 7 do
+				if bit.band(wire, bit.lshift(1, i)) ~= 0 then
+					nodebox[connected_nodebox_wire[i - 3].name] = connected_nodebox_wire[i - 3].nodebox
 				end
 			end
 
@@ -237,6 +242,7 @@ do
 		local name = wireflags_to_name(wire)
 		minetest.register_node(name, {
 			drawtype = "nodebox",
+			connects_to = {"group:solid"},
 			paramtype = "light",
 			paramtype2 = "color",
 			palette = "redstone_palette_power.png",

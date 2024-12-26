@@ -167,10 +167,10 @@ function vlf_spawn.get_player_spawn_pos(player)
 						return vlf_spawn.get_world_spawn_pos(), false
 					elseif charge_level ~= 1 then
 						minetest.set_node(checkpos, {name="vlf_beds:respawn_anchor_charged_".. charge_level-1})
-						return checkpos, false
+						return checkpos, true
 					else
 						minetest.set_node(checkpos, {name="vlf_beds:respawn_anchor"})
-						return checkpos, false
+						return checkpos, true
 					end
 				else
 					player:get_meta():set_string("vlf_beds:spawn", "")

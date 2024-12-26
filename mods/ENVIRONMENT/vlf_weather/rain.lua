@@ -50,7 +50,7 @@ function vlf_weather.is_exposed_to_rain (pos)
 	end
 	local name = minetest.get_biome_name (data.biome)
 	local def = minetest.registered_biomes[name]
-	return def._vlf_biome_type ~= "hot"
+	return def and def._vlf_biome_type ~= "hot"
 		and vlf_weather.is_outdoor (pos)
 		and not vlf_weather.has_snow (pos)
 end

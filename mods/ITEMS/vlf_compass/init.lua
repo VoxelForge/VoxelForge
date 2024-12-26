@@ -2,30 +2,6 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 vlf_compass = {}
 
-local compass_types = {
-	{
-		name = "compass",
-		desc = S("Compass"),
-		tt = S("Points to the world origin"),
-		longdesc = S("Compasses are tools which point to the world origin (X=0, Z=0) or the spawn point in the Overworld."),
-		usagehelp = S("A Compass always points to the world spawn point when the player is in the overworld.  In other dimensions, it spins randomly."),
-	},
-	{
-		name = "compass_lodestone",
-		desc = S("Lodestone Compass"),
-		tt = S("Points to a lodestone"),
-		longdesc = S("Lodestone compasses resemble regular compasses, but they point to a specific lodestone."),
-		usagehelp = S("A Lodestone compass can be made from an ordinary compass by using it on a lodestone.  After becoming a lodestone compass, it always points to its linked lodestone, provided that they are in the same dimension.  If not in the same dimension, the lodestone compass spins randomly, similarly to a regular compass when outside the overworld.  A lodestone compass can be relinked with another lodestone."),
-	},
-	{
-		name = "compass_recovery",
-		desc = S("Recovery Compass"),
-		tt = S("Points to your last death location"),
-		longdesc = S("Recovery Compasses are compasses that point to your last death location"),
-		usagehelp = S("Recovery Compasses always point to the location of your last death, in case you haven't died yet, it will just randomly spin around"),
-	}
-}
-
 -- Number of dynamic compass images (and items registered.)
 local compass_frames = 32
 
@@ -35,6 +11,7 @@ local stereotype_frame = 18
 -- random compass spinning tick in seconds.
 -- Increase if there are performance problems.
 local spin_timer_tick = 0.5
+local spin_timer = 0
 
 -- Initialize random compass frame for spinning compass.  It is updated in
 -- the compass globalstep function.
@@ -74,6 +51,7 @@ local function get_compass_angle(pos, target, dir)
 	local angle_relative = (angle_north - angle_dir + 180) % 360
 	return math.floor((angle_relative/11.25) + 0.5) % compass_frames
 end
+vlf_compass.get_compass_angle = get_compass_angle
 
 --- Get compass image frame.
 -- Returns the compass image frame with the needle direction matching the
@@ -117,7 +95,6 @@ local function get_compass_frame(pos, dir, itemstack)
 end
 
 -- Export stereotype item for other mods to use
-vlf_compass.stereotype = "vlf_compass:" .. stereotype_frame
 
 --- Get partial compass itemname.
 -- Returns partial itemname of a compass with needle direction matching compass position.
@@ -130,36 +107,46 @@ function vlf_compass.get_compass_image(pos, dir)
 	return get_compass_frame(pos, dir, itemstack)
 end
 
---- Get compass itemname.
--- Returns the itemname of a compass with needle direction matching the
--- current compass position.
---
--- pos: position of the compass;
--- dir: rotational orientation of the compass;
--- itemstack: the compass including its optional lodestone metadata.
---
-function vlf_compass.get_compass_itemname(pos, dir, itemstack)
-	if not itemstack then
-		minetest.log("warning", "vlf_compass.get_compass_image called without itemstack!")
-		return "vlf_compass:" .. stereotype_frame
-	end
-	local frame = get_compass_frame(pos, dir, itemstack)
-	if itemstack:get_meta():get_string("pointsto") ~= "" then
-		return "vlf_compass:" .. frame .. "_lodestone"
-	else
-		return "vlf_compass:" .. frame
-	end
+--compat: compasses used to consist of many different items
+function vlf_compass.get_compass_itemname() return "vlf_compass:compass" end
+vlf_compass.stereotype = "vlf_compass:compass"
+
+
+local function update_compass_img(stack, img)
+	local m = stack:get_meta()
+	m:set_string("inventory_image", img)
+	m:set_string("wield_image", img)
+	return stack
 end
 
--- Timer for randomly spinning compass.
--- Gets updated and checked in the globalstep function.
-local spin_timer = 0
+local function update_compass(stack, player)
+	local pos = player:get_pos()
+	local dir = player:get_look_horizontal()
+	local def = stack:get_definition()
+	return update_compass_img(stack, string.format(def._vlf_compass_img_fmt, get_compass_frame(pos, dir, stack)))
+end
 
--- Compass globalstep function.
--- * updates random spin counter and random frame of spinning compasses;
--- * updates all compasses in player's inventories to match the correct
---   needle orientations for their current positions.
---
+local function update_recovery_compass(stack, player)
+	local meta = player:get_meta()
+	local posstring =  meta:get_string("vlf_compass:recovery_pos")
+	local targetpos = minetest.string_to_pos(posstring)
+	if not targetpos then return stack end
+
+	local def = stack:get_definition()
+	local pos = player:get_pos()
+	local dir = player:get_look_horizontal()
+
+	local _, target_dim = vlf_worlds.y_to_layer(targetpos.y)
+	local _, p_dim = vlf_worlds.y_to_layer(pos.y)
+	local img
+	if p_dim ~= target_dim then
+		img = string.format(def._vlf_compass_img_fmt, random_frame)
+	else
+		img = string.format(def._vlf_compass_img_fmt, get_compass_angle(pos, targetpos, dir))
+	end
+	return update_compass_img(stack, img)
+end
+
 minetest.register_globalstep(function(dtime)
 	spin_timer = spin_timer + dtime
 	if spin_timer >= spin_timer_tick then
@@ -167,43 +154,15 @@ minetest.register_globalstep(function(dtime)
 		spin_timer = 0
 	end
 
-	local compass_nr, compass_frame
-	local pos, dir, inv
 	for player in vlf_util.connected_players() do
-		pos = player:get_pos()
-		dir = player:get_look_horizontal()
-		inv = player:get_inventory()
+		local inv = player:get_inventory()
 		for j, stack in pairs(inv:get_list("main")) do
-			compass_nr = minetest.get_item_group(stack:get_name(), "compass")
-			if compass_nr ~= 0 and not string.find(stack:get_name(), "_recovery") then
-				-- check if current compass image still matches true orientation
-				compass_frame = get_compass_frame(pos, dir, stack)
-				if compass_nr - 1 ~= compass_frame then
-
-					if string.find(stack:get_name(), "_lodestone") then
-						stack:set_name("vlf_compass:" .. compass_frame .. "_lodestone")
-						awards.unlock(player:get_player_name(), "vlf:countryLode")
-					else
-						stack:set_name("vlf_compass:" .. compass_frame)
-					end
-					inv:set_stack("main", j, stack)
+			local compass_group = minetest.get_item_group(stack:get_name(), "compass")
+			if compass_group > 0 then
+				local def = stack:get_definition()
+				if def._vlf_compass_update then
+					inv:set_stack("main", j, def._vlf_compass_update(stack, player))
 				end
-			elseif compass_nr ~= 0 then
-				local meta = player:get_meta()
-				local posstring =  meta:get_string("vlf_compass:recovery_pos")
-				if not posstring or posstring == "" then
-					stack:set_name("vlf_compass:"..random_frame .. "_recovery")
-				else
-					local targetpos = minetest.string_to_pos(posstring)
-					local _, target_dim = vlf_worlds.y_to_layer(targetpos.y)
-					local _, p_dim = vlf_worlds.y_to_layer(pos.y)
-					if p_dim ~= target_dim then
-						stack:set_name("vlf_compass:"..random_frame.."_recovery")
-					else
-						stack:set_name("vlf_compass:"..get_compass_angle(pos,targetpos,dir).."_recovery")
-					end
-				end
-				inv:set_stack("main",j,stack)
 			end
 		end
 	end
@@ -212,52 +171,64 @@ end)
 --
 -- Node and craftitem definitions
 --
-local doc_mod = minetest.get_modpath("doc")
-
-for _, item in pairs(compass_types) do
-	local name_fmt, img_fmt
-	if item.name == "compass" then
-		name_fmt = "vlf_compass:%d"
-		img_fmt = "vlf_compass_compass_%02d.png"
-	elseif item.name == "compass_lodestone" then
-		name_fmt = "vlf_compass:%d_lodestone"
-		img_fmt = "vlf_compass_compass_%02d.png^[colorize:purple:50"
-	elseif item.name == "compass_recovery" then
-		name_fmt = "vlf_compass:%d_recovery"
-		img_fmt = "vlf_compass_recovery_compass_%02d.png"
-	end
-	for i = 0, compass_frames - 1 do
-		local itemstring = string.format(name_fmt, i)
-		local def = {
-			description = item.desc,
-			_tt_help = item.tt,
-			inventory_image = string.format(img_fmt, i),
-			wield_image = string.format(img_fmt, i),
-			groups = {compass = i + 1, tool = 1, disable_repair = 1},
-			_on_set_item_entity = function(itemstack, entity)
-				entity.is_compass = true
-				itemstack:set_name(string.format(name_fmt, stereotype_frame))
-				return itemstack
-			end
-		}
-		if i == stereotype_frame then
-			def._doc_items_longdesc = item.longdesc
-			def._doc_items_usagehelp = item.usagehelp
-			if string.match(itemstring, "lodestone") then
-				def.groups.not_in_creative_inventory = 1
-			end
-		else
-			def._doc_items_create_entry = false
-			def.groups.not_in_creative_inventory = 1
-		end
-		minetest.register_craftitem(itemstring, table.copy(def))
-
-		-- Help aliases. Makes sure the lookup tool works correctly
-		if doc_mod and i ~= stereotype_frame then
-			doc.add_entry_alias("craftitems", "vlf_compass:"..(stereotype_frame), "craftitems", itemstring)
+vlf_compass.registered_compasses = {}
+function vlf_compass.register_compass(name, def)
+	vlf_compass.registered_compasses[name] = def
+	core.register_craftitem(":vlf_compass:"..(def.name or name), table.merge({}, def.overrides or {}, {
+		groups = table.merge({tool = 1, disable_repair = 1, compass = 1}, def.overrides.groups)
+	}))
+	if def.name_fmt then
+		for i = 0, compass_frames - 1 do
+			core.register_alias(string.format(def.name_fmt, i), "vlf_compass:"..(def.name or name))
 		end
 	end
 end
+
+vlf_compass.register_compass("compass", {
+	name = "compass",
+	name_fmt = "vlf_compass:%d",
+	overrides = {
+		description = S("Compass"),
+		_tt_help = S("Points to the world origin"),
+		_doc_items_longdesc = S("Compasses are tools which point to the world origin (X=0, Z=0) or the spawn point in the Overworld."),
+		_doc_items_usagehelp = S("A Compass always points to the world spawn point when the player is in the overworld.  In other dimensions, it spins randomly."),
+		inventory_image = "vlf_compass_compass_01.png",
+		wield_image = "vlf_compass_compass_01.png",
+		groups = { compass = 1 },
+		_vlf_compass_update = update_compass,
+		_vlf_compass_img_fmt = "vlf_compass_compass_%02d.png",
+	}
+})
+vlf_compass.register_compass("lodestone_compass", {
+	name = "compass_lodestone",
+	name_fmt = "vlf_compass:%d_lodestone",
+	overrides = {
+		description = S("Lodestone Compass"),
+		_tt_help = S("Points to a lodestone"),
+		_doc_items_longdesc = S("Lodestone compasses resemble regular compasses, but they point to a specific lodestone."),
+		_doc_items_usagehelp = S("A Lodestone compass can be made from an ordinary compass by using it on a lodestone.  After becoming a lodestone compass, it always points to its linked lodestone, provided that they are in the same dimension.  If not in the same dimension, the lodestone compass spins randomly, similarly to a regular compass when outside the overworld.  A lodestone compass can be relinked with another lodestone."),
+		inventory_image = "vlf_compass_compass_01.png^[colorize:purple:50",
+		wield_image = "vlf_compass_compass_01.png^[colorize:purple:50",
+		groups = { compass = 2, not_in_creative_inventory = 1 },
+		_vlf_compass_update = update_compass,
+		_vlf_compass_img_fmt = "vlf_compass_compass_%02d.png^[colorize:purple:50",
+	}
+})
+vlf_compass.register_compass("recovery_compass", {
+	name = "compass_recovery",
+	name_fmt = "vlf_compass:%d_recovery",
+	overrides = {
+		description = S("Recovery Compass"),
+		_tt_help = S("Points to your last death location"),
+		_doc_items_longdesc = S("Recovery Compasses are compasses that point to your last death location"),
+		_doc_items_usagehelp = S("Recovery Compasses always point to the location of your last death, in case you haven't died yet, it will just randomly spin around"),
+		inventory_image = "vlf_compass_recovery_compass_01.png",
+		wield_image = "vlf_compass_recovery_compass_01.png",
+		groups = { compass = 3, rarity = 1 },
+		_vlf_compass_update = update_recovery_compass,
+		_vlf_compass_img_fmt = "vlf_compass_recovery_compass_%02d.png",
+	}
+})
 
 minetest.register_craft({
 	output = "vlf_compass:" .. stereotype_frame,
@@ -278,22 +249,13 @@ minetest.register_craft({ --TODO: update once echo shards are a thing
 	}
 })
 
-minetest.register_alias("vlf_compass:compass", "vlf_compass:" .. stereotype_frame)
-
-
 minetest.register_node("vlf_compass:lodestone",{
 	description=S("Lodestone"),
-	on_rightclick = function(pos, _, player, itemstack)
-		local name = itemstack.get_name(itemstack)
-		if string.find(name,"vlf_compass:") then
-			if name ~= "vlf_compass:lodestone" then
-				itemstack:get_meta():set_string("pointsto", minetest.pos_to_string(pos))
-				local dir = player:get_look_horizontal()
-				local frame = get_compass_frame(pos, dir, itemstack)
-				itemstack:set_name("vlf_compass:" .. frame .. "_lodestone")
-			end
+	on_rightclick = function(pos, _, _, itemstack)
+		if itemstack:get_name() == "vlf_compass:compass_lodestone" or itemstack:get_name() == "vlf_compass:compass" then
+			itemstack:get_meta():set_string("pointsto", minetest.pos_to_string(pos))
+			itemstack:set_name("vlf_compass:compass_lodestone")
 		end
-
 		return itemstack
 	end,
 	tiles = {

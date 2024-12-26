@@ -53,6 +53,9 @@ minetest.register_craftitem("vlf_fishing:clownfish_raw", {
 })
 
 local function eat_pufferfish(itemstack, placer, pointed_thing)
+    local rc = vlf_util.call_on_rightclick(itemstack, placer, pointed_thing)
+	if rc then return rc end
+
     vlf_potions.give_effect_by_level("poison", placer, 3, 60)
     vlf_potions.give_effect_by_level("nausea", placer, 2, 60)
     return minetest.item_eat(1)(itemstack, placer, pointed_thing)

@@ -174,6 +174,15 @@ function boat:on_activate(staticdata)
 		self._v = data.v
 		self._last_v = self._v
 		self._itemstring = data.itemstring
+		
+		-- Fall back to oak boat texture if no texture is set
+		if not data.textures then
+			local tx = { "vlf_boats_texture_oak_boat.png", "blank.png" }
+			if self.name == "vlf_boats:chest_boat" then
+				tx = { "vlf_boats_texture_oak_chest_boat.png", "vlf_chests_normal.png" }
+			end
+			data.textures = tx
+		end
 
 		-- Update the texutes for existing old boat entity instances.
 		-- Maybe remove this in the future.
