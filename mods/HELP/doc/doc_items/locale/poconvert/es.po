@@ -20,7 +20,7 @@ msgid "This block is a building block for creating various buildings."
 msgstr "Este bloque es un bloque de construcción para crear diversas construcciones."
 
 msgid "This item is primarily used for crafting other items."
-msgstr "Este objeto se utiliza principalmente para crear otros ítems."
+msgstr "Este ítem se utiliza principalmente para fabricar otros ítems."
 
 msgid "Hold it in your hand, then leftclick to eat it."
 msgstr "Sujétalo en tu mano y luego haz clic izquierdo para comerlo."
@@ -140,13 +140,13 @@ msgid "This block can serve as a smelting fuel with a burning time of @1."
 msgstr "Este bloque se puede utilizar como combustible para @1."
 
 msgid "This item can serve as a smelting fuel with a burning time of @1."
-msgstr "Este objeto se puede utilizar como combustible para @1."
+msgstr "Este ítem se puede utilizar como combustible para @1."
 
 msgid " Using it as fuel turns it into: @1."
 msgstr " Usarlo como combustible lo convierte en: @1."
 
 msgid "Itemstring: \"@1\""
-msgstr "ID de objeto: \"@1\""
+msgstr "ID de ítem: \"@1\""
 
 msgid "Description: @1"
 msgstr "Descripción: @1"
@@ -164,7 +164,7 @@ msgid "This tool points to liquids."
 msgstr "Esta herramienta indica la dirección de los líquidos."
 
 msgid "This item points to liquids."
-msgstr "Este objeto indica la dirección de los líquidos."
+msgstr "Este ítem indica la dirección de los líquidos."
 
 msgid "Punches with this block don't work as usual; melee combat and mining are either not possible or work differently."
 msgstr "Los golpes con este bloque no funcionan de la forma habitual; El combate cuerpo a cuerpo y la minería no son posibles o funcionan de manera diferente."
@@ -173,7 +173,7 @@ msgid "Punches with this tool don't work as usual; melee combat and mining are e
 msgstr "Los golpes con esta herramienta no funcionan normalmente; El combate cuerpo a cuerpo y la minería no son posibles o funcionan de manera diferente."
 
 msgid "Punches with this item don't work as usual; melee combat and mining are either not possible or work differently."
-msgstr "Los golpes con este objeto no funcionan normalmente; El combate cuerpo a cuerpo y la minería no son posibles o funcionan de manera diferente."
+msgstr "Los golpes con este ítem no funcionan normalmente; El combate cuerpo a cuerpo y la minería no son posibles o funcionan de manera diferente."
 
 msgid "This block belongs to the @1 group."
 msgstr "Este bloque pertenece al grupo @1."
@@ -182,7 +182,7 @@ msgid "This tool belongs to the @1 group."
 msgstr "Esta herramienta pertenece al grupo @1."
 
 msgid "This item belongs to the @1 group."
-msgstr "Este objeto pertenece al grupo @1."
+msgstr "Este ítem pertenece al grupo @1."
 
 msgid "This block belongs to these groups: @1."
 msgstr "Este bloque pertenece a estos grupos: @1."
@@ -191,7 +191,7 @@ msgid "This tool belongs to these groups: @1."
 msgstr "Esta herramienta pertenece a estos grupos: @1."
 
 msgid "This item belongs to these groups: @1."
-msgstr "Este artículo pertenece a estos grupos: @1."
+msgstr "Este ítem pertenece a estos grupos: @1."
 
 msgid "Blocks"
 msgstr "Bloques"
@@ -206,7 +206,7 @@ msgid "Pointable: Yes"
 msgstr "Apuntable: Sí"
 
 msgid "Pointable: Only by special items"
-msgstr "Apuntable: Solo por objetos especiales"
+msgstr "Apuntable: Solo por ítems especiales"
 
 msgid "Pointable: No"
 msgstr "Apuntable: No"
@@ -287,16 +287,16 @@ msgid "Falling blocks can go through this block; they destroy it when doing so."
 msgstr "Los bloques que caen pueden atravesar este bloque; lo destruyen al hacerlo."
 
 msgid "This block will drop as an item when a falling block ends up inside it."
-msgstr "Este bloque se convertirá en un item cuando otro bloque caiga sobre él."
+msgstr "Este bloque se convertirá en un ítem cuando otro bloque caiga sobre él."
 
 msgid "This block is destroyed when a falling block ends up inside it."
 msgstr "Este bloque se destruye cuando otro bloque cae sobre él."
 
 msgid "This block will drop as an item when it is not attached to a surrounding block."
-msgstr "Este bloque se transformará en un item cuando ya no esté unido a un bloque circundante."
+msgstr "Este bloque se transformará en un ítem cuando ya no esté unido a un bloque circundante."
 
 msgid "This block will drop as an item when no collidable block is below it."
-msgstr "Este bloque se convertirá en un objeto cuando ya no haya un bloque colisionable debajo de él."
+msgstr "Este bloque se convertirá en un ítem cuando ya no haya un bloque colisionable debajo de él."
 
 msgid "Liquids can flow into this block and destroy it."
 msgstr "Los líquidos pueden fluir hacia este bloque y destruirlo."
@@ -332,22 +332,22 @@ msgid "This block connects to blocks of the following groups: @1."
 msgstr "Este bloque se conecta a bloques de los siguientes grupos: @1."
 
 msgid "This block won't drop anything when mined."
-msgstr "Este bloque no dropeará nada cuando se mine."
+msgstr "Este bloque no recompensará nada cuando se mine."
 
 msgid "This block will drop the following when mined: @1×@2."
-msgstr "Este bloque dropeará lo siguiente al ser minado: @1×@2."
+msgstr "Este bloque recompensará lo siguiente al ser minado: @1×@2."
 
 msgid "This block will drop the following when mined: @1."
-msgstr "Este bloque dropeará lo siguiente al ser minado: @1."
+msgstr "Este bloque recompensará lo siguiente al ser minado: @1."
 
 msgid "This block will drop the following items when mined: @1."
-msgstr "Este bloque dropeará los siguientes ítems al ser minado: @1."
+msgstr "Este bloque recompensará los siguientes ítems al ser minado: @1."
 
 msgid "This block will randomly drop one of the following when mined: @1."
-msgstr "Este bloque dropeará aleatoriamente uno de los siguientes ítems al ser minado: @1."
+msgstr "Este bloque recompensará aleatoriamente uno de los siguientes ítems al ser minado: @1."
 
 msgid "This block will randomly drop up to @1 drops of the following possible drops when mined: @2."
-msgstr "Este bloque dropeará aleatoriamente hasta @1 de los siguientes ítems cuando se mine: @2."
+msgstr "Este bloque recompensará aleatoriamente hasta @1 de los siguientes ítems cuando se mine: @2."
 
 msgid " and "
 msgstr " y "
@@ -380,13 +380,13 @@ msgid "Miscellaneous items"
 msgstr "Ítems diversos"
 
 msgid "Item reference of items which are neither blocks, tools or weapons (esp. crafting items)"
-msgstr "Referencia de ítems que no son bloques, herramientas ni armas (especialmente ítems de crafteo)"
+msgstr "Referencia de ítems que no son bloques, herramientas ni armas (especialmente ítems de fabricación)"
 
 msgid "Mobs"
-msgstr "Mobs"
+msgstr "Criaturas"
 
 msgid "Different Mobs"
-msgstr "Mobs diferentes"
+msgstr "Diferentes criaturas"
 
 msgid "Type: @1"
 msgstr "Tipo: @1"
@@ -404,7 +404,7 @@ msgid "Can Swim"
 msgstr "Puede nadar"
 
 msgid "Drops: "
-msgstr "Ítems que dropea: "
+msgstr "Recompensas: "
 
 msgid "Follows player when these items are held:"
 msgstr "Sigue al jugador cuando se sostiene estos ítems:"

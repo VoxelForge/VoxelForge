@@ -67,11 +67,14 @@ msgstr "Vén Őrszem"
 msgid "Hoglin"
 msgstr "Varacskos"
 
+msgid "Baby Hoglin"
+msgstr "Varacskos Malac"
+
 msgid "Zoglin"
 msgstr "Zord Varacskos"
 
-msgid "Baby Hoglin"
-msgstr "Varacskos Malac"
+msgid "Sneak to dismount"
+msgstr "Guggolj, hogy leszereld"
 
 msgid "Horse"
 msgstr "Ló"
@@ -87,9 +90,6 @@ msgstr "Szamár"
 
 msgid "Mule"
 msgstr "Öszvér"
-
-msgid "Sneak to dismount"
-msgstr "Guggolj, hogy leszereld"
 
 msgid "Iron Golem"
 msgstr "Vas Gólem"
@@ -112,14 +112,14 @@ msgstr "Malac"
 msgid "Piglin"
 msgstr "Malacfej"
 
-msgid "Zombiefied Piglin"
-msgstr "Zombi Malacfej"
-
 msgid "Piglin Brute"
 msgstr "Durva Malacfej"
 
 msgid "Zombie Piglin"
 msgstr "Élőhalott Piglin"
+
+msgid "Zombified Piglin"
+msgstr "Malacfej Zombi"
 
 msgid "Pillager"
 msgstr "Rabló"
@@ -211,32 +211,17 @@ msgstr "Bosszancs"
 msgid "Villager"
 msgstr "Falusi"
 
-msgid "Evoker"
-msgstr "Idéző"
+msgid "Armorer"
+msgstr "Pajzs Kovács"
 
-msgid "Illusioner"
-msgstr "Szemfényvesztő"
+msgid "Butcher"
+msgstr "Mészáros"
 
-msgid "Vindicator"
-msgstr "Védelmező"
+msgid "Cartographer"
+msgstr "Térképész"
 
-msgid "Zombie Villager"
-msgstr "Zombi Falulakó"
-
-msgid "@1 sleeps here"
-msgstr "@1 itt alszik"
-
-msgid "A villager sleeps here"
-msgstr "Itt alszik egy falusi"
-
-msgid "@1 works here"
-msgstr "@1 itt dolgozik"
-
-msgid "A villager works here"
-msgstr "Itt dolgozik egy falubeli"
-
-msgid "Unemployed"
-msgstr "Munkanélküli"
+msgid "Cleric"
+msgstr "Pap"
 
 msgid "Farmer"
 msgstr "Földműves"
@@ -247,41 +232,26 @@ msgstr "Halász"
 msgid "Fletcher"
 msgstr "Nyílkészitő"
 
-msgid "Shepherd"
-msgstr "Juhász"
+msgid "Leatherworker"
+msgstr "Tímár"
 
 msgid "Librarian"
 msgstr "Könyvtáros"
 
-msgid "Cartographer"
-msgstr "Térképész"
-
-msgid "Armorer"
-msgstr "Pajzs Kovács"
-
-msgid "Leatherworker"
-msgstr "Tímár"
-
-msgid "Butcher"
-msgstr "Mészáros"
-
-msgid "Weapon Smith"
-msgstr "Fegyver Kovács"
-
-msgid "Tool Smith"
-msgstr "Eszköz Kovács"
-
-msgid "Cleric"
-msgstr "Pap"
-
 msgid "Mason"
 msgstr "Kőműves"
 
+msgid "Shepherd"
+msgstr "Juhász"
+
+msgid "Toolsmith"
+msgstr ""
+
+msgid "Weaponsmith"
+msgstr ""
+
 msgid "Nitwit"
 msgstr "Falu Bolondja"
-
-msgid "Wandering Trader"
-msgstr "Vándor Kereskedő"
 
 msgid "Novice"
 msgstr "Kezdő"
@@ -298,6 +268,24 @@ msgstr "Szakértő"
 msgid "Master"
 msgstr "Mester"
 
+msgid "Evoker"
+msgstr "Idéző"
+
+msgid "Illusioner"
+msgstr "Szemfényvesztő"
+
+msgid "Vindicator"
+msgstr "Védelmező"
+
+msgid "Zombie Villager"
+msgstr "Zombi Falulakó"
+
+msgid "Wandering Trader"
+msgstr "Vándor Kereskedő"
+
+msgid "Trader Llama"
+msgstr ""
+
 msgid "Witch"
 msgstr "Boszi"
 
@@ -306,9 +294,6 @@ msgstr "Sorvasztó"
 
 msgid "Wolf"
 msgstr "Farkas"
-
-msgid "Dog"
-msgstr "Kutya"
 
 msgid "Zombie"
 msgstr "Zombi"
@@ -321,7 +306,4 @@ msgstr "Sivatagi Zombi"
 
 msgid "Baby Husk"
 msgstr "Sivatagi Zombika"
-
-msgid "Zombified Piglin"
-msgstr "Malacfej Zombi"
 

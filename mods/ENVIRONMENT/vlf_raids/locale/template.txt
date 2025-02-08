@@ -1,4 +1,0 @@
-# textdomain: vlf_raids
-
-### init.lua ###
-Ominous Banner=

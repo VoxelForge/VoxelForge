@@ -22,22 +22,22 @@ minetest.register_on_mods_loaded(function()
 	end
 end)
 
-vlf_player.register_globalstep(function(player)
+mcl_player.register_globalstep(function(player)
 	local pos = player:get_pos()
-	local npos = vector.add(pos, vlf_player.node_offsets.stand)
+	local npos = vector.add(pos, mcl_player.node_offsets.stand)
 	local node = minetest.get_node(npos)
-	if on_walk[vlf_player.players[player].nodes.stand] then
-		on_walk[vlf_player.players[player].nodes.stand](npos, node, player)
+	if on_walk[mcl_player.players[player].nodes.stand] then
+		on_walk[mcl_player.players[player].nodes.stand](npos, node, player)
 	end
 	for i = 1, #registered_globals do
 		registered_globals[i](npos, node, player)
 	end
-	if on_walk_through[vlf_player.players[player].nodes.feet] then
-		local npos = vector.add(pos, vlf_player.node_offsets.feet)
-		on_walk_through[vlf_player.players[player].nodes.feet](npos, minetest.get_node(npos), player)
+	if on_walk_through[mcl_player.players[player].nodes.feet] then
+		local npos = vector.add(pos, mcl_player.node_offsets.feet)
+		on_walk_through[mcl_player.players[player].nodes.feet](npos, minetest.get_node(npos), player)
 	end
-	if on_walk_through[vlf_player.players[player].nodes.head] then
-		local npos = vector.add(pos, vlf_player.node_offsets.head)
-		on_walk_through[vlf_player.players[player].nodes.head](npos, minetest.get_node(npos), player)
+	if on_walk_through[mcl_player.players[player].nodes.head] then
+		local npos = vector.add(pos, mcl_player.node_offsets.head)
+		on_walk_through[mcl_player.players[player].nodes.head](npos, minetest.get_node(npos), player)
 	end
 end)

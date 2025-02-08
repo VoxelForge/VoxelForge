@@ -5,7 +5,7 @@
 
 local S = minetest.get_translator("mobs_mc")
 local snow_trail_frequency = 0.5 -- Time in seconds between depositions of snow trails
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 local mobs_griefing = minetest.settings:get_bool("mobs_griefing") ~= false
 
 local sheared_textures = {
@@ -27,7 +27,7 @@ local snow_golem = {
 	hp_max = 4,
 	fall_damage = 0,
 	water_damage = 4,
-	_vlf_freeze_damage = 0,
+	_mcl_freeze_damage = 0,
 	head_eye_height = 1.7,
 	rain_damage = 4,
 	armor = { fleshy = 100, water_vulnerable = 100, },
@@ -50,7 +50,7 @@ local snow_golem = {
 		"farming_pumpkin_top.png", --left
 	},
 	drops = {{
-		name = "vlf_throwing:snowball",
+		name = "mcl_throwing:snowball",
 		chance = 1, min = 0,
 		max = 15,
 	}},
@@ -58,7 +58,7 @@ local snow_golem = {
 	movement_speed = 4.0,
 	makes_footstep_sound = true,
 	attack_type = "ranged",
-	arrow = "vlf_throwing:snowball_entity",
+	arrow = "mcl_throwing:snowball_entity",
 	ranged_attack_radius = 10.0,
 	shoot_offset = 0.5,
 	pursuit_bonus = 1.25,
@@ -82,10 +82,10 @@ function snow_golem:on_rightclick (clicker)
 		self:set_textures (sheared_textures)
 
 		local pos = self.object:get_pos()
-		minetest.sound_play("vlf_tools_shears_cut", {pos = pos}, true)
+		minetest.sound_play("mcl_tools_shears_cut", {pos = pos}, true)
 
-		if minetest.registered_items["vlf_farming:pumpkin_face"] then
-			minetest.add_item({x=pos.x, y=pos.y+1.4, z=pos.z}, "vlf_farming:pumpkin_face")
+		if minetest.registered_items["mcl_farming:pumpkin_face"] then
+			minetest.add_item({x=pos.x, y=pos.y+1.4, z=pos.z}, "mcl_farming:pumpkin_face")
 		end
 
 		-- Wear out
@@ -125,7 +125,7 @@ function snow_golem:ai_step (dtime)
 		local name = biome and minetest.get_biome_name (biome.biome)
 		local def = name and minetest.registered_biomes[name]
 
-		if def and def._vlf_biome_type == "hot" then
+		if def and def._mcl_biome_type == "hot" then
 			self:damage_mob ("on_fire", 1.0)
 		end
 	end
@@ -152,17 +152,17 @@ function snow_golem:ai_step (dtime)
 			if belowdef and belowdef.walkable
 				and (belowdef.node_box == nil or belowdef.node_box.type == "regular") then
 				-- Place top snow
-				minetest.set_node(pos, {name = "vlf_core:snow"})
+				minetest.set_node(pos, {name = "mcl_core:snow"})
 			end
 		end
 	end
 end
 
 function snow_golem:shoot_arrow (pos, dir)
-	vlf_throwing.throw ("vlf_throwing:snowball", pos, dir, nil, self.object)
+	mcl_throwing.throw ("mcl_throwing:snowball", pos, dir, nil, self.object)
 end
 
-vlf_mobs.register_mob ("mobs_mc:snowman", snow_golem)
+mcl_mobs.register_mob ("mobs_mc:snowman", snow_golem)
 
 ------------------------------------------------------------------------
 -- Snow Golem summoning.
@@ -184,7 +184,7 @@ local summon_particles = function(obj)
 		maxexptime = 2.0,
 		minsize = 2.0,
 		maxsize = 3.0,
-		texture = "vlf_particles_smoke.png",
+		texture = "mcl_particles_smoke.png",
 	})
 end
 
@@ -209,7 +209,7 @@ function mobs_mc.check_snow_golem_summon(pos, player)
 		local place = checks[c][3]
 		local b1n = minetest.get_node(b1)
 		local b2n = minetest.get_node(b2)
-		if b1n.name == "vlf_core:snowblock" and b2n.name == "vlf_core:snowblock" then
+		if b1n.name == "mcl_core:snowblock" and b2n.name == "mcl_core:snowblock" then
 			-- Remove the pumpkin and both snow blocks and summon the snow golem
 			minetest.remove_node(pos)
 			minetest.remove_node(b1)
@@ -229,4 +229,4 @@ function mobs_mc.check_snow_golem_summon(pos, player)
 end
 
 -- Spawn egg
-vlf_mobs.register_egg("mobs_mc:snowman", S("Snow Golem"), "#f2f2f2", "#fd8f47", 0)
+mcl_mobs.register_egg("mobs_mc:snowman", S("Snow Golem"), "#f2f2f2", "#fd8f47", 0)

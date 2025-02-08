@@ -1,12 +1,12 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 
-local mob_class = vlf_mobs.mob_class
-local is_valid = vlf_util.is_valid_objectref
+local mob_class = mcl_mobs.mob_class
+local is_valid = mcl_util.is_valid_objectref
 
 local food_items = {
-	"vlf_fishing:fish_raw",
-	"vlf_fishing:salmon_raw",
-	"vlf_fishing:clownfish_raw",
+	"mcl_fishing:fish_raw",
+	"mcl_fishing:salmon_raw",
+	"mcl_fishing:clownfish_raw",
 }
 
 local dolphin = {
@@ -45,7 +45,7 @@ local dolphin = {
 	},
 	drops = {
 		{
-			name = "vlf_fishing:fish_raw",
+			name = "mcl_fishing:fish_raw",
 			chance = 1,
 			min = 0,
 			max = 1,
@@ -59,8 +59,8 @@ local dolphin = {
 	makes_footstep_sound = false,
 	swims = true,
 	flops = true,
-	do_go_pos = vlf_mobs.mob_class.pitchswim_do_go_pos,
-	swims_in = { "vlf_core:water_source", "vlfx_core:river_water_source" },
+	do_go_pos = mcl_mobs.mob_class.pitchswim_do_go_pos,
+	swims_in = { "mcl_core:water_source", "mclx_core:river_water_source" },
 	idle_gravity_in_liquids = true,
 	movement_speed = 24.0,
 	retaliates = true,
@@ -94,7 +94,7 @@ end
 function dolphin:ai_step (dtime)
 	mob_class.ai_step (self, dtime)
 	if minetest.get_item_group (self.standing_in, "water") == 0
-		and not vlf_weather.is_exposed_to_rain (self.object:get_pos ()) then
+		and not mcl_weather.is_exposed_to_rain (self.object:get_pos ()) then
 		self._moisture = self._moisture - dtime
 		if self._moisture <= 0 and self:check_timer ("desiccation", 1.0) then
 			self:damage_mob ("environment", 1.0)
@@ -154,8 +154,8 @@ local function dolphin_swim_with_boat (self, self_pos, dtime)
 		for object in minetest.objects_inside_radius (self_pos, 5) do
 			local entity
 			entity = object:get_luaentity ()
-			if entity and (entity.name == "vlf_boats:boat"
-					or entity.name == "vlf_boats:chest_boat") then
+			if entity and (entity.name == "mcl_boats:boat"
+					or entity.name == "mcl_boats:chest_boat") then
 				if entity._driver
 					and is_valid (entity._driver)
 					and entity._driver:is_player ()
@@ -233,7 +233,7 @@ local function dolphin_jump (self, self_pos, dtime, moveresult)
 		and math.random (math.round (10 * (dtime / 0.05))) == 1 then
 		-- Poor man's spline raycast.
 		local yaw = self:get_yaw ()
-		local dx, dz = vlf_util.get_2d_block_direction (yaw)
+		local dx, dz = mcl_util.get_2d_block_direction (yaw)
 		local nodepos = {
 			x = math.floor (self_pos.x + 0.5),
 			y = math.floor (self_pos.y + 0.5),
@@ -270,7 +270,8 @@ local function dolphin_swim_with_player (self, self_pos, dtime)
 	if player then
 		if not is_valid (player)
 			or vector.distance (player:get_pos (), self_pos) >= 16
-			or not vlf_player.players[player].is_swimming then
+			or (not mcl_player.players[player].is_swimming
+			    and not mcl_serverplayer.is_swimming (player)) then
 			self._swimming_with = nil
 			self:cancel_navigation ()
 			self:halt_in_tracks ()
@@ -278,7 +279,7 @@ local function dolphin_swim_with_player (self, self_pos, dtime)
 		end
 
 		if math.random (math.round (6 * dtime / 0.05)) == 1 then
-			vlf_potions.give_effect ("dolphin_grace", player, 1, 5)
+			mcl_potions.give_effect ("dolphin_grace", player, 1, 5)
 		end
 
 		if vector.distance (self_pos, player:get_pos ()) < 2.5 then
@@ -290,9 +291,11 @@ local function dolphin_swim_with_player (self, self_pos, dtime)
 		return true
 	elseif self:check_timer ("dolphin_locate_swimmers", 0.3) then
 		local cur_dist, closest_player
-		for player, meta in pairs (vlf_player.players) do
+		for player, meta in pairs (mcl_player.players) do
 			local pos
-			if self.attack ~= player and meta.is_swimming then
+			local is_swimming = meta.is_swimming
+				or mcl_serverplayer.is_swimming (player)
+			if self.attack ~= player and is_swimming then
 				pos = player:get_pos ()
 
 				if pos then
@@ -318,7 +321,7 @@ function dolphin:find_treasure (self_pos)
 	-- structures, just the chests.
 	local p1 = vector.offset (self_pos, -64, -16, -64)
 	local p2 = vector.offset (self_pos, 64, math.min (1, self_pos.y+16), 64)
-	local chests = minetest.find_nodes_in_area (p1, p2, {"vlf_chests:chest_small"})
+	local chests = minetest.find_nodes_in_area (p1, p2, {"mcl_chests:chest_small"})
 	if chests and #chests > 0 then
 		table.sort(chests, function(a, b)
 			return vector.distance (self_pos, a)
@@ -493,9 +496,9 @@ local function dolphin_breathe_air (self, self_pos, dtime)
 	end
 end
 
-local hashpos = vlf_mobs.gwp_hashpos
-local gwp_get_node = vlf_mobs.gwp_get_node
-local gwp_nodevalue_to_name = vlf_mobs.gwp_nodevalue_to_name
+local hashpos = mcl_mobs.gwp_hashpos
+local gwp_get_node = mcl_mobs.gwp_get_node
+local gwp_nodevalue_to_name = mcl_mobs.gwp_nodevalue_to_name
 
 local function dolphin_gwp_basic_classify (pos)
 	local nodevalue, value = gwp_get_node (pos), nil
@@ -568,13 +571,13 @@ dolphin.ai_functions = {
 	dolphin_breathe_air,
 }
 
-vlf_mobs.register_mob ("mobs_mc:dolphin", dolphin)
+mcl_mobs.register_mob ("mobs_mc:dolphin", dolphin)
 
 ------------------------------------------------------------------------
 -- Dolphin spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:dolphin",
 	type_of_spawning = "water",
 	dimension = "overworld",
@@ -727,4 +730,4 @@ vlf_mobs.spawn_setup ({
 	},
 })
 
-vlf_mobs.register_egg("mobs_mc:dolphin", S("Dolphin"), "#223b4d", "#f9f9f9", 0)
+mcl_mobs.register_egg("mobs_mc:dolphin", S("Dolphin"), "#223b4d", "#f9f9f9", 0)

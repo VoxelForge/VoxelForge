@@ -1,0 +1,267 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Luanti textdomain mcl_banners x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.1\n"
+
+msgid "White Banner"
+msgstr "Spanduk Putih"
+
+msgid "White"
+msgstr "Putih"
+
+msgid "Grey Banner"
+msgstr "Spanduk Abu-abu"
+
+msgid "Grey"
+msgstr "Abu-abu"
+
+msgid "Light Grey Banner"
+msgstr "Spanduk Abu-abu Terang"
+
+msgid "Light Grey"
+msgstr "Abu-abu Terang"
+
+msgid "Black Banner"
+msgstr "Spanduk Hitam"
+
+msgid "Black"
+msgstr "Hitam"
+
+msgid "Red Banner"
+msgstr "Spanduk Merah"
+
+msgid "Red"
+msgstr "Merah"
+
+msgid "Yellow Banner"
+msgstr "Spanduk Kuning"
+
+msgid "Yellow"
+msgstr "Kuning"
+
+msgid "Green Banner"
+msgstr "Spanduk Hijau"
+
+msgid "Green"
+msgstr "Hijau"
+
+msgid "Cyan Banner"
+msgstr "Spanduk Sian"
+
+msgid "Cyan"
+msgstr "Sian"
+
+msgid "Blue Banner"
+msgstr "Spanduk Biru"
+
+msgid "Blue"
+msgstr "Biru"
+
+msgid "Magenta Banner"
+msgstr "Spanduk Magenta"
+
+msgid "Magenta"
+msgstr "Magenta"
+
+msgid "Orange Banner"
+msgstr "Spanduk Oranye"
+
+msgid "Orange"
+msgstr "Oranye"
+
+msgid "Purple Banner"
+msgstr "Spanduk Ungu"
+
+msgid "Violet"
+msgstr "Ungu lembayung"
+
+msgid "Brown Banner"
+msgstr "Spanduk Coklat"
+
+msgid "Brown"
+msgstr "Coklat"
+
+msgid "Pink Banner"
+msgstr "Spanduk Merah Muda"
+
+msgid "Pink"
+msgstr "Merah Muda"
+
+msgid "Lime Banner"
+msgstr "Spanduk Limau"
+
+msgid "Lime"
+msgstr "Limau"
+
+msgid "Light Blue Banner"
+msgstr "Spanduk Biru Terang"
+
+msgid "Light Blue"
+msgstr "Biru Terang"
+
+msgid "Banner"
+msgstr "Spanduk"
+
+msgid "Banners are tall colorful decorative blocks. They can be placed on the floor and at walls. Banners can be emblazoned with a variety of patterns using a lot of dye in crafting."
+msgstr "Spanduk adalah blok dekorasi warna-warni. Mereka dapat diletakkan di lantai atau tembok. Spanduk dapat dihiasi dengan berbagai macam pola menggunakan banyak pewarna pada kerajinan."
+
+msgid "Use crafting to draw a pattern on top of the banner. Emblazoned banners can be emblazoned again to combine various patterns. You can draw up to 12 layers on a banner that way. If the banner includes a gradient, only 3 layers are possible."
+msgstr "Gunakan kerajinan untuk menggambar pola di atas spanduk. Spanduk yang dihiasi dapat dihias lagi untuk berbagai kombinasi pola. Kamu dapat menggambar hingga 12 lapis spanduk. Jika spanduk terdapat gradasi, hanya memungkinkan 3 lapis saja."
+
+msgid "You can copy the pattern of a banner by placing two banners of the same color in the crafting grid—one needs to be emblazoned, the other one must be clean. Finally, you can use a banner on a cauldron with water to wash off its top-most layer."
+msgstr "Kamu dapat menyalin spanduk dengan menaruh dua spanduk dengan warna sama pada kotak kerajinan—satu harus sudah dihias, yang lainnya harus bersih. Terakhir, kamu dapat menggunakan kuali berisi air untuk membilas spanduk untuk membersihkan lapisan paling atas."
+
+msgid "Preview Banner"
+msgstr "Pratinjau Spanduk"
+
+msgid "Paintable decoration"
+msgstr "Dekorasi yang bisa diwarnai"
+
+msgid "Can be used to craft special banner designs on the loom"
+msgstr "Bisa digunakan untuk membuat desain spanduk khusus pada alat tenun"
+
+msgid "Special Banner Pattern"
+msgstr "Pola Spanduk Khusus"
+
+msgid "@1 Bordure"
+msgstr ""
+
+msgid "@1 Bricks"
+msgstr ""
+
+msgid "@1 Roundel"
+msgstr ""
+
+msgid "@1 Creeper Charge"
+msgstr ""
+
+msgid "@1 Saltire"
+msgstr ""
+
+msgid "@1 Bordure Indented"
+msgstr ""
+
+msgid "@1 Per Bend Inverted"
+msgstr ""
+
+msgid "@1 Per Bend Sinister Inverted"
+msgstr ""
+
+msgid "@1 Per Bend"
+msgstr ""
+
+msgid "@1 Per Bend Sinister"
+msgstr ""
+
+msgid "@1 Flower Charge"
+msgstr ""
+
+msgid "@1 Gradient"
+msgstr "@1 Gradasi"
+
+msgid "@1 Base Gradient"
+msgstr ""
+
+msgid "@1 Per Fess Inverted"
+msgstr ""
+
+msgid "@1 Per Fess"
+msgstr ""
+
+msgid "@1 Per Pale"
+msgstr ""
+
+msgid "@1 Per Pale Inverted"
+msgstr ""
+
+msgid "@1 Thing Charge"
+msgstr ""
+
+msgid "@1 Globe Charge"
+msgstr ""
+
+msgid "@1 Piglin Charge"
+msgstr ""
+
+msgid "@1 Lozenge"
+msgstr ""
+
+msgid "@1 Skull Charge"
+msgstr ""
+
+msgid "@1 Paly"
+msgstr ""
+
+msgid "@1 Base Dexter Canton"
+msgstr ""
+
+msgid "@1 Base Sinister Canton"
+msgstr ""
+
+msgid "@1 Chief Dexter Canton"
+msgstr ""
+
+msgid "@1 Chief Sinister Canton"
+msgstr ""
+
+msgid "@1 Cross"
+msgstr ""
+
+msgid "@1 Base"
+msgstr ""
+
+msgid "@1 Pale"
+msgstr ""
+
+msgid "@1 Bend Sinister"
+msgstr ""
+
+msgid "@1 Bend"
+msgstr ""
+
+msgid "@1 Pale Dexter"
+msgstr ""
+
+msgid "@1 Fess"
+msgstr ""
+
+msgid "@1 Pale Sinister"
+msgstr ""
+
+msgid "@1 Chief"
+msgstr ""
+
+msgid "@1 Chevron"
+msgstr ""
+
+msgid "@1 Chevron Inverted"
+msgstr ""
+
+msgid "@1 Base Indented"
+msgstr ""
+
+msgid "@1 Chief Indented"
+msgstr ""
+
+msgid "@1 Flow"
+msgstr ""
+
+msgid "@1 Guster"
+msgstr ""
+
+msgid "And one additional layer"
+msgstr "Dan satu lapisan tambahan"
+
+msgid "And @1 additional layers"
+msgstr "Dan @1 lapisan tambahan"
+

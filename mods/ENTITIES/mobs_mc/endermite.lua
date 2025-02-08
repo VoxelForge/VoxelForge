@@ -3,7 +3,7 @@
 --###################
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 local endermite = {
 	description = S("Endermite"),
@@ -47,5 +47,5 @@ endermite.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob("mobs_mc:endermite", endermite)
-vlf_mobs.register_egg("mobs_mc:endermite", S("Endermite"), "#161616", "#6d6d6d", 0)
+mcl_mobs.register_mob("mobs_mc:endermite", endermite)
+mcl_mobs.register_egg("mobs_mc:endermite", S("Endermite"), "#161616", "#6d6d6d", 0)

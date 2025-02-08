@@ -67,10 +67,13 @@ msgstr "Ancian Gardian"
 msgid "Hoglin"
 msgstr "Porcard"
 
+msgid "Baby Hoglin"
+msgstr ""
+
 msgid "Zoglin"
 msgstr ""
 
-msgid "Baby Hoglin"
+msgid "Sneak to dismount"
 msgstr ""
 
 msgid "Horse"
@@ -87,9 +90,6 @@ msgstr "Asne"
 
 msgid "Mule"
 msgstr "Miule"
-
-msgid "Sneak to dismount"
-msgstr ""
 
 msgid "Iron Golem"
 msgstr "Golem de Fèrre"
@@ -112,14 +112,14 @@ msgstr "Cochon"
 msgid "Piglin"
 msgstr ""
 
-msgid "Zombiefied Piglin"
-msgstr ""
-
 msgid "Piglin Brute"
 msgstr ""
 
 msgid "Zombie Piglin"
 msgstr "Porcadés Zombia"
+
+msgid "Zombified Piglin"
+msgstr ""
 
 msgid "Pillager"
 msgstr "Pilhard"
@@ -211,32 +211,17 @@ msgstr "Vex"
 msgid "Villager"
 msgstr "Vialatgés"
 
-msgid "Evoker"
-msgstr "Invocataire"
+msgid "Armorer"
+msgstr "Armurèir"
 
-msgid "Illusioner"
-msgstr "Fisiciaire"
+msgid "Butcher"
+msgstr "Maselèir"
 
-msgid "Vindicator"
-msgstr "Vindicataire"
+msgid "Cartographer"
+msgstr "Cartografe"
 
-msgid "Zombie Villager"
-msgstr "Vialatgés Zombia"
-
-msgid "@1 sleeps here"
-msgstr ""
-
-msgid "A villager sleeps here"
-msgstr ""
-
-msgid "@1 works here"
-msgstr ""
-
-msgid "A villager works here"
-msgstr ""
-
-msgid "Unemployed"
-msgstr ""
+msgid "Cleric"
+msgstr "Clerc"
 
 msgid "Farmer"
 msgstr "Boriaire"
@@ -247,41 +232,26 @@ msgstr "Peschaire"
 msgid "Fletcher"
 msgstr "Archèir"
 
-msgid "Shepherd"
-msgstr "Bergèir"
+msgid "Leatherworker"
+msgstr "Tanaire"
 
 msgid "Librarian"
 msgstr "Bibliotecaire"
 
-msgid "Cartographer"
-msgstr "Cartografe"
-
-msgid "Armorer"
-msgstr "Armurèir"
-
-msgid "Leatherworker"
-msgstr "Tanaire"
-
-msgid "Butcher"
-msgstr "Maselèir"
-
-msgid "Weapon Smith"
-msgstr "Farjaire d'Armas"
-
-msgid "Tool Smith"
-msgstr "Farjaire d'Otilhs"
-
-msgid "Cleric"
-msgstr "Clerc"
-
 msgid "Mason"
+msgstr ""
+
+msgid "Shepherd"
+msgstr "Bergèir"
+
+msgid "Toolsmith"
+msgstr ""
+
+msgid "Weaponsmith"
 msgstr ""
 
 msgid "Nitwit"
 msgstr "Simple"
-
-msgid "Wandering Trader"
-msgstr ""
 
 msgid "Novice"
 msgstr ""
@@ -298,6 +268,24 @@ msgstr ""
 msgid "Master"
 msgstr ""
 
+msgid "Evoker"
+msgstr "Invocataire"
+
+msgid "Illusioner"
+msgstr "Fisiciaire"
+
+msgid "Vindicator"
+msgstr "Vindicataire"
+
+msgid "Zombie Villager"
+msgstr "Vialatgés Zombia"
+
+msgid "Wandering Trader"
+msgstr ""
+
+msgid "Trader Llama"
+msgstr ""
+
 msgid "Witch"
 msgstr "Fachinèira"
 
@@ -306,9 +294,6 @@ msgstr "Le Sechaire"
 
 msgid "Wolf"
 msgstr "Lop"
-
-msgid "Dog"
-msgstr ""
 
 msgid "Zombie"
 msgstr "Zombia"
@@ -320,8 +305,5 @@ msgid "Husk"
 msgstr "Zombia Momificat"
 
 msgid "Baby Husk"
-msgstr ""
-
-msgid "Zombified Piglin"
 msgstr ""
 

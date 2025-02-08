@@ -5,6 +5,7 @@
 
 local S = minetest.get_translator("mobs_mc")
 local mobs_griefing = minetest.settings:get_bool("mobs_griefing", true)
+local mob_class = mcl_mobs.mob_class
 
 --###################
 --################### GHAST
@@ -18,7 +19,7 @@ local ghast = {
 	hp_max = 10,
 	xp_min = 5,
 	xp_max = 5,
-	collisionbox = {-2, 5, -2, 2, 9, 2},
+	collisionbox = {-2, 0, -2, 2, 4.0, 2},
 	doll_size_override = { x = 1.05, y = 1.05 },
 	visual = "mesh",
 	mesh = "mobs_mc_ghast.b3d",
@@ -37,12 +38,12 @@ local ghast = {
 	movement_speed = 14,
 	drops = {
 		{
-			name = "vlf_mobitems:gunpowder",
+			name = "mcl_mobitems:gunpowder",
 			chance = 1, min = 0, max = 2,
 			looting = "common",
 		},
 		{
-			name = "vlf_mobitems:ghast_tear",
+			name = "mcl_mobitems:ghast_tear",
 			chance = 10/6, min = 0, max = 1,
 			looting = "common",
 			looting_ignore_chance = true,
@@ -57,16 +58,17 @@ local ghast = {
 	view_range = 100.0,
 	tracking_distance = 100.0,
 	arrow = "mobs_mc:fireball",
-	shoot_offset = 1,
+	shoot_offset = 0.3,
 	jump_height = 4,
 	head_eye_height = 2.6,
 	floats = 1,
 	fly = true,
 	-- True flight.
-	motion_step = vlf_mobs.mob_class.flying_step,
+	motion_step = mob_class.flying_step,
 	makes_footstep_sound = false,
 	instant_death = true,
 	fire_resistant = true,
+	lava_damage = 0,
 	does_not_prevent_sleep = true,
 	_projectile_gravity = false,
 	_impulse_time = 0.0,
@@ -75,6 +77,13 @@ local ghast = {
 ------------------------------------------------------------------------
 -- Ghast AI.
 ------------------------------------------------------------------------
+
+-- Ghasts should not notice players till they are within 4.0 blocks
+-- vertically.
+function ghast:should_attack (object)
+	return mob_class.should_attack (self, object)
+		and math.abs (object:get_pos ().y - self.object:get_pos ().y) <= 4.0
+end
 
 function ghast:do_go_pos (dtime, moveresult)
 	local target = self.movement_target or vector.zero ()
@@ -93,20 +102,20 @@ function ghast:do_go_pos (dtime, moveresult)
 	if not self.attack then
 		local dir = math.atan2 (dir.z, dir.x) - math.pi/2
 		self:set_yaw (dir)
+	end
 
-		if moveresult.collides then
-			if not self._ghast_collide_time then
-				self._ghast_collide_time = dtime
-			else
-				self._ghast_collide_time
-					= self._ghast_collide_time + dtime
-			end
+	if moveresult.collides then
+		if not self._ghast_collide_time then
+			self._ghast_collide_time = dtime
+		else
+			self._ghast_collide_time
+				= self._ghast_collide_time + dtime
+		end
 
-			if self._ghast_collide_time > 1 then
-				-- If this mob has been colliding for
-				-- over a second, abandon this target.
-				self:halt_in_tracks ()
-			end
+		if self._ghast_collide_time > 1 then
+			-- If this mob has been colliding for
+			-- over a second, abandon this target.
+			self:halt_in_tracks ()
 		end
 	end
 end
@@ -138,6 +147,7 @@ local function ghast_move_randomly (self, self_pos)
 			= vector.offset (self_pos, x_delta, y_delta, z_delta)
 		if self:line_of_sight (self_pos, position) then
 			self:go_to_pos (position)
+			self._ghast_collide_time = 0
 		end
 	end
 end
@@ -205,9 +215,9 @@ function ghast.can_spawn (pos)
 	return true
 end
 
-vlf_mobs.register_mob ("mobs_mc:ghast", ghast)
+mcl_mobs.register_mob ("mobs_mc:ghast", ghast)
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:ghast",
 	type_of_spawning = "ground",
 	dimension = "nether",
@@ -223,7 +233,7 @@ vlf_mobs.spawn_setup ({
 })
 
 -- spawn eggs
-vlf_mobs.register_egg ("mobs_mc:ghast", S("Ghast"), "#f9f9f9", "#bcbcbc", 0)
+mcl_mobs.register_egg ("mobs_mc:ghast", S("Ghast"), "#f9f9f9", "#bcbcbc", 0)
 
 ------------------------------------------------------------------------
 -- Big Fireball.
@@ -258,7 +268,7 @@ local function fireball_safe_boom (self, pos, strength, no_remove)
 	}, true)
 	local radius = strength
 	blast_damage(pos, radius, self.object)
-	vlf_mobs.effect(pos, 32, "vlf_particles_smoke.png", radius * 3, radius * 5, radius, 1, 0)
+	mcl_mobs.effect(pos, 32, "mcl_particles_smoke.png", radius * 3, radius * 5, radius, 1, 0)
 	if not no_remove then
 		if self.is_mob then
 			self:safe_remove()
@@ -271,7 +281,7 @@ end
 -- make explosion with protection and tnt mod check
 local function fireball_boom (self, pos, strength, fire, no_remove)
 	if mobs_griefing and not minetest.is_protected(pos, "") then
-		vlf_explosions.explode(pos, strength, { fire = fire }, self.object)
+		mcl_explosions.explode(pos, strength, { fire = fire }, self.object)
 	else
 		fireball_safe_boom(self, pos, strength, no_remove)
 	end
@@ -285,19 +295,19 @@ local function fireball_boom (self, pos, strength, fire, no_remove)
 end
 
 -- fireball (projectile)
-vlf_mobs.register_arrow("mobs_mc:fireball", {
+mcl_mobs.register_arrow("mobs_mc:fireball", {
 	description = S("Ghast Fireball"),
 	visual = "sprite",
 	visual_size = {x = 1, y = 1},
-	textures = {"vlf_fire_fire_charge.png"},
-	velocity = 24,
+	textures = {"mcl_fire_fire_charge.png"},
+	velocity = 19,
 	collisionbox = {-.5, -.5, -.5, .5, .5, .5},
 	_is_fireball = true,
-	_vlf_fishing_hookable = true,
-	_vlf_fishing_reelable = true,
+	_mcl_fishing_hookable = true,
+	_mcl_fishing_reelable = true,
 	redirectable = true,
 	hit_player = function(self, player)
-		vlf_mobs.get_arrow_damage_func(6, "fireball")(self, player)
+		mcl_mobs.get_arrow_damage_func(6, "fireball")(self, player)
 		local p = self.object:get_pos()
 		if p then
 			fireball_boom (self,p, 1, true)
@@ -307,9 +317,9 @@ vlf_mobs.register_arrow("mobs_mc:fireball", {
 	end,
 	hit_mob = function(self, mob)
 		if mob == self._shooter then
-			vlf_mobs.get_arrow_damage_func (6000, "fireball") (self, mob)
+			mcl_mobs.get_arrow_damage_func (6000, "fireball") (self, mob)
 		else
-			vlf_mobs.get_arrow_damage_func(6, "fireball")(self, mob)
+			mcl_mobs.get_arrow_damage_func(6, "fireball")(self, mob)
 		end
 		fireball_boom (self,self.object:get_pos(), 1, true)
 	end,

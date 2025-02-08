@@ -44,7 +44,7 @@ msgid "Dolphin"
 msgstr "Delfín"
 
 msgid "Ender Dragon"
-msgstr "Ender Dragon"
+msgstr "Enderdragón"
 
 msgid "Enderman"
 msgstr "Enderman"
@@ -62,16 +62,19 @@ msgid "Guardian"
 msgstr "Guardián"
 
 msgid "Elder Guardian"
-msgstr "Guardián Anciano"
+msgstr "Guardián anciano"
 
 msgid "Hoglin"
 msgstr "Hoglin"
 
+msgid "Baby Hoglin"
+msgstr "Bebe Hoglin"
+
 msgid "Zoglin"
 msgstr "Zoglin"
 
-msgid "Baby Hoglin"
-msgstr "Bebe Hoglin"
+msgid "Sneak to dismount"
+msgstr "Agáchate para desmontar"
 
 msgid "Horse"
 msgstr "Caballo"
@@ -87,9 +90,6 @@ msgstr "Burro"
 
 msgid "Mule"
 msgstr "Mula"
-
-msgid "Sneak to dismount"
-msgstr "Agáchate para desmontar"
 
 msgid "Iron Golem"
 msgstr "Golem de hierro"
@@ -112,14 +112,14 @@ msgstr "Cerdo"
 msgid "Piglin"
 msgstr "Piglin"
 
-msgid "Zombiefied Piglin"
-msgstr "Piglin Zombificado"
-
 msgid "Piglin Brute"
-msgstr "Piglin Bruto"
+msgstr "Piglin bruto"
 
 msgid "Zombie Piglin"
-msgstr "Piglin Zombi"
+msgstr "Piglin zombi"
+
+msgid "Zombified Piglin"
+msgstr "Piglin Zombificado"
 
 msgid "Pillager"
 msgstr "Saqueador"
@@ -194,10 +194,10 @@ msgid "Glow Squid"
 msgstr "Calamar brillante"
 
 msgid "Strider"
-msgstr "Strider"
+msgstr "Lavagante"
 
 msgid "Baby Strider"
-msgstr "Bebé Strider"
+msgstr "Lavagante Bebé"
 
 msgid "Tropical Fish"
 msgstr "Pez Tropical"
@@ -211,32 +211,17 @@ msgstr "Vex"
 msgid "Villager"
 msgstr "Aldeano"
 
-msgid "Evoker"
-msgstr "Invocador"
+msgid "Armorer"
+msgstr "Escudero"
 
-msgid "Illusioner"
-msgstr "Illusionista"
+msgid "Butcher"
+msgstr "Carnicero"
 
-msgid "Vindicator"
-msgstr "Vindicador"
+msgid "Cartographer"
+msgstr "Cartógrafo"
 
-msgid "Zombie Villager"
-msgstr "Aldeano zombi"
-
-msgid "@1 sleeps here"
-msgstr "@1 duerme aquí"
-
-msgid "A villager sleeps here"
-msgstr "Un aldeano duerme aquí"
-
-msgid "@1 works here"
-msgstr "@1 trabaja aquí"
-
-msgid "A villager works here"
-msgstr "Un aldeano trabaja aquí"
-
-msgid "Unemployed"
-msgstr "Desempleado"
+msgid "Cleric"
+msgstr "Clérigo"
 
 msgid "Farmer"
 msgstr "Granjero"
@@ -247,41 +232,26 @@ msgstr "Pescador"
 msgid "Fletcher"
 msgstr "Flechero"
 
-msgid "Shepherd"
-msgstr "Pastor"
+msgid "Leatherworker"
+msgstr "Peletero"
 
 msgid "Librarian"
 msgstr "Bibliotecario"
 
-msgid "Cartographer"
-msgstr "Cartógrafo"
-
-msgid "Armorer"
-msgstr "Escudero"
-
-msgid "Leatherworker"
-msgstr "Peletero"
-
-msgid "Butcher"
-msgstr "Carnicero"
-
-msgid "Weapon Smith"
-msgstr "Armero"
-
-msgid "Tool Smith"
-msgstr "Herrero"
-
-msgid "Cleric"
-msgstr "Clérigo"
-
 msgid "Mason"
 msgstr "Albañil"
 
+msgid "Shepherd"
+msgstr "Pastor"
+
+msgid "Toolsmith"
+msgstr ""
+
+msgid "Weaponsmith"
+msgstr ""
+
 msgid "Nitwit"
 msgstr "Holgazán"
-
-msgid "Wandering Trader"
-msgstr "Comerciante errante"
 
 msgid "Novice"
 msgstr "Principiante"
@@ -298,6 +268,24 @@ msgstr "Experto"
 msgid "Master"
 msgstr "Maestro"
 
+msgid "Evoker"
+msgstr "Invocador"
+
+msgid "Illusioner"
+msgstr "Illusionista"
+
+msgid "Vindicator"
+msgstr "Vindicador"
+
+msgid "Zombie Villager"
+msgstr "Aldeano zombi"
+
+msgid "Wandering Trader"
+msgstr "Comerciante errante"
+
+msgid "Trader Llama"
+msgstr ""
+
 msgid "Witch"
 msgstr "Bruja"
 
@@ -307,9 +295,6 @@ msgstr "Wither"
 msgid "Wolf"
 msgstr "Lobo"
 
-msgid "Dog"
-msgstr "Perro"
-
 msgid "Zombie"
 msgstr "Zombi"
 
@@ -317,11 +302,8 @@ msgid "Baby Zombie"
 msgstr "Bebé Zombi"
 
 msgid "Husk"
-msgstr "Zombi Momificado"
+msgstr "Zombi momificado"
 
 msgid "Baby Husk"
 msgstr "Bebé Zombi Momificado"
-
-msgid "Zombified Piglin"
-msgstr "Piglin Zombificado"
 

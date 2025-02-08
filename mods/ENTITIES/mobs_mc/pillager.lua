@@ -1,6 +1,6 @@
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
-local posing_humanoid = vlf_mobs.posing_humanoid
+local mob_class = mcl_mobs.mob_class
+local posing_humanoid = mcl_mobs.posing_humanoid
 local illager = mobs_mc.illager
 
 local pillager = table.merge (illager, table.merge (posing_humanoid, {
@@ -52,7 +52,7 @@ local pillager = table.merge (illager, table.merge (posing_humanoid, {
 	},
 	drops = {
 		{
-			name = "vlf_bows:arrow",
+			name = "mcl_bows:arrow",
 			chance = 1,
 			min = 0,
 			max = 2,
@@ -100,8 +100,8 @@ function pillager:on_spawn ()
 	illager.on_spawn (self)
 
 	local self_pos = self.object:get_pos ()
-	local mob_factor = vlf_worlds.get_special_difficulty (self_pos)
-	self:set_wielditem (ItemStack ("vlf_bows:crossbow"))
+	local mob_factor = mcl_worlds.get_special_difficulty (self_pos)
+	self:set_wielditem (ItemStack ("mcl_bows:crossbow"))
 	self:enchant_default_weapon (mob_factor, pr)
 end
 
@@ -111,11 +111,11 @@ function pillager:enchant_default_weapon (mob_factor, pr)
 	if pr:next (1, 300) == 1 then
 		local wielditem = self:get_wielditem ()
 		local name = wielditem:get_name ()
-		if name ~= "vlf_bows:crossbow"
-			and name ~= "vlf_bows:crossbow_enchanted" then
+		if name ~= "mcl_bows:crossbow"
+			and name ~= "mcl_bows:crossbow_enchanted" then
 			return
 		end
-		vlf_enchanting.enchant (wielditem, "piercing", 1)
+		mcl_enchanting.enchant (wielditem, "piercing", 1)
 		self:set_wielditem (wielditem)
 	end
 end
@@ -134,7 +134,7 @@ function pillager:drop_custom (looting_level)
 	-- raids.  They are only dropped by Pillagers.
 	if not self:_get_active_raid () and self._raidcaptain then
 		local self_pos = self.object:get_pos ()
-		local stack = ItemStack ("vlf_potions:ominous")
+		local stack = ItemStack ("mcl_potions:ominous")
 		minetest.add_item (self_pos, stack)
 	end
 end
@@ -242,7 +242,7 @@ function pillager:shoot_arrow (pos, dir)
 	if minetest.get_item_group (wielditem:get_name (), "crossbow") == 0 then
 		wielditem = nil
 	end
-	vlf_bows.shoot_arrow_crossbow ("vlf_bows:arrow", pos, dir, self:get_yaw (),
+	mcl_bows.shoot_arrow_crossbow ("mcl_bows:arrow", pos, dir, self:get_yaw (),
 				       self.object, 32.0, nil, true, wielditem, false)
 end
 
@@ -260,8 +260,8 @@ pillager.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:pillager", pillager)
-vlf_mobs.register_egg ("mobs_mc:pillager", S("Pillager"), "#532f36", "#959b9b", 0)
+mcl_mobs.register_mob ("mobs_mc:pillager", pillager)
+mcl_mobs.register_egg ("mobs_mc:pillager", S("Pillager"), "#532f36", "#959b9b", 0)
 
 ------------------------------------------------------------------------
 -- Pillager spawning.
@@ -317,7 +317,7 @@ local function spawn_patrolman (nodepos, as_leader)
 end
 
 minetest.register_globalstep (function (dtime)
-	if vlf_vars.difficulty == 0 or not mobs_spawn then
+	if mcl_vars.difficulty == 0 or not mobs_spawn then
 		return
 	end
 	next_spawn_attempt = next_spawn_attempt - dtime
@@ -325,16 +325,16 @@ minetest.register_globalstep (function (dtime)
 		next_spawn_attempt = (12000 + pr:next (0, 1200)) / 20
 
 		local days = minetest.get_day_count ()
-		if days < 5 or not vlf_util.is_daytime ()
+		if days < 5 or not mcl_util.is_daytime ()
 			or pr:next (1, 5) ~= 1 then
 			return
 		end
 
 		-- Select a player in the overworld at random.
 		local players_in_overworld = {}
-		for player in vlf_util.connected_players () do
+		for player in mcl_util.connected_players () do
 			local pos = player:get_pos ()
-			local dim = vlf_worlds.pos_to_dimension (pos)
+			local dim = mcl_worlds.pos_to_dimension (pos)
 
 			if dim == "overworld" then
 				table.insert (players_in_overworld, player)
@@ -346,8 +346,8 @@ minetest.register_globalstep (function (dtime)
 		end
 		local player = players_in_overworld[pr:next (1, nplayers)]
 		local pos = player:get_pos ()
-		local nodepos = vlf_util.get_nodepos (pos)
-		if vlf_villages.get_poi_heat (nodepos) >= 4 then
+		local nodepos = mcl_util.get_nodepos (pos)
+		if mcl_villages.get_poi_heat (nodepos) >= 4 then
 			-- The player is too close to a village.
 			return
 		end
@@ -368,7 +368,7 @@ minetest.register_globalstep (function (dtime)
 
 		-- Spawn pillagers.
 		local n_pillagers
-			= vlf_worlds.get_regional_difficulty (nodepos)
+			= mcl_worlds.get_regional_difficulty (nodepos)
 		n_pillagers = math.ceil (n_pillagers)
 
 		for i = 1, n_pillagers do

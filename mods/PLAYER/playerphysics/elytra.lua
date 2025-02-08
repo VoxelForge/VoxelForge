@@ -17,11 +17,15 @@ local function clamp(num, min, max)
 	return math.min(max, math.max(num, min))
 end
 
-vlf_player.register_globalstep(function(player, dtime)
+mcl_player.register_globalstep(function(player, dtime)
+	if mcl_serverplayer.is_csm_capable (player) then
+		return
+	end
+
 	local fly_pos = player:get_pos()
 	local fly_node = minetest.get_node({x = fly_pos.x, y = fly_pos.y - 0.1, z = fly_pos.z}).name
 	local player_vel = player:get_velocity()
-	local elytra = vlf_player.players[player].elytra
+	local elytra = mcl_player.players[player].elytra
 
 	if not elytra.active then
 		elytra.speed = 0
@@ -31,8 +35,8 @@ vlf_player.register_globalstep(function(player, dtime)
 		elytra.last_yaw = player:get_look_horizontal()
 	end
 
-	local is_just_jumped = player:get_player_control().jump and not vlf_player.players[player].is_pressing_jump and not elytra.active
-	vlf_player.players[player].is_pressing_jump = player:get_player_control().jump
+	local is_just_jumped = player:get_player_control().jump and not mcl_player.players[player].is_pressing_jump and not elytra.active
+	mcl_player.players[player].is_pressing_jump = player:get_player_control().jump
 	if is_just_jumped and not elytra.active then
 		local direction = player:get_look_dir()
 		elytra.speed = 1 - (direction.y/2 + 0.5)
@@ -48,7 +52,7 @@ vlf_player.register_globalstep(function(player, dtime)
 		if is_just_jumped then -- move the player up when they start flying to give some clearance
 			player:set_pos(vector.offset(player:get_pos(), 0, 0.8, 0))
 		end
-		vlf_player.player_set_animation(player, "fly")
+		mcl_player.player_set_animation(player, "fly")
 		local direction = player:get_look_dir()
 		local turn_amount = anglediff(minetest.dir_to_yaw(direction), minetest.dir_to_yaw(player_vel))
 		local direction_mult = clamp(-(direction.y+0.1), -1, 1)
@@ -66,7 +70,7 @@ vlf_player.register_globalstep(function(player, dtime)
 			speed_mult = speed_mult - (speed_mult * (turn_amount / (math.pi*8)))
 		end
 
-		playerphysics.add_physics_factor(player, "gravity", "vlf_playerplus:elytra", elytra_vars.fall_speed)
+		playerphysics.add_physics_factor(player, "gravity", "mcl_playerplus:elytra", elytra_vars.fall_speed)
 		if elytra.rocketing > 0 then
 			elytra.rocketing = elytra.rocketing - dtime
 			if vector.length(player_vel) < 40 then
@@ -76,11 +80,11 @@ vlf_player.register_globalstep(function(player, dtime)
 					pos = fly_pos,
 					velocity = {x = 0, y = 0, z = 0},
 					acceleration = {x = 0, y = 0, z = 0},
-					expirationtime = vlf_util.float_random(0.3, 0.5),
-					size = vlf_util.float_random(1, 2),
+					expirationtime = mcl_util.float_random(0.3, 0.5),
+					size = mcl_util.float_random(1, 2),
 					collisiondetection = false,
 					vertical = false,
-					texture = "vlf_particles_bonemeal.png^[colorize:#bc7a57:127",
+					texture = "mcl_particles_bonemeal.png^[colorize:#bc7a57:127",
 					glow = 5,
 				})
 			end
@@ -101,8 +105,8 @@ vlf_player.register_globalstep(function(player, dtime)
 		player:add_velocity(new_vel)
 	else -- reset things when you stop flying with elytra
 		elytra.rocketing = 0
-		vlf_player.players[player].elytra.active = false
-		playerphysics.remove_physics_factor(player, "gravity", "vlf_playerplus:elytra")
+		mcl_player.players[player].elytra.active = false
+		playerphysics.remove_physics_factor(player, "gravity", "mcl_playerplus:elytra")
 	end
-	vlf_player.players[player].elytra.last_yaw = player:get_look_horizontal()
+	mcl_player.players[player].elytra.last_yaw = player:get_look_horizontal()
 end)

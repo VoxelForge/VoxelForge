@@ -39,7 +39,7 @@ minetest.register_on_leaveplayer(function(player)
 	controls.players[name] = nil
 end)
 
-vlf_player.register_globalstep(function(player)
+mcl_player.register_globalstep(function(player)
 	local player_name = player:get_player_name()
 	local player_controls = player:get_player_control()
 	for cname, cbool in pairs(player_controls) do

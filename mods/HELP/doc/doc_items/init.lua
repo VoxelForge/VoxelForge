@@ -349,22 +349,16 @@ end
 
 -- Pointing range of itmes
 local function range_factoid(itemstring, def)
-	local handrange = minetest.registered_items[""].range
-	local itemrange = def.range
+	-- Get hand range.  Showing tool info, don't need creative hand range.
+	local handrange = minetest.registered_items[""].range or tonumber(core.settings:get("mcl_hand_range")) or 4.5
 	if itemstring == "" then
-		if handrange then
-			return S("Range: @1", itemrange)
-		else
-			return S("Range: 4")
-		end
-	else
-		if handrange == nil then handrange = 4 end
-		if itemrange then
-			return S("Range: @1", itemrange)
-		else
-			return S("Range: @1 (@2)", get_entry_name(""), handrange)
-		end
+		return S("Range: @1", handrange)
 	end
+	local itemrange = def.range
+	if itemrange then
+		return S("Range: @1", itemrange)
+	end
+	return S("Range: @1 (@2)", get_entry_name(""), handrange)
 end
 
 -- Smelting fuel factoid
@@ -1135,7 +1129,7 @@ doc.add_category("mobs", {
 	description = S("Different Mobs"),
 	hide_entries_by_default = true,
 	build_formspec = function(d, _)
-		local data = vlf_mobs.registered_mobs[d.name]
+		local data = mcl_mobs.registered_mobs[d.name]
 		local min_light = data.min_light or (data.spawn_class == "hostile" and 0) or 7
 		local max_light = data.max_light or (data.spawn_class == "hostile" and 7) or minetest.LIGHT_MAX + 1
 		if data then
@@ -1478,7 +1472,7 @@ local timer = 0
 minetest.register_globalstep(function(dtime)
 	timer = timer + dtime
 	if timer > checktime then
-		for pl in vlf_util.connected_players() do
+		for pl in mcl_util.connected_players() do
 			reveal_items_in_inventory(pl)
 		end
 		timer = math.fmod(timer, checktime)

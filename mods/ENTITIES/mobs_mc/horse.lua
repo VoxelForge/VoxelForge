@@ -1,18 +1,14 @@
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
-local is_valid = vlf_util.is_valid_objectref
+local mob_class = mcl_mobs.mob_class
+local is_valid = mcl_util.is_valid_objectref
 
-local extended_pet_control = minetest.settings:get_bool("vlf_extended_pet_control",false)
+local extended_pet_control = minetest.settings:get_bool("mcl_extended_pet_control",false)
 
 local function attach_driver(self, clicker)
-	vlf_title.set(clicker, "actionbar", {
+	mcl_title.set(clicker, "actionbar", {
 		text=S("Sneak to dismount"),
 		color="white", stay = 60,
 	})
-	self.object:set_properties ({
-		selectionbox = {0,0,0,0,0,0},
-	})
-	self._selectionbox_overloaded = true
 	self:attach(clicker)
 end
 
@@ -90,9 +86,9 @@ local horse = {
 		run_start = 0, run_end = 40, run_speed = 50,
 	},
 	follow = {
-		"vlf_farming:carrot_item_gold",
-		"vlf_core:apple_gold",
-		"vlf_core:apple_gold_enchanted",
+		"mcl_farming:carrot_item_gold",
+		"mcl_core:apple_gold",
+		"mcl_core:apple_gold_enchanted",
 	},
 	textures = horse_textures,
 	sounds = {
@@ -105,39 +101,39 @@ local horse = {
 	},
 	steer_class = "controls",
 	_food_items = {
-		["vlf_farming:wheat_item"] = {
+		["mcl_farming:wheat_item"] = {
 			2.0, -- Health.
 			20, -- Age delta in MC ticks.
 			3, -- Temper.
 		},
-		["vlf_core:sugar"] = {
+		["mcl_core:sugar"] = {
 			1.0, -- Health.
 			30, -- Age delta in MC ticks.
 			3, -- Temper.
 		},
-		["vlf_farming:hay_block"] = {
+		["mcl_farming:hay_block"] = {
 			2.0, -- Health.
 			20, -- Age delta in MC ticks.
 			3, -- Temper.
 		},
-		["vlf_core:apple"] = {
+		["mcl_core:apple"] = {
 			3.0,
 			60,
 			3,
 		},
-		["vlf_farming:carrot_item_gold"] = {
+		["mcl_farming:carrot_item_gold"] = {
 			4.0,
 			60,
 			5,
 			true -- Breed.
 		},
-		["vlf_core:apple_gold"] = {
+		["mcl_core:apple_gold"] = {
 			10.0,
 			240,
 			10,
 			true -- Breed.
 		},
-		["vlf_core:apple_gold_enchanted"] = {
+		["mcl_core:apple_gold_enchanted"] = {
 			10.0,
 			240,
 			10,
@@ -154,7 +150,7 @@ local horse = {
 	jump = true,
 	drops = {
 		{
-			name = "vlf_mobitems:leather",
+			name = "mcl_mobitems:leather",
 			chance = 1,
 			min = 0,
 			max = 2,
@@ -174,6 +170,7 @@ local horse = {
 	_saddle = "",
 	_horse_armor_stack = "",
 	_eats = true,
+	_csm_driving_enabled = true,
 }
 
 function horse:on_spawn ()
@@ -201,7 +198,7 @@ function horse:enrage ()
 	-- TODO: angry noises.
 end
 
-local SOLID_PACING_GROUPS = vlf_mobs.SOLID_PACING_GROUPS
+local SOLID_PACING_GROUPS = mcl_mobs.SOLID_PACING_GROUPS
 
 local function horse_maybe_tame (self, self_pos, dtime)
 	local driver = self.driver
@@ -277,7 +274,7 @@ function horse:ai_step (dtime)
 		if not self._eating
 			and not self.driver
 			and pr:next (1, math.round (300 * dtime / 0.05))
-			and self.standing_on == "vlf_core:dirt_with_grass" then
+			and self.standing_on == "mcl_core:dirt_with_grass" then
 			self:begin_eating (2.5)
 		end
 		if self._eating then
@@ -359,7 +356,7 @@ function horse:set_armor_1 (iname, w)
 	local cstring
 	if minetest.get_item_group(iname, "armor_leather") > 0 then
 		local m = w:get_meta()
-		local cs = m:get_string("vlf_armor:color")
+		local cs = m:get_string("mcl_armor:color")
 		cstring = cs ~= "" and cs or nil
 	end
 	local armor = minetest.get_item_group(iname, "horse_armor")
@@ -375,8 +372,8 @@ function horse:set_armor_1 (iname, w)
 	self.base_texture = tex
 	self:set_textures (tex)
 	local def = w:get_definition()
-	if def.sounds and def.sounds._vlf_armor_equip then
-		minetest.sound_play({name = def.sounds._vlf_armor_equip},
+	if def.sounds and def.sounds._mcl_armor_equip then
+		minetest.sound_play({name = def.sounds._mcl_armor_equip},
 			{gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
 	end
 end
@@ -385,12 +382,12 @@ function horse:set_armor (clicker)
 	local w = clicker:get_wielded_item ()
 	local iname = w:get_name ()
 	if self._horse_armor_stack == "" then
+		self:set_armor_1 (iname, w)
+		self:update_armor_inv ()
 		if not minetest.is_creative_enabled(clicker:get_player_name()) then
 			w:take_item()
 			clicker:set_wielded_item(w)
 		end
-		self:set_armor_1 (iname, w)
-		self:update_armor_inv ()
 		return true
 	end
 end
@@ -398,8 +395,8 @@ end
 function horse:remove_armor (stack)
 	self._horse_armor_stack = ""
 	local def = stack:get_definition ()
-	if def.sounds and def.sounds._vlf_armor_unequip then
-		minetest.sound_play ({name = def.sounds._vlf_armor_unequip},
+	if def.sounds and def.sounds._mcl_armor_unequip then
+		minetest.sound_play ({name = def.sounds._mcl_armor_unequip},
 			{gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
 	end
 	local tex = self:extra_textures ()
@@ -421,7 +418,7 @@ local SADDLE_SLOT = 1
 local ARMOR_SLOT = 2
 
 function horse:is_saddle_item (stack)
-	return stack:get_name () == "vlf_mobitems:saddle"
+	return stack:get_name () == "mcl_mobitems:saddle"
 end
 
 local function armor_allow_move (inv, from_list, from_index, to_list, to_index, count, player)
@@ -467,6 +464,26 @@ function horse:get_staticdata_table ()
 	return supertable
 end
 
+function horse:post_load_staticdata ()
+	mob_class.post_load_staticdata (self)
+	-- Update old horses.
+	if self._horse_armor and self._wearing_armor then
+		self._horse_armor_stack
+			= ItemStack (self._horse_armor):to_string ()
+	end
+	if self._saddle and type (self._saddle) ~= "string" then
+		self._saddle
+			= ItemStack ("mcl_mobitems:saddle"):to_string ()
+	end
+	if not self._saddle then
+		self._saddle = ""
+	end
+	if not self._horse_armor_stack then
+		self._horse_armor_stack = ""
+	end
+	self._horse_armor = nil
+end
+
 function horse:mob_activate (staticdata, dtime)
 	if not mob_class.mob_activate (self, staticdata, dtime) then
 		return false
@@ -480,22 +497,6 @@ function horse:mob_activate (staticdata, dtime)
 		})
 		self.health = math.min (self.health, self.hp_max)
 	end
-	-- Update old horses.
-	if self._horse_armor and self._wearing_armor then
-		self._horse_armor_stack
-			= ItemStack (self._horse_armor):to_string ()
-	end
-	if self._saddle and type (self._saddle) ~= "string" then
-		self._saddle
-			= ItemStack ("vlf_mobitems:saddle"):to_string ()
-	end
-	if not self._saddle then
-		self._saddle = ""
-	end
-	if not self._horse_armor_stack then
-		self._horse_armor_stack = ""
-	end
-	self._horse_armor = nil
 	self._selectionbox_overloaded = false
 	self:init_attachment_position ()
 	return true
@@ -503,7 +504,7 @@ end
 
 function horse:on_deactivate (removal)
 	if self.driver then
-		vlf_player.set_inventory_formspec (self.driver, nil, 100)
+		mcl_player.set_inventory_formspec (self.driver, nil, 100)
 	end
 
 	mob_class.on_deactivate (self, removal)
@@ -529,7 +530,7 @@ function horse:generate_inventory_formspec ()
 	if not self._armor_inv_name then
 		return "formspec_version[6]"
 	end
-	local objectname = vlf_util.get_object_name (self.object)
+	local objectname = mcl_util.get_object_name (self.object)
 	objectname = minetest.formspec_escape (objectname)
 	local armorname = self._armor_inv_name
 	armorname = minetest.formspec_escape ("detached:" .. armorname)
@@ -538,7 +539,7 @@ function horse:generate_inventory_formspec ()
 		chest_itemslots = string.format ("list[detached:%s;main;5.375,0.875;5,3;]",
 					 self._inv_id)
 	else
-		chest_itemslots = "image[5.375,0.825;6.10,3.625;vlf_formspec_itemslot.png;2]"
+		chest_itemslots = "image[5.375,0.825;6.10,3.625;mcl_formspec_itemslot.png;2]"
 	end
 	local nslots
 	if can_equip_horse_armor (self.name) then
@@ -551,18 +552,18 @@ function horse:generate_inventory_formspec ()
 		"size[11.75,10.45]",
 		"position[0.5,0.5]",
 		string.format ("label[0.375,0.5;%s]", objectname),
-		vlf_formspec.get_itemslot_bg_v4 (0.375, 0.875, 1, nslots),
+		mcl_formspec.get_itemslot_bg_v4 (0.375, 0.875, 1, nslots),
 		string.format ("list[%s;main;0.375,0.875;1,%d;]", armorname, nslots),
-		"image[1.55,0.825;3.625,3.625;vlf_inventory_background9.png;2]",
+		"image[1.55,0.825;3.625,3.625;mcl_inventory_background9.png;2]",
 		string.format ("model[1.55,0.875;3.625,3.5;horse;mobs_mc_horse.b3d;%s;%s]",
 			       table.concat (self.base_texture, ","), "0,45,0"),
-		self._chest and vlf_formspec.get_itemslot_bg_v4 (5.375, 0.875, 5, 3) or "",
+		self._chest and mcl_formspec.get_itemslot_bg_v4 (5.375, 0.875, 5, 3) or "",
 		chest_itemslots,
 		-- Main inventory.
-		vlf_formspec.get_itemslot_bg_v4 (0.375, 5, 9, 3),
+		mcl_formspec.get_itemslot_bg_v4 (0.375, 5, 9, 3),
 		"list[current_player;main;0.375,5;9,3;9]",
 		-- Hotbar.
-		vlf_formspec.get_itemslot_bg_v4 (0.375, 8.95, 9, 1),
+		mcl_formspec.get_itemslot_bg_v4 (0.375, 8.95, 9, 1),
 		"list[current_player;main;0.375,8.95;9,1;]",
 		string.format ("listring[%s;main]", armorname),
 		self._chest and string.format ("listring[detached:%s;main]",
@@ -600,16 +601,29 @@ function horse:post_attach (player)
 		self:update_armor_inv ()
 	end
 	local formspec = self:generate_inventory_formspec ()
-	vlf_player.set_inventory_formspec (player, formspec, 100)
-	vlf_entity_invs.load_inv (self, 15)
+	mcl_player.set_inventory_formspec (player, formspec, 100)
+	mcl_entity_invs.load_inv (self, 15)
+	self.object:set_properties ({
+		selectionbox = {0,0,0,0,0,0},
+	})
+	self._selectionbox_overloaded = true
 end
 
-function horse:attach (player)
-	mob_class.attach (self, player)
-	if not self.tamed then
-		return
+function horse:attach (player, server_side)
+	if mob_class.attach (self, player, server_side) then
+		if self.tamed then
+			self:post_attach (player)
+		end
+		return true
 	end
-	self:post_attach (player)
+	return false
+end
+
+function horse:complete_attachment (player, state)
+	mob_class.complete_attachment (self, player, state)
+	if self.tamed then
+		self:post_attach (player)
+	end
 end
 
 function horse:detach (player)
@@ -617,8 +631,8 @@ function horse:detach (player)
 	if not self.tamed then
 		return
 	end
-	vlf_player.set_inventory_formspec (player, nil, 100)
-	vlf_entity_invs.save_inv (self)
+	mcl_player.set_inventory_formspec (player, nil, 100)
+	mcl_entity_invs.save_inv (self)
 	if self._armor_inv_name then
 		minetest.remove_detached_inventory (self._armor_inv_name)
 		self._armor_inv_name = nil
@@ -633,7 +647,7 @@ function horse:set_textures (texturelist)
 	end
 	if self.driver then
 		local formspec = self:generate_inventory_formspec ()
-		vlf_player.set_inventory_formspec (self.driver, formspec, 100)
+		mcl_player.set_inventory_formspec (self.driver, formspec, 100)
 	end
 end
 
@@ -641,15 +655,15 @@ function horse:drop_armor (bonus)
 	local self_pos = self.object:get_pos ()
 	if self._saddle ~= "" then
 		local stack = ItemStack (self._saddle)
-		vlf_util.drop_item_stack (self_pos, stack)
+		mcl_util.drop_item_stack (self_pos, stack)
 	end
 	if self._horse_armor_stack ~= "" then
 		local stack = ItemStack (self._horse_armor_stack)
-		vlf_util.drop_item_stack (self_pos, stack)
+		mcl_util.drop_item_stack (self_pos, stack)
 	end
 	if self._chest then
-		local stack = ItemStack ("vlf_chests:chest")
-		vlf_util.drop_item_stack (self_pos, stack)
+		local stack = ItemStack ("mcl_chests:chest")
+		mcl_util.drop_item_stack (self_pos, stack)
 	end
 	self._horse_armor_stack = ""
 	self._saddle = ""
@@ -760,7 +774,7 @@ function horse:on_rightclick (clicker)
 	end
 
 	if self._inv_id then
-		if not self._chest and iname == "vlf_chests:chest" then
+		if not self._chest and iname == "mcl_chests:chest" then
 			item:take_item()
 			clicker:set_wielded_item(item)
 			self._chest = true
@@ -774,7 +788,7 @@ function horse:on_rightclick (clicker)
 			self:set_textures (tex)
 			return
 		elseif self._chest and clicker:get_player_control().sneak then
-			vlf_entity_invs.show_inv_form(self,clicker)
+			mcl_entity_invs.show_inv_form(self,clicker)
 			return
 		end
 	end
@@ -859,7 +873,7 @@ function horse:set_saddle (stack, clicker)
 		local tex = self:extra_textures ()
 		self.base_texture = tex
 		self:set_textures (tex)
-		minetest.sound_play({name = "vlf_armor_equip_leather"},
+		minetest.sound_play({name = "mcl_armor_equip_leather"},
 			{gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
 		return true
 	end
@@ -873,7 +887,7 @@ function horse:remove_saddle ()
 	local tex = self:extra_textures ()
 	self.base_texture = tex
 	self:set_textures (tex)
-	minetest.sound_play ({name = "vlf_armor_unequip_leather"},
+	minetest.sound_play ({name = "mcl_armor_unequip_leather"},
 		{gain=0.5, max_hear_distance=12, pos=self.object:get_pos()}, true)
 end
 
@@ -972,7 +986,7 @@ end
 
 function horse:on_breed (parent1, parent2)
 	local pos = parent1.object:get_pos()
-	local child = vlf_mobs.spawn_child(pos, parent1.name)
+	local child = mcl_mobs.spawn_child(pos, parent1.name)
 	if child then
 		local ent_c = child:get_luaentity()
 		local p = math.random(1, 2)
@@ -1018,7 +1032,7 @@ function horse:on_breed (parent1, parent2)
 	end
 end
 
-vlf_mobs.register_mob ("mobs_mc:horse", horse)
+mcl_mobs.register_mob ("mobs_mc:horse", horse)
 mobs_mc.horse = horse
 
 ------------------------------------------------------------------------
@@ -1032,7 +1046,7 @@ local skeleton_horse = table.merge(horse, {
 	textures = {{"blank.png", "mobs_mc_horse_skeleton.png", "blank.png"}},
 	drops = {
 		{
-			name = "vlf_mobitems:bone",
+			name = "mcl_mobitems:bone",
 			chance = 1,
 			min = 0,
 			max = 2,
@@ -1074,10 +1088,10 @@ end
 local function get_helmet (skeleton)
 	if skeleton.armor_list.head ~= "" then
 		local stack = ItemStack (skeleton.armor_list.head)
-		stack:get_meta ():set_string ("vlf_enchanting:enchantments", "")
+		stack:get_meta ():set_string ("mcl_enchanting:enchantments", "")
 		return stack
 	end
-	return ItemStack ("vlf_armor:helmet_iron")
+	return ItemStack ("mcl_armor:helmet_iron")
 end
 
 local function check_skeleton_trap (self, self_pos, dtime)
@@ -1087,9 +1101,9 @@ local function check_skeleton_trap (self, self_pos, dtime)
 	if not self:check_timer ("skeleton_trap", 0.15) then
 		return false
 	end
-	for player in vlf_util.connected_players (self_pos, 10) do
+	for player in mcl_util.connected_players (self_pos, 10) do
 		self._is_trap = false
-		vlf_lightning.strike (self_pos, true)
+		mcl_lightning.strike (self_pos, true)
 		self.tamed = true
 
 		-- Spawn three horses.
@@ -1104,7 +1118,7 @@ local function check_skeleton_trap (self, self_pos, dtime)
 			end
 		end
 
-		local mob_factor = vlf_worlds.get_special_difficulty (self_pos)
+		local mob_factor = mcl_worlds.get_special_difficulty (self_pos)
 		-- Spawn skeletons for each horse.
 		for _, horse in pairs (horses) do
 			local skelly = minetest.add_entity (self_pos, "mobs_mc:skeleton")
@@ -1121,14 +1135,14 @@ local function check_skeleton_trap (self, self_pos, dtime)
 				-- and 23.
 				local helmet = get_helmet (entity)
 				local level = 5.0 + math.random (18) * mob_factor
-				vlf_enchanting.enchant_randomly (helmet, level, false, false, true)
+				mcl_enchanting.enchant_randomly (helmet, level, false, false, true)
 				entity.persistent = true
 				entity.armor_list.head = helmet:to_string ()
 				entity:set_armor_texture ()
 
-				local bow = ItemStack ("vlf_bows:bow")
+				local bow = ItemStack ("mcl_bows:bow")
 				local level = 5.0 + math.random (18) * mob_factor
-				vlf_enchanting.enchant_randomly (bow, level, false, false, true)
+				mcl_enchanting.enchant_randomly (bow, level, false, false, true)
 				entity:set_wielditem (bow)
 			end
 		end
@@ -1157,14 +1171,14 @@ skeleton_horse.ai_functions = {
 	-- horse_cancel_rearing,
 }
 
-vlf_mobs.register_mob("mobs_mc:skeleton_horse", skeleton_horse)
+mcl_mobs.register_mob("mobs_mc:skeleton_horse", skeleton_horse)
 
-vlf_mobs.register_mob("mobs_mc:zombie_horse", table.merge(skeleton_horse, {
+mcl_mobs.register_mob("mobs_mc:zombie_horse", table.merge(skeleton_horse, {
 	description = S("Zombie Horse"),
 	textures = {{"blank.png", "mobs_mc_horse_zombie.png", "blank.png"}},
 	drops = {
 		{
-			name = "vlf_mobitems:rotten_flesh",
+			name = "mcl_mobitems:rotten_flesh",
 			chance = 1,
 			min = 0,
 			max = 2,
@@ -1246,7 +1260,7 @@ function donkey:on_breed (parent1, parent2)
 	local name = parent2.name == "mobs_mc:horse"
 		and "mobs_mc:mule" or parent1.name
 	local pos = parent1.object:get_pos ()
-	local child = vlf_mobs.spawn_child (pos, name)
+	local child = mcl_mobs.spawn_child (pos, name)
 	if child then
 		local ent_c = child:get_luaentity ()
 		ent_c:derive_child_properties (parent1, parent2)
@@ -1254,8 +1268,8 @@ function donkey:on_breed (parent1, parent2)
 	end
 end
 
-vlf_mobs.register_mob ("mobs_mc:donkey", donkey)
-vlf_entity_invs.register_inv ("mobs_mc:donkey", "Donkey", 15, true)
+mcl_mobs.register_mob ("mobs_mc:donkey", donkey)
+mcl_entity_invs.register_inv ("mobs_mc:donkey", "Donkey", 15, true)
 
 ------------------------------------------------------------------------
 -- Mules.
@@ -1285,14 +1299,14 @@ mule.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:mule", mule)
-vlf_entity_invs.register_inv ("mobs_mc:mule", "Mule", 15, true)
+mcl_mobs.register_mob ("mobs_mc:mule", mule)
+mcl_entity_invs.register_inv ("mobs_mc:mule", "Mule", 15, true)
 
 ------------------------------------------------------------------------
 -- Spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:horse",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -1312,7 +1326,7 @@ vlf_mobs.spawn_setup({
 	chance = 40,
 })
 
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:donkey",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -1333,8 +1347,8 @@ vlf_mobs.spawn_setup({
 	chance = 10,
 })
 
-vlf_mobs.register_egg("mobs_mc:horse", S("Horse"), "#c09e7d", "#eee500", 0)
-vlf_mobs.register_egg("mobs_mc:skeleton_horse", S("Skeleton Horse"), "#68684f", "#e5e5d8", 0)
-vlf_mobs.register_egg("mobs_mc:zombie_horse", S("Zombie Horse"), "#2a5a37", "#84d080", 0)
-vlf_mobs.register_egg("mobs_mc:donkey", S("Donkey"), "#534539", "#867566", 0)
-vlf_mobs.register_egg("mobs_mc:mule", S("Mule"), "#1b0200", "#51331d", 0)
+mcl_mobs.register_egg("mobs_mc:horse", S("Horse"), "#c09e7d", "#eee500", 0)
+mcl_mobs.register_egg("mobs_mc:skeleton_horse", S("Skeleton Horse"), "#68684f", "#e5e5d8", 0)
+mcl_mobs.register_egg("mobs_mc:zombie_horse", S("Zombie Horse"), "#2a5a37", "#84d080", 0)
+mcl_mobs.register_egg("mobs_mc:donkey", S("Donkey"), "#534539", "#867566", 0)
+mcl_mobs.register_egg("mobs_mc:mule", S("Mule"), "#1b0200", "#51331d", 0)

@@ -1,0 +1,75 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Luanti textdomain mcl_lush_caves x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.1\n"
+
+msgid "Azalea Plant"
+msgstr "Planta de azalea"
+
+msgid "Flowering Azalea Plant"
+msgstr "Planta de azalea florecida"
+
+msgid "Moss"
+msgstr "Musgo"
+
+msgid "Moss is a green block found in lush caves"
+msgstr "El musgo es un bloque verde que se encuentra en las cuevas frondosas"
+
+msgid "Moss carpet"
+msgstr "Capa de musgo"
+
+msgid "Hanging roots"
+msgstr "Raíces colgantes"
+
+msgid "Cave vines"
+msgstr "Enredaderas de cueva"
+
+msgid "Rooted dirt"
+msgstr "Tierra enraizada"
+
+msgid "Glow berry"
+msgstr "Bayas luminosas"
+
+msgid "This is a food item which can be eaten."
+msgstr "Este es un alimento que se puede comer."
+
+msgid "Azalea Leaves"
+msgstr "Hojas de azalea"
+
+msgid "Leaves of an Azalea tree"
+msgstr "Hojas de un árbol de Azalea"
+
+msgid "Flowering Azalea Leaves"
+msgstr "Hojas de azalea florecidas"
+
+msgid "The Flowering Leaves of an Azalea tree"
+msgstr "Las hojas florecidas de un árbol de Azalea"
+
+msgid "Spore blossom"
+msgstr "Flor de esporas"
+
+msgid "Needs soil and bone meal to grow"
+msgstr "Necesita suelo y polvo de hueso para crecer"
+
+msgid "Azalea"
+msgstr "Azalea"
+
+msgid "Azalea is a small plant which often occurs in lush caves. It can be broken by hand or any tool. By using bone meal, azalea can be turned into an azalea tree."
+msgstr "La azalea es una planta pequeña que suele crecer en las cuevas frondosas. Se puede romper con la mano o con cualquier herramienta. Si se utiliza polvo de hueso, la azalea se puede convertir en un árbol de azalea."
+
+msgid "Flowering Azalea"
+msgstr "Azalea florecida"
+
+msgid "Flowering azalea is a small plant which often occurs in lush caves. It can be broken by hand or any tool. By using bone meal, flowering azalea can be turned into an azalea tree."
+msgstr "La azalea florecida es una planta pequeña que suele crecer en las cuevas frondosas. Se puede romper con la mano o con cualquier herramienta. Si se utiliza polvo de hueso, la azalea florecida se puede convertir en un árbol de azalea."
+

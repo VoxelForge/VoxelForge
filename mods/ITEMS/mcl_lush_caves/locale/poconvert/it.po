@@ -1,0 +1,75 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Luanti textdomain mcl_lush_caves x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.1\n"
+
+msgid "Azalea Plant"
+msgstr "Pianta d'azalea"
+
+msgid "Flowering Azalea Plant"
+msgstr "Pianta d'azalea fiorita"
+
+msgid "Moss"
+msgstr "Muschio"
+
+msgid "Moss is a green block found in lush caves"
+msgstr ""
+
+msgid "Moss carpet"
+msgstr "Tappeto di muschio"
+
+msgid "Hanging roots"
+msgstr "Radici penditi"
+
+msgid "Cave vines"
+msgstr "Rampicante delle caverne"
+
+msgid "Rooted dirt"
+msgstr "Terra con radici"
+
+msgid "Glow berry"
+msgstr "Bacche luminose"
+
+msgid "This is a food item which can be eaten."
+msgstr ""
+
+msgid "Azalea Leaves"
+msgstr "Foglie di azalea"
+
+msgid "Leaves of an Azalea tree"
+msgstr ""
+
+msgid "Flowering Azalea Leaves"
+msgstr "Foglie di azalea fiorite"
+
+msgid "The Flowering Leaves of an Azalea tree"
+msgstr ""
+
+msgid "Spore blossom"
+msgstr "Fiore sporifero"
+
+msgid "Needs soil and bone meal to grow"
+msgstr ""
+
+msgid "Azalea"
+msgstr "Azalea"
+
+msgid "Azalea is a small plant which often occurs in lush caves. It can be broken by hand or any tool. By using bone meal, azalea can be turned into an azalea tree."
+msgstr ""
+
+msgid "Flowering Azalea"
+msgstr "Azalea fiorita"
+
+msgid "Flowering azalea is a small plant which often occurs in lush caves. It can be broken by hand or any tool. By using bone meal, flowering azalea can be turned into an azalea tree."
+msgstr ""
+

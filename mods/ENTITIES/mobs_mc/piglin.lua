@@ -1,7 +1,7 @@
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
-local posing_humanoid = vlf_mobs.posing_humanoid
-local is_valid = vlf_util.is_valid_objectref
+local mob_class = mcl_mobs.mob_class
+local posing_humanoid = mcl_mobs.posing_humanoid
+local is_valid = mcl_util.is_valid_objectref
 
 ------------------------------------------------------------------------
 -- Abstract piglin.  Models and armor.
@@ -114,7 +114,7 @@ function piglin_base:ai_step (dtime)
 end
 
 function piglin_base:conversion_step (self_pos, dtime)
-	local dimension = vlf_worlds.pos_to_dimension (self_pos)
+	local dimension = mcl_worlds.pos_to_dimension (self_pos)
 	if dimension == "overworld" then
 		if not self._conversion_time then
 			self._conversion_time = 0
@@ -126,7 +126,7 @@ function piglin_base:conversion_step (self_pos, dtime)
 			local object
 				= self:replace_with (self._convert_to, true)
 			if object then
-				vlf_potions.give_effect ("nausea", object, 1, 10, false)
+				mcl_potions.give_effect ("nausea", object, 1, 10, false)
 			end
 		end
 	else
@@ -145,24 +145,24 @@ piglin_base.gwp_penalties = table.merge (mob_class.gwp_penalties, {
 ------------------------------------------------------------------------
 
 local trading_items = {
-	{ itemstring = "vlf_core:obsidian", weight = 40, amount_min = 1, amount_max = 1 },
-	{ itemstring = "vlf_core:gravel", weight = 40, amount_min = 8, amount_max = 16 },
-	{ itemstring = "vlf_mobitems:leather", weight = 40, amount_min = 4, amount_max = 10 },
-	{ itemstring = "vlf_nether:soul_sand", weight = 40, amount_min = 4, amount_max = 16 },
-	{ itemstring = "vlf_nether:nether_brick", weight = 40, amount_min = 4, amount_max = 16 },
-	{ itemstring = "vlf_mobitems:string", weight = 20, amount_min = 3, amount_max = 9 },
-	{ itemstring = "vlf_nether:quartz", weight = 20, amount_min = 4, amount_max = 10 },
-	{ itemstring = "vlf_potions:water", weight = 40, amount_min = 1, amount_max = 1 },
-	{ itemstring = "vlf_core:iron_nugget", weight = 10, amount_min = 10, amount_max = 36 },
-	{ itemstring = "vlf_throwing:ender_pearl", weight = 10, amount_min = 2, amount_max = 6 },
-	{ itemstring = "vlf_potions:fire_resistance", weight = 8, amount_min = 1, amount_max = 1 },
-	{ itemstring = "vlf_potions:fire_resistance_splash", weight = 8, amount_min = 1, amount_max = 1 },
-	{ itemstring = "vlf_books:book", weight = 5, func = function(stack, pr) vlf_enchanting.enchant(stack, "soul_speed", vlf_enchanting.random(pr, 1, vlf_enchanting.enchantments["soul_speed"].max_level)) end },
-	{ itemstring = "vlf_armor:boots_iron", weight = 8, func = function(stack, pr) vlf_enchanting.enchant(stack, "soul_speed", vlf_enchanting.random(pr, 1, vlf_enchanting.enchantments["soul_speed"].max_level)) end },
-	{ itemstring = "vlf_blackstone:blackstone", weight = 40, amount_min = 8, amount_max = 16 },
-	{ itemstring = "vlf_bows:arrow", weight = 40, amount_min = 6, amount_max = 12 },
-	{ itemstring = "vlf_core:crying_obsidian", weight = 40, amount_min = 1, amount_max = 1 },
-	{ itemstring = "vlf_fire:fire_charge", weight = 40, amount_min = 1, amount_max = 1 },
+	{ itemstring = "mcl_core:obsidian", weight = 40, amount_min = 1, amount_max = 1 },
+	{ itemstring = "mcl_core:gravel", weight = 40, amount_min = 8, amount_max = 16 },
+	{ itemstring = "mcl_mobitems:leather", weight = 40, amount_min = 4, amount_max = 10 },
+	{ itemstring = "mcl_nether:soul_sand", weight = 40, amount_min = 4, amount_max = 16 },
+	{ itemstring = "mcl_nether:nether_brick", weight = 40, amount_min = 4, amount_max = 16 },
+	{ itemstring = "mcl_mobitems:string", weight = 20, amount_min = 3, amount_max = 9 },
+	{ itemstring = "mcl_nether:quartz", weight = 20, amount_min = 4, amount_max = 10 },
+	{ itemstring = "mcl_potions:water", weight = 40, amount_min = 1, amount_max = 1 },
+	{ itemstring = "mcl_core:iron_nugget", weight = 10, amount_min = 10, amount_max = 36 },
+	{ itemstring = "mcl_throwing:ender_pearl", weight = 10, amount_min = 2, amount_max = 6 },
+	{ itemstring = "mcl_potions:fire_resistance", weight = 8, amount_min = 1, amount_max = 1 },
+	{ itemstring = "mcl_potions:fire_resistance_splash", weight = 8, amount_min = 1, amount_max = 1 },
+	{ itemstring = "mcl_books:book", weight = 5, func = function(stack, pr) mcl_enchanting.enchant(stack, "soul_speed", mcl_enchanting.random(pr, 1, mcl_enchanting.enchantments["soul_speed"].max_level)) end },
+	{ itemstring = "mcl_armor:boots_iron", weight = 8, func = function(stack, pr) mcl_enchanting.enchant(stack, "soul_speed", mcl_enchanting.random(pr, 1, mcl_enchanting.enchantments["soul_speed"].max_level)) end },
+	{ itemstring = "mcl_blackstone:blackstone", weight = 40, amount_min = 8, amount_max = 16 },
+	{ itemstring = "mcl_bows:arrow", weight = 40, amount_min = 6, amount_max = 12 },
+	{ itemstring = "mcl_core:crying_obsidian", weight = 40, amount_min = 1, amount_max = 1 },
+	{ itemstring = "mcl_fire:fire_charge", weight = 40, amount_min = 1, amount_max = 1 },
 	--{ itemstring = "FIXME:spectral_arrow", weight = 40, amount_min = 6, amount_max = 12 },
 }
 
@@ -441,30 +441,30 @@ function piglin:on_spawn ()
 	if not self.child and not self._converted_from_old_piglin then
 		local f = pr:next (1, 10)
 		if f == 1 then
-			self.armor_list.head = "vlf_armor:helmet_gold"
+			self.armor_list.head = "mcl_armor:helmet_gold"
 		end
 		local f = pr:next (1, 10)
 		if f == 1 then
-			self.armor_list.torso = "vlf_armor:chestplate_gold"
+			self.armor_list.torso = "mcl_armor:chestplate_gold"
 		end
 		local f = pr:next (1, 10)
 		if f == 1 then
-			self.armor_list.legs = "vlf_armor:leggings_gold"
+			self.armor_list.legs = "mcl_armor:leggings_gold"
 		end
 		local f = pr:next (1, 10)
 		if f == 1 then
-			self.armor_list.feet = "vlf_armor:boots_gold"
+			self.armor_list.feet = "mcl_armor:boots_gold"
 		end
 
 		local self_pos = self.object:get_pos ()
-		local mob_factor = vlf_worlds.get_special_difficulty (self_pos)
+		local mob_factor = mcl_worlds.get_special_difficulty (self_pos)
 		self:enchant_default_armor (mob_factor, pr)
 		self:set_armor_texture ()
 
 		if pr:next (1, 2) == 1 then
-			self:set_wielditem (ItemStack ("vlf_bows:crossbow"))
+			self:set_wielditem (ItemStack ("mcl_bows:crossbow"))
 		else
-			self:set_wielditem (ItemStack ("vlf_tools:sword_gold"))
+			self:set_wielditem (ItemStack ("mcl_tools:sword_gold"))
 		end
 		self:enchant_default_weapon (mob_factor, pr)
 	end
@@ -520,47 +520,47 @@ minetest.register_on_dignode (function (pos, node, player)
 end)
 
 local function piglin_loves_item (itemname)
-	return itemname == "vlf_core:stone_with_gold"
-		or itemname == "vlf_core:deepslate_with_gold"
-		or itemname == "vlf_blackstone:nether_gold"
+	return itemname == "mcl_core:stone_with_gold"
+		or itemname == "mcl_core:deepslate_with_gold"
+		or itemname == "mcl_blackstone:nether_gold"
 		-- or itemname == light_weighted_pressure_plate
-		or itemname == "vlf_core:gold_ingot"
-		or itemname == "vlf_bells:bell"
+		or itemname == "mcl_core:gold_ingot"
+		or itemname == "mcl_bells:bell"
 		or minetest.get_item_group (itemname, "clock") > 0
-		or itemname == "vlf_farming:carrot_item_gold"
-		or itemname == "vlf_potions:speckled_melon"
-		or itemname == "vlf_core:apple_gold"
-		or itemname == "vlf_core:apple_gold_enchanted"
+		or itemname == "mcl_farming:carrot_item_gold"
+		or itemname == "mcl_potions:speckled_melon"
+		or itemname == "mcl_core:apple_gold"
+		or itemname == "mcl_core:apple_gold_enchanted"
 		or minetest.get_item_group (itemname, "golden") > 0
 		or (minetest.get_item_group (itemname, "tool") > 0
 			and itemname:find ("gold"))
 		or (minetest.get_item_group (itemname, "weapon") > 0
 			and itemname:find ("gold"))
-		or itemname == "vlf_raw_ores:raw_gold"
-		or itemname == "vlf_raw_ores:raw_gold_block"
+		or itemname == "mcl_raw_ores:raw_gold"
+		or itemname == "mcl_raw_ores:raw_gold_block"
 end
 
 local function is_piglin_food (itemname)
-	return itemname == "vlf_mobitems:porkchop"
-		or itemname == "vlf_mobitems:cooked_porkchop"
+	return itemname == "mcl_mobitems:porkchop"
+		or itemname == "mcl_mobitems:cooked_porkchop"
 end
 
 function piglin:should_pick_up (stack)
 	local name = stack:get_name ()
-	if self.child and name == "vlf_mobitems:leather" then
+	if self.child and name == "mcl_mobitems:leather" then
 		return false
 	elseif minetest.get_item_group (name, "soul_firelike") > 0 then
 		return false
 	elseif self._admire_cooldown > 0 and self.attack then
 		return false
-	elseif name == "vlf_core:gold_ingot" then
+	elseif name == "mcl_core:gold_ingot" then
 		local offhand = self:get_offhand_item ()
 		return not piglin_loves_item (offhand:get_name ())
 	else
 		local fits = self:has_inventory_space (stack)
 		if is_piglin_food (name) then
 			return fits and self._feed_cooldown == 0
-		elseif name == "vlf_core:gold_nugget" then
+		elseif name == "mcl_core:gold_nugget" then
 			return fits
 		elseif piglin_loves_item (name) then
 			local offhand = self:get_offhand_item ()
@@ -579,7 +579,7 @@ function piglin:shoot_arrow (pos, dir)
 	if minetest.get_item_group (wielditem:get_name (), "crossbow") == 0 then
 		wielditem = nil
 	end
-	vlf_bows.shoot_arrow_crossbow ("vlf_bows:arrow", pos, dir, self:get_yaw (),
+	mcl_bows.shoot_arrow_crossbow ("mcl_bows:arrow", pos, dir, self:get_yaw (),
 				       self.object, 32.0, nil, true, wielditem, false)
 end
 local function piglin_attracted_to_player (player)
@@ -588,7 +588,7 @@ local function piglin_attracted_to_player (player)
 end
 
 function piglin:wielditem_better_than (stack, current)
-	if vlf_enchanting.has_enchantment (current, "curse_of_binding") then
+	if mcl_enchanting.has_enchantment (current, "curse_of_binding") then
 		return false
 	end
 
@@ -753,7 +753,7 @@ function piglin:get_staticdata_table ()
 end
 
 function piglin:can_accept_offer (itemname)
-	return itemname == "vlf_core:gold_ingot"
+	return itemname == "mcl_core:gold_ingot"
 		and not self._admiring_item
 		and not self.child
 		and self._admire_cooldown == 0
@@ -781,7 +781,7 @@ function piglin:set_offhand_item (stack)
 
 	if not stack:is_empty () then
 		local name = stack:get_name ()
-		if name == "vlf_core:gold_ingot" then
+		if name == "mcl_core:gold_ingot" then
 			self.persistent = true
 		end
 		self._effective_offhand_drop_probability = 1.0
@@ -820,11 +820,11 @@ function piglin:dispose_of_wielditem (self_pos, no_bartering)
 	if not self.child then
 		local pos = vector.offset (self_pos, 0, 1.16, 0)
 		local name = wielditem:get_name ()
-		if name == "vlf_core:gold_ingot" then
+		if name == "mcl_core:gold_ingot" then
 			if no_bartering then
 				return
 			end
-			local loot = vlf_loot.get_loot ({
+			local loot = mcl_loot.get_loot ({
 				stacks_min = 1,
 				stacks_max = 1,
 				items = trading_items,
@@ -877,7 +877,7 @@ function piglin:default_pickup (object, stack, def, itemname)
 
 	local taken
 
-	if itemname == "vlf_core:gold_nugget" then
+	if itemname == "mcl_core:gold_nugget" then
 		taken = stack:take_item (stack:get_count ())
 	else
 		taken = stack:take_item ()
@@ -1298,7 +1298,7 @@ local function baby_piglin_mount_baby_hoglin (self, self_pos, dtime)
 	end
 end
 
-local scale_chance = vlf_mobs.scale_chance
+local scale_chance = mcl_mobs.scale_chance
 
 local function piglin_interact_with (self, self_pos, dtime)
 	if self._interacting_with then
@@ -1484,10 +1484,10 @@ end
 
 function piglin.can_spawn (pos)
 	local block = minetest.get_node (vector.offset (pos, 0, -1, 0))
-	return block.name ~= "vlf_nether:nether_wart_block"
+	return block.name ~= "mcl_nether:nether_wart_block"
 end
 
-vlf_mobs.register_mob ("mobs_mc:piglin", piglin)
+mcl_mobs.register_mob ("mobs_mc:piglin", piglin)
 
 ------------------------------------------------------------------------
 -- Legacy sword piglin.
@@ -1501,7 +1501,7 @@ function old_sword_piglin:on_activate (staticdata, dtime)
 		or {}
 	local self_pos = self.object:get_pos ()
 	minetest.add_entity (self_pos, "mobs_mc:piglin", minetest.serialize ({
-		_wielditem = "vlf_tools:sword_gold",
+		_wielditem = "mcl_tools:sword_gold",
 		nametag = data.nametag,
 		_piglin_initialized = true,
 		_converted_from_old_piglin = true,
@@ -1546,7 +1546,7 @@ local piglin_brute = table.merge (piglin_base, {
 
 function piglin_brute:on_spawn ()
 	local self_pos = self.object:get_pos ()
-	self:set_wielditem (ItemStack ("vlf_tools:axe_gold"))
+	self:set_wielditem (ItemStack ("mcl_tools:axe_gold"))
 	self:restrict_to (self_pos, 100)
 end
 
@@ -1654,7 +1654,7 @@ piglin_brute.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:piglin_brute", piglin_brute)
+mcl_mobs.register_mob ("mobs_mc:piglin_brute", piglin_brute)
 
 ------------------------------------------------------------------------
 -- Zombified Piglin.
@@ -1698,21 +1698,21 @@ local zombified_piglin = table.merge (zombie, {
 	},
 	drops = {
 		{
-			name = "vlf_mobitems:rotten_flesh",
+			name = "mcl_mobitems:rotten_flesh",
 			chance = 1,
 			min = 1,
 			max = 1,
 			looting = "common",
 		},
 		{
-			name = "vlf_core:gold_nugget",
+			name = "mcl_core:gold_nugget",
 			chance = 1,
 			min = 0,
 			max = 1,
 			looting = "common",
 		},
 		{
-			name = "vlf_core:gold_ingot",
+			name = "mcl_core:gold_ingot",
 			chance = 40, -- 2.5%
 			min = 1,
 			max = 1,
@@ -1763,7 +1763,7 @@ function zombified_piglin:generate_default_equipment (mob_factor, do_armor, do_w
 	mob_class.generate_default_equipment (self, mob_factor, do_armor, false)
 
 	if do_wielditems then
-		self:set_wielditem (ItemStack ("vlf_tools:sword_gold"))
+		self:set_wielditem (ItemStack ("mcl_tools:sword_gold"))
 		self:enchant_default_weapon (mob_factor, pr)
 	end
 end
@@ -1811,7 +1811,7 @@ local zombified_piglin_poses = {
 	},
 }
 
-vlf_mobs.define_composite_pose (zombified_piglin_poses, "jockey", {
+mcl_mobs.define_composite_pose (zombified_piglin_poses, "jockey", {
 	["Leg_Left"] = {
 		vector.new (-1, 0, 0),
 		vector.new (-90, 35, 0),
@@ -1869,19 +1869,19 @@ zombified_piglin.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:zombified_piglin", zombified_piglin)
+mcl_mobs.register_mob ("mobs_mc:zombified_piglin", zombified_piglin)
 
 ------------------------------------------------------------------------
 -- Piglin & Zombie Pigman spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:piglin",
 	type_of_spawning = "ground",
 	dimension = "nether",
 	min_light = 0,
 	max_light = minetest.LIGHT_MAX+1,
-	min_height = vlf_vars.mg_lava_nether_max,
+	min_height = mcl_vars.mg_lava_nether_max,
 	aoc = 3,
 	biomes = {
 		"Nether",
@@ -1890,13 +1890,13 @@ vlf_mobs.spawn_setup({
 	chance = 300,
 })
 
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:zombified_piglin",
 	type_of_spawning = "lava",
 	dimension = "nether",
 	min_light = 0,
 	max_light = minetest.LIGHT_MAX+1,
-	min_height = vlf_vars.mg_lava_nether_max,
+	min_height = mcl_vars.mg_lava_nether_max,
 	aoc = 4,
 	biomes = {
 		"Nether",
@@ -1905,6 +1905,6 @@ vlf_mobs.spawn_setup({
 	chance = 1000,
 })
 
-vlf_mobs.register_egg("mobs_mc:piglin", S("Piglin"), "#7b4a17","#d5c381", 0)
-vlf_mobs.register_egg("mobs_mc:piglin_brute", S("Piglin Brute"), "#562b0c","#ddc89d", 0)
-vlf_mobs.register_egg("mobs_mc:zombified_piglin", S("Zombie Piglin"), "#ea9393", "#4c7129", 0)
+mcl_mobs.register_egg("mobs_mc:piglin", S("Piglin"), "#7b4a17","#d5c381", 0)
+mcl_mobs.register_egg("mobs_mc:piglin_brute", S("Piglin Brute"), "#562b0c","#ddc89d", 0)
+mcl_mobs.register_egg("mobs_mc:zombified_piglin", S("Zombie Piglin"), "#ea9393", "#4c7129", 0)

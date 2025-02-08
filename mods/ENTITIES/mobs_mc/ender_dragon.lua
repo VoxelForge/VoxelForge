@@ -3,8 +3,8 @@
 ------------------------------------------------------------------------
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
-local is_valid = vlf_util.is_valid_objectref
+local mob_class = mcl_mobs.mob_class
+local is_valid = mcl_util.is_valid_objectref
 local mobs_griefing = minetest.settings:get_bool ("mobs_griefing") ~= false
 local dragon_debug
 	= minetest.settings:get_bool ("dragon_debug", false)
@@ -76,6 +76,7 @@ local dragon = {
 	_damage_sustained_on_podium = 0.0,
 	_death_routine_progress = 0.0,
 	_death_xp_time = 0.0,
+	_dragon_dead = false,
 }
 
 ------------------------------------------------------------------------
@@ -90,12 +91,12 @@ local dragon_piece = {
 		collide_with_objects = false,
 		static_save = false,
 		textures = {
-			"vlf_core_glass_green.png",
-			"vlf_core_glass_green.png",
-			"vlf_core_glass_green.png",
-			"vlf_core_glass_green.png",
-			"vlf_core_glass_green.png",
-			"vlf_core_glass_green.png",
+			"mcl_core_glass_green.png",
+			"mcl_core_glass_green.png",
+			"mcl_core_glass_green.png",
+			"mcl_core_glass_green.png",
+			"mcl_core_glass_green.png",
+			"mcl_core_glass_green.png",
 		},
 		use_texture_alpha = false,
 	},
@@ -113,11 +114,11 @@ function dragon_piece:on_step (dtime)
 	end
 end
 
-function dragon_piece:deal_damage (damage, vlf_reason)
+function dragon_piece:deal_damage (damage, mcl_reason)
 	if not is_valid (self._dragon) then
 		return false
 	end
-	return vlf_util.deal_damage (self._dragon, damage, vlf_reason)
+	return mcl_util.deal_damage (self._dragon, damage, mcl_reason)
 end
 
 function dragon_piece:on_punch (puncher, time_from_last_punch,
@@ -129,11 +130,11 @@ function dragon_piece:on_punch (puncher, time_from_last_punch,
 		object = self.object,
 		max_hear_distance = 5
 	}, true)
-	local vlf_reason = {}
-	vlf_damage.from_punch (vlf_reason, puncher)
-	vlf_damage.finish_reason (vlf_reason)
-	vlf_reason.dragon_part = self._dragon_part
-	vlf_util.deal_damage (self._dragon, damage, vlf_reason)
+	local mcl_reason = {}
+	mcl_damage.from_punch (mcl_reason, puncher)
+	mcl_damage.finish_reason (mcl_reason)
+	mcl_reason.dragon_part = self._dragon_part
+	mcl_util.deal_damage (self._dragon, damage, mcl_reason)
 	return true
 end
 
@@ -147,16 +148,16 @@ local DEATH_VELOCITY = vector.new (0.0, 2.0, 0.0)
 local ZERO_VECTOR = vector.zero ()
 
 function dragon:restore_portal ()
-	local struct = vlf_structures.registered_structures["end_exit_portal_open"]
+	local struct = mcl_structures.registered_structures["end_exit_portal_open"]
 	local pr = PseudoRandom (minetest.get_mapgen_setting("seed"))
-	local podium = vlf_vars.mg_end_exit_portal_pos
+	local podium = mcl_vars.mg_end_exit_portal_pos
 
-	vlf_portals.spawn_gateway_portal ()
-	vlf_structures.place_structure (podium, struct, pr, -1)
+	mcl_portals.spawn_gateway_portal ()
+	mcl_structures.place_structure (podium, struct, pr, -1)
 
 	if self._initial then
 		minetest.set_node (vector.add (podium, vector.new (0, 5, 0)), {
-			name = "vlf_end:dragon_egg",
+			name = "mcl_end:dragon_egg",
 		})
 	end
 
@@ -164,19 +165,19 @@ function dragon:restore_portal ()
 	local self_pos = self.object:get_pos ()
 	for players in minetest.objects_inside_radius (self_pos, 64) do
 		if players:is_player () then
-			awards.unlock (players:get_player_name (), "vlf:freeTheEnd")
+			awards.unlock (players:get_player_name (), "mcl:freeTheEnd")
 		end
 	end
 end
 
 function dragon:check_dying (dtime)
-	if not self.dead then
+	if not self._dragon_dead then
 		return
 	end
 
 	local self_pos = self.object:get_pos ()
 	self:rotate_joints (self_pos)
-	vlf_bossbars.update_boss (self.object, S ("Ender Dragon"), "light_purple")
+	mcl_bossbars.update_boss (self.object, S ("Ender Dragon"), "light_purple")
 	local t = self._death_routine_progress + dtime
 	self._death_routine_progress = t
 	self._dragon_target = nil
@@ -196,7 +197,7 @@ function dragon:check_dying (dtime)
 				min = 8,
 				max = 12,
 			},
-			texture = "vlf_particles_smoke.png",
+			texture = "mcl_particles_smoke.png",
 			attached = self.object,
 		})
 		self._explosion_particles_spawned = true
@@ -216,12 +217,12 @@ function dragon:check_dying (dtime)
 			local amount = math.floor (xp_remaining * 0.08)
 			self._death_xp_time = t
 			self._death_xp_reward = xp_remaining - amount
-			vlf_experience.throw_xp (self_pos, amount)
+			mcl_experience.throw_xp (self_pos, amount)
 		end
 	end
 
 	if xp_remaining <= 200 then
-		vlf_experience.throw_xp (self_pos, xp_remaining)
+		mcl_experience.throw_xp (self_pos, xp_remaining)
 		self._death_xp_reward = 0
 		self.object:set_velocity (ZERO_VECTOR)
 		self:restore_portal ()
@@ -352,9 +353,9 @@ local function sample_idx (idx)
 end
 
 local function lerp_yaw (prev_sample, current_sample, progress)
-	local diff = vlf_util.norm_radians (current_sample - prev_sample)
+	local diff = mcl_util.norm_radians (current_sample - prev_sample)
 	local raw = prev_sample + diff * progress
-	return vlf_util.norm_radians (raw)
+	return mcl_util.norm_radians (raw)
 end
 
 local function lerp_pos (prev_sample, current_sample, progress)
@@ -395,7 +396,9 @@ end
 function dragon:joint_sample (joint_no)
 	local idx = sample_idx (self._sample_ptr - (joint_no - 1))
 	local sample = self._heading_samples[idx]
-	return sample or self._heading_samples[1]
+	return sample or self._heading_samples[1] or {
+		0, self.object:get_pos (),
+	}
 end
 
 function dragon:set_yaw (yaw)
@@ -478,10 +481,10 @@ function dragon:rotate_joints (self_pos)
 		local yaw, pos = unpack (self:joint_sample (idx))
 		local pitch = self:joint_pitch (self_pos, idx, pos_body.y, pos.y)
 		local next_yaw = self:joint_sample (idx + 1)[1]
-		local roll = vlf_util.norm_radians ((yaw - next_yaw) * ROLL_MULTIPLIER)
-		joint_yaw[idx] = vlf_util.norm_radians (yaw - yaw_so_far)
-		joint_pitch[idx] = vlf_util.norm_radians (pitch - pitch_so_far)
-		joint_roll[idx] = vlf_util.norm_radians (roll - roll_so_far)
+		local roll = mcl_util.norm_radians ((yaw - next_yaw) * ROLL_MULTIPLIER)
+		joint_yaw[idx] = mcl_util.norm_radians (yaw - yaw_so_far)
+		joint_pitch[idx] = mcl_util.norm_radians (pitch - pitch_so_far)
+		joint_roll[idx] = mcl_util.norm_radians (roll - roll_so_far)
 		yaw_so_far = yaw_so_far + joint_yaw[idx]
 		pitch_so_far = pitch_so_far + joint_pitch[idx]
 		roll_so_far = roll_so_far + joint_roll[idx]
@@ -491,7 +494,7 @@ function dragon:rotate_joints (self_pos)
 	local body_yaw = unpack (self:joint_sample (BODY))
 	for i = BODY + 1, #joints_by_temporal_order do
 		local yaw = self:joint_sample (i)[1]
-		joint_yaw[i] = vlf_util.norm_radians (body_yaw - yaw)
+		joint_yaw[i] = mcl_util.norm_radians (body_yaw - yaw)
 		joint_pitch[i] = 0
 		joint_roll[i] = 0
 		body_yaw = body_yaw - joint_yaw[i]
@@ -572,7 +575,7 @@ end
 local FIFTY_DEG = math.rad (50)
 local Y_DRAG = 0.91
 local YAW_DRAG = 0.8
-local pow_by_step = vlf_mobs.pow_by_step
+local pow_by_step = mcl_mobs.pow_by_step
 
 function dragon:motion_step (dtime, moveresult, self_pos)
 	local target = self._dragon_target
@@ -604,7 +607,7 @@ function dragon:motion_step (dtime, moveresult, self_pos)
 		if math.abs (horiz) > 5e-05 then
 			local value = math.atan2 (dz, dx) - math.pi / 2
 			local yaw_diff
-				= vlf_util.norm_radians (value - yaw)
+				= mcl_util.norm_radians (value - yaw)
 			local turn_speed = self:get_turn_speed (v)
 			local yaw_drag = pow_by_step (YAW_DRAG, dtime)
 			local yaw_scale = (1 - yaw_drag) / (1 - YAW_DRAG)
@@ -633,7 +636,7 @@ function dragon:motion_step (dtime, moveresult, self_pos)
 		v.x = v.x * x_drag_real
 		v.z = v.z * x_drag_real
 		v.y = v.y * y_drag
-	elseif not self.dead then
+	elseif not self._dragon_dead then
 		self._start_velocity = vector.zero ()
 		self.object:set_velocity (self._start_velocity)
 	end
@@ -680,12 +683,12 @@ function dragon:damage_entity (self_pos, object, pos, do_knockback)
 		return
 	end
 	if do_knockback then
-		local vlf_reason = {
+		local mcl_reason = {
 			type = "mob",
 			source = self.object,
 		}
-		vlf_damage.finish_reason (vlf_reason)
-		vlf_util.deal_damage (object, 5.0, vlf_reason)
+		mcl_damage.finish_reason (mcl_reason)
+		mcl_util.deal_damage (object, 5.0, mcl_reason)
 
 		local dx = pos.x - self_pos.x
 		local dz = pos.z - self_pos.z
@@ -694,12 +697,12 @@ function dragon:damage_entity (self_pos, object, pos, do_knockback)
 		local z = dz / total * 4.0 * 20
 		object:add_velocity (vector.new (x, 4, z))
 	else
-		local vlf_reason = {
+		local mcl_reason = {
 			type = "mob",
 			source = self.object,
 		}
-		vlf_damage.finish_reason (vlf_reason)
-		vlf_util.deal_damage (object, 10.0, vlf_reason)
+		mcl_damage.finish_reason (mcl_reason)
+		mcl_util.deal_damage (object, 10.0, mcl_reason)
 	end
 	damage_immune[object] = 0.5
 end
@@ -761,17 +764,17 @@ local is_dragon_immune = {}
 minetest.register_on_mods_loaded (function ()
 	for name, def in pairs (minetest.registered_nodes) do
 		if name == "air" or name == "ignore"
-			or name == "vlf_core:barrier"
-			or name == "vlf_core:bedrock"
-			or name == "vlf_portals:portal_end"
+			or name == "mcl_core:barrier"
+			or name == "mcl_core:bedrock"
+			or name == "mcl_portals:portal_end"
 			or def.groups.end_portal_frame
 			or def.groups.command_block
-			or name == "vlf_core:obsidian"
-			or name == "vlf_core:crying_obsidian"
-			or name == "vlf_end:end_stone"
+			or name == "mcl_core:obsidian"
+			or name == "mcl_core:crying_obsidian"
+			or name == "mcl_end:end_stone"
 			or def.groups.iron_bars
 			or def.groups.fire
-			or name == "vlf_deepslate:deepslate_reinforced"
+			or name == "mcl_deepslate:deepslate_reinforced"
 			or def.groups.respawn_anchor then
 			is_dragon_immune[name] = true
 		end
@@ -868,36 +871,36 @@ end
 function dragon:on_punch (_, _, _, _)
 end
 
-function dragon:check_for_death (vlf_reason, damage)
+function dragon:check_for_death (mcl_reason, damage)
 	if self.health > 0 then
-		return mob_class.check_for_death (self, vlf_reason, damage)
+		return mob_class.check_for_death (self, mcl_reason, damage)
 	else
 		self._phase = "death"
 		return false
 	end
 end
 
-function dragon:receive_damage (vlf_reason, damage)
+function dragon:receive_damage (mcl_reason, damage)
 	-- Only register damage from players and attenuate any damage
 	-- not dealt to the head.
 
-	if vlf_reason.direct and self:is_phase_sitting () then
-		local ent = vlf_reason.direct:get_luaentity ()
-		local wind_charge = "vlf_charges:wind_charge_flying"
+	if mcl_reason.direct and self:is_phase_sitting () then
+		local ent = mcl_reason.direct:get_luaentity ()
+		local wind_charge = "mcl_charges:wind_charge_flying"
 		if ent and (ent._is_arrow or ent.name == wind_charge) then
 			return false
 		end
 	end
 
-	if (vlf_reason.source and vlf_reason.source:is_player ())
-		or vlf_reason.flags.always_affects_dragons then
-		if vlf_reason.dragon_part ~= "head" then
+	if (mcl_reason.source and mcl_reason.source:is_player ())
+		or mcl_reason.flags.always_affects_dragons then
+		if mcl_reason.dragon_part ~= "head" then
 			damage = damage / 4.0 + math.min (damage, 1.0)
 		end
 		if damage < 0.01 then
 			return false
 		end
-		if mob_class.receive_damage (self, vlf_reason, damage) then
+		if mob_class.receive_damage (self, mcl_reason, damage) then
 			-- Am I sitting?
 			if self:is_phase_sitting () then
 				local dmg = self._damage_sustained_on_podium + damage
@@ -921,11 +924,11 @@ end
 -- Ender Dragon navigation.
 ------------------------------------------------------------------------
 
-local hashpos = vlf_mobs.gwp_longhash
+local hashpos = mcl_mobs.gwp_longhash
 
 local function find_end_surface_position (x, z, elevation)
-	local end_min = vlf_vars.mg_end_platform_pos.y + 10
-	local end_max = vlf_vars.mg_end_max_official
+	local end_min = mcl_vars.mg_end_platform_pos.y + 10
+	local end_max = mcl_vars.mg_end_max_official
 	local node = vector.new (math.floor (x - 0.5), end_max,
 				 math.floor (z - 0.5))
 
@@ -1166,7 +1169,7 @@ function dragon:gwp_classify_for_movement (pos)
 end
 
 function dragon:gwp_align_start_pos (pos)
-	return vlf_util.get_nodepos (pos)
+	return mcl_util.get_nodepos (pos)
 end
 
 function dragon:gwp_start (context)
@@ -1443,9 +1446,9 @@ function dragon:do_phase_descent (self_pos, dtime)
 				max = 1.5,
 			},
 			texpool = {
-				"vlf_particles_dragon_breath_1.png^[colorize:#ff00ff:127",
-				"vlf_particles_dragon_breath_2.png^[colorize:#ff00ff:127",
-				"vlf_particles_dragon_breath_3.png^[colorize:#ff00ff:127",
+				"mcl_particles_dragon_breath_1.png^[colorize:#ff00ff:127",
+				"mcl_particles_dragon_breath_2.png^[colorize:#ff00ff:127",
+				"mcl_particles_dragon_breath_3.png^[colorize:#ff00ff:127",
 			},
 			attached = self.object,
 		})
@@ -1463,7 +1466,7 @@ end
 function dragon:get_nearest_player (self_pos, radius)
 	local nearest, dist
 
-	for object, distance in vlf_util.connected_players (self_pos, radius) do
+	for object, distance in mcl_util.connected_players (self_pos, radius) do
 		if (not dist or dist > distance)
 			and self:attack_player_allowed (object) then
 			nearest = object
@@ -1491,7 +1494,7 @@ function dragon:look_at_and_integrate_yaw (self_pos, pos, dtime)
 	local value = math.atan2 (dz, dx) - math.pi / 2
 	local yaw = self:get_yaw ()
 	local yaw_diff
-		= vlf_util.norm_radians (value - yaw)
+		= mcl_util.norm_radians (value - yaw)
 	local dist = math.sqrt (dx * dx + dz * dz) + 1.0
 	local lim = math.max (-100, math.min (100, dist))
 	local turn_speed = 0.7 / lim / dist
@@ -1583,9 +1586,9 @@ function dragon:do_phase_bellow_acid (self_pos, dtime)
 				max = 1.5,
 			},
 			texpool = {
-				"vlf_particles_dragon_breath_1.png^[colorize:#ff00ff:127",
-				"vlf_particles_dragon_breath_2.png^[colorize:#ff00ff:127",
-				"vlf_particles_dragon_breath_3.png^[colorize:#ff00ff:127",
+				"mcl_particles_dragon_breath_1.png^[colorize:#ff00ff:127",
+				"mcl_particles_dragon_breath_2.png^[colorize:#ff00ff:127",
+				"mcl_particles_dragon_breath_3.png^[colorize:#ff00ff:127",
 			},
 		})
 	end
@@ -1601,9 +1604,9 @@ function dragon:do_phase_bellow_acid (self_pos, dtime)
 		local x_off = self_pos.x + (dir.x * 5.0 / 2.0)
 		local z_off = self_pos.z + (dir.z * 5.0 / 2.0)
 		local target = vector.offset (pos, x_off, self_pos.y, z_off)
-		target = vlf_util.get_nodepos (target)
+		target = mcl_util.get_nodepos (target)
 
-		while is_clear (target) and target.y > vlf_vars.mg_end_min do
+		while is_clear (target) and target.y > mcl_vars.mg_end_min do
 			target.y = target.y - 1
 		end
 		target.y = target.y + 0.5
@@ -1655,7 +1658,7 @@ function dragon:do_phase_takeoff (self_pos, dtime)
 		local yaw = self:joint_sample (1)[1]
 		local x = 40 * math.cos (yaw)
 		local z = 40 * -math.sin (yaw)
-		local y = vlf_vars.mg_end_platform_pos.y + 105
+		local y = mcl_vars.mg_end_platform_pos.y + 105
 		local v = vector.new (x, y, z)
 		local _, id = self:get_closest_circling_position (v)
 
@@ -1710,7 +1713,7 @@ function dragon:maybe_shoot (self_pos, dtime, target, target_pos)
 				local dx = target_pos.x - pos.x
 				local dz = target_pos.z - pos.z
 				local target = math.atan2 (dz, dx) - math.pi / 2
-				local diff = vlf_util.norm_radians (yaw - target)
+				local diff = mcl_util.norm_radians (yaw - target)
 
 				if diff > -TEN_DEG and diff < TEN_DEG then
 					self:mob_sound ("shoot_attack")
@@ -1826,13 +1829,13 @@ function dragon:do_phase_death (self_pos, dtime)
 				min = 8,
 				max = 12,
 			},
-			texture = "vlf_particles_smoke.png",
+			texture = "mcl_particles_smoke.png",
 			attached = self.object,
 		})
 	end
 
 	if vector.distance (self_pos, podium) < 7.0 then
-		self.dead = true
+		self._dragon_dead = true
 		self._dragon_target = nil
 	end
 end
@@ -1852,7 +1855,7 @@ function dragon:apply_debug_nametag ()
 end
 
 function dragon:run_ai (dtime, moveresult)
-	if self.dead then
+	if self.dead or self._dragon_dead then
 		return
 	end
 	local self_pos = self.object:get_pos ()
@@ -1893,12 +1896,12 @@ end
 function dragon:refresh_dragon_fight ()
 	-- Locate and tally remaining crystals.
 	local crystals = {}
-	local center = vector.new (0, vlf_vars.mg_end_platform_pos.y, 0)
+	local center = vector.new (0, mcl_vars.mg_end_platform_pos.y, 0)
 	local min = vector.offset (center, -128, 0, -128)
-	local max = vector.offset (center, 128, vlf_vars.mg_end_max_official - center.y, 128)
+	local max = vector.offset (center, 128, mcl_vars.mg_end_max_official - center.y, 128)
 	for object in minetest.objects_in_area (min, max) do
 		local entity = object:get_luaentity ()
-		if entity and entity.name == "vlf_end:crystal" then
+		if entity and entity.name == "mcl_end:crystal" then
 			table.insert (crystals, object)
 		end
 	end
@@ -1941,7 +1944,7 @@ function dragon:check_crystals (dtime, self_pos)
 		end
 		if nearest then
 			self._current_beam
-				= minetest.add_entity (nearest_pos, "vlf_end:crystal_beam")
+				= minetest.add_entity (nearest_pos, "mcl_end:crystal_beam")
 			if self._current_beam then
 				local entity = self._current_beam:get_luaentity ()
 				entity:init (self.object, nearest)
@@ -1955,13 +1958,13 @@ function dragon:check_crystals (dtime, self_pos)
 		if not entity then
 			self._current_crystal = nil
 		elseif entity._exploded then
-			local vlf_reason = {
+			local mcl_reason = {
 				type = "explosion",
 				source = self.object,
 				dragon_part = "head",
 			}
-			vlf_damage.finish_reason (vlf_reason)
-			vlf_util.deal_damage (self.object, 10.0, vlf_reason)
+			mcl_damage.finish_reason (mcl_reason)
+			mcl_util.deal_damage (self.object, 10.0, mcl_reason)
 			self._current_crystal:remove ()
 			self._current_crystal = nil
 		elseif self:check_timer ("crystal_heal", 0.5) then
@@ -1978,15 +1981,15 @@ function dragon:step_dragon_fight (dtime, self_pos)
 		self:refresh_dragon_fight ()
 	end
 	self:check_crystals (dtime, self_pos)
-	vlf_bossbars.update_boss (self.object, S ("Ender Dragon"), "light_purple")
+	mcl_bossbars.update_boss (self.object, S ("Ender Dragon"), "light_purple")
 end
 
 ------------------------------------------------------------------------
 -- Ender Dragon spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.register_mob ("mobs_mc:enderdragon", dragon)
-vlf_mobs.register_egg ("mobs_mc:enderdragon", S("Ender Dragon"), "#252525", "#b313c9", 0, true)
+mcl_mobs.register_mob ("mobs_mc:enderdragon", dragon)
+mcl_mobs.register_egg ("mobs_mc:enderdragon", S("Ender Dragon"), "#252525", "#b313c9", 0, true)
 
 ------------------------------------------------------------------------
 -- Ender Dragon area effect cloud.
@@ -2074,9 +2077,9 @@ function dragon_effect_cloud:create_particlespawner (self_pos)
 			max = 1.5,
 		},
 		texpool = {
-			"vlf_particles_dragon_breath_1.png^[colorize:#ff00ff:127",
-			"vlf_particles_dragon_breath_2.png^[colorize:#ff00ff:127",
-			"vlf_particles_dragon_breath_3.png^[colorize:#ff00ff:127",
+			"mcl_particles_dragon_breath_1.png^[colorize:#ff00ff:127",
+			"mcl_particles_dragon_breath_2.png^[colorize:#ff00ff:127",
+			"mcl_particles_dragon_breath_3.png^[colorize:#ff00ff:127",
 		},
 	}
 	minetest.add_particlespawner (spawner)
@@ -2122,7 +2125,7 @@ function dragon_effect_cloud:on_step (dtime)
 
 				if box_intersection (cbox, cbox1) then
 					damage_immune[object] = 0.5
-					vlf_util.deal_damage (object, self._damage, {
+					mcl_util.deal_damage (object, self._damage, {
 						type = "dragon_breath",
 					})
 				end
@@ -2147,18 +2150,18 @@ end
 
 function dragon_effect_cloud:on_rightclick (clicker)
 	local item = clicker:get_wielded_item ()
-	if item and item:get_name () == "vlf_potions:glass_bottle" then
+	if item and item:get_name () == "mcl_potions:glass_bottle" then
 		local inv = clicker:get_inventory ()
-		inv:remove_item ("main", "vlf_potions:glass_bottle")
+		inv:remove_item ("main", "mcl_potions:glass_bottle")
 		-- If room exists add dragon's breath to inventory,
 		-- and otherwise drop it as an item.
-		if inv:room_for_item ("main", { name = "vlf_potions:dragon_breath", }) then
-			clicker:get_inventory():add_item ("main", "vlf_potions:dragon_breath")
+		if inv:room_for_item ("main", { name = "mcl_potions:dragon_breath", }) then
+			clicker:get_inventory():add_item ("main", "mcl_potions:dragon_breath")
 		else
 			local pos = clicker:get_pos ()
 			pos.y = pos.y + 0.5
 			minetest.add_item (pos, {
-				name = "vlf_potions:dragon_breath",
+				name = "mcl_potions:dragon_breath",
 			})
 		end
 		self._radius = math.max (0, self._radius - 0.5)
@@ -2210,9 +2213,9 @@ function dragon_fireball:splash_particle (pos)
 		collisiondetection = true,
 		vertical = false,
 		texpool = {
-			"vlf_particles_dragon_breath_1.png^[colorize:#ff00ff:127",
-			"vlf_particles_dragon_breath_2.png^[colorize:#ff00ff:127",
-			"vlf_particles_dragon_breath_3.png^[colorize:#ff00ff:127",
+			"mcl_particles_dragon_breath_1.png^[colorize:#ff00ff:127",
+			"mcl_particles_dragon_breath_2.png^[colorize:#ff00ff:127",
+			"mcl_particles_dragon_breath_3.png^[colorize:#ff00ff:127",
 		},
 	})
 end

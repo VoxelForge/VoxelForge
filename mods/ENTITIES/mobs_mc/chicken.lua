@@ -1,7 +1,7 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 --###################
 --################### CHICKEN
@@ -34,12 +34,12 @@ local chicken = {
 	makes_footstep_sound = true,
 	movement_speed = 5.0,
 	drops = {
-		{name = "vlf_mobitems:chicken",
+		{name = "mcl_mobitems:chicken",
 		 chance = 1,
 		 min = 1,
 		 max = 1,
 		 looting = "common",},
-		{name = "vlf_mobitems:feather",
+		{name = "mcl_mobitems:feather",
 		 chance = 1,
 		 min = 0,
 		 max = 2,
@@ -74,10 +74,10 @@ local chicken = {
 		flap_start = 31, flap_end = 31, flap_speed = 0,
 	},
 	follow = {
-		"vlf_farming:wheat_seeds",
-		"vlf_farming:melon_seeds",
-		"vlf_farming:pumpkin_seeds",
-		"vlf_farming:beetroot_seeds",
+		"mcl_farming:wheat_seeds",
+		"mcl_farming:melon_seeds",
+		"mcl_farming:pumpkin_seeds",
+		"mcl_farming:beetroot_seeds",
 	},
 	run_bonus = 1.4,
 	_is_chicken_jockey = false,
@@ -113,7 +113,7 @@ function chicken:do_custom (dtime)
 		self.egg_timer = nil
 
 		local pos = self.object:get_pos ()
-		minetest.add_item (pos, "vlf_throwing:egg")
+		minetest.add_item (pos, "mcl_throwing:egg")
 		minetest.sound_play ("mobs_mc_chicken_lay_egg", {
 			pos = pos,
 			gain = 1.0,
@@ -160,13 +160,13 @@ function chicken:motion_step (dtime, moveresult, self_pos)
 	mob_class.motion_step (self, dtime, moveresult, self_pos)
 end
 
-vlf_mobs.register_mob ("mobs_mc:chicken", chicken)
+mcl_mobs.register_mob ("mobs_mc:chicken", chicken)
 
 ------------------------------------------------------------------------
 -- Chicken spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:chicken",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -213,4 +213,4 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:chicken", S("Chicken"), "#a1a1a1", "#ff0000", 0)
+mcl_mobs.register_egg("mobs_mc:chicken", S("Chicken"), "#a1a1a1", "#ff0000", 0)

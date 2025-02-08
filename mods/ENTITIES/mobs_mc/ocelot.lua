@@ -4,7 +4,7 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 local mobs_spawn = minetest.settings:get_bool ("mobs_spawn", true)
 
 --###################
@@ -12,10 +12,10 @@ local mobs_spawn = minetest.settings:get_bool ("mobs_spawn", true)
 --###################
 
 local food = {
-	"vlf_fishing:fish_raw",
-	"vlf_fishing:salmon_raw",
-	"vlf_fishing:clownfish_raw",
-	"vlf_fishing:pufferfish_raw",
+	"mcl_fishing:fish_raw",
+	"mcl_fishing:salmon_raw",
+	"mcl_fishing:clownfish_raw",
+	"mcl_fishing:pufferfish_raw",
 }
 
 ------------------------------------------------------------------------
@@ -229,7 +229,7 @@ local function ocelot_follow_shyly (self, self_pos, dtime)
 		end
 		return true
 	elseif self.follow and not self.follow_cooldown and not self.tamed then
-		for player in vlf_util.connected_players () do
+		for player in mcl_util.connected_players () do
 			local distance = vector.distance (player:get_pos (), self_pos)
 			if distance < self.follow_distance
 				and distance > self.stop_distance and self:follow_holding (player) then
@@ -358,11 +358,11 @@ function ocelot:on_rightclick (clicker)
 		if random == 3 then
 			self._trusts_players = true
 			self.persistent = true
-			vlf_mobs.effect (vector.offset (self_pos, 0, 0.7, 0),
+			mcl_mobs.effect (vector.offset (self_pos, 0, 0.7, 0),
 				5, "heart.png", 2, 4, 2.0, 0.1)
 		else
-			vlf_mobs.effect (vector.offset (self_pos, 0, 0.7, 0),
-				5, "vlf_particles_mob_death.png^[colorize:#000000:255",
+			mcl_mobs.effect (vector.offset (self_pos, 0, 0.7, 0),
+				5, "mcl_particles_mob_death.png^[colorize:#000000:255",
 				2, 4, 2.0, 0.1)
 		end
 	elseif self._trusts_players
@@ -378,7 +378,7 @@ function ocelot:on_rightclick (clicker)
 	end
 end
 
-vlf_mobs.register_mob ("mobs_mc:ocelot", ocelot)
+mcl_mobs.register_mob ("mobs_mc:ocelot", ocelot)
 
 ------------------------------------------------------------------------
 -- Cat.
@@ -457,31 +457,31 @@ local cat_loot_table = {
 	items = {
 		{
 			weight = 10,
-			itemstring = "vlf_mobitems:rabbit_hide",
+			itemstring = "mcl_mobitems:rabbit_hide",
 		},
 		{
 			weight = 10,
-			itemstring = "vlf_mobitems:rabbit_foot",
+			itemstring = "mcl_mobitems:rabbit_foot",
 		},
 		{
 			weight = 10,
-			itemstring = "vlf_mobitems:chicken",
+			itemstring = "mcl_mobitems:chicken",
 		},
 		{
 			weight = 10,
-			itemstring = "vlf_mobitems:feather",
+			itemstring = "mcl_mobitems:feather",
 		},
 		{
 			weight = 10,
-			itemstring = "vlf_mobitems:rotten_flesh",
+			itemstring = "mcl_mobitems:rotten_flesh",
 		},
 		{
 			weight = 10,
-			itemstring = "vlf_mobitems:string",
+			itemstring = "mcl_mobitems:string",
 		},
 		-- {
 		-- 	weight = 2,
-		-- 	itemstack = ItemStack ("vlf_mobitems:phantom_membrane"),
+		-- 	itemstack = ItemStack ("mcl_mobitems:phantom_membrane"),
 		-- },
 	},
 }
@@ -505,9 +505,9 @@ function cat:give_wakeup_gift (self_pos)
 		if class == "WALKABLE" then
 			self.object:set_pos (pos)
 		end
-		local loot = vlf_loot.get_loot (cat_loot_table, pr)
+		local loot = mcl_loot.get_loot (cat_loot_table, pr)
 		if #loot >= 1 then
-			vlf_util.drop_item_stack (self.object:get_pos (), loot[1])
+			mcl_util.drop_item_stack (self.object:get_pos (), loot[1])
 		end
 	end
 end
@@ -527,12 +527,12 @@ local function cat_sleep_with_owner (self, self_pos, dtime)
 			return true
 		end
 		local bed_occupied = self:bed_occupied (self._bed)
-		if not vlf_beds.player[self.owner] or bed_occupied then
+		if not mcl_beds.player[self.owner] or bed_occupied then
 			self:cancel_navigation ()
 			self:halt_in_tracks ()
 			self._pose = "walk"
 
-			if not vlf_beds.player[self.owner] then
+			if not mcl_beds.player[self.owner] then
 				self:give_wakeup_gift (self_pos)
 			end
 			self._sleeping_with_owner = false
@@ -549,7 +549,7 @@ local function cat_sleep_with_owner (self, self_pos, dtime)
 			return false
 		end
 		local owner_pos = owner:get_pos ()
-		if not vlf_beds.player[self.owner]
+		if not mcl_beds.player[self.owner]
 			or vector.distance (owner_pos, self_pos) > 10 then
 			return false
 		end
@@ -659,7 +659,7 @@ local function cat_sit_on_block (self, self_pos, dtime)
 	elseif self._target_block then
 		local node = minetest.get_node (self._target_block_real)
 		if minetest.get_item_group (node.name, "furnace") == 0
-			and node.name ~= "vlf_chests:chest" then
+			and node.name ~= "mcl_chests:chest" then
 			self._target_block = nil
 			self:cancel_navigation ()
 			self:halt_in_tracks ()
@@ -705,7 +705,7 @@ local function cat_sit_on_block (self, self_pos, dtime)
 			local bb = vector.offset (self_pos, 4, 1, 4)
 			local block_groups = {
 				"group:furnace",
-				"vlf_chests:chest",
+				"mcl_chests:chest",
 			}
 			local nodes = minetest.find_nodes_in_area (aa, bb, block_groups)
 			if #nodes > 0 then
@@ -718,8 +718,8 @@ local function cat_sit_on_block (self, self_pos, dtime)
 					local name = minetest.get_node (node)
 					local open = false
 
-					if name.name == "vlf_chests:chest" then
-						open = vlf_chests.is_opened (node)
+					if name.name == "mcl_chests:chest" then
+						open = mcl_chests.is_opened (node)
 					end
 
 					local node_above = vector.offset (node, 0, 1, 0)
@@ -776,7 +776,7 @@ cat.ai_functions = {
 
 function cat:update_textures ()
 	local texturelist = cat_default_textures
-	if vlf_moon.get_moon_phase () == 0 then
+	if mcl_moon.get_moon_phase () == 0 then
 		texturelist = cat_full_moon_textures
 	end
 
@@ -810,7 +810,7 @@ end
 
 function cat:on_breed (parent1, parent2)
 	local self_pos = self.object:get_pos ()
-	local child = vlf_mobs.spawn_child (self_pos, self.name)
+	local child = mcl_mobs.spawn_child (self_pos, self.name)
 	if child then
 		local ent_c = child:get_luaentity ()
 		-- Use texture of one of the parents
@@ -855,8 +855,8 @@ local colors = {
 }
 
 local cat_food = {
-	"vlf_fishing:fish_raw",
-	"vlf_fishing:salmon_raw",
+	"mcl_fishing:fish_raw",
+	"mcl_fishing:salmon_raw",
 }
 
 function cat:on_rightclick (clicker)
@@ -908,8 +908,8 @@ function cat:on_rightclick (clicker)
 			self:set_textures (self.base_texture)
 			self.order = "sit"
 		else
-			vlf_mobs.effect (vector.offset (self_pos, 0, 0.7, 0),
-					5, "vlf_particles_mob_death.png^[colorize:#000000:255",
+			mcl_mobs.effect (vector.offset (self_pos, 0, 0.7, 0),
+					5, "mcl_particles_mob_death.png^[colorize:#000000:255",
 					2, 4, 2.0, 0.1)
 		end
 		if not creative then
@@ -922,13 +922,13 @@ function cat:on_rightclick (clicker)
 	end
 end
 
-vlf_mobs.register_mob ("mobs_mc:cat", cat)
+mcl_mobs.register_mob ("mobs_mc:cat", cat)
 
 ------------------------------------------------------------------------
 -- Cat & Ocelot spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:ocelot",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -964,7 +964,7 @@ minetest.register_globalstep (function (dtime)
 	end
 	time_since_spawn_attempt = 0
 
-	for player in vlf_util.connected_players () do
+	for player in mcl_util.connected_players () do
 		local pos = player:get_pos ()
 		local dx = pr:next (8, 31) * (pr:next (0, 1) == 0 and -1 or 1)
 		local dz = pr:next (8, 31) * (pr:next (0, 1) == 0 and -1 or 1)
@@ -974,14 +974,14 @@ minetest.register_globalstep (function (dtime)
 		spawn_pos.z = math.floor (spawn_pos.z + 0.5)
 
 		if is_cat_spawn_position (spawn_pos)
-			and vlf_villages.get_poi_heat (spawn_pos) >= 4 then
+			and mcl_villages.get_poi_heat (spawn_pos) >= 4 then
 			-- Count nearby homes and cats.
 			local count_homes = 0
 			local aa = vector.offset (spawn_pos, -48, -8, -48)
 			local bb = vector.offset (spawn_pos, 48, 8, 48)
-			local pois = vlf_villages.get_pois_in_by_nodepos (aa, bb)
+			local pois = mcl_villages.get_pois_in_by_nodepos (aa, bb)
 			for _, poi in pairs (pois) do
-				local def = vlf_villages.registered_pois[poi.data]
+				local def = mcl_villages.registered_pois[poi.data]
 				if def and def.is_home then
 					count_homes = count_homes + 1
 				end
@@ -1007,5 +1007,5 @@ end)
 end
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:ocelot", S("Ocelot"), "#efde7d", "#564434", 0)
-vlf_mobs.register_egg("mobs_mc:cat", S("Cat"), "#AA8755", "#505438", 0)
+mcl_mobs.register_egg("mobs_mc:ocelot", S("Ocelot"), "#efde7d", "#564434", 0)
+mcl_mobs.register_egg("mobs_mc:cat", S("Cat"), "#AA8755", "#505438", 0)

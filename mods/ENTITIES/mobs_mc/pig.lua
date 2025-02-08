@@ -1,7 +1,7 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 local pig = {
 	description = S("Pig"),
@@ -31,7 +31,7 @@ local pig = {
 	drive_bonus = 0.225,
 	drops = {
 		{
-			name = "vlf_mobitems:porkchop",
+			name = "mcl_mobitems:porkchop",
 			chance = 1,
 			min = 1,
 			max = 3,
@@ -56,14 +56,15 @@ local pig = {
 		run_start = 41, run_end = 81, run_speed = 90,
 	},
 	follow = {
-		"vlf_farming:potato_item",
-		"vlf_farming:carrot_item",
-		"vlf_farming:beetroot_item",
-		"vlf_mobitems:carrot_on_a_stick"
+		"mcl_farming:potato_item",
+		"mcl_farming:carrot_item",
+		"mcl_farming:beetroot_item",
+		"mcl_mobitems:carrot_on_a_stick"
 	},
 	steer_class = "follow_item",
-	steer_item = "vlf_mobitems:carrot_on_a_stick",
+	steer_item = "mcl_mobitems:carrot_on_a_stick",
 	follow_herd_bonus = 1.1,
+	_csm_driving_enabled = true,
 }
 
 ------------------------------------------------------------------------
@@ -71,13 +72,13 @@ local pig = {
 ------------------------------------------------------------------------
 
 function pig:_on_lightning_strike ()
-	vlf_util.replace_mob (self.object, "mobs_mc:zombified_piglin")
+	mcl_util.replace_mob (self.object, "mobs_mc:zombified_piglin")
 	return true
 end
 
 function pig:on_breed (parent1, parent2)
 	local pos = parent1.object:get_pos ()
-	local child = vlf_mobs.spawn_child (pos, parent1.name)
+	local child = mcl_mobs.spawn_child (pos, parent1.name)
 	if child then
 		local ent_c = child:get_luaentity ()
 		ent_c.persistent = true
@@ -106,7 +107,7 @@ function pig:on_rightclick (clicker)
 
 	-- Feed pig
 	if self:follow_holding (clicker) then
-		if item:get_name() ~= "vlf_mobitems:carrot_on_a_stick"
+		if item:get_name() ~= "mcl_mobitems:carrot_on_a_stick"
 			and self:feed_tame(clicker, 4, true, false) then
 			return
 		end
@@ -115,7 +116,7 @@ function pig:on_rightclick (clicker)
 	if self.child then return end
 
 	-- Put saddle on pig
-	if item:get_name() == "vlf_mobitems:saddle" and self.saddle ~= "yes" then
+	if item:get_name() == "mcl_mobitems:saddle" and self.saddle ~= "yes" then
 		self.base_texture = {
 			"mobs_mc_pig.png", -- base
 			"mobs_mc_pig_saddle.png", -- saddle
@@ -124,11 +125,11 @@ function pig:on_rightclick (clicker)
 		self.saddle = "yes"
 		self.tamed = true
 		self.drops = {
-			{name = "vlf_mobitems:porkchop",
+			{name = "mcl_mobitems:porkchop",
 			 chance = 1,
 			 min = 1,
 			 max = 3,},
-			{name = "vlf_mobitems:saddle",
+			{name = "mcl_mobitems:saddle",
 			 chance = 1,
 			 min = 1,
 			 max = 1,},
@@ -139,12 +140,12 @@ function pig:on_rightclick (clicker)
 			stack:take_item()
 			inv:set_stack("main", clicker:get_wield_index(), stack)
 		end
-		minetest.sound_play({name = "vlf_armor_equip_leather"}, {gain=0.5, max_hear_distance=8, pos=self.object:get_pos()}, true)
+		minetest.sound_play({name = "mcl_armor_equip_leather"}, {gain=0.5, max_hear_distance=8, pos=self.object:get_pos()}, true)
 		return
 	end
 
 	-- Accelerate pig when right clicked with carrot on a stick.
-	if self.driver and clicker == self.driver and self.driver:get_wielded_item():get_name() == "vlf_mobitems:carrot_on_a_stick" then
+	if self.driver and clicker == self.driver and self.driver:get_wielded_item():get_name() == "mcl_mobitems:carrot_on_a_stick" then
 		if self:hog_boost () and not minetest.is_creative_enabled(clicker:get_player_name()) then
 			local inv = self.driver:get_inventory()
 			local wielditem = clicker:get_wielded_item ()
@@ -155,7 +156,7 @@ function pig:on_rightclick (clicker)
 				if def.sounds and def.sounds.breaks then
 					minetest.sound_play(def.sounds.breaks, {pos = clicker:get_pos(), max_hear_distance = 8, gain = 0.5}, true)
 				end
-				wielditem = {name = "vlf_fishing:fishing_rod", count = 1}
+				wielditem = {name = "mcl_fishing:fishing_rod", count = 1}
 			else
 				wielditem:add_wear(2521)
 			end
@@ -165,7 +166,7 @@ function pig:on_rightclick (clicker)
 	end
 
 	-- Mount or detach player
-	if self.driver and clicker == self.driver then -- and self.driver:get_wielded_item():get_name() ~= "vlf_mobitems:carrot_on_a_stick" then -- Note: This is for when the ability to make the pig go faster is implemented
+	if self.driver and clicker == self.driver then -- and self.driver:get_wielded_item():get_name() ~= "mcl_mobitems:carrot_on_a_stick" then -- Note: This is for when the ability to make the pig go faster is implemented
 		-- Detach if already attached
 		self:detach(clicker, {x=1, y=0, z=0})
 		return
@@ -215,13 +216,13 @@ pig.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:pig", pig)
+mcl_mobs.register_mob ("mobs_mc:pig", pig)
 
 ------------------------------------------------------------------------
 -- Pig spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:pig",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -265,4 +266,4 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:pig", S("Pig"), "#f0a5a2", "#db635f", 0)
+mcl_mobs.register_egg("mobs_mc:pig", S("Pig"), "#f0a5a2", "#db635f", 0)

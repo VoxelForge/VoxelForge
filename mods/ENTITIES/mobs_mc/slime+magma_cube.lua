@@ -2,10 +2,10 @@
 
 local S = minetest.get_translator("mobs_mc")
 
-local slime_chunk_spawn_max = vlf_worlds.layer_to_y(40)
+local slime_chunk_spawn_max = mcl_worlds.layer_to_y(40)
 
 local function in_slime_chunk(pos)
-	local pr = PseudoRandom(vlf_mapgen_core.get_block_seed(pos))
+	local pr = PseudoRandom(mcl_mapgen_core.get_block_seed(pos))
 	return pr:next(1,10) == 1
 end
 
@@ -18,7 +18,7 @@ end
 local function swamp_spawn(pos)
 	local light = (minetest.get_node_light (pos) or minetest.LIGHT_MAX)
 	if light > math.random(0,7) then return false end
-	if math.abs(4 - vlf_moon.get_moon_phase()) / 4 < math.random() then return false end --moon phase 4 is new moon in vlf_moon
+	if math.abs(4 - mcl_moon.get_moon_phase()) / 4 < math.random() then return false end --moon phase 4 is new moon in mcl_moon
 	if math.random(2) == 2 then return false end
 	return true
 end
@@ -174,35 +174,25 @@ local function slime_check_particle (self, dtime, moveresult)
 		and moveresult.touching_ground
 		and self._get_slime_particle then
 		local cbox = self.collisionbox
-		local radius = (cbox[6] - cbox[3])
+		local radius = (cbox[6] - cbox[3]) * 0.75
 		local self_pos = self.object:get_pos ()
-		for i = 1, math.round (radius * 32) do
-			local scale = math.random () * 0.5 + 0.5
-			local angle = math.random () * math.pi * 2
-			local x, z
-			x = math.sin (angle) * scale * radius
-			z = math.cos (angle) * scale * radius
-			minetest.add_particle ({
-					pos = vector.offset (self_pos, x, 0, z),
-					collisiondetection = true,
-					texture = self._get_slime_particle (),
-					time = 0.20,
-					velocity = {
-						x = math.random (-1, 1),
-						y = math.random (1, 2),
-						z = math.random (-1, 1),
-					},
-					acceleration = {
-						x = 0,
-						y = math.random(-9, -5),
-						z = 0,
-					},
-					collision_removal = true,
-					size = math.random (0.5, 1.5),
-					glow = self._slime_particle_glow,
-			})
-		end
-
+		local v = 1
+		minetest.add_particlespawner ({
+			amount = math.round (radius * 32),
+			minpos = vector.offset (self_pos, -radius, 0, -radius),
+			maxpos = vector.offset (self_pos, radius, 0, radius),
+			minvel = vector.new (-v, 0, -v),
+			maxvel = vector.new (v, 0, v),
+			minacc = vector.new (0, 0, 0),
+			maxacc = vector.new (0, 0, 0),
+			texture = self._get_slime_particle (),
+			time = 0.1,
+			minexptime = 0.1,
+			maxexptime = 0.6,
+			minsize = 0.5,
+			maxsize = 1.5,
+			glow = self._slime_particle_glow,
+		})
 	end
 	self._slime_was_touching_ground = moveresult.touching_ground
 end
@@ -279,10 +269,10 @@ local slime_big = {
 		return "[combine:" .. math.random (3)
 			.. "x" .. math.random (3) .. ":-"
 			.. math.random (4) .. ",-"
-			.. math.random (4) .. "=vlf_core_slime.png"
+			.. math.random (4) .. "=mcl_core_slime.png"
 	end
 }
-vlf_mobs.register_mob("mobs_mc:slime_big", slime_big)
+mcl_mobs.register_mob("mobs_mc:slime_big", slime_big)
 
 local slime_small = table.copy(slime_big)
 slime_small.description = S("Slime - small")
@@ -299,7 +289,7 @@ slime_small.movement_speed = 6.0
 slime_small.spawn_small_alternative = "mobs_mc:slime_tiny"
 slime_small.on_die = spawn_children_on_die("mobs_mc:slime_tiny", 0.6, 1.0)
 slime_small.sound_params.gain = slime_big.sound_params.gain / 3
-vlf_mobs.register_mob("mobs_mc:slime_small", slime_small)
+mcl_mobs.register_mob("mobs_mc:slime_small", slime_small)
 
 local slime_tiny = table.copy(slime_big)
 slime_tiny.description = S("Slime - tiny")
@@ -314,7 +304,7 @@ slime_tiny.damage = 0
 slime_tiny.reach = 2.5
 slime_tiny.drops = {
 	-- slimeball
-	{name = "vlf_mobitems:slimeball",
+	{name = "mcl_mobitems:slimeball",
 	chance = 1,
 	min = 0,
 	max = 2,},
@@ -324,7 +314,7 @@ slime_tiny.spawn_small_alternative = nil
 slime_tiny.on_die = nil
 slime_tiny.sound_params.gain = slime_small.sound_params.gain / 3
 
-vlf_mobs.register_mob("mobs_mc:slime_tiny", slime_tiny)
+mcl_mobs.register_mob("mobs_mc:slime_tiny", slime_tiny)
 
 local water_level = mobs_mc.water_level
 
@@ -363,7 +353,7 @@ local cave_biomes = {
 	"MangroveSwamp_underground"
 }
 
-local cave_min = vlf_vars.mg_overworld_min
+local cave_min = mcl_vars.mg_overworld_min
 local cave_max = water_level - 23
 
 local swampy_biomes = {"Swampland", "MangroveSwamp"}
@@ -375,7 +365,7 @@ for slime_name,slime_chance in pairs({
 	["mobs_mc:slime_small"] = 1000,
 	["mobs_mc:slime_big"] = 1000
 }) do
-	vlf_mobs.spawn_setup({
+	mcl_mobs.spawn_setup({
 		name = slime_name,
 		type_of_spawning = "ground",
 		dimension = "overworld",
@@ -388,7 +378,7 @@ for slime_name,slime_chance in pairs({
 		check_position = in_slime_chunk,
 	})
 
-	vlf_mobs.spawn_setup({
+	mcl_mobs.spawn_setup({
 		name = slime_name,
 		type_of_spawning = "ground",
 		dimension = "overworld",
@@ -433,7 +423,7 @@ local magma_cube_big = {
 	reach = 3,
 	armor = 53,
 	drops = {
-		{name = "vlf_mobitems:magma_cream",
+		{name = "mcl_mobitems:magma_cream",
 		chance = 4,
 		min = 1,
 		max = 1,},
@@ -456,7 +446,7 @@ local magma_cube_big = {
 	do_custom = slime_check_particle,
 	jump_delay_multiplier = 4,
 	water_damage = 0,
-	_vlf_freeze_damage = 5,
+	_mcl_freeze_damage = 5,
 	lava_damage = 0,
         fire_damage = 0,
 	fall_damage = 0,
@@ -469,12 +459,12 @@ local magma_cube_big = {
 		"mobs_mc:iron_golem",
 	},
 	_get_slime_particle = function ()
-		return "vlf_particles_fire_flame.png"
+		return "mcl_particles_fire_flame.png"
 	end,
 	attack_type = "null",
 	_slime_particle_glow = 14,
 }
-vlf_mobs.register_mob("mobs_mc:magma_cube_big", magma_cube_big)
+mcl_mobs.register_mob("mobs_mc:magma_cube_big", magma_cube_big)
 
 local magma_cube_small = table.copy(magma_cube_big)
 magma_cube_small.description = S("Magma Cube - small")
@@ -496,7 +486,7 @@ magma_cube_small.armor = 66
 magma_cube_small.spawn_small_alternative = "mobs_mc:magma_cube_tiny"
 magma_cube_small.on_die = spawn_children_on_die("mobs_mc:magma_cube_tiny", 0.6, 1.0)
 magma_cube_small.sound_params.gain = 0.7 -- has different sound file from big
-vlf_mobs.register_mob("mobs_mc:magma_cube_small", magma_cube_small)
+mcl_mobs.register_mob("mobs_mc:magma_cube_small", magma_cube_small)
 
 local magma_cube_tiny = table.copy(magma_cube_big)
 magma_cube_tiny.description = S("Magma Cube - tiny")
@@ -519,14 +509,14 @@ magma_cube_tiny.spawn_small_alternative = nil
 magma_cube_tiny.on_die = nil
 magma_cube_tiny.sound_params.gain = magma_cube_small.sound_params.gain / 3
 
-vlf_mobs.register_mob("mobs_mc:magma_cube_tiny", magma_cube_tiny)
+mcl_mobs.register_mob("mobs_mc:magma_cube_tiny", magma_cube_tiny)
 
 for magma_name,magma_chance in pairs({
 	["mobs_mc:magma_cube_tiny"] = 100,
 	["mobs_mc:magma_cube_small"] = 100,
 	["mobs_mc:magma_cube_big"] = 100
 }) do
-	vlf_mobs.spawn_setup({
+	mcl_mobs.spawn_setup({
 		name = magma_name,
 		type_of_spawning = "ground",
 		dimension = "nether",
@@ -538,6 +528,6 @@ for magma_name,magma_chance in pairs({
 end
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:magma_cube_big", S("Magma Cube"), "#350000", "#fcfc00")
+mcl_mobs.register_egg("mobs_mc:magma_cube_big", S("Magma Cube"), "#350000", "#fcfc00")
 
-vlf_mobs.register_egg("mobs_mc:slime_big", S("Slime"), "#52a03e", "#7ebf6d")
+mcl_mobs.register_egg("mobs_mc:slime_big", S("Slime"), "#52a03e", "#7ebf6d")

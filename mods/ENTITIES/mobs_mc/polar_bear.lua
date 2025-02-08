@@ -1,7 +1,7 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 --###################
 --################### POLARBEAR
@@ -33,7 +33,7 @@ local polar_bear = {
 	head_yaw = "z",
 	visual_size = {x=3.0, y=3.0},
 	makes_footstep_sound = true,
-	_vlf_freeze_damage = 0,
+	_mcl_freeze_damage = 0,
 	damage = 6,
 	reach = 2,
 	movement_speed = 5.0,
@@ -42,7 +42,7 @@ local polar_bear = {
 	drops = {
 		-- 3/4 chance to drop raw fish (poor approximation)
 		{
-			name = "vlf_fishing:fish_raw",
+			name = "mcl_fishing:fish_raw",
 			chance = 2,
 			min = 0,
 			max = 2,
@@ -50,7 +50,7 @@ local polar_bear = {
 		},
 		-- 1/4 to drop raw salmon
 		{
-			name = "vlf_fishing:salmon_raw",
+			name = "mcl_fishing:salmon_raw",
 			chance = 4,
 			min = 0,
 			max = 2,
@@ -256,7 +256,7 @@ function polar_bear:is_frightened ()
 		and self.runaway_timer > 0 then
 		return true
 	end
-	return vlf_burning.is_burning (self.object)
+	return mcl_burning.is_burning (self.object)
 end
 
 function polar_bear:check_attack (self_pos, dtime)
@@ -273,13 +273,13 @@ polar_bear.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:polar_bear", polar_bear)
+mcl_mobs.register_mob ("mobs_mc:polar_bear", polar_bear)
 
 ------------------------------------------------------------------------
 -- Polar bear spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:polar_bear",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -293,4 +293,4 @@ vlf_mobs.spawn_setup ({
 })
 
 -- spawn egg
-vlf_mobs.register_egg("mobs_mc:polar_bear", S("Polar Bear"), "#f2f2f2", "#959590", 0)
+mcl_mobs.register_egg("mobs_mc:polar_bear", S("Polar Bear"), "#f2f2f2", "#959590", 0)

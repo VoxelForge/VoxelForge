@@ -67,10 +67,13 @@ msgstr "Großer Wächter"
 msgid "Hoglin"
 msgstr ""
 
+msgid "Baby Hoglin"
+msgstr ""
+
 msgid "Zoglin"
 msgstr ""
 
-msgid "Baby Hoglin"
+msgid "Sneak to dismount"
 msgstr ""
 
 msgid "Horse"
@@ -87,9 +90,6 @@ msgstr "Esel"
 
 msgid "Mule"
 msgstr "Maultier"
-
-msgid "Sneak to dismount"
-msgstr ""
 
 msgid "Iron Golem"
 msgstr "Eisengolem"
@@ -112,13 +112,13 @@ msgstr "Schwein"
 msgid "Piglin"
 msgstr ""
 
-msgid "Zombiefied Piglin"
-msgstr ""
-
 msgid "Piglin Brute"
 msgstr ""
 
 msgid "Zombie Piglin"
+msgstr ""
+
+msgid "Zombified Piglin"
 msgstr ""
 
 msgid "Pillager"
@@ -211,32 +211,17 @@ msgstr "Plagegeist"
 msgid "Villager"
 msgstr "Dorfbewohner"
 
-msgid "Evoker"
-msgstr "Magier"
+msgid "Armorer"
+msgstr "Rüstungsschmied"
 
-msgid "Illusioner"
-msgstr "Illusionist"
+msgid "Butcher"
+msgstr "Metzger"
 
-msgid "Vindicator"
-msgstr "Diener"
+msgid "Cartographer"
+msgstr "Kartograph"
 
-msgid "Zombie Villager"
-msgstr "Dorfbewohnerzombie"
-
-msgid "@1 sleeps here"
-msgstr ""
-
-msgid "A villager sleeps here"
-msgstr "Hier schläft ein Dorfbewohner"
-
-msgid "@1 works here"
-msgstr ""
-
-msgid "A villager works here"
-msgstr ""
-
-msgid "Unemployed"
-msgstr ""
+msgid "Cleric"
+msgstr "Priester"
 
 msgid "Farmer"
 msgstr "Bauer"
@@ -247,41 +232,26 @@ msgstr "Fischer"
 msgid "Fletcher"
 msgstr "Pfeilmacher"
 
-msgid "Shepherd"
-msgstr "Schäfer"
+msgid "Leatherworker"
+msgstr "Lederarbeiter"
 
 msgid "Librarian"
 msgstr "Bibliothekar"
 
-msgid "Cartographer"
-msgstr "Kartograph"
-
-msgid "Armorer"
-msgstr "Rüstungsschmied"
-
-msgid "Leatherworker"
-msgstr "Lederarbeiter"
-
-msgid "Butcher"
-msgstr "Metzger"
-
-msgid "Weapon Smith"
-msgstr "Waffenschmied"
-
-msgid "Tool Smith"
-msgstr "Werkzeugschmied"
-
-msgid "Cleric"
-msgstr "Priester"
-
 msgid "Mason"
+msgstr ""
+
+msgid "Shepherd"
+msgstr "Schäfer"
+
+msgid "Toolsmith"
+msgstr ""
+
+msgid "Weaponsmith"
 msgstr ""
 
 msgid "Nitwit"
 msgstr "Dorftrottel"
-
-msgid "Wandering Trader"
-msgstr ""
 
 msgid "Novice"
 msgstr ""
@@ -298,6 +268,24 @@ msgstr ""
 msgid "Master"
 msgstr ""
 
+msgid "Evoker"
+msgstr "Magier"
+
+msgid "Illusioner"
+msgstr "Illusionist"
+
+msgid "Vindicator"
+msgstr "Diener"
+
+msgid "Zombie Villager"
+msgstr "Dorfbewohnerzombie"
+
+msgid "Wandering Trader"
+msgstr ""
+
+msgid "Trader Llama"
+msgstr ""
+
 msgid "Witch"
 msgstr "Hexe"
 
@@ -306,9 +294,6 @@ msgstr "Wither"
 
 msgid "Wolf"
 msgstr "Wolf"
-
-msgid "Dog"
-msgstr ""
 
 msgid "Zombie"
 msgstr "Zombie"
@@ -320,8 +305,5 @@ msgid "Husk"
 msgstr "Wüstenzombie"
 
 msgid "Baby Husk"
-msgstr ""
-
-msgid "Zombified Piglin"
 msgstr ""
 

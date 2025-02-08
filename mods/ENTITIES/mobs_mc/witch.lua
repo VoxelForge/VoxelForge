@@ -4,7 +4,7 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 local raid_mob = mobs_mc.raid_mob
 
 --###################
@@ -19,37 +19,37 @@ local WIELD_POSITION = vector.copy ({
 
 local witch_base_drops = {
 	{
-		name = "vlf_potions:glass_bottle",
+		name = "mcl_potions:glass_bottle",
 		chance = 8, min = 0, max = 2,
 		looting = "common",
 	},
 	{
-		name = "vlf_nether:glowstone_dust",
+		name = "mcl_nether:glowstone_dust",
 		chance = 8, min = 0, max = 2,
 		looting = "common",
 	},
 	{
-		name = "vlf_mobitems:gunpowder",
+		name = "mcl_mobitems:gunpowder",
 		chance = 8, min = 0, max = 2,
 		looting = "common",
 	},
 	{
-		name = "vlf_redstone:redstone",
+		name = "mcl_redstone:redstone",
 		chance = 1, min = 4, max = 8,
 		looting = "common",
 	},
 	{
-		name = "vlf_mobitems:spider_eye",
+		name = "mcl_mobitems:spider_eye",
 		chance = 8, min = 0, max = 2,
 		looting = "common",
 	},
 	{
-		name = "vlf_core:sugar",
+		name = "mcl_core:sugar",
 		chance = 8, min = 0, max = 2,
 		looting = "common",
 	},
 	{
-		name = "vlf_core:stick",
+		name = "mcl_core:stick",
 		chance = 4, min = 0, max = 2,
 		looting = "common",
 	},
@@ -115,6 +115,7 @@ local witch = table.merge (raid_mob, {
 		bone = "arm",
 	},
 	wielditem_drop_probability = 0.085,
+	_can_serve_as_captain = false,
 })
 
 ------------------------------------------------------------------------
@@ -142,7 +143,7 @@ local function witch_consume_potion (self, wielditem)
 	self:remove_physics_factor ("movement_speed", "mobs_mc:witch_potion_penalty")
 
 	local potion = wielditem:get_name ()
-	vlf_potions.consume_potion (self.object, potion, 0, 0)
+	mcl_potions.consume_potion (self.object, potion, 0, 0)
 	self:set_wielditem (ItemStack ())
 	 -- Play a sound.
 	local sound = {
@@ -156,35 +157,35 @@ end
 
 local witch_potion_items = {
 	{
-		potion = "vlf_potions:water_breathing",
+		potion = "mcl_potions:water_breathing",
 		test = function (self)
 			local head_nodedef = minetest.registered_nodes[self.head_in]
-			return (not vlf_potions.has_effect (self.object, "water_breathing")
+			return (not mcl_potions.has_effect (self.object, "water_breathing")
 				and head_nodedef and head_nodedef.drowning > 0)
 		end,
 		chance = 15,
 	},
 	{
-		potion = "vlf_potions:fire_resistance",
+		potion = "mcl_potions:fire_resistance",
 		test = function (self)
-			return (vlf_burning.is_burning (self.object)
-				and not vlf_potions.has_effect (self.object,
+			return (mcl_burning.is_burning (self.object)
+				and not mcl_potions.has_effect (self.object,
 								"fire_resistance"))
 		end,
 		chance = 15,
 	},
 	{
-		potion = "vlf_potions:healing",
+		potion = "mcl_potions:healing",
 		test = function (self)
 			return self.health < self.object:get_properties ().hp_max
 		end,
 		chance = 5,
 	},
 	{
-		potion = "vlf_potions:swiftness",
+		potion = "mcl_potions:swiftness",
 		test = function (self)
 			if self.attack then
-				if vlf_potions.has_effect (self.object, "swiftness") then
+				if mcl_potions.has_effect (self.object, "swiftness") then
 					return false
 				end
 				local pos = self.attack:get_pos ()
@@ -210,16 +211,16 @@ local function check_behind (self, obj_pos, target_pos)
 	 return vector.dot (v, x) <= 0
 end
 
-function witch:receive_damage (vlf_reason, damage)
+function witch:receive_damage (mcl_reason, damage)
 	local factor = 1
-	if vlf_reason.type == "magic" then
+	if mcl_reason.type == "magic" then
 		factor = 0.15
 	end
-	return mob_class.receive_damage (self, vlf_reason, damage * factor)
+	return mob_class.receive_damage (self, mcl_reason, damage * factor)
 end
 
 function witch:shoot_arrow (p, vec)
-	local effect_potion = "vlf_potions:harming_splash"
+	local effect_potion = "mcl_potions:harming_splash"
 	local target_hp, target_pos
 
 	if not self.attack or not self:get_wielditem ():is_empty () then
@@ -247,20 +248,20 @@ function witch:shoot_arrow (p, vec)
 		-- either regeneration or instant health subject to
 		-- its remaining health.
 		if target_hp and target_hp <= 4.0 then
-			effect_potion = "vlf_potions:healing_splash"
+			effect_potion = "mcl_potions:healing_splash"
 		else
-			effect_potion = "vlf_potions:regeneration_splash"
+			effect_potion = "mcl_potions:regeneration_splash"
 		end
 	elseif dist >= 8
-		and not vlf_potions.has_effect (self.attack, "slowness") then
-		effect_potion = "vlf_potions:slowness_splash"
+		and not mcl_potions.has_effect (self.attack, "slowness") then
+		effect_potion = "mcl_potions:slowness_splash"
 	elseif target_hp >= 8
-		and not vlf_potions.has_effect (self.attack, "poison") then
-		effect_potion = "vlf_potions:poison_splash"
+		and not mcl_potions.has_effect (self.attack, "poison") then
+		effect_potion = "mcl_potions:poison_splash"
 	elseif dist <= 3
-		and not vlf_potions.has_effect (self.attack, "weakness")
+		and not mcl_potions.has_effect (self.attack, "weakness")
 		and math.random (1, 4) == 1 then
-		effect_potion = "vlf_potions:weakness_splash"
+		effect_potion = "mcl_potions:weakness_splash"
 	end
 
 	-- Adjust for deceleration and entity movement.
@@ -275,7 +276,7 @@ function witch:shoot_arrow (p, vec)
 
 	local d = vector.subtract (target_pos, p)
 	d.y = d.y + 0.25 + vector.length (d) * 0.25
-	vlf_potions.throw_splash (effect_potion, vector.normalize (d), p, self.object, 0, 0)
+	mcl_potions.throw_splash (effect_potion, vector.normalize (d), p, self.object, 0, 0)
 end
 
 function witch:ai_step (dtime)
@@ -373,13 +374,13 @@ witch.ai_functions = {
 	raid_mob.check_celebrate,
 }
 
-vlf_mobs.register_mob ("mobs_mc:witch", witch)
+mcl_mobs.register_mob ("mobs_mc:witch", witch)
 
 ------------------------------------------------------------------------
 -- Witch spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:witch",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -392,7 +393,7 @@ vlf_mobs.spawn_setup ({
 	chance = 200,
 })
 
-vlf_mobs.register_egg ("mobs_mc:witch", S("Witch"), "#340000", "#51a03e", 0)
+mcl_mobs.register_egg ("mobs_mc:witch", S("Witch"), "#340000", "#51a03e", 0)
 
 ------------------------------------------------------------------------
 -- Legacy Witch wielditem entity.  This entity is retained to avoid
@@ -404,7 +405,7 @@ local potion_props = {
 	physical = false,
 	pointable = false,
 	static_save = false,
-	wield_item = "vlf_potions:water",
+	wield_item = "mcl_potions:water",
 }
 
 local witch_potion_entity = {

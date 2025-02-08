@@ -8,12 +8,6 @@ local dlimit = 3  -- HUD element will be hidden after this many seconds
 
 local hudbars_mod = minetest.get_modpath("hudbars")
 
--- TODO: when < minetest 5.9 isn't supported anymore, remove this variable check and replace all occurences of [hud_elem_type_field] with type
-local hud_elem_type_field = "type"
-if not minetest.features.hud_def_type_field then
-	hud_elem_type_field = "hud_elem_type"
-end
-
 local function set_hud(player)
 	if not player:is_player() then return end
 	local player_name = player:get_player_name()
@@ -42,7 +36,7 @@ local function set_hud(player)
 	end
 
 	huds[player_name] = player:hud_add({
-		[hud_elem_type_field] = "text",
+		type = "text",
 		position = {x=0.5, y=1},
 		offset = off,
 		alignment = {x=0, y=0},
@@ -75,7 +69,7 @@ local function get_first_line(text)
 	return text
 end
 
-vlf_player.register_globalstep(function(player, dtime)
+mcl_player.register_globalstep(function(player, dtime)
 	local player_name = player:get_player_name()
 	local wstack = player:get_wielded_item()
 	local wname = wstack:get_name()

@@ -143,7 +143,7 @@ msgid "This item can serve as a smelting fuel with a burning time of @1."
 msgstr "Dieser Gegenstand kann als Brennstoff mit einer Brenndauer von @1 dienen."
 
 msgid " Using it as fuel turns it into: @1."
-msgstr ""
+msgstr " Es als Brennstoff zu verwenden macht es zu: @1."
 
 msgid "Itemstring: \"@1\""
 msgstr "Itemstring: „@1“"
@@ -383,31 +383,31 @@ msgid "Item reference of items which are neither blocks, tools or weapons (esp. 
 msgstr "Gegenstandsreferenz aller Gegenstände, welche weder Blöcke, Werkzeuge oder Waffen sind (insb. Fertigungsgegenstände)"
 
 msgid "Mobs"
-msgstr ""
+msgstr "Kreaturen"
 
 msgid "Different Mobs"
-msgstr ""
+msgstr "Verschiedene Kreaturen"
 
 msgid "Type: @1"
-msgstr ""
+msgstr "Typ: @1"
 
 msgid "Spawning light levels (min / max): @1 / @2"
-msgstr ""
+msgstr "Lichtlevel zum Spawnen (min/max): @1/@2"
 
 msgid "Can Jump a height of @1 nodes"
-msgstr ""
+msgstr "Kann @1 Nodes hoch springen"
 
 msgid "Can Fly"
-msgstr ""
+msgstr "Kann fliegen"
 
 msgid "Can Swim"
-msgstr ""
+msgstr "Kann schwimmen"
 
 msgid "Drops: "
-msgstr ""
+msgstr "Lässt fallen: "
 
 msgid "Follows player when these items are held:"
-msgstr ""
+msgstr "Folgt dem Spieler, wenn diese Gegenstände gehalten werden:"
 
 msgid "A transparent block, basically empty space. It is usually left behind after digging something."
 msgstr "Ein transparenter Block, praktisch leerer Raum. Er wird üblicherweise hinterlassen, nachdem man etwas ausgegraben hat."

@@ -4,11 +4,11 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
-local posing_humanoid = vlf_mobs.posing_humanoid
+local mob_class = mcl_mobs.mob_class
+local posing_humanoid = mcl_mobs.posing_humanoid
 local illager = mobs_mc.illager
 local evoker = mobs_mc.evoker
-local is_valid = vlf_util.is_valid_objectref
+local is_valid = mcl_util.is_valid_objectref
 
 ------------------------------------------------------------------------
 -- Illusioner.
@@ -80,9 +80,9 @@ local illusioner = table.merge (evoker, table.merge (posing_humanoid, {
 ------------------------------------------------------------------------
 
 function illusioner:on_spawn ()
-	local stack = ItemStack ("vlf_bows:bow")
+	local stack = ItemStack ("mcl_bows:bow")
 	local self_pos = self.object:get_pos ()
-	local mob_factor = vlf_worlds.get_special_difficulty (self_pos)
+	local mob_factor = mcl_worlds.get_special_difficulty (self_pos)
 	evoker.on_spawn (self)
 	self:set_wielditem (stack)
 	self:enchant_default_weapon (mob_factor, pr)
@@ -280,8 +280,8 @@ function illusioner:refresh_illusion (offsets, yaw)
 	self:set_bone_position ("body.004", offsets[4], yaw)
 end
 
-function illusioner:receive_damage (vlf_reason, damage)
-	if mob_class.receive_damage (self, vlf_reason, damage)
+function illusioner:receive_damage (mcl_reason, damage)
+	if mob_class.receive_damage (self, mcl_reason, damage)
 		and self._illusion_offsets then
 		self._timers.illusion = 0.5
 
@@ -453,7 +453,7 @@ function illusioner:display_wielditem (offhand)
 			if is_valid (decoy) then
 				local bone = "bow.00" .. i
 				decoy:set_attach (self.object, bone)
-				vlf_util.set_bone_position (self.object, bone, pos, rot)
+				mcl_util.set_bone_position (self.object, bone, pos, rot)
 				decoy:set_properties ({
 					wield_item = name,
 					visual_size = size,
@@ -477,7 +477,7 @@ function illusioner:create_wielditems ()
 			and is_valid (self._wielditem_object) then
 			new_wielditems[1] = self._wielditem_object
 			new_wielditems[1]:set_attach (self.object, "bow.001")
-			vlf_util.set_bone_position (self.object, "bow.001", pos, rot)
+			mcl_util.set_bone_position (self.object, "bow.001", pos, rot)
 			new_wielditems[1]:set_properties ({
 				wield_item = name,
 				visual_size = size,
@@ -487,13 +487,13 @@ function illusioner:create_wielditems ()
 		for i = #new_wielditems + 1, 4 do
 			local bone = "bow.00" .. i
 			new_wielditems[i]
-				= minetest.add_entity (self_pos, "vlf_mobs:wielditem")
+				= minetest.add_entity (self_pos, "mcl_mobs:wielditem")
 
 			if not new_wielditems[i] then
 				return
 			end
 			new_wielditems[i]:set_attach (self.object, bone)
-			vlf_util.set_bone_position (self.object, bone, pos, rot)
+			mcl_util.set_bone_position (self.object, bone, pos, rot)
 			new_wielditems[i]:set_properties ({
 				wield_item = name,
 				visual_size = size,
@@ -561,11 +561,11 @@ local illusioner_mirror_spell = evoker.define_spell ({
 	duration = 1.0,
 	interval = 17,
 	check_activate = function (self, self_pos, dtime)
-		return not vlf_potions.has_effect (self.object, "invisibility")
+		return not mcl_potions.has_effect (self.object, "invisibility")
 	end,
 	step = function (self, self_pos, dtime, rem)
-		if not vlf_potions.has_effect (self.object, "invisibility") then
-			vlf_potions.give_effect ("invisibility", self.object, 0, 60)
+		if not mcl_potions.has_effect (self.object, "invisibility") then
+			mcl_potions.give_effect ("invisibility", self.object, 0, 60)
 		end
 		return rem > 0
 	end,
@@ -580,15 +580,15 @@ local illusioner_blindness_spell = evoker.define_spell ({
 	check_activate = function (self, self_pos, dtime)
 		if self._last_blinded ~= self.attack and self.attack then
 			local difficulty
-				= vlf_worlds.get_regional_difficulty (self_pos)
+				= mcl_worlds.get_regional_difficulty (self_pos)
 			return difficulty >= 2.0
 		end
 		return false
 	end,
 	step = function (self, self_pos, dtime, rem)
 		if self.attack and is_valid (self.attack)
-			and not vlf_potions.has_effect (self.attack, "blindness") then
-			vlf_potions.give_effect ("blindness", self.attack, 0, 60)
+			and not mcl_potions.has_effect (self.attack, "blindness") then
+			mcl_potions.give_effect ("blindness", self.attack, 0, 60)
 		end
 		self._last_blinded = self.attack
 		return rem > 0
@@ -623,7 +623,7 @@ end
 
 function illusioner:shoot_arrow (pos, dir)
 	local wielditem = self:get_wielditem ()
-	vlf_bows.shoot_arrow ("vlf_bows:arrow", pos, dir,
+	mcl_bows.shoot_arrow ("mcl_bows:arrow", pos, dir,
 			self:get_yaw (), self.object, 0.5333333, nil,
 			false, wielditem)
 end
@@ -638,10 +638,10 @@ illusioner.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:illusioner", illusioner)
+mcl_mobs.register_mob ("mobs_mc:illusioner", illusioner)
 
 ------------------------------------------------------------------------
 -- Illusioner spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.register_egg ("mobs_mc:illusioner", S("Illusioner"), "#3f5cbb", "#8a8686", 0)
+mcl_mobs.register_egg ("mobs_mc:illusioner", S("Illusioner"), "#3f5cbb", "#8a8686", 0)

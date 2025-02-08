@@ -4,8 +4,8 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
-local is_valid = vlf_util.is_valid_objectref
+local mob_class = mcl_mobs.mob_class
+local is_valid = mcl_util.is_valid_objectref
 
 --###################
 --################### STRIDER
@@ -46,7 +46,7 @@ local strider = {
 	movement_speed = 3.5,
 	drops = {
 		{
-			name = "vlf_mobsitems:string",
+			name = "mcl_mobsitems:string",
 			chance = 1,
 			min = 2,
 			max = 5,
@@ -61,18 +61,18 @@ local strider = {
 		walk_end = 20,
 	},
 	follow = {
-		"vlf_crimson:warped_fungus",
-		"vlf_mobitems:warped_fungus_on_a_stick",
+		"mcl_crimson:warped_fungus",
+		"mcl_mobitems:warped_fungus_on_a_stick",
 	},
 	lava_damage = 0,
 	fire_damage = 0,
 	water_damage = 5,
-	_vlf_freeze_damage = 5,
+	_mcl_freeze_damage = 5,
 	fire_resistant = true,
 	floats_on_lava = true,
 	floats = 0,
 	steer_class = "follow_item",
-	steer_item = "vlf_mobitems:warped_fungus_on_a_stick",
+	steer_item = "mcl_mobitems:warped_fungus_on_a_stick",
 	run_bonus = 1.65,
 	follow_herd_bonus = 1.0,
 	follow_bonus = 1.4,
@@ -104,7 +104,7 @@ function strider:on_spawn ()
 					z = 0,
 				}
 				entity:jock_to_existing (self.object, "", pos)
-				entity:set_wielditem (ItemStack ("vlf_mobitems:warped_fungus_on_a_stick"))
+				entity:set_wielditem (ItemStack ("mcl_mobitems:warped_fungus_on_a_stick"))
 			end
 		elseif pr:next (1, 10) == 1 then
 			local self_pos = self.object:get_pos ()
@@ -141,7 +141,7 @@ end
 -- Nullify all lava damage for players mounted on striders.  This is
 -- not optimal at all, but the server is unaware of attachment points
 -- and would otherwise regard riders as in contact with lava below.
-vlf_damage.register_modifier (function (obj, damage, reason)
+mcl_damage.register_modifier (function (obj, damage, reason)
 	if reason.type == "lava" and obj:is_player ()
 		and mobs_mc.is_riding_strider (obj) then
 		return 0
@@ -150,7 +150,7 @@ vlf_damage.register_modifier (function (obj, damage, reason)
 end, -1000)
 
 function strider:detach (driver, pos)
-	local thing = vlf_util.get_pointed_thing (driver, false, false, {})
+	local thing = mcl_util.get_pointed_thing (driver, false, false, {})
 	if thing and thing.type == "node" then
 		local self_pos = self.object:get_pos ()
 		local node_pos = vector.offset (thing.under, 0, 1, 0)
@@ -187,7 +187,7 @@ function strider:on_rightclick (clicker)
 	local item = clicker:get_wielded_item ()
 	local name = item:get_name ()
 
-	if name == "vlf_crimson:warped_fungus" then
+	if name == "mcl_crimson:warped_fungus" then
 		self:mob_sound ("eat")
 		if self:feed_tame (clicker, 0, true, false) then
 			return
@@ -198,7 +198,7 @@ function strider:on_rightclick (clicker)
 		return
 	end
 
-	if name == "vlf_mobitems:saddle" and self.saddle ~= "yes" then
+	if name == "mcl_mobitems:saddle" and self.saddle ~= "yes" then
 		self.base_texture = {
 			"extra_mobs_strider.png",
 			"mobs_mc_pig_saddle.png",
@@ -207,13 +207,13 @@ function strider:on_rightclick (clicker)
 		self.saddle = "yes"
 		self.drops = {
 			{
-				name = "vlf_mobitems:string",
+				name = "mcl_mobitems:string",
 				chance = 1,
 				min = 1,
 				max = 3,
 			},
 			{
-				name = "vlf_mobitems:saddle",
+				name = "mcl_mobitems:saddle",
 				chance = 1,
 				min = 1,
 				max = 1,
@@ -223,7 +223,7 @@ function strider:on_rightclick (clicker)
 		if not minetest.is_creative_enabled (clicker_name) then
 			item:take_item ()
 			clicker:set_wielded_item (item)
-			minetest.sound_play ({name = "vlf_armor_equip_leather"},
+			minetest.sound_play ({name = "mcl_armor_equip_leather"},
 				{gain=0.5, max_hear_distance=8, pos=self.object:get_pos()}, true)
 		end
 	elseif not self.driver
@@ -235,7 +235,7 @@ function strider:on_rightclick (clicker)
 		self.driver_scale = {x = 1/vsize.x, y = 1/vsize.y}
 		self:attach (clicker)
 	elseif self.driver and clicker == self.driver then
-		if name == "vlf_mobitems:warped_fungus_on_a_stick" then
+		if name == "mcl_mobitems:warped_fungus_on_a_stick" then
 			self:hog_boost ()
 		else
 			self:detach (clicker, {x = 1, y = 0, z = 0})
@@ -259,7 +259,7 @@ end
 -- propagate the textures of saddled striders to their offspring.
 function strider:on_breed (parent1, parent2)
 	local pos = parent1.object:get_pos ()
-	local child = vlf_mobs.spawn_child (pos, parent1.name)
+	local child = mcl_mobs.spawn_child (pos, parent1.name)
 	if child then
 		local ent_c = child:get_luaentity ()
 		ent_c.persistent = true
@@ -336,7 +336,7 @@ local function strider_go_to_lava (self, self_pos, dtime)
 		if not self:check_timer ("strider_locate_lava", 0.5) then
 			return false
 		end
-		local nodepos = vlf_util.get_nodepos (self_pos)
+		local nodepos = mcl_util.get_nodepos (self_pos)
 		local aa = vector.offset (nodepos, -8, -2, -8)
 		local bb = vector.offset (nodepos, 8, 2, 8)
 		local lava = minetest.find_nodes_in_area_under_air (aa, bb, {
@@ -379,7 +379,7 @@ strider.ai_functions = {
 ------------------------------------------------------------------------
 
 local gwp_ej_scratch = vector.zero ()
-local gwp_basic_classify = vlf_mobs.gwp_basic_classify
+local gwp_basic_classify = mcl_mobs.gwp_basic_classify
 
 function strider:gwp_essay_jump (context, target, parent, floor)
 	-- Striders cannot jump from lava onto a normal walkable
@@ -436,8 +436,8 @@ strider.gwp_penalties = table.merge (mob_class.gwp_penalties, {
 ------------------------------------------------------------------------
 
 local spawn_nodes = {
-	"vlf_nether:nether_lava_source",
-	"vlf_nether:nether_lava_flowing",
+	"mcl_nether:nether_lava_source",
+	"mcl_nether:nether_lava_flowing",
 }
 
 function strider.can_spawn (pos)
@@ -445,16 +445,16 @@ function strider.can_spawn (pos)
 	return l ~= nil
 end
 
-vlf_mobs.register_mob ("mobs_mc:strider", strider)
+mcl_mobs.register_mob ("mobs_mc:strider", strider)
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:strider",
 	type_of_spawning = "lava",
 	dimension = "nether",
 	chance = 200,
 })
 
-vlf_mobs.register_egg ("mobs_mc:strider", S("Strider"), "#000000", "#FF0000", 0)
+mcl_mobs.register_egg ("mobs_mc:strider", S("Strider"), "#000000", "#FF0000", 0)
 
 -----------------------------------------------------------------------
 -- Legacy baby strider.
@@ -482,5 +482,5 @@ function old_baby_strider:mob_activate (staticdata, dtime)
 	return true
 end
 
-vlf_mobs.register_mob ("mobs_mc:baby_strider", old_baby_strider)
+mcl_mobs.register_mob ("mobs_mc:baby_strider", old_baby_strider)
 

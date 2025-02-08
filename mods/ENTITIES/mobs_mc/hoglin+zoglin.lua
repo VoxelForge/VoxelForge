@@ -2,10 +2,10 @@
 --maikerumine
 --made for MC like Survival game
 --License for code WTFPL and otherwise stated in readmes
-local is_valid = vlf_util.is_valid_objectref
+local is_valid = mcl_util.is_valid_objectref
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 --###################
 --################### hoglin
@@ -45,14 +45,14 @@ local hoglin = {
 	retaliates = true,
 	group_attack = true,
 	avoid_nodes = {
-		"vlf_crimson:warped_fungus",
-		"vlf_flowerpots:flower_pot_warped_fungus",
-		"vlf_portals:portal",
-		"vlf_beds:respawn_anchor",
-		"vlf_beds:respawn_anchor_charged_1",
-		"vlf_beds:respawn_anchor_charged_2",
-		"vlf_beds:respawn_anchor_charged_3",
-		"vlf_beds:respawn_anchor_charged_4",
+		"mcl_crimson:warped_fungus",
+		"mcl_flowerpots:flower_pot_warped_fungus",
+		"mcl_portals:portal",
+		"mcl_beds:respawn_anchor",
+		"mcl_beds:respawn_anchor_charged_1",
+		"mcl_beds:respawn_anchor_charged_2",
+		"mcl_beds:respawn_anchor_charged_3",
+		"mcl_beds:respawn_anchor_charged_4",
 	},
 	runaway_from = {
 		"mobs_mc:piglin",
@@ -60,13 +60,13 @@ local hoglin = {
 	},
 	drops = {
 		{
-			name = "vlf_mobitems:leather",
+			name = "mcl_mobitems:leather",
 			chance = 1,
 			min = 0,
 			max = 1,
 		},
 		{
-			name = "vlf_mobitems:porkchop",
+			name = "mcl_mobitems:porkchop",
 			chance = 1,
 			min = 2,
 			max = 4,
@@ -330,10 +330,14 @@ function hoglin:custom_attack ()
 	if not self.child and damage > 0 then
 		damage = damage / 2.0 + math.random (0, damage - 1)
 	end
-	vlf_util.deal_damage (self.attack, damage, {
+	mcl_util.deal_damage (self.attack, damage, {
 		type = "mob",
 		source = self.object,
 	})
+	-- self.attack may be reset if the target dies or is removed.
+	if not self.attack or not self.attack:is_valid () then
+		return
+	end
 	local knockback = 1.0 - get_knockback_resistance (self.attack)
 	if knockback > 0 and not self.child then
 		local self_pos = self.object:get_pos ()
@@ -352,7 +356,12 @@ function hoglin:custom_attack ()
 		else
 			v.y = math.random () * 20
 		end
-		self.attack:add_velocity (v)
+		if mcl_serverplayer.is_csm_capable (self.attack) then
+			local v1 = vector.add (v, self.attack:get_velocity ())
+			mcl_serverplayer.send_knockback (self.attack, v1)
+		else
+			self.attack:add_velocity (v)
+		end
 	end
 	if is_piglin (self.attack)
 		and self.child
@@ -380,7 +389,7 @@ function hoglin:on_rightclick (clicker)
 		return
 	end
 	local item = clicker:get_wielded_item ()
-	if item:get_name () == "vlf_crimson:crimson_fungus" then
+	if item:get_name () == "mcl_crimson:crimson_fungus" then
 		self:feed_tame (clicker, 4, true, false)
 	end
 end
@@ -392,11 +401,11 @@ function hoglin:on_breed (parent1)
 		return
 	end
 
-	vlf_mobs.effect (pos, 15, "vlf_particles_smoke.png", 1, 2, 2, 15, 5)
+	mcl_mobs.effect (pos, 15, "mcl_particles_smoke.png", 1, 2, 2, 15, 5)
 end
 
 function hoglin:on_grown ()
-	vlf_util.replace_mob (self.object, "mobs_mc:hoglin")
+	mcl_util.replace_mob (self.object, "mobs_mc:hoglin")
 end
 
 ------------------------------------------------------------------------
@@ -404,7 +413,7 @@ end
 ------------------------------------------------------------------------
 
 function hoglin:conversion_step (self_pos, dtime)
-	local dimension = vlf_worlds.pos_to_dimension (self_pos)
+	local dimension = mcl_worlds.pos_to_dimension (self_pos)
 	if dimension == "overworld" then
 		if not self._conversion_time then
 			self._conversion_time = 0
@@ -414,9 +423,9 @@ function hoglin:conversion_step (self_pos, dtime)
 			= self._conversion_time + dtime
 		if self._conversion_time > 15 then
 			local object
-				= vlf_util.replace_mob (self.object, self._convert_to)
+				= mcl_util.replace_mob (self.object, self._convert_to)
 			if object then
-				vlf_potions.give_effect ("nausea", object, 1, 10, false)
+				mcl_potions.give_effect ("nausea", object, 1, 10, false)
 			end
 		end
 	else
@@ -425,13 +434,13 @@ function hoglin:conversion_step (self_pos, dtime)
 	end
 end
 
-vlf_mobs.register_mob ("mobs_mc:hoglin", hoglin)
+mcl_mobs.register_mob ("mobs_mc:hoglin", hoglin)
 
 ------------------------------------------------------------------------
 -- Baby Hoglins.
 ------------------------------------------------------------------------
 
-vlf_mobs.register_mob("mobs_mc:baby_hoglin", table.merge (hoglin, {
+mcl_mobs.register_mob("mobs_mc:baby_hoglin", table.merge (hoglin, {
 	description = S("Baby Hoglin"),
 	collisionbox = {-.3, -0.01, -.3, .3, 0.94, .3},
 	xp_min = 20,
@@ -459,13 +468,13 @@ vlf_mobs.register_mob("mobs_mc:baby_hoglin", table.merge (hoglin, {
 -- Hoglin spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:hoglin",
 	type_of_spawning = "ground",
 	dimension = "nether",
 	min_light = 0,
 	max_light = minetest.LIGHT_MAX+1,
-	min_height = vlf_vars.mg_lava_nether_max,
+	min_height = mcl_vars.mg_lava_nether_max,
 	aoc = 3,
 	biomes = {
 		"Nether",
@@ -522,7 +531,7 @@ zoglin.ai_step = nil
 zoglin.call_group_attack = mob_class.call_group_attack
 zoglin.get_staticdata_table = mob_class.get_staticdata_table
 
-vlf_mobs.register_mob ("mobs_mc:zoglin", zoglin)
+mcl_mobs.register_mob ("mobs_mc:zoglin", zoglin)
 
 ------------------------------------------------------------------------
 -- Baby Zoglins.
@@ -576,7 +585,7 @@ baby_zoglin.ai_step = nil
 baby_zoglin.call_group_attack = mob_class.call_group_attack
 baby_zoglin.get_staticdata_table = mob_class.get_staticdata_table
 
-vlf_mobs.register_mob ("mobs_mc:baby_zoglin", baby_zoglin)
+mcl_mobs.register_mob ("mobs_mc:baby_zoglin", baby_zoglin)
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:hoglin", S("Hoglin"), "#85682e", "#2b2140", 0)
+mcl_mobs.register_egg("mobs_mc:hoglin", S("Hoglin"), "#85682e", "#2b2140", 0)

@@ -20,7 +20,7 @@ msgid "No help entry for this block could be found."
 msgstr "No se encontró ninguna página de ayuda para este bloque."
 
 msgid "Error: This node, item or object is undefined. This is always an error."
-msgstr "Error: Este nodo, ítem u objeto no está definido. Esto siempre es un error."
+msgstr "Error: Este nodo, ítem o objeto no está definido. Esto siempre es un error."
 
 msgid "This can happen for the following reasons:"
 msgstr "Esto puede suceder por los siguientes motivos:"
@@ -56,7 +56,7 @@ msgid "Lookup Tool"
 msgstr "Herramienta lupa"
 
 msgid "Show help for pointed thing"
-msgstr "Muestra ayuda para el objeto que estás apuntando"
+msgstr "Muestra ayuda para el ítem que estás apuntando"
 
 msgid "This useful little helper can be used to quickly learn more about about one's closer environment. It identifies and analyzes blocks, items and other things and it shows extensive information about the thing on which it is used."
 msgstr "Este pequeño y útil ayudante se puede utilizar para aprender rápidamente más sobre el entorno cercano. Identifica y analiza bloques, ítems y otras cosas, y muestra información detallada sobre el elemento en el que se usa."

@@ -23,136 +23,136 @@ msgid "Blaze"
 msgstr "Blaze"
 
 msgid "Chicken"
-msgstr ""
+msgstr "Gallina"
 
 msgid "Cod"
-msgstr ""
+msgstr "Merluzzo"
 
 msgid "Cow"
-msgstr ""
+msgstr "Mucca"
 
 msgid "Mooshroom"
-msgstr ""
+msgstr "Mooshroom"
 
 msgid "Creeper"
-msgstr ""
+msgstr "Creeper"
 
 msgid "Charged Creeper"
-msgstr ""
+msgstr "Creeper caricato"
 
 msgid "Dolphin"
-msgstr ""
+msgstr "Delfino"
 
 msgid "Ender Dragon"
-msgstr ""
+msgstr "Enderdrago"
 
 msgid "Enderman"
-msgstr ""
+msgstr "Enderman"
 
 msgid "Endermite"
-msgstr ""
+msgstr "Endermite"
 
 msgid "Ghast"
-msgstr ""
+msgstr "Ghast"
 
 msgid "Ghast Fireball"
 msgstr ""
 
 msgid "Guardian"
-msgstr ""
+msgstr "Guardiano"
 
 msgid "Elder Guardian"
-msgstr ""
+msgstr "Guardiano antico"
 
 msgid "Hoglin"
-msgstr ""
-
-msgid "Zoglin"
-msgstr ""
+msgstr "Hoglin"
 
 msgid "Baby Hoglin"
-msgstr ""
+msgstr "Hoglin bambino"
 
-msgid "Horse"
-msgstr ""
-
-msgid "Skeleton Horse"
-msgstr ""
-
-msgid "Zombie Horse"
-msgstr ""
-
-msgid "Donkey"
-msgstr ""
-
-msgid "Mule"
-msgstr ""
+msgid "Zoglin"
+msgstr "Zoglin"
 
 msgid "Sneak to dismount"
 msgstr ""
 
+msgid "Horse"
+msgstr "Cavallo"
+
+msgid "Skeleton Horse"
+msgstr "Cavallo scheletro"
+
+msgid "Zombie Horse"
+msgstr "Cavallo zombi"
+
+msgid "Donkey"
+msgstr "Asino"
+
+msgid "Mule"
+msgstr "Mulo"
+
 msgid "Iron Golem"
-msgstr ""
+msgstr "Golem di ferro"
 
 msgid "Llama"
-msgstr ""
+msgstr "Lama"
 
 msgid "Ocelot"
-msgstr ""
+msgstr "Ocelot"
 
 msgid "Cat"
-msgstr ""
+msgstr "Gatti"
 
 msgid "Parrot"
-msgstr ""
+msgstr "Pappagallo"
 
 msgid "Pig"
-msgstr ""
+msgstr "Maiale"
 
 msgid "Piglin"
-msgstr ""
-
-msgid "Zombiefied Piglin"
-msgstr ""
+msgstr "Piglin"
 
 msgid "Piglin Brute"
-msgstr ""
+msgstr "Piglin bruto"
 
 msgid "Zombie Piglin"
 msgstr ""
 
+msgid "Zombified Piglin"
+msgstr "Piglin zombificato"
+
 msgid "Pillager"
-msgstr ""
+msgstr "Predone"
 
 msgid "Polar Bear"
-msgstr ""
+msgstr "Orso polare"
 
 msgid "Rabbit"
-msgstr ""
+msgstr "Coniglio"
 
 msgid "Killer Bunny"
 msgstr ""
 
 msgid "Salmon"
-msgstr ""
+msgstr "Salmone"
 
 msgid "Sheep"
-msgstr ""
+msgstr "Pecora"
 
 msgid "Shulker"
-msgstr ""
+msgstr "Shulker"
 
 msgid "Silverfish"
-msgstr ""
+msgstr "Pesciolino d'argento"
 
 msgid "Skeleton"
-msgstr ""
+msgstr "Scheletro"
 
 msgid "Stray"
-msgstr ""
+msgstr "Errante"
 
 msgid "Wither Skeleton"
-msgstr ""
+msgstr "Scheletro wither"
 
 msgid "Slime - big"
 msgstr ""
@@ -173,69 +173,54 @@ msgid "Magma Cube - tiny"
 msgstr ""
 
 msgid "Magma Cube"
-msgstr ""
+msgstr "Cubo di magma"
 
 msgid "Slime"
-msgstr ""
+msgstr "Slime"
 
 msgid "Snow Golem"
 msgstr ""
 
 msgid "Spider"
-msgstr ""
+msgstr "Ragno"
 
 msgid "Cave Spider"
-msgstr ""
+msgstr "Ragno delle caverne"
 
 msgid "Squid"
-msgstr ""
+msgstr "Calamaro"
 
 msgid "Glow Squid"
-msgstr ""
+msgstr "Calamaro luminescente"
 
 msgid "Strider"
-msgstr ""
+msgstr "Strider"
 
 msgid "Baby Strider"
-msgstr ""
+msgstr "Strider bambino"
 
 msgid "Tropical Fish"
-msgstr ""
+msgstr "Pesce tropicale"
 
 msgid "Tropical fish"
 msgstr ""
 
 msgid "Vex"
-msgstr ""
+msgstr "Vessante"
 
 msgid "Villager"
 msgstr "Villico"
 
-msgid "Evoker"
+msgid "Armorer"
 msgstr ""
 
-msgid "Illusioner"
+msgid "Butcher"
 msgstr ""
 
-msgid "Vindicator"
+msgid "Cartographer"
 msgstr ""
 
-msgid "Zombie Villager"
-msgstr "Villico Zombie"
-
-msgid "@1 sleeps here"
-msgstr ""
-
-msgid "A villager sleeps here"
-msgstr "Un villico dorme qui"
-
-msgid "@1 works here"
-msgstr ""
-
-msgid "A villager works here"
-msgstr "Un villico lavora qui"
-
-msgid "Unemployed"
+msgid "Cleric"
 msgstr ""
 
 msgid "Farmer"
@@ -247,40 +232,25 @@ msgstr ""
 msgid "Fletcher"
 msgstr ""
 
-msgid "Shepherd"
+msgid "Leatherworker"
 msgstr ""
 
 msgid "Librarian"
 msgstr "Bibliotecario"
 
-msgid "Cartographer"
-msgstr ""
-
-msgid "Armorer"
-msgstr ""
-
-msgid "Leatherworker"
-msgstr ""
-
-msgid "Butcher"
-msgstr ""
-
-msgid "Weapon Smith"
-msgstr ""
-
-msgid "Tool Smith"
-msgstr ""
-
-msgid "Cleric"
-msgstr ""
-
 msgid "Mason"
 msgstr ""
 
-msgid "Nitwit"
+msgid "Shepherd"
 msgstr ""
 
-msgid "Wandering Trader"
+msgid "Toolsmith"
+msgstr ""
+
+msgid "Weaponsmith"
+msgstr ""
+
+msgid "Nitwit"
 msgstr ""
 
 msgid "Novice"
@@ -298,30 +268,42 @@ msgstr ""
 msgid "Master"
 msgstr ""
 
-msgid "Witch"
+msgid "Evoker"
+msgstr "Evocatore"
+
+msgid "Illusioner"
+msgstr "Illusore"
+
+msgid "Vindicator"
+msgstr "Vendicatore"
+
+msgid "Zombie Villager"
+msgstr "Villico zombi"
+
+msgid "Wandering Trader"
 msgstr ""
+
+msgid "Trader Llama"
+msgstr ""
+
+msgid "Witch"
+msgstr "Strega"
 
 msgid "Wither"
-msgstr ""
+msgstr "Wither"
 
 msgid "Wolf"
-msgstr ""
-
-msgid "Dog"
-msgstr ""
+msgstr "Lupo"
 
 msgid "Zombie"
-msgstr ""
+msgstr "Zombi"
 
 msgid "Baby Zombie"
 msgstr ""
 
 msgid "Husk"
-msgstr ""
+msgstr "Zombi secco"
 
 msgid "Baby Husk"
-msgstr ""
-
-msgid "Zombified Piglin"
 msgstr ""
 

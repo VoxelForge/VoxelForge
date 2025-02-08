@@ -67,10 +67,13 @@ msgstr ""
 msgid "Hoglin"
 msgstr ""
 
+msgid "Baby Hoglin"
+msgstr ""
+
 msgid "Zoglin"
 msgstr ""
 
-msgid "Baby Hoglin"
+msgid "Sneak to dismount"
 msgstr ""
 
 msgid "Horse"
@@ -86,9 +89,6 @@ msgid "Donkey"
 msgstr ""
 
 msgid "Mule"
-msgstr ""
-
-msgid "Sneak to dismount"
 msgstr ""
 
 msgid "Iron Golem"
@@ -112,13 +112,13 @@ msgstr ""
 msgid "Piglin"
 msgstr ""
 
-msgid "Zombiefied Piglin"
-msgstr ""
-
 msgid "Piglin Brute"
 msgstr ""
 
 msgid "Zombie Piglin"
+msgstr ""
+
+msgid "Zombified Piglin"
 msgstr ""
 
 msgid "Pillager"
@@ -211,31 +211,16 @@ msgstr ""
 msgid "Villager"
 msgstr ""
 
-msgid "Evoker"
+msgid "Armorer"
 msgstr ""
 
-msgid "Illusioner"
+msgid "Butcher"
 msgstr ""
 
-msgid "Vindicator"
+msgid "Cartographer"
 msgstr ""
 
-msgid "Zombie Villager"
-msgstr ""
-
-msgid "@1 sleeps here"
-msgstr ""
-
-msgid "A villager sleeps here"
-msgstr ""
-
-msgid "@1 works here"
-msgstr ""
-
-msgid "A villager works here"
-msgstr ""
-
-msgid "Unemployed"
+msgid "Cleric"
 msgstr ""
 
 msgid "Farmer"
@@ -247,40 +232,25 @@ msgstr ""
 msgid "Fletcher"
 msgstr ""
 
-msgid "Shepherd"
+msgid "Leatherworker"
 msgstr ""
 
 msgid "Librarian"
 msgstr ""
 
-msgid "Cartographer"
-msgstr ""
-
-msgid "Armorer"
-msgstr ""
-
-msgid "Leatherworker"
-msgstr ""
-
-msgid "Butcher"
-msgstr ""
-
-msgid "Weapon Smith"
-msgstr ""
-
-msgid "Tool Smith"
-msgstr ""
-
-msgid "Cleric"
-msgstr ""
-
 msgid "Mason"
 msgstr ""
 
-msgid "Nitwit"
+msgid "Shepherd"
 msgstr ""
 
-msgid "Wandering Trader"
+msgid "Toolsmith"
+msgstr ""
+
+msgid "Weaponsmith"
+msgstr ""
+
+msgid "Nitwit"
 msgstr ""
 
 msgid "Novice"
@@ -298,6 +268,24 @@ msgstr ""
 msgid "Master"
 msgstr ""
 
+msgid "Evoker"
+msgstr ""
+
+msgid "Illusioner"
+msgstr ""
+
+msgid "Vindicator"
+msgstr ""
+
+msgid "Zombie Villager"
+msgstr ""
+
+msgid "Wandering Trader"
+msgstr ""
+
+msgid "Trader Llama"
+msgstr ""
+
 msgid "Witch"
 msgstr ""
 
@@ -305,9 +293,6 @@ msgid "Wither"
 msgstr ""
 
 msgid "Wolf"
-msgstr ""
-
-msgid "Dog"
 msgstr ""
 
 msgid "Zombie"
@@ -320,8 +305,5 @@ msgid "Husk"
 msgstr ""
 
 msgid "Baby Husk"
-msgstr ""
-
-msgid "Zombified Piglin"
 msgstr ""
 

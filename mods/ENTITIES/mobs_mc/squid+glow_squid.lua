@@ -5,7 +5,7 @@
 --###################
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 local squid = {
 	description = S("Squid"),
@@ -42,7 +42,7 @@ local squid = {
 	runaway = false,
 	drops = {
 		{
-			name = "vlf_mobitems:ink_sac",
+			name = "mcl_mobitems:ink_sac",
 			chance = 1,
 			min = 1,
 			max = 3,
@@ -61,21 +61,21 @@ local squid = {
 	_ink_jet_glow = nil,
 	_ink_jet_textures = {
 		{
-			name = "vlf_particles_squid_ink.png^[colorize:#000000:255",
+			name = "mcl_particles_squid_ink.png^[colorize:#000000:255",
 			alpha_tween = {
 				1,
 				0,
 			},
 		},
 		{
-			name = "vlf_particles_squid_ink_1.png^[colorize:#000000:255",
+			name = "mcl_particles_squid_ink_1.png^[colorize:#000000:255",
 			alpha_tween = {
 				1,
 				0,
 			},
 		},
 		{
-			name = "vlf_particles_squid_ink_2.png^[colorize:#000000:255",
+			name = "mcl_particles_squid_ink_2.png^[colorize:#000000:255",
 			alpha_tween = {
 				1,
 				0,
@@ -133,9 +133,9 @@ function squid:spawn_ink_jet ()
 	minetest.add_particlespawner (particlespawner)
 end
 
-function squid:receive_damage (vlf_reason, damage)
-	local rc = mob_class.receive_damage (self, vlf_reason, damage)
-	if rc and damage > 0 and vlf_reason.source then
+function squid:receive_damage (mcl_reason, damage)
+	local rc = mob_class.receive_damage (self, mcl_reason, damage)
+	if rc and damage > 0 and mcl_reason.source then
 		self:spawn_ink_jet ()
 	end
 	return rc
@@ -168,7 +168,7 @@ function squid:get_staticdata_table ()
 	return supertable
 end
 
-local pow_by_step = vlf_mobs.pow_by_step
+local pow_by_step = mcl_mobs.pow_by_step
 
 function squid:set_body_roll (roll)
 	-- Squid must be rotated around their body bone, not the
@@ -262,7 +262,7 @@ function squid:motion_step (dtime, moveresult, self_pos)
 		-- radians, in which pi only serves as the number of
 		-- degrees by which to rotate per rotation cycle.
 		local target = roll + math.rad (math.pi * self._rotate_speed * 1.5 * r_scale)
-		local norm = vlf_util.norm_radians (target)
+		local norm = mcl_util.norm_radians (target)
 		self:set_body_roll (norm)
 
 		if self._stepheight_enabled then
@@ -311,7 +311,7 @@ end
 -- Squid "AI".
 ------------------------------------------------------------------------
 
-local scale_chance = vlf_mobs.scale_chance
+local scale_chance = mcl_mobs.scale_chance
 
 local function squid_move_randomly (self, self_pos, dtime)
 	if pr:next (1, scale_chance (50, dtime)) == 1
@@ -376,7 +376,7 @@ squid.ai_functions = {
 	squid_move_randomly,
 }
 
-vlf_mobs.register_mob ("mobs_mc:squid", squid)
+mcl_mobs.register_mob ("mobs_mc:squid", squid)
 
 ------------------------------------------------------------------------
 -- Glow Squid.
@@ -415,7 +415,7 @@ local glow_squid = table.merge (squid, {
 	},
 	drops = {
 		{
-			name = "vlf_mobitems:glow_ink_sac",
+			name = "mcl_mobitems:glow_ink_sac",
 			chance = 1,
 			min = 1,
 			max = 3,
@@ -428,21 +428,21 @@ local glow_squid = table.merge (squid, {
 	_ink_jet_glow = 8,
 	_ink_jet_textures = {
 		{
-			name = "vlf_particles_squid_ink.png^[colorize:#33e099:255",
+			name = "mcl_particles_squid_ink.png^[colorize:#33e099:255",
 			alpha_tween = {
 				1,
 				0,
 			},
 		},
 		{
-			name = "vlf_particles_squid_ink_1.png^[colorize:#33e099:255",
+			name = "mcl_particles_squid_ink_1.png^[colorize:#33e099:255",
 			alpha_tween = {
 				1,
 				0,
 			},
 		},
 		{
-			name = "vlf_particles_squid_ink_2.png^[colorize:#33e099:255",
+			name = "mcl_particles_squid_ink_2.png^[colorize:#33e099:255",
 			alpha_tween = {
 				1,
 				0,
@@ -451,8 +451,8 @@ local glow_squid = table.merge (squid, {
 	},
 })
 
-function glow_squid:receive_damage (vlf_reason, damage)
-	if squid.receive_damage (self, vlf_reason, damage) then
+function glow_squid:receive_damage (mcl_reason, damage)
+	if squid.receive_damage (self, mcl_reason, damage) then
 		self:set_properties ({
 			glow = 0,
 		})
@@ -475,14 +475,21 @@ function glow_squid:ai_step (dtime)
 	end
 end
 
-vlf_mobs.register_mob ("mobs_mc:glow_squid", glow_squid)
+-- The mobs framework no longer respects min_light and max_light when
+-- modern spawning thresholds are enabled.
+
+function glow_squid.check_light (_, gotten_light, _, _)
+	return gotten_light == 0
+end
+
+mcl_mobs.register_mob ("mobs_mc:glow_squid", glow_squid)
 
 ------------------------------------------------------------------------
 -- Squid & Glow Squid spawning.
 ------------------------------------------------------------------------
 
 -- Spawn near the water surface
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:squid",
 	type_of_spawning = "water",
 	dimension = "overworld",
@@ -495,10 +502,10 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:squid", S("Squid"), "#223b4d", "#708999", 0)
+mcl_mobs.register_egg("mobs_mc:squid", S("Squid"), "#223b4d", "#708999", 0)
 
 -- spawning
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:glow_squid",
 	type_of_spawning = "water",
 	dimension = "overworld",
@@ -511,4 +518,4 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn egg
-vlf_mobs.register_egg("mobs_mc:glow_squid", S("Glow Squid"), "#095757", "#87f6c0", 0)
+mcl_mobs.register_egg("mobs_mc:glow_squid", S("Glow Squid"), "#095757", "#87f6c0", 0)

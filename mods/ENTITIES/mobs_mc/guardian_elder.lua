@@ -5,7 +5,7 @@
 --###################
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 local guardian_elder = table.merge (mobs_mc.guardian, {
 	description = S("Elder Guardian"),
@@ -30,51 +30,51 @@ local guardian_elder = table.merge (mobs_mc.guardian, {
 	},
 	visual_size = {x=7, y=7},
 	drops = {
-		{name = "vlf_ocean:prismarine_shard",
+		{name = "mcl_ocean:prismarine_shard",
 		chance = 1,
 		min = 0,
 		max = 2,
 		looting = "common",},
 
 		-- TODO: Only drop if killed by player
-		{name = "vlf_sponges:sponge_wet",
+		{name = "mcl_sponges:sponge_wet",
 		chance = 1,
 		min = 1,
 		max = 1,},
 
 		-- The following drops are approximations
 		-- Fish / prismarine crystal
-		{name = "vlf_fishing:fish_raw",
+		{name = "mcl_fishing:fish_raw",
 		chance = 4,
 		min = 1,
 		max = 1,
 		looting = "common",},
-		{name = "vlf_ocean:prismarine_crystals",
+		{name = "mcl_ocean:prismarine_crystals",
 		chance = 1,
 		min = 1,
 		max = 10,
 		looting = "common",},
 
 		-- Rare drop: fish
-		{name = "vlf_fishing:fish_raw",
+		{name = "mcl_fishing:fish_raw",
 		chance = 160, -- 2.5% / 4
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.01 / 4,},
-		{name = "vlf_fishing:salmon_raw",
+		{name = "mcl_fishing:salmon_raw",
 		chance = 160,
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.01 / 4,},
-		{name = "vlf_fishing:clownfish_raw",
+		{name = "mcl_fishing:clownfish_raw",
 		chance = 160,
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.01 / 4,},
-		{name = "vlf_fishing:pufferfish_raw",
+		{name = "mcl_fishing:pufferfish_raw",
 		chance = 160,
 		min = 1,
 		max = 1,
@@ -102,11 +102,11 @@ function guardian_elder:ai_step (dtime)
 	if self._fatigue_counter > 60 then
 		self._fatigue_counter = self._fatigue_counter - 60
 
-		for player in vlf_util.connected_players() do
+		for player in mcl_util.connected_players() do
 			local pos = player:get_pos ()
 			if vector.distance (pos, self_pos) <= 50 then
 				-- Inflict Mining Fatigue III for 5 minutes.
-				vlf_potions.give_effect_by_level ("fatigue", player, 3, 300)
+				mcl_potions.give_effect_by_level ("fatigue", player, 3, 300)
 				-- TODO: display an apparition and play eerie noises.
 			end
 		end
@@ -119,9 +119,9 @@ guardian_elder.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:guardian_elder", guardian_elder)
+mcl_mobs.register_mob ("mobs_mc:guardian_elder", guardian_elder)
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:guardian_elder", S("Elder Guardian"), "#ceccba", "#747693", 0)
+mcl_mobs.register_egg("mobs_mc:guardian_elder", S("Elder Guardian"), "#ceccba", "#747693", 0)
 
 

@@ -1,26 +1,36 @@
 local S = minetest.get_translator ("mobs_mc")
 local mob_griefing = minetest.settings:get_bool ("mobs_griefing", true)
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
-local sheared_textures = { "blank.png", "mobs_mc_sheep.png" }
+local function sheared_textures(unicolor_group)
+	local color = mcl_dyes.colors["white"].rgb.."00"
+	local d = mcl_dyes.unicolor_to_dye(unicolor_group)
+	if d then
+		color = mcl_dyes.colors[d:gsub("^mcl_dyes:","")].rgb.."D0"
+	end
+	return {
+		"blank.png",
+		"mobs_mc_sheep.png^(mobs_mc_sheep_sheared.png^[colorize:"..color..")",
+	}
+end
 
 local function unicolor_to_wool(unicolor_group)
-	local d = vlf_dyes.unicolor_to_dye(unicolor_group)
+	local d = mcl_dyes.unicolor_to_dye(unicolor_group)
 	if d then
-		return "vlf_wool:"..d:gsub("^vlf_dyes:","")
+		return "mcl_wool:"..d:gsub("^mcl_dyes:","")
 	end
-	return "vlf_wool:white"
+	return "mcl_wool:white"
 end
 
 local function sheep_texture(unicolor_group)
-	local color = vlf_dyes.colors["white"].rgb.."00"
-	local d = vlf_dyes.unicolor_to_dye(unicolor_group)
+	local color = mcl_dyes.colors["white"].rgb.."00"
+	local d = mcl_dyes.unicolor_to_dye(unicolor_group)
 	if d then
-		color = vlf_dyes.colors[d:gsub("^vlf_dyes:","")].rgb.."D0"
+		color = mcl_dyes.colors[d:gsub("^mcl_dyes:","")].rgb.."D0"
 	end
 	return {
 		"mobs_mc_sheep_fur.png^[colorize:"..color,
-		"mobs_mc_sheep.png",
+		"mobs_mc_sheep.png^(mobs_mc_sheep_sheared.png^[colorize:"..color..")",
 	}
 end
 
@@ -28,7 +38,7 @@ local function get_sheep_drops(unicolor_group)
 	local wool = unicolor_to_wool(unicolor_group)
 	return {
 		{
-			name = "vlf_mobitems:mutton",
+			name = "mcl_mobitems:mutton",
 			 chance = 1,
 			 min = 1,
 			 max = 2,
@@ -92,7 +102,7 @@ local sheep = {
 		eat_speed = 10,
 	},
 	follow = {
-		"vlf_farming:wheat_item",
+		"mcl_farming:wheat_item",
 	},
 	follow_bonus = 1.1,
 	follow_herd_bonus = 1.1,
@@ -110,22 +120,31 @@ function sheep:set_color (color)
 end
 
 function sheep:on_spawn ()
-	local r = math.random (0,100000)
-	local color
-	if r <= 81836 then -- 81.836%
-		color = "unicolor_white"
-	elseif r <= 81836 + 5000 then -- 5%
-		color = "unicolor_grey"
-	elseif r <= 81836 + 5000 + 5000 then-- 5%
-		color = "unicolor_darkgrey"
-	elseif r <= 81836 + 5000 + 5000 + 5000 then -- 5%
-		color = "unicolor_black"
-	elseif r <= 81836 + 5000 + 5000 + 5000 + 3000 then -- 3%
-		color = "unicolor_dark_orange"
-	else-- 0.164%
-		color = "unicolor_light_red"
+	-- Although the mobs framework takes measures not to run
+	-- on_spawn on existing mobs, the old framework did not do so
+	-- if on_spawn was not defined, with the result that old sheep
+	-- whose colors were already defined may still enter this
+	-- function.
+	if not rawget (self, "color") then
+		local r = math.random (0,100000)
+		local color
+		if r <= 81836 then -- 81.836%
+			color = "unicolor_white"
+		elseif r <= 81836 + 5000 then -- 5%
+			color = "unicolor_grey"
+		elseif r <= 81836 + 5000 + 5000 then-- 5%
+			color = "unicolor_darkgrey"
+		elseif r <= 81836 + 5000 + 5000 + 5000 then -- 5%
+			color = "unicolor_black"
+		elseif r <= 81836 + 5000 + 5000 + 5000 + 3000 then -- 3%
+			color = "unicolor_dark_orange"
+		else-- 0.164%
+			color = "unicolor_light_red"
+		end
+		self:set_color (color)
+	else
+		self:set_color (self.color)
 	end
-	self:set_color (color)
 end
 
 function sheep:on_rightclick (clicker)
@@ -142,7 +161,7 @@ function sheep:on_rightclick (clicker)
 			item:take_item()
 			clicker:set_wielded_item(item)
 		end
-		local cgroup = "unicolor_"..vlf_dyes.colors[idef._color].unicolor
+		local cgroup = "unicolor_"..mcl_dyes.colors[idef._color].unicolor
 		self.color = cgroup
 		self.base_texture = sheep_texture(cgroup)
 		self:set_textures (self.base_texture)
@@ -153,13 +172,13 @@ function sheep:on_rightclick (clicker)
 	if minetest.get_item_group(item:get_name(), "shears") > 0 and not self.gotten then
 		self.gotten = true
 		local pos = self.object:get_pos()
-		minetest.sound_play("vlf_tools_shears_cut", {pos = pos}, true)
+		minetest.sound_play("mcl_tools_shears_cut", {pos = pos}, true)
 		pos.y = pos.y + 0.5
 		self.color = self.color or "unicolor_white"
 		minetest.add_item(pos, ItemStack(unicolor_to_wool(self.color).." "..math.random(1,3)))
-		self.base_texture = sheared_textures
+		self.base_texture = sheared_textures(self.color)
 		self:set_textures (self.base_texture)
-		self.drops = {{ name = "vlf_mobitems:mutton", chance = 1, min = 1, max = 2 },}
+		self.drops = {{ name = "mcl_mobitems:mutton", chance = 1, min = 1, max = 2 },}
 		if not minetest.is_creative_enabled(clicker:get_player_name()) then
 			item:add_wear(mobs_mc.shears_wear)
 			clicker:get_inventory():set_stack("main", clicker:get_wield_index(), item)
@@ -170,20 +189,20 @@ end
 
 function sheep:on_breed (parent1, parent2)
 	local pos = parent1.object:get_pos()
-	local child = vlf_mobs.spawn_child(pos, parent1.name)
+	local child = mcl_mobs.spawn_child(pos, parent1.name)
 	if child then
 		local ent_c = child:get_luaentity()
 		local color = { parent1.color, parent2.color }
 
-		local dye1 = vlf_dyes.unicolor_to_dye(color[1])
-		local dye2 = vlf_dyes.unicolor_to_dye(color[2])
+		local dye1 = mcl_dyes.unicolor_to_dye(color[1])
+		local dye2 = mcl_dyes.unicolor_to_dye(color[2])
 		local output
 		if dye1 and dye2 then
 			output = minetest.get_craft_result({items = {dye1, dye2}, method="normal"})
 		end
 		if output and not output.item:is_empty() then
 			local ndef = output.item:get_definition()
-			local cgroup = "unicolor_"..vlf_dyes.colors[ndef._color].unicolor
+			local cgroup = "unicolor_"..mcl_dyes.colors[ndef._color].unicolor
 			ent_c.color = cgroup
 			ent_c.base_texture = sheep_texture(cgroup)
 		else
@@ -209,7 +228,7 @@ function sheep:_on_dispense (dropitem, pos, droppos, dropnode, dropdir)
 		if self.drops[2] then
 			minetest.add_item(pos, unicolor_to_wool(self.color) .. " " .. math.random(1, 3))
 		end
-		self.drops = {{ name = "vlf_mobitems:mutton", chance = 1, min = 1, max = 2 },}
+		self.drops = {{ name = "mcl_mobitems:mutton", chance = 1, min = 1, max = 2 },}
 		return dropitem
 	end
 	return mob_class._on_dispense (self, dropitem, pos, droppos, dropnode, dropdir)
@@ -227,7 +246,7 @@ function sheep:who_are_you_looking_at ()
 	end
 end
 
-local scale_chance = vlf_mobs.scale_chance
+local scale_chance = mcl_mobs.scale_chance
 
 local function sheep_graze (self, self_pos, dtime)
 	if not mob_griefing then
@@ -241,15 +260,15 @@ local function sheep_graze (self, self_pos, dtime)
 
 			local node = minetest.get_node (self_pos)
 			local consumed = false
-			if node.name == "vlf_flowers:tallgrass" then
+			if node.name == "mcl_flowers:tallgrass" then
 				minetest.remove_node (self_pos)
 				consumed = true
 			else
 				local offset = vector.offset (self_pos, 0, -1, 0)
 				local below = minetest.get_node (offset)
-				if below.name == "vlf_core:dirt_with_grass" then
+				if below.name == "mcl_core:dirt_with_grass" then
 					minetest.set_node (offset, {
-						name = "vlf_core:dirt",
+						name = "mcl_core:dirt",
 					})
 					consumed = true
 				end
@@ -275,12 +294,12 @@ local function sheep_graze (self, self_pos, dtime)
 	elseif math.random (scale_chance (base_chance, dtime)) == 1 then
 		local node_valid = false
 		local node = minetest.get_node (self_pos)
-		if node.name == "vlf_flowers:tallgrass" then
+		if node.name == "mcl_flowers:tallgrass" then
 			node_valid = true
 		else
 			local offset = vector.offset (self_pos, 0, -1, 0)
 			local below = minetest.get_node (offset)
-			if below.name == "vlf_core:dirt_with_grass" then
+			if below.name == "mcl_core:dirt_with_grass" then
 				node_valid = true
 			end
 		end
@@ -306,13 +325,13 @@ sheep.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:sheep", sheep)
+mcl_mobs.register_mob ("mobs_mc:sheep", sheep)
 
 ------------------------------------------------------------------------
 -- Sheep spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:sheep",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -361,4 +380,4 @@ vlf_mobs.spawn_setup ({
 	chance = 120,
 })
 
-vlf_mobs.register_egg ("mobs_mc:sheep", S("Sheep"), "#e7e7e7", "#ffb5b5", 0)
+mcl_mobs.register_egg ("mobs_mc:sheep", S("Sheep"), "#e7e7e7", "#ffb5b5", 0)

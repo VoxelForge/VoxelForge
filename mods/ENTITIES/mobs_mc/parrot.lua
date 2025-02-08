@@ -4,7 +4,7 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 --###################
 --################### PARROT
@@ -45,7 +45,7 @@ local parrot = {
 	},
 	drops = {
 		{
-			name = "vlf_mobitems:feather",
+			name = "mcl_mobitems:feather",
 			chance = 1,
 			min = 1,
 			max = 2,
@@ -85,19 +85,19 @@ function parrot:on_rightclick (clicker)
 	end
 	local name = item:get_name()
 	-- Kill parrot if fed with cookie
-	if item and name == "vlf_farming:cookie" then
+	if item and name == "mcl_farming:cookie" then
 		minetest.sound_play ("mobs_mc_animal_eat_generic", {
 			object = self.object,
 			max_hear_distance = 16,
 		}, true)
 
-		local vlf_reason = {
+		local mcl_reason = {
 			type = "player",
 			source = clicker,
 		}
-		vlf_damage.finish_reason (vlf_reason)
-		self:receive_damage (vlf_reason, 65535.0)
-		vlf_potions.give_effect_by_level ("poison", self.object, 900, 10)
+		mcl_damage.finish_reason (mcl_reason)
+		self:receive_damage (mcl_reason, 65535.0)
+		mcl_potions.give_effect_by_level ("poison", self.object, 900, 10)
 		if not minetest.is_creative_enabled (clicker:get_player_name()) then
 			item:take_item ()
 			clicker:set_wielded_item (item)
@@ -107,10 +107,10 @@ function parrot:on_rightclick (clicker)
 
 	-- Feed to tame, but not breed
 	local food = {
-		"vlf_farming:wheat_seeds",
-		"vlf_farming:melon_seeds",
-		"vlf_farming:pumpkin_seeds",
-		"vlf_farming:beetroot_seeds",
+		"mcl_farming:wheat_seeds",
+		"mcl_farming:melon_seeds",
+		"mcl_farming:pumpkin_seeds",
+		"mcl_farming:beetroot_seeds",
 	}
 	if table.indexof (food, name) ~= -1 then
 		self:feed_tame (clicker, 4, false, true, false, 0.1)
@@ -303,7 +303,7 @@ end
 local function parrot_check_dance (self, self_pos, dtime, moveresult)
 	local is_party_parrot = false
 	-- Search for playing jukeboxes nearby.
-	for hash, track in pairs (vlf_jukebox.active_tracks) do
+	for hash, track in pairs (mcl_jukebox.active_tracks) do
 		if track then
 			local node = minetest.get_position_from_hash (hash)
 			if vector.distance (self_pos, node) <= 3.0 then
@@ -340,19 +340,19 @@ parrot.gwp_penalties = table.copy (mob_class.gwp_penalties)
 parrot.gwp_penalties.DANGER_FIRE = -1.0
 parrot.gwp_penalties.DAMAGE_FIRE = -1.0
 
-vlf_mobs.register_mob ("mobs_mc:parrot", parrot)
+mcl_mobs.register_mob ("mobs_mc:parrot", parrot)
 
 ------------------------------------------------------------------------
 -- Parrot spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:parrot",
 	type_of_spawning = "ground",
 	dimension = "overworld",
 	aoc = 3,
 	min_height = mobs_mc.water_level+7,
-	max_height = vlf_vars.mg_overworld_max,
+	max_height = mcl_vars.mg_overworld_max,
 	biomes = {
 		"Jungle",
 		"JungleEdgeM",
@@ -364,4 +364,4 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:parrot", S("Parrot"), "#0da70a", "#ff0000", 0)
+mcl_mobs.register_egg("mobs_mc:parrot", S("Parrot"), "#0da70a", "#ff0000", 0)

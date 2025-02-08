@@ -1,6 +1,6 @@
 local S = minetest.get_translator(minetest.get_current_modname())
-local mob_class = vlf_mobs.mob_class
-local is_valid = vlf_util.is_valid_objectref
+local mob_class = mcl_mobs.mob_class
+local is_valid = mcl_util.is_valid_objectref
 
 ------------------------------------------------------------------------
 -- Axolotl
@@ -51,19 +51,19 @@ local axolotl = {
 		run_start = 61, run_end = 81, run_speed = 20,
 	},
 	follow = {
-		"vlf_buckets:bucket_tropical_fish"
+		"mcl_buckets:bucket_tropical_fish"
 	},
 	on_rightclick = function(self, clicker)
 		local bn = clicker:get_wielded_item():get_name()
-		if bn == "vlf_buckets:bucket_water" or bn == "vlf_buckets:bucket_river_water" then
-			if clicker:set_wielded_item("vlf_buckets:bucket_axolotl") then
+		if bn == "mcl_buckets:bucket_water" or bn == "mcl_buckets:bucket_river_water" then
+			if clicker:set_wielded_item("mcl_buckets:bucket_axolotl") then
 				local it = clicker:get_wielded_item()
 				local m = it:get_meta()
 				m:set_string("properties",minetest.serialize(self.object:get_properties()))
 				clicker:set_wielded_item(it)
 				self:safe_remove()
 			end
-			awards.unlock(clicker:get_player_name(), "vlf:cutestPredator")
+			awards.unlock(clicker:get_player_name(), "mcl:cutestPredator")
 			return
 		end
 		if self:follow_holding (clicker)
@@ -73,7 +73,7 @@ local axolotl = {
 	end,
 	makes_footstep_sound = false,
 	amphibious = true,
-	do_go_pos = vlf_mobs.mob_class.pitchswim_do_go_pos,
+	do_go_pos = mcl_mobs.mob_class.pitchswim_do_go_pos,
 	idle_gravity_in_liquids = true,
 	breathes_in_water = true,
 	damage = 2,
@@ -184,7 +184,7 @@ local function axolotl_find_water (self, self_pos, dtime)
 	return false
 end
 
-function axolotl:receive_damage (vlf_reason, damage)
+function axolotl:receive_damage (mcl_reason, damage)
 	-- If a 50% chance is realized and either the damage is
 	-- greater than a number between 0 and 2 or this mob is at
 	-- half health or worse, and this mob is waterborne, play dead
@@ -194,14 +194,14 @@ function axolotl:receive_damage (vlf_reason, damage)
 			or self.health / self.initial_properties.hp_max < 0.5)
 		and damage < self.health
 		and minetest.get_item_group (self.standing_in, "water")
-		and vlf_reason and vlf_reason.source
+		and mcl_reason and mcl_reason.source
 		and not self._regeneration_time then
 		self._regeneration_time = 10
 		self:replace_activity ("_regeneration_time")
-		vlf_potions.give_effect_by_level ("regeneration", self.object, 1, 10)
+		mcl_potions.give_effect_by_level ("regeneration", self.object, 1, 10)
 	end
 
-	return mob_class.receive_damage (self, vlf_reason, damage)
+	return mob_class.receive_damage (self, mcl_reason, damage)
 end
 
 function axolotl:should_continue_to_attack (object)
@@ -212,21 +212,21 @@ function axolotl:should_continue_to_attack (object)
 	-- regeneration and remove mining fatigue.
 	if entity and entity.dead then
 		local attacker = entity._last_attacker
-		if is_valid (attacker)
+		if attacker and is_valid (attacker)
 			and attacker:is_player ()
 			and vector.distance (attacker:get_pos (),
 						self.object:get_pos ()) < 20 then
-			local effect = vlf_potions.get_effect (attacker, "regeneration")
+			local effect = mcl_potions.get_effect (attacker, "regeneration")
 			if not effect or effect.dur < 120 then
 				local current_dur = 0
 				if effect then
 					current_dur = math.max (0, effect.dur - effect.timer)
 				end
 				local dur = math.min (120, current_dur + 5)
-				vlf_potions.give_effect_by_level ("regeneration", attacker,
+				mcl_potions.give_effect_by_level ("regeneration", attacker,
 								1, dur)
 			end
-			vlf_potions.clear_effect (attacker, "fatigue")
+			mcl_potions.clear_effect (attacker, "fatigue")
 		end
 		-- Wait for a cooldown period before hunting another mob.
 		self._hunting_cooldown = 120
@@ -278,16 +278,16 @@ axolotl.ai_functions = {
 function axolotl.can_spawn (pos)
 	for i = 1, 4 do
 		local block = minetest.get_node (vector.offset (pos, 0, -i, 0))
-		if block.name == "vlf_core:clay" then
+		if block.name == "mcl_core:clay" then
 			return true
 		end
 	end
 	return false
 end
 
-vlf_mobs.register_mob ("mobs_mc:axolotl", axolotl)
+mcl_mobs.register_mob ("mobs_mc:axolotl", axolotl)
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:axolotl",
 	type_of_spawning = "water",
 	dimension = "overworld",
@@ -302,4 +302,4 @@ vlf_mobs.spawn_setup ({
 })
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:axolotl", S("Axolotl"), "#e890bf", "#b83D7e", 0)
+mcl_mobs.register_egg("mobs_mc:axolotl", S("Axolotl"), "#e890bf", "#b83D7e", 0)

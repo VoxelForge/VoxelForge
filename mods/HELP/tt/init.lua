@@ -1,8 +1,8 @@
 tt = {}
-tt.COLOR_DEFAULT = vlf_colors.GREEN
-tt.COLOR_DANGER = vlf_colors.YELLOW
-tt.COLOR_GOOD = vlf_colors.GREEN
-tt.NAME_COLOR = vlf_colors.YELLOW
+tt.COLOR_DEFAULT = mcl_colors.GREEN
+tt.COLOR_DANGER = mcl_colors.YELLOW
+tt.COLOR_GOOD = mcl_colors.GREEN
+tt.NAME_COLOR = mcl_colors.YELLOW
 
 -- API
 tt.registered_snippets = {}
@@ -60,16 +60,16 @@ function tt.reload_itemstack_description(itemstack)
 	local itemstring = itemstack:get_name()
 	local def = itemstack:get_definition()
 	local meta = itemstack:get_meta()
-	if def and def._vlf_generate_description then
-		def._vlf_generate_description(itemstack)
+	if def and def._mcl_generate_description then
+		def._mcl_generate_description(itemstack)
 	elseif should_change(itemstring, def) then
 		local toolcaps
 		if def.tool_capabilities then
 			toolcaps = itemstack:get_tool_capabilities()
 		end
 		local orig_desc = def._tt_original_description or def.description
-		if def._vlf_filter_description then
-		    orig_desc = def._vlf_filter_description (itemstack,
+		if def._mcl_filter_description then
+		    orig_desc = def._mcl_filter_description (itemstack,
 							     orig_desc)
 		end
 		if meta:get_string("name") ~= "" then

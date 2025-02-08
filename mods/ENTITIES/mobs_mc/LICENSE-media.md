@@ -189,7 +189,7 @@ Origin of those models:
     * `mobs_mc_zombie_hurt.ogg`
         * Source: <https://freesound.org/people/haratman/sounds/393749/>
 * [Spennnyyy](https://freesound.org/people/Spennnyyy/) (CC0)
-    * `vlf_totems_totem.ogg`
+    * `mcl_totems_totem.ogg`
         * Source: <https://freesound.org/people/Spennnyyy/sounds/323502/>
 * [Baŝto](https://opengameart.org/users/ba%C5%9Dto) (remixer) and [kantouth](https://freesound.org/people/kantouth/) (original author)
     * `mobs_mc_skeleton_random.*.ogg` (CC BY 3.0)

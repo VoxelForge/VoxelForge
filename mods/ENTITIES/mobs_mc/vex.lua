@@ -4,8 +4,8 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
-local is_valid = vlf_util.is_valid_objectref
+local mob_class = mcl_mobs.mob_class
+local is_valid = mcl_util.is_valid_objectref
 
 --###################
 --################### VEX
@@ -115,8 +115,8 @@ local pr = PcgRandom (os.time () - 30)
 
 function vex:on_spawn ()
 	local self_pos = self.object:get_pos ()
-	local mob_factor = vlf_worlds.get_special_difficulty (self_pos)
-	self:set_wielditem (ItemStack ("vlf_tools:sword_iron"))
+	local mob_factor = mcl_worlds.get_special_difficulty (self_pos)
+	self:set_wielditem (ItemStack ("mcl_tools:sword_iron"))
 	self:enchant_default_weapon (mob_factor, pr)
 end
 
@@ -131,9 +131,9 @@ function vex:do_env_damage ()
 	return false
 end
 
-local AIR_FRICTION = vlf_mobs.AIR_FRICTION
+local AIR_FRICTION = mcl_mobs.AIR_FRICTION
 local AIR_FRICTION_Y = 0.98
-local pow_by_step = vlf_mobs.pow_by_step
+local pow_by_step = mcl_mobs.pow_by_step
 
 function vex:motion_step (dtime, moveresult, self_pos)
 	if not moveresult then
@@ -190,7 +190,7 @@ local pr = PcgRandom (os.time () + 40)
 
 function vex:attack_null (self_pos, dtime, target_pos, line_of_sight)
 	local target = self.attack
-	local eye_pos = vlf_util.target_eye_pos (target)
+	local eye_pos = mcl_util.target_eye_pos (target)
 
 	if not self.attacking then
 		self.attacking = true
@@ -273,7 +273,7 @@ end
 
 function vex:get_pace_pos (self_pos)
 	local basis = self._restriction_center
-		or vlf_util.get_nodepos (self_pos)
+		or mcl_util.get_nodepos (self_pos)
 
 	for i = 1, 3 do
 		local x = basis.x + pr:next (-7, 7)
@@ -289,7 +289,7 @@ function vex:get_pace_pos (self_pos)
 	return nil
 end
 
-local scale_chance = vlf_mobs.scale_chance
+local scale_chance = mcl_mobs.scale_chance
 
 local function vex_pace (self, self_pos, dtime)
 	local rc = false
@@ -322,11 +322,11 @@ vex.ai_functions = {
 	vex_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:vex", vex)
+mcl_mobs.register_mob ("mobs_mc:vex", vex)
 
 ------------------------------------------------------------------------
 -- Vex spawning.
 ------------------------------------------------------------------------
 
 -- spawn eggs
-vlf_mobs.register_egg ("mobs_mc:vex", S("Vex"), "#7a90a4", "#e8edf1", 0)
+mcl_mobs.register_egg ("mobs_mc:vex", S("Vex"), "#7a90a4", "#e8edf1", 0)
