@@ -69,6 +69,9 @@ vlf_death_messages = {
 			killer = NS("@1 was killed by @2 using magic"),
 			item = NS("@1 was killed by @2 using @3"),
 		},
+		a_bad_tempered_potato = {
+			plain = NS("@1 was killed by a bad-tempered potato"),
+		},
 		dragon_breath = {
 			plain = NS("@1 was roasted in dragon breath"),
 			killer = NS("@1 was roasted in dragon breath by @2"),

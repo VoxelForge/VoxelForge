@@ -144,7 +144,7 @@ function armadillo:do_custom(dtime)
 		minetest.add_item(pos, "vlf_mobitems:armadillo_scute")
 end
 
-function armadillo:receive_damage(damage, vlf_reason)
+function armadillo:receive_damage(vlf_reason, damage)
 		self.health = self.health - damage
 		local changed_to_tb
 		-- Blacklisted entity detected

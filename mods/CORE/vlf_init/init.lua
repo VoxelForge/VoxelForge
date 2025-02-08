@@ -17,7 +17,7 @@ minetest.register_on_mods_loaded(function()
 	local font_size = minetest.settings:get("vlf_font_size") or 35
 	local font_shadow_size = minetest.settings:get("vlf_font_shadow_size") or 2
 	local chat_font_size = minetest.settings:get("vlf_chat_font_size") or 25
-	minetest.settings:set("font_path", modpath.."/fonts/voxelforge.ttf")
+	--minetest.settings:set("font_path", modpath.."/fonts/voxelforge.ttf")
 	minetest.settings:set("font_shadow", font_shadow_size)
 	minetest.settings:set("font_size", font_size)
 	minetest.settings:set("chat_font_size", chat_font_size)
@@ -25,7 +25,7 @@ minetest.register_on_mods_loaded(function()
 end)
 
 minetest.register_on_shutdown(function()
-	minetest.settings:set("font_path", "") -- One day hopefully this will be replaced by a setting that players can set so it's  their default font.
+	--minetest.settings:set("font_path", "") -- One day hopefully this will be replaced by a setting that players can set so it's  their default font.
 	minetest.settings:set("font_shadow", "1")
 	minetest.settings:set("font_size", "16")
 	minetest.settings:set("chat_font_size", "")
@@ -371,6 +371,11 @@ vlf_vars.mg_end_exit_portal_pos = vector.new(0, vlf_vars.mg_end_min + 71, 0)
 -- Realm barrier used to safely separate the End from the void below the Overworld
 vlf_vars.mg_realm_barrier_overworld_end_max = vlf_vars.mg_end_max
 vlf_vars.mg_realm_barrier_overworld_end_min = vlf_vars.mg_end_max - 11
+
+-- The Potato (surface at ca. Y -25079)
+vlf_vars.mg_potato_min = -25079
+vlf_vars.mg_potato_max = vlf_vars.mg_potato_min + 128
+vlf_vars.mg_potato_deco_max = vlf_vars.mg_potato_max -11
 
 -- Use MineClone 2-style dungeons
 vlf_vars.mg_dungeons = true

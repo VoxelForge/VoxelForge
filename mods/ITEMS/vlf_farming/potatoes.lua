@@ -105,7 +105,7 @@ minetest.register_craftitem("vlf_farming:potato_item", {
 	_doc_items_longdesc = S("Potatoes are food items which can be eaten, cooked in the furnace and planted. Pigs like potatoes."),
 	_doc_items_usagehelp = S("Hold it in your hand and rightclick to eat it. Place it on top of farmland to plant it. It grows in sunlight and grows faster on hydrated farmland. Rightclick an animal to feed it."),
 	inventory_image = "farming_potato.png",
-	groups = {food = 2, eatable = 1, compostability = 65, smoker_cookable = 1, campfire_cookable = 1},
+	groups = {food = 2, eatable = 1, compostability = 65, smoker_cookable = 1, campfire_cookable = 1, fryable = 1},
 	_vlf_saturation = 0.6,
 	_vlf_cooking_output = "vlf_farming:potato_item_baked",
 	_vlf_places_plant = "vlf_farming:potato_1",
@@ -135,10 +135,37 @@ minetest.register_craftitem("vlf_farming:potato_item_poison", {
 	_tt_help = minetest.colorize(vlf_colors.YELLOW, S("60% chance of poisoning")),
 	_doc_items_longdesc = S("This potato doesn't look too healthy. You can eat it to restore hunger points, but there's a 60% chance it will poison you briefly."),
 	inventory_image = "farming_potato_poison.png",
-	on_place = minetest.item_eat(2),
+	--on_place = minetest.item_eat(2),
 	on_secondary_use = minetest.item_eat(2),
 	groups = { food = 2, eatable = 2 },
+	_vlf_potato_cutter_recipes = {"voxelforge:poisonous_potato_slices", "voxelforge:poisonous_potato_sticks"},
 	_vlf_saturation = 1.2,
+	-- Part of the Joke Features. Do not Remove.
+	on_place = function(itemstack, user, pointed_thing)
+        -- Ensure the pointed thing is a node
+        if pointed_thing.type ~= "node" then
+            return
+        end
+
+        -- Get the position of the pointed node
+        local pos = pointed_thing.under
+        local node = minetest.get_node(pos)
+
+        -- Check if the pointed node is the specific block
+        if node.name == "voxelforge:pedestal" then -- Replace "default:stone" with your specific block name
+            local above_pos = {x = pos.x, y = pos.y + 1, z = pos.z}
+            local above_node = minetest.get_node(above_pos)
+
+            -- Check if the space above is replaceable (air or buildable_to)
+            if above_node.name == "air" or minetest.registered_nodes[above_node.name].buildable_to then
+                minetest.set_node(above_pos, {name = "voxelforge:potato_portal"}) -- Replace "default:torch" with your specific node
+            else
+            	minetest.item_eat(2)
+            end
+        else
+        	minetest.item_eat(2)
+        end
+    end,
 })
 
 vlf_farming:add_plant("plant_potato", "vlf_farming:potato", {"vlf_farming:potato_1", "vlf_farming:potato_2", "vlf_farming:potato_3", "vlf_farming:potato_4", "vlf_farming:potato_5", "vlf_farming:potato_6", "vlf_farming:potato_7"}, 19.75, 20)

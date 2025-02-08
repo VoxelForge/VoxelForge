@@ -21,6 +21,7 @@ local builtin_filter_ids = {
 	"combat",
 	"mobs",
 	"brew",
+	"potato",
 	"matr",
 	"misc",
 	"all",
@@ -100,6 +101,10 @@ minetest.register_on_mods_loaded(function()
 			end
 			if def.groups.craftitem then
 				table.insert(inventory_lists["matr"], name)
+				nonmisc = true
+			end
+			if def.groups.potato then
+				table.insert(inventory_lists["potato"], name)
 				nonmisc = true
 			end
 			-- Misc. category is for everything which is not in any other category
@@ -262,6 +267,7 @@ next_noffset("deco")
 next_noffset("redstone")
 next_noffset("rail")
 next_noffset("brew")
+next_noffset("potato")
 next_noffset("misc")
 next_noffset("nix", true)
 
@@ -287,6 +293,7 @@ button_bg_postfix["deco"] = ""
 button_bg_postfix["redstone"] = ""
 button_bg_postfix["rail"] = ""
 button_bg_postfix["brew"] = ""
+button_bg_postfix["potato"] = ""
 button_bg_postfix["misc"] = ""
 button_bg_postfix["nix"] = ""
 button_bg_postfix["default"] = ""
@@ -302,6 +309,7 @@ filtername["blocks"] = S("Building Blocks")
 filtername["deco"] = S("Decoration Blocks")
 filtername["redstone"] = S("Redstone")
 filtername["rail"] = S("Transportation")
+filtername["potato"] = S("Potato")
 filtername["misc"] = S("Miscellaneous")
 filtername["nix"] = S("Search Items")
 filtername["food"] = S("Foodstuffs")
@@ -338,6 +346,7 @@ local tab_icon = {
 	deco = "vlf_flowers:peony",
 	redstone = "vlf_redstone:redstone",
 	rail = "vlf_minecarts:golden_rail",
+	potato = "vlf_farming:potato_item_poison",
 	misc = "vlf_buckets:bucket_lava",
 	nix = "vlf_compass:compass",
 	food = "vlf_core:apple",
@@ -609,6 +618,8 @@ function vlf_inventory.set_creative_formspec(player)
 
 		tab(name, "blocks") ..
 		"tooltip[blocks;"..F(filtername["blocks"]).."]"..
+		tab(name, "potato") ..
+		"tooltip[potato;"..F(filtername["potato"]).."]"..
 		tab(name, "deco") ..
 		"tooltip[deco;"..F(filtername["deco"]).."]"..
 		tab(name, "redstone") ..
@@ -671,6 +682,10 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		if players[name].page == "blocks" then return end
 		set_inv_page("blocks", player)
 		page = "blocks"
+	elseif fields.potato or fields.potato_outer then
+		if players[name].page == "potato" then return end
+		set_inv_page("potato", player)
+		page = "potato"
 	elseif fields.deco or fields.deco_outer then
 		if players[name].page == "deco" then return end
 		set_inv_page("deco", player)

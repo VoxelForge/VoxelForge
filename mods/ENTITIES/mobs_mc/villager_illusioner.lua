@@ -228,7 +228,7 @@ function illusioner:wielditem_transform (info, stack)
 	return rot, pos, size
 end
 
-function mob_class:is_armor_texture_slot (i)
+function illusioner:is_armor_texture_slot (i)
 	return i > 1
 end
 

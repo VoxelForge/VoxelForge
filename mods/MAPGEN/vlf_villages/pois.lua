@@ -750,7 +750,7 @@ vlf_villages.register_poi ("vlf_villages:provisional_poi", {
 			or node.name == "vlf_stonecutter:stonecutter"
 			or node.name == "vlf_barrels:barrel_closed"
 			or node.name == "vlf_barrels:barrel_open"
-			or vlf_composters.test_composter (node.name)
+			--or vlf_composters.test_composter (node.name)
 			or minetest.get_item_group (node.name, "brewing_stand") > 0
 			or minetest.get_item_group (node.name, "cauldron") > 0)
 	end,

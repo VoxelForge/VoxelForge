@@ -7,14 +7,16 @@ function vlf_worlds.is_in_void(pos)
 	local void =
 		not ((pos.y < vlf_vars.mg_overworld_max and pos.y > vlf_vars.mg_overworld_min) or
 		(pos.y < vlf_vars.mg_nether_max+128 and pos.y > vlf_vars.mg_nether_min) or
-		(pos.y < vlf_vars.mg_end_max and pos.y > vlf_vars.mg_end_min))
+		(pos.y < vlf_vars.mg_end_max and pos.y > vlf_vars.mg_end_min) or (pos.y < vlf_vars.mg_potato_max and pos.y > vlf_vars.mg_potato_min))
 
 	local void_deadly = false
 	local deadly_tolerance = 64 -- the player must be this many nodes “deep” into the void to be damaged
 	if void then
 		-- Overworld → Void → End → Void → Nether → Void
-		if pos.y < vlf_vars.mg_overworld_min and pos.y > vlf_vars.mg_end_max then
+		if pos.y < vlf_vars.mg_overworld_min and pos.y > vlf_vars.mg_potato_max then
 			void_deadly = pos.y < vlf_vars.mg_overworld_min - deadly_tolerance
+		elseif pos.y < vlf_vars.mg_potato_min and pos.y > vlf_vars.mg_end_max then
+			void_deadly = pos.y < vlf_vars.mg_potato_min - deadly_tolerance
 		elseif pos.y < vlf_vars.mg_end_min and pos.y > vlf_vars.mg_nether_max+128 then
 			-- The void between End and Nether. Like usual, but here, the void
 			-- *above* the Nether also has a small tolerance area, so player
@@ -39,6 +41,8 @@ function vlf_worlds.y_to_layer(y)
 		return y - vlf_vars.mg_nether_min, "nether"
 	elseif y >= vlf_vars.mg_end_min and y <= vlf_vars.mg_end_max then
 		return y - vlf_vars.mg_end_min, "end"
+	elseif y >= vlf_vars.mg_potato_min and y <= vlf_vars.mg_potato_max then
+		return y - vlf_vars.mg_potato_min, "potato"
 	else
 		return nil, "void"
 	end
@@ -61,6 +65,8 @@ function vlf_worlds.layer_to_y(layer, mc_dimension)
 		return layer + vlf_vars.mg_nether_min
 	elseif mc_dimension == "end" then
 		return layer + vlf_vars.mg_end_min
+	elseif mc_dimension == "potato" then
+		return layer + vlf_vas.mg_potato_min
 	end
 end
 
@@ -185,6 +191,8 @@ local function id_dimension (y)
 		return "nether_"
 	elseif y >= vlf_vars.mg_end_min and y <= vlf_vars.mg_end_max then
 		return "theEnd_"
+	elseif y >= vlf_vars.mg_potato_min and y <= vlf_vars.mg_potato_max then
+		return "thePotato_"
 	else
 		-- Void.
 		return "theVoid_"

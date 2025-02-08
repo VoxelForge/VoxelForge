@@ -92,6 +92,7 @@ S("• When water is directly below lava, the water turns into stone."),
 	groups = { water=3, liquid=3, puts_out_fire=1, freezes=1, not_in_creative_inventory=1, dig_by_piston=1, unsticky = 1},
 	_pathfinding_class = "WATER",
 	_vlf_blast_resistance = 100,
+	color = "#3f76e4",
 	-- Hardness intentionally set to infinite instead of 100 (Minecraft value) to avoid problems in creative mode
 	_vlf_hardness = -1,
 })
