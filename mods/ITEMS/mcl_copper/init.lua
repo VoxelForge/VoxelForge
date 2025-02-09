@@ -12,9 +12,9 @@ mcl_copper.register_decaychain("copper",{
 	undecay_callback = "_on_axe_place",
 	nodes = { --order is significant
 		"mcl_copper:block",
-		"mcl_copper:block_exposed",
-		"mcl_copper:block_weathered",
-		"mcl_copper:block_oxidized",
+		"mcl_copper:exposed_block",
+		"mcl_copper:weathered_block",
+		"mcl_copper:oxidized_block",
 	},
 })
 
@@ -25,23 +25,23 @@ for _, v in pairs({ "chiseled", "grate", "cut" }) do
 		undecay_callback = "_on_axe_place",
 		nodes = { --order is significant
 			"mcl_copper:block_"..v,
-			"mcl_copper:block_exposed_"..v,
-			"mcl_copper:block_weathered_"..v,
-			"mcl_copper:block_oxidized_"..v,
+			"mcl_copper:exposed_block_"..v,
+			"mcl_copper:weathered_block_"..v,
+			"mcl_copper:oxidized_block_"..v,
 		},
 	})
 end
 
-for _, v in pairs({ "on", "off" }) do
-	mcl_copper.register_decaychain("copper_bulb_"..v,{
+for _, v in pairs({ "_lit", "_lit_powered", "_powered", ""}) do
+	mcl_copper.register_decaychain("copper_bulb"..v,{
 		preserve_group = "preserves_copper",
 		unpreserve_callback = "_on_axe_place",
 		undecay_callback = "_on_axe_place",
 		nodes = { --order is significant
-			"mcl_copper:bulb_"..v,
-			"mcl_copper:bulb_exposed_"..v,
-			"mcl_copper:bulb_weathered_"..v,
-			"mcl_copper:bulb_oxidized_"..v,
+			"mcl_copper:copper_bulb"..v,
+			"mcl_copper:exposed_copper_bulb"..v,
+			"mcl_copper:weathered_copper_bulb"..v,
+			"mcl_copper:oxidized_copper_bulb"..v,
 		},
 	})
 end
@@ -52,10 +52,10 @@ for _, v in pairs({"", "_open"}) do
 		unpreserve_callback = "_on_axe_place",
 		undecay_callback = "_on_axe_place",
 		nodes = { --order is significant
-			"mcl_copper:trapdoor"..v,
-			"mcl_copper:trapdoor_exposed"..v,
-			"mcl_copper:trapdoor_weathered"..v,
-			"mcl_copper:trapdoor_oxidized"..v,
+			"mcl_copper:copper_trapdoor"..v,
+			"mcl_copper:exposed_copper_trapdoor"..v,
+			"mcl_copper:weathered_copper_trapdoor"..v,
+			"mcl_copper:oxidized_copper_trapdoor"..v,
 		},
 	})
 end
@@ -69,9 +69,9 @@ for _,v in pairs({"stair","slab"}) do
 		undecay_callback = "_on_axe_place",
 		nodes = { --order is significant
 			"mcl_stairs:"..v.."_copper_cut",
-			"mcl_stairs:"..v.."_copper_exposed_cut",
-			"mcl_stairs:"..v.."_copper_weathered_cut",
-			"mcl_stairs:"..v.."_copper_oxidized_cut",
+			"mcl_stairs:"..v.."_exposed_copper_cut",
+			"mcl_stairs:"..v.."_weathered_copper_cut",
+			"mcl_stairs:"..v.."_oxidized_copper_cut",
 		},
 	})
 end
@@ -83,9 +83,9 @@ for _,v in pairs({"inner","outer"}) do
 		undecay_callback = "_on_axe_place",
 		nodes = { --order is significant
 			"mcl_stairs:stair_copper_cut_"..v,
-			"mcl_stairs:stair_copper_exposed_cut_"..v,
-			"mcl_stairs:stair_copper_weathered_cut_"..v,
-			"mcl_stairs:stair_copper_oxidized_cut_"..v,
+			"mcl_stairs:stair_exposed_copper_cut_"..v,
+			"mcl_stairs:stair_weathered_copper_cut_"..v,
+			"mcl_stairs:stair_oxidized_copper_cut_"..v,
 		},
 	})
 end
@@ -96,9 +96,9 @@ for _,v in pairs({"top","double"}) do
 		undecay_callback = "_on_axe_place",
 		nodes = { --order is significant
 			"mcl_stairs:slab_copper_cut_"..v,
-			"mcl_stairs:slab_copper_exposed_cut_"..v,
-			"mcl_stairs:slab_copper_weathered_cut_"..v,
-			"mcl_stairs:slab_copper_oxidized_cut_"..v,
+			"mcl_stairs:slab_exposed_copper_cut_"..v,
+			"mcl_stairs:slab_weathered_copper_cut_"..v,
+			"mcl_stairs:slab_oxidized_copper_cut_"..v,
 		},
 	})
 end
