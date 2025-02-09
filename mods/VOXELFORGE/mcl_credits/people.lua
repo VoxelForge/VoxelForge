@@ -2,6 +2,9 @@ local modname = minetest.get_current_modname()
 local S = minetest.get_translator(modname)
 
 return {
+    {S("Creator of VoxelForge"), 0xFFD332, {
+		"DragonWrangler1",
+	}},
 	{S("Creators of Mineclonia"), 0x0A9400, {
 		"ryvnf",
 		"cora",
@@ -52,7 +55,7 @@ return {
 		"ChrisPHP",
 		"3raven",
 		"ShadowRoi",
-		"DragonWrangler1",
+		"crispiebacon",
 		"amino",
 		"teknomunk",
 		"nixnoxus",
@@ -91,12 +94,15 @@ return {
 		"jordan4ibanez",
 		"paramat",
 		"cora",
+        "DragonWrangler1",
 	}},
 	{S("3D Models"), 0x343434, {
 		"22i",
 		"tobyplowy",
 		"epCode",
 		"pixelzone",
+        "DragonWrangler1",
+        "crispiebacon",
 	}},
 	{S("Textures and menu images"), 0x0019FF, {
 		"XSSheep",
@@ -120,6 +126,8 @@ return {
 		"Wbjitscool",
 		"SmokeyDope",
 		"pixelzone",
+        "crispiebacon",
+        "DragonWrangler1"
 	}},
 	{S("Translations"), 0xFF9705, {
 		"Wuzzy",

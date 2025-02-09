@@ -124,7 +124,8 @@ local function creaking_play(self, dtime)
 
         -- Handle jumping for obstacles
         local node_below = minetest.get_node_or_nil({x = pos.x, y = pos.y - 1, z = pos.z})
-        if node_below and minetest.registered_nodes[node_below.name].walkable then
+
+        if node_below and node_below.name and minetest.registered_nodes[node_below.name] and minetest.registered_nodes[node_below.name].walkable then
             self.object:add_velocity({x = 0, y = self.jump_height * 0.5, z = 0}) -- More controlled jumping
         end
 

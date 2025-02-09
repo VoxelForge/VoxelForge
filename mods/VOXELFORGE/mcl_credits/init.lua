@@ -58,7 +58,7 @@ function mcl_credits.show(player)
 	}
 	add_hud_element({
 		type = "image",
-		text = "mineclonia_logo.png",
+		text = "voxelforge_logo.png",
 		scale = {x = 1, y = 1},
 	}, huds, 300)
 	add_hud_element({
@@ -89,7 +89,7 @@ function mcl_credits.show(player)
 	end
 	huds.icon = add_hud_element({
 		type = "image",
-		text = "mineclonia_icon.png",
+		text = "voxelforge_icon.png",
 		scale = {x = 1, y = 1},
 	}, huds, y)
 	mcl_credits.players[name] = huds
