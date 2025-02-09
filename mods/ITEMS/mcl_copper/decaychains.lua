@@ -288,3 +288,4 @@ minetest.register_on_mods_loaded(function()
 	end
 	mcl_stonecutter.refresh_recipes()
 end)
+

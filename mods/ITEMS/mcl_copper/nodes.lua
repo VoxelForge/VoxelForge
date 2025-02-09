@@ -1,6 +1,7 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 local D = mcl_util.get_dynamic_translator()
 
+
 local function on_lightning_strike(pos, _, pos2)
 	local node = minetest.get_node(pos)
 	if vector.distance(pos, pos2) <= 1 then
@@ -11,7 +12,7 @@ local function on_lightning_strike(pos, _, pos2)
 	minetest.swap_node(pos, node)
 end
 
-minetest.register_alias("mcl_copper:copper_ore", "mcl_copper:stone_with_copper")
+minetest.register_alias("vlf_copper:copper_ore", "mcl_copper:stone_with_copper")
 
 minetest.register_node("mcl_copper:stone_with_copper", {
 	description = S("Copper Ore"),
@@ -66,7 +67,7 @@ for n, desc in pairs(n_desc) do
 	if n == "" then
 		bdesc = "Block of "
 	end
-	minetest.register_node("mcl_copper:"..n.."block", {
+	minetest.register_node("mcl_copper:"..n.."copper", {
 		description = D(bdesc .. "Copper"),
 		_doc_items_longdesc = D(bdesc .. "Copper is mostly a decorative block."),
 		tiles = {"mcl_copper"..(n == "" and "_block" or n) ..".png"},
@@ -91,10 +92,10 @@ for n, desc in pairs(n_desc) do
 		sounds = mcl_sounds.node_sound_metal_defaults(),
 		_mcl_blast_resistance = 6,
 		_mcl_hardness = 3,
-		_mcl_stonecutter_recipes = { "mcl_copper:"..n.."block" }
+		_mcl_stonecutter_recipes = { "mcl_copper:"..n.."copper" }
 	})
 
-	minetest.register_node("mcl_copper:"..n.."block_chiseled", {
+	minetest.register_node("mcl_copper:"..n.."chiseled_copper", {
 		description = D(desc .. "Chiseled Copper"),
 		_doc_items_longdesc = D(desc .. "Chiseled Copper is mostly a decorative block."),
 		tiles = {"mcl_copper"..(n == "" and "_block" or n) .."_chiseled.png"},
@@ -103,9 +104,9 @@ for n, desc in pairs(n_desc) do
 		sounds = mcl_sounds.node_sound_metal_defaults(),
 		_mcl_blast_resistance = 6,
 		_mcl_hardness = 3,
-		_mcl_stonecutter_recipes = { "mcl_copper:"..n.."block", "mcl_copper:"..n.."cut_copper" }
+		_mcl_stonecutter_recipes = { "mcl_copper:"..n.."copper", "mcl_copper:"..n.."cut_copper" }
 	})
-	minetest.register_node("mcl_copper:"..n.."block_grate", {
+	minetest.register_node("mcl_copper:"..n.."copper_grate", {
 		description = D(desc .. "Copper Grate"),
 		_doc_items_longdesc = D(desc .. "Copper Grate is mostly a decorative block."),
 		drawtype = "allfaces_optional",
@@ -117,7 +118,7 @@ for n, desc in pairs(n_desc) do
 		sounds = mcl_sounds.node_sound_metal_defaults(),
 		_mcl_blast_resistance = 6,
 		_mcl_hardness = 3,
-		_mcl_stonecutter_recipes = { "mcl_copper:"..n.."block" }
+		_mcl_stonecutter_recipes = { "mcl_copper:"..n.."copper" }
 	})
 
 minetest.register_node("mcl_copper:"..n.."copper_bulb_lit_powered", {
@@ -211,7 +212,7 @@ minetest.register_node("mcl_copper:"..n.."copper_bulb_powered", {
 	})
 
 
-	mcl_doors:register_trapdoor("mcl_copper:"..n.."copper_trapdoor", {
+	mcl_doors:register_trapdoor("mcl_copper:"..n.."trapdoor", {
 		description = D(desc .. "Copper Trapdoor"),
 		groups = { copper = 1, pickaxey = 2, deco_block = 1 },
 		sounds = mcl_sounds.node_sound_metal_defaults(),
@@ -235,7 +236,18 @@ minetest.register_node("mcl_copper:"..n.."copper_bulb_powered", {
 		_mcl_blast_resistance = 3,
 		_mcl_hardness = 3
 	})
-	mcl_wip.register_wip_item("mcl_copper:"..n.."door")
+    mcl_doors:register_door("mcl_copper:waxed_"..n.."copper_door", {
+		description = D("Waxed ".. desc .. "Copper Door"),
+		groups = { door = 1, copper = 1, pickaxey = 2, building_block = 1, door_iron = 1,},
+		inventory_image = "mcl_copper_door"..n..".png",
+		sounds = mcl_sounds.node_sound_metal_defaults(),
+		sound_close = "doors_steel_door_close",
+		sound_open = "doors_steel_door_open",
+		tiles_bottom = { "mcl_copper_door"..n.."_bottom.png^[transformFX", "mcl_copper_door"..n.."_bottom.png" },
+		tiles_top = { "mcl_copper_door"..n.."_top.png^[transformFX", "mcl_copper_door"..n.."_top.png" },
+		_mcl_blast_resistance = 3,
+		_mcl_hardness = 3
+	})
 end
 
 -- These are static translation strings, but use D instead of S, anyway, to get
@@ -244,26 +256,26 @@ mcl_stairs.register_stair_and_slab("copper_cut", {
 	baseitem = "mcl_copper:cut_copper",
 	description_stair = D("Cut Copper Stairs"),
 	description_slab = D("Cut Copper Slab"),
-	overrides = {_mcl_stonecutter_recipes = {"mcl_copper:block", "mcl_copper:cut_copper"}}
+	overrides = {_mcl_stonecutter_recipes = {"mcl_copper:copper", "mcl_copper:cut_copper"}}
 })
 
 mcl_stairs.register_stair_and_slab("copper_exposed_cut", {
 	baseitem = "mcl_copper:exposed_cut_copper",
 	description_stair = D("Exposed Cut Copper Stairs"),
 	description_slab = D("Exposed Cut Copper Slab"),
-	overrides = {_mcl_stonecutter_recipes = {"mcl_copper:exposed_block", "mcl_copper:exposed_cut_copper"}, _on_lightning_strike = on_lightning_strike}
+	overrides = {_mcl_stonecutter_recipes = {"mcl_copper:exposed_copper", "mcl_copper:exposed_cut_copper"}, _on_lightning_strike = on_lightning_strike}
 })
 
 mcl_stairs.register_stair_and_slab("copper_weathered_cut", {
 	baseitem = "mcl_copper:weathered_cut_copper",
 	description_stair = D("Weathered Cut Copper Stairs"),
 	description_slab = D("Weathered Cut Copper Slab"),
-	overrides = {_mcl_stonecutter_recipes = {"mcl_copper:weathered_block", "mcl_copper:weathered_cut_copper"}, _on_lightning_strike = on_lightning_strike}
+	overrides = {_mcl_stonecutter_recipes = {"mcl_copper:weathered_copper", "mcl_copper:weathered_cut_copper"}, _on_lightning_strike = on_lightning_strike}
 })
 
 mcl_stairs.register_stair_and_slab("copper_oxidized_cut", {
 	baseitem = "mcl_copper:oxidized_cut_copper",
 	description_stair = D("Oxidized Cut Copper Stairs"),
 	description_slab = D("Oxidized Cut Copper Slab"),
-	overrides = {_mcl_stonecutter_recipes = {"mcl_copper:oxidized_block", "mcl_copper:oxidized_cut_copper"}, _on_lightning_strike = on_lightning_strike}
+	overrides = {_mcl_stonecutter_recipes = {"mcl_copper:oxidized_copper", "mcl_copper:oxidized_cut_copper"}, _on_lightning_strike = on_lightning_strike}
 })

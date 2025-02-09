@@ -2,8 +2,8 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 local dripstone_directions =
 {
-	[-1] = "bottom",
-	[1] = "top",
+	[-1] = "up",
+	[1] = "down",
 }
 
 local dripstone_stages =
@@ -62,7 +62,7 @@ end
 
 -- extracts the direction from dripstone's name
 local function extract_direction(name)
-	return string.sub(name, 26, 31) == "bottom" and -1 or 1
+	return string.sub(name, 26, 31) == "up" and -1 or 1
 end
 
 -- it is assumed pos is at the tip of the dripstone
@@ -213,16 +213,16 @@ minetest.register_craftitem("mcl_dripstone:pointed_dripstone", {
 for i = 1, #dripstone_stages do
 	local stage = dripstone_stages[i]
 	local add = ( i - 1 ) / 16
-	local box_top = {
+	local box_down = {
 		type = "fixed",
 		fixed = { math.max(-0.5, -3/16 - add), -0.5, math.max(-0.5, -3/16 - add), math.min(0.5, 3/16 + add), 0.5, math.min(3/16 + add) },
 	}
-	local box_bottom = {
+	local box_up = {
 		type = "fixed",
 		fixed = { math.max(-0.5, -3/16 - add), -0.5, math.max(-0.5, -3/16 - add), math.min(0.5, 3/16 + add), 0.5, math.min(0.5, 3/16 + add) },
 	}
 
-	minetest.register_node("mcl_dripstone:dripstone_top_" .. stage, {
+	minetest.register_node("mcl_dripstone:dripstone_down_" .. stage, {
 		description = S("Pointed dripstone (@1/@2)", i, #dripstone_stages),
 		_doc_items_longdesc = S("Pointed dripstone is what stalagmites and stalagtites are made of"),
 		_doc_items_hidden = true,
@@ -233,15 +233,15 @@ for i = 1, #dripstone_stages do
 		sunlight_propagates = true,
 		paramtype = "light",
 		is_ground_content = false,
-		selection_box = box_top,
-		collision_box = box_top,
+		selection_box = box_down,
+		collision_box = box_down,
 		sounds = mcl_sounds.node_sound_stone_defaults(),
 		on_destruct = on_dripstone_destruct,
 		_mcl_blast_resistance = 3,
 		_mcl_hardness = 1.5,
 	})
 
-	minetest.register_node("mcl_dripstone:dripstone_bottom_" .. stage, {
+	minetest.register_node("mcl_dripstone:dripstone_up_" .. stage, {
 		description = S("Pointed dripstone (@1/@2)", i, #dripstone_stages),
 		_doc_items_longdesc = S("Pointed dripstone is what stalagmites and stalagtites are made of"),
 		_doc_items_hidden = true,
@@ -252,8 +252,8 @@ for i = 1, #dripstone_stages do
 		sunlight_propagates = true,
 		paramtype = "light",
 		is_ground_content = false,
-		selection_box = box_bottom,
-		collision_box = box_bottom,
+		selection_box = box_up,
+		collision_box = box_up,
 		sounds = mcl_sounds.node_sound_stone_defaults(),
 		on_destruct = on_dripstone_destruct,
 		_mcl_blast_resistance = 3,
@@ -275,7 +275,7 @@ end)
 
 minetest.register_abm({
 	label = "Dripstone growth",
-	nodenames = {"mcl_dripstone:dripstone_top_tip"},
+	nodenames = {"mcl_dripstone:dripstone_down_tip"},
 	interval = 69,
 	chance = 88,
 	action = function(pos)
@@ -321,7 +321,7 @@ minetest.register_abm({
 
 minetest.register_abm({
 	label = "Dripstone filling water cauldrons, conversion from mud to clay",
-	nodenames = {"mcl_dripstone:dripstone_top_tip"},
+	nodenames = {"mcl_dripstone:dripstone_down_tip"},
 	interval = 69,
 	chance = 5.5,
 	action = function(pos)
@@ -358,7 +358,7 @@ minetest.register_abm({
 
 minetest.register_abm({
 	label = "Dripstone filling lava cauldrons",
-	nodenames = {"mcl_dripstone:dripstone_top_tip"},
+	nodenames = {"mcl_dripstone:dripstone_down_tip"},
 	interval = 69,
 	chance = 17,
 	action = function(pos)
