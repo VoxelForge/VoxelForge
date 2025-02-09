@@ -103,7 +103,7 @@ end
 
 local function unpreserve(itemstack, _, pointed_thing)
 	local node = minetest.get_node(pointed_thing.under)
-	local unpreserved = node.name:gsub("_waxed","")
+	local unpreserved = node.name:gsub("waxed_","")
 	if minetest.registered_nodes[unpreserved] then
 		node.name = unpreserved
 		minetest.swap_node(pointed_thing.under,node)
@@ -119,87 +119,7 @@ local function undecay(itemstack, _, pointed_thing)
 	return itemstack
 end
 
---[[]local function register_unpreserve(nodename,od,def)
-	local nd = table.copy(od)
-	if nd.description then
-		local description, args = untranslate(nd.description)
-		nd.description = D("Waxed " .. description, unpack(args))
-	end
-	nd[def.unpreserve_callback]  = function(itemstack, clicker, pointed_thing)
-		if pointed_thing then
-			awards.unlock(clicker:get_player_name(), "mcl:wax_off")
-			return unpreserve(itemstack, clicker, pointed_thing)
-		end
-		return itemstack
-	end
-	-- Update appropriate stonecutter recipes for the preserved variant
-	if nd._mcl_stonecutter_recipes then
-		local new_recipes = {}
-		for _, v in pairs(nd._mcl_stonecutter_recipes) do
-			table.insert(new_recipes, v.."_waxed")
-		end
-		nd._mcl_stonecutter_recipes = new_recipes
-	end
-	nd.groups = table.merge(nd.groups, { affected_by_lightning = 0 })
-	nd._on_lightning_strike = nil
-	if od._mcl_other_slab_half then
-		nd._mcl_other_slab_half = od._mcl_other_slab_half.."_waxed"
-	end
-	if od.stairs then
-		nd.stairs = { od.stairs[1].."_waxed", od.stairs[1].."_outer_waxed", od.stairs[1].."_inner_waxed" }
-		nd.drop = mcl_stairs.get_base_itemstring(nodename).."_waxed"
-	end
-	if nd._mcl_copper_bulb_switch_to then
-		nd.drop = nd.drop and (nd.drop.."_waxed")
-		nd._mcl_copper_bulb_switch_to = od._mcl_copper_bulb_switch_to.."_waxed"
-	end
-	if minetest.get_item_group(nodename, "double_slab") > 0 then
-		nd.drop = mcl_stairs.get_base_itemstring(nodename).."_waxed 2"
-	elseif minetest.get_item_group(nodename, "slab_top") > 0 then
-		nd.drop = mcl_stairs.get_base_itemstring(nodename).."_waxed"
-	elseif minetest.get_item_group(nodename, "slab") > 0 then
-		nd._mcl_stairs_double_slab = nodename.."_double_waxed"
-	end
-	minetest.register_node(":"..nodename.."_waxed",nd)
-end
-
-local function register_undecay(nodename,def)
-	local old_os = minetest.registered_items[nodename][def.undecay_callback]
-	minetest.override_item(nodename,{
-		[def.undecay_callback] = function(itemstack, clicker, pointed_thing)
-			if old_os  then itemstack = old_os(itemstack, clicker, pointed_thing) end
-			if pointed_thing then
-				return undecay(itemstack, clicker, pointed_thing)
-			end
-			return itemstack
-		end
-	})
-end
-
-local function register_preserve(nodename,def,chaindef)
-	local old_op = def.on_place
-	minetest.override_item(nodename,{
-		on_place =  function(itemstack, placer, pointed_thing)
-			local node = minetest.get_node(pointed_thing.under)
-			if table.indexof(chaindef.nodes,node.name) == -1 then
-				if old_op then return old_op(itemstack, placer, pointed_thing) end
-			elseif table.indexof(chaindef.nodes,node.name) <= #chaindef.nodes then
-				node.name = node.name.."_waxed"
-				if minetest.registered_nodes[node.name] then
-					minetest.swap_node(pointed_thing.under,node)
-					particles(pointed_thing, "mcl_copper_anti_oxidation_particle.png^[colorize:#d1d553:125")
-					if not minetest.is_creative_enabled(placer and placer:get_player_name() or "") then
-						itemstack:take_item()
-					end
-				end
-				awards.unlock(placer:get_player_name(), "mcl:wax_on")
-			end
-			return itemstack
-		end
-	})
-end]]
-
-local function register_unpreserve(nodename, od, def)
+--[[local function register_unpreserve(nodename, od, def)
     local nd = table.copy(od)
     if nd.description then
         local description, args = untranslate(nd.description)
@@ -286,7 +206,114 @@ local function register_preserve(nodename, def, chaindef)
             return itemstack
         end
     })
+end]]
+
+local function register_unpreserve(nodename, od, def)
+    local nd = table.copy(od)
+    if nd.description then
+        local description, args = untranslate(nd.description)
+        nd.description = D("Waxed " .. description, unpack(args))
+    end
+    nd[def.unpreserve_callback] = function(itemstack, clicker, pointed_thing)
+        if pointed_thing then
+            awards.unlock(clicker:get_player_name(), "mcl:wax_off")
+            return unpreserve(itemstack, clicker, pointed_thing)
+        end
+        return itemstack
+    end
+    -- Update appropriate stonecutter recipes for the preserved variant
+    if nd._mcl_stonecutter_recipes then
+        local new_recipes = {}
+        for _, v in ipairs(nd._mcl_stonecutter_recipes) do
+            if type(v) == "string" then
+                if v:find("stair_") then
+                    table.insert(new_recipes, (v:gsub("(.-):(stair_.*)", "%1:stair%2_waxed")))
+                elseif v:find("slab_") then
+                    table.insert(new_recipes, (v:gsub("(.-):(slab_.*)", "%1:stair%2_waxed")))
+                else
+                    table.insert(new_recipes, (v:gsub("(.-):(.*)", "%1:waxed_%2")))
+                end
+            end
+        end
+        nd._mcl_stonecutter_recipes = new_recipes
+    end
+    nd.groups = table.merge(nd.groups, { affected_by_lightning = 0 })
+    nd._on_lightning_strike = nil
+    if od._mcl_other_slab_half then
+        nd._mcl_other_slab_half = tostring(od._mcl_other_slab_half):gsub("(.-):(slab_.*)", "%1:%2_waxed")
+    end
+    if od.stairs then
+        nd.stairs = {
+            tostring(od.stairs[1]):gsub("(.-):(stair_.*)", "%1:%2_waxed"),
+            tostring(od.stairs[1]):gsub("(.-):(stair_.*)", "%1:%2_waxed") .. "_outer",
+            tostring(od.stairs[1]):gsub("(.-):(stair_.*)", "%1:%2_waxed") .. "_inner"
+        }
+        nd.drop = tostring(mcl_stairs.get_base_itemstring(nodename)):gsub("(.-):(stair_.*)", "%1:%2_waxed")
+    end
+    if nd._mcl_copper_bulb_switch_to then
+        nd.drop = nd.drop and tostring(nd.drop):gsub("(.-):(.*)", "%1:waxed_%2")
+        nd._mcl_copper_bulb_switch_to = tostring(od._mcl_copper_bulb_switch_to):gsub("(.-):(.*)", "%1:waxed_%2")
+    end
+    if minetest.get_item_group(nodename, "double_slab") > 0 then
+        nd.drop = tostring(mcl_stairs.get_base_itemstring(nodename)):gsub("(.-):(slab_.*)", "%1:%2_waxed") .. " 2"
+    elseif minetest.get_item_group(nodename, "slab_top") > 0 then
+        nd.drop = tostring(mcl_stairs.get_base_itemstring(nodename)):gsub("(.-):(slab_.*)", "%1:%2_waxed")
+    elseif minetest.get_item_group(nodename, "slab") > 0 then
+        nd._mcl_stairs_double_slab = tostring(nodename):gsub("(.-):(slab_.*)", "%1:%2_waxed") .. "_double"
+    end
+    --minetest.register_node(":" .. tostring(nodename):gsub("(.-):(.*)", "%1:waxed_%2"), nd)
+    if nodename:find("stair_") then
+        minetest.register_node(":" .. tostring(nodename):gsub("(.-):(stair_)(.*)", "%1:%2waxed_%3"), nd)
+    elseif nodename:find("slab_") then
+        minetest.register_node(":" .. tostring(nodename):gsub("(.-):(slab_)(.*)", "%1:%2waxed_%3"), nd)
+    else
+        minetest.register_node(":" .. tostring(nodename):gsub("(.-):(.*)", "%1:waxed_%2"), nd)
+    end
 end
+
+local function register_undecay(nodename, def)
+    local old_os = minetest.registered_items[nodename][def.undecay_callback]
+    minetest.override_item(nodename, {
+        [def.undecay_callback] = function(itemstack, clicker, pointed_thing)
+            if old_os then itemstack = old_os(itemstack, clicker, pointed_thing) end
+            if pointed_thing then
+                return undecay(itemstack, clicker, pointed_thing)
+            end
+            return itemstack
+        end
+    })
+end
+
+local function register_preserve(nodename, def, chaindef)
+    local old_op = def.on_place
+    minetest.override_item(nodename, {
+        on_place = function(itemstack, placer, pointed_thing)
+            local node = minetest.get_node(pointed_thing.under)
+            if table.indexof(chaindef.nodes, node.name) == -1 then
+                if old_op then return old_op(itemstack, placer, pointed_thing) end
+            elseif table.indexof(chaindef.nodes, node.name) <= #chaindef.nodes then
+                if node.name:find("stair_") then
+                    node.name = tostring(node.name):gsub("(.-):(stair_.*)", "%1:%2_waxed")
+                elseif node.name:find("slab_") then
+                    node.name = tostring(node.name):gsub("(.-):(slab_.*)", "%1:%2_waxed")
+                else
+                    node.name = tostring(node.name):gsub("(.-):(.*)", "%1:waxed_%2")
+                end
+                if minetest.registered_nodes[node.name] then
+                    minetest.swap_node(pointed_thing.under, node)
+                    particles(pointed_thing, "mcl_copper_anti_oxidation_particle.png^[colorize:#d1d553:125")
+                    if not minetest.is_creative_enabled(placer and placer:get_player_name() or "") then
+                        itemstack:take_item()
+                    end
+                end
+                awards.unlock(placer:get_player_name(), "mcl:wax_on")
+            end
+            return itemstack
+        end
+    })
+end
+
+
 
 -- mcl_copper.register_decaychain(name,def)
 -- name: short string that describes the decaychain; will be used as index of the registration table

@@ -17,17 +17,17 @@ mcl_copper.register_decaychain("copper",{
 		"mcl_copper:oxidized_block",
 	},
 })
-
-for _, v in pairs({ "chiseled", "grate", "cut" }) do
-	mcl_copper.register_decaychain(v.."_copper",{
+-- chiseled, grate
+for _, v in pairs({ "cut_copper" }) do
+	mcl_copper.register_decaychain(v,{
 		preserve_group = "preserves_copper",
 		unpreserve_callback = "_on_axe_place",
 		undecay_callback = "_on_axe_place",
 		nodes = { --order is significant
-			"mcl_copper:block_"..v,
-			"mcl_copper:exposed_block_"..v,
-			"mcl_copper:weathered_block_"..v,
-			"mcl_copper:oxidized_block_"..v,
+			"mcl_copper:"..v,
+			"mcl_copper:exposed_"..v,
+			"mcl_copper:weathered_"..v,
+			"mcl_copper:oxidized_"..v,
 		},
 	})
 end
@@ -69,9 +69,9 @@ for _,v in pairs({"stair","slab"}) do
 		undecay_callback = "_on_axe_place",
 		nodes = { --order is significant
 			"mcl_stairs:"..v.."_copper_cut",
-			"mcl_stairs:"..v.."_exposed_copper_cut",
-			"mcl_stairs:"..v.."_weathered_copper_cut",
-			"mcl_stairs:"..v.."_oxidized_copper_cut",
+			"mcl_stairs:"..v.."_copper_exposed_cut",
+			"mcl_stairs:"..v.."_copper_weathered_cut",
+			"mcl_stairs:"..v.."_copper_oxidized_cut",
 		},
 	})
 end
@@ -83,9 +83,9 @@ for _,v in pairs({"inner","outer"}) do
 		undecay_callback = "_on_axe_place",
 		nodes = { --order is significant
 			"mcl_stairs:stair_copper_cut_"..v,
-			"mcl_stairs:stair_exposed_copper_cut_"..v,
-			"mcl_stairs:stair_weathered_copper_cut_"..v,
-			"mcl_stairs:stair_oxidized_copper_cut_"..v,
+			"mcl_stairs:stair_copper_exposed_cut_"..v,
+			"mcl_stairs:stair_copper_weathered_cut_"..v,
+			"mcl_stairs:stair_copper_oxidized_cut_"..v,
 		},
 	})
 end
@@ -96,9 +96,9 @@ for _,v in pairs({"top","double"}) do
 		undecay_callback = "_on_axe_place",
 		nodes = { --order is significant
 			"mcl_stairs:slab_copper_cut_"..v,
-			"mcl_stairs:slab_exposed_copper_cut_"..v,
-			"mcl_stairs:slab_weathered_copper_cut_"..v,
-			"mcl_stairs:slab_oxidized_copper_cut_"..v,
+			"mcl_stairs:slab_copper_exposed_cut_"..v,
+			"mcl_stairs:slab_copper_weathered_cut_"..v,
+			"mcl_stairs:slab_copper_oxidized_cut_"..v,
 		},
 	})
 end

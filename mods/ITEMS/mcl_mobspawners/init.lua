@@ -5,9 +5,8 @@ minetest.register_entity(":vlf_mobspawners:doll", {
         physical = true,
         collide_with_objects = true,
         collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.8, 0.3},
-        visual = "mesh",
-        mesh = "character.b3d",
-        textures = {"character.png"},
+        visual = "sprite",
+        textures = {"blank.png"},
         makes_footstep_sound = true,
     },
 
