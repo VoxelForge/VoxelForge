@@ -6,6 +6,12 @@ voxelforge = {}
 --==============--
 --=== Locals ===--
 --==============--
+local modpath = minetest.get_modpath("voxelforge")
+--==============--
+--=== Dofile ===--
+--==============--
+dofile(modpath.."/biomes.lua")
+dofile(modpath.."/torchflower.lua")
 
 --=================--
 --=== Functions ===--

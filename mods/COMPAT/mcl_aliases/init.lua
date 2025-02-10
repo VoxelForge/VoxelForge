@@ -140,3 +140,20 @@ minetest.register_on_mods_loaded(function()
         minetest.log("error", "[Alias Creator] No 'mcl:' nodes found to alias.")
     end
 end)
+minetest.register_on_mods_loaded(function()
+    local count = 0
+    for item_name, _ in pairs(minetest.registered_items) do
+        if item_name:sub(1, 3) == "mcl" then
+            local alias_name = "vlf" .. item_name:sub(4) -- Replace "vlf:" with "mcl:"
+            minetest.register_alias(alias_name, item_name)
+            count = count + 1
+        end
+    end
+
+    -- Log success message
+    if count > 0 then
+        minetest.log("error", "[Alias Creator] Registered " .. count .. " aliases from 'vlf:' to 'mcl:'.")
+    else
+        minetest.log("error", "[Alias Creator] No 'mcl:' items found to alias.")
+    end
+end)

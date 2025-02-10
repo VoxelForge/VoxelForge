@@ -345,7 +345,9 @@ minetest.register_node("vlf_pale_garden:pale_moss_carpet", {
 		end
 	end
 })
-
+minetest.register_alias("mcl_pale_garden:pale_hanging_moss", "vlf_pale_garden:pale_hanging_moss")
+minetest.register_alias("mcl_pale_garden:pale_hanging_moss_tip", "vlf_pale_garden:pale_hanging_moss_tip")
+minetest.register_alias("mcl_pale_garden:active_creaking_heart", "vlf_pale_garden:active_creaking_heart")
 minetest.register_node("vlf_pale_garden:pale_hanging_moss", {
 	description = S("Hanging Pale Moss"),
 	_doc_items_create_entry = S("Hanging Pale Moss"),
