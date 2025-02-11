@@ -235,7 +235,6 @@ function mcl_charges.register_charge(name, descr, def)
 			local dpos = vector.round(vector.new(pos)) -- digital pos
 			if n ~= "air" then
 				def.hit_node(self, pos, node)
-				self.object:remove()
 			end
 			local bdef = minetest.registered_nodes[node.name]
 			if (bdef and bdef._on_wind_charge_hit) then
