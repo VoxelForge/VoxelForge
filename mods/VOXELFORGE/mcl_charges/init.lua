@@ -92,44 +92,51 @@ end
 local KNOCKBACK = 2.5 -- Default knockback distance for non-player entities
 local PLAYER_KNOCKBACK_MULTIPLIER = math.random(6, 7) -- Multiplier for player knockback
 
+local BLACKLISTED_ENTITIES = {
+    ["vlf_pale_garden:eyeblossom_pot_emissive"] = true,
+    ["voxelforge:firefly_bush_emissive"] = true,
+    ["vlf_pale_garden:eyeblossom_emissive"] = true,
+}
+
 function mcl_charges.wind_burst(pos, radius, origin_pos, owner)
-	for obj in minetest.objects_inside_radius(pos, radius) do
-		local obj_pos = obj:get_pos()
+    for obj in minetest.objects_inside_radius(pos, radius) do
+        local obj_pos = obj:get_pos()
 
-		-- Calculate the direction of knockback from origin_pos to pos
-		local knockback_dir = vector.normalize(vector.subtract(obj_pos, pos))
+        -- Calculate the direction of knockback from origin_pos to pos
+        local knockback_dir = vector.normalize(vector.subtract(obj_pos, pos))
 
-		if obj:is_player() then
-			-- Apply direct knockback to players with increased strength (multiplied by 20)
+        if obj:is_player() then
             if owner and obj:get_player_name() == owner then
-				-- Store the Y position before launching
-				local meta = obj:get_meta()
-				meta:set_float("previous_y", obj_pos.y)
-			end
-			local knockback_vel = vector.multiply(knockback_dir, KNOCKBACK * PLAYER_KNOCKBACK_MULTIPLIER)
-			obj:add_velocity(knockback_vel)
-		else
-			local luaobj = obj:get_luaentity()
-			if luaobj then
-				local is_builtin_item = luaobj.name == "__builtin:item"
-				if luaobj.is_mob or is_builtin_item then
-					-- Apply wind burst velocity to mobs and items
-					obj:set_velocity(mcl_charges.wind_burst_velocity(pos, obj_pos, obj:get_velocity(), radius * 3))
-				else
-					-- Apply default knockback for non-mob and non-item entities
-					local knockback_vel = vector.multiply(knockback_dir, KNOCKBACK)
-					obj:set_velocity(knockback_vel)
-				end
-			else
-				-- Default knockback for non-Lua entities (like particles or unknown objects)
-				local knockback_vel = vector.multiply(knockback_dir, KNOCKBACK)
-				obj:set_velocity(knockback_vel)
-			end
-		end
-	end
+                -- Store the Y position before launching
+                local meta = obj:get_meta()
+                meta:set_float("previous_y", obj_pos.y)
+            end
+            local knockback_vel = vector.multiply(knockback_dir, KNOCKBACK * PLAYER_KNOCKBACK_MULTIPLIER)
+            obj:add_velocity(knockback_vel)
+        else
+            local luaobj = obj:get_luaentity()
+            if luaobj then
+                if BLACKLISTED_ENTITIES[luaobj.name] then
+                    return false
+                end
+
+                local is_builtin_item = luaobj.name == "__builtin:item"
+                if luaobj.is_mob or is_builtin_item then
+                    -- Apply wind burst velocity to mobs and items
+                    obj:set_velocity(mcl_charges.wind_burst_velocity(pos, obj_pos, obj:get_velocity(), radius * 3))
+                else
+                    -- Apply default knockback for non-mob and non-item entities
+                    local knockback_vel = vector.multiply(knockback_dir, KNOCKBACK)
+                    obj:set_velocity(knockback_vel)
+                end
+            else
+                -- Default knockback for non-Lua entities (like particles or unknown objects)
+                local knockback_vel = vector.multiply(knockback_dir, KNOCKBACK)
+                obj:set_velocity(knockback_vel)
+            end
+        end
+    end
 end
-
-
 
 
 --throwable charge registry
