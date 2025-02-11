@@ -17,8 +17,6 @@
 	along with Meshport. If not, see <https://www.gnu.org/licenses/>.
 ]]
 
-local S = meshport.S
-
 --[[
 	A buffer of faces.
 
@@ -278,54 +276,6 @@ function meshport.Mesh:insert_faces(faces)
 	end
 end
 
---[[function meshport.Mesh:write_obj(path)
-	local objFile = io.open(path .. "/model.obj", "w")
-
-	objFile:write("# Created using Meshport (https://github.com/random-geek/meshport).\n")
-	objFile:write("mtllib materials.mtl\n")
-
-	-- Write vertices.
-	for _, vert in ipairs(self.verts) do
-		objFile:write(string.format("v %s\n", vert))
-	end
-
-	-- Write texture coordinates.
-	for _, texCoord in ipairs(self.tex_coords) do
-		objFile:write(string.format("vt %s\n", texCoord))
-	end
-
-	-- Write vertex normals.
-	for _, vertNorm in ipairs(self.vert_norms) do
-		objFile:write(string.format("vn %s\n", vertNorm))
-	end
-
-	-- Write faces, sorted in order of material.
-	for mat, faces in pairs(self.faces) do
-		objFile:write(string.format("g %s\n", #mat.."_material"))
-		objFile:write(string.format("usemtl %s\n", mat))
-
-		for _, face in ipairs(faces) do
-			objFile:write(string.format("f %s\n", face))
-		end
-	end
-
-	objFile:close()
-end]]
-
-local function number_to_ordinal(n)
-    local suffixes = {"st", "nd", "rd", "th"}
-    local last_digit = n % 10
-    local last_two_digits = n % 100
-
-    if last_two_digits >= 11 and last_two_digits <= 13 then
-        return tostring(n) .. "th"
-    elseif last_digit >= 1 and last_digit <= 3 then
-        return tostring(n) .. suffixes[last_digit]
-    else
-        return tostring(n) .. "th"
-    end
-end
-
 local function number_to_word(n)
     local ones = {"first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth"}
     local tens = {"tenth", "twentieth", "thirtieth", "fortieth", "fiftieth", "sixtieth", "seventieth", "eightieth", "ninetieth"}
@@ -393,9 +343,6 @@ function meshport.Mesh:write_mtl(path, name)
 		local texName = string.match(mat, "[%w%s%-_%.]+%.png") or mat
 
 		if meshport.texture_paths[texName] then
-			if texName ~= mat then
-				--meshport.log(playerName, "warning", S("Ignoring texture modifers in material \"@1\".", mat))
-			end
 
 			matFile:write(string.format("map_Kd %s\n", meshport.texture_paths[texName]))
 		else

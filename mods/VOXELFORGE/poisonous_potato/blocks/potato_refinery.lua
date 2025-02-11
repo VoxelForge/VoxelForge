@@ -138,11 +138,10 @@ local function furnace_node_timer(pos, elapsed)
 		--
 
 		-- Check if we have cookable content
-		local aftercooked
-		cooked, aftercooked = voxelforge.get_craft_result({method = "potato_refinery", width = 2, items = {inputlist[1], input2list[1]}})
+		cooked = voxelforge.get_craft_result({method = "potato_refinery", width = 2, items = {inputlist[1], input2list[1]}})
 		cookable = cooked.time ~= 0
 
-						
+
 			local el = math.min(elapsed, fuel_totaltime - fuel_time)
 			if cookable then -- fuel lasts long enough, adjust el to cooking duration
 				el = math.min(el, cooked.time - input_time)

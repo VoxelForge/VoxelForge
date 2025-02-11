@@ -204,10 +204,14 @@ globals = {
 }
 
 exclude_files = {
-	"mods/PLAYER/vlf_music/init.lua",
-	"mods/ITEMS/vlf_bubble_column/init.lua",
-	"mods/ITEMS/vlf_sculk/init.lua",
-	"mods/HUD/vlf_inventory/init.lua",
+	"mods/VOXELFORGE/vlf_bubble_column/init.lua",
+	"mods/ITEMS/mcl_sculk/init.lua",
+	"mods/ITEMS/mcl_portals/portal_end.lua",
+	"mods/HUD/mcl_inventory/init.lua",
+	"mods/CORE/mcl_util/init.lua",
+	"mods/CORE/mcl_util/compat.lua",
+	"mods/ENTITIES/mcl_mobs/pathfinding.lua",
+	"mods/ENTITIES/mobs_mc/dolphin.lua",
 	"pattern/*"
 }
 
