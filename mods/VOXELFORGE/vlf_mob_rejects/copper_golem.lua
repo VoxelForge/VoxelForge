@@ -14,7 +14,7 @@ local function find_nearby_copper_button(pos)
 	local nearby_buttons = minetest.find_nodes_in_area(
 		vector.subtract(pos, 5),
 		vector.add(pos, 5),
-		{"mesecons_button:copper_button_off"}
+		{"mcl_buttons:button_copper_off"}
 	)
 	if #nearby_buttons > 0 then
 		return nearby_buttons[math.random(#nearby_buttons)]
@@ -85,7 +85,7 @@ local copper_golem = {
 			if self.waxed then
 				awards.unlock(clicker:get_player_name(), "vlf:wax_off")
 				self.waxed = false
-				mcl_honey.particles(pos)
+				mcl_copper.particles(pos)
 			else
 				self.oxidation_level = self.oxidation_level - 1
 				self.base_texture = {oxidation_levels[self.oxidation_level].texture}
@@ -101,9 +101,9 @@ local copper_golem = {
 					}
 					self.state = "walk"
 					if self.oxidation_level > 3 then
-						mcl_honey.particles(pos)
+						mcl_copper.particles(pos)
 					else
-						mcl_honey.particles(pos, "vlf_copper_anti_oxidation_particle.png^[colorize:#6CC298:125")
+						mcl_copper.particles(pos, "vlf_copper_anti_oxidation_particle.png^[colorize:#6CC298:125")
 					end
 				end
 			end
@@ -111,7 +111,7 @@ local copper_golem = {
 		if item_name == "mcl_honey:honeycomb" and self.oxidation_level < 4 and not self.waxed then
 			awards.unlock(clicker:get_player_name(), "mcl:wax_on")
 			self.waxed = true
-			mcl_honey.particles(pos, "mcl_copper_anti_oxidation_particle.png^[colorize:#E58A14:125")
+			mcl_copper.particles(pos, "mcl_copper_anti_oxidation_particle.png^[colorize:#E58A14:125")
 		end
 	end,
 	do_custom = function(self)
@@ -138,18 +138,18 @@ local copper_golem = {
 				if self.target_button_pos then
 					self:go_to_pos(self.target_button_pos)
 					self.randomly_turn = false
-					self.heading_to_button = true	
+					self.heading_to_button = true
 				end
 			end
 		end
 	end,
 	on_deactivate  = function(self, staticdata)
-		oxidation_level = self.oxidation_level
+		local oxidation_level = self.oxidation_level
 		self.base_texture = self.base_texture or {oxidation_levels[oxidation_level].texture}
 		self.object:set_properties({textures = self.base_texture})
-	end, 
+	end,
 	on_activate = function(self, staticdata)
-		oxidation_level = self.oxidation_level
+		local oxidation_level = self.oxidation_level
 		self.base_texture = self.base_texture or {oxidation_levels[oxidation_level].texture}
 		self.object:set_properties({textures = self.base_texture})
 	end,
@@ -188,24 +188,23 @@ local function activate_copper_button(button_pos)
 	local dpos = vector.round(vector.new(button_pos))
 	local bdef = minetest.registered_nodes[node.name]
 	if (bdef and bdef._on_copper_golem_hit) then
-		bdef._on_copper_golem_hit(dpos, self)
+		bdef._on_copper_golem_hit(dpos)
 	end
 end
 
 local function check_golem_near_buttons()
 	local players = minetest.get_connected_players()
-	local curr_time = minetest.get_gametime()
 	for _, player in ipairs(players) do
 		local player_pos = player:get_pos()
 		local nearby_objects = minetest.get_objects_inside_radius(player_pos, 20)
 		for _, obj in ipairs(nearby_objects) do
 			if obj and obj:get_luaentity() and obj:get_luaentity().name == "vlf_mob_rejects:copper_golem" then
- 				local golem = obj:get_luaentity()
+				local golem = obj:get_luaentity()
 				local golem_pos = obj:get_pos()
 				local copper_buttons = minetest.find_nodes_in_area(
 					vector.subtract(golem_pos, 5),
 					vector.add(golem_pos, 5),
-					{"mesecons_button:copper_button_off"}
+					{"mcl_buttons:button_copper_off"}
 				)
 				if golem.heading_to_button then
 					for _, button_pos in ipairs(copper_buttons) do
@@ -339,10 +338,30 @@ minetest.register_globalstep(function(dtime)
 			for y = minp.y, maxp.y do
 				for z = minp.z, maxp.z do
 					local pos = {x = x, y = y, z = z}
-					local node = minetest.get_node(pos)
 					vlf_mob_rejects.check_copper_golem_summon(pos, player)
 				end
 			end
 		end
 	end
 end)
+
+mcl_buttons.register_button("copper", {
+	description = S("Copper Button"),
+	texture = "mcl_copper_block.png",
+	recipeitem = "mcl_copper:copper_block",
+	sounds = mcl_sounds.node_sound_stone_defaults(),
+	groups = {material_stone=1,handy=1,pickaxey=1},
+	push_duration = 10,
+	push_by_arrow = false,
+	longdesc = S("A Copper button is a redstone component made out of copper which can be pushed to provide redstone power. When pushed, it powers adjacent redstone components for 1 second."),
+	push_sound = "mesecons_button_push",
+	_on_copper_golem_hit = function(pos)
+			local node = minetest.get_node(pos)
+			if node.name == "mcl_buttons:button_copper_off" then
+				mcl_buttons.push_button(pos, node)
+				return true
+			else
+				return
+			end
+		end,
+})

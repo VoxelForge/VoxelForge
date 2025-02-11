@@ -110,15 +110,15 @@ end]]
 --[[function detect_entities_and_activate(pos, connected)
     local distance = vector.distance(pos, connected)
     local objs = minetest.get_objects_inside_radius(pos, distance)
-    
+
     for _, obj in ipairs(objs) do
         local obj_pos = obj:get_pos()
-        
+
         -- Check if the entity is positioned correctly between the hooks
         if is_entity_between(pos, connected, obj_pos) then
             local pos_node = minetest.get_node(pos)
             local connected_node = minetest.get_node(connected)
-            
+
             -- Check if we are in the right state to activate the second hook
            -- if connected_node.name == "vlf_tripwire:tripwire_hook_on" then
                 -- Activate the second hook and ensure it's in the active state
@@ -130,10 +130,10 @@ end]]
                 minetest.set_node(pos, {name="vlf_tripwire:tripwire_hook_active", param2=pos_node.param2})
             --end
         else
-        	local pos_node = minetest.get_node(pos)
+			local pos_node = minetest.get_node(pos)
                 local connected_node = minetest.get_node(connected)
-        	minetest.set_node(pos, {name="vlf_tripwire:tripwire_hook_on", param2=pos_node.param2})
-        	minetest.set_node(connected, {name="vlf_tripwire:tripwire_hook_on", param2=connected_node.param2})
+		 	minetest.set_node(pos, {name="vlf_tripwire:tripwire_hook_on", param2=pos_node.param2})
+			minetest.set_node(connected, {name="vlf_tripwire:tripwire_hook_on", param2=connected_node.param2})
         end
     end
 end]]
@@ -253,126 +253,3 @@ minetest.register_craft({
 		{"group:wood", "vlf_tripwire:tripwire", "group:wood"},
 	}
 })
-
--- Define the grappling hook item
-minetest.register_craftitem(":mod:grappling_hook", {
-    description = "Grappling Hook",
-    inventory_image = "grappling_hook.png",
-
-    on_use = function(itemstack, user, pointed_thing)
-        local player_name = user:get_player_name()
-        local pos = user:get_pos()
-        local dir = user:get_look_dir()
-        local hook_pos = vector.add(pos, vector.multiply(dir, 2))
-
-        -- Create the hook entity
-        local hook = minetest.add_entity(hook_pos, "mod:grappling_hook_entity")
-        if not hook then
-            return
-        end
-
-        local hook_ent = hook:get_luaentity()
-        if hook_ent then
-            hook_ent.owner = player_name
-            hook_ent.start_pos = pos
-            hook_ent.velocity = vector.multiply(dir, 20) -- Hook speed
-        end
-
-        -- Reduce item durability (optional)
-        itemstack:add_wear(65535 / 100) -- Adjust durability
-        return itemstack
-    end,
-})
-
--- Define the hook entity
-minetest.register_entity(":mod:grappling_hook_entity", {
-    initial_properties = {
-        physical = false,
-        collide_with_objects = false,
-        pointable = false,
-        visual = "cube",
-        textures = {"hook_texture.png", "hook_texture.png", "hook_texture.png", "hook_texture.png", "hook_texture.png", "hook_texture.png"},
-        visual_size = {x = 0.2, y = 0.2},
-    },
-
-    owner = nil,
-    start_pos = nil,
-    velocity = nil,
-    attached = false,
-    target_pos = nil,
-
-    on_step = function(self, dtime)
-        local pos = self.object:get_pos()
-
-        if self.attached then
-            -- Handle player reeling and swinging
-            if self.owner then
-            local player = minetest.get_player_by_name(self.owner)
-            if player then
-                local player_pos = player:get_pos()
-                local rope_dir = vector.direction(player_pos, self.target_pos)
-
-                -- Reel in or swing based on player input
-                if player:get_player_control().jump then
-                    local reel_speed = 5
-                    player:add_velocity(vector.multiply(rope_dir, reel_speed * dtime))
-                elseif player:get_player_control().sneak then
-                    -- Swinging effect
-                    local swing_force = vector.new(-rope_dir.z, 0, rope_dir.x)
-                    player:add_velocity(vector.multiply(swing_force, 2 * dtime))
-                end
-            end
-            end
-        else
-            -- Move hook until it hits a node or maximum range
-            local velocity = self.velocity
-            if self.object and self.velocity then
-            	self.object:set_velocity(velocity)
-        end
-
-            if minetest.get_node(pos).name ~= "air" then
-                -- Attach hook
-                self.attached = true
-                self.target_pos = pos
-                self.object:set_velocity(vector.new(0, 0, 0))
-                self.object:set_acceleration(vector.new(0, 0, 0))
-            end
-        end
-
-        -- Destroy the hook if it exceeds range
-        if self.start_pos and vector.distance(self.start_pos, pos) > 50 then
-            self.object:remove()
-        end
-    end,
-
-    on_activate = function(self, staticdata, dtime_s)
-        self.object:set_acceleration(vector.new(0, -9.8, 0))
-    end,
-})
-
--- Add a rope particle effect (optional)
-minetest.register_globalstep(function(dtime)
-    for _, player in ipairs(minetest.get_connected_players()) do
-        local wielded_item = player:get_wielded_item():get_name()
-        if wielded_item == "mod:grappling_hook" then
-            local pos = player:get_pos()
-            local hook_entities = minetest.get_objects_inside_radius(pos, 50)
-
-            for _, obj in ipairs(hook_entities) do
-                local ent = obj:get_luaentity()
-                if ent and ent.name == "mod:grappling_hook_entity" and ent.owner == player:get_player_name() then
-                    minetest.add_particle({
-                        pos = pos,
-                        velocity = vector.new(0, 0, 0),
-                        acceleration = vector.new(0, 0, 0),
-                        expirationtime = 0.1,
-                        size = 2,
-                        texture = "rope_texture.png",
-                        glow = 10,
-                    })
-                end
-            end
-        end
-    end
-end)
-

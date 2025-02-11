@@ -157,7 +157,7 @@ minetest.register_node("mcl_copper:"..n.."copper_bulb_lit_powered", {
         _mcl_copper_bulb_switch_to = "mcl_copper:"..n.."copper_bulb_powered",
         _mcl_redstone = {
 			connects_to = function(node, dir)
-		    	return true
+				return true
 		    end,
 		    update = function(pos, node)
 				if mcl_redstone.get_power(pos) ~= 0 then
@@ -208,7 +208,7 @@ minetest.register_node("mcl_copper:"..n.."copper_bulb_powered", {
 					return {priority = 1, name = node.name:gsub("copper_bulb", "copper_bulb_lit_powered")}
 			    end
 		    end,
-	    },	
+	    },
 	})
 
 

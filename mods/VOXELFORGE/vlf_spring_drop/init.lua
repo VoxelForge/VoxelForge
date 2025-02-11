@@ -5,7 +5,7 @@ minetest.register_craftitem(":voxelforge:leaf_litter", {
     wield_image = "leaf_litter_4.png",
     groups = {craftitem=1},
     stack_max = 64,
-    
+
     on_place = function(itemstack, placer, pointed_thing)
         if not pointed_thing or not pointed_thing.under then
             return itemstack
@@ -16,14 +16,14 @@ minetest.register_craftitem(":voxelforge:leaf_litter", {
         local above_pos = {x=pos.x, y=pos.y+1, z=pos.z}
         local above_node = minetest.get_node(above_pos)
         local node_def = minetest.registered_nodes[node.name]
-        
+
         -- Swap the node in place if it's part of the progression
         local swap_map = {
             ["voxelforge:leaf_litter_1"] = "voxelforge:leaf_litter_2",
             ["voxelforge:leaf_litter_2"] = "voxelforge:leaf_litter_3",
             ["voxelforge:leaf_litter_3"] = "voxelforge:leaf_litter_4",
         }
-        
+
         if swap_map[node.name] then
             minetest.set_node(pos, {name = swap_map[node.name]})
         else
@@ -72,7 +72,7 @@ minetest.register_craftitem(":voxelforge:wildflowers", {
     inventory_image = "wildflower.png",
     wield_image = "wildflower.png",
     groups = {craftitem=1},
-    
+
     on_place = function(itemstack, placer, pointed_thing)
         if not pointed_thing or not pointed_thing.under then
             return itemstack
@@ -83,14 +83,14 @@ minetest.register_craftitem(":voxelforge:wildflowers", {
         local above_pos = {x=pos.x, y=pos.y+1, z=pos.z}
         local above_node = minetest.get_node(above_pos)
         local node_def = minetest.registered_nodes[node.name]
-        
+
         -- Swap the node in place if it's part of the progression
         local swap_map = {
             ["voxelforge:wildflower_1"] = "voxelforge:wildflower_2",
             ["voxelforge:wildflower_2"] = "voxelforge:wildflower_3",
             ["voxelforge:wildflower_3"] = "voxelforge:wildflower_4",
         }
-        
+
         if swap_map[node.name] then
             minetest.set_node(pos, {name = swap_map[node.name]})
         else
