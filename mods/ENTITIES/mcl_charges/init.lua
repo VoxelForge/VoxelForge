@@ -99,7 +99,7 @@ function mcl_charges.wind_burst(pos, radius, origin_pos, owner)
 		local dist = math.max(1, vector.distance(pos, obj_pos))
 
 		-- Calculate the direction of knockback from origin_pos to pos
-		local knockback_dir = vector.normalize(vector.subtract(origin_pos, pos))
+		local knockback_dir = vector.normalize(vector.subtract(obj_pos, pos))
 
 		if obj:is_player() then
 			-- Apply direct knockback to players with increased strength (multiplied by 20)
@@ -207,6 +207,7 @@ function mcl_charges.register_charge(name, descr, def)
 				local v = ent_charge.velocity or 20
 				charge:set_velocity(vector.multiply(dropdir, v))
                 ent_charge.origin_pos = pos
+                ent_charge.owner = minetest.pos_to_string(pos)
 				ent_charge.switch = 1
 			end
 			stack:take_item()
