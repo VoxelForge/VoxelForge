@@ -206,7 +206,6 @@ minetest.register_entity(":voxelforge:firefly_bush_emissive", {
     end,
 })
 
-
 minetest.register_abm({
     label = "Firefly Emitter Behavior",
     nodenames = {"voxelforge:firefly_bush"},
@@ -221,7 +220,9 @@ minetest.register_abm({
                 local above_node = minetest.get_node_or_nil(above)
 
                 if above_node and above_node.name == "air" then
-                    minetest.sound_play("Fireflies", {pos = pos, gain = 0.03, max_hear_distance = 10})
+                    --minetest.sound_play("Fireflies", {pos = pos, gain = 0.03, max_hear_distance = 4})
+                    voxelforge.play_sound("Fireflies", pos, 10, 0.03)
+
                 end
             end
 

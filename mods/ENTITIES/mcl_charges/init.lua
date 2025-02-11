@@ -91,7 +91,7 @@ end
 
 local RADIUS = 4
 local KNOCKBACK = 2.5 -- Default knockback distance for non-player entities
-local PLAYER_KNOCKBACK_MULTIPLIER = math.random(4, 6) -- Multiplier for player knockback
+local PLAYER_KNOCKBACK_MULTIPLIER = math.random(6, 7) -- Multiplier for player knockback
 
 function mcl_charges.wind_burst(pos, radius, origin_pos, owner)
 	for obj in minetest.objects_inside_radius(pos, radius) do
@@ -279,6 +279,7 @@ dofile(modpath.."/wind_charge.lua")
 
 mcl_damage.register_modifier(function(obj, damage, reason)
 	if reason.type == "fall" then
+        if obj:is_player() then
 		local meta = obj:get_meta()
 		local previous_y = meta:get_float("previous_y")
 
@@ -304,6 +305,7 @@ mcl_damage.register_modifier(function(obj, damage, reason)
 				-- If fallen 5 or more blocks, deal 1 damage per extra block fallen
 				return fall_distance - 4
 			end
+        end
 		end
 	end
 end)
