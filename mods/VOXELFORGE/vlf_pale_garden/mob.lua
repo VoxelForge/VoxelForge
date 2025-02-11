@@ -239,7 +239,7 @@ function creaking_transient:ai_step(dtime)
         particles.trail(self._heart_pos, pos, "#EC7214", "out", 1)
         self.particle = false
         if self._heart_pos == nil then
-        	self.object:remove()
+			self.object:remove()
         end
     end
 end

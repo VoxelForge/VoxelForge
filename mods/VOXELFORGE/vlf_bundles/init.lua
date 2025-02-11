@@ -85,7 +85,7 @@ local function on_leftclick(itemstack)
 							"^" .. node_def.inventory_image ..
 							"^" .. stack_def:gsub(".png", "") .. "_open_front.png" ..
 							"^vlf_bundles_" .. item_count .. ".png"
-			else		
+			else
 				local node_def = minetest.registered_nodes[selected_item]
 				if not node_def then
 					return

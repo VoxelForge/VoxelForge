@@ -46,6 +46,22 @@ function particles.trail(start_pos, target_pos, color, a_type, attraction, speed
     })
 end
 
+function voxelforge.play_sound(sound_name, pos, max_distance, gain)
+    for _, player in ipairs(minetest.get_connected_players()) do
+        local player_pos = player:get_pos()
+        local distance = vector.distance(pos, player_pos)
+
+        if distance < max_distance then
+            local new_gain = gain * (1 - (distance / max_distance))  -- Scale gain based on distance
+            minetest.sound_play(sound_name, {
+                pos = pos,
+                gain = math.max(new_gain, 0),  -- Ensure gain never goes negative
+                max_hear_distance = max_distance,
+            }, true)  -- Ephemeral sound (doesn't track entity)
+        end
+    end
+end
+
 --TODO: Remove after version 25w09a
 minetest.register_on_joinplayer(function(player)
     minetest.chat_send_player(player:get_player_name(),

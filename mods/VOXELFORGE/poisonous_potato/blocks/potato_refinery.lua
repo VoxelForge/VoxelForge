@@ -63,7 +63,6 @@ end
 
 local function allow_metadata_inventory_put(pos, listname, index, stack, player)
     if minetest.is_protected(pos, player:get_player_name()) then return 0 end
-    local inv = minetest.get_meta(pos):get_inventory()
     if listname == "fuel" then
         if minetest.get_craft_result({method = "fuel", width = 1, items = {stack}}).time ~= 0 then
             return stack:get_count()
@@ -72,7 +71,7 @@ local function allow_metadata_inventory_put(pos, listname, index, stack, player)
     elseif listname == "input" then
         return stack:get_count()
     elseif listname == "input_2" then
-    	return stack:get_count()
+		return stack:get_count()
     elseif listname == "output" then
         return 0
     end
@@ -139,252 +138,199 @@ local function furnace_node_timer(pos, elapsed)
 		--
 
 		-- Check if we have cookable content
-		local aftercooked
-		cooked, aftercooked = voxelforge.get_craft_result({method = "potato_refinery", width = 2, items = {inputlist[1], input2list[1]}})
+		cooked = voxelforge.get_craft_result({method = "potato_refinery", width = 2, items = {inputlist[1], input2list[1]}})
 		cookable = cooked.time ~= 0
 
-		--[[local el = math.min(elapsed, fuel_totaltime - fuel_time)
-		if cookable then -- fuel lasts long enough, adjust el to cooking duration
-			el = math.min(el, cooked.time - input_time)
-		end
 
-		-- Check if we have enough fuel to burn
-		if fuel_time < fuel_totaltime then
-			-- The furnace is currently active and has enough fuel
-			fuel_time = fuel_time + el
-			-- If there is a cookable item then check if it is ready yet
-			if cookable then
-				input_time = input_time + el
-				if input_time >= cooked.time then
-					-- Place result in output list if possible
-					if inv:room_for_item("output", cooked.item) then
-						inv:add_item("output", cooked.item)]]
-		--[[local el = math.min(elapsed, fuel_totaltime - fuel_time)
-		if cookable then -- fuel lasts long enough, adjust el to cooking duration
-			el = math.min(el, cooked.time - input_time)
-		end
+			local el = math.min(elapsed, fuel_totaltime - fuel_time)
+			if cookable then -- fuel lasts long enough, adjust el to cooking duration
+				el = math.min(el, cooked.time - input_time)
+			end
 
-		-- Check if we have enough fuel to burn
-		if fuel_time < fuel_totaltime then
-			-- The furnace is currently active and has enough fuel
-			fuel_time = fuel_time + el
-			-- If there is a cookable item then check if it is ready yet
-			if cookable then
-				input_time = input_time + el
-				if input_time >= cooked.time then
-					-- Place result in output list if possible
-					if inv:room_for_item("output", cooked.item) then
-						--local output_item = cooked.item:item_copy()
-						local output_item = ItemStack(cooked.item)
+			-- Check if we have enough fuel to burn
+			if fuel_time < fuel_totaltime then
+				-- The furnace is currently active and has enough fuel
+				fuel_time = fuel_time + el
+				-- If there is a cookable item then check if it is ready yet
+				if cookable then
+					input_time = input_time + el
+					if input_time >= cooked.time then
+						-- Place result in output list if possible
+						if inv:room_for_item("output", cooked.item) then
+							local output_item = ItemStack(cooked.item)
 
-						-- Check if metadata exists in the cooked recipe
-						if cooked.meta then
-							local meta = output_item:get_meta()
-                    
-							-- Apply metadata from cooked.meta to the output item
-							for key, value in pairs(cooked.meta) do
-								if type(value) == "string" then
-									meta:set_string(key, value)
-								elseif type(value) == "number" then
-									meta:set_int(key, value)
+							-- Add the item to the inventory first (without meta)
+							inv:add_item("output", output_item)
+
+							-- Retrieve the added ItemStack from the inventory
+							output_item = inv:get_stack("output", 1)  -- Get the item that was added to the output
+
+							-- Check if metadata exists in the recipe
+							if cooked.meta then
+								local meta = output_item:get_meta()
+
+								-- Apply metadata from cooked.meta to the output item
+								for key, value in pairs(cooked.meta) do
+									if not cooked.meta.description then
+										if type(value) == "string" then
+											-- Set string metadata
+											meta:set_string(key, value)
+										elseif type(value) == "number" then
+											-- Set integer metadata
+											meta:set_int(key, value)
+										elseif type(value) == "boolean" then
+											-- Set boolean metadata
+											meta:set_bool(key, value)
+										end
+									else
+										local o_item = ItemStack(cooked.item)
+										local registered_item = minetest.registered_items[o_item:get_name()]
+										local registered_description = registered_item and registered_item.description
+										local current_description-- = meta:get_string("description")
+										local meta_description = meta:get_string("description")
+										if not string.find(meta_description, cooked.meta.description) then
+											current_description = registered_description .. "\n" .. cooked.meta.description
+											meta:set_string("description", current_description)
+										end
+									end
 								end
 							end
+
+							-- Update the inventory with the modified item (with metadata)
+							inv:set_stack("output", 1, output_item)
+
+
+							-- Remove one item from each input slot
+							local input1 = inv:get_stack("input", 1)
+							local input2 = inv:get_stack("input_2", 1)
+
+							-- Take one item from input1 if it has at least one item
+							if input1:get_count() > 0 then
+								input1:take_item(1)  -- Removes 1 item from input1
+								inv:set_stack("input", 1, input1)  -- Update inventory with the modified stack
+							end
+
+							-- Take one item from input2 if it has at least one item
+							if input2:get_count() > 0 then
+								input2:take_item(1)  -- Removes 1 item from input2
+								inv:set_stack("input_2", 1, input2)  -- Update inventory with the modified stack
+							end
+							input_time = input_time - cooked.time
+							update = true
+						else
+							output_full = true
 						end
-
-						-- Add the item with metadata to the inventory
-						inv:add_item("output", output_item)]]
-						
-			local el = math.min(elapsed, fuel_totaltime - fuel_time)
-if cookable then -- fuel lasts long enough, adjust el to cooking duration
-    el = math.min(el, cooked.time - input_time)
-end
-
--- Check if we have enough fuel to burn
-if fuel_time < fuel_totaltime then
-    -- The furnace is currently active and has enough fuel
-    fuel_time = fuel_time + el
-    -- If there is a cookable item then check if it is ready yet
-    if cookable then
-        input_time = input_time + el
-        if input_time >= cooked.time then
-            -- Place result in output list if possible
-            if inv:room_for_item("output", cooked.item) then
-                local output_item = ItemStack(cooked.item)
-                
-                -- Add the item to the inventory first (without meta)
-                inv:add_item("output", output_item)
-
-                -- Retrieve the added ItemStack from the inventory
-                output_item = inv:get_stack("output", 1)  -- Get the item that was added to the output
-
-                -- Check if metadata exists in the recipe
-                if cooked.meta then
-                    local meta = output_item:get_meta()
-
-                    -- Apply metadata from cooked.meta to the output item
-                    for key, value in pairs(cooked.meta) do
-                if not cooked.meta.description then
-                        if type(value) == "string" then
-                            -- Set string metadata
-                            meta:set_string(key, value)
-                        elseif type(value) == "number" then
-                            -- Set integer metadata
-                            meta:set_int(key, value)
-                        elseif type(value) == "boolean" then
-                            -- Set boolean metadata
-                            meta:set_bool(key, value)
-                        end
-                else
-                	local o_item = ItemStack(cooked.item)
-                	 local registered_item = minetest.registered_items[o_item:get_name()]
-			local registered_description = registered_item and registered_item.description
-			local current_description-- = meta:get_string("description")
-			local meta_description = meta:get_string("description")
-				if not string.find(meta_description, cooked.meta.description) then
-						current_description = registered_description .. "\n" .. cooked.meta.description
-					meta:set_string("description", current_description)
-				end
-			end
-                    end
-                end
-
-                -- Update the inventory with the modified item (with metadata)
-                inv:set_stack("output", 1, output_item)
-
-
-						-- Remove one item from each input slot
-						local input1 = inv:get_stack("input", 1)
-						local input2 = inv:get_stack("input_2", 1)
-
-						-- Take one item from input1 if it has at least one item
-						if input1:get_count() > 0 then
-							input1:take_item(1)  -- Removes 1 item from input1
-							inv:set_stack("input", 1, input1)  -- Update inventory with the modified stack
-						end
-
-						-- Take one item from input2 if it has at least one item
-						if input2:get_count() > 0 then
-							input2:take_item(1)  -- Removes 1 item from input2
-							inv:set_stack("input_2", 1, input2)  -- Update inventory with the modified stack
-						end
-						input_time = input_time - cooked.time
+						items_smelt = items_smelt + 1
+					else
+						-- Item could not be cooked: probably missing fuel
 						update = true
-					else
-						output_full = true
 					end
-					items_smelt = items_smelt + 1
-				else
-					-- Item could not be cooked: probably missing fuel
-					update = true
-				end
-			end
-		else
-			-- Furnace ran out of fuel
-			if cookable then
-				-- We need to get new fuel
-				local afterfuel
-				fuel, afterfuel = minetest.get_craft_result({method = "fuel", width = 1, items = fuellist})
-
-				if fuel.time == 0 then
-					-- No valid fuel in fuel list
-					fuel_totaltime = 0
-					input_time = 0
-				else
-					-- prevent blocking of fuel inventory (for automatization mods)
-					local is_fuel = minetest.get_craft_result({method = "fuel", width = 1, items = {afterfuel.items[1]:to_string()}})
-					if is_fuel.time == 0 then
-						table.insert(fuel.replacements, afterfuel.items[1])
-						inv:set_stack("fuel", 1, "")
-					else
-						-- Take fuel from fuel list
-						inv:set_stack("fuel", 1, afterfuel.items[1])
-					end
-					-- Put replacements in output list or drop them on the furnace.
-					local replacements = fuel.replacements
-					if replacements[1] then
-						local leftover = inv:add_item("output", replacements[1])
-						if not leftover:is_empty() then
-							local above = vector.new(pos.x, pos.y + 1, pos.z)
-							local drop_pos = minetest.find_node_near(above, 1, {"air"}) or above
-							minetest.item_drop(replacements[1], nil, drop_pos)
-						end
-					end
-					update = true
-					fuel_totaltime = fuel.time + (fuel_totaltime - fuel_time)
 				end
 			else
-				-- We don't need to get new fuel since there is no cookable item
-				fuel_totaltime = 0
-				input_time = 0
+				-- Furnace ran out of fuel
+				if cookable then
+					-- We need to get new fuel
+					local afterfuel
+					fuel, afterfuel = minetest.get_craft_result({method = "fuel", width = 1, items = fuellist})
+
+					if fuel.time == 0 then
+						-- No valid fuel in fuel list
+						fuel_totaltime = 0
+						input_time = 0
+					else
+						-- prevent blocking of fuel inventory (for automatization mods)
+						local is_fuel = minetest.get_craft_result({method = "fuel", width = 1, items = {afterfuel.items[1]:to_string()}})
+						if is_fuel.time == 0 then
+							table.insert(fuel.replacements, afterfuel.items[1])
+							inv:set_stack("fuel", 1, "")
+						else
+							-- Take fuel from fuel list
+							inv:set_stack("fuel", 1, afterfuel.items[1])
+						end
+						-- Put replacements in output list or drop them on the furnace.
+						local replacements = fuel.replacements
+						if replacements[1] then
+							local leftover = inv:add_item("output", replacements[1])
+							if not leftover:is_empty() then
+								local above = vector.new(pos.x, pos.y + 1, pos.z)
+								local drop_pos = minetest.find_node_near(above, 1, {"air"}) or above
+								minetest.item_drop(replacements[1], nil, drop_pos)
+							end
+						end
+						update = true
+						fuel_totaltime = fuel.time + (fuel_totaltime - fuel_time)
+					end
+				else
+					-- We don't need to get new fuel since there is no cookable item
+					fuel_totaltime = 0
+					input_time = 0
+				end
+				fuel_time = 0
 			end
-			fuel_time = 0
+
+			elapsed = elapsed - el
 		end
 
-		elapsed = elapsed - el
-	end
-
-	if items_smelt > 0 then
-		-- Play cooling sound
-		minetest.sound_play("voxelforge_cool_lava",
+		if items_smelt > 0 then
+			-- Play cooling sound
+			minetest.sound_play("voxelforge_cool_lava",
 			{ pos = pos, max_hear_distance = 16, gain = 0.07 * math.min(items_smelt, 7) }, true)
-	end
-	if fuel and fuel_totaltime > fuel.time then
-		fuel_totaltime = fuel.time
-	end
-	if inputlist and inputlist[1]:is_empty() then
-		input_time = 0
-	elseif input2list and input2list[1]:is_empty() then
-		input_time = 0
-	end
-
-	--
-	-- Update formspec, infotext and node
-	--
-	local formspec
-	local item_state
-	local item_percent = 0
-	if cookable then
-		item_percent = math.floor(input_time / cooked.time * 100)
-		if output_full then
-			item_state = S("100% (output full)")
-		else
-			item_state = S("@1%", item_percent)
 		end
-	else
-		if inputlist and not inputlist[1]:is_empty() then
-			item_state = S("Not refinable")
-		else
-			item_state = S("Empty")
+		if fuel and fuel_totaltime > fuel.time then
+			fuel_totaltime = fuel.time
 		end
-	end
+		if inputlist and inputlist[1]:is_empty() then
+			input_time = 0
+		elseif input2list and input2list[1]:is_empty() then
+			input_time = 0
+		end
 
-	local fuel_state = S("Empty")
-	local active = false
-	local result = false
-
-	if fuel_totaltime ~= 0 then
-		active = true
-		local fuel_percent = 100 - math.floor(fuel_time / fuel_totaltime * 100)
-		fuel_state = S("@1%", fuel_percent)
-		--formspec = voxelforge.get_furnace_active_formspec(fuel_percent, item_percent)
-		formspec = voxelforge.get_furnace_formspec(fuel_percent, item_percent, fuel_totaltime > 0)
-		swap_node(pos, "voxelforge:furnace_active")
-		-- make sure timer restarts automatically
-		result = true
-
-		-- Play sound every 5 seconds while the furnace is active
-		if timer_elapsed == 0 or (timer_elapsed + 1) % 5 == 0 then
-			local sound_id = minetest.sound_play("voxelforge_furnace_active",
-				{pos = pos, max_hear_distance = 16, gain = 0.25})
-			local hash = minetest.hash_node_position(pos)
-			furnace_fire_sounds[hash] = furnace_fire_sounds[hash] or {}
-			table.insert(furnace_fire_sounds[hash], sound_id)
-			-- Only remember the 3 last sound handles
-			if #furnace_fire_sounds[hash] > 3 then
-				table.remove(furnace_fire_sounds[hash], 1)
+		-- Update formspec, infotext and node
+		local formspec
+		local item_state
+		local item_percent = 0
+		if cookable then
+			item_percent = math.floor(input_time / cooked.time * 100)
+			if output_full then
+				item_state = S("100% (output full)")
+			else
+				item_state = S("@1%", item_percent)
 			end
-			-- Remove the sound ID automatically from table after 11 seconds
-			minetest.after(11, function()
+		else
+			if inputlist and not inputlist[1]:is_empty() then
+				item_state = S("Not refinable")
+			else
+				item_state = S("Empty")
+			end
+		end
+
+		local fuel_state = S("Empty")
+		local active = false
+		local result = false
+
+		if fuel_totaltime ~= 0 then
+			active = true
+			local fuel_percent = 100 - math.floor(fuel_time / fuel_totaltime * 100)
+			fuel_state = S("@1%", fuel_percent)
+			--formspec = voxelforge.get_furnace_active_formspec(fuel_percent, item_percent)
+			formspec = voxelforge.get_furnace_formspec(fuel_percent, item_percent, fuel_totaltime > 0)
+			swap_node(pos, "voxelforge:furnace_active")
+			-- make sure timer restarts automatically
+			result = true
+
+			-- Play sound every 5 seconds while the furnace is active
+			if timer_elapsed == 0 or (timer_elapsed + 1) % 5 == 0 then
+				local sound_id = minetest.sound_play("voxelforge_furnace_active",
+				{pos = pos, max_hear_distance = 16, gain = 0.25})
+				local hash = minetest.hash_node_position(pos)
+				furnace_fire_sounds[hash] = furnace_fire_sounds[hash] or {}
+				table.insert(furnace_fire_sounds[hash], sound_id)
+				-- Only remember the 3 last sound handles
+				if #furnace_fire_sounds[hash] > 3 then
+					table.remove(furnace_fire_sounds[hash], 1)
+				end
+				-- Remove the sound ID automatically from table after 11 seconds
+				minetest.after(11, function()
 				if not furnace_fire_sounds[hash] then
 					return
 				end

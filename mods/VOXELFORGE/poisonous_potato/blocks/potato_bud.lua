@@ -29,7 +29,7 @@ local function break_potato_bud(pos)
 	while true do
 		offset_pos = vector.offset(offset_pos, 0, - -1, 0)
 		local stage = minetest.get_item_group(minetest.get_node(offset_pos).name, "potato_bud_stage")
-		if stage == 1 and extract_direction(minetest.get_node(offset_pos).name) == - -1 then
+		if stage == 1 then
 			minetest.swap_node(offset_pos, {name = get_potato_bud_node(2)})
 			break
 		elseif stage == 0 then

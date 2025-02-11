@@ -19,7 +19,7 @@ minetest.register_on_mods_loaded(function()
         if def.groups and def.groups.potato then
             -- Add "Potato" to the description in green
             local new_description = def.description .. "\n" .. minetest.colorize("#00FF00", "Potato")
-            
+
             -- Override the item definition with the updated description
             minetest.override_item(name, {
                 description = new_description,

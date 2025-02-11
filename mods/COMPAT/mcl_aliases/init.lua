@@ -21,13 +21,13 @@ minetest.register_chatcommand("place_all_blocks", {
         if not player then
             return false, "Player not found!"
         end
-        
+
         local pos = vector.round(player:get_pos())
         local nodes = {}
         for nodename in pairs(minetest.registered_nodes) do
             table.insert(nodes, nodename)
         end
-        
+
         -- Square placement logic
         local side_length = math.ceil(math.sqrt(#nodes))
         local index = 1
@@ -39,7 +39,7 @@ minetest.register_chatcommand("place_all_blocks", {
                 index = index + 1
             end
         end
-        
+
         return true, "Placed " .. #nodes .. " blocks in a square around your position."
     end,
 })

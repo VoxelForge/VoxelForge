@@ -70,7 +70,7 @@ for n, desc in pairs(n_desc) do
 	minetest.register_node("mcl_copper:"..n.."copper", {
 		description = D(bdesc .. "Copper"),
 		_doc_items_longdesc = D(bdesc .. "Copper is mostly a decorative block."),
-		tiles = {"mcl_copper"..(n == "" and "_block" or n) ..".png"},
+		tiles = {"mcl_copper"..((string.sub(n, -1) == "_" and "_" .. string.sub(n, 1, -2) or n) == "" and "_block" or (string.sub(n, -1) == "_" and "_" .. string.sub(n, 1, -2) or n)) ..".png"},
 		is_ground_content = false,
 		groups = {pickaxey = 2, building_block = 1, stonecuttable = 1},
 		sounds = mcl_sounds.node_sound_metal_defaults(),
@@ -86,7 +86,7 @@ for n, desc in pairs(n_desc) do
 	minetest.register_node("mcl_copper:"..n.."cut_copper", {
 		description = D(desc .. "Cut Copper"),
 		_doc_items_longdesc = D(desc .. "Cut Copper is mostly a decorative block."),
-		tiles = {"mcl_copper"..(n == "" and "_block" or n) .."_cut.png"},
+		tiles = {"mcl_copper"..((string.sub(n, -1) == "_" and "_" .. string.sub(n, 1, -2) or n) == "" and "_block" or (string.sub(n, -1) == "_" and "_" .. string.sub(n, 1, -2) or n)) .."_cut.png"},
 		is_ground_content = false,
 		groups = {pickaxey = 2, building_block = 1, stonecuttable = 1},
 		sounds = mcl_sounds.node_sound_metal_defaults(),
@@ -98,7 +98,7 @@ for n, desc in pairs(n_desc) do
 	minetest.register_node("mcl_copper:"..n.."chiseled_copper", {
 		description = D(desc .. "Chiseled Copper"),
 		_doc_items_longdesc = D(desc .. "Chiseled Copper is mostly a decorative block."),
-		tiles = {"mcl_copper"..(n == "" and "_block" or n) .."_chiseled.png"},
+		tiles = {"mcl_copper"..((string.sub(n, -1) == "_" and "_" .. string.sub(n, 1, -2) or n) == "" and "_block" or (string.sub(n, -1) == "_" and "_" .. string.sub(n, 1, -2) or n)) .."_chiseled.png"},
 		is_ground_content = false,
 		groups = {pickaxey = 2, building_block = 1, stonecuttable = 1},
 		sounds = mcl_sounds.node_sound_metal_defaults(),
@@ -111,7 +111,7 @@ for n, desc in pairs(n_desc) do
 		_doc_items_longdesc = D(desc .. "Copper Grate is mostly a decorative block."),
 		drawtype = "allfaces_optional",
 		paramtype = "light",
-		tiles = {"mcl_copper"..(n == "" and "_block" or n) .."_grate.png"},
+		tiles = {"mcl_copper"..((string.sub(n, -1) == "_" and "_" .. string.sub(n, 1, -2) or n) == "" and "_block" or (string.sub(n, -1) == "_" and "_" .. string.sub(n, 1, -2) or n)) .."_grate.png"},
 		use_texture_alpha = "blend",
 		is_ground_content = false,
 		groups = {pickaxey = 2, building_block = 1, copper_grate = 1, },
@@ -156,15 +156,15 @@ minetest.register_node("mcl_copper:"..n.."copper_bulb_lit_powered", {
 		_mcl_hardness = 3,
         _mcl_copper_bulb_switch_to = "mcl_copper:"..n.."copper_bulb_powered",
         _mcl_redstone = {
-	    	connects_to = function(node, dir)
-		    	return true
+			connects_to = function(node, dir)
+				return true
 		    end,
 		    update = function(pos, node)
-			    if mcl_redstone.get_power(pos) ~= 0 then
-		    		return {priority = 1, name = node.name:gsub("copper_bulb_lit", "copper_bulb_powered")}
-			    end
-		    end,
-	    },	
+				if mcl_redstone.get_power(pos) ~= 0 then
+					return {priority = 1, name = node.name:gsub("copper_bulb_lit", "copper_bulb_powered")}
+				end
+			end,
+		},
 	})
 
 minetest.register_node("mcl_copper:"..n.."copper_bulb_powered", {
@@ -200,15 +200,15 @@ minetest.register_node("mcl_copper:"..n.."copper_bulb_powered", {
 		_mcl_hardness = 3,
         _mcl_copper_bulb_switch_to = "mcl_copper:"..n.."copper_bulb_lit_powered",
         _mcl_redstone = {
-	    	connects_to = function(node, dir)
-		    	return true
+			connects_to = function(node, dir)
+				return true
 		    end,
 		    update = function(pos, node)
 			    if mcl_redstone.get_power(pos) ~= 0 then
-		    		return {priority = 1, name = node.name:gsub("copper_bulb", "copper_bulb_lit_powered")}
+					return {priority = 1, name = node.name:gsub("copper_bulb", "copper_bulb_lit_powered")}
 			    end
 		    end,
-	    },	
+	    },
 	})
 
 
@@ -218,33 +218,33 @@ minetest.register_node("mcl_copper:"..n.."copper_bulb_powered", {
 		sounds = mcl_sounds.node_sound_metal_defaults(),
 		sound_close = "doors_steel_door_close",
 		sound_open = "doors_steel_door_open",
-		tile_front = "mcl_copper_trapdoor"..n..".png",
-		tile_side = "mcl_copper_trapdoor"..n.."_side.png",
-		wield_image = "mcl_copper_trapdoor"..n..".png",
+		tile_front = "mcl_copper_trapdoor"..(string.sub(n, -1) == "_" and "_" .. string.sub(n, 1, -2) or n)..".png",
+		tile_side = "mcl_copper_trapdoor"..(string.sub(n, -1) == "_" and "_" .. string.sub(n, 1, -2) or n).."_side.png",
+		wield_image = "mcl_copper_trapdoor"..(string.sub(n, -1) == "_" and "_" .. string.sub(n, 1, -2) or n)..".png",
 		_mcl_blast_resistance = 3,
 		_mcl_hardness = 3
 	})
 	mcl_doors:register_door("mcl_copper:"..n.."copper_door", {
 		description = D(desc .. "Copper Door"),
 		groups = { door = 1, copper = 1, pickaxey = 2, building_block = 1, door_iron = 1,},
-		inventory_image = "mcl_copper_door"..n..".png",
+        inventory_image = "mcl_copper_door" .. (string.sub(n, -1) == "_" and "_" .. string.sub(n, 1, -2) or n) .. ".png",
 		sounds = mcl_sounds.node_sound_metal_defaults(),
 		sound_close = "doors_steel_door_close",
 		sound_open = "doors_steel_door_open",
-		tiles_bottom = { "mcl_copper_door"..n.."_bottom.png^[transformFX", "mcl_copper_door"..n.."_bottom.png" },
-		tiles_top = { "mcl_copper_door"..n.."_top.png^[transformFX", "mcl_copper_door"..n.."_top.png" },
+		tiles_bottom = { "mcl_copper_door_"..n.."bottom.png^[transformFX", "mcl_copper_door_"..n.."bottom.png" },
+		tiles_top = { "mcl_copper_door_"..n.."top.png^[transformFX", "mcl_copper_door_"..n.."top.png" },
 		_mcl_blast_resistance = 3,
 		_mcl_hardness = 3
 	})
     mcl_doors:register_door("mcl_copper:waxed_"..n.."copper_door", {
 		description = D("Waxed ".. desc .. "Copper Door"),
 		groups = { door = 1, copper = 1, pickaxey = 2, building_block = 1, door_iron = 1,},
-		inventory_image = "mcl_copper_door"..n..".png",
+        inventory_image = "mcl_copper_door" .. (string.sub(n, -1) == "_" and "_" .. string.sub(n, 1, -2) or n) .. ".png",
 		sounds = mcl_sounds.node_sound_metal_defaults(),
 		sound_close = "doors_steel_door_close",
 		sound_open = "doors_steel_door_open",
-		tiles_bottom = { "mcl_copper_door"..n.."_bottom.png^[transformFX", "mcl_copper_door"..n.."_bottom.png" },
-		tiles_top = { "mcl_copper_door"..n.."_top.png^[transformFX", "mcl_copper_door"..n.."_top.png" },
+		tiles_bottom = { "mcl_copper_door_"..n.."bottom.png^[transformFX", "mcl_copper_door_"..n.."bottom.png" },
+		tiles_top = { "mcl_copper_door_"..n.."top.png^[transformFX", "mcl_copper_door_"..n.."top.png" },
 		_mcl_blast_resistance = 3,
 		_mcl_hardness = 3
 	})

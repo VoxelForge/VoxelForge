@@ -8,7 +8,7 @@ local function spawn_shulkers(pos,def,pr)
 	local p2 = vector.offset(pos,def.sidelen/2,def.sidelen,def.sidelen/2)
 	mcl_structures.spawn_mobs("mobs_mc:shulker",spawnon,p1,p2,pr,1)
 
-	local guard = minetest.find_node_near(pos,def.sidelen,{"mcl_itemframes:frame"})
+	local guard = minetest.find_node_near(pos,def.sidelen,{"vlf_itemframes:frame"})
 	if guard then
 		minetest.add_entity(vector.offset(guard,0,-0.5,0),"mobs_mc:shulker")
 	end
@@ -28,10 +28,10 @@ mcl_structures.register_structure("end_shipwreck",{
 	},
 	construct_nodes = {"mcl_chests:ender_chest_small","mcl_chests:ender_chest","mcl_brewing:stand_000","mcl_chests:violet_shulker_box_small"},
 	after_place = function(pos,def,pr)
-		local fr = minetest.find_node_near(pos,def.sidelen,{"mcl_itemframes:frame"})
+		local fr = minetest.find_node_near(pos,def.sidelen,{"vlf_itemframes:frame"})
 		if fr then
-			if mcl_itemframes then
-				mcl_itemframes.update_entity(fr)
+			if vlf_itemframes then
+				vlf_itemframes.update_entity(fr)
 			end
 		end
 		local p1 = vector.offset(pos, -15, -9, -15)
@@ -42,7 +42,7 @@ mcl_structures.register_structure("end_shipwreck",{
 		return spawn_shulkers(pos,def,pr)
 	end,
 	loot = {
-		[ "mcl_itemframes:frame" ] ={{
+		[ "vlf_itemframes:frame" ] ={{
 			stacks_min = 1,
 			stacks_max = 1,
 			items = {
