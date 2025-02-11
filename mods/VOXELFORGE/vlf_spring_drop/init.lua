@@ -225,8 +225,8 @@ minetest.register_abm({
                 end
             end
 
-            local light_level = minetest.get_node_light(pos) or 0
-                if light_level < 5 then
+            local light_level = minetest.get_node_light(pos)
+                if light_level < 7 then
                     local particle_lifetime = math.random(36, 180) / 20  -- Convert ticks to seconds
                     local size = 0.5  -- Scale of the particle
                     local vel = {

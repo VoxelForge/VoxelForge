@@ -3,6 +3,33 @@ local RADIUS = 4
 local damage_radius = (RADIUS / math.max(1, RADIUS)) * RADIUS
 local radius = 2
 
+local function windcharge_hit(pos, node)
+    -- Define the search radius
+    local radius = 3
+
+    -- Loop through all nodes within the radius
+    for x = -radius, radius do
+        for y = -radius, radius do
+            for z = -radius, radius do
+                -- Calculate the current position to check
+                local check_pos = {x = pos.x + x, y = pos.y + y, z = pos.z + z}
+
+                -- Get the node at the current position
+                local check_node = minetest.get_node(check_pos)
+
+                -- Check if the node name contains "lit"
+                if check_node.name:find("lit_candle") then
+                    -- Replace "lit" with "unl" in the node name
+                    local new_node_name = check_node.name:gsub("lit_candle", "unl_candle")
+
+                    -- Set the new node at the position
+                    minetest.set_node(check_pos, {name = new_node_name})
+                end
+            end
+        end
+    end
+end
+
 mcl_charges.register_charge("wind_charge", S("Wind Charge"), {
 	hit_player = mcl_mobs.get_arrow_damage_func(0, "fireball"),
 	hit_mob = mcl_mobs.get_arrow_damage_func(6, "fireball"),
@@ -39,6 +66,7 @@ mcl_charges.register_charge("wind_charge", S("Wind Charge"), {
 			minetest.add_item(pos, {name = "mcl_core:brick"})
 			mcl_charges.pot_effects(pos, radius)
 		end
+        windcharge_hit(pos, node)
 	end,
 	hit_player_alt = function(_, pos)
 		mcl_charges.wind_burst(pos, damage_radius, self.origin_pos, self.owner)
@@ -52,6 +80,7 @@ mcl_charges.register_charge("wind_charge", S("Wind Charge"), {
 			maxpos = vector.offset(pos, 0.8, 0.8, 0.8),
 		}))
 		minetest.sound_play("tnt_explode", { pos = pos, gain = 0.5, max_hear_distance = 30, pitch = 2.5 }, true)
+        windcharge_hit(pos, node)
 	end,
 	hit_mob_alt = function(_, pos)
 		mcl_charges.wind_burst(pos, damage_radius, self.origin_pos, self.owner)
@@ -65,6 +94,7 @@ mcl_charges.register_charge("wind_charge", S("Wind Charge"), {
 			maxpos = vector.offset(pos, 0.8, 0.8, 0.8),
 		}))
 		minetest.sound_play("tnt_explode", { pos = pos, gain = 0.5, max_hear_distance = 30, pitch = 2.5 }, true)
+        windcharge_hit(pos, node)
 	end,
 	on_activate = function(self, _)
 		self.object:set_armor_groups({immortal = 1})
