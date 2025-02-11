@@ -137,63 +137,126 @@ end
 
 minetest.register_node(":voxelforge:firefly_bush", {
     description = "Firefly Bush",
-    tiles = {"default_wood.png"},
-    groups = {choppy = 2, oddly_breakable_by_hand = 1},
+    waving = 1,
+	tiles = {"firefly_bush.png"},
+	inventory_image = "firefly_bush.png",
+    drawtype = "plantlike",
+	wield_image = "firefly_bush.png",
+	selection_box = {
+		type = "fixed",
+		fixed = {{ -6/16, -8/16, -6/16, 6/16, 4/16, 6/16 }},
+	},
+	paramtype = "light",
+	sunlight_propagates = true,
+	walkable = false,
+	buildable_to = true,
+	groups = {
+		handy = 1, shearsy = 1, attached_node = 1, deco_block = 1,
+		plant = 1, place_flowerlike = 2, non_mycelium_plant = 1,
+		flammable = 3, fire_encouragement = 60, fire_flammability = 10, dig_by_piston = 1,
+		dig_by_water = 1, destroy_by_lava_flow = 1, compostability = 30, grass_palette = 1
+	},
+	sounds = mcl_sounds.node_sound_leaves_defaults(),
+	drop = mcl_flowers.wheat_seed_drop,
+	_mcl_shears_drop = true,
+	_mcl_fortune_drop = mcl_flowers.fortune_wheat_seed_drop,
+	node_placement_prediction = "",
+	on_place = mcl_flowers.on_place_flower,
+    light_source = 3,
+	_mcl_blast_resistance = 0,
+	_mcl_hardness = 0,
+    use_texture_alpha = "clip",
+	_on_bone_meal = mcl_flowers.on_bone_meal,
+    on_construct = function(pos)
+		minetest.add_entity(pos, "voxelforge:firefly_bush_emissive")
+        end,
 })
+
+minetest.register_entity(":voxelforge:firefly_bush_emissive", {
+    initial_properties = {
+		pointable = false,
+		visual = "mesh",
+		mesh = "plantlike.obj",
+		visual_size = {x = 10, y = 10},
+		textures = {"firefly_bush_emissive.png^[verticalframe:10:0"},
+		glow = 15,
+	},
+
+    timer = 0,
+    frame = 0,
+    on_activate = function(self)
+        self.object:set_yaw(math.rad(270))  -- Rotate -90 degrees
+    end,
+
+    on_step = function(self, dtime)
+        self.timer = self.timer + dtime
+        if self.timer >= 0.1 then  -- Change frame every 0.2 seconds
+            self.timer = 0
+            self.frame = (self.frame + 1) % 10  -- Loop through 4 frames
+            self.object:set_properties({
+                textures = {"firefly_bush_emissive.png^[verticalframe:10:" .. self.frame}
+            })
+            local pos = self.object:get_pos()
+            local node = minetest.get_node(pos)
+            if node.name ~= "voxelforge:firefly_bush" then
+                self.object:remove()
+                return
+            end
+        end
+    end,
+})
+
 
 minetest.register_abm({
     label = "Firefly Emitter Behavior",
     nodenames = {"voxelforge:firefly_bush"},
-    interval = 3.0,  -- Runs every 3 seconds
+    interval = 1.0,  -- Runs every 3 seconds
     chance = 1,  -- Runs on all matching nodes
     catch_up = false,
-    --bulk_abm = true,  -- Enables bulk processing
 
     action = function(pos)
         local time_of_day = minetest.get_timeofday()
-        if time_of_day < 0.2 or time_of_day > 0.8 then -- Nighttime
-            --for _, pos in ipairs(pos_list) do
+            if time_of_day < 0.2 or time_of_day > 0.8 then -- Nighttime
                 local above = {x = pos.x, y = pos.y + 1, z = pos.z}
                 local above_node = minetest.get_node_or_nil(above)
 
                 if above_node and above_node.name == "air" then
-                    minetest.sound_play("firefly_sound", {pos = pos, gain = 0.5, max_hear_distance = 10})
-
-                    local light_level = minetest.get_node_light(pos) or 0
-                    if light_level < 5 then
-                        minetest.add_particlespawner({
-                            amount = 5,
-                            time = 2,
-                            glow = 10,
-                            minpos = {x = pos.x - 2.5, y = pos.y, z = pos.z - 2.5},
-                            maxpos = {x = pos.x + 2.5, y = pos.y + 2.5, z = pos.z + 2.5},
-                            minvel = {x = 0, y = 0.2, z = 0},
-                            maxvel = {x = 0, y = 0.4, z = 0},
-                            minacc = {x = 0, y = 0, z = 0},
-                            maxacc = {x = 0, y = 0, z = 0},
-                            minexptime = 1,
-                            maxexptime = 2,
-                            minsize = 1,
-                            maxsize = 2,
-                            texpool = {
-			{
-				name = "default_wood.png^[colorize:#FFFF00",
-				scale = {x = 1, y = 1},
-				alpha_tween = {{x = 1, y = 1}, {x = 0, y = 0}}
-			},
-                        {
-				name = "default_wood.png^[colorize:#FFFF00",
-				scale = {x = 1, y = 1},
-				alpha_tween = {{x = 1, y = 1}, {x = 0, y = 0}}
-			},
-		},
-                        })
-                    end
-                --end
+                    minetest.sound_play("Fireflies", {pos = pos, gain = 0.03, max_hear_distance = 10})
+                end
             end
+
+            local light_level = minetest.get_node_light(pos) or 0
+                if light_level < 5 then
+                    local particle_lifetime = math.random(36, 180) / 20  -- Convert ticks to seconds
+                    local size = 0.5  -- Scale of the particle
+                    local vel = {
+                        x = math.random(-50, 50) / 100,
+                        y = math.random(-50, 50) / 100,
+                        z = math.random(-50, 50) / 100
+                    }
+
+                    minetest.add_particlespawner({
+                        amount = 2,
+                           time = particle_lifetime,
+                           minpos = {x = pos.x - 5, y = pos.y - 5, z = pos.z - 5},
+                           maxpos = {x = pos.x + 5, y = pos.y + 5, z = pos.z + 5},
+                           minvel = vel,
+                           maxvel = vel,
+                           minacc = {x = 0, y = 0, z = 0},
+                           maxacc = {x = 0, y = 0, z = 0},
+                           minexptime = particle_lifetime,
+                           maxexptime = particle_lifetime,
+                           minsize = size,
+                           maxsize = size,
+                           collisiondetection = true,
+                           particlespawner_tweenable = true,
+                           texture = { name = "firefly.png", alpha_tween = {0.0, 1.0, style="pulse", reps=1} },
+                           glow = 14,
+                    })
         end
     end
 })
+
 
 
 -----------------
