@@ -89,14 +89,12 @@ function mcl_charges.wind_burst_velocity(pos1, pos2, old_vel, power)
 	return vel
 end
 
-local RADIUS = 4
 local KNOCKBACK = 2.5 -- Default knockback distance for non-player entities
 local PLAYER_KNOCKBACK_MULTIPLIER = math.random(6, 7) -- Multiplier for player knockback
 
 function mcl_charges.wind_burst(pos, radius, origin_pos, owner)
 	for obj in minetest.objects_inside_radius(pos, radius) do
 		local obj_pos = obj:get_pos()
-		local dist = math.max(1, vector.distance(pos, obj_pos))
 
 		-- Calculate the direction of knockback from origin_pos to pos
 		local knockback_dir = vector.normalize(vector.subtract(obj_pos, pos))
@@ -243,7 +241,7 @@ function mcl_charges.register_charge(name, descr, def)
 			end
 			if self.hit_player or self.hit_mob or self.hit_object then
 				for player in minetest.objects_inside_radius(pos, 0.6) do
-					if self.hit_player and player:is_player() and not self.owner == player:get_player_name() then
+					if self.hit_player and player:is_player() and self.owner ~= player:get_player_name() then
 						self.hit_player(self, player)
 						def.hit_player_alt(self, pos)
 						minetest.after(0.01, function()

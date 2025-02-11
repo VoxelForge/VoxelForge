@@ -73,7 +73,7 @@ minetest.register_tool("mcl_tools:mace", {
 						local vr = vector.new(pr:next(-2, 2)/10, 0, pr:next(-2, 2)/10)
 						local amount = 20
 						vr.y = pr:next(-9, -4) / 10
-						minetest.add_particlespawner(table.merge(wind_burst_spawner, {
+						minetest.add_particlespawner(table.merge(mcl_charges.wind_burst_spawner, {
 							amount = amount,
 							minacc = vr,
 							maxacc = vr,

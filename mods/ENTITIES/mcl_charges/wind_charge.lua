@@ -39,41 +39,41 @@ mcl_charges.register_charge("wind_charge", S("Wind Charge"), {
         if node_def and node_def.groups and node_def.groups.liquid and node_def.groups.liquid > 0 then
             return
         else
-		    mcl_charges.wind_burst(pos, damage_radius, self.origin_pos, self.owner)
-		    local pr = PseudoRandom(math.ceil(os.time() / 60 / 10)) -- make particles change direction every 10 minutes
-		    local v = vector.new(pr:next(-2, 2)/10, 0, pr:next(-2, 2)/10)
-		    v.y = pr:next(-9, -4) / 10
-		    minetest.add_particlespawner(table.merge(mcl_charges.wind_burst_spawner, {
-		    	minacc = v,
-		    	maxacc = v,
-		    	minpos = vector.offset(pos, -0.8, 0.6, -0.8),
-		    	maxpos = vector.offset(pos, 0.8, 0.8, 0.8),
-		    }))
-		    minetest.sound_play("tnt_explode", { pos = pos, gain = 0.4, max_hear_distance = 30, pitch = 2.5 }, true)
+            mcl_charges.wind_burst(pos, damage_radius, self.origin_pos, self.owner)
+            local pr = PseudoRandom(math.ceil(os.time() / 60 / 10)) -- make particles change direction every 10 minutes
+            local v = vector.new(pr:next(-2, 2)/10, 0, pr:next(-2, 2)/10)
+            v.y = pr:next(-9, -4) / 10
+            minetest.add_particlespawner(table.merge(mcl_charges.wind_burst_spawner, {
+            minacc = v,
+            maxacc = v,
+				minpos = vector.offset(pos, -0.8, 0.6, -0.8),
+				maxpos = vector.offset(pos, 0.8, 0.8, 0.8),
+			}))
+			minetest.sound_play("tnt_explode", { pos = pos, gain = 0.4, max_hear_distance = 30, pitch = 2.5 }, true)
 
-		    if node.name == "mcl_bells:bell" then
-		    	mcl_bells.ring_once(pos)
-		    end
-		    if node.name == "mcl_end:chorus_flower" then
-		    	minetest.dig_node(pos)
-		    	mcl_charges.chorus_flower_effects(pos, radius)
-		    end
-		    if node.name == "mcl_end:chorus_flower_dead" then
-		    	minetest.swap_node(pos, {name = "air"})
-		    	minetest.add_item(pos, {name = "mcl_end:chorus_flower"})
-		    	mcl_charges.chorus_flower_effects(pos, radius)
-		    end
-		    if node.name == "mcl_pottery_sherds:pot" then
-		    	minetest.swap_node(pos, {name = "air"})
-		    	minetest.add_item(pos, {name = "mcl_core:brick"})
-		    	minetest.add_item(pos, {name = "mcl_core:brick"})
-		    	minetest.add_item(pos, {name = "mcl_core:brick"})
-		    	minetest.add_item(pos, {name = "mcl_core:brick"})
-		    	mcl_charges.pot_effects(pos, radius)
-		    end
+			if node.name == "mcl_bells:bell" then
+				mcl_bells.ring_once(pos)
+			end
+			if node.name == "mcl_end:chorus_flower" then
+				minetest.dig_node(pos)
+				mcl_charges.chorus_flower_effects(pos, radius)
+			end
+			if node.name == "mcl_end:chorus_flower_dead" then
+				minetest.swap_node(pos, {name = "air"})
+				minetest.add_item(pos, {name = "mcl_end:chorus_flower"})
+				mcl_charges.chorus_flower_effects(pos, radius)
+			end
+			if node.name == "mcl_pottery_sherds:pot" then
+				minetest.swap_node(pos, {name = "air"})
+				minetest.add_item(pos, {name = "mcl_core:brick"})
+				minetest.add_item(pos, {name = "mcl_core:brick"})
+				minetest.add_item(pos, {name = "mcl_core:brick"})
+				minetest.add_item(pos, {name = "mcl_core:brick"})
+				mcl_charges.pot_effects(pos, radius)
+			end
             windcharge_hit(pos, node)
             self.object:remove()
-        end
+		end
 	end,
 	hit_player_alt = function(self, pos)
 		mcl_charges.wind_burst(pos, damage_radius, self.origin_pos, self.owner)
@@ -87,7 +87,6 @@ mcl_charges.register_charge("wind_charge", S("Wind Charge"), {
 			maxpos = vector.offset(pos, 0.8, 0.8, 0.8),
 		}))
 		minetest.sound_play("tnt_explode", { pos = pos, gain = 0.5, max_hear_distance = 30, pitch = 2.5 }, true)
-        windcharge_hit(pos, node)
 	end,
 	hit_mob_alt = function(self, pos)
 		mcl_charges.wind_burst(pos, damage_radius, self.origin_pos, self.owner)
@@ -101,7 +100,6 @@ mcl_charges.register_charge("wind_charge", S("Wind Charge"), {
 			maxpos = vector.offset(pos, 0.8, 0.8, 0.8),
 		}))
 		minetest.sound_play("tnt_explode", { pos = pos, gain = 0.5, max_hear_distance = 30, pitch = 2.5 }, true)
-        windcharge_hit(pos, node)
 	end,
 	on_activate = function(self, _)
 		self.object:set_armor_groups({immortal = 1})
