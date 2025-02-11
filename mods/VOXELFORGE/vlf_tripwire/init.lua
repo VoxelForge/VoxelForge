@@ -132,7 +132,7 @@ end]]
         else
 			local pos_node = minetest.get_node(pos)
                 local connected_node = minetest.get_node(connected)
-		 	minetest.set_node(pos, {name="vlf_tripwire:tripwire_hook_on", param2=pos_node.param2})
+			minetest.set_node(pos, {name="vlf_tripwire:tripwire_hook_on", param2=pos_node.param2})
 			minetest.set_node(connected, {name="vlf_tripwire:tripwire_hook_on", param2=connected_node.param2})
         end
     end

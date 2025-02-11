@@ -5,12 +5,6 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 --- Plant parts ---
 
--- Helper function
-local function round(num, idp)
-	local mult = 10^(idp or 0)
-	return math.floor(num * mult + 0.5) / mult
-end
-
 -- This is a list of nodes that SHOULD NOT call their detach function
 local no_detach = {}
 
@@ -258,7 +252,6 @@ function voxelforge.grow_potato_plant_step(pos, node, pr)
     if node.name == "voxelforge:powerful_potato" then
         local age = node.param2 or 0
         local below = { x = pos.x, y = pos.y - 1, z = pos.z }
-        local node_below = minetest.get_node(below)
 
         if age < 3--[[ and node_below.name == "air" ]]and pr:next(1, 100) <= 78 then -- 50% chance to grow downward
             minetest.set_node(below, { name = "voxelforge:strong_roots", param2 = age })
@@ -271,7 +264,7 @@ function voxelforge.grow_potato_plant_step(pos, node, pr)
                 { x = 0, y = 0, z = 1 },
             }) do
                 local neighbor = vector.add(pos, offset)
-                if --[[minetest.get_node(neighbor).name == "air" and ]]pr:next(1, 100) <= 7 then -- 25% chance to grow horizontally
+                if pr:next(1, 100) <= 7 then -- 25% chance to grow horizontally
                 if node.name ~= "voxelforge:powerful_potato" then
                     minetest.set_node(neighbor, { name = "voxelforge:strong_roots" })
                     table.insert(new_flower_buds, neighbor)
@@ -285,9 +278,8 @@ function voxelforge.grow_potato_plant_step(pos, node, pr)
     elseif node.name == "voxelforge:strong_roots" then
         if not is_touching_four_or_more_roots(pos) then
             local below = { x = pos.x, y = pos.y - 1, z = pos.z }
-            local node_below = minetest.get_node(below)
 
-            if --[[node_below.name == "air" and ]]pr:next(1, 100) <= 78 then -- 50% chance to grow downward
+            if pr:next(1, 100) <= 78 then -- 50% chance to grow downward
                 minetest.set_node(below, { name = "voxelforge:strong_roots" })
                 table.insert(new_flower_buds, below)
             end
@@ -300,10 +292,10 @@ function voxelforge.grow_potato_plant_step(pos, node, pr)
             }) do
                 local neighbor = vector.add(pos, offset)
                 if --[[minetest.get_node(neighbor).name == "air" and ]]pr:next(1, 100) <= 7 then -- 25% chance to grow horizontally
-                	if node.name ~= "voxelforge:powerful_potato" then
-                   	 minetest.set_node(neighbor, { name = "voxelforge:strong_roots" })
-                    	table.insert(new_flower_buds, neighbor)
-                    	end
+					if node.name ~= "voxelforge:powerful_potato" then
+						minetest.set_node(neighbor, { name = "voxelforge:strong_roots" })
+						table.insert(new_flower_buds, neighbor)
+						end
                 end
             end
         end

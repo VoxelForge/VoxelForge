@@ -349,21 +349,20 @@ minetest.register_globalstep(function(dtime)
                                 local description = itemstack:get_meta():get_string("description")
                                 if description and description ~= "" then
                                     local spawn_pos = vector.add(final_pos, {x = 0, y = 1, z = 0})
-                                    local entity_found = false
-                                    
+
                                     local entity_count = 0
 					-- Count entities with the specified name within the radius
 					for _, obj in ipairs(minetest.get_objects_inside_radius(spawn_pos, 0.45)) do
-    					local luaentity = obj:get_luaentity()
-    					if luaentity and luaentity.name == "vlf_itemframes:nametag_entity" then
-        					entity_count = entity_count + 1
-        					if entity_count > 2 then
-            						break -- No need to continue if more than 2 are found
-        					end
-    					end
+						local luaentity = obj:get_luaentity()
+						if luaentity and luaentity.name == "vlf_itemframes:nametag_entity" then
+							entity_count = entity_count + 1
+							if entity_count > 2 then
+								break -- No need to continue if more than 2 are found
+							end
+						end
 				end
 				if entity_count <= 2 then
-    					spawn_nametag(spawn_pos, description, 2)
+						spawn_nametag(spawn_pos, description, 2)
 				end
                                 end
                             end

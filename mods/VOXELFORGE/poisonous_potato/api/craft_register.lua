@@ -30,7 +30,7 @@ function register_potato_refinery_for_all_items()
 
         -- Register the potato refinery craft for each item
         if item.name ~= "custom_mod:potato_oil" then
-       	 voxelforge.register_craft({
+			voxelforge.register_craft({
             type = "potato_refinery",
             output = item.name,  -- Output item with metadata attached
             recipe = { item.name, "custom_mod:potato_oil"},  -- Using the registered item + potato_oil
@@ -56,13 +56,6 @@ function voxelforge.get_craft_result(params)
     assert(type(params.items) == "table", "Items must be a table")
     assert(params.width, "Craft width is required")
 
-    -- Default decremented input
-    local decremented_input = {
-        method = params.method,
-        width = params.width,
-        items = params.items,
-    }
-
     -- Handling for 'potato_refinery' craft method
     if params.method == "potato_refinery" then
         for _, craft in ipairs(custom_crafts) do
@@ -86,11 +79,11 @@ function voxelforge.get_craft_result(params)
                 if all_match then
                     -- Create the output item
                     local output_item = ItemStack(craft.output)
-                    
+
                     -- Check if metadata is defined and apply it to the output item
                     if craft.meta then
                         local meta = output_item:get_meta()
-                        
+
                         -- Apply Lubricated metadata increment
                         if craft.meta.LubricatedIncrement then
                             local current_lubricated = meta:get_int("Lubricated")

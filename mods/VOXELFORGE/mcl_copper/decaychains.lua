@@ -79,7 +79,7 @@ function mcl_copper.get_undecayed(nodename, amount)
 	return dc.nodes[ci]
 end
 
-local function particles(pointed_thing, texture)
+function mcl_copper.particles(pointed_thing, texture)
 	local pos = pointed_thing.under
 	minetest.add_particlespawner({
 		amount = 8,
@@ -100,7 +100,7 @@ local function particles(pointed_thing, texture)
 		glow = 5,
 	})
 end
-
+local particles = mcl_copper.particles
 local function unpreserve(itemstack, _, pointed_thing)
 	local node = minetest.get_node(pointed_thing.under)
 	local unpreserved = node.name:gsub("waxed_","")
