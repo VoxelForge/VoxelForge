@@ -133,6 +133,69 @@ minetest.register_node(":voxelforge:wildflower_"..i, {
 })
 end
 
+-- FireFly Bush
+
+minetest.register_node(":voxelforge:firefly_bush", {
+    description = "Firefly Bush",
+    tiles = {"default_wood.png"},
+    groups = {choppy = 2, oddly_breakable_by_hand = 1},
+})
+
+minetest.register_abm({
+    label = "Firefly Emitter Behavior",
+    nodenames = {"voxelforge:firefly_bush"},
+    interval = 3.0,  -- Runs every 3 seconds
+    chance = 1,  -- Runs on all matching nodes
+    catch_up = false,
+    --bulk_abm = true,  -- Enables bulk processing
+
+    action = function(pos)
+        local time_of_day = minetest.get_timeofday()
+        if time_of_day < 0.2 or time_of_day > 0.8 then -- Nighttime
+            --for _, pos in ipairs(pos_list) do
+                local above = {x = pos.x, y = pos.y + 1, z = pos.z}
+                local above_node = minetest.get_node_or_nil(above)
+
+                if above_node and above_node.name == "air" then
+                    minetest.sound_play("firefly_sound", {pos = pos, gain = 0.5, max_hear_distance = 10})
+
+                    local light_level = minetest.get_node_light(pos) or 0
+                    if light_level < 5 then
+                        minetest.add_particlespawner({
+                            amount = 5,
+                            time = 2,
+                            glow = 10,
+                            minpos = {x = pos.x - 2.5, y = pos.y, z = pos.z - 2.5},
+                            maxpos = {x = pos.x + 2.5, y = pos.y + 2.5, z = pos.z + 2.5},
+                            minvel = {x = 0, y = 0.2, z = 0},
+                            maxvel = {x = 0, y = 0.4, z = 0},
+                            minacc = {x = 0, y = 0, z = 0},
+                            maxacc = {x = 0, y = 0, z = 0},
+                            minexptime = 1,
+                            maxexptime = 2,
+                            minsize = 1,
+                            maxsize = 2,
+                            texpool = {
+			{
+				name = "default_wood.png^[colorize:#FFFF00",
+				scale = {x = 1, y = 1},
+				alpha_tween = {{x = 1, y = 1}, {x = 0, y = 0}}
+			},
+                        {
+				name = "default_wood.png^[colorize:#FFFF00",
+				scale = {x = 1, y = 1},
+				alpha_tween = {{x = 1, y = 1}, {x = 0, y = 0}}
+			},
+		},
+                        })
+                    end
+                --end
+            end
+        end
+    end
+})
+
+
 -----------------
 ---===MAPGEN===--
 -----------------

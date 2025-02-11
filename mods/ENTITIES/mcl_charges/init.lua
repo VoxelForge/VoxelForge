@@ -66,15 +66,20 @@ function mcl_charges.pot_effects(pos, radius)
 		collisiondetection = true,
 	})
 end
+
 -- knockback function
 function mcl_charges.wind_burst_velocity(pos1, pos2, old_vel, power)
 	if vector.equals(pos1, pos2) then
 		return old_vel
 	end
 
-	local vel = vector.multiply(vector.normalize(vector.direction(pos1, pos2)), power)
+	local dir = vector.direction(pos1, pos2)
+	local vel = vector.multiply(vector.normalize(dir), power)
 	vel = vector.add(vel, old_vel)
-	vel = vector.add(vel, {x = math.random() - 0.5, y = math.random() - 0.5, z = math.random() - 0.5})
+
+	-- Removing randomization for better reliability with players
+	-- You can adjust this if you want some randomness in velocity
+	-- vel = vector.add(vel, {x = math.random() - 0.5, y = math.random() - 0.5, z = math.random() - 0.5})
 
 	if vector.length(vel) > 250 then
 		vel = vector.normalize(vel)
@@ -85,25 +90,49 @@ function mcl_charges.wind_burst_velocity(pos1, pos2, old_vel, power)
 end
 
 local RADIUS = 4
+local KNOCKBACK = 2.5 -- Default knockback distance for non-player entities
+local PLAYER_KNOCKBACK_MULTIPLIER = math.random(4, 6) -- Multiplier for player knockback
 
-function mcl_charges.wind_burst(pos, radius)
+function mcl_charges.wind_burst(pos, radius, origin_pos, owner)
 	for obj in minetest.objects_inside_radius(pos, radius) do
 		local obj_pos = obj:get_pos()
 		local dist = math.max(1, vector.distance(pos, obj_pos))
 
+		-- Calculate the direction of knockback from origin_pos to pos
+		local knockback_dir = vector.normalize(vector.subtract(origin_pos, pos))
+
 		if obj:is_player() then
-			obj:add_velocity(vector.multiply(vector.normalize(vector.subtract(obj_pos, pos)), mcl_util.float_random(1.8, 2.0) / dist * RADIUS))
+			-- Apply direct knockback to players with increased strength (multiplied by 20)
+            if owner and obj:get_player_name() == owner then
+				-- Store the Y position before launching
+				local meta = obj:get_meta()
+				meta:set_float("previous_y", obj_pos.y)
+			end
+			local knockback_vel = vector.multiply(knockback_dir, KNOCKBACK * PLAYER_KNOCKBACK_MULTIPLIER)
+			obj:add_velocity(knockback_vel)
 		else
 			local luaobj = obj:get_luaentity()
 			if luaobj then
 				local is_builtin_item = luaobj.name == "__builtin:item"
 				if luaobj.is_mob or is_builtin_item then
+					-- Apply wind burst velocity to mobs and items
 					obj:set_velocity(mcl_charges.wind_burst_velocity(pos, obj_pos, obj:get_velocity(), radius * 3))
+				else
+					-- Apply default knockback for non-mob and non-item entities
+					local knockback_vel = vector.multiply(knockback_dir, KNOCKBACK)
+					obj:set_velocity(knockback_vel)
 				end
+			else
+				-- Default knockback for non-Lua entities (like particles or unknown objects)
+				local knockback_vel = vector.multiply(knockback_dir, KNOCKBACK)
+				obj:set_velocity(knockback_vel)
 			end
 		end
 	end
 end
+
+
+
 
 --throwable charge registry
 function mcl_charges.register_charge(name, descr, def)
@@ -124,13 +153,15 @@ function mcl_charges.register_charge(name, descr, def)
 				local playerpos = placer:get_pos()
 				local obj = minetest.add_entity({
 					x = playerpos.x + dir.x,
-					y = playerpos.y + 1.3 + dir.y,
+					y = playerpos.y + 2 + dir.y,
 					z = playerpos.z + dir.z
 				}, "mcl_charges:" .. name .. "_flying")
 				local vec = {x = dir.x * velocity, y = dir.y * velocity, z = dir.z * velocity}
 				local acc = {x = 0, y = 0, z = 0}
 				obj:set_velocity(vec)
 				obj:set_acceleration(acc)
+                obj:get_luaentity().owner = placer:get_player_name()
+                obj:get_luaentity().origin_pos = playerpos
 				local ent = obj:get_luaentity() ; ent.posthrow = playerpos
 				if not minetest.is_creative_enabled(placer:get_player_name()) then
 					itemstack:take_item()
@@ -158,6 +189,8 @@ function mcl_charges.register_charge(name, descr, def)
 				local acc = {x = 0, y = 0, z = 0}
 				obj:set_velocity(vec)
 				obj:set_acceleration(acc)
+                obj:get_luaentity().owner = placer:get_player_name()
+                obj:get_luaentity().origin_pos = playerpos
 				local ent = obj:get_luaentity() ; ent.posthrow = playerpos
 				if not minetest.is_creative_enabled(placer:get_player_name()) then
 					itemstack:take_item()
@@ -173,6 +206,7 @@ function mcl_charges.register_charge(name, descr, def)
 				ent_charge._shot_from_dispenser = true
 				local v = ent_charge.velocity or 20
 				charge:set_velocity(vector.multiply(dropdir, v))
+                ent_charge.origin_pos = pos
 				ent_charge.switch = 1
 			end
 			stack:take_item()
@@ -192,6 +226,8 @@ function mcl_charges.register_charge(name, descr, def)
 		hit_player = def.hit_player,
 		hit_mob = def.hit_mob,
 		on_activate = def.on_activate,
+        owner = "",
+        origin_pos = nil,
 		on_step = function(self, _)
 			local pos = self.object:get_pos()
 			local node = minetest.get_node(pos)
@@ -207,7 +243,7 @@ function mcl_charges.register_charge(name, descr, def)
 			end
 			if self.hit_player or self.hit_mob or self.hit_object then
 				for player in minetest.objects_inside_radius(pos, 0.6) do
-					if self.hit_player and player:is_player() then
+					if self.hit_player and player:is_player() and not self.owner == player:get_player_name() then
 						self.hit_player(self, player)
 						def.hit_player_alt(self, pos)
 						minetest.after(0.01, function()
@@ -240,3 +276,35 @@ function mcl_charges.register_charge(name, descr, def)
 end
 
 dofile(modpath.."/wind_charge.lua")
+
+mcl_damage.register_modifier(function(obj, damage, reason)
+	if reason.type == "fall" then
+		local meta = obj:get_meta()
+		local previous_y = meta:get_float("previous_y")
+
+		-- If previous_y is 32000, ignore this modifier and allow normal fall damage
+		if previous_y == 32000 or previous_y == nil or previous_y == "" then
+			return
+		end
+
+		-- If previous_y exists and is not 32000, process fall damage logic
+		if previous_y ~= 0 then
+			local current_y = obj:get_pos().y
+
+			-- Remove the previous_y meta since the player has landed
+			meta:set_float("previous_y", 32000)
+
+			-- Calculate the fall distance relative to previous_y
+			local fall_distance = previous_y - current_y
+
+			-- If the player has fallen 4 blocks or less below previous_y, no fall damage
+			if fall_distance <= 4 then
+				return 0
+			else
+				-- If fallen 5 or more blocks, deal 1 damage per extra block fallen
+				return fall_distance - 4
+			end
+		end
+	end
+end)
+

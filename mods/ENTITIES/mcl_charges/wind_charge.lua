@@ -7,7 +7,7 @@ mcl_charges.register_charge("wind_charge", S("Wind Charge"), {
 	hit_player = mcl_mobs.get_arrow_damage_func(0, "fireball"),
 	hit_mob = mcl_mobs.get_arrow_damage_func(6, "fireball"),
 	hit_node = function(self, pos, node)
-		mcl_charges.wind_burst(pos, damage_radius)
+		mcl_charges.wind_burst(pos, damage_radius, self.origin_pos, self.owner)
 		local pr = PseudoRandom(math.ceil(os.time() / 60 / 10)) -- make particles change direction every 10 minutes
 		local v = vector.new(pr:next(-2, 2)/10, 0, pr:next(-2, 2)/10)
 		v.y = pr:next(-9, -4) / 10
@@ -41,7 +41,7 @@ mcl_charges.register_charge("wind_charge", S("Wind Charge"), {
 		end
 	end,
 	hit_player_alt = function(_, pos)
-		mcl_charges.wind_burst(pos, damage_radius)
+		mcl_charges.wind_burst(pos, damage_radius, self.origin_pos, self.owner)
 		local pr = PseudoRandom(math.ceil(os.time() / 60 / 10))
 		local v = vector.new(pr:next(-2, 2)/10, 0, pr:next(-2, 2)/10)
 		v.y = pr:next(-9, -4) / 10
@@ -54,7 +54,7 @@ mcl_charges.register_charge("wind_charge", S("Wind Charge"), {
 		minetest.sound_play("tnt_explode", { pos = pos, gain = 0.5, max_hear_distance = 30, pitch = 2.5 }, true)
 	end,
 	hit_mob_alt = function(_, pos)
-		mcl_charges.wind_burst(pos, damage_radius)
+		mcl_charges.wind_burst(pos, damage_radius, self.origin_pos, self.owner)
 		local pr = PseudoRandom(math.ceil(os.time() / 60 / 10))
 		local v = vector.new(pr:next(-2, 2)/10, 0, pr:next(-2, 2)/10)
 		v.y = pr:next(-9, -4) / 10
