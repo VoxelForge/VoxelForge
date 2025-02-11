@@ -1,0 +1,267 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Luanti textdomain mcl_banners x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.1\n"
+
+msgid "White Banner"
+msgstr "白旗"
+
+msgid "White"
+msgstr "白色"
+
+msgid "Grey Banner"
+msgstr "灰旗"
+
+msgid "Grey"
+msgstr "灰色"
+
+msgid "Light Grey Banner"
+msgstr "淡灰旗"
+
+msgid "Light Grey"
+msgstr "浅灰"
+
+msgid "Black Banner"
+msgstr "黑旗"
+
+msgid "Black"
+msgstr "黑色"
+
+msgid "Red Banner"
+msgstr "红旗"
+
+msgid "Red"
+msgstr "红色"
+
+msgid "Yellow Banner"
+msgstr "黄旗"
+
+msgid "Yellow"
+msgstr "黄色"
+
+msgid "Green Banner"
+msgstr "绿旗"
+
+msgid "Green"
+msgstr "绿色"
+
+msgid "Cyan Banner"
+msgstr "青旗"
+
+msgid "Cyan"
+msgstr "蓝绿"
+
+msgid "Blue Banner"
+msgstr "蓝旗"
+
+msgid "Blue"
+msgstr "蓝色"
+
+msgid "Magenta Banner"
+msgstr "品红旗"
+
+msgid "Magenta"
+msgstr "洋红"
+
+msgid "Orange Banner"
+msgstr "橙旗"
+
+msgid "Orange"
+msgstr "橙色"
+
+msgid "Purple Banner"
+msgstr "紫旗"
+
+msgid "Violet"
+msgstr "蓝紫色的"
+
+msgid "Brown Banner"
+msgstr "棕旗"
+
+msgid "Brown"
+msgstr "棕色"
+
+msgid "Pink Banner"
+msgstr "粉红旗"
+
+msgid "Pink"
+msgstr "粉色"
+
+msgid "Lime Banner"
+msgstr "酸橙旗"
+
+msgid "Lime"
+msgstr "鲜绿"
+
+msgid "Light Blue Banner"
+msgstr "淡蓝旗"
+
+msgid "Light Blue"
+msgstr "淡蓝"
+
+msgid "Banner"
+msgstr "旗帜"
+
+msgid "Banners are tall colorful decorative blocks. They can be placed on the floor and at walls. Banners can be emblazoned with a variety of patterns using a lot of dye in crafting."
+msgstr "旗帜是高大、色彩鲜艳的装饰性方块。它们可以放置在地面上以及墙边。在制作过程中，使用大量染料能让旗帜印上各种各样的图案。"
+
+msgid "Use crafting to draw a pattern on top of the banner. Emblazoned banners can be emblazoned again to combine various patterns. You can draw up to 12 layers on a banner that way. If the banner includes a gradient, only 3 layers are possible."
+msgstr "利用制作工艺在旗帜上绘制图案。已印有图案的旗帜可以再次印制，以组合各类图案。通过这种方式，你可以在一面旗帜上最多绘制12层图案。如果旗帜包含渐变效果，那就只能绘制3层图案了。"
+
+msgid "You can copy the pattern of a banner by placing two banners of the same color in the crafting grid—one needs to be emblazoned, the other one must be clean. Finally, you can use a banner on a cauldron with water to wash off its top-most layer."
+msgstr "你可以通过将两块相同颜色的旗帜放置在制作栏中来复制旗帜的图案——其中一块必须印有图案，另一块则必须是空白的。最后，你可以将旗帜放在装有水的炼药锅中，以洗去其最上面的一层图案。"
+
+msgid "Preview Banner"
+msgstr "预览旗帜"
+
+msgid "Paintable decoration"
+msgstr "可绘制的装饰品"
+
+msgid "Can be used to craft special banner designs on the loom"
+msgstr "可用于在织布机上制作特殊的旗帜图案"
+
+msgid "Special Banner Pattern"
+msgstr "特殊旗帜图案"
+
+msgid "@1 Bordure"
+msgstr "@1 简单边框"
+
+msgid "@1 Bricks"
+msgstr "@1 砖纹背景"
+
+msgid "@1 Roundel"
+msgstr "@1 中心圆"
+
+msgid "@1 Creeper Charge"
+msgstr "@1 爬行者图案"
+
+msgid "@1 Saltire"
+msgstr "@1 斜十字"
+
+msgid "@1 Bordure Indented"
+msgstr "@1 凹形边框"
+
+msgid "@1 Per Bend Inverted"
+msgstr "@1 下左半部"
+
+msgid "@1 Per Bend Sinister Inverted"
+msgstr "@1 下右半部"
+
+msgid "@1 Per Bend"
+msgstr "@1 上右半部"
+
+msgid "@1 Per Bend Sinister"
+msgstr "@1 上左半部"
+
+msgid "@1 Flower Charge"
+msgstr "@1 花朵图案"
+
+msgid "@1 Gradient"
+msgstr "@1 上方渐变"
+
+msgid "@1 Base Gradient"
+msgstr "@1 下方渐变"
+
+msgid "@1 Per Fess Inverted"
+msgstr "@1 下半部"
+
+msgid "@1 Per Fess"
+msgstr "@1 上半部"
+
+msgid "@1 Per Pale"
+msgstr "@1 左半部"
+
+msgid "@1 Per Pale Inverted"
+msgstr "@1 右半部"
+
+msgid "@1 Thing Charge"
+msgstr "@1 事物图案"
+
+msgid "@1 Globe Charge"
+msgstr "@1 球状图案"
+
+msgid "@1 Piglin Charge"
+msgstr "@1 猪灵图案"
+
+msgid "@1 Lozenge"
+msgstr "@1 中心菱形"
+
+msgid "@1 Skull Charge"
+msgstr "@1 骷髅图案"
+
+msgid "@1 Paly"
+msgstr "@1 横向条纹"
+
+msgid "@1 Base Dexter Canton"
+msgstr "@1 下左角"
+
+msgid "@1 Base Sinister Canton"
+msgstr "@1 下右角"
+
+msgid "@1 Chief Dexter Canton"
+msgstr "@1 上左角"
+
+msgid "@1 Chief Sinister Canton"
+msgstr "@1 上右角"
+
+msgid "@1 Cross"
+msgstr "@1 十字"
+
+msgid "@1 Base"
+msgstr "@1 下三分之一"
+
+msgid "@1 Pale"
+msgstr "@1 垂直中线"
+
+msgid "@1 Bend Sinister"
+msgstr "@1 从上至右对角线"
+
+msgid "@1 Bend"
+msgstr "@1 从上至左对角线"
+
+msgid "@1 Pale Dexter"
+msgstr "@1 左三分之一"
+
+msgid "@1 Fess"
+msgstr "@1 分割线"
+
+msgid "@1 Pale Sinister"
+msgstr "@1 右三分之一"
+
+msgid "@1 Chief"
+msgstr "@1 上三分之一"
+
+msgid "@1 Chevron"
+msgstr "@1 下方三角形"
+
+msgid "@1 Chevron Inverted"
+msgstr "@1 上方三角形"
+
+msgid "@1 Base Indented"
+msgstr "@1 下方锯齿"
+
+msgid "@1 Chief Indented"
+msgstr "@1 上方锯齿"
+
+msgid "@1 Flow"
+msgstr "@1 流彩"
+
+msgid "@1 Guster"
+msgstr "@1 阵风"
+
+msgid "And one additional layer"
+msgstr "和一层额外图案"
+
+msgid "And @1 additional layers"
+msgstr "和@1层额外图案"
+

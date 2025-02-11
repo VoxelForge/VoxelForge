@@ -1,7 +1,7 @@
 local S = minetest.get_translator("mobs_mc")
 local mobs_griefing = minetest.settings:get_bool("mobs_griefing") ~= false
-local mob_class = vlf_mobs.mob_class
-local is_valid = vlf_util.is_valid_objectref
+local mob_class = mcl_mobs.mob_class
+local is_valid = mcl_util.is_valid_objectref
 
 ------------------------------------------------------------------------
 -- Wither.
@@ -42,13 +42,13 @@ local wither_def = {
 	can_despawn = false,
 	drops = {
 		{
-			name = "vlf_mobitems:nether_star",
+			name = "mcl_mobitems:nether_star",
 			chance = 1,
 			min = 1,
 			max = 1,
 		},
 	},
-	_vlf_freeze_damage = 0,
+	_mcl_freeze_damage = 0,
 	lava_damage = 0,
 	fire_damage = 0,
 	attack_type = "null",
@@ -86,7 +86,7 @@ local wither_def = {
 			glow = 5,
 			collisiondetection = true,
 			collision_removal = true,
-			texture = "vlf_particles_mob_death.png^[colorize:#000000:255",
+			texture = "mcl_particles_mob_death.png^[colorize:#000000:255",
 		},
 	},
 }
@@ -109,7 +109,7 @@ local function wither_unstuck (self, xz_exp)
 			local name = minetest.get_node(npos).name
 			if name ~= "air" then
 				local ndef = minetest.registered_nodes[name]
-				if ndef and ndef._vlf_hardness and ndef._vlf_hardness >= 0 and ( ndef.can_dig == nil or ndef.can_dig(npos) )then
+				if ndef and ndef._mcl_hardness and ndef._mcl_hardness >= 0 and ( ndef.can_dig == nil or ndef.can_dig(npos) )then
 					minetest.remove_node(npos)
 					local drops = minetest.get_node_drops(name, "")
 					if drops then
@@ -145,17 +145,17 @@ local function wither_register_damage (self)
 	end
 end
 
-function wither_def:receive_damage (vlf_reason, damage)
+function wither_def:receive_damage (mcl_reason, damage)
 	if self._spawning then
 		return false
 	end
-	if vlf_reason.direct then
-		local ent = vlf_reason.direct:get_luaentity ()
+	if mcl_reason.direct then
+		local ent = mcl_reason.direct:get_luaentity ()
 		if ent and self._arrow_resistant and ent._is_arrow then
 			return false
 		end
 	end
-	if mob_class.receive_damage (self, vlf_reason, damage) then
+	if mob_class.receive_damage (self, mcl_reason, damage) then
 		wither_register_damage (self)
 		return true
 	end
@@ -170,7 +170,7 @@ function wither_def:on_spawn ()
 	--   - Easy: 0.5
 
 	local properties = self.object:get_properties ()
-	local health_factor = 1.0 - (3 - vlf_vars.difficulty) * 0.25
+	local health_factor = 1.0 - (3 - mcl_vars.difficulty) * 0.25
 	properties.hp_max = math.max (0.5, health_factor) * properties.hp_max
 	self.object:set_properties ({
 			hp_max = properties.hp_max,
@@ -317,7 +317,7 @@ function wither_def:safe_boom (pos, strength, no_remove)
 	}, true)
 	local radius = strength
 	blast_damage(pos, radius, self.object)
-	vlf_mobs.effect(pos, 32, "vlf_particles_smoke.png", radius * 3, radius * 5, radius, 1, 0)
+	mcl_mobs.effect(pos, 32, "mcl_particles_smoke.png", radius * 3, radius * 5, radius, 1, 0)
 	if not no_remove then
 		if self.is_mob then
 			self:safe_remove()
@@ -338,10 +338,10 @@ function wither_def:do_custom (dtime, moveresult)
 		}
 
 		local pos = self.object:get_pos()
-		for player in vlf_util.connected_players() do
+		for player in mcl_util.connected_players() do
 			local d = vector.distance(pos, player:get_pos())
 			if d <= 80 then
-				vlf_bossbars.add_bar(player, bardef, true, d)
+				mcl_bossbars.add_bar(player, bardef, true, d)
 			end
 		end
 		self:set_yaw (self._spawning * math.pi * 5)
@@ -358,7 +358,7 @@ function wither_def:do_custom (dtime, moveresult)
 
 		if self._spawning <= 0 then
 			if mobs_griefing and not minetest.is_protected(pos, "") then
-				vlf_explosions.explode(pos, WITHER_INIT_BOOM, { drop_chance = 1.0 }, self.object)
+				mcl_explosions.explode(pos, WITHER_INIT_BOOM, { drop_chance = 1.0 }, self.object)
 			else
 				self:safe_boom (pos, WITHER_INIT_BOOM, true)
 			end
@@ -409,7 +409,7 @@ function wither_def:do_custom (dtime, moveresult)
 	end
 
 	self:set_textures (self.base_texture)
-	vlf_bossbars.update_boss(self.object, "Wither", "dark_purple")
+	mcl_bossbars.update_boss(self.object, "Wither", "dark_purple")
 end
 
 function wither_def:should_attack (object)
@@ -447,7 +447,7 @@ function spawn_one_skeleton (object, aa, bb, self_pos)
 				and def3 and not def3.walkable then
 				copy.y = nodepos.y + 1
 				local entity
-					= vlf_mobs.spawn (copy, "mobs_mc:witherskeleton")
+					= mcl_mobs.spawn (copy, "mobs_mc:witherskeleton")
 				-- Prevent summoned skeletons from
 				-- attacking their invoker.
 				if entity then
@@ -461,7 +461,7 @@ function spawn_one_skeleton (object, aa, bb, self_pos)
 end
 
 function wither_def:spawn_skeletons (self_pos)
-	if vlf_vars.difficulty <= 1 then
+	if mcl_vars.difficulty <= 1 then
 		return
 	end
 	local aa = vector.offset (self_pos, -7, -2, -7)
@@ -658,7 +658,7 @@ function wither_def:run_ai (dtime, moveresult)
 	if ws.pending_explode
 		and (moveresult.touching_ground
 		     or (self._immersion_depth or 0) > 0) then
-		vlf_explosions.explode (vector.offset (self_pos, 0, self.head_eye_height, 0),
+		mcl_explosions.explode (vector.offset (self_pos, 0, self.head_eye_height, 0),
 					WITHER_DESCENT_BOOM, {drop_chance = 1.0}, self.object)
 		self:spawn_skeletons (self_pos)
 		ws.pending_explode = false
@@ -697,7 +697,7 @@ function wither_def:run_ai (dtime, moveresult)
 			head_z = self_pos.z + head_off * math.cos (base_yaw)
 
 			local target_x = attack_pos.x
-			local target_y = attack_pos.y + vlf_util.target_eye_height (attack)
+			local target_y = attack_pos.y + mcl_util.target_eye_height (attack)
 			local target_z = attack_pos.z
 			local dx, dy, dz = target_x - head_x,
 				target_y - head_y,
@@ -712,7 +712,7 @@ function wither_def:run_ai (dtime, moveresult)
 
 		if head.next_update <= 0 then
 			head.next_update = 0.5 + math.random () * 0.5
-			if vlf_vars.difficulty >= 2 and head.idle_update >= 15 then
+			if mcl_vars.difficulty >= 2 and head.idle_update >= 15 then
 				head.idle_update = 0
 				local random = {
 					x = self_pos.x + math.random () * 20 - 10,
@@ -751,9 +751,9 @@ function wither_def:run_ai (dtime, moveresult)
 		-- Interpolate head yaw and pitch.
 		if yaw ~= head.yaw or pitch ~= head.pitch then
 			head.yaw
-				= vlf_mobs.clip_rotation (head.yaw or 0, yaw, FOURTY_DEG)
+				= mcl_mobs.clip_rotation (head.yaw or 0, yaw, FOURTY_DEG)
 			head.pitch
-				= vlf_mobs.clip_rotation (head.pitch or 0, pitch, TEN_DEG)
+				= mcl_mobs.clip_rotation (head.pitch or 0, pitch, TEN_DEG)
 		end
 		local vec = vector.new (head.pitch, head.yaw, 0)
 		local info = {
@@ -801,7 +801,7 @@ function wither_def:run_ai (dtime, moveresult)
 			local entity = object:get_luaentity ()
 			if object ~= self.object
 				and (object:is_player () or (entity and entity.is_mob)) then
-				vlf_util.deal_damage (object, WITHER_CHARGE_DAMAGE, {type = "explosion"})
+				mcl_util.deal_damage (object, WITHER_CHARGE_DAMAGE, {type = "explosion"})
 			end
 		end
 	end
@@ -827,7 +827,7 @@ function wither_def:run_ai (dtime, moveresult)
 	end
 end
 
-vlf_mobs.register_mob ("mobs_mc:wither", wither_def)
+mcl_mobs.register_mob ("mobs_mc:wither", wither_def)
 
 ------------------------------------------------------------------------
 -- Wither Skull.
@@ -835,12 +835,12 @@ vlf_mobs.register_mob ("mobs_mc:wither", wither_def)
 
 local wither_rose_soil = {
 	"group:grass_block",
-	"vlf_core:dirt",
-	"vlf_core:coarse_dirt",
-	"vlf_nether:netherrack",
+	"mcl_core:dirt",
+	"mcl_core:coarse_dirt",
+	"mcl_nether:netherrack",
 	"group:soul_block",
-	"vlf_mud:mud",
-	"vlf_lush_caves:moss",
+	"mcl_mud:mud",
+	"mcl_lush_caves:moss",
 }
 
 local function spawn_wither_rose (obj)
@@ -848,8 +848,8 @@ local function spawn_wither_rose (obj)
 	if n then
 		local p = vector.offset(n,0,1,0)
 		if minetest.get_node(p).name == "air" then
-			if not ( mobs_griefing and minetest.place_node(p,{name="vlf_flowers:wither_rose"}) ) then
-				minetest.add_item(p,"vlf_flowers:wither_rose")
+			if not ( mobs_griefing and minetest.place_node(p,{name="mcl_flowers:wither_rose"}) ) then
+				minetest.add_item(p,"mcl_flowers:wither_rose")
 			end
 		end
 	end
@@ -875,18 +875,23 @@ local skull_def = {
 	-- direct hit
 	hit_player = function(self, player)
 		local pos = vector.new(self.object:get_pos())
-		if vlf_vars.difficulty >= 2 then
-			local duration = vlf_vars.difficulty == 2 and 10 or 40
-			vlf_potions.give_effect_by_level ("withering", player, 2,
+		if mcl_vars.difficulty >= 2 then
+			local duration = mcl_vars.difficulty == 2 and 10 or 40
+			mcl_potions.give_effect_by_level ("withering", player, 2,
 							  duration)
 		end
-		vlf_util.deal_damage (player, 8.0, {
+		mcl_util.deal_damage (player, 8.0, {
 					      source = self._shooter,
 					      direct = self.object,
 					      type = "wither_skull",
 		})
+		-- This must come before mcl_explosions.explode, which
+		-- is liable to remove this object.
+		local v = self.object:get_velocity ()
+		v.y = 0
+		local dir = vector.normalize (v)
 		if mobs_griefing and not minetest.is_protected(pos, "") then
-			vlf_explosions.explode(pos, 1, self._explosioninfo, self.object)
+			mcl_explosions.explode(pos, 1, self._explosioninfo, self.object)
 		else
 			wither_def.safe_boom (self, pos, 1) --need to call it this way bc self is the "arrow" object here
 		end
@@ -895,27 +900,27 @@ local skull_def = {
 			if shooter then shooter.health = shooter.health + 5 end
 			spawn_wither_rose(player)
 		else
-			local v = self.object:get_velocity ()
-			v.y = 0
-			local dir = vector.normalize (v)
-			vlf_player.player_knockback (player, self.object, dir, nil, 8.0)
+			mcl_player.player_knockback (player, self.object, dir, nil, 8.0)
 		end
 	end,
 
 	hit_mob = function(self, mob)
 		local pos = vector.new (self.object:get_pos())
-		if vlf_vars.difficulty >= 2 then
-			local duration = vlf_vars.difficulty == 2 and 10 or 40
-			vlf_potions.give_effect_by_level ("withering", mob, 2,
+		if mcl_vars.difficulty >= 2 then
+			local duration = mcl_vars.difficulty == 2 and 10 or 40
+			mcl_potions.give_effect_by_level ("withering", mob, 2,
 							  duration)
 		end
-		vlf_util.deal_damage (mob, 8.0, {
+		mcl_util.deal_damage (mob, 8.0, {
 					      source = self._shooter,
 					      direct = self.object,
 					      type = "wither_skull",
 		})
+		local v = self.object:get_velocity ()
+		v.y = 0
+		local dir = vector.normalize (v)
 		if mobs_griefing and not minetest.is_protected(pos, "") then
-			vlf_explosions.explode(pos, 1, self._explosioninfo, self.object)
+			mcl_explosions.explode(pos, 1, self._explosioninfo, self.object)
 		else
 			wither_def.safe_boom (self, pos, 1, true) --need to call it this way bc self is the "arrow" object here
 		end
@@ -926,9 +931,6 @@ local skull_def = {
 			spawn_wither_rose(mob)
 		end
 		if l then
-			local v = self.object:get_velocity ()
-			v.y = 0
-			local dir = vector.normalize (v)
 			l:projectile_knockback (1, dir)
 		end
 	end,
@@ -936,14 +938,14 @@ local skull_def = {
 	-- node hit, explode
 	hit_node = function(self, pos)
 		if mobs_griefing and not minetest.is_protected(pos, "") then
-			vlf_explosions.explode(pos, 1, self._explosioninfo, self.object)
+			mcl_explosions.explode(pos, 1, self._explosioninfo, self.object)
 		else
 			wither_def.safe_boom (self, pos, 1, true) --need to call it this way bc self is the "arrow" object here
 		end
 	end
 }
 
-vlf_mobs.register_arrow("mobs_mc:wither_skull", skull_def)
+mcl_mobs.register_arrow("mobs_mc:wither_skull", skull_def)
 
 strong_skull_def = table.copy (skull_def)
 strong_skull_def.velocity = 12
@@ -961,7 +963,7 @@ strong_skull_def.textures = {
 	"mobs_mc_wither_projectile_strong.png^[verticalframe:6:5", -- front
 }
 
-vlf_mobs.register_arrow("mobs_mc:wither_skull_strong", strong_skull_def)
+mcl_mobs.register_arrow("mobs_mc:wither_skull_strong", strong_skull_def)
 
 --Spawn egg
-vlf_mobs.register_egg ("mobs_mc:wither", S("Wither"), "#4f4f4f", "#4f4f4f", 0, true)
+mcl_mobs.register_egg ("mobs_mc:wither", S("Wither"), "#4f4f4f", "#4f4f4f", 0, true)

@@ -1,7 +1,7 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 local function check_light(_, _, artificial_light, _)
 	local date = os.date("*t")
@@ -92,7 +92,7 @@ local function signum (number)
 		or (number == 0.0 and 0.0 or 1)
 end
 
-local scale_chance = vlf_mobs.scale_chance
+local scale_chance = mcl_mobs.scale_chance
 
 function bat:motion_step (dtime, moveresult, self_pos)
 	local h_scale, v_scale
@@ -112,7 +112,7 @@ function bat:motion_step (dtime, moveresult, self_pos)
 			self:set_animation ("walk")
 		else
 			-- Be startled off by players wihin 4 nodes.
-			for player in vlf_util.connected_players (self_pos, 4) do
+			for player in mcl_util.connected_players (self_pos, 4) do
 				self._resting = false
 				self:set_animation ("walk")
 				break
@@ -182,7 +182,7 @@ function bat:run_ai (dtime, moveresult)
 	return
 end
 
-vlf_mobs.register_mob ("mobs_mc:bat", bat)
+mcl_mobs.register_mob ("mobs_mc:bat", bat)
 
 ------------------------------------------------------------------------
 -- Bat spawning.
@@ -198,11 +198,11 @@ else
 	maxlight = 3
 end
 
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:bat",
 	type_of_spawning = "ground",
 	dimension = "overworld",
-	min_height = vlf_vars.mg_overworld_min,
+	min_height = mcl_vars.mg_overworld_min,
 	max_height = mobs_mc.water_level - 1,
 	min_light = 0,
 	max_light = maxlight,
@@ -211,4 +211,4 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:bat", S("Bat"), "#4c3e30", "#0f0f0f", 0)
+mcl_mobs.register_egg("mobs_mc:bat", S("Bat"), "#4c3e30", "#0f0f0f", 0)

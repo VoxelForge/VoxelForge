@@ -4,9 +4,9 @@
 -- blaze.lua partial copy of mobs_mc/ghast.lua
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
-local mod_target = minetest.get_modpath("vlf_target")
+local mod_target = minetest.get_modpath("mcl_target")
 
 --###################
 --################### BLAZE
@@ -62,7 +62,7 @@ local blaze = {
 	reach = 2,
 	drops = {
 		{
-			name = "vlf_mobitems:blaze_rod",
+			name = "mcl_mobitems:blaze_rod",
 			chance = 1,
 			min = 0,
 			max = 1,
@@ -76,7 +76,7 @@ local blaze = {
 	},
 	-- MC Wiki: takes 1 damage every half second while in water
 	water_damage = 2,
-	_vlf_freeze_damage = 5,
+	_mcl_freeze_damage = 5,
 	lava_damage = 0,
 	fire_damage = 0,
 	fall_damage = 0,
@@ -99,9 +99,9 @@ local blaze = {
 
 local function blaze_set_charged (self, charged)
 	if charged then
-		vlf_burning.set_on_fire (self.object, math.huge)
+		mcl_burning.set_on_fire (self.object, math.huge)
 	else
-		vlf_burning.extinguish (self.object)
+		mcl_burning.extinguish (self.object)
 	end
 end
 
@@ -109,21 +109,21 @@ function blaze:do_custom (dtime)
 	local pos = self.object:get_pos()
 
 	if not self._height_diff_tolerance or self._height_diff_tolerance_age >= 5 then
-		self._height_diff_tolerance = vlf_util.dist_triangular (0.5, 6.891)
+		self._height_diff_tolerance = mcl_util.dist_triangular (0.5, 6.891)
 		self._height_diff_tolerance_age = 0
 	end
 	self._height_diff_tolerance_age = self._height_diff_tolerance_age + dtime
 
-	if not self:check_timer("blaze_particles", vlf_util.float_random(0.5, 2)) then return end
+	if not self:check_timer("blaze_particles", mcl_util.float_random(0.5, 2)) then return end
 
 	minetest.add_particle({
-			pos = {x = pos.x+vlf_util.float_random(-0.7,0.7) * math.random()/2, y = pos.y+vlf_util.float_random(0.7,1.2), z = pos.z+vlf_util.float_random(-0.7,0.7) * math.random()/2},
-			velocity = {x=0, y = vlf_util.float_random(0.5, 2), z=0},
+			pos = {x = pos.x+mcl_util.float_random(-0.7,0.7) * math.random()/2, y = pos.y+mcl_util.float_random(0.7,1.2), z = pos.z+mcl_util.float_random(-0.7,0.7) * math.random()/2},
+			velocity = {x=0, y = mcl_util.float_random(0.5, 2), z=0},
 			expirationtime = math.random(),
-			size = vlf_util.float_random(1, 4),
+			size = mcl_util.float_random(1, 4),
 			collisiondetection = true,
 			vertical = false,
-			texture = "vlf_particles_smoke_anim.png^[colorize:#2c2c2c:255",
+			texture = "mcl_particles_smoke_anim.png^[colorize:#2c2c2c:255",
 			animation = {
 				type = "vertical_frames",
 				aspect_w = 8,
@@ -132,13 +132,13 @@ function blaze:do_custom (dtime)
 			},
 	})
 	minetest.add_particle({
-			pos = {x = pos.x+vlf_util.float_random(-0.7,0.7)* math.random()/2, y = pos.y+vlf_util.float_random(0.7,1.2), z = pos.z+vlf_util.float_random(-0.7,0.7) * math.random()/2},
-			velocity = {x=0, y = vlf_util.float_random(0.5, 2), z=0},
+			pos = {x = pos.x+mcl_util.float_random(-0.7,0.7)* math.random()/2, y = pos.y+mcl_util.float_random(0.7,1.2), z = pos.z+mcl_util.float_random(-0.7,0.7) * math.random()/2},
+			velocity = {x=0, y = mcl_util.float_random(0.5, 2), z=0},
 			expirationtime = math.random(),
-			size = vlf_util.float_random(1, 4),
+			size = mcl_util.float_random(1, 4),
 			collisiondetection = true,
 			vertical = false,
-			texture = "vlf_particles_smoke_anim.png^[colorize:#424242:255",
+			texture = "mcl_particles_smoke_anim.png^[colorize:#424242:255",
 			animation = {
 				type = "vertical_frames",
 				aspect_w = 8,
@@ -147,13 +147,13 @@ function blaze:do_custom (dtime)
 			},
 	})
 	minetest.add_particle({
-			pos = {x = pos.x+vlf_util.float_random(-0.7,0.7)*math.random()/2, y = pos.y+vlf_util.float_random(0.7,1.2), z = pos.z+vlf_util.float_random(-0.7,0.7)*math.random()/2},
-			velocity = {x=0, y = vlf_util.float_random(0.5,2), z=0},
+			pos = {x = pos.x+mcl_util.float_random(-0.7,0.7)*math.random()/2, y = pos.y+mcl_util.float_random(0.7,1.2), z = pos.z+mcl_util.float_random(-0.7,0.7)*math.random()/2},
+			velocity = {x=0, y = mcl_util.float_random(0.5,2), z=0},
 			expirationtime = math.random(),
-			size = vlf_util.float_random(1, 4),
+			size = mcl_util.float_random(1, 4),
 			collisiondetection = true,
 			vertical = false,
-			texture = "vlf_particles_smoke_anim.png^[colorize:#0f0f0f:255",
+			texture = "mcl_particles_smoke_anim.png^[colorize:#0f0f0f:255",
 			animation = {
 				type = "vertical_frames",
 				aspect_w = 8,
@@ -195,12 +195,12 @@ function blaze:attack_null (self_pos, dtime, target_pos, line_of_sight)
 
 	-- Move above target if necessary
 	local target_eye_height
-		= target_pos.y + vlf_util.target_eye_height (self.attack)
+		= target_pos.y + mcl_util.target_eye_height (self.attack)
 	local self_eye_height
 		= self_pos.y + self.head_eye_height
 	if target_eye_height > self_eye_height + self._height_diff_tolerance then
 		local v = self.object:get_velocity ()
-		v.y = v.y + (6 - v.y) * vlf_mobs.pow_by_step (0.3, dtime)
+		v.y = v.y + (6 - v.y) * mcl_mobs.pow_by_step (0.3, dtime)
 		self.object:set_velocity (v)
 	end
 
@@ -245,9 +245,9 @@ function blaze:attack_null (self_pos, dtime, target_pos, line_of_sight)
 
 			local scatter = math.sqrt (distance) / 2
 			local vec = vector.normalize ({
-				x = vlf_util.dist_triangular (dx, 2.297 * scatter),
+				x = mcl_util.dist_triangular (dx, 2.297 * scatter),
 				y = dy,
-				z = vlf_util.dist_triangular (dz, 2.297 * scatter),
+				z = mcl_util.dist_triangular (dz, 2.297 * scatter),
 			})
 			local pos = vector.offset (self_pos, 0, 0.9, 0)
 			local arrow = minetest.add_entity (pos, self.arrow)
@@ -285,39 +285,39 @@ blaze.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:blaze", blaze)
+mcl_mobs.register_mob ("mobs_mc:blaze", blaze)
 
 ------------------------------------------------------------------------
 -- Blaze spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.register_egg ("mobs_mc:blaze", S("Blaze"), "#f6b201", "#fff87e", 0)
+mcl_mobs.register_egg ("mobs_mc:blaze", S("Blaze"), "#f6b201", "#fff87e", 0)
 
 ------------------------------------------------------------------------
 -- Small Fireball.
 ------------------------------------------------------------------------
 
-vlf_mobs.register_arrow ("mobs_mc:blaze_fireball", {
+mcl_mobs.register_arrow ("mobs_mc:blaze_fireball", {
 	visual = "sprite",
 	visual_size = {x = 1, y = 1},
-	textures = {"vlf_fire_fire_charge.png"},
+	textures = {"mcl_fire_fire_charge.png"},
 	velocity = 24,
 	collisionbox = {-.5, -.5, -.5, .5, .5, .5},
 	_is_fireball = true,
 
 	-- Direct hit, no fire... just plenty of pain
 	hit_player = function (self, player)
-		vlf_mobs.get_arrow_damage_func (5, "fireball") (self, player)
-		vlf_burning.set_on_fire (player, 5)
+		mcl_mobs.get_arrow_damage_func (5, "fireball") (self, player)
+		mcl_burning.set_on_fire (player, 5)
 	end,
 	hit_mob = function (self, mob)
-		vlf_mobs.get_arrow_damage_func (5, "fireball") (self, mob)
-		vlf_burning.set_on_fire (mob, 5)
+		mcl_mobs.get_arrow_damage_func (5, "fireball") (self, mob)
+		mcl_burning.set_on_fire (mob, 5)
 	end,
 	hit_object = function(_, object)
 		local lua = object:get_luaentity()
 		if lua then
-			if lua.name == "vlf_minecarts:tnt_minecart" then
+			if lua.name == "mcl_minecarts:tnt_minecart" then
 				lua:on_activate_by_rail(2)
 			end
 		end
@@ -326,10 +326,10 @@ vlf_mobs.register_arrow ("mobs_mc:blaze_fireball", {
 	-- Node hit, make fire
 	hit_node = function(self, pos, node)
 		if node == "air" then
-			minetest.set_node(pos, {name = "vlf_fire:fire"})
+			minetest.set_node(pos, {name = "mcl_fire:fire"})
 		else
-			if self._shot_from_dispenser and mod_target and node == "vlf_target:target_off" then
-				vlf_target.hit(vector.round(pos), 0.4) --4 redstone ticks
+			if self._shot_from_dispenser and mod_target and node == "mcl_target:target_off" then
+				mcl_target.hit(vector.round(pos), 0.4) --4 redstone ticks
 			end
 			local v = vector.normalize(self.object:get_velocity())
 			local crashpos = vector.subtract(pos, v)
@@ -338,7 +338,7 @@ vlf_mobs.register_arrow ("mobs_mc:blaze_fireball", {
 			-- Set fire if node is air, or a replacable flammable node (e.g. a plant)
 			if crashnode.name == "air" or
 					(cndef and cndef.buildable_to and minetest.get_item_group(crashnode.name, "flammable") >= 1) then
-				minetest.set_node(crashpos, {name = "vlf_fire:fire"})
+				minetest.set_node(crashpos, {name = "mcl_fire:fire"})
 			end
 		end
 	end

@@ -38,7 +38,7 @@ msgid "Creeper"
 msgstr "苦力怕"
 
 msgid "Charged Creeper"
-msgstr ""
+msgstr "苦力怕"
 
 msgid "Dolphin"
 msgstr "海豚"
@@ -67,11 +67,14 @@ msgstr "末影守卫"
 msgid "Hoglin"
 msgstr "疣猪兽"
 
+msgid "Baby Hoglin"
+msgstr "幼体僵尸疣猪兽"
+
 msgid "Zoglin"
 msgstr "僵尸疣猪兽"
 
-msgid "Baby Hoglin"
-msgstr "幼体僵尸疣猪兽"
+msgid "Sneak to dismount"
+msgstr "潜行以离开"
 
 msgid "Horse"
 msgstr "马"
@@ -87,9 +90,6 @@ msgstr "驴"
 
 msgid "Mule"
 msgstr "骡子"
-
-msgid "Sneak to dismount"
-msgstr ""
 
 msgid "Iron Golem"
 msgstr "铁傀儡"
@@ -112,13 +112,13 @@ msgstr "猪"
 msgid "Piglin"
 msgstr "猪灵"
 
-msgid "Zombiefied Piglin"
-msgstr "僵尸猪灵"
-
 msgid "Piglin Brute"
 msgstr "猪灵蛮兵"
 
 msgid "Zombie Piglin"
+msgstr "僵尸猪灵"
+
+msgid "Zombified Piglin"
 msgstr "僵尸猪灵"
 
 msgid "Pillager"
@@ -155,22 +155,22 @@ msgid "Wither Skeleton"
 msgstr "凋灵骷髅"
 
 msgid "Slime - big"
-msgstr ""
+msgstr "大史莱姆"
 
 msgid "Slime - small"
-msgstr ""
+msgstr "小史莱姆"
 
 msgid "Slime - tiny"
-msgstr ""
+msgstr "极小史莱姆"
 
 msgid "Magma Cube - big"
-msgstr ""
+msgstr "大型岩浆怪"
 
 msgid "Magma Cube - small"
-msgstr ""
+msgstr "小型岩浆怪"
 
 msgid "Magma Cube - tiny"
-msgstr ""
+msgstr "微型岩浆怪"
 
 msgid "Magma Cube"
 msgstr "岩浆怪"
@@ -211,32 +211,17 @@ msgstr "恼鬼"
 msgid "Villager"
 msgstr "村民"
 
-msgid "Evoker"
-msgstr "唤魔者"
+msgid "Armorer"
+msgstr "盔甲匠"
 
-msgid "Illusioner"
-msgstr "幻术师"
+msgid "Butcher"
+msgstr "屠夫"
 
-msgid "Vindicator"
-msgstr "卫道士"
+msgid "Cartographer"
+msgstr "制图师"
 
-msgid "Zombie Villager"
-msgstr "僵尸村民"
-
-msgid "@1 sleeps here"
-msgstr "@1在此就寝"
-
-msgid "A villager sleeps here"
-msgstr "村民就寝之处"
-
-msgid "@1 works here"
-msgstr "@1在此工作"
-
-msgid "A villager works here"
-msgstr "村民打工之地"
-
-msgid "Unemployed"
-msgstr "失业人员"
+msgid "Cleric"
+msgstr "牧师"
 
 msgid "Farmer"
 msgstr "农夫"
@@ -247,41 +232,26 @@ msgstr "渔夫"
 msgid "Fletcher"
 msgstr "制箭师"
 
-msgid "Shepherd"
-msgstr "羊倌"
+msgid "Leatherworker"
+msgstr "皮匠"
 
 msgid "Librarian"
 msgstr "图书馆管理员"
 
-msgid "Cartographer"
-msgstr "制图师"
-
-msgid "Armorer"
-msgstr "盔甲匠"
-
-msgid "Leatherworker"
-msgstr "皮匠"
-
-msgid "Butcher"
-msgstr "屠夫"
-
-msgid "Weapon Smith"
-msgstr "武器制造商"
-
-msgid "Tool Smith"
-msgstr "工具商人"
-
-msgid "Cleric"
-msgstr "牧师"
-
 msgid "Mason"
 msgstr "石匠"
 
+msgid "Shepherd"
+msgstr "羊倌"
+
+msgid "Toolsmith"
+msgstr ""
+
+msgid "Weaponsmith"
+msgstr ""
+
 msgid "Nitwit"
 msgstr "傻子"
-
-msgid "Wandering Trader"
-msgstr "漫游商人"
 
 msgid "Novice"
 msgstr "新手"
@@ -298,6 +268,24 @@ msgstr "专家"
 msgid "Master"
 msgstr "大师"
 
+msgid "Evoker"
+msgstr "唤魔者"
+
+msgid "Illusioner"
+msgstr "幻术师"
+
+msgid "Vindicator"
+msgstr "卫道士"
+
+msgid "Zombie Villager"
+msgstr "僵尸村民"
+
+msgid "Wandering Trader"
+msgstr "漫游商人"
+
+msgid "Trader Llama"
+msgstr ""
+
 msgid "Witch"
 msgstr "女巫"
 
@@ -306,9 +294,6 @@ msgstr "凋灵"
 
 msgid "Wolf"
 msgstr "狼"
-
-msgid "Dog"
-msgstr ""
 
 msgid "Zombie"
 msgstr "僵尸"
@@ -321,7 +306,4 @@ msgstr "尸壳"
 
 msgid "Baby Husk"
 msgstr "小尸壳"
-
-msgid "Zombified Piglin"
-msgstr "僵尸猪灵"
 

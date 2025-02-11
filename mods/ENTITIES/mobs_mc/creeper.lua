@@ -1,10 +1,10 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local is_valid = vlf_util.is_valid_objectref
+local is_valid = mcl_util.is_valid_objectref
 
 local mobs_griefing = minetest.settings:get_bool("mobs_griefing", true)
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 --###################
 --################### CREEPER
@@ -36,7 +36,7 @@ local creeper_defs = {
 	},
 	drops = {
 		{
-			name = "vlf_mobitems:gunpowder",
+			name = "mcl_mobitems:gunpowder",
 			chance = 1,
 			min = 0,
 			max = 2,
@@ -45,7 +45,7 @@ local creeper_defs = {
 
 		-- Head
 		{
-			name = "vlf_heads:creeper",
+			name = "mcl_heads:creeper",
 			chance = 200, -- 0.5%
 			min = 1,
 			max = 1,
@@ -106,7 +106,7 @@ function creeper_defs:update_swell ()
 	end
 
 	if self._swell_time >= CREEPER_SWELL_TIME then
-		self:boom (vlf_util.get_object_center (self.object),
+		self:boom (mcl_util.get_object_center (self.object),
 			   self.explosion_strength, false)
 		return
 	end
@@ -160,7 +160,7 @@ function creeper_defs:safe_boom(pos, strength, no_remove)
 	}, true)
 	local radius = strength
 	blast_damage(pos, radius, self.object)
-	vlf_mobs.effect(pos, 32, "vlf_particles_smoke.png", radius * 3, radius * 5, radius, 1, 0)
+	mcl_mobs.effect(pos, 32, "mcl_particles_smoke.png", radius * 3, radius * 5, radius, 1, 0)
 	if not no_remove then
 		if self.is_mob then
 			self:safe_remove()
@@ -174,15 +174,15 @@ end
 -- make explosion with protection and tnt mod check
 function creeper_defs:boom(pos, strength, fire, no_remove)
 	if mobs_griefing and not minetest.is_protected(pos, "") then
-		vlf_explosions.explode(pos, strength, { fire = fire }, self.object)
+		mcl_explosions.explode(pos, strength, { fire = fire }, self.object)
 	else
 		self:safe_boom(pos, strength, no_remove)
 	end
 	-- Dissipate active status effects.
-	for name, val in pairs (vlf_potions.all_effects (self.object)) do
-		local level = vlf_potions.get_effect_level (self.object,
+	for name, val in pairs (mcl_potions.all_effects (self.object)) do
+		local level = mcl_potions.get_effect_level (self.object,
 							    name)
-		vlf_potions.add_lingering_effect (pos, name, val.dur / 2,
+		mcl_potions.add_lingering_effect (pos, name, val.dur / 2,
 						  level, 2.5)
 	end
 	if not no_remove then
@@ -217,12 +217,12 @@ function creeper_defs:do_custom (dtime)
 	end
 end
 
-function creeper_defs:on_die (pos, vlf_reason)
+function creeper_defs:on_die (pos, mcl_reason)
 	-- Drop a random music disc when killed by skeleton or stray
-	if vlf_reason and vlf_reason.type == "arrow" then
-		if vlf_reason.mob_name == "mobs_mc:skeleton"
-			or vlf_reason.mob_name == "mobs_mc:stray" then
-			local loot = vlf_jukebox.get_random_creeper_loot()
+	if mcl_reason and mcl_reason.type == "arrow" then
+		if mcl_reason.mob_name == "mobs_mc:skeleton"
+			or mcl_reason.mob_name == "mobs_mc:stray" then
+			local loot = mcl_jukebox.get_random_creeper_loot()
 			if loot then
 				minetest.add_item({x=pos.x, y=pos.y+1, z=pos.z}, loot)
 			end
@@ -277,11 +277,11 @@ local regular_creeper = table.merge (creeper_defs, {
 })
 
 function regular_creeper:_on_lightning_strike ()
-	vlf_util.replace_mob(self.object, "mobs_mc:creeper_charged")
+	mcl_util.replace_mob(self.object, "mobs_mc:creeper_charged")
 	return true
 end
 
-vlf_mobs.register_mob ("mobs_mc:creeper", regular_creeper)
+mcl_mobs.register_mob ("mobs_mc:creeper", regular_creeper)
 
 local charged_creeper = table.merge (creeper_defs, {
 	description = S("Charged Creeper"),
@@ -298,9 +298,9 @@ local charged_creeper = table.merge (creeper_defs, {
 	use_texture_alpha = true,
 })
 
-vlf_mobs.register_mob ("mobs_mc:creeper_charged", charged_creeper)
+mcl_mobs.register_mob ("mobs_mc:creeper_charged", charged_creeper)
 
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:creeper",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -313,4 +313,4 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:creeper", S("Creeper"), "#0da70a", "#000000", 0)
+mcl_mobs.register_egg("mobs_mc:creeper", S("Creeper"), "#0da70a", "#000000", 0)

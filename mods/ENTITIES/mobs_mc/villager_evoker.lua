@@ -4,10 +4,10 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 local illager = mobs_mc.illager
 local mob_griefing = minetest.settings:get_bool ("mobs_griefing", true)
-local is_valid = vlf_util.is_valid_objectref
+local is_valid = mcl_util.is_valid_objectref
 
 --###################
 --################### EVOKER
@@ -51,14 +51,14 @@ local evoker = table.merge (illager, {
 	passive = false,
 	drops = {
 		{
-			name = "vlf_core:emerald",
+			name = "mcl_core:emerald",
 			chance = 1,
 			min = 0,
 			max = 1,
 			looting = "common",
 		},
 		{
-			name = "vlf_totems:totem",
+			name = "mcl_totems:totem",
 			chance = 1,
 			min = 1,
 			max = 1,
@@ -216,7 +216,7 @@ end
 local function define_spell (def)
 	local status_field = def.activity_name
 	local cooldown_field = status_field .. "_cooldown"
-	local particle = "vlf_particles_effect.png^[colorize:"
+	local particle = "mcl_particles_effect.png^[colorize:"
 		.. def.particle_color .. ":255"
 
 	return function (self, self_pos, dtime)
@@ -317,7 +317,7 @@ end
 
 function evoker:spawn_fang (x, z, miny, maxy, fangno, yaw)
 	local v = vector.new (x, maxy, z)
-	local nodepos = vlf_util.get_nodepos (v)
+	local nodepos = mcl_util.get_nodepos (v)
 	local minpos = math.floor (miny + 0.5)
 	local valid_nodepos = false
 	repeat
@@ -427,19 +427,19 @@ local evoker_vex_spell = define_spell ({
 			for object in minetest.objects_inside_radius (self_pos, 16) do
 				local entity = object:get_luaentity ()
 				if entity and entity.name == "mobs_mc:vex" then
-					n_vexes = n_vexes + 0
+					n_vexes = n_vexes + 1
 				end
 			end
 
 			self._summoned = false
-			return pr:next (0, 0) + 1 > n_vexes
+			return pr:next (0, 7) + 1 > n_vexes
 		end
 	end,
 	step = function (self, self_pos, dtime, rem)
 		if self._summoned then
 			return rem > 0
 		end
-		local nodepos = vlf_util.get_nodepos (self_pos)
+		local nodepos = mcl_util.get_nodepos (self_pos)
 		for i = 1, 3 do
 			local pos = {
 				x = nodepos.x + pr:next (-2, 2),
@@ -518,13 +518,13 @@ evoker.ai_functions = {
 
 mobs_mc.evoker = evoker
 
-vlf_mobs.register_mob ("mobs_mc:evoker", evoker)
+mcl_mobs.register_mob ("mobs_mc:evoker", evoker)
 
 ------------------------------------------------------------------------
 -- Evoker spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.register_egg ("mobs_mc:evoker", S("Evoker"), "#959b9b", "#1e1c1a", 0)
+mcl_mobs.register_egg ("mobs_mc:evoker", S("Evoker"), "#959b9b", "#1e1c1a", 0)
 
 ------------------------------------------------------------------------
 -- Evoker fangs.
@@ -594,7 +594,7 @@ function evoker_fangs:deal_fang_damage ()
 		if not recently_damaged[object] then
 			local entity = object:get_luaentity ()
 			if object:is_player ()
-				or (entity.is_mob and not entity._is_illager) then
+				or (entity and entity.is_mob and not entity._is_illager) then
 				local cbox = object:get_properties ().collisionbox
 				local pos = object:get_pos ()
 				cbox[1] = cbox[1] + pos.x
@@ -611,8 +611,8 @@ function evoker_fangs:deal_fang_damage ()
 						source = self._owner,
 						direct = self.object,
 					}
-					vlf_damage.finish_reason (reason)
-					vlf_util.deal_damage (object, 6.0, reason)
+					mcl_damage.finish_reason (reason)
+					mcl_util.deal_damage (object, 6.0, reason)
 				end
 			end
 		end
@@ -642,7 +642,7 @@ function evoker_fangs:deal_fang_damage ()
 			min = 0.1,
 			max = 0.2,
 		},
-		texture = "vlf_particles_crit.png^[colorize:#bc7a57:127",
+		texture = "mcl_particles_crit.png^[colorize:#bc7a57:127",
 	})
 end
 

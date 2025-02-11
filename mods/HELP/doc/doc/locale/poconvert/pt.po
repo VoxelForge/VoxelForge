@@ -35,10 +35,10 @@ msgid "Error: No help available."
 msgstr "Erro: Nenhuma ajuda disponível."
 
 msgid "No categories have been registered, but they are required to provide help."
-msgstr ""
+msgstr "Nenhuma categoria foi registrada, porém elas são necessárias para providenciar ajuda."
 
 msgid "The Documentation System [doc] does not come with help contents on its own, it needs additional mods to add help content. Please make sure such mods are enabled on for this world, and try again."
-msgstr ""
+msgstr "O Sistema de Documentação [doc] não vem com conteúdo de ajuda por si só, precisa de mods adicionais para adicionar conteúdo de ajuda. Por favor tenha certeza que tais mods estão habilitados nesse mundo e tente de novo."
 
 msgid "Recommended mods: doc_basics, doc_items, doc_identifier, doc_encyclopedia."
 msgstr "Mods recomendados: doc_basics, doc_items, doc_identifier, doc_encyclopedia."
@@ -56,10 +56,10 @@ msgid "Help > @1"
 msgstr "Ajuda > @1"
 
 msgid "Currently all entries in this category are hidden from you."
-msgstr ""
+msgstr "No momento todas as entradas nessa categoria estão escondidas de você."
 
 msgid "Unlock new entries by progressing in the game."
-msgstr ""
+msgstr "Desbloqueie novas entradas progredindo no jogo."
 
 msgid "Number of entries: @1"
 msgstr "Número de entradas: @1"

@@ -191,7 +191,7 @@ msgid "This tool belongs to these groups: @1."
 msgstr "Cet outil appartient aux groupes suivants : @1."
 
 msgid "This item belongs to these groups: @1."
-msgstr "Cet objet appartient aux groupes suivants : @1"
+msgstr "Cet objet appartient aux groupes suivants : @1."
 
 msgid "Blocks"
 msgstr "Blocs"
@@ -284,7 +284,7 @@ msgid "Building another block at this block will place it inside and replace it.
 msgstr "Construire un autre bloc sur ce bloc le placera à l'intérieur et le remplacera."
 
 msgid "Falling blocks can go through this block; they destroy it when doing so."
-msgstr "Les blocs en chute peuvent traverser ce bloc; ils le détruisent en faisant cela."
+msgstr "Les blocs tombants peuvent traverser ce bloc ; ils le détruisent en faisant cela."
 
 msgid "This block will drop as an item when a falling block ends up inside it."
 msgstr "Ce bloc se transformera en objet lorsqu'un autre bloc tombe dessus."
@@ -323,13 +323,13 @@ msgid "This block connects to this block: @1."
 msgstr "Ce bloc se connecte à ce bloc : @1."
 
 msgid "This block connects to these blocks: @1."
-msgstr "Ce bloc se connecte à ces blocs : @1"
+msgstr "Ce bloc se connecte à ces blocs : @1."
 
 msgid "This block connects to blocks of the @1 group."
 msgstr "Ce bloc se connecte aux blocs du groupe @1."
 
 msgid "This block connects to blocks of the following groups: @1."
-msgstr "Ce bloc se connecte aux blocs des groupes suivants : @1"
+msgstr "Ce bloc se connecte aux blocs des groupes suivants : @1."
 
 msgid "This block won't drop anything when mined."
 msgstr "Ce bloc ne donnera rien lorsque miné."

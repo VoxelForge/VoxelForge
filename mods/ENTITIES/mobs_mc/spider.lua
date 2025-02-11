@@ -4,7 +4,7 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 --###################
 --################### SPIDER
@@ -77,12 +77,12 @@ local spider = {
 	floats = 1,
 	drops = {
 		{
-			name = "vlf_mobitems:string",
+			name = "mcl_mobitems:string",
 			chance = 1, min = 0, max = 2,
 			looting = "common",
 		},
 		{
-			name = "vlf_mobitems:spider_eye",
+			name = "mcl_mobitems:spider_eye",
 			chance = 3, min = 1, max = 1,
 			looting = "common",
 			looting_chance_function = function(lvl)
@@ -111,7 +111,7 @@ local spider = {
 ------------------------------------------------------------------------
 
 spider.slowdown_nodes = table.copy (mob_class.slowdown_nodes)
-spider.slowdown_nodes["vlf_core:cobweb"] = nil
+spider.slowdown_nodes["mcl_core:cobweb"] = nil
 
 function spider:gopath_internal (target, speed_bonus, animation, tolerance, penalties)
 	-- Record the destination so that this spider may attempt to
@@ -120,7 +120,7 @@ function spider:gopath_internal (target, speed_bonus, animation, tolerance, pena
 						animation, tolerance, penalties)
 	if rc then
 		self._gopath_destination
-			= vlf_util.get_nodepos (target)
+			= mcl_util.get_nodepos (target)
 		return rc
 	else
 		return nil
@@ -209,11 +209,11 @@ function spider:on_spawn ()
 
 	-- Occasionally spawn with various beneficial status effects
 	-- on hard difficulty.
-	if vlf_vars.difficulty == 3 then
+	if mcl_vars.difficulty == 3 then
 		local random = math.random ()
-		if random < 0.1 * vlf_worlds.get_special_difficulty (self_pos) then
+		if random < 0.1 * mcl_worlds.get_special_difficulty (self_pos) then
 			local effect = spider_effects[math.random (#spider_effects)]
-			vlf_potions.give_effect (effect, self.object, 1, math.huge)
+			mcl_potions.give_effect (effect, self.object, 1, math.huge)
 		end
 	end
 end
@@ -284,7 +284,7 @@ function spider:should_attack (target)
 		and mc_light_value (self) < 0.5
 end
 
-vlf_mobs.register_mob ("mobs_mc:spider", spider)
+mcl_mobs.register_mob ("mobs_mc:spider", spider)
 
 ------------------------------------------------------------------------
 -- Cave spider.
@@ -323,13 +323,13 @@ function cave_spider:on_spawn ()
 	-- as jockeys.
 end
 
-vlf_mobs.register_mob ("mobs_mc:cave_spider", cave_spider)
+mcl_mobs.register_mob ("mobs_mc:cave_spider", cave_spider)
 
 ------------------------------------------------------------------------
 -- Spider spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:spider",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -342,5 +342,5 @@ vlf_mobs.spawn_setup ({
 })
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:spider", S("Spider"), "#342d26", "#a80e0e", 0)
-vlf_mobs.register_egg("mobs_mc:cave_spider", S("Cave Spider"), "#0c424e", "#a80e0e", 0)
+mcl_mobs.register_egg("mobs_mc:spider", S("Spider"), "#342d26", "#a80e0e", 0)
+mcl_mobs.register_egg("mobs_mc:cave_spider", S("Cave Spider"), "#0c424e", "#a80e0e", 0)

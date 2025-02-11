@@ -4,7 +4,7 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator(minetest.get_current_modname())
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 --###################
 --################### cod
@@ -43,13 +43,13 @@ local cod = {
 	},
 	drops = {
 		{
-			name = "vlf_fishing:fish_raw",
+			name = "mcl_fishing:fish_raw",
 			chance = 1,
 			min = 1,
 			max = 1,
 		},
 		{
-			name = "vlf_bone_meal:bone_meal",
+			name = "mcl_bone_meal:bone_meal",
 			chance = 20,
 			min = 1,
 			max = 1,
@@ -64,7 +64,7 @@ local cod = {
 	makes_footstep_sound = false,
 	swims = true,
 	pace_height = 1.0,
-	do_go_pos = vlf_mobs.mob_class.fish_do_go_pos,
+	do_go_pos = mcl_mobs.mob_class.fish_do_go_pos,
 	flops = true,
 	breathes_in_water = true,
 	movement_speed = 14.0,
@@ -78,10 +78,10 @@ local cod = {
 
 function cod:on_rightclick (clicker)
 	local bn = clicker:get_wielded_item():get_name()
-	if bn == "vlf_buckets:bucket_water" or bn == "vlf_buckets:bucket_river_water" then
+	if bn == "mcl_buckets:bucket_water" or bn == "mcl_buckets:bucket_river_water" then
 		self:safe_remove()
-		clicker:set_wielded_item("vlf_buckets:bucket_cod")
-		awards.unlock(clicker:get_player_name(), "vlf:tacticalFishing")
+		clicker:set_wielded_item("mcl_buckets:bucket_cod")
+		awards.unlock(clicker:get_player_name(), "mcl:tacticalFishing")
 	end
 end
 
@@ -96,13 +96,13 @@ cod.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:cod", cod)
+mcl_mobs.register_mob ("mobs_mc:cod", cod)
 
 ------------------------------------------------------------------------
 -- Cod spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:cod",
 	type_of_spawning = "water",
 	dimension = "overworld",
@@ -115,4 +115,4 @@ vlf_mobs.spawn_setup ({
 })
 
 --spawn egg
-vlf_mobs.register_egg("mobs_mc:cod", S("Cod"), "#c1a76a", "#e5c48b", 0)
+mcl_mobs.register_egg("mobs_mc:cod", S("Cod"), "#c1a76a", "#e5c48b", 0)

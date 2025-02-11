@@ -5,10 +5,10 @@ local pigman = {
 	description = S("Zombified Piglin"),
 	textures = {{ "" }},
 	after_activate = function(self)
-		vlf_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
+		mcl_util.replace_mob(self.object, "mobs_mc:zombified_piglin")
 	end,
 	hp_min = 0,
 }
 
-vlf_mobs.register_mob("mobs_mc:pigman", pigman)
-vlf_mobs.register_mob("mobs_mc:baby_pigman", pigman)
+mcl_mobs.register_mob("mobs_mc:pigman", pigman)
+mcl_mobs.register_mob("mobs_mc:baby_pigman", pigman)

@@ -1,8 +1,8 @@
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 local modname = minetest.get_current_modname ()
 local S = minetest.get_translator (modname)
 local villager_base = mobs_mc.villager_base
-local is_valid = vlf_util.is_valid_objectref
+local is_valid = mcl_util.is_valid_objectref
 
 ------------------------------------------------------------------------
 -- Wandering Trader.
@@ -15,6 +15,9 @@ local wandering_trader = table.merge (villager_base, {
        },
        runaway_from = {
 	       "mobs_mc:zombie",
+	       "mobs_mc:baby_zombie",
+	       "mobs_mc:husk",
+	       "mobs_mc:baby_husk",
 	       "mobs_mc:evoker",
 	       "mobs_mc:vindicator",
 	       "mobs_mc:vex",
@@ -38,23 +41,23 @@ local wandering_trader = table.merge (villager_base, {
 ------------------------------------------------------------------------
 
 local function get_random_color ()
-	local _, color = table.random_element (vlf_dyes.colors)
+	local _, color = table.random_element (mcl_dyes.colors)
 	return color
 end
 
 local function get_random_dye ()
-	return "vlf_dyes:"..get_random_color ()
+	return "mcl_dyes:"..get_random_color ()
 end
 
 local function get_random_tree ()
-	local _, wood = table.random_element (vlf_trees.woods)
-	return "vlf_trees:tree_" .. wood
+	local _, wood = table.random_element (mcl_trees.woods)
+	return "mcl_trees:tree_" .. wood
 end
 
 local function get_random_sapling ()
 	local r = {}
-	for k, _ in pairs(vlf_trees.woods) do
-		local sap = "vlf_trees:sapling_" .. k
+	for k, _ in pairs(mcl_trees.woods) do
+		local sap = "mcl_trees:sapling_" .. k
 		local def = minetest.registered_nodes[sap]
 		if def and not def._unobtainable then
 			table.insert (r, sap)
@@ -65,68 +68,68 @@ end
 
 local function get_random_flower ()
 	local _, flower
-		= table.random_element (vlf_flowers.registered_simple_flowers)
+		= table.random_element (mcl_flowers.registered_simple_flowers)
 	return flower
 end
 
 local function E (f, t)
-	return { "vlf_core:emerald", f or 1, t or f or 1 }
+	return { "mcl_core:emerald", f or 1, t or f or 1 }
 end
 
 local trades_purchasing_table = {
-	{ { "vlf_potions:water", 1, 1, }, E(), 1, 0 },
-	{ { "vlf_buckets:bucket_water", 1, 1, }, E(2), 1, 0 },
-	{ { "vlf_mobitems:milk_bucket", 1, 1, }, E(2), 1, 0 },
-	{ { "vlf_potions:fermented_spider_eye", 1, 1, }, E(3), 1, 0 },
-	{ { "vlf_farming:potato_item_baked", 1, 1, }, E(1), 1, 0 },
-	{ { "vlf_farming:hay_block", 1, 1, }, E(1), 1, 0 },
+	{ { "mcl_potions:water", 1, 1, }, E(), 1, 0 },
+	{ { "mcl_buckets:bucket_water", 1, 1, }, E(2), 1, 0 },
+	{ { "mcl_mobitems:milk_bucket", 1, 1, }, E(2), 1, 0 },
+	{ { "mcl_potions:fermented_spider_eye", 1, 1, }, E(3), 1, 0 },
+	{ { "mcl_farming:potato_item_baked", 1, 1, }, E(1), 1, 0 },
+	{ { "mcl_farming:hay_block", 1, 1, }, E(1), 1, 0 },
 }
 
 local trades_special_table = {
-	{ E(), { "vlf_core:packed_ice", 1, 1, }, 6, 0 },
-	{ E(), { "vlf_mobitems:gunpowder", 4, 4, }, 2, 0 },
+	{ E(), { "mcl_core:packed_ice", 1, 1, }, 6, 0 },
+	{ E(), { "mcl_mobitems:gunpowder", 4, 4, }, 2, 0 },
 	{ E(), { get_random_tree, 8, 8, }, 6, 0 },
-	{ E(3), { "vlf_core:podzol", 3, 3, }, 6, 0 },
-	{ E(5), { "vlf_core:ice", 1, 1, }, 6, 0 },
-	{ E(6), { "vlf_potions:invisibility", 1, 1, }, 1, 0 },
-	{ E(6, 20), { "vlf_tools:pick_iron_enchanted", 1, 1 } },
+	{ E(3), { "mcl_core:podzol", 3, 3, }, 6, 0 },
+	{ E(5), { "mcl_core:ice", 1, 1, }, 6, 0 },
+	{ E(6), { "mcl_potions:invisibility", 1, 1, }, 1, 0 },
+	{ E(6, 20), { "mcl_tools:pick_iron_enchanted", 1, 1 } },
 }
 
 local trades_ordinary_table = {
-	{ E(), { "vlf_flowers:fern", 1, 1, }, 12, 0 },
-	{ E(), { "vlf_core:reeds", 1, 1, }, 8, 0 },
-	{ E(), { "vlf_farming:pumpkin", 1, 1, }, 4, 0 },
+	{ E(), { "mcl_flowers:fern", 1, 1, }, 12, 0 },
+	{ E(), { "mcl_core:reeds", 1, 1, }, 8, 0 },
+	{ E(), { "mcl_farming:pumpkin", 1, 1, }, 4, 0 },
 	{ E(), { get_random_flower, 1, 1, }, 12, 0 },
 
-	{ E(), { "vlf_farming:wheat_seeds", 1, 1, }, 12, 0 },
-	{ E(), { "vlf_farming:beetroot_seeds", 1, 1, }, 12, 0 },
-	{ E(), { "vlf_farming:pumpkin_seeds", 1, 1, }, 12, 0 },
-	{ E(), { "vlf_farming:melon_seeds", 1, 1, }, 12, 0 },
+	{ E(), { "mcl_farming:wheat_seeds", 1, 1, }, 12, 0 },
+	{ E(), { "mcl_farming:beetroot_seeds", 1, 1, }, 12, 0 },
+	{ E(), { "mcl_farming:pumpkin_seeds", 1, 1, }, 12, 0 },
+	{ E(), { "mcl_farming:melon_seeds", 1, 1, }, 12, 0 },
 	{ E(), { get_random_dye, 1, 1, }, 12, 0 },
-	{ E(), { "vlf_core:vine", 3, 3, }, 4, 0 },
-	{ E(), { "vlf_flowers:waterlily", 3, 3, }, 2, 0 },
-	{ E(), { "vlf_core:sand", 3, 3, }, 8, 0 },
-	{ E(), { "vlf_core:redsand", 3, 3, }, 6, 0 },
+	{ E(), { "mcl_core:vine", 3, 3, }, 4, 0 },
+	{ E(), { "mcl_flowers:waterlily", 3, 3, }, 2, 0 },
+	{ E(), { "mcl_core:sand", 3, 3, }, 8, 0 },
+	{ E(), { "mcl_core:redsand", 3, 3, }, 6, 0 },
 	--{ E(), { "TODO: small_dripleaf", 3, 3, }, 5, 0 },
-	{ E(), { "vlf_mushrooms:mushroom_brown", 3, 3, }, 4, 0 },
-	{ E(), { "vlf_mushrooms:mushroom_red", 3, 3, }, 4, 0 },
-	{ E(), { "vlf_dripstone:pointed_dripstone", 2, 5, }, 5, 0 },
-	{ E(), { "vlf_lush_caves:rooted_dirt", 2, 2, }, 5, 0 },
-	{ E(), { "vlf_lush_caves:moss", 2, 2, }, 5, 0 },
-	{ E(2), { "vlf_ocean:sea_pickle_1_dead_brain_coral_block", 1, 1, }, 5, 0 },
-	{ E(2), { "vlf_nether:glowstone", 1, 5, }, 5, 0 },
-	{ E(3), { "vlf_buckets:bucket_tropical_fish", 1, 1, }, 4, 0 },
-	--{ E(3), { "TODO: vlf_buckets:bucket_pufferfish", 1, 5, }, 4, 0 },
-	{ E(3), { "vlf_ocean:kelp", 1, 1, }, 12, 0 },
-	{ E(3), { "vlf_core:cactus", 1, 1, }, 8, 0 },
-	{ E(3), { "vlf_ocean:brain_coral_block", 1, 1, }, 8, 0 },
-	{ E(3), { "vlf_ocean:tube_coral_block", 1, 1, }, 8, 0 },
-	{ E(3), { "vlf_ocean:bubble_coral_block", 1, 1, }, 8, 0 },
-	{ E(3), { "vlf_ocean:fire_coral_block", 1, 1, }, 8, 0 },
-	{ E(3), { "vlf_ocean:horn_coral_block", 1, 1, }, 8, 0 },
-	{ E(4), { "vlf_mobitems:slimeball", 1, 1, }, 5, 0 },
+	{ E(), { "mcl_mushrooms:mushroom_brown", 3, 3, }, 4, 0 },
+	{ E(), { "mcl_mushrooms:mushroom_red", 3, 3, }, 4, 0 },
+	{ E(), { "mcl_dripstone:pointed_dripstone", 2, 5, }, 5, 0 },
+	{ E(), { "mcl_lush_caves:rooted_dirt", 2, 2, }, 5, 0 },
+	{ E(), { "mcl_lush_caves:moss", 2, 2, }, 5, 0 },
+	{ E(2), { "mcl_ocean:sea_pickle_1_dead_brain_coral_block", 1, 1, }, 5, 0 },
+	{ E(2), { "mcl_nether:glowstone", 1, 5, }, 5, 0 },
+	{ E(3), { "mcl_buckets:bucket_tropical_fish", 1, 1, }, 4, 0 },
+	--{ E(3), { "TODO: mcl_buckets:bucket_pufferfish", 1, 5, }, 4, 0 },
+	{ E(3), { "mcl_ocean:kelp", 1, 1, }, 12, 0 },
+	{ E(3), { "mcl_core:cactus", 1, 1, }, 8, 0 },
+	{ E(3), { "mcl_ocean:brain_coral_block", 1, 1, }, 8, 0 },
+	{ E(3), { "mcl_ocean:tube_coral_block", 1, 1, }, 8, 0 },
+	{ E(3), { "mcl_ocean:bubble_coral_block", 1, 1, }, 8, 0 },
+	{ E(3), { "mcl_ocean:fire_coral_block", 1, 1, }, 8, 0 },
+	{ E(3), { "mcl_ocean:horn_coral_block", 1, 1, }, 8, 0 },
+	{ E(4), { "mcl_mobitems:slimeball", 1, 1, }, 5, 0 },
 	{ E(5), { get_random_sapling, 8, 8, }, 8, 0 },
-	{ E(5), { "vlf_mobitems:nautilus_shell", 1, 1, }, 5, 0 },
+	{ E(5), { "mcl_mobitems:nautilus_shell", 1, 1, }, 5, 0 },
 }
 
 local pr = PcgRandom (os.time () + 593)
@@ -197,27 +200,27 @@ function wandering_trader:ai_step (dtime)
 			self:safe_remove ()
 		end
 	end
-	local is_day = vlf_util.is_daytime ()
+	local is_day = mcl_util.is_daytime ()
 	if not self._mob_invisible and not is_day then
 		local wielditem = self:get_wielditem ()
 		if not self._using_wielditem
-			or wielditem:get_name () ~= "vlf_potions:invisibility" then
-			self:set_wielditem (ItemStack ("vlf_potions:invisibility"))
+			or wielditem:get_name () ~= "mcl_potions:invisibility" then
+			self:set_wielditem (ItemStack ("mcl_potions:invisibility"))
 			self:use_wielditem ()
 		elseif self._using_wielditem > 1.0 then
-			vlf_potions._use_potion (self.object)
-			vlf_potions.give_effect ("invisibility", self.object,
+			mcl_potions._use_potion (self.object)
+			mcl_potions.give_effect ("invisibility", self.object,
 						 0, math.huge)
 			self:set_wielditem (ItemStack ())
 		end
 	elseif self._mob_invisible and is_day then
 		local wielditem = self:get_wielditem ()
 		if not self._using_wielditem
-			or wielditem:get_name () ~= "vlf_mobitems:milk_bucket" then
-			self:set_wielditem (ItemStack ("vlf_mobitems:milk_bucket"))
+			or wielditem:get_name () ~= "mcl_mobitems:milk_bucket" then
+			self:set_wielditem (ItemStack ("mcl_mobitems:milk_bucket"))
 			self:use_wielditem ()
 		elseif self._using_wielditem > 1.0 then
-			vlf_potions._reset_effects (self.object)
+			mcl_potions._reset_effects (self.object)
 			minetest.sound_play ("survival_thirst_drink", {
 				pos = self.object:get_pos (),
 				max_hear_distance = 6,
@@ -256,16 +259,16 @@ local function is_mob (source)
 	return entity and entity.is_mob
 end
 
-function wandering_trader:receive_damage (vlf_reason, damage)
-	if mob_class.receive_damage (self, vlf_reason, damage) then
-		if vlf_reason.source
-			and (vlf_reason.source:is_player ()
-			     or is_mob (vlf_reason.source)) then
+function wandering_trader:receive_damage (mcl_reason, damage)
+	if mob_class.receive_damage (self, mcl_reason, damage) then
+		if mcl_reason.source
+			and (mcl_reason.source:is_player ()
+			     or is_mob (mcl_reason.source)) then
 			-- Call llamas to retaliate.
 			for _, llama in pairs (self._llamas) do
 				local entity = llama:get_luaentity ()
 				if entity then
-					entity:do_attack (vlf_reason.source)
+					entity:do_attack (mcl_reason.source)
 				end
 			end
 		end
@@ -277,8 +280,9 @@ end
 local function wandering_trader_check_trading (self, self_pos, dtime, moveresult)
 	if self._halted_for_trading then
 		if self._immersion_depth >= 1
-			or not (moveresult.touching_ground
-				or moveresult.standing_on_object)
+			or (not moveresult.touching_ground
+				and not moveresult.standing_on_object
+				and not self.object:get_attach ())
 			or self.runaway_timer >= 4.5 then
 			self:stop_trading ()
 			self._halted_for_trading = false
@@ -398,7 +402,7 @@ function wandering_trader:post_load_staticdata ()
 	end
 end
 
-vlf_mobs.register_mob ("mobs_mc:wandering_trader", wandering_trader)
+mcl_mobs.register_mob ("mobs_mc:wandering_trader", wandering_trader)
 
 ------------------------------------------------------------------------
 -- Wandering Trader spawning.
@@ -452,9 +456,9 @@ end
 local function spawn_wandering_trader ()
 	-- Select a random player in the overworld.
 	local players_in_overworld = {}
-	for player in vlf_util.connected_players () do
+	for player in mcl_util.connected_players () do
 		local pos = player:get_pos ()
-		local dim = vlf_worlds.pos_to_dimension (pos)
+		local dim = mcl_worlds.pos_to_dimension (pos)
 
 		if dim == "overworld" then
 			table.insert (players_in_overworld, player)
@@ -467,17 +471,17 @@ local function spawn_wandering_trader ()
 	local player = players_in_overworld[pr:next (1, nplayers)]
 
 	-- Find nearby bells.
-	local player_pos = vlf_util.get_nodepos (player:get_pos ())
+	local player_pos = mcl_util.get_nodepos (player:get_pos ())
 	local aa = vector.offset (player_pos, -48, -48, -48)
 	local bb = vector.offset (player_pos, 48, 48, 48)
 
 	-- Try to spawn beside a meeting point POI, if any.
 	local poi = nil
-	local pois = vlf_villages.get_pois_in_by_nodepos (aa, bb)
+	local pois = mcl_villages.get_pois_in_by_nodepos (aa, bb)
 	table.shuffle (pois)
 	for _, poi1 in pairs (pois) do
-		if poi1.data == "vlf_villages:bell"
-			or poi1.data == "vlf_villages:demo_poi" then
+		if poi1.data == "mcl_villages:bell"
+			or poi1.data == "mcl_villages:demo_poi" then
 			poi = poi1.min
 			break
 		end
@@ -505,7 +509,7 @@ local function spawn_wandering_trader ()
 			local trader_id = storage:get_int ("last_trader_id") + 1
 			storage:set_int ("last_trader_id", trader_id)
 			local entity = trader:get_luaentity ()
-			entity._life_timer = 2400
+			entity._life_timer = 1200
 			entity._trader_id = trader_id
 			entity._wander_to = base_position
 			entity:restrict_to (base_position, 16)
@@ -553,7 +557,7 @@ end)
 
 end
 
-vlf_mobs.register_egg ("mobs_mc:wandering_trader", S("Wandering Trader"), "#1E90FF", "#bc8b72", 0)
+mcl_mobs.register_egg ("mobs_mc:wandering_trader", S("Wandering Trader"), "#1E90FF", "#bc8b72", 0)
 
 ------------------------------------------------------------------------------
 -- Trader Llama.
@@ -679,5 +683,5 @@ trader_llama.ai_functions = {
 -- Trader Llama spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.register_mob ("mobs_mc:trader_llama", trader_llama)
-vlf_mobs.register_egg ("mobs_mc:trader_llama", S("Trader Llama"), "#eaa430", "#456296", 0)
+mcl_mobs.register_mob ("mobs_mc:trader_llama", trader_llama)
+mcl_mobs.register_egg ("mobs_mc:trader_llama", S("Trader Llama"), "#eaa430", "#456296", 0)

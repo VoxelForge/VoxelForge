@@ -4,8 +4,8 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
-local is_valid = vlf_util.is_valid_objectref
+local mob_class = mcl_mobs.mob_class
+local is_valid = mcl_util.is_valid_objectref
 
 --###################
 --################### IRON GOLEM
@@ -51,13 +51,13 @@ local golem = {
 	attack_type = "melee",
 	drops = {
 		{
-			name = "vlf_core:iron_ingot",
+			name = "mcl_core:iron_ingot",
 			chance = 1,
 			min = 3,
 			max = 5,
 		},
 		{
-			name = "vlf_flowers:poppy",
+			name = "mcl_flowers:poppy",
 			chance = 1,
 			min = 0,
 			max = 2,
@@ -130,7 +130,7 @@ local function find_nearest_village_section (section)
 				v.x = section.x + x
 				v.y = section.y + y
 				v.z = section.z + z
-				local candidate = vlf_villages.get_poi_heat_of_section (v)
+				local candidate = mcl_villages.get_poi_heat_of_section (v)
 				if candidate >= 4 and (not closest or candidate >= heat) then
 					heat = candidate
 					closest = vector.copy (v)
@@ -149,8 +149,8 @@ local function golem_seek_village (self, self_pos, dtime)
 		end
 		return true
 	else
-		local section = vlf_villages.section_position (self_pos)
-		local heat = vlf_villages.get_poi_heat_of_section (section)
+		local section = mcl_villages.section_position (self_pos)
+		local heat = mcl_villages.get_poi_heat_of_section (section)
 
 		-- Can't seek village if already in one.
 		if heat >= 5 then
@@ -158,7 +158,7 @@ local function golem_seek_village (self, self_pos, dtime)
 		end
 		local section = find_nearest_village_section (section)
 		if section then
-			local center = vlf_villages.center_of_section (section)
+			local center = mcl_villages.center_of_section (section)
 			local dir = vector.direction (self_pos, center)
 			local target = self:target_in_direction (self_pos, 10, 7,
 								 dir, NINETY_DEG)
@@ -194,7 +194,7 @@ local function golem_extend_flower (self, self_pos, dtime)
 		if is_valid (target) then
 			self:look_at (target:get_pos ())
 			self:set_animation ("flower")
-			self._poppy_texture = "vlf_flowers_poppy.png"
+			self._poppy_texture = "mcl_flowers_poppy.png"
 		end
 		return true
 	else
@@ -248,12 +248,12 @@ function golem:custom_attack ()
 	if damage > 0 then
 		damage = damage / 2.0 + pr:next (0, damage - 1)
 	end
-	local hp = vlf_util.get_hp (attack)
+	local hp = mcl_util.get_hp (attack)
 	attack:punch (self.object, 1.0, {
 		full_punch_interval = 1.0,
 		damage_groups = { fleshy = damage, },
 	}, nil)
-	if vlf_util.get_hp (attack) < hp then
+	if mcl_util.get_hp (attack) < hp then
 		local throw = 1.0 - get_knockback_resistance (attack)
 		attack:add_velocity (vector.new (0, 16 * throw, 0))
 	end
@@ -306,7 +306,7 @@ function golem:locate_undesirable (self_pos)
 	end
 
 	local undesirable, dist = nil, nil
-	for player in vlf_util.connected_players (self_pos, 64) do
+	for player in mcl_util.connected_players (self_pos, 64) do
 		if self:attack_player_allowed (player) then
 			local name = player:get_player_name ()
 			local rep = player_rep[name] or 0
@@ -382,13 +382,13 @@ function golem:pacing_target_towards_poi (pos)
 	-- Select a hot village section in a 5x5 cube around this mob
 	-- horizontally, and subsequently a random POI from that
 	-- section.
-	local section = vlf_villages.section_position (pos)
+	local section = mcl_villages.section_position (pos)
 	local sections = {}
 	for x = -2, 2 do
 		for y = -2, 2 do
 			for z = -2, 2 do
 				local v = vector.offset (section, x, y, z)
-				if vlf_villages.get_poi_heat_of_section (v) == 6 then
+				if mcl_villages.get_poi_heat_of_section (v) == 6 then
 					table.insert (sections, v)
 				end
 			end
@@ -396,7 +396,7 @@ function golem:pacing_target_towards_poi (pos)
 	end
 	if #sections > 0 then
 		local section = sections[pr:next (1, #sections)]
-		local pois = vlf_villages.get_pois_in_section (section)
+		local pois = mcl_villages.get_pois_in_section (section)
 		if #pois > 0 then
 			local poi = pois[pr:next (1, #pois)].min
 			local dir = vector.direction (pos, poi)
@@ -470,7 +470,7 @@ function golem:on_rightclick (clicker)
 	end
 
 	local item = clicker:get_wielded_item()
-	if item:get_name() == "vlf_core:iron_ingot"
+	if item:get_name() == "mcl_core:iron_ingot"
 		and self.health < self.object:get_properties().hp_max then
 		if not minetest.is_creative_enabled(clicker:get_player_name()) then
 			item:take_item()
@@ -501,10 +501,10 @@ end
 -- Iron Golem summoning.
 ------------------------------------------------------------------------
 
-vlf_mobs.register_mob ("mobs_mc:iron_golem", golem)
+mcl_mobs.register_mob ("mobs_mc:iron_golem", golem)
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:iron_golem", S("Iron Golem"), "#b3b3b3", "#4d7e47", 0)
+mcl_mobs.register_egg("mobs_mc:iron_golem", S("Iron Golem"), "#b3b3b3", "#4d7e47", 0)
 
 --[[ This is to be called when a pumpkin or jack'o lantern has been placed. Recommended: In the on_construct function of the node.
 This summons an iron golen if placing the pumpkin created an iron golem summon pattern:
@@ -576,7 +576,7 @@ function mobs_mc.check_iron_golem_summon(pos, player)
 		for i=1, 4 do
 			local cpos = vector.add(pos, checks[c][i])
 			local node = minetest.get_node(cpos)
-			if node.name ~= "vlf_core:ironblock" then
+			if node.name ~= "mcl_core:ironblock" then
 				ok = false
 				break
 			end

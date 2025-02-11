@@ -137,7 +137,7 @@ end
 function doc_identifier.solid_mode(itemstack, user, pointed_thing)
 	-- Use pointed node's on_rightclick function first, if present
 	if pointed_thing.type == "node" then
-		local rc = vlf_util.call_on_rightclick(itemstack, user, pointed_thing)
+		local rc = mcl_util.call_on_rightclick(itemstack, user, pointed_thing)
 		if rc then return rc end
 	end
 
@@ -147,7 +147,7 @@ end
 function doc_identifier.liquid_mode(itemstack, user, pointed_thing)
 	-- Use pointed node's on_rightclick function first, if present
 	if pointed_thing.type == "node" then
-		local rc = vlf_util.call_on_rightclick(itemstack, user, pointed_thing)
+		local rc = mcl_util.call_on_rightclick(itemstack, user, pointed_thing)
 		if rc then return rc end
 	end
 
@@ -168,13 +168,14 @@ minetest.register_tool("doc_identifier:identifier_solid", {
 	on_use = doc_identifier.identify,
 	on_place = doc_identifier.liquid_mode,
 	on_secondary_use = doc_identifier.liquid_mode,
+	groups = {rarity = 3}
 })
 minetest.register_tool("doc_identifier:identifier_liquid", {
 	description = S("Lookup Tool"),
 	_doc_items_create_entry = false,
 	tool_capabilities = {},
 	range = 10,
-	groups = { not_in_creative_inventory = 1, not_in_craft_guide = 1, disable_repair = 1 },
+	groups = { not_in_creative_inventory = 1, not_in_craft_guide = 1, disable_repair = 1, rarity = 3 },
 	wield_image = "doc_identifier_identifier_liquid.png",
 	inventory_image = "doc_identifier_identifier_liquid.png",
 	liquids_pointable = true,
@@ -190,10 +191,10 @@ minetest.register_craft({
 		   {"group:stick", ""} }
 })
 
-if minetest.get_modpath("vlf_core") then
+if minetest.get_modpath("mcl_core") then
 	minetest.register_craft({
 		output = "doc_identifier:identifier_solid",
-		recipe = { { "vlf_core:glass" },
+		recipe = { { "mcl_core:glass" },
 			   { "group:stick" } }
 	})
 end

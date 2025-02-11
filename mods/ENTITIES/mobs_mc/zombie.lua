@@ -4,8 +4,8 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
-local posing_humanoid = vlf_mobs.posing_humanoid
+local mob_class = mcl_mobs.mob_class
+local posing_humanoid = mcl_mobs.posing_humanoid
 
 --###################
 --################### ZOMBIE
@@ -13,14 +13,14 @@ local posing_humanoid = vlf_mobs.posing_humanoid
 
 local drops_common = {
 	{
-		name = "vlf_mobitems:rotten_flesh",
+		name = "mcl_mobitems:rotten_flesh",
 		chance = 1,
 		min = 0,
 		max = 2,
 		looting = "common",
 	},
 	{
-		name = "vlf_core:iron_ingot",
+		name = "mcl_core:iron_ingot",
 		chance = 120, -- 2.5% / 3
 		min = 1,
 		max = 1,
@@ -28,7 +28,7 @@ local drops_common = {
 		looting_factor = 0.01 / 3,
 	},
 	{
-		name = "vlf_farming:carrot_item",
+		name = "mcl_farming:carrot_item",
 		chance = 120, -- 2.5% / 3
 		min = 1,
 		max = 1,
@@ -36,7 +36,7 @@ local drops_common = {
 		looting_factor = 0.01 / 3,
 	},
 	{
-		name = "vlf_farming:potato_item",
+		name = "mcl_farming:potato_item",
 		chance = 120, -- 2.5% / 3
 		min = 1,
 		max = 1,
@@ -48,7 +48,7 @@ local drops_common = {
 local drops_zombie = table.copy (drops_common)
 table.insert (drops_zombie, {
 	-- Zombie Head
-	name = "vlf_heads:zombie",
+	name = "mcl_heads:zombie",
 	chance = 200, -- 0.5%
 	min = 1,
 	max = 1,
@@ -232,7 +232,7 @@ local zombie_poses = {
 	},
 }
 
-vlf_mobs.define_composite_pose (zombie_poses, "jockey", {
+mcl_mobs.define_composite_pose (zombie_poses, "jockey", {
 	["leg.right"] = {
 		nil,
 		vector.new (-110, 35, 0),
@@ -297,7 +297,7 @@ end
 
 function zombie:on_spawn ()
 	local self_pos = self.object:get_pos ()
-	local mob_factor = vlf_worlds.get_special_difficulty (self_pos)
+	local mob_factor = mcl_worlds.get_special_difficulty (self_pos)
 	-- Enable picking up armor for a random subset of
 	-- skeletons.
 	if math.random () < 0.55 * mob_factor then
@@ -472,7 +472,7 @@ local function is_closed_wooden_door (pos)
 	local node = minetest.get_node (pos)
 	return minetest.get_item_group (node.name, "door") > 0
 		and minetest.get_item_group (node.name, "door_iron") == 0
-		and not vlf_doors.is_open (node)
+		and not mcl_doors.is_open (node)
 end
 
 local COS_100_DEG = math.cos (100)
@@ -510,7 +510,7 @@ local door_penalties = table.merge (mob_class.gwp_penalties, {
 function zombie:ai_step (dtime)
 	mob_class.ai_step (self, dtime)
 	self.can_open_doors
-		= self._can_break_doors and vlf_vars.difficulty == 3
+		= self._can_break_doors and mcl_vars.difficulty == 3
 	if self.can_open_doors then
 		self.gwp_penalties = door_penalties
 	else
@@ -564,8 +564,8 @@ function zombie:gwp_initialize (targets, range, tolerance, penalties)
 	return mob_class.gwp_initialize (self, targets, range, tolerance, penalties)
 end
 
-function zombie:can_spawn_reinforcements (vlf_reason)
-	local source = self.attack or vlf_reason.source
+function zombie:can_spawn_reinforcements (mcl_reason)
+	local source = self.attack or mcl_reason.source
 	local entity = source and source:get_luaentity ()
 	return (source and source:is_player ()) or entity and entity.is_mob
 end
@@ -591,7 +591,7 @@ local function is_solid (nodepos, x, y, z)
 end
 
 local function is_free_of_living_players (pos, radius)
-	for player in vlf_util.connected_players (pos, radius) do
+	for player in mcl_util.connected_players (pos, radius) do
 		if player:get_hp () > 0 then
 			return false
 		end
@@ -608,20 +608,20 @@ local function is_living_entity (object)
 	return object:is_player () or (entity and entity.is_mob)
 end
 
-function zombie:receive_damage (vlf_reason, damage)
-	if not mob_class.receive_damage (self, vlf_reason, damage) then
+function zombie:receive_damage (mcl_reason, damage)
+	if not mob_class.receive_damage (self, mcl_reason, damage) then
 		return false
 	end
 
-	if vlf_vars.difficulty >= 3 -- Hard
-		and is_living_entity (self.attack or vlf_reason.source)
+	if mcl_vars.difficulty >= 3 -- Hard
+		and is_living_entity (self.attack or mcl_reason.source)
 		and math.random () < self._spawn_reinforcements_chance
-		and self:can_spawn_reinforcements (vlf_reason) then
+		and self:can_spawn_reinforcements (mcl_reason) then
 		-- Perform 50 attempts to spawn reinforcements on
 		-- positions between 7 to 40 blocks removed on some
 		-- axes.
 		local self_pos = self.object:get_pos ()
-		local node_pos = vlf_util.get_nodepos (self_pos)
+		local node_pos = mcl_util.get_nodepos (self_pos)
 
 		for i = 1, 50 do
 			local dx = math.random (7, 40) * math.random (-1, 1)
@@ -642,7 +642,7 @@ function zombie:receive_damage (vlf_reason, damage)
 					entity:add_physics_factor ("_spawn_reinforcements_chance",
 								   "mobs_mc:zombie_reinforcement_callee_attenuation",
 								   -0.05, "add", true)
-					entity:do_attack (self.attack or vlf_reason.source, 15)
+					entity:do_attack (self.attack or mcl_reason.source, 15)
 				end
 			end
 		end
@@ -671,9 +671,9 @@ function zombie:poi_pacing_target (pos, width, height)
 		local dy = math.random (-height, height)
 		local dz = math.random (-width, width)
 		local random_node = vector.offset (pos, dx, dy, dz)
-		if vlf_villages.get_poi_heat (random_node) >= 1.0 then
+		if mcl_villages.get_poi_heat (random_node) >= 1.0 then
 			local poi, distance
-				= vlf_villages.nearest_poi_in_radius (pos, 10.0,
+				= mcl_villages.nearest_poi_in_radius (pos, 10.0,
 								has_not_visited, self)
 			table.insert (candidates, {
 				random_node,
@@ -697,11 +697,11 @@ local function zombie_navigate_village (self, self_pos, dtime)
 		end
 		return true
 	elseif self:check_timer ("check_navigate_village", 1.0)
-		and (not vlf_util.is_daytime ()
-			or vlf_worlds.pos_to_dimension (self_pos)
+		and (not mcl_util.is_daytime ()
+			or mcl_worlds.pos_to_dimension (self_pos)
 				~= "overworld") then
-		local node_pos = vlf_util.get_nodepos (self_pos)
-		local heat = vlf_villages.get_poi_heat (node_pos)
+		local node_pos = mcl_util.get_nodepos (self_pos)
+		local heat = mcl_villages.get_poi_heat (node_pos)
 
 		if heat >= 3 then
 			local target = self:poi_pacing_target (node_pos, 15, 7)
@@ -736,7 +736,7 @@ zombie.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:zombie", zombie)
+mcl_mobs.register_mob ("mobs_mc:zombie", zombie)
 
 ------------------------------------------------------------------------
 -- Baby zombie.
@@ -761,7 +761,7 @@ local baby_zombie = table.merge (zombie, {
 	head_eye_height = 0.93,
 })
 
-vlf_mobs.register_mob ("mobs_mc:baby_zombie", baby_zombie)
+mcl_mobs.register_mob ("mobs_mc:baby_zombie", baby_zombie)
 
 ------------------------------------------------------------------------
 -- Husk.
@@ -807,7 +807,7 @@ function husk:do_custom (dtime)
 	zombie.do_custom (self, dtime)
 end
 
-vlf_mobs.register_mob ("mobs_mc:husk", husk)
+mcl_mobs.register_mob ("mobs_mc:husk", husk)
 
 ------------------------------------------------------------------------
 -- Baby husk.
@@ -848,13 +848,13 @@ function baby_husk:do_custom (dtime)
 	zombie.do_custom (self, dtime)
 end
 
-vlf_mobs.register_mob ("mobs_mc:baby_husk", baby_husk)
+mcl_mobs.register_mob ("mobs_mc:baby_husk", baby_husk)
 
 ------------------------------------------------------------------------
 -- Zombie and variant spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:zombie",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -866,7 +866,7 @@ vlf_mobs.spawn_setup ({
 	chance = 1000,
 })
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:baby_zombie",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -878,7 +878,7 @@ vlf_mobs.spawn_setup ({
 	chance = 50,
 })
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:husk",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -889,7 +889,7 @@ vlf_mobs.spawn_setup ({
 	chance = 2400,
 })
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:baby_husk",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -901,5 +901,5 @@ vlf_mobs.spawn_setup ({
 })
 
 -- Spawn eggs
-vlf_mobs.register_egg ("mobs_mc:husk", S("Husk"), "#777361", "#ded88f", 0)
-vlf_mobs.register_egg ("mobs_mc:zombie", S("Zombie"), "#00afaf", "#799c66", 0)
+mcl_mobs.register_egg ("mobs_mc:husk", S("Husk"), "#777361", "#ded88f", 0)
+mcl_mobs.register_egg ("mobs_mc:zombie", S("Zombie"), "#00afaf", "#799c66", 0)

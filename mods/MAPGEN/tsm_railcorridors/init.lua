@@ -82,12 +82,12 @@ end
 
 -- Max. and min. heights between rail corridors are generated
 local height_min
-if vlf_vars.mg_lava then
-	height_min = vlf_vars.mg_lava_overworld_max + 2
+if mcl_vars.mg_lava then
+	height_min = mcl_vars.mg_lava_overworld_max + 2
 else
-	height_min = vlf_vars.mg_bedrock_overworld_max + 2
+	height_min = mcl_vars.mg_bedrock_overworld_max + 2
 end
-local height_max = vlf_worlds.layer_to_y(60)
+local height_max = mcl_worlds.layer_to_y(60)
 
 -- Chaos Mode: If enabled, rail corridors don't stop generating when hitting obstacles
 local chaos_mode = minetest.settings:get_bool("tsm_railcorridors_chaos") or false
@@ -366,18 +366,18 @@ local function Platform(p, radius, node, node2)
 			end
 		end
 	end
-	vlf_util.bulk_swap_node(n1,node)
-	vlf_util.bulk_swap_node(n2,node2)
+	mcl_util.bulk_swap_node(n1,node)
+	mcl_util.bulk_swap_node(n2,node2)
 end
 
 -- Chests
 local function PlaceChest(pos, param2)
 	if SetNodeIfCanBuild(pos, {name=tsm_railcorridors.nodes.chest, param2=param2}) then
-		vlf_structures.construct_nodes(pos, pos, {"vlf_chests:chest"})
+		mcl_structures.construct_nodes(pos, pos, {"mcl_chests:chest"})
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		local items = tsm_railcorridors.get_treasures(pr)
-		vlf_loot.fill_inventory(inv, "main", items, pr)
+		mcl_loot.fill_inventory(inv, "main", items, pr)
 	end
 end
 
@@ -1089,18 +1089,18 @@ local function create_corridor_system(main_cave_coords)
 	return true
 end
 
-vlf_structures.register_structure("mineshaft",{
-	place_on = {"group:sand","group:grass_block","vlf_core:water_source","group:dirt","vlf_core:dirt_with_grass","vlf_core:gravel","group:material_stone","vlf_core:snow"},
+mcl_structures.register_structure("mineshaft",{
+	place_on = {"group:sand","group:grass_block","mcl_core:water_source","group:dirt","mcl_core:dirt_with_grass","mcl_core:gravel","group:material_stone","mcl_core:snow"},
 	chunk_probability = 4,
 	flags = "place_center_x, place_center_z, force_placement, all_floors",
 	sidelen = 32,
 	y_max = 40,
-	y_min = vlf_vars.mg_overworld_min,
+	y_min = mcl_vars.mg_overworld_min,
 	place_func = function(pos, _, pr, blockseed)
 		local r = pr:next(-50,-10)
 		local p = vector.offset(pos,0,r,0)
-		if p.y < vlf_vars.mg_overworld_min + 5 then
-			p.y = vlf_vars.mg_overworld_min + 5
+		if p.y < mcl_vars.mg_overworld_min + 5 then
+			p.y = mcl_vars.mg_overworld_min + 5
 		end
 		if p.y > -10 then return true end
 		InitRandomizer(blockseed)
@@ -1112,7 +1112,7 @@ vlf_structures.register_structure("mineshaft",{
 
 --[[ Old Generation code this is VERY slow
 -- The rail corridor algorithm starts here
-vlf_mapgen_core.register_generator("railcorridors", nil, function(minp, maxp, blockseed, _pr)
+mcl_mapgen_core.register_generator("railcorridors", nil, function(minp, maxp, blockseed, _pr)
 	-- We re-init the randomizer for every mapchunk as we start generating in the middle of each mapchunk.
 	-- We can't use the mapgen seed as this would make the algorithm depending on the order the mapchunk generate.
 	InitRandomizer(blockseed)

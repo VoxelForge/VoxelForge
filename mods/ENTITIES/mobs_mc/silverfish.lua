@@ -4,7 +4,7 @@
 
 local S = minetest.get_translator("mobs_mc")
 local mob_griefing = minetest.settings:get_bool("mobs_griefing", true)
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 ------------------------------------------------------------------------
 --- Silverfish.
@@ -76,7 +76,7 @@ function silverfish:ai_step (dtime)
 		for _, p in pairs (silverfish_nodes) do
 			minetest.remove_node (p)
 			minetest.add_entity (p, "mobs_mc:silverfish")
-			vlf_mobs.effect (p, 32, "vlf_particles_smoke.png",
+			mcl_mobs.effect (p, 32, "mcl_particles_smoke.png",
 					0.5, 1.5, 1, 1, 0)
 			-- Spread silverfish revival over a number of
 			-- server steps.
@@ -88,12 +88,12 @@ function silverfish:ai_step (dtime)
 	self._reinforcement_time = t
 end
 
-function silverfish:receive_damage (vlf_reason, damage)
-	local result = mob_class.receive_damage (self, vlf_reason, damage)
+function silverfish:receive_damage (mcl_reason, damage)
+	local result = mob_class.receive_damage (self, mcl_reason, damage)
 	if self.health > 0 then
 		-- Potentially summon friends from nearby infested
 		-- blocks unless mob griefing is disabled.
-		if mob_griefing and (vlf_reason.type == "magic" or vlf_reason.direct) then
+		if mob_griefing and (mcl_reason.type == "magic" or mcl_reason.direct) then
 			self._reinforcement_time = 1.0
 		end
 	end
@@ -110,15 +110,15 @@ local directions = {
 }
 
 local replacements = {
-	["vlf_core:stone"] = "vlf_monster_eggs:monster_egg_stone",
-	["vlf_core:cobble"] = "vlf_monster_eggs:monster_egg_cobble",
-	["vlf_core:stonebrick"] = "vlf_monster_eggs:monster_egg_stonebrick",
-	["vlf_core:stonebrickmossy"] = "vlf_monster_eggs:monster_egg_stonebrickmossy",
-	["vlf_core:stonebrickcracked"] = "vlf_monster_eggs:monster_egg_stonebrickcracked",
-	["vlf_core:stonebrickcarved"] = "vlf_monster_eggs:monster_egg_stonebrickcarved",
+	["mcl_core:stone"] = "mcl_monster_eggs:monster_egg_stone",
+	["mcl_core:cobble"] = "mcl_monster_eggs:monster_egg_cobble",
+	["mcl_core:stonebrick"] = "mcl_monster_eggs:monster_egg_stonebrick",
+	["mcl_core:stonebrickmossy"] = "mcl_monster_eggs:monster_egg_stonebrickmossy",
+	["mcl_core:stonebrickcracked"] = "mcl_monster_eggs:monster_egg_stonebrickcracked",
+	["mcl_core:stonebrickcarved"] = "mcl_monster_eggs:monster_egg_stonebrickcarved",
 }
 
-local scale_chance = vlf_mobs.scale_chance
+local scale_chance = mcl_mobs.scale_chance
 
 local function silverfish_return_to_block (self, self_pos, dtime)
 	if not mob_griefing then
@@ -127,7 +127,7 @@ local function silverfish_return_to_block (self, self_pos, dtime)
 	local chance = scale_chance (50, dtime)
 	if pr:next (1, chance) == 1 then
 		local dir = directions[pr:next (1, #directions)]
-		local node_pos = vlf_util.get_nodepos (self_pos)
+		local node_pos = mcl_util.get_nodepos (self_pos)
 		node_pos.x = node_pos.x + dir.x
 		node_pos.y = node_pos.y + dir.y
 		node_pos.z = node_pos.z + dir.z
@@ -136,7 +136,7 @@ local function silverfish_return_to_block (self, self_pos, dtime)
 		local replacement = replacements[node.name]
 		if replacement then
 			minetest.set_node (node_pos, {name = replacement})
-			vlf_mobs.effect (self_pos, 32, "vlf_particles_smoke.png",
+			mcl_mobs.effect (self_pos, 32, "mcl_particles_smoke.png",
 					0.5, 1.5, 1, 1, 0)
 			self:safe_remove ()
 			return true
@@ -152,5 +152,5 @@ silverfish.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:silverfish", silverfish)
-vlf_mobs.register_egg ("mobs_mc:silverfish", S("Silverfish"), "#6d6d6d", "#313131", 0)
+mcl_mobs.register_mob ("mobs_mc:silverfish", silverfish)
+mcl_mobs.register_egg ("mobs_mc:silverfish", S("Silverfish"), "#6d6d6d", "#313131", 0)

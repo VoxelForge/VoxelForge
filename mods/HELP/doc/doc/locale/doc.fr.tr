@@ -1,5 +1,5 @@
 # textdomain: doc
-This is the help.=Ceci est l'aide.
+This is the help.=Voici la rubrique d'aide.
 All help entries revealed!=Toutes les pages d'aide ont été découvertes !
 All help entries are already revealed.=Toutes les pages d'aide sont déjà découvertes.
 Category list=Liste des catégories
@@ -12,15 +12,15 @@ Recommended mods: doc_basics, doc_items, doc_identifier, doc_encyclopedia.=Mods 
 Error: Access denied.=Erreur : Accès refusé.
 Access to the requested entry has been denied; this entry is secret. You may unlock access by progressing in the game. Figure out on your own how to unlock this entry.=L'accès à cette page a été refusé ; cette page est secrète. Vous pouvez débloquer l'accès en progressant dans le jeu. Trouvez comment débloquer cette page.
 Nameless entry (@1)=Pages sans nom (@1)
-Help > @1=Aide > @1
+Help > @1=Rubrique d'aide > @1
 Currently all entries in this category are hidden from you.=Toutes les pages de cette catégories vous sont cachées.
 Unlock new entries by progressing in the game.=Débloquez de nouvelles pages en progressant dans le jeu.
 Number of entries: @1=Nombre de pages : @1
 New entries: @1=Nouvelles pages : @1
 Hidden entries: @1=Pages cachées : @1
-Help > @1 > (No Entry)=Aide > @1 > (Aucune page)
-Help > @1 > @2=Aide > @1 > @2
+Help > @1 > (No Entry)=Rubrique d'aide > @1 > (Aucune page)
+Help > @1 > @2=Rubrique d'aide > @1 > @2
 Open a window providing help entries about Minetest and more=Ouvrir une fenêtre contenant les pages d'aides à propos de Minetest
-Help=Aide
+Help=Rubrique d'aide
 Allows you to reveal all hidden help entries with /help_reveal=Vous permet de découvrir toutes les pages d'aide cachées avec /help_reveal
 Reveal all hidden help entries to you=Vous révèle toutes les pages d'aide cachées

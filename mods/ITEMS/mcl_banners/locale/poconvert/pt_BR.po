@@ -1,0 +1,267 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Luanti textdomain mcl_banners x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.1\n"
+
+msgid "White Banner"
+msgstr "Estandarte Branco"
+
+msgid "White"
+msgstr "Branco"
+
+msgid "Grey Banner"
+msgstr "Estandarte Cinza"
+
+msgid "Grey"
+msgstr "Cinza"
+
+msgid "Light Grey Banner"
+msgstr "Estandarte Cinza-Claro"
+
+msgid "Light Grey"
+msgstr "Cinza-Claro"
+
+msgid "Black Banner"
+msgstr "Estandarte Preto"
+
+msgid "Black"
+msgstr "Preto"
+
+msgid "Red Banner"
+msgstr "Estandarte Vermelho"
+
+msgid "Red"
+msgstr "Vermelho"
+
+msgid "Yellow Banner"
+msgstr "Estandarte Amarelo"
+
+msgid "Yellow"
+msgstr "Amarelo"
+
+msgid "Green Banner"
+msgstr "Estandarte Verde"
+
+msgid "Green"
+msgstr "Verde"
+
+msgid "Cyan Banner"
+msgstr "Estandarte Ciano"
+
+msgid "Cyan"
+msgstr "Ciano"
+
+msgid "Blue Banner"
+msgstr "Estandarte Azul"
+
+msgid "Blue"
+msgstr "Azul"
+
+msgid "Magenta Banner"
+msgstr "Estandarte Magenta"
+
+msgid "Magenta"
+msgstr "Magenta"
+
+msgid "Orange Banner"
+msgstr "Estandarte Laranja"
+
+msgid "Orange"
+msgstr "Laranja"
+
+msgid "Purple Banner"
+msgstr "Estandarte Roxo"
+
+msgid "Violet"
+msgstr "Violeta"
+
+msgid "Brown Banner"
+msgstr "Estandarte Marrom"
+
+msgid "Brown"
+msgstr "Marrom"
+
+msgid "Pink Banner"
+msgstr "Estandarte Rosa"
+
+msgid "Pink"
+msgstr "Rosa"
+
+msgid "Lime Banner"
+msgstr "Estandarte Lima"
+
+msgid "Lime"
+msgstr "Lima"
+
+msgid "Light Blue Banner"
+msgstr "Estandarte Azul-Claro"
+
+msgid "Light Blue"
+msgstr "Azul-Claro"
+
+msgid "Banner"
+msgstr "Estandarte"
+
+msgid "Banners are tall colorful decorative blocks. They can be placed on the floor and at walls. Banners can be emblazoned with a variety of patterns using a lot of dye in crafting."
+msgstr "Estandartes são altos e coloridos blocos decorativos. Podem ser colocados no chão ou em paredes. Estandartes podem ser brasonados com uma variedade de padrões usando muitos corantes na mesa de trabalho."
+
+msgid "Use crafting to draw a pattern on top of the banner. Emblazoned banners can be emblazoned again to combine various patterns. You can draw up to 12 layers on a banner that way. If the banner includes a gradient, only 3 layers are possible."
+msgstr "Use a mesa de trabalho para desenhar um padrão sob o estandarte. Estandartes brasonados podem ser brasonados novamente para combinar diversos padrões. Você pode desenhar até 12 camadas em um estandarte dessa maneira. Se o estandarte possuir gradiente, apenas 3 camadas são possíveis."
+
+msgid "You can copy the pattern of a banner by placing two banners of the same color in the crafting grid—one needs to be emblazoned, the other one must be clean. Finally, you can use a banner on a cauldron with water to wash off its top-most layer."
+msgstr "Você pode copiar o padrão de um estandarte colocando dois estandartes da mesma cor na mesa de trabalho - um necessita estar brasonado, o outro, limpo. Finalmente, você pode usar um estandarte em um caldeirão com água para lavar fora a camada mais recente."
+
+msgid "Preview Banner"
+msgstr "Pré-visualização do Banner"
+
+msgid "Paintable decoration"
+msgstr "Decoração pintável"
+
+msgid "Can be used to craft special banner designs on the loom"
+msgstr "Pode ser usado para fabricar designs especiais no tear"
+
+msgid "Special Banner Pattern"
+msgstr "Figuras de Estandarte Especiais"
+
+msgid "@1 Bordure"
+msgstr "@1 Bordadura"
+
+msgid "@1 Bricks"
+msgstr "@1 Muro Colorido"
+
+msgid "@1 Roundel"
+msgstr "@1 Besante"
+
+msgid "@1 Creeper Charge"
+msgstr "@1 Figura de Creeper Colorida"
+
+msgid "@1 Saltire"
+msgstr "@1 Aspa"
+
+msgid "@1 Bordure Indented"
+msgstr "@1 Bordadura Dentada Colorida"
+
+msgid "@1 Per Bend Inverted"
+msgstr "@1 Fendido Invertido"
+
+msgid "@1 Per Bend Sinister Inverted"
+msgstr "@1 Talhado Invertido"
+
+msgid "@1 Per Bend"
+msgstr "@1 Fendido"
+
+msgid "@1 Per Bend Sinister"
+msgstr "@1 Talhado"
+
+msgid "@1 Flower Charge"
+msgstr "@1 Figura de Flor Colorida"
+
+msgid "@1 Gradient"
+msgstr "@1 Gradiente"
+
+msgid "@1 Base Gradient"
+msgstr "@1 Gradiente na Base"
+
+msgid "@1 Per Fess Inverted"
+msgstr "@1 Cortado Invertido"
+
+msgid "@1 Per Fess"
+msgstr "@1 Cortado"
+
+msgid "@1 Per Pale"
+msgstr "@1 Partido"
+
+msgid "@1 Per Pale Inverted"
+msgstr "@1 Partido Invertido"
+
+msgid "@1 Thing Charge"
+msgstr "@1 Símbolo Colorido"
+
+msgid "@1 Globe Charge"
+msgstr "@1 Globo Colorido"
+
+msgid "@1 Piglin Charge"
+msgstr "@1 Figura de Focinho Colorido"
+
+msgid "@1 Lozenge"
+msgstr "@1 Losango"
+
+msgid "@1 Skull Charge"
+msgstr "@1 Figura de Caveira Colorida"
+
+msgid "@1 Paly"
+msgstr "@1 Palado"
+
+msgid "@1 Base Dexter Canton"
+msgstr "@1 Cantão na Ponta Dextra"
+
+msgid "@1 Base Sinister Canton"
+msgstr "@1 Cantão na Ponta Sinistra"
+
+msgid "@1 Chief Dexter Canton"
+msgstr "@1 Cantão no Chefe Dextro"
+
+msgid "@1 Chief Sinister Canton"
+msgstr "@1 Cantão no Chefe Sinistro"
+
+msgid "@1 Cross"
+msgstr "@1 Cruz"
+
+msgid "@1 Base"
+msgstr "@1 Base"
+
+msgid "@1 Pale"
+msgstr "@1 Pala"
+
+msgid "@1 Bend Sinister"
+msgstr "@1 Banda Sinistra"
+
+msgid "@1 Bend"
+msgstr "@1 Banda"
+
+msgid "@1 Pale Dexter"
+msgstr "@1 Pala Dextra"
+
+msgid "@1 Fess"
+msgstr "@1 Faixa"
+
+msgid "@1 Pale Sinister"
+msgstr "@1 Pala Sinistra"
+
+msgid "@1 Chief"
+msgstr "@1 Chefe"
+
+msgid "@1 Chevron"
+msgstr "@1 Asna"
+
+msgid "@1 Chevron Inverted"
+msgstr "@1 Asna Invertida"
+
+msgid "@1 Base Indented"
+msgstr "@1 Dentado na Base"
+
+msgid "@1 Chief Indented"
+msgstr "@1 Dentado no Chefe"
+
+msgid "@1 Flow"
+msgstr "@1 Fluxo"
+
+msgid "@1 Guster"
+msgstr "@1 Vórtice"
+
+msgid "And one additional layer"
+msgstr "E uma camada adicional"
+
+msgid "And @1 additional layers"
+msgstr "E @1 camadas adicionais"
+

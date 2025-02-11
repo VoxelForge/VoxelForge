@@ -3,7 +3,7 @@
 --made for MC like Survival game
 --License for code WTFPL and otherwise stated in readmes
 
-local is_valid = vlf_util.is_valid_objectref
+local is_valid = mcl_util.is_valid_objectref
 
 -- Rootyjr
 -----------------------------
@@ -12,11 +12,11 @@ local is_valid = vlf_util.is_valid_objectref
 -- implemented teleport to avoid rain.
 -- implemented teleport to chase.
 -- added enderman particles.
--- drew vlf_portal_particle1.png
--- drew vlf_portal_particle2.png
--- drew vlf_portal_particle3.png
--- drew vlf_portal_particle4.png
--- drew vlf_portal_particle5.png
+-- drew mcl_portal_particle1.png
+-- drew mcl_portal_particle2.png
+-- drew mcl_portal_particle3.png
+-- drew mcl_portal_particle4.png
+-- drew mcl_portal_particle5.png
 -- added rain damage.
 -- fixed the grass_with_dirt issue.
 
@@ -58,7 +58,7 @@ end
 --################### ENDERMAN
 --###################
 
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 local pr = PcgRandom (os.time () * (-334))
 
 -- Texuture overrides for enderman block. Required for cactus because it's original is a nodebox
@@ -66,7 +66,7 @@ local pr = PcgRandom (os.time () * (-334))
 local block_texture_overrides
 do
 	local cbackground = "mobs_mc_enderman_cactus_background.png"
-	local ctiles = minetest.registered_nodes["vlf_core:cactus"].tiles
+	local ctiles = minetest.registered_nodes["mcl_core:cactus"].tiles
 
 	local ctable = {}
 	local last
@@ -78,16 +78,16 @@ do
 	end
 
 	block_texture_overrides = {
-		["vlf_core:cactus"] = ctable,
+		["mcl_core:cactus"] = ctable,
 		-- FIXME: replace colorize colors with colors from palette
-		["vlf_core:dirt_with_grass"] =
+		["mcl_core:dirt_with_grass"] =
 		{
-		"vlf_core_grass_block_top.png^[colorize:green:90",
+		"mcl_core_grass_block_top.png^[colorize:green:90",
 		"default_dirt.png",
-		"default_dirt.png^(vlf_core_grass_block_side_overlay.png^[colorize:green:90)",
-		"default_dirt.png^(vlf_core_grass_block_side_overlay.png^[colorize:green:90)",
-		"default_dirt.png^(vlf_core_grass_block_side_overlay.png^[colorize:green:90)",
-		"default_dirt.png^(vlf_core_grass_block_side_overlay.png^[colorize:green:90)"}
+		"default_dirt.png^(mcl_core_grass_block_side_overlay.png^[colorize:green:90)",
+		"default_dirt.png^(mcl_core_grass_block_side_overlay.png^[colorize:green:90)",
+		"default_dirt.png^(mcl_core_grass_block_side_overlay.png^[colorize:green:90)",
+		"default_dirt.png^(mcl_core_grass_block_side_overlay.png^[colorize:green:90)"}
 	}
 end
 
@@ -230,7 +230,7 @@ local psdefs = {{
 	collisiondetection = true,
 	vertical = false,
 	time = 0,
-	texture = "vlf_portals_particle"..math.random(1, 5)..".png",
+	texture = "mcl_portals_particle"..math.random(1, 5)..".png",
 }}
 
 local enderman = {
@@ -266,7 +266,7 @@ local enderman = {
 	particlespawners = psdefs,
 	drops = {
 		{
-			name = "vlf_throwing:ender_pearl",
+			name = "mcl_throwing:ender_pearl",
 			chance = 1,
 			min = 0,
 			max = 1,
@@ -329,7 +329,7 @@ function enderman:do_custom (dtime)
 		if not minetest.is_player(obj) then
 			local lua = obj:get_luaentity()
 			if lua then
-				if lua.name == "vlf_bows:arrow_entity" or lua.name == "vlf_throwing:snowball_entity" then
+				if lua.name == "mcl_bows:arrow_entity" or lua.name == "mcl_throwing:snowball_entity" then
 					self:teleport(nil)
 				end
 			end
@@ -431,9 +431,9 @@ local function is_living_damage_source (source)
 	return nil
 end
 
-function enderman:receive_damage (vlf_reason, damage)
-	local result = mob_class.receive_damage (self, vlf_reason, damage)
-	if result and not is_living_damage_source (vlf_reason.source) then
+function enderman:receive_damage (mcl_reason, damage)
+	local result = mob_class.receive_damage (self, mcl_reason, damage)
+	if result and not is_living_damage_source (mcl_reason.source) then
 		self:teleport ()
 	end
 	return result
@@ -535,6 +535,7 @@ local function enderman_ungrief (self, self_pos, dtime)
 
 		-- Also check to see if protected.
 		if minetest.get_node (place_pos).name == "air"
+			and core.get_item_group(core.get_node(vector.offset(place_pos, 0, -1, 0)).name, "solid") > 0
 			and not minetest.is_protected (place_pos, "") then
 			-- ... but only if there's a free space
 			local success = minetest.place_node(place_pos, {name = self._taken_node})
@@ -620,12 +621,12 @@ enderman.ai_functions = {
 function enderman:eye_contact (eye_pos, object, line_of_sight)
 	local inventory = object:get_inventory ()
 	local stack = inventory:get_stack ("armor", 2)
-	if stack:get_name () == "vlf_farming:pumpkin_face" then
+	if stack:get_name () == "mcl_farming:pumpkin_face" then
 		return false
 	end
 
 	local player_look_dir = object:get_look_dir ()
-	local player_pos = vlf_util.target_eye_pos (object)
+	local player_pos = mcl_util.target_eye_pos (object)
 	local direction = vector.direction (player_pos, eye_pos)
 	local distance = vector.distance (eye_pos, player_pos)
 
@@ -653,7 +654,7 @@ function enderman:attack_custom (self_pos, dtime)
 	}
 	if not self._pending_target then
 		local player, best_distance
-		for obj in vlf_util.connected_players (self_pos, self.tracking_distance) do
+		for obj in mcl_util.connected_players (self_pos, self.tracking_distance) do
 			local dist_factor = self:detection_multiplier_for_object (obj)
 			local modified = self.tracking_distance * dist_factor
 			local distance = vector.distance (obj:get_pos (), self_pos)
@@ -719,10 +720,10 @@ function enderman:ai_step (dtime)
 	self._targeting_delay
 		= math.max (0, self._targeting_delay - dtime)
 	local self_pos = self.object:get_pos ()
-	if vlf_worlds.pos_to_dimension (self_pos) == "overworld"
+	if mcl_worlds.pos_to_dimension (self_pos) == "overworld"
 		and minetest.get_timeofday () > 0.25 then
 		local light = mc_light_value (self, self_pos)
-		if light > 0.5 and vlf_weather.is_outdoor (self_pos)
+		if light > 0.5 and mcl_weather.is_outdoor (self_pos)
 			and math.random () * 30 < (light - 0.4) * 2.0 then
 			if self.attack then
 				self.attack = nil
@@ -737,34 +738,34 @@ end
 enderman.gwp_penalties = table.copy (mob_class.gwp_penalties)
 enderman.gwp_penalties.WATER = -1.0
 
-vlf_mobs.register_mob ("mobs_mc:enderman", enderman)
+mcl_mobs.register_mob ("mobs_mc:enderman", enderman)
 
 ------------------------------------------------------------------------
 -- Enderman spawning.
 ------------------------------------------------------------------------
 
 -- End spawn
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:enderman",
 	type_of_spawning = "ground",
 	dimension = "end",
 	aoc = 9,
-	min_height = vlf_vars.mg_end_min,
-	max_height = vlf_vars.mg_end_max,
+	min_height = mcl_vars.mg_end_min,
+	max_height = mcl_vars.mg_end_max,
 	min_light = 0,
 	chance = 100,
 })
 
 -- Overworld spawn
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:enderman",
 	type_of_spawning = "ground",
 	dimension = "overworld",
 	aoc = 9,
 	min_light = 0,
 	max_light = 7,
-	min_height = vlf_vars.mg_overworld_min,
-	max_height = vlf_vars.mg_overworld_max,
+	min_height = mcl_vars.mg_overworld_min,
+	max_height = mcl_vars.mg_overworld_max,
 	biomes_except = {
 		"MushroomIslandShore",
 		"MushroomIsland"
@@ -772,7 +773,7 @@ vlf_mobs.spawn_setup({
 	chance = 100,
 })
 -- Nether spawn (rare)
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:enderman",
 	type_of_spawning = "ground",
 	dimension = "nether",
@@ -787,7 +788,7 @@ vlf_mobs.spawn_setup({
 
 
 -- Warped Forest spawn (common)
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:enderman",
 	type_of_spawning = "ground",
 	dimension = "nether",
@@ -799,4 +800,4 @@ vlf_mobs.spawn_setup({
 })
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:enderman", S("Enderman"), "#252525", "#151515", 0)
+mcl_mobs.register_egg("mobs_mc:enderman", S("Enderman"), "#252525", "#151515", 0)

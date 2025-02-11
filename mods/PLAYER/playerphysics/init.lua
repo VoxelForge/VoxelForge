@@ -15,6 +15,30 @@ local function calculate_attribute_product(player, attribute)
 	return product
 end
 
+function playerphysics.set_absolute_fov(player, fov)
+	local meta = player:get_meta()
+	local a = minetest.deserialize(meta:get_string("playerphysics:physics"))
+
+	if fov == 0 then
+		if a == nil then return end
+		a.fov_absolute = nil
+
+		local factor = calculate_attribute_product(player, "fov")
+		player:set_fov(factor, true, 0.1)
+	else
+		if a == nil then
+			a = { fov_absolute = fov }
+		else
+			if a.fov_absolute == fov then return end
+			a.fov_absolute = fov
+		end
+	end
+
+	meta:set_string("playerphysics:physics", minetest.serialize(a))
+
+	player:set_fov(fov, false, 0.1)
+end
+
 function playerphysics.add_physics_factor(player, attribute, id, value)
 	local meta = player:get_meta()
 	local a = minetest.deserialize(meta:get_string("playerphysics:physics"))
@@ -27,7 +51,13 @@ function playerphysics.add_physics_factor(player, attribute, id, value)
 	end
 	meta:set_string("playerphysics:physics", minetest.serialize(a))
 	local raw_value = calculate_attribute_product(player, attribute)
-	player:set_physics_override({[attribute] = raw_value})
+	if attribute == "fov" then
+		if player:is_player() and not a.fov_absolute then
+			player:set_fov(raw_value, true, 0.1)
+		end
+	else
+		player:set_physics_override({[attribute] = raw_value})
+	end
 end
 
 function playerphysics.remove_physics_factor(player, attribute, id)
@@ -41,7 +71,13 @@ function playerphysics.remove_physics_factor(player, attribute, id)
 	end
 	meta:set_string("playerphysics:physics", minetest.serialize(a))
 	local raw_value = calculate_attribute_product(player, attribute)
-	player:set_physics_override({[attribute] = raw_value})
+	if attribute == "fov" then
+		if player:is_player() and not a.fov_absolute then
+			player:set_fov(raw_value, true, 0.1)
+		end
+	else
+		player:set_physics_override({[attribute] = raw_value})
+	end
 end
 
 function playerphysics.get_physics_factor(player, attribute, id)

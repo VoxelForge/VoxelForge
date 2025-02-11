@@ -2,11 +2,11 @@
 -- New MCL villagers.
 ------------------------------------------------------------------------
 
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 local F = minetest.formspec_escape
 local S = minetest.get_translator ("mobs_mc")
 local mob_griefing = minetest.settings:get_bool ("mobs_griefing", true)
-local is_valid = vlf_util.is_valid_objectref
+local is_valid = mcl_util.is_valid_objectref
 local villager_verbose
 	= minetest.settings:get_bool ("villager_verbose", false)
 local villager_debug
@@ -134,8 +134,8 @@ end
 
 function trade_class:get_offered ()
 	local stack = ItemStack (self.offered)
-	if vlf_enchanting.is_enchanted (stack:get_name ()) then
-		vlf_enchanting.load_enchantments (stack)
+	if mcl_enchanting.is_enchanted (stack:get_name ()) then
+		mcl_enchanting.load_enchantments (stack)
 	end
 	return stack
 end
@@ -179,15 +179,15 @@ function mobs_mc.trade_from_table (pr, trade, reward_xp)
 	offered:set_count (pr:next (trade[2][2], trade[2][3]))
 
 	local name = offered:get_name ()
-	if vlf_enchanting.is_enchanted (name) then
-		if vlf_enchanting.is_book (name) then
-			offered = vlf_enchanting.enchant_uniform_randomly (offered, {
+	if mcl_enchanting.is_enchanted (name) then
+		if mcl_enchanting.is_book (name) then
+			offered = mcl_enchanting.enchant_uniform_randomly (offered, {
 				"soul_speed",
 			}, pr)
 		else
-			vlf_enchanting.enchant_randomly (offered, pr:next (5, 19),
+			mcl_enchanting.enchant_randomly (offered, pr:next (5, 19),
 							 false, false, true, pr)
-			vlf_enchanting.unload_enchantments (offered)
+			mcl_enchanting.unload_enchantments (offered)
 		end
 	end
 
@@ -331,7 +331,10 @@ end
 function villager_base:update_trades (trades)
 	self._trades = trades
 	for key, value in pairs (self._trading_with) do
-		self:show_trade_formspec (key, nil)
+		if value < 1 or value > #trades then
+			value = nil
+		end
+		self:show_trade_formspec (key, value)
 	end
 end
 
@@ -348,7 +351,7 @@ function villager_base:get_tier_name (id)
 end
 
 function villager_base:get_dialog_label ()
-	return vlf_util.get_object_name (self.object)
+	return mcl_util.get_object_name (self.object)
 end
 
 ------------------------------------------------------------------------
@@ -381,17 +384,14 @@ function villager_base:validate_transaction (inv, player, trade_id, input1, inpu
 	trade.uses = trade.uses + 1
 	if trade.reward_xp then
 		local xp = 3 + math.random (3)
-		vlf_experience.throw_xp (self.object:get_pos (), xp)
+		mcl_experience.throw_xp (self.object:get_pos (), xp)
 	end
 	self:on_transaction (trade, player)
 
 	local stacktype = inv:get_stack ("output", 1)
 	local desired = trade:get_offered ()
 	if stacktype == desired and desired:get_count () > 0 then
-		awards.unlock (player:get_player_name (), "vlf:whatAdeal")
-		if player:get_pos().y >= 218 then -- 218 due to the limit of Minetest's default mapgen limit
-			awards.unlock(player:get_player_name(), "vlf:trade_at_world_height")
-		end
+		awards.unlock (player:get_player_name (), "mcl:whatAdeal")
 		return desired:get_count ()
 	else
 		return 0
@@ -454,23 +454,6 @@ function inv_class:allow_put (listname, _, stack, player)
 end
 
 function inv_class:on_put (listname, index, stack, player)
-	if listname == "input" then
-		-- Replace clocks and compasses with their base items.
-		local name = stack:get_name ()
-		if minetest.get_item_group (name, "compass") > 0 then
-			if name:find ("_recovery") then
-				stack:set_name ("vlf_compass:compass_recovery")
-			elseif name:find ("_lodestone") then
-				stack:set_name ("vlf_compass:compass_lodestone")
-			else
-				stack:set_name (vlf_compass.stereotype)
-			end
-			self:set_stack (listname, index, stack)
-		elseif minetest.get_item_group (name, "clock") > 0 then
-			stack:set_name ("vlf_clock:clock")
-			self:set_stack (listname, index, stack)
-		end
-	end
 	local merchant = trading_players[player]
 	if not merchant or not is_valid (merchant) then
 		return
@@ -518,7 +501,7 @@ local function move_stack (inv1, list1, inv2, list2, stack, pos)
 		and inv2:room_for_item (list2, stack) then
 		return inv2:add_item (list2, inv1:remove_item (list1, stack))
 	elseif pos and not inv2:room_for_item (list2, stack) then
-		vlf_util.drop_item_stack (pos, stack)
+		mcl_util.drop_item_stack (pos, stack)
 		inv1:remove_item (list1, stack)
 	end
 end
@@ -596,8 +579,8 @@ position[0.5,0.5]
 label[7.5,0.3;%s]
 style_type[label;textcolor=white]
 
-background[6.3,0.55;5.9,0.2;vlf_inventory_bar.png]
-background[6.3,0.55;%s,0.2;vlf_inventory_bar_fill.png]
+background[6.3,0.55;5.9,0.2;mcl_inventory_bar.png]
+background[6.3,0.55;%s,0.2;mcl_inventory_bar_fill.png]
 
 scrollbaroptions[min=1;max=%i;thumbsize=1]
 scrollbar[3.3,0.05;0.4,9.1;vertical;trade_scroller;1]
@@ -657,16 +640,16 @@ local fs_trade_wants2_template = [[
 
 ]]
 
--- This should be what is in vlf_inventory_button9_pressed with the pressed button
+-- This should be what is in mcl_inventory_button9_pressed with the pressed button
 -- image used as the unpressed option
 local fs_trade_pushed_template = [[
-	style_type[button;border=false;bgimg=vlf_inventory_button9_pressed.png;bgimg_pressed=vlf_inventory_button9_pressed.png;bgimg_middle=2,2]
+	style_type[button;border=false;bgimg=mcl_inventory_button9_pressed.png;bgimg_pressed=mcl_inventory_button9_pressed.png;bgimg_middle=2,2]
 
 ]]
 
--- This should be what is in vlf_inventory_button9
+-- This should be what is in mcl_inventory_button9
 local fs_trade_unpush_template = [[
-	style_type[button;border=false;bgimg=vlf_inventory_button9.png;bgimg_pressed=vlf_inventory_button9_pressed.png;bgimg_middle=2,2]
+	style_type[button;border=false;bgimg=mcl_inventory_button9.png;bgimg_pressed=mcl_inventory_button9_pressed.png;bgimg_middle=2,2]
 
 ]]
 
@@ -700,13 +683,13 @@ image[9.5,1.0;1.0,0.5;gui_crafting_arrow.png]
 image[9.5,2.25;1.0,0.5;gui_crafting_arrow.png]
 
 ]] ..
-vlf_formspec.get_itemslot_bg_v4(6.4,2.0,2,1)
+mcl_formspec.get_itemslot_bg_v4(6.4,2.0,2,1)
 ..
-vlf_formspec.get_itemslot_bg_v4(11.1,2.0,1,1)
+mcl_formspec.get_itemslot_bg_v4(11.1,2.0,1,1)
 ..
-vlf_formspec.get_itemslot_bg_v4(3.97,3.98,9,3)
+mcl_formspec.get_itemslot_bg_v4(3.97,3.98,9,3)
 ..
-vlf_formspec.get_itemslot_bg_v4(3.97,7.98,9,1)
+mcl_formspec.get_itemslot_bg_v4(3.97,7.98,9,1)
  ..
 [[
 
@@ -1023,110 +1006,110 @@ local villager_professions = {
 	{
 		description = S ("Armorer"),
 		name = "armorer",
-		poi = "vlf_villages:armorer",
-		group = "vlf_blast_furnace:blast_furnace",
-		texture = "mobs_mc_villager_armorer.png",
+		poi = "mcl_villages:armorer",
+		group = "mcl_blast_furnace:blast_furnace",
+		texture = "mobs_mc_villager_profession_armorer.png",
 		extra_pick_up = {},
 	},
 	{
 		description = S ("Butcher"),
 		name = "butcher",
-		poi = "vlf_villages:butcher",
-		group = "vlf_smoker:smoker",
-		texture = "mobs_mc_villager_butcher.png",
+		poi = "mcl_villages:butcher",
+		group = "mcl_smoker:smoker",
+		texture = "mobs_mc_villager_profession_butcher.png",
 		extra_pick_up = {},
 	},
 	{
 		description = S ("Cartographer"),
 		name = "cartographer",
-		poi = "vlf_villages:cartographer",
-		group = "vlf_cartography_table:cartography_table",
-		texture = "mobs_mc_villager_cartographer.png",
+		poi = "mcl_villages:cartographer",
+		group = "mcl_cartography_table:cartography_table",
+		texture = "mobs_mc_villager_profession_cartographer.png",
 		extra_pick_up = {},
 	},
 	{
 		description = S ("Cleric"),
 		name = "cleric",
-		poi = "vlf_villages:cleric",
+		poi = "mcl_villages:cleric",
 		group = "group:brewing_stand",
-		texture = "mobs_mc_villager_cleric.png",
+		texture = "mobs_mc_villager_profession_cleric.png",
 		extra_pick_up = {},
 	},
 	{
 		description = S ("Farmer"),
 		name = "farmer",
-		poi = "vlf_villages:farmer",
+		poi = "mcl_villages:farmer",
 		group = "group:composter",
-		texture = "mobs_mc_villager_farmer.png",
+		texture = "mobs_mc_villager_profession_farmer.png",
 		extra_pick_up = {
-			"vlf_bone_meal:bone_meal",
-			"vlf_farming:wheat_item",
-			"vlf_farming:wheat_seeds",
-			"vlf_farming:beetroot_seeds",
+			"mcl_bone_meal:bone_meal",
+			"mcl_farming:wheat_item",
+			"mcl_farming:wheat_seeds",
+			"mcl_farming:beetroot_seeds",
 		},
 	},
 	{
 		description = S ("Fisherman"),
 		name = "fisherman",
-		poi = "vlf_villages:fisherman",
+		poi = "mcl_villages:fisherman",
 		group = "group:barrel",
-		texture = "mobs_mc_villager_fisherman.png",
+		texture = "mobs_mc_villager_profession_fisherman.png",
 		extra_pick_up = {},
 	},
 	{
 		description = S ("Fletcher"),
 		name = "fletcher",
-		poi = "vlf_villages:fletcher",
-		group = "vlf_fletching_table:fletching_table",
-		texture = "mobs_mc_villager_fletcher.png",
+		poi = "mcl_villages:fletcher",
+		group = "mcl_fletching_table:fletching_table",
+		texture = "mobs_mc_villager_profession_fletcher.png",
 		extra_pick_up = {},
 	},
 	{
 		description = S ("Leatherworker"),
 		name = "leatherworker",
-		poi = "vlf_villages:leatherworker",
+		poi = "mcl_villages:leatherworker",
 		group = "group:cauldron",
-		texture = "mobs_mc_villager_leatherworker.png",
+		texture = "mobs_mc_villager_profession_leatherworker.png",
 		extra_pick_up = {},
 	},
 	{
 		description = S ("Librarian"),
 		name = "librarian",
-		poi = "vlf_villages:librarian",
+		poi = "mcl_villages:librarian",
 		group = "group:lectern",
-		texture = "mobs_mc_villager_librarian.png",
+		texture = "mobs_mc_villager_profession_librarian.png",
 		extra_pick_up = {},
 	},
 	{
 		description = S ("Mason"),
 		name = "mason",
-		poi = "vlf_villages:mason",
-		group = "vlf_stonecutter:stonecutter",
-		texture = "mobs_mc_villager_mason.png",
+		poi = "mcl_villages:mason",
+		group = "mcl_stonecutter:stonecutter",
+		texture = "mobs_mc_villager_profession_mason.png",
 		extra_pick_up = {},
 	},
 	{
 		description = S ("Shepherd"),
 		name = "shepherd",
-		poi = "vlf_villages:shepherd",
-		group = "vlf_loom:loom",
-		texture = "mobs_mc_villager_shepherd.png",
+		poi = "mcl_villages:shepherd",
+		group = "mcl_loom:loom",
+		texture = "mobs_mc_villager_profession_shepherd.png",
 		extra_pick_up = {},
 	},
 	{
 		description = S ("Toolsmith"),
 		name = "toolsmith",
-		poi = "vlf_villages:toolsmith",
-		group = "vlf_smithing_table:table",
-		texture = "mobs_mc_villager_toolsmith.png",
+		poi = "mcl_villages:toolsmith",
+		group = "mcl_smithing_table:table",
+		texture = "mobs_mc_villager_profession_toolsmith.png",
 		extra_pick_up = {},
 	},
 	{
 		description = S ("Weaponsmith"),
 		name = "weaponsmith",
-		poi = "vlf_villages:weaponsmith",
-		group = "vlf_grindstone:grindstone",
-		texture = "mobs_mc_villager_weaponsmith.png",
+		poi = "mcl_villages:weaponsmith",
+		group = "mcl_grindstone:grindstone",
+		texture = "mobs_mc_villager_profession_weaponsmith.png",
 		extra_pick_up = {},
 	},
 	{
@@ -1134,7 +1117,7 @@ local villager_professions = {
 		name = "nitwit",
 		poi = nil,
 		group = nil,
-		texture = "mobs_mc_villager_nitwit.png",
+		texture = "mobs_mc_villager_profession_nitwit.png",
 		extra_pick_up = {},
 	},
 }
@@ -1194,7 +1177,7 @@ function villager:get_overlaid_texture ()
 		and professions_by_name[self._profession]
 	local textures = {}
 
-	table.insert (textures, "mobs_mc_villager.png")
+	table.insert (textures, "mobs_mc_villager_base.png")
 	if overlay ~= "" then
 		table.insert (textures, overlay)
 	end
@@ -1247,7 +1230,7 @@ function villager:angry_villager_effect ()
 			max = 2.8,
 			min = 1.8,
 		},
-		texture = "vlf_particles_angry_villager.png",
+		texture = "mcl_particles_angry_villager.png",
 	}
 	minetest.add_particlespawner (particlespawner)
 end
@@ -1279,7 +1262,7 @@ function villager:happy_villager_effect ()
 			max = 2.8,
 			min = 1.8,
 		},
-		texture = "vlf_particles_bonemeal.png^[colorize:#00EE00:125",
+		texture = "mcl_particles_bonemeal.png^[colorize:#00EE00:125",
 	}
 	minetest.add_particlespawner (particlespawner)
 end
@@ -1343,523 +1326,523 @@ end
 local DEFAULT_PRICE_MULTIPLIER = 0.05
 
 local function E (f, t)
-	return { "vlf_core:emerald", f or 1, t or f or 1 }
+	return { "mcl_core:emerald", f or 1, t or f or 1 }
 end
 
 local villager_trades = {
 	farmer = {
 		{
-			{ { "vlf_farming:wheat_item", 20, 20, }, E(), 16, 2 },
-			{ { "vlf_farming:potato_item", 26, 26, }, E(), 16, 2 },
-			{ { "vlf_farming:carrot_item", 22, 22, }, E(), 16, 2 },
-			{ { "vlf_farming:beetroot_item", 15, 15 }, E(), 16, 2 },
-			{ E(), { "vlf_farming:bread", 6, 6 }, 16, 1 },
+			{ { "mcl_farming:wheat_item", 20, 20, }, E(), 16, 2 },
+			{ { "mcl_farming:potato_item", 26, 26, }, E(), 16, 2 },
+			{ { "mcl_farming:carrot_item", 22, 22, }, E(), 16, 2 },
+			{ { "mcl_farming:beetroot_item", 15, 15 }, E(), 16, 2 },
+			{ E(), { "mcl_farming:bread", 6, 6 }, 16, 1 },
 		},
 
 		{
-			{ { "vlf_farming:pumpkin", 6, 6 }, E(), 12, 10 },
-			{ E(), { "vlf_farming:pumpkin_pie", 4, 4 }, 12, 5 },
-			{ E(), { "vlf_core:apple", 4, 4 }, 16, 5 },
+			{ { "mcl_farming:pumpkin", 6, 6 }, E(), 12, 10 },
+			{ E(), { "mcl_farming:pumpkin_pie", 4, 4 }, 12, 5 },
+			{ E(), { "mcl_core:apple", 4, 4 }, 16, 5 },
 		},
 
 		{
-			{ { "vlf_farming:melon", 4, 4 }, E(), 12, 20 },
-			{ E(3), {"vlf_farming:cookie", 18, 18 }, 12, 10},
+			{ { "mcl_farming:melon", 4, 4 }, E(), 12, 20 },
+			{ E(3), {"mcl_farming:cookie", 18, 18 }, 12, 10},
 		},
 
 		{
-			{ E(), { "vlf_cake:cake", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_sus_stew:stew", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_cake:cake", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_sus_stew:stew", 1, 1 }, 12, 15 },
 		},
 
 		{
-			{ E(3), { "vlf_farming:carrot_item_gold", 3, 3 }, 12, 30 },
-			{ E(4), { "vlf_potions:speckled_melon", 3, 3 }, 12, 30 },
+			{ E(3), { "mcl_farming:carrot_item_gold", 3, 3 }, 12, 30 },
+			{ E(4), { "mcl_potions:speckled_melon", 3, 3 }, 12, 30 },
 		},
 	},
 	fisherman = {
 		{
-			{ { "vlf_mobitems:string", 20, 20 }, E(), 16, 2 },
-			{ { "vlf_core:coal_lump", 10, 10 }, E(), 16, 2 },
-			{ { "vlf_core:emerald", 1, 1, "vlf_fishing:fish_raw", 6, 6 }, { "vlf_fishing:fish_cooked", 6, 6 }, 16, 1 },
-			{ E(3), { "vlf_buckets:bucket_cod", 1, 1 }, 16, 1 },
+			{ { "mcl_mobitems:string", 20, 20 }, E(), 16, 2 },
+			{ { "mcl_core:coal_lump", 10, 10 }, E(), 16, 2 },
+			{ { "mcl_core:emerald", 1, 1, "mcl_fishing:fish_raw", 6, 6 }, { "mcl_fishing:fish_cooked", 6, 6 }, 16, 1 },
+			{ E(3), { "mcl_buckets:bucket_cod", 1, 1 }, 16, 1 },
 		},
 
 		{
-			{ { "vlf_fishing:fish_raw", 15, 15 }, E(), 16, 10 },
-			{ { "vlf_core:emerald", 1, 1, "vlf_fishing:salmon_raw", 6, 6 }, { "vlf_fishing:salmon_cooked", 6, 6 }, 16, 5 },
-			{ E(2), {"vlf_campfires:campfire_lit", 1, 1 }, 12, 5 },
+			{ { "mcl_fishing:fish_raw", 15, 15 }, E(), 16, 10 },
+			{ { "mcl_core:emerald", 1, 1, "mcl_fishing:salmon_raw", 6, 6 }, { "mcl_fishing:salmon_cooked", 6, 6 }, 16, 5 },
+			{ E(2), {"mcl_campfires:campfire_lit", 1, 1 }, 12, 5 },
 		},
 
 		{
-			{ { "vlf_fishing:salmon_raw", 13, 13 }, E(), 16, 20 },
-			{ E(8,22), { "vlf_fishing:fishing_rod_enchanted", 1, 1 }, 3, 10, 0.2, },
+			{ { "mcl_fishing:salmon_raw", 13, 13 }, E(), 16, 20 },
+			{ E(8,22), { "mcl_fishing:fishing_rod_enchanted", 1, 1 }, 3, 10, 0.2, },
 		},
 
 		{
-			{ { "vlf_fishing:clownfish_raw", 6, 6 }, E(), 12, 30 },
+			{ { "mcl_fishing:clownfish_raw", 6, 6 }, E(), 12, 30 },
 		},
 
 		{
-			{ { "vlf_fishing:pufferfish_raw", 4, 4 }, E(), 12, 30 },
+			{ { "mcl_fishing:pufferfish_raw", 4, 4 }, E(), 12, 30 },
 
 			--Boat cherry?
-			{ { "vlf_boats:boat", 1, 1 }, E(), 12, 30 },
-			{ { "vlf_boats:boat_acacia", 1, 1 }, E(), 12, 30 },
-			{ { "vlf_boats:boat_spruce", 1, 1 }, E(), 12, 30 },
-			{ { "vlf_boats:boat_dark_oak", 1, 1 }, E(), 12, 30 },
-			{ { "vlf_boats:boat_birch", 1, 1 }, E(), 12, 30 },
+			{ { "mcl_boats:boat", 1, 1 }, E(), 12, 30 },
+			{ { "mcl_boats:boat_acacia", 1, 1 }, E(), 12, 30 },
+			{ { "mcl_boats:boat_spruce", 1, 1 }, E(), 12, 30 },
+			{ { "mcl_boats:boat_dark_oak", 1, 1 }, E(), 12, 30 },
+			{ { "mcl_boats:boat_birch", 1, 1 }, E(), 12, 30 },
 		},
 	},
 	fletcher = {
 		{
-			{ { "vlf_core:stick", 32, 32 }, E(), 16, 2 },
-			{ E(), { "vlf_bows:arrow", 16, 16 }, 12, 1 },
-			{ { "vlf_core:emerald", 1, 1, "vlf_core:gravel", 10, 10 }, { "vlf_core:flint", 10, 10 }, 12, 1 },
+			{ { "mcl_core:stick", 32, 32 }, E(), 16, 2 },
+			{ E(), { "mcl_bows:arrow", 16, 16 }, 12, 1 },
+			{ { "mcl_core:emerald", 1, 1, "mcl_core:gravel", 10, 10 }, { "mcl_core:flint", 10, 10 }, 12, 1 },
 		},
 
 		{
-			{ { "vlf_core:flint", 26, 26 }, E(), 12, 10 },
-			{ E(2), { "vlf_bows:bow", 1, 1 }, 12, 5 },
+			{ { "mcl_core:flint", 26, 26 }, E(), 12, 10 },
+			{ E(2), { "mcl_bows:bow", 1, 1 }, 12, 5 },
 		},
 
 		{
-			{ { "vlf_mobitems:string", 14, 14 }, E(), 16, 20 },
-			{ E(3), { "vlf_bows:crossbow", 1, 1 }, 12, 10 },
+			{ { "mcl_mobitems:string", 14, 14 }, E(), 16, 20 },
+			{ E(3), { "mcl_bows:crossbow", 1, 1 }, 12, 10 },
 		},
 
 		{
-			{ { "vlf_mobitems:feather", 24, 24 }, E(), 16, 30 },
-			{ E(7, 21) , { "vlf_bows:bow_enchanted", 1, 1 }, 3, 15 },
+			{ { "mcl_mobitems:feather", 24, 24 }, E(), 16, 30 },
+			{ E(7, 21) , { "mcl_bows:bow_enchanted", 1, 1 }, 3, 15 },
 		},
 
 		{
 			--FIXME: supposed to be tripwire hook{ { "tripwirehook", 8, 8 }, E(), 12, 30 },
-			{ E(8, 22) , { "vlf_bows:crossbow_enchanted", 1, 1 }, 3, 15 },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_potions:healing_arrow", 5, 5 }, 12, 30 },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_potions:harming_arrow", 5, 5 }, 12, 30 },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_potions:night_vision_arrow", 5, 5 }, 12, 30 },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_potions:swiftness_arrow", 5, 5 }, 12, 30 },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_potions:slowness_arrow", 5, 5 }, 12, 30 },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_potions:leaping_arrow", 5, 5 }, 12, 30 },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_potions:poison_arrow", 5, 5 }, 12, 30 },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_potions:regeneration_arrow", 5, 5 }, 12, 30 },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_potions:invisibility_arrow", 5, 5 }, 12, 30 },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_potions:water_breathing_arrow", 5, 5 }, 12, 30 },
-			{ { "vlf_core:emerald", 2, 2, "vlf_bows:arrow", 5, 5 }, { "vlf_potions:fire_resistance_arrow", 5, 5 }, 12, 30 },
+			{ E(8, 22) , { "mcl_bows:crossbow_enchanted", 1, 1 }, 3, 15 },
+			{ { "mcl_core:emerald", 2, 2, "mcl_bows:arrow", 5, 5 }, { "mcl_potions:healing_arrow", 5, 5 }, 12, 30 },
+			{ { "mcl_core:emerald", 2, 2, "mcl_bows:arrow", 5, 5 }, { "mcl_potions:harming_arrow", 5, 5 }, 12, 30 },
+			{ { "mcl_core:emerald", 2, 2, "mcl_bows:arrow", 5, 5 }, { "mcl_potions:night_vision_arrow", 5, 5 }, 12, 30 },
+			{ { "mcl_core:emerald", 2, 2, "mcl_bows:arrow", 5, 5 }, { "mcl_potions:swiftness_arrow", 5, 5 }, 12, 30 },
+			{ { "mcl_core:emerald", 2, 2, "mcl_bows:arrow", 5, 5 }, { "mcl_potions:slowness_arrow", 5, 5 }, 12, 30 },
+			{ { "mcl_core:emerald", 2, 2, "mcl_bows:arrow", 5, 5 }, { "mcl_potions:leaping_arrow", 5, 5 }, 12, 30 },
+			{ { "mcl_core:emerald", 2, 2, "mcl_bows:arrow", 5, 5 }, { "mcl_potions:poison_arrow", 5, 5 }, 12, 30 },
+			{ { "mcl_core:emerald", 2, 2, "mcl_bows:arrow", 5, 5 }, { "mcl_potions:regeneration_arrow", 5, 5 }, 12, 30 },
+			{ { "mcl_core:emerald", 2, 2, "mcl_bows:arrow", 5, 5 }, { "mcl_potions:invisibility_arrow", 5, 5 }, 12, 30 },
+			{ { "mcl_core:emerald", 2, 2, "mcl_bows:arrow", 5, 5 }, { "mcl_potions:water_breathing_arrow", 5, 5 }, 12, 30 },
+			{ { "mcl_core:emerald", 2, 2, "mcl_bows:arrow", 5, 5 }, { "mcl_potions:fire_resistance_arrow", 5, 5 }, 12, 30 },
 		},
 	},
 	shepherd = {
 		{
-			{ { "vlf_wool:white", 18, 18 }, E(), 16, 2 },
-			{ { "vlf_wool:brown", 18, 18 }, E(), 16, 2 },
-			{ { "vlf_wool:black", 18, 18 }, E(), 16, 2 },
-			{ { "vlf_wool:grey", 18, 18 }, E(), 16, 2 },
-			{ E(2), { "vlf_tools:shears", 1, 1 }, 12, 1 },
+			{ { "mcl_wool:white", 18, 18 }, E(), 16, 2 },
+			{ { "mcl_wool:brown", 18, 18 }, E(), 16, 2 },
+			{ { "mcl_wool:black", 18, 18 }, E(), 16, 2 },
+			{ { "mcl_wool:grey", 18, 18 }, E(), 16, 2 },
+			{ E(2), { "mcl_tools:shears", 1, 1 }, 12, 1 },
 		},
 
 		{
-			{ { "vlf_dyes:black", 12, 12 }, E(), 16, 10 },
-			{ { "vlf_dyes:dark_grey", 12, 12 }, E(), 16, 10 },
-			{ { "vlf_dyes:green", 12, 12 }, E(), 16, 10 },
-			{ { "vlf_dyes:lightblue", 12, 12 }, E(), 16, 10 },
-			{ { "vlf_dyes:white", 12, 12 }, E(), 16, 10 },
+			{ { "mcl_dyes:black", 12, 12 }, E(), 16, 10 },
+			{ { "mcl_dyes:dark_grey", 12, 12 }, E(), 16, 10 },
+			{ { "mcl_dyes:green", 12, 12 }, E(), 16, 10 },
+			{ { "mcl_dyes:lightblue", 12, 12 }, E(), 16, 10 },
+			{ { "mcl_dyes:white", 12, 12 }, E(), 16, 10 },
 
-			{ E(), { "vlf_wool:white", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:grey", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:silver", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:black", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:yellow", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:orange", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:red", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:magenta", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:purple", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:blue", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:cyan", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:lime", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:green", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:pink", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:light_blue", 1, 1 }, 16, 5 },
-			{ E(), { "vlf_wool:brown", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:white", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:grey", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:silver", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:black", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:yellow", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:orange", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:red", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:magenta", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:purple", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:blue", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:cyan", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:lime", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:green", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:pink", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:light_blue", 1, 1 }, 16, 5 },
+			{ E(), { "mcl_wool:brown", 1, 1 }, 16, 5 },
 
-			{ E(), { "vlf_wool:white_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:grey_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:silver_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:black_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:yellow_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:orange_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:red_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:magenta_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:purple_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:blue_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:cyan_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:lime_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:green_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:pink_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:light_blue_carpet", 4, 4 }, 16, 5 },
-			{ E(), { "vlf_wool:brown_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:white_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:grey_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:silver_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:black_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:yellow_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:orange_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:red_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:magenta_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:purple_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:blue_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:cyan_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:lime_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:green_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:pink_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:light_blue_carpet", 4, 4 }, 16, 5 },
+			{ E(), { "mcl_wool:brown_carpet", 4, 4 }, 16, 5 },
 		},
 
 		{
-			{ { "vlf_dyes:red", 12, 12 }, E(), 16, 20 },
-			{ { "vlf_dyes:grey", 12, 12 }, E(), 16, 20 },
-			{ { "vlf_dyes:pink", 12, 12 }, E(), 16, 20 },
-			{ { "vlf_dyes:yellow", 12, 12 }, E(), 16, 20 },
-			{ { "vlf_dyes:orange", 12, 12 }, E(), 16, 20 },
+			{ { "mcl_dyes:red", 12, 12 }, E(), 16, 20 },
+			{ { "mcl_dyes:grey", 12, 12 }, E(), 16, 20 },
+			{ { "mcl_dyes:pink", 12, 12 }, E(), 16, 20 },
+			{ { "mcl_dyes:yellow", 12, 12 }, E(), 16, 20 },
+			{ { "mcl_dyes:orange", 12, 12 }, E(), 16, 20 },
 
-			{ E(3), { "vlf_beds:bed_red_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_blue_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_cyan_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_grey_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_silver_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_black_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_yellow_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_green_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_magenta_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_orange_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_purple_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_brown_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_pink_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_lime_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_light_blue_bottom", 1, 1 }, 12, 10 },
-			{ E(3), { "vlf_beds:bed_white_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_red_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_blue_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_cyan_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_grey_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_silver_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_black_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_yellow_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_green_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_magenta_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_orange_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_purple_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_brown_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_pink_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_lime_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_light_blue_bottom", 1, 1 }, 12, 10 },
+			{ E(3), { "mcl_beds:bed_white_bottom", 1, 1 }, 12, 10 },
 		},
 
 		{
-			{ { "vlf_dyes:dark_green", 12, 12 }, E(), 16, 30 },
-			{ { "vlf_dyes:brown", 12, 12 }, E(), 16, 30 },
-			{ { "vlf_dyes:blue", 12, 12 }, E(), 16, 30 },
-			{ { "vlf_dyes:violet", 12, 12 }, E(), 16, 30 },
-			{ { "vlf_dyes:cyan", 12, 12 }, E(), 16, 30 },
-			{ { "vlf_dyes:magenta", 12, 12 }, E(), 16, 30 },
+			{ { "mcl_dyes:dark_green", 12, 12 }, E(), 16, 30 },
+			{ { "mcl_dyes:brown", 12, 12 }, E(), 16, 30 },
+			{ { "mcl_dyes:blue", 12, 12 }, E(), 16, 30 },
+			{ { "mcl_dyes:violet", 12, 12 }, E(), 16, 30 },
+			{ { "mcl_dyes:cyan", 12, 12 }, E(), 16, 30 },
+			{ { "mcl_dyes:magenta", 12, 12 }, E(), 16, 30 },
 
-			{ E(3), { "vlf_banners:banner_item_white", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_grey", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_silver", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_black", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_red", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_yellow", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_green", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_cyan", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_blue", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_magenta", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_orange", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_purple", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_brown", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_pink", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_lime", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_light_blue", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_white", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_grey", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_silver", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_black", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_red", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_yellow", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_green", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_cyan", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_blue", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_magenta", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_orange", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_purple", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_brown", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_pink", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_lime", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_light_blue", 1, 1 }, 12, 15 },
 		},
 
 		{
-			{ E(2), { "vlf_paintings:painting", 3, 3 }, 12, 30 },
+			{ E(2), { "mcl_paintings:painting", 3, 3 }, 12, 30 },
 		},
 	},
 	librarian = {
 		{
-			{ { "vlf_core:paper", 24, 24 }, E(), 16, 2 },
-			{ { "vlf_core:emerald", 5, 64, "vlf_books:book", 1, 1 }, { "vlf_enchanting:book_enchanted", 1 ,1 }, 12, 1 },
-			{ E(9), { "vlf_books:bookshelf", 1 ,1 }, 12, 1 },
+			{ { "mcl_core:paper", 24, 24 }, E(), 16, 2 },
+			{ { "mcl_core:emerald", 5, 64, "mcl_books:book", 1, 1 }, { "mcl_enchanting:book_enchanted", 1 ,1 }, 12, 1 },
+			{ E(9), { "mcl_books:bookshelf", 1 ,1 }, 12, 1 },
 		},
 
 		{
-			{ { "vlf_books:book", 4, 4 }, E(), 12, 10 },
-			{ { "vlf_core:emerald", 5, 64, "vlf_books:book", 1, 1 }, { "vlf_enchanting:book_enchanted", 1 ,1 }, 12, 5 },
-			{ E(), { "vlf_lanterns:lantern_floor", 1, 1 }, 12, 5 },
+			{ { "mcl_books:book", 4, 4 }, E(), 12, 10 },
+			{ { "mcl_core:emerald", 5, 64, "mcl_books:book", 1, 1 }, { "mcl_enchanting:book_enchanted", 1 ,1 }, 12, 5 },
+			{ E(), { "mcl_lanterns:lantern_floor", 1, 1 }, 12, 5 },
 		},
 
 		{
-			{ { "vlf_mobitems:ink_sac", 5, 5 }, E(), 12, 20 },
-			{ { "vlf_core:emerald", 5, 64, "vlf_books:book", 1, 1 }, { "vlf_enchanting:book_enchanted", 1 ,1 }, 12, 10},
-			{ E(), { "vlf_core:glass", 4, 4 }, 12, 10 },
+			{ { "mcl_mobitems:ink_sac", 5, 5 }, E(), 12, 20 },
+			{ { "mcl_core:emerald", 5, 64, "mcl_books:book", 1, 1 }, { "mcl_enchanting:book_enchanted", 1 ,1 }, 12, 10},
+			{ E(), { "mcl_core:glass", 4, 4 }, 12, 10 },
 		},
 
 		{
-			{ { "vlf_books:writable_book", 1, 1 }, E(), 12, 30 },
-			{ E(5), { "vlf_clock:clock", 1, 1 }, 12, 15 },
-			{ E(4), { "vlf_compass:compass", 1 ,1 }, 12, 15 },
+			{ { "mcl_books:writable_book", 1, 1 }, E(), 12, 30 },
+			{ E(5), { "mcl_clock:clock", 1, 1 }, 12, 15 },
+			{ E(4), { "mcl_compass:compass", 1 ,1 }, 12, 15 },
 		},
 
 		{
-			{ { "vlf_core:emerald", 5, 45, "vlf_books:book", 1, 1 }, { "vlf_enchanting:book_enchanted", 1 ,1 }, 12, 30 },
-			{ E(20), { "vlf_mobs:nametag", 1, 1 }, 12, 30 },
+			{ { "mcl_core:emerald", 5, 45, "mcl_books:book", 1, 1 }, { "mcl_enchanting:book_enchanted", 1 ,1 }, 12, 30 },
+			{ E(20), { "mcl_mobs:nametag", 1, 1 }, 12, 30 },
 		}
 	},
 	cartographer = {
 		{
-			{ { "vlf_core:paper", 24, 24 }, E(), 16, 2 },
-			{ E(7), { "vlf_maps:empty_map", 1, 1 }, 12, 1 },
+			{ { "mcl_core:paper", 24, 24 }, E(), 16, 2 },
+			{ E(7), { "mcl_maps:empty_map", 1, 1 }, 12, 1 },
 		},
 
 		{
-			{ { "vlf_panes:pane_natural_flat", 11, 11 }, E(), 16, 10 },
-			--{ { "vlf_core:emerald", 13, 13, "vlf_compass:compass", 1, 1 }, { "FIXME:ocean explorer map" 1, 1 }, 12, 5 },
+			{ { "mcl_panes:pane_natural_flat", 11, 11 }, E(), 16, 10 },
+			--{ { "mcl_core:emerald", 13, 13, "mcl_compass:compass", 1, 1 }, { "FIXME:ocean explorer map" 1, 1 }, 12, 5 },
 		},
 
 		{
-			{ { "vlf_compass:compass", 1, 1 }, E(), 12, 20 },
-			--{ { "vlf_core:emerald", 14, 14, "vlf_compass:compass", 1, 1 }, { "FIXME:woodland explorer map" 1, 1 }, 12, 10 },
+			{ { "mcl_compass:compass", 1, 1 }, E(), 12, 20 },
+			--{ { "mcl_core:emerald", 14, 14, "mcl_compass:compass", 1, 1 }, { "FIXME:woodland explorer map" 1, 1 }, 12, 10 },
 		},
 
 		{
-			{ E(7), { "vlf_itemframes:frame", 1, 1 }, 12, 15 },
+			{ E(7), { "mcl_itemframes:frame", 1, 1 }, 12, 15 },
 
-			{ E(3), { "vlf_banners:banner_item_white", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_grey", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_silver", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_black", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_red", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_yellow", 1, 1 }, 12, 15},
-			{ E(3), { "vlf_banners:banner_item_green", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_cyan", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_blue", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_magenta", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_orange", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_purple", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_brown", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_pink", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_lime", 1, 1 }, 12, 15 },
-			{ E(3), { "vlf_banners:banner_item_light_blue", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_white", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_grey", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_silver", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_black", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_red", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_yellow", 1, 1 }, 12, 15},
+			{ E(3), { "mcl_banners:banner_item_green", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_cyan", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_blue", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_magenta", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_orange", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_purple", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_brown", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_pink", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_lime", 1, 1 }, 12, 15 },
+			{ E(3), { "mcl_banners:banner_item_light_blue", 1, 1 }, 12, 15 },
 		},
 
 		{
-			{ E(8), { "vlf_banners:pattern_globe", 1, 1 }, 12, 30 },
+			{ E(8), { "mcl_banners:pattern_globe", 1, 1 }, 12, 30 },
 		},
 	},
 	armorer = {
 		{
-			{ { "vlf_core:coal_lump", 15, 15 }, E(), 16, 2 },
-			{ E(5), { "vlf_armor:helmet_iron", 1, 1 }, 12, 1, 0.2 },
-			{ E(9), { "vlf_armor:chestplate_iron", 1, 1 }, 12, 1, 0.2,  },
-			{ E(7), { "vlf_armor:leggings_iron", 1, 1 }, 12, 1, 0.2, },
-			{ E(4), { "vlf_armor:boots_iron", 1, 1 }, 12, 1, 0.2, },
+			{ { "mcl_core:coal_lump", 15, 15 }, E(), 16, 2 },
+			{ E(5), { "mcl_armor:helmet_iron", 1, 1 }, 12, 1, 0.2 },
+			{ E(9), { "mcl_armor:chestplate_iron", 1, 1 }, 12, 1, 0.2,  },
+			{ E(7), { "mcl_armor:leggings_iron", 1, 1 }, 12, 1, 0.2, },
+			{ E(4), { "mcl_armor:boots_iron", 1, 1 }, 12, 1, 0.2, },
 		},
 
 		{
-			{ { "vlf_core:iron_ingot", 4, 4 }, E(), 12, 10 },
-			{ { "vlf_core:emerald", 36, 36 }, { "vlf_bells:bell", 1, 1 }, 12, 5, 0.2, },
-			{ E(3), { "vlf_armor:leggings_chain", 1, 1 }, 12, 5, 0.2, },
-			{ E(), { "vlf_armor:boots_chain", 1, 1 }, 12, 5, 0.2, },
+			{ { "mcl_core:iron_ingot", 4, 4 }, E(), 12, 10 },
+			{ { "mcl_core:emerald", 36, 36 }, { "mcl_bells:bell", 1, 1 }, 12, 5, 0.2, },
+			{ E(3), { "mcl_armor:leggings_chain", 1, 1 }, 12, 5, 0.2, },
+			{ E(), { "mcl_armor:boots_chain", 1, 1 }, 12, 5, 0.2, },
 		},
 
 		{
-			{ { "vlf_buckets:bucket_lava", 1, 1 }, E(), 12, 20, },
-			{ { "vlf_core:diamond", 1, 1 }, E(), 12, 20, },
-			{ E(), { "vlf_armor:helmet_chain", 1, 1 }, 12, 10, 0.2, },
-			{ E(4), { "vlf_armor:chestplate_chain", 1, 1 }, 12, 10, 0.2, },
-			{ E(5), { "vlf_shields:shield", 1, 1 }, 12, 10, 0.2, },
+			{ { "mcl_buckets:bucket_lava", 1, 1 }, E(), 12, 20, },
+			{ { "mcl_core:diamond", 1, 1 }, E(), 12, 20, },
+			{ E(), { "mcl_armor:helmet_chain", 1, 1 }, 12, 10, 0.2, },
+			{ E(4), { "mcl_armor:chestplate_chain", 1, 1 }, 12, 10, 0.2, },
+			{ E(5), { "mcl_shields:shield", 1, 1 }, 12, 10, 0.2, },
 		},
 
 		{
-			{ E(19, 33), { "vlf_armor:leggings_diamond_enchanted", 1, 1 } , 3, 15, 0.2, },
-			{ E(13, 27), { "vlf_armor:boots_diamond_enchanted", 1, 1 }, 3, 15, 0.2, },
+			{ E(19, 33), { "mcl_armor:leggings_diamond_enchanted", 1, 1 } , 3, 15, 0.2, },
+			{ E(13, 27), { "mcl_armor:boots_diamond_enchanted", 1, 1 }, 3, 15, 0.2, },
 		},
 
 		{
-			{ E(13, 27), { "vlf_armor:helmet_diamond_enchanted", 1, 1 }, 3, 30, 0.2, },
-			{ E(21, 35), { "vlf_armor:chestplate_diamond_enchanted", 1, 1 }, 3, 30, 0.2, },
+			{ E(13, 27), { "mcl_armor:helmet_diamond_enchanted", 1, 1 }, 3, 30, 0.2, },
+			{ E(21, 35), { "mcl_armor:chestplate_diamond_enchanted", 1, 1 }, 3, 30, 0.2, },
 		},
 	},
 	leatherworker = {
 		{
-			{ { "vlf_mobitems:leather", 6, 6 }, E(), 16, 2 },
-			{ E(3), { "vlf_armor:leggings_leather", 1, 1 }, 12, 1 },
-			{ E(7), { "vlf_armor:chestplate_leather", 1, 1 }, 12, 1 },
+			{ { "mcl_mobitems:leather", 6, 6 }, E(), 16, 2 },
+			{ E(3), { "mcl_armor:leggings_leather", 1, 1 }, 12, 1 },
+			{ E(7), { "mcl_armor:chestplate_leather", 1, 1 }, 12, 1 },
 		},
 
 		{
-			{ { "vlf_core:flint", 26, 26 }, E(), 12, 10 },
-			{ E(5), { "vlf_armor:helmet_leather", 1, 1 }, 12, 5 },
-			{ E(4), { "vlf_armor:boots_leather", 1, 1 }, 12, 5 },
+			{ { "mcl_core:flint", 26, 26 }, E(), 12, 10 },
+			{ E(5), { "mcl_armor:helmet_leather", 1, 1 }, 12, 5 },
+			{ E(4), { "mcl_armor:boots_leather", 1, 1 }, 12, 5 },
 		},
 
 		{
-			{ { "vlf_mobitems:rabbit_hide", 9, 9 }, E(), 12, 20 },
-			{ E(7), { "vlf_armor:chestplate_leather", 1, 1 }, 12, 1 },
+			{ { "mcl_mobitems:rabbit_hide", 9, 9 }, E(), 12, 20 },
+			{ E(7), { "mcl_armor:chestplate_leather", 1, 1 }, 12, 1 },
 		},
 
 		{
 			--{ { "FIXME: scute", 4, 4 }, E(), 12, 30 },
-			{ { "vlf_core:emerald", 6, 6 }, { "vlf_mobitems:leather_horse_armor", 1, 1 }, 12, 15 },
+			{ { "mcl_core:emerald", 6, 6 }, { "mcl_mobitems:leather_horse_armor", 1, 1 }, 12, 15 },
 		},
 
 		{
-			{ E(6), { "vlf_mobitems:saddle", 1, 1 }, 12, 30 },
-			{ E(5), { "vlf_armor:helmet_leather", 1, 1 }, 12, 30 },
+			{ E(6), { "mcl_mobitems:saddle", 1, 1 }, 12, 30 },
+			{ E(5), { "mcl_armor:helmet_leather", 1, 1 }, 12, 30 },
 		},
 	},
 	butcher = {
 		{
-			{ { "vlf_mobitems:chicken", 14, 14 }, E(), 16, 2 },
-			{ { "vlf_mobitems:porkchop", 7, 7 }, E(), 16, 2 },
-			{ { "vlf_mobitems:rabbit", 4, 4 }, E(), 16, 2 },
-			{ E(), { "vlf_mobitems:rabbit_stew", 1, 1 }, 12, 1 },
+			{ { "mcl_mobitems:chicken", 14, 14 }, E(), 16, 2 },
+			{ { "mcl_mobitems:porkchop", 7, 7 }, E(), 16, 2 },
+			{ { "mcl_mobitems:rabbit", 4, 4 }, E(), 16, 2 },
+			{ E(), { "mcl_mobitems:rabbit_stew", 1, 1 }, 12, 1 },
 		},
 
 		{
-			{ { "vlf_core:coal_lump", 15, 15 }, E(), 16, 2 },
-			{ E(), { "vlf_mobitems:cooked_porkchop", 5, 5 }, 16, 5 },
-			{ E(), { "vlf_mobitems:cooked_chicken", 8, 8 }, 16, 5 },
+			{ { "mcl_core:coal_lump", 15, 15 }, E(), 16, 2 },
+			{ E(), { "mcl_mobitems:cooked_porkchop", 5, 5 }, 16, 5 },
+			{ E(), { "mcl_mobitems:cooked_chicken", 8, 8 }, 16, 5 },
 		},
 
 		{
-			{ { "vlf_mobitems:mutton", 7, 7 }, E(), 16, 20 },
-			{ { "vlf_mobitems:beef", 10, 10 }, E(), 16, 20 },
+			{ { "mcl_mobitems:mutton", 7, 7 }, E(), 16, 20 },
+			{ { "mcl_mobitems:beef", 10, 10 }, E(), 16, 20 },
 		},
 
 		{
-			{ { "vlf_ocean:dried_kelp_block", 10, 10 }, E(), 12, 30 },
+			{ { "mcl_ocean:dried_kelp_block", 10, 10 }, E(), 12, 30 },
 		},
 
 		{
-			{ { "vlf_farming:sweet_berry", 10, 10 }, E(), 12, 30 },
+			{ { "mcl_farming:sweet_berry", 10, 10 }, E(), 12, 30 },
 		},
 	},
 	weaponsmith = {
 		{
-			{ { "vlf_core:coal_lump", 15, 15 }, E(), 16, 2 },
-			{ E(3), { "vlf_tools:axe_iron", 1, 1 }, 12, 1, 0.2, },
-			{ E(7, 21), { "vlf_tools:sword_iron_enchanted", 1, 1 }, 3, 1 },
+			{ { "mcl_core:coal_lump", 15, 15 }, E(), 16, 2 },
+			{ E(3), { "mcl_tools:axe_iron", 1, 1 }, 12, 1, 0.2, },
+			{ E(7, 21), { "mcl_tools:sword_iron_enchanted", 1, 1 }, 3, 1 },
 		},
 
 		{
-			{ { "vlf_core:iron_ingot", 4, 4 }, E(), 12, 10 },
-			{ E(36), { "vlf_bells:bell", 1, 1 }, 12, 5, 0.2 },
+			{ { "mcl_core:iron_ingot", 4, 4 }, E(), 12, 10 },
+			{ E(36), { "mcl_bells:bell", 1, 1 }, 12, 5, 0.2 },
 		},
 
 		{
-			{ { "vlf_core:flint", 24, 24 }, E(), 12, 20 },
+			{ { "mcl_core:flint", 24, 24 }, E(), 12, 20 },
 		},
 
 		{
-			{ { "vlf_core:diamond", 1, 1 }, E(), 12, 30 },
-			{ E(17, 31), { "vlf_tools:axe_diamond_enchanted", 1, 1 }, 3, 15, 0.2, },
+			{ { "mcl_core:diamond", 1, 1 }, E(), 12, 30 },
+			{ E(17, 31), { "mcl_tools:axe_diamond_enchanted", 1, 1 }, 3, 15, 0.2, },
 		},
 
 		{
-			{ E(13, 27), { "vlf_tools:sword_diamond_enchanted", 1, 1 }, 3, 30, 0.2, },
+			{ E(13, 27), { "mcl_tools:sword_diamond_enchanted", 1, 1 }, 3, 30, 0.2, },
 		},
 	},
 	toolsmith = {
 		{
-			{ { "vlf_core:coal_lump", 15, 15 }, E(), 16, 2 },
-			{ E(), { "vlf_tools:axe_stone", 1, 1 }, 12, 1, 0.2, },
-			{ E(), { "vlf_tools:shovel_stone", 1, 1 }, 12, 1, 0.2, },
-			{ E(), { "vlf_tools:pick_stone", 1, 1 }, 12, 1, 0.2, },
-			{ E(), { "vlf_farming:hoe_stone", 1, 1 }, 12, 1, 0.2, },
+			{ { "mcl_core:coal_lump", 15, 15 }, E(), 16, 2 },
+			{ E(), { "mcl_tools:axe_stone", 1, 1 }, 12, 1, 0.2, },
+			{ E(), { "mcl_tools:shovel_stone", 1, 1 }, 12, 1, 0.2, },
+			{ E(), { "mcl_tools:pick_stone", 1, 1 }, 12, 1, 0.2, },
+			{ E(), { "mcl_farming:hoe_stone", 1, 1 }, 12, 1, 0.2, },
 		},
 
 		{
-			{ { "vlf_core:iron_ingot", 4, 4 }, E(), 12, 10 },
-			{ E(36), { "vlf_bells:bell", 1, 1 }, 12, 5, 0.2 },
+			{ { "mcl_core:iron_ingot", 4, 4 }, E(), 12, 10 },
+			{ E(36), { "mcl_bells:bell", 1, 1 }, 12, 5, 0.2 },
 		},
 
 		{
-			{ { "vlf_core:flint", 30, 30 }, E(), 12, 20 },
-			{ E(6, 20), { "vlf_tools:axe_iron_enchanted", 1, 1 }, 3, 10, 0.2, },
-			{ E(7, 21), { "vlf_tools:shovel_iron_enchanted", 1, 1 }, 3, 10, 0.2, },
-			{ E(8, 22), { "vlf_tools:pick_iron_enchanted", 1, 1 }, 3, 10, 0.2, },
-			{ E(4), { "vlf_farming:hoe_diamond", 1, 1 }, 3, 10, 0.2, },
+			{ { "mcl_core:flint", 30, 30 }, E(), 12, 20 },
+			{ E(6, 20), { "mcl_tools:axe_iron_enchanted", 1, 1 }, 3, 10, 0.2, },
+			{ E(7, 21), { "mcl_tools:shovel_iron_enchanted", 1, 1 }, 3, 10, 0.2, },
+			{ E(8, 22), { "mcl_tools:pick_iron_enchanted", 1, 1 }, 3, 10, 0.2, },
+			{ E(4), { "mcl_farming:hoe_diamond", 1, 1 }, 3, 10, 0.2, },
 		},
 
 		{
-			{ { "vlf_core:diamond", 1, 1 }, E(), 12, 30 },
-			{ E(17, 31), { "vlf_tools:axe_diamond_enchanted", 1, 1 }, 3, 15, 0.2, },
-			{ E(10, 24), { "vlf_tools:shovel_diamond_enchanted", 1, 1 }, 3, 15, 0.2, },
+			{ { "mcl_core:diamond", 1, 1 }, E(), 12, 30 },
+			{ E(17, 31), { "mcl_tools:axe_diamond_enchanted", 1, 1 }, 3, 15, 0.2, },
+			{ E(10, 24), { "mcl_tools:shovel_diamond_enchanted", 1, 1 }, 3, 15, 0.2, },
 		},
 
 		{
-			{ E(18, 32), { "vlf_tools:pick_diamond_enchanted", 1, 1 }, 3, 30, 0.2, },
+			{ E(18, 32), { "mcl_tools:pick_diamond_enchanted", 1, 1 }, 3, 30, 0.2, },
 		},
 	},
 	cleric = {
 		{
-			{ { "vlf_mobitems:rotten_flesh", 32, 32 }, E(), 16, 12 },
-			{ E(), { "vlf_redstone:redstone", 2, 2  }, 12, 1 },
+			{ { "mcl_mobitems:rotten_flesh", 32, 32 }, E(), 16, 12 },
+			{ E(), { "mcl_redstone:redstone", 2, 2  }, 12, 1 },
 		},
 
 		{
-			{ { "vlf_core:gold_ingot", 3, 3 }, E(), 12, 10 },
-			{ E(), { "vlf_core:lapis", 1, 1 }, 12, 5 },
+			{ { "mcl_core:gold_ingot", 3, 3 }, E(), 12, 10 },
+			{ E(), { "mcl_core:lapis", 1, 1 }, 12, 5 },
 		},
 
 		{
-			{ { "vlf_mobitems:rabbit_foot", 2, 2 }, E(), 12, 20 },
-			{ E(4), { "vlf_nether:glowstone", 1, 1 }, 12, 10 },
+			{ { "mcl_mobitems:rabbit_foot", 2, 2 }, E(), 12, 20 },
+			{ E(4), { "mcl_nether:glowstone", 1, 1 }, 12, 10 },
 		},
 
 		{
 			--{ { "FIXME: scute", 4, 4 }, E(), 12, 30 },
-			{ { "vlf_potions:glass_bottle", 9, 9 }, E(), 12, 30 },
-			{ E(5), { "vlf_throwing:ender_pearl", 1, 1 }, 12, 15 },
+			{ { "mcl_potions:glass_bottle", 9, 9 }, E(), 12, 30 },
+			{ E(5), { "mcl_throwing:ender_pearl", 1, 1 }, 12, 15 },
 		},
 
 		{
-			{ { "vlf_nether:nether_wart_item", 22, 22 }, E(), 12, 30 },
-			{ E(3), { "vlf_experience:bottle", 1, 1 }, 12, 30 },
+			{ { "mcl_nether:nether_wart_item", 22, 22 }, E(), 12, 30 },
+			{ E(3), { "mcl_experience:bottle", 1, 1 }, 12, 30 },
 		},
 	},
 	mason = {
 		{
-			{ { "vlf_core:clay_lump", 10, 10 }, E(), 16, 2  },
-			{ E(), { "vlf_core:brick", 10, 10 }, 16, 1 },
+			{ { "mcl_core:clay_lump", 10, 10 }, E(), 16, 2  },
+			{ E(), { "mcl_core:brick", 10, 10 }, 16, 1 },
 		},
 
 		{
-			{ { "vlf_core:stone", 20, 20 }, E(), 16, 10 },
-			{ E(), { "vlf_core:stonebrickcarved", 4, 4 }, 16, 5 },
+			{ { "mcl_core:stone", 20, 20 }, E(), 16, 10 },
+			{ E(), { "mcl_core:stonebrickcarved", 4, 4 }, 16, 5 },
 		},
 
 		{
-			{ { "vlf_core:granite", 16, 16 }, E(), 16, 20 },
-			{ { "vlf_core:andesite", 16, 16 }, E(), 16, 20 },
-			{ { "vlf_core:diorite", 16, 16 }, E(), 16, 20 },
-			{ E(), { "vlf_core:andesite_smooth", 4, 4 }, 16, 10 },
-			{ E(), { "vlf_core:granite_smooth", 4, 4 }, 16, 10 },
-			{ E(), { "vlf_core:diorite_smooth", 4, 4 }, 16, 10 },
-			{ E(), { "vlf_dripstone:dripstone_block", 4, 4 }, 16, 10 },
+			{ { "mcl_core:granite", 16, 16 }, E(), 16, 20 },
+			{ { "mcl_core:andesite", 16, 16 }, E(), 16, 20 },
+			{ { "mcl_core:diorite", 16, 16 }, E(), 16, 20 },
+			{ E(), { "mcl_core:andesite_smooth", 4, 4 }, 16, 10 },
+			{ E(), { "mcl_core:granite_smooth", 4, 4 }, 16, 10 },
+			{ E(), { "mcl_core:diorite_smooth", 4, 4 }, 16, 10 },
+			{ E(), { "mcl_dripstone:dripstone_block", 4, 4 }, 16, 10 },
 		},
 
 		{
-			{ { "vlf_nether:quartz", 12, 12 }, E(), 12, 30 },
-			{ E(), { "vlf_colorblocks:hardened_clay_white", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_grey", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_silver", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_black", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_red", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_yellow", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_green", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_cyan", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_blue", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_magenta", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_orange", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_brown", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_pink", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_light_blue", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_lime", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:hardened_clay_purple", 1, 1 }, 12, 15 },
+			{ { "mcl_nether:quartz", 12, 12 }, E(), 12, 30 },
+			{ E(), { "mcl_colorblocks:hardened_clay_white", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_grey", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_silver", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_black", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_red", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_yellow", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_green", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_cyan", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_blue", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_magenta", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_orange", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_brown", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_pink", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_light_blue", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_lime", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:hardened_clay_purple", 1, 1 }, 12, 15 },
 
-			{ E(), { "vlf_colorblocks:glazed_terracotta_white", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_grey", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_silver", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_black", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_red", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_yellow", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_green", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_cyan", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_blue", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_magenta", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_orange", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_brown", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_pink", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_light_blue", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_lime", 1, 1 }, 12, 15 },
-			{ E(), { "vlf_colorblocks:glazed_terracotta_purple", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_white", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_grey", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_silver", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_black", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_red", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_yellow", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_green", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_cyan", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_blue", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_magenta", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_orange", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_brown", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_pink", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_light_blue", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_lime", 1, 1 }, 12, 15 },
+			{ E(), { "mcl_colorblocks:glazed_terracotta_purple", 1, 1 }, 12, 15 },
 		},
 
 		{
-			{ E(), { "vlf_nether:quartz_pillar", 1, 1 }, 12, 30 },
-			{ E(), { "vlf_nether:quartz_block", 1, 1 }, 12, 30 },
+			{ E(), { "mcl_nether:quartz_pillar", 1, 1 }, 12, 30 },
+			{ E(), { "mcl_nether:quartz_block", 1, 1 }, 12, 30 },
 		},
 	},
 }
@@ -1910,7 +1893,7 @@ function villager:on_transaction (trade, player)
 	if tier_thresholds[self._tier + 1]
 		and self._xp >= tier_thresholds[self._tier + 1] then
 		self._levelup_in = 2.0
-		vlf_experience.throw_xp (self.object:get_pos (), 5)
+		mcl_experience.throw_xp (self.object:get_pos (), 5)
 	end
 
 	self:record_gossip (player:get_player_name (), "trading", 2)
@@ -1959,7 +1942,7 @@ function villager:apply_player_prices (player)
 	local name = player:get_player_name ()
 	local reputation = self._reputation[name] or 0
 	local hero_of_the_village
-		= vlf_potions.has_effect (player, "hero_of_village")
+		= mcl_potions.has_effect (player, "hero_of_village")
 
 	for _, trade in pairs (self._trades) do
 		local diff = math.floor (trade.price_multiplier * -reputation)
@@ -1996,7 +1979,7 @@ function villager:level_up ()
 	assert (self._tier <= MAX_TIER)
 
 	self:activate_trades ()
-	vlf_potions.give_effect_by_level ("regeneration", self.object, 1, 10)
+	mcl_potions.give_effect_by_level ("regeneration", self.object, 1, 10)
 	self.base_texture[1] = self:get_overlaid_texture ()
 	self:set_textures (self.base_texture)
 end
@@ -2207,16 +2190,16 @@ function villager:mob_activate (staticdata, dtime)
 	return true
 end
 
-function villager:receive_damage (vlf_reason, damage)
-	if mob_class.receive_damage (self, vlf_reason, damage) then
+function villager:receive_damage (mcl_reason, damage)
+	if mob_class.receive_damage (self, mcl_reason, damage) then
 		self._panic_time = 2.0
 
 		-- Murders are reported in `on_die'.
-		if vlf_reason.source and self.health > 0 then
-			self._panic_source = vlf_reason.source
+		if mcl_reason.source and self.health > 0 then
+			self._panic_source = mcl_reason.source
 
-			if vlf_reason.source:is_player () then
-				local name = vlf_reason.source:get_player_name ()
+			if mcl_reason.source:is_player () then
+				local name = mcl_reason.source:get_player_name ()
 				self:record_gossip (name, "minor_negative", 25)
 				self:angry_villager_effect ()
 			end
@@ -2238,9 +2221,9 @@ function villager:report_murder (name)
 end
 
 local function relinquish_provisional_poi (pos)
-	local poi = vlf_villages.get_poi (pos)
+	local poi = mcl_villages.get_poi (pos)
 	if poi then
-		vlf_villages.remove_poi (poi.id)
+		mcl_villages.remove_poi (poi.id)
 	end
 end
 
@@ -2276,16 +2259,16 @@ function villager:export_villager_data ()
 	}
 end
 
-function villager:on_die (_, vlf_reason)
+function villager:on_die (_, mcl_reason)
 	self:relinquish_pois ()
-	if vlf_reason.source and vlf_reason.source:is_player () then
-		local name = vlf_reason.source:get_player_name ()
+	if mcl_reason.source and mcl_reason.source:is_player () then
+		local name = mcl_reason.source:get_player_name ()
 		self:record_gossip (name, "major_negative", 25)
 		self:report_murder (name)
-	elseif vlf_vars.difficulty >= 2
-		and vlf_reason.mob_name
-		and table.indexof (zombie_types, vlf_reason.mob_name) ~= -1
-		and (vlf_vars.difficulty > 2 or pr:next (1, 2) == 1) then
+	elseif mcl_vars.difficulty >= 2
+		and mcl_reason.mob_name
+		and table.indexof (zombie_types, mcl_reason.mob_name) ~= -1
+		and (mcl_vars.difficulty > 2 or pr:next (1, 2) == 1) then
 		self:replace_with ("mobs_mc:villager_zombie", false, {
 			_previous_incarnation = self:export_villager_data (),
 		})
@@ -2293,7 +2276,7 @@ function villager:on_die (_, vlf_reason)
 end
 
 function villager:_on_lightning_strike ()
-	if vlf_vars.difficulty > 0 then
+	if mcl_vars.difficulty > 0 then
 		if self:replace_with ("mobs_mc:witch", false) then
 			self:relinquish_pois ()
 		end
@@ -2460,10 +2443,10 @@ end
 ------------------------------------------------------------------------
 
 local villager_wanted_items = {
-	"vlf_farming:bread",
-	"vlf_farming:potato_item",
-	"vlf_farming:carrot_item",
-	"vlf_farming:beetroot_item",
+	"mcl_farming:bread",
+	"mcl_farming:potato_item",
+	"mcl_farming:carrot_item",
+	"mcl_farming:beetroot_item",
 }
 
 function villager:should_pick_up (stack)
@@ -2543,7 +2526,7 @@ local function find_nearest_village_section (section, min_heat)
 				v.x = section.x + x
 				v.y = section.y + y
 				v.z = section.z + z
-				local candidate = vlf_villages.get_poi_heat_of_section (v)
+				local candidate = mcl_villages.get_poi_heat_of_section (v)
 				if candidate >= min_heat and (not closest or candidate >= heat) then
 					heat = candidate
 					closest = vector.copy (v)
@@ -2556,34 +2539,34 @@ end
 
 local function check_bell_occupancy (bell)
 	local meta = minetest.get_meta (bell)
-	return meta:get_int ("vlf_villages:bell_users") <= 32
+	return meta:get_int ("mcl_villages:bell_users") <= 32
 end
 
 function villager:relinquish_job_site ()
 	if self._job_site then
 		local profession = professions_by_name[self._profession]
 		assert (profession)
-		local poi = vlf_villages.get_poi (self._job_site)
+		local poi = mcl_villages.get_poi (self._job_site)
 		if poi and poi.data == profession.poi then
-			vlf_villages.remove_poi (poi.id)
+			mcl_villages.remove_poi (poi.id)
 		end
 		self._job_site = nil
 	end
 end
 
-local BED_POI = "vlf_villages:bed"
+local BED_POI = "mcl_villages:bed"
 
 function villager:relinquish_home ()
 	if self._home then
-		local poi = vlf_villages.get_poi (self._home)
+		local poi = mcl_villages.get_poi (self._home)
 		if poi and poi.data == BED_POI then
-			vlf_villages.remove_poi (poi.id)
+			mcl_villages.remove_poi (poi.id)
 		end
 		self._home = nil
 	end
 end
 
-local BELL_POI = "vlf_villages:bell"
+local BELL_POI = "mcl_villages:bell"
 
 -- N.B.: the bell's user count is liable to disagree with the number
 -- of users in existence in the vanishingly improbable scenario that a
@@ -2597,33 +2580,33 @@ function villager:relinquish_bell ()
 		return
 	end
 
-	local poi = vlf_villages.get_poi (pos)
+	local poi = mcl_villages.get_poi (pos)
 	if poi and poi.data == BELL_POI then
 		local meta = minetest.get_meta (pos)
 		local remaining_users
-			= math.max (meta:get_int ("vlf_villages:bell_users") - 1, 0)
-		meta:set_int ("vlf_villages:bell_users", remaining_users)
+			= math.max (meta:get_int ("mcl_villages:bell_users") - 1, 0)
+		meta:set_int ("mcl_villages:bell_users", remaining_users)
 
 		if remaining_users <= 0 then
-			vlf_villages.remove_poi (poi.id)
+			mcl_villages.remove_poi (poi.id)
 		end
 	end
 	self._bell = nil
 end
 
 local function acquire_bell (pos, limit)
-	local poi = vlf_villages.get_poi (pos)
+	local poi = mcl_villages.get_poi (pos)
 	local meta = minetest.get_meta (pos)
 	if poi and poi.data == BELL_POI then
-		local users = meta:get_int ("vlf_villages:bell_users")
+		local users = meta:get_int ("mcl_villages:bell_users")
 		if users <= (limit or 32) - 1 then
-			meta:set_int ("vlf_villages:bell_users", users + 1)
+			meta:set_int ("mcl_villages:bell_users", users + 1)
 			return true
 		end
 		return false
 	else
-		if vlf_villages.insert_poi (pos, BELL_POI) then
-			meta:set_int ("vlf_villages:bell_users", 0)
+		if mcl_villages.insert_poi (pos, BELL_POI) then
+			meta:set_int ("mcl_villages:bell_users", 0)
 			return true
 		end
 	end
@@ -2666,10 +2649,10 @@ local alarm_distances = {
 }
 
 local mature_plants = {
-	"vlf_farming:wheat",
-	"vlf_farming:potato",
-	"vlf_farming:beetroot",
-	"vlf_farming:carrot",
+	"mcl_farming:wheat",
+	"mcl_farming:potato",
+	"mcl_farming:beetroot",
+	"mcl_farming:carrot",
 }
 
 local function is_mature_crop_or_air (nodeinfo)
@@ -2685,20 +2668,20 @@ local function is_mature_crop (nodeinfo)
 end
 
 local function is_farmland (nodeinfo)
-	return nodeinfo.name == "vlf_farming:soil_wet"
-		or nodeinfo.name == "vlf_farming:soil"
+	return nodeinfo.name == "mcl_farming:soil_wet"
+		or nodeinfo.name == "mcl_farming:soil"
 end
 
 local soil_groups = {
-	"vlf_farming:soil_wet",
-	"vlf_farming:soil",
+	"mcl_farming:soil_wet",
+	"mcl_farming:soil",
 }
 
 local villager_seeds = {
-	"vlf_farming:wheat_seeds",
-	"vlf_farming:potato_item",
-	"vlf_farming:carrot_item",
-	"vlf_farming:beetroot_seeds",
+	"mcl_farming:wheat_seeds",
+	"mcl_farming:potato_item",
+	"mcl_farming:carrot_item",
+	"mcl_farming:beetroot_seeds",
 }
 
 local function sense_nearby_jobsites (self, self_pos)
@@ -2719,7 +2702,7 @@ local function sense_free_jobsites (self, self_pos)
 		local hash = hash_pos (node)
 		if self:should_retry (hash) then
 			self:process_retry_attempt (hash)
-			local poi = vlf_villages.get_poi (node)
+			local poi = mcl_villages.get_poi (node)
 			if not poi then
 				table.insert (sites, node)
 			end
@@ -2757,7 +2740,7 @@ local function sense_free_beds (self, self_pos)
 		local hash = hash_pos (node)
 		if self:should_retry (hash) then
 			self:process_retry_attempt (hash)
-			local poi = vlf_villages.get_poi (node)
+			local poi = mcl_villages.get_poi (node)
 			if not poi then
 				table.insert (sites, node)
 			end
@@ -2773,8 +2756,8 @@ end
 local function sense_nearby_bells (self, self_pos)
 	local aa = vector.offset (self_pos, -48, -32, -48)
 	local bb = vector.offset (self_pos, 48, 32, 48)
-	local result = minetest.find_nodes_in_area (aa, bb, {"vlf_bells:bell"})
-	local persist = 1.0 + pr:next (0, 20) / 20
+	local result = minetest.find_nodes_in_area (aa, bb, {"mcl_bells:bell"})
+	local persist = 2.0 + pr:next (0, 20) / 20
 	return result, persist
 end
 
@@ -2785,7 +2768,7 @@ local function sense_free_bells (self, self_pos)
 		local hash = hash_pos (node)
 		if self:should_retry (hash) then
 			self:process_retry_attempt (hash)
-			local poi = vlf_villages.get_poi (node)
+			local poi = mcl_villages.get_poi (node)
 			if not poi or (poi.data == BELL_POI
 				       and check_bell_occupancy (node)) then
 				table.insert (sites, node)
@@ -2799,9 +2782,11 @@ local function sense_free_bells (self, self_pos)
 	return sites
 end
 
+local WANTED_ITEM_RANGE = 8.0
+
 local function sense_visible_wanted_items (self, self_pos)
 	local items = {}
-	for object in minetest.objects_inside_radius (self_pos, self.view_range) do
+	for object in minetest.objects_inside_radius (self_pos, WANTED_ITEM_RANGE) do
 		local entity = object:get_luaentity ()
 		if entity and entity.name == "__builtin:item"
 			and check_item_timeout (self, entity) then
@@ -2817,9 +2802,11 @@ local function sense_visible_wanted_items (self, self_pos)
 	return items, persist
 end
 
+local ENTITY_VIEW_RANGE = 16.0
+
 local function sense_visible_living_entities (self, self_pos)
 	local entities = {}
-	for object in minetest.objects_inside_radius (self_pos, self.view_range) do
+	for object in minetest.objects_inside_radius (self_pos, ENTITY_VIEW_RANGE) do
 		local entity = object:get_luaentity ()
 		if object ~= self.object
 			and (object:is_player () or (entity and entity.is_mob)) then
@@ -2939,7 +2926,7 @@ local function sense_nearest_hostile (self, self_pos)
 end
 
 local function sense_nearby_farmland (self, self_pos)
-	local pos = vlf_util.get_nodepos (self_pos)
+	local pos = mcl_util.get_nodepos (self_pos)
 	local aa = vector.offset (pos, -4, -2, -4)
 	local bb = vector.offset (pos, 4, 2, 4)
 	local nodes = minetest.find_nodes_in_area (aa, bb, soil_groups)
@@ -2949,7 +2936,7 @@ local function sense_nearby_farmland (self, self_pos)
 end
 
 local function sense_harvestable_farmland (self, self_pos)
-	local pos = vlf_util.get_nodepos (self_pos)
+	local pos = mcl_util.get_nodepos (self_pos)
 	local aa = vector.offset (pos, -2, -2, -2)
 	local bb = vector.offset (pos, 2, 0, 2)
 	local nodes = minetest.find_nodes_in_area (aa, bb, soil_groups)
@@ -2971,7 +2958,7 @@ local function sense_harvestable_farmland (self, self_pos)
 end
 
 local function sense_random_immature_crop (self, self_pos)
-	local pos = vlf_util.get_nodepos (self_pos)
+	local pos = mcl_util.get_nodepos (self_pos)
 	local aa = vector.offset (pos, -2, -1, -2)
 	local bb = vector.offset (pos, 2, 1, 2)
 	local nodes = minetest.find_nodes_in_area (aa, bb, {"group:plant"})
@@ -2982,7 +2969,7 @@ local function sense_random_immature_crop (self, self_pos)
 		local def = minetest.registered_nodes[node.name]
 
 		-- XXX: wouldn't better criteria be in order...
-		if table.indexof (villager_seeds, def._vlf_baseitem) ~= -1
+		if table.indexof (villager_seeds, def._mcl_baseitem) ~= -1
 			and table.indexof (mature_plants, node.name) == -1 then
 			return pos
 		end
@@ -3050,7 +3037,7 @@ end
 
 local function sense_nearby_visible_players (self, self_pos)
 	local players = {}
-	for object in vlf_util.connected_players (self_pos, 4) do
+	for object in mcl_util.connected_players (self_pos, 4) do
 		if self:target_visible (self_pos, object) then
 			table.insert (players, object)
 		end
@@ -3062,8 +3049,8 @@ end
 
 local function sense_nearby_visible_heroes (self, self_pos)
 	local players = {}
-	for object in vlf_util.connected_players (self_pos, self.view_range) do
-		if vlf_potions.has_effect (object, "hero_of_village")
+	for object in mcl_util.connected_players (self_pos, self.view_range) do
+		if mcl_potions.has_effect (object, "hero_of_village")
 			and self:target_visible (self_pos, object) then
 			table.insert (players, object)
 		end
@@ -3260,7 +3247,7 @@ function villager:maybe_summon_golem (self_pos, n_villagers)
 			"Requesting golem: ",
 			#villagers, "/", n_villagers, " present",
 		})
-		if #villagers > n_villagers and self:summon_golem (self_pos) then
+		if #villagers >= n_villagers and self:summon_golem (self_pos) then
 			for _, villager in pairs (villagers) do
 				local entity = villager:get_luaentity ()
 				if entity then
@@ -3290,7 +3277,7 @@ end
 function villager:answer_bell (self_pos, dtime)
 	if self._special_schedule ~= "BELL_RANG" then
 		if self._last_alarm_gmt ~= 0 then
-			if vlf_raids.find_active_raid (self_pos) then
+			if mcl_raids.find_active_raid (self_pos) then
 				return
 			end
 			local time = minetest.get_gametime ()
@@ -3309,21 +3296,22 @@ end
 function villager:validate_job_sites ()
 	if self._provisional_job_site then
 		local pos = self._provisional_job_site
-		local poi = vlf_villages.get_poi (pos)
+		local poi = mcl_villages.get_poi (pos)
 
 		-- This job site vanished or was claimed.
-		if not poi or poi.data ~= "vlf_villages:provisional_poi" then
+		if not poi or poi.data ~= "mcl_villages:provisional_poi" then
 			self._provisional_job_site = nil
 			self._sensing["nearby_jobsites"] = nil
 		end
 	end
 	if self._job_site then
 		local pos = self._job_site
-		local poi = vlf_villages.get_poi (pos)
+		local poi = mcl_villages.get_poi (pos)
 		local profession = professions_by_name[self._profession]
-		assert (profession)
 
-		if not poi or poi.data ~= profession.poi then
+		-- A self._profession of nil has been observed in
+		-- certain old villagers with job sites.
+		if not profession or not poi or poi.data ~= profession.poi then
 			self._job_site = nil
 			self._sensing["nearby_jobsites"] = nil
 
@@ -3338,7 +3326,7 @@ function villager:validate_job_sites ()
 	end
 	if self._home then
 		local pos = self._home
-		local poi = vlf_villages.get_poi (pos)
+		local poi = mcl_villages.get_poi (pos)
 		if not poi or poi.data ~= BED_POI then
 			self._home = nil
 			self._sensing["nearby_beds"] = nil
@@ -3346,7 +3334,7 @@ function villager:validate_job_sites ()
 	end
 	if self._bell then
 		local pos = self._bell
-		local poi = vlf_villages.get_poi (pos)
+		local poi = mcl_villages.get_poi (pos)
 		if not poi or poi.data ~= BELL_POI then
 			self._bell = nil
 			self._sensing["nearby_bells"] = nil
@@ -3420,14 +3408,14 @@ function villager:visit_wanted_item (self_pos, dtime)
 end
 
 local function acquire_provisional_poi (pos)
-	vlf_villages.insert_poi (pos, "vlf_villages:provisional_poi")
+	mcl_villages.insert_poi (pos, "mcl_villages:provisional_poi")
 end
 
 local function remove_provisional_poi (pos)
-	local poi = vlf_villages.get_poi (pos)
+	local poi = mcl_villages.get_poi (pos)
 	assert (poi)
 
-	vlf_villages.remove_poi (poi.id)
+	mcl_villages.remove_poi (poi.id)
 end
 
 function villager:claim_poi (target)
@@ -3445,7 +3433,7 @@ function villager:claim_poi (target)
 			")",
 		}))
 	else
-		if vlf_villages.insert_poi (target, profession.poi) then
+		if mcl_villages.insert_poi (target, profession.poi) then
 			self._job_site = target
 			self._wander_time = 0
 			self:happy_villager_effect ()
@@ -3527,7 +3515,7 @@ function villager:acquire_job_site (self_pos, dtime)
 end
 
 function villager:claim_home (home)
-	if vlf_villages.insert_poi (home, BED_POI) then
+	if mcl_villages.insert_poi (home, BED_POI) then
 		self._home = home
 		return true
 	end
@@ -3575,6 +3563,48 @@ function villager:acquire_bell (self_pos, dtime)
 	end
 end
 
+function villager:near_map_boundaries ()
+	-- Return whether this villager is so near the perimeter of
+	-- the loaded area of the map that any failure to navigate is
+	-- most likely to be a result of the map being unloaded.
+
+	if self._near_map_boundaries ~= nil then
+		return self._near_map_boundaries
+	end
+
+	local node_pos = self.object:get_pos ()
+	node_pos.x = math.floor (node_pos.x + 0.5)
+	node_pos.y = math.floor (node_pos.y + 0.5)
+	node_pos.z = math.floor (node_pos.z + 0.5)
+	if not minetest.get_node_or_nil (node_pos) then
+		self._near_map_boundaries = true
+		return true
+	end
+	node_pos.x = node_pos.x + 16
+	if not minetest.get_node_or_nil (node_pos) then
+		self._near_map_boundaries = true
+		return true
+	end
+	node_pos.x = node_pos.x - 32
+	if not minetest.get_node_or_nil (node_pos) then
+		self._near_map_boundaries = true
+		return true
+	end
+	node_pos.x = node_pos.x + 16
+	node_pos.z = node_pos.z + 16
+	if not minetest.get_node_or_nil (node_pos) then
+		self._near_map_boundaries = true
+		return true
+	end
+	node_pos.z = node_pos.z - 32
+	if not minetest.get_node_or_nil (node_pos) then
+		self._near_map_boundaries = true
+		return true
+	end
+	self._near_map_boundaries = false
+	return false
+end
+
 local function generate_wander_to (poi_field, activity_name, time_field, time_limit,
 			wander_threshold, tolerance, relinquish_job_site, start_conditions)
 	return function (self, self_pos, dtime)
@@ -3596,7 +3626,9 @@ local function generate_wander_to (poi_field, activity_name, time_field, time_li
 			self[time_field] = t
 
 			if t > time_limit then
-				relinquish_job_site (self)
+				if not self:near_map_boundaries () then
+					relinquish_job_site (self)
+				end
 				self[activity_name] = nil
 				self[time_field] = nil
 				return false
@@ -3616,7 +3648,9 @@ local function generate_wander_to (poi_field, activity_name, time_field, time_li
 					end
 
 					if status == "failed" then
-						relinquish_job_site (self)
+						if not self:near_map_boundaries () then
+							relinquish_job_site (self)
+						end
 						self[activity_name] = nil
 						self[time_field] = nil
 						return false
@@ -3633,10 +3667,10 @@ local function generate_wander_to (poi_field, activity_name, time_field, time_li
 				self:session_navigate (target, 0.5, 0.0)
 			end
 			self[activity_name] = 0
-
 			return true
 		elseif poi
 			and start_conditions (self)
+			and not self:near_map_boundaries ()
 			and manhattan3d (self, self_pos, poi) > tolerance then
 			self[activity_name] = 0
 
@@ -3757,7 +3791,7 @@ function villager:find_shuffle_position (node_pos)
 			for y = -1, 1 do
 				if z ~= 0 or x ~= 0 or y ~= 0 then
 					local node = vector.offset (node_pos, z, x, y)
-					if not vlf_weather.is_outdoor (node)
+					if not mcl_weather.is_outdoor (node)
 						and self:gwp_classify_for_movement (node) == "WALKABLE" then
 						return node
 					end
@@ -3797,7 +3831,7 @@ function villager:shuffle_indoors (self_pos, dtime)
 			math.floor (self_pos.z + 0.5)
 		local node_pos = vector.new (x, y, z)
 
-		if vlf_weather.is_outdoor (node_pos) then
+		if mcl_weather.is_outdoor (node_pos) then
 			return false
 		else
 			local pos = self:find_shuffle_position (node_pos)
@@ -3822,19 +3856,19 @@ function villager:return_to_village (self_pos, dtime)
 		self._returning_to_village = nil
 		return false
 	elseif not self._home and (pr:next (1, 50) or self._return_success) then
-		local node_pos = vlf_util.get_nodepos (self_pos)
-		local heat = vlf_villages.get_poi_heat (node_pos)
+		local node_pos = mcl_util.get_nodepos (self_pos)
+		local heat = mcl_villages.get_poi_heat (node_pos)
 		self._return_success = false
 		if heat >= 5 then
 			return false
 		end
 
-		local section_pos = vlf_villages.section_position (node_pos)
+		local section_pos = mcl_villages.section_position (node_pos)
 		local section, new_heat = find_nearest_village_section (section_pos, 0)
 		local selected = nil
 
 		if section and new_heat > heat then
-			local center = vlf_villages.center_of_section (section)
+			local center = mcl_villages.center_of_section (section)
 			local dir = vector.direction (self_pos, center)
 			selected = self:target_in_direction (self_pos, 10, 7, dir,
 							math.pi / 2)
@@ -3862,13 +3896,13 @@ function villager:compost (composter)
 		local stack = ItemStack (item)
 		local name = stack:get_name ()
 		local take
-		if name == "vlf_farming:beetroot_seeds" then
+		if name == "mcl_farming:beetroot_seeds" then
 			local count = stack:get_count ()
 			total_beetroot = total_beetroot + count
 			local take_max
 				= math.min (total_beetroot - 10, compost_total)
 			take = math.min (math.max (take_max, 0), count)
-		elseif name == "vlf_farming:wheat_seeds" then
+		elseif name == "mcl_farming:wheat_seeds" then
 			local count = stack:get_count ()
 			total_wheat = total_wheat + count
 			local take_max
@@ -3885,27 +3919,27 @@ function villager:compost (composter)
 			self._inventory[i] = stack:to_string ()
 			for _ = 1, take do
 				local node = minetest.get_node (composter)
-				vlf_composters.add_item (composter, node, stack)
+				mcl_composters.add_item (composter, node, stack)
 			end
 		end
 	end
 end
 
 function villager:craft_bread (self_pos)
-	if not self:has_items ("vlf_farming:bread", 37) then
-		local n_wheat = self:count_items ("vlf_farming:wheat_item")
+	if not self:has_items ("mcl_farming:bread", 37) then
+		local n_wheat = self:count_items ("mcl_farming:wheat_item")
 		local pcs = math.min (3, math.floor (n_wheat / 3))
 
 		if pcs > 0 then
 			local stack
-				= self:remove_item ("vlf_farming:wheat_item", pcs * 3)
+				= self:remove_item ("mcl_farming:wheat_item", pcs * 3)
 			local count = math.floor (stack:get_count () / 3)
 			local itemstring
-				= string.format ("vlf_farming:bread %d", count)
+				= string.format ("mcl_farming:bread %d", count)
 			local stack = ItemStack (itemstring)
 			local rem = self:add_to_inventory (stack)
 			if not rem:is_empty () then
-				vlf_util.drop_item_stack (self_pos, rem)
+				mcl_util.drop_item_stack (self_pos, rem)
 			end
 		end
 	end
@@ -3923,12 +3957,12 @@ function villager:use_workstation (self_pos, job_site)
 		end
 
 		local site_type = minetest.get_node (job_site)
-		local level = vlf_composters.test_composter (site_type.name)
+		local level = mcl_composters.test_composter (site_type.name)
 		if level == 8 then
 			minetest.swap_node (job_site, {
-				    name = "vlf_composters:composter",
+				    name = "mcl_composters:composter",
 			})
-			minetest.add_item (job_site, "vlf_bone_meal:bone_meal")
+			minetest.add_item (job_site, "mcl_bone_meal:bone_meal")
 		end
 		if level then
 			self:compost (job_site)
@@ -3988,12 +4022,12 @@ function villager:acceptable_pacing_target (target)
 			or manhattan3d (self, target, job_site) <= 9.0
 	end
 	if self._active_activity == "_playing_tag" then
-		return vlf_villages.get_poi_heat (target) >= 5
+		return mcl_villages.get_poi_heat (target) >= 5
 	end
 	return true
 end
 
-local SOLID_PACING_GROUPS = vlf_mobs.SOLID_PACING_GROUPS
+local SOLID_PACING_GROUPS = mcl_mobs.SOLID_PACING_GROUPS
 
 function villager:pace_around_poi (self_pos, dtime)
 	if self._pacing_around_poi then
@@ -4112,7 +4146,7 @@ function villager:farm (self_pos, dtime)
 					local node = minetest.get_node (target)
 					if seed and is_farmland (node) then
 						local def = seed:get_definition ()
-						local plant = def._vlf_places_plant
+						local plant = def._mcl_places_plant
 						assert (plant)
 						local what = {
 							name = plant,
@@ -4182,7 +4216,7 @@ function villager:fertilize_farmland (self_pos, dtime)
 		local stack, idx
 		for i, slot in ipairs (self._inventory) do
 			stack = ItemStack (slot)
-			if stack:get_name () == "vlf_bone_meal:bone_meal" then
+			if stack:get_name () == "mcl_bone_meal:bone_meal" then
 				idx = i
 				break
 			end
@@ -4193,9 +4227,9 @@ function villager:fertilize_farmland (self_pos, dtime)
 			local def = minetest.registered_nodes[node.name]
 			if def._on_bone_meal
 				and table.indexof (villager_seeds,
-						   def._vlf_baseitem) ~= -1 then
+						   def._mcl_baseitem) ~= -1 then
 				if def._on_bone_meal (stack, nil, nil, target, node) then
-					vlf_bone_meal.add_bone_meal_particle (target)
+					mcl_bone_meal.add_bone_meal_particle (target)
 					stack:take_item ()
 					self._inventory[idx] = stack:to_string ()
 				end
@@ -4207,7 +4241,7 @@ function villager:fertilize_farmland (self_pos, dtime)
 		and self._profession == "farmer"
 		and self:check_timer ("start_bone_meal", 1.0)
 		and not self._bone_meal_cooldown then
-		local items = self:count_items ("vlf_bone_meal:bone_meal")
+		local items = self:count_items ("mcl_bone_meal:bone_meal")
 		if items <= 0 then
 			return false
 		else
@@ -4386,22 +4420,22 @@ local villager_gift_tables = {
 		stacks_max = 5,
 		items = {
 			{
-				itemstring = "vlf_core:iron_ingot",
+				itemstring = "mcl_core:iron_ingot",
 				amount_min = 1,
 				amount_max = 3,
 				weight = 2,
 			},
 			{
-				itemstring = "vlf_farming:bread",
+				itemstring = "mcl_farming:bread",
 				amount_min = 1,
 				amount_max = 4,
 				weight = 4,
 			},
 			{
-				itemstring = "vlf_armor:helmet_iron",
+				itemstring = "mcl_armor:helmet_iron",
 			},
 			{
-				itemstring = "vlf_core:emerald",
+				itemstring = "mcl_core:emerald",
 			},
 		},
 	},
@@ -4410,25 +4444,25 @@ local villager_gift_tables = {
 		stacks_max = 5,
 		items = {
 			{
-				itemstring = "vlf_core:emerald",
+				itemstring = "mcl_core:emerald",
 			},
 			{
-				itemstring = "vlf_mobitems:porkchop",
+				itemstring = "mcl_mobitems:porkchop",
 				amount_min = 1,
 				amount_max = 3,
 			},
 			{
-				itemstring = "vlf_farming:wheat_item",
+				itemstring = "mcl_farming:wheat_item",
 				amount_min = 1,
 				amount_max = 3,
 			},
 			{
-				itemstring = "vlf_mobitems:beef",
+				itemstring = "mcl_mobitems:beef",
 				amount_min = 1,
 				amount_max = 3,
 			},
 			{
-				itemstring = "vlf_mobitems:mutton",
+				itemstring = "mcl_mobitems:mutton",
 				amount_min = 1,
 				amount_max = 3,
 			},
@@ -4439,27 +4473,27 @@ local villager_gift_tables = {
 		stacks_max = 5,
 		items = {
 			{
-				itemstring = "vlf_maps:empty_map",
+				itemstring = "mcl_maps:empty_map",
 				amount_min = 1.0,
 				amount_max = 3.0,
 				weight = 10,
 			},
 			{
-				itemstring = "vlf_core:paper",
+				itemstring = "mcl_core:paper",
 				amount_min = 1.0,
 				amount_max = 5.0,
 				weight = 15,
 			},
 			{
-				itemstring = vlf_compass.stereotype,
+				itemstring = mcl_compass.stereotype,
 				weight = 5,
 			},
 			{
-				itemstring = "vlf_farming:bread",
+				itemstring = "mcl_farming:bread",
 				weight = 15,
 			},
 			{
-				itemstring = "vlf_core:stick",
+				itemstring = "mcl_core:stick",
 				amount_max = 2.0,
 				amount_min = 1.0,
 				weight = 5,
@@ -4471,31 +4505,31 @@ local villager_gift_tables = {
 		stacks_max = 5,
 		items = {
 			{
-				itemstring = "vlf_core:emerald",
+				itemstring = "mcl_core:emerald",
 			},
 			{
-				itemstring = "vlf_fishing:fish_raw",
+				itemstring = "mcl_fishing:fish_raw",
 				amount_max = 3.0,
 				amount_min = 1.0,
 				weight = 2,
 			},
 			{
-				itemstring = "vlf_fishing:salmon_raw",
+				itemstring = "mcl_fishing:salmon_raw",
 				amount_max = 3.0,
 				amount_min = 1.0,
 			},
 			{
-				itemstring = "vlf_core:bucket_water",
+				itemstring = "mcl_core:bucket_water",
 				amount_max = 3.0,
 				amount_min = 1.0,
 			},
 			{
-				itemstring = "vlf_barrels:barrel_closed",
+				itemstring = "mcl_barrels:barrel_closed",
 				amount_max = 3.0,
 				amount_min = 1.0,
 			},
 			{
-				itemstring = "vlf_core:coal",
+				itemstring = "mcl_core:coal",
 				amount_max = 3.0,
 				amount_min = 2.0,
 				weight = 2,
@@ -4507,31 +4541,31 @@ local villager_gift_tables = {
 		stacks_max = 5,
 		items = {
 			{
-				itemstring = "vlf_bows:arrow",
+				itemstring = "mcl_bows:arrow",
 				amount_max = 3.0,
 				amount_min = 1.0,
 				weight = 2,
 			},
 			{
-				itemstring = "vlf_core:feather",
+				itemstring = "mcl_core:feather",
 				amount_max = 3.0,
 				amount_min = 1.0,
 				weight = 6,
 			},
 			{
-				itemstring = "vlf_throwing:egg",
+				itemstring = "mcl_throwing:egg",
 				amount_max = 3.0,
 				amount_min = 1.0,
 				weight = 6,
 			},
 			{
-				itemstring = "vlf_core:flint",
+				itemstring = "mcl_core:flint",
 				amount_max = 3.0,
 				amount_min = 1.0,
 				weight = 6,
 			},
 			{
-				itemstring = "vlf_core:stick",
+				itemstring = "mcl_core:stick",
 				amount_max = 3.0,
 				amount_min = 1.0,
 				weight = 6,
@@ -4543,35 +4577,35 @@ local villager_gift_tables = {
 		stacks_max = 5,
 		items = {
 			{
-				itemstring = "vlf_core:clay_lump",
+				itemstring = "mcl_core:clay_lump",
 				amount_max = 3.0,
 				amount_min = 1.0,
 			},
 			{
-				itemstring = "vlf_flowerpots:flower_pot",
+				itemstring = "mcl_flowerpots:flower_pot",
 			},
 			{
-				itemstring = "vlf_core:stone",
+				itemstring = "mcl_core:stone",
 				weight = 2,
 			},
 			{
-				itemstring = "vlf_core:stonebrick",
+				itemstring = "mcl_core:stonebrick",
 				weight = 2,
 			},
 			{
-				itemstring = "vlf_farming:bread",
+				itemstring = "mcl_farming:bread",
 				amount_max = 4.0,
 				amount_min = 1.0,
 				weight = 4,
 			},
 			{
-				itemstring = "vlf_dyes:yellow",
+				itemstring = "mcl_dyes:yellow",
 			},
 			{
-				itemstring = "vlf_core:stone_smooth",
+				itemstring = "mcl_core:stone_smooth",
 			},
 			{
-				itemstring = "vlf_core:emerald",
+				itemstring = "mcl_core:emerald",
 			},
 		},
 	},
@@ -4580,34 +4614,34 @@ local villager_gift_tables = {
 		stacks_max = 5,
 		items = {
 			{
-				itemstring = "vlf_wool:white",
+				itemstring = "mcl_wool:white",
 				amount_max = 8.0,
 				amount_min = 1.0,
 				weight = 6,
 			},
 			{
-				itemstring = "vlf_wool:black",
+				itemstring = "mcl_wool:black",
 				amount_max = 3.0,
 				amount_min = 1.0,
 				weight = 3,
 			},
 			{
-				itemstring = "vlf_wool:grey",
+				itemstring = "mcl_wool:grey",
 				amount_max = 3.0,
 				amount_min = 1.0,
 				weight = 2,
 			},
 			{
-				itemstring = "vlf_wool:light_gray",
+				itemstring = "mcl_wool:light_gray",
 				amount_max = 3.0,
 				amount_min = 1.0,
 				weight = 2,
 			},
 			{
-				itemstring = "vlf_core:emerald",
+				itemstring = "mcl_core:emerald",
 			},
 			{
-				itemstring = "vlf_tools:shears",
+				itemstring = "mcl_tools:shears",
 			},
 		},
 	},
@@ -4616,38 +4650,38 @@ local villager_gift_tables = {
 		stacks_max = 8,
 		items = {
 			{
-				itemstring = "vlf_core:diamond",
+				itemstring = "mcl_core:diamond",
 				amount_max = 3.0,
 				amount_min = 1.0,
 			},
 			{
-				itemstring = "vlf_core:iron_ingot",
+				itemstring = "mcl_core:iron_ingot",
 				amount_max = 5.0,
 				amount_min = 1.0,
 				weight = 5,
 			},
 			{
-				itemstring = "vlf_core:gold_ingot",
+				itemstring = "mcl_core:gold_ingot",
 				amount_max = 3.0,
 				amount_min = 1.0,
 			},
 			{
-				itemstring = "vlf_farming:bread",
+				itemstring = "mcl_farming:bread",
 				amount_max = 3.0,
 				amount_min = 1.0,
 				weight = 15,
 			},
 			{
-				itemstring = "vlf_tools:pick_iron",
+				itemstring = "mcl_tools:pick_iron",
 				weight = 5,
 			},
 			{
-				itemstring = "vlf_core:coal",
+				itemstring = "mcl_core:coal",
 				amount_min = 1.0,
 				amount_max = 3.0,
 			},
 			{
-				itemstring = "vlf_core:stick",
+				itemstring = "mcl_core:stick",
 				amount_max = 3.0,
 				amount_min = 1.0,
 				weight = 20,
@@ -4659,83 +4693,83 @@ local villager_gift_tables = {
 		stacks_max = 8,
 		items = {
 			{
-				itemstring = "vlf_core:diamond",
+				itemstring = "mcl_core:diamond",
 				amount_max = 3.0,
 				amount_min = 1.0,
 				weight = 3,
 			},
 			{
-				itemstring = "vlf_core:iron_ingot",
+				itemstring = "mcl_core:iron_ingot",
 				amount_max = 5.0,
 				amount_min = 1.0,
 				weight = 10,
 			},
 			{
-				itemstring = "vlf_core:gold_ingot",
+				itemstring = "mcl_core:gold_ingot",
 				amount_max = 3.0,
 				amount_min = 1.0,
 				weight = 5,
 			},
 			{
-				itemstring = "vlf_farming:bread",
-				amount_max = 3.0,
-				amount_min = 1.0,
-				weight = 15,
-			},
-			{
-				itemstring = "vlf_core:apple",
+				itemstring = "mcl_farming:bread",
 				amount_max = 3.0,
 				amount_min = 1.0,
 				weight = 15,
 			},
 			{
-				itemstring = "vlf_tools:pick_iron",
+				itemstring = "mcl_core:apple",
+				amount_max = 3.0,
+				amount_min = 1.0,
+				weight = 15,
+			},
+			{
+				itemstring = "mcl_tools:pick_iron",
 				weight = 5,
 			},
 			{
-				itemstring = "vlf_tools:sword_iron",
+				itemstring = "mcl_tools:sword_iron",
 				weight = 5,
 			},
 			{
-				itemstring = "vlf_armor:chestplate_iron",
+				itemstring = "mcl_armor:chestplate_iron",
 				weight = 5,
 			},
 			{
-				itemstring = "vlf_armor:helmet_iron",
+				itemstring = "mcl_armor:helmet_iron",
 				weight = 5,
 			},
 			{
-				itemstring = "vlf_armor:leggings_iron",
+				itemstring = "mcl_armor:leggings_iron",
 				weight = 5,
 			},
 			{
-				itemstring = "vlf_armor:boots_iron",
+				itemstring = "mcl_armor:boots_iron",
 				weight = 5,
 			},
 			{
-				itemstring = "vlf_core:obsidian",
+				itemstring = "mcl_core:obsidian",
 				amount_max = 7.0,
 				amount_min = 3.0,
 				weight = 5,
 			},
 			{
-				itemstring = "vlf_core:oak_sapling",
+				itemstring = "mcl_core:oak_sapling",
 				amount_max = 7.0,
 				amount_min = 3.0,
 				weight = 5,
 			},
 			{
-				itemstring = "vlf_mobitems:saddle",
+				itemstring = "mcl_mobitems:saddle",
 				weight = 3,
 			},
 			{
-				itemstring = "vlf_mobitems:iron_horse_armor",
+				itemstring = "mcl_mobitems:iron_horse_armor",
 			},
 			{
-				itemstring = "vlf_mobitems:golden_horse_armor",
+				itemstring = "mcl_mobitems:golden_horse_armor",
 			},
 			{
-				itemstring = "vlf_mobitems:diamond_horse_armor",
+				itemstring = "mcl_mobitems:diamond_horse_armor",
 			},
 		},
 	},
@@ -4744,14 +4778,14 @@ local villager_gift_tables = {
 function villager:throw_gifts (self_pos, recipient, pos)
 	local items
 	if self.child then
-		items = {ItemStack ("vlf_flowers:poppy")}
+		items = {ItemStack ("mcl_flowers:poppy")}
 	else
 		local profession_table = self._profession
 			and villager_gift_tables[self._profession]
 		if profession_table then
-			items = vlf_loot.get_loot (profession_table, pr)
+			items = mcl_loot.get_loot (profession_table, pr)
 		else
-			items = {ItemStack ("vlf_farming:wheat_seeds")}
+			items = {ItemStack ("mcl_farming:wheat_seeds")}
 		end
 	end
 
@@ -4815,8 +4849,8 @@ local function is_leader (child)
 end
 
 local function get_poi_heat (pos)
-	local nodepos = vlf_util.get_nodepos (pos)
-	return vlf_villages.get_poi_heat (nodepos)
+	local nodepos = mcl_util.get_nodepos (pos)
+	return mcl_villages.get_poi_heat (nodepos)
 end
 
 local function count_pursuers (child, children)
@@ -4997,8 +5031,8 @@ local function generate_pace_around_village (activity_name, bonus, range_xz, ran
 			and (always or pr:next (1, 120) == 1)
 			and (not start_condition
 			     or start_condition (self, self_pos)) then
-			local section = vlf_villages.section_position (self_pos)
-			local heat = vlf_villages.get_poi_heat_of_section (section)
+			local section = mcl_villages.section_position (self_pos)
+			local heat = mcl_villages.get_poi_heat_of_section (section)
 			local pos
 			local xz = range_xz
 			local y = range_y
@@ -5008,7 +5042,7 @@ local function generate_pace_around_village (activity_name, bonus, range_xz, ran
 			else
 				local target = find_nearest_village_section (section, 5)
 				if target and not vector.equals (target, section) then
-					local center = vlf_villages.center_of_section (target)
+					local center = mcl_villages.center_of_section (target)
 					local dir = vector.direction (self_pos, center)
 					pos = self:target_in_direction (self_pos, xz, y, dir, math.pi / 2)
 				else
@@ -5035,7 +5069,7 @@ villager.pace_around_village
 villager.village_aware_pacing
 	= generate_pace_around_village ("_village_aware_pacing", 0.5, 10, 7, false,
 					function (self, self_pos)
-						local heat = vlf_villages.get_poi_heat (self_pos)
+						local heat = mcl_villages.get_poi_heat (self_pos)
 						return heat <= 4 and not self._home
 					end)
 
@@ -5206,17 +5240,17 @@ function villager:socialize_at_bell (self_pos, dtime)
 end
 
 local villager_food_points = {
-	["vlf_farming:bread"] = 4,
-	["vlf_farming:potato_item"] = 1,
-	["vlf_farming:carrot"] = 1,
-	["vlf_farming:beetroot"] = 1,
+	["mcl_farming:bread"] = 4,
+	["mcl_farming:potato_item"] = 1,
+	["mcl_farming:carrot_item"] = 1,
+	["mcl_farming:beetroot_item"] = 1,
 }
 
 local villager_food_items = {
-	"vlf_farming:bread",
-	"vlf_farming:potato_item",
-	"vlf_farming:carrot_item",
-	"vlf_farming:beetroot_item",
+	"mcl_farming:bread",
+	"mcl_farming:potato_item",
+	"mcl_farming:carrot_item",
+	"mcl_farming:beetroot_item",
 }
 
 function villager:count_food_points ()
@@ -5350,8 +5384,8 @@ function villager:gossip_and_trade (self_pos, dtime)
 				self:throw_some_of (self_pos, target_pos, villager_food_items)
 			end
 			if entity._profession == "farmer"
-				and self:count_items ("vlf_farming:wheat_item") > 32 then
-				self:throw_some_of (self_pos, target_pos, {"vlf_farming:wheat_item"})
+				and self:count_items ("mcl_farming:wheat_item") > 32 then
+				self:throw_some_of (self_pos, target_pos, {"mcl_farming:wheat_item"})
 			end
 			if #self._gossip_trades > 0 then
 				self:throw_some_of (self_pos, target_pos, self._gossip_trades)
@@ -5514,9 +5548,9 @@ function villager:make_love (self_pos, dtime)
 					self._birth_time = nil
 					return false
 				elseif pr:next (1, 45) == 1 then
-					vlf_mobs.effect (vector.offset (self_pos, 0, 1.7, 0),
+					mcl_mobs.effect (vector.offset (self_pos, 0, 1.7, 0),
 						5, "heart.png", 2, 4, 2.0, 0.1)
-					vlf_mobs.effect (vector.offset (mate_pos, 0, 1.7, 0),
+					mcl_mobs.effect (vector.offset (mate_pos, 0, 1.7, 0),
 						5, "heart.png", 2, 4, 2.0, 0.1)
 				end
 			end
@@ -5566,7 +5600,7 @@ function villager:begin_lovemaking (object, dtime)
 end
 
 -- TODO: rewrite raids to vary by difficulty and to utilize the
--- village mechanics defined here and by vlf_villages.
+-- village mechanics defined here and by mcl_villages.
 
 function villager:answer_raid (self_pos, dtime)
 end
@@ -5644,6 +5678,8 @@ function villager:calm_down (self_pos, dtime)
 		and not self._panic_source
 		and not self:seen_hostile_lately (self_pos) then
 		self._special_schedule = nil
+	elseif self:check_timer ("golem_summon", 5.0) then
+		self:maybe_summon_golem (self_pos, 3)
 	end
 end
 
@@ -5827,6 +5863,7 @@ function villager:get_staticdata_table ()
 		supertable._player_wielditem = nil
 		supertable._displayed_trades = nil
 		supertable._wielditem_timer = nil
+		supertable._near_map_boundaries = nil
 
 		if supertable._trades then
 			-- It is possible for supertable._trade not to
@@ -5996,6 +6033,7 @@ function villager:ai_step (dtime)
 		self._hero_cooldown = t
 	end
 
+	self._near_map_boundaries = nil
 	self:tick_retry (dtime)
 	self:decay_gossips ()
 end
@@ -6136,24 +6174,24 @@ end
 -- Villager pathfinding.
 ------------------------------------------------------------------------
 
--- Many village buildings in vlf are generated with spaces comprising
+-- Many village buildings in mcl are generated with spaces comprising
 -- two nodes' worth of clearance formed by a pair of slabs or slablike
 -- blocks.  In order to navigate these passageways, villagers
 -- specifically depart from Minecraft pathfinding behavior by
 -- accounting for walkable spaces formed by a pair of lower and upper
 -- slabs, disabling this classic mob trap.
 
-local gwp_basic_node_classes = vlf_mobs.gwp_basic_node_classes
-local gwp_classify_node_1 = vlf_mobs.gwp_classify_node_1
-local gwp_get_node = vlf_mobs.gwp_get_node
-local hashpos = vlf_mobs.gwp_hashpos
+local gwp_basic_node_classes = mcl_mobs.gwp_basic_node_classes
+local gwp_classify_node_1 = mcl_mobs.gwp_classify_node_1
+local gwp_get_node = mcl_mobs.gwp_get_node
+local hashpos = mcl_mobs.gwp_hashpos
 
 local is_top_slab = {}
 local is_bottom_slab = {}
 
 minetest.register_on_mods_loaded (function ()
 	for name, def in pairs (minetest.registered_nodes) do
-		local value = vlf_mobs.gwp_name_to_nodevalue (name)
+		local value = mcl_mobs.gwp_name_to_nodevalue (name)
 		if def.groups.slab_top then
 			is_top_slab[value] = true
 		elseif def.groups.slab or def.groups.bed then
@@ -6268,7 +6306,7 @@ function villager:gwp_classify_node (context, pos)
 end
 
 function villager:gwp_align_start_pos (pos)
-	local nodepos = vlf_util.get_nodepos (pos)
+	local nodepos = mcl_util.get_nodepos (pos)
 	local is_bottom_slab = is_pos_bottom_slab (pos)
 
 	if not self.child and is_bottom_slab then
@@ -6323,8 +6361,8 @@ local function is_old_trade_list (trades)
 end
 
 function villager:claim_poi_for_upgrade (old_jobsite)
-	local poi = vlf_villages.get_poi (old_jobsite)
-	if poi and poi.data ~= "vlf_villages:provisional_poi" then
+	local poi = mcl_villages.get_poi (old_jobsite)
+	if poi and poi.data ~= "mcl_villages:provisional_poi" then
 		local template = {
 			"[mobs_mc] Failed to upgrade work site of old ",
 			self._profession or "unemployed",
@@ -6353,9 +6391,9 @@ function villager:claim_poi_for_upgrade (old_jobsite)
 			-- villager has decided to attempt to claim it),
 			-- delete it.
 			if poi then
-				vlf_villages.remove_poi (poi.id)
+				mcl_villages.remove_poi (poi.id)
 			end
-			if vlf_villages.insert_poi (old_jobsite, profession.poi) then
+			if mcl_villages.insert_poi (old_jobsite, profession.poi) then
 				self._job_site = old_jobsite
 				self._jobsite = nil
 				self._wander_time = 0
@@ -6394,7 +6432,7 @@ function villager:claim_home_for_upgrade (old_bed)
 		return
 	end
 
-	local poi = vlf_villages.get_poi (bottom)
+	local poi = mcl_villages.get_poi (bottom)
 	if poi then
 		local template = {
 			"[mobs_mc] Failed to upgrade bed of old ",
@@ -6420,7 +6458,7 @@ local function search_upward_for_bell (bell_pos)
 
 	for i = 0, 8 do
 		local node = vector.offset (bell_pos, 0, i, 0)
-		if minetest.get_node (node).name == "vlf_bells:bell" then
+		if minetest.get_node (node).name == "mcl_bells:bell" then
 			return node
 		end
 	end
@@ -6543,10 +6581,10 @@ function villager:post_load_staticdata ()
 	end
 end
 
-vlf_mobs.register_mob ("mobs_mc:villager", villager)
+mcl_mobs.register_mob ("mobs_mc:villager", villager)
 
 ------------------------------------------------------------------------
 -- Villager spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.register_egg ("mobs_mc:villager", S("Villager"), "#563d33", "#bc8b72", 0)
+mcl_mobs.register_egg ("mobs_mc:villager", S("Villager"), "#563d33", "#bc8b72", 0)

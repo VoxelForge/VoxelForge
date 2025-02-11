@@ -1,7 +1,7 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 local rabbit = {
 	description = S("Rabbit"),
@@ -53,17 +53,17 @@ local rabbit = {
 	runaway = true,
 	drops = {
 		{
-			name = "vlf_mobitems:rabbit",
+			name = "mcl_mobitems:rabbit",
 			chance = 1, min = 0, max = 1,
 			looting = "common",
 		},
 		{
-			name = "vlf_mobitems:rabbit_hide",
+			name = "mcl_mobitems:rabbit_hide",
 			chance = 1, min = 0, max = 1,
 			looting = "common",
 		},
 		{
-			name = "vlf_mobitems:rabbit_foot",
+			name = "mcl_mobitems:rabbit_foot",
 			chance = 10, min = 0, max = 1,
 			looting = "rare",
 			looting_factor = 0.03,
@@ -81,9 +81,9 @@ local rabbit = {
 	},
 	-- Follow (yellow) dangelions, carrots and golden carrots
 	follow = {
-		"vlf_flowers:dandelion",
-		"vlf_farming:carrot_item",
-		"vlf_farming:carrot_item_gold",
+		"mcl_flowers:dandelion",
+		"mcl_farming:carrot_item",
+		"mcl_farming:carrot_item_gold",
 	},
 	climb_powder_snow = true,
 	follow_bonus = 1.0,
@@ -134,8 +134,8 @@ function rabbit:on_spawn ()
 	local definition = minetest.registered_biomes[name]
 	local texture
 
-	if definition._vlf_biome_type == "cold"
-		or definition._vlf_biome_type == "snowy" then
+	if definition._mcl_biome_type == "cold"
+		or definition._mcl_biome_type == "snowy" then
 		if random < 80 then
 			texture = "mobs_mc_rabbit_white.png"
 		else
@@ -159,7 +159,7 @@ end
 ------------------------------------------------------------------------
 
 function rabbit:get_jump_force (moveresult)
-	local collides = vlf_mobs.horiz_collision (moveresult)
+	local collides = mcl_mobs.horiz_collision (moveresult)
 	local self_pos = self.object:get_pos ()
 	local v = 0.3
 
@@ -204,8 +204,7 @@ function rabbit:do_go_pos (dtime, moveresult)
 		self.acc_dir.x = 0
 		self.acc_dir.y = 0
 	else
-		local self_pos = self.object:get_pos ()
-		local depth = self:immersion_depth ("water", self_pos, 1.0)
+		local depth = self._immersion_depth
 		local factor = 1.0
 		if depth > self.head_eye_height then
 			factor = 1.5
@@ -325,7 +324,7 @@ local function rabbit_grief_garden (self, self_pos, dtime)
 					pos = target,
 				}, true)
 
-				local carrot = "vlf_farming:carrot_"
+				local carrot = "mcl_farming:carrot_"
 					.. previous_stage (age)
 				minetest.place_node (target, {
 					name = carrot,
@@ -358,7 +357,7 @@ local function rabbit_grief_garden (self, self_pos, dtime)
 		end
 		-- Locate carrot blocks within a 16 block horizontal
 		-- area.
-		local nodepos = vlf_util.get_nodepos (self_pos)
+		local nodepos = mcl_util.get_nodepos (self_pos)
 		local aa = vector.offset (nodepos, -8, 0, -8)
 		local bb = vector.offset (nodepos, 8, 1, 8)
 		local carrots = minetest.find_nodes_in_area (aa, bb, {
@@ -396,7 +395,7 @@ rabbit.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:rabbit", rabbit)
+mcl_mobs.register_mob ("mobs_mc:rabbit", rabbit)
 
 ------------------------------------------------------------------------
 -- Killer bunny.
@@ -438,12 +437,12 @@ killer_bunny.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:killer_bunny", killer_bunny)
+mcl_mobs.register_mob ("mobs_mc:killer_bunny", killer_bunny)
 
 -- Mob spawning rules.
 -- Different skins depending on spawn location <- we'll get to this when the spawning algorithm is fleshed out
 
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:rabbit",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -463,7 +462,7 @@ vlf_mobs.spawn_setup({
 })
 
 -- Spawn egg
-vlf_mobs.register_egg("mobs_mc:rabbit", S("Rabbit"), "#995f40", "#734831", 0)
+mcl_mobs.register_egg("mobs_mc:rabbit", S("Rabbit"), "#995f40", "#734831", 0)
 
 -- Note: This spawn egg does not exist in Minecraft
-vlf_mobs.register_egg("mobs_mc:killer_bunny", S("Killer Bunny"), "#f2f2f2", "#ff0000", 0)
+mcl_mobs.register_egg("mobs_mc:killer_bunny", S("Killer Bunny"), "#f2f2f2", "#ff0000", 0)

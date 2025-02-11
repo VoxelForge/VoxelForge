@@ -67,10 +67,13 @@ msgstr "Guardião Ancião"
 msgid "Hoglin"
 msgstr "Hoglin"
 
+msgid "Baby Hoglin"
+msgstr ""
+
 msgid "Zoglin"
 msgstr "Zoglin"
 
-msgid "Baby Hoglin"
+msgid "Sneak to dismount"
 msgstr ""
 
 msgid "Horse"
@@ -87,9 +90,6 @@ msgstr "Burro"
 
 msgid "Mule"
 msgstr "Mula"
-
-msgid "Sneak to dismount"
-msgstr ""
 
 msgid "Iron Golem"
 msgstr "Golem de Ferro"
@@ -112,14 +112,14 @@ msgstr "Porco"
 msgid "Piglin"
 msgstr "Piglin"
 
-msgid "Zombiefied Piglin"
-msgstr ""
-
 msgid "Piglin Brute"
 msgstr "Piglin Barbáro"
 
 msgid "Zombie Piglin"
 msgstr "Piglin Zumbi"
+
+msgid "Zombified Piglin"
+msgstr ""
 
 msgid "Pillager"
 msgstr "Saqueador"
@@ -211,32 +211,17 @@ msgstr "Vex"
 msgid "Villager"
 msgstr "Aldeão"
 
-msgid "Evoker"
-msgstr "Invocador"
+msgid "Armorer"
+msgstr "Armoreiro"
 
-msgid "Illusioner"
-msgstr "Ilusionista"
+msgid "Butcher"
+msgstr "Açougueiro"
 
-msgid "Vindicator"
-msgstr "Vingador"
+msgid "Cartographer"
+msgstr "Cartógrafo"
 
-msgid "Zombie Villager"
-msgstr "Aldeão Zumbi"
-
-msgid "@1 sleeps here"
-msgstr ""
-
-msgid "A villager sleeps here"
-msgstr ""
-
-msgid "@1 works here"
-msgstr ""
-
-msgid "A villager works here"
-msgstr ""
-
-msgid "Unemployed"
-msgstr ""
+msgid "Cleric"
+msgstr "Clérigo"
 
 msgid "Farmer"
 msgstr "Fazendeiro"
@@ -247,41 +232,26 @@ msgstr "Pescador"
 msgid "Fletcher"
 msgstr "Flecheiro"
 
-msgid "Shepherd"
-msgstr "Pastor"
+msgid "Leatherworker"
+msgstr "Coureiro"
 
 msgid "Librarian"
 msgstr "Bibliotecário"
 
-msgid "Cartographer"
-msgstr "Cartógrafo"
-
-msgid "Armorer"
-msgstr "Armoreiro"
-
-msgid "Leatherworker"
-msgstr "Coureiro"
-
-msgid "Butcher"
-msgstr "Açougueiro"
-
-msgid "Weapon Smith"
-msgstr "Armeiro"
-
-msgid "Tool Smith"
-msgstr "Ferramenteiro"
-
-msgid "Cleric"
-msgstr "Clérigo"
-
 msgid "Mason"
+msgstr ""
+
+msgid "Shepherd"
+msgstr "Pastor"
+
+msgid "Toolsmith"
+msgstr ""
+
+msgid "Weaponsmith"
 msgstr ""
 
 msgid "Nitwit"
 msgstr "Palerma"
-
-msgid "Wandering Trader"
-msgstr ""
 
 msgid "Novice"
 msgstr ""
@@ -298,6 +268,24 @@ msgstr ""
 msgid "Master"
 msgstr ""
 
+msgid "Evoker"
+msgstr "Invocador"
+
+msgid "Illusioner"
+msgstr "Ilusionista"
+
+msgid "Vindicator"
+msgstr "Vingador"
+
+msgid "Zombie Villager"
+msgstr "Aldeão Zumbi"
+
+msgid "Wandering Trader"
+msgstr ""
+
+msgid "Trader Llama"
+msgstr ""
+
 msgid "Witch"
 msgstr "Bruxa"
 
@@ -306,9 +294,6 @@ msgstr "Wither"
 
 msgid "Wolf"
 msgstr "Lobo"
-
-msgid "Dog"
-msgstr ""
 
 msgid "Zombie"
 msgstr "Zumbi"
@@ -321,7 +306,4 @@ msgstr "Zumbi-Múmia"
 
 msgid "Baby Husk"
 msgstr "Zumbi-Múmia Bebê"
-
-msgid "Zombified Piglin"
-msgstr ""
 

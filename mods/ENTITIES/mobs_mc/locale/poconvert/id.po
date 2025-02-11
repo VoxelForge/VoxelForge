@@ -67,11 +67,14 @@ msgstr "Tetua Penjaga"
 msgid "Hoglin"
 msgstr ""
 
+msgid "Baby Hoglin"
+msgstr "Bayi Hoglin"
+
 msgid "Zoglin"
 msgstr ""
 
-msgid "Baby Hoglin"
-msgstr "Bayi Hoglin"
+msgid "Sneak to dismount"
+msgstr "Menyelinap untuk turun"
 
 msgid "Horse"
 msgstr "Kuda"
@@ -87,9 +90,6 @@ msgstr "Keledai"
 
 msgid "Mule"
 msgstr "Bagal"
-
-msgid "Sneak to dismount"
-msgstr "Menyelinap untuk turun"
 
 msgid "Iron Golem"
 msgstr "Golem Besi"
@@ -112,14 +112,14 @@ msgstr "Babi"
 msgid "Piglin"
 msgstr ""
 
-msgid "Zombiefied Piglin"
-msgstr "Piglin Zombifikasi"
-
 msgid "Piglin Brute"
 msgstr "Piglin Brutal"
 
 msgid "Zombie Piglin"
 msgstr "Piglin Zombi"
+
+msgid "Zombified Piglin"
+msgstr "Zombifikasi Piglin"
 
 msgid "Pillager"
 msgstr "Penjarah"
@@ -211,32 +211,17 @@ msgstr ""
 msgid "Villager"
 msgstr "Penduduk"
 
-msgid "Evoker"
-msgstr ""
+msgid "Armorer"
+msgstr "Pandai Besi Zirah"
 
-msgid "Illusioner"
-msgstr "Ilusionis"
+msgid "Butcher"
+msgstr "Tukang Daging"
 
-msgid "Vindicator"
-msgstr "Pembela"
+msgid "Cartographer"
+msgstr "Kartogram"
 
-msgid "Zombie Villager"
-msgstr "Zombi Penduduk"
-
-msgid "@1 sleeps here"
-msgstr "@1 tidur disini"
-
-msgid "A villager sleeps here"
-msgstr "Penduduk tidur disini"
-
-msgid "@1 works here"
-msgstr "@1 bekerja disini"
-
-msgid "A villager works here"
-msgstr "Penduduk bekerja disini"
-
-msgid "Unemployed"
-msgstr "Pengangguran"
+msgid "Cleric"
+msgstr "Pendeta"
 
 msgid "Farmer"
 msgstr "Petani"
@@ -247,41 +232,26 @@ msgstr "Nelayan"
 msgid "Fletcher"
 msgstr ""
 
-msgid "Shepherd"
-msgstr "Gembala"
+msgid "Leatherworker"
+msgstr "Pengrajin Kulit"
 
 msgid "Librarian"
 msgstr "Pustakawan"
 
-msgid "Cartographer"
-msgstr "Kartogram"
-
-msgid "Armorer"
-msgstr "Pandai Besi Zirah"
-
-msgid "Leatherworker"
-msgstr "Pengrajin Kulit"
-
-msgid "Butcher"
-msgstr "Tukang Daging"
-
-msgid "Weapon Smith"
-msgstr "Empu"
-
-msgid "Tool Smith"
-msgstr "Pandai Besi Alat"
-
-msgid "Cleric"
-msgstr "Pendeta"
-
 msgid "Mason"
 msgstr "Tukang Batu"
 
+msgid "Shepherd"
+msgstr "Gembala"
+
+msgid "Toolsmith"
+msgstr ""
+
+msgid "Weaponsmith"
+msgstr ""
+
 msgid "Nitwit"
 msgstr "Dungu"
-
-msgid "Wandering Trader"
-msgstr "Pengembara"
 
 msgid "Novice"
 msgstr "Pemula"
@@ -298,6 +268,24 @@ msgstr "Pakar"
 msgid "Master"
 msgstr "Sepuh"
 
+msgid "Evoker"
+msgstr ""
+
+msgid "Illusioner"
+msgstr "Ilusionis"
+
+msgid "Vindicator"
+msgstr "Pembela"
+
+msgid "Zombie Villager"
+msgstr "Zombi Penduduk"
+
+msgid "Wandering Trader"
+msgstr "Pengembara"
+
+msgid "Trader Llama"
+msgstr ""
+
 msgid "Witch"
 msgstr "Penyihir"
 
@@ -306,9 +294,6 @@ msgstr "Layu"
 
 msgid "Wolf"
 msgstr "Serigala"
-
-msgid "Dog"
-msgstr "Anjing"
 
 msgid "Zombie"
 msgstr "Zombi"
@@ -321,7 +306,4 @@ msgstr "Sekam"
 
 msgid "Baby Husk"
 msgstr "Bayi Sekam"
-
-msgid "Zombified Piglin"
-msgstr "Zombifikasi Piglin"
 

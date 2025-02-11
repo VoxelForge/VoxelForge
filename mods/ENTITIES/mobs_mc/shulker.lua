@@ -4,8 +4,8 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
-local is_valid = vlf_util.is_valid_objectref
+local mob_class = mcl_mobs.mob_class
+local is_valid = mcl_util.is_valid_objectref
 
 ------------------------------------------------------------------------
 -- Shulker.
@@ -44,7 +44,7 @@ local shulker = {
 	does_not_prevent_sleep = true,
 	drops = {
 		{
-			name = "vlf_mobitems:shulker_shell",
+			name = "mcl_mobitems:shulker_shell",
 			chance = 2,
 			min = 1,
 			max = 1,
@@ -55,15 +55,15 @@ local shulker = {
 	animation = {},
 	movement_speed = 0,
 	_color = "purple",
-	_vlf_fishing_hookable = true,
-	_vlf_fishing_reelable = false,
+	_mcl_fishing_hookable = true,
+	_mcl_fishing_reelable = false,
 	fire_damage = 0,
 	lava_damage = 0,
 	group_attack = {
 		"mobs_mc:shulker",
 	},
 	sounds = {
-		teleport = "vlf_end_teleport",
+		teleport = "mcl_end_teleport",
 	},
 	_cbox_extension = 0,
 	_cbox_animation = 0,
@@ -511,7 +511,7 @@ function shulker:check_head_swivel (self_pos, dtime, clear)
 
 	local locked_object = self._locked_object
 	if locked_object and is_valid (locked_object) then
-		local target_pos = vlf_util.target_eye_pos (locked_object)
+		local target_pos = mcl_util.target_eye_pos (locked_object)
 		if self._look_target
 			and vector.equals (self._look_target, target_pos) then
 			return
@@ -606,7 +606,7 @@ function shulker:attack_null (self_pos, dtime, target_pos, line_of_sight)
 
 	self._attack_cooldown = self._attack_cooldown - dtime
 
-	if vlf_vars.difficulty > 0 then
+	if mcl_vars.difficulty > 0 then
 		local distance = vector.distance (self_pos, target_pos)
 		if distance < 20 then
 			if self._attack_cooldown <= 0 then
@@ -619,7 +619,7 @@ function shulker:attack_null (self_pos, dtime, target_pos, line_of_sight)
 				local shoot_pos = vector.copy (self_pos)
 				if self._face == "up" or self._face == "down" then
 					local yaw = math.atan2 (dir.z, dir.x) - math.pi / 2
-					local x, z = vlf_util.get_2d_block_direction (yaw)
+					local x, z = mcl_util.get_2d_block_direction (yaw)
 					if self._face == "up" then
 						shoot_pos.y = shoot_pos.y + 1.0 + 0.3125 * 0.5
 					else
@@ -628,7 +628,7 @@ function shulker:attack_null (self_pos, dtime, target_pos, line_of_sight)
 					dir = vector.new (x, 0, z)
 				elseif self._face == "north" or self._face == "south" then
 					local rot = math.atan2 (dir.y, dir.x) - math.pi / 2
-					local x, y = vlf_util.get_2d_block_direction (rot)
+					local x, y = mcl_util.get_2d_block_direction (rot)
 					if self._face == "south" then
 						shoot_pos.z = shoot_pos.z - 0.5 - 0.3125 * 0.5
 						shoot_pos.y = shoot_pos.y + 0.5
@@ -639,7 +639,7 @@ function shulker:attack_null (self_pos, dtime, target_pos, line_of_sight)
 					dir = vector.new (x, y, 0)
 				else -- if self._face == "west" or self._face == "east" then
 					local rot = math.atan2 (dir.y, dir.z) - math.pi / 2
-					local z, y = vlf_util.get_2d_block_direction (rot)
+					local z, y = mcl_util.get_2d_block_direction (rot)
 					if self._face == "west" then
 						shoot_pos.x = shoot_pos.x - 0.5 - 0.3125 * 0.5
 						shoot_pos.y = shoot_pos.y + 0.5
@@ -685,7 +685,7 @@ local shulker_faces = {
 function shulker:ai_step (dtime)
 	mob_class.ai_step (self, dtime)
 	local self_pos = self.object:get_pos ()
-	local node_pos = vlf_util.get_nodepos (self_pos)
+	local node_pos = mcl_util.get_nodepos (self_pos)
 
 	if not self:attachment_valid (self._face, node_pos, self_pos) then
 		-- Try to attach to a different surface at the same
@@ -708,7 +708,7 @@ local pr = PcgRandom (os.time ())
 
 function shulker:attempt_teleport (node_pos)
 	if not node_pos then
-		node_pos = vlf_util.get_nodepos (self.object:get_pos ())
+		node_pos = mcl_util.get_nodepos (self.object:get_pos ())
 	end
 	for i = 1, 5 do
 		local dx = pr:next (-8, 8)
@@ -743,7 +743,7 @@ local r = 1 / 2147483647
 
 function shulker:maybe_duplicate ()
 	local old_pos = self.object:get_pos ()
-	local node_pos = vlf_util.get_nodepos (old_pos)
+	local node_pos = mcl_util.get_nodepos (old_pos)
 
 	if self:attempt_teleport (node_pos) then
 		local surviving_shulkers = 0
@@ -767,24 +767,24 @@ function shulker:maybe_duplicate ()
 	end
 end
 
-function shulker:receive_damage (vlf_reason, damage)
+function shulker:receive_damage (mcl_reason, damage)
 	-- Absorb arrow damage if shell is sealed.
 	if not self._peek_time and not self.attack then
-		if vlf_reason.direct then
-			local ent = vlf_reason.direct:get_luaentity ()
+		if mcl_reason.direct then
+			local ent = mcl_reason.direct:get_luaentity ()
 			if ent and ent._is_arrow then
 				return false
 			end
 		end
 	end
-	if mob_class.receive_damage (self, vlf_reason, damage) then
+	if mob_class.receive_damage (self, mcl_reason, damage) then
 		if self.health < self.initial_properties.hp_max * 0.5
 			and pr:next (4) == 1 then
 			self:attempt_teleport ()
-		elseif vlf_reason.flags.is_projectile
-			and vlf_reason.direct
-			and vlf_reason.direct:get_luaentity ()
-			and vlf_reason.direct:get_luaentity ().name
+		elseif mcl_reason.flags.is_projectile
+			and mcl_reason.direct
+			and mcl_reason.direct:get_luaentity ()
+			and mcl_reason.direct:get_luaentity ().name
 				== "mobs_mc:shulkerbullet" then
 			self:maybe_duplicate ()
 		end
@@ -793,7 +793,7 @@ function shulker:receive_damage (vlf_reason, damage)
 	return false
 end
 
-local scale_chance = vlf_mobs.scale_chance
+local scale_chance = mcl_mobs.scale_chance
 
 local function shulker_peek (self, self_pos, dtime)
 	if self._peek_time then
@@ -817,8 +817,8 @@ shulker.ai_functions = {
 	shulker_peek,
 }
 
-vlf_mobs.register_mob ("mobs_mc:shulker", shulker)
-vlf_mobs.register_egg ("mobs_mc:shulker", S("Shulker"), "#946694", "#4d3852", 0)
+mcl_mobs.register_mob ("mobs_mc:shulker", shulker)
+mcl_mobs.register_egg ("mobs_mc:shulker", S("Shulker"), "#946694", "#4d3852", 0)
 
 ------------------------------------------------------------------------
 -- Shulker bullet.
@@ -850,8 +850,8 @@ local shulker_bullet = {
 		static_save = false,
 		use_texture_alpha = true,
 	},
-	_vlf_fishing_hookable = true,
-	_vlf_fishing_reelable = true,
+	_mcl_fishing_hookable = true,
+	_mcl_fishing_reelable = true,
 	_dir = vector.zero (),
 	_dir_accel = vector.zero (),
 	_time_to_switch = 0,
@@ -883,7 +883,7 @@ local random_dirs = {
 }
 
 function shulker_bullet:switch_dir (self_pos, target_pos)
-	local node_pos = vlf_util.get_nodepos (self_pos)
+	local node_pos = mcl_util.get_nodepos (self_pos)
 	local dx = target_pos.x - self_pos.x
 	local dy = target_pos.y - self_pos.y
 	local dz = target_pos.z - self_pos.z
@@ -963,8 +963,8 @@ function shulker_bullet:attack_allowed (object)
 end
 
 function shulker_bullet:hit_object (object)
-	vlf_potions.give_effect_by_level ("levitation", object, 1, 10)
-	vlf_mobs.get_arrow_damage_func (4) (self, object)
+	mcl_potions.give_effect_by_level ("levitation", object, 1, 10)
+	mcl_mobs.get_arrow_damage_func (4) (self, object)
 end
 
 function shulker_bullet:check_hit (self_pos, moveresult, v, dtime)
@@ -974,7 +974,7 @@ function shulker_bullet:check_hit (self_pos, moveresult, v, dtime)
 				pos = self_pos, gain = 1.0,
 				max_hear_distance = 16,
 			}, true)
-			vlf_explosions.add_particles (self_pos, 2)
+			mcl_explosions.add_particles (self_pos, 2)
 			self.object:remove ()
 			return true
 		end
@@ -1022,7 +1022,7 @@ function shulker_bullet:check_hit (self_pos, moveresult, v, dtime)
 	return false
 end
 
-local pow_by_step = vlf_mobs.pow_by_step
+local pow_by_step = mcl_mobs.pow_by_step
 
 function shulker_bullet:on_step (dtime, moveresult)
 	local v = self.object:get_velocity ()
@@ -1038,14 +1038,14 @@ function shulker_bullet:on_step (dtime, moveresult)
 		minetest.add_particle ({
 			pos = particle_pos,
 			expirationtime = 5.0,
-			texture = "vlf_particles_smoke_anim.png",
+			texture = "mcl_particles_smoke_anim.png",
 			animation = {
 				type = "vertical_frames",
 				aspect_w = 8,
 				aspect_h = 8,
 				length = 5.0,
 			},
-			size = vlf_util.float_random (1, 4),
+			size = mcl_util.float_random (1, 4),
 		})
 	end
 
@@ -1060,15 +1060,15 @@ function shulker_bullet:on_step (dtime, moveresult)
 		return
 	end
 
-	local target_pos = vlf_util.target_eye_pos (self._target)
+	local target_pos = mcl_util.target_eye_pos (self._target)
 	if self._time_to_switch == 0 then
 		self:switch_dir (self_pos, target_pos)
 		self._time_to_switch = (10 + pr:next (0, 4) * 10) / 20
 	end
 
-	local node_pos = vlf_util.get_nodepos (self_pos)
+	local node_pos = mcl_util.get_nodepos (self_pos)
 	local next_node = vector.add (node_pos, self._dir)
-	local target_nodepos = vlf_util.get_nodepos (target_pos)
+	local target_nodepos = mcl_util.get_nodepos (target_pos)
 
 	if is_walkable (next_node)
 		or (node_pos.x == target_nodepos.x and self._dir.x ~= 0)
@@ -1091,7 +1091,7 @@ function shulker_bullet:on_step (dtime, moveresult)
 end
 
 function shulker_bullet:on_punch (_, _, _, _, _)
-	minetest.sound_play ("vlf_criticals_hit", {
+	minetest.sound_play ("mcl_criticals_hit", {
 		object = self.object,
 	}, true)
 	local pos = self.object:get_pos ()
@@ -1110,7 +1110,7 @@ function shulker_bullet:on_punch (_, _, _, _, _)
 		maxsize = 1.5,
 		collisiondetection = false,
 		vertical = false,
-		texture = "vlf_particles_crit.png^[colorize:#bc7a57:127",
+		texture = "mcl_particles_crit.png^[colorize:#bc7a57:127",
 	})
 	self.object:remove ()
 	return true

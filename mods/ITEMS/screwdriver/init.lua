@@ -176,7 +176,7 @@ minetest.register_tool("screwdriver:screwdriver", {
 	description = S("Screwdriver"),
 	inventory_image = "screwdriver.png",
 	wield_image = "screwdriver.png^[transformFX",
-	groups = { tool = 1 },
+	groups = { tool = 1, rarity = 3 },
 	on_use = function(itemstack, user, pointed_thing)
 		screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_FACE, 200)
 		return itemstack
@@ -187,13 +187,13 @@ minetest.register_tool("screwdriver:screwdriver", {
 	end,
 })
 
-vlf_wip.register_wip_item("screwdriver:screwdriver")
+mcl_wip.register_wip_item("screwdriver:screwdriver")
 
 minetest.register_craft({
 	output = "screwdriver:screwdriver",
 	recipe = {
-		{"vlf_core:iron_ingot"},
-		{"vlf_core:stick"}
+		{"mcl_core:iron_ingot"},
+		{"mcl_core:stick"}
 	}
 })
 

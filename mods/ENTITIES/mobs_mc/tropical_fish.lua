@@ -1,6 +1,6 @@
 --Tropical Fish by cora
 local S = minetest.get_translator(minetest.get_current_modname())
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 local tropical_fish = {
 	description = S("Tropical Fish"),
@@ -28,11 +28,11 @@ local tropical_fish = {
 		run_start = 20, run_end = 40, run_speed = 50,
 	},
 	drops = {
-		{name = "vlf_fishing:clownfish_raw",
+		{name = "mcl_fishing:clownfish_raw",
 		chance = 1,
 		min = 1,
 		max = 1,},
-		{name = "vlf_bone_meal:bone_meal",
+		{name = "mcl_bone_meal:bone_meal",
 		chance = 20,
 		min = 1,
 		max = 1,},
@@ -52,7 +52,7 @@ local tropical_fish = {
 	makes_footstep_sound = false,
 	swims = true,
 	pace_height = 1.0,
-	do_go_pos = vlf_mobs.mob_class.fish_do_go_pos,
+	do_go_pos = mcl_mobs.mob_class.fish_do_go_pos,
 	breathes_in_water = true,
 	flops = true,
 	runaway = true,
@@ -155,15 +155,15 @@ end
 
 function tropical_fish:on_rightclick (clicker)
 	local bn = clicker:get_wielded_item():get_name()
-	if bn == "vlf_buckets:bucket_water" or bn == "vlf_buckets:bucket_river_water" then
-		if clicker:set_wielded_item("vlf_buckets:bucket_tropical_fish") then
+	if bn == "mcl_buckets:bucket_water" or bn == "mcl_buckets:bucket_river_water" then
+		if clicker:set_wielded_item("mcl_buckets:bucket_tropical_fish") then
 			local it = clicker:get_wielded_item()
 			local m = it:get_meta()
 			m:set_string("properties",minetest.serialize(self.object:get_properties()))
 			clicker:set_wielded_item(it)
 			self:safe_remove()
 		end
-		awards.unlock(clicker:get_player_name(), "vlf:tacticalFishing")
+		awards.unlock(clicker:get_player_name(), "mcl:tacticalFishing")
 	end
 end
 
@@ -178,13 +178,13 @@ tropical_fish.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:tropical_fish", tropical_fish)
+mcl_mobs.register_mob ("mobs_mc:tropical_fish", tropical_fish)
 
 ------------------------------------------------------------------------
 -- Tropical Fish spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:tropical_fish",
 	type_of_spawning = "water",
 	dimension = "overworld",
@@ -254,4 +254,4 @@ vlf_mobs.spawn_setup({
 })
 
 --spawn egg
-vlf_mobs.register_egg("mobs_mc:tropical_fish", S("Tropical fish"), "#ef6915", "#fff9ef", 0)
+mcl_mobs.register_egg("mobs_mc:tropical_fish", S("Tropical fish"), "#ef6915", "#fff9ef", 0)

@@ -3,8 +3,8 @@
 --###################
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
-local is_valid = vlf_util.is_valid_objectref
+local mob_class = mcl_mobs.mob_class
+local is_valid = mcl_util.is_valid_objectref
 
 local guardian = {
 	description = S("Guardian"),
@@ -49,7 +49,7 @@ local guardian = {
 	},
 	drops = {
 		-- Greatly increased amounts of prismarine
-		{name = "vlf_ocean:prismarine_shard",
+		{name = "mcl_ocean:prismarine_shard",
 		chance = 1,
 		min = 0,
 		max = 32,
@@ -58,37 +58,37 @@ local guardian = {
 
 		-- The following drops are approximations
 		-- Fish / prismarine crystal
-		{name = "vlf_fishing:fish_raw",
+		{name = "mcl_fishing:fish_raw",
 		chance = 4,
 		min = 1,
 		max = 1,
 		looting = "common",},
-		{name = "vlf_ocean:prismarine_crystals",
+		{name = "mcl_ocean:prismarine_crystals",
 		chance = 4,
 		min = 1,
 		max = 2,
 		looting = "common",},
 
 		-- Rare drop: fish
-		{name = "vlf_fishing:fish_raw",
+		{name = "mcl_fishing:fish_raw",
 		chance = 160, -- 2.5% / 4
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.0025,},
-		{name = "vlf_fishing:salmon_raw",
+		{name = "mcl_fishing:salmon_raw",
 		chance = 160,
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.0025,},
-		{name = "vlf_fishing:clownfish_raw",
+		{name = "mcl_fishing:clownfish_raw",
 		chance = 160,
 		min = 1,
 		max = 1,
 		looting = "rare",
 		looting_factor = 0.0025,},
-		{name = "vlf_fishing:pufferfish_raw",
+		{name = "mcl_fishing:pufferfish_raw",
 		chance = 160,
 		min = 1,
 		max = 1,
@@ -114,7 +114,7 @@ local guardian = {
 ------------------------------------------------------------------------
 
 local NINETY_DEG = math.pi / 2
-local clip_rotation = vlf_mobs.clip_rotation
+local clip_rotation = mcl_mobs.clip_rotation
 
 function guardian:do_go_pos (dtime, moveresult)
 	local target = self.movement_target or vector.zero ()
@@ -214,7 +214,7 @@ function guardian:check_head_swivel (self_pos, dtime, clear)
 		}
 		-- Project vector from eye to player position onto eye
 		-- vector.
-		local target_head_pos = vlf_util.target_eye_pos (self._locked_object)
+		local target_head_pos = mcl_util.target_eye_pos (self._locked_object)
 		diff = vector.subtract (diff, target_head_pos)
 		if self._previous_eye_diff
 			and vector.equals (self._previous_eye_diff, diff) then
@@ -324,10 +324,10 @@ function guardian:attack_null (self_pos, dtime, target_pos, line_of_sight)
 	self:look_at (self.attack:get_pos ())
 	if self._laser_delay <= 0 then
 		local magic_damage = 1.0
-		if vlf_vars.difficulty == 3 then
+		if mcl_vars.difficulty == 3 then
 			magic_damage = 3.0
 		end
-		vlf_util.deal_damage (self.attack, magic_damage, {
+		mcl_util.deal_damage (self.attack, magic_damage, {
 			type = "magic",
 			source = self.object,
 		})
@@ -351,20 +351,20 @@ guardian.ai_functions = {
 -- Guardian sundries.
 ------------------------------------------------------------------------
 
-function guardian:receive_damage (vlf_reason, damage)
-	local result = mob_class.receive_damage (self, vlf_reason, damage)
+function guardian:receive_damage (mcl_reason, damage)
+	local result = mob_class.receive_damage (self, mcl_reason, damage)
 	if not result then
 		return false
 	end
-	local source = vlf_reason.source
+	local source = mcl_reason.source
 	if not source then
 		return
 	end
 	local entity = source:get_luaentity ()
 	if (source:is_player () or (entity and entity.is_mob))
 		and self.movement_goal ~= "go_pos"
-		and not vlf_reason.flags.bypasses_guardian then
-		vlf_util.deal_damage (source, 2.0, {
+		and not mcl_reason.flags.bypasses_guardian then
+		mcl_util.deal_damage (source, 2.0, {
 			type = "thorns",
 			source = self.object,
 		})
@@ -374,7 +374,7 @@ function guardian:receive_damage (vlf_reason, damage)
 end
 
 mobs_mc.guardian = guardian
-vlf_mobs.register_mob ("mobs_mc:guardian", guardian)
+mcl_mobs.register_mob ("mobs_mc:guardian", guardian)
 
 -- spawn eggs
-vlf_mobs.register_egg("mobs_mc:guardian", S("Guardian"), "#5a8272", "#f17d31", 0)
+mcl_mobs.register_egg("mobs_mc:guardian", S("Guardian"), "#5a8272", "#f17d31", 0)

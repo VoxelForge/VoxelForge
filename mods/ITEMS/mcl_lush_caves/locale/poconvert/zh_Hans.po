@@ -1,0 +1,75 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Luanti textdomain mcl_lush_caves x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.1\n"
+
+msgid "Azalea Plant"
+msgstr "杜鹃花丛"
+
+msgid "Flowering Azalea Plant"
+msgstr "开花的杜鹃花丛"
+
+msgid "Moss"
+msgstr "苔藓"
+
+msgid "Moss is a green block found in lush caves"
+msgstr "苔藓是一种在繁茂洞穴中能找到的绿色方块"
+
+msgid "Moss carpet"
+msgstr "苔藓地毯"
+
+msgid "Hanging roots"
+msgstr "垂根"
+
+msgid "Cave vines"
+msgstr "洞穴藤蔓"
+
+msgid "Rooted dirt"
+msgstr "扎根土"
+
+msgid "Glow berry"
+msgstr "发光浆果"
+
+msgid "This is a food item which can be eaten."
+msgstr "这是一种可以食用的食物。"
+
+msgid "Azalea Leaves"
+msgstr "杜鹃树叶"
+
+msgid "Leaves of an Azalea tree"
+msgstr "杜鹃树的叶子"
+
+msgid "Flowering Azalea Leaves"
+msgstr "开花杜鹃的叶子"
+
+msgid "The Flowering Leaves of an Azalea tree"
+msgstr "一棵杜鹃树的开花叶子"
+
+msgid "Spore blossom"
+msgstr "孢子花"
+
+msgid "Needs soil and bone meal to grow"
+msgstr "需要土壤和骨粉才能生长"
+
+msgid "Azalea"
+msgstr "杜鹃"
+
+msgid "Azalea is a small plant which often occurs in lush caves. It can be broken by hand or any tool. By using bone meal, azalea can be turned into an azalea tree."
+msgstr "杜鹃是一种小型植物，常出现在繁茂洞穴中。它可以用手或任何工具破坏。使用骨粉的话，杜鹃能够变成一棵杜鹃树。"
+
+msgid "Flowering Azalea"
+msgstr "开花的杜鹃"
+
+msgid "Flowering azalea is a small plant which often occurs in lush caves. It can be broken by hand or any tool. By using bone meal, flowering azalea can be turned into an azalea tree."
+msgstr "开花杜鹃是一种小型植物，常出现在繁茂洞穴中。它可以用手或任何工具破坏。使用骨粉的话，开花杜鹃能够变成一棵杜鹃树。"
+

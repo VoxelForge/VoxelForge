@@ -4,7 +4,7 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 local skeleton = mobs_mc.skeleton
 
 --###################
@@ -34,14 +34,14 @@ local wither_skeleton = table.merge (skeleton, {
 	movement_speed = 5.0,
 	drops = {
 		{
-			name = "vlf_core:coal_lump",
+			name = "mcl_core:coal_lump",
 			chance = 1,
 			min = 0,
 			max = 1,
 			looting = "common",
 		},
 		{
-			name = "vlf_mobitems:bone",
+			name = "mcl_mobitems:bone",
 			chance = 1,
 			min = 0,
 			max = 2,
@@ -50,7 +50,7 @@ local wither_skeleton = table.merge (skeleton, {
 
 		-- Head
 		{
-			name = "vlf_heads:wither_skeleton",
+			name = "mcl_heads:wither_skeleton",
 			chance = 40, -- 2.5% chance
 			min = 1,
 			max = 1,
@@ -117,7 +117,7 @@ local wither_skeleton_poses = {
 	},
 }
 
-vlf_mobs.define_composite_pose (wither_skeleton_poses, "jockey", {
+mcl_mobs.define_composite_pose (wither_skeleton_poses, "jockey", {
 	["leg.right"] = {
 		nil,
 		vector.new (-115, 0, -90),
@@ -135,10 +135,10 @@ wither_skeleton._arm_poses = wither_skeleton_poses
 ------------------------------------------------------------------------
 
 function wither_skeleton:skelly_generate_default_equipment (mob_factor)
-	self:set_wielditem (ItemStack ("vlf_tools:sword_stone"))
+	self:set_wielditem (ItemStack ("mcl_tools:sword_stone"))
 end
 
-function wither_skeleton:on_die (pos, vlf_reason)
+function wither_skeleton:on_die (pos, mcl_reason)
 	-- `snipeSkeleton' should not be granted for sniping a wither
 	-- skeleton.
 end
@@ -159,10 +159,10 @@ function wither_skeleton:should_continue_to_attack (object)
 		and mob_class.should_continue_to_attack (self, object)
 end
 
-vlf_mobs.register_mob ("mobs_mc:witherskeleton", wither_skeleton)
+mcl_mobs.register_mob ("mobs_mc:witherskeleton", wither_skeleton)
 
 ------------------------------------------------------------------------
 -- Wither Skeleton spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.register_egg ("mobs_mc:witherskeleton", S("Wither Skeleton"), "#141414", "#474d4d", 0)
+mcl_mobs.register_egg ("mobs_mc:witherskeleton", S("Wither Skeleton"), "#141414", "#474d4d", 0)

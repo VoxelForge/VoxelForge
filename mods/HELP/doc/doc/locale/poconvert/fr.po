@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This is the help."
-msgstr "Ceci est l'aide."
+msgstr "Voici la rubrique d'aide."
 
 msgid "All help entries revealed!"
 msgstr "Toutes les pages d'aide ont été découvertes !"
@@ -53,7 +53,7 @@ msgid "Nameless entry (@1)"
 msgstr "Pages sans nom (@1)"
 
 msgid "Help > @1"
-msgstr "Aide > @1"
+msgstr "Rubrique d'aide > @1"
 
 msgid "Currently all entries in this category are hidden from you."
 msgstr "Toutes les pages de cette catégories vous sont cachées."
@@ -71,16 +71,16 @@ msgid "Hidden entries: @1"
 msgstr "Pages cachées : @1"
 
 msgid "Help > @1 > (No Entry)"
-msgstr "Aide > @1 > (Aucune page)"
+msgstr "Rubrique d'aide > @1 > (Aucune page)"
 
 msgid "Help > @1 > @2"
-msgstr "Aide > @1 > @2"
+msgstr "Rubrique d'aide > @1 > @2"
 
 msgid "Open a window providing help entries about Minetest and more"
 msgstr "Ouvrir une fenêtre contenant les pages d'aides à propos de Minetest"
 
 msgid "Help"
-msgstr "Aide"
+msgstr "Rubrique d'aide"
 
 msgid "Allows you to reveal all hidden help entries with /help_reveal"
 msgstr "Vous permet de découvrir toutes les pages d'aide cachées avec /help_reveal"

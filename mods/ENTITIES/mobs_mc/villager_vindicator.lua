@@ -4,9 +4,9 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 local illager = mobs_mc.illager
-local posing_humanoid = vlf_mobs.posing_humanoid
+local posing_humanoid = mcl_mobs.posing_humanoid
 local mob_griefing = minetest.settings:get_bool ("mobs_griefing", true)
 
 ------------------------------------------------------------------------
@@ -57,7 +57,7 @@ local vindicator = table.merge (illager, table.merge (posing_humanoid, {
 	},
 	drops = {
 		{
-			name = "vlf_core:emerald",
+			name = "mcl_core:emerald",
 			chance = 1,
 			min = 0,
 			max = 1,
@@ -155,8 +155,8 @@ function vindicator:on_spawn ()
 	illager.on_spawn (self)
 
 	local self_pos = self.object:get_pos ()
-	local mob_factor = vlf_worlds.get_special_difficulty (self_pos)
-	local wielditem = ItemStack ("vlf_tools:axe_iron")
+	local mob_factor = mcl_worlds.get_special_difficulty (self_pos)
+	local wielditem = ItemStack ("mcl_tools:axe_iron")
 	self:set_wielditem (wielditem)
 	self:enchant_default_weapon (mob_factor, pr)
 end
@@ -221,7 +221,7 @@ function vindicator:gwp_open_door (door, nodedef, dtime)
 	-- On Normal and Hard, there is a 10% chance per tick that a
 	-- vindicator will choose to break rather than open a door.
 
-	if mob_griefing and vlf_vars.difficulty >= 2
+	if mob_griefing and mcl_vars.difficulty >= 2
 		and pr:next (1, 10) == 1
 		and not minetest.is_protected (door, "") then
 		self:set_animation ("punch")
@@ -256,11 +256,11 @@ vindicator.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:vindicator", vindicator)
+mcl_mobs.register_mob ("mobs_mc:vindicator", vindicator)
 
 ------------------------------------------------------------------------
 -- Vindicator spawning.
 ------------------------------------------------------------------------
 
 -- spawn eggs
-vlf_mobs.register_egg ("mobs_mc:vindicator", S("Vindicator"), "#959b9b", "#275e61", 0)
+mcl_mobs.register_egg ("mobs_mc:vindicator", S("Vindicator"), "#959b9b", "#275e61", 0)

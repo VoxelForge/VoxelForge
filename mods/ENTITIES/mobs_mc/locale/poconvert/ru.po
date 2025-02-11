@@ -67,11 +67,14 @@ msgstr "Древний страж"
 msgid "Hoglin"
 msgstr "Хоглин"
 
+msgid "Baby Hoglin"
+msgstr "Малыш Хоглин"
+
 msgid "Zoglin"
 msgstr "Зоглин"
 
-msgid "Baby Hoglin"
-msgstr "Малыш Хоглин"
+msgid "Sneak to dismount"
+msgstr "Нажмите [Красться] для высадки"
 
 msgid "Horse"
 msgstr "Лошадь"
@@ -87,9 +90,6 @@ msgstr "Ослик"
 
 msgid "Mule"
 msgstr "Мул"
-
-msgid "Sneak to dismount"
-msgstr "Нажмите [Красться] для высадки"
 
 msgid "Iron Golem"
 msgstr "Железный голем"
@@ -112,14 +112,14 @@ msgstr "Свинья"
 msgid "Piglin"
 msgstr "Пиглин"
 
-msgid "Zombiefied Piglin"
-msgstr "Зомбированный Пиглин"
-
 msgid "Piglin Brute"
 msgstr "Жестокий пиглин"
 
 msgid "Zombie Piglin"
 msgstr "Зомби-пиглин"
+
+msgid "Zombified Piglin"
+msgstr "Зомбированный Пиглин"
 
 msgid "Pillager"
 msgstr "Разбойник"
@@ -211,32 +211,17 @@ msgstr "Досаждатель"
 msgid "Villager"
 msgstr "Житель"
 
-msgid "Evoker"
-msgstr "Вызыватель"
+msgid "Armorer"
+msgstr "Бронник"
 
-msgid "Illusioner"
-msgstr "Иллюзор"
+msgid "Butcher"
+msgstr "Мясник"
 
-msgid "Vindicator"
-msgstr "Поборник"
+msgid "Cartographer"
+msgstr "Картограф"
 
-msgid "Zombie Villager"
-msgstr "Зомби-житель"
-
-msgid "@1 sleeps here"
-msgstr "@1 спит здесь"
-
-msgid "A villager sleeps here"
-msgstr "Здесь спит деревенский житель"
-
-msgid "@1 works here"
-msgstr "@1 работает здесь"
-
-msgid "A villager works here"
-msgstr "Здесь работает деревенский житель"
-
-msgid "Unemployed"
-msgstr "Безработный"
+msgid "Cleric"
+msgstr "Церковник"
 
 msgid "Farmer"
 msgstr "Фермер"
@@ -247,41 +232,26 @@ msgstr "Рыбак"
 msgid "Fletcher"
 msgstr "Лучник"
 
-msgid "Shepherd"
-msgstr "Пастух"
+msgid "Leatherworker"
+msgstr "Кожевник"
 
 msgid "Librarian"
 msgstr "Библиотекарь"
 
-msgid "Cartographer"
-msgstr "Картограф"
-
-msgid "Armorer"
-msgstr "Бронник"
-
-msgid "Leatherworker"
-msgstr "Кожевник"
-
-msgid "Butcher"
-msgstr "Мясник"
-
-msgid "Weapon Smith"
-msgstr "Оружейник"
-
-msgid "Tool Smith"
-msgstr "Инструментальщик"
-
-msgid "Cleric"
-msgstr "Церковник"
-
 msgid "Mason"
 msgstr "Мейсон"
 
+msgid "Shepherd"
+msgstr "Пастух"
+
+msgid "Toolsmith"
+msgstr ""
+
+msgid "Weaponsmith"
+msgstr ""
+
 msgid "Nitwit"
 msgstr "Нищий"
-
-msgid "Wandering Trader"
-msgstr "Бродячий торговец"
 
 msgid "Novice"
 msgstr "Новичок"
@@ -298,6 +268,24 @@ msgstr "Эксперт"
 msgid "Master"
 msgstr "Мастер"
 
+msgid "Evoker"
+msgstr "Вызыватель"
+
+msgid "Illusioner"
+msgstr "Иллюзор"
+
+msgid "Vindicator"
+msgstr "Поборник"
+
+msgid "Zombie Villager"
+msgstr "Зомби-житель"
+
+msgid "Wandering Trader"
+msgstr "Бродячий торговец"
+
+msgid "Trader Llama"
+msgstr ""
+
 msgid "Witch"
 msgstr "Ведьма"
 
@@ -306,9 +294,6 @@ msgstr "Иссушитель"
 
 msgid "Wolf"
 msgstr "Волк"
-
-msgid "Dog"
-msgstr "Собака"
 
 msgid "Zombie"
 msgstr "Зомби"
@@ -321,7 +306,4 @@ msgstr "Кадавр"
 
 msgid "Baby Husk"
 msgstr "Кадавр-ребёнок"
-
-msgid "Zombified Piglin"
-msgstr "Зомбированный Пиглин"
 

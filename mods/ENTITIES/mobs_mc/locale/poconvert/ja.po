@@ -67,10 +67,13 @@ msgstr "エルダーガーディアン"
 msgid "Hoglin"
 msgstr ""
 
+msgid "Baby Hoglin"
+msgstr ""
+
 msgid "Zoglin"
 msgstr ""
 
-msgid "Baby Hoglin"
+msgid "Sneak to dismount"
 msgstr ""
 
 msgid "Horse"
@@ -87,9 +90,6 @@ msgstr "ロバ"
 
 msgid "Mule"
 msgstr "ラバ"
-
-msgid "Sneak to dismount"
-msgstr ""
 
 msgid "Iron Golem"
 msgstr "アイアンゴーレム"
@@ -112,13 +112,13 @@ msgstr "ブタ"
 msgid "Piglin"
 msgstr ""
 
-msgid "Zombiefied Piglin"
-msgstr ""
-
 msgid "Piglin Brute"
 msgstr ""
 
 msgid "Zombie Piglin"
+msgstr ""
+
+msgid "Zombified Piglin"
 msgstr ""
 
 msgid "Pillager"
@@ -211,32 +211,17 @@ msgstr "ヴェックス"
 msgid "Villager"
 msgstr "村人"
 
-msgid "Evoker"
-msgstr "エヴォーカー"
+msgid "Armorer"
+msgstr "防具鍛冶"
 
-msgid "Illusioner"
-msgstr "イリュージョナー"
+msgid "Butcher"
+msgstr "肉屋"
 
-msgid "Vindicator"
-msgstr "ヴィンディケーター"
+msgid "Cartographer"
+msgstr "製図家"
 
-msgid "Zombie Villager"
-msgstr "村人ゾンビ"
-
-msgid "@1 sleeps here"
-msgstr ""
-
-msgid "A villager sleeps here"
-msgstr ""
-
-msgid "@1 works here"
-msgstr ""
-
-msgid "A villager works here"
-msgstr ""
-
-msgid "Unemployed"
-msgstr ""
+msgid "Cleric"
+msgstr "聖職者"
 
 msgid "Farmer"
 msgstr "農民"
@@ -247,41 +232,26 @@ msgstr "漁師"
 msgid "Fletcher"
 msgstr "矢師"
 
-msgid "Shepherd"
-msgstr "羊飼い"
+msgid "Leatherworker"
+msgstr "革職人"
 
 msgid "Librarian"
 msgstr "司書"
 
-msgid "Cartographer"
-msgstr "製図家"
-
-msgid "Armorer"
-msgstr "防具鍛冶"
-
-msgid "Leatherworker"
-msgstr "革職人"
-
-msgid "Butcher"
-msgstr "肉屋"
-
-msgid "Weapon Smith"
-msgstr "武器鍛冶"
-
-msgid "Tool Smith"
-msgstr "道具鍛冶"
-
-msgid "Cleric"
-msgstr "聖職者"
-
 msgid "Mason"
+msgstr ""
+
+msgid "Shepherd"
+msgstr "羊飼い"
+
+msgid "Toolsmith"
+msgstr ""
+
+msgid "Weaponsmith"
 msgstr ""
 
 msgid "Nitwit"
 msgstr "求職者"
-
-msgid "Wandering Trader"
-msgstr ""
 
 msgid "Novice"
 msgstr ""
@@ -298,6 +268,24 @@ msgstr ""
 msgid "Master"
 msgstr ""
 
+msgid "Evoker"
+msgstr "エヴォーカー"
+
+msgid "Illusioner"
+msgstr "イリュージョナー"
+
+msgid "Vindicator"
+msgstr "ヴィンディケーター"
+
+msgid "Zombie Villager"
+msgstr "村人ゾンビ"
+
+msgid "Wandering Trader"
+msgstr ""
+
+msgid "Trader Llama"
+msgstr ""
+
 msgid "Witch"
 msgstr "魔女"
 
@@ -306,9 +294,6 @@ msgstr "ウィザー"
 
 msgid "Wolf"
 msgstr "オオカミ"
-
-msgid "Dog"
-msgstr ""
 
 msgid "Zombie"
 msgstr "ゾンビ"
@@ -320,8 +305,5 @@ msgid "Husk"
 msgstr "ハスク"
 
 msgid "Baby Husk"
-msgstr ""
-
-msgid "Zombified Piglin"
 msgstr ""
 

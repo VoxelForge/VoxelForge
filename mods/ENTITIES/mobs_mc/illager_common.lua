@@ -4,8 +4,8 @@
 -- long distances.
 ------------------------------------------------------------------------
 
-local mob_class = vlf_mobs.mob_class
-local is_valid = vlf_util.is_valid_objectref
+local mob_class = mcl_mobs.mob_class
+local is_valid = mcl_util.is_valid_objectref
 
 ------------------------------------------------------------------------
 -- Patrols.
@@ -29,14 +29,14 @@ local patrolling_mob = {
 
 function patrolling_mob:promote_to_raidcaptain ()
 	local self_pos = self.object:get_pos ()
-	local entity = "vlf_raids:ominous_banner"
+	local entity = "mcl_raids:ominous_banner"
 	local banner = minetest.add_entity (self_pos, entity)
 	if not banner then
 		return
 	end
-	local layers = vlf_raids.ominous_banner_layers
+	local layers = mcl_raids.ominous_banner_layers
 	local textures = {
-		vlf_banners.make_banner_texture ("unicolor_white", layers)
+		mcl_banners.make_banner_texture ("unicolor_white", layers)
 	}
 	banner:set_properties ({
 			textures = textures,
@@ -115,7 +115,7 @@ function patrolling_mob:select_patrol_target (self_pos)
 end
 
 function mobs_mc.find_surface_position (node_pos)
-	if node_pos.y < vlf_vars.mg_overworld_min then
+	if node_pos.y < mcl_vars.mg_overworld_min then
 		return node_pos
 	else
 		-- Raycast from a position 256 blocks above the
@@ -125,13 +125,15 @@ function mobs_mc.find_surface_position (node_pos)
 		local v = vector.copy (node_pos)
 		v.y = math.max (node_pos.y, 256)
 		local lim
-			= math.max (vlf_vars.mg_overworld_min, node_pos.y - 512)
+			= math.max (mcl_vars.mg_overworld_min, node_pos.y - 512)
 		while v.y >= lim do
 			local node = minetest.get_node (v)
 			local def = minetest.registered_nodes[node.name]
+			local group_leaves = def and def.groups and def.groups.leaves or 0
+			local group_liquid = def and def.groups and def.groups.liquid or 0
 			if node.name ~= "ignore"
-				and not def.groups.leaves
-				and (def.groups.liquid or def.walkable) then
+				and group_leaves == 0
+				and (group_liquid ~= 0 or (def and def.walkable)) then
 				break
 			end
 			v.y = v.y - 1
@@ -154,16 +156,16 @@ end
 function patrolling_mob:drop_custom (looting_level)
 	if self._raidcaptain then
 		local self_pos = self.object:get_pos ()
-		vlf_raids.drop_obanner (self_pos)
+		mcl_raids.drop_obanner (self_pos)
 	end
 end
 
-function patrolling_mob:on_die (pos, vlf_reason)
+function patrolling_mob:on_die (pos, mcl_reason)
 	if self._raidcaptain
-		and vlf_reason
-		and vlf_reason.type == "player" then
-		local playername = vlf_reason.source:get_player_name ()
-		awards.unlock (playername, "vlf:voluntary_exile")
+		and mcl_reason
+		and mcl_reason.type == "player" then
+		local playername = mcl_reason.source:get_player_name ()
+		awards.unlock (playername, "mcl:voluntary_exile")
 	end
 
 	-- TODO
@@ -172,7 +174,7 @@ end
 function patrolling_mob:patrol_unstuck (self_pos)
 	local x = pr:next (-8, 8)
 	local z = pr:next (-8, 8)
-	local node_pos = vlf_util.get_nodepos (self_pos)
+	local node_pos = mcl_util.get_nodepos (self_pos)
 	local pos = vector.offset (node_pos, x, 0, z)
 	local target = self:find_surface_position (pos)
 	self:gopath (target, self._patrol_bonus_minions)
@@ -238,7 +240,7 @@ function patrolling_mob:check_distant_patrol (self_pos, dtime)
 			local dir = vector.direction (self_pos, offset_pos)
 			local pos = vector.multiply (dir, 10)
 			pos = vector.add (pos, self_pos)
-			local node_pos = vlf_util.get_nodepos (pos)
+			local node_pos = mcl_util.get_nodepos (pos)
 
 			-- Find a position on the surface at this
 			-- target position.
@@ -388,7 +390,7 @@ local function decode_banner_item (entity)
 		return nil
 	end
 	local stack = ItemStack (entity.itemstring)
-	if vlf_raids.is_banner_item (stack) then
+	if mcl_raids.is_banner_item (stack) then
 		local def = stack:get_definition ()
 		local name = stack:get_name ()
 		return stack, def, name
@@ -397,7 +399,7 @@ local function decode_banner_item (entity)
 end
 
 function raid_mob:default_pickup (object, stack, def, itemname)
-	if vlf_raids.is_banner_item (stack) and self._can_serve_as_captain then
+	if mcl_raids.is_banner_item (stack) and self._can_serve_as_captain then
 		local raid = self:_get_active_raid ()
 		if raid and not raid._raidcaptain then
 			local item = stack:take_item ()
@@ -474,7 +476,7 @@ function raid_mob:recruit_reinforcements (self_pos, self_raid)
 		if entity and entity._is_raid_mob then
 			local raid = entity:_get_active_raid ()
 			if not raid then
-				vlf_raids.enroll_in_raid (self_raid, entity)
+				mcl_raids.enroll_in_raid (self_raid, entity)
 			end
 		end
 	end
@@ -493,7 +495,7 @@ function raid_mob:check_pathfind_to_raid (self_pos, dtime)
 		y = math.floor (self_pos.y + 0.5),
 		z = math.floor (self_pos.z + 0.5),
 	}
-	local proximity = vlf_villages.get_poi_heat (nodepos)
+	local proximity = mcl_villages.get_poi_heat (nodepos)
 	if self._raid_target_position then
 		if proximity >= 4 then
 			self._raid_target_position = nil
@@ -541,8 +543,8 @@ end
 function raid_mob:get_village_poi (self_pos)
 	local aa = vector.offset (self_pos, -48, -48, -48)
 	local bb = vector.offset (self_pos, 48, 48, 48)
-	local poi = vlf_villages.random_poi_in (aa, bb, function (poi)
-		local def = vlf_villages.registered_pois[poi.data]
+	local poi = mcl_villages.random_poi_in (aa, bb, function (poi)
+		local def = mcl_villages.registered_pois[poi.data]
 
 		if def and def.is_home then
 			return not self:has_visited_poi (poi)

@@ -1,7 +1,7 @@
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 local horse = mobs_mc.horse
-local is_valid = vlf_util.is_valid_objectref
+local is_valid = mcl_util.is_valid_objectref
 
 -- table mapping unified color names to non-conforming color names in carpet texture filenames
 local messytextures = {
@@ -45,7 +45,7 @@ local llama = table.merge (horse, {
 	},
 	movement_speed = 3.5,
 	drops = {
-		{name = "vlf_mobitems:leather",
+		{name = "mcl_mobitems:leather",
 		 chance = 1,
 		 min = 0,
 		 max = 2,
@@ -68,12 +68,12 @@ local llama = table.merge (horse, {
 		run_start = 41, run_end = 81, run_speed = 30,
 	},
 	_food_items = {
-		["vlf_farming:wheat_item"] = {
+		["mcl_farming:wheat_item"] = {
 			2.0, -- Health
 			10, -- Age delta in MC ticks.
 			3, -- Temper.
 		},
-		["vlf_farming:hay_block"] = {
+		["mcl_farming:hay_block"] = {
 			10.0, -- Health.
 			90, -- Age delta in MC ticks.
 			6, -- Temper.
@@ -85,7 +85,7 @@ local llama = table.merge (horse, {
 	follow_bonus = 1.25,
 	follow_herd_bonus = 1.0,
 	follow = {
-		"vlf_farming:hay_block",
+		"mcl_farming:hay_block",
 	},
 	view_range = 40,
 	tracking_distance = 40,
@@ -107,7 +107,7 @@ function llama:on_breed (parent1, parent2)
 	else
 		parent = parent2
 	end
-	child = vlf_mobs.spawn_child(pos, parent.name)
+	child = mcl_mobs.spawn_child(pos, parent.name)
 	if child then
 		local ent_c = child:get_luaentity()
 		ent_c.base_texture = table.copy(ent_c.base_texture)
@@ -201,7 +201,7 @@ end
 
 function llama:discharge_ranged (self_pos, target_pos)
 	local attack = self.attack
-	local eye_height = vlf_util.target_eye_height (attack)
+	local eye_height = mcl_util.target_eye_height (attack)
 	local p = vector.offset (target_pos, 0, eye_height, 0)
 	local s = vector.offset (self_pos, 0, self.shoot_offset, 0)
 	local vec = vector.subtract (p, s)
@@ -437,7 +437,7 @@ function llama:generate_inventory_formspec ()
 	if not self._armor_inv_name then
 		return "formspec_version[6]"
 	end
-	local objectname = vlf_util.get_object_name (self.object)
+	local objectname = mcl_util.get_object_name (self.object)
 	objectname = minetest.formspec_escape (objectname)
 	local armorname = self._armor_inv_name
 	armorname = minetest.formspec_escape ("detached:" .. armorname)
@@ -446,26 +446,26 @@ function llama:generate_inventory_formspec ()
 		chest_itemslots = string.format ("list[detached:%s;main;5.375,0.875;%d,3;]",
 					 self._inv_id, self._llama_strength)
 	else
-		chest_itemslots = "image[5.375,0.825;6.10,3.625;vlf_formspec_itemslot.png;2]"
+		chest_itemslots = "image[5.375,0.825;6.10,3.625;mcl_formspec_itemslot.png;2]"
 	end
 	return table.concat ({
 		"formspec_version[6]",
 		"size[11.75,10.45]",
 		"position[0.5,0.5]",
 		string.format ("label[0.375,0.5;%s]", objectname),
-		vlf_formspec.get_itemslot_bg_v4 (0.375, 2.25, 1, 1),
+		mcl_formspec.get_itemslot_bg_v4 (0.375, 2.25, 1, 1),
 		string.format ("list[%s;main;0.375,2.25;1,1;]", armorname),
-		"image[1.55,0.825;3.625,3.625;vlf_inventory_background9.png;2]",
+		"image[1.55,0.825;3.625,3.625;mcl_inventory_background9.png;2]",
 		string.format ("model[1.55,0.875;3.625,3.5;horse;mobs_mc_llama_preview.b3d;%s;%s]",
 			       table.concat (self.base_texture, ","), "-15,135,0"),
-		self._chest and vlf_formspec.get_itemslot_bg_v4 (5.375, 0.875,
+		self._chest and mcl_formspec.get_itemslot_bg_v4 (5.375, 0.875,
 								 self._llama_strength, 3) or "",
 		chest_itemslots,
 		-- Main inventory.
-		vlf_formspec.get_itemslot_bg_v4 (0.375, 5, 9, 3),
+		mcl_formspec.get_itemslot_bg_v4 (0.375, 5, 9, 3),
 		"list[current_player;main;0.375,5;9,3;9]",
 		-- Hotbar.
-		vlf_formspec.get_itemslot_bg_v4 (0.375, 8.95, 9, 1),
+		mcl_formspec.get_itemslot_bg_v4 (0.375, 8.95, 9, 1),
 		"list[current_player;main;0.375,8.95;9,1;]",
 		string.format ("listring[%s;main]", armorname),
 		self._chest and string.format ("listring[detached:%s;main]",
@@ -489,15 +489,15 @@ function llama:should_drive ()
 	return false
 end
 
-vlf_mobs.register_mob ("mobs_mc:llama", llama)
+mcl_mobs.register_mob ("mobs_mc:llama", llama)
 mobs_mc.llama = llama
-vlf_entity_invs.register_inv ("mobs_mc:llama", "Llama", nil, true)
+mcl_entity_invs.register_inv ("mobs_mc:llama", "Llama", nil, true)
 
 ------------------------------------------------------------------------
 -- Llama spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:llama",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -516,7 +516,7 @@ vlf_mobs.spawn_setup ({
 	chance = 50,
 })
 
-vlf_mobs.register_egg ("mobs_mc:llama", S("Llama"), "#c09e7d", "#995f40", 0)
+mcl_mobs.register_egg ("mobs_mc:llama", S("Llama"), "#c09e7d", "#995f40", 0)
 
 ------------------------------------------------------------------------
 -- Llama spit entity.
@@ -549,7 +549,7 @@ local llama_spit = {
 }
 
 function llama_spit:hit_object (object)
-	return vlf_mobs.get_arrow_damage_func (1, "spit", self._shooter) (self, object)
+	return mcl_mobs.get_arrow_damage_func (1, "spit", self._shooter) (self, object)
 end
 
 function llama_spit:on_activate (_, _)
@@ -583,9 +583,9 @@ function llama_spit:on_activate (_, _)
 			max = 1.0,
 		},
 		texpool = {
-			"vlf_particles_mob_death.png^[colorize:#2c2c2c2c:255",
-			"vlf_particles_mob_death.png^[colorize:#c5c5c5c5:255",
-			"vlf_particles_mob_death.png^[colorize:#f0f0f0f0:255",
+			"mcl_particles_mob_death.png^[colorize:#2c2c2c2c:255",
+			"mcl_particles_mob_death.png^[colorize:#c5c5c5c5:255",
+			"mcl_particles_mob_death.png^[colorize:#f0f0f0f0:255",
 		},
 		attached = self.object,
 	})

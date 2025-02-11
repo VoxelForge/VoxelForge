@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Luanti textdomain mcl_panes x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.1\n"
+
+msgid "Glass panes are thin layers of glass which neatly connect to their neighbors as you build them."
+msgstr "玻璃板是薄薄的玻璃層，在你建造它們時，它們會整齊地連接到鄰近的方塊。"
+
+msgid "Stained glass panes are thin layers of stained glass which neatly connect to their neighbors as you build them. They come in many different colors."
+msgstr "染色玻璃片是薄薄的一層染色玻璃，在你建造它們時，它們會整齊地連接到它們的鄰居。它們有許多不同的顏色。"
+
+msgid "Stained Glass Pane"
+msgstr "染色玻璃片"
+
+msgid "Iron Bars"
+msgstr "鐵柵欄"
+
+msgid "Iron bars neatly connect to their neighbors as you build them."
+msgstr "在你建造鐵柵欄時，它們會整齊地連接到鄰近的方塊。"
+
+msgid "Glass Pane"
+msgstr "玻璃片"
+
+msgid "Black Stained Glass Pane"
+msgstr "黑色玻璃片"
+
+msgid "Blue Stained Glass Pane"
+msgstr "藍色玻璃片"
+
+msgid "Brown Stained Glass Pane"
+msgstr "棕色玻璃片"
+
+msgid "Cyan Stained Glass Pane"
+msgstr "青色玻璃片"
+
+msgid "Green Stained Glass Pane"
+msgstr "綠色玻璃片"
+
+msgid "Grey Stained Glass Pane"
+msgstr "灰色玻璃片"
+
+msgid "Light Blue Stained Glass Pane"
+msgstr "淺藍色玻璃片"
+
+msgid "Light Grey Stained Glass Pane"
+msgstr "淺灰色玻璃片"
+
+msgid "Lime Stained Glass Pane"
+msgstr "淺綠色玻璃片"
+
+msgid "Magenta Stained Glass Pane"
+msgstr "洋紅色玻璃片"
+
+msgid "Orange Stained Glass Pane"
+msgstr "橙色玻璃片"
+
+msgid "Pink Stained Glass Pane"
+msgstr "粉紅色玻璃片"
+
+msgid "Purple Stained Glass Pane"
+msgstr "紫色玻璃片"
+
+msgid "Red Stained Glass Pane"
+msgstr "紅色玻璃片"
+
+msgid "White Stained Glass Pane"
+msgstr "白色玻璃片"
+
+msgid "Yellow Stained Glass Pane"
+msgstr "黃色玻璃片"
+

@@ -4,8 +4,8 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator("mobs_mc")
-local mob_class = vlf_mobs.mob_class
-local posing_humanoid = vlf_mobs.posing_humanoid
+local mob_class = mcl_mobs.mob_class
+local posing_humanoid = mcl_mobs.posing_humanoid
 
 --###################
 --################### SKELETON
@@ -58,21 +58,21 @@ local skeleton = table.merge (posing_humanoid, {
 	reach = 2,
 	drops = {
 		{
-			name = "vlf_bows:arrow",
+			name = "mcl_bows:arrow",
 			chance = 1,
 			min = 0,
 			max = 2,
 			looting = "common",
 		},
 		{
-			name = "vlf_mobitems:bone",
+			name = "mcl_mobitems:bone",
 			chance = 1,
 			min = 0,
 			max = 2,
 			looting = "common",
 		},
 		{
-			name = "vlf_heads:skeleton",
+			name = "mcl_heads:skeleton",
 			chance = 200, -- 0.5% chance
 			min = 1,
 			max = 1,
@@ -94,7 +94,7 @@ local skeleton = table.merge (posing_humanoid, {
 	specific_attack = {
 		"mobs_mc:iron_golem",
 	},
-	arrow = "vlf_bows:arrow_entity",
+	arrow = "mcl_bows:arrow_entity",
 	shoot_interval = 1,
 	shoot_offset = 1.5,
 	harmed_by_heal = true,
@@ -115,7 +115,7 @@ local skeleton = table.merge (posing_humanoid, {
 	},
 	wielditem_drop_probability = 0.085,
 	_humanoid_superclass = mob_class,
-	_vlf_freeze_damage = 0,
+	_mcl_freeze_damage = 0,
 	_frozen_time = 0,
 })
 
@@ -150,7 +150,7 @@ local skeleton_poses = {
 	},
 }
 
-vlf_mobs.define_composite_pose (skeleton_poses, "jockey", {
+mcl_mobs.define_composite_pose (skeleton_poses, "jockey", {
 	["leg.right"] = {
 		nil,
 		vector.new (-115, 0, -90),
@@ -193,15 +193,15 @@ end
 
 function skeleton:conversion_step (dtime)
 	self.shaking = false
-	if self.standing_in == "vlf_powder_snow:powder_snow"
-		or self.head_in == "vlf_powder_snow:powder_snow" then
+	if self.standing_in == "mcl_powder_snow:powder_snow"
+		or self.head_in == "mcl_powder_snow:powder_snow" then
 		self._frozen_time = self._frozen_time + dtime
 
 		if self._frozen_time > 7 then
 			self.shaking = true
 
 			if self._frozen_time > 22 then
-				vlf_util.replace_mob (self.object, "mobs_mc:stray", true)
+				mcl_util.replace_mob (self.object, "mobs_mc:stray", true)
 				return
 			end
 		end
@@ -218,7 +218,7 @@ local pr = PcgRandom (os.time () + 332)
 
 function skeleton:on_spawn ()
 	local self_pos = self.object:get_pos ()
-	local mob_factor = vlf_worlds.get_special_difficulty (self_pos)
+	local mob_factor = mcl_worlds.get_special_difficulty (self_pos)
 	-- Enable picking up armor for a random subset of
 	-- skeletons.
 	if math.random () < 0.55 * mob_factor then
@@ -231,18 +231,18 @@ end
 
 function skeleton:skelly_generate_default_equipment (mob_factor)
 	self:generate_default_equipment (mob_factor, true, false)
-	self:set_wielditem (ItemStack ("vlf_bows:bow"))
+	self:set_wielditem (ItemStack ("mcl_bows:bow"))
 	self:enchant_default_weapon (mob_factor, pr)
 end
 
-function skeleton:on_die (pos, vlf_reason)
-	if vlf_reason
-		and vlf_reason.type == "arrow"
-		and vlf_reason.source then
-		local source = vlf_reason.source
+function skeleton:on_die (pos, mcl_reason)
+	if mcl_reason
+		and mcl_reason.type == "arrow"
+		and mcl_reason.source then
+		local source = mcl_reason.source
 		if source:is_player ()
 			and vector.distance (pos, source:get_pos ()) > 20 then
-			awards.unlock(source:get_player_name (), "vlf:snipeSkeleton")
+			awards.unlock(source:get_player_name (), "mcl:snipeSkeleton")
 		end
 	end
 end
@@ -255,13 +255,13 @@ function skeleton:validate_waypoints (waypoints)
 	local self_pos = self.object:get_pos ()
 	if self.armor_list.head == ""
 		and self:endangered_by_sunlight ()
-		and not vlf_weather.is_outdoor (self_pos)
+		and not mcl_weather.is_outdoor (self_pos)
 		and #waypoints > 0 then
 		local safe_waypoints = {}
 		local n_waypoints = #waypoints
 		for i = 0, n_waypoints - 1 do
 			local r = n_waypoints - i
-			if vlf_weather.is_outdoor (waypoints[r]) then
+			if mcl_weather.is_outdoor (waypoints[r]) then
 				break
 			end
 			table.insert (safe_waypoints, waypoints[r])
@@ -303,7 +303,7 @@ function skeleton:ai_step (dtime)
 		self:conversion_step (dtime)
 	end
 
-	if vlf_vars.difficulty < 3 then
+	if mcl_vars.difficulty < 3 then
 		self.shoot_interval = 2
 	else
 		self.shoot_interval = 1
@@ -312,7 +312,7 @@ end
 
 function skeleton:shoot_arrow (pos, dir)
 	local wielditem = self:get_wielditem ()
-	vlf_bows.shoot_arrow ("vlf_bows:arrow", pos, dir,
+	mcl_bows.shoot_arrow ("mcl_bows:arrow", pos, dir,
 			self:get_yaw (), self.object, 0.5333333, nil,
 			false, wielditem)
 end
@@ -324,7 +324,7 @@ skeleton.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:skeleton", skeleton)
+mcl_mobs.register_mob ("mobs_mc:skeleton", skeleton)
 mobs_mc.skeleton = skeleton
 
 ------------------------------------------------------------------------
@@ -342,7 +342,7 @@ local stray = table.merge (skeleton, {
 		},
 	},
 	drops = table.insert (table.copy (skeleton.drops), {
-		name = "vlf_potions:slowness_arrow",
+		name = "mcl_potions:slowness_arrow",
 		chance = 2,
 		min = 1,
 		max = 1,
@@ -363,18 +363,18 @@ local stray = table.merge (skeleton, {
 
 function stray:shoot_arrow (pos, dir)
 	local wielditem = self:get_wielditem ()
-	vlf_bows.shoot_arrow ("vlf_potions:slowness_arrow", pos, dir,
+	mcl_bows.shoot_arrow ("mcl_potions:slowness_arrow", pos, dir,
 			self:get_yaw (), self.object, 0.5333333, nil,
 			false, wielditem)
 end
 
-vlf_mobs.register_mob ("mobs_mc:stray", stray)
+mcl_mobs.register_mob ("mobs_mc:stray", stray)
 
 ------------------------------------------------------------------------
 -- Skeleton & Stray spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:skeleton",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -386,7 +386,7 @@ vlf_mobs.spawn_setup ({
 	chance = 800,
 })
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:skeleton",
 	type_of_spawning = "ground",
 	dimension = "nether",
@@ -397,7 +397,7 @@ vlf_mobs.spawn_setup ({
 	chance = 800,
 })
 
-vlf_mobs.spawn_setup ({
+mcl_mobs.spawn_setup ({
 	name = "mobs_mc:stray",
 	type_of_spawning = "ground",
 	dimension = "overworld",
@@ -411,5 +411,5 @@ vlf_mobs.spawn_setup ({
 	chance = 1200,
 })
 
-vlf_mobs.register_egg ("mobs_mc:skeleton", S("Skeleton"), "#c1c1c1", "#494949", 0)
-vlf_mobs.register_egg ("mobs_mc:stray", S("Stray"), "#5f7476", "#dae8e7", 0)
+mcl_mobs.register_egg ("mobs_mc:skeleton", S("Skeleton"), "#c1c1c1", "#494949", 0)
+mcl_mobs.register_egg ("mobs_mc:stray", S("Stray"), "#5f7476", "#dae8e7", 0)

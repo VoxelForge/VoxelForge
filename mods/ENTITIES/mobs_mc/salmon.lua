@@ -4,7 +4,7 @@
 --License for code WTFPL and otherwise stated in readmes
 
 local S = minetest.get_translator(minetest.get_current_modname())
-local mob_class = vlf_mobs.mob_class
+local mob_class = mcl_mobs.mob_class
 
 --###################
 --################### salmon
@@ -38,11 +38,11 @@ local salmon = {
 		run_start = 1, run_end = 20,
 	},
 	drops = {
-		{name = "vlf_fishing:salmon_raw",
+		{name = "mcl_fishing:salmon_raw",
 		chance = 1,
 		min = 1,
 		max = 1,},
-		{name = "vlf_bone_meal:bone_meal",
+		{name = "mcl_bone_meal:bone_meal",
 		chance = 20,
 		min = 1,
 		max = 1,},
@@ -71,10 +71,10 @@ local salmon = {
 
 function salmon:on_rightclick (clicker)
 	local bn = clicker:get_wielded_item():get_name()
-	if bn == "vlf_buckets:bucket_water" or bn == "vlf_buckets:bucket_river_water" then
+	if bn == "mcl_buckets:bucket_water" or bn == "mcl_buckets:bucket_river_water" then
 		self:safe_remove()
-		clicker:set_wielded_item("vlf_buckets:bucket_salmon")
-		awards.unlock(clicker:get_player_name(), "vlf:tacticalFishing")
+		clicker:set_wielded_item("mcl_buckets:bucket_salmon")
+		awards.unlock(clicker:get_player_name(), "mcl:tacticalFishing")
 	end
 end
 
@@ -89,13 +89,13 @@ salmon.ai_functions = {
 	mob_class.check_pace,
 }
 
-vlf_mobs.register_mob ("mobs_mc:salmon", salmon)
+mcl_mobs.register_mob ("mobs_mc:salmon", salmon)
 
 ------------------------------------------------------------------------
 -- Salmon spawning.
 ------------------------------------------------------------------------
 
-vlf_mobs.spawn_setup({
+mcl_mobs.spawn_setup({
 	name = "mobs_mc:salmon",
 	type_of_spawning = "water",
 	dimension = "overworld",
@@ -108,4 +108,4 @@ vlf_mobs.spawn_setup({
 })
 
 --spawn egg
-vlf_mobs.register_egg("mobs_mc:salmon", S("Salmon"), "#a00f10", "#0e8474", 0)
+mcl_mobs.register_egg("mobs_mc:salmon", S("Salmon"), "#a00f10", "#0e8474", 0)
