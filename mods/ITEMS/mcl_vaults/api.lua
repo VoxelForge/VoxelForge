@@ -240,6 +240,11 @@ function mcl_vaults.register_vault(name, def)
 			generate_loot(pos, node)
 			if itemstack:get_name() == keyitem and try_open(pos, clicker) then
 				node.name = "mcl_vaults:"..name.."_ejecting"
+				if keyitem == "mcl_vaults:trial_key" then
+					awards.unlock(clicker:get_player_name(), "mcl:under_lock_and_key")
+				elseif keyitem == "mcl_vaults:ominous_trial_key" then
+					awards.unlock(clicker:get_player_name(), "mcl:revaulting")
+				end
 				minetest.swap_node(pos, node)
 				if not minetest.is_creative_enabled(clicker:get_player_name()) then
 					itemstack:take_item()
@@ -250,11 +255,7 @@ function mcl_vaults.register_vault(name, def)
 				activate_item_entity(pos)
 				return itemstack
 			end
-			if def.key == "mcl_trials:trial_key" then
-					awards.unlock(clicker:get_player_name(), "mcl:under_lock_and_key")
-				elseif def.key == "mcl_trials:ominous_trial_key" then
-					awards.unlock(clicker:get_player_name(), "mcl:revaulting")
-				end
+
 		end
 	}, def.node_on))
 

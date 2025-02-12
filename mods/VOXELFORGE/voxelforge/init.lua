@@ -10,8 +10,10 @@ local modpath = minetest.get_modpath("voxelforge")
 --==============--
 --=== Dofile ===--
 --==============--
+dofile(modpath.."/advancements.lua")
 dofile(modpath.."/biomes.lua")
 dofile(modpath.."/torchflower.lua")
+dofile(modpath.."/vlf_compat.lua")
 
 --=================--
 --=== Functions ===--

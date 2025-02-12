@@ -22,6 +22,27 @@ local function find_nearby_copper_button(pos)
 	return nil
 end
 
+local function particles(pos, texture)
+	minetest.add_particlespawner({
+		amount = 8,
+		time = 1,
+		minpos = vector.subtract(pos, 1),
+		maxpos = vector.add(pos,1),
+		minvel = vector.zero(),
+		maxvel = vector.zero(),
+		minacc = vector.zero(),
+		maxacc = vector.zero(),
+		minexptime = 0.5,
+		maxexptime = 1,
+		minsize = 1,
+		maxsize = 2.5,
+		collisiondetection = false,
+		vertical = false,
+		texture = texture or "mcl_copper_anti_oxidation_particle.png",
+		glow = 5,
+	})
+end
+
 -- Function to handle oxidation
 local function handle_oxidation(self)
 	if self.oxidation_level < 4 and not self.waxed then
@@ -85,7 +106,7 @@ local copper_golem = {
 			if self.waxed then
 				awards.unlock(clicker:get_player_name(), "vlf:wax_off")
 				self.waxed = false
-				mcl_copper.particles(pos)
+				particles(pos)
 			else
 				self.oxidation_level = self.oxidation_level - 1
 				self.base_texture = {oxidation_levels[self.oxidation_level].texture}
@@ -101,9 +122,9 @@ local copper_golem = {
 					}
 					self.state = "walk"
 					if self.oxidation_level > 3 then
-						mcl_copper.particles(pos)
+						particles(pos)
 					else
-						mcl_copper.particles(pos, "vlf_copper_anti_oxidation_particle.png^[colorize:#6CC298:125")
+						particles(pos, "mcl_copper_anti_oxidation_particle.png^[colorize:#6CC298:125")
 					end
 				end
 			end
@@ -111,7 +132,7 @@ local copper_golem = {
 		if item_name == "mcl_honey:honeycomb" and self.oxidation_level < 4 and not self.waxed then
 			awards.unlock(clicker:get_player_name(), "mcl:wax_on")
 			self.waxed = true
-			mcl_copper.particles(pos, "mcl_copper_anti_oxidation_particle.png^[colorize:#E58A14:125")
+			particles(pos, "mcl_copper_anti_oxidation_particle.png^[colorize:#E58A14:125")
 		end
 	end,
 	do_custom = function(self)

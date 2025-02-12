@@ -205,6 +205,13 @@ minetest.register_node("mcl_jukebox:jukebox", {
 			-- Jukebox is empty: Play track if player holds music record
 			local playing = play_record(pos, itemstack, clicker)
 			if playing then
+				local biome_data = minetest.get_biome_data(pos)
+				if biome_data then
+					local biome_name = minetest.get_biome_name(biome_data.biome)
+					if biome_name == "Meadow" then
+						awards.unlock(clicker:get_player_name(), "mcl:play_jukebox_in_meadows")
+					end
+				end
 				local put_itemstack = ItemStack(itemstack)
 				put_itemstack:set_count(1)
 				inv:set_stack("main", 1, put_itemstack)

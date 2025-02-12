@@ -121,13 +121,13 @@ for n, desc in pairs(n_desc) do
 		_mcl_stonecutter_recipes = { "mcl_copper:"..n.."copper" }
 	})
 
-minetest.register_node("mcl_copper:"..n.."copper_bulb_lit_powered", {
+	minetest.register_node("mcl_copper:"..n.."copper_bulb_lit_powered", {
 		description = D(desc .. "Copper Bulb On"),
 		_doc_items_longdesc = D(desc .. "Copper Bulb is mostly a decorative block."),
 		tiles = { "mcl_copper_"..n.."copper_bulb_lit_powered.png"},
 		is_ground_content = false,
 		light_source = bulb_light[n],
-		groups = {pickaxey = 2, building_block = 1, not_in_creative_inventory = 1, not_opaque = 1, comparator_signal = 15},
+		groups = {pickaxey = 2, building_block = 1, not_in_creative_inventory = 1, not_opaque = 1, comparator_signal = 15, copper_bulb = 1},
 		sounds = mcl_sounds.node_sound_metal_defaults(),
 		_mcl_blast_resistance = 6,
 		_mcl_hardness = 3,
@@ -142,7 +142,7 @@ minetest.register_node("mcl_copper:"..n.."copper_bulb_lit_powered", {
 				return {priority = 1, name = node.name:gsub("copper_bulb_lit_powered", "copper_bulb_lit")}
 			end
 		end,
-	},
+		},
 	})
 	minetest.register_node("mcl_copper:"..n.."copper_bulb_lit", {
 		description = D(desc .. "Copper Bulb"),
@@ -150,7 +150,7 @@ minetest.register_node("mcl_copper:"..n.."copper_bulb_lit_powered", {
 		tiles = { "mcl_copper_"..n.."copper_bulb_lit.png"},
 		is_ground_content = false,
         light_source = bulb_light[n],
-		groups = {pickaxey = 2, building_block = 1, comparator_signal = 15 },
+		groups = {pickaxey = 2, building_block = 1, comparator_signal = 15, copper_bulb = 1},
 		sounds = mcl_sounds.node_sound_metal_defaults(),
 		_mcl_blast_resistance = 6,
 		_mcl_hardness = 3,
@@ -172,7 +172,7 @@ minetest.register_node("mcl_copper:"..n.."copper_bulb_powered", {
 		_doc_items_longdesc = D(desc .. "Copper Bulb is mostly a decorative block."),
 		tiles = { "mcl_copper_"..n.."copper_bulb_powered.png"},
 		is_ground_content = false,
-		groups = {pickaxey = 2, building_block = 1, not_in_creative_inventory = 1, not_opaque = 1, comparator_signal = 15},
+		groups = {pickaxey = 2, building_block = 1, not_in_creative_inventory = 1, not_opaque = 1, comparator_signal = 15, copper_bulb = 1},
 		sounds = mcl_sounds.node_sound_metal_defaults(),
 		_mcl_blast_resistance = 6,
 		_mcl_hardness = 3,
@@ -194,7 +194,7 @@ minetest.register_node("mcl_copper:"..n.."copper_bulb_powered", {
 		_doc_items_longdesc = D(desc .. "Copper Bulb is mostly a decorative block."),
 		tiles = { "mcl_copper_"..n.."copper_bulb.png"},
 		is_ground_content = false,
-		groups = {pickaxey = 2, building_block = 1, comparator_signal = 0 },
+		groups = {pickaxey = 2, building_block = 1, comparator_signal = 0, copper_bulb = 1},
 		sounds = mcl_sounds.node_sound_metal_defaults(),
 		_mcl_blast_resistance = 6,
 		_mcl_hardness = 3,

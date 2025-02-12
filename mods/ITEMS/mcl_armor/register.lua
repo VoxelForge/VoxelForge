@@ -243,5 +243,6 @@ minetest.register_tool("mcl_armor:elytra", {
 	on_secondary_use = mcl_armor.equip_on_use,
 	_mcl_armor_element = "torso",
 	_mcl_armor_texture = "mcl_armor_elytra.png",
+	_repair_material = "mcl_mobitems:phantom_membrane",
 	_on_repair = mcl_armor.reenable_elytra,
 })

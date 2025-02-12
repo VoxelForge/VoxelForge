@@ -718,6 +718,9 @@ local trade_inventory = {
 			-- May need to be moved if award gets unlocked in the wrong cases.
 			elseif trader_exists(player:get_player_name()) then
 				awards.unlock(player:get_player_name(), "mcl:whatAdeal")
+				if player:get_pos().y >= 218 then -- 218 due to the limit of Minetest's default mapgen limit
+					awards.unlock(player:get_player_name(), "mcl:trade_at_world_height")
+				end
 			-- End Award Code
 			end
 			-- Only allow taking full stack
