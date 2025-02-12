@@ -19,7 +19,7 @@ local function try_open(pos, player)
 end
 
 local function get_eligible_player_near(pos, distance)
-	for v in core.objects_inside_radius(pos, distance) do
+	for _, v in pairs(minetest.get_objects_inside_radius(pos, distance)) do
 		if v:is_player() and can_open(pos, v) then return v end
 	end
 end
@@ -89,6 +89,7 @@ minetest.register_entity("mcl_vaults:item_entity", {
 		collisionbox = {0,0,0,0,0,0},
 		pointable = true,
 		static_save = false,
+		automatic_rotate = math.pi * 1.5,
 	},
 	_deactivate = function(self, node)
 		node.name = self._vault_name
@@ -249,6 +250,11 @@ function mcl_vaults.register_vault(name, def)
 				activate_item_entity(pos)
 				return itemstack
 			end
+			if def.key == "mcl_trials:trial_key" then
+					awards.unlock(clicker:get_player_name(), "mcl:under_lock_and_key")
+				elseif def.key == "mcl_trials:ominous_trial_key" then
+					awards.unlock(clicker:get_player_name(), "mcl:revaulting")
+				end
 		end
 	}, def.node_on))
 
