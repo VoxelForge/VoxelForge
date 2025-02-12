@@ -55,7 +55,7 @@ minetest.register_entity("vlf_trials:ominous_item_spawner", {
                     end
                 end)
             end
-            
+
             minetest.add_particlespawner({
                 amount = math.random(6, 10),
                 time = 4, -- Particle spawner duration
@@ -93,8 +93,7 @@ minetest.register_craftitem("vlf_trials:ominous_item_spawner", {
     on_use = function(itemstack, user, pointed_thing)
         -- Spawn the spawner entity at the user's position
         local pos = user:get_pos()
-        local spawner_entity = minetest.add_entity({x = pos.x, y = pos.y + 1.5, z = pos.z}, "vlf_trials:ominous_item_spawner")  -- Spawn slightly above the player
-        
+        minetest.add_entity({x = pos.x, y = pos.y + 1.5, z = pos.z}, "vlf_trials:ominous_item_spawner")  -- Spawn slightly above the player
         -- Remove the item from the user's inventory
         itemstack:take_item()
         return itemstack

@@ -352,7 +352,6 @@ local function pos_to_string(pos)
 end
 
 local function reload_model_in_formspec(player_name, player, fname)
-	local pmeta = player:get_meta()
     minetest.dynamic_add_media({
         filename = fname..".obj",
         filepath = minetest.get_worldpath() .. "/voxelforge/structure_block/3d_models/"..fname..".obj",
@@ -856,8 +855,8 @@ minetest.register_node(":voxelforge:structure_block", {
 		}, minetest.get_worldpath() .. "/voxelforge/structure_block/3d_models", pos_to_string(pos) .. "_structure_block_model")
 	end,
     on_rightclick = function(pos, node, player, itemstack, pointed_thing)
+		local meta = minetest.get_meta(pos)
         meta:set_string("owner", player:get_player_name())
-        local filename = meta:get_string("filename") or "schematic"
 	reload_model_in_formspec(player:get_player_name(), player, pos_to_string(pos) .. "_structure_block_model")
 	if meta:get_string("mode") == "Save" then
 			show_sb_formspec(pos, player:get_player_name(), player, "voxelforge:structure_block", nil)
