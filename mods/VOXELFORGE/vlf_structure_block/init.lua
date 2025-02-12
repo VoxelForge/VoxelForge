@@ -86,57 +86,6 @@ function vlf_structure_block.load_vlfschem_nb(file_name, worldpath)
     return schematic_data -- Return the entire schematic table
 end
 
---[[function vlf_structure_block.load_vlfschem(file_name, worldpath)
-    if not file_name then
-        --minetest.log("error", "File name is nil.")
-        return
-    end
-    local file_path
-    if worldpath == true then
-		file_path = minetest.get_worldpath().."/generated/voxelforge/structures/" .. file_name
-    elseif worldpath == false then
-		file_path = modpath .. "/" .. file_name
-	end
-    --minetest.log("action", "Loading schematic from file: " .. file_path)
-
-    -- Attempt to open the file in binary mode
-    local file = io.open(file_path, "rb")
-    if not file then
-        minetest.log("error","Cannot open file: " .. file_path)
-        return nil
-    end
-
-    -- Read the binary file content
-    local compressed_content = file:read("*a")
-    file:close()
-
-    -- Decompress the content
-	local content = core.decompress(compressed_content)
-    -- Attempt to deserialize the decompressed content
-    	local success, schematic_data = pcall(function() return binser.deserialize(content) end)
-    if not success then
-        --minetest.log("error", "Error deserializing .gamedata file: " .. schematic_data)
-        return nil
-    end
-
-    -- Ensure the schematic data is a table
-    if type(schematic_data) ~= "table" then
-        minetest.log("error", "Schematic data is not a table in file: " .. file_name)
-        return nil
-    end
-
-    -- Log the type and content of the schematic data
-    --minetest.log("action", "Schematic data type: " .. type(schematic_data[1]))
-
-    -- Check the structure of the schematic data
-    if type(schematic_data[1].nodes) ~= "table" then
-        --minetest.log("error", "Invalid schematic data format in file: " .. file_name)
-        return nil
-    end
-
-    return schematic_data[1] -- return the first item in case of multiple items
-end]]
-
 function vlf_structure_block.load_vlfschem(file_name, worldpath)
     if not file_name or file_name == "" then
         minetest.log("error", "Invalid file name provided.")
