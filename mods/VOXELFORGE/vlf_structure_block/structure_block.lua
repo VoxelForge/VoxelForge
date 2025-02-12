@@ -1335,7 +1335,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         elseif fields.unmark_borders then
             minetest.chat_send_player(name, "Removing temporary glass...")
             unmark_borders(pos, {x = sx, y = sy, z = sz}, {x = ox, y = oy, z = oz})
-	elseif fields.threedexport then
+		elseif fields.threedexport then
 		create_sb_model(pos, {
 			x = sx, y = sy, z = sz
 		}, {

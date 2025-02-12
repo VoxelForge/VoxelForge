@@ -125,6 +125,3 @@ function awards.clear_player(name)
 	__player_data[name] = {}
 end
 
-local storage = minetest.get_mod_storage()
-local __player_data
-	

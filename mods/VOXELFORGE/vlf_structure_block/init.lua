@@ -86,10 +86,10 @@ function vlf_structure_block.load_vlfschem_nb(file_name, worldpath)
     return schematic_data -- Return the entire schematic table
 end
 
-function vlf_structure_block.load_vlfschem(file_name, worldpath)
+--[[function vlf_structure_block.load_vlfschem(file_name, worldpath)
     if not file_name then
         --minetest.log("error", "File name is nil.")
-        return nil
+        return
     end
     local file_path
     if worldpath == true then
@@ -111,10 +111,9 @@ function vlf_structure_block.load_vlfschem(file_name, worldpath)
     file:close()
 
     -- Decompress the content
-    local content = core.decompress(compressed_content)
-
+	local content = core.decompress(compressed_content)
     -- Attempt to deserialize the decompressed content
-    local success, schematic_data = pcall(function() return binser.deserialize(content) end)
+    	local success, schematic_data = pcall(function() return binser.deserialize(content) end)
     if not success then
         --minetest.log("error", "Error deserializing .gamedata file: " .. schematic_data)
         return nil
@@ -136,7 +135,69 @@ function vlf_structure_block.load_vlfschem(file_name, worldpath)
     end
 
     return schematic_data[1] -- return the first item in case of multiple items
+end]]
+
+function vlf_structure_block.load_vlfschem(file_name, worldpath)
+    if not file_name or file_name == "" then
+        minetest.log("error", "Invalid file name provided.")
+        return nil
+    end
+    
+    local file_path
+    if worldpath == true then
+        file_path = minetest.get_worldpath() .. "/generated/voxelforge/structures/" .. file_name
+    elseif worldpath == false then
+        file_path = modpath .. "/" .. file_name
+    else
+        minetest.log("error", "Invalid worldpath parameter.")
+        return nil
+    end
+    
+    -- Attempt to open the file in binary mode
+    local file = io.open(file_path, "rb")
+    if not file then
+        minetest.log("error", "File not found or cannot be opened: " .. file_path)
+        return nil
+    end
+    
+    -- Read the binary file content
+    local compressed_content = file:read("*a")
+    file:close()
+    
+    if not compressed_content or compressed_content == "" then
+        minetest.log("error", "File is empty or unreadable: " .. file_path)
+        return nil
+    end
+    
+    -- Decompress the content
+    local content = core.decompress(compressed_content)
+    if not content then
+        minetest.log("error", "Failed to decompress file: " .. file_path)
+        return nil
+    end
+    
+    -- Attempt to deserialize the decompressed content
+    local success, schematic_data = pcall(function() return binser.deserialize(content) end)
+    if not success or not schematic_data then
+        minetest.log("error", "Error deserializing file: " .. file_path)
+        return nil
+    end
+    
+    -- Ensure the schematic data is a table
+    if type(schematic_data) ~= "table" or #schematic_data == 0 then
+        minetest.log("error", "Invalid schematic data format in file: " .. file_path)
+        return nil
+    end
+    
+    -- Check the structure of the schematic data
+    if not schematic_data[1] or type(schematic_data[1].nodes) ~= "table" then
+        minetest.log("error", "Schematic data is missing required fields in file: " .. file_path)
+        return nil
+    end
+    
+    return schematic_data[1] -- return the first item in case of multiple items
 end
+
 
 -- Function to check if a table contains a value
 local function table_contains(tbl, value)

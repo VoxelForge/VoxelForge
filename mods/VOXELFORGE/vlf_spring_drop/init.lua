@@ -206,7 +206,7 @@ minetest.register_entity(":voxelforge:firefly_bush_emissive", {
     end,
 })
 
-minetest.register_abm({
+--[[minetest.register_abm({
     label = "Firefly Emitter Behavior",
     nodenames = {"voxelforge:firefly_bush"},
     interval = 1.0,  -- Runs every 3 seconds
@@ -256,8 +256,80 @@ minetest.register_abm({
                     })
         end
     end
-})
+})]]
 
+minetest.register_abm({
+    label = "Firefly Emitter Behavior",
+    nodenames = {"voxelforge:firefly_bush"},
+    interval = 1.0,  -- Runs every 1 second
+    chance = 1,  -- Runs on all matching nodes
+    catch_up = false,
+
+    action = function(pos)
+        -- Store the positions that have already played sound
+        local positions = {}
+
+        -- Define a function to randomly choose 4 positions within the mapblock
+        local function get_random_positions()
+            local random_positions = {}
+            for i = 1, 4 do
+                local offset = {x = math.random(-5, 5), y = math.random(-5, 5), z = math.random(-5, 5)}
+                local new_pos = {x = pos.x + offset.x, y = pos.y + offset.y, z = pos.z + offset.z}
+                table.insert(random_positions, new_pos)
+            end
+            return random_positions
+        end
+
+        -- Get the random positions and store them for this cycle
+        positions = get_random_positions()
+
+        -- Get the current time of day and check if it's night
+        local time_of_day = minetest.get_timeofday()
+        if time_of_day < 0.2 or time_of_day > 0.8 then -- Nighttime
+            -- Play sound at each of the 4 positions selected for this cycle
+            for _, sound_pos in ipairs(positions) do
+                local above = {x = sound_pos.x, y = sound_pos.y + 1, z = sound_pos.z}
+                local above_node = minetest.get_node_or_nil(above)
+
+                if above_node and above_node.name == "air" then
+                    -- Play the sound at the random position
+                    voxelforge.play_sound("Fireflies", sound_pos, 10, 0.03)
+                end
+            end
+        end
+
+        -- Check light level for particle spawning
+        local light_level = minetest.get_node_light(pos)
+        if light_level < 7 then
+            local particle_lifetime = math.random(36, 180) / 20  -- Convert ticks to seconds
+            local size = 0.5  -- Scale of the particle
+            local vel = {
+                x = math.random(-50, 50) / 100,
+                y = math.random(-50, 50) / 100,
+                z = math.random(-50, 50) / 100
+            }
+
+            minetest.add_particlespawner({
+                amount = 2,
+                time = particle_lifetime,
+                minpos = {x = pos.x - 5, y = pos.y - 5, z = pos.z - 5},
+                maxpos = {x = pos.x + 5, y = pos.y + 5, z = pos.z + 5},
+                minvel = vel,
+                maxvel = vel,
+                minacc = {x = 0, y = 0, z = 0},
+                maxacc = {x = 0, y = 0, z = 0},
+                minexptime = particle_lifetime,
+                maxexptime = particle_lifetime,
+                minsize = size,
+                maxsize = size,
+                collisiondetection = true,
+                particlespawner_tweenable = true,
+                texture = { name = "firefly.png", alpha_tween = {0.0, 1.0, style="pulse", reps=1} },
+                glow = 14,
+            })
+        end
+    end
+})
 
 
 -----------------
