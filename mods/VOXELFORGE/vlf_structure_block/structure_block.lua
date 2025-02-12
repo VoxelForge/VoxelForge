@@ -485,30 +485,37 @@ local function show_sb_formspec(pos, playername, player, formspec_name, eformspe
     --"background[-0.2,-0.3;28.5,20.8;sbfs.png]" ..
     "background[-0.2,-0.3;48.5,27.8;sbfs.png]" ..
     "label[1.3,2.7;Mode:]" ..
-    "dropdown[1.4,3.3;10.2,2.3;mode;Save,Load,Corner,3D_Export;1]" ..
+    "dropdown[1.4,3.3;10.2,2.2;mode;Save,Load,Corner,3D_Export;1]" ..
+    "image[1.55,6.3;9.9,1.5;sbfs_field.png;]" ..
     "field[1.55,6.3;9.9,1.5;filename;;" .. filename .. "]" ..
 
 	-- Size Field
     "label[2.8,8.4;Size:]" ..
     -- X
     "image[1.3,8.9;1.5,1.5;sbfs_X.png;]" ..
+    "image[2.7,8.9;2.8,1.5;sbfs_field.png;]" ..
     "field[2.7,8.9;2.8,1.5;sx; ;" .. sx .. "]" ..
     -- Y
     "image[1.3,10.4;1.5,1.5;sbfs_Y.png;]" ..
+    "image[2.7,10.4;2.8,1.5;sbfs_field.png;]" ..
     "field[2.7,10.4;2.8,1.5;sy; ;" .. sy .. "]" ..
     -- Z
     "image[1.3,12;1.5,1.5;sbfs_Z.png;]" ..
+    "image[2.7,12;2.8,1.5;sbfs_field.png;]" ..
     "field[2.7,12;2.8,1.5;sz; ;" .. sz .. "]" ..
 	-- Offset Field
     "label[7.8,8.4;Offset:]" ..
     -- X
     "image[6.5,8.9;1.5,1.5;sbfs_X.png;]" ..
+    "image[7.8,8.9;2.8,1.5;sbfs_field.png;]" ..
     "field[7.8,8.9;2.8,1.5;ox; ;" .. ox .. "]" ..
     -- Y
     "image[6.5,10.4;1.5,1.5;sbfs_Y.png;]" ..
+    "image[7.8,10.4;2.8,1.5;sbfs_field.png;]" ..
     "field[7.8,10.4;2.8,1.5;oy; ;" .. oy .. "]" ..
     -- Z
     "image[6.5,12;1.5,1.5;sbfs_Z.png;]" ..
+    "image[7.8,12;2.8,1.5;sbfs_field.png;]" ..
     "field[7.8,12;2.8,1.5;oz; ;" .. oz .. "]" ..
     
     "style[detect;border=false;bgimg=sbfs_bp.png;bgimg_pressed=sbsb.png]" ..
@@ -595,7 +602,7 @@ local function show_sb_load_formspec(pos, playername, player, formspec_name, efo
     "button[34.6,24.15;10.25,2.2;reset;Reset]" ..
     
     
-    "background[-0.2,-0.3;48.5,27.8;sbfs_load.png]" ..
+    "background[-0.2,-0.3;48.5,27.8;sbfs.png]" ..
     "scroll_container[1,2.3;11,24.2;Load_Bar;vertical;1.25]" ..
     "label[0.3,0.4;Mode:]" ..
     "dropdown[0.4,1;9.5,2.3;mode;Save,Load,Corner,3D_Export;2]" ..
@@ -736,29 +743,36 @@ local function show_sb_export_formspec(pos, playername, player, formspec_name, e
     "background[-0.2,-0.3;48.5,27.8;sbfs_export.png]" ..
     "label[1.3,2.7;Mode:]" ..
     "dropdown[1.4,3.3;10.2,2.3;mode;Save,Load,Corner,3D_Export;4]" ..
+    "image[1.55,6.3;9.9,1.5;sbfs_field.png;]" ..
     "field[1.55,6.3;9.9,1.5;filename;;" .. filename .. "]" ..
 
 	-- Size Field
     "label[2.8,8.4;Size:]" ..
     -- X
     "image[1.3,8.9;1.5,1.5;sbfs_X.png;]" ..
+    "image[2.7,8.9;2.8,1.5;sbfs_field.png;]" ..
     "field[2.7,8.9;2.8,1.5;sx; ;" .. sx .. "]" ..
     -- Y
     "image[1.3,10.4;1.5,1.5;sbfs_Y.png;]" ..
+    "image[2.7,10.4;2.8,1.5;sbfs_field.png;]" ..
     "field[2.7,10.4;2.8,1.5;sy; ;" .. sy .. "]" ..
     -- Z
     "image[1.3,12;1.5,1.5;sbfs_Z.png;]" ..
+    "image[2.7,12;2.8,1.5;sbfs_field.png;]" ..
     "field[2.7,12;2.8,1.5;sz; ;" .. sz .. "]" ..
 	-- Offset Field
     "label[7.8,8.4;Offset:]" ..
     -- X
     "image[6.5,8.9;1.5,1.5;sbfs_X.png;]" ..
+    "image[7.8,8.9;2.8,1.5;sbfs_field.png;]" ..
     "field[7.8,8.9;2.8,1.5;ox; ;" .. ox .. "]" ..
     -- Y
     "image[6.5,10.4;1.5,1.5;sbfs_Y.png;]" ..
+    "image[7.8,10.4;2.8,1.5;sbfs_field.png;]" ..
     "field[7.8,10.4;2.8,1.5;oy; ;" .. oy .. "]" ..
     -- Z
     "image[6.5,12;1.5,1.5;sbfs_Z.png;]" ..
+    "image[7.8,12;2.8,1.5;sbfs_field.png;]" ..
     "field[7.8,12;2.8,1.5;oz; ;" .. oz .. "]" ..
     
    
