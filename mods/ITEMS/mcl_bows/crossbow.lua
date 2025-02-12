@@ -69,6 +69,7 @@ function shoot_arrow_crossbow_1 (arrow_item, pos, dir, yaw, shooter, speed, dama
 			obj:get_luaentity().player = shooter
 		end
 		obj:get_luaentity().node = shooter:get_inventory():get_stack("main", 1):get_name()
+		awards.unlock(shooter:get_player_name(), "mcl:ol_betsy")
 	end
 	return obj
 end

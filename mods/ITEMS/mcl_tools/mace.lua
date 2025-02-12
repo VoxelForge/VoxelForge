@@ -47,6 +47,7 @@ minetest.register_tool("mcl_tools:mace", {
 	on_use = function(itemstack, user, pointed_thing)
 		local fall_distance = user:get_velocity().y
 		local obj = pointed_thing.ref
+		local damage
 		if pointed_thing.type == "object" then
 			if mcl_tools.mace_cooldown[user] == nil then
 				mcl_tools.mace_cooldown[user] = mcl_tools.mace_cooldown[user] or 0
@@ -57,6 +58,12 @@ minetest.register_tool("mcl_tools:mace", {
 				local density_add = (mcl_enchanting.get_enchantment(itemstack, "density") or 0) * 0.5 * fall_distance
 				mcl_tools.mace_cooldown[user] = current_time
 				if fall_distance < 0 then
+					damage = -6 * fall_distance / 5.5 + density_add
+					if user:is_player() then
+						if damage > 50 then
+							awards.unlock(user:get_player_name(), "mcl:overoverkill")
+						end
+					end
 					if obj:is_player() or obj:get_luaentity() then
 						obj:punch(user, 1.6, {
 						full_punch_interval = 1.6,

@@ -1,6 +1,18 @@
-
 local storage = minetest.get_mod_storage()
 local __player_data
+
+-- Function to update all cases of 'vlf' with 'mcl' in mod storage
+local function update_modstorage()
+	local json = storage:get("player_data")
+	if json then
+		json = json:gsub("vlf", "mcl")
+		storage:set_string("player_data", json)
+	end
+end
+
+minetest.register_on_mods_loaded(function()
+	update_modstorage()
+end)
 
 -- Table Save Load Functions
 function awards.save()
@@ -112,3 +124,4 @@ end
 function awards.clear_player(name)
 	__player_data[name] = {}
 end
+

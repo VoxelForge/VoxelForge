@@ -222,9 +222,9 @@ function mcl_charges.register_charge(name, descr, def)
 	minetest.register_entity("mcl_charges:" .. name .. "_flying", {
 		initial_properties = {
 			visual = "mesh",
-			mesh = name..".obj",
-			visual_size = {x=2, y=1.5},
-			textures = {"mcl_charges_" .. name .. "_entity.png"},
+			mesh = name..".b3d",
+			visual_size = {x=10, y=10},
+			textures = {"mcl_charges_" .. name .. "_entity2.png"},
 			hp_max = 20,
 			collisionbox = {-0.1,-0.1,-0.1, 0.1,0.0,0.1},
 			collide_with_objects = true,

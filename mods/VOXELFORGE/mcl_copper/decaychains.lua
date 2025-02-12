@@ -116,6 +116,9 @@ local function undecay(itemstack, _, pointed_thing)
 	node.name = mcl_copper.get_undecayed(node.name)
 	minetest.swap_node(pointed_thing.under,node)
 	particles(pointed_thing)
+	if minetest.get_item_group(node.name, "copper_bulb") > 0 then
+		awards.unlock(_:get_player_name(), "mcl:lighten_up")
+	end
 	return itemstack
 end
 

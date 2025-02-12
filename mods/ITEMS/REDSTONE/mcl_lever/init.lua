@@ -71,6 +71,11 @@ minetest.register_node("mcl_lever:lever_off", table.merge(commdef, {
 		minetest.set_node(pos, {name="mcl_lever:lever_on", param2=node.param2})
 		minetest.sound_play("mesecons_button_push", {pos=pos, max_hear_distance=16}, true)
 	end,
+	_on_wind_charge_hit = function(pos)
+		local node = minetest.get_node(pos)
+		minetest.set_node(pos, {name="mcl_lever:lever_on", param2=node.param2})
+		minetest.sound_play("mesecons_button_push", {pos=pos, max_hear_distance=16}, true)
+	end,
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 			-- no interaction possible with entities
@@ -149,6 +154,11 @@ minetest.register_node("mcl_lever:lever_on", table.merge(commdef, {
 	groups = table.merge(commdef.groups, {not_in_creative_inventory = 1}),
 	_doc_items_create_entry = false,
 	on_rightclick = function(pos, node)
+		minetest.set_node(pos, {name="mcl_lever:lever_off", param2=node.param2})
+		minetest.sound_play("mesecons_button_push", {pos=pos, max_hear_distance=16, pitch=0.9}, true)
+	end,
+	_on_wind_charge_hit = function(pos)
+		local node = minetest.get_node(pos)
 		minetest.set_node(pos, {name="mcl_lever:lever_off", param2=node.param2})
 		minetest.sound_play("mesecons_button_push", {pos=pos, max_hear_distance=16, pitch=0.9}, true)
 	end,
