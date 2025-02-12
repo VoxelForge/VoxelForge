@@ -157,9 +157,6 @@ minetest.register_node(":voxelforge:firefly_bush", {
 		dig_by_water = 1, destroy_by_lava_flow = 1, compostability = 30, grass_palette = 1
 	},
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
-	drop = mcl_flowers.wheat_seed_drop,
-	_mcl_shears_drop = true,
-	_mcl_fortune_drop = mcl_flowers.fortune_wheat_seed_drop,
 	node_placement_prediction = "",
 	on_place = mcl_flowers.on_place_flower,
     light_source = 3,
@@ -169,7 +166,7 @@ minetest.register_node(":voxelforge:firefly_bush", {
 	_on_bone_meal = mcl_flowers.on_bone_meal,
     on_construct = function(pos)
 		minetest.add_entity(pos, "voxelforge:firefly_bush_emissive")
-        end,
+	end,
 })
 
 minetest.register_entity(":voxelforge:firefly_bush_emissive", {
@@ -334,4 +331,13 @@ minetest.register_decoration({
 		y_min = mcl_vars.mg_overworld_min,
 		y_max = mcl_vars.mg_overworld_max,
 		decoration = "voxelforge:leaf_litter_4",
+	})
+minetest.register_decoration({
+		deco_type = "simple",
+		place_on = {"mcl_core:dirt_with_grass"},
+		fill_ratio = 0.02,
+		biomes = {"Swampland", "MangroveSwamp"},
+		y_min = mcl_vars.mg_overworld_min,
+		y_max = mcl_vars.mg_overworld_max,
+		decoration = "voxelforge:firefly_bush",
 	})
