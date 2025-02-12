@@ -250,13 +250,13 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
     rotation = rotation or 0
     rotation_origin = rotation_origin or pos
 
-    local pos_hash = minetest.hash_node_position(pos)
-    local blockseed = minetest.get_mapgen_setting("seed")
+--    local pos_hash = minetest.hash_node_position(pos)
+--    local blockseed = minetest.get_mapgen_setting("seed")
     local schematic
     if binary == "true" then
 		schematic = vlf_structure_block.load_vlfschem(file_name, worldpath)
     elseif binary == "false" then
-    	schematic = vlf_structure_block.load_vlfschem_nb(file_name, worldpath)
+		schematic = vlf_structure_block.load_vlfschem_nb(file_name, worldpath)
     else
 		schematic = vlf_structure_block.load_vlfschem(file_name, worldpath)
     end

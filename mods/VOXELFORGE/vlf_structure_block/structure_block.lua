@@ -143,7 +143,7 @@ end
         y = max_y - min_y + 1,
         z = max_z - min_z + 1
     }
-    
+
 -- Serialize and write entities if required
 if meta:get_int("ie_value") == 1 then
     file:write("    entities = {\n")
@@ -172,9 +172,9 @@ if meta:get_int("ie_value") == 1 then
                 -- Write the entity data to file without any local variables or returns
                 local entity_data = string.format(
                     "        {name = %q, pos = {x = %.2f, y = %.2f, z = %.2f}, properties = %s},\n",
-                    luaentity.name, 
-                    obj:get_pos().x - start_pos.x, 
-                    obj:get_pos().y - start_pos.y, 
+                    luaentity.name,
+                    obj:get_pos().x - start_pos.x,
+                    obj:get_pos().y - start_pos.y,
                     obj:get_pos().z - start_pos.z,
                     properties_str
                 )
@@ -193,7 +193,6 @@ end
     file:close()
 
     minetest.chat_send_player(player:get_player_name(), "Schematic exported to " .. file_path)
-    
     convert_vlfschem_file_to_binary(worldpath .. "/generated/voxelforge/structures/" .. filename .. ".gamedata")
 end
 
@@ -247,7 +246,7 @@ function vlf_structure_block.mark_borders(pos, size, offset)
 	local end_pos = vector.add(start_pos, {x = size.x - 1, y = size.y - 1, z = size.z - 1})
 	local center = vector.multiply(vector.add(start_pos, end_pos), 0.5)
 	local c1, c2 = vector.subtract(start_pos, 0.5 + 0.01), vector.add(end_pos, 0.5 + 0.01)
-	
+
 	-- Remove existing border entities in the area
 	for _, obj in ipairs(minetest.get_objects_inside_radius(center, math.max(size.x, size.y, size.z) + 1)) do
 		if obj:get_luaentity() and obj:get_luaentity().name == "vlf_structure_block:border" then
@@ -354,7 +353,6 @@ end
 
 local function reload_model_in_formspec(player_name, player, fname)
 	local pmeta = player:get_meta()
-	local sbm = pmeta:get_int("sbm")
     minetest.dynamic_add_media({
         filename = fname..".obj",
         filepath = minetest.get_worldpath() .. "/voxelforge/structure_block/3d_models/"..fname..".obj",
@@ -362,7 +360,7 @@ local function reload_model_in_formspec(player_name, player, fname)
     }, function(name)
     end)
 end
-    
+
 local function extract_textures_from_file(file_path)
     local textures = {}
 
@@ -401,7 +399,6 @@ local function show_sb_formspec(pos, playername, player, formspec_name, eformspe
         local oy = meta:get_int("oy")
         local oz = meta:get_int("oz")
         local textures = extract_textures_from_file(minetest.get_worldpath() .. "/voxelforge/structure_block/3d_models/"..pos_to_string(pos).."_structure_block_model.mtl") or "blank.png"
-        local owner = meta:get_string("owner")
         local filename = meta:get_string("filename") or "schematic"
         local formspec = "formspec_version[4]" ..
 	"size[48,27]" ..
@@ -414,7 +411,7 @@ local function show_sb_formspec(pos, playername, player, formspec_name, eformspe
 	"style_type[label;textcolor=#ffffff]"..
 	"style_type[textarea;textcolor=#323232]"..
 	"style_type[checkbox;textcolor=#323232]" ..
-	
+
 	-- Top
 	"button_exit[0,0;0.9,0.9;back_button;<]" ..
 	"label[2.8,0.4;Structure Block]" ..
@@ -455,15 +452,15 @@ local function show_sb_formspec(pos, playername, player, formspec_name, eformspe
     "image[6.5,12;1.5,1.5;sbfs_Z.png;]" ..
     "image[7.8,12;2.8,1.5;sbfs_field.png;]" ..
     "field[7.8,12;2.8,1.5;oz; ;" .. oz .. "]" ..
-    
+
     "style[detect;border=false;bgimg=sbfs_bp.png;bgimg_pressed=sbsb.png]" ..
     "button[1.4,14;9.9,1.5;detect;Detect]" ..
-    
-    
+
+
     "label[1.5,16;Include Entities:]" ..
     "button[2.31,16.5;2,1;toggle_ie; ]" ..
     "image[2.31,16;2,2;sbfs_scrollbar_on.png]" ..
-    
+
 
     "label[1.5,18.15;Remove Blocks:]" ..
     "button[2.2,18.5;2,1;toggle_rb; ]" ..
@@ -480,14 +477,14 @@ local function show_sb_formspec(pos, playername, player, formspec_name, eformspe
 
     -- Right Panel (3D Model Preview and Buttons)
 	"model[13.3,2.25;34,20.3;obj;"..pos_to_string(pos).."_structure_block_model.obj;"..textures..";0,0;false;true]" ..
-    
+
     -- Bottom Buttons
     "style[save;border=false;bgimg=sbfs_bp.png;bgimg_pressed=sbsb.png]" ..
     "button[13.35,24.15;10.25,2.2;save;Save]" ..
-    
+
     "style[export;border=false;bgimg=sbfs_bp.png;bgimg_pressed=sbsb.png]" ..
     "button[23.8,24.15;10.55,2.2;export;Export]" ..
-    
+
     "style[reset;border=false;bgimg=sbfs_bp.png;bgimg_pressed=sbsb.png]" ..
     "button[34.6,24.15;10.25,2.2;reset;Reset]"
     if eformspec ~= nil then formspec = formspec .. eformspec else formspec = formspec end
@@ -516,7 +513,7 @@ local function show_sb_load_formspec(pos, playername, player, formspec_name, efo
 	"style_type[label;textcolor=#ffffff]"..
 	"style_type[textarea;textcolor=#323232]"..
 	"style_type[checkbox;textcolor=#323232]" ..
-	
+
 	-- Top
 	"button_exit[0,0;0.9,0.9;back_button;<]" ..
 	"label[2.8,0.4;Structure Block]" ..
@@ -609,15 +606,8 @@ local function show_sb_load_formspec(pos, playername, player, formspec_name, efo
 end
 
 local function show_sb_corner_formspec(pos, playername, player, formspec_name, eformspec)
-	local meta = minetest.get_meta(pos)
-        local ox = meta:get_int("ox")
-        local oy = meta:get_int("oy")
-        local oz = meta:get_int("oz")
-        local textures = extract_textures_from_file(minetest.get_worldpath() .. "/voxelforge/structure_block/3d_models/"..pos_to_string(pos).."_structure_block_model.mtl") or "blank.png"
+		local meta = minetest.get_meta(pos)
         local filename = meta:get_string("filename") or "schematic"
-        local si = meta:get_int("si") or 100
-        local seed = meta:get_string("seed")
-        local at = meta:get_int("at")
         local formspec = "formspec_version[4]" ..
 	"size[15,7.5]" ..
 	-- Initial Values.
@@ -629,11 +619,11 @@ local function show_sb_corner_formspec(pos, playername, player, formspec_name, e
 	"style_type[label;textcolor=#ffffff]"..
 	"style_type[textarea;textcolor=#323232]"..
 	"style_type[checkbox;textcolor=#323232]" ..
-	
+
 	-- Top
 	"button_exit[-0.2,-0.4;0.9,0.9;back_button;<]" ..
 	"label[1.2,0.1;Structure Block]" ..
-	
+
 	"background[-0.2,-0.3;15.5,8.3;sbfs_corner.png]" ..
 	"label[0.5,1.2;Mode:]" ..
 	"dropdown[0.5,1.49;4.9,1.1;mode;Save,Load,Corner,3D_Export;3]" ..
@@ -659,7 +649,6 @@ local function show_sb_export_formspec(pos, playername, player, formspec_name, e
         local oy = meta:get_int("oy")
         local oz = meta:get_int("oz")
         local textures = extract_textures_from_file(minetest.get_worldpath() .. "/voxelforge/structure_block/3d_models/"..pos_to_string(pos).."_structure_block_model.mtl") or "blank.png"
-        local owner = meta:get_string("owner")
         local filename = meta:get_string("filename") or "schematic"
         local formspec = "formspec_version[4]" ..
 	"size[48,27]" ..
@@ -672,7 +661,7 @@ local function show_sb_export_formspec(pos, playername, player, formspec_name, e
 	"style_type[label;textcolor=#ffffff]"..
 	"style_type[textarea;textcolor=#323232]"..
 	"style_type[checkbox;textcolor=#323232]" ..
-	
+
 	-- Top
 	"button_exit[0,0;0.9,0.9;back_button;<]" ..
 	"label[2.8,0.4;Structure Block]" ..
@@ -712,7 +701,7 @@ local function show_sb_export_formspec(pos, playername, player, formspec_name, e
     "image[6.5,12;1.5,1.5;sbfs_Z.png;]" ..
     "image[7.8,12;2.8,1.5;sbfs_field.png;]" ..
     "field[7.8,12;2.8,1.5;oz; ;" .. oz .. "]" ..
-    
+
 
     "label[1.5,14.3;Remove Blocks:]" ..
     "button[2.2,14.8;2,1;toggle_rb; ]" ..
@@ -762,7 +751,7 @@ local function find_and_execute_with_sb_model(pos, search_size, name)
 
     -- Abort if more than 2 blocks are found
     if #valid_positions > 2 then
-    	minetest.log("error", "Structure block at: " .. tostring(pos) .. " . Attempted to detect the size from more than two possible blocks. This action is not supported.")
+		minetest.log("error", "Structure block at: " .. tostring(pos) .. " . Attempted to detect the size from more than two possible blocks. This action is not supported.")
         return
     end
 
@@ -848,7 +837,6 @@ minetest.register_node(":voxelforge:structure_block", {
     tiles = {"structure_block.png"},
     groups = {cracky = 3, oddly_breakable_by_hand = 3},
     on_construct = function(pos, node)
-    	local meta = minetest.get_meta(pos)
         mark_borders(pos, {
 			x = 5, y = 5, z = 5
 		}, {
@@ -868,22 +856,19 @@ minetest.register_node(":voxelforge:structure_block", {
 		}, minetest.get_worldpath() .. "/voxelforge/structure_block/3d_models", pos_to_string(pos) .. "_structure_block_model")
 	end,
     on_rightclick = function(pos, node, player, itemstack, pointed_thing)
-        local meta = minetest.get_meta(pos)
-        local pmeta = player:get_meta()
         meta:set_string("owner", player:get_player_name())
-        local owner = meta:get_string("owner")
         local filename = meta:get_string("filename") or "schematic"
 	reload_model_in_formspec(player:get_player_name(), player, pos_to_string(pos) .. "_structure_block_model")
 	if meta:get_string("mode") == "Save" then
-        	show_sb_formspec(pos, player:get_player_name(), player, "voxelforge:structure_block", nil)
+			show_sb_formspec(pos, player:get_player_name(), player, "voxelforge:structure_block", nil)
         elseif meta:get_string("mode") == "Load" then
-        	show_sb_load_formspec(pos, player:get_player_name(), player, "voxelforge:structure_block", "scroll_container_end[]")
+			show_sb_load_formspec(pos, player:get_player_name(), player, "voxelforge:structure_block", "scroll_container_end[]")
         elseif meta:get_string("mode") == "Corner" then
-        	show_sb_corner_formspec(pos, player:get_player_name(), player, "voxelforge:structure_block", nil)
+			show_sb_corner_formspec(pos, player:get_player_name(), player, "voxelforge:structure_block", nil)
         elseif meta:get_string("mode") == "Export" then
-        	show_sb_export_formspec(pos, player:get_player_name(), player, "voxelforge:structure_block", nil)
+			show_sb_export_formspec(pos, player:get_player_name(), player, "voxelforge:structure_block", nil)
 	else
-        	show_sb_formspec(pos, player:get_player_name(), player, "voxelforge:structure_block", nil)
+			show_sb_formspec(pos, player:get_player_name(), player, "voxelforge:structure_block", nil)
         end
     end,
 })
@@ -917,8 +902,6 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         local oy = tonumber(fields.oy) or meta:get_int("oy")
         local oz = tonumber(fields.oz) or meta:get_int("oz")
         local filename = fields.filename or meta:get_string("filename") or "schematic"
-        --local ie_value = 
-        local rb_value = tonumber(fields.rb) or meta:get_int("rb_value")
 
         -- Save settings to node meta
         meta:set_int("sx", sx)
@@ -1273,14 +1256,14 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         -- Handle save button
         local lpos = {x=(pos.x + ox) or pos.x, y=(pos.y + oy) or pos.y, z=(pos.z + oz) or pos.z}
         if meta:get_string("mode") == "Load" and fields.load and meta:get_int("ie_value") == 1 then
-        	vlf_structure_block.place_schematic(lpos, filename, rotation or 0, rotation_origin or pos, "true", true, true)
+			vlf_structure_block.place_schematic(lpos, filename, 0, pos, "true", true, true)
         elseif meta:get_string("mode") == "Load" and fields.load and meta:get_int("ie_value") == 0 then
-        	vlf_structure_block.place_schematic(lpos, filename, rotation or 0, rotation_origin or pos, "true", true, false)
+			vlf_structure_block.place_schematic(lpos, filename, 0, pos, "true", true, false)
         end
         if fields.save then
             minetest.chat_send_player(name, "Configurations saved!")
         elseif fields.detect then
-        	find_and_execute_with_sb_model(pos, {x=48,y=48,z=48}, meta:get_string("filename"))
+			find_and_execute_with_sb_model(pos, {x=48,y=48,z=48}, meta:get_string("filename"))
         elseif fields.export then
             minetest.chat_send_player(name, "Exporting schematic...")
             export_schematic(player, pos, {x = sx, y = sy, z = sz}, {x = ox, y = oy, z = oz}, filename, true)
@@ -1293,7 +1276,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		}, {
 			x = ox, y = oy, z = oz
 		}, minetest.get_worldpath() .. "/voxelforge/structure_block/export", meta:get_string("filename"))
-		
+
         end
         if fields.mode and fields.mode == "Load" then
 		meta:set_string("mode", "Load")
@@ -1350,7 +1333,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		show_sb_export_formspec(pos, name, player, "voxelforge:structure_block", nil)
 		meta:set_string("mode", "Export")
 	end
-	
+
 	local updated = false
         if fields.sx then meta:set_int("sx", tonumber(fields.sx) or 0); updated = true end
         if fields.sy then meta:set_int("sy", tonumber(fields.sy) or 0); updated = true end

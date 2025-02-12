@@ -209,6 +209,7 @@ exclude_files = {
 	"mods/CORE/mcl_util/compat.lua",
 	"mods/ENTITIES/mcl_mobs/pathfinding.lua",
 	"mods/ENTITIES/mobs_mc/dolphin.lua",
+	"mods/VOXELFORGE/vlf_lib/binser.lua",
 	"pattern/*"
 }
 
