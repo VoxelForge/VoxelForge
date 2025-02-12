@@ -103,6 +103,7 @@ mcl_charges.register_charge("wind_charge", S("Wind Charge"), {
 	end,
 	on_activate = function(self, _)
 		self.object:set_armor_groups({immortal = 1})
+		self.object:set_animation({x = 0, y = 12}, 50, 0, true)
 		minetest.after(3, function()
 			if self.object:get_luaentity() then
 				self.object:remove()
