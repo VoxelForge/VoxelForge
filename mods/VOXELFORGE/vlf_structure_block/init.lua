@@ -253,7 +253,7 @@ local function load_area(minp, maxp)
 end
 
 
-function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_origin, binary, worldpath)
+function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_origin, binary, worldpath, include_entities)
     local start_time = minetest.get_us_time()  -- Start timing
 
     rotation = rotation or 0
@@ -369,7 +369,7 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
     end
     
     -- Handle loading entities
-    if schematic.entities then
+    if schematic.entities and include_entities == true then
         for _, entity_data in ipairs(schematic.entities) do
             -- Rotate entity position
             local rotated_pos = rotate_position(entity_data.pos, rotation, rotation_origin)

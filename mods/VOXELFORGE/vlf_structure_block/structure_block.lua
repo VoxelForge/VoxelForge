@@ -1320,8 +1320,10 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         
 
         -- Handle save button
-        if meta:get_string("mode") == "Load" and fields.load then
-        	vlf_structure_block.place_schematic(pos, filename, rotation or 0, rotation_origin or pos, "true", true)
+        if meta:get_string("mode") == "Load" and fields.load and meta:get_int("ie_value") == 1 then
+        	vlf_structure_block.place_schematic(pos, filename, rotation or 0, rotation_origin or pos, "true", true, true)
+        elseif meta:get_string("mode") == "Load" and fields.load and meta:get_int("ie_value") == 0 then
+        	vlf_structure_block.place_schematic(pos, filename, rotation or 0, rotation_origin or pos, "true", true, false)
         end
         if fields.save then
             minetest.chat_send_player(name, "Configurations saved!")
