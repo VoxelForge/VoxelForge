@@ -176,7 +176,6 @@ function armadillo:receive_damage(mcl_reason, damage)
 end
 
 armadillo.ai_functions = {
-	scare,
 	mob_class.check_pace
 }
 

@@ -1,7 +1,6 @@
 local cpath = minetest.get_modpath("vlf_structure_block")
 local modpath = minetest.get_modpath("vlf_structure_block")
 local binser = dofile(minetest.get_modpath("vlf_lib") .. "/binser.lua")
-local Randomizer = dofile(minetest.get_modpath("vlf_lib").."/init.lua")
 vlf_structure_block = {}
 
 
@@ -9,10 +8,9 @@ minetest.register_on_mods_loaded(function()
     local worldpath = minetest.get_worldpath()
     local dir_name = "voxelforge/structure_block/export"
     local target_path = worldpath .. DIR_DELIM .. dir_name
-    
     local dir_name2 = "voxelforge/structure_block/3d_models"
     local target_path2 = worldpath .. DIR_DELIM .. dir_name2
-    
+
     local dir_name3 = "generated/voxelforge/structures"
     local target_path3 = worldpath .. DIR_DELIM .. dir_name3
 
@@ -91,7 +89,7 @@ function vlf_structure_block.load_vlfschem(file_name, worldpath)
         minetest.log("error", "Invalid file name provided.")
         return nil
     end
-    
+
     local file_path
     if worldpath == true then
         file_path = minetest.get_worldpath() .. "/generated/voxelforge/structures/" .. file_name
@@ -101,14 +99,14 @@ function vlf_structure_block.load_vlfschem(file_name, worldpath)
         minetest.log("error", "Invalid worldpath parameter.")
         return nil
     end
-    
+
     -- Attempt to open the file in binary mode
     local file = io.open(file_path, "rb")
     if not file then
         minetest.log("error", "File not found or cannot be opened: " .. file_path)
         return nil
     end
-    
+
     -- Read the binary file content
     local compressed_content = file:read("*a")
     file:close()
@@ -117,14 +115,14 @@ function vlf_structure_block.load_vlfschem(file_name, worldpath)
         minetest.log("error", "File is empty or unreadable: " .. file_path)
         return nil
     end
-    
+
     -- Decompress the content
     local content = core.decompress(compressed_content)
     if not content then
         minetest.log("error", "Failed to decompress file: " .. file_path)
         return nil
     end
-    
+
     -- Attempt to deserialize the decompressed content
     local success, schematic_data = pcall(function() return binser.deserialize(content) end)
     if not success or not schematic_data then
@@ -137,25 +135,14 @@ function vlf_structure_block.load_vlfschem(file_name, worldpath)
         minetest.log("error", "Invalid schematic data format in file: " .. file_path)
         return nil
     end
-    
+
     -- Check the structure of the schematic data
     if not schematic_data[1] or type(schematic_data[1].nodes) ~= "table" then
         minetest.log("error", "Schematic data is missing required fields in file: " .. file_path)
         return nil
     end
-    
+
     return schematic_data[1] -- return the first item in case of multiple items
-end
-
-
--- Function to check if a table contains a value
-local function table_contains(tbl, value)
-    for _, v in ipairs(tbl) do
-        if v == value then
-            return true
-        end
-    end
-    return false
 end
 
 local function set_metadata(metadata)
@@ -179,10 +166,6 @@ local function set_metadata(metadata)
             node_meta:set_string(key, value)
         end
     end
-
-    local end_time = minetest.get_us_time()  -- End timing
-    local elapsed_time = (end_time - start_time) / 1000000  -- Convert microseconds to seconds
-    --minetest.log("action", string.format("Metadata setting finished in %.4f seconds.", elapsed_time))
 end
 
 -- Rotation function for positions, considering the rotation origin
@@ -226,7 +209,7 @@ local function rotate_param2(param2, rotation)
     if normalized_rotation < 0 then
         normalized_rotation = normalized_rotation + 360
     end
-    
+
     -- Determine the current index in the table
     local index = nil
     for i, val in ipairs(table_to_use) do
@@ -272,7 +255,6 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
     local pos_hash = minetest.hash_node_position(pos)
     local blockseed = minetest.get_mapgen_setting("seed")
     local seed = pos_hash + blockseed
-    local rng = PcgRandom(seed)
     local schematic
     if binary == "true" then
     	schematic = vlf_structure_block.load_vlfschem(file_name, worldpath)
@@ -377,7 +359,7 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
     if next(metadata) then
         set_metadata(metadata)
     end
-    
+
     -- Handle loading entities
     if schematic.entities and include_entities == true then
         for _, entity_data in ipairs(schematic.entities) do
@@ -399,10 +381,6 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
             end
         end
     end
-
-    local end_time = minetest.get_us_time()  -- End timing
-    local elapsed_time = (end_time - start_time) / 1000000  -- Convert microseconds to seconds
-    --minetest.log("action", string.format("Schematic placed in %.4f seconds.", elapsed_time))
 end
 
 dofile(cpath .. "/structure_block.lua")

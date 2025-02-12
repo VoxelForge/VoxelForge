@@ -1,4 +1,3 @@
-local modpath = minetest.get_modpath("vlf_structure_block")
 local binser = dofile(minetest.get_modpath("vlf_lib") .. "/binser.lua")
 
 local function convert_vlfschem_to_binary(directory)
@@ -6,58 +5,58 @@ local function convert_vlfschem_to_binary(directory)
         -- Get the list of files and subdirectories in the current directory
         local files = minetest.get_dir_list(dir, false)
         local subdirs = minetest.get_dir_list(dir, true)
-        
+
         -- Process files in the current directory
         for _, file in ipairs(files) do
             local filepath = dir .. "/" .. file
             if filepath:sub(-18) == ".gamedata.gamedata" then
                 local output_file_path = filepath:gsub(".gamedata.gamedata", ".gamedata")
-                
+
                 -- Attempt to open the input file in text mode
                 local input_file = io.open(filepath, "r")
                 if not input_file then
                     return false
                 end
-                
+
                 -- Read the input file content
                 local content = input_file:read("*a")
                 input_file:close()
-                
+
                 -- Attempt to deserialize the content into a Lua table
                 local func, err = loadstring(content)
                 if not func then
                     return false
                 end
-                
+
                 local success, data = pcall(func)
                 if not success then
                     return false
                 end
-                
+
                 -- Serialize the Lua table into binary format
                 local binary_data = binser.serialize(data)
-                
+
                 -- Compress the binary data
                 local compressed_data = minetest.compress(binary_data)
-                
+
                 -- Attempt to open the output file in binary mode
                 local output_file = io.open(output_file_path, "wb")
                 if not output_file then
                     return false
                 end
-                
+
                 -- Write the compressed binary data to the output file
                 output_file:write(compressed_data)
                 output_file:close()
             end
         end
-        
+
         -- Recursively process subdirectories
         for _, subdir in ipairs(subdirs) do
             process_directory(dir .. "/" .. subdir)
         end
     end
-    
+
     -- Start processing from the specified directory
     process_directory(directory)
 end
@@ -65,13 +64,13 @@ end
 local function convert_vlfschem_file_to_binary(file_path)
 
     local output_file_path = file_path
-    
+
     -- Attempt to open the input file in text mode
     local input_file = io.open(file_path, "r")
     if not input_file then
         return false, "Failed to open input file"
     end
-    
+
     -- Read the input file content
     local content = input_file:read("*a")
     input_file:close()
@@ -526,7 +525,7 @@ local function show_sb_formspec(pos, playername, player, formspec_name, eformspe
     "button[2.31,16.5;2,1;toggle_ie; ]" ..
     "image[2.31,16;2,2;sbfs_scrollbar_on.png]" ..
     
-   
+
     "label[1.5,18.15;Remove Blocks:]" ..
     "button[2.2,18.5;2,1;toggle_rb; ]" ..
     "image[2.2,18.15;2,2;sbfs_scrollbar_off.png]" ..
@@ -629,7 +628,7 @@ local function show_sb_load_formspec(pos, playername, player, formspec_name, efo
     "button[1.31,11.9;2,1;toggle_ie; ]" ..
     "image[1.31,11.9;2,2;sbfs_scrollbar_on.png]" ..
     
-   
+
     "label[0.5,14.35;Remove Blocks:]" ..
     "button[1.2,14.35.15;2,1;toggle_rb; ]" ..
     "image[1.2,14.35;2,2;sbfs_scrollbar_off.png]" ..
@@ -775,7 +774,7 @@ local function show_sb_export_formspec(pos, playername, player, formspec_name, e
     "image[7.8,12;2.8,1.5;sbfs_field.png;]" ..
     "field[7.8,12;2.8,1.5;oz; ;" .. oz .. "]" ..
     
-   
+
     "label[1.5,14.3;Remove Blocks:]" ..
     "button[2.2,14.8;2,1;toggle_rb; ]" ..
     "image[2.2,14.5;2,2;sbfs_scrollbar_off.png]" ..
@@ -1157,10 +1156,9 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
             return
         end
         end
-        
-        
-        
-        
+
+
+
         if meta:get_string("mode") == "Load" then
         -- bbox Value off-on, ie_value On, rb_value Off
         if fields.toggle_bbox and meta:get_int("ie_value") == 1 and meta:get_int("rb_value") == 0 and meta:get_int("bbox_value") == 0 then
@@ -1324,20 +1322,21 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
             return
         end
         end
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
 
         -- Handle save button
+        local lpos = {x=(pos.x + ox) or pos.x, y=(pos.y + oy) or pos.y, z=(pos.z + oz) or pos.z}
         if meta:get_string("mode") == "Load" and fields.load and meta:get_int("ie_value") == 1 then
-        	vlf_structure_block.place_schematic(pos, filename, rotation or 0, rotation_origin or pos, "true", true, true)
+        	vlf_structure_block.place_schematic(lpos, filename, rotation or 0, rotation_origin or pos, "true", true, true)
         elseif meta:get_string("mode") == "Load" and fields.load and meta:get_int("ie_value") == 0 then
-        	vlf_structure_block.place_schematic(pos, filename, rotation or 0, rotation_origin or pos, "true", true, false)
+        	vlf_structure_block.place_schematic(lpos, filename, rotation or 0, rotation_origin or pos, "true", true, false)
         end
         if fields.save then
             minetest.chat_send_player(name, "Configurations saved!")

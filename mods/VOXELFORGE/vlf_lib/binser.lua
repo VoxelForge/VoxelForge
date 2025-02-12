@@ -542,7 +542,7 @@ local function newbinser()
     end
 
     local function readFile(path)
-    	local true_path = modpath .. "/" .. path
+		local true_path = modpath .. "/" .. path
         local file, err = io.open(true_path, "rb")
         assert(file, err)
         local str = file:read("*all")
