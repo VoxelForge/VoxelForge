@@ -110,7 +110,7 @@ function vlf_structure_block.load_vlfschem(file_name, worldpath)
     -- Read the binary file content
     local compressed_content = file:read("*a")
     file:close()
-    
+
     if not compressed_content or compressed_content == "" then
         minetest.log("error", "File is empty or unreadable: " .. file_path)
         return nil
@@ -129,7 +129,7 @@ function vlf_structure_block.load_vlfschem(file_name, worldpath)
         minetest.log("error", "Error deserializing file: " .. file_path)
         return nil
     end
-    
+
     -- Ensure the schematic data is a table
     if type(schematic_data) ~= "table" or #schematic_data == 0 then
         minetest.log("error", "Invalid schematic data format in file: " .. file_path)
@@ -150,7 +150,6 @@ local function set_metadata(metadata)
         return
     end
 
-    local start_time = minetest.get_us_time()  -- Start timing
 
     -- Ensure the metadata is in the correct format
     local formatted_metadata = {}
@@ -247,21 +246,19 @@ end
 
 
 function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_origin, binary, worldpath, include_entities)
-    local start_time = minetest.get_us_time()  -- Start timing
 
     rotation = rotation or 0
     rotation_origin = rotation_origin or pos
 
     local pos_hash = minetest.hash_node_position(pos)
     local blockseed = minetest.get_mapgen_setting("seed")
-    local seed = pos_hash + blockseed
     local schematic
     if binary == "true" then
-    	schematic = vlf_structure_block.load_vlfschem(file_name, worldpath)
+		schematic = vlf_structure_block.load_vlfschem(file_name, worldpath)
     elseif binary == "false" then
     	schematic = vlf_structure_block.load_vlfschem_nb(file_name, worldpath)
     else
-    	schematic = vlf_structure_block.load_vlfschem(file_name, worldpath)
+		schematic = vlf_structure_block.load_vlfschem(file_name, worldpath)
     end
     if not schematic then
         minetest.log("error", "Failed to load schematic data.")

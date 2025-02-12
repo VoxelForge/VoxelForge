@@ -1,66 +1,5 @@
 local binser = dofile(minetest.get_modpath("vlf_lib") .. "/binser.lua")
 
-local function convert_vlfschem_to_binary(directory)
-    local function process_directory(dir)
-        -- Get the list of files and subdirectories in the current directory
-        local files = minetest.get_dir_list(dir, false)
-        local subdirs = minetest.get_dir_list(dir, true)
-
-        -- Process files in the current directory
-        for _, file in ipairs(files) do
-            local filepath = dir .. "/" .. file
-            if filepath:sub(-18) == ".gamedata.gamedata" then
-                local output_file_path = filepath:gsub(".gamedata.gamedata", ".gamedata")
-
-                -- Attempt to open the input file in text mode
-                local input_file = io.open(filepath, "r")
-                if not input_file then
-                    return false
-                end
-
-                -- Read the input file content
-                local content = input_file:read("*a")
-                input_file:close()
-
-                -- Attempt to deserialize the content into a Lua table
-                local func, err = loadstring(content)
-                if not func then
-                    return false
-                end
-
-                local success, data = pcall(func)
-                if not success then
-                    return false
-                end
-
-                -- Serialize the Lua table into binary format
-                local binary_data = binser.serialize(data)
-
-                -- Compress the binary data
-                local compressed_data = minetest.compress(binary_data)
-
-                -- Attempt to open the output file in binary mode
-                local output_file = io.open(output_file_path, "wb")
-                if not output_file then
-                    return false
-                end
-
-                -- Write the compressed binary data to the output file
-                output_file:write(compressed_data)
-                output_file:close()
-            end
-        end
-
-        -- Recursively process subdirectories
-        for _, subdir in ipairs(subdirs) do
-            process_directory(dir .. "/" .. subdir)
-        end
-    end
-
-    -- Start processing from the specified directory
-    process_directory(directory)
-end
-
 local function convert_vlfschem_file_to_binary(file_path)
 
     local output_file_path = file_path
@@ -74,34 +13,34 @@ local function convert_vlfschem_file_to_binary(file_path)
     -- Read the input file content
     local content = input_file:read("*a")
     input_file:close()
-    
+
     -- Attempt to deserialize the content into a Lua table
     local func, err = loadstring(content)
     if not func then
         return false, "Failed to load content: " .. (err or "Unknown error")
     end
-    
+
     local success, data = pcall(func)
     if not success then
         return false, "Failed to execute content: " .. (data or "Unknown error")
     end
-    
+
     -- Serialize the Lua table into binary format
     local binary_data = binser.serialize(data)
-    
+
     -- Compress the binary data
     local compressed_data = minetest.compress(binary_data)
-    
+
     -- Attempt to open the output file in binary mode
     local output_file = io.open(output_file_path, "wb")
     if not output_file then
         return false, "Failed to open output file"
     end
-    
+
     -- Write the compressed binary data to the output file
     output_file:write(compressed_data)
     output_file:close()
-    
+
     return true, "File successfully converted"
 end
 
@@ -540,7 +479,7 @@ local function show_sb_formspec(pos, playername, player, formspec_name, eformspe
     "image[2.31,24.55;2,2;sbfs_scrollbar_on.png]" ..
 
     -- Right Panel (3D Model Preview and Buttons)
-"model[13.3,2.25;34,20.3;obj;"..pos_to_string(pos).."_structure_block_model.obj;"..textures..";0,0;false;true]" ..
+	"model[13.3,2.25;34,20.3;obj;"..pos_to_string(pos).."_structure_block_model.obj;"..textures..";0,0;false;true]" ..
     
     -- Bottom Buttons
     "style[save;border=false;bgimg=sbfs_bp.png;bgimg_pressed=sbsb.png]" ..
@@ -551,8 +490,8 @@ local function show_sb_formspec(pos, playername, player, formspec_name, eformspe
     
     "style[reset;border=false;bgimg=sbfs_bp.png;bgimg_pressed=sbsb.png]" ..
     "button[34.6,24.15;10.25,2.2;reset;Reset]"
-        if eformspec ~= nil then formspec = formspec .. eformspec else formspec = formspec end
-    
+    if eformspec ~= nil then formspec = formspec .. eformspec else formspec = formspec end
+
     minetest.show_formspec(playername, formspec_name, formspec)
 end
 
@@ -589,18 +528,18 @@ local function show_sb_load_formspec(pos, playername, player, formspec_name, efo
 
     -- Right Panel (3D Model Preview and Buttons)
 "model[13.3,2.25;34,20.3;obj;"..pos_to_string(pos).."_structure_block_model.obj;"..textures..";0,0;false;true]" ..
-    
+
     -- Bottom Buttons
     "style[load;border=false;bgimg=sbfs_bp.png;bgimg_pressed=sbsb.png]" ..
     "button[13.35,24.15;10.25,2.2;load;Load]" ..
-    
+
     "style[export;border=false;bgimg=sbfs_bp.png;bgimg_pressed=sbsb.png]" ..
     "button[23.8,24.15;10.55,2.2;export;Export]" ..
-    
+
     "style[reset;border=false;bgimg=sbfs_bp.png;bgimg_pressed=sbsb.png]" ..
     "button[34.6,24.15;10.25,2.2;reset;Reset]" ..
-    
-    
+
+
     "background[-0.2,-0.3;48.5,27.8;sbfs.png]" ..
     "scroll_container[1,2.3;11,24.2;Load_Bar;vertical;1.25]" ..
     "label[0.3,0.4;Mode:]" ..
@@ -611,7 +550,7 @@ local function show_sb_load_formspec(pos, playername, player, formspec_name, efo
 	-- Offset Field
     "label[4,6.1;Offset:]" ..
     -- X
-    
+
     "image[0.3,6.6;1.5,1.5;sbfs_X.png;]" ..
     "image[0.3,8.1;1.5,1.5;sbfs_Y.png;]" ..
     "image[0.3,9.7;1.5,1.5;sbfs_Z.png;]" ..
@@ -622,17 +561,17 @@ local function show_sb_load_formspec(pos, playername, player, formspec_name, efo
     "field[1.7,8.1;7.9,1.5;oy; ;" .. oy .. "]" ..
     "image[1.7,9.7;7.9,1.5;sbfs_field.png;]" ..
     "field[1.7,9.7;7.9,1.5;oz; ;" .. oz .. "]" ..
-    
-    
+
+
     "label[0.4,11.9;Include Entities:]" ..
     "button[1.31,11.9;2,1;toggle_ie; ]" ..
     "image[1.31,11.9;2,2;sbfs_scrollbar_on.png]" ..
-    
+
 
     "label[0.5,14.35;Remove Blocks:]" ..
     "button[1.2,14.35.15;2,1;toggle_rb; ]" ..
     "image[1.2,14.35;2,2;sbfs_scrollbar_off.png]" ..
-    
+
     "label[0.3,16.8;Integrity:]" ..
     "image[0.45,17.2;9.2,1.5;sbfs_field.png;]" ..
     "field[0.45,17.2;9.2,1.5;si;;" .. si .. "]" ..
@@ -640,20 +579,20 @@ local function show_sb_load_formspec(pos, playername, player, formspec_name, efo
     "label[0.3,19.5;Seed:]" ..
     "image[0.45,19.9;9.2,1.5;sbfs_field.png;]" ..
     "field[0.45,19.9;9.2,1.5;si;;" .. seed .. "]" ..
-    
+
     "label[0.3,22;Rotation:]" ..
     "image[0.4,22.4;9.3,1.5;sbfs_scrollbar_long.png]" ..
     "image[0.4,22.4;1.5,1.5;sbfs_scrollbar_indicator.png]" ..
-    
+
     "label[0.3,24.5;Mirror:]" ..
     "image[0.8,24.6;1.225,1.225;sbfs_X.png;]" ..
     "checkbox[1.8,25.2;mirror_x; ;0]" ..
     "image[2.25,24.6;1.225,1.225;sbfs_Z.png;]" ..
     "checkbox[3.25,25.2;mirror_x; ;0]" ..
-    
+
     "label[0.3,26;Animation Mode:]" ..
     "dropdown[0.4,26.6;9.5,2.3;animation_mode;None,Layer By Layer,Block By Block;1]" ..
-    
+
     "label[0.3,29.5;Animation Time:]" ..
     "image[0.45,29.9;9.2,1.5;sbfs_field.png;]" ..
     "field[0.45,29.9;9.2,1.5;at;;" .. at .. "]" ..
@@ -663,9 +602,9 @@ local function show_sb_load_formspec(pos, playername, player, formspec_name, efo
     "button[0.81,32.8;2,1;toggle_bbox; ]" ..
     "image[0.81,32.35;2,2;sbfs_scrollbar_on.png]"
     --"scroll_container_end[]"
-    
+
         if eformspec ~= nil then formspec = formspec .. eformspec else formspec = formspec end
-    
+
     minetest.show_formspec(playername, formspec_name, formspec)
 end
 
@@ -707,7 +646,7 @@ local function show_sb_corner_formspec(pos, playername, player, formspec_name, e
 	"label[6.4,3.3;ture being saved.]"
 
         if eformspec ~= nil then formspec = formspec .. eformspec else formspec = formspec end
-    
+
     minetest.show_formspec(playername, formspec_name, formspec)
 end
 
@@ -786,15 +725,15 @@ local function show_sb_export_formspec(pos, playername, player, formspec_name, e
 
     -- Right Panel (3D Model Preview and Buttons)
 "model[13.3,2.25;34,20.3;obj;"..pos_to_string(pos).."_structure_block_model.obj;"..textures..";0,0;false;true]" ..
-    
-    
+
+
     "style[export;border=false;bgimg=sbfs_bp.png;bgimg_pressed=sbsb.png]" ..
     "button[13.3,24.15;15.65,2.2;threedexport;Export]" ..
-    
+
     "style[reset;border=false;bgimg=sbfs_bp.png;bgimg_pressed=sbsb.png]" ..
     "button[29.2,24.15;15.65,2.2;reset;Reset]"
         if eformspec ~= nil then formspec = formspec .. eformspec else formspec = formspec end
-    
+
     minetest.show_formspec(playername, formspec_name, formspec)
 end
 
@@ -991,7 +930,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         --meta:set_int("ie_value", ie_value)
         --meta:set_int("rb_value", rb_value)
         meta:set_string("filename", filename)
-        
+
 
         if meta:get_string("mode") == "Save" then
         -- bbox Value off-on, ie_value On, rb_value Off
