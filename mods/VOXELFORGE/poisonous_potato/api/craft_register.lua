@@ -29,11 +29,11 @@ function register_potato_refinery_for_all_items()
     for _, item in pairs(minetest.registered_items) do
 
         -- Register the potato refinery craft for each item
-        if item.name ~= "custom_mod:potato_oil" then
+        if item.name ~= "voxelforge:potato_oil" then
 			voxelforge.register_craft({
             type = "potato_refinery",
             output = item.name,  -- Output item with metadata attached
-            recipe = { item.name, "custom_mod:potato_oil"},  -- Using the registered item + potato_oil
+            recipe = { item.name, "voxelforge:potato_oil"},  -- Using the registered item + potato_oil
             cooktime = 10,  -- Set cooktime as needed
             meta = {
                 LubricatedIncrement = 1,  -- Increment Lubricated by 1
@@ -117,7 +117,7 @@ end
 -- Example Usage:
 voxelforge.register_craft({
     type = "potato_refinery",
-    output = "custom_mod:potato_oil",
+    output = "voxelforge:potato_oil",
     recipe = {"mcl_farming:potato_item", "mcl_potions:glass_bottle"},
     cooktime = 5,
 })

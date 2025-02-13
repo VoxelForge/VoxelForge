@@ -1,4 +1,4 @@
-local S = minetest.get_translator("vlf_pale_garden")
+--local S = minetest.get_translator("vlf_pale_garden")
 local schempath = minetest.get_modpath("vlf_pale_garden")
 dofile(schempath.."/biome.lua")
 dofile(schempath.."/mob.lua")
@@ -86,7 +86,7 @@ local spawn_particlespawner = {
 }
 
 mcl_trees.register_wood("pale_oak",{
-	readable_name=S("Pale"),
+	readable_name=("Pale"),
 	sign_color="#E3D6CF",
 	--sapling=true,
 	tree_schems_2x2 = {
@@ -128,16 +128,13 @@ mcl_trees.register_wood("pale_oak",{
 	},
 	trapdoor = {
 		tile_front = "pale_oak_trapdoor.png",
-		tile_side = "pale_oak_trapdoor_side.png",
+		tile_side = "pale_oak_trapdoor.png",
 		wield_image = "pale_oak_trapdoor.png",
 	},
 })
 
 minetest.register_node("vlf_pale_garden:pale_moss", {
-	description = S("Pale Moss"),
-	_doc_items_longdesc = S("Pale Moss is a pale block found in pale gardens"),
-	_doc_items_entry_name = "pale_moss",
-	_doc_items_hidden = false,
+	description = ("Pale Moss"),
 	tiles = {"pale_moss_block.png"},
 	groups = {handy=1, hoey=2, dirt=1, soil=1, soil_bamboo=1, soil_sapling=2, soil_sugarcane=1, soil_fungus=1, enderman_takable=1, building_block=1, grass_block_no_snow=1, compostability=65, dig_by_piston=1},
 	sounds = mcl_sounds.node_sound_dirt_defaults(),
@@ -161,7 +158,7 @@ local function register_pale_moss_node(name, description, longdesc, image, mesh,
 	end
 
 	minetest.register_node(name, {
-		description = S(description),
+		description = (description),
 		is_ground_content = false,
 		paramtype2 = "4dir",
 		tiles = {image},
@@ -219,7 +216,7 @@ register_pale_moss_node(
 )
 
 minetest.register_node("vlf_pale_garden:pale_moss_carpet", {
-	description = S("Pale Moss Carpet"),
+	description = ("Pale Moss Carpet"),
 	is_ground_content = false,
 	tiles = {"pale_moss_carpet.png"},
 	wield_image = "pale_moss_carpet.png",
@@ -344,7 +341,7 @@ minetest.register_alias("mcl_pale_garden:pale_hanging_moss", "vlf_pale_garden:pa
 minetest.register_alias("mcl_pale_garden:pale_hanging_moss_tip", "vlf_pale_garden:pale_hanging_moss_tip")
 minetest.register_alias("mcl_pale_garden:active_creaking_heart", "vlf_pale_garden:active_creaking_heart")
 minetest.register_node("vlf_pale_garden:pale_hanging_moss", {
-	description = S("Hanging Pale Moss"),
+	description = ("Hanging Pale Moss"),
 	sunlight_propagates = true,
 	light_propagates = true,
 	walkable = false,
@@ -368,7 +365,7 @@ minetest.register_node("vlf_pale_garden:pale_hanging_moss", {
 })
 
 minetest.register_node("vlf_pale_garden:pale_hanging_moss_tip", {
-	description = S("Hanging Pale Moss"),
+	description = ("Hanging Pale Moss"),
 	sunlight_propagates = true,
 	light_propagates = true,
 	walkable = false,
@@ -452,7 +449,7 @@ minetest.register_abm({
 })
 
 minetest.register_node("vlf_pale_garden:inactive_creaking_heart", {
-	description = S("Creaking Heart"),
+	description = ("Creaking Heart"),
 	_doc_items_hidden = false,
 	paramtype2 = "facedir",
 	tiles = {"creaking_heart_top.png", "creaking_heart_top.png","creaking_heart.png"},
@@ -532,7 +529,7 @@ minetest.register_abm({
 })
 
 minetest.register_node("vlf_pale_garden:active_creaking_heart", {
-	description = S("Creaking Heart"),
+	description = ("Creaking Heart"),
 	_doc_items_hidden = false,
 	paramtype2 = "facedir",
 	tiles = {"creaking_heart_top_active.png", "creaking_heart_top_active.png","creaking_heart_active.png"},
@@ -672,7 +669,7 @@ minetest.register_abm({
 })
 
 minetest.register_node("vlf_pale_garden:closed_eyeblossom", {
-	description = S("Closed Eyeblossom"),
+	description = ("Closed Eyeblossom"),
 	drawtype = "plantlike",
 	waving = 1,
 	tiles = { "eyeblossom_stem.png^closed_eyeblossom.png" },
@@ -700,12 +697,12 @@ minetest.register_node("vlf_pale_garden:closed_eyeblossom", {
 })
 mcl_flowerpots.register_potted_flower("vlf_pale_garden:closed_eyeblossom", {
 	name = "closed_eyeblossom",
-	desc = S("Closed Eyeblossom"),
+	desc = ("Closed Eyeblossom"),
 	image = "(eyeblossom_stem.png^closed_eyeblossom.png)",
 })
 
 minetest.register_node("vlf_pale_garden:open_eyeblossom", {
-	description = S("Open Eyeblossom"),
+	description = ("Open Eyeblossom"),
 	drawtype = "plantlike",
 	waving = 1,
 	tiles = { "eyeblossom_stem.png^open_eyeblossom.png" },
@@ -736,7 +733,7 @@ minetest.register_node("vlf_pale_garden:open_eyeblossom", {
 })
 mcl_flowerpots.register_potted_flower("vlf_pale_garden:open_eyeblossom", {
 	name = "open_eyeblossom",
-	desc = S("Open Eyeblossom"),
+	desc = ("Open Eyeblossom"),
 	image = "(eyeblossom_stem.png^open_eyeblossom.png)",
 	on_construct = function(pos)
 		minetest.add_entity(pos, "vlf_pale_garden:eyeblossom_pot_emissive")
