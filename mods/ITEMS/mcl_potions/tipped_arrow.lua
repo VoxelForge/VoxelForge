@@ -15,7 +15,7 @@ function mcl_potions.register_arrow(name, desc, color, def)
 	local tt = def._tt or ""
 	local groups = {ammo=1, ammo_bow=1, ammo_crossbow=1, brewitem=1, _mcl_potion=1}
 	if def.nocreative then groups.not_in_creative_inventory = 1 end
-	minetest.register_craftitem("mcl_potions:"..name.."_arrow", table.merge (arrow_def, {
+	minetest.register_craftitem(":mcl_potions:"..name.."_arrow", table.merge (arrow_def, {
 		description = desc,
 		_tt_help = arrow_tt .. "\n" .. tt,
 		_dynamic_tt = def._dynamic_tt,
@@ -55,7 +55,7 @@ function mcl_potions.register_arrow(name, desc, color, def)
 		if def.custom_effect then def.custom_effect (obj, potency+1, nil, self._shooter) end
 	end
 
-	minetest.register_entity("mcl_potions:"..name.."_arrow_entity", ARROW_ENTITY)
+	minetest.register_entity(":mcl_potions:"..name.."_arrow_entity", ARROW_ENTITY)
 
 	minetest.register_craft({
 		output = "mcl_potions:"..name.."_arrow 8",
