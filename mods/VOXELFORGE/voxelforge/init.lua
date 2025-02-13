@@ -286,13 +286,13 @@ local function register_vlf_entities()
                         local velocity = self.object:get_velocity()
                         local yaw = self.object:get_yaw()
                         local properties = self.object:get_properties()
-                        
+
                         for k, v in pairs(properties) do
                             if type(v) == "string" then
                                 properties[k] = v:gsub("vlf", "mcl")
                             end
                         end
-                        
+
                         self.object:remove()
                         local new_obj = minetest.add_entity(pos, name)
                         if new_obj then
