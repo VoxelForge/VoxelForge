@@ -255,6 +255,28 @@ minetest.register_abm({
     end
 })
 
+minetest.register_lbm({
+    name = ":voxelforge:spawn_firefly_bush_emissive",
+    nodenames = {"voxelforge:firefly_bush"},
+    run_at_every_load = true,
+    action = function(pos, node)
+        local objects = minetest.get_objects_inside_radius(pos, 0.5)
+        local has_emissive = false
+
+        for _, obj in ipairs(objects) do
+            if obj and obj:get_luaentity() and obj:get_luaentity().name == "voxelforge:firefly_bush_emissive" then
+                has_emissive = true
+                break
+            end
+        end
+
+        if not has_emissive then
+            minetest.add_entity(pos, "voxelforge:firefly_bush_emissive")
+        end
+    end
+})
+
+
 -----------------
 ---===MAPGEN===--
 -----------------
@@ -334,7 +356,7 @@ minetest.register_decoration({
 	})
 minetest.register_decoration({
 		deco_type = "simple",
-		place_on = {"mcl_core:dirt_with_grass"},
+		place_on = {"mcl_core:dirt_with_grass", "mcl_mud:mud"},
 		fill_ratio = 0.02,
 		biomes = {"Swampland", "MangroveSwamp"},
 		y_min = mcl_vars.mg_overworld_min,
