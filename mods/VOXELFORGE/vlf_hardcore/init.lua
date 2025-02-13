@@ -35,10 +35,3 @@ minetest.register_on_prejoinplayer(function(name, ip)
         return "This world is locked. You only had one life in Hardcore Mode."
     end
 end)
-
-minetest.register_on_joinplayer(function(player)
-    local meta = player:get_meta()
-    if not meta:get_string("gamemode") or meta:get_string("gamemode") == "" then
-        meta:set_string("gamemode", "creative")
-    end
-end)

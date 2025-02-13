@@ -273,28 +273,42 @@ end)
 --=== COMPAT ===--
 ------------------
 
-minetest.register_entity(":vlf_minecarts:chest_minecart", {
-    initial_properties = {
-        physical = true,
-        collide_with_objects = true,
-        collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.8, 0.3},
-        visual = "sprite",
-        textures = {"blank.png"},
-        makes_footstep_sound = true,
-    },
 
-    on_activate = function(self, staticdata, dtime_s)
-        -- Preserve original entity properties
-        local properties = self.object:get_properties()
+local function register_vlf_entities()
+    for name, def in pairs(minetest.registered_entities) do
+        local vlf_name = name:gsub("^mcl_", "vlf_")
+        if not minetest.registered_entities[vlf_name] then
+            minetest.register_entity(":"..vlf_name, {
+                on_activate = function(self, staticdata, dtime_s)
+                    local new_name = self.name:gsub("^vlf_", "mcl_")
+                    if minetest.registered_entities[new_name] then
+                        local pos = self.object:get_pos()
+                        local velocity = self.object:get_velocity()
+                        local yaw = self.object:get_yaw()
+                        local properties = self.object:get_properties()
 
-        -- Remove the old entity
-        local pos = self.object:get_pos()
-        self.object:remove()
+                        for k, v in pairs(properties) do
+                            if type(v) == "string" then
+                                properties[k] = v:gsub("vlf", "mcl")
+                            end
+                        end
 
-        -- Spawn the new entity with the same properties
-        local new_entity = minetest.add_entity(pos, "mcl_minecarts:chest_minecart")
-        if new_entity then
-            new_entity:set_properties(properties)
+                        self.object:remove()
+                        local new_obj = minetest.add_entity(pos, name)
+                        if new_obj then
+                            local new_entity = new_obj:get_luaentity()
+                            if new_entity then
+                                new_obj:set_velocity(velocity)
+                                new_obj:set_yaw(yaw)
+                                new_obj:set_properties(properties)
+                            end
+                        end
+                    end
+                end,
+            })
         end
-    end,
-})
+    end
+end
+
+register_vlf_entities()
+
