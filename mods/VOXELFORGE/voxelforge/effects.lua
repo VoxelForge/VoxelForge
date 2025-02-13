@@ -149,10 +149,10 @@ function mcl_potions.check_wind_charged_on_death(obj)
 	-- check for weaving status effect
 	if mcl_potions.get_effect(obj, "wind_charged") then
 		local pos = vector.round(obj:get_pos())
-		local posy = {x=pos.x, y=pos.y-1, z=pos.z}
-		local RADIUS = 8
+		--local posy = {x=pos.x, y=pos.y, z=pos.z}
+		local RADIUS = 6
 		local damage_radius = (RADIUS / math.max(1, RADIUS)) * RADIUS
-		mcl_charges.wind_burst(posy, damage_radius)
+		mcl_charges.wind_burst(pos, damage_radius)
 	end
 end
 

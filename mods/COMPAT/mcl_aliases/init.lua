@@ -134,11 +134,11 @@ minetest.register_on_mods_loaded(function()
     end
 
     -- Log success message
-    if count > 0 then
+    --[[if count > 0 then
         minetest.log("error", "[Alias Creator] Registered " .. count .. " aliases from 'vlf:' to 'mcl:'.")
     else
         minetest.log("error", "[Alias Creator] No 'mcl:' nodes found to alias.")
-    end
+    end]]
 end)
 minetest.register_on_mods_loaded(function()
     local count = 0
@@ -151,9 +151,9 @@ minetest.register_on_mods_loaded(function()
     end
 
     -- Log success message
-    if count > 0 then
+    --[[if count > 0 then
         minetest.log("error", "[Alias Creator] Registered " .. count .. " aliases from 'vlf:' to 'mcl:'.")
     else
         minetest.log("error", "[Alias Creator] No 'mcl:' items found to alias.")
-    end
+    end]]
 end)

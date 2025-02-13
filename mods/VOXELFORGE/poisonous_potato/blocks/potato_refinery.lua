@@ -433,12 +433,12 @@ minetest.register_node(":voxelforge:furnace_active", {
     allow_metadata_inventory_take = allow_metadata_inventory_take,
 })
 
-minetest.register_craftitem(":custom_mod:potato_oil", {
+minetest.register_craftitem(":voxelforge:potato_oil", {
     description = "Potato Oil",
-    inventory_image = "potato_oil.png",
+    inventory_image = "mcl_potions_potion_bottle.png^(mcl_potions_potion_overlay.png^[multiply:#a9dffe)",
 })
 
-minetest.register_craftitem(":custom_mod:poisonous_potato_oil", {
+minetest.register_craftitem(":voxelforge:poisonous_potato_oil", {
     description = "Poisonous Potato Oil",
-    inventory_image = "poisonous_potato_oil.png",
+    inventory_image = "mcl_potions_potion_bottle.png^(mcl_potions_potion_overlay.png^[multiply:#a9dffe)",
 })
