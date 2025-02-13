@@ -174,7 +174,8 @@ end)
 
 
 function mcl_potions.register_lingering(name, descr, color, def)
-	local id = "mcl_potions:"..name.."_lingering"
+	local id = ":mcl_potions:"..name.."_lingering"
+	local id_ = "mcl_potions:"..name.."_lingering"
 	local longdesc = def._longdesc
 	if not def.no_effect then
 		longdesc = S("A throwable potion that will shatter on impact, where it creates a magic cloud that lingers around for a while. Any player or mob inside the cloud will receive the potion's effect or set of effects, possibly repeatedly.")
@@ -207,7 +208,7 @@ function mcl_potions.register_lingering(name, descr, color, def)
 			local dir = placer:get_look_dir();
 			local pos = placer:get_pos();
 			minetest.sound_play("mcl_throwing_throw", {pos = pos, gain = 0.4, max_hear_distance = 16}, true)
-			local obj = minetest.add_entity({x=pos.x+dir.x,y=pos.y+2+dir.y,z=pos.z+dir.z}, id.."_flying")
+			local obj = minetest.add_entity({x=pos.x+dir.x,y=pos.y+2+dir.y,z=pos.z+dir.z}, id_.."_flying")
 			obj:set_velocity({x=dir.x*velocity,y=dir.y*velocity,z=dir.z*velocity})
 			obj:set_acceleration({x=dir.x*-3, y=-9.8, z=dir.z*-3})
 			local ent = obj:get_luaentity()
@@ -224,7 +225,7 @@ function mcl_potions.register_lingering(name, descr, color, def)
 			local s_pos = vector.add(dispenserpos, vector.multiply(dropdir, 0.51))
 			local pos = {x=s_pos.x+dropdir.x,y=s_pos.y+dropdir.y,z=s_pos.z+dropdir.z}
 			minetest.sound_play("mcl_throwing_throw", {pos = pos, gain = 0.4, max_hear_distance = 16}, true)
-			local obj = minetest.add_entity(pos, id.."_flying")
+			local obj = minetest.add_entity(pos, id_.."_flying")
 			if obj and obj:get_pos() then
 				local velocity = 22
 				obj:set_velocity({x=dropdir.x*velocity,y=dropdir.y*velocity,z=dropdir.z*velocity})
