@@ -1,7 +1,7 @@
 local modpath = minetest.get_modpath("vlf_mob_rejects")
 dofile(modpath.."/copper_golem.lua")
 
-minetest.register_entity("vlf_mob_rejects:firefly", {
+minetest.register_entity(":mobs_mc:firefly", {
     initial_properties = {
         physical = true,
         collide_with_objects = false,

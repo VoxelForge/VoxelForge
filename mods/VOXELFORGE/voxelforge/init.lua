@@ -269,3 +269,32 @@ minetest.register_on_mods_loaded(function()
         error("Version information is missing or incorrect in current_version.lua")
     end
 end)
+------------------
+--=== COMPAT ===--
+------------------
+
+minetest.register_entity(":vlf_minecarts:chest_minecart", {
+    initial_properties = {
+        physical = true,
+        collide_with_objects = true,
+        collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.8, 0.3},
+        visual = "sprite",
+        textures = {"blank.png"},
+        makes_footstep_sound = true,
+    },
+
+    on_activate = function(self, staticdata, dtime_s)
+        -- Preserve original entity properties
+        local properties = self.object:get_properties()
+
+        -- Remove the old entity
+        local pos = self.object:get_pos()
+        self.object:remove()
+
+        -- Spawn the new entity with the same properties
+        local new_entity = minetest.add_entity(pos, "mcl_minecarts:chest_minecart")
+        if new_entity then
+            new_entity:set_properties(properties)
+        end
+    end,
+})
