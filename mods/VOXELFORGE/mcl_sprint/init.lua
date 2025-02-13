@@ -56,7 +56,7 @@ local function setSprinting(playerName, sprinting) -- Sets the state of a player
 	if players[playerName] then
 		players[playerName].sprinting = sprinting
 		local fov_old = players[playerName].fov
-		local fov_new = players[playerName].fov
+		local fov_new
 		local fade_time = .15
 		if sprinting == true then
 			fov_new = math.min(players[playerName].fov + 0.05, 1.2)
