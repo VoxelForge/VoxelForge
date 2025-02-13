@@ -162,8 +162,6 @@ local function register_pale_moss_node(name, description, longdesc, image, mesh,
 
 	minetest.register_node(name, {
 		description = S(description),
-		_doc_items_longdesc = S(longdesc),
-		_doc_items_entry_name = name,
 		is_ground_content = false,
 		paramtype2 = "4dir",
 		tiles = {image},
@@ -222,9 +220,6 @@ register_pale_moss_node(
 
 minetest.register_node("vlf_pale_garden:pale_moss_carpet", {
 	description = S("Pale Moss Carpet"),
-	_doc_items_longdesc = S("Pale Moss carpet"),
-	_doc_items_entry_name = "pale_moss_carpet",
-
 	is_ground_content = false,
 	tiles = {"pale_moss_carpet.png"},
 	wield_image = "pale_moss_carpet.png",
@@ -350,9 +345,6 @@ minetest.register_alias("mcl_pale_garden:pale_hanging_moss_tip", "vlf_pale_garde
 minetest.register_alias("mcl_pale_garden:active_creaking_heart", "vlf_pale_garden:active_creaking_heart")
 minetest.register_node("vlf_pale_garden:pale_hanging_moss", {
 	description = S("Hanging Pale Moss"),
-	_doc_items_create_entry = S("Hanging Pale Moss"),
-	_doc_items_entry_name = S("Hanging Pale Moss"),
-	_doc_items_longdesc = S("Hanging Pale Moss"),
 	sunlight_propagates = true,
 	light_propagates = true,
 	walkable = false,
@@ -377,9 +369,6 @@ minetest.register_node("vlf_pale_garden:pale_hanging_moss", {
 
 minetest.register_node("vlf_pale_garden:pale_hanging_moss_tip", {
 	description = S("Hanging Pale Moss"),
-	_doc_items_create_entry = S("Hanging Pale Moss"),
-	_doc_items_entry_name = S("Hanging Pale Moss"),
-	_doc_items_longdesc = S("Hanging Pale Moss"),
 	sunlight_propagates = true,
 	light_propagates = true,
 	walkable = false,

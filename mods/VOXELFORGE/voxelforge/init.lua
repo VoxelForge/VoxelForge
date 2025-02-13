@@ -67,6 +67,6 @@ end
 --TODO: Remove after version 25w09a
 minetest.register_on_joinplayer(function(player)
     minetest.chat_send_player(player:get_player_name(),
-        minetest.colorize("#FF50FF", "THIS VERSION MAY BE BUGGY, A PATCH RELEASE IS PLANNED BETWEEN 02/13/25 TO 02/19/25. PLEASE REPORT ALL BUGS TO: https://github.com/VoxelForge/VoxelForge/issues")
+        minetest.colorize("#FF50FF", "THIS VERSION MAY BE BUGGY, PATCH RELEASES ARE PLANNED BETWEEN 02/13/25 TO 02/26/25. PLEASE REPORT ALL BUGS TO: https://github.com/VoxelForge/VoxelForge/issues")
     )
 end)
