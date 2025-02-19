@@ -12,6 +12,7 @@ local modpath = minetest.get_modpath("voxelforge")
 --==============--
 dofile(modpath.."/advancements.lua")
 dofile(modpath.."/biomes.lua")
+dofile(modpath.."/breeze.lua")
 dofile(modpath.."/effects.lua")
 dofile(modpath.."/potions.lua")
 dofile(modpath.."/torchflower.lua")
@@ -34,8 +35,8 @@ function particles.trail(start_pos, target_pos, color, a_type, attraction, speed
     return minetest.add_particlespawner({
         amount = math.random(20, 40),
         time = 4,
-        minpos = vector.subtract(start_pos, {x = speed.x, y = speed.y, z = speed.z}),
-        maxpos = vector.add(start_pos, {x = speed.x, y = speed.y, z = speed.z}),
+        minpos = vector.subtract(start_pos, {x = speed, y = speed, z = speed}),
+        maxpos = vector.add(start_pos, {x = speed, y = speed, z = speed}),
         minvel = vector.multiply(vector.direction(start_pos, target_pos), 3.0),
         maxvel = vector.multiply(vector.direction(start_pos, target_pos), 5.0),
         glow = 8,
@@ -77,7 +78,7 @@ minetest.register_on_mods_loaded(function()
 	local font_size = minetest.settings:get("vlf_font_size") or 30
 	local font_shadow_size = minetest.settings:get("vlf_font_shadow_size") or 3
 	local chat_font_size = minetest.settings:get("vlf_chat_font_size") or 24
-	minetest.settings:set("font_path", modpath.."/fonts/voxelforge.ttf")
+	--minetest.settings:set("font_path", modpath.."/fonts/voxelforge.ttf")
 	minetest.settings:set("font_shadow", font_shadow_size)
 	minetest.settings:set("font_size", font_size)
 	minetest.settings:set("chat_font_size", chat_font_size)
@@ -85,7 +86,7 @@ minetest.register_on_mods_loaded(function()
 end)
 
 minetest.register_on_shutdown(function()
-	minetest.settings:set("font_path", "") -- One day hopefully this will be replaced by a setting that players can set so it's  their default font.
+	--minetest.settings:set("font_path", "") -- One day hopefully this will be replaced by a setting that players can set so it's  their default font.
 	minetest.settings:set("font_shadow", "1")
 	minetest.settings:set("font_size", "16")
 	minetest.settings:set("chat_font_size", "")

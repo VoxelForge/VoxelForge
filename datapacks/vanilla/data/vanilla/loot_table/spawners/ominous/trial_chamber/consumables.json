@@ -1,0 +1,75 @@
+{
+    "type": "chest",
+    "functions": [],
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "mcl_mobitems:cooked_beef",
+                    "weight": 3,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "mcl_farming:potato_item_baked",
+                    "weight": 3,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 2,
+                                "max": 4
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "mcl_farming:carrot_item_gold",
+                    "weight": 2,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "mcl_potions:regeneration",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "mcl_potions:strength",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
