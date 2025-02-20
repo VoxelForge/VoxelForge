@@ -72,12 +72,36 @@ minetest.register_on_joinplayer(function(player)
         minetest.colorize("#FF50FF", "THIS VERSION MAY BE BUGGY, PATCH RELEASES ARE PLANNED BETWEEN 02/13/25 TO 02/26/25. PLEASE REPORT ALL BUGS TO: https://github.com/VoxelForge/VoxelForge/issues")
     )
 end)
+
+-- 5.11.0 will allow media files. Come 5.11.0 full support this will be removed.
+local function is_version_5100_or_lower()
+    local version_info = minetest.get_version()
+        if not version_info or not version_info.string then
+        	return false
+        end
+        local major, minor = version_info.string:match("^(%d+)%.(%d+)")
+        major = tonumber(major)
+        minor = tonumber(minor)
+        return major < 5 or (major == 5 and minor <= 10)
+end
+
+minetest.register_on_mods_loaded(function()
+	if is_version_5100_or_lower() then
+		minetest.settings:set("font_path", modpath.."/fonts/regular.ttf")
+    end
+end)
+
+minetest.register_on_shutdown(function()
+	if is_version_5100_or_lower() then
+		minetest.settings:set("font_path", "")
+    end
+end)
+
 -- Font
 minetest.register_on_mods_loaded(function()
 	local font_size = minetest.settings:get("vlf_font_size") or 30
 	local font_shadow_size = minetest.settings:get("vlf_font_shadow_size") or 3
 	local chat_font_size = minetest.settings:get("vlf_chat_font_size") or 24
-	minetest.settings:set("font_path", modpath.."/fonts/voxelforge.ttf")
 	minetest.settings:set("font_shadow", font_shadow_size)
 	minetest.settings:set("font_size", font_size)
 	minetest.settings:set("chat_font_size", chat_font_size)
@@ -85,12 +109,12 @@ minetest.register_on_mods_loaded(function()
 end)
 
 minetest.register_on_shutdown(function()
-	minetest.settings:set("font_path", "") -- One day hopefully this will be replaced by a setting that players can set so it's  their default font.
 	minetest.settings:set("font_shadow", "1")
 	minetest.settings:set("font_size", "16")
 	minetest.settings:set("chat_font_size", "")
 	minetest.settings:set("font_shadow_alpha", "172")
 end)
+
 -- Chat Hud.
 -- Table to store player chat HUD IDs and chat history
 local player_chat_huds = {}
