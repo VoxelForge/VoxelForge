@@ -77,7 +77,7 @@ end)
 local function is_version_5100_or_lower()
     local version_info = minetest.get_version()
         if not version_info or not version_info.string then
-        	return false
+			return false
         end
         local major, minor = version_info.string:match("^(%d+)%.(%d+)")
         major = tonumber(major)
