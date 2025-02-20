@@ -114,47 +114,16 @@ function vlf_trials.setup_spawner(pos, Mob, MinLight, MaxLight, MaxMobsInArea, M
     t:start(2)
 end
 
---[[local function check_player_proximity_and_los(pos)
-    local meta = minetest.get_meta(pos)
-    local mob = meta:get_string("Mob")
-
-    local doll = find_doll(pos)
-    if not doll then
-        doll = spawn_doll(pos)
-        set_doll_properties(doll, mob)
-    end
-
-    local players = minetest.get_connected_players()
-
-    for _, player in ipairs(players) do
-        local player_pos = player:get_pos()
-
-        if vector.distance(pos, player_pos) <= 14 and mcl_potions.has_effect(player,"bad_omen")then
-        	local lv = mcl_potions.get_effect_level(player, "bad_omen")
-        	mcl_potions.clear_effect (player, "bad_omen")
-			mcl_potions.give_effect ("trial_omen", player, 0, tonumber(lv)*900)
-			meta:set_string("Ominous", "true")
-			minetest.swap_node(pos, {name = "vlf_trials:ominous_spawner_active"})
-		elseif vector.distance(pos, player_pos) <= 14 and mcl_potions.has_effect(player,"trial_omen") then
-			meta:set_string("Ominous", "true")
-			minetest.swap_node(pos, {name = "vlf_trials:ominous_spawner_active"})
-		elseif vector.distance(pos, player_pos) <= 14 then
-            minetest.swap_node(pos, {name = "vlf_trials:spawner_active"})
-        end
-    end
-
-    minetest.get_node_timer(pos):start(2)
-end]]
-
 local function check_player_proximity_and_los(pos)
     local meta = minetest.get_meta(pos)
     local mob = meta:get_string("Mob")
 
     local doll = find_doll(pos)
-    if not doll then
-        doll = spawn_doll(pos)
-        set_doll_properties(doll, mob)
+    if doll then
+    doll:remove()
     end
+        doll = spawn_doll(pos)
+    set_doll_properties(doll, mob)
 
     local players = minetest.get_connected_players()
 
@@ -187,141 +156,119 @@ local function check_player_proximity_and_los(pos)
                     mcl_potions.clear_effect(player, "bad_omen")
                     mcl_potions.give_effect("trial_omen", player, 0, tonumber(lv) * 900)
                     meta:set_string("Ominous", "true")
+                    local activate = {
+						amount = 10,
+						texpool = {
+							{
+								name = "ominous_trial_spawner_detection.png",
+								animation = {type = "vertical_frames", aspect_w = 8, aspect_h = 8, length = 0.78},
+							}
+						},
+						time = 1,
+						minvel = vector.new(0.0, 1.5, 0.0),
+						maxvel = vector.new(0.0, 2.5, 0.0),
+						minexptime = 1.0,
+						maxexptime = 1.25,
+						minsize = 2,
+						maxsize= 4.75,
+						glow = 10,
+						collisiondetection = true,
+						collision_removal = false,
+						vertical = true,
+					}
+					local minpos = vector.offset(pos, -0.5, -0.0, -0.5)
+					local maxpos = vector.offset(pos, 0.5, 1, 0.5)
+					minetest.add_particlespawner(table.merge(activate, {
+						minpos = minpos,
+						maxpos = maxpos,
+					}))
                     minetest.swap_node(pos, { name = "vlf_trials:ominous_spawner_active" })
                 elseif mcl_potions.has_effect(player, "trial_omen") then
                     meta:set_string("Ominous", "true")
                     minetest.swap_node(pos, { name = "vlf_trials:ominous_spawner_active" })
+                    local activate = {
+						amount = 10,
+						texpool = {
+							{
+								name = "ominous_trial_spawner_detection.png",
+								animation = {type = "vertical_frames", aspect_w = 8, aspect_h = 8, length = 0.78},
+							}
+						},
+						time = 1,
+						minvel = vector.new(0.0, 1.5, 0.0),
+						maxvel = vector.new(0.0, 2.5, 0.0),
+						minexptime = 1.0,
+						maxexptime = 1.25,
+						minsize = 2,
+						maxsize= 4.75,
+						glow = 10,
+						collisiondetection = true,
+						collision_removal = false,
+						vertical = true,
+					}
+					local minpos = vector.offset(pos, -0.5, -0.0, -0.5)
+					local maxpos = vector.offset(pos, 0.5, 1, 0.5)
+					minetest.add_particlespawner(table.merge(activate, {
+						minpos = minpos,
+						maxpos = maxpos,
+					}))
                 else
+                	minetest.sound_play("trial_spawner_detect_player1", {pos = pos, gain = 1, max_hear_distance = 14})
                     minetest.swap_node(pos, { name = "vlf_trials:spawner_active" })
+                    local activate = {
+						amount = 10,
+						texpool = {
+							{
+								name = "trial_spawner_detection.png",
+								animation = {type = "vertical_frames", aspect_w = 8, aspect_h = 8, length = 0.78},
+							}
+						},
+						time = 1,
+						minvel = vector.new(0.0, 1.5, 0.0),
+						maxvel = vector.new(0.0, 2.5, 0.0),
+						minexptime = 1.0,
+						maxexptime = 1.25,
+						minsize = 2,
+						maxsize= 4.75,
+						glow = 10,
+						collisiondetection = true,
+						collision_removal = false,
+						vertical = true,
+					}
+					local minpos = vector.offset(pos, -0.5, -0.0, -0.5)
+					local maxpos = vector.offset(pos, 0.5, 1, 0.5)
+					minetest.add_particlespawner(table.merge(activate, {
+						minpos = minpos,
+						maxpos = maxpos,
+					}))
                 end
             else
             end
         end
     end
+    
+	minetest.add_particlespawner({
+		amount = 20,  -- Number of particles
+		time = 2,  -- Spawner lasts forever (0 means infinite)
+		minpos = {x=pos.x-0.5,y=pos.y-0.5,z=pos.z-0.5},
+		maxpos = {x=pos.x+0.5,y=pos.y+0.5,z=pos.z+0.5},
+		minvel = {x = -0.0, y = -0.0, z = -0.0},
+		maxvel = {x = 0.0, y = 0.0, z = 0.0},
+		minacc = {x = 0, y = 0, z = 0},
+		maxacc = {x = 0, y = 0, z = 0},
+		minexptime = 0.8,
+		maxexptime = 0.8,
+		minsize = 0.4,
+		maxsize = 1.2,
+		collisiondetection = true,
+		collision_removal = false,
+		vertical = false,
+		texture = "voxelforge_flame.png",
+		glow = 10,
+	})
 
     minetest.get_node_timer(pos):start(2)
 end
-
-
---[[local function spawn_mobs(pos)
-    local meta = minetest.get_meta(pos)
-    local mob = meta:get_string("Mob")
-    local mlig = meta:get_int("MinLight")
-    local xlig = meta:get_int("MaxLight")
-    local numm = meta:get_int("MaxMobsInArea")
-    local maxxx = meta:get_int("MaxMobs")
-    local spawned = meta:get_int("SpawnedMobs")
-    local pla = meta:get_int("PlayerDistance")
-    local yof = meta:get_int("YOffset")
-    local spawn_interval = meta:get_int("SpawnInterval")
-    local Ominous = meta:get_string("Ominous")
-    local maxx
-    local num
-    if Ominous == "true" then maxx = maxxx * 2  else maxx = maxxx end
-    if Ominous == "true" then num = numm + 1 else num = numm end
-
-    if num == 0 then return end
-    if not mcl_mobs.spawning_mobs[mob] then
-        minetest.log("error", "[vlf_trials] Mob Spawner: Mob doesn't exist: " .. mob)
-        return
-    end
-    
-    local doll = find_doll(pos)
-    if not doll then
-        doll = spawn_doll(pos)
-        set_doll_properties(doll, mob)
-    end
-
-    local count = 0
-    for obj in minetest.objects_inside_radius(pos, 18) do
-        local ent = obj:get_luaentity()
-        if ent and ent.name == mob and ent.origin_pos == pos then
-            count = count + 1
-        end
-    end
-
-    if count >= num then
-        minetest.get_node_timer(pos):start(spawn_interval)
-        return
-    end
-
-    local air = minetest.find_nodes_in_area(
-        {x = pos.x - 2, y = pos.y - 1 + yof, z = pos.z - 2},
-        {x = pos.x + 2, y = pos.y + 1 + yof, z = pos.z + 2},
-        {"air"}
-    )
-
-    if air and #air > 0 then
-        for _ = 1, math.min(num - count, maxx - spawned) do
-            local air_index = math.random(#air)
-            local pos2 = air[air_index]
-            local lig = minetest.get_node_light(pos2) or 0
-            pos2.y = pos2.y + 0.5
-
-            if lig >= mlig and lig <= xlig then
-                local entity = minetest.add_entity(pos2, mob)
-                local luaentity = entity:get_luaentity()
-                luaentity.origin_pos = pos
-                meta:set_int("SpawnedMobs", spawned + 1)
-            end
-            table.remove(air, air_index)
-        end
-    end
-
-    -- Check if ominous and if there is a player within 14 blocks
-    if Ominous == "true" then
-        local players_nearby = false
-        for _, player in pairs(minetest.get_connected_players()) do
-            if player:get_pos():distance(pos) <= 14 then
-                players_nearby = true
-                break
-            end
-        end
-
-        -- Every 8 cycles, add an ominous item spawner above
-        local cycle_count = meta:get_int("CycleCount") or 0
-        if players_nearby then
-            local choice = math.random(0, 1)  -- Randomly pick mob or player
-            local spawn_pos
-            if choice == 0 then
-                -- Pick a random summoned mob position
-                for obj in minetest.objects_inside_radius(pos, 14) do
-                    local ent = obj:get_luaentity()
-                    if ent and ent.name == mob then
-                        spawn_pos = obj:get_pos()
-                        break
-                    end
-                end
-            else
-                -- Pick player position
-                for _, player in pairs(minetest.get_connected_players()) do
-                    if player:get_pos():distance(pos) <= 14 then
-                        spawn_pos = player:get_pos()
-                        break
-                    end
-                end
-            end
-
-            if spawn_pos then
-                spawn_pos.y = spawn_pos.y + 5  -- Place the item spawner slightly above
-                 local resource = vl_datapacks.get_resource("loot_table", "vanilla:spawners/trial_chamber/items_to_drop_when_ominous")
-                minetest.add_entity(spawn_pos, "vlf_trials:ominous_item_spawner")
-            end
-
-            meta:set_int("CycleCount", cycle_count + 1)
-        end
-    end
-
-    if meta:get_int("SpawnedMobs") == maxx and count == 0 then
-        if meta:get_string("Ominous") == "true" then
-            minetest.swap_node(pos, {name = "vlf_trials:ominous_spawner_ejecting"})
-        else
-            minetest.swap_node(pos, {name = "vlf_trials:spawner_ejecting"})
-        end
-    end
-
-    minetest.get_node_timer(pos):start(spawn_interval)
-end]]
 
 local function spawn_mobs(pos)
     local meta = minetest.get_meta(pos)
@@ -355,6 +302,12 @@ local function spawn_mobs(pos)
             	trial_omen = true
             end
         end
+    end
+    
+    local doll = find_doll(pos)
+    if not doll then
+        doll = spawn_doll(pos)
+        set_doll_properties(doll, mob)
     end
 
     -- Adjust mob limits based on player count and mobs_per_player meta
@@ -434,6 +387,51 @@ local function spawn_mobs(pos)
             pos2.y = pos2.y + 0.5
 
             if lig >= mlig and lig <= xlig then
+            	if Ominous == "true" then
+            	
+            	minetest.add_particlespawner({
+					amount = 15,
+					time = 1,
+					minpos = {x=pos2.x-0.5,y=pos2.y-0.5,z=pos2.z-0.5},
+					maxpos = {x=pos2.x+0.5,y=pos2.y+0.5,z=pos2.z+0.5},
+					minvel = {x = -0.0, y = -0.0, z = -0.0},
+					maxvel = {x = 0.0, y = 0.0, z = 0.0},
+					minacc = {x = 0, y = 0, z = 0},
+					maxacc = {x = 0, y = 0, z = 0},
+					minexptime = 0.8,
+					maxexptime = 0.8,
+					minsize = 0.4,
+					maxsize = 1.2,
+					collisiondetection = true,
+					collision_removal = false,
+					vertical = false,
+					texture = "vlf_particles_soul_flame.png",
+					glow = 10,
+				})
+				
+				else
+            	
+            	minetest.add_particlespawner({
+					amount = 15,
+					time = 1,
+					minpos = {x=pos2.x-0.5,y=pos2.y-0.5,z=pos2.z-0.5},
+					maxpos = {x=pos2.x+0.5,y=pos2.y+0.5,z=pos2.z+0.5},
+					minvel = {x = -0.0, y = -0.0, z = -0.0},
+					maxvel = {x = 0.0, y = 0.0, z = 0.0},
+					minacc = {x = 0, y = 0, z = 0},
+					maxacc = {x = 0, y = 0, z = 0},
+					minexptime = 0.8,
+					maxexptime = 0.8,
+					minsize = 0.4,
+					maxsize = 1.2,
+					collisiondetection = true,
+					collision_removal = false,
+					vertical = false,
+					texture = "voxelforge_flame.png",
+					glow = 10,
+				})
+				end
+				minetest.sound_play("trial_spawner_spawn", {pos = pos2, gain = 0.3, max_hear_distance = 14})
                 local entity = minetest.add_entity(pos2, mob)
                 local luaentity = entity:get_luaentity()
                 luaentity.origin_pos = pos
@@ -445,8 +443,10 @@ local function spawn_mobs(pos)
     
      if meta:get_int("SpawnedMobs") == maxx and count == 0 then
         if meta:get_string("Ominous") == "true" then
+        	minetest.sound_play("trial_spawner_open_shutter", {pos = pos, gain = 1, max_hear_distance = 7})
             minetest.swap_node(pos, {name = "vlf_trials:ominous_spawner_ejecting"})
         else
+        	minetest.sound_play("trial_spawner_open_shutter", {pos = pos, gain = 1, max_hear_distance = 7})
             minetest.swap_node(pos, {name = "vlf_trials:spawner_ejecting"})
         end
     end
@@ -454,6 +454,41 @@ local function spawn_mobs(pos)
 		meta:set_int("CycleCount", meta:get_int("CycleCount") + 1)
 	else
 		meta:set_int("Cycle_Count", 1)
+	end
+	if meta:get_string("Ominous") == "true" then
+	minetest.add_particlespawner({
+		amount = 20 * spawn_interval,  -- Number of particles
+		time = spawn_interval,  -- Spawner lasts forever (0 means infinite)
+		minpos = {x=pos.x-0.5,y=pos.y-0.5,z=pos.z-0.5},
+		maxpos = {x=pos.x+0.5,y=pos.y+0.5,z=pos.z+0.5},
+		minvel = {x = -0.0, y = -0.0, z = -0.0},
+		maxvel = {x = 0.0, y = 0.0, z = 0.0},
+		minacc = {x = 0, y = 0, z = 0},
+		maxacc = {x = 0, y = 0, z = 0},
+		minexptime = 0.8,
+		maxexptime = 0.8,
+		minsize = 0.4,
+		maxsize = 1.2,
+		texture = "vlf_particles_soul_flame.png",
+		glow = 10,
+	})
+	else
+	minetest.add_particlespawner({
+		amount = 20 * spawn_interval,  -- Number of particles
+		time = spawn_interval,  -- Spawner lasts forever (0 means infinite)
+		minpos = {x=pos.x-0.5,y=pos.y-0.5,z=pos.z-0.5},
+		maxpos = {x=pos.x+0.5,y=pos.y+0.5,z=pos.z+0.5},
+		minvel = {x = -0.0, y = -0.0, z = -0.0},
+		maxvel = {x = 0.0, y = 0.0, z = 0.0},
+		minacc = {x = 0, y = 0, z = 0},
+		maxacc = {x = 0, y = 0, z = 0},
+		minexptime = 0.8 * spawn_interval,
+		maxexptime = 0.8 * spawn_interval,
+		minsize = 0.4,
+		maxsize = 1.2,
+		texture = "voxelforge_flame.png",
+		glow = 10,
+	})
 	end
     minetest.get_node_timer(pos):start(spawn_interval)
 end
@@ -500,6 +535,7 @@ local function eject_loot(pos)
                 local loot_stacks = vl_loot.engine.get_loot(resource, {})
                 for _, itemstack in ipairs(loot_stacks) do
                     -- Drop each item at the player's position
+                    minetest.sound_play("trial_spawner_eject_item", {pos = pos, gain = 1, max_hear_distance = 10})
                     minetest.add_item({x=pos.x,y=pos.y+1,z=pos.z}, itemstack)
                 end
             else
@@ -508,10 +544,53 @@ local function eject_loot(pos)
         end
     end
     if Ominous == "true" then
-    	minetest.swap_node(pos, {name = "vlf_trials:ominous_spawner_cooldown"})
+    	minetest.after(1, function()
+    		minetest.sound_play("trial_spawner_close_shutter", {pos = pos, gain = 1, max_hear_distance = 10})
+    		minetest.swap_node(pos, {name = "vlf_trials:ominous_spawner_cooldown"})
+    	end)
     else
-		minetest.swap_node(pos, {name = "vlf_trials:spawner_cooldown"})
+    	minetest.after(1, function()
+    		minetest.sound_play("trial_spawner_close_shutter", {pos = pos, gain = 1, max_hear_distance = 10})
+			minetest.swap_node(pos, {name = "vlf_trials:spawner_cooldown"})
+		end)
 	end
+	
+	local smoke_particlespawner = {
+		amount = 1000,
+		texture = "",
+		texpool = {
+			{
+				name = "vlf_particles_generic.png^[colorize:#2c2c2c:255",
+				animation = {type = "vertical_frames", aspect_w = 8, aspect_h = 8, length = 0.78},
+			},
+			{
+				name = "vlf_particles_generic.png^[colorize:#424242:255",
+				animation = {type = "vertical_frames", aspect_w = 8, aspect_h = 8, length = 0.78},
+			},
+			{
+				name = "vlf_particles_generic.png^[colorize:#0f0f0f:255",
+				animation = {type = "vertical_frames", aspect_w = 8, aspect_h = 8, length = 0.78},
+			}
+		},
+		time = 900,
+		minvel = vector.zero(),
+		maxvel = vector.zero(),
+		minacc = vector.new(0.0, 0.5, 0.0),
+		maxacc = vector.new(0.0, 0.9, 0.0),
+		minexptime = 2.0,
+		maxexptime = 2.25,
+		minsize = 1,
+		maxsize= 1.75,
+		glow = 1,
+		collisiondetection = true,
+		collision_removal = true,
+	}
+	local minpos = vector.offset(pos, -0.05, -0.0, -0.05)
+	local maxpos = vector.offset(pos, 0.05, 0.1, 0.05)
+	minetest.add_particlespawner(table.merge(smoke_particlespawner, {
+		minpos = minpos,
+		maxpos = maxpos,
+	}))
 
     minetest.get_node_timer(pos):start(1800)
 end
@@ -524,429 +603,6 @@ local function leave_cooldown(pos)
 	minetest.get_node_timer(pos):start(1)
 end
 
-
--- The mob spawner node.
--- PLACEMENT INSTRUCTIONS:
--- If this node is placed by a player, minetest.item_place, etc. default settings are applied
--- automatially.
--- IF this node is placed by ANY other method (e.g. minetest.set_node, LuaVoxelManip), you
--- MUST call vlf_trials.setup_spawner right after the spawner has been placed.
---[[minetest.register_node("vlf_trials:spawner_inactive", {
-	tiles = {"trial_spawner_top_inactive.png", "trial_spawner_bottom.png", "trial_spawner_side_inactive.png"},
-	drawtype = "allfaces",
-	paramtype = "light",
-	light_source = 4,
-	description = S("Mob Spawner"),
-	_tt_help = S("Makes mobs appear"),
-	_doc_items_longdesc = S("A mob spawner regularily causes mobs to appear around it while a player is nearby. Some mob spawners are disabled while in light."),
-	_doc_items_usagehelp = S("If you have a spawn egg, you can use it to change the mob to spawn. Just place the item on the mob spawner. Player-set mob spawners always spawn mobs regardless of the light level."),
-	groups = {pickaxey=1, material_stone=1, deco_block=1, unmovable_by_piston = 1},
-	is_ground_content = false,
-	drop = "",
-
-	-- If placed by player, setup spawner with default settings
-	on_place = function(itemstack, placer, pointed_thing)
-		if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
-			return itemstack
-		end
-
-		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
-		if rc then return rc end
-
-		local name = placer:get_player_name()
-		local privs = minetest.get_player_privs(name)
-		if not privs.maphack then
-			minetest.chat_send_player(name, "Placement denied. You need the “maphack” privilege to place mob spawners.")
-			return itemstack
-		end
-		local node_under = minetest.get_node(pointed_thing.under)
-		local new_itemstack, success = minetest.item_place_node(itemstack, placer, pointed_thing)
-		if success then
-			local placepos
-			local def = minetest.registered_nodes[node_under.name]
-			if def and def.buildable_to then
-				placepos = pointed_thing.under
-			else
-				placepos = pointed_thing.above
-			end
-			vlf_trials.setup_spawner(placepos)
-		end
-		return new_itemstack
-	end,
-	
-	on_construct = function(pos, node)
-		vlf_trials.setup_spawner(pos)
-	end,
-
-	on_rightclick = function(pos, _, clicker, itemstack, _)
-		if not clicker:is_player() then return itemstack end
-		if minetest.get_item_group(itemstack:get_name(),"spawn_egg") == 0 then return itemstack end
-		local name = clicker:get_player_name()
-		local privs = minetest.get_player_privs(name)
-		if minetest.is_protected(pos, name) then
-			minetest.record_protection_violation(pos, name)
-			return itemstack
-		end
-		if not privs.maphack then
-			minetest.chat_send_player(name, S("You need the “maphack” privilege to change the mob spawner."))
-			return itemstack
-		end
-
-		vlf_trials.setup_spawner(pos, itemstack:get_name())
-
-		if not minetest.is_creative_enabled(name) then
-			itemstack:take_item()
-		end
-		return itemstack
-	end,
-
-	on_destruct = function(pos)
-		-- Remove doll (if any)
-		local obj = find_doll(pos)
-		if obj then
-			obj:remove()
-		end
-		mcl_experience.throw_xp(pos, math.random(15, 43))
-	end,
-
-	on_punch = function(pos)
-		respawn_doll(pos)
-	end,
-
-	on_timer = function(pos)
-		check_player_proximity_and_los(pos)
-	end,
-
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-
-	_mcl_blast_resistance = 5,
-	_mcl_hardness = 5,
-})
-
-minetest.register_node("vlf_trials:spawner_active", {
-	tiles = {"trial_spawner_top_active.png", "trial_spawner_bottom.png", "trial_spawner_side_active.png"},
-	drawtype = "allfaces",
-	paramtype = "light",
-	light_source = 8,
-	description = S("Mob Spawner"),
-	_tt_help = S("Makes mobs appear"),
-	_doc_items_longdesc = S("A mob spawner regularily causes mobs to appear around it while a player is nearby. Some mob spawners are disabled while in light."),
-	_doc_items_usagehelp = S("If you have a spawn egg, you can use it to change the mob to spawn. Just place the item on the mob spawner. Player-set mob spawners always spawn mobs regardless of the light level."),
-	groups = {pickaxey=1, material_stone=1, deco_block=1, unmovable_by_piston = 1},
-	is_ground_content = false,
-	drop = "",
-	
-		-- If placed by player, setup spawner with default settings
-	on_place = function(itemstack, placer, pointed_thing)
-		if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
-			return itemstack
-		end
-
-		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
-		if rc then return rc end
-
-		local name = placer:get_player_name()
-		local privs = minetest.get_player_privs(name)
-		if not privs.maphack then
-			minetest.chat_send_player(name, "Placement denied. You need the “maphack” privilege to place mob spawners.")
-			return itemstack
-		end
-		local node_under = minetest.get_node(pointed_thing.under)
-		local new_itemstack, success = minetest.item_place_node(itemstack, placer, pointed_thing)
-		if success then
-			local placepos
-			local def = minetest.registered_nodes[node_under.name]
-			if def and def.buildable_to then
-				placepos = pointed_thing.under
-			else
-				placepos = pointed_thing.above
-			end
-			vlf_trials.setup_spawner(placepos)
-		end
-		return new_itemstack
-	end,
-
-	on_rightclick = function(pos, _, clicker, itemstack, _)
-		if not clicker:is_player() then return itemstack end
-		if minetest.get_item_group(itemstack:get_name(),"spawn_egg") == 0 then return itemstack end
-		local name = clicker:get_player_name()
-		local privs = minetest.get_player_privs(name)
-		if minetest.is_protected(pos, name) then
-			minetest.record_protection_violation(pos, name)
-			return itemstack
-		end
-		if not privs.maphack then
-			minetest.chat_send_player(name, S("You need the “maphack” privilege to change the mob spawner."))
-			return itemstack
-		end
-
-		vlf_trials.setup_spawner(pos, itemstack:get_name())
-
-		if not minetest.is_creative_enabled(name) then
-			itemstack:take_item()
-		end
-		return itemstack
-	end,
-
-	on_destruct = function(pos)
-		-- Remove doll (if any)
-		local obj = find_doll(pos)
-		if obj then
-			obj:remove()
-		end
-		mcl_experience.throw_xp(pos, math.random(15, 43))
-	end,
-
-	on_punch = function(pos)
-		respawn_doll(pos)
-	end,
-
-	on_timer = function(pos) 
-		spawn_mobs(pos)
-	end,
-
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-
-	_mcl_blast_resistance = 5,
-	_mcl_hardness = 5,
-})
-
-minetest.register_node("vlf_trials:spawner_ejecting", {
-	tiles = {"trial_spawner_top_ejecting_reward.png", "trial_spawner_bottom.png", "trial_spawner_side_active.png"},
-	drawtype = "allfaces",
-	paramtype = "light",
-	light_source = 8,
-	description = S("Mob Spawner"),
-	_tt_help = S("Makes mobs appear"),
-	_doc_items_longdesc = S("A mob spawner regularily causes mobs to appear around it while a player is nearby. Some mob spawners are disabled while in light."),
-	_doc_items_usagehelp = S("If you have a spawn egg, you can use it to change the mob to spawn. Just place the item on the mob spawner. Player-set mob spawners always spawn mobs regardless of the light level."),
-	groups = {pickaxey=1, material_stone=1, deco_block=1, unmovable_by_piston = 1},
-	is_ground_content = false,
-	drop = "",
-	
-	on_destruct = function(pos)
-		-- Remove doll (if any)
-		local obj = find_doll(pos)
-		if obj then
-			obj:remove()
-		end
-		mcl_experience.throw_xp(pos, math.random(15, 43))
-	end,
-
-	on_punch = function(pos)
-		respawn_doll(pos)
-	end,
-
-	on_timer = function(pos) 
-		eject_loot(pos)
-	end,
-
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-
-	_mcl_blast_resistance = 5,
-	_mcl_hardness = 5,
-})
-
-minetest.register_node("vlf_trials:spawner_cooldown", {
-	tiles = {"trial_spawner_top_inactive.png", "trial_spawner_bottom.png", "trial_spawner_side_inactive.png"},
-	drawtype = "allfaces",
-	paramtype = "light",
-	light_source = 4,
-	description = S("Mob Spawner"),
-	_tt_help = S("Makes mobs appear"),
-	_doc_items_longdesc = S("A mob spawner regularily causes mobs to appear around it while a player is nearby. Some mob spawners are disabled while in light."),
-	_doc_items_usagehelp = S("If you have a spawn egg, you can use it to change the mob to spawn. Just place the item on the mob spawner. Player-set mob spawners always spawn mobs regardless of the light level."),
-	groups = {pickaxey=1, material_stone=1, deco_block=1, unmovable_by_piston = 1},
-	is_ground_content = false,
-	drop = "",
-	
-	on_destruct = function(pos)
-		-- Remove doll (if any)
-		local obj = find_doll(pos)
-		if obj then
-			obj:remove()
-		end
-		mcl_experience.throw_xp(pos, math.random(15, 43))
-	end,
-
-	on_punch = function(pos)
-		respawn_doll(pos)
-	end,
-
-	on_timer = function(pos) 
-		leave_cooldown(pos)
-	end,
-
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-
-	_mcl_blast_resistance = 5,
-	_mcl_hardness = 5,
-})
-----------------------------
---=== Ominous Spawners ===--
-----------------------------
-
-
-minetest.register_node("vlf_trials:ominous_spawner_active", {
-	tiles = {"trial_spawner_top_active_ominous.png", "trial_spawner_bottom.png", "trial_spawner_side_active_ominous.png"},
-	drawtype = "allfaces",
-	paramtype = "light",
-	light_source = 8,
-	description = S("Mob Spawner"),
-	_tt_help = S("Makes mobs appear"),
-	_doc_items_longdesc = S("A mob spawner regularily causes mobs to appear around it while a player is nearby. Some mob spawners are disabled while in light."),
-	_doc_items_usagehelp = S("If you have a spawn egg, you can use it to change the mob to spawn. Just place the item on the mob spawner. Player-set mob spawners always spawn mobs regardless of the light level."),
-	groups = {pickaxey=1, material_stone=1, deco_block=1, unmovable_by_piston = 1},
-	is_ground_content = false,
-	drop = "",
-	
-		-- If placed by player, setup spawner with default settings
-	on_place = function(itemstack, placer, pointed_thing)
-		if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
-			return itemstack
-		end
-
-		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
-		if rc then return rc end
-
-		local name = placer:get_player_name()
-		local privs = minetest.get_player_privs(name)
-		if not privs.maphack then
-			minetest.chat_send_player(name, "Placement denied. You need the “maphack” privilege to place mob spawners.")
-			return itemstack
-		end
-		local node_under = minetest.get_node(pointed_thing.under)
-		local new_itemstack, success = minetest.item_place_node(itemstack, placer, pointed_thing)
-		if success then
-			local placepos
-			local def = minetest.registered_nodes[node_under.name]
-			if def and def.buildable_to then
-				placepos = pointed_thing.under
-			else
-				placepos = pointed_thing.above
-			end
-			vlf_trials.setup_spawner(placepos)
-		end
-		return new_itemstack
-	end,
-
-	on_rightclick = function(pos, _, clicker, itemstack, _)
-		if not clicker:is_player() then return itemstack end
-		if minetest.get_item_group(itemstack:get_name(),"spawn_egg") == 0 then return itemstack end
-		local name = clicker:get_player_name()
-		local privs = minetest.get_player_privs(name)
-		if minetest.is_protected(pos, name) then
-			minetest.record_protection_violation(pos, name)
-			return itemstack
-		end
-		if not privs.maphack then
-			minetest.chat_send_player(name, S("You need the “maphack” privilege to change the mob spawner."))
-			return itemstack
-		end
-
-		vlf_trials.setup_spawner(pos, itemstack:get_name())
-
-		if not minetest.is_creative_enabled(name) then
-			itemstack:take_item()
-		end
-		return itemstack
-	end,
-
-	on_destruct = function(pos)
-		-- Remove doll (if any)
-		local obj = find_doll(pos)
-		if obj then
-			obj:remove()
-		end
-		mcl_experience.throw_xp(pos, math.random(15, 43))
-	end,
-
-	on_punch = function(pos)
-		respawn_doll(pos)
-	end,
-
-	on_timer = function(pos) 
-		spawn_mobs(pos)
-	end,
-
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-
-	_mcl_blast_resistance = 5,
-	_mcl_hardness = 5,
-})
-
-minetest.register_node("vlf_trials:ominous_spawner_ejecting", {
-	tiles = {"trial_spawner_top_ejecting_reward_ominous.png", "trial_spawner_bottom.png", "trial_spawner_side_active_ominous.png"},
-	drawtype = "allfaces",
-	paramtype = "light",
-	light_source = 8,
-	description = S("Mob Spawner"),
-	_tt_help = S("Makes mobs appear"),
-	_doc_items_longdesc = S("A mob spawner regularily causes mobs to appear around it while a player is nearby. Some mob spawners are disabled while in light."),
-	_doc_items_usagehelp = S("If you have a spawn egg, you can use it to change the mob to spawn. Just place the item on the mob spawner. Player-set mob spawners always spawn mobs regardless of the light level."),
-	groups = {pickaxey=1, material_stone=1, deco_block=1, unmovable_by_piston = 1},
-	is_ground_content = false,
-	drop = "",
-	
-	on_destruct = function(pos)
-		-- Remove doll (if any)
-		local obj = find_doll(pos)
-		if obj then
-			obj:remove()
-		end
-		mcl_experience.throw_xp(pos, math.random(15, 43))
-	end,
-
-	on_punch = function(pos)
-		respawn_doll(pos)
-	end,
-
-	on_timer = function(pos) 
-		eject_loot(pos)
-	end,
-
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-
-	_mcl_blast_resistance = 5,
-	_mcl_hardness = 5,
-})
-
-minetest.register_node("vlf_trials:ominous_spawner_cooldown", {
-	tiles = {"trial_spawner_top_inactive_ominous.png", "trial_spawner_bottom.png", "trial_spawner_side_inactive_ominous.png"},
-	drawtype = "allfaces",
-	paramtype = "light",
-	light_source = 4,
-	description = S("Mob Spawner"),
-	_tt_help = S("Makes mobs appear"),
-	_doc_items_longdesc = S("A mob spawner regularily causes mobs to appear around it while a player is nearby. Some mob spawners are disabled while in light."),
-	_doc_items_usagehelp = S("If you have a spawn egg, you can use it to change the mob to spawn. Just place the item on the mob spawner. Player-set mob spawners always spawn mobs regardless of the light level."),
-	groups = {pickaxey=1, material_stone=1, deco_block=1, unmovable_by_piston = 1},
-	is_ground_content = false,
-	drop = "",
-	
-	on_destruct = function(pos)
-		-- Remove doll (if any)
-		local obj = find_doll(pos)
-		if obj then
-			obj:remove()
-		end
-		mcl_experience.throw_xp(pos, math.random(15, 43))
-	end,
-
-	on_punch = function(pos)
-		respawn_doll(pos)
-	end,
-
-	on_timer = function(pos) 
-		leave_cooldown(pos)
-	end,
-
-	sounds = mcl_sounds.node_sound_metal_defaults(),
-
-	_mcl_blast_resistance = 5,
-	_mcl_hardness = 5,
-})]]
-
 local function create_spawner_def(base_def, extra_def)
     return table.merge(base_def, extra_def)
 end
@@ -954,10 +610,7 @@ end
 local base_spawner_def = {
     drawtype = "allfaces",
     paramtype = "light",
-    description = S("Mob Spawner"),
-    _tt_help = S("Makes mobs appear"),
-    _doc_items_longdesc = S("A mob spawner regularly causes mobs to appear around it while a player is nearby. Some mob spawners are disabled while in light."),
-    _doc_items_usagehelp = S("If you have a spawn egg, you can use it to change the mob to spawn. Just place the item on the mob spawner. Player-set mob spawners always spawn mobs regardless of the light level."),
+    description = S("Trial Spawner"),
     groups = {pickaxey = 1, material_stone = 1, deco_block = 1, unmovable_by_piston = 1},
     is_ground_content = false,
     drop = "",
@@ -1036,49 +689,20 @@ local base_spawner_def = {
 
 local spawner_states = {
     inactive = {tiles = {"trial_spawner_top_inactive.png", "trial_spawner_bottom.png", "trial_spawner_side_inactive.png"}, light_source = 4, on_timer = function(pos) check_player_proximity_and_los(pos) end},
-    active = {tiles = {"trial_spawner_top_active.png", "trial_spawner_bottom.png", "trial_spawner_side_active.png"}, light_source = 8, on_timer = function(pos) spawn_mobs(pos) end},
-    ejecting = {tiles = {"trial_spawner_top_ejecting_reward.png", "trial_spawner_bottom.png", "trial_spawner_side_active.png"}, light_source = 8, on_timer = function(pos) eject_loot(pos) end},
-    cooldown = {tiles = {"trial_spawner_top_inactive.png", "trial_spawner_bottom.png", "trial_spawner_side_inactive.png"}, light_source = 4, on_timer = function(pos) leave_cooldown(pos) end},
+    active = {tiles = {"trial_spawner_top_active.png", "trial_spawner_bottom.png", "trial_spawner_side_active.png"}, light_source = 8, groups = {not_in_creative_inventory=1}, on_timer = function(pos) spawn_mobs(pos) end},
+    ejecting = {tiles = {"trial_spawner_top_ejecting_reward.png", "trial_spawner_bottom.png", "trial_spawner_side_active.png"}, light_source = 8, groups = {not_in_creative_inventory=1}, on_timer = function(pos) eject_loot(pos) end},
+    cooldown = {tiles = {"trial_spawner_top_inactive.png", "trial_spawner_bottom.png", "trial_spawner_side_inactive.png"}, light_source = 4, groups = {not_in_creative_inventory=1}, on_timer = function(pos) leave_cooldown(pos) end},
 }
 
 local ominous_spawner_states = {
-    active = {tiles = {"trial_spawner_top_active_ominous.png", "trial_spawner_bottom.png", "trial_spawner_side_active_ominous.png"}, light_source = 8, on_timer = function(pos) spawn_mobs(pos) end},
-    ejecting = {tiles = {"trial_spawner_top_ejecting_reward_ominous.png", "trial_spawner_bottom.png", "trial_spawner_side_active_ominous.png"}, light_source = 8, on_timer = function(pos) eject_loot(pos) end},
-    cooldown = {tiles = {"trial_spawner_top_inactive_ominous.png", "trial_spawner_bottom.png", "trial_spawner_side_inactive_ominous.png"}, light_source = 4, on_timer = function(pos) leave_cooldown(pos) end},
+    active = {tiles = {"trial_spawner_top_active_ominous.png", "trial_spawner_bottom.png", "trial_spawner_side_active_ominous.png"}, light_source = 8, groups = {not_in_creative_inventory=1}, on_timer = function(pos) spawn_mobs(pos) end},
+    ejecting = {tiles = {"trial_spawner_top_ejecting_reward_ominous.png", "trial_spawner_bottom.png", "trial_spawner_side_active_ominous.png"}, light_source = 8, groups = {not_in_creative_inventory=1}, on_timer = function(pos) eject_loot(pos) end},
+    cooldown = {tiles = {"trial_spawner_top_inactive_ominous.png", "trial_spawner_bottom.png", "trial_spawner_side_inactive_ominous.png"}, light_source = 4, groups = {not_in_creative_inventory=1}, on_timer = function(pos) leave_cooldown(pos) end},
 }
 minetest.register_node("vlf_trials:spawner_inactive", create_spawner_def(base_spawner_def, spawner_states.inactive))
---[[minetest.register_node("vlf_trials:spawner_inactive", table.merge(base_spawner_def, {
-	tiles = {"trial_spawner_top_inactive.png", "trial_spawner_bottom.png", "trial_spawner_side_inactive.png"},
-	light_source = 4,
-	on_timer = function(pos)
-		check_player_proximity_and_los(pos)
-	end,
-}))]]
 minetest.register_node("vlf_trials:spawner_active", create_spawner_def(base_spawner_def, spawner_states.active))
---[[minetest.register_node("vlf_trials:spawner_active", table.merge(base_spawner_def, {
-	tiles = {"trial_spawner_top_active.png", "trial_spawner_bottom.png", "trial_spawner_side_active.png"},
-	light_source = 8,
-	on_timer = function(pos)
-		spawn_mobs(pos)
-	end,
-}))]]
 minetest.register_node("vlf_trials:spawner_ejecting", create_spawner_def(base_spawner_def, spawner_states.ejecting))
---[[minetest.register_node("vlf_trials:spawner_ejecting", table.merge(base_spawner_def, {
-	tiles = {"trial_spawner_top_ejecting_reward.png", "trial_spawner_bottom.png", "trial_spawner_side_inactive.png"},
-	light_source = 8,
-	on_timer = function(pos)
-		eject_loot(pos)
-	end,
-}))]]
 minetest.register_node("vlf_trials:spawner_cooldown", create_spawner_def(base_spawner_def, spawner_states.cooldown))
-minetest.register_node("vlf_trials:spawner_cooldown", table.merge(base_spawner_def, {
-	tiles = {"trial_spawner_top_inactive.png", "trial_spawner_bottom.png", "trial_spawner_side_inactive.png"},
-	light_source = 4,
-	on_timer = function(pos)
-		leave_cooldown(pos)
-	end,
-}))
-
 minetest.register_node("vlf_trials:ominous_spawner_active", create_spawner_def(base_spawner_def, ominous_spawner_states.active))
 minetest.register_node("vlf_trials:ominous_spawner_ejecting", create_spawner_def(base_spawner_def, ominous_spawner_states.ejecting))
 minetest.register_node("vlf_trials:ominous_spawner_cooldown", create_spawner_def(base_spawner_def, ominous_spawner_states.cooldown))
@@ -1119,9 +743,11 @@ end
 doll_def.on_step = function(self, dtime)
 	-- Check if spawner is still present. If not, delete the entity
 	self.timer = self.timer + dtime
-	local n = minetest.get_node_or_nil(self.object:get_pos())
+	--local n = minetest.get_node_or_nil(self.object:get_pos())
+	local n = minetest.get_node(self.object:get_pos())
 	if self.timer > 1 then
-		if n and n.name and n.name ~= "vlf_trials:spawner_inactive" or n.name ~= "vlf_trials:spawner_active" or n.name ~= "vlf_trials:spawner_ejecting" or n.name ~= "vlf_trials:spawner_cooldown" or n.name ~= "vlf_trials:ominous_spawner_active" or n.name ~= "vlf_trials:ominous_spawner_ejecting" or n.name ~= "vlf_trials:ominous_spawner_cooldown" then
+		if n and n.name and (n.name ~= "vlf_trials:spawner_inactive" and n.name ~= "vlf_trials:spawner_active" and n.name ~= "vlf_trials:spawner_ejecting" and n.name ~= "vlf_trials:spawner_cooldown" and n.name ~= "vlf_trials:ominous_spawner_active" and n.name ~= "vlf_trials:ominous_spawner_ejecting" and n.name ~= "vlf_trials:ominous_spawner_cooldown") then
+		--if n and n.name and n.name ~= "vlf_trials:spawner_active" then
 			self.object:remove()
 		end
 	end
