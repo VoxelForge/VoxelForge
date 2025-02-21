@@ -4,7 +4,7 @@ local Randomizer = dofile(minetest.get_modpath("vlf_lib").."/init.lua")
 
 local json = minetest.parse_json
 
-local function spawn_struct(pos, terrain_match)
+local function spawn_struct(pos)
     local pos_hash_1 = minetest.hash_node_position(pos, terrain_match)
     local blockseed_1 = minetest.get_mapgen_setting("seed")
     local seed_1 = pos_hash_1 + blockseed_1
@@ -22,6 +22,7 @@ local function spawn_struct(pos, terrain_match)
     local levels = tonumber(meta:get_string("levels")) or 0
     local joint_type = meta:get_string("joint_type")
     local param2 = minetest.get_node(pos).param2
+    local projection
 
     local offsets = {
         [0] = vector.new(0, 0, 1),    -- North-facing
@@ -97,10 +98,11 @@ local function spawn_struct(pos, terrain_match)
                 table.insert(valid_schematics, {schematic = nil, weight = weight})
                 total_weight = total_weight + weight
             else
+            	projection = element_entry.element.projection or "rigid"
                 local location = element.location:gsub("minecraft:", "")
                 local base_name = location:gsub("%.gamedata$", "")
                 local selecting_schematic = "data/voxelforge/structure/" .. base_name .. ".gamedata"
-                minetest.log("error", "selected schematic:" .. selecting_schematic.."")
+                minetest.log("error", "selected schematic:" .. selecting_schematic.." projection: " .. projection)
 
                 local schematic_data = vlf_structure_block.load_vlfschem(selecting_schematic, false)
                 if not schematic_data then
@@ -217,7 +219,7 @@ local function spawn_struct(pos, terrain_match)
 
     	if vlf_structure_block.get_bounding_box(placement_pos, selected_schematic, rot, target_pos,"true", false) == "good" then
 
-            vlf_structure_block.place_schematic(placement_pos, selected_schematic, rot, target_pos,"true", false, true)
+            vlf_structure_block.place_schematic(placement_pos, selected_schematic, rot, target_pos,"true", false, true, projection)
             minetest.set_node(pos, {name = final_state})
             local place_pos = pos + offset
             local target_node_meta = minetest.get_meta(place_pos)
@@ -276,7 +278,8 @@ minetest.register_node(":voxelforge:jigsaw", {
         local meta = minetest.get_meta(pos)
         
         -- Check if the node name matches the one you're interested in
-        minetest.after(0.01, function()
+       -- minetest.after(0.01, function()
+        minetest.after(1, function()
         if node.name == "voxelforge:jigsaw" then
             meta:set_string("generate", "true")
             local generate = meta:get_string("generate")
@@ -287,6 +290,7 @@ minetest.register_node(":voxelforge:jigsaw", {
         end)
 end,
 })
+
 
 -- Handle form submissions
 minetest.register_on_player_receive_fields(function(player, formname, fields)
@@ -387,27 +391,6 @@ minetest.register_chatcommand("set_meta_here", {
     end
 })
 
-minetest.register_chatcommand("place_tt", {
-	params = "",
-	description = "Test for Procedural Structures.",
-	func = function(name, param)
-        local player = minetest.get_player_by_name(name)
-        if not player then
-            return false, "Player not found."
-        end
-
-        local pos = player:get_pos()
-        local rand = math.random(1, 3)
-        if rand == 1 then
-			vlf_structure_block.place_schematic(pos, "data/voxelforge/structure/trial_chambers/corridor/end_1.gamedata", 0, pos, "true", "datapack", true)
-		elseif rand == 2 then
-			vlf_structure_block.place_schematic(pos, "data/voxelforge/structure/trial_chambers/corridor/end_2.gamedata", 0, pos, "true", "datapack", true)
-		else
-			vlf_structure_block.place_schematic(pos, "data/voxelforge/structure/trial_chambers/corridor/end_3.gamedata", 0, pos, "true", "datapack", true)
-		end
-	end
-})
-
 minetest.register_chatcommand("place_po", {
 	params = "",
 	description = "Test for Procedural Structures.",
@@ -418,7 +401,7 @@ minetest.register_chatcommand("place_po", {
         end
 
         local pos = player:get_pos()
-		vlf_structure_block.place_schematic(pos, "data/voxelforge/structure/pillager_outpost/base_plate.gamedata", 0, pos, "true", false, true)
+		vlf_structure_block.place_schematic(pos, "data/voxelforge/structure/pillager_outpost/base_plate.gamedata", 0, pos, "true", false, true, "terrain_matching")
 	end
 })
 
@@ -559,6 +542,26 @@ minetest.register_chatcommand("place_schematics", {
         end
 
         return true, "All schematics placed!"
+    end,
+})
+
+minetest.register_abm({
+    nodenames = {"voxelforge:jigsaw"},  -- Only check jigsaw blocks
+    interval = 10,  -- Runs every 10 seconds
+    chance = 1,  -- Check every block
+    action = function(pos, node)
+        -- Get the final_state meta field from the node
+        local meta = minetest.get_meta(pos)
+        local final_state = meta:get_string("final_state")
+        
+        -- Check if final_state is not empty
+        if final_state ~= "" then
+            -- Place the final_state block in place of the jigsaw block
+            local final_node = minetest.registered_nodes[final_state]
+            if final_node then
+                minetest.set_node(pos, {name = final_state})
+            end
+        end
     end,
 })
 
