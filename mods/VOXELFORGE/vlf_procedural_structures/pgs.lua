@@ -9,7 +9,6 @@ local function spawn_struct(pos)
     local blockseed_1 = minetest.get_mapgen_setting("seed")
     local seed_1 = pos_hash_1 + blockseed_1
     local rng = PcgRandom(seed_1)
-    local modpath = minetest.get_modpath("vlf_data")
     local pos_hash = minetest.hash_node_position({x = pos.x * 256 * 8, y = pos.y * 12, z = pos.z * 18})
     local blockseed = minetest.get_mapgen_setting("seed")
     local seed = pos_hash + blockseed + minetest.hash_node_position({x = pos.x * rng:next(1, 47), y = pos.y * rng:next(1, 49), z = pos.z * rng:next(1, 45)}) -- For better randomization
@@ -203,19 +202,6 @@ local function spawn_struct(pos)
         
         local rot = rotations[param2] and rotations[param2][target_param2] or 0
         local placement_pos = vector.add(pos, vector.subtract(offset, target_pos))
-        
-        if terrain_match then
-        local found_surface = false
-        for y = placement_pos.y + 200, placement_pos.y, -1 do
-            local node = minetest.get_node({x = placement_pos.x, y = y, z = placement_pos.z})
-            if node.name ~= "air" and node.name ~= "ignore" then
-                placement_pos.y = y - 1
-                found_surface = true
-                break
-            end
-        end
-        if not found_surface then return end
-    end
 
     	if vlf_structure_block.get_bounding_box(placement_pos, selected_schematic, rot, target_pos,"true", false) == "good" then
 
@@ -231,8 +217,6 @@ local function spawn_struct(pos)
         end
     end
 end
-
-
 
 -- Function to get the formspec
 local function get_jigsaw_formspec(pos)

@@ -1,8 +1,8 @@
-# mcl_structures
+# vlf_structures
 Structure placement API for MCL2.
 
-## mcl_structures.register_structure(name,structure definition,nospawn)
-If nospawn is truthy the structure will not be placed by mapgen and the decoration parameters can be omitted. This is intended for secondary structures the placement of which gets triggered by the placement of other structures. It can also be used to register testing structures so they can be used with /spawnstruct.
+## vlf_structures.register_structure(name,structure definition,nospawn)
+If nospawn is truthy the structure will not be placed by mapgen and the decoration parameters can be omitted. This is intended for secondary structures the placement of which gets triggered by the placement of other structures. It can also be used to register testing structures so they can be used with /vlfspawnstruct.
 
 ### structure definition
 {
@@ -29,10 +29,10 @@ If nospawn is truthy the structure will not be placed by mapgen and the decorati
 					--a table of loot tables for mcl_loot indexed by node names
 					-- e.g. { ["mcl_chests:chest_small"] = {loot},... }
 }
-## mcl_structures.registered_structures
+## vlf_structures.registered_structures
 Table of the registered structure defintions indexed by name.
 
-## mcl_structures.place_structure(pos, def, pr)
+## vlf_structures.place_structure(pos, def, pr)
 Places a structure using the mapgen placement function
 
-## mcl_structures.place_schematic(pos, schematic, rotation, replacements, force_placement, flags, after_placement_callback, pr, callback_param)
+## vlf_structures.place_schematic(pos, schematic, rotation, replacements, force_placement, flags, after_placement_callback, pr, callback_param)
