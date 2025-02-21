@@ -19,7 +19,9 @@ for more details.
 
 In the mods you might find in the readme or license text files a different
 license. This counts as dual-licensing. You can choose which license applies to
-you: Either the license of Mineclonia (GNU GPLv3) or the mod's license.
+you: Either the license of VoxelForge (GNU GPLv3), the mod's license, or the OCL (Open Credit License V1.1).
+
+[Open Creative License V1.1](https://github.com/DragonWrangler1/OCL-1.1-License)
 
 See the content of each mod directory for information about the author and
 license. For mods that do not have such a file, the license is the source code
