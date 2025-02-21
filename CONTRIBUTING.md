@@ -9,7 +9,9 @@ By asking us to include your work. You agree that it falls under one of two lice
 
 1. GNU GPLv3
 2. OCLv1.1
+3. OCLv2.3
 [Open Credit License V1.1](https://github.com/DragonWrangler1/OCL-1.1-License)
+[Open Credit License V2.3](https://github.com/DragonWrangler1/OCL-2.3-License)
 
 ## Inclusion criteria
 The project goals are listed under the project description in the
