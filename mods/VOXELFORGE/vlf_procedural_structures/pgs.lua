@@ -5,7 +5,7 @@ local Randomizer = dofile(minetest.get_modpath("vlf_lib").."/init.lua")
 local json = minetest.parse_json
 
 local function spawn_struct(pos)
-    local pos_hash_1 = minetest.hash_node_position(pos, terrain_match)
+    local pos_hash_1 = minetest.hash_node_position(pos)
     local blockseed_1 = minetest.get_mapgen_setting("seed")
     local seed_1 = pos_hash_1 + blockseed_1
     local rng = PcgRandom(seed_1)
@@ -22,6 +22,7 @@ local function spawn_struct(pos)
     local joint_type = meta:get_string("joint_type")
     local param2 = minetest.get_node(pos).param2
     local projection
+    local processor
 
     local offsets = {
         [0] = vector.new(0, 0, 1),    -- North-facing
@@ -83,7 +84,7 @@ local function spawn_struct(pos)
 
     local fallback_pool = pool_data.fallback
     if fallback_pool then
-        fallback_pool = fallback_pool:gsub("voxelforge:", "")
+        fallback_pool = fallback_pool:gsub("minecraft:", "")
     end
 
     local valid_schematics = {}
@@ -97,7 +98,40 @@ local function spawn_struct(pos)
                 table.insert(valid_schematics, {schematic = nil, weight = weight})
                 total_weight = total_weight + weight
             else
-            	projection = element_entry.element.projection or "rigid"
+				projection = element_entry.element.projection or "rigid"
+				local jsonprocess = element.processors
+				if jsonprocess then
+					-- Check if processors is an array
+					if type(jsonprocess) == "table" and #jsonprocess > 0 then
+						processor = {}
+						for _, proc in ipairs(jsonprocess) do
+							if proc and proc ~= "" then
+								-- Apply gsub if processor is valid
+								table.insert(processor, proc:gsub("minecraft:", ""))
+							end
+						end
+						-- If no valid processors were found, set processor to nil
+						if #processor == 0 then
+							processor = nil
+						end
+					elseif type(jsonprocess) == "string" and jsonprocess ~= "" then
+						-- If it's a single string, apply gsub directly
+						processor = jsonprocess:gsub("minecraft:", "")
+					else
+						processor = nil
+					end
+				else
+					processor = nil
+				end
+
+				-- Log processor (if valid)
+				if processor then
+					minetest.log("error", "Processor found: " .. tostring(processor))
+				else
+					minetest.log("error", "No valid processor found")
+				end
+
+
                 local location = element.location:gsub("minecraft:", "")
                 local base_name = location:gsub("%.gamedata$", "")
                 local selecting_schematic = "data/voxelforge/structure/" .. base_name .. ".gamedata"
@@ -205,7 +239,7 @@ local function spawn_struct(pos)
 
     	if vlf_structure_block.get_bounding_box(placement_pos, selected_schematic, rot, target_pos,"true", false) == "good" then
 
-            vlf_structure_block.place_schematic(placement_pos, selected_schematic, rot, target_pos,"true", false, true, projection)
+            vlf_structure_block.place_schematic(placement_pos, selected_schematic, rot, target_pos,"true", false, true, projection, processor)
             minetest.set_node(pos, {name = final_state})
             local place_pos = pos + offset
             local target_node_meta = minetest.get_meta(place_pos)
@@ -491,7 +525,7 @@ local function place_all_schematics_in_directory(mopath, directory, pos_start, p
     return final_pos
 end
 
-minetest.register_chatcommand("place_schematics", {
+--[[minetest.register_chatcommand("place_schematics", {
     params = "",
     description = "Place all trial chamber schematics",
     func = function(name)
@@ -527,9 +561,24 @@ minetest.register_chatcommand("place_schematics", {
 
         return true, "All schematics placed!"
     end,
-})
+})]]
 
-minetest.register_abm({
+minetest.register_chatcommand("place_schematics", {
+    params = "",
+    description = "Place all trial chamber schematics",
+    func = function(name)
+        local schematic_positions = {
+            {x=0, y=100, z=0, path="data/voxelforge/structure/pillager_outpost", extra="false"},
+        }
+
+        for _, schematic in ipairs(schematic_positions) do
+            place_all_schematics_in_directory(mpath, schematic.path, {x=schematic.x, y=schematic.y, z=schematic.z}, nil, "true", ".gamedata")
+        end
+
+        return true, "All schematics placed!"
+    end,
+})
+--[[minetest.register_abm({
     nodenames = {"voxelforge:jigsaw"},  -- Only check jigsaw blocks
     interval = 10,  -- Runs every 10 seconds
     chance = 1,  -- Check every block
@@ -547,6 +596,6 @@ minetest.register_abm({
             end
         end
     end,
-})
+})]]
 
 

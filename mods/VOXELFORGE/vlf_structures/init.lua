@@ -6,6 +6,7 @@ vlf_structures = {}
 
 dofile(modpath.."/api.lua")
 dofile(modpath.."/trial_chambers.lua")
+dofile(modpath.."/pillager_outpost.lua")
 
 
 
