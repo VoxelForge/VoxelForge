@@ -54,8 +54,8 @@ minetest.register_node(":voxelforge:leaf_litter_"..i, {
 		type = "wallmounted",
 	},
 	groups = {
-		handy = 1, shearsy = 1, hoey = 1, swordy = 1, deco_block = 1,
-		dig_by_piston = 1, leaf = i, attached_block = 1, dig_by_water = 1, destroy_by_lava_flow = 1,
+		handy = 1, shearsy = 1, hoey = 1, swordy = 1, deco_block = 1, flammable=3, attached_node=1, compostability=30,
+		dig_by_piston = 1, leaf = i, attached_block = 1, dig_by_water = 1, destroy_by_lava_flow = 1, not_in_creative_inventory=1
 	},
 	drop = "voxelforge:leaf_litter " ..i,
 	_mcl_shears_drop = true,
@@ -120,8 +120,8 @@ minetest.register_node(":voxelforge:wildflower_"..i, {
     selection_box = {type = "fixed", fixed = {-1/2, -1/2, -1/2, 1/2, -5/16, 1/2}},
     stack_max = 64,
 	groups = {
-		handy = 1, hoey = 1, shearsy = 1, swordy = 1, deco_block = 1,
-		dig_by_piston = 1, wildflower = i, attached_block = 1, dig_by_water = 1, destroy_by_lava_flow = 1,
+		handy = 1, shearsy = 1, hoey = 1, swordy = 1, deco_block = 1, flammable=3, attached_node=1, compostability=30,
+		dig_by_piston = 1, wildflower = i, attached_block = 1, dig_by_water = 1, destroy_by_lava_flow = 1, not_in_creative_inventory=1
 	},
 	drop = "voxelforge:wildflowers " ..i,
 	_mcl_shears_drop = true,

@@ -315,3 +315,4 @@ function mcl_structures.register_structure_spawn(def)
 		end,
 	})
 end
+

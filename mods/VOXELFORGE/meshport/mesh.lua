@@ -329,28 +329,54 @@ function meshport.Mesh:write_obj(path, name)
     objFile:close()
 end
 
+-- Define a pool of fallback textures (you can add more textures here)
+local fallback_textures = {
+    "default_dirt.png",
+    "default_stone.png",
+    "default_gravel.png",
+    "default_wood.png",
+    "default_cobble.png"
+}
 
 function meshport.Mesh:write_mtl(path, name)
-	local matFile = io.open(path .. "/"..name..".mtl" or "materials"..".mtl", "w")
+    local matFile = io.open(path .. "/"..name..".mtl" or "materials"..".mtl", "w")
 
-	matFile:write("# Created using Meshport (https://github.com/random-geek/meshport).\n")
+    matFile:write("# Created using Meshport (https://github.com/random-geek/meshport).\n")
 
-	-- Write material information.
-	for mat, _ in pairs(self.faces) do
-		matFile:write(string.format("\nnewmtl %s\n", mat))
+    -- Write material information.
+    for mat, _ in pairs(self.faces) do
+        matFile:write(string.format("\nnewmtl %s\n", mat))
 
-		-- Attempt to get the base texture, ignoring texture modifiers.
-		local texName = string.match(mat, "[%w%s%-_%.]+%.png") or mat
+        -- Check if mat is a table of textures (e.g., special_tiles)
+        local texName
+        if type(mat) == "table" then
+            -- Pick the first texture from the list of textures
+            texName = mat[1] and string.match(mat[1], "[%w%s%-_%.]+%.png") or nil
+        else
+            -- Otherwise, proceed with the regular string match
+            texName = string.match(mat, "[%w%s%-_%.]+%.png") or mat
+        end
 
-		if meshport.texture_paths[texName] then
+        if texName then
+            if meshport.texture_paths[texName] then
+                matFile:write(string.format("map_Kd %s\n", meshport.texture_paths[texName]))
+            elseif texName == "default_water_flowing_animated.png" then
+                -- Handle the flowing water texture with animation properly.
+                matFile:write(string.format("map_Kd %s\n", meshport.texture_paths["default_water_flowing_animated.png"]))
+                -- Optional: Add a custom property or animation setup for the flowing water texture.
+                matFile:write("Kd 0.5 0.5 1.0\n")  -- Water color, you can adjust as needed.
+            else
+                -- Fallback to a random texture from the pool
+                local fallback_tex = fallback_textures[math.random(#fallback_textures)]
+                matFile:write(string.format("map_Kd %s\n", meshport.texture_paths[fallback_tex] or fallback_tex))
+            end
+        else
+            -- Fallback if no texture name could be found
+            local fallback_tex = fallback_textures[math.random(#fallback_textures)]
+            matFile:write(string.format("map_Kd %s\n", meshport.texture_paths[fallback_tex] or fallback_tex))
+        end
+    end
 
-			matFile:write(string.format("map_Kd %s\n", meshport.texture_paths[texName]))
-		else
-			--meshport.log(playerName, "warning",
-					--S("Could not find texture \"@1\". Using a dummy material instead.", texName))
-			matFile:write(string.format("Kd %f %f %f\n", math.random(), math.random(), math.random()))
-		end
-	end
-
-	matFile:close()
+    matFile:close()
 end
+

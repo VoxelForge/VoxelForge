@@ -24,3 +24,9 @@ local function register_ominous_bottles()
 	end
 end
 register_ominous_bottles()
+
+mcl_potions.register_effect({
+	name = "trial_omen",
+	description = S("Trial Omen"),
+	particle_color = "#44FF44",
+})

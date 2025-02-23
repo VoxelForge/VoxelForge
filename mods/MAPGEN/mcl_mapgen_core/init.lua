@@ -314,3 +314,27 @@ mcl_mapgen_core.register_generator("structures",nil, function(minp, maxp, blocks
 	end
 	return false, false, false
 end, 100, false)
+
+mcl_mapgen_core.register_generator("vlf_structures",nil, function(minp, maxp, blockseed)
+	local gennotify = minetest.get_mapgen_object("gennotify")
+	for _,struct in pairs(vlf_structures.registered_structures) do
+		if struct.deco_id then
+			local has = false
+			for _, pos in pairs(gennotify["decoration#"..struct.deco_id] or {}) do
+				local pr = PcgRandom(minetest.hash_node_position(pos) + 42)
+				if struct.chunk_probability == nil or (not has and pr:next(1,struct.chunk_probability) == 1 ) then
+					vlf_structures.place_structure(vector.offset(pos,0,1,0), struct, pr, blockseed)
+					has=true
+				end
+			end
+		elseif struct.static_pos then
+			for _, pos in pairs(struct.static_pos) do
+				local pr = PcgRandom(minetest.hash_node_position(pos) + 42)
+				if in_cube(pos, minp, maxp) then
+					vlf_structures.place_structure(pos, struct, pr, blockseed)
+				end
+			end
+		end
+	end
+	return false, false, false
+end, 100, false)

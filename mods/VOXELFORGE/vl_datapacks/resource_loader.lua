@@ -71,7 +71,7 @@ local function read_file_string(filepath)
     return filestring
 end
 
--- registry_path must end in a slash
+--[[ registry_path must end in a slash
 local function load_single_resource(registry_path, subpath, namespace_table, file_suffix)
     local absolute_path = registry_path .. subpath
     local stem = get_stem(subpath, file_suffix)
@@ -94,7 +94,40 @@ local function load_single_resource(registry_path, subpath, namespace_table, fil
     end
 
     namespace_table[stem] = loaded_data
+end]]
+
+local function load_single_resource(registry_path, subpath, namespace_table, file_suffix)
+    local absolute_path = registry_path .. subpath
+    local stem = get_stem(subpath, file_suffix)
+    if not stem then
+        minetest.log("error", "Invalid filename in datapack at " .. absolute_path)
+        return
+    end
+    
+    local raw_data = read_file_string(absolute_path)
+    if not raw_data then
+        minetest.log("error", "Could not read file at " .. absolute_path)
+        return
+    end
+    
+    local loaded_data
+
+    minetest.debug("Loading resource at " .. subpath .. " in " .. registry_path)
+
+    if file_suffix == "json" then
+        loaded_data = minetest.parse_json(raw_data)
+        if not loaded_data then
+            minetest.log("error", "Error while reading json file at " .. absolute_path)
+            return
+        end
+    else
+        minetest.log("error", "Can't read file with format " .. file_suffix .. " at " .. absolute_path)
+        return
+    end
+
+    namespace_table[stem] = loaded_data
 end
+
 
 -- registry_path must end in a slash
 local function load_resources_recursive(registry_path, subpath, namespace_table, file_suffix)

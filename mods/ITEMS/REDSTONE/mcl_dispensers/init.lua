@@ -305,6 +305,7 @@ do
 			S("• Flint and steel: Is used to ignite a fire in air and to ignite TNT") .. "\n" ..
 			S("• Spawn eggs: Will summon the mob they contain") .. "\n" ..
 			S("• Other items: Are simply dropped"),
+
 		tiles = {
 			"default_furnace_top.png", "default_furnace_bottom.png",
 			"default_furnace_side.png", "default_furnace_side.png",
@@ -314,7 +315,19 @@ do
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
 			setup_dispenser(pos)
 			orientate(pos, placer, "dispenser")
+			local itemstack_meta = itemstack:get_meta()
+			local node_meta = minetest.get_meta(pos)
+			node_meta:set_string("loot_table", itemstack_meta:get_string("loot_table"))
 		end,
+		on_construct = function(pos, node)
+			setup_dispenser(pos)
+			local node_meta = minetest.get_meta(pos)
+			node_meta:get_string("loot_table")
+			local inventory = node_meta:get_inventory()
+			minetest.after(1, function()
+				vl_loot.generate_container_loot_if_exists(pos, nil, inventory, "main")
+			end)
+		end
 	}))
 
 	minetest.register_node("mcl_dispensers:dispenser_down", table.merge(dispenserdef, {
@@ -328,6 +341,22 @@ do
 		groups = table.merge(dispenserdef.groups, { not_in_creative_inventory = 1, }),
 		_doc_items_create_entry = false,
 		drop = "mcl_dispensers:dispenser",
+		after_place_node = function(pos, placer, itemstack, pointed_thing)
+			--setup_dispenser(pos)
+			orientate(pos, placer, "dispenser")
+			local itemstack_meta = itemstack:get_meta()
+			local node_meta = minetest.get_meta(pos)
+			node_meta:set_string("loot_table", itemstack_meta:get_string("loot_table"))
+		end,
+		on_construct = function(pos, node)
+			setup_dispenser(pos)
+			local node_meta = minetest.get_meta(pos)
+			node_meta:get_string("loot_table")
+			local inventory = node_meta:get_inventory()
+			minetest.after(1, function()
+				vl_loot.generate_container_loot_if_exists(pos, nil, inventory, "main")
+			end)
+		end
 	}))
 	minetest.register_node("mcl_dispensers:dispenser_up", table.merge(dispenserdef, {
 		description = S("Dispenser"),
@@ -340,6 +369,23 @@ do
 		groups = table.merge(dispenserdef.groups, { not_in_creative_inventory = 1, }),
 		_doc_items_create_entry = false,
 		drop = "mcl_dispensers:dispenser",
+		after_place_node = function(pos, placer, itemstack, pointed_thing)
+			--setup_dispenser(pos)
+			orientate(pos, placer, "dispenser")
+			local itemstack_meta = itemstack:get_meta()
+			local node_meta = minetest.get_meta(pos)
+			node_meta:set_string("loot_table", itemstack_meta:get_string("loot_table"))
+		end,
+		on_construct = function(pos, node)
+			setup_dispenser(pos)
+			local node_meta = minetest.get_meta(pos)
+			node_meta:get_string("loot_table")
+			local inventory = node_meta:get_inventory()
+			minetest.after(1, function()
+				vl_loot.generate_container_loot_if_exists(pos, nil, inventory, "main")
+			end)
+			
+		end
 	}))
 
 	minetest.register_craft({

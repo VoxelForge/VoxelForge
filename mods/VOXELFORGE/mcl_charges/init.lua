@@ -157,9 +157,9 @@ function mcl_charges.register_charge(name, descr, def)
 				local dir = placer:get_look_dir()
 				local playerpos = placer:get_pos()
 				local obj = minetest.add_entity({
-					x = playerpos.x + dir.x,
-					y = playerpos.y + 2 + dir.y,
-					z = playerpos.z + dir.z
+					x = playerpos.x,
+					y = playerpos.y + 2,
+					z = playerpos.z,
 				}, "mcl_charges:" .. name .. "_flying")
 				local vec = {x = dir.x * velocity, y = dir.y * velocity, z = dir.z * velocity}
 				local acc = {x = 0, y = 0, z = 0}
@@ -186,9 +186,9 @@ function mcl_charges.register_charge(name, descr, def)
 				local dir = placer:get_look_dir()
 				local playerpos = placer:get_pos()
 				local obj = minetest.add_entity({
-					x = playerpos.x + dir.x,
-					y = playerpos.y + 2 + dir.y,
-					z = playerpos.z + dir.z
+					x = playerpos.x,
+					y = playerpos.y +2,
+					z = playerpos.z,
 				}, "mcl_charges:" .. name .. "_flying")
 				local vec = {x = dir.x * velocity, y = dir.y * velocity, z = dir.z * velocity}
 				local acc = {x = 0, y = 0, z = 0}

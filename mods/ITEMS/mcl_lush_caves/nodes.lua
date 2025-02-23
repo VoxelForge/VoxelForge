@@ -324,7 +324,9 @@ minetest.register_node("mcl_lush_caves:spore_blossom", {
 	tiles = {"mcl_lush_caves_spore_blossom.png"},
 	inventory_image = "mcl_lush_caves_spore_blossom.png",
 	wield_image = "mcl_lush_caves_spore_blossom.png",
-	drawtype = "plantlike",
+	drawtype = "mesh",
+	mesh = "spore_blossom.obj",
+	tiles = {"spore_blossom_base.png", "blank.png", "spore_blossom.png"},
 	paramtype = "light",
 	groups = {handy = 1, plant = 1, deco_block = 1},
 	sounds = mcl_sounds.node_sound_dirt_defaults(),
@@ -335,6 +337,7 @@ minetest.register_node("mcl_lush_caves:spore_blossom", {
 	_mcl_blast_resistance = 0.5,
 	_mcl_hardness = 0.5,
 	node_placement_prediction = "",
+	use_texture_alpha = "clip",
 	on_place = mcl_util.generate_on_place_plant_function(function(place_pos)
 		local above = vector.offset(place_pos,0,1,0)
 		local node_above = minetest.get_node_or_nil(above)
