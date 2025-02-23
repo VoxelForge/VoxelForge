@@ -15,9 +15,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
         "location": "minecraft:pillager_outpost/watchtower_overgrown",
-        "processors": {
-          "processors": []
-        },
+        "processors": "minecraft:outpost_rot",
         "projection": "rigid"
       },
       "weight": 1

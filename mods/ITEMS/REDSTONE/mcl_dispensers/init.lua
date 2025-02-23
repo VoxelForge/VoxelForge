@@ -313,7 +313,7 @@ do
 		},
 		paramtype2 = "facedir",
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
-			--setup_dispenser(pos)
+			setup_dispenser(pos)
 			orientate(pos, placer, "dispenser")
 			local itemstack_meta = itemstack:get_meta()
 			local node_meta = minetest.get_meta(pos)

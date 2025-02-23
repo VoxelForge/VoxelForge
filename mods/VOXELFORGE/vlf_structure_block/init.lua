@@ -492,7 +492,7 @@ end
     end
 end]]
 
-function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_origin, binary, worldpath, include_entities, terrain_setting, processor)
+--[[function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_origin, binary, worldpath, include_entities, terrain_setting, processor)
     rotation = rotation or 0
     rotation_origin = rotation_origin or pos
     processor = processor or nil
@@ -535,11 +535,76 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
 
     local nodes_by_type = {}
     local metadata = {}
+    
+        if terrain_setting == "terrain_matching" then
+        local highest_pos = nil
+
+        -- Check from 40 blocks above down to pos
+        for offset = 40, 0, -1 do
+            local check_pos = vector.add(pos, vector.new(0, offset, 0))
+            local check_node = minetest.get_node(check_pos)
+            if minetest.registered_nodes[check_node.name].walkable then
+                highest_pos = check_pos
+                break  -- Take the first solid node from the top
+            end
+        end
+
+        -- If no solid node was found above, check from pos down to -80
+        if not highest_pos then
+            for offset = 0, 80 do
+                local check_pos = vector.add(pos, vector.new(0, -offset, 0))
+                local check_node = minetest.get_node(check_pos)
+                if minetest.registered_nodes[check_node.name].walkable then
+                    highest_pos = check_pos
+                    break  -- Take the first solid node below
+                end
+            end
+        end
+
+        -- If we found a valid position, update the Y-coordinate of the schematic block
+        if highest_pos then
+            pos.y = highest_pos.y
+        end
+    elseif terrain_setting == "rigid" and pos.y > 0 then
+        --mcl_util.create_ground_turnip(pos, schematic.size.x / 2, 5)
+        local center_pos = vector.add(pos, vector.new(schematic.size.x / 2, 0, schematic.size.z / 2))
+        mcl_util.create_ground_turnip(center_pos, schematic.size.x / 2, 5)
+    end
 
     for _, node in ipairs(schematic.nodes) do
         local rotated_pos = rotate_position(node.pos, rotation, rotation_origin)
         local node_pos = vector.add(pos, rotated_pos)
         local rotated_param2 = rotate_param2(node.param2 or 0, rotation)
+        
+        -- Adjust the Y-coordinate of the schematic block to match the terrain
+        if terrain_setting == "terrain_matching" then
+            local highest_pos = nil
+            for offset = 1, 80 do
+                local up_pos = vector.add(node_pos, vector.new(0, offset, 0))
+                local down_pos = vector.add(node_pos, vector.new(0, -offset, 0))
+
+                -- Check upwards (find highest solid node)
+                if not highest_pos then
+                    local up_node = minetest.get_node(up_pos)
+                    if minetest.registered_nodes[up_node.name].walkable then
+                        highest_pos = up_pos
+                    end
+                end
+
+                -- Check downwards (find solid node within the allowed depth range)
+                if not highest_pos then
+                    local down_node = minetest.get_node(down_pos)
+                    if minetest.registered_nodes[down_node.name].walkable then
+                        highest_pos = down_pos
+                    end
+                end
+            end
+
+            -- If we found a valid position, update the Y-coordinate of the schematic block
+            if highest_pos then
+                node_pos.y = highest_pos.y + 1
+            end
+        end
         
         if processor ~= nil then
             local processed_node = processors.generic_processor(processor, node_pos, node)
@@ -605,9 +670,310 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
             end
         end
     end
+end]]
+
+--[[function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_origin, binary, worldpath, include_entities, terrain_setting, processor)
+    rotation = rotation or 0
+    rotation_origin = rotation_origin or pos
+    processor = processor or nil
+
+    local schematic
+    if binary == "true" then
+        schematic = vlf_structure_block.load_vlfschem(file_name, worldpath)
+    elseif binary == "false" then
+        schematic = vlf_structure_block.load_vlfschem_nb(file_name, worldpath)
+    else
+        schematic = vlf_structure_block.load_vlfschem(file_name, worldpath)
+    end
+    if not schematic then
+        minetest.log("error", "Failed to load schematic data.")
+        return
+    end
+
+    local nodes_by_type = {}
+    local metadata = {}
+    
+    if terrain_setting == "terrain_matching" then
+        local highest_pos = nil
+
+        -- Check from 40 blocks above down to pos
+        for offset = 40, 0, -1 do
+            local check_pos = vector.add(pos, vector.new(0, offset, 0))
+            local check_node = minetest.get_node(check_pos)
+            if minetest.registered_nodes[check_node.name].walkable then
+                highest_pos = check_pos
+                break  -- Take the first solid node from the top
+            end
+        end
+
+        -- If no solid node was found above, check from pos down to -80
+        if not highest_pos then
+            for offset = 0, 80 do
+                local check_pos = vector.add(pos, vector.new(0, -offset, 0))
+                local check_node = minetest.get_node(check_pos)
+                if minetest.registered_nodes[check_node.name].walkable then
+                    highest_pos = check_pos
+                    break  -- Take the first solid node below
+                end
+            end
+        end
+
+        -- If we found a valid position, update the Y-coordinate of the schematic block
+        if highest_pos then
+            pos.y = highest_pos.y
+        end
+    elseif terrain_setting == "rigid" and pos.y > 0 then
+        --mcl_util.create_ground_turnip(pos, schematic.size.x / 2, 5)
+        local center_pos = vector.add(pos, vector.new(schematic.size.x / 2, 0, schematic.size.z / 2))
+        mcl_util.create_ground_turnip(center_pos, schematic.size.x / 2, 5)
+    end
+
+    for _, node in ipairs(schematic.nodes) do
+        local rotated_pos = rotate_position(node.pos, rotation, rotation_origin)
+        local node_pos = vector.add(pos, rotated_pos)
+        local rotated_param2 = rotate_param2(node.param2 or 0, rotation)
+        
+        -- Adjust the Y-coordinate of the schematic block to match the terrain
+        if terrain_setting == "terrain_matching" then
+            local highest_pos = nil
+            for offset = 1, 80 do
+                local up_pos = vector.add(node_pos, vector.new(0, offset, 0))
+                local down_pos = vector.add(node_pos, vector.new(0, -offset, 0))
+
+                -- Check upwards (find highest solid node)
+                if not highest_pos then
+                    local up_node = minetest.get_node(up_pos)
+                    if minetest.registered_nodes[up_node.name].walkable then
+                        highest_pos = up_pos
+                    end
+                end
+
+                -- Check downwards (find solid node within the allowed depth range)
+                if not highest_pos then
+                    local down_node = minetest.get_node(down_pos)
+                    if minetest.registered_nodes[down_node.name].walkable then
+                        highest_pos = down_pos
+                    end
+                end
+            end
+
+            -- If we found a valid position, update the Y-coordinate of the schematic block
+            if highest_pos then
+                node_pos.y = highest_pos.y + 1
+            end
+        end
+        
+        
+        if processor ~= nil then
+            local processed_node = processors.generic_processor(processor, node_pos, node)
+            if processed_node and processed_node ~= "rotted" then
+                minetest.set_node(node_pos, {name = processed_node.name, param2 = rotated_param2 or 0})
+            elseif processed_node == "rotted" then
+            	goto continue
+            else
+                local node_key = node.name .. "_" .. rotated_param2
+                if not nodes_by_type[node_key] then
+                    nodes_by_type[node_key] = {positions = {}, name = node.name, param2 = rotated_param2}
+                end
+                table.insert(nodes_by_type[node_key].positions, node_pos)
+                if node.metadata and next(node.metadata) then
+                    metadata[node_pos] = node.metadata
+                end
+            end
+        else
+            local node_key = node.name .. "_" .. rotated_param2
+            if not nodes_by_type[node_key] then
+                nodes_by_type[node_key] = {positions = {}, name = node.name, param2 = rotated_param2}
+            end
+            table.insert(nodes_by_type[node_key].positions, node_pos)
+            if node.metadata and next(node.metadata) then
+                metadata[node_pos] = node.metadata
+            end
+        end
+
+        -- Normal flow: add the processed node to the nodes_by_type list
+        local node_key = node.name .. "_" .. rotated_param2
+        if not nodes_by_type[node_key] then
+            nodes_by_type[node_key] = {positions = {}, name = node.name, param2 = rotated_param2}
+        end
+        table.insert(nodes_by_type[node_key].positions, node_pos)
+        
+        -- If there is metadata, add it to the metadata table
+        if node.metadata and next(node.metadata) then
+            metadata[node_pos] = node.metadata
+        end
+
+        ::continue::  -- Continue to the next node without further processing
+
+    end
+
+    -- Bulk set for nodes that were not removed by processors
+    for _, node_group in pairs(nodes_by_type) do
+        local positions = node_group.positions
+        local total_positions = #positions
+        local max_nodes_per_batch = 20000
+
+        for i = 1, total_positions, max_nodes_per_batch do
+            local end_index = math.min(i + max_nodes_per_batch - 1, total_positions)
+            local batch_positions = {}
+            for j = i, end_index do
+                table.insert(batch_positions, positions[j])
+            end
+
+            -- Set nodes in bulk, if any nodes exist
+            if #batch_positions > 0 then
+                minetest.bulk_set_node(batch_positions, {name = node_group.name, param2 = node_group.param2})
+            end
+        end
+    end
+
+    -- Set metadata if any
+    if next(metadata) then
+        set_metadata(metadata)
+    end
+
+    -- Add entities if specified
+    if schematic.entities and include_entities == true then
+        for _, entity_data in ipairs(schematic.entities) do
+            local rotated_pos = rotate_position(entity_data.pos, rotation, rotation_origin)
+            local entity_pos = vector.add(pos, rotated_pos)
+
+            if entity_data.name ~= "vlf_structure_block:border" then
+                local obj = minetest.add_entity(entity_pos, entity_data.name)
+                if obj and entity_data.properties then
+                    local luaentity = obj:get_luaentity()
+                    if luaentity then
+                        for key, value in pairs(entity_data.properties) do
+                            luaentity[key] = value
+                        end
+                    end
+                end
+            end
+        end
+    end
+end]]
+
+function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_origin, binary, worldpath, include_entities, terrain_setting, processor)
+    rotation = rotation or 0
+    rotation_origin = rotation_origin or pos
+    processor = processor or nil
+
+    local schematic
+    if binary == "true" then
+        schematic = vlf_structure_block.load_vlfschem(file_name, worldpath)
+    elseif binary == "false" then
+        schematic = vlf_structure_block.load_vlfschem_nb(file_name, worldpath)
+    else
+        schematic = vlf_structure_block.load_vlfschem(file_name, worldpath)
+    end
+    if not schematic then
+        minetest.log("error", "Failed to load schematic data.")
+        return
+    end
+
+    local schematic_size = schematic.size
+    local minp, maxp
+    
+    local schem_size = (rotation == 90 or rotation == 270) 
+                   and {x = schematic_size.z, y = schematic_size.y, z = schematic_size.x} 
+                   or schematic_size
+
+    local min_offset = vector.new(0, 0, 0)
+    local max_offset = vector.new(schem_size.x, schem_size.y, schem_size.z)
+
+    minp = vector.add(pos, min_offset)
+    maxp = vector.add(pos, max_offset)
+
+    if minp.x > maxp.x then minp.x, maxp.x = maxp.x, minp.x end
+    if minp.y > maxp.y then minp.y, maxp.y = maxp.y, minp.y end
+    if minp.z > maxp.z then minp.z, maxp.z = maxp.z, minp.z end
+
+    minetest.log("error", "Schematic " .. file_name .. " bounds: minp=" .. minetest.pos_to_string(minp) .. ", maxp=" .. minetest.pos_to_string(maxp) .. "Schematic rotation: " .. tostring(rotation))
+
+    if not load_area(minp, maxp) then
+        return
+    end
+
+    local nodes_by_type = {}
+    local metadata = {}
+
+    for _, node in ipairs(schematic.nodes) do
+        local rotated_pos = rotate_position(node.pos, rotation, rotation_origin)
+        local node_pos = vector.add(pos, rotated_pos)
+        local rotated_param2 = rotate_param2(node.param2 or 0, rotation)
+        
+        if processor ~= nil then
+            local processed_node = processors.generic_processor(processor, node_pos, node)
+            --if processed_node == true then
+            if processed_node ~= nil and processed_node ~= "rotted" then
+                minetest.set_node(node_pos, {name = processed_node.name, param2 = rotated_param2 or 0})
+                goto continue
+            elseif processed_node == "rotted" then
+            	goto continue
+            else
+                local node_key = node.name .. "_" .. rotated_param2
+                if not nodes_by_type[node_key] then
+                    nodes_by_type[node_key] = {positions = {}, name = node.name, param2 = rotated_param2}
+                end
+                table.insert(nodes_by_type[node_key].positions, node_pos)
+                if node.metadata and next(node.metadata) then
+                    metadata[node_pos] = node.metadata
+                end
+            end
+        end
+        --else
+            local node_key = node.name .. "_" .. rotated_param2
+            if not nodes_by_type[node_key] then
+                nodes_by_type[node_key] = {positions = {}, name = node.name, param2 = rotated_param2}
+            end
+            table.insert(nodes_by_type[node_key].positions, node_pos)
+            if node.metadata and next(node.metadata) then
+                metadata[node_pos] = node.metadata
+            end
+            
+            ::continue::
+        --end
+    end
+
+    for _, node_group in pairs(nodes_by_type) do
+        local positions = node_group.positions
+        local total_positions = #positions
+        local max_nodes_per_batch = 20000
+
+        for i = 1, total_positions, max_nodes_per_batch do
+            local end_index = math.min(i + max_nodes_per_batch - 1, total_positions)
+            local batch_positions = {}
+            for j = i, end_index do
+                table.insert(batch_positions, positions[j])
+            end
+
+            minetest.bulk_set_node(batch_positions, {name = node_group.name, param2 = node_group.param2})
+        end
+    end
+
+    if next(metadata) then
+        set_metadata(metadata)
+    end
+
+    if schematic.entities and include_entities == true then
+        for _, entity_data in ipairs(schematic.entities) do
+            local rotated_pos = rotate_position(entity_data.pos, rotation, rotation_origin)
+            local entity_pos = vector.add(pos, rotated_pos)
+
+            if entity_data.name ~= "vlf_structure_block:border" then
+                local obj = minetest.add_entity(entity_pos, entity_data.name)
+                if obj and entity_data.properties then
+                    local luaentity = obj:get_luaentity()
+                    if luaentity then
+                        for key, value in pairs(entity_data.properties) do
+                            luaentity[key] = value
+                        end
+                    end
+                end
+            end
+        end
+    end
 end
-
-
 
 vlf_structure_block.schematic_bounds = {}
 

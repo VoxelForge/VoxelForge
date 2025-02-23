@@ -156,6 +156,7 @@ local function check_player_proximity_and_los(pos)
                     mcl_potions.clear_effect(player, "bad_omen")
                     mcl_potions.give_effect("trial_omen", player, 0, tonumber(lv) * 900)
                     meta:set_string("Ominous", "true")
+                    minetest.sound_play("trial_spawner_detect_player1", {pos = pos, gain = 1, max_hear_distance = 14})
                     local activate = {
 						amount = 10,
 						texpool = {
@@ -182,9 +183,37 @@ local function check_player_proximity_and_los(pos)
 						minpos = minpos,
 						maxpos = maxpos,
 					}))
+					local playerposmin = vector.offset(player:get_pos(), -0.5, 0.0, -0.5)
+					local playerposmax = vector.offset(player:get_pos(), 0.5, 0.0, 0.5)
+					minetest.add_particlespawner(table.merge(activate, {
+						minpos = playerposmin,
+						maxpos = playerposmax,
+						minvel = vector.new(0.0, 1.5, 0.0),
+						maxvel = vector.new(0.0, 2.5, 0.0),
+					}))
+					minetest.add_particlespawner({
+						amount = 15,
+						time = 1,
+						minpos = {x=player:get_pos().x-0.5,y=player:get_pos().y-0.5,z=player:get_pos().z-0.5},
+						maxpos = {x=player:get_pos().x+0.5,y=player:get_pos().y+0.5,z=player:get_pos().z+0.5},
+						minvel = {x = -0.0, y = -0.0, z = -0.0},
+						maxvel = {x = 0.0, y = 0.0, z = 0.0},
+						minacc = {x = 0, y = 0, z = 0},
+						maxacc = {x = 0, y = 0, z = 0},
+						minexptime = 0.8,
+						maxexptime = 0.8,
+						minsize = 0.4,
+						maxsize = 1.2,
+						collisiondetection = true,
+						collision_removal = false,
+						vertical = false,
+						texture = "vlf_particles_soul_flame.png",
+						glow = 10,
+					})
                     minetest.swap_node(pos, { name = "vlf_trials:ominous_spawner_active" })
                 elseif mcl_potions.has_effect(player, "trial_omen") then
                     meta:set_string("Ominous", "true")
+                    minetest.sound_play("trial_spawner_detect_player1", {pos = pos, gain = 1, max_hear_distance = 14})
                     minetest.swap_node(pos, { name = "vlf_trials:ominous_spawner_active" })
                     local activate = {
 						amount = 10,
@@ -212,6 +241,33 @@ local function check_player_proximity_and_los(pos)
 						minpos = minpos,
 						maxpos = maxpos,
 					}))
+					local playerposmin = vector.offset(player:get_pos(), -0.8, 0.5, -0.8)
+					local playerposmax = vector.offset(player:get_pos(), 0.8, 1.5, 0.8)
+					minetest.add_particlespawner(table.merge(activate, {
+						minpos = playerposmin,
+						maxpos = playerposmax,
+						minvel = vector.new(0.0, 1.5, 0.0),
+						maxvel = vector.new(0.0, 2.5, 0.0),
+					}))
+					minetest.add_particlespawner({
+						amount = 15,
+						time = 1,
+						minpos = {x=player:get_pos().x-0.8,y=player:get_pos().y+1.5,z=player:get_pos().z-0.8},
+						maxpos = {x=player:get_pos().x+0.8,y=player:get_pos().y+2,z=player:get_pos().z+0.8},
+						minvel = {x = -0.0, y = -0.0, z = -0.0},
+						maxvel = {x = 0.0, y = 0.0, z = 0.0},
+						minacc = {x = 0, y = 0, z = 0},
+						maxacc = {x = 0, y = 0, z = 0},
+						minexptime = 0.8,
+						maxexptime = 0.8,
+						minsize = 0.4,
+						maxsize = 1.2,
+						collisiondetection = true,
+						collision_removal = false,
+						vertical = false,
+						texture = "vlf_particles_soul_flame.png",
+						glow = 10,
+					})
                 else
                 	minetest.sound_play("trial_spawner_detect_player1", {pos = pos, gain = 1, max_hear_distance = 14})
                     minetest.swap_node(pos, { name = "vlf_trials:spawner_active" })

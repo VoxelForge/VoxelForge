@@ -150,6 +150,32 @@ minetest.register_chatcommand("lootdispenser", {
     end
 })
 
+minetest.register_chatcommand("lootbarrel", {
+    params = "<loot table resource location>",
+    privs = {["give"] = true},
+    description = "Give yourself a loot chest with a specified loot table",
+    func = function(name, param)
+        if vl_datapacks.get_resource("loot_table", param) then
+            local itemstack = ItemStack({
+                name = "mcl_barrels:barrel_closed",
+                meta = {["loot_table"] = param,
+                }
+            })
+            tt.reload_itemstack_description(itemstack)
+            local player = minetest.get_player_by_name(name)
+            local leftover = player:get_inventory():add_item("main", itemstack)
+            if leftover:is_empty() then
+                return true, "Gave loot chest with table: " .. param
+            else
+                -- Could not add to inventory
+                return false, "No space in inventory"
+            end
+        else
+            return false, "Loot table resource does not exist: " .. param
+        end
+    end
+})
+
 --load_loot_tables(default_loot_path, expected_loot_tables, true)
 
 minetest.debug(dump(vl_loot))

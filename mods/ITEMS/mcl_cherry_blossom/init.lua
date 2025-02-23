@@ -47,7 +47,7 @@ mcl_trees.register_wood("cherry_blossom",{
 	},
 })
 
-minetest.register_node("mcl_cherry_blossom:pink_petals",{
+--[[minetest.register_node("mcl_cherry_blossom:pink_petals",{
 	description = S("Pink Petals"),
 	doc_items_longdesc = S("Pink Petals are ground decoration of cherry grove biomes"),
 	doc_items_hidden = false,
@@ -84,7 +84,7 @@ minetest.register_node("mcl_cherry_blossom:pink_petals",{
 		minetest.add_item(pos,n.name)
 	end,
 	_mcl_crafting_output = {single = {output = "mcl_dyes:pink"}}
-})
+})]]
 
 local cherry_particlespawner = {
 	texture = "mcl_cherry_blossom_particle_1.png",
