@@ -137,6 +137,7 @@ The VoxelForge repository is hosted at [Github](https://github.com).
 To contribute or report issues, head there.
 
 * Github: <https://github/VoxelForge/VoxelForge>
+* Discord: <https://discord.com/invite/7Jv5s7dnzG>
 * ContentDB: <https://content.minetest.net/packages/VoxelForge/voxelforge>
 
 ## Project description
