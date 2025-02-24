@@ -173,7 +173,7 @@ mcl_player.register_globalstep_slow(function(player, dtime)
 		end
 
 		player_meta:set_string("time_in_snow", tostring(time_in_snow))
-		
+
 		if minetest.get_node(player_pos).name == "mcl_powder_snow:powder_snow" and player_has_leather_armor(player) then
 			awards.unlock(player:get_player_name(), "mcl:walk_on_powder_snow_with_leather_boots")
 		end
