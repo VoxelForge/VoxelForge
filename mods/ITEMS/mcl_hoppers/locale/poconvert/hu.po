@@ -23,13 +23,13 @@ msgid "5 inventory slots"
 msgstr "5 rekeszű tároló"
 
 msgid "Collects items from above, moves items to container below"
-msgstr "Fentről begyűjti a tárgyakat és lent kiadja őket"
+msgstr "Fentről begyűjti a tárgyakat, és az alatta lévő tárolóba helyezi őket"
 
 msgid "Can be disabled with redstone power"
 msgstr "Vöröskő jellel kikapcsolható"
 
 msgid "Hoppers are containers with 5 inventory slots. They collect dropped items from above, take items from a container above and attempt to put its items it into an adjacent container. Hoppers can go either downwards or sideways. Hoppers interact with chests, droppers, dispensers, shulker boxes, furnaces and hoppers."
-msgstr "A Tölcsér egy 5 rekeszű tároló. Fentről begyűjti a kidobott tárgyakat, vagy a felette levő tárolóból kiszedi a tárgyakat és megpróbálja a szomszédos tárolóba elhelyezni. A Tölcsér lefelé vagy oldalirányba is működhet. Ládákkal, Adagolókkal, Kidobókkal, Kagylapuló Dobozokkal, Kemencével és más Tölcsérrel tud együttműködni."
+msgstr "A tölcsér egy tároló, amelynek 5 rekesze van. Fentről begyűjti a leesett tárgyakat, vagy a felette levő tárolóból kiszedi a tárgyakat, és megpróbálja a szomszédos tárolóba elhelyezni a tárgyait. A tölcsér vagy lefelé, vagy oldalirányba működhet. Ládákkal, adagolókkal, kidobókkal, kagylapuló-dobozokkal, kemencével és másik tölcsérekkel tud együttműködni."
 
 msgid "Hoppers interact with containers the following way:"
 msgstr ""
@@ -44,7 +44,7 @@ msgid "• Other containers: Normal interaction."
 msgstr ""
 
 msgid "Hoppers can be disabled when supplied with redstone power. Disabled hoppers don't move items."
-msgstr "A Tölcsért vöröskő jellel lehet kikapcsolni. Ilyenkor nem mozgat tárgyakat."
+msgstr "A tölcsért vöröskőjellel ki lehet kapcsolni. A kikapcsolt tölcsér nem továbbít tárgyakat."
 
 msgid "To place a hopper vertically, place it on the floor or a ceiling. To place it sideways, place it at the side of a block. Use the hopper to access its inventory."
 msgstr ""

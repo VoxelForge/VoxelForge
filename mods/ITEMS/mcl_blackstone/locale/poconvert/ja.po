@@ -53,7 +53,7 @@ msgid "Eternal Soul Fire"
 msgstr "永続的な魂の炎"
 
 msgid "Blackstone Stairs"
-msgstr ""
+msgstr "ブラックストーンの階段"
 
 msgid "Blackstone Slab"
 msgstr "ブラックストーンのハーフブロック"
@@ -65,10 +65,10 @@ msgid "Polished Blackstone Slab"
 msgstr "磨かれたブラックストーンのハーフブロック"
 
 msgid "Blackstone Brick Stairs"
-msgstr ""
+msgstr "ブラックストーンレンガの階段"
 
 msgid "Blackstone Brick Slab"
-msgstr ""
+msgstr "ブラックストーンレンガのハーフブロック"
 
 msgid "Soul Torch"
 msgstr "魂の松明"

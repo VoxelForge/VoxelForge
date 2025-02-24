@@ -32,7 +32,7 @@ msgid "Extremely fast"
 msgstr "とてつもなく速い"
 
 msgid "Instantaneous"
-msgstr ""
+msgstr "即時"
 
 msgid "Unlimited uses"
 msgstr "無限に使用可能"
@@ -56,10 +56,10 @@ msgid "Full punch interval: @1s"
 msgstr "全力攻撃の間隔：@1秒"
 
 msgid "Food item"
-msgstr ""
+msgstr "食料アイテム"
 
 msgid "+@1 food points"
-msgstr ""
+msgstr "+@1 満腹度"
 
 msgid "Contact damage: @1 per second"
 msgstr "接触ダメージ：@1/秒"

@@ -13,15 +13,39 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: mtt_convert 0.1.1\n"
 
+msgid "Unavailable"
+msgstr "No disponible"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Beacon"
+msgstr "Faro"
+
 msgid "Primary Power:"
 msgstr "Poder Primario:"
 
 msgid "Secondary Power:"
 msgstr "Poder Secundario:"
 
-msgid "Inventory:"
-msgstr "Inventario:"
+msgid "Swiftness"
+msgstr "Velocidad"
 
-msgid "Beacon"
-msgstr "Faro"
+msgid "Haste"
+msgstr "Prisa minera"
+
+msgid "Resistance"
+msgstr "Resistencia"
+
+msgid "Leaping"
+msgstr "Salto"
+
+msgid "Strength"
+msgstr "Fuerza"
+
+msgid "Regeneration"
+msgstr "Regeneración"
+
+msgid "Inventory"
+msgstr "Inventario"
 

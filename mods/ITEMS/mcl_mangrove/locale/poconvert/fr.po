@@ -34,14 +34,17 @@ msgstr "Propagule suspendue"
 msgid "Grows on Mangrove leaves"
 msgstr "Pousse sur les feuilles de Palétuvier"
 
-msgid "water logged mangrove roots"
-msgstr "racines de palétuvier immergées"
+msgid "Water logged mangrove roots"
+msgstr ""
 
 msgid "Mangrove roots, despite being a full block, can be waterlogged and do not flow water out"
 msgstr "Les racines de palétuvier sont un bloc plein mais qui peut être immergé et ne remplace pas l'eau"
 
 msgid "These cannot be crafted yet only occure when get in contact of water."
 msgstr "Elles ne peuvent être fabriquées mais se forment au contact de l'eau."
+
+msgid "River water logged mangrove roots"
+msgstr ""
 
 msgid "Muddy Mangrove Roots"
 msgstr "Racines de palétuvier boueuses"

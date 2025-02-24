@@ -36,6 +36,7 @@ if mcl_hunger.active then
 			hb.change_hudbar(player, "hunger", hunger)
 			mcl_hunger.update_saturation_hud(player, nil, hunger)
 		end
+		mcl_serverplayer.update_vitals (player)
 		return true
 	end
 
@@ -45,6 +46,7 @@ if mcl_hunger.active then
 		if update_hudbar ~= false then
 			mcl_hunger.update_saturation_hud(player, saturation)
 		end
+		mcl_serverplayer.update_vitals (player)
 		return true
 	end
 

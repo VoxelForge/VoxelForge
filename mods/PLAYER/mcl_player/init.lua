@@ -36,8 +36,8 @@ mcl_player.node_offsets = nodeinfo_pos
 -- (Set in on_joinplayer)
 local bone_start_positions = {
 	Head_Control =            vector.new(0, 6.75, 0),
-	Arm_Right_Pitch_Control = vector.new(-3, 5.785, 0),
-	Arm_Left_Pitch_Control =  vector.new(3, 5.785, 0),
+	Arm_Right_Pitch_Control = vector.new(0, 0, 0),
+	Arm_Left_Pitch_Control =  vector.new(0, 0, 0),
 	Body_Control =            vector.new(0, 6.75, 0),
 }
 
@@ -130,7 +130,7 @@ mcl_player.register_globalstep_slow(function(player)
 	end
 end)
 
--- Change the fall damage dealt depending on the block the player landed on
+-- Change the fall damage dealt depending on the block the player landed on or leaping status effect
 mcl_damage.register_modifier(function(obj, damage, reason)
 	if obj:is_player () and mcl_serverplayer.is_csm_capable (obj) then
 		return
@@ -165,6 +165,7 @@ mcl_damage.register_modifier(function(obj, damage, reason)
 			pos = vector.add(pos, step)
 			node = minetest.get_node(pos)
 		end
+		return damage - mcl_potions.get_effect_level(obj, "leaping") --damage is reduced by 1 per level of leaping effect
 	end
 end, -200)
 

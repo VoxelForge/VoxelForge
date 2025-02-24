@@ -202,9 +202,6 @@ msgstr ""
 msgid "Tropical Fish"
 msgstr ""
 
-msgid "Tropical fish"
-msgstr "Peiçon tropicau"
-
 msgid "Vex"
 msgstr "Vex"
 

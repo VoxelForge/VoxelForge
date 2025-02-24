@@ -1,0 +1,99 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Luanti textdomain mcl_pottery_sherds x.x.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: mtt_convert 0.1.1\n"
+
+msgid "Angler"
+msgstr "垂钓者"
+
+msgid "Archer"
+msgstr "弓箭手"
+
+msgid "Arms Up"
+msgstr "举起手臂"
+
+msgid "Blade"
+msgstr "剑"
+
+msgid "Brewer"
+msgstr "酿造者"
+
+msgid "Burn"
+msgstr "燃烧"
+
+msgid "Danger"
+msgstr "危险"
+
+msgid "Explorer"
+msgstr "探险家"
+
+msgid "Friend"
+msgstr "朋友"
+
+msgid "Heartbreak"
+msgstr "心碎"
+
+msgid "Heart"
+msgstr "心脏"
+
+msgid "Howl"
+msgstr "嚎叫"
+
+msgid "Miner"
+msgstr "矿工"
+
+msgid "Mourner"
+msgstr "哀悼者"
+
+msgid "Plenty"
+msgstr "众多"
+
+msgid "Prize"
+msgstr "奖赏"
+
+msgid "Sheaf"
+msgstr "捆"
+
+msgid "Shelter"
+msgstr "庇护所"
+
+msgid "Skull"
+msgstr "头骨"
+
+msgid "Snort"
+msgstr "哼"
+
+msgid "Flow"
+msgstr "流"
+
+msgid "Guster"
+msgstr "沙风怪"
+
+msgid "Scrape"
+msgstr "刮"
+
+msgid "@1 Pottery Sherd"
+msgstr "@1陶片"
+
+msgid "Used for crafting decorated pots"
+msgstr "用于制作装饰的罐子"
+
+msgid "Decorated Pot"
+msgstr "装饰罐"
+
+msgid "Pots are decorative blocks."
+msgstr "罐子是装饰性方块。"
+
+msgid "Specially decorated pots can be crafted using pottery sherds"
+msgstr "可以使用陶片来制作特别装饰过的罐子"
+

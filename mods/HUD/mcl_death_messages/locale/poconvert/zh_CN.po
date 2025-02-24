@@ -17,10 +17,10 @@ msgid "@1 went up in flames"
 msgstr "@1在火焰中化为灰烬"
 
 msgid "@1 walked into fire whilst fighting @2"
-msgstr "@1在与@2战斗时走进了火里"
+msgstr "与@2战斗时，@1引火烧身"
 
 msgid "@1 was struck by lightning"
-msgstr "@1被闪电击中"
+msgstr "闪电击中了@1"
 
 msgid "@1 was struck by lightning whilst fighting @2"
 msgstr "@1在与@2战斗时被闪电击中"
@@ -95,46 +95,46 @@ msgid "@1 was killed by magic"
 msgstr "@1为魔法所杀"
 
 msgid "@1 was killed by magic whilst trying to escape @2"
-msgstr "@1在试图逃离@2时被魔法杀死了"
+msgstr "@1逃跑时为@2的魔法所杀"
 
 msgid "@1 was killed by @2 using magic"
-msgstr "@1被@2用魔法杀死了"
+msgstr "@2用魔法杀死了@1"
 
 msgid "@1 was killed by @2 using @3"
-msgstr "@1被@2用@3杀死了"
+msgstr "@2用@3杀死了@1"
 
 msgid "@1 was roasted in dragon breath"
 msgstr "@1在龙息中被烤焦了"
 
 msgid "@1 was roasted in dragon breath by @2"
-msgstr "@1被@2用龙息烤焦了"
+msgstr "@2用龙息烤焦了@1"
 
 msgid "@1 withered away"
-msgstr "@1枯萎消逝了"
+msgstr "@1虚弱至死"
 
 msgid "@1 withered away whilst fighting @2"
-msgstr "@1在与@2战斗时枯萎消逝了"
+msgstr "@1在与@2的战斗中虚弱至死"
 
 msgid "@1 was shot by a skull from @2"
-msgstr "@1被@2射出的头骨击中了"
+msgstr "@2射出的头骨击中了@1"
 
 msgid "@1 was squashed by a falling anvil"
-msgstr "@1被落下的铁砧砸扁了"
+msgstr "落下的铁砧砸死了@1"
 
 msgid "@1 was squashed by a falling anvil whilst fighting @2"
-msgstr "@1在与@2战斗时被落下的铁砧砸扁了"
+msgstr "在与@2战斗时，@1被落下的铁砧砸死"
 
 msgid "@1 was squashed by a falling block"
-msgstr "@1被落下的方块压扁了"
+msgstr "下落的方块压扁了@1"
 
 msgid "@1 was squashed by a falling block whilst fighting @2"
-msgstr "@1在与@2战斗时被落下的方块压扁了"
+msgstr "与@2战斗时，@1被落下的方块压扁了"
 
 msgid "@1 was slain by @2"
-msgstr "@2杀死了@1"
+msgstr "@1被@2虐杀"
 
 msgid "@1 was slain by @2 using @3"
-msgstr "@2使用@3杀死了@1"
+msgstr "@2使用@3虐杀了@1"
 
 msgid "@1 was shot by @2"
 msgstr "@2射杀了@1"
@@ -143,25 +143,25 @@ msgid "@1 was shot by @2 using @3"
 msgstr "@2使用@3射杀了@1"
 
 msgid "@1 was spitballed by @2"
-msgstr ""
+msgstr "@2用口水喷死了@1"
 
 msgid "@1 was spitballed by @2 using @3"
-msgstr ""
+msgstr "@2用@3喷死了@1"
 
 msgid "@1 was fireballed by @2"
-msgstr "@1被@2发射的火球击中了"
+msgstr "@2发射火球击杀了@1"
 
 msgid "@1 was fireballed by @2 using @3"
-msgstr "@1被@2用@3发射的火球击中了"
+msgstr "@2用@3发射火球击杀了@1"
 
 msgid "@1 was killed trying to hurt @2"
-msgstr "@1在试图伤害@2时被杀了"
+msgstr "@1被@2反杀了"
 
 msgid "@1 tried to hurt @2 and died by @3"
 msgstr "@1试图伤害@2，结果被@3杀死了"
 
 msgid "@1 blew up"
-msgstr "@1爆炸了"
+msgstr "@1被炸死了"
 
 msgid "@1 was blown up by @2"
 msgstr "@1被@2炸飞了"

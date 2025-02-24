@@ -20,19 +20,19 @@ msgid "Dispenser projectile"
 msgstr "Projectile pour le distributeur"
 
 msgid "Fire charges are primarily projectiles which can be launched from dispensers, they will fly in a straight line and burst into a fire on impact. Alternatively, they can be used to ignite fires directly."
-msgstr "Les charges de feu sont principalement des projectiles qui peuvent être lancés à partir de distributeurs, ils voleront en ligne droite et éclateront en feu à l'impact. Alternativement, ils peuvent être utilisés pour allumer des incendies directement."
+msgstr "Les charges de feu sont principalement des projectiles qui peuvent être lancés depuis des distributeurs, ils voleront en ligne droite et éclateront en feu à l'impact. Alternativement, ils peuvent être directement utilisés pour allumer des feux."
 
 msgid "Put the fire charge into a dispenser and supply it with redstone power to launch it. To ignite a fire directly, simply place the fire charge on the ground, which uses it up."
-msgstr "Mettez la charge de feu dans un distributeur et alimentez-le en redstone pour la lancer. Pour allumer un feu directement, placez simplement la charge de feu sur le sol, et utiliser la."
+msgstr "Mettez la charge de feu dans un distributeur et alimentez-le en énergie redstone pour la lancer. Pour allumer un feu directement, placez simplement la charge de feu sur le sol, et utiliser la."
 
 msgid "Starts fires and ignites blocks"
-msgstr "Démarre les incendies et allume les blocs"
+msgstr "Démarre des feux et allume des blocs"
 
 msgid "Flint and Steel"
 msgstr "Briquet"
 
 msgid "Flint and steel is a tool to start fires and ignite blocks."
-msgstr "Le Briquet est un outil pour allumer un feu ou allumer des blocs."
+msgstr "Le briquet est un outil pour allumer un feu ou allumer des blocs."
 
 msgid "Rightclick the surface of a block to attempt to light a fire in front of it or ignite the block. A few blocks have an unique reaction when ignited."
 msgstr "Cliquez avec le bouton droit sur la surface d'un bloc pour tenter d'allumer un feu devant lui ou d'allumer le bloc. Quelques blocs ont une réaction unique lorsqu'ils sont enflammés."

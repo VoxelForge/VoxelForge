@@ -23,7 +23,7 @@ msgid "Place a music disc into an empty jukebox to play the music. Use the jukeb
 msgstr "將唱片放入空的唱片機中播放音樂。再次使用唱片機取出唱片。音樂只能由您自己聽，而不能由其他玩家聽。"
 
 msgid "@1—@2"
-msgstr ""
+msgstr "@1—@2"
 
 msgid "Now playing: @1—@2"
 msgstr "正在播放：@1—@2"

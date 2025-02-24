@@ -92,10 +92,10 @@ msgid "A bucket can be used to collect and release liquids. This one is filled w
 msgstr "A vödör folyadékok összegyűjtésére és kiöntésére használható. Ez vízzel van tele."
 
 msgid "Place it to empty the bucket and create a water source."
-msgstr "Helyezd el a vödröt a kiürítéshez, ezzel vízforrást hozol létre."
+msgstr "Helyezd le a vödör kiürítéshez, és egy vízgóc létrehozásához."
 
 msgid "Places a water source"
-msgstr "Vízforrást hoz létre"
+msgstr "Letesz egy vízgócot"
 
 msgid "River Water Bucket"
 msgstr "Folyóvizes Vödör"
@@ -104,8 +104,8 @@ msgid "A bucket can be used to collect and release liquids. This one is filled w
 msgstr "A vödör folyadékok összegyűjtésére és kiöntésére használható. Ez folyóvízzel van tele."
 
 msgid "Place it to empty the bucket and create a river water source."
-msgstr "Helyezd el a vödröt a kiürítéshez, ezzel folyóvíz forrást hozol létre."
+msgstr "Helyezd le a vödör kiürítéséhez, és egy folyóvízgóc létrehozásához."
 
 msgid "Places a river water source"
-msgstr "Folyóvíz forrást hoz létre"
+msgstr "Folyóvízgócot hoz létre"
 

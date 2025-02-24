@@ -3,17 +3,6 @@ local normal_vars_in_singlenode = false
 
 local modpath = core.get_modpath(core.get_current_modname())
 
-core.register_on_mods_loaded(function()
-    for node_name, _ in pairs(minetest.registered_nodes) do
-        if node_name:sub(1, 4) == "mcl:" then
-            local alias_name = "vlf:" .. node_name:sub(5) -- Replace "mcl:" with "vlf:"
-            core.register_alias(alias_name, node_name)
-        end
-    end
-    core.log("warning", "[Alias Creator] Aliases from 'mcl:' to 'vlf:' have been registered.")
-end)
-
-
 -- Some global variables (don't overwrite them!)
 mcl_vars = {}
 

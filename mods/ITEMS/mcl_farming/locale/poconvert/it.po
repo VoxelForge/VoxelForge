@@ -103,9 +103,6 @@ msgstr ""
 msgid "Wood Hoe"
 msgstr "Zappa di legno"
 
-msgid "Uses: @1"
-msgstr ""
-
 msgid "Stone Hoe"
 msgstr "Zappa di pietra"
 

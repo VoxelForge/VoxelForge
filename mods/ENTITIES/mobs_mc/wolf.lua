@@ -151,7 +151,7 @@ local wolf_variants = {
 	}),
 	woods = wolf_variant ("wolf_woods", {
 		"Forest",
-		"Forest_Beach",
+		"Forest_beach",
 	}),
 	chestnut = wolf_variant ("wolf_chestnut", {
 		"MegaSpruceTaiga",

@@ -61,6 +61,9 @@ msgstr "Progressos"
 msgid "Switch stack size"
 msgstr "Trocar tamanho da pilha"
 
+msgid "@1 / @2"
+msgstr ""
+
 msgid "Recipe book"
 msgstr "Livro de receitas"
 

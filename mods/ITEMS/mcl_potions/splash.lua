@@ -12,8 +12,7 @@ end
 
 
 function mcl_potions.register_splash(name, descr, color, def)
-	local id = ":mcl_potions:"..name.."_splash"
-	local id_ = "mcl_potions:"..name.."_splash"
+	local id = "mcl_potions:"..name.."_splash"
 	local longdesc = def._longdesc
 	if not def.no_effect then
 		longdesc = S("A throwable potion that will shatter on impact, where it gives all nearby players and mobs a status effect or a set of status effects.")
@@ -47,7 +46,7 @@ function mcl_potions.register_splash(name, descr, color, def)
 			local potency = item:get_meta():get_int ("mcl_potions:potion_potent")
 			local plus = item:get_meta():get_int ("mcl_potions:potion_plus")
 			pos.y = pos.y + placer:get_properties ().eye_height
-			mcl_potions.throw_splash (id_, dir, pos, placer:get_player_name (),
+			mcl_potions.throw_splash (id, dir, pos, placer:get_player_name (),
 						  potency, plus)
 			if not minetest.is_creative_enabled(placer:get_player_name()) then
 				item:take_item()
@@ -58,7 +57,7 @@ function mcl_potions.register_splash(name, descr, color, def)
 			local s_pos = vector.add(dispenserpos, vector.multiply(dropdir, 0.51))
 			local pos = {x=s_pos.x+dropdir.x,y=s_pos.y+dropdir.y,z=s_pos.z+dropdir.z}
 			minetest.sound_play("mcl_throwing_throw", {pos = pos, gain = 0.4, max_hear_distance = 16}, true)
-			local obj = minetest.add_entity(pos, id_.."_flying")
+			local obj = minetest.add_entity(pos, id.."_flying")
 			if obj and obj:get_pos() then
 				local velocity = 22
 				obj:set_velocity({x=dropdir.x*velocity,y=dropdir.y*velocity,z=dropdir.z*velocity})

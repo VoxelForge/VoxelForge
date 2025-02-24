@@ -2,8 +2,8 @@
 Book=书籍
 Books are used to make bookshelves and book and quills.=书可用于制作书架以及书与羽毛笔。
 “@1”=“@1”
-Copy of “@1”=“@1”的副本
-Copy of Copy of “@1”=“@1”的副本的副本
+Copy of “@1”=“@1”的抄本
+Copy of Copy of “@1”=“@1”的再抄本
 Tattered Book=残书
 by @1=由@1撰写
 # as in “to sign a book”

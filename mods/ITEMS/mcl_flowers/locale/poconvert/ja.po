@@ -53,13 +53,13 @@ msgid "Blue Orchid"
 msgstr "ヒスイラン"
 
 msgid "Wither Rose"
-msgstr ""
+msgstr "ウィザーローズ"
 
 msgid "Lily of the Valley"
-msgstr ""
+msgstr "スズラン"
 
 msgid "Cornflower"
-msgstr ""
+msgstr "ヤグルマギク"
 
 msgid "Peony"
 msgstr "ボタン"

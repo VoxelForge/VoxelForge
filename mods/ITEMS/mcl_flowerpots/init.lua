@@ -31,7 +31,7 @@ minetest.register_node("mcl_flowerpots:flower_pot", {
 	collision_box = pot_box,
 	is_ground_content = false,
 	inventory_image = "mcl_flowerpots_flowerpot_inventory.png",
-	groups = { dig_immediate = 3, deco_block = 1, attached_node = 1, dig_by_piston = 1, flower_pot = 1, unsticky = 1, _mcl_partial = 2, },
+	groups = { dig_immediate = 3, deco_block = 1, attached_node = 1, dig_by_piston = 1, flower_pot = 1, unsticky = 1, pathfinder_partial = 2, },
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	on_rightclick = function(pos, _, clicker, itemstack)
 		local name = clicker:get_player_name()

@@ -124,9 +124,6 @@ msgstr "Нет предмета для показа"
 msgid "Collect items to reveal more recipes"
 msgstr "Собирайте предметы, чтобы открыть больше рецептов"
 
-msgid "Invalid crafting ingredient: \"@1\" (dosent exist)"
-msgstr "Недопустимый ингредиент для крафтинга: «@1» (не существует)"
-
 msgid "This item can be repaired at an anvil with: @1."
 msgstr "Этот предмет можно починить на наковальне с помощью: @1."
 

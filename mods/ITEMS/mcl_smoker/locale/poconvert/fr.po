@@ -26,7 +26,7 @@ msgid "Use the smoker to open the furnace menu."
 msgstr "Utilisez le fumoir pour ouvrir le menu du four."
 
 msgid "Place a furnace fuel in the lower slot and the source material in the upper slot."
-msgstr "Placez un combustible dans l'emplacement inférieure et le matériau source dans l'emplacement supérieure."
+msgstr "Placez un combustible dans l'emplacement inférieur et le matériau dans l'emplacement supérieur."
 
 msgid "The smoker will slowly use its fuel to smelt the item."
 msgstr "Le fumoir utilise lentement son combustible pour faire fondre l'objet."

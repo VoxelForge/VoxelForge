@@ -19,12 +19,6 @@ msgstr "Une hache est votre outil de choix pour abbatre des arbres, les blocs fa
 msgid "To strip bark from trunks and hyphae, use the ax by right-clicking on them. To reduce an oxidation stage from a block made of copper or remove wax from waxed variants, right-click on them. Doors and trapdoors also require you to hold down the sneak key while using the axe."
 msgstr "Pour retirer l'écorce et l'hyphe des troncs, utilisez une hache et faites un clic droit sur ces blocs. Pour diminuer le niveau d'oxydation d'un bloc en cuivre ou retirer la cire de leurs variantes cirées, faites un clic droit sur ces blocs. Les portes et les trappes requièrent en plus que vous mainteniez enfoncé le bouton pour s'accroupir en utilisant la hache."
 
-msgid "Hoes are essential tools for growing crops. They are used to create farmland in order to plant seeds on it. Hoes can also be used as very weak weapons in a pinch."
-msgstr "Les houes sont des outils essentiels pour cultiver des plantes. Elles sont utilisées pour créer des terres arables afin d'y semer des graines. Les houes peuvent aussi être utilisées comme de faibles armes en cas d'attaque."
-
-msgid "Use the hoe on a cultivatable block (by rightclicking it) to turn it into farmland. Dirt, grass blocks and grass paths are cultivatable blocks. Using a hoe on coarse dirt turns it into dirt."
-msgstr "Utilisez une houe sur un bloc cultivable (avec un clic droit sur celui-ci) pour le transformer en terre arable. La terre, les blocs enherbés et les chemins d'herbe sont des blocs cultivables. Utiliser une houe sur un bloc de terre stérile la transforme en bloc de terre simple."
-
 msgid "Pickaxes are mining tools to mine hard blocks, such as stone. A pickaxe can also be used as weapon, but it is rather inefficient."
 msgstr "Les pioches sont des outils d'extraction pour extraire des blocs durs, comme la pierre. Une pioche peut également être utilisée comme arme, mais c'est plutôt inefficace."
 

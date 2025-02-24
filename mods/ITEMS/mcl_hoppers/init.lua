@@ -216,7 +216,7 @@ end
 local def_hopper = {
 	inventory_image = "mcl_hoppers_item.png",
 	wield_image = "mcl_hoppers_item.png",
-	groups = { pickaxey = 1, container = 2, deco_block = 1, hopper = 1, _mcl_partial = 2, },
+	groups = { pickaxey = 1, container = 2, deco_block = 1, hopper = 1, pathfinder_partial = 2, },
 	drawtype = "nodebox",
 	paramtype = "light",
 	-- FIXME: mcl_hoppers_hopper_inside.png is unused by hoppers.
@@ -366,7 +366,7 @@ minetest.register_node("mcl_hoppers:hopper_disabled", def_hopper_disabled)
 local def_hopper_side = table.merge(def_hopper, {
 	_doc_items_create_entry = false,
 	drop = "mcl_hoppers:hopper",
-	groups = { pickaxey = 1, container = 2, not_in_creative_inventory = 1, hopper = 2, _mcl_partial = 2 },
+	groups = { pickaxey = 1, container = 2, not_in_creative_inventory = 1, hopper = 2, pathfinder_partial = 2 },
 	paramtype2 = "facedir",
 	tiles = {"mcl_hoppers_hopper_inside.png^mcl_hoppers_hopper_top.png", "mcl_hoppers_hopper_outside.png", "mcl_hoppers_hopper_outside.png", "mcl_hoppers_hopper_outside.png", "mcl_hoppers_hopper_outside.png", "mcl_hoppers_hopper_outside.png"},
 	node_box = {

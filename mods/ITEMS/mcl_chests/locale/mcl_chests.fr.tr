@@ -2,7 +2,7 @@
 Chest=Coffre
 Inventory=Inventaire
 Large Chest=Grand coffre
-To access its inventory, rightclick it. When broken, the items will drop out.=Pour accéder à son contenu, faites un clic droit dessus. Détruit, il fera tomber les objets qu'il contient.
+To access its inventory, rightclick it. When broken, the items will drop out.=Pour accéder à son contenu, faites un clic droit dessus. Détruit, il fera tomber les objets qu'il contenait.
 Chests are containers which provide 27 inventory slots. Chests can be turned into large chests with double the capacity by placing two chests next to each other.=Les coffres sont des conteneurs qui offrent 27 emplacements d'inventaire. Les coffres peuvent être transformés en grands coffres avec une capacité double en plaçant deux coffres l'un à côté de l'autre.
 27 inventory slots=27 emplacements d'inventaire
 Can be combined to a large chest=Peut être combiné à un grand coffre

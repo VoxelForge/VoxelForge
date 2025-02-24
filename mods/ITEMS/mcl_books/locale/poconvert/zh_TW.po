@@ -62,7 +62,7 @@ msgid "Sign and Close"
 msgstr "署名並退出"
 
 msgid "Note: The book will no longer be editable after signing"
-msgstr "注意：在署名後，它不能再被編輯了。"
+msgstr "注意：在署名後，它就不能再被編輯。"
 
 msgid "Cancel"
 msgstr "取消"
@@ -89,5 +89,5 @@ msgid "Inventory"
 msgstr ""
 
 msgid "Bookshelves are used for decoration."
-msgstr "書櫃是一種裝飾行方塊"
+msgstr "書櫃是一種裝飾性方塊。"
 

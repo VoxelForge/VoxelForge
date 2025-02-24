@@ -26,7 +26,7 @@ msgid "Map"
 msgstr "地圖"
 
 msgid "Shows a map image."
-msgstr ""
+msgstr "顯示地圖影像。"
 
 msgid "When created, the map saves the nearby area as an image that can be viewed any time by holding the map."
 msgstr ""

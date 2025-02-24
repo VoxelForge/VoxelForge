@@ -17,7 +17,7 @@ msgid "Remove all, nametagged or tamed mobs within the specified distance or eve
 msgstr ""
 
 msgid "Invalid syntax."
-msgstr ""
+msgstr "無效的語法。"
 
 msgid "This allows you to place a single mob."
 msgstr "允許你放置一個生物。"

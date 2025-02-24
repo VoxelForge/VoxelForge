@@ -151,7 +151,7 @@ local fill_cauldron = function(cauldron, water_type)
 end
 
 -- function to set node and empty water bottle (used for cauldrons and mud)
-local function set_node_empty_bottle(itemstack, placer, pointed_thing, newitemstring)
+local function set_node_empty_bottle(itemstack, placer, pointed_thing, newitemstring, old_param2)
 	local pname = placer:get_player_name()
 	if minetest.is_protected(pointed_thing.under, pname) then
 		minetest.record_protection_violation(pointed_thing.under, pname)
@@ -159,7 +159,7 @@ local function set_node_empty_bottle(itemstack, placer, pointed_thing, newitemst
 	end
 
 	-- set the node to `itemstring`
-	minetest.set_node(pointed_thing.under, {name=newitemstring})
+	minetest.set_node(pointed_thing.under, {name = newitemstring, param2 = old_param2 or 0})
 
 	-- play sound
 	minetest.sound_play("mcl_potions_bottle_pour", {pos=pointed_thing.under, gain=0.5, max_hear_range=16}, true)
@@ -200,11 +200,16 @@ local function water_bottle_on_place(itemstack, placer, pointed_thing)
 			cauldron = fill_cauldron(node.name, "mclx_core:river_water_source")
 		end
 
+		local candle_group = core.get_item_group(node.name, "lit_candles")
+
 		if cauldron then
 			set_node_empty_bottle(itemstack, placer, pointed_thing, cauldron)
 			return ItemStack("mcl_potions:glass_bottle")
 		elseif node.name == "mcl_core:dirt" or node.name == "mcl_core:coarse_dirt" then
 			set_node_empty_bottle(itemstack, placer, pointed_thing, "mcl_mud:mud")
+		elseif candle_group > 0 then
+			set_node_empty_bottle(itemstack, placer, pointed_thing, "mcl_candles:candle_" .. candle_group, node.param2)
+			core.sound_play("fire_extinguish_flame", {gain = 0.1, max_hear_distance = 16, pos = pointed_thing.under}, true)
 		end
 
 		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)

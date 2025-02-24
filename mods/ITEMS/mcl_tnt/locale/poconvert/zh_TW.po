@@ -20,10 +20,10 @@ msgid "An explosive device. When it explodes, it will hurt living beings. TNT ha
 msgstr "一個爆炸性裝置。當它爆炸時，會傷害生物，並摧毀周圍的方塊。TNT的爆炸半徑為@1。TNT可以被工具、爆炸、火、熔岩和紅石信號點燃。"
 
 msgid "TNT"
-msgstr ""
+msgstr "TNT"
 
 msgid "Ignited by tools, explosions, fire, lava, redstone power"
-msgstr "被工具、爆炸、火、熔岩和紅石信號點燃。"
+msgstr "用工具、爆炸、火、熔岩、紅石信號皆可點火"
 
 msgid "Explosion radius: @1"
 msgstr "爆炸半徑：@1"

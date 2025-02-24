@@ -38,7 +38,6 @@ This block can be mined by mining tools which match any of the following mining 
 Mining ratings:=採掘レート：
 Toughness level: @1=タフネスレベル：@1
 Range: @1=範囲：@1
-Range: 4=範囲：4
 # Range: <Hand> (<Range>)
 Range: @1 (@2)=範囲：@1 (@2)
 This tool can serve as a smelting fuel with a burning time of @1.=この道具は、燃焼時間@1の製錬燃料として使用できます。
@@ -129,7 +128,7 @@ Durability: @1 uses=耐久度：@1回 使用
 Durability: @1=耐久度：@1
 Miscellaneous items=その他の雑多なアイテム
 Item reference of items which are neither blocks, tools or weapons (esp. crafting items)=ブロックでも道具でも武器でもないアイテム（特にクラフトアイテム）の、アイテム参照
-Mobs=
+Mobs=モブ
 Different Mobs=
 Type: @1=
 Spawning light levels (min / max): @1 / @2=

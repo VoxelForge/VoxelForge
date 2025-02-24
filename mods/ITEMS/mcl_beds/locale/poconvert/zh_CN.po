@@ -53,7 +53,7 @@ msgid "You can't sleep now, monsters are nearby!"
 msgstr "怪物还在附近徘徊，现在还不能睡！"
 
 msgid "You can't sleep, the bed is obstructed!"
-msgstr "你没法睡觉，床离得太远了！"
+msgstr "床离得太远，你还不能睡觉！"
 
 msgid "It's too dangerous to sleep here!"
 msgstr "此处就寝不太安全！"

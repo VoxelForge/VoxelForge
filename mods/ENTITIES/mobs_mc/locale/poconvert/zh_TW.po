@@ -17,61 +17,61 @@ msgid "Axolotl"
 msgstr "六角恐龍"
 
 msgid "Bat"
-msgstr ""
+msgstr "蝙蝠"
 
 msgid "Blaze"
-msgstr ""
+msgstr "烈焰使者"
 
 msgid "Chicken"
-msgstr ""
+msgstr "雞"
 
 msgid "Cod"
-msgstr ""
+msgstr "鱈魚"
 
 msgid "Cow"
-msgstr ""
+msgstr "牛"
 
 msgid "Mooshroom"
-msgstr ""
+msgstr "蘑菇牛"
 
 msgid "Creeper"
-msgstr ""
+msgstr "苦力怕"
 
 msgid "Charged Creeper"
-msgstr ""
+msgstr "閃電苦力怕"
 
 msgid "Dolphin"
-msgstr ""
+msgstr "海豚"
 
 msgid "Ender Dragon"
-msgstr ""
+msgstr "終界龍"
 
 msgid "Enderman"
-msgstr ""
+msgstr "終界使者"
 
 msgid "Endermite"
-msgstr ""
+msgstr "終界蟎"
 
 msgid "Ghast"
-msgstr ""
+msgstr "地獄幽靈"
 
 msgid "Ghast Fireball"
-msgstr ""
+msgstr "地獄幽靈火球"
 
 msgid "Guardian"
-msgstr ""
+msgstr "深海守衛"
 
 msgid "Elder Guardian"
-msgstr ""
+msgstr "遠古深海守衛"
 
 msgid "Hoglin"
-msgstr ""
+msgstr "豬布獸"
 
 msgid "Baby Hoglin"
-msgstr ""
+msgstr "幼體豬布獸"
 
 msgid "Zoglin"
-msgstr ""
+msgstr "僵屍豬布獸"
 
 msgid "Sneak to dismount"
 msgstr "潛行以停止騎乘"
@@ -86,224 +86,221 @@ msgid "Zombie Horse"
 msgstr "殭屍馬"
 
 msgid "Donkey"
-msgstr ""
+msgstr "驢"
 
 msgid "Mule"
-msgstr ""
+msgstr "騾"
 
 msgid "Iron Golem"
-msgstr ""
+msgstr "鐵巨人"
 
 msgid "Llama"
-msgstr ""
+msgstr "羊駝"
 
 msgid "Ocelot"
-msgstr ""
+msgstr "虎貓"
 
 msgid "Cat"
 msgstr "貓"
 
 msgid "Parrot"
-msgstr ""
+msgstr "鸚鵡"
 
 msgid "Pig"
 msgstr "豬"
 
 msgid "Piglin"
-msgstr ""
+msgstr "豬布林"
 
 msgid "Piglin Brute"
-msgstr ""
+msgstr "豬布林蠻兵"
 
 msgid "Zombie Piglin"
-msgstr ""
+msgstr "僵屍豬布林"
 
 msgid "Zombified Piglin"
-msgstr ""
+msgstr "僵屍化豬布林"
 
 msgid "Pillager"
-msgstr ""
+msgstr "掠奪者"
 
 msgid "Polar Bear"
-msgstr ""
+msgstr "北極熊"
 
 msgid "Rabbit"
-msgstr ""
+msgstr "兔"
 
 msgid "Killer Bunny"
-msgstr ""
+msgstr "殺手兔"
 
 msgid "Salmon"
-msgstr ""
+msgstr "鮭魚"
 
 msgid "Sheep"
 msgstr "羊"
 
 msgid "Shulker"
-msgstr ""
+msgstr "界伏蚌"
 
 msgid "Silverfish"
-msgstr ""
+msgstr "蠹魚"
 
 msgid "Skeleton"
-msgstr ""
+msgstr "骷髏"
 
 msgid "Stray"
-msgstr ""
+msgstr "流髑"
 
 msgid "Wither Skeleton"
-msgstr ""
+msgstr "凋零骷髏"
 
 msgid "Slime - big"
-msgstr ""
+msgstr "史萊姆．大"
 
 msgid "Slime - small"
-msgstr ""
+msgstr "史萊姆．中"
 
 msgid "Slime - tiny"
-msgstr ""
+msgstr "史萊姆．小"
 
 msgid "Magma Cube - big"
-msgstr ""
+msgstr "岩漿史萊姆．大"
 
 msgid "Magma Cube - small"
-msgstr ""
+msgstr "岩漿史萊姆．中"
 
 msgid "Magma Cube - tiny"
-msgstr ""
+msgstr "岩漿史萊姆．小"
 
 msgid "Magma Cube"
-msgstr ""
+msgstr "岩漿史萊姆"
 
 msgid "Slime"
-msgstr ""
+msgstr "史萊姆"
 
 msgid "Snow Golem"
-msgstr ""
+msgstr "雪人"
 
 msgid "Spider"
-msgstr ""
+msgstr "蜘蛛"
 
 msgid "Cave Spider"
-msgstr ""
+msgstr "洞穴蜘蛛"
 
 msgid "Squid"
-msgstr ""
+msgstr "魷魚"
 
 msgid "Glow Squid"
-msgstr ""
+msgstr "螢光魷魚"
 
 msgid "Strider"
-msgstr ""
+msgstr "熾足獸"
 
 msgid "Baby Strider"
-msgstr ""
+msgstr "幼體熾足獸"
 
 msgid "Tropical Fish"
-msgstr ""
-
-msgid "Tropical fish"
-msgstr ""
+msgstr "熱帶魚"
 
 msgid "Vex"
-msgstr ""
+msgstr "惱鬼"
 
 msgid "Villager"
-msgstr ""
+msgstr "村民"
 
 msgid "Armorer"
-msgstr ""
+msgstr "盔甲匠"
 
 msgid "Butcher"
-msgstr ""
+msgstr "屠夫"
 
 msgid "Cartographer"
-msgstr ""
+msgstr "製圖師"
 
 msgid "Cleric"
-msgstr ""
+msgstr "神職人員"
 
 msgid "Farmer"
-msgstr ""
+msgstr "農夫"
 
 msgid "Fisherman"
-msgstr ""
+msgstr "漁夫"
 
 msgid "Fletcher"
-msgstr ""
+msgstr "製箭師"
 
 msgid "Leatherworker"
-msgstr ""
+msgstr "皮匠"
 
 msgid "Librarian"
-msgstr ""
+msgstr "圖書管理員"
 
 msgid "Mason"
-msgstr ""
+msgstr "石匠"
 
 msgid "Shepherd"
-msgstr ""
+msgstr "牧羊人"
 
 msgid "Toolsmith"
-msgstr ""
+msgstr "工具匠"
 
 msgid "Weaponsmith"
-msgstr ""
+msgstr "武器匠"
 
 msgid "Nitwit"
-msgstr ""
+msgstr "傻仔"
 
 msgid "Novice"
-msgstr ""
+msgstr "新手"
 
 msgid "Apprentice"
-msgstr ""
+msgstr "學徒"
 
 msgid "Journeyman"
-msgstr ""
+msgstr "老手"
 
 msgid "Expert"
-msgstr ""
+msgstr "專家"
 
 msgid "Master"
-msgstr ""
+msgstr "大師"
 
 msgid "Evoker"
-msgstr ""
+msgstr "喚魔者"
 
 msgid "Illusioner"
-msgstr ""
+msgstr "幻術師"
 
 msgid "Vindicator"
-msgstr ""
+msgstr "衛道士"
 
 msgid "Zombie Villager"
-msgstr ""
+msgstr "僵屍村民"
 
 msgid "Wandering Trader"
-msgstr ""
+msgstr "流浪商人"
 
 msgid "Trader Llama"
-msgstr ""
+msgstr "旅商羊駝"
 
 msgid "Witch"
-msgstr ""
+msgstr "女巫"
 
 msgid "Wither"
-msgstr ""
+msgstr "凋靈"
 
 msgid "Wolf"
-msgstr ""
+msgstr "狼"
 
 msgid "Zombie"
-msgstr ""
+msgstr "僵屍"
 
 msgid "Baby Zombie"
-msgstr ""
+msgstr "小僵屍"
 
 msgid "Husk"
-msgstr ""
+msgstr "屍殼"
 
 msgid "Baby Husk"
-msgstr ""
+msgstr "小屍殼"
 

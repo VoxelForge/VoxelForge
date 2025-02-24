@@ -61,6 +61,9 @@ msgstr "Progressi"
 msgid "Switch stack size"
 msgstr ""
 
+msgid "@1 / @2"
+msgstr ""
+
 msgid "Recipe book"
 msgstr "Libro delle ricette"
 

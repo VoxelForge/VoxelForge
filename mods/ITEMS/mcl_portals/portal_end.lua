@@ -180,7 +180,7 @@ local function show_credits(player)
 	local meta = player:get_meta()
 	local completed_end = meta:get_int("completed_end")
 
-	if completed_end == 0 then
+	if completed_end == 0 and minetest.is_singleplayer() then
 		meta:set_int("completed_end", 1)
 		for _, func in ipairs(mcl_portals.registered_on_beat_game) do
 			func(player)
@@ -190,9 +190,8 @@ local function show_credits(player)
 end
 
 local function teleport_object(obj, target, original_dim)
-	core.after(0.1, function ()
-		obj:set_pos(target)
-	end)
+	obj:set_pos(target)
+	minetest.sound_play("mcl_portals_teleport", {pos=target, gain=0.05, max_hear_distance = 16}, true)
 
 	if obj:is_player() then
 		-- Look towards the main End island
@@ -225,7 +224,6 @@ function mcl_portals.end_teleport(obj, pos)
 			target, player_spawn = mcl_spawn.get_player_spawn_pos(obj)
 		end
 
-		minetest.sound_play("mcl_portals_teleport", {pos=target, gain=0.5, max_hear_distance = 16}, true)
 		if not target or not player_spawn then
 			target = find_valid_spawn(mcl_spawn.get_world_spawn_pos())
 		end
@@ -235,7 +233,6 @@ function mcl_portals.end_teleport(obj, pos)
 		-- Teleport to the End at a fixed position.
 		-- The destination is built by mcl_structures.
 
-		minetest.sound_play("mcl_portals_teleport", {pos=target, gain=0.5, max_hear_distance = 16}, true)
 		core.load_area(vector.subtract(mcl_vars.mg_end_platform_pos, 8), vector.add(mcl_vars.mg_end_platform_pos, 8))
 		mcl_structures.place_structure(mcl_vars.mg_end_platform_pos, mcl_structures.registered_structures["end_spawn_obsidian_platform"], PseudoRandom(minetest.get_mapgen_setting("seed")),-1)
 		teleport_object(obj, vector.offset(mcl_vars.mg_end_platform_pos, 0, 1, 0), dim)
@@ -257,8 +254,12 @@ function mcl_portals.end_portal_teleport(pos)
 				return
 			end
 
-			mcl_portals.end_teleport(obj, objpos)
-			awards.unlock(obj:get_player_name(), "mcl:enterEndPortal")
+			if obj:is_player() and mcl_player.players[obj].attached == true then --luacheck: ignore 542 (empty if branch)
+				-- do nothing if player is attached to something in portal
+			else
+				mcl_portals.end_teleport(obj, objpos)
+				awards.unlock(obj:get_player_name(), "mcl:enterEndPortal")
+			end
 		end
 	end
 end
@@ -299,7 +300,7 @@ minetest.register_node("mcl_portals:end_portal_frame", {
 	_tt_help = S("Used to construct end portals"),
 	_doc_items_longdesc = S("End portal frames are used in the construction of End portals. Each block has a socket for an eye of ender.") .. "\n" .. S("NOTE: The End dimension is currently incomplete and might change in future versions."),
 	_doc_items_usagehelp = S("To create an End portal, you need 12 end portal frames and 12 eyes of ender. The end portal frames have to be arranged around a horizontal 3×3 area with each block facing inward. Any other arrangement will fail.") .. "\n" .. S("Place an eye of ender into each block. The end portal appears in the middle after placing the final eye.") .. "\n" .. S("Once placed, an eye of ender can not be taken back."),
-	groups = { creative_breakable = 1, deco_block = 1, end_portal_frame = 1, unmovable_by_piston = 1},
+	groups = { creative_breakable = 1, deco_block = 1, end_portal_frame = 1, unmovable_by_piston = 1, pathfinder_partial = 2},
 	tiles = { "mcl_portals_endframe_top.png", "mcl_portals_endframe_bottom.png", "mcl_portals_endframe_side.png" },
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
 	paramtype2 = "facedir",
@@ -325,7 +326,7 @@ minetest.register_node("mcl_portals:end_portal_frame_eye", {
 	description = S("End Portal Frame with Eye of Ender"),
 	_tt_help = S("Used to construct end portals"),
 	_doc_items_create_entry = false,
-	groups = { creative_breakable = 1, deco_block = 1, comparator_signal = 15, end_portal_frame = 2, not_in_creative_inventory = 1, unmovable_by_piston = 1},
+	groups = { creative_breakable = 1, deco_block = 1, comparator_signal = 15, end_portal_frame = 2, not_in_creative_inventory = 1, unmovable_by_piston = 1, pathfinder_partial = 2},
 	tiles = { "mcl_portals_endframe_top.png^[lowpart:75:mcl_portals_endframe_eye.png", "mcl_portals_endframe_bottom.png", "mcl_portals_endframe_eye.png^mcl_portals_endframe_side.png" },
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "opaque" or false,
 	paramtype2 = "facedir",

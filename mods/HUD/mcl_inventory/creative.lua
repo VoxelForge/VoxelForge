@@ -39,7 +39,7 @@ minetest.register_on_mods_loaded(function()
 		if (not def.groups.not_in_creative_inventory or def.groups.not_in_creative_inventory == 0) and def.description and
 			def.description ~= "" then
 			local function is_redstone(def)
-				return def._mcl_redstone or def.groups.redstone_wire or def.groups.opaquely_powered
+				return def._mcl_redstone or def.groups.redstone_wire
 			end
 
 			local function is_tool(def)

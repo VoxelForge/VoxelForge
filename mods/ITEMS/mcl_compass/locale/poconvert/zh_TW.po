@@ -23,25 +23,25 @@ msgid "Compasses are tools which point to the world origin (X=0, Z=0) or the spa
 msgstr "羅盤是指向世界原點（X=0，Z=0）或主世界生成點的工具。"
 
 msgid "A Compass always points to the world spawn point when the player is in the overworld.  In other dimensions, it spins randomly."
-msgstr "羅盤總是在玩家位於主世界時指向世界生成點。在其他維度，它是隨機旋轉的。"
+msgstr "當玩家位於主世界時，羅盤會指向世界生成點。在其他維度，它會隨機旋轉。"
 
 msgid "Lodestone Compass"
-msgstr "磁石羅盤"
+msgstr "定位磁石"
 
 msgid "Points to a lodestone"
-msgstr "指向一塊磁石"
+msgstr "指向一塊定位石"
 
 msgid "Lodestone compasses resemble regular compasses, but they point to a specific lodestone."
-msgstr "磁石羅盤類似於一般羅盤，但是它們指向特定的磁石。"
+msgstr "定位羅盤會持續指向特定的定位石。"
 
 msgid "A Lodestone compass can be made from an ordinary compass by using it on a lodestone.  After becoming a lodestone compass, it always points to its linked lodestone, provided that they are in the same dimension.  If not in the same dimension, the lodestone compass spins randomly, similarly to a regular compass when outside the overworld.  A lodestone compass can be relinked with another lodestone."
 msgstr ""
 
 msgid "Recovery Compass"
-msgstr ""
+msgstr "回生羅盤"
 
 msgid "Points to your last death location"
-msgstr ""
+msgstr "指向你上次死亡的位置"
 
 msgid "Recovery Compasses are compasses that point to your last death location"
 msgstr ""
@@ -50,5 +50,5 @@ msgid "Recovery Compasses always point to the location of your last death, in ca
 msgstr ""
 
 msgid "Lodestone"
-msgstr "磁石"
+msgstr "定位石"
 

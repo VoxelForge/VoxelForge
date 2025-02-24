@@ -26,7 +26,7 @@ msgid "Fill Craft Grid"
 msgstr "Remplir la grille d'artisanat"
 
 msgid "Crafting Table"
-msgstr "Etabli"
+msgstr "Établi"
 
 msgid "3×3 crafting grid"
 msgstr "Grille d'établi 3×3"

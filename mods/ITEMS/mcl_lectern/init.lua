@@ -21,7 +21,7 @@ local function get_formspec(text, title, author)
 	end
 	fs = fs .."textarea[0.75,1.24;7.20,7.5;;" .. F(text or "") .. ";]" ..
 	"button_exit[1.25,7.95;3,1;ok;" .. F(S("Done")) .. "]"..
-	"button[4.25,7.95;3,1;take;" .. F(S("Take Book")) .. "]"
+	"button_exit[4.25,7.95;3,1;take;" .. F(S("Take Book")) .. "]"
 	return fs
 end
 
@@ -38,7 +38,7 @@ local lectern_tpl = {
 	mesh = "mcl_lectern_lectern.obj",
 	tiles = {"mcl_lectern_lectern.png", },
 	drop = "mcl_lectern:lectern",
-	groups = {handy = 1, axey = 1, flammable = 2, fire_encouragement = 5, fire_flammability = 5, solid = 1, deco_block=1, lectern = 1, _mcl_partial = 2},
+	groups = {handy = 1, axey = 1, flammable = 2, fire_encouragement = 5, fire_flammability = 5, solid = 1, deco_block=1, lectern = 1, pathfinder_partial = 2},
 	sunlight_propagates = true,
 	is_ground_content = false,
 	node_placement_prediction = "",
@@ -142,12 +142,8 @@ minetest.register_node("mcl_lectern:lectern_with_book", table.merge( lectern_tpl
 				inv:add_item("main", is)
 			end
 			node.name = "mcl_lectern:lectern"
-			mcl_redstone.swap_node(pos,node)
-			nm:set_string("formspec","")
-			nm:set_string("infotext","")
-			nm:set_string("pages","")
-			nm:set_string("book_item","")
-			nm:set_string("page","")
+			core.set_node(pos, node)
+			mcl_redstone.update_comparators(pos)
 		elseif fields and fields.ok then
 			-- simulate a page turn
 			-- TODO: actually implement multi page books
@@ -174,7 +170,7 @@ minetest.register_node("mcl_lectern:lectern_with_book", table.merge( lectern_tpl
 		end,
 		get_power = function(node, dir)
 			local powered = node.param2 >= 128
-			return powered and 15 or 0, false
+			return powered and 15 or 0, dir.y < 0
 		end,
 		update = function(_, node)
 			local powered = node.param2 >= 128

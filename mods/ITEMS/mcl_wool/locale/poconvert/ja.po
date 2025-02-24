@@ -26,98 +26,98 @@ msgid "Carpets are thin floor covers which come in many different colors."
 msgstr "カーペットは、多彩なカラーバリエーションを持つ薄い敷物です。"
 
 msgid "Black Carpet"
-msgstr ""
+msgstr "黒色のカーペット"
 
 msgid "Black Wool"
-msgstr ""
+msgstr "黒色の羊毛"
 
 msgid "Blue Carpet"
-msgstr ""
+msgstr "青色のカーペット"
 
 msgid "Blue Wool"
-msgstr ""
+msgstr "青色の羊毛"
 
 msgid "Brown Carpet"
-msgstr ""
+msgstr "茶色のカーペット"
 
 msgid "Brown Wool"
-msgstr ""
+msgstr "茶色の羊毛"
 
 msgid "Cyan Carpet"
-msgstr ""
+msgstr "青緑色のカーペット"
 
 msgid "Cyan Wool"
-msgstr ""
+msgstr "青緑色の羊毛"
 
 msgid "Green Carpet"
-msgstr ""
+msgstr "緑色のカーペット"
 
 msgid "Green Wool"
-msgstr ""
+msgstr "緑色の羊毛"
 
 msgid "Grey Carpet"
-msgstr ""
+msgstr "灰色のカーペット"
 
 msgid "Grey Wool"
-msgstr ""
+msgstr "灰色の羊毛"
 
 msgid "Light Blue Carpet"
-msgstr ""
+msgstr "空色のカーペット"
 
 msgid "Light Blue Wool"
-msgstr ""
+msgstr "空色の羊毛"
 
 msgid "Light Grey Carpet"
-msgstr ""
+msgstr "薄灰色のカーペット"
 
 msgid "Light Grey Wool"
-msgstr ""
+msgstr "薄灰色の羊毛"
 
 msgid "Lime Carpet"
-msgstr ""
+msgstr "黄緑色のカーペット"
 
 msgid "Lime Wool"
-msgstr ""
+msgstr "黄緑色の羊毛"
 
 msgid "Magenta Carpet"
-msgstr ""
+msgstr "赤紫色のカーペット"
 
 msgid "Magenta Wool"
-msgstr ""
+msgstr "赤紫色の羊毛"
 
 msgid "Orange Carpet"
-msgstr ""
+msgstr "橙色のカーペット"
 
 msgid "Orange Wool"
-msgstr ""
+msgstr "橙色の羊毛"
 
 msgid "Pink Carpet"
-msgstr ""
+msgstr "桃色のカーペット"
 
 msgid "Pink Wool"
-msgstr ""
+msgstr "桃色の羊毛"
 
 msgid "Purple Carpet"
-msgstr ""
+msgstr "紫色のカーペット"
 
 msgid "Purple Wool"
-msgstr ""
+msgstr "紫色の羊毛"
 
 msgid "Red Carpet"
-msgstr ""
+msgstr "赤色のカーペット"
 
 msgid "Red Wool"
-msgstr ""
+msgstr "赤色の羊毛"
 
 msgid "White Carpet"
-msgstr ""
+msgstr "白色のカーペット"
 
 msgid "White Wool"
-msgstr ""
+msgstr "白色の羊毛"
 
 msgid "Yellow Carpet"
-msgstr ""
+msgstr "黄色のカーペット"
 
 msgid "Yellow Wool"
-msgstr ""
+msgstr "黄色の羊毛"
 

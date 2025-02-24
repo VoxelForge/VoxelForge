@@ -17,5 +17,5 @@ msgid "Lightning Rod"
 msgstr "避雷針"
 
 msgid "A block that attracts lightning"
-msgstr ""
+msgstr "吸引閃電的方塊"
 

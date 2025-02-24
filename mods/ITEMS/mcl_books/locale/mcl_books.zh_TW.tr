@@ -16,7 +16,7 @@ Hold it in the hand, then rightclick to read the current notes and edit then. Yo
 A book can hold up to 4500 characters. The title length is limited to 64 characters.=一本書最多可以容納4500個字符。標題長度限制為64個字符。
 Enter book title:=輸入書本標題：
 Sign and Close=署名並退出
-Note: The book will no longer be editable after signing=注意：在署名後，它不能再被編輯了。
+Note: The book will no longer be editable after signing=注意：在署名後，它就不能再被編輯。
 Cancel=取消
 Nameless Book=未命名的書
 Written Book=完成的書
@@ -25,4 +25,4 @@ Hold it in your hand, then rightclick to read the book.=把書放在手裏，右
 To copy the text of the written book, place it into the crafting grid together with a book and quill (or multiple of those) and craft. The written book will not be consumed. Copies of copies can not be copied.=要復製完成的書的文本，請將其與書和羽毛筆（或多個）一起放入製作網格，然後製作。完成的書不會被消耗掉。複本的複本不能被複製。
 Bookshelf=書櫃
 Inventory=
-Bookshelves are used for decoration.=書櫃是一種裝飾行方塊
+Bookshelves are used for decoration.=書櫃是一種裝飾性方塊。

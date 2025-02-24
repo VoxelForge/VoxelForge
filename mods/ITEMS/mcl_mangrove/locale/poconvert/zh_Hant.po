@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Mangrove Roots"
-msgstr ""
+msgstr "紅樹根"
 
 msgid "Mangrove roots are decorative blocks that form as part of mangrove trees."
 msgstr ""
 
 msgid "Mangrove Propagule"
-msgstr ""
+msgstr "紅樹胚軸"
 
 msgid "Needs soil and light to grow"
 msgstr ""
@@ -29,12 +29,12 @@ msgid "When placed on soil (such as dirt) and exposed to light, an propagule wil
 msgstr ""
 
 msgid "Hanging Propagule"
-msgstr ""
+msgstr "垂懸紅樹胚軸"
 
 msgid "Grows on Mangrove leaves"
 msgstr ""
 
-msgid "water logged mangrove roots"
+msgid "Water logged mangrove roots"
 msgstr ""
 
 msgid "Mangrove roots, despite being a full block, can be waterlogged and do not flow water out"
@@ -43,8 +43,11 @@ msgstr ""
 msgid "These cannot be crafted yet only occure when get in contact of water."
 msgstr ""
 
-msgid "Muddy Mangrove Roots"
+msgid "River water logged mangrove roots"
 msgstr ""
+
+msgid "Muddy Mangrove Roots"
+msgstr "帶泥紅樹根"
 
 msgid "crafted with Mud and Mangrove roots"
 msgstr ""
@@ -53,71 +56,71 @@ msgid "Muddy Mangrove Roots is a block from mangrove swamp.It drowns player a bi
 msgstr ""
 
 msgid "Mangrove Bark"
-msgstr ""
+msgstr "紅樹樹皮"
 
 msgid "Mangrove Bark Slab"
-msgstr ""
+msgstr "紅樹樹皮台階"
 
 msgid "Mangrove Bark Stairs"
-msgstr ""
+msgstr "紅樹樹皮階梯"
 
 msgid "Mangrove Boat"
-msgstr ""
+msgstr "紅樹船"
 
 msgid "Mangrove Button"
-msgstr ""
+msgstr "紅樹按鈕"
 
 msgid "Mangrove Chest Boat"
-msgstr ""
+msgstr "紅樹儲物箱船"
 
 msgid "Mangrove Door"
-msgstr ""
+msgstr "紅樹門"
 
 msgid "Mangrove Fence"
-msgstr ""
+msgstr "紅樹柵欄"
 
 msgid "Mangrove Fence Gate"
-msgstr ""
+msgstr "紅樹柵欄門"
 
 msgid "Mangrove Leaves"
-msgstr ""
+msgstr "紅樹樹葉"
 
 msgid "Mangrove Log"
-msgstr ""
+msgstr "紅樹原木"
 
 msgid "Mangrove Planks"
-msgstr ""
+msgstr "紅樹板"
 
 msgid "Mangrove Pressure Plate"
-msgstr ""
+msgstr "紅樹壓力板"
 
 msgid "Mangrove Sign"
-msgstr ""
+msgstr "紅樹告示牌"
 
 msgid "Mangrove Slab"
-msgstr ""
+msgstr "紅樹台階"
 
 msgid "Mangrove Stairs"
-msgstr ""
+msgstr "紅樹階梯"
 
 msgid "Mangrove Trapdoor"
-msgstr ""
+msgstr "紅樹活板門"
 
 msgid "Mangrove leaves are grown from Mangrove trees."
-msgstr ""
+msgstr "紅樹樹葉是從紅樹長出的樹葉。"
 
 msgid "Stripped Mangrove Bark"
 msgstr ""
 
 msgid "Stripped Mangrove Log"
-msgstr ""
+msgstr "去皮紅樹原木"
 
 msgid "The stripped trunk of an Mangrove tree."
-msgstr ""
+msgstr "去皮後的紅樹樹幹。"
 
 msgid "The stripped wood of an Mangrove tree."
-msgstr ""
+msgstr "去皮後的紅樹木塊。"
 
 msgid "The trunk of a Mangrove tree."
-msgstr ""
+msgstr "紅樹的樹幹。"
 

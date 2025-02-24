@@ -17,46 +17,46 @@ msgid "A Block made of Bamboo stalks. Can be crafted into Bamboo Planks."
 msgstr ""
 
 msgid "Block of Bamboo"
-msgstr ""
+msgstr "竹ブロック"
 
 msgid "Block of Stripped Bamboo"
-msgstr ""
+msgstr "表皮を剥いだ竹ブロック"
 
 msgid "Bamboo Raft"
 msgstr "竹のイカダ"
 
 msgid "Chest Bamboo Raft"
-msgstr ""
+msgstr "チェスト付きの竹のイカダ"
 
 msgid "Bamboo Button"
-msgstr ""
+msgstr "竹のボタン"
 
 msgid "Bamboo Door"
-msgstr ""
+msgstr "竹のドア"
 
 msgid "Bamboo Fence"
-msgstr ""
+msgstr "竹のフェンス"
 
 msgid "Bamboo Fence Gate"
-msgstr ""
+msgstr "竹のフェンスゲート"
 
 msgid "Bamboo Planks"
-msgstr ""
+msgstr "竹の板材"
 
 msgid "Bamboo Pressure Plate"
-msgstr ""
+msgstr "竹の感圧板"
 
 msgid "Bamboo Sign"
-msgstr ""
+msgstr "竹の看板"
 
 msgid "Bamboo Slab"
-msgstr ""
+msgstr "竹のハーフブロック"
 
 msgid "Bamboo Stairs"
-msgstr ""
+msgstr "竹の階段"
 
 msgid "Bamboo Trapdoor"
-msgstr ""
+msgstr "竹のトラップドア"
 
 msgid "Bamboo"
 msgstr "竹"
@@ -65,16 +65,16 @@ msgid "Bamboo Plant"
 msgstr ""
 
 msgid "Bamboo Mosaic Plank"
-msgstr ""
+msgstr "竹細工の板材"
 
 msgid "Bamboo Mosaic Stairs"
-msgstr ""
+msgstr "竹細工の階段"
 
 msgid "Bamboo Mosaic Slab"
-msgstr ""
+msgstr "竹細工のハーフブロックの"
 
 msgid "Scaffolding"
-msgstr ""
+msgstr "足場"
 
 msgid "Scaffolding is a temporary structure to easily climb up while building that is easily removed"
 msgstr ""

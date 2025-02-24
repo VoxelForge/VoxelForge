@@ -122,7 +122,7 @@ local main_page_static = table.concat({
 
 	--Achievements button
 	"image_button[10.325,4.075;1.1,1.1;mcl_achievements_button.png;__mcl_achievements;]",
-	"tooltip[__mcl_achievements;" .. F(S("Achievements")) .. "]",
+	"tooltip[__mcl_achievements;" .. F(S("Advancements")) .. "]",
 
 	--Listring
 	"listring[current_player;main]",
@@ -221,14 +221,6 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	end
 end)
 
-local function sort_stack(stack, inv)
-	if minetest.get_item_group(stack:get_name(), "offhand_item") > 0 and inv:get_stack("offhand", 1):is_empty() then
-		return "offhand"
-	elseif minetest.get_item_group(stack:get_name(), "armor") > 0 then
-		return "armor"
-	end
-end
-
 local function find_empty_inv_slots(inv)
 	local main, hotbar
 	for i, stack in pairs(inv:get_list("main")) do
@@ -245,20 +237,15 @@ end
 minetest.register_on_player_inventory_action(function(player, action, inv, info)
 	if action == "move" and info.to_list == "sorter" then
 		local stack = inv:get_stack(info.to_list, info.to_index)
-		local trg = sort_stack(stack, inv)
 		local empty_main, empty_hotbar = find_empty_inv_slots(inv)
-		if trg then
-			if trg == "armor" then
-				local newstack = mcl_armor.equip(stack, player, true)
-				if newstack and not newstack:is_empty() then
-					if inv:get_stack(info.from_list, info.from_index):is_empty() then
-						inv:set_stack(info.from_list, info.from_index, newstack)
-					elseif inv:room_for_item(info.from_list, newstack) then
-						inv:add_item(info.from_list, newstack)
-					end
+		if minetest.get_item_group(stack:get_name(), "armor") > 0 then
+			local newstack = mcl_armor.equip(stack, player, true)
+			if newstack and not newstack:is_empty() then
+				if inv:get_stack(info.from_list, info.from_index):is_empty() then
+					inv:set_stack(info.from_list, info.from_index, newstack)
+				elseif inv:room_for_item(info.from_list, newstack) then
+					inv:add_item(info.from_list, newstack)
 				end
-			else
-				inv:add_item(trg, stack)
 			end
 		elseif info.from_list == "main" and info.from_index <= 9 and empty_main then --hotbar to inv
 			inv:set_stack("main", empty_main, stack)
@@ -275,22 +262,9 @@ minetest.register_allow_player_inventory_action(function(_, action, inv, info)
 	if info.to_list == "sorter" or info.from_list == "sorter" or info.listname == "sorter" then
 		if action == "put" or action == "take" then return 0 end
 		local stack = inv:get_stack(info.from_list, info.from_index)
-		local trg = sort_stack(stack, inv)
 		local empty_main, empty_hotbar = find_empty_inv_slots(inv)
-		if trg then
-			if trg == "armor" then
-				return 1
-			end
-			local stack1 = ItemStack(stack):take_item()
-			if inv:room_for_item(trg, stack) then
-				return stack:get_count()
-			elseif inv:room_for_item(trg, stack1) then
-				for k,v in pairs(inv:get_list(trg)) do
-					if v:to_string() == stack:to_string() then
-						return stack:get_stack_max() - inv:get_stack(trg, k):get_count()
-					end
-				end
-			end
+		if minetest.get_item_group(stack:get_name(), "armor") > 0 then
+			return 1
 		elseif ( info.from_list == "main" and info.from_index <= 9 and empty_main ) or
 			( info.from_list == "main" and info.from_index > 9 and empty_hotbar ) then
 			return stack:get_count()

@@ -127,9 +127,6 @@ msgstr "Nivel de dureza: @1"
 msgid "Range: @1"
 msgstr "Rango: @1"
 
-msgid "Range: 4"
-msgstr "Rango: 4"
-
 msgid "Range: @1 (@2)"
 msgstr "Rango: @1 (@2)"
 

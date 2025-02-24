@@ -14,17 +14,17 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Chain"
-msgstr ""
+msgstr "鎖鏈"
 
 msgid "Chains are metallic decoration blocks."
-msgstr ""
+msgstr "鎖鏈 是一種金屬裝飾性方塊。"
 
 msgid "Lantern"
-msgstr ""
+msgstr "燈籠"
 
 msgid "Lanterns are light sources which can be placed on the top or the bottom of most blocks."
-msgstr ""
+msgstr "燈籠是一種發光方塊，可以放置在大多數方塊的上方或下方。"
 
 msgid "Soul Lantern"
-msgstr ""
+msgstr "靈魂燈籠"
 

@@ -241,7 +241,7 @@ minetest.register_craftitem("mcl_mobitems:nether_star", {
 	wield_image = "mcl_mobitems_nether_star.png",
 	inventory_image = "mcl_mobitems_nether_star.png",
 	-- TODO: Reveal item when it's useful
-	groups = { craftitem = 1, not_in_creative_inventory = 1, rarity = 2 },
+	groups = { craftitem = 1, rarity = 2 },
 })
 
 minetest.register_craftitem("mcl_mobitems:leather", {

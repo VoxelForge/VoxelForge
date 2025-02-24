@@ -62,7 +62,7 @@ msgid "Get the awards statistics for the given player or yourself"
 msgstr "取得指定玩家或自己的獎勵統計資料"
 
 msgid "Error: No achivements available."
-msgstr "錯誤：沒有可用的成就。"
+msgstr "錯誤：找不到成就。"
 
 msgid "OK"
 msgstr "好的"
@@ -89,95 +89,95 @@ msgid "@1’s awards:"
 msgstr "@1 的獎勵："
 
 msgid "@1/@2 chat messages"
-msgstr ""
+msgstr "@1/@2 項聊天訊息"
 
 msgid "Send a chat message"
-msgstr ""
+msgstr "發送聊天訊息"
 
 msgid "Chat @1 times"
-msgstr ""
+msgstr "發送 @1 項聊天訊息"
 
 msgid "@1/@2 joins"
-msgstr ""
+msgstr "登入 @1/@2 次"
 
 msgid "Join once"
-msgstr ""
+msgstr "登入一次"
 
 msgid "Join @1 times"
-msgstr "加入 @1 次"
+msgstr "登入 @1 次"
 
 msgid "@1/@2 deaths"
-msgstr ""
+msgstr "@1/@2 次死亡"
 
 msgid "Die once of @1"
-msgstr ""
+msgstr "死於 @1 一次"
 
 msgid "Die @1 times of @2"
-msgstr ""
+msgstr "死於 @2 @1次"
 
 msgid "Die @1 times."
-msgstr ""
+msgstr "死亡@1次。"
 
 msgid "Mine @1 times"
-msgstr ""
+msgstr "挖掘@1次"
 
 msgid "@1/@2 dug"
-msgstr ""
+msgstr "@1/@2 次開採"
 
 msgid "Mine: @1"
-msgstr ""
+msgstr "開採：@1"
 
 msgid "Mine: @1×@2"
-msgstr ""
+msgstr "開採：@1×@2"
 
 msgid "Mine @1 block."
-msgstr ""
+msgstr "開採 @1 個方塊。"
 
 msgid "Mine @1 blocks."
-msgstr ""
+msgstr "開採 @1 個方塊。"
 
 msgid "@1/@2 placed"
-msgstr ""
+msgstr "放置了 @1/@2"
 
 msgid "Place: @1"
-msgstr ""
+msgstr "放置：@1"
 
 msgid "Place: @1×@2"
-msgstr ""
+msgstr "放置：@1×@2"
 
 msgid "Place @1 block."
-msgstr ""
+msgstr "放置 @1 個方塊。"
 
 msgid "Place @1 blocks."
-msgstr ""
+msgstr "放置 @1 個方塊。"
 
 msgid "@1/@2 crafted"
-msgstr ""
+msgstr "合成 @1/@2 次"
 
 msgid "Craft: @1"
-msgstr ""
+msgstr "合成：@1"
 
 msgid "Craft: @1×@2"
-msgstr ""
+msgstr "合成：@1×@2"
 
 msgid "Craft @1 item"
-msgstr ""
+msgstr "合成 @1 件物品"
 
 msgid "Craft @1 items."
-msgstr ""
+msgstr "合成 @1 件物品。"
 
 msgid "@1/@2 eaten"
-msgstr ""
+msgstr "進食 @1/@2 次"
 
 msgid "Eat @1"
-msgstr ""
+msgstr "進食@1"
 
 msgid "Eat @1×@2"
-msgstr ""
+msgstr "進食@1×@2"
 
 msgid "Eat @1 item"
-msgstr ""
+msgstr "進食 @1 次"
 
 msgid "Eat @1 items."
-msgstr ""
+msgstr "進食 @1 次。"
 

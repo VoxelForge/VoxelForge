@@ -17,7 +17,7 @@ msgid "When placed on soil (such as dirt) and exposed to light, a sapling will g
 msgstr ""
 
 msgid "Needs soil and light to grow"
-msgstr ""
+msgstr "生育に必要なのは土と光"
 
 msgid "Wooden doors are 2-block high barriers which can be opened or closed by hand and by a redstone signal."
 msgstr ""

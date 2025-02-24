@@ -217,14 +217,14 @@ msgstr "Неизвестное зачарование"
 msgid "Inventory"
 msgstr "Инвентарь"
 
-msgid "@1 Lapis Lazuli"
-msgstr "@1 лазурит(а)"
-
 msgid "@1 Enchantment Levels"
 msgstr "@1 уровень зачаровывания"
 
 msgid "Level requirement: @1"
 msgstr "Требуемый уровень: @1"
+
+msgid "@1 Lapis Lazuli"
+msgstr "@1 лазурит(а)"
 
 msgid "Enchant an item"
 msgstr "Зачаровать предмет"

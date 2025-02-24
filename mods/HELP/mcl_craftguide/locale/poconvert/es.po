@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Any shulker box"
-msgstr "Cualquier caja shulker"
+msgstr "Cualquier caja de shulker"
 
 msgid "Any wool"
 msgstr "Cualquier lana"
@@ -56,7 +56,7 @@ msgid "Any wooden stairs"
 msgstr "Cualquier escalera de madera"
 
 msgid "Any coal"
-msgstr "Cualquier carbon"
+msgstr "Cualquier carbón"
 
 msgid "Any kind of quartz block"
 msgstr "Cualquier bloque de cuarzo"
@@ -98,7 +98,7 @@ msgid "Shapeless"
 msgstr "Sin forma"
 
 msgid "Cooking"
-msgstr "Cocción"
+msgstr "Cocinar"
 
 msgid "Increase window size"
 msgstr "Ampliar"
@@ -123,9 +123,6 @@ msgstr "No hay ítem para mostrar"
 
 msgid "Collect items to reveal more recipes"
 msgstr "Recolecta ítems para revelar más recetas"
-
-msgid "Invalid crafting ingredient: \"@1\" (dosent exist)"
-msgstr "Ingrediente de fabricación inválido: \"@1\" (no existe)"
 
 msgid "This item can be repaired at an anvil with: @1."
 msgstr "Este ítem puede ser reparado en un yunque con: @1."

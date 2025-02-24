@@ -38,6 +38,10 @@ local dolphin = {
 		},
 	},
 	sounds = {
+		random = "mobs_mc_dolphin_whistle",
+		attack = "mobs_mc_dolphin_attack",
+		damage = "mobs_mc_dolphin_hurt",
+		death = "mobs_mc_dolphin_dying",
 	},
 	animation = {
 		stand_start = 0, stand_end = 15, stand_speed = 20,

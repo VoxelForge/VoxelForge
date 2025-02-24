@@ -14,56 +14,56 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Block of Amethyst"
-msgstr ""
+msgstr "紫水晶方塊"
 
 msgid "The Block of Amethyst is a decoration block crafted from amethyst shards."
-msgstr ""
+msgstr "紫水晶立方是用紫水晶碎片製成的裝飾性方塊。"
 
 msgid "Budding Amethyst"
-msgstr ""
+msgstr "紫晶芽"
 
 msgid "The Budding Amethyst can grow amethyst"
-msgstr ""
+msgstr "紫晶芽會長出紫水晶。"
 
 msgid "Amethyst Shard"
-msgstr ""
+msgstr "紫水晶碎片"
 
 msgid "An amethyst shard is a crystalline mineral."
-msgstr ""
+msgstr "紫水晶碎片是一種晶體礦物。"
 
 msgid "Calcite"
-msgstr ""
+msgstr "方解石"
 
 msgid "Calcite can be found as part of amethyst geodes."
-msgstr ""
+msgstr "方解石可以在紫晶洞發現。"
 
 msgid "Tinted Glass"
-msgstr ""
+msgstr "遮光玻璃"
 
 msgid "Tinted Glass is a type of glass which blocks lights while it is visually transparent."
-msgstr ""
+msgstr "遮光玻璃是一種能阻擋光線但同時不妨礙視線的玻璃。"
 
 msgid "Small Amethyst Bud"
-msgstr ""
+msgstr "小紫晶芽"
 
 msgid "Small Amethyst Bud is the first growth of amethyst bud."
-msgstr ""
+msgstr "小紫晶芽是紫晶芽成長的第一階段。"
 
 msgid "Medium Amethyst Bud"
-msgstr ""
+msgstr "中紫晶芽"
 
 msgid "Medium Amethyst Bud is the second growth of amethyst bud."
-msgstr ""
+msgstr "中紫晶芽是紫晶芽成長的第二階段。"
 
 msgid "Large Amethyst Bud"
-msgstr ""
+msgstr "大紫晶芽"
 
 msgid "Large Amethyst Bud is the third growth of amethyst bud."
-msgstr ""
+msgstr "大紫晶芽是紫晶芽成長的第三階段。"
 
 msgid "Amethyst Cluster"
-msgstr ""
+msgstr "紫水晶簇"
 
 msgid "Amethyst Cluster is the final growth of amethyst bud."
-msgstr ""
+msgstr "紫水晶簇是完全成長的紫晶芽。"
 

@@ -116,7 +116,7 @@ msgid "Wield the bone near wolves to attract them. Use the “Place” key on th
 msgstr "骨をオオカミの近くで振り、引き付けます。オオカミに「設置」キーを使うと、骨を与えて手なずけられます。手なずけたオオカミに「設置」キーを使えば、オオカミに号令が出せます。"
 
 msgid "Squid Ink Sac"
-msgstr ""
+msgstr "イカスミ"
 
 msgid "This item is dropped by dead squids. Squid ink can be used to as an ingredient to craft book and quill or black dye."
 msgstr ""
@@ -134,10 +134,10 @@ msgid "This is a crafting component dropped from dead blazes."
 msgstr "これは死んだブレイズから落ちた、クラフトの構成材です。"
 
 msgid "Breeze Rod"
-msgstr ""
+msgstr "ブリーズロッド"
 
 msgid "This is a crafting item dropped from breezes."
-msgstr ""
+msgstr "これは死んだブリーズから落ちた、クラフトの構成材です。"
 
 msgid "Blaze Powder"
 msgstr "ブレイズパウダー"
@@ -233,7 +233,7 @@ msgid "Place it on a saddled pig to mount it. You can now ride the pig like a ho
 msgstr "鞍をつけたブタの上にそれを掲げます。 これで、ブタに騎乗できること馬のごとしです。 ニンジン付きの棒を振るうだけでも、ブタはあなたに向かって歩いてきます。"
 
 msgid "Warped Fungus on a Stick"
-msgstr ""
+msgstr "歪んだキノコ付きの棒"
 
 msgid "Lets you ride a strider"
 msgstr ""
@@ -263,7 +263,7 @@ msgid "Place it on a horse to put on the horse armor. Donkeys and mules can't we
 msgstr "ウマに被せると、馬鎧を着せることができます。ロバとラバには、馬鎧を着せられません。"
 
 msgid "Leather Horse Armor"
-msgstr ""
+msgstr "革の馬鎧"
 
 msgid "Leather horse armor can be worn by horses to increase their protection from harm a little."
 msgstr ""
@@ -287,7 +287,7 @@ msgid "Diamond horse armor can be worn by horses to greatly increase their prote
 msgstr "ダイヤモンドの馬鎧は、ウマに装着することで、危害から守る力を大幅に高めることができます。"
 
 msgid "Glow Ink Sac"
-msgstr ""
+msgstr "輝くイカスミ"
 
 msgid "Use it to craft the Glow Item Frame."
 msgstr ""
@@ -296,16 +296,16 @@ msgid "Use the Glow Ink Sac and the normal Item Frame to craft the Glow Item Fra
 msgstr ""
 
 msgid "Name Tag"
-msgstr ""
+msgstr "名札"
 
 msgid "Give names to mobs"
-msgstr ""
+msgstr "モブに名前を付けること"
 
 msgid "Set name at anvil"
 msgstr ""
 
 msgid "A name tag is an item to name a mob."
-msgstr ""
+msgstr "名札は、モブに名前を付けることのできるアイテムである。"
 
 msgid "Before you use the name tag, you need to set a name at an anvil. Then you can use the name tag to name a mob. This uses up the name tag."
 msgstr ""

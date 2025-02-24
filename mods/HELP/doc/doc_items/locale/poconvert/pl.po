@@ -127,9 +127,6 @@ msgstr "Poziom twardości: @1"
 msgid "Range: @1"
 msgstr "Zasięg: @1"
 
-msgid "Range: 4"
-msgstr "Zasięg: 4"
-
 msgid "Range: @1 (@2)"
 msgstr "Zasięg @1 (@2)"
 

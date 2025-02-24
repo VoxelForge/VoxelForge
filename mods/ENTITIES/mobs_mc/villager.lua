@@ -532,8 +532,8 @@ function villager_base:set_trade (player, inv, id)
 
 	-- Move items from the player's inventory into the input
 	-- slots.
-	move_stack (p_inv, "main", inv, "input", wanted1, 1)
-	move_stack (p_inv, "main", inv, "input", wanted2, 2)
+	move_stack (p_inv, "main", inv, "input", wanted1, pos)
+	move_stack (p_inv, "main", inv, "input", wanted2, pos)
 end
 
 function villager_base:update_offer (inv, player, idx, sounds)
@@ -3914,12 +3914,10 @@ function villager:compost (composter)
 
 		compost_total = compost_total - take
 
-		if take > 0 then
-			stack:take_item (take)
-			self._inventory[i] = stack:to_string ()
-			for _ = 1, take do
-				local node = minetest.get_node (composter)
-				mcl_composters.add_item (composter, node, stack)
+		for _ = 1, take do
+			if mcl_composters.farmer_add_compost (composter, nil, stack) then
+				stack:take_item ()
+				self._inventory[i] = stack:to_string ()
 			end
 		end
 	end
@@ -3956,17 +3954,7 @@ function villager:use_workstation (self_pos, job_site)
 			return
 		end
 
-		local site_type = minetest.get_node (job_site)
-		local level = mcl_composters.test_composter (site_type.name)
-		if level == 8 then
-			minetest.swap_node (job_site, {
-				    name = "mcl_composters:composter",
-			})
-			minetest.add_item (job_site, "mcl_bone_meal:bone_meal")
-		end
-		if level then
-			self:compost (job_site)
-		end
+		self:compost (job_site)
 		self:craft_bread (self_pos)
 	end
 end

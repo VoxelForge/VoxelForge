@@ -23,7 +23,7 @@ msgid "Recipe book"
 msgstr "合成教學"
 
 msgid "Fill Craft Grid"
-msgstr ""
+msgstr "填滿合成欄位"
 
 msgid "Crafting Table"
 msgstr "合成台"

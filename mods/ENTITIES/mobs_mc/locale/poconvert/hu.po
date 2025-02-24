@@ -44,13 +44,13 @@ msgid "Dolphin"
 msgstr "Delfin"
 
 msgid "Ender Dragon"
-msgstr "Végzetsárkány"
+msgstr "Végsárkány"
 
 msgid "Enderman"
-msgstr "Bevégző"
+msgstr "Végszerzet"
 
 msgid "Endermite"
-msgstr "Végbogár"
+msgstr "Végatka"
 
 msgid "Ghast"
 msgstr "Szellem"
@@ -202,9 +202,6 @@ msgstr "Álomfutócska"
 msgid "Tropical Fish"
 msgstr "Trópusi Hal"
 
-msgid "Tropical fish"
-msgstr "Trópusi hal"
-
 msgid "Vex"
 msgstr "Bosszancs"
 
@@ -245,10 +242,10 @@ msgid "Shepherd"
 msgstr "Juhász"
 
 msgid "Toolsmith"
-msgstr ""
+msgstr "Szerszámkovács"
 
 msgid "Weaponsmith"
-msgstr ""
+msgstr "Fegyverkovács"
 
 msgid "Nitwit"
 msgstr "Falu Bolondja"
@@ -281,10 +278,10 @@ msgid "Zombie Villager"
 msgstr "Zombi Falulakó"
 
 msgid "Wandering Trader"
-msgstr "Vándor Kereskedő"
+msgstr "Vándorkereskedő"
 
 msgid "Trader Llama"
-msgstr ""
+msgstr "Kereskedő lámája"
 
 msgid "Witch"
 msgstr "Boszi"

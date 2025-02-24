@@ -92,7 +92,7 @@ msgid "@1/@2 chat messages"
 msgstr "@1/@2 チャットメッセージ"
 
 msgid "Send a chat message"
-msgstr ""
+msgstr "チャットメッセージを送信"
 
 msgid "Chat @1 times"
 msgstr ""
@@ -125,31 +125,31 @@ msgid "@1/@2 dug"
 msgstr "@1/@2 掘った"
 
 msgid "Mine: @1"
-msgstr ""
+msgstr "採掘：@1"
 
 msgid "Mine: @1×@2"
-msgstr ""
+msgstr "採掘：@1×@2"
 
 msgid "Mine @1 block."
-msgstr ""
+msgstr "採掘：@1 ブロック。"
 
 msgid "Mine @1 blocks."
-msgstr ""
+msgstr "採掘：@1 ブロック。"
 
 msgid "@1/@2 placed"
 msgstr "@1/@2 置いた"
 
 msgid "Place: @1"
-msgstr ""
+msgstr "設置：@1"
 
 msgid "Place: @1×@2"
-msgstr ""
+msgstr "設置：@1×@2"
 
 msgid "Place @1 block."
-msgstr ""
+msgstr "設置：@1 ブロック。"
 
 msgid "Place @1 blocks."
-msgstr ""
+msgstr "設置：@1 ブロック。"
 
 msgid "@1/@2 crafted"
 msgstr "@1/@2 クラフトした"
@@ -161,10 +161,10 @@ msgid "Craft: @1×@2"
 msgstr "クラフト： @1×@2"
 
 msgid "Craft @1 item"
-msgstr ""
+msgstr "クラフト： @1 アイテム"
 
 msgid "Craft @1 items."
-msgstr ""
+msgstr "クラフト： @1 アイテム。"
 
 msgid "@1/@2 eaten"
 msgstr "@1/@2 食した"

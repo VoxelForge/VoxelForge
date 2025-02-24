@@ -41,7 +41,7 @@ msgid "Tinted Glass"
 msgstr "遮光玻璃"
 
 msgid "Tinted Glass is a type of glass which blocks lights while it is visually transparent."
-msgstr "有色玻璃是一种在视觉上透明但能阻挡光线的玻璃。"
+msgstr "遮光玻璃是一种在视觉上透明但能阻挡光线的玻璃。"
 
 msgid "Small Amethyst Bud"
 msgstr "小型紫晶芽"

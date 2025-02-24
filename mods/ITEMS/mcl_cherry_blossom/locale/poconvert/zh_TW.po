@@ -14,67 +14,67 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Pink Petals"
-msgstr "粉瓣花"
+msgstr "櫻花花瓣"
 
 msgid "Pink Petals are ground decoration of cherry grove biomes"
-msgstr "粉瓣花是櫻花林生物群落的地面裝飾"
+msgstr "櫻花花瓣是櫻花林生物群落的地面裝飾。"
 
 msgid "Cherry Bark"
-msgstr ""
+msgstr "櫻花樹皮"
 
 msgid "Cherry Bark Slab"
-msgstr ""
+msgstr "櫻花樹皮台階"
 
 msgid "Cherry Bark Stairs"
-msgstr ""
+msgstr "櫻花樹皮階梯"
 
 msgid "Cherry Boat"
-msgstr ""
+msgstr "櫻花木船"
 
 msgid "Cherry Button"
-msgstr ""
+msgstr "櫻花木按鈕"
 
 msgid "Cherry Chest Boat"
-msgstr ""
+msgstr "櫻花木船連箱子"
 
 msgid "Cherry Door"
-msgstr ""
+msgstr "櫻花木門"
 
 msgid "Cherry Fence"
-msgstr ""
+msgstr "櫻花木柵欄"
 
 msgid "Cherry Fence Gate"
-msgstr ""
+msgstr "櫻花木柵欄門"
 
 msgid "Cherry Leaves"
-msgstr ""
+msgstr "櫻花樹葉"
 
 msgid "Cherry Log"
-msgstr ""
+msgstr "櫻花樹原木"
 
 msgid "Cherry Planks"
-msgstr ""
+msgstr "櫻花木板"
 
 msgid "Cherry Pressure Plate"
-msgstr ""
+msgstr "櫻花木壓力板"
 
 msgid "Cherry Sapling"
-msgstr ""
+msgstr "櫻花樹苗"
 
 msgid "Cherry Sign"
-msgstr ""
+msgstr "櫻花木告示牌"
 
 msgid "Cherry Slab"
-msgstr ""
+msgstr "櫻花木台階"
 
 msgid "Cherry Stairs"
-msgstr ""
+msgstr "櫻花木階梯"
 
 msgid "Cherry Trapdoor"
-msgstr ""
+msgstr "櫻花木活板門"
 
 msgid "Cherry leaves are grown from Cherry trees."
-msgstr ""
+msgstr "櫻花樹葉長在櫻花樹上。"
 
 msgid "Stripped Cherry Bark"
 msgstr ""
@@ -89,5 +89,5 @@ msgid "The stripped wood of an Cherry tree."
 msgstr ""
 
 msgid "The trunk of a Cherry tree."
-msgstr ""
+msgstr "櫻花樹的樹幹。"
 

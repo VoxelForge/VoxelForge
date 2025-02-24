@@ -14,20 +14,20 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Powder Snow"
-msgstr ""
+msgstr "粉雪"
 
 msgid "This is a block of snow thats extra fluffy, this means players can sink in it"
 msgstr ""
 
 msgid "Powder Snow Bucket"
-msgstr ""
+msgstr "粉雪桶"
 
 msgid "This bucket is filled powder snow"
-msgstr ""
+msgstr "裝滿粉雪的桶"
 
 msgid "Place it to empty the bucket and place powder snow. Obtain by right clicking on a block of powder snow with an empty bucket."
 msgstr ""
 
 msgid "Places a powder snow block"
-msgstr ""
+msgstr "使用即可放置一塊粉雪"
 

@@ -13,15 +13,39 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: mtt_convert 0.1.1\n"
 
-msgid "Primary Power:"
-msgstr "プライマリーパワー："
+msgid "Unavailable"
+msgstr "利用できない"
 
-msgid "Secondary Power:"
-msgstr ""
-
-msgid "Inventory:"
-msgstr "インベントリ："
+msgid "Active"
+msgstr "活発な"
 
 msgid "Beacon"
-msgstr ""
+msgstr "ビーコン"
+
+msgid "Primary Power:"
+msgstr "主効果："
+
+msgid "Secondary Power:"
+msgstr "副効果："
+
+msgid "Swiftness"
+msgstr "移動速度"
+
+msgid "Haste"
+msgstr "採掘速度"
+
+msgid "Resistance"
+msgstr "耐性"
+
+msgid "Leaping"
+msgstr "跳躍力"
+
+msgid "Strength"
+msgstr "攻撃力"
+
+msgid "Regeneration"
+msgstr "再生能力"
+
+msgid "Inventory"
+msgstr "インベントリ"
 

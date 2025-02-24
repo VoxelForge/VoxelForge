@@ -14,10 +14,10 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Cooks food and keeps bees happy."
-msgstr "烹飪食物並且讓蜜蜂開心。"
+msgstr "能煮食，也能取悅蜜蜂。"
 
 msgid "Campfires have multiple uses, including keeping bees happy, cooking raw meat and fish, and as a trap."
-msgstr "營火有多種用途，包括讓蜜蜂開心、烹飪生肉和生魚，以及作為陷阱。"
+msgstr "營火有多種用途，包括讓取悅蜜蜂，烤肉烤魚，用作陷阱等。"
 
 msgid "Campfire"
 msgstr "營火"

@@ -29,10 +29,10 @@ msgid "Starts fires and ignites blocks"
 msgstr ""
 
 msgid "Flint and Steel"
-msgstr "Kovakő és acél"
+msgstr "Tűzszerszám"
 
 msgid "Flint and steel is a tool to start fires and ignite blocks."
-msgstr ""
+msgstr "A tűzszerszám egy eszköz, amellyel tüzet lehet gyújtani, és meg lehet gyújtani blokkokat."
 
 msgid "Rightclick the surface of a block to attempt to light a fire in front of it or ignite the block. A few blocks have an unique reaction when ignited."
 msgstr ""

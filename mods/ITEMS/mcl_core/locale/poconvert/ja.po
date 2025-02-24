@@ -125,484 +125,484 @@ msgid "Enchanted Golden Apple"
 msgstr "エンチャントされた金のリンゴ"
 
 msgid "Acacia Bark"
-msgstr ""
+msgstr "アカシアの樹皮"
 
 msgid "Acacia Bark Slab"
-msgstr ""
+msgstr "アカシアの樹皮のハーフブロック"
 
 msgid "Acacia Bark Stairs"
-msgstr ""
+msgstr "アカシアの樹皮の階段"
 
 msgid "Acacia Boat"
-msgstr ""
+msgstr "アカシアのボート"
 
 msgid "Acacia Button"
-msgstr ""
+msgstr "アカシアのボタン"
 
 msgid "Acacia Chest Boat"
-msgstr ""
+msgstr "チェスト付きのアカシアのボート"
 
 msgid "Acacia Door"
-msgstr ""
+msgstr "アカシアのドア"
 
 msgid "Acacia Fence"
-msgstr ""
+msgstr "アカシアのフェンス"
 
 msgid "Acacia Fence Gate"
-msgstr ""
+msgstr "アカシアのフェンスゲート"
 
 msgid "Acacia Leaves"
-msgstr ""
+msgstr "アカシアの葉"
 
 msgid "Acacia Log"
-msgstr ""
+msgstr "アカシアの原木"
 
 msgid "Acacia Planks"
-msgstr ""
+msgstr "アカシアの板材"
 
 msgid "Acacia Pressure Plate"
-msgstr ""
+msgstr "アカシアの感圧板"
 
 msgid "Acacia Sapling"
-msgstr ""
+msgstr "アカシアの苗木"
 
 msgid "Acacia Sign"
-msgstr ""
+msgstr "アカシアの看板"
 
 msgid "Acacia Slab"
-msgstr ""
+msgstr "アカシアのハーフブロック"
 
 msgid "Acacia Stairs"
-msgstr ""
+msgstr "アカシアの階段"
 
 msgid "Acacia Trapdoor"
-msgstr ""
+msgstr "アカシアのトラップドア"
 
 msgid "Acacia leaves are grown from Acacia trees."
 msgstr ""
 
 msgid "Birch Bark"
-msgstr ""
+msgstr "シラカバの樹皮"
 
 msgid "Birch Bark Slab"
-msgstr ""
+msgstr "シラカバの樹皮のハーフブロック"
 
 msgid "Birch Bark Stairs"
-msgstr ""
+msgstr "シラカバの樹皮の階段"
 
 msgid "Birch Boat"
-msgstr ""
+msgstr "シラカバのボート"
 
 msgid "Birch Button"
-msgstr ""
+msgstr "シラカバのボタン"
 
 msgid "Birch Chest Boat"
-msgstr ""
+msgstr "チェスト付きのシラカバのボート"
 
 msgid "Birch Door"
-msgstr ""
+msgstr "シラカバのドア"
 
 msgid "Birch Fence"
-msgstr ""
+msgstr "シラカバのフェンス"
 
 msgid "Birch Fence Gate"
-msgstr ""
+msgstr "シラカバのフェンスゲート"
 
 msgid "Birch Leaves"
-msgstr ""
+msgstr "シラカバの葉"
 
 msgid "Birch Log"
-msgstr ""
+msgstr "シラカバの原木"
 
 msgid "Birch Planks"
-msgstr ""
+msgstr "シラカバの板材"
 
 msgid "Birch Pressure Plate"
-msgstr ""
+msgstr "シラカバの感圧板"
 
 msgid "Birch Sapling"
-msgstr ""
+msgstr "シラカバの苗木"
 
 msgid "Birch Sign"
-msgstr ""
+msgstr "シラカバの看板"
 
 msgid "Birch Slab"
-msgstr ""
+msgstr "シラカバのハーフブロック"
 
 msgid "Birch Stairs"
-msgstr ""
+msgstr "シラカバの階段"
 
 msgid "Birch Trapdoor"
-msgstr ""
+msgstr "シラカバのトラップドア"
 
 msgid "Birch leaves are grown from Birch trees."
 msgstr ""
 
 msgid "Black Stained Glass"
-msgstr ""
+msgstr "黒色の色付きガラス板"
 
 msgid "Blue Stained Glass"
-msgstr ""
+msgstr "青色の色付きガラス板"
 
 msgid "Brown Stained Glass"
-msgstr ""
+msgstr "茶色の色付きガラス板"
 
 msgid "Cyan Stained Glass"
-msgstr ""
+msgstr "青緑色の色付きガラス板"
 
 msgid "Dark Oak Bark"
-msgstr ""
+msgstr "ダークオークの樹皮"
 
 msgid "Dark Oak Bark Slab"
-msgstr ""
+msgstr "ダークオークの樹皮のハーフブロック"
 
 msgid "Dark Oak Bark Stairs"
-msgstr ""
+msgstr "ダークオークの樹皮の階段"
 
 msgid "Dark Oak Boat"
-msgstr ""
+msgstr "ダークオークのボート"
 
 msgid "Dark Oak Button"
-msgstr ""
+msgstr "ダークオークのボタン"
 
 msgid "Dark Oak Chest Boat"
-msgstr ""
+msgstr "チェスト付きのダークオークのボート"
 
 msgid "Dark Oak Door"
-msgstr ""
+msgstr "ダークオークのドア"
 
 msgid "Dark Oak Fence"
-msgstr ""
+msgstr "ダークオークのフェンス"
 
 msgid "Dark Oak Fence Gate"
-msgstr ""
+msgstr "ダークオークのフェンスゲート"
 
 msgid "Dark Oak Leaves"
-msgstr ""
+msgstr "ダークオークの葉"
 
 msgid "Dark Oak Log"
-msgstr ""
+msgstr "ダークオークの原木"
 
 msgid "Dark Oak Planks"
-msgstr ""
+msgstr "ダークオークの板材"
 
 msgid "Dark Oak Pressure Plate"
-msgstr ""
+msgstr "ダークオークの感圧板の"
 
 msgid "Dark Oak Sapling"
-msgstr ""
+msgstr "ダークオークの苗木"
 
 msgid "Dark Oak Sign"
-msgstr ""
+msgstr "ダークオークの看板"
 
 msgid "Dark Oak Slab"
-msgstr ""
+msgstr "ダークオークのハーフブロック"
 
 msgid "Dark Oak Stairs"
-msgstr ""
+msgstr "ダークオークの階段"
 
 msgid "Dark Oak Trapdoor"
-msgstr ""
+msgstr "ダークオークのトラップドア"
 
 msgid "Dark Oak leaves are grown from Dark Oak trees."
 msgstr ""
 
 msgid "Green Stained Glass"
-msgstr ""
+msgstr "緑色の色付きガラス板"
 
 msgid "Grey Stained Glass"
-msgstr ""
+msgstr "灰色の色付きガラス板"
 
 msgid "Jungle Bark"
-msgstr ""
+msgstr "ジャングルの樹皮"
 
 msgid "Jungle Bark Slab"
-msgstr ""
+msgstr "ジャングルの樹皮のハーフブロック"
 
 msgid "Jungle Bark Stairs"
-msgstr ""
+msgstr "ジャングルの樹皮の階段"
 
 msgid "Jungle Boat"
-msgstr ""
+msgstr "ジャングルのボート"
 
 msgid "Jungle Button"
-msgstr ""
+msgstr "ジャングルのボタン"
 
 msgid "Jungle Chest Boat"
-msgstr ""
+msgstr "チェスト付きのジャングルのボート"
 
 msgid "Jungle Door"
-msgstr ""
+msgstr "ジャングルのドア"
 
 msgid "Jungle Fence"
-msgstr ""
+msgstr "ジャングルのフェンス"
 
 msgid "Jungle Fence Gate"
-msgstr ""
+msgstr "ジャングルのフェンスゲート"
 
 msgid "Jungle Leaves"
-msgstr ""
+msgstr "ジャングルの葉"
 
 msgid "Jungle Log"
-msgstr ""
+msgstr "ジャングルの原木"
 
 msgid "Jungle Planks"
-msgstr ""
+msgstr "ジャングルの板材"
 
 msgid "Jungle Pressure Plate"
-msgstr ""
+msgstr "ジャングルの感圧板"
 
 msgid "Jungle Sapling"
-msgstr ""
+msgstr "ジャングルの苗木"
 
 msgid "Jungle Sign"
-msgstr ""
+msgstr "ジャングルの看板"
 
 msgid "Jungle Slab"
-msgstr ""
+msgstr "ジャングルのハーフブロック"
 
 msgid "Jungle Stairs"
-msgstr ""
+msgstr "ジャングルの階段"
 
 msgid "Jungle Trapdoor"
-msgstr ""
+msgstr "ジャングルのトラップドア"
 
 msgid "Jungle leaves are grown from Jungle trees."
 msgstr ""
 
 msgid "Light Blue Stained Glass"
-msgstr ""
+msgstr "空色の色付きガラス板"
 
 msgid "Light Grey Stained Glass"
-msgstr ""
+msgstr "薄灰色の色付きガラス板"
 
 msgid "Lime Stained Glass"
-msgstr ""
+msgstr "黄緑色の色付きガラス板"
 
 msgid "Magenta Stained Glass"
-msgstr ""
+msgstr "赤紫色の色付きガラス板"
 
 msgid "Oak Bark"
-msgstr ""
+msgstr "オークの樹皮"
 
 msgid "Oak Bark Slab"
-msgstr ""
+msgstr "オークの樹皮のハーフブロック"
 
 msgid "Oak Bark Stairs"
-msgstr ""
+msgstr "オークの樹皮の階段"
 
 msgid "Oak Boat"
-msgstr ""
+msgstr "オークのボート"
 
 msgid "Oak Button"
-msgstr ""
+msgstr "オークのボタン"
 
 msgid "Oak Chest Boat"
-msgstr ""
+msgstr "チェスト付きのオークのボート"
 
 msgid "Oak Door"
-msgstr ""
+msgstr "オークのドア"
 
 msgid "Oak Fence"
-msgstr ""
+msgstr "オークのフェンス"
 
 msgid "Oak Fence Gate"
-msgstr ""
+msgstr "オークのフェンスゲート"
 
 msgid "Oak Leaves"
-msgstr ""
+msgstr "オークの葉"
 
 msgid "Oak Log"
-msgstr ""
+msgstr "オークの原木"
 
 msgid "Oak Planks"
-msgstr ""
+msgstr "オークの板材"
 
 msgid "Oak Pressure Plate"
-msgstr ""
+msgstr "オークの感圧板"
 
 msgid "Oak Sapling"
-msgstr ""
+msgstr "オークの苗木"
 
 msgid "Oak Sign"
-msgstr ""
+msgstr "オークの看板"
 
 msgid "Oak Slab"
-msgstr ""
+msgstr "オークのハーフブロック"
 
 msgid "Oak Stairs"
-msgstr ""
+msgstr "オークの階段"
 
 msgid "Oak Trapdoor"
-msgstr ""
+msgstr "オークのトラップドア"
 
 msgid "Oak leaves are grown from Oak trees."
 msgstr ""
 
 msgid "Orange Stained Glass"
-msgstr ""
+msgstr "橙色の色付きガラス板"
 
 msgid "Pink Stained Glass"
-msgstr ""
+msgstr "桃色の色付きガラス板"
 
 msgid "Purple Stained Glass"
-msgstr ""
+msgstr "紫色の色付きガラス板"
 
 msgid "Red Stained Glass"
-msgstr ""
+msgstr "赤色の色付きガラス板"
 
 msgid "Spruce Bark"
-msgstr ""
+msgstr "トウヒの樹皮"
 
 msgid "Spruce Bark Slab"
-msgstr ""
+msgstr "トウヒの樹皮のハーフブロック"
 
 msgid "Spruce Bark Stairs"
-msgstr ""
+msgstr "トウヒの樹皮の階段"
 
 msgid "Spruce Boat"
-msgstr ""
+msgstr "トウヒのボート"
 
 msgid "Spruce Button"
-msgstr ""
+msgstr "トウヒのボタン"
 
 msgid "Spruce Chest Boat"
-msgstr ""
+msgstr "チェスト付きのトウヒのボート"
 
 msgid "Spruce Door"
-msgstr ""
+msgstr "トウヒのドア"
 
 msgid "Spruce Fence"
-msgstr ""
+msgstr "トウヒのフェンス"
 
 msgid "Spruce Fence Gate"
-msgstr ""
+msgstr "トウヒのフェンスゲート"
 
 msgid "Spruce Leaves"
-msgstr ""
+msgstr "トウヒの葉"
 
 msgid "Spruce Log"
-msgstr ""
+msgstr "トウヒの原木"
 
 msgid "Spruce Planks"
-msgstr ""
+msgstr "トウヒの板材"
 
 msgid "Spruce Pressure Plate"
-msgstr ""
+msgstr "トウヒの感圧板"
 
 msgid "Spruce Sapling"
-msgstr ""
+msgstr "トウヒの苗木"
 
 msgid "Spruce Sign"
-msgstr ""
+msgstr "トウヒの看板"
 
 msgid "Spruce Slab"
-msgstr ""
+msgstr "トウヒのハーフブロック"
 
 msgid "Spruce Stairs"
-msgstr ""
+msgstr "トウヒの階段"
 
 msgid "Spruce Trapdoor"
-msgstr ""
+msgstr "トウヒのトラップドア"
 
 msgid "Spruce leaves are grown from Spruce trees."
 msgstr ""
 
 msgid "Stripped Acacia Bark"
-msgstr ""
+msgstr "樹皮を剥いだアカシアの木"
 
 msgid "Stripped Acacia Log"
-msgstr ""
+msgstr "樹皮を剥いだアカシアの原木"
 
 msgid "Stripped Birch Bark"
-msgstr ""
+msgstr "樹皮を剥いだシラカバの木"
 
 msgid "Stripped Birch Log"
-msgstr ""
+msgstr "樹皮を剥いだシラカバの原木"
 
 msgid "Stripped Dark Oak Bark"
-msgstr ""
+msgstr "樹皮を剥いだダークオークの木"
 
 msgid "Stripped Dark Oak Log"
-msgstr ""
+msgstr "樹皮を剥いだダークオークの原木"
 
 msgid "Stripped Jungle Bark"
-msgstr ""
+msgstr "樹皮を剥いだジャングルの木"
 
 msgid "Stripped Jungle Log"
-msgstr ""
+msgstr "樹皮を剥いだジャングルの原木"
 
 msgid "Stripped Oak Bark"
-msgstr ""
+msgstr "樹皮を剥いだオークの木"
 
 msgid "Stripped Oak Log"
-msgstr ""
+msgstr "樹皮を剥いだオークの原木"
 
 msgid "Stripped Spruce Bark"
-msgstr ""
+msgstr "樹皮を剥いだトウヒの木"
 
 msgid "Stripped Spruce Log"
-msgstr ""
+msgstr "樹皮を剥いだトウヒの原木"
 
 msgid "The stripped trunk of an Acacia tree."
-msgstr ""
+msgstr "皮を剥いだ後のアカシアの木の幹。"
 
 msgid "The stripped trunk of an Birch tree."
-msgstr ""
+msgstr "皮を剥いだ後のシラカバの木の幹。"
 
 msgid "The stripped trunk of an Dark Oak tree."
-msgstr ""
+msgstr "皮を剥いだ後のダークオークの木の幹。"
 
 msgid "The stripped trunk of an Jungle tree."
-msgstr ""
+msgstr "皮を剥いだ後のジャングルの木の幹。"
 
 msgid "The stripped trunk of an Oak tree."
-msgstr ""
+msgstr "皮を剥いだ後のオークの木の幹。"
 
 msgid "The stripped trunk of an Spruce tree."
-msgstr ""
+msgstr "皮を剥いだ後のトウヒの木の幹。"
 
 msgid "The stripped wood of an Acacia tree."
-msgstr ""
+msgstr "皮を剥いだ後のアカシアの木。"
 
 msgid "The stripped wood of an Birch tree."
-msgstr ""
+msgstr "皮を剥いだ後のシラカバの木。"
 
 msgid "The stripped wood of an Dark Oak tree."
-msgstr ""
+msgstr "皮を剥いだ後のダークオークの木。"
 
 msgid "The stripped wood of an Jungle tree."
-msgstr ""
+msgstr "皮を剥いだ後のジャングルの木。"
 
 msgid "The stripped wood of an Oak tree."
-msgstr ""
+msgstr "皮を剥いだ後のオークの木。"
 
 msgid "The stripped wood of an Spruce tree."
-msgstr ""
+msgstr "皮を剥いだ後のトウヒの木。"
 
 msgid "The trunk of a Acacia tree."
-msgstr ""
+msgstr "アカシアの木の幹。"
 
 msgid "The trunk of a Birch tree."
-msgstr ""
+msgstr "シラカバの木の幹。"
 
 msgid "The trunk of a Dark Oak tree."
-msgstr ""
+msgstr "ダークオークの木の幹。"
 
 msgid "The trunk of a Jungle tree."
-msgstr ""
+msgstr "ジャングルの木の幹。"
 
 msgid "The trunk of a Oak tree."
-msgstr ""
+msgstr "オークの木の幹。"
 
 msgid "The trunk of a Spruce tree."
-msgstr ""
+msgstr "トウヒの木の幹。"
 
 msgid "White Stained Glass"
-msgstr ""
+msgstr "白色の色付きガラス板"
 
 msgid "Yellow Stained Glass"
-msgstr ""
+msgstr "黄色の色付きガラス板"
 
 msgid "Stone"
 msgstr "石"
@@ -713,7 +713,7 @@ msgid "A grass block is dirt with a grass cover. Grass blocks are resourceful bl
 msgstr "草原とは、土に草を被せたものです。草原は、さまざまな植物を育てることができる、資源的なブロックです。クワで農地にしたり、シャベルでオフロードにしたりできます。光に当たると、近くの土の上に草がゆっくりと広がっていきます。不透明なブロックや液体の下では、草原は土に戻ることがあります。"
 
 msgid "Dirt with Snow"
-msgstr ""
+msgstr "雪が積もった土"
 
 msgid "Grass Path"
 msgstr "オフロード"
@@ -728,7 +728,7 @@ msgid "Mycelium is a type of dirt and the ideal soil for mushrooms. Unlike other
 msgstr "菌糸は土の一種であり、キノコに最適な土壌です。他の土系ブロックと違い、クワで農地に変えられません。光に当たると、菌糸は近くの土の上にゆっくりと広がっていきます。不透明なブロックや液体の下では、それはやがて土に戻ります。"
 
 msgid "Mycelium with Snow"
-msgstr ""
+msgstr "雪が積もった菌糸"
 
 msgid "Podzol"
 msgstr "ポドゾル"
@@ -737,7 +737,7 @@ msgid "Podzol is a type of dirt found in taiga forests. Only a few plants are ab
 msgstr "ポドゾルとは、タイガの森で見つかる土の一種です。その上で生きられる植物はごくわずかです。"
 
 msgid "Podzol with Snow"
-msgstr ""
+msgstr "雪が積もったポドゾル"
 
 msgid "Dirt"
 msgstr "土"
@@ -869,7 +869,7 @@ msgid "A block of diamond is mostly a shiny decorative block but also useful as 
 msgstr "ダイヤモンドブロックは、主に装飾用の輝くブロックですが、ダイヤモンドをコンパクトに保管するのにも便利です。"
 
 msgid "Block of Lapis Lazuli"
-msgstr ""
+msgstr "ラピスラズリブロック"
 
 msgid "A lapis lazuli block is mostly a decorative block but also useful as a compact storage of lapis lazuli."
 msgstr "ラピスラズリブロックは、主に装飾用のブロックですが、ラピスラズリをコンパクトに保管するのにも便利です。"
@@ -1163,29 +1163,29 @@ msgid "Stone Brick Stairs"
 msgstr "石レンガの階段"
 
 msgid "Stone Brick Slab"
-msgstr ""
+msgstr "石レンガのハーフブロック"
 
 msgid "Polished Andesite Stairs"
-msgstr ""
+msgstr "磨かれた安山岩の階段"
 
 msgid "Polished Andesite Slab"
-msgstr ""
+msgstr "磨かれた安山岩のハーフブロック"
 
 msgid "Polished Granite Stairs"
-msgstr ""
+msgstr "磨かれた花崗岩の階段"
 
 msgid "Polished Granite Slab"
-msgstr ""
+msgstr "磨かれた花崗岩のハーフブロック"
 
 msgid "Polished Diorite Stairs"
-msgstr ""
+msgstr "磨かれた閃緑岩の階段"
 
 msgid "Polished Diorite Slab"
-msgstr ""
+msgstr "磨かれた閃緑岩のハーフブロック"
 
 msgid "Mossy Stone Brick Stairs"
-msgstr ""
+msgstr "苔むした石レンガの階段"
 
 msgid "Mossy Stone Brick Slab"
-msgstr ""
+msgstr "苔むした石レンガのハーフブロック"
 

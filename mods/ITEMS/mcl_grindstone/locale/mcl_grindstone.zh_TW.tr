@@ -1,8 +1,8 @@
 # textdomain: mcl_grindstone
-Repair & Disenchant=
+Repair & Disenchant=修復・除魔
 Inventory=物品欄
-Grindstone=
-Used to disenchant/fix tools=
+Grindstone=磨石
+Used to disenchant/fix tools=用以移除附魔及修復耐久
 Grindstone disenchants tools and armour except for curses, and repairs two items of the same type it is also the weapon smith's work station.=
 To use the grindstone, rightclick it, Two input slots (on the left) and a single output slot.=
 To disenchant an item place enchanted item in one of the input slots and take the disenchanted item from the output.=

@@ -95,16 +95,13 @@ msgid "Turns block into farmland"
 msgstr "Convierte bloques en tierra de cultivo"
 
 msgid "Hoes are essential tools for growing crops. They are used to create farmland in order to plant seeds on it. Hoes can also be used as very weak weapons in a pinch."
-msgstr "Las azadas son herramientas esenciales para el cultivo. Se utilizan para crear tierras de cultivo para plantar semillas en él. Las azadas también se pueden usar como armas muy débiles en caso de apuro."
+msgstr "Las azadas son herramientas esenciales para cultivar cultivos. Se utilizan para crear tierra de cultivo para plantar semillas en ella. Las azadas también se pueden utilizar como armas muy débiles en caso de necesidad."
 
 msgid "Use the hoe on a cultivatable block (by rightclicking it) to turn it into farmland. Dirt, grass blocks and grass paths are cultivatable blocks. Using a hoe on coarse dirt turns it into dirt."
 msgstr "Use la azada en un bloque cultivable (al hacer clic derecho) para convertirlo en tierras de cultivo. La tierra, los bloques de hierba y los caminos de hierba son bloques cultivables. Usar una azada en tierra gruesa la convierte en tierra."
 
 msgid "Wood Hoe"
 msgstr "Azada de madera"
-
-msgid "Uses: @1"
-msgstr "Usos: @1"
 
 msgid "Stone Hoe"
 msgstr "Azada de piedra"

@@ -17,5 +17,5 @@ msgid "Spyglass"
 msgstr "望遠鏡"
 
 msgid "A spyglass is an item that can be used for zooming in on specific locations."
-msgstr ""
+msgstr "望遠鏡是一種可以用來放大特定位置的物品。"
 

@@ -1,8 +1,8 @@
 # textdomain: doc_items
-This is a decorational block.=
-This block is a building block for creating various buildings.=
-This item is primarily used for crafting other items.=
-Hold it in your hand, then leftclick to eat it.=
+This is a decorational block.=Dit is een decoratief blok.
+This block is a building block for creating various buildings.=Dit blok is een bouwblok,  voor het maken van verschillende bouwwerken.
+This item is primarily used for crafting other items.=Dit item word voornamelijk gebruikt voor het maken van andere items.
+Hold it in your hand, then leftclick to eat it.=Hou het in je hand, doe dan een linker muisklik om het te eten.
 Hold it in your hand, then leftclick to eat it. But why would you want to do this?=
 This block's rotation is affected by the way you place it: Place it on the floor or ceiling for a vertical orientation; place it at the side for a horizontal orientation. Sneaking while placing it leads to a perpendicular orientation instead.=
 Hand=
@@ -38,7 +38,6 @@ This block can be mined by mining tools which match any of the following mining 
 Mining ratings:=
 Toughness level: @1=
 Range: @1=
-Range: 4=
 # Range: <Hand> (<Range>)
 Range: @1 (@2)=
 This tool can serve as a smelting fuel with a burning time of @1.=

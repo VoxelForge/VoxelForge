@@ -1,6 +1,6 @@
 # textdomain: mcl_fireworks
-Firework Rocket=
-@1s power left. Not using rocket.=
-Elytra not deployed. Jump while falling down to deploy.=
-Elytra not equipped.=
-Flight Duration: @1s=
+Firework Rocket=煙花火箭
+@1s power left. Not using rocket.=剩 @1 秒動力。無火箭輔助。
+Elytra not deployed. Jump while falling down to deploy.=鞘翅停用中。下落時跳躍即可展開。
+Elytra not equipped.=未裝備鞘翅。
+Flight Duration: @1s=飛行時長：@1 秒

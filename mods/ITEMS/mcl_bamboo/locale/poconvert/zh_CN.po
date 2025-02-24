@@ -68,10 +68,10 @@ msgid "Bamboo Mosaic Plank"
 msgstr "竹马赛克板"
 
 msgid "Bamboo Mosaic Stairs"
-msgstr ""
+msgstr "竹马赛克楼梯"
 
 msgid "Bamboo Mosaic Slab"
-msgstr ""
+msgstr "竹马赛克台阶"
 
 msgid "Scaffolding"
 msgstr "脚手架"

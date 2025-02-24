@@ -17,7 +17,6 @@ mobs_mc.water_level = tonumber(minetest.settings:get("water_level")) or 0
 -- Load mobs in the right order.
 local path = minetest.get_modpath ("mobs_mc")
 local files = {
-	"armadillo.lua",
 	"axolotl.lua",
 	"bat.lua",
 	"blaze.lua",

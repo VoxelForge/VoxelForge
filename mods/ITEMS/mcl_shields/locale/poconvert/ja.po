@@ -53,7 +53,7 @@ msgid "Orange Shield"
 msgstr "盾（橙色）"
 
 msgid "Violet Shield"
-msgstr ""
+msgstr "盾（紫色）"
 
 msgid "Brown Shield"
 msgstr "盾（茶色）"

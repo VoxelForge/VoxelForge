@@ -14,16 +14,16 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Repair & Disenchant"
-msgstr ""
+msgstr "修復・除魔"
 
 msgid "Inventory"
 msgstr "物品欄"
 
 msgid "Grindstone"
-msgstr ""
+msgstr "磨石"
 
 msgid "Used to disenchant/fix tools"
-msgstr ""
+msgstr "用以移除附魔及修復耐久"
 
 msgid "Grindstone disenchants tools and armour except for curses, and repairs two items of the same type it is also the weapon smith's work station."
 msgstr ""

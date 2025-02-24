@@ -103,12 +103,15 @@ minetest.register_node("mcl_redstone_torch:redstoneblock", {
 	_doc_items_longdesc = S("A block of redstone permanently supplies redstone power to its surrounding blocks."),
 	tiles = {"redstone_redstone_block.png"},
 	stack_max = 64,
-	groups = {pickaxey=1, opaquely_powered=15},
+	groups = {pickaxey=1},
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	is_ground_content = false,
 	_mcl_redstone = {
 		connects_to = function()
 			return true
+		end,
+		get_power = function()
+			return 15, false
 		end,
 	},
 	_mcl_blast_resistance = 6,

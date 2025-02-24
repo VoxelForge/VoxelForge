@@ -14,80 +14,80 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Pink Petals"
-msgstr ""
+msgstr "桜色の花びら"
 
 msgid "Pink Petals are ground decoration of cherry grove biomes"
 msgstr ""
 
 msgid "Cherry Bark"
-msgstr ""
+msgstr "サクラ"
 
 msgid "Cherry Bark Slab"
-msgstr ""
+msgstr "サクラの樹皮のハーフブロック"
 
 msgid "Cherry Bark Stairs"
-msgstr ""
+msgstr "サクラの樹皮の階段"
 
 msgid "Cherry Boat"
-msgstr ""
+msgstr "サクラのボート"
 
 msgid "Cherry Button"
-msgstr ""
+msgstr "サクラのボタン"
 
 msgid "Cherry Chest Boat"
-msgstr ""
+msgstr "チェスト付きのサクラのボート"
 
 msgid "Cherry Door"
-msgstr ""
+msgstr "サクラのドア"
 
 msgid "Cherry Fence"
-msgstr ""
+msgstr "サクラのフェンス"
 
 msgid "Cherry Fence Gate"
-msgstr ""
+msgstr "サクラのフェンスゲート"
 
 msgid "Cherry Leaves"
-msgstr ""
+msgstr "サクラの葉"
 
 msgid "Cherry Log"
-msgstr ""
+msgstr "サクラの原木"
 
 msgid "Cherry Planks"
-msgstr ""
+msgstr "サクラの板材"
 
 msgid "Cherry Pressure Plate"
-msgstr ""
+msgstr "サクラの感圧板"
 
 msgid "Cherry Sapling"
-msgstr ""
+msgstr "サクラの苗木"
 
 msgid "Cherry Sign"
-msgstr ""
+msgstr "サクラの看板"
 
 msgid "Cherry Slab"
-msgstr ""
+msgstr "サクラのハーフブロック"
 
 msgid "Cherry Stairs"
-msgstr ""
+msgstr "サクラの階段"
 
 msgid "Cherry Trapdoor"
-msgstr ""
+msgstr "サクラのトラップドア"
 
 msgid "Cherry leaves are grown from Cherry trees."
 msgstr ""
 
 msgid "Stripped Cherry Bark"
-msgstr ""
+msgstr "樹皮を剥いだサクラの木"
 
 msgid "Stripped Cherry Log"
-msgstr ""
+msgstr "樹皮を剥いだサクラの原木"
 
 msgid "The stripped trunk of an Cherry tree."
-msgstr ""
+msgstr "皮を剥いだ後のサクラの木の幹。"
 
 msgid "The stripped wood of an Cherry tree."
-msgstr ""
+msgstr "皮を剥いだ後のサクラの木。"
 
 msgid "The trunk of a Cherry tree."
-msgstr ""
+msgstr "サクラの木の幹。"
 

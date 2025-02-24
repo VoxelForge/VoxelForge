@@ -25,16 +25,34 @@ msgstr ""
 msgid "Moss is a green block found in lush caves"
 msgstr ""
 
-msgid "Moss carpet"
-msgstr ""
+msgid "Moss Carpet"
+msgstr "mos tapijt"
+
+msgid "A moss carpet is a flat variant of the moss block."
+msgstr "Een mos tapijt is een platte variant van een blok mos."
 
 msgid "Hanging roots"
+msgstr ""
+
+msgid "Hanging roots are a decorative block found hanging from rooted dirt in lush caves."
 msgstr ""
 
 msgid "Cave vines"
 msgstr ""
 
+msgid "Cave vines are decorative blocks growing from the ceiling of lush caves."
+msgstr ""
+
+msgid "Lit Cave vines"
+msgstr ""
+
+msgid "Lit cave vines are light emitting decorative blocks growing from the ceiling of lush caves."
+msgstr ""
+
 msgid "Rooted dirt"
+msgstr ""
+
+msgid "Rooted dirt is type of dirt found in lush caves."
 msgstr ""
 
 msgid "Glow berry"
@@ -56,6 +74,9 @@ msgid "The Flowering Leaves of an Azalea tree"
 msgstr ""
 
 msgid "Spore blossom"
+msgstr ""
+
+msgid "Spore blossoms are a type of flower found in lush caves."
 msgstr ""
 
 msgid "Needs soil and bone meal to grow"

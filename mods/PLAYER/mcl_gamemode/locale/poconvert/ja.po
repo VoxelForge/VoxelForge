@@ -16,15 +16,15 @@ msgstr ""
 msgid "[<gamemode>] [<player>]"
 msgstr ""
 
-msgid "Change gamemode (survival/creative) for yourself or player"
+msgid "Change gamemode (survival/creative/0/1/s/c) for yourself or player"
 msgstr ""
 
 msgid "Player not online"
-msgstr ""
+msgstr "プレーヤーがオンラインではありません"
 
 msgid "Failed to set Gamemode @1 for player @2"
-msgstr ""
+msgstr "プレイヤー @2 のゲームモード @1 を設定できませんでした"
 
 msgid "Gamemode for player @1: @2"
-msgstr ""
+msgstr "プレイヤー@1のゲームモード:@2"
 

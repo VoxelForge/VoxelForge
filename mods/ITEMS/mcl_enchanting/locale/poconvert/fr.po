@@ -217,14 +217,14 @@ msgstr "Enchantement inconnu"
 msgid "Inventory"
 msgstr "Inventaire"
 
-msgid "@1 Lapis Lazuli"
-msgstr "@1 unité(s) de lapis-lazuli"
-
 msgid "@1 Enchantment Levels"
 msgstr "@1 niveau(x) d'enchantement"
 
 msgid "Level requirement: @1"
 msgstr "Niveau requis : @1"
+
+msgid "@1 Lapis Lazuli"
+msgstr "@1 unité(s) de lapis-lazuli"
 
 msgid "Enchant an item"
 msgstr "Enchanter un objet"

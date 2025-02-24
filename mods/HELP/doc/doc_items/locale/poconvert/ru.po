@@ -127,9 +127,6 @@ msgstr "Уровень твёрдости: @1"
 msgid "Range: @1"
 msgstr "Дальность: @1"
 
-msgid "Range: 4"
-msgstr "Дальность: 4"
-
 msgid "Range: @1 (@2)"
 msgstr "Дальность: @1 (@2)"
 
