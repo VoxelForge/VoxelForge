@@ -138,7 +138,7 @@ local function get_pool_loot(pool_table, loot_context)
 end
 
 local function get_loot(loot_table, loot_context)
-    local start_time = minetest.get_us_time()
+    --local start_time = minetest.get_us_time()
     -- DEBUG ONLY ^^ REMOVE
     local loot_stacks = {}
     for _, pool_table in ipairs(loot_table.pools) do

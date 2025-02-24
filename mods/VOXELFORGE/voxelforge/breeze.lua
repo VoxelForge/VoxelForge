@@ -6,8 +6,6 @@
 local S = minetest.get_translator("mobs_mc")
 local mob_class = mcl_mobs.mob_class
 
-local mod_target = minetest.get_modpath("mcl_target")
-
 local breeze = {
     description = S("Breeze"),
     type = "monster",
@@ -86,7 +84,6 @@ local breeze = {
 }
 
 function breeze:do_custom(dtime)
-    local pos = self.object:get_pos()
 
     if not self._height_diff_tolerance or self._height_diff_tolerance_age >= 5 then
         self._height_diff_tolerance = mcl_util.dist_triangular(0.5, 6.891)

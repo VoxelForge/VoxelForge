@@ -321,7 +321,6 @@ minetest.register_node("mcl_lush_caves:spore_blossom", {
 	description = S("Spore blossom"),
 	_doc_items_longdesc = S("Spore blossoms are a type of flower found in lush caves."),
 	_doc_items_hidden = false,
-	tiles = {"mcl_lush_caves_spore_blossom.png"},
 	inventory_image = "mcl_lush_caves_spore_blossom.png",
 	wield_image = "mcl_lush_caves_spore_blossom.png",
 	drawtype = "mesh",

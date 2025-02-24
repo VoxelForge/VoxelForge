@@ -1,6 +1,3 @@
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath("vlf_structure_block")
-
 vlf_structures.register_structure("trial_chambers",{
 	place_on = {"mcl_deepslate:deepslate"},
 	flags = "place_center_x, place_center_z",

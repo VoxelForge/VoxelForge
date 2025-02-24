@@ -332,7 +332,6 @@ do
 
 	minetest.register_node("mcl_dispensers:dispenser_down", table.merge(dispenserdef, {
 		description = S("Dispenser"),
-		after_place_node = setup_dispenser,
 		tiles = {
 			"default_furnace_top.png", "mcl_dispensers_dispenser_front_vertical.png",
 			"default_furnace_side.png", "default_furnace_side.png",
@@ -360,7 +359,6 @@ do
 	}))
 	minetest.register_node("mcl_dispensers:dispenser_up", table.merge(dispenserdef, {
 		description = S("Dispenser"),
-		after_place_node = setup_dispenser,
 		tiles = {
 			"mcl_dispensers_dispenser_front_vertical.png", "default_furnace_bottom.png",
 			"default_furnace_side.png", "default_furnace_side.png",
@@ -384,7 +382,7 @@ do
 			minetest.after(1, function()
 				vl_loot.generate_container_loot_if_exists(pos, nil, inventory, "main")
 			end)
-			
+
 		end
 	}))
 

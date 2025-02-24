@@ -28,14 +28,14 @@ local function spawn_doll(pos)
 	return minetest.add_entity({x=pos.x, y=pos.y-0.3, z=pos.z}, "vlf_trials:doll")
 end
 
-local spawn_count_overrides = {
+--[[local spawn_count_overrides = {
 	["mobs_mc:enderdragon"] = 1,
 	["mobs_mc:wither"] = 1,
 	["mobs_mc:ghast"] = 1,
 	["mobs_mc:guardian_elder"] = 1,
 	["mobs_mc:guardian"] = 2,
 	["mobs_mc:iron_golem"] = 2,
-}
+}]]
 
 local function set_doll_properties(doll, mob)
 	local mobinfo = minetest.registered_entities[mob]
@@ -79,7 +79,6 @@ end
 function vlf_trials.setup_spawner(pos, Mob, MinLight, MaxLight, MaxMobsInArea, MaxMobs, SpawnedMobs, PlayerDistance, YOffset, SpawnInterval, MAPP, MMIAAPP)
     local dim = mcl_worlds.pos_to_dimension(pos)
     Mob = Mob or default_mob
-    local mn, mx = mcl_mobs.get_mob_light_level(Mob, dim)
     MinLight = MinLight or 0
     MaxLight = MaxLight or 14
     MaxMobsInArea = MaxMobsInArea or 2
@@ -269,7 +268,7 @@ local function check_player_proximity_and_los(pos)
 						glow = 10,
 					})
                 else
-                	minetest.sound_play("trial_spawner_detect_player1", {pos = pos, gain = 1, max_hear_distance = 14})
+					minetest.sound_play("trial_spawner_detect_player1", {pos = pos, gain = 1, max_hear_distance = 14})
                     minetest.swap_node(pos, { name = "vlf_trials:spawner_active" })
                     local activate = {
 						amount = 10,
@@ -298,11 +297,10 @@ local function check_player_proximity_and_los(pos)
 						maxpos = maxpos,
 					}))
                 end
-            else
             end
         end
     end
-    
+
 	minetest.add_particlespawner({
 		amount = 20,  -- Number of particles
 		time = 2,  -- Spawner lasts forever (0 means infinite)
@@ -355,11 +353,11 @@ local function spawn_mobs(pos)
                 mcl_potions.clear_effect(player, "bad_omen")
 				mcl_potions.give_effect("trial_omen", player, 0, tonumber(lv) * 900)
             elseif mcl_potions.has_effect(player, "trial_omen")  and Ominous ~= "true" then
-            	trial_omen = true
+				trial_omen = true
             end
         end
     end
-    
+
     local doll = find_doll(pos)
     if not doll then
         doll = spawn_doll(pos)
@@ -393,7 +391,7 @@ local function spawn_mobs(pos)
             count = count + 1
         end
     end
-    
+
     -- Every 8 cycles, add an ominous item spawner above
         local cycle_count = meta:get_int("CycleCount") or 0
         if players_nearby > 0 and cycle_count == 1  then
@@ -443,9 +441,9 @@ local function spawn_mobs(pos)
             pos2.y = pos2.y + 0.5
 
             if lig >= mlig and lig <= xlig then
-            	if Ominous == "true" then
-            	
-            	minetest.add_particlespawner({
+				if Ominous == "true" then
+
+				minetest.add_particlespawner({
 					amount = 15,
 					time = 1,
 					minpos = {x=pos2.x-0.5,y=pos2.y-0.5,z=pos2.z-0.5},
@@ -466,8 +464,8 @@ local function spawn_mobs(pos)
 				})
 				
 				else
-            	
-            	minetest.add_particlespawner({
+
+				minetest.add_particlespawner({
 					amount = 15,
 					time = 1,
 					minpos = {x=pos2.x-0.5,y=pos2.y-0.5,z=pos2.z-0.5},
@@ -496,13 +494,13 @@ local function spawn_mobs(pos)
             table.remove(air, air_index)
         end
     end
-    
+
      if meta:get_int("SpawnedMobs") == maxx and count == 0 then
         if meta:get_string("Ominous") == "true" then
-        	minetest.sound_play("trial_spawner_open_shutter", {pos = pos, gain = 1, max_hear_distance = 7})
+			minetest.sound_play("trial_spawner_open_shutter", {pos = pos, gain = 1, max_hear_distance = 7})
             minetest.swap_node(pos, {name = "vlf_trials:ominous_spawner_ejecting"})
         else
-        	minetest.sound_play("trial_spawner_open_shutter", {pos = pos, gain = 1, max_hear_distance = 7})
+			minetest.sound_play("trial_spawner_open_shutter", {pos = pos, gain = 1, max_hear_distance = 7})
             minetest.swap_node(pos, {name = "vlf_trials:spawner_ejecting"})
         end
     end
@@ -554,6 +552,7 @@ end
 local function eject_loot(pos)
     local meta = minetest.get_meta(pos)
     local Ominous = meta:get_string("Ominous")
+    local mob = meta:get_string("mob")
 
     local doll = find_doll(pos)
     if not doll then
@@ -564,11 +563,11 @@ local function eject_loot(pos)
     local players = minetest.get_connected_players()
 
     -- Determine the resource pool to use
-    local resource_pool 
+    local resource_pool
     if Ominous == "true" then
-    	resource_pool = math.random() < 0.3 and "key" or "consumables"
+		resource_pool = math.random() < 0.3 and "key" or "consumables"
     else
-    	resource_pool = math.random() < 0.5 and "key" or "consumables"
+		resource_pool = math.random() < 0.5 and "key" or "consumables"
     end
     minetest.chat_send_all("Selected resource pool: " .. resource_pool)
 
@@ -580,11 +579,11 @@ local function eject_loot(pos)
             minetest.chat_send_all("Player within range, fetching resource...")
 
             -- Fetch the resource using vl_datapacks.get_resource
-            local resource 
-            if Ominous == "true" then 
-            	resource = vl_datapacks.get_resource("loot_table", "vanilla:spawners/ominous/trial_chamber/" .. resource_pool)
+            local resource
+            if Ominous == "true" then
+				resource = vl_datapacks.get_resource("loot_table", "vanilla:spawners/ominous/trial_chamber/" .. resource_pool)
             else
-            	resource = vl_datapacks.get_resource("loot_table", "vanilla:spawners/trial_chamber/" .. resource_pool)
+				resource = vl_datapacks.get_resource("loot_table", "vanilla:spawners/trial_chamber/" .. resource_pool)
             end
             if resource then
                 minetest.chat_send_all("Resource loaded for player " .. player:get_player_name() .. ": " .. minetest.serialize(resource))
@@ -600,17 +599,17 @@ local function eject_loot(pos)
         end
     end
     if Ominous == "true" then
-    	minetest.after(1, function()
-    		minetest.sound_play("trial_spawner_close_shutter", {pos = pos, gain = 1, max_hear_distance = 10})
-    		minetest.swap_node(pos, {name = "vlf_trials:ominous_spawner_cooldown"})
-    	end)
+		minetest.after(1, function()
+			minetest.sound_play("trial_spawner_close_shutter", {pos = pos, gain = 1, max_hear_distance = 10})
+			minetest.swap_node(pos, {name = "vlf_trials:ominous_spawner_cooldown"})
+		end)
     else
-    	minetest.after(1, function()
-    		minetest.sound_play("trial_spawner_close_shutter", {pos = pos, gain = 1, max_hear_distance = 10})
+		minetest.after(1, function()
+			minetest.sound_play("trial_spawner_close_shutter", {pos = pos, gain = 1, max_hear_distance = 10})
 			minetest.swap_node(pos, {name = "vlf_trials:spawner_cooldown"})
 		end)
 	end
-	
+
 	local smoke_particlespawner = {
 		amount = 1000,
 		texture = "",
@@ -670,8 +669,8 @@ local base_spawner_def = {
     groups = {pickaxey = 1, material_stone = 1, deco_block = 1, unmovable_by_piston = 1},
     is_ground_content = false,
     drop = "",
-    
-    	on_place = function(itemstack, placer, pointed_thing)
+
+		on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 			return itemstack
 		end
@@ -721,7 +720,7 @@ local base_spawner_def = {
 		end
 		return itemstack
 	end,
-	
+
 	on_construct = function(pos, node)
 		vlf_trials.setup_spawner(pos)
 	end,
@@ -735,7 +734,7 @@ local base_spawner_def = {
     on_punch = function(pos)
         respawn_doll(pos)
     end,
-    
+
         on_blast = function()
         end,
     sounds = mcl_sounds.node_sound_metal_defaults(),

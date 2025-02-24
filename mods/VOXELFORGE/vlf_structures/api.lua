@@ -1,7 +1,4 @@
 vlf_structures.registered_structures = {}
-local modname = minetest.get_current_modname()
-local modpath = minetest.get_modpath(modname)
-
 local disabled_structures = minetest.settings:get("mcl_disabled_structures")
 if disabled_structures then	disabled_structures = disabled_structures:split(",")
 else disabled_structures = {} end
@@ -48,9 +45,7 @@ function vlf_structures.place_schematic(pos, schematic, rotation, replacements, 
 		local p1 = {x=pos.x    , y=pos.y           , z=pos.z    }
 		local p2 = {x=pos.x+x-1, y=pos.y+s.size.y-1, z=pos.z+z-1}
 		minetest.log("verbose", "[mcl_structures] size=" ..minetest.pos_to_string(s.size) .. ", rotation=" .. tostring(rotation) .. ", emerge from "..minetest.pos_to_string(p1) .. " to " .. minetest.pos_to_string(p2))
-		local param = {pos=vector.new(pos), schematic=s, rotation=rotation, replacements=replacements, force_placement=force_placement, flags=flags, p1=p1, p2=p2, after_placement_callback = after_placement_callback, size=vector.new(s.size), pr=pr, callback_param=callback_param}
-		--minetest.emerge_area(p1, p2, ecb_place, param)
-		vlf_structure_block.place_schematic(pos, schematic, 0, rotation_origin or pos, "true", "false", true)
+		vlf_structure_block.place_schematic(pos, schematic, 0, pos, "true", "false", true)
 		return true
 	end
 end
@@ -152,8 +147,6 @@ function vlf_structures.place_structure(pos, def, pr, blockseed, _)
 				ap = def.after_place
 			end
 			vlf_structures.place_schematic(pp, file, rot,  def.replacements, true, "place_center_x,place_center_z",function(p1, p2, size, rotation)---@diagnostic disable-line: unused-local
-				if not def.daughters then
-				end
 				return ap(pp, def, pr, blockseed)
 			end,pr)
 			if log_enabled then

@@ -1,4 +1,3 @@
-local modpath = minetest.get_modpath("vlf_procedural_structures")
 local mpath = minetest.get_modpath("vlf_structure_block")
 local Randomizer = dofile(minetest.get_modpath("vlf_lib").."/init.lua")
 
@@ -11,15 +10,13 @@ local function spawn_struct(pos)
     local rng = PcgRandom(seed_1)
     local pos_hash = minetest.hash_node_position({x = pos.x * 256 * 8, y = pos.y * 12, z = pos.z * 18})
     local blockseed = minetest.get_mapgen_setting("seed")
-    local seed = pos_hash + blockseed + minetest.hash_node_position({x = pos.x * rng:next(1, 47), y = pos.y * rng:next(1, 49), z = pos.z * rng:next(1, 45)}) -- For better randomization
     local rng = Randomizer.new(pos_hash, blockseed)
     local meta = minetest.get_meta(pos)
     local pool = meta:get_string("pool")
-    local name = meta:get_string("name")
     local target = meta:get_string("target")
     local final_state = meta:get_string("final_state")
-    local levels = tonumber(meta:get_string("levels")) or 0
-    local joint_type = meta:get_string("joint_type")
+    --local levels = tonumber(meta:get_string("levels")) or 0
+    --local joint_type = meta:get_string("joint_type")
     local param2 = minetest.get_node(pos).param2
     local projection
     local processor
@@ -40,26 +37,21 @@ local function spawn_struct(pos)
     }
 
     local rotations = {
-        -- Normal
-        [0] = { [2] = 0 },
-        [1] = { [3] = 0 },
-        [2] = { [0] = 0 },
-        [3] = { [1] = 0 },
         -- Up
         [6] = { [4] = 0, [19] = 90, [10] = 180, [13] = 270 },
         [8] = { [4] = 180, [19] = 270, [10] = 0, [13] = 90},
         [15] = { [4] = 90, [19] = 180, [10] = 270, [13] = 0 },
         [17] = { [19] = 0, [4] = 270, [10] = 90, [13] = 180},
-        -- Down 
+        -- Down
         [4] = { [6] = 0, [8] = 180, [15] = 90, [17] = 270},
         [10] = { [6] = 180, [8] = 0, [15] = 270, [17] = 90},
         [13] = { [6] = 90, [8] = 270, [15] = 0, [17] = 180},
         [19] = { [6] = 270, [8] = 90, [15] = 180, [17] = 0},
         -- Hybrid
-        [0] = { [3] = 270, [1] = 90, [0] = 180 },
-        [1] = { [2] = 90, [0] = 270, [1] = 180 },
-        [2] = { [1] = 270, [3] = 90, [2] = 180 },
-        [3] = { [2] = 270, [3] = 180, [0] = 90 },
+        [0] = { [3] = 270, [1] = 90, [0] = 180, [2] = 0 },
+        [1] = { [2] = 90, [0] = 270, [1] = 180, [3] = 0 },
+        [2] = { [1] = 270, [3] = 90, [2] = 180, [0] = 0 },
+        [3] = { [2] = 270, [3] = 180, [0] = 90, [1] = 0 },
     }
 
     local real_pool = pool:gsub("voxelforge:", "")
@@ -233,11 +225,11 @@ local function spawn_struct(pos)
         if not target_pos then
             return
         end
-        
+
         local rot = rotations[param2] and rotations[param2][target_param2] or 0
         local placement_pos = vector.add(pos, vector.subtract(offset, target_pos))
 
-    	if vlf_structure_block.get_bounding_box(placement_pos, selected_schematic, rot, target_pos,"true", false) == "good" then
+		if vlf_structure_block.get_bounding_box(placement_pos, selected_schematic, rot, target_pos,"true", false) == "good" then
 
             vlf_structure_block.place_schematic(placement_pos, selected_schematic, rot, target_pos,"true", false, true, projection, processor)
             minetest.set_node(pos, {name = final_state})
@@ -261,7 +253,7 @@ local function get_jigsaw_formspec(pos)
     local target = meta:get_string("target")
     local levels = meta:get_string("levels")
     local joint_type = meta:get_string("joint_type")
-    
+
     return "size[12,10]" ..
            "field[0.5,0.5;7.5,1;pool;Target Pool:;" .. pool .. "]" ..
            "field[0.5,1.5;7.5,1;name;Name:;" .. name .. "]" ..
@@ -294,7 +286,7 @@ minetest.register_node(":voxelforge:jigsaw", {
     on_construct = function(pos, node)
         local node = minetest.get_node(pos)
         local meta = minetest.get_meta(pos)
-        
+
         -- Check if the node name matches the one you're interested in
        -- minetest.after(0.01, function()
         minetest.after(1, function()
@@ -302,7 +294,7 @@ minetest.register_node(":voxelforge:jigsaw", {
             meta:set_string("generate", "true")
             local generate = meta:get_string("generate")
             if generate == "true" then
-            	spawn_struct(pos, false)
+				spawn_struct(pos, false)
             end
         end
         end)
@@ -315,7 +307,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
     if formname ~= "voxelforge:jigsaw" then
         return
     end
-    
+
         local node_pos = minetest.get_player_by_name(player:get_player_name()):get_pos()
         node_pos = vector.floor(node_pos)
 
@@ -424,14 +416,6 @@ minetest.register_chatcommand("place_po", {
 })
 
 local placed_schematics = {}  -- Table to store placed schematic data for each player
-
-local function is_directory(path)
-    local success, _, code = os.rename(path, path)
-    if not success and code == 13 then
-        return true
-    end
-    return success, code
-end
 
 local function is_file(path)
     local f = io.open(path, "r")
@@ -586,7 +570,7 @@ minetest.register_abm({
         -- Get the final_state meta field from the node
         local meta = minetest.get_meta(pos)
         local final_state = meta:get_string("final_state")
-        
+
         -- Check if final_state is not empty
         if final_state ~= "" then
             -- Place the final_state block in place of the jigsaw block

@@ -15,10 +15,11 @@ local function register_song_for_biomes(song_name, biomes)
 end
 
 -- Register songs for specific biomes
-register_song_for_biomes("echo_In_the_wind", {"Mesa", "CherryGrove", "FlowerForest", "LushCaves"})
+register_song_for_biomes("echo_in_the_wind", {"Mesa", "CherryGrove", "FlowerForest", "LushCaves"})
 register_song_for_biomes("end", {"End"})
 register_song_for_biomes("living_mice", {"Mesa", "BambooJungle", "Desert", "FlowerForest", "Forest", "Jungle", "Meadow", "MegaTaiga"})
 register_song_for_biomes("oxygene", {"Jungle", "MegaTaiga"})
+register_song_for_biomes("concrete_halls", {"BasaltDelta", "CrimsonForest", "Nether", "WarpedForest"})
 
 local function get_player_biome(player)
 	local pos = player:get_pos()
@@ -111,7 +112,7 @@ local function play()
 	local time = minetest.get_timeofday()
 	if time < 0.25 or time >= 0.75 then
 		stop_music_for_all()
-		minetest.after(10, play)
+		minetest.after(math.random(600, 1200), play)
 		return
 	end
 
@@ -142,7 +143,7 @@ local function play()
 				if track then
 					play_song(track, player_name, dimension, day_count)
 				else
-					--minetest.log("no track found. weird")
+					minetest.log("info", "no track found.")
 				end
 			else
 				if handle and handle_pale_garden_biome(player, handle) then
@@ -153,12 +154,12 @@ local function play()
 		end
 	end
 
-	minetest.after(7, play)
+	minetest.after(600, 1200, play)
 end
 local music_enabled = true
 if music_enabled then
 	minetest.log("action", "[vlf_music] In-game music is activated")
-	minetest.after(15, play)
+	minetest.after(math.random(600, 1200), play)
 
 	minetest.register_on_joinplayer(function(player, last_login)
 		local player_name = player:get_player_name()
@@ -210,7 +211,7 @@ minetest.register_chatcommand("music", {
 		end
 
 		local meta = target_player:get_meta()
-		local display_new_state = "unknown"
+		local display_new_state
 
 		if action == "invert" then
 			if not meta:get("vlf_music:disable") then
@@ -219,12 +220,12 @@ minetest.register_chatcommand("music", {
 			else
 				meta:set_string("vlf_music:disable", "")
 				display_new_state = S("on")
-				minetest.after(math.random(7, 15), play)
+				minetest.after(1, play)
 			end
 		elseif action == "on" then
 			meta:set_string("vlf_music:disable", "")
 			display_new_state = S("on")
-			minetest.after(math.random(7, 15), play)
+			minetest.after(1, play)
 		else
 			meta:set_int("vlf_music:disable", 1)
 			display_new_state = S("off")

@@ -578,7 +578,7 @@ local function register_chest(basename, desc, longdesc, usagehelp, tt_help, tile
 			if name == "" then
 				name = S("Chest")
 			end
-			
+
 			local inventory = node_meta:get_inventory()
 			-- TODO: Loot is generated invidually per half of double chest
 			vl_loot.generate_container_loot_if_exists(pos, clicker, inventory, "main")
@@ -763,8 +763,8 @@ local function register_chest(basename, desc, longdesc, usagehelp, tt_help, tile
 			if name == "" then
 				name = S("Large Chest")
 			end
-			
-			
+
+
 			-- TODO: loot is generated separately per chest half
 			local inventory = node_meta:get_inventory()
 			vl_loot.generate_container_loot_if_exists(pos, clicker, inventory, "main")
@@ -949,7 +949,7 @@ local function register_chest(basename, desc, longdesc, usagehelp, tt_help, tile
 			if name == "" then
 				name = S("Large Chest")
 			end
-			
+
 			-- TODO: loot is generated separately per chest half
 			local inventory = node_meta:get_inventory()
 			vl_loot.generate_container_loot_if_exists(pos, clicker, inventory, "main")

@@ -346,7 +346,6 @@ minetest.register_node(":voxelforge:pink_petal_"..i, {
 	sunlight_propagates = true,
 	paramtype2 = "none",
 	mesh = "wildflower_"..i..".obj",
-	sunlight_propagates = true,
 	walkable = false,
 	climbable = false,
 	buildable_to = true,
