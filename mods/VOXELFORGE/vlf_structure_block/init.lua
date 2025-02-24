@@ -73,8 +73,6 @@ function vlf_structure_block.load_vlfschem_nb(file_name, worldpath)
     elseif worldpath == false then
 		file_path = modpath .. "/" .. file_name
 	end
-    --minetest.log("action", "Loading schematic from file: " .. file_path)
-    minetest.log("action", "Loading schematic from file: " .. file_path)
 
     -- Attempt to load the Lua file
     local chunk, load_err = loadfile(file_path)
@@ -110,7 +108,7 @@ end
 
 function vlf_structure_block.load_vlfschem(file_name, worldpath)
     if not file_name or file_name == "" then
-        --minetest.log("error", "Invalid file name provided.")
+        minetest.log("error", "Invalid file name provided.")
         return nil
     end
 
@@ -294,7 +292,7 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
         schematic = vlf_structure_block.load_vlfschem(file_name, worldpath)
     end
     if not schematic then
-        minetest.log("error", "Failed to load schematic data.")
+        minetest.log("error", "Failed to load schematic data. " .. file_name)
         return
     end
 
@@ -315,7 +313,7 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
     if minp.y > maxp.y then minp.y, maxp.y = maxp.y, minp.y end
     if minp.z > maxp.z then minp.z, maxp.z = maxp.z, minp.z end
 
-    minetest.log("error", "Schematic " .. file_name .. " bounds: minp=" .. minetest.pos_to_string(minp) .. ", maxp=" .. minetest.pos_to_string(maxp) .. "Schematic rotation: " .. tostring(rotation))
+    --minetest.log("error", "Schematic " .. file_name .. " bounds: minp=" .. minetest.pos_to_string(minp) .. ", maxp=" .. minetest.pos_to_string(maxp) .. "Schematic rotation: " .. tostring(rotation))
 
     if not load_area(minp, maxp) then
         return
@@ -483,7 +481,7 @@ function vlf_structure_block.get_bounding_box(pos, file_name, rotation, rotation
         schematic = vlf_structure_block.load_vlfschem(file_name, worldpath)
     end
     if not schematic then
-        minetest.log("error", "Failed to load schematic data.")
+        minetest.log("error", "Failed to load schematic data." .. file_name)
         return
     end
 
@@ -521,7 +519,7 @@ function vlf_structure_block.get_bounding_box(pos, file_name, rotation, rotation
             if not (minp.x >= bounds.minp.x and maxp.x <= bounds.maxp.x and
                     minp.y >= bounds.minp.y and maxp.y <= bounds.maxp.y and
                     minp.z >= bounds.minp.z and maxp.z <= bounds.maxp.z) then
-                minetest.log("error", "Schematic placement for " .. file_name .. " overlaps with " .. existing_file .. ". Aborting placement.")
+                --minetest.log("error", "Schematic placement for " .. file_name .. " overlaps with " .. existing_file .. ". Aborting placement.")
                 result = "bad"
                 return result
             end
@@ -529,7 +527,7 @@ function vlf_structure_block.get_bounding_box(pos, file_name, rotation, rotation
     end
 
     vlf_structure_block.schematic_bounds[file_name] = {minp = minp, maxp = maxp}
-    minetest.log("error", "Schematic " .. file_name .. " bounds: minp=" .. minetest.pos_to_string(minp) .. ", maxp=" .. minetest.pos_to_string(maxp) .. " Schematic rotation: " .. tostring(rotation))
+    --minetest.log("error", "Schematic " .. file_name .. " bounds: minp=" .. minetest.pos_to_string(minp) .. ", maxp=" .. minetest.pos_to_string(maxp) .. " Schematic rotation: " .. tostring(rotation))
     return result
 end
 

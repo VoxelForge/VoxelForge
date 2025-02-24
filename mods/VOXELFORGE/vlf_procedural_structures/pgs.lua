@@ -113,9 +113,7 @@ local function spawn_struct(pos)
 				end
 
 				-- Log processor (if valid)
-				if processor then
-					minetest.log("error", "Processor found: " .. tostring(processor))
-				else
+				if not processor then
 					minetest.log("error", "No valid processor found")
 				end
 
@@ -123,7 +121,7 @@ local function spawn_struct(pos)
                 local location = element.location:gsub("minecraft:", "")
                 local base_name = location:gsub("%.gamedata$", "")
                 local selecting_schematic = "data/voxelforge/structure/" .. base_name .. ".gamedata"
-                minetest.log("error", "selected schematic:" .. selecting_schematic.." projection: " .. projection)
+                --minetest.log("error", "selected schematic:" .. selecting_schematic.." projection: " .. projection)
 
                 local schematic_data = vlf_structure_block.load_vlfschem(selecting_schematic, false)
                 if not schematic_data then
@@ -435,7 +433,7 @@ local function place_all_schematics_in_directory(mopath, directory, pos_start, p
             if item:match("%.gamedata$") then  -- Check if the file has .gamedata extension
                 local filepath = directory .. "/" .. item
                 if is_file(mopath.."/"..filepath) then
-                    minetest.log("error", "Found schematic file: " .. filepath)
+                    --minetest.log("error", "Found schematic file: " .. filepath)
                     local fpath = mopath .. dir .. DIR_DELIM .. item
                     local schematic = vlf_structure_block.load_vlfschem(filepath, false)
 
@@ -451,7 +449,7 @@ local function place_all_schematics_in_directory(mopath, directory, pos_start, p
 
                         -- Place the schematic
                         vlf_structure_block.place_schematic(pos, filepath, 0, pos, "true", false, true)
-                        minetest.log("error", "Placed schematic at position: " .. minetest.pos_to_string(pos))
+                        --minetest.log("error", "Placed schematic at position: " .. minetest.pos_to_string(pos))
 
                         -- Determine the position for the voxelforge:schematic_editor block
                         local editor_pos = {
