@@ -4,10 +4,6 @@ local Randomizer = dofile(minetest.get_modpath("vlf_lib").."/init.lua")
 local json = minetest.parse_json
 
 local function spawn_struct(pos)
-    local pos_hash_1 = minetest.hash_node_position(pos)
-    local blockseed_1 = minetest.get_mapgen_setting("seed")
-    local seed_1 = pos_hash_1 + blockseed_1
-    local rng = PcgRandom(seed_1)
     local pos_hash = minetest.hash_node_position({x = pos.x * 256 * 8, y = pos.y * 12, z = pos.z * 18})
     local blockseed = minetest.get_mapgen_setting("seed")
     local rng = Randomizer.new(pos_hash, blockseed)
@@ -323,7 +319,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         -- Retrieve node meta
         local meta = minetest.get_meta(pos)
 
-       	local pool = tostring(fields.pool) or meta:get_string("pool")
+		local pool = tostring(fields.pool) or meta:get_string("pool")
         local name = tostring(fields.name) or meta:get_string("name")
         local final_state = tostring(fields.final_state) or meta:get_string("final_state")
         local target = tostring(fields.target) or meta:get_string("target")

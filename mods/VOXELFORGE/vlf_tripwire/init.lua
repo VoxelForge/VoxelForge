@@ -104,7 +104,7 @@ minetest.register_node("vlf_tripwire:tripwire_hook_on", {
         --mesecon.receptor_off(pos, mesecon.rules.alldirs)
         local meta = minetest.get_meta(pos)
         local connected = minetest.parse_json(meta:get_string("connected"))
-        
+
         if minetest.get_node(connected).name ~= "vlf_tripwire:tripwire_hook_on" then
             minetest.set_node(pos, {name = "vlf_tripwire:tripwire_hook"})
             --mesecon.receptor_off(pos, mesecon.rules.alldirs)
@@ -137,7 +137,7 @@ minetest.register_node("vlf_tripwire:tripwire_hook_active", {
     on_timer = function(pos, elapsed)
         local meta = minetest.get_meta(pos)
         local connected = minetest.parse_json(meta:get_string("connected"))
-        
+
         if minetest.get_node(connected).name ~= "vlf_tripwire:tripwire_hook_active" then
             minetest.set_node(pos, {name = "vlf_tripwire:tripwire_hook"})
         else

@@ -77,7 +77,6 @@ local function respawn_doll(pos)
 end
 
 function vlf_trials.setup_spawner(pos, Mob, MinLight, MaxLight, MaxMobsInArea, MaxMobs, SpawnedMobs, PlayerDistance, YOffset, SpawnInterval, MAPP, MMIAAPP)
-    local dim = mcl_worlds.pos_to_dimension(pos)
     Mob = Mob or default_mob
     MinLight = MinLight or 0
     MaxLight = MaxLight or 14
@@ -462,7 +461,7 @@ local function spawn_mobs(pos)
 					texture = "vlf_particles_soul_flame.png",
 					glow = 10,
 				})
-				
+
 				else
 
 				minetest.add_particlespawner({

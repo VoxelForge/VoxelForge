@@ -9,6 +9,7 @@ ignore = {
 globals = {
 	"minetest", "core",
 	"doc",
+	"err",
 	"tt",
 	"mesecon",
 	"vlf_lightning",

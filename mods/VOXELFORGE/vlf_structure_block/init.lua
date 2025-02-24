@@ -1,7 +1,6 @@
 local cpath = minetest.get_modpath("vlf_structure_block")
 local modpath = minetest.get_modpath("vlf_structure_block")
 local binser = dofile(minetest.get_modpath("vlf_lib") .. "/binser.lua")
-local Randomizer = dofile(minetest.get_modpath("vlf_lib").."/init.lua")
 dofile (modpath.."/processors.lua")
 vlf_structure_block = {}
 
@@ -107,11 +106,6 @@ function vlf_structure_block.load_vlfschem_nb(file_name, worldpath)
     minetest.log("action", "Schematic data type: " .. type(schematic_data))
 
     return schematic_data -- Return the entire schematic table
-end
-
-local function split_resource_string(resource_string)
-    local match_start, _, namespace, path = string.find(resource_string, "([^%s]+)%:([^%s]+)")
-    return match_start, namespace, path
 end
 
 function vlf_structure_block.load_vlfschem(file_name, worldpath)
@@ -306,9 +300,9 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
 
     local schematic_size = schematic.size
     local minp, maxp
-    
-    local schem_size = (rotation == 90 or rotation == 270) 
-                   and {x = schematic_size.z, y = schematic_size.y, z = schematic_size.x} 
+
+    local schem_size = (rotation == 90 or rotation == 270)
+                   and {x = schematic_size.z, y = schematic_size.y, z = schematic_size.x}
                    or schematic_size
 
     local min_offset = vector.new(0, 0, 0)
@@ -329,7 +323,7 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
 
     local nodes_by_type = {}
     local metadata = {}
-    
+
         if terrain_setting == "terrain_matching" then
         local highest_pos = nil
 
@@ -370,7 +364,7 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
         local rotated_pos = rotate_position(node.pos, rotation, rotation_origin)
         local node_pos = vector.add(pos, rotated_pos)
         local rotated_param2 = rotate_param2(node.param2 or 0, rotation)
-        
+
         -- Adjust the Y-coordinate of the schematic block to match the terrain
         if terrain_setting == "terrain_matching" then
             local highest_pos = nil
@@ -400,7 +394,7 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
                 node_pos.y = highest_pos.y + 1
             end
         end
-        
+
         if processor ~= nil then
             local processed_node = processors.generic_processor(processor, node_pos, node)
             --if processed_node == true then
@@ -408,7 +402,7 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
                 minetest.set_node(node_pos, {name = processed_node.name, param2 = rotated_param2 or 0})
                 goto continue
             elseif processed_node == "rotted" then
-            	goto continue
+				goto continue
             else
                 local node_key = node.name .. "_" .. rotated_param2
                 if not nodes_by_type[node_key] then
@@ -429,7 +423,7 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
             if node.metadata and next(node.metadata) then
                 metadata[node_pos] = node.metadata
             end
-            
+
             ::continue::
         --end
     end
@@ -494,7 +488,6 @@ function vlf_structure_block.get_bounding_box(pos, file_name, rotation, rotation
     end
 
     local nodes_by_type = {}
-    local metadata = {}
     local minp, maxp
 
     for _, node in ipairs(schematic.nodes) do
@@ -521,9 +514,9 @@ function vlf_structure_block.get_bounding_box(pos, file_name, rotation, rotation
             metadata[node_pos] = node.metadata
         end
     end
-    
+
     local result = "good"
-    
+
     for existing_file, bounds in pairs(vlf_structure_block.schematic_bounds) do
         if not (maxp.x <= bounds.minp.x or minp.x >= bounds.maxp.x or
                 maxp.y <= bounds.minp.y or minp.y >= bounds.maxp.y or
