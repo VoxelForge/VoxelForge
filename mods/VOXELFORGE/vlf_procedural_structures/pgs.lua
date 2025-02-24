@@ -578,7 +578,7 @@ minetest.register_chatcommand("place_schematics", {
         return true, "All schematics placed!"
     end,
 })
---[[minetest.register_abm({
+minetest.register_abm({
     nodenames = {"voxelforge:jigsaw"},  -- Only check jigsaw blocks
     interval = 10,  -- Runs every 10 seconds
     chance = 1,  -- Check every block
@@ -596,6 +596,6 @@ minetest.register_chatcommand("place_schematics", {
             end
         end
     end,
-})]]
+})
 
 

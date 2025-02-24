@@ -1,7 +1,7 @@
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath("vlf_structure_block")
 
-local spawnon = {"air"}
+local spawnon = {"mcl_trees:wood_birch"}
 
 vlf_structures.register_structure("pillager_outpost",{
 	place_on = {"group:grass_block","group:dirt","mcl_core:dirt_with_grass","group:sand"},
@@ -24,8 +24,9 @@ vlf_structures.register_structure_spawn({
 	name = "mobs_mc:pillager",
 	y_min = mcl_vars.mg_overworld_min,
 	y_max = mcl_vars.mg_overworld_max,
-	chance = 10,
-	interval = 60,
+	chance = 1,
+	interval = 6,
 	limit = 9,
 	spawnon = spawnon,
+	radius = 15,
 })

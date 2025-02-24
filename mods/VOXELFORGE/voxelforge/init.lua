@@ -388,9 +388,9 @@ minetest.register_craftitem(":voxelforge:pinkpetals", {
 
         -- Swap the node in place if it's part of the progression
         local swap_map = {
-            ["voxelforge:pinkpetal_1"] = "voxelforge:pinkpetal_2",
-            ["voxelforge:pinkpetal_2"] = "voxelforge:pinkpetal_3",
-            ["voxelforge:pinkpetal_3"] = "voxelforge:pinkpetal_4",
+            ["voxelforge:pink_petal_1"] = "voxelforge:pink_petal_2",
+            ["voxelforge:pink_petal_2"] = "voxelforge:pink_petal_3",
+            ["voxelforge:pink_petal_3"] = "voxelforge:pink_petal_4",
         }
 
         if swap_map[node.name] then
@@ -398,7 +398,7 @@ minetest.register_craftitem(":voxelforge:pinkpetals", {
         else
             -- If not already part of the cycle, place _1 above
             if above_node.name == "air" and not (node_def and node_def.groups and node_def.groups.pinkpetal and node_def.groups.pinkpetal > 0 and node_def.groups.pinkpetal < 5) then
-                minetest.set_node(above_pos, {name = "voxelforge:pinkpetal_1"})
+                minetest.set_node(above_pos, {name = "voxelforge:pink_petal_1"})
             end
         end
 

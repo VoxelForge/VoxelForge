@@ -157,14 +157,14 @@ function vlf_structures.place_structure(pos, def, pr, blockseed, _)
 				return ap(pp, def, pr, blockseed)
 			end,pr)
 			if log_enabled then
-				minetest.log("info","[mcl_structures] "..def.name.." placed at "..minetest.pos_to_string(pp))
+				minetest.log("error","[mcl_structures] "..def.name.." placed at "..minetest.pos_to_string(pp))
 			end
 			return true
 		end
 	elseif def.place_func and def.place_func(pp,def,pr,blockseed) then
 		if not def.after_place or ( def.after_place  and def.after_place(pp,def,pr,blockseed) ) then
 			if log_enabled then
-				minetest.log("info","[mcl_structures] "..def.name.." placed at "..minetest.pos_to_string(pp))
+				minetest.log("error","[mcl_structures] "..def.name.." placed at "..minetest.pos_to_string(pp))
 			end
 			return true
 		end

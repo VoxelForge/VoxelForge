@@ -896,11 +896,77 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
 
     local nodes_by_type = {}
     local metadata = {}
+    
+        if terrain_setting == "terrain_matching" then
+        local highest_pos = nil
+
+        -- Check from 40 blocks above down to pos
+        for offset = 40, 0, -1 do
+            local check_pos = vector.add(pos, vector.new(0, offset, 0))
+            local check_node = minetest.get_node(check_pos)
+            if minetest.registered_nodes[check_node.name].walkable then
+                highest_pos = check_pos
+                break  -- Take the first solid node from the top
+            end
+        end
+
+        -- If no solid node was found above, check from pos down to -80
+        if not highest_pos then
+            for offset = 0, 80 do
+                local check_pos = vector.add(pos, vector.new(0, -offset, 0))
+                local check_node = minetest.get_node(check_pos)
+                if minetest.registered_nodes[check_node.name].walkable then
+                    highest_pos = check_pos
+                    break  -- Take the first solid node below
+                end
+            end
+        end
+
+        -- If we found a valid position, update the Y-coordinate of the schematic block
+        if highest_pos then
+            pos.y = highest_pos.y
+        end
+    elseif terrain_setting == "rigid" and pos.y > 0 then
+        --mcl_util.create_ground_turnip(pos, schematic.size.x / 2, 5)
+        local center_pos = vector.add(pos, vector.new(schematic.size.x / 2, 0, schematic.size.z / 2))
+        mcl_util.create_ground_turnip(center_pos, schematic.size.x / 2, 5)
+    end
+
 
     for _, node in ipairs(schematic.nodes) do
         local rotated_pos = rotate_position(node.pos, rotation, rotation_origin)
         local node_pos = vector.add(pos, rotated_pos)
         local rotated_param2 = rotate_param2(node.param2 or 0, rotation)
+        
+        -- Adjust the Y-coordinate of the schematic block to match the terrain
+        if terrain_setting == "terrain_matching" then
+            local highest_pos = nil
+            for offset = 1, 80 do
+                local up_pos = vector.add(node_pos, vector.new(0, offset, 0))
+                local down_pos = vector.add(node_pos, vector.new(0, -offset, 0))
+
+                -- Check upwards (find highest solid node)
+                if not highest_pos then
+                    local up_node = minetest.get_node(up_pos)
+                    if minetest.registered_nodes[up_node.name].walkable then
+                        highest_pos = up_pos
+                    end
+                end
+
+                -- Check downwards (find solid node within the allowed depth range)
+                if not highest_pos then
+                    local down_node = minetest.get_node(down_pos)
+                    if minetest.registered_nodes[down_node.name].walkable then
+                        highest_pos = down_pos
+                    end
+                end
+            end
+
+            -- If we found a valid position, update the Y-coordinate of the schematic block
+            if highest_pos then
+                node_pos.y = highest_pos.y + 1
+            end
+        end
         
         if processor ~= nil then
             local processed_node = processors.generic_processor(processor, node_pos, node)
