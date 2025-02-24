@@ -68,6 +68,8 @@ local function barrel_open(pos, node, clicker)
 	open_barrels[playername] = pos
 	minetest.sound_play({ name = "mcl_barrels_default_barrel_open" }, { pos = pos, gain = 0.5, max_hear_distance = 16 }, true)
 	mobs_mc.enrage_piglins (clicker, true)
+	local inventory = minetest.get_meta(pos):get_inventory()
+	vl_loot.generate_container_loot_if_exists(pos, nil, inventory, "main")
 end
 
 local function close_forms(pos)
@@ -134,6 +136,8 @@ minetest.register_node("mcl_barrels:barrel_closed", {
 	end,
 	after_place_node = function(pos, _, itemstack)
 		minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
+		local itemstack_meta = itemstack:get_meta()
+		minetest.get_meta(pos):set_string("loot_table", itemstack_meta:get_string("loot_table"))
 	end,
 	allow_metadata_inventory_move = protection_check_move,
 	allow_metadata_inventory_take = protection_check_put_take,

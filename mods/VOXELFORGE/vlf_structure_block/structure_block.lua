@@ -95,7 +95,7 @@ for x = start_pos.x, end_pos.x do
         for z = start_pos.z, end_pos.z do
             local node_pos = {x = x, y = y, z = z}
             local node = minetest.get_node(node_pos)
-            if node.name ~= "voxelforge:temp_glass" and node.name ~= "voxelforge:structure_block" and meta:get_int("rb_value") == 0 then
+            if node.name ~= "voxelforge:structure_void" and node.name ~= "voxelforge:structure_block" and meta:get_int("rb_value") == 0 then
                 local meta = minetest.get_meta(node_pos):to_table().fields
 
                 -- Manually format the metadata with type checks to ensure proper value formatting
@@ -841,11 +841,11 @@ minetest.register_node(":voxelforge:structure_block", {
 		}, {
 			x = 0, y = -1, z = 0
 		})
-	create_sb_model(pos, {
+	--[[create_sb_model(pos, {
 			x = 5, y = 5, z = 5
 		}, {
 			x = 0, y = -1, z = 0
-		}, minetest.get_worldpath() .. "/voxelforge/structure_block/3d_models", pos_to_string(pos) .. "_structure_block_model")
+		}, minetest.get_worldpath() .. "/voxelforge/structure_block/3d_models", pos_to_string(pos) .. "_structure_block_model")]]
 	end,
 	on_destruct = function(pos)
 		create_sb_model(pos, {
@@ -1363,3 +1363,20 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         end
     end
 end)
+
+minetest.register_node(":voxelforge:structure_void", {
+	description = "Structure Void",
+	drawtype = "nodebox",
+	tiles = {"structure_void.png"},
+	node_box = {
+        type = "fixed",
+        fixed = {
+            {-0.25, -0.25, -0.25, 0.25, 0.25, 0.25}, -- Half the height of a full block
+        }
+    },
+    paramtype = "light",
+    sunlight_propagates = true,
+    light_propagates = true,
+    use_texture_alpha = true,
+    groups = {cracky = 3, oddly_breakable_by_hand = 3},
+})

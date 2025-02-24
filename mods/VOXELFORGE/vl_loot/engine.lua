@@ -138,7 +138,7 @@ local function get_pool_loot(pool_table, loot_context)
 end
 
 local function get_loot(loot_table, loot_context)
-    local start_time = minetest.get_us_time()
+    --local start_time = minetest.get_us_time()
     -- DEBUG ONLY ^^ REMOVE
     local loot_stacks = {}
     for _, pool_table in ipairs(loot_table.pools) do
@@ -146,7 +146,7 @@ local function get_loot(loot_table, loot_context)
         append_table(loot_stacks, pool_loot_stacks)
     end
     modify_stacks(loot_table.functions, loot_stacks, loot_context)
-    minetest.debug("Generated loot in " .. tostring((minetest.get_us_time() - start_time)/1000) .. " milliseconds")
+    --minetest.debug("Generated loot in " .. tostring((minetest.get_us_time() - start_time)/1000) .. " milliseconds")
     -- DEBUG ONLY ^^ REMOVE
     return loot_stacks
 end

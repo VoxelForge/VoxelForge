@@ -1,30 +1,36 @@
-# Contributing to Mineclonia
-So you want to contribute to Mineclonia?
+# Contributing to VoxelForge
+So you want to contribute to VoxelForge?
 
 Wow, thank you! :-)
 
-Mineclonia is maintained by ryvnf and cora. By asking us to include your
-changes in this game, you agree that they fall under the terms of the GPLv3
-license, which means they will become part of a free/libre software.
+VoxelForge is maintained by DragonWrangler. 
+
+By asking us to include your work. You agree that it falls under one of two licenses.
+
+1. GNU GPLv3
+2. OCLv1.1
+3. OCLv2.3
+[Open Credit License V1.1](https://github.com/DragonWrangler1/OCL-1.1-License)
+[Open Credit License V2.3](https://github.com/DragonWrangler1/OCL-2.3-License)
 
 ## Inclusion criteria
 The project goals are listed under the project description in the
 [README](./src/branch/main/README.md). Contributions that do not align with the project goals
-will not be accepted. The main goal of Mineclonia is to be a stable and
-performant clone of Minecraft. We suggest using the
+will not be accepted. The main goal of VoxelForge is to be a stable and
+performant clone of Minecraft, while keeping functionality.. We suggest using the
 [Minecraft wiki](https://minecraft.wiki/w/Minecraft_Wiki) as a
 reference when implementing new features.
 
-While the primary goal of Mineclonia is to clone Minecraft gameplay, sometimes
+While the primary goal of VoxelForge is to clone Minecraft gameplay, sometimes
 contributions containing minor deviations from Minecraft will be included. These
 deviations should be motivated either by Luanti engine limitations or other
 technical difficulties replicating Minecraft behaviour. The addition of bonus
 features not found in Minecraft will generally not be accepted. Most of the time
-we will suggest putting such features in a separate mod since Mineclonia has
+we will suggest putting such features in a separate mod since VoxelForge has
 modding support.
 
 Contributions which fix bugs or incomplete features are always welcome.
-Contributions of Minecraft features not yet implemented in Mineclonia are also
+Contributions of Minecraft features not yet implemented in VoxelForge are also
 welcome but should be complete before their inclusion. Assets like sounds and
 textures must come from sources which allow their use.
 
