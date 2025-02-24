@@ -429,7 +429,11 @@ local function register_chest(basename, desc, longdesc, usagehelp, tt_help, tile
 			minetest.set_node(pos, node)
 		end,
 		after_place_node = function(pos, _, itemstack, _)
-			minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
+			--minetest.get_meta(pos):set_string("name", itemstack:get_meta():get_string("name"))
+			local itemstack_meta = itemstack:get_meta()
+			local node_meta = minetest.get_meta(pos)
+			node_meta:set_string("name", itemstack_meta:get_string("name"))
+			node_meta:set_string("loot_table", itemstack_meta:get_string("loot_table"))
 		end,
 		_mcl_burntime = 15
 	})
@@ -479,7 +483,7 @@ local function register_chest(basename, desc, longdesc, usagehelp, tt_help, tile
 			flammable = -1,
 			chest_entity = 1,
 			not_in_creative_inventory = 1,
-			pathfinder_partial = 2,
+			_mcl_partial = 2,
 			piglin_protected = 1,
 		},
 		is_ground_content = false,
@@ -568,10 +572,16 @@ local function register_chest(basename, desc, longdesc, usagehelp, tt_help, tile
 				-- won't open if there is no space from the top
 				return false
 			end
-			local name = minetest.get_meta(pos):get_string("name")
+			--local name = minetest.get_meta(pos):get_string("name")
+			local node_meta = minetest.get_meta(pos)
+			local name = node_meta:get_string("name")
 			if name == "" then
 				name = S("Chest")
 			end
+
+			local inventory = node_meta:get_inventory()
+			-- TODO: Loot is generated invidually per half of double chest
+			vl_loot.generate_container_loot_if_exists(pos, clicker, inventory, "main")
 
 			minetest.show_formspec(clicker:get_player_name(),
 				sf("mcl_chests:%s_%s_%s_%s", canonical_basename, pos.x, pos.y, pos.z),
@@ -632,7 +642,7 @@ local function register_chest(basename, desc, longdesc, usagehelp, tt_help, tile
 			flammable = -1,
 			chest_entity = 1,
 			double_chest = 1,
-			pathfinder_partial = 2,
+			_mcl_partial = 2,
 			piglin_protected = 1,
 		},
 		drop = drop,
@@ -742,13 +752,25 @@ local function register_chest(basename, desc, longdesc, usagehelp, tt_help, tile
 				return false
 			end
 
-			local name = minetest.get_meta(pos):get_string("name")
+			--local name = minetest.get_meta(pos):get_string("name")
+			local node_meta = minetest.get_meta(pos)
+			local other_node_meta = minetest.get_meta(pos_other)
+			local name = node_meta:get_string("name")
 			if name == "" then
-				name = minetest.get_meta(pos_other):get_string("name")
+				--name = minetest.get_meta(pos_other):get_string("name")
+				name = other_node_meta:get_string("name")
 			end
 			if name == "" then
 				name = S("Large Chest")
 			end
+
+
+			-- TODO: loot is generated separately per chest half
+			local inventory = node_meta:get_inventory()
+			vl_loot.generate_container_loot_if_exists(pos, clicker, inventory, "main")
+
+			local inventory_other = other_node_meta:get_inventory()
+			vl_loot.generate_container_loot_if_exists(pos_other, clicker, inventory_other, "main")
 
 			minetest.show_formspec(clicker:get_player_name(),
 				sf("mcl_chests:%s_%s_%s_%s", canonical_basename, pos.x, pos.y, pos.z),
@@ -809,7 +831,7 @@ local function register_chest(basename, desc, longdesc, usagehelp, tt_help, tile
 			material_wood = 1,
 			flammable = -1,
 			double_chest = 2,
-			pathfinder_partial = 2,
+			_mcl_partial = 2,
 			piglin_protected = 1,
 		},
 		drop = drop,
@@ -916,13 +938,24 @@ local function register_chest(basename, desc, longdesc, usagehelp, tt_help, tile
 				return false
 			end
 
-			local name = minetest.get_meta(pos_other):get_string("name")
+			--local name = minetest.get_meta(pos_other):get_string("name")
+			local node_meta = minetest.get_meta(pos)
+			local other_node_meta = minetest.get_meta(pos_other)
+			local name = other_node_meta:get_string("name")
 			if name == "" then
-				name = minetest.get_meta(pos):get_string("name")
+				--name = minetest.get_meta(pos):get_string("name")
+				name = node_meta:get_string("name")
 			end
 			if name == "" then
 				name = S("Large Chest")
 			end
+
+			-- TODO: loot is generated separately per chest half
+			local inventory = node_meta:get_inventory()
+			vl_loot.generate_container_loot_if_exists(pos, clicker, inventory, "main")
+
+			local inventory_other = other_node_meta:get_inventory()
+			vl_loot.generate_container_loot_if_exists(pos_other, clicker, inventory_other, "main")
 
 			minetest.show_formspec(clicker:get_player_name(),
 				sf("mcl_chests:%s_%s_%s_%s", canonical_basename, pos.x, pos.y, pos.z),
@@ -1159,7 +1192,7 @@ minetest.register_node("mcl_chests:ender_chest_small", {
 		material_stone = 1,
 		chest_entity = 1,
 		not_in_creative_inventory = 1,
-		pathfinder_partial = 2,
+		_mcl_partial = 2,
 		piglin_protected = 1,
 		unmovable_by_piston = 1,
 	},
