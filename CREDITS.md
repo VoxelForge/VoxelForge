@@ -11,18 +11,7 @@
 * davedevils
 
 ## Active Contributors
-* codiac
-* DragonWrangler1
-* JoseDouglas26
-* Brama Udi
-* amino
-* Jürgen Rühle
-* kno10
-* Po Lu
-* goblin_mode
-* Lars Müller
-* the-real-herowl
-* nooneatall
+* Scout339
 
 ## Previous Contributors
 * Lizzy Fleckenstein
@@ -51,6 +40,18 @@
 * ChrisPHP
 * 3raven
 * ShadowRoi
+* codiac
+* JoseDouglas26
+* Brama Udi
+* amino
+* Jürgen Rühle
+* kno10
+* Po Lu
+* goblin_mode
+* Lars Müller
+* the-real-herowl
+* nooneatall
+
 
 ## Original Mod Authors
 * Wuzzy
