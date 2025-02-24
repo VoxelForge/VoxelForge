@@ -510,9 +510,6 @@ function vlf_structure_block.get_bounding_box(pos, file_name, rotation, rotation
         end
         table.insert(nodes_by_type[node_key].positions, node_pos)
 
-        if node.metadata and next(node.metadata) then
-            metadata[node_pos] = node.metadata
-        end
     end
 
     local result = "good"
