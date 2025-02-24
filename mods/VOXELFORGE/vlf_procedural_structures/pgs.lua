@@ -112,11 +112,6 @@ local function spawn_struct(pos)
 					processor = nil
 				end
 
-				-- Log processor (if valid)
-				if not processor then
-					minetest.log("error", "No valid processor found")
-				end
-
 
                 local location = element.location:gsub("minecraft:", "")
                 local base_name = location:gsub("%.gamedata$", "")
