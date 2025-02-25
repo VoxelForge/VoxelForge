@@ -1030,11 +1030,11 @@ mob_class.gwp_floortypes = {
 }
 
 local function get_partial_type (nodedef)
-	if nodedef.groups._mcl_partial == 3 then
+	if nodedef.groups.pathfinder_partial == 3 then
 		return "SLAB"
-	elseif nodedef.groups._mcl_partial == 2 then
+	elseif nodedef.groups.pathfinder_partial == 2 then
 		return "BLOCKED"
-	elseif nodedef.groups._mcl_partial == 1 then
+	elseif nodedef.groups.pathfinder_partial == 1 then
 		return "OPEN"
 	end
 

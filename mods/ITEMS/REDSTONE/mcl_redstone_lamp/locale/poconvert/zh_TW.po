@@ -14,10 +14,10 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Redstone Lamp"
-msgstr ""
+msgstr "紅石燈"
 
 msgid "Glows when powered by redstone power"
-msgstr ""
+msgstr "由紅石能量發光"
 
 msgid "Redstone lamps are simple redstone components which glow brightly (light level @1) when they receive redstone power."
 msgstr ""

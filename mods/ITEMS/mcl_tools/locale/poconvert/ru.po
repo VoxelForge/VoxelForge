@@ -19,12 +19,6 @@ msgstr "Топор - это ваш инструмент для рубки дер
 msgid "To strip bark from trunks and hyphae, use the ax by right-clicking on them. To reduce an oxidation stage from a block made of copper or remove wax from waxed variants, right-click on them. Doors and trapdoors also require you to hold down the sneak key while using the axe."
 msgstr "Чтобы снять со стволов кору и гифы, используйте топор, щелкнув по ним правой кнопкой мыши. Чтобы снять слой окисления с блока меди или удалить воск с вощеных изделий, щелкните по ним правой кнопкой мыши. Двери и люки также требуют, чтобы вы удерживали нажатой клавишу скрытности при использовании топора."
 
-msgid "Hoes are essential tools for growing crops. They are used to create farmland in order to plant seeds on it. Hoes can also be used as very weak weapons in a pinch."
-msgstr "Мотыги - важнейшие инструменты для выращивания сельскохозяйственных культур. С их помощью создаются фермерские угодья, чтобы посадить на них семена. В случае необходимости мотыги можно использовать как очень слабое оружие."
-
-msgid "Use the hoe on a cultivatable block (by rightclicking it) to turn it into farmland. Dirt, grass blocks and grass paths are cultivatable blocks. Using a hoe on coarse dirt turns it into dirt."
-msgstr "Примените мотыгу к культивируемому блоку (кликнув правой кнопкой мыши по нему), чтобы превратить его в грядку. Земля, дёрн и тропинки это культивируемые блоки. Разрыхлив мотыгой каменистую землю, вы получите из неё обычную землю."
-
 msgid "Pickaxes are mining tools to mine hard blocks, such as stone. A pickaxe can also be used as weapon, but it is rather inefficient."
 msgstr "Кирка это инструмент для добычи твёрдых блоков - камней и т. п. Кирка также может использоваться в качестве оружия, но не особо эффективного."
 

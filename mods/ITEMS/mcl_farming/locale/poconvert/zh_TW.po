@@ -103,9 +103,6 @@ msgstr "在可耕地塊上使用鋤頭（通過右鍵點擊），將其變成農
 msgid "Wood Hoe"
 msgstr "木鋤"
 
-msgid "Uses: @1"
-msgstr "使用：@1"
-
 msgid "Stone Hoe"
 msgstr "石鋤"
 

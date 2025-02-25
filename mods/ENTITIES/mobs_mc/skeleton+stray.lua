@@ -370,50 +370,6 @@ end
 
 mcl_mobs.register_mob ("mobs_mc:stray", stray)
 
-
-------------------
---=== Bogged ===--
-------------------
-
-local bogged = table.merge (skeleton, {
-	description = S("Bogged"),
-	mesh = "mobs_mc_skeleton.b3d",
-	textures = {
-		{
-			"mobs_mc_empty.png", -- armor
-			"mobs_mc_bogged_overlay.png",
-			"mobs_mc_bogged.png",
-		},
-	},
-	drops = table.insert (table.copy (skeleton.drops), {
-		name = "mcl_potions:poison_arrow",
-		chance = 2,
-		min = 1,
-		max = 1,
-		looting = "rare",
-		looting_chance_function = function(lvl)
-			local chance = 0.5
-			for _ = 1, lvl do
-				if chance > 1 then
-					return 1
-				end
-				chance = chance + (1 - chance) / 2
-			end
-			return chance
-		end,
-	}),
-	conversion_step = nil,
-})
-
-function bogged:shoot_arrow (pos, dir)
-	local wielditem = self:get_wielditem ()
-	mcl_bows.shoot_arrow ("mcl_potions:poison_arrow", pos, dir,
-			self:get_yaw (), self.object, 0.5333333, nil,
-			false, wielditem)
-end
-
-mcl_mobs.register_mob ("mobs_mc:bogged", bogged)
-
 ------------------------------------------------------------------------
 -- Skeleton & Stray spawning.
 ------------------------------------------------------------------------
@@ -455,18 +411,5 @@ mcl_mobs.spawn_setup ({
 	chance = 1200,
 })
 
-mcl_mobs.spawn_setup ({
-	name = "mobs_mc:bogged",
-	type_of_spawning = "ground",
-	dimension = "overworld",
-	aoc = 2,
-	biomes = {
-		"Swampland",
-	},
-	chance = 1200,
-})
-
-
 mcl_mobs.register_egg ("mobs_mc:skeleton", S("Skeleton"), "#c1c1c1", "#494949", 0)
 mcl_mobs.register_egg ("mobs_mc:stray", S("Stray"), "#5f7476", "#dae8e7", 0)
-mcl_mobs.register_egg ("mobs_mc:bogged", S("Bogged"), "#7f9069", "#273d15", 0)

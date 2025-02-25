@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Done"
-msgstr ""
+msgstr "完了"
 
 msgid "Take Book"
-msgstr ""
+msgstr "本を取る"
 
 msgid "Lectern"
-msgstr ""
+msgstr "書見台"
 
 msgid "Lecterns not only look good, but are job site blocks for Librarians."
 msgstr ""

@@ -14,26 +14,26 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Provides redstone power when pushed"
-msgstr ""
+msgstr "按下時提供紅石能量"
 
 msgid "Push duration: @1s"
-msgstr ""
+msgstr "下按維持時間：@1 秒"
 
 msgid "Pushable by arrow"
-msgstr ""
+msgstr "可被箭按下"
 
 msgid "Use the button to push it."
-msgstr ""
+msgstr "使用按鈕以按下。"
 
 msgid "Stone Button"
-msgstr "石製按鈕"
+msgstr "石按鈕"
 
 msgid "A stone button is a redstone component made out of stone which can be pushed to provide redstone power. When pushed, it powers adjacent redstone components for 1 second."
-msgstr ""
+msgstr "石按鈕是一種石製的紅石元件，按下就會給鄰接的紅石元件供應能量，持續一秒。"
 
 msgid "Polished Blackstone Button"
 msgstr "拋光黑石按鈕"
 
 msgid "A polished blackstone button is a redstone component made out of polished blackstone which can be pushed to provide redstone power. When pushed, it powers adjacent redstone components for 1 second."
-msgstr ""
+msgstr "拋光黑石按鈕是一種由拋光黑石製做的紅石元件，按下就會給鄰接的紅石元件供應能量，持續一秒。"
 

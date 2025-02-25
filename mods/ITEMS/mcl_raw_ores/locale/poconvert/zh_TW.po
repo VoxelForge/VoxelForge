@@ -17,23 +17,23 @@ msgid "Raw Iron"
 msgstr "鐵原礦"
 
 msgid "Block of Raw Iron"
-msgstr ""
+msgstr "鐵原礦方塊"
 
 msgid "Raw Iron. Mine an Iron ore to get it."
-msgstr ""
+msgstr "鐵原礦。開採鐵礦可以獲得。"
 
 msgid "A block of raw Iron is mostly a decorative block but also useful as a compact storage of raw Iron."
-msgstr ""
+msgstr "鐵原礦方塊可以用作裝飾，也可以壓縮儲存鐵原礦。"
 
 msgid "Raw Gold"
-msgstr ""
+msgstr "金原礦"
 
 msgid "Block of Raw Gold"
-msgstr ""
+msgstr "金原礦方塊"
 
 msgid "Raw Gold. Mine a Gold ore to get it."
-msgstr ""
+msgstr "金原礦。開採金礦可以獲得。"
 
 msgid "A block of raw Gold is mostly a decorative block but also useful as a compact storage of raw Gold."
-msgstr ""
+msgstr "金原礦方塊可以用作裝飾，也可以壓縮儲存金原礦。"
 

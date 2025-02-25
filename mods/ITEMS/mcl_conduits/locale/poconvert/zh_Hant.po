@@ -14,8 +14,8 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Conduit"
-msgstr ""
+msgstr "海靈核心"
 
 msgid "A conduit provides certain status effects to nearby players much like a beacon but under water"
-msgstr ""
+msgstr "海靈核心為附近的玩家提供狀態效果，類似信標但只在水中運作。"
 

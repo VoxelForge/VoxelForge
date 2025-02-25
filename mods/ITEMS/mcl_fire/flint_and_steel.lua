@@ -45,7 +45,7 @@ minetest.register_tool("mcl_fire:flint_and_steel", {
 			minetest.sound_play(idef.sound.breaks, {pos=user:get_pos(), gain=0.5}, true)
 		end
 		if (not minetest.is_creative_enabled(user:get_player_name())) and used == true then
-			itemstack:add_wear(65535/65) -- 65 uses
+			itemstack:add_wear_by_uses(mcl_util.calculate_durability(itemstack))
 		end
 		return itemstack
 	end,
@@ -74,6 +74,11 @@ minetest.register_tool("mcl_fire:flint_and_steel", {
 	end,
 	sound = { breaks = "default_tool_breaks" },
 	_mcl_uses = 65,
+	_placement_def = {
+		inherit = "node_defaults",
+		["mobs_mc:creeper"] = "default",
+		["mobs_mc:creeper_charged"] = "default",
+	},
 })
 
 minetest.register_craft({

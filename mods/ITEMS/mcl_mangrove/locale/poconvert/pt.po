@@ -34,13 +34,16 @@ msgstr ""
 msgid "Grows on Mangrove leaves"
 msgstr ""
 
-msgid "water logged mangrove roots"
+msgid "Water logged mangrove roots"
 msgstr ""
 
 msgid "Mangrove roots, despite being a full block, can be waterlogged and do not flow water out"
 msgstr ""
 
 msgid "These cannot be crafted yet only occure when get in contact of water."
+msgstr ""
+
+msgid "River water logged mangrove roots"
 msgstr ""
 
 msgid "Muddy Mangrove Roots"

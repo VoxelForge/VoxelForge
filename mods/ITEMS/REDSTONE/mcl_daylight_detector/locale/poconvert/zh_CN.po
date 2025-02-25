@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Daylight Sensor"
-msgstr "日光探测器"
+msgstr "阳光探测器"
 
 msgid "Provides redstone power when in sunlight"
 msgstr "在阳光下提供红石能量"

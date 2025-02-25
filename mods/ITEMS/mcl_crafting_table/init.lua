@@ -40,7 +40,7 @@ function mcl_crafting_table.has_crafting_table(player)
 	if not player or not player:get_pos() then return end
 	local wdef = player:get_wielded_item():get_definition()
 	local range = wdef and wdef.range or ItemStack():get_definition().range or tonumber(minetest.settings:get("mcl_hand_range")) or 4.5
-	return minetest.is_creative_enabled(player:get_player_name()) or (minetest.find_node_near(player:get_pos(), range, { "group:crafting_table" }) ~= nil)
+	return minetest.is_creative_enabled(player:get_player_name()) or (minetest.find_node_near(player:get_pos(), range, { "group:crafting_table" }, true) ~= nil)
 end
 
 function mcl_crafting_table.show_crafting_form(player)

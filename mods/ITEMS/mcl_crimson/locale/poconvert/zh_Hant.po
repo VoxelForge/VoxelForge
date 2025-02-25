@@ -14,103 +14,103 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Warped Fungus"
-msgstr ""
+msgstr "扭曲蕈菇"
 
 msgid "Warped fungus is a mushroom found in the nether's warped forest."
-msgstr ""
+msgstr "扭曲蕈菇是扭曲森林的原生菌類。"
 
 msgid "Twisting Vines"
-msgstr ""
+msgstr "扭曲藤"
 
 msgid "Weeping Vines"
-msgstr ""
+msgstr "垂泣藤"
 
 msgid "Nether Sprouts"
-msgstr ""
+msgstr "地獄芽"
 
 msgid "Warped Roots"
-msgstr ""
+msgstr "扭曲蕈根"
 
 msgid "Warped Wart Block"
-msgstr ""
+msgstr "扭曲疙瘩塊"
 
 msgid "Shroomlight"
-msgstr ""
+msgstr "蕈光體"
 
 msgid "Warped Nylium"
-msgstr ""
+msgstr "扭曲菌絲石"
 
 msgid "Crimson Fungus"
-msgstr ""
+msgstr "緋紅蕈菇"
 
 msgid "Crimson fungus is a mushroom found in the nether's crimson forest."
-msgstr ""
+msgstr "緋紅蕈菇是地獄的緋紅森林的原生蘑菇。"
 
 msgid "Crimson Roots"
-msgstr ""
+msgstr "緋紅蕈根"
 
 msgid "Crimson Nylium"
-msgstr ""
+msgstr "緋紅菌絲石"
 
 msgid "Crimson Bark"
-msgstr ""
+msgstr "緋紅蕈皮"
 
 msgid "Crimson Bark Slab"
-msgstr ""
+msgstr "緋紅蕈皮台階"
 
 msgid "Crimson Bark Stairs"
-msgstr ""
+msgstr "緋紅蕈皮階梯"
 
 msgid "Crimson Button"
-msgstr ""
+msgstr "緋紅按鈕"
 
 msgid "Crimson Door"
-msgstr ""
+msgstr "緋紅門"
 
 msgid "Crimson Fence"
-msgstr ""
+msgstr "緋紅柵欄"
 
 msgid "Crimson Fence Gate"
-msgstr ""
+msgstr "緋紅柵欄門"
 
 msgid "Crimson Log"
-msgstr ""
+msgstr "緋紅蕈柄"
 
 msgid "Crimson Planks"
-msgstr ""
+msgstr "緋紅板"
 
 msgid "Crimson Pressure Plate"
-msgstr ""
+msgstr "緋紅壓力板"
 
 msgid "Crimson Sign"
-msgstr ""
+msgstr "緋紅告示牌"
 
 msgid "Crimson Slab"
-msgstr ""
+msgstr "緋紅台階"
 
 msgid "Crimson Stairs"
-msgstr ""
+msgstr "緋紅階梯"
 
 msgid "Crimson Trapdoor"
-msgstr ""
+msgstr "緋紅活板門"
 
 msgid "Stripped Crimson Bark"
 msgstr ""
 
 msgid "Stripped Crimson Log"
-msgstr ""
+msgstr "去皮緋紅蕈柄"
 
 msgid "Stripped Warped Bark"
 msgstr ""
 
 msgid "Stripped Warped Log"
-msgstr ""
+msgstr "去皮扭曲蕈柄"
 
 msgid "The stripped trunk of an Crimson tree."
-msgstr ""
+msgstr "緋紅蕈菌的去皮主柄。"
 
 msgid "The stripped trunk of an Warped tree."
-msgstr ""
+msgstr "扭曲蕈菌的去皮主柄。"
 
 msgid "The stripped wood of an Crimson tree."
 msgstr ""
@@ -119,50 +119,50 @@ msgid "The stripped wood of an Warped tree."
 msgstr ""
 
 msgid "The trunk of a Crimson tree."
-msgstr ""
+msgstr "緋紅蕈菌的主柄。"
 
 msgid "The trunk of a Warped tree."
-msgstr ""
+msgstr "扭曲蕈菌的主柄。"
 
 msgid "Warped Bark"
-msgstr ""
+msgstr "扭曲蕈皮"
 
 msgid "Warped Bark Slab"
-msgstr ""
+msgstr "扭曲蕈皮台階"
 
 msgid "Warped Bark Stairs"
-msgstr ""
+msgstr "扭曲蕈皮蕈皮"
 
 msgid "Warped Button"
-msgstr ""
+msgstr "扭曲按鈕"
 
 msgid "Warped Door"
-msgstr ""
+msgstr "扭曲門"
 
 msgid "Warped Fence"
-msgstr ""
+msgstr "扭曲柵欄"
 
 msgid "Warped Fence Gate"
-msgstr ""
+msgstr "扭曲柵欄門"
 
 msgid "Warped Log"
-msgstr ""
+msgstr "扭曲蕈柄"
 
 msgid "Warped Planks"
-msgstr ""
+msgstr "扭曲板"
 
 msgid "Warped Pressure Plate"
-msgstr ""
+msgstr "扭曲壓力板"
 
 msgid "Warped Sign"
-msgstr ""
+msgstr "扭曲告示牌"
 
 msgid "Warped Slab"
-msgstr ""
+msgstr "扭曲台階"
 
 msgid "Warped Stairs"
-msgstr ""
+msgstr "扭曲階梯"
 
 msgid "Warped Trapdoor"
-msgstr ""
+msgstr "扭曲活板門"
 

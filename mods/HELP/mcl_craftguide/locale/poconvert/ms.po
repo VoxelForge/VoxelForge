@@ -124,9 +124,6 @@ msgstr ""
 msgid "Collect items to reveal more recipes"
 msgstr ""
 
-msgid "Invalid crafting ingredient: \"@1\" (dosent exist)"
-msgstr ""
-
 msgid "This item can be repaired at an anvil with: @1."
 msgstr ""
 

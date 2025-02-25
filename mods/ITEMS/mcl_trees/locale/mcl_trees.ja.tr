@@ -1,6 +1,6 @@
 # textdomain: mcl_trees
 When placed on soil (such as dirt) and exposed to light, a sapling will grow into a tree after some time.=
-Needs soil and light to grow=
+Needs soil and light to grow=生育に必要なのは土と光
 Wooden doors are 2-block high barriers which can be opened or closed by hand and by a redstone signal.=
 To open or close a wooden door, rightclick it or supply its lower half with a redstone signal.=
 Wooden trapdoors are horizontal barriers which can be opened and closed by hand or a redstone signal. They occupy the upper or lower part of a block, depending on how they have been placed. When open, they can be climbed like a ladder.=

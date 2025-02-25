@@ -155,7 +155,7 @@ minetest.register_node("mcl_smithing_table:table", {
 	S("To trim your armor, you need a mineral item and a smithing template. Each piece of armor can be given an trimming pattern. The items are consumed after trimming and the armor piece receives the pattern defined by the template.").."\n\n"..
 	S("List of mineral items:\n• Amethyst Shard\n• Copper Ingot\n• Diamond\n• Emerald\n• Gold Ingot\n• Iron Ingot\n• Lapis Lazuli\n• Netherite Ingot\n• Quartz\n• Redstone"),
 	groups = { pickaxey = 2, deco_block = 1 },
-
+	_configures_formspec = true,
 	tiles = {
 		"mcl_smithing_table_top.png",
 		"mcl_smithing_table_bottom.png",

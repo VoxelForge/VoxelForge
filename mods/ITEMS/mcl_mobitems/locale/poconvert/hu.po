@@ -83,7 +83,7 @@ msgid "Cooked Rabbit"
 msgstr "Nyúlpecsenye"
 
 msgid "This is a food item which can be eaten."
-msgstr "Ez egy ehető élelmiszer."
+msgstr "Ez egy élelmiszer, amelyet meg tudsz enni."
 
 msgid "Milk"
 msgstr "Tej"

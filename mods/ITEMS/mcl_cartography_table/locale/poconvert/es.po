@@ -20,5 +20,5 @@ msgid "Used to create or copy maps"
 msgstr "Se utiliza para crear o copiar mapas"
 
 msgid "Is used to create or copy maps for use.."
-msgstr "Se utiliza para crear o copiar mapas.."
+msgstr "Se utiliza para crear o copiar mapas para su uso.."
 

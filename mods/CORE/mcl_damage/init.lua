@@ -225,6 +225,7 @@ function mcl_damage.heal_player (player, amount)
 	mcl_health = math.min (player:get_properties ().hp_max,
 			  mcl_health + amount)
 	meta:set_float ("mcl_health", mcl_health)
+	mcl_serverplayer.update_vitals (player)
 
 	mcl_health = math.ceil (mcl_health)
 	if mcl_health > engine_hp then
@@ -295,6 +296,7 @@ minetest.register_on_player_hpchange(function(player, hp_change, mt_reason)
 	-- Deduct engine damage.
 	mcl_health = math.max (0, mcl_health + hp_change)
 	meta:set_float ("mcl_health", mcl_health)
+	mcl_serverplayer.update_vitals (player)
 
 	-- Return the difference in engine damage.
 	local difference = math.ceil (mcl_health) - engine_hp
@@ -321,6 +323,7 @@ minetest.register_on_joinplayer (function (player, _)
 	  local meta = player:get_meta ()
 	  if meta:get_float ("mcl_health") == 0 then
 	 meta:set_float ("mcl_health", player:get_hp ())
+	mcl_serverplayer.update_vitals (player)
 	  end
 end)
 

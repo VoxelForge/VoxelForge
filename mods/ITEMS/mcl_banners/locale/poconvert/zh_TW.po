@@ -113,13 +113,13 @@ msgid "Banner"
 msgstr "旗幟"
 
 msgid "Banners are tall colorful decorative blocks. They can be placed on the floor and at walls. Banners can be emblazoned with a variety of patterns using a lot of dye in crafting."
-msgstr ""
+msgstr "旗幟是又高又色彩繽紛的裝飾性物件，可以置在地上，也可以掛牆。用紋樣和染料能給旗幟織上花樣繁多的圖案。"
 
 msgid "Use crafting to draw a pattern on top of the banner. Emblazoned banners can be emblazoned again to combine various patterns. You can draw up to 12 layers on a banner that way. If the banner includes a gradient, only 3 layers are possible."
 msgstr ""
 
 msgid "You can copy the pattern of a banner by placing two banners of the same color in the crafting grid—one needs to be emblazoned, the other one must be clean. Finally, you can use a banner on a cauldron with water to wash off its top-most layer."
-msgstr ""
+msgstr "要複製圖案，請將兩幅旗幟放入工作台。其中一幅必需有圖案，另一幅必需為空白。最後­，對盛有水的鍋使用旗幟，可以洗去最近加上去的紋樣。"
 
 msgid "Preview Banner"
 msgstr "預覽旗幟"
@@ -128,10 +128,10 @@ msgid "Paintable decoration"
 msgstr "可塗裝裝飾"
 
 msgid "Can be used to craft special banner designs on the loom"
-msgstr ""
+msgstr "配合織布機使用，可以製作出有特別圖案的旗幟。"
 
 msgid "Special Banner Pattern"
-msgstr "特殊旗幟圖案"
+msgstr "特殊旗幟紋樣"
 
 msgid "@1 Bordure"
 msgstr ""

@@ -165,7 +165,7 @@ function screwdriver.handler(itemstack, user, pointed_thing, mode, uses)
 	end
 
 	if not (minetest.is_creative_enabled(user:get_player_name())) then
-		itemstack:add_wear(65535 / ((uses or 200) - 1))
+		itemstack:add_wear_by_uses(mcl_util.calculate_durability(itemstack))
 	end
 
 	return itemstack
@@ -176,7 +176,8 @@ minetest.register_tool("screwdriver:screwdriver", {
 	description = S("Screwdriver"),
 	inventory_image = "screwdriver.png",
 	wield_image = "screwdriver.png^[transformFX",
-	groups = { tool = 1, rarity = 3 },
+	groups = { tool = 1, enchantability = -1 },
+	_mcl_uses = 200,
 	on_use = function(itemstack, user, pointed_thing)
 		screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_FACE, 200)
 		return itemstack

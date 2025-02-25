@@ -31,51 +31,6 @@ msgstr ""
 msgid "Glass Pane"
 msgstr ""
 
-msgid "Black Stained Glass Pane"
-msgstr ""
-
-msgid "Blue Stained Glass Pane"
-msgstr ""
-
-msgid "Brown Stained Glass Pane"
-msgstr ""
-
-msgid "Cyan Stained Glass Pane"
-msgstr ""
-
-msgid "Green Stained Glass Pane"
-msgstr ""
-
-msgid "Grey Stained Glass Pane"
-msgstr ""
-
-msgid "Light Blue Stained Glass Pane"
-msgstr ""
-
-msgid "Light Grey Stained Glass Pane"
-msgstr ""
-
-msgid "Lime Stained Glass Pane"
-msgstr ""
-
-msgid "Magenta Stained Glass Pane"
-msgstr ""
-
-msgid "Orange Stained Glass Pane"
-msgstr ""
-
-msgid "Pink Stained Glass Pane"
-msgstr ""
-
-msgid "Purple Stained Glass Pane"
-msgstr ""
-
-msgid "Red Stained Glass Pane"
-msgstr ""
-
-msgid "White Stained Glass Pane"
-msgstr ""
-
-msgid "Yellow Stained Glass Pane"
+msgid "@1 Glass Pane"
 msgstr ""
 

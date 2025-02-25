@@ -14,17 +14,17 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Done"
-msgstr ""
+msgstr "完成"
 
 msgid "Take Book"
-msgstr ""
+msgstr "拿起書"
 
 msgid "Lectern"
 msgstr "講台"
 
 msgid "Lecterns not only look good, but are job site blocks for Librarians."
-msgstr ""
+msgstr "講台既美觀，也是圖書管理員的工作站。"
 
 msgid "Place the Lectern on a solid node for best results. May attract villagers, so it's best to place outside of where you call 'home'."
-msgstr ""
+msgstr "講台適宜放在堅固的方塊上。"
 

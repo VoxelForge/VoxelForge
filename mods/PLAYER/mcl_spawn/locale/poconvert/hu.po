@@ -14,14 +14,14 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Respawn position cleared!"
-msgstr ""
+msgstr "Feltámadási hely megszűnt!"
 
 msgid "New respawn position set!"
-msgstr "Ez az új kiindulási pontod!"
+msgstr "Új feltámadási helyet választottál!"
 
 msgid "Couldn't get level of your respawn anchor!"
-msgstr ""
+msgstr "Nem lehet megállapítani a lélekhorgonyod szintjét!"
 
 msgid "Your spawn bed was missing or blocked, and you had no charged respawn anchor!"
-msgstr ""
+msgstr "A feltámadáshoz használt ágyad eltűnt vagy el van torlaszolva, és nem volt töltött lélekhorgonyod sem!"
 

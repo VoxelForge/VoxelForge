@@ -9,9 +9,7 @@ function mcl_redstone.register_action(func, node_names)
 	end
 end
 
--- Nodes by name that are opaque. Redstone block is a special opaque node that
--- is treated as always being powered, its entry has the value 15 and all
--- others have the value 0.
+-- Nodes by name that are opaque.
 mcl_redstone._solid_opaque_tab = {}
 
 --- Wireflags are numbers with binary representation YYYYXXXX where XXXX
@@ -24,10 +22,8 @@ mcl_redstone._wireflag_tab = {}
 
 minetest.register_on_mods_loaded(function()
 	for name, ndef in pairs(minetest.registered_nodes) do
-		local opaquely_powered = minetest.get_item_group(name, "opaquely_powered")
-		if opaquely_powered > 0 then
-			mcl_redstone._solid_opaque_tab[name] = opaquely_powered
-		elseif minetest.get_item_group(name, "opaque") ~= 0 and minetest.get_item_group(name, "solid") ~= 0 then
+		-- TODO: We need a way to treat specific blocks (slime blocks) as non-opaque
+		if minetest.get_item_group(name, "opaque") ~= 0 and minetest.get_item_group(name, "solid") ~= 0 then
 			mcl_redstone._solid_opaque_tab[name] = 0
 		end
 	end

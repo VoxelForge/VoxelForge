@@ -39,7 +39,7 @@ minetest.register_node("mcl_nether:quartz_ore", {
 	description = S("Nether Quartz Ore"),
 	_doc_items_longdesc = S("Nether quartz ore is an ore containing nether quartz. It is commonly found around netherrack in the Nether."),
 	tiles = {"mcl_nether_quartz_ore.png"},
-	groups = {pickaxey=1, building_block=1, material_stone=1, xp=3},
+	groups = {pickaxey=1, building_block=1, material_stone=1, xp=3, blast_furnace_smeltable = 1},
 	drop = "mcl_nether:quartz",
 	sounds = mcl_sounds.node_sound_stone_defaults(),
 	_mcl_blast_resistance = 3,
@@ -157,7 +157,7 @@ minetest.register_node("mcl_nether:soul_sand", {
 	_tt_help = S("Reduces walking speed"),
 	_doc_items_longdesc = S("Soul sand is a block from the Nether. One can only slowly walk on soul sand. The slowing effect is amplified when the soul sand is on top of ice, packed ice or a slime block."),
 	tiles = {"mcl_nether_soul_sand.png"},
-	groups = {handy = 1, shovely = 1, building_block = 1, soil_nether_wart = 1, material_sand = 1, soul_block = 1, _mcl_partial = 2 },
+	groups = {handy = 1, shovely = 1, building_block = 1, soil_nether_wart = 1, material_sand = 1, soul_block = 1, pathfinder_partial = 2 },
 	collision_box = {
 		type = "fixed",
 		fixed = { -0.5, -0.5, -0.5, 0.5, 0.5 - 2/16, 0.5 },

@@ -14,97 +14,97 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Water can flow into this block and cause it to drop as an item."
-msgstr ""
+msgstr "此方塊遇水時會變成物品掉落。"
 
 msgid "This block can be turned into dirt with a hoe."
-msgstr ""
+msgstr "此方塊可用鋤變成泥土。"
 
 msgid "This block can be turned into farmland with a hoe."
-msgstr ""
+msgstr "此方塊可用鋤變成耕地。"
 
 msgid "This block can be turned into grass path with a shovel."
-msgstr ""
+msgstr "此方塊可用鏟變成草徑。"
 
 msgid "This block acts as a soil for all saplings."
-msgstr ""
+msgstr "樹苗可以種在此方塊上。"
 
 msgid "This block acts as a soil for some saplings."
-msgstr ""
+msgstr "某些樹苗可以種在此方塊上。"
 
 msgid "Sugar canes will grow on this block."
-msgstr ""
+msgstr "甘蔗可以長在此方塊上。"
 
 msgid "Nether wart will grow on this block."
 msgstr ""
 
 msgid "This block quickly decays when there is no wood block of any species within a distance of @1. When decaying, it disappears and may drop one of its regular drops. The block does not decay when the block has been placed by a player."
-msgstr ""
+msgstr "當 @1 格內沒有樹幹時，此方塊會迅速凋謝。方塊會因凋謝而消失，有機會掉出尋常的掉落物。被玩家放置的話就不會凋謝。"
 
 msgid "This block quickly decays and disappears when there is no wood block of any species within a distance of @1. The block does not decay when the block has been placed by a player."
-msgstr ""
+msgstr "當 @1 格內沒有樹幹時，此方塊會迅速凋謝、消失。被玩家放置的話就不會凋謝。"
 
 msgid "This plant can only grow on grass blocks and dirt. To survive, it needs to have an unobstructed view to the sky above or be exposed to a light level of 8 or higher."
-msgstr ""
+msgstr "此植物只能長在草和泥土方塊之上。它需要從上方直射的陽光才能存活，8 級或以上的光照也可以。"
 
 msgid "This plant can grow on grass blocks, podzol, dirt and coarse dirt. To survive, it needs to have an unobstructed view to the sky above or be exposed to a light level of 8 or higher."
-msgstr ""
+msgstr "此植物只能長在草、灰壤、泥土和粗泥方塊之上。它需要從上方直射的陽光才能存活，8 級或以上的光照也可以。"
 
 msgid "This block is flammable."
-msgstr ""
+msgstr "此方塊可燃。"
 
 msgid "This block destroys any item it touches."
-msgstr ""
+msgstr "此方塊會摧毀所接觸的物品。"
 
 msgid "To eat it, wield it, then rightclick."
-msgstr ""
+msgstr "持用並右按即可食用。"
 
 msgid "You can eat this even when your hunger bar is full."
-msgstr ""
+msgstr "即使飽肚也可以吃。"
 
 msgid "You cannot eat this when your hunger bar is full."
-msgstr ""
+msgstr "飽肚時不可以吃。"
 
 msgid "To drink it, wield it, then rightclick."
-msgstr ""
+msgstr "持用並右按即可飲用。"
 
 msgid "You cannot drink this when your hunger bar is full."
-msgstr ""
+msgstr "飽肚時不可以飲。"
 
 msgid "To consume it, wield it, then rightclick."
-msgstr ""
+msgstr "持用並右按即可服用。"
 
 msgid "You cannot consume this when your hunger bar is full."
-msgstr ""
+msgstr "飽肚時不可以服用。"
 
 msgid "You have to wait for about 2 seconds before you can eat or drink again."
-msgstr ""
+msgstr "每次服用需相隔最少 2 秒。"
 
 msgid "Hunger points restored: @1"
-msgstr ""
+msgstr "飢餓值：@1 點"
 
 msgid "Saturation points restored: @1%"
-msgstr ""
+msgstr "飽食度：@1 點"
 
 msgid "It can be worn on the head."
-msgstr ""
+msgstr "可以載在頭上。"
 
 msgid "It can be worn on the torso."
-msgstr ""
+msgstr "可以穿在身上。"
 
 msgid "It can be worn on the legs."
-msgstr ""
+msgstr "可以穿在腿上。"
 
 msgid "It can be worn on the feet."
-msgstr ""
+msgstr "可以穿在腳上。"
 
 msgid "Armor points: @1"
-msgstr ""
+msgstr "盔甲點：@1"
 
 msgid "Armor durability: @1"
-msgstr ""
+msgstr "盔甲耐久：@1"
 
 msgid "This item cannot be renamed at an anvil."
-msgstr ""
+msgstr "此物品𣎴能用鐵砧重命名。"
 
 msgid "This block crushes any block it falls into."
 msgstr ""
@@ -113,79 +113,79 @@ msgid "When this block falls deeper than 1 block, it causes damage to any player
 msgstr ""
 
 msgid "Diamond Pickaxe"
-msgstr ""
+msgstr "鑽石鎬"
 
 msgid "Iron Pickaxe"
-msgstr ""
+msgstr "鐵鎬"
 
 msgid "Stone Pickaxe"
-msgstr ""
+msgstr "石鎬"
 
 msgid "Golden Pickaxe"
 msgstr "金鎬"
 
 msgid "Wooden Pickaxe"
-msgstr ""
+msgstr "木鎬"
 
 msgid "Diamond Axe"
-msgstr ""
+msgstr "鑽石斧"
 
 msgid "Iron Axe"
-msgstr ""
+msgstr "鐵斧"
 
 msgid "Stone Axe"
-msgstr ""
+msgstr "石斧"
 
 msgid "Golden Axe"
 msgstr "金斧"
 
 msgid "Wooden Axe"
-msgstr ""
+msgstr "木斧"
 
 msgid "Diamond Shovel"
-msgstr ""
+msgstr "鑽石鏟"
 
 msgid "Iron Shovel"
-msgstr ""
+msgstr "鐵鏟"
 
 msgid "Stone Shovel"
-msgstr ""
+msgstr "石鏟"
 
 msgid "Golden Shovel"
-msgstr ""
+msgstr "金鏟"
 
 msgid "Wooden Shovel"
-msgstr ""
+msgstr "木鏟"
 
 msgid "This block can be mined by any tool instantly."
-msgstr ""
+msgstr "此方塊用任何工具都可以瞬間開採。"
 
 msgid "• Shears"
-msgstr ""
+msgstr "・剪刀"
 
 msgid "• Sword"
-msgstr ""
+msgstr "・劍"
 
 msgid "• Hand"
-msgstr ""
+msgstr "・手"
 
 msgid "This block can be mined by:"
-msgstr ""
+msgstr "適合開採此方塊的工具："
 
 msgid "Hardness: ∞"
-msgstr ""
+msgstr "硬度：∞"
 
 msgid "Hardness: @1"
-msgstr ""
+msgstr "硬度：@1"
 
 msgid "Blast Resistance: @1"
-msgstr ""
+msgstr "抗爆：@1"
 
 msgid "This block will not be destroyed by TNT explosions."
-msgstr ""
+msgstr "此方塊能抵抗 TNT 爆炸。"
 
 msgid "This block drops itself when mined by shears."
-msgstr ""
+msgstr "用剪刀開採此方塊時，它會整塊作為物品掉落。"
 
 msgid "@1×@2"
 msgstr ""
@@ -197,25 +197,25 @@ msgid ", "
 msgstr ""
 
 msgid "Painfully slow"
-msgstr ""
+msgstr "痛苦難熬"
 
 msgid "Very slow"
-msgstr ""
+msgstr "非常慢"
 
 msgid "Slow"
-msgstr ""
+msgstr "慢"
 
 msgid "Fast"
-msgstr ""
+msgstr "快"
 
 msgid "Very fast"
-msgstr ""
+msgstr "非常快"
 
 msgid "Extremely fast"
-msgstr ""
+msgstr "極快"
 
 msgid "Instantaneous"
-msgstr ""
+msgstr "瞬間"
 
 msgid "@1 uses"
 msgstr ""
@@ -224,10 +224,10 @@ msgid "Unlimited uses"
 msgstr ""
 
 msgid "Mining speed: @1"
-msgstr ""
+msgstr "開採速度：@1"
 
 msgid "Mining durability: @1"
-msgstr ""
+msgstr "開採耐久：@1"
 
 msgid "This tool is capable of mining."
 msgstr ""
@@ -239,7 +239,7 @@ msgid "This is a melee weapon which deals damage by punching."
 msgstr ""
 
 msgid "Maximum damage: @1 HP"
-msgstr ""
+msgstr "最大傷害：@1 HP"
 
 msgid "Full punch interval: @1 s"
 msgstr ""

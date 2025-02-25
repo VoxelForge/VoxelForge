@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Sneak-click to remove"
-msgstr ""
+msgstr "跪著點擊以還原為物品"
 
 msgid "Minecart"
-msgstr ""
+msgstr "礦車"
 
 msgid "Vehicle for fast travel on rails"
-msgstr ""
+msgstr "使用鐵軌的高速載具"
 
 msgid "Minecarts can be used for a quick transportion on rails."
 msgstr ""
@@ -38,13 +38,13 @@ msgid "If it moves over a powered activator rail, you'll get ejected."
 msgstr ""
 
 msgid "Sneak to dismount"
-msgstr "潛行以停止騎乘"
+msgstr "潛行以離開"
 
 msgid "Minecart with Chest"
-msgstr ""
+msgstr "儲物箱礦車"
 
 msgid "Minecart with Furnace"
-msgstr ""
+msgstr "熔爐礦車"
 
 msgid "A minecart with furnace is a vehicle that travels on rails. It can propel itself with fuel."
 msgstr ""
@@ -56,13 +56,13 @@ msgid "To obtain the minecart and furnace, punch them while holding down the sne
 msgstr ""
 
 msgid "Minecart with Command Block"
-msgstr ""
+msgstr "指令方塊礦車"
 
 msgid "Minecart with Hopper"
-msgstr ""
+msgstr "漏斗礦車"
 
 msgid "Minecart with TNT"
-msgstr ""
+msgstr "TNT礦車"
 
 msgid "Can be ignited by tools or powered activator rail"
 msgstr ""
@@ -80,16 +80,16 @@ msgid "Place them on the ground to build your railway, the rails will automatica
 msgstr ""
 
 msgid "Rail"
-msgstr ""
+msgstr "鐵軌"
 
 msgid "Track for minecarts"
-msgstr ""
+msgstr "礦車用軌道"
 
 msgid "Rails can be used to build transport tracks for minecarts. Normal rails slightly slow down minecarts due to friction."
 msgstr ""
 
 msgid "Powered Rail"
-msgstr ""
+msgstr "動力鐵軌"
 
 msgid "Speed up when powered, slow down when not powered"
 msgstr ""
@@ -101,7 +101,7 @@ msgid "Without redstone power, the rail will brake minecarts. To make this rail 
 msgstr ""
 
 msgid "Activator Rail"
-msgstr ""
+msgstr "觸發鐵軌"
 
 msgid "Activates minecarts when powered"
 msgstr ""
@@ -113,10 +113,10 @@ msgid "To make this rail activate minecarts, power it with redstone power and se
 msgstr ""
 
 msgid "Detector Rail"
-msgstr ""
+msgstr "感壓鐵軌"
 
 msgid "Emits redstone power when a minecart is detected"
-msgstr ""
+msgstr "在偵察到礦車時送出紅石能量"
 
 msgid "Rails can be used to build transport tracks for minecarts. A detector rail is able to detect a minecart above it and powers redstone mechanisms."
 msgstr ""

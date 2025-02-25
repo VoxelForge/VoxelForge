@@ -34,14 +34,17 @@ msgstr "芽"
 msgid "Grows on Mangrove leaves"
 msgstr "マングローブの葉に生育"
 
-msgid "water logged mangrove roots"
-msgstr "水没したマングローブの根"
+msgid "Water logged mangrove roots"
+msgstr ""
 
 msgid "Mangrove roots, despite being a full block, can be waterlogged and do not flow water out"
 msgstr "マングローブの根は、フルブロックであるにもかかわらず水没することがあり、水が流出しない"
 
 msgid "These cannot be crafted yet only occure when get in contact of water."
 msgstr "これはクラフトできないものの、水と接触したときだけ発生します。"
+
+msgid "River water logged mangrove roots"
+msgstr ""
 
 msgid "Muddy Mangrove Roots"
 msgstr "泥に塗れたマングローブの根"
@@ -53,70 +56,70 @@ msgid "Muddy Mangrove Roots is a block from mangrove swamp.It drowns player a bi
 msgstr "泥に塗れたマングローブの根は、マングローブの沼地から1ブロックの場所にあります。"
 
 msgid "Mangrove Bark"
-msgstr ""
+msgstr "マングローブの樹皮"
 
 msgid "Mangrove Bark Slab"
-msgstr ""
+msgstr "マングローブの樹皮のハーフブロック"
 
 msgid "Mangrove Bark Stairs"
-msgstr ""
+msgstr "マングローブの樹皮の階段"
 
 msgid "Mangrove Boat"
-msgstr ""
+msgstr "マングローブのボート"
 
 msgid "Mangrove Button"
-msgstr ""
+msgstr "マングローブのボタン"
 
 msgid "Mangrove Chest Boat"
-msgstr ""
+msgstr "チェスト付きのマングローブのボート"
 
 msgid "Mangrove Door"
-msgstr ""
+msgstr "マングローブのドア"
 
 msgid "Mangrove Fence"
-msgstr ""
+msgstr "マングローブのフェンス"
 
 msgid "Mangrove Fence Gate"
-msgstr ""
+msgstr "マングローブのフェンスゲート"
 
 msgid "Mangrove Leaves"
-msgstr ""
+msgstr "マングローブの葉"
 
 msgid "Mangrove Log"
-msgstr ""
+msgstr "マングローブの原木"
 
 msgid "Mangrove Planks"
-msgstr ""
+msgstr "マングローブの板材"
 
 msgid "Mangrove Pressure Plate"
-msgstr ""
+msgstr "マングローブの感圧板"
 
 msgid "Mangrove Sign"
-msgstr ""
+msgstr "マングローブの看板"
 
 msgid "Mangrove Slab"
-msgstr ""
+msgstr "マングローブのハーフブロック"
 
 msgid "Mangrove Stairs"
-msgstr ""
+msgstr "マングローブの階段"
 
 msgid "Mangrove Trapdoor"
-msgstr ""
+msgstr "マングローブのトラップドア"
 
 msgid "Mangrove leaves are grown from Mangrove trees."
 msgstr ""
 
 msgid "Stripped Mangrove Bark"
-msgstr ""
+msgstr "樹皮を剥いだマングローブの木"
 
 msgid "Stripped Mangrove Log"
-msgstr ""
+msgstr "樹皮を剥いだマングローブの原木"
 
 msgid "The stripped trunk of an Mangrove tree."
-msgstr ""
+msgstr "皮を剥いだ後のマングローブの木の幹。"
 
 msgid "The stripped wood of an Mangrove tree."
-msgstr ""
+msgstr "皮を剥いだ後のマングローブの木。"
 
 msgid "The trunk of a Mangrove tree."
 msgstr ""

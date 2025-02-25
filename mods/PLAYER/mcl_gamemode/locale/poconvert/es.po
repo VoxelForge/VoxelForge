@@ -16,8 +16,8 @@ msgstr ""
 msgid "[<gamemode>] [<player>]"
 msgstr "[<modo de juego>] [<jugador>]"
 
-msgid "Change gamemode (survival/creative) for yourself or player"
-msgstr "Cambiar el modo de juego (survival/creative) para usted o un jugador"
+msgid "Change gamemode (survival/creative/0/1/s/c) for yourself or player"
+msgstr ""
 
 msgid "Player not online"
 msgstr "Jugador no en línea"

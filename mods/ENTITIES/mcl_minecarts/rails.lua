@@ -300,7 +300,7 @@ register_rail("mcl_minecarts:detector_rail_on",
 		_doc_items_create_entry = false,
 		_mcl_redstone = {
 			get_power = function(node, dir)
-				return 15
+				return 15, dir.y < 0
 			end,
 		},
 		drop = "mcl_minecarts:detector_rail",

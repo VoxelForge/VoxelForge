@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Warped Fungus"
-msgstr ""
+msgstr "歪んだキノコ"
 
 msgid "Warped fungus is a mushroom found in the nether's warped forest."
 msgstr ""
@@ -23,7 +23,7 @@ msgid "Twisting Vines"
 msgstr "ねじれツタ"
 
 msgid "Weeping Vines"
-msgstr ""
+msgstr "しだれツタ"
 
 msgid "Nether Sprouts"
 msgstr "ネザースプラウト"
@@ -41,7 +41,7 @@ msgid "Warped Nylium"
 msgstr "歪なナイリウム"
 
 msgid "Crimson Fungus"
-msgstr ""
+msgstr "真紅のキノコ"
 
 msgid "Crimson fungus is a mushroom found in the nether's crimson forest."
 msgstr ""
@@ -53,116 +53,116 @@ msgid "Crimson Nylium"
 msgstr "真紅のナイリウム"
 
 msgid "Crimson Bark"
-msgstr ""
+msgstr "真紅の表皮"
 
 msgid "Crimson Bark Slab"
-msgstr ""
+msgstr "真紅の表皮のハーフブロック"
 
 msgid "Crimson Bark Stairs"
-msgstr ""
+msgstr "真紅の表皮の階段"
 
 msgid "Crimson Button"
-msgstr ""
+msgstr "真紅のボタン"
 
 msgid "Crimson Door"
-msgstr ""
+msgstr "真紅のドア"
 
 msgid "Crimson Fence"
-msgstr ""
+msgstr "真紅のフェンス"
 
 msgid "Crimson Fence Gate"
-msgstr ""
+msgstr "真紅のフェンスゲート"
 
 msgid "Crimson Log"
-msgstr ""
+msgstr "真紅の幹"
 
 msgid "Crimson Planks"
-msgstr ""
+msgstr "真紅の板材"
 
 msgid "Crimson Pressure Plate"
-msgstr ""
+msgstr "真紅の感圧板"
 
 msgid "Crimson Sign"
-msgstr ""
+msgstr "真紅の看板"
 
 msgid "Crimson Slab"
-msgstr ""
+msgstr "真紅のハーフブロック"
 
 msgid "Crimson Stairs"
-msgstr ""
+msgstr "真紅の階段"
 
 msgid "Crimson Trapdoor"
-msgstr ""
+msgstr "真紅のトラップドア"
 
 msgid "Stripped Crimson Bark"
-msgstr ""
+msgstr "皮を剥いだ後の真紅の菌糸"
 
 msgid "Stripped Crimson Log"
-msgstr ""
+msgstr "表皮を剥いだ真紅の幹"
 
 msgid "Stripped Warped Bark"
-msgstr ""
+msgstr "皮を剥いだ後の歪んだ菌糸"
 
 msgid "Stripped Warped Log"
-msgstr ""
+msgstr "表皮を剥いだ歪んだ幹"
 
 msgid "The stripped trunk of an Crimson tree."
-msgstr ""
+msgstr "皮を剥いだ後の真紅の幹。"
 
 msgid "The stripped trunk of an Warped tree."
-msgstr ""
+msgstr "皮を剥いだ後の歪んだ幹。"
 
 msgid "The stripped wood of an Crimson tree."
-msgstr ""
+msgstr "皮を剥いだ後の真紅の菌糸。"
 
 msgid "The stripped wood of an Warped tree."
-msgstr ""
+msgstr "皮を剥いだ後の歪んだ菌糸。"
 
 msgid "The trunk of a Crimson tree."
-msgstr ""
+msgstr "真紅の菌糸。"
 
 msgid "The trunk of a Warped tree."
-msgstr ""
+msgstr "歪んだ菌糸。"
 
 msgid "Warped Bark"
-msgstr ""
+msgstr "歪んだ表皮"
 
 msgid "Warped Bark Slab"
-msgstr ""
+msgstr "歪んだ表皮のハーフブロック"
 
 msgid "Warped Bark Stairs"
-msgstr ""
+msgstr "歪んだ表皮の階段"
 
 msgid "Warped Button"
-msgstr ""
+msgstr "歪んだボタン"
 
 msgid "Warped Door"
-msgstr ""
+msgstr "歪んだドア"
 
 msgid "Warped Fence"
-msgstr ""
+msgstr "歪んだフェンス"
 
 msgid "Warped Fence Gate"
-msgstr ""
+msgstr "歪んだフェンスゲート"
 
 msgid "Warped Log"
-msgstr ""
+msgstr "歪んだ幹"
 
 msgid "Warped Planks"
-msgstr ""
+msgstr "歪んだ板材"
 
 msgid "Warped Pressure Plate"
-msgstr ""
+msgstr "歪んだ感圧板"
 
 msgid "Warped Sign"
-msgstr ""
+msgstr "歪んだ看板"
 
 msgid "Warped Slab"
-msgstr ""
+msgstr "歪んだハーフブロック"
 
 msgid "Warped Stairs"
-msgstr ""
+msgstr "歪んだ階段"
 
 msgid "Warped Trapdoor"
-msgstr ""
+msgstr "歪んだトラップドア"
 

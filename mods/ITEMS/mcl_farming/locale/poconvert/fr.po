@@ -103,9 +103,6 @@ msgstr "Utilisez une houe sur un bloc cultivable (avec un clic droit sur celui-c
 msgid "Wood Hoe"
 msgstr "Houe en bois"
 
-msgid "Uses: @1"
-msgstr "Utilisations : @1"
-
 msgid "Stone Hoe"
 msgstr "Houe en pierre"
 

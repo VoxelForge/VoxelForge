@@ -103,9 +103,6 @@ msgstr "Użyj motyki na bloku który można zaorać (klikając go prawym przycis
 msgid "Wood Hoe"
 msgstr "Drewniana motyka"
 
-msgid "Uses: @1"
-msgstr "Wykorzystuje: @1"
-
 msgid "Stone Hoe"
 msgstr "Kamienna motyka"
 

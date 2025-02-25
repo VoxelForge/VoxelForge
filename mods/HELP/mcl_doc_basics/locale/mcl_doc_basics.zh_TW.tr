@@ -2,7 +2,7 @@
 Advanced usage=進階用法
 Advanced information which may be nice to know, but is not crucial to gameplay=
 # MCL2 extensions
-Creative Mode=
+Creative Mode=創造模式
 Enabling Creative Mode in MineClonia applies the following changes:=
 • You keep the things you've placed=
 • Creative inventory is available to obtain most items easily=
@@ -14,7 +14,7 @@ Enabling Creative Mode in MineClonia applies the following changes:=
 • You can eat food whenever you want=
 • You can always use the minimap (including radar mode)=
 Damage is not affected by Creative Mode, it needs to be disabled separately.=
-Console=
+Console=指令行
 With [F10] you can open and close the console. The main use of the console is to show the chat log and enter chat messages or server commands.=
 Using the chat or server command key also opens the console, but it is smaller and will be closed after you sent a message.=
 Use the chat to communicate with other players. This requires you to have the “shout” privilege.=
@@ -118,7 +118,7 @@ Web forums: <https://forum.luanti.org/>=
 A web-based discussion platform where you can discuss everything related to Luanti. This is also a place where player-made mods and games are published and discussed. The discussions are mainly in English, but there is also space for discussion in other languages.=
 Chat: <irc://irc.freenode.net#minetest>=
 A generic Internet Relay Chat channel for everything related to Luanti where people can meet to discuss in real-time. If you do not understand IRC, see the Community Wiki for help.=
-Basics=
+Basics=基礎
 Everything you need to know to get started with playing=
 Quick start=
 This is a very brief introduction to the basic gameplay.=

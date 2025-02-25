@@ -17,10 +17,10 @@ msgid "Totem of Undying"
 msgstr "不死圖騰"
 
 msgid "Protects you from death while wielding it"
-msgstr ""
+msgstr "拿在手就能保你不死"
 
 msgid "A totem of undying is a rare artifact which may safe you from certain death."
-msgstr ""
+msgstr "不死圖騰是一種罕見的神器，有時能幫你跨過死門關。"
 
 msgid "The totem only works while you hold it in your hand. If you receive fatal damage, you are saved from death and you get a second chance with 1 HP. The totem is destroyed in the process, however."
 msgstr ""

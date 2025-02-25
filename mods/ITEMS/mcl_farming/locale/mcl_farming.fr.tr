@@ -29,7 +29,6 @@ Turns block into farmland=Transforme un bloc en terres agricoles
 Hoes are essential tools for growing crops. They are used to create farmland in order to plant seeds on it. Hoes can also be used as very weak weapons in a pinch.=Les houes sont des outils essentiels pour cultiver des plantes. Elles sont utilisées pour créer des terres arables afin d'y semer des graines. Les houes peuvent aussi être utilisées comme de faibles armes en cas d'attaque.
 Use the hoe on a cultivatable block (by rightclicking it) to turn it into farmland. Dirt, grass blocks and grass paths are cultivatable blocks. Using a hoe on coarse dirt turns it into dirt.=Utilisez une houe sur un bloc cultivable (avec un clic droit sur celui-ci) pour le transformer en terre arable. La terre, les blocs enherbés et les chemins d'herbe sont des blocs cultivables. Utiliser une houe sur un bloc de terre stérile la transforme en bloc de terre simple.
 Wood Hoe=Houe en bois
-Uses: @1=Utilisations : @1
 Stone Hoe=Houe en pierre
 Iron Hoe=Houe en fer
 Golden Hoe=Houe en or

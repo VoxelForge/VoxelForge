@@ -14,118 +14,118 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This is a piece of equippable armor which reduces the amount of damage you receive."
-msgstr "這是一件可裝備的盔甲，可以減少你受到的傷害。"
+msgstr "這是一件盔甲部件，裝備後可以減少你所受的傷害。"
 
 msgid "To equip it, put it on the corresponding armor slot in your inventory menu."
-msgstr "要裝備它，就把它放在你的物品欄中相應的盔甲插槽上。"
+msgstr "將它放在你的物品欄中相應的盔甲槽，就可以裝備。"
 
 msgid "Leather Cap"
-msgstr "皮革帽子"
+msgstr "皮帽"
 
 msgid "Leather Tunic"
-msgstr "皮革上衣"
+msgstr "皮外衣"
 
 msgid "Leather Pants"
-msgstr "皮革褲子"
+msgstr "皮褲"
 
 msgid "Leather Boots"
-msgstr "皮革靴子"
+msgstr "皮靴"
 
 msgid "Colorize a piece of leather armor, or wash it"
-msgstr ""
+msgstr "給一件皮盔甲染色，或洗掉它的染色。"
 
 msgid "Not leather armor."
-msgstr ""
+msgstr "不是皮盔甲。"
 
 msgid "Washed."
-msgstr ""
+msgstr "已洗掉染色。"
 
 msgid "Done: @1"
-msgstr ""
+msgstr "完成：@1"
 
 msgid "Player isn't online"
-msgstr ""
+msgstr "玩家不在線。"
 
 msgid "Bolt Armor Trim"
-msgstr ""
+msgstr "鑲鉚盔甲紋飾"
 
 msgid "Coast Armor Trim"
-msgstr ""
+msgstr "海岸盔甲紋飾"
 
 msgid "Dune Armor Trim"
-msgstr ""
+msgstr "沙丘盔甲紋飾"
 
 msgid "Eye Armor Trim"
-msgstr ""
+msgstr "眼眸盔甲紋飾"
 
 msgid "Flow Armor Trim"
-msgstr ""
+msgstr "渦流盔甲紋飾"
 
 msgid "Rib Armor Trim"
-msgstr ""
+msgstr "肋骨盔甲紋飾"
 
 msgid "Sentry Armor Trim"
-msgstr ""
+msgstr "哨兵盔甲紋飾"
 
 msgid "Silence Armor Trim"
-msgstr ""
+msgstr "沉靜盔甲紋飾"
 
 msgid "Snout Armor Trim"
-msgstr ""
+msgstr "豬鼻盔甲紋飾"
 
 msgid "Spire Armor Trim"
-msgstr ""
+msgstr "尖塔盔甲紋飾"
 
 msgid "Tide Armor Trim"
-msgstr ""
+msgstr "潮汐盔甲紋飾"
 
 msgid "Vex Armor Trim"
-msgstr ""
+msgstr "惱鬼盔甲紋飾"
 
 msgid "Ward Armor Trim"
-msgstr ""
+msgstr "守衞盔甲紋飾"
 
 msgid "Wayfinder Armor Trim"
-msgstr ""
+msgstr "嚮導盔甲紋飾"
 
 msgid "Wild Armor Trim"
-msgstr ""
+msgstr "荒野盔甲紋飾"
 
 msgid "Golden Helmet"
-msgstr "黃金頭盔"
+msgstr "金頭盔"
 
 msgid "Golden Chestplate"
-msgstr "黃金胸甲"
+msgstr "金胸甲"
 
 msgid "Golden Leggings"
-msgstr "黃金護腿"
+msgstr "金護腿"
 
 msgid "Golden Boots"
-msgstr "黃金靴子"
+msgstr "金靴"
 
 msgid "Chainmail Helmet"
-msgstr ""
+msgstr "鐵鏈頭盔"
 
 msgid "Chainmail Chestplate"
-msgstr ""
+msgstr "鐵鏈胸甲"
 
 msgid "Chainmail Leggings"
-msgstr ""
+msgstr "鐵鏈護腿"
 
 msgid "Chainmail Boots"
-msgstr ""
+msgstr "鐵鏈靴"
 
 msgid "Iron Helmet"
-msgstr "鐵製頭盔"
+msgstr "鐵頭盔"
 
 msgid "Iron Chestplate"
-msgstr "鐵製胸甲"
+msgstr "鐵胸甲"
 
 msgid "Iron Leggings"
-msgstr "鐵製護腿"
+msgstr "鐵護腿"
 
 msgid "Iron Boots"
-msgstr "鐵製靴子"
+msgstr "鐵靴"
 
 msgid "Diamond Helmet"
 msgstr "鑽石頭盔"
@@ -137,83 +137,83 @@ msgid "Diamond Leggings"
 msgstr "鑽石護腿"
 
 msgid "Diamond Boots"
-msgstr "鑽石靴子"
+msgstr "鑽石靴"
 
 msgid "Netherite Helmet"
-msgstr ""
+msgstr "獄髓頭盔"
 
 msgid "Netherite Chestplate"
-msgstr ""
+msgstr "獄髓胸甲"
 
 msgid "Netherite Leggings"
-msgstr ""
+msgstr "獄髓護腿"
 
 msgid "Netherite Boots"
-msgstr ""
+msgstr "獄髓靴"
 
 msgid "Projectile Protection"
-msgstr ""
+msgstr "投射物防護"
 
 msgid "Reduces projectile damage."
-msgstr ""
+msgstr "減少來自投射物的傷害。"
 
 msgid "Blast Protection"
-msgstr ""
+msgstr "爆炸防護"
 
 msgid "Reduces explosion damage and knockback."
-msgstr ""
+msgstr "減少來自爆炸的傷害，並阻緩擊退。"
 
 msgid "Fire Protection"
-msgstr ""
+msgstr "火焰防護"
 
 msgid "Reduces fire damage."
-msgstr ""
+msgstr "減少源自高熱的傷害。"
 
 msgid "Protection"
-msgstr ""
+msgstr "防護"
 
 msgid "Reduces most types of damage by 4% for each level."
-msgstr ""
+msgstr "減少常見的傷害，每魔咒等級減 4%。"
 
 msgid "Feather Falling"
-msgstr ""
+msgstr "輕盈"
 
 msgid "Reduces fall damage."
-msgstr ""
+msgstr "減少摔落傷害。"
 
 msgid "Aqua Affinity"
-msgstr ""
+msgstr "水中挖掘"
 
 msgid "Increases underwater mining speed."
-msgstr ""
+msgstr "提升水下挖掘速度。"
 
 msgid "Curse of Binding"
-msgstr ""
+msgstr "綁定詛咒"
 
 msgid "Item cannot be removed from armor slots except due to death, breaking or in Creative Mode."
-msgstr ""
+msgstr "被詛咒物品穿上後無法卸下，除因死亡而掉落、耐久度耗盡、或處於創造模式。"
 
 msgid "Thorns"
-msgstr ""
+msgstr "荊棘"
 
 msgid "Reflects some of the damage taken when hit, at the cost of reducing durability with each proc."
-msgstr ""
+msgstr "在受到攻擊時返還部分傷害，但會額外損耗耐久。"
 
 msgid "Elytra"
-msgstr ""
+msgstr "鞘翅"
 
 msgid "Smithing Template"
-msgstr ""
+msgstr "鍛造模板"
 
 msgid "Applies to:"
-msgstr ""
+msgstr "適用於："
 
 msgid "Armor"
-msgstr ""
+msgstr "盔甲"
 
 msgid "Ingredients:"
-msgstr ""
+msgstr "材料："
 
 msgid "Ingot & Crystals"
-msgstr ""
+msgstr "錠、寶石"
 

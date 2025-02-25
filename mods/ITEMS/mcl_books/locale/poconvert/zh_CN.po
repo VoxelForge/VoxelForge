@@ -23,10 +23,10 @@ msgid "“@1”"
 msgstr "“@1”"
 
 msgid "Copy of “@1”"
-msgstr "“@1”的副本"
+msgstr "“@1”的抄本"
 
 msgid "Copy of Copy of “@1”"
-msgstr "“@1”的副本的副本"
+msgstr "“@1”的再抄本"
 
 msgid "Tattered Book"
 msgstr "残书"

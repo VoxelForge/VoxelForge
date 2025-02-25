@@ -7,6 +7,19 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 -- Honeycomb
 minetest.register_craftitem("mcl_honey:honeycomb", {
+	_dispense_into_walkable = true,
+	_on_dispense = function(stack, _, droppos, dropnode)
+		if not dropnode.name:find("_preserved") then
+			local new_name = dropnode.name .. "_preserved"
+
+			if core.registered_nodes[new_name] then
+				mcl_copper.spawn_particles(droppos, "mcl_copper_anti_oxidation_particle.png^[colorize:#d1d553:125")
+				core.swap_node(droppos, {name = new_name, param2 = dropnode.param2})
+				stack:take_item()
+			end
+		end
+		return stack
+	end,
 	description = S("Honeycomb"),
 	_doc_items_longdesc = S("Used to craft beehives and protect copper blocks from further oxidation."),
 	_doc_items_usagehelp = S("Use on copper blocks to prevent further oxidation."),
@@ -63,7 +76,7 @@ minetest.register_node("mcl_honey:honey_block", {
 	tiles = {"mcl_honey_block_side.png"},
 	is_ground_content = false,
 	use_texture_alpha = minetest.features.use_texture_alpha_string_modes and "blend" or true,
-	groups = { handy = 1, deco_block = 1, fall_damage_add_percent = -80, _mcl_partial = 2, },
+	groups = { handy = 1, deco_block = 1, fall_damage_add_percent = -80, pathfinder_partial = 2, },
 	paramtype = "light",
 	drawtype = "nodebox",
 	node_box = {

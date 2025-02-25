@@ -2,6 +2,7 @@
 local mob_class = mcl_mobs.mob_class
 local is_valid = mcl_util.is_valid_objectref
 
+local only_peaceful_mobs = minetest.settings:get_bool("only_peaceful_mobs", false)
 local modern_lighting = minetest.settings:get_bool("mcl_mobs_modern_lighting", true)
 
 local nether_threshold = 11
@@ -120,7 +121,7 @@ function mcl_mobs.spawn_setup(def)
 
 	local mob_def = minetest.registered_entities[def.name]
 	assert(mob_def, "spawn definition with invalid entity: "..tostring(def.name))
-	if mcl_vars.difficulty <= 0 and not mob_def.persist_in_peaceful then return end
+	if (mcl_vars.difficulty <= 0 or only_peaceful_mobs) and not mob_def.persist_in_peaceful then return end
 	assert(def.chance > 0, "Chance shouldn't be less than 1 (mob name: " .. def.name ..")")
 
 	setmetatable(def, spawn_defaults_meta)

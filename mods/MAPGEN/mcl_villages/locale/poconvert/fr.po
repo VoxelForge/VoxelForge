@@ -29,5 +29,5 @@ msgid "A place to plant @1 crops"
 msgstr "Un endroit pour planter des cultures @1"
 
 msgid "Example POI"
-msgstr ""
+msgstr "Exemple de point d'intérêt"
 

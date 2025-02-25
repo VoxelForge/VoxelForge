@@ -29,10 +29,10 @@ msgid "Ancient Debris"
 msgstr "古代の残骸"
 
 msgid "Ancient debris can be found in the nether and is very very rare."
-msgstr ""
+msgstr "古代の残骸は、ネザーに生成される珍しい鉱石であり。"
 
 msgid "Block of Netherite"
-msgstr ""
+msgstr "ネザライトブロック"
 
 msgid "Netherite block is very hard and can be made of 9 netherite ingots."
 msgstr "ネザライトブロックは、非常に硬く、9個のネザライトインゴットから作れます。"
@@ -68,10 +68,10 @@ msgid "Red Nether Brick Block"
 msgstr "赤いネザーレンガブロック"
 
 msgid "Chiseled Nether Brick Block"
-msgstr ""
+msgstr "模様入りのネザーレンガ"
 
 msgid "Cracked Nether Bricks"
-msgstr ""
+msgstr "ひび割れたネザーレンガ"
 
 msgid "Nether Wart Block"
 msgstr "ネザーウォートブロック"
@@ -92,31 +92,31 @@ msgid "Smooth Quartz"
 msgstr "滑らかなクォーツ"
 
 msgid "Quartz Stairs"
-msgstr ""
+msgstr "クォーツの階段"
 
 msgid "Quartz Slab"
-msgstr ""
+msgstr "クォーツのハーフブロック"
 
 msgid "Smooth Quartz Stairs"
-msgstr ""
+msgstr "滑らかなクォーツの階段"
 
 msgid "Smooth Quartz Slab"
-msgstr ""
+msgstr "滑らかなクォーツのハーフブロック"
 
 msgid "Nether Brick Stairs"
-msgstr ""
+msgstr "ネザーレンガの階段"
 
 msgid "Nether Brick Slab"
-msgstr ""
+msgstr "ネザーレンガのハーフブロック"
 
 msgid "Red Nether Brick Stairs"
-msgstr ""
+msgstr "赤いネザーレンガの階段"
 
 msgid "Red Nether Brick Slab"
-msgstr ""
+msgstr "赤いネザーレンガのハーフブロック"
 
 msgid "Nether Brick Fence"
-msgstr ""
+msgstr "ネザーレンガのフェンス"
 
 msgid "Glowstone Dust"
 msgstr "グローストーンダスト"
@@ -149,22 +149,22 @@ msgid "Nether bricks are the main crafting ingredient for crafting nether brick 
 msgstr "ネザーレンガは、ネザーレンガブロックやネザーフェンスを製作するための主なクラフト材料です。"
 
 msgid "Netherite Upgrade Template"
-msgstr ""
+msgstr "ネザライト強化用鍛冶型"
 
 msgid "Smithing Template"
-msgstr ""
+msgstr "鍛冶型"
 
 msgid "Applies to:"
 msgstr ""
 
 msgid "Diamond Armor"
-msgstr ""
+msgstr "ダイヤモンド防具"
 
 msgid "Diamond Tools"
-msgstr ""
+msgstr "ダイヤモンド武器と道具"
 
 msgid "Ingredients:"
-msgstr ""
+msgstr "素材："
 
 msgid "Nether Lava Source"
 msgstr "ネザー溶岩源"

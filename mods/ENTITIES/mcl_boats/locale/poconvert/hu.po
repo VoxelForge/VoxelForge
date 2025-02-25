@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Sneak to dismount"
-msgstr "Guggolj, hogy leszereld"
+msgstr "Lopakodásgombbal szállhatsz ki"
 
 msgid "Boats are used to travel on the surface of water."
 msgstr "Csónakkal a víz felszínén közlekedhetsz."
 
 msgid "Rightclick on a water source to place the boat. Rightclick the boat to enter it. Use [Left] and [Right] to steer, [Forwards] to speed up and [Backwards] to slow down or move backwards. Use [Sneak] to leave the boat, punch the boat to make it drop as an item."
-msgstr "Jobb gombbal kattints a vízre, hogy elhelyezd a csónakot. Jobb gombbal kattints a csónakra a beszálláshoz. A [Bal] és [Jobb] irányváltoztatáshoz, [Előre] és [Hátra] az evezéshez. Használd a [Guggolás]-t a kiszálláshoz, üsd meg a csónakot, hogy felvehető elemmé váljon."
+msgstr "Jobb gombbal kattints egy vízgócra, hogy ráhelyezd a csónakot. Jobb gombbal kattints a csónakra a beszálláshoz. Nyomj [Bal] és [Jobb] gombot a forgáshoz, [Előre] gombot a gyorsításhoz és [Hátra] gombot az lassításhoz vagy hátramenethez. Használd a [Lopakodás] gombot a kiszálláshoz, üsd meg a csónakot, hogy felvehető tárggyá váljon."
 
 msgid "Boat"
 msgstr "Csónak"
@@ -32,7 +32,7 @@ msgid "Chest Boats are used to travel on the surface of water. And transport goo
 msgstr "Ládás csónakkal árut szállíthatsz a vízen"
 
 msgid "Rightclick on a water source to place the boat. Rightclick the boat to enter it. Use [Left] and [Right] to steer, [Forwards] to speed up and [Backwards] to slow down or move backwards. Use [Sneak] to leave the boat, punch the boat to make it drop as an item. Use [Sneak] + [Rightclick] to open the boat's chest"
-msgstr "Jobb gombbal kattints a vízre, hogy elhelyezd a csónakot. Jobb gombbal kattints a csónakra a beszálláshoz. A [Bal] és [Jobb] irányváltoztatáshoz, [Előre] és [Hátra] az evezéshez. Használd a [Guggolás]-t a kiszálláshoz, üsd meg a csónakot, hogy felvehető elemmé váljon. A [Guggolás] + [Jobb kattintás] nyitja a ládát"
+msgstr "Jobb gombbal kattints egy vízgócra, hogy ráhelyezd a csónakot. Jobb gombbal kattints a csónakra a beszálláshoz. Nyomj [Bal] és [Jobb] gombot a forgáshoz, [Előre] gombot a gyorsításhoz és [Hátra] gombot az lassításhoz vagy hátramenethez. Használd a [Lopakodás] gombot a kiszálláshoz, üsd meg a csónakot, hogy felvehető tárggyá váljon. A [Lopakodás] + [Jobb kattintás] kombinációval megnyitható a csónak ládája"
 
 msgid "Chest Boat"
 msgstr "Ládás csónak"

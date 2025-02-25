@@ -36,7 +36,6 @@ Previous page=Vorherige Seite
 Next page=Nächste Seite
 No item to show=Nichts anzuzeigen
 Collect items to reveal more recipes=Gegenstände aufsammeln, um mehr Rezepte aufzudecken
-Invalid crafting ingredient: "@1" (dosent exist)=
 This item can be repaired at an anvil with: @1.=Dieser Gegenstand kann an einem Amboss repariert werden mit: @1.
 This item can be repaired at an anvil with any wooden planks.=Dieser Gegenstand kann auf einem Amboss mit beliebigen Holzbrettern repariert werden.
 This item can be repaired at an anvil with any item in the “@1” group.=Dieser Gegenstand kann an einem Amboss mit jedem Gegenstand der Gruppe „@1“ repariert werden.

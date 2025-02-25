@@ -172,7 +172,7 @@ minetest.register_craftitem("mcl_end:crystal", {
 		end
 		return itemstack
 	end,
-	_tt_help = S("Ignited by a punch or a hit with an arrow").."\n"..S("Explosion radius: @1", tostring(explosion_strength)),
+	_tt_help = S("Ignited by a punch or a hit with an arrow").."\n"..S("Explosion power: @1", tostring(explosion_strength)),
 	_doc_items_longdesc = S("End Crystals are explosive devices. They can be placed on Obsidian or Bedrock. Ignite them by a punch or a hit with an arrow. End Crystals can also be used the spawn the Ender Dragon by placing one at each side of the End Exit Portal."),
 	_doc_items_usagehelp = S("Place the End Crystal on Obsidian or Bedrock, then punch it or hit it with an arrow to cause an huge and probably deadly explosion. To Spawn the Ender Dragon, place one at each side of the End Exit Portal."),
 

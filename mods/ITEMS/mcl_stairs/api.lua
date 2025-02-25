@@ -189,7 +189,7 @@ local function register_stair(subname, stairdef)
 		paramtype2 = "facedir",
 		is_ground_content = false,
 		groups = table.merge(stairdef.groups, {
-			_mcl_partial = 2, building_block = 1, stair = 1
+			pathfinder_partial = 2, building_block = 1, stair = 1
 		}),
 		sounds = stairdef.sounds,
 		node_box = {
@@ -323,7 +323,7 @@ local function register_slab(subname, stairdef)
 		-- Facedir intentionally left out (see below)
 		is_ground_content = false,
 		groups = table.merge(stairdef.groups, {
-			_mcl_partial = 3, building_block = 1, slab = 1
+			pathfinder_partial = 3, building_block = 1, slab = 1
 		}),
 		sounds = stairdef.sounds,
 		node_box = {
@@ -395,7 +395,7 @@ local function register_slab(subname, stairdef)
 	-- Using facedir is not an option, as this would rotate the textures as well and would make
 	-- e.g. upper sandstone slabs look completely wrong.
 	local topdef = table.copy(nodedef)
-	topdef.groups._mcl_partial = 2
+	topdef.groups.pathfinder_partial = 2
 	topdef.groups.slab_top = 1
 	topdef.groups.not_in_creative_inventory = 1
 	topdef.groups.not_in_craft_guide = 1
@@ -431,7 +431,7 @@ local function register_slab(subname, stairdef)
 	dgroups.not_in_creative_inventory = 1
 	dgroups.not_in_craft_guide = 1
 	dgroups.slab = nil
-	dgroups._mcl_partial = 2
+	dgroups.pathfinder_partial = 2
 	dgroups.double_slab = 1
 	minetest.register_node(":"..double_slab, {
 		description = stairdef.double_description,

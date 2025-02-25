@@ -19,12 +19,6 @@ msgstr "斧头是你砍伐树木、木质方块及其他一些方块的首选工
 msgid "To strip bark from trunks and hyphae, use the ax by right-clicking on them. To reduce an oxidation stage from a block made of copper or remove wax from waxed variants, right-click on them. Doors and trapdoors also require you to hold down the sneak key while using the axe."
 msgstr "要剥去树干上的树皮和菌丝，可通过右键点击它们来使用斧头。要降低铜制方块的氧化程度或去除打蜡铜块上的蜡，也需右键点击它们。而对于门和活板门，在使用斧头时还需要按住潜行键。"
 
-msgid "Hoes are essential tools for growing crops. They are used to create farmland in order to plant seeds on it. Hoes can also be used as very weak weapons in a pinch."
-msgstr "锄头是种植农作物必不可少的工具。它们被用来开垦农田，以便在上面播种。在紧急情况下，锄头也可以当作威力很弱的武器来使用。"
-
-msgid "Use the hoe on a cultivatable block (by rightclicking it) to turn it into farmland. Dirt, grass blocks and grass paths are cultivatable blocks. Using a hoe on coarse dirt turns it into dirt."
-msgstr "在可耕种的方块上使用锄头（通过右键点击它），将其变为农田。泥土、草方块以及草径都是可耕种的方块。在粗制泥土上使用锄头会将其变为普通泥土。"
-
 msgid "Pickaxes are mining tools to mine hard blocks, such as stone. A pickaxe can also be used as weapon, but it is rather inefficient."
 msgstr "镐是用于开采坚硬方块（如石头）的采矿工具。镐也可用作武器，但效率相当低。"
 

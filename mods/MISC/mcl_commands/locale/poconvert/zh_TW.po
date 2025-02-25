@@ -26,7 +26,7 @@ msgid "Player @1 does not exist."
 msgstr "玩家 @1 不存在。"
 
 msgid "You are already dead"
-msgstr "你已經死了"
+msgstr "你已經死了。"
 
 msgid "@1 is already dead"
 msgstr "@1 已經死了。"
@@ -47,7 +47,7 @@ msgid "<message>"
 msgstr "<信息>"
 
 msgid "Send a message to every player"
-msgstr "廣播信息給每個玩家"
+msgstr "廣播信息給所有玩家"
 
 msgid "Invalid usage, see /help say."
 msgstr "無效用法，見 /help say"
@@ -71,10 +71,10 @@ msgid "Invalid parameters (see /help setblock)"
 msgstr "無效參數（見 /help setblock）"
 
 msgid "<sound> <target>"
-msgstr ""
+msgstr "<sound> <target>"
 
 msgid "Play a sound. Arguments: <sound>: name of the sound. <target>: Target."
-msgstr ""
+msgstr "播放聲音。參數 <sound>：聲音名稱：參數 <target>：目標玩家。"
 
 msgid "Sound name is invalid!"
 msgstr ""

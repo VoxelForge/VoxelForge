@@ -20,7 +20,7 @@ msgid "To equip it, put it on the corresponding armor slot in your inventory men
 msgstr "A felszereléshez helyezd a megfelelő páncélrekeszbe az eszköztárban."
 
 msgid "Leather Cap"
-msgstr "Bőrsapka"
+msgstr "Bőrsisak"
 
 msgid "Leather Tunic"
 msgstr "Bőrmellény"
@@ -35,7 +35,7 @@ msgid "Colorize a piece of leather armor, or wash it"
 msgstr "Színezz egy darabka bőrpáncélt vagy mosd ki"
 
 msgid "Not leather armor."
-msgstr "Nincs bőrpáncél."
+msgstr "Nem bőrpáncél."
 
 msgid "Washed."
 msgstr "Kimosva."
@@ -47,49 +47,49 @@ msgid "Player isn't online"
 msgstr "Játékos nem online"
 
 msgid "Bolt Armor Trim"
-msgstr ""
+msgstr "Szegecselt páncéldísz"
 
 msgid "Coast Armor Trim"
-msgstr ""
+msgstr "Tengerparti páncéldísz"
 
 msgid "Dune Armor Trim"
-msgstr ""
+msgstr "Dűnés páncéldísz"
 
 msgid "Eye Armor Trim"
-msgstr ""
+msgstr "Szemes páncéldísz"
 
 msgid "Flow Armor Trim"
-msgstr ""
+msgstr "Örvényes páncéldísz"
 
 msgid "Rib Armor Trim"
-msgstr ""
+msgstr "Bordás páncéldísz"
 
 msgid "Sentry Armor Trim"
-msgstr ""
+msgstr "Őrszemes páncéldísz"
 
 msgid "Silence Armor Trim"
-msgstr ""
+msgstr "Csendes páncéldísz"
 
 msgid "Snout Armor Trim"
-msgstr ""
+msgstr "Ormányos páncéldísz"
 
 msgid "Spire Armor Trim"
-msgstr ""
+msgstr "Toronycsúcsos páncéldísz"
 
 msgid "Tide Armor Trim"
-msgstr ""
+msgstr "Hullámos páncéldísz"
 
 msgid "Vex Armor Trim"
-msgstr ""
+msgstr "Bosszancsos páncéldísz"
 
 msgid "Ward Armor Trim"
-msgstr ""
+msgstr "Strázsás páncéldísz"
 
 msgid "Wayfinder Armor Trim"
-msgstr ""
+msgstr "Útjelzős páncéldísz"
 
 msgid "Wild Armor Trim"
-msgstr ""
+msgstr "Vad páncéldísz"
 
 msgid "Golden Helmet"
 msgstr "Aranysisak"
@@ -104,7 +104,7 @@ msgid "Golden Boots"
 msgstr "Arany csizma"
 
 msgid "Chainmail Helmet"
-msgstr "Páncélsisak"
+msgstr "Sodronysisak"
 
 msgid "Chainmail Chestplate"
 msgstr "Sodronying"
@@ -122,7 +122,7 @@ msgid "Iron Chestplate"
 msgstr "Vas mellvért"
 
 msgid "Iron Leggings"
-msgstr "Vasnadrág"
+msgstr "Vas lábvért"
 
 msgid "Iron Boots"
 msgstr "Vascsizma"
@@ -131,25 +131,25 @@ msgid "Diamond Helmet"
 msgstr "Gyémántsisak"
 
 msgid "Diamond Chestplate"
-msgstr "Gyémánt Mellvért"
+msgstr "Gyémánt mellvért"
 
 msgid "Diamond Leggings"
-msgstr "Gyémánt Nadrág"
+msgstr "Gyémánt lábvért"
 
 msgid "Diamond Boots"
-msgstr "Gyémánt Csizma"
+msgstr "Gyémántcsizma"
 
 msgid "Netherite Helmet"
-msgstr ""
+msgstr "Netheritsisak"
 
 msgid "Netherite Chestplate"
-msgstr ""
+msgstr "Netherit mellvért"
 
 msgid "Netherite Leggings"
-msgstr ""
+msgstr "Netherit lábvért"
 
 msgid "Netherite Boots"
-msgstr ""
+msgstr "Netheritcsizma"
 
 msgid "Projectile Protection"
 msgstr ""
@@ -200,10 +200,10 @@ msgid "Reflects some of the damage taken when hit, at the cost of reducing durab
 msgstr ""
 
 msgid "Elytra"
-msgstr ""
+msgstr "Kitinszárny"
 
 msgid "Smithing Template"
-msgstr ""
+msgstr "Kovácssablon"
 
 msgid "Applies to:"
 msgstr ""
@@ -212,7 +212,7 @@ msgid "Armor"
 msgstr "Páncél"
 
 msgid "Ingredients:"
-msgstr ""
+msgstr "Összetevők:"
 
 msgid "Ingot & Crystals"
 msgstr ""

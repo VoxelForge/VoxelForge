@@ -38,16 +38,16 @@ msgid "A dragon egg is a decorative item which can be placed."
 msgstr "ドラゴンの卵は、置いておくだけの装飾用アイテムです。"
 
 msgid "End Stone Brick Stairs"
-msgstr ""
+msgstr "エンドストーンレンガの階段"
 
 msgid "End Stone Brick Slab"
-msgstr ""
+msgstr "エンドストーンレンガのハーフブロック"
 
 msgid "Purpur Stairs"
-msgstr ""
+msgstr "プルプァの階段"
 
 msgid "Purpur Slab"
-msgstr ""
+msgstr "プルプァのハーフブロック"
 
 msgid "Chorus Flower"
 msgstr "コーラスフラワー"

@@ -14,10 +14,10 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Bone Meal"
-msgstr ""
+msgstr "骨粉"
 
 msgid "Speeds up plant growth"
-msgstr ""
+msgstr "植物の成長の促進"
 
 msgid "Bone meal is a white dye and also useful as a fertilizer to speed up the growth of many plants."
 msgstr ""

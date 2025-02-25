@@ -1,5 +1,13 @@
 # textdomain: mcl_beacons
+Unavailable=
+Active=
+Beacon=Маяк
 Primary Power:=Основной эффект:
 Secondary Power:=Вторичная энергия:
-Inventory:=Инвентарь:
-Beacon=Маяк
+Swiftness=
+Haste=
+Resistance=
+Leaping=
+Strength=
+Regeneration=
+Inventory=

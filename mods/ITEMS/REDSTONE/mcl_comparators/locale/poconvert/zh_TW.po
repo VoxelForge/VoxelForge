@@ -40,11 +40,11 @@ msgid "Redstone Comparator"
 msgstr "紅石比較器"
 
 msgid "Redstone Comparator (Powered)"
-msgstr ""
+msgstr "紅石比較器（充能）"
 
 msgid "Redstone Comparator (Subtract)"
 msgstr "紅石比較器（作差）"
 
 msgid "Redstone Comparator (Subtract, Powered)"
-msgstr ""
+msgstr "紅石比較器（作差、充能）"
 

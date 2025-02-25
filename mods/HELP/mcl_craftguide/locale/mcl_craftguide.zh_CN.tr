@@ -36,7 +36,6 @@ Previous page=上一页
 Next page=下一页
 No item to show=无物品可显示
 Collect items to reveal more recipes=收集物品以解锁更多配方
-Invalid crafting ingredient: "@1" (dosent exist)=无效的合成材料：“@1”（不存在）
 This item can be repaired at an anvil with: @1.=这件物品可以在铁砧上使用以下物品进行修复：@1。
 This item can be repaired at an anvil with any wooden planks.=这件物品可以在铁砧上使用任意木板进行修复。
 This item can be repaired at an anvil with any item in the “@1” group.=这件物品可以在铁砧上使用“@1”组中的任意物品进行修复。

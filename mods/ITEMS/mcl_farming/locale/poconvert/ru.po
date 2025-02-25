@@ -103,9 +103,6 @@ msgstr "Примените мотыгу к культивируемому бло
 msgid "Wood Hoe"
 msgstr "Деревянная мотыга"
 
-msgid "Uses: @1"
-msgstr "Использований: @1"
-
 msgid "Stone Hoe"
 msgstr "Каменная мотыга"
 

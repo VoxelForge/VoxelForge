@@ -983,10 +983,10 @@ msgid "Stained Glass"
 msgstr ""
 
 msgid "Flowing Water"
-msgstr "Folyóvíz"
+msgstr "Folyó víz"
 
 msgid "Water Source"
-msgstr "Vízforrás"
+msgstr "Vízgóc"
 
 msgid "Water"
 msgstr "Víz"
@@ -1001,7 +1001,7 @@ msgid "• When water is directly above or horizontally next to a lava source, t
 msgstr ""
 
 msgid "• When flowing water touches flowing lava either from above or horizontally, the lava turns into cobblestone."
-msgstr ""
+msgstr "• Mikor a folyó víz felülről vagy oldalról folyó lávára folyik, a láva zúzottkővé válik."
 
 msgid "• When water is directly below lava, the water turns into stone."
 msgstr ""

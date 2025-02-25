@@ -26,7 +26,7 @@ msgid "Error: Too many parameters!"
 msgstr "错误：参数过多！"
 
 msgid "Error: Incorrect value of XP"
-msgstr "错误：经验值数值不正确"
+msgstr "错误：经验值有误"
 
 msgid "Error: Player not found"
 msgstr "错误：未找到玩家"

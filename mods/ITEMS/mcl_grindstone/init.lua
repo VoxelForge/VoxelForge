@@ -192,8 +192,9 @@ minetest.register_node("mcl_grindstone:grindstone", {
 	selection_box = node_box,
 	collision_box = node_box,
 	sounds = mcl_sounds.node_sound_stone_defaults(),
-	groups = { pickaxey = 1, deco_block = 1, _mcl_partial = 2, },
+	groups = { pickaxey = 1, deco_block = 1, pathfinder_partial = 2, },
 	after_dig_node = mcl_util.drop_items_from_meta_container({"input"}),
+	_configures_formspec = true,
 	allow_metadata_inventory_take = function(pos, _, _, stack, player)
 		local name = player:get_player_name()
 		if minetest.is_protected(pos, name) then

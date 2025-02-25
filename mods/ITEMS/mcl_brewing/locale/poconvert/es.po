@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Brewing Stand"
-msgstr "Alambique"
+msgstr "Soporte para pociones"
 
 msgid "Inventory"
 msgstr "Inventario"
 
 msgid "To use a brewing stand, rightclick it."
-msgstr "Para usar un alambique, haz clic derecho en él."
+msgstr "Para usar un soporte para pociones, haz clic derecho en él."
 
 msgid "To brew, you need blaze powder as fuel, a brewing material and at least 1 glass bottle filled with a liquid."
 msgstr "Para hacer pociones, necesitas polvo de blaze como combustible, un material de elaboración y al menos 1 botella de cristal llena con un líquido."
@@ -38,5 +38,5 @@ msgid "Brew Potions"
 msgstr "Preparar pociones"
 
 msgid "The stand allows you to brew potions!"
-msgstr "¡El alambique te permite elaborar pociones!"
+msgstr "¡El soporte para pociones te permite elaborar pociones!"
 

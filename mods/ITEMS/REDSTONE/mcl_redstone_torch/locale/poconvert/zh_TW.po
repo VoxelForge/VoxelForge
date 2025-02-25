@@ -26,10 +26,10 @@ msgid "Redstone Torch"
 msgstr "紅石火把"
 
 msgid "Block of Redstone"
-msgstr ""
+msgstr "紅石方塊"
 
 msgid "Provides redstone power"
-msgstr ""
+msgstr "提供紅石能量"
 
 msgid "A block of redstone permanently supplies redstone power to its surrounding blocks."
 msgstr ""

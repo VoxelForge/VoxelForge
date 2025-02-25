@@ -38,7 +38,7 @@ msgid "A stone pressure plate is a redstone component which supplies its surroun
 msgstr "石の感圧板はレッドストーン部品で、プレイヤーやモブがその上に立っている間、周囲のブロックにレッドストーン動力を供給します。他の何かがトリガーになることはありません。"
 
 msgid "Polished Blackstone Pressure Plate"
-msgstr ""
+msgstr "磨かれたブラックストーンの感圧版"
 
 msgid "A polished blackstone pressure plate is a redstone component which supplies its surrounding blocks with redstone power while a player or mob stands on top of it. It is not triggered by anything else."
 msgstr ""

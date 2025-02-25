@@ -31,51 +31,6 @@ msgstr "在你搭建铁栏杆时，它们能与相邻的铁栏杆整齐地连接
 msgid "Glass Pane"
 msgstr "玻璃板"
 
-msgid "Black Stained Glass Pane"
-msgstr "黑色染色玻璃板"
-
-msgid "Blue Stained Glass Pane"
-msgstr "蓝色染色玻璃板"
-
-msgid "Brown Stained Glass Pane"
-msgstr "棕色染色玻璃板"
-
-msgid "Cyan Stained Glass Pane"
-msgstr "青色染色玻璃板"
-
-msgid "Green Stained Glass Pane"
-msgstr "绿色染色玻璃板"
-
-msgid "Grey Stained Glass Pane"
-msgstr "灰色染色玻璃板"
-
-msgid "Light Blue Stained Glass Pane"
-msgstr "淡蓝色染色玻璃板"
-
-msgid "Light Grey Stained Glass Pane"
-msgstr "淡灰色染色玻璃板"
-
-msgid "Lime Stained Glass Pane"
-msgstr "黄绿色染色玻璃板"
-
-msgid "Magenta Stained Glass Pane"
-msgstr "品红色染色玻璃板"
-
-msgid "Orange Stained Glass Pane"
-msgstr "橙色染色玻璃板"
-
-msgid "Pink Stained Glass Pane"
-msgstr "粉色染色玻璃板"
-
-msgid "Purple Stained Glass Pane"
-msgstr "紫色染色玻璃板"
-
-msgid "Red Stained Glass Pane"
-msgstr "红色染色玻璃板"
-
-msgid "White Stained Glass Pane"
-msgstr "白色染色玻璃板"
-
-msgid "Yellow Stained Glass Pane"
-msgstr "黄色染色玻璃板"
+msgid "@1 Glass Pane"
+msgstr "@1块玻璃板"
 

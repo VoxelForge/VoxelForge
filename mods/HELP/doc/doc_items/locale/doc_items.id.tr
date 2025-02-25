@@ -38,7 +38,6 @@ This block can be mined by mining tools which match any of the following mining 
 Mining ratings:=Peringkat penggalian :
 Toughness level: @1=Tingkat ketangguhan : @1
 Range: @1=Jangkauan : @1
-Range: 4=Jangkauan : 4
 # Range: <Hand> (<Range>)
 Range: @1 (@2)=Jangkauan : @1 (@2)
 This tool can serve as a smelting fuel with a burning time of @1.=Alat ini dapat berfungsi sebagai bahan bakar peleburan dengan waktu pembakaran @1.

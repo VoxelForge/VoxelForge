@@ -17,7 +17,7 @@ msgid "Inventory"
 msgstr "物品欄"
 
 msgid "Recipe book"
-msgstr "合成教學"
+msgstr "配方手冊"
 
 msgid "Furnace"
 msgstr "熔爐"
@@ -26,19 +26,19 @@ msgid "Uses fuel to smelt or cook items"
 msgstr "使用燃料來熔煉或烹飪物品"
 
 msgid "Furnaces cook or smelt several items, using a furnace fuel, into something else."
-msgstr "熔爐用一種爐子燃料將幾種物品烹飪或熔煉成其他東西。"
+msgstr "熔爐可透過使用燃料將幾種特定原材料烹煮或熔煉成其他東西。"
 
 msgid "Use the furnace to open the furnace menu."
-msgstr ""
+msgstr "使用熔爐可開啟它的介面。"
 
 msgid "Place a furnace fuel in the lower slot and the source material in the upper slot."
-msgstr ""
+msgstr "將燃料置於下方欄位中，並將原材料置於上方欄位中。"
 
 msgid "The furnace will slowly use its fuel to smelt the item."
-msgstr ""
+msgstr "熔爐會慢慢使用燃料來熔化熔煉物。"
 
 msgid "The result will be placed into the output slot at the right side."
-msgstr ""
+msgstr "成品會存放於右側的成品欄。"
 
 msgid "Use the recipe book to see what you can smelt, what you can use as fuel and how long it will burn."
 msgstr "使用合成教學來查看您可以冶煉的東西，可以用作燃料的物品以及可燃燒時間。"

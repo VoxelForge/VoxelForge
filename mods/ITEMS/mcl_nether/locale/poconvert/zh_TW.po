@@ -20,31 +20,31 @@ msgid "Glowstone is a naturally-glowing block which is home to the Nether."
 msgstr ""
 
 msgid "Nether Quartz Ore"
-msgstr ""
+msgstr "地獄石英礦石"
 
 msgid "Nether quartz ore is an ore containing nether quartz. It is commonly found around netherrack in the Nether."
 msgstr ""
 
 msgid "Ancient Debris"
-msgstr ""
+msgstr "遠古遺骸"
 
 msgid "Ancient debris can be found in the nether and is very very rare."
 msgstr ""
 
 msgid "Block of Netherite"
-msgstr ""
+msgstr "獄髓方塊"
 
 msgid "Netherite block is very hard and can be made of 9 netherite ingots."
 msgstr ""
 
 msgid "Netherrack"
-msgstr ""
+msgstr "地獄石"
 
 msgid "Netherrack is a stone-like block home to the Nether. Starting a fire on this block will create an eternal fire."
 msgstr ""
 
 msgid "Magma Block"
-msgstr ""
+msgstr "岩漿塊"
 
 msgid "Burns your feet"
 msgstr ""
@@ -53,7 +53,7 @@ msgid "Magma blocks are hot solid blocks which hurt anyone standing on it, unles
 msgstr ""
 
 msgid "Soul Sand"
-msgstr ""
+msgstr "靈魂沙"
 
 msgid "Reduces walking speed"
 msgstr ""
@@ -62,79 +62,79 @@ msgid "Soul sand is a block from the Nether. One can only slowly walk on soul sa
 msgstr ""
 
 msgid "Nether Brick Block"
-msgstr ""
+msgstr "地獄磚方塊"
 
 msgid "Red Nether Brick Block"
-msgstr ""
+msgstr "紅色地獄磚方塊"
 
 msgid "Chiseled Nether Brick Block"
-msgstr ""
+msgstr "浮雕地獄磚方塊"
 
 msgid "Cracked Nether Bricks"
-msgstr ""
+msgstr "裂紋地獄磚"
 
 msgid "Nether Wart Block"
-msgstr ""
+msgstr "地獄疙瘩塊"
 
 msgid "A nether wart block is a purely decorative block made from nether wart."
 msgstr ""
 
 msgid "Block of Quartz"
-msgstr ""
+msgstr "石英方塊"
 
 msgid "Chiseled Quartz Block"
-msgstr ""
+msgstr "浮雕石英方塊"
 
 msgid "Pillar Quartz Block"
-msgstr ""
+msgstr "石英柱"
 
 msgid "Smooth Quartz"
-msgstr ""
+msgstr "平滑石英"
 
 msgid "Quartz Stairs"
-msgstr ""
+msgstr "石英階梯"
 
 msgid "Quartz Slab"
-msgstr ""
+msgstr "石英台階"
 
 msgid "Smooth Quartz Stairs"
-msgstr ""
+msgstr "平滑石英階梯"
 
 msgid "Smooth Quartz Slab"
-msgstr ""
+msgstr "平滑石英台階"
 
 msgid "Nether Brick Stairs"
-msgstr ""
+msgstr "地獄磚階梯"
 
 msgid "Nether Brick Slab"
-msgstr ""
+msgstr "地獄磚台階"
 
 msgid "Red Nether Brick Stairs"
-msgstr ""
+msgstr "紅色地獄磚階梯"
 
 msgid "Red Nether Brick Slab"
-msgstr ""
+msgstr "紅色地獄磚台階"
 
 msgid "Nether Brick Fence"
-msgstr ""
+msgstr "地獄磚柵欄"
 
 msgid "Glowstone Dust"
-msgstr ""
+msgstr "螢光粉"
 
 msgid "Glowstone dust is the dust which comes out of broken glowstones. It is mainly used in crafting."
 msgstr ""
 
 msgid "Nether Quartz"
-msgstr ""
+msgstr "地獄石英"
 
 msgid "Nether quartz is a versatile crafting ingredient."
 msgstr ""
 
 msgid "Netherite Scrap"
-msgstr ""
+msgstr "獄髓合金"
 
 msgid "Netherite scrap is a crafting ingredient for netherite ingots."
-msgstr ""
+msgstr "獄髓合金可以用來製作獄髓錠。"
 
 msgid "Netherite Ingot"
 msgstr "獄髓錠"
@@ -143,13 +143,13 @@ msgid "Netherite ingots can be used with a smithing table to upgrade items to ne
 msgstr ""
 
 msgid "Nether Brick"
-msgstr ""
+msgstr "地獄磚"
 
 msgid "Nether bricks are the main crafting ingredient for crafting nether brick blocks and nether fences."
 msgstr ""
 
 msgid "Netherite Upgrade Template"
-msgstr ""
+msgstr "獄髓升級鍛造模板"
 
 msgid "Smithing Template"
 msgstr ""
@@ -167,31 +167,31 @@ msgid "Ingredients:"
 msgstr ""
 
 msgid "Nether Lava Source"
-msgstr ""
+msgstr "地獄熔岩源"
 
 msgid "Flowing Nether Lava"
-msgstr ""
+msgstr "地獄熔岩流體"
 
 msgid "Premature Nether Wart (Stage 1)"
-msgstr ""
+msgstr "地獄疣幼株（階段一）"
 
 msgid "A premature nether wart has just recently been planted on soul sand. Nether wart slowly grows on soul sand in 4 stages (the second and third stages look identical). Although nether wart is home to the Nether, it grows in any dimension."
 msgstr ""
 
 msgid "Premature Nether Wart (Stage 2)"
-msgstr ""
+msgstr "地獄疣幼株（階段二）"
 
 msgid "Premature Nether Wart (Stage 3)"
-msgstr ""
+msgstr "地獄疣幼株（階段三）"
 
 msgid "Mature Nether Wart"
-msgstr ""
+msgstr "地獄疣成株"
 
 msgid "The mature nether wart is a plant from the Nether and reached its full size and won't grow any further. It is ready to be harvested for its items."
 msgstr ""
 
 msgid "Nether Wart"
-msgstr ""
+msgstr "地獄疣"
 
 msgid "Grows on soul sand"
 msgstr ""

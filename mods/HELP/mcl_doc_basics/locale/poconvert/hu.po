@@ -386,22 +386,22 @@ msgid "• Punch a tree trunk until it breaks and collect wood"
 msgstr "• Ütögess egy fát amíg ki nem törik, majd szedd fel a fahasábot"
 
 msgid "• Place the wood into the 2×2 grid (your “crafting grid”) in your inventory menu and craft 4 wood planks"
-msgstr "• Tedd a fahasábot az eszköztárad 2x2 méretű négyzetrácsába (ez a saját barkácsrácsod), ezzel 4 deszkát készíthetsz"
+msgstr "• Tedd a fát az eszköztárad 2×2 méretű rácsába (ez a saját barkácsrácsod), és barkácsolj 4 fadeszkát"
 
 msgid "• Place them in a 2×2 shape in the crafting grid to craft a crafting table"
-msgstr "• Tedd a deszkákat 2x2-es alakzatban a rácsra, hogy egy barkácsasztalt készíthess"
+msgstr "• Helyezd el ezeket egy 2×2-es alakzatban a barkácsrácson, hogy barkácsolj egy barkácsasztalt"
 
 msgid "• Place the crafting table on the ground"
 msgstr "• Helyezd a barkácsasztalt a földre"
 
 msgid "• Rightclick it for a 3×3 crafting grid"
-msgstr "• Jobb gombbal kattints a barkácsasztalra, hogy egy 3x3-as barkácsrácshoz juss"
+msgstr "• Kattints rá jobb gombbal, hogy megjelenjen egy 3×3-as barkácsrács"
 
 msgid "• Use the crafting guide (book icon) to learn all the possible crafting recipes"
-msgstr "• A Barkácsútmutató (könyv ikon) segítségével megtanulhatod az összes barkács receptet"
+msgstr "• A barkácsútmutató (könyv ikon) segítségével megtanulhatod az összes barkácsreceptet"
 
 msgid "• Craft a wooden pickaxe so you can dig stone"
-msgstr "• Készíts facsákányt, hogy követ törhess"
+msgstr "• Barkácsolj facsákányt, hogy követ áshass"
 
 msgid "• Different tools break different kinds of blocks. Try them out!"
 msgstr "• A különböző eszközökkel más és más típusú blokkokat tudsz hatékonyan fejteni. Próbáld ki őket!"
@@ -449,7 +449,7 @@ msgid "• Space: Jump"
 msgstr "• Szóköz: Ugrik"
 
 msgid "• Shift: Sneak"
-msgstr "• Shift: Oson"
+msgstr "• Shift: Lopakodás"
 
 msgid "While on a ladder, swimming in a liquid or fly mode is active"
 msgstr "Létrán állva, vízben vagy más folyadékban úszva illetve repülési módban"
@@ -737,7 +737,7 @@ msgid "Blocks can have a wide range of different properties which determine mini
 msgstr ""
 
 msgid "• Collidable: Collidable blocks can not be passed through; players can walk on them. Non-collidable blocks can be passed through freely"
-msgstr ""
+msgstr "• Tömör: A tömör blokkokon nem lehet keresztülmenni; a játékosok járhatnak rajtuk. A nem tömör blokkokon szabadon keresztül lehet menni"
 
 msgid "• Pointable: Pointable blocks show a wireframe or a halo box when pointed. But you will just point through non-pointable blocks. Liquids are usually non-pointable but they can be pointed at by some special tools"
 msgstr ""
@@ -1049,7 +1049,7 @@ msgid "• Switch camera mode: [F7]"
 msgstr ""
 
 msgid "Sneaking"
-msgstr ""
+msgstr "Lopakodás"
 
 msgid "Sneaking makes you walk slower and prevents you from falling off the edge of a block."
 msgstr ""

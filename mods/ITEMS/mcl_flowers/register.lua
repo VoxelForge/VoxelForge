@@ -272,7 +272,7 @@ minetest.register_node("mcl_flowers:waterlily", {
 	sunlight_propagates = true,
 	groups = {
 		deco_block = 1, plant = 1, compostability = 65, destroy_by_lava_flow = 1,
-		dig_immediate = 3, dig_by_water = 1, dig_by_piston = 1, dig_by_boat = 1,
+		dig_immediate = 3, dig_by_water = 1, dig_by_piston = 1, dig_by_boat = 1, supported_node = 1
 	},
 	sounds = mcl_sounds.node_sound_leaves_defaults(),
 	node_placement_prediction = "",

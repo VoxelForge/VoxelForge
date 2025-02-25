@@ -35,7 +35,7 @@ msgid "Instantaneous"
 msgstr ""
 
 msgid "Unlimited uses"
-msgstr ""
+msgstr "可無限使用"
 
 msgid "Mining speed: @1"
 msgstr ""
@@ -47,76 +47,76 @@ msgid "Block breaking strength: @1"
 msgstr ""
 
 msgid "Damage: @1"
-msgstr ""
+msgstr "傷害：@1 HP"
 
 msgid "Healing: @1"
-msgstr ""
+msgstr "治療：@1 HP"
 
 msgid "Full punch interval: @1s"
-msgstr ""
+msgstr "全力攻擊間隔：@1 秒"
 
 msgid "Food item"
-msgstr ""
+msgstr "食物"
 
 msgid "+@1 food points"
-msgstr ""
+msgstr "+@1 飢餓值"
 
 msgid "Contact damage: @1 per second"
-msgstr ""
+msgstr "接觸傷害：每秒 @1 HP"
 
 msgid "Contact healing: @1 per second"
-msgstr ""
+msgstr "接觸治療：每秒 @1 HP"
 
 msgid "Drowning damage: @1"
-msgstr ""
+msgstr "遇溺傷害：@1"
 
 msgid "Fall damage: +@1%"
-msgstr ""
+msgstr "墜落傷害：+@1%"
 
 msgid "No fall damage"
-msgstr ""
+msgstr "抵消墜落傷害"
 
 msgid "Fall damage: @1%"
-msgstr ""
+msgstr "墜落傷害：@1%"
 
 msgid "No jumping"
-msgstr ""
+msgstr "不允許跳躍"
 
 msgid "No swimming upwards"
-msgstr ""
+msgstr "不允許上浮"
 
 msgid "No rising"
-msgstr ""
+msgstr "不允許上昇"
 
 msgid "Climbable (only downwards)"
-msgstr ""
+msgstr "可攀爬（限向下）"
 
 msgid "Climbable"
-msgstr ""
+msgstr "可攀爬"
 
 msgid "Slippery"
-msgstr ""
+msgstr "滑溜"
 
 msgid "Bouncy (@1%)"
-msgstr ""
+msgstr "彈跳：@1%"
 
 msgid "Luminance: @1"
-msgstr ""
+msgstr "亮度：@1"
 
 msgid "@1 uses"
 msgstr ""
 
 msgid "Head armor"
-msgstr ""
+msgstr "頭部盔甲"
 
 msgid "Torso armor"
-msgstr ""
+msgstr "胸部盔甲"
 
 msgid "Legs armor"
-msgstr ""
+msgstr "腿部盔甲"
 
 msgid "Feet armor"
-msgstr ""
+msgstr "腳部盔甲"
 
 msgid "Armor points: @1"
 msgstr ""
@@ -125,7 +125,7 @@ msgid "Armor durability: @1"
 msgstr ""
 
 msgid "Protection: @1%"
-msgstr ""
+msgstr "保護：@1%"
 
 msgid "Hunger points: +@1"
 msgstr ""
@@ -134,25 +134,25 @@ msgid "Saturation points: +@1"
 msgstr ""
 
 msgid "Deals damage when falling"
-msgstr ""
+msgstr "墜落時造成傷害"
 
 msgid "Grows on grass blocks or dirt"
-msgstr ""
+msgstr "在草和泥土上會生長"
 
 msgid "Grows on grass blocks, podzol, dirt or coarse dirt"
-msgstr ""
+msgstr "在草、灰壤、泥土、粗泥上會生長"
 
 msgid "Flammable"
-msgstr ""
+msgstr "可燃"
 
 msgid "Zombie view range: -50%"
-msgstr ""
+msgstr "被僵屍發現的距離 -50%"
 
 msgid "Skeleton view range: -50%"
-msgstr ""
+msgstr "被骷髏發現的距離 -50%"
 
 msgid "Creeper view range: -50%"
-msgstr ""
+msgstr "被苦力怕發現的距離 -50%"
 
 msgid "Durability: @1"
 msgstr ""

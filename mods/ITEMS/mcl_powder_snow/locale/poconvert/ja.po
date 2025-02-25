@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Powder Snow"
-msgstr ""
+msgstr "粉雪"
 
 msgid "This is a block of snow thats extra fluffy, this means players can sink in it"
 msgstr ""
 
 msgid "Powder Snow Bucket"
-msgstr ""
+msgstr "粉雪入りバケツ"
 
 msgid "This bucket is filled powder snow"
 msgstr ""
