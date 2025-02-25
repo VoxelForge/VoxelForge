@@ -65,6 +65,9 @@ function awards.unlock(name, award)
 
 	-- Unlock Award
 	minetest.log("action", name.." has unlocked award "..award)
+	if minetest.settings:get_bool("mcl_showAdvancementMessages", true) then
+		minetest.chat_send_all(S("@1 has made the advancement @2", name, minetest.colorize(mcl_colors.GREEN, "[" .. (awdef.title or award) .. "]")))
+	end
 	data.unlocked[award] = award
 	awards.save()
 
@@ -115,9 +118,9 @@ function awards.unlock(name, award)
 	if awards.show_mode == "chat" then
 		local chat_announce
 		if awdef.secret then
-			chat_announce = S("Secret Award Unlocked: @1", title)
+			chat_announce = S("Secret Advancement Unlocked: @1", title)
 		else
-			chat_announce = S("Award Unlocked: @1", title)
+			chat_announce = S("Advancement Unlocked: @1", title)
 		end
 		-- use the chat console to send it
 		minetest.chat_send_player(name, chat_announce)
@@ -184,6 +187,21 @@ function awards.unlock(name, award)
 			end
 		end)
 	end
+end
+
+function awards.remove(name, award)
+	local data  = awards.player(name)
+	local awdef = awards.registered_awards[award]
+	assert(awdef, "Unable to remove an award which doesn't exist!")
+
+	if data.disabled or
+			(not data.unlocked[award]) then
+		return
+	end
+
+	minetest.log("action", "Award " .. award .." has been removed from ".. name)
+	data.unlocked[award] = nil
+	awards.save()
 end
 
 function awards.get_award_states(name)

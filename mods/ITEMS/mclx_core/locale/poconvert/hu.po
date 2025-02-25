@@ -14,14 +14,14 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "River Water Source"
-msgstr ""
+msgstr "Folyóvízgóc"
 
 msgid "River water has the same properties as water, but has a reduced flowing distance and is not renewable."
-msgstr ""
+msgstr "A folyóvíz tulajdonságai ugyanolyanok, mint a víznek, csak nem folyik olyan messzire, és nem képződik újra."
 
 msgid "River Water"
-msgstr ""
+msgstr "Folyóvíz"
 
 msgid "Flowing River Water"
-msgstr ""
+msgstr "Folyó folyóvíz"
 

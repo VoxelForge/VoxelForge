@@ -1,5 +1,13 @@
 # textdomain: mcl_beacons
+Unavailable=
+Active=
+Beacon=Faro
 Primary Power:=Potere Primario:
 Secondary Power:=Potere secondario:
-Inventory:=Inventario:
-Beacon=Faro
+Swiftness=
+Haste=
+Resistance=
+Leaping=
+Strength=
+Regeneration=
+Inventory=

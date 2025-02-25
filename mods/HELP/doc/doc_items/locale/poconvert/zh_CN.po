@@ -38,10 +38,10 @@ msgid "Air"
 msgstr "空气"
 
 msgid "Yes"
-msgstr "是的"
+msgstr "是"
 
 msgid "No"
-msgstr "不是"
+msgstr "否"
 
 msgid ", "
 msgstr ", "
@@ -89,7 +89,7 @@ msgid "This is a melee weapon which deals damage by punching."
 msgstr "这是一件近战武器，通过挥拳来造成伤害。"
 
 msgid "Maximum damage per hit:"
-msgstr "每次攻击的最大伤害:"
+msgstr "单次攻击伤害上限:"
 
 msgid "• @1: @2 HP"
 msgstr "• @1: @2 生命值"
@@ -127,9 +127,6 @@ msgstr "韧性等级:@1"
 msgid "Range: @1"
 msgstr "范围:@1"
 
-msgid "Range: 4"
-msgstr "范围: 4"
-
 msgid "Range: @1 (@2)"
 msgstr "范围: @1 (@2)"
 
@@ -137,10 +134,10 @@ msgid "This tool can serve as a smelting fuel with a burning time of @1."
 msgstr "此工具可用作冶炼燃料，燃烧时间为@1。"
 
 msgid "This block can serve as a smelting fuel with a burning time of @1."
-msgstr "这个方块可以作为冶炼燃料，燃烧时间为@1。"
+msgstr "此方块可作为冶炼燃料，燃烧时长为@1。"
 
 msgid "This item can serve as a smelting fuel with a burning time of @1."
-msgstr "此物品可作为冶炼燃料，燃烧时间为@1。"
+msgstr "此物品可作为冶炼燃料，燃烧时长为@1。"
 
 msgid " Using it as fuel turns it into: @1."
 msgstr " 将其用作燃料会将其转化为: @1。"
@@ -176,22 +173,22 @@ msgid "Punches with this item don't work as usual; melee combat and mining are e
 msgstr "使用这件物品挥拳攻击时不会像平常那样起效；近战格斗和挖掘要么无法进行，要么运作方式有所不同。"
 
 msgid "This block belongs to the @1 group."
-msgstr "这种方块属于 @1 群组。"
+msgstr "该方块属于 @1 群组。"
 
 msgid "This tool belongs to the @1 group."
-msgstr "这件工具属于 @1 群组。"
+msgstr "该工具属于 @1 群组。"
 
 msgid "This item belongs to the @1 group."
-msgstr "这件物品属于 @1 群组。"
+msgstr "该物品属于 @1 群组。"
 
 msgid "This block belongs to these groups: @1."
-msgstr "这种方块属于以下这些群组：@1。"
+msgstr "该方块属于以下这些群组：@1。"
 
 msgid "This tool belongs to these groups: @1."
-msgstr "这件工具属于以下这些群组：@1。"
+msgstr "该工具属于以下这些群组：@1。"
 
 msgid "This item belongs to these groups: @1."
-msgstr "这件物品属于以下这些群组：@1。"
+msgstr "该物品属于以下这些群组：@1。"
 
 msgid "Blocks"
 msgstr "方块"
@@ -239,49 +236,49 @@ msgid "This block decreases your breath and causes a drowning damage of @1 hit p
 msgstr "这种方块会减少你的氧气值，并且每 2 秒造成 @1 点溺水伤害。"
 
 msgid "This block decreases your breath and causes a drowning damage of @1 hit point every 2 seconds."
-msgstr "这种方块会减少你的氧气值，并且每 2 秒造成 @1 点溺水伤害。"
+msgstr "该方块会降低你的氧气值，并且每 2 秒造成 @1 点溺水伤害。"
 
 msgid "The fall damage on this block is increased by @1%."
-msgstr "落在这种方块上时，坠落伤害会增加 @1%。"
+msgstr "落在该方块上时，坠落伤害会增加 @1%。"
 
 msgid "This block negates all fall damage."
-msgstr "这种方块可抵消所有坠落伤害。"
+msgstr "该方块可抵消所有坠落伤害。"
 
 msgid "The fall damage on this block is reduced by @1%."
-msgstr "落在这种方块上时，坠落伤害会减少 @1%。"
+msgstr "落在该方块上时，坠落伤害会减少 @1%。"
 
 msgid "You can not jump while standing on this block."
-msgstr "当站在这种方块上时，你无法进行跳跃。"
+msgstr "当站在该方块上时，你无法进行跳跃。"
 
 msgid "This block can be climbed."
-msgstr "这种方块可以被攀爬。"
+msgstr "该方块可以攀爬。"
 
 msgid "This block will make you bounce off with an elasticity of @1%."
-msgstr "这种方块会以 @1% 的弹性让你弹起。"
+msgstr "该方块会以 @1% 的弹性弹起玩家。"
 
 msgid "This block is slippery."
-msgstr "这种方块是滑溜溜的。"
+msgstr "该方块滑不唧溜。"
 
 msgid "This block is completely silent when walked on, mined or built."
-msgstr "在这种方块上行走、挖掘或者搭建时，完全没有声音发出。"
+msgstr "在该方块上行走、挖掘或建造时，完全无声。"
 
 msgid "This block is completely silent when mined or built."
-msgstr "在挖掘或搭建这种方块时，完全没有声音发出。"
+msgstr "挖掘或搭建该方块时寂然无声。"
 
 msgid "Walking on this block is completely silent."
-msgstr "在这种方块上行走时完全没有声音。"
+msgstr "在该方块上行走时完全没有声音。"
 
 msgid "Mining this block is completely silent."
-msgstr "挖掘这种方块时完全没有声音。"
+msgstr "挖掘该方块时，完全没有声音。"
 
 msgid "Building this block is completely silent."
-msgstr "搭建这种方块时完全没有声音。"
+msgstr "搭建该方块时完全没有声音。"
 
 msgid "This block is affected by gravity and can fall."
-msgstr "这种方块受重力影响，会下落。"
+msgstr "该方块受重力影响，会下落。"
 
 msgid "Building another block at this block will place it inside and replace it."
-msgstr "在这个方块处搭建另一个方块将会把它放置在其内部并替换它。"
+msgstr "在该方块处搭建另一个方块将会把它放置在其内部并替换它。"
 
 msgid "Falling blocks can go through this block; they destroy it when doing so."
 msgstr "下落的方块可以穿过这种方块，在穿过时会将其摧毁。"

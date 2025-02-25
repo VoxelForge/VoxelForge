@@ -1,6 +1,6 @@
 mcl_dyes = {}
 
-local S = minetest.get_translator(minetest.get_current_modname())
+local S = core.get_translator(core.get_current_modname())
 local D = mcl_util.get_dynamic_translator()
 
 -- Common color table to be used by other mods. The "mcl2" field if present
@@ -161,19 +161,21 @@ function mcl_dyes.palette_index_to_color(index)
 	end
 end
 
-for k,v in pairs(mcl_dyes.colors) do
-	minetest.register_craftitem("mcl_dyes:" .. k, {
-		inventory_image = "mcl_dye.png^(mcl_dye_mask.png^[colorize:"..v.rgb..")",
-		description = D(v.readable_name .. " Dye"),
+for k, v in pairs(mcl_dyes.colors) do
+	core.register_craftitem("mcl_dyes:" .. k, {
+		_color = k,
 		_doc_items_longdesc = S("This item is a dye which is used for dyeing and crafting."),
 		_doc_items_usagehelp = S("Rightclick on a sheep to dye its wool. Other things are dyed by crafting."),
+		description = D(v.readable_name .. " Dye"),
 		groups = table.update({craftitem = 1, dye = 1}, v.groups),
-		_color = k,
-		on_place = function(itemstack,placer,pointed_thing)
-			local def = minetest.registered_nodes[minetest.get_node(pointed_thing.under).name]
+		inventory_image = "mcl_dye.png^(mcl_dye_mask.png^[colorize:"..v.rgb..")",
+		on_place = function(itemstack, placer, pointed_thing)
+			local def = core.registered_nodes[core.get_node(pointed_thing.under).name]
+
 			if def and def._on_dye_place then
-				local ret = def._on_dye_place(pointed_thing.under,k)
-				if not minetest.is_creative_enabled(placer and placer:get_player_name() or "") then
+				local ret = def._on_dye_place(pointed_thing.under, k)
+
+				if not core.is_creative_enabled(placer and placer:get_player_name() or "") then
 					if ret ~= true then itemstack:take_item() end
 				end
 			else
@@ -182,78 +184,35 @@ for k,v in pairs(mcl_dyes.colors) do
 			end
 
 			return itemstack
-		end,
+		end
 	})
 end
 
-minetest.register_craft({
-	type = "shapeless",
-	output = "mcl_dyes:grey 2",
-	recipe = {"mcl_dyes:black", "mcl_dyes:white"},
-})
+local color_mix_recipes = {
+	["cyan"] = {{"mcl_dyes:blue", "mcl_dyes:green"}},
+	["grey"] = {{"mcl_dyes:black", "mcl_dyes:white"}},
+	["light_blue"] = {{"mcl_dyes:blue", "mcl_dyes:white"}},
+	["lime"] = {{"mcl_dyes:green", "mcl_dyes:white"}},
+	["magenta"] = {
+		{"mcl_dyes:pink", "mcl_dyes:purple"},
+		{"mcl_dyes:blue", "mcl_dyes:pink", "mcl_dyes:red"},
+		{"mcl_dyes:blue", "mcl_dyes:red", "mcl_dyes:red", "mcl_dyes:white"}
+	},
+	["orange"] = {{"mcl_dyes:red", "mcl_dyes:yellow"}},
+	["pink"] = {{"mcl_dyes:red", "mcl_dyes:white"}},
+	["purple"] = {{"mcl_dyes:blue", "mcl_dyes:red"}},
+	["silver"] = {
+		{"mcl_dyes:grey", "mcl_dyes:white"},
+		{"mcl_dyes:black", "mcl_dyes:white", "mcl_dyes:white"}
+	}
+}
 
-minetest.register_craft({
-	type = "shapeless",
-	output = "mcl_dyes:light_blue 2",
-	recipe = {"mcl_dyes:blue", "mcl_dyes:white"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "mcl_dyes:silver 3",
-	recipe = {"mcl_dyes:black", "mcl_dyes:white", "mcl_dyes:white"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "mcl_dyes:silver 2",
-	recipe = {"mcl_dyes:grey", "mcl_dyes:white"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "mcl_dyes:lime 2",
-	recipe = {"mcl_dyes:green", "mcl_dyes:white"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "mcl_dyes:magenta 4",
-	recipe = {"mcl_dyes:blue", "mcl_dyes:white", "mcl_dyes:red", "mcl_dyes:red"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "mcl_dyes:magenta 3",
-	recipe = {"mcl_dyes:pink", "mcl_dyes:red", "mcl_dyes:blue"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "mcl_dyes:magenta 2",
-	recipe = {"mcl_dyes:purple", "mcl_dyes:pink"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "mcl_dyes:pink 2",
-	recipe = {"mcl_dyes:red", "mcl_dyes:white"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "mcl_dyes:cyan 2",
-	recipe = {"mcl_dyes:blue", "mcl_dyes:green"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "mcl_dyes:purple 2",
-	recipe = {"mcl_dyes:blue", "mcl_dyes:red"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "mcl_dyes:orange 2",
-	recipe = {"mcl_dyes:yellow", "mcl_dyes:red"},
-})
+for color, recipes in pairs(color_mix_recipes) do
+	for _, recipe in pairs(recipes) do
+		core.register_craft({
+			output = "mcl_dyes:" .. color .. " " .. #recipe,
+			recipe = recipe,
+			type = "shapeless"
+		})
+	end
+end

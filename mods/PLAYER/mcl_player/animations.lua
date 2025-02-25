@@ -34,6 +34,21 @@ mcl_player.player_props_sneaking = player_props_sneaking
 mcl_player.player_props_swimming = player_props_swimming
 mcl_player.player_props_normal = player_props_normal
 
+-- HACK work around https://github.com/luanti-org/luanti/issues/15692
+-- Scales corresponding to default perfect 180° rotations in the character b3d model
+local bone_workaround_scales = {
+	Body_Control = vector.new(-1, 1, -1),
+	Leg_Right = vector.new(1, -1, -1),
+	Leg_Left = vector.new(1, -1, -1),
+	Cape = vector.new(1, -1, 1),
+	Arm_Right_Pitch_Control = vector.new(1, -1, -1),
+	Arm_Left_Pitch_Control = vector.new(1, -1, -1),
+}
+
+local function set_bone_pos(player, bonename, pos, rot)
+	return mcl_util.set_bone_position(player, bonename, pos, rot, bone_workaround_scales[bonename])
+end
+
 function mcl_player.player_register_model(name, def)
 	mcl_player.registered_player_models[name] = def
 end
@@ -267,25 +282,25 @@ local function set_swimming(player, anim, anim_speed)
 	mcl_player.players[player].is_swimming = true
 	anim = anim or "swim_stand"
 	mcl_player.player_set_animation(player, anim, anim_speed)
-	mcl_util.set_bone_position(player, "Head_Control", nil, vector.new(pitch - math.deg(dir_to_pitch(vel)) + 20, mcl_player.players[player].vel_yaw - yaw, 0))
-	mcl_util.set_bone_position(player,"Body_Control", nil, vector.new((75 + math.deg(dir_to_pitch(vel))), mcl_player.players[player].vel_yaw - yaw, 180))
+	set_bone_pos(player, "Head_Control", nil, vector.new(pitch - math.deg(dir_to_pitch(vel)) + 20, mcl_player.players[player].vel_yaw - yaw, 0))
+	set_bone_pos(player,"Body_Control", nil, vector.new((75 + math.deg(dir_to_pitch(vel))), mcl_player.players[player].vel_yaw - yaw, 0))
 	mcl_util.set_properties(player, player_props_swimming)
 end
 
 function mcl_player.position_wielditem (wielded_itemname, wielded_def, player)
 	-- Specific wielditem positions according to item
 	if wielded_def and wielded_def._mcl_toollike_wield then
-		mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 4.7, 3.1), vector.new(-90, 225, 90))
+		set_bone_pos(player, "Wield_Item", vector.new(0, 4.7, 3.1), vector.new(-90, 225, 90))
 	elseif minetest.get_item_group(wielded_itemname, "bow") > 0 then
-		mcl_util.set_bone_position(player, "Wield_Item", vector.new(1, 4, 0), vector.new(90, 130, 115))
+		set_bone_pos(player, "Wield_Item", vector.new(1, 4, 0), vector.new(90, 130, 115))
 	elseif minetest.get_item_group(wielded_itemname, "crossbow") > 4 then
-		mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 5.2, 1.2), vector.new(0, 180, 73))
+		set_bone_pos(player, "Wield_Item", vector.new(0, 5.2, 1.2), vector.new(0, 180, 73))
 	elseif minetest.get_item_group(wielded_itemname, "crossbow") > 0 then
-		mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 5.2, 1.2), vector.new(0, 180, 45))
+		set_bone_pos(player, "Wield_Item", vector.new(0, 5.2, 1.2), vector.new(0, 180, 45))
 	elseif wielded_def and wielded_def.inventory_image == "" then
-		mcl_util.set_bone_position(player,"Wield_Item", vector.new(0, 6, 2), vector.new(180, -45, 0))
+		set_bone_pos(player,"Wield_Item", vector.new(0, 6, 2), vector.new(180, -45, 0))
 	else
-		mcl_util.set_bone_position(player, "Wield_Item", vector.new(0, 5.3, 2), vector.new(90, 0, 0))
+		set_bone_pos(player, "Wield_Item", vector.new(0, 5.3, 2), vector.new(90, 0, 0))
 	end
 end
 
@@ -327,13 +342,13 @@ mcl_player.register_globalstep(function(player)
 		if parent then
 			mcl_util.set_properties(player, player_props_riding)
 			local parent_yaw = math.deg(parent:get_yaw())
-			mcl_util.set_bone_position(player,"Body_Control", nil, vector.zero())
+			set_bone_pos(player,"Body_Control", nil, vector.zero())
 			hyaw = -limit_vel_yaw(yaw, parent_yaw) + parent_yaw
 		else
-			mcl_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
+			set_bone_pos(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 		end
 
-		mcl_util.set_bone_position(player, "Head_Control", nil, vector.new(pitch, hyaw, 0))
+		set_bone_pos(player, "Head_Control", nil, vector.new(pitch, hyaw, 0))
 	else
 		local walking = control.up or control.down or control.left or control.right
 		local animation_speed_mod = model and model.animation_speed or 30
@@ -358,14 +373,14 @@ mcl_player.register_globalstep(function(player)
 		if player:get_hp() == 0 then --dead
 			mcl_player.player_set_animation(player, "die")
 		elseif elytra then --using elytra
-			mcl_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch - math.deg(dir_to_pitch(player_velocity)) + 50, player_vel_yaw - yaw, 0))
-			mcl_util.set_bone_position(player, "Body_Control", nil, vector.new(math.deg(dir_to_pitch(player_velocity)) + 110, -player_vel_yaw + yaw, 180))
+			set_bone_pos(player,"Head_Control", nil, vector.new(pitch - math.deg(dir_to_pitch(player_velocity)) + 50, player_vel_yaw - yaw, 0))
+			set_bone_pos(player, "Body_Control", nil, vector.new(math.deg(dir_to_pitch(player_velocity)) + 110, -player_vel_yaw + yaw, 0))
 			-- sets eye height, and nametag color accordingly
 			mcl_util.set_properties(player, player_props_elytra)
 		elseif walking and (math.abs(velocity.x) > 0.35 or math.abs(velocity.z) > 0.35) then --walking
 			mcl_util.set_properties(player, player_props_normal)
-			mcl_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
-			mcl_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
+			set_bone_pos(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
+			set_bone_pos(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 			local no_arm_moving = minetest.get_item_group(wielded_itemname, "bow") > 0 or
 				minetest.get_item_group(wielded_itemname, "crossbow") > 0 or
 				mcl_shields.wielding_shield(player, 1) or
@@ -387,8 +402,8 @@ mcl_player.register_globalstep(function(player)
 				mcl_player.players[player].is_swimming = false
 				mcl_player.player_set_animation(player, "stand")
 				mcl_util.set_properties(player, player_props_normal)
-				mcl_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
-				mcl_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
+				set_bone_pos(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
+				set_bone_pos(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 			elseif no_arm_moving and control.RMB and control.sneak or minetest.get_item_group(wielded_itemname, "crossbow") > 0 and control.sneak then
 				mcl_player.player_set_animation(player, "bow_sneak", animation_speed_mod)
 			elseif no_arm_moving and control.RMB or minetest.get_item_group(wielded_itemname, "crossbow") > 0 then
@@ -418,8 +433,8 @@ mcl_player.register_globalstep(function(player)
 			mcl_player.players[player].is_swimming = false
 			mcl_player.player_set_animation(player, "stand")
 			mcl_util.set_properties(player, player_props_normal)
-			mcl_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
-			mcl_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
+			set_bone_pos(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
+			set_bone_pos(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 		elseif get_mouse_button(player) and not control.sneak then
 			mcl_player.player_set_animation(player, "mine")
 		elseif get_mouse_button(player) and control.sneak then
@@ -427,14 +442,14 @@ mcl_player.register_globalstep(function(player)
 		elseif not control.sneak and head_in_water and is_sprinting then
 			mcl_player.player_set_animation(player, "swim_stand", animation_speed_mod)
 		elseif control.sneak then
-			mcl_util.set_bone_position(player, "Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, player_vel_yaw - yaw))
-			mcl_util.set_bone_position(player, "Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
+			set_bone_pos(player, "Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, player_vel_yaw - yaw))
+			set_bone_pos(player, "Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 			mcl_util.set_properties(player, player_props_sneaking)
 			mcl_player.player_set_animation(player, "sneak_stand", animation_speed_mod)
 		elseif not mcl_player.players[player].attached then
 			mcl_util.set_properties(player, player_props_normal)
-			mcl_util.set_bone_position(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
-			mcl_util.set_bone_position(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
+			set_bone_pos(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
+			set_bone_pos(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 			mcl_player.player_set_animation(player, "stand", animation_speed_mod)
 		end
 	end
@@ -443,34 +458,34 @@ mcl_player.register_globalstep(function(player)
 
 	-- controls right and left arms pitch when shooting a bow or blocking
 	if mcl_shields.is_blocking(player) == 2 then
-		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.new(20, -20, 0))
+		set_bone_pos(player, "Arm_Right_Pitch_Control", nil, vector.new(20, -20, 0))
 	elseif mcl_shields.is_blocking(player) == 1 then
-		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.new(20, 20, 0))
+		set_bone_pos(player, "Arm_Left_Pitch_Control", nil, vector.new(20, 20, 0))
 	-- controls right and left arms pitch when holing a loaded crossbow
 	elseif minetest.get_item_group(wielded_itemname, "crossbow") == 5 then
-		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.new(pitch + 90, -30, pitch * -1 * .35))
-		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.new(pitch + 90, 43, pitch * .35))
+		set_bone_pos(player, "Arm_Right_Pitch_Control", nil, vector.new(pitch + 90, -30, pitch * -1 * .35))
+		set_bone_pos(player, "Arm_Left_Pitch_Control", nil, vector.new(pitch + 90, 43, pitch * .35))
 	-- controls right and left arms pitch when loading a crossbow
 	elseif minetest.get_item_group(wielded_itemname, "crossbow") > 0 then
-		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.new(45, -20, 25))
-		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.new(55, 20, -45))
+		set_bone_pos(player, "Arm_Right_Pitch_Control", nil, vector.new(45, -20, 25))
+		set_bone_pos(player, "Arm_Left_Pitch_Control", nil, vector.new(55, 20, -45))
 	elseif minetest.get_item_group(wielded_itemname, "bow") > 0 and control.RMB then
 		local right_arm_rot = vector.new(pitch + 90, -30, pitch * -1 * .35)
 		local left_arm_rot = vector.new(pitch + 90, 43, pitch * .35)
-		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, right_arm_rot)
-		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, left_arm_rot)
+		set_bone_pos(player, "Arm_Right_Pitch_Control", nil, right_arm_rot)
+		set_bone_pos(player, "Arm_Left_Pitch_Control", nil, left_arm_rot)
 	-- when punching
 	elseif control.LMB and not parent then
-		mcl_util.set_bone_position(player,"Arm_Right_Pitch_Control", nil, vector.new(pitch, 0, 0))
-		mcl_util.set_bone_position(player,"Arm_Left_Pitch_Control", nil, vector.zero())
+		set_bone_pos(player,"Arm_Right_Pitch_Control", nil, vector.new(pitch, 0, 0))
+		set_bone_pos(player,"Arm_Left_Pitch_Control", nil, vector.zero())
 	-- when holding an item.
 	elseif wielded:get_name() ~= "" then
-		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.new(20, 0, 0))
-		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.zero())
+		set_bone_pos(player, "Arm_Right_Pitch_Control", nil, vector.new(20, 0, 0))
+		set_bone_pos(player, "Arm_Left_Pitch_Control", nil, vector.zero())
 	-- resets arms pitch
 	else
-		mcl_util.set_bone_position(player, "Arm_Left_Pitch_Control", nil, vector.zero())
-		mcl_util.set_bone_position(player, "Arm_Right_Pitch_Control", nil, vector.zero())
+		set_bone_pos(player, "Arm_Left_Pitch_Control", nil, vector.zero())
+		set_bone_pos(player, "Arm_Right_Pitch_Control", nil, vector.zero())
 	end
 end)
 

@@ -31,51 +31,6 @@ msgstr "Los barrotes de hierro se conectan perfectamente a sus vecinos a medida 
 msgid "Glass Pane"
 msgstr "Panel de cristal"
 
-msgid "Black Stained Glass Pane"
-msgstr "Panel de cristal tintado de negro"
-
-msgid "Blue Stained Glass Pane"
-msgstr "Panel de cristal tintado de azul"
-
-msgid "Brown Stained Glass Pane"
-msgstr "Panel de cristal tintado de marrón"
-
-msgid "Cyan Stained Glass Pane"
-msgstr "Panel de cristal tintado de cian"
-
-msgid "Green Stained Glass Pane"
-msgstr "Panel de cristal tintado de verde"
-
-msgid "Grey Stained Glass Pane"
-msgstr "Panel de cristal tintado de gris"
-
-msgid "Light Blue Stained Glass Pane"
-msgstr "Panel de cristal tintado de azul claro"
-
-msgid "Light Grey Stained Glass Pane"
-msgstr "Panel de cristal tintado de gris claro"
-
-msgid "Lime Stained Glass Pane"
-msgstr "Panel de cristal tintado de verde lima"
-
-msgid "Magenta Stained Glass Pane"
-msgstr "Panel de cristal tintado de magenta"
-
-msgid "Orange Stained Glass Pane"
-msgstr "Panel de cristal tintado de naranja"
-
-msgid "Pink Stained Glass Pane"
-msgstr "Panel de cristal tintado de rosa"
-
-msgid "Purple Stained Glass Pane"
-msgstr "Panel de cristal tintado de morado"
-
-msgid "Red Stained Glass Pane"
-msgstr "Panel de cristal tintado de rojo"
-
-msgid "White Stained Glass Pane"
-msgstr "Panel de cristal tintado de blanco"
-
-msgid "Yellow Stained Glass Pane"
-msgstr "Panel de cristal tintado de amarillo"
+msgid "@1 Glass Pane"
+msgstr "Panel de cristal @1"
 

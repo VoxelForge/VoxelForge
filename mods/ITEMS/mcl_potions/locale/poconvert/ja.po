@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "<effect>|heal|list|clear|remove <duration|heal-amount|effect>|INF [<level>] [<factor>] [NOPART]"
-msgstr ""
+msgstr "<effect>|heal|list|clear|remove <duration|heal-amount|effect>|INF [<level>] [<factor>] [NOPART]"
 
 msgid "Add a status effect to yourself. Arguments: <effect>: name of status effect. Passing \"list\" as effect name lists available effects. Passing \"heal\" as effect name heals (or harms) by amount designed by the next parameter. Passing \"clear\" as effect name removes all effects. Passing \"remove\" as effect name removes the effect named by the next parameter. <duration>: duration in seconds. Passing \"INF\" as duration makes the effect infinite. (<heal-amount>: amount of healing when the effect is \"heal\", passing a negative value subtracts health. <effect>: name of a status effect to be removed when using \"remove\" as the previous parameter.) <level>: effect power determinant, bigger level results in more powerful effect for effects that depend on the level (no changes for other effects), defaults to 1, pass F to use low-level factor instead. <factor>: effect strength modifier, can mean different things depending on the effect, no changes for effects that do not depend on level/factor. NOPART at the end means no particles will be shown for this effect."
 msgstr ""
@@ -62,79 +62,79 @@ msgid "@1 effect on level @2 given to player @3 for @4 seconds."
 msgstr ""
 
 msgid "Invisiblity"
-msgstr ""
+msgstr "透明化"
 
 msgid "body is invisible"
-msgstr ""
+msgstr "不可視性を付与します"
 
 msgid "Poison"
 msgstr "毒薬"
 
 msgid "-1 HP / @1 s"
-msgstr ""
+msgstr "-1 HP / @1 s"
 
 msgid "Regeneration"
 msgstr "再生"
 
 msgid "+1 HP / @1 s"
-msgstr ""
+msgstr "+1 HP / @1 s"
 
 msgid "Strength"
 msgstr "剛力"
 
 msgid "+@1% melee damage"
-msgstr ""
+msgstr "近接攻撃の威力が@1%上昇する"
 
 msgid "Weakness"
 msgstr "弱化"
 
 msgid "-@1% melee damage"
-msgstr ""
+msgstr "近接攻撃の威力が@1%低下する"
 
 msgid "Water Breathing"
 msgstr "吸気"
 
 msgid "limitless breathing under water"
-msgstr ""
+msgstr "酸素ゲージが減らず"
 
 msgid "Dolphin's Grace"
-msgstr ""
+msgstr "イルカの好意"
 
 msgid "swimming gracefully"
-msgstr ""
+msgstr "泳ぐ速度を増加"
 
 msgid "Leaping"
 msgstr "跳躍"
 
 msgid "+@1% jumping power"
-msgstr ""
+msgstr "ジャンプの高さが@1%上昇"
 
 msgid "-@1% jumping power"
-msgstr ""
+msgstr "ジャンプの高さが@1%低下"
 
 msgid "Slow Falling"
-msgstr ""
+msgstr "低速落下"
 
 msgid "decreases gravity effects"
-msgstr ""
+msgstr "落下速度が低下し"
 
 msgid "Swiftness"
 msgstr "加速"
 
 msgid "+@1% running speed"
-msgstr ""
+msgstr "疾走速度が@1%上昇する"
 
 msgid "Slowness"
 msgstr "減速"
 
 msgid "-@1% running speed"
-msgstr ""
+msgstr "疾走速度が@1%低下する"
 
 msgid "Levitation"
-msgstr ""
+msgstr "浮遊"
 
 msgid "moves body upwards at @1 nodes/s"
-msgstr ""
+msgstr "毎秒@1ブロックの速度で上に浮かせる"
 
 msgid "Night Vision"
 msgstr "暗視"
@@ -143,7 +143,7 @@ msgid "improved vision during the night"
 msgstr ""
 
 msgid "Darkness"
-msgstr ""
+msgstr "暗闇"
 
 msgid "surrounded by darkness"
 msgstr ""
@@ -152,19 +152,19 @@ msgid "not seeing anything beyond @1 nodes"
 msgstr ""
 
 msgid "Glowing"
-msgstr ""
+msgstr "発光"
 
 msgid "more visible at all times"
 msgstr ""
 
 msgid "Health Boost"
-msgstr ""
+msgstr "体力増強"
 
 msgid "HP increased by @1"
 msgstr ""
 
 msgid "Absorption"
-msgstr ""
+msgstr "ダメージ吸収"
 
 msgid "absorbs up to @1 incoming damage"
 msgstr ""
@@ -173,46 +173,46 @@ msgid "Fire Resistance"
 msgstr "耐火"
 
 msgid "resistance to fire damage"
-msgstr ""
+msgstr "火によるダメージを軽減"
 
 msgid "Resistance"
-msgstr ""
+msgstr "耐性"
 
 msgid "resist @1% of incoming damage"
-msgstr ""
+msgstr "ダメージを@1%軽減"
 
 msgid "Luck"
-msgstr ""
+msgstr "幸運"
 
 msgid "Bad Luck"
-msgstr ""
+msgstr "不運"
 
 msgid "Bad Omen"
-msgstr ""
+msgstr "不吉な予感"
 
 msgid "danger is imminent"
 msgstr ""
 
 msgid "Hero of the Village"
-msgstr ""
+msgstr "村の英雄"
 
 msgid "Withering"
-msgstr ""
+msgstr "衰弱"
 
 msgid "-1 HP / @1 s, can kill"
 msgstr ""
 
 msgid "impaired sight"
-msgstr ""
+msgstr "盲目"
 
 msgid "Hunger"
-msgstr ""
+msgstr "満腹度"
 
 msgid "exhausts by @1 per second"
 msgstr ""
 
 msgid "Nausea"
-msgstr ""
+msgstr "吐き気"
 
 msgid "not feeling very well..."
 msgstr ""
@@ -221,34 +221,34 @@ msgid "frequency: @1 / 1 s"
 msgstr ""
 
 msgid "Saturation"
-msgstr ""
+msgstr "満腹度回復"
 
 msgid "saturates by @1 per second"
 msgstr ""
 
 msgid "Haste"
-msgstr ""
+msgstr "俊敏"
 
 msgid "+@1% mining and attack speed"
-msgstr ""
+msgstr "採掘速度と攻撃速度が@1%上昇する"
 
 msgid "Fatigue"
-msgstr ""
+msgstr "鈍化"
 
 msgid "-@1% mining and attack speed"
-msgstr ""
+msgstr "採掘速度と攻撃速度が@1%低下する"
 
 msgid "Conduit Power"
-msgstr ""
+msgstr "コンジットパワー"
 
 msgid "+@1% mining and attack speed in water"
-msgstr ""
+msgstr "水中での採掘速度と攻撃速度が@1%上昇する"
 
 msgid "Fermented Spider Eye"
 msgstr "発酵したクモの目"
 
 msgid "Try different combinations to create potions."
-msgstr "いろいろな組み合わせを試して、ポーションを作ってみましょう。 "
+msgstr "いろいろな組み合わせを試して、ポーションを作ってみましょう。"
 
 msgid "Glass Bottle"
 msgstr "ガラス瓶"
@@ -308,7 +308,7 @@ msgid "A throwable potion that will shatter on impact, where it creates a magic 
 msgstr ""
 
 msgid "Use the “Punch” key to throw it."
-msgstr "「パンチ」キーで投げます。 "
+msgstr "「パンチ」キーで投げます。"
 
 msgid "Use the “Place” key to drink it."
 msgstr "「置く」キーで飲めます。"
@@ -317,34 +317,34 @@ msgid "Drinking a potion gives you a particular effect or set of effects."
 msgstr ""
 
 msgid "@1 Potion @2"
-msgstr ""
+msgstr "@1のポーション @2"
 
 msgid "@1 Potion"
-msgstr "ポーション（@1）"
+msgstr "@1のポーション"
 
 msgid "Potion @1"
-msgstr ""
+msgstr "ポーション（@1）"
 
 msgid "Strange Potion"
-msgstr ""
+msgstr "奇妙なポーション"
 
 msgid "Splash @1"
-msgstr ""
+msgstr "スプラッシュ@1"
 
 msgid "Lingering @1"
-msgstr ""
+msgstr "残留@1"
 
 msgid "@1 Arrow @2"
-msgstr ""
+msgstr "@1の矢 @2"
 
 msgid "@1 Arrow"
-msgstr ""
+msgstr "@1の矢"
 
 msgid "Arrow @1"
-msgstr ""
+msgstr "矢（@1）"
 
 msgid "Strange Tipped Arrow"
-msgstr ""
+msgstr "奇妙な矢"
 
 msgid "Dragon's Breath"
 msgstr "ドラゴンブレス"
@@ -353,118 +353,118 @@ msgid "This item is used in brewing and can be combined with splash potions to c
 msgstr "醸造に使用するアイテムで、飛散ポーションと組み合わせて滞留ポーションが作れます。"
 
 msgid "Awkward"
-msgstr ""
+msgstr "奇妙な"
 
 msgid "Has an awkward taste and is used for brewing potions."
-msgstr "味に癖があり、ポーションの醸造に使用されます。 "
+msgstr "味に癖があり、ポーションの醸造に使用されます。"
 
 msgid "Mundane"
-msgstr ""
+msgstr "ありふれた"
 
 msgid "Has a terrible taste and is not really useful for brewing potions."
 msgstr ""
 
 msgid "Thick"
-msgstr ""
+msgstr "濃厚な"
 
 msgid "Has a bitter taste and is not really useful for brewing potions."
 msgstr ""
 
 msgid "of Healing"
-msgstr ""
+msgstr "治癒"
 
 msgid "+@1 HP"
-msgstr ""
+msgstr "+@1 HP"
 
 msgid "Instantly heals."
 msgstr "即座に治癒します。"
 
 msgid "of Harming"
-msgstr ""
+msgstr "負傷"
 
 msgid "-@1 HP"
-msgstr ""
+msgstr "-@1 HP"
 
 msgid "Instantly deals damage."
 msgstr "即座にダメージを与えます。"
 
 msgid "of Night Vision"
-msgstr ""
+msgstr "暗視"
 
 msgid "Increases the perceived brightness of light under a dark sky."
 msgstr "暗い空の下で、光の明るさを感じやすくします。"
 
 msgid "of Swiftness"
-msgstr ""
+msgstr "俊敏"
 
 msgid "Increases walking speed."
-msgstr "歩行速度が上がります。 "
+msgstr "歩行速度が上がります。"
 
 msgid "of Slowness"
-msgstr ""
+msgstr "遅さ"
 
 msgid "Decreases walking speed."
-msgstr "歩行速度が下がります。 "
+msgstr "歩行速度が下がります。"
 
 msgid "of Leaping"
-msgstr ""
+msgstr "跳躍"
 
 msgid "Increases jump strength."
 msgstr "ジャンプ力を高めます。"
 
 msgid "of Decay"
-msgstr ""
+msgstr "衰弱"
 
 msgid "Applies the withering effect which deals damage at a regular interval and can kill."
 msgstr ""
 
 msgid "of Poison"
-msgstr ""
+msgstr "毒"
 
 msgid "Applies the poison effect which deals damage at a regular interval."
 msgstr "一定間隔でダメージを与える毒効果を及ぼします。"
 
 msgid "of Regeneration"
-msgstr ""
+msgstr "再生能力"
 
 msgid "Regenerates health over time."
 msgstr "時間経過でヘルスを回復します。"
 
 msgid "of Invisibility"
-msgstr ""
+msgstr "透明化"
 
 msgid "Grants invisibility."
 msgstr "不可視性を付与します。"
 
 msgid "of Water Breathing"
-msgstr ""
+msgstr "水中呼吸"
 
 msgid "Grants limitless breath underwater."
 msgstr "水中で無限の呼吸を付与します。"
 
 msgid "of Fire Resistance"
-msgstr ""
+msgstr "火炎耐性"
 
 msgid "Grants immunity to damage from heat sources like fire."
 msgstr "火などの熱源から受けるダメージに対する免疫力を付与します。"
 
 msgid "of Strength"
-msgstr ""
+msgstr "剛力"
 
 msgid "Increases attack power."
-msgstr ""
+msgstr "攻撃の威力が上昇する。"
 
 msgid "of Weakness"
-msgstr ""
+msgstr "弱化"
 
 msgid "Decreases attack power."
-msgstr ""
+msgstr "攻撃の威力が低下する。"
 
 msgid "of Slow Falling"
-msgstr ""
+msgstr "落下速度低下"
 
 msgid "Instead of falling, you descend gracefully."
-msgstr ""
+msgstr "落下速度を低下させ。"
 
 msgid "of the Turtle Master"
 msgstr ""
@@ -473,31 +473,31 @@ msgid "Decreases damage taken at the cost of speed."
 msgstr ""
 
 msgid "of Luck"
-msgstr ""
+msgstr "幸運"
 
 msgid "Increases luck."
 msgstr ""
 
 msgid "of Bad Luck"
-msgstr ""
+msgstr "不運"
 
 msgid "Decreases luck."
 msgstr ""
 
 msgid "Ominous Bottle"
-msgstr ""
+msgstr "不吉な瓶"
 
 msgid "Attracts danger."
 msgstr ""
 
 msgid "Unknown Potion"
-msgstr ""
+msgstr "未知のポーション"
 
 msgid "Right-click to identify"
 msgstr ""
 
 msgid "Unknown Tipped Arrow"
-msgstr ""
+msgstr "未知の矢"
 
 msgid "A throwable potion that will shatter on impact, where it gives all nearby players and mobs a status effect or a set of status effects."
 msgstr ""

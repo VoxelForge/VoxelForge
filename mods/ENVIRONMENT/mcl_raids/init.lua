@@ -1,4 +1,5 @@
 -- mcl_raids
+local S = core.get_translator(core.get_current_modname())
 mcl_raids = {}
 
 -- Define the amount of illagers to spawn each wave.
@@ -69,6 +70,7 @@ local oban_layers = {
 	}
 }
 
+mcl_raids.ominous_banner_name = S("Ominous Banner")
 mcl_raids.ominous_banner_layers = oban_layers
 
 local oban_def = table.copy(minetest.registered_entities["mcl_banners:standing_banner"])
@@ -83,34 +85,19 @@ minetest.register_entity(":mcl_raids:ominous_banner",oban_def)
 
 function mcl_raids.drop_obanner(pos)
 	local it = ItemStack("mcl_banners:banner_item_white")
-	it:get_meta():set_string("layers",minetest.serialize(oban_layers))
-	local banner_description = string.gsub(it:get_definition().description, "White Banner", "Ominous Banner")
-	local description = mcl_banners.make_advanced_banner_description(banner_description, oban_layers)
-	it:get_meta():set_string("description", description)
+	mcl_banners.write_layers(it:get_meta(), oban_layers)
+	tt.reload_itemstack_description(it)
 	minetest.add_item(pos,it)
 end
 
-function mcl_raids.is_banner_item (stack)
+function mcl_raids.is_banner_item (stack, layers)
 	local name = stack:get_name ()
-	if name == "mcl_banners:banner_item_white" then
+	if name ~= "mcl_banners:banner_item_white" then return false end
+	if not layers then
 		local metadata = stack:get_meta ()
-		local layers = metadata:get_string ("layers")
-		if layers == "" then
-			return false
-		end
-		layers = minetest.deserialize (layers)
-		if #layers ~= #oban_layers then
-			return false
-		end
-		for i = 1, #layers do
-			if oban_layers[i].color ~= layers[i].color
-				or oban_layers[i].pattern ~= layers[i].pattern then
-				return false
-			end
-		end
-		return true
+		layers = mcl_banners.read_layers (metadata)
 	end
-	return false
+	return mcl_banners.is_same_layers(layers, oban_layers)
 end
 
 function mcl_raids.enroll_in_raid (raid, entity)

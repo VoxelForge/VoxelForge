@@ -103,9 +103,6 @@ msgstr "Benutzen Sie die Hacke auf einen beackerbaren Block (indem Sie ihn recht
 msgid "Wood Hoe"
 msgstr "Holzhacke"
 
-msgid "Uses: @1"
-msgstr "Verwendungen: @1"
-
 msgid "Stone Hoe"
 msgstr "Steinhacke"
 

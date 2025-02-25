@@ -17,65 +17,65 @@ msgid "Blackstone"
 msgstr "黑石"
 
 msgid "Gilded Blackstone"
-msgstr ""
+msgstr "鑲金黑石"
 
 msgid "Nether Gold Ore"
-msgstr ""
+msgstr "地獄金礦"
 
 msgid "Polished Basalt"
-msgstr ""
+msgstr "抛光玄武岩"
 
 msgid "Basalt"
-msgstr ""
+msgstr "玄武岩"
 
 msgid "Smooth Basalt"
-msgstr ""
+msgstr "平滑玄武岩"
 
 msgid "Polished Blackstone"
 msgstr ""
 
 msgid "Chiseled Polished Blackstone"
-msgstr ""
+msgstr "浮雕拋光黑石"
 
 msgid "Polished Blackstone Bricks"
-msgstr ""
+msgstr "拋光黑石磚"
 
 msgid "Cracked Polished Blackstone Bricks"
-msgstr ""
+msgstr "裂紋拋光黑石磚"
 
 msgid "Quartz Bricks"
-msgstr ""
+msgstr "石英磚"
 
 msgid "Soul Soil"
-msgstr ""
+msgstr "靈魂土"
 
 msgid "Eternal Soul Fire"
-msgstr ""
+msgstr "靈魂火"
 
 msgid "Blackstone Stairs"
-msgstr ""
+msgstr "黑石階梯"
 
 msgid "Blackstone Slab"
-msgstr ""
+msgstr "黑石台階"
 
 msgid "Polished Blackstone Stairs"
-msgstr ""
+msgstr "拋光黑石階梯"
 
 msgid "Polished Blackstone Slab"
-msgstr ""
+msgstr "拋光黑石半磚"
 
 msgid "Blackstone Brick Stairs"
-msgstr ""
+msgstr "黑石磚階梯"
 
 msgid "Blackstone Brick Slab"
-msgstr ""
+msgstr "黑石磚台階"
 
 msgid "Soul Torch"
-msgstr ""
+msgstr "靈魂火把"
 
 msgid "Torches are light sources which can be placed at the side or on the top of most blocks."
-msgstr ""
+msgstr "火把會發光，可以壁掛也可以置地。"
 
 msgid "Blackstone Wall"
-msgstr ""
+msgstr "黑石牆"
 

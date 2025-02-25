@@ -1,6 +1,8 @@
 local mob_class = mcl_mobs.mob_class
 local is_valid = mcl_util.is_valid_objectref
 
+local only_peaceful_mobs = minetest.settings:get_bool("only_peaceful_mobs", false)
+
 -- API for Mobs Redo: MineClone 2 Edition (MRM)
 
 -- Localize
@@ -347,7 +349,7 @@ function mob_class:mob_activate (staticdata, dtime)
 		return false
 	end
 
-	if mcl_vars.difficulty <= 0 and not self.persist_in_peaceful then
+	if (mcl_vars.difficulty <= 0 or only_peaceful_mobs) and not self.persist_in_peaceful then
 		mcl_burning.extinguish(self.object)
 		self.object:remove()
 		return false

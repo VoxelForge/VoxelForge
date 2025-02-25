@@ -127,9 +127,6 @@ msgstr "Härtegrad: @1"
 msgid "Range: @1"
 msgstr "Reichweite: @1"
 
-msgid "Range: 4"
-msgstr "Reichweite: 4"
-
 msgid "Range: @1 (@2)"
 msgstr "Reichweite: @1 (@2)"
 

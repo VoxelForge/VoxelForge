@@ -31,51 +31,6 @@ msgstr ""
 msgid "Glass Pane"
 msgstr "Pannello di vetro"
 
-msgid "Black Stained Glass Pane"
-msgstr "Pannello di vetro nero"
-
-msgid "Blue Stained Glass Pane"
-msgstr "Pannello di vetro blu"
-
-msgid "Brown Stained Glass Pane"
-msgstr "Pannello di vetro marrone"
-
-msgid "Cyan Stained Glass Pane"
-msgstr "Pannello di vetro ciano"
-
-msgid "Green Stained Glass Pane"
-msgstr "Pannello di vetro verde"
-
-msgid "Grey Stained Glass Pane"
-msgstr "Pannello di vetro grigio"
-
-msgid "Light Blue Stained Glass Pane"
-msgstr "Pannello di vetro azzurro"
-
-msgid "Light Grey Stained Glass Pane"
-msgstr "Pannello di vetro grigio chiaro"
-
-msgid "Lime Stained Glass Pane"
-msgstr "Pannello di vetro lime"
-
-msgid "Magenta Stained Glass Pane"
-msgstr "Pannello di vetro magenta"
-
-msgid "Orange Stained Glass Pane"
-msgstr "Pannello di vetro arancione"
-
-msgid "Pink Stained Glass Pane"
-msgstr "Pannello di vetro rosa"
-
-msgid "Purple Stained Glass Pane"
-msgstr "Pannello di vetro viola"
-
-msgid "Red Stained Glass Pane"
-msgstr "Pannello di vetro rosso"
-
-msgid "White Stained Glass Pane"
-msgstr "Pannello di vetro bianco"
-
-msgid "Yellow Stained Glass Pane"
-msgstr "Pannello di vetro giallo"
+msgid "@1 Glass Pane"
+msgstr ""
 

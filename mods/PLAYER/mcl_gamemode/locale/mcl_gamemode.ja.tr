@@ -1,6 +1,6 @@
 # textdomain: mcl_gamemode
 [<gamemode>] [<player>]=
-Change gamemode (survival/creative) for yourself or player=
-Player not online=
-Failed to set Gamemode @1 for player @2=
-Gamemode for player @1: @2=
+Change gamemode (survival/creative/0/1/s/c) for yourself or player=
+Player not online=プレーヤーがオンラインではありません
+Failed to set Gamemode @1 for player @2=プレイヤー @2 のゲームモード @1 を設定できませんでした
+Gamemode for player @1: @2=プレイヤー@1のゲームモード:@2

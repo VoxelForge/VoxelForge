@@ -13,15 +13,39 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: mtt_convert 0.1.1\n"
 
+msgid "Unavailable"
+msgstr "不可用"
+
+msgid "Active"
+msgstr "激活"
+
+msgid "Beacon"
+msgstr "信标"
+
 msgid "Primary Power:"
 msgstr "主要效果:"
 
 msgid "Secondary Power:"
 msgstr "辅助效果:"
 
-msgid "Inventory:"
-msgstr "背包:"
+msgid "Swiftness"
+msgstr "迅捷"
 
-msgid "Beacon"
-msgstr "信标"
+msgid "Haste"
+msgstr "急迫"
+
+msgid "Resistance"
+msgstr "抗性"
+
+msgid "Leaping"
+msgstr "跳跃提升"
+
+msgid "Strength"
+msgstr "力量"
+
+msgid "Regeneration"
+msgstr "再生"
+
+msgid "Inventory"
+msgstr "背包"
 

@@ -23,7 +23,7 @@ msgid "Mangrove Propagule"
 msgstr "Propágulo de mangle"
 
 msgid "Needs soil and light to grow"
-msgstr "Necesita tierra y luz para crecer"
+msgstr "Necesita suelo y luz para crecer"
 
 msgid "When placed on soil (such as dirt) and exposed to light, an propagule will grow into an mangrove after some time."
 msgstr "Cuando se coloca en el suelo (como tierra) y se expone a la luz, un propágulo se convertirá en un manglar después de un tiempo."
@@ -34,20 +34,23 @@ msgstr "Propágulo colgante"
 msgid "Grows on Mangrove leaves"
 msgstr "Crece en hojas de manglar"
 
-msgid "water logged mangrove roots"
-msgstr "Raíces de manglares llenos de agua"
+msgid "Water logged mangrove roots"
+msgstr "Agua sumergiendo raíces de mangle"
 
 msgid "Mangrove roots, despite being a full block, can be waterlogged and do not flow water out"
-msgstr "Las raíces del manglar, a pesar de ser un bloque completo, pueden contener el agua"
+msgstr "Las raíces de mangle, a pesar de ser un bloque completo, pueden contener el agua"
 
 msgid "These cannot be crafted yet only occure when get in contact of water."
 msgstr "Estos no se pueden fabricar, pero solo ocurren cuando entran en contacto con el agua."
 
+msgid "River water logged mangrove roots"
+msgstr "Agua de río sumergiendo raíces de mangle"
+
 msgid "Muddy Mangrove Roots"
-msgstr "Raíces de manglar lodosas"
+msgstr "Raíces de mangle lodosas"
 
 msgid "crafted with Mud and Mangrove roots"
-msgstr "Se fabrica con lodo y raíces de manglar"
+msgstr "Se fabrica con lodo y raíces de mangle"
 
 msgid "Muddy Mangrove Roots is a block from mangrove swamp.It drowns player a bit inside it."
 msgstr "Las raíces de mangle lodosas hunden un poco al jugador."

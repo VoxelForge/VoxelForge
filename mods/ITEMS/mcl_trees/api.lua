@@ -383,6 +383,8 @@ function mcl_trees.register_wood(name, p)
 		mcl_trees.woods[name] = p
 	end
 	local wood_amount = p.wood_amount or 4
+	local bark_enabled = p.bark == nil or type(p.bark) == "table"
+	local stripped_bark_enabled = p.stripped_bark == nil or type(p.stripped_bark) == "table"
 	if p.tree == nil or type(p.tree) == "table" then
 		local def = table.merge(tpl_log,{
 			tiles = { minetest.get_current_modname().."_log_"..name.."_top.png",  "mcl_core_log_"..name.."_top.png", "mcl_core_log_"..name..".png"},
@@ -392,7 +394,7 @@ function mcl_trees.register_wood(name, p)
 		def._doc_items_longdesc = def._doc_items_longdesc or D("The trunk of a " .. rname .. " tree.")
 		def._mcl_crafting_output = {
 			single = {output = "mcl_trees:wood_"..name.." "..wood_amount},
-			square2 = {output = "mcl_trees:bark_"..name.." 3"}
+			square2 = bark_enabled and {output = "mcl_trees:bark_"..name.." 3"} or nil
 		}
 		minetest.register_node(":mcl_trees:".."tree_"..name,def)
 	end
@@ -406,12 +408,12 @@ function mcl_trees.register_wood(name, p)
 		minetest.register_node(":mcl_trees:wood_"..name, def)
 	end
 
-	if p.bark == nil or type(p.bark) == "table" then
+	if bark_enabled then
 		local def = table.merge(tpl_log, {
 			_doc_items_longdesc = S("This is a decorative block surrounded by the bark of a tree trunk."),
 			tiles = p.tree and p.tree.tiles and {p.tree.tiles[3]} or { minetest.get_current_modname().."_log_"..name..".png"},
 			is_ground_content = false,
-			_mcl_stripped_variant = (p.stripped_bark == nil or type(p.stripped_bark) == "table") and "mcl_trees:bark_stripped_"..name,
+			_mcl_stripped_variant = stripped_bark_enabled and "mcl_trees:bark_stripped_"..name or nil,
 			_mcl_crafting_output = {single = {output = "mcl_trees:wood_"..name.." "..wood_amount}}
 
 		}, p.bark or {})
@@ -428,12 +430,12 @@ function mcl_trees.register_wood(name, p)
 		def._doc_items_longdesc = def._doc_items_longdesc or D("The stripped trunk of an ".. rname .. " tree.")
 		def._mcl_crafting_output = {
 			single = {output = "mcl_trees:wood_"..name.." "..wood_amount},
-			square2 = {output = "mcl_trees:bark_stripped_"..name.." 3"}
+			square2 = stripped_bark_enabled and {output = "mcl_trees:bark_stripped_"..name.." 3"} or nil
 		}
 		minetest.register_node(":mcl_trees:stripped_"..name, def)
 	end
 
-	if p.stripped_bark == nil or type(p.stripped_bark) == "table" then
+	if stripped_bark_enabled then
 		local def = table.merge(tpl_log, {
 			tiles = { minetest.get_current_modname().."_stripped_"..name.."_side.png"},
 			is_ground_content = false,
@@ -611,20 +613,16 @@ function mcl_trees.register_wood(name, p)
 
 	if p.pressure_plate == nil or type(p.pressure_plate) == "table" then
 		p.pressure_plate = p.pressure_plate or {}
-		mcl_redstone.register_pressure_plate(
+		mcl_pressureplates.register_pressure_plate(name, {
 			"mcl_pressureplates:pressure_plate_"..name,
-			p.pressure_plate.description or D(rname .. " Pressure Plate"),
-			p.wood and p.wood.tiles or { minetest.get_current_modname().."_planks_"..name..".png"},
-			p.wood and p.wood.tiles or { minetest.get_current_modname().."_planks_"..name..".png"},
-			p.wood and p.wood.tiles[1] or "mcl_core_planks_"..name..".png",
-			nil,
-			{{"mcl_trees:wood_"..name, "mcl_trees:wood_"..name}},
-			mcl_sounds.node_sound_wood_defaults(),
-			{axey=1, material_wood=1},
-			nil,
-			S("A wooden pressure plate is a redstone component which supplies its surrounding blocks with redstone power while any movable object (including dropped items, players and mobs) rests on top of it."),
-			p.pressure_plate._mcl_burntime or 15
-		)
+			description = p.pressure_plate.description or D(rname .. " Pressure Plate"),
+			texture = p.wood and p.wood.tiles and p.wood.tiles[1] or (minetest.get_current_modname().."_planks_"..name..".png"),
+			recipeitem = "mcl_trees:wood_"..name,
+			sounds = mcl_sounds.node_sound_wood_defaults(),
+			groups = {axey=1, material_wood=1},
+			longdesc = S("A wooden pressure plate is a redstone component which supplies its surrounding blocks with redstone power while any movable object (including dropped items, players and mobs) rests on top of it."),
+			burntime = p.pressure_plate._mcl_burntime or 15
+		})
 	end
 	if p.button == nil or type(p.button) == "table" then
 		p.button = p.button or {}

@@ -202,9 +202,6 @@ msgstr "Lavagante Bebé"
 msgid "Tropical Fish"
 msgstr "Pez Tropical"
 
-msgid "Tropical fish"
-msgstr "Pez tropical"
-
 msgid "Vex"
 msgstr "Vex"
 
@@ -245,10 +242,10 @@ msgid "Shepherd"
 msgstr "Pastor"
 
 msgid "Toolsmith"
-msgstr ""
+msgstr "Herrero de herramientas"
 
 msgid "Weaponsmith"
-msgstr ""
+msgstr "Herrero de armas"
 
 msgid "Nitwit"
 msgstr "Holgazán"
@@ -284,7 +281,7 @@ msgid "Wandering Trader"
 msgstr "Comerciante errante"
 
 msgid "Trader Llama"
-msgstr ""
+msgstr "Llama comerciante"
 
 msgid "Witch"
 msgstr "Bruja"

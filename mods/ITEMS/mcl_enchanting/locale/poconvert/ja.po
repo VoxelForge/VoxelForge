@@ -194,37 +194,37 @@ msgid "Increases item durability."
 msgstr "アイテムの耐久度が向上します。"
 
 msgid "Density"
-msgstr ""
+msgstr "密度"
 
 msgid "Increases mace damage when falling."
 msgstr ""
 
 msgid "Breach"
-msgstr ""
+msgstr "防具貫通"
 
 msgid "Reduces target's armor effectiveness."
 msgstr ""
 
 msgid "Wind Burst"
-msgstr ""
+msgstr "ウィンドバースト"
 
 msgid "Emits a burst of wind from a mace smash attack."
 msgstr ""
 
 msgid "Unknown Enchantment"
-msgstr ""
+msgstr "未知のエンチャント"
 
 msgid "Inventory"
 msgstr "インベントリ"
-
-msgid "@1 Lapis Lazuli"
-msgstr "@1 ラピスラズリ"
 
 msgid "@1 Enchantment Levels"
 msgstr "@1 エンチャントレベル"
 
 msgid "Level requirement: @1"
 msgstr "必要レベル：@1"
+
+msgid "@1 Lapis Lazuli"
+msgstr "@1 ラピスラズリ"
 
 msgid "Enchant an item"
 msgstr "アイテムにエンチャントする"

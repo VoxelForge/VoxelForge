@@ -38,7 +38,6 @@ This block can be mined by mining tools which match any of the following mining 
 Mining ratings:=Рейтинг добывания:
 Toughness level: @1=Уровень твёрдости: @1
 Range: @1=Дальность: @1
-Range: 4=Дальность: 4
 # Range: <Hand> (<Range>)
 Range: @1 (@2)=Дальность: @1 (@2)
 This tool can serve as a smelting fuel with a burning time of @1.=Этот инструмент можно использовать как топливо со временем горения @1.

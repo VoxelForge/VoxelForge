@@ -161,10 +161,10 @@ msgid "Craft: @1×@2"
 msgstr "Barkácsolj: @1x@2"
 
 msgid "Craft @1 item"
-msgstr "Barkácsolj @1 elemet"
+msgstr "Barkácsolj @1 tárgyat"
 
 msgid "Craft @1 items."
-msgstr "Barkácsolj @1 elemeket."
+msgstr "Barkácsolj @1 tárgyat."
 
 msgid "@1/@2 eaten"
 msgstr "@1/@2 elfogyasztva"
@@ -176,8 +176,8 @@ msgid "Eat @1×@2"
 msgstr "Egyél @1x@2"
 
 msgid "Eat @1 item"
-msgstr "Egyél @1 elemet"
+msgstr "Egyél @1 élelmiszert"
 
 msgid "Eat @1 items."
-msgstr "Egyél @1 elemeket."
+msgstr "Egyél @1 élelmiszert."
 

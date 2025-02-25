@@ -35,5 +35,5 @@ msgid "Rightclick on a water source to place the boat. Rightclick the boat to en
 msgstr ""
 
 msgid "Chest Boat"
-msgstr ""
+msgstr "チェスト付きのボート"
 

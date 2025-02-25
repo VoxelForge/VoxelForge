@@ -14,55 +14,55 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Block of Amethyst"
-msgstr ""
+msgstr "Ametisztblokk"
 
 msgid "The Block of Amethyst is a decoration block crafted from amethyst shards."
 msgstr ""
 
 msgid "Budding Amethyst"
-msgstr ""
+msgstr "Kristályosodó ametiszt"
 
 msgid "The Budding Amethyst can grow amethyst"
 msgstr ""
 
 msgid "Amethyst Shard"
-msgstr ""
+msgstr "Ametisztszilánk"
 
 msgid "An amethyst shard is a crystalline mineral."
 msgstr ""
 
 msgid "Calcite"
-msgstr ""
+msgstr "Kalcit"
 
 msgid "Calcite can be found as part of amethyst geodes."
 msgstr ""
 
 msgid "Tinted Glass"
-msgstr ""
+msgstr "Sötétített üveg"
 
 msgid "Tinted Glass is a type of glass which blocks lights while it is visually transparent."
 msgstr ""
 
 msgid "Small Amethyst Bud"
-msgstr ""
+msgstr "Kis ametisztkristály"
 
 msgid "Small Amethyst Bud is the first growth of amethyst bud."
 msgstr ""
 
 msgid "Medium Amethyst Bud"
-msgstr ""
+msgstr "Közepes ametisztkristály"
 
 msgid "Medium Amethyst Bud is the second growth of amethyst bud."
 msgstr ""
 
 msgid "Large Amethyst Bud"
-msgstr ""
+msgstr "Nagy ametisztkristály"
 
 msgid "Large Amethyst Bud is the third growth of amethyst bud."
 msgstr ""
 
 msgid "Amethyst Cluster"
-msgstr ""
+msgstr "Ametiszt-kristálycsoport"
 
 msgid "Amethyst Cluster is the final growth of amethyst bud."
 msgstr ""

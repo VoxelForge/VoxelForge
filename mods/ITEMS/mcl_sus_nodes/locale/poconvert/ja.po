@@ -14,17 +14,17 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Brush"
-msgstr ""
+msgstr "ブラシ"
 
 msgid "Brushes are used in archeology to discover hidden items"
-msgstr ""
+msgstr "ブラシはアイテムを発掘するのに使われる道具である。"
 
 msgid "Use the brush on a suspicious node to uncover its secrets"
 msgstr ""
 
 msgid "Suspicious Sand"
-msgstr ""
+msgstr "怪しげな砂"
 
 msgid "Suspicious Gravel"
-msgstr ""
+msgstr "怪しげな砂利"
 

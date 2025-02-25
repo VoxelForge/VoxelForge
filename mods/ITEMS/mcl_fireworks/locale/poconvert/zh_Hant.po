@@ -14,17 +14,17 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Firework Rocket"
-msgstr ""
+msgstr "煙花火箭"
 
 msgid "@1s power left. Not using rocket."
-msgstr ""
+msgstr "剩 @1 秒動力。無火箭輔助。"
 
 msgid "Elytra not deployed. Jump while falling down to deploy."
-msgstr ""
+msgstr "鞘翅停用中。下落時跳躍即可展開。"
 
 msgid "Elytra not equipped."
-msgstr ""
+msgstr "未裝備鞘翅。"
 
 msgid "Flight Duration: @1s"
-msgstr ""
+msgstr "飛行時長：@1 秒"
 

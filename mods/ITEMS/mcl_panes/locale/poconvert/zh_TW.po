@@ -31,51 +31,6 @@ msgstr "在你建造鐵柵欄時，它們會整齊地連接到鄰近的方塊。
 msgid "Glass Pane"
 msgstr "玻璃片"
 
-msgid "Black Stained Glass Pane"
-msgstr "黑色玻璃片"
-
-msgid "Blue Stained Glass Pane"
-msgstr "藍色玻璃片"
-
-msgid "Brown Stained Glass Pane"
-msgstr "棕色玻璃片"
-
-msgid "Cyan Stained Glass Pane"
-msgstr "青色玻璃片"
-
-msgid "Green Stained Glass Pane"
-msgstr "綠色玻璃片"
-
-msgid "Grey Stained Glass Pane"
-msgstr "灰色玻璃片"
-
-msgid "Light Blue Stained Glass Pane"
-msgstr "淺藍色玻璃片"
-
-msgid "Light Grey Stained Glass Pane"
-msgstr "淺灰色玻璃片"
-
-msgid "Lime Stained Glass Pane"
-msgstr "淺綠色玻璃片"
-
-msgid "Magenta Stained Glass Pane"
-msgstr "洋紅色玻璃片"
-
-msgid "Orange Stained Glass Pane"
-msgstr "橙色玻璃片"
-
-msgid "Pink Stained Glass Pane"
-msgstr "粉紅色玻璃片"
-
-msgid "Purple Stained Glass Pane"
-msgstr "紫色玻璃片"
-
-msgid "Red Stained Glass Pane"
-msgstr "紅色玻璃片"
-
-msgid "White Stained Glass Pane"
-msgstr "白色玻璃片"
-
-msgid "Yellow Stained Glass Pane"
-msgstr "黃色玻璃片"
+msgid "@1 Glass Pane"
+msgstr ""
 

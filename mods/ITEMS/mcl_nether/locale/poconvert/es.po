@@ -152,7 +152,7 @@ msgid "Netherite Upgrade Template"
 msgstr "Mejora de netherita"
 
 msgid "Smithing Template"
-msgstr "Molde de herrería"
+msgstr "Plantilla de herrería"
 
 msgid "Applies to:"
 msgstr "Se aplica a:"

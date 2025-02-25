@@ -7,7 +7,7 @@ function awards.get_formspec(name, _, sid)
 	local awards_list = awards.get_award_states(name)
 
 	if #awards_list == 0 then
-		formspec = formspec .. "label[3.9,1.5;"..minetest.formspec_escape(S("Error: No achivements available.")).."]"
+		formspec = formspec .. "label[3.9,1.5;"..minetest.formspec_escape(S("Error: No advancements available.")).."]"
 		formspec = formspec .. "button_exit[4.2,2.3;3,1;close;"..minetest.formspec_escape(S("OK")).."]"
 		return formspec
 	end
@@ -18,12 +18,12 @@ function awards.get_formspec(name, _, sid)
 	local sdef = sitem.def
 	if sdef and sdef.secret and not sitem.unlocked then
 		formspec = formspec .. "label[1,2.75;"..
-				minetest.formspec_escape(S("(Secret Award)")).."]"..
+				minetest.formspec_escape(S("(Secret Advancement)")).."]"..
 				"image[1,0;3,3;awards_unknown.png]"
 		if sdef and sdef.description then
 			formspec = formspec	.. "textarea[0.25,3.25;4.8,1.7;;"..
 					minetest.formspec_escape(
-							S("Unlock this award to find out what it is."))..";]"
+							S("Unlock this advancement to find out what it is."))..";]"
 		end
 	else
 		local title = sitem.name
@@ -45,7 +45,7 @@ function awards.get_formspec(name, _, sid)
 			";]"
 
 		if sdef and sdef.icon then
-			formspec = formspec .. "image[0.45,0;3.5,3.5;" .. sdef.icon .. "]"  -- adjusted values from 0.6,0;3,3
+			formspec = formspec .. "image[0.45,0;3.5,3.5;" .. minetest.formspec_escape(sdef.icon) .. "]"  -- adjusted values from 0.6,0;3,3
 		end
 
 		if sitem.progress then
@@ -81,7 +81,7 @@ function awards.get_formspec(name, _, sid)
 			first = false
 
 			if def.secret and not award.unlocked then
-				formspec = formspec .. "#707070"..minetest.formspec_escape(S("(Secret Award)"))
+				formspec = formspec .. "#707070"..minetest.formspec_escape(S("(Secret Advancement)"))
 			else
 				local title = award.name
 				if def and def.title then
@@ -108,19 +108,19 @@ function awards.show_to(name, to, sid, text)
 	end
 	local data = awards.player(to)
 	if name == to and data.disabled then
-		minetest.chat_send_player(name, S("You've disabled awards. Type /awards enable to reenable."))
+		minetest.chat_send_player(name, S("You've disabled advancements. Type /awards enable to reenable."))
 		return
 	end
 	if text then
 		local awards_list = awards.get_award_states(name)
 		if #awards_list == 0 then
-			minetest.chat_send_player(to, S("Error: No award available."))
+			minetest.chat_send_player(to, S("Error: No advancement available."))
 			return
 		elseif not data or not data.unlocked  then
-			minetest.chat_send_player(to, S("You have not unlocked any awards."))
+			minetest.chat_send_player(to, S("You have not unlocked any advancement."))
 			return
 		end
-		minetest.chat_send_player(to, S("@1’s awards:", name))
+		minetest.chat_send_player(to, S("@1’s advancement:", name))
 
 		for str, _ in pairs(data.unlocked) do
 			local def = awards.registered_awards[str]

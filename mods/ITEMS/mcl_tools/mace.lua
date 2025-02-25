@@ -9,7 +9,7 @@ local mace_longdesc = S("The mace is a slow melee weapon that deals incredible d
 minetest.register_node("mcl_tools:heavy_core", {
     description = S("Heavy Core"),
 	paramtype = "light",
-    _doc_long_desc = heavy_core_longdesc,
+    _doc_items_longdesc = heavy_core_longdesc,
     tiles = {"mcl_tools_heavy_core_top.png", "mcl_tools_heavy_core_bottom.png", "mcl_tools_heavy_core_side.png"},
     is_ground_content = false,
     groups = {pickaxey = 1, deco_block = 1, rarity = 3},
@@ -45,52 +45,25 @@ minetest.register_tool("mcl_tools:mace", {
 	_mcl_toollike_wield = true,
 
 	on_use = function(itemstack, user, pointed_thing)
-		local fall_distance = user:get_velocity().y
-		local obj = pointed_thing.ref
-		local damage
-		if pointed_thing.type == "object" then
-			if mcl_tools.mace_cooldown[user] == nil then
-				mcl_tools.mace_cooldown[user] = mcl_tools.mace_cooldown[user] or 0
-			end
-			local current_time = minetest.get_gametime()
-			if current_time - mcl_tools.mace_cooldown[user] >= cooldown_time then
-				local wind_burst = mcl_enchanting.get_enchantment(itemstack, "wind_burst")
-				local density_add = (mcl_enchanting.get_enchantment(itemstack, "density") or 0) * 0.5 * fall_distance
-				mcl_tools.mace_cooldown[user] = current_time
-				if fall_distance < 0 then
-					damage = -6 * fall_distance / 5.5 + density_add
-					if user:is_player() then
-						if damage > 50 then
-							awards.unlock(user:get_player_name(), "mcl:overoverkill")
+			local fall_distance = user:get_velocity().y
+			mcl_tools.entity = pointed_thing.ref
+			if pointed_thing.type == "object" then
+				if mcl_tools.mace_cooldown[user] == nil then
+					mcl_tools.mace_cooldown[user] = mcl_tools.mace_cooldown[user] or 0
+				end
+				local current_time = minetest.get_gametime()
+				if current_time - mcl_tools.mace_cooldown[user] >= cooldown_time then
+					mcl_tools.mace_cooldown[user] = current_time
+					if fall_distance < 0 then
+						if mcl_tools.entity:is_player() or mcl_tools.entity:get_luaentity() then
+							mcl_tools.entity:punch(user, 1.6, {
+							full_punch_interval = 1.6,
+							damage_groups = {fleshy = -6 * fall_distance / 5.5},
+							}, nil)
 						end
-					end
-					if obj:is_player() or obj:get_luaentity() then
-						obj:punch(user, 1.6, {
-						full_punch_interval = 1.6,
-						damage_groups = {fleshy = -6 * fall_distance / 5.5 + density_add},
-						}, nil)
-					end
-					if wind_burst >= 1 then
-						local v = user:get_velocity()
-						user:set_velocity(vector.new(v.x, 0, v.z))
-						local pos = user:get_pos()
-						-- set vertical V to 0  first otherwise this is highly dependent on falling speed
-						user:add_velocity(vector.new(0, 30 + (wind_burst * 5), 0))
-						local pr = PseudoRandom(math.ceil(os.time() / 60 / 10))
-						local vr = vector.new(pr:next(-2, 2)/10, 0, pr:next(-2, 2)/10)
-						local amount = 20
-						vr.y = pr:next(-9, -4) / 10
-						minetest.add_particlespawner(table.merge(mcl_charges.wind_burst_spawner, {
-							amount = amount,
-							minacc = vr,
-							maxacc = vr,
-							minpos = vector.offset(pos, -2, 3, -2),
-							maxpos = vector.offset(pos, 2, 0.3, 2),
-						}))
-					end
-				else
-					if obj:is_player() or obj:get_luaentity() then
-						obj:punch(user, 1.6, {
+					else
+					if mcl_tools.entity:is_player() or mcl_tools.entity:get_luaentity() then
+						mcl_tools.entity:punch(user, 1.6, {
 						full_punch_interval = 1.6,
 						damage_groups = {fleshy = 6},
 						}, nil)
@@ -124,4 +97,3 @@ minetest.register_craft({
 		{ "", "mcl_mobitems:breeze_rod" },
 	}
 })
-

@@ -17,19 +17,19 @@ msgid "Daylight Sensor"
 msgstr "日光感測器"
 
 msgid "Provides redstone power when in sunlight"
-msgstr ""
+msgstr "有陽光時供應紅石能量"
 
 msgid "Can be inverted"
-msgstr ""
+msgstr "可反轉"
 
 msgid "Daylight detectors are redstone components which provide redstone power when they are in sunlight and no power otherwise. They can also be inverted."
-msgstr ""
+msgstr "日光感應器是紅石元件，在照到日光時供應紅石能量，否則就不供應。其運作模式可以反轉。"
 
 msgid "In inverted state, they provide redstone power when they are not in sunlight and no power otherwise."
-msgstr ""
+msgstr "反轉後，沒有日光時會供應紅石能量，否則就不供應。"
 
 msgid "Use the daylight detector to toggle its state."
-msgstr ""
+msgstr "使用日光感測器就可以切換運作模式。"
 
 msgid "Inverted Daylight Sensor"
 msgstr "反相日光感測器"

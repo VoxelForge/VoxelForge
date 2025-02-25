@@ -143,7 +143,7 @@ minetest.register_node("mcl_stonecutter:stonecutter", {
 	drawtype = "nodebox",
 	paramtype = "light",
 	paramtype2 = "facedir",
-	groups = { pickaxey=1, material_stone=1, deco_block=1, _mcl_partial = 2, },
+	groups = { pickaxey=1, material_stone=1, deco_block=1, pathfinder_partial = 2, },
 	node_box = {
 		type = "fixed",
 		fixed = {

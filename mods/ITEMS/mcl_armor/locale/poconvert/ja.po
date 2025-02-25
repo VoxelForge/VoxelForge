@@ -47,49 +47,49 @@ msgid "Player isn't online"
 msgstr ""
 
 msgid "Bolt Armor Trim"
-msgstr ""
+msgstr "ネジ止め風の装飾"
 
 msgid "Coast Armor Trim"
-msgstr ""
+msgstr "海洋風の装飾"
 
 msgid "Dune Armor Trim"
-msgstr ""
+msgstr "砂丘風の装飾"
 
 msgid "Eye Armor Trim"
-msgstr ""
+msgstr "エンダーアイ風の装飾"
 
 msgid "Flow Armor Trim"
-msgstr ""
+msgstr "旋風の装飾"
 
 msgid "Rib Armor Trim"
-msgstr ""
+msgstr "あばら模様の装飾"
 
 msgid "Sentry Armor Trim"
-msgstr ""
+msgstr "略奪者風の装飾"
 
 msgid "Silence Armor Trim"
-msgstr ""
+msgstr "静寂の装飾"
 
 msgid "Snout Armor Trim"
-msgstr ""
+msgstr "ブタの鼻風の装飾"
 
 msgid "Spire Armor Trim"
-msgstr ""
+msgstr "尖塔風の装飾"
 
 msgid "Tide Armor Trim"
-msgstr ""
+msgstr "潮流風の装飾"
 
 msgid "Vex Armor Trim"
-msgstr ""
+msgstr "ヴェックス風の装飾"
 
 msgid "Ward Armor Trim"
-msgstr ""
+msgstr "監獄風の装飾"
 
 msgid "Wayfinder Armor Trim"
-msgstr ""
+msgstr "先駆者風の装飾"
 
 msgid "Wild Armor Trim"
-msgstr ""
+msgstr "大自然風の装飾"
 
 msgid "Golden Helmet"
 msgstr "金のヘルメット"
@@ -209,11 +209,11 @@ msgid "Applies to:"
 msgstr ""
 
 msgid "Armor"
-msgstr ""
+msgstr "防具"
 
 msgid "Ingredients:"
-msgstr ""
+msgstr "素材："
 
 msgid "Ingot & Crystals"
-msgstr ""
+msgstr "インゴット・結晶"
 

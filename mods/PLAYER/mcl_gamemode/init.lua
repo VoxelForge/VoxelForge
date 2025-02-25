@@ -8,6 +8,13 @@ mcl_gamemode = {
 	registered_on_gamemode_change = {}
 }
 
+local gamemode_aliases = {
+	["0"] = "survival",
+	["1"] = "creative",
+	["s"] = "survival",
+	["c"] = "creative",
+}
+
 function mcl_gamemode.register_on_gamemode_change(func)
 	table.insert(mcl_gamemode.registered_on_gamemode_change, func)
 end
@@ -41,7 +48,7 @@ end
 
 minetest.register_chatcommand("gamemode",{
 	params = S("[<gamemode>] [<player>]"),
-	description = S("Change gamemode (survival/creative) for yourself or player"),
+	description = S("Change gamemode (survival/creative/0/1/s/c) for yourself or player"),
 	privs = { server = true },
 	func = function(n,param)
 		local p
@@ -55,9 +62,16 @@ minetest.register_chatcommand("gamemode",{
 		if not p then
 			return false, S("Player not online")
 		end
-		if args[1] and mcl_gamemode.set_gamemode(p, args[1]) == false then
-			return false, S("Failed to set Gamemode @1 for player @2", args[1], p:get_player_name())
+
+		local gm = gamemode_aliases[args[1]] or args[1]
+		if gm and mcl_gamemode.set_gamemode(p, gm) == false then
+			return false, S("Failed to set gamemode @1 for player @2", gm, p:get_player_name())
 		end
+
+		if gm == "survival" and minetest.is_creative_enabled() then
+			return true, S("Player @1 is still in creative mode because world is in creative mode", n)
+		end
+
 		--Result message - show effective game mode
 		return true, S("Gamemode for player @1: @2", n, mcl_gamemode.get_gamemode(p))
 	end

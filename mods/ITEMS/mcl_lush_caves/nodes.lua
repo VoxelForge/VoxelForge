@@ -88,10 +88,8 @@ minetest.register_node("mcl_lush_caves:moss", {
 })
 
 minetest.register_node("mcl_lush_caves:moss_carpet", {
-	description = S("Moss carpet"),
+	description = S("Moss Carpet"),
 	_doc_items_longdesc = S("A moss carpet is a flat variant of the moss block."),
-	_doc_items_entry_name = S("Moss Carpet"),
-	_doc_items_hidden = false,
 	is_ground_content = false,
 	tiles = {"mcl_lush_caves_moss_carpet.png"},
 	wield_image ="mcl_lush_caves_moss_carpet.png",
@@ -230,6 +228,14 @@ minetest.register_node("mcl_lush_caves:rooted_dirt", {
 	sounds = mcl_sounds.node_sound_dirt_defaults(),
 	_mcl_blast_resistance = 0.5,
 	_mcl_hardness = 0.5,
+	_on_bone_meal = function(_, _, _, pos, _)
+		local under = vector.offset(pos, 0, -1, 0)
+		if core.get_node(under).name == "air" then
+			core.swap_node(under, {name = "mcl_lush_caves:hanging_roots"})
+			return true
+		end
+		return false
+	end,
 	_on_hoe_place = function(itemstack, placer, pointed_thing)
 		local rc, no_wear = mcl_farming.cultivate_dirt(itemstack, placer, pointed_thing)
 		if rc then
@@ -258,7 +264,8 @@ minetest.register_craftitem("mcl_lush_caves:glow_berry", {
 		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
 		if rc then return rc end
 
-		if vector.direction(pointed_thing.under, pointed_thing.above).y ~= -1 then
+		if not pointed_thing.under
+			or vector.direction (pointed_thing.under, pointed_thing.above).y ~= -1 then
 			return core.do_item_eat(2, nil, itemstack, placer, pointed_thing)
 		end
 
@@ -288,16 +295,16 @@ local function register_leaves(subname, def)
 	def.palette = ""
 	def.paramtype2 = "none"
 	local d = mcl_trees.generate_leaves_def(
-		"mcl_lush_caves:", subname, def,
+		"mcl_trees:", subname, def,
 		{"mcl_lush_caves:azalea_flowering", "mcl_lush_caves:azalea"}, false, {20, 16, 12, 10})
 	d.leaves_def.groups.biomecolor = nil
 	d.orphan_leaves_def.groups.biomecolor = nil
-	minetest.register_node(d["leaves_id"], d["leaves_def"])
-	minetest.register_node(d["orphan_leaves_id"], d["orphan_leaves_def"])
+	minetest.register_node(":"..d["leaves_id"], d["leaves_def"])
+	minetest.register_node(":"..d["orphan_leaves_id"], d["orphan_leaves_def"])
 end
 
 register_leaves(
-	"azalea_leaves",
+	"leaves_azalea",
 	{
 		description = S("Azalea Leaves"),
 		_doc_items_longdesc = S("Leaves of an Azalea tree"),
@@ -307,7 +314,7 @@ register_leaves(
 )
 
 register_leaves(
-	"azalea_leaves_flowering",
+	"leaves_azalea_flowering",
 	{
 		description = S("Flowering Azalea Leaves"),
 		_doc_items_longdesc = S("The Flowering Leaves of an Azalea tree"),
@@ -316,16 +323,17 @@ register_leaves(
 	}
 )
 
+core.register_alias("mcl_lush_caves:azalea_leaves", "mcl_trees:leaves_azalea")
+core.register_alias("mcl_lush_caves:azalea_leaves_flowering", "mcl_trees:leaves_azalea_flowering")
 
 minetest.register_node("mcl_lush_caves:spore_blossom", {
 	description = S("Spore blossom"),
 	_doc_items_longdesc = S("Spore blossoms are a type of flower found in lush caves."),
 	_doc_items_hidden = false,
+	tiles = {"mcl_lush_caves_spore_blossom.png"},
 	inventory_image = "mcl_lush_caves_spore_blossom.png",
 	wield_image = "mcl_lush_caves_spore_blossom.png",
-	drawtype = "mesh",
-	mesh = "spore_blossom.obj",
-	tiles = {"spore_blossom_base.png", "blank.png", "spore_blossom.png"},
+	drawtype = "plantlike",
 	paramtype = "light",
 	groups = {handy = 1, plant = 1, deco_block = 1},
 	sounds = mcl_sounds.node_sound_dirt_defaults(),
@@ -336,7 +344,6 @@ minetest.register_node("mcl_lush_caves:spore_blossom", {
 	_mcl_blast_resistance = 0.5,
 	_mcl_hardness = 0.5,
 	node_placement_prediction = "",
-	use_texture_alpha = "clip",
 	on_place = mcl_util.generate_on_place_plant_function(function(place_pos)
 		local above = vector.offset(place_pos,0,1,0)
 		local node_above = minetest.get_node_or_nil(above)
@@ -368,7 +375,7 @@ local tpl_azalea = {
 		plant = 1, non_mycelium_plant = 1,
 		dig_by_piston = 1, dig_by_water = 1,
 		flammable = 2, fire_encouragement = 30, fire_flammability = 60,
-		deco_block = 1, _mcl_partial = 2,
+		deco_block = 1, pathfinder_partial = 2, attached_node = 3
 	},
 	sounds = mcl_sounds.node_sound_dirt_defaults(),
 	paramtype = "light",

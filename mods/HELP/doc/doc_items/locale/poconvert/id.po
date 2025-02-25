@@ -127,9 +127,6 @@ msgstr "Tingkat ketangguhan : @1"
 msgid "Range: @1"
 msgstr "Jangkauan : @1"
 
-msgid "Range: 4"
-msgstr "Jangkauan : 4"
-
 msgid "Range: @1 (@2)"
 msgstr "Jangkauan : @1 (@2)"
 

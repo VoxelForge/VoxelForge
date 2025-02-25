@@ -154,7 +154,7 @@ local function play()
 		end
 	end
 
-	minetest.after(600, 1200, play)
+	minetest.after(math.random(600, 1200), play)
 end
 local music_enabled = true
 if music_enabled then
@@ -177,6 +177,64 @@ if music_enabled then
 else
 	minetest.log("action", "[vlf_music] In-game music is deactivated")
 end
+
+minetest.register_chatcommand("music", {
+	params = "[on|off|invert [<player name>]",
+	description = S("Turns music for yourself or another player on or off."),
+	func = function(sender_name, params)
+		local argtable = {}
+		for str in string.gmatch(params, "([^%s]+)") do
+			table.insert(argtable, str)
+		end
+
+		local action = argtable[1]
+		local playername = argtable[2]
+
+		local sender = minetest.get_player_by_name(sender_name)
+		local target_player
+
+		if not action or action == "" then action = "invert" end
+
+		if not playername or playername == "" or sender_name == playername then
+			target_player = sender
+			playername =sender_name
+		elseif not minetest.check_player_privs(sender, "debug") then
+			minetest.chat_send_player(sender_name, S("You need the debug privilege in order to turn ingame music on or off for somebody else!"))
+			return
+		else
+			target_player = minetest.get_player_by_name(playername)
+		end
+
+		if not target_player then
+			minetest.chat_send_player(sender_name, S("Couldn't find player @1!", playername))
+			return
+		end
+
+		local meta = target_player:get_meta()
+		local display_new_state
+
+		if action == "invert" then
+			if not meta:get("vlf_music:disable") then
+				meta:set_int("vlf_music:disable", 1)
+				display_new_state = S("off")
+			else
+				meta:set_string("vlf_music:disable", "")
+				display_new_state = S("on")
+				minetest.after(1, play)
+			end
+		elseif action == "on" then
+			meta:set_string("vlf_music:disable", "")
+			display_new_state = S("on")
+			minetest.after(1, play)
+		else
+			meta:set_int("vlf_music:disable", 1)
+			display_new_state = S("off")
+		end
+
+		stop_music_for_listener_name(playername)
+		minetest.chat_send_player(sender_name, S("Set music for @1 to: @2", playername, display_new_state))
+	end,
+})
 
 minetest.register_chatcommand("music", {
 	params = "[on|off|invert [<player name>]",

@@ -35,7 +35,7 @@ msgid "Dragon Egg"
 msgstr "Sárkánytojás"
 
 msgid "A dragon egg is a decorative item which can be placed."
-msgstr "A Sárkánytojás egy dekorációs célból is elhelyezhető tárgy."
+msgstr "A sárkánytojás egy lehelyezhető dísztárgy."
 
 msgid "End Stone Brick Stairs"
 msgstr "Végkő Téglalépcső"
@@ -98,26 +98,26 @@ msgid "Explosion radius: @1"
 msgstr "Robbanási kör: @1"
 
 msgid "End Crystals are explosive devices. They can be placed on Obsidian or Bedrock. Ignite them by a punch or a hit with an arrow. End Crystals can also be used the spawn the Ender Dragon by placing one at each side of the End Exit Portal."
-msgstr "A végkristályok robbanószerkezetek. Obszidiánra vagy alapkőzetre helyezhetők. Gyújtsd meg őket egy ütéssel vagy egy nyíllal. A végkristályok felhasználhatók az Végzetsárkány megidézéséhez is, ha a Végkijárat minden oldalára helyeznek egyet."
+msgstr "A végkristály egy robbanószerkezet. Obszidiánra vagy alapkőzetre helyezhetők. Gyújtsd be őket egy ütéssel vagy egy nyíllal. A végkristályok felhasználhatók a Végsárkány megidézéséhez is, ehhez a Végkijárat minden oldalára helyezz egyet."
 
 msgid "Place the End Crystal on Obsidian or Bedrock, then punch it or hit it with an arrow to cause an huge and probably deadly explosion. To Spawn the Ender Dragon, place one at each side of the End Exit Portal."
-msgstr "Helyezd a végkristályt obszidiánra vagy alapkőzetre, majd üss rá, vagy lődd meg nyíllal, hogy hatalmas és valószínűleg halálos robbanást okozzon. A Végzetsárkány megidézéséhez helyezz egyet-egyet a Végkijárat minden oldalára."
+msgstr "Helyezd a végkristályt obszidiánra vagy alapkőzetre, majd üss rá, vagy lődd meg nyíllal, hogy hatalmas és valószínűleg halálos robbanást okozzon. A Végsárkány megidézéséhez helyezz egyet-egyet a Végkijárat minden oldalára."
 
 msgid "Eye of Ender"
-msgstr "Végzet Szeme"
+msgstr "Végszem"
 
 msgid "Guides the way to the mysterious End dimension"
 msgstr "Elvezet a titokzatos Vég dimenziójába"
 
 msgid "This item is used to locate End portal shrines in the Overworld and to activate End portals."
-msgstr "Ez az elem a Végkapu szentélyek megkeresésére és a Végkapuk aktiválásához használható a Felvilágban."
+msgstr "Ez a tárgy a Végkapuszentélyek megkeresésére és a Végkapuk aktiválására használható a Felvilágban."
 
 msgid "NOTE: The End dimension is currently incomplete and might change in future versions."
 msgstr "MEGJEGYZÉS: A Vég dimenziója jelenleg nem teljes és változhat a későbbi verziókban."
 
 msgid "Use the attack key to release the eye of ender. It will rise and fly in the horizontal direction of the closest end portal shrine. If you're very close, the eye of ender will take the direct path to the End portal shrine instead. After a few seconds, it stops. It may drop as an item, but there's a 20% chance it shatters."
-msgstr "Használja a támadó billentyűt az Végzet Szemének felszabadításához. Ettől felemelkedik és vízszintes irányban elrepül a legközelebbi Végkapu szentély irányába. Ha nagyon közel vagy, a Végzet Szeme a közvetlen utat választja az Végkapu szentélyhez. Néhány másodperc múlva leáll. Előfordulhat, hogy felvehető tárgyként leesik, de 20% az esélye, hogy összetörik."
+msgstr "Használja a támadóbillentyűt a végszem felbocsátásához. Ettől felemelkedik, és vízszintes irányban elrepül a legközelebbi Végkapuszentély irányába. Ha nagyon közel vagy, a végszem a közvetlenül a végkap szentély irányába fog repülni. Néhány másodperc múlva megáll. Vagy felvehető tárgyként leesik, vagy pedig 20%-os eséllyel összetörik."
 
 msgid "To activate an End portal, eyes of ender need to be placed into each block of an intact End portal frame."
-msgstr "Egy Végkapu aktiválásához a Végzet Szemét be kell helyezni egy sértetlen Végkapu keret minden blokkjába."
+msgstr "A végkapu működésbe hozásához a sértetlen végkapukeret minden blokkjába bele kell helyezni egy végszemet."
 

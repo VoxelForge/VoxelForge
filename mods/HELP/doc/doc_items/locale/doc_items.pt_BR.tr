@@ -38,7 +38,6 @@ This block can be mined by mining tools which match any of the following mining 
 Mining ratings:=Classificações de mineração:
 Toughness level: @1=
 Range: @1=Alcance: @1
-Range: 4=Range: 4
 # Range: <Hand> (<Range>)
 Range: @1 (@2)=Alcance: @1 (@2)
 This tool can serve as a smelting fuel with a burning time of @1.=Essa ferramenta pode servir como combustível de fundição com um tempo de queima de @1.

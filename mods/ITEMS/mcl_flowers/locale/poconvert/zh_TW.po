@@ -53,13 +53,13 @@ msgid "Blue Orchid"
 msgstr "藍色蝴蝶蘭"
 
 msgid "Wither Rose"
-msgstr ""
+msgstr "凋零玫瑰"
 
 msgid "Lily of the Valley"
-msgstr ""
+msgstr "鈴蘭"
 
 msgid "Cornflower"
-msgstr ""
+msgstr "矢車菊"
 
 msgid "Peony"
 msgstr "牡丹花"

@@ -59,7 +59,10 @@ msgid "Advancements"
 msgstr "進捗"
 
 msgid "Switch stack size"
-msgstr ""
+msgstr "スタックサイズを変更します"
+
+msgid "@1 / @2"
+msgstr "@1 / @2"
 
 msgid "Recipe book"
 msgstr "レシピ本"
@@ -80,5 +83,5 @@ msgid "Fill Craft Grid"
 msgstr ""
 
 msgid "Achievements"
-msgstr ""
+msgstr "実績"
 

@@ -113,7 +113,7 @@ end)
 minetest.register_on_leaveplayer(function(player)
 	local name = player:get_player_name()
 	mcl_bossbars.huds[name] = nil
-	for _, bar in pairs(mcl_bossbars.bars[name]) do
+	for _, bar in pairs(mcl_bossbars.bars[name] or {}) do
 		if bar.id then
 			mcl_bossbars.static[bar.id] = nil
 		end

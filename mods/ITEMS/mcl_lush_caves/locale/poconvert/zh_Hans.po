@@ -25,17 +25,35 @@ msgstr "苔藓"
 msgid "Moss is a green block found in lush caves"
 msgstr "苔藓是一种在繁茂洞穴中能找到的绿色方块"
 
-msgid "Moss carpet"
+msgid "Moss Carpet"
 msgstr "苔藓地毯"
+
+msgid "A moss carpet is a flat variant of the moss block."
+msgstr "苔藓地毯是苔藓块的扁平变体。"
 
 msgid "Hanging roots"
 msgstr "垂根"
 
+msgid "Hanging roots are a decorative block found hanging from rooted dirt in lush caves."
+msgstr "垂根是一种装饰块，悬挂在郁郁葱葱的洞穴根部泥土上。"
+
 msgid "Cave vines"
 msgstr "洞穴藤蔓"
 
+msgid "Cave vines are decorative blocks growing from the ceiling of lush caves."
+msgstr "洞穴藤蔓是从郁郁葱葱的洞穴天花板上生长出来的装饰块。"
+
+msgid "Lit Cave vines"
+msgstr "发光洞穴藤蔓"
+
+msgid "Lit cave vines are light emitting decorative blocks growing from the ceiling of lush caves."
+msgstr "从郁郁葱葱的洞穴天花板上生长出来的发光装饰块。"
+
 msgid "Rooted dirt"
 msgstr "扎根土"
+
+msgid "Rooted dirt is type of dirt found in lush caves."
+msgstr "在茂密的洞穴中发现的一种土。"
 
 msgid "Glow berry"
 msgstr "发光浆果"
@@ -57,6 +75,9 @@ msgstr "一棵杜鹃树的开花叶子"
 
 msgid "Spore blossom"
 msgstr "孢子花"
+
+msgid "Spore blossoms are a type of flower found in lush caves."
+msgstr "在茂密的洞穴中发现的一种花。"
 
 msgid "Needs soil and bone meal to grow"
 msgstr "需要土壤和骨粉才能生长"

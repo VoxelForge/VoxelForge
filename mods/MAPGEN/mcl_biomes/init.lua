@@ -2837,7 +2837,7 @@ local function register_dimension_ores()
 		ore_type        = "stratum",
 		ore             = "mcl_end:end_stone",
 		wherein         = {"air"},
-		biomes          = {"EndSmallIslands","Endborder"},
+		biomes          = {"EndSmallIslands","EndBorder"},
 		y_min           = mcl_vars.mg_end_min+64,
 		y_max           = mcl_vars.mg_end_min+80,
 		clust_num_ores  = 3375,
@@ -4935,7 +4935,6 @@ local function register_decorations()
 		y_min = 1,
 		y_max = mcl_vars.mg_overworld_max,
 	})
-
 
 	-- Grasses and ferns
 	local grass_forest = {"Plains", "Taiga", "Forest", "FlowerForest", "BirchForest", "BirchForestM", "RoofedForest", "Swampland" }

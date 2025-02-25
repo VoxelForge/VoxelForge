@@ -61,6 +61,9 @@ msgstr "Progresos"
 msgid "Switch stack size"
 msgstr "Cambiar la cantidad de ítems por pila"
 
+msgid "@1 / @2"
+msgstr "@1 / @2"
+
 msgid "Recipe book"
 msgstr "Libro de recetas"
 
@@ -71,13 +74,13 @@ msgid "Select player skin"
 msgstr "Seleccionar aspecto del jugador"
 
 msgid "Crafting table out of range!"
-msgstr ""
+msgstr "¡Mesa de trabajo fuera de alcance!"
 
 msgid "Crafting"
-msgstr "Crafteo"
+msgstr "Fabricación"
 
 msgid "Fill Craft Grid"
-msgstr "Llenar la cuadrícula de crafteo"
+msgstr "Llenar la cuadrícula de fabricación"
 
 msgid "Achievements"
 msgstr "Logros"

@@ -20,7 +20,7 @@ msgid "This is a block of snow thats extra fluffy, this means players can sink i
 msgstr "Este es un bloque de nieve que es extra suave, esto significa que los jugadores pueden hundirse en él"
 
 msgid "Powder Snow Bucket"
-msgstr ""
+msgstr "Cubo con nieve en polvo"
 
 msgid "This bucket is filled powder snow"
 msgstr "Este cubo está lleno de nieve en polvo"

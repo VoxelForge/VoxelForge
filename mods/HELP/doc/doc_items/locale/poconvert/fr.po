@@ -127,9 +127,6 @@ msgstr "Niveau de robustesse : @1"
 msgid "Range: @1"
 msgstr "Portée : @1"
 
-msgid "Range: 4"
-msgstr "Portée : 4"
-
 msgid "Range: @1 (@2)"
 msgstr "Portée : @1 (@2)"
 

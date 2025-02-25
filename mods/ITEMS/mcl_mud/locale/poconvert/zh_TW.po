@@ -20,13 +20,13 @@ msgid "Mud is a decorative block that generates in mangrove swamps. Mud can also
 msgstr ""
 
 msgid "Packed Mud"
-msgstr ""
+msgstr "泥坯"
 
 msgid "Packed mud is a decorative block used to craft mud bricks."
 msgstr ""
 
 msgid "Mud Bricks"
-msgstr ""
+msgstr "泥磚"
 
 msgid "Decorative block crafted from packed mud."
 msgstr ""

@@ -20,7 +20,7 @@ msgid "Advanced information which may be nice to know, but is not crucial to gam
 msgstr ""
 
 msgid "Creative Mode"
-msgstr ""
+msgstr "創造模式"
 
 msgid "Enabling Creative Mode in MineClonia applies the following changes:"
 msgstr ""
@@ -56,7 +56,7 @@ msgid "Damage is not affected by Creative Mode, it needs to be disabled separate
 msgstr ""
 
 msgid "Console"
-msgstr ""
+msgstr "指令行"
 
 msgid "With [F10] you can open and close the console. The main use of the console is to show the chat log and enter chat messages or server commands."
 msgstr ""
@@ -368,7 +368,7 @@ msgid "A generic Internet Relay Chat channel for everything related to Luanti wh
 msgstr ""
 
 msgid "Basics"
-msgstr ""
+msgstr "基礎"
 
 msgid "Everything you need to know to get started with playing"
 msgstr ""

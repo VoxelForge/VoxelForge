@@ -26,10 +26,9 @@ Hold it in your hand and rightclick to eat it. Place it on top of farmland to pl
 Golden Carrot=Zanahoria dorada
 A golden carrot is a precious food item which can be eaten. It is really, really filling!=Una zanahoria dorada es un alimento precioso que se puede comer. ¡Es realmente, realmente abundante!
 Turns block into farmland=Convierte bloques en tierra de cultivo
-Hoes are essential tools for growing crops. They are used to create farmland in order to plant seeds on it. Hoes can also be used as very weak weapons in a pinch.=Las azadas son herramientas esenciales para el cultivo. Se utilizan para crear tierras de cultivo para plantar semillas en él. Las azadas también se pueden usar como armas muy débiles en caso de apuro.
+Hoes are essential tools for growing crops. They are used to create farmland in order to plant seeds on it. Hoes can also be used as very weak weapons in a pinch.=Las azadas son herramientas esenciales para cultivar cultivos. Se utilizan para crear tierra de cultivo para plantar semillas en ella. Las azadas también se pueden utilizar como armas muy débiles en caso de necesidad.
 Use the hoe on a cultivatable block (by rightclicking it) to turn it into farmland. Dirt, grass blocks and grass paths are cultivatable blocks. Using a hoe on coarse dirt turns it into dirt.=Use la azada en un bloque cultivable (al hacer clic derecho) para convertirlo en tierras de cultivo. La tierra, los bloques de hierba y los caminos de hierba son bloques cultivables. Usar una azada en tierra gruesa la convierte en tierra.
 Wood Hoe=Azada de madera
-Uses: @1=Usos: @1
 Stone Hoe=Azada de piedra
 Iron Hoe=Azada de hierro
 Golden Hoe=Azada de oro

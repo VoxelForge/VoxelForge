@@ -17,61 +17,61 @@ msgid "Empty Bucket"
 msgstr "空桶"
 
 msgid "A bucket can be used to collect and release liquids."
-msgstr "桶可以用來收集和倒出液體。"
+msgstr "用桶可以收集和倒出液體。"
 
 msgid "Punch a liquid source to collect it. You can then use the filled bucket to place the liquid somewhere else."
-msgstr "擊打一個液體源頭來收集它。然後你可以用裝滿的桶把液體放在其他地方。"
+msgstr "拿著空桶對著擊液體源頭使用，就可以收集它。使用裝滿的桶可以倒出液體，創造源頭。"
 
 msgid "Collects liquids"
-msgstr "攜帶流體"
+msgstr "收集流體"
 
 msgid "Bucket of Axolotl"
-msgstr ""
+msgstr "活蠑螈"
 
 msgid "Bucket of Cod"
-msgstr ""
+msgstr "活鱈魚"
 
 msgid "Bucket of Salmon"
-msgstr ""
+msgstr "活三文魚"
 
 msgid "Bucket of Tropical Fish"
-msgstr ""
+msgstr "活熱帶魚"
 
 msgid "Place it to empty the bucket and place a Cod. Obtain by right clicking on a Cod with a bucket of water."
-msgstr ""
+msgstr "使用這個桶可以將其倒空，放出水和鱈魚。用桶右按水中的鱈魚可以獲得此桶。"
 
 msgid "Place it to empty the bucket and place a Salmon. Obtain by right clicking on a Salmon with a bucket of water."
-msgstr ""
+msgstr "使用這個桶可以將其倒空，放出水和三文魚。用水桶右按水中的三文魚可以獲得此桶。"
 
 msgid "Place it to empty the bucket and place a Tropical Fish. Obtain by right clicking on a Tropical Fish with a bucket of water."
-msgstr ""
+msgstr "使用這個桶可以將其倒空，放出水和熱帶魚。用水桶右按水中的熱帶魚可以獲得此桶。"
 
 msgid "Place it to empty the bucket and place an Axolotl. Obtain by right clicking on an Axolotl with a bucket of water."
-msgstr ""
+msgstr "使用這個桶可以將其倒空，放出水和蠑螈。用桶右按水中的蠑螈可以獲得此桶。"
 
 msgid "Places a water source and a Cod."
-msgstr ""
+msgstr "放置一處水源和一尾鱈魚。"
 
 msgid "Places a water source and a Salmon."
-msgstr ""
+msgstr "放置一處水源和一尾三文魚。"
 
 msgid "Places a water source and a Tropical Fish."
-msgstr ""
+msgstr "放置一處水源和一尾熱帶魚。"
 
 msgid "Places a water source and an Axolotl."
-msgstr ""
+msgstr "放置一處水源和一尾蠑螈。"
 
 msgid "This bucket is filled with water and a Cod."
-msgstr ""
+msgstr "這個桶盛著水和一尾鱈魚。"
 
 msgid "This bucket is filled with water and a Salmon."
-msgstr ""
+msgstr "這個桶盛著水和一尾三文魚。"
 
 msgid "This bucket is filled with water and a Tropical Fish."
-msgstr ""
+msgstr "這個桶盛著水和一尾熱帶魚。"
 
 msgid "This bucket is filled with water and an Axolotl."
-msgstr ""
+msgstr "這個桶盛著水和一尾蠑螈。"
 
 msgid "Lava Bucket"
 msgstr "熔岩桶"

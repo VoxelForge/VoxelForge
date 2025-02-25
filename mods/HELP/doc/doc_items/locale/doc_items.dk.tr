@@ -38,7 +38,6 @@ This block can be mined by mining tools which match any of the following mining 
 Mining ratings:=Udvindelsesvurdering
 Toughness level: @1=Hårdhedsgrad: @1
 Range: @1=Rækkevidde: @1
-Range: 4=Rækkevidde: 4
 # Range: <Hand> (<Range>)
 Range: @1 (@2)=Rækkevidde: @1 (@2)
 This tool can serve as a smelting fuel with a burning time of @1.=Dette værktøj virker som brændstof til at smelte og har en brændetid på @1.

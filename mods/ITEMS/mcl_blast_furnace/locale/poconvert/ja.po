@@ -38,5 +38,5 @@ msgid "Use the recipe book to see what ores you can smelt, what you can use as f
 msgstr ""
 
 msgid "Burning Blast Furnace"
-msgstr ""
+msgstr "溶鉱炉 燃焼中"
 

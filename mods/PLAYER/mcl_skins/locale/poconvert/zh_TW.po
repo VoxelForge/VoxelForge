@@ -17,31 +17,31 @@ msgid "Templates"
 msgstr "範本"
 
 msgid "Arm size"
-msgstr ""
+msgstr "手臂大小"
 
 msgid "Bases"
 msgstr ""
 
 msgid "Footwears"
-msgstr ""
+msgstr "鞋子"
 
 msgid "Eyes"
-msgstr ""
+msgstr "眼睛"
 
 msgid "Mouths"
-msgstr ""
+msgstr "嘴巴"
 
 msgid "Bottoms"
-msgstr ""
+msgstr "下身"
 
 msgid "Tops"
-msgstr ""
+msgstr "上身"
 
 msgid "Hairs"
-msgstr ""
+msgstr "頭髮"
 
 msgid "Headwears"
-msgstr ""
+msgstr "頭飾"
 
 msgid "Skins"
 msgstr ""

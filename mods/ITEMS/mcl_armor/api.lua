@@ -54,6 +54,10 @@ function mcl_armor.equip(itemstack, obj, swap)
 	if element then
 		local old_stack = inv:get_stack("armor", element.index)
 
+		if mcl_enchanting.has_enchantment(old_stack, "curse_of_binding") then
+			return itemstack
+		end
+
 		if swap or old_stack:is_empty() then
 			local new_stack
 

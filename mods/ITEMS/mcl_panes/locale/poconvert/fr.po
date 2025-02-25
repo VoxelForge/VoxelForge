@@ -31,51 +31,6 @@ msgstr "Les barreaux de fer se connectent parfaitement à leurs voisins lorsque 
 msgid "Glass Pane"
 msgstr "Vitre"
 
-msgid "Black Stained Glass Pane"
-msgstr "Vitre noire"
-
-msgid "Blue Stained Glass Pane"
-msgstr "Vitre bleue"
-
-msgid "Brown Stained Glass Pane"
-msgstr "Vitre marron"
-
-msgid "Cyan Stained Glass Pane"
-msgstr "Vitre cyan"
-
-msgid "Green Stained Glass Pane"
-msgstr "Vitre verte"
-
-msgid "Grey Stained Glass Pane"
-msgstr "Vitre grise"
-
-msgid "Light Blue Stained Glass Pane"
-msgstr "Vitre bleu clair"
-
-msgid "Light Grey Stained Glass Pane"
-msgstr "Vitre gris clair"
-
-msgid "Lime Stained Glass Pane"
-msgstr "Vitre vert clair"
-
-msgid "Magenta Stained Glass Pane"
-msgstr "Vitre magenta"
-
-msgid "Orange Stained Glass Pane"
-msgstr "Vitre orange"
-
-msgid "Pink Stained Glass Pane"
-msgstr "Vitre rose"
-
-msgid "Purple Stained Glass Pane"
-msgstr "Vitre violette"
-
-msgid "Red Stained Glass Pane"
-msgstr "Vitre rouge"
-
-msgid "White Stained Glass Pane"
-msgstr "Vitre blanche"
-
-msgid "Yellow Stained Glass Pane"
-msgstr "Vitre jaune"
+msgid "@1 Glass Pane"
+msgstr ""
 

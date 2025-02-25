@@ -220,12 +220,23 @@ local function get_player_data(name, init)
 	return player_data[name]
 end
 
+local function get_item_recipes(item_name)
+	local recipes = minetest.get_all_craft_recipes(item_name) or {}
+	if custom_crafts[item_name] then
+		for _, v in pairs(custom_crafts[item_name]) do
+			recipes[#recipes + 1] = v
+		end
+	end
+
+	return recipes
+end
+
 local function get_filtered_items(player)
 	local items, c = {}, 0
 
 	for i = 1, #init_items do
 		local item = init_items[i]
-		local recipes = minetest.get_all_craft_recipes(item)
+		local recipes = get_item_recipes(item)
 		local usages = usages_cache[item]
 
 		if recipes and #apply_recipe_filters(recipes, player) > 0 or
@@ -240,7 +251,7 @@ end
 
 local function get_recipes(item, data, player)
 	item = minetest.registered_aliases[item] or item
-	local recipes = minetest.get_all_craft_recipes(item)
+	local recipes = get_item_recipes(item)
 	local usages = usages_cache[item]
 
 	if recipes then
@@ -521,7 +532,7 @@ local function get_recipe_fs(data, iY, player)
 		local has_table = mcl_crafting_table.has_crafting_table(player)
 		local width = has_table and 3 or 2
 		local height = has_table and 3 or 2
-		if mcl_inventory.get_recipe_groups(player, recipe, width, height) then
+		if recipe.type == "normal" and mcl_inventory.get_recipe_groups(player, recipe, width, height) then
 			fs[#fs + 1] = string.format("image_button[%f,%f;%f,%f;%s;%s_inv;%s]",
 				output_X + 2.7,
 				iY + 2.2,
@@ -726,17 +737,6 @@ local function reset_data(data)
 	data.items       = data.items_raw
 end
 
-local function get_item_recipes(item_name)
-	local recipes = minetest.get_all_craft_recipes(item_name) or {}
-	if custom_crafts[item_name] then
-		for _, v in pairs(custom_crafts[item_name]) do
-			recipes[#recipes + 1] = v
-		end
-	end
-
-	return recipes
-end
-
 local function get_init_items()
 	local recipes
 	local used_items
@@ -761,7 +761,7 @@ local function get_init_items()
 								usages_cache[ingredient] = usages_cache[ingredient] or {}
 								table.insert(usages_cache[ingredient], recipe)
 							else
-								minetest.log("warning", S("Invalid crafting ingredient: \"@1\" (dosent exist)", ingredient))
+								minetest.log("warning", "[mcl_craftguide] ingredient \"" .. ingredient .. "\" doesn't exist")
 							end
 						end
 					end
@@ -1004,9 +1004,9 @@ if progressive_mode then
 		return changed
 	end
 
-	local function recipe_unlocked(recipe, progress)
+	local function recipe_unlocked(recipe, progress, show_all)
 		for _, item in pairs(recipe.items) do
-			if not ((minetest.registered_items[item] or group_cache[item]) and progress[item]) then
+			if not ((minetest.registered_items[item] or group_cache[item]) and (show_all or progress[item])) then
 				return
 			end
 		end
@@ -1015,12 +1015,13 @@ if progressive_mode then
 	end
 
 	local function progressive_filter(recipes, player)
+		local show_all = minetest.is_creative_enabled(player:get_player_name())
 		local progress = get_progress(player)
 
 		local filtered, c = {}, 0
 		for i = 1, #recipes do
 			local recipe = recipes[i]
-			if recipe_unlocked(recipe, progress) then
+			if recipe_unlocked(recipe, progress, show_all) then
 				c = c + 1
 				filtered[c] = recipe
 			end
@@ -1065,7 +1066,6 @@ else
 		player_data[name] = nil
 	end)
 
-
 	if strict_mode then
 		local function recipe_unlocked(recipe)
 			for _, item in pairs(recipe.items) do
@@ -1101,7 +1101,7 @@ function mcl_craftguide.show(name)
 		data.items_raw = get_filtered_items(player)
 		search(data)
 	end
-	minetest.show_formspec(name, "mcl_craftguide", make_formspec(name))
+	show_fs(player, name)
 end
 
 doc.sub.items.register_factoid(nil, "groups", function(_, def)

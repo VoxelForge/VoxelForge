@@ -202,9 +202,6 @@ msgstr "Bayi Strider"
 msgid "Tropical Fish"
 msgstr "Ikan Tropis"
 
-msgid "Tropical fish"
-msgstr "Ikan tropis"
-
 msgid "Vex"
 msgstr ""
 

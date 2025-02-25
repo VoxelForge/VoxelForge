@@ -14,16 +14,16 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Redstone Repeater"
-msgstr ""
+msgstr "紅石中繼器"
 
 msgid "Redstone Repeater (Delay @1)"
-msgstr ""
+msgstr "紅石中繼器（延遲 @1）"
 
 msgid "Transmits redstone power only in one direction"
-msgstr ""
+msgstr "單向傳遞紅石能量"
 
 msgid "Delays signal"
-msgstr ""
+msgstr "延遲訊號"
 
 msgid "Output locks when getting active redstone repeater signal from the side"
 msgstr ""
@@ -38,11 +38,11 @@ msgid "Redstone repeaters are versatile redstone components with multiple purpos
 msgstr ""
 
 msgid "Redstone Repeater (Delay @1, Powered)"
-msgstr ""
+msgstr "紅石中繼器（延遲 @1、充能）"
 
 msgid "Redstone Repeater (Locked)"
-msgstr ""
+msgstr "紅石中繼器（閉鎖）"
 
 msgid "Redstone Repeater (Locked, Powered)"
-msgstr ""
+msgstr "紅石中繼器（充能、閉鎖）"
 

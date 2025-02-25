@@ -200,6 +200,11 @@ function mcl_serverplayer.init_player (client_state, player)
 		mcl_serverplayer.send_register_attribute_modifier (player, modifier)
 	end
 	mcl_potions.send_effects_to_client (player)
+	mcl_serverplayer.update_vitals (player)
+
+	if client_state.proto >= 1 then
+		mcl_shields.set_blocking (player, 0)
+	end
 end
 
 function mcl_serverplayer.sprinting_locally (player)
@@ -684,7 +689,8 @@ function mcl_serverplayer.override_pose (player, poseid)
 end
 
 function mcl_serverplayer.handle_blocking (player, blocking)
-	if mcl_serverplayer.is_csm_capable (player) then
+	if mcl_serverplayer.is_csm_capable (player)
+		and not mcl_serverplayer.is_csm_at_least (player, 1) then
 		mcl_serverplayer.send_shieldctrl (player, blocking)
 	end
 end
@@ -781,3 +787,28 @@ mcl_gamemode.register_on_gamemode_change (function (player, _, gamemode)
 		})
 	end
 end)
+
+------------------------------------------------------------------------
+-- Player vitals.
+------------------------------------------------------------------------
+
+function mcl_serverplayer.update_vitals (player)
+	if mcl_serverplayer.is_csm_at_least (player, 1) then
+		local hunger = mcl_hunger.get_hunger (player)
+		local saturation = math.floor (mcl_hunger.get_saturation (player))
+		local health = mcl_damage.get_hp (player)
+		local state = mcl_serverplayer.client_states[player]
+
+		if state.last_hunger ~= hunger
+			or state.last_saturation ~= saturation
+			or state.last_health ~= health then
+
+			mcl_serverplayer.send_player_vitals (player, health,
+							hunger,
+							saturation)
+			state.last_hunger = hunger
+			state.last_saturation = saturation
+			state.last_health = health
+		end
+	end
+end

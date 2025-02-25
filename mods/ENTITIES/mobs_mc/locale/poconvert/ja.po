@@ -38,7 +38,7 @@ msgid "Creeper"
 msgstr "クリーパー"
 
 msgid "Charged Creeper"
-msgstr ""
+msgstr "帯電クリーパー"
 
 msgid "Dolphin"
 msgstr "イルカ"
@@ -56,7 +56,7 @@ msgid "Ghast"
 msgstr "ガスト"
 
 msgid "Ghast Fireball"
-msgstr ""
+msgstr "ガストの火の玉"
 
 msgid "Guardian"
 msgstr "ガーディアン"
@@ -65,16 +65,16 @@ msgid "Elder Guardian"
 msgstr "エルダーガーディアン"
 
 msgid "Hoglin"
-msgstr ""
+msgstr "ホグリン"
 
 msgid "Baby Hoglin"
-msgstr ""
+msgstr "子供のホグリン"
 
 msgid "Zoglin"
-msgstr ""
+msgstr "ゾグリン"
 
 msgid "Sneak to dismount"
-msgstr ""
+msgstr "スニークで降りる"
 
 msgid "Horse"
 msgstr "ウマ"
@@ -101,7 +101,7 @@ msgid "Ocelot"
 msgstr "ヤマネコ"
 
 msgid "Cat"
-msgstr ""
+msgstr "ネコ"
 
 msgid "Parrot"
 msgstr "オウム"
@@ -110,16 +110,16 @@ msgid "Pig"
 msgstr "ブタ"
 
 msgid "Piglin"
-msgstr ""
+msgstr "ピグリン"
 
 msgid "Piglin Brute"
-msgstr ""
+msgstr "ピグリンブルート"
 
 msgid "Zombie Piglin"
-msgstr ""
+msgstr "ゾンビピグリン"
 
 msgid "Zombified Piglin"
-msgstr ""
+msgstr "ゾンビ化ピグリン‌"
 
 msgid "Pillager"
 msgstr "ピリジャー"
@@ -155,22 +155,22 @@ msgid "Wither Skeleton"
 msgstr "ウィザースケルトン"
 
 msgid "Slime - big"
-msgstr ""
+msgstr "大型のスライム"
 
 msgid "Slime - small"
-msgstr ""
+msgstr "中型のスライム"
 
 msgid "Slime - tiny"
-msgstr ""
+msgstr "小型のスライム"
 
 msgid "Magma Cube - big"
-msgstr ""
+msgstr "大型のマグマキューブ"
 
 msgid "Magma Cube - small"
-msgstr ""
+msgstr "中型のマグマキューブ"
 
 msgid "Magma Cube - tiny"
-msgstr ""
+msgstr "小型のマグマキューブ"
 
 msgid "Magma Cube"
 msgstr "マグマキューブ"
@@ -191,19 +191,16 @@ msgid "Squid"
 msgstr "イカ"
 
 msgid "Glow Squid"
-msgstr ""
+msgstr "ヒカリイカ"
 
 msgid "Strider"
-msgstr ""
+msgstr "ストライダー"
 
 msgid "Baby Strider"
-msgstr ""
+msgstr "子供のストライダー"
 
 msgid "Tropical Fish"
-msgstr ""
-
-msgid "Tropical fish"
-msgstr "クマノミ"
+msgstr "熱帯魚"
 
 msgid "Vex"
 msgstr "ヴェックス"
@@ -239,34 +236,34 @@ msgid "Librarian"
 msgstr "司書"
 
 msgid "Mason"
-msgstr ""
+msgstr "石工"
 
 msgid "Shepherd"
 msgstr "羊飼い"
 
 msgid "Toolsmith"
-msgstr ""
+msgstr "道具鍛冶"
 
 msgid "Weaponsmith"
-msgstr ""
+msgstr "武器鍛冶"
 
 msgid "Nitwit"
 msgstr "求職者"
 
 msgid "Novice"
-msgstr ""
+msgstr "新米"
 
 msgid "Apprentice"
-msgstr ""
+msgstr "見習い"
 
 msgid "Journeyman"
-msgstr ""
+msgstr "一人前"
 
 msgid "Expert"
-msgstr ""
+msgstr "熟練者"
 
 msgid "Master"
-msgstr ""
+msgstr "達人"
 
 msgid "Evoker"
 msgstr "エヴォーカー"
@@ -281,10 +278,10 @@ msgid "Zombie Villager"
 msgstr "村人ゾンビ"
 
 msgid "Wandering Trader"
-msgstr ""
+msgstr "行商人"
 
 msgid "Trader Llama"
-msgstr ""
+msgstr "商人のラマ"
 
 msgid "Witch"
 msgstr "魔女"
@@ -299,11 +296,11 @@ msgid "Zombie"
 msgstr "ゾンビ"
 
 msgid "Baby Zombie"
-msgstr ""
+msgstr "子供ゾンビ"
 
 msgid "Husk"
 msgstr "ハスク"
 
 msgid "Baby Husk"
-msgstr ""
+msgstr "子供のハスク"
 

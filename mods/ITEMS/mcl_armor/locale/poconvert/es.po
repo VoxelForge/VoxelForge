@@ -47,49 +47,49 @@ msgid "Player isn't online"
 msgstr "La persona no está en línea"
 
 msgid "Bolt Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura de remaches"
 
 msgid "Coast Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura costera"
 
 msgid "Dune Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura de las dunas"
 
 msgid "Eye Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura de ojos"
 
 msgid "Flow Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura de espiral"
 
 msgid "Rib Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura de costillas"
 
 msgid "Sentry Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura de centinela"
 
 msgid "Silence Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura de silencio"
 
 msgid "Snout Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura de hocico"
 
 msgid "Spire Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura de agujas"
 
 msgid "Tide Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura de la marea"
 
 msgid "Vex Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura de vex"
 
 msgid "Ward Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura de warden"
 
 msgid "Wayfinder Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura de buscacaminos"
 
 msgid "Wild Armor Trim"
-msgstr ""
+msgstr "Diseño de armadura salvaje"
 
 msgid "Golden Helmet"
 msgstr "Casco de oro"

@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Sneak-click to remove"
-msgstr "Agachar+clic para remover"
+msgstr "Agacharse+clic para remover"
 
 msgid "Minecart"
 msgstr "Vagoneta"
@@ -32,7 +32,7 @@ msgid "You can place the minecart on rails. Right-click it to enter it. Punch it
 msgstr "Puedes colocar el vagoneta en los rieles. Haga clic derecho para insertarlo. Golpea para que se mueva."
 
 msgid "To obtain the minecart, punch it while holding down the sneak key."
-msgstr "Para obtener el vagoneta, golpéalo mientras mantienes presionada la tecla."
+msgstr "Para obtener la vagoneta, golpéala mientras mantienes presionada la tecla de agacharse."
 
 msgid "If it moves over a powered activator rail, you'll get ejected."
 msgstr "Si se mueve sobre un riel activador activado, te expulsará del vagón."
@@ -53,7 +53,7 @@ msgid "Place it on rails. If you give it some coal, the furnace will start burni
 msgstr "Colóquelo sobre rieles. Si le das un poco de carbón, el horno comenzará a arder durante mucho tiempo y el vagón podrá moverse por sí solo. Golpéalo para que se mueva."
 
 msgid "To obtain the minecart and furnace, punch them while holding down the sneak key."
-msgstr "Para obtener el vagón y el horno, golpéalos mientras mantienes presionada la tecla para agacharte (normalmente es la tecla Shift)."
+msgstr "Para obtener la vagoneta y el horno, golpéalos mientras mantienes presionada la tecla para agacharse."
 
 msgid "Minecart with Command Block"
 msgstr "Vagoneta con bloque de comandos"
@@ -74,7 +74,7 @@ msgid "Place it on rails. Punch it to move it. The TNT is ignited with a flint a
 msgstr "Colóquelo sobre rieles. Golpéalo para moverlo. El TNT se enciende con un mechero o cuando el vagón está sobre un riel activador activado."
 
 msgid "To obtain the minecart and TNT, punch them while holding down the sneak key. You can't do this if the TNT was ignited."
-msgstr "Para obtener el vagón y la TNT, golpéalos mientras mantienes presionada la tecla de agacharte. No puedes hacer esto si ya encendiste la TNT."
+msgstr "Para obtener la vagoneta y la dinamita, golpéalas mientras mantienes presionada la tecla de agacharse. No puedes hacer esto si ya encendiste la dinamita."
 
 msgid "Place them on the ground to build your railway, the rails will automatically connect to each other and will turn into curves, T-junctions, crossings and slopes as needed."
 msgstr "Colóquelos en el suelo para construir su ferrocarril, los rieles se conectarán automáticamente entre sí y se convertirán en curvas, uniones en T, cruces y pendientes según sea necesario."

@@ -402,8 +402,8 @@ mcl_structures.register_structure("powder_snow_trap", {
 -- direction is a multiplier to each block's y offset from the starting position, should be either -1 or 1
 local function generate_dripstone(pos, max_length, direction)
 		-- generating relative to some random sub position of the node, so the dripstone column is more asymetrical (aka natural)
-		local x_offset = math.random(-0.2, 0.2)
-		local z_offset = math.random(-0.2, 0.2)
+		local x_offset = mcl_util.float_random(-0.2, 0.2)
+		local z_offset = mcl_util.float_random(-0.2, 0.2)
 		local r = math.ceil((max_length / 8))
 		-- local r = math.random(2, 4)
 		-- local max_length = r * 5 + math.random(0, 4)
@@ -479,7 +479,7 @@ mcl_structures.register_structure("large_dripstone_stalagtite", {
 			empty_air_length = empty_air_length + 1
 		end
 
-		generate_dripstone(pos, math.min(20, empty_air_length * math.random(0.2, 0.6)), -1)
+		generate_dripstone(pos, math.min(20, empty_air_length * mcl_util.float_random(0.2, 0.6)), -1)
 		return true
 	end
 })
@@ -504,7 +504,7 @@ mcl_structures.register_structure("large_dripstone_stalagmite", {
 			empty_air_length = empty_air_length + 1
 		end
 
-		generate_dripstone(pos, math.min(20, empty_air_length * math.random(0.4, 0.8)), 1)
+		generate_dripstone(pos, math.min(20, empty_air_length * mcl_util.float_random(0.4, 0.8)), 1)
 		return true
 	end
 })
@@ -531,7 +531,7 @@ mcl_structures.register_structure("large_dripstone_column", {
 			empty_air_length = empty_air_length + 1
 		end
 
-		local height_multi = math.random(0.4, 6)
+		local height_multi = mcl_util.float_random(0.4, 6)
 		generate_dripstone(pos, math.min(20, empty_air_length * height_multi), 1)
 		generate_dripstone(vector.offset(pos, 0, empty_air_length, 0), math.min(20, empty_air_length * height_multi), -1)
 		return true

@@ -47,49 +47,49 @@ msgid "Player isn't online"
 msgstr "玩家未上线"
 
 msgid "Bolt Armor Trim"
-msgstr ""
+msgstr "镶铆盔甲纹饰"
 
 msgid "Coast Armor Trim"
-msgstr ""
+msgstr "海岸盔甲纹饰"
 
 msgid "Dune Armor Trim"
-msgstr ""
+msgstr "沙丘盔甲纹饰"
 
 msgid "Eye Armor Trim"
-msgstr ""
+msgstr "眼眸盔甲纹饰"
 
 msgid "Flow Armor Trim"
-msgstr ""
+msgstr "涡流盔甲纹饰"
 
 msgid "Rib Armor Trim"
-msgstr ""
+msgstr "肋骨盔甲纹饰"
 
 msgid "Sentry Armor Trim"
-msgstr ""
+msgstr "哨兵盔甲纹饰"
 
 msgid "Silence Armor Trim"
-msgstr ""
+msgstr "幽静盔甲纹饰"
 
 msgid "Snout Armor Trim"
-msgstr ""
+msgstr "猪鼻盔甲纹饰"
 
 msgid "Spire Armor Trim"
-msgstr ""
+msgstr "尖塔盔甲纹饰"
 
 msgid "Tide Armor Trim"
-msgstr ""
+msgstr "潮汐盔甲纹饰"
 
 msgid "Vex Armor Trim"
-msgstr ""
+msgstr "恼鬼盔甲纹饰"
 
 msgid "Ward Armor Trim"
-msgstr ""
+msgstr "监守盔甲纹饰"
 
 msgid "Wayfinder Armor Trim"
-msgstr ""
+msgstr "向导盔甲纹饰"
 
 msgid "Wild Armor Trim"
-msgstr ""
+msgstr "荒野盔甲纹饰"
 
 msgid "Golden Helmet"
 msgstr "金头盔"

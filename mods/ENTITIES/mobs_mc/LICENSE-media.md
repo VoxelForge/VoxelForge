@@ -162,7 +162,7 @@ Origin of those models:
         * Source: <https://freesound.org/people/kyles/sounds/450848/>
 * [thefilmbakery](https://freesound.org/people/thefilmbakery/) (CC0)
     * `mobs_mc_blaze_hurt.ogg`
-	* Source: <https://freesound.org/people/thefilmbakery/sounds/137836/>
+        * Source: <https://freesound.org/people/thefilmbakery/sounds/137836/>
 * TenPlus1, from `mobs_monster` or `mobs_animal` mod (MIT License)
     * `mobs_fireball.ogg`
     * `mobs_mc_cat_idle.1.ogg`
@@ -310,9 +310,24 @@ Origin of those models:
         * Source: <https://git.minetest.land/epCode/extra_mobs/src/branch/master/sounds>
 * [F.M.Audio](https://freesound.org/people/F.M.Audio)
     * `mobs_mc_zombie_door_break.1.ogg` (CC BY 4.0)
-	* Source: <https://freesound.org/people/F.M.Audio/sounds/547580>
+        * Source: <https://freesound.org/people/F.M.Audio/sounds/547580>
     * `mobs_mc_zombie_door_break.2.ogg` (CC BY 4.0)
         * Source: <https://freesound.org/people/F.M.Audio/sounds/547579>
+* [felix.blume](https://freesound.org/people/felix.blume/)
+    * `mobs_mc_dolphion_*.ogg` (CC0)
+        * Source: <https://freesound.org/people/felix.blume/sounds/408555/>
+* [Department64](https://freesound.org/people/Department64/)
+    * `mobs_mc_ghast_dying.ogg` (CC0)
+        * Derived from: <https://freesound.org/people/Department64/sounds/64011/>
+    * `mobs_mc_ghast_shot.1.ogg` (CC0)
+        * Derived from: <https://freesound.org/people/Department64/sounds/64012/>
+    * `mobs_mc_ghast_shot.2.ogg` (CC0)
+        * Derived from: <https://freesound.org/people/Department64/sounds/64014/>
+    * `mobs_mc_ghast_hurt.1.ogg` (CC0)
+        * Derived from: <https://freesound.org/people/Department64/sounds/64015/>
+    * `mobs_mc_ghast_hurt.2.ogg` (CC0)
+        * Derived from: <https://freesound.org/people/Department64/sounds/64010/>
+    
 
 Note: Many of these sounds have been more or less modified to fit the game.
 

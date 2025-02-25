@@ -114,3 +114,189 @@ function mcl_serverplayer.release_useitem (state, player, usetime, challenge)
 	state.ammo_challenge = challenge
 	mcl_serverplayer.update_ammo (state, player, true)
 end
+
+------------------------------------------------------------------------
+-- Offhand management.
+------------------------------------------------------------------------
+
+minetest.register_on_player_inventory_action (function (player, action, inv, inventory_info)
+	if mcl_serverplayer.is_csm_at_least (player, 1) then
+		if (action == "move"
+			and (inventory_info.from_list == "offhand"
+			     or inventory_info.to_list == "offhand"))
+			or inventory_info.listname == "offhand" then
+			local stack = inv:get_stack ("offhand", 1)
+			mcl_serverplayer.send_offhand_item (player, stack)
+		end
+	end
+end)
+
+------------------------------------------------------------------------
+-- Client-side item placement.
+------------------------------------------------------------------------
+
+
+-- This is a list defining how items should be placed when something
+-- is being pointed at.
+
+minetest.register_on_mods_loaded (function ()
+
+local handshake_item_defs = mcl_serverplayer.handshake_item_defs
+
+for name, item in pairs (minetest.registered_items) do
+	-- The following placement classes exist:
+	--   food
+	--   food_edible_whilst_full
+	--   shield
+	--   bow
+
+	if item._placement_def then
+		handshake_item_defs[name] = item._placement_def
+	elseif item._placement_class then
+		local class = item._placement_class
+
+		if class == "shield" then
+			handshake_item_defs[name] = "shields"
+		end
+	elseif item.groups.can_eat_when_full and item.groups.can_eat_when_full > 0
+		and item.groups.food and item.groups.food > 0 then
+		handshake_item_defs[name] = "magic_victuals"
+	elseif item.groups.eatable and item.groups.food > 0 then
+		if item._mcl_places_plant then
+			handshake_item_defs[name] = "farmable_victuals"
+		else
+			handshake_item_defs[name] = "victuals"
+		end
+	elseif item.groups.crossbow and item.groups.crossbow > 0 then
+		handshake_item_defs[name] = "bows"
+	elseif item.groups.bow and item.groups.bow > 0 then
+		handshake_item_defs[name] = "bows"
+	elseif item.on_place and minetest.registered_nodes[name] then
+		-- Probably a node.  Default to being used on nodes.
+		handshake_item_defs[name] = "node_defaults"
+	elseif rawget (item, "on_secondary_use") then
+		handshake_item_defs[name] = "placeable_item"
+	elseif item.on_place then
+		handshake_item_defs[name] = "placeable_on_any_thing"
+	end
+end
+
+-- The hand.
+local hand = {
+	default = "undefined",
+}
+
+-- Assign "default" to entities and nodes with
+-- right click menus/actions.
+
+for node, def in pairs (minetest.registered_nodes) do
+	if def.on_rightclick
+		or def._configures_formspec
+		or (def.groups.container and def.groups.container > 0) then
+		hand[node] = "default"
+	end
+end
+
+for entity, def in pairs (minetest.registered_entities) do
+	if def.on_rightclick and not def._unplaceable_by_default then
+		hand[entity] = "default"
+	end
+end
+handshake_item_defs["default"] = hand
+handshake_item_defs[""] = nil -- Remove this hand.
+
+-- Nodes.
+
+local node_defaults = {
+}
+
+for node, _ in pairs (minetest.registered_nodes) do
+	node_defaults[node] = "default"
+end
+
+for entity, def in pairs (minetest.registered_entities) do
+	if def.on_rightclick and not def._unplaceable_by_default then
+		node_defaults[entity] = "default"
+	end
+end
+handshake_item_defs["node_defaults"] = node_defaults
+
+-- Placeable items.
+handshake_item_defs["placeable_item"] = {
+	default = "default",
+}
+
+handshake_item_defs["placeable_on_any_thing"] = {
+	inherit = "node_defaults",
+}
+
+local placeable_on_any_thing = handshake_item_defs["placeable_on_any_thing"]
+
+-- Add all entities.
+for entity, def in pairs (minetest.registered_entities) do
+	placeable_on_any_thing[entity] = "default"
+end
+
+local placeable_on_actionable = {
+}
+
+-- Assign "default" to entities and nodes with
+-- right click menus.
+for node, def in pairs (minetest.registered_nodes) do
+	if def.on_rightclick
+		or def._configures_formspec
+		or (def.groups.container and def.groups.container > 0) then
+		placeable_on_actionable[node] = "default"
+	end
+end
+
+for entity, def in pairs (minetest.registered_entities) do
+	if def.on_rightclick and not def._unplaceable_by_default then
+		placeable_on_actionable[entity] = "default"
+	end
+end
+
+handshake_item_defs["placeable_on_actionable"] = placeable_on_actionable
+
+-- Shields.
+local shields = {
+	default = "shield",
+	inherit = "placeable_on_actionable",
+}
+
+handshake_item_defs["shields"] = shields
+
+-- Foods.
+local foods = {
+	default = "food",
+	inherit = "placeable_on_actionable",
+}
+
+handshake_item_defs["victuals"] = foods
+
+-- Magic foods.
+local magic_foods = {
+	default = "food_edible_whilst_full",
+	inherit = "placeable_on_actionable",
+}
+
+handshake_item_defs["magic_victuals"] = magic_foods
+
+-- Foods placeable on farmland.
+local magic_foods = {
+	inherit = "victuals",
+	["mcl_farming:soil"] = "default",
+	["mcl_farming:soil_wet"] = "default",
+}
+
+handshake_item_defs["farmable_victuals"] = magic_foods
+
+-- Bows.
+local bows = {
+	default = "bow",
+	inherit = "placeable_on_actionable",
+}
+
+handshake_item_defs["bows"] = bows
+
+end)

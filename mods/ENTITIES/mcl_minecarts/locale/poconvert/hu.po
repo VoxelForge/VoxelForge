@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Sneak-click to remove"
-msgstr "Guggolj és kattints az eltávolításhoz"
+msgstr "Az eltávolításhoz kattints, miközben nyomod a lopakodást"
 
 msgid "Minecart"
 msgstr "Csille"
@@ -32,13 +32,13 @@ msgid "You can place the minecart on rails. Right-click it to enter it. Punch it
 msgstr "Helyezd a csillét a sínre. Jobb kattintással beszállhatsz. Ütéssel tudod mozgásba hozni."
 
 msgid "To obtain the minecart, punch it while holding down the sneak key."
-msgstr "A csille felvételéhez üss rá miközben nyomod a guggolás gombot."
+msgstr "A csille felvételéhez üss rá, miközben nyomod a lopakodás gombot."
 
 msgid "If it moves over a powered activator rail, you'll get ejected."
 msgstr "Ha rágördül egy aktiváló sínre, akkor kirepülsz belőle."
 
 msgid "Sneak to dismount"
-msgstr "Guggolj, hogy leszereld"
+msgstr "Lopakodásgombbal szállhatsz ki"
 
 msgid "Minecart with Chest"
 msgstr "Tárolócsille"
@@ -53,7 +53,7 @@ msgid "Place it on rails. If you give it some coal, the furnace will start burni
 msgstr "Helyezd sínre. Ha adsz neki némi szenet, a tűztér elkezd égni és a csille hosszú időn keresztül magától fog haladni. Üss rá, hogy elinduljon."
 
 msgid "To obtain the minecart and furnace, punch them while holding down the sneak key."
-msgstr "A kemencés csille felvételéhez üss rá miközben nyomod a guggolás gombot."
+msgstr "A kemencés csille felvételéhez üss rá, miközben nyomod a lopakodás gombot."
 
 msgid "Minecart with Command Block"
 msgstr "Parancsblokkos csille"
@@ -71,10 +71,10 @@ msgid "A minecart with TNT is an explosive vehicle that travels on rail."
 msgstr "A TNT csille egy sínen közlekedő robbantható jármű."
 
 msgid "Place it on rails. Punch it to move it. The TNT is ignited with a flint and steel or when the minecart is on an powered activator rail."
-msgstr "Helyezd sínblokkra. Üss rá, hogy elinduljon. A TNT-t kovakővel és acéllal vagy aktiváló sínnel tudod begyújtani."
+msgstr "Helyezd rá egy sínre. Üsd meg, hogy mozgásba hozd. A TNT-t tűzszerszámmal tudod begyújtani, vagy úgy, hogy a csille jelet kibocsátó aktiválósínre kerül."
 
 msgid "To obtain the minecart and TNT, punch them while holding down the sneak key. You can't do this if the TNT was ignited."
-msgstr "A TNT csille felvételéhez üss rá miközben nyomod a guggolás gombot. Nem tudod felvenni, ha a TNT-t már begyulladt."
+msgstr "A TNT-s csille felvételéhez üss rá, miközben nyomod a lopakodás gombot. Nem tudod iyen módon felvenni, ha a TNT már begyulladt."
 
 msgid "Place them on the ground to build your railway, the rails will automatically connect to each other and will turn into curves, T-junctions, crossings and slopes as needed."
 msgstr "Helyezd a földre a vasút megépítéséhez. A sínek automatikusan csatlakoznak egymáshoz és szükség szerint ívekké, T-elágazásokká, kereszteződésekké és lejtőssé válnak."

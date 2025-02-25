@@ -23,7 +23,7 @@ msgid "Creative Mode"
 msgstr "Mode Créatif"
 
 msgid "Enabling Creative Mode in MineClonia applies the following changes:"
-msgstr ""
+msgstr "L'activation du mode créatif dans MineClonia entraîne les modifications suivantes :"
 
 msgid "• You keep the things you've placed"
 msgstr "• Vous gardez les choses que vous avez placées"
@@ -1373,13 +1373,13 @@ msgid "Technical terms:"
 msgstr "Termes techniques :"
 
 msgid "• Luanti: This game engine"
-msgstr ""
+msgstr "• Luanti : Ce moteur de jeu"
 
 msgid "• Minetest Game: A game for Luanti by the Minetest developers"
-msgstr ""
+msgstr "• Minetest Game : Un jeu pour Luanti par les développeurs de Minetest"
 
 msgid "• Game: A complete playing experience to be used in Luanti; such as a game or sandbox or similar"
-msgstr ""
+msgstr "• Jeu : Une expérience complète de jeu à utiliser dans Luanti, tel qu'un jeu bac à sable ou similaire"
 
 msgid "• Mod: A single subsystem which adds or modifies functionality; is the basic building block of games and can be used to further enhance or modify them"
 msgstr "• Mod : un sous-système unique qui ajoute ou modifie des fonctionnalités ; est le bloc de construction de base des jeux et peut être utilisé pour les améliorer ou les modifier davantage"

@@ -19,12 +19,6 @@ msgstr ""
 msgid "To strip bark from trunks and hyphae, use the ax by right-clicking on them. To reduce an oxidation stage from a block made of copper or remove wax from waxed variants, right-click on them. Doors and trapdoors also require you to hold down the sneak key while using the axe."
 msgstr ""
 
-msgid "Hoes are essential tools for growing crops. They are used to create farmland in order to plant seeds on it. Hoes can also be used as very weak weapons in a pinch."
-msgstr ""
-
-msgid "Use the hoe on a cultivatable block (by rightclicking it) to turn it into farmland. Dirt, grass blocks and grass paths are cultivatable blocks. Using a hoe on coarse dirt turns it into dirt."
-msgstr ""
-
 msgid "Pickaxes are mining tools to mine hard blocks, such as stone. A pickaxe can also be used as weapon, but it is rather inefficient."
 msgstr "鎬是開採硬方塊的工具，如石頭。鎬也可以作為武器使用，但它的效率很低。"
 
@@ -53,10 +47,10 @@ msgid "The mace is a slow melee weapon that deals incredible damage. “dig” k
 msgstr ""
 
 msgid "Heavy Core"
-msgstr ""
+msgstr "沉重核心"
 
 msgid "Mace"
-msgstr ""
+msgstr "重錘"
 
 msgid "Wooden Pickaxe"
 msgstr "木鎬"
@@ -119,14 +113,14 @@ msgid "Diamond Axe"
 msgstr "鑽石斧"
 
 msgid "Netherite Pickaxe"
-msgstr ""
+msgstr "獄髓鎬"
 
 msgid "Netherite Shovel"
-msgstr ""
+msgstr "獄髓鏟"
 
 msgid "Netherite Sword"
-msgstr ""
+msgstr "獄髓劍"
 
 msgid "Netherite Axe"
-msgstr ""
+msgstr "獄髓斧"
 

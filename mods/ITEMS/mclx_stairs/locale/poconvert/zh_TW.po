@@ -17,254 +17,254 @@ msgid "Lapis Lazuli Stairs"
 msgstr "青金石階梯"
 
 msgid "Lapis Lazuli Slab"
-msgstr ""
+msgstr "青金石台階"
 
 msgid "Gold Stairs"
-msgstr ""
+msgstr "金階梯"
 
 msgid "Gold Slab"
-msgstr ""
+msgstr "金台階"
 
 msgid "Iron Stairs"
-msgstr ""
+msgstr "鐵階梯"
 
 msgid "Iron Slab"
-msgstr ""
+msgstr "鐵台階"
 
 msgid "Cracked Stone Brick Stairs"
-msgstr ""
+msgstr "裂紋石磚階梯"
 
 msgid "Cracked Stone Brick Slab"
-msgstr ""
+msgstr "裂紋石磚台階"
 
 msgid "Cracked Deepslate Brick Stairs"
-msgstr ""
+msgstr "裂紋深板岩磚階梯"
 
 msgid "Cracked Deepslate Brick Slab"
-msgstr ""
+msgstr "裂紋深板岩磚台階"
 
 msgid "Cracked Deepslate Tile Stairs"
-msgstr ""
+msgstr "裂紋深板岩磚瓦階梯"
 
 msgid "Cracked Deepslate Tile Slab"
-msgstr ""
+msgstr "裂紋深板岩磚瓦台階"
 
 msgid "End Stone Stairs"
-msgstr ""
+msgstr "終界石階梯"
 
 msgid "End Stone Slab"
-msgstr ""
+msgstr "終界石台階"
 
 msgid "Smooth Stone Stairs"
-msgstr ""
+msgstr "平滑石階梯"
 
 msgid "Terracotta Stairs"
-msgstr ""
+msgstr "陶土階梯"
 
 msgid "Terracotta Slab"
-msgstr ""
+msgstr "陶土台階"
 
 msgid "Concrete Slab"
-msgstr ""
+msgstr "混凝土台階"
 
 msgid "Double Concrete Slab"
-msgstr ""
+msgstr "雙層混凝土台階"
 
 msgid "Concrete Stairs"
-msgstr ""
+msgstr "混凝土階梯"
 
 msgid "Double Terracotta Slab"
-msgstr ""
+msgstr "雙層陶土台階"
 
 msgid "Black Concrete Slab"
-msgstr ""
+msgstr "黑色混凝土台階"
 
 msgid "Black Concrete Stairs"
-msgstr ""
+msgstr "黑色混凝土階梯"
 
 msgid "Black Terracotta Slab"
-msgstr ""
+msgstr "黑色陶土台階"
 
 msgid "Black Terracotta Stairs"
-msgstr ""
+msgstr "黑色陶土階梯"
 
 msgid "Blue Concrete Slab"
-msgstr ""
+msgstr "藍色混凝土台階"
 
 msgid "Blue Concrete Stairs"
-msgstr ""
+msgstr "藍色混凝土階梯"
 
 msgid "Blue Terracotta Slab"
-msgstr ""
+msgstr "藍色陶土台階"
 
 msgid "Blue Terracotta Stairs"
-msgstr ""
+msgstr "藍色陶土階梯"
 
 msgid "Brown Concrete Slab"
-msgstr ""
+msgstr "棕色混凝土台階"
 
 msgid "Brown Concrete Stairs"
-msgstr ""
+msgstr "棕色混凝土階梯"
 
 msgid "Brown Terracotta Slab"
-msgstr ""
+msgstr "棕色陶土台階"
 
 msgid "Brown Terracotta Stairs"
-msgstr ""
+msgstr "棕色陶土階梯"
 
 msgid "Cyan Concrete Slab"
-msgstr ""
+msgstr "青色混凝土台階"
 
 msgid "Cyan Concrete Stairs"
-msgstr ""
+msgstr "青色混凝土階梯"
 
 msgid "Cyan Terracotta Slab"
-msgstr ""
+msgstr "青色陶土台階"
 
 msgid "Cyan Terracotta Stairs"
-msgstr ""
+msgstr "青色陶土階梯"
 
 msgid "Green Concrete Slab"
-msgstr ""
+msgstr "綠色混凝土台階"
 
 msgid "Green Concrete Stairs"
-msgstr ""
+msgstr "綠色混凝土階梯"
 
 msgid "Green Terracotta Slab"
-msgstr ""
+msgstr "綠色陶土台階"
 
 msgid "Green Terracotta Stairs"
-msgstr ""
+msgstr "綠色陶土階梯"
 
 msgid "Grey Concrete Slab"
-msgstr ""
+msgstr "灰色混凝土台階"
 
 msgid "Grey Concrete Stairs"
-msgstr ""
+msgstr "灰色混凝土階梯"
 
 msgid "Grey Terracotta Slab"
-msgstr ""
+msgstr "灰色陶土台階"
 
 msgid "Grey Terracotta Stairs"
-msgstr ""
+msgstr "灰色陶土階梯"
 
 msgid "Light Blue Concrete Slab"
-msgstr ""
+msgstr "淺藍色混凝土台階"
 
 msgid "Light Blue Concrete Stairs"
-msgstr ""
+msgstr "淺藍色混凝土階梯"
 
 msgid "Light Blue Terracotta Slab"
-msgstr ""
+msgstr "淺藍色陶土台階"
 
 msgid "Light Blue Terracotta Stairs"
-msgstr ""
+msgstr "淺藍色陶土階梯"
 
 msgid "Light Grey Concrete Slab"
-msgstr ""
+msgstr "淺灰色混凝土台階"
 
 msgid "Light Grey Concrete Stairs"
-msgstr ""
+msgstr "淺灰色混凝土階梯"
 
 msgid "Light Grey Terracotta Slab"
-msgstr ""
+msgstr "淺灰色陶土台階"
 
 msgid "Light Grey Terracotta Stairs"
-msgstr ""
+msgstr "淺灰色陶土階梯"
 
 msgid "Lime Concrete Slab"
-msgstr ""
+msgstr "淺綠色混凝土台階"
 
 msgid "Lime Concrete Stairs"
-msgstr ""
+msgstr "淺綠色混凝土階梯"
 
 msgid "Lime Terracotta Slab"
-msgstr ""
+msgstr "淺綠色陶土台階"
 
 msgid "Lime Terracotta Stairs"
-msgstr ""
+msgstr "淺綠色陶土階梯"
 
 msgid "Magenta Concrete Slab"
-msgstr ""
+msgstr "洋紅色混凝土台階"
 
 msgid "Magenta Concrete Stairs"
-msgstr ""
+msgstr "洋紅色混凝土階梯"
 
 msgid "Magenta Terracotta Slab"
-msgstr ""
+msgstr "洋紅色陶土台階"
 
 msgid "Magenta Terracotta Stairs"
-msgstr ""
+msgstr "洋紅色陶土階梯"
 
 msgid "Orange Concrete Slab"
-msgstr ""
+msgstr "橙色混凝土台階"
 
 msgid "Orange Concrete Stairs"
-msgstr ""
+msgstr "橙色混凝土階梯"
 
 msgid "Orange Terracotta Slab"
-msgstr ""
+msgstr "橙色陶土台階"
 
 msgid "Orange Terracotta Stairs"
-msgstr ""
+msgstr "橙色陶土階梯"
 
 msgid "Pink Concrete Slab"
-msgstr ""
+msgstr "粉紅色混凝土台階"
 
 msgid "Pink Concrete Stairs"
-msgstr ""
+msgstr "粉紅色混凝土階梯"
 
 msgid "Pink Terracotta Slab"
-msgstr ""
+msgstr "粉紅色陶土台階"
 
 msgid "Pink Terracotta Stairs"
-msgstr ""
+msgstr "粉紅色陶土階梯"
 
 msgid "Purple Concrete Slab"
-msgstr ""
+msgstr "紫色混凝土台階"
 
 msgid "Purple Concrete Stairs"
-msgstr ""
+msgstr "紫色混凝土階梯"
 
 msgid "Purple Terracotta Slab"
-msgstr ""
+msgstr "紫色陶土台階"
 
 msgid "Purple Terracotta Stairs"
-msgstr ""
+msgstr "紫色陶土階梯"
 
 msgid "Red Concrete Slab"
-msgstr ""
+msgstr "紅色混凝土台階"
 
 msgid "Red Concrete Stairs"
-msgstr ""
+msgstr "紅色混凝土階梯"
 
 msgid "Red Terracotta Slab"
-msgstr ""
+msgstr "紅色陶土台階"
 
 msgid "Red Terracotta Stairs"
-msgstr ""
+msgstr "紅色陶土階梯"
 
 msgid "White Concrete Slab"
-msgstr ""
+msgstr "白色混凝土台階"
 
 msgid "White Concrete Stairs"
-msgstr ""
+msgstr "白色混凝土階梯"
 
 msgid "White Terracotta Slab"
-msgstr ""
+msgstr "白色陶土台階"
 
 msgid "White Terracotta Stairs"
-msgstr ""
+msgstr "白色陶土階梯"
 
 msgid "Yellow Concrete Slab"
-msgstr ""
+msgstr "黃色混凝土台階"
 
 msgid "Yellow Concrete Stairs"
-msgstr ""
+msgstr "黃色混凝土階梯"
 
 msgid "Yellow Terracotta Slab"
-msgstr ""
+msgstr "黃色陶土台階"
 
 msgid "Yellow Terracotta Stairs"
-msgstr ""
+msgstr "黃色陶土階梯"
 

@@ -46,10 +46,10 @@ end
 
 local longdesc
 if explosions_griefing then
-	longdesc = S("An explosive device. When it explodes, it will hurt living beings and destroy blocks around it. TNT has an explosion radius of @1. With a small chance, blocks may drop as an item (as if being mined) rather than being destroyed. TNT can be ignited by tools, explosions, fire, lava and redstone signals."
+	longdesc = S("An explosive device. When it explodes, it will hurt living beings and destroy blocks around it. TNT has an explosion power of @1. With a small chance, blocks may drop as an item (as if being mined) rather than being destroyed. TNT can be ignited by tools, explosions, fire, lava and redstone signals."
 		, TNT_RANGE)
 else
-	longdesc = S("An explosive device. When it explodes, it will hurt living beings. TNT has an explosion radius of @1. TNT can be ignited by tools, explosions, fire, lava and redstone signals."
+	longdesc = S("An explosive device. When it explodes, it will hurt living beings. TNT has an explosion power of @1. TNT can be ignited by tools, explosions, fire, lava and redstone signals."
 		, TNT_RANGE)
 end
 
@@ -67,7 +67,7 @@ minetest.register_node("mcl_tnt:tnt", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	_tt_help = S("Ignited by tools, explosions, fire, lava, redstone power") ..
-		"\n" .. S("Explosion radius: @1", tostring(TNT_RANGE)),
+		"\n" .. S("Explosion power: @1", tostring(TNT_RANGE)),
 	_doc_items_longdesc = longdesc,
 	_doc_items_usagehelp = S("Place the TNT and ignite it with one of the methods above. Quickly get in safe distance. The TNT will start to be affected by gravity and explodes in 4 seconds."),
 	groups = { dig_immediate = 3, tnt = 1, enderman_takable = 1, flammable = -1 },

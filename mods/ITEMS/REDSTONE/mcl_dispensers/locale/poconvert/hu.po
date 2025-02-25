@@ -23,16 +23,16 @@ msgid "9 inventory slots"
 msgstr "9 rekeszű tároló"
 
 msgid "Launches item when powered by redstone power"
-msgstr "Kilő tárgyakat, amennyiben vöröskő jelet kap"
+msgstr "Kilő egy tárgyat, amikor vöröskőjelet kap"
 
 msgid "A dispenser is a block which acts as a redstone component which, when powered with redstone power, dispenses an item. It has a container with 9 inventory slots."
-msgstr "Az Adagoló egy vöröskő szerkezet, amely ha vöröskő jelet kap, kilő egy tárgyat. 9 rekeszes tárolója van."
+msgstr "Az adagoló egy olyan blokk, amely egy vöröskővel működő szerkezet. Amikor vöröskőjelet kap, kihajít egy tárgyat. 9 rekeszes tárolója van."
 
 msgid "Place the dispenser in one of 6 possible directions. The “hole” is where items will fly out of the dispenser. Use the dispenser to access its inventory. Insert the items you wish to dispense. Supply the dispenser with redstone energy once to dispense a random item."
-msgstr "Helyezz el egy Adagolót a hat lehetséges irány valamelyikébe. A \"lyukon\" keresztül fog a tárgy kirepülni. Használd az Adagolót a tároló eléréséhez. Tedd bele a tárgyakat, amiket ki szeretnél lőni. Vezess bele vöröskő jelet, hogy kilőjön egy véletlenszerűen kiválasztott tárgyat."
+msgstr "Az adagolót a hat lehetséges irány valamelyikébe lehet lehelyezni. A \"lyukon\" keresztül fog a tárgy kirepülni az adagolóból . Használd az adagolót a tárolója eléréséhez. Tedd bele a tárgyakat, amelyeket ki szeretnél lőni. Vezess az adagolóba vöröskőjelet egy alkalommal, hogy kilőjön egy véletlenszerűen kiválasztott tárgyat."
 
 msgid "The dispenser will do different things, depending on the dispensed item:"
-msgstr "Az Adagoló a beletöltött tárgyak függvényében különbözőképpen viselkedhet:"
+msgstr "Az adagoló a kihajítandó tárgytól függően különbözőképpen viselkedhet:"
 
 msgid "• Arrows: Are launched"
 msgstr "• Nyilak: kilövi őket"
@@ -71,23 +71,23 @@ msgid "• TNT: Is placed and ignited"
 msgstr "• TNT: elhelyezi és meggyújtja"
 
 msgid "• Flint and steel: Is used to ignite a fire in air and to ignite TNT"
-msgstr "• Kova és acél: tüzet gyújt vele a levegőben és meggyújtja a TNT-t"
+msgstr "• Tűzszerszám: Tüzet lehet vele gyújtani egy levegőblokkban, és begyújtja a TNT-t"
 
 msgid "• Spawn eggs: Will summon the mob they contain"
 msgstr "• Kelesztő tojás: kikelti a benne rejlő mobot"
 
 msgid "• Other items: Are simply dropped"
-msgstr "• Egyéb: egyszerűen kidobja"
+msgstr "• Egyéb tárgy: egyszerűen kidobja"
 
 msgid "Dropper"
 msgstr "Kidobó"
 
 msgid "Drops item when powered by redstone power"
-msgstr "Kiadagolja a tárgyakat ha vöröskő jelet kap"
+msgstr "Kidobja a tárgyakat, ha vöröskőjelet kap"
 
 msgid "A dropper is a redstone component and a container with 9 inventory slots which, when supplied with redstone power, drops an item or puts it into a container in front of it."
-msgstr "A kidobó egy vöröskő berendezés kilenc rekeszű tárolóval. Amennyiben vöröskő jelet kap, kiadagol, vagy az előtte álló tárolóba tesz egy tárgyat."
+msgstr "A kidobó egy vöröskőszerkezet és egy 9 rekeszes tároló. Amikor vöröskőjelet kap, kidob egy tárgyat, vagy az előtte lévő tárolóba teszi."
 
 msgid "Droppers can be placed in 6 possible directions, items will be dropped out of the hole. Use the dropper to access its inventory. Supply it with redstone energy once to make the dropper drop or transfer a random item."
-msgstr "A kidobót hatféle irányba lehet elhelyezni. A tárgyak a lyukból lesznek kiadva. Az kidobót használva éred el a tárolóját. Vezess bele vöröskő jelet, hogy véletlenszerűen kiadjon egy tárgyat."
+msgstr "A kidobót a hatféle irány bármelyike felé le lehet helyezni. A tárgyakat a lyukon keresztül dobja ki. Használd a kidobót a tárolója eléréséhez. Vezess bele vöröskőjelet egy alkalommal, hogy véletlenszerűen kidobjon vagy továbbítson egy tárgyat."
 

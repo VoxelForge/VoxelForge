@@ -101,22 +101,19 @@ msgid "Use the hoe on a cultivatable block (by rightclicking it) to turn it into
 msgstr "在可耕种的方块上使用锄头（通过右键点击它），将其变为农田。泥土、草方块以及草径都是可耕种的方块。在粗制泥土上使用锄头会将其变为普通泥土。"
 
 msgid "Wood Hoe"
-msgstr "木锄头"
-
-msgid "Uses: @1"
-msgstr "用途：@1"
+msgstr "木锄"
 
 msgid "Stone Hoe"
-msgstr "石锄头"
+msgstr "石锄"
 
 msgid "Iron Hoe"
-msgstr "铁锄头"
+msgstr "铁锄"
 
 msgid "Golden Hoe"
-msgstr "金锄头"
+msgstr "金锄"
 
 msgid "Diamond Hoe"
-msgstr "钻石锄头"
+msgstr "钻石锄"
 
 msgid "Netherite Hoe"
 msgstr "下界合金锄"
@@ -137,13 +134,13 @@ msgid "A melon is a block which can be grown from melon stems, which in turn are
 msgstr "西瓜是一种可由西瓜梗长出的方块，西瓜梗又是由西瓜种子长成的。它可收获为西瓜片。"
 
 msgid "Premature Melon Stem"
-msgstr "未成熟西瓜梗"
+msgstr "西瓜幼藤"
 
 msgid "Melon stems grow on farmland in 8 stages. On hydrated farmland, the growth is a bit quicker. Mature melon stems are able to grow melons."
-msgstr "西瓜梗在耕地上分8个阶段生长。在湿润的耕地上，生长速度会快一点。成熟的西瓜梗能够长出西瓜。"
+msgstr "西瓜藤在耕地上分8个阶段生长。在湿润的耕地上，生长速度会快一点。成熟的西瓜梗能够长出西瓜。"
 
 msgid "Premature Melon Stem (Stage @1)"
-msgstr "未成熟西瓜梗（第@1阶段）"
+msgstr "西瓜幼藤（第@1阶段）"
 
 msgid "Mature Melon Stem"
 msgstr "成熟西瓜藤"
@@ -158,13 +155,13 @@ msgid "This is a food item which can be eaten."
 msgstr "这是一种可以食用的食物。"
 
 msgid "Premature Potato Plant"
-msgstr "未成熟土豆植株"
+msgstr "土豆幼株"
 
 msgid "Potato plants are plants which grow on farmland under sunlight in 8 stages, but only 4 stages can be visually told apart. On hydrated farmland, they grow a bit faster. They can be harvested at any time but will only yield a profit when mature."
 msgstr "土豆植株是在阳光下于耕地上分8个阶段生长的植物，但只有4个阶段能从外观上区分开来。在湿润的耕地上，它们生长会快一点。它们可以随时收获，但只有成熟时才有收益。"
 
 msgid "Premature Potato Plant (Stage @1)"
-msgstr "未成熟土豆植株（第@1阶段）"
+msgstr "土豆幼株（第@1阶段）"
 
 msgid "Mature Potato Plant"
 msgstr "成熟土豆植株"
@@ -176,25 +173,25 @@ msgid "Potato"
 msgstr "马铃薯"
 
 msgid "Potatoes are food items which can be eaten, cooked in the furnace and planted. Pigs like potatoes."
-msgstr "土豆是可食用、能在熔炉中烹饪且可种植的食物。猪喜欢土豆。"
+msgstr "马铃薯可食用、能在熔炉中烹饪且可种植的食物。猪也喜欢吃。"
 
 msgid "Hold it in your hand and rightclick to eat it. Place it on top of farmland to plant it. It grows in sunlight and grows faster on hydrated farmland. Rightclick an animal to feed it."
-msgstr "手持土豆并右键点击可食用。将土豆放置在耕地上可种植。它在阳光下生长，在湿润的耕地上生长更快。右键点击动物可喂它土豆。"
+msgstr "手持马铃薯并右键点击可食用。将土豆放置在耕地上可种植。它在阳光下生长，在湿润的耕地上生长更快。右击动物可喂食之。"
 
 msgid "Baked Potato"
 msgstr "烤马铃薯"
 
 msgid "Baked potatoes are food items which are more filling than the unbaked ones."
-msgstr "烤土豆是比未烤的土豆更饱腹的食物。"
+msgstr "烤马铃薯是比生吃更饱腹的食物。"
 
 msgid "Poisonous Potato"
-msgstr "有毒马铃薯"
+msgstr "毒芽马铃薯"
 
 msgid "60% chance of poisoning"
 msgstr "六成中毒几率"
 
 msgid "This potato doesn't look too healthy. You can eat it to restore hunger points, but there's a 60% chance it will poison you briefly."
-msgstr "这个土豆看起来不太健康。你可以吃它来恢复饥饿值，但有60%的几率会让你短暂中毒。"
+msgstr "这只马铃薯看起来不太健康。你可以食用以恢复饥饿值，但有60%的几率会让你短暂中毒。"
 
 msgid "Pumpkin Seeds"
 msgstr "南瓜籽"
@@ -212,7 +209,7 @@ msgid "Pumpkin stems grow on farmland in 8 stages. On hydrated farmland, the gro
 msgstr "南瓜梗在耕地上分8个阶段生长。在湿润的耕地上，生长速度会快一点。成熟的南瓜梗能够长出南瓜。"
 
 msgid "Premature Pumpkin Stem (Stage @1)"
-msgstr "未成熟南瓜梗（第@1阶段）"
+msgstr "南瓜幼藤（第@1阶段）"
 
 msgid "Mature Pumpkin Stem"
 msgstr "成熟南瓜蔓"
@@ -278,10 +275,10 @@ msgid "Grows into a wheat plant. Chickens like wheat seeds."
 msgstr "种植后长出小麦。鸡喜欢吃小麦种子。"
 
 msgid "Premature Wheat Plant"
-msgstr "早熟小麦植株"
+msgstr "小麦幼苗"
 
 msgid "Premature Wheat Plant (Stage @1)"
-msgstr "早熟小麦植株（阶段@1）"
+msgstr "小麦幼苗（第@1阶段）"
 
 msgid "Mature Wheat Plant"
 msgstr "成熟小麦植株"
@@ -321,8 +318,8 @@ msgid "\n"
 "			On hydrated farmland, they grow faster. They can be harvested at any time but will only yield a profit when mature.\n"
 "		"
 msgstr "\n"
-"\t\t\t未成熟的小麦植株在阳光下的农田里会经历8个生长阶段。\n"
-"在湿润的农田上，它们生长得更快。它们可以在任何时候被收割，但只有成熟时才会有产出（才会有收益）。\n"
+"\t\t\t小麦幼苗在阳光下的农田里会经历8个生长阶段。\n"
+"在湿润的农田上，它们生长得更快。可以在任何时候收割，但只有成熟时才会有产出（才会有收益）。\n"
 "\t\t"
 
 msgid "\n"

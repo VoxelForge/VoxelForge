@@ -103,9 +103,6 @@ msgstr "耕せるブロックに（右クリックで）クワを使うと耕地
 msgid "Wood Hoe"
 msgstr "木製のクワ"
 
-msgid "Uses: @1"
-msgstr "使用：@1"
-
 msgid "Stone Hoe"
 msgstr "石のクワ"
 
@@ -119,7 +116,7 @@ msgid "Diamond Hoe"
 msgstr "ダイヤモンドのクワ"
 
 msgid "Netherite Hoe"
-msgstr ""
+msgstr "ネザライトのクワ"
 
 msgid "Melon Seeds"
 msgstr "スイカの種"
@@ -266,10 +263,10 @@ msgid "Hydrated farmland is used in farming, this is where you can plant and gro
 msgstr "湿った耕地は農業に使われるもので、ここに何らかの作物を植えて育てられます。耕地が雨に降られたり水辺にある場合、これが出来上がります。水がなければ、やがて乾いてしまいます。上に固体ブロックが現れたり、上にピストンアームが伸びたりすると、このブロックは土に戻ります。"
 
 msgid "Sweet Berry Bush (Stage @1)"
-msgstr ""
+msgstr "スイートベリーの低木（第@1段階）"
 
 msgid "Sweet Berry"
-msgstr ""
+msgstr "スイートベリー"
 
 msgid "Wheat Seeds"
 msgstr "小麦の種"

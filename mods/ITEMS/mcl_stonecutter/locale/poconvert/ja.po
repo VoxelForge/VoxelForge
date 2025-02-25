@@ -14,10 +14,10 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Stonecutter"
-msgstr ""
+msgstr "石切台"
 
 msgid "Inventory"
-msgstr ""
+msgstr "インベントリ"
 
 msgid "Stone Cutter"
 msgstr "ストーンカッター"

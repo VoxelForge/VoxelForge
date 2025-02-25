@@ -17,7 +17,7 @@ msgid "Sponge"
 msgstr "海綿"
 
 msgid "Removes water on contact"
-msgstr "如果海綿吸的河水比（正常的）水多，它就會變成濕河水海綿（而不是濕海綿）。"
+msgstr "吸掉所接觸的水"
 
 msgid "Sponges are blocks which remove water around them when they are placed or come in contact with water, turning it into a wet sponge."
 msgstr "海綿是一種方塊，當它們被放置或與水接觸時，會去除它們周圍的水，使其變成濕海綿。"

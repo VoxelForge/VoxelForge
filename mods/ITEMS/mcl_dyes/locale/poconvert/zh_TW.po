@@ -14,25 +14,25 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This item is a dye which is used for dyeing and crafting."
-msgstr "此物品是一種用於染色和合成的染料。"
+msgstr "此物品是染料，可用於染色和合成。"
 
 msgid "Rightclick on a sheep to dye its wool. Other things are dyed by crafting."
-msgstr "右鍵點擊一隻羊來為其羊毛染色。其他東西透過合成染色。"
+msgstr "持著它右按一隻羊可以將牠染色。其他東西透過合成染色。"
 
 msgid "Black Dye"
-msgstr ""
+msgstr "黑色染料"
 
 msgid "Blue Dye"
-msgstr ""
+msgstr "藍色染料"
 
 msgid "Brown Dye"
-msgstr ""
+msgstr "棕色染料"
 
 msgid "Cyan Dye"
-msgstr ""
+msgstr "青色染料"
 
 msgid "Green Dye"
-msgstr ""
+msgstr "綠色染料"
 
 msgid "Grey Dye"
 msgstr "灰色染料"
@@ -59,11 +59,11 @@ msgid "Purple Dye"
 msgstr "紫色染料"
 
 msgid "Red Dye"
-msgstr ""
+msgstr "紅色染料"
 
 msgid "White Dye"
 msgstr "白色染料"
 
 msgid "Yellow Dye"
-msgstr ""
+msgstr "黃色染料"
 

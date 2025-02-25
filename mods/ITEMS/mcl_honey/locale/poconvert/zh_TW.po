@@ -17,29 +17,29 @@ msgid "Honeycomb"
 msgstr "蜂巢"
 
 msgid "Used to craft beehives and protect copper blocks from further oxidation."
-msgstr ""
+msgstr "用以合成蜂箱，及給銅上蠟阻止氧化。"
 
 msgid "Use on copper blocks to prevent further oxidation."
-msgstr ""
+msgstr "對著銅使用可以阻止其繼續氧化。"
 
 msgid "Honeycomb Block"
 msgstr "蜂巢塊"
 
 msgid "Honeycomb Block. Used as a decoration."
-msgstr ""
+msgstr "蜂巢塊。裝飾用。"
 
 msgid "Honey Bottle"
 msgstr "蜂蜜瓶"
 
 msgid "Honey Bottle is used to craft honey blocks and to restore hunger points."
-msgstr ""
+msgstr "蜂蜜瓶用以合成蜂巢塊，也可以填肚。"
 
 msgid "Drinking will restore 6 hunger points. Can also be used to craft honey blocks."
-msgstr ""
+msgstr "+6 飢餓值，也可以合成蜂巢塊。"
 
 msgid "Honey Block"
 msgstr "蜂蜜塊"
 
 msgid "Honey Block. Used as a decoration and in redstone. Is sticky on some sides."
-msgstr ""
+msgstr "蜂蜜塊。裝飾和紅石兩用。部分表面有黏性。"
 
