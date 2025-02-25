@@ -29,7 +29,6 @@ Version: Voxelforge Beta 0.5.0
 * 1.21 status effects.
 * Tripwire.
 * FireFlies.
-* Dyable Wolf Armor.
 
 ### Differences from Voxelibre
 * Mace
@@ -50,7 +49,6 @@ Version: Voxelforge Beta 0.5.0
 * Cherry grove biome.
 * No hamburgers.
 * FireFlies.
-* Dyable Wolf Armor.
 * Vaults.
 
 ### Gameplay
@@ -138,6 +136,7 @@ To contribute or report issues, head there.
 
 * Github: <https://github/VoxelForge/VoxelForge>
 * Discord: <https://discord.com/invite/7Jv5s7dnzG>
+* Website: <https://voxelforge.net>
 * ContentDB: <https://content.minetest.net/packages/VoxelForge/voxelforge>
 
 ## Project description
