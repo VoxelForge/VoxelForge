@@ -14,17 +14,17 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Dripstone block"
-msgstr "鍾乳石ブロック"
+msgstr ""
 
 msgid "Dripstone is type of stone that allows stalagmites and stalagtites to grow on it"
 msgstr ""
 
 msgid "Pointed dripstone"
-msgstr "鍾乳石"
+msgstr ""
 
 msgid "Pointed dripstone is what stalagmites and stalagtites are made of"
 msgstr ""
 
 msgid "Pointed dripstone (@1/@2)"
-msgstr "鍾乳石（@1/@2）"
+msgstr ""
 
