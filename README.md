@@ -137,7 +137,6 @@ To contribute or report issues, head there.
 * Official Website: <https://voxelforge.net/>
 * Github: <https://github/VoxelForge/VoxelForge>
 * Discord: <https://discord.com/invite/7Jv5s7dnzG>
-* Website: <https://voxelforge.net>
 * ContentDB: <https://content.minetest.net/packages/VoxelForge/voxelforge>
 
 ## Project description
