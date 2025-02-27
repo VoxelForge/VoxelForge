@@ -8,6 +8,7 @@ vlf_structures.register_structure("trial_chambers",{
 	fill_ratio = 50,
 	terrain_setting = "rigid",
 	include_entities = false,
+	wom = "false",
 	y_max = -60,
 	y_min = -100,
 	--biomes = {},
