@@ -131,15 +131,14 @@ function vlf_structures.place_structure(pos, def, pr, blockseed, _)
 			local rot = rotations[pr:next(1,#rotations)]
 
 			if def.daughters then
-					for _,d in pairs(def.daughters) do
-						local p = vector.add(pos,d.pos)
-						local rot = d.rot or 0
-						vlf_structures.place_schematic(p, d.files[pr:next(1,#d.files)], rot, nil, true, "place_center_x,place_center_z",function()
-							if def.after_place then
-								def.after_place(pos,def,pr)
-							end
-						end,pr)
-					end
+				for _,d in pairs(def.daughters) do
+					local p = vector.add(pos,d.pos)
+					local rot = d.rot or 0
+					vlf_structures.place_schematic(p, d.files[pr:next(1,#d.files)], rot, nil, true, "place_center_x,place_center_z",function()
+						if def.after_place then
+							def.after_place(pos,def,pr)
+						end
+					end,pr)
 				end
 			end
 			vlf_structures.place_schematic(pp, file, rot,  def.replacements, def, true, "place_center_x,place_center_z", ---@diagnostic disable-line: unused-local
