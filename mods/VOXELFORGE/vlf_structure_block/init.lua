@@ -418,6 +418,10 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
                 nodes_by_type[node_key] = {positions = {}, name = node.name, param2 = rotated_param2}
             end
             table.insert(nodes_by_type[node_key].positions, node_pos)
+            if node.name == "voxelforge:jigsaw" then
+            	local meta = minetest.get_meta(node_pos)
+            	meta:set_string("generate", "true")
+			end
             if node.metadata and next(node.metadata) then
                 metadata[node_pos] = node.metadata
             end
@@ -439,6 +443,7 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
             end
 
             minetest.bulk_set_node(batch_positions, {name = node_group.name, param2 = node_group.param2})
+            
         end
     end
 
