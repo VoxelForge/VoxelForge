@@ -7,6 +7,7 @@ vlf_structures.register_structure("pillager_outpost",{
 	make_foundation = true,
 	terrain_setting = "terrain_matching",
 	include_entities = true,
+	wom = "false",
 	sidelen = 32,
 	y_offset = 0,
 	chunk_probability = 15,
