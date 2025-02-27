@@ -129,7 +129,6 @@ function vlf_structures.place_structure(pos, def, pr, blockseed, _)
 		local file = def.filenames[r]
 		if file then
 			local rot = rotations[pr:next(1,#rotations)]
-			local ap = function(pos,def,pr,blockseed) end ---@diagnostic disable-line: unused-local
 
 			if def.daughters then
 				ap = function(pos,def,pr,blockseed) ---@diagnostic disable-line: unused-local
