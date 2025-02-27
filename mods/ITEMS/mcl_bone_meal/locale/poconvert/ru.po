@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Bone Meal"
-msgstr ""
+msgstr "Костная мука"
 
 msgid "Speeds up plant growth"
 msgstr ""

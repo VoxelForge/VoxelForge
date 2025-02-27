@@ -19,7 +19,9 @@ function minetest.do_item_eat(hp_change, replace_with_item, itemstack, user, poi
 	local creative = minetest.is_creative_enabled(name)
 
 	-- Special foodstuffs like the cake may disable the eating delay
-	local no_eat_delay = creative or (minetest.get_item_group(itemstack:get_name(), "no_eat_delay") == 1)
+	local no_eat_delay = creative
+		or pointed_thing._csm_eating
+		or (minetest.get_item_group(itemstack:get_name(), "no_eat_delay") == 1)
 
 	-- Allow eating only after a delay of 2 seconds. This prevents eating as an excessive speed.
 	-- FIXME: time() is not a precise timer, so the actual delay may be +- 1 second, depending on which fraction
@@ -173,7 +175,7 @@ function mcl_hunger.item_eat(hunger_change, replace_with_item, poisontime, poiso
 			if not creative then
 				local nstack = ItemStack(replace_with_item)
 				local inv = user:get_inventory()
-				if itemstack:get_count() == 1 then
+				if itemstack:is_empty () then
 					itemstack:add_item(replace_with_item)
 				elseif inv:room_for_item("main",nstack) then
 					inv:add_item("main", nstack)

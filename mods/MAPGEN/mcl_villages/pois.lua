@@ -631,7 +631,7 @@ mcl_villages.register_poi ("mcl_villages:farmer", {
 	is_valid = function (nodepos)
 		local node = minetest.get_node (nodepos)
 		return (node.name == "ignore"
-			or mcl_composters.test_composter (node.name))
+			or minetest.get_item_group (node.name, "composter") > 0)
 	end,
 	village_center = true,
 })
@@ -750,7 +750,7 @@ mcl_villages.register_poi ("mcl_villages:provisional_poi", {
 			or node.name == "mcl_stonecutter:stonecutter"
 			or node.name == "mcl_barrels:barrel_closed"
 			or node.name == "mcl_barrels:barrel_open"
-			or mcl_composters.test_composter (node.name)
+			or minetest.get_item_group (node.name, "composter") > 0
 			or minetest.get_item_group (node.name, "brewing_stand") > 0
 			or minetest.get_item_group (node.name, "cauldron") > 0)
 	end,

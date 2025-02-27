@@ -26,7 +26,7 @@ msgid "Redstone Torch"
 msgstr "レッドストーントーチ"
 
 msgid "Block of Redstone"
-msgstr ""
+msgstr "レッドストーンブロック"
 
 msgid "Provides redstone power"
 msgstr "レッドストーン動力を提供"

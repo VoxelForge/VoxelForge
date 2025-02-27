@@ -119,16 +119,16 @@ msgid "Die @1 times."
 msgstr "死亡@1次。"
 
 msgid "Mine @1 times"
-msgstr "挖矿@1次"
+msgstr "挖掘@1次"
 
 msgid "@1/@2 dug"
 msgstr "@1/@2个已挖掘"
 
 msgid "Mine: @1"
-msgstr "采矿：@1"
+msgstr "挖掘：@1"
 
 msgid "Mine: @1×@2"
-msgstr "采矿：@1x@2"
+msgstr "挖掘：@1x@2"
 
 msgid "Mine @1 block."
 msgstr "挖掘 @1 方块。"

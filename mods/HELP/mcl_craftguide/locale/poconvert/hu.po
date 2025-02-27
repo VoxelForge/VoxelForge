@@ -124,15 +124,12 @@ msgstr "Nincs megjeleníthető tárgy"
 msgid "Collect items to reveal more recipes"
 msgstr "Gyűjts tárgyakat további receptek felfedéséhez"
 
-msgid "Invalid crafting ingredient: \"@1\" (dosent exist)"
-msgstr "Nem létező hozzávaló: \"@1\""
-
 msgid "This item can be repaired at an anvil with: @1."
-msgstr "Ez a tárgy egy üllőnél ezzel javítható: @1."
+msgstr "Ez a tárgy megjavítható egy üllőnél, ezzel: @1."
 
 msgid "This item can be repaired at an anvil with any wooden planks."
-msgstr "Ez az elem egy üllőnél bármilyen fadeszkával javítható."
+msgstr "Ez a tárgy egy üllőnél bármilyen fadeszkával javítható."
 
 msgid "This item can be repaired at an anvil with any item in the “@1” group."
-msgstr "Ez az elem egy üllőnél bármely ebbe a csoportba tartozó tárggyal javítható: \"@1\"."
+msgstr "Ez a tárgy megjavítható egy üllőnél, bármely ebbe a csoportba tartozó tárggyal: \"@1\"."
 

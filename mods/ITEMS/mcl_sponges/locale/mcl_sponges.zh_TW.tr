@@ -1,6 +1,6 @@
 # textdomain: mcl_sponges
 Sponge=海綿
-Removes water on contact=如果海綿吸的河水比（正常的）水多，它就會變成濕河水海綿（而不是濕海綿）。
+Removes water on contact=吸掉所接觸的水
 Sponges are blocks which remove water around them when they are placed or come in contact with water, turning it into a wet sponge.=海綿是一種方塊，當它們被放置或與水接觸時，會去除它們周圍的水，使其變成濕海綿。
 Waterlogged Sponge=濕海綿
 Can be dried in furnace=可以在熔爐裏烘乾

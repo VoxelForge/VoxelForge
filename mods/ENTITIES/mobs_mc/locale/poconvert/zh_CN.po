@@ -202,9 +202,6 @@ msgstr "小炽足兽"
 msgid "Tropical Fish"
 msgstr "热带鱼"
 
-msgid "Tropical fish"
-msgstr "热带鱼"
-
 msgid "Vex"
 msgstr "恼鬼"
 
@@ -245,10 +242,10 @@ msgid "Shepherd"
 msgstr "羊倌"
 
 msgid "Toolsmith"
-msgstr ""
+msgstr "工具匠"
 
 msgid "Weaponsmith"
-msgstr ""
+msgstr "武器匠"
 
 msgid "Nitwit"
 msgstr "傻子"
@@ -284,7 +281,7 @@ msgid "Wandering Trader"
 msgstr "漫游商人"
 
 msgid "Trader Llama"
-msgstr ""
+msgstr "行商羊驼"
 
 msgid "Witch"
 msgstr "女巫"

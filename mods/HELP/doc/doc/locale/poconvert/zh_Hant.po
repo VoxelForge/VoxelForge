@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This is the help."
-msgstr ""
+msgstr "這是幫助訊息。"
 
 msgid "All help entries revealed!"
 msgstr ""
@@ -23,16 +23,16 @@ msgid "All help entries are already revealed."
 msgstr ""
 
 msgid "Category list"
-msgstr ""
+msgstr "分類"
 
 msgid "Entry list"
-msgstr ""
+msgstr "條目列表"
 
 msgid "Entry"
-msgstr ""
+msgstr "條目"
 
 msgid "Error: No help available."
-msgstr ""
+msgstr "錯誤：無可用幫助。"
 
 msgid "No categories have been registered, but they are required to provide help."
 msgstr ""
@@ -44,16 +44,16 @@ msgid "Recommended mods: doc_basics, doc_items, doc_identifier, doc_encyclopedia
 msgstr ""
 
 msgid "Error: Access denied."
-msgstr ""
+msgstr "錯誤：拒絕存取。"
 
 msgid "Access to the requested entry has been denied; this entry is secret. You may unlock access by progressing in the game. Figure out on your own how to unlock this entry."
 msgstr ""
 
 msgid "Nameless entry (@1)"
-msgstr ""
+msgstr "無名條目（@1）"
 
 msgid "Help > @1"
-msgstr ""
+msgstr "幫助 > @1"
 
 msgid "Currently all entries in this category are hidden from you."
 msgstr ""
@@ -62,25 +62,25 @@ msgid "Unlock new entries by progressing in the game."
 msgstr ""
 
 msgid "Number of entries: @1"
-msgstr ""
+msgstr "條目數量：@1"
 
 msgid "New entries: @1"
-msgstr ""
+msgstr "新條目：@1"
 
 msgid "Hidden entries: @1"
-msgstr ""
+msgstr "隱藏條目：@1"
 
 msgid "Help > @1 > (No Entry)"
-msgstr ""
+msgstr "幫助 > @1 > (無條目)"
 
 msgid "Help > @1 > @2"
-msgstr ""
+msgstr "幫助 > @1 > @2"
 
 msgid "Open a window providing help entries about Minetest and more"
 msgstr ""
 
 msgid "Help"
-msgstr ""
+msgstr "幫助"
 
 msgid "Allows you to reveal all hidden help entries with /help_reveal"
 msgstr ""

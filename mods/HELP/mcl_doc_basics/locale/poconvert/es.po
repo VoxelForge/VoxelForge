@@ -23,7 +23,7 @@ msgid "Creative Mode"
 msgstr "Modo creativo"
 
 msgid "Enabling Creative Mode in MineClonia applies the following changes:"
-msgstr ""
+msgstr "Al habilitar el modo creativo en MineClonia se aplican los siguientes cambios:"
 
 msgid "• You keep the things you've placed"
 msgstr "• Conservas las cosas que colocaste"
@@ -110,7 +110,7 @@ msgid "• [Page down]: Scroll down"
 msgstr "• [Av Pág]: Desplazar hacia abajo"
 
 msgid "There is also an input history. Luanti saves your previous console inputs which you can quickly access later:"
-msgstr ""
+msgstr "También hay un historial de entradas. Luanti guarda tus entradas de consola anteriores a las que puedes acceder rápidamente más tarde:"
 
 msgid "• [Up]: Go to previous entry in history"
 msgstr "• [Arriba]: Ir a la entrada anterior en el historial"
@@ -128,7 +128,7 @@ msgid "Server commands can be entered by players using the chat to perform a spe
 msgstr "Los comandos del servidor pueden ser ingresados por los jugadores a través del chat para realizar acciones especiales en el servidor. Hay algunos comandos que puede ejecutar cualquier persona, pero otros solo funcionan si tienes ciertos privilegios otorgados en el servidor. Hay un pequeño conjunto de comandos básicos que siempre están disponibles; otros comandos pueden ser añadidos por mods."
 
 msgid "To issue a command, simply type it like a chat message or press Luanti's command key (default: [/]). All commands have to begin with “/”, for example “/mods”. The Luanti command key does the same as the chat key, except that the slash is already entered."
-msgstr ""
+msgstr "Para emitir un comando, simplemente escríbelo como si fuera un mensaje del chat o presiona la tecla de comando de Luanti (por defecto: [/]). Todos los comandos deben comenzar con “/”, por ejemplo “/mods”. La tecla de comando de Luanti hace lo mismo que la tecla de chat, excepto que la barra ya está ingresada."
 
 msgid "Commands may or may not give a response in the chat log, but errors will generally be shown in the chat. Try it for yourselves: Close this window and type in the “/mods” command. This will give you the list of available mods on this server."
 msgstr "Los comandos pueden dar o no una respuesta en el registro del chat, pero los errores generalmente se mostrarán en el chat. Pruébelo por su cuenta: cierre esta ventana y escriba el comando \"/mods\". Esto le dará la lista de modificaciones disponibles en este servidor."
@@ -257,7 +257,7 @@ msgid "Fly mode:"
 msgstr "Modo de vuelo:"
 
 msgid "• Description: Gravity doesn't affect you and you can move freely in all directions. Use the jump key to rise and the sneak key to sink."
-msgstr "• Descripción: la gravedad no te afecta y puedes moverte libremente en todas las direcciones. Usa la tecla de saltar para subir y la tecla de caminar para caer."
+msgstr "• Descripción: la gravedad no te afecta y puedes moverte libremente en todas las direcciones. Usa la tecla de saltar para subir y la tecla de agacharse para caer."
 
 msgid "• Default key: [K]"
 msgstr "• Tecla por defecto: [K]"
@@ -341,31 +341,31 @@ msgid "Online help"
 msgstr "Ayuda en línea"
 
 msgid "You may want to check out these online resources related to Luanti:"
-msgstr ""
+msgstr "Puede que desee consultar estos recursos en línea relacionados con Luanti:"
 
 msgid "Official homepage of Luanti: <https://luanti.org/>"
-msgstr ""
+msgstr "Página oficial de Luanti: <https://luanti.org/>"
 
 msgid "The main place to find the most recent version of Luanti."
-msgstr ""
+msgstr "El lugar principal para encontrar la versión más reciente de Luanti."
 
 msgid "Community wiki: <https://wiki.minetest.net/>"
 msgstr "Wiki de la comunidad: <https://wiki.minetest.net/>"
 
 msgid "A community-based documentation website for Luanti. Anyone with an account can edit it! It also features a documentation of Minetest Game."
-msgstr ""
+msgstr "Un sitio web de documentación comunitaria para Luanti. ¡Cualquiera con una cuenta puede editarlo! También incluye documentación de Minetest Game."
 
 msgid "Web forums: <https://forum.luanti.org/>"
-msgstr ""
+msgstr "Foros web: <https://forum.luanti.org/>"
 
 msgid "A web-based discussion platform where you can discuss everything related to Luanti. This is also a place where player-made mods and games are published and discussed. The discussions are mainly in English, but there is also space for discussion in other languages."
-msgstr ""
+msgstr "Una plataforma de discusión en línea donde puedes discutir todo lo relacionado con Luanti. También es un lugar donde se publican y discuten mods y juegos creados por los jugadores. Las discusiones son principalmente en inglés, pero también hay espacio para discusiones en otros idiomas."
 
 msgid "Chat: <irc://irc.freenode.net#minetest>"
 msgstr "Chat: <irc://irc.freenode.net#minetest>"
 
 msgid "A generic Internet Relay Chat channel for everything related to Luanti where people can meet to discuss in real-time. If you do not understand IRC, see the Community Wiki for help."
-msgstr ""
+msgstr "Un canal genérico de Internet Relay Chat para todo lo relacionado con Luanti donde las personas pueden reunirse para discutir en tiempo real. Si no entiendes el IRC, consulta la Wiki de la comunidad para obtener ayuda."
 
 msgid "Basics"
 msgstr "Conceptos básicos"
@@ -449,7 +449,7 @@ msgid "• Space: Jump"
 msgstr "• Espacio: Saltar"
 
 msgid "• Shift: Sneak"
-msgstr "• Shift: Ir sigilosamente"
+msgstr "• Shift: Agacharse"
 
 msgid "While on a ladder, swimming in a liquid or fly mode is active"
 msgstr "Mientras se encuentra en una escalera, nadas en un líquido o el modo de vuelo está activo"
@@ -488,10 +488,10 @@ msgid "• Shift+Right mouse button: Build"
 msgstr "• Shift+Botón derecho del ratón: Construir"
 
 msgid "• Roll mouse wheel / B / N: Select next/previous item in hotbar"
-msgstr "• Rueda del ratón / B / N: Seleccione el siguiente/anterior ítem del hotbar"
+msgstr "• Rueda del ratón / B / N: Seleccione el siguiente/anterior ítem de la barra de ítems"
 
 msgid "• 1-9: Select item in hotbar directly"
-msgstr "• 1-9: Selecciona un ítem del hotbar directamente"
+msgstr "• 1-9: Selecciona un ítem de la barra de ítems directamente"
 
 msgid "• Q: Drop item stack"
 msgstr "• Q: Soltar pila de ítems"
@@ -659,25 +659,25 @@ msgid "Quick transfer: You can quickly transfer an item stack between a player's
 msgstr "Transferencia rápida: puedes transferir rápidamente una pila de ítems entre el inventario de un jugador y el inventario de un bloque, como un horno, un cofre o cualquier otro ítem con una ranura de inventario cuando se accede al inventario de ese bloque. El inventario de destino suele ser el inventario más relevante en este contexto."
 
 msgid "• Sneak+Left click: Automatically transfer item stack (Sneak is by default [Shift])"
-msgstr "• Caminar+Clic izquierdo: Transferir automáticamente la pila de ítems (Caminar es [Shift] por defecto)"
+msgstr "• Agacharse+Clic izquierdo: Transferir automáticamente la pila de ítems (Agacharse es [Shift] por defecto)"
 
 msgid "Hotbar"
-msgstr "Hotbar"
+msgstr "Barra de ítems"
 
 msgid "At the bottom of the screen you see some squares. This is called the “hotbar”, and contains the items you have put in the last row of your inventory."
-msgstr "En la parte inferior de la pantalla verás unos cuadrados. Estos se llama “hotbar”, y contienen los ítems que has colocado en la última fila de tu inventario."
+msgstr "En la parte inferior de la pantalla verás unos cuadrados. Estos se llama “barra de ítems”, y contienen los ítems que has colocado en la última fila de tu inventario."
 
 msgid "You can change the selected item with the mouse wheel or the keyboard:"
 msgstr "Puede cambiar el ítem seleccionado con la rueda del ratón o el teclado:"
 
 msgid "• Select previous item in hotbar: [Mouse wheel up] or [B]"
-msgstr "• Seleccionar el ítem anterior en el hotbar: [Rueda del ratón hacia arriba] o [B]"
+msgstr "• Seleccionar el ítem anterior de la barra de ítems: [Rueda del ratón hacia arriba] o [B]"
 
 msgid "• Select next item in hotbar: [Mouse wheel down] or [N]"
-msgstr "• Seleccionar el siguiente ítem en el hotbar: [Rueda del ratón hacia abajo] o [N]"
+msgstr "• Seleccionar el siguiente ítem de la barra de ítems: [Rueda del ratón hacia abajo] o [N]"
 
 msgid "• Select item in hotbar directly: [1]-[9]"
-msgstr "• Seleccionar un ítem directamente en el hotbar: [1]-[9]"
+msgstr "• Seleccionar un ítem directamente de la barra de ítems: [1]-[9]"
 
 msgid "The selected item is also your wielded item."
 msgstr "El ítem seleccionado es también el ítem que utilizas."
@@ -746,7 +746,7 @@ msgid "• Mining properties: By which tools it can be mined, how fast and how m
 msgstr "• Propiedades de minado: Con qué herramientas se puede minar, con qué rapidez y cuánto se desgastan las herramientas"
 
 msgid "• Climbable: While you are at a climbable block, you won't fall and you can move up and down with the jump and sneak keys"
-msgstr "• Escalable: mientras estés en un bloque escalable, no te caerás y podrás moverte hacia arriba y hacia abajo con las teclas de saltar y caminar"
+msgstr "• Escalable: mientras estés en un bloque escalable, no te caerás y podrás moverte hacia arriba y hacia abajo con las teclas de saltar y agacharse"
 
 msgid "• Drowning damage: See the entry “Basics > Player”"
 msgstr "• Daño por ahogamiento: Ver la entrada “Conceptos básicos > Jugador”"
@@ -788,7 +788,7 @@ msgid "Almost all blocks can be built (or placed). Building is very simple and h
 msgstr "Se pueden construir (o colocar) casi todos los bloques. La construcción es muy simple y no tiene demora."
 
 msgid "To build your wielded block, point at a block in the world and right-click. If this is not possible because the pointed block has a special right-click action, hold down the sneak key before right-clicking."
-msgstr "Para construir el bloque que empuñas, apunta a un bloque en el mundo y haz clic derecho. Si esto no es posible porque el bloque apuntado tiene una acción especial con el clic derecho, mantén presionada la tecla de caminar antes de hacer clic derecho."
+msgstr "Para construir el bloque que empuñas, apunta a un bloque en el mundo y haz clic derecho. Si esto no es posible porque el bloque apuntado tiene una acción especial con el clic derecho, mantén presionada la tecla de agacharse antes de hacer clic derecho."
 
 msgid "Blocks can almost always be built at pointable blocks. One exception are blocks attached to the floor; these can only be built on the floor."
 msgstr "Casi siempre es posible construir bloques en bloques apuntables. Una excepción son los bloques fijados al suelo, que solo se pueden construir en el suelo."
@@ -887,7 +887,7 @@ msgid "Details:"
 msgstr "Detalles:"
 
 msgid "You have 0-20 hunger points, indicated by 20 drumstick half-icons above the hotbar. You also have an invisible attribute: Saturation."
-msgstr "Tienes entre 0-20 puntos de hambre, que se indican con 20 íconos de medio muslo sobre el hotbar. También tienes un atributo invisible: Saturación."
+msgstr "Tienes entre 0-20 puntos de hambre, que se indican con 20 íconos de medio muslo sobre la barra de ítems. También tienes un atributo invisible: Saturación."
 
 msgid "Hunger points reflect how full you are while saturation points reflect how long it takes until you're hungry again."
 msgstr "Los puntos de hambre reflejan lo lleno que estás, mientras que los puntos de saturación reflejan cuánto tiempo tardas en volver a tener hambre."
@@ -1049,16 +1049,16 @@ msgid "• Switch camera mode: [F7]"
 msgstr "• Cambiar el modo de cámara: [F7]"
 
 msgid "Sneaking"
-msgstr "Ir sigilosamente"
+msgstr "Agacharse"
 
 msgid "Sneaking makes you walk slower and prevents you from falling off the edge of a block."
-msgstr "Ir sigilosamente hace que camines más lento y evita que te caigas del borde de un bloque."
+msgstr "Agacharse hace que camines más lento y evita que te caigas del borde de un bloque."
 
 msgid "To sneak, hold down the sneak key (default: [Shift]). When you release it, you stop sneaking. Careful: When you release the sneak key at a ledge, you might fall!"
-msgstr "Para ir sigilosamente, mantén presionada la tecla de caminar (por defecto: [Shift]). Cuando la sueltes, dejarás de ir sigilosamente. ¡Cuidado: cuando sueltes la tecla de caminar en un borde, podrías caerte!"
+msgstr "Para agacharse, mantén presionada la tecla de agacharse (por defecto: [Shift]). Cuando la sueltes, dejarás de ir agachado. ¡Cuidado: cuando sueltes la tecla de agacharse en un borde, podrías caerte!"
 
 msgid "Sneaking only works when you stand on solid ground, are not in a liquid and don't climb."
-msgstr "Ir sigilosamente solo funciona cuando estás en un terreno sólido, no estás en un líquido y no trepas."
+msgstr "Agacharse solo funciona cuando estás en un terreno sólido, no estás en un líquido y no trepas."
 
 msgid "Players"
 msgstr "Jugadores"
@@ -1070,7 +1070,7 @@ msgid "Players are living beings. They start with a number of health points (HP)
 msgstr "Los jugadores son seres vivos. Comienzan con una cantidad determinada de puntos de salud (PS) y una cantidad determinada de puntos de respiración (BP)."
 
 msgid "Players are capable of walking, sneaking, jumping, climbing, swimming, diving, mining, building, fighting and using tools and blocks."
-msgstr "Los jugadores son capaces de caminar, ir sigilosamente, saltar, escalar, nadar, bucear, minar, construir, luchar y usar herramientas y bloques."
+msgstr "Los jugadores son capaces de caminar, agacharse, saltar, escalar, nadar, bucear, minar, construir, luchar y usar herramientas y bloques."
 
 msgid "Players can take damage for a variety of reasons:"
 msgstr "Los jugadores pueden sufrir daños por diversas razones:"
@@ -1148,7 +1148,7 @@ msgid "When those criteria are met, the open space is filled with a new liquid s
 msgstr "Cuando se cumplen estos criterios, el espacio abierto se llena con una nueva fuente de líquido del mismo tipo (imagen 3)."
 
 msgid "Swimming in a liquid is fairly straightforward: The usual direction keys for basic movement, the jump key for rising and the sneak key for sinking."
-msgstr "Nadar en un líquido es bastante sencillo: las teclas de dirección habituales para el movimiento básico, la tecla de saltar para elevarse y la tecla de caminar para hundirse."
+msgstr "Nadar en un líquido es bastante sencillo: las teclas de dirección habituales para el movimiento básico, la tecla de saltar para elevarse y la tecla de agacharse para hundirse."
 
 msgid "The physics for swimming and diving in a liquid are:"
 msgstr "Las leyes físicas para nadar y bucear en un líquido son:"
@@ -1250,7 +1250,7 @@ msgid "• Punching: Attacking with left-click, is also used on blocks"
 msgstr "• Puñetazos: Atacar con clic izquierdo, también se utiliza en bloques"
 
 msgid "• Sneaking: Walking slowly while (usually) avoiding to fall over edges"
-msgstr "• Ir sigilosamente: caminar lentamente mientras se evita (generalmente) caerse por los bordes"
+msgstr "• Agacharse: caminar lentamente mientras se evita (generalmente) caerse por los bordes"
 
 msgid "• Climbing: Moving up or down a climbable block"
 msgstr "• Escalada: subir o bajar un bloque escalable"
@@ -1346,7 +1346,7 @@ msgid "Interface"
 msgstr "Interfaz"
 
 msgid "• Hotbar: Inventory slots at the bottom"
-msgstr "• Hotbar: ranuras de inventario en la parte inferior"
+msgstr "• Barra de ítems: ranuras de inventario en la parte inferior"
 
 msgid "• Statbar: Indicator made out of half-symbols, used for health and breath"
 msgstr "• Barra de estadística: Indicador formado por medio de símbolos, utilizado para la salud y la respiración"
@@ -1373,13 +1373,13 @@ msgid "Technical terms:"
 msgstr "Términos técnicos:"
 
 msgid "• Luanti: This game engine"
-msgstr ""
+msgstr "• Luanti: Este motor de juego"
 
 msgid "• Minetest Game: A game for Luanti by the Minetest developers"
-msgstr ""
+msgstr "• Minetest Game: Un juego para Luanti de los desarrolladores de Minetest"
 
 msgid "• Game: A complete playing experience to be used in Luanti; such as a game or sandbox or similar"
-msgstr ""
+msgstr "• Juego: Una experiencia de juego completa para ser utilizada en Luanti; como un juego o sandbox o similar"
 
 msgid "• Mod: A single subsystem which adds or modifies functionality; is the basic building block of games and can be used to further enhance or modify them"
 msgstr "• Mod: Un subsistema único que agrega o modifica funcionalidad; es el componente básico de los juegos y se puede utilizar para mejorarlos o modificarlos aún más"
@@ -1391,17 +1391,17 @@ msgid "• Node: Other word for “block”"
 msgstr "• Nodo: Otra palabra para “bloque”"
 
 msgid "Luanti"
-msgstr ""
+msgstr "Luanti"
 
 msgid "Luanti (formely Minetest) is a free software game engine for games based on voxel gameplay, inspired by InfiniMiner, Minecraft, and the like. Luanti was originally created by Perttu Ahola (alias “celeron55”)."
-msgstr ""
+msgstr "Luanti (anteriormente Minetest) es un motor de juegos de software libre para juegos basados en jugabilidad de vóxeles, inspirado en InfiniMiner, Minecraft y similares. Luanti fue creado originalmente por Perttu Ahola (alias “celeron55”)."
 
 msgid "A core feature of Luanti is the built-in modding capability, which all games consist of too. They can be as simple as adding a few decorational blocks or be very complex by e.g. introducing completely new gameplay concepts, generating a completely different kind of world, and many other things."
-msgstr ""
+msgstr "Una característica fundamental de Luanti es la capacidad de modificación integrada, que también tienen todos los juegos. Pueden ser tan simples como agregar algunos bloques decorativos o muy complejas, por ejemplo, al introducir conceptos de juego completamente nuevos, generar un tipo de mundo completamente diferente y muchas otras cosas."
 
 msgid "Luanti can be played alone or online together with multiple players. Online play will work out of the box with any mods, with no need for additional software as they are entirely provided by the server."
-msgstr ""
+msgstr "Luanti se puede jugar solo o en línea con varios jugadores. El juego en línea funciona de inmediato con cualquier mod, sin necesidad de software adicional, ya que todo lo proporciona el servidor."
 
 msgid "MineClonia is a game that is built on top of the Luanti engine that intends to create a game that is as close to Minecraft as possible. There are many other games for Minetest however, that can be installed from the main menu content browser."
-msgstr ""
+msgstr "MineClonia es un juego que se basa en el motor de Luanti y que pretende crear un juego lo más parecido posible a Minecraft. Sin embargo, hay muchos otros juegos para Minetest que se pueden instalar desde el navegador de contenido del menú principal."
 

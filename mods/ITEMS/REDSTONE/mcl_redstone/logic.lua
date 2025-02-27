@@ -46,18 +46,15 @@ local wiredirs_down = {
 local function iterate_wire_neighbours(wireflags)
 	local i = 1
 	local state = 0
-	-- core.debug("IMPORTANT!", wireflags)
 	-- `state` is a special variable that meansL
 	-- 0: now returning entry from the block to the side
 	-- 1: now returning entry from the block to the side and up
 	-- 2: now returning entry from the block to the side and down
 	return function(wireflags)
-		-- core.debug("ITER!", wireflags, i, state)
 		if state == 0 then
 			while i <= 8 do
 				local val = bit.band(wireflags, bit.bor(i, bit.lshift(i, 4)))
 				local tmp = wiredirs[i]
-				-- core.debug("pop", val)
 				if val == i then
 					-- if goes to the side of that block
 					state = 2
@@ -69,7 +66,6 @@ local function iterate_wire_neighbours(wireflags)
 				end
 				i = i * 2
 			end
-			-- core.debug("terminate")
 			return
 		elseif state == 1 then
 			state = 2
@@ -83,10 +79,15 @@ local function iterate_wire_neighbours(wireflags)
 	end, wireflags
 end
 
--- Get power from direct neighbours at pos. Returns weak and strong power.
+-- Get power from direct neighbours at pos. Returns "weak" and "strong" power.
+--  weak:                soft powered. (i.e. activates components, doesn't power blocks.)
+--  strong:              hard powered, strong power
+--  weak_from_wire_only: hard powered, weak power. (doesn't power wire through blocks.)
 local function get_node_power(pos, include_wire)
 	local weak = 0
 	local strong = 0
+	local weak_from_wire_only = 0
+
 	for i, dir in pairs(sixdirs) do
 		local pos2 = pos:add(dir)
 		local node2 = minetest.get_node(pos2)
@@ -100,11 +101,12 @@ local function get_node_power(pos, include_wire)
 			end
 		elseif include_wire and wireflag_tab[node2.name] and (i == 5 or check_bit(wireflag_tab[node2.name], i)) then
 			-- Wire is above or pointing towards this node.
-			weak = math.max(weak, node2.param2)
+			weak = math.max(weak, bit.band(node2.param2, 0xF))
+			weak_from_wire_only = math.max(weak_from_wire_only, bit.band(node2.param2, 0xF))
 		end
 	end
 
-	return weak, strong
+	return weak, strong, weak_from_wire_only
 end
 
 -- Get strong power from neighbours (including opaque nodes) at pos.
@@ -116,7 +118,7 @@ local function get_node_power_2(pos)
 
 		if opaque_tab[node2.name] then
 			local _, power2 = get_node_power(pos2)
-			max = math.max(max, power2, opaque_tab[node2.name])
+			max = math.max(max, power2)
 		end
 	end
 
@@ -127,7 +129,9 @@ end
 -- were power which is lowered/removed. 'fill_queue' is a queue of events were
 -- power is added/raised. 'update' is a table which gets populated with
 -- positions that should get redstone update events.
-local function propagate_wire(clear_queue, fill_queue, updates)
+local function propagate_wire(clear_nodes, fill_nodes, updates)
+	local fill_queue = mcl_util.queue()
+	local clear_queue = mcl_util.queue()
 	local nodecache = {}
 	local updates_ = {}
 
@@ -145,12 +149,25 @@ local function propagate_wire(clear_queue, fill_queue, updates)
 		nodecache[h] = node
 	end
 
-	local function get_power(node)
-		return wireflag_tab[node.name] and node.param2 or 0
+	local function set_power(pos, power)
+		local node = get_node(pos)
+		node.param2 = bit.bor(bit.band(node.param2, 0xF0), power)
+		node.dirty = true
 	end
 
-	for _, entry in pairs(clear_queue.queue) do
-		swap_node(entry.pos, {name = get_node(entry.pos).name, param2 = 0})
+	local function get_power(node)
+		if wireflag_tab[node.name] then
+			return bit.band(node.param2, 0xF), bit.rshift(node.param2, 4)
+		end
+		return 0, 0
+	end
+
+	for _, entry in pairs(clear_nodes) do
+		swap_node(entry.pos, {
+			name = get_node(entry.pos).name,
+			param2 = 0
+		})
+		clear_queue:enqueue(entry)
 	end
 
 	while clear_queue:size() > 0 do
@@ -162,18 +179,19 @@ local function propagate_wire(clear_queue, fill_queue, updates)
 		updates_[minetest.hash_node_position(pos)] = pos
 
 		for dir in iterate_wire_neighbours(wireflag_tab[node.name] or 0xFF) do
-			-- core.debug(dump(dir))
 			if not dir.obstruct or not opaque_tab[get_node(pos:add(dir.obstruct)).name] then
 				local pos2 = pos:add(dir.wire)
 				local node2 = get_node(pos2)
-				local power2 = get_power(node2)
+				local power2, power2_direct = get_power(node2)
 
 				if power2 > 0 then
 					if power2 < power then
-						swap_node(pos2, {name = node2.name, param2 = 0})
+						set_power(pos2, 0)
 						clear_queue:enqueue({pos = pos2, power = power2})
+						if power2_direct > 0 then
+							table.insert(fill_nodes, {pos = pos2, power = power2_direct})
+						end
 					else
-						swap_node(pos2, {name = node2.name, param2 = power2})
 						fill_queue:enqueue({pos = pos2, power = power2})
 					end
 				end
@@ -181,8 +199,12 @@ local function propagate_wire(clear_queue, fill_queue, updates)
 		end
 	end
 
-	for _, entry in pairs(fill_queue.queue) do
-		swap_node(entry.pos, {name = get_node(entry.pos).name, param2 = entry.power})
+	for _, entry in pairs(fill_nodes) do
+		swap_node(entry.pos, {
+			name = get_node(entry.pos).name,
+			param2 = bit.bor(bit.lshift(entry.power, 4), entry.power)
+		})
+		fill_queue:enqueue(entry)
 	end
 
 	while fill_queue:size() > 0 do
@@ -198,7 +220,7 @@ local function propagate_wire(clear_queue, fill_queue, updates)
 				local pos2 = pos:add(dir.wire)
 				local node2 = get_node(pos2)
 				if wireflag_tab[node2.name] and get_power(node2) < power2 then
-					swap_node(pos2, {name = node2.name, param2 = power2})
+					set_power(pos2, power2)
 					fill_queue:enqueue({pos = pos2, power = power2})
 				end
 			end
@@ -252,12 +274,10 @@ function mcl_redstone.get_power(pos, dir, option)
 			local power2 = get_power_tab[node2.name](node2, -dir)
 			power = math.max(power, power2)
 		elseif wireflag_tab[node2.name] and (i == 5 or check_bit(wireflag_tab[node2.name], i)) then
-			power = math.max(power, node2.param2)
-		elseif opaque_tab[node2.name] then
-			power = math.max(power, opaque_tab[node2.name])
-			if option ~= "direct" then
-				power = math.max(power, get_node_power(pos2, true))
-			end
+			power = math.max(power, bit.band(node2.param2, 0xF))
+		elseif opaque_tab[node2.name] and option ~= "direct" then
+			local _, strong, weak_from_wire = get_node_power(pos2, true)
+			power = math.max(power, math.max(strong, weak_from_wire))
 		end
 	end
 
@@ -268,6 +288,8 @@ local function schedule_update(pos, update)
 	local delay = update.delay or 1
 	local priority = update.priority or 1000
 	local oldnode = minetest.get_node(pos)
+	update.param2 = update.param2 or 0
+
 	mcl_redstone._schedule_update(delay, priority, pos, update, oldnode)
 end
 
@@ -294,6 +316,63 @@ end
 -- TODO: A bit ugly, could be refactored.
 function mcl_redstone.update_node(pos)
 	mcl_redstone._pending_updates[minetest.hash_node_position(pos)] = pos
+end
+
+-- Update neighbouring wires and components at pos. Oldnode is the previous
+-- node at the position.
+local function update_neighbours(pos, oldnode, newnode)
+	minetest.load_area(pos:subtract(20), pos:add(20))
+
+	local fill_nodes = {}
+	local clear_nodes = {}
+	local node = newnode or minetest.get_node(pos)
+	local ndef = minetest.registered_nodes[node.name]
+	local oldndef = oldnode and minetest.registered_nodes[oldnode.name]
+	local get_power = ndef and ndef._mcl_redstone and ndef._mcl_redstone.get_power
+	local old_get_power = oldndef and oldndef._mcl_redstone and oldndef._mcl_redstone.get_power
+
+	local function update_wire(pos, oldpower)
+		if oldpower then
+			table.insert(clear_nodes, {pos = pos, power = oldpower})
+		end
+		local power = get_node_power_2(pos)
+
+		table.insert(fill_nodes, {pos = pos, power = power})
+	end
+
+	local hash = minetest.hash_node_position(pos)
+	mcl_redstone._pending_updates[hash] = update_tab[node.name] and pos or nil
+
+	if not (get_power or old_get_power) then return end
+
+	for _, dir in pairs(sixdirs) do
+		local pos2 = pos:add(dir)
+		local power2 = get_power and get_power(node, dir) or 0
+		local oldpower2 = old_get_power and old_get_power(oldnode, dir) or 0
+
+		if power2 ~= oldpower2 then
+			local node2 = minetest.get_node(pos2)
+			local hash2 = minetest.hash_node_position(pos2)
+
+			mcl_redstone._pending_updates[hash2] = update_tab[node2.name] and pos2 or nil
+			if wireflag_tab[node2.name] then
+				update_wire(pos2, oldpower2)
+			elseif opaque_tab[node2.name] then
+				for i, dir in pairs(sixdirs) do
+					local pos3 = pos2:add(dir)
+					local node3 = minetest.get_node(pos3)
+					local hash3 = minetest.hash_node_position(pos3)
+
+					mcl_redstone._pending_updates[hash3] = update_tab[node3.name] and pos3 or nil
+					if wireflag_tab[node3.name] then
+						update_wire(pos3, math.max(oldpower2, 0))
+					end
+				end
+			end
+		end
+	end
+
+	propagate_wire(clear_nodes, fill_nodes)
 end
 
 -- Piston pusher nodes calls this during init to avoid circuits stopping if a
@@ -325,73 +404,16 @@ function mcl_redstone.swap_node(pos, node)
 	mcl_redstone._update_neighbours(pos, oldnode, node)
 end
 
--- Update neighbouring wires and components at pos. Oldnode is the previous
--- node at the position.
-function update_neighbours(pos, oldnode, newnode)
-	minetest.load_area(pos:subtract(20), pos:add(20))
-
-	local fill_queue = mcl_util.queue()
-	local clear_queue = mcl_util.queue()
-	local node = newnode or minetest.get_node(pos)
-	local ndef = minetest.registered_nodes[node.name]
-	local oldndef = oldnode and minetest.registered_nodes[oldnode.name]
-	local get_power = ndef and ndef._mcl_redstone and ndef._mcl_redstone.get_power
-	local old_get_power = oldndef and oldndef._mcl_redstone and oldndef._mcl_redstone.get_power
-
-	local function update_wire(pos, oldpower, dirs)
-		if oldpower then
-			clear_queue:enqueue({pos = pos, power = oldpower, dirs = dirs})
-		end
-		local power = get_node_power_2(pos)
-
-		fill_queue:enqueue({pos = pos, power = power, dirs = dirs})
-	end
-
-	local hash = minetest.hash_node_position(pos)
-	mcl_redstone._pending_updates[hash] = update_tab[node.name] and pos or nil
-
-	if not (get_power or old_get_power) then return end
-
-	for _, dir in pairs(sixdirs) do
-		local pos2 = pos:add(dir)
-		local power2 = get_power and get_power(node, dir) or 0
-		local oldpower2 = old_get_power and old_get_power(oldnode, dir) or 0
-
-		if power2 ~= oldpower2 then
-			local node2 = minetest.get_node(pos2)
-			local hash2 = minetest.hash_node_position(pos2)
-
-			mcl_redstone._pending_updates[hash2] = update_tab[node2.name] and pos2 or nil
-			if wireflag_tab[node2.name] then
-				update_wire(pos2, oldpower2)
-			elseif opaque_tab[node2.name] then
-				for i, dir in pairs(sixdirs) do
-					local pos3 = pos2:add(dir)
-					local node3 = minetest.get_node(pos3)
-					local hash3 = minetest.hash_node_position(pos3)
-
-					mcl_redstone._pending_updates[hash3] = update_tab[node3.name] and pos3 or nil
-					if wireflag_tab[node3.name] then
-						update_wire(pos3, math.max(oldpower2, 0, opaque_tab[node2.name]))
-					end
-				end
-			end
-		end
-	end
-
-	propagate_wire(clear_queue, fill_queue)
-end
-
 local function opaque_update_neighbours(pos, added)
-	local fill_queue = mcl_util.queue()
-	local clear_queue = mcl_util.queue()
+	local fill_nodes = {}
+	local clear_nodes = {}
 
 	local function update_wire(pos)
-		local oldpower = minetest.get_node(pos).param2
+		local oldpower = bit.band(minetest.get_node(pos).param2, 0xF)
 		local power = get_node_power_2(pos)
 
-		clear_queue:enqueue({pos = pos, power = oldpower})
-		fill_queue:enqueue({pos = pos, power = power})
+		table.insert(clear_nodes, {pos = pos, power = oldpower})
+		table.insert(fill_nodes, {pos = pos, power = power})
 	end
 
 	for _, dir in pairs(sixdirs) do
@@ -405,21 +427,21 @@ local function opaque_update_neighbours(pos, added)
 		end
 	end
 
-	propagate_wire(clear_queue, fill_queue)
+	propagate_wire(clear_nodes, fill_nodes)
 end
 
 local function update_wire(pos, oldnode)
-	local fill_queue = mcl_util.queue()
-	local clear_queue = mcl_util.queue()
+	local fill_nodes = {}
+	local clear_nodes = {}
 	local node = minetest.get_node(pos)
 	local power = get_node_power_2(pos)
 
-	clear_queue:enqueue({pos = pos, power = oldnode and oldnode.param2 or 0})
+	table.insert(clear_nodes, {pos = pos, power = oldnode and oldnode.param2 or 0})
 	if wireflag_tab[node.name] then
-		fill_queue:enqueue({pos = pos, power = power})
+		table.insert(fill_nodes, {pos = pos, power = power})
 	end
 
-	propagate_wire(clear_queue, fill_queue)
+	propagate_wire(clear_nodes, fill_nodes)
 end
 
 -- Override nodes to perform redstone updates on changes.
@@ -427,7 +449,7 @@ minetest.register_on_mods_loaded(function()
 	for name, ndef in pairs(minetest.registered_nodes) do
 		local old_construct = ndef.on_construct
 		local old_destruct = ndef.after_destruct
-		if minetest.get_item_group(name, "opaque") ~= 0 and minetest.get_item_group(name, "solid") ~= 0 then
+		if opaque_tab[name] then
 			minetest.override_item(name, {
 				on_construct = function(pos)
 					if old_construct then

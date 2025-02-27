@@ -202,9 +202,6 @@ msgstr "Strider bambino"
 msgid "Tropical Fish"
 msgstr "Pesce tropicale"
 
-msgid "Tropical fish"
-msgstr ""
-
 msgid "Vex"
 msgstr "Vessante"
 

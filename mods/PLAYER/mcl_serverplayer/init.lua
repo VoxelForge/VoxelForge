@@ -28,7 +28,7 @@ end)
 -- Modchannel message definitions.
 -----------------------------------------------------------------------
 
-local MAX_PROTO_VERSION = 0
+local MAX_PROTO_VERSION = 1
 
 -- Serverbound messages.
 local SERVERBOUND_HELLO = 'aa'
@@ -45,6 +45,8 @@ local SERVERBOUND_REFUSE_VEHICLE = 'ak'
 local SERVERBOUND_MOVE_VEHICLE = 'al'
 local SERVERBOUND_CONFIGURE_VEHICLE = 'am'
 local SERVERBOUND_TURN_VEHICLE = 'an'
+local SERVERBOUND_SHIELDCTRL = 'ao' -- Protocol version 1.
+local SERVERBOUND_EAT_ITEM = 'ap'
 
 -- Clientbound messages.
 local CLIENTBOUND_HELLO = 'AA'
@@ -63,6 +65,8 @@ local CLIENTBOUND_VEHICLE_POSITION = 'AM'
 local CLIENTBOUND_RESCIND_VEHICLE = 'AN'
 local CLIENTBOUND_VEHICLE_CAPABILITIES = 'AO'
 local CLIENTBOUND_KNOCKBACK = 'AP'
+local CLIENTBOUND_OFFHAND_ITEM = 'AQ' -- Protocol version 1.
+local CLIENTBOUND_PLAYER_VITALS = 'AR'
 
 local MAX_PAYLOAD = 65533
 
@@ -179,6 +183,27 @@ function mcl_serverplayer.send_knockback (player, kb)
 	})
 end
 
+function mcl_serverplayer.send_offhand_item (player, offhand_item)
+	-- Remove stack's metadata.
+	local stack = ItemStack (offhand_item:get_name ())
+	modchannels[player]:send_all (table.concat {
+		CLIENTBOUND_OFFHAND_ITEM,
+		stack:to_string (),
+	})
+end
+
+function mcl_serverplayer.send_player_vitals (player, hp, hunger, saturation)
+	local payload = core.write_json ({
+		hp = hp,
+		hunger = hunger,
+		saturation = saturation,
+	})
+	assert (#payload <= MAX_PAYLOAD, "oversized ClientboundPlayerVitals")
+	modchannels[player]:send_all (table.concat {
+		CLIENTBOUND_PLAYER_VITALS, payload,
+	})
+end
+
 -----------------------------------------------------------------------
 -- Handshakes.  When a client joins, it is not considered CSM-enabled
 -- till a SERVERBOUND_HELLO packet is received containing the protocol
@@ -203,6 +228,11 @@ function mcl_serverplayer.is_csm_capable (player)
 			== "complete")
 end
 
+function mcl_serverplayer.is_csm_at_least (player, proto)
+	return client_states[player]
+		and (client_states[player].proto or -1) >= proto
+end
+
 local serverbound_handshake = {}
 local keys_to_copy = {
 	"_mcl_velocity_factor",
@@ -225,6 +255,8 @@ minetest.register_on_mods_loaded (function ()
 	serverbound_handshake.bow_info = mcl_serverplayer.bow_info
 end)
 
+mcl_serverplayer.handshake_item_defs = {}
+
 local function process_serverbound_hello (player, state, payload)
 	if state.handshake_status ~= "want_hello" then
 		error ("Duplicate ServerboundHello messages")
@@ -236,6 +268,12 @@ local function process_serverbound_hello (player, state, payload)
 
 		-- Generate the response.
 		serverbound_handshake.proto = proto
+		if proto >= 1 then
+			serverbound_handshake.item_defs
+				= mcl_serverplayer.handshake_item_defs
+		else
+			serverbound_handshake.item_defs = nil
+		end
 		local payload = minetest.write_json (serverbound_handshake)
 		if (#payload % MAX_PAYLOAD) == 0 then
 			-- Insert trailing whitespace so that partial
@@ -312,6 +350,12 @@ local function receive_modchannel_message_1 (player, message)
 				.. player:get_player_name ()
 			minetest.log ("action", blurb)
 			state.handshake_status = "complete"
+
+			if state.proto >= 1 then
+				local inv = player:get_inventory ()
+				local stack = inv:get_stack ("offhand", 1)
+				mcl_serverplayer.send_offhand_item (player, stack)
+			end
 		end
 		if msgtype == SERVERBOUND_PLAYERPOSE then
 			local id = tonumber (payload)
@@ -428,6 +472,52 @@ local function receive_modchannel_message_1 (player, message)
 				error ("Invalid ServerboundTurnVehicle message")
 			end
 			mcl_serverplayer.handle_turn_vehicle (player, state, id, tsc, yaw)
+		elseif msgtype == SERVERBOUND_SHIELDCTRL then
+			if state.proto < 1 then
+				error ("ServerboundShieldctrl messages can only be "
+				       .. "delivered when protocol version >= 1")
+			end
+
+			local blocking = tonumber (payload)
+			if blocking ~= 0 and blocking ~= 1 and blocking ~= 2 then
+				error ("Invalid parameter in ServerboundShieldctrl message")
+			end
+			mcl_shields.set_blocking (player, blocking)
+		elseif msgtype == SERVERBOUND_EAT_ITEM then
+			if state.proto < 1 then
+				error ("ServerboundEatItem messages can only be "
+				       .. "delivered when protocol version >= 1")
+			end
+
+			local payload = minetest.parse_json (payload)
+			if type (payload) ~= "table"
+				or type (payload.stack) ~= "string"
+				or type (payload.index) ~= "number" then
+				error ("Invalid payload in ServerboundEatItem message")
+			end
+			local stack = ItemStack (payload.stack)
+			local index = payload.index
+			local def = stack:get_definition ()
+
+			if def and def.on_place
+				and def.groups.food
+				and def.groups.food > 0 then
+				local inv = player:get_inventory ()
+
+				-- Guarantee that the stack's contents
+				-- haven't changed in the interim.
+				if inv:get_stack ("main", index):equals (stack) then
+					stack = def.on_place (stack, player, {
+						type = "nothing",
+						_csm_eating = true,
+					})
+					if stack then
+						inv:set_stack ("main", index, stack)
+					end
+				end
+			else
+				error ("Attempting to consume non-edible item")
+			end
 		else
 			minetest.log ("warning", table.concat ({
 				"Client ", player:get_player_name (), " delivered",

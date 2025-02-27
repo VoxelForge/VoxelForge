@@ -124,9 +124,6 @@ msgstr "Nichts anzuzeigen"
 msgid "Collect items to reveal more recipes"
 msgstr "Gegenstände aufsammeln, um mehr Rezepte aufzudecken"
 
-msgid "Invalid crafting ingredient: \"@1\" (dosent exist)"
-msgstr ""
-
 msgid "This item can be repaired at an anvil with: @1."
 msgstr "Dieser Gegenstand kann an einem Amboss repariert werden mit: @1."
 

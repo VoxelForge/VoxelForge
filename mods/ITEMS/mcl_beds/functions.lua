@@ -1,8 +1,6 @@
 local S = minetest.get_translator(minetest.get_current_modname())
 local F = minetest.formspec_escape
 
-local allow_nav_hacks = minetest.settings:get_bool("mcl_mob_allow_nav_hacks", false)
-
 local player_in_bed = 0
 local is_sp = minetest.is_singleplayer()
 
@@ -305,18 +303,7 @@ function mcl_beds.kick_player(player)
 	end
 end
 
--- Remember when the last skip was
-local last_skip = 0
-
-function mcl_beds.last_skip()
-	return last_skip
-end
-
 function mcl_beds.skip_night()
-	if allow_nav_hacks then
-		last_skip = minetest.get_day_count()
-	end
-
 	minetest.set_timeofday(0.25) -- tod = 6000
 end
 

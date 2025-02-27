@@ -13,15 +13,39 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: mtt_convert 0.1.1\n"
 
+msgid "Unavailable"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Beacon"
+msgstr "Маяк"
+
 msgid "Primary Power:"
 msgstr "Основной эффект:"
 
 msgid "Secondary Power:"
 msgstr "Вторичная энергия:"
 
-msgid "Inventory:"
-msgstr "Инвентарь:"
+msgid "Swiftness"
+msgstr ""
 
-msgid "Beacon"
-msgstr "Маяк"
+msgid "Haste"
+msgstr ""
+
+msgid "Resistance"
+msgstr ""
+
+msgid "Leaping"
+msgstr ""
+
+msgid "Strength"
+msgstr ""
+
+msgid "Regeneration"
+msgstr ""
+
+msgid "Inventory"
+msgstr ""
 

@@ -1,5 +1,5 @@
 # textdomain: mcl_daylight_detector
-Daylight Sensor=日光探测器
+Daylight Sensor=阳光探测器
 Provides redstone power when in sunlight=在阳光下提供红石能量
 Can be inverted=可反转
 Daylight detectors are redstone components which provide redstone power when they are in sunlight and no power otherwise. They can also be inverted.=阳光探测器是红石元件，在阳光下时它们会提供红石能量，否则不提供能量。它们也可以被反转。

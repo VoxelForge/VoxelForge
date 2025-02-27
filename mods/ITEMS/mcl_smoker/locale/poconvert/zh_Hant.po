@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Smoker"
-msgstr ""
+msgstr "煙燻爐"
 
 msgid "Cooks food faster than furnace"
 msgstr ""
@@ -38,5 +38,5 @@ msgid "Use the recipe book to see what foods you can smelt, what you can use as 
 msgstr ""
 
 msgid "Burning Smoker"
-msgstr ""
+msgstr "煙燻爐（運作中）"
 

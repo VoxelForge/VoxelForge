@@ -29,7 +29,7 @@ msgid "Miscellaneous"
 msgstr "Egyéb"
 
 msgid "Search Items"
-msgstr "Keresés"
+msgstr "Tárgy keresése"
 
 msgid "Foodstuffs"
 msgstr "Élelmiszerek"
@@ -60,6 +60,9 @@ msgstr "Kihívások"
 
 msgid "Switch stack size"
 msgstr "Köteg méretének állítása"
+
+msgid "@1 / @2"
+msgstr ""
 
 msgid "Recipe book"
 msgstr "Receptkönyv"

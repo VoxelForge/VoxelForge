@@ -17,13 +17,13 @@ msgid "Block of Amethyst"
 msgstr "Amethystblock"
 
 msgid "The Block of Amethyst is a decoration block crafted from amethyst shards."
-msgstr ""
+msgstr "Der Amethyst-Block ist ein Dekorationsblock, welcher aus Amethyst-Scherben erstellt wird."
 
 msgid "Budding Amethyst"
 msgstr "Amethystknospenblock"
 
 msgid "The Budding Amethyst can grow amethyst"
-msgstr ""
+msgstr "Auf Amethystknospenblock kann Amethyst wachsen"
 
 msgid "Amethyst Shard"
 msgstr "Amethystscherbe"

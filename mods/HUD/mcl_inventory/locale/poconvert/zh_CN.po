@@ -61,6 +61,9 @@ msgstr "进度"
 msgid "Switch stack size"
 msgstr "切换堆叠数量"
 
+msgid "@1 / @2"
+msgstr "@1 / @2"
+
 msgid "Recipe book"
 msgstr "配方书"
 
@@ -71,7 +74,7 @@ msgid "Select player skin"
 msgstr "选择玩家皮肤"
 
 msgid "Crafting table out of range!"
-msgstr ""
+msgstr "离工作台太远！"
 
 msgid "Crafting"
 msgstr "制作"

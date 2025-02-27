@@ -127,9 +127,6 @@ msgstr ""
 msgid "Range: @1"
 msgstr "Alcance: @1"
 
-msgid "Range: 4"
-msgstr "Range: 4"
-
 msgid "Range: @1 (@2)"
 msgstr "Alcance: @1 (@2)"
 

@@ -14,17 +14,17 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "[<gamemode>] [<player>]"
-msgstr ""
+msgstr "[<遊戲模式>] [<玩家>]"
 
-msgid "Change gamemode (survival/creative) for yourself or player"
+msgid "Change gamemode (survival/creative/0/1/s/c) for yourself or player"
 msgstr ""
 
 msgid "Player not online"
-msgstr ""
+msgstr "玩家不在線"
 
 msgid "Failed to set Gamemode @1 for player @2"
-msgstr ""
+msgstr "失敗：玩家 @2 無法設定為 @1 模式"
 
 msgid "Gamemode for player @1: @2"
-msgstr ""
+msgstr "玩家 @1 的遊戲模為現在為 @2"
 

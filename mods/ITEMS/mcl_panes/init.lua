@@ -106,7 +106,7 @@ function mcl_panes.register_pane(name, def)
 	end
 	flatgroups.pane = 1
 	flatgroups.deco_block = 1
-	flatgroups._mcl_partial = 2
+	flatgroups.pathfinder_partial = 2
 	minetest.register_node(":mcl_panes:" .. name .. "_flat", {
 		description = def.description,
 		_doc_items_create_entry = def._doc_items_create_entry,
@@ -142,7 +142,7 @@ function mcl_panes.register_pane(name, def)
 	local groups = table.copy(def.groups)
 	groups.pane = 1
 	groups.not_in_creative_inventory = 1
-	groups._mcl_partial = 2
+	groups.pathfinder_partial = 2
 	minetest.register_node(":mcl_panes:" .. name, {
 		drawtype = "nodebox",
 		paramtype = "light",
@@ -212,7 +212,7 @@ local function pane(description, node, append, color)
 		inventory_image = texture1,
 		wield_image = texture1,
 		sounds = mcl_sounds.node_sound_glass_defaults(),
-		groups = {handy=1, material_glass=1, _mcl_partial=2},
+		groups = {handy=1, material_glass=1, pathfinder_partial=2},
 		recipe = {
 			{node, node, node},
 			{node, node, node},

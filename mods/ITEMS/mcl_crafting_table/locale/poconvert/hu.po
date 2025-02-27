@@ -32,8 +32,8 @@ msgid "3×3 crafting grid"
 msgstr "3x3 barkácsrács"
 
 msgid "A crafting table is a block which grants you access to a 3×3 crafting grid which allows you to perform advanced crafts."
-msgstr "A barkácsasztal egy olyan blokk, amely hozzáférést biztosít egy 3×3-as barkácsrácshoz, amely lehetővé teszi a fejlett eszközök elkészítését."
+msgstr "A barkácsasztal egy olyan blokk, amely hozzáférést biztosít egy 3×3-as barkácsrácshoz, amely bonyolutabb barkácsolást tesz lehetővé."
 
 msgid "Rightclick the crafting table to access the 3×3 crafting grid."
-msgstr "Jobb kattintás a barkácsasztalra a 3x3-as rács eléréséhez."
+msgstr "Kattints jobb gombbal a barkácsasztalra a 3×3-as barkácsrács eléréséhez."
 

@@ -17,10 +17,10 @@ msgid "This door is a 2-block high barrier which can be opened or closed by hand
 msgstr ""
 
 msgid "This door is a 2-block high barrier which can only be opened by redstone power, not by hand."
-msgstr ""
+msgstr "このドアは高さ2ブロックの遮蔽物で、レッドストーン信号によってのみ開閉でき、手では開けられません。"
 
 msgid "To open or close this door, send a redstone signal to its bottom half."
-msgstr ""
+msgstr "このドアを開閉するには、その下半分にレッドストーン信号を供給します。"
 
 msgid "To open or close this door, rightclick it or send a redstone signal to its bottom half."
 msgstr ""

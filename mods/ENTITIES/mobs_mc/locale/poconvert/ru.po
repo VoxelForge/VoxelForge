@@ -202,9 +202,6 @@ msgstr "Малыш-страйдер"
 msgid "Tropical Fish"
 msgstr "Тропическая рыба"
 
-msgid "Tropical fish"
-msgstr "Тропические рыбы"
-
 msgid "Vex"
 msgstr "Досаждатель"
 

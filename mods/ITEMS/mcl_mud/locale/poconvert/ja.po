@@ -32,8 +32,8 @@ msgid "Decorative block crafted from packed mud."
 msgstr "固めた泥で作った装飾ブロックです。"
 
 msgid "Mud Brick Stair"
-msgstr ""
+msgstr "泥レンガの階段"
 
 msgid "Mud Brick Slab"
-msgstr ""
+msgstr "泥レンガのハーフブロック"
 

@@ -17,103 +17,103 @@ msgid "Deepslate"
 msgstr "深板岩"
 
 msgid "Deepslate is a stone type found deep underground in the Overworld that functions similar to regular stone but is harder than the stone."
-msgstr ""
+msgstr "深板岩存在於主世界深處，功用類似石頭，但更堅硬。"
 
 msgid "Infested Deepslate"
-msgstr ""
+msgstr "蛀蝕的深板岩"
 
 msgid "Reinforced Deepslate"
-msgstr ""
+msgstr "強化深板岩"
 
 msgid "Reinforced deepslate is a very hard block undestructable by even wither explosions. It is unobtainable in survival mode."
-msgstr ""
+msgstr "強化深板岩非常堅硬，連凋零爆炸都無法破壞。生存模式下無法獲得。"
 
 msgid "Deepslate Coal Ore"
-msgstr ""
+msgstr "深板岩煤礦"
 
 msgid "Deepslate Iron Ore"
-msgstr ""
+msgstr "深板岩鐵礦"
 
 msgid "Deepslate Gold Ore"
-msgstr ""
+msgstr "深板岩金礦"
 
 msgid "Deepslate Emerald Ore"
-msgstr ""
+msgstr "深板岩綠寶石礦"
 
 msgid "Deepslate Diamond Ore"
-msgstr ""
+msgstr "深板岩鑽石礦"
 
 msgid "Deepslate Lapis Lazuli Ore"
-msgstr ""
+msgstr "深板岩青金石礦"
 
 msgid "Deepslate Redstone Ore"
-msgstr ""
+msgstr "深板岩紅石礦"
 
 msgid "Lit Deepslate Redstone Ore"
-msgstr ""
+msgstr "深板岩紅石礦(亮）"
 
 msgid "Deepslate Copper Ore"
-msgstr "深板岩銅礦石"
+msgstr "深板岩銅礦"
 
 msgid "Cobbled Deepslate"
-msgstr ""
+msgstr "鵝卵深板岩"
 
 msgid "Cobbled deepslate is a stone variant that functions similar to cobblestone or blackstone."
-msgstr ""
+msgstr "鵝卵深板岩是一種石方塊，功用類似鵝卵石或黑石。"
 
 msgid "Cobbled Deepslate Stairs"
-msgstr ""
+msgstr "鵝卵深板岩階梯"
 
 msgid "Cobbled Deepslate Slab"
-msgstr ""
+msgstr "鵝卵深板岩台階"
 
 msgid "Cobbled Deepslate Wall"
-msgstr ""
+msgstr "鵝卵深板岩牆"
 
 msgid "Polished Deepslate"
-msgstr ""
+msgstr "拋光深板岩"
 
 msgid "Polished deepslate is the stone-like polished version of deepslate."
-msgstr ""
+msgstr "拋光深板岩是經拋光的深板岩。"
 
 msgid "Polished Deepslate Stairs"
-msgstr ""
+msgstr "拋光深板岩階梯"
 
 msgid "Polished Deepslate Slab"
-msgstr ""
+msgstr "拋光深板岩台階"
 
 msgid "Polished Deepslate Wall"
-msgstr ""
+msgstr "拋光深板岩牆"
 
 msgid "Deepslate Bricks"
-msgstr ""
+msgstr "深板岩磚"
 
 msgid "Deepslate bricks are the brick version of deepslate."
-msgstr ""
+msgstr "深板岩磚是深板岩的磚塊版。"
 
 msgid "Deepslate Brick Stairs"
-msgstr ""
+msgstr "深板岩磚階梯"
 
 msgid "Deepslate Brick Slab"
-msgstr ""
+msgstr "深板岩磚台階"
 
 msgid "Deepslate Brick Wall"
-msgstr ""
+msgstr "深板岩磚牆"
 
 msgid "Cracked Deepslate Bricks"
-msgstr ""
+msgstr "裂紋深板岩磚"
 
 msgid "Deepslate Tiles"
-msgstr ""
+msgstr "深板岩磚瓦"
 
 msgid "Deepslate tiles are a decorative variant of deepslate."
-msgstr ""
+msgstr "深板岩磚瓦是裝飾性的深板岩。"
 
 msgid "Deepslate Tile Stairs"
-msgstr ""
+msgstr "深板岩磚瓦階梯"
 
 msgid "Deepslate Tile Slab"
-msgstr ""
+msgstr "深板岩磚瓦台階"
 
 msgid "Deepslate Tiles Wall"
 msgstr ""
@@ -122,10 +122,10 @@ msgid "Cracked Deepslate Tiles"
 msgstr ""
 
 msgid "Chiseled Deepslate"
-msgstr ""
+msgstr "浮雕深板岩"
 
 msgid "@1 is a variant of @2 that can generate in deepslate and tuff blobs."
-msgstr ""
+msgstr "@1是@2的變體，能在深板岩和凝灰岩中生成。"
 
 msgid "@1 are a cracked variant."
 msgstr ""
@@ -140,19 +140,19 @@ msgid "Chiseled Tuff"
 msgstr "浮雕凝灰岩"
 
 msgid "Chiseled tuff is a chiseled variant of tuff."
-msgstr ""
+msgstr "浮雕凝灰岩是有浮雕的凝灰岩。"
 
 msgid "Chiseled Tuff Bricks"
-msgstr ""
+msgstr "浮雕凝灰岩磚"
 
 msgid "Chiseled tuff bricks are a variant of tuff bricks, featuring a large brick in the center of the block, with geometric design above and below."
-msgstr ""
+msgstr "浮雕凝灰岩磚是凝灰岩的變種，中央一塊大磚，以幾何圖案作外框。"
 
 msgid "Tuff Stairs"
-msgstr ""
+msgstr "凝灰岩階梯"
 
 msgid "Tuff Slab"
-msgstr "凝灰岩半磚"
+msgstr "凝灰岩台階"
 
 msgid "Tuff Wall"
 msgstr "凝灰岩牆"
@@ -161,29 +161,29 @@ msgid "Polished Tuff"
 msgstr "拋光凝灰岩"
 
 msgid "Polished tuff is a polished variant of the tuff block."
-msgstr ""
+msgstr "凝灰岩拋光是經拋光的凝灰岩方塊。"
 
 msgid "Polished Tuff Stairs"
 msgstr "拋光凝灰岩階梯"
 
 msgid "Polished Tuff Slab"
-msgstr "拋光凝灰岩半磚"
+msgstr "拋光凝灰岩台階"
 
 msgid "Polished Tuff Wall"
 msgstr "拋光凝灰岩牆"
 
 msgid "Tuff Bricks"
-msgstr ""
+msgstr "凝灰岩磚"
 
 msgid "Tuff bricks are a brick variant of tuff."
-msgstr ""
+msgstr "凝灰岩磚是凝灰岩的磚塊版。"
 
 msgid "Tuff Bricks Stairs"
-msgstr ""
+msgstr "凝灰岩磚階梯"
 
 msgid "Tuff Bricks Slab"
-msgstr ""
+msgstr "凝灰岩磚台階"
 
 msgid "Tuff Bricks Wall"
-msgstr ""
+msgstr "凝灰岩磚牆"
 

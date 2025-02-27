@@ -80,6 +80,15 @@ local function generate_modifier_func(name, dmg_flag, mod_func, is_type)
 	end end
 end
 
+local function change_text_hud_if_changed(obj, hud_id, new_value)
+	if not obj:is_player() or not hud_id then return end
+	local hud = obj:hud_get(hud_id)
+	if not hud then return end
+	if hud.text ~= new_value then
+		obj:hud_change(hud_id, "text", new_value)
+	end
+end
+
 -- API - registers an effect
 -- required parameters in def:
 -- name - string - effect name in code
@@ -1337,31 +1346,31 @@ local function potions_set_icons(player)
 		local timestamp = icon_ids[name][i].timestamp
 		local vals = active_effects[effect_name]
 		if vals then
-			player:hud_change(icon, "text", def.icon .. "^[resize:128x128")
+			change_text_hud_if_changed(player, icon, def.icon.."^[resize:128x128")
 			if def.uses_factor then
 				local level = def.factor_to_level(vals.factor)
 				if level > 3000 or level == math.huge then level = "∞"
 				elseif level < 0  then level = "???"
 				elseif level == 0 then level = "0"
 				else level = mcl_util.to_roman(level) end
-				player:hud_change(label, "text", level)
+				change_text_hud_if_changed(player, label, level)
 			else
-				player:hud_change(label, "text", "")
+				change_text_hud_if_changed(player, label, "")
 			end
 			if vals.dur == math.huge then
-				player:hud_change(timestamp, "text", "∞")
+				change_text_hud_if_changed(player, timestamp, "∞")
 			else
 				local dur = math.round(vals.dur-vals.timer)
-				player:hud_change(timestamp, "text", math.floor(dur/60)..string.format(":%02d",math.floor(dur % 60)))
+				change_text_hud_if_changed(player, timestamp, math.floor(dur/60)..string.format(":%02d",math.floor(dur % 60)))
 			end
 			EF[effect_name][player].hud_index = i
 			i = i + 1
 		end
 	end
 	while i < EFFECT_TYPES do
-		player:hud_change(icon_ids[name][i].img, "text", "blank.png")
-		player:hud_change(icon_ids[name][i].label, "text", "")
-		player:hud_change(icon_ids[name][i].timestamp, "text", "")
+		change_text_hud_if_changed(player, icon_ids[name][i].img, "blank.png")
+		change_text_hud_if_changed(player, icon_ids[name][i].label, "")
+		change_text_hud_if_changed(player, icon_ids[name][i].timestamp, "")
 		i = i + 1
 	end
 end
@@ -1455,13 +1464,12 @@ minetest.register_globalstep(function(dtime)
 			end
 			mcl_serverplayer.remove_status_effect (object, name)
 		elseif object:is_player() then
+			local hud_id = icon_ids[object:get_player_name()][vals.hud_index].timestamp
 			if vals.dur == math.huge then
-			object:hud_change(icon_ids[object:get_player_name()][vals.hud_index].timestamp,
-					  "text", "∞")
+				change_text_hud_if_changed(object, hud_id, "∞")
 			else
-			local dur = math.round(vals.dur-vals.timer)
-			object:hud_change(icon_ids[object:get_player_name()][vals.hud_index].timestamp,
-					  "text", math.floor(dur/60)..string.format(":%02d",math.floor(dur % 60)))
+				local dur = math.round(vals.dur-vals.timer)
+				change_text_hud_if_changed(object, hud_id, math.floor(dur/60)..string.format(":%02d",math.floor(dur % 60)))
 			end
 		else
 			local ent = object:get_luaentity()

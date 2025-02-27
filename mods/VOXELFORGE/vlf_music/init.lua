@@ -20,6 +20,12 @@ register_song_for_biomes("end", {"End"})
 register_song_for_biomes("living_mice", {"Mesa", "BambooJungle", "Desert", "FlowerForest", "Forest", "Jungle", "Meadow", "MegaTaiga"})
 register_song_for_biomes("oxygene", {"Jungle", "MegaTaiga"})
 register_song_for_biomes("concrete_halls", {"BasaltDelta", "CrimsonForest", "Nether", "WarpedForest"})
+register_song_for_biomes("bromeliad", {"BambooJungle", "CherryGrove", "FlowerForest", "Forest", "Jungle"})
+local biome_names = {}
+for name, _ in pairs(minetest.registered_biomes) do
+    table.insert(biome_names, name)
+end
+register_song_for_biomes("a_familiar_room", biome_names)
 
 local function get_player_biome(player)
 	local pos = player:get_pos()
@@ -154,7 +160,7 @@ local function play()
 		end
 	end
 
-	minetest.after(600, 1200, play)
+	minetest.after(math.random(600, 1200), play)
 end
 local music_enabled = true
 if music_enabled then

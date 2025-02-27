@@ -61,6 +61,9 @@ msgstr "Fortschritte"
 msgid "Switch stack size"
 msgstr "Wechsle die Größe des Stapels"
 
+msgid "@1 / @2"
+msgstr ""
+
 msgid "Recipe book"
 msgstr "Fertigungsbuch"
 

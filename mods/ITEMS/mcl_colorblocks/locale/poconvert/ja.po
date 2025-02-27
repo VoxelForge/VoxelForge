@@ -47,194 +47,194 @@ msgid "Concrete"
 msgstr "コンクリート"
 
 msgid "Black Concrete"
-msgstr ""
+msgstr "黒色のコンクリート"
 
 msgid "Black Concrete Powder"
-msgstr ""
+msgstr "黒色のコンクリートパウダー"
 
 msgid "Black Glazed Terracotta"
-msgstr ""
+msgstr "黒色の彩釉テラコッタ"
 
 msgid "Black Terracotta"
-msgstr ""
+msgstr "黒色のテラコッタ"
 
 msgid "Blue Concrete"
-msgstr ""
+msgstr "青色のコンクリート"
 
 msgid "Blue Concrete Powder"
-msgstr ""
+msgstr "青色のコンクリートパウダー"
 
 msgid "Blue Glazed Terracotta"
-msgstr ""
+msgstr "青色の彩釉テラコッタ"
 
 msgid "Blue Terracotta"
-msgstr ""
+msgstr "青色のテラコッタ"
 
 msgid "Brown Concrete"
-msgstr ""
+msgstr "茶色のコンクリート"
 
 msgid "Brown Concrete Powder"
-msgstr ""
+msgstr "茶色のコンクリートパウダー"
 
 msgid "Brown Glazed Terracotta"
-msgstr ""
+msgstr "茶色の彩釉テラコッタ"
 
 msgid "Brown Terracotta"
-msgstr ""
+msgstr "茶色のテラコッタ"
 
 msgid "Cyan Concrete"
-msgstr ""
+msgstr "青緑色のコンクリート"
 
 msgid "Cyan Concrete Powder"
-msgstr ""
+msgstr "青緑色のコンクリートパウダー"
 
 msgid "Cyan Glazed Terracotta"
-msgstr ""
+msgstr "青緑色の彩釉テラコッタ"
 
 msgid "Cyan Terracotta"
-msgstr ""
+msgstr "青緑色のテラコッタ"
 
 msgid "Green Concrete"
-msgstr ""
+msgstr "緑色のコンクリート"
 
 msgid "Green Concrete Powder"
-msgstr ""
+msgstr "緑色のコンクリートパウダー"
 
 msgid "Green Glazed Terracotta"
-msgstr ""
+msgstr "緑色の彩釉テラコッタ"
 
 msgid "Green Terracotta"
-msgstr ""
+msgstr "緑色のテラコッタ"
 
 msgid "Grey Concrete"
-msgstr ""
+msgstr "灰色のコンクリート"
 
 msgid "Grey Concrete Powder"
-msgstr ""
+msgstr "灰色のコンクリートパウダー"
 
 msgid "Grey Glazed Terracotta"
-msgstr ""
+msgstr "灰色の彩釉テラコッタ"
 
 msgid "Grey Terracotta"
-msgstr ""
+msgstr "灰色のテラコッタ"
 
 msgid "Light Blue Concrete"
-msgstr ""
+msgstr "空色のコンクリート"
 
 msgid "Light Blue Concrete Powder"
-msgstr ""
+msgstr "空色のコンクリートパウダー"
 
 msgid "Light Blue Glazed Terracotta"
-msgstr ""
+msgstr "空色の彩釉テラコッタ"
 
 msgid "Light Blue Terracotta"
-msgstr ""
+msgstr "空色のテラコッタ"
 
 msgid "Light Grey Concrete"
-msgstr ""
+msgstr "薄灰色のコンクリート"
 
 msgid "Light Grey Concrete Powder"
-msgstr ""
+msgstr "薄灰色のコンクリートパウダー"
 
 msgid "Light Grey Glazed Terracotta"
-msgstr ""
+msgstr "薄灰色の彩釉テラコッタ"
 
 msgid "Light Grey Terracotta"
-msgstr ""
+msgstr "薄灰色のテラコッタ"
 
 msgid "Lime Concrete"
-msgstr ""
+msgstr "黄緑色のコンクリート"
 
 msgid "Lime Concrete Powder"
-msgstr ""
+msgstr "黄緑色のコンクリートパウダー"
 
 msgid "Lime Glazed Terracotta"
-msgstr ""
+msgstr "黄緑色のテラコッタ"
 
 msgid "Lime Terracotta"
-msgstr ""
+msgstr "黄緑色のテラコッタ"
 
 msgid "Magenta Concrete"
-msgstr ""
+msgstr "赤紫色のコンクリート"
 
 msgid "Magenta Concrete Powder"
-msgstr ""
+msgstr "赤紫色のコンクリートパウダー"
 
 msgid "Magenta Glazed Terracotta"
-msgstr ""
+msgstr "赤紫色の彩釉テラコッタ"
 
 msgid "Magenta Terracotta"
-msgstr ""
+msgstr "赤紫色のテラコッタ"
 
 msgid "Orange Concrete"
-msgstr ""
+msgstr "橙色のコンクリート"
 
 msgid "Orange Concrete Powder"
-msgstr ""
+msgstr "橙色のコンクリートパウダー"
 
 msgid "Orange Glazed Terracotta"
-msgstr ""
+msgstr "橙色の彩釉テラコッタ"
 
 msgid "Orange Terracotta"
-msgstr ""
+msgstr "橙色のテラコッタ"
 
 msgid "Pink Concrete"
-msgstr ""
+msgstr "桃色のコンクリート"
 
 msgid "Pink Concrete Powder"
-msgstr ""
+msgstr "桃色のコンクリートパウダー"
 
 msgid "Pink Glazed Terracotta"
-msgstr ""
+msgstr "桃色の彩釉テラコッタ"
 
 msgid "Pink Terracotta"
-msgstr ""
+msgstr "桃色のテラコッタ"
 
 msgid "Purple Concrete"
-msgstr ""
+msgstr "紫色のコンクリート"
 
 msgid "Purple Concrete Powder"
-msgstr ""
+msgstr "紫色のコンクリートパウダー"
 
 msgid "Purple Glazed Terracotta"
-msgstr ""
+msgstr "紫色の彩釉テラコッタ"
 
 msgid "Purple Terracotta"
-msgstr ""
+msgstr "紫色のテラコッタ"
 
 msgid "Red Concrete"
-msgstr ""
+msgstr "赤色のコンクリート"
 
 msgid "Red Concrete Powder"
-msgstr ""
+msgstr "赤色のコンクリートパウダー"
 
 msgid "Red Glazed Terracotta"
-msgstr ""
+msgstr "赤色の彩釉テラコッタ"
 
 msgid "Red Terracotta"
-msgstr ""
+msgstr "赤色のテラコッタ"
 
 msgid "White Concrete"
-msgstr ""
+msgstr "白色のコンクリート"
 
 msgid "White Concrete Powder"
-msgstr ""
+msgstr "白色のコンクリートパウダー"
 
 msgid "White Glazed Terracotta"
-msgstr ""
+msgstr "白色の彩釉テラコッタ"
 
 msgid "White Terracotta"
-msgstr ""
+msgstr "白色のテラコッタ"
 
 msgid "Yellow Concrete"
-msgstr ""
+msgstr "黄色のコンクリート"
 
 msgid "Yellow Concrete Powder"
-msgstr ""
+msgstr "黄色のコンクリートパウダー"
 
 msgid "Yellow Glazed Terracotta"
-msgstr ""
+msgstr "黄色の彩釉テラコッタ"
 
 msgid "Yellow Terracotta"
-msgstr ""
+msgstr "黄色のテラコッタ"
 

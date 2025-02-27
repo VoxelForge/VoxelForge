@@ -20,10 +20,10 @@ msgid "Structure placed."
 msgstr "建筑已安置。"
 
 msgid "Error: No structure type given. Please use “/spawnstruct <type>”."
-msgstr "错误：未给出结构类型。请使用“/spawnstruct <类型>”指令。"
+msgstr "错误：未给出建筑类型。请使用“/spawnstruct <类型>”指令。"
 
 msgid "Error: Unknown structure type. Please use “/spawnstruct <type>”."
-msgstr "错误：未知的结构类型。请使用“/spawnstruct <类型>”指令。"
+msgstr "错误：建筑类型未知。请使用“/spawnstruct <类型>”指令。"
 
 msgid "Use /help spawnstruct to see a list of available types."
 msgstr "使用“/help spawnstruct”指令来查看可用的结构类型列表。"

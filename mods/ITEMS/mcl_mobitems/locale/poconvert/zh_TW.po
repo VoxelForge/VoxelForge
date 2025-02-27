@@ -14,79 +14,79 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Rotten Flesh"
-msgstr ""
+msgstr "腐肉"
 
 msgid "80% chance of food poisoning"
-msgstr ""
+msgstr "80% 機率食物中毒"
 
 msgid "Yuck! This piece of flesh clearly has seen better days. If you're really desperate, you can eat it to restore a few hunger points, but there's a 80% chance it causes food poisoning, which increases your hunger for a while."
 msgstr ""
 
 msgid "Raw Mutton"
-msgstr ""
+msgstr "生羊肉"
 
 msgid "Raw mutton is the flesh from a sheep and can be eaten safely. Cooking it will greatly increase its nutritional value."
 msgstr ""
 
 msgid "Cooked Mutton"
-msgstr ""
+msgstr "羊排"
 
 msgid "Cooked mutton is the cooked flesh from a sheep and is used as food."
 msgstr ""
 
 msgid "Raw Beef"
-msgstr ""
+msgstr "生牛肉"
 
 msgid "Raw beef is the flesh from cows and can be eaten safely. Cooking it will greatly increase its nutritional value."
 msgstr ""
 
 msgid "Steak"
-msgstr ""
+msgstr "牛排"
 
 msgid "Steak is cooked beef from cows and can be eaten."
 msgstr ""
 
 msgid "Raw Chicken"
-msgstr ""
+msgstr "生雞肉"
 
 msgid "30% chance of food poisoning"
-msgstr ""
+msgstr "30% 機率食物中毒"
 
 msgid "Raw chicken is a food item which is not safe to consume. You can eat it to restore a few hunger points, but there's a 30% chance to suffer from food poisoning, which increases your hunger rate for a while. Cooking raw chicken will make it safe to eat and increases its nutritional value."
 msgstr ""
 
 msgid "Cooked Chicken"
-msgstr ""
+msgstr "烤雞"
 
 msgid "A cooked chicken is a healthy food item which can be eaten."
 msgstr ""
 
 msgid "Raw Porkchop"
-msgstr ""
+msgstr "生豬肉"
 
 msgid "A raw porkchop is the flesh from a pig and can be eaten safely. Cooking it will greatly increase its nutritional value."
 msgstr ""
 
 msgid "Cooked Porkchop"
-msgstr ""
+msgstr "豬排"
 
 msgid "Cooked porkchop is the cooked flesh of a pig and is used as food."
 msgstr ""
 
 msgid "Raw Rabbit"
-msgstr ""
+msgstr "生兔肉"
 
 msgid "Raw rabbit is a food item from a dead rabbit. It can be eaten safely. Cooking it will increase its nutritional value."
 msgstr ""
 
 msgid "Cooked Rabbit"
-msgstr ""
+msgstr "烤兔"
 
 msgid "This is a food item which can be eaten."
 msgstr ""
 
 msgid "Milk"
-msgstr ""
+msgstr "牛奶"
 
 msgid "Removes all status effects"
 msgstr ""
@@ -98,16 +98,16 @@ msgid "Use the placement key to drink the milk."
 msgstr ""
 
 msgid "Spider Eye"
-msgstr ""
+msgstr "蜘蛛眼"
 
 msgid "Poisonous"
-msgstr ""
+msgstr "有毒"
 
 msgid "Spider eyes are used mainly in crafting. If you're really desperate, you can eat a spider eye, but it will poison you briefly."
 msgstr ""
 
 msgid "Bone"
-msgstr ""
+msgstr "骨"
 
 msgid "Bones can be used to tame wolves so they will protect you. They are also useful as a crafting ingredient."
 msgstr ""
@@ -116,43 +116,43 @@ msgid "Wield the bone near wolves to attract them. Use the “Place” key on th
 msgstr ""
 
 msgid "Squid Ink Sac"
-msgstr ""
+msgstr "墨囊"
 
 msgid "This item is dropped by dead squids. Squid ink can be used to as an ingredient to craft book and quill or black dye."
 msgstr ""
 
 msgid "String"
-msgstr ""
+msgstr "線"
 
 msgid "Strings are used in crafting."
 msgstr ""
 
 msgid "Blaze Rod"
-msgstr ""
+msgstr "烈焰桿"
 
 msgid "This is a crafting component dropped from dead blazes."
 msgstr ""
 
 msgid "Breeze Rod"
-msgstr ""
+msgstr "旋風桿"
 
 msgid "This is a crafting item dropped from breezes."
 msgstr ""
 
 msgid "Blaze Powder"
-msgstr ""
+msgstr "烈焰粉"
 
 msgid "This item is mainly used for crafting."
 msgstr ""
 
 msgid "Magma Cream"
-msgstr ""
+msgstr "岩漿球"
 
 msgid "Magma cream is a crafting component."
 msgstr ""
 
 msgid "Ghast Tear"
-msgstr ""
+msgstr "幽靈之淚"
 
 msgid "Place this item in an item frame as decoration."
 msgstr ""
@@ -164,31 +164,31 @@ msgid "A nether star is dropped when the Wither dies. Place it in an item frame 
 msgstr ""
 
 msgid "Leather"
-msgstr ""
+msgstr "皮革"
 
 msgid "Leather is a versatile crafting component."
 msgstr ""
 
 msgid "Feather"
-msgstr ""
+msgstr "羽毛"
 
 msgid "Feathers are used in crafting and are dropped from chickens."
 msgstr ""
 
 msgid "Rabbit Hide"
-msgstr ""
+msgstr "兔皮"
 
 msgid "Rabbit hide is used to create leather."
 msgstr ""
 
 msgid "Rabbit's Foot"
-msgstr ""
+msgstr "兔子腳"
 
 msgid "Must be your lucky day! Place this item in an item frame for decoration."
 msgstr ""
 
 msgid "Saddle"
-msgstr ""
+msgstr "鞍"
 
 msgid "Can be placed on animals to ride them"
 msgstr ""
@@ -200,28 +200,28 @@ msgid "Use the placement key with the saddle in your hand to try to put on the s
 msgstr ""
 
 msgid "Rabbit Stew"
-msgstr ""
+msgstr "兔肉煮"
 
 msgid "Rabbit stew is a very nutricious food item."
 msgstr ""
 
 msgid "Shulker Shell"
-msgstr ""
+msgstr "界伏殼"
 
 msgid "Shulker shells are used in crafting. They are dropped from dead shulkers."
 msgstr ""
 
 msgid "Slimeball"
-msgstr ""
+msgstr "史萊姆球"
 
 msgid "Slimeballs are used in crafting. They are dropped from slimes."
 msgstr ""
 
 msgid "Gunpowder"
-msgstr ""
+msgstr "火藥"
 
 msgid "Carrot on a Stick"
-msgstr ""
+msgstr "胡蘿蔔釣竿"
 
 msgid "Lets you ride a saddled pig"
 msgstr ""
@@ -233,7 +233,7 @@ msgid "Place it on a saddled pig to mount it. You can now ride the pig like a ho
 msgstr ""
 
 msgid "Warped Fungus on a Stick"
-msgstr ""
+msgstr "扭曲蕈菇釣竿"
 
 msgid "Lets you ride a strider"
 msgstr ""
@@ -245,7 +245,7 @@ msgid "Place it on a saddled strider to mount it. You can now ride the strider l
 msgstr ""
 
 msgid "Nautilus Shell"
-msgstr ""
+msgstr "鸚鵡螺殼"
 
 msgid "Used to craft a conduit"
 msgstr ""
@@ -254,7 +254,7 @@ msgid "The Nautilus Shell is used to craft a conduit. They can be obtained by fi
 msgstr ""
 
 msgid "Heart of the Sea"
-msgstr ""
+msgstr "海洋之心"
 
 msgid "The Heart of the Sea is used to craft a conduit. They can be obtained by finding them in a buried treasure chest."
 msgstr ""
@@ -263,31 +263,31 @@ msgid "Place it on a horse to put on the horse armor. Donkeys and mules can't we
 msgstr ""
 
 msgid "Leather Horse Armor"
-msgstr ""
+msgstr "皮革馬鎧"
 
 msgid "Leather horse armor can be worn by horses to increase their protection from harm a little."
 msgstr ""
 
 msgid "Iron Horse Armor"
-msgstr ""
+msgstr "鐵馬鎧"
 
 msgid "Iron horse armor can be worn by horses to increase their protection from harm a bit."
 msgstr ""
 
 msgid "Golden Horse Armor"
-msgstr ""
+msgstr "金馬鎧"
 
 msgid "Golden horse armor can be worn by horses to increase their protection from harm."
 msgstr ""
 
 msgid "Diamond Horse Armor"
-msgstr ""
+msgstr "鑽石馬鎧"
 
 msgid "Diamond horse armor can be worn by horses to greatly increase their protection from harm."
 msgstr ""
 
 msgid "Glow Ink Sac"
-msgstr ""
+msgstr "螢光墨囊"
 
 msgid "Use it to craft the Glow Item Frame."
 msgstr ""
@@ -305,8 +305,8 @@ msgid "Set name at anvil"
 msgstr "在鐵砧上設置名字"
 
 msgid "A name tag is an item to name a mob."
-msgstr "命名牌是一個用於命名生物的物品"
+msgstr "命名牌可用來給生物命名。"
 
 msgid "Before you use the name tag, you need to set a name at an anvil. Then you can use the name tag to name a mob. This uses up the name tag."
-msgstr "在使用名字標籤之前，你需要在一個鐵砧上設置一個名字。然後你就可以用名字標籤來給生物命名。這會消耗命名牌。"
+msgstr "在使用命名牌之前，你需要在一個鐵砧上設置一個名字。然後你就可以用命名牌來給生物命名。這會消耗命名牌。"
 

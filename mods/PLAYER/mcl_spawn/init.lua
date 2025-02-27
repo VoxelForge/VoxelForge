@@ -205,8 +205,30 @@ end
 
 function mcl_spawn.spawn(player)
 	local pos, in_bed = mcl_spawn.get_player_spawn_pos(player)
-	if in_bed then player:set_pos(pos) end
-	return in_bed
+	if in_bed then
+		player:set_pos(pos)
+		return true
+	end
+
+	-- The engine finds a spawn position but sometimes players are spawned
+	-- in the air. To avoid fall damage players are moved down such that
+	-- they stand on top of a node.
+	minetest.after(0, function()
+		local pos = vector.round(player:get_pos())
+		while pos.y > mcl_vars.mg_overworld_min do
+			pos.y = pos.y - 1
+			minetest.load_area(pos)
+
+			local node = minetest.get_node(pos)
+			local ndef = minetest.registered_nodes[node.name]
+			if ndef and (ndef.walkable or ndef.liquidtype ~= "none") then
+				break
+			end
+		end
+
+		player:set_pos(pos:offset(0, 0.5, 0))
+	end)
+	return false
 end
 
 -- Respawn player at specified respawn position

@@ -146,7 +146,7 @@ minetest.register_node("mcl_observers:observer_on", table.merge(commdef_on, {
 		end,
 		get_power = function(node, dir)
 			local dir2 = -minetest.facedir_to_dir(node.param2)
-			return dir2 == dir and 15 or 0, false
+			return dir2 == dir and 15 or 0, true
 		end,
 	})
 }))
@@ -173,7 +173,7 @@ minetest.register_node("mcl_observers:observer_down_on", table.merge(commdef_on,
 	_mcl_observer_off = "mcl_observers:observer_down_off",
 	_mcl_redstone = table.merge(commdef_on._mcl_redstone, {
 		get_power = function(node, dir)
-			return dir.y > 0 and 15 or 0
+			return dir.y > 0 and 15 or 0, true
 		end,
 	})
 }))
@@ -200,7 +200,7 @@ minetest.register_node("mcl_observers:observer_up_on", table.merge(commdef_on, {
 	_mcl_observer_off = "mcl_observers:observer_up_off",
 	_mcl_redstone = table.merge(commdef_on._mcl_redstone, {
 		get_power = function(node, dir)
-			return dir.y < 0 and 15 or 0
+			return dir.y < 0 and 15 or 0, true
 		end,
 	})
 }))

@@ -166,13 +166,6 @@ function minetest.handle_node_drops(pos, drops, digger)
 	local diggroups = tooldef and tooldef._mcl_diggroups
 	local shearsy_level = diggroups and diggroups.shearsy and diggroups.shearsy.level
 
-	--[[ Special node drops when dug by shears by reading _mcl_shears_drop or with a silk touch tool reading _mcl_silk_touch_drop
-	from the node definition.
-	Definition of _mcl_shears_drop / _mcl_silk_touch_drop:
-	* true: Drop itself when dug by shears / silk touch tool
-	* table: Drop every itemstring in this table when dug by shears _mcl_silk_touch_drop
-	]]
-
 	local enchantments = tool and mcl_enchanting.get_enchantments(tool)
 
 	local silk_touch_drop = false
@@ -512,7 +505,7 @@ minetest.register_entity(":__builtin:item", {
 		end
 		self._on_entity_step = stack:get_definition()._on_entity_step
 		self.itemstring = stack:to_string()
-		local s = 0.2 + 0.1 * (count / max_count)
+		local s = 0.2 + 0.1 * math.min(1.0, count / max_count)
 		local wield_scale = (def and type(def.wield_scale) == "table" and tonumber(def.wield_scale.x)) or 1
 		local c = s
 		s = s / wield_scale
@@ -692,7 +685,10 @@ minetest.register_entity(":__builtin:item", {
 		end
 
 		if self._on_entity_step then
-			self:_on_entity_step(dtime, moveresult)
+			local r = self:_on_entity_step(dtime, self.itemstring)
+			if type(r) == "string" then
+				self.itemstring = r
+			end
 		end
 
 		-- If no collector was found for a long enough time, declare the magnet as disabled

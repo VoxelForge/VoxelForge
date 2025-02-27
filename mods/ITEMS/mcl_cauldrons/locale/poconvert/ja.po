@@ -26,14 +26,14 @@ msgid "Place a water bucket into the cauldron to fill it with water. Place an em
 msgstr ""
 
 msgid "Cauldron (@1/3 Water)"
-msgstr ""
+msgstr "大釜（水@1/3）"
 
 msgid "Cauldron (@1/3 Lava)"
-msgstr ""
+msgstr "大釜（溶岩@1/3）"
 
 msgid "Cauldron (@1/3 Powder Snow)"
-msgstr ""
+msgstr "大釜（粉雪@1/3）"
 
 msgid "Cauldron (@1/3 River Water)"
-msgstr ""
+msgstr "大釜（河川水@1/3）"
 

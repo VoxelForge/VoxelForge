@@ -14,16 +14,16 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This is a decorational block."
-msgstr ""
+msgstr "Dit is een decoratief blok."
 
 msgid "This block is a building block for creating various buildings."
-msgstr ""
+msgstr "Dit blok is een bouwblok,  voor het maken van verschillende bouwwerken."
 
 msgid "This item is primarily used for crafting other items."
-msgstr ""
+msgstr "Dit item word voornamelijk gebruikt voor het maken van andere items."
 
 msgid "Hold it in your hand, then leftclick to eat it."
-msgstr ""
+msgstr "Hou het in je hand, doe dan een linker muisklik om het te eten."
 
 msgid "Hold it in your hand, then leftclick to eat it. But why would you want to do this?"
 msgstr ""
@@ -125,9 +125,6 @@ msgid "Toughness level: @1"
 msgstr ""
 
 msgid "Range: @1"
-msgstr ""
-
-msgid "Range: 4"
 msgstr ""
 
 msgid "Range: @1 (@2)"

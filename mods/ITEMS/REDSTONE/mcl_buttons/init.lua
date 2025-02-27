@@ -124,11 +124,11 @@ function mcl_buttons.register_button(basename, def)
 		on_rightclick = function(pos, node)
 			mcl_buttons.push_button(pos, node)
 		end,
+		sounds = sounds,
 		_on_wind_charge_hit = function(pos)
 			local node = minetest.get_node(pos)
 			mcl_buttons.push_button(pos, node)
 		end,
-		sounds = sounds,
 		_on_arrow_hit = function(pos, arrowent)
 			local node = minetest.get_node(pos)
 			local bdir = minetest.wallmounted_to_dir(node.param2)

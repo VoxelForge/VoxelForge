@@ -246,6 +246,7 @@ function mcl_buckets.register_liquid(def)
 		liquids_pointable = false,
 		on_place = on_place_bucket,
 		on_secondary_use = on_place_bucket,
+		_placement_def = "placeable_on_any_thing",
 		_on_dispense = function(stack, _, droppos, dropnode, _)
 			local buildable = minetest.registered_nodes[dropnode.name].buildable_to or dropnode.name == "mcl_portals:portal"
 			if not buildable then return stack end
@@ -274,6 +275,7 @@ minetest.register_craftitem("mcl_buckets:bucket_empty", {
 	liquids_pointable = false,
 	on_place = on_place_bucket_empty,
 	on_secondary_use = on_place_bucket_empty,
+	_placement_def = "placeable_on_any_thing",
 	_on_dispense = function(stack, _, droppos, dropnode, _)
 		-- Fill empty bucket with liquid or drop bucket if no liquid
 		local collect_liquid = false

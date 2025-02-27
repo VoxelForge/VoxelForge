@@ -376,7 +376,7 @@ local function damage_anvil_by_falling(pos, distance)
 end
 
 local anvildef = {
-	groups = { pickaxey = 1, falling_node = 1, falling_node_damage = 1, crush_after_fall = 1, deco_block = 1, anvil = 1, container = 69, _mcl_partial = 2,},
+	groups = { pickaxey = 1, falling_node = 1, falling_node_damage = 1, crush_after_fall = 1, deco_block = 1, anvil = 1, container = 69, pathfinder_partial = 2,},
 	tiles = { "mcl_anvils_anvil_top_damaged_0.png^[transformR90", "mcl_anvils_anvil_base.png", "mcl_anvils_anvil_side.png" },
 	use_texture_alpha = "opaque",
 	_tt_help = S("Repair and rename items"),

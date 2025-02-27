@@ -14,16 +14,16 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This door is a 2-block high barrier which can be opened or closed by hand or by redstone power."
-msgstr ""
+msgstr "此門是高兩格的屏障，可以手動開關，也可以用紅石訊號開關。"
 
 msgid "This door is a 2-block high barrier which can only be opened by redstone power, not by hand."
-msgstr ""
+msgstr "此門是高兩格的屏障，必須用紅石訊號開關，不能手動操作。"
 
 msgid "To open or close this door, send a redstone signal to its bottom half."
-msgstr ""
+msgstr "向門的下半部傳送紅石訊號以開關此門。"
 
 msgid "To open or close this door, rightclick it or send a redstone signal to its bottom half."
-msgstr ""
+msgstr "右按它，或向下半部傳送紅石訊號，都可以開關此門。"
 
 msgid "Openable by redstone power"
 msgstr "能通過紅石信號打開"
@@ -32,13 +32,13 @@ msgid "Openable by players and redstone power"
 msgstr "可以用手和紅石信號來打開"
 
 msgid "Trapdoors are horizontal barriers which can be opened or closed and climbed like a ladder when open. They occupy the upper or lower part of a block, depending on how they have been placed. This trapdoor can only be opened or closed by redstone power."
-msgstr ""
+msgstr "活板門是一種水平屏障，可以開關，打開時像梯子一樣可攀爬。放置方式決定它是佔據方塊的頂部還是底部。此活板門必須用紅石訊號開關。"
 
 msgid "Trapdoors are horizontal barriers which can be opened or closed and climbed like a ladder when open. They occupy the upper or lower part of a block, depending on how they have been placed. This trapdoor can be opened or closed by hand or redstone power."
-msgstr ""
+msgstr "活板門是一種水平屏障，可以開關，打開時像梯子一樣可攀爬。放置方式決定它是佔據方塊的頂部還是底部。此活板門可以手動開關，也可以用紅石訊號開關。"
 
 msgid "To open or close this trapdoor, rightclick it or send a redstone signal to it."
-msgstr ""
+msgstr "右按它，或傳送紅石訊號，都可以開關此活板門。"
 
 msgid "Iron Door"
 msgstr "鐵門"

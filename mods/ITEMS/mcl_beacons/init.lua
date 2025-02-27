@@ -418,6 +418,7 @@ minetest.register_node("mcl_beacons:beacon", {
 	drop = "mcl_beacons:beacon",
 	sounds = mcl_sounds.node_sound_glass_defaults(),
 	_mcl_hardness = 3,
+	_configures_formspec = true,
 })
 
 minetest.register_node("mcl_beacons:beacon_beam", {

@@ -127,9 +127,6 @@ msgstr "タフネスレベル：@1"
 msgid "Range: @1"
 msgstr "範囲：@1"
 
-msgid "Range: 4"
-msgstr "範囲：4"
-
 msgid "Range: @1 (@2)"
 msgstr "範囲：@1 (@2)"
 
@@ -383,7 +380,7 @@ msgid "Item reference of items which are neither blocks, tools or weapons (esp. 
 msgstr "ブロックでも道具でも武器でもないアイテム（特にクラフトアイテム）の、アイテム参照"
 
 msgid "Mobs"
-msgstr ""
+msgstr "モブ"
 
 msgid "Different Mobs"
 msgstr ""

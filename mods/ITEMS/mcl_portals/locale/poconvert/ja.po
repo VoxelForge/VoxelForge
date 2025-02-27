@@ -47,10 +47,10 @@ msgid "End Portal Frame with Eye of Ender"
 msgstr "エンドポータル・フレーム（エンダーアイ入り）"
 
 msgid "End Gateway Portal"
-msgstr ""
+msgstr "エンドゲートウェイポータル"
 
 msgid "Used to construct end gateway portals"
-msgstr ""
+msgstr "エンドゲートウェイポータルの構築に使用"
 
 msgid "An End gateway portal teleports creatures and objects to the outer End (and back!)."
 msgstr ""

@@ -32,76 +32,76 @@ msgid "Dead Tube Coral Fan"
 msgstr "死亡的扇狀管珊瑚"
 
 msgid "Brain Coral Block"
-msgstr ""
+msgstr "腦珊瑚方塊"
 
 msgid "Dead Brain Coral Block"
-msgstr ""
+msgstr "死亡的腦珊瑚方塊"
 
 msgid "Brain Coral"
-msgstr ""
+msgstr "腦珊瑚"
 
 msgid "Dead Brain Coral"
-msgstr ""
+msgstr "死亡的腦珊瑚"
 
 msgid "Brain Coral Fan"
-msgstr ""
+msgstr "扇狀腦珊瑚"
 
 msgid "Dead Brain Coral Fan"
-msgstr ""
+msgstr "死亡的扇狀腦珊瑚"
 
 msgid "Bubble Coral Block"
-msgstr ""
+msgstr "氣泡珊瑚方塊"
 
 msgid "Dead Bubble Coral Block"
-msgstr ""
+msgstr "死亡的氣泡珊瑚方塊"
 
 msgid "Bubble Coral"
-msgstr ""
+msgstr "氣泡珊瑚"
 
 msgid "Dead Bubble Coral"
-msgstr ""
+msgstr "死亡的氣泡珊瑚"
 
 msgid "Bubble Coral Fan"
-msgstr ""
+msgstr "扇狀氣泡珊瑚"
 
 msgid "Dead Bubble Coral Fan"
-msgstr ""
+msgstr "死亡的扇狀氣泡珊瑚"
 
 msgid "Fire Coral Block"
-msgstr ""
+msgstr "火珊瑚方塊"
 
 msgid "Dead Fire Coral Block"
-msgstr ""
+msgstr "死亡的火珊瑚方塊"
 
 msgid "Fire Coral"
-msgstr ""
+msgstr "火珊瑚"
 
 msgid "Dead Fire Coral"
-msgstr ""
+msgstr "死亡的火珊瑚"
 
 msgid "Fire Coral Fan"
-msgstr ""
+msgstr "扇狀火珊瑚"
 
 msgid "Dead Fire Coral Fan"
-msgstr ""
+msgstr "死亡的扇狀火珊瑚"
 
 msgid "Horn Coral Block"
-msgstr ""
+msgstr "角珊瑚"
 
 msgid "Dead Horn Coral Block"
-msgstr ""
+msgstr "死亡的角珊瑚方塊"
 
 msgid "Horn Coral"
-msgstr ""
+msgstr "角珊瑚"
 
 msgid "Dead Horn Coral"
-msgstr ""
+msgstr "死亡的角珊瑚"
 
 msgid "Horn Coral Fan"
-msgstr ""
+msgstr "扇狀角珊瑚"
 
 msgid "Dead Horn Coral Fan"
-msgstr ""
+msgstr "死亡的扇狀角珊瑚"
 
 msgid "Coral blocks live in the oceans and need a water source next to them to survive. Without water, they die off."
 msgstr ""
@@ -113,76 +113,76 @@ msgid "Corals fans grow on top of coral blocks and need to be inside a water sou
 msgstr ""
 
 msgid "Needs water to live"
-msgstr ""
+msgstr "需要水才能存活"
 
 msgid "Grows on coral block of same species"
-msgstr ""
+msgstr "長在同種珊瑚方塊上"
 
 msgid "Kelp"
-msgstr ""
+msgstr "海帶"
 
 msgid "Kelp grows inside water on top of dirt, sand or gravel."
-msgstr ""
+msgstr "海帶能長於水中的泥土、沙子、礫石之上。"
 
 msgid "Dried Kelp"
-msgstr ""
+msgstr "亁海帶"
 
 msgid "Dried kelp is a food item."
-msgstr ""
+msgstr "亁海帶是一種食物。"
 
 msgid "Dried Kelp Block"
-msgstr ""
+msgstr "亁海帶方塊"
 
 msgid "A decorative block that serves as a great furnace fuel."
-msgstr ""
+msgstr "亁海帶方塊是一種不錯的燃料。"
 
 msgid "Grows in water on dirt, sand, gravel"
-msgstr ""
+msgstr "長在泥土、沙子、礫石上"
 
 msgid "Sea Lantern"
-msgstr ""
+msgstr "海燈籠"
 
 msgid "Sea lanterns are decorative light sources which look great underwater but can be placed anywhere."
 msgstr ""
 
 msgid "Prismarine"
-msgstr ""
+msgstr "海磷石"
 
 msgid "Prismarine is used as a building block. It slowly changes its color."
 msgstr ""
 
 msgid "Prismarine Bricks"
-msgstr ""
+msgstr "海磷石磚"
 
 msgid "Dark Prismarine"
-msgstr ""
+msgstr "暗海磷石"
 
 msgid "Prismarine Stairs"
-msgstr ""
+msgstr "海磷石階梯"
 
 msgid "Prismarine Slab"
-msgstr ""
+msgstr "海磷石台階"
 
 msgid "Prismarine Brick Stairs"
-msgstr ""
+msgstr "海磷石磚階梯"
 
 msgid "Prismarine Brick Slab"
-msgstr ""
+msgstr "海磷石磚台階"
 
 msgid "Dark Prismarine Stairs"
-msgstr ""
+msgstr "暗海磷石階梯"
 
 msgid "Dark Prismarine Slab"
-msgstr ""
+msgstr "暗海磷石台階"
 
 msgid "Prismarine Crystals"
-msgstr ""
+msgstr "海磷晶"
 
 msgid "Prismarine Shard"
-msgstr ""
+msgstr "海磷碎片"
 
 msgid "Sea Pickle"
-msgstr ""
+msgstr "海鞘"
 
 msgid "Sea pickles grow on dead brain coral blocks and provide light when underwater. They come in 4 sizes that vary in brightness."
 msgstr ""
@@ -191,17 +191,17 @@ msgid "It can only be placed on top of dead brain coral blocks. Placing a sea pi
 msgstr ""
 
 msgid "Glows in the water"
-msgstr ""
+msgstr "水中光源"
 
 msgid "4 possible sizes"
-msgstr ""
+msgstr "四種大小"
 
 msgid "Grows on dead brain coral block"
-msgstr ""
+msgstr "長在死亡的腦珊瑚方塊上"
 
 msgid "Seagrass"
-msgstr ""
+msgstr "海草"
 
 msgid "Seagrass grows inside water on top of dirt, sand or gravel."
-msgstr ""
+msgstr "海草能長於水中的泥土、沙子、礫石之上。"
 

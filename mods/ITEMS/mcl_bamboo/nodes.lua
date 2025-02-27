@@ -34,7 +34,7 @@ local bamboo_def = {
 	paramtype = "light",
 	paramtype2 = "4dir",
 	use_texture_alpha = "clip",
-	groups = {handy = 1, axey = 1, swordy_bamboo = 1, choppy = 1, dig_by_piston = 1, plant = 1, non_mycelium_plant = 1, flammable = 3, bamboo = 1, bamboo_tree = 1, vinelike_node = 1, unsticky = 1, _mcl_partial = 2,},
+	groups = {handy = 1, axey = 1, swordy_bamboo = 1, choppy = 1, dig_by_piston = 1, plant = 1, non_mycelium_plant = 1, flammable = 3, bamboo = 1, bamboo_tree = 1, vinelike_node = 1, unsticky = 1, pathfinder_partial = 2,},
 	sounds = mcl_sounds.node_sound_wood_defaults(),
 	drop = "mcl_bamboo:bamboo",
 	inventory_image = "mcl_bamboo_bamboo_shoot.png",

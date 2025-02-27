@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "A Block made of Bamboo stalks. Can be crafted into Bamboo Planks."
-msgstr ""
+msgstr "一捆竹枝。可以用來造竹板。"
 
 msgid "Block of Bamboo"
-msgstr ""
+msgstr "竹塊"
 
 msgid "Block of Stripped Bamboo"
-msgstr ""
+msgstr "去皮竹塊"
 
 msgid "Bamboo Raft"
 msgstr "竹筏"
@@ -29,49 +29,49 @@ msgid "Chest Bamboo Raft"
 msgstr "竹筏連箱子"
 
 msgid "Bamboo Button"
-msgstr ""
+msgstr "竹鍵"
 
 msgid "Bamboo Door"
-msgstr ""
+msgstr "竹門"
 
 msgid "Bamboo Fence"
-msgstr ""
+msgstr "竹柵欄"
 
 msgid "Bamboo Fence Gate"
-msgstr ""
+msgstr "竹閘門"
 
 msgid "Bamboo Planks"
-msgstr ""
+msgstr "竹板"
 
 msgid "Bamboo Pressure Plate"
-msgstr ""
+msgstr "竹壓力板"
 
 msgid "Bamboo Sign"
-msgstr ""
+msgstr "竹告示牌"
 
 msgid "Bamboo Slab"
-msgstr ""
+msgstr "竹台階"
 
 msgid "Bamboo Stairs"
-msgstr ""
+msgstr "竹樓梯"
 
 msgid "Bamboo Trapdoor"
-msgstr ""
+msgstr "竹地板門"
 
 msgid "Bamboo"
-msgstr "竹子"
+msgstr "竹"
 
 msgid "Bamboo Plant"
-msgstr "竹子植株"
+msgstr "竹苗"
 
 msgid "Bamboo Mosaic Plank"
-msgstr ""
+msgstr "竹馬賽克板"
 
 msgid "Bamboo Mosaic Stairs"
-msgstr ""
+msgstr "竹馬賽克樓梯"
 
 msgid "Bamboo Mosaic Slab"
-msgstr ""
+msgstr "竹馬賽克台階"
 
 msgid "Scaffolding"
 msgstr "鷹架"
@@ -80,8 +80,8 @@ msgid "Scaffolding is a temporary structure to easily climb up while building th
 msgstr "鷹架是一種臨時結構，在建築時可以輕鬆攀爬，並且易於拆除"
 
 msgid "Scaffolding horizontal"
-msgstr ""
+msgstr "橫向鷹架"
 
 msgid "Scaffolding block..."
-msgstr ""
+msgstr "鷹架塊"
 

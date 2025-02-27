@@ -34,14 +34,17 @@ msgstr "Свисающий мангровый отросток"
 msgid "Grows on Mangrove leaves"
 msgstr "Растет на мангровой листве"
 
-msgid "water logged mangrove roots"
-msgstr "Затопленные мангровые корни"
+msgid "Water logged mangrove roots"
+msgstr ""
 
 msgid "Mangrove roots, despite being a full block, can be waterlogged and do not flow water out"
 msgstr "Мангровые корни, не смотря на то что это полный блок, может быть затоплен и не выпускать воду наружу"
 
 msgid "These cannot be crafted yet only occure when get in contact of water."
 msgstr "Нельзя скрафтить, появляется только при контакте с водой."
+
+msgid "River water logged mangrove roots"
+msgstr ""
 
 msgid "Muddy Mangrove Roots"
 msgstr "Грязные мангровые корни"

@@ -126,7 +126,7 @@ function mcl_maps.create_map(pos)
 			end
 			last_heightmap = heightmap
 		end
-		tga_encoder.image(pixels):save(map_textures_path .. "mcl_maps_map_texture_" .. id .. ".tga")
+		tga_encoder.image(pixels):save(map_textures_path .. "mcl_maps_map_texture_" .. id .. ".tga", { compression = "RLE", color_format = "A1R5G5B5", })
 		creating_maps[id] = nil
 	end)
 	return itemstack

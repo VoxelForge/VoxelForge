@@ -113,7 +113,7 @@ msgid "To make this rail activate minecarts, power it with redstone power and se
 msgstr "このレールでトロッコを作動させるには、レッドストーン動力を与えたレール上にトロッコを送り込みます。"
 
 msgid "Detector Rail"
-msgstr ""
+msgstr "ディテクターレール"
 
 msgid "Emits redstone power when a minecart is detected"
 msgstr "トロッコを検知するとレッドストーン動力を放出"

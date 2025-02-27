@@ -39,17 +39,16 @@ minetest.register_craftitem("mcl_clock:clock", {
 	groups = { tool=1, clock = 1, disable_repair=1 },
 	wield_image = "",
 	stack_max = 1,
-	_on_entity_step = function(self, dtime)
+	_on_entity_step = function(self, dtime, itemstring)
 		self._clock_timer = (self._clock_timer or 0) - dtime
 		if self._clock_timer > 0 then return end
 		self._clock_timer = 5
+		local stack = ItemStack(itemstring)
+		local m = stack:get_meta()
+		m:set_string("inventory_image", mcl_clock.images[mcl_clock.get_clock_frame() + 1])
+		m:set_string("wield_image", mcl_clock.images[mcl_clock.get_clock_frame() + 1])
 		self.object:set_properties({
-			visual = "upright_sprite",
-			visual_size = { x = 0.55, y = 0.55 },
-			textures = {
-				mcl_clock.images[mcl_clock.get_clock_frame() + 1],
-				mcl_clock.images[mcl_clock.get_clock_frame() + 1]
-			},
+			wield_item = stack:to_string()
 		})
 	end
 })

@@ -124,9 +124,6 @@ msgstr "Ingen genstande at vise"
 msgid "Collect items to reveal more recipes"
 msgstr "Saml genstande for at afsløre flere opskrifter"
 
-msgid "Invalid crafting ingredient: \"@1\" (dosent exist)"
-msgstr ""
-
 msgid "This item can be repaired at an anvil with: @1."
 msgstr ""
 

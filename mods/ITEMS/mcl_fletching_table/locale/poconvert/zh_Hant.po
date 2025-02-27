@@ -14,11 +14,11 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Fletching Table"
-msgstr ""
+msgstr "製箭台"
 
 msgid "A fletching table"
-msgstr ""
+msgstr "製箭台"
 
 msgid "This is the fletcher villager's work station. It currently has no use beyond decoration."
-msgstr ""
+msgstr "這是製箭師村民的工作站點方塊。目前除了裝飾之外沒有其他用途。"
 

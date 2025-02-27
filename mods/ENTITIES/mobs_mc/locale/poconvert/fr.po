@@ -202,9 +202,6 @@ msgstr "Bébé arpenteur"
 msgid "Tropical Fish"
 msgstr "Poisson Tropical"
 
-msgid "Tropical fish"
-msgstr "Poisson tropical"
-
 msgid "Vex"
 msgstr "Vex"
 
@@ -245,10 +242,10 @@ msgid "Shepherd"
 msgstr "Berger"
 
 msgid "Toolsmith"
-msgstr ""
+msgstr "Forgeron d'outils"
 
 msgid "Weaponsmith"
-msgstr ""
+msgstr "Forgeron d'armes"
 
 msgid "Nitwit"
 msgstr "Idiot"
@@ -284,7 +281,7 @@ msgid "Wandering Trader"
 msgstr "Marchand ambulant"
 
 msgid "Trader Llama"
-msgstr ""
+msgstr "Lama de marchand"
 
 msgid "Witch"
 msgstr "Sorcière"

@@ -26,16 +26,16 @@ msgid "Collects liquids"
 msgstr "液体を回収"
 
 msgid "Bucket of Axolotl"
-msgstr ""
+msgstr "ウーパールーパー入りバケツ"
 
 msgid "Bucket of Cod"
-msgstr ""
+msgstr "タラ入りバケツ"
 
 msgid "Bucket of Salmon"
-msgstr ""
+msgstr "サケ入りバケツ"
 
 msgid "Bucket of Tropical Fish"
-msgstr ""
+msgstr "熱帯魚入りバケツ"
 
 msgid "Place it to empty the bucket and place a Cod. Obtain by right clicking on a Cod with a bucket of water."
 msgstr ""

@@ -1,6 +1,6 @@
 # textdomain: mcl_gamemode
 [<gamemode>] [<player>]=[<gamemode>] [<player>]
-Change gamemode (survival/creative) for yourself or player=Change le mode de jeu (survie/créatif) pour vous ou un autre joueur
+Change gamemode (survival/creative/0/1/s/c) for yourself or player=
 Player not online=Le joueur n'est pas en ligne
 Failed to set Gamemode @1 for player @2=Échec dans la configuration du mode de jeu @1 pour le joueur @2
 Gamemode for player @1: @2=Mode de jeu pour le joueur @1 : @2

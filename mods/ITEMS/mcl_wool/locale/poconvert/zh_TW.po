@@ -17,7 +17,7 @@ msgid "Carpet"
 msgstr "地毯"
 
 msgid "Wool"
-msgstr ""
+msgstr "羊毛"
 
 msgid "Wool is a decorative block which comes in many different colors."
 msgstr ""
@@ -26,98 +26,98 @@ msgid "Carpets are thin floor covers which come in many different colors."
 msgstr ""
 
 msgid "Black Carpet"
-msgstr ""
+msgstr "黑色地毯"
 
 msgid "Black Wool"
-msgstr ""
+msgstr "黑色羊毛"
 
 msgid "Blue Carpet"
-msgstr ""
+msgstr "藍色地毯"
 
 msgid "Blue Wool"
-msgstr ""
+msgstr "藍色羊毛"
 
 msgid "Brown Carpet"
-msgstr ""
+msgstr "棕色地毯"
 
 msgid "Brown Wool"
-msgstr ""
+msgstr "棕色羊毛"
 
 msgid "Cyan Carpet"
-msgstr ""
+msgstr "青色地毯"
 
 msgid "Cyan Wool"
-msgstr ""
+msgstr "青色羊毛"
 
 msgid "Green Carpet"
-msgstr ""
+msgstr "綠色地毯"
 
 msgid "Green Wool"
-msgstr ""
+msgstr "綠色羊毛"
 
 msgid "Grey Carpet"
-msgstr ""
+msgstr "灰色地毯"
 
 msgid "Grey Wool"
-msgstr ""
+msgstr "灰色羊毛"
 
 msgid "Light Blue Carpet"
-msgstr ""
+msgstr "淺藍色地毯"
 
 msgid "Light Blue Wool"
-msgstr ""
+msgstr "淺藍色羊毛"
 
 msgid "Light Grey Carpet"
-msgstr ""
+msgstr "淺灰色地毯"
 
 msgid "Light Grey Wool"
-msgstr ""
+msgstr "淺灰色羊毛"
 
 msgid "Lime Carpet"
-msgstr ""
+msgstr "淺綠色地毯"
 
 msgid "Lime Wool"
-msgstr ""
+msgstr "淺綠色羊毛"
 
 msgid "Magenta Carpet"
-msgstr ""
+msgstr "洋紅色地毯"
 
 msgid "Magenta Wool"
-msgstr ""
+msgstr "洋紅色羊毛"
 
 msgid "Orange Carpet"
-msgstr ""
+msgstr "橙色地毯"
 
 msgid "Orange Wool"
-msgstr ""
+msgstr "橙色羊毛"
 
 msgid "Pink Carpet"
-msgstr ""
+msgstr "粉紅色地毯"
 
 msgid "Pink Wool"
-msgstr ""
+msgstr "粉紅色羊毛"
 
 msgid "Purple Carpet"
-msgstr ""
+msgstr "紫色地毯"
 
 msgid "Purple Wool"
-msgstr ""
+msgstr "紫色羊毛"
 
 msgid "Red Carpet"
-msgstr ""
+msgstr "紅色地毯"
 
 msgid "Red Wool"
-msgstr ""
+msgstr "紅色羊毛"
 
 msgid "White Carpet"
-msgstr ""
+msgstr "白色地毯"
 
 msgid "White Wool"
-msgstr ""
+msgstr "白色羊毛"
 
 msgid "Yellow Carpet"
-msgstr ""
+msgstr "黃色地毯"
 
 msgid "Yellow Wool"
-msgstr ""
+msgstr "黃色羊毛"
 

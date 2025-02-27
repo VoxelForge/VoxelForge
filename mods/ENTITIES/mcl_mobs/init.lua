@@ -420,6 +420,9 @@ function mcl_mobs.register_mob(name, def)
 		head_eye_height = eye_height,
 		hp_min = def.hp_min,
 		on_rightclick = create_mob_on_rightclick(def.on_rightclick),
+		_unplaceable_by_default = (def._unplaceable_by_default ~= nil)
+			and def._unplaceable_by_default
+			or (not def.on_rightclick),
 		gwp_penalties = def.can_open_doors
 			and table.merge (gwp_penalties, {
 						 DOOR_WOOD_CLOSED = 0.0,

@@ -124,10 +124,14 @@ end
 local function get_tool_diggroups(materialdefs, toolname)
 	local diggroups = mcl_tools.commondefs[toolname].diggroups
 
-	for _, diggroup in pairs(diggroups) do
+	for groupname, diggroup in pairs(diggroups) do
 		diggroup.speed = materialdefs.speed
 		diggroup.level = materialdefs.level
 		diggroup.uses = toolname == "sword" and materialdefs.uses / 2 or materialdefs.uses
+		if groupname == "swordy_bamboo" then
+			diggroup.speed = 45
+			diggroup.level = 1
+		end
 	end
 
 	return diggroups
@@ -174,7 +178,9 @@ local function register_tool(setname, materialdefs, toolname, tooldefs, override
 		}, tcs_overrides, overrides.toolname),
 		on_place = mcl_tools.tool_place_funcs[toolname],
 		sound = { breaks = "default_tool_breaks" },
-		wield_scale = wield_scale
+		wield_scale = wield_scale,
+		_placement_def = commondefs._placement_def
+			or "placeable_on_actionable",
 	}, tooldefs, overrides)
 
 	minetest.register_tool(itemstring, tooldefs)
@@ -233,13 +239,6 @@ function mcl_tools.register_set(setname, materialdefs, tools, overrides)
 
 	for tool, defs in pairs(tools) do
 		if mcl_tools.commondefs[tool] then
-			if tool == "sword" then
-				defs = table.merge(defs, {
-					_mcl_diggroups = {
-						swordy_bamboo = { speed = 45, level = 1, uses = materialdefs.uses }
-					},
-				})
-			end
 			register_tool(setname, materialdefs, tool, defs, overrides)
 		else
 			local msg = "[mcl_tools] mod '%s' trying to register unknown tool '%s' for set '%s'"
@@ -274,6 +273,15 @@ minetest.register_tool("mcl_tools:shears", {
 		shearsy_wool = { speed = 5, level = 1, uses = 238 },
 		shearsy_cobweb = { speed = 15, level = 1, uses = 238 }
 	},
+	_on_dispense = function(stack, _, droppos, dropnode, dropdir)
+		if core.get_item_group(dropnode.name, "honey_level") == 5 then
+			core.swap_node(droppos, {name = dropnode.name:gsub("_5", ""), param2 = dropnode.param2})
+			core.add_item(vector.add(droppos, dropdir), "mcl_honey:honeycomb 3")
+			stack:add_wear_by_uses(238)
+		end
+		return stack
+	end,
+	_dispense_into_walkable = true
 })
 
 minetest.register_craft({

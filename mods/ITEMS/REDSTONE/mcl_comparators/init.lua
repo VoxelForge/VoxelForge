@@ -406,9 +406,8 @@ minetest.register_on_mods_loaded(function()
 			measure_tab[name] = measure_inventory
 		elseif minetest.get_item_group(name, "brewing_stand") ~= 0 then
 			measure_tab[name] = measure_brewing_stand
-		elseif def.groups and (def.groups.comparator_signal or def.groups.opaquely_powered) then
-			local power = math.max(def.groups.comparator_signal or 0, def.groups.opaquely_powered or 0)
-			measure_tab[name] = measure_constant(power)
+		elseif def.groups and def.groups.comparator_signal then
+			measure_tab[name] = measure_constant(def.groups.comparator_signal)
 		end
 	end
 

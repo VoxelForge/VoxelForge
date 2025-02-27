@@ -17,22 +17,22 @@ msgid "Blast Furnace"
 msgstr "高爐"
 
 msgid "Smelts ores faster than furnace"
-msgstr ""
+msgstr "冶煉礦石專用高速爐"
 
 msgid "Blast Furnaces smelt several items, mainly ores and armor, using a furnace fuel, but twice as fast as a normal furnace."
-msgstr ""
+msgstr "高爐只能冶煉礦物、熔掉盔甲等少數物品，但速度比普通熔爐快一倍。"
 
 msgid "Use the blast furnace to open the furnace menu."
-msgstr ""
+msgstr "使用高爐即可打開冶煉介面。"
 
 msgid "Place a furnace fuel in the lower slot and the source material in the upper slot."
-msgstr ""
+msgstr "燃料放在下方，要熔掉的東西放在上方。"
 
 msgid "The blast furnace will slowly use its fuel to smelt the item."
-msgstr ""
+msgstr "高爐會消耗燃料，漸漸熔掉目標物。"
 
 msgid "The result will be placed into the output slot at the right side."
-msgstr ""
+msgstr "冶煉成果會輸出到右邊的輸出槽。"
 
 msgid "Use the recipe book to see what ores you can smelt, what you can use as fuel and how long it will burn."
 msgstr ""

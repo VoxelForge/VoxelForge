@@ -217,14 +217,14 @@ msgstr "未知的附魔"
 msgid "Inventory"
 msgstr "背包"
 
-msgid "@1 Lapis Lazuli"
-msgstr "@1块青金石"
-
 msgid "@1 Enchantment Levels"
 msgstr "@1级魔法"
 
 msgid "Level requirement: @1"
 msgstr "升级所需：@1"
+
+msgid "@1 Lapis Lazuli"
+msgstr "@1块青金石"
 
 msgid "Enchant an item"
 msgstr "给物品附魔"

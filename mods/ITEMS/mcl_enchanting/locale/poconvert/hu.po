@@ -217,13 +217,13 @@ msgstr ""
 msgid "Inventory"
 msgstr "Eszköztár"
 
-msgid "@1 Lapis Lazuli"
-msgstr ""
-
 msgid "@1 Enchantment Levels"
 msgstr ""
 
 msgid "Level requirement: @1"
+msgstr ""
+
+msgid "@1 Lapis Lazuli"
 msgstr ""
 
 msgid "Enchant an item"
@@ -275,10 +275,10 @@ msgid "'@1' is not a valid number."
 msgstr ""
 
 msgid "Enchanted Book"
-msgstr ""
+msgstr "Elvarászolt könyv"
 
 msgid "Enchanting Table"
-msgstr ""
+msgstr "Varázslóasztal"
 
 msgid "Spend experience, and lapis to enchant various items."
 msgstr ""

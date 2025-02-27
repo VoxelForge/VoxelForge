@@ -14,10 +14,10 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "This is the help."
-msgstr "这是帮助信息。"
+msgstr "此处为帮助信息。"
 
 msgid "All help entries revealed!"
-msgstr "所有帮助条目已显示！"
+msgstr "已显示全部帮助条目！"
 
 msgid "All help entries are already revealed."
 msgstr "所有帮助条目都已显示。"

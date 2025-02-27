@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: mtt_convert 0.1.1\n"
 
 msgid "Conduit"
-msgstr ""
+msgstr "コンジット"
 
 msgid "A conduit provides certain status effects to nearby players much like a beacon but under water"
 msgstr ""

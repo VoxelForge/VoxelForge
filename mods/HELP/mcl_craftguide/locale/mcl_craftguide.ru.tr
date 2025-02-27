@@ -36,7 +36,6 @@ Previous page=Предыдущая страница
 Next page=Следующая страница
 No item to show=Нет предмета для показа
 Collect items to reveal more recipes=Собирайте предметы, чтобы открыть больше рецептов
-Invalid crafting ingredient: "@1" (dosent exist)=Недопустимый ингредиент для крафтинга: «@1» (не существует)
 This item can be repaired at an anvil with: @1.=Этот предмет можно починить на наковальне с помощью: @1.
 This item can be repaired at an anvil with any wooden planks.=Этот предмет можно починить на наковальне с помощью любых деревянных досок.
 This item can be repaired at an anvil with any item in the “@1” group.=Этот предмет можно починить на наковальне с помощью любого предмета из группы "@1".

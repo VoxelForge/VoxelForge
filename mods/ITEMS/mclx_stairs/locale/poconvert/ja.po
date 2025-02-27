@@ -20,16 +20,16 @@ msgid "Lapis Lazuli Slab"
 msgstr "ラピスラズリのスラブ"
 
 msgid "Gold Stairs"
-msgstr ""
+msgstr "金の階段"
 
 msgid "Gold Slab"
-msgstr ""
+msgstr "金のハーフブロック"
 
 msgid "Iron Stairs"
-msgstr ""
+msgstr "鉄の階段"
 
 msgid "Iron Slab"
-msgstr ""
+msgstr "鉄のハーフブロック"
 
 msgid "Cracked Stone Brick Stairs"
 msgstr "ひび割れた石レンガの階段"
@@ -38,31 +38,31 @@ msgid "Cracked Stone Brick Slab"
 msgstr "ひび割れた石レンガのスラブ"
 
 msgid "Cracked Deepslate Brick Stairs"
-msgstr ""
+msgstr "ひび割れた深層岩レンガの階段"
 
 msgid "Cracked Deepslate Brick Slab"
-msgstr ""
+msgstr "ひび割れた深層岩レンガのハーフブロック"
 
 msgid "Cracked Deepslate Tile Stairs"
-msgstr ""
+msgstr "ひび割れた深層岩タイルの階段"
 
 msgid "Cracked Deepslate Tile Slab"
-msgstr ""
+msgstr "ひび割れた深層岩タイルのハーフブロック"
 
 msgid "End Stone Stairs"
-msgstr ""
+msgstr "エンドストーンの階段"
 
 msgid "End Stone Slab"
-msgstr ""
+msgstr "エンドストーンのハーフブロック"
 
 msgid "Smooth Stone Stairs"
-msgstr ""
+msgstr "滑らかな石の階段"
 
 msgid "Terracotta Stairs"
-msgstr ""
+msgstr "テラコッタの階段"
 
 msgid "Terracotta Slab"
-msgstr ""
+msgstr "テラコッタのハーフブロック"
 
 msgid "Concrete Slab"
 msgstr "コンクリートのスラブ"
@@ -77,194 +77,194 @@ msgid "Double Terracotta Slab"
 msgstr ""
 
 msgid "Black Concrete Slab"
-msgstr ""
+msgstr "黒色のコンクリートのハーフブロック"
 
 msgid "Black Concrete Stairs"
-msgstr ""
+msgstr "黒色のコンクリートの階段"
 
 msgid "Black Terracotta Slab"
-msgstr ""
+msgstr "黒色のテラコッタのハーフブロック"
 
 msgid "Black Terracotta Stairs"
-msgstr ""
+msgstr "黒色のテラコッタの階段"
 
 msgid "Blue Concrete Slab"
-msgstr ""
+msgstr "青色のコンクリートのハーフブロック"
 
 msgid "Blue Concrete Stairs"
-msgstr ""
+msgstr "青色のコンクリートの階段"
 
 msgid "Blue Terracotta Slab"
-msgstr ""
+msgstr "青色のテラコッタのハーフブロック"
 
 msgid "Blue Terracotta Stairs"
-msgstr ""
+msgstr "青色のテラコッタの階段"
 
 msgid "Brown Concrete Slab"
-msgstr ""
+msgstr "茶色のコンクリートのハーフブロック"
 
 msgid "Brown Concrete Stairs"
-msgstr ""
+msgstr "茶色のコンクリートの階段"
 
 msgid "Brown Terracotta Slab"
-msgstr ""
+msgstr "茶色のテラコッタのハーフブロック"
 
 msgid "Brown Terracotta Stairs"
-msgstr ""
+msgstr "茶色のテラコッタの階段"
 
 msgid "Cyan Concrete Slab"
-msgstr ""
+msgstr "青緑色のコンクリートのハーフブロック"
 
 msgid "Cyan Concrete Stairs"
-msgstr ""
+msgstr "青緑色のコンクリートの階段"
 
 msgid "Cyan Terracotta Slab"
-msgstr ""
+msgstr "青緑色のテラコッタのハーフブロック"
 
 msgid "Cyan Terracotta Stairs"
-msgstr ""
+msgstr "青緑色のテラコッタの階段"
 
 msgid "Green Concrete Slab"
-msgstr ""
+msgstr "緑色のコンクリートのハーフブロック"
 
 msgid "Green Concrete Stairs"
-msgstr ""
+msgstr "緑色のコンクリートの階段"
 
 msgid "Green Terracotta Slab"
-msgstr ""
+msgstr "緑色のテラコッタのハーフブロック"
 
 msgid "Green Terracotta Stairs"
-msgstr ""
+msgstr "緑色のテラコッタの階段"
 
 msgid "Grey Concrete Slab"
-msgstr ""
+msgstr "灰色のコンクリートのハーフブロック"
 
 msgid "Grey Concrete Stairs"
-msgstr ""
+msgstr "灰色のコンクリートの階段"
 
 msgid "Grey Terracotta Slab"
-msgstr ""
+msgstr "灰色のテラコッタのハーフブロック"
 
 msgid "Grey Terracotta Stairs"
-msgstr ""
+msgstr "灰色のテラコッタの階段"
 
 msgid "Light Blue Concrete Slab"
-msgstr ""
+msgstr "空色のコンクリートのハーフブロック"
 
 msgid "Light Blue Concrete Stairs"
-msgstr ""
+msgstr "空色のコンクリートの階段"
 
 msgid "Light Blue Terracotta Slab"
-msgstr ""
+msgstr "空色のテラコッタのハーフブロック"
 
 msgid "Light Blue Terracotta Stairs"
-msgstr ""
+msgstr "空色のテラコッタの階段"
 
 msgid "Light Grey Concrete Slab"
-msgstr ""
+msgstr "薄灰色のコンクリートのハーフブロック"
 
 msgid "Light Grey Concrete Stairs"
-msgstr ""
+msgstr "薄灰色のコンクリートの階段"
 
 msgid "Light Grey Terracotta Slab"
-msgstr ""
+msgstr "薄灰色のテラコッタのハーフブロック"
 
 msgid "Light Grey Terracotta Stairs"
-msgstr ""
+msgstr "薄灰色のテラコッタの階段"
 
 msgid "Lime Concrete Slab"
-msgstr ""
+msgstr "黄緑色のコンクリートのハーフブロック"
 
 msgid "Lime Concrete Stairs"
-msgstr ""
+msgstr "黄緑色のコンクリートの階段"
 
 msgid "Lime Terracotta Slab"
-msgstr ""
+msgstr "黄緑色のテラコッタのハーフブロック"
 
 msgid "Lime Terracotta Stairs"
-msgstr ""
+msgstr "黄緑色のテラコッタの階段"
 
 msgid "Magenta Concrete Slab"
-msgstr ""
+msgstr "赤紫色のコンクリートのハーフブロック"
 
 msgid "Magenta Concrete Stairs"
-msgstr ""
+msgstr "赤紫色のコンクリートの階段"
 
 msgid "Magenta Terracotta Slab"
-msgstr ""
+msgstr "赤紫色のテラコッタのハーフブロック"
 
 msgid "Magenta Terracotta Stairs"
-msgstr ""
+msgstr "赤紫色のテラコッタの階段"
 
 msgid "Orange Concrete Slab"
-msgstr ""
+msgstr "橙色のコンクリートのハーフブロック"
 
 msgid "Orange Concrete Stairs"
-msgstr ""
+msgstr "橙色のコンクリートの階段"
 
 msgid "Orange Terracotta Slab"
-msgstr ""
+msgstr "橙色のテラコッタのハーフブロック"
 
 msgid "Orange Terracotta Stairs"
-msgstr ""
+msgstr "橙色のテラコッタの階段"
 
 msgid "Pink Concrete Slab"
-msgstr ""
+msgstr "桃色のコンクリートのハーフブロック"
 
 msgid "Pink Concrete Stairs"
-msgstr ""
+msgstr "桃色のコンクリートの階段"
 
 msgid "Pink Terracotta Slab"
-msgstr ""
+msgstr "桃色のテラコッタのハーフブロック"
 
 msgid "Pink Terracotta Stairs"
-msgstr ""
+msgstr "桃色のテラコッタの階段"
 
 msgid "Purple Concrete Slab"
-msgstr ""
+msgstr "紫色のコンクリートのハーフブロック"
 
 msgid "Purple Concrete Stairs"
-msgstr ""
+msgstr "紫色のコンクリートの階段"
 
 msgid "Purple Terracotta Slab"
-msgstr ""
+msgstr "紫色のテラコッタのハーフブロック"
 
 msgid "Purple Terracotta Stairs"
-msgstr ""
+msgstr "紫色のテラコッタの階段"
 
 msgid "Red Concrete Slab"
-msgstr ""
+msgstr "赤色のコンクリートのハーフブロック"
 
 msgid "Red Concrete Stairs"
-msgstr ""
+msgstr "赤色のコンクリートの階段"
 
 msgid "Red Terracotta Slab"
-msgstr ""
+msgstr "赤色のテラコッタのハーフブロック"
 
 msgid "Red Terracotta Stairs"
-msgstr ""
+msgstr "赤色のテラコッタの階段"
 
 msgid "White Concrete Slab"
-msgstr ""
+msgstr "白色のコンクリートのハーフブロック"
 
 msgid "White Concrete Stairs"
-msgstr ""
+msgstr "白色のコンクリートの階段"
 
 msgid "White Terracotta Slab"
-msgstr ""
+msgstr "白色のテラコッタのハーフブロック"
 
 msgid "White Terracotta Stairs"
-msgstr ""
+msgstr "白色のテラコッタの階段"
 
 msgid "Yellow Concrete Slab"
-msgstr ""
+msgstr "黄色のコンクリートのハーフブロック"
 
 msgid "Yellow Concrete Stairs"
-msgstr ""
+msgstr "黄色のコンクリートの階段"
 
 msgid "Yellow Terracotta Slab"
-msgstr ""
+msgstr "黄色のテラコッタのハーフブロック"
 
 msgid "Yellow Terracotta Stairs"
-msgstr ""
+msgstr "黄色のテラコッタの階段"
 

@@ -107,52 +107,52 @@ msgid "New respawn position set!"
 msgstr "新たなリスポーン地点を設定しました！"
 
 msgid "Black Bed"
-msgstr ""
+msgstr "黒色のベッド"
 
 msgid "Blue Bed"
-msgstr ""
+msgstr "青色のベッド"
 
 msgid "Brown Bed"
-msgstr ""
+msgstr "茶色のベッド"
 
 msgid "Cyan Bed"
-msgstr ""
+msgstr "青緑色のベッド"
 
 msgid "Green Bed"
-msgstr ""
+msgstr "緑色のベッド"
 
 msgid "Grey Bed"
-msgstr ""
+msgstr "灰色のベッド"
 
 msgid "Light Blue Bed"
-msgstr ""
+msgstr "空色のベッド"
 
 msgid "Light Grey Bed"
-msgstr ""
+msgstr "薄灰色のベッド"
 
 msgid "Lime Bed"
-msgstr ""
+msgstr "黄緑色のベッド"
 
 msgid "Magenta Bed"
-msgstr ""
+msgstr "赤紫色のベッド"
 
 msgid "Orange Bed"
-msgstr ""
+msgstr "橙色のベッド"
 
 msgid "Pink Bed"
-msgstr ""
+msgstr "桃色のベッド"
 
 msgid "Purple Bed"
-msgstr ""
+msgstr "紫色のベッド"
 
 msgid "Red Bed"
-msgstr ""
+msgstr "赤色のベッド"
 
 msgid "White Bed"
-msgstr ""
+msgstr "白色のベッド"
 
 msgid "Yellow Bed"
-msgstr ""
+msgstr "黄色のベッド"
 
 msgid "Respawn Anchor"
 msgstr "リスポーンアンカー"

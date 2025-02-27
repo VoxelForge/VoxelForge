@@ -46,7 +46,15 @@ local hoe_common_defs = {
 			{ "", "mcl_core:stick" },
 			{ "", "mcl_core:stick" }
 		}
-	}
+	},
+	_placement_def = {
+		["mcl_lush_caves:rooted_dirt"] = "default",
+		["mcl_core:dirt_with_grass"] = "default",
+		["mcl_core:grass_path"] = "default",
+		["mcl_core:dirt"] = "default",
+		["mcl_core:coarse_dirt"] = "default",
+		inherit = "placeable_on_actionable",
+	},
 }
 
 mcl_tools.tool_place_funcs["hoe"] = mcl_tools.get_default_tool_place_func("hoe")

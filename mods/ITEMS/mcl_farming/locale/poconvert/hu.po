@@ -103,9 +103,6 @@ msgstr ""
 msgid "Wood Hoe"
 msgstr "Fa Kapa"
 
-msgid "Uses: @1"
-msgstr "Használat: @1"
-
 msgid "Stone Hoe"
 msgstr "Kőkapa"
 
@@ -185,7 +182,7 @@ msgid "Baked Potato"
 msgstr "Sült Krumpli"
 
 msgid "Baked potatoes are food items which are more filling than the unbaked ones."
-msgstr "A héjában sült krumpli egy ízletes étel ami jóval laktatóbb nyers változatánál."
+msgstr "A héjában sült krumpli egy ízletes élelmiszer, amely jóval laktatóbb nyers változatánál."
 
 msgid "Poisonous Potato"
 msgstr "Mérgezett Krumpli"

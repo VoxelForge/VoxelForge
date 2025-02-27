@@ -25,17 +25,35 @@ msgstr "Musgo"
 msgid "Moss is a green block found in lush caves"
 msgstr "El musgo es un bloque verde que se encuentra en las cuevas frondosas"
 
-msgid "Moss carpet"
+msgid "Moss Carpet"
 msgstr "Capa de musgo"
+
+msgid "A moss carpet is a flat variant of the moss block."
+msgstr "Una capa de musgo es una variante plana del bloque de musgo."
 
 msgid "Hanging roots"
 msgstr "Raíces colgantes"
 
+msgid "Hanging roots are a decorative block found hanging from rooted dirt in lush caves."
+msgstr "Las raíces colgantes son bloques decorativos que se encuentra colgados en la tierra enraizada en cuevas frondosas."
+
 msgid "Cave vines"
 msgstr "Enredaderas de cueva"
 
+msgid "Cave vines are decorative blocks growing from the ceiling of lush caves."
+msgstr "Las enredaderas de cueva son bloques decorativos que crecen desde el techo de cuevas frondosas."
+
+msgid "Lit Cave vines"
+msgstr "Enredaderas de cueva encendidas"
+
+msgid "Lit cave vines are light emitting decorative blocks growing from the ceiling of lush caves."
+msgstr "Las enredaderas de cueva encendidas son bloques decorativos emisores de luz que crecen desde el techo de cuevas frondosas."
+
 msgid "Rooted dirt"
 msgstr "Tierra enraizada"
+
+msgid "Rooted dirt is type of dirt found in lush caves."
+msgstr "La tierra enraizada es un tipo de tierra que se encuentra en las cuevas frondosas."
 
 msgid "Glow berry"
 msgstr "Bayas luminosas"
@@ -57,6 +75,9 @@ msgstr "Las hojas florecidas de un árbol de Azalea"
 
 msgid "Spore blossom"
 msgstr "Flor de esporas"
+
+msgid "Spore blossoms are a type of flower found in lush caves."
+msgstr "La flor de esporas es un tipo de flor que se encuentra en las cuevas frondosas."
 
 msgid "Needs soil and bone meal to grow"
 msgstr "Necesita suelo y polvo de hueso para crecer"
