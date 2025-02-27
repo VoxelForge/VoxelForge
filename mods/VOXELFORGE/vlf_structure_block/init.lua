@@ -443,7 +443,7 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
             end
 
             minetest.bulk_set_node(batch_positions, {name = node_group.name, param2 = node_group.param2})
-            
+
         end
     end
 
