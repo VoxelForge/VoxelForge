@@ -280,7 +280,7 @@ minetest.register_node(":voxelforge:jigsaw", {
        -- minetest.after(0.01, function()
         minetest.after(1, function()
         if node.name == "voxelforge:jigsaw" then
-            meta:set_string("generate", "true")
+            --meta:set_string("generate", "true")
             local generate = meta:get_string("generate")
             if generate == "true" then
 				spawn_struct(pos, false)
@@ -561,7 +561,7 @@ minetest.register_abm({
         local final_state = meta:get_string("final_state")
 
         -- Check if final_state is not empty
-        if final_state ~= "" then
+        if final_state ~= "" and meta:get_string("generate") == "true" then
             -- Place the final_state block in place of the jigsaw block
             local final_node = minetest.registered_nodes[final_state]
             if final_node then
