@@ -45,7 +45,7 @@ function vlf_structures.place_schematic(pos, schematic, rotation, replacements, 
 		local p1 = {x=pos.x    , y=pos.y           , z=pos.z    }
 		local p2 = {x=pos.x+x-1, y=pos.y+s.size.y-1, z=pos.z+z-1}
 		minetest.log("verbose", "[mcl_structures] size=" ..minetest.pos_to_string(s.size) .. ", rotation=" .. tostring(rotation) .. ", emerge from "..minetest.pos_to_string(p1) .. " to " .. minetest.pos_to_string(p2))
-		vlf_structure_block.place_schematic(pos, schematic, 0, pos, "true", "false", true, def.include_entities or true, def.terrain_setting or "rigid", def.processor or nil)
+		vlf_structure_block.place_schematic(pos, schematic, 0, pos, "true", "false", def.include_entities or true, def.terrain_setting or "rigid", def.processor or nil)
 		return true
 	end
 end
