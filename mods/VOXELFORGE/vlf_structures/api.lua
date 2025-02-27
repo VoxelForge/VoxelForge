@@ -24,7 +24,7 @@ function vlf_structures.is_disabled(structname)
 	return table.indexof(disabled_structures,structname) ~= -1
 end
 
-function vlf_structures.place_schematic(pos, schematic, rotation, replacements, force_placement, flags, after_placement_callback, pr, callback_param)
+function vlf_structures.place_schematic(pos, schematic, rotation, replacements, def, force_placement, flags, after_placement_callback, pr, callback_param)
 	--if type(schematic) ~= "table" and not mcl_util.file_exists(schematic) then
 		--minetest.log("warning","[mcl_structures] schematic file "..tostring(schematic).." does not exist.")
 		--return end
@@ -45,7 +45,7 @@ function vlf_structures.place_schematic(pos, schematic, rotation, replacements, 
 		local p1 = {x=pos.x    , y=pos.y           , z=pos.z    }
 		local p2 = {x=pos.x+x-1, y=pos.y+s.size.y-1, z=pos.z+z-1}
 		minetest.log("verbose", "[mcl_structures] size=" ..minetest.pos_to_string(s.size) .. ", rotation=" .. tostring(rotation) .. ", emerge from "..minetest.pos_to_string(p1) .. " to " .. minetest.pos_to_string(p2))
-		vlf_structure_block.place_schematic(pos, schematic, 0, pos, "true", "false", true)
+		vlf_structure_block.place_schematic(pos, schematic, 0, pos, "true", "false", true, def.include_entities or true, def.terrain_setting or "rigid", def.processor or nil)
 		return true
 	end
 end
@@ -146,9 +146,8 @@ function vlf_structures.place_structure(pos, def, pr, blockseed, _)
 			elseif def.after_place then
 				ap = def.after_place
 			end
-			vlf_structures.place_schematic(pp, file, rot,  def.replacements, true, "place_center_x,place_center_z",function(p1, p2, size, rotation)---@diagnostic disable-line: unused-local
-				return ap(pp, def, pr, blockseed)
-			end,pr)
+			vlf_structures.place_schematic(pp, file, rot,  def.replacements, def, true, "place_center_x,place_center_z", ---@diagnostic disable-line: unused-local
+			pr)
 			if log_enabled then
 				minetest.log("error","[mcl_structures] "..def.name.." placed at "..minetest.pos_to_string(pp))
 			end

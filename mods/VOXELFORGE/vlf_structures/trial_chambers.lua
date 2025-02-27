@@ -6,6 +6,8 @@ vlf_structures.register_structure("trial_chambers",{
 	y_offset = function(pr) return pr:next(-3,0) -5 end,
 	chunk_probability = 2,
 	fill_ratio = 50,
+	terrain_setting = "rigid",
+	include_entities = false,
 	y_max = -60,
 	y_min = -100,
 	--biomes = {},
