@@ -469,3 +469,11 @@ minetest.register_decoration({
 })
 
 minetest.register_alias("mcl_cherry_blossom:pink_petals", "voxelforge:pink_petal_4")
+
+minetest.register_on_joinplayer(function(player)
+    player:set_physics_override({
+        jump = 1.1,
+        gravity = 1.1,
+    })
+end)
+
