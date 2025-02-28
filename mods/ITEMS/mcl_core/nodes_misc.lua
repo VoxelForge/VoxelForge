@@ -44,7 +44,7 @@ minetest.register_node("mcl_core:slimeblock", {
 	-- According to Minecraft Wiki, bouncing off a slime block from a height off 255 blocks should result in a bounce height of 50 blocks
 	-- bouncy=44 makes the player bounce up to 49.6. This value was chosen by experiment.
 	-- bouncy=80 was chosen because it is higher than 66 (bounciness of bed)
-	groups = {dig_immediate = 3, bouncy = 80, fall_damage_add_percent = -100, deco_block = 1, pathfinder_partial = 2,},
+	groups = {dig_immediate = 3, bouncy = 80, fall_damage_add_percent = -100, deco_block = 1, _mcl_partial = 2,},
 	sounds = {
 		dug = {name = "slimenodes_dug", gain = 0.6},
 		place = {name = "slimenodes_place", gain = 0.6},

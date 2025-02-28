@@ -183,10 +183,6 @@ minetest.register_craftitem("mcl_core:apple_gold", {
 	on_secondary_use = eat_gapple,
 	groups = { food = 2, eatable = 4, can_eat_when_full = 1 },
 	_mcl_saturation = 9.6,
-	_placement_def = {
-		["mobs_mc:villager_zombie"] = "default",
-		inherit = "magic_victuals",
-	},
 })
 
 minetest.register_craftitem("mcl_core:apple_gold_enchanted", {
