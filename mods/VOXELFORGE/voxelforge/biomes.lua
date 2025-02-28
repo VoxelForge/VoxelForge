@@ -224,3 +224,112 @@ local function quick_spruce(seed, offset, sprucename, biomes, y)
 ------
 
 
+
+-- Include the Perlin noise library
+--[[local perlin = ]]dofile(minetest.get_modpath("voxelforge") .. "/perlin.lua")
+
+--[[local OCTAVES = 1
+local PERSISTENCE = 0.4
+local SPREAD = 200
+
+minetest.register_on_generated(function(minp, maxp, seed)
+    local t1 = minetest.get_us_time()
+
+    -- Get voxel manipulation area
+    local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
+    local area = VoxelArea:new({MinEdge = emin, MaxEdge = emax})
+    local data = vm:get_data()
+
+    -- Node content IDs
+    local c_air = minetest.get_content_id("air")
+    local c_stone = minetest.get_content_id("mcl_core:stone")
+    local c_dirt = minetest.get_content_id("mcl_core:dirt")
+    local c_tallgrass = minetest.get_content_id("mcl_flowers:tallgrass")
+
+    -- Iterate over the chunk's x and z coordinates
+    for x = minp.x, maxp.x do
+        --for y = minp.y, maxp.y do
+        	for z = minp.z, maxp.z do
+            -- Generate height based on Perlin noise
+            local height = math.floor(perlin.noise2d(x, z, OCTAVES, PERSISTENCE, SPREAD) * 100 + 20)
+
+            -- Iterate over the chunk's y coordinates
+            for y = minp.y, maxp.y do
+                local vi = area:index(x, y, z)
+
+                -- Set stone, dirt, or air based on height
+                if y < height then
+                    if y < height - 4 then
+                        data[vi] = c_stone  -- Below the ground, set stone
+                    else
+                        data[vi] = c_dirt  -- Ground level, set dirt
+                    end
+                elseif y == height then
+                    data[vi] = c_dirt  -- Surface level, set dirt
+                elseif y == height + 1 and math.random() < 0.2 then
+                    data[vi] = c_tallgrass  -- Add tall grass with a 20% chance
+                elseif y <= 60 then
+                	data[vi] = minetest.get_content_id("mcl_core:water_source")
+                else
+                    data[vi] = c_air  -- Everything else is air
+                end
+            end
+            --end
+        end
+    end
+
+    -- Write the changes to the map
+    vm:set_data(data)
+    vm:write_to_map()
+    vm:update_liquids()
+
+    -- Log time taken for map generation
+    local t2 = minetest.get_us_time()
+    minetest.log("action", "[Perlin Mapgen] Chunk generated in " .. (t2 - t1) / 1000 .. " ms")
+end)]]
+
+--[[Mapgen settings
+local noise_scale = 0.1  -- Scale of the Perlin noise for terrain
+local max_height = 80    -- Maximum height for terrain
+local min_height = 5     -- Minimum height for terrain
+local water_level = 10   -- Level where water starts
+
+-- This function generates terrain using Perlin noise
+local function generate_terrain(seed, data, minp, maxp)
+    local perlin = PerlinNoise.new(math.random, {0, 1, 2, 3, 4, 5})  -- Generate PerlinNoise with seed
+
+    -- Loop through the map chunks to generate terrain
+    for z = minp.z, maxp.z do
+        for x = minp.x, maxp.x do
+            local noise_value = perlin:getValue(x * noise_scale, 0, z * noise_scale) -- Get terrain value
+            local height = math.floor((noise_value * (max_height - min_height)) + min_height)
+
+            -- Set the blocks based on height
+            for y = min_height, height do
+                local pos = {x = x, y = y, z = z}
+                data:set(pos, "default:stone")  -- Set stone block
+
+                -- Add some surface details
+                if y == height then
+                    -- Set the surface as dirt
+                    data:set(pos, "default:dirt")
+                end
+            end
+
+            -- Set water below a certain height
+            for y = height + 1, water_level do
+                local pos = {x = x, y = y, z = z}
+                data:set(pos, "default:water_source")
+            end
+        end
+    end
+end
+
+-- Register the on_generated function
+minetest.register_on_generated(function(minp, maxp, seed)
+    local data = minetest.get_mapgen_object("data") -- Access the mapgen data
+
+    -- Generate terrain
+    generate_terrain(seed, data, minp, maxp)
+end)
+]]

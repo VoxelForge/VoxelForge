@@ -1,9 +1,11 @@
 local mpath = minetest.get_modpath("vlf_structure_block")
 local Randomizer = dofile(minetest.get_modpath("vlf_lib").."/init.lua")
 
+vlf_procedural_structures = {}
+
 local json = minetest.parse_json
 
-local function spawn_struct(pos)
+function vlf_procedural_structures.spawn_struct(pos)
     local pos_hash = minetest.hash_node_position({x = pos.x * 256 * 8, y = pos.y * 12, z = pos.z * 18})
     local blockseed = minetest.get_mapgen_setting("seed")
     local rng = Randomizer.new(pos_hash, blockseed)
@@ -116,7 +118,7 @@ local function spawn_struct(pos)
                 local location = element.location:gsub("minecraft:", "")
                 local base_name = location:gsub("%.gamedata$", "")
                 local selecting_schematic = "data/voxelforge/structure/" .. base_name .. ".gamedata"
-                --minetest.log("error", "selected schematic:" .. selecting_schematic.." projection: " .. projection)
+                minetest.log("error", "selected schematic:" .. selecting_schematic.." projection: " .. projection)
 
                 local schematic_data = vlf_structure_block.load_vlfschem(selecting_schematic, false)
                 if not schematic_data then
@@ -221,6 +223,7 @@ local function spawn_struct(pos)
 		if vlf_structure_block.get_bounding_box(placement_pos, selected_schematic, rot, target_pos,"true", false) == "good" then
 
             vlf_structure_block.place_schematic(placement_pos, selected_schematic, rot, target_pos,"true", false, true, projection, processor)
+            minetest.log("error", "placed schematic: " .. selected_schematic)
             minetest.set_node(pos, {name = final_state})
             local place_pos = pos + offset
             local target_node_meta = minetest.get_meta(place_pos)
@@ -272,7 +275,7 @@ minetest.register_node(":voxelforge:jigsaw", {
             minetest.show_formspec(player:get_player_name(), "voxelforge:jigsaw", get_jigsaw_formspec(pos))
         end
     end,
-    on_construct = function(pos, node)
+    --[[on_construct = function(pos, node)
         local node = minetest.get_node(pos)
         local meta = minetest.get_meta(pos)
 
@@ -280,14 +283,14 @@ minetest.register_node(":voxelforge:jigsaw", {
        -- minetest.after(0.01, function()
         minetest.after(1, function()
         if node.name == "voxelforge:jigsaw" then
-            --meta:set_string("generate", "true")
+            meta:set_string("generate", "true")
             local generate = meta:get_string("generate")
             if generate == "true" then
-				spawn_struct(pos, false)
+				vlf_procedural_structures.spawn_struct(pos)
             end
         end
         end)
-end,
+end,]]
 })
 
 
@@ -327,7 +330,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         meta:set_string("joint_type", joint_type)
     if fields.generate then
 	--meta:set_string("generate", "true")
-	spawn_struct(pos)
+	vlf_procedural_structures.spawn_struct(pos)
     end
 end)
 

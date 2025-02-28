@@ -278,7 +278,7 @@ local function load_area(minp, maxp)
     end
 end
 
-function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_origin, binary, worldpath, include_entities, terrain_setting, processor)
+--[[function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_origin, binary, worldpath, include_entities, terrain_setting, processor)
     rotation = rotation or 0
     rotation_origin = rotation_origin or pos
     processor = processor or nil
@@ -469,7 +469,273 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
             end
         end
     end
+end]]
+
+--[[function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_origin, binary, worldpath, include_entities, terrain_setting, processor)
+    rotation = rotation or 0
+    rotation_origin = rotation_origin or pos
+    processor = processor or nil
+
+    local schematic = (binary == "true") and vlf_structure_block.load_vlfschem(file_name, worldpath) 
+                      or vlf_structure_block.load_vlfschem_nb(file_name, worldpath)
+    
+    if not schematic then
+        minetest.log("error", "Failed to load schematic data: " .. file_name)
+        return
+    end
+
+    local schematic_size = schematic.size
+    local schem_size = (rotation == 90 or rotation == 270) and {x = schematic_size.z, y = schematic_size.y, z = schematic_size.x} or schematic_size
+    local minp = vector.add(pos, vector.new(0, 0, 0))
+    local maxp = vector.add(pos, vector.new(schem_size.x, schem_size.y, schem_size.z))
+    
+    if terrain_setting == "terrain_matching" then
+        local highest_pos = nil
+        for offset = 40, 0, -1 do
+            local check_pos = vector.add(pos, vector.new(0, offset, 0))
+            local check_node = minetest.get_node(check_pos)
+            if minetest.registered_nodes[check_node.name].walkable then
+                highest_pos = check_pos
+                break
+            end
+        end
+        if not highest_pos then
+            for offset = 0, 80 do
+                local check_pos = vector.add(pos, vector.new(0, -offset, 0))
+                local check_node = minetest.get_node(check_pos)
+                if minetest.registered_nodes[check_node.name].walkable then
+                    highest_pos = check_pos
+                    break
+                end
+            end
+        end
+        if highest_pos then
+            pos.y = highest_pos.y
+        end
+    elseif terrain_setting == "rigid" and pos.y > 0 then
+        local center_pos = vector.add(pos, vector.new(schematic.size.x / 2, 0, schematic.size.z / 2))
+        mcl_util.create_ground_turnip(center_pos, schematic.size.x / 2, 5)
+    end
+    
+    if not load_area(minp, maxp) then return end
+
+    local vm = minetest.get_voxel_manip()
+    local emin, emax = vm:read_from_map(minp, maxp)
+    local area = VoxelArea:new({MinEdge = emin, MaxEdge = emax})
+    local data = vm:get_data()
+    local param2_data = vm:get_param2_data()
+    
+    local node_ids = {}
+    for name, def in pairs(minetest.registered_nodes) do
+        node_ids[name] = minetest.get_content_id(name)
+    end
+    
+    local metadata = {}
+    for _, node in ipairs(schematic.nodes) do
+        local rotated_pos = rotate_position(node.pos, rotation, rotation_origin)
+        local node_pos = vector.add(pos, rotated_pos)
+        local rotated_param2 = rotate_param2(node.param2 or 0, rotation)
+        
+        if processor ~= nil then
+            local processed_node = processors.generic_processor(processor, node_pos, node)
+            if processed_node ~= nil and processed_node ~= "rotted" then
+                node.name = processed_node.name
+            elseif processed_node == "rotted" then
+                goto continue
+            end
+        end
+
+        if area:containsp(node_pos) then
+            local index = area:indexp(node_pos)
+            data[index] = node_ids[node.name] or node_ids["air"]
+            param2_data[index] = rotated_param2
+            
+            if node.metadata and next(node.metadata) then
+                metadata[node_pos] = node.metadata
+            end
+        end
+        
+        ::continue::
+    end
+    
+    vm:set_data(data)
+    vm:set_param2_data(param2_data)
+    vm:write_to_map()
+    vm:update_map()
+    
+    
+    for node_pos, meta_data in pairs(metadata) do
+        local meta = minetest.get_meta(node_pos)
+        for key, value in pairs(meta_data) do
+            meta:set_string(key, value)
+        end
+        if minetest.get_node(node_pos).name == "voxelforge:jigsaw" then
+            meta:set_string("generate", "true")
+            vlf_procedural_structures.spawn_struct(node_pos)
+        end
+    end
+    if schematic.entities and include_entities then
+        for _, entity_data in ipairs(schematic.entities) do
+            local rotated_pos = rotate_position(entity_data.pos, rotation, rotation_origin)
+            local entity_pos = vector.add(pos, rotated_pos)
+
+            if entity_data.name ~= "vlf_structure_block:border" then
+                local obj = minetest.add_entity(entity_pos, entity_data.name)
+                if obj and entity_data.properties then
+                    local luaentity = obj:get_luaentity()
+                    if luaentity then
+                        for key, value in pairs(entity_data.properties) do
+                            luaentity[key] = value
+                        end
+                    end
+                end
+            end
+        end
+    end
+end]]
+
+function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_origin, binary, worldpath, include_entities, terrain_setting, processor)
+    rotation = rotation or 0
+    rotation_origin = rotation_origin or pos
+    processor = processor or nil
+
+    local schematic = (binary == "true") and vlf_structure_block.load_vlfschem(file_name, worldpath) 
+                      or vlf_structure_block.load_vlfschem_nb(file_name, worldpath)
+    
+    if not schematic then
+        minetest.log("error", "Failed to load schematic data: " .. file_name)
+        return
+    end
+
+    local schematic_size = schematic.size
+    local schem_size = (rotation == 90 or rotation == 270) and {x = schematic_size.z, y = schematic_size.y, z = schematic_size.x} or schematic_size
+    local minp = vector.add(pos, vector.new(-schem_size.x, -schem_size.y, -schem_size.z))
+    local maxp = vector.add(pos, vector.new(2 * schem_size.x, 2 * schem_size.y, 2 * schem_size.z))
+    
+    if terrain_setting == "terrain_matching" then
+        local highest_pos = nil
+        for offset = 40, 0, -1 do
+            local check_pos = vector.add(pos, vector.new(0, offset, 0))
+            local check_node = minetest.get_node(check_pos)
+            if minetest.registered_nodes[check_node.name].walkable then
+                highest_pos = check_pos
+                break
+            end
+        end
+        if not highest_pos then
+            for offset = 0, 80 do
+                local check_pos = vector.add(pos, vector.new(0, -offset, 0))
+                local check_node = minetest.get_node(check_pos)
+                if minetest.registered_nodes[check_node.name].walkable then
+                    highest_pos = check_pos
+                    break
+                end
+            end
+        end
+        if highest_pos then
+            pos.y = highest_pos.y
+        end
+    elseif terrain_setting == "rigid" and pos.y > 0 then
+        local center_pos = vector.add(pos, vector.new(schematic.size.x / 2, 0, schematic.size.z / 2))
+        mcl_util.create_ground_turnip(center_pos, schematic.size.x / 2, 5)
+    end
+    
+    if not load_area(minp, maxp) then return end
+
+    local vm = minetest.get_voxel_manip()
+    local emin, emax = vm:read_from_map(minp, maxp)
+    local area = VoxelArea:new({MinEdge = emin, MaxEdge = emax})
+    local data = vm:get_data()
+    local param2_data = vm:get_param2_data()
+    
+    local node_ids = {}
+    for name, def in pairs(minetest.registered_nodes) do
+        node_ids[name] = minetest.get_content_id(name)
+    end
+    
+    local metadata = {}
+    local constructed_nodes = {}
+    for _, node in ipairs(schematic.nodes) do
+        local rotated_pos = rotate_position(node.pos, rotation, rotation_origin)
+        local node_pos = vector.add(pos, rotated_pos)
+        local rotated_param2 = rotate_param2(node.param2 or 0, rotation)
+        
+        if processor ~= nil then
+            local processed_node = processors.generic_processor(processor, node_pos, node)
+            if processed_node ~= nil and processed_node ~= "rotted" then
+                node.name = processed_node.name
+            elseif processed_node == "rotted" then
+                goto continue
+            end
+        end
+
+        if area:containsp(node_pos) then
+            local index = area:indexp(node_pos)
+            data[index] = node_ids[node.name] or node_ids["air"]
+            param2_data[index] = rotated_param2
+            
+            if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_construct then
+                table.insert(constructed_nodes, node_pos)
+            end
+            
+            if node.metadata and next(node.metadata) then
+                metadata[node_pos] = node.metadata
+            end
+        end
+        
+        ::continue::
+    end
+    
+    vm:set_data(data)
+    vm:set_param2_data(param2_data)
+    vm:write_to_map()
+    vm:update_map()
+    
+    if next(metadata) then
+        set_metadata(metadata)
+    end
+    
+    for _, node_pos in ipairs(constructed_nodes) do
+        local node = minetest.get_node(node_pos)
+        if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_construct then
+            minetest.registered_nodes[node.name].on_construct(node_pos)
+        end
+    end
+    
+    for node_pos, meta_data in pairs(metadata) do
+        local meta = minetest.get_meta(node_pos)
+        --[[for key, value in pairs(meta_data) do
+            meta:set_string(key, value)
+        end]]
+        if minetest.get_node(node_pos).name == "voxelforge:jigsaw" then
+            meta:set_string("generate", "true")
+            vlf_procedural_structures.spawn_struct(node_pos)
+        end
+    end
+    
+    if schematic.entities and include_entities then
+        for _, entity_data in ipairs(schematic.entities) do
+            local rotated_pos = rotate_position(entity_data.pos, rotation, rotation_origin)
+            local entity_pos = vector.add(pos, rotated_pos)
+
+            if entity_data.name ~= "vlf_structure_block:border" then
+                local obj = minetest.add_entity(entity_pos, entity_data.name)
+                if obj and entity_data.properties then
+                    local luaentity = obj:get_luaentity()
+                    if luaentity then
+                        for key, value in pairs(entity_data.properties) do
+                            luaentity[key] = value
+                        end
+                    end
+                end
+            end
+        end
+    end
 end
+
+
+
+
 
 vlf_structure_block.schematic_bounds = {}
 
