@@ -164,7 +164,7 @@ msgid "Diamond Tools"
 msgstr "ダイヤモンド武器と道具"
 
 msgid "Ingredients:"
-msgstr ""
+msgstr "素材："
 
 msgid "Nether Lava Source"
 msgstr "ネザー溶岩源"

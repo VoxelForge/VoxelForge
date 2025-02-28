@@ -869,7 +869,7 @@ msgid "A block of diamond is mostly a shiny decorative block but also useful as 
 msgstr "ダイヤモンドブロックは、主に装飾用の輝くブロックですが、ダイヤモンドをコンパクトに保管するのにも便利です。"
 
 msgid "Block of Lapis Lazuli"
-msgstr ""
+msgstr "ラピスラズリブロック"
 
 msgid "A lapis lazuli block is mostly a decorative block but also useful as a compact storage of lapis lazuli."
 msgstr "ラピスラズリブロックは、主に装飾用のブロックですが、ラピスラズリをコンパクトに保管するのにも便利です。"
@@ -1163,29 +1163,29 @@ msgid "Stone Brick Stairs"
 msgstr "石レンガの階段"
 
 msgid "Stone Brick Slab"
-msgstr ""
+msgstr "石レンガのハーフブロック"
 
 msgid "Polished Andesite Stairs"
-msgstr ""
+msgstr "磨かれた安山岩の階段"
 
 msgid "Polished Andesite Slab"
-msgstr ""
+msgstr "磨かれた安山岩のハーフブロック"
 
 msgid "Polished Granite Stairs"
-msgstr ""
+msgstr "磨かれた花崗岩の階段"
 
 msgid "Polished Granite Slab"
-msgstr ""
+msgstr "磨かれた花崗岩のハーフブロック"
 
 msgid "Polished Diorite Stairs"
-msgstr ""
+msgstr "磨かれた閃緑岩の階段"
 
 msgid "Polished Diorite Slab"
-msgstr ""
+msgstr "磨かれた閃緑岩のハーフブロック"
 
 msgid "Mossy Stone Brick Stairs"
-msgstr ""
+msgstr "苔むした石レンガの階段"
 
 msgid "Mossy Stone Brick Slab"
-msgstr ""
+msgstr "苔むした石レンガのハーフブロック"
 
