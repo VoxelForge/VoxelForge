@@ -393,20 +393,6 @@ minetest.register_chatcommand("set_meta_here", {
     end
 })
 
-minetest.register_chatcommand("place_po", {
-	params = "",
-	description = "Test for Procedural Structures.",
-	func = function(name, param)
-        local player = minetest.get_player_by_name(name)
-        if not player then
-            return false, "Player not found."
-        end
-
-        local pos = player:get_pos()
-		vlf_structure_block.place_schematic(pos, "data/voxelforge/structure/pillager_outpost/base_plate.gamedata", 0, pos, "true", false, true, "terrain_matching")
-	end
-})
-
 local placed_schematics = {}  -- Table to store placed schematic data for each player
 
 local function is_file(path)
