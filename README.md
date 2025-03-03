@@ -14,42 +14,31 @@ ________________________________________________________________________________
 
 An unofficial Minecraft-like game for Minetest. Fork of Mineclonia with focus
 on stability, performance and features. For information about
-migrating from Voxelibre or Mineclonia to VoxelForge, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
 
-Version: Voxelforge Beta 0.5.0
+Version: Voxelforge Beta 0.6.0
 
 ### Differences from Mineclonia
 * More minecraft like font.
-* different Jukebox music.
-* better structure platforms.
 * bubble columns.
 * Different Chat hud.
 * Vaults.
 * Bundles.
-* 1.21 status effects.
 * Tripwire.
 * FireFlies.
+* Procedural Structures.
+* Breeze.
+* Bogged.
+* Pale Garden.
+* Trial Chambers.
+* Trial Spawners.
+* MC mob rejects.
+* Firefly bush.
+* Better wind charges.
+* Music.
+* Structure Block.
+* Datapacks.
 
-### Differences from Voxelibre
-* Mace
-* More minecraft like font.
-* Different Jukebox music.
-* Better structure platforms.
-* bubble columns.
-* Overworld depth increased from 64 to 128 nodes.
-* Improved nether portals.
-* Improved leaf decay.
-* Improved villages.
-* Wandering traders and trader llamas.
-* Suspicious nodes, pottery shreds and decorated pots.
-* Conduits.
-* Deep dark biome and ancient hermitage (structure corresponding to ancient city).
-* Functional loom to apply banner patterns.
-* Lush caves biome.
-* Cherry grove biome.
-* No hamburgers.
-* FireFlies.
-* Vaults.
+If you want a lesser minecraft experience. (but still a very fun game) Checkout Voxelibre! [VoxeLibre Download link](https://content.luanti.org/packages/Wuzzy/mineclone2/)
 
 ### Gameplay
 You start in a randomly-generated world made entirely of cubes. You can explore
