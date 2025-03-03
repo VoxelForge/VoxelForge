@@ -378,7 +378,11 @@ mcl_player.register_globalstep(function(player)
 			-- sets eye height, and nametag color accordingly
 			mcl_util.set_properties(player, player_props_elytra)
 		elseif walking and (math.abs(velocity.x) > 0.35 or math.abs(velocity.z) > 0.35) then --walking
-			mcl_util.set_properties(player, player_props_normal)
+			if not control.sneak then
+				mcl_util.set_properties(player, player_props_normal)
+			else
+				mcl_util.set_properties(player, player_props_sneaking)
+			end
 			set_bone_pos(player,"Head_Control", nil, vector.new(pitch, player_vel_yaw - yaw, 0))
 			set_bone_pos(player,"Body_Control", nil, vector.new(0, -player_vel_yaw + yaw, 0))
 			local no_arm_moving = minetest.get_item_group(wielded_itemname, "bow") > 0 or

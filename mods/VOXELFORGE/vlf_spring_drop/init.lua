@@ -71,9 +71,20 @@ minetest.register_craftitem(":voxelforge:wildflowers", {
     description = "Wildflowers",
     inventory_image = "wildflower.png",
     wield_image = "wildflower.png",
-    groups = {craftitem=1},
+    groups = {
+			craftitem = 1,
+			attached_node = 1, deco_block = 1, dig_by_piston = 1, dig_immediate = 3,
+			dig_by_water = 1, destroy_by_lava_flow = 1, enderman_takable = 1,
+			plant = 1, flower = 1, place_flowerlike = 1, non_mycelium_plant = 1,
+			flammable = 2, fire_encouragement = 60, fire_flammability = 100,
+			compostability = 65, unsticky = 1
+		},
+		_mcl_crafting_output = {single = {output = "mcl_dyes:yellow"}},
 
     on_place = function(itemstack, placer, pointed_thing)
+		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		if rc then return rc end
+		
         if not pointed_thing or not pointed_thing.under then
             return itemstack
         end
@@ -92,11 +103,17 @@ minetest.register_craftitem(":voxelforge:wildflowers", {
         }
 
         if swap_map[node.name] then
+        	itemstack:take_item(1)
             minetest.set_node(pos, {name = swap_map[node.name]})
         else
             -- If not already part of the cycle, place _1 above
             if above_node.name == "air" and not (node_def and node_def.groups and node_def.groups.wildflower and node_def.groups.wildflower > 0 and node_def.groups.wildflower < 5) then
-                minetest.set_node(above_pos, {name = "voxelforge:wildflower_1"})
+				if core.get_item_group(node.name, "soil") == 0 then
+					return itemstack
+				else
+					itemstack:take_item(1)
+					minetest.set_node(above_pos, {name = "voxelforge:wildflower_1"})
+				end
             end
         end
 
@@ -104,14 +121,16 @@ minetest.register_craftitem(":voxelforge:wildflowers", {
     end
 })
 
-
-
 for i = 1,4 do
 minetest.register_node(":voxelforge:wildflower_"..i, {
 	description = ("WildFlower"),
 	drawtype = "mesh",
-	tiles = {"wildflower.png", "wildflower_stem.png"},
+	tiles = {{ name="wildflower.png", color="white" }, "wildflower_stem.png"},
 	paramtype = "light",
+	paramtype2 = "color",
+	palette = "mcl_core_palette_grass.png",
+	palette_index = 0,
+	color = "#8EB971",
     mesh = "wildflower_"..i..".obj",
 	sunlight_propagates = true,
 	walkable = false,
@@ -128,8 +147,18 @@ minetest.register_node(":voxelforge:wildflower_"..i, {
 	node_placement_prediction = "",
     use_texture_alpha = "clip",
 	_mcl_blast_resistance = 0.2,
+	_on_bone_meal = mcl_flowers.on_bone_meal_simple,
 	_mcl_hardness = 0.2,
 	on_rotate = false,
+	on_construct = function(pos)
+		local node = minetest.get_node(pos)
+		if node.param2 == 0 then
+			local new_node = voxelforge.get_grass_block_type(pos, "voxelforge:wildflower_"..i)
+			if new_node.param2 ~= 0 or new_node.name ~= "voxelforge:wildflower_"..i then
+				minetest.set_node(pos, new_node)
+			end
+		end
+	end,
 })
 end
 
