@@ -617,7 +617,7 @@ function mob_class:on_step (dtime, moveresult)
 		self.opinion_sound_cooloff = self.opinion_sound_cooloff - dtime
 	end
 	-- Mob plays random sound at times.
-	local chance = scale_chance (70, dtime)
+	local chance = scale_chance (700, dtime)
 	if math.random (1, chance) == 1 then
 		self:mob_sound("random", true)
 	end
