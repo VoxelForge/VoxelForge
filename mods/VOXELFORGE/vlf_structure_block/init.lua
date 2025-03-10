@@ -331,19 +331,14 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
     local area = VoxelArea:new({MinEdge = emin, MaxEdge = emax})
     local data = vm:get_data()
     local param2_data = vm:get_param2_data()
-    
-    local node_ids = {}
-    for name, def in pairs(minetest.registered_nodes) do
-        node_ids[name] = minetest.get_content_id(name)
-    end
-    
+
     local metadata = {}
     local constructed_nodes = {}
     for _, node in ipairs(schematic.nodes) do
         local rotated_pos = rotate_position(node.pos, rotation, rotation_origin)
         local node_pos = vector.add(pos, rotated_pos)
         local rotated_param2 = rotate_param2(node.param2 or 0, rotation)
-        
+
         if processor ~= nil then
             local processed_node = processors.generic_processor(processor, node_pos, node)
             if processed_node ~= nil and processed_node ~= "rotted" then
@@ -355,7 +350,7 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
 
         if area:containsp(node_pos) then
             local index = area:indexp(node_pos)
-            data[index] = node_ids[node.name] or node_ids["air"]
+            data[index] = minetest.get_content_id(node.name)
             param2_data[index] = rotated_param2
             
             if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_construct then
@@ -381,9 +376,6 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
     
     for node_pos, meta_data in pairs(metadata) do
         local meta = minetest.get_meta(node_pos)
-        --[[for key, value in pairs(meta_data) do
-            meta:set_string(key, value)
-        end]]
         if minetest.get_node(node_pos).name == "voxelforge:jigsaw" then
             meta:set_string("generate", "true")
             vlf_procedural_structures.spawn_struct(node_pos)
