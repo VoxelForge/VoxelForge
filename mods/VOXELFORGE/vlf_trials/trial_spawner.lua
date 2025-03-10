@@ -669,7 +669,7 @@ local base_spawner_def = {
     is_ground_content = false,
     drop = "",
 
-		on_place = function(itemstack, placer, pointed_thing)
+	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.type ~= "node" or not placer or not placer:is_player() then
 			return itemstack
 		end
@@ -721,7 +721,9 @@ local base_spawner_def = {
 	end,
 
 	on_construct = function(pos, node)
-		vlf_trials.setup_spawner(pos)
+		--vlf_trials.setup_spawner(pos)
+		local t = minetest.get_node_timer(pos)
+		t:start(2)
 	end,
 
     on_destruct = function(pos)

@@ -67,6 +67,10 @@ function voxelforge.play_sound(sound_name, pos, max_distance, gain)
     end
 end
 
+function voxelforge.get_grass_block_type(pos, name)
+	return {name = name, param2 = mcl_core.get_grass_palette_index(pos)}
+end
+
 --TODO: Remove after version 25w09a
 minetest.register_on_joinplayer(function(player)
     minetest.chat_send_player(player:get_player_name(),
@@ -363,44 +367,24 @@ end
 
 register_vlf_entities()
 
-for i = 1,4 do
-minetest.register_node(":voxelforge:pink_petal_"..i, {
-	description = ("Pink Petal"),
-	drawtype = "mesh",
-	tiles = {"mcl_cherry_blossom_pink_petals.png", "wildflower_stem.png"},
-	paramtype = "light",
-	sunlight_propagates = true,
-	paramtype2 = "none",
-	mesh = "wildflower_"..i..".obj",
-	walkable = false,
-	climbable = false,
-	buildable_to = true,
-    selection_box = {type = "fixed", fixed = {-1/2, -1/2, -1/2, 1/2, -5/16, 1/2}},
-	groups = {
-		handy = 1, shearsy = 1, hoey = 1, swordy = 1, deco_block = 1, flammable=3, attached_node=1, compostability=30,
-		dig_by_piston = 1, pinkpetal = i, attached_block = 1, dig_by_water = 1, destroy_by_lava_flow = 1, not_in_creative_inventory=1
-	},
-	drop = "voxelforge:pink_petal " ..i,
-	_mcl_shears_drop = true,
-	node_placement_prediction = "",
-	_mcl_blast_resistance = 0.0,
-	_mcl_hardness = 0.0,
-	use_texture_alpha = true,
-	on_rotate = false,
-	_on_bone_meal = function(_, _, _ , pos, n)
-		minetest.add_item(pos,"voxelforge:pink_petals")
-	end,
-})
-end
--- pinkpetals.
-
 minetest.register_craftitem(":voxelforge:pinkpetals", {
     description = "Pink Petals",
     inventory_image = "mcl_cherry_blossom_pink_petals_inv.png",
     wield_image = "mcl_cherry_blossom_pink_petals_inv.png",
-    groups = {craftitem=1},
+    groups = {
+			craftitem = 1,
+			attached_node = 1, deco_block = 1, dig_by_piston = 1, dig_immediate = 3,
+			dig_by_water = 1, destroy_by_lava_flow = 1, enderman_takable = 1,
+			plant = 1, flower = 1, place_flowerlike = 1, non_mycelium_plant = 1,
+			flammable = 2, fire_encouragement = 60, fire_flammability = 100,
+			compostability = 65, unsticky = 1
+		},
+		_mcl_crafting_output = {single = {output = "mcl_dyes:pink"}},
 
     on_place = function(itemstack, placer, pointed_thing)
+		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
+		if rc then return rc end
+
         if not pointed_thing or not pointed_thing.under then
             return itemstack
         end
@@ -419,17 +403,64 @@ minetest.register_craftitem(":voxelforge:pinkpetals", {
         }
 
         if swap_map[node.name] then
+			itemstack:take_item(1)
             minetest.set_node(pos, {name = swap_map[node.name]})
         else
             -- If not already part of the cycle, place _1 above
             if above_node.name == "air" and not (node_def and node_def.groups and node_def.groups.pinkpetal and node_def.groups.pinkpetal > 0 and node_def.groups.pinkpetal < 5) then
-                minetest.set_node(above_pos, {name = "voxelforge:pink_petal_1"})
+				if core.get_item_group(node.name, "soil") == 0 then
+					return itemstack
+				else
+					itemstack:take_item(1)
+					minetest.set_node(above_pos, {name = "voxelforge:pink_petal_1"})
+				end
             end
         end
 
         return itemstack
     end
 })
+
+for i = 1,4 do
+minetest.register_node(":voxelforge:pink_petal_"..i, {
+	description = ("Pink Petal " .. i),
+	drawtype = "mesh",
+	tiles = {{ name="mcl_cherry_blossom_pink_petals.png", color="white" }, "wildflower_stem.png"},
+	paramtype = "light",
+	paramtype2 = "color",
+	palette = "mcl_core_palette_grass.png",
+	palette_index = 0,
+	color = "#8EB971",
+    mesh = "wildflower_"..i..".obj",
+	sunlight_propagates = true,
+	walkable = false,
+	climbable = false,
+	buildable_to = true,
+    selection_box = {type = "fixed", fixed = {-1/2, -1/2, -1/2, 1/2, -5/16, 1/2}},
+    stack_max = 64,
+	groups = {
+		handy = 1, shearsy = 1, hoey = 1, swordy = 1, deco_block = 1, flammable=3, attached_node=1, compostability=30,
+		dig_by_piston = 1, pinkpetal = i, attached_block = 1, dig_by_water = 1, destroy_by_lava_flow = 1, not_in_creative_inventory=1
+	},
+	drop = "voxelforge:pinkpetals " ..i,
+	_mcl_shears_drop = true,
+	node_placement_prediction = "",
+    use_texture_alpha = "clip",
+	_mcl_blast_resistance = 0.2,
+	_on_bone_meal = mcl_flowers.on_bone_meal_simple,
+	_mcl_hardness = 0.2,
+	on_rotate = false,
+	on_construct = function(pos)
+		local node = minetest.get_node(pos)
+		if node.param2 == 0 then
+			local new_node = voxelforge.get_grass_block_type(pos, "voxelforge:pink_petal_"..i)
+			if new_node.param2 ~= 0 or new_node.name ~= "voxelforge:pink_petal_"..i then
+				minetest.set_node(pos, new_node)
+			end
+		end
+	end,
+})
+end
 
 minetest.register_decoration({
 		deco_type = "simple",
@@ -469,3 +500,11 @@ minetest.register_decoration({
 })
 
 minetest.register_alias("mcl_cherry_blossom:pink_petals", "voxelforge:pink_petal_4")
+
+minetest.register_on_joinplayer(function(player)
+    player:set_physics_override({
+        jump = 1.1,
+        gravity = 1.1,
+    })
+end)
+
