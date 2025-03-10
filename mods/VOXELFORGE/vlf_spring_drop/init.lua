@@ -84,7 +84,7 @@ minetest.register_craftitem(":voxelforge:wildflowers", {
     on_place = function(itemstack, placer, pointed_thing)
 		local rc = mcl_util.call_on_rightclick(itemstack, placer, pointed_thing)
 		if rc then return rc end
-		
+
         if not pointed_thing or not pointed_thing.under then
             return itemstack
         end
@@ -103,7 +103,7 @@ minetest.register_craftitem(":voxelforge:wildflowers", {
         }
 
         if swap_map[node.name] then
-        	itemstack:take_item(1)
+			itemstack:take_item(1)
             minetest.set_node(pos, {name = swap_map[node.name]})
         else
             -- If not already part of the cycle, place _1 above

@@ -283,9 +283,9 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
     rotation_origin = rotation_origin or pos
     processor = processor or nil
 
-    local schematic = (binary == "true") and vlf_structure_block.load_vlfschem(file_name, worldpath) 
+    local schematic = (binary == "true") and vlf_structure_block.load_vlfschem(file_name, worldpath)
                       or vlf_structure_block.load_vlfschem_nb(file_name, worldpath)
-    
+
     if not schematic then
         minetest.log("error", "Failed to load schematic data: " .. file_name)
         return
@@ -295,7 +295,7 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
     local schem_size = (rotation == 90 or rotation == 270) and {x = schematic_size.z, y = schematic_size.y, z = schematic_size.x} or schematic_size
     local minp = vector.add(pos, vector.new(-schem_size.x, -schem_size.y, -schem_size.z))
     local maxp = vector.add(pos, vector.new(2 * schem_size.x, 2 * schem_size.y, 2 * schem_size.z))
-    
+
     if terrain_setting == "terrain_matching" then
         local highest_pos = nil
         for offset = 40, 0, -1 do
@@ -323,7 +323,7 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
         local center_pos = vector.add(pos, vector.new(schematic.size.x / 2, 0, schematic.size.z / 2))
         mcl_util.create_ground_turnip(center_pos, schematic.size.x / 2, 5)
     end
-    
+
     if not load_area(minp, maxp) then return end
 
     local vm = minetest.get_voxel_manip()
@@ -352,28 +352,28 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
             local index = area:indexp(node_pos)
             data[index] = minetest.get_content_id(node.name)
             param2_data[index] = rotated_param2
-            
+
             if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_construct then
                 table.insert(constructed_nodes, node_pos)
             end
-            
+
             if node.metadata and next(node.metadata) then
                 metadata[node_pos] = node.metadata
             end
         end
-        
+
         ::continue::
     end
-    
+
     vm:set_data(data)
     vm:set_param2_data(param2_data)
     vm:write_to_map()
     vm:update_map()
-    
+
     if next(metadata) then
         set_metadata(metadata)
     end
-    
+
     for node_pos, meta_data in pairs(metadata) do
         local meta = minetest.get_meta(node_pos)
         if minetest.get_node(node_pos).name == "voxelforge:jigsaw" then
@@ -381,14 +381,14 @@ function vlf_structure_block.place_schematic(pos, file_name, rotation, rotation_
             vlf_procedural_structures.spawn_struct(node_pos)
         end
     end
-    
+
     for _, node_pos in ipairs(constructed_nodes) do
         local node = minetest.get_node(node_pos)
         if minetest.registered_nodes[node.name] and minetest.registered_nodes[node.name].on_construct then
             minetest.registered_nodes[node.name].on_construct(node_pos)
         end
     end
-    
+
     if schematic.entities and include_entities then
         for _, entity_data in ipairs(schematic.entities) do
             local rotated_pos = rotate_position(entity_data.pos, rotation, rotation_origin)
