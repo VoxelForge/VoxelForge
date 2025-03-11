@@ -223,7 +223,8 @@ mcl_mobs.mob_class = {
 	--internal variables
 	standing_in = "ignore",
 	standing_on = "ignore",
-	opinion_sound_cooloff = 7, -- used to prevent sound spam of particular sound types
+	jump_sound_cooloff = 0.5, -- used to prevent jump sound from being played too often in short time
+	opinion_sound_cooloff = 1, -- used to prevent sound spam of particular sound types
 	_frozen_for = 0,
 	_restriction_center = nil,
 	_restriction_size = 0,

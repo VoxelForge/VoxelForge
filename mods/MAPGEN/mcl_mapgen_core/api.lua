@@ -86,9 +86,9 @@ minetest.register_on_generated(function(minp, maxp, blockseed)
 	end
 end)
 
---[[function minetest.register_on_generated(node_function)
+function minetest.register_on_generated(node_function)
 	mcl_mapgen_core.register_generator("mod_"..minetest.get_current_modname().."_"..tostring(#registered_generators+1), nil, node_function)
-end]]
+end
 
 function mcl_mapgen_core.register_generator(id, lvm_function, node_function, priority, needs_param2)
 	if not id then return end
