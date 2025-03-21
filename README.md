@@ -1,255 +1,190 @@
 # VoxelForge
 
-[![ContentDB](https://content.minetest.net/packages/VoxelForge/voxelforge/shields/downloads/)](https://content.minetest.net/packages/VoxelForge/voxelforge/)
-[![Luacheck](https://github.com/VoxelForge/VoxelForge/actions/workflows/luacheck.yml/badge.svg)](https://github.com/VoxelForge/VoxelForge/actions/workflows/luacheck.yml)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/VoxelForge/VoxelForge)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/VoxelForge/VoxelForge?include_prereleases)](https://github.com/VoxelForge/VoxelForge/releases/latest)
-[![GitHub issues](https://img.shields.io/github/issues/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/issues)
-![GitHub closed issues](https://img.shields.io/github/issues-closed/VoxelForge/VoxelForge)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/pulls)
-[![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/pulls-closed)
-[![GitHub](https://img.shields.io/github/license/VoxelForge/VoxelForge)](https://github.com/VoxelForge/VoxelForge/blob/master/LICENSE)
+<div align="center">
+  <img src="https://content.minetest.net/packages/VoxelForge/voxelforge/shields/downloads/" alt="ContentDB" />
+  <img src="https://github.com/VoxelForge/VoxelForge/actions/workflows/luacheck.yml/badge.svg" alt="Luacheck" />
+  <img src="https://img.shields.io/github/commit-activity/m/VoxelForge/VoxelForge" alt="GitHub commit activity" />
+  <img src="https://img.shields.io/github/v/release/VoxelForge/VoxelForge?include_prereleases" alt="GitHub release" />
+  <img src="https://img.shields.io/github/issues/VoxelForge/VoxelForge" alt="GitHub issues" />
+  <img src="https://img.shields.io/github/issues-closed/VoxelForge/VoxelForge" alt="GitHub closed issues" />
+  <img src="https://img.shields.io/github/issues-pr/VoxelForge/VoxelForge" alt="GitHub pull requests" />
+  <img src="https://img.shields.io/github/issues-pr-closed/VoxelForge/VoxelForge" alt="GitHub closed pull requests" />
+  <img src="https://img.shields.io/github/license/VoxelForge/VoxelForge" alt="GitHub license" />
+</div>
 
-___________________________________________________________________________________________________________________________________________________________________________________
+---
 
-An unofficial Minecraft-like game for Minetest. Fork of Mineclonia with focus
-on stability, performance and features. For information about
-migrating from Voxelibre or Mineclonia to VoxelForge, see [MIGRATING.md](../../../src/branch/main/MIGRATING.md).
+<div style="background-color: #f0f8ff; padding: 10px;">
+  <h2 style="color: #333333; text-align: center;">🎮 VoxelForge - An Unofficial Minecraft-Like Game for Minetest</h2>
+  <p><strong>VoxelForge</strong> is a <strong>Minecraft-inspired</strong> game built on <strong>Minetest</strong>, focusing on <strong>stability</strong>, <strong>performance</strong>, and new <strong>features</strong>. It is a fork of <strong>Mineclonia</strong>, designed for fans who crave a more familiar Minecraft-like experience with added flair.</p>
+</div>
 
-Version: Voxelforge Beta 0.5.0
+### ⚡ Version: VoxelForge Beta 1.6.0
 
-### Differences from Mineclonia
-* More minecraft like font.
-* different Jukebox music.
-* better structure platforms.
-* bubble columns.
-* Different Chat hud.
-* Vaults.
-* Bundles.
-* 1.21 status effects.
-* Tripwire.
-* FireFlies.
+---
 
-### Differences from Voxelibre
-* Mace
-* More minecraft like font.
-* Different Jukebox music.
-* Better structure platforms.
-* bubble columns.
-* Overworld depth increased from 64 to 128 nodes.
-* Improved nether portals.
-* Improved leaf decay.
-* Improved villages.
-* Wandering traders and trader llamas.
-* Suspicious nodes, pottery shreds and decorated pots.
-* Conduits.
-* Deep dark biome and ancient hermitage (structure corresponding to ancient city).
-* Functional loom to apply banner patterns.
-* Lush caves biome.
-* Cherry grove biome.
-* No hamburgers.
-* FireFlies.
-* Vaults.
+## ✅ Key Features
 
-### Gameplay
-You start in a randomly-generated world made entirely of cubes. You can explore
-the world and dig and build almost every block in the world to create new
-structures. You can choose to play in a “survival mode” in which you have to
-fight monsters and hunger for survival and slowly progress through the various
-other aspects of the game, such as mining, farming, building machines, and so on
-Or you can play in “creative mode” in which you can build almost anything
-instantly.
+### <div align="center" style="color: #228B22;">Advantages over Mineclonia</div>
 
-#### Gameplay summary
-* Sandbox-style gameplay, no goals
-* Survive: Fight against hostile monsters and hunger
-* Mine for ores and other treasures
-* Magic: Gain experience and enchant your tools
-* Use the collected blocks to create great buildings, your imagination is the
-  limit
-* Collect flowers (and other dye sources) and colorize your world
-* Find some seeds and start farming
-* Find or craft one of hundreds of items
-* Build a railway system and have fun with minecarts
-* Build complex machines with redstone circuits
-* In creative mode you can build almost anything for free and without limits
+- More **Minecraft-like** font
+- **Bubble Columns**
+- Custom **Chat HUD**
+- **Vaults** & **Bundles**
+- **Fireflies** & **Procedural Structures**
+- Exciting **new biomes** and **structures** like **Breeze**, **Bogged**, **Pale Garden**, **Trial Chambers**, and more!
+- **Better Wind Charges**
+- **Music** integration
+- **Datapacks** support
 
-## How to play (quick start)
-### Getting started
-* **Punch a tree** trunk until it breaks and collect wood
-* Place the **wood into the 2×2 grid** (your “crafting grid” in your inventory
-  menu) and craft 4 wood planks
-* Place the 4 wood planks in a 2×2 shape in the crafting grid to **make a
-  crafting table**
-* **Rightclick the crafting table** for a 3×3 crafting grid to craft more
-  complex things
-* Use the **crafting guide** (book icon) to learn all the possible crafting
-  recipes
-* **Craft a wooden pickaxe** so you can dig stone
-* Different tools break different kinds of blocks. Try them out!
-* Continue playing as you wish. Have fun!
+---
 
-### Farming
-* Find seeds
-* Craft a hoe
-* Rightclick dirt or a similar block with a hoe to create farmland
-* Place seeds on farmland and watch them grow
-* Collect plants when fully grown
-* If near water, farmland becomes wet and speeds up growth
+### <div align="center" style="color: #FF6347;">Potential Drawbacks</div>
 
-### Furnace
-* Craft a furnace
-* The furnace allows you to obtain more items
-* Upper slot must contain a smeltable item (example: iron ore)
-* Lower slot must contain a fuel item (example: coal)
-* See tooltips in crafting guide to learn about fuels and smeltable items
+- May have slightly less **stability** in certain areas.
+- Higher **CPU usage** due to advanced features.
+- **Longer bugfix delays**.
 
-### Additional help
-More help about the gameplay, blocks items and much more can be found from
-inside the game. You can access the help from your inventory menu.
+---
 
-### Special items
-The following items are interesting for Creative Mode and for adventure
-map builders. They can not be obtained in-game or in the creative inventory.
+#### <div align="center" style="color: #4682B4;">If you're looking for a more lightweight experience, check out VoxelLibre!</div>  
+[Download VoxelLibre](https://content.luanti.org/packages/Wuzzy/mineclone2/)
 
-* Barrier: `vlf_core:barrier`
+---
 
-Use the `/giveme` chat command to obtain them. See the in-game help for
-an explanation.
+## 🕹️ Gameplay
 
-## Installation
-This game requires [Minetest](http://minetest.net) to run (version 5.5.1 or
-later). So you need to install Minetest first. Only stable versions of Minetest
-are officially supported. There is no support for running VoxelForge in
-development versions of Minetest. If you have issues in dev versions, 
-then we will attempt to reproduce them in stable versions, 
-and if we can't then the issue will be closed, 
-and it will be looked into at the next release.
+Start your adventure in a **randomly-generated world** made entirely of cubes. Explore, build, and survive in two different modes:
 
-To install VoxelForge (if you haven't already), move this directory into the
-“games” directory of your Minetest data directory. Consult the help of
-Minetest to learn more.
+- **Survival Mode**: Battle hostile monsters, manage hunger, mine resources, and craft powerful tools.
+- **Creative Mode**: Unleash your imagination and build anything instantly.
 
-## Useful links
-The VoxelForge repository is hosted at [Github](https://github.com).
-To contribute or report issues, head there.
+---
 
-* Official Website: <https://voxelforge.net/>
-* Github: <https://github/VoxelForge/VoxelForge>
-* Discord: <https://discord.com/invite/7Jv5s7dnzG>
-* ContentDB: <https://content.minetest.net/packages/VoxelForge/voxelforge>
+### 📜 Gameplay Summary
+- **Sandbox-style gameplay** with no fixed goals
+- **Survival**: Fight against hostile monsters and hunger
+- **Mining**: Discover ores and treasures
+- **Magic**: Enchant tools and gain experience
+- **Farming**: Grow crops and harvest food
+- **Machines & Redstone**: Build contraptions with advanced circuits
+- **Creative Mode**: Build freely without limits
 
-## Project description
-The main goal of **VoxelForge** is to be a very close but stable and performant 
-Minecraft clone. released as free software.
+---
 
-* We try to clone Minecraft as well as Minetest currently permits without
-  resorting to hacks which are too heavyweight or complicated to maintain
-* Cloning the gameplay has highest priority. And overall looks
-* VoxelForge will use different graphics and sounds, but with a similar style
+## ⛏️ Quick Start Guide
 
-## Completion status
-This game is currently in **Beta** stage.
-It is playable, but not yet feature-complete.
-Backwards-compatibility is not guaranteed, updating your world might cause bugs
-and things to behave differently.
+### **Getting Started**
+1. **Punch a tree** to gather wood.
+2. Craft **4 wood planks** by placing the wood into your inventory crafting grid (2x2).
+3. Craft a **crafting table** by placing the planks in a 2x2 shape.
+4. **Right-click the crafting table** to access the 3x3 crafting grid.
+5. Use the **crafting guide** (book icon) to discover recipes.
+6. **Craft a wooden pickaxe** and start mining stone!
 
-The following main features are available:
+---
 
-* Tools, weapons
-* Armor
-* Crafting system: 2×2 grid, crafting table (3×3 grid), furnace, including a
-  crafting guide
-* Chests, large chests, ender chests, shulker boxes
-* Furnaces, hoppers
-* Hunger
-* Most monsters and animals
-* All ores from Minecraft
-* Most blocks in the overworld
-* Water and lava
-* Weather
-* 28 biomes + 5 Nether Biomes
-* The Nether, a fiery underworld in another dimension
-* Redstone circuits (partially)
-* Minecarts (partial)
-* Status effects (partial)
-* Experience
-* Enchanting
-* Brewing, potions, tipped arrow (partial)
-* Boats
-* Fire
-* Buidling blocks: Stairs, slabs, doors, trapdoors, fences, fence gates, walls
-* Clock
-* Compass
-* Sponge
-* Slime block
-* Small plants and saplings
-* Dyes
-* Banners
-* Deco blocks: Glass, stained glass, glass panes, iron bars, hardened clay (and
-  colors), heads and more
-* Item frames
-* Jukeboxes
-* Beds
-* Inventory menu
-* Creative inventory
-* Farming
-* Writable books
-* Commands
-* Villages
-* The End
-* And more!
+### 🌾 Farming
+1. Find **seeds**.
+2. Craft a **hoe** and use it on dirt to create **farmland**.
+3. Plant seeds on farmland and watch them grow.
+4. Farmland near water grows plants **faster**.
 
-The following features are incomplete and might change in the future:
+---
 
-* Some monsters and animals
-* Redstone-related things
-* Special minecarts
-* A couple of non-trivial blocks and items
+### 🔥 Furnace
+1. Craft a **furnace** to smelt ores and craft more advanced items.
+2. Place ores in the **upper slot** and fuel (e.g., **coal**) in the **lower slot**.
 
-Bonus features (not found in Minecraft):
+---
 
-* Built-in crafting guide which shows you crafting and smelting recipes
-* In-game help system containing extensive help about gameplay basics, blocks,
-  items and more
-* Fully moddable (thanks to Minetest's powerful Lua API)
-* Bookshelves can be used to store books
-* Nether portals can be created with custom shapes
-* New blocks and items:
-    * Lookup tool, shows you the help for whatever it touches
-    * More slabs and stairs
-    * Nether Brick Fence Gate
-    * Red Nether Brick Fence
-    * Red Nether Brick Fence Gate
+### 🎮 Special Items for Creative Mode & Builders
+- **Barrier**: `vlf_core:barrier`
+- Use the `/giveme` chat command to obtain special items.
 
-Technical differences from Minecraft:
+---
 
-* Height limit of ca. 31000 blocks (much higher than in Minecraft)
-* Horizontal world size is ca. 62000×62000 blocks (much smaller than in
-  Minecraft, but it is still very large)
-* Still incomplete and buggy
-* Blocks, items, enemies and other features are missing
-* Structure replacements - these small variants of Minecraft structures serve as
-  replacements until we can get large structures working:
-    * Woodland Cabin (Mansion)
-    * Nether Outpost (Fortress)
-    * Ocean Temple (Monument)
-    * Nether Bulwark (Bastion)
-    * End Shipwreck & End Boat (End City)
-    * Ancient Hermitage (Ancient City)
-* A few items have slightly different names to make them easier to distinguish
-* Different music for jukebox
-* Different textures (Pixel Perfection)
-* Different sounds (various sources)
-* Different engine (Minetest)
-* Different easter eggs
+## 💾 Installation
 
-… and finally, VoxelForge is free software
+1. **Install Minetest** (version 5.5.1 or later).
+2. Download and move the **VoxelForge directory** into your **Minetest “games”** folder.
+3. Launch Minetest and select **VoxelForge** from the game menu.
 
-## Other readme files
-* [LICENSE.txt](../../../src/branch/main/LICENSE.txt): The GPLv3 license text
-* [CONTRIBUTING.md](../../../src/branch/main/CONTRIBUTING.md): Information for those who want to contribute
-* [API.md](../../../src/branch/main/API.md): For Minetest modders who want to mod this game
-* [LEGAL.md](../../../src/branch/main/LEGAL.md): Legal information
-* [CREDITS.md](../../../src/branch/main/CREDITS.md): List of everyone who contributed
-# VLF
+> **Note:** VoxelForge is compatible only with stable versions of Minetest. For issues on development versions, we can attempt to reproduce them in stable releases.
+
+---
+
+## 🌐 Useful Links
+
+<div align="center">
+  <ul style="list-style-type: none;">
+    <li><a href="https://voxelforge.net/" style="color: #008CBA;">Official Website</a></li>
+    <li><a href="https://github.com/VoxelForge/VoxelForge" style="color: #008CBA;">GitHub Repository</a></li>
+    <li><a href="https://discord.com/invite/7Jv5s7dnzG" style="color: #008CBA;">Discord Community</a></li>
+    <li><a href="https://content.minetest.net/packages/VoxelForge/voxelforge" style="color: #008CBA;">ContentDB</a></li>
+  </ul>
+</div>
+
+---
+
+## 📌 Project Overview
+
+<div style="background-color: #f4f4f4; padding: 10px;">
+  <p><strong>VoxelForge</strong> strives to be a <strong>stable</strong>, <strong>performant</strong>, and visually appealing Minecraft clone within <strong>Minetest</strong>. It aims to replicate Minecraft's gameplay without the need for complex hacks.</p>
+</div>
+
+- **Goal**: To clone Minecraft's gameplay and visuals while adding new features and enhancing the user experience.
+- **Distinct Features**: Different graphics, sounds, and an overall different engine (Minetest).
+
+---
+
+## 🚧 Completion Status
+
+VoxelForge is in **Beta** stage—playable, but not yet feature-complete. There might be bugs and backwards-compatibility issues with world updates.
+
+### Main Features Available:
+- **Tools**, **Weapons**, **Armor**, **Crafting System**, **Furnaces**, **Monsters**, **Animals**, **Ores**, **Biomes** (28 + 5 Nether biomes)
+- **Redstone**, **Minecarts**, **Enchanting**, **Brewing**, **Farming**, **Commands**, **Villages**, and much more!
+
+### Features In Progress:
+- **Redstone** features
+- **Some monsters and animals**
+- **Minecarts** (partial)
+
+---
+
+## 🎁 Bonus Features:
+- Built-in **crafting guide**
+- **Moddable** via Minetest's Lua API
+- **New blocks and items** like slabs, stairs, and redstone components
+- Custom **Nether Portals** and new features for advanced builders
+
+---
+
+## 📏 Technical Differences from Minecraft:
+- **Height Limit**: ~31,000 blocks (far higher than Minecraft)
+- **World Size**: ~62,000x62,000 blocks (smaller than Minecraft, but still vast)
+- Unique features like **structure replacements** (e.g., Woodland Cabin for Mansion, Ocean Temple for Monument).
+
+---
+
+## ⚖️ License & Contribution
+
+- **License**: [GPLv3](../../../src/branch/main/LICENSE.txt)
+- **Contribution**: [Guidelines](../../../src/branch/main/CONTRIBUTING.md)
+- **API**: [For modders](../../../src/branch/main/API.md)
+
+---
+
+### 🖤 **VoxelForge is Free Software**!
+
+---
+
+## 📝 Other README Files
+- [LICENSE.txt](../../../src/branch/main/LICENSE.txt): The full GPLv3 license text.
+- [CREDITS.md](../../../src/branch/main/CREDITS.md): List of contributors.
+
+---
+
+### 🌟 Enjoy your adventures in VoxelForge!
+

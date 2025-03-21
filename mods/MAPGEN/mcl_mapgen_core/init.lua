@@ -230,7 +230,7 @@ end
 local biome_id_p2 = {}
 local biomecolor_nodes = {}
 
-minetest.register_on_mods_loaded(function()
+--[[minetest.register_on_mods_loaded(function()
 	for n, _ in pairs(minetest.registered_nodes) do
 		if minetest.get_item_group(n, "biomecolor") > 0 then
 			table.insert(biomecolor_nodes, n)
@@ -239,7 +239,7 @@ minetest.register_on_mods_loaded(function()
 	for k, v in pairs(minetest.registered_biomes) do
 		biome_id_p2[minetest.get_biome_id(k)] = v._mcl_palette_index or 255
 	end
-end)
+end)]]
 
 local function set_param2_nodes(vm, data, data2, emin, emax, area, minp, maxp, blockseed) ---@diagnostic disable-line: unused-local
 	if emin.y > mcl_vars.mg_overworld_max or emax.y < mcl_vars.mg_overworld_min then return end

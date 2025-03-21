@@ -356,9 +356,12 @@ minetest.register_node("mcl_core:dirt_with_grass", {
 	paramtype2 = "color",
 	tiles = {"mcl_core_grass_block_top.png", { name="default_dirt.png", color="white" }, { name="default_dirt.png^mcl_dirt_grass_shadow.png", color="white" }},
 	overlay_tiles = {"mcl_core_grass_block_top.png", "blank.png", {name="mcl_core_grass_block_side_overlay.png", tileable_vertical=false}},
-	palette = "mcl_core_palette_grass.png",
-	palette_index = 0,
+	--palette = "mcl_core_palette_grass.png",
+	palette = "grass_palette.png",
+	--palette_index = 0,
+	palette_index = 136,
 	color = "#8EB971",
+	place_param2 = 136,
 	_on_shovel_place = mcl_core.make_dirtpath,
 	groups = {
 		handy=1, shovely=1, dirt=2, grass_block=1, grass_block_no_snow=1,
@@ -372,12 +375,13 @@ minetest.register_node("mcl_core:dirt_with_grass", {
 	}),
 	on_construct = function(pos)
 		local node = minetest.get_node(pos)
-		if node.param2 == 0 then
-			local new_node = mcl_core.get_grass_block_type(pos)
-			if new_node.param2 ~= 0 or new_node.name ~= "mcl_core:dirt_with_grass" then
-				minetest.set_node(pos, new_node)
-			end
-		end
+		--if node.param2 == 0 then
+			--local new_node = mcl_core.get_grass_block_type(pos)
+			--if new_node.param2 ~= 0 or new_node.name ~= "mcl_core:dirt_with_grass" then
+				--minetest.set_node(pos, new_node)
+				vlf_luscious.on_construct(pos)
+			--end
+		--end
 		return mcl_core.on_snowable_construct(pos)
 	end,
 	_mcl_snowed = "mcl_core:dirt_with_grass_snow",
@@ -386,6 +390,50 @@ minetest.register_node("mcl_core:dirt_with_grass", {
 	_mcl_silk_touch_drop = true,
 	_on_bone_meal = mcl_core.bone_meal_grass,
 })
+
+-- Grass Block
+minetest.register_node("mcl_core:dirt_with_grass_c", {
+	description = S("Grass Block"),
+	_doc_items_longdesc = S("A grass block is dirt with a grass cover. Grass blocks are resourceful blocks which allow the growth of all sorts of plants. They can be turned into farmland with a hoe and turned into grass paths with a shovel. In light, the grass slowly spreads onto dirt nearby. Under an opaque block or a liquid, a grass block may turn back to dirt."),
+	_doc_items_hidden = false,
+	paramtype2 = "color",
+	tiles = {"mcl_core_grass_block_top.png", { name="default_dirt.png", color="white" }, { name="default_dirt.png^mcl_dirt_grass_shadow.png", color="white" }},
+	overlay_tiles = {"mcl_core_grass_block_top.png", "blank.png", {name="mcl_core_grass_block_side_overlay.png", tileable_vertical=false}},
+	--palette = "mcl_core_palette_grass.png",
+	palette = "cherry_grove_palette.png",
+	--palette_index = 0,
+	palette_index = 136,
+	color = "#8EB971",
+	place_param2 = 136,
+	_on_shovel_place = mcl_core.make_dirtpath,
+	groups = {
+		handy=1, shovely=1, dirt=2, grass_block=1, grass_block_no_snow=1,
+		soil=1, soil_sapling=2, soil_sugarcane=1, soil_bamboo=1, soil_fungus=1, cultivatable=2,
+		spreading_dirt_type=1, enderman_takable=1, building_block=1,
+		compostability=30, biomecolor=1, converts_to_moss=1,
+	},
+	drop = "mcl_core:dirt",
+	sounds = mcl_sounds.node_sound_dirt_defaults({
+		footstep = {name="default_grass_footstep", gain=0.1},
+	}),
+	on_construct = function(pos)
+		local node = minetest.get_node(pos)
+		--if node.param2 == 0 then
+			--local new_node = mcl_core.get_grass_block_type(pos)
+			--if new_node.param2 ~= 0 or new_node.name ~= "mcl_core:dirt_with_grass" then
+				--minetest.set_node(pos, new_node)
+				vlf_luscious.on_construct(pos)
+			--end
+		--end
+		return mcl_core.on_snowable_construct(pos)
+	end,
+	_mcl_snowed = "mcl_core:dirt_with_grass_snow",
+	_mcl_blast_resistance = 0.6,
+	_mcl_hardness = 0.6,
+	_mcl_silk_touch_drop = true,
+	_on_bone_meal = mcl_core.bone_meal_grass,
+})
+mcl_core.register_snowed_node("mcl_core:dirt_with_grass_snow_c", "mcl_core:dirt_with_grass_c", nil, nil, true, S("Dirt with Snow"))
 mcl_core.register_snowed_node("mcl_core:dirt_with_grass_snow", "mcl_core:dirt_with_grass", nil, nil, true, S("Dirt with Snow"))
 
 minetest.register_node("mcl_core:grass_path", {

@@ -193,7 +193,7 @@ end
 
 -- Return appropriate grass block node for pos
 function mcl_core.get_grass_block_type(pos)
-	return {name = "mcl_core:dirt_with_grass", param2 = mcl_core.get_grass_palette_index(pos)}
+	return {name = "mcl_core:dirt_with_grass", param2 = vlf_luscious.blend_biome_color(pos)}
 end
 
 ------------------------------

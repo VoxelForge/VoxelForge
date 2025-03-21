@@ -570,10 +570,15 @@ local function register_biomes()
 		y_max = mcl_vars.mg_overworld_max,
 		humidity_point = 39,
 		heat_point = 58,
+		temperature = 86,
+		downfall = 40,
 		_mcl_biome_type = "medium",
 		_mcl_palette_index = 0,
 		_mcl_skycolor = "#78A7FF",
-		_mcl_fogcolor = overworld_fogcolor
+		_mcl_fogcolor = overworld_fogcolor,
+		tags = {
+			"#minecraft:has_structure/ruined_portal_desert"
+		}
 	})
 	minetest.register_biome({
 		name = "Plains_beach",
@@ -612,7 +617,7 @@ local function register_biomes()
 
 	minetest.register_biome({
 		name = "CherryGrove",
-		node_top = "mcl_core:dirt_with_grass",
+		node_top = "mcl_core:dirt_with_grass_c",
 		depth_top = 1,
 		node_filler = "mcl_core:dirt",
 		depth_filler = 2,
@@ -622,11 +627,37 @@ local function register_biomes()
 		y_max = mcl_vars.mg_overworld_max,
 		humidity_point = 41,
 		heat_point = 55,
+		temperature_c = 100,
+		downfall_c = 0,
 		_mcl_biome_type = "medium",
 		_mcl_palette_index = 11,
 		_mcl_skycolor = "#78A7FF",
 		_mcl_fogcolor = overworld_fogcolor
 	})
+	
+minetest.register_lbm({
+    name = "mcl_biomes:replace_cherrygrove_grass",
+    nodenames = {"mcl_core:dirt_with_grass"},
+    run_at_every_load = false,
+    
+    action = function(pos, node)
+        local vm = minetest.get_voxel_manip()
+        local minp, maxp = vm:read_from_map(pos, pos)
+        local data = vm:get_data()
+        local area = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
+        local biome_name = minetest.get_biome_name(minetest.get_biome_data(pos).biome)
+        
+        if biome_name == "CherryGrove" then
+            local node_id = minetest.get_content_id("mcl_core:dirt_with_grass_c")
+            local index = area:indexp(pos)
+            data[index] = node_id
+            vm:set_data(data)
+            vm:write_to_map()
+            vm:update_map()
+        end
+    end
+})
+
 
 	-- Sunflower Plains
 	minetest.register_biome({
@@ -783,6 +814,8 @@ local function register_biomes()
 		y_max = mcl_vars.mg_overworld_max,
 		humidity_point = 44,
 		heat_point = 32,
+		temperature = 60,
+		downfall = 60,
 		_mcl_biome_type = "medium",
 		_mcl_palette_index = 14,
 		_mcl_skycolor = "#79A6FF",
@@ -1253,6 +1286,8 @@ local function register_biomes()
 		y_max = mcl_vars.mg_overworld_max,
 		humidity_point = 36,
 		heat_point = 79,
+		temperature = 100,
+		downfall = 0,
 		_mcl_biome_type = "hot",
 		_mcl_palette_index = 1,
 		_mcl_skycolor = "#6EB1FF",

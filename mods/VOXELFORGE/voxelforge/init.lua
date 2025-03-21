@@ -105,7 +105,7 @@ end)
 -- Font
 minetest.register_on_mods_loaded(function()
 	local font_size = minetest.settings:get("vlf_font_size") or 30
-	local font_shadow_size = minetest.settings:get("vlf_font_shadow_size") or 3
+	local font_shadow_size = minetest.settings:get("vlf_font_shadow_size") or 2
 	local chat_font_size = minetest.settings:get("vlf_chat_font_size") or 24
 	minetest.settings:set("font_shadow", font_shadow_size)
 	minetest.settings:set("font_size", font_size)
